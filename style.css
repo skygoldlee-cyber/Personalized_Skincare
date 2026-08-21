@@ -3656,11 +3656,22 @@ body.reader-focus-mode .reader-readable-width {
         justify-content: center;
     }
 
+    /* 헤더 액션 영역 확보 */
+    .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-shrink: 0;
+    }
+
     /* PWA 설치 버튼 모바일 최적화 */
     #pwa-install-btn {
         margin-right: 0.25rem;
         font-size: 0.85rem;
         white-space: nowrap;
+        /* 모바일에서 확실히 보이도록 z-index 및 위치 조정 */
+        position: relative;
+        z-index: 10;
     }
 
     #pwa-install-btn i {
