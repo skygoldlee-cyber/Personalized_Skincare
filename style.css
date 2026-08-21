@@ -3937,194 +3937,6 @@ body.reader-focus-mode .reader-readable-width {
 }
 
 /* ============================================================
-   📱 모바일 가로보기 모드 (landscape) 지원
-   - 높이가 500px 이하인 가로 모드에서 레이아웃 최적화
-   ============================================================ */
-@media (max-height: 500px) and (orientation: landscape) {
-    /* 헤더 간소화 */
-    .app-header {
-        padding: 0.5rem 1rem !important;
-        position: relative !important;
-    }
-
-    .app-header h2 {
-        font-size: 1rem !important;
-    }
-
-    .app-header p {
-        display: none !important;
-    }
-
-    /* 헤더 버튼 축소 */
-    .header-actions .btn,
-    .header-actions button {
-        min-width: 36px !important;
-        min-height: 36px !important;
-        padding: 0.25rem 0.5rem !important;
-        font-size: 0.8rem !important;
-    }
-
-    /* 뷰 섹션 패딩 축소 */
-    .view-section {
-        padding: 0.75rem 1rem !important;
-    }
-
-    /* 통계 카드 4열 유지 (가로 모드) */
-    .stats-grid {
-        grid-template-columns: repeat(4, 1fr) !important;
-        gap: 0.5rem !important;
-    }
-
-    .stat-card {
-        padding: 0.75rem !important;
-        flex-direction: row !important;
-        text-align: left !important;
-    }
-
-    .stat-icon {
-        width: 32px !important;
-        height: 32px !important;
-        font-size: 1rem !important;
-    }
-
-    .stat-info h3 {
-        font-size: 0.65rem !important;
-    }
-
-    .stat-value {
-        font-size: 1rem !important;
-    }
-
-    .stat-info p {
-        font-size: 0.6rem !important;
-    }
-
-    /* 대시보드 위젯 2열 유지 */
-    .dashboard-widgets-row {
-        grid-template-columns: 2fr 1fr !important;
-        gap: 1rem !important;
-        margin-top: 0.75rem !important;
-        margin-bottom: 0.75rem !important;
-    }
-
-    /* 데일리 챌린지 카드 가로 모드 최적화 */
-    .daily-challenge-card {
-        padding: 1rem !important;
-    }
-
-    .daily-challenge-card > div:first-child {
-        flex-direction: row !important;
-        align-items: center !important;
-        justify-content: space-between !important;
-        margin-bottom: 0.75rem !important;
-    }
-
-    .daily-challenge-card .streak-badge {
-        font-size: 0.8rem !important;
-        padding: 0.35rem 0.7rem !important;
-    }
-
-    .daily-challenge-card p {
-        font-size: 0.85rem !important;
-        margin-bottom: 0.75rem !important;
-        line-height: 1.4 !important;
-    }
-
-    .daily-challenge-card > div:last-child {
-        flex-direction: row !important;
-        align-items: center !important;
-        justify-content: space-between !important;
-    }
-
-    .daily-challenge-card #daily-challenge-status {
-        width: auto !important;
-        padding: 0.4rem 0.8rem !important;
-    }
-
-    .daily-challenge-card #start-daily-btn {
-        width: auto !important;
-        padding: 0.4rem 1rem !important;
-    }
-
-    /* 하단 탭 바 숨김 (가로 모드에서 공간 확보) */
-    .mobile-tab-bar {
-        display: none !important;
-    }
-
-    /* 메인 콘텐츠 패딩 조정 */
-    .main-content {
-        padding-bottom: 0 !important;
-    }
-
-    /* 플래시카드 높이 조정 */
-    .flashcard-wrapper {
-        min-height: 200px !important;
-        max-height: 50vh !important;
-    }
-
-    /* 모달 크기 조정 */
-    .modal-content {
-        max-height: 85vh !important;
-        margin: 0.5rem auto !important;
-    }
-
-    /* 버튼 크기 축소 */
-    .btn {
-        padding: 0.5rem 0.75rem !important;
-        min-height: 36px !important;
-        font-size: 0.85rem !important;
-    }
-
-    /* 입력 필드 높이 축소 */
-    input, select, textarea {
-        min-height: 36px !important;
-        font-size: 14px !important;
-    }
-
-    /* h3 크기 축소 */
-    h3 {
-        font-size: 1rem !important;
-    }
-
-    /* 그리드 카드 간격 축소 */
-    .glass-card {
-        padding: 1rem !important;
-    }
-}
-
-/* 가로보기에서 매우 낮은 높이 (400px 이하) 추가 최적화 */
-@media (max-height: 400px) and (orientation: landscape) {
-    .app-header {
-        padding: 0.25rem 0.75rem !important;
-    }
-
-    .view-section {
-        padding: 0.5rem 0.75rem !important;
-    }
-
-    .stats-grid {
-        gap: 0.35rem !important;
-    }
-
-    .stat-card {
-        padding: 0.5rem !important;
-    }
-
-    .daily-challenge-card {
-        padding: 0.75rem !important;
-    }
-
-    .daily-challenge-card p {
-        font-size: 0.8rem !important;
-        margin-bottom: 0.5rem !important;
-    }
-
-    .glass-card {
-        padding: 0.75rem !important;
-    }
-}
-
-/* ============================================================
    오프라인 배너 (전체 화면 크기 공통 적용)
    - 기본 상태는 숨김(transform: translateY(-100%))
    - JS에서 .show 클래스를 추가할 때만 표시
@@ -4351,6 +4163,194 @@ body.reader-focus-mode .reader-readable-width {
     }
     .pwa-modal-body {
         padding: 1rem;
+    }
+}
+
+/* ============================================================
+   📱 모바일 가로보기 모드 (landscape) 지원 - 우선순위 높음
+   - 높이가 500px 이하인 가로 모드에서 레이아웃 최적화
+   ============================================================ */
+@media (max-height: 500px) and (orientation: landscape) {
+    /* 헤더 간소화 */
+    .app-header {
+        padding: 0.5rem 1rem !important;
+        position: relative !important;
+    }
+
+    .app-header h2 {
+        font-size: 1rem !important;
+    }
+
+    .app-header p {
+        display: none !important;
+    }
+
+    /* 헤더 버튼 축소 */
+    .header-actions .btn,
+    .header-actions button {
+        min-width: 36px !important;
+        min-height: 36px !important;
+        padding: 0.25rem 0.5rem !important;
+        font-size: 0.8rem !important;
+    }
+
+    /* 뷰 섹션 패딩 축소 */
+    .view-section {
+        padding: 0.75rem 1rem !important;
+    }
+
+    /* 통계 카드 4열 유지 (가로 모드) */
+    .stats-grid {
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 0.5rem !important;
+    }
+
+    .stat-card {
+        padding: 0.75rem !important;
+        flex-direction: row !important;
+        text-align: left !important;
+    }
+
+    .stat-icon {
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 1rem !important;
+    }
+
+    .stat-info h3 {
+        font-size: 0.65rem !important;
+    }
+
+    .stat-value {
+        font-size: 1rem !important;
+    }
+
+    .stat-info p {
+        font-size: 0.6rem !important;
+    }
+
+    /* 대시보드 위젯 2열 유지 */
+    .dashboard-widgets-row {
+        grid-template-columns: 2fr 1fr !important;
+        gap: 1rem !important;
+        margin-top: 0.75rem !important;
+        margin-bottom: 0.75rem !important;
+    }
+
+    /* 데일리 챌린지 카드 가로 모드 최적화 */
+    .daily-challenge-card {
+        padding: 1rem !important;
+    }
+
+    .daily-challenge-card > div:first-child {
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        margin-bottom: 0.75rem !important;
+    }
+
+    .daily-challenge-card .streak-badge {
+        font-size: 0.8rem !important;
+        padding: 0.35rem 0.7rem !important;
+    }
+
+    .daily-challenge-card p {
+        font-size: 0.85rem !important;
+        margin-bottom: 0.75rem !important;
+        line-height: 1.4 !important;
+    }
+
+    .daily-challenge-card > div:last-child {
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+    }
+
+    .daily-challenge-card #daily-challenge-status {
+        width: auto !important;
+        padding: 0.4rem 0.8rem !important;
+    }
+
+    .daily-challenge-card #start-daily-btn {
+        width: auto !important;
+        padding: 0.4rem 1rem !important;
+    }
+
+    /* 하단 탭 바 숨김 (가로 모드에서 공간 확보) */
+    .mobile-tab-bar {
+        display: none !important;
+    }
+
+    /* 메인 콘텐츠 패딩 조정 */
+    .main-content {
+        padding-bottom: 0 !important;
+    }
+
+    /* 플래시카드 높이 조정 */
+    .flashcard-wrapper {
+        min-height: 200px !important;
+        max-height: 50vh !important;
+    }
+
+    /* 모달 크기 조정 */
+    .modal-content {
+        max-height: 85vh !important;
+        margin: 0.5rem auto !important;
+    }
+
+    /* 버튼 크기 축소 */
+    .btn {
+        padding: 0.5rem 0.75rem !important;
+        min-height: 36px !important;
+        font-size: 0.85rem !important;
+    }
+
+    /* 입력 필드 높이 축소 */
+    input, select, textarea {
+        min-height: 36px !important;
+        font-size: 14px !important;
+    }
+
+    /* h3 크기 축소 */
+    h3 {
+        font-size: 1rem !important;
+    }
+
+    /* 그리드 카드 간격 축소 */
+    .glass-card {
+        padding: 1rem !important;
+    }
+}
+
+/* 가로보기에서 매우 낮은 높이 (400px 이하) 추가 최적화 */
+@media (max-height: 400px) and (orientation: landscape) {
+    .app-header {
+        padding: 0.25rem 0.75rem !important;
+    }
+
+    .view-section {
+        padding: 0.5rem 0.75rem !important;
+    }
+
+    .stats-grid {
+        gap: 0.35rem !important;
+    }
+
+    .stat-card {
+        padding: 0.5rem !important;
+    }
+
+    .daily-challenge-card {
+        padding: 0.75rem !important;
+    }
+
+    .daily-challenge-card p {
+        font-size: 0.8rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+
+    .glass-card {
+        padding: 0.75rem !important;
     }
 }
 
