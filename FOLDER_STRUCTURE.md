@@ -32,7 +32,9 @@ Personalized Skincare/
 │   ├── charts.js                    ← SVG 차트 (레이더 차트, 성적 꺾은선 그래프)
 │   ├── sanitize.js                  ← HTML/XSS 방어 및 텍스트 정제 유틸리티
 │   ├── scratchpad.js                ← HTML5 Canvas 드로잉 연습장 (손글씨 계산)
-│   └── state.js                     ← 전역 상태 관리 및 로컬 스토리지 헬퍼
+│   ├── state.js                     ← 전역 상태 관리 및 로컬 스토리지 헬퍼
+│   ├── trainer-calc.js              ← 🆕 계산 훈련 문제 생성기 (순수 로직, DOM 의존 없음)
+│   └── utils.js                     ← 🆕 범용 헬퍼 (한글 초성 추출 등, app.js보다 먼저 로드)
 │
 ├── 📂 data/                         ← ✅ Vercel 배포 (생성된 데이터 번들)
 │   ├── study_data.js                ← 교재 학습 데이터 (4개 과목, 19개 단원)

@@ -209,3 +209,49 @@
 ### 검증
 - `node --check src/app.js` 문법 검증 통과.
 - 프로덕션 배포 완료 (https://personalized-skincare-study.vercel.app).
+
+---
+
+## 모바일 UI 개선 및 코드 모듈 분리 (2026-08-21)
+
+### 1. 모바일 하단 탭 바 메뉴 확장
+- **증상**: 모바일에서 교재본문 검색, 성분 검색, 복습, 훈련소 메뉴가 하단 탭 바에 없어 접근 불가.
+- **해결**: `index.html` 모바일 탭 바에 누락된 4개 메뉴(복습/훈련소/교재검색/성분검색) 추가 → 총 10개 메뉴. `style.css`에 `overflow-x: auto` 적용으로 가로 스크롤 지원.
+
+### 2. 일일 챌린지 카드 모바일 깨짐 수정
+- **증상**: 모바일에서 "일일 5분 데일리 챌린지" 카드 레이아웃이 깨짐.
+- **원인**: 전역 `[style*="display: flex"] { flex-wrap: wrap !important; }` 규칙이 카드 날부 flex 레이아웃을 강제 변경.
+- **해결**: `style.css`에 `.daily-challenge-card` 전용 모바일 스타일(`flex-direction: column`) 추가.
+
+### 3. 가로/세로 보기 토글 버튼 추가
+- **요구사항**: 모바일에서 가로보기 모드를 수동으로 전환할 수 있는 토글 버튼 필요.
+- **해결**:
+    - `index.html` 헤더에 `#orientation-toggle-btn` 버튼 추가.
+    - `src/app.js`에 `setupOrientationToggle()` 함수 추가 → `body.landscape-mode` 클래스 토글, `localStorage`에 선택 상태 저장, 토스트 알림 표시.
+    - `style.css` 파일 끝에 `body.landscape-mode` 강제 가로 레이아웃 스타일 배치(CSS 우선순위 확보).
+    - `DOMContentLoaded`에서 `setTimeout(100ms)`으로 이벤트 바인딩하여 DOM 준비 보장.
+
+### 4. 성적 분석 그리드 모바일 종열 배치
+- **증상**: 모바일 세로보기에서 "실전 모의고사 성적 분석 및 합격 예측" 3개 카드(성적 추이/과목별 진단/합격 예측)가 가로로 배치되어 표시 영역 부족.
+- **원인**: `index.html`의 `.analytics-grid` 인라인 스타일 `grid-template-columns: 1.5fr 1.2fr 1.3fr`가 모바일 미디어 쿼리보다 우선 적용.
+- **해결**:
+    - `index.html`: 인라인 `grid-template-columns` 제거.
+    - `style.css`: 모바일 미디어 쿼리에 `.analytics-grid { grid-template-columns: 1fr !important; }` 명시적 규칙 추가.
+
+### 5. 코드 모듈 분리 (리팩토링)
+- **목적**: `src/app.js`(약 5000줄)의 모놀리식 구조 개선, 유지보수성·테스트 용이성 확보.
+- **변경 내용**:
+    - **`src/trainer-calc.js`** (신규): 계산 훈련 문제 생성 로직 분리. DOM 조작 없이 순수 데이터(`{ type, question, answer, unit, solution }`)만 반환 → 단위 테스트·재사용 용이.
+    - **`src/utils.js`** (신규): 의존성 없는 범용 헬퍼 모듈. 한글 초성 추출 함수(`getChosung()`)를 `charts.js`에서 이동. `app.js`보다 먼저 로드되어야 함.
+    - **`src/app.js`**: 분리된 로직 제거 및 신규 모듈 참조로 대체.
+    - **`src/charts.js`**: 초성 추출 로직을 `utils.js`로 이동.
+    - **`index.html`**: 신규 스크립트 파일 로드 추가.
+
+### 관련 커밋
+- `fix: 모바일 세로보기에서 성적 분석 그리드 1열(종열) 배치로 수정` (`72ef8d4`)
+- `refactor: 외부 수정사항 반영 - 코드 모듈 분리 (trainer-calc, utils)` (`8ffbc08`)
+
+### 검증
+- 프로덕션 배포 완료 (https://personalized-skincare-study.vercel.app).
+- 모바일에서 하단 탭 바 10개 메뉴 정상 표시 및 가로 스크롤 동작 확인.
+- 성적 분석 3개 카드가 세로보기에서 1열로 정상 배치 확인.
