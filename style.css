@@ -4173,6 +4173,7 @@ body.reader-focus-mode .reader-readable-width {
 
 /* 가로보기 토글 버튼 스타일 */
 #orientation-toggle-btn {
+    display: none; /* 기본적으로 숨김 (데스크톱) */
     padding: 0.5rem !important;
     min-width: 44px !important;
     min-height: 44px !important;
@@ -4352,10 +4353,12 @@ body.landscape-mode .glass-card {
 
 /* 모바일에서만 토글 버튼 표시 */
 @media (max-width: 768px) {
-    #orientation-toggle-btn {
+    button#orientation-toggle-btn {
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
+        visibility: visible !important;
+        opacity: 1 !important;
     }
 }
 
