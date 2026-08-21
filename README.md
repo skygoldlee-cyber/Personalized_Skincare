@@ -91,7 +91,7 @@
 └── docs/                       # 매뉴얼·요약·배포 가이드
 ```
 
-자세한 구조는 [`FOLDER_STRUCTURE.md`](FOLDER_STRUCTURE.md)를 참고하세요.
+자세한 구조는 [`FOLDER_STRUCTURE.md`](FOLDER_STRUCTURE.md)를, 설계 컨셉과 아키텍처는 [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)를 참고하세요.
 
 ---
 
