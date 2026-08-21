@@ -4167,6 +4167,199 @@ body.reader-focus-mode .reader-readable-width {
 }
 
 /* ============================================================
+   📱 가로/세로 보기 토글 버튼 및 강제 가로보기 모드
+   - 사용자가 버튼으로 가로/세로 모드를 전환할 수 있음
+   ============================================================ */
+
+/* 가로보기 토글 버튼 스타일 */
+#orientation-toggle-btn {
+    padding: 0.5rem !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    border-radius: 8px !important;
+    transition: transform 0.3s ease !important;
+}
+
+#orientation-toggle-btn:hover {
+    transform: rotate(90deg) !important;
+}
+
+#orientation-toggle-btn i {
+    transition: transform 0.3s ease !important;
+}
+
+/* 토스트 애니메이션 */
+@keyframes orientationToastIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes orientationToastOut {
+    from {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.9);
+    }
+}
+
+/* 강제 가로보기 모드 (body.landscape-mode 클래스) */
+body.landscape-mode .app-header {
+    padding: 0.5rem 1rem !important;
+    position: relative !important;
+}
+
+body.landscape-mode .app-header h2 {
+    font-size: 1rem !important;
+}
+
+body.landscape-mode .app-header p {
+    display: none !important;
+}
+
+body.landscape-mode .header-actions .btn,
+body.landscape-mode .header-actions button {
+    min-width: 36px !important;
+    min-height: 36px !important;
+    padding: 0.25rem 0.5rem !important;
+    font-size: 0.8rem !important;
+}
+
+body.landscape-mode .view-section {
+    padding: 0.75rem 1rem !important;
+}
+
+body.landscape-mode .stats-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 0.5rem !important;
+}
+
+body.landscape-mode .stat-card {
+    padding: 0.75rem !important;
+    flex-direction: row !important;
+    text-align: left !important;
+}
+
+body.landscape-mode .stat-icon {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 1rem !important;
+}
+
+body.landscape-mode .stat-info h3 {
+    font-size: 0.65rem !important;
+}
+
+body.landscape-mode .stat-value {
+    font-size: 1rem !important;
+}
+
+body.landscape-mode .stat-info p {
+    font-size: 0.6rem !important;
+}
+
+body.landscape-mode .dashboard-widgets-row {
+    grid-template-columns: 2fr 1fr !important;
+    gap: 1rem !important;
+    margin-top: 0.75rem !important;
+    margin-bottom: 0.75rem !important;
+}
+
+body.landscape-mode .daily-challenge-card {
+    padding: 1rem !important;
+}
+
+body.landscape-mode .daily-challenge-card > div:first-child {
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    margin-bottom: 0.75rem !important;
+}
+
+body.landscape-mode .daily-challenge-card .streak-badge {
+    font-size: 0.8rem !important;
+    padding: 0.35rem 0.7rem !important;
+}
+
+body.landscape-mode .daily-challenge-card p {
+    font-size: 0.85rem !important;
+    margin-bottom: 0.75rem !important;
+    line-height: 1.4 !important;
+}
+
+body.landscape-mode .daily-challenge-card > div:last-child {
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+}
+
+body.landscape-mode .daily-challenge-card #daily-challenge-status {
+    width: auto !important;
+    padding: 0.4rem 0.8rem !important;
+}
+
+body.landscape-mode .daily-challenge-card #start-daily-btn {
+    width: auto !important;
+    padding: 0.4rem 1rem !important;
+}
+
+body.landscape-mode .mobile-tab-bar {
+    display: none !important;
+}
+
+body.landscape-mode .main-content {
+    padding-bottom: 0 !important;
+}
+
+body.landscape-mode .flashcard-wrapper {
+    min-height: 200px !important;
+    max-height: 50vh !important;
+}
+
+body.landscape-mode .modal-content {
+    max-height: 85vh !important;
+    margin: 0.5rem auto !important;
+}
+
+body.landscape-mode .btn {
+    padding: 0.5rem 0.75rem !important;
+    min-height: 36px !important;
+    font-size: 0.85rem !important;
+}
+
+body.landscape-mode input,
+body.landscape-mode select,
+body.landscape-mode textarea {
+    min-height: 36px !important;
+    font-size: 14px !important;
+}
+
+body.landscape-mode h3 {
+    font-size: 1rem !important;
+}
+
+body.landscape-mode .glass-card {
+    padding: 1rem !important;
+}
+
+/* 모바일에서만 토글 버튼 표시 */
+@media (max-width: 768px) {
+    #orientation-toggle-btn {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+}
+
+/* ============================================================
    📱 모바일 가로보기 모드 (landscape) 지원 - 우선순위 높음
    - 가로가 세로보다 긴 화면에서 레이아웃 최적화
    ============================================================ */

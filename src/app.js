@@ -8,11 +8,85 @@ function initApp() {
     loadProgress();
     setupNavigation();
     setupEventListeners();
+    setupOrientationToggle();
     
     // 초기 뷰 렌더링
     renderDashboard();
     updateGlobalStats();
     checkExamDraft();
+}
+
+// --- 가로/세로 보기 토글 기능 ---
+function setupOrientationToggle() {
+    const toggleBtn = document.getElementById('orientation-toggle-btn');
+    if (!toggleBtn) return;
+    
+    // 저장된 방향 설정 불러오기
+    const savedOrientation = localStorage.getItem('preferredOrientation');
+    if (savedOrientation === 'landscape') {
+        document.body.classList.add('landscape-mode');
+    }
+    
+    toggleBtn.addEventListener('click', () => {
+        document.body.classList.toggle('landscape-mode');
+        const isLandscape = document.body.classList.contains('landscape-mode');
+        
+        // 설정 저장
+        localStorage.setItem('preferredOrientation', isLandscape ? 'landscape' : 'portrait');
+        
+        // 아이콘 회전 애니메이션
+        const icon = toggleBtn.querySelector('i');
+        if (icon) {
+            icon.style.transform = isLandscape ? 'rotate(90deg)' : 'rotate(0deg)';
+        }
+        
+        // 토스트 알림
+        showOrientationToast(isLandscape);
+    });
+}
+
+// 방향 전환 알림 표시
+function showOrientationToast(isLandscape) {
+    // 기존 토스트 제거
+    const existingToast = document.querySelector('.orientation-toast');
+    if (existingToast) existingToast.remove();
+    
+    const toast = document.createElement('div');
+    toast.className = 'orientation-toast';
+    toast.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 1rem 1.5rem;
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        animation: orientationToastIn 0.3s ease;
+    `;
+    
+    const icon = document.createElement('i');
+    icon.className = isLandscape ? 'fa-solid fa-mobile-screen' : 'fa-solid fa-mobile-screen-button';
+    icon.style.cssText = 'font-size: 1.5rem; color: var(--color-primary);';
+    
+    const text = document.createElement('span');
+    text.textContent = isLandscape ? '가로 보기 모드' : '세로 보기 모드';
+    text.style.cssText = 'font-weight: 600; color: var(--color-text-main);';
+    
+    toast.appendChild(icon);
+    toast.appendChild(text);
+    document.body.appendChild(toast);
+    
+    // 2초 후 자동 제거
+    setTimeout(() => {
+        toast.style.animation = 'orientationToastOut 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+    }, 2000);
 }
 
 // --- 네비게이션 제어 (SPA) ---
