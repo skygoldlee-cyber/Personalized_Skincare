@@ -10,11 +10,14 @@ audiobook/mp3/
 *.mp3
 
 # ---------- 📚 비대화된 HTML 콘텐츠 (501MB) ----------
-# MD 원본은 유지하되, 렌더링된 HTML은 제외
-# (앱은 data/*.js를 사용하므로 HTML 불필요)
-content/**/*.html
-exams/**/*.html
-docs/**/*.html
+# 앱은 data/*.js를 사용하므로 서브 폴터의 렌더링된 HTML은 모두 제외.
+# (루트 index.html은 진입점이므로 반드시 유지)
+*.html
+!index.html
+
+# ---------- 🔁 Vercel 빌드 캐시 ----------
+.vercel/
+.vercel
 
 # ---------- 📂 아카이브된 원본 폴터 ----------
 # content/와 동일한 MD 파일들의 중복 (archive/로 이동됨)

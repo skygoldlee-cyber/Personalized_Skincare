@@ -59,3 +59,5 @@ archive/
 
 # ----------  대용량 HTML (GitHub 100MB 한도 초과) ----------
 content/**/*.html
+.vercel
+.env*

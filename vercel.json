@@ -1,6 +1,5 @@
 {
-  "version": 2,
-  "name": "personalized-skincare-study",
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "public": true,
   "rewrites": [
     {
