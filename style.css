@@ -3729,14 +3729,30 @@ body.reader-focus-mode .reader-readable-width {
 
     .stat-card {
         padding: 1rem !important;
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem !important;
+        min-width: 0; /* 그리드 오버플로우 방지 */
+    }
+
+    .stat-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
     }
 
     .stat-info h3 {
-        font-size: 1.1rem !important;
+        font-size: 0.7rem !important;
+        margin-bottom: 0.25rem !important;
+    }
+
+    .stat-value {
+        font-size: 1.25rem !important;
+        margin-bottom: 0.25rem !important;
     }
 
     .stat-info p {
-        font-size: 0.75rem !important;
+        font-size: 0.7rem !important;
     }
 
     /* 대시보드 위젯 간격 축소 */
