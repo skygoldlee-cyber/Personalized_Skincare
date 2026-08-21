@@ -3546,12 +3546,22 @@ body.reader-focus-mode .reader-readable-width {
         line-height: 1.25;
     }
 
-    /* 카드·그리드 1열화 */
+    /* 카드·그리드 1열화 (인라인 grid-template-columns 고정값도 강제 해제) */
     .dashboard-grid,
     .analytics-grid,
     .grid,
-    .cards-grid {
+    .cards-grid,
+    .dashboard-widgets-row,
+    .stats-grid,
+    [style*="grid-template-columns"] {
         grid-template-columns: 1fr !important;
+        display: grid !important;
+    }
+
+    /* 인라인 display:flex 가로 배치도 모바일에서는 세로로 */
+    [style*="display: flex"],
+    [style*="display:flex"] {
+        flex-wrap: wrap !important;
     }
 
     /* 테이블은 가로 스크롤 허용 */
