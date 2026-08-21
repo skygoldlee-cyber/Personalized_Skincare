@@ -1,0 +1,60 @@
+# ============================================
+# Vercel 배포 제외 파일 (.vercelignore)
+# ============================================
+# 총 프로젝트 크기: ~1.03GB
+# Vercel 업로드 대상: ~5MB (핵심 앱만)
+# ============================================
+
+# ---------- 🎧 대용량 오디오 (302MB) ----------
+audiobook/mp3/
+*.mp3
+
+# ---------- 📚 비대화된 HTML 콘텐츠 (501MB) ----------
+# MD 원본은 유지하되, 렌더링된 HTML은 제외
+# (앱은 data/*.js를 사용하므로 HTML 불필요)
+content/**/*.html
+exams/**/*.html
+docs/**/*.html
+
+# ---------- 📂 아카이브된 원본 폴터 ----------
+# content/와 동일한 MD 파일들의 중복 (archive/로 이동됨)
+archive/
+
+# ---------- 🔧 개발 도구 및 파이프라인 ----------
+audiobook/
+tools/
+*.py
+*.ps1
+requirements.txt
+.env.example
+.generation_progress.json
+
+# ---------- 🗑️ 캐시 및 빌드 아티팩트 ----------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# ---------- 📝 문서 (선택적) ----------
+# docs/는 필요시 주석 해제
+# docs/
+
+# ---------- 💻 OS/에디터 ----------
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ---------- 📦 Git ----------
+.git/
+.gitignore
+.gitattributes

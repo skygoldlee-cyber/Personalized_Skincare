@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>맞춤형화장품 조제관리사 스마트 학습 플랫폼</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS Style Link -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <i class="fa-solid fa-wand-magic-sparkles logo-icon"></i>
+                <div class="logo-text">
+                    <h1>Cosmetic</h1>
+                    <span>Pass Master</span>
+                </div>
+            </div>
+            <nav class="nav-menu">
+                <a href="./docs/user_manual.html" target="_blank" class="manual-nav-link" style="text-decoration: none;">
+                    <i class="fa-solid fa-circle-info"></i> 사용자 매뉴얼
+                </a>
+                <button class="nav-item" data-target="textbook-reader-view">
+                    <i class="fa-solid fa-book-open"></i> 교재 본문 읽기
+                </button>
+                <button class="nav-item active" data-target="dashboard-view">
+                    <i class="fa-solid fa-chart-pie"></i> 대시보드
+                </button>
+                <button class="nav-item" data-target="flashcard-view">
+                    <i class="fa-solid fa-layer-group"></i> 플래시카드
+                </button>
+                <button class="nav-item" data-target="quiz-view">
+                    <i class="fa-solid fa-circle-question"></i> 기출 퀴즈
+                </button>
+                <button class="nav-item" data-target="review-view">
+                    <i class="fa-solid fa-star"></i> 오답/중요 복습
+                </button>
+                <button class="nav-item" data-target="trainer-view">
+                    <i class="fa-solid fa-dumbbell"></i> 스마트 훈련소
+                </button>
+                <button class="nav-item" data-target="exam-view">
+                    <i class="fa-solid fa-file-invoice"></i> 실전 예상문제집
+                </button>
+                <button class="nav-item" data-target="textbook-view">
+                    <i class="fa-solid fa-book"></i> 교재 본문 검색
+                </button>
+                <button class="nav-item" data-target="dictionary-view">
+                    <i class="fa-solid fa-search"></i> 성분 검색 사전
+                </button>
+            </nav>
+            <div class="sidebar-footer">
+                <p>© 2026 Cosmetic Pass</p>
+                <span>v1.0.0</span>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="app-header">
+                <div class="header-title">
+                    <h2 id="view-title">학습 대시보드</h2>
+                    <p id="view-subtitle">2026 시험 합격을 위한 분석 및 스마트 툴</p>
+                </div>
+                <div class="header-actions">
+                    <button id="reset-progress-btn" class="btn btn-secondary">
+                        <i class="fa-solid fa-rotate-left"></i> 진도 초기화
+                    </button>
+                </div>
+            </header>
+
+            <!-- Dashboard View -->
+            <section id="dashboard-view" class="view-section active">
+                <!-- Draft Resume Banner (New Feature 1) -->
+                <div id="draft-resume-banner" style="display: none; background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(239, 68, 68, 0.15) 100%); border: 1px solid var(--color-warning); border-radius: 8px; padding: 1rem 1.5rem; margin-bottom: 1.5rem; justify-content: space-between; align-items: center; gap: 1rem; width: 100%;">
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <i class="fa-solid fa-file-pen" style="font-size: 1.5rem; color: var(--color-warning);"></i>
+                        <div style="text-align: left;">
+                            <h5 style="margin: 0; font-size: 1rem; font-weight: 700; color: #fff;" id="draft-banner-title">진행 중인 모의고사가 있습니다.</h5>
+                            <p style="margin: 0.25rem 0 0 0; font-size: 0.85rem; color: var(--color-text-muted);" id="draft-banner-desc">남은 시간: --:--</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem; flex-shrink: 0;">
+                        <button class="btn btn-warning" onclick="resumeSimDraft()" style="padding: 0.4rem 1rem; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.25rem;"><i class="fa-solid fa-play"></i> 이어서 풀기</button>
+                        <button class="btn btn-secondary" onclick="clearSimDraft()" style="padding: 0.4rem 1rem; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.25rem;"><i class="fa-solid fa-trash"></i> 새로 시작</button>
+                    </div>
+                </div>
+
+                <!-- Status Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon icon-blue"><i class="fa-solid fa-book-open"></i></div>
+                        <div class="stat-info">
+                            <h3>총 학습 진척도</h3>
+                            <div class="stat-value" id="total-progress-val">0%</div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" id="total-progress-bar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon icon-purple"><i class="fa-solid fa-id-card"></i></div>
+                        <div class="stat-info">
+                            <h3>외운 카드 수</h3>
+                            <div class="stat-value"><span id="memorized-cards-count">0</span> / <span id="total-cards-count">0</span></div>
+                            <p class="stat-desc">학습 완료 상태 카드</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon icon-green"><i class="fa-solid fa-circle-check"></i></div>
+                        <div class="stat-info">
+                            <h3>퀴즈 정답률</h3>
+                            <div class="stat-value" id="quiz-success-rate">0%</div>
+                            <p class="stat-desc">푼 문제 <span id="solved-quizzes-count">0</span>개 기준</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon icon-orange"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                        <div class="stat-info">
+                            <h3>헷갈린 카드</h3>
+                            <div class="stat-value" id="weak-cards-count">0</div>
+                            <p class="stat-desc">집중 복습이 필요함</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Daily Challenge & Streak and Data Management Row -->
+                <div class="dashboard-widgets-row" style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; margin-top: 1.5rem; margin-bottom: 1.5rem;">
+                    <!-- 1. Daily 5-Min Challenge Card -->
+                    <div class="glass-card daily-challenge-card" style="padding: 2rem; position: relative; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <i class="fa-solid fa-calendar-day" style="font-size: 1.5rem; color: var(--color-success);"></i>
+                                <h4 style="font-size: 1.25rem; font-weight: 700; margin: 0;">일일 5분 데일리 챌린지</h4>
+                            </div>
+                            <div class="streak-badge" style="display: flex; align-items: center; gap: 0.4rem; background: rgba(245, 158, 11, 0.12); color: var(--color-warning); padding: 0.5rem 1rem; border-radius: 20px; font-weight: 700; font-size: 0.95rem;">
+                                <i class="fa-solid fa-fire streak-fire-icon"></i> 연속 학습 <span id="streak-days">0</span>일
+                            </div>
+                        </div>
+                        <p style="color: var(--color-text-muted); line-height: 1.6; margin-bottom: 1.5rem; font-size: 0.95rem;">
+                            매일 한 번 플래시카드, 퀴즈, 계산기, 원료 안전성이 배합된 5분 압축 세트를 풀며 시험 합격 실천 습관을 다집니다.
+                        </p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span id="daily-challenge-status" class="badge" style="background: rgba(255,255,255,0.05); color: var(--color-text-muted); padding: 0.5rem 1rem;">오늘 미션 미완료</span>
+                            <button id="start-daily-btn" class="btn btn-success" onclick="startDailyChallenge()">
+                                <i class="fa-solid fa-play"></i> 챌린지 시작
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 2. Data Backup & Restore Card -->
+                    <div class="glass-card backup-restore-card" style="padding: 2rem; display: flex; flex-direction: column; justify-content: space-between; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md);">
+                        <div>
+                            <h4 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-database color-primary" style="color: var(--color-primary);"></i> 데이터 관리</h4>
+                            <p style="color: var(--color-text-muted); font-size: 0.85rem; line-height: 1.5; margin-bottom: 1.5rem;">
+                                나의 공부 진척도, 모의고사 기록, 오답 노트를 파일로 안전하게 백업 및 복원합니다.
+                            </p>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                            <button class="btn btn-secondary" onclick="exportData()" style="width: 100%; justify-content: center;">
+                                <i class="fa-solid fa-download"></i> 데이터 백업
+                            </button>
+                            <button class="btn btn-secondary" onclick="triggerImport()" style="width: 100%; justify-content: center;">
+                                <i class="fa-solid fa-upload"></i> 백업 가져오기
+                            </button>
+                            <input type="file" id="import-file-input" style="display: none;" onchange="importData(event)">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pomodoro Timer Row -->
+                <div class="pomo-section-container" style="margin-top: 1.5rem; margin-bottom: 2.5rem;">
+                    <div class="pomodoro-card">
+                        <div class="pomodoro-header">
+                            <div class="pomo-title-group">
+                                <h4>⏱️ 집중 뽀모도로 타이머</h4>
+                                <span class="pomodoro-status" id="pomo-status">대기 중</span>
+                            </div>
+                            <div class="pomo-total-time-group">
+                                오늘 누적 집중 시간: <strong id="pomo-total-time" class="color-primary">0분</strong>
+                            </div>
+                        </div>
+                        <div class="pomodoro-body">
+                            <div class="timer-display" id="pomo-time">25:00</div>
+                            <div class="pomo-controls">
+                                <button class="btn btn-primary" id="pomo-start-btn" onclick="togglePomodoro()"><i class="fa-solid fa-play"></i> 집중 시작</button>
+                                <button class="btn btn-secondary" onclick="resetPomodoro()"><i class="fa-solid fa-rotate-right"></i> 초기화</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Subject Progress Cards -->
+                <div class="section-title">
+                    <h3>과목별 학습 상태</h3>
+                </div>
+                <div class="subject-grid" id="subject-cards-container">
+                    <!-- Dynamic injection via app.js -->
+                </div>
+
+                <!-- Mock Exam Analytics Section -->
+                <div class="section-title" style="margin-top: 3.5rem;">
+                    <h3>실전 모의고사 성적 분석 및 합격 예측</h3>
+                </div>
+                <div class="analytics-grid" style="display: grid; grid-template-columns: 1.5fr 1.2fr 1.3fr; gap: 1.5rem; margin-top: 1.5rem; margin-bottom: 2.5rem;">
+                    <!-- SVG Chart Card -->
+                    <div class="analytics-card chart-card">
+                        <h5>모의고사 성적 추이 (최근 5회)</h5>
+                        <div id="analytics-chart-wrapper" class="chart-wrapper">
+                            <div class="empty-chart-state" id="empty-chart-msg">
+                                <i class="fa-solid fa-chart-line"></i>
+                                <p>모의고사를 풀면 성적 추이 그래프가 나타납니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- SVG Radar Chart Card -->
+                    <div class="analytics-card radar-card">
+                        <h5>과목별 역량 진단 (Radar Chart)</h5>
+                        <div id="radar-chart-wrapper" class="chart-wrapper">
+                            <div class="empty-chart-state" id="empty-radar-msg">
+                                <i class="fa-solid fa-chart-pie"></i>
+                                <p>모의고사를 풀면 역량 차트가 나타납니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Pass/Fail prediction card -->
+                    <div class="analytics-card prediction-card">
+                        <h5>합격 가능성 진단</h5>
+                        <div id="prediction-result-area" class="prediction-body">
+                            <div class="prediction-placeholder">
+                                <i class="fa-solid fa-user-doctor"></i>
+                                <p>모의고사 점수를 토대로 과락 및 평균 통과 여부를 진단합니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Flashcard View -->
+            <section id="flashcard-view" class="view-section">
+                <div class="filter-bar">
+                    <div class="filter-group">
+                        <label for="fc-subject-select">과목 선택</label>
+                        <select id="fc-subject-select" class="form-select">
+                            <option value="law">1과목: 화장품법의 이해</option>
+                            <option value="manufacturing">2과목: 화장품 제조 및 품질관리</option>
+                            <option value="safety">3과목: 유통화장품 안전관리</option>
+                            <option value="understanding">4과목: 맞춤형화장품의 이해</option>
+                        </select>
+                    </div>
+                    <div class="filter-group-checkbox">
+                        <input type="checkbox" id="fc-key-only" class="form-checkbox">
+                        <label for="fc-key-only"><i class="fa-solid fa-star text-warning"></i> 기출/중요 개념만</label>
+                    </div>
+                </div>
+
+                <div class="flashcard-arena">
+                    <!-- Flashcard 3D Wrapper -->
+                    <div class="flashcard-wrapper" id="flashcard-item">
+                        <div class="flashcard-inner">
+                            <!-- Card Front -->
+                            <div class="flashcard-face flashcard-front">
+                                <div class="card-header">
+                                    <span class="card-badge" id="card-front-category">카테고리</span>
+                                    <span class="card-key-icon" id="card-front-star"><i class="fa-solid fa-star"></i></span>
+                                </div>
+                                <div class="card-body">
+                                    <h2 id="card-front-term">개념 용어</h2>
+                                    <p class="flip-hint"><i class="fa-solid fa-arrows-rotate"></i> 클릭하여 설명 보기</p>
+                                </div>
+                            </div>
+                            <!-- Card Back -->
+                            <div class="flashcard-face flashcard-back">
+                                <div class="card-header">
+                                    <span class="card-badge" id="card-back-category">카테고리</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="card-definition-container">
+                                        <p id="card-back-definition">여기에 상세한 정의나 설명글이 나타납니다. 여러 줄이 들어와도 가독성 있게 잘 정렬됩니다.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Controls -->
+                <div class="flashcard-controls">
+                    <button id="fc-prev-btn" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> 이전</button>
+                    <div class="fc-status-indicator">
+                        <span id="fc-current-index">0</span> / <span id="fc-total-count">0</span>
+                    </div>
+                    <button id="fc-next-btn" class="btn btn-secondary">다음 <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+
+                <div class="flashcard-actions">
+                    <button id="fc-easy-btn" class="btn btn-success"><i class="fa-solid fa-circle-check"></i> 완벽히 외움 (쉽다)</button>
+                    <button id="fc-hard-btn" class="btn btn-danger"><i class="fa-solid fa-circle-xmark"></i> 아직 헷갈림 (어렵다)</button>
+                </div>
+            </section>
+
+            <!-- Quiz View -->
+            <section id="quiz-view" class="view-section">
+                <div class="filter-bar">
+                    <div class="filter-group">
+                        <label for="quiz-subject-select">과목 선택</label>
+                        <select id="quiz-subject-select" class="form-select">
+                            <option value="law">1과목: 화장품법의 이해</option>
+                            <option value="manufacturing">2과목: 화장품 제조 및 품질관리</option>
+                            <option value="safety">3과목: 유통화장품 안전관리</option>
+                            <option value="understanding">4과목: 맞춤형화장품의 이해</option>
+                        </select>
+                    </div>
+                    <button id="start-quiz-btn" class="btn btn-primary">퀴즈 시작</button>
+                </div>
+
+                <!-- Quiz Progress Area -->
+                <div class="quiz-progress-header" style="display: none;">
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="quiz-run-progress" style="width: 0%"></div>
+                    </div>
+                    <div class="quiz-score-indicator">
+                        진행: <span id="quiz-curr-idx">1</span>/<span id="quiz-total-idx">10</span> | 
+                        맞춘 문제: <span id="quiz-correct-count">0</span>
+                    </div>
+                </div>
+
+                <!-- Quiz Question Card -->
+                <div class="quiz-arena" id="quiz-arena-panel" style="display: none;">
+                    <div class="quiz-card">
+                        <div class="quiz-card-header">
+                            <span class="badge badge-quiz-cat" id="quiz-category">카테고리</span>
+                            <span class="quiz-context" id="quiz-context-title">[기출 지문]</span>
+                        </div>
+                        <div class="quiz-body">
+                            <h2 class="quiz-question-text" id="quiz-question">여기는 [ 빈칸 ] 입니다.</h2>
+                            
+                            <div class="quiz-input-group">
+                                <input type="text" id="quiz-answer-input" class="form-input" placeholder="정답을 입력하세요 (띄어쓰기 유의)" autocomplete="off">
+                                <button id="submit-quiz-btn" class="btn btn-primary">정답 제출</button>
+                            </div>
+
+                            <!-- Feedback Panel -->
+                            <div class="quiz-feedback" id="quiz-feedback-panel" style="display: none;">
+                                <div class="feedback-icon" id="feedback-icon-indicator">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+                                <div class="feedback-content">
+                                    <h4 id="feedback-result-title">정답입니다!</h4>
+                                    <p>해답: <strong id="feedback-correct-answer">10%</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="quiz-card-footer">
+                            <button id="next-quiz-btn" class="btn btn-success" style="display: none;">다음 문제 <i class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quiz Results Panel -->
+                <div class="quiz-results-card" id="quiz-result-panel" style="display: none;">
+                    <i class="fa-solid fa-trophy trophy-icon"></i>
+                    <h2>퀴즈 학습 완료!</h2>
+                    <p class="result-score-summary">정답수: <span id="result-correct-num">0</span> / <span id="result-total-num">10</span> (<span id="result-percent">0%</span>)</p>
+                    <div class="result-actions">
+                        <button id="retry-quiz-btn" class="btn btn-primary"><i class="fa-solid fa-rotate-left"></i> 다시 풀기</button>
+                        <button id="back-to-dashboard-btn" class="btn btn-secondary"><i class="fa-solid fa-house"></i> 대시보드로</button>
+                    </div>
+                </div>
+
+                <!-- Empty State before Quiz Start -->
+                <div class="empty-state" id="quiz-empty-state">
+                    <i class="fa-solid fa-clipboard-question"></i>
+                    <h3>맞춤형화장품 조제관리사 모의 퀴즈</h3>
+                    <p>과목을 선택한 후 "퀴즈 시작" 버튼을 누르시면 중요 빈칸 및 용어 퀴즈가 시작됩니다.</p>
+                </div>
+            </section>
+
+            <!-- Review View (Weak concepts) -->
+            <section id="review-view" class="view-section">
+                <!-- Print-only Header -->
+                <div class="print-only-header" style="display: none; border-bottom: 2px solid #000; padding-bottom: 1.5rem; margin-bottom: 2rem; text-align: center;">
+                    <h1 style="font-size: 2.2rem; color: #000; font-weight: 800;">맞춤형화장품 조제관리사 오답 복습노트</h1>
+                    <p style="color: #666; font-size: 1rem; margin-top: 0.5rem;">Cosmetic Pass Master 스마트 오답 학습 플랫폼</p>
+                </div>
+
+                <div class="review-header">
+                    <div class="review-stats">
+                        <span class="badge"><i class="fa-solid fa-triangle-exclamation"></i> 헷갈린 카드: <strong id="review-card-count">0</strong></span>
+                    </div>
+                    <div class="review-actions-group" style="display: flex; gap: 1rem;">
+                        <button id="start-weak-quiz-btn" class="btn btn-warning" style="display: none;">
+                            <i class="fa-solid fa-bolt"></i> 헷갈린 카드 집중 퀴즈 시작
+                        </button>
+                        <button id="start-weak-exam-btn" class="btn btn-primary" onclick="startWeakExam()" style="display: none;">
+                            <i class="fa-solid fa-file-signature"></i> 헷갈린 문제 집중 모의고사
+                        </button>
+                        <button id="print-review-btn" class="btn btn-secondary" onclick="printReviewNotes()" style="display: none;">
+                            <i class="fa-solid fa-print"></i> 오답노트 인쇄
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 과목별 필터 버튼 그룹 (신규 Feature 3) -->
+                <div class="review-filter-group" id="review-filter-group" style="display: flex; gap: 0.5rem; margin-top: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+                    <button class="btn btn-secondary filter-btn active" data-filter="all" onclick="setReviewFilter('all')" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; border-radius: 4px; background: var(--color-primary); border-color: var(--color-primary); color: #fff;">전체</button>
+                    <button class="btn btn-secondary filter-btn" data-filter="law" onclick="setReviewFilter('law')" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; border-radius: 4px;">1과목 (법령)</button>
+                    <button class="btn btn-secondary filter-btn" data-filter="manufacturing" onclick="setReviewFilter('manufacturing')" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; border-radius: 4px;">2과목 (품질)</button>
+                    <button class="btn btn-secondary filter-btn" data-filter="safety" onclick="setReviewFilter('safety')" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; border-radius: 4px;">3과목 (안전)</button>
+                    <button class="btn btn-secondary filter-btn" data-filter="understanding" onclick="setReviewFilter('understanding')" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; border-radius: 4px;">4과목 (이해)</button>
+                </div>
+
+                <div class="empty-state" id="review-empty-state">
+                    <i class="fa-solid fa-shield-heart"></i>
+                    <h3>복습할 카드가 없습니다!</h3>
+                    <p>플래시카드 학습 중에 "아직 헷갈림"으로 분류한 카드가 여기에 수집됩니다.</p>
+                </div>
+
+                <div class="review-card-list" id="review-cards-list-container">
+                    <!-- Dynamic injection of weak cards -->
+                </div>
+            </section>
+
+            <!-- Trainer View (Limits & Calculation Practice) -->
+            <section id="trainer-view" class="view-section">
+                <!-- 1. Menu Selection Panel -->
+                <div id="trainer-menu-panel">
+                    <div class="section-title-area">
+                        <h3>스마트 훈련소</h3>
+                        <p>시험 합격의 당락을 결정하는 법령 수치 암기와 배합 계산 문제를 완벽히 정복하세요.</p>
+                    </div>
+                    <div class="trainer-menu-grid">
+                        <div class="trainer-menu-card" onclick="startLimitsTrainer()">
+                            <div class="trainer-card-icon icon-orange">
+                                <i class="fa-solid fa-hashtag"></i>
+                            </div>
+                            <h4>핵심 수치 암기 마스터</h4>
+                            <p>배합 한도, 안전관리 허용 한도, 천연/유기농 비율 등 중요 법령 수치를 빈칸 채우기 4지선다형으로 훈련합니다.</p>
+                            <span class="trainer-card-btn">훈련 시작 <i class="fa-solid fa-chevron-right"></i></span>
+                        </div>
+
+                        <div class="trainer-menu-card" onclick="startCalcPractice()">
+                            <div class="trainer-card-icon icon-blue">
+                                <i class="fa-solid fa-calculator"></i>
+                            </div>
+                            <h4>원료 배합 계산 연습기</h4>
+                            <p>기본 배합 비율, 희석 농도, 한도 내 최대 추가량 등 다양한 난수형 계산 문제를 무한 생성하여 풀이 공식을 마스터합니다.</p>
+                            <span class="trainer-card-btn">연습 시작 <i class="fa-solid fa-chevron-right"></i></span>
+                        </div>
+
+                        <div class="trainer-menu-card" onclick="startIngredientsChallenge()">
+                            <div class="trainer-card-icon icon-green">
+                                <i class="fa-solid fa-flask"></i>
+                            </div>
+                            <h4>원료 안전성 챌린지</h4>
+                            <p>사용 가능(approved), 제한(restricted), 금지(banned) 성분을 구분하고 배합한도 및 조제 적합성 문항을 정복합니다.</p>
+                            <span class="trainer-card-btn">도전 시작 <i class="fa-solid fa-chevron-right"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Limits Trainer Panel -->
+                <div id="trainer-limits-panel" style="display: none;">
+                    <div class="sim-arena-header" style="margin-bottom: 2rem;">
+                        <button class="btn btn-secondary" onclick="exitTrainerSubView()"><i class="fa-solid fa-arrow-left"></i> 나가기</button>
+                        <div class="sim-title-group">
+                            <h4>핵심 수치 암기 마스터</h4>
+                            <span class="badge badge-quiz-cat">수치 암기 훈련</span>
+                        </div>
+                    </div>
+
+                    <div class="trainer-arena">
+                        <div class="quiz-card">
+                            <div class="quiz-card-header">
+                                <span class="badge" id="limits-progress-indicator">문제 1</span>
+                                <span class="quiz-context" id="limits-q-category">보존제 한도</span>
+                            </div>
+                            <div class="quiz-body">
+                                <h2 class="quiz-question-text" id="limits-question-text" style="font-size: 1.4rem; line-height: 1.8; margin-bottom: 2rem;">
+                                    질문이 들어갑니다.
+                                </h2>
+                                
+                                <!-- Multiple Choice Options Grid -->
+                                <div class="limits-options-grid" id="limits-options-container" style="margin-bottom: 2rem;">
+                                    <!-- 4 buttons populated by JS -->
+                                </div>
+
+                                <!-- Feedback Panel -->
+                                <div class="quiz-feedback" id="limits-feedback-panel" style="display: none;">
+                                    <div class="feedback-icon" id="limits-feedback-icon">
+                                        <i class="fa-solid fa-check"></i>
+                                    </div>
+                                    <div class="feedback-content">
+                                        <h4 id="limits-feedback-title">정답입니다!</h4>
+                                        <p id="limits-feedback-desc">설명문</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="quiz-card-footer" style="justify-content: flex-end;">
+                                <button id="next-limits-btn" class="btn btn-success" style="display: none;" onclick="nextLimitsQuestion()">다음 문제 <i class="fa-solid fa-arrow-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Blending Calculator Panel -->
+                <div id="trainer-calc-panel" style="display: none;">
+                    <div class="sim-arena-header" style="margin-bottom: 2rem;">
+                        <button class="btn btn-secondary" onclick="exitTrainerSubView()"><i class="fa-solid fa-arrow-left"></i> 나가기</button>
+                        <div class="sim-title-group">
+                            <h4>원료 배합 계산 연습기</h4>
+                            <span class="badge badge-quiz-cat">실전 계산 훈련</span>
+                        </div>
+                    </div>
+
+                    <div class="trainer-arena">
+                        <div class="quiz-card">
+                            <div class="quiz-card-header">
+                                <span class="badge" id="calc-type-badge">배합 추가량</span>
+                                <span class="quiz-context">[무한 생성 연습 문제]</span>
+                            </div>
+                            <div class="quiz-body">
+                                <h2 class="quiz-question-text" id="calc-question-text" style="font-size: 1.25rem; line-height: 1.8; margin-bottom: 1.5rem;">
+                                    계산 문제가 들어갑니다.
+                                </h2>
+
+                                <div class="calc-input-group" style="display: flex; gap: 1rem; align-items: center; max-width: 500px; margin-bottom: 1.5rem;">
+                                    <input type="number" step="any" id="calc-answer-input" class="form-input" placeholder="정답을 입력하세요 (예: 12.34)" autocomplete="off">
+                                    <span class="calc-unit" id="calc-unit-text">g</span>
+                                    <button id="submit-calc-btn" class="btn btn-primary" onclick="submitCalcAnswer()">정답 제출</button>
+                                </div>
+
+                                <!-- Scratchpad Toggle & Canvas (New Feature 4) -->
+                                <div style="margin-bottom: 1.5rem;">
+                                    <button class="btn btn-secondary" id="calc-scratchpad-toggle" onclick="toggleCalcScratchpad()" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 0.25rem;">
+                                        <i class="fa-solid fa-pencil"></i> ✏️ 계산 연습장 열기
+                                    </button>
+                                    
+                                    <div id="calc-scratchpad-container" style="display: none; margin-top: 1rem; border: 1px solid var(--color-border); border-radius: 8px; background: #fff; padding: 0.5rem; max-width: 500px;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; padding: 0 0.5rem;">
+                                            <span style="color: #333; font-size: 0.8rem; font-weight: bold;"><i class="fa-solid fa-palette"></i> 계산 연습장</span>
+                                            <div style="display: flex; gap: 0.5rem;">
+                                                <button class="btn" onclick="clearScratchpad()" style="padding: 2px 8px; font-size: 0.7rem; background: #ef4444; color: #fff; border: none; border-radius: 4px; cursor: pointer;">모두 지우기</button>
+                                                <button class="btn" id="scratchpad-eraser-btn" onclick="toggleScratchpadEraser()" style="padding: 2px 8px; font-size: 0.7rem; background: #6b7280; color: #fff; border: none; border-radius: 4px; cursor: pointer;">지우개</button>
+                                            </div>
+                                        </div>
+                                        <canvas id="scratchpad-canvas" width="480" height="200" style="border: 1px dashed #ccc; border-radius: 4px; background: #fdfdfd; cursor: crosshair; display: block; width: 100%; height: 200px; touch-action: none;"></canvas>
+                                    </div>
+                                </div>
+
+                                <!-- Feedback Panel -->
+                                <div class="quiz-feedback" id="calc-feedback-panel" style="display: none; margin-bottom: 1.5rem;">
+                                    <div class="feedback-icon" id="calc-feedback-icon">
+                                        <i class="fa-solid fa-check"></i>
+                                    </div>
+                                    <div class="feedback-content">
+                                        <h4 id="calc-feedback-title">정답입니다!</h4>
+                                        <p id="calc-feedback-desc">설명</p>
+                                    </div>
+                                </div>
+
+                                <!-- Accordion Solution -->
+                                <div class="solution-accordion" id="calc-solution-panel" style="display: none; margin-bottom: 1.5rem;">
+                                    <div class="solution-header" onclick="toggleSolutionAccordion()">
+                                        <span><i class="fa-solid fa-square-root-variable"></i> 단계별 풀이 공식 보기</span>
+                                        <i class="fa-solid fa-chevron-down" id="solution-chevron"></i>
+                                    </div>
+                                    <div class="solution-body" id="calc-solution-body" style="display: none; padding: 1.5rem; background: var(--color-bg-darker); border-radius: 0 0 8px 8px; font-family: monospace; font-size: 1rem; line-height: 1.6; border-top: 1px solid var(--color-border);">
+                                        풀이 공식 설명...
+                                    </div>
+                                </div>
+
+                                <!-- 계산 기록 히스토리 (신규 Feature 4) -->
+                                <div class="calc-history-panel" id="calc-history-panel" style="margin-top: 2rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1.5rem;">
+                                    <h5 style="font-size: 0.9rem; margin-bottom: 1rem; color: var(--color-text-muted); display: flex; align-items: center; gap: 0.25rem;"><i class="fa-solid fa-clock-rotate-left"></i> 최근 계산 문제 풀이 기록 (최대 5회)</h5>
+                                    <div id="calc-history-list" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                                        <!-- Dynamic list of previous calculations -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="quiz-card-footer" style="justify-content: flex-end;">
+                                <button id="next-calc-btn" class="btn btn-success" style="display: none;" onclick="generateCalcQuestion()">다음 문제 생성 <i class="fa-solid fa-arrow-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Ingredients Challenge Panel -->
+                <div id="trainer-ingredients-panel" style="display: none;">
+                    <div class="sim-arena-header" style="margin-bottom: 2rem;">
+                        <button class="btn btn-secondary" onclick="exitTrainerSubView()"><i class="fa-solid fa-arrow-left"></i> 나가기</button>
+                        <div class="sim-title-group">
+                            <h4>원료 안전성 챌린지</h4>
+                            <span class="badge badge-quiz-cat">원료 규격 & 안전성</span>
+                        </div>
+                    </div>
+
+                    <div class="trainer-arena">
+                        <div class="quiz-card">
+                            <div class="quiz-card-header">
+                                <span class="badge" id="ing-progress-indicator">문제 1 / 10</span>
+                                <span class="quiz-context" id="ing-q-type-label">안전성 판별</span>
+                            </div>
+                            <div class="quiz-body">
+                                <h2 class="quiz-question-text" id="ing-question-text" style="font-size: 1.35rem; line-height: 1.8; margin-bottom: 2rem;">
+                                    성분 질문이 들어갑니다.
+                                </h2>
+                                
+                                <!-- Multiple Choice Options Grid -->
+                                <div class="limits-options-grid" id="ing-options-container" style="margin-bottom: 2rem; display: grid; gap: 1rem;">
+                                    <!-- Populated by JS -->
+                                </div>
+
+                                <!-- Text Input Wrapper -->
+                                <div class="calc-input-group" id="ing-input-container" style="display: none; gap: 1rem; align-items: center; max-width: 500px; margin-bottom: 2rem;">
+                                    <input type="text" id="ing-answer-input" class="form-input" placeholder="정답 입력 (예: 1.0% 또는 기재해야 한다)" autocomplete="off">
+                                    <button id="submit-ing-btn" class="btn btn-primary" onclick="submitIngAnswer()">정답 제출</button>
+                                </div>
+
+                                <!-- Feedback Panel -->
+                                <div class="quiz-feedback" id="ing-feedback-panel" style="display: none;">
+                                    <div class="feedback-icon" id="ing-feedback-icon">
+                                        <i class="fa-solid fa-check"></i>
+                                    </div>
+                                    <div class="feedback-content">
+                                        <h4 id="ing-feedback-title">정답입니다!</h4>
+                                        <p id="ing-feedback-desc">설명문</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="quiz-card-footer" style="justify-content: flex-end;">
+                                <button id="next-ing-btn" class="btn btn-success" style="display: none;" onclick="nextIngQuestion()">다음 문제 <i class="fa-solid fa-arrow-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Exam View (Mock exams & Summaries) -->
+            <section id="exam-view" class="view-section">
+                <!-- 1. Exam List Panel -->
+                <div id="exam-list-panel">
+                    <div class="section-title-area">
+                        <h3>실전 모의고사 및 요약본</h3>
+                        <p>인터넷 자료와 로컬 학습노트를 융합하여 특별 제작된 100제 & 300제 문제집과 통합 요약본을 열람할 수 있습니다.</p>
+                    </div>
+                    
+                    <div class="exam-list-grid">
+                        <!-- 1~4과목 통합 실전 모의고사 (신규) -->
+                        <div class="exam-card-item highlight-card" style="grid-column: 1 / -1; background: linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%); border: 1px solid var(--color-primary-light, var(--color-primary)); position: relative; overflow: hidden;">
+                            <div class="exam-card-badge" style="background: var(--color-primary); color: #fff; display: inline-block; padding: 0.25rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: bold; margin-bottom: 0.75rem;">종합 평가</div>
+                            <span style="position: absolute; top: 1rem; right: 1rem; color: var(--color-primary); font-size: 0.8rem; font-weight: bold; background: rgba(6, 182, 212, 0.1); padding: 2px 8px; border-radius: 20px;"><i class="fa-solid fa-star"></i> 추천</span>
+                            <h4 class="exam-card-title" style="margin-top: 0; font-size: 1.25rem; font-weight: 700;">1~4과목 통합 실전 모의고사 (100제)</h4>
+                            <p class="exam-card-desc" style="margin: 0.5rem 0 1rem 0; font-size: 0.9rem; line-height: 1.5; color: var(--color-text-muted);">실제 국가 자격증 시험과 동일한 문항 비율(1과목 10문항, 2과목 25문항, 3과목 25문항, 4과목 40문항)로 100문항을 무작위로 구성하여 푸는 종합 실전 모의고사입니다. 시험 타이머, OMR 답안지 마킹 및 자동 과락/합격 판정을 완벽히 지원합니다.</p>
+                            <div class="exam-card-btns flex-btns" style="justify-content: flex-start; gap: 0.75rem;">
+                                <button class="exam-btn-sim btn-cyan" onclick="startIntegratedMockExam()" style="padding: 0.6rem 1.2rem; font-size: 0.9rem; font-weight: 600; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-clock"></i> 통합 모의고사 시작 (100분)</button>
+                            </div>
+                        </div>
+
+                        <!-- 1과목 -->
+                        <div class="exam-card-item">
+                            <div class="exam-card-badge badge-cyan">1과목</div>
+                            <h4 class="exam-card-title">화장품법의 이해 100제</h4>
+                            <p class="exam-card-desc">화장품 정의/유형, 기재사항, 실증제, 책임판매관리자 결격사유 등 수치 중심 모의고사</p>
+                            <div class="exam-card-btns flex-btns">
+                                <a href="./exams/subject1_100_questions.html" target="_blank" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> 문제집 열기</a>
+                                <button class="exam-btn-sim btn-cyan" onclick="startMockExamSim('subject1')"><i class="fa-solid fa-clock"></i> 시뮬레이터 시작</button>
+                            </div>
+                        </div>
+
+                        <!-- 2과목 -->
+                        <div class="exam-card-item highlight-card">
+                            <div class="exam-card-badge badge-violet">2과목 (취약단원)</div>
+                            <h4 class="exam-card-title">화장품 제조 및 품질관리 300제</h4>
+                            <p class="exam-card-desc">취약 부분 완성을 위해 계면화학(HLB/CMC), CGMP 적격성 평가 및 밸리데이션, 독성시험 등을 심층적으로 다룬 300제 문제집</p>
+                            <div class="exam-card-btns grid-btns-3">
+                                <div class="exam-btn-pair">
+                                    <a href="./exams/subject2_100_questions.html" target="_blank" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> 1부 PDF</a>
+                                    <button class="exam-btn-sim" onclick="startMockExamSim('subject2_p1')"><i class="fa-solid fa-circle-play"></i> 1부 풀기</button>
+                                </div>
+                                <div class="exam-btn-pair">
+                                    <a href="./exams/subject2_part2_100.html" target="_blank" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> 2부 PDF</a>
+                                    <button class="exam-btn-sim" onclick="startMockExamSim('subject2_p2')"><i class="fa-solid fa-circle-play"></i> 2부 풀기</button>
+                                </div>
+                                <div class="exam-btn-pair">
+                                    <a href="./exams/subject2_part3_100.html" target="_blank" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> 3부 PDF</a>
+                                    <button class="exam-btn-sim" onclick="startMockExamSim('subject2_p3')"><i class="fa-solid fa-circle-play"></i> 3부 풀기</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3과목 -->
+                        <div class="exam-card-item">
+                            <div class="exam-card-badge badge-emerald">3과목</div>
+                            <h4 class="exam-card-title">유통화장품 안전관리 200제</h4>
+                            <p class="exam-card-desc">작업장/작업자 청정도 관리, 미생물 및 중금속/메탄올 유해 물질 한도, 재작업 승인 절차 등</p>
+                            <div class="exam-card-btns grid-btns-2">
+                                <div class="exam-btn-pair">
+                                    <a href="./exams/subject3_100_questions.html" target="_blank" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> 1부 PDF</a>
+                                    <button class="exam-btn-sim" onclick="startMockExamSim('subject3_p1')"><i class="fa-solid fa-circle-play"></i> 1부 풀기</button>
+                                </div>
+                                <div class="exam-btn-pair">
+                                    <a href="./exams/subject3_part2_100.html" target="_blank" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> 2부 PDF</a>
+                                    <button class="exam-btn-sim" onclick="startMockExamSim('subject3_p2')"><i class="fa-solid fa-circle-play"></i> 2부 풀기</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 4과목 -->
+                        <div class="exam-card-item">
+                            <div class="exam-card-badge badge-amber">4과목</div>
+                            <h4 class="exam-card-title">맞춤형화장품의 이해 300제</h4>
+                            <p class="exam-card-desc">표피 5대층 및 진피 구조, 모발 성장 주기, 원료 배합 및 한도 계산 실무, 위생 조제 지침 등</p>
+                            <div class="exam-card-btns grid-btns-3">
+                                <div class="exam-btn-pair">
+                                    <a href="./exams/subject4_100_questions.html" target="_blank" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> 1부 PDF</a>
+                                    <button class="exam-btn-sim" onclick="startMockExamSim('subject4_p1')"><i class="fa-solid fa-circle-play"></i> 1부 풀기</button>
+                                </div>
+                                <div class="exam-btn-pair">
+                                    <a href="./exams/subject4_part2_100.html" target="_blank" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> 2부 PDF</a>
+                                    <button class="exam-btn-sim" onclick="startMockExamSim('subject4_p2')"><i class="fa-solid fa-circle-play"></i> 2부 풀기</button>
+                                </div>
+                                <div class="exam-btn-pair">
+                                    <a href="./exams/subject4_part3_100.html" target="_blank" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> 3부 PDF</a>
+                                    <button class="exam-btn-sim" onclick="startMockExamSim('subject4_p3')"><i class="fa-solid fa-circle-play"></i> 3부 풀기</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 부록 요약본 -->
+                        <div class="exam-card-item full-width-card">
+                            <div class="exam-card-badge badge-gray">학습 부록</div>
+                            <h4 class="exam-card-title">통합 핵심 이론 요약집</h4>
+                            <p class="exam-card-desc">스터디윤 및 이기적 유튜브 수험 채널을 분석한 핵심 단권화 요약본입니다.</p>
+                            <div class="exam-card-btns" style="display: flex; gap: 1rem;">
+                                <a href="./docs/study_summary.html" target="_blank" class="exam-btn-link"><i class="fa-solid fa-book"></i> 핵심 단권화 요약집</a>
+                                <a href="./docs/user_manual.html" target="_blank" class="exam-btn-link" style="background: rgba(255, 255, 255, 0.05); color: var(--color-text-main);"><i class="fa-solid fa-circle-info"></i> 사용자 매뉴얼</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 추천 외부 링크 (유튜브 및 공식 정보) -->
+                    <div class="section-title-area" style="margin-top: 3rem;">
+                        <h3>추천 학습 유튜브 및 공식 레퍼런스</h3>
+                        <p>시험 대비에 큰 도움이 되는 합격자 추천 유튜브 강의 및 대한상공회의소 공식 자격 정보를 확인하세요.</p>
+                    </div>
+
+                    <!-- 유튜브 특징 요약 판넬 (신규) -->
+                    <div style="background: rgba(6, 182, 212, 0.05); border: 1px solid rgba(6, 182, 212, 0.15); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.15);">
+                        <h4 style="color: var(--color-primary); font-size: 1.1rem; margin-bottom: 1rem; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                            <i class="fa-solid fa-graduation-cap"></i> 합격자 강추! 유튜브 채널 4대 특징 요약
+                        </h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; font-size: 0.85rem;">
+                            <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 1rem;">
+                                <strong style="color: #ffffff; display: block; margin-bottom: 0.5rem; font-size: 0.9rem;">📚 지한쌤 (법령백과)</strong>
+                                <span style="color: var(--color-text-muted); line-height: 1.5; display: block;">식약처 고시 및 최신 개정 법령 분석 특화. 복잡한 규정을 10초 암기 공식으로 만들어 가장 실수하기 쉬운 과목을 방어해 줍니다.</span>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 1rem;">
+                                <strong style="color: #ffffff; display: block; margin-bottom: 0.5rem; font-size: 0.9rem;">⚡ 해커스 (김경표)</strong>
+                                <span style="color: var(--color-text-muted); line-height: 1.5; display: block;">기출 복원 문제 풀이 및 벼락치기 특강 위주. 최신 출제 경향 파악과 단기 시험 직전 마무리 정리에 강력 추천됩니다.</span>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 1rem;">
+                                <strong style="color: #ffffff; display: block; margin-bottom: 0.5rem; font-size: 0.9rem;">🎯 에듀윌 (이은주/유선희)</strong>
+                                <span style="color: var(--color-text-muted); line-height: 1.5; display: block;">기본 이론 정립 및 빈칸 채우기 맞춤 특강. 개념의 뼈대를 세우고 적중도 높은 예상문제들을 다량 연습하기에 좋습니다.</span>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 1rem;">
+                                <strong style="color: #ffffff; display: block; margin-bottom: 0.5rem; font-size: 0.9rem;">🧮 화박사 (전혜승)</strong>
+                                <span style="color: var(--color-text-muted); line-height: 1.5; display: block;">수험생이 가장 두려워하는 원료 배합 및 화학 계산식 집중 해설. 무료 전과목 고화질 요약 특강의 가성비가 훌륭합니다.</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="exam-list-grid">
+
+
+                        <!-- 지한쌤 -->
+                        <div class="exam-card-item">
+                            <div class="exam-card-badge badge-cyan"><i class="fa-brands fa-youtube"></i> 유튜브 강의</div>
+                            <h4 class="exam-card-title">지한쌤 (법령백과사전)</h4>
+                            <p class="exam-card-desc">식약처 고시 교수학습가이드 해설 및 화장품법, 개정 법령 등 가장 점수가 깎이기 쉬운 법령 파트를 명쾌하게 다루는 채널입니다.</p>
+                            <div class="exam-card-btns">
+                                <a href="https://www.youtube.com/@yoonerslee" target="_blank" class="exam-btn-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> 채널 바로가기</a>
+                            </div>
+                        </div>
+
+                        <!-- 해커스자격증 -->
+                        <div class="exam-card-item">
+                            <div class="exam-card-badge badge-violet"><i class="fa-brands fa-youtube"></i> 유튜브 강의</div>
+                            <h4 class="exam-card-title">해커스자격증 (김경표)</h4>
+                            <p class="exam-card-desc">1타 강사인 김경표 교수님의 벼락치기 특강, 핵심 요약 강의 및 최신 기출 복원 해설 등으로 단기 합격을 돕는 필수 채널입니다.</p>
+                            <div class="exam-card-btns">
+                                <a href="https://www.youtube.com/results?search_query=%ED%95%B4%EC%BB%A4%EC%8A%A4%EC%9E%90%EA%B2%A9%EC%A6%9D+%EB%A7%9E%EC%B6%A4%ED%98%95%ED%99%94%EC%9E%A5%ED%92%88" target="_blank" class="exam-btn-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> 채널 바로가기</a>
+                            </div>
+                        </div>
+
+                        <!-- 에듀윌 자격증 -->
+                        <div class="exam-card-item">
+                            <div class="exam-card-badge badge-amber"><i class="fa-brands fa-youtube"></i> 유튜브 강의</div>
+                            <h4 class="exam-card-title">에듀윌 자격증 (이은주/유선희)</h4>
+                            <p class="exam-card-desc">체계적인 "한권끝장" 커리큘럼 기반의 빈칸 채우기 단기 암기 특강 및 적중력 높은 핵심 문제 풀이 강좌를 제공하는 대표 채널입니다.</p>
+                            <div class="exam-card-btns">
+                                <a href="https://www.youtube.com/results?search_query=%EC%97%90%EB%93%80%EC%9C%8C+%EB%A7%9E%EC%B6%A4%ED%98%95%ED%99%94%EC%9E%A5%ED%92%88%EC%A1%B0%EC%A0%9C%EA%B4%80%EB%A6%AC%EC%82%AC" target="_blank" class="exam-btn-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> 채널 바로가기</a>
+                            </div>
+                        </div>
+
+                        <!-- 화박사 -->
+                        <div class="exam-card-item">
+                            <div class="exam-card-badge badge-cyan"><i class="fa-brands fa-youtube"></i> 유튜브 강의</div>
+                            <h4 class="exam-card-title">화박사 (전혜승)</h4>
+                            <p class="exam-card-desc">수험생 추천도 최상위권인 무료 이론 정리 특강과 헷갈리기 쉬운 화학 수식 및 계산 문제의 명쾌한 해설을 제공하는 필수 채널입니다.</p>
+                            <div class="exam-card-btns">
+                                <a href="https://www.youtube.com/@%EB%A7%9E%EC%B6%A4%ED%98%95%ED%99%94%EC%9E%A5%ED%92%88%EC%A0%84%EC%84%A0%EC%83%9D" target="_blank" class="exam-btn-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> 채널 바로가기</a>
+                            </div>
+                        </div>
+
+                        <!-- 대한상공회의소 -->
+                        <div class="exam-card-item">
+                            <div class="exam-card-badge badge-emerald"><i class="fa-solid fa-building-columns"></i> 공식 기관</div>
+                            <h4 class="exam-card-title">대한상공회의소 자격평가사업단</h4>
+                            <p class="exam-card-desc">2024년 하반기부터 이관되어 시험을 주관하는 대한상공회의소 공식 사이트로, 최신 일정 및 시험 안내를 제공합니다.</p>
+                            <div class="exam-card-btns">
+                                <a href="https://license.korcham.net" target="_blank" class="exam-btn-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</a>
+                            </div>
+                        </div>
+
+                        <!-- 식약처 유튜브 -->
+                        <div class="exam-card-item">
+                            <div class="exam-card-badge badge-amber"><i class="fa-solid fa-gavel"></i> 법령 고시</div>
+                            <h4 class="exam-card-title">식품의약품안전처 (MFDS)</h4>
+                            <p class="exam-card-desc">화장품법, 고시 개정 사항 및 맞춤형화장품 안전 가이드라인을 직접 공식적으로 확인 및 보도하는 채널입니다.</p>
+                            <div class="exam-card-btns">
+                                <a href="https://www.youtube.com/@MFDS" target="_blank" class="exam-btn-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 유튜브</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Simulation Arena Panel -->
+                <div id="sim-arena-panel" style="display: none;">
+                    <div class="sim-arena-header">
+                        <button class="btn btn-secondary" onclick="exitSimArena()"><i class="fa-solid fa-arrow-left"></i> 나가기</button>
+                        <div class="sim-title-group">
+                            <h4 id="sim-exam-title">모의고사 타이틀</h4>
+                            <div class="sim-timer"><i class="fa-regular fa-clock"></i> 남은 시간: <span id="sim-time-left">120:00</span></div>
+                        </div>
+                    </div>
+
+                    <div class="sim-content-layout">
+                        <!-- Left: Question Area -->
+                        <div class="sim-main-panel">
+                            <div class="sim-question-card">
+                                <div class="sim-card-header">
+                                    <span class="badge" id="sim-q-num">Q 1 / 100</span>
+                                    <span class="badge badge-quiz-cat" id="sim-q-type">객관식</span>
+                                </div>
+                                <div class="sim-card-body">
+                                    <p id="sim-q-text" class="sim-q-text">여기에 모의고사 질문이 렌더링됩니다.</p>
+                                    
+                                    <!-- Dynamic Options Area -->
+                                    <div id="sim-options-container" class="sim-options-list">
+                                        <!-- Choice or OX or Blank input -->
+                                    </div>
+                                </div>
+                                <div class="sim-card-footer">
+                                    <button class="btn btn-secondary" id="sim-prev-btn"><i class="fa-solid fa-chevron-left"></i> 이전</button>
+                                    <button class="btn btn-primary" id="sim-next-btn">다음 <i class="fa-solid fa-chevron-right"></i></button>
+                                    <button class="btn btn-success" id="sim-submit-exam-btn" style="display: none;"><i class="fa-solid fa-circle-check"></i> 답안지 제출</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right: OMR Sheet -->
+                        <aside class="sim-omr-panel">
+                            <div class="omr-header">
+                                <h5>OMR 답안지</h5>
+                                <span class="omr-progress">푼 문제: <strong id="omr-solved-count">0</strong> / <strong id="omr-total-count">100</strong></span>
+                            </div>
+                            <div class="omr-grid-container" id="omr-grid">
+                                <!-- Dynamic OMR bubbles -->
+                            </div>
+                        </aside>
+                    </div>
+                </div>
+
+                <!-- 3. Simulation Results Panel -->
+                <div id="sim-result-panel" style="display: none; text-align: center; padding: 3rem 1.5rem;">
+                    <i class="fa-solid fa-square-poll-vertical trophy-icon" style="font-size: 4rem; color: var(--color-secondary); margin-bottom: 1.5rem; display: inline-block;"></i>
+                    <h2 id="sim-result-title">모의고사 종료</h2>
+                    <p class="result-score-summary" style="font-size: 1.3rem; margin: 1rem 0;">점수: <span id="sim-result-score">0 / 100</span> (<span id="sim-result-rate">0%</span>)</p>
+                    <p class="result-desc" style="color: var(--color-text-muted); margin-bottom: 1rem;">틀린 문제들은 복습 및 오답 분석 탭에 즉시 연동됩니다.</p>
+                    
+                    <!-- 과목별 성적 상세 분석 (신규 Feature 2) -->
+                    <div id="sim-result-breakdown" style="max-width: 480px; margin: 1.5rem auto; text-align: left; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); padding: 1.25rem; border-radius: 8px; display: none;">
+                        <!-- Dynamic injection of subject scores & failure diagnostic -->
+                    </div>
+                    
+                    <div style="display: flex; justify-content: center; gap: 1rem;">
+                        <button class="btn btn-primary" onclick="showSimAnswerReview()"><i class="fa-solid fa-book-open"></i> 오답 해설 풀이 보기</button>
+                        <button class="btn btn-secondary" onclick="exitSimArena()"><i class="fa-solid fa-house"></i> 목차로 돌아가기</button>
+                    </div>
+                </div>
+
+                <!-- 4. Simulation Answer Review Panel -->
+                <div id="sim-review-panel" style="display: none;">
+                    <div class="sim-review-header">
+                        <button class="btn btn-secondary" onclick="showSimResultsSummary()"><i class="fa-solid fa-arrow-left"></i> 결과 요약으로</button>
+                        <h4>틀린 문제 & 정답 해설 보기</h4>
+                    </div>
+                    <div class="sim-review-list" id="sim-review-list-container">
+                        <!-- Dynamic list of reviewed questions -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Textbook Search View -->
+            <section id="textbook-view" class="view-section">
+                <div class="section-title-area">
+                    <h3>📖 교재 본문 통합 검색</h3>
+                    <p>교재 본문(화장품법, 제조/품질관리, 안전관리, 맞춤형화장품 이해) 전체 내용을 키워드로 검색하여 관련 내용을 빠르게 확인하세요.</p>
+                </div>
+
+                <div class="textbook-control-panel" style="margin-bottom: 2rem;">
+                    <!-- Search Bar -->
+                    <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1.5rem;">
+                        <div class="search-input-wrapper" style="position: relative; flex: 1;">
+                            <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 1.25rem; top: 50%; transform: translateY(-50%); color: var(--color-text-muted);"></i>
+                            <input type="text" id="textbook-search-input" class="form-input" placeholder="검색할 키워드를 입력하세요 (예: 안전용기, 페녹시에탄올, 미생물)" style="padding-left: 3rem; width: 100%;">
+                        </div>
+                        <button class="btn btn-secondary" onclick="clearTextbookSearch()" style="height: 52px; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-xmark"></i> 초기화</button>
+                    </div>
+
+                    <!-- Subject Filter Buttons -->
+                    <div class="textbook-filter-buttons" style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                        <button class="btn btn-secondary active-filter" data-filter="all" onclick="setTextbookFilter('all')">전체 과목</button>
+                        <button class="btn btn-secondary" data-filter="law" onclick="setTextbookFilter('law')">1과목 (법령)</button>
+                        <button class="btn btn-secondary" data-filter="manufacturing" onclick="setTextbookFilter('manufacturing')">2과목 (제조)</button>
+                        <button class="btn btn-secondary" data-filter="safety" onclick="setTextbookFilter('safety')">3과목 (안전)</button>
+                        <button class="btn btn-secondary" data-filter="understanding" onclick="setTextbookFilter('understanding')">4과목 (이해)</button>
+                    </div>
+                </div>
+
+                <!-- Search Results Summary -->
+                <div id="textbook-search-summary" style="margin-bottom: 1.5rem; color: var(--color-text-muted); font-size: 0.95rem;">
+                    키워드를 입력하면 검색 결과가 여기에 표시됩니다.
+                </div>
+
+                <!-- Search Results Container -->
+                <div class="textbook-results-list" id="textbook-results-container">
+                    <div class="empty-state">
+                        <i class="fa-solid fa-book-open" style="font-size: 3rem; color: var(--color-text-muted); margin-bottom: 1rem; display: block;"></i>
+                        <h3>검색어를 입력하세요</h3>
+                        <p>위 검색창에 궁금한 교재 키워드를 입력하고 검색 결과를 확인하세요.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Textbook Reader View -->
+            <section id="textbook-reader-view" class="view-section">
+                <!-- Reading Progress Bar (fixed at top of view) -->
+                <div id="reader-progress-bar" class="reader-progress-bar" style="display:none;">
+                    <div id="reader-progress-fill" class="reader-progress-fill"></div>
+                </div>
+
+                <div class="section-title-area">
+                    <h3>📖 교재 본문 읽기</h3>
+                    <p>과목과 단원을 선택하여 교재 본문을 편안하게 읽으세요. 모든 내용이 바로 표시됩니다.</p>
+                </div>
+
+                <div class="textbook-reader-controls" style="margin-bottom: 1.5rem;">
+                    <div style="display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;">
+                        <div class="filter-group">
+                            <label for="reader-subject-select">과목 선택</label>
+                            <select id="reader-subject-select" class="form-select" style="min-width: 220px;">
+                                <option value="">과목을 선택하세요</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="reader-chapter-select">단원 선택</label>
+                            <select id="reader-chapter-select" class="form-select" style="min-width: 280px;" disabled>
+                                <option value="">단원을 선택하세요</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reading Convenience Toolbar -->
+                <div id="reader-toolbar" class="reader-toolbar" style="display:none;">
+                    <div class="reader-toolbar-group">
+                        <span class="reader-toolbar-label"><i class="fa-solid fa-text-height"></i> 글자 크기</span>
+                        <button class="reader-tool-btn" id="reader-font-decrease" title="글자 작게">A-</button>
+                        <span id="reader-font-size-display" class="reader-font-size-display">100%</span>
+                        <button class="reader-tool-btn" id="reader-font-increase" title="글자 크게">A+</button>
+                        <button class="reader-tool-btn" id="reader-font-reset" title="기본 크기로"><i class="fa-solid fa-rotate-left"></i></button>
+                    </div>
+                    <div class="reader-toolbar-divider"></div>
+                    <div class="reader-toolbar-group">
+                        <button class="reader-tool-btn" id="reader-theme-toggle" title="다크/라이트 모드 전환">
+                            <i class="fa-solid fa-sun"></i> <span>라이트</span>
+                        </button>
+                        <button class="reader-tool-btn" id="reader-focus-toggle" title="집중 모드 (주변 UI 숨기기)">
+                            <i class="fa-solid fa-expand"></i> <span>집중 모드</span>
+                        </button>
+                    </div>
+                    <div class="reader-toolbar-divider"></div>
+                    <div class="reader-toolbar-group">
+                        <button class="reader-tool-btn" id="reader-expand-all" title="모든 섹션 펼치기">
+                            <i class="fa-solid fa-angles-down"></i> 모두 펼치기
+                        </button>
+                        <button class="reader-tool-btn" id="reader-collapse-all" title="모든 섹션 접기 (개요만 보기)">
+                            <i class="fa-solid fa-angles-up"></i> 모두 접기
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Reader Layout: TOC sidebar + Content -->
+                <div id="reader-layout" class="reader-layout">
+                    <!-- TOC Sidebar (sections of current chapter) -->
+                    <aside id="reader-toc" class="reader-toc" style="display:none;">
+                        <div class="reader-toc-header">
+                            <i class="fa-solid fa-list"></i> 목차
+                        </div>
+                        <nav id="reader-toc-list" class="reader-toc-list">
+                            <!-- Populated dynamically -->
+                        </nav>
+                    </aside>
+
+                    <div id="textbook-reader-container" class="textbook-reader-content">
+                        <div class="empty-state">
+                            <i class="fa-solid fa-book-open" style="font-size: 3rem; color: var(--color-text-muted); margin-bottom: 1rem; display: block;"></i>
+                            <h3>읽을 교재를 선택하세요</h3>
+                            <p>위에서 과목과 단원을 선택하면 해당 교재의 본문 내용이 표시됩니다.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Back to top button -->
+                <button id="reader-back-to-top" class="reader-back-to-top" style="display:none;" title="맨 위로">
+                    <i class="fa-solid fa-arrow-up"></i>
+                </button>
+
+                <!-- Table fullscreen modal -->
+                <div id="reader-table-modal" class="reader-table-modal" style="display:none;">
+                    <div class="reader-table-modal-backdrop"></div>
+                    <div class="reader-table-modal-content">
+                        <button class="reader-table-modal-close" id="reader-table-modal-close"><i class="fa-solid fa-xmark"></i></button>
+                        <div id="reader-table-modal-body" class="reader-table-modal-body"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ingredient Dictionary View -->
+            <section id="dictionary-view" class="view-section">
+                <div class="section-title-area">
+                    <h3>🔍 화장품 성분 검색 사전</h3>
+                    <p>사용가능(approved), 사용제한(restricted), 사용금지(banned) 성분들의 배합 한도 및 시험 중요 팁을 실시간 검색해 확인하세요.</p>
+                </div>
+
+                <div class="dictionary-control-panel" style="margin-bottom: 2rem;">
+                    <!-- Search Bar -->
+                    <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1.5rem;">
+                        <div class="search-input-wrapper" style="position: relative; flex: 1;">
+                            <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 1.25rem; top: 50%; transform: translateY(-50%); color: var(--color-text-muted);"></i>
+                            <input type="text" id="dict-search-input" class="form-input" placeholder="성분명, 영문명 또는 초성을 입력하여 실시간 검색 (예: 페녹시, glycerin, ㄱㄹㅅㄹ)" style="padding-left: 3rem; width: 100%;">
+                        </div>
+                        <button class="btn btn-secondary" onclick="clearDictSearch()" style="height: 52px; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-xmark"></i> 초기화</button>
+                    </div>
+
+                    <!-- Category Filter Buttons -->
+                    <div class="dict-filter-buttons" style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                        <button class="btn btn-secondary active-filter" data-filter="all" onclick="setDictFilter('all')">전체 성분</button>
+                        <button class="btn btn-secondary" data-filter="approved" onclick="setDictFilter('approved')">🟢 사용 가능 원료</button>
+                        <button class="btn btn-secondary" data-filter="restricted" onclick="setDictFilter('restricted')">🟡 사용 제한 원료</button>
+                        <button class="btn btn-secondary" data-filter="banned" onclick="setDictFilter('banned')">🔴 사용 금지 원료</button>
+                    </div>
+                </div>
+
+                <!-- Dictionary Results Container -->
+                <div class="dictionary-grid" id="dict-results-container">
+                    <!-- Populated dynamically via JS -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Sanitizer utility (XSS-safe HTML injection helper) - loaded first, no dependencies -->
+    <script src="src/sanitize.js"></script>
+    <!--
+      대용량 데이터 파일 지연 로딩 (v2 권고 #2):
+      `defer`를 추가하여 HTML 파싱을 블로킹하지 않고, 문서 파싱 완료 후 순서대로 실행합니다.
+      (app.js보다 먼저 실행되어야 하므로 defer 순서를 유지합니다.)
+    -->
+    <!-- Inject Study Data -->
+    <script src="data/study_data.js" defer></script>
+    <!-- Inject Audio Manifest (오디오 파일 경로 매핑) -->
+    <script src="data/audio_manifest.js" defer></script>
+    <!-- Inject Ingredients Data -->
+    <script src="data/ingredients_data.js" defer></script>
+    <!-- Inject Exam Data -->
+    <script src="data/exam_data.js" defer></script>
+    <!-- Inject SVG Charts & Scratchpad Logic Modules -->
+    <script src="src/charts.js" defer></script>
+    <script src="src/scratchpad.js" defer></script>
+    <!-- Global State & Persistence Module (app.js보다 먼저 로드되어야 함) -->
+    <script src="src/state.js" defer></script>
+    <!-- App Logic Script (defer로 DOM 준비 후 실행) -->
+    <script src="src/app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사용자 매뉴얼 | Cosmetic Pass Master</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-app: #0b0f19;
+            --bg-card: rgba(31, 41, 55, 0.45);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --color-primary: #06b6d4;      /* Luminous Cyan */
+            --color-secondary: #8b5cf6;    /* Neon Violet */
+            --color-success: #10b981;      /* Emerald Green */
+            --color-warning: #f59e0b;      /* Amber Gold */
+            --color-text-main: #f3f4f6;    /* Warm White */
+            --color-text-muted: #9ca3af;   /* Muted Gray */
+            --radius-md: 12px;
+            --radius-sm: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', 'Outfit', sans-serif;
+            background-color: var(--bg-app);
+            color: var(--color-text-main);
+            line-height: 1.7;
+            padding: 3rem 1.5rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .manual-wrapper {
+            max-width: 900px;
+            width: 100%;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 3.5rem 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        header {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 2rem;
+            margin-bottom: 2.5rem;
+            text-align: center;
+        }
+
+        .logo-text {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+
+        .subtitle {
+            color: var(--color-text-muted);
+            font-size: 1.05rem;
+        }
+
+        h2 {
+            font-size: 1.45rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-top: 3rem;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-left: 4px solid var(--color-primary);
+            padding-left: 0.75rem;
+        }
+
+        p {
+            font-size: 1rem;
+            color: var(--color-text-muted);
+            margin-bottom: 1.25rem;
+        }
+
+        ul, ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--color-text-muted);
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        strong {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        /* Mermaid Box */
+        .diagram-container {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 2rem;
+            margin: 2rem 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Code and Pre styles */
+        pre {
+            background: #060913;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 1.5rem;
+            font-family: 'Outfit', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            line-height: 1.5;
+            color: #a5b4fc;
+        }
+
+        code {
+            font-family: 'Outfit', monospace;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: var(--color-secondary);
+        }
+
+        pre code {
+            background: transparent;
+            padding: 0;
+            color: inherit;
+        }
+
+        .highlight-box {
+            background: rgba(6, 182, 212, 0.05);
+            border-left: 4px solid var(--color-primary);
+            padding: 1.25rem 1.5rem;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            margin: 2rem 0;
+        }
+
+        .highlight-box h4 {
+            color: var(--color-primary);
+            font-size: 1.05rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .highlight-box p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        .manual-footer {
+            margin-top: 4rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            color: var(--color-text-muted);
+            font-size: 0.88rem;
+        }
+
+        /* Chevron indicator styling for list badges */
+        .bullet-badge {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--color-text-main);
+            padding: 0.15rem 0.40rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+    </style>
+    <!-- Mermaid CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark',
+            securityLevel: 'loose',
+            themeVariables: {
+                background: '#0b0f19',
+                primaryColor: '#1f2937',
+                primaryTextColor: '#f3f4f6',
+                lineColor: '#8b5cf6',
+                signalColor: '#06b6d4',
+                textColor: '#9ca3af'
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="manual-wrapper">
+        <header>
+            <span class="logo-text">Cosmetic Pass Master</span>
+            <h1>스마트 학습 플랫폼 사용자 매뉴얼</h1>
+            <p class="subtitle">맞춤형화장품 조제관리사 합격을 위한 플랫폼 가이드</p>
+        </header>
+
+        <section>
+            <p>본 스마트 학습 플랫폼은 맞춤형화장품 조제관리사 자격증 취득을 위해 법령 암기, 플래시카드, 계산식 연습, 실전 모의고사를 한곳에서 학습할 수 있도록 설계된 프리미엄 SPA(Single Page Application) 학습 포털입니다.</p>
+        </section>
+
+        <h2><i class="fa-solid fa-route"></i> 🧭 전체 학습 흐름 (Workflow)</h2>
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph TD
+    A[대시보드 진도 체크] --> B[개념 플래시카드 암기]
+    B --> C[빈칸 채우기 기출 퀴즈]
+    C --> D[오답/중요 복습 수집]
+    E[실전 예상문제집 & OMR] -->|틀린 문제 발생| D
+    F[스마트 훈련소] -->|수치 암기 & 계산 집중 훈련| G[합격 보장]
+    D -->|약점 카드 집중 퀴즈| G
+            </pre>
+        </div>
+
+        <h2><i class="fa-solid fa-chart-pie"></i> 1. 📊 학습 대시보드 (Dashboard)</h2>
+        <p>학습의 첫 단추인 대시보드는 현재 나의 학습 진척도와 상태를 시각적으로 분석해 줍니다.</p>
+        <ul>
+            <li><strong>총 학습 진척도</strong>: 데이터베이스의 전체 암기 대상 카드 대비 "외운 카드"의 비중을 백분율(%)로 나타냅니다.</li>
+            <li><strong>퀴즈 정답률</strong>: 지금까지 기출 및 핵심 퀴즈를 풀며 정답을 맞춘 비율을 나타냅니다.</li>
+            <li><strong>헷갈린 카드 개수</strong>: 플래시카드에서 "헷갈림"으로 선택하거나 모의고사에서 틀려 복습이 필요한 핵심 오답의 잔여 개수입니다.</li>
+            <li><strong>과목별 학습 상태</strong>: 1과목부터 4과목까지 카드 수, 퀴즈 개수, 각 과목의 상세 진척도와 바로가기 버튼이 내장되어 있습니다.</li>
+            <li><strong>진도 초기화 (우측 상단)</strong>: 클릭 시 로컬 스토리지에 보관된 학습 진도 데이터를 안전하게 포맷하고 대시보드를 <code>0%</code> 상태로 되돌립니다.</li>
+        </ul>
+
+        <h2><i class="fa-solid fa-layer-group"></i> 2. 🎴 개념 플래시카드 (Flashcards)</h2>
+        <p><em>Active Recall(능동적 연상)</em> 학습법을 적용하여 뇌에 강력하게 핵심 개념을 주입합니다.</p>
+        <ol>
+            <li><strong>과목 필터링</strong>: 사이드바 및 카드 화면 상단에서 1~4과목 중 암기하고자 하는 대상을 선택합니다.</li>
+            <li><strong>키워드만 보기 모드</strong>: 활성화 시 본문이 숨겨지고 주요 빈칸 키워드만 표시되어 단답형 시험에 직관적으로 대비할 수 있습니다.</li>
+            <li><strong>카드 뒤집기 & 자가 평가</strong>:
+                <ul>
+                    <li><strong>카드 클릭</strong>: 카드가 부드럽게 플립 애니메이션되며 뒷면의 정답과 상세 해설이 드러납니다.</li>
+                    <li><strong>자가 진단 버튼</strong>:
+                        <br><span class="bullet-badge">🟢 다 외웠어요</span> 해당 카드를 완벽 암기 상태로 등록하여 대시보드 진척도(%)를 올리고 다음 학습에서 필터링합니다.
+                        <br><span class="bullet-badge">🟡 아직 헷갈려요</span> 해당 카드를 <strong>오답/중요 복습 목록</strong>으로 즉각 분류하여 재학습을 유도합니다.
+                    </li>
+                </ul>
+            </li>
+        </ol>
+
+        <h2><i class="fa-solid fa-circle-question"></i> 3. ✍️ 기출 및 핵심 퀴즈 (Quiz)</h2>
+        <p>실제 기출 단답형 빈칸 채우기 문항들을 10문제 단위로 모아 학습할 수 있습니다.</p>
+        <ul>
+            <li><strong>실시간 답안 입력</strong>: 빈칸에 해당하는 용어나 수치를 입력창에 넣고 제출합니다.</li>
+            <li><strong>채점 및 피드백</strong>: 공백을 자동 제거하여 채점 신뢰성을 확보했으며, 해설과 정오답 처리가 매끄럽게 팝업됩니다.</li>
+            <li><strong>복습 자동 연동</strong>: 틀린 퀴즈 정보 역시 오답/중요 복습 카드로 즉시 이관됩니다.</li>
+        </ul>
+
+        <h2><i class="fa-solid fa-star"></i> 4. ⭐ 오답 / 중요 복습 (Review Note)</h2>
+        <p>나의 취약점들만 모아 단권화 요약 노트를 보듯 학습하는 공간입니다.</p>
+        <ul>
+            <li><strong>양방향 카드 보관소</strong>: 플래시카드의 <code>헷갈림</code> 카드와 실전 모의고사에서 제출 후 <code>오답</code>으로 식별된 문항들이 복습 카드로 표시됩니다.</li>
+            <li><strong>과목별 복습 필터 <span style="font-size: 0.75rem; background: var(--color-primary); color: #fff; padding: 2px 6px; border-radius: 4px; margin-left: 5px;">신규!</span></strong>: 복습 상단의 <code>[전체] [1과목] [2과목] [3과목] [4과목]</code> 필터 버튼 그룹을 통해 과목별로 오답 목록을 실시간 필터링하여 일목요연하게 복습할 수 있습니다.</li>
+            <li><strong>필터 기반 맞춤형 시험 <span style="font-size: 0.75rem; background: var(--color-primary); color: #fff; padding: 2px 6px; border-radius: 4px; margin-left: 5px;">신규!</span></strong>: 특정 과목 필터를 선택한 채로 <code>헷갈린 카드 집중 퀴즈</code>나 <code>오답 모의고사</code>를 시작하면, 필터링된 해당 과목의 약점 문항들만으로 시험지가 자동 구성되어 집중 보강이 가능합니다.</li>
+            <li><strong>오답 인쇄 및 인쇄 필터</strong>: 화면 우측 상단의 인쇄 버튼을 눌러 깔끔한 학습 오답 요약본을 출력할 수 있으며, 마찬가지로 필터링 상태가 인쇄물에도 그대로 연계 반영됩니다.</li>
+        </ul>
+
+        <h2><i class="fa-solid fa-file-invoice"></i> 5. 📝 실전 예상문제집 & OMR 시뮬레이터 (Mock Exam)</h2>
+        <p>실제 국가 공인 시험장의 환경(시간 압박, 마킹 실수, 문항 검토)을 브라우저에 그대로 시뮬레이션합니다.</p>
+        <pre>
++--------------------------------------------------------+
+|  [<- 나가기]    화장품법의 이해 100제     (남은시간 120:00) |
++------------------------------------------+-------------+
+|                                          |  [OMR]      |
+|  Q 12 / 100 (객관식)                      |  (1) [ ]    |
+|                                          |  (2) [X]    |
+|  다음 중 화장품의 정의로 올바르지...        |  (3) [ ]    |
+|                                          |  (4) [ ]    |
+|  ① 인체 청결, 미화 목적으로 사용           |  (5) [ ]    |
+|  ② 인체에 작용이 경미함                   |             |
+|                                          |  푼문제: 1  |
++------------------------------------------+-------------+
+|  [이전]                 [다음]           | [답안제출]  |
++------------------------------------------+-------------+
+        </pre>
+        <ul>
+            <li><strong>통합 및 과목별 실전 예상문제집 구성</strong>:
+                <ul>
+                    <li><strong style="color: var(--color-primary);">1~4과목 통합 실전 모의고사 (100제) <span style="font-size: 0.75rem; background: var(--color-primary); color: #fff; padding: 2px 6px; border-radius: 4px; margin-left: 5px;">신규!</span></strong>: 실제 자격증 시험 출제 비율(1과목 10문항, 2과목 25문항, 3과목 25문항, 4과목 40문항)을 정확히 준수하여 전체 900여 문항 중 100문항을 동적으로 무작위 추출 및 조합합니다. 실제 시험과 동일한 모의 테스트가 가능하며 성적 분석 및 합격 가능성 진단에 완벽히 연동됩니다.</li>
+                    <li><strong>1과목 (화장품법의 이해 100제)</strong>: 화장품의 정의 및 유형, 책임판매관리자 자격 요건, 표시기재 및 실증제 등 법률 규정 위주 구성.</li>
+                    <li><strong>2과목 (화장품 제조 및 품질관리 300제 - 1~3부)</strong>: 계면화학(HLB/CMC), CGMP 기준서, 밸리데이션(Validation), 원료 규격 평가 등 취약 단원 심화 학습.</li>
+                    <li><strong>3과목 (유통화장품 안전관리 200제 - 1~2부)</strong>: 작업장 청정도 관리, 미생물 및 중금속 한도, 혼입 및 오염 방지 대책.</li>
+                    <li><strong>4과목 (맞춤형화장품의 이해 300제 - 1~3부)</strong>: 피부 생리 구조, 원료 배합 및 한도 실무 계산, 포장 및 조제 지침 가이드라인.</li>
+                </ul>
+            </li>
+            <li><strong>OMR 답안지 실시간 마킹 연동</strong>:
+                <ul>
+                    <li>우측 OMR 패널에 전체 100문항의 답안 버블이 렌더링됩니다.</li>
+                    <li>문제를 풀 때마다 해당 번호 버블의 마킹 상태가 실시간으로 채워져, 덜 푼 문제나 건너뛴 문항을 한눈에 식별(`푼 문제: N / 100`)할 수 있습니다.</li>
+                    <li>OMR 버블을 클릭하면 이전/다음 버튼을 연타할 필요 없이 해당 문제 카드로 즉시 화면이 스크롤되어 시간 배분이 유리해집니다.</li>
+                </ul>
+            </li>
+            <li><strong>실전 카운트다운 타이머 (Timer)</strong>:
+                <ul>
+                    <li>상단에 실시간으로 동작하는 카운트다운 타이머(`남은 시간: MM:SS`)를 탑재하여 실제 고사장과 같은 시간 압박 속에서 문제를 푸는 연습을 돕습니다.</li>
+                </ul>
+            </li>
+            <li><strong>다양한 시험 유형 렌더링</strong>:
+                <ul>
+                    <li><strong>객관식 5지선다형</strong>: ①부터 ⑤까지의 보기 중에서 올바른 답안을 원클릭으로 마킹합니다.</li>
+                    <li><strong>진위형 (O/X)</strong>: 문장의 옳고 그름을 빠르게 판단하여 마킹하는 문항에 대응합니다.</li>
+                    <li><strong>주관식 단답형</strong>: 빈칸에 해당하는 한글 용어나 영어 약어, 혹은 배합 수치를 직접 타이핑하여 입력합니다.</li>
+                </ul>
+            </li>
+            <li><strong>즉각적인 종합 성적 분석 (Score Report)</strong>:
+                <ul>
+                    <li>OMR 제출을 클릭하면 점수 및 정답률(%)을 요약하여 즉시 시각화해 줍니다.</li>
+                    <li><strong>오답 해설 및 분석 모드</strong>: 결과 요약 화면에서 '오답 해설 풀이 보기'를 클릭하면 틀린 문제들만 정렬되어 `내가 쓴 답`, `실제 정답`, `상세 출제 해설`을 한눈에 카드식으로 복습할 수 있습니다.</li>
+                </ul>
+            </li>
+            <li><strong>모의고사 자동 저장 및 이어 풀기 (Auto-Save & Resume) <span style="font-size: 0.75rem; background: var(--color-primary); color: #fff; padding: 2px 6px; border-radius: 4px; margin-left: 5px;">신규!</span></strong>: 시험 진행 중 답안을 마킹하거나 5초 주기의 타이머 틱이 발생할 때마다 진행 정보가 로컬 스토리지에 자동 백업됩니다. 브라우저 종료나 새로고침 후에도 대시보드 상단의 배너를 통해 풀던 시간과 상태 그대로 즉각 시험지로 복원되어 이어 풀 수 있습니다.</li>
+            <li><strong>종합 성적 및 과목별 과락 진단 보고서 <span style="font-size: 0.75rem; background: var(--color-primary); color: #fff; padding: 2px 6px; border-radius: 4px; margin-left: 5px;">신규!</span></strong>: 답안 제출 즉시 총점 외에도 1~4과목별 상세 문항 수 및 득점률 프로그레스 바가 제공됩니다. 이 중 40% 미만 점수를 취득한 과목이 있는 경우 `[과락]` 경고문이 출력되며, 해당 과목 기출 퀴즈로 바로 이동해 연습할 수 있는 맞춤 보완 학습 버튼이 동적으로 자동 생성됩니다.</li>
+            <li><strong>복습 데이터 양방향 영구 보존 (Review Synchronization)</strong>:
+                <ul>
+                    <li>시뮬레이터 제출 시 오답으로 판명된 카드들은 `weak_sim_` 계열의 영구 식별 코드와 함께 로컬 스토리지에 자동 저장됩니다.</li>
+                    <li>이 덕분에 브라우저를 껐다 켜거나 새로고침을 하더라도 **"오답/중요 복습"** 탭에 틀린 모의고사 문항이 그대로 유지되며, 복습 탭에서 **"헷갈린 카드 집중 퀴즈"**의 출제 대상에 포함되어 취약 유형을 재격파하는 순환 학습이 이루어집니다.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2><i class="fa-solid fa-dumbbell"></i> 6. 🏋️ 스마트 훈련소 (Smart Trainer Center)</h2>
+        <p>맞춤형화장품 조제관리사 합격의 지름길인 <strong>수치 단순 암기</strong>와 <strong>배합량 연산</strong>만을 무한 반복하는 스마트 트레이닝 도구입니다.</p>
+        
+        <div class="highlight-box">
+            <h4>🔢 핵심 수치 암기 마스터 (Limits Trainer)</h4>
+            <p>보존제 한도, 자외선 차단 성분 한도, 안전기준 유해 물질 허용값(납, 비소, 수은, 카드뮴, 메탄올 등), 천연/유기농 충족 함량 등 법정 필수 수치 23종을 사지선다형으로 학습합니다.
+            <br>정답이 0.04%이면 오답으로 0.02%, 0.05%, 0.1% 등 오도하기 쉬운 보기들을 시스템이 동적으로 계산하여 보기 조합을 매번 다르게 생성해 냅니다.</p>
+        </div>
+
+        <div class="highlight-box" style="background: rgba(139, 92, 246, 0.05); border-left-color: var(--color-secondary);">
+            <h4 style="color: var(--color-secondary);">🧮 원료 배합 계산 연습기 (Blending Calculator Practice)</h4>
+            <p>원료 첨가량 연산, 가상 제형 혼합 시 평균 농도 계산, 한도 내 최대 추가량 연산 등 주관식 기출 수학 문제를 출제합니다.
+            <br>매번 무작위 숫자로 문제가 변형 출제되어 단순 답 암기를 방지하며, 정답의 &plusmn;0.02 오차 범위를 허용하는 스마트 정답 채점을 수행합니다.
+            <br>제출 후 "단계별 풀이 공식 보기"를 확장하면 적용된 공식과 세부 풀이 전개 과정을 확인할 수 있습니다.
+            <br>· <strong>✏️ 손글씨 계산 연습장 (Canvas Scratchpad) <span style="font-size: 0.75rem; background: var(--color-secondary); color: #fff; padding: 2px 6px; border-radius: 4px; margin-left: 5px;">신규!</span></strong>: 계산기 카드 아래의 그리기 보드를 열어 공식 필기나 숫자를 자유롭게 메모할 수 있습니다. 연필/지우개 모드 및 모두 지우기를 지원하며 신규 문제 출제 시 자동 비워집니다.
+            <br>· <strong>🗂️ 최근 계산 5회 풀이 이력 로그 <span style="font-size: 0.75rem; background: var(--color-secondary); color: #fff; padding: 2px 6px; border-radius: 4px; margin-left: 5px;">신규!</span></strong>: 계산 직후 과거 풀었던 계산 문제 정보가 카드 형태로 이력 저장 보드에 실시간 기록되어 쉽게 복습할 수 있습니다.</p>
+        </div>
+
+        <div class="highlight-box" style="background: rgba(16, 185, 129, 0.05); border-left-color: var(--color-success);">
+            <h4 style="color: var(--color-success);">🧪 화장품 원료 안전성 챌린지 (Ingredients Safety Challenge) <span style="font-size: 0.8rem; background: var(--color-success); color: #fff; padding: 2px 6px; border-radius: 4px; margin-left: 5px;">신규!</span></h4>
+            <p>워크스페이스 내의 원료 데이터베이스(사용가능, 제한, 금지 원료) 정보를 정밀 연계 및 분석하여 총 10문항의 원료 맞춤형 퀴즈를 동적으로 생성합니다.
+            <br>· <strong>유형 1 (안전성 판별)</strong>: 무작위 성분을 제시하고 사용 가능, 제한, 금지 원료 범주를 올바르게 매칭합니다.
+            <br>· <strong>유형 2 (배합 한도 주관식)</strong>: 보존제 및 자외선 차단 성분의 최대 배합 한도 수치를 % 단위까지 완벽하게 주관식으로 기재합니다.
+            <br>· <strong>유형 3 (조제 적합성 판정)</strong>: 조제관리사가 매장에서 성분을 직접 계량 배합할 수 있는지 법적 조제 권한 한계를 OX/선택 방식으로 진단합니다. (예: 별표 2 제한원료는 직접 배합 불가가 정답)
+            <br>· <strong>유형 4 (알레르기 고지 의무)</strong>: 씻어내는 제품(0.01% 초과) 및 씻어내지 않는 제품(0.001% 초과)의 알레르기 유발 유무를 배합량 대비 수학적으로 판정하여 고지 대상을 선별합니다.</p>
+        </div>
+
+        <h2><i class="fa-solid fa-puzzle-piece"></i> 7. 🚀 학습 고도화 기능 (Advanced Study Features)</h2>
+        <p>효율적인 학습 관리와 실전 채점 및 인쇄 출력을 위해 도입된 플랫폼의 프리미엄 시스템입니다.</p>
+
+        <div class="highlight-box" style="background: rgba(6, 182, 212, 0.05); border-left-color: var(--color-primary);">
+            <h4 style="color: var(--color-primary);">⏱️ 대시보드 뽀모도로 타이머 (Pomodoro Study Timer)</h4>
+            <p>공부와 휴식 주기를 조절하여 뇌의 학습 몰입도를 높이는 집중 툴입니다.
+            <br>· <strong>작동법</strong>: <code>집중 시작</code>을 누르면 25분 카운트다운이 시작됩니다. 완료 시 Web Audio API로 구현된 맑은 비프 신호음(C5 &rarr; E5 &rarr; G5)이 울리며 5분 휴식 모드로 자동 이행합니다.
+            <br>· <strong>누적 연동</strong>: 집중이 끝난 누적 시간(분 단위)은 브라우저에 안전히 기록되어 대시보드에서 매일 총 집중량을 모니터링할 수 있습니다.</p>
+        </div>
+
+        <div class="highlight-box" style="background: rgba(16, 185, 129, 0.05); border-left-color: var(--color-success);">
+            <h4 style="color: var(--color-success);">📊 모의고사 성적 추이 & 합격 예측 (Performance Chart & Prediction)</h4>
+            <p>모의고사를 풀 때마다 나의 취약점과 최근 점수 경향을 분석하여 합격 확률을 보여줍니다.
+            <br>· <strong>SVG 선 차트</strong>: 최근 5회의 성적을 반응형 벡터 차트로 그려내어 점수 상승/하락 곡선을 깔끔하게 파악합니다.
+            <br>· <strong>과락 진단 시스템</strong>: 전과목 평균 60점 이상 합격 및 과목별 최소 40% 이상 유지 요건을 검사합니다. 최신 성적 중 40% 미만 과목이 식별되면 즉각 빨간색 <code>과락 위험</code> 알림을 띄우고 집중 요약 복습 경로를 가이드합니다.</p>
+        </div>
+
+        <div class="highlight-box" style="background: rgba(245, 158, 11, 0.05); border-left-color: var(--color-warning);">
+            <h4 style="color: var(--color-warning);">🧠 주관식 유사어 스마트 채점 (Smart Synonym Matcher)</h4>
+            <p>주관식 빈칸 채우기 채점 시 의미상 일치하는 보기를 유연하게 정답 처리하는 인공지능형 매칭 엔진입니다.
+            <br>· <strong>유사어 자동 판단</strong>: "식약처장"과 "식품의약품안전처장", "CGMP"와 "우수화장품제조및품질관리기준" 등 다양한 정답 대안 사전을 기반으로 채점합니다.
+            <br>· <strong>국어 조사 무시 로직</strong>: 단어 끝에 붙는 조사('이', '가', '을', '를', '은', '는')를 제거하고 채점하여, 조사 하나로 억울하게 감점 처리되는 것을 방지합니다.</p>
+        </div>
+
+        <div class="highlight-box" style="background: rgba(255, 255, 255, 0.02); border-left-color: var(--color-text-muted);">
+            <h4 style="color: var(--color-text-muted);">🖨️ 오답노트 종이 시험지 인쇄 (Print Study Note)</h4>
+            <p>복습 탭에서 나만의 약점 카드를 종이로 인쇄하거나 PDF로 영구 소장할 수 있습니다.
+            <br>· <code>오답노트 인쇄</code>를 클릭하면 CSS 프린트 스타일이 활성화되어, 사이드바나 각종 버튼 및 다크 테마 배경을 숨기고 백색 바탕의 깔끔한 모의시험지 양식으로 레이아웃을 변환하여 출력해 줍니다.</p>
+        </div>
+
+        <h2><i class="fa-solid fa-gem"></i> 8. 💎 추가 고도화 7대 편의 기능 (Premium Utilities) <span style="font-size: 0.8rem; background: var(--color-secondary); color: #fff; padding: 2px 6px; border-radius: 4px; margin-left: 5px;">신규!</span></h2>
+        <p>학습의 효율성을 극대화하고, 공부 진행 상황을 안전하게 유지 및 관리하기 위해 추가로 탑재된 고도화 편의 기능군입니다.</p>
+
+        <div class="highlight-box" style="background: rgba(6, 182, 212, 0.05); border-left-color: var(--color-primary);">
+            <h4 style="color: var(--color-primary);">📖 교재 본문 통합 검색 (Textbook Search) <span style="font-size: 0.75rem; background: var(--color-primary); color: #fff; padding: 2px 6px; border-radius: 4px; margin-left: 5px;">신규!</span></h4>
+            <p>1~4과목 전체 교재 본문을 키워드로 통합 실시간 검색하여 관련 규정과 단락을 즉시 확인할 수 있습니다.
+            <br>· <strong>다중 키워드 (AND) 검색</strong>: 여러 단어를 공백으로 구분해 검색 시 모든 키워드가 조합된 문단만 정확하게 찾아줍니다.
+            <br>· <strong>키워드 하이라이트</strong>: 본문 안의 검색 대상 키워드가 형광펜 형태로 눈에 띄게 강조 표출됩니다.
+            <br>· <strong>접기/펼치기 & 원본 링크</strong>: 본문이 긴 내용은 더 보기 버튼으로 확장 가능하며, '전체 단원 보기'를 통해 해당 챕터의 정밀 HTML 전체 교재 화면을 새 탭으로 바로 띄워 전후 맥락을 탐독할 수 있습니다.</p>
+        </div>
+
+        <div class="highlight-box" style="background: rgba(16, 185, 129, 0.05); border-left-color: var(--color-success);">
+            <h4 style="color: var(--color-success);">📖 교재 본문 읽기 (Textbook Reader) <span style="font-size: 0.75rem; background: var(--color-success); color: #fff; padding: 2px 6px; border-radius: 4px; margin-left: 5px;">신규!</span></h4>
+            <p>사이드바 상단(사용자 매뉴얼 바로 아래)에 배치된 전용 뷰로, 4대 과목의 모든 교재를 앱 안에서 처음부터 끝까지 편안하게 정독할 수 있는 전자책 리더입니다.
+            <br>· <strong>과목/단원 2단계 선택</strong>: 플래시카드와 동일한 디자인의 드롭다운에서 과목(1~4과목)을 고르고, 이어서 해당 과목의 챕터(단원)를 선택하면 본문 전체가 즉시 렌더링됩니다.
+            <br>· <strong>실제 표(Table) 렌더링</strong>: 마크다운 표 문법으로 작성된 법령 조항표, 안전성 시험표 등이 헤더와 열이 구분된 실제 웹 테이블(줄무늬, hover 강조)로 깔끔하게 출력됩니다.
+            <br>· <strong>서식 완벽 지원</strong>: 굵은 글씨, 위첨자(<code>기출</code> 표시), 인용 박스(고득점 TIP/확인문제), 코드블록 개념도, 구분선, 들여쓰기 리스트까지 교재 원문의 서식을 그대로 재현합니다.
+            <br>· <strong>원본 HTML 바로가기</strong>: 각 챕터 상단의 '원본 HTML 보기' 버튼으로 인쇄/저장용 정밀 원본 문서를 새 탭에서 열 수 있습니다.</p>
+        </div>
+
+        <div class="highlight-box" style="background: rgba(16, 185, 129, 0.05); border-left-color: var(--color-success);">
+            <h4 style="color: var(--color-success);">🎧 교재 오디오 듣기 (Textbook Audio Player) <span style="font-size: 0.75rem; background: var(--color-success); color: #fff; padding: 2px 6px; border-radius: 4px; margin-left: 5px;">신규!</span></h4>
+            <p>1~4과목 전체 19개 단원의 교재 본문을 Google TTS 엔진으로 음성 합성한 오디오북 MP3(총 약 11시간)가 내장되어, 교재 본문 읽기 화면에서 귀로 학습할 수 있습니다.
+            <br>· <strong>재생 방법</strong>: 사이드바의 <code>교재 본문 읽기</code>에서 과목·단원을 선택한 뒤, 단원 제목 우측의 <strong>🎧 오디오 듣기</strong> 버튼을 클릭하면 플레이어 패널이 펼쳐지며 자동 재생됩니다.
+            <br>· <strong>풀 커스텀 컨트롤</strong>: 재생/일시정지 원형 버튼, 드래그 시크바(탐색), 재생·전체 시간(<code>mm:ss</code>) 표시, <code>1x</code> 버튼 클릭 시 <code>0.75x→1x→1.25x→1.5x→2x</code> 순환 속도 조절(선택 속도 저장), <code>로딩 중…/버퍼링…/재생 중</code> 상태 배지를 제공합니다.
+            <br>· <strong>똑똑한 이어보기</strong>: 재생 위치가 5초 간격으로 자동 저장되어, 중단한 단원을 다시 열 때 <strong>"N분 N초부터 이어듣기"</strong> 안내와 함께 이어서 재생됩니다. 끝까지 들은 단원은 저장 위치가 자동 삭제됩니다.
+            <br>· <strong>자동 정지·토스트 안내</strong>: 재생 중 다른 단원·과목·메뉴로 이동하면 안전하게 정지되고 하단에 <code>재생이 중지되었습니다</code> 토스트가 표시됩니다. 탭 비활성화(화면 꺼짐) 시 자동 일시정지되어 모바일 배터리를 보호합니다.
+            <br>· <strong>실행 환경</strong>: 탐색(Seek)의 완전한 동작을 위해 HTTP Range 지원 서버를 권장합니다. 프로젝트 루트에서 <code>node serve.js 8001</code> 실행 후 <code>http://localhost:8001/index.html</code>로 접속하세요. (<code>file://</code> 직접 열기 시 기능이 제한될 수 있습니다.)</p>
+        </div>
+
+        <div class="highlight-box" style="background: rgba(6, 182, 212, 0.05); border-left-color: var(--color-primary);">
+            <h4 style="color: var(--color-primary);">🔍 화장품 성분 검색 사전 (Ingredient Dictionary)</h4>
+            <p>초성 검색(예: <code>ㄱㄹㅅㄹ</code>) 및 영문명 검색을 완벽하게 수행하는 원클릭 사전입니다.
+            <br>· <strong>상세 한도 정보</strong>: 검색 결과 카드를 클릭 시, 배합 금지 여부, 법적 사용 한도 수치 및 고시 팁을 즉시 펼쳐볼 수 있습니다.</p>
+        </div>
+
+        <div class="highlight-box" style="background: rgba(139, 92, 246, 0.05); border-left-color: var(--color-secondary);">
+            <h4 style="color: var(--color-secondary);">📊 과목별 역량 진단 레이더 차트 (SVG Radar Chart)</h4>
+            <p>4대 과목별 나의 이해도 평균 정답률을 방사형 레이더 차트로 대시보드에 그립니다.
+            <br>· <strong>균형 학습 도모</strong>: 과락 기준(40%) 미만의 과목은 안쪽으로 크게 찌그러지게 표출되어 집중 복습 과목을 직관적으로 선정하게 돕습니다.</p>
+        </div>
+
+        <div class="highlight-box" style="background: rgba(245, 158, 11, 0.05); border-left-color: var(--color-warning);">
+            <h4 style="color: var(--color-warning);">📋 "틀린 문제 집중" 오답 모의고사 (Weakness Exam)</h4>
+            <p>그동안 틀린 카드나 퀴즈들 중 오답 비율을 맞춤 계산하여 20문항의 동적 복습 모의고사를 생성합니다.
+            <br>· <strong>실전 연계</strong>: 타이머와 OMR 답안 마킹, 사후 오답 풀이가 동일하게 연동되어 약점을 완전히 보완할 수 있습니다.</p>
+        </div>
+
+        <div class="highlight-box" style="background: rgba(16, 185, 129, 0.05); border-left-color: var(--color-success);">
+            <h4 style="color: var(--color-success);">🧩 일일 5분 데일리 챌린지 (Daily Challenge) & Streak</h4>
+            <p>매일 한 번만 풀 수 있는 암기/퀴즈/계산/안전성 믹스 문제집으로, 완료 시 연속 학습 불꽃(🔥 Streak) 일수가 누적 상승하여 공부 루틴을 형성하게 만듭니다.</p>
+        </div>
+
+        <div class="highlight-box" style="background: rgba(255, 255, 255, 0.02); border-left-color: var(--color-text-muted);">
+            <h4 style="color: var(--color-text-muted);">💾 로컬 데이터 백업 및 복원 (Data Backup & Restore)</h4>
+            <p>학습 데이터를 JSON 파일 형태로 로컬 컴퓨터에 안전하게 백업(Export)하고, 다른 컴퓨터나 브라우저에서 진도를 복구(Import)할 수 있게 해줍니다.</p>
+        </div>
+
+        <div class="highlight-box" style="background: rgba(239, 68, 68, 0.05); border-left-color: var(--color-warning);">
+            <h4 style="color: var(--color-danger);">⚡ 대용량 문서 스크롤 렌더링 성능 최적화 (content-visibility: auto) <span style="font-size: 0.8rem; background: var(--color-danger); color: #fff; padding: 2px 6px; border-radius: 4px; margin-left: 5px;">신규!</span></h4>
+            <p>수천 줄에 달하는 법적 제한 원료 목록이나 긴 규정집 문서를 불러올 때 발생하는 스크롤 버벅임 현상을 완벽하게 해결합니다.
+            <br>· <strong>오프스크린 렌더링 생략</strong>: 대제목 단원 기준으로 단락들을 독립된 구획으로 자동 분류하여 화면 바깥의 콘텐츠 연산을 제어, 스크롤 반응 속도를 비약적으로 높였습니다.
+            <br>· <strong>인쇄/PDF 호환</strong>: PDF 출력이나 인쇄 시 최적화가 임시 자동 해제되어 내용 누락 없이 깨끗하게 문서 전체가 복원 출력되도록 지원합니다.</p>
+        </div>
+
+        <div class="manual-footer">
+            <p>© 2026 Cosmetic Pass. All Rights Reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
