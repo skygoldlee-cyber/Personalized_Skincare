@@ -28,8 +28,10 @@ function setupOrientationToggle() {
     }
     
     toggleBtn.addEventListener('click', () => {
+        console.log('[Orientation] Toggle button clicked');
         document.body.classList.toggle('landscape-mode');
         const isLandscape = document.body.classList.contains('landscape-mode');
+        console.log('[Orientation] landscape-mode class:', isLandscape);
         
         // 설정 저장
         localStorage.setItem('preferredOrientation', isLandscape ? 'landscape' : 'portrait');
@@ -43,6 +45,7 @@ function setupOrientationToggle() {
         // 토스트 알림
         showOrientationToast(isLandscape);
     });
+    console.log('[Orientation] Toggle button initialized');
 }
 
 // 방향 전환 알림 표시
