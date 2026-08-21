@@ -114,6 +114,36 @@ function renderPerformanceChart() {
 }
 
 /* =======================================================
+   ð ê³¼ëª©ë³ ì ëµë¥  ì§ê³ (ê³µíµ í¬í¼)
+   - #3: renderPassFailDiagnosis / renderRadarChart ì¤ë³µ ë¡ì§ íµí©
+   - #2: êµ¬ë²ì  ì´ë ¥(examId/subjectRates ëë¦½)ì ëí ë°©ì´ í¬í¨
+   ======================================================= */
+function aggregateSubjectRates(history) {
+    const subjectRates = {
+        'subject1': [],
+        'subject2': [],
+        'subject3': [],
+        'subject4': []
+    };
+    history.forEach(r => {
+        if (r.subjectRates) {
+            Object.keys(r.subjectRates).forEach(subj => {
+                const rate = r.subjectRates[subj];
+                if (rate !== null && rate !== undefined && subjectRates[subj]) {
+                    subjectRates[subj].push(rate);
+                }
+            });
+        } else {
+            const baseId = (r.examId || '').split('_')[0]; // #2 ê°ë: examId ìì¼ë©´ ë¹ ë¬¸ìì´ë¡ ìì  ì²ë¦¬
+            if (subjectRates[baseId]) {
+                subjectRates[baseId].push(r.rate);
+            }
+        }
+    });
+    return subjectRates;
+}
+
+/* =======================================================
    📈 합격 가능성 진단 (Pass/Fail Diagnosis)
    ======================================================= */
 function renderPassFailDiagnosis() {
@@ -143,28 +173,7 @@ function renderPassFailDiagnosis() {
     const avgRate = Math.round(recentExams.reduce((sum, r) => sum + r.rate, 0) / recentExams.length);
     
     // 과목별 최근 점수 추출하여 과락 판정
-    const subjectRates = {
-        'subject1': [],
-        'subject2': [],
-        'subject3': [],
-        'subject4': []
-    };
-    
-    history.forEach(r => {
-        if (r.subjectRates) {
-            Object.keys(r.subjectRates).forEach(subj => {
-                const rate = r.subjectRates[subj];
-                if (rate !== null && rate !== undefined) {
-                    subjectRates[subj].push(rate);
-                }
-            });
-        } else {
-            const baseId = r.examId.split('_')[0]; // e.g. subject2_p1 -> subject2
-            if (subjectRates[baseId]) {
-                subjectRates[baseId].push(r.rate);
-            }
-        }
-    });
+    const subjectRates = aggregateSubjectRates(history);
     
     // 각 과목 최신 성적 또는 평균 산출
     const getLatestRate = (subjBaseId) => {
@@ -242,20 +251,6 @@ function renderPassFailDiagnosis() {
 }
 
 // 한글 초성 추출 헬퍼 함수 (검색사전 초성 매칭용 글로벌 유틸리티)
-function getChosung(str) {
-    const chosungs = ['ㄱ','ㄲ','ㄴ','ㄷ','ㄸ','ㄹ','ㅁ','ㅂ','ㅃ','ㅅ','ㅆ','ㅇ','ㅈ','ㅉ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
-    let result = '';
-    for (let i = 0; i < str.length; i++) {
-        const code = str.charCodeAt(i) - 44032;
-        // 유효한 완성형 한글 음절 범위: 0 ~ 11171 (가 ~ 힣)
-        if (code >= 0 && code <= 11171) {
-            result += chosungs[Math.floor(code / 588)];
-        } else {
-            result += str.charAt(i);
-        }
-    }
-    return result;
-}
 
 /* =======================================================
    📊 과목별 역량 진단 레이더 차트 (Radar Chart)
@@ -285,28 +280,7 @@ function renderRadarChart() {
     if (oldSvg) oldSvg.remove();
     
     // 과목별 평균 정답률 계산
-    const subjectRates = {
-        'subject1': [],
-        'subject2': [],
-        'subject3': [],
-        'subject4': []
-    };
-    
-    history.forEach(r => {
-        if (r.subjectRates) {
-            Object.keys(r.subjectRates).forEach(subj => {
-                const rate = r.subjectRates[subj];
-                if (rate !== null && rate !== undefined) {
-                    subjectRates[subj].push(rate);
-                }
-            });
-        } else {
-            const baseId = r.examId.split('_')[0];
-            if (subjectRates[baseId]) {
-                subjectRates[baseId].push(r.rate);
-            }
-        }
-    });
+    const subjectRates = aggregateSubjectRates(history);
     
     const getAvgRate = (subjBaseId) => {
         const rates = subjectRates[subjBaseId];
