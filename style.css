@@ -3474,3 +3474,132 @@ body.reader-focus-mode .reader-readable-width {
 }
 
 
+/* ============================================================
+   📱 모바일 최적화 (스마트폰 접속 대응)
+   - 100vw/100vh 고정으로 인한 가로 스크롤·잘림 방지
+   - 터치 타겟·폰트 크기·패딩 최적화
+   ============================================================ */
+@media (max-width: 900px) {
+    /* 100vw 고정은 세로 스크롤바 폭만큼 가로 넘침을 유발 → 100% 로 완화 */
+    .app-container {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+
+    html, body {
+        overflow-x: hidden;
+        /* iOS 주소창 높이 변동 대응 */
+        min-height: 100%;
+    }
+
+    /* 사이드바: 상단 바 형태로, 낮은 높이 + 가로 스크롤 nav */
+    .sidebar {
+        position: sticky;
+        top: 0;
+        max-height: none;
+        padding: 0.9rem 1rem;
+    }
+    .logo-area {
+        margin-bottom: 0.75rem;
+    }
+    .logo-text h1 {
+        font-size: 1.2rem;
+    }
+    .nav-menu {
+        flex-direction: row;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        gap: 0.4rem;
+        padding-bottom: 0.25rem;
+    }
+    .nav-menu::-webkit-scrollbar {
+        height: 4px;
+    }
+    .nav-item {
+        padding: 0.55rem 0.85rem;
+        font-size: 0.85rem;
+        flex: 0 0 auto;
+    }
+    .nav-item.active {
+        border-left: none;
+        border-bottom: 3px solid var(--color-primary);
+    }
+    .sidebar-footer {
+        display: none;
+    }
+
+    /* 본문 여백 축소 */
+    .app-header {
+        padding: 1rem 1.1rem;
+    }
+    .view-section {
+        padding: 1rem 1.1rem;
+    }
+
+    /* 헤더 타이틀 크기 */
+    .app-header h2,
+    .app-header .page-title {
+        font-size: 1.35rem;
+        line-height: 1.25;
+    }
+
+    /* 카드·그리드 1열화 */
+    .dashboard-grid,
+    .analytics-grid,
+    .grid,
+    .cards-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* 테이블은 가로 스크롤 허용 */
+    table,
+    .table,
+    .data-table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        max-width: 100%;
+    }
+
+    /* 이미지·캔버스·차트 넘침 방지 */
+    img, canvas, svg, video {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* 버튼·입력 터치 타겟 확대 */
+    .btn, button, input, select, textarea {
+        font-size: 1rem;
+    }
+
+    /* 모달·팝업 여백 */
+    .modal-content,
+    .modal-body {
+        max-width: 94vw;
+        margin: 1rem auto;
+    }
+}
+
+/* 소형 스마트폰 추가 미세 조정 */
+@media (max-width: 480px) {
+    .app-header h2,
+    .app-header .page-title {
+        font-size: 1.2rem;
+    }
+    .flashcard-wrapper {
+        height: 280px;
+    }
+    .nav-item {
+        font-size: 0.8rem;
+        padding: 0.5rem 0.7rem;
+    }
+    body {
+        /* 모바일에서 본문 기본 폰트 약간 축소 */
+        font-size: 0.95rem;
+    }
+}
+
+
