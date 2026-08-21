@@ -8,7 +8,6 @@ function initApp() {
     loadProgress();
     setupNavigation();
     setupEventListeners();
-    setupOrientationToggle();
     
     // 초기 뷰 렌더링
     renderDashboard();
@@ -447,7 +446,6 @@ initApp = function() {
     originalInitApp();
     setupOfflineDetection();
     setupModalBackHandler();
-    setupOrientationToggle();
 };
 
 // --- 글로벌 학습 통계 업데이트 ---
@@ -4952,4 +4950,10 @@ function formatSectionContentForReader(rawContent) {
 }
 
 // 윈도우 로드 시 구동
-window.addEventListener('DOMContentLoaded', initApp);
+window.addEventListener('DOMContentLoaded', () => {
+    initApp();
+    // DOM이 완전히 로드된 후 토글 버튼 설정
+    setTimeout(() => {
+        setupOrientationToggle();
+    }, 100);
+});
