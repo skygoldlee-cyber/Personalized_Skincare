@@ -52,9 +52,11 @@ Personalized_Skincare/
 │   ├── ingredients_data.js
 │   └── audio_manifest.js  # AUDIO_BASE_URL 설정 추가됨
 │
-├── docs/               # 문서 (4.64 MB, HTML 제외 시 ~1 MB)
+├── docs/               # 문서 (MD + 앱 링크용 HTML 포함, ~4.6 MB)
 │   ├── user_manual.md
+│   ├── user_manual.html      # ✅ 배포 포함 (앱에서 "사용자 매뉴얼" 링크로 엶)
 │   ├── study_summary.md
+│   ├── study_summary.html    # ✅ 배포 포함 (앱에서 "핵심 단권화 요약집" 링크로 엶)
 │   ├── VERCEL_DEPLOY_GUIDE.md
 │   └── VERCEL_SIZE_OPTIMIZATION.md  # 본 문서
 │
@@ -76,9 +78,18 @@ Personalized_Skincare/
 **제외 대상 (`.vercelignore` 적용됨):**
 - `audiobook/` — MP3, 파이썬 스크립트, TTS 모델
 - `content/**/*.html` — 비대화된 HTML (MD 원본은 유지)
-- `exams/**/*.html` — 시험지 HTML (데이터는 `exam_data.js`에 포함)
+- `exams/**/*.html` — 시험지 HTML (~220MB, 100MB 제한 초과로 제외. 데이터는 `exam_data.js`에 포함)
 - `archive/` — 아카이브된 중복 원본 폴터 (구 `2026 *` 폴터들)
 - `tools/`, `__pycache__/` — 개발 도구
+
+> ⚠️ **`.vercelignore`의 `*.html` 예외 규칙**
+> 기본적으로 모든 `*.html`을 제외하되, 아래는 반드시 배포에 포함합니다.
+> ```
+> *.html
+> !index.html        # 앱 진입점
+> !docs/*.html       # 앱 내 링크로 여는 매뉴얼/요약집 (없으면 404)
+> ```
+> `docs/*.html`을 예외 처리하지 않으면 배포 환경에서 "사용자 매뉴얼" 링크가 404가 됩니다.
 
 ---
 
