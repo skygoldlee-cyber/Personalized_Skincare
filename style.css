@@ -3634,10 +3634,19 @@ body.reader-focus-mode .reader-readable-width {
         background: rgba(11, 15, 25, 0.95);
         -webkit-backdrop-filter: blur(12px);
         backdrop-filter: blur(12px);
+        /* 모바일에서 헤더가 넘치지 않도록 */
+        flex-wrap: nowrap;
+        overflow: hidden;
     }
 
     .app-header h2 {
         font-size: 1.25rem;
+        /* 타이틀이 너무 길면 말줄임 */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        flex-shrink: 1;
+        min-width: 0;
     }
 
     .app-header p {
@@ -3656,12 +3665,14 @@ body.reader-focus-mode .reader-readable-width {
         justify-content: center;
     }
 
-    /* 헤더 액션 영역 확보 */
+    /* 헤더 액션 영역 확보 - 모바일에서 버튼이 잘리지 않도록 */
     .header-actions {
         display: flex;
         align-items: center;
         gap: 0.5rem;
         flex-shrink: 0;
+        /* 헤더 타이틀이 길어져도 버튼 영역 유지 */
+        margin-left: auto;
     }
 
     /* PWA 설치 버튼 모바일 최적화 */
