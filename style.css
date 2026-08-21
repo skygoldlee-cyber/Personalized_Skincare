@@ -3889,25 +3889,30 @@ body.reader-focus-mode .reader-readable-width {
         100% { background-position: -200% 0; }
     }
 
-    /* 오프라인 배너 */
-    .offline-banner {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        background: var(--color-danger);
-        color: white;
-        text-align: center;
-        padding: 0.5rem;
-        font-size: 0.8rem;
-        z-index: 9999;
-        transform: translateY(-100%);
-        transition: transform 0.3s ease;
-    }
+}
 
-    .offline-banner.show {
-        transform: translateY(0);
-    }
+/* ============================================================
+   오프라인 배너 (전체 화면 크기 공통 적용)
+   - 기본 상태는 숨김(transform: translateY(-100%))
+   - JS에서 .show 클래스를 추가할 때만 표시
+   ============================================================ */
+.offline-banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: var(--color-danger);
+    color: white;
+    text-align: center;
+    padding: 0.5rem;
+    font-size: 0.8rem;
+    z-index: 9999;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease;
+}
+
+.offline-banner.show {
+    transform: translateY(0);
 }
 
 /* 소형 스마트폰 (≤480px) 추가 미세 조정 */

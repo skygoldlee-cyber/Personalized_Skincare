@@ -225,19 +225,59 @@ function setupOfflineDetection() {
     const banner = document.getElementById('offline-banner');
     if (!banner) return;
 
-    function updateOnlineStatus() {
-        if (navigator.onLine) {
-            banner.classList.remove('show');
-        } else {
-            banner.classList.add('show');
+    let probeInFlight = false;
+
+    function showBanner() {
+        banner.classList.add('show');
+    }
+
+    function hideBanner() {
+        banner.classList.remove('show');
+    }
+
+    /**
+     * 실제 인터넷 접속 여부를 확인합니다.
+     * navigator.onLine은 OS 네트워크 어댑터 상태만 반영하므로
+     * 실제 연결 확인을 위해 가벼운 리소스를 no-cors로 요청합니다.
+     */
+    async function probeConnectivity() {
+        // OS가 오프라인이라고 보고하면 바로 배너 표시
+        if (!navigator.onLine) {
+            showBanner();
+            return;
+        }
+        if (probeInFlight) return;
+        probeInFlight = true;
+        try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 4000);
+            await fetch('https://www.gstatic.com/generate_204', {
+                mode: 'no-cors',
+                cache: 'no-store',
+                signal: controller.signal
+            });
+            clearTimeout(timeoutId);
+            hideBanner();
+        } catch (e) {
+            showBanner();
+        } finally {
+            probeInFlight = false;
         }
     }
 
-    window.addEventListener('online', updateOnlineStatus);
-    window.addEventListener('offline', updateOnlineStatus);
-    
-    // 초기 상태 확인
-    updateOnlineStatus();
+    window.addEventListener('online', probeConnectivity);
+    window.addEventListener('offline', showBanner);
+
+    // 초기 상태: navigator.onLine이 true면 배너를 숨기고 시작
+    // (잘못된 오프라인 오표시 방지). 이후 주기적으로 실제 연결 확인.
+    if (navigator.onLine) {
+        hideBanner();
+    } else {
+        showBanner();
+    }
+
+    // 주기적 연결 확인 (30초 간격)
+    setInterval(probeConnectivity, 30000);
 }
 
 // ============================================================
