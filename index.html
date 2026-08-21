@@ -1088,6 +1088,34 @@
                 </div>
             </section>
         </main>
+
+        <!-- Mobile Bottom Tab Bar (모바일 하단 네비게이션) -->
+        <nav class="mobile-tab-bar" id="mobile-tab-bar">
+            <a href="./docs/user_manual.html" target="_blank" class="mobile-tab-item">
+                <i class="fa-solid fa-circle-info"></i>
+                <span>매뉴얼</span>
+            </a>
+            <button class="mobile-tab-item" data-target="textbook-reader-view">
+                <i class="fa-solid fa-book-open"></i>
+                <span>교재</span>
+            </button>
+            <button class="mobile-tab-item active" data-target="dashboard-view">
+                <i class="fa-solid fa-chart-pie"></i>
+                <span>대시보드</span>
+            </button>
+            <button class="mobile-tab-item" data-target="flashcard-view">
+                <i class="fa-solid fa-layer-group"></i>
+                <span>카드</span>
+            </button>
+            <button class="mobile-tab-item" data-target="quiz-view">
+                <i class="fa-solid fa-circle-question"></i>
+                <span>퀴즈</span>
+            </button>
+            <button class="mobile-tab-item" data-target="exam-view">
+                <i class="fa-solid fa-file-lines"></i>
+                <span>모의고사</span>
+            </button>
+        </nav>
     </div>
 
     <!-- Sanitizer utility (XSS-safe HTML injection helper) - loaded first, no dependencies -->

@@ -38,11 +38,86 @@ function setupNavigation() {
         item.addEventListener('click', () => {
             const target = item.getAttribute('data-target');
             
-            // 네비게이션 활성화 클래스 변경
+            // 네비게이션 활성화 클래스 변경 (사이드바 + 모바일 탭 바 모두 동기화)
             navItems.forEach(nav => nav.classList.remove('active'));
             item.classList.add('active');
+            
+            // 모바일 탭 바 활성화 상태 동기화
+            const mobileTabItems = document.querySelectorAll('.mobile-tab-item');
+            mobileTabItems.forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.getAttribute('data-target') === target) {
+                    tab.classList.add('active');
+                }
+            });
 
             // 교재 읽기 집중 모드 해제 (다른 뷰로 이동 시)
+            if (target !== 'textbook-reader-view' && document.body.classList.contains('reader-focus-mode')) {
+                document.body.classList.remove('reader-focus-mode');
+                const focusBtn = document.getElementById('reader-focus-toggle');
+                if (focusBtn) {
+                    focusBtn.classList.remove('active');
+                    focusBtn.innerHTML = '<i class="fa-solid fa-expand"></i> <span>집중 모드</span>';
+                }
+            }
+
+            // 리더 화면을 벗어나면 재생 중인 오디오 정지
+            if (target !== 'textbook-reader-view' && typeof stopReaderAudio === 'function') {
+                stopReaderAudio();
+            }
+            
+            // 섹션 토글
+            sections.forEach(sec => sec.classList.remove('active'));
+            document.getElementById(target).classList.add('active');
+            
+            // 헤더 텍스트 변경
+            if (titlesMap[target]) {
+                viewTitle.textContent = titlesMap[target].title;
+                viewSubtitle.textContent = titlesMap[target].subtitle;
+            }
+            
+            state.currentView = target;
+            
+            // 각 뷰 진입 시 렌더링 갱신
+            if (target === 'dashboard-view') {
+                renderDashboard();
+                checkExamDraft();
+            } else if (target === 'flashcard-view') {
+                loadFlashcards();
+            } else if (target === 'review-view') {
+                renderReviewList();
+            } else if (target === 'trainer-view') {
+                initTrainer();
+            } else if (target === 'textbook-view') {
+                renderTextbookSearch();
+            } else if (target === 'textbook-reader-view') {
+                renderTextbookReader();
+            } else if (target === 'dictionary-view') {
+                renderDictionary();
+            }
+        });
+    });
+
+    // 모바일 하단 탭 바 클릭 이벤트 설정
+    const mobileTabItems = document.querySelectorAll('.mobile-tab-item');
+    mobileTabItems.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const target = tab.getAttribute('data-target');
+            if (!target) return; // 외부 링크(매뉴얼)는 제외
+            
+            // 모바일 탭 바 활성화 상태 변경
+            mobileTabItems.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            
+            // 사이드바 네비게이션 활성화 상태 동기화 (클릭 이벤트는 발생시키지 않음)
+            navItems.forEach(nav => {
+                nav.classList.remove('active');
+                if (nav.getAttribute('data-target') === target) {
+                    nav.classList.add('active');
+                }
+            });
+
+            // 교재 읽기 집중 모드 해제
             if (target !== 'textbook-reader-view' && document.body.classList.contains('reader-focus-mode')) {
                 document.body.classList.remove('reader-focus-mode');
                 const focusBtn = document.getElementById('reader-focus-toggle');
