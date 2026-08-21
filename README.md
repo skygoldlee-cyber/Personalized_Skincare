@@ -71,6 +71,9 @@
 
 ```
 ├── index.html / style.css      # 앱 진입점·전역 스타일
+├── manifest.webmanifest        # PWA 매니페스트 (앱 이름/아이콘/테마)
+├── sw.js                       # PWA Service Worker (오프라인 캐시)
+├── icons/                      # PWA 아이콘 (192/512/maskable)
 ├── src/                        # 애플리케이션 소스
 │   ├── app.js                  # 메인 로직 (라우팅·상태·렌더링)
 │   ├── charts.js               # SVG 차트

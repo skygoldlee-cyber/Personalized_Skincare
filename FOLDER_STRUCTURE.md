@@ -14,11 +14,18 @@ Personalized Skincare/
 │
 ├── 📄 index.html                    ← ✅ Vercel 배포 (앱 진입점)
 ├── 📄 style.css                     ← ✅ Vercel 배포 (전역 스타일시트)
+├── 📄 manifest.webmanifest          ← 🆕 PWA 매니페스트 (앱 이름/아이콘/테마)
+├── 📄 sw.js                         ← 🆕 PWA Service Worker (오프라인 캐시)
 ├── 📄 serve.js                      ← 로컬 개발 서버 (Node.js HTTP 서버)
 ├── 📄 FOLDER_STRUCTURE.md           ← 본 문서 (폴터구조 설명)
-├── 📄 vercel.json                   ← 🆕 Vercel SPA 설정
-├── 📄 .vercelignore                 ← 🆕 Vercel 배포 제외 목록
-├── 📄 .gitignore                    ← 🆕 Git 추적 제외 목록
+├── 📄 vercel.json                   ← Vercel SPA 설정
+├── 📄 .vercelignore                 ← Vercel 배포 제외 목록
+├── 📄 .gitignore                    ← Git 추적 제외 목록
+│
+├── 📂 icons/                        ← ✅ Vercel 배포 (PWA 아이콘)
+│   ├── icon-192.png                 ← 192×192 앱 아이콘
+│   ├── icon-512.png                 ← 512×512 앱 아이콘
+│   └── icon-maskable-512.png        ← 마스커블 아이콘 (Android 적응형)
 │
 ├── 📂 src/                          ← ✅ Vercel 배포 (애플리케이션 소스 코드)
 │   ├── app.js                       ← 메인 앱 로직 (SPA 라우팅, 상태 관리, UI 렌더링)
