@@ -467,6 +467,43 @@ graph TD
             <br>· <strong>인쇄/PDF 호환</strong>: PDF 출력이나 인쇄 시 최적화가 임시 자동 해제되어 내용 누락 없이 깨끗하게 문서 전체가 복원 출력되도록 지원합니다.</p>
         </div>
 
+        <h2><i class="fa-solid fa-mobile-screen-button"></i> 9. 📲 PWA 설치 — 홈 화면에 앱처럼 추가하기 <span style="font-size: 0.8rem; background: var(--color-primary); color: #fff; padding: 2px 6px; border-radius: 4px; margin-left: 5px;">신규!</span></h2>
+        <p>본 플랫폼은 <strong>PWA(Progressive Web App)</strong>로 제작되어, 스마트폰이나 PC의 홈 화면에 일반 앱처럼 설치하여 사용할 수 있습니다. 설치 후에는 브라우저 주소창 없이 전체 화면으로 실행되며, 한 번 방문한 핵심 화면·데이터는 <strong>오프라인</strong>에서도 열립니다.</p>
+
+        <div class="highlight-box" style="background: rgba(6, 182, 212, 0.05); border-left-color: var(--color-primary);">
+            <h4 style="color: var(--color-primary);">⬇️ 앱 안 '앱 설치' 버튼 (가장 쉬운 방법)</h4>
+            <p>화면 <strong>우측 상단 헤더</strong>의 <code>⬇ 앱 설치</code> 버튼을 누르세요.
+            <br>· <strong>설치 가능한 경우</strong>: 브라우저 네이티브 설치 팝업(예: <code>Cosmetic Pass 설치</code>)이 바로 뜨며, <code>설치</code>를 누륾만으로 완료됩니다.
+            <br>· <strong>네이티브 팝업이 뜨지 않는 경우</strong>(모바일 초기 방문, iOS 등): 기기에 맞는 <strong>그림 설치 안내 모달</strong>이 자동으로 표시됩니다. Android·iPhone·기타 환경을 자동 감지하여 각기 다른 단계별 안내를 보여줍니다.
+            <br>· <strong>이미 설치된 경우</strong>: 버튼이 자동으로 숨겨집니다.</p>
+        </div>
+
+        <div class="highlight-box" style="background: rgba(139, 92, 246, 0.05); border-left-color: var(--color-secondary);">
+            <h4 style="color: var(--color-secondary);">🤖 Android — 브라우저별 수동 설치 경로</h4>
+            <p>브라우저마다 메뉴 위치가 다륯므로, 아래 중 본인의 브라우저를 따라 하세요.
+            <br>· <strong>Chrome</strong>: 주소창 <strong>오른쪽 ⋮(세로 점 3개)</strong> → <code>앱 설치</code> 또는 <code>홈 화면에 추가</code>
+            <br>· <strong>Samsung Internet</strong>: 화면 <strong>하단 ≡(가로 줄 3개)</strong> → <code>페이지를 홈 화면에 추가</code>
+            <br>· <strong>Whale / 기타</strong>: 주소창 주변의 메뉴 버튼 → <code>홈 화면에 추가</code>
+            <br>· <strong>주소창에 다운로드 아이콘(⬇)이 보이는 경우</strong>: 메뉴를 거치지 않고 해당 아이콘을 바로 눌러도 설치됩니다.</p>
+        </div>
+
+        <div class="highlight-box" style="background: rgba(16, 185, 129, 0.05); border-left-color: var(--color-success);">
+            <h4 style="color: var(--color-success);">🍎 iPhone / iPad (Safari)</h4>
+            <p>iOS는 브라우저 정책상 <strong>수동 설치만</strong> 지원됩니다.
+            <br>· <strong>1단계</strong>: Safari 하단(또는 상단)의 <strong>공유 버튼(□↑)</strong>을 누릅니다.
+            <br>· <strong>2단계</strong>: 공유 시트를 아래로 스크롤하여 <code>홈 화면에 추가</code>를 선택합니다.
+            <br>· <strong>3단계</strong>: 우측 상단 <code>추가</code>를 누륾면 홈 화면에 앱 아이콘이 생성됩니다.
+            <br>· <strong>주의</strong>: Chrome 등 타사 브라우저에서는 설치가 되지 않으므로 반드시 <strong>Safari</strong>로 접속하세요.</p>
+        </div>
+
+        <div class="highlight-box" style="background: rgba(255, 255, 255, 0.02); border-left-color: var(--color-text-muted);">
+            <h4 style="color: var(--color-text-muted);">📡 오프라인 지원 범위 & 설치 해제</h4>
+            <p>· <strong>오프라인에서 열리는 것</strong>: 앱 화면(HTML/CSS/JS), 플래시카드·퀴즈·모의고사 데이터, 교재 본문.
+            <br>· <strong>오프라인에서 제한되는 것</strong>: 교재 오디오(MP3) 스트리밍은 용량 관계로 캐시에서 제외되어 인터넷 연결이 필요합니다.
+            <br>· <strong>설치 해제</strong>: 홈 화면의 앱 아이콘 길게 누르기 → <code>삭제</code>(Android) / <code>앱 삭제</code>(iOS), 또는 브라우저 설정의 설치된 앱 관리 메뉴에서 제거할 수 있습니다.
+            <br>· <strong>업데이트</strong>: 새 버전이 배포되면 다음 접속 시 자동으로 최신 버전이 적용되며, 필요한 경우 화면이 1회 자동 새로고침됩니다.</p>
+        </div>
+
         <div class="manual-footer">
             <p>© 2026 Cosmetic Pass. All Rights Reserved.</p>
         </div>
