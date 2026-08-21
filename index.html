@@ -2,8 +2,18 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>맞춤형화장품 조제관리사 스마트 학습 플랫폼</title>
+    <!-- PWA: Web App Manifest & Theme -->
+    <meta name="description" content="2026 맞춤형화장품 조제관리사 시험 대비 스마트 학습 플랫폼">
+    <meta name="theme-color" content="#0b0f19">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+    <!-- PWA: iOS Safari 홈 화면 추가 지원 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Cosmetic Pass">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1145,5 +1155,15 @@
     <script src="src/state.js" defer></script>
     <!-- App Logic Script (defer로 DOM 준비 후 실행) -->
     <script src="src/app.js" defer></script>
+    <!-- PWA: Service Worker 등록 -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js').catch((err) => {
+                    console.warn('[PWA] Service Worker 등록 실패:', err);
+                });
+            });
+        }
+    </script>
 </body>
 </html>
