@@ -1174,6 +1174,8 @@
         (function setupPWAInstall() {
             let deferredPrompt = null;
             const installBtn = document.getElementById('pwa-install-btn');
+            
+            console.log('[PWA] 설치 버튼 초기화:', installBtn ? '발견됨' : '발견되지 않음');
 
             // beforeinstallprompt 이벤트 캡처
             window.addEventListener('beforeinstallprompt', (e) => {
@@ -1185,14 +1187,20 @@
                 // 설치 버튼 표시
                 if (installBtn) {
                     installBtn.style.display = 'inline-flex';
+                    console.log('[PWA] 설치 버튼 표시됨');
+                } else {
+                    console.warn('[PWA] 설치 버튼을 찾을 수 없습니다.');
                 }
             });
 
             // 설치 버튼 클릭 핸들러
             if (installBtn) {
                 installBtn.addEventListener('click', async () => {
+                    console.log('[PWA] 설치 버튼 클릭됨');
                     if (!deferredPrompt) {
                         console.log('[PWA] 설치 프롬프트가 아직 준비되지 않았습니다.');
+                        // 사용자에게 수동 설치 방법 안내
+                        alert('Chrome 메뉴(⋮) → "Cosmetic Pass 설치"를 선택하거나, 주소창의 설치 아이콘을 클릭하세요.');
                         return;
                     }
                     // 설치 프롬프트 표시
@@ -1219,10 +1227,20 @@
             // 이미 설치된 경우 버튼 숨기기
             if (window.matchMedia('(display-mode: standalone)').matches ||
                 window.navigator.standalone === true) {
+                console.log('[PWA] 이미 설치된 상태입니다.');
                 if (installBtn) {
                     installBtn.style.display = 'none';
                 }
             }
+            
+            // 3초 후에도 beforeinstallprompt가 발생하지 않으면 수동 설치 버튼 표시
+            setTimeout(() => {
+                if (!deferredPrompt && installBtn && installBtn.style.display === 'none') {
+                    console.log('[PWA] beforeinstallprompt 미발생 - 수동 설치 버튼 표시');
+                    installBtn.style.display = 'inline-flex';
+                    installBtn.innerHTML = '<i class="fa-solid fa-download"></i> <span class="btn-text">설치 방법</span>';
+                }
+            }, 3000);
         })();
     </script>
 </body>
