@@ -11,7 +11,7 @@
  * ⚠️ 배포 시 CACHE_VERSION을 올려야 구 캐시가 정리됩니다.
  * ============================================================ */
 
-const CACHE_VERSION = 'v1';
+const CACHE_VERSION = 'v2';
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${CACHE_VERSION}`;
 const CDN_CACHE = `cosmetic-pass-cdn-${CACHE_VERSION}`;
@@ -107,6 +107,14 @@ self.addEventListener('fetch', (event) => {
   // 3) 동일 출처 요청만 처리 (그 외 cross-origin은 네트워크 직행)
   if (url.origin !== self.location.origin) return;
 
+  // 3-1) 페이지 네비게이션(HTML 문서) → Network First
+  // (배포 직후 구버전 HTML이 SW 캐시에서 제공되는 것을 방지.
+  //  온라인이면 항상 최신 HTML, 오프라인이면 캐시 폴리백)
+  if (request.mode === 'navigate') {
+    event.respondWith(networkFirst(request, SHELL_CACHE));
+    return;
+  }
+
   // 4) 학습 데이터 파일 → Cache First
   // (루트/서브디렉터리 배포 모두 대응: 경로 어디에 있든 /data/ 세그먼트 매칭)
   if (url.pathname.includes('/data/')) {
@@ -121,6 +129,22 @@ self.addEventListener('fetch', (event) => {
 /* ------------------------------------------------------------
  * 캐시 전략 구현
  * ---------------------------------------------------------- */
+
+/** Network First: 네트워크 우선, 실패 시 캐시 폴리백 (HTML 문서용) */
+async function networkFirst(request, cacheName) {
+  try {
+    const response = await fetch(request);
+    if (response.ok) {
+      const cache = await caches.open(cacheName);
+      cache.put(request, response.clone());
+    }
+    return response;
+  } catch (error) {
+    const cached = await caches.match(request);
+    if (cached) return cached;
+    return offlineFallback(request);
+  }
+}
 
 /** Cache First: 캐시 우선, 없으면 네트워크 후 캐시에 저장 */
 async function cacheFirst(request, cacheName) {
