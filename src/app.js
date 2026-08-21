@@ -17,8 +17,13 @@ function initApp() {
 
 // --- 가로/세로 보기 토글 기능 ---
 function setupOrientationToggle() {
+    console.log('[Orientation] setupOrientationToggle called');
     const toggleBtn = document.getElementById('orientation-toggle-btn');
-    if (!toggleBtn) return;
+    if (!toggleBtn) {
+        console.log('[Orientation] Toggle button not found in DOM');
+        return;
+    }
+    console.log('[Orientation] Toggle button found:', toggleBtn);
     
     // 저장된 방향 설정 불러오기
     const savedOrientation = localStorage.getItem('preferredOrientation');
