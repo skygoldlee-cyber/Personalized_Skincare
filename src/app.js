@@ -444,6 +444,7 @@ initApp = function() {
     originalInitApp();
     setupOfflineDetection();
     setupModalBackHandler();
+    setupOrientationToggle();
 };
 
 // --- 글로벌 학습 통계 업데이트 ---
