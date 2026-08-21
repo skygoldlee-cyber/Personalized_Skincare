@@ -3569,6 +3569,40 @@ body.reader-focus-mode .reader-readable-width {
         flex-wrap: wrap !important;
     }
 
+    /* 데일리 챌린지 카드 모바일 최적화 */
+    .daily-challenge-card {
+        padding: 1.25rem !important;
+    }
+
+    .daily-challenge-card > div:first-child {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.75rem !important;
+        margin-bottom: 1rem !important;
+    }
+
+    .daily-challenge-card .streak-badge {
+        align-self: flex-start !important;
+        font-size: 0.85rem !important;
+        padding: 0.4rem 0.8rem !important;
+    }
+
+    .daily-challenge-card > div:last-child {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 0.75rem !important;
+    }
+
+    .daily-challenge-card #daily-challenge-status {
+        text-align: center !important;
+        width: 100% !important;
+    }
+
+    .daily-challenge-card #start-daily-btn {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+
     /* 테이블 가로 스크롤 */
     table,
     .table,
