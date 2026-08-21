@@ -38,6 +38,9 @@ function setupNavigation() {
         item.addEventListener('click', () => {
             const target = item.getAttribute('data-target');
             
+            // 현재 뷰 스크롤 위치 저장
+            saveScrollPosition(state.currentView);
+            
             // 네비게이션 활성화 클래스 변경 (사이드바 + 모바일 탭 바 모두 동기화)
             navItems.forEach(nav => nav.classList.remove('active'));
             item.classList.add('active');
@@ -95,6 +98,9 @@ function setupNavigation() {
             } else if (target === 'dictionary-view') {
                 renderDictionary();
             }
+            
+            // 새 뷰 스크롤 위치 복원
+            restoreScrollPosition(target);
         });
     });
 
@@ -104,6 +110,9 @@ function setupNavigation() {
         tab.addEventListener('click', () => {
             const target = tab.getAttribute('data-target');
             if (!target) return; // 외부 링크(매뉴얼)는 제외
+            
+            // 현재 뷰 스크롤 위치 저장
+            saveScrollPosition(state.currentView);
             
             // 모바일 탭 바 활성화 상태 변경
             mobileTabItems.forEach(t => t.classList.remove('active'));
@@ -161,6 +170,9 @@ function setupNavigation() {
             } else if (target === 'dictionary-view') {
                 renderDictionary();
             }
+            
+            // 새 뷰 스크롤 위치 복원
+            restoreScrollPosition(target);
         });
     });
 }
@@ -171,11 +183,154 @@ function switchView(targetView) {
     if (targetView !== 'textbook-reader-view' && typeof stopReaderAudio === 'function') {
         stopReaderAudio();
     }
+    
+    // 현재 뷰 스크롤 위치 저장
+    saveScrollPosition(state.currentView);
+    
     const navItem = document.querySelector(`.nav-item[data-target="${targetView}"]`);
     if (navItem) {
         navItem.click();
     }
+    
+    // 새 뷰 스크롤 위치 복원
+    restoreScrollPosition(targetView);
 }
+
+// ============================================================
+// 모바일 UX 개선: 스크롤 위치 저장/복원
+// ============================================================
+const scrollPositions = {};
+
+function saveScrollPosition(viewId) {
+    const mainContent = document.querySelector('.main-content');
+    if (mainContent) {
+        scrollPositions[viewId] = mainContent.scrollTop;
+    }
+}
+
+function restoreScrollPosition(viewId) {
+    const mainContent = document.querySelector('.main-content');
+    if (mainContent && scrollPositions[viewId] !== undefined) {
+        // DOM 렌더링 완료 후 복원
+        requestAnimationFrame(() => {
+            mainContent.scrollTop = scrollPositions[viewId];
+        });
+    }
+}
+
+// ============================================================
+// 모바일 UX 개선: 오프라인 감지 및 배너 표시
+// ============================================================
+function setupOfflineDetection() {
+    const banner = document.getElementById('offline-banner');
+    if (!banner) return;
+
+    function updateOnlineStatus() {
+        if (navigator.onLine) {
+            banner.classList.remove('show');
+        } else {
+            banner.classList.add('show');
+        }
+    }
+
+    window.addEventListener('online', updateOnlineStatus);
+    window.addEventListener('offline', updateOnlineStatus);
+    
+    // 초기 상태 확인
+    updateOnlineStatus();
+}
+
+// ============================================================
+// 모바일 UX 개선: 모달 뒤로가기 버튼 대응
+// ============================================================
+let modalOpenState = false;
+
+function setupModalBackHandler() {
+    // 모달이 열릴 때 history 상태 추가
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+                const target = mutation.target;
+                if (target.classList.contains('modal') ||
+                    target.classList.contains('modal-content') ||
+                    target.id === 'reader-table-modal') {
+                    const isVisible = target.style.display !== 'none' &&
+                                     target.style.display !== '' ||
+                                     getComputedStyle(target).display !== 'none';
+                    
+                    if (isVisible && !modalOpenState) {
+                        modalOpenState = true;
+                        history.pushState({ modalOpen: true }, '');
+                    } else if (!isVisible && modalOpenState) {
+                        modalOpenState = false;
+                    }
+                }
+            }
+        });
+    });
+
+    // 주요 모달 요소들 관찰
+    document.querySelectorAll('.modal, .modal-content, [id$="-modal"]').forEach(el => {
+        observer.observe(el, { attributes: true });
+    });
+
+    // 뒤로가기 버튼 처리
+    window.addEventListener('popstate', (e) => {
+        if (modalOpenState) {
+            // 열린 모달 찾아서 닫기
+            const openModals = document.querySelectorAll('.modal, .modal-content, [id$="-modal"]');
+            openModals.forEach(modal => {
+                if (modal.style.display !== 'none' && modal.style.display !== '') {
+                    modal.style.display = 'none';
+                }
+            });
+            modalOpenState = false;
+        }
+    });
+}
+
+// ============================================================
+// 모바일 UX 개선: 로딩 상태 표시
+// ============================================================
+function showLoading(containerId, message = '로딩 중...') {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    
+    container.innerHTML = `
+        <div class="loading-state" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3rem; color: var(--color-text-muted);">
+            <div class="spinner" style="width: 40px; height: 40px; border: 3px solid var(--border-color); border-top-color: var(--color-primary); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 1rem;"></div>
+            <p>${message}</p>
+        </div>
+    `;
+}
+
+function hideLoading(containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    const loading = container.querySelector('.loading-state');
+    if (loading) {
+        loading.remove();
+    }
+}
+
+// 스피너 애니메이션을 위한 CSS 추가
+const spinnerStyle = document.createElement('style');
+spinnerStyle.textContent = `
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+`;
+document.head.appendChild(spinnerStyle);
+
+// ============================================================
+// 초기화 확장
+// ============================================================
+const originalInitApp = initApp;
+initApp = function() {
+    originalInitApp();
+    setupOfflineDetection();
+    setupModalBackHandler();
+};
 
 // --- 글로벌 학습 통계 업데이트 ---
 function updateGlobalStats() {

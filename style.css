@@ -3480,12 +3480,10 @@ body.reader-focus-mode .reader-readable-width {
 
 
 /* ============================================================
-   📱 모바일 최적화 (스마트폰 접속 대응)
-   - 100vw/100vh 고정으로 인한 가로 스크롤·잘림 방지
-   - 터치 타겟·폰트 크기·패딩 최적화
+   📱 태블릿 최적화 (769px ~ 900px)
+   - 사이드바를 상단 바 형태로 전환하되 하단 탭 바는 미사용
    ============================================================ */
-@media (max-width: 900px) {
-    /* 100vw 고정은 세로 스크롤바 폭만큼 가로 넘침을 유발 → 100% 로 완화 */
+@media (min-width: 769px) and (max-width: 900px) {
     .app-container {
         width: 100%;
         max-width: 100%;
@@ -3496,16 +3494,18 @@ body.reader-focus-mode .reader-readable-width {
 
     html, body {
         overflow-x: hidden;
-        /* iOS 주소창 높이 변동 대응 */
         min-height: 100%;
     }
 
-    /* 사이드바: 상단 바 형태로, 낮은 높이 + 가로 스크롤 nav */
+    /* 사이드바: 상단 바 형태 */
     .sidebar {
         position: sticky;
         top: 0;
         max-height: none;
         padding: 0.9rem 1rem;
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
     }
     .logo-area {
         margin-bottom: 0.75rem;
@@ -3551,7 +3551,7 @@ body.reader-focus-mode .reader-readable-width {
         line-height: 1.25;
     }
 
-    /* 카드·그리드 1열화 (인라인 grid-template-columns 고정값도 강제 해제) */
+    /* 카드·그리드 1열화 */
     .dashboard-grid,
     .analytics-grid,
     .grid,
@@ -3563,13 +3563,13 @@ body.reader-focus-mode .reader-readable-width {
         display: grid !important;
     }
 
-    /* 인라인 display:flex 가로 배치도 모바일에서는 세로로 */
+    /* 인라인 display:flex 가로 배치도 세로로 */
     [style*="display: flex"],
     [style*="display:flex"] {
         flex-wrap: wrap !important;
     }
 
-    /* 테이블은 가로 스크롤 허용 */
+    /* 테이블 가로 스크롤 */
     table,
     .table,
     .data-table {
@@ -3579,18 +3579,15 @@ body.reader-focus-mode .reader-readable-width {
         max-width: 100%;
     }
 
-    /* 이미지·캔버스·차트 넘침 방지 */
     img, canvas, svg, video {
         max-width: 100%;
         height: auto;
     }
 
-    /* 버튼·입력 터치 타겟 확대 */
     .btn, button, input, select, textarea {
         font-size: 1rem;
     }
 
-    /* 모달·팝업 여백 */
     .modal-content,
     .modal-body {
         max-width: 94vw;
@@ -3598,27 +3595,8 @@ body.reader-focus-mode .reader-readable-width {
     }
 }
 
-/* 소형 스마트폰 추가 미세 조정 */
-@media (max-width: 480px) {
-    .app-header h2,
-    .app-header .page-title {
-        font-size: 1.2rem;
-    }
-    .flashcard-wrapper {
-        height: 280px;
-    }
-    .nav-item {
-        font-size: 0.8rem;
-        padding: 0.5rem 0.7rem;
-    }
-    body {
-        /* 모바일에서 본문 기본 폰트 약간 축소 */
-        font-size: 0.95rem;
-    }
-}
-
 /* ============================================================
-   📱 모바일 앱 스타일 레이아웃 (하단 탭 바)
+   📱 모바일 앱 스타일 레이아웃 (≤768px, 하단 탭 바)
    - 스마트폰에서 사이드바를 숨기고 하단 네비게이션 바로 전환
    - 네이티브 앱과 유사한 UX 제공
    ============================================================ */
@@ -3643,11 +3621,11 @@ body.reader-focus-mode .reader-readable-width {
         flex: 1;
         overflow-y: auto;
         overflow-x: hidden;
-        padding-bottom: 70px; /* 하단 탭 바 높이만큼 패딩 */
+        padding-bottom: calc(70px + env(safe-area-inset-bottom, 0px)); /* safe-area 대응 */
         -webkit-overflow-scrolling: touch;
     }
 
-    /* 헤더 간소화 */
+    /* 헤더 간소화 + sticky */
     .app-header {
         padding: 1rem 1.25rem;
         position: sticky;
@@ -3667,24 +3645,36 @@ body.reader-focus-mode .reader-readable-width {
         display: none; /* 부제목 숨김으로 공간 확보 */
     }
 
+    /* 헤더 액션 버튼 터치 영역 확대 */
+    .header-actions .btn,
+    .header-actions button {
+        min-width: 44px;
+        min-height: 44px;
+        padding: 0.5rem !important;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
     /* 뷰 섹션 패딩 조정 */
     .view-section {
         padding: 1rem 1.25rem;
     }
 
-    /* 하단 탭 바에 네비게이션 복제 */
+    /* 하단 탭 바 - safe-area 대응 */
     .mobile-tab-bar {
         position: fixed;
         bottom: 0;
         left: 0;
         right: 0;
-        height: 70px;
+        height: calc(70px + env(safe-area-inset-bottom, 0px));
+        padding-bottom: env(safe-area-inset-bottom, 0px);
         background: var(--bg-sidebar);
         border-top: 1px solid var(--border-color);
         display: flex;
         justify-content: space-around;
-        align-items: center;
-        padding: 0 0.5rem;
+        align-items: flex-start;
+        padding-top: 0.5rem;
         z-index: 1000;
         -webkit-backdrop-filter: blur(12px);
         backdrop-filter: blur(12px);
@@ -3695,22 +3685,23 @@ body.reader-focus-mode .reader-readable-width {
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 0.25rem;
-        padding: 0.5rem;
+        gap: 0.2rem;
+        padding: 0.4rem 0.25rem;
         color: var(--color-text-muted);
-        font-size: 0.65rem;
+        font-size: 0.6rem;
         font-weight: 500;
         text-decoration: none;
         border: none;
         background: transparent;
         cursor: pointer;
-        transition: color 0.2s ease;
+        transition: color 0.2s ease, transform 0.1s ease;
         flex: 1;
-        max-width: 80px;
+        max-width: 72px;
+        min-height: 48px;
     }
 
     .mobile-tab-item i {
-        font-size: 1.25rem;
+        font-size: 1.2rem;
     }
 
     .mobile-tab-item.active {
@@ -3718,7 +3709,7 @@ body.reader-focus-mode .reader-readable-width {
     }
 
     .mobile-tab-item:active {
-        transform: scale(0.95);
+        transform: scale(0.92);
     }
 
     /* 통계 카드 그리드 2열로 변경 */
@@ -3782,7 +3773,14 @@ body.reader-focus-mode .reader-readable-width {
         width: 100%;
     }
 
-    /* 플래시카드 컨트롤 버튼 크기 조정 */
+    /* 플래시카드 높이 동적 조정 */
+    .flashcard-wrapper {
+        height: auto !important;
+        min-height: 320px;
+        max-height: 60vh;
+        aspect-ratio: 3/4;
+    }
+
     .flashcard-controls {
         flex-wrap: wrap;
         gap: 0.5rem;
@@ -3834,9 +3832,63 @@ body.reader-focus-mode .reader-readable-width {
         font-size: 0.7rem !important;
         padding: 0.2rem 0.5rem !important;
     }
+
+    /* 스켈레톤 로딩 애니메이션 */
+    .skeleton {
+        background: linear-gradient(90deg, var(--bg-card) 25%, rgba(255,255,255,0.05) 50%, var(--bg-card) 75%);
+        background-size: 200% 100%;
+        animation: skeleton-loading 1.5s infinite;
+        border-radius: var(--radius-sm);
+    }
+
+    @keyframes skeleton-loading {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+    }
+
+    /* 오프라인 배너 */
+    .offline-banner {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: var(--color-danger);
+        color: white;
+        text-align: center;
+        padding: 0.5rem;
+        font-size: 0.8rem;
+        z-index: 9999;
+        transform: translateY(-100%);
+        transition: transform 0.3s ease;
+    }
+
+    .offline-banner.show {
+        transform: translateY(0);
+    }
 }
 
-/* 매우 작은 화면 (iPhone SE 등) */
+/* 소형 스마트폰 (≤480px) 추가 미세 조정 */
+@media (max-width: 480px) {
+    .app-header h2,
+    .app-header .page-title {
+        font-size: 1.15rem;
+    }
+
+    .flashcard-wrapper {
+        min-height: 280px;
+    }
+
+    .nav-item {
+        font-size: 0.8rem;
+        padding: 0.5rem 0.7rem;
+    }
+
+    body {
+        font-size: 0.95rem;
+    }
+}
+
+/* 매우 작은 화면 (≤375px, iPhone SE 등) */
 @media (max-width: 375px) {
     .stats-grid {
         grid-template-columns: 1fr !important;
@@ -3847,7 +3899,12 @@ body.reader-focus-mode .reader-readable-width {
     }
 
     .mobile-tab-item i {
-        font-size: 1.4rem;
+        font-size: 1.35rem;
+    }
+
+    .mobile-tab-item {
+        min-height: 44px;
+        padding: 0.3rem;
     }
 }
 
