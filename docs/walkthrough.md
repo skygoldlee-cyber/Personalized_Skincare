@@ -183,3 +183,29 @@
 ### 검증
 - 프로덕션(https://personalized-skincare-study.vercel.app)에서 `sw.js`의 `CACHE_VERSION = 'v2'`, 설치 버튼, 모달 마크업, `docs/*.html` 200 응답 모두 확인.
 - 모바일에서 설치 버튼 클릭 시 플랫폼별 안내 모달 정상 표시 확인.
+
+---
+
+## 오프라인 배너 오표시 버그 수정 (2026-08-21)
+
+### 증상
+- 인터넷에 정상 연결된 환경에서도 `index.html` 초기 로드 시 "인터넷 연결이 끊어졌습니다. 일부 기능이 제한될 수 있습니다." 배너가 화면 상단에 표시됨.
+
+### 원인
+1. **CSS 스코프 문제 (주원인)**: `.offline-banner` 스타일이 `@media (max-width: 768px)` 블록 날부에만 정의되어 있었음. 데스크톱(>768px)에서는 기본 숨김 스타일(`transform: translateY(-100%)`)이 존재하지 않아, JS가 `.show` 클래스를 추가하지 않아도 배너가 일반 블록 요소로 항상 렌더링됨.
+2. **`navigator.onLine` 신뢰성 문제**: 해당 API는 실제 인터넷 도달 가능성이 아닌 OS 네트워크 어댑터 상태만 반영하므로 오탐지(false offline) 가능.
+
+### 해결
+- **`style.css`**: `.offline-banner` / `.offline-banner.show` 스타일을 미디어 쿼리 밖 전역 스코프로 이동 → 모든 화면 크기에서 기본 숨김 상태 유지.
+- **`src/app.js` `setupOfflineDetection()` 개선**:
+    - 초기 로드 시 `navigator.onLine`이 `true`이면 배너를 명시적으로 숨김(오탐지 방지).
+    - 실제 연결 확인용 경량 프로브(`https://www.gstatic.com/generate_204`, `no-cors`, 4초 타임아웃) 추가.
+    - 30초 간격 주기적 연결 상태 점검.
+    - `offline` 이벤트 시 즉시 배너 표시, `online` 이벤트 시 프로브 재확인 후 숨김.
+
+### 관련 커밋
+- `fix: 온라인 환경에서도 오프라인 배너가 표시되던 버그 수정` (`c2aaaa5`)
+
+### 검증
+- `node --check src/app.js` 문법 검증 통과.
+- 프로덕션 배포 완료 (https://personalized-skincare-study.vercel.app).
