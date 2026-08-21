@@ -3704,7 +3704,7 @@ body.reader-focus-mode .reader-readable-width {
         padding: 1rem 1.25rem;
     }
 
-    /* 하단 탭 바 - safe-area 대응 */
+    /* 하단 탭 바 - safe-area 대응 (스크롤 가능하도록 수정) */
     .mobile-tab-bar {
         position: fixed;
         bottom: 0;
@@ -3715,12 +3715,22 @@ body.reader-focus-mode .reader-readable-width {
         background: var(--bg-sidebar);
         border-top: 1px solid var(--border-color);
         display: flex;
-        justify-content: space-around;
+        justify-content: flex-start;
         align-items: flex-start;
         padding-top: 0.5rem;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
         z-index: 1000;
         -webkit-backdrop-filter: blur(12px);
         backdrop-filter: blur(12px);
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    .mobile-tab-bar::-webkit-scrollbar {
+        display: none;
     }
 
     .mobile-tab-item {
@@ -3729,7 +3739,7 @@ body.reader-focus-mode .reader-readable-width {
         align-items: center;
         justify-content: center;
         gap: 0.2rem;
-        padding: 0.4rem 0.25rem;
+        padding: 0.4rem 0.5rem;
         color: var(--color-text-muted);
         font-size: 0.6rem;
         font-weight: 500;
@@ -3738,7 +3748,8 @@ body.reader-focus-mode .reader-readable-width {
         background: transparent;
         cursor: pointer;
         transition: color 0.2s ease, transform 0.1s ease;
-        flex: 1;
+        flex: 0 0 auto;
+        min-width: 60px;
         max-width: 72px;
         min-height: 48px;
     }
