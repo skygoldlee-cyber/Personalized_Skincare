@@ -4168,9 +4168,9 @@ body.reader-focus-mode .reader-readable-width {
 
 /* ============================================================
    📱 모바일 가로보기 모드 (landscape) 지원 - 우선순위 높음
-   - 높이가 500px 이하인 가로 모드에서 레이아웃 최적화
+   - 가로가 세로보다 긴 화면에서 레이아웃 최적화
    ============================================================ */
-@media (max-height: 500px) and (orientation: landscape) {
+@media screen and (min-aspect-ratio: 1/1) and (max-width: 1024px) {
     /* 헤더 간소화 */
     .app-header {
         padding: 0.5rem 1rem !important;
@@ -4322,8 +4322,8 @@ body.reader-focus-mode .reader-readable-width {
     }
 }
 
-/* 가로보기에서 매우 낮은 높이 (400px 이하) 추가 최적화 */
-@media (max-height: 400px) and (orientation: landscape) {
+/* 가로보기에서 매우 넓은 화면 (16:9 이상) 추가 최적화 */
+@media screen and (min-aspect-ratio: 16/9) and (max-width: 1024px) {
     .app-header {
         padding: 0.25rem 0.75rem !important;
     }
