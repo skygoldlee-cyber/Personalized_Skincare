@@ -15,41 +15,12 @@ function initApp() {
     checkExamDraft();
 }
 
-// --- 가로/세로 보기 토글 기능 ---
+// --- 가로/세로 보기 ---
+// 실제 기기 회전 + 반응형 CSS가 가로/세로를 직접 처리하므로
+// 별도 토글 버튼은 사용하지 않는다. 과거에 저장된 landscape-mode 잔존 상태만 정리한다.
 function setupOrientationToggle() {
-    console.log('[Orientation] setupOrientationToggle called');
-    const toggleBtn = document.getElementById('orientation-toggle-btn');
-    if (!toggleBtn) {
-        console.log('[Orientation] Toggle button not found in DOM');
-        return;
-    }
-    console.log('[Orientation] Toggle button found:', toggleBtn);
-    
-    // 저장된 방향 설정 불러오기
-    const savedOrientation = localStorage.getItem('preferredOrientation');
-    if (savedOrientation === 'landscape') {
-        document.body.classList.add('landscape-mode');
-    }
-    
-    toggleBtn.addEventListener('click', () => {
-        console.log('[Orientation] Toggle button clicked');
-        document.body.classList.toggle('landscape-mode');
-        const isLandscape = document.body.classList.contains('landscape-mode');
-        console.log('[Orientation] landscape-mode class:', isLandscape);
-        
-        // 설정 저장
-        localStorage.setItem('preferredOrientation', isLandscape ? 'landscape' : 'portrait');
-        
-        // 아이콘 회전 애니메이션
-        const icon = toggleBtn.querySelector('i');
-        if (icon) {
-            icon.style.transform = isLandscape ? 'rotate(90deg)' : 'rotate(0deg)';
-        }
-        
-        // 토스트 알림
-        showOrientationToast(isLandscape);
-    });
-    console.log('[Orientation] Toggle button initialized');
+    document.body.classList.remove('landscape-mode');
+    try { localStorage.removeItem('preferredOrientation'); } catch (e) {}
 }
 
 // 방향 전환 알림 표시

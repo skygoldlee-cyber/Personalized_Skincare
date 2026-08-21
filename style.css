@@ -1854,7 +1854,7 @@ body {
     transform: rotate(180deg);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 768px), (orientation: landscape) and (max-height: 500px) {
     .limits-options-grid {
         grid-template-columns: 1fr;
     }
@@ -2815,7 +2815,7 @@ mark.txt-highlight {
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 768px), (orientation: landscape) and (max-height: 500px) {
     .textbook-reader-content {
         padding: 1rem;
         max-height: calc(100vh - 220px);
@@ -3462,7 +3462,7 @@ body.reader-focus-mode .reader-readable-width {
         display: none !important;
     }
 }
-@media (max-width: 768px) {
+@media (max-width: 768px), (orientation: landscape) and (max-height: 500px) {
     .reader-chapter-nav {
         flex-direction: column;
     }
@@ -3483,7 +3483,7 @@ body.reader-focus-mode .reader-readable-width {
    📱 태블릿 최적화 (769px ~ 900px)
    - 사이드바를 상단 바 형태로 전환하되 하단 탭 바는 미사용
    ============================================================ */
-@media (min-width: 769px) and (max-width: 900px) {
+@media (min-width: 769px) and (max-width: 900px) and (min-height: 501px) {
     .app-container {
         width: 100%;
         max-width: 100%;
@@ -3634,7 +3634,7 @@ body.reader-focus-mode .reader-readable-width {
    - 스마트폰에서 사이드바를 숨기고 하단 네비게이션 바로 전환
    - 네이티브 앱과 유사한 UX 제공
    ============================================================ */
-@media (max-width: 768px) {
+@media (max-width: 768px), (orientation: landscape) and (max-height: 500px) {
     /* 기존 상단 사이드바 완전히 숨김 */
     .sidebar {
         display: none !important;
@@ -4216,19 +4216,9 @@ body.reader-focus-mode .reader-readable-width {
     }
 }
 
-/* 모바일에서만 토글 버튼 표시 */
-@media (max-width: 768px) {
-    button#orientation-toggle-btn {
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        position: relative !important;
-        z-index: 100 !important;
-        pointer-events: auto !important;
-        cursor: pointer !important;
-    }
+/* 가로/세로 토글 버튼 비활성화 — 실제 화면 회전으로 대체되어 숨김 */
+#orientation-toggle-btn {
+    display: none !important;
 }
 
 /* ============================================================
@@ -4374,4 +4364,52 @@ body.landscape-mode .glass-card {
     padding: 1rem !important;
 }
 
+/* ============================================================
+   ð± ëìë³´ë ìì ¯í ëª¨ë°ì¼ 1ì´í + ë°ì¼ë¦¬ ì±ë¦°ì§ í¤ë ì ë ¬ êµì 
+   - ëª¨ë°ì¼ìì 2ì´ ê·¸ë¦¬ëê° ì ë¬´ëì ¸ ì ëª©ì´ ê¸ì ë¨ìë¡ ìª¼ê°ì§ë ë¬¸ì  í´ê²°
+   ============================================================ */
+@media (max-width: 768px), (orientation: landscape) and (max-height: 500px) {
+    /* ìì ¯ íì 1ì´ë¡ (ì¸ë¼ì¸ 2fr 1fr ë®ì´ì°ê¸°) */
+    .dashboard-widgets-row {
+        grid-template-columns: 1fr !important;
+    }
 
+    /* ë°ì¼ë¦¬ ì±ë¦°ì§ ì¹´ë: í¤ëë¥¼ ì¸ë¡ë¡ ìì ì ëª©/ë±ì§ ì¶©ë ë°©ì§ */
+    .daily-challenge-card {
+        padding: 1.25rem !important;
+    }
+    .daily-challenge-card > div:first-child {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.75rem !important;
+    }
+    /* ìì´ì½+ì ëª© ë¬¶ìì ê°ë¡ ì ì§ */
+    .daily-challenge-card > div:first-child > div:first-child {
+        min-width: 0 !important;
+        flex-wrap: nowrap !important;
+    }
+    /* ì ëª© í ì¤ ì ì§ â "5ë¶" ë¶ë¦¬ ë°©ì§ */
+    .daily-challenge-card h4 {
+        font-size: 1.1rem !important;
+        white-space: nowrap !important;
+    }
+    .daily-challenge-card .streak-badge {
+        align-self: flex-start !important;
+        white-space: nowrap !important;
+        flex-shrink: 0 !important;
+    }
+    /* íë¨ ìí/ë²í¼ë ì¸ë¡ë¡ */
+    .daily-challenge-card > div:last-child {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 0.75rem !important;
+    }
+    .daily-challenge-card #daily-challenge-status {
+        text-align: center !important;
+        width: 100% !important;
+    }
+    .daily-challenge-card #start-daily-btn {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+}
