@@ -4179,6 +4179,10 @@ body.reader-focus-mode .reader-readable-width {
     min-height: 44px !important;
     border-radius: 8px !important;
     transition: transform 0.3s ease !important;
+    position: relative !important;
+    z-index: 100 !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
 }
 
 #orientation-toggle-btn:hover {
@@ -4220,6 +4224,10 @@ body.reader-focus-mode .reader-readable-width {
         justify-content: center !important;
         visibility: visible !important;
         opacity: 1 !important;
+        position: relative !important;
+        z-index: 100 !important;
+        pointer-events: auto !important;
+        cursor: pointer !important;
     }
 }
 
