@@ -1137,6 +1137,97 @@
         </nav>
     </div>
 
+    <!-- PWA 설치 안내 모달 (iOS/Android 분기) -->
+    <div id="pwa-install-modal" class="pwa-install-modal" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="pwa-modal-title">
+        <div class="pwa-modal-backdrop" id="pwa-modal-backdrop"></div>
+        <div class="pwa-modal-card">
+            <div class="pwa-modal-header">
+                <h3 id="pwa-modal-title"><i class="fa-solid fa-download"></i> 앱 설치하기</h3>
+                <button type="button" class="pwa-modal-close" id="pwa-modal-close" aria-label="닫기">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Android Chrome 안내 -->
+            <div class="pwa-modal-body" id="pwa-guide-android" style="display: none;">
+                <p class="pwa-modal-lead">Chrome에서 아래 순서로 설치하세요.</p>
+                <ol class="pwa-steps">
+                    <li>
+                        <span class="pwa-step-num">1</span>
+                        <span class="pwa-step-text">주소창 오른쪽의 <strong>메뉴(⋮)</strong> 버튼을 누르세요.</span>
+                        <svg class="pwa-step-illust" viewBox="0 0 200 60" aria-hidden="true">
+                            <rect x="0" y="0" width="200" height="60" rx="8" fill="#1e2433"/>
+                            <rect x="8" y="18" width="140" height="24" rx="12" fill="#2a3247"/>
+                            <circle cx="24" cy="30" r="5" fill="#8ab4f8"/>
+                            <text x="40" y="35" fill="#c7d0e0" font-size="11">personalized-skincare...</text>
+                            <circle cx="180" cy="22" r="2.5" fill="#e8eaed"/>
+                            <circle cx="180" cy="30" r="2.5" fill="#e8eaed"/>
+                            <circle cx="180" cy="38" r="2.5" fill="#e8eaed"/>
+                        </svg>
+                    </li>
+                    <li>
+                        <span class="pwa-step-num">2</span>
+                        <span class="pwa-step-text">메뉴에서 <strong>"앱 설치"</strong> 또는 <strong>"홈 화면에 추가"</strong>를 선택하세요.</span>
+                        <svg class="pwa-step-illust" viewBox="0 0 200 90" aria-hidden="true">
+                            <rect x="40" y="0" width="160" height="90" rx="10" fill="#1e2433"/>
+                            <rect x="52" y="14" width="136" height="22" rx="4" fill="#2a3247"/>
+                            <text x="60" y="29" fill="#e8eaed" font-size="11">페이지 정보</text>
+                            <rect x="52" y="42" width="136" height="30" rx="4" fill="#0f6b3a"/>
+                            <path d="M64 57 l4 4 8 -9" stroke="#fff" stroke-width="2" fill="none"/>
+                            <text x="82" y="61" fill="#fff" font-size="12" font-weight="bold">앱 설치</text>
+                        </svg>
+                    </li>
+                    <li>
+                        <span class="pwa-step-num">3</span>
+                        <span class="pwa-step-text">확인 팝업에서 <strong>"설치"</strong>를 누륮면 홈 화면에 추가됩니다.</span>
+                    </li>
+                </ol>
+                <p class="pwa-tip"><i class="fa-solid fa-circle-info"></i> 주소창에 <i class="fa-solid fa-download"></i> 아이콘이 보이면 바로 눌러도 됩니다.</p>
+            </div>
+
+            <!-- iOS Safari 안내 -->
+            <div class="pwa-modal-body" id="pwa-guide-ios" style="display: none;">
+                <p class="pwa-modal-lead">Safari에서 아래 순서로 설치하세요.</p>
+                <ol class="pwa-steps">
+                    <li>
+                        <span class="pwa-step-num">1</span>
+                        <span class="pwa-step-text">화면 하단의 <strong>공유</strong> 버튼을 누르세요.</span>
+                        <svg class="pwa-step-illust" viewBox="0 0 200 60" aria-hidden="true">
+                            <rect x="0" y="0" width="200" height="60" rx="8" fill="#1e2433"/>
+                            <rect x="70" y="12" width="60" height="36" rx="6" fill="#0a84ff"/>
+                            <path d="M100 20 v14 M94 26 l6 -7 6 7 M92 38 h16" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                            <text x="138" y="34" fill="#c7d0e0" font-size="11">공유</text>
+                        </svg>
+                    </li>
+                    <li>
+                        <span class="pwa-step-num">2</span>
+                        <span class="pwa-step-text">메뉴를 아래로 스크롤해 <strong>"홈 화면에 추가"</strong>를 선택하세요.</span>
+                        <svg class="pwa-step-illust" viewBox="0 0 200 90" aria-hidden="true">
+                            <rect x="40" y="0" width="160" height="90" rx="10" fill="#1e2433"/>
+                            <rect x="52" y="14" width="136" height="26" rx="6" fill="#2a3247"/>
+                            <text x="60" y="31" fill="#e8eaed" font-size="11">즐겨찾기에 추가</text>
+                            <rect x="52" y="48" width="136" height="30" rx="6" fill="#2f6fed"/>
+                            <rect x="60" y="55" width="16" height="16" rx="3" fill="#fff" opacity="0.9"/>
+                            <path d="M64 63 h8 M68 59 v8" stroke="#2f6fed" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+                            <text x="84" y="68" fill="#fff" font-size="12" font-weight="bold">홈 화면에 추가</text>
+                        </svg>
+                    </li>
+                    <li>
+                        <span class="pwa-step-num">3</span>
+                        <span class="pwa-step-text">오른쪽 상단의 <strong>"추가"</strong>를 누륮면 완료됩니다.</span>
+                    </li>
+                </ol>
+                <p class="pwa-tip"><i class="fa-solid fa-circle-info"></i> iOS는 Safari에서만 홈 화면 추가가 가능합니다.</p>
+            </div>
+
+            <!-- 일반/데스크톱 안내 -->
+            <div class="pwa-modal-body" id="pwa-guide-generic" style="display: none;">
+                <p class="pwa-modal-lead">브라우저 메뉴에서 설치 옵션을 찾아주세요.</p>
+                <p class="pwa-tip"><i class="fa-solid fa-circle-info"></i> Chrome: 메뉴(⋮) → "앱 설치" / Safari(Mac): 파일 → "홈 화면에 추가"</p>
+            </div>
+        </div>
+    </div>
+
     <!-- Sanitizer utility (XSS-safe HTML injection helper) - loaded first, no dependencies -->
     <script src="src/sanitize.js"></script>
     <!--
@@ -1217,14 +1308,58 @@
                 }
             });
 
+            // 설치 안내 모달 제어 (iOS/Android 분기)
+            const installModal = document.getElementById('pwa-install-modal');
+            const guideAndroid = document.getElementById('pwa-guide-android');
+            const guideIos = document.getElementById('pwa-guide-ios');
+            const guideGeneric = document.getElementById('pwa-guide-generic');
+            const modalCloseBtn = document.getElementById('pwa-modal-close');
+            const modalBackdrop = document.getElementById('pwa-modal-backdrop');
+
+            function detectPlatform() {
+                const ua = navigator.userAgent || '';
+                if (/iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) {
+                    return 'ios';
+                }
+                if (/android/i.test(ua)) {
+                    return 'android';
+                }
+                return 'generic';
+            }
+
+            function openInstallModal() {
+                if (!installModal) return;
+                const platform = detectPlatform();
+                console.log('[PWA] 설치 안내 모달 표시 - 플랫폼:', platform);
+                if (guideAndroid) guideAndroid.style.display = platform === 'android' ? 'block' : 'none';
+                if (guideIos) guideIos.style.display = platform === 'ios' ? 'block' : 'none';
+                if (guideGeneric) guideGeneric.style.display = platform === 'generic' ? 'block' : 'none';
+                installModal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeInstallModal() {
+                if (!installModal) return;
+                installModal.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+
+            if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeInstallModal);
+            if (modalBackdrop) modalBackdrop.addEventListener('click', closeInstallModal);
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && installModal && installModal.style.display === 'flex') {
+                    closeInstallModal();
+                }
+            });
+
             // 설치 버튼 클릭 핸들러
             if (installBtn) {
                 installBtn.addEventListener('click', async () => {
                     console.log('[PWA] 설치 버튼 클릭됨');
                     if (!deferredPrompt) {
                         console.log('[PWA] 설치 프롬프트가 아직 준비되지 않았습니다.');
-                        // 사용자에게 수동 설치 방법 안내
-                        alert('Chrome 메뉴(⋮) → "Cosmetic Pass 설치"를 선택하거나, 주소창의 설치 아이콘을 클릭하세요.');
+                        // 플랫폼별 설치 안내 모달 표시
+                        openInstallModal();
                         return;
                     }
                     // 설치 프롬프트 표시

@@ -3951,4 +3951,169 @@ body.reader-focus-mode .reader-readable-width {
     }
 }
 
+/* ============================================================
+   📲 PWA 설치 안내 모달 (iOS/Android 분기 가이드)
+   ============================================================ */
+.pwa-install-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.pwa-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+}
+
+.pwa-modal-card {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    max-height: 86vh;
+    overflow-y: auto;
+    background: var(--bg-card, #171d2b);
+    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    animation: pwaModalIn 0.25s ease;
+}
+
+@keyframes pwaModalIn {
+    from { opacity: 0; transform: translateY(16px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.pwa-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.1rem 1.25rem;
+    border-bottom: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+}
+
+.pwa-modal-header h3 {
+    margin: 0;
+    font-size: 1.05rem;
+    color: var(--color-text-main, #e8eaed);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.pwa-modal-close {
+    background: transparent;
+    border: none;
+    color: var(--color-text-muted, #9aa3b2);
+    font-size: 1.2rem;
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.pwa-modal-close:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--color-text-main, #e8eaed);
+}
+
+.pwa-modal-body {
+    padding: 1.25rem;
+}
+
+.pwa-modal-lead {
+    margin: 0 0 1rem;
+    color: var(--color-text-main, #e8eaed);
+    font-size: 0.95rem;
+}
+
+.pwa-steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+}
+
+.pwa-steps li {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    grid-template-areas:
+        "num text"
+        "num illust";
+    gap: 0.25rem 0.75rem;
+    align-items: start;
+}
+
+.pwa-step-num {
+    grid-area: num;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--color-primary, #06b6d4);
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pwa-step-text {
+    grid-area: text;
+    color: var(--color-text-main, #e8eaed);
+    font-size: 0.9rem;
+    line-height: 1.45;
+}
+
+.pwa-step-text strong {
+    color: var(--color-primary-light, var(--color-primary, #06b6d4));
+}
+
+.pwa-step-illust {
+    grid-area: illust;
+    width: 100%;
+    max-width: 260px;
+    height: auto;
+    border-radius: 10px;
+    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+    margin-top: 0.4rem;
+}
+
+.pwa-tip {
+    margin: 1.1rem 0 0;
+    padding: 0.75rem 0.9rem;
+    background: rgba(6, 182, 212, 0.08);
+    border: 1px solid rgba(6, 182, 212, 0.2);
+    border-radius: 10px;
+    color: var(--color-text-muted, #9aa3b2);
+    font-size: 0.83rem;
+    line-height: 1.5;
+}
+
+.pwa-tip i {
+    color: var(--color-primary, #06b6d4);
+    margin-right: 0.25rem;
+}
+
+@media (max-width: 480px) {
+    .pwa-modal-card {
+        max-width: 94vw;
+    }
+    .pwa-modal-body {
+        padding: 1rem;
+    }
+}
+
 
