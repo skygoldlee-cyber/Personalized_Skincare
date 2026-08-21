@@ -1,12 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "public": true,
-  "rewrites": [
-    {
-      "source": "/((?!.*\\.[a-zA-Z0-9]{1,10}$).*)",
-      "destination": "/index.html"
-    }
-  ],
   "headers": [
     {
       "source": "/sw.js",
