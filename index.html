@@ -1128,6 +1128,10 @@
 
         <!-- Mobile Bottom Tab Bar (모바일 하단 네비게이션) -->
         <nav class="mobile-tab-bar" id="mobile-tab-bar">
+            <button class="mobile-tab-item mobile-tab-action" id="mobile-theme-toggle" type="button" title="라이트/다크 모드 전환">
+                <i class="fa-solid fa-moon"></i>
+                <span>테마</span>
+            </button>
             <a href="./docs/user_manual.html" target="_blank" class="mobile-tab-item">
                 <i class="fa-solid fa-circle-info"></i>
                 <span>매뉴얼</span>
@@ -1453,6 +1457,17 @@
             syncHeaderBtn();
             document.addEventListener('themechange', syncHeaderBtn);
             if (btn) btn.addEventListener('click', toggle);
+
+            // 모바일 하단 탭 바의 테마 토글
+            var mBtn = document.getElementById('mobile-theme-toggle');
+            function syncMobileBtn() {
+                if (!mBtn) return;
+                var i = mBtn.querySelector('i');
+                if (i) i.className = isLight() ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+            }
+            syncMobileBtn();
+            document.addEventListener('themechange', syncMobileBtn);
+            if (mBtn) mBtn.addEventListener('click', toggle);
 
             // 사용자가 수동 선택하지 않았을 때만 시스템 테마 변경을 따라감
             if (window.matchMedia) {

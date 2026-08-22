@@ -11,7 +11,7 @@
  * ⚠️ 배포 시 CACHE_VERSION을 올려야 구 캐시가 정리됩니다.
  * ============================================================ */
 
-const CACHE_VERSION = 'v2';
+const CACHE_VERSION = 'v3';
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${CACHE_VERSION}`;
 const CDN_CACHE = `cosmetic-pass-cdn-${CACHE_VERSION}`;
@@ -26,6 +26,8 @@ const SHELL_ASSETS = [
   './src/state.js',
   './src/charts.js',
   './src/scratchpad.js',
+  './src/utils.js',
+  './src/trainer-calc.js',
   './src/app.js',
   './icons/icon-192.png',
   './icons/icon-512.png'
@@ -122,7 +124,15 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 5) 그 외 App Shell (HTML/CSS/JS/아이콘) → Stale-While-Revalidate
+  // 5) 코드 자산(CSS/JS) → Network First
+  //    (온라인이면 항상 최신 배포본, 오프라인이면 캐시 폴백.
+  //     버전 bump을 깜빡해도 폰에서 구버전이 남지 않도록 함)
+  if (/\.(?:css|js)$/i.test(url.pathname)) {
+    event.respondWith(networkFirst(request, SHELL_CACHE));
+    return;
+  }
+
+  // 6) 그 외 App Shell(아이콘/이미지 등) → Stale-While-Revalidate
   event.respondWith(staleWhileRevalidate(request, SHELL_CACHE));
 });
 
