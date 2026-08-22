@@ -4513,7 +4513,6 @@ function renderChapterContent(subjId, chapterIdx) {
 // --- Reader convenience feature state & logic ---
 let readerChapterContext = { subjId: '', chapterIdx: 0 };
 let readerFontScale = parseFloat(localStorage.getItem('readerFontScale')) || 1;
-let readerLightTheme = localStorage.getItem('readerLightTheme') === 'true';
 let readerScrollBound = false;
 
 function getReaderBookmarks() {
@@ -4548,15 +4547,12 @@ function applyReaderFontScale() {
 }
 
 function applyReaderThemeClass() {
+    // 리더 테마는 전역 테마(window.AppTheme / <html>.light-theme)를 그대로 따름
     const view = document.getElementById('textbook-reader-view');
-    const toggleBtn = document.getElementById('reader-theme-toggle');
-    if (view) view.classList.toggle('reader-light-theme', readerLightTheme);
-    if (toggleBtn) {
-        toggleBtn.innerHTML = readerLightTheme
-            ? '<i class="fa-solid fa-moon"></i> <span>다크</span>'
-            : '<i class="fa-solid fa-sun"></i> <span>라이트</span>';
-    }
-    localStorage.setItem('readerLightTheme', readerLightTheme);
+    const isLight = window.AppTheme
+        ? window.AppTheme.isLight()
+        : document.documentElement.classList.contains('light-theme');
+    if (view) view.classList.toggle('reader-light-theme', isLight);
 }
 
 function bindReaderScrollEvents() {
@@ -4606,7 +4602,6 @@ function initReaderToolbar() {
     const decBtn = document.getElementById('reader-font-decrease');
     const incBtn = document.getElementById('reader-font-increase');
     const resetBtn = document.getElementById('reader-font-reset');
-    const themeBtn = document.getElementById('reader-theme-toggle');
     const focusBtn = document.getElementById('reader-focus-toggle');
     const expandAllBtn = document.getElementById('reader-expand-all');
     const collapseAllBtn = document.getElementById('reader-collapse-all');
@@ -4634,12 +4629,10 @@ function initReaderToolbar() {
             applyReaderFontScale();
         });
     }
-    if (themeBtn && !themeBtn.dataset.bound) {
-        themeBtn.dataset.bound = 'true';
-        themeBtn.addEventListener('click', () => {
-            readerLightTheme = !readerLightTheme;
-            applyReaderThemeClass();
-        });
+    // 헤더 등 다른 곳에서 테마가 바뀌면 리더도 즉시 동기화
+    if (!document.body.dataset.readerThemeSync) {
+        document.body.dataset.readerThemeSync = 'true';
+        document.addEventListener('themechange', applyReaderThemeClass);
     }
     if (focusBtn && !focusBtn.dataset.bound) {
         focusBtn.dataset.bound = 'true';

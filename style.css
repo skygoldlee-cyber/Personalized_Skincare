@@ -32,6 +32,33 @@
     --font-app: 'Noto Sans KR', 'Outfit', sans-serif;
 }
 
+/* Light Theme Overrides */
+.light-theme {
+    --bg-app: #f5f7fa;
+    --bg-sidebar: #ffffff;
+    --bg-card: rgba(255, 255, 255, 0.85);
+    --bg-card-hover: rgba(255, 255, 255, 0.95);
+    --border-color: rgba(0, 0, 0, 0.08);
+    --border-color-active: rgba(6, 182, 212, 0.5);
+    
+    --color-text-main: #1f2937;
+    --color-text-muted: #4b5563;
+    
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+    --shadow-lg: 0 10px 25px rgba(0,0,0,0.12);
+    --glow-primary: 0 0 15px rgba(6, 182, 212, 0.15);
+    --glow-success: 0 0 15px rgba(16, 189, 129, 0.15);
+}
+
+/* Light-mode scrollbar */
+.light-theme ::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.12);
+}
+.light-theme ::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.22);
+}
+
 /* Reset & Base Styles */
 * {
     margin: 0;
@@ -110,6 +137,13 @@ body {
     -webkit-text-fill-color: transparent;
 }
 
+.light-theme .logo-text h1 {
+    background: linear-gradient(to right, #111827, #374151);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 .logo-text span {
     font-size: 0.75rem;
     color: var(--color-primary);
@@ -153,6 +187,10 @@ body {
     background-color: rgba(255, 255, 255, 0.03);
 }
 
+.light-theme .nav-item:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+}
+
 .nav-item:hover i {
     transform: scale(1.1);
 }
@@ -162,6 +200,10 @@ body {
     background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(139, 92, 246, 0.05));
     border-left: 3px solid var(--color-primary);
     box-shadow: var(--shadow-sm);
+}
+
+.light-theme .nav-item.active {
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.12), rgba(139, 92, 246, 0.04));
 }
 
 .nav-item.active i {
@@ -252,10 +294,24 @@ body {
     background-color: rgba(255,255,255,0.1);
 }
 
+.light-theme .btn-secondary {
+    background-color: rgba(0,0,0,0.04);
+    border-color: var(--border-color);
+    color: var(--color-text-main);
+}
+
+.light-theme .btn-secondary:hover {
+    background-color: rgba(0,0,0,0.08);
+}
+
 .btn-success {
     background-color: rgba(16, 185, 129, 0.15);
     border-color: rgba(16, 185, 129, 0.3);
     color: #a7f3d0;
+}
+
+.light-theme .btn-success {
+    color: #065f46;
 }
 
 .btn-success:hover {
@@ -269,6 +325,10 @@ body {
     color: #fca5a5;
 }
 
+.light-theme .btn-danger {
+    color: #991b1b;
+}
+
 .btn-danger:hover {
     background-color: rgba(239, 68, 68, 0.25);
 }
@@ -277,6 +337,10 @@ body {
     background-color: rgba(245, 158, 11, 0.15);
     border-color: rgba(245, 158, 11, 0.3);
     color: #fde68a;
+}
+
+.light-theme .btn-warning {
+    color: #92400e;
 }
 
 .btn-warning:hover {
@@ -360,6 +424,10 @@ body {
     margin-bottom: 0.35rem;
 }
 
+.light-theme .stat-value {
+    color: var(--color-text-main);
+}
+
 .stat-desc {
     font-size: 0.75rem;
     color: var(--color-text-muted);
@@ -372,6 +440,10 @@ body {
     border-radius: 3px;
     overflow: hidden;
     margin-top: 0.5rem;
+}
+
+.light-theme .progress-bar-container {
+    background-color: rgba(0,0,0,0.06);
 }
 
 .progress-bar {
@@ -432,6 +504,10 @@ body {
     color: #ffffff;
 }
 
+.light-theme .subj-header h4 {
+    color: var(--color-text-main);
+}
+
 .subj-header span {
     font-size: 0.75rem;
     color: var(--color-primary);
@@ -446,6 +522,11 @@ body {
     border: 1px solid rgba(255,255,255,0.03);
     border-radius: var(--radius-sm);
     padding: 0.75rem 1rem;
+}
+
+.light-theme .subj-stats-summary {
+    background: rgba(0,0,0,0.02);
+    border: 1px solid rgba(0,0,0,0.04);
 }
 
 .subj-stat-item {
@@ -503,6 +584,10 @@ body {
     flex-wrap: wrap;
 }
 
+.light-theme .filter-bar {
+    background-color: rgba(0,0,0,0.02);
+}
+
 .filter-group {
     display: flex;
     align-items: center;
@@ -531,6 +616,17 @@ body {
 .form-select option {
     background-color: #111827;
     color: #ffffff;
+}
+
+.light-theme .form-select {
+    background-color: #ffffff;
+    color: var(--color-text-main);
+    border-color: rgba(0,0,0,0.12);
+}
+
+.light-theme .form-select option {
+    background-color: #ffffff;
+    color: var(--color-text-main);
 }
 
 .form-select:focus {
@@ -594,8 +690,16 @@ body {
     justify-content: space-between;
 }
 
+.light-theme .flashcard-face {
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
 .flashcard-front {
     background: linear-gradient(135deg, rgba(31, 41, 55, 0.95), rgba(17, 24, 39, 0.95));
+}
+
+.light-theme .flashcard-front {
+    background: linear-gradient(135deg, #ffffff, #f8fafc);
 }
 
 .flashcard-front::after {
@@ -612,6 +716,10 @@ body {
 .flashcard-back {
     background: linear-gradient(135deg, rgba(17, 24, 39, 0.95), rgba(31, 41, 55, 0.95));
     transform: rotateY(180deg);
+}
+
+.light-theme .flashcard-back {
+    background: linear-gradient(135deg, #f8fafc, #ffffff);
 }
 
 .card-header {
@@ -657,6 +765,10 @@ body {
     line-height: 1.3;
 }
 
+.light-theme #card-front-term {
+    color: var(--color-text-main);
+}
+
 .card-definition-container {
     width: 100%;
     max-height: 190px;
@@ -671,6 +783,10 @@ body {
     text-align: left;
     white-space: pre-wrap;
     word-break: keep-all;
+}
+
+.light-theme #card-back-definition {
+    color: #374151;
 }
 
 .flip-hint {
@@ -765,6 +881,10 @@ body {
     word-break: keep-all;
 }
 
+.light-theme .quiz-question-text {
+    color: var(--color-text-main);
+}
+
 .quiz-question-text strong {
     color: var(--color-primary);
     font-weight: 700;
@@ -788,6 +908,12 @@ body {
     font-size: 1rem;
     outline: none;
     transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.light-theme .form-input {
+    background-color: #ffffff;
+    color: var(--color-text-main);
+    border-color: rgba(0,0,0,0.12);
 }
 
 .form-input:focus {
@@ -984,6 +1110,10 @@ body {
     color: #ffffff;
 }
 
+.light-theme .review-card-item h5 {
+    color: var(--color-text-main);
+}
+
 .review-card-item p {
     font-size: 0.85rem;
     color: var(--color-text-muted);
@@ -1052,6 +1182,10 @@ body {
     box-shadow: var(--shadow-lg);
 }
 
+.light-theme .exam-card-item:hover {
+    border-color: rgba(0, 0, 0, 0.12);
+}
+
 .exam-card-badge {
     align-self: flex-start;
     padding: 0.35rem 0.75rem;
@@ -1090,6 +1224,10 @@ body {
     background-color: rgba(156, 163, 175, 0.15);
     color: #f3f4f6;
     border: 1px solid rgba(156, 163, 175, 0.3);
+}
+
+.light-theme .badge-gray {
+    color: #4b5563;
 }
 
 .exam-card-title {
@@ -4418,4 +4556,87 @@ body.landscape-mode .glass-card {
         width: 100% !important;
         justify-content: center !important;
     }
+}
+
+/* ============================================================
+   🌗 전역 라이트 테마 — 추가 보정
+   - 다크 테마 규칙은 그대로 두고, .light-theme 하위 선택자에서만 교정
+   - 카드/패널 위에 하드코딩된 흰색 텍스트 및 어두운 배경을 라이트에 맞게 조정
+   ============================================================ */
+
+/* 1) 카드·패널 위의 고정 흰색 텍스트 → 테마 변수로 교정 */
+.light-theme .stat-value,
+.light-theme .subj-header h4,
+.light-theme #card-back-definition,
+.light-theme .quiz-question-text,
+.light-theme .result-score-summary span,
+.light-theme .review-card-item h5,
+.light-theme .sim-title-group h4,
+.light-theme .sim-q-text,
+.light-theme .sim-option-item .opt-text,
+.light-theme .omr-header h5,
+.light-theme .sim-review-header h4,
+.light-theme .review-item-q-text,
+.light-theme .textbook-card-title {
+    color: var(--color-text-main);
+}
+
+/* 입력 요소 텍스트 (배경은 기존 .light-theme 규칙에서 흰색으로 지정됨) */
+.light-theme .form-select,
+.light-theme .form-select option,
+.light-theme .form-input {
+    color: var(--color-text-main);
+}
+
+/* 2) 하드코딩된 어두운 패널 배경 → 라이트 카드 배경 */
+.light-theme .app-header {
+    background: rgba(255, 255, 255, 0.85);
+}
+.light-theme #sim-arena-panel,
+.light-theme #sim-result-panel,
+.light-theme #sim-review-panel,
+.light-theme .full-width-card {
+    background-color: var(--bg-card);
+}
+.light-theme .highlight-card {
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.06), rgba(139, 92, 246, 0.04));
+}
+
+/* 3) 반투명 흰색 인터랙티브 배경 → 라이트에서 대비 확보 */
+.light-theme .sim-option-item,
+.light-theme .omr-bubble {
+    background-color: rgba(0, 0, 0, 0.03);
+}
+.light-theme .sim-option-item:hover {
+    background-color: rgba(0, 0, 0, 0.06);
+    border-color: rgba(0, 0, 0, 0.15);
+}
+.light-theme .omr-bubble:hover {
+    background-color: rgba(0, 0, 0, 0.06);
+    border-color: rgba(0, 0, 0, 0.2);
+    color: var(--color-text-main);
+}
+.light-theme .omr-bubble.active,
+.light-theme .sim-option-item.active .opt-num {
+    color: var(--color-secondary);
+    text-shadow: none;
+}
+
+/* 4) 기타 아주 옅은 흰색 배경 */
+.light-theme .filter-bar,
+.light-theme .review-answer-panel,
+.light-theme .empty-state {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* 5) 교재 카드 접힘 페이드: 어두운 색 → 라이트 배경색으로 페이드 */
+.light-theme .textbook-card-body.collapsed::after {
+    background: linear-gradient(to top, rgba(245, 247, 250, 0.98), rgba(245, 247, 250, 0));
+}
+
+/* 6) 테마 토글 버튼 아이콘 미세 정렬 */
+#theme-toggle-btn {
+    padding: 0.5rem;
+    min-width: 40px;
+    justify-content: center;
 }

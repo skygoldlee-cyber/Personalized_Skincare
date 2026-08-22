@@ -22,6 +22,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- CSS Style Link -->
     <link rel="stylesheet" href="style.css">
+    <!-- Theme (Light/Dark): 페인트 전에 테마 클래스를 적용하여 깜빡임(FOUC) 방지 -->
+    <script>
+        (function () {
+            try {
+                var saved = localStorage.getItem('appTheme');
+                var prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+                var theme = saved || (prefersLight ? 'light' : 'dark');
+                document.documentElement.classList.toggle('light-theme', theme === 'light');
+                var meta = document.querySelector('meta[name="theme-color"]');
+                if (meta) meta.setAttribute('content', theme === 'light' ? '#f5f7fa' : '#0b0f19');
+            } catch (e) {}
+        })();
+    </script>
 </head>
 <body class="dark-theme">
     <!-- Offline Banner (오프라인 상태 표시) -->
@@ -86,6 +99,10 @@
                     <p id="view-subtitle">2026 시험 합격을 위한 분석 및 스마트 툴</p>
                 </div>
                 <div class="header-actions">
+                    <!-- 라이트/다크 테마 토글 버튼 -->
+                    <button id="theme-toggle-btn" class="btn btn-secondary" title="라이트/다크 모드 전환" aria-label="테마 전환">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
                     <!-- 가로/세로 보기 토글 버튼 (모바일 전용) -->
                     <button id="orientation-toggle-btn" class="btn btn-secondary" title="가로/세로 보기 전환">
                         <i class="fa-solid fa-rotate"></i>
@@ -107,7 +124,7 @@
                     <div style="display: flex; align-items: center; gap: 0.75rem;">
                         <i class="fa-solid fa-file-pen" style="font-size: 1.5rem; color: var(--color-warning);"></i>
                         <div style="text-align: left;">
-                            <h5 style="margin: 0; font-size: 1rem; font-weight: 700; color: #fff;" id="draft-banner-title">진행 중인 모의고사가 있습니다.</h5>
+                            <h5 style="margin: 0; font-size: 1rem; font-weight: 700; color: var(--color-text-main);" id="draft-banner-title">진행 중인 모의고사가 있습니다.</h5>
                             <p style="margin: 0.25rem 0 0 0; font-size: 0.85rem; color: var(--color-text-muted);" id="draft-banner-desc">남은 시간: --:--</p>
                         </div>
                     </div>
@@ -783,19 +800,19 @@
                         </h4>
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; font-size: 0.85rem;">
                             <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 1rem;">
-                                <strong style="color: #ffffff; display: block; margin-bottom: 0.5rem; font-size: 0.9rem;">📚 지한쌤 (법령백과)</strong>
+                                <strong style="color: var(--color-text-main); display: block; margin-bottom: 0.5rem; font-size: 0.9rem;">📚 지한쌤 (법령백과)</strong>
                                 <span style="color: var(--color-text-muted); line-height: 1.5; display: block;">식약처 고시 및 최신 개정 법령 분석 특화. 복잡한 규정을 10초 암기 공식으로 만들어 가장 실수하기 쉬운 과목을 방어해 줍니다.</span>
                             </div>
                             <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 1rem;">
-                                <strong style="color: #ffffff; display: block; margin-bottom: 0.5rem; font-size: 0.9rem;">⚡ 해커스 (김경표)</strong>
+                                <strong style="color: var(--color-text-main); display: block; margin-bottom: 0.5rem; font-size: 0.9rem;">⚡ 해커스 (김경표)</strong>
                                 <span style="color: var(--color-text-muted); line-height: 1.5; display: block;">기출 복원 문제 풀이 및 벼락치기 특강 위주. 최신 출제 경향 파악과 단기 시험 직전 마무리 정리에 강력 추천됩니다.</span>
                             </div>
                             <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 1rem;">
-                                <strong style="color: #ffffff; display: block; margin-bottom: 0.5rem; font-size: 0.9rem;">🎯 에듀윌 (이은주/유선희)</strong>
+                                <strong style="color: var(--color-text-main); display: block; margin-bottom: 0.5rem; font-size: 0.9rem;">🎯 에듀윌 (이은주/유선희)</strong>
                                 <span style="color: var(--color-text-muted); line-height: 1.5; display: block;">기본 이론 정립 및 빈칸 채우기 맞춤 특강. 개념의 뼈대를 세우고 적중도 높은 예상문제들을 다량 연습하기에 좋습니다.</span>
                             </div>
                             <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 1rem;">
-                                <strong style="color: #ffffff; display: block; margin-bottom: 0.5rem; font-size: 0.9rem;">🧮 화박사 (전혜승)</strong>
+                                <strong style="color: var(--color-text-main); display: block; margin-bottom: 0.5rem; font-size: 0.9rem;">🧮 화박사 (전혜승)</strong>
                                 <span style="color: var(--color-text-muted); line-height: 1.5; display: block;">수험생이 가장 두려워하는 원료 배합 및 화학 계산식 집중 해설. 무료 전과목 고화질 요약 특강의 가성비가 훌륭합니다.</span>
                             </div>
                         </div>
@@ -1025,9 +1042,6 @@
                     </div>
                     <div class="reader-toolbar-divider"></div>
                     <div class="reader-toolbar-group">
-                        <button class="reader-tool-btn" id="reader-theme-toggle" title="다크/라이트 모드 전환">
-                            <i class="fa-solid fa-sun"></i> <span>라이트</span>
-                        </button>
                         <button class="reader-tool-btn" id="reader-focus-toggle" title="집중 모드 (주변 UI 숨기기)">
                             <i class="fa-solid fa-expand"></i> <span>집중 모드</span>
                         </button>
@@ -1410,6 +1424,46 @@
                     installBtn.style.display = 'none';
                 }
             });
+        })();
+    </script>
+    <!-- Theme (Light/Dark) 토글 로직 -->
+    <script>
+        (function setupThemeToggle() {
+            var root = document.documentElement;
+            var meta = document.querySelector('meta[name="theme-color"]');
+            function isLight() { return root.classList.contains('light-theme'); }
+            function apply(light) {
+                root.classList.toggle('light-theme', light);
+                if (meta) meta.setAttribute('content', light ? '#f5f7fa' : '#0b0f19');
+                try { localStorage.setItem('appTheme', light ? 'light' : 'dark'); } catch (e) {}
+                // 리더 등 다른 모듈이 동일한 테마 상태를 공유하도록 이벤트 브로드캐스트
+                document.dispatchEvent(new CustomEvent('themechange', { detail: { light: light } }));
+            }
+            function toggle() { apply(!isLight()); }
+            // 전역 테마 API 노출 (단일 소스 오브 트루스)
+            window.AppTheme = { isLight: isLight, apply: apply, toggle: toggle };
+
+            var btn = document.getElementById('theme-toggle-btn');
+            function syncHeaderBtn() {
+                if (!btn) return;
+                var i = btn.querySelector('i');
+                if (i) i.className = isLight() ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+                btn.title = isLight() ? '다크 모드로 전환' : '라이트 모드로 전환';
+            }
+            syncHeaderBtn();
+            document.addEventListener('themechange', syncHeaderBtn);
+            if (btn) btn.addEventListener('click', toggle);
+
+            // 사용자가 수동 선택하지 않았을 때만 시스템 테마 변경을 따라감
+            if (window.matchMedia) {
+                var mq = window.matchMedia('(prefers-color-scheme: light)');
+                var onChange = function (e) {
+                    if (localStorage.getItem('appTheme')) return;
+                    apply(e.matches);
+                };
+                if (mq.addEventListener) mq.addEventListener('change', onChange);
+                else if (mq.addListener) mq.addListener(onChange);
+            }
         })();
     </script>
 </body>
