@@ -1,7 +1,7 @@
 # 📁 프로젝트 폴터구조 가이드
 
 > **대상 프로젝트**: 맞춤형화장품 조제관리사 스마트 학습 플랫폼
-> **최종 업데이트**: 2026-08-21
+> **최종 업데이트**: 2026-08-22
 > **목적**: 프로젝트의 폴터 및 파일 구조를 설명하고, 각 구성 요소의 역할을 명확히 정의
 > **배포 최적화**: Vercel 배포를 위한 크기 최적화 적용됨 ([`docs/VERCEL_SIZE_OPTIMIZATION.md`](docs/VERCEL_SIZE_OPTIMIZATION.md) 참고)
 
@@ -12,10 +12,10 @@
 ```
 Personalized Skincare/
 │
-├── 📄 index.html                    ← ✅ Vercel 배포 (앱 진입점)
-├── 📄 style.css                     ← ✅ Vercel 배포 (전역 스타일시트)
+├── 📄 index.html                    ← ✅ Vercel 배포 (앱 진입점, 라이트/다크 테마 로직 내장)
+├── 📄 style.css                     ← ✅ Vercel 배포 (전역 스타일시트, 라이트/다크 듀얼 테마)
 ├── 📄 manifest.webmanifest          ← 🆕 PWA 매니페스트 (앱 이름/아이콘/테마)
-├── 📄 sw.js                         ← 🆕 PWA Service Worker (오프라인 캐시)
+├── 📄 sw.js                         ← 🆕 PWA Service Worker (오프라인 캐시, 코드 자산 Network First, v3)
 ├── 📄 serve.js                      ← 로컬 개발 서버 (Node.js HTTP 서버)
 ├── 📄 FOLDER_STRUCTURE.md           ← 본 문서 (폴터구조 설명)
 ├── 📄 vercel.json                   ← Vercel SPA 설정

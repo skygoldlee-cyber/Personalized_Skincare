@@ -255,3 +255,33 @@
 - 프로덕션 배포 완료 (https://personalized-skincare-study.vercel.app).
 - 모바일에서 하단 탭 바 10개 메뉴 정상 표시 및 가로 스크롤 동작 확인.
 - 성적 분석 3개 카드가 세로보기에서 1열로 정상 배치 확인.
+
+---
+
+## 라이트/다크 테마 시스템 추가 및 SW 캐시 전략 개선 (2026-08-22)
+
+### 개요
+앱 전체에 라이트/다크 듀얼 테마를 도입하고, 모바일 하단 탭 바에 테마 토글을 추가했으며, Service Worker의 코드 자산 캐시 전략을 Network First로 개선하여 모바일 구버전 고착 문제를 근본적으로 방지했습니다.
+
+### 1. 전역 라이트/다크 테마 시스템
+- **FOUC 방지**: `index.html` `<head>`에 인라인 스크립트 추가 — 페인트 전에 `localStorage('appTheme')` 또는 `prefers-color-scheme`을 읽어 `<html>.light-theme` 클래스와 `theme-color` 메타 태그를 즉시 적용.
+- **전역 테마 API**: `window.AppTheme = { isLight, apply, toggle }` 노출. 테마 변경 시 `localStorage` 저장 + `themechange` 커스텀 이벤트 브로드캐스트.
+- **CSS 변수 오버라이드**: `style.css`의 `.light-theme` 블록에서 다크(기본) 디자인 토큰을 라이트 팔레트로 재정의하고, `.light-theme` 하위 선택자에서 라이트 전용 보정 규칙 약 220줄 추가 (하드코딩된 `#fff` 텍스트를 `var(--color-text-main)`으로 교체 등).
+- **리더 테마 통합**: 기존 리더 전용 `readerLightTheme` 로컬 상태를 제거하고 전역 테마로 통합. `applyReaderThemeClass()`가 `themechange` 이벤트를 구독하여 즉시 동기화 → 두 테마가 어긋나는 버그 원천 차단.
+- **헤더 토글 버튼**: 데스크톱 헤더에 `#theme-toggle-btn` 추가 (해/달 아이콘 자동 전환).
+
+### 2. 모바일 하단 탭 바 테마 토글
+- **증상**: 모바일에서는 헤더가 숨겨져 테마 전환 수단이 없었음.
+- **해결**: 모바일 탭 바에 `#mobile-theme-toggle` 탭 추가 (아이콘 + "테마" 레이블). 헤더 버튼과 동일한 `toggle()`을 공유하고 `themechange` 이벤트로 아이콘 동기화.
+
+### 3. Service Worker 캐시 전략 개선 (v3)
+- **변경**: `CACHE_VERSION` `v2` → `v3` 상향.
+- **프리캐시 보강**: `SHELL_ASSETS`에 `src/utils.js`, `src/trainer-calc.js` 추가 (모듈 분리 반영).
+- **코드 자산 Network First**: `*.css` / `*.js` 요청을 Stale-While-Revalidate에서 **Network First**로 전환 — 온라인이면 항상 최신 배포본을 제공하고 오프라인이면 캐시 폴리백. `CACHE_VERSION` 범프를 깜빡핬어도 모바일에 구버전 JS/CSS가 남지 않도록 이중 안전장치 마련.
+
+### 관련 커밋
+- `Update index.html, src/app.js, style.css (external edits)` (`6ac5b2f`) — 테마 시스템 + 리더 통합 + 라이트 보정 CSS
+- `Update index.html and sw.js (external edits)` (`e1eeca9`) — 모바일 테마 탭 + SW v3
+
+### 검증
+- 프로덕션 배포 완료 (https://personalized-skincare-study.vercel.app).

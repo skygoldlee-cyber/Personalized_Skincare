@@ -1,7 +1,7 @@
 # 🏛️ 설계 컨셉 & 아키텍처 (Architecture & Design Concept)
 
 > **대상 프로젝트**: Cosmetic Pass Master — 맞춤형화장품 조제관리사 스마트 학습 플랫폼
-> **최종 업데이트**: 2026-08-21
+> **최종 업데이트**: 2026-08-22
 > **목적**: 시스템의 설계 철학, 아키텍처 구조, 주요 설계 결정 사항을 설명
 
 ---
@@ -14,12 +14,13 @@
 4. [모듈 설계](#-모듈-설계)
 5. [데이터 흐름](#-데이터-흐름)
 6. [상태 관리 전략](#-상태-관리-전략)
-7. [PWA & 오프라인 전략](#-pwa--오프라인-전략)
-8. [반응형 & 모바일 설계](#-반응형--모바일-설계)
-9. [보안 설계](#-보안-설계)
-10. [빌드 타임 데이터 파이프라인](#-빌드-타임-데이터-파이프라인)
-11. [주요 설계 결정 및 근거](#-주요-설계-결정-및-근거)
-12. [향후 확장 방향](#-향후-확장-방향)
+7. [테마 시스템 (라이트/다크)](#-테마-시스템-라이트다크)
+8. [PWA & 오프라인 전략](#-pwa--오프라인-전략)
+9. [반응형 & 모바일 설계](#-반응형--모바일-설계)
+10. [보안 설계](#-보안-설계)
+11. [빌드 타임 데이터 파이프라인](#-빌드-타임-데이터-파이프라인)
+12. [주요 설계 결정 및 근거](#-주요-설계-결정-및-근거)
+13. [향후 확장 방향](#-향후-확장-방향)
 
 ---
 
@@ -264,23 +265,56 @@ const state = {
 
 ---
 
+## 🌗 테마 시스템 (라이트/다크)
+
+앱 전체가 **CSS 변수 기반 듀얼 테마**를 지원합니다. 단일 소스 오브 트루스(Single Source of Truth)는 `<html>` 요소의 `.light-theme` 클래스입니다.
+
+### 구성 요소
+
+| 구성 요소 | 위치 | 역할 |
+|-----------|------|------|
+| **FOUC 방지 스크립트** | [`index.html`](../index.html) `<head>` 인라인 | 페인트 전에 `localStorage('appTheme')` 또는 `prefers-color-scheme`을 읽어 `<html>.light-theme` 클래스와 `<meta name="theme-color">`를 즉시 적용 → 테마 깜빡임(FOUC) 제거 |
+| **전역 테마 API** | [`index.html`](../index.html) 하단 인라인 | `window.AppTheme = { isLight, apply, toggle }` 노출. 테마 변경 시 `localStorage` 저장 + `themechange` 커스텀 이벤트 브로드캐스트 |
+| **CSS 변수 오버라이드** | [`style.css`](../style.css) `.light-theme` | `:root`(다크, 기본값)의 디자인 토큰을 라이트 팔레트로 재정의. `.light-theme` 하위 선택자에서만 라이트 전용 보정 규칙 추가 |
+| **헤더 토글 버튼** | `#theme-toggle-btn` | 데스크톱 헤더에서 테마 전환 (해/달 아이콘) |
+| **모바일 탭 토글** | `#mobile-theme-toggle` | 모바일 하단 탭 바의 "테마" 탭에서 전환 |
+
+### 테마 결정 우선순위
+
+```
+localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
+```
+
+- 사용자가 수동으로 선택하면 `localStorage`에 저장되어 이후 시스템 테마 변경을 무시
+- 수동 선택이 없으면 시스템 테마 변경(`matchMedia('(prefers-color-scheme: light)').change`)을 실시간 추적
+
+### 모듈 간 테마 동기화
+
+- 테마 변경 시 `document.dispatchEvent(new CustomEvent('themechange'))`로 브로드캐스트
+- 교재 리더([`src/app.js`](../src/app.js) `applyReaderThemeClass()`)는 `themechange` 이벤트를 구독하여 `.reader-light-theme` 클래스를 즉시 동기화
+- **설계 결정**: 과거 리더 전용 `readerLightTheme` 로컬 상태를 제거하고 전역 테마로 통합 → 두 테마가 어긋나는 버그 원천 차단
+
+---
+
 ## 📴 PWA & 오프라인 전략
 
 ### Service Worker 캐시 계층 ([`sw.js`](../sw.js))
 
-리소스 특성별로 **3종 캐시 + 1종 바이패스** 전략을 적용합니다.
+리소스 특성별로 **5단계 분기 전략**을 적용합니다.
 
-| 캐시 | 대상 | 전략 | 근거 |
-|------|------|------|------|
-| **Shell** | HTML/CSS/JS/아이콘 | Stale-While-Revalidate | 빠른 표시 + 백그라운드 갱신 |
-| **Data** | `data/*.js` | Cache First | 거의 불변, 오프라인 학습 핵심 |
-| **CDN** | Google Fonts/FontAwesome | Stale-While-Revalidate | 외부 리소스 안정성 확보 |
-| **(바이패스)** | MP3 오디오 (302MB) | 네트워크 직행 | 대용량 미디어는 캐시 제외 (저장공간 보호) |
+| 우선순위 | 대상 | 전략 | 근거 |
+|:---:|------|------|------|
+| 1 | 네비게이션 (`navigate`) | **Network First** | 최신 HTML 우선 보장, 오프라인 시 캐시 폴리백 |
+| 2 | 데이터 번들 (`data/*.js`) | **Cache First** | 거의 불변, 오프라인 학습 핵심 |
+| 3 | 외부 CDN (Google Fonts/FontAwesome) | **Stale-While-Revalidate** | 외부 리소스 안정성 확보 |
+| 4 | MP3 오디오 (302MB) | **네트워크 직행 (바이패스)** | 대용량 미디어는 캐시 제외 (저장공간 보호) |
+| 5 | 코드 자산 (`*.css` / `*.js`) | **Network First** | 온라인이면 항상 최신 배포본 제공, 오프라인이면 캐시 폴리백. `CACHE_VERSION` 범프를 깜빡핬어도 모바일에 구버전이 남지 않도록 함 |
+| 6 | 그 외 App Shell (아이콘/이미지 등) | **Stale-While-Revalidate** | 빠른 표시 + 백그라운드 갱신 |
 
 ### 캐시 버전 관리
-- `CACHE_VERSION` 상수로 캐시 네임스페이스 관리 (`v2` 등)
+- `CACHE_VERSION` 상수로 캐시 네임스페이스 관리 (현재 `v3`)
 - **배포 시 버전을 올리면 구 캐시 자동 정리** → 모바일 구버전 고착(Stale Cache) 문제 방지
-- 네비게이션 요청은 Network-First로 처리하여 최신 HTML 우선 보장
+- `SHELL_ASSETS`에는 [`src/utils.js`](../src/utils.js), [`src/trainer-calc.js`](../src/trainer-calc.js) 등 분리된 모듈이 모두 프리캐시에 포함됨
 
 ### 오프라인 감지 설계
 - `navigator.onLine`은 OS 어댑터 상태만 반영하므로 **신뢰하지 않음**

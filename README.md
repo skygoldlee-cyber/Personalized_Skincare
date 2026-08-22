@@ -38,6 +38,7 @@
 | 🔍 **성분 검색 사전** | 사용 가능/금지/제한 화장품 성분 검색 (배합 한도 포함) |
 | 🎧 **오디오북** | TTS로 생성한 단원별 음성 강의 (MP3) |
 | ✏️ **스크래치패드** | HTML5 Canvas 손글씨 연습장 |
+| 🌗 **라이트/다크 테마** | 시스템 테마 자동 감지 + 수동 토글 (헤더·모바일 탭 바), FOUC 없는 즉시 적용 |
 | 📱 **모바일 최적화** | 하단 탭 바 네비게이션, safe-area 대응, 스크롤 복원, 오프라인 감지, 가로/세로 보기 토글 |
 
 ---
@@ -49,7 +50,7 @@
 - SPA 라우팅 (자체 구현)
 - SVG 기반 차트 (레이더/꺾은선, 외부 라이브러리 없음)
 - Noto Sans KR · Outfit (Google Fonts), FontAwesome 아이콘
-- 다크 테마 UI
+- **라이트/다크 듀얼 테마 UI**: CSS 변수 기반 디자인 토큰, 시스템 테마 연동, `localStorage` 선택 영속화
 - **반응형 모바일 레이아웃**: 하단 탭 바 네비게이션, safe-area-inset 대응, 100dvh 동적 뷰포트
 
 **데이터 파이프라인** (빌드 타임)
@@ -70,9 +71,9 @@
 ## 📁 폴터 구조
 
 ```
-├── index.html / style.css      # 앱 진입점·전역 스타일
+├── index.html / style.css      # 앱 진입점·전역 스타일 (라이트/다크 테마)
 ├── manifest.webmanifest        # PWA 매니페스트 (앱 이름/아이콘/테마)
-├── sw.js                       # PWA Service Worker (오프라인 캐시)
+├── sw.js                       # PWA Service Worker (오프라인 캐시, 코드 자산 Network First)
 ├── icons/                      # PWA 아이콘 (192/512/maskable)
 ├── src/                        # 애플리케이션 소스
 │   ├── app.js                  # 메인 로직 (라우팅·상태·렌더링)
