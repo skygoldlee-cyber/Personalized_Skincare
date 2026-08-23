@@ -2,15 +2,15 @@
 var DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2026",
-  "generatedAt": "2026-08-23T06:17:05.306Z",
+  "generatedAt": "2026-08-23T16:05:18.972Z",
   "subjects": [
     {
       "key": "law",
       "order": 1,
       "name": "화장품법의 이해",
-      "bundle": "./data/subjects/law.cd33ce72.js",
+      "bundle": "./data/subjects/law.dc527030.js",
       "global": "STUDY_DATA_law",
-      "contentHash": "cd33ce72",
+      "contentHash": "dc527030",
       "stats": {
         "cards": 131,
         "quizzes": 11,
@@ -21,9 +21,9 @@ var DATA_REGISTRY = {
       "key": "manufacturing",
       "order": 2,
       "name": "화장품 제조 및 품질관리",
-      "bundle": "./data/subjects/manufacturing.b9613334.js",
+      "bundle": "./data/subjects/manufacturing.24c76409.js",
       "global": "STUDY_DATA_manufacturing",
-      "contentHash": "b9613334",
+      "contentHash": "24c76409",
       "stats": {
         "cards": 487,
         "quizzes": 0,
@@ -34,9 +34,9 @@ var DATA_REGISTRY = {
       "key": "safety",
       "order": 3,
       "name": "유통화장품 안전관리",
-      "bundle": "./data/subjects/safety.e3df5443.js",
+      "bundle": "./data/subjects/safety.f53ab991.js",
       "global": "STUDY_DATA_safety",
-      "contentHash": "e3df5443",
+      "contentHash": "f53ab991",
       "stats": {
         "cards": 195,
         "quizzes": 0,
@@ -47,9 +47,9 @@ var DATA_REGISTRY = {
       "key": "understanding",
       "order": 4,
       "name": "맞춤형화장품의 이해",
-      "bundle": "./data/subjects/understanding.c83bfce3.js",
+      "bundle": "./data/subjects/understanding.f8a22631.js",
       "global": "STUDY_DATA_understanding",
-      "contentHash": "c83bfce3",
+      "contentHash": "f8a22631",
       "stats": {
         "cards": 365,
         "quizzes": 0,

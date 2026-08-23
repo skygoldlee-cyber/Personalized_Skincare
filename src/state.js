@@ -68,14 +68,43 @@ const state = {
    💾 상태 영속성 (localStorage Load / Save)
    ======================================================= */
 
+// 로컬스토리지 안전 접근 래퍼.
+// Safari 프라이빗 모드/용량 초과(QuotaExceededError)/스토리지 비활성 환경에서
+// localStorage 접근 자체가 예외를 던질 수 있으므로, 앱 흐름이 중단되지 않도록 감싼다.
+// - 읽기 실패: null 반환(값 없음과 동일 취급)
+// - 쓰기 실패: false 반환 + 1회 콘솔 경고(반복 스팸 방지)
+function safeGetItem(key) {
+    try {
+        return localStorage.getItem(key);
+    } catch (e) {
+        return null;
+    }
+}
+
+function safeSetItem(key, value) {
+    try {
+        localStorage.setItem(key, value);
+        return true;
+    } catch (e) {
+        if (!safeSetItem._warned) {
+            safeSetItem._warned = true;
+            console.warn('[Storage] 로컬 저장 실패 — 진행상황이 저장되지 않을 수 있습니다 ' +
+                '(용량 초과/프라이빗 모드/스토리지 비활성).', e && e.name);
+        }
+        // 다른 모듈이 배너/토스트로 안내하고 싶을 때 쓸 수 있는 플래그
+        try { state._storageUnavailable = true; } catch (_) {}
+        return false;
+    }
+}
+
 // 로컬스토리지에서 진도 가져오기
 function loadProgress() {
     // 2단계: 안정적 ID 마이그레이션 실행
     migrateProgressV2();
 
-    const memorized = localStorage.getItem('fc_memorized');
-    const weak = localStorage.getItem('fc_weak');
-    const quizzes = localStorage.getItem('quiz_results');
+    const memorized = safeGetItem('fc_memorized');
+    const weak = safeGetItem('fc_weak');
+    const quizzes = safeGetItem('quiz_results');
 
     if (memorized) {
         try {
@@ -119,14 +148,14 @@ function loadProgress() {
     }
 
     // 뽀모도로 누적 시간은 "오늘" 기준이므로, 날짜가 바뀌었으면 0으로 리셋
-    const pomoDate = localStorage.getItem('pomo_total_time_date');
+    const pomoDate = safeGetItem('pomo_total_time_date');
     const todayStr = new Date().toISOString().split('T')[0];
     if (pomoDate !== todayStr) {
         state.trainer.pomodoro.totalTimeToday = 0;
-        localStorage.setItem('pomo_total_time', '0');
-        localStorage.setItem('pomo_total_time_date', todayStr);
+        safeSetItem('pomo_total_time', '0');
+        safeSetItem('pomo_total_time_date', todayStr);
     } else {
-        const totalPomo = localStorage.getItem('pomo_total_time');
+        const totalPomo = safeGetItem('pomo_total_time');
         if (totalPomo) {
             state.trainer.pomodoro.totalTimeToday = parseInt(totalPomo) || 0;
         }
@@ -135,7 +164,7 @@ function loadProgress() {
 
 // 1회성 안정 ID 마이그레이션 실행
 function migrateProgressV2() {
-    if (localStorage.getItem('fc_migrated_v2') === 'true') {
+    if (safeGetItem('fc_migrated_v2') === 'true') {
         return;
     }
 
@@ -145,15 +174,15 @@ function migrateProgressV2() {
 
     console.log('[Migration] Starting ID migration to stable hash-based IDs...');
 
-    const memorized = localStorage.getItem('fc_memorized');
-    const weak = localStorage.getItem('fc_weak');
-    const quizzes = localStorage.getItem('quiz_results');
+    const memorized = safeGetItem('fc_memorized');
+    const weak = safeGetItem('fc_weak');
+    const quizzes = safeGetItem('quiz_results');
 
     if (memorized) {
         try {
             const arr = JSON.parse(memorized);
             const migratedArr = arr.map(id => ID_MIGRATION_MAP[id] || id);
-            localStorage.setItem('fc_memorized', JSON.stringify(migratedArr));
+            safeSetItem('fc_memorized', JSON.stringify(migratedArr));
             console.log(`[Migration] Migrated ${arr.length} memorized card IDs.`);
         } catch (e) { console.error('[Migration] memorized cards migration error:', e); }
     }
@@ -162,7 +191,7 @@ function migrateProgressV2() {
         try {
             const arr = JSON.parse(weak);
             const migratedArr = arr.map(id => ID_MIGRATION_MAP[id] || id);
-            localStorage.setItem('fc_weak', JSON.stringify(migratedArr));
+            safeSetItem('fc_weak', JSON.stringify(migratedArr));
             console.log(`[Migration] Migrated ${arr.length} weak card IDs.`);
         } catch (e) { console.error('[Migration] weak cards migration error:', e); }
     }
@@ -175,20 +204,20 @@ function migrateProgressV2() {
                 const newId = ID_MIGRATION_MAP[oldId] || oldId;
                 migratedObj[newId] = obj[oldId];
             });
-            localStorage.setItem('quiz_results', JSON.stringify(migratedObj));
+            safeSetItem('quiz_results', JSON.stringify(migratedObj));
             console.log(`[Migration] Migrated ${Object.keys(obj).length} quiz result IDs.`);
         } catch (e) { console.error('[Migration] quiz results migration error:', e); }
     }
 
-    localStorage.setItem('fc_migrated_v2', 'true');
+    safeSetItem('fc_migrated_v2', 'true');
     console.log('[Migration] ID migration completed.');
 }
 
 // 로컬스토리지에 진도 저장
 function saveProgress() {
-    localStorage.setItem('fc_memorized', JSON.stringify([...state.memorizedCards]));
-    localStorage.setItem('fc_weak', JSON.stringify([...state.weakCards]));
-    localStorage.setItem('quiz_results', JSON.stringify(state.quizResults));
+    safeSetItem('fc_memorized', JSON.stringify([...state.memorizedCards]));
+    safeSetItem('fc_weak', JSON.stringify([...state.weakCards]));
+    safeSetItem('quiz_results', JSON.stringify(state.quizResults));
 
     // 대시보드 글로벌 통계 갱신 (app.js에 정의된 전역 함수; 로드 순서상 런타임에 사용 가능)
     if (typeof updateGlobalStats === 'function') {

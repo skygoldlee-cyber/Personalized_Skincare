@@ -1,12 +1,12 @@
-// src/trainer-calc.js - ê³ì° í¸ë ì´ë ë¬¸ì  ìì±ê¸° (ìì ë¡ì§, ê¸ë¡ë² ì¤ì½í ì¤í)
+// src/trainer-calc.js - 계산 트레이너 문제 생성기 (순수 로직, 전역 스코프 실행)
 //
-// v2 ë¦¬ë·° ê¶ê³  #5 (ëª¨ëë¦¬ì¤ ì ì§ ëª¨ëí)ì ì²« ë²ì§¸ ë¨ê³.
-// ê¸°ì¡´ app.jsì generateCalcQuestion()ìì DOM ì¡°ìê³¼ ë¬´ê´í "ë¬¸ì  ì´ê°(qData) ìì±" ë¡ì§ë§
-// ë¶ë¦¬íìµëë¤. DOM ìì¡´ ìì â ë¨ì íì¤í¸/ì¬ì¬ì© ì©ì´.
+// 모놀리식 점진 모듈화의 일부로, 기존 app.js의 계산 문제 생성 로직 중
+// DOM 조작과 무관한 "문제 데이터(qData) 생성" 부분만 분리했습니다.
+// DOM 의존이 없어 단위 테스트/재사용이 쉽습니다.
 //
-// ë°í: { type, question, answer, unit, solution }
-// question/solutionì ì½ëê° ì¡°ë¦½í ì ë¢°ë HTML(ì«ì + <strong>/<br>)ì´ë¯ë¡
-// í¸ì¶ì¸¡ìì innerHTMLë¡ ì£¼ìí´ë ìì í©ëë¤(raw ì¬ì©ì ë°ì´í° ìì).
+// 반환: { type, question, answer, unit, solution }
+// question/solution은 코드가 조립한 신뢰된 HTML(숫자 + <strong>/<br>)이므로
+// 호출측에서 innerHTML로 주입해도 안전합니다(raw 사용, 사용자 입력 없음).
 
 function buildCalcQuestion() {
     const qType = Math.floor(Math.random() * 4);

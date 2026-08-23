@@ -3416,8 +3416,8 @@ var STUDY_DATA_manufacturing = {
   "chapters": [
     {
       "chapterTitle": "3. 화장품 제품의 제조관리",
-      "fileName": "1.화장품 원료의 종류와 특성 및 제품의 제조관리2026.md",
-      "filePath": "./content/manufacturing/1.화장품 원료의 종류와 특성 및 제품의 제조관리2026.html",
+      "fileName": "1.ingredients.md",
+      "filePath": "./content/manufacturing/1.ingredients.html",
       "sections": [
         {
           "title": "개요",
@@ -3435,8 +3435,8 @@ var STUDY_DATA_manufacturing = {
     },
     {
       "chapterTitle": "Chapter 02. 화장품의 기능과 품질",
-      "fileName": "2.화장품의 기능과 품질2026.md",
-      "filePath": "./content/manufacturing/2.화장품의 기능과 품질2026.html",
+      "fileName": "2.quality.md",
+      "filePath": "./content/manufacturing/2.quality.html",
       "sections": [
         {
           "title": "개요",
@@ -3458,8 +3458,8 @@ var STUDY_DATA_manufacturing = {
     },
     {
       "chapterTitle": "Chapter 03. 화장품 사용제한 원료 (PART 02 · 화장품 제조 및 품질관리)",
-      "fileName": "3.화장품 사용제한 원료2026.md",
-      "filePath": "./content/manufacturing/3.화장품 사용제한 원료2026.html",
+      "fileName": "3.restricted.md",
+      "filePath": "./content/manufacturing/3.restricted.html",
       "sections": [
         {
           "title": "개요",
@@ -3477,8 +3477,8 @@ var STUDY_DATA_manufacturing = {
     },
     {
       "chapterTitle": "Chapter 04. 화장품 관리",
-      "fileName": "4.화장품 관리2026.md",
-      "filePath": "./content/manufacturing/4.화장품 관리2026.html",
+      "fileName": "4.management.md",
+      "filePath": "./content/manufacturing/4.management.html",
       "sections": [
         {
           "title": "개요",
@@ -3508,8 +3508,8 @@ var STUDY_DATA_manufacturing = {
     },
     {
       "chapterTitle": "Chapter 05. 위해사례 판단 및 보고",
-      "fileName": "5.위해사례 판단 및 보고2026.md",
-      "filePath": "./content/manufacturing/5.위해사례 판단 및 보고2026.html",
+      "fileName": "5.hazard.md",
+      "filePath": "./content/manufacturing/5.hazard.html",
       "sections": [
         {
           "title": "개요",
