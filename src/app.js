@@ -160,12 +160,24 @@ function setupNavigation() {
                 initTrainer();
             } else if (target === 'textbook-view') {
                 showGlobalLoading('교재 검색용 데이터를 불러오는 중입니다...');
+                if (typeof DataLoader === 'undefined') {
+                    hideGlobalLoading();
+                    const container = document.getElementById('textbook-results-container');
+                    if (container) {
+                        container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--color-text-muted);"><i class="fa-solid fa-triangle-exclamation" style="font-size: 2rem; margin-bottom: 1rem; display: block;"></i> 데이터 로더를 불러올 수 없습니다. 인터넷 연결을 확인하고 앱을 다시 시작해 주세요.</div>';
+                    }
+                    return;
+                }
                 const loaderPromises = DataLoader.getSubjectList().map(s => DataLoader.loadSubject(s.key));
                 Promise.all(loaderPromises).then(() => {
                     hideGlobalLoading();
                     renderTextbookSearch();
                 }).catch(() => {
                     hideGlobalLoading();
+                    const container = document.getElementById('textbook-results-container');
+                    if (container) {
+                        container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--color-text-muted);"><i class="fa-solid fa-cloud-arrow-down" style="font-size: 2rem; margin-bottom: 1rem; display: block;"></i> 교재 데이터를 불러오지 못했습니다. 네트워크 상태를 확인한 뒤 다시 시도해 주세요.</div>';
+                    }
                     renderTextbookSearch();
                 });
             } else if (target === 'textbook-reader-view') {
@@ -183,11 +195,23 @@ function setupNavigation() {
                 }
             } else if (target === 'dictionary-view') {
                 showGlobalLoading('성분 사전을 불러오는 중입니다...');
+                if (typeof DataLoader === 'undefined') {
+                    hideGlobalLoading();
+                    const container = document.getElementById('dictionary-grid-container');
+                    if (container) {
+                        container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--color-text-muted);"><i class="fa-solid fa-triangle-exclamation" style="font-size: 2rem; margin-bottom: 1rem; display: block;"></i> 데이터 로더를 불러올 수 없습니다. 인터넷 연결을 확인하고 앱을 다시 시작해 주세요.</div>';
+                    }
+                    return;
+                }
                 DataLoader.loadIngredients().then(() => {
                     hideGlobalLoading();
                     renderDictionary();
                 }).catch(() => {
                     hideGlobalLoading();
+                    const container = document.getElementById('dictionary-grid-container');
+                    if (container) {
+                        container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--color-text-muted);"><i class="fa-solid fa-cloud-arrow-down" style="font-size: 2rem; margin-bottom: 1rem; display: block;"></i> 성분 데이터를 불러오지 못했습니다. 네트워크 상태를 확인한 뒤 다시 시도해 주세요.</div>';
+                    }
                     renderDictionary();
                 });
             }
