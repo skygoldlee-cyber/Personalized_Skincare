@@ -138,17 +138,58 @@ function setupNavigation() {
                 renderDashboard();
                 checkExamDraft();
             } else if (target === 'flashcard-view') {
-                loadFlashcards();
+                showGlobalLoading('플래시카드를 불러오는 중입니다...');
+                DataLoader.loadSubject(state.flashcards.subject).then(() => {
+                    hideGlobalLoading();
+                    loadFlashcards();
+                }).catch(() => {
+                    hideGlobalLoading();
+                    loadFlashcards();
+                });
             } else if (target === 'review-view') {
-                renderReviewList();
+                showGlobalLoading('오답 및 중요 카드를 불러오는 중입니다...');
+                const loaderPromises = DataLoader.getSubjectList().map(s => DataLoader.loadSubject(s.key));
+                Promise.all(loaderPromises).then(() => {
+                    hideGlobalLoading();
+                    renderReviewList();
+                }).catch(() => {
+                    hideGlobalLoading();
+                    renderReviewList();
+                });
             } else if (target === 'trainer-view') {
                 initTrainer();
             } else if (target === 'textbook-view') {
-                renderTextbookSearch();
+                showGlobalLoading('교재 검색용 데이터를 불러오는 중입니다...');
+                const loaderPromises = DataLoader.getSubjectList().map(s => DataLoader.loadSubject(s.key));
+                Promise.all(loaderPromises).then(() => {
+                    hideGlobalLoading();
+                    renderTextbookSearch();
+                }).catch(() => {
+                    hideGlobalLoading();
+                    renderTextbookSearch();
+                });
             } else if (target === 'textbook-reader-view') {
-                renderTextbookReader();
+                if (textbookReaderState.selectedSubject) {
+                    showGlobalLoading('교재 본문을 불러오는 중입니다...');
+                    DataLoader.loadSubject(textbookReaderState.selectedSubject).then(() => {
+                        hideGlobalLoading();
+                        renderTextbookReader();
+                    }).catch(() => {
+                        hideGlobalLoading();
+                        renderTextbookReader();
+                    });
+                } else {
+                    renderTextbookReader();
+                }
             } else if (target === 'dictionary-view') {
-                renderDictionary();
+                showGlobalLoading('성분 사전을 불러오는 중입니다...');
+                DataLoader.loadIngredients().then(() => {
+                    hideGlobalLoading();
+                    renderDictionary();
+                }).catch(() => {
+                    hideGlobalLoading();
+                    renderDictionary();
+                });
             }
             
             // 새 뷰 스크롤 위치 복원
@@ -162,69 +203,7 @@ function setupNavigation() {
         tab.addEventListener('click', () => {
             const target = tab.getAttribute('data-target');
             if (!target) return; // 외부 링크(매뉴얼)는 제외
-            
-            // 현재 뷰 스크롤 위치 저장
-            saveScrollPosition(state.currentView);
-            
-            // 모바일 탭 바 활성화 상태 변경
-            mobileTabItems.forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
-            
-            // 사이드바 네비게이션 활성화 상태 동기화 (클릭 이벤트는 발생시키지 않음)
-            navItems.forEach(nav => {
-                nav.classList.remove('active');
-                if (nav.getAttribute('data-target') === target) {
-                    nav.classList.add('active');
-                }
-            });
-
-            // 교재 읽기 집중 모드 해제
-            if (target !== 'textbook-reader-view' && document.body.classList.contains('reader-focus-mode')) {
-                document.body.classList.remove('reader-focus-mode');
-                const focusBtn = document.getElementById('reader-focus-toggle');
-                if (focusBtn) {
-                    focusBtn.classList.remove('active');
-                    focusBtn.innerHTML = '<i class="fa-solid fa-expand"></i> <span>집중 모드</span>';
-                }
-            }
-
-            // 리더 화면을 벗어나면 재생 중인 오디오 정지
-            if (target !== 'textbook-reader-view' && typeof stopReaderAudio === 'function') {
-                stopReaderAudio();
-            }
-            
-            // 섹션 토글
-            sections.forEach(sec => sec.classList.remove('active'));
-            document.getElementById(target).classList.add('active');
-            
-            // 헤더 텍스트 변경
-            if (titlesMap[target]) {
-                viewTitle.textContent = titlesMap[target].title;
-                viewSubtitle.textContent = titlesMap[target].subtitle;
-            }
-            
-            state.currentView = target;
-            
-            // 각 뷰 진입 시 렌더링 갱신
-            if (target === 'dashboard-view') {
-                renderDashboard();
-                checkExamDraft();
-            } else if (target === 'flashcard-view') {
-                loadFlashcards();
-            } else if (target === 'review-view') {
-                renderReviewList();
-            } else if (target === 'trainer-view') {
-                initTrainer();
-            } else if (target === 'textbook-view') {
-                renderTextbookSearch();
-            } else if (target === 'textbook-reader-view') {
-                renderTextbookReader();
-            } else if (target === 'dictionary-view') {
-                renderDictionary();
-            }
-            
-            // 새 뷰 스크롤 위치 복원
-            restoreScrollPosition(target);
+            switchView(target);
         });
     });
 }
@@ -405,6 +384,49 @@ function hideLoading(containerId) {
     }
 }
 
+// 글로벌 로딩 오버레이 제어 함수 (DOM 파괴 방지용)
+function showGlobalLoading(message = '로딩 중...') {
+    let overlay = document.getElementById('global-loading-overlay');
+    if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.id = 'global-loading-overlay';
+        overlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(11, 15, 25, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            transition: opacity 0.2s ease;
+        `;
+        overlay.innerHTML = `
+            <div class="spinner" style="width: 48px; height: 48px; border: 4px solid rgba(255,255,255,0.1); border-top-color: var(--color-primary); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 1.25rem;"></div>
+            <p id="global-loading-message" style="font-weight: 600; font-size: 1.05rem; margin: 0;"></p>
+        `;
+        document.body.appendChild(overlay);
+    }
+    document.getElementById('global-loading-message').textContent = message;
+    overlay.style.display = 'flex';
+    overlay.style.opacity = '1';
+}
+
+function hideGlobalLoading() {
+    const overlay = document.getElementById('global-loading-overlay');
+    if (overlay) {
+        overlay.style.opacity = '0';
+        setTimeout(() => {
+            overlay.style.display = 'none';
+        }, 200);
+    }
+}
+
 // 스피너 애니메이션을 위한 CSS 추가
 const spinnerStyle = document.createElement('style');
 spinnerStyle.textContent = `
@@ -428,9 +450,15 @@ initApp = function() {
 function updateGlobalStats() {
     // 1. 전체 카드 통계
     let totalCards = 0;
-    Object.keys(STUDY_DATA).forEach(subj => {
-        totalCards += STUDY_DATA[subj].cards.length;
-    });
+    if (typeof DataLoader !== 'undefined' && DataLoader.registry) {
+        DataLoader.getSubjectList().forEach(subj => {
+            totalCards += (subj.stats && subj.stats.cards) || 0;
+        });
+    } else if (typeof STUDY_DATA !== 'undefined' && STUDY_DATA) {
+        Object.keys(STUDY_DATA).forEach(subj => {
+            totalCards += STUDY_DATA[subj].cards.length;
+        });
+    }
     
     document.getElementById('total-cards-count').textContent = totalCards;
     document.getElementById('memorized-cards-count').textContent = state.memorizedCards.size;
@@ -457,25 +485,28 @@ function renderDashboard() {
     const container = document.getElementById('subject-cards-container');
     container.innerHTML = '';
     
-    Object.keys(STUDY_DATA).forEach(subjId => {
-        const subj = STUDY_DATA[subjId];
-        const totalSubjCards = subj.cards.length;
-        const totalSubjQuizzes = subj.quizzes.length;
+    const subjects = (typeof DataLoader !== 'undefined' && DataLoader.registry)
+        ? DataLoader.getSubjectList()
+        : Object.keys(STUDY_DATA).map(key => ({ key, name: STUDY_DATA[key].name, stats: { cards: STUDY_DATA[key].cards.length, quizzes: STUDY_DATA[key].quizzes.length } }));
+    
+    subjects.forEach(subjMeta => {
+        const subjId = subjMeta.key;
+        const totalSubjCards = (subjMeta.stats && subjMeta.stats.cards) || 0;
+        const totalSubjQuizzes = (subjMeta.stats && subjMeta.stats.quizzes) || 0;
         
-        // 과목별 완료된 카드 수
-        const memorizedSubjCards = subj.cards.filter(c => state.memorizedCards.has(c.id)).length;
+        // 과목별 완료된 카드 수 (ID prefix 기반)
+        const memorizedSubjCards = [...state.memorizedCards].filter(id => id.startsWith(subjId + '_card_')).length;
         const progressPercent = totalSubjCards > 0 ? Math.round((memorizedSubjCards / totalSubjCards) * 100) : 0;
         
-        // 과목별 퀴즈 정답률
-        const subjQuizIds = new Set(subj.quizzes.map(q => q.id));
-        const solvedSubjQuizzes = Object.keys(state.quizResults).filter(id => subjQuizIds.has(id));
+        // 과목별 퀴즈 정답률 (ID prefix 기반)
+        const solvedSubjQuizzes = Object.keys(state.quizResults).filter(id => id.startsWith(subjId + '_quiz_'));
         const correctSubjQuizzes = solvedSubjQuizzes.filter(id => state.quizResults[id].correct);
         const quizRate = solvedSubjQuizzes.length > 0 ? Math.round((correctSubjQuizzes.length / solvedSubjQuizzes.length) * 100) : 0;
         
         const cardHTML = `
             <div class="subject-card">
                 <div class="subj-header">
-                    <h4>${esc(subj.name)}</h4>
+                    <h4>${esc(subjMeta.name)}</h4>
                     <span>카드 ${totalSubjCards}개 / 퀴즈 ${totalSubjQuizzes}개</span>
                 </div>
                 <div class="subj-stats-summary">
@@ -1025,7 +1056,9 @@ function setupEventListeners() {
     document.getElementById('fc-subject-select').addEventListener('change', (e) => {
         state.flashcards.subject = e.target.value;
         state.flashcards.currentIndex = 0;
-        loadFlashcards();
+        DataLoader.loadSubject(e.target.value).then(() => {
+            loadFlashcards();
+        }).catch(() => loadFlashcards());
     });
     
     document.getElementById('fc-key-only').addEventListener('change', (e) => {
@@ -1094,7 +1127,14 @@ function setupEventListeners() {
     });
     
     document.getElementById('start-quiz-btn').addEventListener('click', () => {
-        startQuiz();
+        showGlobalLoading('퀴즈 데이터를 불러오는 중입니다...');
+        DataLoader.loadSubject(state.quiz.subject).then(() => {
+            hideGlobalLoading();
+            startQuiz();
+        }).catch(() => {
+            hideGlobalLoading();
+            startQuiz();
+        });
     });
     
     document.getElementById('submit-quiz-btn').addEventListener('click', () => {
@@ -1196,19 +1236,31 @@ function startSimSession(examData) {
 }
 
 function startMockExamSim(examId) {
-    if (typeof EXAM_DATA === 'undefined' || !EXAM_DATA[examId]) {
+    showGlobalLoading('모의고사 데이터를 불러오는 중입니다...');
+    DataLoader.loadExam(examId).then((examData) => {
+        hideGlobalLoading();
+        startSimSession(examData);
+    }).catch(err => {
+        hideGlobalLoading();
+        console.error(err);
         alert("모의고사 데이터를 로드하지 못했습니다.");
-        return;
-    }
-    startSimSession(EXAM_DATA[examId]);
+    });
 }
 
 function startIntegratedMockExam() {
-    if (typeof EXAM_DATA === 'undefined') {
+    showGlobalLoading('통합 모의고사 데이터를 불러오는 중입니다...');
+    const loaderPromises = DataLoader.registry.exams.map(e => DataLoader.loadExam(e.key));
+    Promise.all(loaderPromises).then(() => {
+        hideGlobalLoading();
+        _startIntegratedMockExamImpl();
+    }).catch(err => {
+        hideGlobalLoading();
+        console.error(err);
         alert("모의고사 데이터를 로드하지 못했습니다.");
-        return;
-    }
+    });
+}
 
+function _startIntegratedMockExamImpl() {
     // 과목별 문제들 동적 수집 ( subject1, subject2_p1, subject4_p3 등 접두사 기준 자동 분류 )
     const s1Questions = [];
     const s2Questions = [];
@@ -2754,6 +2806,16 @@ function clearDictSearch() {
    📋 "틀린 문제만 모아 풀기" 오답 모의고사 (Weakness Exam)
    ======================================================= */
 function startWeakExam() {
+    const loaderPromises = DataLoader.getSubjectList().map(s => DataLoader.loadSubject(s.key));
+    Promise.all(loaderPromises).then(() => {
+        _startWeakExamImpl();
+    }).catch(err => {
+        console.error(err);
+        alert("복습 데이터를 로드하지 못했습니다.");
+    });
+}
+
+function _startWeakExamImpl() {
     // 헷갈린 카드나 오답 데이터 로딩
     let weakCards = Array.from(state.weakCards);
     let solvedQuizzes = Object.keys(state.quizResults).filter(id => !state.quizResults[id].correct);
@@ -2938,6 +3000,17 @@ function startDailyChallenge() {
         return;
     }
     
+    const loaderPromises = DataLoader.getSubjectList().map(s => DataLoader.loadSubject(s.key));
+    Promise.all(loaderPromises).then(() => {
+        _startDailyChallengeImpl();
+    }).catch(err => {
+        console.error(err);
+        alert("챌린지 데이터를 로드하지 못했습니다.");
+    });
+}
+
+function _startDailyChallengeImpl() {
+    const todayStr = new Date().toISOString().split('T')[0];
     // 8문제 챌린지 팩 조립
     const qPack = [];
     
@@ -3275,7 +3348,8 @@ function getBackupKeys() {
         'pomo_total_time_date',
         'study_streak',
         'study_streak_last_date',
-        'calc_history'
+        'calc_history',
+        'fc_migrated_v2'
     ];
     const dynamicKeys = [];
     for (let i = 0; i < localStorage.length; i++) {
@@ -3327,7 +3401,8 @@ function importData(event) {
         'pomo_total_time_date',
         'study_streak',
         'study_streak_last_date',
-        'calc_history'
+        'calc_history',
+        'fc_migrated_v2'
     ];
     
     const reader = new FileReader();
@@ -3372,24 +3447,29 @@ function debounce(func, delay = 150) {
    🖨️ 오답노트 인쇄 (Print Handler)
    ======================================================= */
 function startFocusSubjectStudy(subKey) {
-    if (typeof STUDY_DATA !== 'undefined' && STUDY_DATA[subKey]) {
-        const subj = STUDY_DATA[subKey];
-        state.quiz.data = [...subj.quizzes].sort(() => 0.5 - Math.random()).slice(0, 10);
-        state.quiz.currentIndex = 0;
-        state.quiz.correctCount = 0;
-        state.quiz.solvedList = [];
-        
-        // 퀴즈 화면 초기화 및 활성화
-        document.getElementById('quiz-setup-panel').style.display = 'none';
-        document.getElementById('quiz-result-panel').style.display = 'none';
-        document.getElementById('quiz-arena-panel').style.display = 'block';
-        document.getElementById('quiz-q-category').textContent = subj.name;
-        
-        renderQuizQuestion();
-        
-        // 퀴즈 탭 활성화
-        switchView('quiz-view');
-    }
+    DataLoader.loadSubject(subKey).then(() => {
+        if (typeof STUDY_DATA !== 'undefined' && STUDY_DATA[subKey]) {
+            const subj = STUDY_DATA[subKey];
+            state.quiz.data = [...subj.quizzes].sort(() => 0.5 - Math.random()).slice(0, 10);
+            state.quiz.currentIndex = 0;
+            state.quiz.correctCount = 0;
+            state.quiz.solvedList = [];
+            
+            // 퀴즈 화면 초기화 및 활성화
+            document.getElementById('quiz-setup-panel').style.display = 'none';
+            document.getElementById('quiz-result-panel').style.display = 'none';
+            document.getElementById('quiz-arena-panel').style.display = 'block';
+            document.getElementById('quiz-q-category').textContent = subj.name;
+            
+            renderQuizQuestion();
+            
+            // 퀴즈 탭 활성화
+            switchView('quiz-view');
+        }
+    }).catch(err => {
+        console.error(err);
+        alert("퀴즈 데이터를 로드하지 못했습니다.");
+    });
 }
 
 
@@ -4207,38 +4287,18 @@ function renderTextbookReader() {
     // Initialize reader convenience toolbar (font size, theme, focus mode, etc.)
     initReaderToolbar();
     
-    // STUDY_DATA 로드 대기 (defer 로딩으로 인한 타이밍 이슈 방지)
-    if (typeof STUDY_DATA === 'undefined' || !STUDY_DATA) {
-        container.innerHTML = `
-            <div class="empty-state">
-                <i class="fa-solid fa-spinner fa-spin" style="font-size: 3rem; color: var(--color-primary); margin-bottom: 1rem; display: block;"></i>
-                <h3>교재 데이터를 불러오는 중...</h3>
-                <p>잠시만 기다려 주세요.</p>
-            </div>
-        `;
-        setTimeout(renderTextbookReader, 200);
-        return;
-    }
-    
     // Always repopulate subject select to ensure fresh state
     const previousValue = subjectSelect.value || textbookReaderState.selectedSubject;
     subjectSelect.innerHTML = '<option value="">과목을 선택하세요</option>';
     
-    // 과목 번호 순서대로 정렬 (1과목 → 4과목)
-    const subjectOrder = ['law', 'manufacturing', 'safety', 'understanding'];
-    const sortedSubjIds = Object.keys(STUDY_DATA).sort((a, b) => {
-        const idxA = subjectOrder.indexOf(a);
-        const idxB = subjectOrder.indexOf(b);
-        // 목록에 없는 키는 뒤로
-        return (idxA === -1 ? 99 : idxA) - (idxB === -1 ? 99 : idxB);
-    });
+    // DataLoader를 사용하여 레지스트리 기반으로 과목 목록 구성
+    const subjects = (typeof DataLoader !== 'undefined' && DataLoader.registry)
+        ? DataLoader.getSubjectList()
+        : [];
     
-    sortedSubjIds.forEach(subjId => {
-        const subj = STUDY_DATA[subjId];
-        // Skip if no name or chapters
-        if (!subj || !subj.name || !subj.chapters || subj.chapters.length === 0) return;
+    subjects.forEach(subj => {
         const option = document.createElement('option');
-        option.value = subjId;
+        option.value = subj.key;
         option.textContent = subj.name;
         subjectSelect.appendChild(option);
     });
@@ -4273,7 +4333,9 @@ function renderTextbookReader() {
             
             if (subjId) {
                 chapterSelect.disabled = false;
-                populateChapterSelect(subjId);
+                DataLoader.loadSubject(subjId).then(() => {
+                    populateChapterSelect(subjId);
+                });
                 container.innerHTML = `
                     <div class="empty-state">
                         <i class="fa-solid fa-book-open" style="font-size: 3rem; color: var(--color-text-muted); margin-bottom: 1rem; display: block;"></i>

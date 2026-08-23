@@ -70,6 +70,9 @@ const state = {
 
 // 로컬스토리지에서 진도 가져오기
 function loadProgress() {
+    // 2단계: 안정적 ID 마이그레이션 실행
+    migrateProgressV2();
+
     const memorized = localStorage.getItem('fc_memorized');
     const weak = localStorage.getItem('fc_weak');
     const quizzes = localStorage.getItem('quiz_results');
@@ -92,6 +95,29 @@ function loadProgress() {
         } catch (e) { console.error(e); }
     }
 
+    // 고아 ID 정리 (Orphan ID Cleanup)
+    // STUDY_DATA가 통째로 정의되어 있는 레거시 상태에서만 실행 (지연 로딩 도입 전)
+    if (typeof STUDY_DATA !== 'undefined' && Object.keys(STUDY_DATA).length > 0) {
+        const validCardIds = new Set();
+        const validQuizIds = new Set();
+        Object.keys(STUDY_DATA).forEach(subjKey => {
+            const subj = STUDY_DATA[subjKey];
+            if (subj.cards) subj.cards.forEach(c => validCardIds.add(c.id));
+            if (subj.quizzes) subj.quizzes.forEach(q => validQuizIds.add(q.id));
+        });
+
+        state.memorizedCards = new Set([...state.memorizedCards].filter(id => validCardIds.has(id)));
+        state.weakCards = new Set([...state.weakCards].filter(id => validCardIds.has(id)));
+
+        const cleanQuizzes = {};
+        Object.keys(state.quizResults).forEach(id => {
+            if (validQuizIds.has(id)) {
+                cleanQuizzes[id] = state.quizResults[id];
+            }
+        });
+        state.quizResults = cleanQuizzes;
+    }
+
     // 뽀모도로 누적 시간은 "오늘" 기준이므로, 날짜가 바뀌었으면 0으로 리셋
     const pomoDate = localStorage.getItem('pomo_total_time_date');
     const todayStr = new Date().toISOString().split('T')[0];
@@ -107,6 +133,57 @@ function loadProgress() {
     }
 }
 
+// 1회성 안정 ID 마이그레이션 실행
+function migrateProgressV2() {
+    if (localStorage.getItem('fc_migrated_v2') === 'true') {
+        return;
+    }
+
+    if (typeof ID_MIGRATION_MAP === 'undefined') {
+        return; // 아직 로드되지 않음
+    }
+
+    console.log('[Migration] Starting ID migration to stable hash-based IDs...');
+
+    const memorized = localStorage.getItem('fc_memorized');
+    const weak = localStorage.getItem('fc_weak');
+    const quizzes = localStorage.getItem('quiz_results');
+
+    if (memorized) {
+        try {
+            const arr = JSON.parse(memorized);
+            const migratedArr = arr.map(id => ID_MIGRATION_MAP[id] || id);
+            localStorage.setItem('fc_memorized', JSON.stringify(migratedArr));
+            console.log(`[Migration] Migrated ${arr.length} memorized card IDs.`);
+        } catch (e) { console.error('[Migration] memorized cards migration error:', e); }
+    }
+
+    if (weak) {
+        try {
+            const arr = JSON.parse(weak);
+            const migratedArr = arr.map(id => ID_MIGRATION_MAP[id] || id);
+            localStorage.setItem('fc_weak', JSON.stringify(migratedArr));
+            console.log(`[Migration] Migrated ${arr.length} weak card IDs.`);
+        } catch (e) { console.error('[Migration] weak cards migration error:', e); }
+    }
+
+    if (quizzes) {
+        try {
+            const obj = JSON.parse(quizzes);
+            const migratedObj = {};
+            Object.keys(obj).forEach(oldId => {
+                const newId = ID_MIGRATION_MAP[oldId] || oldId;
+                migratedObj[newId] = obj[oldId];
+            });
+            localStorage.setItem('quiz_results', JSON.stringify(migratedObj));
+            console.log(`[Migration] Migrated ${Object.keys(obj).length} quiz result IDs.`);
+        } catch (e) { console.error('[Migration] quiz results migration error:', e); }
+    }
+
+    localStorage.setItem('fc_migrated_v2', 'true');
+    console.log('[Migration] ID migration completed.');
+}
+
 // 로컬스토리지에 진도 저장
 function saveProgress() {
     localStorage.setItem('fc_memorized', JSON.stringify([...state.memorizedCards]));
@@ -116,5 +193,41 @@ function saveProgress() {
     // 대시보드 글로벌 통계 갱신 (app.js에 정의된 전역 함수; 로드 순서상 런타임에 사용 가능)
     if (typeof updateGlobalStats === 'function') {
         updateGlobalStats();
+    }
+}
+
+// 특정 과목 데이터가 동적 로드되었을 때 해당 과목의 고아 ID를 청소하는 함수 (지연 로딩 대응)
+function cleanOrphansForSubject(subjKey, subjData) {
+    if (!subjData) return;
+    
+    const validCardIds = new Set();
+    const validQuizIds = new Set();
+    
+    if (subjData.cards) subjData.cards.forEach(c => validCardIds.add(c.id));
+    if (subjData.quizzes) subjData.quizzes.forEach(q => validQuizIds.add(q.id));
+    
+    // 외운 카드 및 틀린 카드 청소
+    const cardsToClean = [...state.memorizedCards].filter(id => id.startsWith(subjKey + '_card_') && !validCardIds.has(id));
+    const weakToClean = [...state.weakCards].filter(id => id.startsWith(subjKey + '_card_') && !validCardIds.has(id));
+    
+    cardsToClean.forEach(id => state.memorizedCards.delete(id));
+    weakToClean.forEach(id => state.weakCards.delete(id));
+    
+    // 퀴즈 결과 청소
+    let quizzesCleaned = false;
+    Object.keys(state.quizResults).forEach(id => {
+        if (id.startsWith(subjKey + '_quiz_') && !validQuizIds.has(id)) {
+            delete state.quizResults[id];
+            quizzesCleaned = true;
+        }
+    });
+    
+    if (cardsToClean.length > 0 || weakToClean.length > 0 || quizzesCleaned) {
+        console.log(`[Orphan Cleanup] Cleaned orphans for ${subjKey}:`, {
+            memorized: cardsToClean.length,
+            weak: weakToClean.length,
+            quizzes: quizzesCleaned
+        });
+        saveProgress();
     }
 }

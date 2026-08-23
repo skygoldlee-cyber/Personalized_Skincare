@@ -11,12 +11,12 @@ audiobook/mp3/
 
 # ---------- 📚 비대화된 HTML 콘텐츠 (501MB) ----------
 # 앱은 data/*.js를 사용하므로 content/ 등에서 렌더링된 HTML은 제외하되,
-# 앱에서 링크로 여는 문서 HTML(docs/*.html)은 반드시 배포에 포함해야 한다.
+# 앱에서 링크로 여는 문서 HTML(docs/*.html) 및 모의고사 HTML(exams/*.html)은 반드시 배포에 포함해야 한다.
 # (루트 index.html은 진입점이므로 반드시 유지)
-# exams/*.html은 ~220MB로 Vercel 물리적 제한(100MB) 초과하므로 제외 유지.
 *.html
 !index.html
 !docs/*.html
+!exams/*.html
 
 # ---------- 🔁 Vercel 빌드 캐시 ----------
 .vercel/

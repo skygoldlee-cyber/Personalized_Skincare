@@ -2,7 +2,7 @@
 const EXAM_DATA = {
   "subject1": {
     "id": "subject1",
-    "title": "1과목: 화장품법의 이해 (1~100번)",
+    "title": "화장품법의 이해 (1~100번)",
     "questions": [
       {
         "id": "subject1_q1",
@@ -1268,7 +1268,7 @@ const EXAM_DATA = {
   },
   "subject2_p1": {
     "id": "subject2_p1",
-    "title": "2과목: 화장품 제조 및 품질관리 - 1부 (1~100번)",
+    "title": "화장품 제조 및 품질관리 - 1부",
     "questions": [
       {
         "id": "subject2_p1_q1",
@@ -2534,7 +2534,7 @@ const EXAM_DATA = {
   },
   "subject2_p2": {
     "id": "subject2_p2",
-    "title": "2과목: 화장품 제조 및 품질관리 - 2부 (101~200번)",
+    "title": "화장품 제조 및 품질관리 - 2부",
     "questions": [
       {
         "id": "subject2_p2_q101",
@@ -3795,7 +3795,7 @@ const EXAM_DATA = {
   },
   "subject2_p3": {
     "id": "subject2_p3",
-    "title": "2과목: 화장품 제조 및 품질관리 - 3부 (201~300번)",
+    "title": "화장품 제조 및 품질관리 - 3부",
     "questions": [
       {
         "id": "subject2_p3_q201",
@@ -5036,7 +5036,7 @@ const EXAM_DATA = {
   },
   "subject3_p1": {
     "id": "subject3_p1",
-    "title": "3과목: 유통화장품 안전관리 - 1부 (1~100번)",
+    "title": "유통화장품 안전관리 - 1부",
     "questions": [
       {
         "id": "subject3_p1_q1",
@@ -6302,7 +6302,7 @@ const EXAM_DATA = {
   },
   "subject3_p2": {
     "id": "subject3_p2",
-    "title": "3과목: 유통화장품 안전관리 - 2부 (101~200번)",
+    "title": "유통화장품 안전관리 - 2부",
     "questions": [
       {
         "id": "subject3_p2_q101",
@@ -7568,7 +7568,7 @@ const EXAM_DATA = {
   },
   "subject4_p1": {
     "id": "subject4_p1",
-    "title": "4과목: 맞춤형화장품의 이해 - 1부 (1~100번)",
+    "title": "맞춤형화장품의 이해 - 1부",
     "questions": [
       {
         "id": "subject4_p1_q1",
@@ -8834,7 +8834,7 @@ const EXAM_DATA = {
   },
   "subject4_p2": {
     "id": "subject4_p2",
-    "title": "4과목: 맞춤형화장품의 이해 - 2부 (101~200번)",
+    "title": "맞춤형화장품의 이해 - 2부",
     "questions": [
       {
         "id": "subject4_p2_q101",
@@ -10100,7 +10100,7 @@ const EXAM_DATA = {
   },
   "subject4_p3": {
     "id": "subject4_p3",
-    "title": "4과목: 맞춤형화장품의 이해 - 3부 (201~300번)",
+    "title": "맞춤형화장품의 이해 - 3부",
     "questions": [
       {
         "id": "subject4_p3_q201",

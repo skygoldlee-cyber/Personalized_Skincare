@@ -606,7 +606,8 @@ function Convert-MarkdownToHtml {
     $listType = "" # "ul" or "ol"
     $inQuote = $false
 
-    for ($i = 0; $i -lt $lines.Length; $i++) {
+    [void](& {
+        for ($i = 0; $i -lt $lines.Length; $i++) {
         $line = $lines[$i].Trim()
 
         # Handle Blockquotes
@@ -733,10 +734,11 @@ function Convert-MarkdownToHtml {
         $html.AppendLine("<p>$parsedLine</p>")
     }
 
-    # Clean up blocks
-    if ($inTable) { $html.AppendLine("</tbody>`n</table>") }
-    if ($inList) { $html.AppendLine("</$listType>") }
-    if ($inQuote) { $html.AppendLine("</blockquote>") }
+        # Clean up blocks
+        if ($inTable) { $html.AppendLine("</tbody>`n</table>") }
+        if ($inList) { $html.AppendLine("</$listType>") }
+        if ($inQuote) { $html.AppendLine("</blockquote>") }
+    })
 
     return $html.ToString()
 }

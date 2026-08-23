@@ -4,48 +4,24 @@ const path = require('path');
 const WORKSPACE_DIR = path.resolve(__dirname, '..');
 const EXAMS_DIR = path.join(WORKSPACE_DIR, 'exams');
 // 디렉토리를 탐색하여 subject*.md 파일 목록을 동적으로 빌드
-const files = fs.readdirSync(EXAMS_DIR);
-const EXAM_FILES = [];
-
-const subjectNames = {
-  1: '화장품법의 이해',
-  2: '화장품 제조 및 품질관리',
-  3: '유통화장품 안전관리',
-  4: '맞춤형화장품의 이해'
-};
-
-files.forEach(filename => {
-  const match = filename.match(/^subject(\d+)_(?:part\d+|\d+)_.*\.md$/i) || filename.match(/^subject(\d+)_100_questions\.md$/i);
-  if (match) {
-    const s = parseInt(match[1]);
-    let p = 1;
-    
-    // partX 형태나 pX 형태의 파트 번호 추출
-    const partMatch = filename.match(/part(\d+)/i) || filename.match(/_p(\d+)/i);
-    if (partMatch) {
-      p = parseInt(partMatch[1]);
-    }
-    
-    const subjectName = subjectNames[s] || '기타 과목';
-    
-    let id = `subject${s}`;
-    let title = `${s}과목: ${subjectName}`;
-    
-    if (s === 1) {
-      title += ' (1~100번)';
-    } else {
-      id += `_p${p}`;
-      title += ` - ${p}부 (${(p - 1) * 100 + 1}~${p * 100}번)`;
-    }
-    
-    EXAM_FILES.push({
-      id: id,
-      file: filename,
-      title: title,
-      subjectNum: s,
-      partNum: p
-    });
-  }
+const manifestPath = path.join(WORKSPACE_DIR, 'content', 'manifest.json');
+const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'));
+const EXAM_FILES = manifest.exams.map(e => {
+  const subjectMap = {
+    'law': 1,
+    'manufacturing': 2,
+    'safety': 3,
+    'understanding': 4
+  };
+  const s = subjectMap[e.subject] || 99;
+  const p = e.part || 1;
+  return {
+    id: e.key,
+    file: e.file,
+    title: e.title,
+    subjectNum: s,
+    partNum: p
+  };
 });
 
 // 정렬: 과목 번호순, 파트 번호순

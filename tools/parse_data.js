@@ -1,15 +1,19 @@
 const fs = require('fs');
 const path = require('path');
+const { stableId } = require('./build/id-factory');
 
 const WORKSPACE_DIR = path.resolve(__dirname, '..');
 const OUTPUT_FILE = path.join(WORKSPACE_DIR, 'data', 'study_data.js');
 
-const SUBJECT_DIRS = [
-  { id: 'law', name: '1과목: 화장품법의 이해', dir: 'content/law' },
-  { id: 'manufacturing', name: '2과목: 화장품 제조 및 품질관리', dir: 'content/manufacturing' },
-  { id: 'safety', name: '3과목: 유통화장품 안전관리', dir: 'content/safety' },
-  { id: 'understanding', name: '4과목: 맞춤형화장품의 이해', dir: 'content/understanding' }
-];
+// manifest.json을 로드하여 SUBJECT_DIRS 구성
+const manifestPath = path.join(WORKSPACE_DIR, 'content', 'manifest.json');
+const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'));
+const SUBJECT_DIRS = manifest.subjects.map(s => ({
+  id: s.key,
+  name: `${s.order}과목: ${s.name}`,
+  dir: `content/${s.dir}`,
+  chapters: s.chapters
+}));
 
 // 정규식 패턴 정의
 const NUMERIC_PATTERN = /\b\d+(?:\.\d+)?(?:%|세 이하|세 이상|개월|일|년|배|종|가지|개|시간|g|ml|kg|℃|도|분|초|주|ppm|㎛|회\/hr|개\/hr|개\/㎥)\b/g;
@@ -27,7 +31,7 @@ const cleanText = (text) => {
 };
 
 // 마크다운 파싱 함수
-const parseMarkdownFile = (filePath, subjectId, filename) => {
+const parseMarkdownFile = (filePath, subjectId, filename, chapterKey) => {
   const content = fs.readFileSync(filePath, 'utf-8');
   const lines = content.split(/\r?\n/);
 
@@ -64,7 +68,7 @@ const parseMarkdownFile = (filePath, subjectId, filename) => {
 
       // 플래시카드 생성
       cards.push({
-        id: `${subjectId}_card_${filePrefix}_${cards.length + 1}`,
+        id: stableId(subjectId, chapterKey, 'card', term.replace(/\*\*/g, '')),
         category: currentSection,
         term: term.replace(/\*\*/g, ''),
         definition: desc,
@@ -93,7 +97,7 @@ const parseMarkdownFile = (filePath, subjectId, filename) => {
             if (answer.length > 1) {
               const quizText = desc.replace(new RegExp(`\\*\\*${escapeRegExp(answer)}\\*\\*|${escapeRegExp(answer)}`, 'g'), ' [ 빈칸 ] ');
               quizzes.push({
-                id: `${subjectId}_quiz_${filePrefix}_${quizzes.length + 1}`,
+                id: stableId(subjectId, chapterKey, 'quiz', term.replace(/\*\*/g, '')),
                 category: currentSection,
                 context: `[용어: ${term}]`,
                 question: quizText,
@@ -107,7 +111,7 @@ const parseMarkdownFile = (filePath, subjectId, filename) => {
             const answer = match[0].trim();
             const quizText = desc.replace(new RegExp(escapeRegExp(answer), 'g'), ' [ 빈칸 ] ');
             quizzes.push({
-              id: `${subjectId}_quiz_${filePrefix}_${quizzes.length + 1}`,
+              id: stableId(subjectId, chapterKey, 'quiz', term.replace(/\*\*/g, '')),
               category: currentSection,
               context: `[용어: ${term}]`,
               question: quizText,
@@ -118,7 +122,7 @@ const parseMarkdownFile = (filePath, subjectId, filename) => {
         } else {
           // 마땅한 빈칸 대상이 없으면 OX 혹은 단답형 질문 생성 (단순 정의 묻기)
           quizzes.push({
-            id: `${subjectId}_quiz_${filePrefix}_${quizzes.length + 1}`,
+            id: stableId(subjectId, chapterKey, 'quiz', term.replace(/\*\*/g, '')),
             category: currentSection,
             context: `정의에 알맞은 용어를 적으시오.`,
             question: `${desc}`,
@@ -173,7 +177,7 @@ const parseMarkdownFile = (filePath, subjectId, filename) => {
           const term = listMatch[1].trim();
           const desc = listMatch[2].trim();
           cards.push({
-            id: `${subjectId}_card_${filePrefix}_${cards.length + 1}`,
+            id: stableId(subjectId, chapterKey, 'card', term),
             category: currentSection,
             term: term,
             definition: cleanText(desc),
@@ -192,7 +196,7 @@ const parseMarkdownFile = (filePath, subjectId, filename) => {
             boldMatches.forEach(m => {
               const ans = m[1].trim();
               quizzes.push({
-                id: `${subjectId}_quiz_${filePrefix}_${quizzes.length + 1}`,
+                id: stableId(subjectId, chapterKey, 'quiz', term),
                 category: currentSection,
                 context: `[주제: ${term}]`,
                 question: cleanText(desc).replace(new RegExp(`\\*\\*${escapeRegExp(ans)}\\*\\*|${escapeRegExp(ans)}`, 'g'), ' [ 빈칸 ] '),
@@ -221,7 +225,7 @@ const parseMarkdownFile = (filePath, subjectId, filename) => {
               const ans = m[1].trim();
               if (ans.length > 1 && !ans.includes('기출') && !ans.includes('중요')) {
                 quizzes.push({
-                  id: `${subjectId}_quiz_${filePrefix}_${quizzes.length + 1}`,
+                  id: stableId(subjectId, chapterKey, 'quiz', cleanedLine.substring(0, 15)),
                   category: currentSection,
                   context: `[기출 지문 빈칸 채우기]`,
                   question: cleanedLine.replace(new RegExp(`\\*\\*${escapeRegExp(ans)}\\*\\*|${escapeRegExp(ans)}`, 'g'), ' [ 빈칸 ] '),
@@ -234,7 +238,7 @@ const parseMarkdownFile = (filePath, subjectId, filename) => {
             numMatches.forEach(m => {
               const ans = m[0].trim();
               quizzes.push({
-                id: `${subjectId}_quiz_${filePrefix}_${quizzes.length + 1}`,
+                id: stableId(subjectId, chapterKey, 'quiz', cleanedLine.substring(0, 15)),
                 category: currentSection,
                 context: `[기출 지문 빈칸 채우기]`,
                 question: cleanedLine.replace(new RegExp(escapeRegExp(ans), 'g'), ' [ 빈칸 ] '),
@@ -334,10 +338,15 @@ const main = () => {
       chapters: []
     };
 
-    const files = fs.readdirSync(subjPath).filter(f => f.endsWith('.md')).sort();
-    files.forEach(file => {
+    const chapters = subj.chapters || [];
+    chapters.forEach(chapter => {
+      const file = chapter.file;
       const filePath = path.join(subjPath, file);
-      const { cards, quizzes } = parseMarkdownFile(filePath, subj.id, file);
+      if (!fs.existsSync(filePath)) {
+        console.warn(`경고: 파일이 없습니다: ${filePath}`);
+        return;
+      }
+      const { cards, quizzes } = parseMarkdownFile(filePath, subj.id, file, chapter.key);
       resultData[subj.id].cards.push(...cards);
       resultData[subj.id].quizzes.push(...quizzes);
 

@@ -1,5 +1,5 @@
 // 자동 생성된 화장품 원료 데이터 파일입니다. 수정하지 마십시오.
-const INGREDIENTS_DATA = [
+var INGREDIENTS_DATA = [
   {
     "name": "글리세린",
     "engName": "Glycerin",

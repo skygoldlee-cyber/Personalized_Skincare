@@ -3,6 +3,7 @@
 > **대상 프로젝트**: Cosmetic Pass Master — 맞춤형화장품 조제관리사 스마트 학습 플랫폼
 > **작성일**: 2026-08-22
 > **개정**: 2026-08-22 (rev.2) — 안정 ID 해시 입력 재설계(`chapterKey` 포함·`definition` 제외), Phase 간 선행 조건 명문화, ID 마이그레이션/`ALLOWED_KEYS` 세부 보강, SW 캐시 전략 단순화
+> **개정**: 2026-08-23 (rev.3, 구현 반영) — 아래 4건을 코드에 반영하고 문서를 실제 구현에 맞춰 갱신: ① SW 데이터 캐시 버전 분리(`DATA_CACHE_VERSION` 안정화 + `DATA_ASSETS` 경량화 + activate 고아 번들 정리)로 "변경 과목만 갱신" 실현, ② 퀴즈 안정 ID를 `term|answer(+#n)`로 확장해 단원 내 복수 빈칸의 ID 충돌 제거(마이그레이션 맵 동기 재생성), ③ 마커 감시(5-3) 구현(`textbook.plugin` 수집 + `report.printMarkerWarnings` 출력), ④ `--only <subjectKey>` 부분 빌드 구현(레지스트리·통계 병합 보존)
 > **목적**: 교재 내용이 수시로 변경되어도 코드 수정 없이 콘텐츠만 교체하면 되는 **콘텐츠 주도(Content-Driven) 모듈화 아키텍처** 제안
 > **관련 문서**: [`ARCHITECTURE.md`](ARCHITECTURE.md) — 기존 아키텍처 개요
 
@@ -262,18 +263,27 @@ module.exports = {
 
 **효과**: 새 콘텐츠 유형(예: "용어 사전", "판례 모음")이 추가되면 플러그인 1개를 새로 작성해 등록하면 됩니다. 기존 코드에 `if/else`를 추가하지 않습니다 (Open/Closed 원칙).
 
-### 2-3. 빌드 실행 (package.json 스크립트)
+### 2-3. 빌드 실행 (package.json 스크립트) ✅ 구현됨 (rev.3)
 
 ```json
 {
   "scripts": {
     "build:data": "node tools/build/index.js",
-    "build:data:law": "node tools/build/index.js --only law"
+    "build:data:law": "node tools/build/index.js --only law",
+    "build:data:manufacturing": "node tools/build/index.js --only manufacturing",
+    "build:data:safety": "node tools/build/index.js --only safety",
+    "build:data:understanding": "node tools/build/index.js --only understanding"
   }
 }
 ```
 
-`--only <subjectKey>` 옵션으로 **변경된 과목만 재빌드** → C4 해소의 빌드 측면.
+`--only <subjectKey>`(콤마로 다중 지정 가능, 예: `--only law,safety`) 옵션으로 **변경된 과목만 재빌드** → C4 해소의 빌드 측면.
+
+**부분 빌드의 무결성 보장**:
+- 대상 과목 + 그 과목에 속한 시험(`exams[].subject` 일치)만 재파싱·재출력하고, 나머지 과목/시험/원료는 **이전 `data/registry.js` 항목과 기존 해시 번들 파일을 그대로 재사용**합니다. 따라서 부분 빌드 후에도 레지스트리는 전체 목록을 유지합니다.
+- `.last-stats.json`(통계 이상 감지 baseline)도 이전 값을 로드해 병합하므로, 부분 빌드가 다른 과목의 baseline을 지우지 않습니다.
+- 이전 레지스트리가 없는 최초 상태에서 `--only`를 실행하면 나머지를 보존할 수 없으므로 **에러로 중단**하고 전체 빌드를 1회 먼저 하도록 안내합니다.
+- 임의의 과목 키는 `node tools/build/index.js --only <key>`로 스크립트 없이도 동작합니다(신규 과목 추가 시 npm 스크립트를 추가하지 않아도 됨).
 
 ---
 
@@ -362,19 +372,37 @@ const DataLoader = {
 
 **부수 효과**: 초기 로드 시 사용하지 않는 과목 번들을 로드하지 않아 **초기 구동 속도 향상** (모바일 체감 개선).
 
-### 4-3. Service Worker 전략 수정
+### 4-3. Service Worker 전략 ✅ 구현됨 (rev.3)
 
-**우선 권장 (단순 · 저위험)**: 번들 파일명에 콘텐츠 해시를 포함시킵니다(예: `law.a1b2c3d4.js`). 내용이 바뀐 과목만 URL이 달라지므로 **브라우저 HTTP 캐시와 SW Cache-First가 자동으로 변경분만 갱신**합니다 — fetch 핸들러에 별도 대조 로직이 필요 없습니다. 레지스트리(`registry.js`)만 Network First로 두어 항상 최신 번들 URL을 가리키게 합니다.
+번들 파일명에 콘텐츠 해시를 포함시켜(예: `law.a1b2c3d4.js`) 내용이 바뀐 과목만 URL이 달라지게 하고, **Cache First + 온디맨드 캐싱**으로 변경분만 자연 갱신합니다. 레지스트리(`registry.js`)만 Network First로 두어 항상 최신 번들 URL을 가리킵니다.
 
-| 항목 | 현재 | 제안(우선) |
+**핵심(rev.3에서 바로잡은 지점) — 데이터 캐시 버전을 쉘/CDN과 분리**:
+초기 구현은 `CACHE_VERSION`(레지스트리 전체 해시)이 **쉘·CDN·데이터 캐시 이름을 모두 스코프**하고 activate가 구버전 캐시를 통째 삭제했습니다. 그 결과 한 과목만 바뀌어도 데이터 캐시가 전부 폐기·재프리캐시되어 **해시 파일명의 이점이 무력화**됐습니다(C4 런타임 목표 미달). rev.3에서는 캐시 버전을 둘로 나눕니다.
+
+```javascript
+// sw.js
+const CACHE_VERSION      = 'v3-<shellHash>'; // 쉘/CDN: 배포마다 갱신 (코드/HTML 최신 보장)
+const DATA_CACHE_VERSION = 'v1';             // 데이터: "안정" — 콘텐츠 변경으로는 올리지 않음
+const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
+```
+
+- **데이터 캐시(`DATA_CACHE`)는 배포 간 유지**됩니다. 변경된 과목은 새 해시 URL이라 Cache First 미스 → 네트워크 fetch 후 저장되고, **미변경 번들 캐시는 그대로 재사용**됩니다.
+- activate는 구버전 쉘/CDN 캐시만 삭제하고, 데이터 캐시는 통째로 지우지 않는 대신 **`pruneStaleDataBundles()`**로 최신 레지스트리가 더 이상 참조하지 않는 **구 해시 번들만 선별 삭제**합니다(best-effort, 실패해도 fetch 경로 무영향).
+- 빌드(`index.js`)는 `CACHE_VERSION`(쉘/CDN)만 갱신하고 `DATA_CACHE_VERSION`은 건드리지 않습니다.
+
+**`DATA_ASSETS`는 경량 세트로 축소**(`registry.js` + `audio_manifest.js`)했습니다. 무거운 과목/시험/원료 번들은 install 시 프리캐시하지 않고 fetch 핸들러의 Cache First가 **최초 접근 시 온디맨드로 캐시**합니다.
+
+| 항목 | 초기 구현 | rev.3 |
 |------|------|------|
-| 데이터 캐시 단위 | 전체 번들 1개 | 레지스트리(Network First) + 해시 파일명 과목 번들(Cache First) |
-| 캐시 무효화 | `CACHE_VERSION` 수동 증가 (전체 삭제) | 번들 URL 변경으로 변경 과목만 자연 갱신 |
+| 데이터 캐시 이름 | `CACHE_VERSION`로 스코프(배포마다 교체) | `DATA_CACHE_VERSION` 안정 이름(배포 간 유지) |
+| 캐시 무효화 | 버전 bump → 데이터 캐시 전체 삭제·재다운로드 | 번들 URL 변경분만 갱신 + activate 고아 정리 |
+| `DATA_ASSETS` | 전체 번들 16개 프리캐시 | `registry.js` + `audio_manifest.js`만 |
+| 무거운 번들 확보 | install 시 일괄 | 최초 접근 시 온디맨드 |
 
-`sw.js`의 `DATA_ASSETS`는 `./data/registry.js`로 축소합니다.
+> **트레이드오프 (명시)**: 온디맨드 캐싱은 *아직 방문하지 않은 과목이 최초 1회 온라인 접속 전까지 오프라인 미가용*이라는 점을 감수합니다. "설치 직후 전체 오프라인 가용"이 필수라면 `DATA_ASSETS`에 번들을 다시 추가할 수 있으나, 그 경우 변경-격리 이점(변경 과목만 재다운로드)을 일부 포기합니다. 현 데이터 총량(~2MB)과 학습 흐름(과목을 순차 진입)을 고려해 **온디맨드 + 변경 격리**를 기본값으로 택했습니다.
 
 > **⏸️ 후순위(선택) — SW 내 해시 대조 로직**
-> fetch 핸들러에서 캐시된 레지스트리 해시와 요청을 직접 대조하는 방식은 SW 생명주기(activate 캐시 정리, 레지스트리 stale 처리, 롤백)와 얽혀 미묘한 버그를 유발하기 쉽습니다. **현 데이터 총량(~2MB: study 944KB + exam 571KB + ingredients 457KB)에서 과목별 재다운로드가 실제 체감 문제인지 먼저 측정**한 뒤, 위 해시 파일명 방식으로 부족할 때에만 별도 단계로 도입합니다.
+> fetch 핸들러에서 캐시된 레지스트리 해시와 요청을 직접 대조하는 방식은 SW 생명주기와 얽혀 버그를 유발하기 쉽습니다. rev.3의 "해시 파일명 + 안정 데이터 캐시 + activate 고아 정리"로 충분하므로 도입하지 않습니다. (activate의 고아 정리는 fetch 경로에 개입하지 않아 저위험입니다.)
 
 ---
 
@@ -412,6 +440,19 @@ function stableId(subjectKey, chapterKey, type, term) {
 > 같은 과목의 서로 다른 단원에 동일 용어가 등장하는 것은 정상적인 콘텐츠입니다(예: "위해평가"가 3과목 여러 단원에 출현). `subjectKey + term`만으로 해시하면 이런 정당한 콘텐츠에서 **동일 ID가 생성되어 [`uniqueIds` 검증](#-스키마-검증-및-빌드-안전장치)이 빌드를 실패**시킵니다. 이는 해시 함수 충돌([Q3](#q3-해시-충돌-가능성은))이 아니라 **입력 충돌**이라 해시 길이를 늘려도 해결되지 않습니다. `chapterKey`를 포함해 단원 간 동일 용어를 구분합니다.
 >
 > **잔여 위험**: 같은 단원 안에 동일 용어 카드가 2장 있으면 여전히 충돌합니다. 이는 학습자에게도 혼란스러운 콘텐츠이므로, 빌드 검증에서 검출해 **콘텐츠를 수정(용어 구분)**하는 것을 원칙으로 합니다.
+
+> **⚠️ 설계 결정 (rev.3) — 퀴즈 ID는 `term|answer(+#n)`로 유일화**
+> 카드는 용어당 1장이지만 **퀴즈는 한 용어에서 여러 개**가 나올 수 있습니다(정의 본문에 볼드 정답이 2개 이상이면 빈칸 퀴즈가 2개 생성). 카드와 동일하게 `term`만으로 해시하면 이들이 **같은 ID로 충돌**해, 정상 콘텐츠인데도 [`uniqueIds` 검증](#-스키마-검증-및-빌드-안전장치)이 빌드를 실패시킵니다(입력 충돌, [Q3](#q3-해시-충돌-가능성은)).
+> 따라서 퀴즈 ID는 해시 입력에 **정답(answer)을 결합**(`term|answer`)해 빈칸별로 구분하고, 동일 `term|answer`가 한 파일에서 반복되는 드문 경우에는 **파일 단위 순번 `#n`**을 덧붙입니다.
+> ```javascript
+> // tools/build/plugins/textbook.plugin.js — makeQuizId (파일 단위 카운터)
+> const base = `${term}|${answer}`;
+> const n = (counts.get(base) || 0) + 1;         // 같은 base 재등장 시 증가
+> const input = n === 1 ? base : `${base}#${n}`;
+> stableId(subjectKey, chapterKey, 'quiz', input);
+> ```
+> **안정성**: `answer`(빈칸 대상 토큰)는 정의 본문보다 훨씬 덜 바뀌므로 오탈자·해설 수정에도 퀴즈 진행상황이 유지됩니다. 카드 ID(`term` 기반)는 변경 없음.
+> **동기화 규약**: `tools/generate_migration_map.js`의 신 퀴즈 ID 생성은 위 `makeQuizId`와 **바이트 단위로 동일**해야 마이그레이션 타깃이 실제 번들 ID와 일치합니다(둘 다 같은 파일을 같은 순서로 walk). 플러그인 수정 시 생성기도 함께 갱신하고 맵을 재생성합니다.
 
 ### ID 변경 규칙 (예측 가능성)
 
@@ -456,14 +497,17 @@ const SubjectSchema = {
 - `key` 중복 여부
 - `exams[].subject`가 `subjects[].key` 중 하나를 가리키는지 (C6 해소의 검증 측면)
 
-### 5-3. 파싱 마커 감시
+### 5-3. 파싱 마커 감시 ✅ 구현됨 (rev.3)
 
-플러그인이 `🔖기출` 마커가 있는데 퀴즈가 생성되지 않은 행을 수집해 빌드 리포트에 경고로 출력합니다.
+`textbook.plugin`이 `🔖기출` 마커가 있는데 퀴즈가 생성되지 않은 행/지문을 파일별로 수집하고, `tools/build/report.js`의 `printMarkerWarnings()`가 빌드 로그에 경고로 출력합니다(빌드는 실패시키지 않음 — 조용한 손실을 "보이게" 만드는 것이 목적). 수집 결과는 **비열거(`_warnings`) 필드**로 전달되어 번들/`contentHash`에는 섞이지 않습니다.
 
 ```
-[WARN] law/cosmetic-law.md: 🔖기출 마커가 있으나 퀴즈 미생성 — 3건
-  - "제조판매업자는 매 제조번호별로..."
+[마커 감시] 🔖기출 표시가 있으나 퀴즈 미생성 — 총 1건
+[WARN] law/1.화장품법2026.md: 🔖기출 마커가 있으나 퀴즈 미생성 — 1건
+  - "### 화장품법의 목적"
 ```
+
+> 참고: 현재 콘텐츠에서 manufacturing·safety·understanding의 퀴즈가 0개인 것은 **해당 md에 `🔖기출`/`📌중요` 마커 자체가 없기 때문**(파싱 회귀가 아님)이며, 마커가 없으므로 이 경고도 발생하지 않습니다. 반대로 law에서 마커가 있으나 퀴즈가 안 나온 1건은 위와 같이 정상 검출됩니다.
 
 ---
 
@@ -547,19 +591,22 @@ const SubjectSchema = {
 2. `src/data-loader.js` 작성
 3. `app.js`의 데이터 접근 지점을 로더 API로 교체 (접근 지점이 한정적이므로 범위 명확)
 4. `index.html`의 `<script>` 목록에서 개별 데이터 파일 제거 → `registry.js` + `data-loader.js` 추가
-5. `sw.js` 캐시 전략 수정
+5. `sw.js` 캐시 전략 수정 (rev.3: 데이터 캐시 버전 분리 + `DATA_ASSETS` 경량화 + activate 고아 정리로 완성)
 
-**완료 기준**: 1개 과목 재빌드 시 다른 과목 번들의 캐시 유지
+**완료 기준**: 1개 과목 재빌드 시 다른 과목 번들의 캐시 유지 — ✅ 달성(`DATA_CACHE_VERSION` 안정화). 부분 빌드는 `--only`로 지원.
 
 ### Phase 4 — 검증 강화 + 파이프라인 정리 (리스크: 낮음)
 **목표**: 조용한 실패 제거 (C5, C7 해소)
 
-1. `tools/build/` 플러그인 구조로 파서 재편 (기능 동등)
-2. 스키마 검증 + 통계 비교 + 마커 감시 추가
-3. `package.json` 스크립트 정비, 레거시 파서 제거
+1. `tools/build/` 플러그인 구조로 파서 재편 (기능 동등) — ✅
+2. 스키마 검증 + 통계 비교 + 마커 감시 추가 — ✅ (스키마·`uniqueIds`·20% 감소 경고·마커 감시 모두 구현)
+3. `package.json` 스크립트 정비(`--only` 포함), 레거시 파서 제거 — 스크립트 ✅ / 레거시 파서 제거는 미착수(전환기 유지)
 4. (선택) 콘텐츠 파일명 슬러그화 — **Phase 2 안정 ID 배포 이후에만 안전** (그 전에는 `filePrefix` 변화로 레거시 ID가 깨짐, 위 선행 조건 참조)
+   - 실측 이슈: 현재 콘텐츠 md 파일명이 **CP949로 저장**되어 UTF-8 매니페스트와 불일치 → 리눅스 CI/빌드에서 `File does not exist`로 실패. 슬러그화(ASCII 키)가 이 인코딩 문제까지 함께 해소합니다.
 
-**완료 기준**: 파싱 이상 시 CI/빌드가 실패하고 원인 출력
+**완료 기준**: 파싱 이상 시 CI/빌드가 실패하고 원인 출력 — ✅ (검증 실패 시 exit 1 + 원인 출력, 마커 미생성은 경고로 리포트)
+
+> **미착수(향후)**: 스키마의 `cards.length > 0` / `chapters.length > 0` 비어있음 검사(현재는 배열 타입만 확인), 레거시 파서(`tools/parse_*.js`) 제거, 파일명 슬러그화.
 
 ---
 

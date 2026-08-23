@@ -3,17 +3,24 @@
  * 맞춤형화장품 조제관리사 스마트 학습 플랫폼 PWA
  *
  * 캐시 전략:
- *  - App Shell (HTML/CSS/JS)      : Stale-While-Revalidate
- *  - 학습 데이터 (data/*.js)       : Cache First (거의 불변, 오프라인 핵심)
+ *  - App Shell (HTML/CSS/JS)      : Network First / SWR (배포 시 CACHE_VERSION 갱신)
+ *  - 레지스트리 (registry.js)      : Network First (항상 최신 번들 URL 확보)
+ *  - 학습 데이터 번들 (해시 파일명) : Cache First + 온디맨드 캐싱 (변경분만 새 URL로 갱신)
  *  - 외부 CDN (폰트/아이콘)        : Stale-While-Revalidate
  *  - MP3 오디오 (302MB)           : 네트워크 직행 (캐시 제외)
  *
- * ⚠️ 배포 시 CACHE_VERSION을 올려야 구 캐시가 정리됩니다.
+ * ⚠️ 캐시 버전 규약 (MODULAR_DESIGN 4-3):
+ *   - CACHE_VERSION(쉘/CDN)은 배포마다 갱신 → 코드/HTML은 항상 최신.
+ *   - DATA_CACHE_VERSION(데이터)은 "안정" 이름으로, 콘텐츠 변경 시 올리지 않음.
+ *     번들 파일명에 콘텐츠 해시가 포함되므로 변경된 과목만 새 URL이 되어
+ *     Cache First로 자연 갱신되고, 미변경 번들 캐시는 배포 간 그대로 유지된다.
+ *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v3';
+const CACHE_VERSION = 'v3-ff99432b';       // 쉘/CDN: 배포마다 갱신
+const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
-const DATA_CACHE = `cosmetic-pass-data-${CACHE_VERSION}`;
+const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
 const CDN_CACHE = `cosmetic-pass-cdn-${CACHE_VERSION}`;
 
 /** 설치 시 미리 캐시할 App Shell 목록 */
@@ -33,11 +40,17 @@ const SHELL_ASSETS = [
   './icons/icon-512.png'
 ];
 
-/** 오프라인 학습 핵심 — 대용량 데이터 파일 */
+/**
+ * 설치 시 프리캐시할 "경량" 데이터만 나열한다 (MODULAR_DESIGN 4-3).
+ * 무거운 과목/시험/원료 번들은 해시 파일명 + fetch 핸들러의 Cache First
+ * 온디맨드 캐싱으로 처리하므로 여기에 넣지 않는다.
+ *   - 장점: 배포마다 전체(~2MB) 재프리캐시/재다운로드가 사라짐, 변경 과목만 갱신.
+ *   - 트레이드오프: 아직 방문하지 않은 과목은 최초 1회 온라인 접속 시 캐시됨
+ *     (그 전까지는 오프라인 미가용). 전체 오프라인 선(先)확보가 필요하면
+ *     이 배열에 번들을 다시 추가할 수 있으나, 그 경우 변경-격리 이점을 일부 포기한다.
+ */
 const DATA_ASSETS = [
-  './data/study_data.js',
-  './data/exam_data.js',
-  './data/ingredients_data.js',
+  './data/registry.js',
   './data/audio_manifest.js'
 ];
 
@@ -70,6 +83,8 @@ self.addEventListener('install', (event) => {
  * activate: 이전 버전 캐시 정리
  * ---------------------------------------------------------- */
 self.addEventListener('activate', (event) => {
+  // DATA_CACHE는 "안정" 이름이라 배포 간 유지된다 (통째 삭제하지 않음).
+  // 구 버전 쉘/CDN 캐시만 제거하고, 데이터 캐시 내부는 레지스트리 기준으로 고아만 정리한다.
   const currentCaches = [SHELL_CACHE, DATA_CACHE, CDN_CACHE];
   event.waitUntil(
     caches.keys()
@@ -80,9 +95,42 @@ self.addEventListener('activate', (event) => {
             .map((key) => caches.delete(key))
         )
       )
+      .then(() => pruneStaleDataBundles())
       .then(() => self.clients.claim())
   );
 });
+
+/**
+ * 데이터 캐시는 배포 간 유지되므로, 최신 레지스트리가 더 이상 참조하지 않는
+ * 구 해시 번들만 선별 삭제한다. 실패해도 무해한 best-effort (fetch 경로 영향 없음).
+ * 루트/서브디렉터리 배포 모두 대응하기 위해 경로 끝 일치로 비교한다.
+ */
+async function pruneStaleDataBundles() {
+  try {
+    const cache = await caches.open(DATA_CACHE);
+    const res = await fetch('./data/registry.js', { cache: 'no-cache' });
+    if (!res || !res.ok) return;
+    const text = await res.text();
+
+    // 레지스트리가 참조하는 모든 ./data/*.js 경로 수집 (+ 항상 보존할 경량 파일)
+    const referenced = new Set(text.match(/\.\/data\/[A-Za-z0-9_./-]+\.js/g) || []);
+    referenced.add('./data/registry.js');
+    referenced.add('./data/audio_manifest.js');
+    const refSuffixes = [...referenced].map((r) => r.replace(/^\.\//, '/'));
+
+    const requests = await cache.keys();
+    await Promise.all(
+      requests.map(async (req) => {
+        const pathname = new URL(req.url).pathname;
+        if (!pathname.includes('/data/')) return; // 데이터 번들만 대상
+        const isReferenced = refSuffixes.some((suffix) => pathname.endsWith(suffix));
+        if (!isReferenced) await cache.delete(req);
+      })
+    );
+  } catch (e) {
+    // best-effort: 실패 시 아무 것도 하지 않음
+  }
+}
 
 /* ------------------------------------------------------------
  * fetch: 요청 유형별 캐시 전략 적용
@@ -117,10 +165,14 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 4) 학습 데이터 파일 → Cache First
+  // 4) 학습 데이터 파일 → Cache First (단, registry.js는 최신 변경사항 확인을 위해 Network First 적용)
   // (루트/서브디렉터리 배포 모두 대응: 경로 어디에 있든 /data/ 세그먼트 매칭)
   if (url.pathname.includes('/data/')) {
-    event.respondWith(cacheFirst(request, DATA_CACHE));
+    if (url.pathname.endsWith('registry.js')) {
+      event.respondWith(networkFirst(request, DATA_CACHE));
+    } else {
+      event.respondWith(cacheFirst(request, DATA_CACHE));
+    }
     return;
   }
 

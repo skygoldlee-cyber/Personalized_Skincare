@@ -1,0 +1,22 @@
+{
+  "name": "cosmetic-pass-master",
+  "version": "1.0.0",
+  "description": "맞춤형화장품 조제관리사 자격시험 스마트 학습 플랫폼",
+  "main": "serve.js",
+  "scripts": {
+    "build:data": "node tools/build/index.js",
+    "build:data:law": "node tools/build/index.js --only law",
+    "build:data:manufacturing": "node tools/build/index.js --only manufacturing",
+    "build:data:safety": "node tools/build/index.js --only safety",
+    "build:data:understanding": "node tools/build/index.js --only understanding",
+    "serve": "node serve.js"
+  },
+  "keywords": [
+    "cosmetics",
+    "education",
+    "pwa",
+    "vanilla-js"
+  ],
+  "author": "",
+  "license": "MIT"
+}

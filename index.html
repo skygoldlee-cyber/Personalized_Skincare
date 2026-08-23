@@ -1277,14 +1277,11 @@
       `defer`를 추가하여 HTML 파싱을 블로킹하지 않고, 문서 파싱 완료 후 순서대로 실행합니다.
       (app.js보다 먼저 실행되어야 하므로 defer 순서를 유지합니다.)
     -->
-    <!-- Inject Study Data -->
-    <script src="data/study_data.js" defer></script>
+    <!-- Inject Dynamic Data Registry & Loader -->
+    <script src="data/registry.js" defer></script>
+    <script src="src/data-loader.js" defer></script>
     <!-- Inject Audio Manifest (오디오 파일 경로 매핑) -->
     <script src="data/audio_manifest.js" defer></script>
-    <!-- Inject Ingredients Data -->
-    <script src="data/ingredients_data.js" defer></script>
-    <!-- Inject Exam Data -->
-    <script src="data/exam_data.js" defer></script>
     <!-- Utility helpers (no deps) - app.js보다 먼저 로드 -->
     <script src="src/utils.js" defer></script>
     <!-- Inject SVG Charts & Scratchpad Logic Modules -->
@@ -1293,6 +1290,7 @@
     <!-- Calc trainer question generator (pure) - app.js보다 먼저 로드 -->
     <script src="src/trainer-calc.js" defer></script>
     <!-- Global State & Persistence Module (app.js보다 먼저 로드되어야 함) -->
+    <script src="data/id_migration.js" defer></script>
     <script src="src/state.js" defer></script>
     <!-- App Logic Script (defer로 DOM 준비 후 실행) -->
     <script src="src/app.js" defer></script>
