@@ -372,7 +372,7 @@ const DataLoader = {
 
 **부수 효과**: 초기 로드 시 사용하지 않는 과목 번들을 로드하지 않아 **초기 구동 속도 향상** (모바일 체감 개선).
 
-### 4-3. Service Worker 전략 ✅ 구현됨 (rev.3)
+### 4-3. Service Worker 전략 ✅ 구현됨 (rev.3, rev.4 보강)
 
 번들 파일명에 콘텐츠 해시를 포함시켜(예: `law.a1b2c3d4.js`) 내용이 바뀐 과목만 URL이 달라지게 하고, **Cache First + 온디맨드 캐싱**으로 변경분만 자연 갱신합니다. 레지스트리(`registry.js`)만 Network First로 두어 항상 최신 번들 URL을 가리킵니다.
 
@@ -391,6 +391,11 @@ const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
 - 빌드(`index.js`)는 `CACHE_VERSION`(쉘/CDN)만 갱신하고 `DATA_CACHE_VERSION`은 건드리지 않습니다.
 
 **`DATA_ASSETS`는 경량 세트로 축소**(`registry.js` + `audio_manifest.js`)했습니다. 무거운 과목/시험/원료 번들은 install 시 프리캐시하지 않고 fetch 핸들러의 Cache First가 **최초 접근 시 온디맨드로 캐시**합니다.
+
+**rev.4 보강 (2026-08-23)** — PWA 설치본 런타임 안정성 개선:
+- `SHELL_ASSETS`에 `src/data-loader.js`와 `data/id_migration.js`를 추가했습니다. 이들은 `index.html`에서 `defer`로 로드되는 핵심 런타임 모듈로, 누락 시 `DataLoader is not defined` 오류가 발생하여 교재 검색·성분 사전 등 동적 로딩 기능이 실패했습니다.
+- `src/data-loader.js`의 `_loadScript()`에 **재시도 로직**을 추가했습니다. 일부 모바일 브라우저(삼성 인터넷 등)에서 스크립트 로딩이 간헐적으로 실패하는 문제를 완화하기 위해 최대 2회 재시도합니다.
+- `loadSubject()`, `loadExam()`, `loadIngredients()`에 **데이터 검증**을 추가했습니다. 스크립트 로드 후 전역 변수가 실제로 설정되었는지 확인하고, 빈 데이터면 명시적 오류를 발생시켜 조용한 실패를 방지합니다.
 
 | 항목 | 초기 구현 | rev.3 |
 |------|------|------|
