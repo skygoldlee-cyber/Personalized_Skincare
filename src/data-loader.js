@@ -21,32 +21,57 @@ const DataLoader = {
         }
     },
 
-    /** Dynamic script loading utility with load caching */
-    _loadScript(url) {
+    /** Dynamic script loading utility with load caching and retry */
+    _loadScript(url, retries = 2) {
         return new Promise((resolve, reject) => {
-            const existing = document.querySelector(`script[src="${url}"]`);
-            if (existing) {
-                if (existing.dataset.loaded === 'true') {
-                    resolve();
-                } else {
-                    existing.addEventListener('load', () => resolve());
-                    existing.addEventListener('error', (e) => reject(e));
+            const attemptLoad = (remaining) => {
+                const existing = document.querySelector(`script[src="${url}"]`);
+                if (existing) {
+                    if (existing.dataset.loaded === 'true') {
+                        resolve();
+                    } else if (existing.dataset.loaded === 'error') {
+                        // Remove failed script and retry
+                        existing.remove();
+                        if (remaining > 0) {
+                            setTimeout(() => attemptLoad(remaining - 1), 100);
+                        } else {
+                            reject(new Error(`Script load failed after retries: ${url}`));
+                        }
+                    } else {
+                        existing.addEventListener('load', () => resolve());
+                        existing.addEventListener('error', (e) => {
+                            existing.dataset.loaded = 'error';
+                            if (remaining > 0) {
+                                existing.remove();
+                                setTimeout(() => attemptLoad(remaining - 1), 100);
+                            } else {
+                                reject(e);
+                            }
+                        });
+                    }
+                    return;
                 }
-                return;
-            }
 
-            const script = document.createElement('script');
-            script.src = url;
-            script.async = true;
-            script.dataset.loaded = 'false';
-            script.onload = () => {
-                script.dataset.loaded = 'true';
-                resolve();
+                const script = document.createElement('script');
+                script.src = url;
+                script.async = true;
+                script.dataset.loaded = 'false';
+                script.onload = () => {
+                    script.dataset.loaded = 'true';
+                    resolve();
+                };
+                script.onerror = (e) => {
+                    script.dataset.loaded = 'error';
+                    if (remaining > 0) {
+                        script.remove();
+                        setTimeout(() => attemptLoad(remaining - 1), 100);
+                    } else {
+                        reject(e);
+                    }
+                };
+                document.head.appendChild(script);
             };
-            script.onerror = (e) => {
-                reject(e);
-            };
-            document.head.appendChild(script);
+            attemptLoad(retries);
         });
     },
 
@@ -57,7 +82,11 @@ const DataLoader = {
         if (!meta) throw new Error(`Subject metadata not found for key: ${key}`);
         
         await this._loadScript(meta.bundle);
+        await new Promise(r => setTimeout(r, 0));
         const data = window[meta.global];
+        if (!data) {
+            throw new Error(`Subject data is empty or invalid: ${meta.global}`);
+        }
         this._loaded[key] = data;
         
         // Populate the legacy global STUDY_DATA for backward compatibility
@@ -83,7 +112,11 @@ const DataLoader = {
         if (!meta) throw new Error(`Exam metadata not found for key: ${key}`);
         
         await this._loadScript(meta.bundle);
+        await new Promise(r => setTimeout(r, 0));
         const data = window[meta.global];
+        if (!data) {
+            throw new Error(`Exam data is empty or invalid: ${meta.global}`);
+        }
         this._loadedExams[key] = data;
         
         // Populate the legacy global EXAM_DATA for backward compatibility
@@ -98,7 +131,12 @@ const DataLoader = {
         if (!meta) throw new Error(`Ingredients metadata not found`);
         
         await this._loadScript(meta.bundle);
+        // Small delay to ensure global variable is set (var hoisting in non-module scripts)
+        await new Promise(r => setTimeout(r, 0));
         const data = window[meta.global];
+        if (!data || (Array.isArray(data) && data.length === 0)) {
+            throw new Error(`Ingredients data is empty or invalid: ${meta.global}`);
+        }
         this._ingredients = data;
         window.INGREDIENTS_DATA = data;
         return data;
