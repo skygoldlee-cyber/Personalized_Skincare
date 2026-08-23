@@ -1297,7 +1297,7 @@
     <!-- PWA: Service Worker 등록 및 설치 프롬프트 -->
     <script>
         // 빌드 마커 — 배포 버전 확인용 (모바일에서 구버전 수신 여부 진단)
-        console.log('%c[BUILD] v2 sw-network-first 설치버튼 기본표시', 'color:#06b6d4;font-weight:bold;');
+        console.log('%c[BUILD] v3-20260823-debug-panel', 'color:#06b6d4;font-weight:bold;');
 
         // Service Worker 등록
         if ('serviceWorker' in navigator) {
@@ -1317,6 +1317,70 @@
                 window.location.reload();
             });
         }
+
+        // 디버그 패널: ?debug=1 쿼리 파라미터가 있을 때만 표시
+        (function setupDebugPanel() {
+            if (!window.location.search.includes('debug=1')) return;
+            
+            const panel = document.createElement('div');
+            panel.id = 'debug-panel';
+            panel.style.cssText = 'position:fixed;bottom:0;left:0;right:0;background:rgba(0,0,0,0.95);color:#0f0;font-size:11px;padding:8px;z-index:99999;max-height:40vh;overflow:auto;font-family:monospace;border-top:2px solid #0f0;';
+            panel.innerHTML = '<div style="display:flex;justify-content:space-between;margin-bottom:6px;"><strong>[DEBUG PANEL]</strong><button onclick="this.parentElement.parentElement.remove()" style="background:#f00;color:#fff;border:none;padding:2px 8px;cursor:pointer;">X</button></div><div id="debug-log"></div>';
+            document.body.appendChild(panel);
+            
+            const logEl = document.getElementById('debug-log');
+            function addLog(msg, color) {
+                const div = document.createElement('div');
+                div.style.color = color || '#0f0';
+                div.textContent = new Date().toISOString().substr(11, 8) + ' ' + msg;
+                logEl.appendChild(div);
+                logEl.scrollTop = logEl.scrollHeight;
+            }
+            
+            addLog('Debug panel initialized');
+            addLog('SW supported: ' + ('serviceWorker' in navigator));
+            addLog('Display mode: ' + (window.matchMedia('(display-mode: standalone)').matches ? 'standalone' : 'browser'));
+            addLog('Online: ' + navigator.onLine);
+            
+            // Service Worker 상태 확인
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.getRegistrations().then(regs => {
+                    addLog('SW registrations: ' + regs.length);
+                    regs.forEach((reg, i) => {
+                        addLog('  [' + i + '] scope: ' + reg.scope);
+                        addLog('  [' + i + '] active: ' + (reg.active ? reg.active.state : 'none'));
+                        addLog('  [' + i + '] installing: ' + (reg.installing ? reg.installing.state : 'none'));
+                        addLog('  [' + i + '] waiting: ' + (reg.waiting ? reg.waiting.state : 'none'));
+                    });
+                });
+                
+                navigator.serviceWorker.ready.then(reg => {
+                    addLog('SW ready, active: ' + (reg.active ? reg.active.state : 'none'));
+                });
+            }
+            
+            // DataLoader 상태 확인
+            setTimeout(() => {
+                addLog('DataLoader defined: ' + (typeof DataLoader !== 'undefined'));
+                if (typeof DataLoader !== 'undefined') {
+                    addLog('DataLoader.registry: ' + (DataLoader.registry ? 'loaded' : 'null'));
+                    if (DataLoader.registry) {
+                        addLog('Subjects count: ' + (DataLoader.registry.subjects ? DataLoader.registry.subjects.length : 0));
+                    }
+                }
+                addLog('STUDY_DATA keys: ' + (typeof STUDY_DATA !== 'undefined' ? Object.keys(STUDY_DATA).length : 'undefined'));
+                addLog('INGREDIENTS_DATA: ' + (typeof INGREDIENTS_DATA !== 'undefined' ? (Array.isArray(INGREDIENTS_DATA) ? INGREDIENTS_DATA.length + ' items' : typeof INGREDIENTS_DATA) : 'undefined'));
+            }, 2000);
+            
+            // 전역 에러 캡처
+            window.addEventListener('error', (e) => {
+                addLog('ERROR: ' + e.message + ' at ' + e.filename + ':' + e.lineno, '#f00');
+            });
+            
+            window.addEventListener('unhandledrejection', (e) => {
+                addLog('UNHANDLED REJECTION: ' + e.reason, '#f00');
+            });
+        })();
 
         // PWA 설치 프롬프트 처리
         (function setupPWAInstall() {
