@@ -8,6 +8,8 @@ function initApp() {
     loadProgress();
     setupNavigation();
     setupEventListeners();
+    setupPWAInstall();
+    setupThemeToggle();
     
     // 초기 뷰 렌더링
     renderDashboard();
@@ -1240,6 +1242,37 @@ function setupEventListeners() {
     if (dictSearchInput) {
         dictSearchInput.addEventListener('input', debounce(filterDictionary, 150));
     }
+
+    // 7. HTML 내 인라인 onclick 제거 대응을 위한 data-click 위임 이벤트 바인딩
+    document.body.addEventListener('click', (e) => {
+        const el = e.target.closest('[data-click]');
+        if (!el) return;
+
+        const handlerName = el.getAttribute('data-click');
+        const arg = el.getAttribute('data-arg');
+
+        // A 태그나 href="#" 태그일 경우 기본 동작 차단
+        if (el.tagName === 'A' || el.getAttribute('href') === '#') {
+            e.preventDefault();
+        }
+
+        // 전역 범위(window)에서 함수 찾기 (ManualViewer.openManual 등의 네임스페이스 포함)
+        let handler = window;
+        const parts = handlerName.split('.');
+        for (const part of parts) {
+            if (handler) handler = handler[part];
+        }
+
+        if (typeof handler === 'function') {
+            if (arg !== null) {
+                handler(arg);
+            } else {
+                handler();
+            }
+        } else {
+            console.error(`Handler not found: ${handlerName}`);
+        }
+    });
 }
 
 // --- 5. 실전 모의고사 시뮬레이터 구현 ---
@@ -4789,6 +4822,172 @@ function openTableModal(wrapper) {
 function closeTableModal() {
     const modal = document.getElementById('reader-table-modal');
     if (modal) modal.style.display = 'none';
+}
+
+
+function setupPWAInstall() {
+    let deferredPrompt = null;
+    const installBtn = document.getElementById('pwa-install-btn');
+    
+    console.log('[PWA] 설치 버튼 초기화:', installBtn ? '발견됨' : '발견되지 않음');
+
+    // 이미 설치된 경우 버튼 숨기기 (즉시 실행)
+    if (window.matchMedia('(display-mode: standalone)').matches ||
+        window.navigator.standalone === true) {
+        console.log('[PWA] 이미 설치된 상태입니다.');
+        if (installBtn) {
+            installBtn.style.display = 'none';
+        }
+        return;
+    }
+
+    // beforeinstallprompt 이벤트 캡처
+    window.addEventListener('beforeinstallprompt', (e) => {
+        console.log('[PWA] beforeinstallprompt 이벤트 발생');
+        // 기본 설치 프롬프트 방지
+        e.preventDefault();
+        // 이벤트 저장
+        deferredPrompt = e;
+        // 설치 버튼 표시
+        if (installBtn) {
+            installBtn.style.display = 'inline-flex';
+            installBtn.innerHTML = '<i class="fa-solid fa-download"></i> <span class="btn-text">앱 설치</span>';
+            console.log('[PWA] 설치 버튼 표시됨');
+        } else {
+            console.warn('[PWA] 설치 버튼을 찾을 수 없습니다.');
+        }
+    });
+
+    // 설치 안내 모달 제어 (iOS/Android 분기)
+    const installModal = document.getElementById('pwa-install-modal');
+    const guideAndroid = document.getElementById('pwa-guide-android');
+    const guideIos = document.getElementById('pwa-guide-ios');
+    const guideGeneric = document.getElementById('pwa-guide-generic');
+    const modalCloseBtn = document.getElementById('pwa-modal-close');
+    const modalBackdrop = document.getElementById('pwa-modal-backdrop');
+
+    function detectPlatform() {
+        const ua = navigator.userAgent || '';
+        if (/iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) {
+            return 'ios';
+        }
+        if (/android/i.test(ua)) {
+            return 'android';
+        }
+        return 'generic';
+    }
+
+    function openInstallModal() {
+        if (!installModal) return;
+        const platform = detectPlatform();
+        console.log('[PWA] 설치 안내 모달 표시 - 플랫폼:', platform);
+        if (guideAndroid) guideAndroid.style.display = platform === 'android' ? 'block' : 'none';
+        if (guideIos) guideIos.style.display = platform === 'ios' ? 'block' : 'none';
+        if (guideGeneric) guideGeneric.style.display = platform === 'generic' ? 'block' : 'none';
+        installModal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeInstallModal() {
+        if (!installModal) return;
+        installModal.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+
+    if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeInstallModal);
+    if (modalBackdrop) modalBackdrop.addEventListener('click', closeInstallModal);
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && installModal && installModal.style.display === 'flex') {
+            closeInstallModal();
+        }
+    });
+
+    // 설치 버튼 클릭 핸들러
+    if (installBtn) {
+        installBtn.addEventListener('click', async () => {
+            console.log('[PWA] 설치 버튼 클릭됨');
+            if (!deferredPrompt) {
+                console.log('[PWA] 설치 프롬프트가 아직 준비되지 않았습니다.');
+                // 플랫폼별 설치 안내 모달 표시
+                openInstallModal();
+                return;
+            }
+            // 설치 프롬프트 표시
+            deferredPrompt.prompt();
+            // 사용자 선택 대기
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log('[PWA] 설치 프롬프트 결과:', outcome);
+            // 프롬프트 사용 후 초기화
+            deferredPrompt = null;
+            // 버튼 숨기기
+            installBtn.style.display = 'none';
+        });
+    }
+
+    // 앱 설치 완료 감지
+    window.addEventListener('appinstalled', () => {
+        console.log('[PWA] 앱이 설치되었습니다.');
+        deferredPrompt = null;
+        if (installBtn) {
+            installBtn.style.display = 'none';
+        }
+    });
+
+    // 서비스 워커 등록
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js')
+            .then(reg => console.log('[PWA] 서비스 워커 등록 성공:', reg.scope))
+            .catch(err => console.error('[PWA] 서비스 워커 등록 실패:', err));
+    }
+}
+
+function setupThemeToggle() {
+    var root = document.documentElement;
+    var meta = document.querySelector('meta[name="theme-color"]');
+    function isLight() { return root.classList.contains('light-theme'); }
+    function apply(light) {
+        root.classList.toggle('light-theme', light);
+        if (meta) meta.setAttribute('content', light ? '#f5f7fa' : '#0b0f19');
+        try { localStorage.setItem('appTheme', light ? 'light' : 'dark'); } catch (e) {}
+        // 리더 등 다른 모듈이 동일한 테마 상태를 공유하도록 이벤트 브로드캐스트
+        document.dispatchEvent(new CustomEvent('themechange', { detail: { light: light } }));
+    }
+    function toggle() { apply(!isLight()); }
+    // 전역 테마 API 노출 (단일 소스 오브 트루스)
+    window.AppTheme = { isLight: isLight, apply: apply, toggle: toggle };
+
+    var btn = document.getElementById('theme-toggle-btn');
+    function syncHeaderBtn() {
+        if (!btn) return;
+        var i = btn.querySelector('i');
+        if (i) i.className = isLight() ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+        btn.title = isLight() ? '다크 모드로 전환' : '라이트 모드로 전환';
+    }
+    syncHeaderBtn();
+    document.addEventListener('themechange', syncHeaderBtn);
+    if (btn) btn.addEventListener('click', toggle);
+
+    // 모바일 하단 탭 바의 테마 토글
+    var mBtn = document.getElementById('mobile-theme-toggle');
+    function syncMobileBtn() {
+        if (!mBtn) return;
+        var i = mBtn.querySelector('i');
+        if (i) i.className = isLight() ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+    }
+    syncMobileBtn();
+    document.addEventListener('themechange', syncMobileBtn);
+    if (mBtn) mBtn.addEventListener('click', toggle);
+
+    // 사용자가 수동 선택하지 않았을 때만 시스템 테마 변경을 따라감
+    if (window.matchMedia) {
+        var mq = window.matchMedia('(prefers-color-scheme: light)');
+        var onChange = function (e) {
+            if (localStorage.getItem('appTheme')) return;
+            apply(e.matches);
+        };
+        if (mq.addEventListener) mq.addEventListener('change', onChange);
+        else if (mq.addListener) mq.addListener(onChange);
+    }
 }
 
 

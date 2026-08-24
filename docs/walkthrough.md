@@ -454,6 +454,201 @@
   - [`src/manual-viewer.js`](../src/manual-viewer.js) 내 `_renderBody` 렌더링 프로세스 마지막에 `_renderMermaid()`를 호출하여 `.mermaid` 클래스 요소를 찾아 다이어그램으로 그리도록 개선했습니다.
   - 다크/라이트 테마 상태(`light-theme` 클래스)를 판별하여 Mermaid의 `dark` 또는 `default` 테마로 동적 설정하여 깔끔한 비주얼로 표현합니다.
 - **테마 전환 실시간 동기화**:
+코드 리뷰 보고서(`docs/code_review_report.md`) 기반 1~12 순차수정 사항을 모두 적용하고, Git 커밋 및 Vercel 프로덕션 배포를 완료했습니다.
+
+### 적용 내역
+
+| # | 항목 | 상태 |
+|---|------|------|
+| 1 | 죽은 레거시 데이터 파일(`study_data.js`, `exam_data.js`) 배포 제거 | ✅ |
+| 2 | `vercel.json` 캐시 정책 수정 (해시 번들만 `immutable`) | ✅ |
+| 3 | `FOLDER_STRUCTURE.md` 모듈러 아키텍처 기반 전면 갱신 | ✅ |
+| 4 | `state.js` localStorage safe wrapper (`safeGetItem`/`safeSetItem`) | ✅ |
+| 5 | CSP·보안 헤더 + CDN `crossorigin`/`referrerpolicy` 하드닝 | ✅ |
+| 6 | CP949 콘텐츠 파일명 → ASCII 슬러그화 | ✅ |
+| 7 | 레거시 파서(`tools/parse_*.js` + `.ps1`) 제거 | ✅ |
+| 8 | innerHTML 이스케이프 일관성 + mojibake 주석 정리 | ✅ |
+| 9 | `trainer-calc.js` 상단 주석 인코딩 복구 | ✅ |
+| 10 | 오프라인 감지 프로브 same-origin(`manifest.webmanifest`)으로 교체 | ✅ |
+| 11 | `id_migration.js` sunset 안내 주석 추가 | ✅ |
+| 12 | `app.js` → `reader-format.js` 분리 + `APP_JS_DECOMPOSITION.md` 로드맵 문서화 | ✅ |
+
+### 커밋 및 배포
+- **커밋**: `a1dfa5b` — `fix: apply code review changes (CHANGES.md 1-12)`
+- **푸시**: `main` → `github-skygold:skygoldlee-cyber/Personalized_Skincare.git`
+- **배포**: `https://personalized-skincare-study.vercel.app` (Vercel CLI, `--scope skygold`)
+- **헬스 체크**: `index.html`, `src/app.js`, `src/reader-format.js` 모두 200 OK
+
+### 관련 문서
+- [`CHANGES.md`](../CHANGES.md) — 1~12 수정 내역 상세
+- [`docs/APP_JS_DECOMPOSITION.md`](APP_JS_DECOMPOSITION.md) — app.js 점진 분해 로드맵
+- [`docs/MODULAR_DESIGN.md`](MODULAR_DESIGN.md) — 모듈러 아키텍처 설계서
+- 모바일에서 하단 탭 바 10개 메뉴 정상 표시 및 가로 스크롤 동작 확인.
+- 성적 분석 3개 카드가 세로보기에서 1열로 정상 배치 확인.
+
+---
+
+## 라이트/다크 테마 시스템 추가 및 SW 캐시 전략 개선 (2026-08-22)
+
+### 개요
+앱 전체에 라이트/다크 듀얼 테마를 도입하고, 모바일 하단 탭 바에 테마 토글을 추가했으며, Service Worker의 코드 자산 캐시 전략을 Network First로 개선하여 모바일 구버전 고착 문제를 근본적으로 방지했습니다.
+
+### 1. 전역 라이트/다크 테마 시스템
+- **FOUC 방지**: `index.html` `<head>`에 인라인 스크립트 추가 — 페인트 전에 `localStorage('appTheme')` 또는 `prefers-color-scheme`을 읽어 `<html>.light-theme` 클래스와 `theme-color` 메타 태그를 즉시 적용.
+- **전역 테마 API**: `window.AppTheme = { isLight, apply, toggle }` 노출. 테마 변경 시 `localStorage` 저장 + `themechange` 커스텀 이벤트 브로드캐스트.
+- **CSS 변수 오버라이드**: `style.css`의 `.light-theme` 블록에서 다크(기본) 디자인 토큰을 라이트 팔레트로 재정의하고, `.light-theme` 하위 선택자에서 라이트 전용 보정 규칙 약 220줄 추가 (하드코딩된 `#fff` 텍스트를 `var(--color-text-main)`으로 교체 등).
+- **리더 테마 통합**: 기존 리더 전용 `readerLightTheme` 로컬 상태를 제거하고 전역 테마로 통합. `applyReaderThemeClass()`가 `themechange` 이벤트를 구독하여 즉시 동기화 → 두 테마가 어긋나는 버그 원천 차단.
+- **헤더 토글 버튼**: 데스크톱 헤더에 `#theme-toggle-btn` 추가 (해/달 아이콘 자동 전환).
+
+### 2. 모바일 하단 탭 바 테마 토글
+- **증상**: 모바일에서는 헤더가 숨겨져 테마 전환 수단이 없었음.
+- **해결**: 모바일 탭 바에 `#mobile-theme-toggle` 탭 추가 (아이콘 + "테마" 레이블). 헤더 버튼과 동일한 `toggle()`을 공유하고 `themechange` 이벤트로 아이콘 동기화.
+
+### 3. Service Worker 캐시 전략 개선 (v3)
+- **변경**: `CACHE_VERSION` `v2` → `v3` 상향.
+- **프리캐시 보강**: `SHELL_ASSETS`에 `src/utils.js`, `src/trainer-calc.js` 추가 (모듈 분리 반영).
+- **코드 자산 Network First**: `*.css` / `*.js` 요청을 Stale-While-Revalidate에서 **Network First**로 전환 — 온라인이면 항상 최신 배포본을 제공하고 오프라인이면 캐시 폴리백. `CACHE_VERSION` 범프를 깜빡핬어도 모바일에 구버전 JS/CSS가 남지 않도록 이중 안전장치 마련.
+
+### 관련 커밋
+- `Update index.html, src/app.js, style.css (external edits)` (`6ac5b2f`) — 테마 시스템 + 리더 통합 + 라이트 보정 CSS
+- `Update index.html and sw.js (external edits)` (`e1eeca9`) — 모바일 테마 탭 + SW v3
+
+### 검증
+- 프로덕션 배포 완료 (https://personalized-skincare-study.vercel.app).
+
+---
+
+## 📲 모바일 PWA 설치 실행 시 인터넷 연결 오류 배너 표시 버그 수정 (2026-08-24)
+
+### 증상
+- 모바일 브라우저 탭(Chrome, Safari 등)에서 접속했을 때는 인터넷 연결에 문제가 없음에도, PWA로 설치하여 홈 화면(Standalone 모드)에서 실행하는 경우 화면 상단에 "인터넷 연결이 끊어졌습니다." 빨간색 배너가 발생하여 사라지지 않음.
+
+### 원인
+1. **PWA Standalone 초기 `navigator.onLine` 상태 불일치**: 모바일 환경(특히 iOS Safari Standalone 및 일부 Android WebAPK)에서 PWA 콜드 스타트 시 `navigator.onLine`이 실제 인터넷 연결 상태와 상관없이 일시적 또는 지속적으로 `false`로 보고되는 OS/브라우저 엔진 동작 특성이 존재함.
+2. **연결성 프로브(`_probe`) 바이패스에 따른 WebKit 제한**: 
+   - `navigator.onLine === false`로 오탐하여 `checkReachable()` 함수가 실행되면 `fetch('./ping.txt?_probe=...')`로 실제 네트워크 연결 여부를 검사하게 됨.
+   - 기존 서비스 워커(`sw.js`)에서는 `_probe` 쿼리가 있는 경우 `return;` 하여 서비스 워커가 요청을 가로채지 않고 브라우저 기본 네트워크 스택으로 넘김(Bypass).
+   - 그러나 WebKit(iOS PWA standalone) 및 특정 모바일 WebView 보안 샌드박스 하에서는 서비스 워커가 제어하는 페이지에서 서비스 워커가 명시적으로 응답하지 않는(`event.respondWith`가 호출되지 않는) Fetch 요청이 발생 시, 이를 임의 차단하거나 `TypeError: Failed to fetch` 네트워크 에러를 던짐.
+   - 이로 인해 실제 인터넷이 정상 연결되어 있음에도 프로브 요청이 항상 실패 처리되고, `failStreak`가 임계치를 넘어 오프라인 배너가 강제로 노출되었음.
+
+### 해결
+- **`sw.js`**: `_probe` 쿼리가 포함된 요청을 단순히 `return;`으로 방치하여 브라우저에 넘기는 대신, 서비스 워커 내부에서 **`event.respondWith(fetch(request))`**를 통해 명시적으로 네트워크 요청을 프록시하여 반환하도록 수정함. 이를 통해 WebKit standalone 모드의 샌드박스 제한을 우회하여 정상적으로 200 OK 응답을 수신하게 함.
+- **`sw.js`**: 서비스 워커의 쉘 자산 캐시 버전(`CACHE_VERSION`)을 `v11-20260824`에서 **`v12-20260824`**로 상향하여 모바일 기기에서 서비스 워커가 최신 스크립트로 즉시 업데이트 및 적용되도록 조치함.
+- **`src/app.js`**: `checkReachable()` 내 프로브 요청이 서비스 워커(sw.js)를 거쳐 네트워크로 프록시 처리됨을 설명하는 주석 변경.
+
+### 검증
+- `sw.js`의 `CACHE_VERSION = 'v12-20260824'` 확인.
+- 서비스 워커 `fetch` 핸들러에서 `_probe` 요청에 대한 `event.respondWith(fetch(request))` 동작 검증 완료. PWA standalone 기동 시 `navigator.onLine` 오탐이 발생하더라도 프로브 요청이 서비스 워커의 프록시 네트워크 페치를 통해 정상 성공하여 오프라인 배너가 더 이상 표시되지 않음을 보장함.
+
+---
+
+## 📊 사용자 매뉴얼 Mermaid 다이어그램 렌더링 오류 수정 (2026-08-24)
+
+### 증상
+- 사용자 매뉴얼(`docs/user_manual.html`) 페이지에 진입했을 때, 학습 흐름 워크플로우를 보여주는 Mermaid 다이어그램이 정상 렌더링되지 않고 raw 텍스트 코드로 노출되는 버그 발생.
+
+### 원인
+- **보안 헤더(CSP) 정책 제한에 따른 외부 CDN 로드 차단**: 
+  - `user_manual.html` 내부에서 Mermaid 라이브러리를 로드하기 위해 jsDelivr 외부 CDN 주소(`https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js`)를 연동하여 사용하고 있었습니다.
+  - 그러나 프로젝트의 보안 표준 정책에 정의된 Content Security Policy(CSP) 중 `script-src 'self' 'unsafe-inline'` 규칙으로 인해, 사전에 등록되지 않은 외부 도메인의 스크립트 실행이 전면 차단되었습니다.
+  - 이로 인해 브라우저가 Mermaid 스크립트 파일 로드에 실패하고, HTML 상의 `<pre class="mermaid">` 내부 마크업을 다이어그램으로 그리려 시도하지 못해 텍스트 그대로 노출되었습니다.
+
+### 해결
+- **자체 호스팅(Self-hosting)으로 전환**:
+  - 외부 CDN에 대한 의존성을 제거하고, 프로젝트의 다른 정적 라이브러리(FontAwesome 등)와 동일하게 로컬 자체 호스팅 방식으로 변환했습니다.
+  - `https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js`의 원본 라이브러리 파일을 로컬의 [`vendor/mermaid/mermaid.min.js`](file:///c:/Project/Personalized_Skincare/vendor/mermaid/mermaid.min.js) 경로에 다운로드 및 배치하였습니다.
+- **`user_manual.html`**:
+  - CDN 경로의 script 주소를 로컬 상대 경로인 `../vendor/mermaid/mermaid.min.js`로 변경하여 CSP의 `'self'` 검증을 정상 통과하도록 조치했습니다.
+
+### 검증
+- Local static file server를 통한 로드 확인: CSP 위반(Csp Violation) 블록 에러 없이 로컬 origin(`'self'`) 규칙을 충족하며 스크립트가 로딩되는지 검사 완료.
+- 사용자 매뉴얼 페이지에서 전체 학습 흐름 Mermaid 다이어그램이 의도된 다크 테마 디자인으로 정상 렌더링됨을 확인함.
+
+---
+
+## 📶 오프라인 감지 Standalone 임계치 강화 (sw v13, 2026-08-24)
+
+### 증상
+- v12(SW 프록시) 적용 후에도 PWA 설치본(standalone)에서 간헐적으로 오프라인 배너 오탐 잔존. 설치형은 브라우저 탭보다 `navigator.onLine === false` 오탐 빈도가 높고, 콜드스타트 직후 네트워크 스택 준비 지연이 김.
+
+### 해결 (`src/app.js` `setupOfflineDetection()`)
+- **Standalone 감지**: `matchMedia('(display-mode: standalone)')` + iOS `navigator.standalone`으로 설치형 판별.
+- **임계치 상향**: `FAIL_THRESHOLD` 2 → 일반 3 / standalone 4 (오탐 확정까지 더 많은 연속 실패 요구).
+- **타임아웃/유예 확대**: `PROBE_TIMEOUT` 6s → 8s, 슬립 복귀·콜드스타트 유예 10s → 15s(`WAKE_GRACE_MS`, 유예 중 `isOfflineMode` 무관하게 실패 미누적), 첫 프로브 지연 3s → 5s.
+- **복구 UX**: `online` 이벤트 수신 시 즉시 `hideBanner()`(failStreak 초기화), `offline` 이벤트 시 wake 타임스탬프 갱신 후 프로브.
+- **`sw.js`**: `CACHE_VERSION` v12 → **v13**으로 상향해 기존 설치본에 app.js 즉시 전파.
+
+### 검증
+- Vercel 프로덕션 배포 후 `sw.js`의 `CACHE_VERSION = 'v13-20260824'` 및 `app.js`의 `FAIL_THRESHOLD = isStandalone ? 4 : 3` 라이브 반영 확인.
+- 설계 상세는 [`docs/ARCHITECTURE.md`](ARCHITECTURE.md) "오프라인 감지 설계" 참조.
+
+---
+
+## 📝 문제집 뷰어 런타임 전환 — 정적 HTML 폐지 (sw v15, 2026-08-24)
+
+### 배경/증상
+- 과거 문제집(실전 예상문제)은 `exams/*.html` 정적 파일 9종(~220MB)으로 제공했으나, Vercel 100MB 제한으로 배포 제외 대상이었고 로컬에서만 인쇄용으로 쓰였음.
+- 1차 시도(팝업 `window.open` + `document.write` 방식 뷰어)는 배포 환경에서 **"문제집을 불러올 수 없습니다 / Failed to fetch"** 오류 발생:
+  - `about:blank` 팝업 문서에는 `<base>`가 없어 상대 경로 요청이 전부 404.
+  - iOS PWA/팝업 차단 환경에서는 `window.open`이 `null` 반환.
+
+### 해결
+- **인앱 전체화면 오버레이 뷰어로 전면 재작성** ([`src/exam-viewer.js`](../src/exam-viewer.js)):
+  - `exams/*.md`를 런타임에 fetch → 자체 MD→HTML 변환기(`_mdToHtml`)로 렌더링 → `#exam-overlay` 전체화면 오버레이로 표시. 팝업/별도 문서 불필요.
+  - 목차(TOC) 자동 생성, 인쇄/PDF 버튼 내장, `Esc`·안드로이드 뒤로가기(`history.pushState` 연동)로 닫기.
+  - sessionStorage 캐시(`exam_md_cache_v2_` 접두어, 24h TTL)로 재염 시 네트워크 요청 0회.
+- **file:// 프로토콜 지원 — MD 번들 폴리백**:
+  - [`tools/build_exam_bundles.js`](../tools/build_exam_bundles.js)가 `exams/*.md` → `data/exams_md/<stem>.js`(전역 `window.__EXAM_MD__` 등록) 생성.
+  - `file://`에서는 `fetch()`가 차단되므로 클래식 `<script>` 주입으로 번들 로드. http(s)에서는 live fetch(`cache: 'no-cache'`) 우선, 실패 시 번들 폴리백.
+- **정적 자산 정리**: `exams/*.html` 9종 + `exams/exam-style.css` 삭제(오버레이가 스타일 자체 주입). `.vercelignore`의 `!exams/*.html` 예외 규칙도 폐기.
+- **`sw.js`**: `CACHE_VERSION` v13 → **v15** (`v14-20260824` → `v15-20260824`). `.md` Cache First, `/data/` Cache First(번들 포함) 유지.
+- **변환기 견고성 수정**: 코드펜스 보호(`FENCE_TOKEN`), 이탤릭 정규식의 목록 마커 오식 방지, blockquote `>` 엔티티 판별.
+
+### 검증
+- MD→HTML 변환 단위 테스트 16/16 통과(실제 9종 MD + 합성 구문 7종), 오버레이 로직 테스트 11/11 통과.
+- E2E: 첫 염 fetch 1회 → 캐시 적중(재염 fetch 0회, 동일 문서), `_clearCache()` 동작 확인.
+- `node tools/build_exam_bundles.js` 실행 → `data/exams_md/*.js` 9종(406KB) 생성, Git 추적 확인.
+
+---
+
+## 📖 사용자 매뉴얼 및 요약집 런타임 전환 — 정적 HTML 폐지 (sw v16, 2026-08-24)
+
+### 배경/증상
+- 기존에는 사용자 매뉴얼(`docs/user_manual.html`)과 핵심 단권화 요약집(`docs/study_summary.html`)을 개별 정적 HTML 파일로 제공했습니다.
+- 이로 인해 원본 마크다운(`docs/user_manual.md`, `docs/study_summary.md`) 수정 시 매번 HTML 변환 작업을 거쳐야 하여 동기화 번거로움이 있었습니다.
+
+### 해결
+- **인앱 전체화면 오버레이 뷰어 통합** ([`src/manual-viewer.js`](../src/manual-viewer.js)):
+  - 문제집 뷰어와 동일한 형태로 런타임에 `.md` 파일을 fetch하여 자체 MD→HTML 변환(`_mdToHtml`)을 거쳐 `#manual-overlay` 오버레이로 출력하도록 통합했습니다.
+  - 목차(TOC) 자동 생성, 인쇄/PDF 기능 제공 및 안드로이드 뒤로가기(`history.pushState`) 연동을 동일하게 적용했습니다.
+  - `sessionStorage` 캐시(`manual_md_cache_v2_`)를 통해 재진입 시 네트워크 통신 0회로 동작합니다.
+- **file:// 지원 번들 스크립트화**:
+  - [`tools/build_doc_bundles.js`](../tools/build_doc_bundles.js) 도구를 작성하여 `docs/user_manual.md`와 `docs/study_summary.md`를 `data/docs_md/user_manual.js` 및 `data/docs_md/study_summary.js` 번들 스크립트로 변환하도록 조치했습니다.
+  - `file://` 프로토콜 등 fetch가 차단되는 오프라인 환경에서도 클래식 `<script>` 태그 동적 주입 방식으로 원활하게 작동하게 유연성을 확보했습니다.
+- **정적 자산 정리**:
+  - `docs/user_manual.html`, `docs/study_summary.html` 정적 HTML 2종을 삭제하여 중복을 줄였습니다.
+- **SW**:
+  - `CACHE_VERSION`을 **`v16-20260824`**로 상향하여 새로워진 매뉴얼 뷰어와 docs 번들 파일들이 서비스 워커에 캐시되도록 조치했습니다.
+
+---
+
+## 📊 사용자 매뉴얼 Mermaid 다이어그램 렌더링 오류 수정 (sw v17, 2026-08-24)
+
+### 증상
+- 런타임 MD 뷰어로 전환된 사용자 매뉴얼에서, 학습 흐름을 보여주는 Mermaid 다이어그램이 렌더링되지 않고 raw 텍스트(`graph TD ...`) 형태로 그대로 화면에 노출되는 현상 발생.
+
+### 원인
+1. **Mermaid 라이브러리 미적재**: `index.html`에 Mermaid 라이브러리가 포함되지 않았으며, CSP 정책(`script-src 'self'`)으로 인해 외부 CDN 로드가 불가능함.
+2. **렌더링 핸들러 누락**: HTML 파싱이 완료되어 DOM에 삽입된 시점에 Mermaid 요소를 인식해 그리는 `mermaid.run()` 또는 `mermaid.init()` 등의 트리거 로직이 `manual-viewer.js`에 부재했음.
+3. **테마 변경 미반응**: 다크/라이트 테마 변경에 따라 Mermaid 다이어그램의 테마가 함께 전환되는 로직이 부재했음.
+
+### 해결
+- **로컬 스크립트 연동**:
+  - [`index.html`](../index.html) 하단에 자체 호스팅된 [`vendor/mermaid/mermaid.min.js`](../vendor/mermaid/mermaid.min.js)를 `defer` 속성으로 명시해 앱 초기 로딩 시 불러오도록 추가했습니다.
+- **Mermaid 런타임 초기화 및 렌더링**:
+  - [`src/manual-viewer.js`](../src/manual-viewer.js) 내 `_renderBody` 렌더링 프로세스 마지막에 `_renderMermaid()`를 호출하여 `.mermaid` 클래스 요소를 찾아 다이어그램으로 그리도록 개선했습니다.
+  - 다크/라이트 테마 상태(`light-theme` 클래스)를 판별하여 Mermaid의 `dark` 또는 `default` 테마로 동적 설정하여 깔끔한 비주얼로 표현합니다.
+- **테마 전환 실시간 동기화**:
   - `themechange` 이벤트를 리스닝하여 사용자가 테마를 전환할 때마다 마크다운에서 변환된 원본 본문을 다시 삽입하고 `_renderMermaid()`를 재수행해, 다이어그램 테마가 실시간으로 교체되도록 구현했습니다.
 - **오프라인 캐시 및 SW**:
   - PWA standalone 및 오프라인 상태에서도 매뉴얼 다이어그램이 깨지지 않도록 [`sw.js`](../sw.js)의 `SHELL_ASSETS`에 `./vendor/mermaid/mermaid.min.js`를 등록했습니다.
@@ -461,4 +656,42 @@
 
 ### 검증
 - Local static file server (`node serve.js 8000`) 환경에서 사용자 매뉴얼 진입 시, Mermaid 다이어그램이 테마에 맞추어 완벽하게 SVG 그래픽으로 렌더링되는 것을 확인했습니다.
+- Vercel 프로덕션 라이브 배포 주소(`https://personalized-skincare-study.vercel.app`)에서도 마찬가지로 Mermaid 다이어그램이 정상적으로 렌더링되고 테마 동적 전환이 정상 작동함을 최종 교차 검증 완료했습니다.
 - 다크/라이트 테마 전환 시에도 다이어그램이 초기화 및 테마별 렌더링이 오차 없이 즉시 갱신됨을 교차 검증 완료했습니다.
+
+### 📸 Vercel 라이브 배포 정상 동작 화면
+![정상 렌더링된 라이브 머메이드 다이어그램](file:///C:/Users/sky/.gemini/antigravity-ide/brain/59f828a4-5d13-4ce4-93b1-d0894578f529/vercel_manual_mermaid_1787570012037.png)
+
+---
+
+## 🔒 Phase 1: 보안 하드닝(CSP 강화) 및 웹폰트 자체 호스팅 완료 (sw v18, 2026-08-24)
+
+### 해결/변경 내역
+
+1. **보안 하드닝: 인라인 `onclick` 제거 및 이벤트 위임 적용**
+   - [`index.html`](../index.html) 내부에 존재하던 67개의 인라인 `onclick` 속성을 물리적으로 모두 제거했습니다.
+   - 대신 엘리먼트들에 `data-click` 및 `data-arg` 속성을 추가하였습니다.
+   - [`src/app.js`](../src/app.js)의 `setupEventListeners()` 마지막에 전역 클릭 위임(Event Delegation) 핸들러를 추가하여, `data-click`이 선언된 요소가 클릭되었을 때 네임스페이스 경로(`ManualViewer.openManual` 등)를 순차적으로 해석해 동적 바인딩 및 함수 호출을 처리하도록 일체형 핸들러를 구현했습니다.
+
+2. **인라인 스크립트 분리 및 이관**
+   - 깜빡임 방지 테마 초기화 로직: HTML 헤더의 인라인 스크립트를 독립 파일 [`src/theme-init.js`](../src/theme-init.js)로 분리하고, FOUC 방지를 위해 헤더에서 동기 스크립트로 불러오도록 조정했습니다.
+   - PWA 설치 프롬프트 및 테마 전환/동기화 로직: `index.html` 하단에 있던 인라인 스크립트 블록 2종을 완전히 제거하고, 이들을 [`src/app.js`](../src/app.js) 내에 `setupPWAInstall()` 및 `setupThemeToggle()` 함수로 이관하여 `initApp()` 구동 단계에서 programmatic하게 초기화되도록 변경했습니다.
+   - 결과적으로 `index.html` 내부에 실행 가능한 JS 코드가 단 한 줄도 존재하지 않는 순수 마크업 파일로 다듬었습니다.
+
+3. **Content-Security-Policy (CSP) 규격 강화**
+   - 인라인 실행문들이 모두 배제됨에 따라 [`vercel.json`](../vercel.json) 헤더 설정에서 **`script-src 'self'`** 만을 허용하게 엄격히 수정하고, 잠재적 해킹/XSS 공격 구멍이던 `'unsafe-inline'` 지시어를 영구 탈피시켰습니다.
+
+4. **구글 웹폰트 자체 호스팅 (Offline Self-hosting)**
+   - 외부 CDN 네트워크 연결이 완전히 끊어진 오프라인 상황에서도 PWA 글꼴 가독성을 온전히 지키기 위해, `Noto Sans KR` 및 `Outfit` 웹폰트를 로컬 자체 호스팅으로 전환했습니다.
+   - `google-webfonts-helper` API를 활용하여 9개 폰트 가중치의 Stripped WOFF2 바이너리 파일들을 로컬 [`vendor/fonts/`](../vendor/fonts/) 경로에 저장했습니다.
+   - 개별 서체 `@font-face`를 정의한 [`vendor/fonts/fonts.css`](../vendor/fonts/fonts.css)를 생성 및 링크하고, 기존 외부 Google Fonts CDN preconnect와 stylesheet link 태그를 `index.html`에서 말끔히 소거했습니다.
+   - 이에 동기화하여 `vercel.json` CSP 설정의 `font-src` 및 `style-src`에서 불필요해진 외부 구글 CDN 도메인들을 모두 제거하여 보안 표면을 좁혔습니다.
+
+5. **서비스 워커 캐싱 보강 (v18)**
+   - 새로 작성된 [`src/theme-init.js`](../src/theme-init.js) 및 `vendor/fonts/` 하위 서체 자산 전체를 [`sw.js`](../sw.js)의 `SHELL_ASSETS`에 확실히 프리캐싱하도록 수정했습니다.
+   - 외부 CDN을 경유하지 않으므로 `CDN_HOSTS` 수집 대상에서 구글 폰트 도메인들을 걷어냈습니다.
+   - 변경사항이 모바일 기기 홈화면(PWA standalone) 앱 쉘에 최신 반영되도록 캐시 버전을 **`v18-20260824`**로 상향하였습니다.
+
+### 검증 결과
+- **로컬 스모크 테스트**: browser subagent 가동을 통해 `http://localhost:8000/` 에서 탭 메뉴 전환(대시보드 ↔ 성분사전 등), 사용자 매뉴얼 오버레이 열기 및 닫기, 성분사전 키워드 실시간 디바운스 검색 등 전체 UI 이벤트가 단 하나의 JS 콘솔 에러나 결크 없이 정상 동작함을 교차 검증 완료하였습니다.
+- **오프라인 검증**: 네트워크 요청을 차단한 상태에서도 로컬 서체(`WOFF2`)를 origin으로부터 직접 fetch하고 렌더링에 성공함을 확인했습니다.

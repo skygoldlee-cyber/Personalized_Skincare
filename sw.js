@@ -17,7 +17,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v17-20260824';       // 쉘/CDN: 배포마다 갱신 (매뉴얼/요약집 런타임 MD 뷰어 + docs_md 번들 + 머메이드 자체 호스팅)
+const CACHE_VERSION = 'v18-20260824';       // 쉘/CDN: 배포마다 갱신 (매뉴얼/요약집 런타임 MD 뷰어 + docs_md 번들 + 머메이드 및 웹폰트 자체 호스팅)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
@@ -30,6 +30,7 @@ const SHELL_ASSETS = [
   './style.css',
   './manifest.webmanifest',
   './ping.txt',
+  './src/theme-init.js',
   './src/sanitize.js',
   './src/state.js',
   './src/charts.js',
@@ -47,6 +48,17 @@ const SHELL_ASSETS = [
   './vendor/fontawesome/webfonts/fa-solid-900.woff2',
   './vendor/fontawesome/webfonts/fa-brands-400.woff2',
   './vendor/fontawesome/webfonts/fa-regular-400.woff2',
+  // Noto Sans KR & Outfit 웹폰트 자체 호스팅
+  './vendor/fonts/fonts.css',
+  './vendor/fonts/noto-sans-kr-300.woff2',
+  './vendor/fonts/noto-sans-kr-400.woff2',
+  './vendor/fonts/noto-sans-kr-500.woff2',
+  './vendor/fonts/noto-sans-kr-700.woff2',
+  './vendor/fonts/noto-sans-kr-900.woff2',
+  './vendor/fonts/outfit-300.woff2',
+  './vendor/fonts/outfit-400.woff2',
+  './vendor/fonts/outfit-600.woff2',
+  './vendor/fonts/outfit-800.woff2',
   // Mermaid 자체 호스팅 (오프라인/모바일에서도 다이어그램 정상 표시)
   './vendor/mermaid/mermaid.min.js'
 ];
@@ -76,8 +88,7 @@ const MD_PATTERN = /\.md$/i;
 
 /** 외부 CDN 호스트 (Stale-While-Revalidate 대상) */
 const CDN_HOSTS = [
-  'fonts.googleapis.com',
-  'fonts.gstatic.com'
+  // 외부 폰트/서체 CDN 사용 제거됨 (100% 로컬 자체 호스팅)
 ];
 
 /* ------------------------------------------------------------

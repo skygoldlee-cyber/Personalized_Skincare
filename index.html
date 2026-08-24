@@ -54,7 +54,7 @@
                 </div>
             </div>
             <nav class="nav-menu">
-                <a href="#" onclick="ManualViewer.openManual(); return false;" class="manual-nav-link" style="text-decoration: none;">
+                <a href="#" data-click="ManualViewer.openManual" class="manual-nav-link" style="text-decoration: none;">
                     <i class="fa-solid fa-circle-info"></i> 사용자 매뉴얼
                 </a>
                 <button class="nav-item" data-target="textbook-reader-view">
@@ -130,8 +130,8 @@
                         </div>
                     </div>
                     <div style="display: flex; gap: 0.5rem; flex-shrink: 0;">
-                        <button class="btn btn-warning" onclick="resumeSimDraft()" style="padding: 0.4rem 1rem; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.25rem;"><i class="fa-solid fa-play"></i> 이어서 풀기</button>
-                        <button class="btn btn-secondary" onclick="clearSimDraft()" style="padding: 0.4rem 1rem; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.25rem;"><i class="fa-solid fa-trash"></i> 새로 시작</button>
+                        <button class="btn btn-warning" data-click="resumeSimDraft" style="padding: 0.4rem 1rem; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.25rem;"><i class="fa-solid fa-play"></i> 이어서 풀기</button>
+                        <button class="btn btn-secondary" data-click="clearSimDraft" style="padding: 0.4rem 1rem; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.25rem;"><i class="fa-solid fa-trash"></i> 새로 시작</button>
                     </div>
                 </div>
 
@@ -191,7 +191,7 @@
                         </p>
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <span id="daily-challenge-status" class="badge" style="background: rgba(255,255,255,0.05); color: var(--color-text-muted); padding: 0.5rem 1rem;">오늘 미션 미완료</span>
-                            <button id="start-daily-btn" class="btn btn-success" onclick="startDailyChallenge()">
+                            <button id="start-daily-btn" class="btn btn-success" data-click="startDailyChallenge">
                                 <i class="fa-solid fa-play"></i> 챌린지 시작
                             </button>
                         </div>
@@ -206,10 +206,10 @@
                             </p>
                         </div>
                         <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-                            <button class="btn btn-secondary" onclick="exportData()" style="width: 100%; justify-content: center;">
+                            <button class="btn btn-secondary" data-click="exportData" style="width: 100%; justify-content: center;">
                                 <i class="fa-solid fa-download"></i> 데이터 백업
                             </button>
-                            <button class="btn btn-secondary" onclick="triggerImport()" style="width: 100%; justify-content: center;">
+                            <button class="btn btn-secondary" data-click="triggerImport" style="width: 100%; justify-content: center;">
                                 <i class="fa-solid fa-upload"></i> 백업 가져오기
                             </button>
                             <input type="file" id="import-file-input" style="display: none;" onchange="importData(event)">
@@ -232,8 +232,8 @@
                         <div class="pomodoro-body">
                             <div class="timer-display" id="pomo-time">25:00</div>
                             <div class="pomo-controls">
-                                <button class="btn btn-primary" id="pomo-start-btn" onclick="togglePomodoro()"><i class="fa-solid fa-play"></i> 집중 시작</button>
-                                <button class="btn btn-secondary" onclick="resetPomodoro()"><i class="fa-solid fa-rotate-right"></i> 초기화</button>
+                                <button class="btn btn-primary" id="pomo-start-btn" data-click="togglePomodoro"><i class="fa-solid fa-play"></i> 집중 시작</button>
+                                <button class="btn btn-secondary" data-click="resetPomodoro"><i class="fa-solid fa-rotate-right"></i> 초기화</button>
                             </div>
                         </div>
                     </div>
@@ -441,10 +441,10 @@
                         <button id="start-weak-quiz-btn" class="btn btn-warning" style="display: none;">
                             <i class="fa-solid fa-bolt"></i> 헷갈린 카드 집중 퀴즈 시작
                         </button>
-                        <button id="start-weak-exam-btn" class="btn btn-primary" onclick="startWeakExam()" style="display: none;">
+                        <button id="start-weak-exam-btn" class="btn btn-primary" data-click="startWeakExam" style="display: none;">
                             <i class="fa-solid fa-file-signature"></i> 헷갈린 문제 집중 모의고사
                         </button>
-                        <button id="print-review-btn" class="btn btn-secondary" onclick="printReviewNotes()" style="display: none;">
+                        <button id="print-review-btn" class="btn btn-secondary" data-click="printReviewNotes" style="display: none;">
                             <i class="fa-solid fa-print"></i> 오답노트 인쇄
                         </button>
                     </div>
@@ -452,11 +452,11 @@
 
                 <!-- 과목별 필터 버튼 그룹 (신규 Feature 3) -->
                 <div class="review-filter-group" id="review-filter-group" style="display: flex; gap: 0.5rem; margin-top: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
-                    <button class="btn btn-secondary filter-btn active" data-filter="all" onclick="setReviewFilter('all')" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; border-radius: 4px; background: var(--color-primary); border-color: var(--color-primary); color: #fff;">전체</button>
-                    <button class="btn btn-secondary filter-btn" data-filter="law" onclick="setReviewFilter('law')" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; border-radius: 4px;">1과목 (법령)</button>
-                    <button class="btn btn-secondary filter-btn" data-filter="manufacturing" onclick="setReviewFilter('manufacturing')" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; border-radius: 4px;">2과목 (품질)</button>
-                    <button class="btn btn-secondary filter-btn" data-filter="safety" onclick="setReviewFilter('safety')" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; border-radius: 4px;">3과목 (안전)</button>
-                    <button class="btn btn-secondary filter-btn" data-filter="understanding" onclick="setReviewFilter('understanding')" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; border-radius: 4px;">4과목 (이해)</button>
+                    <button class="btn btn-secondary filter-btn active" data-filter="all" data-click="setReviewFilter" data-arg="all" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; border-radius: 4px; background: var(--color-primary); border-color: var(--color-primary); color: #fff;">전체</button>
+                    <button class="btn btn-secondary filter-btn" data-filter="law" data-click="setReviewFilter" data-arg="law" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; border-radius: 4px;">1과목 (법령)</button>
+                    <button class="btn btn-secondary filter-btn" data-filter="manufacturing" data-click="setReviewFilter" data-arg="manufacturing" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; border-radius: 4px;">2과목 (품질)</button>
+                    <button class="btn btn-secondary filter-btn" data-filter="safety" data-click="setReviewFilter" data-arg="safety" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; border-radius: 4px;">3과목 (안전)</button>
+                    <button class="btn btn-secondary filter-btn" data-filter="understanding" data-click="setReviewFilter" data-arg="understanding" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; border-radius: 4px;">4과목 (이해)</button>
                 </div>
 
                 <div class="empty-state" id="review-empty-state">
@@ -479,7 +479,7 @@
                         <p>시험 합격의 당락을 결정하는 법령 수치 암기와 배합 계산 문제를 완벽히 정복하세요.</p>
                     </div>
                     <div class="trainer-menu-grid">
-                        <div class="trainer-menu-card" onclick="startLimitsTrainer()">
+                        <div class="trainer-menu-card" data-click="startLimitsTrainer">
                             <div class="trainer-card-icon icon-orange">
                                 <i class="fa-solid fa-hashtag"></i>
                             </div>
@@ -488,7 +488,7 @@
                             <span class="trainer-card-btn">훈련 시작 <i class="fa-solid fa-chevron-right"></i></span>
                         </div>
 
-                        <div class="trainer-menu-card" onclick="startCalcPractice()">
+                        <div class="trainer-menu-card" data-click="startCalcPractice">
                             <div class="trainer-card-icon icon-blue">
                                 <i class="fa-solid fa-calculator"></i>
                             </div>
@@ -497,7 +497,7 @@
                             <span class="trainer-card-btn">연습 시작 <i class="fa-solid fa-chevron-right"></i></span>
                         </div>
 
-                        <div class="trainer-menu-card" onclick="startIngredientsChallenge()">
+                        <div class="trainer-menu-card" data-click="startIngredientsChallenge">
                             <div class="trainer-card-icon icon-green">
                                 <i class="fa-solid fa-flask"></i>
                             </div>
@@ -511,7 +511,7 @@
                 <!-- 2. Limits Trainer Panel -->
                 <div id="trainer-limits-panel" style="display: none;">
                     <div class="sim-arena-header" style="margin-bottom: 2rem;">
-                        <button class="btn btn-secondary" onclick="exitTrainerSubView()"><i class="fa-solid fa-arrow-left"></i> 나가기</button>
+                        <button class="btn btn-secondary" data-click="exitTrainerSubView"><i class="fa-solid fa-arrow-left"></i> 나가기</button>
                         <div class="sim-title-group">
                             <h4>핵심 수치 암기 마스터</h4>
                             <span class="badge badge-quiz-cat">수치 암기 훈련</span>
@@ -546,7 +546,7 @@
                                 </div>
                             </div>
                             <div class="quiz-card-footer" style="justify-content: flex-end;">
-                                <button id="next-limits-btn" class="btn btn-success" style="display: none;" onclick="nextLimitsQuestion()">다음 문제 <i class="fa-solid fa-arrow-right"></i></button>
+                                <button id="next-limits-btn" class="btn btn-success" style="display: none;" data-click="nextLimitsQuestion">다음 문제 <i class="fa-solid fa-arrow-right"></i></button>
                             </div>
                         </div>
                     </div>
@@ -555,7 +555,7 @@
                 <!-- 3. Blending Calculator Panel -->
                 <div id="trainer-calc-panel" style="display: none;">
                     <div class="sim-arena-header" style="margin-bottom: 2rem;">
-                        <button class="btn btn-secondary" onclick="exitTrainerSubView()"><i class="fa-solid fa-arrow-left"></i> 나가기</button>
+                        <button class="btn btn-secondary" data-click="exitTrainerSubView"><i class="fa-solid fa-arrow-left"></i> 나가기</button>
                         <div class="sim-title-group">
                             <h4>원료 배합 계산 연습기</h4>
                             <span class="badge badge-quiz-cat">실전 계산 훈련</span>
@@ -576,12 +576,12 @@
                                 <div class="calc-input-group" style="display: flex; gap: 1rem; align-items: center; max-width: 500px; margin-bottom: 1.5rem;">
                                     <input type="number" step="any" id="calc-answer-input" class="form-input" placeholder="정답을 입력하세요 (예: 12.34)" autocomplete="off">
                                     <span class="calc-unit" id="calc-unit-text">g</span>
-                                    <button id="submit-calc-btn" class="btn btn-primary" onclick="submitCalcAnswer()">정답 제출</button>
+                                    <button id="submit-calc-btn" class="btn btn-primary" data-click="submitCalcAnswer">정답 제출</button>
                                 </div>
 
                                 <!-- Scratchpad Toggle & Canvas (New Feature 4) -->
                                 <div style="margin-bottom: 1.5rem;">
-                                    <button class="btn btn-secondary" id="calc-scratchpad-toggle" onclick="toggleCalcScratchpad()" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 0.25rem;">
+                                    <button class="btn btn-secondary" id="calc-scratchpad-toggle" data-click="toggleCalcScratchpad" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 0.25rem;">
                                         <i class="fa-solid fa-pencil"></i> ✏️ 계산 연습장 열기
                                     </button>
                                     
@@ -589,8 +589,8 @@
                                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; padding: 0 0.5rem;">
                                             <span style="color: #333; font-size: 0.8rem; font-weight: bold;"><i class="fa-solid fa-palette"></i> 계산 연습장</span>
                                             <div style="display: flex; gap: 0.5rem;">
-                                                <button class="btn" onclick="clearScratchpad()" style="padding: 2px 8px; font-size: 0.7rem; background: #ef4444; color: #fff; border: none; border-radius: 4px; cursor: pointer;">모두 지우기</button>
-                                                <button class="btn" id="scratchpad-eraser-btn" onclick="toggleScratchpadEraser()" style="padding: 2px 8px; font-size: 0.7rem; background: #6b7280; color: #fff; border: none; border-radius: 4px; cursor: pointer;">지우개</button>
+                                                <button class="btn" data-click="clearScratchpad" style="padding: 2px 8px; font-size: 0.7rem; background: #ef4444; color: #fff; border: none; border-radius: 4px; cursor: pointer;">모두 지우기</button>
+                                                <button class="btn" id="scratchpad-eraser-btn" data-click="toggleScratchpadEraser" style="padding: 2px 8px; font-size: 0.7rem; background: #6b7280; color: #fff; border: none; border-radius: 4px; cursor: pointer;">지우개</button>
                                             </div>
                                         </div>
                                         <canvas id="scratchpad-canvas" width="480" height="200" style="border: 1px dashed #ccc; border-radius: 4px; background: #fdfdfd; cursor: crosshair; display: block; width: 100%; height: 200px; touch-action: none;"></canvas>
@@ -610,7 +610,7 @@
 
                                 <!-- Accordion Solution -->
                                 <div class="solution-accordion" id="calc-solution-panel" style="display: none; margin-bottom: 1.5rem;">
-                                    <div class="solution-header" onclick="toggleSolutionAccordion()">
+                                    <div class="solution-header" data-click="toggleSolutionAccordion">
                                         <span><i class="fa-solid fa-square-root-variable"></i> 단계별 풀이 공식 보기</span>
                                         <i class="fa-solid fa-chevron-down" id="solution-chevron"></i>
                                     </div>
@@ -628,7 +628,7 @@
                                 </div>
                             </div>
                             <div class="quiz-card-footer" style="justify-content: flex-end;">
-                                <button id="next-calc-btn" class="btn btn-success" style="display: none;" onclick="generateCalcQuestion()">다음 문제 생성 <i class="fa-solid fa-arrow-right"></i></button>
+                                <button id="next-calc-btn" class="btn btn-success" style="display: none;" data-click="generateCalcQuestion">다음 문제 생성 <i class="fa-solid fa-arrow-right"></i></button>
                             </div>
                         </div>
                     </div>
@@ -637,7 +637,7 @@
                 <!-- 4. Ingredients Challenge Panel -->
                 <div id="trainer-ingredients-panel" style="display: none;">
                     <div class="sim-arena-header" style="margin-bottom: 2rem;">
-                        <button class="btn btn-secondary" onclick="exitTrainerSubView()"><i class="fa-solid fa-arrow-left"></i> 나가기</button>
+                        <button class="btn btn-secondary" data-click="exitTrainerSubView"><i class="fa-solid fa-arrow-left"></i> 나가기</button>
                         <div class="sim-title-group">
                             <h4>원료 안전성 챌린지</h4>
                             <span class="badge badge-quiz-cat">원료 규격 & 안전성</span>
@@ -663,7 +663,7 @@
                                 <!-- Text Input Wrapper -->
                                 <div class="calc-input-group" id="ing-input-container" style="display: none; gap: 1rem; align-items: center; max-width: 500px; margin-bottom: 2rem;">
                                     <input type="text" id="ing-answer-input" class="form-input" placeholder="정답 입력 (예: 1.0% 또는 기재해야 한다)" autocomplete="off">
-                                    <button id="submit-ing-btn" class="btn btn-primary" onclick="submitIngAnswer()">정답 제출</button>
+                                    <button id="submit-ing-btn" class="btn btn-primary" data-click="submitIngAnswer">정답 제출</button>
                                 </div>
 
                                 <!-- Feedback Panel -->
@@ -678,7 +678,7 @@
                                 </div>
                             </div>
                             <div class="quiz-card-footer" style="justify-content: flex-end;">
-                                <button id="next-ing-btn" class="btn btn-success" style="display: none;" onclick="nextIngQuestion()">다음 문제 <i class="fa-solid fa-arrow-right"></i></button>
+                                <button id="next-ing-btn" class="btn btn-success" style="display: none;" data-click="nextIngQuestion">다음 문제 <i class="fa-solid fa-arrow-right"></i></button>
                             </div>
                         </div>
                     </div>
@@ -702,7 +702,7 @@
                             <h4 class="exam-card-title" style="margin-top: 0; font-size: 1.25rem; font-weight: 700;">1~4과목 통합 실전 모의고사 (100제)</h4>
                             <p class="exam-card-desc" style="margin: 0.5rem 0 1rem 0; font-size: 0.9rem; line-height: 1.5; color: var(--color-text-muted);">실제 국가 자격증 시험과 동일한 문항 비율(1과목 10문항, 2과목 25문항, 3과목 25문항, 4과목 40문항)로 100문항을 무작위로 구성하여 푸는 종합 실전 모의고사입니다. 시험 타이머, OMR 답안지 마킹 및 자동 과락/합격 판정을 완벽히 지원합니다.</p>
                             <div class="exam-card-btns flex-btns" style="justify-content: flex-start; gap: 0.75rem;">
-                                <button class="exam-btn-sim btn-cyan" onclick="startIntegratedMockExam()" style="padding: 0.6rem 1.2rem; font-size: 0.9rem; font-weight: 600; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-clock"></i> 통합 모의고사 시작 (100분)</button>
+                                <button class="exam-btn-sim btn-cyan" data-click="startIntegratedMockExam" style="padding: 0.6rem 1.2rem; font-size: 0.9rem; font-weight: 600; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-clock"></i> 통합 모의고사 시작 (100분)</button>
                             </div>
                         </div>
 
@@ -712,8 +712,8 @@
                             <h4 class="exam-card-title">화장품법의 이해 100제</h4>
                             <p class="exam-card-desc">화장품 정의/유형, 기재사항, 실증제, 책임판매관리자 결격사유 등 수치 중심 모의고사</p>
                             <div class="exam-card-btns flex-btns">
-                                <button onclick="ExamViewer.openExam('exams/subject1_100_questions.md')" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> 문제집 열기</button>
-                                <button class="exam-btn-sim btn-cyan" onclick="startMockExamSim('subject1')"><i class="fa-solid fa-clock"></i> 시뮬레이터 시작</button>
+                                <button data-click="ExamViewer.openExam" data-arg="exams/subject1_100_questions.md" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> 문제집 열기</button>
+                                <button class="exam-btn-sim btn-cyan" data-click="startMockExamSim" data-arg="subject1"><i class="fa-solid fa-clock"></i> 시뮬레이터 시작</button>
                             </div>
                         </div>
 
@@ -724,16 +724,16 @@
                             <p class="exam-card-desc">취약 부분 완성을 위해 계면화학(HLB/CMC), CGMP 적격성 평가 및 밸리데이션, 독성시험 등을 심층적으로 다룬 300제 문제집</p>
                             <div class="exam-card-btns grid-btns-3">
                                 <div class="exam-btn-pair">
-                                    <button onclick="ExamViewer.openExam('exams/subject2_100_questions.md')" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> 1부 PDF</button>
-                                    <button class="exam-btn-sim" onclick="startMockExamSim('subject2_p1')"><i class="fa-solid fa-circle-play"></i> 1부 풀기</button>
+                                    <button data-click="ExamViewer.openExam" data-arg="exams/subject2_100_questions.md" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> 1부 PDF</button>
+                                    <button class="exam-btn-sim" data-click="startMockExamSim" data-arg="subject2_p1"><i class="fa-solid fa-circle-play"></i> 1부 풀기</button>
                                 </div>
                                 <div class="exam-btn-pair">
-                                    <button onclick="ExamViewer.openExam('exams/subject2_part2_100.md')" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> 2부 PDF</button>
-                                    <button class="exam-btn-sim" onclick="startMockExamSim('subject2_p2')"><i class="fa-solid fa-circle-play"></i> 2부 풀기</button>
+                                    <button data-click="ExamViewer.openExam" data-arg="exams/subject2_part2_100.md" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> 2부 PDF</button>
+                                    <button class="exam-btn-sim" data-click="startMockExamSim" data-arg="subject2_p2"><i class="fa-solid fa-circle-play"></i> 2부 풀기</button>
                                 </div>
                                 <div class="exam-btn-pair">
-                                    <button onclick="ExamViewer.openExam('exams/subject2_part3_100.md')" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> 3부 PDF</button>
-                                    <button class="exam-btn-sim" onclick="startMockExamSim('subject2_p3')"><i class="fa-solid fa-circle-play"></i> 3부 풀기</button>
+                                    <button data-click="ExamViewer.openExam" data-arg="exams/subject2_part3_100.md" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> 3부 PDF</button>
+                                    <button class="exam-btn-sim" data-click="startMockExamSim" data-arg="subject2_p3"><i class="fa-solid fa-circle-play"></i> 3부 풀기</button>
                                 </div>
                             </div>
                         </div>
@@ -745,12 +745,12 @@
                             <p class="exam-card-desc">작업장/작업자 청정도 관리, 미생물 및 중금속/메탄올 유해 물질 한도, 재작업 승인 절차 등</p>
                             <div class="exam-card-btns grid-btns-2">
                                 <div class="exam-btn-pair">
-                                    <button onclick="ExamViewer.openExam('exams/subject3_100_questions.md')" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> 1부 PDF</button>
-                                    <button class="exam-btn-sim" onclick="startMockExamSim('subject3_p1')"><i class="fa-solid fa-circle-play"></i> 1부 풀기</button>
+                                    <button data-click="ExamViewer.openExam" data-arg="exams/subject3_100_questions.md" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> 1부 PDF</button>
+                                    <button class="exam-btn-sim" data-click="startMockExamSim" data-arg="subject3_p1"><i class="fa-solid fa-circle-play"></i> 1부 풀기</button>
                                 </div>
                                 <div class="exam-btn-pair">
-                                    <button onclick="ExamViewer.openExam('exams/subject3_part2_100.md')" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> 2부 PDF</button>
-                                    <button class="exam-btn-sim" onclick="startMockExamSim('subject3_p2')"><i class="fa-solid fa-circle-play"></i> 2부 풀기</button>
+                                    <button data-click="ExamViewer.openExam" data-arg="exams/subject3_part2_100.md" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> 2부 PDF</button>
+                                    <button class="exam-btn-sim" data-click="startMockExamSim" data-arg="subject3_p2"><i class="fa-solid fa-circle-play"></i> 2부 풀기</button>
                                 </div>
                             </div>
                         </div>
@@ -762,16 +762,16 @@
                             <p class="exam-card-desc">표피 5대층 및 진피 구조, 모발 성장 주기, 원료 배합 및 한도 계산 실무, 위생 조제 지침 등</p>
                             <div class="exam-card-btns grid-btns-3">
                                 <div class="exam-btn-pair">
-                                    <button onclick="ExamViewer.openExam('exams/subject4_100_questions.md')" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> 1부 PDF</button>
-                                    <button class="exam-btn-sim" onclick="startMockExamSim('subject4_p1')"><i class="fa-solid fa-circle-play"></i> 1부 풀기</button>
+                                    <button data-click="ExamViewer.openExam" data-arg="exams/subject4_100_questions.md" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> 1부 PDF</button>
+                                    <button class="exam-btn-sim" data-click="startMockExamSim" data-arg="subject4_p1"><i class="fa-solid fa-circle-play"></i> 1부 풀기</button>
                                 </div>
                                 <div class="exam-btn-pair">
-                                    <button onclick="ExamViewer.openExam('exams/subject4_part2_100.md')" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> 2부 PDF</button>
-                                    <button class="exam-btn-sim" onclick="startMockExamSim('subject4_p2')"><i class="fa-solid fa-circle-play"></i> 2부 풀기</button>
+                                    <button data-click="ExamViewer.openExam" data-arg="exams/subject4_part2_100.md" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> 2부 PDF</button>
+                                    <button class="exam-btn-sim" data-click="startMockExamSim" data-arg="subject4_p2"><i class="fa-solid fa-circle-play"></i> 2부 풀기</button>
                                 </div>
                                 <div class="exam-btn-pair">
-                                    <button onclick="ExamViewer.openExam('exams/subject4_part3_100.md')" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> 3부 PDF</button>
-                                    <button class="exam-btn-sim" onclick="startMockExamSim('subject4_p3')"><i class="fa-solid fa-circle-play"></i> 3부 풀기</button>
+                                    <button data-click="ExamViewer.openExam" data-arg="exams/subject4_part3_100.md" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> 3부 PDF</button>
+                                    <button class="exam-btn-sim" data-click="startMockExamSim" data-arg="subject4_p3"><i class="fa-solid fa-circle-play"></i> 3부 풀기</button>
                                 </div>
                             </div>
                         </div>
@@ -782,8 +782,8 @@
                             <h4 class="exam-card-title">통합 핵심 이론 요약집</h4>
                             <p class="exam-card-desc">스터디윤 및 이기적 유튜브 수험 채널을 분석한 핵심 단권화 요약본입니다.</p>
                             <div class="exam-card-btns" style="display: flex; gap: 1rem;">
-                                <a href="#" onclick="ManualViewer.openSummary(); return false;" class="exam-btn-link"><i class="fa-solid fa-book"></i> 핵심 단권화 요약집</a>
-                                <a href="#" onclick="ManualViewer.openManual(); return false;" class="exam-btn-link" style="background: rgba(255, 255, 255, 0.05); color: var(--color-text-main);"><i class="fa-solid fa-circle-info"></i> 사용자 매뉴얼</a>
+                                <a href="#" data-click="ManualViewer.openSummary" class="exam-btn-link"><i class="fa-solid fa-book"></i> 핵심 단권화 요약집</a>
+                                <a href="#" data-click="ManualViewer.openManual" class="exam-btn-link" style="background: rgba(255, 255, 255, 0.05); color: var(--color-text-main);"><i class="fa-solid fa-circle-info"></i> 사용자 매뉴얼</a>
                             </div>
                         </div>
                     </div>
@@ -887,7 +887,7 @@
                 <!-- 2. Simulation Arena Panel -->
                 <div id="sim-arena-panel" style="display: none;">
                     <div class="sim-arena-header">
-                        <button class="btn btn-secondary" onclick="exitSimArena()"><i class="fa-solid fa-arrow-left"></i> 나가기</button>
+                        <button class="btn btn-secondary" data-click="exitSimArena"><i class="fa-solid fa-arrow-left"></i> 나가기</button>
                         <div class="sim-title-group">
                             <h4 id="sim-exam-title">모의고사 타이틀</h4>
                             <div class="sim-timer"><i class="fa-regular fa-clock"></i> 남은 시간: <span id="sim-time-left">120:00</span></div>
@@ -944,15 +944,15 @@
                     </div>
                     
                     <div style="display: flex; justify-content: center; gap: 1rem;">
-                        <button class="btn btn-primary" onclick="showSimAnswerReview()"><i class="fa-solid fa-book-open"></i> 오답 해설 풀이 보기</button>
-                        <button class="btn btn-secondary" onclick="exitSimArena()"><i class="fa-solid fa-house"></i> 목차로 돌아가기</button>
+                        <button class="btn btn-primary" data-click="showSimAnswerReview"><i class="fa-solid fa-book-open"></i> 오답 해설 풀이 보기</button>
+                        <button class="btn btn-secondary" data-click="exitSimArena"><i class="fa-solid fa-house"></i> 목차로 돌아가기</button>
                     </div>
                 </div>
 
                 <!-- 4. Simulation Answer Review Panel -->
                 <div id="sim-review-panel" style="display: none;">
                     <div class="sim-review-header">
-                        <button class="btn btn-secondary" onclick="showSimResultsSummary()"><i class="fa-solid fa-arrow-left"></i> 결과 요약으로</button>
+                        <button class="btn btn-secondary" data-click="showSimResultsSummary"><i class="fa-solid fa-arrow-left"></i> 결과 요약으로</button>
                         <h4>틀린 문제 & 정답 해설 보기</h4>
                     </div>
                     <div class="sim-review-list" id="sim-review-list-container">
@@ -975,16 +975,16 @@
                             <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 1.25rem; top: 50%; transform: translateY(-50%); color: var(--color-text-muted);"></i>
                             <input type="text" id="textbook-search-input" class="form-input" placeholder="검색할 키워드를 입력하세요 (예: 안전용기, 페녹시에탄올, 미생물)" style="padding-left: 3rem; width: 100%;">
                         </div>
-                        <button class="btn btn-secondary" onclick="clearTextbookSearch()" style="height: 52px; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-xmark"></i> 초기화</button>
+                        <button class="btn btn-secondary" data-click="clearTextbookSearch" style="height: 52px; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-xmark"></i> 초기화</button>
                     </div>
 
                     <!-- Subject Filter Buttons -->
                     <div class="textbook-filter-buttons" style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-                        <button class="btn btn-secondary active-filter" data-filter="all" onclick="setTextbookFilter('all')">전체 과목</button>
-                        <button class="btn btn-secondary" data-filter="law" onclick="setTextbookFilter('law')">1과목 (법령)</button>
-                        <button class="btn btn-secondary" data-filter="manufacturing" onclick="setTextbookFilter('manufacturing')">2과목 (제조)</button>
-                        <button class="btn btn-secondary" data-filter="safety" onclick="setTextbookFilter('safety')">3과목 (안전)</button>
-                        <button class="btn btn-secondary" data-filter="understanding" onclick="setTextbookFilter('understanding')">4과목 (이해)</button>
+                        <button class="btn btn-secondary active-filter" data-filter="all" data-click="setTextbookFilter" data-arg="all">전체 과목</button>
+                        <button class="btn btn-secondary" data-filter="law" data-click="setTextbookFilter" data-arg="law">1과목 (법령)</button>
+                        <button class="btn btn-secondary" data-filter="manufacturing" data-click="setTextbookFilter" data-arg="manufacturing">2과목 (제조)</button>
+                        <button class="btn btn-secondary" data-filter="safety" data-click="setTextbookFilter" data-arg="safety">3과목 (안전)</button>
+                        <button class="btn btn-secondary" data-filter="understanding" data-click="setTextbookFilter" data-arg="understanding">4과목 (이해)</button>
                     </div>
                 </div>
 
@@ -1108,15 +1108,15 @@
                             <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 1.25rem; top: 50%; transform: translateY(-50%); color: var(--color-text-muted);"></i>
                             <input type="text" id="dict-search-input" class="form-input" placeholder="성분명, 영문명 또는 초성을 입력하여 실시간 검색 (예: 페녹시, glycerin, ㄱㄹㅅㄹ)" style="padding-left: 3rem; width: 100%;">
                         </div>
-                        <button class="btn btn-secondary" onclick="clearDictSearch()" style="height: 52px; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-xmark"></i> 초기화</button>
+                        <button class="btn btn-secondary" data-click="clearDictSearch" style="height: 52px; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-xmark"></i> 초기화</button>
                     </div>
 
                     <!-- Category Filter Buttons -->
                     <div class="dict-filter-buttons" style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-                        <button class="btn btn-secondary active-filter" data-filter="all" onclick="setDictFilter('all')">전체 성분</button>
-                        <button class="btn btn-secondary" data-filter="approved" onclick="setDictFilter('approved')">🟢 사용 가능 원료</button>
-                        <button class="btn btn-secondary" data-filter="restricted" onclick="setDictFilter('restricted')">🟡 사용 제한 원료</button>
-                        <button class="btn btn-secondary" data-filter="banned" onclick="setDictFilter('banned')">🔴 사용 금지 원료</button>
+                        <button class="btn btn-secondary active-filter" data-filter="all" data-click="setDictFilter" data-arg="all">전체 성분</button>
+                        <button class="btn btn-secondary" data-filter="approved" data-click="setDictFilter" data-arg="approved">🟢 사용 가능 원료</button>
+                        <button class="btn btn-secondary" data-filter="restricted" data-click="setDictFilter" data-arg="restricted">🟡 사용 제한 원료</button>
+                        <button class="btn btn-secondary" data-filter="banned" data-click="setDictFilter" data-arg="banned">🔴 사용 금지 원료</button>
                     </div>
                 </div>
 
@@ -1133,7 +1133,7 @@
                 <i class="fa-solid fa-moon"></i>
                 <span>테마</span>
             </button>
-            <a href="#" onclick="ManualViewer.openManual(); return false;" class="mobile-tab-item">
+            <a href="#" data-click="ManualViewer.openManual" class="mobile-tab-item">
                 <i class="fa-solid fa-circle-info"></i>
                 <span>매뉴얼</span>
             </a>
@@ -1308,189 +1308,8 @@
     <!-- App Logic Script (defer로 DOM 준비 후 실행) -->
     <script src="src/app.js" defer></script>
     <!-- PWA: Service Worker 등록 및 설치 프롬프트 -->
-    <script>
-        // 빌드 마커 — 배포 버전 확인용 (모바일에서 구버전 수신 여부 진단)
-        console.log('%c[BUILD] v2 sw-network-first 설치버튼 기본표시', 'color:#06b6d4;font-weight:bold;');
-
-        // Service Worker 등록
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js').catch((err) => {
-                    console.warn('[PWA] Service Worker 등록 실패:', err);
-                });
-            });
-
-            // 새 Service Worker가 제어권을 가져가면(버전 업데이트) 1회 자동 새로고침
-            // → 구버전 캐시 HTML 사용 상태에서 즉시 탈출
-            let swRefreshing = false;
-            navigator.serviceWorker.addEventListener('controllerchange', () => {
-                if (swRefreshing) return;
-                swRefreshing = true;
-                console.log('[PWA] 새 Service Worker 적용 — 페이지를 새로고침합니다.');
-                window.location.reload();
-            });
-        }
-
-        // PWA 설치 프롬프트 처리
-        (function setupPWAInstall() {
-            let deferredPrompt = null;
-            const installBtn = document.getElementById('pwa-install-btn');
-            
-            console.log('[PWA] 설치 버튼 초기화:', installBtn ? '발견됨' : '발견되지 않음');
-
-            // 이미 설치된 경우 버튼 숨기기 (즉시 실행)
-            if (window.matchMedia('(display-mode: standalone)').matches ||
-                window.navigator.standalone === true) {
-                console.log('[PWA] 이미 설치된 상태입니다.');
-                if (installBtn) {
-                    installBtn.style.display = 'none';
-                }
-                return;
-            }
-
-            // beforeinstallprompt 이벤트 캡처
-            window.addEventListener('beforeinstallprompt', (e) => {
-                console.log('[PWA] beforeinstallprompt 이벤트 발생');
-                // 기본 설치 프롬프트 방지
-                e.preventDefault();
-                // 이벤트 저장
-                deferredPrompt = e;
-                // 설치 버튼 표시
-                if (installBtn) {
-                    installBtn.style.display = 'inline-flex';
-                    installBtn.innerHTML = '<i class="fa-solid fa-download"></i> <span class="btn-text">앱 설치</span>';
-                    console.log('[PWA] 설치 버튼 표시됨');
-                } else {
-                    console.warn('[PWA] 설치 버튼을 찾을 수 없습니다.');
-                }
-            });
-
-            // 설치 안내 모달 제어 (iOS/Android 분기)
-            const installModal = document.getElementById('pwa-install-modal');
-            const guideAndroid = document.getElementById('pwa-guide-android');
-            const guideIos = document.getElementById('pwa-guide-ios');
-            const guideGeneric = document.getElementById('pwa-guide-generic');
-            const modalCloseBtn = document.getElementById('pwa-modal-close');
-            const modalBackdrop = document.getElementById('pwa-modal-backdrop');
-
-            function detectPlatform() {
-                const ua = navigator.userAgent || '';
-                if (/iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) {
-                    return 'ios';
-                }
-                if (/android/i.test(ua)) {
-                    return 'android';
-                }
-                return 'generic';
-            }
-
-            function openInstallModal() {
-                if (!installModal) return;
-                const platform = detectPlatform();
-                console.log('[PWA] 설치 안내 모달 표시 - 플랫폼:', platform);
-                if (guideAndroid) guideAndroid.style.display = platform === 'android' ? 'block' : 'none';
-                if (guideIos) guideIos.style.display = platform === 'ios' ? 'block' : 'none';
-                if (guideGeneric) guideGeneric.style.display = platform === 'generic' ? 'block' : 'none';
-                installModal.style.display = 'flex';
-                document.body.style.overflow = 'hidden';
-            }
-
-            function closeInstallModal() {
-                if (!installModal) return;
-                installModal.style.display = 'none';
-                document.body.style.overflow = '';
-            }
-
-            if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeInstallModal);
-            if (modalBackdrop) modalBackdrop.addEventListener('click', closeInstallModal);
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && installModal && installModal.style.display === 'flex') {
-                    closeInstallModal();
-                }
-            });
-
-            // 설치 버튼 클릭 핸들러
-            if (installBtn) {
-                installBtn.addEventListener('click', async () => {
-                    console.log('[PWA] 설치 버튼 클릭됨');
-                    if (!deferredPrompt) {
-                        console.log('[PWA] 설치 프롬프트가 아직 준비되지 않았습니다.');
-                        // 플랫폼별 설치 안내 모달 표시
-                        openInstallModal();
-                        return;
-                    }
-                    // 설치 프롬프트 표시
-                    deferredPrompt.prompt();
-                    // 사용자 선택 대기
-                    const { outcome } = await deferredPrompt.userChoice;
-                    console.log('[PWA] 설치 프롬프트 결과:', outcome);
-                    // 프롬프트 사용 후 초기화
-                    deferredPrompt = null;
-                    // 버튼 숨기기
-                    installBtn.style.display = 'none';
-                });
-            }
-
-            // 앱 설치 완료 감지
-            window.addEventListener('appinstalled', () => {
-                console.log('[PWA] 앱이 설치되었습니다.');
-                deferredPrompt = null;
-                if (installBtn) {
-                    installBtn.style.display = 'none';
-                }
-            });
-        })();
-    </script>
+    
     <!-- Theme (Light/Dark) 토글 로직 -->
-    <script>
-        (function setupThemeToggle() {
-            var root = document.documentElement;
-            var meta = document.querySelector('meta[name="theme-color"]');
-            function isLight() { return root.classList.contains('light-theme'); }
-            function apply(light) {
-                root.classList.toggle('light-theme', light);
-                if (meta) meta.setAttribute('content', light ? '#f5f7fa' : '#0b0f19');
-                try { localStorage.setItem('appTheme', light ? 'light' : 'dark'); } catch (e) {}
-                // 리더 등 다른 모듈이 동일한 테마 상태를 공유하도록 이벤트 브로드캐스트
-                document.dispatchEvent(new CustomEvent('themechange', { detail: { light: light } }));
-            }
-            function toggle() { apply(!isLight()); }
-            // 전역 테마 API 노출 (단일 소스 오브 트루스)
-            window.AppTheme = { isLight: isLight, apply: apply, toggle: toggle };
-
-            var btn = document.getElementById('theme-toggle-btn');
-            function syncHeaderBtn() {
-                if (!btn) return;
-                var i = btn.querySelector('i');
-                if (i) i.className = isLight() ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
-                btn.title = isLight() ? '다크 모드로 전환' : '라이트 모드로 전환';
-            }
-            syncHeaderBtn();
-            document.addEventListener('themechange', syncHeaderBtn);
-            if (btn) btn.addEventListener('click', toggle);
-
-            // 모바일 하단 탭 바의 테마 토글
-            var mBtn = document.getElementById('mobile-theme-toggle');
-            function syncMobileBtn() {
-                if (!mBtn) return;
-                var i = mBtn.querySelector('i');
-                if (i) i.className = isLight() ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
-            }
-            syncMobileBtn();
-            document.addEventListener('themechange', syncMobileBtn);
-            if (mBtn) mBtn.addEventListener('click', toggle);
-
-            // 사용자가 수동 선택하지 않았을 때만 시스템 테마 변경을 따라감
-            if (window.matchMedia) {
-                var mq = window.matchMedia('(prefers-color-scheme: light)');
-                var onChange = function (e) {
-                    if (localStorage.getItem('appTheme')) return;
-                    apply(e.matches);
-                };
-                if (mq.addEventListener) mq.addEventListener('change', onChange);
-                else if (mq.addListener) mq.addListener(onChange);
-            }
-        })();
-    </script>
+    
 </body>
 </html>
