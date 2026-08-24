@@ -725,5 +725,7 @@
 - **로컬 스모크 테스트**: `node serve.js` 로컬 가동 후 browser subagent를 통해 `http://localhost:8000/` 접속 검증을 수행했습니다.
   - 개발자 도구 콘솔 상에서 ESM 모듈 경로(Mime Type) 에러 및 변수 스코프 오류가 0회로 전무하게 완전 이관된 것을 확인했습니다.
   - 대시보드 렌더링, 성분사전 glycerin 실시간 검색 디바운싱 작동, 사용자 매뉴얼 오버레이 및 다이어그램 출력 모두 이벤트가 오차 없이 의도대로 트리거됨을 검증했습니다.
-- **E2E 검증 레코딩**:
-  ![Phase 2 E2E local verification](file:///C:/Users/sky/.gemini/antigravity-ide/brain/59f828a4-5d13-4ce4-93b1-d0894578f529/verify_phase2_local_1787571219264.webp)
+- **로컬 E2E 검증 레코딩**:
+  ![Phase 2 E2E 로컬 검증 레코딩](file:///C:/Users/sky/.gemini/antigravity-ide/brain/59f828a4-5d13-4ce4-93b1-d0894578f529/verify_phase2_local_1787571219264.webp)
+- **Vercel 라이브 프로덕션 E2E 검증 레코딩**:
+  ![Phase 2 E2E 라이브 검증 레코딩](file:///C:/Users/sky/.gemini/antigravity-ide/brain/59f828a4-5d13-4ce4-93b1-d0894578f529/verify_phase2_live_1787571339389.webp)
