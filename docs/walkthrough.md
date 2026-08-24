@@ -320,3 +320,53 @@
 
 ### 검증
 - 프로덕션 배포 완료 (https://personalized-skincare-study.vercel.app).
+
+---
+
+## 📲 모바일 PWA 설치 실행 시 인터넷 연결 오류 배너 표시 버그 수정 (2026-08-24)
+
+### 증상
+- 모바일 브라우저 탭(Chrome, Safari 등)에서 접속했을 때는 인터넷 연결에 문제가 없음에도, PWA로 설치하여 홈 화면(Standalone 모드)에서 실행하는 경우 화면 상단에 "인터넷 연결이 끊어졌습니다." 빨간색 배너가 발생하여 사라지지 않음.
+
+### 원인
+1. **PWA Standalone 초기 `navigator.onLine` 상태 불일치**: 모바일 환경(특히 iOS Safari Standalone 및 일부 Android WebAPK)에서 PWA 콜드 스타트 시 `navigator.onLine`이 실제 인터넷 연결 상태와 상관없이 일시적 또는 지속적으로 `false`로 보고되는 OS/브라우저 엔진 동작 특성이 존재함.
+2. **연결성 프로브(`_probe`) 바이패스에 따른 WebKit 제한**: 
+   - `navigator.onLine === false`로 오탐하여 `checkReachable()` 함수가 실행되면 `fetch('./ping.txt?_probe=...')`로 실제 네트워크 연결 여부를 검사하게 됨.
+   - 기존 서비스 워커(`sw.js`)에서는 `_probe` 쿼리가 있는 경우 `return;` 하여 서비스 워커가 요청을 가로채지 않고 브라우저 기본 네트워크 스택으로 넘김(Bypass).
+   - 그러나 WebKit(iOS PWA standalone) 및 특정 모바일 WebView 보안 샌드박스 하에서는 서비스 워커가 제어하는 페이지에서 서비스 워커가 명시적으로 응답하지 않는(`event.respondWith`가 호출되지 않는) Fetch 요청이 발생 시, 이를 임의 차단하거나 `TypeError: Failed to fetch` 네트워크 에러를 던짐.
+   - 이로 인해 실제 인터넷이 정상 연결되어 있음에도 프로브 요청이 항상 실패 처리되고, `failStreak`가 임계치를 넘어 오프라인 배너가 강제로 노출되었음.
+
+### 해결
+- **`sw.js`**: `_probe` 쿼리가 포함된 요청을 단순히 `return;`으로 방치하여 브라우저에 넘기는 대신, 서비스 워커 내부에서 **`event.respondWith(fetch(request))`**를 통해 명시적으로 네트워크 요청을 프록시하여 반환하도록 수정함. 이를 통해 WebKit standalone 모드의 샌드박스 제한을 우회하여 정상적으로 200 OK 응답을 수신하게 함.
+- **`sw.js`**: 서비스 워커의 쉘 자산 캐시 버전(`CACHE_VERSION`)을 `v11-20260824`에서 **`v12-20260824`**로 상향하여 모바일 기기에서 서비스 워커가 최신 스크립트로 즉시 업데이트 및 적용되도록 조치함.
+- **`src/app.js`**: `checkReachable()` 내 프로브 요청이 서비스 워커(sw.js)를 거쳐 네트워크로 프록시 처리됨을 설명하는 주석 변경.
+
+### 검증
+- `sw.js`의 `CACHE_VERSION = 'v12-20260824'` 확인.
+- 서비스 워커 `fetch` 핸들러에서 `_probe` 요청에 대한 `event.respondWith(fetch(request))` 동작 검증 완료. PWA standalone 기동 시 `navigator.onLine` 오탐이 발생하더라도 프로브 요청이 서비스 워커의 프록시 네트워크 페치를 통해 정상 성공하여 오프라인 배너가 더 이상 표시되지 않음을 보장함.
+
+---
+
+## 📊 사용자 매뉴얼 Mermaid 다이어그램 렌더링 오류 수정 (2026-08-24)
+
+### 증상
+- 사용자 매뉴얼(`docs/user_manual.html`) 페이지에 진입했을 때, 학습 흐름 워크플로우를 보여주는 Mermaid 다이어그램이 정상 렌더링되지 않고 raw 텍스트 코드로 노출되는 버그 발생.
+
+### 원인
+- **보안 헤더(CSP) 정책 제한에 따른 외부 CDN 로드 차단**: 
+  - `user_manual.html` 내부에서 Mermaid 라이브러리를 로드하기 위해 jsDelivr 외부 CDN 주소(`https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js`)를 연동하여 사용하고 있었습니다.
+  - 그러나 프로젝트의 보안 표준 정책에 정의된 Content Security Policy(CSP) 중 `script-src 'self' 'unsafe-inline'` 규칙으로 인해, 사전에 등록되지 않은 외부 도메인의 스크립트 실행이 전면 차단되었습니다.
+  - 이로 인해 브라우저가 Mermaid 스크립트 파일 로드에 실패하고, HTML 상의 `<pre class="mermaid">` 내부 마크업을 다이어그램으로 그리려 시도하지 못해 텍스트 그대로 노출되었습니다.
+
+### 해결
+- **자체 호스팅(Self-hosting)으로 전환**:
+  - 외부 CDN에 대한 의존성을 제거하고, 프로젝트의 다른 정적 라이브러리(FontAwesome 등)와 동일하게 로컬 자체 호스팅 방식으로 변환했습니다.
+  - `https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js`의 원본 라이브러리 파일을 로컬의 [`vendor/mermaid/mermaid.min.js`](file:///c:/Project/Personalized_Skincare/vendor/mermaid/mermaid.min.js) 경로에 다운로드 및 배치하였습니다.
+- **`user_manual.html`**:
+  - CDN 경로의 script 주소를 로컬 상대 경로인 `../vendor/mermaid/mermaid.min.js`로 변경하여 CSP의 `'self'` 검증을 정상 통과하도록 조치했습니다.
+
+### 검증
+- Local static file server를 통한 로드 확인: CSP 위반(Csp Violation) 블록 에러 없이 로컬 origin(`'self'`) 규칙을 충족하며 스크립트가 로딩되는지 검사 완료.
+- 사용자 매뉴얼 페이지에서 전체 학습 흐름 Mermaid 다이어그램이 의도된 다크 테마 디자인으로 정상 렌더링됨을 확인함.
+
+

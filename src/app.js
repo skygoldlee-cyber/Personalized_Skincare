@@ -297,7 +297,7 @@ function setupOfflineDetection() {
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), PROBE_TIMEOUT);
             // cache: 'no-store'는 일부 웹뷰/보안정책과 충돌해 fetch가 실패하는 사례가 있어 제거.
-            // 쿼리스트링 타임스탬프로만 캐시를 우회하고, ?_probe= 요청은 서비스워커가 가로채지 않는다(sw.js).
+            // 쿼리스트링 타임스탬프로만 캐시를 우회하고, ?_probe= 요청은 서비스워커(sw.js)가 직접 네트워크로 프록시하여 처리합니다.
             const res = await fetch(`./ping.txt?_probe=${Date.now()}`, {
                 signal: controller.signal
             });
