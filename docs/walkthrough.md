@@ -729,3 +729,9 @@
   ![Phase 2 E2E 로컬 검증 레코딩](file:///C:/Users/sky/.gemini/antigravity-ide/brain/59f828a4-5d13-4ce4-93b1-d0894578f529/verify_phase2_local_1787571219264.webp)
 - **Vercel 라이브 프로덕션 E2E 검증 레코딩**:
   ![Phase 2 E2E 라이브 검증 레코딩](file:///C:/Users/sky/.gemini/antigravity-ide/brain/59f828a4-5d13-4ce4-93b1-d0894578f529/verify_phase2_live_1787571339389.webp)
+
+### 🐛 모바일/데스크톱 메뉴 버튼 클릭 무반응 오류 수정 (2026-08-24)
+- **원인**: 클래식 스크립트에서 ES Modules로 전환되면서 비동기 스크립트 로드 타이밍 문제로 인해, HTML 파싱이 모듈 평가 전에 종료되어 `DOMContentLoaded` 이벤트가 먼저 발생할 경우 `app.js` 내부의 `DOMContentLoaded` 리스너가 등록되지 않아 `initApp()` 및 모든 네비게이션/클릭 핸들러 바인딩이 씹히는 인스턴스 레이스 컨디션이 원인이었습니다.
+- **해결**: `DOMContentLoaded` 리스너를 붙이기 전 `document.readyState`가 `'loading'`을 탈피했는지 검증하여, 로딩이 완료된 경우에는 즉시 `initApp()`을 programmatic하게 실행하도록 안전 장치(가드)를 추가했습니다.
+- **검증**: 실서버 Vercel E2E 테스트를 재기동해 사이드바 및 하단 메뉴 클릭 시 즉시 정상적으로 뷰 전환이 이루어지는 것을 확인했습니다.
+  ![메뉴 클릭 동작 복구 E2E 레코딩](file:///C:/Users/sky/.gemini/antigravity-ide/brain/59f828a4-5d13-4ce4-93b1-d0894578f529/verify_live_menu_fix_1787572036394.webp)
