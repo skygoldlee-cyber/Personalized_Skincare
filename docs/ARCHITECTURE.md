@@ -124,6 +124,7 @@
 | [`src/state.js`](../src/state.js) | 전역 상태 객체(`state`) 정의 + localStorage 영속성(`loadProgress`/`saveProgress`) |
 | [`src/utils.js`](../src/utils.js) | 의존성 없는 범용 헬퍼 (한글 초성 추출 `getChosung()` 등) |
 | [`src/sanitize.js`](../src/sanitize.js) | HTML/XSS 방어 및 텍스트 정제 유틸리티 |
+| [`src/exam-viewer.js`](../src/exam-viewer.js) | 문제집(MD) 런타임 뷰어. `exams/*.md` fetch → 자체 MD→HTML 변환 → 인앱 전체화면 오버레이 렌더링. TOC 생성·인쇄·sessionStorage 캐시(24h)·`file://` 번들 폴리백(`data/exams_md/*.js`) 지원. 정적 `exams/*.html` 대체(2026-08-24~) |
 
 ### 3. Data Layer (데이터 계층)
 

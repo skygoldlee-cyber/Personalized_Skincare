@@ -70,6 +70,7 @@ Personalized Skincare/
 │   ├── scratchpad.js                ← HTML5 Canvas 손글씨 계산 연습장
 │   ├── trainer-calc.js              ← 계산 훈련 문제 생성기(순수 로직)
 │   ├── state.js                     ← 전역 상태 + localStorage 영속성 + ID 마이그레이션 실행
+│   ├── exam-viewer.js               ← 🆕 문제집(MD) 런타임 뷰어 — 인앱 전체화면 오버레이 (2026-08-24~)
 │   └── app.js                       ← 메인 앱(SPA 라우팅/렌더링/오디오/퀴즈/모의고사/훈련소)
 │
 ├── 📂 data/                         ← ✅ 배포 (빌드 산출물 — 수정 금지)
@@ -78,6 +79,7 @@ Personalized Skincare/
 │   ├── audio_manifest.js            ← 오디오 파일 경로 매니페스트
 │   ├── subjects/<key>.<hash>.js     ← 과목별 학습 번들 (law/manufacturing/safety/understanding)
 │   ├── exams/<key>.<hash>.js        ← 시험별 문항 번들 (subject1, subject2_p1 …)
+│   ├── exams_md/<stem>.js           ← 🆕 문제집 MD 번들 — file:// 프로토콜 폴리백용 (fetch 차단 우회)
 │   └── ingredients_data.<hash>.js   ← 성분 사전 번들
 │
 ├── 📂 content/                      ← 🔧 MD/manifest만 Git, HTML은 .vercelignore
@@ -88,8 +90,10 @@ Personalized Skincare/
 │   └── law/ (2단원)                 ← 4과목: 화장품법의 이해
 │       └── {번호}.{제목}2026.md      ← .html은 빌드 산출/배포 제외
 │
-├── 📂 exams/                        ← 🔧 MD만 Git, HTML은 .vercelignore(!exams/*.html로 배포 포함)
-│   └── subject{n}_*.md/.html        ← 과목별 모의고사 원본(빌드 입력) + 인쇄용 HTML
+├── 📂 exams/                        ← ✅ 배포 (MD만 — 정적 HTML 폐지, 2026-08-24~)
+│   └── subject{n}_*.md              ← 과목별 모의고사 원본(빌드 입력 + 문제집 뷰어 소스)
+│                                      ※ 인쇄용 정적 HTML은 삭제됨 → src/exam-viewer.js가 MD를 런타임에
+│                                        HTML로 변환해 전체화면 오버레이로 표시(인쇄/PDF 버튼 내장)
 │
 ├── 📂 ingredients/                  ← 🔧 성분 원본 MD (빌드 입력)
 │   ├── approved_ingredients.md
@@ -105,6 +109,7 @@ Personalized Skincare/
 │   │   ├── report.js                ← 통계 이상 감지 + 마커 감시 리포트
 │   │   └── plugins/                 ← textbook / exams / ingredients 플러그인
 │   ├── generate_migration_map.js    ← id_migration.js 생성(플러그인 ID 규칙과 동기)
+│   ├── build_exam_bundles.js        ← 🆕 exams/*.md → data/exams_md/*.js (file:// 폴리백 번들)
 │   ├── convert_study_docs.ps1       ← 교재 MD → HTML 변환(선택)
 │   └── generate_pwa_icons.ps1       ← PWA 아이콘 생성(선택)
 │
@@ -133,7 +138,11 @@ Personalized Skincare/
 | `audio_manifest.js` | 수동 | 과목/단원별 MP3 경로 | 재검증(비해시) |
 | `subjects/<key>.<hash>.js` | textbook 플러그인 | 카드/퀴즈/챕터 | `immutable`(해시) |
 | `exams/<key>.<hash>.js` | exams 플러그인 | 시험 문항 | `immutable`(해시) |
+| `exams_md/<stem>.js` | `tools/build_exam_bundles.js` | 문제집 MD 번들(file:// 폴리백, `window.__EXAM_MD__` 등록) | Cache First(SW) |
 | `ingredients_data.<hash>.js` | ingredients 플러그인 | 성분 사전 | `immutable`(해시) |
+
+> 📌 `exams/*.md`를 편집하면 `node tools/build_exam_bundles.js`로 `exams_md` 번들도 함께
+> 재생성해 커밋해야 합니다(HTTP(S) 환경은 MD를 live fetch하므로 선택, `file://` 환경은 필수).
 
 > ⚠️ 이 파일들은 **수동 편집 금지**. 재생성은 `npm run build:data`(전체) 또는
 > `npm run build:data:<과목>` / `node tools/build/index.js --only <key>`(부분).
@@ -145,6 +154,7 @@ Personalized Skincare/
 | 스크립트 | 입력 | 출력 | 역할 |
 |----------|------|------|------|
 | `build/index.js` | `content/manifest.json` + MD | `data/registry.js` + 번들 | 전체/부분 빌드, sw.js 갱신, 검증/리포트 |
+| `build_exam_bundles.js` | `exams/*.md` | `data/exams_md/<stem>.js` | 문제집 MD file:// 폴리백 번들 |
 | `generate_migration_map.js` | content MD | `data/id_migration.js` | 안정 ID 이관 맵(플러그인과 동일 규칙) |
 | `convert_study_docs.ps1` | content MD | content HTML | 교재 HTML 변환(선택) |
 | `generate_pwa_icons.ps1` | 원본 아이콘 | icons/*.png | PWA 아이콘(선택) |
@@ -161,6 +171,7 @@ graph TD
     M[content/manifest.json (SSOT)] -->|tools/build/index.js| R[data/registry.js]
     M -->|textbook plugin| S[data/subjects/*.hash.js]
     E[exams/*.md] -->|exams plugin| X[data/exams/*.hash.js]
+    E -->|build_exam_bundles.js| EMD[data/exams_md/*.js]
     I[ingredients/*.md] -->|ingredients plugin| G[data/ingredients_data.hash.js]
     M -->|generate_migration_map.js| MIG[data/id_migration.js]
     A[content/**/*.md] -->|audiobook pipeline| MP3[audiobook/mp3/*.mp3]
@@ -173,6 +184,8 @@ graph TD
     DL -->|on demand| S
     DL -->|on demand| X
     DL -->|on demand| G
+    EMD -->|file:// fallback| EV[src/exam-viewer.js]
+    EV -->|http(s): fetch exams/*.md| E
     IDX --> APP[src/app.js + state/charts/… ]
 ```
 
@@ -194,6 +207,9 @@ node tools/build/index.js --only law,safety
 # 안정 ID 이관 맵 재생성(퀴즈 ID 규칙 변경 시 함께)
 node tools/generate_migration_map.js
 
+# 문제집 MD 번들 재생성(exams/*.md 편집 후)
+node tools/build_exam_bundles.js
+
 # 오디오북 생성
 cd audiobook && pip install -r requirements.txt && python run_pipeline.py
 ```
@@ -207,4 +223,4 @@ cd audiobook && pip install -r requirements.txt && python run_pipeline.py
 
 ---
 
-**문서 버전**: 2.0 (모듈러 아키텍처)
+**문서 버전**: 2.1 (모듈러 아키텍처 + 문제집 런타임 뷰어)

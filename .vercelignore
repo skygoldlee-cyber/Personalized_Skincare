@@ -12,12 +12,14 @@ audiobook/mp3/
 # ---------- 📚 비대화된 HTML 콘텐츠 ----------
 # 앱은 data/registry.js + data/subjects·exams/*.js(모듈러 번들)를 로드하므로
 # content/ 등에서 렌더링된 HTML은 제외하되,
-# 앱에서 링크로 여는 문서 HTML(docs/*.html) 및 모의고사 HTML(exams/*.html)은 반드시 배포에 포함해야 한다.
+# 앱에서 링크로 여는 문서 HTML(docs/*.html)은 반드시 배포에 포함해야 한다.
 # (루트 index.html은 진입점이므로 반드시 유지)
+# ※ exams/*.html 정적 문제집은 런타임 MD 뷰어(오버레이)로 대체·삭제되었다.
+#    문제집은 exams/*.md(원본) + data/exams_md/*.js(file:// 폴리백 번들)로 제공되며
+#    둘 다 .html 규칙에 걸리지 않으므로 그대로 배포된다.
 *.html
 !index.html
 !docs/*.html
-!exams/*.html
 
 # ---------- 🗑️ 구(모놀리식) 죽은 데이터 파일 ----------
 # index.html은 모듈러 구조(registry + data/subjects·exams/*.hash.js)만 로드한다.

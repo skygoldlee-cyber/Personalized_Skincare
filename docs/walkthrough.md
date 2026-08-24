@@ -171,7 +171,7 @@
 ### 3. Vercel 배포 누락 리소스 수정
 - **증상**: 배포 환경에서 "사용자 매뉴얼" / "핵심 단권화 요약집" 링크가 404.
 - **원인**: `.vercelignore`의 `*.html` 규칙이 모든 HTML을 재귀적으로 제외하면서 `docs/*.html`도 함께 제외됨.
-- **해결**: `.vercelignore`에 `!docs/*.html` 예외 추가 → `docs/user_manual.html`, `docs/study_summary.html` 배포 포함. (`exams/*.html`은 ~220MB로 100MB 제한 초과하여 계속 제외)
+- **해결**: `.vercelignore`에 `!docs/*.html` 예외 추가 → `docs/user_manual.html`, `docs/study_summary.html` 배포 포함. (`exams/*.html`은 당시 ~220MB로 100MB 제한 초과하여 제외했으나, 2026-08-24 런타임 MD 뷰어 전환으로 파일 자체가 삭제되어 현재는 해당 없음)
 
 ### 관련 커밋
 - `feat: PWA 커스텀 설치 버튼 추가 및 모바일 최적화`
@@ -386,5 +386,32 @@
 ### 검증
 - Vercel 프로덕션 배포 후 `sw.js`의 `CACHE_VERSION = 'v13-20260824'` 및 `app.js`의 `FAIL_THRESHOLD = isStandalone ? 4 : 3` 라이브 반영 확인.
 - 설계 상세는 [`docs/ARCHITECTURE.md`](ARCHITECTURE.md) "오프라인 감지 설계" 참조.
+
+---
+
+## 📝 문제집 뷰어 런타임 전환 — 정적 HTML 폐지 (sw v15, 2026-08-24)
+
+### 배경/증상
+- 과거 문제집(실전 예상문제)은 `exams/*.html` 정적 파일 9종(~220MB)으로 제공했으나, Vercel 100MB 제한으로 배포 제외 대상이었고 로컬에서만 인쇄용으로 쓰였음.
+- 1차 시도(팝업 `window.open` + `document.write` 방식 뷰어)는 배포 환경에서 **"문제집을 불러올 수 없습니다 / Failed to fetch"** 오류 발생:
+  - `about:blank` 팝업 문서에는 `<base>`가 없어 상대 경로 요청이 전부 404.
+  - iOS PWA/팝업 차단 환경에서는 `window.open`이 `null` 반환.
+
+### 해결
+- **인앱 전체화면 오버레이 뷰어로 전면 재작성** ([`src/exam-viewer.js`](../src/exam-viewer.js)):
+  - `exams/*.md`를 런타임에 fetch → 자체 MD→HTML 변환기(`_mdToHtml`)로 렌더링 → `#exam-overlay` 전체화면 오버레이로 표시. 팝업/별도 문서 불필요.
+  - 목차(TOC) 자동 생성, 인쇄/PDF 버튼 내장, `Esc`·안드로이드 뒤로가기(`history.pushState` 연동)로 닫기.
+  - sessionStorage 캐시(`exam_md_cache_v2_` 접두어, 24h TTL)로 재염 시 네트워크 요청 0회.
+- **file:// 프로토콜 지원 — MD 번들 폴리백**:
+  - [`tools/build_exam_bundles.js`](../tools/build_exam_bundles.js)가 `exams/*.md` → `data/exams_md/<stem>.js`(전역 `window.__EXAM_MD__` 등록) 생성.
+  - `file://`에서는 `fetch()`가 차단되므로 클래식 `<script>` 주입으로 번들 로드. http(s)에서는 live fetch(`cache: 'no-cache'`) 우선, 실패 시 번들 폴리백.
+- **정적 자산 정리**: `exams/*.html` 9종 + `exams/exam-style.css` 삭제(오버레이가 스타일 자체 주입). `.vercelignore`의 `!exams/*.html` 예외 규칙도 폐기.
+- **`sw.js`**: `CACHE_VERSION` v13 → **v15** (`v14-20260824` → `v15-20260824`). `.md` Cache First, `/data/` Cache First(번들 포함) 유지.
+- **변환기 견고성 수정**: 코드펜스 보호(`FENCE_TOKEN`), 이탤릭 정규식의 목록 마커 오식 방지, blockquote `>` 엔티티 판별.
+
+### 검증
+- MD→HTML 변환 단위 테스트 16/16 통과(실제 9종 MD + 합성 구문 7종), 오버레이 로직 테스트 11/11 통과.
+- E2E: 첫 염 fetch 1회 → 캐시 적중(재염 fetch 0회, 동일 문서), `_clearCache()` 동작 확인.
+- `node tools/build_exam_bundles.js` 실행 → `data/exams_md/*.js` 9종(406KB) 생성, Git 추적 확인.
 
 

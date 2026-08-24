@@ -34,7 +34,7 @@
 | ❓ **기출 퀴즈** | 900+ 문항 풀이, 즉시 채점 및 해설 |
 | ⭐ **오답/중요 복습** | 틀린 문제·북마크 문제 집중 복습 |
 | 🏋️ **스마트 훈련소** | 취약 영역 집중 연습 |
-| 📝 **실전 예상문제집** | 과목별 모의고사 (100문항 × 다수 세트) |
+| 📝 **실전 예상문제집** | 과목별 모의고사 (100문항 × 다수 세트) + MD 문제집 인앱 뷰어 (목차·인쇄, 팝업 없음) |
 | 🔍 **성분 검색 사전** | 사용 가능/금지/제한 화장품 성분 검색 (배합 한도 포함) |
 | 🎧 **오디오북** | TTS로 생성한 단원별 음성 강의 (MP3) |
 | ✏️ **스크래치패드** | HTML5 Canvas 손글씨 연습장 |
@@ -56,6 +56,7 @@
 **데이터 파이프라인** (빌드 타임)
 - Node.js 모듈러 빌드 파이프라인으로 MD 교재/문제 → 해시드 JS 번들 생성
   - `tools/build/index.js` → `data/registry.js` + `data/subjects/*.hash.js` + `data/exams/*.hash.js` + `data/ingredients_data.*.js`
+  - `tools/build_exam_bundles.js` → `data/exams_md/*.js` (문제집 MD file:// 폴리백 번들)
   - `tools/generate_migration_map.js` → `data/id_migration.js`
   - 런타임: `src/data-loader.js`가 registry를 보고 필요한 과목/시험만 온디맨드 로드
 

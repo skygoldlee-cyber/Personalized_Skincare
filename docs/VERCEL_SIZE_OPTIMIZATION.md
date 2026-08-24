@@ -13,7 +13,7 @@
 | **전체 프로젝트** | **~1.03 GB** | 100% | ❌ 불가능 |
 | `content/**/*.html` | 501 MB | 48.6% | ❌ 제외 필요 |
 | `audiobook/mp3/` | 302 MB | 29.3% | ❌ 제외 필요 |
-| `exams/**/*.html` | 220 MB | 21.3% | ❌ 제외 필요 |
+| ~~`exams/**/*.html`~~ | ~~220 MB~~ | — | 🗑️ **삭제됨** (2026-08-24, 런타임 MD 뷰어로 대체) |
 | `data/*.js` | 1.88 MB | 0.2% | ✅ 포함 |
 | `src/*.js` | 0.22 MB | 0.02% | ✅ 포함 |
 | `docs/` (MD만) | 4.64 MB | 0.5% | ✅ 포함 |
@@ -66,7 +66,7 @@ Personalized_Skincare/
 │   ├── manufacturing/*.md
 │   └── law/*.md
 │
-├── exams/              # 📝 시험 원본 (MD만, HTML 제외)
+├── exams/              # 📝 시험 원본 (MD만 — 정적 HTML은 2026-08-24 삭제됨)
 │   └── *.md
 │
 └── ingredients/        # 성분 데이터 (0.26 MB)
@@ -78,7 +78,9 @@ Personalized_Skincare/
 **제외 대상 (`.vercelignore` 적용됨):**
 - `audiobook/` — MP3, 파이썬 스크립트, TTS 모델
 - `content/**/*.html` — 비대화된 HTML (MD 원본은 유지)
-- `exams/**/*.html` — 시험지 HTML (~220MB, 100MB 제한 초과로 제외. 데이터는 `exam_data.js`에 포함)
+- ~~`exams/**/*.html`~~ — **2026-08-24부터 해당 없음**: 정적 시험지 HTML은 삭제되고
+  `src/exam-viewer.js`가 `exams/*.md`를 런타임에 HTML로 변환해 전체화면 오버레이로 표시합니다.
+  `exams/*.md`(원본)와 `data/exams_md/*.js`(file:// 폴리백 번들)는 `*.html` 규칙에 걸리지 않아 그대로 배포됩니다.
 - `archive/` — 아카이브된 중복 원본 폴터 (구 `2026 *` 폴터들)
 - `tools/`, `__pycache__/` — 개발 도구
 
@@ -211,11 +213,14 @@ vercel dev
 
 ### HTML 파일이 비대화된 이유
 
-`content/**/*.html`과 `exams/**/*.html` 파일들이 **인라인 CSS/JS**를 포함하여 수백만 라인에 달합니다. 예:
+`content/**/*.html` 파일들이 **인라인 CSS/JS**를 포함하여 수백만 라인에 달합니다. 예:
 - `content/manufacturing/1.화장품...html`: **176 MB** (4,099,170 라인)
 - `content/law/1.화장품법2026.html`: **113 MB** (1,736,376 라인)
 
-이 파일들은 `tools/convert_study_docs.ps1`로 MD에서 생성된 것으로, 앱에서는 `data/study_data.js`를 사용하므로 HTML이 필요 없습니다.
+이 파일들은 `tools/convert_study_docs.ps1`로 MD에서 생성된 것으로, 앱에서는 `data/subjects/*.js` 번들을 사용하므로 HTML이 필요 없습니다.
+
+> 📌 같은 문제였던 `exams/**/*.html`(~220MB)은 2026-08-24에 **전량 삭제**되어 더 이상 제외 대상이 아닙니다.
+> 문제집은 이제 `exams/*.md` 원본을 `src/exam-viewer.js`가 런타임 변환해 보여줍니다.
 
 ### 오디오 기능 사용 시
 
@@ -261,7 +266,7 @@ Personalized_Skincare/
 │   ├── manufacturing/*.md
 │   └── law/*.md
 │
-├── 📂 exams/                        # 🔧 MD만 Git 관리, HTML은 .vercelignore
+├── 📂 exams/                        # ✅ MD 원본 (정적 HTML 폐지 — 런타임 뷰어로 대체)
 │   └── *.md
 │
 ├── 📂 ingredients/                  # ✅ Vercel 배포 (MD 원본)

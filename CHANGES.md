@@ -96,3 +96,19 @@
 - **증상**: `docs/user_manual.html`의 학습 흐름 다이어그램이 렌더링되지 않고 `graph TD …` 텍스트로 노출.
 - **원인**: jsDelivr CDN(`mermaid@10`) 스크립트가 CSP `script-src 'self'`에 차단.
 - **해결**: [`vendor/mermaid/mermaid.min.js`](vendor/mermaid/mermaid.min.js) 자체 호스팅 전환 + `user_manual.html` 스크립트 경로를 `../vendor/mermaid/mermaid.min.js`로 교체. FontAwesome과 동일한 로컬 벤더링 패턴.
+
+### 문제집 뷰어 런타임 전환 — 정적 HTML 폐지 (sw `v13` → `v15`, 2026-08-24)
+
+- **배경**: `exams/*.html` 정적 문제집 9종(~220MB)은 Vercel 100MB 제한으로 배포 불가 → 런타임 MD 변환 뷰어로 대체하기로 결정.
+- **1차 시도 실패**: 팝업(`window.open` + `document.write`) 방식 뷰어에서 "문제집을 불러올 수 없습니다 / Failed to fetch" 오류. `about:blank` 문서는 `<base>`가 없어 상대 경로가 전부 404이고, iOS PWA/팝업 차단 환경은 `window.open`이 `null` 반환.
+- **최종 해결 — 인앱 전체화면 오버레이**:
+  - [`src/exam-viewer.js`](src/exam-viewer.js) 신규: `exams/*.md`를 런타임 fetch → 자체 MD→HTML 변환(`_mdToHtml`) → `#exam-overlay` 오버레이 렌더링. 팝업/별도 HTML 문서 불필요.
+  - 목차(TOC) 자동 생성, 인쇄/PDF 버튼, `Esc`·모바일 뒤로가기(`history.pushState`) 닫기.
+  - sessionStorage 캐시(`exam_md_cache_v2_`, 24h TTL) — 재염 시 네트워크 0회.
+- **file:// 지원 번들**: [`tools/build_exam_bundles.js`](tools/build_exam_bundles.js)가 `exams/*.md` → `data/exams_md/<stem>.js`(전역 `window.__EXAM_MD__`) 생성. `file://`의 fetch 차단을 클래식 `<script>` 주입으로 우회. http(s)는 live fetch 우선 + 번들 폴리백.
+- **삭제**: `exams/*.html` 9종, `exams/exam-style.css` (오버레이가 스타일 자체 주입). `.vercelignore`의 `!exams/*.html` 예외 규칙 폐기.
+- **변환기 수정**: 코드펜스 보호(`FENCE_TOKEN`), 이탤릭 정규식이 목록 마커(`* `)를 오식하던 버그, blockquote의 `>` 엔티티 판별.
+- **SW**: `CACHE_VERSION` v13 → **v15-20260824**. `.md` Cache First + `/data/` Cache First(번들 포함).
+- **검증**: 변환 단위 테스트 16/16, 오버레이 로직 테스트 11/11, E2E 캐시(첫 염 fetch 1회→재염 0회) 통과.
+- **운영 노트**: `exams/*.md` 편집 후 `node tools/build_exam_bundles.js` 실행 + `data/exams_md/*.js` 커밋 필요.
+- **기타**: `.vscode/settings.json` 추가 — `.vercelignore` 등 ignore 파일을 JS로 오인해 발생하던 가짜 진단 제거.
