@@ -272,11 +272,19 @@ function setupOfflineDetection() {
      * 실제 연결은 "같은 출처(자체 도메인)"의 가벼운 리소스를 요청해 확인합니다.
      * (과거에는 www.gstatic.com을 썼으나, 해당 도메인이 차단되는 지역/망에서
      *  온라인인데도 오프라인으로 오탐하는 문제가 있어 same-origin으로 변경.)
+     *
+     * ⚠️ file:// 프로토콜(파일 더블클릭으로 직접 연 경우)에서는 fetch 자체가
+     * CORS 정책으로 항상 실패하므로 프로브를 생략하고 navigator.onLine만 신뢰한다.
      */
     async function probeConnectivity() {
         // OS가 오프라인이라고 보고하면 바로 배너 표시
         if (!navigator.onLine) {
             showBanner();
+            return;
+        }
+        // file:// 에서는 fetch가 구조적으로 불가 → 프로브 생략 (항상 오탐지됨)
+        if (location.protocol === 'file:') {
+            hideBanner();
             return;
         }
         if (probeInFlight) return;
