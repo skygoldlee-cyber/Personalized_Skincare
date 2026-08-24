@@ -280,17 +280,24 @@ function setupOfflineDetection() {
     }
 
     /**
-     * 실제 네트워크 도달 여부만 확인한다.
-     * navigator.onLine이 false여도 모바일(특히 iOS Safari) 버그로 오탐인 경우가 있으므로
-     * 실제 ping.txt fetch 결과를 최종 신뢰한다.
+     * 실제 네트워크 도달 여부를 확인한다.
+     * 판정 원칙:
+     *  1) navigator.onLine === true  → 온라인으로 신뢰하고 배너를 띄우지 않는다.
+     *     (onLine이 '온라인인데 false'로 오탐하는 경우는 있어도, '오프라인인데 true'로
+     *      보고하는 경우는 사실상 없다. 그래서 onLine은 '억제' 방향으로만 사용한다.
+     *      이 한 줄이 모바일 콜드스타트/저속망에서 프로브가 잠깐 실패해도 가짜 배너가
+     *      뜨는 것을 원천 차단한다.)
+     *  2) navigator.onLine === false → iOS Safari 등의 오탐일 수 있으므로 실제 ping.txt
+     *     프로브로 최종 확인한다.
      */
     async function checkReachable() {
         if (location.protocol === 'file:') return true;
+        if (navigator.onLine === true) return true;
         try {
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), PROBE_TIMEOUT);
-            // cache: 'no-store' 옵션이 일부 로컬 브라우저/웹뷰 보안 정책(CORS 또는 Direct Network Access)과 충돌하여
-            // fetch가 실패하는 문제를 방지하기 위해 제거합니다. 쿼리 스트링 타임스탬프로만 캐시 우회를 수행합니다.
+            // cache: 'no-store'는 일부 웹뷰/보안정책과 충돌해 fetch가 실패하는 사례가 있어 제거.
+            // 쿼리스트링 타임스탬프로만 캐시를 우회하고, ?_probe= 요청은 서비스워커가 가로채지 않는다(sw.js).
             const res = await fetch(`./ping.txt?_probe=${Date.now()}`, {
                 signal: controller.signal
             });
