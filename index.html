@@ -18,11 +18,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet" referrerpolicy="no-referrer">
-    <!-- FontAwesome Icons -->
-    <!-- 공급망 보안: 아래 링크에 SRI(integrity)를 추가 권장. cdnjs.com/libraries/font-awesome/6.4.0 의
-         all.min.css "Copy SRI" 값을 그대로 넣으면 됨. 예) integrity="sha512-..." (버전 갱신 시 반드시 함께 교체)
-         해시가 실제 파일과 다르면 아이콘이 로드되지 않으므로, 검증된 값만 넣을 것. -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <!-- FontAwesome Icons (자체 호스팅: CDN/CSP/오프라인 의존성 제거) -->
+    <!-- 6.4.0 을 vendor/fontawesome/ 에 포함. 버전 갱신 시 css/all.min.css + webfonts/* 함께 교체. -->
+    <link rel="stylesheet" href="vendor/fontawesome/css/all.min.css">
     <!-- CSS Style Link -->
     <link rel="stylesheet" href="style.css">
     <!-- Theme (Light/Dark): 페인트 전에 테마 클래스를 적용하여 깜빡임(FOUC) 방지 -->
