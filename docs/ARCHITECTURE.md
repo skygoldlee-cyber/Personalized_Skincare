@@ -1,7 +1,7 @@
 # 🏛️ 설계 컨셉 & 아키텍처 (Architecture & Design Concept)
 
 > **대상 프로젝트**: Cosmetic Pass Master — 맞춤형화장품 조제관리사 스마트 학습 플랫폼
-> **최종 업데이트**: 2026-08-22
+> **최종 업데이트**: 2026-08-23
 > **목적**: 시스템의 설계 철학, 아키텍처 구조, 주요 설계 결정 사항을 설명
 
 ---
@@ -129,9 +129,11 @@
 
 | 파일 | 내용 | 생성 주체 |
 |------|------|-----------|
-| [`data/study_data.js`](../data/study_data.js) | 4과목 19단원 교재 본문 + 플래시카드 | `tools/parse_data.js` |
-| [`data/exam_data.js`](../data/exam_data.js) | 900+ 문항 시험 문제 | `tools/parse_exams.js` |
-| [`data/ingredients_data.js`](../data/ingredients_data.js) | 화장품 성분 사전 (가용/금지/제한) | `tools/parse_ingredients.js` |
+| [`data/registry.js`](../data/registry.js) | 번들 목록/메타 (해시 포인터) | `tools/build/index.js` |
+| [`data/subjects/<key>.<hash>.js`](../data/subjects/) | 과목별 학습 번들 (카드/퀴즈/챕터) | `tools/build/index.js` (textbook plugin) |
+| [`data/exams/<key>.<hash>.js`](../data/exams/) | 시험별 문항 번들 | `tools/build/index.js` (exams plugin) |
+| [`data/ingredients_data.<hash>.js`](../data/) | 화장품 성분 사전 (가용/금지/제한) | `tools/build/index.js` (ingredients plugin) |
+| [`data/id_migration.js`](../data/id_migration.js) | 레거시 ID → 안정 ID 일회성 매핑 | `tools/generate_migration_map.js` |
 | [`data/audio_manifest.js`](../data/audio_manifest.js) | 오디오 파일 경로 매니페스트 | 오디오북 파이프라인 |
 
 **특징**: 모두 전역 상수를 선언하는 JS 파일로, 별도 fetch 없이 `<script>` 로드만으로 즉시 사용 가능 (오프라인 핵심).
@@ -150,14 +152,18 @@
 [`index.html`](../index.html)의 로드 순서는 **의존성 방향**을 반영합니다 (하향식):
 
 ```
-1. sanitize.js      (즉시 — 인라인 스크립트의 XSS 방어용)
-2. data/*.js        (defer — 전역 데이터 상수)
-3. utils.js         (defer — 의존성 無, 최하위 헬퍼)
-4. charts.js        (defer — utils 의존)
-5. scratchpad.js    (defer — 독립)
-6. trainer-calc.js  (defer — 독립, 순수 로직)
-7. state.js         (defer — 전역 state + 영속성)
-8. app.js           (defer — 위 모든 것에 의존, 최종 오케스트레이터)
+1. sanitize.js         (즉시 — 인라인 스크립트의 XSS 방어용)
+2. data/registry.js    (defer — 번들 메타)
+3. data-loader.js      (defer — 온디맨드 로더)
+4. data/audio_manifest.js (defer — 오디오 경로)
+5. utils.js            (defer — 의존성 無, 최하위 헬퍼)
+6. charts.js           (defer — utils 의존)
+7. scratchpad.js       (defer — 독립)
+8. trainer-calc.js     (defer — 독립, 순수 로직)
+9. data/id_migration.js (defer — 일회성 마이그레이션 맵)
+10. state.js           (defer — 전역 state + 영속성)
+11. reader-format.js   (defer — 리더 포맷터, app.js보다 먼저)
+12. app.js             (defer — 위 모든 것에 의존, 최종 오케스트레이터)
 ```
 
 ### 모듈화 전략: "점진적 모듈화 (Progressive Modularization)"
@@ -165,7 +171,7 @@
 거대한 단일 `app.js`(약 4,900줄)를 한 번에 ES Modules로 전환하는 대신, **부수효과 없는 순수 로직부터 글로벌 스코프 스크립트로 점진 분리**하는 전략을 채택했습니다.
 
 **분리 원칙**:
-1. **DOM 의존성 없는 순수 로직 우선 분리** → `trainer-calc.js`(문제 생성), `utils.js`(초성 추출)
+1. **DOM 의존성 없는 순수 로직 우선 분리** → `trainer-calc.js`(문제 생성), `utils.js`(초성 추출), `reader-format.js`(리더 포맷터)
 2. **상태·영속성 로직 분리** → `state.js`
 3. **ES Modules 전환 대비**: 각 파일을 `export` 추가만으로 변환 가능하도록 순수 선언으로 구성
 
@@ -177,7 +183,10 @@ state.js (상태·영속성)           - 모의고사 채점 로직 (submitExam)
 charts.js (시각화)               - 데일리 챌린지 로직
 sanitize.js (보안)
 scratchpad.js (캔버스)
+reader-format.js (리더 포맷터)
 ```
+
+> 상세 분해 로드맵은 [`docs/APP_JS_DECOMPOSITION.md`](APP_JS_DECOMPOSITION.md) 참고.
 
 ---
 
@@ -305,7 +314,7 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 | 우선순위 | 대상 | 전략 | 근거 |
 |:---:|------|------|------|
 | 1 | 네비게이션 (`navigate`) | **Network First** | 최신 HTML 우선 보장, 오프라인 시 캐시 폴리백 |
-| 2 | 데이터 번들 (`data/*.js`) | **Cache First** | 거의 불변, 오프라인 학습 핵심 |
+| 2 | 해시드 데이터 번들 (`data/subjects/*.hash.js`, `data/exams/*.hash.js`) | **Cache First** | 해시 파일명으로 자연 갱신, 오프라인 학습 핵심 |
 | 3 | 외부 CDN (Google Fonts/FontAwesome) | **Stale-While-Revalidate** | 외부 리소스 안정성 확보 |
 | 4 | MP3 오디오 (302MB) | **네트워크 직행 (바이패스)** | 대용량 미디어는 캐시 제외 (저장공간 보호) |
 | 5 | 코드 자산 (`*.css` / `*.js`) | **Network First** | 온라인이면 항상 최신 배포본 제공, 오프라인이면 캐시 폴리백. `CACHE_VERSION` 범프를 깜빡핬어도 모바일에 구버전이 남지 않도록 함 |
@@ -318,7 +327,8 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 
 ### 오프라인 감지 설계
 - `navigator.onLine`은 OS 어댑터 상태만 반영하므로 **신뢰하지 않음**
-- 실제 도달 가능성 프로브: `https://www.gstatic.com/generate_204` (`no-cors`, 4초 타임아웃, 30초 주기)
+- 실제 도달 가능성 프로브: **same-origin** `./manifest.webmanifest?_probe=…` (`no-store`, 4초 타임아웃, 30초 주기)
+  - 과거 `www.gstatic.com/generate_204`를 사용했으나, 해당 도메인이 차단되는 지역/망에서 온라인인데도 오프라인으로 오탐하는 문제가 있어 same-origin으로 변경
 - 오탐지(false offline) 방지 로직 포함
 
 ---
@@ -367,19 +377,22 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 
 ## ⚙️ 빌드 타임 데이터 파이프라인
 
-런타임 변환 비용을 없애기 위해 **콘텐츠 → 데이터 번들 변환을 빌드 타임에 수행**합니다.
+런타임 변환 비용을 없애기 위해 **콘텐츠 → 해시드 데이터 번들 변환을 빌드 타임에 수행**합니다.
 
 ```
-[원본 콘텐츠]                [변환 스크립트]              [데이터 번들]
-content/**/*.md    ──►   tools/parse_data.js       ──►   data/study_data.js
-exams/**/*.md      ──►   tools/parse_exams.js      ──►   data/exam_data.js
-ingredients/*.md   ──►   tools/parse_ingredients.js ──►  data/ingredients_data.js
+[원본 콘텐츠]                [변환 스크립트]                    [데이터 번들]
+content/manifest.json ──► tools/build/index.js        ──► data/registry.js
+content/**/*.md         ──► (textbook plugin)          ──► data/subjects/<key>.<hash>.js
+exams/**/*.md           ──► (exams plugin)             ──► data/exams/<key>.<hash>.js
+ingredients/*.md        ──► (ingredients plugin)       ──► data/ingredients_data.<hash>.js
+content/**/*.md         ──► tools/generate_migration_map.js ──► data/id_migration.js
 ```
 
-**장점**:
-- 런타임에 마크다운 파서를 탑재할 필요 없음 → 번들 경량화
-- 생성물이 순수 JS 상수이므로 `<script defer>` 로드만으로 즉시 사용 가능
-- 오프라인 캐시가 단순해짐 (정적 JS 파일)
+**특징**:
+- **SSOT**: `content/manifest.json`이 단일 진실 원천
+- **해시 파일명**: 번들 내용이 바뀌면 파일명도 바뀌어 캐시 무효화가 자연스럽게 이루어짐
+- **온디맨드 로딩**: `src/data-loader.js`가 registry를 보고 필요한 과목/시험만 런타임에 로드
+- **스키마 검증**: 빌드 시 카드/퀴즈 수·ID 유효성 검증 및 통계 이상 감지
 
 **오디오북 파이프라인** ([`audiobook/`](../audiobook/README.md))은 Python 기반 별도 파이프라인으로, MD 청크 분할 → TTS → MP3 병합을 수행합니다.
 
@@ -423,6 +436,8 @@ ingredients/*.md   ──►   tools/parse_ingredients.js ──►  data/ingred
 - [`FOLDER_STRUCTURE.md`](../FOLDER_STRUCTURE.md) — 폴터·파일 구조 상세
 - [`README.md`](../README.md) — 프로젝트 소개 및 시작 가이드
 - [`docs/walkthrough.md`](walkthrough.md) — 변경 이력 및 버그 수정 기록
-- [`docs/code_review_report.md`](code_review_report.md) — 코드 리뷰 및 개선 제안
+- [`docs/MODULAR_DESIGN.md`](MODULAR_DESIGN.md) — 모듈러 아키텍처 설계서
+- [`docs/APP_JS_DECOMPOSITION.md`](APP_JS_DECOMPOSITION.md) — app.js 점진 분해 로드맵
 - [`docs/VERCEL_DEPLOY_GUIDE.md`](VERCEL_DEPLOY_GUIDE.md) — 배포 가이드
 - [`docs/VERCEL_SIZE_OPTIMIZATION.md`](VERCEL_SIZE_OPTIMIZATION.md) — 배포 크기 최적화
+- [`CHANGES.md`](../CHANGES.md) — 코드 리뷰 수정 내역 (1~12)

@@ -237,7 +237,7 @@ PC에서 카카오톡 "나와의 채팅"으로 URL을 본인에게 전송한 뒤
 ### ❓ 배포 후 페이지가 하얗게(빈 화면) 나와요
 
 - 브라우저에서 `F12` → **Console** 탭을 열어 빨간 오류를 확인하세요.
-- 이 프로젝트는 `src/sanitize.js` → `study_data.js` → `ingredients_data.js` → `exam_data.js` → `src/charts.js` → `src/scratchpad.js` → `src/state.js` → `app.js` 순서로 로드되어야 합니다. 파일이 누락되지 않았는지 확인하세요.
+- 이 프로젝트는 `src/sanitize.js` → `data/registry.js` → `src/data-loader.js` → `src/utils.js` → `src/charts.js` → `src/scratchpad.js` → `src/trainer-calc.js` → `data/id_migration.js` → `src/state.js` → `src/reader-format.js` → `src/app.js` 순서로 로드되어야 합니다. 파일이 누락되지 않았는지 확인하세요.
 - **Ctrl + Shift + R** (강력 새로고침)으로 캐시를 지워보세요.
 
 ### ❓ 교재 본문(HTML 파일)이 열리지 않아요
@@ -276,9 +276,9 @@ PC에서 카카오톡 "나와의 채팅"으로 URL을 본인에게 전송한 뒤
 | 항목 | 상태 |
 |---|---|
 | 빌드 도구 (webpack, vite 등) | ❌ 없음 → 설정 불필요 |
-| `fetch()` 로 데이터 로드 | ❌ 없음 (`<script src>` 방식이라 정적 호스팅에 최적) |
+| 런타임 데이터 로드 | ✅ `data/registry.js` + `src/data-loader.js`가 해시드 번들을 온디맨드 로드 |
 | 외부 의존성 | Google Fonts, FontAwesome CDN만 사용 (인터넷만 되면 OK) |
-| 한글/공백 포함 경로 | ✅ 브라우저가 자동 인코딩 처리 |
+| 한글/공백 포함 경로 | ✅ 콘텐츠 파일명은 ASCII 슬러그로 정규화됨 |
 | `viewport` 메타 태그 | ✅ 모바일 반응형 지원 |
 
 ### 💰 비용

@@ -1013,8 +1013,8 @@ var STUDY_DATA_law = {
   "chapters": [
     {
       "chapterTitle": "화장품법 통합 정리",
-      "fileName": "1.화장품법2026.md",
-      "filePath": "./content/law/1.화장품법2026.html",
+      "fileName": "1.cosmetic-law.md",
+      "filePath": "./content/law/1.cosmetic-law.html",
       "sections": [
         {
           "title": "개요",
@@ -1104,8 +1104,8 @@ var STUDY_DATA_law = {
     },
     {
       "chapterTitle": "Chapter 02. 개인정보 보호법",
-      "fileName": "2.개인정보 보호법2026.md",
-      "filePath": "./content/law/2.개인정보 보호법2026.html",
+      "fileName": "2.privacy-law.md",
+      "filePath": "./content/law/2.privacy-law.html",
       "sections": [
         {
           "title": "개요",

@@ -253,6 +253,41 @@
 
 ### 검증
 - 프로덕션 배포 완료 (https://personalized-skincare-study.vercel.app).
+
+---
+
+## 코드 리뷰 수정 사항 적용 (2026-08-23)
+
+### 개요
+코드 리뷰 보고서(`docs/code_review_report.md`) 기반 1~12 순차수정 사항을 모두 적용하고, Git 커밋 및 Vercel 프로덕션 배포를 완료했습니다.
+
+### 적용 내역
+
+| # | 항목 | 상태 |
+|---|------|------|
+| 1 | 죽은 레거시 데이터 파일(`study_data.js`, `exam_data.js`) 배포 제거 | ✅ |
+| 2 | `vercel.json` 캐시 정책 수정 (해시 번들만 `immutable`) | ✅ |
+| 3 | `FOLDER_STRUCTURE.md` 모듈러 아키텍처 기반 전면 갱신 | ✅ |
+| 4 | `state.js` localStorage safe wrapper (`safeGetItem`/`safeSetItem`) | ✅ |
+| 5 | CSP·보안 헤더 + CDN `crossorigin`/`referrerpolicy` 하드닝 | ✅ |
+| 6 | CP949 콘텐츠 파일명 → ASCII 슬러그화 | ✅ |
+| 7 | 레거시 파서(`tools/parse_*.js` + `.ps1`) 제거 | ✅ |
+| 8 | innerHTML 이스케이프 일관성 + mojibake 주석 정리 | ✅ |
+| 9 | `trainer-calc.js` 상단 주석 인코딩 복구 | ✅ |
+| 10 | 오프라인 감지 프로브 same-origin(`manifest.webmanifest`)으로 교체 | ✅ |
+| 11 | `id_migration.js` sunset 안내 주석 추가 | ✅ |
+| 12 | `app.js` → `reader-format.js` 분리 + `APP_JS_DECOMPOSITION.md` 로드맵 문서화 | ✅ |
+
+### 커밋 및 배포
+- **커밋**: `a1dfa5b` — `fix: apply code review changes (CHANGES.md 1-12)`
+- **푸시**: `main` → `github-skygold:skygoldlee-cyber/Personalized_Skincare.git`
+- **배포**: `https://personalized-skincare-study.vercel.app` (Vercel CLI, `--scope skygold`)
+- **헬스 체크**: `index.html`, `src/app.js`, `src/reader-format.js` 모두 200 OK
+
+### 관련 문서
+- [`CHANGES.md`](../CHANGES.md) — 1~12 수정 내역 상세
+- [`docs/APP_JS_DECOMPOSITION.md`](APP_JS_DECOMPOSITION.md) — app.js 점진 분해 로드맵
+- [`docs/MODULAR_DESIGN.md`](MODULAR_DESIGN.md) — 모듈러 아키텍처 설계서
 - 모바일에서 하단 탭 바 10개 메뉴 정상 표시 및 가로 스크롤 동작 확인.
 - 성적 분석 3개 카드가 세로보기에서 1열로 정상 배치 확인.
 

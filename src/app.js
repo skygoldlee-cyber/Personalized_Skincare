@@ -160,24 +160,12 @@ function setupNavigation() {
                 initTrainer();
             } else if (target === 'textbook-view') {
                 showGlobalLoading('교재 검색용 데이터를 불러오는 중입니다...');
-                if (typeof DataLoader === 'undefined') {
-                    hideGlobalLoading();
-                    const container = document.getElementById('textbook-results-container');
-                    if (container) {
-                        container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--color-text-muted);"><i class="fa-solid fa-triangle-exclamation" style="font-size: 2rem; margin-bottom: 1rem; display: block;"></i> 데이터 로더를 불러올 수 없습니다. 인터넷 연결을 확인하고 앱을 다시 시작해 주세요.</div>';
-                    }
-                    return;
-                }
                 const loaderPromises = DataLoader.getSubjectList().map(s => DataLoader.loadSubject(s.key));
                 Promise.all(loaderPromises).then(() => {
                     hideGlobalLoading();
                     renderTextbookSearch();
                 }).catch(() => {
                     hideGlobalLoading();
-                    const container = document.getElementById('textbook-results-container');
-                    if (container) {
-                        container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--color-text-muted);"><i class="fa-solid fa-cloud-arrow-down" style="font-size: 2rem; margin-bottom: 1rem; display: block;"></i> 교재 데이터를 불러오지 못했습니다. 네트워크 상태를 확인한 뒤 다시 시도해 주세요.</div>';
-                    }
                     renderTextbookSearch();
                 });
             } else if (target === 'textbook-reader-view') {
@@ -195,23 +183,11 @@ function setupNavigation() {
                 }
             } else if (target === 'dictionary-view') {
                 showGlobalLoading('성분 사전을 불러오는 중입니다...');
-                if (typeof DataLoader === 'undefined') {
-                    hideGlobalLoading();
-                    const container = document.getElementById('dictionary-grid-container');
-                    if (container) {
-                        container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--color-text-muted);"><i class="fa-solid fa-triangle-exclamation" style="font-size: 2rem; margin-bottom: 1rem; display: block;"></i> 데이터 로더를 불러올 수 없습니다. 인터넷 연결을 확인하고 앱을 다시 시작해 주세요.</div>';
-                    }
-                    return;
-                }
                 DataLoader.loadIngredients().then(() => {
                     hideGlobalLoading();
                     renderDictionary();
                 }).catch(() => {
                     hideGlobalLoading();
-                    const container = document.getElementById('dictionary-grid-container');
-                    if (container) {
-                        container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--color-text-muted);"><i class="fa-solid fa-cloud-arrow-down" style="font-size: 2rem; margin-bottom: 1rem; display: block;"></i> 성분 데이터를 불러오지 못했습니다. 네트워크 상태를 확인한 뒤 다시 시도해 주세요.</div>';
-                    }
                     renderDictionary();
                 });
             }
@@ -292,8 +268,10 @@ function setupOfflineDetection() {
 
     /**
      * 실제 인터넷 접속 여부를 확인합니다.
-     * navigator.onLine은 OS 네트워크 어댑터 상태만 반영하므로
-     * 실제 연결 확인을 위해 가벼운 리소스를 no-cors로 요청합니다.
+     * navigator.onLine은 OS 네트워크 어댑터 상태만 반영하므로,
+     * 실제 연결은 "같은 출처(자체 도메인)"의 가벼운 리소스를 요청해 확인합니다.
+     * (과거에는 www.gstatic.com을 썼으나, 해당 도메인이 차단되는 지역/망에서
+     *  온라인인데도 오프라인으로 오탐하는 문제가 있어 same-origin으로 변경.)
      */
     async function probeConnectivity() {
         // OS가 오프라인이라고 보고하면 바로 배너 표시
@@ -306,8 +284,8 @@ function setupOfflineDetection() {
         try {
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 4000);
-            await fetch('https://www.gstatic.com/generate_204', {
-                mode: 'no-cors',
+            // same-origin + no-store + 캐시버스터: SW/HTTP 캐시를 우회해 실제 네트워크 도달을 확인
+            await fetch(`./manifest.webmanifest?_probe=${Date.now()}`, {
                 cache: 'no-store',
                 signal: controller.signal
             });
@@ -2100,7 +2078,7 @@ function generateCalcQuestion() {
     state.trainer.calc.currentQuestion = qData;
     
     document.getElementById('calc-type-badge').textContent = qData.type;
-    // ì ë¢°ë HTML: buildCalcQuestion()ê° ì«ì+<strong>ë¡ ì¡°ë¦½(raw ì¬ì©ì ë°ì´í° ìì). ì¸ë¶ ë°ì´í° ì°ê²° ì esc() íì.
+    // 의도된 HTML(생성기가 만든 <strong>/<br>): trainer-calc.js가 생성한 안전한 마크업이므로 raw 사용
     document.getElementById('calc-question-text').innerHTML = qData.question;
     document.getElementById('calc-unit-text').textContent = qData.unit;
     
@@ -2167,7 +2145,7 @@ function submitCalcAnswer() {
         feedbackDesc.textContent = `정답은 약 ${currentQ.answer}${currentQ.unit} 입니다. 아래의 공식을 활용하여 풀이법을 다시 체크해 보세요.`;
     }
     
-    // ì ë¢°ë HTML: íì´ë ì½ëê° <br>/<strong>+ì«ìë¡ ì¡°ë¦½. raw ì¬ì©ì ë°ì´í° ì£¼ì ê¸ì§.
+    // 의도된 HTML(계산 풀이 마크업, 사용자 입력 없음): raw 사용
     document.getElementById('calc-solution-body').innerHTML = currentQ.solution;
     document.getElementById('calc-solution-panel').style.display = 'block';
     document.getElementById('next-calc-btn').style.display = 'inline-flex';
@@ -2304,7 +2282,7 @@ function generateIngredientsQuestions() {
                     '🟡 사용상의 제한이 필요한 원료 (보존제/자외선차단제 등)',
                     '🔴 사용할 수 없는 원료 (배합 금지)'
                 ],
-                explanation: `성분명 <strong>"${esc(ing.name)}"</strong>은(는) <strong>${correctText}</strong>에 해당합니다.<br>• 카테고리: ${esc(ing.category)}<br>• 특징: ${esc(ing.description || '법적 허용 기준 준수 대상')}<br>• 고득점 TIP: ${esc(ing.tip || '안전 기준 규격을 반드시 암기하세요.')}`
+                explanation: `성분명 "${ing.name}"은(는) ${correctText}에 해당합니다.\n• 카테고리: ${ing.category}\n• 특징: ${ing.description || '법적 허용 기준 준수 대상'}\n• 고득점 TIP: ${ing.tip || '안전 기준 규격을 반드시 암기하세요.'}`
             });
         } else if (qType === 1) {
             list.push({
@@ -2312,7 +2290,7 @@ function generateIngredientsQuestions() {
                 qTypeLabel: '배합 한도 주관식',
                 question: `사용상의 제한이 필요한 보존제/자외선 차단 성분인 <strong>"${esc(ing.name)}"</strong>의 법정 최대 배합 한도(%)는 얼마입니까?<br>(※ 성분 데이터에 명시된 수치와 % 기호 및 세부 조건을 정확히 입력하세요. 예: 1.0%, 0.5% 등)`,
                 correct: ing.limit,
-                explanation: `성분명 <strong>"${esc(ing.name)}"</strong>의 법정 사용 한도는 <strong>"${esc(ing.limit)}"</strong> 입니다.<br>• 특징: ${esc(ing.description || '')}<br>• 비고/TIP: ${esc(ing.tip || '')}`
+                explanation: `성분명 "${ing.name}"의 법정 사용 한도는 "${ing.limit}" 입니다.\n• 특징: ${ing.description || ''}\n• 비고/TIP: ${ing.tip || ''}`
             });
         } else if (qType === 2) {
             let questionText = '';
@@ -2380,7 +2358,7 @@ function generateIngredientsQuestions() {
                     '🟢 의무 고지 대상',
                     '🔴 고지 의무 없음'
                 ],
-                explanation: `알레르기 유발 성분 25종 기재 기준:<br>• 씻어내는 제품: <strong>0.01% 초과</strong> 시 기재 의무<br>• 씻어내지 않는 제품: <strong>0.001% 초과</strong> 시 기재 의무<br>현재 배합량 ${conc}%는 기준치 ${limitVal}%에 대해 <strong>${isRequired ? '초과' : '이하'}</strong>이므로, <strong>${correctText}</strong>이(가) 맞습니다.`
+                explanation: `알레르기 유발 성분 25종 기재 기준:\n• 씻어내는 제품: 0.01% 초과 시 기재 의무\n• 씻어내지 않는 제품: 0.001% 초과 시 기재 의무\n현재 배합량 ${conc}%는 기준치 ${limitVal}%에 대해 ${isRequired ? '초과' : '이하'}이므로, ${correctText}이(가) 맞습니다.`
             });
         }
     }
@@ -2394,7 +2372,7 @@ function renderIngQuestion() {
     
     document.getElementById('ing-progress-indicator').textContent = `문제 ${ingState.currentIndex + 1} / ${ingState.shuffledQuestions.length}`;
     document.getElementById('ing-q-type-label').textContent = currentQ.qTypeLabel;
-    // ì ë¢°ë HTML: ë¬¸ì  ìì± ì ëì  ë¶ë¶ì ì´ë¯¸ esc(ing.name) ì²ë¦¬ë¨. raw ì¬ì©ì ë°ì´í° ì£¼ì ê¸ì§.
+    // 의도된 HTML: 질문 내 데이터는 생성 시 esc()로 이스케이프됨(<strong> 등 마크업만 raw 유지)
     document.getElementById('ing-question-text').innerHTML = currentQ.question;
     
     const optionsContainer = document.getElementById('ing-options-container');
@@ -2907,9 +2885,9 @@ function _startWeakExamImpl() {
                 id: `weak_card_${cardObj.id}`,
                 subject: subject,
                 type: 'blank',
-                question: `[용어 정의] 다음 설명이 뜻하는 개념은 무엇입니까?<br><strong>설명:</strong> ${cardObj.definition}`,
+                question: `[용어 정의] 다음 설명이 뜻하는 개념은 무엇입니까?\n설명: ${cardObj.definition}`,
                 answer: cardObj.term,
-                explanation: `정의: ${cardObj.definition}<br>용어: ${cardObj.term}`
+                explanation: `정의: ${cardObj.definition}\n용어: ${cardObj.term}`
             });
         }
     });
@@ -3048,7 +3026,7 @@ function _startDailyChallengeImpl() {
         qPack.push({
             type: 'card',
             cardObj: c,
-            question: `다음 개념의 정답을 아십니까?<br><br><strong>[설명]</strong><br>${c.definition}`,
+            question: `다음 개념의 정답을 아십니까?\n\n[설명]\n${c.definition}`,
             correct: c.term
         });
     });
@@ -3075,7 +3053,7 @@ function _startDailyChallengeImpl() {
     const formulaWeight = (w * cVal) / 100;
     qPack.push({
         type: 'short',
-        question: `[실전 계산] 베이스 오일 <strong>${w}g</strong>에 보존 성분 <strong>${cVal}%</strong>를 배합하여 제품을 조제하려고 합니다. 첨가해야 할 성분의 중량은 몇 g인가요? (소수점 둘째자리까지 정답 인정)`,
+        question: `[실전 계산] 베이스 오일 ${w}g에 보존 성분 ${cVal}%를 배합하여 제품을 조제하려고 합니다. 첨가해야 할 성분의 중량은 몇 g인가요? (소수점 둘째자리까지 정답 인정)`,
         correct: String(formulaWeight.toFixed(2)),
         explanation: `계산 공식: 중량 = (전체 중량 * 배합 %) / 100 = (${w} * ${cVal}) / 100 = ${formulaWeight}g`
     });
@@ -3091,7 +3069,7 @@ function _startDailyChallengeImpl() {
         
         qPack.push({
             type: 'choice',
-            question: `[원료 안전성] 다음 성분명 <strong>"${ing.name}"</strong>은(는) 화장품 원료 고시 기준상 어느 그룹에 속하나요?`,
+            question: `[원료 안전성] 다음 성분명 "${ing.name}"은(는) 화장품 원료 고시 기준상 어느 그룹에 속하나요?`,
             correct: correctText,
             options: [
                 '🟢 사용 가능 원료',
@@ -4773,151 +4751,6 @@ function closeTableModal() {
     if (modal) modal.style.display = 'none';
 }
 
-function formatSectionContentForReader(rawContent) {
-    // 1. 안전한 인라인 태그를 플레이스홀더 토큰으로 치환 (이스케이프 전에 처리)
-    //    이렇게 하면 escapeHTML이 태그를 엔티티로 변환하는 것을 방지할 수 있음
-    let html = String(rawContent);
-    html = html.replace(/<br\s*\/?>/gi, 'BR_TOKEN');
-    html = html.replace(/<sup>/gi, 'SUP_O');
-    html = html.replace(/<\/sup>/gi, 'SUP_C');
-    html = html.replace(/&nbsp;/gi, 'NBSP_TOKEN');
-
-    // 2. HTML 이스케이프 (나머지 위험 문자만 엔티티로 변환)
-    html = escapeHTML(html);
-
-    // 3. 토큰을 실제 안전한 태그로 복원
-    html = html.replace(/BR_TOKEN/gi, '<br>');
-    html = html.replace(/SUP_O/gi, '<sup>');
-    html = html.replace(/SUP_C/gi, '</sup>');
-    html = html.replace(/NBSP_TOKEN/gi, '&nbsp;');
-    
-    // 3. 마크다운 볼드 처리
-    html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-    
-    // 4. 줄 단위 처리 (마크다운 테이블을 실제 HTML 테이블로 변환)
-    const lines = html.split(/\r?\n/);
-    const output = [];
-    let tableRows = [];
-    let quoteLines = [];
-    let codeLines = [];
-    let inCodeBlock = false;
-    
-    const flushTable = () => {
-        if (tableRows.length === 0) return;
-        
-        // 구분 행(|---|)을 제외한 데이터 행만 추출
-        const dataRows = tableRows.filter(row => {
-            const cells = row.split('|').map(c => c.trim()).filter(c => c !== '');
-            return !cells.every(c => /^:?-+:?$/.test(c));
-        });
-        
-        if (dataRows.length === 0) {
-            tableRows = [];
-            return;
-        }
-        
-        let tableHTML = '<div class="reader-table-wrapper"><table class="reader-table">';
-        dataRows.forEach((row, idx) => {
-            const cells = row.split('|').map(c => c.trim()).filter(c => c !== '');
-            const tag = idx === 0 ? 'th' : 'td';
-            tableHTML += '<tr>' + cells.map(c => `<${tag}>${c}</${tag}>`).join('') + '</tr>';
-        });
-        tableHTML += '</table></div>';
-        output.push(tableHTML);
-        tableRows = [];
-    };
-    
-    const flushQuote = () => {
-        if (quoteLines.length === 0) return;
-        output.push(`<div class="md-quote">${quoteLines.join('<br>')}</div>`);
-        quoteLines = [];
-    };
-    
-    const flushCode = () => {
-        if (codeLines.length === 0) return;
-        output.push(`<pre class="reader-code-block">${codeLines.join('\n')}</pre>`);
-        codeLines = [];
-    };
-    
-    lines.forEach(line => {
-        const trimmed = line.trim();
-        
-        // 코드블록(```) 처리 - 테이블/인용구 처리보다 우선
-        if (trimmed.startsWith('```')) {
-            if (inCodeBlock) {
-                flushCode();
-                inCodeBlock = false;
-            } else {
-                flushTable();
-                flushQuote();
-                inCodeBlock = true;
-            }
-            return;
-        }
-        if (inCodeBlock) {
-            codeLines.push(line);
-            return;
-        }
-        
-        // 테이블 행 (| 로 시작)
-        if (trimmed.startsWith('|')) {
-            flushQuote();
-            tableRows.push(line);
-            return;
-        } else {
-            flushTable();
-        }
-        
-        // 인용구 (> 로 시작)
-        if (trimmed.startsWith('>')) {
-            quoteLines.push(line.replace(/^>\s*/, ''));
-            return;
-        } else {
-            flushQuote();
-        }
-        
-        // 빈 줄
-        if (trimmed === '') {
-            output.push('<div style="height: 0.5rem;"></div>');
-            return;
-        }
-        
-        // 헤더 (#### 를 ### 보다 먼저 체크)
-        if (trimmed.startsWith('#### ')) {
-            output.push(`<h6 class="md-h4">${line.replace(/^####\s+/, '')}</h6>`);
-            return;
-        }
-        if (trimmed.startsWith('### ')) {
-            output.push(`<h5 class="md-h3">${line.replace(/^###\s+/, '')}</h5>`);
-            return;
-        }
-        
-        // 구분선
-        if (trimmed === '---') {
-            output.push('<hr class="reader-hr">');
-            return;
-        }
-        
-        // 리스트 항목 (들여쓰기 레벨 반영)
-        const listMatch = line.match(/^(\s*)[-*]\s+(.*)$/);
-        if (listMatch) {
-            const indentLevel = Math.floor(listMatch[1].length / 2);
-            output.push(`<div class="md-list-item" style="padding-left: ${0.5 + indentLevel * 1.25}rem;"><span class="md-bullet">•</span> <span>${listMatch[2]}</span></div>`);
-            return;
-        }
-        
-        // 번호 리스트 (①② 등 유지, 일반 문단으로)
-        // 일반 문단
-        output.push(`<p class="md-para">${line}</p>`);
-    });
-    
-    // 남은 블록 플러시
-    flushTable();
-    flushQuote();
-    flushCode();
-    
-    return output.join('');
-}
 
 // 윈도우 로드 시 구동
 window.addEventListener('DOMContentLoaded', () => {

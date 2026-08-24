@@ -1372,8 +1372,8 @@ var STUDY_DATA_safety = {
   "chapters": [
     {
       "chapterTitle": "Chapter 01. 작업장 위생관리",
-      "fileName": "1.작업장 위생관리2026.md",
-      "filePath": "./content/safety/1.작업장 위생관리2026.html",
+      "fileName": "1.workspace-safety.md",
+      "filePath": "./content/safety/1.workspace-safety.html",
       "sections": [
         {
           "title": "개요",
@@ -1407,8 +1407,8 @@ var STUDY_DATA_safety = {
     },
     {
       "chapterTitle": "Chapter 02. 작업자 위생관리",
-      "fileName": "2.작업자 위생관리2026.md",
-      "filePath": "./content/safety/2.작업자 위생관리2026.html",
+      "fileName": "2.worker-safety.md",
+      "filePath": "./content/safety/2.worker-safety.html",
       "sections": [
         {
           "title": "개요",
@@ -1442,8 +1442,8 @@ var STUDY_DATA_safety = {
     },
     {
       "chapterTitle": "Chapter 03. 설비 및 기구관리 (PART 03)",
-      "fileName": "3.설비 및 기구관리2026.md",
-      "filePath": "./content/safety/3.설비 및 기구관리2026.html",
+      "fileName": "3.equipment-safety.md",
+      "filePath": "./content/safety/3.equipment-safety.html",
       "sections": [
         {
           "title": "개요",
@@ -1473,8 +1473,8 @@ var STUDY_DATA_safety = {
     },
     {
       "chapterTitle": "PART 03. 유통화장품 안전관리",
-      "fileName": "4.내용물 및 원료관리2026.md",
-      "filePath": "./content/safety/4.내용물 및 원료관리2026.html",
+      "fileName": "4.material-safety.md",
+      "filePath": "./content/safety/4.material-safety.html",
       "sections": [
         {
           "title": "개요",
@@ -1488,8 +1488,8 @@ var STUDY_DATA_safety = {
     },
     {
       "chapterTitle": "Chapter 05. 포장재의 관리",
-      "fileName": "5.포장재의 관리2026.md",
-      "filePath": "./content/safety/5.포장재의 관리2026.html",
+      "fileName": "5.packaging-safety.md",
+      "filePath": "./content/safety/5.packaging-safety.html",
       "sections": [
         {
           "title": "개요",

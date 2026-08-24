@@ -54,10 +54,10 @@
 - **반응형 모바일 레이아웃**: 하단 탭 바 네비게이션, safe-area-inset 대응, 100dvh 동적 뷰포트
 
 **데이터 파이프라인** (빌드 타임)
-- Node.js 스크립트로 MD 교재/문제 → JS 데이터 번들 생성
-  - `tools/parse_data.js` → `data/study_data.js`
-  - `tools/parse_exams.js` → `data/exam_data.js`
-  - `tools/parse_ingredients.js` → `data/ingredients_data.js`
+- Node.js 모듈러 빌드 파이프라인으로 MD 교재/문제 → 해시드 JS 번들 생성
+  - `tools/build/index.js` → `data/registry.js` + `data/subjects/*.hash.js` + `data/exams/*.hash.js` + `data/ingredients_data.*.js`
+  - `tools/generate_migration_map.js` → `data/id_migration.js`
+  - 런타임: `src/data-loader.js`가 registry를 보고 필요한 과목/시험만 온디맨드 로드
 
 **오디오북 파이프라인** (`audiobook/`)
 - Python: 마크다운 청크 분할 → TTS(Google gTTS / ElevenLabs) → MP3 병합
@@ -78,17 +78,26 @@
 ├── src/                        # 애플리케이션 소스
 │   ├── app.js                  # 메인 로직 (라우팅·상태·렌더링)
 │   ├── charts.js               # SVG 차트
+│   ├── data-loader.js          # 레지스트리 기반 온디맨드 번들 로더
+│   ├── reader-format.js        # 교재 리더 본문 포맷터 (순수 함수)
 │   ├── sanitize.js             # XSS 방어·텍스트 정제
 │   ├── scratchpad.js           # Canvas 연습장
 │   ├── state.js                # 상태 관리·로컬 스토리지
 │   ├── trainer-calc.js         # 계산 훈련 문제 생성기 (순수 로직)
 │   └── utils.js                # 범용 헬퍼 (한글 초성 추출 등)
-├── data/                       # 생성된 데이터 번들 (study/exam/ingredients/audio)
-├── content/                    # 교재 MD + HTML (4과목 19단원)
+├── data/                       # 빌드 산출물 (registry + 해시 번들)
+│   ├── registry.js             # 번들 목록/메타
+│   ├── id_migration.js         # 레거시→안정 ID 일회성 매핑
+│   ├── audio_manifest.js       # 오디오 파일 경로 매니페스트
+│   ├── subjects/<key>.<hash>.js    # 과목별 학습 번들
+│   ├── exams/<key>.<hash>.js       # 시험별 문항 번들
+│   └── ingredients_data.<hash>.js  # 성분 사전 번들
+├── content/                    # 교재 MD + manifest.json (4과목 19단원)
 ├── exams/                      # 시험 문제 MD + HTML
 ├── ingredients/                # 성분 원본 MD (approved/banned/restricted)
 ├── audiobook/                  # 오디오북 파이프라인 (Python·TTS·MP3)
-├── tools/                      # 데이터 생성 스크립트 (Node.js/PowerShell)
+├── tools/                      # 빌드/변환 자동화 (Node.js)
+│   └── build/                  # 모듈러 빌드 파이프라인
 └── docs/                       # 매뉴얼·요약·배포 가이드
 ```
 
@@ -157,9 +166,15 @@ vercel
 ### 데이터 재생성 (교재/문제 수정 시)
 
 ```bash
-node tools/parse_data.js
-node tools/parse_exams.js
-node tools/parse_ingredients.js
+# 전체 빌드
+npm run build:data
+
+# 부분 빌드 (변경 과목만)
+npm run build:data:law
+node tools/build/index.js --only law,safety
+
+# 안정 ID 이관 맵 재생성 (퀴즈 ID 규칙 변경 시)
+node tools/generate_migration_map.js
 ```
 
 ---

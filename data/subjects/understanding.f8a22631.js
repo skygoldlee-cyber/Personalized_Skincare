@@ -2562,8 +2562,8 @@ var STUDY_DATA_understanding = {
   "chapters": [
     {
       "chapterTitle": "Chapter 01. 맞춤형화장품 개요",
-      "fileName": "1.맞춤형화장품 개요2026.md",
-      "filePath": "./content/understanding/1.맞춤형화장품 개요2026.html",
+      "fileName": "1.overview.md",
+      "filePath": "./content/understanding/1.overview.html",
       "sections": [
         {
           "title": "개요",
@@ -2593,8 +2593,8 @@ var STUDY_DATA_understanding = {
     },
     {
       "chapterTitle": "Chapter 02. 피부 및 모발의 생리구조",
-      "fileName": "2.피부 및 모발의 생리구조2026.md",
-      "filePath": "./content/understanding/2.피부 및 모발의 생리구조2026.html",
+      "fileName": "2.physiology.md",
+      "filePath": "./content/understanding/2.physiology.html",
       "sections": [
         {
           "title": "개요",
@@ -2616,8 +2616,8 @@ var STUDY_DATA_understanding = {
     },
     {
       "chapterTitle": "Chapter 03. 관능평가 방법과 절차",
-      "fileName": "3.관능평가 방법과 절차2026.md",
-      "filePath": "./content/understanding/3.관능평가 방법과 절차2026.html",
+      "fileName": "3.sensory-evaluation.md",
+      "filePath": "./content/understanding/3.sensory-evaluation.html",
       "sections": [
         {
           "title": "개요",
@@ -2655,8 +2655,8 @@ var STUDY_DATA_understanding = {
     },
     {
       "chapterTitle": "Chapter 04. 제품 상담",
-      "fileName": "4.제품 상담2026.md",
-      "filePath": "./content/understanding/4.제품 상담2026.html",
+      "fileName": "4.consulting.md",
+      "filePath": "./content/understanding/4.consulting.html",
       "sections": [
         {
           "title": "개요",
@@ -2682,8 +2682,8 @@ var STUDY_DATA_understanding = {
     },
     {
       "chapterTitle": "Chapter 05. 제품 안내 (PART 04)",
-      "fileName": "5.제품 안내2026.md",
-      "filePath": "./content/understanding/5.제품 안내2026.html",
+      "fileName": "5.guideline.md",
+      "filePath": "./content/understanding/5.guideline.html",
       "sections": [
         {
           "title": "개요",
@@ -2709,8 +2709,8 @@ var STUDY_DATA_understanding = {
     },
     {
       "chapterTitle": "Chapter 06. 혼합 및 소분",
-      "fileName": "6.혼합 및 소분2026.md",
-      "filePath": "./content/understanding/6.혼합 및 소분2026.html",
+      "fileName": "6.mixing-subdivision.md",
+      "filePath": "./content/understanding/6.mixing-subdivision.html",
       "sections": [
         {
           "title": "개요",
@@ -2740,8 +2740,8 @@ var STUDY_DATA_understanding = {
     },
     {
       "chapterTitle": "Chapter 07. 충진 및 포장",
-      "fileName": "7.충진 및 포장2026.md",
-      "filePath": "./content/understanding/7.충진 및 포장2026.html",
+      "fileName": "7.filling-packaging.md",
+      "filePath": "./content/understanding/7.filling-packaging.html",
       "sections": [
         {
           "title": "개요",
