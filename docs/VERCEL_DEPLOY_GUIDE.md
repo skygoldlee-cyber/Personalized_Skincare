@@ -277,7 +277,7 @@ PC에서 카카오톡 "나와의 채팅"으로 URL을 본인에게 전송한 뒤
 |---|---|
 | 빌드 도구 (webpack, vite 등) | ❌ 없음 → 설정 불필요 |
 | 런타임 데이터 로드 | ✅ `data/registry.js` + `src/data-loader.js`가 해시드 번들을 온디맨드 로드 |
-| 외부 의존성 | Google Fonts, FontAwesome CDN만 사용 (인터넷만 되면 OK) |
+| 외부 의존성 | Google Fonts CDN만 사용. FontAwesome은 자체 호스팅([`vendor/fontawesome/`](../vendor/fontawesome/))으로 전환되어 CDN 의존 없음 |
 | 한글/공백 포함 경로 | ✅ 콘텐츠 파일명은 ASCII 슬러그로 정규화됨 |
 | `viewport` 메타 태그 | ✅ 모바일 반응형 지원 |
 

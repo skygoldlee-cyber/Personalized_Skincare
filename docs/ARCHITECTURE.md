@@ -315,13 +315,13 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 |:---:|------|------|------|
 | 1 | 네비게이션 (`navigate`) | **Network First** | 최신 HTML 우선 보장, 오프라인 시 캐시 폴리백 |
 | 2 | 해시드 데이터 번들 (`data/subjects/*.hash.js`, `data/exams/*.hash.js`) | **Cache First** | 해시 파일명으로 자연 갱신, 오프라인 학습 핵심 |
-| 3 | 외부 CDN (Google Fonts/FontAwesome) | **Stale-While-Revalidate** | 외부 리소스 안정성 확보 |
+| 3 | 외부 CDN (Google Fonts) | **Stale-While-Revalidate** | 외부 리소스 안정성 확보. FontAwesome은 2026-08-24부터 자체 호스팅([`vendor/fontawesome/`](../vendor/fontawesome/))으로 전환하여 CDN 의존 제거, App Shell 프리캐시에 포함 |
 | 4 | MP3 오디오 (302MB) | **네트워크 직행 (바이패스)** | 대용량 미디어는 캐시 제외 (저장공간 보호) |
 | 5 | 코드 자산 (`*.css` / `*.js`) | **Network First** | 온라인이면 항상 최신 배포본 제공, 오프라인이면 캐시 폴리백. `CACHE_VERSION` 범프를 깜빡핬어도 모바일에 구버전이 남지 않도록 함 |
 | 6 | 그 외 App Shell (아이콘/이미지 등) | **Stale-While-Revalidate** | 빠른 표시 + 백그라운드 갱신 |
 
 ### 캐시 버전 관리
-- `CACHE_VERSION` 상수로 캐시 네임스페이스 관리 (현재 `v3`)
+- `CACHE_VERSION` 상수로 캐시 네임스페이스 관리 (현재 `v7-20260824`)
 - **배포 시 버전을 올리면 구 캐시 자동 정리** → 모바일 구버전 고착(Stale Cache) 문제 방지
 - `SHELL_ASSETS`에는 [`src/utils.js`](../src/utils.js), [`src/trainer-calc.js`](../src/trainer-calc.js) 등 분리된 모듈이 모두 프리캐시에 포함됨
 
@@ -370,7 +370,7 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 - 악성 JSON 백업 파일로 인한 스토리지 오염/스크립트 키 주입 방지
 
 ### 3. Content 보안
-- 외부 리소스는 신뢰된 CDN(Google Fonts, FontAwesome)으로 제한
+- 외부 리소스는 신뢰된 CDN(Google Fonts)으로 제한. FontAwesome은 자체 호스팅으로 전환하여 외부 폰트/스타일 출처를 축소 (CSP `font-src`/`style-src`에서 cdnjs 제거됨)
 - Service Worker의 캐시 대상을 명시적 화이트리스트로 관리
 
 ---

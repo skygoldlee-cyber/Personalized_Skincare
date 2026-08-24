@@ -54,6 +54,11 @@ Personalized Skincare/
 │
 ├── 📂 icons/                        ← ✅ 배포 (PWA 아이콘 192/512/maskable)
 │
+├── 📂 vendor/                       ← ✅ 배포 (자체 호스팅 서드파티 자산)
+│   └── fontawesome/                 ← 🆕 FontAwesome 6.4.0 자체 호스팅 (2026-08-24~)
+│       ├── css/all.min.css          ← CDN(cdnjs) 대체 — 모바일 아이콘 깨짐 해결
+│       └── webfonts/*.woff2/.ttf    ← SW 프리캐시 포함 (오프라인에서도 아이콘 표시)
+│
 ├── 📂 src/                          ← ✅ 배포 (애플리케이션 소스; 전역 스코프)
 │   ├── sanitize.js                  ← XSS 방어(esc/safeTextWithBreaks) — 가장 먼저 로드
 │   ├── data-loader.js               ← 🆕 레지스트리 기반 온디맨드 번들 로더(DataLoader)

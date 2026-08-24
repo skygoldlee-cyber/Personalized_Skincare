@@ -74,4 +74,5 @@
      `node tools/generate_migration_map.js`를 다시 돌려 생성하는 것을 권장합니다(내용은 동일해야 함).
 2. `vercel.json`의 CSP는 인라인 스크립트/핸들러 때문에 `script-src 'unsafe-inline'`을 포함합니다.
    장기적으로 인라인 제거 후 nonce/hash 기반으로 강화 가능.
-3. FontAwesome SRI는 `cdnjs.com/libraries/font-awesome/6.4.0`의 "Copy SRI" 값으로 채워 넣으세요.
+3. ~~FontAwesome SRI는 `cdnjs.com/libraries/font-awesome/6.4.0`의 "Copy SRI" 값으로 채워 넣으세요.~~
+   → **(2026-08-24 폐기)** FontAwesome을 자체 호스팅([`vendor/fontawesome/`](vendor/fontawesome/))으로 전환하여 CDN/SRI가 더 이상 필요하지 않습니다. 모바일 아이콘 깨짐(네모) 문제 해결 목적. CSP의 `font-src`/`style-src`에서 cdnjs도 제거되었습니다.

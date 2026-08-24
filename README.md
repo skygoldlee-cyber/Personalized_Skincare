@@ -49,7 +49,7 @@
 - 순수 HTML5 / CSS3 / Vanilla JavaScript (프레임워크 없음)
 - SPA 라우팅 (자체 구현)
 - SVG 기반 차트 (레이더/꺾은선, 외부 라이브러리 없음)
-- Noto Sans KR · Outfit (Google Fonts), FontAwesome 아이콘
+- Noto Sans KR · Outfit (Google Fonts), FontAwesome 아이콘 (자체 호스팅 — [`vendor/fontawesome/`](vendor/fontawesome/), CDN 의존 없음)
 - **라이트/다크 듀얼 테마 UI**: CSS 변수 기반 디자인 토큰, 시스템 테마 연동, `localStorage` 선택 영속화
 - **반응형 모바일 레이아웃**: 하단 탭 바 네비게이션, safe-area-inset 대응, 100dvh 동적 뷰포트
 
