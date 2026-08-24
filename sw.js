@@ -17,7 +17,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v7-20260824';       // 쉘/CDN: 배포마다 갱신 (FontAwesome 자체 호스팅 전환)
+const CACHE_VERSION = 'v8-20260824';       // 쉘/CDN: 배포마다 갱신 (오프라인 배너 오탐 수정 + 프로브 SW 우회)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
@@ -146,6 +146,11 @@ self.addEventListener('fetch', (event) => {
   if (request.method !== 'GET') return;
 
   const url = new URL(request.url);
+
+  // 0) 연결 프로브(?_probe=) → 가로채지 않고 네트워크 직행.
+  //    실제 도달성 확인이 목적이므로 캐시/SWR를 태우면 안 되고, 매번 유니크한
+  //    URL이 SHELL_CACHE에 쌓이는 캐시 오염도 방지한다. (오프라인이면 브라우저 fetch가 실패 → 프로브가 오프라인으로 판정)
+  if (url.searchParams.has('_probe')) return;
 
   // 1) 오디오 등 대용량 미디어 → 캐시 우회 (네트워크 직행)
   if (BYPASS_PATTERNS.some((pattern) => pattern.test(url.pathname))) {

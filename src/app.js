@@ -257,65 +257,70 @@ function setupOfflineDetection() {
     if (!banner) return;
 
     let probeInFlight = false;
+    let failStreak = 0;              // 연속 프로브 실패 횟수
+    const FAIL_THRESHOLD = 2;        // 연속 2회 실패해야 오프라인으로 확정 (일시적 끊김/오탐 무시)
+    const PROBE_TIMEOUT = 6000;      // 모바일 저속망 여유 (기존 4s → 6s)
 
-    function showBanner() {
-        banner.classList.add('show');
-    }
-
-    function hideBanner() {
-        banner.classList.remove('show');
-    }
+    function showBanner() { banner.classList.add('show'); }
+    function hideBanner() { banner.classList.remove('show'); failStreak = 0; }
 
     /**
-     * 실제 인터넷 접속 여부를 확인합니다.
-     * navigator.onLine은 OS 네트워크 어댑터 상태만 반영하므로,
-     * 실제 연결은 "같은 출처(자체 도메인)"의 가벼운 리소스를 요청해 확인합니다.
-     * (과거에는 www.gstatic.com을 썼으나, 해당 도메인이 차단되는 지역/망에서
-     *  온라인인데도 오프라인으로 오탐하는 문제가 있어 same-origin으로 변경.)
-     *
-     * ⚠️ file:// 프로토콜(파일 더블클릭으로 직접 연 경우)에서는 fetch 자체가
-     * CORS 정책으로 항상 실패하므로 프로브를 생략하고 navigator.onLine만 신뢰한다.
+     * 실제 네트워크 도달 여부만 확인한다 (배너 표시 여부는 호출부에서 결정).
+     * navigator.onLine은 OS 어댑터 상태만 반영하므로, same-origin 리소스를 실제로 요청해 검증.
+     * ⚠️ file:// 에서는 fetch가 CORS로 항상 실패 → 온라인으로 간주하고 프로브 생략.
      */
-    async function probeConnectivity() {
-        // OS가 오프라인이라고 보고하면 바로 배너 표시
-        if (!navigator.onLine) {
-            showBanner();
-            return;
-        }
-        // file:// 에서는 fetch가 구조적으로 불가 → 프로브 생략 (항상 오탐지됨)
-        if (location.protocol === 'file:') {
-            hideBanner();
-            return;
-        }
-        if (probeInFlight) return;
-        probeInFlight = true;
+    async function checkReachable() {
+        if (!navigator.onLine) return false;
+        if (location.protocol === 'file:') return true;
         try {
             const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 4000);
-            // same-origin + no-store + 캐시버스터: SW/HTTP 캐시를 우회해 실제 네트워크 도달을 확인
-            await fetch(`./manifest.webmanifest?_probe=${Date.now()}`, {
+            const timeoutId = setTimeout(() => controller.abort(), PROBE_TIMEOUT);
+            // ?_probe= 는 서비스워커가 가로채지 않고 네트워크로 직행하도록 처리됨(sw.js).
+            const res = await fetch(`./manifest.webmanifest?_probe=${Date.now()}`, {
                 cache: 'no-store',
                 signal: controller.signal
             });
             clearTimeout(timeoutId);
-            hideBanner();
+            return !!(res && res.ok);
         } catch (e) {
-            showBanner();
+            return false;
+        }
+    }
+
+    /**
+     * 프로브 결과가 '연속 실패 임계치'를 넘겼을 때만 배너를 띄운다.
+     * → 모바일 콜드스타트/일시적 끊김에서 발생하는 오탐(순간 배너 깜빡임)을 방지.
+     * 아직 확정 전이면 잠시 뒤 한 번 더 확인해, 진짜 오프라인은 수 초 내 표시된다.
+     */
+    async function probeConnectivity() {
+        if (probeInFlight) return;
+        probeInFlight = true;
+        try {
+            const ok = await checkReachable();
+            if (ok) {
+                hideBanner();
+            } else {
+                failStreak++;
+                if (failStreak >= FAIL_THRESHOLD) {
+                    showBanner();
+                } else {
+                    // 확정 아님 → 2.5초 후 재확인 (일시적 끊김이면 이때 회복)
+                    setTimeout(probeConnectivity, 2500);
+                }
+            }
         } finally {
             probeInFlight = false;
         }
     }
 
-    window.addEventListener('online', probeConnectivity);
-    window.addEventListener('offline', showBanner);
+    // online/offline 이벤트는 그대로 신뢰하지 않고(특히 모바일에서 오발생 잦음) 실제 프로브로 재확인.
+    window.addEventListener('online', () => { failStreak = 0; probeConnectivity(); });
+    window.addEventListener('offline', probeConnectivity); // 즉시 표시하지 않고 검증부터
 
-    // 초기 상태: navigator.onLine이 true면 배너를 숨기고 시작
-    // (잘못된 오프라인 오표시 방지). 이후 주기적으로 실제 연결 확인.
-    if (navigator.onLine) {
-        hideBanner();
-    } else {
-        showBanner();
-    }
+    // 초기 상태: 배너는 숨김으로 시작(HTML 기본값 유지). 콜드스타트 직후 데이터 로딩으로
+    // 스레드가 바쁠 수 있어 첫 확인은 3초 지연 → 시작 직후 가짜 배너를 원천 차단.
+    hideBanner();
+    setTimeout(probeConnectivity, 3000);
 
     // 주기적 연결 확인 (30초 간격)
     setInterval(probeConnectivity, 30000);
