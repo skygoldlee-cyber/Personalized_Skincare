@@ -91,11 +91,19 @@
 - **4차 (v12)**: **SW 프로브 프록시 전환** — PWA standalone(iOS WebKit/일부 웹뷰)에서 `?_probe=` 요청을 SW가 단순 `return`으로 바이패스하면 샌드박스가 `respondWith` 없는 fetch를 차단해 프로브가 항상 실패하던 문제 수정. `event.respondWith(fetch(request))`로 명시적 네트워크 프록시.
 - **5차 (v13)**: **Standalone 인지 임계치 강화** — 설치형 PWA는 `onLine === false` 오탐 빈도가 높아 판정을 더 보수적으로. `FAIL_THRESHOLD` 일반 3회/standalone 4회, `PROBE_TIMEOUT` 8초, 슬립 복귀·콜드스타트 유예 15초(`WAKE_GRACE_MS`), 첫 프로브 5초 지연, `online` 이벤트 시 즉시 배너 해제.
 
-### 사용자 매뉴얼 Mermaid 다이어그램 미렌더링 수정 (2026-08-24)
+### 사용자 매뉴얼 및 요약집 런타임 MD 뷰어 전환 및 다이어그램 오류 수정 (sw `v16` → `v17`, 2026-08-24)
 
-- **증상**: `docs/user_manual.html`의 학습 흐름 다이어그램이 렌더링되지 않고 `graph TD …` 텍스트로 노출.
-- **원인**: jsDelivr CDN(`mermaid@10`) 스크립트가 CSP `script-src 'self'`에 차단.
-- **해결**: [`vendor/mermaid/mermaid.min.js`](vendor/mermaid/mermaid.min.js) 자체 호스팅 전환 + `user_manual.html` 스크립트 경로를 `../vendor/mermaid/mermaid.min.js`로 교체. FontAwesome과 동일한 로컬 벤더링 패턴.
+- **배경**: 기존 개별 정적 HTML 방식(`user_manual.html`, `study_summary.html`)을 폐기하고, 마크다운 원본(`docs/*.md`)을 직접 읽어 렌더링하는 인앱 뷰어([`src/manual-viewer.js`](src/manual-viewer.js))를 통합 구축함.
+- **다이어그램 오류 증상**: 런타임 뷰어로 전환되면서, 매뉴얼에 작성된 Mermaid 다이어그램이 렌더링되지 못하고 `graph TD …` 텍스트 그대로 노출되는 현상 발생.
+- **원인**:
+  - `index.html`에 Mermaid 라이브러리가 포함되지 않았으며, CSP 정책(`script-src 'self'`)으로 인해 외부 CDN 로드가 불가능했음.
+  - 마크다운 파싱 결과물을 DOM에 삽입한 후에 `mermaid.run()`을 호출하여 다이어그램 렌더링을 지시하는 핸들러 및 테마 전환 대응 로직이 누락됨.
+- **해결**:
+  - `index.html`에 로컬 자체 호스팅된 [`vendor/mermaid/mermaid.min.js`](vendor/mermaid/mermaid.min.js) 로드를 `defer`로 등록함.
+  - `src/manual-viewer.js` 내에 `_renderMermaid()`를 구현해 `.mermaid` 요소를 찾아 렌더링하도록 지시하고, 테마(`light-theme` 유무)에 맞춰 `dark` / `default` 설정을 자동 적용함.
+  - `themechange` 이벤트 핸들러를 추가해 테마 변경 시에도 다이어그램이 깨지지 않고 실시간 갱신 및 재렌더링되도록 수정함.
+- **오프라인 및 SW**:
+  - 오프라인/PWA 지원을 위해 `sw.js`의 `SHELL_ASSETS` 목록에 `vendor/mermaid/mermaid.min.js`를 등록하고 `CACHE_VERSION`을 **`v17-20260824`**로 상향 적용함.
 
 ### 문제집 뷰어 런타임 전환 — 정적 HTML 폐지 (sw `v13` → `v15`, 2026-08-24)
 

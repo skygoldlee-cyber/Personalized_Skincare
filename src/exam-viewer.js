@@ -213,19 +213,29 @@ const ExamViewer = (() => {
         if (document.getElementById('exam-overlay-style')) return;
         const style = document.createElement('style');
         style.id = 'exam-overlay-style';
+        // 앱의 실제 테마 토큰(--bg-app / --bg-card / --color-text-main / --color-text-muted)을
+        // 사용해 글로벌 다크/라이트 테마를 자동으로 따라갑니다.
+        // (이전에는 존재하지 않는 --bg-color/--text-color/--card-bg/--text-muted 를 참조해
+        //  항상 라이트 폰트 기본값으로 떨어져 전역 테마가 적용되지 않던 문제 수정)
         style.textContent = `
 #exam-overlay{position:fixed;inset:0;z-index:9999;display:none;flex-direction:column;
-  background:var(--bg-color,#fff);color:var(--text-color,#1a1a1a);}
+  background:var(--bg-app);color:var(--color-text-main);}
 #exam-overlay.open{display:flex;}
 #exam-overlay .exam-ov-bar{display:flex;align-items:center;gap:12px;flex:0 0 auto;
-  padding:10px 16px;border-bottom:1px solid var(--border-color,#e5e5e5);
-  background:var(--card-bg,#fff);}
+  padding:10px 16px;border-bottom:1px solid var(--border-color);
+  background:var(--bg-card);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
 #exam-overlay .exam-ov-title{flex:1 1 auto;min-width:0;font-weight:700;font-size:.98rem;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-#exam-overlay .exam-ov-btn{flex:0 0 auto;cursor:pointer;border:1px solid var(--border-color,#ddd);
-  background:var(--card-bg,#fff);color:inherit;border-radius:10px;padding:8px 14px;font-size:.9rem;
-  display:inline-flex;align-items:center;gap:6px;font-family:inherit;}
-#exam-overlay .exam-ov-btn.primary{background:var(--color-primary,#6c5ce7);border-color:transparent;color:#fff;}
+#exam-overlay .exam-ov-btn{flex:0 0 auto;cursor:pointer;border:1px solid var(--border-color);
+  background:var(--bg-card);color:inherit;border-radius:10px;padding:8px 14px;font-size:.9rem;
+  display:inline-flex;align-items:center;gap:6px;font-family:inherit;
+  transition:all .15s ease;}
+#exam-overlay .exam-ov-btn:hover{border-color:var(--border-color-active);color:var(--color-primary);}
+#exam-overlay .exam-ov-btn.primary{background:linear-gradient(135deg,var(--color-primary),#0891b2);
+  border-color:transparent;color:#fff;}
+#exam-overlay .exam-ov-btn.primary:hover{color:#fff;filter:brightness(1.1);
+  box-shadow:var(--glow-primary);}
 #exam-overlay .exam-ov-btn:active{transform:translateY(1px);}
 #exam-overlay .exam-ov-scroll{flex:1 1 auto;overflow-y:auto;-webkit-overflow-scrolling:touch;
   padding:20px clamp(16px,4vw,48px) 80px;}
@@ -233,40 +243,42 @@ const ExamViewer = (() => {
   font-size:1rem;color:inherit;}
 /* ---- 변환된 마크다운 본문 타이포그래피 (style.css 비의존, 다크/라이트 모두 대응) ---- */
 #exam-overlay #exam-article h1{font-size:1.6rem;font-weight:800;margin:0 0 1rem;
-  padding-bottom:.6rem;border-bottom:2px solid var(--color-primary,#6c5ce7);
-  background:linear-gradient(135deg,var(--color-primary,#06b6d4),var(--color-secondary,#8b5cf6));
+  padding-bottom:.6rem;border-bottom:2px solid var(--color-primary);
+  background:linear-gradient(135deg,var(--color-primary),var(--color-secondary));
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
 #exam-overlay #exam-article h2{font-size:1.25rem;font-weight:700;margin:1.8rem 0 .8rem;
-  padding-left:.7rem;border-left:4px solid var(--color-primary,#06b6d4);}
+  padding-left:.7rem;border-left:4px solid var(--color-primary);}
 #exam-overlay #exam-article h3{font-size:1.08rem;font-weight:600;margin:1.4rem 0 .6rem;
-  color:var(--color-primary,#06b6d4);}
+  color:var(--color-primary);}
 #exam-overlay #exam-article p{margin:0 0 .9rem;}
-#exam-overlay #exam-article strong{color:var(--color-warning,#f59e0b);font-weight:700;}
+#exam-overlay #exam-article strong{color:var(--color-warning);font-weight:700;}
 #exam-overlay #exam-article em{font-style:italic;}
 #exam-overlay #exam-article code{font-family:ui-monospace,Consolas,monospace;font-size:.9em;
   background:rgba(127,127,127,.18);border-radius:4px;padding:.1em .35em;}
 #exam-overlay #exam-article blockquote{margin:1rem 0;padding:.8rem 1rem;
-  border-left:4px solid var(--color-secondary,#8b5cf6);
+  border-left:4px solid var(--color-secondary);
   background:rgba(139,92,246,.08);border-radius:0 8px 8px 0;}
 #exam-overlay #exam-article blockquote p{margin:0;}
 #exam-overlay #exam-article ul,#exam-overlay #exam-article ol{margin:0 0 1rem;padding-left:1.4rem;}
 #exam-overlay #exam-article li{margin:.25rem 0;}
-#exam-overlay #exam-article hr{border:none;border-top:1px solid var(--border-color,#e5e5e5);
+#exam-overlay #exam-article hr{border:none;border-top:1px solid var(--border-color);
   margin:1.6rem 0;}
-#exam-overlay #exam-article sup{color:var(--color-warning,#f59e0b);}
+#exam-overlay #exam-article sup{color:var(--color-warning);}
 #exam-overlay #exam-article .reader-table-wrapper{margin:1rem 0;}
 #exam-overlay #exam-article pre.reader-code-block{margin:1rem 0;padding:1rem;overflow-x:auto;
-  border-radius:8px;background:rgba(0,0,0,.3);border:1px solid var(--border-color,#333);}
+  border-radius:8px;background:rgba(0,0,0,.3);border:1px solid var(--border-color);}
+html.light-theme #exam-overlay #exam-article pre.reader-code-block{background:rgba(0,0,0,.06);}
 #exam-overlay #exam-article pre.reader-code-block code{background:none;padding:0;}
 #exam-overlay .exam-ov-toc{max-width:900px;margin:0 auto 18px;}
 #exam-overlay .exam-ov-toc summary{cursor:pointer;font-weight:600;padding:8px 0;}
-#exam-overlay .exam-ov-toc a{display:block;padding:4px 0;color:var(--color-primary,#6c5ce7);
+#exam-overlay .exam-ov-toc a{display:block;padding:4px 0;color:var(--color-primary);
   text-decoration:none;font-size:.9rem;}
+#exam-overlay .exam-ov-toc a:hover{text-decoration:underline;}
 #exam-overlay .exam-ov-toc a.depth-3{padding-left:16px;font-size:.85rem;opacity:.85;}
 #exam-overlay .exam-loading{display:flex;flex-direction:column;align-items:center;justify-content:center;
-  min-height:60vh;gap:18px;color:var(--text-muted,#888);}
-#exam-overlay .exam-loading .spinner{width:44px;height:44px;border:4px solid var(--border-color,#e5e5e5);
-  border-top-color:var(--color-primary,#6c5ce7);border-radius:50%;animation:exam-spin 1s linear infinite;}
+  min-height:60vh;gap:18px;color:var(--color-text-muted);}
+#exam-overlay .exam-loading .spinner{width:44px;height:44px;border:4px solid var(--border-color);
+  border-top-color:var(--color-primary);border-radius:50%;animation:exam-spin 1s linear infinite;}
 @keyframes exam-spin{to{transform:rotate(360deg);}}
 body.exam-open{overflow:hidden;}
 @media print{

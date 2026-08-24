@@ -414,4 +414,51 @@
 - E2E: 첫 염 fetch 1회 → 캐시 적중(재염 fetch 0회, 동일 문서), `_clearCache()` 동작 확인.
 - `node tools/build_exam_bundles.js` 실행 → `data/exams_md/*.js` 9종(406KB) 생성, Git 추적 확인.
 
+---
 
+## 📖 사용자 매뉴얼 및 요약집 런타임 전환 — 정적 HTML 폐지 (sw v16, 2026-08-24)
+
+### 배경/증상
+- 기존에는 사용자 매뉴얼(`docs/user_manual.html`)과 핵심 단권화 요약집(`docs/study_summary.html`)을 개별 정적 HTML 파일로 제공했습니다.
+- 이로 인해 원본 마크다운(`docs/user_manual.md`, `docs/study_summary.md`) 수정 시 매번 HTML 변환 작업을 거쳐야 하여 동기화 번거로움이 있었습니다.
+
+### 해결
+- **인앱 전체화면 오버레이 뷰어 통합** ([`src/manual-viewer.js`](../src/manual-viewer.js)):
+  - 문제집 뷰어와 동일한 형태로 런타임에 `.md` 파일을 fetch하여 자체 MD→HTML 변환(`_mdToHtml`)을 거쳐 `#manual-overlay` 오버레이로 출력하도록 통합했습니다.
+  - 목차(TOC) 자동 생성, 인쇄/PDF 기능 제공 및 안드로이드 뒤로가기(`history.pushState`) 연동을 동일하게 적용했습니다.
+  - `sessionStorage` 캐시(`manual_md_cache_v2_`)를 통해 재진입 시 네트워크 통신 0회로 동작합니다.
+- **file:// 지원 번들 스크립트화**:
+  - [`tools/build_doc_bundles.js`](../tools/build_doc_bundles.js) 도구를 작성하여 `docs/user_manual.md`와 `docs/study_summary.md`를 `data/docs_md/user_manual.js` 및 `data/docs_md/study_summary.js` 번들 스크립트로 변환하도록 조치했습니다.
+  - `file://` 프로토콜 등 fetch가 차단되는 오프라인 환경에서도 클래식 `<script>` 태그 동적 주입 방식으로 원활하게 작동하게 유연성을 확보했습니다.
+- **정적 자산 정리**:
+  - `docs/user_manual.html`, `docs/study_summary.html` 정적 HTML 2종을 삭제하여 중복을 줄였습니다.
+- **SW**:
+  - `CACHE_VERSION`을 **`v16-20260824`**로 상향하여 새로워진 매뉴얼 뷰어와 docs 번들 파일들이 서비스 워커에 캐시되도록 조치했습니다.
+
+---
+
+## 📊 사용자 매뉴얼 Mermaid 다이어그램 렌더링 오류 수정 (sw v17, 2026-08-24)
+
+### 증상
+- 런타임 MD 뷰어로 전환된 사용자 매뉴얼에서, 학습 흐름을 보여주는 Mermaid 다이어그램이 렌더링되지 않고 raw 텍스트(`graph TD ...`) 형태로 그대로 화면에 노출되는 현상 발생.
+
+### 원인
+1. **Mermaid 라이브러리 미적재**: `index.html`에 Mermaid 라이브러리가 포함되지 않았으며, CSP 정책(`script-src 'self'`)으로 인해 외부 CDN 로드가 불가능함.
+2. **렌더링 핸들러 누락**: HTML 파싱이 완료되어 DOM에 삽입된 시점에 Mermaid 요소를 인식해 그리는 `mermaid.run()` 또는 `mermaid.init()` 등의 트리거 로직이 `manual-viewer.js`에 부재했음.
+3. **테마 변경 미반응**: 다크/라이트 테마 변경에 따라 Mermaid 다이어그램의 테마가 함께 전환되는 로직이 부재했음.
+
+### 해결
+- **로컬 스크립트 연동**:
+  - [`index.html`](../index.html) 하단에 자체 호스팅된 [`vendor/mermaid/mermaid.min.js`](../vendor/mermaid/mermaid.min.js)를 `defer` 속성으로 명시해 앱 초기 로딩 시 불러오도록 추가했습니다.
+- **Mermaid 런타임 초기화 및 렌더링**:
+  - [`src/manual-viewer.js`](../src/manual-viewer.js) 내 `_renderBody` 렌더링 프로세스 마지막에 `_renderMermaid()`를 호출하여 `.mermaid` 클래스 요소를 찾아 다이어그램으로 그리도록 개선했습니다.
+  - 다크/라이트 테마 상태(`light-theme` 클래스)를 판별하여 Mermaid의 `dark` 또는 `default` 테마로 동적 설정하여 깔끔한 비주얼로 표현합니다.
+- **테마 전환 실시간 동기화**:
+  - `themechange` 이벤트를 리스닝하여 사용자가 테마를 전환할 때마다 마크다운에서 변환된 원본 본문을 다시 삽입하고 `_renderMermaid()`를 재수행해, 다이어그램 테마가 실시간으로 교체되도록 구현했습니다.
+- **오프라인 캐시 및 SW**:
+  - PWA standalone 및 오프라인 상태에서도 매뉴얼 다이어그램이 깨지지 않도록 [`sw.js`](../sw.js)의 `SHELL_ASSETS`에 `./vendor/mermaid/mermaid.min.js`를 등록했습니다.
+  - 변경사항이 캐시에 반영되도록 `CACHE_VERSION`을 **`v17-20260824`**로 상향하였습니다.
+
+### 검증
+- Local static file server (`node serve.js 8000`) 환경에서 사용자 매뉴얼 진입 시, Mermaid 다이어그램이 테마에 맞추어 완벽하게 SVG 그래픽으로 렌더링되는 것을 확인했습니다.
+- 다크/라이트 테마 전환 시에도 다이어그램이 초기화 및 테마별 렌더링이 오차 없이 즉시 갱신됨을 교차 검증 완료했습니다.

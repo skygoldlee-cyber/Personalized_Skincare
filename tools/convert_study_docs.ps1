@@ -1,4 +1,4 @@
-$WorkspaceDir = Split-Path -Parent $PSScriptRoot
+﻿$WorkspaceDir = Split-Path -Parent $PSScriptRoot
 if (!$WorkspaceDir) { $WorkspaceDir = (Get-Location).Path }
 
 # Define the HTML template as a single string
@@ -470,7 +470,8 @@ $HtmlTemplate = @'
             <div class="actions">
                 <div class="action-group">
                     <a href="../index.html" class="btn"><i class="fa-solid fa-house"></i> 학습 홈</a>
-                    <a href="../user_manual.html" class="btn"><i class="fa-solid fa-book"></i> 매뉴얼</a>
+                    <!-- 매뉴얼은 앱 남부 런타임 뷰어(ManualViewer)로 표시되므로 앱으로 이동 -->
+                    <a href="../index.html" class="btn"><i class="fa-solid fa-book"></i> 매뉴얼 (앱에서 열기)</a>
                 </div>
                 <button onclick="window.print()" class="btn btn-primary"><i class="fa-solid fa-print"></i> 인쇄 / PDF 저장</button>
             </div>
