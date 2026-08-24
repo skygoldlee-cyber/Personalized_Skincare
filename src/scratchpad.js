@@ -6,7 +6,7 @@ let isEraser = false;
 let lastX = 0;
 let lastY = 0;
 
-function toggleCalcScratchpad() {
+export function toggleCalcScratchpad() {
     const container = document.getElementById('calc-scratchpad-container');
     const toggleBtn = document.getElementById('calc-scratchpad-toggle');
     if (!container) return;
@@ -25,7 +25,7 @@ function toggleCalcScratchpad() {
     }
 }
 
-function initScratchpadCanvas() {
+export function initScratchpadCanvas() {
     const canvas = document.getElementById('scratchpad-canvas');
     if (!canvas) return;
     
@@ -88,14 +88,14 @@ function initScratchpadCanvas() {
     scratchpadCanvasInitialized = true;
 }
 
-function clearScratchpad() {
+export function clearScratchpad() {
     const canvas = document.getElementById('scratchpad-canvas');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-function toggleScratchpadEraser() {
+export function toggleScratchpadEraser() {
     const canvas = document.getElementById('scratchpad-canvas');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');

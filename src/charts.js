@@ -3,7 +3,7 @@
 /* =======================================================
    📊 모의고사 성적 차트 (Performance Line Chart)
    ======================================================= */
-function renderPerformanceChart() {
+export function renderPerformanceChart() {
     const wrapper = document.getElementById('analytics-chart-wrapper');
     const emptyMsg = document.getElementById('empty-chart-msg');
     if (!wrapper) return;
@@ -118,7 +118,7 @@ function renderPerformanceChart() {
    - #3: renderPassFailDiagnosis / renderRadarChart ì¤ë³µ ë¡ì§ íµí©
    - #2: êµ¬ë²ì  ì´ë ¥(examId/subjectRates ëë¦½)ì ëí ë°©ì´ í¬í¨
    ======================================================= */
-function aggregateSubjectRates(history) {
+export function aggregateSubjectRates(history) {
     const subjectRates = {
         'subject1': [],
         'subject2': [],
@@ -146,7 +146,7 @@ function aggregateSubjectRates(history) {
 /* =======================================================
    📈 합격 가능성 진단 (Pass/Fail Diagnosis)
    ======================================================= */
-function renderPassFailDiagnosis() {
+export function renderPassFailDiagnosis() {
     const area = document.getElementById('prediction-result-area');
     if (!area) return;
     
@@ -255,7 +255,7 @@ function renderPassFailDiagnosis() {
 /* =======================================================
    📊 과목별 역량 진단 레이더 차트 (Radar Chart)
    ======================================================= */
-function renderRadarChart() {
+export function renderRadarChart() {
     const wrapper = document.getElementById('radar-chart-wrapper');
     const emptyMsg = document.getElementById('empty-radar-msg');
     if (!wrapper) return;

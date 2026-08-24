@@ -698,3 +698,32 @@
 
 ### 🎥 Vercel 라이브 E2E CSP 및 폰트 검증 레코딩
 ![라이브 CSP 및 폰트 검증 레코딩](file:///C:/Users/sky/.gemini/antigravity-ide/brain/59f828a4-5d13-4ce4-93b1-d0894578f529/verify_phase1_live_1787570756041.webp)
+
+---
+
+## 🏗️ Phase 2: native ES Modules (ESM) 모듈 전환 및 고아 ID 정리 완료 (sw v19, 2026-08-24)
+
+### 해결/변경 내역
+
+1. **native ES Modules (ESM) 아키텍처 도입**
+   - [`index.html`](../index.html)에서 기존에 11개 스크립트 파일들을 지저분하게 나열하여 로드하던 구조를 완전히 제거했습니다.
+   - 단 하나의 진입 자바스크립트 모듈인 **`<script type="module" src="src/app.js"></script>`**만 호출하도록 결합도를 모던하게 통합 정리하였습니다. (정적 전역 변수를 사용하는 레지스트리 및 Mermaid 외부 라이브러리는 클래식 스크립트 그대로 유지하여 로딩 효율 극대화)
+   - `src/` 내의 모든 자바스크립트 파일들([`src/utils.js`](../src/utils.js), [`src/sanitize.js`](../src/sanitize.js), [`src/reader-format.js`](../src/reader-format.js), [`src/trainer-calc.js`](../src/trainer-calc.js), [`src/scratchpad.js`](../src/scratchpad.js), [`src/charts.js`](../src/charts.js), [`src/state.js`](../src/state.js), [`src/data-loader.js`](../src/data-loader.js), [`src/exam-viewer.js`](../src/exam-viewer.js), [`src/manual-viewer.js`](../src/manual-viewer.js))을 순수 `import` / `export` 지시어로 데이터를 명시적으로 공유하도록 마이그레이션했습니다.
+
+2. **이벤트 위임 지원을 위한 전역 액션 바인딩**
+   - ESM 모듈화 시 각 변수와 함수가 모듈 전용 비공개(private) 영역에 격리되므로, `data-click`으로 호출되는 global action들에 대한 바인딩이 런타임에 깨지는 것을 방지해야 합니다.
+   - 이를 해결하기 위해 [`src/app.js`](../src/app.js)의 최하단에 `window` 전역 범위로 노출이 보장되어야 하는 모의고사 제어, 플래시카드, 팝업 뷰어 API 등을 명시적으로 바인딩해 주는 노출 맵을 작성했습니다.
+
+3. **고아 ID 정리 (Orphan ID Cleanup) 데드 코드 제거**
+   - [`src/state.js`](../src/state.js) 내 `loadProgress()`에 남아있던 레거시 단일 덩어리 `STUDY_DATA` 기반의 고아 ID 제거 조건문은 런타임에 dynamic lazy loading이 도입됨에 따라 결코 진입하지 않는 **데드 코드(Dead Code)**였습니다.
+   - 이를 삭제하여 코드를 슬림화했습니다. (동적 데이터 로딩 완료 시점의 고아 ID 청소는 현재 `DataLoader.loadSubject` 생명주기에 정확하게 결합되어 `cleanOrphansForSubject`로 동작하고 있음을 교차 검증 완료)
+
+4. **서비스 워커 프리캐시 버전 상향 (v19)**
+   - 자산 구성에 변화가 생김에 따라 캐시 강제 리프레시를 유도하기 위해 [`sw.js`](../sw.js)의 `CACHE_VERSION`을 **`v19-20260824`**로 범프하였습니다.
+
+### 검증 결과
+- **로컬 스모크 테스트**: `node serve.js` 로컬 가동 후 browser subagent를 통해 `http://localhost:8000/` 접속 검증을 수행했습니다.
+  - 개발자 도구 콘솔 상에서 ESM 모듈 경로(Mime Type) 에러 및 변수 스코프 오류가 0회로 전무하게 완전 이관된 것을 확인했습니다.
+  - 대시보드 렌더링, 성분사전 glycerin 실시간 검색 디바운싱 작동, 사용자 매뉴얼 오버레이 및 다이어그램 출력 모두 이벤트가 오차 없이 의도대로 트리거됨을 검증했습니다.
+- **E2E 검증 레코딩**:
+  ![Phase 2 E2E local verification](file:///C:/Users/sky/.gemini/antigravity-ide/brain/59f828a4-5d13-4ce4-93b1-d0894578f529/verify_phase2_local_1787571219264.webp)

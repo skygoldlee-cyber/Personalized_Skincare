@@ -7,7 +7,9 @@
 //   - file:// 프로토콜에서는 fetch가 차단되므로 번들 방식 폰트 폴로백
 //   - 전역 테마(--bg-app, --color-text-main 등)를 자동으로 따라감
 
-const ManualViewer = (() => {
+import { escapeHTML } from './sanitize.js';
+
+export const ManualViewer = (() => {
     // 지원하는 마크다운 소스 정의
     const MD_SOURCES = {
         'user_manual': { path: 'docs/user_manual.md', title: '사용자 매뉴얼' },
@@ -599,5 +601,4 @@ body.manual-open{overflow:hidden;}
     };
 })();
 
-// 전역 호환성 (index.html의 onclick="ManualViewer.openManual()" 그대로 동작)
-window.ManualViewer = ManualViewer;
+// 전역 노출은 app.js에서 일괄 수행합니다.

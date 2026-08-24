@@ -1,7 +1,14 @@
 // app.js - 맞춤형화장품 조제관리사 학습 플랫폼 애플리케이션 로직
-//
-// [모듈화] 전역 상태 객체(state) 및 영속성 로직(loadProgress/saveProgress)은
-// src/state.js로 분리되었습니다. 이 파일은 src/state.js 이후에 로드되어야 합니다.
+import { state, loadProgress, saveProgress, cleanOrphansForSubject } from './state.js';
+import { escapeHTML, safeTextWithBreaks, esc } from './sanitize.js';
+import { getChosung } from './utils.js';
+import { formatSectionContentForReader } from './reader-format.js';
+import { buildCalcQuestion } from './trainer-calc.js';
+import { renderPerformanceChart, aggregateSubjectRates, renderPassFailDiagnosis, renderRadarChart } from './charts.js';
+import { initScratchpadCanvas, clearScratchpad, toggleCalcScratchpad, toggleScratchpadEraser } from './scratchpad.js';
+import { DataLoader } from './data-loader.js';
+import { ExamViewer } from './exam-viewer.js';
+import { ManualViewer } from './manual-viewer.js';
 
 // --- 초기화 및 로컬스토리지 로드 ---
 function initApp() {
@@ -4989,6 +4996,45 @@ function setupThemeToggle() {
         else if (mq.addListener) mq.addListener(onChange);
     }
 }
+
+
+// data-click 기반 이벤트 위임을 위한 전역 API 노출
+window.ManualViewer = ManualViewer;
+window.ExamViewer = ExamViewer;
+window.DataLoader = DataLoader;
+window.clearScratchpad = clearScratchpad;
+window.toggleCalcScratchpad = toggleCalcScratchpad;
+window.toggleScratchpadEraser = toggleScratchpadEraser;
+
+window.clearDictSearch = clearDictSearch;
+window.clearSimDraft = clearSimDraft;
+window.clearTextbookSearch = clearTextbookSearch;
+window.exitSimArena = exitSimArena;
+window.exitTrainerSubView = exitTrainerSubView;
+window.exportData = exportData;
+window.generateCalcQuestion = generateCalcQuestion;
+window.nextIngQuestion = nextIngQuestion;
+window.nextLimitsQuestion = nextLimitsQuestion;
+window.printReviewNotes = printReviewNotes;
+window.resetPomodoro = resetPomodoro;
+window.resumeSimDraft = resumeSimDraft;
+window.setDictFilter = setDictFilter;
+window.setReviewFilter = setReviewFilter;
+window.setTextbookFilter = setTextbookFilter;
+window.showSimAnswerReview = showSimAnswerReview;
+window.showSimResultsSummary = showSimResultsSummary;
+window.startCalcPractice = startCalcPractice;
+window.startDailyChallenge = startDailyChallenge;
+window.startIngredientsChallenge = startIngredientsChallenge;
+window.startIntegratedMockExam = startIntegratedMockExam;
+window.startLimitsTrainer = startLimitsTrainer;
+window.startMockExamSim = startMockExamSim;
+window.startWeakExam = startWeakExam;
+window.submitCalcAnswer = submitCalcAnswer;
+window.submitIngAnswer = submitIngAnswer;
+window.togglePomodoro = togglePomodoro;
+window.toggleSolutionAccordion = toggleSolutionAccordion;
+window.triggerImport = triggerImport;
 
 
 // 윈도우 로드 시 구동

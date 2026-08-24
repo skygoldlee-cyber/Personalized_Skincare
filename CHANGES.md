@@ -139,3 +139,15 @@
 - **서비스 워커 캐싱 전략 보강**:
   - [`sw.js`](sw.js)의 `SHELL_ASSETS` 프리캐시 목록에 신설된 `src/theme-init.js` 및 `vendor/fonts/*` 자산들을 모두 추가하였습니다.
   - 캐시가 클라이언트에 즉시 갱신되도록 `CACHE_VERSION`을 **`v18-20260824`**로 상향하였습니다.
+
+### Phase 2: native ES Modules (ESM) 모듈 전환 및 고아 ID 정리 완료 (sw `v19`, 2026-08-24)
+
+- **native ES Modules (ESM) 아키텍처 도입**:
+  - `index.html`에서 기존 11개의 `<script>` 태그들을 들어내고 메인 ESM 엔트리 포인트인 `<script type="module" src="src/app.js"></script>`만 호출하도록 통합 정돈했습니다. (데이터 파일 및 외부 Mermaid 라이브러리는 최적화를 위해 클래식 스크립트 유지)
+  - `src/` 내 모든 자바스크립트 파일들(`utils.js`, `sanitize.js`, `reader-format.js`, `trainer-calc.js`, `scratchpad.js`, `charts.js`, `state.js`, `data-loader.js`, `exam-viewer.js`, `manual-viewer.js`)에 `import`/`export` 문법을 도입해 모듈 스코프와 명시적 종속 관계를 확립했습니다.
+- **이벤트 위임 지원용 전역 노출 바인딩**:
+  - ESM 전환 시 모듈 내의 함수들이 비공개 스코프에 갇히는 문제를 우려하여, `app.js` 최하단에 `window` 전역 객체로 `ManualViewer`, `ExamViewer`, `DataLoader` 및 30여 개의 클릭 핸들러 함수들을 매핑해 주는 바인딩 테이블을 추가하여 기존 `data-click` 기반 이벤트 위임 동작과의 완벽한 하위 호환성을 확보했습니다.
+- **고아 ID 정리 데드 코드 소거**:
+  - `src/state.js` 내의 `loadProgress()` 초기화 부분에서 dynamic lazy loading 도입으로 인해 영구적으로 사용되지 않게 된 `STUDY_DATA` 판정용 레거시 고아 ID 클리닝 조건문을 완전히 삭제했습니다. (동적 데이터 로딩 완료 시점의 개별 정리 로직은 `DataLoader`에 의해 안정적으로 기동 중)
+- **서비스 워커 프리캐시 버전 상향**:
+  - 소스코드 및 모듈 로딩 아키텍처 개편에 대응하여 서비스 워커의 `CACHE_VERSION`을 **`v19-20260824`**로 상향 적용하여 클라이언트 캐시 갱신을 강제하였습니다.

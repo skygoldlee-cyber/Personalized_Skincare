@@ -1,10 +1,7 @@
-// src/reader-format.js - 교재 리더 본문 포맷터 (순수 함수, 전역 스코프)
-//
-// app.js 모놀리식 축소의 일부로 분리. rawContent(마크다운 유사 텍스트)를 리더용 HTML로 변환.
-// 외부 모듈 상태에 의존하지 않는 순수 문자열 변환이라 app.js보다 먼저 로드되어도 안전하며,
-// 전역 함수명으로 호출된다(app.js의 리더 렌더링에서 사용).
+// src/reader-format.js - 교재 리더 본문 포맷터 (순수 함수, ESM)
+import { escapeHTML } from './sanitize.js';
 
-function formatSectionContentForReader(rawContent) {
+export function formatSectionContentForReader(rawContent) {
     // 1. 안전한 인라인 태그를 플레이스홀더 토큰으로 치환 (이스케이프 전에 처리)
     //    이렇게 하면 escapeHTML이 태그를 엔티티로 변환하는 것을 방지할 수 있음
     let html = String(rawContent);

@@ -8,7 +8,7 @@
 // question/solution은 코드가 조립한 신뢰된 HTML(숫자 + <strong>/<br>)이므로
 // 호출측에서 innerHTML로 주입해도 안전합니다(raw 사용, 사용자 입력 없음).
 
-function buildCalcQuestion() {
+export function buildCalcQuestion() {
     const qType = Math.floor(Math.random() * 4);
     let qData = {};
     

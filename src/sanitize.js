@@ -29,7 +29,7 @@ const HTML_ESCAPE_MAP = {
  * @param {*} value 이스케이프할 값 (문자열이 아니면 문자열로 변환)
  * @returns {string} 이스케이프된 안전한 문자열
  */
-function escapeHTML(value) {
+export function escapeHTML(value) {
     if (value === null || value === undefined) return '';
     return String(value).replace(/[&<>"']/g, function (ch) {
         return HTML_ESCAPE_MAP[ch];
@@ -43,7 +43,7 @@ function escapeHTML(value) {
  * @param {*} value 원본 데이터
  * @returns {string} innerHTML에 안전하게 주입 가능한 문자열
  */
-function safeTextWithBreaks(value) {
+export function safeTextWithBreaks(value) {
     return escapeHTML(value).replace(/\r\n|\r|\n/g, '<br>');
 }
 
@@ -54,6 +54,6 @@ function safeTextWithBreaks(value) {
  * @param {*} value 이스케이프할 값
  * @returns {string} 이스케이프된 문자열
  */
-function esc(value) {
+export function esc(value) {
     return escapeHTML(value);
 }

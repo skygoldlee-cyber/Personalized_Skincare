@@ -18,7 +18,9 @@
 //                 (클래식 <script> 는 file:// 에서도 로드되므로 동작)
 //   번들이 없으면 `node tools/build_exam_bundles.js` 를 실행하라는 안내를 띄웁니다.
 
-const ExamViewer = (() => {
+import { escapeHTML } from './sanitize.js';
+
+export const ExamViewer = (() => {
     // 캐시 포맷 변경(전체 문서 → 본문 HTML)으로 v2 로 bump
     const CACHE_PREFIX = 'exam_md_cache_v2_';
     const CACHE_TTL = 24 * 60 * 60 * 1000; // 24시간
@@ -525,5 +527,4 @@ body.exam-open{overflow:hidden;}
     };
 })();
 
-// 전역 호환성 (index.html의 onclick="ExamViewer.openExam(...)" 그대로 동작)
-window.ExamViewer = ExamViewer;
+// 전역 노출은 app.js에서 일괄 수행합니다.

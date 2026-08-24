@@ -1,9 +1,11 @@
 // Declare legacy global structures so referencing them doesn't throw ReferenceErrors
+import { cleanOrphansForSubject } from './state.js';
+
 var STUDY_DATA = {};
 var EXAM_DATA = {};
 var INGREDIENTS_DATA = [];
 
-const DataLoader = {
+export const DataLoader = {
     registry: null,
     _loaded: {},
     _loadedExams: {},

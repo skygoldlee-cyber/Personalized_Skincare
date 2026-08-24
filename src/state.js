@@ -11,7 +11,7 @@
 /* =======================================================
    📦 전역 학습 상태 객체 (Global Application State)
    ======================================================= */
-const state = {
+export const state = {
     currentView: 'dashboard-view',
 
     // 로컬스토리지 연동 데이터
@@ -98,7 +98,7 @@ function safeSetItem(key, value) {
 }
 
 // 로컬스토리지에서 진도 가져오기
-function loadProgress() {
+export function loadProgress() {
     // 2단계: 안정적 ID 마이그레이션 실행
     migrateProgressV2();
 
@@ -122,29 +122,6 @@ function loadProgress() {
         try {
             state.quizResults = JSON.parse(quizzes);
         } catch (e) { console.error(e); }
-    }
-
-    // 고아 ID 정리 (Orphan ID Cleanup)
-    // STUDY_DATA가 통째로 정의되어 있는 레거시 상태에서만 실행 (지연 로딩 도입 전)
-    if (typeof STUDY_DATA !== 'undefined' && Object.keys(STUDY_DATA).length > 0) {
-        const validCardIds = new Set();
-        const validQuizIds = new Set();
-        Object.keys(STUDY_DATA).forEach(subjKey => {
-            const subj = STUDY_DATA[subjKey];
-            if (subj.cards) subj.cards.forEach(c => validCardIds.add(c.id));
-            if (subj.quizzes) subj.quizzes.forEach(q => validQuizIds.add(q.id));
-        });
-
-        state.memorizedCards = new Set([...state.memorizedCards].filter(id => validCardIds.has(id)));
-        state.weakCards = new Set([...state.weakCards].filter(id => validCardIds.has(id)));
-
-        const cleanQuizzes = {};
-        Object.keys(state.quizResults).forEach(id => {
-            if (validQuizIds.has(id)) {
-                cleanQuizzes[id] = state.quizResults[id];
-            }
-        });
-        state.quizResults = cleanQuizzes;
     }
 
     // 뽀모도로 누적 시간은 "오늘" 기준이므로, 날짜가 바뀌었으면 0으로 리셋
@@ -214,7 +191,7 @@ function migrateProgressV2() {
 }
 
 // 로컬스토리지에 진도 저장
-function saveProgress() {
+export function saveProgress() {
     safeSetItem('fc_memorized', JSON.stringify([...state.memorizedCards]));
     safeSetItem('fc_weak', JSON.stringify([...state.weakCards]));
     safeSetItem('quiz_results', JSON.stringify(state.quizResults));
@@ -226,7 +203,7 @@ function saveProgress() {
 }
 
 // 특정 과목 데이터가 동적 로드되었을 때 해당 과목의 고아 ID를 청소하는 함수 (지연 로딩 대응)
-function cleanOrphansForSubject(subjKey, subjData) {
+export function cleanOrphansForSubject(subjKey, subjData) {
     if (!subjData) return;
     
     const validCardIds = new Set();
