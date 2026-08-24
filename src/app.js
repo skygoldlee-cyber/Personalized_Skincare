@@ -5037,11 +5037,17 @@ window.toggleSolutionAccordion = toggleSolutionAccordion;
 window.triggerImport = triggerImport;
 
 
-// 윈도우 로드 시 구동
-window.addEventListener('DOMContentLoaded', () => {
+// 윈도우 로드 시 구동 (DOMContentLoaded 이미 완료 시 즉시 실행 대응)
+function startAppInit() {
     initApp();
     // DOM이 완전히 로드된 후 토글 버튼 설정
     setTimeout(() => {
         setupOrientationToggle();
     }, 100);
-});
+}
+
+if (document.readyState === 'loading') {
+    window.addEventListener('DOMContentLoaded', startAppInit);
+} else {
+    startAppInit();
+}
