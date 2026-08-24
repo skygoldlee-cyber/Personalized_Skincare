@@ -258,39 +258,52 @@ function setupOfflineDetection() {
 
     let probeInFlight = false;
     let failStreak = 0;              // 연속 프로브 실패 횟수
-    const FAIL_THRESHOLD = 2;        // 연속 2회 실패해야 오프라인으로 확정 (일시적 끊김/오탐 무시)
+    const FAIL_THRESHOLD = 2;        // 연속 2회 실패해야 오프라인으로 확정
     const PROBE_TIMEOUT = 6000;      // 모바일 저속망 여유 (기존 4s → 6s)
+    let checkIntervalId = null;
+    let isOfflineMode = false;       // 현재 오프라인 상태 여부 (배너 노출 상태)
+    let lastVisibilityChangeTime = Date.now(); // 마지막 화면 활성화 시각
 
-    function showBanner() { banner.classList.add('show'); }
-    function hideBanner() { banner.classList.remove('show'); failStreak = 0; }
+    function showBanner() {
+        banner.classList.add('show');
+        isOfflineMode = true;
+        // 오프라인 상태인 경우 복구 확인을 위해 빠른 주기로 단축 (5초)
+        resetCheckInterval(5000);
+    }
+
+    function hideBanner() {
+        banner.classList.remove('show');
+        failStreak = 0;
+        isOfflineMode = false;
+        // 온라인 정상 상태에서는 주기 체크 간격을 완화 (30초)
+        resetCheckInterval(30000);
+    }
 
     /**
-     * 실제 네트워크 도달 여부만 확인한다 (배너 표시 여부는 호출부에서 결정).
-     * navigator.onLine은 OS 어댑터 상태만 반영하므로, same-origin 리소스를 실제로 요청해 검증.
-     * ⚠️ file:// 에서는 fetch가 CORS로 항상 실패 → 온라인으로 간주하고 프로브 생략.
+     * 실제 네트워크 도달 여부만 확인한다.
+     * navigator.onLine이 false여도 모바일(특히 iOS Safari) 버그로 오탐인 경우가 있으므로
+     * 실제 ping.txt fetch 결과를 최종 신뢰한다.
      */
     async function checkReachable() {
-        if (!navigator.onLine) return false;
         if (location.protocol === 'file:') return true;
         try {
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), PROBE_TIMEOUT);
-            // ?_probe= 는 서비스워커가 가로채지 않고 네트워크로 직행하도록 처리됨(sw.js).
-            const res = await fetch(`./manifest.webmanifest?_probe=${Date.now()}`, {
-                cache: 'no-store',
+            // cache: 'no-store' 옵션이 일부 로컬 브라우저/웹뷰 보안 정책(CORS 또는 Direct Network Access)과 충돌하여
+            // fetch가 실패하는 문제를 방지하기 위해 제거합니다. 쿼리 스트링 타임스탬프로만 캐시 우회를 수행합니다.
+            const res = await fetch(`./ping.txt?_probe=${Date.now()}`, {
                 signal: controller.signal
             });
             clearTimeout(timeoutId);
             return !!(res && res.ok);
         } catch (e) {
+            console.warn("Offline detection probe failed:", e);
             return false;
         }
     }
 
     /**
      * 프로브 결과가 '연속 실패 임계치'를 넘겼을 때만 배너를 띄운다.
-     * → 모바일 콜드스타트/일시적 끊김에서 발생하는 오탐(순간 배너 깜빡임)을 방지.
-     * 아직 확정 전이면 잠시 뒤 한 번 더 확인해, 진짜 오프라인은 수 초 내 표시된다.
      */
     async function probeConnectivity() {
         if (probeInFlight) return;
@@ -300,11 +313,20 @@ function setupOfflineDetection() {
             if (ok) {
                 hideBanner();
             } else {
+                // 화면이 켜지거나 슬립 모드에서 복구한 지 10초 이내인 경우:
+                // 모바일 통신 칩셋 및 Wi-Fi 재연결(네트워크 핸드셰이크) 중일 수 있으므로
+                // 즉시 failStreak를 쌓아 배너를 띄우지 않고 3초 후 재시도한다.
+                const sinceWakeup = Date.now() - lastVisibilityChangeTime;
+                if (sinceWakeup < 10000 && !isOfflineMode) {
+                    setTimeout(probeConnectivity, 3000);
+                    return;
+                }
+
                 failStreak++;
                 if (failStreak >= FAIL_THRESHOLD) {
                     showBanner();
                 } else {
-                    // 확정 아님 → 2.5초 후 재확인 (일시적 끊김이면 이때 회복)
+                    // 미확정 상태 -> 2.5초 후 재시도
                     setTimeout(probeConnectivity, 2500);
                 }
             }
@@ -313,17 +335,34 @@ function setupOfflineDetection() {
         }
     }
 
-    // online/offline 이벤트는 그대로 신뢰하지 않고(특히 모바일에서 오발생 잦음) 실제 프로브로 재확인.
-    window.addEventListener('online', () => { failStreak = 0; probeConnectivity(); });
-    window.addEventListener('offline', probeConnectivity); // 즉시 표시하지 않고 검증부터
+    // 주기적 체크 간격 리셋 함수
+    function resetCheckInterval(ms) {
+        if (checkIntervalId) {
+            clearInterval(checkIntervalId);
+        }
+        checkIntervalId = setInterval(probeConnectivity, ms);
+    }
 
-    // 초기 상태: 배너는 숨김으로 시작(HTML 기본값 유지). 콜드스타트 직후 데이터 로딩으로
-    // 스레드가 바쁠 수 있어 첫 확인은 3초 지연 → 시작 직후 가짜 배너를 원천 차단.
+    // online/offline 이벤트는 그대로 신뢰하지 않고 실제 프로브로 재확인
+    window.addEventListener('online', () => {
+        failStreak = 0;
+        probeConnectivity();
+    });
+    window.addEventListener('offline', probeConnectivity);
+
+    // 화면 활성화(슬립 복귀) 감지: 모바일 기기 화면 켜짐/브라우저 탭 활성화 시 즉시 프로브
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+            lastVisibilityChangeTime = Date.now();
+            failStreak = 0; // 복귀 시 failStreak 초기화
+            probeConnectivity();
+        }
+    });
+
+    // 초기 상태 설정
     hideBanner();
+    // 콜드스타트 직후 데이터 로딩으로 스레드가 바쁠 수 있어 첫 확인은 3초 지연
     setTimeout(probeConnectivity, 3000);
-
-    // 주기적 연결 확인 (30초 간격)
-    setInterval(probeConnectivity, 30000);
 }
 
 // ============================================================
