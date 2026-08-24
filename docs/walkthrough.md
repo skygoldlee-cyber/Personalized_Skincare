@@ -369,4 +369,22 @@
 - Local static file server를 통한 로드 확인: CSP 위반(Csp Violation) 블록 에러 없이 로컬 origin(`'self'`) 규칙을 충족하며 스크립트가 로딩되는지 검사 완료.
 - 사용자 매뉴얼 페이지에서 전체 학습 흐름 Mermaid 다이어그램이 의도된 다크 테마 디자인으로 정상 렌더링됨을 확인함.
 
+---
+
+## 📶 오프라인 감지 Standalone 임계치 강화 (sw v13, 2026-08-24)
+
+### 증상
+- v12(SW 프록시) 적용 후에도 PWA 설치본(standalone)에서 간헐적으로 오프라인 배너 오탐 잔존. 설치형은 브라우저 탭보다 `navigator.onLine === false` 오탐 빈도가 높고, 콜드스타트 직후 네트워크 스택 준비 지연이 김.
+
+### 해결 (`src/app.js` `setupOfflineDetection()`)
+- **Standalone 감지**: `matchMedia('(display-mode: standalone)')` + iOS `navigator.standalone`으로 설치형 판별.
+- **임계치 상향**: `FAIL_THRESHOLD` 2 → 일반 3 / standalone 4 (오탐 확정까지 더 많은 연속 실패 요구).
+- **타임아웃/유예 확대**: `PROBE_TIMEOUT` 6s → 8s, 슬립 복귀·콜드스타트 유예 10s → 15s(`WAKE_GRACE_MS`, 유예 중 `isOfflineMode` 무관하게 실패 미누적), 첫 프로브 지연 3s → 5s.
+- **복구 UX**: `online` 이벤트 수신 시 즉시 `hideBanner()`(failStreak 초기화), `offline` 이벤트 시 wake 타임스탬프 갱신 후 프로브.
+- **`sw.js`**: `CACHE_VERSION` v12 → **v13**으로 상향해 기존 설치본에 app.js 즉시 전파.
+
+### 검증
+- Vercel 프로덕션 배포 후 `sw.js`의 `CACHE_VERSION = 'v13-20260824'` 및 `app.js`의 `FAIL_THRESHOLD = isStandalone ? 4 : 3` 라이브 반영 확인.
+- 설계 상세는 [`docs/ARCHITECTURE.md`](ARCHITECTURE.md) "오프라인 감지 설계" 참조.
+
 

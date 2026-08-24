@@ -88,3 +88,11 @@
 - **1차 (v8)**: 프로브 신뢰성 개선 — 연속 실패 임계(`FAIL_THRESHOLD=2`), 타임아웃 4s→6s, `res.ok` 검사, SW `?_probe=` 바이패스.
 - **2차 (v10)**: 프로브 대상을 전용 `ping.txt`(내용 `1`)로 교체, `cache: 'no-store'` 제거(일부 웹뷰/보안정책과 충돌해 fetch 자체가 실패하는 사례 방지), `navigator.onLine` 사전 차단 제거, 적응 주기(온라인 30s/오프라인 5s), 슬립 복귀 10초 유예. `serve.js`에 `.txt` MIME 추가.
 - **3차 (v11)**: **`navigator.onLine === true` 억제 가드 추가** — 온라인이면 프로브 없이 신뢰하여 콜드스타트/저속망에서의 일시적 프로브 실패로 인한 가짜 배너를 원천 차단. `onLine === false`일 때만 ping.txt 프로브로 최종 확인하는 비대칭 신뢰 구조로 확정.
+- **4차 (v12)**: **SW 프로브 프록시 전환** — PWA standalone(iOS WebKit/일부 웹뷰)에서 `?_probe=` 요청을 SW가 단순 `return`으로 바이패스하면 샌드박스가 `respondWith` 없는 fetch를 차단해 프로브가 항상 실패하던 문제 수정. `event.respondWith(fetch(request))`로 명시적 네트워크 프록시.
+- **5차 (v13)**: **Standalone 인지 임계치 강화** — 설치형 PWA는 `onLine === false` 오탐 빈도가 높아 판정을 더 보수적으로. `FAIL_THRESHOLD` 일반 3회/standalone 4회, `PROBE_TIMEOUT` 8초, 슬립 복귀·콜드스타트 유예 15초(`WAKE_GRACE_MS`), 첫 프로브 5초 지연, `online` 이벤트 시 즉시 배너 해제.
+
+### 사용자 매뉴얼 Mermaid 다이어그램 미렌더링 수정 (2026-08-24)
+
+- **증상**: `docs/user_manual.html`의 학습 흐름 다이어그램이 렌더링되지 않고 `graph TD …` 텍스트로 노출.
+- **원인**: jsDelivr CDN(`mermaid@10`) 스크립트가 CSP `script-src 'self'`에 차단.
+- **해결**: [`vendor/mermaid/mermaid.min.js`](vendor/mermaid/mermaid.min.js) 자체 호스팅 전환 + `user_manual.html` 스크립트 경로를 `../vendor/mermaid/mermaid.min.js`로 교체. FontAwesome과 동일한 로컬 벤더링 패턴.

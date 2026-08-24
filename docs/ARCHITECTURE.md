@@ -321,7 +321,7 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 | 6 | 그 외 App Shell (아이콘/이미지 등) | **Stale-While-Revalidate** | 빠른 표시 + 백그라운드 갱신 |
 
 ### 캐시 버전 관리
-- `CACHE_VERSION` 상수로 캐시 네임스페이스 관리 (현재 `v11-20260824`)
+- `CACHE_VERSION` 상수로 캐시 네임스페이스 관리 (현재 `v13-20260824`)
 - **배포 시 버전을 올리면 구 캐시 자동 정리** → 모바일 구버전 고착(Stale Cache) 문제 방지
 - `SHELL_ASSETS`에는 [`src/utils.js`](../src/utils.js), [`src/trainer-calc.js`](../src/trainer-calc.js) 등 분리된 모듈이 모두 프리캐시에 포함됨
 
@@ -334,12 +334,13 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 - **2차 게이트 — 실제 도달 프로브**: `onLine === false`일 때만 **same-origin** `./ping.txt?_probe={timestamp}` fetch 수행.
   - 과거 `www.gstatic.com/generate_204`(제3자, 지역 차단 시 오탐) → `manifest.webmanifest`를 거쳐 전용 `ping.txt`(내용 `1`)로 정착.
   - `cache: 'no-store'`는 일부 웹뷰/보안정책과 충돌해 fetch 자체가 실패하는 사례가 있어 제거하고, **쿼리스트링 타임스탬프로만 캐시를 우회**합니다.
-  - `?_probe=` 요청은 Service Worker가 가로채지 않고 네트워크 직행([sw.js](../sw.js)의 probe 바이패스).
-- **3중 오탐 방지 (연속 실패 임계 + 타임아웃 + 슬립 유예)**:
-  - `FAIL_THRESHOLD = 2`: 프로브가 **연속 2회** 실패해야 오프라인 확정(1회 실패는 2.5초 후 재시도).
-  - `PROBE_TIMEOUT = 6000ms`: 모바일 저속망 여유분.
-  - **슬립 복귀 유예**: 화면 활성화(`visibilitychange`) 후 10초 이내 실패는 통신 칩셋/Wi-Fi 재연결 중일 수 있어 failStreak를 쌓지 않고 3초 후 재시도.
-- **적응 주기**: 온라인 정상 시 30초, 오프라인 확정 후 복구 감시는 5초로 단축. `online`/`offline`/`visibilitychange` 이벤트 시 즉시 재프로브.
+  - `?_probe=` 요청은 Service Worker가 `event.respondWith(fetch(request))`로 **직접 네트워크에 프록시**하여 반환합니다 ([sw.js](../sw.js)). 단순 `return`(바이패스)로 두면 WebKit standalone 샌드박스가 `respondWith` 없는 fetch를 차단해 프로브가 항상 실패하는 문제가 있어 v12에서 변경되었습니다. 캐시 저장은 하지 않으므로 캐시 오염은 발생하지 않습니다.
+- **3중 오탐 방지 (standalone 감지 + 연속 실패 임계 + 타임아웃 + 슬립 유예)** (v13):
+  - **Standalone 감지**: `display-mode: standalone` 미디어쿼리 + iOS `navigator.standalone`으로 설치형 PWA 여부를 판별. 설치형은 `onLine === false` 오탐 빈도가 높아 판정을 더 보수적으로 합니다.
+  - `FAIL_THRESHOLD = isStandalone ? 4 : 3`: 프로브가 **연속 3회(일반)/4회(standalone)** 실패해야 오프라인 확정(미확정 시 2.5초 후 재시도).
+  - `PROBE_TIMEOUT = 8000ms`: 모바일 저속망 여유분(4s→6s→8s로 단계적 상향).
+  - **슬립 복귀/콜드스타트 유예**: 마지막 화면 활성화(`visibilitychange`) 또는 `offline` 이벤트 후 **15초(`WAKE_GRACE_MS`)** 이내 실패는 통신 칩셋/Wi-Fi 재연결 중일 수 있어 `isOfflineMode`와 무관하게 failStreak를 쌓지 않고 3초 후 재시도. 첫 프로브는 5초 지연.
+- **적응 주기**: 온라인 정상 시 30초, 오프라인 확정 후 복구 감시는 5초로 단축. `online` 이벤트는 즉시 배너 해제(failStreak 초기화 + `hideBanner()`), `offline`/`visibilitychange` 이벤트는 wake 타임스탬프 갱신 후 즉시 재프로브.
 
 ---
 

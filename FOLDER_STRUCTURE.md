@@ -45,7 +45,7 @@ Personalized Skincare/
 ├── 📄 index.html                    ← ✅ 배포 (앱 진입점, 테마 로직 내장)
 ├── 📄 style.css                     ← ✅ 배포 (전역 스타일, 라이트/다크)
 ├── 📄 manifest.webmanifest          ← ✅ 배포 (PWA 매니페스트)
-├── 📄 ping.txt                      ← ✅ 배포 (오프라인 감지용 연결 프로브 대상, 내용 `1`; SW 프리캐시 + `?_probe=` 바이패스)
+├── 📄 ping.txt                      ← ✅ 배포 (오프라인 감지용 연결 프로브 대상, 내용 `1`; SW 프리캐시 + `?_probe=` 요청은 SW가 네트워크 프록시)
 ├── 📄 sw.js                         ← ✅ 배포 (Service Worker; 쉘 Network First, 데이터 안정캐시)
 ├── 📄 serve.js                      ← 로컬 개발 서버 (Vercel 제외)
 ├── 📄 vercel.json                   ← Vercel 설정 (캐시/보안 헤더)
@@ -56,9 +56,11 @@ Personalized Skincare/
 ├── 📂 icons/                        ← ✅ 배포 (PWA 아이콘 192/512/maskable)
 │
 ├── 📂 vendor/                       ← ✅ 배포 (자체 호스팅 서드파티 자산)
-│   └── fontawesome/                 ← 🆕 FontAwesome 6.4.0 자체 호스팅 (2026-08-24~)
-│       ├── css/all.min.css          ← CDN(cdnjs) 대체 — 모바일 아이콘 깨짐 해결
-│       └── webfonts/*.woff2/.ttf    ← SW 프리캐시 포함 (오프라인에서도 아이콘 표시)
+│   ├── fontawesome/                 ← FontAwesome 6.4.0 자체 호스팅 (2026-08-24~)
+│   │   ├── css/all.min.css          ← CDN(cdnjs) 대체 — 모바일 아이콘 깨짐 해결
+│   │   └── webfonts/*.woff2/.ttf    ← SW 프리캐시 포함 (오프라인에서도 아이콘 표시)
+│   └── mermaid/                     ← 🆕 Mermaid v10 자체 호스팅 (2026-08-24~)
+│       └── mermaid.min.js           ← CDN(jsDelivr) 대체 — CSP `script-src 'self'` 통과, docs/*.html 다이어그램 렌더링 복구
 │
 ├── 📂 src/                          ← ✅ 배포 (애플리케이션 소스; 전역 스코프)
 │   ├── sanitize.js                  ← XSS 방어(esc/safeTextWithBreaks) — 가장 먼저 로드
