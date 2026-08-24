@@ -45,6 +45,7 @@ Personalized Skincare/
 ├── 📄 index.html                    ← ✅ 배포 (앱 진입점, 테마 로직 내장)
 ├── 📄 style.css                     ← ✅ 배포 (전역 스타일, 라이트/다크)
 ├── 📄 manifest.webmanifest          ← ✅ 배포 (PWA 매니페스트)
+├── 📄 ping.txt                      ← ✅ 배포 (오프라인 감지용 연결 프로브 대상, 내용 `1`; SW 프리캐시 + `?_probe=` 바이패스)
 ├── 📄 sw.js                         ← ✅ 배포 (Service Worker; 쉘 Network First, 데이터 안정캐시)
 ├── 📄 serve.js                      ← 로컬 개발 서버 (Vercel 제외)
 ├── 📄 vercel.json                   ← Vercel 설정 (캐시/보안 헤더)

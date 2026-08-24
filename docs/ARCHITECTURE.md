@@ -321,15 +321,25 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 | 6 | 그 외 App Shell (아이콘/이미지 등) | **Stale-While-Revalidate** | 빠른 표시 + 백그라운드 갱신 |
 
 ### 캐시 버전 관리
-- `CACHE_VERSION` 상수로 캐시 네임스페이스 관리 (현재 `v7-20260824`)
+- `CACHE_VERSION` 상수로 캐시 네임스페이스 관리 (현재 `v11-20260824`)
 - **배포 시 버전을 올리면 구 캐시 자동 정리** → 모바일 구버전 고착(Stale Cache) 문제 방지
 - `SHELL_ASSETS`에는 [`src/utils.js`](../src/utils.js), [`src/trainer-calc.js`](../src/trainer-calc.js) 등 분리된 모듈이 모두 프리캐시에 포함됨
 
 ### 오프라인 감지 설계
-- `navigator.onLine`은 OS 어댑터 상태만 반영하므로 **신뢰하지 않음**
-- 실제 도달 가능성 프로브: **same-origin** `./manifest.webmanifest?_probe=…` (`no-store`, 4초 타임아웃, 30초 주기)
-  - 과거 `www.gstatic.com/generate_204`를 사용했으나, 해당 도메인이 차단되는 지역/망에서 온라인인데도 오프라인으로 오탐하는 문제가 있어 same-origin으로 변경
-- 오탐지(false offline) 방지 로직 포함
+판정은 **억제 우선(suppress-first)** 원칙을 따릅니다 — "실제로 오프라인일 때만" 배너를 띄우고, 모호하면 띄우지 않습니다.
+
+- **1차 게이트 — `navigator.onLine` 억제 신뢰**: `true`이면 프로브 없이 온라인으로 간주.
+  - 이 API는 "온라인인데 `false`"로 오탐하는 경우는 있어도 "오프라인인데 `true`"로 허위 보고하는 경우는 사실상 없으므로, **`true`는 신뢰(억제 방향), `false`는 불신(재확인)** 하는 비대칭 신뢰를 적용합니다.
+  - 이 한 줄이 모바일 콜드스타트/저속망에서 프로브가 일시 실패핮라도 가짜 배너가 뜨는 것을 원천 차단합니다. (v11)
+- **2차 게이트 — 실제 도달 프로브**: `onLine === false`일 때만 **same-origin** `./ping.txt?_probe={timestamp}` fetch 수행.
+  - 과거 `www.gstatic.com/generate_204`(제3자, 지역 차단 시 오탐) → `manifest.webmanifest`를 거쳐 전용 `ping.txt`(내용 `1`)로 정착.
+  - `cache: 'no-store'`는 일부 웹뷰/보안정책과 충돌해 fetch 자체가 실패하는 사례가 있어 제거하고, **쿼리스트링 타임스탬프로만 캐시를 우회**합니다.
+  - `?_probe=` 요청은 Service Worker가 가로채지 않고 네트워크 직행([sw.js](../sw.js)의 probe 바이패스).
+- **3중 오탐 방지 (연속 실패 임계 + 타임아웃 + 슬립 유예)**:
+  - `FAIL_THRESHOLD = 2`: 프로브가 **연속 2회** 실패해야 오프라인 확정(1회 실패는 2.5초 후 재시도).
+  - `PROBE_TIMEOUT = 6000ms`: 모바일 저속망 여유분.
+  - **슬립 복귀 유예**: 화면 활성화(`visibilitychange`) 후 10초 이내 실패는 통신 칩셋/Wi-Fi 재연결 중일 수 있어 failStreak를 쌓지 않고 3초 후 재시도.
+- **적응 주기**: 온라인 정상 시 30초, 오프라인 확정 후 복구 감시는 5초로 단축. `online`/`offline`/`visibilitychange` 이벤트 시 즉시 재프로브.
 
 ---
 
