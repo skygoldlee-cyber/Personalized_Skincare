@@ -1,4 +1,6 @@
-// src/charts.js - SVG 차트 및 합격 진단 로직 모듈 (글로벌 스코프 실행)
+// src/charts.js - SVG 차트 및 합격 진단 로직 모듈
+// [개선안 1-2] 데이터 레지스트리를 window 전역 대신 정적 ESM import 로 참조.
+import { DATA_REGISTRY } from '../data/registry.js';
 
 /* =======================================================
    📊 모의고사 성적 차트 (Performance Line Chart)
@@ -119,7 +121,7 @@ export function renderPerformanceChart() {
    ======================================================= */
 export function aggregateSubjectRates(history) {
     const subjectRates = {};
-    const subjects = (window.DATA_REGISTRY && window.DATA_REGISTRY.subjects) || [];
+    const subjects = (DATA_REGISTRY && DATA_REGISTRY.subjects) || [];
     subjects.forEach(sub => {
         subjectRates[sub.key] = [];
     });
@@ -190,7 +192,7 @@ export function renderPassFailDiagnosis() {
     
     // 과목별 최근 점수 추출하여 과락 판정
     const subjectRates = aggregateSubjectRates(history);
-    const subjects = (window.DATA_REGISTRY && window.DATA_REGISTRY.subjects) || [];
+    const subjects = (DATA_REGISTRY && DATA_REGISTRY.subjects) || [];
     
     // 각 과목 최신 성적 추출
     const getLatestRate = (subjKey) => {
@@ -291,7 +293,7 @@ export function renderRadarChart() {
     
     // 과목별 평균 정답률 계산
     const subjectRates = aggregateSubjectRates(history);
-    const subjects = (window.DATA_REGISTRY && window.DATA_REGISTRY.subjects) || [];
+    const subjects = (DATA_REGISTRY && DATA_REGISTRY.subjects) || [];
     const N = subjects.length;
     
     if (N < 3) {

@@ -1,0 +1,49 @@
+{
+  "subjects": {
+    "law": {
+      "cards": 131,
+      "quizzes": 11
+    },
+    "manufacturing": {
+      "cards": 487,
+      "quizzes": 0
+    },
+    "safety": {
+      "cards": 195,
+      "quizzes": 0
+    },
+    "understanding": {
+      "cards": 365,
+      "quizzes": 0
+    }
+  },
+  "exams": {
+    "subject1": {
+      "questions": 100
+    },
+    "subject2_p1": {
+      "questions": 100
+    },
+    "subject2_p2": {
+      "questions": 100
+    },
+    "subject2_p3": {
+      "questions": 98
+    },
+    "subject3_p1": {
+      "questions": 100
+    },
+    "subject3_p2": {
+      "questions": 100
+    },
+    "subject4_p1": {
+      "questions": 100
+    },
+    "subject4_p2": {
+      "questions": 100
+    },
+    "subject4_p3": {
+      "questions": 99
+    }
+  }
+}

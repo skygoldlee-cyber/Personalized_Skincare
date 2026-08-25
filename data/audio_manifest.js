@@ -11,9 +11,11 @@
 //    1) GitHub Releases에 MP3 업로드 후 raw URL 사용
 //    2) Cloudflare R2 / AWS S3 / GCS에 업로드
 //    3) 별도 Vercel 프로젝트로 오디오만 배포
-const AUDIO_BASE_URL = null; // null = 로컬 개발 모드, 문자열 = 외부 CDN URL
+/** @type {string|null} */
+export const AUDIO_BASE_URL = null; // null = 로컬 개발 모드, 문자열 = 외부 CDN URL
 
-const AUDIO_MANIFEST = {
+/** @type {import('../src/types.js').AudioManifest} */
+export const AUDIO_MANIFEST = {
   "law": {
     "0": "content/audiobook/mp3/law/ch01_1_화장품법2026.mp3",
     "1": "content/audiobook/mp3/law/ch02_2_개인정보_보호법2026.mp3"
@@ -46,10 +48,10 @@ const AUDIO_MANIFEST = {
 /**
  * 오디오 파일의 실제 접근 URL을 반환한다.
  * AUDIO_BASE_URL이 설정되어 있으면 외부 URL로, 아니면 로컬 상대 경로로 변환.
- * @param {string} localPath - 매니페스트에 저장된 로컬 경로
- * @returns {string} 실제 재생 가능한 URL
+ * @param {string|null} localPath - 매니페스트에 저장된 로컬 경로
+ * @returns {string|null} 실제 재생 가능한 URL(입력이 비면 null)
  */
-function getAudioUrl(localPath) {
+export function getAudioUrl(localPath) {
   if (!localPath) return null;
   if (AUDIO_BASE_URL && typeof AUDIO_BASE_URL === 'string' && AUDIO_BASE_URL.trim() !== '') {
     // 외부 CDN 사용: base URL + 파일명만 추출하여 조합

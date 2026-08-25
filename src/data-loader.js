@@ -6,6 +6,8 @@
 //        exam/ingredients 는 기존 레지스트리 번들 방식을 그대로 유지한다.
 import { cleanOrphansForSubject } from './state.js';
 import { buildSubjectData } from './textbook-parser.js';
+// [개선안 1-2] 레지스트리를 정적 ESM import 로 참조(window 전역 의존 제거).
+import { DATA_REGISTRY } from '../data/registry.js';
 
 var STUDY_DATA = {};
 var EXAM_DATA = {};
@@ -23,9 +25,12 @@ export const DataLoader = {
     _manifest: null,
     _fallbackInjected: false,
 
-    /** Initialize from the global registry */
+    /**
+     * Initialize from the ESM-imported registry.
+     * @returns {void}
+     */
     init() {
-        this.registry = typeof DATA_REGISTRY !== 'undefined' ? DATA_REGISTRY : window.DATA_REGISTRY;
+        this.registry = DATA_REGISTRY;
         if (typeof window.STUDY_DATA === 'undefined') window.STUDY_DATA = {};
         if (typeof window.EXAM_DATA === 'undefined') window.EXAM_DATA = {};
     },
@@ -147,7 +152,10 @@ export const DataLoader = {
         });
     },
 
-    /** 과목 목록 (레지스트리 메타: key/order/name/stats) */
+    /**
+     * 과목 목록 (레지스트리 메타: key/order/name/stats).
+     * @returns {import('./types.js').SubjectMeta[]}
+     */
     getSubjectList() {
         return this.registry.subjects;
     },
@@ -166,7 +174,11 @@ export const DataLoader = {
         return data;
     },
 
-    /** Load the ingredients database bundle on demand (기존 유지) */
+    /**
+     * Load the ingredients database bundle on demand.
+     * (온디맨드 번들은 file:// 호환을 위해 클래식 <script> 주입 방식을 유지한다.)
+     * @returns {Promise<import('./types.js').Ingredient[]>}
+     */
     async loadIngredients() {
         if (this._ingredients) return this._ingredients;
         const meta = this.registry.ingredients;
@@ -183,7 +195,7 @@ export const DataLoader = {
     }
 };
 
-// Auto-init if registry is loaded
-if (typeof DATA_REGISTRY !== 'undefined' || window.DATA_REGISTRY) {
+// Auto-init: 레지스트리는 정적 import 로 이미 로드되어 있으므로 즉시 초기화.
+if (DATA_REGISTRY) {
     DataLoader.init();
 }

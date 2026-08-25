@@ -1,8 +1,9 @@
 // 자동 생성된 데이터 레지스트리 파일입니다. 수정하지 마십시오.
-var DATA_REGISTRY = {
+/** @type {import('../src/types.js').DataRegistry} */
+export const DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2026",
-  "generatedAt": "2026-08-23T16:05:18.972Z",
+  "generatedAt": "2026-08-25T11:17:49.452Z",
   "subjects": [
     {
       "key": "law",
@@ -176,3 +177,6 @@ var DATA_REGISTRY = {
     }
   }
 };
+if (typeof window !== 'undefined') {
+  window.DATA_REGISTRY = DATA_REGISTRY;
+}

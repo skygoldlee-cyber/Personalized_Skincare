@@ -11,6 +11,7 @@
 /* =======================================================
    📦 전역 학습 상태 객체 (Global Application State)
    ======================================================= */
+/** @type {import('./types.js').State} */
 export const state = {
     currentView: 'dashboard-view',
 
@@ -81,13 +82,16 @@ function safeGetItem(key) {
     }
 }
 
+// 저장 실패 경고를 1회만 출력하기 위한 모듈 스코프 플래그(반복 스팸 방지).
+let storageWarnEmitted = false;
+
 function safeSetItem(key, value) {
     try {
         localStorage.setItem(key, value);
         return true;
     } catch (e) {
-        if (!safeSetItem._warned) {
-            safeSetItem._warned = true;
+        if (!storageWarnEmitted) {
+            storageWarnEmitted = true;
             console.warn('[Storage] 로컬 저장 실패 — 진행상황이 저장되지 않을 수 있습니다 ' +
                 '(용량 초과/프라이빗 모드/스토리지 비활성).', e && e.name);
         }
