@@ -1,7 +1,7 @@
 # 🏛️ 설계 컨셉 & 아키텍처 (Architecture & Design Concept)
 
 > **대상 프로젝트**: Cosmetic Pass Master — 맞춤형화장품 조제관리사 스마트 학습 플랫폼
-> **최종 업데이트**: 2026-08-23
+> **최종 업데이트**: 2026-08-25
 > **목적**: 시스템의 설계 철학, 아키텍처 구조, 주요 설계 결정 사항을 설명
 
 ---
@@ -70,11 +70,17 @@
 │ │  │ (라우팅· │ │ (SVG    │ │  .js       │ │ calc.js    │ │ │
 │ │  │  렌더링) │ │  차트)  │ │ (캔버스)   │ │ (문제생성) │ │ │
 │ │  └─────────┘ └─────────┘ └────────────┘ └────────────┘ │ │
-│ │  ┌─────────┐ ┌─────────┐                                │ │
-│ │  │state.js │ │utils.js │  sanitize.js (보안 유틸)       │ │
-│ │  │ (상태·  │ │ (초성·  │                                │ │
-│ │  │  영속성)│ │  헬퍼)  │                                │ │
+│ │  ┌─────────┐ ┌─────────┐ ┌────────────┐                │ │
+│ │  │state.js │ │utils.js │ │ ui-utils   │  sanitize.js  │ │
+│ │  │ (상태·  │ │ (초성·  │ │ (로딩UI)   │  (보안 유틸)   │ │
+│ │  │  영속성)│ │  헬퍼)  │ └────────────┘                │ │
 │ │  └─────────┘ └─────────┘                                │ │
+│ │  ┌──────────────────────────────────────────────────┐  │ │
+│ │  │  views/ (뷰 컨트롤러 모듈)                          │  │ │
+│ │  │  dashboard · flashcard · quiz · trainer            │  │ │
+│ │  │  dictionary · backup · textbook-search             │  │ │
+│ │  │  textbook-reader · exam-simulator                  │  │ │
+│ │  └──────────────────────────────────────────────────┘  │ │
 │ └─────────────────────────────────────────────────────────┘ │
 │ ┌─────────────────────────────────────────────────────────┐ │
 │ │                       Data Layer                         │ │
@@ -117,7 +123,7 @@
 
 | 모듈 | 책임 |
 |------|------|
-| [`src/app.js`](../src/app.js) | **메인 오케스트레이터**. 초기화(`initApp`), SPA 라우팅, 이벤트 바인딩, 각 기능별 렌더링 함수 |
+| [`src/app.js`](../src/app.js) | **메인 오케스트레이터** (1,154줄). 초기화(`initApp`), SPA 라우팅, 이벤트 바인딩, `startFocusSubjectStudy` 등 뷰 간 브릿지 함수 |
 | [`src/charts.js`](../src/charts.js) | SVG 기반 차트 생성 (레이더 차트, 성적 꺾은선 그래프). 외부 차트 라이브러리 미사용 |
 | [`src/scratchpad.js`](../src/scratchpad.js) | HTML5 Canvas 손글씨 연습장 (계산 문제 풀이용) |
 | [`src/trainer-calc.js`](../src/trainer-calc.js) | 계산 훈련 문제 생성기. **순수 로직** — DOM 의존 없이 문제 데이터 객첼만 반환 |
@@ -125,9 +131,11 @@
 | [`src/utils.js`](../src/utils.js) | 의존성 없는 범용 헬퍼 (한글 초성 추출 `getChosung()` 등) |
 | [`src/sanitize.js`](../src/sanitize.js) | HTML/XSS 방어 및 텍스트 정제 유틸리티 |
 | [`src/exam-viewer.js`](../src/exam-viewer.js) | 문제집(MD) 런타임 뷰어. `exams/*.md` fetch → 자체 MD→HTML 변환 → 인앱 전체화면 오버레이 렌더링. TOC 생성·인쇄·sessionStorage 캐시(24h)·`file://` 번들 폴리백(`data/exams_md/*.js`) 지원. 정적 `exams/*.html` 대체(2026-08-24~) |
-| [`src/data-loader.js`](../src/data-loader.js) | 온디맨드 데이터 로더. **교재/카드/퀴즈: `content/*.md` 런타임 fetch+파싱**(http는 라이브 fetch, `file://`은 `data/study_md.js` 폴백, fetch 실패 시 자동 폴백). 시험/성분은 기존 번들 로드 유지. 로드 후 registry stats를 실제 개수로 갱신 |
+| [`src/data-loader.js`](../src/data-loader.js) | 온디맨드 데이터 로더. **교재/카드/퀴즈: `content/*.md` 런타임 fetch+파싱**(http는 라이브 fetch, `file://`은 `data/study_md/` 과목별 분할 폴백, fetch 실패 시 자동 폴백). 시험/성분은 기존 번들 로드 유지. 로드 후 registry stats를 실제 개수로 갱신 |
 | [`src/textbook-parser.js`](../src/textbook-parser.js) | 교재 MD 런타임 파서. `tools/build/plugins/textbook.plugin.js`의 브라우저 포팅으로 카드/퀴즈/챕터를 조립(`buildSubjectData`). 빌드 산출물과 **바이트 단위 동일** 검증됨 |
+| [`src/ui-utils.js`](../src/ui-utils.js) | 공통 UI 유틸리티. 로딩 스피너(`showLoading`/`hideLoading`) 및 글로벌 로딩 오버레이(`showGlobalLoading`/`hideGlobalLoading`) |
 | [`src/sha256.js`](../src/sha256.js) | 순수 동기 SHA-256 + `stableId()`. 빌드타임 Node `crypto`와 동일한 카드/퀴즈 안정 ID를 브라우저에서 재현(진도 보존의 핵심) |
+| [`src/views/`](../src/views/) | **뷰 컨트롤러 모듈 디렉터리** (app.js에서 분리 추출). `dashboard.js`, `flashcard.js`, `quiz.js`, `trainer.js`, `dictionary.js`, `backup.js`, `textbook-search.js`, `textbook-reader.js`, `exam-simulator.js` |
 
 ### 3. Data Layer (데이터 계층)
 
@@ -135,7 +143,7 @@
 |------|------|-----------|
 | [`data/registry.js`](../data/registry.js) | 시험/성분 번들 목록·메타 + 과목 목록/통계 | `tools/build/index.js` |
 | [`content/**/*.md`](../content/) + [`content/manifest.json`](../content/manifest.json) | **교재/카드/퀴즈의 원본 (SSOT).** 런타임에 fetch+파싱 | 저자 직접 작성 |
-| [`data/study_md.js`](../data/study_md.js) | 교재 MD `file://` 폴백 번들 (매니페스트+전체 MD 인라인). http에선 미사용 | `tools/build_study_md_bundle.js` |
+| [`data/study_md/`](../data/study_md/) | 교재 MD `file://` 폴백 번들 (**과목별 분할**: manifest.js + 과목별 `.js`). http에선 미사용. 과목 로드 시 해당 파일만 온디맨드 로드 | `tools/build_study_md_bundle.js` |
 | [`data/exams/<key>.<hash>.js`](../data/exams/) | 시험별 문항 번들 | `tools/build/index.js` (exams plugin) |
 | [`data/ingredients_data.<hash>.js`](../data/) | 화장품 성분 사전 (가용/금지/제한) | `tools/build/index.js` (ingredients plugin) |
 | [`data/id_migration.js`](../data/id_migration.js) | 레거시 ID → 안정 ID 일회성 매핑 | `tools/generate_migration_map.js` |
@@ -143,7 +151,7 @@
 
 > ⚠️ `data/subjects/<key>.<hash>.js`(과목 학습 번들)는 **2026-08-24부터 런타임 MD 파싱으로 대체·제거**되었다. `npm run build:data`가 재생성하더라도 앱은 로드하지 않으며 배포에서도 제외(`.vercelignore`)된다.
 
-**특징**: 시험/성분 번들은 전역 상수 JS로 `<script>` 로드만으로 즉시 사용(오프라인 핵심). 교재/카드/퀴즈는 `content/*.md`를 런타임 fetch(http, SW `Cache First`로 오프라인 대응)하거나 `file://`에선 `data/study_md.js` 폴백을 사용한다.
+**특징**: 시험/성분 번들은 전역 상수 JS로 `<script>` 로드만으로 즉시 사용(오프라인 핵심). 교재/카드/퀴즈는 `content/*.md`를 런타임 fetch(http, SW `Cache First`로 오프라인 대응)하거나 `file://`에선 `data/study_md/` 과목별 분할 폴백을 사용한다.
 
 ### 4. Persistence Layer (영속성 계층)
 
@@ -175,23 +183,29 @@
 
 ### 모듈화 전략: "점진적 모듈화 (Progressive Modularization)"
 
-거대한 단일 `app.js`(약 4,900줄)를 한 번에 ES Modules로 전환하는 대신, **부수효과 없는 순수 로직부터 글로벌 스코프 스크립트로 점진 분리**하는 전략을 채택했습니다.
+거대한 단일 `app.js`(원래 약 4,900줄)를 한 번에 ES Modules로 전환하는 대신, **부수효과 없는 순수 로직부터 글로벌 스코프 스크립트로 점진 분리**하는 전략을 채택했습니다. 2026-08-25 기준 `app.js`는 **1,154줄**로 축소되었고, 9개 뷰 컨트롤러 모듈이 `src/views/`에 분리되었습니다.
 
 **분리 원칙**:
 1. **DOM 의존성 없는 순수 로직 우선 분리** → `trainer-calc.js`(문제 생성), `utils.js`(초성 추출), `reader-format.js`(리더 포맷터)
 2. **상태·영속성 로직 분리** → `state.js`
-3. **ES Modules 전환 대비**: 각 파일을 `export` 추가만으로 변환 가능하도록 순수 선언으로 구성
+3. **뷰 컨트롤러 분리** → `src/views/` 디렉터리에 과목별/기능별 모듈 추출
+4. **공통 UI 유틸 분리** → `ui-utils.js`(로딩 오버레이) — 순환 의존성 방지
+5. **ES Modules 전환 대비**: 각 파일을 `export` 추가만으로 변환 가능하도록 순수 선언으로 구성
 
 ```
-[분리 완료]                     [향후 분리 후보]
-utils.js (헬퍼)                 - 텍스트 검색 로직 (performTextbookSearch)
-trainer-calc.js (문제 생성)      - 오디오 리더 로직 (renderTextbookReader)
-state.js (상태·영속성)           - 모의고사 채점 로직 (submitExam)
-charts.js (시각화)               - 데일리 챌린지 로직
-sanitize.js (보안)
-scratchpad.js (캔버스)
-reader-format.js (리더 포맷터)
+[분리 완료]
+utils.js (헬퍼)                  views/backup.js (백업/복원)
+trainer-calc.js (문제 생성)       views/textbook-search.js (교재 검색)
+state.js (상태·영속성)            views/textbook-reader.js (리더+오디오)
+charts.js (시각화)                views/exam-simulator.js (모의고사)
+sanitize.js (보안)                views/dashboard.js (대시보드)
+scratchpad.js (캔버스)            views/flashcard.js (플래시카드)
+reader-format.js (리더 포맷터)    views/quiz.js (퀴즈+복습)
+ui-utils.js (로딩 UI)             views/trainer.js (훈련소)
+                                  views/dictionary.js (성분 검색)
 ```
+
+> `app.js`에 남은 함수: `startFocusSubjectStudy`(뷰 간 브릿지), `switchView`, 초기화/네비게이션/이벤트 바인딩. `examIdToSubjectId`는 `exam-simulator.js`에서 정의 후 `app.js`를 통해 re-export되어 `quiz.js`가 import.
 
 > 상세 분해 로드맵은 [`docs/APP_JS_DECOMPOSITION.md`](APP_JS_DECOMPOSITION.md) 참고.
 
@@ -404,13 +418,13 @@ exams/**/*.md           ──► (exams plugin)             ──► data/exam
 content/ingredients/*.md ──► (ingredients plugin)       ──► data/ingredients_data.<hash>.js
 
 content/**/*.md ───(런타임 fetch)──► src/data-loader.js + src/textbook-parser.js ──► STUDY_DATA (카드/퀴즈/챕터)
-content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.js ──► data/study_md.js
+content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.js ──► data/study_md/ (과목별 분할)
 ```
 
 **특징**:
 - **SSOT**: `content/manifest.json` + `content/**/*.md`가 교재/카드/퀴즈의 단일 진실 원천
 - **런타임 파싱**: `src/textbook-parser.js`가 브라우저에서 카드/퀴즈/챕터를 조립. 카드/퀴즈 안정 ID는 `src/sha256.js`(Node `crypto`와 동일)로 재현되어 진도 보존
-- **재빌드 불필요**: `content/*.md` 수정 시 http 배포는 즉시 반영. `file://` 지원이 필요할 때만 `node tools/build_study_md_bundle.js` 실행
+- **재빌드 불필요**: `content/*.md` 수정 시 http 배포는 즉시 반영. `file://` 지원이 필요할 때만 `npm run build:study-md` 실행 (과목별 분할 번들 생성)
 - **온디맨드 로딩**: `src/data-loader.js`가 필요한 과목/시험만 로드하고, 로드 후 registry stats를 실제 개수로 갱신
 - **해시 파일명(시험/성분)**: 번들 내용이 바뀌면 파일명도 바뀌어 캐시 무효화가 자연스럽게 이루어짐
 
@@ -449,19 +463,24 @@ content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.j
 
 ## 🚀 향후 확장 방향
 
-1. **ES Modules 전환 완성**
-   - 현재 글로벌 스코프 모듈들에 `export`/`import` 적용 → 명시적 의존성 그래프, 트리셰이킹 가능
+1. **ES Modules 전환 완성** ✅
+   - 모든 `src/` 모듈이 ESM `import`/`export` 사용 → 명시적 의존성 그래프 확립
 
-2. **추가 도메인 로직 분리**
-   - 텍스트 검색 엔진, 오디오 리더, 모의고사 채점기 등을 독립 모듈로 분리 → 단위 테스트 작성 기반 마련
+2. **추가 도메인 로직 분리** ✅
+   - `backup.js`, `textbook-search.js`, `textbook-reader.js`, `exam-simulator.js` 등 9개 뷰 컨트롤러 모듈 분리 완료
+   - `ui-utils.js` 공통 UI 유틸 분리로 순환 의존성 방지
 
-3. **타입 안정성 도입 (선택)**
+3. **DOM 테스트 환경 도입** ✅
+   - Vitest + jsdom으로 DOM 렌더링/이벤트 테스트 기반 구축 (96 tests: 86 unit + 10 DOM)
+   - GitHub Actions CI로 push 시 자동 테스트 실행
+
+4. **타입 안정성 도입 (선택)**
    - JSDoc + `checkJs` 또는 TypeScript 점진 도입으로 대형 리팩토링 안전성 확보
 
-4. **백엔드 연동 확장성 (필요 시)**
+5. **백엔드 연동 확장성 (필요 시)**
    - 상태 영속성 계층(`state.js`의 `saveProgress`)을 추상화핛두어, 향후 클라우드 동기화 시 해당 지점만 API 호출로 교체 가능하도록 설계
 
-5. **성능 계측**
+6. **성능 계측**
    - Core Web Vitals (LCP/CLS/INP) 기준 지속 모니터링, 대용량 데이터 지연 로딩 검토
 
 ---

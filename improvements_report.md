@@ -1,6 +1,8 @@
 # 💄 Cosmetic Pass Master 보완 및 개선점 정리 보고서
 
-본 보고서는 **맞춤형화장품 조제관리사 스마트 학습 플랫폼(Cosmetic Pass Master)**의 현재 코드베이스와 문서 분석을 바탕으로, 시스템 안정성, 성능 최적화, 기능 확장성 및 UI/UX 완성도를 극대화하기 위한 보완 및 개선 사항을 정리한 것입니다.
+본 보고서는 **맞춤형화장품 조제관리사 스마트 학습 플랫픔(Cosmetic Pass Master)**의 현재 코드베이스와 문서 분석을 바탕으로, 시스템 안정성, 성능 최적화, 기능 확장성 및 UI/UX 완성도를 극대화하기 위한 보완 및 개선 사항을 정리한 것입니다.
+
+> **2026-08-25 업데이트**: 1-1(app.js 분할), 1-2(ESM 완성), 4-1(단위 테스트), 4-2(CI/CD) 항목이 완료되었습니다. 완료된 항목은 ✅ 표시로 갱신합니다.
 
 ---
 
@@ -10,8 +12,8 @@
 mindmap
   root((Cosmetic Pass Master))
     아키텍처 및 코드 구조
-      app.js 모놀리식 분할
-      ESM 모듈화 완성
+      ✅ app.js 모놀리식 분할
+      ✅ ESM 모듈화 완성
       TypeScript/JSDoc 도입
     성능 및 빌드 최적화
       가상 스크롤 도입
@@ -22,8 +24,8 @@ mindmap
       오디오북 미디어 세션 연동
       인터랙티브 차트 보완
     품질 및 안정성 검증
-      Vitest 단위 테스트 도입
-      CI/CD 파이프라인 연동
+      ✅ Vitest 단위 테스트 도입
+      ✅ CI/CD 파이프라인 연동
     디자인 및 UI/UX 디테일
       화면 전환 애니메이션
       3D 카드 뒤집기 최적화
@@ -33,21 +35,24 @@ mindmap
 
 ## 1. 🏛️ 아키텍처 및 코드 구조 개선
 
-### 1-1. `src/app.js` 모놀리식 파일 분할
-- **현황**: 메인 엔트리 역할을 하는 [`src/app.js`](file:///c:/Project/Personalized_Skincare/src/app.js)가 약 5,170줄에 달하는 대형 파일로 구성되어 있습니다. 라우팅, 9개 뷰(View)의 렌더링 로직, 이벤트 핸들러가 모두 모여 있어 장기적인 유지보수와 디버깅이 어렵습니다.
-- **개선안**: 각 뷰별 컨트롤러를 분리하여 `src/views/` 디렉터리에 모듈화합니다.
+### 1-1. ✅ `src/app.js` 모놀리식 파일 분할 (완료: 2026-08-25)
+- **현황**: ~~메인 엔트리 역할을 하는 `src/app.js`가 약 5,170줄에 달하는 대형 파일~~ → **1,154줄로 축소 완료**.
+- **완료 내역**: 각 뷰별 컨트롤러를 `src/views/` 디렉터리에 모듈화 완료.
   - `src/views/dashboard.js` (대시보드 통계 및 챌린지)
   - `src/views/flashcard.js` (플래시카드 학습)
   - `src/views/quiz.js` (기출 및 일일 퀴즈)
   - `src/views/trainer.js` (스마트 훈련소 및 계산기)
   - `src/views/dictionary.js` (성분 검색 및 상세 보기)
-  - `src/app.js`는 공통 라우팅 및 상태 변경 감지, 이벤트 위임 브릿지만 담당하도록 축소시킵니다.
+  - `src/views/backup.js` (데이터 백업/복원)
+  - `src/views/textbook-search.js` (교재 본문 검색)
+  - `src/views/textbook-reader.js` (교재 리더 + 오디오 재생)
+  - `src/views/exam-simulator.js` (실전 모의고사 시뮬레이터)
+  - `src/ui-utils.js` (공통 로딩 UI 유틸)
+  - `src/app.js`는 공통 라우팅 및 상태 변경 감지, 이벤트 위임 브릿지만 담당하도록 축소.
 
-### 1-2. ES Modules (ESM) 아키텍처 완성
-- **현황**: `src/` 폴더 내 코드는 ESM 모듈 시스템을 도입하여 `import/export`를 사용하고 있으나, 빌드 산출물 번들(`data/registry.js`, `data/audio_manifest.js` 등)과 외부 Mermaid 라이브러리 등은 여전히 클래식 전역 스크립트로 로드되어 전역 `window` 객체에 바인딩하고 있습니다.
-- **개선안**:
-  - `data/registry.js` 및 오디오 매니페스트 등을 정적 ESM 모듈 형태로 빌드하도록 개선합니다.
-  - 빌드 시스템(`tools/build/`)을 정돈하여 배포판 자산 전체가 표준 ESM 흐름을 타도록 완성합니다.
+### 1-2. ✅ ES Modules (ESM) 아키텍처 완성 (완료: 2026-08-25)
+- **현황**: `src/` 폴더 내 모든 코드가 ESM 모듈 시스템을 사용하여 `import/export`로 명시적 의존성 그래프를 구축했습니다. `data/registry.js`도 ESM import로 참조합니다.
+- **완료 내역**: 모든 `src/*.js` 및 `src/views/*.js`가 ESM `import`/`export` 사용. `window` 전역 노출은 이벤트 위임 호환성 유지용으로만 최소화하여 남김.
 
 ### 1-3. 타입 안정성 (JSDoc 또는 TypeScript) 도입
 - **현황**: 전역 상태(`state`) 및 복잡한 과목 메타데이터 구조가 자바스크립트 객체로 관리되어, 속성 추가/변경 시 런타임 오류가 발생하기 쉽습니다.
@@ -87,15 +92,17 @@ mindmap
 
 ## 4. 🧪 테스트 및 코드 안정성 확보
 
-### 4-1. 단위 테스트(Unit Test) 시스템 도입
-- **현황**: 복잡한 비즈니스 로직(예: 퀴즈 ID 해시 규칙, MD 파서 변환 규칙, 계산기 수식 문제 생성기 등)의 안전성을 검증할 수 있는 자동화 테스트 코드가 누락되어 있습니다.
-- **개선안**:
-  - 가벼운 테스트 러너인 **Vitest** 또는 **Jest**를 설치하고, 로직 전용 파일인 `trainer-calc.js`, `sanitize.js`, `textbook-parser.js`에 대한 단위 테스트 스위트를 빌드 파이프라인에 추가합니다.
-  - 예시: `npm run test` 실행 시 파서 정합성 자동 검증.
+### 4-1. ✅ 단위 테스트(Unit Test) 시스템 도입 (완료: 2026-08-25)
+- **현황**: ~~복잡한 비즈니스 로직에 대한 자동화 테스트 코드가 누락~~ → **96개 테스트 구축 완료**.
+- **완료 내역**:
+  - Node.js 내장 테스트 러너로 86개 단위 테스트 구축 (`sha256`, `sanitize`, `state`, `textbook-parser`, `trainer-calc`, `utils`, `id-factory`)
+  - **Vitest + jsdom**으로 10개 DOM 테스트 구축 (`backup.js` 모듈)
+  - `npm test` (unit), `npm run test:dom` (DOM), `npm run test:all` (전체) 스크립트 운영
+  - 파서 정합성 검증: `node tools/check_parser_parity.js`
 
-### 4-2. CI/CD 빌드 유효성 자동화 검증
-- **현황**: PR(Pull Request) 등록이나 Vercel 배포 시, 개발자가 로컬에서 돌려보는 스모크 테스트 위주로 이루어집니다.
-- **개선안**: GitHub Actions 등을 연동하여 푸시(Push) 발생 시 `npm run build:data` 빌드 확인 및 린트 검사(`ESLint`), 단위 테스트가 자동으로 작동하고 실패 시 배포를 중단하는 가드레일을 설치합니다.
+### 4-2. ✅ CI/CD 빌드 유효성 자동화 검증 (완료: 2026-08-25)
+- **현황**: ~~PR 등록이나 배포 시 개발자가 로컬에서 돌려보는 스모크 테스트 위주~~ → **GitHub Actions CI 구축 완료**.
+- **완료 내역**: `.github/workflows/ci.yml` — push 시 자동으로 `npm test`(86 unit tests) + `node tools/check_parser_parity.js`(파서 정합성 검증) 실행. 실패 시 PR 상태에 반영.
 
 ---
 

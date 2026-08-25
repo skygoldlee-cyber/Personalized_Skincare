@@ -179,3 +179,38 @@
 - **배포 가이드 통합**: Vercel 배포, 용량 최적화, 외부 오디오 호스팅 가이드를 하나의 완결성 있는 `DEPLOYMENT_GUIDE.md`로 통합하고 구 문서 3개 파일을 삭제했습니다.
 - **과거 로그 단일화**: `CHANGES.md`에 이전 세션의 주요 수정 완료 보고서(`walkthrough.md`, `code_review_report.md`)와 기술 마일스톤 이력(`RUNTIME_MD_MIGRATION.md`) 정보를 요약 병합하고 구 문서 3개 파일을 삭제했습니다.
 - **폴더 구조 README 통합**: `FOLDER_STRUCTURE.md` 내의 폴더 트리를 `README.md`로 흡수하고 해당 파일을 정리했습니다.
+
+---
+
+## 🏛️ 후속 수정 및 아키텍처 개편 내역 (2026-08-25, 2차)
+
+### 5. app.js 모듈화 — 뷰 컨트롤러 9개 모듈 분리 완료
+
+- **배경**: 단일 `app.js`(원래 약 4,900줄)에서 뷰 컨트롤러 로직을 순차적으로 독립 ES Module로 추출하여 유지보수성과 테스트 가능성을 향상.
+- **분리된 모듈** (`src/views/`):
+  - `backup.js` — 데이터 백업/복원 (exportData, importData, triggerImport)
+  - `textbook-search.js` — 교재 본문 검색 (검색 상태, 렌더링, 필터링, 카드 토글)
+  - `textbook-reader.js` — 교재 리더 + 오디오 재생 (상태, 오디오 컨트롤, 렌더링)
+  - `exam-simulator.js` — 실전 모의고사 시뮬레이터 (simState, 세션 관리, 타이머, OMR, 채점)
+- **공통 UI 유틸 분리**: `src/ui-utils.js` — `showLoading`/`hideLoading`/`showGlobalLoading`/`hideGlobalLoading` + spinner CSS. 순환 의존성 방지를 위해 별도 모듈로 분리.
+- **app.js 축소**: 3,277줄 → **1,154줄** (65% 감소). 남은 핵심: 초기화, 라우팅, 이벤트 바인딩, `startFocusSubjectStudy`(뷰 간 브릿지), `switchView`.
+- **호환성 유지**: `window` 전역 객체에 추출된 함수들을 노출하여 기존 `data-click` 이벤트 위임 패턴과 인라인 핸들러 호환성 확보. `examIdToSubjectId`는 `exam-simulator.js`에서 정의 후 `app.js`를 통해 re-export.
+
+### 6. DOM 테스트 환경 도입 (Vitest + jsdom)
+
+- **Vitest + jsdom** 설치 및 `vitest.config.mjs` 설정 (jsdom 환경, `tests/dom/**/*.test.js` 포함).
+- `tests/dom/backup.dom.test.js` — `backup.js` 모듈의 DOM 렌더링 및 이벤트 테스트 (10 tests).
+- `package.json`에 `test:dom` 및 `test:all` 스크립트 추가.
+- **총 테스트: 96개** (86 unit + 10 DOM), 전부 통과.
+
+### 7. GitHub Actions CI 통합
+
+- `.github/workflows/ci.yml` — push 시 자동으로 `npm test`(unit tests) + `node tools/check_parser_parity.js`(파서 정합성 검증) 실행.
+
+### 8. data/study_md.js 폴백 번들 최적화 — 과목별 분할
+
+- **배경**: `file://` 프로토콜용 단일 폴백 번들 `data/study_md.js`(513KB)를 과목별로 분할하여 초기 로드 크기 최적화.
+- **변경**: 단일 513KB 파일 → `data/study_md/manifest.js`(3KB) + 과목별 `.js` 파일 (102~162KB each).
+- **데이터 로더 수정**: `src/data-loader.js`의 `_ensureFallbackBundle()`을 `_ensureFallbackManifest()` + `_ensureFallbackSubjectFiles(key)`로 분리. 과목 로드 시 해당 과목의 MD 파일만 온디맨드 로드.
+- **최적화 효과**: 사용자가 1과목만 학습할 경우 513KB → **112KB** (78% 감소). 전체 과목 순차 학습 시에도 한 번에 513KB 로드 대신 과목 전환 시마다 분할 로드.
+- **빌드 스크립트**: `tools/build_study_md_bundle.js` 재작성. `npm run build:study-md`로 실행.

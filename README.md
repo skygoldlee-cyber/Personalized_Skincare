@@ -47,16 +47,23 @@
 
 **Frontend**
 - 순수 HTML5 / CSS3 / Vanilla JavaScript (프레임워크 없음)
+- ES Modules (ESM) — `import`/`export` 기반 명시적 의존성 그래프
 - SPA 라우팅 (자체 구현)
 - SVG 기반 차트 (레이더/꺾은선, 외부 라이브러리 없음)
 - Noto Sans KR · Outfit (Google Fonts), FontAwesome 아이콘 (자체 호스팅 — [`vendor/fontawesome/`](vendor/fontawesome/), CDN 의존 없음)
 - **라이트/다크 듀얼 테마 UI**: CSS 변수 기반 디자인 토큰, 시스템 테마 연동, `localStorage` 선택 영속화
 - **반응형 모바일 레이아웃**: 하단 탭 바 네비게이션, safe-area-inset 대응, 100dvh 동적 뷰포트
 
+**테스트**
+- Node.js 내장 테스트 러너 (`node --test`) — 86 unit tests (sha256, sanitize, state, parser, trainer-calc, utils)
+- Vitest + jsdom — 10 DOM tests (backup 모듈)
+- GitHub Actions CI — push 시 `npm test` + parser parity 자동 실행
+
 **데이터 파이프라인** (빌드 타임)
 - Node.js 모듈러 빌드 파이프라인으로 MD 교재/문제 → 해시드 JS 번들 생성
   - `tools/build/index.js` → `data/registry.js` + `data/subjects/*.hash.js` + `data/exams/*.hash.js` + `data/ingredients_data.*.js`
   - `tools/build_exam_bundles.js` → `data/exams_md/*.js` (문제집 MD file:// 폴리백 번들)
+  - `tools/build_study_md_bundle.js` → `data/study_md/` (교재 MD file:// 폴백, 과목별 분할)
   - `tools/generate_migration_map.js` → `data/id_migration.js`
   - 런타임: `src/data-loader.js`가 registry를 보고 필요한 과목/시험만 온디맨드 로드
 
@@ -66,6 +73,7 @@
 
 **배포**
 - Vercel (정적 호스팅, SPA rewrite 설정)
+- GitHub Actions CI (push 시 자동 테스트 + 파서 정합성 검증)
 
 ---
 
@@ -94,20 +102,34 @@ Personalized Skincare/
 │   ├── sanitize.js                  ← XSS 방어(esc/safeTextWithBreaks)
 │   ├── data-loader.js               ← 레지스트리 기반 온디맨드 번들 로더(DataLoader)
 │   ├── utils.js                     ← 범용 헬퍼(한글 초성 추출 등)
+│   ├── ui-utils.js                  ← 공통 UI 유틸(로딩 오버레이/spinner)
 │   ├── charts.js                    ← SVG 차트 및 합격 진단
 │   ├── scratchpad.js                ← Canvas 손글씨 계산 연습장
 │   ├── trainer-calc.js              ← 계산 훈련 문제 생성기
 │   ├── state.js                     ← 전역 상태 + localStorage 영속화
 │   ├── exam-viewer.js               ← 문제집(MD) 런타임 인앱 뷰어
-│   └── app.js                       ← 메인 앱 (라우팅 및 공통 렌더러)
+│   ├── views/                       ← 뷰 컨트롤러 모듈 (app.js에서 분리)
+│   │   ├── dashboard.js             ← 대시보드 통계 및 챌린지
+│   │   ├── flashcard.js             ← 플래시카드 학습
+│   │   ├── quiz.js                  ← 기출 퀴즈 및 오답 복습
+│   │   ├── trainer.js               ← 스마트 훈련소
+│   │   ├── dictionary.js            ← 성분 검색 사전
+│   │   ├── backup.js                ← 데이터 백업/복원
+│   │   ├── textbook-search.js       ← 교재 본문 검색
+│   │   ├── textbook-reader.js       ← 교재 리더 + 오디오 재생
+│   │   └── exam-simulator.js        ← 실전 모의고사 시뮬레이터
+│   └── app.js                       ← 메인 앱 (라우팅, 공통 렌더러, 초기화)
 │
 ├── 📂 data/                         ← ✅ 배포 (빌드 산출물 — 수정 금지)
 │   ├── registry.js                  ← 번들 목록/메타
 │   ├── id_migration.js              ← 레거시 ID ➔ 안정 ID 일회성 매핑
 │   ├── audio_manifest.js            ← 오디오 파일 경로 매니페스트
-│   ├── subjects/<key>.<hash>.js     ← 과목별 학습 번들
+│   ├── subjects/<key>.<hash>.js     ← 과목별 학습 번들 (레거시, 미사용)
 │   ├── exams/<key>.<hash>.js        ← 시험별 문항 번들
 │   ├── exams_md/<stem>.js           ← 문제집 MD 번들 (file:// 프로토콜 폴백)
+│   ├── study_md/                    ← 교재 MD file:// 폴백 (과목별 분할)
+│   │   ├── manifest.js              ← 폴백 manifest (~3KB)
+│   │   └── <subjectKey>.js          ← 과목별 MD 원문 (온디맨드 로드)
 │   └── ingredients_data.<hash>.js   ← 성분 사전 번들
 │
 ├── 📂 content/                      ← 교재 MD 원본 (manifest만 빌드에 참조)
@@ -121,6 +143,11 @@ Personalized Skincare/
 │
 ├── 📂 exams/                        ← ✅ 배포 (모의고사 MD 원본 및 뷰어 소스)
 │
+├── 📂 tests/                        ← 자동화 테스트
+│   ├── unit/                        ← Node.js 내장 테스트 러너 (86 tests)
+│   └── dom/                         ← Vitest + jsdom DOM 테스트 (10 tests)
+├── 📂 .github/workflows/            ← GitHub Actions CI (test + parser parity)
+│
 └── 📂 docs/                         ← 개발 및 배포 관련 설계 가이드
     ├── ARCHITECTURE.md              ← 아키텍처 및 설계 표준 가이드
     ├── DEPLOYMENT_GUIDE.md          ← Vercel 배포 및 오디오 호스팅 가이드
@@ -129,7 +156,7 @@ Personalized Skincare/
     └── study_summary.md/.html       ← 교재 요약본
 ```
 
-> **범례:** ✅ 배포 포함 · ❌ 배포 제외 · 🆕 최신 모듈러 개편 반영
+> **범례:** ✅ 배포 포함 · ❌ 배포 제외 · 🆕 최신 모듈러 개편 반영 (2026-08-25)
 
 자세한 설계 컨셉과 상세 아키텍처는 [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)를 참고하세요.
 
@@ -157,7 +184,7 @@ python -m http.server 8000
 
 ```bash
 npm i -g vercel
-vercel
+vercel --prod
 ```
 
 배포 최적화 및 오디오 호스팅 상세는 [`docs/DEPLOYMENT_GUIDE.md`](docs/DEPLOYMENT_GUIDE.md)를 참고하세요.
@@ -202,6 +229,9 @@ npm run build:data
 # 부분 빌드 (변경 과목만)
 npm run build:data:law
 node tools/build/index.js --only law,safety
+
+# file:// 폴백 번들 재생성 (교재 MD 수정 시)
+npm run build:study-md
 
 # 안정 ID 이관 맵 재생성 (퀴즈 ID 규칙 변경 시)
 node tools/generate_migration_map.js
