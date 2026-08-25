@@ -967,6 +967,10 @@ function setupPWAInstall() {
 
     function detectPlatform() {
         const ua = navigator.userAgent || '';
+        // 인앱 브라우저(WebView) 감지 — wv 플래그, Kakao, Instagram, Facebook, LINE, Twitter 등
+        if (/;\s*wv\)/.test(ua) || /KAKAOTALK|KakaoTalk/i.test(ua) || /Instagram/i.test(ua) || /FBAN|FBAV/i.test(ua) || /Line\//i.test(ua) || /Twitter/i.test(ua) || /Snapchat/i.test(ua)) {
+            return 'inapp';
+        }
         if (/iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) {
             return 'ios';
         }
@@ -980,9 +984,11 @@ function setupPWAInstall() {
         if (!installModal) return;
         const platform = detectPlatform();
         console.log('[PWA] 설치 안내 모달 표시 - 플랫폼:', platform);
+        const guideInapp = document.getElementById('pwa-guide-inapp');
         if (guideAndroid) guideAndroid.style.display = platform === 'android' ? 'block' : 'none';
         if (guideIos) guideIos.style.display = platform === 'ios' ? 'block' : 'none';
         if (guideGeneric) guideGeneric.style.display = platform === 'generic' ? 'block' : 'none';
+        if (guideInapp) guideInapp.style.display = platform === 'inapp' ? 'block' : 'none';
 
         // 진단 정보 수집 및 표시
         const diagEl = document.getElementById('pwa-diagnostics');
@@ -1112,6 +1118,28 @@ function setupPWAInstall() {
 
     // 서비스 워커 등록은 pwa-install-capture.js(<head>)에서 조기 실행됨.
     // 여기서 중복 등록하지 않음 (navigator.serviceWorker.register는 동일 scope면 재등록 무해하지만 불필요).
+
+    // 인앱 브라우저 자동 감지 — Chrome으로 열기 안내 모달 자동 표시 (최초 1회)
+    const platform = detectPlatform();
+    if (platform === 'inapp') {
+        console.log('[PWA] 인앱 브라우저 감지 — Chrome으로 열기 안내');
+        // 페이지 로드 완료 후 자동 표시
+        const showInappGuide = () => {
+            try {
+                const seen = sessionStorage.getItem('__inappGuideShown');
+                if (seen) return;
+                sessionStorage.setItem('__inappGuideShown', '1');
+                openInstallModal();
+            } catch (e) {
+                openInstallModal();
+            }
+        };
+        if (document.readyState === 'complete') {
+            setTimeout(showInappGuide, 800);
+        } else {
+            window.addEventListener('load', () => setTimeout(showInappGuide, 800));
+        }
+    }
 }
 
 function setupThemeToggle() {

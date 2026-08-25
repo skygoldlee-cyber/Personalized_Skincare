@@ -1244,6 +1244,27 @@
                 <p class="pwa-tip"><i class="fa-solid fa-circle-info"></i> Chrome: 메뉴(⋮) → "앱 설치" / Safari(Mac): 파일 → "홈 화면에 추가"</p>
             </div>
 
+            <!-- 인앱 브라우저(WebView) 안내 — Chrome으로 열기 -->
+            <div class="pwa-modal-body" id="pwa-guide-inapp" style="display: none;">
+                <p class="pwa-modal-lead" style="color: var(--color-primary-light, #06b6d4);"><i class="fa-solid fa-triangle-exclamation"></i> 현재 인앱 브라우저에서 열려 있습니다</p>
+                <p class="pwa-step-text" style="margin-bottom: 1rem;">카카오톡·Instagram·Facebook 등 인앱 브라우저에서는 앱 설치가 지원되지 않습니다. <strong>Chrome 브라우저</strong>에서 열어주세요.</p>
+                <ol class="pwa-steps">
+                    <li>
+                        <span class="pwa-step-num">1</span>
+                        <span class="pwa-step-text">현재 화면 <strong>우측 상단 메뉴(⋮ 또는 ≡)</strong>를 누르세요.</span>
+                    </li>
+                    <li>
+                        <span class="pwa-step-num">2</span>
+                        <span class="pwa-step-text"><strong>"다른 브라우저로 열기"</strong> 또는 <strong>"Chrome으로 열기"</strong>를 선택하세요.</span>
+                    </li>
+                    <li>
+                        <span class="pwa-step-num">3</span>
+                        <span class="pwa-step-text">Chrome에서 다시 이 페이지를 열고, 주소창 옆 <strong>설치 아이콘</strong> 또는 메뉴(⋮) → <strong>"앱 설치"</strong>를 누르세요.</span>
+                    </li>
+                </ol>
+                <p class="pwa-tip"><i class="fa-solid fa-circle-info"></i> 주소창에 직접 입력해도 됩니다: <strong>personalized-skincare-study.vercel.app</strong></p>
+            </div>
+
             <!-- PWA 진단 정보 (디버그용) -->
             <div class="pwa-modal-body" id="pwa-diagnostics" style="display: none; border-top: 1px solid var(--border-color, rgba(255,255,255,0.08)); padding-top: 1rem; margin-top: 0.5rem;">
                 <p class="pwa-modal-lead" style="font-size: 0.85rem; opacity: 0.7;">설치 프롬프트가 자동으로 뜨지 않는 원인 진단:</p>
