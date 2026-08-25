@@ -6,8 +6,8 @@ ElevenLabs API를 사용해 청취용 원고 텍스트를 MP3로 변환하는 �
 
 특징:
   - API 키는 환경변수 ELEVENLABS_API_KEY 에서 읽음
-  - 청크별 개별 MP3 저장 → 중간에 실패핟라도 이어서 재개 가능
-  - 이미 생성된 MP3는 건드러뛰기(--resume)
+  - 청크별 개별 MP3 저장 → 중간에 실패하더라도 이어서 재개 가능
+  - 이미 생성된 MP3는 건너뛰기(--resume)
   - 지수 백오프 재시도 (429/5xx 대응)
   - 한국어 강의식 음성에 적합한 기본 설정
     model: eleven_multilingual_v2
@@ -128,7 +128,7 @@ def synthesize_chunk_to_file(
 ) -> Path:
     """
     단일 청크 텍스트를 MP3 파일로 저장.
-    resume=True이고 파일이 이미 있으면 건드러뛴다.
+    resume=True이고 파일이 이미 있으면 건너뛴다.
     재시도(지수 백오프) 내장.
     """
     out_path = Path(out_path)

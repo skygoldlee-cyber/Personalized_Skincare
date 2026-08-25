@@ -191,7 +191,7 @@ def main() -> int:
     ap.add_argument("--voice", default="Aria",
                     help="ElevenLabs 음성 이름 또는 ID (기본: Aria)")
     ap.add_argument("--no-resume", dest="resume", action="store_false",
-                    help="기존 MP3도 다시 생성 (기본: 이미 있으면 건드러뜀)")
+                    help="기존 MP3도 다시 생성 (기본: 이미 있으면 건너뜀)")
     ap.add_argument("--list", action="store_true",
                     help="처리 대상 목록만 출력하고 종료")
     args = ap.parse_args()

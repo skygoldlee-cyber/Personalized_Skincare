@@ -241,7 +241,7 @@ def process_chapter(job: ChapterJob, output_root: Path, progress: dict) -> Path 
             continue
         out_path = chunk_dir / f"{chunk.chunk_id}.mp3"
 
-        # 이미 생성된 파일 건드러뛰기 (0 bytes 파일은 재생성)
+        # 이미 생성된 파일 건너뛰기 (0 bytes 파일은 재생성)
         if out_path.exists():
             size = out_path.stat().st_size
             if size > 0:
@@ -398,7 +398,7 @@ def main() -> int:
                 print(f"  [skip] 병합할 청크 없음")
             continue
 
-        # 이미 완료된 챕터 건드러뛰기
+        # 이미 완료된 챕터 건너뛰기
         merged_path = output_root / job.subject_key / f"ch{job.chapter_no:02d}_{job.slug}.mp3"
         if merged_path.exists() and merged_path.stat().st_size > 0:
             size_kb = merged_path.stat().st_size // 1024
@@ -415,8 +415,8 @@ def main() -> int:
             else:
                 fail += 1
         except KeyboardInterrupt:
-            print(f"\n\n중단됨. 진행: {ok}개 성공 / {fail}개 실패 / {skipped}개 건드러뜀")
-            print("이어서 실행: 같은 명령을 다시 실행하면 생성된 청크는 건드러뜀")
+            print(f"\n\n중단됨. 진행: {ok}개 성공 / {fail}개 실패 / {skipped}개 건너뜀")
+            print("이어서 실행: 같은 명령을 다시 실행하면 생성된 청크는 건너뜀")
             print(f"진행 상황 파일: {PROGRESS_FILE}")
             return 130
         except Exception as e:
@@ -428,7 +428,7 @@ def main() -> int:
     seconds = int(elapsed % 60)
 
     print(f"\n{'='*60}")
-    print(f"  전체 완료: 성공 {ok}개 / 실패 {fail}개 / 건드러뜀 {skipped}개")
+    print(f"  전체 완료: 성공 {ok}개 / 실패 {fail}개 / 건너뜀 {skipped}개")
     print(f"  소요 시간: {minutes}분 {seconds}초")
     print(f"  출력 위치: {output_root}/")
     if progress["failed_chunks"]:

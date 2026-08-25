@@ -24,9 +24,9 @@ MD 교재 → 청킹(≤2,500자) → 청취용 원고 정제 → ElevenLabs TTS
 1. **Python**: WinPython 3.12.4 (`c:\Python\WPy64-31241\python-3.12.4.amd64\python.exe`)
 2. **패키지 설치** (TTS 사용 시에만 필요):
    ```powershell
-   c:\Python\WPy64-31241\python-3.12.4.amd64\python.exe -m pip install -r audiobook\requirements.txt
+   c:\Python\WPy64-31241\python-3.12.4.amd64\python.exe -m pip install -r content\audiobook\requirements.txt
    ```
-3. **API 키** (TTS 사용 시에만 필요): `.env.example` 참고 → `ELEVENLABS_API_KEY` 환경변수 설정
+3. **API 키** (TTS 사용 시에만 필요): `content\.env.example` 참고 → `ELEVENLABS_API_KEY` 환경변수 설정
 4. **ffmpeg** (선택, MP3 병합 품질 향상): `winget install ffmpeg`
 
 ## 사용법
@@ -35,22 +35,22 @@ MD 교재 → 청킹(≤2,500자) → 청취용 원고 정제 → ElevenLabs TTS
 
 ```powershell
 # 전체 과목 원고 생성
-c:\Python\WPy64-31241\python-3.12.4.amd64\python.exe audiobook\run_pipeline.py --polish-only
+c:\Python\WPy64-31241\python-3.12.4.amd64\python.exe content\audiobook\run_pipeline.py --polish-only
 
 # 처리 대상만 미리 보기
-c:\Python\WPy64-31241\python-3.12.4.amd64\python.exe audiobook\run_pipeline.py --list
+c:\Python\WPy64-31241\python-3.12.4.amd64\python.exe content\audiobook\run_pipeline.py --list
 
 # 특정 과목/챕터만
-c:\Python\WPy64-31241\python-3.12.4.amd64\python.exe audiobook\run_pipeline.py --subject manufacturing --chapter 1 --polish-only
+c:\Python\WPy64-31241\python-3.12.4.amd64\python.exe content\audiobook\run_pipeline.py --subject manufacturing --chapter 1 --polish-only
 ```
 
 결과물:
-- `audiobook/scripts/<과목>/ch01_001.txt …` — 청취용 원고 (검수용)
-- `audiobook/chunks/<과목>/ch01/ch01_001.md …` — 원본 청크 (검수용)
+- `content/audiobook/scripts/<과목>/ch01_001.txt …` — 청취용 원고 (검수용)
+- `content/audiobook/chunks/<과목>/ch01/ch01_001.md …` — 원본 청크 (검수용)
 
 ### 2단계 — 원고 검수 후 TTS 실행
 
-`audiobook/scripts/` 의 `.txt` 파일을 열어 읽기 자연스러운지 확인하고,
+`content/audiobook/scripts/` 의 `.txt` 파일을 열어 읽기 자연스러운지 확인하고,
 부자연스러운 부분은 직접 수정한 뒤 실행하세요 (수정한 원고가 그대로 합성됩니다).
 
 ```powershell
@@ -58,18 +58,18 @@ c:\Python\WPy64-31241\python-3.12.4.amd64\python.exe audiobook\run_pipeline.py -
 $env:ELEVENLABS_API_KEY="여기에_키"
 
 # 전체 챕터 TTS + 병합
-c:\Python\WPy64-31241\python-3.12.4.amd64\python.exe audiobook\run_pipeline.py --tts
+c:\Python\WPy64-31241\python-3.12.4.amd64\python.exe content\audiobook\run_pipeline.py --tts
 
-# 중단됐다면 이어서 (이미 만든 청크 MP3는 건드러뜀)
-c:\Python\WPy64-31241\python-3.12.4.amd64\python.exe audiobook\run_pipeline.py --tts --resume
+# 중단됐다면 이어서 (이미 만든 청크 MP3는 건너뜀)
+c:\Python\WPy64-31241\python-3.12.4.amd64\python.exe content\audiobook\run_pipeline.py --tts --resume
 
 # 음성 변경 (ElevenLabs 웹에서 한국어 음성 테스트 후 이름/ID 지정)
-c:\Python\WPy64-31241\python-3.12.4.amd64\python.exe audiobook\run_pipeline.py --tts --voice "음성이름"
+c:\Python\WPy64-31241\python-3.12.4.amd64\python.exe content\audiobook\run_pipeline.py --tts --voice "음성이름"
 ```
 
 결과물:
-- `audiobook/mp3/<과목>/ch01_chunks/ch01_001.mp3 …` — 청크별 MP3
-- `audiobook/mp3/<과목>/ch01_화장품_원료의_종류와….mp3` — **챕터 통합 MP3** (최종 결과물)
+- `content/audiobook/mp3/<과목>/ch01_chunks/ch01_001.mp3 …` — 청크별 MP3
+- `content/audiobook/mp3/<과목>/ch01_화장품_원료의_종류와….mp3` — **챕터 통합 MP3** (최종 결과물)
 
 ## TTS 설정 (강의식 차분한 음성)
 
@@ -106,7 +106,7 @@ c:\Python\WPy64-31241\python-3.12.4.amd64\python.exe audiobook\run_pipeline.py -
 
 - ElevenLabs 물료 플랜: 월 10,000 크레딧(≒10,000자) — 챕터 1개 분량 수준. 유료 플랜 권장.
 - 청크 1개(2,500자) ≒ 오디오 3~4분 ≒ 생성 수 초.
-- 실패핟라도 청크 단위로 저장되므로 `--resume`으로 이어서 실행 가능.
+- 실패하더라도 청크 단위로 저장되므로 `--resume`으로 이어서 실행 가능.
 
 ## 문제 해결
 
