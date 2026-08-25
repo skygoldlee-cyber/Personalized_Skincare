@@ -12,14 +12,17 @@
   // 1) SW 조기 등록 — Chrome이 PWA 설치 가능 여부를 판단하려면
   //    활성 SW(activate + clients.claim)가 필요. module 스크립트 대기 없이 즉시 등록.
   if ('serviceWorker' in navigator) {
+    var hadController = !!navigator.serviceWorker.controller;
     navigator.serviceWorker.register('./sw.js')
       .then(function (reg) {
         window.__swRegistered = true;
         console.log('[PWA] SW 조기 등록 성공:', reg.scope);
-        // controllerchange 리스너도 여기서 등록 (app.js와 중복 등록해도 무해)
+        // controllerchange: 기존 SW가 있던 상태에서 교체된 경우(=업데이트)만 리로드.
+        // 최초 등록(controller가 null → 새 SW)이나 hardReset 후 재등록 시에는 리로드하지 않음.
         var refreshing = false;
         navigator.serviceWorker.addEventListener('controllerchange', function () {
           if (refreshing) return;
+          if (!hadController) return;  // 최초 등록이면 리로드 불필요
           refreshing = true;
           window.location.reload();
         });
