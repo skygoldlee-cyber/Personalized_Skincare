@@ -57,7 +57,13 @@ requirements.txt
 .env.example
 .generation_progress.json
 
-# ---------- 🗑️ 캐시 및 빌드 아티팩트 ----------
+# ---------- � Node (개발 의존성 — 배포 불필요) ----------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ---------- �🗑️ 캐시 및 빌드 아티팩트 ----------
 __pycache__/
 *.pyc
 *.pyo
