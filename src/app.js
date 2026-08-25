@@ -1020,6 +1020,28 @@ function setupPWAInstall() {
                 }
             }
 
+            // manifest 링크 검증
+            const manifestLink = document.querySelector('link[rel="manifest"]');
+            if (manifestLink) {
+                lines.push('• manifest href: ' + manifestLink.getAttribute('href'));
+                try {
+                    const resp = await fetch(manifestLink.getAttribute('href'), { cache: 'no-cache' });
+                    lines.push('• manifest fetch: ' + resp.status + ' ' + resp.statusText);
+                    lines.push('• manifest Content-Type: ' + resp.headers.get('Content-Type'));
+                    if (resp.ok) {
+                        const json = await resp.json();
+                        lines.push('• manifest name: ' + (json.name || '없음'));
+                        lines.push('• manifest icons: ' + (json.icons ? json.icons.length + '개' : '없음'));
+                        lines.push('• manifest display: ' + (json.display || '없음'));
+                        lines.push('• manifest start_url: ' + (json.start_url || '없음'));
+                    }
+                } catch (e) {
+                    lines.push('• manifest fetch 실패: ' + e.message);
+                }
+            } else {
+                lines.push('• manifest link: 없음');
+            }
+
             diagContent.textContent = lines.join('\n');
             diagEl.style.display = 'block';
         }
