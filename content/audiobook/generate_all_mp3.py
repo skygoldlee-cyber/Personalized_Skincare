@@ -10,12 +10,12 @@ generate_all_mp3.py
   - google: Google Translate TTS 직접 호출 (온라인, 자연스러운 음질, 비공식 엔드포인트)
 
 실행:
-    python audiobook/generate_all_mp3.py                  # 전체
-    python audiobook/generate_all_mp3.py --subject law     # 특정 과목만
-    python audiobook/generate_all_mp3.py --dry-run         # 처리 목록만 출력
-    python audiobook/generate_all_mp3.py --merge-only     # 청크만 있고 병합 안 된 것 병합
-    python audiobook/generate_all_mp3.py --engine google   # Google TTS 직접 호출
-    python audiobook/generate_all_mp3.py --engine gtts     # gTTS 사용 (기본: pyttsx3)
+    python content/audiobook/generate_all_mp3.py                  # 전체
+    python content/audiobook/generate_all_mp3.py --subject law     # 특정 과목만
+    python content/audiobook/generate_all_mp3.py --dry-run         # 처리 목록만 출력
+    python content/audiobook/generate_all_mp3.py --merge-only     # 청크만 있고 병합 안 된 것 병합
+    python content/audiobook/generate_all_mp3.py --engine google   # Google TTS 직접 호출
+    python content/audiobook/generate_all_mp3.py --engine gtts     # gTTS 사용 (기본: pyttsx3)
 """
 
 from __future__ import annotations
