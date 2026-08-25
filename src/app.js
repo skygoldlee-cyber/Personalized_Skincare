@@ -976,13 +976,54 @@ function setupPWAInstall() {
         return 'generic';
     }
 
-    function openInstallModal() {
+    async function openInstallModal() {
         if (!installModal) return;
         const platform = detectPlatform();
         console.log('[PWA] 설치 안내 모달 표시 - 플랫폼:', platform);
         if (guideAndroid) guideAndroid.style.display = platform === 'android' ? 'block' : 'none';
         if (guideIos) guideIos.style.display = platform === 'ios' ? 'block' : 'none';
         if (guideGeneric) guideGeneric.style.display = platform === 'generic' ? 'block' : 'none';
+
+        // 진단 정보 수집 및 표시
+        const diagEl = document.getElementById('pwa-diagnostics');
+        const diagContent = document.getElementById('pwa-diag-content');
+        if (diagEl && diagContent) {
+            const lines = [];
+            lines.push('• beforeinstallprompt 캡처: ' + (window.__deferredPrompt ? '성공' : '실패'));
+            lines.push('• SW 조기 등록: ' + (window.__swRegistered ? '성공' : '미확인'));
+            lines.push('• display-mode standalone: ' + window.matchMedia('(display-mode: standalone)').matches);
+            lines.push('• navigator.standalone: ' + window.navigator.standalone);
+            lines.push('• UA: ' + (navigator.userAgent || '').substring(0, 80));
+
+            // SW 활성 상태 확인
+            if ('serviceWorker' in navigator) {
+                try {
+                    const reg = await navigator.serviceWorker.getRegistration();
+                    lines.push('• SW 등록: ' + (reg ? '있음' : '없음'));
+                    if (reg) {
+                        lines.push('• SW 상태: ' + (reg.active ? reg.active.state : '비활성'));
+                    }
+                } catch (e) {
+                    lines.push('• SW 조회 실패: ' + e.message);
+                }
+            } else {
+                lines.push('• ServiceWorker API: 미지원');
+            }
+
+            // getInstalledRelatedApps 확인 (지원하는 경우)
+            if (navigator.getInstalledRelatedApps) {
+                try {
+                    const apps = await navigator.getInstalledRelatedApps();
+                    lines.push('• 설치된 관련 앱: ' + (apps.length > 0 ? apps.map(a => a.id).join(', ') : '없음'));
+                } catch (e) {
+                    lines.push('• getInstalledRelatedApps 실패: ' + e.message);
+                }
+            }
+
+            diagContent.textContent = lines.join('\n');
+            diagEl.style.display = 'block';
+        }
+
         installModal.style.display = 'flex';
         document.body.style.overflow = 'hidden';
     }
