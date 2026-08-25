@@ -128,9 +128,10 @@ import {
     showSimResultsSummary,
     startWeakExam
 } from './views/exam-simulator.js';
+import { switchView, saveScrollPosition, restoreScrollPosition } from './views/navigation.js';
 
-// Re-export for quiz.js import compatibility
-export { examIdToSubjectId };
+// Re-export for backward compatibility (other modules may still reference app.js for these)
+export { switchView, examIdToSubjectId };
 
 // --- 초기화 및 로컬스토리지 로드 ---
 function populateSubjectSelects() {
@@ -429,46 +430,8 @@ function setupNavigation() {
     });
 }
 
-// 외부에서 특정 뷰로 전환하는 유틸리티
-export function switchView(targetView) {
-    // 리더 화면을 벗어나면 재생 중인 오디오 정지
-    if (targetView !== 'textbook-reader-view' && typeof stopReaderAudio === 'function') {
-        stopReaderAudio();
-    }
-    
-    // 현재 뷰 스크롤 위치 저장
-    saveScrollPosition(state.currentView);
-    
-    const navItem = document.querySelector(`.nav-item[data-target="${targetView}"]`);
-    if (navItem) {
-        navItem.click();
-    }
-    
-    // 새 뷰 스크롤 위치 복원
-    restoreScrollPosition(targetView);
-}
-
-// ============================================================
-// 모바일 UX 개선: 스크롤 위치 저장/복원
-// ============================================================
-const scrollPositions = {};
-
-function saveScrollPosition(viewId) {
-    const mainContent = document.querySelector('.main-content');
-    if (mainContent) {
-        scrollPositions[viewId] = mainContent.scrollTop;
-    }
-}
-
-function restoreScrollPosition(viewId) {
-    const mainContent = document.querySelector('.main-content');
-    if (mainContent && scrollPositions[viewId] !== undefined) {
-        // DOM 렌더링 완료 후 복원
-        requestAnimationFrame(() => {
-            mainContent.scrollTop = scrollPositions[viewId];
-        });
-    }
-}
+// switchView, saveScrollPosition, restoreScrollPosition는
+// ./views/navigation.js로 추출됨 (app.js ↔ quiz.js/dashboard.js 순환 import 해결).
 
 // ============================================================
 // 모바일 UX 개선: 오프라인 감지 및 배너 표시
@@ -1250,6 +1213,7 @@ window.clearTextbookSearch = clearTextbookSearch;
 window.setTextbookFilter = setTextbookFilter;
 window.toggleTextbookCard = toggleTextbookCard;
 window.toggleReaderAudio = toggleReaderAudio;
+window.stopReaderAudio = stopReaderAudio;
 window.toggleReaderPlayPause = toggleReaderPlayPause;
 window.seekReaderAudio = seekReaderAudio;
 window.cycleReaderAudioRate = cycleReaderAudioRate;

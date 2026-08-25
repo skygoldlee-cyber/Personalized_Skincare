@@ -2,7 +2,8 @@
 import { state, saveProgress } from '../state.js';
 import { safeTextWithBreaks, esc } from '../sanitize.js';
 import { DataLoader } from '../data-loader.js';
-import { switchView, examIdToSubjectId } from '../app.js';
+import { switchView } from './navigation.js';
+import { examIdToSubjectId } from './exam-simulator.js';
 import { checkShortAnswer } from './trainer.js';
 import { updateGlobalStats } from './dashboard.js';
 

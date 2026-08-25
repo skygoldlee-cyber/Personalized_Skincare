@@ -3,7 +3,7 @@ import { state, saveProgress } from '../state.js';
 import { esc } from '../sanitize.js';
 import { DataLoader } from '../data-loader.js';
 import { renderPerformanceChart, renderPassFailDiagnosis, renderRadarChart } from '../charts.js';
-import { switchView } from '../app.js';
+import { switchView } from './navigation.js';
 import { updateStreakAndDailyUI } from './quiz.js';
 import { updatePomodoroUI } from './trainer.js';
 
