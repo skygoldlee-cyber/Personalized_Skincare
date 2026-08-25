@@ -72,6 +72,7 @@ export const ManualViewer = (() => {
        ========================================================= */
     let _overlayEl = null;
     let _historyPushed = false;
+    let _openTimestamp = 0;
 
     function _injectStylesOnce() {
         if (document.getElementById('manual-overlay-style')) return;
@@ -288,7 +289,12 @@ body.manual-open{overflow:hidden;}
     }
 
     function _onKeydown(e) { if (e.key === 'Escape') close(); }
-    function _onPopstate() { if (isOpen()) close(true); }
+    function _onPopstate() {
+        if (!isOpen()) return;
+        // _open() 직후 발생하는 popstate(잔류 해시 변경 등) 무시
+        if (Date.now() - _openTimestamp < 300) return;
+        close(true);
+    }
 
     function _open() {
         const el = _ensureOverlay();
@@ -297,6 +303,7 @@ body.manual-open{overflow:hidden;}
             document.body.classList.add('manual-open');
             document.addEventListener('keydown', _onKeydown);
             window.addEventListener('popstate', _onPopstate);
+            _openTimestamp = Date.now();
             // 안드로이드 뒤로가기 / 스와이프로 닫히도록 히스토리 상태 추가
             try { history.pushState({ manualOverlay: true }, ''); _historyPushed = true; }
             catch (e) { _historyPushed = false; }
