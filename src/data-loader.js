@@ -2,7 +2,7 @@
 // [변경] 교재/카드/퀴즈(STUDY_DATA)는 더 이상 사전 빌드된 data/subjects/*.js 번들을 쓰지 않고,
 //        content/*.md 를 런타임에 fetch → src/textbook-parser.js 로 파싱하여 조립한다.
 //        - http(s): content/manifest.json + content/**/*.md 라이브 fetch (항상 최신, 재빌드 불필요)
-//        - file://: fetch 차단되므로 data/study_md.js(__STUDY_MD__) 폴백 번들에서 원문/매니페스트 조회
+//        - file://: fetch 차단되므로 data/study_md/ 분할 폴백 번들에서 원문/매니페스트 조회
 //        exam/ingredients 는 기존 레지스트리 번들 방식을 그대로 유지한다.
 import { cleanOrphansForSubject } from './state.js';
 import { buildSubjectData } from './textbook-parser.js';
@@ -14,7 +14,8 @@ var EXAM_DATA = {};
 var INGREDIENTS_DATA = [];
 
 const IS_FILE = (typeof location !== 'undefined' && location.protocol === 'file:');
-const STUDY_MD_BUNDLE = './data/study_md.js';      // file:// 폴백 (window.__STUDY_MD__)
+const STUDY_MD_MANIFEST_BUNDLE = './data/study_md/manifest.js';  // file:// 폴백 manifest
+const STUDY_MD_SUBJECT_BUNDLE = (key) => `./data/study_md/${key}.js`;  // file:// 폴백 과목별 MD
 const MANIFEST_URL = './content/manifest.json';
 
 export const DataLoader = {
@@ -23,7 +24,8 @@ export const DataLoader = {
     _loadedExams: {},
     _ingredients: null,
     _manifest: null,
-    _fallbackInjected: false,
+    _fallbackManifestInjected: false,
+    _fallbackSubjectInjected: {},
 
     /**
      * Initialize from the ESM-imported registry.
@@ -73,21 +75,40 @@ export const DataLoader = {
         });
     },
 
-    /** file:// 폴백 번들(__STUDY_MD__)을 한 번만 주입 */
-    async _ensureFallbackBundle() {
-        if (this._fallbackInjected && window.__STUDY_MD__) return window.__STUDY_MD__;
-        if (!window.__STUDY_MD__) {
-            await this._loadScript(STUDY_MD_BUNDLE);
+    /** file:// 폴백 manifest를 한 번만 주입 */
+    async _ensureFallbackManifest() {
+        if (this._fallbackManifestInjected && window.__STUDY_MD_MANIFEST__) return window.__STUDY_MD_MANIFEST__;
+        if (!window.__STUDY_MD_MANIFEST__) {
+            await this._loadScript(STUDY_MD_MANIFEST_BUNDLE);
             await new Promise(r => setTimeout(r, 0));
         }
-        this._fallbackInjected = true;
-        if (!window.__STUDY_MD__) {
-            throw new Error('교재 MD 폴백 번들을 찾을 수 없습니다. `node tools/build_study_md_bundle.js` 로 data/study_md.js 를 생성하세요.');
+        this._fallbackManifestInjected = true;
+        if (!window.__STUDY_MD_MANIFEST__) {
+            throw new Error('폴백 manifest를 찾을 수 없습니다. `node tools/build_study_md_bundle.js` 로 data/study_md/ 를 생성하세요.');
         }
-        return window.__STUDY_MD__;
+        return window.__STUDY_MD_MANIFEST__;
     },
 
-    /** content/manifest.json 확보 (http: fetch, file://: 폴백 번들) */
+    /** file:// 폴백 과목별 MD 파일 번들을 온디맨드 주입 */
+    async _ensureFallbackSubjectFiles(subjectKey) {
+        if (this._fallbackSubjectInjected[subjectKey]) {
+            const files = window.__STUDY_MD_FILES__ && window.__STUDY_MD_FILES__[subjectKey];
+            if (files) return files;
+        }
+        if (!window.__STUDY_MD_FILES__) window.__STUDY_MD_FILES__ = {};
+        if (!window.__STUDY_MD_FILES__[subjectKey]) {
+            await this._loadScript(STUDY_MD_SUBJECT_BUNDLE(subjectKey));
+            await new Promise(r => setTimeout(r, 0));
+        }
+        this._fallbackSubjectInjected[subjectKey] = true;
+        const files = window.__STUDY_MD_FILES__ && window.__STUDY_MD_FILES__[subjectKey];
+        if (!files) {
+            throw new Error(`폴백 과목 번들을 찾을 수 없습니다: ${subjectKey}`);
+        }
+        return files;
+    },
+
+    /** content/manifest.json 확보 (http: fetch, file://: 폴백 manifest) */
     async _getManifest() {
         if (this._manifest) return this._manifest;
         if (!IS_FILE) {
@@ -96,22 +117,29 @@ export const DataLoader = {
                 if (res.ok) { this._manifest = await res.json(); return this._manifest; }
             } catch (e) { /* 폴백으로 진행 */ }
         }
-        const bundle = await this._ensureFallbackBundle();
-        if (!bundle.manifest) throw new Error('폴백 번들에 manifest가 없습니다.');
-        this._manifest = bundle.manifest;
+        const manifest = await this._ensureFallbackManifest();
+        this._manifest = manifest;
         return this._manifest;
     },
 
-    /** 단일 MD 원문 확보 (http: fetch, 실패/file://: 폴백 번들) */
-    async _getMd(relPath) {
+    /** 단일 MD 원문 확보 (http: fetch, 실패/file://: 폴백 과목별 번들) */
+    async _getMd(relPath, subjectKey) {
         if (!IS_FILE) {
             try {
                 const res = await fetch('./' + relPath, { cache: 'no-cache' });
                 if (res.ok) return await res.text();
             } catch (e) { /* 폴백으로 진행 */ }
         }
-        const bundle = await this._ensureFallbackBundle();
-        const md = bundle.files && bundle.files[relPath];
+        if (!subjectKey) {
+            // relPath에서 subjectKey 추출: content/{dir}/{file} → manifest에서 dir 매칭
+            const manifest = await this._getManifest();
+            const dir = relPath.split('/')[1];
+            const subj = manifest.subjects.find(s => s.dir === dir);
+            subjectKey = subj ? subj.key : null;
+        }
+        if (!subjectKey) throw new Error(`과목을 식별할 수 없습니다: ${relPath}`);
+        const files = await this._ensureFallbackSubjectFiles(subjectKey);
+        const md = files[relPath];
         if (typeof md !== 'string') throw new Error(`MD 원문을 찾을 수 없습니다: ${relPath}`);
         return md;
     },
@@ -126,7 +154,7 @@ export const DataLoader = {
 
         const mdByFile = {};
         for (const ch of subjMeta.chapters) {
-            mdByFile[ch.file] = await this._getMd(`content/${subjMeta.dir}/${ch.file}`);
+            mdByFile[ch.file] = await this._getMd(`content/${subjMeta.dir}/${ch.file}`, key);
         }
 
         const data = buildSubjectData(subjMeta, mdByFile, { filePathMode: 'md' });

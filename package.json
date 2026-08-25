@@ -13,7 +13,11 @@
     "check:parser": "node tools/check_parser_parity.js",
     "stamp:sw": "node tools/build/stamp-sw-version.js",
     "build:study-md": "node tools/build_study_md_bundle.js",
-    "test": "npm run check:parser",
+    "test": "node --test tests/unit/*.test.js",
+    "test:unit": "node --test tests/unit/*.test.js",
+    "test:dom": "vitest run",
+    "test:all": "node --test tests/unit/*.test.js && node tools/check_parser_parity.js && vitest run",
+    "test:watch": "node --test --watch tests/unit/*.test.js",
     "serve": "node serve.js"
   },
   "keywords": [
@@ -23,5 +27,9 @@
     "vanilla-js"
   ],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "jsdom": "^30.0.1",
+    "vitest": "^4.1.11"
+  }
 }
