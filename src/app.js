@@ -1005,8 +1005,22 @@ function setupPWAInstall() {
     if (installBtn) {
         installBtn.addEventListener('click', async () => {
             console.log('[PWA] 설치 버튼 클릭됨');
+            // window.__deferredPrompt에서 최신 값 동기화
+            if (!deferredPrompt && window.__deferredPrompt) {
+                deferredPrompt = window.__deferredPrompt;
+                console.log('[PWA] window.__deferredPrompt에서 복구');
+            }
             if (!deferredPrompt) {
-                console.log('[PWA] 설치 프롬프트가 아직 준비되지 않았습니다.');
+                // 진단 정보 출력
+                console.log('[PWA] beforeinstallprompt 미발생 — 진단:');
+                console.log('[PWA]   SW 등록:', window.__swRegistered ? '성공' : '실패/미등록');
+                console.log('[PWA]   display-mode standalone:', window.matchMedia('(display-mode: standalone)').matches);
+                console.log('[PWA]   navigator.standalone:', window.navigator.standalone);
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.getRegistration().then(reg => {
+                        console.log('[PWA]   SW 활성 상태:', reg ? reg.active?.state : '등록 없음');
+                    }).catch(e => console.log('[PWA]   SW 조회 실패:', e));
+                }
                 // 플랫폼별 설치 안내 모달 표시
                 openInstallModal();
                 return;
@@ -1033,17 +1047,8 @@ function setupPWAInstall() {
         }
     });
 
-    // 서비스 워커 등록
-    if ('serviceWorker' in navigator) {
-        // 새 SW가 제어를 넘겨받으면 1회 자동 새로고침 → 배포 직후 구/신 파일 혼재(캐시 스큐) 자가 치유
-        let __swRefreshing = false;
-        navigator.serviceWorker.addEventListener('controllerchange', () => {
-            if (__swRefreshing) return; __swRefreshing = true; window.location.reload();
-        });
-        navigator.serviceWorker.register('./sw.js')
-            .then(reg => console.log('[PWA] 서비스 워커 등록 성공:', reg.scope))
-            .catch(err => console.error('[PWA] 서비스 워커 등록 실패:', err));
-    }
+    // 서비스 워커 등록은 pwa-install-capture.js(<head>)에서 조기 실행됨.
+    // 여기서 중복 등록하지 않음 (navigator.serviceWorker.register는 동일 scope면 재등록 무해하지만 불필요).
 }
 
 function setupThemeToggle() {
