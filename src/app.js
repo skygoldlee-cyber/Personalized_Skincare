@@ -220,10 +220,10 @@ function populateSubjectSelects() {
 function initApp() {
     // 한 단계가 실패해도 나머지 버튼 연결/렌더가 죽지 않도록 각 단계를 격리한다.
     // (배포 간 캐시 스큐로 특정 요소/바인딩이 어긋나도 앱이 통째로 벽돌이 되는 것 방지)
-    const step = (label, fn) => { try { fn(); } catch (e) { console.error('[init] ' + label + ' 실패:', e); } };
+    const step = (label, fn) => { try { fn(); console.log('[init] ' + label + ' OK'); return true; } catch (e) { console.error('[init] ' + label + ' 실패:', e); return false; } };
     step('loadProgress', loadProgress);
     step('populateSubjectSelects', populateSubjectSelects);
-    step('setupNavigation', setupNavigation);
+    const navOk = step('setupNavigation', setupNavigation);
     step('setupEventListeners', setupEventListeners);
     step('setupPWAInstall', setupPWAInstall);
     step('setupThemeToggle', setupThemeToggle);
@@ -233,7 +233,13 @@ function initApp() {
     step('refreshDashboardStatsInBackground', refreshDashboardStatsInBackground);
     step('checkExamDraft', checkExamDraft);
     // app-fallback.js가 정상 초기화를 감지할 수 있도록 마커 설정
-    window.__APP_INITIALIZED = true;
+    // setupNavigation이 실패하면 마커를 설정하지 않아 폴백이 복구를 시도하게 함
+    if (navOk) {
+        window.__APP_INITIALIZED = true;
+        console.log('[init] 초기화 완료 — __APP_INITIALIZED = true');
+    } else {
+        console.error('[init] setupNavigation 실패 — __APP_INITIALIZED 미설정, 폴백 대기');
+    }
 }
 
 // --- 가로/세로 보기 ---
@@ -292,6 +298,7 @@ function showOrientationToast(isLandscape) {
 function setupNavigation() {
     const navItems = document.querySelectorAll('.nav-item');
     const sections = document.querySelectorAll('.view-section');
+    console.log('[nav] nav-item 개수:', navItems.length, '/ view-section 개수:', sections.length);
     const viewTitle = document.getElementById('view-title');
     const viewSubtitle = document.getElementById('view-subtitle');
     
@@ -1260,6 +1267,15 @@ function startAppInit() {
     setTimeout(() => {
         setupOrientationToggle();
     }, 100);
+    // 진단: __APP_INITIALIZED가 설정되지 않았으면 화면에 표시
+    setTimeout(() => {
+        if (!window.__APP_INITIALIZED) {
+            var d = document.createElement('div');
+            d.style.cssText = 'position:fixed;bottom:0;left:0;right:0;z-index:99998;background:#c0392b;color:#fff;padding:0.5rem;font-size:0.8rem;text-align:center;';
+            d.textContent = '네비게이션 초기화 실패 — 캐시 정리 후 새로고침 중... (15초 대기)';
+            document.body.appendChild(d);
+        }
+    }, 2000);
 }
 
 if (document.readyState === 'loading') {
