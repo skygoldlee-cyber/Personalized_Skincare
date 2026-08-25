@@ -1,0 +1,1852 @@
+/* Textbook Reader Styles */
+.textbook-reader-content {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 2rem;
+    max-height: calc(100vh - 280px);
+    overflow-y: auto;
+}
+
+.textbook-reader-section-title {
+    font-size: 1.25rem;
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--color-primary);
+    display: inline-block;
+}
+
+.textbook-reader-section-content {
+    line-height: 1.8;
+    color: var(--color-text-main);
+}
+
+.textbook-reader-section-content .md-para {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+.textbook-reader-section-content .md-list-item {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    padding-left: 0.5rem;
+}
+
+.textbook-reader-section-content .md-table-row {
+    font-family: 'Noto Sans KR', monospace;
+    background: rgba(0, 0, 0, 0.15);
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+    white-space: pre-wrap;
+    font-size: 0.9rem;
+    border-left: 3px solid var(--color-secondary);
+    overflow-x: auto;
+}
+
+.textbook-reader-section-content .md-h3 {
+    font-size: 1.1rem;
+    color: var(--color-text-main);
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    font-weight: 700;
+}
+
+.textbook-reader-section-content .md-h4 {
+    font-size: 1rem;
+    color: var(--color-text-main);
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.textbook-reader-section-content .md-quote {
+    background: rgba(6, 182, 212, 0.08);
+    border-left: 3px solid var(--color-primary);
+    padding: 0.75rem 1rem;
+    margin: 1rem 0;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    color: var(--color-text-muted);
+    font-style: italic;
+}
+
+.textbook-reader-section-content strong {
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+/* Reader table styles */
+.reader-table-wrapper {
+    overflow-x: auto;
+    margin: 1rem 0 1.5rem 0;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+}
+
+.reader-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.reader-table th {
+    background: rgba(6, 182, 212, 0.12);
+    color: var(--color-primary);
+    font-weight: 700;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 2px solid var(--color-primary);
+    white-space: nowrap;
+}
+
+.reader-table td {
+    padding: 0.65rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: top;
+    color: var(--color-text-main);
+}
+
+.reader-table tr:nth-child(even) td {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.reader-table tr:hover td {
+    background: rgba(6, 182, 212, 0.05);
+}
+
+.reader-table sup {
+    color: var(--color-warning);
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Reader code block (concept diagrams) */
+.reader-code-block {
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid var(--border-color);
+    border-left: 3px solid var(--color-secondary);
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.25rem;
+    margin: 1rem 0 1.5rem 0;
+    font-family: 'Noto Sans KR', monospace;
+    font-size: 0.85rem;
+    line-height: 1.7;
+    white-space: pre;
+    overflow-x: auto;
+    color: var(--color-text-main);
+}
+
+/* Reader horizontal rule */
+.reader-hr {
+    border: none;
+    border-top: 1px solid var(--border-color);
+    margin: 1.75rem 0;
+}
+
+/* Quote styling improvements */
+.md-quote {
+    background: rgba(245, 158, 11, 0.08);
+    border-left: 3px solid var(--color-warning);
+    padding: 0.85rem 1.1rem;
+    margin: 1rem 0;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    color: var(--color-text-main);
+    line-height: 1.7;
+    font-size: 0.95rem;
+}
+
+.md-quote strong {
+    color: var(--color-warning);
+}
+
+/* Responsive */
+@media (max-width: 768px), (orientation: landscape) and (max-height: 500px) {
+    .textbook-reader-content {
+        padding: 1rem;
+        max-height: calc(100vh - 220px);
+    }
+    
+    .textbook-reader-controls > div {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .textbook-reader-controls select {
+        width: 100%;
+    }
+}
+
+/* ============================================================
+   📖 Textbook Reader — Readability Enhancement Suite
+   ============================================================ */
+
+/* Reading progress bar */
+.reader-progress-bar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 2px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
+.reader-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+    border-radius: 2px;
+    transition: width 0.15s ease-out;
+    box-shadow: 0 0 8px rgba(6, 182, 212, 0.5);
+}
+
+/* Reader toolbar */
+.reader-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1.5rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    position: sticky;
+    top: 8px;
+    z-index: 40;
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+}
+.reader-toolbar-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.reader-toolbar-label {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+.reader-toolbar-divider {
+    width: 1px;
+    height: 22px;
+    background: var(--border-color);
+}
+.reader-tool-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    color: var(--color-text-main);
+    padding: 0.4rem 0.75rem;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-app);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+.reader-tool-btn:hover {
+    background: rgba(6, 182, 212, 0.15);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+.reader-tool-btn.active {
+    background: rgba(6, 182, 212, 0.2);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    box-shadow: var(--glow-primary);
+}
+.reader-font-size-display {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    min-width: 44px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Reader layout: TOC + content */
+.reader-layout {
+    display: flex;
+    gap: 1.75rem;
+    align-items: flex-start;
+}
+
+/* TOC sidebar */
+.reader-toc {
+    width: 250px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 90px;
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+}
+.reader-toc-header {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-text-main);
+    padding-bottom: 0.6rem;
+    margin-bottom: 0.6rem;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.reader-toc-header i {
+    color: var(--color-primary);
+}
+.reader-toc-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.reader-toc-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.5rem 0.65rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.82rem;
+    line-height: 1.4;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    border-left: 3px solid transparent;
+    transition: all 0.15s ease;
+    word-break: keep-all;
+}
+.reader-toc-item:hover {
+    color: var(--color-text-main);
+    background: rgba(255, 255, 255, 0.04);
+}
+.reader-toc-item.active {
+    color: var(--color-primary);
+    background: rgba(6, 182, 212, 0.1);
+    border-left-color: var(--color-primary);
+    font-weight: 600;
+}
+.reader-toc-item .toc-num {
+    color: var(--color-primary);
+    font-weight: 700;
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    margin-top: 1px;
+}
+
+/* Reader content area — typography optimization */
+.textbook-reader-content {
+    flex: 1;
+    min-width: 0;
+    /* CSS variable driven font sizing for A-/A+ controls */
+    --reader-font-scale: 1;
+}
+
+/* Max line width for optimal readability (~40 Korean chars) */
+.reader-readable-width {
+    max-width: 46rem;
+    margin: 0 auto;
+}
+
+/* Section cards */
+.reader-section-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    margin-bottom: 1.75rem;
+    overflow: hidden;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.reader-section-card:hover {
+    border-color: rgba(6, 182, 212, 0.25);
+}
+.reader-section-card.current-section {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 1px rgba(6, 182, 212, 0.3), var(--shadow-md);
+}
+.reader-section-card.current-section .reader-section-title {
+    color: var(--color-primary);
+}
+#reader-audio-scroll-btn.active {
+    background: rgba(6, 182, 212, 0.18);
+    border-color: rgba(6, 182, 212, 0.5);
+    color: var(--color-primary);
+}
+
+.reader-section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.1rem 1.5rem;
+    cursor: pointer;
+    user-select: none;
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid var(--border-color);
+    transition: background 0.15s ease;
+}
+.reader-section-header:hover {
+    background: rgba(6, 182, 212, 0.06);
+}
+.reader-section-toggle {
+    color: var(--color-primary);
+    font-size: 0.85rem;
+    transition: transform 0.25s ease;
+    flex-shrink: 0;
+}
+.reader-section-card.collapsed .reader-section-toggle {
+    transform: rotate(-90deg);
+}
+.reader-section-num {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    min-width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    padding: 0 6px;
+}
+.reader-section-title {
+    font-size: calc(1.15rem * var(--reader-font-scale, 1));
+    color: var(--color-primary);
+    font-weight: 700;
+    margin: 0;
+    flex: 1;
+    line-height: 1.4;
+    border: none !important;
+    padding: 0 !important;
+    display: block !important;
+}
+.reader-bookmark-btn {
+    background: transparent;
+    border: none;
+    color: var(--color-text-muted);
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.35rem;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+.reader-bookmark-btn:hover {
+    color: var(--color-warning);
+    background: rgba(245, 158, 11, 0.1);
+    transform: scale(1.15);
+}
+.reader-bookmark-btn.bookmarked {
+    color: var(--color-warning);
+}
+
+.reader-section-body {
+    padding: 1.5rem 1.75rem 1.75rem 1.75rem;
+    display: block;
+}
+.reader-section-card.collapsed .reader-section-body {
+    display: none;
+}
+
+/* Optimized typography inside reader */
+.textbook-reader-content .textbook-reader-section-content {
+    line-height: 2.05;
+    font-size: calc(1.06rem * var(--reader-font-scale, 1));
+    color: var(--color-text-main);
+    word-break: keep-all;
+    overflow-wrap: break-word;
+}
+.textbook-reader-content .textbook-reader-section-content .md-para {
+    margin-bottom: 1.35rem;
+    font-size: calc(1.06rem * var(--reader-font-scale, 1));
+}
+.textbook-reader-content .textbook-reader-section-content .md-list-item {
+    margin-bottom: 0.65rem;
+}
+.textbook-reader-content .textbook-reader-section-content .md-h3 {
+    font-size: calc(1.2rem * var(--reader-font-scale, 1));
+    margin-top: 1.75rem;
+    margin-bottom: 0.85rem;
+}
+.textbook-reader-content .textbook-reader-section-content .md-h4 {
+    font-size: calc(1.1rem * var(--reader-font-scale, 1));
+    margin-top: 1.4rem;
+    margin-bottom: 0.65rem;
+}
+.textbook-reader-content .textbook-reader-section-content .md-quote {
+    font-size: calc(1rem * var(--reader-font-scale, 1));
+    line-height: 1.9;
+}
+
+/* Chapter header card */
+.reader-chapter-header-card {
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.08), rgba(139, 92, 246, 0.06));
+    border: 1px solid var(--border-color-active);
+    border-radius: var(--radius-md);
+    padding: 1.5rem 1.75rem;
+    margin-bottom: 1.75rem;
+}
+.reader-chapter-header-card h3 {
+    font-size: calc(1.5rem * var(--reader-font-scale, 1));
+    margin: 0.6rem 0 0.75rem 0;
+    line-height: 1.35;
+}
+.reader-chapter-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+}
+
+/* Prev / Next chapter navigation */
+.reader-chapter-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 2.25rem;
+}
+.reader-nav-btn {
+    flex: 1;
+    max-width: 48%;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    text-align: left;
+    color: var(--color-text-main);
+    font-family: var(--font-app);
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+.reader-nav-btn:hover:not(:disabled) {
+    border-color: var(--color-primary);
+    background: rgba(6, 182, 212, 0.06);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+.reader-nav-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+.reader-nav-btn .nav-dir {
+    font-size: 0.75rem;
+    color: var(--color-primary);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+.reader-nav-btn .nav-title {
+    font-size: 0.92rem;
+    font-weight: 600;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.reader-nav-btn.next {
+    text-align: right;
+    margin-left: auto;
+}
+.reader-nav-btn.next .nav-dir {
+    justify-content: flex-end;
+}
+
+/* Back to top button */
+.reader-back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-primary), #0891b2);
+    color: #fff;
+    border: none;
+    font-size: 1.05rem;
+    cursor: pointer;
+    z-index: 60;
+    box-shadow: 0 4px 14px rgba(6, 182, 212, 0.4);
+    transition: all 0.25s ease;
+    opacity: 0.9;
+}
+.reader-back-to-top:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(6, 182, 212, 0.55);
+    opacity: 1;
+}
+
+/* Sticky table header + stronger zebra striping + expand button */
+.reader-table-wrapper {
+    position: relative;
+    max-height: 480px;
+    overflow: auto;
+}
+.reader-table th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: #16233a;
+    box-shadow: 0 2px 0 var(--color-primary);
+}
+.reader-table tr:nth-child(even) td {
+    background: rgba(255, 255, 255, 0.035);
+}
+.reader-table tr:nth-child(odd) td {
+    background: rgba(255, 255, 255, 0.005);
+}
+.reader-table-expand-btn {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    z-index: 3;
+    background: rgba(11, 15, 25, 0.85);
+    border: 1px solid var(--border-color);
+    color: var(--color-text-muted);
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+.reader-table-expand-btn:hover {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+/* Table fullscreen modal */
+.reader-table-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.reader-table-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+}
+.reader-table-modal-content {
+    position: relative;
+    width: min(92vw, 1100px);
+    max-height: 85vh;
+    background: var(--bg-sidebar);
+    border: 1px solid var(--border-color-active);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    overflow: auto;
+    box-shadow: var(--shadow-lg);
+    animation: fadeIn 0.25s ease;
+}
+.reader-table-modal-close {
+    position: sticky;
+    top: 0;
+    float: right;
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #fca5a5;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    z-index: 5;
+}
+.reader-table-modal-close:hover {
+    background: rgba(239, 68, 68, 0.3);
+}
+.reader-table-modal-body .reader-table {
+    font-size: 0.95rem;
+}
+
+/* Focus mode — hide surrounding UI, content goes full width */
+body.reader-focus-mode .sidebar,
+body.reader-focus-mode .app-header,
+body.reader-focus-mode .section-title-area,
+body.reader-focus-mode .textbook-reader-controls,
+body.reader-focus-mode .reader-toc {
+    display: none !important;
+}
+body.reader-focus-mode .reader-layout {
+    gap: 0;
+}
+body.reader-focus-mode .textbook-reader-content {
+    max-height: none;
+}
+body.reader-focus-mode .reader-toolbar {
+    top: 8px;
+}
+body.reader-focus-mode .reader-readable-width {
+    max-width: 52rem;
+}
+#reader-focus-toggle.active {
+    background: rgba(139, 92, 246, 0.2);
+    border-color: var(--color-secondary);
+    color: var(--color-secondary);
+}
+
+/* Light reading theme (scoped to reader only) */
+.reader-light-theme .textbook-reader-content,
+.reader-light-theme .reader-section-card,
+.reader-light-theme .reader-toc,
+.reader-light-theme .reader-toolbar,
+.reader-light-theme .reader-nav-btn {
+    background: #f8f7f4 !important;
+    border-color: #e2ddd3 !important;
+}
+.reader-light-theme .reader-section-header {
+    background: #f0eee8 !important;
+    border-bottom-color: #e2ddd3 !important;
+}
+.reader-light-theme .reader-chapter-header-card {
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.08), rgba(139, 92, 246, 0.05)) !important;
+    border-color: #b8e0e8 !important;
+}
+.reader-light-theme .textbook-reader-section-content,
+.reader-light-theme .textbook-reader-section-content .md-para,
+.reader-light-theme .reader-table td,
+.reader-light-theme .textbook-reader-section-content .md-h3,
+.reader-light-theme .textbook-reader-section-content .md-h4 {
+    color: #2b2b2b !important;
+}
+.reader-light-theme .reader-section-title,
+.reader-light-theme .reader-toc-item.active {
+    color: #0e7490 !important;
+}
+.reader-light-theme .reader-toc-item,
+.reader-light-theme .reader-chapter-meta,
+.reader-light-theme .reader-toolbar-label,
+.reader-light-theme .reader-font-size-display {
+    color: #6b6b6b !important;
+}
+.reader-light-theme .reader-toc-item:hover {
+    color: #2b2b2b !important;
+    background: rgba(0, 0, 0, 0.05) !important;
+}
+.reader-light-theme .reader-toc-item.active {
+    background: rgba(6, 182, 212, 0.12) !important;
+}
+.reader-light-theme .reader-tool-btn {
+    background: #ffffff !important;
+    border-color: #d8d3c8 !important;
+    color: #2b2b2b !important;
+}
+.reader-light-theme .reader-tool-btn:hover {
+    background: rgba(6, 182, 212, 0.12) !important;
+    color: #0e7490 !important;
+    border-color: #06b6d4 !important;
+}
+.reader-light-theme .reader-table th {
+    background: #e8f4f8 !important;
+    color: #0e7490 !important;
+}
+.reader-light-theme .reader-table tr:nth-child(even) td {
+    background: rgba(0, 0, 0, 0.03) !important;
+}
+.reader-light-theme .reader-table tr:nth-child(odd) td {
+    background: #ffffff !important;
+}
+.reader-light-theme .reader-table tr:hover td {
+    background: rgba(6, 182, 212, 0.08) !important;
+}
+.reader-light-theme .md-quote,
+.reader-light-theme .textbook-reader-section-content .md-quote {
+    background: rgba(245, 158, 11, 0.1) !important;
+    color: #4a4a4a !important;
+}
+.reader-light-theme .reader-code-block {
+    background: #f0efe9 !important;
+    color: #2b2b2b !important;
+}
+.reader-light-theme .reader-section-num {
+    color: #fff !important;
+}
+.reader-light-theme .reader-table-expand-btn {
+    background: rgba(255, 255, 255, 0.9) !important;
+    color: #6b6b6b !important;
+}
+.reader-light-theme .reader-bookmark-btn {
+    color: #9a9a9a !important;
+}
+.reader-light-theme .reader-bookmark-btn.bookmarked {
+    color: #d97706 !important;
+}
+.reader-light-theme .badge-cyan {
+    color: #0e7490 !important;
+}
+.reader-light-theme .textbook-reader-section-content strong {
+    color: #0e7490 !important;
+}
+
+/* Responsive for reader layout */
+@media (max-width: 1100px) {
+    .reader-toc {
+        display: none !important;
+    }
+}
+@media (max-width: 768px), (orientation: landscape) and (max-height: 500px) {
+    .reader-chapter-nav {
+        flex-direction: column;
+    }
+    .reader-nav-btn {
+        max-width: 100%;
+    }
+    .reader-section-body {
+        padding: 1.1rem 1.25rem 1.25rem 1.25rem;
+    }
+    .reader-back-to-top {
+        bottom: 1.25rem;
+        right: 1.25rem;
+    }
+}
+
+
+/* ============================================================
+   📱 태블릿 최적화 (769px ~ 900px)
+   - 사이드바를 상단 바 형태로 전환하되 하단 탭 바는 미사용
+   ============================================================ */
+@media (min-width: 769px) and (max-width: 900px) and (min-height: 501px) {
+    .app-container {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+
+    html, body {
+        overflow-x: hidden;
+        min-height: 100%;
+    }
+
+    /* 사이드바: 상단 바 형태 */
+    .sidebar {
+        position: sticky;
+        top: 0;
+        max-height: none;
+        padding: 0.9rem 1rem;
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+    }
+    .logo-area {
+        margin-bottom: 0.75rem;
+    }
+    .logo-text h1 {
+        font-size: 1.2rem;
+    }
+    .nav-menu {
+        flex-direction: row;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        gap: 0.4rem;
+        padding-bottom: 0.25rem;
+    }
+    .nav-menu::-webkit-scrollbar {
+        height: 4px;
+    }
+    .nav-item {
+        padding: 0.55rem 0.85rem;
+        font-size: 0.85rem;
+        flex: 0 0 auto;
+    }
+    .nav-item.active {
+        border-left: none;
+        border-bottom: 3px solid var(--color-primary);
+    }
+    .sidebar-footer {
+        display: none;
+    }
+
+    /* 본문 여백 축소 */
+    .app-header {
+        padding: 1rem 1.1rem;
+    }
+    .view-section {
+        padding: 1rem 1.1rem;
+    }
+
+    /* 헤더 타이틀 크기 */
+    .app-header h2,
+    .app-header .page-title {
+        font-size: 1.35rem;
+        line-height: 1.25;
+    }
+
+    /* 카드·그리드 1열화 */
+    .dashboard-grid,
+    .analytics-grid,
+    .grid,
+    .cards-grid,
+    .dashboard-widgets-row,
+    .stats-grid,
+    [style*="grid-template-columns"],
+    div.analytics-grid[style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+        display: grid !important;
+    }
+    
+    /* 실전 모의고사 성적 분석 그리드 모바일 1열 강제 */
+    .analytics-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* 인라인 display:flex 가로 배치도 세로로 */
+    [style*="display: flex"],
+    [style*="display:flex"] {
+        flex-wrap: wrap !important;
+    }
+
+    /* 데일리 챌린지 카드 모바일 최적화 */
+    .daily-challenge-card {
+        padding: 1.25rem !important;
+    }
+
+    .daily-challenge-card > div:first-child {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.75rem !important;
+        margin-bottom: 1rem !important;
+    }
+
+    .daily-challenge-card .streak-badge {
+        align-self: flex-start !important;
+        font-size: 0.85rem !important;
+        padding: 0.4rem 0.8rem !important;
+    }
+
+    .daily-challenge-card > div:last-child {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 0.75rem !important;
+    }
+
+    .daily-challenge-card #daily-challenge-status {
+        text-align: center !important;
+        width: 100% !important;
+    }
+
+    .daily-challenge-card #start-daily-btn {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+
+    /* 테이블 가로 스크롤 */
+    table,
+    .table,
+    .data-table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        max-width: 100%;
+    }
+
+    img, canvas, svg, video {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .btn, button, input, select, textarea {
+        font-size: 1rem;
+    }
+
+    .modal-content,
+    .modal-body {
+        max-width: 94vw;
+        margin: 1rem auto;
+    }
+}
+
+/* ============================================================
+   📱 모바일 앱 스타일 레이아웃 (≤768px, 하단 탭 바)
+   - 스마트폰에서 사이드바를 숨기고 하단 네비게이션 바로 전환
+   - 네이티브 앱과 유사한 UX 제공
+   ============================================================ */
+@media (max-width: 768px), (orientation: landscape) and (max-height: 500px) {
+    /* 기존 상단 사이드바 완전히 숨김 */
+    .sidebar {
+        display: none !important;
+    }
+
+    /* 앱 컨테이너를 세로 플렉스로 변경하여 하단 바 공간 확보 */
+    .app-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100vh;
+        height: 100dvh; /* 동적 뷰포트 높이 사용 */
+        overflow: hidden;
+    }
+
+    /* 메인 콘텐츠가 남은 공간을 모두 차지 */
+    .main-content {
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding-bottom: calc(70px + env(safe-area-inset-bottom, 0px)); /* safe-area 대응 */
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* 헤더 간소화 + sticky */
+    .app-header {
+        padding: 1rem 1.25rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(11, 15, 25, 0.95);
+        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
+        /* 모바일에서 헤더가 넘치지 않도록 */
+        flex-wrap: nowrap;
+        overflow: hidden;
+    }
+
+    .app-header h2 {
+        font-size: 1.25rem;
+        /* 타이틀이 너무 길면 말줄임 */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        flex-shrink: 1;
+        min-width: 0;
+    }
+
+    .app-header p {
+        font-size: 0.8rem;
+        display: none; /* 부제목 숨김으로 공간 확보 */
+    }
+
+    /* 헤더 액션 버튼 터치 영역 확대 */
+    .header-actions .btn,
+    .header-actions button {
+        min-width: 44px;
+        min-height: 44px;
+        padding: 0.5rem !important;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* 헤더 액션 영역 확보 - 모바일에서 버튼이 잘리지 않도록 */
+    .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-shrink: 0;
+        /* 헤더 타이틀이 길어져도 버튼 영역 유지 */
+        margin-left: auto;
+    }
+
+    /* PWA 설치 버튼 모바일 최적화 */
+    #pwa-install-btn {
+        margin-right: 0.25rem;
+        font-size: 0.85rem;
+        white-space: nowrap;
+        /* 모바일에서 확실히 보이도록 z-index 및 위치 조정 */
+        position: relative;
+        z-index: 10;
+    }
+
+    #pwa-install-btn i {
+        margin-right: 0.25rem;
+    }
+
+    /* 소형 화면에서 버튼 텍스트 숨기고 아이콘만 표시 */
+    @media (max-width: 480px) {
+        #pwa-install-btn .btn-text {
+            display: none;
+        }
+        #pwa-install-btn i {
+            margin-right: 0;
+        }
+    }
+
+    /* 뷰 섹션 패딩 조정 */
+    .view-section {
+        padding: 1rem 1.25rem;
+    }
+
+    /* 하단 탭 바 - safe-area 대응 (스크롤 가능하도록 수정) */
+    .mobile-tab-bar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: calc(70px + env(safe-area-inset-bottom, 0px));
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+        background: var(--bg-sidebar);
+        border-top: 1px solid var(--border-color);
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding-top: 0.5rem;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        z-index: 1000;
+        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    .mobile-tab-bar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .mobile-tab-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.2rem;
+        padding: 0.4rem 0.5rem;
+        color: var(--color-text-muted);
+        font-size: 0.6rem;
+        font-weight: 500;
+        text-decoration: none;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        transition: color 0.2s ease, transform 0.1s ease;
+        flex: 0 0 auto;
+        min-width: 60px;
+        max-width: 72px;
+        min-height: 48px;
+    }
+
+    .mobile-tab-item i {
+        font-size: 1.2rem;
+    }
+
+    .mobile-tab-item.active {
+        color: var(--color-primary);
+    }
+
+    .mobile-tab-item:active {
+        transform: scale(0.92);
+    }
+
+    /* 통계 카드 그리드 2열로 변경 */
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.75rem !important;
+    }
+
+    .stat-card {
+        padding: 1rem !important;
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem !important;
+        min-width: 0; /* 그리드 오버플로우 방지 */
+    }
+
+    .stat-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+
+    .stat-info h3 {
+        font-size: 0.7rem !important;
+        margin-bottom: 0.25rem !important;
+    }
+
+    .stat-value {
+        font-size: 1.25rem !important;
+        margin-bottom: 0.25rem !important;
+    }
+
+    .stat-info p {
+        font-size: 0.7rem !important;
+    }
+
+    /* 대시보드 위젯 간격 축소 */
+    .dashboard-widgets-row {
+        margin-top: 1rem !important;
+        margin-bottom: 1rem !important;
+        gap: 1rem !important;
+    }
+
+    /* 유리 카드 패딩 축소 */
+    .glass-card {
+        padding: 1.25rem !important;
+    }
+
+    /* 필터 바 세로 스택 */
+    .filter-bar {
+        flex-direction: column;
+        align-items: stretch !important;
+        gap: 0.75rem !important;
+    }
+
+    .filter-group {
+        width: 100%;
+    }
+
+    .form-select {
+        width: 100%;
+    }
+
+    /* 플래시카드 높이 동적 조정 */
+    .flashcard-wrapper {
+        height: auto !important;
+        min-height: 320px;
+        max-height: 60vh;
+        aspect-ratio: 3/4;
+    }
+
+    .flashcard-controls {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .flashcard-controls .btn {
+        flex: 1;
+        min-width: calc(50% - 0.25rem);
+    }
+
+    /* 퀴즈/트레이너 카드 패딩 축소 */
+    .quiz-card,
+    .trainer-menu-card {
+        padding: 1.25rem !important;
+    }
+
+    /* 모달 전체 화면에 가깝게 */
+    .modal-content {
+        max-width: 96vw !important;
+        max-height: 90vh;
+        margin: 0.5rem auto !important;
+    }
+
+    /* 텍스트 크기 조정 */
+    h3 {
+        font-size: 1.1rem !important;
+    }
+
+    /* 버튼 터치 영역 확대 */
+    .btn {
+        padding: 0.75rem 1rem !important;
+        min-height: 44px;
+    }
+
+    /* 입력 필드 터치 영역 확대 */
+    input, select, textarea {
+        min-height: 44px;
+        font-size: 16px !important; /* iOS 줌 방지 */
+    }
+
+    /* 테이블 셀 패딩 축소 */
+    td, th {
+        padding: 0.5rem !important;
+        font-size: 0.85rem !important;
+    }
+
+    /* 배지/라벨 크기 조정 */
+    .badge {
+        font-size: 0.7rem !important;
+        padding: 0.2rem 0.5rem !important;
+    }
+
+    /* 스켈레톤 로딩 애니메이션 */
+    .skeleton {
+        background: linear-gradient(90deg, var(--bg-card) 25%, rgba(255,255,255,0.05) 50%, var(--bg-card) 75%);
+        background-size: 200% 100%;
+        animation: skeleton-loading 1.5s infinite;
+        border-radius: var(--radius-sm);
+    }
+
+    @keyframes skeleton-loading {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+    }
+
+}
+
+/* ============================================================
+   오프라인 배너 (전체 화면 크기 공통 적용)
+   - 기본 상태는 숨김(transform: translateY(-100%))
+   - JS에서 .show 클래스를 추가할 때만 표시
+   ============================================================ */
+.offline-banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: var(--color-danger);
+    color: white;
+    text-align: center;
+    padding: 0.5rem;
+    font-size: 0.8rem;
+    z-index: 9999;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease;
+}
+
+.offline-banner.show {
+    transform: translateY(0);
+}
+
+/* 소형 스마트폰 (≤480px) 추가 미세 조정 */
+@media (max-width: 480px) {
+    .app-header h2,
+    .app-header .page-title {
+        font-size: 1.15rem;
+    }
+
+    .flashcard-wrapper {
+        min-height: 280px;
+    }
+
+    .nav-item {
+        font-size: 0.8rem;
+        padding: 0.5rem 0.7rem;
+    }
+
+    body {
+        font-size: 0.95rem;
+    }
+}
+
+/* 매우 작은 화면 (≤375px, iPhone SE 등) */
+@media (max-width: 375px) {
+    .stats-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .mobile-tab-item span {
+        display: none; /* 아이콘만 표시 */
+    }
+
+    .mobile-tab-item i {
+        font-size: 1.35rem;
+    }
+
+    .mobile-tab-item {
+        min-height: 44px;
+        padding: 0.3rem;
+    }
+}
+
+/* ============================================================
+   📲 PWA 설치 안내 모달 (iOS/Android 분기 가이드)
+   ============================================================ */
+.pwa-install-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.pwa-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+}
+
+.pwa-modal-card {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    max-height: 86vh;
+    overflow-y: auto;
+    background: var(--bg-card, #171d2b);
+    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    animation: pwaModalIn 0.25s ease;
+}
+
+@keyframes pwaModalIn {
+    from { opacity: 0; transform: translateY(16px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.pwa-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.1rem 1.25rem;
+    border-bottom: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+}
+
+.pwa-modal-header h3 {
+    margin: 0;
+    font-size: 1.05rem;
+    color: var(--color-text-main, #e8eaed);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.pwa-modal-close {
+    background: transparent;
+    border: none;
+    color: var(--color-text-muted, #9aa3b2);
+    font-size: 1.2rem;
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.pwa-modal-close:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--color-text-main, #e8eaed);
+}
+
+.pwa-modal-body {
+    padding: 1.25rem;
+}
+
+.pwa-modal-lead {
+    margin: 0 0 1rem;
+    color: var(--color-text-main, #e8eaed);
+    font-size: 0.95rem;
+}
+
+.pwa-steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+}
+
+.pwa-steps li {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    grid-template-areas:
+        "num text"
+        "num illust";
+    gap: 0.25rem 0.75rem;
+    align-items: start;
+}
+
+.pwa-step-num {
+    grid-area: num;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--color-primary, #06b6d4);
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pwa-step-text {
+    grid-area: text;
+    color: var(--color-text-main, #e8eaed);
+    font-size: 0.9rem;
+    line-height: 1.45;
+}
+
+.pwa-step-text strong {
+    color: var(--color-primary-light, var(--color-primary, #06b6d4));
+}
+
+.pwa-step-illust {
+    grid-area: illust;
+    width: 100%;
+    max-width: 260px;
+    height: auto;
+    border-radius: 10px;
+    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+    margin-top: 0.4rem;
+}
+
+.pwa-tip {
+    margin: 1.1rem 0 0;
+    padding: 0.75rem 0.9rem;
+    background: rgba(6, 182, 212, 0.08);
+    border: 1px solid rgba(6, 182, 212, 0.2);
+    border-radius: 10px;
+    color: var(--color-text-muted, #9aa3b2);
+    font-size: 0.83rem;
+    line-height: 1.5;
+}
+
+.pwa-tip i {
+    color: var(--color-primary, #06b6d4);
+    margin-right: 0.25rem;
+}
+
+@media (max-width: 480px) {
+    .pwa-modal-card {
+        max-width: 94vw;
+    }
+    .pwa-modal-body {
+        padding: 1rem;
+    }
+}
+
+/* ============================================================
+   📱 가로/세로 보기 토글 버튼 및 강제 가로보기 모드
+   - 사용자가 버튼으로 가로/세로 모드를 전환할 수 있음
+   ============================================================ */
+
+/* 가로보기 토글 버튼 스타일 */
+#orientation-toggle-btn {
+    display: none; /* 기본적으로 숨김 (데스크톱) */
+    padding: 0.5rem !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    border-radius: 8px !important;
+    transition: transform 0.3s ease !important;
+    position: relative !important;
+    z-index: 100 !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+}
+
+#orientation-toggle-btn:hover {
+    transform: rotate(90deg) !important;
+}
+
+#orientation-toggle-btn i {
+    transition: transform 0.3s ease !important;
+}
+
+/* 토스트 애니메이션 */
+@keyframes orientationToastIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes orientationToastOut {
+    from {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.9);
+    }
+}
+
+/* 가로/세로 토글 버튼 비활성화 — 실제 화면 회전으로 대체되어 숨김 */
+#orientation-toggle-btn {
+    display: none !important;
+}
+
+/* ============================================================
+   📱 강제 가로보기 모드 (body.landscape-mode 클래스)
+   - 사용자가 토글 버튼으로 가로 모드를 활성화할 때 적용
+   - 파일 맨 끝에 위치하여 CSS 우선순위 확보
+   ============================================================ */
+body.landscape-mode .app-header {
+    padding: 0.5rem 1rem !important;
+    position: relative !important;
+}
+
+body.landscape-mode .app-header h2 {
+    font-size: 1rem !important;
+}
+
+body.landscape-mode .app-header p {
+    display: none !important;
+}
+
+body.landscape-mode .header-actions .btn,
+body.landscape-mode .header-actions button {
+    min-width: 36px !important;
+    min-height: 36px !important;
+    padding: 0.25rem 0.5rem !important;
+    font-size: 0.8rem !important;
+}
+
+body.landscape-mode .view-section {
+    padding: 0.75rem 1rem !important;
+}
+
+body.landscape-mode .stats-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 0.5rem !important;
+}
+
+body.landscape-mode .stat-card {
+    padding: 0.75rem !important;
+    flex-direction: row !important;
+    text-align: left !important;
+}
+
+body.landscape-mode .stat-icon {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 1rem !important;
+}
+
+body.landscape-mode .stat-info h3 {
+    font-size: 0.65rem !important;
+}
+
+body.landscape-mode .stat-value {
+    font-size: 1rem !important;
+}
+
+body.landscape-mode .stat-info p {
+    font-size: 0.6rem !important;
+}
+
+body.landscape-mode .dashboard-widgets-row {
+    grid-template-columns: 2fr 1fr !important;
+    gap: 1rem !important;
+    margin-top: 0.75rem !important;
+    margin-bottom: 0.75rem !important;
+}
+
+body.landscape-mode .daily-challenge-card {
+    padding: 1rem !important;
+}
+
+body.landscape-mode .daily-challenge-card > div:first-child {
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    margin-bottom: 0.75rem !important;
+}
+
+body.landscape-mode .daily-challenge-card .streak-badge {
+    font-size: 0.8rem !important;
+    padding: 0.35rem 0.7rem !important;
+}
+
+body.landscape-mode .daily-challenge-card p {
+    font-size: 0.85rem !important;
+    margin-bottom: 0.75rem !important;
+    line-height: 1.4 !important;
+}
+
+body.landscape-mode .daily-challenge-card > div:last-child {
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+}
+
+body.landscape-mode .daily-challenge-card #daily-challenge-status {
+    width: auto !important;
+    padding: 0.4rem 0.8rem !important;
+}
+
+body.landscape-mode .daily-challenge-card #start-daily-btn {
+    width: auto !important;
+    padding: 0.4rem 1rem !important;
+}
+
+body.landscape-mode .mobile-tab-bar {
+    display: none !important;
+}
+
+body.landscape-mode .main-content {
+    padding-bottom: 0 !important;
+}
+
+body.landscape-mode .flashcard-wrapper {
+    min-height: 200px !important;
+    max-height: 50vh !important;
+}
+
+body.landscape-mode .modal-content {
+    max-height: 85vh !important;
+    margin: 0.5rem auto !important;
+}
+
+body.landscape-mode .btn {
+    padding: 0.5rem 0.75rem !important;
+    min-height: 36px !important;
+    font-size: 0.85rem !important;
+}
+
+body.landscape-mode input,
+body.landscape-mode select,
+body.landscape-mode textarea {
+    min-height: 36px !important;
+    font-size: 14px !important;
+}
+
+body.landscape-mode h3 {
+    font-size: 1rem !important;
+}
+
+body.landscape-mode .glass-card {
+    padding: 1rem !important;
+}
+
+/* ============================================================
+   ð± ëìë³´ë ìì ¯í ëª¨ë°ì¼ 1ì´í + ë°ì¼ë¦¬ ì±ë¦°ì§ í¤ë ì ë ¬ êµì 
+   - ëª¨ë°ì¼ìì 2ì´ ê·¸ë¦¬ëê° ì ë¬´ëì ¸ ì ëª©ì´ ê¸ì ë¨ìë¡ ìª¼ê°ì§ë ë¬¸ì  í´ê²°
+   ============================================================ */
+@media (max-width: 768px), (orientation: landscape) and (max-height: 500px) {
+    /* ìì ¯ íì 1ì´ë¡ (ì¸ë¼ì¸ 2fr 1fr ë®ì´ì°ê¸°) */
+    .dashboard-widgets-row {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* ë°ì¼ë¦¬ ì±ë¦°ì§ ì¹´ë: í¤ëë¥¼ ì¸ë¡ë¡ ìì ì ëª©/ë±ì§ ì¶©ë ë°©ì§ */
+    .daily-challenge-card {
+        padding: 1.25rem !important;
+    }
+    .daily-challenge-card > div:first-child {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.75rem !important;
+    }
+    /* ìì´ì½+ì ëª© ë¬¶ìì ê°ë¡ ì ì§ */
+    .daily-challenge-card > div:first-child > div:first-child {
+        min-width: 0 !important;
+        flex-wrap: nowrap !important;
+    }
+    /* ì ëª© í ì¤ ì ì§ â "5ë¶" ë¶ë¦¬ ë°©ì§ */
+    .daily-challenge-card h4 {
+        font-size: 1.1rem !important;
+        white-space: nowrap !important;
+    }
+    .daily-challenge-card .streak-badge {
+        align-self: flex-start !important;
+        white-space: nowrap !important;
+        flex-shrink: 0 !important;
+    }
+    /* íë¨ ìí/ë²í¼ë ì¸ë¡ë¡ */
+    .daily-challenge-card > div:last-child {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 0.75rem !important;
+    }
+    .daily-challenge-card #daily-challenge-status {
+        text-align: center !important;
+        width: 100% !important;
+    }
+    .daily-challenge-card #start-daily-btn {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+}
+
+/* ============================================================
+   🌗 전역 라이트 테마 — 추가 보정
+   - 다크 테마 규칙은 그대로 두고, .light-theme 하위 선택자에서만 교정
+   - 카드/패널 위에 하드코딩된 흰색 텍스트 및 어두운 배경을 라이트에 맞게 조정
+   ============================================================ */
+
+/* 1) 카드·패널 위의 고정 흰색 텍스트 → 테마 변수로 교정 */
+.light-theme .stat-value,
+.light-theme .subj-header h4,
+.light-theme #card-back-definition,
+.light-theme .quiz-question-text,
+.light-theme .result-score-summary span,
+.light-theme .review-card-item h5,
+.light-theme .sim-title-group h4,
+.light-theme .sim-q-text,
+.light-theme .sim-option-item .opt-text,
+.light-theme .omr-header h5,
+.light-theme .sim-review-header h4,
+.light-theme .review-item-q-text,
+.light-theme .textbook-card-title {
+    color: var(--color-text-main);
+}
+
+/* 입력 요소 텍스트 (배경은 기존 .light-theme 규칙에서 흰색으로 지정됨) */
+.light-theme .form-select,
+.light-theme .form-select option,
+.light-theme .form-input {
+    color: var(--color-text-main);
+}
+
+/* 2) 하드코딩된 어두운 패널 배경 → 라이트 카드 배경 */
+.light-theme .app-header {
+    background: rgba(255, 255, 255, 0.85);
+}
+.light-theme #sim-arena-panel,
+.light-theme #sim-result-panel,
+.light-theme #sim-review-panel,
+.light-theme .full-width-card {
+    background-color: var(--bg-card);
+}
+.light-theme .highlight-card {
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.06), rgba(139, 92, 246, 0.04));
+}
+
+/* 3) 반투명 흰색 인터랙티브 배경 → 라이트에서 대비 확보 */
+.light-theme .sim-option-item,
+.light-theme .omr-bubble {
+    background-color: rgba(0, 0, 0, 0.03);
+}
+.light-theme .sim-option-item:hover {
+    background-color: rgba(0, 0, 0, 0.06);
+    border-color: rgba(0, 0, 0, 0.15);
+}
+.light-theme .omr-bubble:hover {
+    background-color: rgba(0, 0, 0, 0.06);
+    border-color: rgba(0, 0, 0, 0.2);
+    color: var(--color-text-main);
+}
+.light-theme .omr-bubble.active,
+.light-theme .sim-option-item.active .opt-num {
+    color: var(--color-secondary);
+    text-shadow: none;
+}
+
+/* 4) 기타 아주 옅은 흰색 배경 */
+.light-theme .filter-bar,
+.light-theme .review-answer-panel,
+.light-theme .empty-state {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* 5) 교재 카드 접힘 페이드: 어두운 색 → 라이트 배경색으로 페이드 */
+.light-theme .textbook-card-body.collapsed::after {
+    background: linear-gradient(to top, rgba(245, 247, 250, 0.98), rgba(245, 247, 250, 0));
+}
+
+/* 6) 테마 토글 버튼 아이콘 미세 정렬 */
+#theme-toggle-btn {
+    padding: 0.5rem;
+    min-width: 40px;
+    justify-content: center;
+}

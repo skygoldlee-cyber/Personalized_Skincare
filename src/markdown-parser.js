@@ -43,6 +43,22 @@ export function parseMarkdown(mdText, options = {}) {
     // 4. 펜스 라인 토큰 치환 (```언어)
     html = html.replace(/^```(\w*).*$/gm, (m, lang) => 'FENCE_TOKEN' + (lang || ''));
 
+    // 4-1. 펜스 코드/머메이드 블록 "내부" 라인의 인라인 트리거 문자(* `)를 임시 보호.
+    //      (인라인 서식(5)이 문서 전체에 적용되므로, 보호하지 않으면 코드블록 안의
+    //       `백틱`이나 **별표**가 <code>/<strong>으로 변형되어 원문이 깨진다.)
+    //      복원은 인라인 서식 직후(블록 파싱 전)에 수행한다. lookbehind 미사용(구형 웹뷰 호환).
+    {
+        const fenceLines = html.split(/\r?\n/);
+        let inFence = false;
+        for (let i = 0; i < fenceLines.length; i++) {
+            if (/^FENCE_TOKEN/.test(fenceLines[i].trim())) { inFence = !inFence; continue; }
+            if (inFence) {
+                fenceLines[i] = fenceLines[i].replace(/\*/g, 'STAR_TOKEN').replace(/`/g, 'BTICK_TOKEN');
+            }
+        }
+        html = fenceLines.join('\n');
+    }
+
     // 5. 인라인 서식
     html = html.replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>');
     if (allowItalics) {
@@ -52,8 +68,9 @@ export function parseMarkdown(mdText, options = {}) {
         html = html.replace(/`([^`\n]+)`/g, '<code>$1</code>');
     }
 
-    // 복원
+    // 복원 (펜스 마커 + 코드블록 내부 보호 토큰)
     html = html.replace(/FENCE_TOKEN(\w*)/g, '```$1');
+    html = html.replace(/STAR_TOKEN/g, '*').replace(/BTICK_TOKEN/g, '`');
 
     // 6. 줄 단위 블록 파싱
     const lines = html.split(/\r?\n/);
@@ -67,16 +84,30 @@ export function parseMarkdown(mdText, options = {}) {
     let listItems = [];
     let listType = null;
 
+    // 마크다운 표 셀 분리: 양끝 파이프 1개씩만 제거하고 내부 빈 셀은 보존한다.
+    // (기존 .filter(c => c !== '')는 빈 셀까지 제거해 열이 밀리는 버그가 있었음)
+    // 이스케이프된 파이프(\|)는 임시 토큰으로 보호 후 리터럴로 복원한다.
+    const splitTableCells = (row) => {
+        let s = row.trim();
+        if (s.startsWith('|')) s = s.slice(1);
+        if (s.endsWith('|')) s = s.slice(0, -1);
+        return s
+            .replace(/\\\|/g, 'PIPE_ESC_TOKEN')
+            .split('|')
+            .map(c => c.trim().replace(/PIPE_ESC_TOKEN/g, '|'));
+    };
+
     const flushTable = () => {
         if (tableRows.length === 0) return;
         const dataRows = tableRows.filter(row => {
-            const cells = row.split('|').map(c => c.trim()).filter(c => c !== '');
-            return !cells.every(c => /^:?-+:?$/.test(c));
+            const cells = splitTableCells(row);
+            // 구분선 행(|---|:--:|)은 데이터에서 제외
+            return !(cells.length > 0 && cells.every(c => /^:?-+:?$/.test(c)));
         });
         if (dataRows.length === 0) { tableRows = []; return; }
         let tableHTML = '<div class="reader-table-wrapper"><table class="reader-table">';
         dataRows.forEach((row, idx) => {
-            const cells = row.split('|').map(c => c.trim()).filter(c => c !== '');
+            const cells = splitTableCells(row);
             const tag = idx === 0 ? 'th' : 'td';
             tableHTML += '<tr>' + cells.map(c => `<${tag}>${c}</${tag}>`).join('') + '</tr>';
         });
