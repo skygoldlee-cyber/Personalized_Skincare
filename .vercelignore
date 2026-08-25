@@ -49,7 +49,7 @@ data/subjects/
 archive/
 
 # ---------- 🔧 개발 도구 및 파이프라인 ----------
-audiobook/
+content/audiobook/
 tools/
 *.py
 *.ps1

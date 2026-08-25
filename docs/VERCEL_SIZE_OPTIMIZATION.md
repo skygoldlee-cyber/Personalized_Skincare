@@ -12,7 +12,7 @@
 |------|------|------|----------------|
 | **전체 프로젝트** | **~1.03 GB** | 100% | ❌ 불가능 |
 | `content/**/*.html` | 501 MB | 48.6% | ❌ 제외 필요 |
-| `audiobook/mp3/` | 302 MB | 29.3% | ❌ 제외 필요 |
+| `content/audiobook/mp3/` | 302 MB | 29.3% | ❌ 제외 필요 |
 | ~~`exams/**/*.html`~~ | ~~220 MB~~ | — | 🗑️ **삭제됨** (2026-08-24, 런타임 MD 뷰어로 대체) |
 | `data/*.js` | 1.88 MB | 0.2% | ✅ 포함 |
 | `src/*.js` | 0.22 MB | 0.02% | ✅ 포함 |
@@ -75,7 +75,7 @@ Personalized_Skincare/
 ```
 
 **제외 대상 (`.vercelignore` 적용됨):**
-- `audiobook/` — MP3, 파이썬 스크립트, TTS 모델
+- `content/audiobook/` — MP3, 파이썬 스크립트, TTS 모델
 - `content/**/*.html` — 비대화된 HTML (MD 원본은 유지)
 - ~~`exams/**/*.html`~~ — **2026-08-24부터 해당 없음**: 정적 시험지 HTML은 삭제되고
   `src/exam-viewer.js`가 `exams/*.md`를 런타임에 HTML로 변환해 전체화면 오버레이로 표시합니다.
@@ -102,7 +102,7 @@ MP3 파일(302MB)을 외부에 두고 앱에서 스트리밍합니다.
 
 1. **MP3 업로드:**
    ```bash
-   # audiobook/mp3/ 폴터를 ZIP으로 압축
+   # content/audiobook/mp3/ 폴터를 ZIP으로 압축
    # GitHub 저장소 → Releases → New release → ZIP 업로드
    ```
 
@@ -115,7 +115,7 @@ MP3 파일(302MB)을 외부에 두고 앱에서 스트리밍합니다.
 #### 옵션 2: 별도 Vercel 프로젝트 (권장)
 
 1. **새 저장소 생성:** `personalized-skincare-audio`
-2. **MP3만 포함:** `audiobook/mp3/` 내용만 복사
+2. **MP3만 포함:** `content/audiobook/mp3/` 내용만 복사
 3. **Vercel 배포:** 정적 사이트로 배포
 4. **도메인:** `https://personalized-skincare-audio.vercel.app`
 
@@ -174,7 +174,7 @@ git init
 # 3) 스테이징 전 크기 확인
 git add .
 git status
-# → audiobook/, content/**/*.html 등이 Untracked로 표시되면 정상
+# → content/audiobook/, content/**/*.html 등이 Untracked로 표시되면 정상
 ```
 
 ### 2. GitHub 업로드
@@ -276,7 +276,7 @@ Personalized_Skincare/
 │   ├── 2026 화장품 제조 및 품질관리/
 │   └── 2026 화장품법의 이해/
 │
-├── 📂 audiobook/                    # ❌ Vercel 제외 (302MB)
+├── 📂 content/audiobook/                    # ❌ Vercel 제외 (302MB)
 │   ├── mp3/                         # 외부 CDN으로 이동 권장
 │   └── *.py                         # 파이썬 스크립트
 │
@@ -311,7 +311,7 @@ git push
 
 ### Q: 로컬에서는 오디오가 재생됨
 
-**A:** 정상입니다. 로컬 개발 시 `audiobook/mp3/`가 존재하므로 재생됩니다. Vercel 배포 시에만 외부 URL이 필요합니다.
+**A:** 정상입니다. 로컬 개발 시 `content/audiobook/mp3/`가 존재하므로 재생됩니다. Vercel 배포 시에만 외부 URL이 필요합니다.
 
 ---
 

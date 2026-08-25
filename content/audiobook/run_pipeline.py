@@ -51,8 +51,8 @@ from script_polisher import polish_chapter  # noqa: E402
 # 상수 / 설정
 # ---------------------------------------------------------------------------
 
-# 프로젝트 루트 = audiobook/ 의 상위 디렉터리
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
+# 프로젝트 루트 = content/audiobook/ 의 2단계 상위 디렉터리 (작업공간 루트)
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 
 # 과목 키 → (MD 폴터명, 출력용 한글 과목명)
 SUBJECT_DIRS = {
@@ -63,9 +63,9 @@ SUBJECT_DIRS = {
 }
 
 # 출력 디렉터리
-SCRIPTS_DIR = PROJECT_ROOT / "audiobook" / "scripts"   # 청취용 원고 (.txt)
-CHUNKS_DIR  = PROJECT_ROOT / "audiobook" / "chunks"    # 원본 청크 (.md, 검수용)
-MP3_DIR     = PROJECT_ROOT / "audiobook" / "mp3"       # MP3 출력
+SCRIPTS_DIR = PROJECT_ROOT / "content" / "audiobook" / "scripts"   # 청취용 원고 (.txt)
+CHUNKS_DIR  = PROJECT_ROOT / "content" / "audiobook" / "chunks"    # 원본 청크 (.md, 검수용)
+MP3_DIR     = PROJECT_ROOT / "content" / "audiobook" / "mp3"       # MP3 출력
 
 
 @dataclass

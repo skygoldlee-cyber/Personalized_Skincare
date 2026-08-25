@@ -30,7 +30,7 @@
 
 ## ✅ 사전 점검
 
-1. **MP3 원본 위치 확인**: 19개 파일이 한 폴터(또는 `audiobook/mp3/{과목}/` 구조)에 준비되어 있어야 합니다.
+1. **MP3 원본 위치 확인**: 19개 파일이 한 폴터(또는 `content/audiobook/mp3/{과목}/` 구조)에 준비되어 있어야 합니다.
 2. **파일명 충돌 없음 확인됨**: 현재 매니페스트 기준 19개 파일명이 모두 고유합니다 (예: `ch01_1_화장품법2026.mp3`, `ch01_1_작업장_위생관리2026.mp3` — 제목이 달라 충돌 없음). Releases는 폴터 구조를 보존하지 않고 **파일명만**으로 접근하므로 이 조건이 필수입니다.
 3. **GitHub CLI 설치** (권장): https://cli.github.com/ — 설치 후 `gh auth login` 완료.
 
@@ -41,7 +41,7 @@
 ### 방법 A: GitHub CLI (권장, 한 번에 업로드)
 
 ```powershell
-# 프로젝트 루트에서 실행 (MP3가 audiobook/mp3/{과목}/ 구조에 있다고 가정)
+# 프로젝트 루트에서 실행 (MP3가 content/audiobook/mp3/{과목}/ 구조에 있다고 가정)
 cd c:/Project/Personalized_Skincare
 
 # 1) 릴리스 생성 + 전체 MP3 업로드 (태그: audiobook-v1)
@@ -49,10 +49,10 @@ gh release create audiobook-v1 `
   --repo skygoldlee-cyber/Personalized_Skincare `
   --title "Audiobook v1" `
   --notes "교재 오디오 MP3 19개 (총 302MB, 64kbps). 앱의 data/audio_manifest.js에서 참조." `
-  audiobook/mp3/law/*.mp3 `
-  audiobook/mp3/manufacturing/*.mp3 `
-  audiobook/mp3/safety/*.mp3 `
-  audiobook/mp3/understanding/*.mp3
+  content/audiobook/mp3/law/*.mp3 `
+  content/audiobook/mp3/manufacturing/*.mp3 `
+  content/audiobook/mp3/safety/*.mp3 `
+  content/audiobook/mp3/understanding/*.mp3
 ```
 
 > ⚠️ 각 과목 폴터에 `ch{NN}_chunks/` 서브폴터가 있으면 그 안의 청크 MP3는 **제외**하고, 최종 병합본(과목 폴터 바로 아래의 파일)만 업로드하세요. 위 명령은 `*.mp3`를 폴터 최상위만 매칭하므로 청크는 자동 제외됩니다 (PowerShell `*`는 재귀하지 않음).
@@ -108,7 +108,7 @@ Releases는 폴터 구조가 없으므로 **과목 디렉터리(`subjDir`)를 �
     return `${AUDIO_BASE_URL.replace(/\/$/, '')}/${fileName}`;
 ```
 
-> 💡 로컬 개발 모드에서는? 로컬에서 `audiobook/mp3/` 파일이 그대로 있다면, 개발 시에만 `AUDIO_BASE_URL = null`로 바꿔 테스트하고 커밋 전에 되돌리거나, 로컬에서도 Releases URL을 그대로 사용(인터넷 필요)하면 됩니다. **권장**: Releases URL을 커밋하고, 로컬 오프라인 개발이 필요할 때만 임시로 `null`로 변경.
+> 💡 로컬 개발 모드에서는? 로컬에서 `content/audiobook/mp3/` 파일이 그대로 있다면, 개발 시에만 `AUDIO_BASE_URL = null`로 바꿔 테스트하고 커밋 전에 되돌리거나, 로컬에서도 Releases URL을 그대로 사용(인터넷 필요)하면 됩니다. **권장**: Releases URL을 커밋하고, 로컬 오프라인 개발이 필요할 때만 임시로 `null`로 변경.
 
 ### 2-3. (권장) 모바일 백그라운드 재생 — Media Session API
 
@@ -208,6 +208,6 @@ npx vercel --prod --yes
 
 ```powershell
 # 기존 릴리스에 에셋만 교체 (동일 파일명은 덮어쓰기)
-gh release upload audiobook-v1 audiobook/mp3/law/*.mp3 --clobber --repo skygoldlee-cyber/Personalized_Skincare
+gh release upload audiobook-v1 content/audiobook/mp3/law/*.mp3 --clobber --repo skygoldlee-cyber/Personalized_Skincare
 # ... 나머지 과목도 동일하게
 ```

@@ -17,7 +17,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v22-20260825';       // 쉘/CDN: 배포마다 갱신 (마크다운 파서 모듈화 통합 및 sw.js 갱신)
+const CACHE_VERSION = 'v23-20260825';       // 쉘/CDN: 배포마다 갱신 (오디오북 폴더 content/ 하위로 이동 반영)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
@@ -84,7 +84,7 @@ const DATA_ASSETS = [
 /** 캐시하지 않을 요청 패턴 (오디오 등 대용량 미디어) */
 const BYPASS_PATTERNS = [
   /\.mp3$/i,
-  /audiobook\/mp3\//i
+  /content\/audiobook\/mp3\//i
 ];
 
 /** 마크다운 원본 → Cache First (정적 원본, 배포 시 갱신) */

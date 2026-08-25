@@ -60,7 +60,7 @@
   - `tools/generate_migration_map.js` → `data/id_migration.js`
   - 런타임: `src/data-loader.js`가 registry를 보고 필요한 과목/시험만 온디맨드 로드
 
-**오디오북 파이프라인** (`audiobook/`)
+**오디오북 파이프라인** (`content/audiobook/`)
 - Python: 마크다운 청크 분할 → TTS(Google gTTS / ElevenLabs) → MP3 병합
 - 모델: `ko_KR-jimin-medium.onnx`
 
@@ -93,9 +93,8 @@
 │   ├── subjects/<key>.<hash>.js    # 과목별 학습 번들
 │   ├── exams/<key>.<hash>.js       # 시험별 문항 번들
 │   └── ingredients_data.<hash>.js  # 성분 사전 번들
-├── content/                    # 교재 MD + manifest.json (4과목 19단원) 및 성분 원본 MD (ingredients/)
+├── content/                    # 교재 MD, 성분 MD (ingredients/), 오디오북 파이프라인 (audiobook/)
 ├── exams/                      # 시험 문제 MD + HTML
-├── audiobook/                  # 오디오북 파이프라인 (Python·TTS·MP3)
 ├── tools/                      # 빌드/변환 자동화 (Node.js)
 │   └── build/                  # 모듈러 빌드 파이프라인
 └── docs/                       # 매뉴얼·요약·배포 가이드
@@ -182,13 +181,13 @@ node tools/generate_migration_map.js
 ## 🎧 오디오북 생성
 
 ```bash
-cd audiobook
+cd content/audiobook
 pip install -r requirements.txt
 cp .env.example .env   # API 키 입력
 python run_pipeline.py
 ```
 
-사용법은 [`audiobook/README.md`](audiobook/README.md) 참고.
+사용법은 [`content/audiobook/README.md`](content/audiobook/README.md) 참고.
 
 ---
 
@@ -196,8 +195,8 @@ python run_pipeline.py
 
 대용량 파일은 Git 추적에서 제외됩니다 ([`.gitignore`](.gitignore)):
 
-- `audiobook/mp3/`, `*.mp3` — 생성된 음성 파일 (외부 CDN 권장)
-- `audiobook/models/`, `*.onnx` — TTS 모델
+- `content/audiobook/mp3/`, `*.mp3` — 생성된 음성 파일 (외부 CDN 권장)
+- `content/audiobook/models/`, `*.onnx` — TTS 모델
 - `content/**/*.html` — 100MB 초과 HTML
 - `archive/`, `.env` 등
 

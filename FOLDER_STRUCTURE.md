@@ -89,10 +89,13 @@ Personalized Skincare/
 │   ├── manufacturing/ (5단원)        ← 3과목: 화장품 제조 및 품질관리
 │   ├── law/ (2단원)                 ← 4과목: 화장품법의 이해
 │   │   └── {번호}.{제목}2026.md      ← .html은 빌드 산출/배포 제외
-│   └── ingredients/                 ← 🔧 성분 원본 MD (빌드 입력)
-│       ├── approved_ingredients.md
-│       ├── banned_ingredients.md
-│       └── restricted_ingredients.md
+│   ├── ingredients/                 ← 🔧 성분 원본 MD (빌드 입력)
+│   │   ├── approved_ingredients.md
+│   │   ├── banned_ingredients.md
+│   │   └── restricted_ingredients.md
+│   └── audiobook/                   ← ❌ Vercel 제외 (TTS 오디오 파이프라인, Python)
+│       ├── chunks/ · scripts/ · mp3/ · models/
+│       └── *.py · requirements.txt · README.md
 │
 ├── 📂 exams/                        ← ✅ 배포 (MD만 — 정적 HTML 폐지, 2026-08-24~)
 │   └── subject{n}_*.md              ← 과목별 모의고사 원본(빌드 입력 + 문제집 뷰어 소스)
@@ -112,10 +115,6 @@ Personalized Skincare/
 │   ├── convert_study_docs.ps1       ← 교재 MD → HTML 변환(선택)
 │   └── generate_pwa_icons.ps1       ← PWA 아이콘 생성(선택)
 │
-├── 📂 audiobook/                    ← ❌ Vercel 제외 (TTS 오디오 파이프라인, Python)
-│   ├── chunks/ · scripts/ · mp3/ · models/
-│   ├── *.py (run_pipeline / md_chunker / script_polisher / tts_* / …)
-│   └── requirements.txt · README.md · AUDIOBOOK_SUMMARY.md
 │
 └── 📂 docs/                         ← ⚠️ 선택(HTML 제외, MD 위주)
     ├── MODULAR_DESIGN.md            ← 🆕 모듈러 아키텍처 설계서(권위 문서)
@@ -173,7 +172,7 @@ graph TD
     E -->|build_exam_bundles.js| EMD[data/exams_md/*.js]
     I[content/ingredients/*.md] -->|ingredients plugin| G[data/ingredients_data.hash.js]
     M -->|generate_migration_map.js| MIG[data/id_migration.js]
-    A[content/**/*.md] -->|audiobook pipeline| MP3[audiobook/mp3/*.mp3]
+    A[content/**/*.md] -->|audiobook pipeline| MP3[content/audiobook/mp3/*.mp3]
     MP3 -->|manual mapping| AM[data/audio_manifest.js]
 
     R --> IDX[index.html]
@@ -210,7 +209,7 @@ node tools/generate_migration_map.js
 node tools/build_exam_bundles.js
 
 # 오디오북 생성
-cd audiobook && pip install -r requirements.txt && python run_pipeline.py
+cd content/audiobook && pip install -r requirements.txt && python run_pipeline.py
 ```
 
 ---

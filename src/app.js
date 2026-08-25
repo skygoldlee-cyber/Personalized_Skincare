@@ -3964,7 +3964,7 @@ function getAudioPathForChapter(subjId, chapter) {
         const num = m[1];
         const title = m[2].trim().replace(/\s+/g, '_');
         const chNo = num.padStart(2, '0');
-        localPath = `audiobook/mp3/${subjId}/ch${chNo}_${num}_${title}.mp3`;
+        localPath = `content/audiobook/mp3/${subjId}/ch${chNo}_${num}_${title}.mp3`;
     }
 
     // 3) 외부 CDN URL 변환 (audio_manifest.js의 getAudioUrl 사용)

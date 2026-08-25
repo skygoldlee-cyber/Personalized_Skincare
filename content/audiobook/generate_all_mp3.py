@@ -27,7 +27,7 @@ import time
 from pathlib import Path
 
 AUDIOBOOK_DIR = Path(__file__).resolve().parent
-PROJECT_ROOT = AUDIOBOOK_DIR.parent
+PROJECT_ROOT = AUDIOBOOK_DIR.parent.parent
 sys.path.insert(0, str(AUDIOBOOK_DIR))
 
 from md_chunker import chunk_markdown_file

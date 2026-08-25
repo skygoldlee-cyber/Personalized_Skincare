@@ -691,7 +691,7 @@ class TestIntegration(unittest.TestCase):
 
     def test_chunk_and_polish_real_file(self):
         """실제 manufacturing ch01 MD 파일을 청킹→정제까지 수행."""
-        md_path = AUDIOBOOK_DIR.parent / "content/manufacturing" / "1.화장품 원료의 종류와 특성 및 제품의 제조관리2026.md"
+        md_path = AUDIOBOOK_DIR.parent / "manufacturing" / "1.화장품 원료의 종류와 특성 및 제품의 제조관리2026.md"
         if not md_path.exists():
             self.skipTest(f"테스트 파일 없음: {md_path}")
 
@@ -711,7 +711,7 @@ class TestIntegration(unittest.TestCase):
 
     def test_chunk_sizes_within_limit(self):
         """모든 청크가 max_chars 이내인지 확인."""
-        md_path = AUDIOBOOK_DIR.parent / "content/manufacturing" / "1.화장품 원료의 종류와 특성 및 제품의 제조관리2026.md"
+        md_path = AUDIOBOOK_DIR.parent / "manufacturing" / "1.화장품 원료의 종류와 특성 및 제품의 제조관리2026.md"
         if not md_path.exists():
             self.skipTest(f"테스트 파일 없음: {md_path}")
 

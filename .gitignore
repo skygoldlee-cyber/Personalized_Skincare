@@ -5,11 +5,11 @@
 # ============================================
 
 # ---------- 🎧 대용량 오디오 파일 ----------
-audiobook/mp3/
+content/audiobook/mp3/
 *.mp3
 
 # ---------- 🤖 TTS 모델 파일 ----------
-audiobook/models/
+content/audiobook/models/
 *.onnx
 *.pt
 *.pth
