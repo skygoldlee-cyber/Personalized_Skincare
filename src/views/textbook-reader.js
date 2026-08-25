@@ -1,8 +1,7 @@
 // views/textbook-reader.js - 교재 본문 읽기 및 오디오북 플레이어 (Textbook Reader + Audio)
 import { escapeHTML, esc, safeTextWithBreaks } from '../sanitize.js';
 import { formatSectionContentForReader } from '../reader-format.js';
-import { DATA_REGISTRY } from '../../data/registry.js';
-import { AUDIO_MANIFEST, getAudioUrl } from '../../data/audio_manifest.js';
+// [모바일 PWA 견고성] 오디오 매니페스트는 window 전역(가드)에서 읽는다(정적 import 하드 의존 지양).
 import { DataLoader } from '../data-loader.js';
 
 // --- 교재 본문 읽기 (Textbook Reader) ---
@@ -39,9 +38,10 @@ function getAudioPathForChapter(subjId, chapter) {
         const STUDY_DATA = (typeof window !== 'undefined' && window.STUDY_DATA) ? window.STUDY_DATA : {};
         const chapters = (STUDY_DATA[subjId] && STUDY_DATA[subjId].chapters) || [];
         const idx = chapters.indexOf(chapter);
-        if (AUDIO_MANIFEST &&
-            AUDIO_MANIFEST[subjId] && idx >= 0 && AUDIO_MANIFEST[subjId][idx]) {
-            localPath = AUDIO_MANIFEST[subjId][idx];
+        const manifest = (typeof window !== 'undefined' && window.AUDIO_MANIFEST) || null;
+        if (manifest &&
+            manifest[subjId] && idx >= 0 && manifest[subjId][idx]) {
+            localPath = manifest[subjId][idx];
         }
     } catch (e) { /* 매니페스트 조회 실패 시 폘백 */ }
 
@@ -58,8 +58,9 @@ function getAudioPathForChapter(subjId, chapter) {
         localPath = `content/audiobook/mp3/${subjId}/ch${chNo}_${num}_${title}.mp3`;
     }
 
-    // 3) 외부 CDN URL 변환 (audio_manifest.js 의 getAudioUrl — 정적 import)
-    return getAudioUrl(localPath);
+    // 3) 외부 CDN URL 변환 (audio_manifest.js 의 getAudioUrl — window 전역, 없으면 로컬 경로 그대로)
+    const toUrl = (typeof window !== 'undefined' && window.getAudioUrl) || null;
+    return toUrl ? toUrl(localPath) : localPath;
 }
 
 /** 화면 하단에 잠시 표시되는 토스트 알림 */

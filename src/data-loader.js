@@ -6,8 +6,8 @@
 //        exam/ingredients 는 기존 레지스트리 번들 방식을 그대로 유지한다.
 import { cleanOrphansForSubject } from './state.js';
 import { buildSubjectData } from './textbook-parser.js';
-// [개선안 1-2] 레지스트리를 정적 ESM import 로 참조(window 전역 의존 제거).
-import { DATA_REGISTRY } from '../data/registry.js';
+// [모바일 PWA 견고성] 레지스트리는 window 전역(가드)에서 읽는다. 정적 import 로 하드 의존하면
+// 레지스트리 로드 실패 시 app.js 모듈 그래프 전체가 죽어 흰 화면이 되므로 지양.
 
 var STUDY_DATA = {};
 var EXAM_DATA = {};
@@ -28,11 +28,11 @@ export const DataLoader = {
     _fallbackSubjectInjected: {},
 
     /**
-     * Initialize from the ESM-imported registry.
+     * Initialize from the global registry (index.html의 module 태그가 채운 window 전역).
      * @returns {void}
      */
     init() {
-        this.registry = DATA_REGISTRY;
+        this.registry = window.DATA_REGISTRY;
         if (typeof window.STUDY_DATA === 'undefined') window.STUDY_DATA = {};
         if (typeof window.EXAM_DATA === 'undefined') window.EXAM_DATA = {};
     },
@@ -223,7 +223,7 @@ export const DataLoader = {
     }
 };
 
-// Auto-init: 레지스트리는 정적 import 로 이미 로드되어 있으므로 즉시 초기화.
-if (DATA_REGISTRY) {
+// Auto-init: 레지스트리 전역이 준비되어 있으면 즉시 초기화(없으면 이후 init 재호출 대비).
+if (window.DATA_REGISTRY) {
     DataLoader.init();
 }

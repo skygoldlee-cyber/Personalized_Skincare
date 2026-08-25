@@ -1,6 +1,6 @@
 // views/textbook-search.js - 교재 검색 통합 로직 (Textbook Search Integration)
 import { escapeHTML, esc } from '../sanitize.js';
-import { DATA_REGISTRY } from '../../data/registry.js';
+// [모바일 PWA 견고성] 레지스트리는 window 전역(가드)에서 읽는다(정적 import 하드 의존 지양).
 
 const textbookState = {
     filter: 'all',
@@ -134,7 +134,7 @@ function performTextbookSearch() {
     results.forEach((item, idx) => {
         const colors = ['badge-cyan', 'badge-violet', 'badge-emerald', 'badge-amber', 'badge-rose', 'badge-indigo'];
         const badgeColors = {};
-        const subjects = (DATA_REGISTRY && DATA_REGISTRY.subjects) || [];
+        const subjects = (window.DATA_REGISTRY && window.DATA_REGISTRY.subjects) || [];
         subjects.forEach((sub, idx) => {
             badgeColors[sub.key] = colors[idx % colors.length];
         });

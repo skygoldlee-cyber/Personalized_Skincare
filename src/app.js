@@ -9,9 +9,6 @@ import { initScratchpadCanvas, clearScratchpad, toggleCalcScratchpad, toggleScra
 import { DataLoader } from './data-loader.js';
 import { ExamViewer } from './exam-viewer.js';
 import { ManualViewer } from './manual-viewer.js';
-// [개선안 1-2] 빌드 산출물(레지스트리·오디오 매니페스트)을 window 전역 대신 정적 ESM import 로 참조.
-import { DATA_REGISTRY } from '../data/registry.js';
-import { AUDIO_MANIFEST, getAudioUrl } from '../data/audio_manifest.js';
 
 // --- 뷰 컨트롤러 모듈 임포트 ---
 import {

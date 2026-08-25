@@ -2,7 +2,7 @@
 import { state, saveProgress } from '../state.js';
 import { esc, safeTextWithBreaks } from '../sanitize.js';
 import { checkShortAnswer } from './trainer.js';
-import { DATA_REGISTRY } from '../../data/registry.js';
+// [모바일 PWA 견고성] 레지스트리는 window 전역(가드)에서 읽는다(정적 import 하드 의존 지양).
 import { DataLoader } from '../data-loader.js';
 import { showGlobalLoading, hideGlobalLoading } from '../ui-utils.js';
 
@@ -458,7 +458,7 @@ export function submitExam() {
     
     // 과목별 정답 및 총 문제수 집계용 (레지스트리 기반 동적 초기화)
     const subjectScores = {};
-    const subjects = (DATA_REGISTRY && DATA_REGISTRY.subjects) || [];
+    const subjects = (window.DATA_REGISTRY && window.DATA_REGISTRY.subjects) || [];
     subjects.forEach(sub => {
         subjectScores[sub.key] = { score: 0, total: 0 };
     });
@@ -626,7 +626,7 @@ export function submitExam() {
 }
 
 export function examIdToSubjectId(examId) {
-    const registry = DATA_REGISTRY;
+    const registry = window.DATA_REGISTRY;
     if (registry && registry.exams) {
         const exam = registry.exams.find(e => e.key === examId);
         if (exam) return exam.subject;
@@ -743,7 +743,7 @@ function _startWeakExamImpl() {
     
     if (weakCards.length === 0 && solvedQuizzes.length === 0) {
         const filterNames = {};
-        const subjects = (DATA_REGISTRY && DATA_REGISTRY.subjects) || [];
+        const subjects = (window.DATA_REGISTRY && window.DATA_REGISTRY.subjects) || [];
         subjects.forEach((sub, idx) => {
             const shortName = sub.name.replace('의 이해', '').replace(' 및 품질관리', '').replace('유통화장품 ', '');
             filterNames[sub.key] = `${idx + 1}과목 (${shortName})`;
