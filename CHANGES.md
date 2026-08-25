@@ -214,3 +214,52 @@
 - **데이터 로더 수정**: `src/data-loader.js`의 `_ensureFallbackBundle()`을 `_ensureFallbackManifest()` + `_ensureFallbackSubjectFiles(key)`로 분리. 과목 로드 시 해당 과목의 MD 파일만 온디맨드 로드.
 - **최적화 효과**: 사용자가 1과목만 학습할 경우 513KB → **112KB** (78% 감소). 전체 과목 순차 학습 시에도 한 번에 513KB 로드 대신 과목 전환 시마다 분할 로드.
 - **빌드 스크립트**: `tools/build_study_md_bundle.js` 재작성. `npm run build:study-md`로 실행.
+
+---
+
+## 🏛️ 후속 수정 내역 (2026-08-25, 3차 — 모바일 네비게이션 및 PWA 설치 수정)
+
+### 9. 모바일 매뉴얼 뷰어 즉시 닫힘 수정 (sw `v31` → `v32`)
+
+- **증상**: 모바일에서 매뉴얼 버튼을 누르면 매뉴얼 화면이 잠시 나왔다가 즉시 메인 화면으로 복귀.
+- **원인**: 매뉴얼 링크가 `<a href="#">`로 되어 있어 hash change → `popstate` 이벤트가 발생하고, `manual-viewer.js`의 `_onPopstate()` 핸들러가 즉시 오버레이를 닫아버림.
+- **해결**:
+  - `index.html`: 매뉴얼 링크를 `<a href="#">`에서 `<button type="button">`으로 변경 → hash change 자체를 원천 차단.
+  - `src/manual-viewer.js`: `_openTimestamp` 변수 추가, `_onPopstate()`에서 open 후 300ms 이내 popstate 이벤트 무시하는 타이밍 가드 추가.
+
+### 10. 네비게이션 자동 대시보드 복귀 수정 (sw `v32`)
+
+- **증상**: PC/모바일 모두에서 다른 메뉴를 클릭하여 이동해도 얼마 안 되어 대시보드로 자동 복귀.
+- **원인**: `src/app-fallback.js`가 무조건 `window.__APP_INITIALIZED = false`로 덮어써서, 8초 타임아웃 후 앱이 재초기화되며 대시보드로 리셋됨.
+- **해결**: `app-fallback.js`에서 `window.__APP_INITIALIZED = false` 무조건 덮어쓰기 제거. 이미 초기화된 경우 재실행하지 않도록 가드.
+
+### 11. 전역 데이터 레지스트리/매니페스트 참조 방식 변경 (sw `v33`)
+
+- **배경**: `data/registry.js`와 `data/audio_manifest.js`를 정적 ESM import에서 `window` 전역 참조로 변경하여, 이 파일들 로드 실패 시 `app.js` 모듈 그래프 전체가 죽는 것을 방지 (모바일 PWA 견고성).
+- **변경**:
+  - `data/registry.js`: `window.DATA_REGISTRY` 할당 추가.
+  - `data/audio_manifest.js`: `window.AUDIO_MANIFEST`, `window.AUDIO_BASE_URL`, `window.getAudioUrl` 할당 추가.
+  - `src/app.js`, `src/data-loader.js`, `src/views/exam-simulator.js`, `src/views/textbook-reader.js`, `src/views/textbook-search.js`: 정적 import 제거 → `window.*` 참조로 변경.
+- **SW**: `data/registry.js`와 `data/audio_manifest.js`를 `SHELL_ASSETS` 프리캐시에 추가 (모듈 그래프에서 분리되어 별도 캐싱 필요).
+
+### 12. PWA 설치 버튼 수정 — beforeinstallprompt 조기 캡처 (sw `v34` → `v35`)
+
+- **증상**: Android Chrome에서 "앱 설치" 버튼 클릭 시 실제 설치 프롬프트가 뜨지 않고 수동 설치 안내 모달만 표시.
+- **원인 1**: `beforeinstallprompt` 이벤트는 Chrome에서 페이지 로드 직후 한 번만 발생하지만, `app.js`는 `type="module"`(deferred)이라 실행이 늦어 이벤트 리스너 등록 전에 이벤트가 발생해 버림.
+- **해결 1**: `src/pwa-install-capture.js` 신규 — `<head>`에서 즉시 실행되는 클래식 스크립트로 `beforeinstallprompt` 조기 캡처 → `window.__deferredPrompt`에 저장.
+- **원인 2**: SW 등록이 `app.js`(deferred module) 안에 있어 Android Chrome이 PWA 설치 가능 판정을 내리기 전에 SW가 활성화되지 않음.
+- **해결 2**: SW 등록을 `pwa-install-capture.js`로 이동하여 `<head>`에서 즉시 등록. `app.js`의 중복 SW 등록 제거.
+
+### 13. PWA 설치 진단 패널 및 manifest Content-Type 수정 (sw `v36` → `v37`)
+
+- **진단 패널**: 설치 안내 모달에 PWA 진단 정보 패널 추가 — `beforeinstallprompt` 캡처 여부, SW 등록 상태, display-mode, manifest fetch 상태/Content-Type 등 화면 표시.
+- **manifest Content-Type**: `vercel.json`에 `manifest.webmanifest`에 대한 `Content-Type: application/manifest+json; charset=utf-8` 헤더 추가 — Android Chrome은 manifest Content-Type을 엄격히 검사.
+- **manifest 개선**: `prefer_related_applications: false` 추가, 192x192/512x512 아이콘 `purpose`를 `"any maskable"`로 변경.
+
+### 14. 인앱 브라우저(WebView) 감지 및 Chrome 안내 (sw `v38`)
+
+- **진단 결과**: Android에서 `beforeinstallprompt`가 발생하지 않는 원인은 코드가 아니라 **인앱 브라우저(WebView)** 환경. UA 끝의 `wv`가 WebView를 의미 (카카오톡 등 인앱 브라우저). WebView는 구조적으로 `beforeinstallprompt`를 발생시키지 않고 PWA 설치 미지원.
+- **해결**:
+  - `src/app.js` `detectPlatform()`: 인앱 브라우저 감지 로직 추가 (`wv)` UA 플래그, KakaoTalk, Instagram, FBAN/FBAV, LINE, Twitter, Snapchat 패턴).
+  - `index.html`: 인앱 브라우저용 "Chrome으로 열기" 3단계 안내 모달 섹션 추가.
+  - `src/app.js`: 인앱 브라우저 감지 시 페이지 로드 0.8초 후 자동으로 안내 모달 표시 (sessionStorage로 1회만).

@@ -1,7 +1,7 @@
 # 🏛️ 설계 컨셉 & 아키텍처 (Architecture & Design Concept)
 
 > **대상 프로젝트**: Cosmetic Pass Master — 맞춤형화장품 조제관리사 스마트 학습 플랫폼
-> **최종 업데이트**: 2026-08-25
+> **최종 업데이트**: 2026-08-26
 > **목적**: 시스템의 설계 철학, 아키텍처 구조, 주요 설계 결정 사항을 설명
 
 ---
@@ -342,9 +342,10 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 | 6 | 그 외 App Shell (아이콘/이미지 등) | **Stale-While-Revalidate** | 빠른 표시 + 백그라운드 갱신 |
 
 ### 캐시 버전 관리
-- `CACHE_VERSION` 상수로 캐시 네임스페이스 관리 (현재 `v13-20260824`)
+- `CACHE_VERSION` 상수로 캐시 네임스페이스 관리 (현재 `v38-20260826`)
 - **배포 시 버전을 올리면 구 캐시 자동 정리** → 모바일 구버전 고착(Stale Cache) 문제 방지
 - `SHELL_ASSETS`에는 [`src/utils.js`](../src/utils.js), [`src/trainer-calc.js`](../src/trainer-calc.js) 등 분리된 모듈이 모두 프리캐시에 포함됨
+- `data/registry.js`, `data/audio_manifest.js`도 프리캐시에 포함 (2026-08-25, window 전역 참조 방식 전환으로 모듈 그래프에서 분리되어 별도 캐싱 필요)
 
 ### 오프라인 감지 설계
 판정은 **억제 우선(suppress-first)** 원칙을 따릅니다 — "실제로 오프라인일 때만" 배너를 띄우고, 모호하면 띄우지 않습니다.
@@ -362,6 +363,23 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
   - `PROBE_TIMEOUT = 8000ms`: 모바일 저속망 여유분(4s→6s→8s로 단계적 상향).
   - **슬립 복귀/콜드스타트 유예**: 마지막 화면 활성화(`visibilitychange`) 또는 `offline` 이벤트 후 **15초(`WAKE_GRACE_MS`)** 이내 실패는 통신 칩셋/Wi-Fi 재연결 중일 수 있어 `isOfflineMode`와 무관하게 failStreak를 쌓지 않고 3초 후 재시도. 첫 프로브는 5초 지연.
 - **적응 주기**: 온라인 정상 시 30초, 오프라인 확정 후 복구 감시는 5초로 단축. `online` 이벤트는 즉시 배너 해제(failStreak 초기화 + `hideBanner()`), `offline`/`visibilitychange` 이벤트는 wake 타임스탬프 갱신 후 즉시 재프로브.
+
+### PWA 설치 프롬프트 설계
+
+`beforeinstallprompt` 이벤트 캡처와 설치 버튼 동작을 담당하는 설계 요소들입니다.
+
+| 구성 요소 | 위치 | 역할 |
+|-----------|------|------|
+| **조기 캡처 스크립트** | [`src/pwa-install-capture.js`](../src/pwa-install-capture.js) `<head>` 클래식 스크립트 | `beforeinstallprompt` 이벤트를 최대한 빨리 캡처하여 `window.__deferredPrompt`에 저장. 동시에 SW를 조기 등록하여 Android Chrome이 PWA 설치 가능 판정을 내릴 수 있도록 함 |
+| **설치 버튼 UI** | `#pwa-install-btn` (`index.html`) | `beforeinstallprompt` 캡처 시 표시. 클릭 시 `deferredPrompt.prompt()` 호출 |
+| **설치 안내 모달** | `#pwa-install-modal` (`index.html`) | `deferredPrompt`가 null일 때 플랫폼별 수동 설치 안내 (Android/iOS/generic/inapp 분기) |
+| **진단 패널** | `#pwa-diagnostics` (`index.html`) | `beforeinstallprompt` 미발생 시 원인 진단 정보 화면 표시 (SW 상태, display-mode, manifest 검증 등) |
+| **인앱 브라우저 감지** | `detectPlatform()` ([`src/app.js`](../src/app.js)) | UA 기반 WebView/인앱 브라우저 감지 (`wv)` 플래그, KakaoTalk, Instagram, Facebook, LINE, Twitter, Snapchat). 감지 시 "Chrome으로 열기" 안내 모달 자동 표시 |
+
+**설계 결정사항**:
+- SW 등록을 `app.js`(deferred module)가 아닌 `pwa-install-capture.js`(클래직 스크립트, `<head>`)에서 수행 → Android Chrome이 SW 활성화 상태를 빨리 인식하여 `beforeinstallprompt` 발생 조건 충족
+- `manifest.webmanifest`의 `Content-Type`을 `vercel.json`에서 `application/manifest+json; charset=utf-8`으로 명시 → Android Chrome의 엄격한 Content-Type 검사 대응
+- 인앱 브라우저(WebView)는 구조적으로 `beforeinstallprompt`를 발생시키지 않으므로, 감지 시 "Chrome으로 열기" 안내만 제공 (코드 수정으로 해결 불가능한 환경적 제약)
 
 ---
 
