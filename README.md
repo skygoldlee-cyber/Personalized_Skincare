@@ -69,38 +69,69 @@
 
 ---
 
-## 📁 폴터 구조
+## 📁 폴더 구조 상세
 
 ```
-├── index.html / style.css      # 앱 진입점·전역 스타일 (라이트/다크 테마)
-├── manifest.webmanifest        # PWA 매니페스트 (앱 이름/아이콘/테마)
-├── sw.js                       # PWA Service Worker (오프라인 캐시, 코드 자산 Network First)
-├── icons/                      # PWA 아이콘 (192/512/maskable)
-├── src/                        # 애플리케이션 소스
-│   ├── app.js                  # 메인 로직 (라우팅·상태·렌더링)
-│   ├── charts.js               # SVG 차트
-│   ├── data-loader.js          # 레지스트리 기반 온디맨드 번들 로더
-│   ├── reader-format.js        # 교재 리더 본문 포맷터 (순수 함수)
-│   ├── sanitize.js             # XSS 방어·텍스트 정제
-│   ├── scratchpad.js           # Canvas 연습장
-│   ├── state.js                # 상태 관리·로컬 스토리지
-│   ├── trainer-calc.js         # 계산 훈련 문제 생성기 (순수 로직)
-│   └── utils.js                # 범용 헬퍼 (한글 초성 추출 등)
-├── data/                       # 빌드 산출물 (registry + 해시 번들)
-│   ├── registry.js             # 번들 목록/메타
-│   ├── id_migration.js         # 레거시→안정 ID 일회성 매핑
-│   ├── audio_manifest.js       # 오디오 파일 경로 매니페스트
-│   ├── subjects/<key>.<hash>.js    # 과목별 학습 번들
-│   ├── exams/<key>.<hash>.js       # 시험별 문항 번들
-│   └── ingredients_data.<hash>.js  # 성분 사전 번들
-├── content/                    # 교재 MD, 성분 MD (ingredients/), 오디오북 파이프라인 (audiobook/)
-├── exams/                      # 시험 문제 MD + HTML
-├── tools/                      # 빌드/변환 자동화 (Node.js)
-│   └── build/                  # 모듈러 빌드 파이프라인
-└── docs/                       # 매뉴얼·요약·배포 가이드
+Personalized Skincare/
+│
+├── 📄 index.html                    ← ✅ 배포 (앱 진입점, 테마 로직 내장)
+├── 📄 style.css                     ← ✅ 배포 (전역 스타일, 라이트/다크)
+├── 📄 manifest.webmanifest          ← ✅ 배포 (PWA 매니페스트)
+├── 📄 ping.txt                      ← ✅ 배포 (오프라인 감지용 연결 프로브 대상, 내용 `1`)
+├── 📄 sw.js                         ← ✅ 배포 (Service Worker; 캐시 및 쉘 갱신)
+├── 📄 serve.js                      ← 로컬 개발 서버 (Vercel 제외)
+├── 📄 vercel.json                   ← Vercel 설정 (캐시/보안 헤더)
+├── 📄 .vercelignore / .gitignore    ← 배포/추적 제외 목록
+├── 📄 package.json                  ← 빌드 스크립트(build:data / --only)
+│
+├── 📂 icons/                        ← ✅ 배포 (PWA 아이콘 192/512/maskable)
+│
+├── 📂 vendor/                       ← ✅ 배포 (자체 호스팅 서드파티 자산)
+│   ├── fontawesome/                 ← FontAwesome 6.4.0 자체 호스팅
+│   └── mermaid/                     ← Mermaid v10 자체 호스팅 (인앱 다이어그램용)
+│
+├── 📂 src/                          ← ✅ 배포 (애플리케이션 소스; ESM 모듈화)
+│   ├── sanitize.js                  ← XSS 방어(esc/safeTextWithBreaks)
+│   ├── data-loader.js               ← 레지스트리 기반 온디맨드 번들 로더(DataLoader)
+│   ├── utils.js                     ← 범용 헬퍼(한글 초성 추출 등)
+│   ├── charts.js                    ← SVG 차트 및 합격 진단
+│   ├── scratchpad.js                ← Canvas 손글씨 계산 연습장
+│   ├── trainer-calc.js              ← 계산 훈련 문제 생성기
+│   ├── state.js                     ← 전역 상태 + localStorage 영속화
+│   ├── exam-viewer.js               ← 문제집(MD) 런타임 인앱 뷰어
+│   └── app.js                       ← 메인 앱 (라우팅 및 공통 렌더러)
+│
+├── 📂 data/                         ← ✅ 배포 (빌드 산출물 — 수정 금지)
+│   ├── registry.js                  ← 번들 목록/메타
+│   ├── id_migration.js              ← 레거시 ID ➔ 안정 ID 일회성 매핑
+│   ├── audio_manifest.js            ← 오디오 파일 경로 매니페스트
+│   ├── subjects/<key>.<hash>.js     ← 과목별 학습 번들
+│   ├── exams/<key>.<hash>.js        ← 시험별 문항 번들
+│   ├── exams_md/<stem>.js           ← 문제집 MD 번들 (file:// 프로토콜 폴백)
+│   └── ingredients_data.<hash>.js   ← 성분 사전 번들
+│
+├── 📂 content/                      ← 교재 MD 원본 (manifest만 빌드에 참조)
+│   ├── manifest.json                ← 단일 진실 원천(SSOT): 과목/단원/파일 정의
+│   ├── understanding/               ← 1과목: 맞춤형화장품의 이해
+│   ├── safety/                      ← 2과목: 유통화장품 안전관리
+│   ├── manufacturing/               ← 3과목: 화장품 제조 및 품질관리
+│   ├── law/                         ← 4과목: 화장품법의 이해
+│   ├── ingredients/                 ← 성분 원본 MD
+│   └── audiobook/                   ← 오디오북 파이프라인 (Python)
+│
+├── 📂 exams/                        ← ✅ 배포 (모의고사 MD 원본 및 뷰어 소스)
+│
+└── 📂 docs/                         ← 개발 및 배포 관련 설계 가이드
+    ├── ARCHITECTURE.md              ← 아키텍처 및 설계 표준 가이드
+    ├── DEPLOYMENT_GUIDE.md          ← Vercel 배포 및 오디오 호스팅 가이드
+    ├── MULTI_MACHINE_SETUP.md       ← 멀티 머신 개발 환경 설정
+    ├── user_manual.md/.html         ← 사용자 매뉴얼
+    └── study_summary.md/.html       ← 교재 요약본
 ```
 
-자세한 구조는 [`FOLDER_STRUCTURE.md`](FOLDER_STRUCTURE.md)를, 설계 컨셉과 아키텍처는 [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)를 참고하세요.
+> **범례:** ✅ 배포 포함 · ❌ 배포 제외 · 🆕 최신 모듈러 개편 반영
+
+자세한 설계 컨셉과 상세 아키텍처는 [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)를 참고하세요.
 
 ---
 
@@ -129,7 +160,7 @@ npm i -g vercel
 vercel
 ```
 
-배포 최적화 상세는 [`docs/VERCEL_DEPLOY_GUIDE.md`](docs/VERCEL_DEPLOY_GUIDE.md), [`docs/VERCEL_SIZE_OPTIMIZATION.md`](docs/VERCEL_SIZE_OPTIMIZATION.md) 참고.
+배포 최적화 및 오디오 호스팅 상세는 [`docs/DEPLOYMENT_GUIDE.md`](docs/DEPLOYMENT_GUIDE.md)를 참고하세요.
 
 ### 모바일 접속
 

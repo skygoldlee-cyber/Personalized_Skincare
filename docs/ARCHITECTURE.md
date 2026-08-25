@@ -416,6 +416,21 @@ content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.j
 
 **오디오북 파이프라인** ([`content/audiobook/`](../content/audiobook/README.md))은 Python 기반 별도 파이프라인으로, MD 청크 분할 → TTS → MP3 병합을 수행합니다.
 
+### 🔑 안정적 ID 체계 (Stable ID)
+
+학습 진행상황(외운 카드, 오답 노트)의 데이터 안정성을 위해 콘텐츠 유도형 해시 ID 체계를 적용합니다.
+- **카드 ID 규칙**: `sha256(subjectKey|chapterKey|term)`의 앞 6자리를 취하여 `${subjectKey}_card_${shortHash}` 형태로 구성합니다.
+  - **설계 결정**: 오탈자나 해설 보강 등 잦은 수정 시에도 ID가 변하지 않도록 정의 본문(`definition`)은 해시 입력에서 제외하고, 용어(`term`)만 사용합니다.
+  - **단원 키 포함**: 서로 다른 단원에 동일 용어가 등장하더라도 유일성을 유지하도록 `chapterKey`를 해시 입력에 포함합니다.
+- **퀴즈 ID 규칙**: 한 용어에 복수의 빈칸 퀴즈가 나오는 경우를 위해 `term|answer` 형태를 기반으로 해싱하고, 동일 정답이 중복 출현 시 순번(`#n`)을 결합하여 고유 ID를 부여합니다.
+- **고아 진행상황 정리 (Orphan Cleanup)**: 교재 콘텐츠가 삭제되어 더 이상 존재하지 않는 카드 ID가 localStorage에 남아 있을 경우, 앱 로드 시점(`state.js`의 `loadProgress()`)에 자동으로 감지하고 제거하여 브라우저 스토리지 공간을 항상 깨끗하게 유지합니다.
+
+### 🛡️ 스키마 검증 및 빌드 안전장치
+
+- **빌드 타임 검증 (`tools/build/schema.js`)**: 빌드 도구는 과목 내 카드/단원 수의 유효성 및 고유 ID 중복 여부 등을 사전에 검증하며, 오류 발견 시 `exit code 1`로 빌드를 즉시 중단합니다. 또한, 이전 빌드 대비 데이터 수가 20% 이상 급감하는 경우 경고를 표시해 조용한 데이터 손실을 사전에 차단합니다.
+- **매니페스트 자체 검증**: 매니페스트 파일 내 `chapters[].file`이 실제 경로에 존재하는지, 시험 정보(`exams[].subject`)가 등록된 과목을 바르게 지목하는지 정합성을 대조합니다.
+- **파싱 마커 감시**: 마크다운 파일에 `🔖기출` 마커가 달려 있음에도 정답 빈칸이 누락되어 퀴즈가 생성되지 않은 비정상 행을 감지하여 빌드 시 경고 로그로 가시화합니다.
+
 ---
 
 ## ⚖️ 주요 설계 결정 및 근거
@@ -453,11 +468,6 @@ content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.j
 
 ## 📎 관련 문서
 
-- [`FOLDER_STRUCTURE.md`](../FOLDER_STRUCTURE.md) — 폴터·파일 구조 상세
-- [`README.md`](../README.md) — 프로젝트 소개 및 시작 가이드
-- [`docs/walkthrough.md`](walkthrough.md) — 변경 이력 및 버그 수정 기록
-- [`docs/MODULAR_DESIGN.md`](MODULAR_DESIGN.md) — 모듈러 아키텍처 설계서
-- [`docs/APP_JS_DECOMPOSITION.md`](APP_JS_DECOMPOSITION.md) — app.js 점진 분해 로드맵
-- [`docs/VERCEL_DEPLOY_GUIDE.md`](VERCEL_DEPLOY_GUIDE.md) — 배포 가이드
-- [`docs/VERCEL_SIZE_OPTIMIZATION.md`](VERCEL_SIZE_OPTIMIZATION.md) — 배포 크기 최적화
-- [`CHANGES.md`](../CHANGES.md) — 코드 리뷰 수정 내역 (1~12)
+- [`README.md`](../README.md) — 프로젝트 소개 및 시작 가이드 (폴더 구조 포함)
+- [`docs/DEPLOYMENT_GUIDE.md`](DEPLOYMENT_GUIDE.md) — Vercel 배포 및 오디오 호스팅 가이드
+- [`CHANGES.md`](../CHANGES.md) — 코드 리뷰 및 아키텍처 개편 수정 이력 (Changelog)

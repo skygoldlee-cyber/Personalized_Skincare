@@ -151,3 +151,31 @@
   - `src/state.js` 내의 `loadProgress()` 초기화 부분에서 dynamic lazy loading 도입으로 인해 영구적으로 사용되지 않게 된 `STUDY_DATA` 판정용 레거시 고아 ID 클리닝 조건문을 완전히 삭제했습니다. (동적 데이터 로딩 완료 시점의 개별 정리 로직은 `DataLoader`에 의해 안정적으로 기동 중)
 - **서비스 워커 프리캐시 버전 상향**:
   - 소스코드 및 모듈 로딩 아키텍처 개편에 대응하여 서비스 워커의 `CACHE_VERSION`을 **`v19-20260824`**로 상향 적용하여 클라이언트 캐시 갱신을 강제하였습니다.
+
+---
+
+## 🏛️ 후속 수정 및 아키텍처 개편 내역 (2026-08-25)
+
+### 1. 교재 데이터 및 오디오북 폴더 이동 및 정리 (sw `v23`)
+- **폴더 이전**: 프로젝트 루트에 무질서하게 흩어져 있던 `audiobook/` 폴더와 `ingredients/` 폴더의 데이터가 모두 교재 콘텐츠의 일부임을 명확히 하기 위해 `content/` 하위로 위치를 통합하였습니다 (`content/audiobook/`, `content/ingredients/`).
+- **참조 최적화**: 
+  - `data/audio_manifest.js`의 19개 챕터 MP3 파일 상대 경로 접두사를 `content/audiobook/mp3/...` 형태로 동기화했습니다.
+  - `.gitignore` 및 `.vercelignore` 내 배포 제외 및 필터 규칙을 최신 디렉터리 경로에 맞춰 일제히 갱신하였습니다.
+- **문서 수정**: 5개 주요 기술 문서 내 오디오북 폴더 참조 경로를 일제히 `content/audiobook/`으로 수정했습니다.
+
+### 2. 한국어 오타 및 경로 문법 오류 교정
+- 파이프라인 정제 스크립트 및 마크다운 README 등에 잔존하던 한글 오타 및 경로 표기 오류를 수정했습니다.
+  - 오타 수정: `건드러뛰기` ➔ `건너뛰기`, `건드러뜀` ➔ `건너뜀`, `실패핟라도` ➔ `실패하더라도`, `묣료` ➔ `무료`
+  - README 내 실행 예시 경로: `audiobook\run_pipeline.py` ➔ `content\audiobook\run_pipeline.py` 등 실제 이동된 위치를 바르게 표기하여 실행 명령어 가독성을 보장했습니다.
+
+### 3. 과목 및 모의고사 연동 유연성 확보 (Dynamic SSOT Architecture, sw `v24`)
+- **HTML UI 동적 렌더링**: `index.html`에 하드코딩되어 있던 플래시카드/퀴즈 선택 `<option>` 및 과목 필터 버튼 목록을 제거하고, `src/app.js`에서 앱 실행 시 `DATA_REGISTRY`의 과목 메타 데이터를 기반으로 동적 DOM 엘리먼트를 생성/삽입하도록 개편했습니다. (과목 뱃지 색상 또한 dynamic cycle을 통해 순환 렌더링)
+- **N-축 삼각함수 레이더 차트**: `src/charts.js`의 `renderRadarChart` 함수를 리팩토링하여 임의의 과목 수(N)에 비례하여 $\theta_i = \frac{2\pi \cdot i}{N}$ 기반으로 다각형 그리드, 축, 라벨, 점수 데이터 폴리곤이 완전히 동적 계산 및 렌더링되도록 수학적 구조로 보강하였습니다.
+- **동적 시험-과목 매핑**: 모의고사 ID(예: `subject1_p1` 등) 문자열 분석 하드코딩 판정을 제거하고 `DATA_REGISTRY.exams` 레지스트리를 대조해 부모 과목 키를 동적 조회하도록 수정했습니다. 이전 시험 기록 호환성을 위해 `subject1~4` 형태에 대응하는 하향 호환성 가드를 마련했습니다.
+- **파이프라인 연동**: Python 스크립트(`run_pipeline.py`) 또한 하드코딩된 `SUBJECT_DIRS`를 지우고 `content/manifest.json`을 읽어 과목 경로와 레이아웃을 런타임에 자동 추론하도록 수정했습니다.
+
+### 4. 중복 및 노후 문서 전면 정리 및 통합
+- **아키텍처 가이드 통합**: `ARCHITECTURE.md`에 `MODULAR_DESIGN.md` 및 `APP_JS_DECOMPOSITION.md`의 설계 명세서와 Stable ID 규칙, 검증 파이프라인 등의 핵심 설계 정보를 병합하고 중복 2개 파일을 삭제했습니다.
+- **배포 가이드 통합**: Vercel 배포, 용량 최적화, 외부 오디오 호스팅 가이드를 하나의 완결성 있는 `DEPLOYMENT_GUIDE.md`로 통합하고 구 문서 3개 파일을 삭제했습니다.
+- **과거 로그 단일화**: `CHANGES.md`에 이전 세션의 주요 수정 완료 보고서(`walkthrough.md`, `code_review_report.md`)와 기술 마일스톤 이력(`RUNTIME_MD_MIGRATION.md`) 정보를 요약 병합하고 구 문서 3개 파일을 삭제했습니다.
+- **폴더 구조 README 통합**: `FOLDER_STRUCTURE.md` 내의 폴더 트리를 `README.md`로 흡수하고 해당 파일을 정리했습니다.
