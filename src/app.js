@@ -914,10 +914,11 @@ function printReviewNotes() {
 
 
 function setupPWAInstall() {
-    let deferredPrompt = null;
+    let deferredPrompt = window.__deferredPrompt || null;
     const installBtn = document.getElementById('pwa-install-btn');
     
     console.log('[PWA] 설치 버튼 초기화:', installBtn ? '발견됨' : '발견되지 않음');
+    console.log('[PWA] 조기 캡처된 deferredPrompt:', deferredPrompt ? '있음' : '없음');
 
     // 이미 설치된 경우 버튼 숨기기 (즉시 실행)
     if (window.matchMedia('(display-mode: standalone)').matches ||
@@ -929,20 +930,30 @@ function setupPWAInstall() {
         return;
     }
 
-    // beforeinstallprompt 이벤트 캡처
+    // 이미 조기 캡처된 이벤트가 있으면 버튼 즉시 표시
+    if (deferredPrompt && installBtn) {
+        installBtn.style.display = 'inline-flex';
+    }
+
+    // beforeinstallprompt 이벤트 추가 캡처 (조기 캡처가 놓친 경우 대비)
     window.addEventListener('beforeinstallprompt', (e) => {
         console.log('[PWA] beforeinstallprompt 이벤트 발생');
-        // 기본 설치 프롬프트 방지
         e.preventDefault();
-        // 이벤트 저장
         deferredPrompt = e;
-        // 설치 버튼 표시
+        window.__deferredPrompt = e;
         if (installBtn) {
             installBtn.style.display = 'inline-flex';
             installBtn.innerHTML = '<i class="fa-solid fa-download"></i> <span class="btn-text">앱 설치</span>';
             console.log('[PWA] 설치 버튼 표시됨');
-        } else {
-            console.warn('[PWA] 설치 버튼을 찾을 수 없습니다.');
+        }
+    });
+
+    // 조기 캡처 이벤트가 나중에 도착하는 경우 대비
+    window.addEventListener('pwa-install-available', () => {
+        deferredPrompt = window.__deferredPrompt;
+        if (installBtn && deferredPrompt) {
+            installBtn.style.display = 'inline-flex';
+            console.log('[PWA] 조기 캡처 이벤트 감지 — 설치 버튼 표시');
         }
     });
 
@@ -1016,6 +1027,7 @@ function setupPWAInstall() {
     window.addEventListener('appinstalled', () => {
         console.log('[PWA] 앱이 설치되었습니다.');
         deferredPrompt = null;
+        window.__deferredPrompt = null;
         if (installBtn) {
             installBtn.style.display = 'none';
         }
