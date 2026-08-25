@@ -93,9 +93,8 @@
 │   ├── subjects/<key>.<hash>.js    # 과목별 학습 번들
 │   ├── exams/<key>.<hash>.js       # 시험별 문항 번들
 │   └── ingredients_data.<hash>.js  # 성분 사전 번들
-├── content/                    # 교재 MD + manifest.json (4과목 19단원)
+├── content/                    # 교재 MD + manifest.json (4과목 19단원) 및 성분 원본 MD (ingredients/)
 ├── exams/                      # 시험 문제 MD + HTML
-├── ingredients/                # 성분 원본 MD (approved/banned/restricted)
 ├── audiobook/                  # 오디오북 파이프라인 (Python·TTS·MP3)
 ├── tools/                      # 빌드/변환 자동화 (Node.js)
 │   └── build/                  # 모듈러 빌드 파이프라인

@@ -120,7 +120,7 @@ graph TD
 *   **🗂️ 최근 계산 5회 풀이 이력 로그** `신규!`: 정/오답 제출 즉시 과거 풀었던 계산 문제 정보(날짜, 유형, 문제 문구, 내가 제출한 값, 실제 정답)가 카드 형태로 누적 저장되어 약점을 정확하게 복기할 수 있습니다.
 
 ### 🧪 화장품 원료 안전성 챌린지 (Ingredients Safety Challenge) `신규!`
-*   **원료 데이터베이스 연동**: 워크스페이스 내의 원료 정보(`approved_ingredients.md`, `restricted_ingredients.md`, `banned_ingredients.md`)를 자동으로 파싱하여 동적으로 문제를 생성합니다.
+*   **원료 데이터베이스 연동**: 워크스페이스 내의 원료 정보(`content/ingredients/` 폴더의 `approved_ingredients.md`, `restricted_ingredients.md`, `banned_ingredients.md`)를 자동으로 파싱하여 동적으로 문제를 생성합니다.
 *   **4가지 핵심 학습 유형**:
     1.  **안전성 판별**: 특정 원료명(예: 글루타랄, 납 등)을 보고 사용 가능 / 사용 제한 / 사용 금지 원료를 매칭합니다.
     2.  **배합 한도 주관식**: 보존제 및 자외선 차단제의 법적 사용 한도를 단답형으로 기재합니다.

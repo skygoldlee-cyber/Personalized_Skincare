@@ -87,18 +87,17 @@ Personalized Skincare/
 │   ├── understanding/ (7단원)        ← 1과목: 맞춤형화장품의 이해
 │   ├── safety/ (5단원)              ← 2과목: 유통화장품 안전관리
 │   ├── manufacturing/ (5단원)        ← 3과목: 화장품 제조 및 품질관리
-│   └── law/ (2단원)                 ← 4과목: 화장품법의 이해
-│       └── {번호}.{제목}2026.md      ← .html은 빌드 산출/배포 제외
+│   ├── law/ (2단원)                 ← 4과목: 화장품법의 이해
+│   │   └── {번호}.{제목}2026.md      ← .html은 빌드 산출/배포 제외
+│   └── ingredients/                 ← 🔧 성분 원본 MD (빌드 입력)
+│       ├── approved_ingredients.md
+│       ├── banned_ingredients.md
+│       └── restricted_ingredients.md
 │
 ├── 📂 exams/                        ← ✅ 배포 (MD만 — 정적 HTML 폐지, 2026-08-24~)
 │   └── subject{n}_*.md              ← 과목별 모의고사 원본(빌드 입력 + 문제집 뷰어 소스)
 │                                      ※ 인쇄용 정적 HTML은 삭제됨 → src/exam-viewer.js가 MD를 런타임에
 │                                        HTML로 변환해 전체화면 오버레이로 표시(인쇄/PDF 버튼 내장)
-│
-├── 📂 ingredients/                  ← 🔧 성분 원본 MD (빌드 입력)
-│   ├── approved_ingredients.md
-│   ├── banned_ingredients.md
-│   └── restricted_ingredients.md
 │
 ├── 📂 tools/                        ← ❌ Vercel 제외 (빌드/변환 자동화)
 │   ├── build/                       ← 🆕 모듈러 빌드 파이프라인
@@ -172,7 +171,7 @@ graph TD
     M -->|textbook plugin| S[data/subjects/*.hash.js]
     E[exams/*.md] -->|exams plugin| X[data/exams/*.hash.js]
     E -->|build_exam_bundles.js| EMD[data/exams_md/*.js]
-    I[ingredients/*.md] -->|ingredients plugin| G[data/ingredients_data.hash.js]
+    I[content/ingredients/*.md] -->|ingredients plugin| G[data/ingredients_data.hash.js]
     M -->|generate_migration_map.js| MIG[data/id_migration.js]
     A[content/**/*.md] -->|audiobook pipeline| MP3[audiobook/mp3/*.mp3]
     MP3 -->|manual mapping| AM[data/audio_manifest.js]

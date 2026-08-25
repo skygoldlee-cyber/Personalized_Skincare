@@ -17,7 +17,7 @@
 | `data/*.js` | 1.88 MB | 0.2% | ✅ 포함 |
 | `src/*.js` | 0.22 MB | 0.02% | ✅ 포함 |
 | `docs/` (MD만) | 4.64 MB | 0.5% | ✅ 포함 |
-| `ingredients/` | 0.26 MB | 0.03% | ✅ 포함 |
+| `content/ingredients/` | 0.26 MB | 0.03% | ✅ 포함 |
 | 루트 파일 (`index.html`, `style.css` 등) | 0.82 MB | 0.08% | ✅ 포함 |
 | **배포 대상 합계** | **~7.8 MB** | **0.8%** | ✅ **배포 가능** |
 
@@ -60,19 +60,18 @@ Personalized_Skincare/
 │   ├── VERCEL_DEPLOY_GUIDE.md
 │   └── VERCEL_SIZE_OPTIMIZATION.md  # 본 문서
 │
-├── content/            # 📚 학습 교재 원본 (MD만, HTML 제외)
+├── content/            # 📚 학습 교재 및 성분 원본 (MD만, HTML 제외)
 │   ├── understanding/*.md
 │   ├── safety/*.md
 │   ├── manufacturing/*.md
-│   └── law/*.md
+│   ├── law/*.md
+│   └── ingredients/    # 성분 데이터 (0.26 MB)
+│       ├── approved_ingredients.md
+│       ├── banned_ingredients.md
+│       └── restricted_ingredients.md
 │
 ├── exams/              # 📝 시험 원본 (MD만 — 정적 HTML은 2026-08-24 삭제됨)
 │   └── *.md
-│
-└── ingredients/        # 성분 데이터 (0.26 MB)
-    ├── approved_ingredients.md
-    ├── banned_ingredients.md
-    └── restricted_ingredients.md
 ```
 
 **제외 대상 (`.vercelignore` 적용됨):**
@@ -264,12 +263,11 @@ Personalized_Skincare/
 │   ├── understanding/*.md
 │   ├── safety/*.md
 │   ├── manufacturing/*.md
-│   └── law/*.md
+│   ├── law/*.md
+│   └── ingredients/                 # ✅ Vercel 배포 (MD 원본)
+│       └── *.md
 │
 ├── 📂 exams/                        # ✅ MD 원본 (정적 HTML 폐지 — 런타임 뷰어로 대체)
-│   └── *.md
-│
-├── 📂 ingredients/                  # ✅ Vercel 배포 (MD 원본)
 │   └── *.md
 │
 ├── 📂 archive/                      # ❌ Vercel 제외 (아카이브된 중복 원본)

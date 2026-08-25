@@ -401,7 +401,7 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 [원본 콘텐츠]                [변환]                              [산출/소비]
 content/manifest.json ──► tools/build/index.js        ──► data/registry.js (과목목록·시험·성분 메타)
 exams/**/*.md           ──► (exams plugin)             ──► data/exams/<key>.<hash>.js
-ingredients/*.md        ──► (ingredients plugin)       ──► data/ingredients_data.<hash>.js
+content/ingredients/*.md ──► (ingredients plugin)       ──► data/ingredients_data.<hash>.js
 
 content/**/*.md ───(런타임 fetch)──► src/data-loader.js + src/textbook-parser.js ──► STUDY_DATA (카드/퀴즈/챕터)
 content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.js ──► data/study_md.js
