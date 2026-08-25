@@ -5,7 +5,9 @@
 // 초기화 미감지 시 SW 강제 갱신 + 페이지 리로드로 복구한다.
 (function () {
   'use strict';
-  window.__APP_INITIALIZED = false;
+  // NOTE: app.js (ESM, document order상 먼저 실행)가 initApp() 끝에서
+  // window.__APP_INITIALIZED = true 로 설정한다. 이 스크립트는 그 후에 실행되므로
+  // 값을 덮어쓰지 않아야 한다. undefined도 falsy하므로 초기화 불필요.
 
   var RELOAD_KEY = '__app_fallback_reloads';
   var MAX_RELOADS = 3;
