@@ -17,7 +17,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v28-20260825-111749';       // 쉘/CDN: 배포마다 갱신 (상태 표시줄 및 캐시 갱신 반영)
+const CACHE_VERSION = 'v29-20260825-2200';       // 쉘/CDN: 배포마다 갱신 (상태 표시줄 및 캐시 갱신 반영)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
@@ -51,11 +51,16 @@ const SHELL_ASSETS = [
   './src/sha256.js',
   './src/textbook-parser.js',
   './src/app.js',
+  './src/ui-utils.js',
   './src/views/dashboard.js',
   './src/views/flashcard.js',
   './src/views/quiz.js',
   './src/views/trainer.js',
   './src/views/dictionary.js',
+  './src/views/backup.js',
+  './src/views/textbook-search.js',
+  './src/views/textbook-reader.js',
+  './src/views/exam-simulator.js',
   './icons/icon-192.png',
   './icons/icon-512.png',
   // FontAwesome 자체 호스팅 (오프라인/모바일에서도 아이콘 확실히 표시)
