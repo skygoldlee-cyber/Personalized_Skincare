@@ -17,7 +17,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v39-20260826-b748a39';       // 쉘/CDN: 배포마다 갱신 (app-fallback 폴링/단계적 복구, 진단 강화)
+const CACHE_VERSION = 'v39-20260826-50b61e7';       // 쉘/CDN: 배포마다 갱신 (app-fallback 폴링/단계적 복구, 진단 강화)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
@@ -240,9 +240,20 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 5) 코드 자산(CSS/JS) → Network First
-  //    (온라인이면 항상 최신 배포본, 오프라인이면 캐시 폴백.
-  //     버전 bump을 깜빡해도 폰에서 구버전이 남지 않도록 함)
+  // 5-1) /src/ 하위 JS 모듈 → Cache First (캐시 스큐 방지)
+  //      ESM import 그래프는 한 모듈이라도 버전이 어긋나면 전체가 드랍됨.
+  //      networkFirst를 쓰면 모바일 불안정 네트워크에서 일부는 신버전(네트워크),
+  //      일부는 구버전(캐시)이 섞여 import { 새이름 }이 구파일에 없어 그래프가 붕괴.
+  //      cacheFirst + SHELL_ASSETS 프리캐시로 동일 버전 파일만 일관 서빙.
+  //      새 SW install 시 새 CACHE_VERSION 캐시에 전체 셸을 원자적으로 프리캐시 → 세대 내 불일치 불가.
+  if (url.pathname.includes('/src/') && /\.js$/i.test(url.pathname)) {
+    event.respondWith(cacheFirst(request, SHELL_CACHE));
+    return;
+  }
+
+  // 5-2) 그 외 코드 자산(CSS/JS) → Network First
+  //      (온라인이면 항상 최신 배포본, 오프라인이면 캐시 폴백.
+  //       버전 bump을 깜빡해도 폰에서 구버전이 남지 않도록 함)
   if (/\.(?:css|js)$/i.test(url.pathname)) {
     event.respondWith(networkFirst(request, SHELL_CACHE));
     return;
