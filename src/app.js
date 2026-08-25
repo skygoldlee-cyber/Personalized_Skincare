@@ -21,6 +21,7 @@ function initApp() {
     // 초기 뷰 렌더링
     renderDashboard();
     updateGlobalStats();
+    refreshDashboardStatsInBackground();
     checkExamDraft();
 }
 
@@ -145,6 +146,7 @@ function setupNavigation() {
             // 각 뷰 진입 시 렌더링 갱신
             if (target === 'dashboard-view') {
                 renderDashboard();
+                refreshDashboardStatsInBackground();
                 checkExamDraft();
             } else if (target === 'flashcard-view') {
                 showGlobalLoading('플래시카드를 불러오는 중입니다...');
@@ -529,6 +531,23 @@ function updateGlobalStats() {
     
     document.getElementById('solved-quizzes-count').textContent = solvedCount;
     document.getElementById('quiz-success-rate').textContent = `${successRate}%`;
+}
+
+// --- 대시보드 정확 통계 백그라운드 갱신 ---
+// registry.js의 정적 stats는 콘텐츠(content/*.md) 대폭 수정 시 실제 개수와 어긋날 수 있다.
+// 전 과목을 백그라운드로 로드(캐시됨)해 loadSubject가 레지스트리 stats를 실제값으로 갱신하게 한 뒤,
+// 대시보드가 보이는 상태면 재렌더한다. 세션당 1회만 수행(로드는 캐시되어 저렴).
+let _dashboardStatsRefreshed = false;
+function refreshDashboardStatsInBackground() {
+    if (_dashboardStatsRefreshed) return;
+    if (typeof DataLoader === 'undefined' || !DataLoader.registry) return; // 아직 준비 전 → 다음 기회에
+    _dashboardStatsRefreshed = true;
+    const loads = DataLoader.getSubjectList().map(s => DataLoader.loadSubject(s.key).catch(() => null));
+    Promise.all(loads).then(() => {
+        // loadSubject가 실제 개수로 registry.stats를 갱신한 뒤 반영
+        updateGlobalStats();
+        if (state.currentView === 'dashboard-view') renderDashboard();
+    });
 }
 
 // --- 1. 대시보드 뷰 구현 ---
@@ -4536,7 +4555,7 @@ function renderChapterContent(subjId, chapterIdx) {
                 <span><i class="fa-solid fa-layer-group"></i> 섹션 ${chapter.sections.length}개</span>
                 <span><i class="fa-regular fa-clock"></i> 예상 읽기 시간 약 ${readMinutes}분</span>
                 <a href="${esc(chapter.filePath)}" target="_blank" class="btn btn-secondary" style="display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; padding: 0.35rem 0.75rem;">
-                    <i class="fa-solid fa-arrow-up-right-from-square"></i> 원본 HTML
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i> 원본 MD
                 </a>
                 ${hasAudio ? `
                 <button id="reader-audio-toggle-btn" class="btn btn-secondary" onclick="toggleReaderAudio('${subjId}', ${chapterIdx})" style="display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; padding: 0.35rem 0.75rem;">

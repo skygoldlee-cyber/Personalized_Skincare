@@ -9,14 +9,13 @@
 audiobook/mp3/
 *.mp3
 
-# ---------- 📚 비대화된 HTML 콘텐츠 ----------
-# 앱은 data/registry.js + data/subjects·exams/*.js(모듈러 번들)를 로드하므로
-# content/ 등에서 렌더링된 HTML은 제외하되,
-# 앱에서 링크로 여는 문서 HTML(docs/*.html)은 반드시 배포에 포함해야 한다.
-# (루트 index.html은 진입점이므로 반드시 유지)
-# ※ exams/*.html 정적 문제집은 런타임 MD 뷰어(오버레이)로 대체·삭제되었다.
-#    문제집은 exams/*.md(원본) + data/exams_md/*.js(file:// 폴리백 번들)로 제공되며
-#    둘 다 .html 규칙에 걸리지 않으므로 그대로 배포된다.
+# ---------- 📚 정적 HTML 콘텐츠 (전면 폐기됨) ----------
+# 교재 본문은 이제 content/*.md 를 런타임에 fetch → src/textbook-parser.js 로
+# 파싱하여 렌더링한다(사전 렌더 HTML 불필요). content/*.html 은 삭제되었다.
+# 앱에서 링크로 여는 문서 HTML(docs/*.html)만 배포에 포함하고,
+# 루트 index.html(진입점)은 반드시 유지한다.
+# ※ 교재/카드/퀴즈: content/*.md(원본, 배포됨) + data/study_md.js(file://·fetch실패 폴백)
+# ※ 문제집: exams/*.md(원본) + data/exams_md/*.js(file:// 폴백)
 *.html
 !index.html
 !docs/*.html
@@ -27,6 +26,11 @@ audiobook/mp3/
 # (리포에서도 제거 권장 — 재생성은 tools/build/index.js가 담당)
 data/study_data.js
 data/exam_data.js
+
+# ---------- 🗑️ 미사용 과목 번들 (런타임 MD 파싱으로 대체) ----------
+# 교재/카드/퀴즈는 content/*.md 런타임 파싱으로 로드하므로 data/subjects/*.js 는
+# 더 이상 로드되지 않는다. `npm run build:data` 가 재생성하더라도 배포에서 제외한다.
+data/subjects/
 
 # ---------- ⏳ 일회성 ID 마이그레이션 맵 (유예 후 제거 가능) ----------
 # data/id_migration.js(약 63KB)는 레거시 ID → 안정 ID 일회성 이관용이며 현재는 필요하다.

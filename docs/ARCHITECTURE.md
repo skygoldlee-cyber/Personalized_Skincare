@@ -30,7 +30,7 @@
 
 ### 1. **Zero-Backend (서버리스 정적 아키텍처)**
 - 별도의 백엔드 서버, 데이터베이스, 인증 시스템 없이 **순수 프론트엔드만으로 완결**되는 애플리케이션
-- 모든 학습 데이터는 빌드 타임에 JS 번들로 생성되어 정적 배포
+- 학습 데이터 중 **시험 문항·성분 사전은 빌드 타임 JS 번들**, **교재 본문·카드·퀴즈는 `content/*.md`를 런타임에 fetch+파싱**하여 사용 (2026-08-24~ 런타임 MD 전환)
 - 사용자 진행 상황은 `localStorage`에만 저장 → 계정/로그인 불필요
 - **근거**: 개인 학습 도구 특성상 서버 운영 비용·복잡성을 제거하고, Vercel 묵료 정적 호스팅으로 무한 확장 가능
 
@@ -125,19 +125,25 @@
 | [`src/utils.js`](../src/utils.js) | 의존성 없는 범용 헬퍼 (한글 초성 추출 `getChosung()` 등) |
 | [`src/sanitize.js`](../src/sanitize.js) | HTML/XSS 방어 및 텍스트 정제 유틸리티 |
 | [`src/exam-viewer.js`](../src/exam-viewer.js) | 문제집(MD) 런타임 뷰어. `exams/*.md` fetch → 자체 MD→HTML 변환 → 인앱 전체화면 오버레이 렌더링. TOC 생성·인쇄·sessionStorage 캐시(24h)·`file://` 번들 폴리백(`data/exams_md/*.js`) 지원. 정적 `exams/*.html` 대체(2026-08-24~) |
+| [`src/data-loader.js`](../src/data-loader.js) | 온디맨드 데이터 로더. **교재/카드/퀴즈: `content/*.md` 런타임 fetch+파싱**(http는 라이브 fetch, `file://`은 `data/study_md.js` 폴백, fetch 실패 시 자동 폴백). 시험/성분은 기존 번들 로드 유지. 로드 후 registry stats를 실제 개수로 갱신 |
+| [`src/textbook-parser.js`](../src/textbook-parser.js) | 교재 MD 런타임 파서. `tools/build/plugins/textbook.plugin.js`의 브라우저 포팅으로 카드/퀴즈/챕터를 조립(`buildSubjectData`). 빌드 산출물과 **바이트 단위 동일** 검증됨 |
+| [`src/sha256.js`](../src/sha256.js) | 순수 동기 SHA-256 + `stableId()`. 빌드타임 Node `crypto`와 동일한 카드/퀴즈 안정 ID를 브라우저에서 재현(진도 보존의 핵심) |
 
 ### 3. Data Layer (데이터 계층)
 
 | 파일 | 내용 | 생성 주체 |
 |------|------|-----------|
-| [`data/registry.js`](../data/registry.js) | 번들 목록/메타 (해시 포인터) | `tools/build/index.js` |
-| [`data/subjects/<key>.<hash>.js`](../data/subjects/) | 과목별 학습 번들 (카드/퀴즈/챕터) | `tools/build/index.js` (textbook plugin) |
+| [`data/registry.js`](../data/registry.js) | 시험/성분 번들 목록·메타 + 과목 목록/통계 | `tools/build/index.js` |
+| [`content/**/*.md`](../content/) + [`content/manifest.json`](../content/manifest.json) | **교재/카드/퀴즈의 원본 (SSOT).** 런타임에 fetch+파싱 | 저자 직접 작성 |
+| [`data/study_md.js`](../data/study_md.js) | 교재 MD `file://` 폴백 번들 (매니페스트+전체 MD 인라인). http에선 미사용 | `tools/build_study_md_bundle.js` |
 | [`data/exams/<key>.<hash>.js`](../data/exams/) | 시험별 문항 번들 | `tools/build/index.js` (exams plugin) |
 | [`data/ingredients_data.<hash>.js`](../data/) | 화장품 성분 사전 (가용/금지/제한) | `tools/build/index.js` (ingredients plugin) |
 | [`data/id_migration.js`](../data/id_migration.js) | 레거시 ID → 안정 ID 일회성 매핑 | `tools/generate_migration_map.js` |
 | [`data/audio_manifest.js`](../data/audio_manifest.js) | 오디오 파일 경로 매니페스트 | 오디오북 파이프라인 |
 
-**특징**: 모두 전역 상수를 선언하는 JS 파일로, 별도 fetch 없이 `<script>` 로드만으로 즉시 사용 가능 (오프라인 핵심).
+> ⚠️ `data/subjects/<key>.<hash>.js`(과목 학습 번들)는 **2026-08-24부터 런타임 MD 파싱으로 대체·제거**되었다. `npm run build:data`가 재생성하더라도 앱은 로드하지 않으며 배포에서도 제외(`.vercelignore`)된다.
+
+**특징**: 시험/성분 번들은 전역 상수 JS로 `<script>` 로드만으로 즉시 사용(오프라인 핵심). 교재/카드/퀴즈는 `content/*.md`를 런타임 fetch(http, SW `Cache First`로 오프라인 대응)하거나 `file://`에선 `data/study_md.js` 폴백을 사용한다.
 
 ### 4. Persistence Layer (영속성 계층)
 
@@ -315,7 +321,7 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 | 우선순위 | 대상 | 전략 | 근거 |
 |:---:|------|------|------|
 | 1 | 네비게이션 (`navigate`) | **Network First** | 최신 HTML 우선 보장, 오프라인 시 캐시 폴리백 |
-| 2 | 해시드 데이터 번들 (`data/subjects/*.hash.js`, `data/exams/*.hash.js`) | **Cache First** | 해시 파일명으로 자연 갱신, 오프라인 학습 핵심 |
+| 2 | 시험/성분 데이터 번들 (`data/exams/*.hash.js`, `data/ingredients_data.*.js`) · 교재 원본 (`content/*.md`) | **Cache First** | 해시 파일명/정적 MD로 자연 갱신, 오프라인 학습 핵심. 교재 MD는 최초 fetch 시 캐시됨 |
 | 3 | 외부 CDN (Google Fonts) | **Stale-While-Revalidate** | 외부 리소스 안정성 확보. FontAwesome은 2026-08-24부터 자체 호스팅([`vendor/fontawesome/`](../vendor/fontawesome/))으로 전환하여 CDN 의존 제거, App Shell 프리캐시에 포함 |
 | 4 | MP3 오디오 (302MB) | **네트워크 직행 (바이패스)** | 대용량 미디어는 캐시 제외 (저장공간 보호) |
 | 5 | 코드 자산 (`*.css` / `*.js`) | **Network First** | 온라인이면 항상 최신 배포본 제공, 오프라인이면 캐시 폴리백. `CACHE_VERSION` 범프를 깜빡핬어도 모바일에 구버전이 남지 않도록 함 |
@@ -387,24 +393,26 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 
 ---
 
-## ⚙️ 빌드 타임 데이터 파이프라인
+## ⚙️ 데이터 파이프라인 (빌드 타임 + 런타임)
 
-런타임 변환 비용을 없애기 위해 **콘텐츠 → 해시드 데이터 번들 변환을 빌드 타임에 수행**합니다.
+시험 문항·성분 사전은 빌드 타임에 해시드 번들로 생성하고, **교재 본문·카드·퀴즈는 런타임에 `content/*.md`를 직접 파싱**합니다(재빌드 없이 최신 반영).
 
 ```
-[원본 콘텐츠]                [변환 스크립트]                    [데이터 번들]
-content/manifest.json ──► tools/build/index.js        ──► data/registry.js
-content/**/*.md         ──► (textbook plugin)          ──► data/subjects/<key>.<hash>.js
+[원본 콘텐츠]                [변환]                              [산출/소비]
+content/manifest.json ──► tools/build/index.js        ──► data/registry.js (과목목록·시험·성분 메타)
 exams/**/*.md           ──► (exams plugin)             ──► data/exams/<key>.<hash>.js
 ingredients/*.md        ──► (ingredients plugin)       ──► data/ingredients_data.<hash>.js
-content/**/*.md         ──► tools/generate_migration_map.js ──► data/id_migration.js
+
+content/**/*.md ───(런타임 fetch)──► src/data-loader.js + src/textbook-parser.js ──► STUDY_DATA (카드/퀴즈/챕터)
+content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.js ──► data/study_md.js
 ```
 
 **특징**:
-- **SSOT**: `content/manifest.json`이 단일 진실 원천
-- **해시 파일명**: 번들 내용이 바뀌면 파일명도 바뀌어 캐시 무효화가 자연스럽게 이루어짐
-- **온디맨드 로딩**: `src/data-loader.js`가 registry를 보고 필요한 과목/시험만 런타임에 로드
-- **스키마 검증**: 빌드 시 카드/퀴즈 수·ID 유효성 검증 및 통계 이상 감지
+- **SSOT**: `content/manifest.json` + `content/**/*.md`가 교재/카드/퀴즈의 단일 진실 원천
+- **런타임 파싱**: `src/textbook-parser.js`가 브라우저에서 카드/퀴즈/챕터를 조립. 카드/퀴즈 안정 ID는 `src/sha256.js`(Node `crypto`와 동일)로 재현되어 진도 보존
+- **재빌드 불필요**: `content/*.md` 수정 시 http 배포는 즉시 반영. `file://` 지원이 필요할 때만 `node tools/build_study_md_bundle.js` 실행
+- **온디맨드 로딩**: `src/data-loader.js`가 필요한 과목/시험만 로드하고, 로드 후 registry stats를 실제 개수로 갱신
+- **해시 파일명(시험/성분)**: 번들 내용이 바뀌면 파일명도 바뀌어 캐시 무효화가 자연스럽게 이루어짐
 
 **오디오북 파이프라인** ([`audiobook/`](../audiobook/README.md))은 Python 기반 별도 파이프라인으로, MD 청크 분할 → TTS → MP3 병합을 수행합니다.
 
@@ -418,7 +426,7 @@ content/**/*.md         ──► tools/generate_migration_map.js ──► data
 | **프레임워크** | Vanilla JS | React/Vue | 빌드 불필요, 장기 유지보수성, 번들 최소화 |
 | **상태 관리** | 단일 전역 객체 + localStorage | Redux/MobX | 규모 대비 복잡도 과다, 직렬화 단순성 |
 | **차트** | 직접 SVG 생성 | Chart.js 등 | 외부 의존성 제거, 가벼움, 커스터마이징 자유 |
-| **데이터 로딩** | JS 상수 `<script>` 로드 | fetch + JSON | 오프라인 단순화, 파싱 오버헤드 제거 |
+| **데이터 로딩** | 시험/성분: JS 상수 `<script>` · 교재/카드/퀴즈: 런타임 MD fetch+파싱 | 전량 번들 또는 전량 백엔드 | 시험/성분은 오프라인 단순화, 교재는 재빌드 없이 최신 반영 + 표현 중복 제거 |
 | **모듈 시스템** | 글로벌 스코프 + 점진 분리 | ES Modules 즉시 전환 | 리스크 최소화, `export` 추가만으로 전환 가능하게 준비 |
 | **오디오** | 외부 CDN (캐시 제외) | 앱 번들 포함 | 302MB → Vercel 용량 제한 및 캐시 저장공간 보호 |
 
