@@ -995,61 +995,105 @@ function setupPWAInstall() {
         const diagContent = document.getElementById('pwa-diag-content');
         if (diagEl && diagContent) {
             const lines = [];
-            lines.push('• beforeinstallprompt 캡처: ' + (window.__deferredPrompt ? '성공' : '실패'));
-            lines.push('• SW 조기 등록: ' + (window.__swRegistered ? '성공' : '미확인'));
-            lines.push('• display-mode standalone: ' + window.matchMedia('(display-mode: standalone)').matches);
-            lines.push('• navigator.standalone: ' + window.navigator.standalone);
-            lines.push('• UA: ' + (navigator.userAgent || '').substring(0, 80));
+            const secure = (typeof isSecureContext !== 'undefined') ? isSecureContext : (location.protocol === 'https:');
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+            const hasPrompt = !!window.__deferredPrompt;
 
-            // SW 활성 상태 확인
+            // SW 상태(비동기) 수집
+            let swState = '미확인';
             if ('serviceWorker' in navigator) {
                 try {
                     const reg = await navigator.serviceWorker.getRegistration();
-                    lines.push('• SW 등록: ' + (reg ? '있음' : '없음'));
-                    if (reg) {
-                        lines.push('• SW 상태: ' + (reg.active ? reg.active.state : '비활성'));
-                    }
-                } catch (e) {
-                    lines.push('• SW 조회 실패: ' + e.message);
-                }
+                    swState = reg ? (reg.active ? reg.active.state : '비활성') : '없음';
+                } catch (e) { swState = '조회실패'; }
             } else {
-                lines.push('• ServiceWorker API: 미지원');
+                swState = 'API미지원';
             }
 
-            // getInstalledRelatedApps 확인 (지원하는 경우)
+            // 이미 설치된 관련/동일 앱 확인
+            let relatedInstalled = false;
             if (navigator.getInstalledRelatedApps) {
                 try {
                     const apps = await navigator.getInstalledRelatedApps();
-                    lines.push('• 설치된 관련 앱: ' + (apps.length > 0 ? apps.map(a => a.id).join(', ') : '없음'));
-                } catch (e) {
-                    lines.push('• getInstalledRelatedApps 실패: ' + e.message);
-                }
+                    relatedInstalled = apps.length > 0;
+                } catch (e) { /* 무시 */ }
             }
 
-            // manifest 링크 검증
+            // "any" 용도 아이콘 존재 여부 (Chrome 설치 요건)
+            let anyIcon = null;
             const manifestLink = document.querySelector('link[rel="manifest"]');
+            let manifestStatus = '';
             if (manifestLink) {
-                lines.push('• manifest href: ' + manifestLink.getAttribute('href'));
                 try {
                     const resp = await fetch(manifestLink.getAttribute('href'), { cache: 'no-cache' });
-                    lines.push('• manifest fetch: ' + resp.status + ' ' + resp.statusText);
-                    lines.push('• manifest Content-Type: ' + resp.headers.get('Content-Type'));
+                    manifestStatus = resp.status + ' ' + resp.statusText;
                     if (resp.ok) {
                         const json = await resp.json();
-                        lines.push('• manifest name: ' + (json.name || '없음'));
-                        lines.push('• manifest icons: ' + (json.icons ? json.icons.length + '개' : '없음'));
-                        lines.push('• manifest display: ' + (json.display || '없음'));
-                        lines.push('• manifest start_url: ' + (json.start_url || '없음'));
+                        anyIcon = (json.icons || []).some(ic => !ic.purpose || /(^|\s)any(\s|$)/.test(ic.purpose));
                     }
-                } catch (e) {
-                    lines.push('• manifest fetch 실패: ' + e.message);
-                }
+                } catch (e) { manifestStatus = '실패: ' + e.message; }
             } else {
-                lines.push('• manifest link: 없음');
+                manifestStatus = 'manifest link 없음';
             }
+
+            // ---- 판정 ----
+            let verdict;
+            if (isStandalone || relatedInstalled) {
+                verdict = '✅ 이미 설치됨 — 홈 화면 아이콘으로 실행하세요. (재설치하려면 먼저 삭제)';
+            } else if (platform === 'inapp') {
+                verdict = '⚠️ 인앱 브라우저(카카오톡 등)에서는 설치 불가.\n  → 우측 상단 ⋮ → "다른 브라우저로 열기 / Chrome으로 열기" 후 다시 시도.';
+            } else if (!secure) {
+                verdict = '❌ HTTPS(보안 컨텍스트)가 아니어서 설치 불가.';
+            } else if (swState === '없음' || swState === 'API미지원' || swState === '조회실패') {
+                verdict = '❌ 서비스 워커가 활성 상태가 아님 — 새로고침 후 다시 시도.';
+            } else if (anyIcon === false) {
+                verdict = '❌ manifest에 "any" 용도 아이콘이 없어 설치가 차단됨.';
+            } else if (hasPrompt) {
+                verdict = '✅ 설치 가능 — 아래 "지금 설치" 버튼을 누르세요.';
+            } else {
+                verdict = 'ℹ️ 설치 요건은 충족. 다만 자동 설치 이벤트가 아직 없음.\n  → Chrome 메뉴(⋮) → "앱 설치"로 직접 설치, 또는\n  → 이전에 설치를 취소/삭제했다면: 설정→사이트 설정→(이 사이트) 데이터 삭제 후 재시도, 또는\n  → chrome://apps 에서 기존 설치 여부 확인.';
+            }
+
+            lines.push('▶ 판정: ' + verdict);
+            lines.push('────────────');
+            lines.push('• beforeinstallprompt: ' + (hasPrompt ? '캡처됨(설치 가능)' : '없음'));
+            lines.push('• 보안 컨텍스트(HTTPS): ' + secure);
+            lines.push('• 이미 설치(standalone): ' + isStandalone);
+            lines.push('• 관련 앱 설치됨: ' + relatedInstalled);
+            lines.push('• SW 조기 등록: ' + (window.__swRegistered ? '성공' : '미확인'));
+            lines.push('• SW 상태: ' + swState);
+            lines.push('• "any" 용도 아이콘: ' + (anyIcon === null ? '확인불가' : (anyIcon ? '있음' : '없음')));
+            lines.push('• manifest fetch: ' + manifestStatus);
+            lines.push('• navigator.standalone: ' + window.navigator.standalone);
+            lines.push('• 플랫폼 감지: ' + platform);
+            lines.push('• UA: ' + (navigator.userAgent || '').substring(0, 90));
 
             diagContent.textContent = lines.join('\n');
             diagEl.style.display = 'block';
+
+            // 프롬프트가 실제로 잡혀 있으면 모달 안에서 바로 설치할 수 있는 버튼 제공
+            const directBtnId = 'pwa-direct-install-btn';
+            let directBtn = document.getElementById(directBtnId);
+            if (hasPrompt) {
+                if (!directBtn) {
+                    directBtn = document.createElement('button');
+                    directBtn.id = directBtnId;
+                    directBtn.className = 'btn btn-primary';
+                    directBtn.style.cssText = 'margin:0.5rem 0 0.25rem;width:100%;justify-content:center;';
+                    directBtn.innerHTML = '<i class="fa-solid fa-download"></i> 지금 설치';
+                    directBtn.addEventListener('click', async () => {
+                        const pr = window.__deferredPrompt;
+                        if (!pr) return;
+                        try { pr.prompt(); await pr.userChoice; } catch (e) { /* 무시 */ }
+                        window.__deferredPrompt = null;
+                        closeInstallModal();
+                    });
+                    if (diagEl.parentNode) diagEl.parentNode.insertBefore(directBtn, diagEl);
+                }
+                directBtn.style.display = 'inline-flex';
+            } else if (directBtn) {
+                directBtn.style.display = 'none';
+            }
         }
 
         installModal.style.display = 'flex';
