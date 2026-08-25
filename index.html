@@ -11,7 +11,7 @@
     <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
     <!-- PWA: iOS Safari 홈 화면 추가 지원 -->
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Cosmetic Pass">
     <link rel="apple-touch-icon" href="icons/icon-192.png">
     <!-- Google Fonts -->
@@ -24,18 +24,9 @@
     <!-- CSS Style Link -->
     <link rel="stylesheet" href="style.css">
     <!-- Theme (Light/Dark): 페인트 전에 테마 클래스를 적용하여 깜빡임(FOUC) 방지 -->
-    <script>
-        (function () {
-            try {
-                var saved = localStorage.getItem('appTheme');
-                var prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
-                var theme = saved || (prefersLight ? 'light' : 'dark');
-                document.documentElement.classList.toggle('light-theme', theme === 'light');
-                var meta = document.querySelector('meta[name="theme-color"]');
-                if (meta) meta.setAttribute('content', theme === 'light' ? '#f5f7fa' : '#0b0f19');
-            } catch (e) {}
-        })();
-    </script>
+    <!-- 페인트 전 테마 적용(FOUC 방지). 프로덕션 CSP(script-src 'self')가 인라인 스크립트를
+         차단하므로 외부 self-호스팅 파일로 로드한다. (동일 코드가 src/theme-init.js에 있음) -->
+    <script src="src/theme-init.js"></script>
 </head>
 <body class="dark-theme">
     <!-- Offline Banner (오프라인 상태 표시) -->
