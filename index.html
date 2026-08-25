@@ -1252,6 +1252,8 @@
 
     <!-- Main ES Module Entry Point (모든 src/ 모듈들을 내부에서 import하여 통합 실행) -->
     <script type="module" src="src/app.js"></script>
+    <!-- ESM 로드 실패 시 자동 복구 (모바일 PWA: 의존성 모듈 캐시 미스로 app.js 미실행 방지) -->
+    <script src="src/app-fallback.js" defer></script>
     <!-- PWA: Service Worker 등록 및 설치 프롬프트 -->
     
     <!-- Theme (Light/Dark) 토글 로직 -->

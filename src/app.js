@@ -234,6 +234,8 @@ function initApp() {
     step('updateGlobalStats', updateGlobalStats);
     step('refreshDashboardStatsInBackground', refreshDashboardStatsInBackground);
     step('checkExamDraft', checkExamDraft);
+    // app-fallback.js가 정상 초기화를 감지할 수 있도록 마커 설정
+    window.__APP_INITIALIZED = true;
 }
 
 // --- 가로/세로 보기 ---
