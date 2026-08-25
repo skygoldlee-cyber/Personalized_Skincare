@@ -95,18 +95,20 @@ function populateSubjectSelects() {
 }
 
 function initApp() {
-    loadProgress();
-    populateSubjectSelects();
-    setupNavigation();
-    setupEventListeners();
-    setupPWAInstall();
-    setupThemeToggle();
-    
+    // 한 단계가 실패해도 나머지 버튼 연결/렌더가 죽지 않도록 각 단계를 격리한다.
+    // (배포 간 캐시 스큐로 특정 요소/바인딩이 어긋나도 앱이 통째로 벽돌이 되는 것 방지)
+    const step = (label, fn) => { try { fn(); } catch (e) { console.error('[init] ' + label + ' 실패:', e); } };
+    step('loadProgress', loadProgress);
+    step('populateSubjectSelects', populateSubjectSelects);
+    step('setupNavigation', setupNavigation);
+    step('setupEventListeners', setupEventListeners);
+    step('setupPWAInstall', setupPWAInstall);
+    step('setupThemeToggle', setupThemeToggle);
     // 초기 뷰 렌더링
-    renderDashboard();
-    updateGlobalStats();
-    refreshDashboardStatsInBackground();
-    checkExamDraft();
+    step('renderDashboard', renderDashboard);
+    step('updateGlobalStats', updateGlobalStats);
+    step('refreshDashboardStatsInBackground', refreshDashboardStatsInBackground);
+    step('checkExamDraft', checkExamDraft);
 }
 
 // --- 가로/세로 보기 ---
@@ -5055,6 +5057,11 @@ function setupPWAInstall() {
 
     // 서비스 워커 등록
     if ('serviceWorker' in navigator) {
+        // 새 SW가 제어를 넘겨받으면 1회 자동 새로고침 → 배포 직후 구/신 파일 혼재(캐시 스큐) 자가 치유
+        let __swRefreshing = false;
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+            if (__swRefreshing) return; __swRefreshing = true; window.location.reload();
+        });
         navigator.serviceWorker.register('./sw.js')
             .then(reg => console.log('[PWA] 서비스 워커 등록 성공:', reg.scope))
             .catch(err => console.error('[PWA] 서비스 워커 등록 실패:', err));

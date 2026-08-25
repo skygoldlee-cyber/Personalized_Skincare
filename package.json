@@ -11,6 +11,7 @@
     "build:data:understanding": "node tools/build/index.js --only understanding",
     "postbuild:data": "npm run check:parser",
     "check:parser": "node tools/check_parser_parity.js",
+    "stamp:sw": "node tools/build/stamp-sw-version.js",
     "build:study-md": "node tools/build_study_md_bundle.js",
     "test": "npm run check:parser",
     "serve": "node serve.js"
