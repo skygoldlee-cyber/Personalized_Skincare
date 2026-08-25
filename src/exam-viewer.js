@@ -19,6 +19,7 @@
 //   번들이 없으면 `node tools/build_exam_bundles.js` 를 실행하라는 안내를 띄웁니다.
 
 import { escapeHTML } from './sanitize.js';
+import { parseMarkdown } from './markdown-parser.js';
 
 export const ExamViewer = (() => {
     // 캐시 포맷 변경(전체 문서 → 본문 HTML)으로 v2 로 bump
@@ -62,128 +63,7 @@ export const ExamViewer = (() => {
        마크다운 → HTML 변환 (기존 로직 그대로 — 정상 동작 확인됨)
        ========================================================= */
     function _mdToHtml(mdText) {
-        let html = String(mdText);
-        html = html.replace(/<br\s*\/?>/gi, 'BR_TOKEN');
-        html = html.replace(/<sup>/gi, 'SUP_O');
-        html = html.replace(/<\/sup>/gi, 'SUP_C');
-        html = html.replace(/&nbsp;/gi, 'NBSP_TOKEN');
-
-        html = escapeHTML(html);
-
-        html = html.replace(/BR_TOKEN/gi, '<br>');
-        html = html.replace(/SUP_O/gi, '<sup>');
-        html = html.replace(/SUP_C/gi, '</sup>');
-        html = html.replace(/NBSP_TOKEN/gi, '&nbsp;');
-
-        html = html.replace(/^```.*$/gm, 'FENCE_TOKEN');
-
-        html = html.replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>');
-        html = html.replace(/\*([^\s*][^*\n]*?)\*/g, '<em>$1</em>');
-        html = html.replace(/`([^`\n]+)`/g, '<code>$1</code>');
-
-        html = html.replace(/FENCE_TOKEN/g, '```');
-
-        const lines = html.split(/\r?\n/);
-        const output = [];
-        let tableRows = [];
-        let quoteLines = [];
-        let codeLines = [];
-        let inCodeBlock = false;
-        let listItems = [];
-        let listType = null;
-
-        const flushTable = () => {
-            if (tableRows.length === 0) return;
-            const dataRows = tableRows.filter(row => {
-                const cells = row.split('|').map(c => c.trim()).filter(c => c !== '');
-                return !cells.every(c => /^:?-+:?$/.test(c));
-            });
-            if (dataRows.length === 0) { tableRows = []; return; }
-            let tableHTML = '<div class="reader-table-wrapper"><table class="reader-table">';
-            dataRows.forEach((row, idx) => {
-                const cells = row.split('|').map(c => c.trim()).filter(c => c !== '');
-                const tag = idx === 0 ? 'th' : 'td';
-                tableHTML += '<tr>' + cells.map(c => `<${tag}>${c}</${tag}>`).join('') + '</tr>';
-            });
-            tableHTML += '</table></div>';
-            output.push(tableHTML);
-            tableRows = [];
-        };
-
-        const flushQuote = () => {
-            if (quoteLines.length === 0) return;
-            output.push(`<blockquote><p>${quoteLines.join('<br>')}</p></blockquote>`);
-            quoteLines = [];
-        };
-
-        const flushCode = () => {
-            if (codeLines.length === 0) return;
-            output.push(`<pre class="reader-code-block"><code>${codeLines.join('\n')}</code></pre>`);
-            codeLines = [];
-        };
-
-        const flushList = () => {
-            if (listItems.length === 0) return;
-            const tag = listType === 'ol' ? 'ol' : 'ul';
-            output.push(`<${tag}>${listItems.map(li => `<li>${li}</li>`).join('')}</${tag}>`);
-            listItems = [];
-            listType = null;
-        };
-
-        lines.forEach(line => {
-            const trimmed = line.trim();
-
-            if (trimmed.startsWith('```')) {
-                if (inCodeBlock) { flushCode(); inCodeBlock = false; }
-                else { flushTable(); flushQuote(); flushList(); inCodeBlock = true; }
-                return;
-            }
-            if (inCodeBlock) { codeLines.push(line); return; }
-
-            if (trimmed.startsWith('|')) {
-                flushQuote(); flushList(); tableRows.push(line); return;
-            } else { flushTable(); }
-
-            const GT_ENTITY = '&' + 'gt;';
-            if (trimmed.startsWith(GT_ENTITY) || trimmed.startsWith('>')) {
-                flushList();
-                let qText = trimmed;
-                if (qText.startsWith(GT_ENTITY)) qText = qText.slice(4);
-                else qText = qText.slice(1);
-                qText = qText.trim();
-                if (qText) quoteLines.push(qText);
-                return;
-            } else { flushQuote(); }
-
-            const ulMatch = trimmed.match(/^[-*]\s+(.+)$/);
-            const olMatch = trimmed.match(/^\d+[.)]\s+(.+)$/);
-            if (ulMatch) {
-                if (listType !== 'ul') { flushList(); listType = 'ul'; }
-                listItems.push(ulMatch[1]);
-                return;
-            } else if (olMatch) {
-                if (listType !== 'ol') { flushList(); listType = 'ol'; }
-                listItems.push(olMatch[1]);
-                return;
-            } else { flushList(); }
-
-            if (trimmed.startsWith('### ')) { output.push(`<h3>${trimmed.slice(4)}</h3>`); return; }
-            if (trimmed.startsWith('## ')) { output.push(`<h2>${trimmed.slice(3)}</h2>`); return; }
-            if (trimmed.startsWith('# ')) { output.push(`<h1>${trimmed.slice(2)}</h1>`); return; }
-
-            if (/^-{3,}$/.test(trimmed) || /^\*{3,}$/.test(trimmed)) { output.push('<hr>'); return; }
-
-            if (trimmed === '') return;
-
-            output.push(`<p>${line}</p>`);
-        });
-
-        flushTable();
-        flushQuote();
-        flushCode();
-        flushList();
-
-        return output.join('\n');
+        return parseMarkdown(mdText, { allowMermaid: false });
     }
 
     /* =========================================================

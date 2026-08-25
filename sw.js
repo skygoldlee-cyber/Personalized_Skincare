@@ -17,7 +17,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v21-20260824';       // 쉘/CDN: 배포마다 갱신 (교재 본문 런타임 MD fetch·파싱 전환 + sha256/textbook-parser 모듈 추가)
+const CACHE_VERSION = 'v22-20260825';       // 쉘/CDN: 배포마다 갱신 (마크다운 파서 모듈화 통합 및 sw.js 갱신)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
@@ -40,6 +40,7 @@ const SHELL_ASSETS = [
   './src/reader-format.js',
   './src/exam-viewer.js',
   './src/manual-viewer.js',
+  './src/markdown-parser.js',
   './src/data-loader.js',
   './src/sha256.js',
   './src/textbook-parser.js',
