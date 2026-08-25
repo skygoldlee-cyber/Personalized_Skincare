@@ -11,8 +11,92 @@ import { ExamViewer } from './exam-viewer.js';
 import { ManualViewer } from './manual-viewer.js';
 
 // --- 초기화 및 로컬스토리지 로드 ---
+function populateSubjectSelects() {
+    const subjects = (typeof DataLoader !== 'undefined' && DataLoader.registry)
+        ? DataLoader.getSubjectList()
+        : [];
+    
+    // 1. Flashcard subject select
+    const fcSelect = document.getElementById('fc-subject-select');
+    if (fcSelect) {
+        const prevVal = fcSelect.value || state.flashcards.subject;
+        fcSelect.innerHTML = '';
+        subjects.forEach(subj => {
+            const option = document.createElement('option');
+            option.value = subj.key;
+            option.textContent = subj.name;
+            fcSelect.appendChild(option);
+        });
+        if (prevVal && fcSelect.querySelector(`option[value="${prevVal}"]`)) {
+            fcSelect.value = prevVal;
+            state.flashcards.subject = prevVal;
+        } else if (subjects.length > 0) {
+            fcSelect.value = subjects[0].key;
+            state.flashcards.subject = subjects[0].key;
+        }
+    }
+    
+    // 2. Quiz subject select
+    const quizSelect = document.getElementById('quiz-subject-select');
+    if (quizSelect) {
+        const prevVal = quizSelect.value || state.quiz.subject;
+        quizSelect.innerHTML = '';
+        subjects.forEach(subj => {
+            const option = document.createElement('option');
+            option.value = subj.key;
+            option.textContent = subj.name;
+            quizSelect.appendChild(option);
+        });
+        if (prevVal && quizSelect.querySelector(`option[value="${prevVal}"]`)) {
+            quizSelect.value = prevVal;
+            state.quiz.subject = prevVal;
+        } else if (subjects.length > 0) {
+            quizSelect.value = subjects[0].key;
+            state.quiz.subject = subjects[0].key;
+        }
+    }
+
+    // 3. Review view filter buttons
+    const reviewFilterGroup = document.getElementById('review-filter-group');
+    if (reviewFilterGroup) {
+        reviewFilterGroup.innerHTML = `
+            <button class="btn btn-secondary filter-btn active" data-filter="all" data-click="setReviewFilter" data-arg="all" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; border-radius: 4px; background: var(--color-primary); border-color: var(--color-primary); color: #fff;">전체</button>
+        `;
+        subjects.forEach((subj, idx) => {
+            const shortName = subj.name.replace('의 이해', '').replace(' 및 품질관리', '').replace('유통화장품 ', '');
+            const btn = document.createElement('button');
+            btn.className = 'btn btn-secondary filter-btn';
+            btn.setAttribute('data-filter', subj.key);
+            btn.setAttribute('data-click', 'setReviewFilter');
+            btn.setAttribute('data-arg', subj.key);
+            btn.style.cssText = 'padding: 0.4rem 0.8rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; border-radius: 4px;';
+            btn.textContent = `${idx + 1}과목 (${shortName})`;
+            reviewFilterGroup.appendChild(btn);
+        });
+    }
+
+    // 4. Textbook filter buttons
+    const tbFilterGroup = document.getElementById('textbook-filter-buttons');
+    if (tbFilterGroup) {
+        tbFilterGroup.innerHTML = `
+            <button class="btn btn-secondary active-filter" data-filter="all" data-click="setTextbookFilter" data-arg="all">전체 과목</button>
+        `;
+        subjects.forEach((subj, idx) => {
+            const shortName = subj.name.replace('의 이해', '').replace(' 및 품질관리', '').replace('유통화장품 ', '');
+            const btn = document.createElement('button');
+            btn.className = 'btn btn-secondary';
+            btn.setAttribute('data-filter', subj.key);
+            btn.setAttribute('data-click', 'setTextbookFilter');
+            btn.setAttribute('data-arg', subj.key);
+            btn.textContent = `${idx + 1}과목 (${shortName})`;
+            tbFilterGroup.appendChild(btn);
+        });
+    }
+}
+
 function initApp() {
     loadProgress();
+    populateSubjectSelects();
     setupNavigation();
     setupEventListeners();
     setupPWAInstall();
@@ -1748,13 +1832,12 @@ function submitExam() {
     const total = simState.data.questions.length;
     simState.wrongQuestions = [];
     
-    // 과목별 정답 및 총 문제수 집계용
-    const subjectScores = {
-        'subject1': { score: 0, total: 0 },
-        'subject2': { score: 0, total: 0 },
-        'subject3': { score: 0, total: 0 },
-        'subject4': { score: 0, total: 0 }
-    };
+    // 과목별 정답 및 총 문제수 집계용 (레지스트리 기반 동적 초기화)
+    const subjectScores = {};
+    const subjects = (window.DATA_REGISTRY && window.DATA_REGISTRY.subjects) || [];
+    subjects.forEach(sub => {
+        subjectScores[sub.key] = { score: 0, total: 0 };
+    });
     
     for (let i = 0; i < total; i++) {
         const q = simState.data.questions[i];
@@ -1775,13 +1858,13 @@ function submitExam() {
             state.weakCards.add(fakeCardId);
         }
         
-        // 과목 판별 및 집계
+        // 과목 판별 및 집계 (동적 변환 적용)
         let subj = q.subject;
         if (!subj) {
-            if (q.id.startsWith('subject1') || q.id.includes('subject1')) subj = 'subject1';
-            else if (q.id.startsWith('subject2') || q.id.includes('subject2')) subj = 'subject2';
-            else if (q.id.startsWith('subject3') || q.id.includes('subject3')) subj = 'subject3';
-            else if (q.id.startsWith('subject4') || q.id.includes('subject4')) subj = 'subject4';
+            const prefix = q.id.split('_')[0]; // 'subject1' 등
+            subj = examIdToSubjectId(prefix);
+        } else if (subj.startsWith('subject')) {
+            subj = examIdToSubjectId(subj);
         }
         
         if (subj && subjectScores[subj]) {
@@ -1826,12 +1909,10 @@ function submitExam() {
         let breakdownHTML = `<h4 style="margin-top: 0; margin-bottom: 1rem; color: #fff; font-size: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;"><i class="fa-solid fa-chart-pie color-primary" style="color: var(--color-primary);"></i> 과목별 성적 상세 분석</h4>`;
         breakdownHTML += `<div style="display: flex; flex-direction: column; gap: 0.75rem;">`;
         
-        const subjNames = {
-            'subject1': '1과목: 화장품법의 이해',
-            'subject2': '2과목: 화장품 제조 및 품질관리',
-            'subject3': '3과목: 유통화장품 안전관리',
-            'subject4': '4과목: 맞춤형화장품의 이해'
-        };
+        const subjNames = {};
+        subjects.forEach((sub, idx) => {
+            subjNames[sub.key] = `${idx + 1}과목: ${sub.name}`;
+        });
         
         let failedSubjects = [];
         
@@ -1877,7 +1958,7 @@ function submitExam() {
             `;
             
             failedSubjects.forEach(f => {
-                const subKey = f.id === 'subject1' ? 'law' : (f.id === 'subject2' ? 'manufacturing' : (f.id === 'subject3' ? 'safety' : 'understanding'));
+                const subKey = f.id;
                 breakdownHTML += `
                     <button class="btn" onclick="startFocusSubjectStudy('${subKey}')" style="padding: 3px 8px; font-size: 0.75rem; background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5; cursor: pointer; border-radius: 4px; display: inline-flex; align-items: center; gap: 0.25rem;">
                         <i class="fa-solid fa-bolt"></i> ${esc(f.name.split(':')[0])} 퀴즈 풀기
@@ -1919,10 +2000,23 @@ function submitExam() {
 }
 
 function examIdToSubjectId(examId) {
+    const registry = window.DATA_REGISTRY;
+    if (registry && registry.exams) {
+        const exam = registry.exams.find(e => e.key === examId);
+        if (exam) return exam.subject;
+        // prefix 매칭 호환성 (예: subject2_p1 또는 subject2)
+        const partialExam = registry.exams.find(e => examId.startsWith(e.key) || e.key.startsWith(examId));
+        if (partialExam) return partialExam.subject;
+    }
+    // 구버전 호환성 하드코딩 폴백
     if (examId.startsWith('subject1')) return 'law';
     if (examId.startsWith('subject2')) return 'manufacturing';
     if (examId.startsWith('subject3')) return 'safety';
     if (examId.startsWith('subject4')) return 'understanding';
+    
+    if (registry && registry.subjects && registry.subjects.length > 0) {
+        return registry.subjects[0].key;
+    }
     return 'law';
 }
 
@@ -2951,12 +3045,12 @@ function _startWeakExamImpl() {
     }
     
     if (weakCards.length === 0 && solvedQuizzes.length === 0) {
-        const filterNames = {
-            'law': '1과목 (법령)',
-            'manufacturing': '2과목 (품질)',
-            'safety': '3과목 (안전)',
-            'understanding': '4과목 (이해)'
-        };
+        const filterNames = {};
+        const subjects = (window.DATA_REGISTRY && window.DATA_REGISTRY.subjects) || [];
+        subjects.forEach((sub, idx) => {
+            const shortName = sub.name.replace('의 이해', '').replace(' 및 품질관리', '').replace('유통화장품 ', '');
+            filterNames[sub.key] = `${idx + 1}과목 (${shortName})`;
+        });
         const filterName = filterNames[state.reviewFilter] || '선택한 과목';
         alert(`복습할 헷갈린 카드나 오답 퀴즈가 없습니다! (${filterName})\n플래시카드나 기출 퀴즈를 학습하여 약점 데이터를 모아보세요.`);
         return;
@@ -3786,12 +3880,12 @@ function performTextbookSearch() {
     // Render results
     container.innerHTML = '';
     results.forEach((item, idx) => {
-        const badgeColors = {
-            law: 'badge-cyan',
-            manufacturing: 'badge-violet',
-            safety: 'badge-emerald',
-            understanding: 'badge-amber'
-        };
+        const colors = ['badge-cyan', 'badge-violet', 'badge-emerald', 'badge-amber', 'badge-rose', 'badge-indigo'];
+        const badgeColors = {};
+        const subjects = (window.DATA_REGISTRY && window.DATA_REGISTRY.subjects) || [];
+        subjects.forEach((sub, idx) => {
+            badgeColors[sub.key] = colors[idx % colors.length];
+        });
         const badgeColor = badgeColors[item.subjId] || 'badge-gray';
         
         const isLong = item.content.length > 300;

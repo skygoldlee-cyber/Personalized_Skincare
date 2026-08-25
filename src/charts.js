@@ -114,28 +114,44 @@ export function renderPerformanceChart() {
 }
 
 /* =======================================================
-   ð ê³¼ëª©ë³ ì ëµë¥  ì§ê³ (ê³µíµ í¬í¼)
-   - #3: renderPassFailDiagnosis / renderRadarChart ì¤ë³µ ë¡ì§ íµí©
-   - #2: êµ¬ë²ì  ì´ë ¥(examId/subjectRates ëë¦½)ì ëí ë°©ì´ í¬í¨
+   📊 과목별 정답률 집계 (공통 헬퍼)
+   - content/manifest.json에서 생성된 DATA_REGISTRY를 사용해 동적으로 과목별 집계
    ======================================================= */
 export function aggregateSubjectRates(history) {
-    const subjectRates = {
-        'subject1': [],
-        'subject2': [],
-        'subject3': [],
-        'subject4': []
-    };
+    const subjectRates = {};
+    const subjects = (window.DATA_REGISTRY && window.DATA_REGISTRY.subjects) || [];
+    subjects.forEach(sub => {
+        subjectRates[sub.key] = [];
+    });
+    
     history.forEach(r => {
         if (r.subjectRates) {
             Object.keys(r.subjectRates).forEach(subj => {
                 const rate = r.subjectRates[subj];
-                if (rate !== null && rate !== undefined && subjectRates[subj]) {
-                    subjectRates[subj].push(rate);
+                if (rate !== null && rate !== undefined) {
+                    let key = subj;
+                    if (subj.startsWith('subject')) {
+                        const idx = parseInt(subj.replace('subject', ''), 10) - 1;
+                        const targetSub = subjects[idx];
+                        if (targetSub) {
+                            key = targetSub.key;
+                        }
+                    }
+                    if (subjectRates[key]) {
+                        subjectRates[key].push(rate);
+                    }
                 }
             });
         } else {
-            const baseId = (r.examId || '').split('_')[0]; // #2 ê°ë: examId ìì¼ë©´ ë¹ ë¬¸ìì´ë¡ ìì  ì²ë¦¬
-            if (subjectRates[baseId]) {
+            // 구버전 이력의 examId가 subject1_100_questions 등인 경우 하향 호환 처리
+            const baseId = (r.examId || '').split('_')[0]; // 'subject1' 등
+            if (baseId.startsWith('subject')) {
+                const idx = parseInt(baseId.replace('subject', ''), 10) - 1;
+                const targetSub = subjects[idx];
+                if (targetSub && subjectRates[targetSub.key]) {
+                    subjectRates[targetSub.key].push(r.rate);
+                }
+            } else if (subjectRates[baseId]) {
                 subjectRates[baseId].push(r.rate);
             }
         }
@@ -174,40 +190,30 @@ export function renderPassFailDiagnosis() {
     
     // 과목별 최근 점수 추출하여 과락 판정
     const subjectRates = aggregateSubjectRates(history);
+    const subjects = (window.DATA_REGISTRY && window.DATA_REGISTRY.subjects) || [];
     
-    // 각 과목 최신 성적 또는 평균 산출
-    const getLatestRate = (subjBaseId) => {
-        const rates = subjectRates[subjBaseId];
+    // 각 과목 최신 성적 추출
+    const getLatestRate = (subjKey) => {
+        const rates = subjectRates[subjKey];
         if (!rates || rates.length === 0) return null;
         return rates[rates.length - 1]; // 가장 최신 데이터
     };
     
-    const s1Rate = getLatestRate('subject1');
-    const s2Rate = getLatestRate('subject2');
-    const s3Rate = getLatestRate('subject3');
-    const s4Rate = getLatestRate('subject4');
-    
-    const subjectNames = {
-        'subject1': '1과목: 화장품법의 이해',
-        'subject2': '2과목: 화장품 제조 및 품질관리',
-        'subject3': '3과목: 유통화장품 안전관리',
-        'subject4': '4과목: 맞춤형화장품의 이해'
-    };
+    const subjectNames = {};
+    subjects.forEach((sub, idx) => {
+        subjectNames[sub.key] = `${idx + 1}과목: ${sub.name}`;
+    });
     
     let isGuarak = false;
     let guarakSubjects = [];
     
-    const checkGuarak = (rate, name) => {
+    subjects.forEach(sub => {
+        const rate = getLatestRate(sub.key);
         if (rate !== null && rate < 40) {
             isGuarak = true;
-            guarakSubjects.push(name);
+            guarakSubjects.push(sub.name);
         }
-    };
-    
-    checkGuarak(s1Rate, subjectNames['subject1']);
-    checkGuarak(s2Rate, subjectNames['subject2']);
-    checkGuarak(s3Rate, subjectNames['subject3']);
-    checkGuarak(s4Rate, subjectNames['subject4']);
+    });
     
     let statusClass = 'pass';
     let statusText = '합격 안정권';
@@ -226,14 +232,20 @@ export function renderPassFailDiagnosis() {
         advice = `평균 점수가 합격 기준(60%)에 도달하지 못했습니다. 플래시카드와 스마트 훈련소를 통해 암기량을 보충하세요!`;
     }
     
-    const subjectsHTML = `
-        <div class="pred-subject-scores">
-            ${s1Rate !== null ? `<div class="pred-subject-row ${s1Rate < 40 ? 'danger' : ''}"><span>1과목 (화장품법)</span><strong>${s1Rate}% ${s1Rate < 40 ? '(과락)' : ''}</strong></div>` : ''}
-            ${s2Rate !== null ? `<div class="pred-subject-row ${s2Rate < 40 ? 'danger' : ''}"><span>2과목 (제조/품질)</span><strong>${s2Rate}% ${s2Rate < 40 ? '(과락)' : ''}</strong></div>` : ''}
-            ${s3Rate !== null ? `<div class="pred-subject-row ${s3Rate < 40 ? 'danger' : ''}"><span>3과목 (안전관리)</span><strong>${s3Rate}% ${s3Rate < 40 ? '(과락)' : ''}</strong></div>` : ''}
-            ${s4Rate !== null ? `<div class="pred-subject-row ${s4Rate < 40 ? 'danger' : ''}"><span>4과목 (맞춤형화장품)</span><strong>${s4Rate}% ${s4Rate < 40 ? '(과락)' : ''}</strong></div>` : ''}
-        </div>
-    `;
+    let subjectsHTML = '<div class="pred-subject-scores">';
+    subjects.forEach((sub, idx) => {
+        const rate = getLatestRate(sub.key);
+        if (rate !== null) {
+            const shortName = sub.name.replace('의 이해', '').replace(' 및 품질관리', '').replace('유통화장품 ', '');
+            subjectsHTML += `
+                <div class="pred-subject-row ${rate < 40 ? 'danger' : ''}">
+                    <span>${idx + 1}과목 (${shortName})</span>
+                    <strong>${rate}% ${rate < 40 ? '(과락)' : ''}</strong>
+                </div>
+            `;
+        }
+    });
+    subjectsHTML += '</div>';
     
     area.innerHTML = `
         <div class="pred-card-body">
@@ -250,10 +262,8 @@ export function renderPassFailDiagnosis() {
     `;
 }
 
-// 한글 초성 추출 헬퍼 함수 (검색사전 초성 매칭용 글로벌 유틸리티)
-
 /* =======================================================
-   📊 과목별 역량 진단 레이더 차트 (Radar Chart)
+   📊 과목별 역량 진단 레이더 차트 (N-Axis Radar Chart)
    ======================================================= */
 export function renderRadarChart() {
     const wrapper = document.getElementById('radar-chart-wrapper');
@@ -281,17 +291,24 @@ export function renderRadarChart() {
     
     // 과목별 평균 정답률 계산
     const subjectRates = aggregateSubjectRates(history);
+    const subjects = (window.DATA_REGISTRY && window.DATA_REGISTRY.subjects) || [];
+    const N = subjects.length;
     
-    const getAvgRate = (subjBaseId) => {
-        const rates = subjectRates[subjBaseId];
+    if (N < 3) {
+        if (emptyMsg) {
+            emptyMsg.textContent = "레이더 차트 분석은 최소 3개 과목 이상 필요합니다.";
+            emptyMsg.style.display = 'flex';
+        }
+        return;
+    }
+    
+    const getAvgRate = (subjKey) => {
+        const rates = subjectRates[subjKey];
         if (!rates || rates.length === 0) return 50; // 기본값 50%
         return Math.round(rates.reduce((sum, r) => sum + r, 0) / rates.length);
     };
     
-    const s1 = getAvgRate('subject1');
-    const s2 = getAvgRate('subject2');
-    const s3 = getAvgRate('subject3');
-    const s4 = getAvgRate('subject4');
+    const subjectScores = subjects.map(sub => getAvgRate(sub.key));
     
     // 고정 논리 좌표 적용으로 clientWidth 비의존적 반응형 구현
     const width = 300;
@@ -300,60 +317,67 @@ export function renderRadarChart() {
     const cy = height / 2;
     const maxR = Math.min(width, height) / 2 - 35;
     
-    // 4개 축 좌표 매핑 함수
-    // 0: 상(1과목), 1: 우(2과목), 2: 하(3과목), 3: 좌(4과목)
+    // N-축 좌표 매핑 함수 (12시 방향에서 시계방향으로 2*PI/N씩 회전)
     const getPoint = (idx, value) => {
         const scale = value / 100;
-        if (idx === 0) return { x: cx, y: cy - scale * maxR };
-        if (idx === 1) return { x: cx + scale * maxR, y: cy };
-        if (idx === 2) return { x: cx, y: cy + scale * maxR };
-        return { x: cx - scale * maxR, y: cy };
+        const angle = (2 * Math.PI * idx) / N - (Math.PI / 2); // 12시 방향 시작을 위해 -PI/2
+        const x = cx + scale * maxR * Math.cos(angle);
+        const y = cy + scale * maxR * Math.sin(angle);
+        return { x, y };
     };
     
     let svg = `<svg viewBox="0 0 ${width} ${height}" style="width: 100%; height: 100%; overflow: visible;">`;
     
-    // 1. Concentric Diamond Grid lines (20%, 40%, 60%, 80%, 100%)
+    // 1. Concentric Grid lines (20%, 40%, 60%, 80%, 100%)
     for (let level = 20; level <= 100; level += 20) {
-        const p0 = getPoint(0, level);
-        const p1 = getPoint(1, level);
-        const p2 = getPoint(2, level);
-        const p3 = getPoint(3, level);
-        
-        svg += `<polygon class="radar-grid-line" points="${p0.x},${p0.y} ${p1.x},${p1.y} ${p2.x},${p2.y} ${p3.x},${p3.y}" />`;
-        // grid label
-        svg += `<text x="${cx + 5}" y="${cy - (level/100)*maxR + 4}" fill="rgba(255,255,255,0.2)" font-size="8" font-weight="600">${level}%</text>`;
+        const points = [];
+        for (let i = 0; i < N; i++) {
+            const p = getPoint(i, level);
+            points.push(`${p.x},${p.y}`);
+        }
+        svg += `<polygon class="radar-grid-line" points="${points.join(' ')}" />`;
+        // grid label (12시 방향 축 근처에 표시)
+        const lblP = getPoint(0, level);
+        svg += `<text x="${lblP.x + 5}" y="${lblP.y + 4}" fill="rgba(255,255,255,0.2)" font-size="8" font-weight="600">${level}%</text>`;
     }
     
-    // 2. Axes Lines
-    svg += `<line class="radar-axis-line" x1="${cx}" y1="${cy - maxR}" x2="${cx}" y2="${cy + maxR}" />`;
-    svg += `<line class="radar-axis-line" x1="${cx - maxR}" y1="${cy}" x2="${cx + maxR}" y2="${cy}" />`;
+    // 2. Axes Lines & Labels
+    subjects.forEach((sub, i) => {
+        const edgeP = getPoint(i, 100);
+        // 축 선
+        svg += `<line class="radar-axis-line" x1="${cx}" y1="${cy}" x2="${edgeP.x}" y2="${edgeP.y}" />`;
+        
+        // 축 라벨 위치 결정 (100% 원 외부로 조금 더 오프셋)
+        const angle = (2 * Math.PI * i) / N - (Math.PI / 2);
+        const offset = 15;
+        const labelX = cx + (maxR + offset) * Math.cos(angle);
+        const labelY = cy + (maxR + offset) * Math.sin(angle) + 4; // 폰트 높이 보정
+        
+        let textAnchor = 'middle';
+        const cos = Math.cos(angle);
+        if (cos > 0.1) textAnchor = 'start';
+        else if (cos < -0.1) textAnchor = 'end';
+        
+        const shortName = sub.name.replace('의 이해', '').replace(' 및 품질관리', '').replace('유통화장품 ', '');
+        svg += `<text class="radar-axis-label" x="${labelX}" y="${labelY}" text-anchor="${textAnchor}">${i+1}과목 (${shortName})</text>`;
+    });
     
-    // 3. Axes Labels
-    svg += `<text class="radar-axis-label" x="${cx}" y="${cy - maxR - 15}">1과목 (법령)</text>`;
-    svg += `<text class="radar-axis-label" x="${cx + maxR + 25}" y="${cy + 4}" text-anchor="start">2과목 (품질)</text>`;
-    svg += `<text class="radar-axis-label" x="${cx}" y="${cy + maxR + 20}">3과목 (안전)</text>`;
-    svg += `<text class="radar-axis-label" x="${cx - maxR - 25}" y="${cy + 4}" text-anchor="end">4과목 (이해)</text>`;
+    // 3. Data Polygon
+    const userPoints = [];
+    subjects.forEach((sub, i) => {
+        const p = getPoint(i, subjectScores[i]);
+        userPoints.push(`${p.x},${p.y}`);
+    });
+    svg += `<polygon class="radar-polygon" points="${userPoints.join(' ')}" />`;
     
-    // 4. Data Polygon
-    const userP0 = getPoint(0, s1);
-    const userP1 = getPoint(1, s2);
-    const userP2 = getPoint(2, s3);
-    const userP3 = getPoint(3, s4);
-    
-    svg += `<polygon class="radar-polygon" points="${userP0.x},${userP0.y} ${userP1.x},${userP1.y} ${userP2.x},${userP2.y} ${userP3.x},${userP3.y}" />`;
-    
-    // 5. Data dots and labels
-    const drawDot = (p, score) => {
-        return `
+    // 4. Data dots and labels
+    subjects.forEach((sub, i) => {
+        const p = getPoint(i, subjectScores[i]);
+        svg += `
             <circle class="radar-point" cx="${p.x}" cy="${p.y}" />
-            <text x="${p.x}" y="${p.y - 8}" fill="#ffffff" font-size="10" font-weight="700" text-anchor="middle">${score}%</text>
+            <text x="${p.x}" y="${p.y - 8}" fill="#ffffff" font-size="10" font-weight="700" text-anchor="middle">${subjectScores[i]}%</text>
         `;
-    };
-    
-    svg += drawDot(userP0, s1);
-    svg += drawDot(userP1, s2);
-    svg += drawDot(userP2, s3);
-    svg += drawDot(userP3, s4);
+    });
     
     svg += `</svg>`;
     wrapper.insertAdjacentHTML('beforeend', svg);

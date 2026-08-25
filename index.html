@@ -291,10 +291,7 @@
                     <div class="filter-group">
                         <label for="fc-subject-select">과목 선택</label>
                         <select id="fc-subject-select" class="form-select">
-                            <option value="law">1과목: 화장품법의 이해</option>
-                            <option value="manufacturing">2과목: 화장품 제조 및 품질관리</option>
-                            <option value="safety">3과목: 유통화장품 안전관리</option>
-                            <option value="understanding">4과목: 맞춤형화장품의 이해</option>
+                            <option value="">과목을 선택하세요</option>
                         </select>
                     </div>
                     <div class="filter-group-checkbox">
@@ -354,10 +351,7 @@
                     <div class="filter-group">
                         <label for="quiz-subject-select">과목 선택</label>
                         <select id="quiz-subject-select" class="form-select">
-                            <option value="law">1과목: 화장품법의 이해</option>
-                            <option value="manufacturing">2과목: 화장품 제조 및 품질관리</option>
-                            <option value="safety">3과목: 유통화장품 안전관리</option>
-                            <option value="understanding">4과목: 맞춤형화장품의 이해</option>
+                            <option value="">과목을 선택하세요</option>
                         </select>
                     </div>
                     <button id="start-quiz-btn" class="btn btn-primary">퀴즈 시작</button>
@@ -453,10 +447,6 @@
                 <!-- 과목별 필터 버튼 그룹 (신규 Feature 3) -->
                 <div class="review-filter-group" id="review-filter-group" style="display: flex; gap: 0.5rem; margin-top: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
                     <button class="btn btn-secondary filter-btn active" data-filter="all" data-click="setReviewFilter" data-arg="all" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; border-radius: 4px; background: var(--color-primary); border-color: var(--color-primary); color: #fff;">전체</button>
-                    <button class="btn btn-secondary filter-btn" data-filter="law" data-click="setReviewFilter" data-arg="law" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; border-radius: 4px;">1과목 (법령)</button>
-                    <button class="btn btn-secondary filter-btn" data-filter="manufacturing" data-click="setReviewFilter" data-arg="manufacturing" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; border-radius: 4px;">2과목 (품질)</button>
-                    <button class="btn btn-secondary filter-btn" data-filter="safety" data-click="setReviewFilter" data-arg="safety" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; border-radius: 4px;">3과목 (안전)</button>
-                    <button class="btn btn-secondary filter-btn" data-filter="understanding" data-click="setReviewFilter" data-arg="understanding" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; border-radius: 4px;">4과목 (이해)</button>
                 </div>
 
                 <div class="empty-state" id="review-empty-state">
@@ -979,12 +969,8 @@
                     </div>
 
                     <!-- Subject Filter Buttons -->
-                    <div class="textbook-filter-buttons" style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                    <div class="textbook-filter-buttons" id="textbook-filter-buttons" style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
                         <button class="btn btn-secondary active-filter" data-filter="all" data-click="setTextbookFilter" data-arg="all">전체 과목</button>
-                        <button class="btn btn-secondary" data-filter="law" data-click="setTextbookFilter" data-arg="law">1과목 (법령)</button>
-                        <button class="btn btn-secondary" data-filter="manufacturing" data-click="setTextbookFilter" data-arg="manufacturing">2과목 (제조)</button>
-                        <button class="btn btn-secondary" data-filter="safety" data-click="setTextbookFilter" data-arg="safety">3과목 (안전)</button>
-                        <button class="btn btn-secondary" data-filter="understanding" data-click="setTextbookFilter" data-arg="understanding">4과목 (이해)</button>
                     </div>
                 </div>
 

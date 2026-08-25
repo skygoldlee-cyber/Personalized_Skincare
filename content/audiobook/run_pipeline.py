@@ -29,6 +29,7 @@ MD 교재 → 청취용 원고 → (선택) ElevenLabs TTS → 챕터별 MP3 통
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import sys
 from dataclasses import dataclass
@@ -47,20 +48,29 @@ from md_chunker import (  # noqa: E402
 from script_polisher import polish_chapter  # noqa: E402
 
 
-# ---------------------------------------------------------------------------
-# 상수 / 설정
-# ---------------------------------------------------------------------------
-
 # 프로젝트 루트 = content/audiobook/ 의 2단계 상위 디렉터리 (작업공간 루트)
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 
-# 과목 키 → (MD 폴터명, 출력용 한글 과목명)
-SUBJECT_DIRS = {
-    "understanding":  ("content/understanding", "맞춤형화장품의 이해"),
-    "safety":         ("content/safety", "유통화장품 안전관리"),
-    "manufacturing":  ("content/manufacturing", "화장품 제조 및 품질관리"),
-    "law":            ("content/law", "화장품법의 이해"),
-}
+# content/manifest.json에서 과목 정보 동적 로드
+MANIFEST_PATH = PROJECT_ROOT / "content" / "manifest.json"
+SUBJECT_DIRS = {}
+
+try:
+    with open(MANIFEST_PATH, "r", encoding="utf-8") as f:
+        manifest = json.load(f)
+        for sub in manifest.get("subjects", []):
+            key = sub["key"]
+            directory = sub["dir"]
+            name = sub["name"]
+            SUBJECT_DIRS[key] = (f"content/{directory}", name)
+except Exception as e:
+    # 폴백: 파일 로드 실패 시 기존 기본값 적용
+    SUBJECT_DIRS = {
+        "understanding":  ("content/understanding", "맞춤형화장품의 이해"),
+        "safety":         ("content/safety", "유통화장품 안전관리"),
+        "manufacturing":  ("content/manufacturing", "화장품 제조 및 품질관리"),
+        "law":            ("content/law", "화장품법의 이해"),
+    }
 
 # 출력 디렉터리
 SCRIPTS_DIR = PROJECT_ROOT / "content" / "audiobook" / "scripts"   # 청취용 원고 (.txt)
