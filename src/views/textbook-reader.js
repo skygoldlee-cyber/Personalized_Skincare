@@ -2,6 +2,7 @@
 import { escapeHTML, esc, safeTextWithBreaks } from '../sanitize.js';
 import { formatSectionContentForReader } from '../reader-format.js';
 import { renderConceptMap } from '../concept-map.js';
+import { renderStudyAids, bindStudyAidToggles, renderExamFilterToggle, applyExamFilter, isKeySection } from '../study-aids.js';
 // [모바일 PWA 견고성] 오디오 매니페스트는 window 전역(가드)에서 읽는다(정적 import 하드 의존 지양).
 import { DataLoader } from '../data-loader.js';
 
@@ -721,6 +722,7 @@ function renderChapterContent(subjId, chapterIdx) {
             <div class="reader-chapter-meta">
                 <span><i class="fa-solid fa-layer-group"></i> 섹션 ${chapter.sections.length}개</span>
                 <span><i class="fa-regular fa-clock"></i> 예상 읽기 시간 약 ${readMinutes}분</span>
+                ${renderExamFilterToggle()}
                 <a href="${esc(chapter.filePath)}" target="_blank" class="btn btn-secondary" style="display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; padding: 0.35rem 0.75rem;">
                     <i class="fa-solid fa-arrow-up-right-from-square"></i> 원본 MD
                 </a>
@@ -760,6 +762,7 @@ function renderChapterContent(subjId, chapterIdx) {
             </div>
             <div class="concept-map-body expanded" id="concept-map-body"></div>
         </div>
+        ${renderStudyAids(chapter)}
     `;
 
     chapter.sections.forEach((section, idx) => {
@@ -808,10 +811,6 @@ function renderChapterContent(subjId, chapterIdx) {
     const cmapToggle = container.querySelector('#concept-map-toggle');
     if (cmapBody) {
         const isLight = document.documentElement.classList.contains('light-theme');
-        const isKeySection = (sec) => {
-            const c = sec.content || '';
-            return c.includes('🔖기출') || c.includes('📌중요');
-        };
         renderConceptMap(cmapBody, chapter, {
             isLightTheme: isLight,
             isKeySection,
@@ -833,6 +832,22 @@ function renderChapterContent(subjId, chapterIdx) {
             const isCollapsed = body.classList.toggle('collapsed');
             body.classList.toggle('expanded', !isCollapsed);
             cmapToggle.classList.toggle('collapsed', isCollapsed);
+        });
+    }
+
+    // Study aid toggles (기출 핵심, 숫자 암기표, 절차 플로우, 행정처분)
+    bindStudyAidToggles(container);
+
+    // Exam filter button — 기출/중요 마커가 있는 섹션만 강조
+    const examFilterBtn = container.querySelector('#exam-filter-btn');
+    if (examFilterBtn) {
+        let filterActive = false;
+        examFilterBtn.addEventListener('click', () => {
+            filterActive = !filterActive;
+            examFilterBtn.classList.toggle('active', filterActive);
+            const btnText = examFilterBtn.querySelector('span');
+            if (btnText) btnText.textContent = filterActive ? '기출만 보기 ON' : '기출만 보기';
+            applyExamFilter(container, chapter, filterActive);
         });
     }
 

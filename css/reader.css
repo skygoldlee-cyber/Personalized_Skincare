@@ -2001,3 +2001,332 @@ body.landscape-mode .glass-card {
         min-width: 600px;
     }
 }
+
+/* ===== 학습 보조 카드 공통 ===== */
+
+.study-aid-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.study-aid-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    cursor: pointer;
+}
+
+.study-aid-header i {
+    color: var(--color-primary);
+    font-size: 0.9rem;
+}
+
+.study-aid-header span {
+    font-weight: 600;
+    color: var(--color-text-main);
+}
+
+.study-aid-toggle {
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    transition: background 0.15s, transform 0.2s;
+}
+
+.study-aid-toggle:hover {
+    background: var(--bg-hover);
+}
+
+.study-aid-toggle.collapsed {
+    transform: rotate(-90deg);
+}
+
+.study-aid-body {
+    transition: max-height 0.3s ease, opacity 0.2s ease;
+    overflow: hidden;
+}
+
+.study-aid-body.collapsed {
+    max-height: 0;
+    opacity: 0;
+}
+
+.study-aid-body.expanded {
+    max-height: 1200px;
+    opacity: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* ===== ② 기출 핵심 요약 ===== */
+
+.exam-highlight-card {
+    border-left: 3px solid var(--warning);
+}
+
+.exam-highlight-section {
+    margin-bottom: 0.75rem;
+}
+
+.exam-highlight-section:last-child {
+    margin-bottom: 0;
+}
+
+.exam-highlight-section-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: 0.4rem;
+    padding-bottom: 0.25rem;
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.exam-highlight-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.exam-highlight-list li {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--color-text-main);
+    padding: 0.2rem 0 0.2rem 1rem;
+    position: relative;
+}
+
+.exam-highlight-list li::before {
+    content: '🔖';
+    position: absolute;
+    left: 0;
+    top: 0.15rem;
+    font-size: 0.7rem;
+}
+
+/* 기출 필터 토글 버튼 */
+.exam-filter-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.exam-filter-btn:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.exam-filter-btn.active {
+    background: var(--warning);
+    color: #fff;
+    border-color: var(--warning);
+}
+
+/* 기출 필터 dimmed 섹션 */
+.reader-section-card.exam-filter-dimmed {
+    opacity: 0.25;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.reader-section-card.exam-filter-dimmed:hover {
+    opacity: 0.25;
+}
+
+/* ===== ③ 숫자·기한 암기표 ===== */
+
+.number-drill-card {
+    border-left: 3px solid var(--color-primary);
+}
+
+.number-drill-section {
+    margin-bottom: 0.75rem;
+}
+
+.number-drill-section:last-child {
+    margin-bottom: 0;
+}
+
+.number-drill-section-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: 0.4rem;
+    padding-bottom: 0.25rem;
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.number-drill-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 0.5rem;
+}
+
+.number-drill-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.6rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 0.78rem;
+    background: var(--bg-main);
+}
+
+.number-drill-item.is-key {
+    border-color: var(--warning);
+    background: rgba(250, 171, 0, 0.06);
+}
+
+.number-drill-value {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    white-space: nowrap;
+    flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
+}
+
+.number-drill-item.is-key .number-drill-value {
+    color: var(--warning);
+}
+
+.number-drill-value small {
+    font-size: 0.65rem;
+    font-weight: 600;
+    margin-left: 2px;
+}
+
+.number-drill-context {
+    color: var(--color-text-muted);
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ===== ④ 절차 플로우 ===== */
+
+.procedure-flow-card {
+    border-left: 3px solid #8b5cf6;
+}
+
+.procedure-flow-svg {
+    width: 100%;
+    max-width: 360px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.procedure-step-rect {
+    transition: filter 0.15s;
+}
+
+.procedure-step-text {
+    pointer-events: none;
+    user-select: none;
+}
+
+/* ===== ⑤ 행정처분 계단 ===== */
+
+.admin-penalty-card {
+    border-left: 3px solid #ef4444;
+}
+
+.admin-penalty-table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.admin-penalty-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.78rem;
+}
+
+.admin-penalty-table th {
+    background: var(--bg-hover);
+    padding: 0.5rem 0.6rem;
+    text-align: left;
+    font-weight: 700;
+    color: var(--color-text-main);
+    border-bottom: 2px solid var(--border-color);
+    white-space: nowrap;
+}
+
+.admin-penalty-table td {
+    padding: 0.5rem 0.6rem;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--color-text-main);
+    line-height: 1.4;
+}
+
+.admin-penalty-table tr.is-key td {
+    background: rgba(250, 171, 0, 0.08);
+    font-weight: 600;
+}
+
+.admin-penalty-table tr.zebra td {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.admin-penalty-table .sticky-col {
+    position: sticky;
+    left: 0;
+    background: var(--bg-card);
+    z-index: 1;
+    min-width: 120px;
+    max-width: 200px;
+}
+
+.admin-penalty-table tr.is-key .sticky-col {
+    background: rgba(250, 171, 0, 0.08);
+}
+
+.admin-penalty-table tr.zebra .sticky-col {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+/* ===== 학습 보조 모바일 ===== */
+
+@media (max-width: 768px) {
+    .study-aid-body.expanded {
+        max-height: 500px;
+    }
+
+    .number-drill-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .number-drill-context {
+        white-space: normal;
+    }
+
+    .admin-penalty-table {
+        font-size: 0.72rem;
+    }
+
+    .admin-penalty-table .sticky-col {
+        min-width: 100px;
+        max-width: 140px;
+    }
+}

@@ -1,0 +1,519 @@
+// src/study-aids.js — 교재 학습 보조 모듈 (기출 필터, 숫자 암기표, 절차 플로우, 비교 시각화)
+// 순수 함수 기반, CSP-safe, 외부 의존성 없음
+
+import { escapeHTML as esc } from './sanitize.js';
+
+// --- ② 기출 핵심 요약 ---
+
+/**
+ * 챕터에서 기출/중요 마커가 붙은 핵심 라인을 추출합니다.
+ * @param {object} chapter - { sections: [{ title, content }] }
+ * @returns {{ sectionTitle: string, items: string[] }[]}
+ */
+export function extractExamHighlights(chapter) {
+    const sections = chapter.sections || [];
+    const result = [];
+
+    sections.forEach(sec => {
+        const lines = (sec.content || '').split('\n');
+        const items = [];
+
+        lines.forEach(line => {
+            const trimmed = line.trim();
+            if (!trimmed || trimmed.startsWith('|') || trimmed.startsWith('---')) return;
+
+            if (trimmed.includes('🔖기출') || trimmed.includes('📌중요')) {
+                // 마커 제거하고 의미있는 텍스트만 추출
+                let clean = trimmed
+                    .replace(/🔖기출/g, '')
+                    .replace(/📌중요/g, '')
+                    .replace(/^\*\*([^*]+)\*\*/, '$1')
+                    .replace(/\*\*/g, '')
+                    .replace(/^[-•]\s*/, '')
+                    .trim();
+                if (clean.length > 2) {
+                    // 테이블 행이면 파이프 정리
+                    if (clean.startsWith('|')) {
+                        clean = clean.replace(/^\|/, '').replace(/\|/g, ' · ').trim();
+                    }
+                    items.push(clean.substring(0, 120));
+                }
+            }
+        });
+
+        if (items.length > 0) {
+            result.push({ sectionTitle: sec.title, items });
+        }
+    });
+
+    return result;
+}
+
+/**
+ * 기출 핵심 요약 카드 HTML을 생성합니다.
+ */
+export function renderExamHighlightCard(chapter) {
+    const highlights = extractExamHighlights(chapter);
+    if (highlights.length === 0) return '';
+
+    const totalItems = highlights.reduce((acc, h) => acc + h.items.length, 0);
+
+    let html = `
+        <div class="study-aid-card exam-highlight-card" id="exam-highlight-card">
+            <div class="study-aid-header">
+                <i class="fa-solid fa-fire"></i>
+                <span>기출 핵심 — ${totalItems}개</span>
+                <button class="study-aid-toggle" id="exam-highlight-toggle" title="펼치기/접기">
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+            </div>
+            <div class="study-aid-body expanded" id="exam-highlight-body">
+    `;
+
+    highlights.forEach(h => {
+        html += `<div class="exam-highlight-section">`;
+        html += `<div class="exam-highlight-section-title">${esc(h.sectionTitle)}</div>`;
+        html += `<ul class="exam-highlight-list">`;
+        h.items.forEach(item => {
+            html += `<li>${esc(item)}</li>`;
+        });
+        html += `</ul>`;
+        html += `</div>`;
+    });
+
+    html += `
+            </div>
+        </div>
+    `;
+
+    return html;
+}
+
+// --- ③ 숫자·기한 자동 추출 ---
+
+const NUMBER_REGEX = /\b(\d+(?:\.\d+)?)\s*(%|세 이하|세 이상|개월|일|년|배|종|가지|개|시간|g|ml|kg|℃|도|분|초|주|ppm|㎛|회\/hr|개\/hr|개\/㎥|차|위|종류|가지|명|원|호)\b/g;
+
+/**
+ * 챕터에서 숫자+단위 패턴을 추출하여 암기표 데이터를 생성합니다.
+ * @param {object} chapter
+ * @returns {{ sectionTitle: string, entries: { number: string, unit: string, context: string }[] }[]}
+ */
+export function extractNumberDrills(chapter) {
+    const sections = chapter.sections || [];
+    const result = [];
+
+    sections.forEach(sec => {
+        const lines = (sec.content || '').split('\n');
+        const entries = [];
+        const seen = new Set();
+
+        lines.forEach(line => {
+            const trimmed = line.trim();
+            if (!trimmed || trimmed.startsWith('---') || trimmed.startsWith('|---')) return;
+
+            // 마커 라인 우선
+            const isKey = trimmed.includes('🔖기출') || trimmed.includes('📌중요');
+
+            let match;
+            const localRegex = new RegExp(NUMBER_REGEX.source, 'g');
+            while ((match = localRegex.exec(trimmed)) !== null) {
+                const number = match[1];
+                const unit = match[2];
+                const key = `${number}${unit}`;
+
+                // 중복 제거 (같은 섹션 내)
+                if (seen.has(key)) continue;
+                seen.add(key);
+
+                // 문장에서 숫자 부분만 빈칸으로 만들어 context 생성
+                let context = trimmed
+                    .replace(/🔖기출/g, '')
+                    .replace(/📌중요/g, '')
+                    .replace(/\*\*/g, '')
+                    .replace(new RegExp(match[0].replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), '▓▓')
+                    .trim();
+
+                // 너무 길면 자름
+                if (context.length > 100) {
+                    const idx = context.indexOf('▓▓');
+                    if (idx > 30) context = '...' + context.substring(Math.max(0, idx - 40));
+                    if (context.length > 100) context = context.substring(0, 100) + '...';
+                }
+
+                entries.push({ number, unit, context, isKey });
+            }
+        });
+
+        if (entries.length > 0) {
+            result.push({ sectionTitle: sec.title, entries });
+        }
+    });
+
+    return result;
+}
+
+/**
+ * 숫자·기한 암기표 HTML을 생성합니다.
+ */
+export function renderNumberDrillCard(chapter) {
+    const drills = extractNumberDrills(chapter);
+    if (drills.length === 0) return '';
+
+    const totalEntries = drills.reduce((acc, d) => acc + d.entries.length, 0);
+
+    let html = `
+        <div class="study-aid-card number-drill-card" id="number-drill-card">
+            <div class="study-aid-header">
+                <i class="fa-solid fa-hashtag"></i>
+                <span>숫자·기한 암기표 — ${totalEntries}개</span>
+                <button class="study-aid-toggle" id="number-drill-toggle" title="펼치기/접기">
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+            </div>
+            <div class="study-aid-body expanded" id="number-drill-body">
+    `;
+
+    drills.forEach(d => {
+        html += `<div class="number-drill-section">`;
+        html += `<div class="number-drill-section-title">${esc(d.sectionTitle)}</div>`;
+        html += `<div class="number-drill-grid">`;
+        d.entries.forEach(e => {
+            const keyClass = e.isKey ? ' is-key' : '';
+            html += `<div class="number-drill-item${keyClass}">`;
+            html += `<span class="number-drill-value">${esc(e.number)}<small>${esc(e.unit)}</small></span>`;
+            html += `<span class="number-drill-context">${esc(e.context)}</span>`;
+            html += `</div>`;
+        });
+        html += `</div>`;
+        html += `</div>`;
+    });
+
+    html += `
+            </div>
+        </div>
+    `;
+
+    return html;
+}
+
+// --- ④ 절차 플로우 ---
+
+const PROCEDURE_KEYWORDS = ['신고', '변경신고', '교육', '보수교육', '폐업신고', '승인', '신청', '등록', '갱신', '이전신고'];
+
+/**
+ * 챕터에서 절차성 섹션을 감지하고 플로우 데이터를 추출합니다.
+ * @param {object} chapter
+ * @returns {{ title: string, steps: { label: string, detail: string }[] } | null}
+ */
+export function detectProcedureFlow(chapter) {
+    const sections = chapter.sections || [];
+
+    for (const sec of sections) {
+        const content = sec.content || '';
+        const titleLower = sec.title.toLowerCase();
+
+        // 절차 키워드가 제목에 있거나 본문에 충분히 많으면
+        const titleMatch = PROCEDURE_KEYWORDS.some(kw => sec.title.includes(kw));
+        const contentMatchCount = PROCEDURE_KEYWORDS.reduce((acc, kw) => acc + (content.includes(kw) ? 1 : 0), 0);
+
+        if (!titleMatch && contentMatchCount < 2) continue;
+
+        const steps = [];
+        const lines = content.split('\n');
+
+        lines.forEach(line => {
+            const trimmed = line.trim();
+            if (!trimmed || trimmed.startsWith('---') || trimmed.startsWith('|---')) return;
+
+            // 번호가 있는 리스트 항목 (1. 2. 3. 또는 ① ② ③)
+            const numMatch = trimmed.match(/^(?:\d+[.)]|①|②|③|④|⑤|⑥|⑦|⑧|⑨|⑩)\s*(.+)/);
+            if (numMatch) {
+                const label = numMatch[1]
+                    .replace(/🔖기출/g, '')
+                    .replace(/📌중요/g, '')
+                    .replace(/\*\*/g, '')
+                    .trim();
+                if (label.length > 3) {
+                    // 기한 추출
+                    const deadlineMatch = label.match(/(\d+일|\d+개월|\d+년|즉시|지체 없이)/);
+                    const detail = deadlineMatch ? deadlineMatch[0] : '';
+                    steps.push({ label: label.substring(0, 80), detail });
+                }
+            }
+        });
+
+        if (steps.length >= 2) {
+            return { title: sec.title, steps };
+        }
+    }
+
+    return null;
+}
+
+/**
+ * 절차 플로우를 순수 SVG로 렌더링합니다.
+ */
+export function renderProcedureFlowCard(chapter) {
+    const flow = detectProcedureFlow(chapter);
+    if (!flow) return '';
+
+    const steps = flow.steps;
+    const stepH = 50;
+    const stepGap = 20;
+    const arrowH = 24;
+    const svgWidth = 320;
+    const svgHeight = steps.length * (stepH + arrowH) - arrowH + 20;
+    const centerX = svgWidth / 2;
+    const boxW = 260;
+    const boxX = centerX - boxW / 2;
+
+    let svg = `<svg viewBox="0 0 ${svgWidth} ${svgHeight}" class="procedure-flow-svg" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${esc(flow.title)} 절차 플로우">`;
+
+    steps.forEach((step, i) => {
+        const y = 10 + i * (stepH + arrowH);
+        const isKey = step.detail !== '';
+
+        // 박스
+        svg += `<rect x="${boxX}" y="${y}" width="${boxW}" height="${stepH}" rx="8" ry="8" fill="var(--bg-card)" stroke="${isKey ? 'var(--warning)' : 'var(--border-color)'}" stroke-width="1.5" class="procedure-step-rect"/>`;
+
+        // 스텝 번호 원
+        svg += `<circle cx="${boxX + 20}" cy="${y + stepH / 2}" r="14" fill="var(--color-primary)" class="procedure-step-circle"/>`;
+        svg += `<text x="${boxX + 20}" y="${y + stepH / 2 + 4}" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">${i + 1}</text>`;
+
+        // 라벨
+        const label = step.label.length > 28 ? step.label.substring(0, 27) + '…' : step.label;
+        svg += `<text x="${boxX + 42}" y="${y + stepH / 2 + 4}" fill="var(--color-text-main)" font-size="11" class="procedure-step-text">${esc(label)}</text>`;
+
+        // 기한 배지
+        if (step.detail) {
+            const badgeX = boxX + boxW - 50;
+            svg += `<rect x="${badgeX}" y="${y + 8}" width="42" height="18" rx="9" fill="var(--warning)" opacity="0.15"/>`;
+            svg += `<text x="${badgeX + 21}" y="${y + 20}" text-anchor="middle" fill="var(--warning)" font-size="9" font-weight="600">${esc(step.detail)}</text>`;
+        }
+
+        // 화살표 (다음 스텝이 있으면)
+        if (i < steps.length - 1) {
+            const arrowY = y + stepH + 4;
+            svg += `<path d="M ${centerX} ${arrowY} L ${centerX} ${arrowY + arrowH - 8}" stroke="var(--border-color)" stroke-width="2" fill="none"/>`;
+            svg += `<path d="M ${centerX - 5} ${arrowY + arrowH - 10} L ${centerX} ${arrowY + arrowH - 4} L ${centerX + 5} ${arrowY + arrowH - 10}" stroke="var(--border-color)" stroke-width="2" fill="none"/>`;
+        }
+    });
+
+    svg += `</svg>`;
+
+    return `
+        <div class="study-aid-card procedure-flow-card" id="procedure-flow-card">
+            <div class="study-aid-header">
+                <i class="fa-solid fa-route"></i>
+                <span>절차 플로우 — ${esc(flow.title)}</span>
+                <button class="study-aid-toggle" id="procedure-flow-toggle" title="펼치기/접기">
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+            </div>
+            <div class="study-aid-body expanded" id="procedure-flow-body">
+                ${svg}
+            </div>
+        </div>
+    `;
+}
+
+// --- ⑤ 비교·대조 시각화 ---
+
+/**
+ * 행정처분 표를 감지하고 계단형 데이터로 추출합니다.
+ * @param {object} chapter
+ * @returns {{ title: string, headers: string[], rows: { label: string, penalties: string[] }[] } | null}
+ */
+export function detectAdminPenalty(chapter) {
+    const sections = chapter.sections || [];
+
+    for (const sec of sections) {
+        const content = sec.content || '';
+        if (!content.includes('행정처분') && !sec.title.includes('행정처분')) continue;
+
+        const lines = content.split('\n');
+        let inTable = false;
+        let headers = [];
+        let rows = [];
+
+        lines.forEach(line => {
+            const trimmed = line.trim();
+            if (trimmed.startsWith('|') && !trimmed.startsWith('|---')) {
+                const cells = trimmed.split('|').filter(c => c.trim()).map(c => c.trim().replace(/\*\*/g, ''));
+
+                if (!inTable) {
+                    // 헤더 행 감지: 1차, 2차 등을 포함
+                    if (cells.some(c => c.includes('차') || c.includes('위반') || c.includes('처분'))) {
+                        headers = cells;
+                        inTable = true;
+                    }
+                } else {
+                    // 데이터 행
+                    if (cells.length >= 2) {
+                        const label = cells[0];
+                        const penalties = cells.slice(1);
+                        if (label && !label.includes('---')) {
+                            rows.push({ label, penalties });
+                        }
+                    }
+                }
+            } else if (inTable && !trimmed.startsWith('|')) {
+                inTable = false;
+            }
+        });
+
+        // 헤더에 차수가 있거나 행이 2개 이상이면
+        if (rows.length >= 2 && headers.length >= 2) {
+            return { title: sec.title, headers, rows };
+        }
+    }
+
+    return null;
+}
+
+/**
+ * 행정처분 계단형 시각화 HTML을 생성합니다.
+ */
+export function renderAdminPenaltyCard(chapter) {
+    const penalty = detectAdminPenalty(chapter);
+    if (!penalty) return '';
+
+    const { headers, rows } = penalty;
+    const maxPenalties = Math.max(...rows.map(r => r.penalties.length));
+
+    let html = `
+        <div class="study-aid-card admin-penalty-card" id="admin-penalty-card">
+            <div class="study-aid-header">
+                <i class="fa-solid fa-stairs"></i>
+                <span>행정처분 계단 — ${esc(penalty.title)}</span>
+                <button class="study-aid-toggle" id="admin-penalty-toggle" title="펼치기/접기">
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+            </div>
+            <div class="study-aid-body expanded" id="admin-penalty-body">
+                <div class="admin-penalty-table-wrapper">
+                    <table class="admin-penalty-table">
+                        <thead>
+                            <tr>
+                                <th class="sticky-col">${esc(headers[0] || '위반내용')}</th>
+                                ${headers.slice(1).map(h => `<th>${esc(h)}</th>`).join('')}
+                            </tr>
+                        </thead>
+                        <tbody>
+    `;
+
+    rows.forEach((row, i) => {
+        const isKey = row.label.includes('🔖기출') || row.label.includes('📌중요');
+        const cleanLabel = row.label.replace(/🔖기출/g, '').replace(/📌중요/g, '').trim();
+        html += `<tr class="${isKey ? 'is-key' : ''} ${i % 2 === 0 ? 'zebra' : ''}">`;
+        html += `<td class="sticky-col">${esc(cleanLabel)}</td>`;
+        row.penalties.forEach(p => {
+            const cleanP = p.replace(/🔖기출/g, '').replace(/📌중요/g, '').trim();
+            html += `<td>${esc(cleanP)}</td>`;
+        });
+        html += `</tr>`;
+    });
+
+    html += `
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    `;
+
+    return html;
+}
+
+// --- ② 기출 필터 토글 ---
+
+/**
+ * 기출 필터 토글 버튼 HTML을 생성합니다.
+ */
+export function renderExamFilterToggle() {
+    return `
+        <button class="exam-filter-btn" id="exam-filter-btn" title="기출·중요 마커가 있는 섹션만 강조">
+            <i class="fa-solid fa-filter"></i>
+            <span>기출만 보기</span>
+        </button>
+    `;
+}
+
+/**
+ * 섹션이 기출/중요 마커를 포함하는지 확인합니다.
+ */
+export function isKeySection(sec) {
+    const c = sec.content || '';
+    return c.includes('🔖기출') || c.includes('📌중요');
+}
+
+/**
+ * 기출 필터를 토글합니다. 비기출 섹션에 dim 클래스를 추가/제거합니다.
+ * @param {HTMLElement} container - 교재 리더 컨테이너
+ * @param {object} chapter
+ * @param {boolean} active - 필터 활성화 여부
+ */
+export function applyExamFilter(container, chapter, active) {
+    if (!container) return;
+    const sections = chapter.sections || [];
+
+    sections.forEach((sec, idx) => {
+        const sectionEl = container.querySelector(`#reader-section-${idx}`);
+        if (!sectionEl) return;
+
+        if (active && !isKeySection(sec)) {
+            sectionEl.classList.add('exam-filter-dimmed');
+        } else {
+            sectionEl.classList.remove('exam-filter-dimmed');
+        }
+    });
+}
+
+// --- 통합 렌더링 ---
+
+/**
+ * 모든 학습 보조 카드를 통합하여 HTML을 생성합니다.
+ * 개념 맵 아래, 섹션 카드 위에 삽입됩니다.
+ */
+export function renderStudyAids(chapter) {
+    let html = '';
+
+    // 기출 핵심 요약
+    const highlightCard = renderExamHighlightCard(chapter);
+    if (highlightCard) html += highlightCard;
+
+    // 숫자·기한 암기표
+    const numberCard = renderNumberDrillCard(chapter);
+    if (numberCard) html += numberCard;
+
+    // 절차 플로우
+    const flowCard = renderProcedureFlowCard(chapter);
+    if (flowCard) html += flowCard;
+
+    // 행정처분 계단
+    const penaltyCard = renderAdminPenaltyCard(chapter);
+    if (penaltyCard) html += penaltyCard;
+
+    return html;
+}
+
+/**
+ * 학습 보조 카드들의 토글 이벤트를 바인딩합니다.
+ * @param {HTMLElement} container
+ */
+export function bindStudyAidToggles(container) {
+    if (!container) return;
+
+    // 모든 study-aid-toggle 버튼에 공통 바인딩
+    container.querySelectorAll('.study-aid-toggle').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const card = btn.closest('.study-aid-card');
+            if (!card) return;
+            const body = card.querySelector('.study-aid-body');
+            if (!body) return;
+            const isCollapsed = body.classList.toggle('collapsed');
+            body.classList.toggle('expanded', !isCollapsed);
+            btn.classList.toggle('collapsed', isCollapsed);
+        });
+    });
+}
