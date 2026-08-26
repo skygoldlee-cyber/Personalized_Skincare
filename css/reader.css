@@ -1850,3 +1850,124 @@ body.landscape-mode .glass-card {
     min-width: 40px;
     justify-content: center;
 }
+
+/* ============================================================
+   개념 맵 (Concept Map) — 순수 SVG 인터랙티브 마인드맵
+   ============================================================ */
+
+.concept-map-container {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    overflow-x: auto;
+    position: relative;
+}
+
+.concept-map-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+}
+
+.concept-map-header i {
+    color: var(--color-primary);
+}
+
+.concept-map-toggle {
+    margin-left: auto;
+    background: none;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 0.25rem 0.6rem;
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.concept-map-toggle:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.concept-map-toggle.collapsed i {
+    transform: rotate(-90deg);
+}
+
+.concept-map-toggle i {
+    transition: transform 0.2s;
+}
+
+.concept-map-body {
+    transition: max-height 0.3s ease, opacity 0.2s ease;
+    overflow: hidden;
+}
+
+.concept-map-body.collapsed {
+    max-height: 0;
+    opacity: 0;
+}
+
+.concept-map-body.expanded {
+    max-height: 800px;
+    opacity: 1;
+}
+
+.concept-map-svg {
+    width: 100%;
+    max-width: 760px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.concept-map-root {
+    cursor: default;
+    transition: filter 0.2s;
+}
+
+.concept-map-root-text {
+    pointer-events: none;
+    user-select: none;
+}
+
+.concept-map-node {
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.concept-map-node:hover,
+.concept-map-node:focus {
+    outline: none;
+}
+
+.concept-map-node:hover .concept-map-rect,
+.concept-map-node:focus .concept-map-rect {
+    stroke-width: 2.5;
+    filter: brightness(1.15);
+}
+
+.concept-map-rect {
+    transition: stroke-width 0.15s, filter 0.15s;
+}
+
+.concept-map-node-text {
+    pointer-events: none;
+    user-select: none;
+}
+
+/* 모바일: 개념 맵 축소 */
+@media (max-width: 768px) {
+    .concept-map-container {
+        padding: 0.6rem;
+    }
+
+    .concept-map-svg {
+        min-width: 600px;
+    }
+}

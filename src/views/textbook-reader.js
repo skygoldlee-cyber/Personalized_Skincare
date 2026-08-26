@@ -1,6 +1,7 @@
 // views/textbook-reader.js - 교재 본문 읽기 및 오디오북 플레이어 (Textbook Reader + Audio)
 import { escapeHTML, esc, safeTextWithBreaks } from '../sanitize.js';
 import { formatSectionContentForReader } from '../reader-format.js';
+import { renderConceptMap } from '../concept-map.js';
 // [모바일 PWA 견고성] 오디오 매니페스트는 window 전역(가드)에서 읽는다(정적 import 하드 의존 지양).
 import { DataLoader } from '../data-loader.js';
 
@@ -733,7 +734,7 @@ function renderChapterContent(subjId, chapterIdx) {
                 <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.55rem;">
                     <i class="fa-solid fa-circle-play" style="color: var(--color-primary);"></i>
                     <span id="reader-audio-now-playing" style="color: var(--color-text-main); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></span>
-                    <span id="reader-audio-status" style="margin-left: auto; font-size: 0.78rem; color: var(--color-warning); display: none;"></span>
+                    <span id="reader-audio-status" style="margin-left: auto; font-size: 0.78rem; color: var(--warning); display: none;"></span>
                 </div>
                 <div style="display: flex; align-items: center; gap: 0.6rem;">
                     <button id="reader-audio-playpause-btn" class="btn btn-secondary" onclick="toggleReaderPlayPause()" title="재생" style="display: inline-flex; align-items: center; justify-content: center; width: 2rem; height: 2rem; padding: 0; border-radius: 50%; flex-shrink: 0;">
@@ -748,6 +749,16 @@ function renderChapterContent(subjId, chapterIdx) {
                     </button>
                 </div>
             </div>` : ''}
+        </div>
+        <div class="concept-map-container" id="concept-map-wrapper">
+            <div class="concept-map-header">
+                <i class="fa-solid fa-sitemap"></i>
+                <span>개념 맵 — 섹션 구조</span>
+                <button class="concept-map-toggle" id="concept-map-toggle" title="펼치기/접기">
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+            </div>
+            <div class="concept-map-body expanded" id="concept-map-body"></div>
         </div>
     `;
 
@@ -791,6 +802,39 @@ function renderChapterContent(subjId, chapterIdx) {
     `;
 
     container.innerHTML = html;
+
+    // Concept map rendering
+    const cmapBody = container.querySelector('#concept-map-body');
+    const cmapToggle = container.querySelector('#concept-map-toggle');
+    if (cmapBody) {
+        const isLight = document.documentElement.classList.contains('light-theme');
+        const isKeySection = (sec) => {
+            const c = sec.content || '';
+            return c.includes('🔖기출') || c.includes('📌중요');
+        };
+        renderConceptMap(cmapBody, chapter, {
+            isLightTheme: isLight,
+            isKeySection,
+            onNodeClick: (sectionIdx) => {
+                const target = container.querySelector(`#reader-section-${sectionIdx}`);
+                if (target) {
+                    if (target.classList.contains('collapsed')) {
+                        target.classList.remove('collapsed');
+                    }
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+        });
+    }
+    if (cmapToggle) {
+        cmapToggle.addEventListener('click', () => {
+            const body = container.querySelector('#concept-map-body');
+            if (!body) return;
+            const isCollapsed = body.classList.toggle('collapsed');
+            body.classList.toggle('expanded', !isCollapsed);
+            cmapToggle.classList.toggle('collapsed', isCollapsed);
+        });
+    }
 
     // Section collapse toggles
     container.querySelectorAll('.reader-section-header').forEach(header => {
