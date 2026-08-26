@@ -1,7 +1,7 @@
 # 💻 다른 머신에서 GitHub / Vercel 접근 설정 가이드
 
 > **대상 프로젝트**: 맞춤형화장품 조제관리사 스마트 학습 플랫폼 (Personalized_Skincare)
-> **최종 업데이트**: 2026-08-21
+> **최종 업데이트**: 2026-08-26
 > **목적**: 새로운 PC·노트북에서 GitHub 푸시와 Vercel 배포를 최소 설정으로 재현하기 위한 표준 절차
 
 ---
@@ -12,7 +12,7 @@
 |------|-----------|------|
 | Git remote | `git@github-skygold:skygoldlee-cyber/Personalized_Skincare.git` | SSH 별칭 방식 (개인 키 필요) |
 | GitHub CLI (`gh`) | 미설치 | 설치 권장 |
-| Vercel 링크 | `.vercel/project.json` 커밋됨 | 프로젝트 자동 인식 |
+| Vercel 링크 | `.vercel/project.json` Git 추적됨 (`810de57`부터) | projectId/orgId 자동 인식 |
 | Vercel CLI | 설치됨 | `vercel --prod` 사용 중 |
 
 > **문제점**: SSH 키 방식은 새 머신마다 키 생성 → GitHub 등록 → `~/.ssh/config` 별칭 설정이 필요해 번거롭습니다.
@@ -57,11 +57,19 @@ gh auth setup-git   # git이 gh 인증을 사용하도록 설정
 
 ### 2️⃣ Vercel — 프로젝트 토큰 사용 (비대화형)
 
-이 리포지토리에는 `.vercel/project.json`이 커밋되어 있어, **토큰만 있으면** 로그인 없이 바로 배포할 수 있습니다.
+이 리포지토리에는 `.vercel/project.json`이 Git에 커밋되어 있어 (`810de57`부터), **토큰만 있으면** 로그인 없이 바로 배포할 수 있습니다.
+
+#### 프로젝트 식별 정보 (`.vercel/project.json`)
+
+| 항목 | 값 |
+|------|-----|
+| **projectId** | `prj_706IdDze2DZsNwjADIfhvsfWL3HW` |
+| **orgId** | `team_P4ciaJGD9bvDziPxZM6FOCSK` |
+| **projectName** | `personalized-skincare-study` |
 
 #### 토큰 발급 (기존 머신 또는 웹에서 1회)
 
-1. https://vercel.com/account/tokens 접속
+1. https://vercel.com/account/tokens 접속 (skygold 계정으로 로그인)
 2. **Create Token** 클릭
 3. Scope를 `personalized-skincare-study` 프로젝트로 **제한** (보안 권장)
 4. 생성된 토큰을 안전한 곳에 보관 (1Password, Bitwarden 등)
@@ -73,8 +81,11 @@ gh auth setup-git   # git이 gh 인증을 사용하도록 설정
 npm i -g vercel
 
 # 프로젝트 루트에서 (.vercel/project.json 자동 인식)
-vercel --prod --token <VERCEL_TOKEN>
+# Windows pwsh 환경에서는 cmd /c 래퍼 사용 권장
+cmd /c vercel --prod --token <VERCEL_TOKEN>
 ```
+
+> ⚠️ **Cascade(IDE AI)에서 배포 시**: `vercel login`의 브라우저 OAuth 대기가 타임아웃을 유발할 수 있습니다. 반드시 `--token` 옵션을 사용하여 비대화형 배포를 수행하세요.
 
 #### 환경변수로 자동화 (권장)
 
@@ -89,7 +100,7 @@ export VERCEL_TOKEN="발급받은_토큰"
 환경변수 설정 후에는 토큰 옵션 없이 바로 배포 가능합니다.
 
 ```bash
-vercel --prod --yes
+cmd /c vercel --prod --yes
 ```
 
 ---
@@ -172,6 +183,5 @@ SSH를 계속 쓰고 싶다면 다음 중 하나를 선택하세요.
 
 ## 🔗 관련 문서
 
-- [`VERCEL_DEPLOY_GUIDE.md`](VERCEL_DEPLOY_GUIDE.md) — Vercel 배포 전체 가이드
-- [`VERCEL_SIZE_OPTIMIZATION.md`](VERCEL_SIZE_OPTIMIZATION.md) — 배포 크기 최적화
+- [`DEPLOYMENT_GUIDE.md`](DEPLOYMENT_GUIDE.md) — Vercel 배포 전체 가이드 (프로젝트 정보, CSP, 캐시 정책)
 - [`walkthrough.md`](walkthrough.md) — 변경 이력
