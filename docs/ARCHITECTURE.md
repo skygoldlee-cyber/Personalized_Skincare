@@ -143,6 +143,7 @@
 | [`src/sha256.js`](../src/sha256.js) | 순수 동기 SHA-256 + `stableId()`. 빌드타임 Node `crypto`와 동일한 카드/퀴즈 안정 ID를 브라우저에서 재현(진도 보존의 핵심) |
 | [`src/types.js`](../src/types.js) | **순수 JSDoc 타입 선언 모듈** (런타임 코드 없음). `State`, `Card`, `SubjectMeta` 등 `@typedef` 정의. `jsconfig.json` checkJs로 편집기 타입 검사/자동완성 활성화 |
 | [`src/reader-format.js`](../src/reader-format.js) | 교재 리더 콘텐츠 포맷터 (MD 섹션 → HTML 변환) |
+| [`src/concept-map.js`](../src/concept-map.js) | **순수 SVG 인터랙티브 개념 맵 생성기** (CSP-safe, 의존성 없음). 교재 리더 상단에 섹션 구조를 마인드맵으로 시각화. 데스크톱 좌/우 수평 레이아웃 + 모바일 세로 트리 레이아웃 자동 전환, 노드 클릭 시 해당 섹션으로 스크롤, 기출/중요 마커 하이라이트 |
 | [`src/views/navigation.js`](../src/views/navigation.js) | 뷰 전환 유틸리티 (`switchView`). 순환 import 해결용 별도 모듈 |
 | [`src/views/`](../src/views/) | **뷰 컨트롤러 모듈 디렉터리** (app.js에서 분리 추출). `dashboard.js`, `flashcard.js`, `quiz.js`, `trainer.js`, `dictionary.js`, `backup.js`, `textbook-search.js`, `textbook-reader.js`(**Media Session API 연동**), `exam-simulator.js`(**오답 복습 연동**) |
 
@@ -725,6 +726,16 @@ content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.j
    - Mermaid 제거: `vendor/mermaid/mermaid.min.js` (3.2MB)가 `unsafe-eval` 필요 → CSP 충돌 + 프리캐시 부담 → 텍스트 플로우차트로 대체, 런타임 의존 제거
    - CSS 캐시 스큐: `sw.js` CSS 라우팅 `networkFirst` → `cacheFirst`로 변경 (배포 전환 시 HTML/CSS 세대 불일치 방지)
    - 인코딩: `src/utils.js` mojibake 헤더 수정
+
+14. **교재 리더 인터랙티브 개념 맵** ✅
+   - `src/concept-map.js`: 순수 SVG 마인드맵 생성기 (Mermaid.js 없이 CSP-safe, 의존성 제로)
+   - 데스크톱: 루트(챕터 제목) 중심 좌/우 수평 레이아웃 (760px), 베지어 곡선 연결선
+   - 모바일 (폭 < 480px): 루트 상단 세로 트리 레이아웃 (280px), 수직선 연결, `max-height: 60vh` 내부 스크롤
+   - `🔖기출`/`📌중요` 마커 섹션: amber 색상 + 점 표시로 하이라이트
+   - 노드 클릭 → 해당 섹션으로 smooth scroll + 자동 펼침
+   - 펼치기/접기 토글, 화면 회전 시 자동 재렌더링 (resize 디바운스)
+   - 스크롤 indicator (하단 페이드 그라데이션)로 더 볼 콘텐츠 있음 표시
+   - `textbook-reader.js`의 `renderChapterContent()`에 통합, `css/reader.css`에 스타일 추가
 
 ---
 

@@ -401,3 +401,34 @@
 - `node tools/build/index.js` 재빌드 성공
 - `npm test` 86/86 통과
 - Vercel 배포 완료
+
+---
+
+## 22. 교재 리더 인터랙티브 개념 맵 추가 (2026-08-26)
+
+> **목표**: 교재 본문 읽기 화면에 섹션 구조를 시각화한 마인드맵을 추가하여 학습자가 챕터 전체 구조를 한눈에 파악하고 원하는 섹션으로 빠르게 이동
+
+### 추가 내역
+
+- **`src/concept-map.js`** (신규): 순수 SVG 인터랙티브 개념 맵 생성기
+  - Mermaid.js 없이 자체 SVG 렌더링 (CSP-safe, 의존성 제로, 오프라인 호환)
+  - `generateConceptMap()`: 챕터 섹션 데이터 → SVG 마인드맵 문자열
+  - `generateMobileLayout()`: 세로 트리 레이아웃 (루트 상단, 노드 수직 배치, 280px 폭)
+  - `generateDesktopLayout()`: 좌/우 수평 레이아웃 (루트 중앙, 노드 양쪽 배치, 760px 폭)
+  - `renderConceptMap()`: 컨테이너에 SVG 렌더링 + 클릭 이벤트 바인딩 + resize 감지
+  - 기출(`🔖기출`)/중요(`📌중요`) 마커 섹션: amber 색상 stroke + 점 표시
+  - 라이트/다크 테마 지원
+- **`css/reader.css`**: 개념 맵 컨테이너, 노드 hover/focus, 토글 애니메이션, 모바일 반응형
+  - `.concept-map-body.expanded`: `overflow-y: auto` + `-webkit-overflow-scrolling: touch`
+  - 모바일 `max-height: 60vh` 내부 스크롤, 하단 페이드 그라데이션 indicator
+- **`src/views/textbook-reader.js`**: `renderChapterContent()`에 개념 맵 통합
+  - 챕터 헤더 아래, 섹션 카드 위에 렌더링
+  - 노드 클릭 → 해당 섹션으로 smooth scroll + 자동 펼침
+  - 펼치기/접기 토글 버튼
+  - 모바일 감지: 컨테이너 폭 < 480px 시 세로 레이아웃, 화면 회전 시 자동 재렌더링
+
+### 검증
+
+- `node tools/build/index.js` 재빌드 성공
+- `npm test` 86/86 통과
+- Vercel 배포 완료
