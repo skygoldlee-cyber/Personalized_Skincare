@@ -1961,13 +1961,19 @@ body.landscape-mode .glass-card {
     user-select: none;
 }
 
-/* 모바일: 개념 맵 축소 */
+/* 모바일: 개념 맵 세로 레이아웃 최적화 */
 @media (max-width: 768px) {
     .concept-map-container {
         padding: 0.6rem;
     }
 
-    .concept-map-svg {
+    .concept-map-svg.concept-map-mobile {
+        width: 100%;
+        max-width: 320px;
+        min-width: unset;
+    }
+
+    .concept-map-svg.concept-map-desktop {
         min-width: 600px;
     }
 }

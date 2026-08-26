@@ -8,19 +8,98 @@
  * @returns {string} SVG HTML 문자열
  */
 export function generateConceptMap(chapter, opts = {}) {
-    const { isLightTheme = false, isKeySection = null } = opts;
+    const { isLightTheme = false, isKeySection = null, mobile = false } = opts;
     const sections = chapter.sections || [];
     if (sections.length === 0) return '';
 
-    // 레이아웃 파라미터
-    const nodeW = 180;
-    const nodeH = 44;
-    const gapX = 40;
-    const gapY = 20;
-    const rootR = 32;
     const svgNS = 'http://www.w3.org/2000/svg';
 
-    // 노드 위치 계산 — 루트를 중심으로 좌/우 양쪽으로 배치
+    // 색상 테마
+    const colors = isLightTheme ? {
+        rootFill: '#1a73e8', rootText: '#fff',
+        nodeFill: '#f8f9fa', nodeStroke: '#dadce0', nodeText: '#202124',
+        keyFill: '#fef7e0', keyStroke: '#f9ab00',
+        line: '#9aa0a6', lineKey: '#f9ab00'
+    } : {
+        rootFill: '#1f6feb', rootText: '#fff',
+        nodeFill: '#161b22', nodeStroke: '#30363d', nodeText: '#c9d1d9',
+        keyFill: '#221a00', keyStroke: '#d29922',
+        line: '#30363d', lineKey: '#d29922'
+    };
+
+    if (mobile) {
+        return generateMobileLayout(chapter, sections, colors, svgNS, isKeySection);
+    }
+    return generateDesktopLayout(chapter, sections, colors, svgNS, isKeySection);
+}
+
+// --- 세로 트리 레이아웃 (모바일) ---
+function generateMobileLayout(chapter, sections, colors, svgNS, isKeySection) {
+    const nodeW = 200;
+    const nodeH = 40;
+    const gapY = 14;
+    const rootR = 28;
+    const rootGap = 24;
+    const svgWidth = 280;
+
+    const centerX = svgWidth / 2;
+    const rootY = rootR + 10;
+
+    const nodes = sections.map((sec, i) => {
+        const y = rootY + rootR + rootGap + i * (nodeH + gapY);
+        return {
+            sectionIdx: i,
+            title: sec.title,
+            x: centerX - nodeW / 2,
+            y,
+            cx: centerX,
+            cy: y + nodeH / 2,
+            isKey: isKeySection ? isKeySection(sec) : false
+        };
+    });
+
+    const svgHeight = rootY + rootR + rootGap + nodes.length * (nodeH + gapY) - gapY + 10;
+
+    let svg = `<svg viewBox="0 0 ${svgWidth} ${svgHeight}" class="concept-map-svg concept-map-mobile" xmlns="${svgNS}" role="img" aria-label="${escapeAttr(chapter.chapterTitle)} 개념 맵">`;
+
+    // 엣지 — 루트에서 수직선, 각 노드 상단으로 연결
+    nodes.forEach(n => {
+        const isKey = n.isKey;
+        const stroke = isKey ? colors.lineKey : colors.line;
+        const dash = isKey ? 'stroke-dasharray="5,3"' : '';
+        svg += `<path d="M ${centerX} ${rootY + rootR} L ${centerX} ${n.y}" fill="none" stroke="${stroke}" stroke-width="1.5" ${dash} opacity="0.7"/>`;
+    });
+
+    // 루트 노드
+    const rootLabel = truncate(chapter.chapterTitle, 10);
+    svg += `<circle cx="${centerX}" cy="${rootY}" r="${rootR}" fill="${colors.rootFill}" class="concept-map-root"/>`;
+    svg += `<text x="${centerX}" y="${rootY + 4}" text-anchor="middle" fill="${colors.rootText}" font-size="10" font-weight="700" class="concept-map-root-text">${escapeText(rootLabel)}</text>`;
+
+    // 섹션 노드
+    nodes.forEach(n => {
+        const fill = n.isKey ? colors.keyFill : colors.nodeFill;
+        const stroke = n.isKey ? colors.keyStroke : colors.nodeStroke;
+        const label = truncate(n.title, 18);
+        svg += `<g class="concept-map-node" data-section-idx="${n.sectionIdx}" tabindex="0" role="button" aria-label="섹션: ${escapeAttr(n.title)}">`;
+        svg += `<rect x="${n.x}" y="${n.y}" width="${nodeW}" height="${nodeH}" rx="8" ry="8" fill="${fill}" stroke="${stroke}" stroke-width="1.5" class="concept-map-rect"/>`;
+        if (n.isKey) {
+            svg += `<circle cx="${n.x + 12}" cy="${n.y + nodeH / 2}" r="4" fill="${colors.keyStroke}"/>`;
+        }
+        svg += `<text x="${n.x + nodeW / 2 + (n.isKey ? 6 : 0)}" y="${n.y + nodeH / 2 + 4}" text-anchor="middle" fill="${colors.nodeText}" font-size="11" class="concept-map-node-text">${escapeText(label)}</text>`;
+        svg += `</g>`;
+    });
+
+    svg += `</svg>`;
+    return svg;
+}
+
+// --- 좌/우 수평 레이아웃 (데스크톱) ---
+function generateDesktopLayout(chapter, sections, colors, svgNS, isKeySection) {
+    const nodeW = 180;
+    const nodeH = 44;
+    const gapY = 20;
+    const rootR = 32;
+
     const totalNodes = sections.length;
     const half = Math.ceil(totalNodes / 2);
     const leftNodes = sections.slice(0, half);
@@ -34,7 +113,6 @@ export function generateConceptMap(chapter, opts = {}) {
     const centerX = svgWidth / 2;
     const centerY = svgHeight / 2;
 
-    // 노드 좌표 생성
     const nodes = [];
     const placeColumn = (arr, side) => {
         const colH = colHeight(arr.length);
@@ -58,28 +136,13 @@ export function generateConceptMap(chapter, opts = {}) {
     placeColumn(leftNodes, 'left');
     placeColumn(rightNodes, 'right');
 
-    // 색상 테마
-    const colors = isLightTheme ? {
-        rootFill: '#1a73e8', rootText: '#fff',
-        nodeFill: '#f8f9fa', nodeStroke: '#dadce0', nodeText: '#202124',
-        keyFill: '#fef7e0', keyStroke: '#f9ab00',
-        line: '#9aa0a6', lineKey: '#f9ab00'
-    } : {
-        rootFill: '#1f6feb', rootText: '#fff',
-        nodeFill: '#161b22', nodeStroke: '#30363d', nodeText: '#c9d1d9',
-        keyFill: '#221a00', keyStroke: '#d29922',
-        line: '#30363d', lineKey: '#d29922'
-    };
-
-    // SVG 문자열 조립
-    let svg = `<svg viewBox="0 0 ${svgWidth} ${svgHeight}" class="concept-map-svg" xmlns="${svgNS}" role="img" aria-label="${escapeAttr(chapter.chapterTitle)} 개념 맵">`;
+    let svg = `<svg viewBox="0 0 ${svgWidth} ${svgHeight}" class="concept-map-svg concept-map-desktop" xmlns="${svgNS}" role="img" aria-label="${escapeAttr(chapter.chapterTitle)} 개념 맵">`;
 
     // 엣지 (루트 → 노드 연결선)
     nodes.forEach(n => {
         const isKey = n.isKey;
         const stroke = isKey ? colors.lineKey : colors.line;
         const dash = isKey ? 'stroke-dasharray="6,3"' : '';
-        // 베지어 곡선으로 자연스러운 연결
         const cp1x = centerX + (n.side === 'left' ? -60 : 60);
         const cp2x = n.cx + (n.side === 'left' ? 60 : -60);
         svg += `<path d="M ${centerX} ${centerY} C ${cp1x} ${centerY}, ${cp2x} ${n.cy}, ${n.cx} ${n.cy}" fill="none" stroke="${stroke}" stroke-width="1.5" ${dash} opacity="0.7"/>`;
@@ -118,23 +181,32 @@ export function renderConceptMap(container, chapter, opts = {}) {
     if (!container) return;
     const { onNodeClick } = opts;
 
-    const svgHtml = generateConceptMap(chapter, opts);
-    if (!svgHtml) {
-        container.innerHTML = '';
-        container.style.display = 'none';
-        return;
-    }
+    // 모바일 감지: 컨테이너 폭이 480px 미만이면 세로 레이아웃
+    const detectMobile = () => {
+        const w = container.clientWidth || window.innerWidth;
+        return w < 480;
+    };
 
-    container.innerHTML = svgHtml;
-    container.style.display = 'block';
+    const render = () => {
+        const mobile = detectMobile();
+        const svgHtml = generateConceptMap(chapter, { ...opts, mobile });
+        if (!svgHtml) {
+            container.innerHTML = '';
+            container.style.display = 'none';
+            return;
+        }
+        container.innerHTML = svgHtml;
+        container.style.display = 'block';
+        bindNodes(onNodeClick);
+    };
 
-    // 노드 클릭 → 해당 섹션으로 스크롤
-    if (onNodeClick) {
+    const bindNodes = (clickHandler) => {
+        if (!clickHandler) return;
         container.querySelectorAll('.concept-map-node').forEach(node => {
             const handler = (e) => {
                 e.preventDefault();
                 const idx = parseInt(node.dataset.sectionIdx);
-                if (!isNaN(idx)) onNodeClick(idx);
+                if (!isNaN(idx)) clickHandler(idx);
             };
             node.addEventListener('click', handler);
             node.addEventListener('keydown', (e) => {
@@ -143,6 +215,25 @@ export function renderConceptMap(container, chapter, opts = {}) {
                     handler(e);
                 }
             });
+        });
+    };
+
+    render();
+
+    // 화면 회전/리사이즈 시 재렌더링 (디바운스)
+    if (!container._cmapResizeBound) {
+        container._cmapResizeBound = true;
+        let resizeTimer = null;
+        window.addEventListener('resize', () => {
+            if (resizeTimer) clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                const isMobile = detectMobile();
+                const svg = container.querySelector('.concept-map-svg');
+                const wasMobile = svg && svg.classList.contains('concept-map-mobile');
+                if (isMobile !== wasMobile) {
+                    render();
+                }
+            }, 200);
         });
     }
 }
