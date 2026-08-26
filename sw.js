@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v39-20260826-37c6258';       // 쉘/CDN: 배포마다 갱신 (app-fallback 폴링/단계적 복구, 진단 강화)
+const CACHE_VERSION = 'v40-20260827-study-md';       // 쉘/CDN: 배포마다 갱신 (study_summary.md 프리캐시 추가)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
@@ -106,6 +106,12 @@ const DATA_ASSETS = [
   './data/audio_manifest.js'
 ];
 
+/** 설치 시 프리캐시할 마크다운 문서 (매뉴얼·요약집 — 오프라인 보장) */
+const MD_ASSETS = [
+  './docs/user/user_manual.md',
+  './content/study_summary.md'
+];
+
 /** 캐시하지 않을 요청 패턴 (오디오 등 대용량 미디어) */
 const BYPASS_PATTERNS = [
   /\.mp3$/i,
@@ -158,7 +164,8 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     Promise.all([
       precacheResilient(SHELL_CACHE, SHELL_ASSETS),
-      precacheResilient(DATA_CACHE, DATA_ASSETS)
+      precacheResilient(DATA_CACHE, DATA_ASSETS),
+      precacheResilient(SHELL_CACHE, MD_ASSETS)
     ]).then(() => self.skipWaiting())
   );
 });
