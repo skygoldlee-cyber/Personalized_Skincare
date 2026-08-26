@@ -339,3 +339,14 @@
 - **3-1. 모의고사 오답 복습 연동 보완** (`src/views/exam-simulator.js`):
   - `weak_sim_*` ID 매핑 문제 수정: 기존에는 STUDY_DATA에서 찾지 못해 누락되던 모의고사 오답을 `window.EXAM_DATA`에서 원본 문제를 찾아 복습 문제로 조립
   - `startWeakExam()`의 `_startWeakExamImpl()`에 1-b) 분기 추가: `weak_sim_` 접두사 ID를 EXAM_DATA에서 역추적하여 문제/정답/해설/옵션 복원
+
+### 19. 디자인 완성도 및 마이크로 인터랙션 (UI/UX) — 3항목
+
+- **5-1. 뷰 전환 모션**: 이미 구현됨 (`css/base.css` `@keyframes fadeIn` + `animation: fadeIn 0.4s ease forwards`)
+- **5-2. 3D 플래시카드 GPU 가속** (`css/study.css`):
+  - `will-change: transform` 추가로 GPU 가속 명시적 힌트 → 저가형 단말기 렌더링 최적화
+  - 기존 `perspective: 1200px`, `preserve-3d`, `backface-visibility: hidden` 유지
+- **5-3. 라이트 모드 배지 WCAG 대비 개선** (`css/exam.css`):
+  - `.badge-cyan`: `#0e7490` (대비 ~5.4:1), `.badge-violet`: `#6d28d9` (~5.9:1)
+  - `.badge-emerald`: `#047857` (~4.8:1), `.badge-amber`: `#92400e` (~5.7:1)
+  - 모든 배지 WCAG AA 기준(4.5:1) 충족

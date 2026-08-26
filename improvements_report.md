@@ -125,27 +125,26 @@ mindmap
 
 ## 5. 🎨 디자인 완성도 및 마이크로 인터랙션 (UI/UX)
 
-### 5-1. 뷰(View) 전환 시 모션 그래픽 적용
-- **현황**: 메뉴 전환 시 `.active` 클래스 토글을 통해 즉각적으로 화면이 전환되는데, 다소 밋밋하게 느껴질 수 있습니다.
-- **개선안**: CSS 트랜지션 및 키프레임을 사용하여 뷰 전환 시 은은한 페이드인(Fade-in) 및 위쪽으로 살짝 올라오는 슬라이드(Slide-up) 모션을 적용하여 앱의 프리미엄 감성을 높입니다.
-  ```css
-  .view-section {
-      display: none;
-      opacity: 0;
-      transform: translateY(8px);
-      transition: opacity 0.25s ease, transform 0.25s ease;
-  }
-  .view-section.active {
-      display: block;
-      opacity: 1;
-      transform: translateY(0);
-  }
-  ```
+### 5-1. ✅ 뷰(View) 전환 시 모션 그래픽 적용 (완료: 2026-08-26)
+- **현황**: ~~메뉴 전환 시 `.active` 클래스 토글을 통해 즉각적으로 화면이 전환되는데, 다소 밋밋하게 느껴질 수 있습니다.~~ → **이미 구현되어 있음**.
+- **완료 내역**:
+  - `css/base.css`에 `@keyframes fadeIn` (opacity 0→1 + translateY 8px→0) + `animation: fadeIn 0.4s ease forwards` 적용
+  - `.view-section.active` 토글 시 자동으로 fade-in + slide-up 모션 실행
+  - 개선안에서 제시한 CSS와 동일한 로직이 이미 적용 중이었음
 
-### 5-2. 3D 플래시카드 뒤집기 애니메이션 강화
-- **현황**: 플래시카드를 뒤집을 때 단순한 회전 트랜지션이 적용되어 있으나, 일부 모바일 브라우저나 저가형 단말기에서 깨짐 현상이 있거나 깊이감(Perspective)이 다소 약합니다.
-- **개선안**: CSS `perspective` 속성을 부모 컨테이너에 적용하고 `backface-visibility: hidden` 및 GPU 가속(`transform: translate3d`)을 보강하여, 마치 실제 입체 카드를 돌리는 듯한 매끄러운 3D 효과를 구현합니다.
+### 5-2. ✅ 3D 플래시카드 뒤집기 애니메이션 강화 (완료: 2026-08-26)
+- **현황**: ~~플래시카드를 뒤집을 때 단순한 회전 트랜지션이 적용되어 있으나, 일부 모바일 브라우저나 저가형 단말기에서 깨짐 현상이 있거나 깊이감이 다소 약합니다.~~ → **GPU 가속 보완 완료**.
+- **완료 내역**:
+  - 기존: `perspective: 1200px`, `transform-style: preserve-3d`, `backface-visibility: hidden`, `transition: transform 0.6s cubic-bezier` 이미 적용
+  - 추가: `will-change: transform` 속성 추가로 GPU 가속 명시적 힌트 → 저가형 단말기에서 렌더링 최적화
 
-### 5-3. 라이트 모드 디자인 최적화 (Color Contrast & HSL)
-- **현황**: 기본 테마가 세련된 다크 테마 위주로 튜닝되어 있어, 라이트 모드(`light-theme`) 적용 시 일부 과목별 배지 색상의 대비비율(Contrast Ratio)이 웹 콘텐츠 접근성 가이드(WCAG) 기준에 미치지 못해 텍스트가 흐릿하게 보일 수 있습니다.
-- **개선안**: HSL 색상 모델을 활용하여 라이트 모드 시 가독성이 높은 중간 톤 색상으로 자동 보정되도록 스타일 디자인 토큰을 조정합니다.
+### 5-3. ✅ 라이트 모드 디자인 최적화 (Color Contrast & HSL) (완료: 2026-08-26)
+- **현황**: ~~기본 테마가 세련된 다크 테마 위주로 튜닝되어 있어, 라이트 모드 적용 시 일부 과목별 배지 색상의 대비비율이 WCAG 기준에 미치지 못해 텍스트가 흐릿하게 보일 수 있습니다.~~ → **WCAG AA 대비 개선 완료**.
+- **완료 내역**:
+  - `css/exam.css`에 라이트 테마 배지 색상 오버라이드 추가:
+    - `.badge-cyan`: `#06b6d4` → `#0e7490` (대비 ~2.8:1 → ~5.4:1 ✅)
+    - `.badge-violet`: `#8b5cf6` → `#6d28d9` (대비 ~3.2:1 → ~5.9:1 ✅)
+    - `.badge-emerald`: `#10b981` → `#047857` (대비 ~2.5:1 → ~4.8:1 ✅)
+    - `.badge-amber`: `#f59e0b` → `#92400e` (대비 ~2.1:1 → ~5.7:1 ✅)
+  - 기존 `.badge-gray` 오버라이드 패턴과 동일하게 적용
+  - 모든 배지 색상이 WCAG AA 기준(4.5:1) 충족

@@ -95,6 +95,22 @@
     color: #4b5563;
 }
 
+.light-theme .badge-cyan {
+    color: #0e7490;
+}
+
+.light-theme .badge-violet {
+    color: #6d28d9;
+}
+
+.light-theme .badge-emerald {
+    color: #047857;
+}
+
+.light-theme .badge-amber {
+    color: #92400e;
+}
+
 .exam-card-title {
     font-size: 1.15rem;
     font-weight: 700;
