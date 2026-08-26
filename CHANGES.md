@@ -263,3 +263,28 @@
   - `src/app.js` `detectPlatform()`: 인앱 브라우저 감지 로직 추가 (`wv)` UA 플래그, KakaoTalk, Instagram, FBAN/FBAV, LINE, Twitter, Snapchat 패턴).
   - `index.html`: 인앱 브라우저용 "Chrome으로 열기" 3단계 안내 모달 섹션 추가.
   - `src/app.js`: 인앱 브라우저 감지 시 페이지 로드 0.8초 후 자동으로 안내 모달 표시 (sessionStorage로 1회만).
+
+### 15. 캐시 스큐 수정 — navigation을 Cache First로 전환 (sw `v38` → `v39`)
+
+- **증상**: Chrome(SW 활성)에서만 앱이 실패하고, 인앱 브라우저(WebView, SW 없음)에서는 정상 작동. PC 설치 PWA도 정상.
+- **근본 원인**: navigation(HTML)에 `Network First`를 적용한 것이 핵심.
+  - 구 SW(v38)가 페이지를 제어하는 동안 방문하면:
+    1. `index.html`은 `Network First` → **신버전 HTML** 획득 (네트워크에서)
+    2. `/src/*.js`는 `Cache First` → **구버전 JS** 서빙 (구 캐시에서)
+    3. 신버전 HTML + 구버전 JS = **캐시 스큐** → ESM import 그래프 붕괴 → 앱 초기화 실패
+  - WebView는 SW가 없으므로 모든 요청이 네트워크 직행 → 신 HTML + 신 JS = 정상 작동
+  - PC 설치 PWA는 브라우저 탭이 트리거한 SW 업데이트 완료 후 실행되므로 스큐를 겪지 않음
+- **해결 1 — navigation `Cache First` 전환** (`sw.js`):
+  - HTML과 JS가 항상 동일한 `CACHE_VERSION` 캐시에서 서빙 → 세대 내 불일치 원천 차단.
+  - 구 SW: 구 HTML + 구 JS = 구버전 앱 정상 작동. 신 SW 활성화 후 리로드: 신 HTML + 신 JS = 신버전 앱 정상 작동.
+  - 업데이트 지연은 최대 1 page load 분량 (`skipWaiting()` + `controllerchange` 리로드로 자동 해소).
+- **해결 2 — `precacheResilient()` 도입** (`sw.js`):
+  - `cache.addAll()`의 원자성(all-or-nothing)을 버리고 `Promise.allSettled()` + 개별 `cache.add()`로 변경.
+  - `addAll`은 하나라도 404면 전체 reject → `skipWaiting()` 미실행 → `cacheFirst` 환경에서 사용자가 구버전에 영영 갇힘.
+  - `allSettled`는 일부 실패해도 SW 활성화 보장, 실패분은 `cacheFirst`의 네트워크 폴백으로 온디맨드 자가 치유.
+- **해결 3 — `verify-shell-assets.js` CI 검증 추가** (`tools/verify-shell-assets.js`):
+  - 배포 전 `SHELL_ASSETS`/`DATA_ASSETS`의 모든 파일이 저장소에 존재하는지 확인.
+  - `precacheResilient`이 누락을 조용히 넘기므로 CI에서 사전 차단 (비-0 종료로 실패).
+  - `ci.yml`에 `npm run verify:assets` 단계 추가.
+- **해결 4 — `ci.yml` 수정**: 존재하지 않는 `test:integration` 스크립트 → `check:parser`로 수정.
+- **검증 결과** (모바일 Chrome 실기기): PL=1 (루프 없음), CC=1 (SW 교체 1회), init=1325ms (정상 초기화), nav=9/11 (메뉴 정상), PWA 설치 정상 완료.

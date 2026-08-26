@@ -330,22 +330,45 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 
 ### Service Worker 캐시 계층 ([`sw.js`](../sw.js))
 
-리소스 특성별로 **5단계 분기 전략**을 적용합니다.
+리소스 특성별로 **7단계 분기 전략**을 적용합니다.
 
 | 우선순위 | 대상 | 전략 | 근거 |
 |:---:|------|------|------|
-| 1 | 네비게이션 (`navigate`) | **Network First** | 최신 HTML 우선 보장, 오프라인 시 캐시 폴리백 |
+| 1 | 네비게이션 (`navigate`) | **Cache First** | HTML과 JS 모듈이 항상 동일한 `CACHE_VERSION` 캐시에서 서빙되도록 보장. `Network First`를 쓰면 구 SW가 신버전 HTML(네트워크) + 구버전 JS(캐시)를 섞어 반환하여 ESM import 그래프가 붕괴하는 **캐시 스큐** 발생 (v39 수정, 상세 후술) |
 | 2 | 시험/성분 데이터 번들 (`data/exams/*.hash.js`, `data/ingredients_data.*.js`) · 교재 원본 (`content/*.md`) | **Cache First** | 해시 파일명/정적 MD로 자연 갱신, 오프라인 학습 핵심. 교재 MD는 최초 fetch 시 캐시됨 |
 | 3 | 외부 CDN (Google Fonts) | **Stale-While-Revalidate** | 외부 리소스 안정성 확보. FontAwesome은 2026-08-24부터 자체 호스팅([`vendor/fontawesome/`](../vendor/fontawesome/))으로 전환하여 CDN 의존 제거, App Shell 프리캐시에 포함 |
 | 4 | MP3 오디오 (302MB) | **네트워크 직행 (바이패스)** | 대용량 미디어는 캐시 제외 (저장공간 보호) |
-| 5 | 코드 자산 (`*.css` / `*.js`) | **Network First** | 온라인이면 항상 최신 배포본 제공, 오프라인이면 캐시 폴리백. `CACHE_VERSION` 범프를 깜빡핬어도 모바일에 구버전이 남지 않도록 함 |
-| 6 | 그 외 App Shell (아이콘/이미지 등) | **Stale-While-Revalidate** | 빠른 표시 + 백그라운드 갱신 |
+| 5 | `/src/` 하위 JS 모듈 | **Cache First** | ESM import 그래프는 한 모듈이라도 버전이 어긋나면 전체가 드랍됨. `Network First`를 쓰면 모바일 불안정 네트워크에서 일부는 신버전(네트워크), 일부는 구버전(캐시)이 섞여 import 그래프 붕괴. `Cache First` + `SHELL_ASSETS` 프리캐시로 동일 버전 파일만 일관 서빙 (v38부터 적용) |
+| 6 | 그 외 코드 자산 (`*.css` / `*.js`) | **Network First** | 온라인이면 항상 최신 배포본 제공, 오프라인이면 캐시 폴리백. `CACHE_VERSION` 범프를 깜빡핬어도 모바일에 구버전이 남지 않도록 함 |
+| 7 | 그 외 App Shell (아이콘/이미지 등) | **Stale-While-Revalidate** | 빠른 표시 + 백그라운드 갱신 |
 
 ### 캐시 버전 관리
-- `CACHE_VERSION` 상수로 캐시 네임스페이스 관리 (현재 `v38-20260826`)
+- `CACHE_VERSION` 상수로 캐시 네임스페이스 관리 (현재 `v39-20260826-845d245`)
 - **배포 시 버전을 올리면 구 캐시 자동 정리** → 모바일 구버전 고착(Stale Cache) 문제 방지
 - `SHELL_ASSETS`에는 [`src/utils.js`](../src/utils.js), [`src/trainer-calc.js`](../src/trainer-calc.js) 등 분리된 모듈이 모두 프리캐시에 포함됨
 - `data/registry.js`, `data/audio_manifest.js`도 프리캐시에 포함 (2026-08-25, window 전역 참조 방식 전환으로 모듈 그래프에서 분리되어 별도 캐싱 필요)
+
+### 캐시 스큐 방지 설계 (v39, 2026-08-26)
+
+**문제**: Chrome(SW 활성)에서만 앱이 실패하고, WebView(SW 없음)에서는 정상 작동하는 현상.
+
+**근본 원인**: navigation(HTML)에 `Network First`를 적용한 것이 핵심 원인.
+- 구 SW(v38)가 페이지를 제어하는 동안 방문하면:
+  1. `index.html`은 `Network First` → **신버전 HTML** 획득
+  2. `/src/*.js`는 `Cache First` → **구버전 JS** 서빙
+  3. 신버전 HTML + 구버전 JS = **캐시 스큐** → ESM import 그래프 붕괴 → 앱 초기화 실패
+- WebView는 SW가 없으므로 모든 요청이 네트워크 직행 → 신 HTML + 신 JS = 정상 작동
+- PC 설치 PWA는 브라우저 탭이 트리거한 SW 업데이트 완료 후 실행되므로 스큐를 겪지 않음
+
+**해결**:
+1. **navigation을 `Cache First`로 전환**: HTML과 JS가 항상 동일한 `CACHE_VERSION` 캐시에서 서빙 → 세대 내 불일치 원천 차단. 새 SW install + `skipWaiting()` + `controllerchange` 리로드 후 신버전 캐시로 일괄 전환.
+2. **`precacheResilient()` 도입**: `cache.addAll()`의 원자성(all-or-nothing)을 버리고 `Promise.allSettled()` + 개별 `cache.add()`로 변경. `addAll`은 하나라도 404면 전체 reject → `skipWaiting()` 미실행 → `cacheFirst` 환경에서 사용자가 구버전에 영영 갇힘. `allSettled`는 일부 실패해도 SW 활성화 보장, 실패분은 `cacheFirst`의 네트워크 폴백으로 온디맨드 자가 치유.
+3. **`verify-shell-assets.js` CI 검증**: 배포 전 `SHELL_ASSETS`/`DATA_ASSETS`의 모든 파일이 저장소에 존재하는지 확인. `precacheResilient`이 누락을 조용히 넘기므로 CI에서 사전 차단.
+
+**검증 결과** (모바일 Chrome 실기기):
+- `PL=1` (리로드 루프 없음), `CC=1` (SW 교체 1회, 자동 리로드 없음)
+- `init=1325ms` (앱 정상 초기화), `nav=9/11` (메뉴 정상 렌더링)
+- PWA 설치까지 정상 완료
 
 ### 오프라인 감지 설계
 판정은 **억제 우선(suppress-first)** 원칙을 따릅니다 — "실제로 오프라인일 때만" 배너를 띄우고, 모호하면 띄우지 않습니다.
