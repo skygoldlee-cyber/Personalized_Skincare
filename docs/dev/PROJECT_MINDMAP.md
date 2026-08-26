@@ -249,7 +249,7 @@ Cosmetic Pass Master
 
 ## 📎 관련 문서
 
-- [`docs/ARCHITECTURE.md`](ARCHITECTURE.md) — 상세 아키텍처 설계 문서
-- [`CHANGES.md`](../CHANGES.md) — 변경 이력 (Changelog)
-- [`improvements_report.md`](../improvements_report.md) — 개선점 분석 및 구현 보고서
-- [`README.md`](../README.md) — 프로젝트 소개 및 시작 가이드
+- [`ARCHITECTURE.md`](ARCHITECTURE.md) — 상세 아키텍처 설계 문서
+- [`CHANGES.md`](CHANGES.md) — 변경 이력 (Changelog)
+- [`IMPROVEMENTS_REPORT.md`](IMPROVEMENTS_REPORT.md) — 개선점 분석 및 구현 보고서
+- [`README.md`](../../README.md) — 프로젝트 소개 및 시작 가이드

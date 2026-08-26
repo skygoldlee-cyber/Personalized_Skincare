@@ -2,14 +2,14 @@
 /* ============================================================
  * tools/build_doc_bundles.js
  * ------------------------------------------------------------
- * docs/user_manual.md, docs/study_summary.md (앱 내 표시 문서 원본)를
+ * docs/user/user_manual.md, docs/user/study_summary.md (앱 내 표시 문서 원본)를
  * 클래식 <script>로 불러올 수 있는 JS 번들로 굽는다.
  * → file:// 로 index.html을 더블클릭핸들 때 fetch 없이 문서를 열 수 있게 하기 위함.
  *
- * 입력 : docs/user_manual.md, docs/study_summary.md
+ * 입력 : docs/user/user_manual.md, docs/user/study_summary.md
  * 출력 : data/docs_md/<파일명>.js
  *        각 파일은 다음 형태로 전역에 등록한다.
- *          (window.__DOC_MD__ = window.__DOC_MD__ || {})["docs/<파일명>.md"] = "<마크다운>";
+ *          (window.__DOC_MD__ = window.__DOC_MD__ || {})["docs/user/<파일명>.md"] = "<마크다운>";
  *        키는 src/manual-viewer.js 의 MD_SOURCES[].path 와 정확히 일치한다.
  *
  * 사용 : node tools/build_doc_bundles.js
@@ -23,7 +23,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
-const SRC_DIR = path.join(ROOT, 'docs');
+const SRC_DIR = path.join(ROOT, 'docs', 'user');
 const OUT_DIR = path.join(ROOT, 'data', 'docs_md');
 
 // 번들로 구울 문서 목록 (src/manual-viewer.js 의 MD_SOURCES 와 동기화 유지)
@@ -52,12 +52,12 @@ function main() {
         const md = fs.readFileSync(srcPath, 'utf8');
 
         // manual-viewer.js MD_SOURCES[].path 와 정확히 동일한 키 (항상 POSIX 슬래시)
-        const key = 'docs/' + file;
+        const key = 'docs/user/' + file;
 
         // JSON.stringify 로 문자열 리터럴을 안전하게 생성
         const body =
             AUTOGEN_HEADER + '\n' +
-            `// 원본: docs/${file}\n` +
+            `// 원본: docs/user/${file}\n` +
             '(window.__DOC_MD__ = window.__DOC_MD__ || {})[' +
             JSON.stringify(key) + '] = ' + JSON.stringify(md) + ';\n';
 
@@ -78,7 +78,7 @@ function main() {
         console.warn(`  ⚠ 누락된 원본: ${missing.join(', ')}`);
     }
     console.log(`  총 ${generated.length}개, ${(totalBytes / 1024).toFixed(1)} KB`);
-    console.log('  이후 docs/*.md 를 수정하면 이 스크립트를 다시 실행하세요.');
+    console.log('  이후 docs/user/*.md 를 수정하면 이 스크립트를 다시 실행하세요.');
 }
 
 main();

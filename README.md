@@ -148,17 +148,24 @@ Personalized Skincare/
 │   └── dom/                         ← Vitest + jsdom DOM 테스트 (10 tests)
 ├── 📂 .github/workflows/            ← GitHub Actions CI (test + parser parity)
 │
-└── 📂 docs/                         ← 개발 및 배포 관련 설계 가이드
-    ├── ARCHITECTURE.md              ← 아키텍처 및 설계 표준 가이드
-    ├── DEPLOYMENT_GUIDE.md          ← Vercel 배포 및 오디오 호스팅 가이드
-    ├── MULTI_MACHINE_SETUP.md       ← 멀티 머신 개발 환경 설정
-    ├── user_manual.md/.html         ← 사용자 매뉴얼
-    └── study_summary.md/.html       ← 교재 요약본
+└── 📂 docs/                         ← 문서 (개발 + 사용자)
+    ├── README.md                    ← 문서 인덱스
+    ├── dev/                         ← 개발 문서
+    │   ├── ARCHITECTURE.md          ← 아키텍처 및 설계 표준 가이드
+    │   ├── DEPLOYMENT_GUIDE.md      ← Vercel 배포 및 오디오 호스팅 가이드
+    │   ├── MULTI_MACHINE_SETUP.md   ← 멀티 머신 개발 환경 설정
+    │   ├── PROJECT_MINDMAP.md       ← 프로젝트 전체 구조 마인드맵
+    │   ├── CHANGES.md               ← 코드 리뷰 수정 내역
+    │   └── IMPROVEMENTS_REPORT.md   ← 보완 및 개선점 보고서
+    └── user/                        ← 사용자 문서
+        ├── user_manual.md           ← 사용자 매뉴얼 (앱 내 뷰어 연동)
+        └── study_summary.md         ← 핵심 단권화 요약집 (앱 내 뷰어 연동)
 ```
 
 > **범례:** ✅ 배포 포함 · ❌ 배포 제외 · 🆕 최신 모듈러 개편 반영 (2026-08-25)
 
-자세한 설계 컨셉과 상세 아키텍처는 [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)를 참고하세요.
+자세한 설계 컨셉과 상세 아키텍처는 [`docs/dev/ARCHITECTURE.md`](docs/dev/ARCHITECTURE.md)를 참고하세요.
+전체 문서 목록은 [`docs/README.md`](docs/README.md)를 참고하세요.
 
 ---
 
@@ -187,7 +194,7 @@ npm i -g vercel
 vercel --prod
 ```
 
-배포 최적화 및 오디오 호스팅 상세는 [`docs/DEPLOYMENT_GUIDE.md`](docs/DEPLOYMENT_GUIDE.md)를 참고하세요.
+배포 최적화 및 오디오 호스팅 상세는 [`docs/dev/DEPLOYMENT_GUIDE.md`](docs/dev/DEPLOYMENT_GUIDE.md)를 참고하세요.
 
 ### 모바일 접속
 

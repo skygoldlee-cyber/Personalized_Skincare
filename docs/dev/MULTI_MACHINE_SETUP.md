@@ -184,4 +184,4 @@ SSH를 계속 쓰고 싶다면 다음 중 하나를 선택하세요.
 ## 🔗 관련 문서
 
 - [`DEPLOYMENT_GUIDE.md`](DEPLOYMENT_GUIDE.md) — Vercel 배포 전체 가이드 (프로젝트 정보, CSP, 캐시 정책)
-- [`walkthrough.md`](walkthrough.md) — 변경 이력
+- [`CHANGES.md`](CHANGES.md) — 코드 리뷰 수정 이력

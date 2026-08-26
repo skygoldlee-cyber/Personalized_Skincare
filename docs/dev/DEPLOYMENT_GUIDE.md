@@ -46,7 +46,7 @@
 | **GitHub** | SSH 키 (`github-skygold` 별칭) | `~/.ssh/config`에 별칭 정의 필요 |
 | **Vercel CLI** | 글로벌 로그인 (브라우저 OAuth) | `vercel login` 1회 수행 → 토큰 자동 저장 |
 
-> 새 머신 설정이 필요한 경우 [`docs/MULTI_MACHINE_SETUP.md`](MULTI_MACHINE_SETUP.md) 참조.
+> 새 머신 설정이 필요한 경우 [`MULTI_MACHINE_SETUP.md`](MULTI_MACHINE_SETUP.md) 참조.
 
 ### 1-4. 배포 전 빌드 파이프라인
 
@@ -159,7 +159,7 @@ Production:  https://personalized-skincare-study.vercel.app
 
 ### 방법 C: GitHub Actions 자동 배포
 
-`git push`만 하면 GitHub가 자동으로 Vercel 배포를 수행합니다. 설정 방법은 [`docs/MULTI_MACHINE_SETUP.md`](MULTI_MACHINE_SETUP.md)의 "GitHub Actions로 배포 자동화" 섹션을 참조하세요.
+`git push`만 하면 GitHub가 자동으로 Vercel 배포를 수행합니다. 설정 방법은 [`MULTI_MACHINE_SETUP.md`](MULTI_MACHINE_SETUP.md)의 "GitHub Actions로 배포 자동화" 섹션을 참조하세요.
 
 > ⚠️ 수동 배포(방법 A)와 자동 배포(방법 C)를 혼용하면 충돌이 발생할 수 있으므로 하나를 선택하세요.
 
@@ -215,7 +215,7 @@ Production:  https://personalized-skincare-study.vercel.app
 
 ## 4. vercel.json 헤더 및 캐시 정책
 
-[`vercel.json`](../vercel.json)은 CSP 헤더, 보안 헤더, 캐시 정책을 정의합니다.
+[`vercel.json`](../../vercel.json)은 CSP 헤더, 보안 헤더, 캐시 정책을 정의합니다.
 
 ### 4-1. Content-Security-Policy (CSP)
 

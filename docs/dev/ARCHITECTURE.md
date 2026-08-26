@@ -116,9 +116,9 @@
 
 | 파일 | 역할 |
 |------|------|
-| [`index.html`](../index.html) | 단일 HTML 페이지(SPA App Shell). 모든 뷰 섹션이 하나의 문서에 존재하며 JS로 표시 전환 |
-| [`style.css`](../style.css) | 전역 디자인 시스템. CSS 변수 기반 테마, 반응형 미디어 쿼리, 애니메이션 |
-| [`manifest.webmanifest`](../manifest.webmanifest) | PWA 매니페스트 (앱 이름, 아이콘, 테마 색상) |
+| [`index.html`](../../index.html) | 단일 HTML 페이지(SPA App Shell). 모든 뷰 섹션이 하나의 문서에 존재하며 JS로 표시 전환 |
+| [`style.css`](../../style.css) | 전역 디자인 시스템. CSS 변수 기반 테마, 반응형 미디어 쿼리, 애니메이션 |
+| [`manifest.webmanifest`](../../manifest.webmanifest) | PWA 매니페스트 (앱 이름, 아이콘, 테마 색상) |
 
 **SPA 뷰 전환 방식**:
 - 9개의 `<section class="view-section">`이 하나의 HTML에 공존
@@ -129,35 +129,35 @@
 
 | 모듈 | 책임 |
 |------|------|
-| [`src/app.js`](../src/app.js) | **메인 오케스트레이터** (1,285줄). 초기화(`initApp`), SPA 라우팅, 이벤트 바인딩, `startFocusSubjectStudy` 등 뷰 간 브릿지 함수. `populateExamCards()`로 registry 기반 시험 카드 동적 생성 |
-| [`src/charts.js`](../src/charts.js) | SVG 기반 차트 생성 (레이더 차트, 성적 꺾은선 그래프). **인터랙티브 툴팁**(hover/touch) 지원. 외부 차트 라이브러리 미사용 |
-| [`src/scratchpad.js`](../src/scratchpad.js) | HTML5 Canvas 손글씨 연습장 (계산 문제 풀이용) |
-| [`src/trainer-calc.js`](../src/trainer-calc.js) | 계산 훈련 문제 생성기. **순수 로직** — DOM 의존 없이 문제 데이터 객첼만 반환 |
-| [`src/state.js`](../src/state.js) | 전역 상태 객체(`state`) 정의 + localStorage 영속성(`loadProgress`/`saveProgress`). 기본 과목은 `null`이며 `initApp()`에서 registry 첫 과목으로 설정 |
-| [`src/utils.js`](../src/utils.js) | 의존성 없는 범용 헬퍼 (한글 초성 추출 `getChosung()` 등) |
-| [`src/sanitize.js`](../src/sanitize.js) | HTML/XSS 방어 및 텍스트 정제 유틸리티 |
-| [`src/exam-viewer.js`](../src/exam-viewer.js) | 문제집(MD) 런타임 뷰어. `content/exams/*.md` fetch → 자체 MD→HTML 변환 → 인앱 전체화면 오버레이 렌더링. TOC 생성·인쇄·sessionStorage 캐시(24h)·`file://` 번들 폴리백(`data/exams_md/*.js`) 지원. **시험 제목은 registry에서 동적 조회** (하드코딩 없음) |
-| [`src/data-loader.js`](../src/data-loader.js) | 온디맨드 데이터 로더. **교재/카드/퀴즈: `content/*.md` 런타임 fetch+파싱**(http는 라이브 fetch, `file://`은 `data/study_md/` 과목별 분할 폴백, fetch 실패 시 자동 폴백). 시험/성분은 기존 번들 로드 유지. 로드 후 registry stats를 실제 개수로 갱신 |
-| [`src/textbook-parser.js`](../src/textbook-parser.js) | 교재 MD 런타임 파서. `tools/build/plugins/textbook.plugin.js`의 브라우저 포팅으로 카드/퀴즈/챕터를 조립(`buildSubjectData`). 빌드 산출물과 **바이트 단위 동일** 검증됨 |
-| [`src/ui-utils.js`](../src/ui-utils.js) | 공통 UI 유틸리티. 로딩 스피너(`showLoading`/`hideLoading`) 및 글로벌 로딩 오버레이(`showGlobalLoading`/`hideGlobalLoading`) |
-| [`src/sha256.js`](../src/sha256.js) | 순수 동기 SHA-256 + `stableId()`. 빌드타임 Node `crypto`와 동일한 카드/퀴즈 안정 ID를 브라우저에서 재현(진도 보존의 핵심) |
-| [`src/types.js`](../src/types.js) | **순수 JSDoc 타입 선언 모듈** (런타임 코드 없음). `State`, `Card`, `SubjectMeta` 등 `@typedef` 정의. `jsconfig.json` checkJs로 편집기 타입 검사/자동완성 활성화 |
-| [`src/reader-format.js`](../src/reader-format.js) | 교재 리더 콘텐츠 포맷터 (MD 섹션 → HTML 변환) |
-| [`src/concept-map.js`](../src/concept-map.js) | **순수 SVG 인터랙티브 개념 맵 생성기** (CSP-safe, 의존성 없음). 교재 리더 상단에 섹션 구조를 마인드맵으로 시각화. 데스크톱 좌/우 수평 레이아웃 + 모바일 세로 트리 레이아웃 자동 전환, 노드 클릭 시 해당 섹션으로 스크롤, 기출/중요 마커 하이라이트 |
-| [`src/views/navigation.js`](../src/views/navigation.js) | 뷰 전환 유틸리티 (`switchView`). 순환 import 해결용 별도 모듈 |
-| [`src/views/`](../src/views/) | **뷰 컨트롤러 모듈 디렉터리** (app.js에서 분리 추출). `dashboard.js`, `flashcard.js`, `quiz.js`, `trainer.js`, `dictionary.js`, `backup.js`, `textbook-search.js`, `textbook-reader.js`(**Media Session API 연동**), `exam-simulator.js`(**오답 복습 연동**) |
+| [`src/app.js`](../../src/app.js) | **메인 오케스트레이터** (1,285줄). 초기화(`initApp`), SPA 라우팅, 이벤트 바인딩, `startFocusSubjectStudy` 등 뷰 간 브릿지 함수. `populateExamCards()`로 registry 기반 시험 카드 동적 생성 |
+| [`src/charts.js`](../../src/charts.js) | SVG 기반 차트 생성 (레이더 차트, 성적 꺾은선 그래프). **인터랙티브 툴팁**(hover/touch) 지원. 외부 차트 라이브러리 미사용 |
+| [`src/scratchpad.js`](../../src/scratchpad.js) | HTML5 Canvas 손글씨 연습장 (계산 문제 풀이용) |
+| [`src/trainer-calc.js`](../../src/trainer-calc.js) | 계산 훈련 문제 생성기. **순수 로직** — DOM 의존 없이 문제 데이터 객첼만 반환 |
+| [`src/state.js`](../../src/state.js) | 전역 상태 객체(`state`) 정의 + localStorage 영속성(`loadProgress`/`saveProgress`). 기본 과목은 `null`이며 `initApp()`에서 registry 첫 과목으로 설정 |
+| [`src/utils.js`](../../src/utils.js) | 의존성 없는 범용 헬퍼 (한글 초성 추출 `getChosung()` 등) |
+| [`src/sanitize.js`](../../src/sanitize.js) | HTML/XSS 방어 및 텍스트 정제 유틸리티 |
+| [`src/exam-viewer.js`](../../src/exam-viewer.js) | 문제집(MD) 런타임 뷰어. `content/exams/*.md` fetch → 자체 MD→HTML 변환 → 인앱 전체화면 오버레이 렌더링. TOC 생성·인쇄·sessionStorage 캐시(24h)·`file://` 번들 폴리백(`data/exams_md/*.js`) 지원. **시험 제목은 registry에서 동적 조회** (하드코딩 없음) |
+| [`src/data-loader.js`](../../src/data-loader.js) | 온디맨드 데이터 로더. **교재/카드/퀴즈: `content/*.md` 런타임 fetch+파싱**(http는 라이브 fetch, `file://`은 `data/study_md/` 과목별 분할 폴백, fetch 실패 시 자동 폴백). 시험/성분은 기존 번들 로드 유지. 로드 후 registry stats를 실제 개수로 갱신 |
+| [`src/textbook-parser.js`](../../src/textbook-parser.js) | 교재 MD 런타임 파서. `tools/build/plugins/textbook.plugin.js`의 브라우저 포팅으로 카드/퀴즈/챕터를 조립(`buildSubjectData`). 빌드 산출물과 **바이트 단위 동일** 검증됨 |
+| [`src/ui-utils.js`](../../src/ui-utils.js) | 공통 UI 유틸리티. 로딩 스피너(`showLoading`/`hideLoading`) 및 글로벌 로딩 오버레이(`showGlobalLoading`/`hideGlobalLoading`) |
+| [`src/sha256.js`](../../src/sha256.js) | 순수 동기 SHA-256 + `stableId()`. 빌드타임 Node `crypto`와 동일한 카드/퀴즈 안정 ID를 브라우저에서 재현(진도 보존의 핵심) |
+| [`src/types.js`](../../src/types.js) | **순수 JSDoc 타입 선언 모듈** (런타임 코드 없음). `State`, `Card`, `SubjectMeta` 등 `@typedef` 정의. `jsconfig.json` checkJs로 편집기 타입 검사/자동완성 활성화 |
+| [`src/reader-format.js`](../../src/reader-format.js) | 교재 리더 콘텐츠 포맷터 (MD 섹션 → HTML 변환) |
+| [`src/concept-map.js`](../../src/concept-map.js) | **순수 SVG 인터랙티브 개념 맵 생성기** (CSP-safe, 의존성 없음). 교재 리더 상단에 섹션 구조를 마인드맵으로 시각화. 데스크톱 좌/우 수평 레이아웃 + 모바일 세로 트리 레이아웃 자동 전환, 노드 클릭 시 해당 섹션으로 스크롤, 기출/중요 마커 하이라이트 |
+| [`src/views/navigation.js`](../../src/views/navigation.js) | 뷰 전환 유틸리티 (`switchView`). 순환 import 해결용 별도 모듈 |
+| [`src/views/`](../../src/views/) | **뷰 컨트롤러 모듈 디렉터리** (app.js에서 분리 추출). `dashboard.js`, `flashcard.js`, `quiz.js`, `trainer.js`, `dictionary.js`, `backup.js`, `textbook-search.js`, `textbook-reader.js`(**Media Session API 연동**), `exam-simulator.js`(**오답 복습 연동**) |
 
 ### 3. Data Layer (데이터 계층)
 
 | 파일 | 내용 | 생성 주체 |
 |------|------|-----------|
-| [`data/registry.js`](../data/registry.js) | 시험/성분 번들 목록·메타 + 과목 목록/통계 + 추천 링크. **과목 `shortName`**, 시험 **`file`**, **`resources`** 필드 포함 → 소스 코드 하드코딩 제거 | `tools/build/index.js` |
-| [`content/**/*.md`](../content/) + [`content/manifest.json`](../content/manifest.json) | **교재/카드/퀴즈/시험/추천링크의 원본 (SSOT).** `manifest.json`에 과목 `shortName`, 시험 `file`, `resources`(추천 링크·채널 요약) 등 메타 포함 → 소스 코드 하드코딩 없이 전체 콘텐츠 교체 가능 | 저자 직접 작성 |
-| [`data/study_md/`](../data/study_md/) | 교재 MD `file://` 폴백 번들 (**과목별 분할**: manifest.js + 과목별 `.js`). http에선 미사용. 과목 로드 시 해당 파일만 온디맨드 로드 | `tools/build_study_md_bundle.js` |
-| [`data/exams/<key>.<hash>.js`](../data/exams/) | 시험별 문항 번들 | `tools/build/index.js` (exams plugin) |
-| [`data/ingredients_data.<hash>.js`](../data/) | 화장품 성분 사전 (가용/금지/제한) | `tools/build/index.js` (ingredients plugin) |
-| [`data/id_migration.js`](../data/id_migration.js) | 레거시 ID → 안정 ID 일회성 매핑 | `tools/build/index.js` (id-factory) |
-| [`data/audio_manifest.js`](../data/audio_manifest.js) | 오디오 파일 경로 매니페스트 | 오디오북 파이프라인 |
+| [`data/registry.js`](../../data/registry.js) | 시험/성분 번들 목록·메타 + 과목 목록/통계 + 추천 링크. **과목 `shortName`**, 시험 **`file`**, **`resources`** 필드 포함 → 소스 코드 하드코딩 제거 | `tools/build/index.js` |
+| [`content/**/*.md`](../../content/) + [`content/manifest.json`](../../content/manifest.json) | **교재/카드/퀴즈/시험/추천링크의 원본 (SSOT).** `manifest.json`에 과목 `shortName`, 시험 `file`, `resources`(추천 링크·채널 요약) 등 메타 포함 → 소스 코드 하드코딩 없이 전체 콘텐츠 교체 가능 | 저자 직접 작성 |
+| [`data/study_md/`](../../data/study_md/) | 교재 MD `file://` 폴백 번들 (**과목별 분할**: manifest.js + 과목별 `.js`). http에선 미사용. 과목 로드 시 해당 파일만 온디맨드 로드 | `tools/build_study_md_bundle.js` |
+| [`data/exams/<key>.<hash>.js`](../../data/exams/) | 시험별 문항 번들 | `tools/build/index.js` (exams plugin) |
+| [`data/ingredients_data.<hash>.js`](../../data/) | 화장품 성분 사전 (가용/금지/제한) | `tools/build/index.js` (ingredients plugin) |
+| [`data/id_migration.js`](../../data/id_migration.js) | 레거시 ID → 안정 ID 일회성 매핑 | `tools/build/index.js` (id-factory) |
+| [`data/audio_manifest.js`](../../data/audio_manifest.js) | 오디오 파일 경로 매니페스트 | 오디오북 파이프라인 |
 
 > ⚠️ `data/subjects/<key>.<hash>.js`(과목 학습 번들)는 **2026-08-24부터 런타임 MD 파싱으로 대체·제거**되었다. `npm run build:data`가 재생성하더라도 앱은 로드하지 않으며 배포에서도 제외(`.vercelignore`)된다.
 
@@ -174,7 +174,7 @@
 
 ### 스크립트 로드 순서 (의존성 그래프)
 
-[`index.html`](../index.html)의 로드 순서는 **의존성 방향**을 반영합니다 (하향식):
+[`index.html`](../../index.html)의 로드 순서는 **의존성 방향**을 반영합니다 (하향식):
 
 ```
 <head> (페인트 전 — FOUC 방지)
@@ -216,8 +216,6 @@ types.js (JSDoc 타입 정의)        views/dictionary.js (성분 검색)
 ```
 
 > `app.js`에 남은 함수: `startFocusSubjectStudy`(뷰 간 브릿지), `switchView`, 초기화/네비게이션/이벤트 바인딩. `examIdToSubjectId`는 `exam-simulator.js`에서 정의 후 `app.js`를 통해 re-export되어 `quiz.js`가 import.
-
-> 상세 분해 로드맵은 [`docs/APP_JS_DECOMPOSITION.md`](APP_JS_DECOMPOSITION.md) 참고.
 
 ---
 
@@ -274,7 +272,7 @@ DOMContentLoaded
 
 ### 단일 전역 상태 객체 (Single Global State)
 
-[`src/state.js`](../src/state.js)의 `state` 객체가 **단일 진실 공급원(Single Source of Truth)** 역할을 합니다.
+[`src/state.js`](../../src/state.js)의 `state` 객체가 **단일 진실 공급원(Single Source of Truth)** 역할을 합니다.
 
 ```javascript
 const state = {
@@ -313,9 +311,9 @@ const state = {
 
 | 구성 요소 | 위치 | 역할 |
 |-----------|------|------|
-| **FOUC 방지 스크립트** | [`index.html`](../index.html) `<head>` 인라인 | 페인트 전에 `localStorage('appTheme')` 또는 `prefers-color-scheme`을 읽어 `<html>.light-theme` 클래스와 `<meta name="theme-color">`를 즉시 적용 → 테마 깜빡임(FOUC) 제거 |
-| **전역 테마 API** | [`index.html`](../index.html) 하단 인라인 | `window.AppTheme = { isLight, apply, toggle }` 노출. 테마 변경 시 `localStorage` 저장 + `themechange` 커스텀 이벤트 브로드캐스트 |
-| **CSS 변수 오버라이드** | [`style.css`](../style.css) `.light-theme` | `:root`(다크, 기본값)의 디자인 토큰을 라이트 팔레트로 재정의. `.light-theme` 하위 선택자에서만 라이트 전용 보정 규칙 추가 |
+| **FOUC 방지 스크립트** | [`index.html`](../../index.html) `<head>` 인라인 | 페인트 전에 `localStorage('appTheme')` 또는 `prefers-color-scheme`을 읽어 `<html>.light-theme` 클래스와 `<meta name="theme-color">`를 즉시 적용 → 테마 깜빡임(FOUC) 제거 |
+| **전역 테마 API** | [`index.html`](../../index.html) 하단 인라인 | `window.AppTheme = { isLight, apply, toggle }` 노출. 테마 변경 시 `localStorage` 저장 + `themechange` 커스텀 이벤트 브로드캐스트 |
+| **CSS 변수 오버라이드** | [`style.css`](../../style.css) `.light-theme` | `:root`(다크, 기본값)의 디자인 토큰을 라이트 팔레트로 재정의. `.light-theme` 하위 선택자에서만 라이트 전용 보정 규칙 추가 |
 | **헤더 토글 버튼** | `#theme-toggle-btn` | 데스크톱 헤더에서 테마 전환 (해/달 아이콘) |
 | **모바일 탭 토글** | `#mobile-theme-toggle` | 모바일 하단 탭 바의 "테마" 탭에서 전환 |
 
@@ -331,14 +329,14 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 ### 모듈 간 테마 동기화
 
 - 테마 변경 시 `document.dispatchEvent(new CustomEvent('themechange'))`로 브로드캐스트
-- 교재 리더([`src/app.js`](../src/app.js) `applyReaderThemeClass()`)는 `themechange` 이벤트를 구독하여 `.reader-light-theme` 클래스를 즉시 동기화
+- 교재 리더([`src/app.js`](../../src/app.js) `applyReaderThemeClass()`)는 `themechange` 이벤트를 구독하여 `.reader-light-theme` 클래스를 즉시 동기화
 - **설계 결정**: 과거 리더 전용 `readerLightTheme` 로컬 상태를 제거하고 전역 테마로 통합 → 두 테마가 어긋나는 버그 원천 차단
 
 ---
 
 ## 📴 PWA & 오프라인 전략
 
-### Service Worker 캐시 계층 ([`sw.js`](../sw.js))
+### Service Worker 캐시 계층 ([`sw.js`](../../sw.js))
 
 리소스 특성별로 **7단계 분기 전략**을 적용합니다.
 
@@ -346,7 +344,7 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 |:---:|------|------|------|
 | 1 | 네비게이션 (`navigate`) | **Cache First** | HTML과 JS 모듈이 항상 동일한 `CACHE_VERSION` 캐시에서 서빙되도록 보장. `Network First`를 쓰면 구 SW가 신버전 HTML(네트워크) + 구버전 JS(캐시)를 섞어 반환하여 ESM import 그래프가 붕괴하는 **캐시 스큐** 발생 (v39 수정, 상세 후술) |
 | 2 | 시험/성분 데이터 번들 (`data/exams/*.hash.js`, `data/ingredients_data.*.js`) · 교재 원본 (`content/*.md`) | **Cache First** | 해시 파일명/정적 MD로 자연 갱신, 오프라인 학습 핵심. 교재 MD는 최초 fetch 시 캐시됨 |
-| 3 | 외부 CDN (Google Fonts) | **Stale-While-Revalidate** | 외부 리소스 안정성 확보. FontAwesome은 2026-08-24부터 자체 호스팅([`vendor/fontawesome/`](../vendor/fontawesome/))으로 전환하여 CDN 의존 제거, App Shell 프리캐시에 포함 |
+| 3 | 외부 CDN (Google Fonts) | **Stale-While-Revalidate** | 외부 리소스 안정성 확보. FontAwesome은 2026-08-24부터 자체 호스팅([`vendor/fontawesome/`](../../vendor/fontawesome/))으로 전환하여 CDN 의존 제거, App Shell 프리캐시에 포함 |
 | 4 | MP3 오디오 (302MB) | **네트워크 직행 (바이패스)** | 대용량 미디어는 캐시 제외 (저장공간 보호) |
 | 5 | `/src/` 하위 JS 모듈 | **Cache First** | ESM import 그래프는 한 모듈이라도 버전이 어긋나면 전체가 드랍됨. `Network First`를 쓰면 모바일 불안정 네트워크에서 일부는 신버전(네트워크), 일부는 구버전(캐시)이 섞여 import 그래프 붕괴. `Cache First` + `SHELL_ASSETS` 프리캐시로 동일 버전 파일만 일관 서빙 (v38부터 적용) |
 | 6 | CSS (`*.css`) | **Cache First** | 배포 전환 순간 "구버전 HTML(cacheFirst) + 신버전 CSS(networkFirst)" 혼합으로 화면 깨짐 방지. `/src/` JS와 동일 사유로 `cacheFirst` + `SHELL_ASSETS` 프리캐시로 세대 일관성 확보 (2026-08-26 수정) |
@@ -357,7 +355,7 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 - `CACHE_VERSION` 상수로 캐시 네임스페이스 관리 (현재 `v39-20260826-22db641`)
 - **빌드 타임 자동 치환**: `tools/build/stamp-sw-version.js`가 빌드 완료 시 `CACHE_VERSION`을 `${prefix}-${YYYYMMDD}-${gitShort}` 형태로 자동 갱신 → 수동 관리 불필요
 - **배포 시 버전을 올리면 구 캐시 자동 정리** → 모바일 구버전 고착(Stale Cache) 문제 방지
-- `SHELL_ASSETS`에는 [`src/utils.js`](../src/utils.js), [`src/trainer-calc.js`](../src/trainer-calc.js) 등 분리된 모듈이 모두 프리캐시에 포함됨
+- `SHELL_ASSETS`에는 [`src/utils.js`](../../src/utils.js), [`src/trainer-calc.js`](../../src/trainer-calc.js) 등 분리된 모듈이 모두 프리캐시에 포함됨
 - `data/registry.js`, `data/audio_manifest.js`도 프리캐시에 포함 (2026-08-25, window 전역 참조 방식 전환으로 모듈 그래프에서 분리되어 별도 캐싱 필요)
 
 ### 캐시 스큐 방지 설계 (v39, 2026-08-26)
@@ -391,7 +389,7 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 - **2차 게이트 — 실제 도달 프로브**: `onLine === false`일 때만 **same-origin** `./ping.txt?_probe={timestamp}` fetch 수행.
   - 과거 `www.gstatic.com/generate_204`(제3자, 지역 차단 시 오탐) → `manifest.webmanifest`를 거쳐 전용 `ping.txt`(내용 `1`)로 정착.
   - `cache: 'no-store'`는 일부 웹뷰/보안정책과 충돌해 fetch 자체가 실패하는 사례가 있어 제거하고, **쿼리스트링 타임스탬프로만 캐시를 우회**합니다.
-  - `?_probe=` 요청은 Service Worker가 `event.respondWith(fetch(request))`로 **직접 네트워크에 프록시**하여 반환합니다 ([sw.js](../sw.js)). 단순 `return`(바이패스)로 두면 WebKit standalone 샌드박스가 `respondWith` 없는 fetch를 차단해 프로브가 항상 실패하는 문제가 있어 v12에서 변경되었습니다. 캐시 저장은 하지 않으므로 캐시 오염은 발생하지 않습니다.
+  - `?_probe=` 요청은 Service Worker가 `event.respondWith(fetch(request))`로 **직접 네트워크에 프록시**하여 반환합니다 ([sw.js](../../sw.js)). 단순 `return`(바이패스)로 두면 WebKit standalone 샌드박스가 `respondWith` 없는 fetch를 차단해 프로브가 항상 실패하는 문제가 있어 v12에서 변경되었습니다. 캐시 저장은 하지 않으므로 캐시 오염은 발생하지 않습니다.
 - **3중 오탐 방지 (standalone 감지 + 연속 실패 임계 + 타임아웃 + 슬립 유예)** (v13):
   - **Standalone 감지**: `display-mode: standalone` 미디어쿼리 + iOS `navigator.standalone`으로 설치형 PWA 여부를 판별. 설치형은 `onLine === false` 오탐 빈도가 높아 판정을 더 보수적으로 합니다.
   - `FAIL_THRESHOLD = isStandalone ? 4 : 3`: 프로브가 **연속 3회(일반)/4회(standalone)** 실패해야 오프라인 확정(미확정 시 2.5초 후 재시도).
@@ -405,11 +403,11 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 
 | 구성 요소 | 위치 | 역할 |
 |-----------|------|------|
-| **조기 캡처 스크립트** | [`src/pwa-install-capture.js`](../src/pwa-install-capture.js) `<head>` 클래식 스크립트 | `beforeinstallprompt` 이벤트를 최대한 빨리 캡처하여 `window.__deferredPrompt`에 저장. 동시에 SW를 조기 등록하여 Android Chrome이 PWA 설치 가능 판정을 내릴 수 있도록 함 |
+| **조기 캡처 스크립트** | [`src/pwa-install-capture.js`](../../src/pwa-install-capture.js) `<head>` 클래식 스크립트 | `beforeinstallprompt` 이벤트를 최대한 빨리 캡처하여 `window.__deferredPrompt`에 저장. 동시에 SW를 조기 등록하여 Android Chrome이 PWA 설치 가능 판정을 내릴 수 있도록 함 |
 | **설치 버튼 UI** | `#pwa-install-btn` (`index.html`) | `beforeinstallprompt` 캡처 시 표시. 클릭 시 `deferredPrompt.prompt()` 호출 |
 | **설치 안내 모달** | `#pwa-install-modal` (`index.html`) | `deferredPrompt`가 null일 때 플랫폼별 수동 설치 안내 (Android/iOS/generic/inapp 분기) |
 | **진단 패널** | `#pwa-diagnostics` (`index.html`) | `beforeinstallprompt` 미발생 시 원인 진단 정보 화면 표시 (SW 상태, display-mode, manifest 검증 등) |
-| **인앱 브라우저 감지** | `detectPlatform()` ([`src/app.js`](../src/app.js)) | UA 기반 WebView/인앱 브라우저 감지 (`wv)` 플래그, KakaoTalk, Instagram, Facebook, LINE, Twitter, Snapchat). 감지 시 "Chrome으로 열기" 안내 모달 자동 표시 |
+| **인앱 브라우저 감지** | `detectPlatform()` ([`src/app.js`](../../src/app.js)) | UA 기반 WebView/인앱 브라우저 감지 (`wv)` 플래그, KakaoTalk, Instagram, Facebook, LINE, Twitter, Snapchat). 감지 시 "Chrome으로 열기" 안내 모달 자동 표시 |
 
 **설계 결정사항**:
 - SW 등록을 `app.js`(deferred module)가 아닌 `pwa-install-capture.js`(클래직 스크립트, `<head>`)에서 수행 → Android Chrome이 SW 활성화 상태를 빨리 인식하여 `beforeinstallprompt` 발생 조건 충족
@@ -602,7 +600,7 @@ app-fallback.js 폴링 시작 (400ms 간격, 15s 데드라인)
 
 본 프로젝트는 사용자 입력이 교재 검색, 백업 복원, 캔버스 등 다양한 경로로 유입되므로 다음 방어 계층을 둡니다.
 
-### 1. XSS 방어 ([`src/sanitize.js`](../src/sanitize.js))
+### 1. XSS 방어 ([`src/sanitize.js`](../../src/sanitize.js))
 - 사용자 데이터를 DOM에 삽입할 때 텍스트 정제(sanitize) 적용
 - 신뢰할 수 있는 코드 생성 HTML(숫자 + `<strong>` 등)만 `innerHTML` 허용, raw 사용자 입력은 이스케이프
 
@@ -637,7 +635,7 @@ content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.j
 - **온디맨드 로딩**: `src/data-loader.js`가 필요한 과목/시험만 로드하고, 로드 후 registry stats를 실제 개수로 갱신
 - **해시 파일명(시험/성분)**: 번들 내용이 바뀌면 파일명도 바뀌어 캐시 무효화가 자연스럽게 이루어짐
 
-**오디오북 파이프라인** ([`content/audiobook/`](../content/audiobook/README.md))은 Python 기반 별도 파이프라인으로, MD 청크 분할 → TTS → MP3 병합을 수행합니다.
+**오디오북 파이프라인** ([`content/audiobook/`](../../content/audiobook/README.md))은 Python 기반 별도 파이프라인으로, MD 청크 분할 → TTS → MP3 병합을 수행합니다.
 
 ### 🔑 안정적 ID 체계 (Stable ID)
 
@@ -741,7 +739,7 @@ content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.j
 
 ## 📎 관련 문서
 
-- [`README.md`](../README.md) — 프로젝트 소개 및 시작 가이드 (폴더 구조 포함)
-- [`docs/DEPLOYMENT_GUIDE.md`](DEPLOYMENT_GUIDE.md) — Vercel 배포 및 오디오 호스팅 가이드
-- [`CHANGES.md`](../CHANGES.md) — 코드 리뷰 및 아키텍처 개편 수정 이력 (Changelog)
-- [`improvements_report.md`](../improvements_report.md) — 개선점 분석 및 구현 완료 보고서 (13항목 전부 ✅)
+- [`README.md`](../../README.md) — 프로젝트 소개 및 시작 가이드 (폴더 구조 포함)
+- [`DEPLOYMENT_GUIDE.md`](DEPLOYMENT_GUIDE.md) — Vercel 배포 및 오디오 호스팅 가이드
+- [`CHANGES.md`](CHANGES.md) — 코드 리뷰 및 아키텍처 개편 수정 이력 (Changelog)
+- [`IMPROVEMENTS_REPORT.md`](IMPROVEMENTS_REPORT.md) — 개선점 분석 및 구현 완료 보고서 (13항목 전부 ✅)
