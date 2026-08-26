@@ -20,5 +20,8 @@ jobs:
       - name: Run unit tests
         run: npm test
 
+      - name: Verify SW precache assets
+        run: npm run verify:assets
+
       - name: Run parser parity check
-        run: npm run test:integration
+        run: npm run check:parser

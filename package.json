@@ -12,6 +12,7 @@
     "postbuild:data": "npm run check:parser",
     "check:parser": "node tools/check_parser_parity.js",
     "stamp:sw": "node tools/build/stamp-sw-version.js",
+    "verify:assets": "node tools/verify-shell-assets.js",
     "build:study-md": "node tools/build_study_md_bundle.js",
     "test": "node --test tests/unit/*.test.js",
     "test:unit": "node --test tests/unit/*.test.js",

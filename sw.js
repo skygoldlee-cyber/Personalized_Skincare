@@ -121,11 +121,42 @@ const CDN_HOSTS = [
 /* ------------------------------------------------------------
  * install: App Shell + 데이터 프리캐시
  * ---------------------------------------------------------- */
+/**
+ * addAll 의 원자성(all-or-nothing)을 버리고 자산을 개별 캐싱한다.
+ * addAll 은 목록 중 하나만 404 여도 전체가 reject 되는데, 그러면 install 의
+ * skipWaiting() 이 실행되지 않아 새 SW 가 영영 활성화되지 못한다. navigation 이
+ * cacheFirst 인 구조에서는 그 결과 사용자가 구버전 셸에 '자동 갱신 없이' 갇힌다
+ * (networkFirst 였을 때보다 오히려 나쁜 실패 모드).
+ * 개별 add 를 allSettled 로 처리하면 일부가 실패해도 새 세대는 반드시 활성화되고,
+ * 실패분은 cacheFirst 의 네트워크 폴백으로 온디맨드 자가 치유된다(온라인 한정).
+ * @returns {Promise<string[]>} 실패한 자산 목록
+ */
+async function precacheResilient(cacheName, assets) {
+  const cache = await caches.open(cacheName);
+  const results = await Promise.allSettled(
+    assets.map((asset) => cache.add(asset))
+  );
+  const failed = [];
+  results.forEach((r, i) => {
+    if (r.status === 'rejected') failed.push(assets[i]);
+  });
+  if (failed.length) {
+    console.warn(
+      `[SW] 프리캐시 일부 실패 (${failed.length}/${assets.length}) — ` +
+        '새 SW 는 정상 활성화됨, 실패분은 온디맨드 캐싱으로 폴백:',
+      failed
+    );
+  }
+  return failed;
+}
+
 self.addEventListener('install', (event) => {
+  // 프리캐시는 관용적(resilient)으로 수행한다 — 이유는 precacheResilient 주석 참고.
+  // 개별 실패를 허용하되 skipWaiting 은 절대 건너뛰지 않아 업데이트 경로가 브릭되지 않는다.
   event.waitUntil(
     Promise.all([
-      caches.open(SHELL_CACHE).then((cache) => cache.addAll(SHELL_ASSETS)),
-      caches.open(DATA_CACHE).then((cache) => cache.addAll(DATA_ASSETS))
+      precacheResilient(SHELL_CACHE, SHELL_ASSETS),
+      precacheResilient(DATA_CACHE, DATA_ASSETS)
     ]).then(() => self.skipWaiting())
   );
 });
@@ -216,11 +247,14 @@ self.addEventListener('fetch', (event) => {
   // 3) 동일 출처 요청만 처리 (그 외 cross-origin은 네트워크 직행)
   if (url.origin !== self.location.origin) return;
 
-  // 3-1) 페이지 네비게이션(HTML 문서) → Network First
-  // (배포 직후 구버전 HTML이 SW 캐시에서 제공되는 것을 방지.
-  //  온라인이면 항상 최신 HTML, 오프라인이면 캐시 폴리백)
+  // 3-1) 페이지 네비게이션(HTML 문서) → Cache First (캐시 스큐 방지)
+  // HTML을 Network First로 서빙하면, 구 SW가 신버전 HTML(네트워크) + 구버전 JS(캐시)를
+  // 섞어서 반환하여 ESM import 그래프가 붕괴하는 캐시 스큐가 발생한다.
+  // Cache First로 변경하면 HTML과 JS가 항상 동일한 CACHE_VERSION 캐시에서 서빙되어
+  // 세대 내 불일치가 원천 차단된다. 새 SW install + skipWaiting + controllerchange 리로드 후
+  // 신버전 캐시로 일괄 전환되므로 업데이트 지연은 최대 1 page load 분량이다.
   if (request.mode === 'navigate') {
-    event.respondWith(networkFirst(request, SHELL_CACHE));
+    event.respondWith(cacheFirst(request, SHELL_CACHE));
     return;
   }
 
