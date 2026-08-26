@@ -70,19 +70,13 @@ export const ExamViewer = (() => {
        파일 경로 → 제목
        ========================================================= */
     function _titleFromPath(mdPath) {
-        const filename = mdPath.split('/').pop().replace('.md', '');
-        const map = {
-            'subject1_100_questions': '제1과목: 화장품법의 이해 실전 예상 100제',
-            'subject2_100_questions': '제2과목: 화장품 제조 및 품질관리 실전 예상 100제 (1부)',
-            'subject2_part2_100': '제2과목: 화장품 제조 및 품질관리 실전 예상 100제 (2부)',
-            'subject2_part3_100': '제2과목: 화장품 제조 및 품질관리 실전 예상 100제 (3부)',
-            'subject3_100_questions': '제3과목: 유통화장품 안전관리 실전 예상 100제 (1부)',
-            'subject3_part2_100': '제3과목: 유통화장품 안전관리 실전 예상 100제 (2부)',
-            'subject4_100_questions': '제4과목: 맞춤형화장품의 이해 실전 예상 100제 (1부)',
-            'subject4_part2_100': '제4과목: 맞춤형화장품의 이해 실전 예상 100제 (2부)',
-            'subject4_part3_100': '제4과목: 맞춤형화장품의 이해 실전 예상 100제 (3부)'
-        };
-        return map[filename] || filename.replace(/_/g, ' ');
+        const filename = mdPath.split('/').pop();
+        const registry = (typeof window !== 'undefined' && window.DATA_REGISTRY) || null;
+        if (registry && Array.isArray(registry.exams)) {
+            const exam = registry.exams.find(e => e.file === filename);
+            if (exam && exam.title) return exam.title;
+        }
+        return filename.replace(/\.md$/i, '').replace(/_/g, ' ');
     }
 
     /* =========================================================

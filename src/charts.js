@@ -207,12 +207,11 @@ export function aggregateSubjectRates(history) {
                 const rate = r.subjectRates[subj];
                 if (rate !== null && rate !== undefined) {
                     let key = subj;
+                    // legacy subjectN 형식 → registry에서 매핑
                     if (subj.startsWith('subject')) {
-                        const idx = parseInt(subj.replace('subject', ''), 10) - 1;
-                        const targetSub = subjects[idx];
-                        if (targetSub) {
-                            key = targetSub.key;
-                        }
+                        const exams = (window.DATA_REGISTRY && window.DATA_REGISTRY.exams) || [];
+                        const exam = exams.find(e => e.key === subj || e.key.startsWith(subj));
+                        if (exam) key = exam.subject;
                     }
                     if (subjectRates[key]) {
                         subjectRates[key].push(rate);
@@ -220,16 +219,11 @@ export function aggregateSubjectRates(history) {
                 }
             });
         } else {
-            // 구버전 이력의 examId가 subject1_100_questions 등인 경우 하향 호환 처리
-            const baseId = (r.examId || '').split('_')[0]; // 'subject1' 등
-            if (baseId.startsWith('subject')) {
-                const idx = parseInt(baseId.replace('subject', ''), 10) - 1;
-                const targetSub = subjects[idx];
-                if (targetSub && subjectRates[targetSub.key]) {
-                    subjectRates[targetSub.key].push(r.rate);
-                }
-            } else if (subjectRates[baseId]) {
-                subjectRates[baseId].push(r.rate);
+            // 구버전 이력의 examId로 과목 매핑
+            const exams = (window.DATA_REGISTRY && window.DATA_REGISTRY.exams) || [];
+            const exam = exams.find(e => e.key === r.examId || (r.examId && r.examId.startsWith(e.key)));
+            if (exam && subjectRates[exam.subject]) {
+                subjectRates[exam.subject].push(r.rate);
             }
         }
     });

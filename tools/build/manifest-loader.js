@@ -67,7 +67,7 @@ function loadAndValidateManifest(manifestPath, workspaceDir) {
     }
 
     // Check file existence
-    const filePath = path.join(workspaceDir, 'exams', exam.file);
+    const filePath = path.join(workspaceDir, 'content', 'exams', exam.file);
     if (!fs.existsSync(filePath)) {
       throw new Error(`${prefix}: File does not exist at: ${filePath}`);
     }

@@ -186,7 +186,7 @@ function populateSubjectSelects() {
             <button class="btn btn-secondary filter-btn active" data-filter="all" data-click="setReviewFilter" data-arg="all" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; border-radius: 4px; background: var(--color-primary); border-color: var(--color-primary); color: #fff;">전체</button>
         `;
         subjects.forEach((subj, idx) => {
-            const shortName = subj.name.replace('의 이해', '').replace(' 및 품질관리', '').replace('유통화장품 ', '');
+            const shortName = subj.shortName || subj.name;
             const btn = document.createElement('button');
             btn.className = 'btn btn-secondary filter-btn';
             btn.setAttribute('data-filter', subj.key);
@@ -205,7 +205,7 @@ function populateSubjectSelects() {
             <button class="btn btn-secondary active-filter" data-filter="all" data-click="setTextbookFilter" data-arg="all">전체 과목</button>
         `;
         subjects.forEach((subj, idx) => {
-            const shortName = subj.name.replace('의 이해', '').replace(' 및 품질관리', '').replace('유통화장품 ', '');
+            const shortName = subj.shortName || subj.name;
             const btn = document.createElement('button');
             btn.className = 'btn btn-secondary';
             btn.setAttribute('data-filter', subj.key);
@@ -217,12 +217,66 @@ function populateSubjectSelects() {
     }
 }
 
+const EXAM_BADGE_COLORS = ['badge-cyan', 'badge-violet', 'badge-emerald', 'badge-amber', 'badge-rose', 'badge-indigo'];
+
+function populateExamCards() {
+    const container = document.getElementById('exam-cards-dynamic');
+    if (!container) return;
+    const registry = (typeof DataLoader !== 'undefined' && DataLoader.registry) ? DataLoader.registry : null;
+    if (!registry || !registry.subjects || !registry.exams) return;
+
+    const subjects = registry.subjects;
+    const exams = registry.exams;
+    const badgeColors = {};
+    subjects.forEach((sub, idx) => {
+        badgeColors[sub.key] = EXAM_BADGE_COLORS[idx % EXAM_BADGE_COLORS.length];
+    });
+
+    container.innerHTML = '';
+    subjects.forEach((subj, idx) => {
+        const subjExams = exams.filter(e => e.subject === subj.key);
+        if (subjExams.length === 0) return;
+
+        const totalQuestions = subjExams.reduce((sum, e) => sum + (e.stats && e.stats.questions || 0), 0);
+        const badgeColor = badgeColors[subj.key] || 'badge-gray';
+        const shortName = subj.shortName || subj.name;
+
+        const btnsHtml = subjExams.map((exam, partIdx) => {
+            const partLabel = subjExams.length > 1 ? `${partIdx + 1}부` : '';
+            const pdfLabel = subjExams.length > 1
+                ? `${partLabel} PDF`
+                : '문제집 열기';
+            const simLabel = subjExams.length > 1
+                ? `${partLabel} 풀기`
+                : '시뮬레이터 시작';
+            const btnClass = subjExams.length > 1 ? '' : ' btn-cyan';
+            return `                                <div class="exam-btn-pair">
+                                    <button data-click="ExamViewer.openExam" data-arg="content/exams/${exam.file}" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> ${pdfLabel}</button>
+                                    <button class="exam-btn-sim${btnClass}" data-click="startMockExamSim" data-arg="${exam.key}"><i class="fa-solid fa-circle-play"></i> ${simLabel}</button>
+                                </div>`;
+        }).join('\n');
+
+        const btnsClass = subjExams.length > 2 ? 'grid-btns-3' : subjExams.length > 1 ? 'grid-btns-2' : 'flex-btns';
+
+        const cardHtml = `                        <div class="exam-card-item">
+                            <div class="exam-card-badge ${badgeColor}">${idx + 1}과목</div>
+                            <h4 class="exam-card-title">${subj.name} ${totalQuestions}제</h4>
+                            <div class="exam-card-btns ${btnsClass}">
+${btnsHtml}
+                            </div>
+                        </div>`;
+
+        container.insertAdjacentHTML('beforeend', cardHtml);
+    });
+}
+
 function initApp() {
     // 한 단계가 실패해도 나머지 버튼 연결/렌더가 죽지 않도록 각 단계를 격리한다.
     // (배포 간 캐시 스큐로 특정 요소/바인딩이 어긋나도 앱이 통째로 벽돌이 되는 것 방지)
     const step = (label, fn) => { try { fn(); console.log('[init] ' + label + ' OK'); return true; } catch (e) { console.error('[init] ' + label + ' 실패:', e); return false; } };
     step('loadProgress', loadProgress);
     step('populateSubjectSelects', populateSubjectSelects);
+    step('populateExamCards', populateExamCards);
     const navOk = step('setupNavigation', setupNavigation);
     step('setupEventListeners', setupEventListeners);
     step('setupPWAInstall', setupPWAInstall);

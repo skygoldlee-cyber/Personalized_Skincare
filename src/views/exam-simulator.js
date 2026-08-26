@@ -634,16 +634,10 @@ export function examIdToSubjectId(examId) {
         const partialExam = registry.exams.find(e => examId.startsWith(e.key) || e.key.startsWith(examId));
         if (partialExam) return partialExam.subject;
     }
-    // 구버전 호환성 하드코딩 폴백
-    if (examId.startsWith('subject1')) return 'law';
-    if (examId.startsWith('subject2')) return 'manufacturing';
-    if (examId.startsWith('subject3')) return 'safety';
-    if (examId.startsWith('subject4')) return 'understanding';
-    
     if (registry && registry.subjects && registry.subjects.length > 0) {
         return registry.subjects[0].key;
     }
-    return 'law';
+    return null;
 }
 
 export function showSimAnswerReview() {

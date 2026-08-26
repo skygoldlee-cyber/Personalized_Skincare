@@ -678,82 +678,15 @@
                         <div class="exam-card-item highlight-card" style="grid-column: 1 / -1; background: linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%); border: 1px solid var(--color-primary-light, var(--color-primary)); position: relative; overflow: hidden;">
                             <div class="exam-card-badge" style="background: var(--color-primary); color: #fff; display: inline-block; padding: 0.25rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: bold; margin-bottom: 0.75rem;">종합 평가</div>
                             <span style="position: absolute; top: 1rem; right: 1rem; color: var(--color-primary); font-size: 0.8rem; font-weight: bold; background: rgba(6, 182, 212, 0.1); padding: 2px 8px; border-radius: 20px;"><i class="fa-solid fa-star"></i> 추천</span>
-                            <h4 class="exam-card-title" style="margin-top: 0; font-size: 1.25rem; font-weight: 700;">1~4과목 통합 실전 모의고사 (100제)</h4>
-                            <p class="exam-card-desc" style="margin: 0.5rem 0 1rem 0; font-size: 0.9rem; line-height: 1.5; color: var(--color-text-muted);">실제 국가 자격증 시험과 동일한 문항 비율(1과목 10문항, 2과목 25문항, 3과목 25문항, 4과목 40문항)로 100문항을 무작위로 구성하여 푸는 종합 실전 모의고사입니다. 시험 타이머, OMR 답안지 마킹 및 자동 과락/합격 판정을 완벽히 지원합니다.</p>
+                            <h4 class="exam-card-title" style="margin-top: 0; font-size: 1.25rem; font-weight: 700;">통합 실전 모의고사 (100제)</h4>
+                            <p class="exam-card-desc" style="margin: 0.5rem 0 1rem 0; font-size: 0.9rem; line-height: 1.5; color: var(--color-text-muted);">전 과목 문항을 무작위로 구성하여 푸는 종합 실전 모의고사입니다. 시험 타이머, OMR 답안지 마킹 및 자동 과락/합격 판정을 완벽히 지원합니다.</p>
                             <div class="exam-card-btns flex-btns" style="justify-content: flex-start; gap: 0.75rem;">
                                 <button class="exam-btn-sim btn-cyan" data-click="startIntegratedMockExam" style="padding: 0.6rem 1.2rem; font-size: 0.9rem; font-weight: 600; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-clock"></i> 통합 모의고사 시작 (100분)</button>
                             </div>
                         </div>
 
-                        <!-- 1과목 -->
-                        <div class="exam-card-item">
-                            <div class="exam-card-badge badge-cyan">1과목</div>
-                            <h4 class="exam-card-title">화장품법의 이해 100제</h4>
-                            <p class="exam-card-desc">화장품 정의/유형, 기재사항, 실증제, 책임판매관리자 결격사유 등 수치 중심 모의고사</p>
-                            <div class="exam-card-btns flex-btns">
-                                <button data-click="ExamViewer.openExam" data-arg="content/exams/subject1_100_questions.md" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> 문제집 열기</button>
-                                <button class="exam-btn-sim btn-cyan" data-click="startMockExamSim" data-arg="subject1"><i class="fa-solid fa-clock"></i> 시뮬레이터 시작</button>
-                            </div>
-                        </div>
-
-                        <!-- 2과목 -->
-                        <div class="exam-card-item highlight-card">
-                            <div class="exam-card-badge badge-violet">2과목 (취약단원)</div>
-                            <h4 class="exam-card-title">화장품 제조 및 품질관리 300제</h4>
-                            <p class="exam-card-desc">취약 부분 완성을 위해 계면화학(HLB/CMC), CGMP 적격성 평가 및 밸리데이션, 독성시험 등을 심층적으로 다룬 300제 문제집</p>
-                            <div class="exam-card-btns grid-btns-3">
-                                <div class="exam-btn-pair">
-                                    <button data-click="ExamViewer.openExam" data-arg="content/exams/subject2_100_questions.md" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> 1부 PDF</button>
-                                    <button class="exam-btn-sim" data-click="startMockExamSim" data-arg="subject2_p1"><i class="fa-solid fa-circle-play"></i> 1부 풀기</button>
-                                </div>
-                                <div class="exam-btn-pair">
-                                    <button data-click="ExamViewer.openExam" data-arg="content/exams/subject2_part2_100.md" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> 2부 PDF</button>
-                                    <button class="exam-btn-sim" data-click="startMockExamSim" data-arg="subject2_p2"><i class="fa-solid fa-circle-play"></i> 2부 풀기</button>
-                                </div>
-                                <div class="exam-btn-pair">
-                                    <button data-click="ExamViewer.openExam" data-arg="content/exams/subject2_part3_100.md" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> 3부 PDF</button>
-                                    <button class="exam-btn-sim" data-click="startMockExamSim" data-arg="subject2_p3"><i class="fa-solid fa-circle-play"></i> 3부 풀기</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 3과목 -->
-                        <div class="exam-card-item">
-                            <div class="exam-card-badge badge-emerald">3과목</div>
-                            <h4 class="exam-card-title">유통화장품 안전관리 200제</h4>
-                            <p class="exam-card-desc">작업장/작업자 청정도 관리, 미생물 및 중금속/메탄올 유해 물질 한도, 재작업 승인 절차 등</p>
-                            <div class="exam-card-btns grid-btns-2">
-                                <div class="exam-btn-pair">
-                                    <button data-click="ExamViewer.openExam" data-arg="content/exams/subject3_100_questions.md" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> 1부 PDF</button>
-                                    <button class="exam-btn-sim" data-click="startMockExamSim" data-arg="subject3_p1"><i class="fa-solid fa-circle-play"></i> 1부 풀기</button>
-                                </div>
-                                <div class="exam-btn-pair">
-                                    <button data-click="ExamViewer.openExam" data-arg="content/exams/subject3_part2_100.md" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> 2부 PDF</button>
-                                    <button class="exam-btn-sim" data-click="startMockExamSim" data-arg="subject3_p2"><i class="fa-solid fa-circle-play"></i> 2부 풀기</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 4과목 -->
-                        <div class="exam-card-item">
-                            <div class="exam-card-badge badge-amber">4과목</div>
-                            <h4 class="exam-card-title">맞춤형화장품의 이해 300제</h4>
-                            <p class="exam-card-desc">표피 5대층 및 진피 구조, 모발 성장 주기, 원료 배합 및 한도 계산 실무, 위생 조제 지침 등</p>
-                            <div class="exam-card-btns grid-btns-3">
-                                <div class="exam-btn-pair">
-                                    <button data-click="ExamViewer.openExam" data-arg="content/exams/subject4_100_questions.md" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> 1부 PDF</button>
-                                    <button class="exam-btn-sim" data-click="startMockExamSim" data-arg="subject4_p1"><i class="fa-solid fa-circle-play"></i> 1부 풀기</button>
-                                </div>
-                                <div class="exam-btn-pair">
-                                    <button data-click="ExamViewer.openExam" data-arg="content/exams/subject4_part2_100.md" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> 2부 PDF</button>
-                                    <button class="exam-btn-sim" data-click="startMockExamSim" data-arg="subject4_p2"><i class="fa-solid fa-circle-play"></i> 2부 풀기</button>
-                                </div>
-                                <div class="exam-btn-pair">
-                                    <button data-click="ExamViewer.openExam" data-arg="content/exams/subject4_part3_100.md" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> 3부 PDF</button>
-                                    <button class="exam-btn-sim" data-click="startMockExamSim" data-arg="subject4_p3"><i class="fa-solid fa-circle-play"></i> 3부 풀기</button>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- 과목별 시험 카드 (JS에서 registry 기반 동적 생성) -->
+                        <div id="exam-cards-dynamic" style="display: contents;"></div>
 
                         <!-- 부록 요약본 -->
                         <div class="exam-card-item full-width-card">

@@ -18,7 +18,7 @@
 /**
  * 플래시카드 세션 상태.
  * @typedef {Object} FlashcardsState
- * @property {string}   subject      현재 과목 키 (예: 'law')
+ * @property {string|null} subject      현재 과목 키 (초기값 null, initApp에서 registry 기반 설정)
  * @property {number}   currentIndex 현재 카드 인덱스
  * @property {boolean}  keyOnly      키워드(암기면)만 표시 여부
  * @property {Card[]}   data         현재 필터링된 카드 목록
@@ -27,7 +27,7 @@
 /**
  * 퀴즈 세션 상태.
  * @typedef {Object} QuizSessionState
- * @property {string}   subject      현재 과목 키
+ * @property {string|null} subject      현재 과목 키 (초기값 null, initApp에서 registry 기반 설정)
  * @property {Quiz[]}   data         출제된 퀴즈 목록(보통 10문제)
  * @property {number}   currentIndex 현재 문제 인덱스
  * @property {number}   correctCount 맞힌 개수
@@ -164,6 +164,7 @@
  * @property {string}      key         과목 키(예: 'law')
  * @property {number}      order       정렬 순서
  * @property {string}      name        표시 이름
+ * @property {string}      [shortName] 축약 표시 이름 (필터 버튼 등)
  * @property {string}      bundle      번들 경로(상대)
  * @property {string}      global      전역 변수명(예: 'STUDY_DATA_law')
  * @property {string}      contentHash 콘텐츠 해시(캐시 무효화용)
@@ -177,6 +178,7 @@
  * @property {string}      subject     소속 과목
  * @property {number}      [part]      파트 번호
  * @property {string}      title
+ * @property {string}      file        원본 MD 파일명 (content/exams/ 기준)
  * @property {string}      bundle
  * @property {string}      global      전역 변수명(예: 'EXAM_DATA_subject4_p3')
  * @property {string}      contentHash

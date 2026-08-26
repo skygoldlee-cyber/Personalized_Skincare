@@ -19,11 +19,11 @@ export const state = {
     memorizedCards: new Set(), // 외운 카드 ID 목록
     weakCards: new Set(),      // 헷갈린 카드 ID 목록
     quizResults: {},           // { quizId: { solved: true, correct: true } }
-    reviewFilter: 'all',       // 오답노트 필터 상태 ('all', 'law', 'manufacturing', 'safety', 'understanding')
+    reviewFilter: 'all',       // 오답노트 필터 상태 ('all' 또는 과목 key — 런타임에 registry에서 동적 생성)
 
     // 플래시카드 현재 세션 상태
     flashcards: {
-        subject: 'law',
+        subject: null,           // 초기값 null — initApp()에서 registry 첫 번째 과목으로 설정
         currentIndex: 0,
         keyOnly: false,
         data: [] // 현재 필터링된 카드 목록
@@ -31,7 +31,7 @@ export const state = {
 
     // 퀴즈 현재 세션 상태
     quiz: {
-        subject: 'law',
+        subject: null,           // 초기값 null — initApp()에서 registry 첫 번째 과목으로 설정
         data: [],        // 출제된 퀴즈 목록 (보통 10문제)
         currentIndex: 0,
         correctCount: 0,

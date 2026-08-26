@@ -135,7 +135,7 @@ const parseExamFile = (filePath, examId, examTitle) => {
 module.exports = {
   name: 'exams',
   build(exam, ctx) {
-    const filePath = path.join(ctx.workspaceDir, 'exams', exam.file);
+    const filePath = path.join(ctx.workspaceDir, 'content', 'exams', exam.file);
     return parseExamFile(filePath, exam.key, exam.title);
   }
 };
