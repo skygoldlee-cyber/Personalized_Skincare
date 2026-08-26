@@ -139,6 +139,7 @@ Personalized Skincare/
 │   ├── manufacturing/               ← 3과목: 화장품 제조 및 품질관리
 │   ├── law/                         ← 4과목: 화장품법의 이해
 │   ├── ingredients/                 ← 성분 원본 MD
+│   ├── study_summary.md             ← 핵심 단권화 요약집 (앱 내 뷰어 연동)
 │   └── audiobook/                   ← 오디오북 파이프라인 (Python)
 │
 ├── 📂 exams/                        ← ✅ 배포 (모의고사 MD 원본 및 뷰어 소스)
@@ -158,8 +159,7 @@ Personalized Skincare/
     │   ├── CHANGES.md               ← 코드 리뷰 수정 내역
     │   └── IMPROVEMENTS_REPORT.md   ← 보완 및 개선점 보고서
     └── user/                        ← 사용자 문서
-        ├── user_manual.md           ← 사용자 매뉴얼 (앱 내 뷰어 연동)
-        └── study_summary.md         ← 핵심 단권화 요약집 (앱 내 뷰어 연동)
+        └── user_manual.md           ← 사용자 매뉴얼 (앱 내 뷰어 연동)
 ```
 
 > **범례:** ✅ 배포 포함 · ❌ 배포 제외 · 🆕 최신 모듈러 개편 반영 (2026-08-25)

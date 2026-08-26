@@ -17,9 +17,10 @@ docs/
 │   ├── CHANGES.md             ← 코드 리뷰 수정 내역
 │   └── IMPROVEMENTS_REPORT.md ← 보완 및 개선점 정리 보고서
 └── user/                      ← 사용자 문서
-    ├── user_manual.md         ← 사용자 매뉴얼 (앱 내 매뉴얼 뷰어 연동)
-    └── study_summary.md       ← 핵심 단권화 요약집 (앱 내 요약 뷰어 연동)
+    └── user_manual.md         ← 사용자 매뉴얼 (앱 내 매뉴얼 뷰어 연동)
 ```
+
+> `content/study_summary.md` (핵심 단권화 요약집)은 교재 콘텐츠이므로 `content/` 폴더에 있습니다.
 
 ---
 
@@ -41,7 +42,7 @@ docs/
 | 문서 | 설명 | 접근 방법 |
 |------|------|-----------|
 | [user_manual.md](user/user_manual.md) | 사용자 매뉴얼 | 앱 내 "매뉴얼" 메뉴 또는 직접 열기 |
-| [study_summary.md](user/study_summary.md) | 핵심 단권화 요약집 | 앱 내 "요약집" 메뉴 또는 직접 열기 |
+| [study_summary.md](../content/study_summary.md) | 핵심 단권화 요약집 | 앱 내 "요약집" 메뉴 또는 직접 열기 (`content/` 폴더) |
 
 > 사용자 문서는 앱의 `manual-viewer.js`가 런타임에 fetch하여 인앱 오버레이로 렌더링합니다.
 
