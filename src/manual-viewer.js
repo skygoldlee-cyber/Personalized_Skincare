@@ -211,8 +211,12 @@ body.manual-open{overflow:hidden;}
     }
 
     function _renderMermaid() {
-        // Mermaid.js runtime dependency removed (CSP unsafe-eval conflict + 3.2MB precache burden).
-        // Diagrams in user_manual.md now use plain text flowcharts in code blocks.
+        if (typeof window.mermaid === 'undefined') return;
+        try {
+            window.mermaid.run({ querySelector: '#manual-article pre.mermaid' });
+        } catch (e) {
+            console.warn('[manual] mermaid render failed:', e);
+        }
     }
 
     function _renderBody(title, bodyHtml) {
