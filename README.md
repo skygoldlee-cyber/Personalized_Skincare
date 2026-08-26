@@ -153,6 +153,7 @@ Personalized Skincare/
     ├── README.md                    ← 문서 인덱스
     ├── dev/                         ← 개발 문서
     │   ├── ARCHITECTURE.md          ← 아키텍처 및 설계 표준 가이드
+    │   ├── AUDIO_HOSTING_GUIDE.md   ← 오디오북 호스팅 및 청취 가이드
     │   ├── DEPLOYMENT_GUIDE.md      ← Vercel 배포 및 오디오 호스팅 가이드
     │   ├── MULTI_MACHINE_SETUP.md   ← 멀티 머신 개발 환경 설정
     │   ├── PROJECT_MINDMAP.md       ← 프로젝트 전체 구조 마인드맵

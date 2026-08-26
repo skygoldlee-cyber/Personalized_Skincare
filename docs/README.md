@@ -11,6 +11,7 @@ docs/
 ├── README.md                  ← 본 파일 (문서 인덱스)
 ├── dev/                       ← 개발 문서
 │   ├── ARCHITECTURE.md        ← 아키텍처 및 설계 철학
+│   ├── AUDIO_HOSTING_GUIDE.md ← 오디오북 호스팅 및 청취 가이드
 │   ├── DEPLOYMENT_GUIDE.md    ← Vercel 배포 및 호스팅 가이드
 │   ├── MULTI_MACHINE_SETUP.md ← 다중 머신 개발 환경 설정
 │   ├── PROJECT_MINDMAP.md     ← 프로젝트 전체 구조 마인드맵
@@ -29,6 +30,7 @@ docs/
 | 문서 | 설명 | 주요 내용 |
 |------|------|-----------|
 | [ARCHITECTURE.md](dev/ARCHITECTURE.md) | 시스템 아키텍처 및 설계 철학 | Zero-Backend, ESM 모듈 구조, 데이터 흐름, PWA/SW 전략, 테마 시스템 |
+| [AUDIO_HOSTING_GUIDE.md](dev/AUDIO_HOSTING_GUIDE.md) | 오디오북 호스팅 및 청취 가이드 | 아키텍처, 호스팅 방안 비교, GitHub Releases 적용 절차, 모바일 청취 동작 체인 |
 | [DEPLOYMENT_GUIDE.md](dev/DEPLOYMENT_GUIDE.md) | Vercel 배포 및 오디오 호스팅 | 용량 최적화, .vercelignore, CSP/캐시 정책, 배포 체크리스트, 트러블슈팅 |
 | [MULTI_MACHINE_SETUP.md](dev/MULTI_MACHINE_SETUP.md) | 다중 머신 개발 환경 설정 | GitHub SSH, Vercel CLI 인증, GitHub Actions 자동 배포 |
 | [PROJECT_MINDMAP.md](dev/PROJECT_MINDMAP.md) | 프로젝트 전체 구조 시각화 | Mermaid 마인드맵 — 설계 철학, 기능, 기술 스택, 데이터 파이프라인 |
