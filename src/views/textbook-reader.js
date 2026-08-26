@@ -121,6 +121,67 @@ function persistCurrentAudioPos() {
     }
 }
 
+/* =======================================================
+   📱 Media Session API — 잠금화면/알림바 미디어 제어
+   ======================================================= */
+
+/** 현재 재생 중인 단원의 Media Session 메타데이터 및 액션 핸들러 설정 */
+function setupMediaSession(audio, subjId, chapterIdx, chapterTitle) {
+    if (!('mediaSession' in navigator)) return;
+
+    const STUDY_DATA = (typeof window !== 'undefined' && window.STUDY_DATA) ? window.STUDY_DATA : {};
+    const subj = STUDY_DATA[subjId];
+    const subjTitle = subj ? (subj.title || subjId) : subjId;
+
+    navigator.mediaSession.metadata = new MediaMetadata({
+        title: chapterTitle,
+        artist: '맞춤형화장품 조제관리사 스마트 학습',
+        album: subjTitle,
+        artwork: [
+            { src: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+            { src: '/icons/icon-512.png', sizes: '512x512', type: 'image/png' }
+        ]
+    });
+
+    navigator.mediaSession.setActionHandler('play', () => {
+        audio.play().catch(() => {});
+    });
+    navigator.mediaSession.setActionHandler('pause', () => {
+        audio.pause();
+    });
+    navigator.mediaSession.setActionHandler('seekto', (details) => {
+        if (details.seekTime != null && isFinite(details.seekTime)) {
+            audio.currentTime = details.seekTime;
+        }
+    });
+
+    // 이전/다음 단원 핸들러 (단원이 있을 때만)
+    const chapters = (subj && subj.chapters) || [];
+    if (chapters.length > 1) {
+        navigator.mediaSession.setActionHandler('previoustrack', () => {
+            if (chapterIdx > 0) {
+                toggleReaderAudio(subjId, chapterIdx - 1);
+            }
+        });
+        navigator.mediaSession.setActionHandler('nexttrack', () => {
+            if (chapterIdx < chapters.length - 1) {
+                toggleReaderAudio(subjId, chapterIdx + 1);
+            }
+        });
+    }
+}
+
+/** Media Session 정리 (재생 중지/단원 전환 시) */
+function clearMediaSession() {
+    if (!('mediaSession' in navigator)) return;
+    navigator.mediaSession.metadata = null;
+    navigator.mediaSession.setActionHandler('play', null);
+    navigator.mediaSession.setActionHandler('pause', null);
+    navigator.mediaSession.setActionHandler('seekto', null);
+    navigator.mediaSession.setActionHandler('previoustrack', null);
+    navigator.mediaSession.setActionHandler('nexttrack', null);
+}
+
 /** 플레이어 UI 요소 모음 */
 function getAudioUI() {
     return {
@@ -303,6 +364,8 @@ export function stopReaderAudio() {
     readerAudioState.chapterTitle = '';
     readerAudioState.sectionBoundaries = [];
     readerAudioState.lastSectionIdx = -1;
+    // Media Session 정리
+    clearMediaSession();
     // 하이라이트 제거
     const container = document.getElementById('textbook-reader-container');
     if (container) {
@@ -372,6 +435,9 @@ export function toggleReaderAudio(subjId, chapterIdx) {
     readerAudioState.chapterTitle = chapter.chapterTitle;
     readerAudioState.lastSectionIdx = -1;
 
+    // Media Session API: 잠금화면/알림바 미디어 제어 활성화
+    setupMediaSession(audio, subjId, chapterIdx, chapter.chapterTitle);
+
     // 자동 스크롤 설정 복원
     readerAudioState.autoScroll = getSavedAutoScroll();
     updateAutoScrollBtn();
@@ -412,8 +478,14 @@ export function toggleReaderAudio(subjId, chapterIdx) {
         }
     });
 
-    audio.addEventListener('play', () => { updatePlayPauseIcon(); setAudioStatus(''); });
-    audio.addEventListener('pause', () => { updatePlayPauseIcon(); saveAudioPos(audioPath, audio.currentTime, audio.duration); });
+    audio.addEventListener('play', () => {
+        updatePlayPauseIcon(); setAudioStatus('');
+        if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'playing';
+    });
+    audio.addEventListener('pause', () => {
+        updatePlayPauseIcon(); saveAudioPos(audioPath, audio.currentTime, audio.duration);
+        if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'paused';
+    });
     audio.addEventListener('waiting', () => setAudioStatus('버퍼링…'));
     audio.addEventListener('playing', () => setAudioStatus(''));
     audio.addEventListener('canplay', () => setAudioStatus(''));

@@ -4,6 +4,63 @@
 // 로드가 실패할 때 이 모듈(및 상위 app.js) 전체가 실행되지 않아 흰 화면이 되므로 지양.
 
 /* =======================================================
+   📊 공통 툴팁 유틸리티 (Interactive Tooltip)
+   ======================================================= */
+let _chartTooltip = null;
+let _tooltipHideTimer = null;
+
+function getChartTooltip() {
+    if (_chartTooltip) return _chartTooltip;
+    _chartTooltip = document.createElement('div');
+    _chartTooltip.className = 'chart-tooltip';
+    _chartTooltip.style.cssText =
+        'position:fixed;z-index:9000;pointer-events:none;' +
+        'background:rgba(15,23,42,0.96);color:#fff;border:1px solid rgba(6,182,212,0.5);' +
+        'border-radius:8px;padding:0.5rem 0.75rem;font-size:0.8rem;font-weight:600;' +
+        'line-height:1.4;box-shadow:0 4px 16px rgba(0,0,0,0.4);' +
+        'opacity:0;transition:opacity 0.15s ease;max-width:240px;white-space:nowrap;';
+    document.body.appendChild(_chartTooltip);
+    return _chartTooltip;
+}
+
+function showChartTooltip(html, x, y) {
+    const tip = getChartTooltip();
+    tip.innerHTML = html;
+    tip.style.opacity = '1';
+    // 위치 보정: 화면 경계 넘지 않도록
+    const rect = tip.getBoundingClientRect();
+    let left = x + 12;
+    let top = y - rect.height - 8;
+    if (left + rect.width > window.innerWidth - 8) left = x - rect.width - 12;
+    if (top < 8) top = y + 16;
+    tip.style.left = left + 'px';
+    tip.style.top = top + 'px';
+    if (_tooltipHideTimer) { clearTimeout(_tooltipHideTimer); _tooltipHideTimer = null; }
+}
+
+function hideChartTooltip() {
+    _tooltipHideTimer = setTimeout(() => {
+        if (_chartTooltip) _chartTooltip.style.opacity = '0';
+    }, 100);
+}
+
+/** SVG 요소에 hover + touch 툴팁 이벤트 바인딩 */
+function bindTooltip(el, html) {
+    el.style.cursor = 'pointer';
+    el.addEventListener('mouseenter', (e) => showChartTooltip(html, e.clientX, e.clientY));
+    el.addEventListener('mouseleave', () => hideChartTooltip());
+    el.addEventListener('mousemove', (e) => showChartTooltip(html, e.clientX, e.clientY));
+    // 모바일 터치 지원
+    el.addEventListener('touchstart', (e) => {
+        const t = e.touches[0];
+        if (t) showChartTooltip(html, t.clientX, t.clientY);
+    }, { passive: true });
+    el.addEventListener('touchend', () => {
+        setTimeout(() => hideChartTooltip(), 2000);
+    }, { passive: true });
+}
+
+/* =======================================================
    📊 모의고사 성적 차트 (Performance Line Chart)
    ======================================================= */
 export function renderPerformanceChart() {
@@ -94,7 +151,7 @@ export function renderPerformanceChart() {
     if (pointsCount === 1) {
         const x = xPositions[0];
         const y = paddingTop + chartHeight - (recentData[0].rate * chartHeight / 100);
-        svgContent += `<circle class="chart-dot" cx="${x}" cy="${y}" r="6"/>`;
+        svgContent += `<circle class="chart-dot" cx="${x}" cy="${y}" r="6" data-idx="0"/>`;
         svgContent += `<text class="chart-value-label" x="${x}" y="${y - 12}">${recentData[0].rate}%</text>`;
         svgContent += `<text class="chart-label" x="${x}" y="${height - 15}">${recentData[0].date}</text>`;
     } else {
@@ -106,7 +163,7 @@ export function renderPerformanceChart() {
         recentData.forEach((d, idx) => {
             const x = xPositions[idx];
             const y = paddingTop + chartHeight - (d.rate * chartHeight / 100);
-            svgContent += `<circle class="chart-dot" cx="${x}" cy="${y}" r="5"/>`;
+            svgContent += `<circle class="chart-dot chart-dot-interactive" cx="${x}" cy="${y}" r="5" data-idx="${idx}"/>`;
             svgContent += `<text class="chart-value-label" x="${x}" y="${y - 12}">${d.rate}%</text>`;
             svgContent += `<text class="chart-label" x="${x}" y="${height - 15}">${d.date}</text>`;
         });
@@ -114,6 +171,23 @@ export function renderPerformanceChart() {
     
     svgContent += `</svg>`;
     wrapper.insertAdjacentHTML('beforeend', svgContent);
+
+    // 인터랙티브 툴팁 바인딩 (라인 차트)
+    const recentAvg = Math.round(recentData.reduce((s, d) => s + d.rate, 0) / recentData.length);
+    wrapper.querySelectorAll('.chart-dot-interactive').forEach(dot => {
+        const idx = parseInt(/** @type {SVGElement} */ (dot).dataset.idx || '0', 10);
+        const d = recentData[idx];
+        const delta = idx > 0 ? d.rate - recentData[idx - 1].rate : null;
+        const deltaHtml = delta !== null
+            ? `<span style="color:${delta >= 0 ? '#10b981' : '#ef4444'};">${delta >= 0 ? '▲' : '▼'} ${Math.abs(delta)}%</span>`
+            : '';
+        bindTooltip(dot,
+            `<div>${d.date}</div>` +
+            `<div style="font-size:1.1rem;color:#06b6d4;">${d.rate}%</div>` +
+            (deltaHtml ? `<div style="margin-top:2px;">${deltaHtml}</div>` : '') +
+            `<div style="margin-top:2px;color:rgba(255,255,255,0.6);font-size:0.72rem;">최근 평균 ${recentAvg}%</div>`
+        );
+    });
 }
 
 /* =======================================================
@@ -376,12 +450,29 @@ export function renderRadarChart() {
     // 4. Data dots and labels
     subjects.forEach((sub, i) => {
         const p = getPoint(i, subjectScores[i]);
-        svg += `
-            <circle class="radar-point" cx="${p.x}" cy="${p.y}" />
-            <text x="${p.x}" y="${p.y - 8}" fill="#ffffff" font-size="10" font-weight="700" text-anchor="middle">${subjectScores[i]}%</text>
-        `;
+        svg += `<circle class="radar-point radar-point-interactive" cx="${p.x}" cy="${p.y}" data-idx="${i}" />`;
+        svg += `<text x="${p.x}" y="${p.y - 8}" fill="#ffffff" font-size="10" font-weight="700" text-anchor="middle">${subjectScores[i]}%</text>`;
     });
     
     svg += `</svg>`;
     wrapper.insertAdjacentHTML('beforeend', svg);
+
+    // 인터랙티브 툴팁 바인딩 (레이더 차트)
+    const overallAvg = Math.round(subjectScores.reduce((s, r) => s + r, 0) / subjectScores.length);
+    wrapper.querySelectorAll('.radar-point-interactive').forEach(dot => {
+        const idx = parseInt(/** @type {SVGElement} */ (dot).dataset.idx || '0', 10);
+        const sub = subjects[idx];
+        const rate = subjectScores[idx];
+        const rates = subjectRates[sub.key] || [];
+        const examCount = rates.length;
+        const shortName = sub.name.replace('의 이해', '').replace(' 및 품질관리', '').replace('유통화장품 ', '');
+        const status = rate < 40 ? '과락 위험' : rate < 60 ? '합격 미달' : '안정권';
+        const statusColor = rate < 40 ? '#ef4444' : rate < 60 ? '#f59e0b' : '#10b981';
+        bindTooltip(dot,
+            `<div style="font-size:0.85rem;">${idx + 1}과목: ${shortName}</div>` +
+            `<div style="font-size:1.1rem;color:#06b6d4;margin-top:2px;">${rate}%</div>` +
+            `<div style="margin-top:2px;color:${statusColor};">${status}</div>` +
+            `<div style="margin-top:2px;color:rgba(255,255,255,0.6);font-size:0.72rem;">응시 ${examCount}회 · 전체 평균 ${overallAvg}%</div>`
+        );
+    });
 }

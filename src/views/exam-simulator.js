@@ -758,7 +758,7 @@ function _startWeakExamImpl() {
     
     // 1. 헷갈린 카드로부터 질문 생성
     weakCards.forEach(cardId => {
-        // Find card in STUDY_DATA
+        // 1-a) 일반 플래시카드: STUDY_DATA에서 카드 검색
         let cardObj = null;
         let subject = '';
         for (const subjId of Object.keys(STUDY_DATA)) {
@@ -769,7 +769,7 @@ function _startWeakExamImpl() {
                 break;
             }
         }
-        
+
         if (cardObj) {
             questions.push({
                 id: `weak_card_${cardObj.id}`,
@@ -779,6 +779,36 @@ function _startWeakExamImpl() {
                 answer: cardObj.term,
                 explanation: `정의: ${cardObj.definition}\n용어: ${cardObj.term}`
             });
+            return; // forEach 콜백에서 continue 대신
+        }
+
+        // 1-b) 모의고사 오답: weak_sim_<examId>_q<num> 형태의 ID
+        // STUDY_DATA에 없으므로 window.EXAM_DATA에서 원본 문제를 찾아 복습 문제로 조립
+        if (cardId.startsWith('weak_sim_')) {
+            const origQId = cardId.replace('weak_sim_', '');
+            const EXAM_DATA = (typeof window !== 'undefined' && window.EXAM_DATA) ? window.EXAM_DATA : {};
+            let foundQ = null;
+            let foundSubj = '';
+            for (const examId of Object.keys(EXAM_DATA)) {
+                const qs = EXAM_DATA[examId].questions || [];
+                const q = qs.find(qq => qq.id === origQId);
+                if (q) {
+                    foundQ = q;
+                    foundSubj = examIdToSubjectId(examId);
+                    break;
+                }
+            }
+            if (foundQ) {
+                questions.push({
+                    id: `weak_exam_${origQId}`,
+                    subject: foundSubj,
+                    type: foundQ.type || 'blank',
+                    question: foundQ.question,
+                    answer: foundQ.answer,
+                    options: foundQ.options || null,
+                    explanation: foundQ.explanation || '모의고사 오답 복습 문제입니다.'
+                });
+            }
         }
     });
     

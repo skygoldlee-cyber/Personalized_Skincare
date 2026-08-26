@@ -319,3 +319,23 @@
   - `id_migration.js` 생성 주체: `generate_migration_map.js`(삭제됨) → `tools/build/index.js`
   - 데이터 파이프라인 다이어그램: `exams/**/*.md` → `content/exams/**/*.md`
 - **검증 결과** (모바일 Chrome 실기기): PL=1 (루프 없음), CC=1 (SW 교체 1회), init=1325ms (정상 초기화), nav=9/11 (메뉴 정상), PWA 설치 정상 완료.
+
+### 18. 기능 및 학습 경험 고도화 (UX/Feature) — 3항목 구현
+
+- **3-2. Media Session API 연동** (`src/views/textbook-reader.js`):
+  - `setupMediaSession()` / `clearMediaSession()` 함수 추가
+  - `navigator.mediaSession.metadata`: 단원 제목, 과목명, 앨범 아트(icon-192/512) 설정
+  - `setActionHandler`: play, pause, seekto, previoustrack(이전 단원), nexttrack(다음 단원) 핸들러 등록
+  - `playbackState` 동기화: play/pause 이벤트에서 'playing'/'paused' 설정
+  - Android Chrome에서 잠금화면/알림바 미디어 컨트롤 활성화
+
+- **3-3. 인터랙티브 차트 툴팁** (`src/charts.js`):
+  - 공통 툴팁 유틸리티(`getChartTooltip`, `showChartTooltip`, `hideChartTooltip`, `bindTooltip`) 추가
+  - 라인 차트: 데이터 포인트 hover/touch 시 날짜, 점수, 이전 대비 증감(▲/▼), 최근 평균 표시
+  - 레이더 차트: 꼭짓점 hover/touch 시 과목명, 점수, 합격 상태(과락/미달/안정권), 응시 횟수, 전체 평균 표시
+  - 모바일 터치 지원: touchstart/touchend 이벤트 (2초 후 자동 숨김)
+  - 화면 경계 자동 보정으로 툴팁이 화면 밖으로 넘어가지 않음
+
+- **3-1. 모의고사 오답 복습 연동 보완** (`src/views/exam-simulator.js`):
+  - `weak_sim_*` ID 매핑 문제 수정: 기존에는 STUDY_DATA에서 찾지 못해 누락되던 모의고사 오답을 `window.EXAM_DATA`에서 원본 문제를 찾아 복습 문제로 조립
+  - `startWeakExam()`의 `_startWeakExamImpl()`에 1-b) 분기 추가: `weak_sim_` 접두사 ID를 EXAM_DATA에서 역추적하여 문제/정답/해설/옵션 복원
