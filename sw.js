@@ -3,7 +3,9 @@
  * 맞춤형화장품 조제관리사 스마트 학습 플랫폼 PWA
  *
  * 캐시 전략:
- *  - App Shell (HTML/CSS/JS)      : Network First / SWR (배포 시 CACHE_VERSION 갱신)
+ *  - Navigation (HTML)             : Cache First (캐시 스큐 방지)
+ *  - /src/*.js + CSS               : Cache First (ESM 그래프 + CSS 세대 일관성)
+ *  - 그 외 JS                       : Network First (구버전 잔류 방지)
  *  - 레지스트리 (registry.js)      : Network First (항상 최신 번들 URL 확보)
  *  - 학습 데이터 번들 (해시 파일명) : Cache First + 온디맨드 캐싱 (변경분만 새 URL로 갱신)
  *  - 외부 CDN (폰트/아이콘)        : Stale-While-Revalidate
@@ -17,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v39-20260826-390e22a';       // 쉘/CDN: 배포마다 갱신 (app-fallback 폴링/단계적 복구, 진단 강화)
+const CACHE_VERSION = 'v39-20260826-0655fcc';       // 쉘/CDN: 배포마다 갱신 (app-fallback 폴링/단계적 복구, 진단 강화)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
@@ -85,9 +87,7 @@ const SHELL_ASSETS = [
   './vendor/fonts/outfit-300.woff2',
   './vendor/fonts/outfit-400.woff2',
   './vendor/fonts/outfit-600.woff2',
-  './vendor/fonts/outfit-800.woff2',
-  // Mermaid 자체 호스팅 (오프라인/모바일에서도 다이어그램 정상 표시)
-  './vendor/mermaid/mermaid.min.js'
+  './vendor/fonts/outfit-800.woff2'
 ];
 
 /**
@@ -286,10 +286,18 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 5-2) 그 외 코드 자산(CSS/JS) → Network First
+  // 5-2) CSS → Cache First (캐시 스큐 방지 — /src/ JS와 동일 사유)
+  //      배포 전환 순간 "구버전 HTML(cacheFirst) + 신버전 CSS(networkFirst)" 혼합으로
+  //      화면 깨짐 방지. SHELL_ASSETS 프리캐시로 동일 버전만 서빙.
+  if (/\.css$/i.test(url.pathname)) {
+    event.respondWith(cacheFirst(request, SHELL_CACHE));
+    return;
+  }
+
+  // 5-3) 그 외 JS → Network First
   //      (온라인이면 항상 최신 배포본, 오프라인이면 캐시 폴백.
   //       버전 bump을 깜빡해도 폰에서 구버전이 남지 않도록 함)
-  if (/\.(?:css|js)$/i.test(url.pathname)) {
+  if (/\.js$/i.test(url.pathname)) {
     event.respondWith(networkFirst(request, SHELL_CACHE));
     return;
   }

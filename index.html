@@ -201,7 +201,7 @@
                             <button class="btn btn-secondary" data-click="triggerImport" style="width: 100%; justify-content: center;">
                                 <i class="fa-solid fa-upload"></i> 백업 가져오기
                             </button>
-                            <input type="file" id="import-file-input" style="display: none;" onchange="importData(event)">
+                            <input type="file" id="import-file-input" style="display: none;" accept=".json">
                         </div>
                     </div>
                 </div>
@@ -1118,7 +1118,6 @@
     <script type="module" src="data/registry.js"></script>
     <script type="module" src="data/audio_manifest.js"></script>
     <script src="data/id_migration.js" defer></script>
-    <script src="vendor/mermaid/mermaid.min.js" defer></script>
 
     <!-- Main ES Module Entry Point (모든 src/ 모듈들을 내부에서 import하여 통합 실행) -->
     <script type="module" src="src/app.js"></script>

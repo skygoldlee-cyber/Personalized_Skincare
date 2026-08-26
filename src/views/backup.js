@@ -51,6 +51,13 @@ export function triggerImport() {
     }
 }
 
+export function setupImportListener() {
+    const fileInput = document.getElementById('import-file-input');
+    if (fileInput) {
+        fileInput.addEventListener('change', importData);
+    }
+}
+
 export function importData(event) {
     const file = event.target.files[0];
     if (!file) return;

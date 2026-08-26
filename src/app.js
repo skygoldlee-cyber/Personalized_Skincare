@@ -81,7 +81,8 @@ import {
     getBackupKeys,
     exportData,
     triggerImport,
-    importData
+    importData,
+    setupImportListener
 } from './views/backup.js';
 import {
     renderTextbookSearch,
@@ -322,6 +323,7 @@ function initApp() {
     step('populateSubjectSelects', populateSubjectSelects);
     step('populateExamCards', populateExamCards);
     step('populateResourceCards', populateResourceCards);
+    step('setupImportListener', setupImportListener);
     const navOk = step('setupNavigation', setupNavigation);
     step('setupEventListeners', setupEventListeners);
     step('setupPWAInstall', setupPWAInstall);
@@ -1351,9 +1353,6 @@ window.submitIngAnswer = submitIngAnswer;
 window.togglePomodoro = togglePomodoro;
 window.toggleSolutionAccordion = toggleSolutionAccordion;
 window.triggerImport = triggerImport;
-// index.html의 인라인 onchange="importData(event)"가 전역 스코프에서 평가되므로 노출 필요
-// (app.js가 ES 모듈이라 함수 선언이 더 이상 전역이 아님)
-window.importData = importData;
 // state.js의 saveProgress()가 `typeof updateGlobalStats === 'function'`로 참조하므로 노출 필요
 // (모듈-대-모듈이라 window에 걸어야 bare typeof가 해석됨)
 window.updateGlobalStats = updateGlobalStats;

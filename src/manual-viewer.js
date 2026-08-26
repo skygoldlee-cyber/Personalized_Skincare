@@ -211,27 +211,8 @@ body.manual-open{overflow:hidden;}
     }
 
     function _renderMermaid() {
-        const el = _ensureOverlay();
-        const article = el.querySelector('#manual-article');
-        const mermaidNodes = article.querySelectorAll('.mermaid');
-        if (mermaidNodes.length === 0) return;
-
-        if (window.mermaid) {
-            try {
-                const isLightTheme = document.documentElement.classList.contains('light-theme');
-                window.mermaid.initialize({
-                    startOnLoad: false,
-                    theme: isLightTheme ? 'default' : 'dark',
-                    securityLevel: 'loose'
-                });
-                window.mermaid.run({
-                    nodes: mermaidNodes,
-                    suppressErrors: true
-                });
-            } catch (e) {
-                console.error('Mermaid render failed:', e);
-            }
-        }
+        // Mermaid.js runtime dependency removed (CSP unsafe-eval conflict + 3.2MB precache burden).
+        // Diagrams in user_manual.md now use plain text flowcharts in code blocks.
     }
 
     function _renderBody(title, bodyHtml) {
