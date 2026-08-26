@@ -165,6 +165,54 @@ Production:  https://personalized-skincare-study.vercel.app
 
 ---
 
+## 5-1. 배포 성공 체크리스트 및 트러블슈팅
+
+### 배포 전 체크리스트
+
+#### 1. 인증 (사전 필수)
+- `vercel login` — 터미널에서 직접 실행 (브라우저 OAuth)
+- `vercel whoami` — `skygoldlee-7354` / Active team: `skygold` 확인
+- 인증 만료 시 재로그인 필요 (브라우저에서 https://vercel.com/logout 후 재시도)
+
+#### 2. 프로젝트 연결
+- `.vercel/project.json` 존재 확인
+  - `projectId`: `prj_706IdDze2DZsNwjADIfhvsfWL3HW`
+  - `orgId`: `team_P4ciaJGD9bvDziPxZM6FOCSK`
+- 누락 시 `vercel link`로 재연결
+
+#### 3. 빌드 파이프라인 (본 가이드 1-4절 참조)
+- `node tools/build/index.js` — 데이터 빌드 성공
+- `npm test` — 86개 테스트 전체 통과
+- 빌드 실패 시 배포 중단
+
+#### 4. 코드 커밋
+- `git add -A && git commit -m "..." && git push` — 로컬 변경사항이 원격과 동기화
+- 충돌 시 `git stash; git pull; git stash pop` 또는 `git checkout --theirs`로 해결
+
+#### 5. 배포 실행
+- **터미널 직접 실행** (가장 확실): `vercel --prod`
+- **Cascade (Windsurf AI) 실행** (비동기 패턴 필수):
+  1. `run_command(Blocking: false, WaitMs: 1000)` → 백그라운드 실행
+  2. `command_status(WaitDurationSeconds: 60)` → 결과 폴링
+  > Cascade는 동기 대기 시 `WaitDelay expired` 타임아웃 발생. 비동기 + 폴링 방식만 작동함.
+
+#### 6. 배포 확인
+- Production URL: https://personalized-skincare-study.vercel.app
+- Inspect URL: 배포 완료 시 출력되는 URL에서 빌드 로그 확인
+- `✓ Ready in Ns` 메시지 확인
+
+### 실패 시 원인별 대응
+
+| 에러 | 원인 | 해결 |
+|------|------|------|
+| `Not authorized` | 인증 만료 또는 다른 계정 로그인 | `vercel login` (skygold 계정으로 브라우저 인증) |
+| `Your previously selected team is no longer accessible` | 팀 스코프 변경 | 브라우저 https://vercel.com/logout → skygoldlee 계정으로 재로그인 |
+| 로컬 변경사항 충돌 | pull 전 미커밋 | `git stash; git pull; git stash pop` 또는 `git checkout --theirs` |
+| `WaitDelay expired` (Cascade) | Cascade 동기 타임아웃 | 비동기 패턴(`Blocking: false` + `command_status`) 사용 또는 터미널 직접 실행 |
+| 빌드 용량 초과 (100MB) | `.vercelignore` 미적용 | 오디오북/HTML/tools 폴더가 제외되어 있는지 확인 (3절 참조) |
+
+---
+
 ## 4. vercel.json 헤더 및 캐시 정책
 
 [`vercel.json`](../vercel.json)은 CSP 헤더, 보안 헤더, 캐시 정책을 정의합니다.
