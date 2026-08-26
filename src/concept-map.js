@@ -187,6 +187,13 @@ export function renderConceptMap(container, chapter, opts = {}) {
         return w < 480;
     };
 
+    const updateScrollIndicator = () => {
+        const wrapper = container.closest('.concept-map-container') || container.parentElement;
+        if (!wrapper) return;
+        const hasScroll = container.scrollHeight > container.clientHeight + 2;
+        wrapper.classList.toggle('has-scroll', hasScroll);
+    };
+
     const render = () => {
         const mobile = detectMobile();
         const svgHtml = generateConceptMap(chapter, { ...opts, mobile });
@@ -198,6 +205,8 @@ export function renderConceptMap(container, chapter, opts = {}) {
         container.innerHTML = svgHtml;
         container.style.display = 'block';
         bindNodes(onNodeClick);
+        // 스크롤 indicator 갱신 (DOM 렌더 후)
+        requestAnimationFrame(updateScrollIndicator);
     };
 
     const bindNodes = (clickHandler) => {
@@ -220,6 +229,9 @@ export function renderConceptMap(container, chapter, opts = {}) {
 
     render();
 
+    // 스크롤 시 indicator 갱신
+    container.addEventListener('scroll', updateScrollIndicator, { passive: true });
+
     // 화면 회전/리사이즈 시 재렌더링 (디바운스)
     if (!container._cmapResizeBound) {
         container._cmapResizeBound = true;
@@ -232,6 +244,8 @@ export function renderConceptMap(container, chapter, opts = {}) {
                 const wasMobile = svg && svg.classList.contains('concept-map-mobile');
                 if (isMobile !== wasMobile) {
                     render();
+                } else {
+                    updateScrollIndicator();
                 }
             }, 200);
         });

@@ -1865,6 +1865,23 @@ body.landscape-mode .glass-card {
     position: relative;
 }
 
+.concept-map-container::after {
+    content: '';
+    position: absolute;
+    bottom: 1rem;
+    left: 0;
+    right: 0;
+    height: 24px;
+    background: linear-gradient(to bottom, transparent, var(--bg-card));
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.concept-map-container.has-scroll::after {
+    opacity: 1;
+}
+
 .concept-map-header {
     display: flex;
     align-items: center;
@@ -1916,6 +1933,9 @@ body.landscape-mode .glass-card {
 .concept-map-body.expanded {
     max-height: 800px;
     opacity: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
 }
 
 .concept-map-svg {
@@ -1965,6 +1985,10 @@ body.landscape-mode .glass-card {
 @media (max-width: 768px) {
     .concept-map-container {
         padding: 0.6rem;
+    }
+
+    .concept-map-body.expanded {
+        max-height: 60vh;
     }
 
     .concept-map-svg.concept-map-mobile {
