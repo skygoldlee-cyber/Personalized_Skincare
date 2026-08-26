@@ -34,11 +34,10 @@ data/exam_data.js
 # 더 이상 로드되지 않는다. `npm run build:data` 가 재생성하더라도 배포에서 제외한다.
 data/subjects/
 
-# ---------- 🗑️ file:// 전용 폴백 번들 (프로덕션 불필요) ----------
-# 아래 번들은 file:// 프로토콜(로컬 직접 열기)에서만 사용된다.
-# Vercel 배포(http(s))에서는 content/*.md 라이브 fetch로 로드되므로 불필요.
+# ---------- 🗑️ file:// 전용 폴백 번들 ----------
+# data/docs_md/는 file:// 프로토콜(로컬 직접 열기)뿐 아니라
+# 모바일 PWA에서 fetch 실패 시 폴백으로도 사용되므로 배포에 포함한다.
 data/exams_md/
-data/docs_md/
 data/study_md/
 
 # ---------- ⏳ 일회성 ID 마이그레이션 맵 (유예 후 제거 가능) ----------
