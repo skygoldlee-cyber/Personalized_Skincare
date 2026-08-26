@@ -1,21 +1,73 @@
 # 📱 Vercel 배포 및 오디오북 호스팅 종합 가이드 (Deployment & Hosting)
 
 > **대상 프로젝트**: 맞춤형화장품 조제관리사 스마트 학습 플랫폼 (Cosmetic Pass Master)  
-> **최종 업데이트**: 2026-08-25  
+> **최종 업데이트**: 2026-08-26  
 > **목적**: Vercel 무료 Hobby 플랜(100MB 한도)에 맞춰 프로젝트 크기를 최적화하고, 대용량 오디오북을 연동하여 스마트폰 홈 화면에 설치(PWA)하는 배포 프로세스 가이드
 
 ---
 
 ## 📋 목차
-1. [배경 및 용량 분석](#1-배경-및-용량-분석)
-2. [Vercel 배포 최적화 (.vercelignore 설정)](#2-vercel-배포-최적화-vercelignore-설정)
-3. [Vercel 서비스 배포 방법](#3-vercel-서비스-배포-방법)
-4. [대용량 오디오북 외부 호스팅 (GitHub Releases)](#4-대용량-오디오북-외부-호스팅-github-releases)
-5. [모바일 기기 설치 및 PWA 등록](#5-모바일-기기-설치-및-pwa-등록)
+1. [Vercel 프로젝트 저장 정보](#1-vercel-프로젝트-저장-정보)
+2. [배경 및 용량 분석](#2-배경-및-용량-분석)
+3. [Vercel 배포 최적화 (.vercelignore 설정)](#3-vercel-배포-최적화-vercelignore-설정)
+4. [vercel.json 헤더 및 캐시 정책](#4-verceljson-헤더-및-캐시-정책)
+5. [Vercel 서비스 배포 방법](#5-vercel-서비스-배포-방법)
+6. [대용량 오디오북 외부 호스팅 (GitHub Releases)](#6-대용량-오디오북-외부-호스팅-github-releases)
+7. [모바일 기기 설치 및 PWA 등록](#7-모바일-기기-설치-및-pwa-등록)
 
 ---
 
-## 1. 배경 및 용량 분석
+## 1. Vercel 프로젝트 저장 정보
+
+### 1-1. 프로젝트 식별 정보 (`.vercel/project.json`)
+
+| 항목 | 값 |
+|------|-----|
+| **projectId** | `prj_706IdDze2DZsNwjADIfhvsfWL3HW` |
+| **orgId** | `team_P4ciaJGD9bvDziPxZM6FOCSK` |
+| **projectName** | `personalized-skincare-study` |
+| **프로덕션 URL** | `https://personalized-skincare-study.vercel.app` |
+| **Vercel 대시보드** | `https://vercel.com/skygold/personalized-skincare-study` |
+
+> `.vercel/project.json`은 `.gitignore`에 의해 Git에 커밋되지 않지만, `.vercelignore`에서 `.vercel/`이 배포 제외되므로 로컬에만 존재합니다. 새 머신에서는 `vercel` 명령 한 번으로 자동 생성됩니다.
+
+### 1-2. Git 원격 저장소
+
+| 항목 | 값 |
+|------|-----|
+| **remote origin** | `git@github-skygold:skygoldlee-cyber/Personalized_Skincare.git` (SSH 별칭) |
+| **브랜치** | `main` |
+| **GitHub URL** | `https://github.com/skygoldlee-cyber/Personalized_Skincare` |
+
+### 1-3. 인증 방식
+
+| 서비스 | 방식 | 비고 |
+|--------|------|------|
+| **GitHub** | SSH 키 (`github-skygold` 별칭) | `~/.ssh/config`에 별칭 정의 필요 |
+| **Vercel CLI** | 글로벌 로그인 (브라우저 OAuth) | `vercel login` 1회 수행 → 토큰 자동 저장 |
+
+> 새 머신 설정이 필요한 경우 [`docs/MULTI_MACHINE_SETUP.md`](MULTI_MACHINE_SETUP.md) 참조.
+
+### 1-4. 배포 전 빌드 파이프라인
+
+배포 전 반드시 다음 순서로 빌드 및 테스트를 수행합니다:
+
+```bash
+# 1. 데이터 빌드 (content/*.md → data/*.hash.js 번들 생성)
+node tools/build/index.js
+
+# 2. 단위 테스트 (86개)
+npm test
+
+# 3. Vercel 프로덕션 배포
+cmd /c vercel --prod
+```
+
+> ⚠️ `npx vercel` 대신 `cmd /c vercel --prod`를 사용합니다 (Windows pwsh 환경).
+
+---
+
+## 2. 배경 및 용량 분석
 
 본 플랫폼의 19개 챕터 오디오북 MP3 파일의 합계는 **약 302MB**입니다. Vercel 무료 Hobby 플랜은 1회 배포 시 프로젝트의 총용량을 **100MB**로 제한하므로, 오디오 파일을 프로젝트 소스코드와 함께 배포할 수 없습니다.
 
@@ -36,7 +88,7 @@
 
 ---
 
-## 2. Vercel 배포 최적화 (.vercelignore 설정)
+## 3. Vercel 배포 최적화 (.vercelignore 설정)
 
 정적 자원만 Vercel에 업로드되도록 하기 위해 프로젝트 루트의 [`.vercelignore`](file:///c:/Project/Personalized_Skincare/.vercelignore) 파일에 다음과 같은 규칙을 설정합니다.
 
@@ -63,9 +115,33 @@ __pycache__/
 
 ---
 
-## 3. Vercel 서비스 배포 방법
+## 5. Vercel 서비스 배포 방법
 
-### 방법 A: GitHub 연동 자동 배포 (권장)
+### 방법 A: Vercel CLI 직접 배포 (현재 사용 방식)
+
+Git push 후 터미널에서 직접 배포합니다. 현재 프로젝트에서 사용하는 방식입니다.
+
+```bash
+# 1. 빌드
+node tools/build/index.js
+
+# 2. 테스트
+npm test
+
+# 3. Git 커밋 및 푸시
+git add -A && git commit -m "feat: ..." && git push origin main
+
+# 4. Vercel 배포 (Windows pwsh)
+cmd /c vercel --prod
+```
+
+배포 완료 후 출력 예:
+```
+✓ Ready in 6s
+Production:  https://personalized-skincare-study.vercel.app
+```
+
+### 방법 B: GitHub 연동 자동 배포
 코드를 수정하고 `git push`를 실행하면 Vercel이 변경 사항을 감지하여 자동으로 다시 배포해 줍니다.
 
 1. **GitHub 저장소 만들기**: GitHub 로그인 후 **New repository**를 생성합니다 (예: `skincare-study-app`). README는 추가하지 않고 빈 상태로 생성합니다.
@@ -81,26 +157,69 @@ __pycache__/
 3. **Vercel 연동**: Vercel 대시보드에 접속하여 **Add New... ➔ Project**를 클릭하고 방금 업로드한 GitHub 저장소를 **Import**합니다.
 4. **프로젝트 빌드 설정**: 빌드 옵션(Framework Preset: *Other*, Build/Output Command: *비워둠*)은 수정 없이 기본값으로 두고 **Deploy**를 클릭합니다. 약 30초 후 배포가 완료됩니다.
 
-### 방법 B: Vercel CLI 직접 배포 (가장 빠름)
-Git 연동 없이 터미널 명령어 하나로 현재 로컬 상태를 즉시 배포합니다.
+### 방법 C: GitHub Actions 자동 배포
 
-1. **Vercel CLI 설치**:
-   ```bash
-   npm install -g vercel
-   ```
-2. **배포 명령어 실행**:
-   ```bash
-   vercel --prod
-   ```
-3. 터미널의 대화형 프롬프트에 따라 엔터를 누르고 연동하면 배포 URL이 즉시 생성됩니다.
+`git push`만 하면 GitHub가 자동으로 Vercel 배포를 수행합니다. 설정 방법은 [`docs/MULTI_MACHINE_SETUP.md`](MULTI_MACHINE_SETUP.md)의 "GitHub Actions로 배포 자동화" 섹션을 참조하세요.
+
+> ⚠️ 수동 배포(방법 A)와 자동 배포(방법 C)를 혼용하면 충돌이 발생할 수 있으므로 하나를 선택하세요.
 
 ---
 
-## 4. 대용량 오디오북 외부 호스팅 (GitHub Releases)
+## 4. vercel.json 헤더 및 캐시 정책
+
+[`vercel.json`](../vercel.json)은 CSP 헤더, 보안 헤더, 캐시 정책을 정의합니다.
+
+### 4-1. Content-Security-Policy (CSP)
+
+```
+default-src 'self';
+base-uri 'self';
+object-src 'none';
+frame-ancestors 'none';
+form-action 'self';
+img-src 'self' data:;
+font-src 'self' data:;
+style-src 'self' 'unsafe-inline';
+script-src 'self' 'unsafe-eval';
+connect-src 'self';
+worker-src 'self';
+manifest-src 'self'
+```
+
+- `script-src 'self' 'unsafe-eval'`: 자체 JS만 허용 (inline script 차단). `unsafe-eval`은 빌드 산출물 호환성을 위해 유지
+- `connect-src 'self'`: 외부 API 호출 차단 (오디오는 GitHub Releases URL이 `connect-src`가 아닌 `media-src`로 처리됨 — 사운드 파일은 `<audio>` 태그로 로드되어 CSP `media-src` 제한이 없으면 허용)
+- `frame-ancestors 'none'`: 클릭재킹 방지
+
+### 4-2. 보안 헤더
+
+| 헤더 | 값 | 목적 |
+|------|-----|------|
+| `X-Content-Type-Options` | `nosniff` | MIME 스니핑 방지 |
+| `Referrer-Policy` | `strict-origin-when-cross-origin` | Referrer 정보 제한 |
+| `X-Frame-Options` | `DENY` | iframe 삽입 차단 |
+| `Permissions-Policy` | `geolocation=(), microphone=(), camera=(), payment=(), usb=(), interest-cohort=()` | 디바이스 API 접근 차단 |
+
+### 4-3. 캐시 정책
+
+| 경로 | Cache-Control | 이유 |
+|------|---------------|------|
+| `/sw.js` | `no-cache, no-store, must-revalidate` | Service Worker는 항상 최신 |
+| `/manifest.webmanifest` | `public, max-age=0, must-revalidate` | PWA 매니페스트 즉시 갱신 |
+| `/index.html` | `public, max-age=0, must-revalidate` | 진입점 항상 최신 |
+| `/src/(.*)` | `public, max-age=0, must-revalidate` | JS 모듈 배포 시 즉시 반영 |
+| `/data/registry.js` | `public, max-age=0, must-revalidate` | 레지스트리 갱신 즉시 반영 |
+| `/data/audio_manifest.js` | `public, max-age=0, must-revalidate` | 오디오 매니페스트 갱신 즉시 반영 |
+| `/data/id_migration.js` | `public, max-age=0, must-revalidate` | 마이그레이션 맵 갱신 |
+| `/data/exams/(.*)` | `public, max-age=31536000, immutable` | 해시 파일명 — 1년 불변 캐시 |
+| `/data/ingredients_data.(.*)` | `public, max-age=31536000, immutable` | 해시 파일명 — 1년 불변 캐시 |
+
+---
+
+## 6. 대용량 오디오북 외부 호스팅 (GitHub Releases)
 
 Vercel 용량 한도를 피하기 위해 대용량 MP3 파일은 **GitHub Releases** 공간에 릴리스 파일(Binaries) 형식으로 호스팅하여 무제한 다운로드 대역폭과 Range 요청(이어듣기) 지원을 무료로 확보합니다.
 
-### 4-1. GitHub Release 생성 및 MP3 업로드
+### 6-1. GitHub Release 생성 및 MP3 업로드
 1. GitHub 저장소의 우측 메뉴에서 **Releases** ➔ **Create a new release**를 클릭합니다.
 2. **Tag version**에 `audiobook-v1`을 입력하고 타이틀을 `Audiobook v1`으로 정합니다.
 3. 19개 챕터의 통합 MP3 파일들을 **Attach binaries** 영역에 드래그 앤 드롭하여 업로드한 후 **Publish release**를 클릭합니다.
@@ -109,7 +228,7 @@ Vercel 용량 한도를 피하기 위해 대용량 MP3 파일은 **GitHub Releas
    https://github.com/skygoldlee-cyber/Personalized_Skincare/releases/download/audiobook-v1/ch01_1_화장품법.mp3
    ```
 
-### 4-2. 오디오 매니페스트 연동 코드 수정
+### 6-2. 오디오 매니페스트 연동 코드 수정
 업로드된 주소를 앱에서 접근할 수 있도록 [`data/audio_manifest.js`](file:///c:/Project/Personalized_Skincare/data/audio_manifest.js) 파일을 수정합니다.
 
 - **`AUDIO_BASE_URL` 설정**:
@@ -133,7 +252,7 @@ Vercel 용량 한도를 피하기 위해 대용량 MP3 파일은 **GitHub Releas
 
 ---
 
-## 5. 모바일 기기 설치 및 PWA 등록
+## 7. 모바일 기기 설치 및 PWA 등록
 
 스마트폰에서 모바일 앱처럼 깔끔하게 설치하여 홈 화면에 두고 실행하는 방법입니다.
 
