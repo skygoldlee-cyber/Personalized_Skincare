@@ -318,7 +318,12 @@ function main() {
     console.log('Skipping Ingredients Database (기존 번들 유지)');
   }
 
-  // 5. Output Registry File
+  // 5. Resources (추천 링크 — manifest에서 registry로 전달)
+  if (manifest.resources) {
+    registry.resources = manifest.resources;
+  }
+
+  // 6. Output Registry File
   const registryPath = path.join(DATA_DIR, 'registry.js');
   const registryJsContent = `// 자동 생성된 데이터 레지스트리 파일입니다. 수정하지 마십시오.
 /** @type {import('../src/types.js').DataRegistry} */

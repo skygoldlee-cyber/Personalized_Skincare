@@ -195,6 +195,16 @@
  */
 
 /**
+ * 추천 외부 링크 리소스 메타데이터.
+ * @typedef {Object} ResourcesMeta
+ * @property {string}                  sectionTitle
+ * @property {string}                  sectionDesc
+ * @property {string}                  summaryTitle
+ * @property {Array<{icon:string, name:string, desc:string}>} summaries
+ * @property {Array<{badgeIcon:string, badgeText:string, badgeColor:string, title:string, desc:string, url:string, linkText:string}>} links
+ */
+
+/**
  * 전체 데이터 레지스트리(data/registry.js의 DATA_REGISTRY).
  * @typedef {Object} DataRegistry
  * @property {number}          schemaVersion
@@ -203,6 +213,7 @@
  * @property {SubjectMeta[]}   subjects
  * @property {ExamMeta[]}      exams
  * @property {IngredientsMeta} ingredients
+ * @property {ResourcesMeta}   [resources]
  */
 
 /* =======================================================

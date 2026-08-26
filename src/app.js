@@ -270,6 +270,50 @@ ${btnsHtml}
     });
 }
 
+function populateResourceCards() {
+    const container = document.getElementById('resources-section');
+    if (!container) return;
+    const registry = (typeof DataLoader !== 'undefined' && DataLoader.registry) ? DataLoader.registry : null;
+    if (!registry || !registry.resources) return;
+
+    const res = registry.resources;
+    const summaryCardsHtml = (res.summaries || []).map(s => `
+                            <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 1rem;">
+                                <strong style="color: var(--color-text-main); display: block; margin-bottom: 0.5rem; font-size: 0.9rem;">${s.icon} ${esc(s.name)}</strong>
+                                <span style="color: var(--color-text-muted); line-height: 1.5; display: block;">${esc(s.desc)}</span>
+                            </div>`).join('\n');
+
+    const linkCardsHtml = (res.links || []).map(l => `
+                        <div class="exam-card-item">
+                            <div class="exam-card-badge ${l.badgeColor}"><i class="${l.badgeIcon}"></i> ${esc(l.badgeText)}</div>
+                            <h4 class="exam-card-title">${esc(l.title)}</h4>
+                            <p class="exam-card-desc">${esc(l.desc)}</p>
+                            <div class="exam-card-btns">
+                                <a href="${l.url}" target="_blank" class="exam-btn-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> ${esc(l.linkText)}</a>
+                            </div>
+                        </div>`).join('\n');
+
+    container.innerHTML = `
+                    <div class="section-title-area" style="margin-top: 3rem;">
+                        <h3>${esc(res.sectionTitle)}</h3>
+                        <p>${esc(res.sectionDesc)}</p>
+                    </div>
+
+                    <div style="background: rgba(6, 182, 212, 0.05); border: 1px solid rgba(6, 182, 212, 0.15); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.15);">
+                        <h4 style="color: var(--color-primary); font-size: 1.1rem; margin-bottom: 1rem; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                            <i class="fa-solid fa-graduation-cap"></i> ${esc(res.summaryTitle)}
+                        </h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; font-size: 0.85rem;">
+${summaryCardsHtml}
+                        </div>
+                    </div>
+
+                    <div class="exam-list-grid">
+${linkCardsHtml}
+                    </div>`;
+    container.style.display = 'block';
+}
+
 function initApp() {
     // 한 단계가 실패해도 나머지 버튼 연결/렌더가 죽지 않도록 각 단계를 격리한다.
     // (배포 간 캐시 스큐로 특정 요소/바인딩이 어긋나도 앱이 통째로 벽돌이 되는 것 방지)
@@ -277,6 +321,7 @@ function initApp() {
     step('loadProgress', loadProgress);
     step('populateSubjectSelects', populateSubjectSelects);
     step('populateExamCards', populateExamCards);
+    step('populateResourceCards', populateResourceCards);
     const navOk = step('setupNavigation', setupNavigation);
     step('setupEventListeners', setupEventListeners);
     step('setupPWAInstall', setupPWAInstall);
