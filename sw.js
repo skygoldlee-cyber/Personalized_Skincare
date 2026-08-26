@@ -269,7 +269,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 4-1) 마크다운 원본 파일 → Cache First (exams/*.md 등, 정적 원본)
+  // 4-1) 마크다운 원본 파일 → Cache First (content/exams/*.md 등, 정적 원본)
   if (MD_PATTERN.test(url.pathname)) {
     event.respondWith(cacheFirst(request, SHELL_CACHE));
     return;

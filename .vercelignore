@@ -15,7 +15,7 @@ audiobook/mp3/
 # 앱에서 링크로 여는 문서 HTML(docs/*.html)만 배포에 포함하고,
 # 루트 index.html(진입점)은 반드시 유지한다.
 # ※ 교재/카드/퀴즈: content/*.md(원본, 배포됨) + data/study_md.js(file://·fetch실패 폴백)
-# ※ 문제집: exams/*.md(원본) + data/exams_md/*.js(file:// 폴백)
+# ※ 문제집: content/exams/*.md(원본) + data/exams_md/*.js(file:// 폴백)
 *.html
 !index.html
 !docs/*.html
@@ -24,6 +24,8 @@ audiobook/mp3/
 # index.html은 모듈러 구조(registry + data/subjects·exams/*.hash.js)만 로드한다.
 # 아래 구 단일 번들은 어디에서도 로드되지 않으므로(합계 ~1.48MB) 배포에서 제외한다.
 # (리포에서도 제거 권장 — 재생성은 tools/build/index.js가 담당)
+# data/study_data.js, data/exam_data.js는 이미 삭제됨 — .vercelignore에서도 제거 가능하나
+# 혹시 모를 로컬 잔재를 위해 규칙은 유지한다.
 data/study_data.js
 data/exam_data.js
 
