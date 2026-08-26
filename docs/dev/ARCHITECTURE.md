@@ -10,18 +10,19 @@
 
 1. [설계 철학 (Design Philosophy)](#-설계-철학-design-philosophy)
 2. [시스템 아키텍처 개요](#-시스템-아키텍처-개요)
-3. [계층별 상세 구조](#-계층별-상세-구조)
-4. [모듈 설계](#-모듈-설계)
-5. [데이터 흐름](#-데이터-흐름)
-6. [상태 관리 전략](#-상태-관리-전략)
-7. [테마 시스템 (라이트/다크)](#-테마-시스템-라이트다크)
-8. [PWA & 오프라인 전략](#-pwa--오프라인-전략)
-9. [Service Worker 동작 메커니즘](#-service-worker-동작-메커니즘)
-10. [반응형 & 모바일 설계](#-반응형--모바일-설계)
-11. [보안 설계](#-보안-설계)
-12. [빌드 타임 데이터 파이프라인](#-빌드-타임-데이터-파이프라인)
-13. [주요 설계 결정 및 근거](#-주요-설계-결정-및-근거)
-14. [향후 확장 방향](#-향후-확장-방향)
+3. [프로젝트 루트 파일 분류](#-프로젝트-루트-파일-분류)
+4. [계층별 상세 구조](#-계층별-상세-구조)
+5. [모듈 설계](#-모듈-설계)
+6. [데이터 흐름](#-데이터-흐름)
+7. [상태 관리 전략](#-상태-관리-전략)
+8. [테마 시스템 (라이트/다크)](#-테마-시스템-라이트다크)
+9. [PWA & 오프라인 전략](#-pwa--오프라인-전략)
+10. [Service Worker 동작 메커니즘](#-service-worker-동작-메커니즘)
+11. [반응형 & 모바일 설계](#-반응형--모바일-설계)
+12. [보안 설계](#-보안-설계)
+13. [빌드 타임 데이터 파이프라인](#-빌드-타임-데이터-파이프라인)
+14. [주요 설계 결정 및 근거](#-주요-설계-결정-및-근거)
+15. [향후 확장 방향](#-향후-확장-방향)
 
 ---
 
@@ -110,7 +111,49 @@
 
 ---
 
-## 📚 계층별 상세 구조
+## � 프로젝트 루트 파일 분류
+
+프로젝트 루트에는 프레임워크/도구 요구사항으로 인해 반드시 루트에 위치해야 하는 파일들이 있습니다.
+
+### 루트 필수 파일 (이동 불가)
+
+| 파일 | 용도 | 제약 사유 |
+|------|------|-----------|
+| `index.html` | SPA App Shell 진입점 | Vercel/정적 호스팅 루트 요구 |
+| `style.css` | CSS 진입점 (`@import` 어그리게이터, `css/*.css` 6개 로드) | `index.html`에서 참조 |
+| `sw.js` | Service Worker | SW 스코프이 루트(또는 명시적 `Scope`)에서만 전역 캐싱 |
+| `manifest.webmanifest` | PWA 웹 앱 매니페스트 | `index.html`에서 참조 |
+| `ping.txt` | 오프라인 감지용 same-origin 프로브 (내용 `1`) | `app.js`/`sw.js`에서 same-origin fetch |
+| `vercel.json` | Vercel 배포 설정 (CSP, 보안 헤더, 캐시 정책) | Vercel CLI 요구 |
+| `.vercelignore` | Vercel 배포 제외 목록 | Vercel CLI 요구 |
+| `.gitignore` | Git 추적 제외 | Git 표준 |
+| `README.md` | 프로젝트 소개 문서 | GitHub/관례 |
+| `package.json` | npm 의존성 및 스크립트 | npm 표준 |
+| `package-lock.json` | npm 의존성 잠금 파일 | npm 표준 |
+| `jsconfig.json` | VSCode IntelliSense 설정 (`checkJs`, 경로 매핑) | IDE 프로젝트 루트 요구 |
+| `vitest.config.mjs` | Vitest DOM 테스트 설정 | Vitest 요구 |
+| `.github/` | GitHub Actions CI 워크플로우 | GitHub 요구 |
+| `.vercel/` | Vercel CLI 프로젝트 설정 | Vercel CLI 요구 |
+| `node_modules/` | npm 설치 패키지 | npm 표준 |
+
+### 루트 디렉터리 (콘텐츠)
+
+| 디렉터리 | 용도 |
+|-----------|------|
+| `src/` | 애플리케이션 소스 코드 (ESM 모듈 + 뷰 컨트롤러) |
+| `css/` | UI 모듈별 스타일시트 (`base`, `dashboard`, `study`, `exam`, `trainer`, `reader`) |
+| `data/` | 빌드 산출물 (레지스트리, 과목/시험/성분 번들, MD 폴백) |
+| `content/` | 교재 MD 원본, 성분 사전, 오디오북 파이프라인, 단권화 요약집 |
+| `exams/` | 모의고사 MD 원본 및 뷰어 소스 |
+| `docs/` | 프로젝트 문서 (`dev/` 개발 문서, `user/` 사용자 문서) |
+| `tools/` | 빌드 스크립트, 로컬 개발 서버, 검증 도구 |
+| `tests/` | 자동화 테스트 (`unit/` Node.js, `dom/` Vitest+jsdom) |
+| `vendor/` | 자체 호스팅 라이브러리 (FontAwesome, 웹폰트, Mermaid.js) |
+| `icons/` | PWA 아이콘 (192/512/maskable) |
+
+---
+
+## �� 계층별 상세 구조
 
 ### 1. Presentation Layer (표현 계층)
 
