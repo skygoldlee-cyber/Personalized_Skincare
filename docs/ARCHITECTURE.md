@@ -150,8 +150,8 @@
 
 | 파일 | 내용 | 생성 주체 |
 |------|------|-----------|
-| [`data/registry.js`](../data/registry.js) | 시험/성분 번들 목록·메타 + 과목 목록/통계. **과목 `shortName`**, 시험 **`file`** 필드 포함 → 소스 코드 하드코딩 제거 | `tools/build/index.js` |
-| [`content/**/*.md`](../content/) + [`content/manifest.json`](../content/manifest.json) | **교재/카드/퀴즈/시험의 원본 (SSOT).** `manifest.json`에 과목 `shortName`, 시험 `file` 등 메타 포함 → 소스 코드 하드코딩 없이 전체 콘텐츠 교체 가능 | 저자 직접 작성 |
+| [`data/registry.js`](../data/registry.js) | 시험/성분 번들 목록·메타 + 과목 목록/통계 + 추천 링크. **과목 `shortName`**, 시험 **`file`**, **`resources`** 필드 포함 → 소스 코드 하드코딩 제거 | `tools/build/index.js` |
+| [`content/**/*.md`](../content/) + [`content/manifest.json`](../content/manifest.json) | **교재/카드/퀴즈/시험/추천링크의 원본 (SSOT).** `manifest.json`에 과목 `shortName`, 시험 `file`, `resources`(추천 링크·채널 요약) 등 메타 포함 → 소스 코드 하드코딩 없이 전체 콘텐츠 교체 가능 | 저자 직접 작성 |
 | [`data/study_md/`](../data/study_md/) | 교재 MD `file://` 폴백 번들 (**과목별 분할**: manifest.js + 과목별 `.js`). http에선 미사용. 과목 로드 시 해당 파일만 온디맨드 로드 | `tools/build_study_md_bundle.js` |
 | [`data/exams/<key>.<hash>.js`](../data/exams/) | 시험별 문항 번들 | `tools/build/index.js` (exams plugin) |
 | [`data/ingredients_data.<hash>.js`](../data/) | 화장품 성분 사전 (가용/금지/제한) | `tools/build/index.js` (ingredients plugin) |
@@ -352,7 +352,7 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 | 7 | 그 외 App Shell (아이콘/이미지 등) | **Stale-While-Revalidate** | 빠른 표시 + 백그라운드 갱신 |
 
 ### 캐시 버전 관리
-- `CACHE_VERSION` 상수로 캐시 네임스페이스 관리 (현재 `v39-20260826-14f3c4e`)
+- `CACHE_VERSION` 상수로 캐시 네임스페이스 관리 (현재 `v39-20260826-d6b2d60`)
 - **빌드 타임 자동 치환**: `tools/build/stamp-sw-version.js`가 빌드 완료 시 `CACHE_VERSION`을 `${prefix}-${YYYYMMDD}-${gitShort}` 형태로 자동 갱신 → 수동 관리 불필요
 - **배포 시 버전을 올리면 구 캐시 자동 정리** → 모바일 구버전 고착(Stale Cache) 문제 방지
 - `SHELL_ASSETS`에는 [`src/utils.js`](../src/utils.js), [`src/trainer-calc.js`](../src/trainer-calc.js) 등 분리된 모듈이 모두 프리캐시에 포함됨
@@ -716,6 +716,7 @@ content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.j
    - 기본 과목: `state.js`의 `'law'` 하드코딩 → `null` (initApp에서 registry 첫 과목으로 설정)
    - 축약명: `app.js`의 `.replace()` 체인 → `manifest.json` `shortName` 필드
    - 시험 카드: `index.html`의 4개 과목별 하드코딩 카드 → `populateExamCards()` 동적 생성
+   - 추천 링크: `index.html`의 6개 유튜브/외부링크 카드 + 4개 채널 요약 → `manifest.json` `resources` 섹션 + `populateResourceCards()` 동적 생성
    - **결과: `content/` 전체 교체 시 소스 코드 수정 불필요**
 
 ---

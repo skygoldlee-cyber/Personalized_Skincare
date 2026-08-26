@@ -190,6 +190,10 @@ mindmap
 - **기존**: `index.html`에 4개 과목별 시험 카드 하드코딩 (제목, 설명, 버튼, 경로)
 - **개선**: `#exam-cards-dynamic` 컨테이너 + `populateExamCards()`가 registry에서 자동 생성
 
+### 6-7. ✅ 추천 외부 링크 동적 생성 (`src/app.js`, `index.html`, `content/manifest.json`)
+- **기존**: `index.html`에 6개 유튜브/외부링크 카드 + 4개 채널 요약 판넬 + 부록 설명 하드코딩 (채널명, URL, 설명문 포함)
+- **개선**: `manifest.json` `resources` 섹션(sectionTitle, summaries, links)으로 이전; `#resources-section` 컨테이너 + `populateResourceCards()`가 registry에서 자동 생성
+
 ### 검증 결과
 - `node tools/build/index.js` 재빌드 성공
 - `npm test` 86/86 통과
