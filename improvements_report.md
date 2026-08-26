@@ -5,6 +5,8 @@
 > **2026-08-25 업데이트**: 1-1(app.js 분할), 1-2(ESM 완성), 4-1(단위 테스트), 4-2(CI/CD) 항목이 완료되었습니다. 완료된 항목은 ✅ 표시로 갱신합니다.
 >
 > **2026-08-26 업데이트**: 모바일 네비게이션 버그 수정, PWA 설치 버튼 수정(beforeinstallprompt 조기 캡처 + SW 조기 등록), 인앱 브라우저(WebView) 감지 및 Chrome 안내 기능이 완료되었습니다. 모든 개선 항목(1-1~5-3, 13항목) 구현 완료 및 ✅ 표시 갱신.
+>
+> **2026-08-26 추가 업데이트**: 콘텐츠 하드코딩 제거 리팩터링 완료. 시험 제목, 과목 매핑, 축약명, 시험 카드 등 모든 콘텐츠 데이터를 registry 기반 동적 로딩으로 전환하여 `content/` 전체 교체 시 소스 코드 수정 불필요. (섹션 6 추가)
 
 ---
 
@@ -157,3 +159,38 @@ mindmap
     - `.badge-amber`: `#f59e0b` → `#92400e` (대비 ~2.1:1 → ~5.7:1 ✅)
   - 기존 `.badge-gray` 오버라이드 패턴과 동일하게 적용
   - 모든 배지 색상이 WCAG AA 기준(4.5:1) 충족
+
+---
+
+## 6. 🔄 콘텐츠 하드코딩 제거 (완료: 2026-08-26)
+
+> **배경**: 향후 `content/` 디렉터리의 콘텐츠가 전면 교체될 수 있으므로, 과목명·시험 제목·과목 매핑 등 콘텐츠 데이터가 소스 코드에 하드코딩되어 있으면 안 됨.
+
+### 6-1. ✅ 시험 제목 동적 조회 (`src/exam-viewer.js`)
+- **기존**: 9개 파일명→한글 제목 하드코딩 맵 (`_titleFromPath`)
+- **개선**: `registry.exams[].file` 매칭으로 `.title` 동적 조회
+
+### 6-2. ✅ 과목 매핑 registry 전용 (`src/views/exam-simulator.js`)
+- **기존**: `examIdToSubjectId()`에 `subject1→'law'` 등 4개 하드코딩 폴백
+- **개선**: registry `exams[].key` / `exams[].subject` 매칭 전용, 실패 시 `null` 반환
+
+### 6-3. ✅ 차트 과목 집계 registry 기반 (`src/charts.js`)
+- **기존**: `subjectN` 문자열에서 인덱스 추출 → `subjects[idx]` 매핑
+- **개선**: `registry.exams` key 매칭으로 `exam.subject` 조회
+
+### 6-4. ✅ 기본 과목 null화 (`src/state.js`)
+- **기존**: `flashcards.subject` / `quiz.subject` 기본값 `'law'`
+- **개선**: `null`로 초기화, `initApp()`의 `populateSubjectSelects()`가 registry 첫 과목으로 설정
+
+### 6-5. ✅ 축약명 manifest 필드화 (`src/app.js`, `content/manifest.json`)
+- **기존**: `.replace('의 이해', '').replace(' 및 품질관리', '')` 등 문자열 교체 체인
+- **개선**: `manifest.json`에 `shortName` 필드 추가, registry에서 직접 사용
+
+### 6-6. ✅ 시험 카드 동적 생성 (`src/app.js`, `index.html`)
+- **기존**: `index.html`에 4개 과목별 시험 카드 하드코딩 (제목, 설명, 버튼, 경로)
+- **개선**: `#exam-cards-dynamic` 컨테이너 + `populateExamCards()`가 registry에서 자동 생성
+
+### 검증 결과
+- `node tools/build/index.js` 재빌드 성공
+- `npm test` 86/86 통과
+- Vercel 배포 완료

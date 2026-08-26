@@ -129,14 +129,14 @@
 
 | 모듈 | 책임 |
 |------|------|
-| [`src/app.js`](../src/app.js) | **메인 오케스트레이터** (1,154줄). 초기화(`initApp`), SPA 라우팅, 이벤트 바인딩, `startFocusSubjectStudy` 등 뷰 간 브릿지 함수 |
+| [`src/app.js`](../src/app.js) | **메인 오케스트레이터** (1,285줄). 초기화(`initApp`), SPA 라우팅, 이벤트 바인딩, `startFocusSubjectStudy` 등 뷰 간 브릿지 함수. `populateExamCards()`로 registry 기반 시험 카드 동적 생성 |
 | [`src/charts.js`](../src/charts.js) | SVG 기반 차트 생성 (레이더 차트, 성적 꺾은선 그래프). **인터랙티브 툴팁**(hover/touch) 지원. 외부 차트 라이브러리 미사용 |
 | [`src/scratchpad.js`](../src/scratchpad.js) | HTML5 Canvas 손글씨 연습장 (계산 문제 풀이용) |
 | [`src/trainer-calc.js`](../src/trainer-calc.js) | 계산 훈련 문제 생성기. **순수 로직** — DOM 의존 없이 문제 데이터 객첼만 반환 |
-| [`src/state.js`](../src/state.js) | 전역 상태 객체(`state`) 정의 + localStorage 영속성(`loadProgress`/`saveProgress`) |
+| [`src/state.js`](../src/state.js) | 전역 상태 객체(`state`) 정의 + localStorage 영속성(`loadProgress`/`saveProgress`). 기본 과목은 `null`이며 `initApp()`에서 registry 첫 과목으로 설정 |
 | [`src/utils.js`](../src/utils.js) | 의존성 없는 범용 헬퍼 (한글 초성 추출 `getChosung()` 등) |
 | [`src/sanitize.js`](../src/sanitize.js) | HTML/XSS 방어 및 텍스트 정제 유틸리티 |
-| [`src/exam-viewer.js`](../src/exam-viewer.js) | 문제집(MD) 런타임 뷰어. `content/exams/*.md` fetch → 자체 MD→HTML 변환 → 인앱 전체화면 오버레이 렌더링. TOC 생성·인쇄·sessionStorage 캐시(24h)·`file://` 번들 폴리백(`data/exams_md/*.js`) 지원 |
+| [`src/exam-viewer.js`](../src/exam-viewer.js) | 문제집(MD) 런타임 뷰어. `content/exams/*.md` fetch → 자체 MD→HTML 변환 → 인앱 전체화면 오버레이 렌더링. TOC 생성·인쇄·sessionStorage 캐시(24h)·`file://` 번들 폴리백(`data/exams_md/*.js`) 지원. **시험 제목은 registry에서 동적 조회** (하드코딩 없음) |
 | [`src/data-loader.js`](../src/data-loader.js) | 온디맨드 데이터 로더. **교재/카드/퀴즈: `content/*.md` 런타임 fetch+파싱**(http는 라이브 fetch, `file://`은 `data/study_md/` 과목별 분할 폴백, fetch 실패 시 자동 폴백). 시험/성분은 기존 번들 로드 유지. 로드 후 registry stats를 실제 개수로 갱신 |
 | [`src/textbook-parser.js`](../src/textbook-parser.js) | 교재 MD 런타임 파서. `tools/build/plugins/textbook.plugin.js`의 브라우저 포팅으로 카드/퀴즈/챕터를 조립(`buildSubjectData`). 빌드 산출물과 **바이트 단위 동일** 검증됨 |
 | [`src/ui-utils.js`](../src/ui-utils.js) | 공통 UI 유틸리티. 로딩 스피너(`showLoading`/`hideLoading`) 및 글로벌 로딩 오버레이(`showGlobalLoading`/`hideGlobalLoading`) |
@@ -150,8 +150,8 @@
 
 | 파일 | 내용 | 생성 주체 |
 |------|------|-----------|
-| [`data/registry.js`](../data/registry.js) | 시험/성분 번들 목록·메타 + 과목 목록/통계 | `tools/build/index.js` |
-| [`content/**/*.md`](../content/) + [`content/manifest.json`](../content/manifest.json) | **교재/카드/퀴즈의 원본 (SSOT).** 런타임에 fetch+파싱 | 저자 직접 작성 |
+| [`data/registry.js`](../data/registry.js) | 시험/성분 번들 목록·메타 + 과목 목록/통계. **과목 `shortName`**, 시험 **`file`** 필드 포함 → 소스 코드 하드코딩 제거 | `tools/build/index.js` |
+| [`content/**/*.md`](../content/) + [`content/manifest.json`](../content/manifest.json) | **교재/카드/퀴즈/시험의 원본 (SSOT).** `manifest.json`에 과목 `shortName`, 시험 `file` 등 메타 포함 → 소스 코드 하드코딩 없이 전체 콘텐츠 교체 가능 | 저자 직접 작성 |
 | [`data/study_md/`](../data/study_md/) | 교재 MD `file://` 폴백 번들 (**과목별 분할**: manifest.js + 과목별 `.js`). http에선 미사용. 과목 로드 시 해당 파일만 온디맨드 로드 | `tools/build_study_md_bundle.js` |
 | [`data/exams/<key>.<hash>.js`](../data/exams/) | 시험별 문항 번들 | `tools/build/index.js` (exams plugin) |
 | [`data/ingredients_data.<hash>.js`](../data/) | 화장품 성분 사전 (가용/금지/제한) | `tools/build/index.js` (ingredients plugin) |
@@ -352,7 +352,7 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 | 7 | 그 외 App Shell (아이콘/이미지 등) | **Stale-While-Revalidate** | 빠른 표시 + 백그라운드 갱신 |
 
 ### 캐시 버전 관리
-- `CACHE_VERSION` 상수로 캐시 네임스페이스 관리 (현재 `v39-20260826-845d245`)
+- `CACHE_VERSION` 상수로 캐시 네임스페이스 관리 (현재 `v39-20260826-14f3c4e`)
 - **빌드 타임 자동 치환**: `tools/build/stamp-sw-version.js`가 빌드 완료 시 `CACHE_VERSION`을 `${prefix}-${YYYYMMDD}-${gitShort}` 형태로 자동 갱신 → 수동 관리 불필요
 - **배포 시 버전을 올리면 구 캐시 자동 정리** → 모바일 구버전 고착(Stale Cache) 문제 방지
 - `SHELL_ASSETS`에는 [`src/utils.js`](../src/utils.js), [`src/trainer-calc.js`](../src/trainer-calc.js) 등 분리된 모듈이 모두 프리캐시에 포함됨
@@ -708,6 +708,15 @@ content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.j
 
 11. **검색 디바운스 최적화** ✅
    - 성분 사전/교재 검색에 250ms 디바운스 적용 → 모바일 타이핑 랙 감소
+
+12. **콘텐츠 하드코딩 제거** ✅
+   - 시험 제목: `exam-viewer.js`의 9개 하드코딩 맵 → `registry.exams[].file` + `.title` 동적 조회
+   - 과목 매핑: `exam-simulator.js`의 `subject1→'law'` 등 4개 하드코딩 폴백 제거 → registry 전용 조회
+   - 차트 과목 매핑: `charts.js`의 인덱스 기반 `subjectN` 파싱 → `registry.exams` key 매칭
+   - 기본 과목: `state.js`의 `'law'` 하드코딩 → `null` (initApp에서 registry 첫 과목으로 설정)
+   - 축약명: `app.js`의 `.replace()` 체인 → `manifest.json` `shortName` 필드
+   - 시험 카드: `index.html`의 4개 과목별 하드코딩 카드 → `populateExamCards()` 동적 생성
+   - **결과: `content/` 전체 교체 시 소스 코드 수정 불필요**
 
 ---
 

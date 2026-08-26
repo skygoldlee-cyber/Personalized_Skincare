@@ -350,3 +350,29 @@
   - `.badge-cyan`: `#0e7490` (대비 ~5.4:1), `.badge-violet`: `#6d28d9` (~5.9:1)
   - `.badge-emerald`: `#047857` (~4.8:1), `.badge-amber`: `#92400e` (~5.7:1)
   - 모든 배지 WCAG AA 기준(4.5:1) 충족
+
+---
+
+## 20. 콘텐츠 하드코딩 제거 (2026-08-26)
+
+> **목표**: 향후 `content/` 전체 교체 시 소스 코드 수정 불필요하도록 모든 콘텐츠 데이터를 동적 로딩으로 전환
+
+### 수정 내역
+
+- **`src/exam-viewer.js`**: 9개 시험 제목 하드코딩 맵 제거 → `registry.exams[].file` 매칭으로 `.title` 동적 조회
+- **`src/views/exam-simulator.js`**: `examIdToSubjectId()`의 `subject1→'law'` 등 4개 하드코딩 폴백 제거 → registry 전용 조회, 실패 시 `null` 반환
+- **`src/charts.js`**: `aggregateSubjectRates()`의 인덱스 기반 `subjectN` 파싱 제거 → `registry.exams` key 매칭
+- **`src/state.js`**: `flashcards.subject`/`quiz.subject` 기본값 `'law'` → `null` (initApp에서 registry 첫 과목으로 설정)
+- **`src/app.js`**: `.replace()` 체인 shortName → `registry.subjects[].shortName` 필드 사용; `populateExamCards()` 추가로 시험 카드 동적 생성
+- **`index.html`**: 4개 과목별 하드코딩 시험 카드 제거 → `#exam-cards-dynamic` 컨테이너 (JS에서 registry 기반 생성)
+- **`content/manifest.json`**: 모든 과목에 `shortName` 필드 추가
+- **`tools/build/index.js`**: registry 출력에 `shortName`, `file` 필드 추가
+- **`tools/build/manifest-loader.js`**: 시험 파일 경로 `exams/` → `content/exams/` 수정
+- **`tools/build/plugins/exams.plugin.js`**: 동일 경로 수정
+- **`src/types.js`**: `SubjectMeta.shortName`, `ExamMeta.file` 추가; `FlashcardsState.subject`/`QuizSessionState.subject` → `string|null`
+
+### 검증
+
+- `node tools/build/index.js` 재빌드 성공 (registry에 `shortName`, `file` 필드 포함 확인)
+- `npm test` 86/86 통과
+- Vercel 배포 완료
