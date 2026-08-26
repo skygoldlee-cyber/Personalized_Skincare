@@ -76,6 +76,11 @@
 │ │  │ (상태·  │ │ (초성·  │ │ (로딩UI)   │  (보안 유틸)   │ │
 │ │  │  영속성)│ │  헬퍼)  │ └────────────┘                │ │
 │ │  └─────────┘ └─────────┘                                │ │
+│ │  ┌─────────┐ ┌──────────────┐                          │ │
+│ │  │types.js │ │reader-format │  navigation.js           │ │
+│ │  │(JSDoc   │ │  .js         │  (뷰 전환 유틸)           │ │
+│ │  │ 타입)   │ │ (리더 포맷)  │                          │ │
+│ │  └─────────┘ └──────────────┘                          │ │
 │ │  ┌──────────────────────────────────────────────────┐  │ │
 │ │  │  views/ (뷰 컨트롤러 모듈)                          │  │ │
 │ │  │  dashboard · flashcard · quiz · trainer            │  │ │
@@ -125,7 +130,7 @@
 | 모듈 | 책임 |
 |------|------|
 | [`src/app.js`](../src/app.js) | **메인 오케스트레이터** (1,154줄). 초기화(`initApp`), SPA 라우팅, 이벤트 바인딩, `startFocusSubjectStudy` 등 뷰 간 브릿지 함수 |
-| [`src/charts.js`](../src/charts.js) | SVG 기반 차트 생성 (레이더 차트, 성적 꺾은선 그래프). 외부 차트 라이브러리 미사용 |
+| [`src/charts.js`](../src/charts.js) | SVG 기반 차트 생성 (레이더 차트, 성적 꺾은선 그래프). **인터랙티브 툴팁**(hover/touch) 지원. 외부 차트 라이브러리 미사용 |
 | [`src/scratchpad.js`](../src/scratchpad.js) | HTML5 Canvas 손글씨 연습장 (계산 문제 풀이용) |
 | [`src/trainer-calc.js`](../src/trainer-calc.js) | 계산 훈련 문제 생성기. **순수 로직** — DOM 의존 없이 문제 데이터 객첼만 반환 |
 | [`src/state.js`](../src/state.js) | 전역 상태 객체(`state`) 정의 + localStorage 영속성(`loadProgress`/`saveProgress`) |
@@ -136,7 +141,10 @@
 | [`src/textbook-parser.js`](../src/textbook-parser.js) | 교재 MD 런타임 파서. `tools/build/plugins/textbook.plugin.js`의 브라우저 포팅으로 카드/퀴즈/챕터를 조립(`buildSubjectData`). 빌드 산출물과 **바이트 단위 동일** 검증됨 |
 | [`src/ui-utils.js`](../src/ui-utils.js) | 공통 UI 유틸리티. 로딩 스피너(`showLoading`/`hideLoading`) 및 글로벌 로딩 오버레이(`showGlobalLoading`/`hideGlobalLoading`) |
 | [`src/sha256.js`](../src/sha256.js) | 순수 동기 SHA-256 + `stableId()`. 빌드타임 Node `crypto`와 동일한 카드/퀴즈 안정 ID를 브라우저에서 재현(진도 보존의 핵심) |
-| [`src/views/`](../src/views/) | **뷰 컨트롤러 모듈 디렉터리** (app.js에서 분리 추출). `dashboard.js`, `flashcard.js`, `quiz.js`, `trainer.js`, `dictionary.js`, `backup.js`, `textbook-search.js`, `textbook-reader.js`, `exam-simulator.js` |
+| [`src/types.js`](../src/types.js) | **순수 JSDoc 타입 선언 모듈** (런타임 코드 없음). `State`, `Card`, `SubjectMeta` 등 `@typedef` 정의. `jsconfig.json` checkJs로 편집기 타입 검사/자동완성 활성화 |
+| [`src/reader-format.js`](../src/reader-format.js) | 교재 리더 콘텐츠 포맷터 (MD 섹션 → HTML 변환) |
+| [`src/views/navigation.js`](../src/views/navigation.js) | 뷰 전환 유틸리티 (`switchView`). 순환 import 해결용 별도 모듈 |
+| [`src/views/`](../src/views/) | **뷰 컨트롤러 모듈 디렉터리** (app.js에서 분리 추출). `dashboard.js`, `flashcard.js`, `quiz.js`, `trainer.js`, `dictionary.js`, `backup.js`, `textbook-search.js`, `textbook-reader.js`(**Media Session API 연동**), `exam-simulator.js`(**오답 복습 연동**) |
 
 ### 3. Data Layer (데이터 계층)
 
@@ -196,13 +204,14 @@
 [분리 완료]
 utils.js (헬퍼)                  views/backup.js (백업/복원)
 trainer-calc.js (문제 생성)       views/textbook-search.js (교재 검색)
-state.js (상태·영속성)            views/textbook-reader.js (리더+오디오)
-charts.js (시각화)                views/exam-simulator.js (모의고사)
+state.js (상태·영속성)            views/textbook-reader.js (리더+오디오+Media Session)
+charts.js (시각화+인터랙티브 툴팁) views/exam-simulator.js (모의고사+오답 복습)
 sanitize.js (보안)                views/dashboard.js (대시보드)
 scratchpad.js (캔버스)            views/flashcard.js (플래시카드)
 reader-format.js (리더 포맷터)    views/quiz.js (퀴즈+복습)
 ui-utils.js (로딩 UI)             views/trainer.js (훈련소)
-                                  views/dictionary.js (성분 검색)
+types.js (JSDoc 타입 정의)        views/dictionary.js (성분 검색)
+                                 views/navigation.js (뷰 전환 유틸)
 ```
 
 > `app.js`에 남은 함수: `startFocusSubjectStudy`(뷰 간 브릿지), `switchView`, 초기화/네비게이션/이벤트 바인딩. `examIdToSubjectId`는 `exam-simulator.js`에서 정의 후 `app.js`를 통해 re-export되어 `quiz.js`가 import.
@@ -344,6 +353,7 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 
 ### 캐시 버전 관리
 - `CACHE_VERSION` 상수로 캐시 네임스페이스 관리 (현재 `v39-20260826-845d245`)
+- **빌드 타임 자동 치환**: `tools/build/stamp-sw-version.js`가 빌드 완료 시 `CACHE_VERSION`을 `${prefix}-${YYYYMMDD}-${gitShort}` 형태로 자동 갱신 → 수동 관리 불필요
 - **배포 시 버전을 올리면 구 캐시 자동 정리** → 모바일 구버전 고착(Stale Cache) 문제 방지
 - `SHELL_ASSETS`에는 [`src/utils.js`](../src/utils.js), [`src/trainer-calc.js`](../src/trainer-calc.js) 등 분리된 모듈이 모두 프리캐시에 포함됨
 - `data/registry.js`, `data/audio_manifest.js`도 프리캐시에 포함 (2026-08-25, window 전역 참조 방식 전환으로 모듈 그래프에서 분리되어 별도 캐싱 필요)
@@ -671,14 +681,33 @@ content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.j
    - Vitest + jsdom으로 DOM 렌더링/이벤트 테스트 기반 구축 (96 tests: 86 unit + 10 DOM)
    - GitHub Actions CI로 push 시 자동 테스트 실행
 
-4. **타입 안정성 도입 (선택)**
-   - JSDoc + `checkJs` 또는 TypeScript 점진 도입으로 대형 리팩토링 안전성 확보
+4. **타입 안정성 도입** ✅
+   - JSDoc `@typedef` 타입 정의 구축 (`src/types.js`, 217줄)
+   - `jsconfig.json` checkJs로 편집기 타입 검사/자동완성 활성화
 
 5. **백엔드 연동 확장성 (필요 시)**
    - 상태 영속성 계층(`state.js`의 `saveProgress`)을 추상화핛두어, 향후 클라우드 동기화 시 해당 지점만 API 호출로 교체 가능하도록 설계
 
 6. **성능 계측**
    - Core Web Vitals (LCP/CLS/INP) 기준 지속 모니터링, 대용량 데이터 지연 로딩 검토
+
+7. **인터랙티브 차트 툴팁** ✅
+   - SVG 라인/레이더 차트에 hover/touch 툴팁 추가 (날짜, 점수, 증감, 과목별 합격 상태)
+   - 모바일 터치 지원 + 화면 경계 자동 보정
+
+8. **Media Session API 연동** ✅
+   - 오디오북 재생 시 잠금화면/알림바 미디어 제어 (play/pause/seek/prev/next)
+   - `navigator.mediaSession.metadata`로 단원 제목, 과목명, 앨범 아트 설정
+
+9. **모의고사 오답 복습 연동** ✅
+   - 틀린 문제 자동 수집 → `state.weakCards`에 `weak_sim_*` ID 등록
+   - 오답 모의고사 생성 시 `window.EXAM_DATA`에서 원본 문제 역추적하여 복습 문제 조립
+
+10. **라이트 모드 WCAG 대비 개선** ✅
+   - 배지 색상(cyan/violet/emerald/amber) 라이트 테마 진한 색상 오버라이드 → WCAG AA 기준(4.5:1) 충족
+
+11. **검색 디바운스 최적화** ✅
+   - 성분 사전/교재 검색에 250ms 디바운스 적용 → 모바일 타이핑 랙 감소
 
 ---
 
@@ -687,3 +716,4 @@ content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.j
 - [`README.md`](../README.md) — 프로젝트 소개 및 시작 가이드 (폴더 구조 포함)
 - [`docs/DEPLOYMENT_GUIDE.md`](DEPLOYMENT_GUIDE.md) — Vercel 배포 및 오디오 호스팅 가이드
 - [`CHANGES.md`](../CHANGES.md) — 코드 리뷰 및 아키텍처 개편 수정 이력 (Changelog)
+- [`improvements_report.md`](../improvements_report.md) — 개선점 분석 및 구현 완료 보고서 (13항목 전부 ✅)
