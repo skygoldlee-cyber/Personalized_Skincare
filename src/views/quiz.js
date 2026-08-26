@@ -293,7 +293,7 @@ export function renderReviewList() {
             <div class="review-card-item" id="rev-${card.id}">
                 <div class="review-card-item-header">
                     <span class="card-badge">${esc(card.subjectName)}</span>
-                    <button class="review-remove-btn" onclick="removeWeakCard('${esc(card.id)}')">
+                    <button class="review-remove-btn" data-click="removeWeakCard" data-arg="${esc(card.id)}">
                         <i class="fa-solid fa-trash-can"></i> 제외
                     </button>
                 </div>
@@ -606,8 +606,8 @@ export function showDailyModal() {
                 </div>
                 
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <button class="btn btn-secondary" onclick="closeDailyModal()"><i class="fa-solid fa-xmark"></i> 나가기</button>
-                    <button id="daily-modal-next-btn" class="btn btn-success" style="display: none;" onclick="nextDailyStep()">다음 단계 <i class="fa-solid fa-arrow-right"></i></button>
+                    <button class="btn btn-secondary" data-click="closeDailyModal"><i class="fa-solid fa-xmark"></i> 나가기</button>
+                    <button id="daily-modal-next-btn" class="btn btn-success" style="display: none;" data-click="nextDailyStep">다음 단계 <i class="fa-solid fa-arrow-right"></i></button>
                 </div>
             </div>
         </div>
@@ -661,8 +661,8 @@ export function renderDailyStep() {
         
         answerArea.innerHTML = `
             <div style="display: flex; gap: 1rem; width: 100%;">
-                <button class="btn btn-warning" onclick="submitDailyCardAnswer(false)" style="flex: 1; justify-content: center;"><i class="fa-solid fa-question"></i> 아직 헷갈림</button>
-                <button class="btn btn-success" onclick="submitDailyCardAnswer(true)" style="flex: 1; justify-content: center;"><i class="fa-solid fa-check"></i> 완벽히 외움</button>
+                <button class="btn btn-warning" data-click="submitDailyCardAnswer" data-args="[false]" style="flex: 1; justify-content: center;"><i class="fa-solid fa-question"></i> 아직 헷갈림</button>
+                <button class="btn btn-success" data-click="submitDailyCardAnswer" data-args="[true]" style="flex: 1; justify-content: center;"><i class="fa-solid fa-check"></i> 완벽히 외움</button>
             </div>
         `;
     } else if (q.type === 'choice') {
@@ -682,7 +682,7 @@ export function renderDailyStep() {
         answerArea.innerHTML = `
             <div style="display: flex; gap: 1rem; align-items: center; width: 100%;">
                 <input type="text" id="daily-answer-input" class="form-input" placeholder="정답을 기재하세요" style="flex: 1; height: 50px;" autocomplete="off">
-                <button class="btn btn-primary" onclick="submitDailyShortAnswer()" style="height: 50px;"><i class="fa-solid fa-circle-check"></i> 제출</button>
+                <button class="btn btn-primary" data-click="submitDailyShortAnswer" style="height: 50px;"><i class="fa-solid fa-circle-check"></i> 제출</button>
             </div>
         `;
     }

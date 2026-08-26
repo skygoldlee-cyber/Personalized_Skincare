@@ -123,10 +123,10 @@ export function renderDashboard() {
                     </div>
                 </div>
                 <div class="subj-actions">
-                    <button class="btn btn-secondary" onclick="startSubjectStudy('${subjId}')">
+                    <button class="btn btn-secondary" data-click="startSubjectStudy" data-arg="${subjId}">
                         <i class="fa-solid fa-layer-group"></i> 카드 학습
                      </button>
-                    <button class="btn btn-primary" onclick="startSubjectQuiz('${subjId}')">
+                    <button class="btn btn-primary" data-click="startSubjectQuiz" data-arg="${subjId}">
                         <i class="fa-solid fa-play"></i> 퀴즈 풀기
                     </button>
                 </div>

@@ -586,7 +586,7 @@ export function submitExam() {
             failedSubjects.forEach(f => {
                 const subKey = f.id;
                 breakdownHTML += `
-                    <button class="btn" onclick="startFocusSubjectStudy('${subKey}')" style="padding: 3px 8px; font-size: 0.75rem; background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5; cursor: pointer; border-radius: 4px; display: inline-flex; align-items: center; gap: 0.25rem;">
+                    <button class="btn" data-click="startFocusSubjectStudy" data-arg="${subKey}" style="padding: 3px 8px; font-size: 0.75rem; background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5; cursor: pointer; border-radius: 4px; display: inline-flex; align-items: center; gap: 0.25rem;">
                         <i class="fa-solid fa-bolt"></i> ${esc(f.name.split(':')[0])} 퀴즈 풀기
                     </button>
                 `;

@@ -727,7 +727,7 @@ function renderChapterContent(subjId, chapterIdx) {
                     <i class="fa-solid fa-arrow-up-right-from-square"></i> 원본 MD
                 </a>
                 ${hasAudio ? `
-                <button id="reader-audio-toggle-btn" class="btn btn-secondary" onclick="toggleReaderAudio('${subjId}', ${chapterIdx})" style="display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; padding: 0.35rem 0.75rem;">
+                <button id="reader-audio-toggle-btn" class="btn btn-secondary" data-click="toggleReaderAudio" data-args='["${subjId}", ${chapterIdx}]' style="display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; padding: 0.35rem 0.75rem;">
                     <i class="fa-solid fa-headphones"></i> 오디오 듣기
                 </button>` : ''}
             </div>
@@ -739,14 +739,14 @@ function renderChapterContent(subjId, chapterIdx) {
                     <span id="reader-audio-status" style="margin-left: auto; font-size: 0.78rem; color: var(--warning); display: none;"></span>
                 </div>
                 <div style="display: flex; align-items: center; gap: 0.6rem;">
-                    <button id="reader-audio-playpause-btn" class="btn btn-secondary" onclick="toggleReaderPlayPause()" title="재생" style="display: inline-flex; align-items: center; justify-content: center; width: 2rem; height: 2rem; padding: 0; border-radius: 50%; flex-shrink: 0;">
+                    <button id="reader-audio-playpause-btn" class="btn btn-secondary" data-click="toggleReaderPlayPause" title="재생" style="display: inline-flex; align-items: center; justify-content: center; width: 2rem; height: 2rem; padding: 0; border-radius: 50%; flex-shrink: 0;">
                         <i class="fa-solid fa-play"></i>
                     </button>
                     <span id="reader-audio-current" style="font-variant-numeric: tabular-nums; flex-shrink: 0;">0:00</span>
-                    <input type="range" id="reader-audio-seek" min="0" max="100" value="0" step="0.1" disabled oninput="seekReaderAudio(this.value)" style="flex: 1; accent-color: var(--color-primary); cursor: pointer; height: 4px;">
+                    <input type="range" id="reader-audio-seek" min="0" max="100" value="0" step="0.1" disabled data-input="seekReaderAudio" style="flex: 1; accent-color: var(--color-primary); cursor: pointer; height: 4px;">
                     <span id="reader-audio-duration" style="font-variant-numeric: tabular-nums; flex-shrink: 0;">0:00</span>
-                    <button id="reader-audio-rate-btn" class="btn btn-secondary" onclick="cycleReaderAudioRate()" title="재생 속도" style="font-size: 0.78rem; padding: 0.25rem 0.5rem; flex-shrink: 0; min-width: 3rem;">1x</button>
-                    <button id="reader-audio-scroll-btn" class="btn btn-secondary" onclick="toggleReaderAutoScroll()" title="오디오 위치에 맞춰 자동으로 스크롤" style="font-size: 0.78rem; padding: 0.25rem 0.5rem; flex-shrink: 0; white-space: nowrap;">
+                    <button id="reader-audio-rate-btn" class="btn btn-secondary" data-click="cycleReaderAudioRate" title="재생 속도" style="font-size: 0.78rem; padding: 0.25rem 0.5rem; flex-shrink: 0; min-width: 3rem;">1x</button>
+                    <button id="reader-audio-scroll-btn" class="btn btn-secondary" data-click="toggleReaderAutoScroll" title="오디오 위치에 맞춰 자동으로 스크롤" style="font-size: 0.78rem; padding: 0.25rem 0.5rem; flex-shrink: 0; white-space: nowrap;">
                         <i class="fa-solid fa-arrows-up-down"></i> 스크롤 따라가기
                     </button>
                 </div>

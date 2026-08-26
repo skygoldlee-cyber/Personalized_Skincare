@@ -163,7 +163,7 @@ function performTextbookSearch() {
                 </div>
                 ${isLong ? `
                 <div class="textbook-card-actions">
-                    <button class="btn btn-secondary" onclick="toggleTextbookCard('${cardId}')" id="${cardId}-toggle-btn" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; font-weight: 600;">
+                    <button class="btn btn-secondary" data-click="toggleTextbookCard" data-arg="${cardId}" id="${cardId}-toggle-btn" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; font-weight: 600;">
                         <i class="fa-solid fa-chevron-down"></i> 더 보기
                     </button>
                 </div>
