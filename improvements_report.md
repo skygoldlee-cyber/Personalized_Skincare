@@ -7,6 +7,8 @@
 > **2026-08-26 업데이트**: 모바일 네비게이션 버그 수정, PWA 설치 버튼 수정(beforeinstallprompt 조기 캡처 + SW 조기 등록), 인앱 브라우저(WebView) 감지 및 Chrome 안내 기능이 완료되었습니다. 모든 개선 항목(1-1~5-3, 13항목) 구현 완료 및 ✅ 표시 갱신.
 >
 > **2026-08-26 추가 업데이트**: 콘텐츠 하드코딩 제거 리팩터링 완료. 시험 제목, 과목 매핑, 축약명, 시험 카드 등 모든 콘텐츠 데이터를 registry 기반 동적 로딩으로 전환하여 `content/` 전체 교체 시 소스 코드 수정 불필요. (섹션 6 추가)
+>
+> **2026-08-26 추가 업데이트 2**: 프로덕션 CSP 버그 2건 수정 (백업 가져오기 인라인 핸들러, Mermaid unsafe-eval), CSS 캐시 스큐 수정, utils.js 인코딩 수정. (섹션 7 추가)
 
 ---
 
@@ -193,6 +195,24 @@ mindmap
 ### 6-7. ✅ 추천 외부 링크 동적 생성 (`src/app.js`, `index.html`, `content/manifest.json`)
 - **기존**: `index.html`에 6개 유튜브/외부링크 카드 + 4개 채널 요약 판넬 + 부록 설명 하드코딩 (채널명, URL, 설명문 포함)
 - **개선**: `manifest.json` `resources` 섹션(sectionTitle, summaries, links)으로 이전; `#resources-section` 컨테이너 + `populateResourceCards()`가 registry에서 자동 생성
+
+### 7. 프로덕션 CSP 버그 수정 (2026-08-26)
+
+### 7-1. ✅ 백업 가져오기 CSP 수정 (`index.html`, `src/views/backup.js`, `src/app.js`)
+- **기존**: `index.html`에 인라인 `onchange="importData(event)"` — CSP `script-src 'self'`에 의해 배포본에서 차단, 파일 선택 후 무반응
+- **개선**: 인라인 핸들러 제거, `backup.js`의 `setupImportListener()`에서 `addEventListener('change')` 바인딩, `window.importData` 전역 노출 제거
+
+### 7-2. ✅ Mermaid 런타임 의존 제거 (`docs/user_manual.md`, `index.html`, `sw.js`, `src/manual-viewer.js`)
+- **기존**: `vendor/mermaid/mermaid.min.js` (3.2MB)가 `unsafe-eval` 필요 → CSP 충돌로 다이어그램 미렌더 + SW 프리캐시 부담
+- **개선**: mermaid 코드블록을 텍스트 ASCII 플로우차트로 대체, script 태그 및 SW 프리캐시에서 제거 (프리캐시 3.2MB 절감), `_renderMermaid` no-op화
+
+### 7-3. ✅ CSS 캐시 스큐 수정 (`sw.js`)
+- **기존**: CSS가 `networkFirst` → 배포 전환 시 "구버전 HTML(cacheFirst) + 신버전 CSS(networkFirst)" 혼합으로 화면 깨짐 가능
+- **개선**: CSS를 `cacheFirst`로 변경, `/src/` JS와 동일한 세대 일관성 확보
+
+### 7-4. ✅ 인코딩 수정 (`src/utils.js`)
+- **기존**: 헤더 주석이 mojibake (이중 인코딩) 상태
+- **개선**: UTF-8 한국어로 수정
 
 ### 검증 결과
 - `node tools/build/index.js` 재빌드 성공

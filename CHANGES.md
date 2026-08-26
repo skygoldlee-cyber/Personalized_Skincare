@@ -377,3 +377,27 @@
 - `node tools/build/index.js` 재빌드 성공 (registry에 `shortName`, `file`, `resources` 필드 포함 확인)
 - `npm test` 86/86 통과
 - Vercel 배포 완료
+
+---
+
+## 21. 프로덕션 CSP 버그 수정 (2026-08-26)
+
+> **목표**: Vercel 배포본에서만 발생하는 CSP(`script-src 'self'`) 관련 버그 2건 + 캐시 일관성 1건 + 인코딩 1건 수정
+
+### 수정 내역
+
+- **`index.html`**: 인라인 `onchange="importData(event)"` 제거 (CSP 차단) → `accept=".json"` 속성만 유지
+- **`src/views/backup.js`**: `setupImportListener()` 추가 — `addEventListener('change', importData)`로 CSP-safe 바인딩
+- **`src/app.js`**: `setupImportListener` import 추가, `initApp`에서 호출; `window.importData` 전역 노출 제거 (불필요)
+- **`docs/user_manual.md`**: mermaid 코드블록 → 텍스트 ASCII 플로우차트로 대체 (mermaid.js 불필요)
+- **`index.html`**: `vendor/mermaid/mermaid.min.js` `<script>` 태그 제거
+- **`sw.js`**: `SHELL_ASSETS`에서 `mermaid.min.js` 제거 (프리캐시 3.2MB 절감)
+- **`src/manual-viewer.js`**: `_renderMermaid()` → no-op (mermaid.js 런타임 의존 제거)
+- **`sw.js`**: CSS 라우팅을 `networkFirst` → `cacheFirst`로 변경 (배포 전환 시 HTML/CSS 세대 불일치 방지)
+- **`src/utils.js`**: mojibake (이중 인코딩) 헤더 주석 수정
+
+### 검증
+
+- `node tools/build/index.js` 재빌드 성공
+- `npm test` 86/86 통과
+- Vercel 배포 완료
