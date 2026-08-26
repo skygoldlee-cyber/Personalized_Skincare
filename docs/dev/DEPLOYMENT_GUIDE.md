@@ -56,7 +56,7 @@
 # 1. 데이터 빌드 (content/*.md → data/*.hash.js 번들 생성)
 node tools/build/index.js
 
-# 2. 단위 테스트 (86개)
+# 2. 단위 테스트 (88개)
 npm test
 
 # 3. Vercel 프로덕션 배포
@@ -235,6 +235,7 @@ manifest-src 'self'
 ```
 
 - `script-src 'self' 'unsafe-eval'`: 자체 JS만 허용 (inline script 차단). `unsafe-eval`은 빌드 산출물 호환성을 위해 유지
+  - **인라인 `onclick`/`oninput` 차단 대응**: 동적 생성 HTML의 모든 인라인 이벤트 핸들러를 `data-click`/`data-input`/`data-args` 위임 패턴으로 대체. `src/app.js`의 `resolveDelegatedHandler()`가 `window`에서 핸들러를 찾아 실행. 회귀 가드 테스트(`tests/unit/delegation-guard.test.js`)가 인라인 `on*=` 잔존 및 `window` 브리지 누락을 자동 검출
 - `connect-src 'self'`: 외부 API 호출 차단 (오디오는 GitHub Releases URL이 `connect-src`가 아닌 `media-src`로 처리됨 — 사운드 파일은 `<audio>` 태그로 로드되어 CSP `media-src` 제한이 없으면 허용)
 - `frame-ancestors 'none'`: 클릭재킹 방지
 

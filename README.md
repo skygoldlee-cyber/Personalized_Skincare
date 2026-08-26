@@ -55,7 +55,7 @@
 - **반응형 모바일 레이아웃**: 하단 탭 바 네비게이션, safe-area-inset 대응, 100dvh 동적 뷰포트
 
 **테스트**
-- Node.js 내장 테스트 러너 (`node --test`) — 86 unit tests (sha256, sanitize, state, parser, trainer-calc, utils)
+- Node.js 내장 테스트 러너 (`node --test`) — 88 unit tests (sha256, sanitize, state, parser, trainer-calc, utils, delegation-guard)
 - Vitest + jsdom — 10 DOM tests (backup 모듈)
 - GitHub Actions CI — push 시 `npm test` + parser parity 자동 실행
 
@@ -145,7 +145,7 @@ Personalized Skincare/
 ├── 📂 exams/                        ← ✅ 배포 (모의고사 MD 원본 및 뷰어 소스)
 │
 ├── 📂 tests/                        ← 자동화 테스트
-│   ├── unit/                        ← Node.js 내장 테스트 러너 (86 tests)
+│   ├── unit/                        ← Node.js 내장 테스트 러너 (88 tests)
 │   └── dom/                         ← Vitest + jsdom DOM 테스트 (10 tests)
 ├── 📂 .github/workflows/            ← GitHub Actions CI (test + parser parity)
 │

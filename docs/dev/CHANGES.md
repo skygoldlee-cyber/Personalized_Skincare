@@ -404,6 +404,33 @@
 
 ---
 
+## 23. CSP 이벤트 위임 전면 적용 및 회귀 가드 추가 (2026-08-27)
+
+> **목표**: 배포판(CSP `script-src 'self'`)에서 동적 생성 HTML의 인라인 `onclick`/`oninput`이 브라우저에 의해 차단되어 데일리 챌린지·리더 오디오 컨트롤·대시보드 과목 바로가기·오답 노트 제외 버튼 등이 조용히 죽어 있던 버그 일괄 수정
+
+### 수정 내역
+
+- **`src/app.js`**: 이벤트 위임 시스템 고도화
+  - `resolveDelegatedHandler()`: `window`에서 점 표기 네임스페이스(`ManualViewer.openManual` 등)로 핸들러를 찾는 공용 함수 추출
+  - `parseDelegatedArgs()`: `data-args`(JSON 배열, 다중/타입 인자) 우선 파싱, 없으면 `data-arg`(단일 문자열) 폴백
+  - `data-input` 위임 추가: range 슬라이더 등 `input` 이벤트용, `el.value`를 인자로 전달
+  - 누락된 window 브리지 7개 추가: `startSubjectStudy`, `startSubjectQuiz`, `removeWeakCard`, `closeDailyModal`, `nextDailyStep`, `submitDailyCardAnswer`, `submitDailyShortAnswer`
+- **`src/views/dashboard.js`**: 인라인 `onclick` → `data-click`/`data-arg` (과목 바로가기 2곳)
+- **`src/views/quiz.js`**: 인라인 `onclick` → `data-click`/`data-args` (데일리 챌린지 모달 6곳, 오답 노트 제외 1곳)
+- **`src/views/exam-simulator.js`**: 인라인 `onclick` → `data-click`/`data-arg` (오답 과목 재학습 1곳)
+- **`src/views/textbook-reader.js`**: 인라인 `onclick`/`oninput` → `data-click`/`data-input`/`data-args` (오디오 컨트롤 5곳)
+- **`src/views/textbook-search.js`**: 인라인 `onclick` → `data-click`/`data-arg` (카드 더 보기 1곳)
+- **`tests/unit/delegation-guard.test.js`** (신규): CSP 회귀 가드 테스트
+  - `src/**/*.js` + `index.html`에서 인라인 `on*=` 이벤트 핸들러 속성 잔존 검출
+  - `data-click`/`data-input`으로 참조되는 모든 핸들러 최상위 식별자가 `app.js`에서 `window`에 브리지되어 있는지 교차 검증
+
+### 검증
+
+- `npm test` 88/88 통과 (기존 86 + 신규 2)
+- Vercel 배포 완료
+
+---
+
 ## 22. 교재 리더 인터랙티브 개념 맵 추가 (2026-08-26)
 
 > **목표**: 교재 본문 읽기 화면에 섹션 구조를 시각화한 마인드맵을 추가하여 학습자가 챕터 전체 구조를 한눈에 파악하고 원하는 섹션으로 빠르게 이동

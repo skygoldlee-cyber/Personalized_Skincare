@@ -129,7 +129,7 @@
 
 | 모듈 | 책임 |
 |------|------|
-| [`src/app.js`](../../src/app.js) | **메인 오케스트레이터** (1,285줄). 초기화(`initApp`), SPA 라우팅, 이벤트 바인딩, `startFocusSubjectStudy` 등 뷰 간 브릿지 함수. `populateExamCards()`로 registry 기반 시험 카드 동적 생성 |
+| [`src/app.js`](../../src/app.js) | **메인 오케스트레이터** (~1,400줄). 초기화(`initApp`), SPA 라우팅, **이벤트 위임 바인딩**(`data-click`/`data-input`/`data-args` + `resolveDelegatedHandler`/`parseDelegatedArgs`), `startFocusSubjectStudy` 등 뷰 간 브릿지 함수. `populateExamCards()`로 registry 기반 시험 카드 동적 생성 |
 | [`src/charts.js`](../../src/charts.js) | SVG 기반 차트 생성 (레이더 차트, 성적 꺾은선 그래프). **인터랙티브 툴팁**(hover/touch) 지원. 외부 차트 라이브러리 미사용 |
 | [`src/scratchpad.js`](../../src/scratchpad.js) | HTML5 Canvas 손글씨 연습장 (계산 문제 풀이용) |
 | [`src/trainer-calc.js`](../../src/trainer-calc.js) | 계산 훈련 문제 생성기. **순수 로직** — DOM 의존 없이 문제 데이터 객첼만 반환 |
@@ -608,9 +608,15 @@ app-fallback.js 폴링 시작 (400ms 간격, 15s 데드라인)
 - `importData()`에서 `ALLOWED_KEYS`에 정의된 키만 localStorage에 복원
 - 악성 JSON 백업 파일로 인한 스토리지 오염/스크립트 키 주입 방지
 
-### 3. Content 보안
+### 3. Content 보안 (CSP)
 - 외부 리소스는 신뢰된 CDN(Google Fonts)으로 제한. FontAwesome은 자체 호스팅으로 전환하여 외부 폰트/스타일 출처를 축소 (CSP `font-src`/`style-src`에서 cdnjs 제거됨)
 - Service Worker의 캐시 대상을 명시적 화이트리스트로 관리
+- **`script-src 'self'` (inline script 차단)**: 인라인 `onclick`/`oninput` 속성은 CSP에 의해 브라우저에서 실행 차단됨. 이를 우회하기 위해 **이벤트 위임 패턴** 사용:
+  - `data-click="핸들러명"` + `data-arg="단일인자"` 또는 `data-args='["인자1", 인자2]'` (JSON 배열, 다중/타입 인자)
+  - `data-input="핸들러명"` (range 슬라이더 등 input 이벤트용, `el.value`를 인자로 전달)
+  - [`src/app.js`](../../src/app.js)의 `resolveDelegatedHandler()`가 `window`에서 점 표기 네임스페이스(`ManualViewer.openManual` 등)로 함수를 찾아 실행
+  - 위임 참조되는 모든 핸들러는 `app.js` 하단에서 `window.<name> = <name>;`로 브리지 노출 필수 (ESM 모듈 스코프 격리 해결)
+  - **회귀 가드**: [`tests/unit/delegation-guard.test.js`](../../tests/unit/delegation-guard.test.js)가 인라인 `on*=` 속성 잔존 및 `window` 브리지 누락을 자동 검출
 
 ---
 
