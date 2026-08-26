@@ -287,4 +287,35 @@
   - `precacheResilient`이 누락을 조용히 넘기므로 CI에서 사전 차단 (비-0 종료로 실패).
   - `ci.yml`에 `npm run verify:assets` 단계 추가.
 - **해결 4 — `ci.yml` 수정**: 존재하지 않는 `test:integration` 스크립트 → `check:parser`로 수정.
+
+### 16. 폴더 구조 개선 및 불필요 파일 정리
+
+- **불필요 파일 삭제**:
+  - `improvements_report.md` (1회성 보고서, CHANGES.md가 대체)
+  - `tools/generate_migration_map.js` (package.json 스크립트에 없음, id_migration.js 이미 생성됨)
+  - `tools/generate_pwa_icons.ps1` (아이콘 이미 존재)
+- **`.vercelignore` 개선**: `data/exams_md/`, `data/docs_md/`, `data/study_md/` 추가 (file:// 전용 폴백 번들, ~980KB 배포 절감)
+- **`exams/` → `content/exams/` 이동**: 모든 콘텐츠 MD를 `content/` 하위로 통합
+  - `index.html` 9개 `data-arg` 경로 업데이트
+  - `tools/build_exam_bundles.js` 소스 디렉토리 및 키 생성 로직 업데이트
+  - `data/exams_md/*.js` 번들 재생성 (키를 `content/exams/`로 변경)
+  - `sw.js`, `.vercelignore` 주석 경로 업데이트
+
+### 17. ARCHITECTURE.md — Service Worker 동작 메커니즘 섹션 추가
+
+- **신규 섹션**: "Service Worker 동작 메커니즘" (6소섹션)
+  1. 수명 주기 (install → activate → fetch 활성화 흐름도)
+  2. 요청 가로채기 흐름 (7단계 분기 전략 ASCII 다이어그램)
+  3. 캐시 스큐 방지 메커니즘 (문제 시나리오 vs 해결 메커니즘 비교)
+  4. 캐시 전략 구현체 (Cache First / Network First / SWR 함수 설명)
+  5. 자가 복구 메커니즘 (app-fallback.js 단계적 복구 흐름)
+  6. CI 검증 (verify-shell-assets.js 배포 전 사전 차단)
+- **기존 문서 갱신**:
+  - 목차에 신규 섹션 추가 (번호 9~14 재정렬)
+  - 아키텍처 다이어그램: 삭제된 `study_data.js`/`exam_data.js` 제거, `registry.js`/`id_migration.js` 추가
+  - Vercel CDN 박스: `docs/*.html` → `content/*.md`
+  - 스크립트 로드 순서: 현재 ESM 구조 반영 (theme-init, pwa-install-capture, app-fallback 포함)
+  - `exam-viewer.js` 설명: `exams/*.md` → `content/exams/*.md`
+  - `id_migration.js` 생성 주체: `generate_migration_map.js`(삭제됨) → `tools/build/index.js`
+  - 데이터 파이프라인 다이어그램: `exams/**/*.md` → `content/exams/**/*.md`
 - **검증 결과** (모바일 Chrome 실기기): PL=1 (루프 없음), CC=1 (SW 교체 1회), init=1325ms (정상 초기화), nav=9/11 (메뉴 정상), PWA 설치 정상 완료.

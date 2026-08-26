@@ -16,11 +16,12 @@
 6. [상태 관리 전략](#-상태-관리-전략)
 7. [테마 시스템 (라이트/다크)](#-테마-시스템-라이트다크)
 8. [PWA & 오프라인 전략](#-pwa--오프라인-전략)
-9. [반응형 & 모바일 설계](#-반응형--모바일-설계)
-10. [보안 설계](#-보안-설계)
-11. [빌드 타임 데이터 파이프라인](#-빌드-타임-데이터-파이프라인)
-12. [주요 설계 결정 및 근거](#-주요-설계-결정-및-근거)
-13. [향후 확장 방향](#-향후-확장-방향)
+9. [Service Worker 동작 메커니즘](#-service-worker-동작-메커니즘)
+10. [반응형 & 모바일 설계](#-반응형--모바일-설계)
+11. [보안 설계](#-보안-설계)
+12. [빌드 타임 데이터 파이프라인](#-빌드-타임-데이터-파이프라인)
+13. [주요 설계 결정 및 근거](#-주요-설계-결정-및-근거)
+14. [향후 확장 방향](#-향후-확장-방향)
 
 ---
 
@@ -84,8 +85,8 @@
 │ └─────────────────────────────────────────────────────────┘ │
 │ ┌─────────────────────────────────────────────────────────┐ │
 │ │                       Data Layer                         │ │
-│ │  study_data.js · exam_data.js · ingredients_data.js      │ │
-│ │  audio_manifest.js          (빌드 타임 생성, 불변)        │ │
+│ │  registry.js · ingredients_data.js · audio_manifest.js    │ │
+│ │  id_migration.js     (빌드 타임 생성, 불변)                │ │
 │ └─────────────────────────────────────────────────────────┘ │
 │ ┌─────────────────────────────────────────────────────────┐ │
 │ │                    Persistence Layer                     │ │
@@ -98,7 +99,7 @@
 │   Vercel (CDN)    │                │  외부 오디오 CDN   │
 │  - App Shell      │                │  (302MB, 선택적)   │
 │  - 데이터 번들     │                └───────────────────┘
-│  - docs/*.html    │
+│  - content/*.md   │
 └───────────────────┘
 ```
 
@@ -130,7 +131,7 @@
 | [`src/state.js`](../src/state.js) | 전역 상태 객체(`state`) 정의 + localStorage 영속성(`loadProgress`/`saveProgress`) |
 | [`src/utils.js`](../src/utils.js) | 의존성 없는 범용 헬퍼 (한글 초성 추출 `getChosung()` 등) |
 | [`src/sanitize.js`](../src/sanitize.js) | HTML/XSS 방어 및 텍스트 정제 유틸리티 |
-| [`src/exam-viewer.js`](../src/exam-viewer.js) | 문제집(MD) 런타임 뷰어. `exams/*.md` fetch → 자체 MD→HTML 변환 → 인앱 전체화면 오버레이 렌더링. TOC 생성·인쇄·sessionStorage 캐시(24h)·`file://` 번들 폴리백(`data/exams_md/*.js`) 지원. 정적 `exams/*.html` 대체(2026-08-24~) |
+| [`src/exam-viewer.js`](../src/exam-viewer.js) | 문제집(MD) 런타임 뷰어. `content/exams/*.md` fetch → 자체 MD→HTML 변환 → 인앱 전체화면 오버레이 렌더링. TOC 생성·인쇄·sessionStorage 캐시(24h)·`file://` 번들 폴리백(`data/exams_md/*.js`) 지원 |
 | [`src/data-loader.js`](../src/data-loader.js) | 온디맨드 데이터 로더. **교재/카드/퀴즈: `content/*.md` 런타임 fetch+파싱**(http는 라이브 fetch, `file://`은 `data/study_md/` 과목별 분할 폴백, fetch 실패 시 자동 폴백). 시험/성분은 기존 번들 로드 유지. 로드 후 registry stats를 실제 개수로 갱신 |
 | [`src/textbook-parser.js`](../src/textbook-parser.js) | 교재 MD 런타임 파서. `tools/build/plugins/textbook.plugin.js`의 브라우저 포팅으로 카드/퀴즈/챕터를 조립(`buildSubjectData`). 빌드 산출물과 **바이트 단위 동일** 검증됨 |
 | [`src/ui-utils.js`](../src/ui-utils.js) | 공통 UI 유틸리티. 로딩 스피너(`showLoading`/`hideLoading`) 및 글로벌 로딩 오버레이(`showGlobalLoading`/`hideGlobalLoading`) |
@@ -146,7 +147,7 @@
 | [`data/study_md/`](../data/study_md/) | 교재 MD `file://` 폴백 번들 (**과목별 분할**: manifest.js + 과목별 `.js`). http에선 미사용. 과목 로드 시 해당 파일만 온디맨드 로드 | `tools/build_study_md_bundle.js` |
 | [`data/exams/<key>.<hash>.js`](../data/exams/) | 시험별 문항 번들 | `tools/build/index.js` (exams plugin) |
 | [`data/ingredients_data.<hash>.js`](../data/) | 화장품 성분 사전 (가용/금지/제한) | `tools/build/index.js` (ingredients plugin) |
-| [`data/id_migration.js`](../data/id_migration.js) | 레거시 ID → 안정 ID 일회성 매핑 | `tools/generate_migration_map.js` |
+| [`data/id_migration.js`](../data/id_migration.js) | 레거시 ID → 안정 ID 일회성 매핑 | `tools/build/index.js` (id-factory) |
 | [`data/audio_manifest.js`](../data/audio_manifest.js) | 오디오 파일 경로 매니페스트 | 오디오북 파이프라인 |
 
 > ⚠️ `data/subjects/<key>.<hash>.js`(과목 학습 번들)는 **2026-08-24부터 런타임 MD 파싱으로 대체·제거**되었다. `npm run build:data`가 재생성하더라도 앱은 로드하지 않으며 배포에서도 제외(`.vercelignore`)된다.
@@ -167,18 +168,17 @@
 [`index.html`](../index.html)의 로드 순서는 **의존성 방향**을 반영합니다 (하향식):
 
 ```
-1. sanitize.js         (즉시 — 인라인 스크립트의 XSS 방어용)
-2. data/registry.js    (defer — 번들 메타)
-3. data-loader.js      (defer — 온디맨드 로더)
-4. data/audio_manifest.js (defer — 오디오 경로)
-5. utils.js            (defer — 의존성 無, 최하위 헬퍼)
-6. charts.js           (defer — utils 의존)
-7. scratchpad.js       (defer — 독립)
-8. trainer-calc.js     (defer — 독립, 순수 로직)
-9. data/id_migration.js (defer — 일회성 마이그레이션 맵)
-10. state.js           (defer — 전역 state + 영속성)
-11. reader-format.js   (defer — 리더 포맷터, app.js보다 먼저)
-12. app.js             (defer — 위 모든 것에 의존, 최종 오케스트레이터)
+<head> (페인트 전 — FOUC 방지)
+  1. src/theme-init.js     (클래식 — 페인트 전 테마 클래스 적용)
+  2. src/pwa-install-capture.js (클래식 — beforeinstallprompt 조기 캡처 + SW 등록)
+
+<body> 하단 (DOMContentLoaded 이후)
+  3. data/registry.js       (type=module — 번들 메타, window.DATA_REGISTRY 할당)
+  4. data/audio_manifest.js (type=module — 오디오 경로, window.AUDIO_MANIFEST 할당)
+  5. data/id_migration.js   (defer — 일회성 마이그레이션 맵)
+  6. vendor/mermaid/mermaid.min.js (defer — 다이어그램 렌더링)
+  7. src/app.js             (type=module — ESM 진입점, 모든 src/ 모듈을 내부 import)
+  8. src/app-fallback.js    (defer — ESM 로드 실패 시 자동 복구, app.js와 독립 실행)
 ```
 
 ### 모듈화 전략: "점진적 모듈화 (Progressive Modularization)"
@@ -406,6 +406,162 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 
 ---
 
+## ⚙️ Service Worker 동작 메커니즘
+
+Service Worker(`sw.js`)는 본 애플리케이션의 오프라인 지원과 캐시 일관성을 담보하는 핵심 컴포넌트입니다. 동작 메커니즘을 수명 주기, 요청 가로채기, 캐시 스큐 방지, 자가 복구의 4계층으로 설명합니다.
+
+### 1. 수명 주기 (Lifecycle)
+
+```
+[최초 방문]
+  pwa-install-capture.js → navigator.serviceWorker.register('./sw.js')
+     │
+     ▼
+  install 이벤트
+     ├─ precacheResilient(SHELL_CACHE, SHELL_ASSETS)  ← App Shell 프리캐시
+     ├─ precacheResilient(DATA_CACHE, DATA_ASSETS)    ← 데이터 번들 프리캐시
+     └─ self.skipWaiting()  ← 대기 없이 즉시 활성화 (개별 실패해도 항상 실행)
+         │
+         ▼
+  activate 이벤트
+     ├─ 구버전 캐시 삭제 (cosmetic-pass-* 중 현재 버전이 아닌 것)
+     ├─ pruneStaleDataBundles()  ← 레지스트리가 더 이상 참조하지 않는 구 해시 번들 선별 삭제
+     └─ self.clients.claim()  ← 기존 탭을 즉시 제어
+         │
+         ▼
+  fetch 이벤트 활성화 (모든 요청 가로채 시작)
+
+[배포 후 재방문]
+  브라우저가 sw.js 바이트 비교 → 변경 감지 → 새 SW install
+     ├─ 새 CACHE_VERSION 캐시에 신버전 자산 프리캐시
+     ├─ skipWaiting() → 즉시 activate
+     ├─ 구버전 캐시 전체 삭제
+     └─ controllerchange 이벤트 → 페이지 리로드 → 신버전 일관 서빙
+```
+
+**`precacheResilient()`의 역할** (v39 도입):
+- `cache.addAll()`은 원자성(all-or-nothing)을 가져 하나라도 404면 전체 reject → `skipWaiting()` 미실행
+- `Promise.allSettled()` + 개별 `cache.add()`로 변경 → 일부 실패해도 SW 활성화 보장
+- 실패분은 `cacheFirst`의 네트워크 폴백으로 온디맨드 자가 치유 (온라인 한정)
+
+### 2. 요청 가로채기 흐름 (Fetch Interception)
+
+모든 GET 요청은 `sw.js`의 fetch 핸들러를 통과하며, 요청 유형별로 7단계 분기 전략이 적용됩니다:
+
+```
+요청 도착
+  │
+  ├─ _probe 파라미터? ──► 네트워크 직행 (오프라인 감지 프로브, 캐시 불가)
+  │
+  ├─ 오디오/대용량 미디어? ──► 네트워크 직행 (캐시 제외, 저장공간 보호)
+  │
+  ├─ 외부 CDN (Google Fonts)? ──► Stale-While-Revalidate (캐시 즉시 + 백그라운드 갱신)
+  │
+  ├─ cross-origin? ──► 네트워크 직행 (동일 출처만 처리)
+  │
+  ├─ navigate (HTML)? ──► Cache First (SHELL_CACHE)
+  │     캐시 우선 → 없으면 네트워크 → 캐시 저장 → 오프라인 시 index.html 폴백
+  │
+  ├─ /data/ 경로?
+  │     ├─ registry.js? ──► Network First (DATA_CACHE) — 최신 메타 확인
+  │     └─ 그 외? ──► Cache First (DATA_CACHE) — 해시 파일명으로 자연 갱신
+  │
+  ├─ *.md? ──► Cache First (SHELL_CACHE) — 정적 마크다운 원본
+  │
+  ├─ /src/*.js? ──► Cache First (SHELL_CACHE) — ESM 모듈 일관성 보장
+  │
+  ├─ *.css / *.js? ──► Network First (SHELL_CACHE) — 최신 우선, 오프라인 시 캐시
+  │
+  └─ 그 외 (아이콘/이미지)? ──► Stale-While-Revalidate (SHELL_CACHE)
+```
+
+### 3. 캐시 스큐 방지 메커니즘 (v39 핵심 설계)
+
+**문제 시나리오** (v38 이전, navigation이 Network First일 때):
+
+```
+구 SW(v38) 활성 중, 신버전 배포 후 사용자 방문
+  │
+  ├─ index.html 요청 → Network First → 네트워크에서 신버전 HTML 획득
+  ├─ src/app.js 요청 → Cache First → 구 캐시(v38)에서 구버전 JS 서빙
+  │
+  └─ 신버전 HTML + 구버전 JS = 캐시 스큐
+       └─ ESM import 그래프 붕괴 → 앱 초기화 실패 (Chrome에서만 발생)
+```
+
+**해결 메커니즘** (v39, navigation을 Cache First로 전환):
+
+```
+구 SW(v38) 활성 중, 신버전 배포 후 사용자 방문
+  │
+  ├─ index.html 요청 → Cache First → 구 캐시(v38)에서 구버전 HTML 서빙
+  ├─ src/app.js 요청 → Cache First → 구 캐시(v38)에서 구버전 JS 서빙
+  │
+  └─ 구버전 HTML + 구버전 JS = 동일 세대 → 구버전 앱 정상 작동 ✅
+
+  (백그라운드에서 새 SW install 완료 후)
+  │
+  ├─ controllerchange → 페이지 리로드
+  │
+  ├─ index.html 요청 → Cache First → 신 캐시(v39)에서 신버전 HTML 서빙
+  ├─ src/app.js 요청 → Cache First → 신 캐시(v39)에서 신버전 JS 서빙
+  │
+  └─ 신버전 HTML + 신버전 JS = 동일 세대 → 신버전 앱 정상 작동 ✅
+```
+
+**핵심 원리**: HTML과 JS가 **항상 동일한 `CACHE_VERSION` 캐시에서 서빙**되므로, 세대 내 불일치가 원천 차단됩니다. 업데이트 지연은 최대 1 page load 분량입니다.
+
+**왜 WebView/PC PWA에서는 문제가 없었나**:
+- **WebView**: SW가 없음 → 모든 요청이 네트워크 직행 → 항상 신버전 일관 서빙
+- **PC 설치 PWA**: 브라우저 탭이 SW 업데이트를 트리거한 후 실행되므로, 이미 신 SW가 활성화된 상태
+
+### 4. 캐시 전략 구현체
+
+| 전략 | 함수 | 동작 |
+|------|------|------|
+| **Cache First** | `cacheFirst()` | 캐시 조회 → 있으면 반환, 없으면 네트워크 fetch → 캐시 저장 → 반환. 오프라인 시 `offlineFallback()` |
+| **Network First** | `networkFirst()` | 네트워크 fetch → 성공 시 캐시 저장 + 반환, 실패 시 캐시 폴백. 오프라인 시 `offlineFallback()` |
+| **Stale-While-Revalidate** | `staleWhileRevalidate()` | 캐시 즉시 반환 + 백그라운드에서 네트워크 fetch → 캐시 갱신. 캐시 없으면 네트워크 대기 |
+
+`offlineFallback()`: 네비게이션 요청이면 캐시된 `index.html` 반환, 그 외는 `Response.error()`.
+
+### 5. 자가 복구 메커니즘 (app-fallback.js)
+
+ESM 모듈 로드 실패 시 자동 복구를 담당하는 독립 스크립트입니다. `app.js`(type=module)와 분리되어 클래식 `<script defer>`로 로드됩니다.
+
+```
+app-fallback.js 폴링 시작 (400ms 간격, 15s 데드라인)
+  │
+  ├─ window.__APP_INITIALIZED 감지? ──► 정상 → 폴링 종료, 리로드 카운터 정리
+  │
+  └─ 15s 데드라인 도달, 초기화 안 됨
+       │
+       ├─ 1차 (reload count = 0): SW update + 리로드
+       │     일시적 네트워크 문제일 수 있음 → 가벼운 갱신 시도
+       │
+       ├─ 2차 이후 (reload count ≥ 1): 하드 리셋 + 리로드
+       │     모든 Cache Storage 삭제 + SW 등록 해제 → 캐시 스큐 확실히 해소
+       │
+       └─ 3회 초과 실패: 수동 복구 오버레이 표시
+             "캐시 정리 후 다시 시도" 버튼 → hardReset() + 리로드
+```
+
+**설계 원칙**:
+- **독립 실행**: ESM import 그래프가 전체 드랍되어도 이 스크립트는 실행됨 (클래식 스크립트)
+- **오탐 방지**: 정상 초기화 감지 시 즉시 종료 → 불필요한 리로드 차단
+- **단계적 복구**: 가벼운 갱신 → 하드 리셋 → 수동 복구 순으로 부작용 최소화
+- **세션 스토리지 카운터**: `sessionStorage`로 리로드 횟수 추적 → 무한 루프 방지 (최대 3회)
+
+### 6. CI 검증 (verify-shell-assets.js)
+
+`precacheResilient`이 개별 실패를 조용히 넘기므로, CI에서 배포 전 사전 검증을 수행합니다:
+
+- `SHELL_ASSETS` / `DATA_ASSETS`에 나열된 모든 파일이 저장소에 존재하는지 확인
+- 누락 발견 시 `exit code 1`로 CI 실패 → 배포 차단
+- `npm run verify:assets` 또는 `node tools/verify-shell-assets.js`로 실행
+
+---
+
 ## 📱 반응형 & 모바일 설계
 
 ### 적응형 네비게이션 (Adaptive Navigation)
@@ -455,7 +611,7 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 ```
 [원본 콘텐츠]                [변환]                              [산출/소비]
 content/manifest.json ──► tools/build/index.js        ──► data/registry.js (과목목록·시험·성분 메타)
-exams/**/*.md           ──► (exams plugin)             ──► data/exams/<key>.<hash>.js
+content/exams/**/*.md       ──► (exams plugin)             ──► data/exams/<key>.<hash>.js
 content/ingredients/*.md ──► (ingredients plugin)       ──► data/ingredients_data.<hash>.js
 
 content/**/*.md ───(런타임 fetch)──► src/data-loader.js + src/textbook-parser.js ──► STUDY_DATA (카드/퀴즈/챕터)
