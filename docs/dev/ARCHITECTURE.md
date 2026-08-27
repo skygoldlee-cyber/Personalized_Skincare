@@ -187,6 +187,7 @@
 | [`src/types.js`](../../src/types.js) | **순수 JSDoc 타입 선언 모듈** (런타임 코드 없음). `State`, `Card`, `SubjectMeta` 등 `@typedef` 정의. `jsconfig.json` checkJs로 편집기 타입 검사/자동완성 활성화 |
 | [`src/reader-format.js`](../../src/reader-format.js) | 교재 리더 콘텐츠 포맷터 (MD 섹션 → HTML 변환) |
 | [`src/concept-map.js`](../../src/concept-map.js) | **순수 SVG 인터랙티브 개념 맵 생성기** (CSP-safe, 의존성 없음). 교재 리더 상단에 섹션 구조를 마인드맵으로 시각화. 데스크톱 좌/우 수평 레이아웃 + 모바일 세로 트리 레이아웃 자동 전환, 노드 클릭 시 해당 섹션으로 스크롤, 기출/중요 마커 하이라이트 |
+| [`src/study-aids.js`](../../src/study-aids.js) | **교재 리더 학습 보조 도구** (CSP-safe, 의존성 없음). 4가지 학습 보조 기능: ① 기출 필터 & 요약 카드(🔖기출 마커 하이라이트 + 핵심 요약), ② 숫자·기한 자동 추출 빈칸 카드(정규식 추출 + 챕터별 암기표), ③ 절차 플로우 정적 SVG 플로우차트(신고/변경/교육/폐업), ④ 행정처분 비교·대조 시각화(sticky col, zebra, 기출 하이라이트) |
 | [`src/views/navigation.js`](../../src/views/navigation.js) | 뷰 전환 유틸리티 (`switchView`). 순환 import 해결용 별도 모듈 |
 | [`src/views/`](../../src/views/) | **뷰 컨트롤러 모듈 디렉터리** (app.js에서 분리 추출). `dashboard.js`, `flashcard.js`, `quiz.js`, `trainer.js`, `dictionary.js`, `backup.js`, `textbook-search.js`, `textbook-reader.js`(**Media Session API 연동**), `exam-simulator.js`(**오답 복습 연동**) |
 
@@ -784,11 +785,21 @@ content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.j
    - 스크롤 indicator (하단 페이드 그라데이션)로 더 볼 콘텐츠 있음 표시
    - `textbook-reader.js`의 `renderChapterContent()`에 통합, `css/reader.css`에 스타일 추가
 
+15. **교재 리더 학습 보조 도구** ✅
+   - `src/study-aids.js`: 4가지 학습 보조 기능 (CSP-safe, 의존성 제로)
+   - ① 기출 필터 & 요약: 🔖기출 마커 섹션 하이라이트 + 토글 버튼로 비기출 섹션 디밍, 핵심 요약 카드 표시
+   - ② 숫자·기한 빈칸 카드: 정규식으로 숫자/기한/횟수 자동 추출 → 챕터별 암기표 생성
+   - ③ 절차 플로우: 신고/변경/교육/폐업 절차를 정적 SVG 플로우차트로 시각화
+   - ④ 행정처분 비교표: sticky column + zebra striping + 기출 하이라이트 테이블
+   - `textbook-reader.js`에 토글 버튼과 렌더링 통합, `css/reader.css`에 반응형 스타일 추가
+
 ---
 
 ## 📎 관련 문서
 
 - [`README.md`](../../README.md) — 프로젝트 소개 및 시작 가이드 (폴더 구조 포함)
 - [`DEPLOYMENT_GUIDE.md`](DEPLOYMENT_GUIDE.md) — Vercel 배포 및 오디오 호스팅 가이드
+- [`AUDIO_HOSTING_GUIDE.md`](AUDIO_HOSTING_GUIDE.md) — 오디오북 호스팅 및 청취 가이드
+- [`MULTI_MACHINE_SETUP.md`](MULTI_MACHINE_SETUP.md) — 다중 머신 개발 환경 설정
 - [`CHANGES.md`](CHANGES.md) — 코드 리뷰 및 아키텍처 개편 수정 이력 (Changelog)
 - [`IMPROVEMENTS_REPORT.md`](IMPROVEMENTS_REPORT.md) — 개선점 분석 및 구현 완료 보고서 (13항목 전부 ✅)

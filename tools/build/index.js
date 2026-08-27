@@ -194,21 +194,21 @@ function main() {
       }
 
       const hash = getContentHash(data);
-      const outputFilename = `${subj.key}.${hash}.js`;
-      const outputPath = path.join(SUBJECTS_OUT_DIR, outputFilename);
 
+      // [정합성] 교재/카드/퀴즈는 런타임에 content/*.md 를 파싱해 로드한다
+      // (src/data-loader.js loadSubject → buildSubjectData). 따라서 사전 빌드된
+      // data/subjects/*.js 번들은 더 이상 어디에서도 로드되지 않는다.
+      //  - 번들 파일 생성을 중단하고(불필요한 ~1MB 산출물 제거),
+      //  - 남아있을 수 있는 구 번들만 정리하며,
+      //  - registry 에 bundle/global 을 넣지 않아 "배포에서 제외된(=404) 번들 경로"를
+      //    광고하지 않는다. (exam/ingredients 는 여전히 번들 로드 방식이므로 그대로 유지)
       clearOldBundles(SUBJECTS_OUT_DIR, `${subj.key}.`);
-
-      const jsContent = `// 자동 생성된 과목 학습 데이터입니다. 수정하지 마십시오.\nvar STUDY_DATA_${subj.key} = ${JSON.stringify(data, null, 2)};\n`;
-      fs.writeFileSync(outputPath, jsContent, 'utf-8');
 
       registry.subjects.push({
         key: subj.key,
         order: subj.order,
         name: subj.name,
         shortName: subj.shortName || subj.name,
-        bundle: `./data/subjects/${outputFilename}`,
-        global: `STUDY_DATA_${subj.key}`,
         contentHash: hash,
         stats: {
           cards: data.cards.length,
@@ -222,7 +222,6 @@ function main() {
         quizzes: data.quizzes.length
       };
 
-      generatedFiles.push(`./data/subjects/${outputFilename}`);
       console.log(`- Success: Cards: ${data.cards.length}, Quizzes: ${data.quizzes.length}`);
     } catch (e) {
       console.error(`Build failed for subject ${subj.key}:`, e.stack);

@@ -160,14 +160,14 @@
 
 /**
  * 과목(교재) 메타데이터.
+ * 교재/카드/퀴즈는 런타임에 content/*.md 를 파싱해 로드하므로(data-loader.js)
+ * bundle/global 필드가 없다. (exam/ingredients 메타에는 여전히 존재)
  * @typedef {Object} SubjectMeta
  * @property {string}      key         과목 키(예: 'law')
  * @property {number}      order       정렬 순서
  * @property {string}      name        표시 이름
  * @property {string}      [shortName] 축약 표시 이름 (필터 버튼 등)
- * @property {string}      bundle      번들 경로(상대)
- * @property {string}      global      전역 변수명(예: 'STUDY_DATA_law')
- * @property {string}      contentHash 콘텐츠 해시(캐시 무효화용)
+ * @property {string}      contentHash 콘텐츠 해시(콘텐츠 지문)
  * @property {BundleStats} stats
  */
 

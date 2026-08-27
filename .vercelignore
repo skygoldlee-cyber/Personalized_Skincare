@@ -62,8 +62,15 @@ tools/
 *.py
 *.ps1
 requirements.txt
-.env.example
 .generation_progress.json
+
+# ---------- 🔐 환경 변수 (배포 제외) ----------
+# vercel.json 이 public:true 라 배포에 포함된 파일은 정적으로 그대로 서빙된다.
+# 비밀(VERCEL_OIDC_TOKEN 등)이 /.env.local 로 공개 노출되지 않도록 명시적으로 제외한다.
+.env
+.env.local
+.env.*.local
+.env.example
 
 # ---------- � Node (개발 의존성 — 배포 불필요) ----------
 node_modules/

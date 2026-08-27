@@ -210,13 +210,48 @@ body.manual-open{overflow:hidden;}
         return `<details class="manual-ov-toc"><summary><i class="fa-solid fa-list"></i> 목차</summary>${items}</details>`;
     }
 
+    // mermaid(3.3MB)는 index.html 에서 즉시 로드하지 않고, 매뉴얼에 실제 다이어그램이
+    // 있을 때만 여기서 온디맨드로 1회 주입한다. 중복 주입/경쟁은 모듈 스코프 Promise 로 방지.
+    let _mermaidLoadPromise = null;
+    function _ensureMermaid() {
+        if (window.mermaid) return Promise.resolve(window.mermaid);
+        if (_mermaidLoadPromise) return _mermaidLoadPromise;
+        _mermaidLoadPromise = new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = './vendor/mermaid/mermaid.min.js';
+            script.async = true;
+            script.onload = () => {
+                if (window.mermaid) resolve(window.mermaid);
+                else reject(new Error('mermaid loaded but window.mermaid is undefined'));
+            };
+            script.onerror = (e) => { _mermaidLoadPromise = null; reject(e); };
+            document.head.appendChild(script);
+        });
+        return _mermaidLoadPromise;
+    }
+
     function _renderMermaid() {
-        if (typeof window.mermaid === 'undefined') return;
-        try {
-            window.mermaid.run({ querySelector: '#manual-article pre.mermaid' });
-        } catch (e) {
-            console.warn('[manual] mermaid render failed:', e);
-        }
+        // 다이어그램이 없으면 mermaid 를 아예 로드하지 않는다(대다수 세션).
+        const nodes = document.querySelectorAll('#manual-article pre.mermaid');
+        if (nodes.length === 0) return;
+
+        _ensureMermaid()
+            .then((mermaid) => {
+                try {
+                    // 즉시 로드 시절엔 initialize 호출이 없어 기본값(startOnLoad:true)이었으나,
+                    // 온디맨드 주입에서는 우리가 명시적으로 run() 하므로 startOnLoad 를 끈다.
+                    const isLight = document.documentElement.classList.contains('light-theme');
+                    mermaid.initialize({
+                        startOnLoad: false,
+                        securityLevel: 'strict',
+                        theme: isLight ? 'default' : 'dark'
+                    });
+                    mermaid.run({ querySelector: '#manual-article pre.mermaid' });
+                } catch (e) {
+                    console.warn('[manual] mermaid render failed:', e);
+                }
+            })
+            .catch((e) => console.warn('[manual] mermaid load failed:', e));
     }
 
     function _renderBody(title, bodyHtml) {

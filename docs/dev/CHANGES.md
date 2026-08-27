@@ -404,6 +404,46 @@
 
 ---
 
+## 25. 교재 리더 학습 보조 도구 추가 (2026-08-26)
+
+> **목표**: 교재 리더에 4가지 학습 보조 기능을 추가하여 자격증 시험 대비 학습 효율 향상
+
+### 추가 내역
+
+- **`src/study-aids.js`** (신규): 4가지 학습 보조 도구 (CSP-safe, 의존성 제로)
+  - ① 기출 필터 & 요약: `🔖기출` 마커 섹션 하이라이트, 비기출 섹션 디밍 토글, 핵심 요약 카드
+  - ② 숫자·기한 빈칸 카드: 정규식으로 숫자/기한/횟수 자동 추출 → 챕터별 암기표
+  - ③ 절차 플로우: 신고/변경/교육/폐업 절차를 정적 SVG 플로우차트로 시각화
+  - ④ 행정처분 비교표: sticky column + zebra striping + 기출 하이라이트
+- **`css/reader.css`**: 학습 보조 카드, 토글 버튼, 디밤 섹션, 반응형 레이아웃 스타일 추가
+- **`src/views/textbook-reader.js`**: 기출 필터 버튼 및 학습 보조 HTML 통합, 토글 이벤트 바인딩
+
+### 검증
+
+- `npm test` 86/86 통과
+- Vercel 배포 완료
+
+---
+
+## 24. Vercel 크로스머신 배포 지원 및 문서 갱신 (2026-08-26)
+
+> **목표**: 다른 PC에서도 Vercel 배포가 가능하도록 프로젝트 식별 정보를 Git에 추적하고, 배포 가이드 문서 갱신
+
+### 수정 내역
+
+- **`.gitignore`**: `.vercel` 유지 + `!.vercel/project.json` 예외 추가 — projectId/orgId가 Git에 추적되어 새 머신에서 `vercel link` 불필요
+- **`.vercel/project.json`**: Git에 최초 커밋 (projectId, orgId 포함)
+- **`docs/DEPLOYMENT_GUIDE.md`**: 섹션 1(프로젝트 저장 정보), 섹션 4(vercel.json CSP/캐시 정책) 추가, 섹션 재구성
+- **`docs/MULTI_MACHINE_SETUP.md`**: projectId/orgId 표 추가, Cascade IDE 타임아웃 경고(`--token` 사용 권장), 관련 문서 링크 수정
+- **`css/reader.css`**: `-webkit-line-clamp`에 표준 `line-clamp` 속성 추가 (CSS lint 경고 해결)
+
+### 검증
+
+- `npm test` 86/86 통과
+- Vercel 배포 완료 (`cmd /c vercel --prod`)
+
+---
+
 ## 23. CSP 이벤트 위임 전면 적용 및 회귀 가드 추가 (2026-08-27)
 
 > **목표**: 배포판(CSP `script-src 'self'`)에서 동적 생성 HTML의 인라인 `onclick`/`oninput`이 브라우저에 의해 차단되어 데일리 챌린지·리더 오디오 컨트롤·대시보드 과목 바로가기·오답 노트 제외 버튼 등이 조용히 죽어 있던 버그 일괄 수정

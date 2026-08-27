@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v41-20260827-manual-btn';       // 쉘/CDN: 배포마다 갱신 (학습 부록 매뉴얼 버튼 제거)
+const CACHE_VERSION = 'v42-20260827-021601';     // 쉘/CDN: 배포마다 갱신 (mermaid 프리캐시 제외 → 온디맨드)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
@@ -87,9 +87,11 @@ const SHELL_ASSETS = [
   './vendor/fonts/outfit-300.woff2',
   './vendor/fonts/outfit-400.woff2',
   './vendor/fonts/outfit-600.woff2',
-  './vendor/fonts/outfit-800.woff2',
-  // Mermaid 자체 호스팅 (오프라인/모바일에서도 다이어그램 정상 표시)
-  './vendor/mermaid/mermaid.min.js'
+  './vendor/fonts/outfit-800.woff2'
+  // ⚠️ Mermaid(3.3MB)는 프리캐시하지 않는다 — 매뉴얼/문서 뷰에서만 온디맨드로 주입되며
+  //    fetch 핸들러의 "그 외 JS → Network First" 경로가 최초 열람 시 캐시한다.
+  //    (트레이드오프: 한 번도 온라인에서 매뉴얼을 열지 않은 상태로 오프라인 진입 시
+  //     최초 다이어그램은 렌더되지 않음. 매뉴얼 본문 텍스트/요약은 MD_ASSETS 로 오프라인 보장됨)
 ];
 
 /**
