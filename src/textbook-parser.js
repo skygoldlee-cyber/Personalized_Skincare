@@ -351,6 +351,17 @@ export function buildSubjectData(subjectMeta, mdByFile, opts = {}) {
         data.chapters.push(chapterData);
     });
 
+    // 중복 카드 제거 (같은 chapter 내 용어 사전 표와 본문 표 간 용어 중복 대응)
+    const uniqueCards = [];
+    const cardMap = new Set();
+    data.cards.forEach(c => {
+        if (!cardMap.has(c.id)) {
+            cardMap.add(c.id);
+            uniqueCards.push(c);
+        }
+    });
+    data.cards = uniqueCards;
+
     // 중복 퀴즈 제거 (빌드 build()와 동일 로직)
     const uniqueQuizzes = [];
     const quizMap = new Set();

@@ -425,6 +425,41 @@
 
 ---
 
+## 26. 교재 콘텐츠 5대 학습 보조 개선 적용 (2026-08-27)
+
+> **목표**: 전 교재(4과목 19단원) Markdown 콘텐츠에 5가지 학습 보조 요소를 추가하여 시험 대비 학습 효율 및 콘텐츠 직관성 향상
+
+### 적용 내역
+
+**5가지 개선 요소 (전 19단원 일괄 적용)**:
+1. **학습 가이드**: 각 단원 시작에 출제 빈도(★), 예상 소요 시간, 핵심 키워드 블록 추가
+2. **한 줄 요약**: 각 주요 섹션(`##`) 하단에 핵심 내용을 한 줄로 요약한 blockquote 추가
+3. **비교표**: 주요 개념, 수치, 기준을 한눈에 비교할 수 있는 표 추가/확장
+4. **확인문제**: 객관식 4지선다 문제 + 상세 해설을 각 단원 말미에 추가
+5. **용어 사전**: 단원별 핵심 용어와 포인트를 정리한 표를 단원 말미에 추가
+
+**적용 대상 파일 (19개)**:
+- `content/law/1.cosmetic-law.md`, `content/law/2.privacy-law.md`
+- `content/manufacturing/1.ingredients.md` ~ `5.hazard.md`
+- `content/safety/1.workspace-safety.md` ~ `5.packaging-safety.md`
+- `content/understanding/1.overview.md` ~ `7.filling-packaging.md`
+
+### 빌드 시스템 수정
+
+- **`tools/build/plugins/textbook.plugin.js`**: 카드 중복 제거 로직 추가
+  - 용어 사전 표와 본문 표 간 동일 용어 중복으로 인한 duplicate card ID 빌드 에러 해결
+  - 기존 퀴즈 중복 제거 로직과 동일한 패턴(`Set` 기반 ID dedup) 적용
+- **`src/textbook-parser.js`**: 런타임 파서에 동일한 카드 중복 제거 로직 동기화
+  - `check_parser_parity.js` 등가성 검증 유지
+
+### 검증
+
+- `npm run build:data` 성공 (law 172 cards, manufacturing 596, safety 305, understanding 593)
+- `npm run check:parser` — 빌드 파서 ↔ 런타임 파서 등가성 검증 통과
+- `npm run test:all` — 88 unit tests + 10 DOM tests 전부 통과
+
+---
+
 ## 24. Vercel 크로스머신 배포 지원 및 문서 갱신 (2026-08-26)
 
 > **목표**: 다른 PC에서도 Vercel 배포가 가능하도록 프로젝트 식별 정보를 Git에 추적하고, 배포 가이드 문서 갱신
