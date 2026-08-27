@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v42-20260827-d241f31';     // 쉘/CDN: 배포마다 갱신 (mermaid 프리캐시 제외 → 온디맨드)
+const CACHE_VERSION = 'v42-20260827-6747327';     // 쉘/CDN: 배포마다 갱신 (mermaid 프리캐시 제외 → 온디맨드)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
@@ -87,11 +87,10 @@ const SHELL_ASSETS = [
   './vendor/fonts/outfit-300.woff2',
   './vendor/fonts/outfit-400.woff2',
   './vendor/fonts/outfit-600.woff2',
-  './vendor/fonts/outfit-800.woff2'
-  // ⚠️ Mermaid(3.3MB)는 프리캐시하지 않는다 — 매뉴얼/문서 뷰에서만 온디맨드로 주입되며
-  //    fetch 핸들러의 "그 외 JS → Network First" 경로가 최초 열람 시 캐시한다.
-  //    (트레이드오프: 한 번도 온라인에서 매뉴얼을 열지 않은 상태로 오프라인 진입 시
-  //     최초 다이어그램은 렌더되지 않음. 매뉴얼 본문 텍스트/요약은 MD_ASSETS 로 오프라인 보장됨)
+  './vendor/fonts/outfit-800.woff2',
+  // Mermaid(3.3MB) — 매뉴얼/교재 리더의 다이어그램 렌더링에 필요.
+  //   온디맨드 로드이지만 PWA 오프라인 환경에서도 다이어그램이 표시되도록 프리캐시에 포함.
+  './vendor/mermaid/mermaid.min.js'
 ];
 
 /**

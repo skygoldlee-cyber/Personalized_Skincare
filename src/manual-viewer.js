@@ -16,7 +16,7 @@ export const ManualViewer = (() => {
         'user_manual': { path: 'docs/user/user_manual.md', title: '사용자 매뉴얼' },
         'study_summary': { path: 'content/study_summary.md', title: '핵심 단권화 요약집' }
     };
-    const CACHE_PREFIX = 'manual_md_cache_v2_';
+    const CACHE_PREFIX = 'manual_md_cache_v3_';
     const CACHE_TTL = 24 * 60 * 60 * 1000; // 24시간
     let _currentTitle = '';
     let _currentBodyHtml = '';
@@ -246,7 +246,8 @@ body.manual-open{overflow:hidden;}
                         securityLevel: 'strict',
                         theme: isLight ? 'default' : 'dark'
                     });
-                    mermaid.run({ querySelector: '#manual-article pre.mermaid' });
+                    mermaid.run({ querySelector: '#manual-article pre.mermaid' })
+                    .catch((e) => console.warn('[manual] mermaid.run() failed:', e));
                 } catch (e) {
                     console.warn('[manual] mermaid render failed:', e);
                 }
