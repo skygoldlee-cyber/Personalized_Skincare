@@ -280,7 +280,7 @@ export function renderPassFailDiagnosis() {
     
     subjects.forEach(sub => {
         const rate = getLatestRate(sub.key);
-        if (rate !== null && rate < 40) {
+        if (rate !== null && rate < 60) {
             isGuarak = true;
             guarakSubjects.push(sub.name);
         }
@@ -296,7 +296,7 @@ export function renderPassFailDiagnosis() {
     } else if (avgRate >= 60 && isGuarak) {
         statusClass = 'warning';
         statusText = '과락 경계';
-        advice = `평균 점수는 합격선이나, 일부 과목(${guarakSubjects.join(', ')})에서 과락(40% 미만) 위기가 감지되었습니다. 해당 과목을 더 학습하세요!`;
+        advice = `평균 점수는 합격선이나, 일부 과목(${guarakSubjects.join(', ')})에서 과락(60점 미만) 위기가 감지되었습니다. 해당 과목을 더 학습하세요!`;
     } else {
         statusClass = 'fail';
         statusText = '합격 미달';
@@ -309,9 +309,9 @@ export function renderPassFailDiagnosis() {
         if (rate !== null) {
             const shortName = sub.name.replace('의 이해', '').replace(' 및 품질관리', '').replace('유통화장품 ', '');
             subjectsHTML += `
-                <div class="pred-subject-row ${rate < 40 ? 'danger' : ''}">
+                <div class="pred-subject-row ${rate < 60 ? 'danger' : ''}">
                     <span>${idx + 1}과목 (${shortName})</span>
-                    <strong>${rate}% ${rate < 40 ? '(과락)' : ''}</strong>
+                    <strong>${rate}% ${rate < 60 ? '(과락)' : ''}</strong>
                 </div>
             `;
         }
@@ -460,8 +460,8 @@ export function renderRadarChart() {
         const rates = subjectRates[sub.key] || [];
         const examCount = rates.length;
         const shortName = sub.name.replace('의 이해', '').replace(' 및 품질관리', '').replace('유통화장품 ', '');
-        const status = rate < 40 ? '과락 위험' : rate < 60 ? '합격 미달' : '안정권';
-        const statusColor = rate < 40 ? '#ef4444' : rate < 60 ? '#f59e0b' : '#10b981';
+        const status = rate < 60 ? '과락 위험' : '안정권';
+        const statusColor = rate < 60 ? '#ef4444' : '#10b981';
         bindTooltip(dot,
             `<div style="font-size:0.85rem;">${idx + 1}과목: ${shortName}</div>` +
             `<div style="font-size:1.1rem;color:#06b6d4;margin-top:2px;">${rate}%</div>` +

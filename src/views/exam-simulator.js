@@ -546,7 +546,7 @@ export function submitExam() {
             const data = subjectScores[subj];
             if (data.total > 0) {
                 const subRate = Math.round((data.score / data.total) * 100);
-                const isFail = subRate < 40;
+                const isFail = subRate < 60;
                 if (isFail) {
                     failedSubjects.push({ id: subj, name: subjNames[subj], rate: subRate });
                 }
@@ -578,7 +578,7 @@ export function submitExam() {
                 <div style="margin-top: 1.25rem; padding: 0.75rem 1rem; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 6px;">
                     <h5 style="margin: 0 0 0.5rem 0; color: #ef4444; font-size: 0.9rem; font-weight: bold;"><i class="fa-solid fa-triangle-exclamation"></i> 과락 주의 경고!</h5>
                     <p style="margin: 0; font-size: 0.8rem; color: #fca5a5; line-height: 1.5;">
-                        실제 시험 기준 한 과목이라도 40% 미만 득점 시 전체 평균이 60%를 넘어도 불합격 처리됩니다. 아래 추천 학습으로 약점을 빠르게 보완해 보세요.
+                        실제 시험 기준 한 과목이라도 60점 미만 득점 시 전체 평균이 60점을 넘어도 불합격 처리됩니다. 아래 추천 학습으로 약점을 빠르게 보완해 보세요.
                     </p>
                     <div style="margin-top: 0.75rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
             `;
