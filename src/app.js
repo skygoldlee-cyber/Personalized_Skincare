@@ -946,7 +946,11 @@ function setupEventListeners() {
     }
 
     document.body.addEventListener('click', (e) => {
-        const el = e.target.closest('[data-click]');
+        // 일부 안드로이드 Chrome에서 e.target이 Text 노드가 될 수 있어
+        // closest()가 없어 TypeError 발생 → 버튼 동작 안 함 (PC/최신 모바일은 정상)
+        const targetEl = e.target instanceof Element ? e.target : e.target.parentElement;
+        if (!targetEl) return;
+        const el = targetEl.closest('[data-click]');
         if (!el) return;
 
         const handlerName = el.getAttribute('data-click');
@@ -969,7 +973,9 @@ function setupEventListeners() {
 
     // 입력 이벤트 위임 (range 슬라이더 등). 인라인 oninput 속성(CSP 차단) 대체.
     document.body.addEventListener('input', (e) => {
-        const el = e.target.closest('[data-input]');
+        const targetEl = e.target instanceof Element ? e.target : e.target.parentElement;
+        if (!targetEl) return;
+        const el = targetEl.closest('[data-input]');
         if (!el) return;
 
         const handlerName = el.getAttribute('data-input');
