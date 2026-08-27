@@ -34,6 +34,7 @@ docs/
 | [DEPLOYMENT_GUIDE.md](dev/DEPLOYMENT_GUIDE.md) | Vercel 배포 및 오디오 호스팅 | 용량 최적화, .vercelignore, CSP/캐시 정책, 배포 체크리스트, 트러블슈팅 |
 | [MULTI_MACHINE_SETUP.md](dev/MULTI_MACHINE_SETUP.md) | 다중 머신 개발 환경 설정 | GitHub SSH, Vercel CLI 인증, GitHub Actions 자동 배포 |
 | [PROJECT_MINDMAP.md](dev/PROJECT_MINDMAP.md) | 프로젝트 전체 구조 시각화 | Mermaid 마인드맵 — 설계 철학, 기능, 기술 스택, 데이터 파이프라인 |
+| [DEPLOY.md](dev/DEPLOY.md) | Git Push & Vercel 배포 절차 | 빌드 → 커밋/푸시 → 배포 파이프라인, 명령어별 실행 범위 |
 | [CHANGES.md](dev/CHANGES.md) | 코드 변경 이력 (Changelog) | #27 매뉴얼 재정리, #26 교재 5대 학습 보조 개선, #25 학습 보조 도구, #24 Mermaid 다이어그램, #23 CSP 이벤트 위임 |
 | [IMPROVEMENTS_REPORT.md](dev/IMPROVEMENTS_REPORT.md) | 보완 및 개선점 보고서 | 10개 섹션 개선 완료 (모듈 분할, ESM, 테스트, CI/CD, UI/UX, 콘텐츠 학습 보조, 매뉴얼 재정리 등) |
 
