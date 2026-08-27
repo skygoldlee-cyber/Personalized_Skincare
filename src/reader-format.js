@@ -7,6 +7,7 @@ export function formatSectionContentForReader(rawContent) {
         useReaderStyles: true,
         customSpacing: true,
         allowItalics: false,
-        allowInlineCode: false
+        allowInlineCode: false,
+        allowMermaid: true
     });
 }

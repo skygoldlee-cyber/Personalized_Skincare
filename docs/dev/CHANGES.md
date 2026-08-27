@@ -471,6 +471,38 @@
 
 ---
 
+## 24. 교재 본문 Mermaid 다이어그램 지원 및 시각화 콘텐츠 추가 (2026-08-27)
+
+> **목표**: 교재 리더에서 Mermaid 마인드맵·플로우차트를 렌더링하여 학습자에게 시각적·직관적인 학습 자료 제공
+
+### 수정 내역
+
+- **`src/reader-format.js`**: `allowMermaid: true` 옵션 추가
+  - `parseMarkdown()` 호출 시 mermaid 코드블록을 `<pre class="mermaid">`로 변환하도록 활성화
+- **`src/views/textbook-reader.js`**: Mermaid 온디맨드 로드·렌더링 로직 추가
+  - `_ensureMermaid()`: `vendor/mermaid/mermaid.min.js` (3.3MB)를 mermaid 블록이 있을 때만 동적 주입 (manual-viewer.js와 동일 패턴)
+  - `_renderReaderMermaid()`: `pre.mermaid` 노드를 찾아 `mermaid.run()`으로 렌더링, 라이트/다크 테마별 초기화
+  - `renderChapterContent()` 끝에 `_renderReaderMermaid(container)` 호출 추가
+- **교재 콘텐츠 8개 파일에 11개 다이어그램 추가**:
+  - `content/law/1.cosmetic-law.md`: 법령체계 mindmap + 영업분류 flowchart
+  - `content/manufacturing/1.ingredients.md`: 원료 분류 mindmap
+  - `content/manufacturing/3.restricted.md`: 사용제한 원료 한도 flowchart
+  - `content/manufacturing/5.hazard.md`: 위해성 평가 4단계 flowchart
+  - `content/safety/1.workspace-safety.md`: CGMP 3대 요소 mindmap
+  - `content/understanding/1.overview.md`: 맞춤형화장품 정의 flowchart
+  - `content/understanding/2.physiology.md`: 피부 구조 flowchart
+  - `content/understanding/3.sensory-evaluation.md`: 관능평가 순서 flowchart
+  - `content/understanding/6.mixing-subdivision.md`: 제형 안정성 감소 요인 flowchart
+  - `content/understanding/7.filling-packaging.md`: 충진기 종류 mindmap
+
+### 검증
+
+- `npm run build:data` 성공 (카드 1,178개, 파서 등가성 검사 통과)
+- `npm test` 88/88 통과
+- SW 캐시: mermaid.min.js는 기존과 동일하게 온디맨드 Network First로 캐싱 (프리캐시 불필요)
+
+---
+
 ## 22. 교재 리더 인터랙티브 개념 맵 추가 (2026-08-26)
 
 > **목표**: 교재 본문 읽기 화면에 섹션 구조를 시각화한 마인드맵을 추가하여 학습자가 챕터 전체 구조를 한눈에 파악하고 원하는 섹션으로 빠르게 이동

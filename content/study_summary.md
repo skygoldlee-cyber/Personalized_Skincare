@@ -64,6 +64,8 @@ flowchart LR
 
 ## 📌 제1과목: 화장품법의 이해
 
+> 📖 **원본 교재 매핑**: `law/1.cosmetic-law.md` (화장품법), `law/2.privacy-law.md` (개인정보 보호법)
+
 ### 1. 화장품의 정의 및 영업 분류
 
 ```mermaid
@@ -143,6 +145,8 @@ mindmap
 
 ## 📌 제2과목: 화장품 제조 및 품질관리
 
+> 📖 **원본 교재 매핑**: `manufacturing/1.ingredients.md` ~ `manufacturing/5.hazard.md`
+
 ### 1. 화장품 원료의 성분 분류 및 특성
 
 ```mermaid
@@ -212,6 +216,8 @@ flowchart LR
 
 ## 📌 제3과목: 유통화장품 안전관리
 
+> 📖 **원본 교재 매핑**: `safety/1.workspace-safety.md` ~ `safety/5.packaging-safety.md`
+
 ### 1. 유통화장품 안전관리 기준 (검출 한도 수치)
 유통 중인 완제품이 안전성 기준을 통과하기 위해 아래 검출 허용 한도를 넘지 않아야 합니다.
 
@@ -264,6 +270,8 @@ mindmap
 ---
 
 ## 📌 제4과목: 맞춤형화장품의 이해
+
+> 📖 **원본 교재 매핑**: `understanding/1.overview.md` ~ `understanding/7.filling-packaging.md`
 
 ### 1. 맞춤형화장품 조제 및 위생 관리
 *   **조제 시 위생 원칙**:

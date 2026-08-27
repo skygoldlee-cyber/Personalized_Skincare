@@ -896,6 +896,48 @@ function renderChapterContent(subjId, chapterIdx) {
     bindReaderScrollEvents();
     applyReaderFontScale();
     applyReaderThemeClass();
+
+    // Mermaid 다이어그램 렌더링 (pre.mermaid 노드가 있을 때만 온디맨드 로드)
+    _renderReaderMermaid(container);
+}
+
+// --- Mermaid 온디맨드 로드 (manual-viewer.js 패턴과 동일) ---
+let _mermaidLoadPromise = null;
+function _ensureMermaid() {
+    if (window.mermaid) return Promise.resolve(window.mermaid);
+    if (_mermaidLoadPromise) return _mermaidLoadPromise;
+    _mermaidLoadPromise = new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = './vendor/mermaid/mermaid.min.js';
+        script.async = true;
+        script.onload = () => {
+            if (window.mermaid) resolve(window.mermaid);
+            else reject(new Error('mermaid loaded but window.mermaid is undefined'));
+        };
+        script.onerror = (e) => { _mermaidLoadPromise = null; reject(e); };
+        document.head.appendChild(script);
+    });
+    return _mermaidLoadPromise;
+}
+
+function _renderReaderMermaid(container) {
+    const nodes = container ? container.querySelectorAll('pre.mermaid') : [];
+    if (nodes.length === 0) return;
+    _ensureMermaid()
+        .then((mermaid) => {
+            try {
+                const isLight = document.documentElement.classList.contains('light-theme');
+                mermaid.initialize({
+                    startOnLoad: false,
+                    securityLevel: 'strict',
+                    theme: isLight ? 'default' : 'dark'
+                });
+                mermaid.run({ nodes: Array.from(nodes) });
+            } catch (e) {
+                console.warn('[reader] mermaid render failed:', e);
+            }
+        })
+        .catch((e) => console.warn('[reader] mermaid load failed:', e));
 }
 
 // --- Reader convenience feature state & logic ---

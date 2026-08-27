@@ -185,7 +185,7 @@
 | [`src/ui-utils.js`](../../src/ui-utils.js) | 공통 UI 유틸리티. 로딩 스피너(`showLoading`/`hideLoading`) 및 글로벌 로딩 오버레이(`showGlobalLoading`/`hideGlobalLoading`) |
 | [`src/sha256.js`](../../src/sha256.js) | 순수 동기 SHA-256 + `stableId()`. 빌드타임 Node `crypto`와 동일한 카드/퀴즈 안정 ID를 브라우저에서 재현(진도 보존의 핵심) |
 | [`src/types.js`](../../src/types.js) | **순수 JSDoc 타입 선언 모듈** (런타임 코드 없음). `State`, `Card`, `SubjectMeta` 등 `@typedef` 정의. `jsconfig.json` checkJs로 편집기 타입 검사/자동완성 활성화 |
-| [`src/reader-format.js`](../../src/reader-format.js) | 교재 리더 콘텐츠 포맷터 (MD 섹션 → HTML 변환) |
+| [`src/reader-format.js`](../../src/reader-format.js) | 교재 리더 콘텐츠 포맷터 (MD 섹션 → HTML 변환, Mermaid 다이어그램 렌더링 지원) |
 | [`src/concept-map.js`](../../src/concept-map.js) | **순수 SVG 인터랙티브 개념 맵 생성기** (CSP-safe, 의존성 없음). 교재 리더 상단에 섹션 구조를 마인드맵으로 시각화. 데스크톱 좌/우 수평 레이아웃 + 모바일 세로 트리 레이아웃 자동 전환, 노드 클릭 시 해당 섹션으로 스크롤, 기출/중요 마커 하이라이트 |
 | [`src/study-aids.js`](../../src/study-aids.js) | **교재 리더 학습 보조 도구** (CSP-safe, 의존성 없음). 4가지 학습 보조 기능: ① 기출 필터 & 요약 카드(🔖기출 마커 하이라이트 + 핵심 요약), ② 숫자·기한 자동 추출 빈칸 카드(정규식 추출 + 챕터별 암기표), ③ 절차 플로우 정적 SVG 플로우차트(신고/변경/교육/폐업), ④ 행정처분 비교·대조 시각화(sticky col, zebra, 기출 하이라이트) |
 | [`src/views/navigation.js`](../../src/views/navigation.js) | 뷰 전환 유틸리티 (`switchView`). 순환 import 해결용 별도 모듈 |
@@ -792,6 +792,13 @@ content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.j
    - ③ 절차 플로우: 신고/변경/교육/폐업 절차를 정적 SVG 플로우차트로 시각화
    - ④ 행정처분 비교표: sticky column + zebra striping + 기출 하이라이트 테이블
    - `textbook-reader.js`에 토글 버튼과 렌더링 통합, `css/reader.css`에 반응형 스타일 추가
+
+16. **교재 본문 Mermaid 다이어그램 렌더링** ✅
+   - `reader-format.js`에 `allowMermaid: true` 옵션 추가 → ```mermaid 코드블록을 `<pre class="mermaid">`로 변환
+   - `textbook-reader.js`에 `_ensureMermaid()` + `_renderReaderMermaid()` 추가 (manual-viewer.js와 동일한 온디맨드 패턴)
+   - `vendor/mermaid/mermaid.min.js` (3.3MB)는 mermaid 블록이 있는 챕터를 열 때만 동적 로드 → 1회 캐싱 후 오프라인에서도 렌더링 가능
+   - 교재 콘텐츠 8개 파일에 11개 다이어그램 추가 (mindmap 5개, flowchart 6개) — 법령체계, 영업분류, 원료 분류, 사용제한 원료 한도, 위해성 평가, CGMP 3대 요소, 맞춤형화장품 정의, 피부 구조, 관능평가 순서, 제형 안정성, 충진기 종류
+   - **근거**: 표·리스트 위주의 텍스트 학습 자료에 시각적 구조를 추가하여 이해도·암기 효율 향상. Mermaid는 매뉴얼 뷰어에서 이미 검증된 패턴을 재사용
 
 ---
 
