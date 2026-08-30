@@ -180,6 +180,7 @@ function parseMarkdownFile(content, subjectId, filename, chapterKey) {
                 || currentSection.startsWith('📋 별표')
                 || currentSection.startsWith('📊')
                 || currentSection.startsWith('🔢')
+                || currentSection.startsWith('🔗')
                 || currentSection.includes('데이터 구조')
                 || currentSection.includes('주요 성분 데이터');
             continue;
