@@ -12,9 +12,9 @@ export const DATA_REGISTRY = {
       "shortName": "화장품법",
       "contentHash": "bad21182",
       "stats": {
-        "cards": 172,
-        "quizzes": 11,
-        "chapters": 2
+        "cards": 0,
+        "quizzes": 0,
+        "chapters": 1
       }
     },
     {
@@ -24,9 +24,9 @@ export const DATA_REGISTRY = {
       "shortName": "제조·품질",
       "contentHash": "ea9e7d10",
       "stats": {
-        "cards": 596,
+        "cards": 0,
         "quizzes": 0,
-        "chapters": 5
+        "chapters": 1
       }
     },
     {
@@ -36,9 +36,9 @@ export const DATA_REGISTRY = {
       "shortName": "안전관리",
       "contentHash": "2e1f0c09",
       "stats": {
-        "cards": 305,
+        "cards": 0,
         "quizzes": 0,
-        "chapters": 5
+        "chapters": 1
       }
     },
     {
@@ -48,9 +48,9 @@ export const DATA_REGISTRY = {
       "shortName": "맞춤형화장품",
       "contentHash": "09bfa34a",
       "stats": {
-        "cards": 593,
+        "cards": 0,
         "quizzes": 0,
-        "chapters": 7
+        "chapters": 1
       }
     }
   ],

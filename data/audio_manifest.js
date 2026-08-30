@@ -17,31 +17,16 @@ export const AUDIO_BASE_URL = null; // null = 로컬 개발 모드, 문자열 = 
 /** @type {import('../src/types.js').AudioManifest} */
 export const AUDIO_MANIFEST = {
   "law": {
-    "0": "content/audiobook/mp3/law/ch01_1_화장품법2026.mp3",
-    "1": "content/audiobook/mp3/law/ch02_2_개인정보_보호법2026.mp3"
+    "0": "content/audiobook/mp3/law/ch01_1_화장품법2026.mp3"
   },
   "manufacturing": {
-    "0": "content/audiobook/mp3/manufacturing/ch01_1_화장품_원료의_종류와_특성_및_제품의_제조관리2026.mp3",
-    "1": "content/audiobook/mp3/manufacturing/ch02_2_화장품의_기능과_품질2026.mp3",
-    "2": "content/audiobook/mp3/manufacturing/ch03_3_화장품_사용제한_원료2026.mp3",
-    "3": "content/audiobook/mp3/manufacturing/ch04_4_화장품_관리2026.mp3",
-    "4": "content/audiobook/mp3/manufacturing/ch05_5_위해사례_판단_및_보고2026.mp3"
+    "0": "content/audiobook/mp3/manufacturing/ch01_1_화장품_원료의_종류와_특성_및_제품의_제조관리2026.mp3"
   },
   "safety": {
-    "0": "content/audiobook/mp3/safety/ch01_1_작업장_위생관리2026.mp3",
-    "1": "content/audiobook/mp3/safety/ch02_2_작업자_위생관리2026.mp3",
-    "2": "content/audiobook/mp3/safety/ch03_3_설비_및_기구관리2026.mp3",
-    "3": "content/audiobook/mp3/safety/ch04_4_내용물_및_원료관리2026.mp3",
-    "4": "content/audiobook/mp3/safety/ch05_5_포장재의_관리2026.mp3"
+    "0": "content/audiobook/mp3/safety/ch01_1_작업장_위생관리2026.mp3"
   },
   "understanding": {
-    "0": "content/audiobook/mp3/understanding/ch01_1_맞춤형화장품_개요2026.mp3",
-    "1": "content/audiobook/mp3/understanding/ch02_2_피부_및_모발의_생리구조2026.mp3",
-    "2": "content/audiobook/mp3/understanding/ch03_3_관능평가_방법과_절차2026.mp3",
-    "3": "content/audiobook/mp3/understanding/ch04_4_제품_상담2026.mp3",
-    "4": "content/audiobook/mp3/understanding/ch05_5_제품_안내2026.mp3",
-    "5": "content/audiobook/mp3/understanding/ch06_6_혼합_및_소분2026.mp3",
-    "6": "content/audiobook/mp3/understanding/ch07_7_충진_및_포장2026.mp3"
+    "0": "content/audiobook/mp3/understanding/ch01_1_맞춤형화장품_개요2026.mp3"
   }
 };
 
