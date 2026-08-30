@@ -17,16 +17,16 @@ export const AUDIO_BASE_URL = null; // null = 로컬 개발 모드, 문자열 = 
 /** @type {import('../src/types.js').AudioManifest} */
 export const AUDIO_MANIFEST = {
   "law": {
-    "0": "content/audiobook/mp3/law/ch01_1_화장품법2026.mp3"
+    "0": "content/audiobook/mp3/law/ch01_1과목_화장품법의이해_이야기형.mp3"
   },
   "manufacturing": {
-    "0": "content/audiobook/mp3/manufacturing/ch01_1_화장품_원료의_종류와_특성_및_제품의_제조관리2026.mp3"
+    "0": "content/audiobook/mp3/manufacturing/ch02_2과목_제조및품질관리_이야기형.mp3"
   },
   "safety": {
-    "0": "content/audiobook/mp3/safety/ch01_1_작업장_위생관리2026.mp3"
+    "0": "content/audiobook/mp3/safety/ch03_3과목_유통화장품안전관리_이야기형.mp3"
   },
   "understanding": {
-    "0": "content/audiobook/mp3/understanding/ch01_1_맞춤형화장품_개요2026.mp3"
+    "0": "content/audiobook/mp3/understanding/ch04_4과목_맞춤형화장품의이해_이야기형.mp3"
   }
 };
 

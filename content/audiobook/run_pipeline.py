@@ -92,7 +92,7 @@ class ChapterJob:
 # MD 파일 스캔
 # ---------------------------------------------------------------------------
 
-MD_FILE_RE = re.compile(r"^(\d+)\..*\.md$")
+MD_FILE_RE = re.compile(r"^(\d+).*\.md$")
 
 
 def scan_chapter_jobs(subject_filter: Optional[str] = None,
