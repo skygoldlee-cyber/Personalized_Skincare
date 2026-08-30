@@ -89,6 +89,11 @@ const parseMarkdownFile = (filePath, subjectId, filename, chapterKey, stableId) 
       // term과 definition이 동일하면 의미 없는 카드이므로 건너뛰기
       if (cleanTerm === cleanDesc) return;
 
+      // definition이 '별표' 참조만 있거나 마크다운 링크만 있는 경우 건너뛰기
+      if (/^별표\s*\d/.test(cleanDesc)) return;
+      if (/←.*별표.*참조$/.test(cleanDesc)) return;
+      if (/^\[.+\]\(.+\)$/.test(cleanDesc)) return;
+
       cards.push({
         id: stableId(subjectId, chapterKey, 'card', cleanTerm),
         category: currentSection,
@@ -167,7 +172,7 @@ const parseMarkdownFile = (filePath, subjectId, filename, chapterKey, stableId) 
 
     if (line.startsWith('## ')) {
       currentSection = line.substring(3).trim();
-      skipSection = currentSection.startsWith('🧭') || currentSection.startsWith('🎯 과목 시각화');
+      skipSection = currentSection.startsWith('🧭') || currentSection.startsWith('🎯 과목 시각화') || currentSection.startsWith('📋 별표');
       continue;
     }
 
