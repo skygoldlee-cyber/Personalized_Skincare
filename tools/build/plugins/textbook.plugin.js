@@ -41,6 +41,7 @@ const parseMarkdownFile = (filePath, subjectId, filename, chapterKey, stableId) 
   };
 
   let currentSection = path.basename(filename, '.md');
+  let skipSection = false;
   let inTable = false;
   let tableHeaders = [];
   let tableRows = [];
@@ -144,8 +145,11 @@ const parseMarkdownFile = (filePath, subjectId, filename, chapterKey, stableId) 
 
     if (line.startsWith('## ')) {
       currentSection = line.substring(3).trim();
+      skipSection = currentSection.startsWith('🧭');
       continue;
     }
+
+    if (skipSection) continue;
 
     if (line.startsWith('|')) {
       if (!inTable) {

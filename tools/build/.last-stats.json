@@ -1,19 +1,19 @@
 {
   "subjects": {
     "law": {
-      "cards": 340,
+      "cards": 331,
       "quizzes": 0
     },
     "manufacturing": {
-      "cards": 1024,
+      "cards": 1015,
       "quizzes": 0
     },
     "safety": {
-      "cards": 431,
+      "cards": 422,
       "quizzes": 0
     },
     "understanding": {
-      "cards": 745,
+      "cards": 736,
       "quizzes": 0
     }
   },
