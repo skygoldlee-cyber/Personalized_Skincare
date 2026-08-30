@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v43-20260827-text-node-fix';     // 쉘/CDN: 배포마다 갱신 (안드로이드 Text 노드 click 이벤트 폰트 폴백)
+const CACHE_VERSION = 'v44-20260831-textbook-replace';     // 쉘/CDN: 배포마다 갱신 (교재 파일로 콘텐츠 교체)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
@@ -110,7 +110,11 @@ const DATA_ASSETS = [
 /** 설치 시 프리캐시할 마크다운 문서 (매뉴얼·요약집 — 오프라인 보장) */
 const MD_ASSETS = [
   './docs/user/user_manual.md',
-  './content/study_summary.md'
+  './content/study_summary.md',
+  './content/law/1과목_화장품법의이해.md',
+  './content/manufacturing/2과목_제조및품질관리.md',
+  './content/safety/3과목_유통화장품안전관리.md',
+  './content/understanding/4과목_맞춤형화장품의이해.md'
 ];
 
 /** 캐시하지 않을 요청 패턴 (오디오 등 대용량 미디어) */

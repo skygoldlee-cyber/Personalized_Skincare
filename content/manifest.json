@@ -10,14 +10,9 @@
       "dir": "law",
       "chapters": [
         {
-          "key": "cosmetic-law",
-          "title": "화장품법",
-          "file": "1.cosmetic-law.md"
-        },
-        {
-          "key": "privacy-law",
-          "title": "개인정보 보호법",
-          "file": "2.privacy-law.md"
+          "key": "full",
+          "title": "화장품법의 이해 (전체)",
+          "file": "1과목_화장품법의이해.md"
         }
       ]
     },
@@ -29,29 +24,9 @@
       "dir": "manufacturing",
       "chapters": [
         {
-          "key": "ingredients",
-          "title": "화장품 원료의 종류와 특성 및 제품의 제조관리",
-          "file": "1.ingredients.md"
-        },
-        {
-          "key": "quality",
-          "title": "화장품의 기능과 품질",
-          "file": "2.quality.md"
-        },
-        {
-          "key": "restricted",
-          "title": "화장품 사용제한 원료",
-          "file": "3.restricted.md"
-        },
-        {
-          "key": "management",
-          "title": "화장품 관리",
-          "file": "4.management.md"
-        },
-        {
-          "key": "hazard",
-          "title": "위해사례 판단 및 보고",
-          "file": "5.hazard.md"
+          "key": "full",
+          "title": "화장품 제조 및 품질관리 (전체)",
+          "file": "2과목_제조및품질관리.md"
         }
       ]
     },
@@ -63,29 +38,9 @@
       "dir": "safety",
       "chapters": [
         {
-          "key": "workspace-safety",
-          "title": "작업장 위생관리",
-          "file": "1.workspace-safety.md"
-        },
-        {
-          "key": "worker-safety",
-          "title": "작업자 위생관리",
-          "file": "2.worker-safety.md"
-        },
-        {
-          "key": "equipment-safety",
-          "title": "설비 및 기구관리",
-          "file": "3.equipment-safety.md"
-        },
-        {
-          "key": "material-safety",
-          "title": "내용물 및 원료관리",
-          "file": "4.material-safety.md"
-        },
-        {
-          "key": "packaging-safety",
-          "title": "포장재의 관리",
-          "file": "5.packaging-safety.md"
+          "key": "full",
+          "title": "유통화장품 안전관리 (전체)",
+          "file": "3과목_유통화장품안전관리.md"
         }
       ]
     },
@@ -97,39 +52,9 @@
       "dir": "understanding",
       "chapters": [
         {
-          "key": "overview",
-          "title": "맞춤형화장품 개요",
-          "file": "1.overview.md"
-        },
-        {
-          "key": "physiology",
-          "title": "피부 및 모발의 생리구조",
-          "file": "2.physiology.md"
-        },
-        {
-          "key": "sensory-evaluation",
-          "title": "관능평가 방법과 절차",
-          "file": "3.sensory-evaluation.md"
-        },
-        {
-          "key": "consulting",
-          "title": "제품 상담",
-          "file": "4.consulting.md"
-        },
-        {
-          "key": "guideline",
-          "title": "제품 안내",
-          "file": "5.guideline.md"
-        },
-        {
-          "key": "mixing-subdivision",
-          "title": "혼합 및 소분",
-          "file": "6.mixing-subdivision.md"
-        },
-        {
-          "key": "filling-packaging",
-          "title": "충진 및 포장",
-          "file": "7.filling-packaging.md"
+          "key": "full",
+          "title": "맞춤형화장품의 이해 (전체)",
+          "file": "4과목_맞춤형화장품의이해.md"
         }
       ]
     }
