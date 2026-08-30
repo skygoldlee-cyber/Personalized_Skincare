@@ -106,8 +106,8 @@ function parseMarkdownFile(content, subjectId, filename, chapterKey) {
             // 숫자만 있는 term (표 행 번호, 수치값) 건너뛰기
             if (/^\d+$/.test(term)) return;
 
-            // ①②③ 등 원번호 기호 및 (L숫자) 줄번호 참조 제거
-            const cleanTerm = term.replace(/\*\*/g, '').replace(/\s*\(L\d+\)\s*/g, '').replace(/^[①②③④⑤⑥⑦⑧⑨⑩]\s*/, '').trim();
+            // ①②③ 등 원번호 기호 및 (L숫자) 줄번호 참조 제거, 한국어 카테고리 꼴표 괄호 제거
+            const cleanTerm = term.replace(/\*\*/g, '').replace(/\s*\(L\d+\)\s*/g, '').replace(/^[①②③④⑤⑥⑦⑧⑨⑩]\s*/, '').replace(/\s*\(([^a-zA-Z()]*?)\)/g, '').trim();
             if (!cleanTerm) return;
 
             // 1~2자 키워드는 의미 부족으로 건너뛰기
@@ -251,7 +251,7 @@ function parseMarkdownFile(content, subjectId, filename, chapterKey) {
                 const cleanedLine = cleanText(line);
                 const listMatch = line.match(/^[-*]\s+\*\*([^*]+)\*\*(?:\s*🔖기출)?\s*[:：-]\s*(.+)$/);
                 if (listMatch) {
-                    const term = cleanText(listMatch[1]).replace(/\s*\(L\d+\)\s*/g, '').trim();
+                    const term = cleanText(listMatch[1]).replace(/\s*\(L\d+\)\s*/g, '').replace(/\s*\(([^a-zA-Z()]*?)\)/g, '').trim();
                     if (term.length > 2 && term.length <= 50 && !isGenericTerm(term)) {
                     const desc = listMatch[2].trim();
                     const cleanDesc = cleanText(desc).replace(/\s*\(L\d+\)\s*/g, ' ').trim();
