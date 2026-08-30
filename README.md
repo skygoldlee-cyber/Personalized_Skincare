@@ -61,10 +61,10 @@
 
 **데이터 파이프라인** (빌드 타임)
 - Node.js 모듈러 빌드 파이프라인으로 MD 교재/문제 → 해시드 JS 번들 생성
-  - `tools/build/index.js` → `data/registry.js` + `data/subjects/*.hash.js` + `data/exams/*.hash.js` + `data/ingredients_data.*.js`
-  - `tools/build_exam_bundles.js` → `data/exams_md/*.js` (문제집 MD file:// 폴리백 번들)
+  - `tools/build/index.js` → `data/registry.js` + `data/exams/*.hash.js` + `data/ingredients_data.*.js`
+  - `tools/build_exam_bundles.js` → `data/exams_md/*.js` (문제은행 MD file:// 폴리백 번들)
   - `tools/build_study_md_bundle.js` → `data/study_md/` (교재 MD file:// 폴백, 과목별 분할)
-  - `tools/generate_migration_map.js` → `data/id_migration.js`
+  - `tools/build/index.js` → `data/id_migration.js` (id-factory 플러그인)
   - 런타임: `src/data-loader.js`가 registry를 보고 필요한 과목/시험만 온디맨드 로드
 
 **오디오북 파이프라인** (`content/audiobook/`)
@@ -134,15 +134,13 @@ Personalized Skincare/
 │
 ├── 📂 content/                      ← 교재 MD 원본 (manifest만 빌드에 참조)
 │   ├── manifest.json                ← 단일 진실 원천(SSOT): 과목/단원/파일 정의
-│   ├── understanding/               ← 1과목: 맞춤형화장품의 이해
-│   ├── safety/                      ← 2과목: 유통화장품 안전관리
-│   ├── manufacturing/               ← 3과목: 화장품 제조 및 품질관리
-│   ├── law/                         ← 4과목: 화장품법의 이해
-│   ├── ingredients/                 ← 성분 원본 MD
-│   ├── study_summary.md             ← 핵심 단권화 요약집 (앱 내 뷰어 연동)
+│   ├── 교재/                        ← 4과목 교재 MD (law, manufacturing, safety, understanding)
+│   ├── 문제은행/                    ← 문제은행 MD (4개 파일)
+│   ├── 참조자료/                    ← 참조자료 (원료, 법령원문, 공통)
+│   ├── 학습안내서.md                ← 학습 안내서 (앱 내 뷰어 연동)
+│   ├── report/                      ← 분석 보고서 MD
+│   ├── utils/                       ← Python 변환 스크립트 (md_to_html, batch_convert, check_laws)
 │   └── audiobook/                   ← 오디오북 파이프라인 (Python)
-│
-├── 📂 exams/                        ← ✅ 배포 (모의고사 MD 원본 및 뷰어 소스)
 │
 ├── 📂 tests/                        ← 자동화 테스트
 │   ├── unit/                        ← Node.js 내장 테스트 러너 (88 tests)
@@ -241,8 +239,7 @@ node tools/build/index.js --only law,safety
 # file:// 폴백 번들 재생성 (교재 MD 수정 시)
 npm run build:study-md
 
-# 안정 ID 이관 맵 재생성 (퀴즈 ID 규칙 변경 시)
-node tools/generate_migration_map.js
+# 안정 ID 이관 맵은 build:data 실행 시 자동 생성됩니다
 ```
 
 ---

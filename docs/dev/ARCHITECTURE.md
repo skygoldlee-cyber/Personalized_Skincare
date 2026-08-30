@@ -1,7 +1,7 @@
 # 🏛️ 설계 컨셉 & 아키텍처 (Architecture & Design Concept)
 
 > **대상 프로젝트**: Cosmetic Pass Master — 맞춤형화장품 조제관리사 스마트 학습 플랫폼
-> **최종 업데이트**: 2026-08-26
+> **최종 업데이트**: 2026-08-31
 > **목적**: 시스템의 설계 철학, 아키텍처 구조, 주요 설계 결정 사항을 설명
 
 ---
@@ -143,8 +143,8 @@
 | `src/` | 애플리케이션 소스 코드 (ESM 모듈 + 뷰 컨트롤러) |
 | `css/` | UI 모듈별 스타일시트 (`base`, `dashboard`, `study`, `exam`, `trainer`, `reader`) |
 | `data/` | 빌드 산출물 (레지스트리, 과목/시험/성분 번들, MD 폴백) |
-| `content/` | 교재 MD 원본, 성분 사전, 오디오북 파이프라인, 단권화 요약집 |
-| `exams/` | 모의고사 MD 원본 및 뷰어 소스 |
+| `content/` | 교재 MD 원본(`교재/`), 문제은행(`문제은행/`), 참조자료(`참조자료/`), 학습안내서, 오디오북 파이프라인, report, utils |
+| ~~`exams/`~~ | (삭제됨 — `content/문제은행/`로 이동) |
 | `docs/` | 프로젝트 문서 (`dev/` 개발 문서, `user/` 사용자 문서) |
 | `tools/` | 빌드 스크립트, 로컬 개발 서버, 검증 도구 |
 | `tests/` | 자동화 테스트 (`unit/` Node.js, `dom/` Vitest+jsdom) |
@@ -179,7 +179,7 @@
 | [`src/state.js`](../../src/state.js) | 전역 상태 객체(`state`) 정의 + localStorage 영속성(`loadProgress`/`saveProgress`). 기본 과목은 `null`이며 `initApp()`에서 registry 첫 과목으로 설정 |
 | [`src/utils.js`](../../src/utils.js) | 의존성 없는 범용 헬퍼 (한글 초성 추출 `getChosung()` 등) |
 | [`src/sanitize.js`](../../src/sanitize.js) | HTML/XSS 방어 및 텍스트 정제 유틸리티 |
-| [`src/exam-viewer.js`](../../src/exam-viewer.js) | 문제집(MD) 런타임 뷰어. `content/exams/*.md` fetch → 자체 MD→HTML 변환 → 인앱 전체화면 오버레이 렌더링. TOC 생성·인쇄·sessionStorage 캐시(24h)·`file://` 번들 폴리백(`data/exams_md/*.js`) 지원. **시험 제목은 registry에서 동적 조회** (하드코딩 없음) |
+| [`src/exam-viewer.js`](../../src/exam-viewer.js) | 문제집(MD) 런타임 뷰어. `content/문제은행/*.md` fetch → 자체 MD→HTML 변환 → 인앱 전체화면 오버레이 렌더링. TOC 생성·인쇄·sessionStorage 캐시(24h)·`file://` 번들 폴리백(`data/exams_md/*.js`) 지원. **시험 제목은 registry에서 동적 조회** (하드코딩 없음) |
 | [`src/data-loader.js`](../../src/data-loader.js) | 온디맨드 데이터 로더. **교재/카드/퀴즈: `content/*.md` 런타임 fetch+파싱**(http는 라이브 fetch, `file://`은 `data/study_md/` 과목별 분할 폴백, fetch 실패 시 자동 폴백). 시험/성분은 기존 번들 로드 유지. 로드 후 registry stats를 실제 개수로 갱신 |
 | [`src/textbook-parser.js`](../../src/textbook-parser.js) | 교재 MD 런타임 파서. `tools/build/plugins/textbook.plugin.js`의 브라우저 포팅으로 카드/퀴즈/챕터를 조립(`buildSubjectData`). 빌드 산출물과 **바이트 단위 동일** 검증됨 |
 | [`src/ui-utils.js`](../../src/ui-utils.js) | 공통 UI 유틸리티. 로딩 스피너(`showLoading`/`hideLoading`) 및 글로벌 로딩 오버레이(`showGlobalLoading`/`hideGlobalLoading`) |

@@ -1,6 +1,6 @@
 # 🧠 Cosmetic Pass Master — 프로젝트 마인드맵
 
-> **최종 업데이트**: 2026-08-26
+> **최종 업데이트**: 2026-08-31
 > **목적**: 프로젝트 전체 구조를 마인드맵 다이어그램으로 시각화하여 한눈에 파악
 
 ---
@@ -135,7 +135,12 @@ Cosmetic Pass Master
 │   │   └── navigation.js — 뷰 전환 유틸
 │   ├── Data Layer
 │   │   ├── data/registry.js — 빌드 생성 메타 번들
-│   │   ├── content/*.md — SSOT 원본 (과목/시험/성분/추천)
+│   │   ├── content/교재/ — SSOT 교재 원본 (4과목 MD)
+│   ├── content/문제은행/ — 문제은행 MD (4개 파일)
+│   ├── content/참조자료/ — 참조자료 (원료, 법령원문, 공통)
+│   ├── content/학습안내서.md — 학습 안내서
+│   ├── content/report/ — 분석 보고서 MD
+│   ├── content/utils/ — Python 변환 스크립트
 │   │   ├── data/exams/*.hash.js — 시험 문항 번들 (9개)
 │   │   ├── data/ingredients_data.*.js — 성분 사전 (1,357개)
 │   │   ├── data/study_md/ — file:// 폴백 번들
@@ -146,11 +151,11 @@ Cosmetic Pass Master
 │       └── Cache Storage — SW 캐시
 │
 ├── 📚 콘텐츠 구조
-│   ├── 4과목 (1,178 카드 + 11 퀴즈)
-│   │   ├── 화장품법의 이해 (law) — 131카드
-│   │   ├── 화장품 제조 및 품질관리 (manufacturing) — 487카드
-│   │   ├── 유통화장품 안전관리 (safety) — 195카드
-│   │   └── 맞춤형화장품의 이해 (understanding) — 365카드
+│   ├── 4과목 (1,666 카드 + 11 퀴즈)
+│   │   ├── 화장품법의 이해 (law) — 172카드
+│   │   ├── 화장품 제조 및 품질관리 (manufacturing) — 596카드
+│   │   ├── 유통화장품 안전관리 (safety) — 305카드
+│   │   └── 맞춤형화장품의 이해 (understanding) — 593카드
 │   ├── 9시험 (897문제)
 │   │   ├── subject1 (100문제)
 │   │   ├── subject2_p1/p2/p3 (298문제)
@@ -235,7 +240,7 @@ Cosmetic Pass Master
     │   ├── 교재 검색 (초성/키워드)
     │   ├── 교재 리더 (MD → HTML)
     │   ├── 오디오북 재생 (Media Session API)
-    │   └── 핵심 단권화 요약집
+    │   └── 학습 안내서
     └── 부가 기능
         ├── 성분 사전 (1,357개)
         ├── 뽀모도로 타이머
@@ -251,5 +256,5 @@ Cosmetic Pass Master
 
 - [`ARCHITECTURE.md`](ARCHITECTURE.md) — 상세 아키텍처 설계 문서
 - [`CHANGES.md`](CHANGES.md) — 변경 이력 (Changelog)
-- [`IMPROVEMENTS_REPORT.md`](IMPROVEMENTS_REPORT.md) — 개선점 분석 및 구현 보고서
+- [`MD_TO_HTML_LOGIC.md`](MD_TO_HTML_LOGIC.md) — MD → HTML 변환 로직 문서
 - [`README.md`](../../README.md) — 프로젝트 소개 및 시작 가이드

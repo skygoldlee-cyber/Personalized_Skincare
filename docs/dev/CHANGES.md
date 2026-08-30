@@ -588,3 +588,32 @@
 - `node tools/build/index.js` 재빌드 성공
 - `npm test` 86/86 통과
 - Vercel 배포 완료
+
+---
+
+## 28. 콘텐츠 폴더 구조 개편 및 학습안내서 전환 (2026-08-31)
+
+> **목표**: 콘텐츠 폴더 구조를 한국어 명명으로 통일하고, 문제은행/참조자료/교재/학습안내서 경로를 일원화
+
+### 수정 내역
+
+- **콘텐츠 폴더 이동**:
+  - `content/law/`, `content/manufacturing/`, `content/safety/`, `content/understanding/` → `content/교재/{law,manufacturing,safety,understanding}/`
+  - `content/exams/` → `content/문제은행/` (문제은행 MD 4개 파일)
+  - `content/ingredients/` → `content/참조자료/원료/` (성분 원본 MD)
+  - `content/study_summary.md` → `content/학습안내서.md`
+- **`content/manifest.json`**: 과목 `dir` 필드를 `교재/{subject_key}`로 갱신
+- **`sw.js`**: `MD_ASSETS` 경로를 `content/교재/` 및 `content/학습안내서.md`로 갱신
+- **`src/manual-viewer.js`**: `study_summary` 소스 경로를 `content/학습안내서.md`로 변경, 제목을 "학습 안내서"로 변경
+- **`tools/build_doc_bundles.js`**: 문서 번들 소스를 `학습안내서.md`로 변경
+- **`tools/build/plugins/ingredients.plugin.js`**: `INGREDIENTS_DIR`을 `content/참조자료/원료`로 변경
+- **`content/utils/batch_convert.py`**: 교재 파일 경로를 하위 폴더 구조에 맞게 수정 (`교재/law/` 등)
+- **신규 폴더**: `content/report/` (분석 보고서 MD 4개), `content/utils/` (Python 스크립트 3개)
+- **문서 갱신**: `ARCHITECTURE.md`, `PROJECT_MINDMAP.md`, `docs/README.md`, `README.md` 콘텐츠 구조 및 경로 반영
+
+### 검증
+
+- `npm test` 88/88 통과
+- `node tools/build_doc_bundles.js` 재빌드 성공
+- `python content/utils/batch_convert.py` 13/13 파일 HTML 변환 성공
+- Vercel 배포 완료
