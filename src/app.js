@@ -409,7 +409,7 @@ function setupNavigation() {
         'quiz-view': { title: '기출 및 핵심 퀴즈', subtitle: '빈칸 채우기형 퀴즈로 실전 완벽 대비' },
         'review-view': { title: '오답 및 중요 복습', subtitle: '헷갈리거나 어려운 약점 카드 집중 복습' },
         'trainer-view': { title: '스마트 훈련소', subtitle: '법령 수치 암기 및 배합 계산 트레이닝 센터' },
-        'exam-view': { title: '실전 예상문제집', subtitle: '과목별 100제 & 300제 예상 문제 및 해설 열람' },
+        'exam-view': { title: '실전 모의고사', subtitle: '교재 인용 1,000제 문제은행으로 과목별 모의고사 및 학습안내서 열람' },
         'textbook-view': { title: '교재 본문 검색', subtitle: '교재의 모든 본문 내용을 실시간 키워드로 검색' },
         'textbook-reader-view': { title: '교재 본문 읽기', subtitle: '과목과 단원을 선택하여 교재 본문을 읽기' },
         'dictionary-view': { title: '성분 검색 사전', subtitle: '화장품 성분별 배합한도 및 고시 기준 통합 검색기' }
