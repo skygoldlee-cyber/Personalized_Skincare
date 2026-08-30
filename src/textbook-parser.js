@@ -79,6 +79,9 @@ function parseMarkdownFile(content, subjectId, filename, chapterKey) {
             // 1~2자 키워드는 의미 부족으로 건너뛰기
             if (cleanTerm.length <= 2) return;
 
+            // 50자 초과 키워드는 키워드로 부적합 (긴 문장/설명이 term에 들어간 경우)
+            if (cleanTerm.length > 50) return;
+
             const has기출 = rawTerm.includes('🔖기출') || rawDesc.includes('🔖기출');
             const isKey = has기출 || rawTerm.includes('📌중요') || rawDesc.includes('📌중요');
             // definition에서도 (L숫자) 줄번호 참조 제거
