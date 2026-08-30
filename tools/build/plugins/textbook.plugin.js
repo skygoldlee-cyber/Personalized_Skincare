@@ -8,6 +8,8 @@ const cleanText = (text) => {
     .replace(/&nbsp;/g, ' ')
     .replace(/🔖기출/g, '')
     .replace(/📌중요/g, '')
+    .replace(/🎯\s*기출/g, '')
+    .replace(/🎯\s*중요/g, '')
     .trim();
 };
 
@@ -69,16 +71,26 @@ const parseMarkdownFile = (filePath, subjectId, filename, chapterKey, stableId) 
       // 숫자만 있는 term (표 행 번호, 수치값) 건너뛰기
       if (/^\d+$/.test(term)) return;
 
+      // ①②③ 등 원번호 기호 및 (L숫자) 줄번호 참조 제거
+      const cleanTerm = term.replace(/\*\*/g, '').replace(/\s*\(L\d+\)\s*/g, '').replace(/^[①②③④⑤⑥⑦⑧⑨⑩]\s*/, '').trim();
+      if (!cleanTerm) return;
+
+      // 1~2자 키워드는 의미 부족으로 건너뛰기
+      if (cleanTerm.length <= 2) return;
+
       const has기출 = rawTerm.includes('🔖기출') || rawDesc.includes('🔖기출');
       const isKey = has기출 || rawTerm.includes('📌중요') || rawDesc.includes('📌중요');
-      // (L숫자) 줄번호 참조 제거
-      const cleanTerm = term.replace(/\*\*/g, '').replace(/\s*\(L\d+\)\s*/g, '').trim();
+      // definition에서도 (L숫자) 줄번호 참조 제거
+      const cleanDesc = desc.replace(/\s*\(L\d+\)\s*/g, ' ').trim();
+
+      // term과 definition이 동일하면 의미 없는 카드이므로 건너뛰기
+      if (cleanTerm === cleanDesc) return;
 
       cards.push({
         id: stableId(subjectId, chapterKey, 'card', cleanTerm),
         category: currentSection,
         term: cleanTerm,
-        definition: desc,
+        definition: cleanDesc,
         isKey: isKey
       });
 
@@ -101,11 +113,11 @@ const parseMarkdownFile = (filePath, subjectId, filename, chapterKey, stableId) 
           boldMatches.forEach(match => {
             const answer = match[1].trim();
             if (answer.length > 1) {
-              const quizText = desc.replace(new RegExp(`\\*\\*${escapeRegExp(answer)}\\*\\*|${escapeRegExp(answer)}`, 'g'), ' [ 빈칸 ] ');
+              const quizText = cleanDesc.replace(new RegExp(`\\*\\*${escapeRegExp(answer)}\\*\\*|${escapeRegExp(answer)}`, 'g'), ' [ 빈칸 ] ');
               quizzes.push({
                 id: makeQuizId(cleanTerm, answer),
                 category: currentSection,
-                context: `[용어: ${term}]`,
+                context: `[용어: ${cleanTerm}]`,
                 question: quizText,
                 answer: answer,
                 type: 'blank'
@@ -116,11 +128,11 @@ const parseMarkdownFile = (filePath, subjectId, filename, chapterKey, stableId) 
         } else if (numMatches.length > 0) {
           numMatches.forEach(match => {
             const answer = match[0].trim();
-            const quizText = desc.replace(new RegExp(escapeRegExp(answer), 'g'), ' [ 빈칸 ] ');
+            const quizText = cleanDesc.replace(new RegExp(escapeRegExp(answer), 'g'), ' [ 빈칸 ] ');
             quizzes.push({
               id: makeQuizId(cleanTerm, answer),
               category: currentSection,
-              context: `[용어: ${term}]`,
+              context: `[용어: ${cleanTerm}]`,
               question: quizText,
               answer: answer,
               type: 'blank'
@@ -132,7 +144,7 @@ const parseMarkdownFile = (filePath, subjectId, filename, chapterKey, stableId) 
             id: makeQuizId(cleanTerm, cleanTerm),
             category: currentSection,
             context: `정의에 알맞은 용어를 적으시오.`,
-            question: `${desc}`,
+            question: `${cleanDesc}`,
             answer: cleanTerm,
             type: 'term'
           });
@@ -184,13 +196,14 @@ const parseMarkdownFile = (filePath, subjectId, filename, chapterKey, stableId) 
         const cleanedLine = cleanText(line);
         const listMatch = line.match(/^[-*]\s+\*\*([^*]+)\*\*(?:\s*🔖기출)?\s*[:：-]\s*(.+)$/);
         if (listMatch) {
-          const term = listMatch[1].trim().replace(/\s*\(L\d+\)\s*/g, '').trim();
+          const term = cleanText(listMatch[1]).replace(/\s*\(L\d+\)\s*/g, '').trim();
           const desc = listMatch[2].trim();
+          const cleanDesc = cleanText(desc).replace(/\s*\(L\d+\)\s*/g, ' ').trim();
           cards.push({
             id: stableId(subjectId, chapterKey, 'card', term),
             category: currentSection,
             term: term,
-            definition: cleanText(desc),
+            definition: cleanDesc,
             isKey: true
           });
 
@@ -208,7 +221,7 @@ const parseMarkdownFile = (filePath, subjectId, filename, chapterKey, stableId) 
                 id: makeQuizId(term, ans),
                 category: currentSection,
                 context: `[주제: ${term}]`,
-                question: cleanText(desc).replace(new RegExp(`\\*\\*${escapeRegExp(ans)}\\*\\*|${escapeRegExp(ans)}`, 'g'), ' [ 빈칸 ] '),
+                question: cleanDesc.replace(new RegExp(`\*\*${escapeRegExp(ans)}\*\*|${escapeRegExp(ans)}`, 'g'), ' [ 빈칸 ] '),
                 answer: ans,
                 type: 'blank'
               });

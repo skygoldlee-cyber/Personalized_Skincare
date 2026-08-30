@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v56-20260831-improve-card-keywords';     // 쉘/CDN: 배포마다 갱신 (숫자 term 제거, L참조 제거, 시각화 섹션 제외)
+const CACHE_VERSION = 'v57-20260831-card-quality-audit';     // 쉘/CDN: 배포마다 갱신 (전체 카드 품질 감사: 이모지·단축키·중복·L참조 제거)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
