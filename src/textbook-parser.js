@@ -20,6 +20,40 @@ function escapeRegExp(string) {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
+const GENERIC_SUFFIXES = [
+    '기능','기준','방법','절차','조건','사항','내용','순서','단계',
+    '시기','기간','횟수','위치','크기','형태','상태','수준','범위',
+    '대상','원칙','방안','대책','방향','평가','제한','금지','의무',
+    '책임','권리','예외','처분','제도','정책','사례','전망','비교',
+    '차이','장점','단점','이유','원인','증상','치료','예방','개요',
+    '필요성','의의','효과','역할','분류','원리','개념','구조','특징',
+    '종류','목적','정의','관리','요건','적용','구분','일반','기본',
+    '과정','결과','영향','문제','조치','배경','현황','관리방법',
+];
+
+const GENERIC_SINGLE = new Set([
+    '정의','목적','종류','특징','기준','방법','관리','주의사항',
+    '내용','구분','적용','원칙','개요','필요성','의의','효과',
+    '요건','조건','절차','구조','역할','기능','분류','현황',
+    '배경','개념','원리','방향','평가','기본','일반','사항',
+    '의무','권리','책임','금지','제한','예외','범위','대상',
+    '시기','기간','횟수','위치','크기','형태','상태','수준',
+    '단계','순서','과정','결과','영향','문제','대책','방안',
+    '조치','처분','제도','정책','사례','전망','비교','차이',
+    '장점','단점','이유','원인','증상','치료','예방','안전관리',
+    '관능평가',
+]);
+
+function isGenericTerm(term) {
+    if (GENERIC_SINGLE.has(term)) return true;
+    if (term.length <= 15) {
+        for (const suffix of GENERIC_SUFFIXES) {
+            if (term.endsWith(suffix) && term.length > suffix.length) return true;
+        }
+    }
+    return false;
+}
+
 function basenameNoMd(filename) {
     // path.basename(filename, '.md') 동등: 경로 구분자 제거 후 .md 확장자 제거
     const base = String(filename).split(/[\\/]/).pop();
@@ -81,6 +115,9 @@ function parseMarkdownFile(content, subjectId, filename, chapterKey) {
 
             // 50자 초과 키워드는 키워드로 부적합 (긴 문장/설명이 term에 들어간 경우)
             if (cleanTerm.length > 50) return;
+
+            // 범용 표현(예: "기능", "시험 기준", "보관 조건")은 키워드로 부적합
+            if (isGenericTerm(cleanTerm)) return;
 
             const has기출 = rawTerm.includes('🔖기출') || rawDesc.includes('🔖기출');
             const isKey = has기출 || rawTerm.includes('📌중요') || rawDesc.includes('📌중요');
@@ -215,8 +252,10 @@ function parseMarkdownFile(content, subjectId, filename, chapterKey) {
                 const listMatch = line.match(/^[-*]\s+\*\*([^*]+)\*\*(?:\s*🔖기출)?\s*[:：-]\s*(.+)$/);
                 if (listMatch) {
                     const term = cleanText(listMatch[1]).replace(/\s*\(L\d+\)\s*/g, '').trim();
+                    if (term.length > 2 && term.length <= 50 && !isGenericTerm(term)) {
                     const desc = listMatch[2].trim();
                     const cleanDesc = cleanText(desc).replace(/\s*\(L\d+\)\s*/g, ' ').trim();
+                    if (term !== cleanDesc && cleanDesc.length > 10) {
                     cards.push({
                         id: stableId(subjectId, chapterKey, 'card', term),
                         category: currentSection,
@@ -245,6 +284,8 @@ function parseMarkdownFile(content, subjectId, filename, chapterKey) {
                             });
                             quizzesForLine++;
                         });
+                    }
+                    }
                     }
                 } else {
                     const numMatches = [];

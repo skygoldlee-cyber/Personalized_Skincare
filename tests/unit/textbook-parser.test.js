@@ -11,7 +11,7 @@ const SAMPLE_MD_TABLE = `# 1과목: 맞춤형화장품의 이해
 | 용어 | 설명 |
 | --- | --- |
 | 맞춤형화장품 | 🔖기출 개인의 피부 특성에 맞게 **혼합·소분**하는 화장품 |
-| 관능평가 | 📌중요 시각·후각·촉각 등으로 **품질**을 평가하는 방법 |
+| 관능평가법 | 📌중요 시각·후각·촉각 등으로 **품질**을 평가하는 방법 |
 `;
 
 const SAMPLE_MD_LINE = `# 2과목: 유통화장품 안전관리
@@ -37,7 +37,7 @@ test('parseMarkdownFile: 테이블에서 카드 추출', () => {
     assert.ok(cards.length >= 2, '최소 2개 카드가 추출되어야 함');
     const terms = cards.map(c => c.term);
     assert.ok(terms.includes('맞춤형화장품'), '맞춤형화장품 카드가 있어야 함');
-    assert.ok(terms.includes('관능평가'), '관능평가 카드가 있어야 함');
+    assert.ok(terms.includes('관능평가법'), '관능평가법 카드가 있어야 함');
 });
 
 test('parseMarkdownFile: 🔖기출 마커 카드는 isKey=true', () => {
@@ -48,7 +48,7 @@ test('parseMarkdownFile: 🔖기출 마커 카드는 isKey=true', () => {
 
 test('parseMarkdownFile: 📌중요 마커 카드는 isKey=true', () => {
     const { cards } = parseMarkdownFile(SAMPLE_MD_TABLE, 'understanding', '1.cosmetic-overview.md', 'ch1');
-    const card = cards.find(c => c.term === '관능평가');
+    const card = cards.find(c => c.term === '관능평가법');
     assert.equal(card.isKey, true);
 });
 
