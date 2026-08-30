@@ -54,7 +54,7 @@ module.exports = {
   name: 'ingredients',
   build(manifest, ctx) {
     const list = [];
-    const INGREDIENTS_DIR = path.join(ctx.workspaceDir, 'content', 'ingredients');
+    const INGREDIENTS_DIR = path.join(ctx.workspaceDir, 'content', '참조자료', '원료');
 
     // 1. Approved ingredients
     const approvedPath = path.join(INGREDIENTS_DIR, 'approved_ingredients.md');

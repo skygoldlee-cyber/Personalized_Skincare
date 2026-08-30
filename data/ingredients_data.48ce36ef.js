@@ -4483,7 +4483,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "2,2'-[(3,3'-디클로로[1,1'-비페닐]-4,4'-디일)비스(아조)]비스[3-옥소-N-페닐부탄아마이드](피그먼트엘로우 12) 및 그 염류",
+    "name": "2,2'-[(3,3'-디클로로[1,1'-비페닐]-4,4'-디일)비스(아조)]비스3-옥소-N-페닐부탄아마이드(피그먼트엘로우 12) 및 그 염류",
     "engName": "2,2'-[(3,3'-Dichloro[1,1'-biphenyl]-4,4'-diyl)bis(azo)]bis[3-oxo-N-phenylbutanamide] (Pigment Yellow 12) and its salts",
     "type": "banned",
     "category": "사용 금지 원료",
@@ -5203,7 +5203,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "4,4'-[(4-메칠-1,3-페닐렌)비스(아조)]비스[6-메칠-1,3-벤젠디아민](베이직브라운 4) 및 그 염류",
+    "name": "4,4'-[(4-메칠-1,3-페닐렌)비스(아조)]비스6-메칠-1,3-벤젠디아민(베이직브라운 4) 및 그 염류",
     "engName": "4,4'-[(4-Methyl-1,3-phenylene)bis(azo)]bis[6-methyl-1,3-benzenediamine] (Basic Brown 4) and its salts",
     "type": "banned",
     "category": "사용 금지 원료",
@@ -9766,7 +9766,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "테트라소듐 3,3'-[[1,1'-비페닐]-4,4'-다일비스(아조)]비스[5-아미노-4-하이드록시나프탈렌-2,7-디설포네이트](다이렉트블루 6)",
+    "name": "테트라소듐 3,3'-[[1,1'-비페닐]-4,4'-다일비스(아조)]비스5-아미노-4-하이드록시나프탈렌-2,7-디설포네이트(다이렉트블루 6)",
     "engName": "Tetrasodium 3,3'-[[1,1'-biphenyl]-4,4'-diylbis(azo)]bis[5-amino-4-hydroxynaphthalene-2,7-disulfonate] (Direct Blue 6)",
     "type": "banned",
     "category": "사용 금지 원료",

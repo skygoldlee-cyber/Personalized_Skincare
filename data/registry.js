@@ -3,7 +3,7 @@
 export const DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2026",
-  "generatedAt": "2026-08-30T19:58:36.839Z",
+  "generatedAt": "2026-08-30T20:04:29.581Z",
   "subjects": [
     {
       "key": "law",
@@ -109,9 +109,9 @@ export const DATA_REGISTRY = {
     }
   ],
   "ingredients": {
-    "bundle": "./data/ingredients_data.be87cfdb.js",
+    "bundle": "./data/ingredients_data.48ce36ef.js",
     "global": "INGREDIENTS_DATA",
-    "contentHash": "be87cfdb",
+    "contentHash": "48ce36ef",
     "stats": {
       "count": 1357
     }
