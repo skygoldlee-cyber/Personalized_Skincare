@@ -3,16 +3,16 @@
 export const DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2026",
-  "generatedAt": "2026-08-30T21:30:42.087Z",
+  "generatedAt": "2026-08-30T21:35:08.283Z",
   "subjects": [
     {
       "key": "law",
       "order": 1,
       "name": "화장품법의 이해",
       "shortName": "화장품법",
-      "contentHash": "6780dddb",
+      "contentHash": "92406f22",
       "stats": {
-        "cards": 250,
+        "cards": 177,
         "quizzes": 0,
         "chapters": 1
       }
@@ -22,9 +22,9 @@ export const DATA_REGISTRY = {
       "order": 2,
       "name": "화장품 제조 및 품질관리",
       "shortName": "제조·품질",
-      "contentHash": "d05e5e2e",
+      "contentHash": "ab2f54f6",
       "stats": {
-        "cards": 899,
+        "cards": 624,
         "quizzes": 0,
         "chapters": 1
       }
@@ -34,9 +34,9 @@ export const DATA_REGISTRY = {
       "order": 3,
       "name": "유통화장품 안전관리",
       "shortName": "안전관리",
-      "contentHash": "118fdf6e",
+      "contentHash": "9feea6ef",
       "stats": {
-        "cards": 333,
+        "cards": 220,
         "quizzes": 0,
         "chapters": 1
       }
@@ -46,9 +46,9 @@ export const DATA_REGISTRY = {
       "order": 4,
       "name": "맞춤형화장품의 이해",
       "shortName": "맞춤형화장품",
-      "contentHash": "bc1d627b",
+      "contentHash": "6b7af064",
       "stats": {
-        "cards": 573,
+        "cards": 440,
         "quizzes": 0,
         "chapters": 1
       }

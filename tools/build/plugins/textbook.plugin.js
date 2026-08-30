@@ -94,6 +94,9 @@ const parseMarkdownFile = (filePath, subjectId, filename, chapterKey, stableId) 
       if (/←.*별표.*참조$/.test(cleanDesc)) return;
       if (/^\[.+\]\(.+\)$/.test(cleanDesc)) return;
 
+      // definition이 10자 이하면 설명으로서 의미 부족 (수치/단답형)
+      if (cleanDesc.length <= 10) return;
+
       cards.push({
         id: stableId(subjectId, chapterKey, 'card', cleanTerm),
         category: currentSection,
@@ -172,7 +175,13 @@ const parseMarkdownFile = (filePath, subjectId, filename, chapterKey, stableId) 
 
     if (line.startsWith('## ')) {
       currentSection = line.substring(3).trim();
-      skipSection = currentSection.startsWith('🧭') || currentSection.startsWith('🎯 과목 시각화') || currentSection.startsWith('📋 별표');
+      skipSection = currentSection.startsWith('🧭')
+        || currentSection.startsWith('🎯 과목 시각화')
+        || currentSection.startsWith('📋 별표')
+        || currentSection.startsWith('📊')
+        || currentSection.startsWith('🔢')
+        || currentSection.includes('데이터 구조')
+        || currentSection.includes('주요 성분 데이터');
       continue;
     }
 
