@@ -405,7 +405,7 @@ function setupNavigation() {
     
     const titlesMap = {
         'dashboard-view': { title: '학습 대시보드', subtitle: '2026 시험 합격을 위한 분석 및 스마트 툴' },
-        'flashcard-view': { title: '개념 플래시카드', subtitle: 'Active Recall 학습법으로 효율적인 암기' },
+        'flashcard-view': { title: '개념 플래시카드', subtitle: '과목별 핵심 개념을 카드로 뒤집으며 암기' },
         'quiz-view': { title: '기출 및 핵심 퀴즈', subtitle: '빈칸 채우기형 퀴즈로 실전 완벽 대비' },
         'review-view': { title: '오답 및 중요 복습', subtitle: '헷갈리거나 어려운 약점 카드 집중 복습' },
         'trainer-view': { title: '스마트 훈련소', subtitle: '법령 수치 암기 및 배합 계산 트레이닝 센터' },
