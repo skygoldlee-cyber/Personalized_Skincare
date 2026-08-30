@@ -67,9 +67,13 @@ function parseMarkdownFile(content, subjectId, filename, chapterKey) {
             // 비교표의 체크/대시 마커 등 의미 없는 definition 건너뛰기
             if (/^[—–\-✔✖×○●□■☆★]$/.test(desc)) return;
 
+            // 숫자만 있는 term (표 행 번호, 수치값) 건너뛰기
+            if (/^\d+$/.test(term)) return;
+
             const has기출 = rawTerm.includes('🔖기출') || rawDesc.includes('🔖기출');
             const isKey = has기출 || rawTerm.includes('📌중요') || rawDesc.includes('📌중요');
-            const cleanTerm = term.replace(/\*\*/g, '');
+            // (L숫자) 줄번호 참조 제거
+            const cleanTerm = term.replace(/\*\*/g, '').replace(/\s*\(L\d+\)\s*/g, '').trim();
 
             cards.push({
                 id: stableId(subjectId, chapterKey, 'card', cleanTerm),
@@ -148,7 +152,7 @@ function parseMarkdownFile(content, subjectId, filename, chapterKey) {
 
         if (line.startsWith('## ')) {
             currentSection = line.substring(3).trim();
-            skipSection = currentSection.startsWith('🧭');
+            skipSection = currentSection.startsWith('🧭') || currentSection.startsWith('🎯 과목 시각화');
             continue;
         }
 
@@ -180,7 +184,7 @@ function parseMarkdownFile(content, subjectId, filename, chapterKey) {
                 const cleanedLine = cleanText(line);
                 const listMatch = line.match(/^[-*]\s+\*\*([^*]+)\*\*(?:\s*🔖기출)?\s*[:：-]\s*(.+)$/);
                 if (listMatch) {
-                    const term = listMatch[1].trim();
+                    const term = listMatch[1].trim().replace(/\s*\(L\d+\)\s*/g, '').trim();
                     const desc = listMatch[2].trim();
                     cards.push({
                         id: stableId(subjectId, chapterKey, 'card', term),
