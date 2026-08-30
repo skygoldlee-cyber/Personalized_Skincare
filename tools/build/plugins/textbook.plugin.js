@@ -63,6 +63,9 @@ const parseMarkdownFile = (filePath, subjectId, filename, chapterKey, stableId) 
 
       if (!term || !desc) return;
 
+      // 비교표의 체크/대시 마커 등 의미 없는 definition 건너뛰기
+      if (/^[—–\-✔✖×○●□■☆★]$/.test(desc)) return;
+
       const has기출 = rawTerm.includes('🔖기출') || rawDesc.includes('🔖기출');
       const isKey = has기출 || rawTerm.includes('📌중요') || rawDesc.includes('📌중요');
       const cleanTerm = term.replace(/\*\*/g, '');
