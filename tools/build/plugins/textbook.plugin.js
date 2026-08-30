@@ -269,6 +269,7 @@ const parseTextbookContent = (filePath, filename, subjectDir) => {
   const lines = content.split(/\r?\n/);
   
   let chapterTitle = path.basename(filename, '.md');
+  let chapterTitleSet = false;
   const sections = [];
   
   let currentSectionTitle = '개요';
@@ -279,7 +280,10 @@ const parseTextbookContent = (filePath, filename, subjectDir) => {
     const trimmed = line.trim();
     
     if (trimmed.startsWith('# ')) {
-      chapterTitle = trimmed.substring(2).trim();
+      if (!chapterTitleSet) {
+        chapterTitle = trimmed.substring(2).trim();
+        chapterTitleSet = true;
+      }
       continue;
     }
     
