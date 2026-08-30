@@ -110,7 +110,7 @@ const DATA_ASSETS = [
 /** 설치 시 프리캐시할 마크다운 문서 (매뉴얼·요약집 — 오프라인 보장) */
 const MD_ASSETS = [
   './docs/user/user_manual.md',
-  './content/study_summary.md',
+  './content/학습안내서.md',
   './content/교재/law/1과목_화장품법의이해.md',
   './content/교재/manufacturing/2과목_제조및품질관리.md',
   './content/교재/safety/3과목_유통화장품안전관리.md',

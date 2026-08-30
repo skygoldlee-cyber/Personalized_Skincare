@@ -29,7 +29,7 @@ const OUT_DIR = path.join(ROOT, 'data', 'docs_md');
 // path: 원본 파일의 루트 상대 경로, key: manual-viewer.js MD_SOURCES[].path 와 동일
 const DOC_FILES = [
     { file: 'user_manual.md', dir: path.join(ROOT, 'docs', 'user'), key: 'docs/user/user_manual.md' },
-    { file: 'study_summary.md', dir: path.join(ROOT, 'content'), key: 'content/study_summary.md' }
+    { file: '학습안내서.md', dir: path.join(ROOT, 'content'), key: 'content/학습안내서.md' }
 ];
 
 const AUTOGEN_HEADER = '// 자동 생성된 문서 번들입니다. 수정하지 마십시오. (tools/build_doc_bundles.js)';

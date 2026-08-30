@@ -14,7 +14,7 @@ export const ManualViewer = (() => {
     // 지원하는 마크다운 소스 정의
     const MD_SOURCES = {
         'user_manual': { path: 'docs/user/user_manual.md', title: '사용자 매뉴얼' },
-        'study_summary': { path: 'content/study_summary.md', title: '핵심 단권화 요약집' }
+        'study_summary': { path: 'content/학습안내서.md', title: '학습 안내서' }
     };
     const CACHE_PREFIX = 'manual_md_cache_v3_';
     const CACHE_TTL = 24 * 60 * 60 * 1000; // 24시간
