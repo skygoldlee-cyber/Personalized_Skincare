@@ -1,7 +1,9 @@
 # 📄 MD → HTML 변환·표시 로직 기술 문서
 
-> **작성일**: 2026-08-29
-> **대상**: `content/*.md`, `docs/user/*.md` 마크다운 문서를 모바일/PWA에서 HTML로 변환하여 표시하는 전체 파이프라인
+> **작성일**: 2026-08-29 (최종 갱신: 2026-08-31)
+> **대상**: `content/*.md`, `docs/user/*.md` 마크다운 문서를 HTML로 변환하는 두 가지 파이프라인
+> - **런타임 (JS)**: PWA 앱 내 `manual-viewer.js`가 실시간 MD → HTML 변환
+> - **빌드 타임 (Python)**: `content/utils/md_to_html.py`가 독립 HTML 파일 생성
 
 ---
 
@@ -15,6 +17,8 @@
 6. [Mermaid 다이어그램 렌더링](#6-mermaid-다이어그램-렌더링)
 7. [모바일 특화 처리](#7-모바일-특화-처리)
 8. [데이터 흐름 요약 (Mermaid)](#8-데이터-흐름-요약-mermaid)
+9. [Python MD→HTML 변환기 (`md_to_html.py`)](#9-python-mdhtml-변환기-md_to_htmlpy)
+10. [배치 변환 스크립트 (`batch_convert.py`)](#10-배치-변환-스크립트-batch_convertpy)
 
 ---
 
@@ -22,29 +26,59 @@
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                      MD → HTML 변환 파이프라인                      │
+│              MD → HTML 변환 파이프라인 (두 가지 경로)               │
 │                                                                 │
-│  [1] 원문 확보                                                    │
-│   ├─ http(s):  fetch(content/*.md)  ← SW Cache First             │
-│   └─ file://:  data/docs_md/*.js    ← 전역 __DOC_MD__ 폴백        │
+│  ┌─ A. 런타임 (JS / PWA 앱 내) ────────────────────────────────┐ │
+│  │                                                              │
+│  │  [1] 원문 확보                                                │
+│  │   ├─ http(s):  fetch(content/*.md)  ← SW Cache First         │
+│  │   └─ file://:  data/docs_md/*.js    ← 전역 __DOC_MD__ 폴백    │
+│  │                                                              │
+│  │  [2] 파싱                                                    │
+│  │   └─ markdown-parser.js → parseMarkdown(mdText, options)     │
+│  │       ├─ HTML 이스케이프 (sanitize.js)                        │
+│  │       ├─ 인라인 서식 (bold, italic, code)                    │
+│  │       ├─ 블록 파싱 (header, table, list, quote, code, hr)    │
+│  │       └─ Mermaid 코드블록 → <pre class="mermaid">            │
+│  │                                                              │
+│  │  [3] 렌더링                                                  │
+│  │   └─ manual-viewer.js → _renderBody(title, html)             │
+│  │       ├─ 전체화면 오버레이 (#manual-overlay)                  │
+│  │       ├─ 목차 자동 생성 (h2/h3 기반)                          │
+│  │       ├─ Mermaid 온디맨드 로드 + run()                        │
+│  │       └─ 테마 토큰 연동 (다크/라이트)                          │
+│  │                                                              │
+│  │  [4] 캐싱                                                    │
+│  │   ├─ sessionStorage: 변환된 HTML (TTL 24h)                   │
+│  │   └─ SW Cache Storage: .md 원문 (Cache First)                │
+│  └──────────────────────────────────────────────────────────────┘
 │                                                                 │
-│  [2] 파싱                                                        │
-│   └─ markdown-parser.js → parseMarkdown(mdText, options)         │
-│       ├─ HTML 이스케이프 (sanitize.js)                            │
-│       ├─ 인라인 서식 (bold, italic, code)                        │
-│       ├─ 블록 파싱 (header, table, list, quote, code, hr)        │
-│       └─ Mermaid 코드블록 → <pre class="mermaid">                │
-│                                                                 │
-│  [3] 렌더링                                                      │
-│   └─ manual-viewer.js → _renderBody(title, html)                 │
-│       ├─ 전체화면 오버레이 (#manual-overlay)                      │
-│       ├─ 목차 자동 생성 (h2/h3 기반)                              │
-│       ├─ Mermaid 온디맨드 로드 + run()                            │
-│       └─ 테마 토큰 연동 (다크/라이트)                              │
-│                                                                 │
-│  [4] 캐싱                                                        │
-│   ├─ sessionStorage: 변환된 HTML (TTL 24h)                       │
-│   └─ SW Cache Storage: .md 원문 (Cache First)                    │
+│  ┌─ B. 빌드 타임 (Python / 독립 HTML 생성) ─────────────────────┐
+│  │                                                              │
+│  │  [1] 원문 읽기                                                │
+│  │   └─ content/*.md 파일 직접 읽기 (UTF-8)                      │
+│  │                                                              │
+│  │  [2] 전처리                                                  │
+│  │   ├─ _auto_fence_ascii_diagrams() — 박스 그리기 자동 펜스     │
+│  │   ├─ _tag_fenced_diagram_blocks_as_text() — 언어 태깅         │
+│  │   ├─ _normalize_diagram_codeblocks() — 유니코드 정규화        │
+│  │   └─ _inline_mermaid_fences() — mermaid 펜스 → <div> 변환     │
+│  │       └─ 노드 레이블 sanitize (따옴표, 괄호, → 등)             │
+│  │                                                              │
+│  │  [3] 파싱 (python-markdown)                                  │
+│  │   └─ extensions: fenced_code, tables, toc, codehilite,        │
+│  │      admonition, attr_list, md_in_html                        │
+│  │                                                              │
+│  │  [4] 후처리                                                  │
+│  │   ├─ 테이블 → .table-wrap (가로 스크롤)                       │
+│  │   ├─ blockquote → callout 분류 (SOP/trouble/warning 등)      │
+│  │   ├─ Mermaid → mermaid.ink API 사전 SVG 렌더링 (모바일)       │
+│  │   └─ Mermaid 라이브러리 인라인 임베드 (3.5MB, 오프라인 보장)   │
+│  │                                                              │
+│  │  [5] 독립 HTML 파일 출력                                      │
+│  │   └─ Tailwind CDN + 폴백 CSS, highlight.js, TOC, 검색,        │
+│  │      다크/라이트 테마, 코드 접기/복사, 라이트박스, 인쇄        │
+│  └──────────────────────────────────────────────────────────────┘
 └─────────────────────────────────────────────────────────────────┘
 ```
 
@@ -54,11 +88,13 @@
 |------|------|
 | `src/markdown-parser.js` | 공통 마크다운 → HTML 변환 함수 (순수 함수, ESM) |
 | `src/sanitize.js` | XSS 방어 — `escapeHTML()`, `safeTextWithBreaks()` |
-| `src/manual-viewer.js` | 매뉴얼/요약집 런타임 뷰어 (fetch → 파싱 → 오버레이 표시) |
+| `src/manual-viewer.js` | 매뉴얼/학습안내서 런타임 뷰어 (fetch → 파싱 → 오버레이 표시) |
 | `src/reader-format.js` | 교재 리더용 포맷터 (`parseMarkdown`에 reader 옵션 적용) |
 | `src/exam-viewer.js` | 예상문제집 뷰어 (`parseMarkdown` 사용, Mermaid 비활성) |
 | `sw.js` | Service Worker — `.md` 파일 Cache First, 프리캐시 |
 | `tools/build_doc_bundles.js` | `file://` 폴백용 JS 번들 빌드 (`data/docs_md/*.js`) |
+| `content/utils/md_to_html.py` | Python 독립 HTML 변환기 (GUI/CLI, Tailwind + Mermaid 임베드) |
+| `content/utils/batch_convert.py` | 배치 변환 스크립트 (교재/학습안내서/보고서/문제은행 일괄 HTML 변환) |
 
 ---
 
@@ -71,7 +107,7 @@
 ```javascript
 const MD_SOURCES = {
     'user_manual': { path: 'docs/user/user_manual.md', title: '사용자 매뉴얼' },
-    'study_summary': { path: 'content/study_summary.md', title: '핵심 단권화 요약집' }
+    'study_summary': { path: 'content/학습안내서.md', title: '학습 안내서' }
 };
 ```
 
@@ -109,7 +145,7 @@ async function _loadMd(sourceKey) {
 
 ```
 docs/user/user_manual.md  →  data/docs_md/user_manual.js
-content/study_summary.md  →  data/docs_md/study_summary.js
+content/학습안내서.md      →  data/docs_md/학습안내서.js
 ```
 
 ---
@@ -123,7 +159,11 @@ content/study_summary.md  →  data/docs_md/study_summary.js
 ```javascript
 const MD_ASSETS = [
   './docs/user/user_manual.md',
-  './content/study_summary.md'
+  './content/학습안내서.md',
+  './content/교재/law/1과목_화장품법의이해.md',
+  './content/교재/manufacturing/2과목_제조및품질관리.md',
+  './content/교재/safety/3과목_유통화장품안전관리.md',
+  './content/교재/understanding/4과목_맞춤형화장품의이해.md'
 ];
 ```
 
@@ -461,7 +501,7 @@ flowchart TD
 
 | 파일 | 경로 |
 |------|------|
-| 마크다운 파서 | `src/markdown-parser.js` |
+| 마크다운 파서 (JS) | `src/markdown-parser.js` |
 | XSS 방어 | `src/sanitize.js` |
 | 매뉴얼 뷰어 | `src/manual-viewer.js` |
 | 교재 리더 포맷터 | `src/reader-format.js` |
@@ -469,3 +509,178 @@ flowchart TD
 | Service Worker | `sw.js` |
 | 번들 빌더 | `tools/build_doc_bundles.js` |
 | 이벤트 위임 | `src/app.js` |
+| Python 변환기 | `content/utils/md_to_html.py` |
+| 배치 변환 스크립트 | `content/utils/batch_convert.py` |
+
+---
+
+## 9. Python MD→HTML 변환기 (`md_to_html.py`)
+
+`@/c:\Project\Personalized_Skincare\content\utils\md_to_html.py`
+
+### 9.1 개요
+
+`md_to_html.py`는 Python 기반의 독립 HTML 변환기입니다. PWA 앱의 런타임 변환(JS)과는 별도로, **빌드 타임에 완전한 독립 HTML 파일**을 생성합니다. 모바일 인앱 브라우저(카카오톡, 삼성 인터넷 뷰어 등)에서 CDN 스크립트가 차단되는 환경을 대상으로 설계되었습니다.
+
+### 9.2 실행 모드
+
+| 모드 | 명령 | 설명 |
+|------|------|------|
+| **GUI** (기본) | `python md_to_html.py` | PySide6 드래그&드롭 GUI, 설정 영속화 (`QSettings`) |
+| **CLI** | `python md_to_html.py --cli --in <file.md> --out <file.html>` | 명령행 변환, CI/배치용 |
+
+CLI 옵션:
+- `--in`: 입력 MD 파일 경로 (기본값: `학습안내서.md`)
+- `--out`: 출력 HTML 경로 (기본값: 입력과 동일 이름 `.html`)
+- `--title`: HTML `<title>` (기본값: 파일명 stem)
+- `--collapse-min-lines`: 코드 블록 접기 임계값 (기본값: 35, 0=Off)
+- `--mermaid-sanitize`: `auto` / `on` / `off`
+- `--no-embed-mermaid`: Mermaid 라이브러리 인라인 생략 (CDN 사용, PC 권장)
+- `--no-prerender-mermaid`: Mermaid 사전 SVG 렌더링 생략 (클라이언트 사이드 렌더링)
+
+### 9.3 변환 파이프라인
+
+```
+[MD 원문]
+  ↓ 1. _auto_fence_ascii_diagrams()
+       — 박스 그리기 문자(┌┐└┘├┤┬┴┼│─═ 등)가 2줄 이상 → ```text 자동 펜스
+  ↓ 2. _tag_fenced_diagram_blocks_as_text()
+       — 언어 미지정 펜스에 박스 문자 포함 시 ```text 태깅
+  ↓ 3. _normalize_diagram_codeblocks()
+       — NFKC 정규화, 탭→4공백, NBSP→공백, 전각공백→2공백
+  ↓ 4. _inline_mermaid_fences()
+       — ```mermaid ... ``` → <div class="mermaid">...</div>
+       — 노드 레이블 sanitize: 따옴표 감싸기, → 치환, 괄호 전각화
+       — 다이어그램 타입 감지 (sequenceDiagram, xychart-beta, quadrantChart 등)
+       — 타입별 node_pat 스킵 (flowchart 전용 문법이 아닌 경우)
+  ↓ 5. python-markdown 변환
+       — extensions: fenced_code, tables, toc (toc_depth 2-4), codehilite,
+         admonition, attr_list, md_in_html
+  ↓ 6. 후처리
+       — <table> → <div class="table-wrap"><table> (가로 스크롤)
+       — <blockquote> → callout 분류 (SOP/trouble/warning/form/character/exam)
+       — <pre><code class="language-mermaid"> → <div class="mermaid"> (포스트 처리)
+  ↓ 7. Mermaid 사전 렌더링 (prerender_mermaid=True 시)
+       — mermaid.ink API로 SVG 렌더링 → <div class="mermaid-svg"> 교체
+       — 실패 시 원본 <div class="mermaid"> 유지 (클라이언트 사이드 폴백)
+  ↓ 8. Mermaid 라이브러리 임베드 (embed_mermaid=True 시)
+       — CDN에서 mermaid.min.js (~3.5MB) 다운로드 → <script> 인라인 교체
+       — 메모리 캐시 (디스크 파일 생성 안 함)
+       — 다운로드 실패 시 CDN <script> 태그 유지 (폴백)
+  ↓ 9. HTML 템플릿 주입
+       — %%TITLE%%, %%TOC_HTML%%, %%BODY_HTML%%, %%COLLAPSE_MIN_LINES%%
+[독립 HTML 파일]
+```
+
+### 9.4 `RenderConfig` 데이터클래스
+
+`@/c:\Project\Personalized_Skincare\content\utils\md_to_html.py:39-44`
+
+```python
+@dataclass(frozen=True)
+class RenderConfig:
+    collapse_codeblock_min_lines: int = 35
+    mermaid_sanitize_mode: str = "auto"
+    embed_mermaid: bool = True
+    prerender_mermaid: bool = True
+```
+
+### 9.5 생성되는 HTML 문서 기능
+
+| 기능 | 설명 |
+|------|------|
+| **Tailwind CSS** | CDN 로드 + CDN 차단 시 폴백 CSS (내장 최소 유틸리티 클래스) |
+| **highlight.js** | 코드 블록 구문 강조 (CDN + 폴백 테마 내장) |
+| **Mermaid** | 사전 SVG 렌더링(모바일) 또는 클라이언트 사이드 렌더링(PC) |
+| **다크/라이트 테마** | `localStorage` 영속화, `prefers-color-scheme` 감지, FAB 버튼 |
+| **TOC 사이드바** | 데스크톱: sticky 사이드바, 모바일: 드로어, 검색 + AutoFold + scroll-spy |
+| **인문서 검색** | `Ctrl+K` / `/` 단축키, IME 조합 중 실시간 검색, `mark.search-mark` 하이라이트 |
+| **코드 블록 UX** | Copy 버튼, 언어 라벨, 줄 수 기반 접기/펼치기 (localStorage 영속화) |
+| **ASCII 다이어그램** | 박스 그리기 문자 감지 → `ascii-diagram` 클래스, D2Coding/NanumGothicCoding 폰트 |
+| **라이트박스** | 이미지 클릭 시 전체화면 확대 |
+| **Back to Top** | 스크롤 200px 이상 시 플로팅 버튼 |
+| **인쇄/PDF** | `@media print` — UI 요소 숨김, 코드 블록 줄바꿈, 테이블 전체 표시 |
+| **Callout 분류** | blockquote 내용 기반 자동 분류: SOP(초록), 트러블슈팅(주황), 경고(빨강), 서식(남색), 캐릭터(청록), 시험(보라) |
+
+### 9.6 Mermaid 사전 렌더링 상세
+
+`@/c:\Project\Personalized_Skincare\content\utils\md_to_html.py:3167-3233`
+
+- `<div class="mermaid">` 블록을 mermaid.ink API(`https://mermaid.ink/svg/{base64}?theme=dark&bgColor=0f172a`)로 SVG 변환
+- 변환 성공 시 `<div class="mermaid-svg">{svg}</div>`로 교체
+- 실패 시 원본 `<div class="mermaid">` 유지 → 클라이언트 사이드 렌더링 폴백
+- 라이트 테마에서 SVG에 `filter: invert(0.88) hue-rotate(180deg)` 적용
+
+### 9.7 Mermaid 라이브러리 임베드
+
+`@/c:\Project\Personalized_Skincare\content\utils\md_to_html.py:71-114`
+
+- `_ensure_mermaid_js()`: CDN 3개 순차 시도 (jsdelivr → unpkg → cdnjs), 200KB 미만 응답은 에러 페이지로 간주하고 스킵
+- `_embed_mermaid_js()`: `<script src="...mermaid.min.js">` 태그를 인라인 `<script>`로 교체
+- `</script` → `<\/script` 이스케이프로 인라인 블록 조기 종료 방지
+- 메모리 캐시 (`_MERMAID_JS_MEMORY`) — 디스크 파일 생성 없음
+
+### 9.8 JS 런타임 파서와의 차이
+
+| 항목 | JS (`markdown-parser.js`) | Python (`md_to_html.py`) |
+|------|---------------------------|--------------------------|
+| **실행 시점** | 런타임 (브라우저) | 빌드 타임 (로컬) |
+| **파서** | 자체 정규식 기반 (의존성 제로) | python-markdown 라이브러리 |
+| **출력** | HTML fragment (오버레이에 주입) | 완전한 독립 HTML 파일 |
+| **Mermaid** | 클라이언트 사이드 `mermaid.run()` | 사전 SVG 렌더링 + 라이브러리 인라인 |
+| **구문 강조** | 미지원 | highlight.js + Pygments codehilite |
+| **TOC** | `h2`/`h3` 스캔 후 `<details>` 생성 | python-markdown `toc` 확장 (toc_depth 2-4) |
+| **검색** | 미지원 | 인문서 전체 검색 (IME 대응) |
+| **테마** | CSS 변수 연동 (앱 테마) | 독립 `localStorage` (`doc_theme`) |
+| **캐싱** | sessionStorage (TTL 24h) | 파일 출력 (영속) |
+| **ASCII 다이어그램** | 미지원 | 자동 펜스 + 폰트 최적화 |
+| **Callout** | 미지원 | blockquote 자동 분류 (6종) |
+
+---
+
+## 10. 배치 변환 스크립트 (`batch_convert.py`)
+
+`@/c:\Project\Personalized_Skincare\content\utils\batch_convert.py`
+
+### 10.1 개요
+
+`batch_convert.py`는 `md_to_html.py`의 `markdown_to_tailwind_html()` 함수를 호출하여 여러 MD 파일을 일괄 HTML로 변환하는 스크립트입니다. `content/` 폴더를 기준으로 상대 경로를 사용합니다.
+
+### 10.2 변환 대상
+
+```python
+BATCH_TARGETS = {
+    "교재": [
+        "교재/law/1과목_화장품법의이해.md",
+        "교재/manufacturing/2과목_제조및품질관리.md",
+        "교재/safety/3과목_유통화장품안전관리.md",
+        "교재/understanding/4과목_맞춤형화장품의이해.md",
+    ],
+    "학습안내서": ["학습안내서.md"],
+    "report": [
+        "report/출제비중분포조사결과.md",
+        "report/출제비중기반학습방법.md",
+        "report/법령최신확인결과.md",
+        "report/오답위험_분석보고서.md",
+    ],
+    "문제은행": [
+        "문제은행/과목1_문제은행_교재인용.md",
+        "문제은행/과목2_문제은행_교재인용.md",
+        "문제은행/과목3_문제은행_교재인용.md",
+        "문제은행/과목4_문제은행_교재인용.md",
+    ],
+}
+```
+
+- 총 13개 MD 파일 → 13개 HTML 파일 변환
+- 출력: 각 그룹별 `html/` 하위 폴더 (예: `content/교재/html/`, `content/report/html/`)
+
+### 10.3 실행
+
+```bash
+cd content/utils
+python batch_convert.py
+```
+
+- `md_to_html.py`와 동일한 디렉토리에서 실행 필요
+- `RenderConfig` 기본값 사용 (모바일 모드: SVG 사전 렌더링 + Mermaid 임베드)
