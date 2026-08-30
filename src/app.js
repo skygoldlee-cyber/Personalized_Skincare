@@ -252,7 +252,7 @@ function populateExamCards() {
                 : '시뮬레이터 시작';
             const btnClass = subjExams.length > 1 ? '' : ' btn-cyan';
             return `                                <div class="exam-btn-pair">
-                                    <button data-click="ExamViewer.openExam" data-arg="content/exams/${exam.file}" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> ${pdfLabel}</button>
+                                    <button data-click="ExamViewer.openExam" data-arg="content/문제은행/${exam.file}" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> ${pdfLabel}</button>
                                     <button class="exam-btn-sim${btnClass}" data-click="startMockExamSim" data-arg="${exam.key}"><i class="fa-solid fa-circle-play"></i> ${simLabel}</button>
                                 </div>`;
         }).join('\n');

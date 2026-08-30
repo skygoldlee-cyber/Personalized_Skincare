@@ -2331,3 +2331,44 @@ body.landscape-mode .glass-card {
         max-width: 140px;
     }
 }
+
+/* --- 참조자료 드롭다운 --- */
+.reader-ref-dropdown summary::-webkit-details-marker { display: none; }
+.reader-ref-dropdown summary::marker { display: none; }
+.ref-group-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin: 0.5rem 0 0.25rem;
+    padding-bottom: 0.2rem;
+    border-bottom: 1px solid var(--border-color);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+.ref-group-label:first-child { margin-top: 0; }
+.ref-link-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.5rem;
+    font-size: 0.82rem;
+    color: var(--color-text-main);
+    text-decoration: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+.ref-link-item:hover {
+    background: rgba(6, 182, 212, 0.1);
+    color: var(--color-primary);
+}
+.ref-link-item i {
+    flex-shrink: 0;
+    width: 1.1rem;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+}
+.ref-link-item:hover i {
+    color: var(--color-primary);
+}

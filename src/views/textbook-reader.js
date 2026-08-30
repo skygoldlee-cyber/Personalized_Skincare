@@ -726,6 +726,14 @@ function renderChapterContent(subjId, chapterIdx) {
                 <a href="${esc(chapter.filePath)}" target="_blank" class="btn btn-secondary" style="display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; padding: 0.35rem 0.75rem;">
                     <i class="fa-solid fa-arrow-up-right-from-square"></i> 원본 MD
                 </a>
+                <details id="reader-ref-dropdown" class="reader-ref-dropdown" style="display: inline-block; position: relative;">
+                    <summary class="btn btn-secondary" style="display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; padding: 0.35rem 0.75rem; cursor: pointer; list-style: none;">
+                        <i class="fa-solid fa-book-bookmark"></i> 참조자료
+                    </summary>
+                    <div class="reader-ref-panel" style="position: absolute; top: 100%; left: 0; z-index: 100; margin-top: 0.4rem; min-width: 320px; max-height: 400px; overflow-y: auto; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,0.25); padding: 0.6rem;">
+                        ${buildReferenceLinks(subjId)}
+                    </div>
+                </details>
                 ${hasAudio ? `
                 <button id="reader-audio-toggle-btn" class="btn btn-secondary" data-click="toggleReaderAudio" data-args='["${subjId}", ${chapterIdx}]' style="display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; padding: 0.35rem 0.75rem;">
                     <i class="fa-solid fa-headphones"></i> 오디오 듣기
@@ -899,6 +907,9 @@ function renderChapterContent(subjId, chapterIdx) {
 
     // Mermaid 다이어그램 렌더링 (pre.mermaid 노드가 있을 때만 온디맨드 로드)
     _renderReaderMermaid(container);
+
+    // 참조자료 링크 이벤트 바인딩
+    bindReferenceLinks();
 }
 
 // --- Mermaid 온디맨드 로드 (manual-viewer.js 패턴과 동일) ---
@@ -1115,4 +1126,157 @@ function openTableModal(wrapper) {
 function closeTableModal() {
     const modal = document.getElementById('reader-table-modal');
     if (modal) modal.style.display = 'none';
+}
+
+// --- 참조자료 링크 기능 ---
+// 과목 키 → 참조자료 폴더명 매핑
+const REFERENCE_DIR_MAP = {
+    'law': '과목1',
+    'manufacturing': '과목2',
+    'safety': '과목3',
+    'understanding': '과목4'
+};
+
+// 참조자료 폴더의 파일 목록을 정적 목록으로 관리 (런타임 fetch 불가능하므로 하드코딩)
+const REFERENCE_FILES = {
+    'law': [
+        { name: '화장품법 통합 정리', file: '1.cosmetic-law.md', type: 'md' },
+        { name: '개인정보보호법', file: '2.privacy-law.md', type: 'md' },
+        { name: '시행규칙 별표1 품질관리기준', file: '시행규칙_별표1_품질관리기준.pdf', type: 'pdf' },
+        { name: '시행규칙 별표2 책임판매안전관리기준', file: '시행규칙_별표2_책임판매안전관리기준.pdf', type: 'pdf' }
+    ],
+    'manufacturing': [
+        { name: '원료 종류와 특성', file: '1.ingredients.md', type: 'md' },
+        { name: '품질관리', file: '2.quality.md', type: 'md' },
+        { name: '사용 제한 원료', file: '3.restricted.md', type: 'md' },
+        { name: '제조 관리', file: '4.management.md', type: 'md' },
+        { name: '위해 관리', file: '5.hazard.md', type: 'md' },
+        { name: 'KFCC 별표1 통칙', file: 'KFCC_별표1_통칙.pdf', type: 'pdf' },
+        { name: 'KFCC 별표2 미백', file: 'KFCC_별표2_미백_나이아신아마이드.pdf', type: 'pdf' },
+        { name: 'KFCC 별표3 주름개선', file: 'KFCC_별표3_주름개선_레티놀.pdf', type: 'pdf' },
+        { name: 'KFCC 별표4 자외선보호', file: 'KFCC_별표4_자외선보호.pdf', type: 'pdf' },
+        { name: 'KFCC 별표5 미백주름복합', file: 'KFCC_별표5_미백주름복합.pdf', type: 'pdf' },
+        { name: 'KFCC 별표6 모발색상변화', file: 'KFCC_별표6_모발색상변화.pdf', type: 'pdf' },
+        { name: 'KFCC 별표7 체모제거', file: 'KFCC_별표7_체모제거_치오글리콜산.pdf', type: 'pdf' },
+        { name: 'KFCC 별표8 여드름완화', file: 'KFCC_별표8_여드름완화_살리실릭애씨드.pdf', type: 'pdf' },
+        { name: 'KFCC 별표9 탈모완화', file: 'KFCC_별표9_탈모완화_덱스판테놀.pdf', type: 'pdf' },
+        { name: 'KFCC 별표10 일반시험법', file: 'KFCC_별표10_일반시험법.pdf', type: 'pdf' }
+    ],
+    'safety': [
+        { name: '작업장 위생관리', file: '1.workspace-safety.md', type: 'md' },
+        { name: '작업자 안전', file: '2.worker-safety.md', type: 'md' },
+        { name: '설비 안전', file: '3.equipment-safety.md', type: 'md' },
+        { name: '자재 안전', file: '4.material-safety.md', type: 'md' },
+        { name: '포장 안전', file: '5.packaging-safety.md', type: 'md' }
+    ],
+    'understanding': [
+        { name: '맞춤형화장품 개요', file: '1.overview.md', type: 'md' },
+        { name: '피부 생리학', file: '2.physiology.md', type: 'md' },
+        { name: '감각 평가', file: '3.sensory-evaluation.md', type: 'md' },
+        { name: '상담', file: '4.consulting.md', type: 'md' },
+        { name: '가이드라인', file: '5.guideline.md', type: 'md' },
+        { name: '혼합·소분', file: '6.mixing-subdivision.md', type: 'md' },
+        { name: '충전·포장', file: '7.filling-packaging.md', type: 'md' }
+    ]
+};
+
+// 공통 참조자료 (모든 과목)
+const REFERENCE_COMMON = [
+    { name: '화장품법 원문', file: '화장품법(법률)(제20901호)(20260402).pdf', type: 'pdf', dir: '공통' },
+    { name: '사용불가원료', file: '안전기준_별표1_사용불가원료.pdf', type: 'pdf', dir: '공통' },
+    { name: '사용제한원료', file: '안전기준_별표2_사용제한원료.pdf', type: 'pdf', dir: '공통' },
+    { name: '색소종류및기준', file: '색소종류및기준_전체.pdf', type: 'pdf', dir: '공통' },
+    { name: '별표3 인체세포조직배양액안전기준', file: '안전기준_별표3_인체세포조직배양액안전기준.pdf', type: 'pdf', dir: '공통' },
+    { name: '별표4 유통안전관리시험방법', file: '안전기준_별표4_유통안전관리시험방법.pdf', type: 'pdf', dir: '공통' },
+    { name: '별표1 유형별주의사항표시문구', file: '주의사항_별표1_유형별주의사항표시문구.pdf', type: 'pdf', dir: '공통' },
+    { name: '별표2 알레르기유발성분25종', file: '주의사항_별표2_알레르기유발성분25종.pdf', type: 'pdf', dir: '공통' },
+    { name: '시행규칙 별표3 사용시주의사항', file: '시행규칙_별표3_사용시주의사항.pdf', type: 'pdf', dir: '공통' },
+    { name: '시행규칙 별표4 포장표시기준', file: '시행규칙_별표4_포장표시기준및방법.pdf', type: 'pdf', dir: '공통' },
+    { name: '시행규칙 별표5 표시광고범위', file: '시행규칙_별표5_표시광고범위및준수사항.pdf', type: 'pdf', dir: '공통' },
+    { name: '시행규칙 별표6 위해화장품공표문', file: '시행규칙_별표6_위해화장품공표문.pdf', type: 'pdf', dir: '공통' },
+    { name: '시행규칙 별표7 행정처분기준', file: '시행규칙_별표7_행정처분기준.pdf', type: 'pdf', dir: '공통' },
+    { name: '시행규칙 별표9 수수료', file: '시행규칙_별표9_수수료.pdf', type: 'pdf', dir: '공통' },
+    { name: 'CGMP 별표1 공정별분류', file: 'CGMP_별표1_공정별분류.pdf', type: 'pdf', dir: '공통' },
+    { name: 'CGMP 별표2 실시상황평가표', file: 'CGMP_별표2_실시상황평가표.pdf', type: 'pdf', dir: '공통' },
+    { name: 'CGMP 별표3 적합업소로고', file: 'CGMP_별표3_적합업소로고.pdf', type: 'pdf', dir: '공통' }
+];
+
+// 원료 참조자료
+const REFERENCE_INGREDIENTS = [
+    { name: '승인 원료 목록', file: 'approved_ingredients.md', type: 'md', dir: '원료' },
+    { name: '금지 원료 목록', file: 'banned_ingredients.md', type: 'md', dir: '원료' },
+    { name: '제한 원료 목록', file: 'restricted_ingredients.md', type: 'md', dir: '원료' }
+];
+
+// 법령원문 참조자료
+const REFERENCE_LAW = [
+    { name: '화장품법', file: '화장품법(법률)(제20901호)(20260402).pdf', type: 'pdf', dir: '법령원문' },
+    { name: '화장품법 시행규칙', file: '화장품법 시행규칙(총리령)(제02109호)(20260402).pdf', type: 'pdf', dir: '법령원문' },
+    { name: '화장품 안전기준 등에 관한 규정', file: '화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318).pdf', type: 'pdf', dir: '법령원문' },
+    { name: '우수화장품 제조 및 품질관리기준', file: '우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).pdf', type: 'pdf', dir: '법령원문' },
+    { name: '기능성화장품 기준 및 시험방법', file: '기능성화장품 기준 및 시험방법(식품의약품안전처고시)(제2025-89호)(20251216).pdf', type: 'pdf', dir: '법령원문' },
+    { name: '기능성화장품 심사에 관한 규정', file: '기능성화장품 심사에 관한 규정(식품의약품안전처고시)(제2025-88호)(20251216).pdf', type: 'pdf', dir: '법령원문' },
+    { name: '화장품 사용 시 주의사항 및 알레르기', file: '화장품 사용할 때의 주의사항 및 알레르기 유발성분 표시에 관한 규정(식품의약품안전처고시)(제2026-56호)(20260805).pdf', type: 'pdf', dir: '법령원문' },
+    { name: '화장품의 색소 종류 및 기준', file: '화장품의 색소 종류 및 기준(식품의약품안전처고시)(제2023-61호)(20230921).pdf', type: 'pdf', dir: '법령원문' }
+];
+
+function buildReferenceLinks(subjId) {
+    const dirName = REFERENCE_DIR_MAP[subjId];
+    if (!dirName) return '';
+    const subjectFiles = REFERENCE_FILES[subjId] || [];
+    
+    let links = '';
+    
+    // 과목별 참조자료
+    if (subjectFiles.length > 0) {
+        links += `<div class="ref-group-label">과목별 참조자료</div>`;
+        subjectFiles.forEach(f => {
+            const path = `content/참조자료/${dirName}/${f.file}`;
+            const icon = f.type === 'pdf' ? 'fa-file-pdf' : 'fa-file-lines';
+            if (f.type === 'md') {
+                links += `<a class="ref-link-item" data-ref-md="${esc(path)}"><i class="fa-solid ${icon}"></i> ${esc(f.name)}</a>`;
+            } else {
+                links += `<a href="${esc(path)}" target="_blank" class="ref-link-item"><i class="fa-solid ${icon}"></i> ${esc(f.name)}</a>`;
+            }
+        });
+    }
+    
+    // 원료 참조자료
+    links += `<div class="ref-group-label">원료 참조자료</div>`;
+    REFERENCE_INGREDIENTS.forEach(f => {
+        const path = `content/참조자료/${f.dir}/${f.file}`;
+        if (f.type === 'md') {
+            links += `<a class="ref-link-item" data-ref-md="${esc(path)}"><i class="fa-solid fa-file-lines"></i> ${esc(f.name)}</a>`;
+        } else {
+            links += `<a href="${esc(path)}" target="_blank" class="ref-link-item"><i class="fa-solid fa-file-pdf"></i> ${esc(f.name)}</a>`;
+        }
+    });
+    
+    // 법령원문
+    links += `<div class="ref-group-label">법령원문</div>`;
+    REFERENCE_LAW.forEach(f => {
+        const path = `content/참조자료/${f.dir}/${f.file}`;
+        links += `<a href="${esc(path)}" target="_blank" class="ref-link-item"><i class="fa-solid fa-file-pdf"></i> ${esc(f.name)}</a>`;
+    });
+    
+    // 공통 참조자료
+    links += `<div class="ref-group-label">공통 참조자료</div>`;
+    REFERENCE_COMMON.forEach(f => {
+        const path = `content/참조자료/${f.dir}/${f.file}`;
+        links += `<a href="${esc(path)}" target="_blank" class="ref-link-item"><i class="fa-solid fa-file-pdf"></i> ${esc(f.name)}</a>`;
+    });
+    
+    return links;
+}
+
+function bindReferenceLinks() {
+    document.querySelectorAll('[data-ref-md]').forEach(a => {
+        a.addEventListener('click', (e) => {
+            e.preventDefault();
+            const mdPath = a.dataset.refMd;
+            if (window.ExamViewer && window.ExamViewer.openExam) {
+                window.ExamViewer.openExam(mdPath);
+            }
+        });
+    });
 }

@@ -3,16 +3,16 @@
 export const DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2026",
-  "generatedAt": "2026-08-27T04:10:10.055Z",
+  "generatedAt": "2026-08-30T19:58:36.839Z",
   "subjects": [
     {
       "key": "law",
       "order": 1,
       "name": "화장품법의 이해",
       "shortName": "화장품법",
-      "contentHash": "bad21182",
+      "contentHash": "31fd9a5e",
       "stats": {
-        "cards": 0,
+        "cards": 340,
         "quizzes": 0,
         "chapters": 1
       }
@@ -22,9 +22,9 @@ export const DATA_REGISTRY = {
       "order": 2,
       "name": "화장품 제조 및 품질관리",
       "shortName": "제조·품질",
-      "contentHash": "ea9e7d10",
+      "contentHash": "80b177b0",
       "stats": {
-        "cards": 0,
+        "cards": 1024,
         "quizzes": 0,
         "chapters": 1
       }
@@ -34,9 +34,9 @@ export const DATA_REGISTRY = {
       "order": 3,
       "name": "유통화장품 안전관리",
       "shortName": "안전관리",
-      "contentHash": "2e1f0c09",
+      "contentHash": "39abb068",
       "stats": {
-        "cards": 0,
+        "cards": 431,
         "quizzes": 0,
         "chapters": 1
       }
@@ -46,9 +46,9 @@ export const DATA_REGISTRY = {
       "order": 4,
       "name": "맞춤형화장품의 이해",
       "shortName": "맞춤형화장품",
-      "contentHash": "09bfa34a",
+      "contentHash": "43b8c886",
       "stats": {
-        "cards": 0,
+        "cards": 745,
         "quizzes": 0,
         "chapters": 1
       }
@@ -59,117 +59,52 @@ export const DATA_REGISTRY = {
       "key": "subject1",
       "subject": "law",
       "part": 1,
-      "title": "화장품법의 이해 (1~100번)",
-      "file": "subject1_100_questions.md",
-      "bundle": "./data/exams/subject1.0eacfc4a.js",
+      "title": "화장품법의 이해 (100제)",
+      "file": "과목1_문제은행_교재인용.md",
+      "bundle": "./data/exams/subject1.e7a83eef.js",
       "global": "EXAM_DATA_subject1",
-      "contentHash": "0eacfc4a",
+      "contentHash": "e7a83eef",
       "stats": {
         "questions": 100
       }
     },
     {
-      "key": "subject2_p1",
+      "key": "subject2",
       "subject": "manufacturing",
       "part": 1,
-      "title": "화장품 제조 및 품질관리 - 1부",
-      "file": "subject2_100_questions.md",
-      "bundle": "./data/exams/subject2_p1.303693d9.js",
-      "global": "EXAM_DATA_subject2_p1",
-      "contentHash": "303693d9",
+      "title": "화장품 제조 및 품질관리 (250제)",
+      "file": "과목2_문제은행_교재인용.md",
+      "bundle": "./data/exams/subject2.282500c5.js",
+      "global": "EXAM_DATA_subject2",
+      "contentHash": "282500c5",
       "stats": {
-        "questions": 100
+        "questions": 250
       }
     },
     {
-      "key": "subject2_p2",
-      "subject": "manufacturing",
-      "part": 2,
-      "title": "화장품 제조 및 품질관리 - 2부",
-      "file": "subject2_part2_100.md",
-      "bundle": "./data/exams/subject2_p2.e38f2f33.js",
-      "global": "EXAM_DATA_subject2_p2",
-      "contentHash": "e38f2f33",
-      "stats": {
-        "questions": 100
-      }
-    },
-    {
-      "key": "subject2_p3",
-      "subject": "manufacturing",
-      "part": 3,
-      "title": "화장품 제조 및 품질관리 - 3부",
-      "file": "subject2_part3_100.md",
-      "bundle": "./data/exams/subject2_p3.b0961115.js",
-      "global": "EXAM_DATA_subject2_p3",
-      "contentHash": "b0961115",
-      "stats": {
-        "questions": 98
-      }
-    },
-    {
-      "key": "subject3_p1",
+      "key": "subject3",
       "subject": "safety",
       "part": 1,
-      "title": "유통화장품 안전관리 - 1부",
-      "file": "subject3_100_questions.md",
-      "bundle": "./data/exams/subject3_p1.9a7f19b0.js",
-      "global": "EXAM_DATA_subject3_p1",
-      "contentHash": "9a7f19b0",
+      "title": "유통화장품 안전관리 (250제)",
+      "file": "과목3_문제은행_교재인용.md",
+      "bundle": "./data/exams/subject3.1e84f780.js",
+      "global": "EXAM_DATA_subject3",
+      "contentHash": "1e84f780",
       "stats": {
-        "questions": 100
+        "questions": 250
       }
     },
     {
-      "key": "subject3_p2",
-      "subject": "safety",
-      "part": 2,
-      "title": "유통화장품 안전관리 - 2부",
-      "file": "subject3_part2_100.md",
-      "bundle": "./data/exams/subject3_p2.ee5b1fc7.js",
-      "global": "EXAM_DATA_subject3_p2",
-      "contentHash": "ee5b1fc7",
-      "stats": {
-        "questions": 100
-      }
-    },
-    {
-      "key": "subject4_p1",
+      "key": "subject4",
       "subject": "understanding",
       "part": 1,
-      "title": "맞춤형화장품의 이해 - 1부",
-      "file": "subject4_100_questions.md",
-      "bundle": "./data/exams/subject4_p1.83b639ea.js",
-      "global": "EXAM_DATA_subject4_p1",
-      "contentHash": "83b639ea",
+      "title": "맞춤형화장품의 이해 (400제)",
+      "file": "과목4_문제은행_교재인용.md",
+      "bundle": "./data/exams/subject4.a5ee6c20.js",
+      "global": "EXAM_DATA_subject4",
+      "contentHash": "a5ee6c20",
       "stats": {
-        "questions": 100
-      }
-    },
-    {
-      "key": "subject4_p2",
-      "subject": "understanding",
-      "part": 2,
-      "title": "맞춤형화장품의 이해 - 2부",
-      "file": "subject4_part2_100.md",
-      "bundle": "./data/exams/subject4_p2.70eb51c5.js",
-      "global": "EXAM_DATA_subject4_p2",
-      "contentHash": "70eb51c5",
-      "stats": {
-        "questions": 100
-      }
-    },
-    {
-      "key": "subject4_p3",
-      "subject": "understanding",
-      "part": 3,
-      "title": "맞춤형화장품의 이해 - 3부",
-      "file": "subject4_part3_100.md",
-      "bundle": "./data/exams/subject4_p3.7d6cbd6b.js",
-      "global": "EXAM_DATA_subject4_p3",
-      "contentHash": "7d6cbd6b",
-      "stats": {
-        "questions": 99
+        "questions": 400
       }
     }
   ],

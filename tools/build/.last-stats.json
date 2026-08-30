@@ -1,19 +1,19 @@
 {
   "subjects": {
     "law": {
-      "cards": 172,
-      "quizzes": 11
+      "cards": 340,
+      "quizzes": 0
     },
     "manufacturing": {
-      "cards": 596,
+      "cards": 1024,
       "quizzes": 0
     },
     "safety": {
-      "cards": 305,
+      "cards": 431,
       "quizzes": 0
     },
     "understanding": {
-      "cards": 593,
+      "cards": 745,
       "quizzes": 0
     }
   },
@@ -21,29 +21,14 @@
     "subject1": {
       "questions": 100
     },
-    "subject2_p1": {
-      "questions": 100
+    "subject2": {
+      "questions": 250
     },
-    "subject2_p2": {
-      "questions": 100
+    "subject3": {
+      "questions": 250
     },
-    "subject2_p3": {
-      "questions": 98
-    },
-    "subject3_p1": {
-      "questions": 100
-    },
-    "subject3_p2": {
-      "questions": 100
-    },
-    "subject4_p1": {
-      "questions": 100
-    },
-    "subject4_p2": {
-      "questions": 100
-    },
-    "subject4_p3": {
-      "questions": 99
+    "subject4": {
+      "questions": 400
     }
   }
 }

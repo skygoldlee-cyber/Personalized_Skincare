@@ -6,11 +6,11 @@
  * JS 번들로 굽는다. → file:// 로 index.html을 더블클릭해도 fetch 없이
  * 문제집을 열 수 있게 하기 위함.
  *
- * 입력 : content/exams/*.md
+ * 입력 : content/문제은행/*.md
  * 출력 : data/exams_md/<파일명>.js
  *        각 파일은 다음 형태로 전역에 등록한다.
- *          (window.__EXAM_MD__ = window.__EXAM_MD__ || {})["content/exams/<파일명>.md"] = "<마크다운>";
- *        키는 index.html의 onclick="ExamViewer.openExam('content/exams/...md')" 과 정확히 일치한다.
+ *          (window.__EXAM_MD__ = window.__EXAM_MD__ || {})["content/문제은행/<파일명>.md"] = "<마크다운>";
+ *        키는 app.js의 ExamViewer.openExam('content/문제은행/...md') 과 정확히 일치한다.
  *
  * 사용 : node tools/build_exam_bundles.js
  *        (.md 를 수정하면 다시 실행할 것)
@@ -23,7 +23,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
-const SRC_DIR = path.join(ROOT, 'content', 'exams');
+const SRC_DIR = path.join(ROOT, 'content', '문제은행');
 const OUT_DIR = path.join(ROOT, 'data', 'exams_md');
 
 const AUTOGEN_HEADER = '// 자동 생성된 문제집 번들입니다. 수정하지 마십시오. (tools/build_exam_bundles.js)';
@@ -53,13 +53,13 @@ function main() {
         const md = fs.readFileSync(srcPath, 'utf8');
 
         // openExam()에 넘어오는 경로와 정확히 동일한 키 (항상 POSIX 슬래시)
-        const key = 'content/exams/' + file;
+        const key = 'content/문제은행/' + file;
 
         // JSON.stringify 로 문자열 리터럴을 안전하게 생성
         //  → 따옴표/역슬래시/개행/유니코드/${ 등 모두 이스케이프 처리됨
         const body =
             AUTOGEN_HEADER + '\n' +
-            `// 원본: content/exams/${file}\n` +
+            `// 원본: content/문제은행/${file}\n` +
             '(window.__EXAM_MD__ = window.__EXAM_MD__ || {})[' +
             JSON.stringify(key) + '] = ' + JSON.stringify(md) + ';\n';
 

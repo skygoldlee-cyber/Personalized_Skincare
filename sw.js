@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v45-20260831-story-audio';     // 쉘/CDN: 배포마다 갱신 (이야기형 오디오북 MP3 적용)
+const CACHE_VERSION = 'v46-20260831-exam-ref';     // 쉘/CDN: 배포마다 갱신 (문제은행/참조자료 통합)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
@@ -114,7 +114,11 @@ const MD_ASSETS = [
   './content/law/1과목_화장품법의이해.md',
   './content/manufacturing/2과목_제조및품질관리.md',
   './content/safety/3과목_유통화장품안전관리.md',
-  './content/understanding/4과목_맞춤형화장품의이해.md'
+  './content/understanding/4과목_맞춤형화장품의이해.md',
+  './content/문제은행/과목1_문제은행_교재인용.md',
+  './content/문제은행/과목2_문제은행_교재인용.md',
+  './content/문제은행/과목3_문제은행_교재인용.md',
+  './content/문제은행/과목4_문제은행_교재인용.md'
 ];
 
 /** 캐시하지 않을 요청 패턴 (오디오 등 대용량 미디어) */
