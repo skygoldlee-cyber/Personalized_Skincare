@@ -7,7 +7,7 @@
       "order": 1,
       "name": "화장품법의 이해",
       "shortName": "화장품법",
-      "dir": "law",
+      "dir": "교재/law",
       "chapters": [
         {
           "key": "full",
@@ -21,7 +21,7 @@
       "order": 2,
       "name": "화장품 제조 및 품질관리",
       "shortName": "제조·품질",
-      "dir": "manufacturing",
+      "dir": "교재/manufacturing",
       "chapters": [
         {
           "key": "full",
@@ -35,7 +35,7 @@
       "order": 3,
       "name": "유통화장품 안전관리",
       "shortName": "안전관리",
-      "dir": "safety",
+      "dir": "교재/safety",
       "chapters": [
         {
           "key": "full",
@@ -49,7 +49,7 @@
       "order": 4,
       "name": "맞춤형화장품의 이해",
       "shortName": "맞춤형화장품",
-      "dir": "understanding",
+      "dir": "교재/understanding",
       "chapters": [
         {
           "key": "full",
