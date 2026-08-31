@@ -704,7 +704,7 @@ function renderChapterContent(subjId, chapterIdx) {
         });
     } else {
         const filteredChapter = _filterMetaSections(originalChapter);
-        console.debug('[Reader] Basic mode sections:', filteredChapter.sections.map(s => s.title));
+        console.log('[Reader] Basic mode sections:', filteredChapter.sections.map(s => s.title));
         _renderChapterContentInternal(subjId, chapterIdx, subj, filteredChapter, false);
     }
 }
