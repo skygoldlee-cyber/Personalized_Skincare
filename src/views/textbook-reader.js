@@ -745,6 +745,7 @@ const _STORY_META_PATTERNS = [
     /^✅\s*확인문제/,
     /^목차\s*$/,
     /^🔍\s*키워드/,
+    /^출처:\s/,
 ];
 
 function _isStoryMetaSection(title) {
