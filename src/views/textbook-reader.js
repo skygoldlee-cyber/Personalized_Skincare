@@ -821,6 +821,7 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter) {
                 </div>
             </div>` : ''}
         </div>
+        ${textbookReaderState.storyMode ? '' : `
         <div class="concept-map-container" id="concept-map-wrapper">
             <div class="concept-map-header">
                 <i class="fa-solid fa-sitemap"></i>
@@ -832,6 +833,7 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter) {
             <div class="concept-map-body expanded" id="concept-map-body"></div>
         </div>
         ${renderStudyAids(chapter)}
+        `}
     `;
 
     chapter.sections.forEach((section, idx) => {
