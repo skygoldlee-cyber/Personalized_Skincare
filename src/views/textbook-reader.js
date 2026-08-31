@@ -699,10 +699,12 @@ function renderChapterContent(subjId, chapterIdx) {
         }).catch(err => {
             console.warn('[Story Mode] 이야기형 MD 로드 실패, 기본 모드로 전환:', err);
             showAudioToast('이야기형 파일을 불러올 수 없어 기본 모드로 표시합니다.');
-            _renderChapterContentInternal(subjId, chapterIdx, subj, originalChapter, false);
+            const filteredChapter = _filterMetaSections(originalChapter);
+            _renderChapterContentInternal(subjId, chapterIdx, subj, filteredChapter, false);
         });
     } else {
-        _renderChapterContentInternal(subjId, chapterIdx, subj, originalChapter, false);
+        const filteredChapter = _filterMetaSections(originalChapter);
+        _renderChapterContentInternal(subjId, chapterIdx, subj, filteredChapter, false);
     }
 }
 
@@ -743,13 +745,18 @@ const _STORY_META_PATTERNS = [
     /^✅\s*확인문제/,
     /^목차\s*$/,
     /^🔍\s*키워드/,
-    /^출처:/,
-    /^📖(?!.*Chapter)/,
 ];
 
 function _isStoryMetaSection(title) {
     const t = (title || '').trim();
     return _STORY_META_PATTERNS.some(p => p.test(t));
+}
+
+function _filterMetaSections(chapter) {
+    return {
+        ...chapter,
+        sections: (chapter.sections || []).filter(s => !_isStoryMetaSection(s.title))
+    };
 }
 
 function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStoryMode) {
