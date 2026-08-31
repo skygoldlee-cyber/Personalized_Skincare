@@ -30,10 +30,16 @@ export function formatSectionContentForReader(rawContent, filePath) {
     html = html.replace(/\*?\*?참고[^:]*:\s*본문\s*p\.\d+[^\n<]*/gi, '');
     html = html.replace(/본문\s*p\.\d+(?:\s*[~-]\s*p?\.\d+)?/gi, '');
 
-    // 마인드맵 노드 상세 매핑: (LNN) → 교재 MD 파일 라인 하이퍼링크
-    if (filePath) {
+    // 마인드맵 노드 상세 매핑: (LNN) → 출처(참조자료) MD 파일 라인 하이퍼링크
+    // 출처 파일 경로를 rawContent에서 추출 (교재 파일이 아닌 참조자료 파일 기준)
+    const srcMatch = rawContent.match(/출처:\s*`?(\.{1,2}\/[^\s`]+\.md|[^\s`.]+_참조자료\/[^\s`]+\.md)`?/);
+    if (srcMatch) {
+        const refPath = srcMatch[1]
+            .replace(/^\.\.\/참조자료\//, './content/참조자료/')
+            .replace(/^(\d+)과목_참조자료\//, './content/참조자료/과목$1/')
+            .replace(/^\.\//, './');
         html = html.replace(/\(L(\d+)\)/g, (match, lineNum) => {
-            return `(<a href="${escapeHTML(filePath)}#L${lineNum}" target="_blank" class="source-link">L${lineNum}</a>)`;
+            return `(<a href="${escapeHTML(refPath)}#L${lineNum}" target="_blank" class="source-link">L${lineNum}</a>)`;
         });
     }
 
