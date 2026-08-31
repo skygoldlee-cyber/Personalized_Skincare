@@ -2375,6 +2375,21 @@ body.landscape-mode .glass-card {
 
 /* --- Story Mode: 등장인물 이야기 색상 구분 --- */
 
+/* 출처 하이퍼링크 스타일 */
+.source-link {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-family: monospace;
+    word-break: break-all;
+}
+.source-link:hover {
+    text-decoration: underline;
+}
+.source-link i {
+    margin-right: 0.2rem;
+}
+
 /* 3. 이야기형 배지 */
 .badge-story {
     background: linear-gradient(135deg, #f0c674, #b8860b);
