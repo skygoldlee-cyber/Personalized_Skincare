@@ -856,22 +856,20 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStor
         </div>
     `;
 
-    // 챕터 전체에서 참조자료 파일 경로 추출 (L-line 하이퍼링크용)
-    let chapterRefPath = '';
+    // 챕터 전체에서 출처 텍스트 추출 (L-line PDF 링크용)
+    let chapterSourceText = '';
     for (const s of chapter.sections) {
-        const m = (s.content || '').match(/출처:\s*`?(\.\.{1,2}\/[^\s`]+\.md|[^\s`.]+_참조자료\/[^\s`]+\.md)`?/);
-        if (m) {
-            chapterRefPath = m[1]
-                .replace(/^\.\.\/참조자료\//, './content/참조자료/')
-                .replace(/^(\d+)과목_참조자료\//, './content/참조자료/과목$1/')
-                .replace(/^\.\//, './');
-            break;
-        }
+        const m = (s.content || '').match(/📌\s*\*\*출처\*\*[:：]\s*(.+?)(?:\||\n)/);
+        if (m) { chapterSourceText = m[1]; break; }
     }
+    const chapterPdfPath = _mapSourceToPdf(chapterSourceText);
 
     chapter.sections.forEach((section, idx) => {
         const bookmarkKey = `${subjId}_${chapterIdx}_${idx}`;
         const isBookmarked = bookmarks.includes(bookmarkKey);
+        const secSrcMatch = (section.content || '').match(/📌\s*\*\*출처\*\*[:：]\s*(.+?)(?:\||\n)/);
+        const secPdfPath = secSrcMatch ? _mapSourceToPdf(secSrcMatch[1]) : null;
+        const pdfPath = secPdfPath || chapterPdfPath;
         html += `
             <div class="reader-section-card" id="reader-section-${idx}" data-section-idx="${idx}">
                 <div class="reader-section-header" data-section-idx="${idx}">
@@ -884,7 +882,7 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStor
                 </div>
                 <div class="reader-section-body">
                     <div class="textbook-reader-section-content">
-                        ${formatSectionContentForReader(section.content, chapter.filePath, chapterRefPath)}
+                        ${formatSectionContentForReader(section.content, chapter.filePath, pdfPath)}
                     </div>
                 </div>
             </div>
@@ -1315,6 +1313,59 @@ const REFERENCE_LAW = [
     { name: '화장품 사용 시 주의사항 및 알레르기', file: '화장품 사용할 때의 주의사항 및 알레르기 유발성분 표시에 관한 규정(식품의약품안전처고시)(제2026-56호)(20260805).pdf', type: 'pdf', dir: '법령원문' },
     { name: '화장품의 색소 종류 및 기준', file: '화장품의 색소 종류 및 기준(식품의약품안전처고시)(제2023-61호)(20230921).pdf', type: 'pdf', dir: '법령원문' }
 ];
+
+// 출처 텍스트 → 법령원문 PDF 경로 매핑
+function _mapSourceToPdf(sourceText) {
+    if (!sourceText) return '';
+    const s = sourceText.trim();
+    const lawDir = 'content/참조자료/법령원문';
+
+    // 화장품법 (법률)
+    if (/화장품법\s*제?\d+조/.test(s) && !/시행령|시행규칙|고시/.test(s)) {
+        return `${lawDir}/화장품법(법률)(제20901호)(20260402).pdf`;
+    }
+    // 화장품법 + 시행령
+    if (/시행령/.test(s)) {
+        return `${lawDir}/화장품법 시행규칙(총리령)(제02109호)(20260402).pdf`;
+    }
+    // 화장품법 + 시행규칙
+    if (/시행규칙/.test(s)) {
+        return `${lawDir}/화장품법 시행규칙(총리령)(제02109호)(20260402).pdf`;
+    }
+    // 안전기준
+    if (/안전기준/.test(s)) {
+        return `${lawDir}/화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318).pdf`;
+    }
+    // CGMP / 품질관리
+    if (/CGMP|품질관리|우수화장품/.test(s)) {
+        return `${lawDir}/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).pdf`;
+    }
+    // 기능성화장품 기준 및 시험방법
+    if (/기능성화장품\s*기준|시험\s*방법/.test(s)) {
+        return `${lawDir}/기능성화장품 기준 및 시험방법(식품의약품안전처고시)(제2025-89호)(20251216).pdf`;
+    }
+    // 기능성화장품 심사
+    if (/기능성화장품\s*심사/.test(s)) {
+        return `${lawDir}/기능성화장품 심사에 관한 규정(식품의약품안전처고시)(제2025-88호)(20251216).pdf`;
+    }
+    // 주의사항 / 알레르기
+    if (/주의사항|알레르기/.test(s)) {
+        return `${lawDir}/화장품 사용할 때의 주의사항 및 알레르기 유발성분 표시에 관한 규정(식품의약품안전처고시)(제2026-56호)(20260805).pdf`;
+    }
+    // 색소
+    if (/색소/.test(s)) {
+        return `${lawDir}/화장품의 색소 종류 및 기준(식품의약품안전처고시)(제2023-61호)(20230921).pdf`;
+    }
+    // 개인정보 보호법
+    if (/개인정보\s*보호법/.test(s)) {
+        return `${lawDir}/화장품법(법률)(제20901호)(20260402).pdf`;
+    }
+    // 화장품법 통합 정리 (기본값)
+    if (/화장품법/.test(s)) {
+        return `${lawDir}/화장품법(법률)(제20901호)(20260402).pdf`;
+    }
+    return '';
+}
 
 function buildReferenceLinks(subjId) {
     const dirName = REFERENCE_DIR_MAP[subjId];
