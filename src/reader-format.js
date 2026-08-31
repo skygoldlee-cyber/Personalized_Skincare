@@ -30,6 +30,14 @@ export function formatSectionContentForReader(rawContent, filePath, pdfPath) {
     html = html.replace(/\*?\*?참고[^:]*:\s*본문\s*p\.\d+[^\n<]*/gi, '');
     html = html.replace(/본문\s*p\.\d+(?:\s*[~-]\s*p?\.\d+)?/gi, '');
 
+    // 출처/참고 라인에 PDF 하이퍼링크 추가
+    if (pdfPath) {
+        const pdfFileName = pdfPath.split('/').pop();
+        const pdfIcon = `<a href="${escapeHTML(pdfPath)}" target="_blank" class="source-link" style="margin-left:0.5em;"><i class="fa-solid fa-file-pdf"></i> ${escapeHTML(pdfFileName)}</a>`;
+        // blockquote 내 출처 라인 끝에 PDF 링크 추가
+        html = html.replace(/(📌\s*\*\*출처\*\*[^<]*?)(<br>|<\/p>|\n)/g, `$1 ${pdfIcon}$2`);
+    }
+
     // 마인드맵 노드 상세 매핑: (LNN) → 법령원문 PDF 해당 페이지 하이퍼링크
     // 원본 법령 텍스트의 라인 번호를 PDF 페이지로 추정 (약 40줄/페이지)
     if (pdfPath) {
