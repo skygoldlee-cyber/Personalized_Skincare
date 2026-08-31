@@ -444,7 +444,9 @@ export function renderExamFilterToggle() {
  */
 export function isKeySection(sec) {
     const c = sec.content || '';
-    return c.includes('🔖기출') || c.includes('📌중요');
+    const t = sec.title || '';
+    const text = c + '\n' + t;
+    return text.includes('🔖기출') || text.includes('📌중요') || /🎯\s*기출/.test(text);
 }
 
 /**
