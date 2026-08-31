@@ -145,12 +145,18 @@ async function openPdf(pdfPath, searchKeyword) {
     const el = _ensureOverlay();
     const titleEl = el.querySelector('#pdf-title');
     const scroll = el.querySelector('#pdf-scroll');
-    const loading = el.querySelector('#pdf-loading');
 
     const fileName = pdfPath.split('/').pop();
     titleEl.textContent = fileName;
     scroll.innerHTML = '';
-    if (loading) scroll.appendChild(loading);
+    let loading = el.querySelector('#pdf-loading');
+    if (!loading) {
+        loading = document.createElement('div');
+        loading.id = 'pdf-loading';
+        loading.className = 'pdf-loading';
+        loading.innerHTML = '<div class="spinner"></div><div>PDF 로딩 중...</div>';
+    }
+    scroll.appendChild(loading);
     loading.style.display = 'flex';
 
     _currentPdfUrl = pdfPath;  // 원본 경로 (print 버튼용)
