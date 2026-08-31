@@ -51,6 +51,74 @@ function isGenericTerm(term) {
     return false;
 }
 
+// ── 카드 타입 분류 (8가지 후보 유형) ──
+function classifyCardType(term, definition, category) {
+  const text = `${term} ${definition}`;
+  if (/벌금|징역|과태료|벌칙|행정처분|등록취소|영업정지|폐지|처벌/.test(text)) return 'penalty';
+  if (/금지|안\s*된다|수\s*없|불가|하지\s*아니|금지함/.test(text)) return 'prohibition';
+  if (/예외|단,\s|제외|아니하|예외적으로/.test(text)) return 'exception';
+  if (/\d+\s*(일|년|개월|회|명|%|이상|이하|미만|초과|분의|시간|도|배|g|mL|kg|mg)/.test(definition)) return 'number';
+  if (/요건|조건|기준|필요|자격|구비|갖추어야/.test(text)) return 'requirement';
+  if (/vs|≠|＝|구분|비교|차이|차이점|다르|해당한다|해당하지/.test(text)) return 'comparison';
+  if (/절차|순서|단계|과정|신청|신고|등록|승인|보고|통보/.test(text)) return 'procedure';
+  return 'definition';
+}
+
+// ── 카드 중요도 점수 (0-100) ──
+function scoreCard(term, definition, isKey, category, cardType) {
+  let examImportance = 50;
+  if (isKey) examImportance += 30;
+  if (['penalty', 'prohibition', 'exception'].includes(cardType)) examImportance += 20;
+  else if (['number', 'requirement', 'comparison'].includes(cardType)) examImportance += 10;
+  examImportance = Math.min(100, examImportance);
+
+  let memorizeNeed = 50;
+  if (/\d+\s*(일|년|개월|회|명|%|이상|이하|미만|초과|분의)/.test(definition)) memorizeNeed += 30;
+  if (['number', 'comparison'].includes(cardType)) memorizeNeed += 20;
+  if (term.length >= 3 && term.length <= 15) memorizeNeed += 10;
+  memorizeNeed = Math.min(100, memorizeNeed);
+
+  let numericScore = 0;
+  if (/\d+\s*(일|년|개월|회|명|%|이상|이하|미만|초과|분의|시간|도|배)/.test(definition)) numericScore = 100;
+  else if (/요건|조건|기준|필요|자격/.test(definition)) numericScore = 70;
+  else if (['requirement', 'procedure'].includes(cardType)) numericScore = 50;
+
+  let examRel = isKey ? 100 : (category && /기출/.test(category) ? 30 : 0);
+
+  let cardFit = 70;
+  if (term.length >= 3 && term.length <= 15) cardFit += 20;
+  if (term.length > 30) cardFit -= 20;
+  if (definition.length > 200) cardFit -= 20;
+  if (definition.length < 15) cardFit -= 10;
+  if (/^[•·]/.test(definition)) cardFit -= 10;
+  cardFit = Math.max(0, Math.min(100, cardFit));
+
+  let repeatValue = 60;
+  if (['definition', 'comparison'].includes(cardType)) repeatValue += 20;
+  if (/\*\*[^*]+\*\*/.test(definition)) repeatValue += 10;
+  if (/^[•·]/.test(definition)) repeatValue -= 10;
+  repeatValue = Math.max(0, Math.min(100, repeatValue));
+
+  // 가중 합산 (정수 연산으로 부동소수점 오차 방지)
+  const score = Math.round(
+    (examImportance * 30 +
+    memorizeNeed * 25 +
+    numericScore * 15 +
+    examRel * 15 +
+    cardFit * 10 +
+    repeatValue * 5) / 100
+  );
+  return Math.max(0, Math.min(100, score));
+}
+
+// ── 난이도 분류 ──
+function determineDifficulty(definition, cardType) {
+  if (definition.length > 150 || /^[•·]/.test(definition)) return 'hard';
+  if (definition.length <= 50 && cardType === 'definition') return 'easy';
+  if (/\d+/.test(definition) || definition.length > 80) return 'medium';
+  return 'easy';
+}
+
 const parseMarkdownFile = (filePath, subjectId, filename, chapterKey, stableId) => {
   const content = fs.readFileSync(filePath, 'utf-8');
   const lines = content.split(/\r?\n/);
@@ -134,12 +202,23 @@ const parseMarkdownFile = (filePath, subjectId, filename, chapterKey, stableId) 
       // definition이 10자 이하면 설명으로서 의미 부족 (수치/단답형)
       if (cleanDesc.length <= 10) return;
 
+      // 카드 메타데이터 계산
+      const cardType = classifyCardType(cleanTerm, cleanDesc, currentSection);
+      const importance = scoreCard(cleanTerm, cleanDesc, isKey, currentSection, cardType);
+      const difficulty = determineDifficulty(cleanDesc, cardType);
+
+      // 중요도 40점 미만은 저품질 카드이므로 제거
+      if (importance < 40) return;
+
       cards.push({
         id: stableId(subjectId, chapterKey, 'card', cleanTerm),
         category: currentSection,
         term: cleanTerm,
         definition: cleanDesc,
-        isKey: isKey
+        isKey: isKey,
+        cardType: cardType,
+        importance: importance,
+        difficulty: difficulty
       });
 
       if (isKey) {
@@ -256,12 +335,20 @@ const parseMarkdownFile = (filePath, subjectId, filename, chapterKey, stableId) 
           const desc = listMatch[2].trim();
           const cleanDesc = cleanText(desc).replace(/\s*\(L\d+\)\s*/g, ' ').trim();
           if (term !== cleanDesc && cleanDesc.length > 10) {
+          const liCardType = classifyCardType(term, cleanDesc, currentSection);
+          const liImportance = scoreCard(term, cleanDesc, true, currentSection, liCardType);
+          const liDifficulty = determineDifficulty(cleanDesc, liCardType);
+          if (liImportance < 40) {
+          } else {
           cards.push({
             id: stableId(subjectId, chapterKey, 'card', term),
             category: currentSection,
             term: term,
             definition: cleanDesc,
-            isKey: true
+            isKey: true,
+            cardType: liCardType,
+            importance: liImportance,
+            difficulty: liDifficulty
           });
 
           const boldMatches = [];
@@ -284,6 +371,7 @@ const parseMarkdownFile = (filePath, subjectId, filename, chapterKey, stableId) 
               });
               quizzesForLine++;
             });
+          }
           }
           }
           }

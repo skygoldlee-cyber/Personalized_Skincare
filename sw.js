@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v63-20260831-clean-parens';     // 쉘/CDN: 배포마다 갱신 (한국어 카테고리 괄호 제거)
+const CACHE_VERSION = 'v64-20260831-25c10fe';     // 카드 메타데이터(cardType/importance/difficulty) + 점수 필터링 + 프론트엔드 배지
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;

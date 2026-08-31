@@ -21,6 +21,8 @@
  * @property {string|null} subject      현재 과목 키 (초기값 null, initApp에서 registry 기반 설정)
  * @property {number}   currentIndex 현재 카드 인덱스
  * @property {boolean}  keyOnly      키워드(암기면)만 표시 여부
+ * @property {string}   difficultyFilter 난이도 필터 ('all'|'easy'|'medium'|'hard')
+ * @property {string}   sortBy       정렬 기준 ('importance'|'default')
  * @property {Card[]}   data         현재 필터링된 카드 목록
  */
 
@@ -110,6 +112,9 @@
  * @property {string}  answer   뒷면(정답/설명)
  * @property {string} [chapter] 소속 단원명
  * @property {string} [subject] 소속 과목 키
+ * @property {string} [cardType]   카드 유형 ('penalty'|'prohibition'|'exception'|'number'|'requirement'|'comparison'|'procedure'|'definition')
+ * @property {number} [importance] 중요도 점수 (0-100)
+ * @property {string} [difficulty] 난이도 ('easy'|'medium'|'hard')
  */
 
 /**

@@ -772,6 +772,15 @@ function setupEventListeners() {
         loadFlashcards();
     });
     
+    const fcDifficultySelect = document.getElementById('fc-difficulty-select');
+    if (fcDifficultySelect) {
+        fcDifficultySelect.addEventListener('change', (e) => {
+            state.flashcards.difficultyFilter = e.target.value;
+            state.flashcards.currentIndex = 0;
+            loadFlashcards();
+        });
+    }
+    
     document.getElementById('fc-prev-btn').addEventListener('click', (e) => {
         e.stopPropagation();
         if (state.flashcards.data.length === 0) return;

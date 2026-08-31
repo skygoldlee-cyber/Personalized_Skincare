@@ -26,6 +26,8 @@ export const state = {
         subject: null,           // 초기값 null — initApp()에서 registry 첫 번째 과목으로 설정
         currentIndex: 0,
         keyOnly: false,
+        difficultyFilter: 'all', // 'all', 'easy', 'medium', 'hard'
+        sortBy: 'importance',    // 'importance' or 'default'
         data: [] // 현재 필터링된 카드 목록
     },
 

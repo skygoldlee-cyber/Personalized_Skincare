@@ -283,6 +283,15 @@
                             <option value="">과목을 선택하세요</option>
                         </select>
                     </div>
+                    <div class="filter-group">
+                        <label for="fc-difficulty-select">난이도</label>
+                        <select id="fc-difficulty-select" class="form-select">
+                            <option value="all">전체</option>
+                            <option value="easy">쉬움</option>
+                            <option value="medium">보통</option>
+                            <option value="hard">어려움</option>
+                        </select>
+                    </div>
                     <div class="filter-group-checkbox">
                         <input type="checkbox" id="fc-key-only" class="form-checkbox">
                         <label for="fc-key-only"><i class="fa-solid fa-star text-warning"></i> 기출/중요 개념만</label>
@@ -296,7 +305,10 @@
                             <!-- Card Front -->
                             <div class="flashcard-face flashcard-front">
                                 <div class="card-header">
-                                    <span class="card-badge" id="card-front-category">카테고리</span>
+                                    <div class="card-header-left">
+                                        <span class="card-badge" id="card-front-category">카테고리</span>
+                                        <span class="card-type-badge" id="card-front-type"></span>
+                                    </div>
                                     <span class="card-key-icon" id="card-front-star"><i class="fa-solid fa-star"></i></span>
                                 </div>
                                 <div class="card-body">
@@ -307,7 +319,10 @@
                             <!-- Card Back -->
                             <div class="flashcard-face flashcard-back">
                                 <div class="card-header">
-                                    <span class="card-badge" id="card-back-category">카테고리</span>
+                                    <div class="card-header-left">
+                                        <span class="card-badge" id="card-back-category">카테고리</span>
+                                        <span class="card-type-badge" id="card-back-type"></span>
+                                    </div>
                                 </div>
                                 <div class="card-body">
                                     <div class="card-definition-container">
