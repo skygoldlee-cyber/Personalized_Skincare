@@ -721,13 +721,34 @@ async function _loadStoryChapter(subjId, chapterIdx, originalChapter) {
 
     const storyChapter = {
         chapterTitle: parsed.chapterTitle,
-        sections: parsed.sections,
+        sections: parsed.sections.filter(s => !_isStoryMetaSection(s.title)),
         filePath: `./content/${subjMeta.dir}/${storyFile}`,
         fileName: storyFile
     };
 
     _storyChapterCache[cacheKey] = storyChapter;
     return storyChapter;
+}
+
+const _STORY_META_PATTERNS = [
+    /^🧭\s*학습\s*아이콘/,
+    /^🎯\s*최우선\s*암기\s*축/,
+    /^🔢\s*숫자\s*암기\s*미리보기/,
+    /^🎯\s*과목\s*시각화\s*개요/,
+    /^🚀\s*시험\s*직전/,
+    /^📖\s*학습\s*안내/,
+    /^📖\s*핵심\s*용어\s*정리/,
+    /^📊.*비교표/,
+    /^✅\s*확인문제/,
+    /^목차\s*$/,
+    /^🔍\s*키워드/,
+    /^출처:/,
+    /^📖(?!.*Chapter)/,
+];
+
+function _isStoryMetaSection(title) {
+    const t = (title || '').trim();
+    return _STORY_META_PATTERNS.some(p => p.test(t));
 }
 
 function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter) {
@@ -783,7 +804,7 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter) {
             <div class="reader-chapter-meta">
                 <span><i class="fa-solid fa-layer-group"></i> 섹션 ${chapter.sections.length}개</span>
                 <span><i class="fa-regular fa-clock"></i> 예상 읽기 시간 약 ${readMinutes}분</span>
-                ${renderExamFilterToggle()}
+                ${textbookReaderState.storyMode ? '' : renderExamFilterToggle()}
                 <a href="${esc(chapter.filePath)}" target="_blank" class="btn btn-secondary" style="display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; padding: 0.35rem 0.75rem;">
                     <i class="fa-solid fa-arrow-up-right-from-square"></i> 원본 MD
                 </a>
