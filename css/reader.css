@@ -2374,6 +2374,25 @@ body.landscape-mode .glass-card {
 }
 
 /* --- Story Mode: 등장인물 이야기 색상 구분 --- */
+
+/* 3. 이야기형 배지 */
+.badge-story {
+    background: linear-gradient(135deg, #f0c674, #b8860b);
+    color: #fff;
+    font-size: 0.78rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+/* 6. 이야기모드 줄간격 확대 */
+.story-mode .textbook-reader-section-content {
+    line-height: 2.0;
+}
+
+/* 1. 이야기 서브헤딩 (### 📖) — 범위 제한: md-quote 전까지만 */
 .story-mode .textbook-reader-section-content h5.md-h3 {
     color: #b8860b;
     font-weight: 700;
@@ -2381,7 +2400,54 @@ body.landscape-mode .glass-card {
     padding-left: 0.6rem;
     margin-top: 1.2rem;
 }
+
+/* 이야기 본문 문단 — h5 이후 형제 중 md-quote가 아닌 것만 */
 .story-mode .textbook-reader-section-content h5.md-h3 ~ p,
 .story-mode .textbook-reader-section-content h5.md-h3 ~ div.md-para {
     color: #8b6914;
+}
+
+/* 1. 범위 제한: 한 줄 요약(md-quote)은 이야기 색상 제외 */
+.story-mode .textbook-reader-section-content h5.md-h3 ~ div.md-quote {
+    color: var(--color-text-main);
+}
+
+/* 5. 프롤로그/등장인물 소개 — 첫 섹션의 개요 배경색 */
+.story-mode .reader-section-card:first-child .textbook-reader-section-content {
+    background: linear-gradient(135deg, rgba(184,134,11,0.04), rgba(184,134,11,0.01));
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+/* 7. 대사(인용구) 스타일 — > "..." 형태 */
+.story-mode .textbook-reader-section-content h5.md-h3 ~ div.md-quote {
+    border-left: 3px solid #d4a017;
+    background: rgba(212,160,23,0.06);
+    padding: 0.6rem 0.9rem;
+    border-radius: 0 6px 6px 0;
+    font-style: italic;
+    color: #6b5410;
+}
+
+/* 2. 다크모드 대응 */
+@media (prefers-color-scheme: dark) {
+    .story-mode .textbook-reader-section-content h5.md-h3 {
+        color: #e0c060;
+        border-left-color: #e0c060;
+    }
+    .story-mode .textbook-reader-section-content h5.md-h3 ~ p,
+    .story-mode .textbook-reader-section-content h5.md-h3 ~ div.md-para {
+        color: #d4b878;
+    }
+    .story-mode .textbook-reader-section-content h5.md-h3 ~ div.md-quote {
+        color: #e8d090;
+        background: rgba(224,192,96,0.08);
+        border-left-color: #e0c060;
+    }
+    .story-mode .reader-section-card:first-child .textbook-reader-section-content {
+        background: linear-gradient(135deg, rgba(224,192,96,0.06), rgba(224,192,96,0.02));
+    }
+    .badge-story {
+        background: linear-gradient(135deg, #d4a017, #8b6914);
+    }
 }

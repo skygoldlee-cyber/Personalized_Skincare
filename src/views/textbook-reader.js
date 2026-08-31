@@ -810,11 +810,12 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStor
         <div class="reader-readable-width">
         <div class="reader-chapter-header-card">
             <span class="badge badge-cyan">${esc(subj.name)}</span>
+            ${isStoryMode ? '<span class="badge badge-story"><i class="fa-solid fa-book-open-reader"></i> 이야기형</span>' : ''}
             <h3>${esc(chapter.chapterTitle)}</h3>
             <div class="reader-chapter-meta">
                 <span><i class="fa-solid fa-layer-group"></i> 섹션 ${chapter.sections.length}개</span>
                 <span><i class="fa-regular fa-clock"></i> 예상 읽기 시간 약 ${readMinutes}분</span>
-                ${renderExamFilterToggle()}
+                ${isStoryMode ? '' : renderExamFilterToggle()}
                 <a href="${esc(chapter.filePath)}" target="_blank" class="btn btn-secondary" style="display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; padding: 0.35rem 0.75rem;">
                     <i class="fa-solid fa-arrow-up-right-from-square"></i> 원본 MD
                 </a>
