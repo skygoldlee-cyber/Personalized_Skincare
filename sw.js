@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v96-20260901-story-출처-fix';   // 1과목 이야기형 MD에 출처/참조 PDF 라인 추가
+const CACHE_VERSION = 'v97-20260901-story-출처-pos-fix';   // 2~4과목 이야기형 MD 출처 라인 위치 조정
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
