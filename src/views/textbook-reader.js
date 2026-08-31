@@ -763,6 +763,8 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStor
     const container = document.getElementById('textbook-reader-container');
     if (!container) return;
 
+    container.classList.toggle('story-mode', !!isStoryMode);
+
     // Show reader auxiliary UI
     const toolbar = document.getElementById('reader-toolbar');
     const toc = document.getElementById('reader-toc');

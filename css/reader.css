@@ -2372,3 +2372,16 @@ body.landscape-mode .glass-card {
 .ref-link-item:hover i {
     color: var(--color-primary);
 }
+
+/* --- Story Mode: 등장인물 이야기 색상 구분 --- */
+.story-mode .textbook-reader-section-content h5.md-h3 {
+    color: #b8860b;
+    font-weight: 700;
+    border-left: 3px solid #b8860b;
+    padding-left: 0.6rem;
+    margin-top: 1.2rem;
+}
+.story-mode .textbook-reader-section-content h5.md-h3 ~ p,
+.story-mode .textbook-reader-section-content h5.md-h3 ~ div.md-para {
+    color: #8b6914;
+}
