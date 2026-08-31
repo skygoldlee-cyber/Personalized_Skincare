@@ -26,5 +26,9 @@ export function formatSectionContentForReader(rawContent) {
         }
     );
 
+    // 페이지 참조 제거: "본문 p.22", "본문 p.26~p.27" 등
+    html = html.replace(/\*?\*?참고[^:]*:\s*본문\s*p\.\d+[^\n<]*/gi, '');
+    html = html.replace(/본문\s*p\.\d+(?:\s*[~-]\s*p?\.\d+)?/gi, '');
+
     return html;
 }
