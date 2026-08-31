@@ -145,5 +145,25 @@ export function formatSectionContentForReader(rawContent, filePath, pdfPath, ref
         });
     }
 
+    // 출처 라인의 제N조를 추출하여 PDF 링크에 data-pdf-search 자동 추가
+    // 클릭 시 PDF.js에서 해당 조문을 자동 검색 (방안 C)
+    html = html.split('\n').map(line => {
+        if (!line.includes('data-pdf-path')) return line;
+        if (line.includes('data-pdf-search=')) return line;
+        if (!line.includes('출처') && !line.includes('참고')) return line;
+
+        // 제N조의M 패턴 추출 (첫 번째 매칭 사용)
+        const articleMatch = line.match(/제(\d+)조(?:의(\d+))?/);
+        if (!articleMatch) return line;
+
+        const search = `제${articleMatch[1]}조${articleMatch[2] ? '의' + articleMatch[2] : ''}`;
+
+        // 첫 번째 data-pdf-path 링크에 data-pdf-search 추가
+        return line.replace(
+            /(data-pdf-path="[^"]*")(?!\s*data-pdf-search)/,
+            `$1 data-pdf-search="${escapeHTML(search)}"`
+        );
+    }).join('\n');
+
     return html;
 }
