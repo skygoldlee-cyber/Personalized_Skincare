@@ -1,7 +1,7 @@
 # 🏛️ 설계 컨셉 & 아키텍처 (Architecture & Design Concept)
 
 > **대상 프로젝트**: Cosmetic Pass Master — 맞춤형화장품 조제관리사 스마트 학습 플랫폼
-> **최종 업데이트**: 2026-08-31
+> **최종 업데이트**: 2026-09-01
 > **목적**: 시스템의 설계 철학, 아키텍처 구조, 주요 설계 결정 사항을 설명
 
 ---
@@ -83,6 +83,10 @@
 │ │  │(JSDoc   │ │  .js         │  (뷰 전환 유틸)           │ │
 │ │  │ 타입)   │ │ (리더 포맷)  │                          │ │
 │ │  └─────────┘ └──────────────┘                          │ │
+│ │  ┌──────────────┐                                      │ │
+│ │  │pdf-registry  │  (PDF/참조자료 중앙 설정)              │ │
+│ │  │  .js         │                                      │ │
+│ │  └──────────────┘                                      │ │
 │ │  ┌──────────────────────────────────────────────────┐  │ │
 │ │  │  views/ (뷰 컨트롤러 모듈)                          │  │ │
 │ │  │  dashboard · flashcard · quiz · trainer            │  │ │
@@ -181,18 +185,6 @@
 | [`src/utils.js`](../../src/utils.js) | 의존성 없는 범용 헬퍼 (한글 초성 추출 `getChosung()` 등) |
 | [`src/sanitize.js`](../../src/sanitize.js) | HTML/XSS 방어 및 텍스트 정제 유틸리티 |
 | [`src/exam-viewer.js`](../../src/exam-viewer.js) | 문제집(MD) 런타임 뷰어. `content/문제은행/*.md` fetch → 자체 MD→HTML 변환 → 인앱 전체화면 오버레이 렌더링. TOC 생성·인쇄·sessionStorage 캐시(24h)·`file://` 번들 폴리백(`data/exams_md/*.js`) 지원. **시험 제목은 registry에서 동적 조회** (하드코딩 없음) |
-| [`src/data-loader.js`](../../src/data-loader.js) | 온디맨드 데이터 로더. **교재/카드/퀴즈: `content/*.md` 런타임 fetch+파싱**(http는 라이브 fetch, `file://`은 `data/study_md/` 과목별 분할 폴백, fetch 실패 시 자동 폴백). 시험/성분은 기존 번들 로드 유지. 로드 후 registry stats를 실제 개수로 갱신 |
-| [`src/textbook-parser.js`](../../src/textbook-parser.js) | 교재 MD 런타임 파서. `tools/build/plugins/textbook.plugin.js`의 브라우저 포팅으로 카드/퀴즈/챕터를 조립(`buildSubjectData`). 빌드 산출물과 **바이트 단위 동일** 검증됨 |
-| [`src/ui-utils.js`](../../src/ui-utils.js) | 공통 UI 유틸리티. 로딩 스피너(`showLoading`/`hideLoading`) 및 글로벌 로딩 오버레이(`showGlobalLoading`/`hideGlobalLoading`) |
-| [`src/sha256.js`](../../src/sha256.js) | 순수 동기 SHA-256 + `stableId()`. 빌드타임 Node `crypto`와 동일한 카드/퀴즈 안정 ID를 브라우저에서 재현(진도 보존의 핵심) |
-| [`src/types.js`](../../src/types.js) | **순수 JSDoc 타입 선언 모듈** (런타임 코드 없음). `State`, `Card`, `SubjectMeta` 등 `@typedef` 정의. `jsconfig.json` checkJs로 편집기 타입 검사/자동완성 활성화 |
-| [`src/reader-format.js`](../../src/reader-format.js) | 교재 리더 콘텐츠 포맷터 (MD 섹션 → HTML 변환, Mermaid 다이어그램 렌더링 지원) |
-| [`src/concept-map.js`](../../src/concept-map.js) | **순수 SVG 인터랙티브 개념 맵 생성기** (CSP-safe, 의존성 없음). 교재 리더 상단에 섹션 구조를 마인드맵으로 시각화. 데스크톱 좌/우 수평 레이아웃 + 모바일 세로 트리 레이아웃 자동 전환, 노드 클릭 시 해당 섹션으로 스크롤, 기출/중요 마커 하이라이트 |
-| [`src/study-aids.js`](../../src/study-aids.js) | **교재 리더 학습 보조 도구** (CSP-safe, 의존성 없음). 4가지 학습 보조 기능: ① 기출 필터 & 요약 카드(🔖기출 마커 하이라이트 + 핵심 요약), ② 숫자·기한 자동 추출 빈칸 카드(정규식 추출 + 챕터별 암기표), ③ 절차 플로우 정적 SVG 플로우차트(신고/변경/교육/폐업), ④ 행정처분 비교·대조 시각화(sticky col, zebra, 기출 하이라이트) |
-| [`src/views/navigation.js`](../../src/views/navigation.js) | 뷰 전환 유틸리티 (`switchView`). 순환 import 해결용 별도 모듈 |
-| [`src/views/`](../../src/views/) | **뷰 컨트롤러 모듈 디렉터리** (app.js에서 분리 추출). `dashboard.js`, `flashcard.js`, `quiz.js`, `trainer.js`, `dictionary.js`, `backup.js`, `textbook-search.js`, `textbook-reader.js`(**Media Session API 연동**), `exam-simulator.js`(**오답 복습 연동**) |
-
-### 3. Data Layer (데이터 계층)
 
 | 파일 | 내용 | 생성 주체 |
 |------|------|-----------|
@@ -817,12 +809,13 @@ content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.j
 | | `content/utils/batch_convert.py` | `BATCH_TARGETS["교재"]` 경로 갱신 |
 | **문제은행 MD 변경** | `content/manifest.json` | `exams` 섹션의 파일 경로 갱신 |
 | | `content/utils/batch_convert.py` | `BATCH_TARGETS["문제은행"]` 경로 갱신 |
-| **참조자료 MD 변경** | `src/views/textbook-reader.js` | 참조자료 링크 렌더링 로직 (경로 패턴 확인) |
+| **참조자료 MD/PDF 변경** | `src/pdf-registry.js` | 참조자료 파일 목록·경로 매핑 (중앙 설정 모듈) |
 | | `tools/build/plugins/ingredients.plugin.js` | `INGREDIENTS_DIR` 경로 (원료 하위 폴더 변경 시) |
 | **학습안내서 MD 변경** | (파일명 동일 시 수정 불필요) | `manual-viewer.js`, `build_doc_bundles.js`, `sw.js`가 `content/학습안내서.md` 경로 참조 |
 | | `content/utils/batch_convert.py` | 파일명 변경 시 `BATCH_TARGETS["학습안내서"]` 갱신 |
 | **보고서 MD 변경** (`content/report/`) | `content/utils/batch_convert.py` | `BATCH_TARGETS["report"]` 경로 갱신 |
 | **새 과목 추가** | `content/manifest.json` | `subjects[]`에 새 과목 항목 추가 (`key`, `name`, `dir`, `chapters`) |
+| | `src/pdf-registry.js` | `SUBJECT_DIR_MAP`, `PDF_DIRS`, `REFERENCE_FILES`에 새 과목 항목 추가 |
 | | `sw.js` | `MD_ASSETS`에 새 과목 MD 경로 추가 |
 | | `content/utils/batch_convert.py` | `BATCH_TARGETS["교재"]`에 새 파일 추가 |
 | | `content/audiobook/` | 오디오북 파이프라인 스크립트에 새 과목 추가 (필요 시) |
@@ -890,6 +883,7 @@ cmd /c vercel --prod 2>&1
 | `content/manifest.json` | SSOT — 모든 빌드의 원천 | `subjects[].dir`, `chapters[].file` |
 | `sw.js` | `MD_ASSETS` 하드코딩 | 프리캐시 대상 MD 파일 경로 |
 | `src/manual-viewer.js` | `MD_SOURCES` 객체 | 학습안내서, 사용자매뉴얼 경로 |
+| `src/pdf-registry.js` | `SUBJECT_DIR_MAP`, `PDF_DIRS`, `REFERENCE_FILES` | PDF/참조자료 중앙 설정 (과목 변경 시 유일 수정 파일) |
 | `src/data-loader.js` | `manifest.subjects[].dir` 동적 참조 | 런타임 MD 로드 |
 | `src/textbook-parser.js` | `manifest.subjects[].dir` 동적 참조 | 런타임 MD 파싱 |
 | `tools/build/manifest-loader.js` | `manifest.json` 검증 | 빌드 시 파일 존재 확인 |

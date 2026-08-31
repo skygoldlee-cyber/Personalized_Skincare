@@ -591,6 +591,32 @@
 
 ---
 
+## 29. PDF 제N조 검색어 자동 추가 및 레지스트리 중앙화 (2026-09-01)
+
+> **목표**: 출처 라인의 "제N조"를 PDF 링크 검색어로 자동 추출 (방안 C), PDF/참조자료 설정을 단일 모듈로 중앙화하여 과목 변경 시 수정 범위 최소화
+
+### 수정 내역
+
+- **`src/reader-format.js`**: 출처/참고 라인에서 `제N조`/`제N조의M` 패턴을 추출하여 PDF 링크에 `data-pdf-search` 속성 자동 추가 (방안 C). 기본형·이야기형 모두 적용
+- **`src/pdf-registry.js`** (신규): PDF 파일 목록(`PDF_DIRS`), 출처 키워드→PDF 매핑(`SOURCE_PDF_MAP`), 과목별 참조자료(`REFERENCE_FILES`), 공통/원료/법령원문 참조자료, 헬퍼 함수(`resolvePdfPath`, `mapSourceToPdf`)를 단일 모듈로 통합
+- **`src/reader-format.js`**: `_PDF_DIR_MAP`, `_PDF_FILE_TO_PATH`, `_resolvePdfPath` 제거 → `import { resolvePdfPath }`로 전환
+- **`src/views/textbook-reader.js`**: `REFERENCE_DIR_MAP`, `REFERENCE_FILES`, `REFERENCE_COMMON`, `REFERENCE_INGREDIENTS`, `REFERENCE_LAW`, `_PDF_REGISTRY`, `_SOURCE_PDF_MAP`, `_mapSourceToPdf` 제거 → `import`로 전환 (중복 코드 216행 삭제)
+- **`sw.js`**: `CACHE_VERSION` → `v100-20260901-pdf-registry-refactor`
+- **`docs/dev/ARCHITECTURE.md`**: `pdf-registry.js` 모듈 추가, content 변경 매트릭스 갱신, 참조 파일 목록 갱신
+
+### 검증
+
+- `npm test` 88/88 통과
+- Vercel 배포 완료
+
+### 과목 변경 시 수정 가이드
+
+- **`src/pdf-registry.js` 1개 파일만 수정**하면 됨 (이전: 3개 파일 수정 필요)
+- `SUBJECT_DIR_MAP`, `PDF_DIRS`, `REFERENCE_FILES`에 새 과목 항목 추가
+- 제N조 추출 로직은 한국 법령 형식에 의존하므로 과목 변경과 무관하게 동작
+
+---
+
 ## 28. 콘텐츠 폴더 구조 개편 및 학습안내서 전환 (2026-08-31)
 
 > **목표**: 콘텐츠 폴더 구조를 한국어 명명으로 통일하고, 문제은행/참조자료/교재/학습안내서 경로를 일원화
