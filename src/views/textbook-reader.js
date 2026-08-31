@@ -1370,8 +1370,9 @@ function bindReferenceLinks() {
         a.addEventListener('click', (e) => {
             e.preventDefault();
             const mdPath = a.dataset.refMd;
+            const lineNum = a.dataset.refLine ? parseInt(a.dataset.refLine) : null;
             if (window.ExamViewer && window.ExamViewer.openExam) {
-                window.ExamViewer.openExam(mdPath);
+                window.ExamViewer.openExam(mdPath, lineNum);
             }
         });
     });

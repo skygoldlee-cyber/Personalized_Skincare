@@ -41,7 +41,7 @@ export function formatSectionContentForReader(rawContent, filePath, chapterRefPa
         : chapterRefPath;
     if (refPath) {
         html = html.replace(/\(L(\d+)\)/g, (match, lineNum) => {
-            return `(<a href="${escapeHTML(refPath)}#L${lineNum}" target="_blank" class="source-link">L${lineNum}</a>)`;
+            return `(<a href="javascript:void(0)" data-ref-md="${escapeHTML(refPath)}" data-ref-line="${lineNum}" class="source-link">L${lineNum}</a>)`;
         });
     }
 

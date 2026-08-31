@@ -157,6 +157,9 @@ html.light-theme #exam-overlay #exam-article pre.reader-code-block{background:rg
   border-top-color:var(--color-primary);border-radius:50%;animation:exam-spin 1s linear infinite;}
 @keyframes exam-spin{to{transform:rotate(360deg);}}
 body.exam-open{overflow:hidden;}
+#exam-overlay .exam-line-highlight{background:rgba(250,204,21,.25);border-radius:4px;
+  animation:exam-line-fade .3s ease;}
+@keyframes exam-line-fade{from{background:rgba(250,204,21,.5);}to{background:rgba(250,204,21,.25);}}
 @media print{
   body.exam-open>*:not(#exam-overlay){display:none !important;}
   #exam-overlay{position:static !important;display:block !important;}
@@ -366,11 +369,11 @@ body.exam-open{overflow:hidden;}
     /* =========================================================
        메인 엔트리
        ========================================================= */
-    async function openExam(mdPath) {
+    async function openExam(mdPath, lineNum) {
         const title = _titleFromPath(mdPath);
 
         const cached = _getCached(mdPath);
-        if (cached) { _renderBody(title, cached); _open(); return; }
+        if (cached) { _renderBody(title, cached); _open(); if (lineNum) _scrollToLine(lineNum); return; }
 
         _showLoading(title);
 
@@ -379,10 +382,53 @@ body.exam-open{overflow:hidden;}
             const bodyHtml = _mdToHtml(mdText);
             _setCached(mdPath, bodyHtml);
             _renderBody(title, bodyHtml);
+            if (lineNum) _scrollToLine(lineNum, mdText);
         } catch (err) {
             console.error('Exam load failed:', err);
             _showError(title, err && err.message ? err.message : String(err));
         }
+    }
+
+    /* =========================================================
+       라인 스크롤 헬퍼 (LNN 링크용)
+       ========================================================= */
+    function _scrollToLine(lineNum, mdText) {
+        const el = _overlayEl;
+        if (!el) return;
+        const scroll = el.querySelector('.exam-ov-scroll');
+        if (!scroll) return;
+
+        // 캐시된 경우 mdText가 없으므로 텍스트 검색 불가 → 비례 스크롤로 폴백
+        if (!mdText) {
+            scroll.scrollTop = scroll.scrollHeight * 0.3;
+            return;
+        }
+
+        const lines = mdText.split('\n');
+        if (lineNum < 1 || lineNum > lines.length) return;
+
+        // 타겟 라인의 텍스트에서 마크다운 기호를 제거한 검색 키워드 추출
+        const targetLine = lines[lineNum - 1];
+        const targetText = targetLine.replace(/[#>*`~\-\[\]\(\)!|_]/g, '').trim();
+
+        if (targetText.length >= 2) {
+            const article = el.querySelector('#exam-article');
+            if (article) {
+                const allEls = article.querySelectorAll('*');
+                for (const e of allEls) {
+                    if (e.children.length === 0 && e.textContent.includes(targetText)) {
+                        e.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        e.classList.add('exam-line-highlight');
+                        setTimeout(() => e.classList.remove('exam-line-highlight'), 3000);
+                        return;
+                    }
+                }
+            }
+        }
+
+        // 폴백: 라인 번호 비율로 스크롤
+        const ratio = (lineNum - 1) / lines.length;
+        scroll.scrollTop = scroll.scrollHeight * ratio;
     }
 
     return {
