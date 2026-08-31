@@ -72,9 +72,9 @@ export function formatSectionContentForReader(rawContent, filePath, pdfPath, ref
     );
 
     // 출처: `xxx.pdf` 패턴 → PDF.js 뷰어 링크로 변환
-    // 마크다운 파서 거친 후: 출처: <code>xxx.pdf</code>
+    // allowInlineCode=false이므로 백틱이 그대로 남음
     html = html.replace(
-        /출처:\s*<code>([^<]+\.pdf)<\/code>/g,
+        /출처:\s*`([^`<]+\.pdf)`/g,
         (match, pdfFile) => {
             const resolved = _resolvePdfPath(pdfFile);
             if (resolved) {
@@ -85,9 +85,9 @@ export function formatSectionContentForReader(rawContent, filePath, pdfPath, ref
     );
 
     // **참조 PDF**: `xxx.pdf` 패턴 → PDF.js 뷰어 링크로 변환
-    // 마크다운 파서 거친 후: <strong>참조 PDF</strong>: <code>xxx.pdf</code>
+    // 마크다운 파서 거친 후: <strong>참조 PDF</strong>: `xxx.pdf` (백틱 그대로)
     html = html.replace(
-        /<strong>참조 PDF<\/strong>:\s*<code>([^<]+\.pdf)<\/code>/g,
+        /<strong>참조 PDF<\/strong>:\s*`([^`<]+\.pdf)`/g,
         (match, pdfFile) => {
             const resolved = _resolvePdfPath(pdfFile);
             if (resolved) {
