@@ -871,7 +871,7 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStor
                 </div>
                 <div class="reader-section-body">
                     <div class="textbook-reader-section-content">
-                        ${formatSectionContentForReader(section.content)}
+                        ${formatSectionContentForReader(section.content, chapter.filePath)}
                     </div>
                 </div>
             </div>

@@ -2,7 +2,7 @@
 import { parseMarkdown } from './markdown-parser.js';
 import { escapeHTML } from './sanitize.js';
 
-export function formatSectionContentForReader(rawContent) {
+export function formatSectionContentForReader(rawContent, filePath) {
     let html = parseMarkdown(rawContent, {
         useCustomListDiv: true,
         useReaderStyles: true,
@@ -29,6 +29,13 @@ export function formatSectionContentForReader(rawContent) {
     // 페이지 참조 제거: "본문 p.22", "본문 p.26~p.27" 등
     html = html.replace(/\*?\*?참고[^:]*:\s*본문\s*p\.\d+[^\n<]*/gi, '');
     html = html.replace(/본문\s*p\.\d+(?:\s*[~-]\s*p?\.\d+)?/gi, '');
+
+    // 마인드맵 노드 상세 매핑: (LNN) → 교재 MD 파일 라인 하이퍼링크
+    if (filePath) {
+        html = html.replace(/\(L(\d+)\)/g, (match, lineNum) => {
+            return `(<a href="${escapeHTML(filePath)}#L${lineNum}" target="_blank" class="source-link">L${lineNum}</a>)`;
+        });
+    }
 
     return html;
 }
