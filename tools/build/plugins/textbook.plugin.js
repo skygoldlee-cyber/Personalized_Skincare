@@ -119,6 +119,17 @@ function determineDifficulty(definition, cardType) {
   return 'easy';
 }
 
+// ── 퀴즈 품질 검사 ──
+function isValidQuiz(type, question, answer) {
+  if (answer.length > 25) return false;
+  if (/^[•·]/.test(answer)) return false;
+  if (/참고\s*-/.test(answer)) return false;
+  const cleanQ = question.replace(/^[•·]\s*/, '').trim();
+  if (cleanQ.length < 15) return false;
+  if (/^\[\s*빈칸\s*\]\.?$/i.test(cleanQ)) return false;
+  return true;
+}
+
 const parseMarkdownFile = (filePath, subjectId, filename, chapterKey, stableId) => {
   const content = fs.readFileSync(filePath, 'utf-8');
   const lines = content.split(/\r?\n/);
@@ -241,6 +252,24 @@ const parseMarkdownFile = (filePath, subjectId, filename, chapterKey, stableId) 
             const answer = match[1].trim();
             if (answer.length > 1) {
               const quizText = cleanDesc.replace(new RegExp(`\\*\\*${escapeRegExp(answer)}\\*\\*|${escapeRegExp(answer)}`, 'g'), ' [ 빈칸 ] ');
+              if (isValidQuiz('blank', quizText, answer)) {
+                quizzes.push({
+                  id: makeQuizId(cleanTerm, answer),
+                  category: currentSection,
+                  context: `[용어: ${cleanTerm}]`,
+                  question: quizText,
+                  answer: answer,
+                  type: 'blank'
+                });
+                quizzesForRow++;
+              }
+            }
+          });
+        } else if (numMatches.length > 0) {
+          numMatches.forEach(match => {
+            const answer = match[0].trim();
+            const quizText = cleanDesc.replace(new RegExp(escapeRegExp(answer), 'g'), ' [ 빈칸 ] ');
+            if (isValidQuiz('blank', quizText, answer)) {
               quizzes.push({
                 id: makeQuizId(cleanTerm, answer),
                 category: currentSection,
@@ -252,37 +281,25 @@ const parseMarkdownFile = (filePath, subjectId, filename, chapterKey, stableId) 
               quizzesForRow++;
             }
           });
-        } else if (numMatches.length > 0) {
-          numMatches.forEach(match => {
-            const answer = match[0].trim();
-            const quizText = cleanDesc.replace(new RegExp(escapeRegExp(answer), 'g'), ' [ 빈칸 ] ');
+        } else {
+          if (isValidQuiz('term', cleanDesc, cleanTerm)) {
             quizzes.push({
-              id: makeQuizId(cleanTerm, answer),
+              id: makeQuizId(cleanTerm, cleanTerm),
               category: currentSection,
-              context: `[용어: ${cleanTerm}]`,
-              question: quizText,
-              answer: answer,
-              type: 'blank'
+              context: `정의에 알맞은 용어를 적으시오.`,
+              question: `${cleanDesc}`,
+              answer: cleanTerm,
+              type: 'term'
             });
             quizzesForRow++;
-          });
-        } else {
-          quizzes.push({
-            id: makeQuizId(cleanTerm, cleanTerm),
-            category: currentSection,
-            context: `정의에 알맞은 용어를 적으시오.`,
-            question: `${cleanDesc}`,
-            answer: cleanTerm,
-            type: 'term'
-          });
-          quizzesForRow++;
+          }
         }
 
         // #3: 🔖기출 표시가 있는데 이 행에서 퀴즈가 하나도 안 나오면 경고 수집
         if (has기출 && quizzesForRow === 0) {
           warnings.push(cleanTerm || desc.substring(0, 40));
         }
-      } else if (importance >= 50) {
+      } else if (importance >= 50 && isValidQuiz('term', cleanDesc, cleanTerm)) {
         quizzes.push({
           id: makeQuizId(cleanTerm, cleanTerm),
           category: currentSection,
@@ -370,15 +387,18 @@ const parseMarkdownFile = (filePath, subjectId, filename, chapterKey, stableId) 
           if (boldMatches.length > 0) {
             boldMatches.forEach(m => {
               const ans = m[1].trim();
-              quizzes.push({
-                id: makeQuizId(term, ans),
-                category: currentSection,
-                context: `[주제: ${term}]`,
-                question: cleanDesc.replace(new RegExp(`\*\*${escapeRegExp(ans)}\*\*|${escapeRegExp(ans)}`, 'g'), ' [ 빈칸 ] '),
-                answer: ans,
-                type: 'blank'
-              });
-              quizzesForLine++;
+              const quizText = cleanDesc.replace(new RegExp(`\\*\\*${escapeRegExp(ans)}\\*\\*|${escapeRegExp(ans)}`, 'g'), ' [ 빈칸 ] ');
+              if (isValidQuiz('blank', quizText, ans)) {
+                quizzes.push({
+                  id: makeQuizId(term, ans),
+                  category: currentSection,
+                  context: `[주제: ${term}]`,
+                  question: quizText,
+                  answer: ans,
+                  type: 'blank'
+                });
+                quizzesForLine++;
+              }
             });
           }
           }
@@ -402,29 +422,35 @@ const parseMarkdownFile = (filePath, subjectId, filename, chapterKey, stableId) 
             boldMatches.forEach(m => {
               const ans = m[1].trim();
               if (ans.length > 1 && !ans.includes('기출') && !ans.includes('중요')) {
-                quizzes.push({
-                  id: makeQuizId(cleanedLine.substring(0, 15), ans),
-                  category: currentSection,
-                  context: `[기출 지문 빈칸 채우기]`,
-                  question: cleanedLine.replace(new RegExp(`\\*\\*${escapeRegExp(ans)}\\*\\*|${escapeRegExp(ans)}`, 'g'), ' [ 빈칸 ] '),
-                  answer: ans,
-                  type: 'blank'
-                });
-                quizzesForLine++;
+                const quizText = cleanedLine.replace(new RegExp(`\\*\\*${escapeRegExp(ans)}\\*\\*|${escapeRegExp(ans)}`, 'g'), ' [ 빈칸 ] ');
+                if (isValidQuiz('blank', quizText, ans)) {
+                  quizzes.push({
+                    id: makeQuizId(cleanedLine.substring(0, 15), ans),
+                    category: currentSection,
+                    context: `[기출 지문 빈칸 채우기]`,
+                    question: quizText,
+                    answer: ans,
+                    type: 'blank'
+                  });
+                  quizzesForLine++;
+                }
               }
             });
           } else if (numMatches.length > 0) {
             numMatches.forEach(m => {
               const ans = m[0].trim();
-              quizzes.push({
-                id: makeQuizId(cleanedLine.substring(0, 15), ans),
-                category: currentSection,
-                context: `[기출 지문 빈칸 채우기]`,
-                question: cleanedLine.replace(new RegExp(escapeRegExp(ans), 'g'), ' [ 빈칸 ] '),
-                answer: ans,
-                type: 'blank'
-              });
-              quizzesForLine++;
+              const quizText = cleanedLine.replace(new RegExp(escapeRegExp(ans), 'g'), ' [ 빈칸 ] ');
+              if (isValidQuiz('blank', quizText, ans)) {
+                quizzes.push({
+                  id: makeQuizId(cleanedLine.substring(0, 15), ans),
+                  category: currentSection,
+                  context: `[기출 지문 빈칸 채우기]`,
+                  question: quizText,
+                  answer: ans,
+                  type: 'blank'
+                });
+                quizzesForLine++;
+              }
             });
           }
         }

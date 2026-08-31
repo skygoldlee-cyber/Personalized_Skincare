@@ -136,6 +136,23 @@ function determineDifficulty(definition, cardType) {
     return 'easy';
 }
 
+// ── 퀴즈 품질 검사 ──
+function isValidQuiz(type, question, answer) {
+    // 정답이 너무 김 (타이핑 불가)
+    if (answer.length > 25) return false;
+    // 정답이 •/·로 시작
+    if (/^[•·]/.test(answer)) return false;
+    // 정답에 '참고 -' 포함 (섹션 참조, 용어 아님)
+    if (/참고\s*-/.test(answer)) return false;
+    // 질문 정제: 앞쪽 •/· 제거
+    const cleanQ = question.replace(/^[•·]\s*/, '').trim();
+    // 질문이 너무 짧음 (맥락 부족)
+    if (cleanQ.length < 15) return false;
+    // 질문에 [ 빈칸 ] 만 있는 경우 (빈 질문)
+    if (/^\[\s*빈칸\s*\]\.?$/i.test(cleanQ)) return false;
+    return true;
+}
+
 function basenameNoMd(filename) {
     // path.basename(filename, '.md') 동등: 경로 구분자 제거 후 .md 확장자 제거
     const base = String(filename).split(/[\\/]/).pop();
@@ -256,6 +273,24 @@ function parseMarkdownFile(content, subjectId, filename, chapterKey) {
                         const answer = match[1].trim();
                         if (answer.length > 1) {
                             const quizText = cleanDesc.replace(new RegExp(`\\*\\*${escapeRegExp(answer)}\\*\\*|${escapeRegExp(answer)}`, 'g'), ' [ 빈칸 ] ');
+                            if (isValidQuiz('blank', quizText, answer)) {
+                                quizzes.push({
+                                    id: makeQuizId(cleanTerm, answer),
+                                    category: currentSection,
+                                    context: `[용어: ${cleanTerm}]`,
+                                    question: quizText,
+                                    answer: answer,
+                                    type: 'blank'
+                                });
+                                quizzesForRow++;
+                            }
+                        }
+                    });
+                } else if (numMatches.length > 0) {
+                    numMatches.forEach(match => {
+                        const answer = match[0].trim();
+                        const quizText = cleanDesc.replace(new RegExp(escapeRegExp(answer), 'g'), ' [ 빈칸 ] ');
+                        if (isValidQuiz('blank', quizText, answer)) {
                             quizzes.push({
                                 id: makeQuizId(cleanTerm, answer),
                                 category: currentSection,
@@ -267,36 +302,24 @@ function parseMarkdownFile(content, subjectId, filename, chapterKey) {
                             quizzesForRow++;
                         }
                     });
-                } else if (numMatches.length > 0) {
-                    numMatches.forEach(match => {
-                        const answer = match[0].trim();
-                        const quizText = cleanDesc.replace(new RegExp(escapeRegExp(answer), 'g'), ' [ 빈칸 ] ');
+                } else {
+                    if (isValidQuiz('term', cleanDesc, cleanTerm)) {
                         quizzes.push({
-                            id: makeQuizId(cleanTerm, answer),
+                            id: makeQuizId(cleanTerm, cleanTerm),
                             category: currentSection,
-                            context: `[용어: ${cleanTerm}]`,
-                            question: quizText,
-                            answer: answer,
-                            type: 'blank'
+                            context: `정의에 알맞은 용어를 적으시오.`,
+                            question: `${cleanDesc}`,
+                            answer: cleanTerm,
+                            type: 'term'
                         });
                         quizzesForRow++;
-                    });
-                } else {
-                    quizzes.push({
-                        id: makeQuizId(cleanTerm, cleanTerm),
-                        category: currentSection,
-                        context: `정의에 알맞은 용어를 적으시오.`,
-                        question: `${cleanDesc}`,
-                        answer: cleanTerm,
-                        type: 'term'
-                    });
-                    quizzesForRow++;
+                    }
                 }
 
                 if (has기출 && quizzesForRow === 0) {
                     warnings.push(cleanTerm || desc.substring(0, 40));
                 }
-            } else if (importance >= 50) {
+            } else if (importance >= 50 && isValidQuiz('term', cleanDesc, cleanTerm)) {
                 quizzes.push({
                     id: makeQuizId(cleanTerm, cleanTerm),
                     category: currentSection,
@@ -382,69 +405,74 @@ function parseMarkdownFile(content, subjectId, filename, chapterKey) {
                     }
 
                     if (boldMatches.length > 0) {
-                        boldMatches.forEach(m => {
-                            const ans = m[1].trim();
+                    boldMatches.forEach(m => {
+                        const ans = m[1].trim();
+                        const quizText = cleanDesc.replace(new RegExp(`\\*\\*${escapeRegExp(ans)}\\*\\*|${escapeRegExp(ans)}`, 'g'), ' [ 빈칸 ] ');
+                        if (isValidQuiz('blank', quizText, ans)) {
                             quizzes.push({
                                 id: makeQuizId(term, ans),
                                 category: currentSection,
                                 context: `[주제: ${term}]`,
-                                question: cleanDesc.replace(new RegExp(`\\*\\*${escapeRegExp(ans)}\\*\\*|${escapeRegExp(ans)}`, 'g'), ' [ 빈칸 ] '),
+                                question: quizText,
                                 answer: ans,
                                 type: 'blank'
                             });
                             quizzesForLine++;
-                        });
-                    }
-                    }
-                    }
-                    }
-                } else {
-                    const numMatches = [];
-                    let match;
-                    const numRegex = /\b\d+(?:\.\d+)?(?:%|세 이하|세 이상|개월|일|년|배|종|가지|개|시간|g|ml|kg|℃|도|분|초|주|ppm|㎛|회\/hr|개\/hr|개\/㎥)\b/g;
-                    while ((match = numRegex.exec(cleanedLine)) !== null) {
-                        numMatches.push(match);
-                    }
+                        }
+                    });
+                }
+                }
+                }
+                }
+            } else {
+                const numMatches = [];
+                let match;
+                const numRegex = /\b\d+(?:\.\d+)?(?:%|세 이하|세 이상|개월|일|년|배|종|가지|개|시간|g|ml|kg|℃|도|분|초|주|ppm|㎛|회\/hr|개\/hr|개\/㎥)\b/g;
+                while ((match = numRegex.exec(cleanedLine)) !== null) {
+                    numMatches.push(match);
+                }
 
-                    const boldMatches = [];
-                    const boldRegex = /\*\*([^*]+)\*\*/g;
-                    while ((match = boldRegex.exec(line)) !== null) {
-                        boldMatches.push(match);
-                    }
+                const boldMatches = [];
+                const boldRegex = /\*\*([^*]+)\*\*/g;
+                while ((match = boldRegex.exec(line)) !== null) {
+                    boldMatches.push(match);
+                }
 
-                    if (boldMatches.length > 0) {
-                        boldMatches.forEach(m => {
-                            const ans = m[1].trim();
-                            if (ans.length > 1 && !ans.includes('기출') && !ans.includes('중요')) {
+                if (boldMatches.length > 0) {
+                    boldMatches.forEach(m => {
+                        const ans = m[1].trim();
+                        if (ans.length > 1 && !ans.includes('기출') && !ans.includes('중요')) {
+                            const quizText = cleanedLine.replace(new RegExp(`\\*\\*${escapeRegExp(ans)}\\*\\*|${escapeRegExp(ans)}`, 'g'), ' [ 빈칸 ] ');
+                            if (isValidQuiz('blank', quizText, ans)) {
                                 quizzes.push({
                                     id: makeQuizId(cleanedLine.substring(0, 15), ans),
                                     category: currentSection,
                                     context: `[기출 지문 빈칸 채우기]`,
-                                    question: cleanedLine.replace(new RegExp(`\\*\\*${escapeRegExp(ans)}\\*\\*|${escapeRegExp(ans)}`, 'g'), ' [ 빈칸 ] '),
+                                    question: quizText,
                                     answer: ans,
                                     type: 'blank'
                                 });
                                 quizzesForLine++;
                             }
-                        });
-                    } else if (numMatches.length > 0) {
-                        numMatches.forEach(m => {
-                            const ans = m[0].trim();
+                        }
+                    });
+                } else if (numMatches.length > 0) {
+                    numMatches.forEach(m => {
+                        const ans = m[0].trim();
+                        const quizText = cleanedLine.replace(new RegExp(escapeRegExp(ans), 'g'), ' [ 빈칸 ] ');
+                        if (isValidQuiz('blank', quizText, ans)) {
                             quizzes.push({
                                 id: makeQuizId(cleanedLine.substring(0, 15), ans),
                                 category: currentSection,
                                 context: `[기출 지문 빈칸 채우기]`,
-                                question: cleanedLine.replace(new RegExp(escapeRegExp(ans), 'g'), ' [ 빈칸 ] '),
+                                question: quizText,
                                 answer: ans,
                                 type: 'blank'
                             });
                             quizzesForLine++;
-                        });
-                    }
+                        }
+                    });
                 }
-
-                if (has기출Line && quizzesForLine === 0) {
-                    warnings.push(cleanedLine.substring(0, 40));
                 }
             }
         }
