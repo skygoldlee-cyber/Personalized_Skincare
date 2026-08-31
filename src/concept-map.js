@@ -8,7 +8,7 @@
  * @returns {string} SVG HTML 문자열
  */
 export function generateConceptMap(chapter, opts = {}) {
-    const { isLightTheme = false, isKeySection = null, mobile = false } = opts;
+    const { isLightTheme = false, isKeySection = null, mobile = false, pdfPath = '' } = opts;
     const sections = chapter.sections || [];
     if (sections.length === 0) return '';
 
@@ -28,13 +28,13 @@ export function generateConceptMap(chapter, opts = {}) {
     };
 
     if (mobile) {
-        return generateMobileLayout(chapter, sections, colors, svgNS, isKeySection);
+        return generateMobileLayout(chapter, sections, colors, svgNS, isKeySection, pdfPath);
     }
-    return generateDesktopLayout(chapter, sections, colors, svgNS, isKeySection);
+    return generateDesktopLayout(chapter, sections, colors, svgNS, isKeySection, pdfPath);
 }
 
 // --- 세로 트리 레이아웃 (모바일) ---
-function generateMobileLayout(chapter, sections, colors, svgNS, isKeySection) {
+function generateMobileLayout(chapter, sections, colors, svgNS, isKeySection, pdfPath) {
     const nodeW = 200;
     const nodeH = 40;
     const gapY = 14;
@@ -75,6 +75,17 @@ function generateMobileLayout(chapter, sections, colors, svgNS, isKeySection) {
     svg += `<circle cx="${centerX}" cy="${rootY}" r="${rootR}" fill="${colors.rootFill}" class="concept-map-root"/>`;
     svg += `<text x="${centerX}" y="${rootY + 4}" text-anchor="middle" fill="${colors.rootText}" font-size="10" font-weight="700" class="concept-map-root-text">${escapeText(rootLabel)}</text>`;
 
+    // 루트 노드 아래 PDF 참조 배지
+    if (pdfPath) {
+        const badgeY = rootY + rootR + 6;
+        const fileName = pdfPath.split('/').pop().replace(/\.pdf$/, '');
+        const shortName = truncate(fileName, 16);
+        svg += `<a href="${escapeAttr(pdfPath)}" target="_blank" class="concept-map-pdf-link">`;
+        svg += `<rect x="${centerX - 90}" y="${badgeY}" width="180" height="22" rx="11" fill="${colors.nodeFill}" stroke="${colors.nodeStroke}" stroke-width="1" opacity="0.9"/>`;
+        svg += `<text x="${centerX}" y="${badgeY + 15}" text-anchor="middle" fill="${colors.nodeText}" font-size="9" class="concept-map-pdf-text">📄 ${escapeText(shortName)}</text>`;
+        svg += `</a>`;
+    }
+
     // 섹션 노드
     nodes.forEach(n => {
         const fill = n.isKey ? colors.keyFill : colors.nodeFill;
@@ -94,7 +105,7 @@ function generateMobileLayout(chapter, sections, colors, svgNS, isKeySection) {
 }
 
 // --- 좌/우 수평 레이아웃 (데스크톱) ---
-function generateDesktopLayout(chapter, sections, colors, svgNS, isKeySection) {
+function generateDesktopLayout(chapter, sections, colors, svgNS, isKeySection, pdfPath) {
     const nodeW = 180;
     const nodeH = 44;
     const gapY = 20;
@@ -152,6 +163,17 @@ function generateDesktopLayout(chapter, sections, colors, svgNS, isKeySection) {
     const rootLabel = truncate(chapter.chapterTitle, 12);
     svg += `<circle cx="${centerX}" cy="${centerY}" r="${rootR}" fill="${colors.rootFill}" class="concept-map-root"/>`;
     svg += `<text x="${centerX}" y="${centerY + 4}" text-anchor="middle" fill="${colors.rootText}" font-size="11" font-weight="700" class="concept-map-root-text">${escapeText(rootLabel)}</text>`;
+
+    // 루트 노드 아래 PDF 참조 배지
+    if (pdfPath) {
+        const badgeY = centerY + rootR + 6;
+        const fileName = pdfPath.split('/').pop().replace(/\.pdf$/, '');
+        const shortName = truncate(fileName, 20);
+        svg += `<a href="${escapeAttr(pdfPath)}" target="_blank" class="concept-map-pdf-link">`;
+        svg += `<rect x="${centerX - 100}" y="${badgeY}" width="200" height="24" rx="12" fill="${colors.nodeFill}" stroke="${colors.nodeStroke}" stroke-width="1" opacity="0.9"/>`;
+        svg += `<text x="${centerX}" y="${badgeY + 16}" text-anchor="middle" fill="${colors.nodeText}" font-size="10" class="concept-map-pdf-text">📄 ${escapeText(shortName)}</text>`;
+        svg += `</a>`;
+    }
 
     // 섹션 노드
     nodes.forEach(n => {

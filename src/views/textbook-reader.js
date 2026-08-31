@@ -916,6 +916,7 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStor
         renderConceptMap(cmapBody, chapter, {
             isLightTheme: isLight,
             isKeySection,
+            pdfPath: chapterPdfPath,
             onNodeClick: (sectionIdx) => {
                 const target = container.querySelector(`#reader-section-${sectionIdx}`);
                 if (target) {
