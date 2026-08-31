@@ -30,10 +30,12 @@ export function formatSectionContentForReader(rawContent, filePath, pdfPath) {
     html = html.replace(/\*?\*?참고[^:]*:\s*본문\s*p\.\d+[^\n<]*/gi, '');
     html = html.replace(/본문\s*p\.\d+(?:\s*[~-]\s*p?\.\d+)?/gi, '');
 
-    // 마인드맵 노드 상세 매핑: (LNN) → 법령원문 PDF 하이퍼링크
+    // 마인드맵 노드 상세 매핑: (LNN) → 법령원문 PDF 해당 페이지 하이퍼링크
+    // 원본 법령 텍스트의 라인 번호를 PDF 페이지로 추정 (약 40줄/페이지)
     if (pdfPath) {
         html = html.replace(/\(L(\d+)\)/g, (match, lineNum) => {
-            return `(<a href="${escapeHTML(pdfPath)}" target="_blank" class="source-link">L${lineNum}</a>)`;
+            const pageNum = Math.max(1, Math.ceil(parseInt(lineNum) / 40));
+            return `(<a href="${escapeHTML(pdfPath)}#page=${pageNum}" target="_blank" class="source-link">L${lineNum}</a>)`;
         });
     }
 
