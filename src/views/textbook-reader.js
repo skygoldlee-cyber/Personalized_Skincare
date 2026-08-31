@@ -692,16 +692,17 @@ function renderChapterContent(subjId, chapterIdx) {
     readerChapterContext.subjId = subjId;
     readerChapterContext.chapterIdx = chapterIdx;
 
-    if (textbookReaderState.storyMode) {
+    const isStory = textbookReaderState.storyMode;
+    if (isStory) {
         _loadStoryChapter(subjId, chapterIdx, originalChapter).then(chapter => {
-            _renderChapterContentInternal(subjId, chapterIdx, subj, chapter);
+            _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, true);
         }).catch(err => {
             console.warn('[Story Mode] 이야기형 MD 로드 실패, 기본 모드로 전환:', err);
             showAudioToast('이야기형 파일을 불러올 수 없어 기본 모드로 표시합니다.');
-            _renderChapterContentInternal(subjId, chapterIdx, subj, originalChapter);
+            _renderChapterContentInternal(subjId, chapterIdx, subj, originalChapter, false);
         });
     } else {
-        _renderChapterContentInternal(subjId, chapterIdx, subj, originalChapter);
+        _renderChapterContentInternal(subjId, chapterIdx, subj, originalChapter, false);
     }
 }
 
@@ -751,7 +752,7 @@ function _isStoryMetaSection(title) {
     return _STORY_META_PATTERNS.some(p => p.test(t));
 }
 
-function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter) {
+function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStoryMode) {
     const container = document.getElementById('textbook-reader-container');
     if (!container) return;
 
@@ -804,7 +805,7 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter) {
             <div class="reader-chapter-meta">
                 <span><i class="fa-solid fa-layer-group"></i> 섹션 ${chapter.sections.length}개</span>
                 <span><i class="fa-regular fa-clock"></i> 예상 읽기 시간 약 ${readMinutes}분</span>
-                ${textbookReaderState.storyMode ? '' : renderExamFilterToggle()}
+                ${isStoryMode ? '' : renderExamFilterToggle()}
                 <a href="${esc(chapter.filePath)}" target="_blank" class="btn btn-secondary" style="display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; padding: 0.35rem 0.75rem;">
                     <i class="fa-solid fa-arrow-up-right-from-square"></i> 원본 MD
                 </a>
@@ -842,7 +843,7 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter) {
                 </div>
             </div>` : ''}
         </div>
-        ${textbookReaderState.storyMode ? '' : `
+        ${isStoryMode ? '' : `
         <div class="concept-map-container" id="concept-map-wrapper">
             <div class="concept-map-header">
                 <i class="fa-solid fa-sitemap"></i>
