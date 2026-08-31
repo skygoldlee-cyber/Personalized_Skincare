@@ -72,8 +72,9 @@ export function formatSectionContentForReader(rawContent, filePath, pdfPath, ref
     );
 
     // 출처: `xxx.pdf` 패턴 → PDF.js 뷰어 링크로 변환
+    // 마크다운 파서 거친 후: 출처: <code>xxx.pdf</code>
     html = html.replace(
-        /출처:\s*`([^\s`<]+\.pdf)`/g,
+        /출처:\s*<code>([^<]+\.pdf)<\/code>/g,
         (match, pdfFile) => {
             const resolved = _resolvePdfPath(pdfFile);
             if (resolved) {
@@ -84,8 +85,9 @@ export function formatSectionContentForReader(rawContent, filePath, pdfPath, ref
     );
 
     // **참조 PDF**: `xxx.pdf` 패턴 → PDF.js 뷰어 링크로 변환
+    // 마크다운 파서 거친 후: <strong>참조 PDF</strong>: <code>xxx.pdf</code>
     html = html.replace(
-        /\*\*참조 PDF\*\*:\s*`([^\s`<]+\.pdf)`/g,
+        /<strong>참조 PDF<\/strong>:\s*<code>([^<]+\.pdf)<\/code>/g,
         (match, pdfFile) => {
             const resolved = _resolvePdfPath(pdfFile);
             if (resolved) {
