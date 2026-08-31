@@ -704,7 +704,6 @@ function renderChapterContent(subjId, chapterIdx) {
         });
     } else {
         const filteredChapter = _filterMetaSections(originalChapter);
-        console.log('[Reader] Basic mode sections:', filteredChapter.sections.map(s => s.title));
         _renderChapterContentInternal(subjId, chapterIdx, subj, filteredChapter, false);
     }
 }
@@ -813,7 +812,7 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStor
             <div class="reader-chapter-meta">
                 <span><i class="fa-solid fa-layer-group"></i> 섹션 ${chapter.sections.length}개</span>
                 <span><i class="fa-regular fa-clock"></i> 예상 읽기 시간 약 ${readMinutes}분</span>
-                ${isStoryMode ? '' : renderExamFilterToggle()}
+                ${renderExamFilterToggle()}
                 <a href="${esc(chapter.filePath)}" target="_blank" class="btn btn-secondary" style="display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; padding: 0.35rem 0.75rem;">
                     <i class="fa-solid fa-arrow-up-right-from-square"></i> 원본 MD
                 </a>
@@ -851,19 +850,6 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStor
                 </div>
             </div>` : ''}
         </div>
-        ${isStoryMode ? '' : `
-        <div class="concept-map-container" id="concept-map-wrapper">
-            <div class="concept-map-header">
-                <i class="fa-solid fa-sitemap"></i>
-                <span>개념 맵 — 섹션 구조</span>
-                <button class="concept-map-toggle" id="concept-map-toggle" title="펼치기/접기">
-                    <i class="fa-solid fa-chevron-down"></i>
-                </button>
-            </div>
-            <div class="concept-map-body expanded" id="concept-map-body"></div>
-        </div>
-        ${renderStudyAids(chapter)}
-        `}
     `;
 
     chapter.sections.forEach((section, idx) => {
