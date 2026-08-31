@@ -2,7 +2,7 @@
 import { parseMarkdown } from './markdown-parser.js';
 import { escapeHTML } from './sanitize.js';
 
-export function formatSectionContentForReader(rawContent, filePath) {
+export function formatSectionContentForReader(rawContent, filePath, chapterRefPath) {
     let html = parseMarkdown(rawContent, {
         useCustomListDiv: true,
         useReaderStyles: true,
@@ -31,13 +31,15 @@ export function formatSectionContentForReader(rawContent, filePath) {
     html = html.replace(/본문\s*p\.\d+(?:\s*[~-]\s*p?\.\d+)?/gi, '');
 
     // 마인드맵 노드 상세 매핑: (LNN) → 출처(참조자료) MD 파일 라인 하이퍼링크
-    // 출처 파일 경로를 rawContent에서 추출 (교재 파일이 아닌 참조자료 파일 기준)
+    // 1순위: 섹션 자체의 출처 파일 경로, 2순위: 챕터에서 추출한 참조자료 경로
     const srcMatch = rawContent.match(/출처:\s*`?(\.{1,2}\/[^\s`]+\.md|[^\s`.]+_참조자료\/[^\s`]+\.md)`?/);
-    if (srcMatch) {
-        const refPath = srcMatch[1]
+    const refPath = srcMatch
+        ? srcMatch[1]
             .replace(/^\.\.\/참조자료\//, './content/참조자료/')
             .replace(/^(\d+)과목_참조자료\//, './content/참조자료/과목$1/')
-            .replace(/^\.\//, './');
+            .replace(/^\.\//, './')
+        : chapterRefPath;
+    if (refPath) {
         html = html.replace(/\(L(\d+)\)/g, (match, lineNum) => {
             return `(<a href="${escapeHTML(refPath)}#L${lineNum}" target="_blank" class="source-link">L${lineNum}</a>)`;
         });

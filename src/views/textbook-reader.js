@@ -856,6 +856,19 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStor
         </div>
     `;
 
+    // 챕터 전체에서 참조자료 파일 경로 추출 (L-line 하이퍼링크용)
+    let chapterRefPath = '';
+    for (const s of chapter.sections) {
+        const m = (s.content || '').match(/출처:\s*`?(\.\.{1,2}\/[^\s`]+\.md|[^\s`.]+_참조자료\/[^\s`]+\.md)`?/);
+        if (m) {
+            chapterRefPath = m[1]
+                .replace(/^\.\.\/참조자료\//, './content/참조자료/')
+                .replace(/^(\d+)과목_참조자료\//, './content/참조자료/과목$1/')
+                .replace(/^\.\//, './');
+            break;
+        }
+    }
+
     chapter.sections.forEach((section, idx) => {
         const bookmarkKey = `${subjId}_${chapterIdx}_${idx}`;
         const isBookmarked = bookmarks.includes(bookmarkKey);
@@ -871,7 +884,7 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStor
                 </div>
                 <div class="reader-section-body">
                     <div class="textbook-reader-section-content">
-                        ${formatSectionContentForReader(section.content, chapter.filePath)}
+                        ${formatSectionContentForReader(section.content, chapter.filePath, chapterRefPath)}
                     </div>
                 </div>
             </div>
