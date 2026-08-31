@@ -186,8 +186,8 @@ const parseMarkdownFile = (filePath, subjectId, filename, chapterKey, stableId) 
       // 범용 표현(예: "기능", "시험 기준", "보관 조건")은 키워드로 부적합
       if (isGenericTerm(cleanTerm)) return;
 
-      const has기출 = rawTerm.includes('🔖기출') || rawDesc.includes('🔖기출');
-      const isKey = has기출 || rawTerm.includes('📌중요') || rawDesc.includes('📌중요');
+      const has기출 = /🔖기출|🎯\s*기출/.test(rawTerm) || /🔖기출|🎯\s*기출/.test(rawDesc);
+      const isKey = has기출 || /📌중요|🎯\s*중요/.test(rawTerm) || /📌중요|🎯\s*중요/.test(rawDesc);
       // definition에서도 (L숫자) 줄번호 참조 제거
       const cleanDesc = desc.replace(/\s*\(L\d+\)\s*/g, ' ').trim();
 
@@ -324,11 +324,11 @@ const parseMarkdownFile = (filePath, subjectId, filename, chapterKey, stableId) 
         inTable = false;
       }
 
-      if (line.includes('🔖기출') || line.includes('📌중요')) {
-        const has기출Line = line.includes('🔖기출');
+      if (/🔖기출|📌중요|🎯\s*기출|🎯\s*중요/.test(line)) {
+        const has기출Line = /🔖기출|🎯\s*기출/.test(line);
         let quizzesForLine = 0;
         const cleanedLine = cleanText(line);
-        const listMatch = line.match(/^[-*]\s+\*\*([^*]+)\*\*(?:\s*🔖기출)?\s*[:：-]\s*(.+)$/);
+        const listMatch = line.match(/^[-*]\s+\*\*([^*]+)\*\*(?:\s*(?:🔖기출|🎯\s*기출|📌중요|🎯\s*중요))?\s*[:：-]\s*(.+)$/);
         if (listMatch) {
           const term = cleanText(listMatch[1]).replace(/\s*\(L\d+\)\s*/g, '').replace(/\s*\(([^a-zA-Z()]*?)\)/g, '').trim();
           if (term.length > 2 && term.length <= 50 && !isGenericTerm(term)) {
