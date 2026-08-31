@@ -99,7 +99,7 @@ function _ensureOverlay() {
 
     el.querySelector('#pdf-close-btn').addEventListener('click', close);
     el.querySelector('#pdf-print-btn').addEventListener('click', () => {
-        if (_currentPdfDoc) window.open(_currentPdfUrl, '_blank');
+        if (_currentPdfUrl) window.open(new URL(_currentPdfUrl, window.location.href).href, '_blank');
     });
     el.querySelector('#pdf-search-btn').addEventListener('click', () => _doSearch());
     el.querySelector('#pdf-search-input').addEventListener('keydown', (e) => {
@@ -153,7 +153,7 @@ async function openPdf(pdfPath, searchKeyword) {
     if (loading) scroll.appendChild(loading);
     loading.style.display = 'flex';
 
-    _currentPdfUrl = pdfPath;
+    _currentPdfUrl = pdfPath;  // 원본 경로 (print 버튼용)
     _pendingSearchKeyword = searchKeyword || '';
     _searchResults = [];
     _searchIdx = -1;
@@ -164,7 +164,9 @@ async function openPdf(pdfPath, searchKeyword) {
 
     try {
         const pdfjs = await _ensurePdfJs();
-        const loadingTask = pdfjs.getDocument(pdfPath);
+        // 상대경로를 절대 URL로 변환 (괄호/공백 포함 파일명 처리)
+        const pdfUrl = new URL(pdfPath, window.location.href).href;
+        const loadingTask = pdfjs.getDocument({ url: pdfUrl });
         _currentPdfDoc = await loadingTask.promise;
         _totalPages = _currentPdfDoc.numPages;
         _currentPage = 1;
