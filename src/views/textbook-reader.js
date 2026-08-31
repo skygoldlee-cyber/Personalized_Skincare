@@ -1,6 +1,7 @@
 // views/textbook-reader.js - 교재 본문 읽기 및 오디오북 플레이어 (Textbook Reader + Audio)
 import { escapeHTML, esc, safeTextWithBreaks } from '../sanitize.js';
 import { formatSectionContentForReader } from '../reader-format.js';
+import { parseTextbookContent } from '../textbook-parser.js';
 import { renderConceptMap } from '../concept-map.js';
 import { renderStudyAids, bindStudyAidToggles, renderExamFilterToggle, applyExamFilter, isKeySection } from '../study-aids.js';
 // [모바일 PWA 견고성] 오디오 매니페스트는 window 전역(가드)에서 읽는다(정적 import 하드 의존 지양).
@@ -9,8 +10,12 @@ import { DataLoader } from '../data-loader.js';
 // --- 교재 본문 읽기 (Textbook Reader) ---
 let textbookReaderState = {
     selectedSubject: '',
-    selectedChapter: ''
+    selectedChapter: '',
+    storyMode: false
 };
+
+// --- 이야기형 MD 캐시: { "subjId:chapterIdx": { chapterTitle, sections, filePath } } ---
+const _storyChapterCache = {};
 
 // --- 오디오북 플레이어 ---
 let readerAudioState = {
@@ -632,6 +637,20 @@ export function renderTextbookReader() {
             }
         });
     }
+
+    // Story mode checkbox binding (bind once)
+    const storyToggle = document.getElementById('reader-story-mode-toggle');
+    if (storyToggle && !storyToggle.dataset.bound) {
+        storyToggle.dataset.bound = 'true';
+        storyToggle.checked = textbookReaderState.storyMode;
+        storyToggle.addEventListener('change', (e) => {
+            textbookReaderState.storyMode = e.target.checked;
+            // Re-render current chapter if one is selected
+            if (textbookReaderState.selectedSubject && textbookReaderState.selectedChapter) {
+                renderChapterContent(textbookReaderState.selectedSubject, parseInt(textbookReaderState.selectedChapter));
+            }
+        });
+    }
 }
 
 function populateChapterSelect(subjId) {
@@ -661,7 +680,7 @@ function renderChapterContent(subjId, chapterIdx) {
     const subj = STUDY_DATA[subjId];
     if (!subj || !subj.chapters || isNaN(chapterIdx) || !subj.chapters[chapterIdx]) return;
 
-    const chapter = subj.chapters[chapterIdx];
+    const originalChapter = subj.chapters[chapterIdx];
 
     // 다른 단원으로 이동하면 이전 오디오 정지
     if (readerAudioState.audio &&
@@ -672,6 +691,48 @@ function renderChapterContent(subjId, chapterIdx) {
 
     readerChapterContext.subjId = subjId;
     readerChapterContext.chapterIdx = chapterIdx;
+
+    if (textbookReaderState.storyMode) {
+        _loadStoryChapter(subjId, chapterIdx, originalChapter).then(chapter => {
+            _renderChapterContentInternal(subjId, chapterIdx, subj, chapter);
+        }).catch(err => {
+            console.warn('[Story Mode] 이야기형 MD 로드 실패, 기본 모드로 전환:', err);
+            showAudioToast('이야기형 파일을 불러올 수 없어 기본 모드로 표시합니다.');
+            _renderChapterContentInternal(subjId, chapterIdx, subj, originalChapter);
+        });
+    } else {
+        _renderChapterContentInternal(subjId, chapterIdx, subj, originalChapter);
+    }
+}
+
+async function _loadStoryChapter(subjId, chapterIdx, originalChapter) {
+    const cacheKey = `${subjId}:${chapterIdx}`;
+    if (_storyChapterCache[cacheKey]) return _storyChapterCache[cacheKey];
+
+    const storyFile = originalChapter.fileName.replace(/\.md$/i, '_이야기형.md');
+    const manifest = await DataLoader._getManifest();
+    const subjMeta = manifest.subjects.find(s => s.key === subjId);
+    if (!subjMeta) throw new Error('과목 메타데이터 없음: ' + subjId);
+
+    const relPath = `content/${subjMeta.dir}/${storyFile}`;
+    const md = await DataLoader._getMd(relPath, subjId);
+    const subjectDir = `content/${subjMeta.dir}`;
+    const parsed = parseTextbookContent(md, storyFile, subjectDir);
+
+    const storyChapter = {
+        chapterTitle: parsed.chapterTitle,
+        sections: parsed.sections,
+        filePath: `./content/${subjMeta.dir}/${storyFile}`,
+        fileName: storyFile
+    };
+
+    _storyChapterCache[cacheKey] = storyChapter;
+    return storyChapter;
+}
+
+function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter) {
+    const container = document.getElementById('textbook-reader-container');
+    if (!container) return;
 
     // Show reader auxiliary UI
     const toolbar = document.getElementById('reader-toolbar');
