@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v89-20260901-pdfjs-viewer';     // PDF.js 앱 내 뷰어 + 키워드 검색
+const CACHE_VERSION = 'v90-20260901-source-pdf-refs';     // 교재 출처/참고에 PDF 파일명 명기 + 뷰어 링크 변환
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
