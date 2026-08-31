@@ -30,10 +30,10 @@ export function formatSectionContentForReader(rawContent, filePath, pdfPath, ref
     html = html.replace(/\*?\*?참고[^:]*:\s*본문\s*p\.\d+[^\n<]*/gi, '');
     html = html.replace(/본문\s*p\.\d+(?:\s*[~-]\s*p?\.\d+)?/gi, '');
 
-    // 출처/참고 라인에 PDF 하이퍼링크 추가
+    // 출처/참고 라인에 PDF 하이퍼링크 추가 (앱 내 PDF.js 뷰어 사용)
     if (pdfPath) {
         const pdfFileName = pdfPath.split('/').pop();
-        const pdfIcon = `<a href="${escapeHTML(pdfPath)}" target="_blank" class="source-link" style="margin-left:0.5em;"><i class="fa-solid fa-file-pdf"></i> ${escapeHTML(pdfFileName)}</a>`;
+        const pdfIcon = `<a href="#" data-pdf-path="${escapeHTML(pdfPath)}" class="source-link" style="margin-left:0.5em;"><i class="fa-solid fa-file-pdf"></i> ${escapeHTML(pdfFileName)}</a>`;
         // blockquote 내 출처 라인 끝에 PDF 링크 추가
         html = html.replace(/(📌\s*\*\*출처\*\*[^<]*?)(<br>|<\/p>|\n)/g, `$1 ${pdfIcon}$2`);
     }
@@ -46,19 +46,30 @@ export function formatSectionContentForReader(rawContent, filePath, pdfPath, ref
             if (f.type === 'md') {
                 return `<a class="ref-link-item" data-ref-md="${escapeHTML(path)}" style="display:inline-block;margin-right:0.8em;font-size:0.85em;"><i class="fa-solid ${icon}"></i> ${escapeHTML(f.name)}</a>`;
             }
-            return `<a href="${escapeHTML(path)}" target="_blank" class="ref-link-item" style="display:inline-block;margin-right:0.8em;font-size:0.85em;"><i class="fa-solid ${icon}"></i> ${escapeHTML(f.name)}</a>`;
+            return `<a href="#" data-pdf-path="${escapeHTML(path)}" class="ref-link-item" style="display:inline-block;margin-right:0.8em;font-size:0.85em;"><i class="fa-solid ${icon}"></i> ${escapeHTML(f.name)}</a>`;
         }).join('');
         const refBlock = `<div class="reader-ref-inline" style="margin:0.4em 0;padding:0.4em 0.6em;border:1px solid var(--border-color,#30363d);border-radius:6px;font-size:0.82em;"><span style="opacity:0.7;">📚 과목별 참조자료:</span> ${refLinks}</div>`;
         // 첫 번째 blockquote 종료 후 참조자료 블록 삽입
         html = html.replace(/(<\/blockquote>)/, `$1${refBlock}`);
     }
 
-    // 마인드맵 노드 상세 매핑: (LNN) → 법령원문 PDF 해당 페이지 하이퍼링크
-    // 원본 법령 텍스트의 라인 번호를 PDF 페이지로 추정 (약 40줄/페이지)
+    // 마인드맵 노드 상세 매핑: (LNN) → PDF.js 뷰어에서 키워드 검색
+    // 같은 td 셀 내의 텍스트를 키워드로 추출하여 PDF 검색에 사용
     if (pdfPath) {
+        // HTML에서 <td>...</td> 내부의 (LNN) 패턴을 처리
+        html = html.replace(/<td>([^<]*?)\(L(\d+)\)([^<]*?)<\/td>/g,
+            (match, before, lineNum, after) => {
+                // 셀 내 텍스트에서 키워드 추출 (LNN) 자체는 제외
+                const cellText = (before + after).replace(/\(L\d+\)/g, '').trim();
+                // 의미 있는 키워드 추출 (첫 번째 공백 단어 또는 전체)
+                let keyword = cellText.split(/\s+/)[0] || cellText;
+                if (keyword.length < 2) keyword = cellText;
+                return `<td>${before}(<a href="#" data-pdf-path="${escapeHTML(pdfPath)}" data-pdf-search="${escapeHTML(keyword)}" class="source-link">L${lineNum}</a>)${after}</td>`;
+            }
+        );
+        // td 외부에 남은 (LNN) 패턴도 처리 (fallback)
         html = html.replace(/\(L(\d+)\)/g, (match, lineNum) => {
-            const pageNum = Math.max(1, Math.ceil(parseInt(lineNum) / 40));
-            return `(<a href="${escapeHTML(pdfPath)}#page=${pageNum}" target="_blank" class="source-link">L${lineNum}</a>)`;
+            return `(<a href="#" data-pdf-path="${escapeHTML(pdfPath)}" data-pdf-search="" class="source-link">L${lineNum}</a>)`;
         });
     }
 

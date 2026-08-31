@@ -4,6 +4,7 @@ import { formatSectionContentForReader } from '../reader-format.js';
 import { parseTextbookContent } from '../textbook-parser.js';
 import { renderConceptMap } from '../concept-map.js';
 import { renderStudyAids, bindStudyAidToggles, renderExamFilterToggle, applyExamFilter, isKeySection } from '../study-aids.js';
+import { openPdf } from '../pdf-viewer.js';
 // [모바일 PWA 견고성] 오디오 매니페스트는 window 전역(가드)에서 읽는다(정적 import 하드 의존 지양).
 import { DataLoader } from '../data-loader.js';
 
@@ -1409,7 +1410,7 @@ function buildReferenceLinks(subjId) {
             if (f.type === 'md') {
                 links += `<a class="ref-link-item" data-ref-md="${esc(path)}"><i class="fa-solid ${icon}"></i> ${esc(f.name)}</a>`;
             } else {
-                links += `<a href="${esc(path)}" target="_blank" class="ref-link-item"><i class="fa-solid ${icon}"></i> ${esc(f.name)}</a>`;
+                links += `<a href="#" data-pdf-path="${esc(path)}" class="ref-link-item"><i class="fa-solid ${icon}"></i> ${esc(f.name)}</a>`;
             }
         });
     }
@@ -1421,7 +1422,7 @@ function buildReferenceLinks(subjId) {
         if (f.type === 'md') {
             links += `<a class="ref-link-item" data-ref-md="${esc(path)}"><i class="fa-solid fa-file-lines"></i> ${esc(f.name)}</a>`;
         } else {
-            links += `<a href="${esc(path)}" target="_blank" class="ref-link-item"><i class="fa-solid fa-file-pdf"></i> ${esc(f.name)}</a>`;
+            links += `<a href="#" data-pdf-path="${esc(path)}" class="ref-link-item"><i class="fa-solid fa-file-pdf"></i> ${esc(f.name)}</a>`;
         }
     });
     
@@ -1429,14 +1430,14 @@ function buildReferenceLinks(subjId) {
     links += `<div class="ref-group-label">법령원문</div>`;
     REFERENCE_LAW.forEach(f => {
         const path = `content/참조자료/${f.dir}/${f.file}`;
-        links += `<a href="${esc(path)}" target="_blank" class="ref-link-item"><i class="fa-solid fa-file-pdf"></i> ${esc(f.name)}</a>`;
+        links += `<a href="#" data-pdf-path="${esc(path)}" class="ref-link-item"><i class="fa-solid fa-file-pdf"></i> ${esc(f.name)}</a>`;
     });
     
     // 공통 참조자료
     links += `<div class="ref-group-label">공통 참조자료</div>`;
     REFERENCE_COMMON.forEach(f => {
         const path = `content/참조자료/${f.dir}/${f.file}`;
-        links += `<a href="${esc(path)}" target="_blank" class="ref-link-item"><i class="fa-solid fa-file-pdf"></i> ${esc(f.name)}</a>`;
+        links += `<a href="#" data-pdf-path="${esc(path)}" class="ref-link-item"><i class="fa-solid fa-file-pdf"></i> ${esc(f.name)}</a>`;
     });
     
     return links;
@@ -1450,6 +1451,18 @@ function bindReferenceLinks() {
             const lineNum = a.dataset.refLine ? parseInt(a.dataset.refLine) : null;
             if (window.ExamViewer && window.ExamViewer.openExam) {
                 window.ExamViewer.openExam(mdPath, lineNum);
+            }
+        });
+    });
+
+    // PDF.js 뷰어 바인딩: data-pdf-path 속성을 가진 모든 링크
+    document.querySelectorAll('[data-pdf-path]').forEach(a => {
+        a.addEventListener('click', (e) => {
+            e.preventDefault();
+            const pdfPath = a.dataset.pdfPath;
+            const searchKeyword = a.dataset.pdfSearch || '';
+            if (pdfPath) {
+                openPdf(pdfPath, searchKeyword);
             }
         });
     });
