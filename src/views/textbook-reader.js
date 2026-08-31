@@ -863,6 +863,8 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStor
         if (m) { chapterSourceText = m[1]; break; }
     }
     const chapterPdfPath = _mapSourceToPdf(chapterSourceText);
+    const subjRefFiles = REFERENCE_FILES[subjId] || [];
+    const subjDirName = REFERENCE_DIR_MAP[subjId] || '';
 
     chapter.sections.forEach((section, idx) => {
         const bookmarkKey = `${subjId}_${chapterIdx}_${idx}`;
@@ -882,7 +884,7 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStor
                 </div>
                 <div class="reader-section-body">
                     <div class="textbook-reader-section-content">
-                        ${formatSectionContentForReader(section.content, chapter.filePath, pdfPath)}
+                        ${formatSectionContentForReader(section.content, chapter.filePath, pdfPath, subjRefFiles, subjDirName)}
                     </div>
                 </div>
             </div>

@@ -2,7 +2,7 @@
 import { parseMarkdown } from './markdown-parser.js';
 import { escapeHTML } from './sanitize.js';
 
-export function formatSectionContentForReader(rawContent, filePath, pdfPath) {
+export function formatSectionContentForReader(rawContent, filePath, pdfPath, refFiles, refDir) {
     let html = parseMarkdown(rawContent, {
         useCustomListDiv: true,
         useReaderStyles: true,
@@ -36,6 +36,21 @@ export function formatSectionContentForReader(rawContent, filePath, pdfPath) {
         const pdfIcon = `<a href="${escapeHTML(pdfPath)}" target="_blank" class="source-link" style="margin-left:0.5em;"><i class="fa-solid fa-file-pdf"></i> ${escapeHTML(pdfFileName)}</a>`;
         // blockquote 내 출처 라인 끝에 PDF 링크 추가
         html = html.replace(/(📌\s*\*\*출처\*\*[^<]*?)(<br>|<\/p>|\n)/g, `$1 ${pdfIcon}$2`);
+    }
+
+    // 과목별 참조자료 파일 목록을 출처 라인 아래에 표시
+    if (refFiles && refFiles.length > 0 && refDir) {
+        const refLinks = refFiles.map(f => {
+            const path = `content/참조자료/${refDir}/${f.file}`;
+            const icon = f.type === 'pdf' ? 'fa-file-pdf' : 'fa-file-lines';
+            if (f.type === 'md') {
+                return `<a class="ref-link-item" data-ref-md="${escapeHTML(path)}" style="display:inline-block;margin-right:0.8em;font-size:0.85em;"><i class="fa-solid ${icon}"></i> ${escapeHTML(f.name)}</a>`;
+            }
+            return `<a href="${escapeHTML(path)}" target="_blank" class="ref-link-item" style="display:inline-block;margin-right:0.8em;font-size:0.85em;"><i class="fa-solid ${icon}"></i> ${escapeHTML(f.name)}</a>`;
+        }).join('');
+        const refBlock = `<div class="reader-ref-inline" style="margin:0.4em 0;padding:0.4em 0.6em;border:1px solid var(--border-color,#30363d);border-radius:6px;font-size:0.82em;"><span style="opacity:0.7;">📚 과목별 참조자료:</span> ${refLinks}</div>`;
+        // 첫 번째 blockquote 종료 후 참조자료 블록 삽입
+        html = html.replace(/(<\/blockquote>)/, `$1${refBlock}`);
     }
 
     // 마인드맵 노드 상세 매핑: (LNN) → 법령원문 PDF 해당 페이지 하이퍼링크
