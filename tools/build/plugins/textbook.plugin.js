@@ -282,6 +282,15 @@ const parseMarkdownFile = (filePath, subjectId, filename, chapterKey, stableId) 
         if (has기출 && quizzesForRow === 0) {
           warnings.push(cleanTerm || desc.substring(0, 40));
         }
+      } else if (importance >= 50) {
+        quizzes.push({
+          id: makeQuizId(cleanTerm, cleanTerm),
+          category: currentSection,
+          context: `정의에 알맞은 용어를 적으시오.`,
+          question: `${cleanDesc}`,
+          answer: cleanTerm,
+          type: 'term'
+        });
       }
     });
   };
