@@ -239,7 +239,9 @@ export function renderConceptMap(container, chapter, opts = {}) {
                 e.stopPropagation();
                 const refHtmlPath = link.getAttribute('data-ref-html');
                 if (refHtmlPath && window.HtmlViewer) {
-                    window.HtmlViewer.openHtmlViewer(refHtmlPath, '');
+                    const anchor = link.getAttribute('data-ref-anchor') || '';
+                    const line = link.getAttribute('data-ref-line') || '';
+                    window.HtmlViewer.openHtmlViewer(refHtmlPath, '', anchor, line);
                 }
             });
         });

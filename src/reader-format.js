@@ -1,7 +1,7 @@
 // src/reader-format.js - 교재 리더 본문 포맷터 (순수 함수, ESM)
 import { parseMarkdown } from './markdown-parser.js';
 import { escapeHTML } from './sanitize.js';
-import { resolveRefPath } from './pdf-registry.js';
+import { resolveRefPath, KEYWORD_REF_MAP } from './pdf-registry.js';
 
 export function formatSectionContentForReader(rawContent, filePath, refPath, refFiles, refDir) {
     let html = parseMarkdown(rawContent, {
@@ -87,6 +87,25 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
         }
     }
 
+    // 본문 키워드 자동 하이퍼링크: 법령명/별표명을 클릭 가능한 링크로 변환
+    // <p>와 <li> 내 텍스트 노드만 처리 (기존 <a> 태그, <td>, 출처 라인 제외)
+    html = html.replace(/<(p|li)>([^<]*)<\/\1>/g, (match, tag, text) => {
+        let result = text;
+        for (const entry of KEYWORD_REF_MAP) {
+            const re = new RegExp(entry.pattern.source, entry.pattern.flags.replace(/g$/, ''));
+            if (re.test(result) && !result.includes('data-ref-html')) {
+                const path = resolveRefPath(entry.file);
+                if (path) {
+                    const search = entry.search || '';
+                    result = result.replace(re, (kw) =>
+                        `<a href="#" data-ref-html="${escapeHTML(path)}" data-ref-search="${escapeHTML(search)}" class="keyword-ref-link" style="color:var(--color-primary,#1f6feb);text-decoration:underline dotted;">${escapeHTML(kw)}</a>`
+                    );
+                }
+            }
+        }
+        return `<${tag}>${result}</${tag}>`;
+    });
+
     // 마인드맵 노드 상세 매핑: (LNN) → HTML 뷰어에서 키워드 검색
     // 같은 td 셀 내의 텍스트를 키워드로 추출하여 HTML 본문 검색에 사용
     // 지원 형식: (L42) 동일 참조자료, (L42|file.pdf) 타 참조자료, (L?) 미발견
@@ -103,7 +122,7 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
                 if (keyword.length < 2) keyword = cellText;
                 const resolved = resolveRefPath(pdfFile);
                 const usePath = resolved || refPath;
-                return `<td>${before}(<a href="#" data-ref-html="${escapeHTML(usePath)}" data-ref-search="${escapeHTML(keyword)}" class="source-link">L${lineNum}</a>)${after}</td>`;
+                return `<td>${before}(<a href="#" data-ref-html="${escapeHTML(usePath)}" data-ref-search="${escapeHTML(keyword)}" data-ref-anchor="${escapeHTML(keyword)}" data-ref-line="${lineNum}" class="source-link">L${lineNum}</a>)${after}</td>`;
             }
         );
         // (LNN) 패턴 → 동일 참조자료 링크
@@ -112,7 +131,7 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
                 const cellText = (before + after).replace(/\(L\d+\)/g, '').replace(/\(L\?\)/g, '').trim();
                 let keyword = cellText.split(/\s+/)[0] || cellText;
                 if (keyword.length < 2) keyword = cellText;
-                return `<td>${before}(<a href="#" data-ref-html="${escapeHTML(refPath)}" data-ref-search="${escapeHTML(keyword)}" class="source-link">L${lineNum}</a>)${after}</td>`;
+                return `<td>${before}(<a href="#" data-ref-html="${escapeHTML(refPath)}" data-ref-search="${escapeHTML(keyword)}" data-ref-anchor="${escapeHTML(keyword)}" data-ref-line="${lineNum}" class="source-link">L${lineNum}</a>)${after}</td>`;
             }
         );
         // td 외부에 남은 (LNN|file.pdf) 패턴도 처리 (fallback)
@@ -120,20 +139,19 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
             const resolved = resolveRefPath(pdfFile);
             const usePath = resolved || refPath;
             const keyword = `제${lineNum}조`;
-            return `(<a href="#" data-ref-html="${escapeHTML(usePath)}" data-ref-search="${escapeHTML(keyword)}" class="source-link">L${lineNum}</a>)`;
+            return `(<a href="#" data-ref-html="${escapeHTML(usePath)}" data-ref-search="${escapeHTML(keyword)}" data-ref-anchor="${escapeHTML(keyword)}" data-ref-line="${lineNum}" class="source-link">L${lineNum}</a>)`;
         });
         // td 외부에 남은 (LNN) 패턴도 처리 (fallback)
         html = html.replace(/\(L(\d+)\)/g, (match, lineNum) => {
             const keyword = `제${lineNum}조`;
-            return `(<a href="#" data-ref-html="${escapeHTML(refPath)}" data-ref-search="${escapeHTML(keyword)}" class="source-link">L${lineNum}</a>)`;
+            return `(<a href="#" data-ref-html="${escapeHTML(refPath)}" data-ref-search="${escapeHTML(keyword)}" data-ref-anchor="${escapeHTML(keyword)}" data-ref-line="${lineNum}" class="source-link">L${lineNum}</a>)`;
         });
     }
 
-    // 출처 라인의 제N조를 추출하여 참조 링크에 data-ref-search 자동 추가
-    // 클릭 시 HTML 뷰어에서 해당 조문을 자동 검색 (방안 C)
+    // 출처 라인의 제N조를 추출하여 참조 링크에 data-ref-search + data-ref-anchor 자동 추가
+    // 클릭 시 HTML 뷰어에서 해당 조문을 자동 검색 및 앵커 스크롤 (Deep Linking)
     html = html.split('\n').map(line => {
         if (!line.includes('data-ref-html')) return line;
-        if (line.includes('data-ref-search=')) return line;
         if (!line.includes('출처') && !line.includes('참고')) return line;
 
         // 제N조의M 패턴 추출 (첫 번째 매칭 사용)
@@ -142,10 +160,10 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
 
         const search = `제${articleMatch[1]}조${articleMatch[2] ? '의' + articleMatch[2] : ''}`;
 
-        // 첫 번째 data-ref-html 링크에 data-ref-search 추가
+        // 첫 번째 data-ref-html 링크에 data-ref-search + data-ref-anchor 추가
         return line.replace(
             /(data-ref-html="[^"]*")(?!\s*data-ref-search)/,
-            `$1 data-ref-search="${escapeHTML(search)}"`
+            `$1 data-ref-search="${escapeHTML(search)}" data-ref-anchor="${escapeHTML(search)}"`
         );
     }).join('\n');
 

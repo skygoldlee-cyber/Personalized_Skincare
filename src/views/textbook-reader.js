@@ -812,6 +812,14 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStor
     const audioPath = getAudioPathForChapter(subjId, chapter);
     const hasAudio = !!audioPath;
 
+    // 챕터 전체에서 출처 텍스트 추출 (컨텍스트 사이드바 + L-line PDF 링크용)
+    let chapterSourceText = '';
+    for (const s of chapter.sections) {
+        const m = (s.content || '').match(/📌\s*\*\*출처\*\*[:：]\s*(.+?)(?:\||\n)/);
+        if (m) { chapterSourceText = m[1]; break; }
+    }
+    const chapterRefPath = mapSourceToRef(chapterSourceText);
+
     let html = `
         <div class="reader-readable-width">
         <div class="reader-chapter-header-card">
@@ -830,7 +838,7 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStor
                         <i class="fa-solid fa-book-bookmark"></i> 참조자료
                     </summary>
                     <div class="reader-ref-panel" style="position: absolute; top: 100%; left: 0; z-index: 100; margin-top: 0.4rem; min-width: 320px; max-height: 400px; overflow-y: auto; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,0.25); padding: 0.6rem;">
-                        ${buildReferenceLinks(subjId)}
+                        ${buildReferenceLinks(subjId, chapterRefPath)}
                     </div>
                 </details>
                 ${hasAudio ? `
@@ -861,13 +869,6 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStor
         </div>
     `;
 
-    // 챕터 전체에서 출처 텍스트 추출 (L-line PDF 링크용)
-    let chapterSourceText = '';
-    for (const s of chapter.sections) {
-        const m = (s.content || '').match(/📌\s*\*\*출처\*\*[:：]\s*(.+?)(?:\||\n)/);
-        if (m) { chapterSourceText = m[1]; break; }
-    }
-    const chapterRefPath = mapSourceToRef(chapterSourceText);
     const subjRefFiles = REFERENCE_FILES[subjId] || [];
     const subjDirName = SUBJECT_DIR_MAP[subjId] || '';
 
@@ -1232,12 +1233,38 @@ function closeTableModal() {
 
 // --- 참조자료 링크 기능 ---
 
-function buildReferenceLinks(subjId) {
+function buildReferenceLinks(subjId, contextRefPath) {
     const dirName = SUBJECT_DIR_MAP[subjId];
     if (!dirName) return '';
     const subjectFiles = REFERENCE_FILES[subjId] || [];
     
     let links = '';
+
+    // 컨텍스트 추천: 현재 단원의 출처와 관련된 참조자료를 상단에 표시
+    if (contextRefPath) {
+        const contextName = contextRefPath.split('/').pop().replace(/\.(html|md)$/, '');
+        const allRefs = [
+            ...subjectFiles.map(f => ({ ...f, path: f.type === 'md' ? `content/참조자료/${dirName}/${f.file}` : resolveRefPath(f.file) })),
+            ...REFERENCE_COMMON.map(f => ({ ...f, path: resolveRefPath(f.file) })),
+            ...REFERENCE_LAW.map(f => ({ ...f, path: resolveRefPath(f.file) })),
+            ...REFERENCE_INGREDIENTS.map(f => ({ ...f, path: f.type === 'md' ? `content/참조자료/${f.dir}/${f.file}` : resolveRefPath(f.file) }))
+        ];
+        const matched = allRefs.filter(r => r.path === contextRefPath);
+        const related = allRefs.filter(r => r.path !== contextRefPath && r.type !== 'md' && contextRefPath.endsWith(r.path?.split('/').pop() || ''));
+        const contextRefs = [...matched, ...related].slice(0, 5);
+        if (contextRefs.length > 0) {
+            links += `<div class="ref-group-label" style="color: var(--color-primary, #1f6feb);"><i class="fa-solid fa-bookmark"></i> 이 단원의 참조자료 (${contextRefs.length})</div>`;
+            contextRefs.forEach(f => {
+                const icon = 'fa-file-lines';
+                if (f.type === 'md') {
+                    links += `<a class="ref-link-item" data-ref-md="${esc(f.path)}" style="background:rgba(31,111,235,0.08);"><i class="fa-solid ${icon}"></i> ${esc(f.name)}</a>`;
+                } else {
+                    links += `<a href="#" data-ref-html="${esc(f.path)}" class="ref-link-item" style="background:rgba(31,111,235,0.08);"><i class="fa-solid ${icon}"></i> ${esc(f.name)}</a>`;
+                }
+            });
+            links += `<div style="border-top:1px solid var(--border-color,#30363d);margin:0.4rem 0;"></div>`;
+        }
+    }
     
     // 과목별 참조자료
     if (subjectFiles.length > 0) {
@@ -1283,6 +1310,87 @@ function buildReferenceLinks(subjId) {
     return links;
 }
 
+// --- 참조자료 인라인 프리뷰 (툴팁) ---
+const _previewCache = {};
+let _previewEl = null;
+let _previewTimer = null;
+let _previewTouchTimer = null;
+
+function _ensurePreviewEl() {
+    if (_previewEl) return _previewEl;
+    _previewEl = document.createElement('div');
+    _previewEl.id = 'ref-preview-tooltip';
+    _previewEl.setAttribute('role', 'tooltip');
+    _previewEl.style.cssText = 'position:fixed;z-index:10001;display:none;max-width:420px;max-height:280px;overflow-y:auto;background:var(--bg-card,#161b22);border:1px solid var(--border-color,#30363d);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.3);padding:12px 14px;font-size:0.85rem;line-height:1.5;color:var(--color-text,#e6edf3);pointer-events:none;';
+    document.body.appendChild(_previewEl);
+    return _previewEl;
+}
+
+async function _showPreview(linkEl) {
+    const path = linkEl.dataset.refHtml;
+    const search = linkEl.dataset.refSearch || '';
+    if (!path) return;
+
+    const el = _ensurePreviewEl();
+    el.innerHTML = '<div style="opacity:0.6;">로딩 중...</div>';
+    el.style.display = 'block';
+
+    try {
+        if (!_previewCache[path]) {
+            const fileUrl = new URL(path, window.location.href).href;
+            const resp = await fetch(fileUrl);
+            const rawText = await resp.text();
+            const isMd = path.endsWith('.md');
+            let text;
+            if (isMd) {
+                text = rawText.replace(/^#{1,6}\s.*$/gm, '').replace(/```[\s\S]*?```/g, '').replace(/!\[.*?\]\(.*?\)/g, '').replace(/\|/g, ' ').trim();
+            } else {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(rawText, 'text/html');
+                text = doc.body.textContent.replace(/\s+/g, ' ').trim();
+            }
+            _previewCache[path] = text;
+        }
+
+        const fullText = _previewCache[path];
+        let snippet;
+        if (search && search.length >= 2) {
+            const idx = fullText.toLowerCase().indexOf(search.toLowerCase());
+            if (idx >= 0) {
+                const start = Math.max(0, idx - 60);
+                snippet = (start > 0 ? '...' : '') + fullText.slice(start, idx + search.length + 120) + '...';
+            } else {
+                snippet = fullText.slice(0, 200) + '...';
+            }
+        } else {
+            snippet = fullText.slice(0, 200) + '...';
+        }
+
+        const fileName = decodeURIComponent(path.split('/').pop().replace(/\.(html|md)$/, ''));
+        el.innerHTML = `<div style="font-weight:600;margin-bottom:4px;color:var(--color-primary,#1f6feb);"><i class="fa-solid fa-file-lines"></i> ${esc(fileName)}</div><div style="white-space:pre-wrap;word-break:break-word;">${esc(snippet)}</div>`;
+    } catch (err) {
+        el.innerHTML = '<div style="opacity:0.6;">미리보기를 불러올 수 없습니다.</div>';
+    }
+
+    // Position tooltip near the link
+    const rect = linkEl.getBoundingClientRect();
+    const elRect = el.getBoundingClientRect();
+    let top = rect.bottom + 6;
+    let left = rect.left;
+    if (top + elRect.height > window.innerHeight - 10) {
+        top = Math.max(10, rect.top - elRect.height - 6);
+    }
+    if (left + elRect.width > window.innerWidth - 10) {
+        left = Math.max(10, window.innerWidth - elRect.width - 10);
+    }
+    el.style.top = top + 'px';
+    el.style.left = left + 'px';
+}
+
+function _hidePreview() {
+    if (_previewEl) _previewEl.style.display = 'none';
+}
+
 function bindReferenceLinks() {
     document.querySelectorAll('[data-ref-md]').forEach(a => {
         a.addEventListener('click', (e) => {
@@ -1297,13 +1405,41 @@ function bindReferenceLinks() {
 
     // HTML 뷰어 바인딩: data-ref-html 속성을 가진 모든 링크
     document.querySelectorAll('[data-ref-html]').forEach(a => {
+        // 클릭 → 뷰어 열기
         a.addEventListener('click', (e) => {
             e.preventDefault();
+            clearTimeout(_previewTimer);
+            clearTimeout(_previewTouchTimer);
+            _hidePreview();
             const refHtmlPath = a.dataset.refHtml;
             const searchKeyword = a.dataset.refSearch || '';
+            const anchorId = a.dataset.refAnchor || '';
+            const lineNum = a.dataset.refLine || '';
             if (refHtmlPath) {
-                openHtmlViewer(refHtmlPath, searchKeyword);
+                openHtmlViewer(refHtmlPath, searchKeyword, anchorId, lineNum);
             }
         });
+        // 호버 프리뷰 (데스크톱)
+        a.addEventListener('mouseenter', () => {
+            clearTimeout(_previewTimer);
+            _previewTimer = setTimeout(() => _showPreview(a), 400);
+        });
+        a.addEventListener('mouseleave', () => {
+            clearTimeout(_previewTimer);
+            _hidePreview();
+        });
+        // 롱프레스 프리뷰 (모바일)
+        a.addEventListener('touchstart', () => {
+            clearTimeout(_previewTouchTimer);
+            _previewTouchTimer = setTimeout(() => _showPreview(a), 600);
+        }, { passive: true });
+        a.addEventListener('touchend', () => {
+            clearTimeout(_previewTouchTimer);
+            setTimeout(_hidePreview, 3000);
+        }, { passive: true });
+        a.addEventListener('touchmove', () => {
+            clearTimeout(_previewTouchTimer);
+            _hidePreview();
+        }, { passive: true });
     });
 }

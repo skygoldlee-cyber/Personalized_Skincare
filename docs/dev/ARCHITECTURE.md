@@ -249,11 +249,11 @@ state.js (상태·영속성)            views/textbook-reader.js (리더+오디�
 charts.js (시각화+인터랙티브 툴팁) views/exam-simulator.js (모의고사+오답 복습)
 sanitize.js (보안)                views/dashboard.js (대시보드)
 scratchpad.js (캔버스)            views/flashcard.js (플래시카드)
-reader-format.js (리더 포맷터)    views/quiz.js (퀴즈+복습)
+reader-format.js (리더 포맷터+키워드 자동링크+L### 확장)    views/quiz.js (퀴즈+복습)
 ui-utils.js (로딩 UI)             views/trainer.js (훈련소)
 types.js (JSDoc 타입 정의)        views/dictionary.js (성분 검색)
-html-viewer.js (참조자료 뷰어)    views/navigation.js (뷰 전환 유틸)
-pdf-registry.js (참조자료 레지스트리)
+html-viewer.js (참조자료 뷰어+Deep Linking+앵커 스크롤)    views/navigation.js (뷰 전환 유틸)
+pdf-registry.js (참조자료 레지스트리+KEYWORD_REF_MAP 자동링크)
 markdown-parser.js (MD→HTML 파서)
 ```
 

@@ -70,6 +70,40 @@ export const SOURCE_REF_MAP = [
     { test: /화장품법/, file: '화장품법(법률)(제20901호)(20260402).pdf' },
 ];
 
+// --- 본문 키워드 → 참조자료 자동 링크 매핑 ---
+// reader-format.js에서 교재 본문의 키워드를 자동으로 클릭 가능한 링크로 변환
+// pattern: 본문에서 매칭할 정규식, file: 참조자료 PDF 파일명, search: 검색어(생략시 매칭된 텍스트 사용)
+export const KEYWORD_REF_MAP = [
+    { pattern: /시행규칙\s*별표\s*1(?!\s*_)|별표\s*1\s*품질관리기준/g, file: '시행규칙_별표1_품질관리기준.pdf', search: '품질관리기준' },
+    { pattern: /시행규칙\s*별표\s*2(?!\s*_)|별표\s*2\s*책임판매/g, file: '시행규칙_별표2_책임판매안전관리기준.pdf', search: '책임판매' },
+    { pattern: /시행규칙\s*별표\s*3(?!\s*_)|별표\s*3\s*사용시주의/g, file: '시행규칙_별표3_사용시주의사항.pdf', search: '사용시주의' },
+    { pattern: /시행규칙\s*별표\s*4(?!\s*_)|별표\s*4\s*포장/g, file: '시행규칙_별표4_포장표시기준및방법.pdf', search: '포장표시' },
+    { pattern: /시행규칙\s*별표\s*5(?!\s*_)|별표\s*5\s*표시광고/g, file: '시행규칙_별표5_표시광고범위및준수사항.pdf', search: '표시광고' },
+    { pattern: /시행규칙\s*별표\s*6(?!\s*_)|별표\s*6\s*위해화장품/g, file: '시행규칙_별표6_위해화장품공표문.pdf', search: '위해화장품' },
+    { pattern: /시행규칙\s*별표\s*7(?!\s*_)|별표\s*7\s*행정처분/g, file: '시행규칙_별표7_행정처분기준.pdf', search: '행정처분' },
+    { pattern: /시행규칙\s*별표\s*9(?!\s*_)|별표\s*9\s*수수료/g, file: '시행규칙_별표9_수수료.pdf', search: '수수료' },
+    { pattern: /안전기준\s*별표\s*1(?!\s*_)|별표\s*1\s*사용불가원료/g, file: '안전기준_별표1_사용불가원료.pdf', search: '사용불가원료' },
+    { pattern: /안전기준\s*별표\s*2(?!\s*_)|별표\s*2\s*사용제한원료/g, file: '안전기준_별표2_사용제한원료.pdf', search: '사용제한원료' },
+    { pattern: /안전기준\s*별표\s*3(?!\s*_)|별표\s*3\s*인체세포/g, file: '안전기준_별표3_인체세포조직배양액안전기준.pdf', search: '인체세포' },
+    { pattern: /안전기준\s*별표\s*4(?!\s*_)|별표\s*4\s*유통안전/g, file: '안전기준_별표4_유통안전관리시험방법.pdf', search: '유통안전' },
+    { pattern: /주의사항\s*별표\s*1(?!\s*_)|별표\s*1\s*유형별주의사항/g, file: '주의사항_별표1_유형별주의사항표시문구.pdf', search: '유형별주의사항' },
+    { pattern: /주의사항\s*별표\s*2(?!\s*_)|별표\s*2\s*알레르기유발성분/g, file: '주의사항_별표2_알레르기유발성분25종.pdf', search: '알레르기유발성분' },
+    { pattern: /CGMP\s*별표\s*1(?!\s*_)|별표\s*1\s*공정별분류/g, file: 'CGMP_별표1_공정별분류.pdf', search: '공정별분류' },
+    { pattern: /CGMP\s*별표\s*2(?!\s*_)|별표\s*2\s*실시상황평가/g, file: 'CGMP_별표2_실시상황평가표.pdf', search: '실시상황평가' },
+    { pattern: /CGMP\s*별표\s*3(?!\s*_)|별표\s*3\s*적합업소/g, file: 'CGMP_별표3_적합업소로고.pdf', search: '적합업소' },
+    { pattern: /KFCC\s*별표\s*1(?!\s*_)|별표\s*1\s*통칙/g, file: 'KFCC_별표1_통칙.pdf', search: '통칙' },
+    { pattern: /KFCC\s*별표\s*2(?!\s*_)|별표\s*2\s*미백/g, file: 'KFCC_별표2_미백_나이아신아마이드.pdf', search: '미백' },
+    { pattern: /KFCC\s*별표\s*3(?!\s*_)|별표\s*3\s*주름/g, file: 'KFCC_별표3_주름개선_레티놀.pdf', search: '주름개선' },
+    { pattern: /KFCC\s*별표\s*4(?!\s*_)|별표\s*4\s*자외선/g, file: 'KFCC_별표4_자외선보호.pdf', search: '자외선보호' },
+    { pattern: /KFCC\s*별표\s*5(?!\s*_)|별표\s*5\s*미백주름/g, file: 'KFCC_별표5_미백주름복합.pdf', search: '미백주름복합' },
+    { pattern: /KFCC\s*별표\s*6(?!\s*_)|별표\s*6\s*모발색상/g, file: 'KFCC_별표6_모발색상변화.pdf', search: '모발색상' },
+    { pattern: /KFCC\s*별표\s*7(?!\s*_)|별표\s*7\s*체모제거/g, file: 'KFCC_별표7_체모제거_치오글리콜산.pdf', search: '체모제거' },
+    { pattern: /KFCC\s*별표\s*8(?!\s*_)|별표\s*8\s*여드름/g, file: 'KFCC_별표8_여드름완화_살리실릭애씨드.pdf', search: '여드름완화' },
+    { pattern: /KFCC\s*별표\s*9(?!\s*_)|별표\s*9\s*탈모/g, file: 'KFCC_별표9_탈모완화_덱스판테놀.pdf', search: '탈모완화' },
+    { pattern: /KFCC\s*별표\s*10(?!\s*_)|별표\s*10\s*일반시험/g, file: 'KFCC_별표10_일반시험법.pdf', search: '일반시험법' },
+    { pattern: /색소종류및기준|색소\s*종류\s*및\s*기준/g, file: '색소종류및기준_전체.pdf', search: '색소종류' },
+];
+
 // --- 과목별 참조자료 파일 목록 ---
 export const REFERENCE_FILES = {
     'law': [
@@ -212,4 +246,20 @@ export function mapSourceToRef(sourceText) {
     if (!refFile) return '';
 
     return _toHtmlPath(refFile);
+}
+
+// --- 본문 키워드 자동 링크 헬퍼 ---
+// KEYWORD_REF_MAP의 패턴을 본문 텍스트에 적용하여 링크 생성 정보 반환
+export function resolveKeywordRef(text) {
+    if (!text) return null;
+    for (const entry of KEYWORD_REF_MAP) {
+        const m = text.match(entry.pattern);
+        if (m) {
+            const path = resolveRefPath(entry.file);
+            if (path) {
+                return { match: m[0], path, search: entry.search || m[0] };
+            }
+        }
+    }
+    return null;
 }

@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v120-20260901-perf-a11y';   // Fisher-Yates 셔플, SW 캐시 분리, 검색 인덱스, ARIA, localStorage 경고
+const CACHE_VERSION = 'v121-20260901-ref-link-enhance';   // 참조자료 연결 5종 개선: 컨텍스트 사이드바, Deep Linking, 키워드 자동링크, 인라인 프리뷰, L### 확장
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;

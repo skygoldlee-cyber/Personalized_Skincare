@@ -155,7 +155,7 @@ function close() {
     _contentEl = null;
 }
 
-async function openHtmlViewer(htmlPath, searchKeyword) {
+async function openHtmlViewer(htmlPath, searchKeyword, anchorId, lineNum) {
     const el = _ensureOverlay();
     const titleEl = el.querySelector('#hr-title');
     const scroll = el.querySelector('#hr-scroll');
@@ -237,6 +237,49 @@ async function openHtmlViewer(htmlPath, searchKeyword) {
         // 검색어가 있으면 자동 검색
         if (searchKeyword && searchKeyword.length >= 2) {
             await _doSearch(searchKeyword);
+        }
+
+        // 앵커가 있으면 해당 요소로 스크롤 (Deep Linking)
+        if (anchorId || lineNum) {
+            let target = null;
+            // 1. id로 직접 찾기
+            if (anchorId) {
+                target = content.querySelector(`#${CSS.escape(anchorId)}`);
+            }
+            // 2. heading 텍스트에 앵커 문자열이 포함된 요소 찾기
+            if (!target && anchorId) {
+                const headings = content.querySelectorAll('h1, h2, h3, h4, h5, h6, .section-label, .page-header');
+                for (const h of headings) {
+                    if (h.textContent.includes(anchorId)) {
+                        target = h;
+                        break;
+                    }
+                }
+            }
+            // 3. 라인 번호 기반 추정: content의 block-level 요소들을 순회하며 라인 카운트
+            if (!target && lineNum) {
+                const blocks = content.querySelectorAll('p, h1, h2, h3, h4, h5, h6, table, ul, ol, .page, .section-label');
+                let lineCount = 0;
+                for (const block of blocks) {
+                    const blockLines = block.textContent.split('\n').length;
+                    lineCount += blockLines;
+                    if (lineCount >= parseInt(lineNum)) {
+                        target = block;
+                        break;
+                    }
+                }
+            }
+            // 4. 검색어로 대체 (이미 검색된 결과의 첫 번째로 스크롤)
+            if (!target && _searchResults.length > 0) {
+                target = _searchResults[0];
+            }
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                target.style.transition = 'background 0.5s ease';
+                const origBg = target.style.background;
+                target.style.background = 'rgba(250,204,21,0.25)';
+                setTimeout(() => { target.style.background = origBg; }, 1500);
+            }
         }
     } catch (err) {
         console.error('HTML viewer load failed:', err);

@@ -591,6 +591,49 @@
 
 ---
 
+## 34. 참조자료 연결 5종 개선 (2026-09-01)
+
+> **목표**: 교재 본문과 참조자료 간 연결을 단순 하이퍼링크에서 컨텍스트 인식 Deep Linking 시스템으로 개선
+
+### 변경 내용
+
+1. **컨텍스트 사이드바** (`src/views/textbook-reader.js`)
+   - `buildReferenceLinks()`에 `contextRefPath` 파라미터 추가
+   - 현재 단원의 출처와 매칭되는 참조자료를 "이 단원의 참조자료" 섹션에 상단 추천 표시
+   - `chapterRefPath` 계산을 HTML 템플릿 상단으로 이동하여 중복 제거
+
+2. **Deep Linking (조문 레벨 앵커)** (`src/html-viewer.js`, `src/reader-format.js`, `src/concept-map.js`)
+   - `openHtmlViewer()`에 `anchorId` 파라미터 추가 — 로딩 후 해당 요소로 스크롤
+   - 앵커 검색 3단계: `#id` → heading 텍스트 매칭 → 검색 결과 fallback
+   - `reader-format.js`: 출처 라인의 `제N조`를 추출하여 `data-ref-anchor` 속성 자동 추가
+   - `concept-map.js`: 참조자료 배지 클릭 시 `data-ref-anchor` 전달
+
+3. **본문 키워드 자동 하이퍼링크** (`src/pdf-registry.js`, `src/reader-format.js`)
+   - `KEYWORD_REF_MAP` (28개 패턴) 추가: 별표/KFCC/법령명 키워드 → 참조자료 파일 매핑
+   - `resolveKeywordRef()` 헬퍼 함수 추가
+   - `reader-format.js`: `<p>`/`<li>` 내 키워드를 자동으로 `data-ref-html` 링크로 변환
+   - 링크 클릭 시 검색어 하이라이트까지 자동 수행
+
+4. **인라인 프리뷰 툴팁** (`src/views/textbook-reader.js`)
+   - `_showPreview()` / `_hidePreview()` 함수 추가
+   - 데스크톱: mouseenter 400ms 후 툴팁 표시 (200자 스니펫 + 검색어 컨텍스트)
+   - 모바일: touchstart 600ms 롱프레스 → 3초 후 자동 닫기
+   - `_previewCache`로 fetch 결과 캐싱하여 재호출 시 즉시 표시
+
+5. **L### 참조 확장** (`src/reader-format.js`, `src/html-viewer.js`)
+   - L### 링크에 `data-ref-anchor` + `data-ref-line` 속성 추가
+   - `openHtmlViewer()`에 `lineNum` 파라미터 추가
+   - 라인 번호 기반 스크롤: block-level 요소의 텍스트 라인을 카운트하여 해당 위치로 스크롤
+   - 앵커 → 라인 번호 → 검색 결과 순서로 fallback
+
+### 검증
+
+- `npm test` 88/88 통과
+- `CACHE_VERSION` → `v121-20260901-ref-link-enhance` 갱신
+- Vercel 배포 완료
+
+---
+
 ## 33. 성능·접근성·품질 일괄 개선 (2026-09-01)
 
 > **목표**: 프로젝트 전체 기능·성능 리뷰에서 식별된 7개 개선항목을 일괄 적용
