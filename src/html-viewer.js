@@ -1,5 +1,6 @@
 // src/html-viewer.js — 앱 내 HTML 참조자료 뷰어 오버레이 (검색 + 하이라이트)
-// html_output의 HTML 변환본을 fetch로 로드하여 DOM에 직접 주입 (iframe 없음)
+// html_output의 HTML/MD 변환본을 fetch로 로드하여 DOM에 직접 주입 (iframe 없음)
+import { parseMarkdown } from './markdown-parser.js';
 
 let _overlayEl = null;
 let _contentEl = null;
@@ -45,6 +46,22 @@ function _injectStyles() {
 #html-ref-overlay .hr-ov-content .images img{max-width:100%;border:1px solid #eee;margin:4px 0;display:block;}
 #html-ref-overlay .hr-ov-content .section-label{font-weight:bold;color:#0a5;font-size:12px;margin-top:10px;}
 #html-ref-overlay .hr-ov-content .empty{color:#aaa;font-style:italic;font-size:12px;}
+/* MD 변환 콘텐츠 스타일 (parseMarkdown 출력) */
+#html-ref-overlay .hr-ov-content h1{border-bottom:2px solid #333;padding-bottom:8px;font-size:20px;margin:1em 0 .5em;}
+#html-ref-overlay .hr-ov-content h2{font-size:17px;margin:1.2em 0 .4em;border-bottom:1px solid #ddd;padding-bottom:4px;}
+#html-ref-overlay .hr-ov-content h3{font-size:15px;margin:1em 0 .3em;}
+#html-ref-overlay .hr-ov-content p{margin:.4em 0;}
+#html-ref-overlay .hr-ov-content ul,#html-ref-overlay .hr-ov-content ol{margin:.4em 0;padding-left:1.8em;}
+#html-ref-overlay .hr-ov-content li{margin:.2em 0;}
+#html-ref-overlay .hr-ov-content .reader-table-wrapper{overflow-x:auto;margin:10px 0;}
+#html-ref-overlay .hr-ov-content table.reader-table{border-collapse:collapse;margin:10px 0;font-size:13px;width:auto;}
+#html-ref-overlay .hr-ov-content table.reader-table th,
+#html-ref-overlay .hr-ov-content table.reader-table td{border:1px solid #999;padding:4px 8px;vertical-align:top;}
+#html-ref-overlay .hr-ov-content table.reader-table tr:nth-child(even){background:#f7f7f7;}
+#html-ref-overlay .hr-ov-content pre.reader-code-block{background:#f5f5f5;padding:12px;border-radius:6px;overflow-x:auto;font-size:13px;margin:10px 0;}
+#html-ref-overlay .hr-ov-content blockquote{border-left:3px solid #ccc;margin:10px 0;padding:6px 14px;color:#555;}
+#html-ref-overlay .hr-ov-content img{max-width:100%;border:1px solid #eee;margin:4px 0;display:block;}
+#html-ref-overlay .hr-ov-content hr{border:none;border-top:1px solid #ddd;margin:20px 0;}
 #html-ref-overlay .hr-loading{display:flex;flex-direction:column;align-items:center;
   justify-content:center;min-height:60vh;gap:18px;color:var(--color-text-muted,#8b949e);}
 #html-ref-overlay .hr-loading .spinner{width:44px;height:44px;border:4px solid var(--border-color,#30363d);
@@ -140,7 +157,7 @@ async function openHtmlViewer(htmlPath, searchKeyword) {
     const titleEl = el.querySelector('#hr-title');
     const scroll = el.querySelector('#hr-scroll');
 
-    const fileName = decodeURIComponent(htmlPath.split('/').pop().replace(/\.html$/, ''));
+    const fileName = decodeURIComponent(htmlPath.split('/').pop().replace(/\.(html|md)$/, ''));
     titleEl.textContent = fileName;
 
     // 기존 콘텐츠 제거
@@ -168,32 +185,51 @@ async function openHtmlViewer(htmlPath, searchKeyword) {
     _open();
 
     try {
-        const htmlUrl = new URL(htmlPath, window.location.href).href;
-        const resp = await fetch(htmlUrl);
+        const fileUrl = new URL(htmlPath, window.location.href).href;
+        const resp = await fetch(fileUrl);
         if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-        const htmlText = await resp.text();
+        const rawText = await resp.text();
 
-        // HTML 파싱하여 body 내용 추출
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(htmlText, 'text/html');
+        const baseUrl = fileUrl.substring(0, fileUrl.lastIndexOf('/') + 1);
+        const isMarkdown = htmlPath.endsWith('.md');
+        let innerHTML;
 
-        // 이미지 경로를 절대 경로로 변환
-        const baseUrl = htmlUrl.substring(0, htmlUrl.lastIndexOf('/') + 1);
-        doc.querySelectorAll('img').forEach(img => {
-            const src = img.getAttribute('src');
-            if (src && !src.startsWith('http') && !src.startsWith('data:')) {
-                img.src = new URL(src, baseUrl).href;
-            }
-        });
+        if (isMarkdown) {
+            // Markdown → HTML 변환
+            innerHTML = parseMarkdown(rawText, { allowInlineCode: false });
+        } else {
+            // HTML 파싱하여 body 내용 추출
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(rawText, 'text/html');
+
+            // 이미지 경로를 절대 경로로 변환
+            doc.querySelectorAll('img').forEach(img => {
+                const src = img.getAttribute('src');
+                if (src && !src.startsWith('http') && !src.startsWith('data:')) {
+                    img.src = new URL(src, baseUrl).href;
+                }
+            });
+            innerHTML = doc.body.innerHTML;
+        }
 
         loading.remove();
 
         // 콘텐츠 컨테이너 생성
         const content = document.createElement('div');
         content.className = 'hr-ov-content';
-        content.innerHTML = doc.body.innerHTML;
+        content.innerHTML = innerHTML;
         scroll.appendChild(content);
         _contentEl = content;
+
+        // MD의 경우 이미지 경로를 절대 경로로 변환
+        if (isMarkdown) {
+            content.querySelectorAll('img').forEach(img => {
+                const src = img.getAttribute('src');
+                if (src && !src.startsWith('http') && !src.startsWith('data:')) {
+                    img.src = new URL(src, baseUrl).href;
+                }
+            });
+        }
 
         // 검색어가 있으면 자동 검색
         if (searchKeyword && searchKeyword.length >= 2) {

@@ -62,7 +62,7 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
     // 출처/참고 라인에 참조자료 하이퍼링크 추가 (앱 내 HTML 뷰어 사용)
     // 단, 이미 참조 링크가 있는 경우 중복 추가하지 않음
     if (refPath) {
-        const refFileName = refPath.split('/').pop().replace(/\.html$/, '');
+        const refFileName = refPath.split('/').pop().replace(/\.(html|md)$/, '');
         const refIcon = `<a href="#" data-ref-html="${escapeHTML(refPath)}" class="source-link" style="margin-left:0.5em;"><i class="fa-solid fa-file-lines"></i> ${escapeHTML(refFileName)}</a>`;
         // blockquote 내 출처 라인 끝에 참조 링크 추가 (data-ref-html이 없는 경우만)
         html = html.replace(/(📌\s*\*\*출처\*\*(?:(?!data-ref-html)[^<])*?)(<br>|<\/p>|\n)/g, `$1 ${refIcon}$2`);

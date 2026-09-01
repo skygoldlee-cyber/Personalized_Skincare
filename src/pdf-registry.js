@@ -159,9 +159,17 @@ export const REFERENCE_LAW = [
 
 // HTML 기본 경로: content/참조자료/html_output/{basename}/{basename}.html
 // basename = 파일명에서 .pdf 확장자 제거
+// 대용량 법령 원문 3개는 MD로 변환하여 저장 (용량 절감)
+const MD_CONVERSION_TARGETS = new Set([
+    '기능성화장품 기준 및 시험방법(식품의약품안전처고시)(제2025-89호)(20251216).pdf',
+    'KFCC_별표10_일반시험법.pdf',
+    '화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318).pdf',
+]);
+
 function _toHtmlPath(fileName) {
     const base = fileName.replace(/\.pdf$/, '');
-    return `content/참조자료/html_output/${base}/${base}.html`;
+    const ext = MD_CONVERSION_TARGETS.has(fileName) ? '.md' : '.html';
+    return `content/참조자료/html_output/${base}/${base}${ext}`;
 }
 
 // 파일명 → HTML 경로 매핑 (reader-format.js용, 우선순위: 과목N > 공통 > 법령원문)

@@ -61,6 +61,8 @@ archive/
 content/**/*.html
 # 예외: 참조자료 HTML 변환본 (html_output) — PDF 대체, Git 추적 필요
 !content/참조자료/html_output/**/*.html
+# 예외: 참조자료 MD 변환본 (html_output) — 대용량 법령 원문, Git 추적 필요
+!content/참조자료/html_output/**/*.md
 .vercel
 !.vercel/project.json
 .env*
