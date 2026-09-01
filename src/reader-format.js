@@ -180,12 +180,12 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
             .filter(k => k.keyword && k.keyword.length >= 2)
             .sort((a, b) => b.keyword.length - a.keyword.length);
         if (sorted.length > 0) {
-            // HTML 태그와 기존 <a> 링크 보호 (태그 내부 속성값은 치환하지 않음)
+            // HTML 태그와 기존 <a> 링크를 안전한 플레이스홀더로 보호
             const phs = [];
-            let processed = html.replace(/<a\s[^>]*>.*?<\/a>|<[^>]+>/gs, (m) => {
+            let processed = html.replace(/<a\s[^>]*>[\s\S]*?<\/a>|<[^>]+>/g, (m) => {
                 const i = phs.length;
                 phs.push(m);
-                return `\x00T${i}\x00`;
+                return `\uE000P${i}\uE001`;
             });
             // 단일 패스 교대 정규식으로 모든 키워드 동시 매칭
             const pattern = sorted.map(k => k.keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|');
@@ -196,7 +196,7 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
                 return `<a href="#glossary-${escapeHTML(item.idxKey)}" data-glossary="${escapeHTML(item.idxKey)}" class="glossary-term-link">${escapeHTML(match)}</a>`;
             });
             // 플레이스홀더 복원
-            html = processed.replace(/\x00T(\d+)\x00/g, (m, i) => phs[parseInt(i)]);
+            html = processed.replace(/\uE000P(\d+)\uE001/g, (m, i) => phs[parseInt(i)]);
         }
     }
 
