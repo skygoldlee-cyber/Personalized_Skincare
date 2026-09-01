@@ -2,7 +2,7 @@
 // 교재 리더 상단에 섹션 구조를 시각화한 마인드맵을 렌더링합니다.
 // 대분류/중분류/소분류 테이블이 있으면 계층적 트리로 렌더링, 없으면 평면 섹션 나열.
 import { resolveRefPath } from './pdf-registry.js';
-import { KEYWORD_INDEX } from './keyword-index.js';
+import { GLOSSARY_INDEX } from './keyword-index.js';
 
 /**
  * 챕터 섹션 데이터를 받아 SVG 마인드맵을 생성합니다.
@@ -211,12 +211,12 @@ function buildRefLinkAttrs(linkInfo, refPath) {
     }
     if (!html) return '';
     const line = linkInfo.lineNum || '';
-    // KEYWORD_INDEX 키: "파일명.md|L123" (경로 단축版)
+    // GLOSSARY_INDEX 키: "파일명.md|L123" (경로 단축版)
     const fileName = html.split('/').pop();
     const idxKey = `${fileName}|L${line}`;
-    const keyword = KEYWORD_INDEX[idxKey] || '';
-    if (!keyword) return '';  // 키워드가 없으면 링크 속성 생성하지 않음
-    return `data-ref-html="${escapeAttr(html)}" data-ref-search="${escapeAttr(keyword)}" data-ref-line="${escapeAttr(line)}"`;
+    const entry = GLOSSARY_INDEX[idxKey];
+    if (!entry) return '';  // 키워드가 없으면 링크 속성 생성하지 않음
+    return `data-glossary="${escapeAttr(idxKey)}"`;
 }
 
 function generateTreeMobile(chapter, tree, colors, svgNS, rootR, rootLabel, levelStyles, refPath) {
@@ -631,16 +631,21 @@ export function renderConceptMap(container, chapter, opts = {}) {
                 }
             });
         });
-        // 트리 노드(대분류/중분류/소분류) 참조문서 링크 바인딩
-        container.querySelectorAll('.concept-map-tree-link[data-ref-html]').forEach(link => {
+        // 트리 노드(대분류/중분류/소분류) 용어집 링크 바인딩
+        container.querySelectorAll('.concept-map-tree-link[data-glossary]').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                const refHtmlPath = link.getAttribute('data-ref-html');
-                if (refHtmlPath && window.HtmlViewer) {
-                    const search = link.getAttribute('data-ref-search') || '';
-                    const line = link.getAttribute('data-ref-line') || '';
-                    window.HtmlViewer.openHtmlViewer(refHtmlPath, search, '', line);
+                const idxKey = link.getAttribute('data-glossary');
+                if (idxKey) {
+                    const target = document.getElementById(`glossary-${CSS.escape(idxKey)}`);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        target.style.transition = 'background 0.5s ease';
+                        const origBg = target.style.background;
+                        target.style.background = 'rgba(250,204,21,0.25)';
+                        setTimeout(() => { target.style.background = origBg; }, 2000);
+                    }
                 }
             });
             link.addEventListener('keydown', (e) => {

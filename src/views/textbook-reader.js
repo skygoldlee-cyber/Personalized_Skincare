@@ -1403,6 +1403,24 @@ function bindReferenceLinks() {
         });
     });
 
+    // 용어집 앵커 바인딩: data-glossary 속성을 가진 링크 → 같은 페이지 내 스크롤
+    document.querySelectorAll('[data-glossary]').forEach(a => {
+        a.addEventListener('click', (e) => {
+            e.preventDefault();
+            const idxKey = a.dataset.glossary;
+            if (idxKey) {
+                const target = document.getElementById(`glossary-${CSS.escape(idxKey)}`);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    target.style.transition = 'background 0.5s ease';
+                    const origBg = target.style.background;
+                    target.style.background = 'rgba(250,204,21,0.25)';
+                    setTimeout(() => { target.style.background = origBg; }, 2000);
+                }
+            }
+        });
+    });
+
     // HTML 뷰어 바인딩: data-ref-html 속성을 가진 모든 링크
     document.querySelectorAll('[data-ref-html]').forEach(a => {
         // 클릭 → 뷰어 열기

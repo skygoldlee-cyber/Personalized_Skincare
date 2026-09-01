@@ -2,7 +2,7 @@
 import { parseMarkdown } from './markdown-parser.js';
 import { escapeHTML } from './sanitize.js';
 import { resolveRefPath, KEYWORD_REF_MAP } from './pdf-registry.js';
-import { KEYWORD_INDEX } from './keyword-index.js';
+import { GLOSSARY_INDEX } from './keyword-index.js';
 
 export function formatSectionContentForReader(rawContent, filePath, refPath, refFiles, refDir) {
     let html = parseMarkdown(rawContent, {
@@ -107,49 +107,49 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
         return `<${tag}>${result}</${tag}>`;
     });
 
-    // 마인드맵 노드 상세 매핑: (LNN) → HTML 뷰어에서 키워드 검색
-    // 같은 td 셀 내의 텍스트를 키워드로 추출하여 HTML 본문 검색에 사용
+    // 마인드맵 노드 상세 매핑: (LNN) → 같은 페이지 하단 용어집 테이블로 스크롤
+    // 같은 td 셀 내의 텍스트를 키워드로 추출하여 용어집 앵커로 사용
     // 지원 형식: (L42) 동일 참조자료, (L42|file.pdf) 타 참조자료, (L?) 미발견
     if (refPath) {
         // (L?) 패턴 → 링크 없이 일반 텍스트로 렌더
         html = html.replace(/<td>([^<]*?)\(L\?\)([^<]*?)<\/td>/g,
             (match, before, after) => `<td>${before}(L?)${after}</td>`
         );
-        // (LNN|file.pdf) 패턴 → 타 참조자료 링크 (KEYWORD_INDEX에 키워드가 있는 경우만 링크)
+        // (LNN|file.pdf) 패턴 → 용어집 앵커 링크 (GLOSSARY_INDEX에 키워드가 있는 경우만)
         html = html.replace(/<td>([^<]*?)\(L(\d+)\|(.+?\.pdf)\)([^<]*?)<\/td>/g,
             (match, before, lineNum, pdfFile, after) => {
                 const resolved = resolveRefPath(pdfFile);
                 const usePath = resolved || refPath;
                 const idxKey = `${usePath.split('/').pop()}|L${lineNum}`;
-                const keyword = KEYWORD_INDEX[idxKey] || '';
-                if (!keyword) return `<td>${before}(L?)${after}</td>`;
-                return `<td>${before}(<a href="#" data-ref-html="${escapeHTML(usePath)}" data-ref-search="${escapeHTML(keyword)}" data-ref-line="${lineNum}" class="source-link">L${lineNum}</a>)${after}</td>`;
+                const entry = GLOSSARY_INDEX[idxKey];
+                if (!entry) return `<td>${before}(L?)${after}</td>`;
+                return `<td>${before}(<a href="#glossary-${escapeHTML(idxKey)}" data-glossary="${escapeHTML(idxKey)}" class="glossary-link">L${lineNum}</a>)${after}</td>`;
             }
         );
-        // (LNN) 패턴 → 동일 참조자료 링크 (KEYWORD_INDEX에 키워드가 있는 경우만 링크)
+        // (LNN) 패턴 → 용어집 앵커 링크 (GLOSSARY_INDEX에 키워드가 있는 경우만)
         html = html.replace(/<td>([^<]*?)\(L(\d+)\)([^<]*?)<\/td>/g,
             (match, before, lineNum, after) => {
                 const idxKey = `${refPath.split('/').pop()}|L${lineNum}`;
-                const keyword = KEYWORD_INDEX[idxKey] || '';
-                if (!keyword) return `<td>${before}(L?)${after}</td>`;
-                return `<td>${before}(<a href="#" data-ref-html="${escapeHTML(refPath)}" data-ref-search="${escapeHTML(keyword)}" data-ref-line="${lineNum}" class="source-link">L${lineNum}</a>)${after}</td>`;
+                const entry = GLOSSARY_INDEX[idxKey];
+                if (!entry) return `<td>${before}(L?)${after}</td>`;
+                return `<td>${before}(<a href="#glossary-${escapeHTML(idxKey)}" data-glossary="${escapeHTML(idxKey)}" class="glossary-link">L${lineNum}</a>)${after}</td>`;
             }
         );
-        // td 외부에 남은 (LNN|file.pdf) 패턴도 처리 (KEYWORD_INDEX에 있는 경우만 링크)
+        // td 외부에 남은 (LNN|file.pdf) 패턴도 처리
         html = html.replace(/\(L(\d+)\|(.+?\.pdf)\)/g, (match, lineNum, pdfFile) => {
             const resolved = resolveRefPath(pdfFile);
             const usePath = resolved || refPath;
             const idxKey = `${usePath.split('/').pop()}|L${lineNum}`;
-            const keyword = KEYWORD_INDEX[idxKey] || '';
-            if (!keyword) return '(L?)';
-            return `(<a href="#" data-ref-html="${escapeHTML(usePath)}" data-ref-search="${escapeHTML(keyword)}" data-ref-line="${lineNum}" class="source-link">L${lineNum}</a>)`;
+            const entry = GLOSSARY_INDEX[idxKey];
+            if (!entry) return '(L?)';
+            return `(<a href="#glossary-${escapeHTML(idxKey)}" data-glossary="${escapeHTML(idxKey)}" class="glossary-link">L${lineNum}</a>)`;
         });
-        // td 외부에 남은 (LNN) 패턴도 처리 (KEYWORD_INDEX에 있는 경우만 링크)
+        // td 외부에 남은 (LNN) 패턴도 처리
         html = html.replace(/\(L(\d+)\)/g, (match, lineNum) => {
             const idxKey = `${refPath.split('/').pop()}|L${lineNum}`;
-            const keyword = KEYWORD_INDEX[idxKey] || '';
-            if (!keyword) return '(L?)';
-            return `(<a href="#" data-ref-html="${escapeHTML(refPath)}" data-ref-search="${escapeHTML(keyword)}" data-ref-line="${lineNum}" class="source-link">L${lineNum}</a>)`;
+            const entry = GLOSSARY_INDEX[idxKey];
+            if (!entry) return '(L?)';
+            return `(<a href="#glossary-${escapeHTML(idxKey)}" data-glossary="${escapeHTML(idxKey)}" class="glossary-link">L${lineNum}</a>)`;
         });
     }
 
@@ -171,6 +171,50 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
             `$1 data-ref-search="${escapeHTML(search)}" data-ref-anchor="${escapeHTML(search)}"`
         );
     }).join('\n');
+
+    // --- 용어집 테이블 생성 ---
+    // 이 섹션에서 참조된 GLOSSARY_INDEX 항목들을 모아 하단에 테이블로 렌더
+    if (refPath) {
+        const glossaryItems = [];
+        const seenKeys = new Set();
+        // refPath 기반 항목들
+        const refFileName = refPath.split('/').pop();
+        for (const [idxKey, entry] of Object.entries(GLOSSARY_INDEX)) {
+            if (idxKey.startsWith(refFileName + '|') && !seenKeys.has(idxKey)) {
+                glossaryItems.push({ idxKey, ...entry });
+                seenKeys.add(idxKey);
+            }
+        }
+        // 이 섹션에서 data-glossary로 링크된 타 참조자료 항목들도 추가
+        const glossaryLinkMatches = html.matchAll(/data-glossary="([^"]+)"/g);
+        for (const m of glossaryLinkMatches) {
+            const idxKey = m[1];
+            if (!seenKeys.has(idxKey) && GLOSSARY_INDEX[idxKey]) {
+                glossaryItems.push({ idxKey, ...GLOSSARY_INDEX[idxKey] });
+                seenKeys.add(idxKey);
+            }
+        }
+
+        if (glossaryItems.length > 0) {
+            const rows = glossaryItems.map(item => {
+                const explanation = item.explanation || '(설명 없음)';
+                return `<tr id="glossary-${escapeHTML(item.idxKey)}"><td class="glossary-term">${escapeHTML(item.keyword)}</td><td class="glossary-explanation">${escapeHTML(explanation)}</td><td class="glossary-ref">${escapeHTML(item.refDoc || '')}</td></tr>`;
+            }).join('\n');
+            const glossaryHtml = `
+<div class="reader-glossary">
+<h4 class="glossary-title">📖 중요 용어 해설</h4>
+<div class="reader-table-wrapper">
+<table class="reader-table glossary-table">
+<thead><tr><th>용어</th><th>설명 (참조문서 발췌)</th><th>출처</th></tr></thead>
+<tbody>
+${rows}
+</tbody>
+</table>
+</div>
+</div>`;
+            html += glossaryHtml;
+        }
+    }
 
     return html;
 }

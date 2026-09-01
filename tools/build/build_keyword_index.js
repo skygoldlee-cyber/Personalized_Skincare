@@ -1,5 +1,6 @@
 // tools/build/build_keyword_index.js
-// KEYWORD_INDEX 자동 생성: 교재 MD 테이블에서 (LNN|file.pdf) / (LNN) 패턴 추출
+// GLOSSARY_INDEX 자동 생성: 교재 MD 테이블에서 (LNN|file.pdf) / (LNN) 패턴 추출
+// 참조문서에서 키워드를 찾아 주변 문맥을 설명으로 추출
 // **참조문서에서 키워드가 검색되는 경우만 등록** (검색 불가 → 미등록 → 런타임에 L? 처리)
 // 실행: node tools/build/build_keyword_index.js
 
@@ -8,7 +9,6 @@ import path from 'path';
 
 const ROOT = path.resolve(import.meta.dirname, '../..');
 const TEXTBOOK_DIR = path.join(ROOT, 'content/교재');
-const REF_BASE = path.join(ROOT, 'content/참조자료/html_output');
 const OUTPUT = path.join(ROOT, 'src/keyword-index.js');
 
 // --- pdf-registry.js의 REF_DIRS를 하드코딩 (ESM import 없이 사용) ---
@@ -61,25 +61,92 @@ function resolveRefPath(fileName) {
     return REF_FILE_TO_PATH[fileName] || '';
 }
 
-// --- 참조문서 텍스트 캐시 (공백 제거) ---
+// --- 참조문서 텍스트 캐시 ---
 const refTextCache = {};
-function getRefTextClean(refPath) {
+const refLinesCache = {};
+function getRefText(refPath) {
     if (refTextCache[refPath] !== undefined) return refTextCache[refPath];
     const abs = path.join(ROOT, refPath);
     try {
         const text = fs.readFileSync(abs, 'utf-8');
-        refTextCache[refPath] = text.replace(/\s+/g, '');
-        return refTextCache[refPath];
+        refTextCache[refPath] = text;
+        refLinesCache[refPath] = text.split('\n');
+        return text;
     } catch {
         refTextCache[refPath] = null;
         return null;
     }
 }
 
+function getRefLines(refPath) {
+    if (refLinesCache[refPath] === undefined) getRefText(refPath);
+    return refLinesCache[refPath] || [];
+}
+
 function keywordExistsInRef(keyword, refPath) {
-    const text = getRefTextClean(refPath);
+    const text = getRefText(refPath);
     if (!text) return false;
-    return text.includes(keyword.replace(/\s+/g, ''));
+    return text.replace(/\s+/g, '').includes(keyword.replace(/\s+/g, ''));
+}
+
+// --- 참조문서에서 키워드 주변 문맥 추출 ---
+function extractContext(keyword, refPath) {
+    const lines = getRefLines(refPath);
+    if (!lines.length) return '';
+
+    const kwClean = keyword.replace(/\s+/g, '');
+
+    // 라인들을 블록(공백 라인으로 구분된 연속된 비공백 라인 그룹)으로 분할
+    const blocks = [];
+    let currentBlock = [];
+    for (let i = 0; i < lines.length; i++) {
+        if (lines[i].trim() === '') {
+            if (currentBlock.length > 0) {
+                blocks.push({ startLine: i - currentBlock.length, lines: currentBlock });
+                currentBlock = [];
+            }
+        } else {
+            currentBlock.push(lines[i]);
+        }
+    }
+    if (currentBlock.length > 0) {
+        blocks.push({ startLine: lines.length - currentBlock.length, lines: currentBlock });
+    }
+
+    // 키워드가 포함된 블록 찾기
+    for (let bi = 0; bi < blocks.length; bi++) {
+        const blockText = blocks[bi].lines.join('').replace(/\s+/g, '');
+        if (blockText.includes(kwClean)) {
+            const contextParts = [];
+            // 이전 블록 (heading/context)
+            if (bi > 0) {
+                const prevText = blocks[bi - 1].lines.join(' ').trim();
+                if (prevText.length <= 100) contextParts.push(prevText);
+            }
+            // 현재 블록
+            contextParts.push(blocks[bi].lines.join(' ').trim());
+            // 다음 블록
+            if (bi + 1 < blocks.length) {
+                const nextText = blocks[bi + 1].lines.join(' ').trim();
+                if (nextText.length <= 200) contextParts.push(nextText);
+            }
+            let result = contextParts.join(' ').replace(/\s+/g, ' ').trim();
+            // 너무 길면 키워드 중심으로 잘라내기
+            if (result.length > 300) {
+                const cleanResult = result.replace(/\s+/g, '');
+                const kwPos = cleanResult.indexOf(kwClean);
+                if (kwPos >= 0) {
+                    const start = Math.max(0, kwPos - 100);
+                    const end = Math.min(cleanResult.length, kwPos + kwClean.length + 150);
+                    result = (start > 0 ? '...' : '') + cleanResult.substring(start, end) + (end < cleanResult.length ? '...' : '');
+                } else {
+                    result = result.substring(0, 300) + '...';
+                }
+            }
+            return result;
+        }
+    }
+    return '';
 }
 
 // --- 셀에서 키워드 추출 ---
@@ -101,7 +168,7 @@ const subjects = fs.readdirSync(TEXTBOOK_DIR).filter(d => {
     try { return fs.readdirSync(path.join(TEXTBOOK_DIR, d)).some(f => f.endsWith('.md')); } catch { return false; }
 });
 
-const KEYWORD_INDEX = {};
+const GLOSSARY_INDEX = {};
 let totalChecked = 0, totalRegistered = 0, totalSkipped = 0;
 const skipped = [];
 
@@ -114,7 +181,6 @@ for (const subj of subjects) {
         let currentRefPath = '';
 
         for (let i = 0; i < lines.length; i++) {
-            // 섹션 refPath 업데이트
             const srcMatch = lines[i].match(/📌\s*\*\*출처\*\*[:：]\s*(.+?)(?:\||\n|$)/);
             if (srcMatch) currentRefPath = resolveRefPath(srcMatch[1].trim()) || '';
             const srcMatch2 = lines[i].match(/참조\s*PDF[:：]\s*`?([^`\n|]+\.pdf)/);
@@ -146,7 +212,8 @@ for (const subj of subjects) {
 
                 if (keyword.length >= 2 && keywordExistsInRef(keyword, refPath)) {
                     const idxKey = `${refPath.split('/').pop()}|L${link.lineNum}`;
-                    KEYWORD_INDEX[idxKey] = keyword;
+                    const explanation = extractContext(keyword, refPath);
+                    GLOSSARY_INDEX[idxKey] = { keyword, explanation, refDoc: refPath.split('/').pop().replace(/\.md$/, '') };
                     totalRegistered++;
                 } else {
                     totalSkipped++;
@@ -175,7 +242,8 @@ for (const subj of subjects) {
 
                 if (keyword.length >= 2 && keywordExistsInRef(keyword, currentRefPath)) {
                     const idxKey = `${currentRefPath.split('/').pop()}|L${link.lineNum}`;
-                    KEYWORD_INDEX[idxKey] = keyword;
+                    const explanation = extractContext(keyword, currentRefPath);
+                    GLOSSARY_INDEX[idxKey] = { keyword, explanation, refDoc: currentRefPath.split('/').pop().replace(/\.md$/, '') };
                     totalRegistered++;
                 } else {
                     totalSkipped++;
@@ -187,12 +255,12 @@ for (const subj of subjects) {
 }
 
 // --- 출력 파일 작성 ---
-const jsonStr = JSON.stringify(KEYWORD_INDEX);
-const output = `// src/keyword-index.js — 하이브리드 키워드 인덱스 (셀 텍스트 + 참조자료 검증)
+const jsonStr = JSON.stringify(GLOSSARY_INDEX);
+const output = `// src/keyword-index.js — 용어집 인덱스 (참조문서에서 추출한 키워드 + 설명)
 // 자동 생성됨: node tools/build/build_keyword_index.js
-// 키: "파일명|L라인번호" (런타임에 resolveRefPath로 전체 경로 복원) → 값: 검색 키워드
+// 키: "파일명.md|L라인번호" → 값: { keyword, explanation, refDoc }
 // **참조문서에서 키워드가 검색되는 경우만 등록** (검색 불가 → 미등록 → 런타임에 L? 처리)
-export const KEYWORD_INDEX = ${jsonStr};
+export const GLOSSARY_INDEX = ${jsonStr};
 `;
 
 fs.writeFileSync(OUTPUT, output, 'utf-8');
@@ -202,9 +270,18 @@ console.log(`총 확인: ${totalChecked}`);
 console.log(`등록 (참조문서에 키워드 존재): ${totalRegistered}`);
 console.log(`미등록 (참조문서에 키워드 없음): ${totalSkipped}`);
 console.log(`등록률: ${totalChecked > 0 ? Math.round(totalRegistered / totalChecked * 100) : 0}%`);
-console.log(`KEYWORD_INDEX 항목 수: ${Object.keys(KEYWORD_INDEX).length}`);
+console.log(`GLOSSARY_INDEX 항목 수: ${Object.keys(GLOSSARY_INDEX).length}`);
 console.log(`출력: ${path.relative(ROOT, OUTPUT)}`);
 if (skipped.length > 0) {
     console.log('\n미등록 샘플 (최대 20개):');
     for (const s of skipped) console.log(`  ${s}`);
+}
+const sampleKeys = Object.keys(GLOSSARY_INDEX).slice(0, 5);
+if (sampleKeys.length > 0) {
+    console.log('\n설명 추출 샘플:');
+    for (const k of sampleKeys) {
+        const v = GLOSSARY_INDEX[k];
+        console.log(`  ${k}: kw="${v.keyword}" ref="${v.refDoc}"`);
+        console.log(`    설명: ${v.explanation.substring(0, 120)}${v.explanation.length > 120 ? '...' : ''}`);
+    }
 }
