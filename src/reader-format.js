@@ -2,7 +2,7 @@
 import { parseMarkdown } from './markdown-parser.js';
 import { escapeHTML } from './sanitize.js';
 import { resolveRefPath, KEYWORD_REF_MAP } from './pdf-registry.js';
-import { GLOSSARY_INDEX } from './keyword-index.js';
+import { getGlossaryEntry } from './glossary-query.js';
 
 export function formatSectionContentForReader(rawContent, filePath, refPath, refFiles, refDir, glossaryKeywords) {
     let html = parseMarkdown(rawContent, {
@@ -121,7 +121,7 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
                 const resolved = resolveRefPath(pdfFile);
                 const usePath = resolved || refPath;
                 const idxKey = `${usePath.split('/').pop()}|L${lineNum}`;
-                const entry = GLOSSARY_INDEX[idxKey];
+                const entry = getGlossaryEntry(idxKey);
                 if (!entry) return `<td>${before}(L?)${after}</td>`;
                 return `<td>${before}(<a href="#glossary-${escapeHTML(idxKey)}" data-glossary="${escapeHTML(idxKey)}" class="glossary-link">L${lineNum}</a>)${after}</td>`;
             }
@@ -130,7 +130,7 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
         html = html.replace(/<td>([^<]*?)\(L(\d+)\)([^<]*?)<\/td>/g,
             (match, before, lineNum, after) => {
                 const idxKey = `${refPath.split('/').pop()}|L${lineNum}`;
-                const entry = GLOSSARY_INDEX[idxKey];
+                const entry = getGlossaryEntry(idxKey);
                 if (!entry) return `<td>${before}(L?)${after}</td>`;
                 return `<td>${before}(<a href="#glossary-${escapeHTML(idxKey)}" data-glossary="${escapeHTML(idxKey)}" class="glossary-link">L${lineNum}</a>)${after}</td>`;
             }
@@ -140,14 +140,14 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
             const resolved = resolveRefPath(pdfFile);
             const usePath = resolved || refPath;
             const idxKey = `${usePath.split('/').pop()}|L${lineNum}`;
-            const entry = GLOSSARY_INDEX[idxKey];
+            const entry = getGlossaryEntry(idxKey);
             if (!entry) return '(L?)';
             return `(<a href="#glossary-${escapeHTML(idxKey)}" data-glossary="${escapeHTML(idxKey)}" class="glossary-link">L${lineNum}</a>)`;
         });
         // td 외부에 남은 (LNN) 패턴도 처리
         html = html.replace(/\(L(\d+)\)/g, (match, lineNum) => {
             const idxKey = `${refPath.split('/').pop()}|L${lineNum}`;
-            const entry = GLOSSARY_INDEX[idxKey];
+            const entry = getGlossaryEntry(idxKey);
             if (!entry) return '(L?)';
             return `(<a href="#glossary-${escapeHTML(idxKey)}" data-glossary="${escapeHTML(idxKey)}" class="glossary-link">L${lineNum}</a>)`;
         });

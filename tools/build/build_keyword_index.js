@@ -11,6 +11,14 @@ const ROOT = path.resolve(import.meta.dirname, '../..');
 const TEXTBOOK_DIR = path.join(ROOT, 'content/교재');
 const OUTPUT = path.join(ROOT, 'src/keyword-index.js');
 
+// 과목 디렉토리명 → 과목 ID 매핑 (pdf-registry.js SUBJECT_DIR_MAP과 동일)
+const SUBJECT_DIR_TO_ID = {
+    'law': '과목1',
+    'manufacturing': '과목2',
+    'safety': '과목3',
+    'understanding': '과목4'
+};
+
 // --- pdf-registry.js의 REF_DIRS를 하드코딩 (ESM import 없이 사용) ---
 const REF_DIRS = {
     '법령원문': [
@@ -213,7 +221,7 @@ for (const subj of subjects) {
                 if (keyword.length >= 2 && keywordExistsInRef(keyword, refPath)) {
                     const idxKey = `${refPath.split('/').pop()}|L${link.lineNum}`;
                     const explanation = extractContext(keyword, refPath);
-                    GLOSSARY_INDEX[idxKey] = { keyword, explanation, refDoc: refPath.split('/').pop().replace(/\.md$/, '') };
+                    GLOSSARY_INDEX[idxKey] = { keyword, explanation, refDoc: refPath.split('/').pop().replace(/\.md$/, ''), subjectId: SUBJECT_DIR_TO_ID[subj] || subj };
                     totalRegistered++;
                 } else {
                     totalSkipped++;
@@ -243,7 +251,7 @@ for (const subj of subjects) {
                 if (keyword.length >= 2 && keywordExistsInRef(keyword, currentRefPath)) {
                     const idxKey = `${currentRefPath.split('/').pop()}|L${link.lineNum}`;
                     const explanation = extractContext(keyword, currentRefPath);
-                    GLOSSARY_INDEX[idxKey] = { keyword, explanation, refDoc: currentRefPath.split('/').pop().replace(/\.md$/, '') };
+                    GLOSSARY_INDEX[idxKey] = { keyword, explanation, refDoc: currentRefPath.split('/').pop().replace(/\.md$/, ''), subjectId: SUBJECT_DIR_TO_ID[subj] || subj };
                     totalRegistered++;
                 } else {
                     totalSkipped++;
@@ -258,17 +266,24 @@ for (const subj of subjects) {
 // content/교재/glossary/subject{N}.json 에서 큐레이션 정의를 읽어와
 // GLOSSARY_INDEX의 explanation을 definition으로 덮어쓰기
 const GLOSSARY_DIR = path.join(ROOT, 'content/교재/glossary');
-const curatedMap = new Map(); // keyword → definition
+// 큐레이션 맵: keyword → [{ definition, subjectId? }] (동일 키워드 과목별 정의 지원)
+const curatedMap = new Map();
 let curatedCount = 0;
 
 if (fs.existsSync(GLOSSARY_DIR)) {
     const glossaryFiles = fs.readdirSync(GLOSSARY_DIR).filter(f => f.endsWith('.json'));
     for (const gf of glossaryFiles) {
+        // 파일명에서 과목 ID 추출: subject1.json → 과목1, subject2.json → 과목2, ...
+        const subjMatch = gf.match(/subject(\d+)/i);
+        const fileSubjectId = subjMatch ? `과목${subjMatch[1]}` : null;
         try {
             const items = JSON.parse(fs.readFileSync(path.join(GLOSSARY_DIR, gf), 'utf-8'));
             for (const item of items) {
                 if (item.keyword && item.definition) {
-                    curatedMap.set(item.keyword, item.definition);
+                    // item.subject가 있으면 해당 과목만 매칭, 없으면 파일명 기반 또는 전역
+                    const subjectId = item.subject ? `과목${item.subject}` : fileSubjectId;
+                    if (!curatedMap.has(item.keyword)) curatedMap.set(item.keyword, []);
+                    curatedMap.get(item.keyword).push({ definition: item.definition, subjectId });
                     curatedCount++;
                 }
             }
@@ -278,11 +293,17 @@ if (fs.existsSync(GLOSSARY_DIR)) {
     }
 }
 
-// GLOSSARY_INDEX에 큐레이션 정의 병합
+// GLOSSARY_INDEX에 큐레이션 정의 병합 (subjectId 범위 매칭)
 let mergedCount = 0;
 for (const [idxKey, entry] of Object.entries(GLOSSARY_INDEX)) {
-    if (curatedMap.has(entry.keyword)) {
-        entry.explanation = curatedMap.get(entry.keyword);
+    const candidates = curatedMap.get(entry.keyword);
+    if (!candidates) continue;
+    // 1순위: entry.subjectId와 일치하는 큐레이션 정의
+    let match = candidates.find(c => c.subjectId && c.subjectId === entry.subjectId);
+    // 2순위: subjectId가 없는 전역 큐레이션 정의
+    if (!match) match = candidates.find(c => !c.subjectId);
+    if (match) {
+        entry.explanation = match.definition;
         entry.curated = true;
         mergedCount++;
     }
@@ -292,7 +313,7 @@ for (const [idxKey, entry] of Object.entries(GLOSSARY_INDEX)) {
 const jsonStr = JSON.stringify(GLOSSARY_INDEX);
 const output = `// src/keyword-index.js — 용어집 인덱스 (참조문서에서 추출한 키워드 + 설명)
 // 자동 생성됨: node tools/build/build_keyword_index.js
-// 키: "파일명.md|L라인번호" → 값: { keyword, explanation, refDoc, curated? }
+// 키: "파일명.md|L라인번호" → 값: { keyword, explanation, refDoc, subjectId, curated? }
 // **참조문서에서 키워드가 검색되는 경우만 등록** (검색 불가 → 미등록 → 런타임에 L? 처리)
 // **큐레이션 정의**: content/교재/glossary/subject{N}.json에서 정의가 있으면 explanation을 덮어쓰고 curated=true 설정
 export const GLOSSARY_INDEX = ${jsonStr};

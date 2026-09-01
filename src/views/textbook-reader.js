@@ -8,7 +8,7 @@ import {
     SUBJECT_DIR_MAP, REFERENCE_FILES, REFERENCE_COMMON, REFERENCE_INGREDIENTS,
     REFERENCE_LAW, mapSourceToRef, resolveRefPath
 } from '../pdf-registry.js';
-import { GLOSSARY_INDEX } from '../keyword-index.js';
+import { collectGlossaryItems, renderGlossaryTable, appendGlossaryTocItem, bindGlossaryEvents } from './glossary-renderer.js';
 // [모바일 PWA 견고성] 오디오 매니페스트는 window 전역(가드)에서 읽는다(정적 import 하드 의존 지양).
 import { DataLoader } from '../data-loader.js';
 
@@ -821,37 +821,13 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStor
     }
     const chapterRefPath = mapSourceToRef(chapterSourceText);
 
-    // --- 용어집 항목 사전 계산 (TOC + 본문 렌더 공용) ---
-    const glossaryItems = [];
-    const seenKeys = new Set();
-    for (const s of chapter.sections) {
-        const secSrcM = (s.content || '').match(/📌\s*\*\*출처\*\*[:：]\s*(.+?)(?:\||\n)/);
-        const secRefP = secSrcM ? mapSourceToRef(secSrcM[1]) : null;
-        const secRefPath = secRefP || chapterRefPath;
-        if (secRefPath) {
-            const refFileName = secRefPath.split('/').pop();
-            for (const [idxKey, entry] of Object.entries(GLOSSARY_INDEX)) {
-                if (idxKey.startsWith(refFileName + '|') && !seenKeys.has(idxKey)) {
-                    glossaryItems.push({ idxKey, ...entry });
-                    seenKeys.add(idxKey);
-                }
-            }
-        }
-    }
+    // --- 용어집 항목 사전 계산 (glossary-renderer 모듈 위임) ---
+    const glossaryItems = collectGlossaryItems(chapter.sections, chapterRefPath, mapSourceToRef);
     const hasGlossary = glossaryItems.length > 0;
 
     // TOC에 용어집 항목 추가
     if (hasGlossary && tocList) {
-        const glossaryTocItem = document.createElement('div');
-        glossaryTocItem.className = 'reader-toc-item';
-        glossaryTocItem.dataset.glossaryScroll = '1';
-        glossaryTocItem.style.cssText = 'margin-top:0.4rem;border-top:1px solid var(--border-color,#30363d);padding-top:0.4rem;';
-        glossaryTocItem.innerHTML = '<span class="toc-num"><i class="fa-solid fa-book-bookmark"></i></span><span>중요 용어 해설</span>';
-        glossaryTocItem.addEventListener('click', () => {
-            const target = document.getElementById('reader-glossary');
-            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
-        tocList.appendChild(glossaryTocItem);
+        appendGlossaryTocItem(tocList);
     }
 
     let html = `
@@ -933,28 +909,9 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStor
         `;
     });
 
-    // --- 과목별 용어집 테이블 (챕터 전체에서 한 번만 렌더) ---
+    // --- 과목별 용어집 테이블 (glossary-renderer 모듈 위임) ---
     if (hasGlossary) {
-        const rows = glossaryItems.map(item => {
-            const explanation = item.explanation || '(설명 없음)';
-            const refPath = resolveRefPath(item.refDoc + '.pdf');
-            const refLink = refPath
-                ? `<a href="#" data-ref-html="${esc(refPath)}" class="glossary-ref-link"><i class="fa-solid fa-file-lines"></i> ${esc(item.refDoc || '')}</a>`
-                : esc(item.refDoc || '');
-            return `<tr id="glossary-${esc(item.idxKey)}"><td class="glossary-term">${esc(item.keyword)}</td><td class="glossary-explanation">${esc(explanation)}</td><td class="glossary-ref">${refLink}</td></tr>`;
-        }).join('\n');
-        html += `
-        <div class="reader-glossary" id="reader-glossary">
-        <h4 class="glossary-title">📖 중요 용어 해설</h4>
-        <div class="reader-table-wrapper">
-        <table class="reader-table glossary-table">
-        <thead><tr><th>용어</th><th>설명</th><th>출처</th></tr></thead>
-        <tbody>
-        ${rows}
-        </tbody>
-        </table>
-        </div>
-        </div>`;
+        html += renderGlossaryTable(glossaryItems);
     }
 
     // Prev / Next chapter navigation
@@ -1451,23 +1408,8 @@ function bindReferenceLinks() {
         });
     });
 
-    // 용어집 앵커 바인딩: data-glossary 속성을 가진 링크 → 같은 페이지 내 스크롤
-    document.querySelectorAll('[data-glossary]').forEach(a => {
-        a.addEventListener('click', (e) => {
-            e.preventDefault();
-            const idxKey = a.dataset.glossary;
-            if (idxKey) {
-                const target = document.getElementById(`glossary-${idxKey}`);
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    target.style.transition = 'background 0.5s ease';
-                    const origBg = target.style.background;
-                    target.style.background = 'rgba(250,204,21,0.25)';
-                    setTimeout(() => { target.style.background = origBg; }, 2000);
-                }
-            }
-        });
-    });
+    // 용어집 앵커 바인딩: glossary-renderer 모듈 위임
+    bindGlossaryEvents(document);
 
     // HTML 뷰어 바인딩: data-ref-html 속성을 가진 모든 링크
     document.querySelectorAll('[data-ref-html]').forEach(a => {

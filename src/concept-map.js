@@ -2,7 +2,7 @@
 // 교재 리더 상단에 섹션 구조를 시각화한 마인드맵을 렌더링합니다.
 // 대분류/중분류/소분류 테이블이 있으면 계층적 트리로 렌더링, 없으면 평면 섹션 나열.
 import { resolveRefPath } from './pdf-registry.js';
-import { GLOSSARY_INDEX } from './keyword-index.js';
+import { getGlossaryEntry } from './glossary-query.js';
 
 /**
  * 챕터 섹션 데이터를 받아 SVG 마인드맵을 생성합니다.
@@ -214,7 +214,7 @@ function buildRefLinkAttrs(linkInfo, refPath) {
     // GLOSSARY_INDEX 키: "파일명.md|L123" (경로 단축版)
     const fileName = html.split('/').pop();
     const idxKey = `${fileName}|L${line}`;
-    const entry = GLOSSARY_INDEX[idxKey];
+    const entry = getGlossaryEntry(idxKey);
     if (!entry) return '';  // 키워드가 없으면 링크 속성 생성하지 않음
     return `data-glossary="${escapeAttr(idxKey)}"`;
 }

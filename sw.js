@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v152-20260901-html-viewer-scrollbar-color';   // html-viewer 스크롤바 색상 수정 (흰 배경에 어두운 스크롤바)
+const CACHE_VERSION = 'v153-20260901-glossary-modular';   // 용어집 모듈화 리팩토링 (glossary-query, glossary-renderer 분리)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
