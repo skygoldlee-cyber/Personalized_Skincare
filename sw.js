@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v124-20260901-l-scroll-fix-v2';   // L### 스크롤: _doSearch skipScroll, MD 빈 줄 처리, 키워드 4단어 확장
+const CACHE_VERSION = 'v125-20260901-l-scroll-fix-v3';   // L### 스크롤: 키워드 검색 우선, lineNum fallback
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;

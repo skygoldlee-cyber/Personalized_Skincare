@@ -277,13 +277,19 @@ async function openHtmlViewer(htmlPath, searchKeyword, anchorId, lineNum) {
         }
 
         // 스크롤 타겟 찾기
-        // L### 링크: lineNum이 있으면 HTML은 N번째 <p>, MD는 검색 결과 사용
-        // 출처 링크: anchorId가 있으면 ID/heading 검색 우선
+        // 우선순위: 검색 결과(키워드 매칭) > lineNum(N번째 <p>) > 앵커 ID > heading 텍스트
+        // L### 링크: 키워드 검색이 가장 정확 (셀 텍스트가 참조자료에 있으면 해당 위치로 스크롤)
+        // lineNum은 fallback (L### 번호가 HTML <p> 인덱스와 항상 일치하지 않으므로)
         if (anchorId || lineNum) {
             let target = null;
 
-            // 1. lineNum + HTML 파일: N번째 <p> 요소로 스크롤 (p 태그가 원본 라인과 1:1 대응)
-            if (lineNum && !isMarkdown) {
+            // 1. 검색 결과가 있으면 첫 번째 결과로 스크롤 (키워드 매칭이 가장 정확)
+            if (_searchResults.length > 0) {
+                target = _searchResults[0];
+            }
+
+            // 2. lineNum fallback: N번째 <p> 요소 (HTML 파일에서만, p 태그가 원본 라인과 대략 대응)
+            if (!target && lineNum && !isMarkdown) {
                 const blocks = content.querySelectorAll('p');
                 const idx = parseInt(lineNum) - 1;
                 if (idx >= 0 && idx < blocks.length) {
@@ -291,11 +297,6 @@ async function openHtmlViewer(htmlPath, searchKeyword, anchorId, lineNum) {
                 } else if (blocks.length > 0) {
                     target = blocks[Math.min(idx, blocks.length - 1)];
                 }
-            }
-
-            // 2. lineNum + MD 파일: 검색 결과(원본 라인 텍스트로 검색) 사용
-            if (lineNum && isMarkdown && !target && _searchResults.length > 0) {
-                target = _searchResults[0];
             }
 
             // 3. lineNum이 없고 anchorId가 있으면 ID로 직접 찾기 (출처 라인 제N조용)
@@ -312,11 +313,6 @@ async function openHtmlViewer(htmlPath, searchKeyword, anchorId, lineNum) {
                         break;
                     }
                 }
-            }
-
-            // 5. 최종 fallback: 검색 결과
-            if (!target && _searchResults.length > 0) {
-                target = _searchResults[0];
             }
 
             if (target) {
