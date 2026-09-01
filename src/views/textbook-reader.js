@@ -4,10 +4,10 @@ import { formatSectionContentForReader } from '../reader-format.js';
 import { parseTextbookContent } from '../textbook-parser.js';
 import { renderConceptMap } from '../concept-map.js';
 import { renderStudyAids, bindStudyAidToggles, renderExamFilterToggle, applyExamFilter, isKeySection } from '../study-aids.js';
-import { openPdf } from '../pdf-viewer.js';
+import { openHtmlViewer } from '../html-viewer.js';
 import {
     SUBJECT_DIR_MAP, REFERENCE_FILES, REFERENCE_COMMON, REFERENCE_INGREDIENTS,
-    REFERENCE_LAW, mapSourceToPdf
+    REFERENCE_LAW, mapSourceToRef
 } from '../pdf-registry.js';
 // [모바일 PWA 견고성] 오디오 매니페스트는 window 전역(가드)에서 읽는다(정적 import 하드 의존 지양).
 import { DataLoader } from '../data-loader.js';
@@ -867,7 +867,7 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStor
         const m = (s.content || '').match(/📌\s*\*\*출처\*\*[:：]\s*(.+?)(?:\||\n)/);
         if (m) { chapterSourceText = m[1]; break; }
     }
-    const chapterPdfPath = mapSourceToPdf(chapterSourceText);
+    const chapterRefPath = mapSourceToRef(chapterSourceText);
     const subjRefFiles = REFERENCE_FILES[subjId] || [];
     const subjDirName = REFERENCE_DIR_MAP[subjId] || '';
 
@@ -875,8 +875,8 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStor
         const bookmarkKey = `${subjId}_${chapterIdx}_${idx}`;
         const isBookmarked = bookmarks.includes(bookmarkKey);
         const secSrcMatch = (section.content || '').match(/📌\s*\*\*출처\*\*[:：]\s*(.+?)(?:\||\n)/);
-        const secPdfPath = secSrcMatch ? mapSourceToPdf(secSrcMatch[1]) : null;
-        const pdfPath = secPdfPath || chapterPdfPath;
+        const secRefPath = secSrcMatch ? mapSourceToRef(secSrcMatch[1]) : null;
+        const refPath = secRefPath || chapterRefPath;
         html += `
             <div class="reader-section-card" id="reader-section-${idx}" data-section-idx="${idx}">
                 <div class="reader-section-header" data-section-idx="${idx}">
@@ -889,7 +889,7 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStor
                 </div>
                 <div class="reader-section-body">
                     <div class="textbook-reader-section-content">
-                        ${formatSectionContentForReader(section.content, chapter.filePath, pdfPath, subjRefFiles, subjDirName)}
+                        ${formatSectionContentForReader(section.content, chapter.filePath, refPath, subjRefFiles, subjDirName)}
                     </div>
                 </div>
             </div>
@@ -923,7 +923,7 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStor
         renderConceptMap(cmapBody, chapter, {
             isLightTheme: isLight,
             isKeySection,
-            pdfPath: chapterPdfPath,
+            refPath: chapterRefPath,
             onNodeClick: (sectionIdx) => {
                 const target = container.querySelector(`#reader-section-${sectionIdx}`);
                 if (target) {
@@ -1245,12 +1245,14 @@ function buildReferenceLinks(subjId) {
     if (subjectFiles.length > 0) {
         links += `<div class="ref-group-label">과목별 참조자료</div>`;
         subjectFiles.forEach(f => {
-            const path = `content/참조자료/${dirName}/${f.file}`;
-            const icon = f.type === 'pdf' ? 'fa-file-pdf' : 'fa-file-lines';
+            const icon = 'fa-file-lines';
             if (f.type === 'md') {
+                const path = `content/참조자료/${dirName}/${f.file}`;
                 links += `<a class="ref-link-item" data-ref-md="${esc(path)}"><i class="fa-solid ${icon}"></i> ${esc(f.name)}</a>`;
             } else {
-                links += `<a href="#" data-pdf-path="${esc(path)}" class="ref-link-item"><i class="fa-solid ${icon}"></i> ${esc(f.name)}</a>`;
+                const base = f.file.replace(/\.pdf$/, '');
+                const path = `content/참조자료/html_output/${base}/${base}.html`;
+                links += `<a href="#" data-ref-html="${esc(path)}" class="ref-link-item"><i class="fa-solid ${icon}"></i> ${esc(f.name)}</a>`;
             }
         });
     }
@@ -1258,26 +1260,30 @@ function buildReferenceLinks(subjId) {
     // 원료 참조자료
     links += `<div class="ref-group-label">원료 참조자료</div>`;
     REFERENCE_INGREDIENTS.forEach(f => {
-        const path = `content/참조자료/${f.dir}/${f.file}`;
         if (f.type === 'md') {
+            const path = `content/참조자료/${f.dir}/${f.file}`;
             links += `<a class="ref-link-item" data-ref-md="${esc(path)}"><i class="fa-solid fa-file-lines"></i> ${esc(f.name)}</a>`;
         } else {
-            links += `<a href="#" data-pdf-path="${esc(path)}" class="ref-link-item"><i class="fa-solid fa-file-pdf"></i> ${esc(f.name)}</a>`;
+            const base = f.file.replace(/\.pdf$/, '');
+            const path = `content/참조자료/html_output/${base}/${base}.html`;
+            links += `<a href="#" data-ref-html="${esc(path)}" class="ref-link-item"><i class="fa-solid fa-file-lines"></i> ${esc(f.name)}</a>`;
         }
     });
     
     // 법령원문
     links += `<div class="ref-group-label">법령원문</div>`;
     REFERENCE_LAW.forEach(f => {
-        const path = `content/참조자료/${f.dir}/${f.file}`;
-        links += `<a href="#" data-pdf-path="${esc(path)}" class="ref-link-item"><i class="fa-solid fa-file-pdf"></i> ${esc(f.name)}</a>`;
+        const base = f.file.replace(/\.pdf$/, '');
+        const path = `content/참조자료/html_output/${base}/${base}.html`;
+        links += `<a href="#" data-ref-html="${esc(path)}" class="ref-link-item"><i class="fa-solid fa-file-lines"></i> ${esc(f.name)}</a>`;
     });
     
     // 공통 참조자료
     links += `<div class="ref-group-label">공통 참조자료</div>`;
     REFERENCE_COMMON.forEach(f => {
-        const path = `content/참조자료/${f.dir}/${f.file}`;
-        links += `<a href="#" data-pdf-path="${esc(path)}" class="ref-link-item"><i class="fa-solid fa-file-pdf"></i> ${esc(f.name)}</a>`;
+        const base = f.file.replace(/\.pdf$/, '');
+        const path = `content/참조자료/html_output/${base}/${base}.html`;
+        links += `<a href="#" data-ref-html="${esc(path)}" class="ref-link-item"><i class="fa-solid fa-file-lines"></i> ${esc(f.name)}</a>`;
     });
     
     return links;
@@ -1295,14 +1301,14 @@ function bindReferenceLinks() {
         });
     });
 
-    // PDF.js 뷰어 바인딩: data-pdf-path 속성을 가진 모든 링크
-    document.querySelectorAll('[data-pdf-path]').forEach(a => {
+    // HTML 뷰어 바인딩: data-ref-html 속성을 가진 모든 링크
+    document.querySelectorAll('[data-ref-html]').forEach(a => {
         a.addEventListener('click', (e) => {
             e.preventDefault();
-            const pdfPath = a.dataset.pdfPath;
-            const searchKeyword = a.dataset.pdfSearch || '';
-            if (pdfPath) {
-                openPdf(pdfPath, searchKeyword);
+            const refHtmlPath = a.dataset.refHtml;
+            const searchKeyword = a.dataset.refSearch || '';
+            if (refHtmlPath) {
+                openHtmlViewer(refHtmlPath, searchKeyword);
             }
         });
     });

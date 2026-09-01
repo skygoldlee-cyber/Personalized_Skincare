@@ -9,16 +9,14 @@
 audiobook/mp3/
 *.mp3
 
-# ---------- 📚 정적 HTML 콘텐츠 (전면 폐기됨) ----------
-# 교재 본문은 이제 content/*.md 를 런타임에 fetch → src/textbook-parser.js 로
-# 파싱하여 렌더링한다(사전 렌더 HTML 불필요). content/*.html 은 삭제되었다.
-# 앱에서 링크로 여는 문서 HTML(docs/*.html)만 배포에 포함하고,
-# 루트 index.html(진입점)은 반드시 유지한다.
-# ※ 교재/카드/퀴즈: content/*.md(원본, 배포됨) + data/study_md.js(file://·fetch실패 폴백)
-# ※ 문제집: content/exams/*.md(원본) + data/exams_md/*.js(file:// 폴백)
+# ---------- 📚 정적 HTML 콘텐츠 ----------
+# 교재 본문은 content/*.md 런타임 파싱으로 렌더링 (사전 렌더 HTML 불필요).
+# 참조자료 HTML 변환본(html_output)은 앱 내 HTML 뷰어가 fetch하므로 배포에 포함.
+# 루트 index.html(진입점), docs/*.html도 배포에 포함.
 *.html
 !index.html
 !docs/*.html
+!content/참조자료/html_output/**/*.html
 
 # ---------- 🗑️ 구(모놀리식) 죽은 데이터 파일 ----------
 # index.html은 모듈러 구조(registry + data/subjects·exams/*.hash.js)만 로드한다.
@@ -61,12 +59,12 @@ archive/
 # content/report/는 개발/분석용 문서로 앱에서 참조하지 않음
 content/report/
 
-# ---------- � 참조자료 PDF (27MB, 앱 내 PDF 뷰어 사용) ----------
-# content/참조자료/ 하위 PDF 파일들은 앱 내 PDF.js 뷰어가 직접 fetch하므로 배포에 포함해야 함.
-# 총 42개 파일 약 27MB. Vercel 무료 플랜(100MB) 대비 상당 부분 차지.
-# 향후 용량 문제 시 외부 스토리지(Cloudflare R2, AWS S3) 이관 검토.
+# ---------- 📖 참조자료 PDF (배포 제외 — HTML 변환본으로 대체) ----------
+# content/참조자료/ 하위 PDF 파일들은 html_output의 HTML 변환본으로 대체되어 배포에서 제외.
+# HTML 변환본(~35MB)만 배포에 포함.
+content/참조자료/**/*.pdf
 
-# ---------- �🔧 개발 도구 및 파이프라인 ----------
+# ---------- 🔧 개발 도구 및 파이프라인 ----------
 content/audiobook/
 tools/
 *.py

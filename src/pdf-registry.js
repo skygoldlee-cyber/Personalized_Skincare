@@ -1,11 +1,14 @@
-// src/pdf-registry.js — PDF/참조자료 중앙 설정 모듈
+// src/pdf-registry.js — 참조자료 중앙 설정 모듈 (HTML 변환본 기반)
 // ================================================================
 // 과목이 변경될 때 이 파일만 수정하면 됩니다.
 // reader-format.js와 textbook-reader.js는 이 파일을 import하여 사용합니다.
 //
+// 참조자료는 content/참조자료/html_output/ 하위의 HTML 변환본을 사용합니다.
+// 각 파일은 {파일명(확장자 제거)}/{파일명(확장자 제거)}.html 구조로 배치됩니다.
+//
 // 수정 가이드:
-// 1. 새 과목 추가 → SUBJECT_DIR_MAP, PDF_DIRS, REFERENCE_FILES에 항목 추가
-// 2. 새 법령 PDF 추가 → PDF_DIRS.법령원문, SOURCE_PDF_MAP, REFERENCE_LAW에 추가
+// 1. 새 과목 추가 → SUBJECT_DIR_MAP, REF_DIRS, REFERENCE_FILES에 항목 추가
+// 2. 새 법령 참조자료 추가 → REF_DIRS.법령원문, SOURCE_REF_MAP, REFERENCE_LAW에 추가
 // 3. 새 참조자료 추가 → REFERENCE_COMMON 또는 REFERENCE_FILES에 추가
 // ================================================================
 
@@ -17,9 +20,9 @@ export const SUBJECT_DIR_MAP = {
     'understanding': '과목4'
 };
 
-// --- 폴더별 PDF/MD 파일 목록 ---
+// --- 폴더별 참조자료 파일 목록 (원본 PDF 파일명, HTML 경로는 자동 변환) ---
 // 우선순위: 과목N > 공통 > 법령원문 (같은 파일명이면 먼저 등록된 폴더가 우선)
-export const PDF_DIRS = {
+export const REF_DIRS = {
     '법령원문': [
         '화장품법(법률)(제20901호)(20260402).pdf',
         '화장품법 시행규칙(총리령)(제02109호)(20260402).pdf',
@@ -53,8 +56,8 @@ export const PDF_DIRS = {
     '과목4': []
 };
 
-// --- 출처 키워드 → PDF 파일명 매핑 (위에서 아래로 순차 매칭, 첫 매칭 사용) ---
-export const SOURCE_PDF_MAP = [
+// --- 출처 키워드 → 참조자료 파일명 매핑 (위에서 아래로 순차 매칭, 첫 매칭 사용) ---
+export const SOURCE_REF_MAP = [
     { test: /화장품법\s*제?\d+조/, exclude: /시행령|시행규칙|고시/, file: '화장품법(법률)(제20901호)(20260402).pdf' },
     { test: /시행규칙/, file: '화장품법 시행규칙(총리령)(제02109호)(20260402).pdf' },
     { test: /안전기준/, file: '화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318).pdf' },
@@ -154,46 +157,51 @@ export const REFERENCE_LAW = [
 // 파생 맵 (수정 불필요 — 위의 설정에서 자동 생성됨)
 // ================================================================
 
-// 파일명 → 전체 경로 매핑 (reader-format.js용, 우선순위: 과목N > 공통 > 법령원문)
+// HTML 기본 경로: content/참조자료/html_output/{basename}/{basename}.html
+// basename = 파일명에서 .pdf 확장자 제거
+function _toHtmlPath(fileName) {
+    const base = fileName.replace(/\.pdf$/, '');
+    return `content/참조자료/html_output/${base}/${base}.html`;
+}
+
+// 파일명 → HTML 경로 매핑 (reader-format.js용, 우선순위: 과목N > 공통 > 법령원문)
 const _DIR_PRIORITY = ['과목4', '과목3', '과목2', '과목1', '공통', '법령원문'];
-export const PDF_FILE_TO_PATH = {};
+export const REF_FILE_TO_PATH = {};
 for (const dir of _DIR_PRIORITY) {
-    for (const f of PDF_DIRS[dir] || []) {
-        if (!PDF_FILE_TO_PATH[f]) PDF_FILE_TO_PATH[f] = `content/참조자료/${dir}/${f}`;
+    for (const f of REF_DIRS[dir] || []) {
+        if (!REF_FILE_TO_PATH[f]) REF_FILE_TO_PATH[f] = _toHtmlPath(f);
     }
 }
 
 // 파일명 → 폴더명 레지스트리 (textbook-reader.js용, 동일 우선순위)
-export const PDF_REGISTRY = {};
+export const REF_REGISTRY = {};
 for (const dir of _DIR_PRIORITY) {
-    for (const f of PDF_DIRS[dir] || []) {
-        if (!PDF_REGISTRY[f]) PDF_REGISTRY[f] = dir;
+    for (const f of REF_DIRS[dir] || []) {
+        if (!REF_REGISTRY[f]) REF_REGISTRY[f] = dir;
     }
 }
 
 // --- 헬퍼 함수 ---
 
-export function resolvePdfPath(fileName) {
+export function resolveRefPath(fileName) {
     if (!fileName) return '';
     if (fileName.startsWith('content/')) return fileName;
-    return PDF_FILE_TO_PATH[fileName] || '';
+    return REF_FILE_TO_PATH[fileName] || '';
 }
 
-export function mapSourceToPdf(sourceText) {
+export function mapSourceToRef(sourceText) {
     if (!sourceText) return '';
     const s = sourceText.trim();
 
-    let pdfFile = '';
-    for (const entry of SOURCE_PDF_MAP) {
+    let refFile = '';
+    for (const entry of SOURCE_REF_MAP) {
         if (entry.exclude) {
-            if (entry.test.test(s) && !entry.exclude.test(s)) { pdfFile = entry.file; break; }
+            if (entry.test.test(s) && !entry.exclude.test(s)) { refFile = entry.file; break; }
         } else {
-            if (entry.test.test(s)) { pdfFile = entry.file; break; }
+            if (entry.test.test(s)) { refFile = entry.file; break; }
         }
     }
-    if (!pdfFile) return '';
+    if (!refFile) return '';
 
-    const dir = PDF_REGISTRY[pdfFile];
-    if (dir) return `content/참조자료/${dir}/${pdfFile}`;
-    return '';
+    return _toHtmlPath(refFile);
 }
