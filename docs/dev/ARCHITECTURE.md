@@ -243,7 +243,7 @@
 
 ```
 [분리 완료]
-utils.js (헬퍼)                  views/backup.js (백업/복원)
+utils.js (헬퍼·Fisher-Yates shuffle)  views/backup.js (백업/복원)
 trainer-calc.js (문제 생성)       views/textbook-search.js (교재 검색)
 state.js (상태·영속성)            views/textbook-reader.js (리더+오디오+Media Session)
 charts.js (시각화+인터랙티브 툴팁) views/exam-simulator.js (모의고사+오답 복습)
@@ -498,7 +498,7 @@ Service Worker(`sw.js`)는 본 애플리케이션의 오프라인 지원과 캐�
 
 ### 2. 요청 가로채기 흐름 (Fetch Interception)
 
-모든 GET 요청은 `sw.js`의 fetch 핸들러를 통과하며, 요청 유형별로 7단계 분기 전략이 적용됩니다:
+모든 GET 요청은 `sw.js`의 fetch 핸들러를 통과하며, 요청 유형별로 8단계 분기 전략이 적용됩니다:
 
 ```
 요청 도착
@@ -518,7 +518,11 @@ Service Worker(`sw.js`)는 본 애플리케이션의 오프라인 지원과 캐�
   │     ├─ registry.js? ──► Network First (DATA_CACHE) — 최신 메타 확인
   │     └─ 그 외? ──► Cache First (DATA_CACHE) — 해시 파일명으로 자연 갱신
   │
-  ├─ *.md? ──► Cache First (SHELL_CACHE) — 정적 마크다운 원본
+  ├─ *.md?
+  │     ├─ /html_output/ 경로? ──► Cache First (DATA_CACHE) — 배포 간 유지 (26MB 참조자료)
+  │     └─ 그 외? ──► Cache First (SHELL_CACHE) — 정적 마크다운 원본
+  │
+  ├─ /html_output/*.html? ──► Cache First (DATA_CACHE) — 배포 간 유지 (body-only 참조자료)
   │
   ├─ /src/*.js? ──► Cache First (SHELL_CACHE) — ESM 모듈 일관성 보장
   │

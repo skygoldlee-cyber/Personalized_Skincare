@@ -591,6 +591,50 @@
 
 ---
 
+## 33. 성능·접근성·품질 일괄 개선 (2026-09-01)
+
+> **목표**: 프로젝트 전체 기능·성능 리뷰에서 식별된 7개 개선항목을 일괄 적용
+
+### 변경 내용
+
+1. **Fisher-Yates 셔플 알고리즘 도입** (`src/utils.js`, `app.js`, `quiz.js`, `exam-simulator.js`, `flashcard.js`, `trainer.js`)
+   - 편향된 `.sort(() => 0.5 - Math.random())` 11곳을 공정한 Fisher-Yates `shuffle()` 함수로 교체
+   - 퀴즈 문제 순서, 플래시카드 셔플, 모의고사 문제 선택, 원료 챌린지 등 모든 무작위 선택에 적용
+
+2. **서비스 워커 캐시 전략 분리** (`sw.js`)
+   - `html_output/*.md` 및 `html_output/*.html` 파일을 `SHELL_CACHE`(배포마다 삭제)에서 `DATA_CACHE`(배포 간 유지)로 이동
+   - ~26MB 참조자료가 매 배포마다 재다운로드되는 문제 해결
+
+3. **localStorage 용량 초과 사용자 경고** (`app.js`, `state.js`)
+   - `state._storageUnavailable` 플래그 감지 시 하단 고정 경고 배너 표시
+   - `saveProgress()` 실패 시 자동으로 배너 활성화
+
+4. **교재 검색 인덱스 사전 구축** (`src/views/textbook-search.js`)
+   - `section.content.toLowerCase()`를 검색마다 재계산하던 것을 최초 1회만 계산하여 캐싱
+   - `STUDY_DATA` 키 변경 시에만 인덱스 재구축 (자동 무효화)
+
+5. **console.log → console.debug 변경** (`app.js`, `app-fallback.js`, `state.js`)
+   - 프로덕션 환경에서 브라우저 콘솔 노이즈 제거
+   - `console.error`/`console.warn`은 유지
+
+6. **접근성 ARIA 속성 추가** (`html-viewer.js`, `exam-viewer.js`, `app.js`, `index.html`)
+   - `html-viewer` 및 `exam-viewer` 오버레이: `role="dialog"`, `aria-modal`, `aria-label`, `role="heading"`
+   - 검색 결과 카운트: `aria-live="polite"`
+   - 퀴즈 피드백/결과 패널: `role="status"`, `aria-live="polite"`
+   - 플래시카드: `role="button"`, `tabindex="0"`, 키보드 Enter/Space 플립 지원, `aria-expanded` 상태
+
+7. **대시보드 통계 O(1) 조회** (`src/views/dashboard.js`)
+   - 과목별 카운트 맵(`_getSubjCounts()`)을 캐싱하여 `Set.filter()` 3중 순회를 O(1) 조회로 대체
+   - `memorizedCards.size + weakCards.size + quizResults.length` 키 기반 캐시 무효화
+
+### 검증
+
+- `npm test` 88/88 통과
+- `CACHE_VERSION` → `v120-20260901-perf-a11y` 갱신
+- Vercel 배포 완료: https://personalized-skincare-study.vercel.app
+
+---
+
 ## 32. html_output 대용량 파일 MD 변환 및 body-only 추출 (2026-09-01)
 
 > **목표**: `html_output` 디렉토리의 HTML 파일들이 ~44.5MB로 배포 용량 부담이 큰 문제를 해결하기 위해, 대용량 법령 원문 3개를 Markdown으로 변환하고 나머지 38개는 `<head>`/`<style>`/base64 이미지를 제거하여 용량 절감
