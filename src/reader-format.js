@@ -4,7 +4,7 @@ import { escapeHTML } from './sanitize.js';
 import { resolveRefPath, KEYWORD_REF_MAP } from './pdf-registry.js';
 import { GLOSSARY_INDEX } from './keyword-index.js';
 
-export function formatSectionContentForReader(rawContent, filePath, refPath, refFiles, refDir) {
+export function formatSectionContentForReader(rawContent, filePath, refPath, refFiles, refDir, glossaryKeywords) {
     let html = parseMarkdown(rawContent, {
         useCustomListDiv: true,
         useReaderStyles: true,
@@ -171,6 +171,34 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
             `$1 data-ref-search="${escapeHTML(search)}" data-ref-anchor="${escapeHTML(search)}"`
         );
     }).join('\n');
+
+    // --- 본문 중 용어집 키워드 자동 링크 ---
+    // 용어집에 등록된 키워드가 본문에 나오면 해당 용어집 앵커로 링크
+    if (glossaryKeywords && glossaryKeywords.length > 0) {
+        // 키워드 길이 내림차순 정렬 (긴 키워드 먼저 매칭하여 부분 매칭 방지)
+        const sorted = [...glossaryKeywords]
+            .filter(k => k.keyword && k.keyword.length >= 2)
+            .sort((a, b) => b.keyword.length - a.keyword.length);
+        if (sorted.length > 0) {
+            // HTML 태그와 기존 <a> 링크 보호 (태그 내부 속성값은 치환하지 않음)
+            const phs = [];
+            let processed = html.replace(/<a\s[^>]*>.*?<\/a>|<[^>]+>/gs, (m) => {
+                const i = phs.length;
+                phs.push(m);
+                return `\x00T${i}\x00`;
+            });
+            // 단일 패스 교대 정규식으로 모든 키워드 동시 매칭
+            const pattern = sorted.map(k => k.keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|');
+            const re = new RegExp(`(${pattern})`, 'g');
+            processed = processed.replace(re, (match) => {
+                const item = sorted.find(k => k.keyword === match);
+                if (!item) return match;
+                return `<a href="#glossary-${escapeHTML(item.idxKey)}" data-glossary="${escapeHTML(item.idxKey)}" class="glossary-term-link">${escapeHTML(match)}</a>`;
+            });
+            // 플레이스홀더 복원
+            html = processed.replace(/\x00T(\d+)\x00/g, (m, i) => phs[parseInt(i)]);
+        }
+    }
 
     return html;
 }

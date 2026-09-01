@@ -782,17 +782,50 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStor
 
     const bookmarks = getReaderBookmarks();
 
+    // --- 용어집 항목 사전 계산 (TOC + 본문 렌더 공용) ---
+    const glossaryItems = [];
+    const seenKeys = new Set();
+    for (const s of chapter.sections) {
+        const secSrcM = (s.content || '').match(/📌\s*\*\*출처\*\*[:：]\s*(.+?)(?:\||\n)/);
+        const secRefP = secSrcM ? mapSourceToRef(secSrcM[1]) : null;
+        const secRefPath = secRefP || chapterRefPath;
+        if (secRefPath) {
+            const refFileName = secRefPath.split('/').pop();
+            for (const [idxKey, entry] of Object.entries(GLOSSARY_INDEX)) {
+                if (idxKey.startsWith(refFileName + '|') && !seenKeys.has(idxKey)) {
+                    glossaryItems.push({ idxKey, ...entry });
+                    seenKeys.add(idxKey);
+                }
+            }
+        }
+    }
+    const hasGlossary = glossaryItems.length > 0;
+
     // Build TOC
     const tocList = document.getElementById('reader-toc-list');
     if (tocList) {
-        tocList.innerHTML = chapter.sections.map((section, idx) => `
+        let tocHtml = chapter.sections.map((section, idx) => `
             <div class="reader-toc-item" data-section-idx="${idx}">
                 <span class="toc-num">${idx + 1}</span>
                 <span>${esc(section.title)}</span>
             </div>
         `).join('');
+        // 용어집 항목 추가 (용어집이 있는 경우만)
+        if (hasGlossary) {
+            tocHtml += `<div class="reader-toc-item" data-glossary-scroll="1" style="margin-top:0.4rem;border-top:1px solid var(--border-color,#30363d);padding-top:0.4rem;">
+                <span class="toc-num"><i class="fa-solid fa-book-bookmark"></i></span>
+                <span>중요 용어 해설</span>
+            </div>`;
+        }
+        tocList.innerHTML = tocHtml;
         tocList.querySelectorAll('.reader-toc-item').forEach(item => {
             item.addEventListener('click', () => {
+                const glossaryScroll = item.dataset.glossaryScroll;
+                if (glossaryScroll) {
+                    const target = document.getElementById('reader-glossary');
+                    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    return;
+                }
                 const idx = parseInt(item.dataset.sectionIdx);
                 const target = document.getElementById(`reader-section-${idx}`);
                 if (target) {
@@ -891,7 +924,7 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStor
                 </div>
                 <div class="reader-section-body">
                     <div class="textbook-reader-section-content">
-                        ${formatSectionContentForReader(section.content, chapter.filePath, refPath, subjRefFiles, subjDirName)}
+                        ${formatSectionContentForReader(section.content, chapter.filePath, refPath, subjRefFiles, subjDirName, glossaryItems)}
                     </div>
                 </div>
             </div>
@@ -899,23 +932,7 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStor
     });
 
     // --- 과목별 용어집 테이블 (챕터 전체에서 한 번만 렌더) ---
-    const glossaryItems = [];
-    const seenKeys = new Set();
-    for (const s of chapter.sections) {
-        const secSrcM = (s.content || '').match(/📌\s*\*\*출처\*\*[:：]\s*(.+?)(?:\||\n)/);
-        const secRefP = secSrcM ? mapSourceToRef(secSrcM[1]) : null;
-        const secRefPath = secRefP || chapterRefPath;
-        if (secRefPath) {
-            const refFileName = secRefPath.split('/').pop();
-            for (const [idxKey, entry] of Object.entries(GLOSSARY_INDEX)) {
-                if (idxKey.startsWith(refFileName + '|') && !seenKeys.has(idxKey)) {
-                    glossaryItems.push({ idxKey, ...entry });
-                    seenKeys.add(idxKey);
-                }
-            }
-        }
-    }
-    if (glossaryItems.length > 0) {
+    if (hasGlossary) {
         const rows = glossaryItems.map(item => {
             const explanation = item.explanation || '(설명 없음)';
             const refPath = resolveRefPath(item.refDoc + '.pdf');
@@ -925,7 +942,7 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStor
             return `<tr id="glossary-${esc(item.idxKey)}"><td class="glossary-term">${esc(item.keyword)}</td><td class="glossary-explanation">${esc(explanation)}</td><td class="glossary-ref">${refLink}</td></tr>`;
         }).join('\n');
         html += `
-        <div class="reader-glossary">
+        <div class="reader-glossary" id="reader-glossary">
         <h4 class="glossary-title">📖 중요 용어 해설</h4>
         <div class="reader-table-wrapper">
         <table class="reader-table glossary-table">
