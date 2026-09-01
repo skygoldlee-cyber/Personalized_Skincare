@@ -488,14 +488,6 @@ export function renderStudyAids(chapter) {
     const numberCard = renderNumberDrillCard(chapter);
     if (numberCard) html += numberCard;
 
-    // 절차 플로우
-    const flowCard = renderProcedureFlowCard(chapter);
-    if (flowCard) html += flowCard;
-
-    // 행정처분 계단
-    const penaltyCard = renderAdminPenaltyCard(chapter);
-    if (penaltyCard) html += penaltyCard;
-
     return html;
 }
 

@@ -2,7 +2,6 @@
 import { escapeHTML, esc, safeTextWithBreaks } from '../sanitize.js';
 import { formatSectionContentForReader } from '../reader-format.js';
 import { parseTextbookContent } from '../textbook-parser.js';
-import { renderConceptMap } from '../concept-map.js';
 import { renderStudyAids, bindStudyAidToggles, renderExamFilterToggle, applyExamFilter, isKeySection } from '../study-aids.js';
 import { openHtmlViewer } from '../html-viewer.js';
 import {
@@ -904,16 +903,6 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStor
         </div>
     `;
 
-    // Concept map + study aids
-    html += `
-        <div class="concept-map-container" style="margin: 1rem 0;">
-            <div id="concept-map-toggle" class="concept-map-toggle" style="cursor:pointer;display:flex;align-items:center;gap:0.4rem;padding:0.5rem 0.75rem;background:var(--bg-card);border:1px solid var(--border-color);border-radius:8px;font-size:0.85rem;font-weight:600;color:var(--color-primary);">
-                <i class="fa-solid fa-sitemap"></i> 개념 맵
-                <i class="fa-solid fa-chevron-down" style="margin-left:auto;font-size:0.75rem;"></i>
-            </div>
-            <div id="concept-map-body" class="concept-map-body expanded" style="margin-top:0.5rem;max-height:400px;overflow:auto;background:var(--bg-card);border:1px solid var(--border-color);border-radius:8px;padding:0.5rem;"></div>
-        </div>
-    `;
     html += renderStudyAids(chapter);
 
     const subjRefFiles = REFERENCE_FILES[subjId] || [];
@@ -987,43 +976,7 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStor
 
     container.innerHTML = html;
 
-    // Concept map rendering
-    const cmapBody = container.querySelector('#concept-map-body');
-    const cmapToggle = container.querySelector('#concept-map-toggle');
-    if (cmapBody) {
-        try {
-            const isLight = document.documentElement.classList.contains('light-theme');
-            renderConceptMap(cmapBody, chapter, {
-                isLightTheme: isLight,
-                isKeySection,
-                refPath: chapterRefPath,
-                onNodeClick: (sectionIdx) => {
-                    const target = container.querySelector(`#reader-section-${sectionIdx}`);
-                    if (target) {
-                        if (target.classList.contains('collapsed')) {
-                            target.classList.remove('collapsed');
-                        }
-                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                }
-            });
-        } catch (e) {
-            console.warn('[reader] concept map render failed:', e);
-            cmapBody.style.display = 'none';
-            if (cmapToggle) cmapToggle.style.display = 'none';
-        }
-    }
-    if (cmapToggle) {
-        cmapToggle.addEventListener('click', () => {
-            const body = container.querySelector('#concept-map-body');
-            if (!body) return;
-            const isCollapsed = body.classList.toggle('collapsed');
-            body.classList.toggle('expanded', !isCollapsed);
-            cmapToggle.classList.toggle('collapsed', isCollapsed);
-        });
-    }
-
-    // Study aid toggles (기출 핵심, 숫자 암기표, 절차 플로우, 행정처분)
+    // Study aid toggles (기출 핵심, 숫자 암기표)
     bindStudyAidToggles(container);
 
     // Exam filter button — 기출/중요 마커가 있는 섹션만 강조
