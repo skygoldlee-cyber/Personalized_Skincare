@@ -637,6 +637,12 @@ function setupOfflineDetection() {
             lastWakeTime = Date.now();
             failStreak = 0;
             probeConnectivity();
+        } else {
+            // 페이지가 보이지 않을 때 뽀모도로 타이머 자동 일시정지
+            const pomo = state.trainer.pomodoro;
+            if (pomo.isRunning) {
+                togglePomodoro();
+            }
         }
     });
 
@@ -715,6 +721,7 @@ function setupEventListeners() {
             state.weakCards.clear();
             state.quizResults = {};
             state.trainer.pomodoro.totalTimeToday = 0;
+            state.trainer.pomodoro.sessionCount = 0;
             
             // 로컬스토리지에 남아있는 모든 학습 데이터 키 제거
             const keysToRemove = [
@@ -725,21 +732,25 @@ function setupEventListeners() {
                 'sim_draft_session',
                 'pomo_total_time',
                 'pomo_total_time_date',
+                'pomo_session_count',
+                'pomo_session_date',
                 'study_streak',
                 'study_streak_last_date',
                 'calc_history'
             ];
-            keysToRemove.forEach(k => localStorage.removeItem(k));
+            keysToRemove.forEach(k => { try { localStorage.removeItem(k); } catch(_) {} });
             
             // 날짜 기반 동적 키(daily_completed_*) 일괄 제거
             const dynamicKeys = [];
-            for (let i = 0; i < localStorage.length; i++) {
-                const key = localStorage.key(i);
-                if (key && key.startsWith('daily_completed_')) {
-                    dynamicKeys.push(key);
+            try {
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    if (key && key.startsWith('daily_completed_')) {
+                        dynamicKeys.push(key);
+                    }
                 }
-            }
-            dynamicKeys.forEach(k => localStorage.removeItem(k));
+            } catch(_) {}
+            dynamicKeys.forEach(k => { try { localStorage.removeItem(k); } catch(_) {} });
             
             saveProgress();
             

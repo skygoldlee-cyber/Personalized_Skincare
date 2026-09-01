@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v115-20260901-trainer-improve';   // 훈련소 오답리뷰, 진행률바, 엔터키, localStorage안전화, 세션카운트
+const CACHE_VERSION = 'v116-20260901-dashboard-improve';   // 대시보드 과목카드 강화, streak localStorage 안전화, 빈상태 CTA, 뽀모도로 자동정지
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;

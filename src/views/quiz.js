@@ -1,5 +1,5 @@
 // src/views/quiz.js - 기출 퀴즈, 오답 복습 및 데일리 챌린지 뷰 로직
-import { state, saveProgress } from '../state.js';
+import { state, saveProgress, safeGetItem, safeSetItem } from '../state.js';
 import { safeTextWithBreaks, esc } from '../sanitize.js';
 import { DataLoader } from '../data-loader.js';
 import { switchView } from './navigation.js';
@@ -579,8 +579,8 @@ export function updateStreakAndDailyUI() {
     
     if (!streakDaysEl) return;
     
-    let streak = parseInt(localStorage.getItem('study_streak')) || 0;
-    const lastDate = localStorage.getItem('study_streak_last_date');
+    let streak = parseInt(safeGetItem('study_streak')) || 0;
+    const lastDate = safeGetItem('study_streak_last_date');
     const todayStr = new Date().toISOString().split('T')[0];
     
     if (lastDate) {
@@ -591,7 +591,7 @@ export function updateStreakAndDailyUI() {
         
         if (diffDays > 1) {
             streak = 0;
-            localStorage.setItem('study_streak', 0);
+            safeSetItem('study_streak', 0);
         }
     } else {
         streak = 0;
@@ -599,7 +599,7 @@ export function updateStreakAndDailyUI() {
     
     streakDaysEl.textContent = streak;
     
-    const todayCompleted = localStorage.getItem(`daily_completed_${todayStr}`);
+    const todayCompleted = safeGetItem(`daily_completed_${todayStr}`);
     if (todayCompleted) {
         if (challengeStatusEl) {
             challengeStatusEl.textContent = '🟢 오늘 미션 완료!';
@@ -626,7 +626,7 @@ export function updateStreakAndDailyUI() {
  */
 export function startDailyChallenge() {
     const todayStr = new Date().toISOString().split('T')[0];
-    const todayCompleted = localStorage.getItem(`daily_completed_${todayStr}`);
+    const todayCompleted = safeGetItem(`daily_completed_${todayStr}`);
     if (todayCompleted) {
         alert('오늘의 데일리 챌린지를 이미 달성하셨습니다! 내일 다시 도전해 주세요.');
         return;
@@ -943,15 +943,15 @@ export function finishDailyChallenge() {
     alert(`🎉 일일 데일리 챌린지를 완수하셨습니다!\n획득 점수: ${dailyState.correctCount} / ${dailyState.questions.length} 개`);
     
     const todayStr = new Date().toISOString().split('T')[0];
-    localStorage.setItem(`daily_completed_${todayStr}`, "true");
+    safeSetItem(`daily_completed_${todayStr}`, "true");
     
-    let streak = parseInt(localStorage.getItem('study_streak')) || 0;
-    const lastDate = localStorage.getItem('study_streak_last_date');
+    let streak = parseInt(safeGetItem('study_streak')) || 0;
+    const lastDate = safeGetItem('study_streak_last_date');
     
     if (lastDate !== todayStr) {
         streak++;
-        localStorage.setItem('study_streak', streak);
-        localStorage.setItem('study_streak_last_date', todayStr);
+        safeSetItem('study_streak', streak);
+        safeSetItem('study_streak_last_date', todayStr);
     }
     
     updateStreakAndDailyUI();

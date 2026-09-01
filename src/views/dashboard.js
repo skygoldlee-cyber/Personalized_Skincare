@@ -97,6 +97,9 @@ export function renderDashboard() {
         const correctSubjQuizzes = solvedSubjQuizzes.filter(id => state.quizResults[id].correct);
         const quizRate = solvedSubjQuizzes.length > 0 ? Math.round((correctSubjQuizzes.length / solvedSubjQuizzes.length) * 100) : 0;
         
+        // 과목별 헷갈린 카드 수
+        const weakSubjCards = [...state.weakCards].filter(id => id.startsWith(subjId + '_card_')).length;
+        
         const cardHTML = `
             <div class="subject-card">
                 <div class="subj-header">
@@ -109,8 +112,12 @@ export function renderDashboard() {
                         <strong>${memorizedSubjCards} / ${totalSubjCards}</strong>
                     </div>
                     <div class="subj-stat-item">
+                        <span>헷갈린 카드</span>
+                        <strong style="${weakSubjCards > 0 ? 'color:var(--color-danger);' : ''}">${weakSubjCards}</strong>
+                    </div>
+                    <div class="subj-stat-item">
                         <span>퀴즈 정답률</span>
-                        <strong>${solvedSubjQuizzes.length > 0 ? quizRate + '%' : '-'}</strong>
+                        <strong>${solvedSubjQuizzes.length > 0 ? quizRate + '%' : '-'}${solvedSubjQuizzes.length > 0 ? ' <span style=\"font-size:0.75rem; color:var(--color-text-muted);\">(' + solvedSubjQuizzes.length + '문)</span>' : ''}</strong>
                     </div>
                 </div>
                 <div class="subj-progress-group">
