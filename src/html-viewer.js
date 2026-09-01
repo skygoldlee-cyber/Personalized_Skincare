@@ -1,9 +1,8 @@
 // src/html-viewer.js — 앱 내 HTML 참조자료 뷰어 오버레이 (검색 + 하이라이트)
-// html_output의 HTML 변환본을 iframe으로 표시
-// 동일 출처(same-origin)이므로 iframe.contentDocument에 직접 접근하여 검색·하이라이트
+// html_output의 HTML 변환본을 fetch로 로드하여 DOM에 직접 주입 (iframe 없음)
 
 let _overlayEl = null;
-let _currentIframe = null;
+let _contentEl = null;
 let _searchResults = [];
 let _searchIdx = -1;
 
@@ -31,8 +30,21 @@ function _injectStyles() {
   color:var(--color-text,#e6edf3);font-size:.85rem;}
 #html-ref-overlay .hr-ov-search .hr-search-count{font-size:.78rem;color:var(--color-text-muted,#8b949e);
   min-width:60px;}
-#html-ref-overlay .hr-ov-scroll{flex:1;overflow:hidden;position:relative;}
-#html-ref-overlay .hr-ov-iframe{width:100%;height:100%;border:none;background:#fff;}
+#html-ref-overlay .hr-ov-scroll{flex:1;overflow:auto;position:relative;background:#fff;}
+#html-ref-overlay .hr-ov-content{padding:24px;color:#1a1a1a;font-family:'Malgun Gothic','Noto Sans KR',sans-serif;line-height:1.6;}
+#html-ref-overlay .hr-ov-content h1.doc-title{border-bottom:2px solid #333;padding-bottom:8px;font-size:20px;}
+#html-ref-overlay .hr-ov-content .page{border:1px solid #ddd;margin:18px 0;padding:16px;background:#fff;page-break-after:always;}
+#html-ref-overlay .hr-ov-content .page-header{color:#888;font-size:12px;margin-bottom:8px;border-bottom:1px dashed #ccc;padding-bottom:4px;}
+#html-ref-overlay .hr-ov-content .text-layer{position:relative;}
+#html-ref-overlay .hr-ov-content .text-layer p{position:absolute;margin:0;white-space:pre-wrap;}
+#html-ref-overlay .hr-ov-content table.pdf-table{border-collapse:collapse;margin:10px 0;font-size:13px;width:auto;}
+#html-ref-overlay .hr-ov-content table.pdf-table th,
+#html-ref-overlay .hr-ov-content table.pdf-table td{border:1px solid #999;padding:4px 8px;vertical-align:top;}
+#html-ref-overlay .hr-ov-content table.pdf-table tr:nth-child(even){background:#f7f7f7;}
+#html-ref-overlay .hr-ov-content .images{margin-top:10px;}
+#html-ref-overlay .hr-ov-content .images img{max-width:100%;border:1px solid #eee;margin:4px 0;display:block;}
+#html-ref-overlay .hr-ov-content .section-label{font-weight:bold;color:#0a5;font-size:12px;margin-top:10px;}
+#html-ref-overlay .hr-ov-content .empty{color:#aaa;font-style:italic;font-size:12px;}
 #html-ref-overlay .hr-loading{display:flex;flex-direction:column;align-items:center;
   justify-content:center;min-height:60vh;gap:18px;color:var(--color-text-muted,#8b949e);}
 #html-ref-overlay .hr-loading .spinner{width:44px;height:44px;border:4px solid var(--border-color,#30363d);
@@ -74,8 +86,14 @@ function _ensureOverlay() {
 
     el.querySelector('#hr-close-btn').addEventListener('click', close);
     el.querySelector('#hr-print-btn').addEventListener('click', () => {
-        if (_currentIframe && _currentIframe.contentWindow) {
-            _currentIframe.contentWindow.print();
+        const scroll = el.querySelector('#hr-scroll');
+        if (scroll) {
+            const printWin = window.open('', '_blank');
+            if (printWin) {
+                printWin.document.write('<html><head><title>인쇄</title></head><body>' + scroll.innerHTML + '</body></html>');
+                printWin.document.close();
+                printWin.print();
+            }
         }
     });
     el.querySelector('#hr-search-btn').addEventListener('click', () => _doSearch());
@@ -103,6 +121,7 @@ function close() {
     }
     _searchResults = [];
     _searchIdx = -1;
+    _contentEl = null;
 }
 
 async function openHtmlViewer(htmlPath, searchKeyword) {
@@ -113,9 +132,9 @@ async function openHtmlViewer(htmlPath, searchKeyword) {
     const fileName = decodeURIComponent(htmlPath.split('/').pop().replace(/\.html$/, ''));
     titleEl.textContent = fileName;
 
-    // 기존 iframe 제거
-    const oldIframe = scroll.querySelector('.hr-ov-iframe');
-    if (oldIframe) oldIframe.remove();
+    // 기존 콘텐츠 제거
+    const oldContent = scroll.querySelector('.hr-ov-content');
+    if (oldContent) oldContent.remove();
 
     // 로딩 표시
     let loading = el.querySelector('#hr-loading');
@@ -137,34 +156,31 @@ async function openHtmlViewer(htmlPath, searchKeyword) {
 
     try {
         const htmlUrl = new URL(htmlPath, window.location.href).href;
+        const resp = await fetch(htmlUrl);
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        const htmlText = await resp.text();
 
-        const iframe = document.createElement('iframe');
-        iframe.className = 'hr-ov-iframe';
-        iframe.style.display = 'none';
-        scroll.appendChild(iframe);
-        _currentIframe = iframe;
+        // HTML 파싱하여 body 내용 추출
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlText, 'text/html');
 
-        await new Promise((resolve, reject) => {
-            iframe.onload = resolve;
-            iframe.onerror = reject;
-            iframe.src = htmlUrl;
-            setTimeout(() => reject(new Error('로딩 시간 초과')), 30000);
+        // 이미지 경로를 절대 경로로 변환
+        const baseUrl = htmlUrl.substring(0, htmlUrl.lastIndexOf('/') + 1);
+        doc.querySelectorAll('img').forEach(img => {
+            const src = img.getAttribute('src');
+            if (src && !src.startsWith('http') && !src.startsWith('data:')) {
+                img.src = new URL(src, baseUrl).href;
+            }
         });
 
         loading.style.display = 'none';
-        iframe.style.display = 'block';
 
-        // iframe 문서에 테마 적용 (배경색만)
-        try {
-            const doc = iframe.contentDocument;
-            if (doc) {
-                const bgStyle = doc.createElement('style');
-                bgStyle.textContent = `body{background:#fff !important; color:#1a1a1a !important;}`;
-                doc.head.appendChild(bgStyle);
-            }
-        } catch (e) {
-            // cross-origin 제한 시 무시
-        }
+        // 콘텐츠 컨테이너 생성
+        const content = document.createElement('div');
+        content.className = 'hr-ov-content';
+        content.innerHTML = doc.body.innerHTML;
+        scroll.appendChild(content);
+        _contentEl = content;
 
         // 검색어가 있으면 자동 검색
         if (searchKeyword && searchKeyword.length >= 2) {
@@ -177,12 +193,12 @@ async function openHtmlViewer(htmlPath, searchKeyword) {
     }
 }
 
-function _clearHighlights(doc) {
-    if (!doc) return;
-    const marks = doc.querySelectorAll('mark.hr-highlight');
+function _clearHighlights(container) {
+    if (!container) return;
+    const marks = container.querySelectorAll('mark.hr-highlight');
     marks.forEach(m => {
         const parent = m.parentNode;
-        parent.replaceChild(doc.createTextNode(m.textContent), m);
+        parent.replaceChild(document.createTextNode(m.textContent), m);
         parent.normalize();
     });
 }
@@ -191,22 +207,19 @@ async function _doSearch(keyword) {
     const input = _overlayEl.querySelector('#hr-search-input');
     const kw = keyword || input.value.trim();
     if (!kw || kw.length < 2) return;
-    if (!_currentIframe || !_currentIframe.contentDocument) return;
+    if (!_contentEl) return;
 
     input.value = kw;
     const countEl = _overlayEl.querySelector('#hr-search-count');
     countEl.textContent = '검색 중...';
 
-    const doc = _currentIframe.contentDocument;
-    _clearHighlights(doc);
+    _clearHighlights(_contentEl);
     _searchResults = [];
 
-    // DOM 텍스트 노드 순회하며 검색어 하이라이트
     const lowerKw = kw.toLowerCase();
-    const walker = doc.createTreeWalker(doc.body, NodeFilter.SHOW_TEXT, {
+    const walker = document.createTreeWalker(_contentEl, NodeFilter.SHOW_TEXT, {
         acceptNode: (node) => {
             if (!node.textContent.trim()) return NodeFilter.FILTER_REJECT;
-            // 스크립트/스타일 태그 내부 제외
             const tag = node.parentNode.tagName;
             if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'MARK') return NodeFilter.FILTER_REJECT;
             return NodeFilter.FILTER_ACCEPT;
@@ -225,19 +238,18 @@ async function _doSearch(keyword) {
         let idx = 0;
         let pos = lowerText.indexOf(lowerKw, idx);
         while (pos >= 0) {
-            const range = doc.createRange();
+            const range = document.createRange();
             range.setStart(textNode, pos);
             range.setEnd(textNode, pos + kw.length);
-            const mark = doc.createElement('mark');
+            const mark = document.createElement('mark');
             mark.className = 'hr-highlight';
             range.surroundContents(mark);
             _searchResults.push(mark);
-            // surroundContents 후 텍스트 노드가 분할되므로 다음 검색은 mark 이후부터
             const nextNode = mark.nextSibling;
             if (!nextNode || nextNode.nodeType !== Node.TEXT_NODE) break;
             idx = 0;
             pos = nextNode.textContent.toLowerCase().indexOf(lowerKw, idx);
-            break; // 다음 텍스트 노드로 이동
+            break;
         }
     }
 
@@ -251,7 +263,6 @@ async function _doSearch(keyword) {
 
 function _scrollToResult(idx) {
     if (!_searchResults[idx]) return;
-    // 이전 current 해제
     _searchResults.forEach(m => m.classList.remove('current'));
     _searchResults[idx].classList.add('current');
     _searchResults[idx].scrollIntoView({ behavior: 'smooth', block: 'center' });
