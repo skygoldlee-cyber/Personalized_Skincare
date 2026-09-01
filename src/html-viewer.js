@@ -236,27 +236,42 @@ async function openHtmlViewer(htmlPath, searchKeyword, anchorId, lineNum) {
 
         // 검색어 결정: L### 링크의 경우 lineNum 기반으로 실제 키워드 추출
         let effectiveSearch = searchKeyword;
+        let mdLineText = null;
         if (lineNum && isMarkdown) {
             // MD 파일: 원본 텍스트의 N번째 라인을 추출하여 검색어로 사용
             // (parseMarkdown 후 p 요소 수가 원본 라인과 불일치하므로)
+            // 빈 줄은 건너뛰고 의미 있는 라인을 찾음
             const mdLines = rawText.split('\n');
             const lineIdx = parseInt(lineNum) - 1;
             if (lineIdx >= 0 && lineIdx < mdLines.length) {
-                const lineText = mdLines[lineIdx].replace(/^#+\s*/, '').replace(/\*\*/g, '').replace(/!\[.*?\]\(.*?\)/g, '').trim();
+                let lineText = mdLines[lineIdx];
+                // 빈 줄이면 주변 라인에서 의미 있는 텍스트 찾기
+                if (!lineText.trim()) {
+                    for (let i = lineIdx + 1; i < Math.min(lineIdx + 5, mdLines.length); i++) {
+                        if (mdLines[i].trim()) { lineText = mdLines[i]; break; }
+                    }
+                    if (!lineText.trim()) {
+                        for (let i = lineIdx - 1; i >= Math.max(lineIdx - 5, 0); i--) {
+                            if (mdLines[i].trim()) { lineText = mdLines[i]; break; }
+                        }
+                    }
+                }
+                lineText = lineText.replace(/^#+\s*/, '').replace(/\*\*/g, '').replace(/!\[.*?\]\(.*?\)/g, '').replace(/\[([^]]+)\]\([^)]+\)/g, '$1').trim();
                 if (lineText.length >= 2) {
                     effectiveSearch = lineText;
+                    mdLineText = lineText;
                 }
             }
         }
 
-        // 검색어가 있으면 자동 검색 (하이라이트 + 스크롤 타겟용)
+        // 검색어가 있으면 자동 검색 (하이라이트용, 스크롤은 L### 로직이 별도 처리)
         if (effectiveSearch && effectiveSearch.length >= 2) {
-            await _doSearch(effectiveSearch);
+            await _doSearch(effectiveSearch, !!lineNum);
             // 검색 결과가 없고 키워드에 공백이 있으면 첫 단어로 재검색
             if (_searchResults.length === 0 && effectiveSearch.includes(' ')) {
                 const firstWord = effectiveSearch.split(' ')[0];
                 if (firstWord.length >= 2) {
-                    await _doSearch(firstWord);
+                    await _doSearch(firstWord, !!lineNum);
                 }
             }
         }
@@ -346,7 +361,7 @@ function _highlightInTextNode(textNode, lowerKw, kw) {
     }
 }
 
-async function _doSearch(keyword) {
+async function _doSearch(keyword, skipScroll) {
     const input = _overlayEl.querySelector('#hr-search-input');
     const kw = keyword || input.value.trim();
     if (!kw || kw.length < 2) return;
@@ -383,7 +398,7 @@ async function _doSearch(keyword) {
 
     if (_searchResults.length > 0) {
         _searchIdx = 0;
-        _scrollToResult(0);
+        if (!skipScroll) _scrollToResult(0);
     }
 }
 
