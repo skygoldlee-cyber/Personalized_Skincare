@@ -172,49 +172,5 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
         );
     }).join('\n');
 
-    // --- 용어집 테이블 생성 ---
-    // 이 섹션에서 참조된 GLOSSARY_INDEX 항목들을 모아 하단에 테이블로 렌더
-    if (refPath) {
-        const glossaryItems = [];
-        const seenKeys = new Set();
-        // refPath 기반 항목들
-        const refFileName = refPath.split('/').pop();
-        for (const [idxKey, entry] of Object.entries(GLOSSARY_INDEX)) {
-            if (idxKey.startsWith(refFileName + '|') && !seenKeys.has(idxKey)) {
-                glossaryItems.push({ idxKey, ...entry });
-                seenKeys.add(idxKey);
-            }
-        }
-        // 이 섹션에서 data-glossary로 링크된 타 참조자료 항목들도 추가
-        const glossaryLinkMatches = html.matchAll(/data-glossary="([^"]+)"/g);
-        for (const m of glossaryLinkMatches) {
-            const idxKey = m[1];
-            if (!seenKeys.has(idxKey) && GLOSSARY_INDEX[idxKey]) {
-                glossaryItems.push({ idxKey, ...GLOSSARY_INDEX[idxKey] });
-                seenKeys.add(idxKey);
-            }
-        }
-
-        if (glossaryItems.length > 0) {
-            const rows = glossaryItems.map(item => {
-                const explanation = item.explanation || '(설명 없음)';
-                return `<tr id="glossary-${escapeHTML(item.idxKey)}"><td class="glossary-term">${escapeHTML(item.keyword)}</td><td class="glossary-explanation">${escapeHTML(explanation)}</td><td class="glossary-ref">${escapeHTML(item.refDoc || '')}</td></tr>`;
-            }).join('\n');
-            const glossaryHtml = `
-<div class="reader-glossary">
-<h4 class="glossary-title">📖 중요 용어 해설</h4>
-<div class="reader-table-wrapper">
-<table class="reader-table glossary-table">
-<thead><tr><th>용어</th><th>설명 (참조문서 발췌)</th><th>출처</th></tr></thead>
-<tbody>
-${rows}
-</tbody>
-</table>
-</div>
-</div>`;
-            html += glossaryHtml;
-        }
-    }
-
     return html;
 }

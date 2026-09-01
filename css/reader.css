@@ -2549,6 +2549,20 @@ a.glossary-link:hover {
     text-decoration: underline;
 }
 
+/* Glossary ref link (출처 하이퍼링크) */
+a.glossary-ref-link {
+    color: var(--color-primary, #1f6feb);
+    text-decoration: none;
+    font-size: 0.78rem;
+    cursor: pointer;
+}
+a.glossary-ref-link:hover {
+    text-decoration: underline;
+}
+a.glossary-ref-link i {
+    margin-right: 0.2em;
+}
+
 /* Light theme overrides for glossary */
 .reader-light-theme .reader-glossary {
     background: rgba(6, 182, 212, 0.04);

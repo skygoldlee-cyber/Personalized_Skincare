@@ -9,6 +9,7 @@ import {
     SUBJECT_DIR_MAP, REFERENCE_FILES, REFERENCE_COMMON, REFERENCE_INGREDIENTS,
     REFERENCE_LAW, mapSourceToRef, resolveRefPath
 } from '../pdf-registry.js';
+import { GLOSSARY_INDEX } from '../keyword-index.js';
 // [모바일 PWA 견고성] 오디오 매니페스트는 window 전역(가드)에서 읽는다(정적 import 하드 의존 지양).
 import { DataLoader } from '../data-loader.js';
 
@@ -896,6 +897,46 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStor
             </div>
         `;
     });
+
+    // --- 과목별 용어집 테이블 (챕터 전체에서 한 번만 렌더) ---
+    const glossaryItems = [];
+    const seenKeys = new Set();
+    for (const s of chapter.sections) {
+        const secSrcM = (s.content || '').match(/📌\s*\*\*출처\*\*[:：]\s*(.+?)(?:\||\n)/);
+        const secRefP = secSrcM ? mapSourceToRef(secSrcM[1]) : null;
+        const secRefPath = secRefP || chapterRefPath;
+        if (secRefPath) {
+            const refFileName = secRefPath.split('/').pop();
+            for (const [idxKey, entry] of Object.entries(GLOSSARY_INDEX)) {
+                if (idxKey.startsWith(refFileName + '|') && !seenKeys.has(idxKey)) {
+                    glossaryItems.push({ idxKey, ...entry });
+                    seenKeys.add(idxKey);
+                }
+            }
+        }
+    }
+    if (glossaryItems.length > 0) {
+        const rows = glossaryItems.map(item => {
+            const explanation = item.explanation || '(설명 없음)';
+            const refPath = resolveRefPath(item.refDoc + '.pdf');
+            const refLink = refPath
+                ? `<a href="#" data-ref-html="${esc(refPath)}" class="glossary-ref-link"><i class="fa-solid fa-file-lines"></i> ${esc(item.refDoc || '')}</a>`
+                : esc(item.refDoc || '');
+            return `<tr id="glossary-${esc(item.idxKey)}"><td class="glossary-term">${esc(item.keyword)}</td><td class="glossary-explanation">${esc(explanation)}</td><td class="glossary-ref">${refLink}</td></tr>`;
+        }).join('\n');
+        html += `
+        <div class="reader-glossary">
+        <h4 class="glossary-title">📖 중요 용어 해설</h4>
+        <div class="reader-table-wrapper">
+        <table class="reader-table glossary-table">
+        <thead><tr><th>용어</th><th>설명 (참조문서 발췌)</th><th>출처</th></tr></thead>
+        <tbody>
+        ${rows}
+        </tbody>
+        </table>
+        </div>
+        </div>`;
+    }
 
     // Prev / Next chapter navigation
     const prevChapter = chapterIdx > 0 ? subj.chapters[chapterIdx - 1] : null;
