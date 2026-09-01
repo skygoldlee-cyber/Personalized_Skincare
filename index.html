@@ -296,6 +296,10 @@
                         <input type="checkbox" id="fc-key-only" class="form-checkbox">
                         <label for="fc-key-only"><i class="fa-solid fa-star text-warning"></i> 기출/중요 개념만</label>
                     </div>
+                    <div class="filter-group-checkbox">
+                        <input type="checkbox" id="fc-shuffle" class="form-checkbox">
+                        <label for="fc-shuffle"><i class="fa-solid fa-shuffle"></i> 랜덤 셔플</label>
+                    </div>
                 </div>
 
                 <div class="flashcard-arena">
@@ -313,7 +317,7 @@
                                 </div>
                                 <div class="card-body">
                                     <h2 id="card-front-term">개념 용어</h2>
-                                    <p class="flip-hint"><i class="fa-solid fa-arrows-rotate"></i> 클릭하여 설명 보기</p>
+                                    <p class="flip-hint"><i class="fa-solid fa-arrows-rotate"></i> 클릭 또는 스페이스바로 뒤집기</p>
                                 </div>
                             </div>
                             <!-- Card Back -->
@@ -339,6 +343,8 @@
                     <button id="fc-prev-btn" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> 이전</button>
                     <div class="fc-status-indicator">
                         <span id="fc-current-index">0</span> / <span id="fc-total-count">0</span>
+                        <span class="fc-progress-badge" id="fc-memorized-badge" style="display:none; color:var(--color-success); font-size:0.8em; margin-left:0.5em;"><i class="fa-solid fa-circle-check"></i> <span id="fc-memorized-count">0</span></span>
+                        <span class="fc-progress-badge" id="fc-weak-badge" style="display:none; color:var(--color-danger); font-size:0.8em; margin-left:0.5em;"><i class="fa-solid fa-circle-xmark"></i> <span id="fc-weak-count">0</span></span>
                     </div>
                     <button id="fc-next-btn" class="btn btn-secondary">다음 <i class="fa-solid fa-arrow-right"></i></button>
                 </div>
@@ -382,7 +388,16 @@
                         <div class="quiz-body">
                             <h2 class="quiz-question-text" id="quiz-question">여기는 [ 빈칸 ] 입니다.</h2>
                             
-                            <div class="quiz-input-group">
+                            <!-- 객관식 선택지 컨테이너 -->
+                            <div id="quiz-options-container" style="display:none; margin-bottom:1rem;"></div>
+
+                            <!-- OX 선택 컨테이너 -->
+                            <div id="quiz-ox-container" style="display:none; gap:1rem; margin-bottom:1rem;">
+                                <button class="btn btn-secondary quiz-ox-btn" data-ox="O" style="flex:1; font-size:1.5rem; font-weight:700;">O</button>
+                                <button class="btn btn-secondary quiz-ox-btn" data-ox="X" style="flex:1; font-size:1.5rem; font-weight:700;">X</button>
+                            </div>
+
+                            <div class="quiz-input-group" id="quiz-input-group">
                                 <input type="text" id="quiz-answer-input" class="form-input" placeholder="정답을 입력하세요 (띄어쓰기 유의)" autocomplete="off">
                                 <button id="submit-quiz-btn" class="btn btn-primary">정답 제출</button>
                             </div>
@@ -409,6 +424,7 @@
                     <i class="fa-solid fa-trophy trophy-icon"></i>
                     <h2>퀴즈 학습 완료!</h2>
                     <p class="result-score-summary">정답수: <span id="result-correct-num">0</span> / <span id="result-total-num">10</span> (<span id="result-percent">0%</span>)</p>
+                    <div id="quiz-review-list" style="text-align:left; margin:1.5rem 0;"></div>
                     <div class="result-actions">
                         <button id="retry-quiz-btn" class="btn btn-primary"><i class="fa-solid fa-rotate-left"></i> 다시 풀기</button>
                         <button id="back-to-dashboard-btn" class="btn btn-secondary"><i class="fa-solid fa-house"></i> 대시보드로</button>

@@ -42,7 +42,7 @@ export function startQuiz() {
 }
 
 /**
- * 현재 퀴즈 문제 렌더링
+ * 현재 퀴즈 문제 렌더링 (단답형 / 객관식 / OX 지원)
  */
 export function renderQuizQuestion() {
     const quizState = state.quiz;
@@ -61,6 +61,9 @@ export function renderQuizQuestion() {
     const submitBtn = document.getElementById('submit-quiz-btn');
     const nextBtn = document.getElementById('next-quiz-btn');
     const feedbackPanel = document.getElementById('quiz-feedback-panel');
+    const optionsContainer = document.getElementById('quiz-options-container');
+    const oxContainer = document.getElementById('quiz-ox-container');
+    const inputGroup = document.getElementById('quiz-input-group');
 
     if (runProgressEl) runProgressEl.style.width = `${progressPercent}%`;
     if (currIdxEl) currIdxEl.textContent = quizState.currentIndex + 1;
@@ -76,20 +79,61 @@ export function renderQuizQuestion() {
     qText = safeTextWithBreaks(qText).replace(/\[\s*빈칸\s*\]/g, '<strong>[ 빈칸 ]</strong>');
     if (questionEl) questionEl.innerHTML = qText;
     
-    // 입력폼 및 피드백 초기화
-    if (inputEl) {
-        inputEl.value = '';
-        inputEl.disabled = false;
-        inputEl.focus();
-    }
+    // 타입별 UI 분기
+    const quizType = currentQuiz.type || 'short';
     
-    if (submitBtn) submitBtn.style.display = 'block';
+    // 모든 입력 영역 초기화
+    if (optionsContainer) { optionsContainer.innerHTML = ''; optionsContainer.style.display = 'none'; }
+    if (oxContainer) { oxContainer.style.display = 'none'; }
+    if (inputGroup) inputGroup.style.display = 'none';
+    if (submitBtn) submitBtn.style.display = 'none';
     if (nextBtn) nextBtn.style.display = 'none';
     if (feedbackPanel) feedbackPanel.style.display = 'none';
+
+    if (quizType === 'choice' && currentQuiz.options && currentQuiz.options.length > 0) {
+        // 객관식
+        if (optionsContainer) {
+            optionsContainer.style.display = 'block';
+            const optionIndicators = ['①', '②', '③', '④', '⑤'];
+            currentQuiz.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'limits-opt-btn';
+                btn.style.width = '100%';
+                btn.style.marginBottom = '0.75rem';
+                btn.innerHTML = `<span class="limits-opt-num">${esc(optionIndicators[idx] || String(idx + 1))}</span> <span class="limits-opt-text">${esc(opt)}</span>`;
+                btn.addEventListener('click', () => {
+                    submitQuizChoiceAnswer(btn, opt, currentQuiz.answer);
+                });
+                optionsContainer.appendChild(btn);
+            });
+        }
+    } else if (quizType === 'ox') {
+        // OX 진위형
+        if (oxContainer) {
+            oxContainer.style.display = 'flex';
+            oxContainer.querySelectorAll('.quiz-ox-btn').forEach(btn => {
+                btn.disabled = false;
+                btn.classList.remove('correct', 'incorrect');
+                btn.addEventListener('click', function handler() {
+                    btn.removeEventListener('click', handler);
+                    submitQuizChoiceAnswer(btn, btn.dataset.ox, currentQuiz.answer);
+                }, { once: true });
+            });
+        }
+    } else {
+        // 단답형 (기존 로직)
+        if (inputGroup) inputGroup.style.display = 'flex';
+        if (submitBtn) submitBtn.style.display = 'block';
+        if (inputEl) {
+            inputEl.value = '';
+            inputEl.disabled = false;
+            inputEl.focus();
+        }
+    }
 }
 
 /**
- * 퀴즈 정답 제출
+ * 퀴즈 정답 제출 (단답형)
  */
 export function submitQuizAnswer() {
     const quizState = state.quiz;
@@ -114,6 +158,15 @@ export function submitQuizAnswer() {
     if (isCorrect) {
         quizState.correctCount++;
     }
+    
+    // solvedList에 기록
+    quizState.solvedList.push({
+        quizId: currentQuiz.id,
+        question: currentQuiz.question,
+        selected: userAnswer,
+        correctAnswer: currentQuiz.answer,
+        correct: isCorrect
+    });
     
     // 퀴즈 결과 글로벌 상태에 저장
     state.quizResults[currentQuiz.id] = {
@@ -146,6 +199,75 @@ export function submitQuizAnswer() {
 }
 
 /**
+ * 퀴즈 정답 제출 (객관식 / OX)
+ */
+export function submitQuizChoiceAnswer(selectedBtn, selectedValue, correctValue) {
+    const quizState = state.quiz;
+    const currentQuiz = quizState.data[quizState.currentIndex];
+    const isCorrect = (selectedValue === correctValue);
+    
+    // 모든 옵션 버튼 비활성화
+    const optionsContainer = document.getElementById('quiz-options-container');
+    const oxContainer = document.getElementById('quiz-ox-container');
+    if (optionsContainer) {
+        optionsContainer.querySelectorAll('button').forEach(btn => {
+            btn.disabled = true;
+            const textSpan = btn.querySelector('.limits-opt-text');
+            if (textSpan && textSpan.textContent === correctValue) {
+                btn.classList.add('correct');
+            }
+        });
+    }
+    if (oxContainer) {
+        oxContainer.querySelectorAll('.quiz-ox-btn').forEach(btn => {
+            btn.disabled = true;
+            if (btn.dataset.ox === correctValue) btn.classList.add('correct');
+        });
+    }
+    if (!isCorrect) {
+        selectedBtn.classList.add('incorrect');
+    } else {
+        quizState.correctCount++;
+    }
+    
+    // solvedList에 기록
+    quizState.solvedList.push({
+        quizId: currentQuiz.id,
+        question: currentQuiz.question,
+        selected: selectedValue,
+        correctAnswer: correctValue,
+        correct: isCorrect
+    });
+    
+    // 퀴즈 결과 글로벌 상태에 저장
+    state.quizResults[currentQuiz.id] = {
+        solved: true,
+        correct: isCorrect
+    };
+    
+    // UI 피드백 렌더링
+    const feedbackPanel = document.getElementById('quiz-feedback-panel');
+    const feedbackTitle = document.getElementById('feedback-result-title');
+    const feedbackAnswer = document.getElementById('feedback-correct-answer');
+    
+    if (feedbackPanel) feedbackPanel.style.display = 'flex';
+    if (feedbackAnswer) feedbackAnswer.textContent = correctValue;
+    
+    if (isCorrect) {
+        if (feedbackPanel) feedbackPanel.classList.remove('incorrect');
+        if (feedbackTitle) feedbackTitle.textContent = "정답입니다!";
+    } else {
+        if (feedbackPanel) feedbackPanel.classList.add('incorrect');
+        if (feedbackTitle) feedbackTitle.textContent = `틀렸습니다! (선택: ${selectedValue})`;
+    }
+    
+    saveProgress();
+    
+    const nextBtn = document.getElementById('next-quiz-btn');
+    if (nextBtn) nextBtn.style.display = 'block';
+}
+
+/**
  * 다음 퀴즈 문제로 이동
  */
 export function nextQuizQuestion() {
@@ -161,7 +283,7 @@ export function nextQuizQuestion() {
 }
 
 /**
- * 퀴즈 결과 화면 렌더링
+ * 퀴즈 결과 화면 렌더링 (오답 리뷰 포함)
  */
 export function renderQuizResult() {
     const quizState = state.quiz;
@@ -185,6 +307,28 @@ export function renderQuizResult() {
     
     const rate = Math.round((quizState.correctCount / quizState.data.length) * 100);
     if (percentEl) percentEl.textContent = `${rate}%`;
+    
+    // 오답 리뷰 목록 렌더링
+    const reviewListEl = document.getElementById('quiz-review-list');
+    if (reviewListEl) {
+        const wrongAnswers = quizState.solvedList.filter(s => !s.correct);
+        if (wrongAnswers.length === 0) {
+            reviewListEl.innerHTML = '<p style="text-align:center; color:var(--color-success); font-weight:600;"><i class="fa-solid fa-circle-check"></i> 모든 문제를 맞혔습니다!</p>';
+        } else {
+            reviewListEl.innerHTML = `<h3 style="margin-bottom:0.75rem; font-size:1.1rem;"><i class="fa-solid fa-triangle-exclamation"></i> 오답 리뷰 (${wrongAnswers.length}문제)</h3>`;
+            wrongAnswers.forEach((s, idx) => {
+                const item = document.createElement('div');
+                item.style.cssText = 'padding:0.75rem; margin-bottom:0.5rem; border:1px solid var(--border-color); border-radius:8px; background:var(--bg-card);';
+                item.innerHTML = `
+                    <div style="font-size:0.85rem; color:var(--color-text-muted); margin-bottom:0.3rem;">Q${idx + 1}</div>
+                    <p style="font-size:0.9rem; margin-bottom:0.4rem;">${safeTextWithBreaks(s.question)}</p>
+                    <p style="font-size:0.85rem; color:var(--color-danger);">내 답: ${esc(s.selected)}</p>
+                    <p style="font-size:0.85rem; color:var(--color-success);">정답: <strong>${esc(s.correctAnswer)}</strong></p>
+                `;
+                reviewListEl.appendChild(item);
+            });
+        }
+    }
 }
 
 /**
@@ -379,9 +523,10 @@ export function startWeakFocusQuiz() {
                 id: card.id,
                 category: card.category,
                 context: `[모의고사 오답 퀴즈]`,
-                question: qText,
+                question: q.question,
                 answer: q.answer,
-                type: q.type
+                type: q.type,
+                options: q.options || null
             };
         } else {
             return {

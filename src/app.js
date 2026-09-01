@@ -772,6 +772,15 @@ function setupEventListeners() {
         loadFlashcards();
     });
     
+    const fcShuffleCheckbox = document.getElementById('fc-shuffle');
+    if (fcShuffleCheckbox) {
+        fcShuffleCheckbox.addEventListener('change', (e) => {
+            state.flashcards.shuffle = e.target.checked;
+            state.flashcards.currentIndex = 0;
+            loadFlashcards();
+        });
+    }
+    
     const fcDifficultySelect = document.getElementById('fc-difficulty-select');
     if (fcDifficultySelect) {
         fcDifficultySelect.addEventListener('change', (e) => {
@@ -833,6 +842,41 @@ function setupEventListeners() {
             document.getElementById('fc-hard-btn').style.transform = 'scale(1)';
             document.getElementById('fc-next-btn').click();
         }, 150);
+    });
+
+    // 플래시카드 키보드 단축키 (flashcard-view 활성 시에만 동작)
+    document.addEventListener('keydown', (e) => {
+        if (state.currentView !== 'flashcard-view') return;
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') return;
+
+        const cardEl = document.getElementById('flashcard-item');
+        if (!cardEl || state.flashcards.data.length === 0) return;
+
+        switch (e.key) {
+            case 'ArrowLeft':
+                e.preventDefault();
+                document.getElementById('fc-prev-btn').click();
+                break;
+            case 'ArrowRight':
+                e.preventDefault();
+                document.getElementById('fc-next-btn').click();
+                break;
+            case ' ':
+            case 'Spacebar':
+                e.preventDefault();
+                cardEl.classList.toggle('flipped');
+                break;
+            case 'e':
+            case 'E':
+                e.preventDefault();
+                document.getElementById('fc-easy-btn').click();
+                break;
+            case 'h':
+            case 'H':
+                e.preventDefault();
+                document.getElementById('fc-hard-btn').click();
+                break;
+        }
     });
     
     // 3. 퀴즈 이벤트

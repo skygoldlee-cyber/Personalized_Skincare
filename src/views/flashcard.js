@@ -30,8 +30,10 @@ export function loadFlashcards() {
         cards = cards.filter(c => c.difficulty === fcConfig.difficultyFilter);
     }
     
-    // 중요도 내림차순 정렬 (기본)
-    if (fcConfig.sortBy === 'importance') {
+    // 중요도 내림차순 정렬 (기본) 또는 랜덤 셔플
+    if (fcConfig.shuffle) {
+        cards = [...cards].sort(() => 0.5 - Math.random());
+    } else if (fcConfig.sortBy === 'importance') {
         cards = [...cards].sort((a, b) => (b.importance || 0) - (a.importance || 0));
     }
     
@@ -114,6 +116,18 @@ export function renderFlashcard() {
     // 인덱스 상태 갱신
     if (curIdxEl) curIdxEl.textContent = fcConfig.currentIndex + 1;
     if (totalEl) totalEl.textContent = fcConfig.data.length;
+    
+    // 외움/헷갈림 카드 카운트 표시 (현재 필터된 카드 기준)
+    const memorizedCount = fcConfig.data.filter(c => state.memorizedCards.has(c.id)).length;
+    const weakCount = fcConfig.data.filter(c => state.weakCards.has(c.id)).length;
+    const memBadge = document.getElementById('fc-memorized-badge');
+    const memCountEl = document.getElementById('fc-memorized-count');
+    const weakBadge = document.getElementById('fc-weak-badge');
+    const weakCountEl = document.getElementById('fc-weak-count');
+    if (memBadge) { memBadge.style.display = memorizedCount > 0 ? 'inline' : 'none'; }
+    if (memCountEl) memCountEl.textContent = memorizedCount;
+    if (weakBadge) { weakBadge.style.display = weakCount > 0 ? 'inline' : 'none'; }
+    if (weakCountEl) weakCountEl.textContent = weakCount;
     
     // 진도 버튼들 스타일 동적 제어
     const easyBtn = document.getElementById('fc-easy-btn');
