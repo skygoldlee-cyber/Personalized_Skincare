@@ -12,11 +12,9 @@ audiobook/mp3/
 # ---------- 📚 정적 HTML 콘텐츠 ----------
 # 교재 본문은 content/*.md 런타임 파싱으로 렌더링 (사전 렌더 HTML 불필요).
 # 참조자료 HTML 변환본(html_output)은 앱 내 HTML 뷰어가 fetch하므로 배포에 포함.
-# 루트 index.html(진입점), docs/*.html도 배포에 포함.
-*.html
-!index.html
-!docs/*.html
-!content/참조자료/html_output/**/*.html
+# 루트 index.html(진입점)도 배포에 포함.
+# content/html/의 사전 렌더 HTML만 제외 (negation 패턴 대신 디렉토리 단위 제외)
+content/html/
 
 # ---------- 🗑️ 구(모놀리식) 죽은 데이터 파일 ----------
 # index.html은 모듈러 구조(registry + data/subjects·exams/*.hash.js)만 로드한다.
