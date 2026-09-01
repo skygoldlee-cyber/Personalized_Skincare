@@ -520,10 +520,10 @@ Service Worker(`sw.js`)는 본 애플리케이션의 오프라인 지원과 캐�
   │     └─ 그 외? ──► Cache First (DATA_CACHE) — 해시 파일명으로 자연 갱신
   │
   ├─ *.md?
-  │     ├─ /html_output/ 경로? ──► Cache First (DATA_CACHE) — 배포 간 유지 (26MB 참조자료)
+  │     ├─ /ref_md/ 경로? ──► Cache First (DATA_CACHE) — 배포 간 유지 (26MB 참조자료)
   │     └─ 그 외? ──► Cache First (SHELL_CACHE) — 정적 마크다운 원본
   │
-  ├─ /html_output/*.html? ──► Cache First (DATA_CACHE) — 배포 간 유지 (body-only 참조자료)
+  ├─ /ref_md/*.html? ──► Cache First (DATA_CACHE) — 배포 간 유지 (body-only 참조자료)
   │
   ├─ /src/*.js? ──► Cache First (SHELL_CACHE) — ESM 모듈 일관성 보장
   │
@@ -913,7 +913,7 @@ cmd /c vercel --prod 2>&1
 | `tools/check_parser_parity.js` | `manifest.subjects[].dir` 동적 참조 | 파서 정합성 검증 |
 | `content/utils/batch_convert.py` | `BATCH_TARGETS` 딕셔너리 | 배치 HTML 변환 대상 |
 | `content/utils/md_to_html.py` | `--in` 인자 (기본값 `학습안내서.md`) | 단일 HTML 변환 |
-| `content/utils/convert_html_output.py` | `MD_CONVERSION_TARGETS` Set (스크립트 내 하드코딩) | html_output 대용량 HTML→MD 변환 및 body-only 추출 |
+| `content/utils/convert_ref_md.py` | `MD_CONVERSION_TARGETS` Set (스크립트 내 하드코딩) | ref_md 대용량 HTML→MD 변환 및 body-only 추출 |
 | `content/audiobook/generate_all_mp3.py` | 과목 키 참조 | 오디오북 생성 |
 
 ---

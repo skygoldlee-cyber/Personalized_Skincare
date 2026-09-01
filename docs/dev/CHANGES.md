@@ -608,7 +608,7 @@
    - 첫 매치 발견 즉시 스크롤, 나머지 하이라이트는 `requestIdleCallback`으로 50개씩 지연 처리
    - 키워드 클릭 시 체감 스크롤 속도 대폭 향상
 4. **KEYWORD_INDEX 경로 단축** (`src/keyword-index.js`, `src/concept-map.js`, `src/reader-format.js`)
-   - 키를 전체 경로에서 파일명으로 단축: `"content/참조자료/html_output/.../file.md|L123"` → `"file.md|L123"`
+   - 키를 전체 경로에서 파일명으로 단축: `"content/참조자료/ref_md/.../file.md|L123"` → `"file.md|L123"`
    - 51KB → 14KB (72% 절감)
    - `concept-map.js`, `reader-format.js`에서 런타임에 `path.split('/').pop()`으로 파일명 추출
 
@@ -781,7 +781,7 @@
    - 퀴즈 문제 순서, 플래시카드 셔플, 모의고사 문제 선택, 원료 챌린지 등 모든 무작위 선택에 적용
 
 2. **서비스 워커 캐시 전략 분리** (`sw.js`)
-   - `html_output/*.md` 및 `html_output/*.html` 파일을 `SHELL_CACHE`(배포마다 삭제)에서 `DATA_CACHE`(배포 간 유지)로 이동
+   - `ref_md/*.md` 및 `ref_md/*.html` 파일을 `SHELL_CACHE`(배포마다 삭제)에서 `DATA_CACHE`(배포 간 유지)로 이동
    - ~26MB 참조자료가 매 배포마다 재다운로드되는 문제 해결
 
 3. **localStorage 용량 초과 사용자 경고** (`app.js`, `state.js`)
@@ -814,20 +814,20 @@
 
 ---
 
-## 32. html_output 대용량 파일 MD 변환 및 body-only 추출 (2026-09-01)
+## 32. ref_md 대용량 파일 MD 변환 및 body-only 추출 (2026-09-01)
 
-> **목표**: `html_output` 디렉토리의 HTML 파일들이 ~44.5MB로 배포 용량 부담이 큰 문제를 해결하기 위해, 대용량 법령 원문 3개를 Markdown으로 변환하고 나머지 38개는 `<head>`/`<style>`/base64 이미지를 제거하여 용량 절감
+> **목표**: `ref_md` 디렉토리의 HTML 파일들이 ~44.5MB로 배포 용량 부담이 큰 문제를 해결하기 위해, 대용량 법령 원문 3개를 Markdown으로 변환하고 나머지 38개는 `<head>`/`<style>`/base64 이미지를 제거하여 용량 절감
 
 ### 문제 배경
 
-- `html_output` HTML 파일 42개 총 ~44.5MB가 Vercel 배포에 포함되어 업로드 시간 및 저장소 부담
+- `ref_md` HTML 파일 42개 총 ~44.5MB가 Vercel 배포에 포함되어 업로드 시간 및 저장소 부담
 - 상위 3개 법령 원문 (기능성화장품 기준 11MB, KFCC_별표10 5.3MB, 화장품 안전기준 3.3MB)이 전체의 ~60% 차지
 - 이들은 순수 텍스트(조문)로 절대 좌표 기반 배치가 의미 없음 → Markdown 플로우 레이아웃이 오히려 모바일에서 가독성 향상
 - 나머지 파일들은 `<head>`/`<style>`(~2KB, 모든 파일 동일)과 base64 인라인 이미지가 불필요 (`html-viewer.js`는 `body.innerHTML`만 사용)
 
 ### 수정 내역
 
-- **`content/utils/convert_html_output.py`** (신규): HTML→MD 변환 및 body-only 추출 Python 스크립트
+- **`content/utils/convert_ref_md.py`** (신규): HTML→MD 변환 및 body-only 추출 Python 스크립트
   - 대용량 3개: HTML 파싱 → `<p>` 태그를 top/left 좌표순 정렬 → 텍스트 추출, `<table class="pdf-table">`을 MD 표로 변환, 파일 참조 이미지는 `![](images/...)`로 변환, base64 이미지 제거
   - 나머지 38개: `<body>` 내용만 추출, `<style>` 태그 및 base64 `data:` URI 이미지 제거
   - CRLF 정규화 처리 (Windows 환경 대응)
@@ -839,7 +839,7 @@
   - MD 이미지 경로 절대 경로 변환 (HTML과 동일하게 처리)
   - 타이틀 추출 정규식 `.html` → `.(html|md)` 확장
 - **`src/reader-format.js`**: 참조 링크 표시명에서 `.md` 확장자 제거 정규식 추가 (`/\.(html|md)$/`)
-- **`.gitignore`**: `!content/참조자료/html_output/**/*.md` 예외 추가 (MD 변환본 Git 추적)
+- **`.gitignore`**: `!content/참조자료/ref_md/**/*.md` 예외 추가 (MD 변환본 Git 추적)
 - **`sw.js`**: `CACHE_VERSION` → `v119-20260901-html-to-md`
 
 ### 변환 결과
@@ -910,18 +910,18 @@
 
 ## 30. PDF 뷰어 → HTML 뷰어 전환 (2026-09-01)
 
-> **목표**: PDF.js 기반 참조자료 뷰어의 페이지/라인 참조 오류를 근본 해결하기 위해, `html_output` 폴더의 HTML 변환본을 iframe으로 표시하고 DOM 텍스트 노드 직접 검색으로 정확한 하이라이트 제공
+> **목표**: PDF.js 기반 참조자료 뷰어의 페이지/라인 참조 오류를 근본 해결하기 위해, `ref_md` 폴더의 HTML 변환본을 iframe으로 표시하고 DOM 텍스트 노드 직접 검색으로 정확한 하이라이트 제공
 
 ### 수정 내역
 
 - **`src/html-viewer.js`** (신규): iframe 기반 HTML 참조자료 뷰어 오버레이. DOM `TreeWalker`로 텍스트 노드 순회 → `<mark>` 하이라이트 + 스크롤. 검색어 자동 검색, 인쇄 지원
-- **`src/pdf-registry.js`**: `PDF_DIRS`→`REF_DIRS`, `SOURCE_PDF_MAP`→`SOURCE_REF_MAP`, `PDF_FILE_TO_PATH`→`REF_FILE_TO_PATH`, `PDF_REGISTRY`→`REF_REGISTRY`로 개명. `_toHtmlPath()` 함수로 PDF 파일명 → `html_output/{base}/{base}.html` 경로 자동 변환. `resolvePdfPath`→`resolveRefPath`, `mapSourceToPdf`→`mapSourceToRef`로 개명
+- **`src/pdf-registry.js`**: `PDF_DIRS`→`REF_DIRS`, `SOURCE_PDF_MAP`→`SOURCE_REF_MAP`, `PDF_FILE_TO_PATH`→`REF_FILE_TO_PATH`, `PDF_REGISTRY`→`REF_REGISTRY`로 개명. `_toHtmlPath()` 함수로 PDF 파일명 → `ref_md/{base}/{base}.html` 경로 자동 변환. `resolvePdfPath`→`resolveRefPath`, `mapSourceToPdf`→`mapSourceToRef`로 개명
 - **`src/reader-format.js`**: `data-pdf-path`→`data-ref-html`, `data-pdf-search`→`data-ref-search` 속성명 변경. `pdfPath` 파라미터→`refPath`로 개명. 참조자료 파일 목록의 PDF 타입을 HTML 경로로 변환. 아이콘 `fa-file-pdf`→`fa-file-lines`로 통일
 - **`src/views/textbook-reader.js`**: `openPdf` import→`openHtmlViewer` import. `mapSourceToPdf`→`mapSourceToRef`. `chapterPdfPath`→`chapterRefPath`, `pdfPath`→`refPath` 변수명 변경. `buildReferenceLinks()` 내 PDF 경로→HTML 경로 변환. `bindReferenceLinks()`에서 `data-pdf-path`→`data-ref-html` 바인딩
 - **`src/concept-map.js`**: `pdfPath`→`refPath` 파라미터/변수명 변경. `data-pdf-path`→`data-ref-html` 속성명 변경. `PdfViewer.openPdf`→`HtmlViewer.openHtmlViewer` 호출 변경
 - **`sw.js`**: `pdf-viewer.js`→`html-viewer.js` 캐시 대상 교체. `pdf.min.mjs`/`pdf.worker.min.mjs` 프리캐시 제거. `CACHE_VERSION` → `v103-20260901-html-viewer-docs`
-- **`.gitignore`**: `!content/참조자료/html_output/**/*.html` 예외 추가 (HTML 변환본 Git 추적)
-- **`.vercelignore`**: `!content/참조자료/html_output/**/*.html` 배포 포함. `content/참조자료/**/*.pdf` 배포 제외 (용량 절감 ~27MB)
+- **`.gitignore`**: `!content/참조자료/ref_md/**/*.html` 예외 추가 (HTML 변환본 Git 추적)
+- **`.vercelignore`**: `!content/참조자료/ref_md/**/*.html` 배포 포함. `content/참조자료/**/*.pdf` 배포 제외 (용량 절감 ~27MB)
 - **`docs/dev/ARCHITECTURE.md`**: `html-viewer.js` 모듈 추가, 아키텍처 다이어그램 갱신, 모듈 설명 갱신, content 변경 매트릭스 갱신 (`PDF_DIRS`→`REF_DIRS`), 참조 파일 목록 갱신
 
 ### 검증
