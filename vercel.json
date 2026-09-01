@@ -76,7 +76,7 @@
       ]
     },
     {
-      "source": "/content/참조자료/html_output/(.*)",
+      "source": "/content/%EC%B0%B8%EC%A1%B0%EC%9E%90%EB%A3%8C/html_output/(.*)",
       "headers": [
         {
           "key": "Content-Security-Policy",
