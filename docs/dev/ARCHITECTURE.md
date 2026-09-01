@@ -185,7 +185,7 @@
 | [`src/utils.js`](../../src/utils.js) | 의존성 없는 범용 헬퍼 (한글 초성 추출 `getChosung()` 등) |
 | [`src/sanitize.js`](../../src/sanitize.js) | HTML/XSS 방어 및 텍스트 정제 유틸리티 |
 | [`src/pdf-registry.js`](../../src/pdf-registry.js) | 참조자료 중앙 설정 모듈. 과목별 참조자료 매핑, 출처→HTML 파일명 매핑, HTML 경로 해석 (`REF_DIRS`, `resolveRefPath`, `mapSourceToRef`) |
-| [`src/html-viewer.js`](../../src/html-viewer.js) | 앱 내 HTML 참조자료 뷰어. `fetch()`+`DOMParser`로 HTML 로드 후 DOM 직접 주입 (iframe 없음). 텍스트 노드 순회 검색 + `<mark>` 하이라이트, 검색 결과 내비게이션(이전/다음), 인쇄 지원. PDF.js 기반 `pdf-viewer.js`를 대체 |
+| [`src/html-viewer.js`](../../src/html-viewer.js) | 앱 내 HTML/MD 참조자료 뷰어. `fetch()`+`DOMParser`(HTML) 또는 `parseMarkdown()`(MD)로 로드 후 DOM 직접 주입 (iframe 없음). **키워드 기반 스크롤**: `KEYWORD_INDEX`에서 추출한 셀 텍스트 키워드로 검색→첫 번째 하이라이트로 스크롤 (L###은 스크롤에 사용하지 않음). 텍스트 노드 순회 검색 + `<mark>` 하이라이트, 검색 결과 내비게이션(이전/다음), 인쇄 지원 |
 | [`src/reader-format.js`](../../src/reader-format.js) | 교재 리더 본문 포맷터. `parseMarkdown()` + HTML 참조 링크 변환 (`data-ref-html`, `data-ref-search`) + 참조자료 인라인 렌더링 |
 | [`src/exam-viewer.js`](../../src/exam-viewer.js) | 문제집(MD) 런타임 뷰어. `content/문제은행/*.md` fetch → 자체 MD→HTML 변환 → 인앱 전체화면 오버레이 렌더링. TOC 생성·인쇄·sessionStorage 캐시(24h)·`file://` 번들 폴리백(`data/exams_md/*.js`) 지원. **시험 제목은 registry에서 동적 조회** (하드코딩 없음) |
 
@@ -252,8 +252,9 @@ scratchpad.js (캔버스)            views/flashcard.js (플래시카드)
 reader-format.js (리더 포맷터+키워드 자동링크+L### 확장)    views/quiz.js (퀴즈+복습)
 ui-utils.js (로딩 UI)             views/trainer.js (훈련소)
 types.js (JSDoc 타입 정의)        views/dictionary.js (성분 검색)
-html-viewer.js (참조자료 뷰어+Deep Linking+앵커 스크롤)    views/navigation.js (뷰 전환 유틸)
+html-viewer.js (참조자료 뷰어+키워드 기반 스크롤)    views/navigation.js (뷰 전환 유틸)
 pdf-registry.js (참조자료 레지스트리+KEYWORD_REF_MAP 자동링크)
+keyword-index.js (KEYWORD_INDEX: 교재 셀→참조자료 키워드 매핑)
 markdown-parser.js (MD→HTML 파서)
 ```
 
@@ -394,7 +395,7 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 | 8 | 그 외 App Shell (아이콘/이미지 등) | **Stale-While-Revalidate** | 빠른 표시 + 백그라운드 갱신 |
 
 ### 캐시 버전 관리
-- `CACHE_VERSION` 상수로 캐시 네임스페이스 관리 (현재 `v39-20260826-22db641`)
+- `CACHE_VERSION` 상수로 캐시 네임스페이스 관리 (현재 `v133-20260901-keyword-scroll`)
 - **빌드 타임 자동 치환**: `tools/build/stamp-sw-version.js`가 빌드 완료 시 `CACHE_VERSION`을 `${prefix}-${YYYYMMDD}-${gitShort}` 형태로 자동 갱신 → 수동 관리 불필요
 - **배포 시 버전을 올리면 구 캐시 자동 정리** → 모바일 구버전 고착(Stale Cache) 문제 방지
 - `SHELL_ASSETS`에는 [`src/utils.js`](../../src/utils.js), [`src/trainer-calc.js`](../../src/trainer-calc.js) 등 분리된 모듈이 모두 프리캐시에 포함됨
