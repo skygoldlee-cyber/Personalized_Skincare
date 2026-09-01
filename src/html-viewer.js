@@ -224,6 +224,19 @@ async function openHtmlViewer(htmlPath, searchKeyword, anchorId, lineNum) {
         scroll.appendChild(content);
         _contentEl = content;
 
+        // PDF→HTML 변환시 폰트별 <span> 분할 제거 (한글 키워드 검색을 위해)
+        // 예: <span>알</span><span>코올</span> → 알코올 (단일 텍스트 노드)
+        if (!isMarkdown) {
+            content.querySelectorAll('span').forEach(span => {
+                const parent = span.parentNode;
+                while (span.firstChild) {
+                    parent.insertBefore(span.firstChild, span);
+                }
+                parent.removeChild(span);
+                parent.normalize();
+            });
+        }
+
         // MD의 경우 이미지 경로를 절대 경로로 변환
         if (isMarkdown) {
             content.querySelectorAll('img').forEach(img => {
