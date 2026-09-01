@@ -234,12 +234,27 @@ async function openHtmlViewer(htmlPath, searchKeyword, anchorId, lineNum) {
             });
         }
 
-        // 검색어가 있으면 자동 검색 (하이라이트용)
-        if (searchKeyword && searchKeyword.length >= 2) {
-            await _doSearch(searchKeyword);
+        // 검색어 결정: L### 링크의 경우 lineNum 기반으로 실제 키워드 추출
+        let effectiveSearch = searchKeyword;
+        if (lineNum && isMarkdown) {
+            // MD 파일: 원본 텍스트의 N번째 라인을 추출하여 검색어로 사용
+            // (parseMarkdown 후 p 요소 수가 원본 라인과 불일치하므로)
+            const mdLines = rawText.split('\n');
+            const lineIdx = parseInt(lineNum) - 1;
+            if (lineIdx >= 0 && lineIdx < mdLines.length) {
+                const lineText = mdLines[lineIdx].replace(/^#+\s*/, '').replace(/\*\*/g, '').replace(/!\[.*?\]\(.*?\)/g, '').trim();
+                if (lineText.length >= 2) {
+                    effectiveSearch = lineText;
+                }
+            }
+        }
+
+        // 검색어가 있으면 자동 검색 (하이라이트 + 스크롤 타겟용)
+        if (effectiveSearch && effectiveSearch.length >= 2) {
+            await _doSearch(effectiveSearch);
             // 검색 결과가 없고 키워드에 공백이 있으면 첫 단어로 재검색
-            if (_searchResults.length === 0 && searchKeyword.includes(' ')) {
-                const firstWord = searchKeyword.split(' ')[0];
+            if (_searchResults.length === 0 && effectiveSearch.includes(' ')) {
+                const firstWord = effectiveSearch.split(' ')[0];
                 if (firstWord.length >= 2) {
                     await _doSearch(firstWord);
                 }
@@ -247,14 +262,13 @@ async function openHtmlViewer(htmlPath, searchKeyword, anchorId, lineNum) {
         }
 
         // 스크롤 타겟 찾기
-        // L### 링크: lineNum이 있으면 요소 카운트 기반 스크롤을 최우선 (p 태그가 원본 라인과 1:1 대응)
+        // L### 링크: lineNum이 있으면 HTML은 N번째 <p>, MD는 검색 결과 사용
         // 출처 링크: anchorId가 있으면 ID/heading 검색 우선
         if (anchorId || lineNum) {
             let target = null;
 
-            // 1. lineNum이 있으면 N번째 <p> 요소로 스크롤 (L### 전용)
-            //    참조자료 HTML의 <p> 태그가 원본 PDF 라인과 1:1 대응
-            if (lineNum) {
+            // 1. lineNum + HTML 파일: N번째 <p> 요소로 스크롤 (p 태그가 원본 라인과 1:1 대응)
+            if (lineNum && !isMarkdown) {
                 const blocks = content.querySelectorAll('p');
                 const idx = parseInt(lineNum) - 1;
                 if (idx >= 0 && idx < blocks.length) {
@@ -264,12 +278,17 @@ async function openHtmlViewer(htmlPath, searchKeyword, anchorId, lineNum) {
                 }
             }
 
-            // 2. lineNum이 없고 anchorId가 있으면 ID로 직접 찾기 (출처 라인 제N조용)
+            // 2. lineNum + MD 파일: 검색 결과(원본 라인 텍스트로 검색) 사용
+            if (lineNum && isMarkdown && !target && _searchResults.length > 0) {
+                target = _searchResults[0];
+            }
+
+            // 3. lineNum이 없고 anchorId가 있으면 ID로 직접 찾기 (출처 라인 제N조용)
             if (!target && !lineNum && anchorId) {
                 target = content.querySelector(`#${CSS.escape(anchorId)}`);
             }
 
-            // 3. heading 텍스트에 앵커 문자열이 포함된 요소 찾기
+            // 4. heading 텍스트에 앵커 문자열이 포함된 요소 찾기
             if (!target && !lineNum && anchorId) {
                 const headings = content.querySelectorAll('h1, h2, h3, h4, h5, h6, .section-label, .page-header');
                 for (const h of headings) {
@@ -280,7 +299,7 @@ async function openHtmlViewer(htmlPath, searchKeyword, anchorId, lineNum) {
                 }
             }
 
-            // 4. 검색 결과로 대체 (lineNum으로 타겟을 찾지 못한 경우만)
+            // 5. 최종 fallback: 검색 결과
             if (!target && _searchResults.length > 0) {
                 target = _searchResults[0];
             }
