@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v132-20260901-p-element-fix';   // html-viewer L###을 <p> 요소 인덱스로 통일 (MISMATCH 0)
+const CACHE_VERSION = 'v133-20260901-keyword-scroll';   // 스크롤을 첫 하이라이트로 통일, KEYWORD_INDEX 셀 텍스트 기반
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;

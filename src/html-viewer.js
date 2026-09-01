@@ -247,78 +247,37 @@ async function openHtmlViewer(htmlPath, searchKeyword, anchorId, lineNum) {
             });
         }
 
-        // 검색어 결정: L### 링크의 경우 lineNum 기반으로 실제 키워드 추출
-        // L### 번호 = 렌더링된 HTML의 N번째 <p> 요소 인덱스 (HTML/MD 공통)
+        // 검색어 결정: searchKeyword(셀 텍스트에서 추출)를 우선 사용
+        // L### 번호는 스크롤 위치 힌트로만 사용 (검색어 덮어쓰지 않음)
         let effectiveSearch = searchKeyword;
-        let mdLineText = null;
-        if (lineNum) {
-            const blocks = content.querySelectorAll('p');
-            const idx = parseInt(lineNum) - 1;
-            if (idx >= 0 && idx < blocks.length) {
-                const lineText = blocks[idx].textContent.replace(/\s+/g, ' ').trim();
-                if (lineText.length >= 2) {
-                    effectiveSearch = lineText;
-                    mdLineText = lineText;
-                }
-            }
-        }
-
-        // 검색어가 있으면 자동 검색 (하이라이트용, 스크롤은 L### 로직이 별도 처리)
         if (effectiveSearch && effectiveSearch.length >= 2) {
-            await _doSearch(effectiveSearch, !!lineNum);
+            await _doSearch(effectiveSearch, true);
             // 검색 결과가 없고 키워드에 공백이 있으면 첫 단어로 재검색
             if (_searchResults.length === 0 && effectiveSearch.includes(' ')) {
                 const firstWord = effectiveSearch.split(' ')[0];
                 if (firstWord.length >= 2) {
-                    await _doSearch(firstWord, !!lineNum);
+                    await _doSearch(firstWord, true);
                 }
             }
         }
 
         // 스크롤 타겟 찾기
-        // 우선순위: lineNum 근처의 검색 결과 > lineNum(N번째 <p>) > 첫 번째 검색 결과 > 앵커 ID > heading 텍스트
-        if (anchorId || lineNum) {
+        // 우선순위: 첫 번째 검색 결과(하이라이트된 키워드) > 앵커 ID > heading 텍스트
+        // L###은 원본 HTML <p> 인덱스이나 parseMarkdown <p>와 불일치하므로 스크롤에 사용하지 않음
+        if (anchorId || lineNum || effectiveSearch) {
             let target = null;
 
-            // 1. lineNum이 있고 검색 결과도 있으면: lineNum에 가장 가까운 검색 결과로 스크롤
-            if (lineNum && _searchResults.length > 0) {
-                const blocks = content.querySelectorAll('p');
-                const idx = parseInt(lineNum) - 1;
-                // 각 검색 결과가 속한 <p>의 인덱스를 구하고, lineNum에 가장 가까운 것 선택
-                let best = _searchResults[0];
-                let bestDist = Infinity;
-                for (const mark of _searchResults) {
-                    let p = mark.closest('p');
-                    if (!p) continue;
-                    const pIdx = Array.from(blocks).indexOf(p);
-                    const dist = pIdx >= 0 ? Math.abs(pIdx - idx) : Infinity;
-                    if (dist < bestDist) { bestDist = dist; best = mark; }
-                }
-                target = best;
-            }
-
-            // 2. lineNum이 없고 검색 결과만 있으면: 첫 번째 결과로 스크롤
-            if (!target && _searchResults.length > 0) {
+            // 1. 검색 결과가 있으면: 첫 번째 하이라이트로 스크롤
+            if (_searchResults.length > 0) {
                 target = _searchResults[0];
             }
 
-            // 3. lineNum fallback: N번째 <p> 요소 (HTML/MD 공통, p 태그가 원본 라인과 대략 대응)
-            if (!target && lineNum) {
-                const blocks = content.querySelectorAll('p');
-                const idx = parseInt(lineNum) - 1;
-                if (idx >= 0 && idx < blocks.length) {
-                    target = blocks[idx];
-                } else if (blocks.length > 0) {
-                    target = blocks[Math.min(idx, blocks.length - 1)];
-                }
-            }
-
-            // 3. lineNum이 없고 anchorId가 있으면 ID로 직접 찾기 (출처 라인 제N조용)
+            // 2. lineNum이 없고 anchorId가 있으면 ID로 직접 찾기 (출처 라인 제N조용)
             if (!target && !lineNum && anchorId) {
                 target = content.querySelector(`#${CSS.escape(anchorId)}`);
             }
 
-            // 4. heading 텍스트에 앵커 문자열이 포함된 요소 찾기
+            // 3. heading 텍스트에 앵커 문자열이 포함된 요소 찾기
             if (!target && !lineNum && anchorId) {
                 const headings = content.querySelectorAll('h1, h2, h3, h4, h5, h6, .section-label, .page-header');
                 for (const h of headings) {
