@@ -215,6 +215,7 @@ function buildRefLinkAttrs(linkInfo, refPath) {
     const fileName = html.split('/').pop();
     const idxKey = `${fileName}|L${line}`;
     const keyword = KEYWORD_INDEX[idxKey] || '';
+    if (!keyword) return '';  // 키워드가 없으면 링크 속성 생성하지 않음
     return `data-ref-html="${escapeAttr(html)}" data-ref-search="${escapeAttr(keyword)}" data-ref-line="${escapeAttr(line)}"`;
 }
 

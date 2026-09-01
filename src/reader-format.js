@@ -115,34 +115,40 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
         html = html.replace(/<td>([^<]*?)\(L\?\)([^<]*?)<\/td>/g,
             (match, before, after) => `<td>${before}(L?)${after}</td>`
         );
-        // (LNN|file.pdf) 패턴 → 타 참조자료 링크 (파일명에 괄호가 있을 수 있으므로 .+? 사용)
+        // (LNN|file.pdf) 패턴 → 타 참조자료 링크 (KEYWORD_INDEX에 키워드가 있는 경우만 링크)
         html = html.replace(/<td>([^<]*?)\(L(\d+)\|(.+?\.pdf)\)([^<]*?)<\/td>/g,
             (match, before, lineNum, pdfFile, after) => {
                 const resolved = resolveRefPath(pdfFile);
                 const usePath = resolved || refPath;
                 const idxKey = `${usePath.split('/').pop()}|L${lineNum}`;
                 const keyword = KEYWORD_INDEX[idxKey] || '';
+                if (!keyword) return `<td>${before}(L?)${after}</td>`;
                 return `<td>${before}(<a href="#" data-ref-html="${escapeHTML(usePath)}" data-ref-search="${escapeHTML(keyword)}" data-ref-line="${lineNum}" class="source-link">L${lineNum}</a>)${after}</td>`;
             }
         );
-        // (LNN) 패턴 → 동일 참조자료 링크
+        // (LNN) 패턴 → 동일 참조자료 링크 (KEYWORD_INDEX에 키워드가 있는 경우만 링크)
         html = html.replace(/<td>([^<]*?)\(L(\d+)\)([^<]*?)<\/td>/g,
             (match, before, lineNum, after) => {
                 const idxKey = `${refPath.split('/').pop()}|L${lineNum}`;
                 const keyword = KEYWORD_INDEX[idxKey] || '';
+                if (!keyword) return `<td>${before}(L?)${after}</td>`;
                 return `<td>${before}(<a href="#" data-ref-html="${escapeHTML(refPath)}" data-ref-search="${escapeHTML(keyword)}" data-ref-line="${lineNum}" class="source-link">L${lineNum}</a>)${after}</td>`;
             }
         );
-        // td 외부에 남은 (LNN|file.pdf) 패턴도 처리 (fallback)
+        // td 외부에 남은 (LNN|file.pdf) 패턴도 처리 (KEYWORD_INDEX에 있는 경우만 링크)
         html = html.replace(/\(L(\d+)\|(.+?\.pdf)\)/g, (match, lineNum, pdfFile) => {
             const resolved = resolveRefPath(pdfFile);
             const usePath = resolved || refPath;
-            const keyword = `제${lineNum}조`;
+            const idxKey = `${usePath.split('/').pop()}|L${lineNum}`;
+            const keyword = KEYWORD_INDEX[idxKey] || '';
+            if (!keyword) return '(L?)';
             return `(<a href="#" data-ref-html="${escapeHTML(usePath)}" data-ref-search="${escapeHTML(keyword)}" data-ref-line="${lineNum}" class="source-link">L${lineNum}</a>)`;
         });
-        // td 외부에 남은 (LNN) 패턴도 처리 (fallback)
+        // td 외부에 남은 (LNN) 패턴도 처리 (KEYWORD_INDEX에 있는 경우만 링크)
         html = html.replace(/\(L(\d+)\)/g, (match, lineNum) => {
-            const keyword = `제${lineNum}조`;
+            const idxKey = `${refPath.split('/').pop()}|L${lineNum}`;
+            const keyword = KEYWORD_INDEX[idxKey] || '';
+            if (!keyword) return '(L?)';
             return `(<a href="#" data-ref-html="${escapeHTML(refPath)}" data-ref-search="${escapeHTML(keyword)}" data-ref-line="${lineNum}" class="source-link">L${lineNum}</a>)`;
         });
     }

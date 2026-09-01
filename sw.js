@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v135-20260901-keyword-audit';   // 무효 L### 링크 354개 → L?로 정리 (참조문서에 키워드 없는 링크 제거)
+const CACHE_VERSION = 'v136-20260901-keyword-index-rebuild';   // KEYWORD_INDEX 재생성 (참조문서 검증된 키워드만 등록), 런타임 가드 (빈 키워드 → L?)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
