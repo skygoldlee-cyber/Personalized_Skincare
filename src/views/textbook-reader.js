@@ -948,7 +948,7 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStor
         <h4 class="glossary-title">📖 중요 용어 해설</h4>
         <div class="reader-table-wrapper">
         <table class="reader-table glossary-table">
-        <thead><tr><th>용어</th><th>설명 (참조문서 발췌)</th><th>출처</th></tr></thead>
+        <thead><tr><th>용어</th><th>설명</th><th>출처</th></tr></thead>
         <tbody>
         ${rows}
         </tbody>

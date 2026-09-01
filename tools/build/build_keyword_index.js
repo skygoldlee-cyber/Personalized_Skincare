@@ -254,12 +254,47 @@ for (const subj of subjects) {
     }
 }
 
+// --- 과목별 큐레이션 용어집 JSON 병합 ---
+// content/교재/glossary/subject{N}.json 에서 큐레이션 정의를 읽어와
+// GLOSSARY_INDEX의 explanation을 definition으로 덮어쓰기
+const GLOSSARY_DIR = path.join(ROOT, 'content/교재/glossary');
+const curatedMap = new Map(); // keyword → definition
+let curatedCount = 0;
+
+if (fs.existsSync(GLOSSARY_DIR)) {
+    const glossaryFiles = fs.readdirSync(GLOSSARY_DIR).filter(f => f.endsWith('.json'));
+    for (const gf of glossaryFiles) {
+        try {
+            const items = JSON.parse(fs.readFileSync(path.join(GLOSSARY_DIR, gf), 'utf-8'));
+            for (const item of items) {
+                if (item.keyword && item.definition) {
+                    curatedMap.set(item.keyword, item.definition);
+                    curatedCount++;
+                }
+            }
+        } catch (e) {
+            console.warn(`[경고] glossary JSON 파싱 실패: ${gf} — ${e.message}`);
+        }
+    }
+}
+
+// GLOSSARY_INDEX에 큐레이션 정의 병합
+let mergedCount = 0;
+for (const [idxKey, entry] of Object.entries(GLOSSARY_INDEX)) {
+    if (curatedMap.has(entry.keyword)) {
+        entry.explanation = curatedMap.get(entry.keyword);
+        entry.curated = true;
+        mergedCount++;
+    }
+}
+
 // --- 출력 파일 작성 ---
 const jsonStr = JSON.stringify(GLOSSARY_INDEX);
 const output = `// src/keyword-index.js — 용어집 인덱스 (참조문서에서 추출한 키워드 + 설명)
 // 자동 생성됨: node tools/build/build_keyword_index.js
-// 키: "파일명.md|L라인번호" → 값: { keyword, explanation, refDoc }
+// 키: "파일명.md|L라인번호" → 값: { keyword, explanation, refDoc, curated? }
 // **참조문서에서 키워드가 검색되는 경우만 등록** (검색 불가 → 미등록 → 런타임에 L? 처리)
+// **큐레이션 정의**: content/교재/glossary/subject{N}.json에서 정의가 있으면 explanation을 덮어쓰고 curated=true 설정
 export const GLOSSARY_INDEX = ${jsonStr};
 `;
 
@@ -271,6 +306,7 @@ console.log(`등록 (참조문서에 키워드 존재): ${totalRegistered}`);
 console.log(`미등록 (참조문서에 키워드 없음): ${totalSkipped}`);
 console.log(`등록률: ${totalChecked > 0 ? Math.round(totalRegistered / totalChecked * 100) : 0}%`);
 console.log(`GLOSSARY_INDEX 항목 수: ${Object.keys(GLOSSARY_INDEX).length}`);
+console.log(`큐레이션 정의: ${curatedCount}개 로드, ${mergedCount}개 병합`);
 console.log(`출력: ${path.relative(ROOT, OUTPUT)}`);
 if (skipped.length > 0) {
     console.log('\n미등록 샘플 (최대 20개):');
