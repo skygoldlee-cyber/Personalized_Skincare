@@ -647,6 +647,31 @@
 
 ---
 
+## 39. 과목별 큐레이션 용어집 JSON 병합 + 테이블/뷰어 UI 수정 (2026-09-01)
+
+> **목표**: 과목별 중요 용어 해설을 JSON 파일에서 큐레이션 정의로 관리하고, 빌드 시 기존 자동 추출 설명에 병합
+
+### 구현 내역
+
+- **`content/교재/glossary/subject{1-4}.json`** (신규): 과목별 큐레이션 용어 정의 (1과목 22개, 2과목 38개, 3과목 6개, 4과목 빈 배열)
+- **`tools/build/build_keyword_index.js`**: 빌드 시 `content/교재/glossary/*.json` 읽어 `GLOSSARY_INDEX`의 `explanation`을 큐레이션 정의로 덮어쓰기, `curated: true` 플래그 추가
+- **`src/views/textbook-reader.js`**: 용어집 테이블 헤더 "설명 (참조문서 발췌)" → "설명"으로 변경
+- **`css/reader.css`**: 용어집 테이블 `table-layout: fixed` + `width: 100%` 적용, `glossary-ref` 컬럼 `white-space: nowrap` → `word-break: break-word` — 과목별 컬럼 폭 일관성 확보
+- **`sw.js`**: `CACHE_VERSION` → `v152-20260901-html-viewer-scrollbar-color`
+
+### HTML 뷰어 스크롤바 수정
+
+- **문제**: `css/base.css` 전역 스크롤바 색상이 `rgba(255,255,255,0.1)` (흰색 반투명) → HTML 뷰어 흰 배경에서 스크롤바 안 보임
+- **해결**: `src/html-viewer.js`에 뷰어 전용 스크롤바 스타일 추가 (`#888` thumb, `#f0f0f0` track, 12px)
+- **구조 개선**: 오버레이를 flexbox → 절대 위치(`position:fixed`) 기반으로 변경, `overflow-y:scroll !important` + 인라인 스타일 이중 보장
+
+### 검증
+
+- 88/88 단위 테스트 통과
+- Vercel 배포 완료 (v152)
+
+---
+
 ## 38. 학습 보조 기능 축소 — 개념 맵·절차 플로우·행정처분 계단 삭제 (2026-09-01)
 
 > **목표**: Mermaid 마인드맵/플로우차트가 교재 콘텐츠에 직접 내장됨에 따라 중복 기능인 개념 맵, 절차 플로우, 행정처분 계단 기능을 전면 삭제

@@ -395,7 +395,7 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 | 8 | 그 외 App Shell (아이콘/이미지 등) | **Stale-While-Revalidate** | 빠른 표시 + 백그라운드 갱신 |
 
 ### 캐시 버전 관리
-- `CACHE_VERSION` 상수로 캐시 네임스페이스 관리 (현재 `v147-20260901-remove-cmap-flow-penalty`)
+- `CACHE_VERSION` 상수로 캐시 네임스페이스 관리 (현재 `v152-20260901-html-viewer-scrollbar-color`)
 - **빌드 타임 자동 치환**: `tools/build/stamp-sw-version.js`가 빌드 완료 시 `CACHE_VERSION`을 `${prefix}-${YYYYMMDD}-${gitShort}` 형태로 자동 갱신 → 수동 관리 불필요
 - **배포 시 버전을 올리면 구 캐시 자동 정리** → 모바일 구버전 고착(Stale Cache) 문제 방지
 - `SHELL_ASSETS`에는 [`src/utils.js`](../../src/utils.js), [`src/trainer-calc.js`](../../src/trainer-calc.js) 등 분리된 모듈이 모두 프리캐시에 포함됨
@@ -798,6 +798,18 @@ content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.j
    - **키워드 링크 보호** (2026-09-01): `reader-format.js`에서 `<pre class="mermaid">` 블록을 플레이스홀더로 보호 → 용어집 자동 링크가 Mermaid 문법을 손상시키지 않음
    - `securityLevel: 'loose'`로 변경 (`<br/>` 등 HTML 태그 허용)
    - 교재 콘텐츠에 mindmap + flowchart 다이어그램 다수 포함
+
+17. **과목별 큐레이션 용어집 (Glossary Curation)** ✅ (2026-09-01)
+   - `content/교재/glossary/subject{1-4}.json`: 과목별 큐레이션 용어 정의 파일 (수작성)
+   - `tools/build/build_keyword_index.js`: 빌드 시 JSON 파일을 읽어 `GLOSSARY_INDEX`의 `explanation`을 큐레이션 정의로 덮어쓰기, `curated: true` 플래그 추가
+   - `src/views/textbook-reader.js`: 용어집 테이블 헤더 "설명 (참조문서 발췌)" → "설명"으로 변경
+   - `css/reader.css`: 용어집 테이블 `table-layout: fixed` 적용 — 과목별 컬럼 폭 일관성 확보
+   - JSON 파일은 빌드 타임 전용이므로 SW 캐시 불필요 (빌드 결과가 `src/keyword-index.js`에 합쳐짐)
+
+18. **HTML 뷰어 스크롤바 가시성 수정** ✅ (2026-09-01)
+   - **문제**: `css/base.css` 전역 스크롤바 색상이 `rgba(255,255,255,0.1)` (흰색 반투명) → HTML 뷰어의 흰 배경에서 스크롤바가 안 보임
+   - **해결**: `src/html-viewer.js`에 뷰어 전용 스크롤바 스타일 추가 (`#888` thumb, `#f0f0f0` track, 12px 폭)
+   - **구조 개선**: 오버레이를 flexbox에서 절대 위치(`position:fixed`) 기반으로 변경 — 브라우저별 flexbox 구현 차이에 영향받지 않고 스크롤 영역 확보
 
 ---
 
