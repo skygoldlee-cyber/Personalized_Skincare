@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v104-20260901-ref-link-display';   // 출처/참조 링크 표시 텍스트에서 .pdf 제거, 라벨 '참조 자료'로 변경
+const CACHE_VERSION = 'v105-20260901-remove-dead-pdf-files';   // pdf-viewer.js, PDF.js 라이브러리 삭제, concept-map CSS 클래스명 정리
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;

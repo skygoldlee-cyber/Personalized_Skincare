@@ -80,9 +80,9 @@ function generateMobileLayout(chapter, sections, colors, svgNS, isKeySection, re
         const badgeY = rootY + rootR + 6;
         const fileName = refPath.split('/').pop().replace(/\.html$/, '');
         const shortName = truncate(fileName, 16);
-        svg += `<g class="concept-map-pdf-link" data-ref-html="${escapeAttr(refPath)}" style="cursor:pointer">`;
+        svg += `<g class="concept-map-ref-link" data-ref-html="${escapeAttr(refPath)}" style="cursor:pointer">`;
         svg += `<rect x="${centerX - 90}" y="${badgeY}" width="180" height="22" rx="11" fill="${colors.nodeFill}" stroke="${colors.nodeStroke}" stroke-width="1" opacity="0.9"/>`;
-        svg += `<text x="${centerX}" y="${badgeY + 15}" text-anchor="middle" fill="${colors.nodeText}" font-size="9" class="concept-map-pdf-text">📄 ${escapeText(shortName)}</text>`;
+        svg += `<text x="${centerX}" y="${badgeY + 15}" text-anchor="middle" fill="${colors.nodeText}" font-size="9" class="concept-map-ref-text">📄 ${escapeText(shortName)}</text>`;
         svg += `</g>`;
     }
 
@@ -169,9 +169,9 @@ function generateDesktopLayout(chapter, sections, colors, svgNS, isKeySection, r
         const badgeY = centerY + rootR + 6;
         const fileName = refPath.split('/').pop().replace(/\.html$/, '');
         const shortName = truncate(fileName, 20);
-        svg += `<g class="concept-map-pdf-link" data-ref-html="${escapeAttr(refPath)}" style="cursor:pointer">`;
+        svg += `<g class="concept-map-ref-link" data-ref-html="${escapeAttr(refPath)}" style="cursor:pointer">`;
         svg += `<rect x="${centerX - 100}" y="${badgeY}" width="200" height="24" rx="12" fill="${colors.nodeFill}" stroke="${colors.nodeStroke}" stroke-width="1" opacity="0.9"/>`;
-        svg += `<text x="${centerX}" y="${badgeY + 16}" text-anchor="middle" fill="${colors.nodeText}" font-size="10" class="concept-map-pdf-text">📄 ${escapeText(shortName)}</text>`;
+        svg += `<text x="${centerX}" y="${badgeY + 16}" text-anchor="middle" fill="${colors.nodeText}" font-size="10" class="concept-map-ref-text">📄 ${escapeText(shortName)}</text>`;
         svg += `</g>`;
     }
 
@@ -233,7 +233,7 @@ export function renderConceptMap(container, chapter, opts = {}) {
 
     const bindNodes = (clickHandler) => {
         // 참조자료 배지 클릭 바인딩
-        container.querySelectorAll('.concept-map-pdf-link[data-ref-html]').forEach(link => {
+        container.querySelectorAll('.concept-map-ref-link[data-ref-html]').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 e.stopPropagation();

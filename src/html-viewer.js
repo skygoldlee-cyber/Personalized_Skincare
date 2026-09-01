@@ -1,5 +1,5 @@
 // src/html-viewer.js — 앱 내 HTML 참조자료 뷰어 오버레이 (검색 + 하이라이트)
-// PDF.js 기반 pdf-viewer.js를 대체: html_output의 HTML을 iframe으로 표시
+// html_output의 HTML 변환본을 iframe으로 표시
 // 동일 출처(same-origin)이므로 iframe.contentDocument에 직접 접근하여 검색·하이라이트
 
 let _overlayEl = null;
