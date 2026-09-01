@@ -11,7 +11,7 @@ audiobook/mp3/
 
 # ---------- 📚 정적 HTML 콘텐츠 ----------
 # 교재 본문은 content/*.md 런타임 파싱으로 렌더링 (사전 렌더 HTML 불필요).
-# 참조자료 HTML 변환본(html_output)은 앱 내 HTML 뷰어가 fetch하므로 배포에 포함.
+# 참조자료 HTML 변환본(ref_md)은 앱 내 HTML 뷰어가 fetch하므로 배포에 포함.
 # 루트 index.html(진입점)도 배포에 포함.
 # content/html/의 사전 렌더 HTML만 제외 (negation 패턴 대신 디렉토리 단위 제외)
 content/html/
@@ -58,7 +58,7 @@ archive/
 content/report/
 
 # ---------- 📖 참조자료 PDF (배포 제외 — HTML 변환본으로 대체) ----------
-# content/참조자료/ 하위 PDF 파일들은 html_output의 HTML 변환본으로 대체되어 배포에서 제외.
+# content/참조자료/ 하위 PDF 파일들은 ref_md의 HTML 변환본으로 대체되어 배포에서 제외.
 # HTML 변환본(~35MB)만 배포에 포함.
 content/참조자료/**/*.pdf
 

@@ -3,7 +3,7 @@
 // 과목이 변경될 때 이 파일만 수정하면 됩니다.
 // reader-format.js와 textbook-reader.js는 이 파일을 import하여 사용합니다.
 //
-// 참조자료는 content/참조자료/html_output/ 하위의 MD 변환본을 사용합니다.
+// 참조자료는 content/참조자료/ref_md/ 하위의 MD 변환본을 사용합니다.
 // 각 파일은 {파일명(확장자 제거)}/{파일명(확장자 제거)}.md 구조로 배치됩니다.
 //
 // 수정 가이드:
@@ -191,7 +191,7 @@ export const REFERENCE_LAW = [
 // 파생 맵 (수정 불필요 — 위의 설정에서 자동 생성됨)
 // ================================================================
 
-// HTML 기본 경로: content/참조자료/html_output/{basename}/{basename}.md
+// HTML 기본 경로: content/참조자료/ref_md/{basename}/{basename}.md
 // basename = 파일명에서 .pdf 확장자 제거
 // 전체 참조자료를 MD로 변환 (한글 엔티티 인코딩 문제 해결 + 용량 절감)
 const MD_CONVERSION_TARGETS = null; // null = 전체 MD 변환
@@ -199,7 +199,7 @@ const MD_CONVERSION_TARGETS = null; // null = 전체 MD 변환
 function _toHtmlPath(fileName) {
     const base = fileName.replace(/\.pdf$/, '');
     const ext = '.md';
-    return `content/참조자료/html_output/${base}/${base}${ext}`;
+    return `content/참조자료/ref_md/${base}/${base}${ext}`;
 }
 
 // 파일명 → HTML 경로 매핑 (reader-format.js용, 우선순위: 과목N > 공통 > 법령원문)

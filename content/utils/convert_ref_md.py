@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """
-convert_html_output.py — html_output 디렉토리 최적화 스크립트
+convert_ref_md.py — ref_md 디렉토리 최적화 스크립트
 
 [목적]
-  html_output의 HTML 파일들이 너무 커서(~45MB) 배포 부담이 큼.
+  ref_md의 HTML 파일들이 너무 커서(~45MB) 배포 부담이 큼.
   - 대용량 법령 원문 3개(상위 60%) → Markdown으로 변환 (~70% 절감)
   - 나머지 39개 → <head>/<style> 제거 + base64 이미지 제거 (body-only HTML)
 
 [사용법]
-  python content/utils/convert_html_output.py
+  python content/utils/convert_ref_md.py
 """
 
 import re
@@ -17,7 +17,7 @@ import html
 from pathlib import Path
 from html.parser import HTMLParser
 
-HTML_OUTPUT_DIR = Path(__file__).parent.parent / "참조자료" / "html_output"
+REF_MD_DIR = Path(__file__).parent.parent / "참조자료" / "ref_md"
 
 # MD 변환 대상 — None이면 전체 파일을 MD로 변환
 MD_TARGETS = None  # 전체 MD 변환 (한글 엔티티 인코딩 문제 해결)
@@ -216,15 +216,15 @@ def strip_html_to_body(html_content):
 
 
 def main():
-    if not HTML_OUTPUT_DIR.exists():
-        print(f"ERROR: {HTML_OUTPUT_DIR} not found")
+    if not REF_MD_DIR.exists():
+        print(f"ERROR: {REF_MD_DIR} not found")
         return
 
     md_count = 0
     body_count = 0
     total_saved = 0
 
-    for item in HTML_OUTPUT_DIR.iterdir():
+    for item in REF_MD_DIR.iterdir():
         if not item.is_dir():
             continue
 

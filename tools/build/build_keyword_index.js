@@ -58,7 +58,7 @@ for (const dir of _DIR_PRIORITY) {
     for (const f of REF_DIRS[dir] || []) {
         const base = f.replace(/\.pdf$/, '');
         if (!REF_FILE_TO_PATH[f]) {
-            REF_FILE_TO_PATH[f] = `content/참조자료/html_output/${base}/${base}.md`;
+            REF_FILE_TO_PATH[f] = `content/참조자료/ref_md/${base}/${base}.md`;
         }
     }
 }

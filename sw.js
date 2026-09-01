@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v153-20260901-glossary-modular';   // 용어집 모듈화 리팩토링 (glossary-query, glossary-renderer 분리)
+const CACHE_VERSION = 'v154-20260901-ref-md-rename';   // html_output → ref_md 폴더명 변경
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
@@ -293,10 +293,10 @@ self.addEventListener('fetch', (event) => {
   }
 
   // 4-1) 마크다운 원본 파일 → Cache First (content/exams/*.md 등, 정적 원본)
-  //      단, html_output/*.md는 DATA_CACHE(배포 간 유지)로 분리 — SHELL_CACHE는 배포마다 전체 삭제되므로
+  //      단, ref_md/*.md는 DATA_CACHE(배포 간 유지)로 분리 — SHELL_CACHE는 배포마다 전체 삭제되므로
   //      26MB 참조자료 MD가 매 배포마다 재다운로드되는 것을 방지.
   if (MD_PATTERN.test(url.pathname)) {
-    const targetCache = url.pathname.includes('/html_output/') ? DATA_CACHE : SHELL_CACHE;
+    const targetCache = url.pathname.includes('/ref_md/') ? DATA_CACHE : SHELL_CACHE;
     event.respondWith(cacheFirst(request, targetCache));
     return;
   }
@@ -320,9 +320,9 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 5-3) html_output 정적 콘텐츠 (.html) → Cache First + DATA_CACHE (배포 간 유지)
+  // 5-3) ref_md 정적 콘텐츠 (.html) → Cache First + DATA_CACHE (배포 간 유지)
   //      body-only HTML도 매 배포마다 재다운로드되지 않도록 MD와 동일 처리.
-  if (url.pathname.includes('/html_output/') && /\.html$/i.test(url.pathname)) {
+  if (url.pathname.includes('/ref_md/') && /\.html$/i.test(url.pathname)) {
     event.respondWith(cacheFirst(request, DATA_CACHE));
     return;
   }

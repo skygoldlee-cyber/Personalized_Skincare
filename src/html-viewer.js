@@ -1,5 +1,5 @@
 // src/html-viewer.js — 앱 내 HTML 참조자료 뷰어 오버레이 (검색 + 하이라이트)
-// html_output의 HTML/MD 변환본을 fetch로 로드하여 DOM에 직접 주입 (iframe 없음)
+// ref_md의 HTML/MD 변환본을 fetch로 로드하여 DOM에 직접 주입 (iframe 없음)
 import { parseMarkdown } from './markdown-parser.js';
 
 let _overlayEl = null;
