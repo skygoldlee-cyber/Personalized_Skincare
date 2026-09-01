@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v101-20260901-a38030d';   // SHELL_ASSETS에 pdf-registry.js, reader-format.js 추가
+const CACHE_VERSION = 'v101-20260901-3442bee';   // 마인드맵 (LNN) 라인번호 재계산 및 reader-format.js 3형식 지원
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
