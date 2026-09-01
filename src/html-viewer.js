@@ -21,6 +21,11 @@ function _injectStyles() {
   padding:.6rem 1rem;background:var(--bg-card,#161b22);
   border-bottom:1px solid var(--border-color,#30363d);position:fixed;top:0;left:0;right:0;z-index:10001;}
 #html-ref-overlay .hr-ov-scroll{position:fixed!important;top:48px!important;left:0!important;right:0!important;bottom:0!important;overflow-y:scroll!important;overflow-x:auto!important;background:#fff!important;-webkit-overflow-scrolling:touch!important;}
+#html-ref-overlay .hr-ov-scroll::-webkit-scrollbar{width:12px;height:12px;}
+#html-ref-overlay .hr-ov-scroll::-webkit-scrollbar-track{background:#f0f0f0;}
+#html-ref-overlay .hr-ov-scroll::-webkit-scrollbar-thumb{background:#888;border-radius:6px;}
+#html-ref-overlay .hr-ov-scroll::-webkit-scrollbar-thumb:hover{background:#555;}
+#html-ref-overlay .hr-ov-scroll{scrollbar-width:thin;scrollbar-color:#888 #f0f0f0;}
 #html-ref-overlay .hr-ov-title{flex:1;font-size:1rem;font-weight:600;
   color:var(--color-text,#e6edf3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 #html-ref-overlay .hr-ov-btn{background:var(--color-primary,#1f6feb);color:#fff;border:none;
