@@ -591,6 +591,35 @@
 
 ---
 
+## 36. 참조자료 뷰어 성능 최적화 (2026-09-01)
+
+> **목표**: html-viewer.js의 로딩·렌더링·검색 성능을 4가지 방안으로 최적화
+
+### 수정 내역
+
+1. **sessionStorage fetch 캐싱** (`src/html-viewer.js`)
+   - 참조자료 HTML/MD 렌더링 결과를 sessionStorage에 24h TTL로 캐싱
+   - 재방문 시 fetch 0회, parseMarkdown/DOMParser 0회로 즉시 렌더링
+2. **span 일괄 제거 최적화** (`src/html-viewer.js`)
+   - 기존: span마다 `insertBefore` + `removeChild` + `normalize()` 호출 (O(n) normalize)
+   - 개선: 모든 span을 먼저 수집 후 일괄 unwrap, `normalize()`는 부모별 1회만 호출
+   - 대용량 HTML(수만 개 span)에서 2-3배 빠른 로딩
+3. **검색 조기 종료** (`src/html-viewer.js`)
+   - 첫 매치 발견 즉시 스크롤, 나머지 하이라이트는 `requestIdleCallback`으로 50개씩 지연 처리
+   - 키워드 클릭 시 체감 스크롤 속도 대폭 향상
+4. **KEYWORD_INDEX 경로 단축** (`src/keyword-index.js`, `src/concept-map.js`, `src/reader-format.js`)
+   - 키를 전체 경로에서 파일명으로 단축: `"content/참조자료/html_output/.../file.md|L123"` → `"file.md|L123"`
+   - 51KB → 14KB (72% 절감)
+   - `concept-map.js`, `reader-format.js`에서 런타임에 `path.split('/').pop()`으로 파일명 추출
+
+### 검증
+
+- `npm test` 88/88 통과
+- `CACHE_VERSION` → `v134-20260901-viewer-optimize`
+- Vercel 배포 완료
+
+---
+
 ## 35. 키워드 스크롤 정확성 수정 (2026-09-01)
 
 > **목표**: 교재 표 셀의 키워드(L###) 링크 클릭 시 하이라이트된 키워드가 아닌 엉뚱한 위치로 스크롤되는 문제 수정
