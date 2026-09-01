@@ -395,7 +395,7 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 | 8 | 그 외 App Shell (아이콘/이미지 등) | **Stale-While-Revalidate** | 빠른 표시 + 백그라운드 갱신 |
 
 ### 캐시 버전 관리
-- `CACHE_VERSION` 상수로 캐시 네임스페이스 관리 (현재 `v134-20260901-viewer-optimize`)
+- `CACHE_VERSION` 상수로 캐시 네임스페이스 관리 (현재 `v147-20260901-remove-cmap-flow-penalty`)
 - **빌드 타임 자동 치환**: `tools/build/stamp-sw-version.js`가 빌드 완료 시 `CACHE_VERSION`을 `${prefix}-${YYYYMMDD}-${gitShort}` 형태로 자동 갱신 → 수동 관리 불필요
 - **배포 시 버전을 올리면 구 캐시 자동 정리** → 모바일 구버전 고착(Stale Cache) 문제 방지
 - `SHELL_ASSETS`에는 [`src/utils.js`](../../src/utils.js), [`src/trainer-calc.js`](../../src/trainer-calc.js) 등 분리된 모듈이 모두 프리캐시에 포함됨
@@ -778,30 +778,26 @@ content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.j
    - CSS 캐시 스큐: `sw.js` CSS 라우팅 `networkFirst` → `cacheFirst`로 변경 (배포 전환 시 HTML/CSS 세대 불일치 방지)
    - 인코딩: `src/utils.js` mojibake 헤더 수정
 
-14. **교재 리더 인터랙티브 개념 맵** ✅
-   - `src/concept-map.js`: 순수 SVG 마인드맵 생성기 (Mermaid.js 없이 CSP-safe, 의존성 제로)
-   - 데스크톱: 루트(챕터 제목) 중심 좌/우 수평 레이아웃 (760px), 베지어 곡선 연결선
-   - 모바일 (폭 < 480px): 루트 상단 세로 트리 레이아웃 (280px), 수직선 연결, `max-height: 60vh` 내부 스크롤
-   - `🔖기출`/`📌중요` 마커 섹션: amber 색상 + 점 표시로 하이라이트
-   - 노드 클릭 → 해당 섹션으로 smooth scroll + 자동 펼침
-   - 펼치기/접기 토글, 화면 회전 시 자동 재렌더링 (resize 디바운스)
-   - 스크롤 indicator (하단 페이드 그라데이션)로 더 볼 콘텐츠 있음 표시
-   - `textbook-reader.js`의 `renderChapterContent()`에 통합, `css/reader.css`에 스타일 추가
+14. ~~**교재 리더 인터랙티브 개념 맵**~~ ❌ (2026-09-01 삭제)
+   - `src/concept-map.js`: 순수 SVG 마인드맵 생성기 — **삭제됨** (Mermaid 마인드맵이 콘텐츠에 직접 내장되어 중복 기능이 됨)
+   - `textbook-reader.js`에서 개념 맵 컨테이너 HTML, `renderConceptMap` 호출, 토글 이벤트, import 제거
 
-15. **교재 리더 학습 보조 도구** ✅
-   - `src/study-aids.js`: 4가지 학습 보조 기능 (CSP-safe, 의존성 제로)
+15. **교재 리더 학습 보조 도구** ✅ (2026-09-01 축소)
+   - `src/study-aids.js`: 2가지 학습 보조 기능 (CSP-safe, 의존성 제로)
    - ① 기출 필터 & 요약: 🔖기출 마커 섹션 하이라이트 + 토글 버튼로 비기출 섹션 디밍, 핵심 요약 카드 표시
    - ② 숫자·기한 빈칸 카드: 정규식으로 숫자/기한/횟수 자동 추출 → 챕터별 암기표 생성
-   - ③ 절차 플로우: 신고/변경/교육/폐업 절차를 정적 SVG 플로우차트로 시각화
-   - ④ 행정처분 비교표: sticky column + zebra striping + 기출 하이라이트 테이블
+   - ~~③ 절차 플로우~~ (삭제 — Mermaid flowchart가 콘텐츠에 직접 내장됨)
+   - ~~④ 행정처분 비교표~~ (삭제 — 콘텐츠 본문 표로 충분)
    - `textbook-reader.js`에 토글 버튼과 렌더링 통합, `css/reader.css`에 반응형 스타일 추가
 
-16. **교재 본문 Mermaid 다이어그램 렌더링** ✅
-   - `reader-format.js`에 `allowMermaid: true` 옵션 추가 → ```mermaid 코드블록을 `<pre class="mermaid">`로 변환
-   - `textbook-reader.js`에 `_ensureMermaid()` + `_renderReaderMermaid()` 추가 (manual-viewer.js와 동일한 온디맨드 패턴)
-   - `vendor/mermaid/mermaid.min.js` (3.3MB)는 mermaid 블록이 있는 챕터를 열 때만 동적 로드 → 1회 캐싱 후 오프라인에서도 렌더링 가능
-   - 교재 콘텐츠 8개 파일에 11개 다이어그램 추가 (mindmap 5개, flowchart 6개) — 법령체계, 영업분류, 원료 분류, 사용제한 원료 한도, 위해성 평가, CGMP 3대 요소, 맞춤형화장품 정의, 피부 구조, 관능평가 순서, 제형 안정성, 충진기 종류
-   - **근거**: 표·리스트 위주의 텍스트 학습 자료에 시각적 구조를 추가하여 이해도·암기 효율 향상. Mermaid는 매뉴얼 뷰어에서 이미 검증된 패턴을 재사용
+16. **교재 본문 Mermaid 다이어그램 렌더링** ✅ (2026-09-01 개선)
+   - `reader-format.js`에 `allowMermaid: true` 옵션 → ```mermaid 코드블록을 `<pre class="mermaid">`로 변환
+   - `textbook-reader.js`에 `_ensureMermaid()` + `_renderReaderMermaid()` 추가 (온디맨드 패턴)
+   - `vendor/mermaid/mermaid.min.js` (3.3MB)는 mermaid 블록이 있는 챕터를 열 때만 동적 로드
+   - **개별 렌더링** (2026-09-01): `mermaid.run()`을 노드별로 개별 호출 → 하나의 다이어그램 실패가 전체 렌더링을 중단시키지 않음
+   - **키워드 링크 보호** (2026-09-01): `reader-format.js`에서 `<pre class="mermaid">` 블록을 플레이스홀더로 보호 → 용어집 자동 링크가 Mermaid 문법을 손상시키지 않음
+   - `securityLevel: 'loose'`로 변경 (`<br/>` 등 HTML 태그 허용)
+   - 교재 콘텐츠에 mindmap + flowchart 다이어그램 다수 포함
 
 ---
 

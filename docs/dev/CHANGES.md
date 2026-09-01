@@ -620,6 +620,56 @@
 
 ---
 
+## 37. Mermaid 개별 렌더링 및 키워드 링크 보호 (2026-09-01)
+
+> **목표**: 1과목 마인드맵이 전부 표시되지 않는 문제 수정
+
+### 문제 분석
+
+- **증상**: 1과목은 Mermaid 마인드맵 전부 미표시, 2과목은 대부분 표시됨
+- **원인 1 — 일괄 렌더링 실패**: `mermaid.run({ nodes: Array.from(nodes) })`로 모든 다이어그램을 한 번에 렌더링 → 하나의 파싱 에러가 전체 렌더링을 중단시킴
+- **원인 2 — 키워드 링크 손상**: `reader-format.js`의 용어집 자동 링크가 `<pre class="mermaid">` 블록 내부의 키워드를 `<a>` 태그로 치환 → Mermaid 문법 손상
+- **원인 3 — securityLevel strict**: `securityLevel: 'strict'`가 `<br/>` 등 HTML 태그를 차단하여 일부 다이어그램 렌더링 실패
+
+### 수정 내역
+
+- **`src/views/textbook-reader.js`**: `_renderReaderMermaid()` 개별 노드 렌더링으로 변경
+  - `mermaid.run({ nodes: [node] })`로 노드별 순차 렌더링 → 하나 실패해도 나머지는 정상 렌더링
+  - `securityLevel: 'loose'`로 변경
+- **`src/manual-viewer.js`**: 동일한 개별 렌더링 + `securityLevel: 'loose'` 적용
+- **`src/reader-format.js`**: 키워드 자동 링크 플레이스홀더 보호 정규식에 `<pre class="mermaid">` 블록 추가
+- **`sw.js`**: `CACHE_VERSION` → `v146-20260901-mermaid-individual-render`
+
+### 검증
+
+- 1과목·2과목 모든 Mermaid 다이어그램 정상 렌더링 확인
+- Vercel 배포 완료
+
+---
+
+## 38. 학습 보조 기능 축소 — 개념 맵·절차 플로우·행정처분 계단 삭제 (2026-09-01)
+
+> **목표**: Mermaid 마인드맵/플로우차트가 교재 콘텐츠에 직접 내장됨에 따라 중복 기능인 개념 맵, 절차 플로우, 행정처분 계단 기능을 전면 삭제
+
+### 삭제 내역
+
+- **개념 맵 (Concept Map)**: `textbook-reader.js`에서 개념 맵 컨테이너 HTML, `renderConceptMap()` 호출, 토글 이벤트, `concept-map.js` import 제거
+- **절차 플로우 (Procedure Flow)**: `renderStudyAids()`에서 `renderProcedureFlowCard()` 호출 제거
+- **행정처분 계단 (Admin Penalty Steps)**: `renderStudyAids()`에서 `renderAdminPenaltyCard()` 호출 제거
+- **`src/study-aids.js`**: `renderStudyAids()`가 기출 핵심 요약 + 숫자·기한 암기표 2종만 반환하도록 축소
+- **`sw.js`**: `CACHE_VERSION` → `v147-20260901-remove-cmap-flow-penalty`
+
+### 유지 기능
+
+- 기출 필터 & 요약 카드 (🔖기출 마커 하이라이트 + 디밍 토글)
+- 숫자·기한 빈칸 카드 (정규식 자동 추출 암기표)
+
+### 검증
+
+- Vercel 배포 완료
+
+---
+
 ## 35. 키워드 스크롤 정확성 수정 (2026-09-01)
 
 > **목표**: 교재 표 셀의 키워드(L###) 링크 클릭 시 하이라이트된 키워드가 아닌 엉뚱한 위치로 스크롤되는 문제 수정
