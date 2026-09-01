@@ -782,25 +782,6 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStor
 
     const bookmarks = getReaderBookmarks();
 
-    // --- 용어집 항목 사전 계산 (TOC + 본문 렌더 공용) ---
-    const glossaryItems = [];
-    const seenKeys = new Set();
-    for (const s of chapter.sections) {
-        const secSrcM = (s.content || '').match(/📌\s*\*\*출처\*\*[:：]\s*(.+?)(?:\||\n)/);
-        const secRefP = secSrcM ? mapSourceToRef(secSrcM[1]) : null;
-        const secRefPath = secRefP || chapterRefPath;
-        if (secRefPath) {
-            const refFileName = secRefPath.split('/').pop();
-            for (const [idxKey, entry] of Object.entries(GLOSSARY_INDEX)) {
-                if (idxKey.startsWith(refFileName + '|') && !seenKeys.has(idxKey)) {
-                    glossaryItems.push({ idxKey, ...entry });
-                    seenKeys.add(idxKey);
-                }
-            }
-        }
-    }
-    const hasGlossary = glossaryItems.length > 0;
-
     // Build TOC
     const tocList = document.getElementById('reader-toc-list');
     if (tocList) {
@@ -810,22 +791,9 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStor
                 <span>${esc(section.title)}</span>
             </div>
         `).join('');
-        // 용어집 항목 추가 (용어집이 있는 경우만)
-        if (hasGlossary) {
-            tocHtml += `<div class="reader-toc-item" data-glossary-scroll="1" style="margin-top:0.4rem;border-top:1px solid var(--border-color,#30363d);padding-top:0.4rem;">
-                <span class="toc-num"><i class="fa-solid fa-book-bookmark"></i></span>
-                <span>중요 용어 해설</span>
-            </div>`;
-        }
         tocList.innerHTML = tocHtml;
         tocList.querySelectorAll('.reader-toc-item').forEach(item => {
             item.addEventListener('click', () => {
-                const glossaryScroll = item.dataset.glossaryScroll;
-                if (glossaryScroll) {
-                    const target = document.getElementById('reader-glossary');
-                    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    return;
-                }
                 const idx = parseInt(item.dataset.sectionIdx);
                 const target = document.getElementById(`reader-section-${idx}`);
                 if (target) {
@@ -853,6 +821,39 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStor
         if (m) { chapterSourceText = m[1]; break; }
     }
     const chapterRefPath = mapSourceToRef(chapterSourceText);
+
+    // --- 용어집 항목 사전 계산 (TOC + 본문 렌더 공용) ---
+    const glossaryItems = [];
+    const seenKeys = new Set();
+    for (const s of chapter.sections) {
+        const secSrcM = (s.content || '').match(/📌\s*\*\*출처\*\*[:：]\s*(.+?)(?:\||\n)/);
+        const secRefP = secSrcM ? mapSourceToRef(secSrcM[1]) : null;
+        const secRefPath = secRefP || chapterRefPath;
+        if (secRefPath) {
+            const refFileName = secRefPath.split('/').pop();
+            for (const [idxKey, entry] of Object.entries(GLOSSARY_INDEX)) {
+                if (idxKey.startsWith(refFileName + '|') && !seenKeys.has(idxKey)) {
+                    glossaryItems.push({ idxKey, ...entry });
+                    seenKeys.add(idxKey);
+                }
+            }
+        }
+    }
+    const hasGlossary = glossaryItems.length > 0;
+
+    // TOC에 용어집 항목 추가
+    if (hasGlossary && tocList) {
+        const glossaryTocItem = document.createElement('div');
+        glossaryTocItem.className = 'reader-toc-item';
+        glossaryTocItem.dataset.glossaryScroll = '1';
+        glossaryTocItem.style.cssText = 'margin-top:0.4rem;border-top:1px solid var(--border-color,#30363d);padding-top:0.4rem;';
+        glossaryTocItem.innerHTML = '<span class="toc-num"><i class="fa-solid fa-book-bookmark"></i></span><span>중요 용어 해설</span>';
+        glossaryTocItem.addEventListener('click', () => {
+            const target = document.getElementById('reader-glossary');
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+        tocList.appendChild(glossaryTocItem);
+    }
 
     let html = `
         <div class="reader-readable-width">
