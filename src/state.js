@@ -47,7 +47,8 @@ export const state = {
         limits: {
             currentIndex: 0,
             shuffledData: [],
-            correctCount: 0
+            correctCount: 0,
+            solvedList: []
         },
         calc: {
             currentQuestion: null,
@@ -57,13 +58,15 @@ export const state = {
         ingredients: {
             currentIndex: 0,
             shuffledQuestions: [],
-            correctCount: 0
+            correctCount: 0,
+            solvedList: []
         },
         pomodoro: {
             timerId: null,
             timeLeft: 25 * 60,
             status: 'idle', // 'idle', 'work', 'break'
-            totalTimeToday: 0
+            totalTimeToday: 0,
+            sessionCount: 0
         }
     }
 };
@@ -77,7 +80,7 @@ export const state = {
 // localStorage 접근 자체가 예외를 던질 수 있으므로, 앱 흐름이 중단되지 않도록 감싼다.
 // - 읽기 실패: null 반환(값 없음과 동일 취급)
 // - 쓰기 실패: false 반환 + 1회 콘솔 경고(반복 스팸 방지)
-function safeGetItem(key) {
+export function safeGetItem(key) {
     try {
         return localStorage.getItem(key);
     } catch (e) {
@@ -88,7 +91,7 @@ function safeGetItem(key) {
 // 저장 실패 경고를 1회만 출력하기 위한 모듈 스코프 플래그(반복 스팸 방지).
 let storageWarnEmitted = false;
 
-function safeSetItem(key, value) {
+export function safeSetItem(key, value) {
     try {
         localStorage.setItem(key, value);
         return true;
@@ -142,6 +145,19 @@ export function loadProgress() {
         const totalPomo = safeGetItem('pomo_total_time');
         if (totalPomo) {
             state.trainer.pomodoro.totalTimeToday = parseInt(totalPomo) || 0;
+        }
+    }
+    
+    // 뽀모도로 세션 카운트 로드 (오늘 기준)
+    const pomoSessionDate = safeGetItem('pomo_session_date');
+    if (pomoSessionDate !== todayStr) {
+        state.trainer.pomodoro.sessionCount = 0;
+        safeSetItem('pomo_session_count', '0');
+        safeSetItem('pomo_session_date', todayStr);
+    } else {
+        const sessionCount = safeGetItem('pomo_session_count');
+        if (sessionCount) {
+            state.trainer.pomodoro.sessionCount = parseInt(sessionCount) || 0;
         }
     }
 }

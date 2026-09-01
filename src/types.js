@@ -43,6 +43,7 @@
  * @property {number}   currentIndex 현재 문항 인덱스
  * @property {Array<*>} shuffledData 셔플된 문항 데이터
  * @property {number}   correctCount 맞힌 개수
+ * @property {Array<{question:string,selected:string,correctAnswer:string,correct:boolean}>} solvedList 이번 세션 제출 기록
  */
 
 /**
@@ -59,6 +60,7 @@
  * @property {number}   currentIndex      현재 문항 인덱스
  * @property {Array<*>} shuffledQuestions 셔플된 문항 목록
  * @property {number}   correctCount      맞힌 개수
+ * @property {Array<{question:string,selected:string,correctAnswer:string,correct:boolean}>} solvedList 이번 세션 제출 기록
  */
 
 /**
@@ -68,6 +70,7 @@
  * @property {number}  timeLeft      남은 시간(초)
  * @property {'idle'|'work'|'break'} status 타이머 상태
  * @property {number}  totalTimeToday 오늘 누적 집중 시간(초)
+ * @property {number}  sessionCount  완료된 집중 세션 수
  */
 
 /**

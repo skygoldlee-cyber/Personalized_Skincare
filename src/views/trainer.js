@@ -1,5 +1,5 @@
 // src/views/trainer.js - 스마트 훈련소, 계산 연습기, 배합한도 수치 훈련 및 뽀모도로 타이머 로직
-import { state, saveProgress } from '../state.js';
+import { state, saveProgress, safeGetItem, safeSetItem } from '../state.js';
 import { esc, safeTextWithBreaks } from '../sanitize.js';
 import { DataLoader } from '../data-loader.js';
 import { buildCalcQuestion } from '../trainer-calc.js';
@@ -80,8 +80,10 @@ export function tickPomodoro() {
 
         if (pomoState.status === 'work') {
             pomoState.totalTimeToday += 25;
-            localStorage.setItem('pomo_total_time', pomoState.totalTimeToday);
-            localStorage.setItem('pomo_total_time_date', new Date().toISOString().split('T')[0]);
+            pomoState.sessionCount++;
+            safeSetItem('pomo_total_time', pomoState.totalTimeToday);
+            safeSetItem('pomo_total_time_date', new Date().toISOString().split('T')[0]);
+            safeSetItem('pomo_session_count', pomoState.sessionCount);
             
             alert("집중 25분이 끝났습니다! 5분간 휴식하세요.");
             
@@ -138,9 +140,11 @@ export function updatePomodoroUI() {
     
     const pomoTimeEl = document.getElementById('pomo-time');
     const pomoTotalEl = document.getElementById('pomo-total-time');
+    const pomoSessionEl = document.getElementById('pomo-session-count');
 
     if (pomoTimeEl) pomoTimeEl.textContent = `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
     if (pomoTotalEl) pomoTotalEl.textContent = `${pomoState.totalTimeToday}분`;
+    if (pomoSessionEl) pomoSessionEl.textContent = pomoState.sessionCount;
 }
 
 function triggerPomodoroBeep() {
@@ -280,6 +284,7 @@ export function startLimitsTrainer() {
     state.trainer.activeSubView = 'limits';
     state.trainer.limits.currentIndex = 0;
     state.trainer.limits.correctCount = 0;
+    state.trainer.limits.solvedList = [];
     state.trainer.limits.shuffledData = [...LIMITS_DB].sort(() => 0.5 - Math.random());
     
     document.getElementById('trainer-menu-panel').style.display = 'none';
@@ -298,6 +303,13 @@ export function renderLimitsQuestion() {
 
     if (progressEl) progressEl.textContent = `문제 ${limitsState.currentIndex + 1} / ${limitsState.shuffledData.length}`;
     if (catEl) catEl.textContent = currentQ.category;
+    
+    // 진행률 바
+    const progressBar = document.getElementById('limits-progress-bar');
+    if (progressBar) {
+        const pct = Math.round(((limitsState.currentIndex) / limitsState.shuffledData.length) * 100);
+        progressBar.style.width = `${pct}%`;
+    }
     
     const qText = `다음 중 <strong>${esc(currentQ.category)}</strong> 성분인 <strong>"${esc(currentQ.key)}"</strong>의 기준 수치(<strong>${esc(currentQ.condition)}</strong>)로 올바른 것은?`;
     if (questionTextEl) questionTextEl.innerHTML = qText;
@@ -368,7 +380,12 @@ function generateLimitsOptions(question) {
     }
     
     while (optionsSet.size < 4) {
-        optionsSet.add(String((parseFloat(correctValue) || 1) * (optionsSet.size + 1)));
+        const fallback = String((parseFloat(correctValue) || 1) * (optionsSet.size + 2));
+        if (fallback !== correctValue) {
+            optionsSet.add(fallback);
+        } else {
+            optionsSet.add(String((parseFloat(correctValue) || 1) * (optionsSet.size + 3)));
+        }
     }
     
     return [...optionsSet].sort(() => 0.5 - Math.random());
@@ -395,6 +412,15 @@ export function submitLimitsAnswer(selectedBtn, selectedValue, correctValue) {
     }
     
     const currentQ = state.trainer.limits.shuffledData[state.trainer.limits.currentIndex];
+    
+    // solvedList에 기록
+    state.trainer.limits.solvedList.push({
+        question: `${currentQ.category} - ${currentQ.key} (${currentQ.condition})`,
+        selected: `${selectedValue} ${currentQ.unit}`,
+        correctAnswer: `${correctValue} ${currentQ.unit}`,
+        correct: isCorrect
+    });
+    
     const feedbackPanel = document.getElementById('limits-feedback-panel');
     const feedbackTitle = document.getElementById('limits-feedback-title');
     const feedbackDesc = document.getElementById('limits-feedback-desc');
@@ -418,11 +444,56 @@ export function nextLimitsQuestion() {
     limitsState.currentIndex++;
     
     if (limitsState.currentIndex >= limitsState.shuffledData.length) {
-        alert(`수치 암기 훈련 세션이 종료되었습니다!\n맞춘 문제: ${limitsState.correctCount} / ${limitsState.shuffledData.length} 개`);
-        initTrainer();
+        renderLimitsResult();
     } else {
         renderLimitsQuestion();
     }
+}
+
+function renderLimitsResult() {
+    const limitsState = state.trainer.limits;
+    const panel = document.getElementById('trainer-limits-panel');
+    if (!panel) return;
+
+    const total = limitsState.shuffledData.length;
+    const correct = limitsState.correctCount;
+    const rate = Math.round((correct / total) * 100);
+    const wrongAnswers = limitsState.solvedList.filter(s => !s.correct);
+
+    let reviewHTML = '';
+    if (wrongAnswers.length === 0) {
+        reviewHTML = '<p style="text-align:center; color:var(--color-success); font-weight:600;"><i class="fa-solid fa-circle-check"></i> 모든 문제를 맞혔습니다!</p>';
+    } else {
+        reviewHTML = `<h3 style="margin-bottom:0.75rem; font-size:1.1rem;"><i class="fa-solid fa-triangle-exclamation"></i> 오답 리뷰 (${wrongAnswers.length}문제)</h3>`;
+        wrongAnswers.forEach((s, idx) => {
+            reviewHTML += `
+                <div style="padding:0.75rem; margin-bottom:0.5rem; border:1px solid var(--border-color); border-radius:8px; background:var(--bg-card);">
+                    <div style="font-size:0.85rem; color:var(--color-text-muted); margin-bottom:0.3rem;">Q${idx + 1}</div>
+                    <p style="font-size:0.9rem; margin-bottom:0.4rem;">${esc(s.question)}</p>
+                    <p style="font-size:0.85rem; color:var(--color-danger);">내 답: ${esc(s.selected)}</p>
+                    <p style="font-size:0.85rem; color:var(--color-success);">정답: <strong>${esc(s.correctAnswer)}</strong></p>
+                </div>`;
+        });
+    }
+
+    panel.innerHTML = `
+        <div class="sim-arena-header" style="margin-bottom: 2rem;">
+            <button class="btn btn-secondary" data-click="exitTrainerSubView"><i class="fa-solid fa-arrow-left"></i> 나가기</button>
+            <div class="sim-title-group">
+                <h4>핵심 수치 암기 마스터 결과</h4>
+                <span class="badge badge-quiz-cat">수치 암기 훈련</span>
+            </div>
+        </div>
+        <div class="trainer-arena" style="text-align:center;">
+            <i class="fa-solid fa-trophy trophy-icon"></i>
+            <h2>훈련 완료!</h2>
+            <p class="result-score-summary">정답수: <strong>${correct}</strong> / ${total} (${rate}%)</p>
+            <div style="text-align:left; margin:1.5rem 0; max-width:600px; margin-left:auto; margin-right:auto;">${reviewHTML}</div>
+            <div class="result-actions" style="display:flex; gap:1rem; justify-content:center;">
+                <button class="btn btn-primary" data-click="startLimitsTrainer"><i class="fa-solid fa-rotate-left"></i> 다시 풀기</button>
+                <button class="btn btn-secondary" data-click="exitTrainerSubView"><i class="fa-solid fa-house"></i> 메뉴로</button>
+            </div>
+        </div>`;
 }
 
 /* =======================================================
@@ -556,7 +627,7 @@ export function renderCalcHistory() {
     const listContainer = document.getElementById('calc-history-list');
     if (!listContainer) return;
     
-    const historyJSON = localStorage.getItem('calc_history');
+    const historyJSON = safeGetItem('calc_history');
     let history = [];
     if (historyJSON) {
         try {
@@ -597,7 +668,7 @@ export function renderCalcHistory() {
 }
 
 export function addCalcHistoryItem(questionText, type, userVal, correctAns, isCorrect, unit) {
-    const historyJSON = localStorage.getItem('calc_history');
+    const historyJSON = safeGetItem('calc_history');
     let history = [];
     if (historyJSON) {
         try {
@@ -623,7 +694,7 @@ export function addCalcHistoryItem(questionText, type, userVal, correctAns, isCo
         history = history.slice(0, 5);
     }
     
-    localStorage.setItem('calc_history', JSON.stringify(history));
+    safeSetItem('calc_history', JSON.stringify(history));
     renderCalcHistory();
 }
 
@@ -634,6 +705,7 @@ export function startIngredientsChallenge() {
     state.trainer.activeSubView = 'ingredients';
     state.trainer.ingredients.currentIndex = 0;
     state.trainer.ingredients.correctCount = 0;
+    state.trainer.ingredients.solvedList = [];
     state.trainer.ingredients.shuffledQuestions = generateIngredientsQuestions();
     
     const menuPanel = document.getElementById('trainer-menu-panel');
@@ -776,6 +848,13 @@ export function renderIngQuestion() {
     if (labelEl) labelEl.textContent = currentQ.qTypeLabel;
     if (textEl) textEl.innerHTML = currentQ.question;
     
+    // 진행률 바
+    const ingProgressBar = document.getElementById('ing-progress-bar');
+    if (ingProgressBar) {
+        const pct = Math.round(((ingState.currentIndex) / ingState.shuffledQuestions.length) * 100);
+        ingProgressBar.style.width = `${pct}%`;
+    }
+    
     const optionsContainer = document.getElementById('ing-options-container');
     const inputContainer = document.getElementById('ing-input-container');
     const answerInput = document.getElementById('ing-answer-input');
@@ -828,6 +907,15 @@ export function submitIngChoiceAnswer(selectedBtn, selectedValue, correctValue) 
         state.trainer.ingredients.correctCount++;
     }
     
+    // solvedList에 기록
+    const currentQ = state.trainer.ingredients.shuffledQuestions[state.trainer.ingredients.currentIndex];
+    state.trainer.ingredients.solvedList.push({
+        question: currentQ.question.replace(/<[^>]*>/g, ''),
+        selected: selectedValue,
+        correctAnswer: correctValue,
+        correct: isCorrect
+    });
+    
     showIngFeedback(isCorrect, correctValue);
 }
 
@@ -847,6 +935,14 @@ export function submitIngAnswer() {
     if (isCorrect) {
         ingState.correctCount++;
     }
+    
+    // solvedList에 기록
+    ingState.solvedList.push({
+        question: currentQ.question.replace(/<[^>]*>/g, ''),
+        selected: userInput,
+        correctAnswer: currentQ.correct,
+        correct: isCorrect
+    });
     
     showIngFeedback(isCorrect, currentQ.correct);
 }
@@ -898,11 +994,56 @@ export function nextIngQuestion() {
     ingState.currentIndex++;
     
     if (ingState.currentIndex >= ingState.shuffledQuestions.length) {
-        alert(`원료 안전성 챌린지가 종료되었습니다!\n맞춘 문제: ${ingState.correctCount} / ${ingState.shuffledQuestions.length} 개`);
-        initTrainer();
+        renderIngredientsResult();
     } else {
         renderIngQuestion();
     }
+}
+
+function renderIngredientsResult() {
+    const ingState = state.trainer.ingredients;
+    const panel = document.getElementById('trainer-ingredients-panel');
+    if (!panel) return;
+
+    const total = ingState.shuffledQuestions.length;
+    const correct = ingState.correctCount;
+    const rate = Math.round((correct / total) * 100);
+    const wrongAnswers = ingState.solvedList.filter(s => !s.correct);
+
+    let reviewHTML = '';
+    if (wrongAnswers.length === 0) {
+        reviewHTML = '<p style="text-align:center; color:var(--color-success); font-weight:600;"><i class="fa-solid fa-circle-check"></i> 모든 문제를 맞혔습니다!</p>';
+    } else {
+        reviewHTML = `<h3 style="margin-bottom:0.75rem; font-size:1.1rem;"><i class="fa-solid fa-triangle-exclamation"></i> 오답 리뷰 (${wrongAnswers.length}문제)</h3>`;
+        wrongAnswers.forEach((s, idx) => {
+            reviewHTML += `
+                <div style="padding:0.75rem; margin-bottom:0.5rem; border:1px solid var(--border-color); border-radius:8px; background:var(--bg-card);">
+                    <div style="font-size:0.85rem; color:var(--color-text-muted); margin-bottom:0.3rem;">Q${idx + 1}</div>
+                    <p style="font-size:0.9rem; margin-bottom:0.4rem;">${safeTextWithBreaks(s.question)}</p>
+                    <p style="font-size:0.85rem; color:var(--color-danger);">내 답: ${esc(s.selected)}</p>
+                    <p style="font-size:0.85rem; color:var(--color-success);">정답: <strong>${esc(s.correctAnswer)}</strong></p>
+                </div>`;
+        });
+    }
+
+    panel.innerHTML = `
+        <div class="sim-arena-header" style="margin-bottom: 2rem;">
+            <button class="btn btn-secondary" data-click="exitTrainerSubView"><i class="fa-solid fa-arrow-left"></i> 나가기</button>
+            <div class="sim-title-group">
+                <h4>원료 안전성 챌린지 결과</h4>
+                <span class="badge badge-quiz-cat">원료 규격 & 안전성</span>
+            </div>
+        </div>
+        <div class="trainer-arena" style="text-align:center;">
+            <i class="fa-solid fa-trophy trophy-icon"></i>
+            <h2>챌린지 완료!</h2>
+            <p class="result-score-summary">정답수: <strong>${correct}</strong> / ${total} (${rate}%)</p>
+            <div style="text-align:left; margin:1.5rem 0; max-width:600px; margin-left:auto; margin-right:auto;">${reviewHTML}</div>
+            <div class="result-actions" style="display:flex; gap:1rem; justify-content:center;">
+                <button class="btn btn-primary" data-click="startIngredientsChallenge"><i class="fa-solid fa-rotate-left"></i> 다시 도전</button>
+                <button class="btn btn-secondary" data-click="exitTrainerSubView"><i class="fa-solid fa-house"></i> 메뉴로</button>
+            </div>
+        </div>`;
 }
 
 /* =======================================================

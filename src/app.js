@@ -920,6 +920,32 @@ function setupEventListeners() {
     document.getElementById('retry-quiz-btn').addEventListener('click', () => {
         startQuiz();
     });
+
+    // 계산 연습기 엔터키 제출
+    const calcInput = document.getElementById('calc-answer-input');
+    if (calcInput) {
+        calcInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const submitBtn = document.getElementById('submit-calc-btn');
+                if (submitBtn && !submitBtn.disabled) {
+                    submitCalcAnswer();
+                }
+            }
+        });
+    }
+
+    // 원료 챌린지 주관식 엔터키 제출
+    const ingInput = document.getElementById('ing-answer-input');
+    if (ingInput) {
+        ingInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const submitBtn = document.getElementById('submit-ing-btn');
+                if (submitBtn && !submitBtn.disabled) {
+                    submitIngAnswer();
+                }
+            }
+        });
+    }
     
     document.getElementById('back-to-dashboard-btn').addEventListener('click', () => {
         switchView('dashboard-view');
