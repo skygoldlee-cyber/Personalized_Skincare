@@ -14,12 +14,13 @@ function _injectStyles() {
     const style = document.createElement('style');
     style.id = 'html-viewer-styles';
     style.textContent = `
-#html-ref-overlay{position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100%;height:100dvh;z-index:10000;display:none;
+#html-ref-overlay{position:fixed;top:0;left:0;right:0;bottom:0;width:100vw;height:100vh;height:100dvh;z-index:10000;display:none;
   background:var(--bg-overlay,rgba(0,0,0,.85));backdrop-filter:blur(4px);}
-#html-ref-overlay.open{display:flex;flex-direction:column;overflow:hidden;}
+#html-ref-overlay.open{display:block;overflow:hidden;}
 #html-ref-overlay .hr-ov-bar{display:flex;align-items:center;gap:.6rem;
   padding:.6rem 1rem;background:var(--bg-card,#161b22);
-  border-bottom:1px solid var(--border-color,#30363d);flex-shrink:0;}
+  border-bottom:1px solid var(--border-color,#30363d);position:fixed;top:0;left:0;right:0;z-index:10001;}
+#html-ref-overlay .hr-ov-scroll{position:fixed;top:48px;left:0;right:0;bottom:0;overflow:auto;background:#fff;-webkit-overflow-scrolling:touch;}
 #html-ref-overlay .hr-ov-title{flex:1;font-size:1rem;font-weight:600;
   color:var(--color-text,#e6edf3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 #html-ref-overlay .hr-ov-btn{background:var(--color-primary,#1f6feb);color:#fff;border:none;
@@ -33,7 +34,7 @@ function _injectStyles() {
   color:var(--color-text,#e6edf3);font-size:.85rem;}
 #html-ref-overlay .hr-ov-search .hr-search-count{font-size:.78rem;color:var(--color-text-muted,#8b949e);
   min-width:60px;}
-#html-ref-overlay .hr-ov-scroll{flex:1 1 0;overflow:auto;position:relative;background:#fff;min-height:0;max-height:calc(100dvh - 50px);}
+/* scroll area positioned absolutely — no flexbox dependency */
 #html-ref-overlay .hr-ov-content{padding:24px;color:#1a1a1a;font-family:'Malgun Gothic','Noto Sans KR',sans-serif;line-height:1.6;}
 #html-ref-overlay .hr-ov-content h1.doc-title{border-bottom:2px solid #333;padding-bottom:8px;font-size:20px;}
 #html-ref-overlay .hr-ov-content .page{border:1px solid #ddd;margin:18px 0;padding:16px;background:#fff;page-break-after:always;}
