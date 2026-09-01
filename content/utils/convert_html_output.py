@@ -19,12 +19,8 @@ from html.parser import HTMLParser
 
 HTML_OUTPUT_DIR = Path(__file__).parent.parent / "참조자료" / "html_output"
 
-# MD 변환 대상 (상위 3개 대용량 법령 원문)
-MD_TARGETS = [
-    "기능성화장품 기준 및 시험방법(식품의약품안전처고시)(제2025-89호)(20251216)",
-    "KFCC_별표10_일반시험법",
-    "화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318)",
-]
+# MD 변환 대상 — None이면 전체 파일을 MD로 변환
+MD_TARGETS = None  # 전체 MD 변환 (한글 엔티티 인코딩 문제 해결)
 
 
 def decode_entities(text):
@@ -239,7 +235,7 @@ def main():
         original_size = html_file.stat().st_size
         html_content = html_file.read_text(encoding='utf-8')
 
-        if item.name in MD_TARGETS:
+        if MD_TARGETS is None or item.name in MD_TARGETS:
             # Markdown 변환
             md_content = convert_html_to_md(html_content, item.name)
             md_file = item / f"{item.name}.md"

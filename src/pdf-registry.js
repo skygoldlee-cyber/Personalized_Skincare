@@ -3,8 +3,8 @@
 // 과목이 변경될 때 이 파일만 수정하면 됩니다.
 // reader-format.js와 textbook-reader.js는 이 파일을 import하여 사용합니다.
 //
-// 참조자료는 content/참조자료/html_output/ 하위의 HTML 변환본을 사용합니다.
-// 각 파일은 {파일명(확장자 제거)}/{파일명(확장자 제거)}.html 구조로 배치됩니다.
+// 참조자료는 content/참조자료/html_output/ 하위의 MD 변환본을 사용합니다.
+// 각 파일은 {파일명(확장자 제거)}/{파일명(확장자 제거)}.md 구조로 배치됩니다.
 //
 // 수정 가이드:
 // 1. 새 과목 추가 → SUBJECT_DIR_MAP, REF_DIRS, REFERENCE_FILES에 항목 추가
@@ -191,18 +191,14 @@ export const REFERENCE_LAW = [
 // 파생 맵 (수정 불필요 — 위의 설정에서 자동 생성됨)
 // ================================================================
 
-// HTML 기본 경로: content/참조자료/html_output/{basename}/{basename}.html
+// HTML 기본 경로: content/참조자료/html_output/{basename}/{basename}.md
 // basename = 파일명에서 .pdf 확장자 제거
-// 대용량 법령 원문 3개는 MD로 변환하여 저장 (용량 절감)
-const MD_CONVERSION_TARGETS = new Set([
-    '기능성화장품 기준 및 시험방법(식품의약품안전처고시)(제2025-89호)(20251216).pdf',
-    'KFCC_별표10_일반시험법.pdf',
-    '화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318).pdf',
-]);
+// 전체 참조자료를 MD로 변환 (한글 엔티티 인코딩 문제 해결 + 용량 절감)
+const MD_CONVERSION_TARGETS = null; // null = 전체 MD 변환
 
 function _toHtmlPath(fileName) {
     const base = fileName.replace(/\.pdf$/, '');
-    const ext = MD_CONVERSION_TARGETS.has(fileName) ? '.md' : '.html';
+    const ext = '.md';
     return `content/참조자료/html_output/${base}/${base}${ext}`;
 }
 

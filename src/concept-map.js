@@ -78,7 +78,7 @@ function generateMobileLayout(chapter, sections, colors, svgNS, isKeySection, re
     // 루트 노드 아래 참조자료 배지
     if (refPath) {
         const badgeY = rootY + rootR + 6;
-        const fileName = refPath.split('/').pop().replace(/\.html$/, '');
+        const fileName = refPath.split('/').pop().replace(/\.(html|md)$/, '');
         const shortName = truncate(fileName, 16);
         svg += `<g class="concept-map-ref-link" data-ref-html="${escapeAttr(refPath)}" style="cursor:pointer">`;
         svg += `<rect x="${centerX - 90}" y="${badgeY}" width="180" height="22" rx="11" fill="${colors.nodeFill}" stroke="${colors.nodeStroke}" stroke-width="1" opacity="0.9"/>`;
@@ -167,7 +167,7 @@ function generateDesktopLayout(chapter, sections, colors, svgNS, isKeySection, r
     // 루트 노드 아래 참조자료 배지
     if (refPath) {
         const badgeY = centerY + rootR + 6;
-        const fileName = refPath.split('/').pop().replace(/\.html$/, '');
+        const fileName = refPath.split('/').pop().replace(/\.(html|md)$/, '');
         const shortName = truncate(fileName, 20);
         svg += `<g class="concept-map-ref-link" data-ref-html="${escapeAttr(refPath)}" style="cursor:pointer">`;
         svg += `<rect x="${centerX - 100}" y="${badgeY}" width="200" height="24" rx="12" fill="${colors.nodeFill}" stroke="${colors.nodeStroke}" stroke-width="1" opacity="0.9"/>`;

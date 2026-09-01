@@ -2,6 +2,7 @@
 import { parseMarkdown } from './markdown-parser.js';
 import { escapeHTML } from './sanitize.js';
 import { resolveRefPath, KEYWORD_REF_MAP } from './pdf-registry.js';
+import { KEYWORD_INDEX } from './keyword-index.js';
 
 export function formatSectionContentForReader(rawContent, filePath, refPath, refFiles, refDir) {
     let html = parseMarkdown(rawContent, {
@@ -117,20 +118,18 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
         // (LNN|file.pdf) 패턴 → 타 참조자료 링크 (파일명에 괄호가 있을 수 있으므로 .+? 사용)
         html = html.replace(/<td>([^<]*?)\(L(\d+)\|(.+?\.pdf)\)([^<]*?)<\/td>/g,
             (match, before, lineNum, pdfFile, after) => {
-                const cellText = (before + after).replace(/\(L\d+\|.+?\.pdf\)/g, '').replace(/\(L\?\)/g, '').trim();
-                const words = cellText.split(/\s+/).filter(w => w.length >= 2);
-                const keyword = words[0] || '';
                 const resolved = resolveRefPath(pdfFile);
                 const usePath = resolved || refPath;
+                const idxKey = `${usePath}|L${lineNum}`;
+                const keyword = KEYWORD_INDEX[idxKey] || '';
                 return `<td>${before}(<a href="#" data-ref-html="${escapeHTML(usePath)}" data-ref-search="${escapeHTML(keyword)}" data-ref-line="${lineNum}" class="source-link">L${lineNum}</a>)${after}</td>`;
             }
         );
         // (LNN) 패턴 → 동일 참조자료 링크
         html = html.replace(/<td>([^<]*?)\(L(\d+)\)([^<]*?)<\/td>/g,
             (match, before, lineNum, after) => {
-                const cellText = (before + after).replace(/\(L\d+\)/g, '').replace(/\(L\?\)/g, '').trim();
-                const words = cellText.split(/\s+/).filter(w => w.length >= 2);
-                const keyword = words[0] || '';
+                const idxKey = `${refPath}|L${lineNum}`;
+                const keyword = KEYWORD_INDEX[idxKey] || '';
                 return `<td>${before}(<a href="#" data-ref-html="${escapeHTML(refPath)}" data-ref-search="${escapeHTML(keyword)}" data-ref-line="${lineNum}" class="source-link">L${lineNum}</a>)${after}</td>`;
             }
         );
