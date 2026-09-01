@@ -27,27 +27,29 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
         }
     );
 
-    // 출처: `xxx.pdf` 패턴 → HTML 뷰어 링크로 변환
+    // 출처: `xxx.pdf` 패턴 → HTML 뷰어 링크로 변환 (표시 텍스트에서 .pdf 확장자 제거)
     // allowInlineCode=false이므로 백틱이 그대로 남음
     html = html.replace(
         /출처:\s*`([^`<]+\.pdf)`/g,
         (match, pdfFile) => {
             const resolved = resolveRefPath(pdfFile);
             if (resolved) {
-                return `출처: <a href="#" data-ref-html="${escapeHTML(resolved)}" class="source-link"><i class="fa-solid fa-file-lines"></i> ${escapeHTML(pdfFile)}</a>`;
+                const displayName = pdfFile.replace(/\.pdf$/, '');
+                return `출처: <a href="#" data-ref-html="${escapeHTML(resolved)}" class="source-link"><i class="fa-solid fa-file-lines"></i> ${escapeHTML(displayName)}</a>`;
             }
             return match;
         }
     );
 
-    // **참조 PDF**: `xxx.pdf` 패턴 → HTML 뷰어 링크로 변환
+    // **참조 PDF**: `xxx.pdf` 패턴 → HTML 뷰어 링크로 변환 (라벨을 '참조 자료'로 변경, .pdf 확장자 제거)
     // 마크다운 파서 거친 후: <strong>참조 PDF</strong>: `xxx.pdf` (백틱 그대로)
     html = html.replace(
         /<strong>참조 PDF<\/strong>:\s*`([^`<]+\.pdf)`/g,
         (match, pdfFile) => {
             const resolved = resolveRefPath(pdfFile);
             if (resolved) {
-                return `<a href="#" data-ref-html="${escapeHTML(resolved)}" class="source-link"><i class="fa-solid fa-file-lines"></i> ${escapeHTML(pdfFile)}</a>`;
+                const displayName = pdfFile.replace(/\.pdf$/, '');
+                return `<strong>참조 자료</strong>: <a href="#" data-ref-html="${escapeHTML(resolved)}" class="source-link"><i class="fa-solid fa-file-lines"></i> ${escapeHTML(displayName)}</a>`;
             }
             return match;
         }
@@ -69,7 +71,7 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
     // 과목별 참조자료 파일 목록을 출처 라인 아래에 표시
     if (refFiles && refFiles.length > 0 && refDir) {
         const refLinks = refFiles.map(f => {
-            const icon = f.type === 'pdf' ? 'fa-file-lines' : 'fa-file-lines';
+            const icon = 'fa-file-lines';
             if (f.type === 'md') {
                 const path = `content/참조자료/${refDir}/${f.file}`;
                 return `<a class="ref-link-item" data-ref-md="${escapeHTML(path)}" style="display:inline-block;margin-right:0.8em;font-size:0.85em;"><i class="fa-solid ${icon}"></i> ${escapeHTML(f.name)}</a>`;
