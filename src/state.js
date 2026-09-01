@@ -172,7 +172,7 @@ function migrateProgressV2() {
         return; // 아직 로드되지 않음
     }
 
-    console.log('[Migration] Starting ID migration to stable hash-based IDs...');
+    console.debug('[Migration] Starting ID migration to stable hash-based IDs...');
 
     const memorized = safeGetItem('fc_memorized');
     const weak = safeGetItem('fc_weak');
@@ -183,7 +183,7 @@ function migrateProgressV2() {
             const arr = JSON.parse(memorized);
             const migratedArr = arr.map(id => ID_MIGRATION_MAP[id] || id);
             safeSetItem('fc_memorized', JSON.stringify(migratedArr));
-            console.log(`[Migration] Migrated ${arr.length} memorized card IDs.`);
+            console.debug(`[Migration] Migrated ${arr.length} memorized card IDs.`);
         } catch (e) { console.error('[Migration] memorized cards migration error:', e); }
     }
 
@@ -192,7 +192,7 @@ function migrateProgressV2() {
             const arr = JSON.parse(weak);
             const migratedArr = arr.map(id => ID_MIGRATION_MAP[id] || id);
             safeSetItem('fc_weak', JSON.stringify(migratedArr));
-            console.log(`[Migration] Migrated ${arr.length} weak card IDs.`);
+            console.debug(`[Migration] Migrated ${arr.length} weak card IDs.`);
         } catch (e) { console.error('[Migration] weak cards migration error:', e); }
     }
 
@@ -205,12 +205,12 @@ function migrateProgressV2() {
                 migratedObj[newId] = obj[oldId];
             });
             safeSetItem('quiz_results', JSON.stringify(migratedObj));
-            console.log(`[Migration] Migrated ${Object.keys(obj).length} quiz result IDs.`);
+            console.debug(`[Migration] Migrated ${Object.keys(obj).length} quiz result IDs.`);
         } catch (e) { console.error('[Migration] quiz results migration error:', e); }
     }
 
     safeSetItem('fc_migrated_v2', 'true');
-    console.log('[Migration] ID migration completed.');
+    console.debug('[Migration] ID migration completed.');
 }
 
 // 로컬스토리지에 진도 저장
@@ -222,6 +222,10 @@ export function saveProgress() {
     // 대시보드 글로벌 통계 갱신 (app.js에 정의된 전역 함수; 로드 순서상 런타임에 사용 가능)
     if (typeof updateGlobalStats === 'function') {
         updateGlobalStats();
+    }
+    // 저장 실패 시 사용자 경고 배너 표시
+    if (state._storageUnavailable && typeof checkStorageWarning === 'function') {
+        checkStorageWarning();
     }
 }
 
@@ -252,7 +256,7 @@ export function cleanOrphansForSubject(subjKey, subjData) {
     });
     
     if (cardsToClean.length > 0 || weakToClean.length > 0 || quizzesCleaned) {
-        console.log(`[Orphan Cleanup] Cleaned orphans for ${subjKey}:`, {
+        console.debug(`[Orphan Cleanup] Cleaned orphans for ${subjKey}:`, {
             memorized: cardsToClean.length,
             weak: weakToClean.length,
             quizzes: quizzesCleaned

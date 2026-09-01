@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v119-20260901-html-to-md';   // html_output 대용량 3개 → MD 변환, 나머지 body-only 추출 (18.5MB 절감)
+const CACHE_VERSION = 'v120-20260901-perf-a11y';   // Fisher-Yates 셔플, SW 캐시 분리, 검색 인덱스, ARIA, localStorage 경고
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
@@ -293,8 +293,11 @@ self.addEventListener('fetch', (event) => {
   }
 
   // 4-1) 마크다운 원본 파일 → Cache First (content/exams/*.md 등, 정적 원본)
+  //      단, html_output/*.md는 DATA_CACHE(배포 간 유지)로 분리 — SHELL_CACHE는 배포마다 전체 삭제되므로
+  //      26MB 참조자료 MD가 매 배포마다 재다운로드되는 것을 방지.
   if (MD_PATTERN.test(url.pathname)) {
-    event.respondWith(cacheFirst(request, SHELL_CACHE));
+    const targetCache = url.pathname.includes('/html_output/') ? DATA_CACHE : SHELL_CACHE;
+    event.respondWith(cacheFirst(request, targetCache));
     return;
   }
 
@@ -317,7 +320,14 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 5-3) 그 외 JS → Network First
+  // 5-3) html_output 정적 콘텐츠 (.html) → Cache First + DATA_CACHE (배포 간 유지)
+  //      body-only HTML도 매 배포마다 재다운로드되지 않도록 MD와 동일 처리.
+  if (url.pathname.includes('/html_output/') && /\.html$/i.test(url.pathname)) {
+    event.respondWith(cacheFirst(request, DATA_CACHE));
+    return;
+  }
+
+  // 5-4) 그 외 JS → Network First
   //      (온라인이면 항상 최신 배포본, 오프라인이면 캐시 폴백.
   //       버전 bump을 깜빡해도 폰에서 구버전이 남지 않도록 함)
   if (/\.js$/i.test(url.pathname)) {

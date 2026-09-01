@@ -1,6 +1,7 @@
 // src/views/flashcard.js - 플래시카드 뷰 로직
 import { state } from '../state.js';
 import { safeTextWithBreaks } from '../sanitize.js';
+import { shuffle } from '../utils.js';
 
 const CARD_TYPE_LABELS = {
     penalty: '처벌',
@@ -32,7 +33,7 @@ export function loadFlashcards() {
     
     // 중요도 내림차순 정렬 (기본) 또는 랜덤 셔플
     if (fcConfig.shuffle) {
-        cards = [...cards].sort(() => 0.5 - Math.random());
+        cards = shuffle(cards);
     } else if (fcConfig.sortBy === 'importance') {
         cards = [...cards].sort((a, b) => (b.importance || 0) - (a.importance || 0));
     }

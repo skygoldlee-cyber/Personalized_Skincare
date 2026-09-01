@@ -8,6 +8,36 @@ const textbookState = {
     debounceTimer: null
 };
 
+let _searchIndex = null;
+let _searchIndexKeys = null;
+
+function _getSearchIndex() {
+    const STUDY_DATA = (typeof window !== 'undefined' && window.STUDY_DATA) ? window.STUDY_DATA : {};
+    const keys = Object.keys(STUDY_DATA).join(',');
+    if (_searchIndex && _searchIndexKeys === keys) return _searchIndex;
+    _searchIndexKeys = keys;
+    _searchIndex = [];
+    Object.keys(STUDY_DATA).forEach(subjId => {
+        const subj = STUDY_DATA[subjId];
+        if (!subj.chapters) return;
+        subj.chapters.forEach(chapter => {
+            chapter.sections.forEach(section => {
+                _searchIndex.push({
+                    subjId,
+                    subjName: subj.name,
+                    chapterTitle: chapter.chapterTitle,
+                    filePath: chapter.filePath,
+                    sectionTitle: section.title,
+                    content: section.content,
+                    _titleLower: section.title.toLowerCase(),
+                    _contentLower: section.content.toLowerCase()
+                });
+            });
+        });
+    });
+    return _searchIndex;
+}
+
 export function renderTextbookSearch() {
     const searchInput = document.getElementById('textbook-search-input');
     
@@ -80,40 +110,23 @@ function performTextbookSearch() {
     }
     
     const terms = query.split(/\s+/).filter(t => t.length > 0);
+    const index = _getSearchIndex();
     const results = [];
     
-    // Search across STUDY_DATA
-    const STUDY_DATA = (typeof window !== 'undefined' && window.STUDY_DATA) ? window.STUDY_DATA : {};
-    Object.keys(STUDY_DATA).forEach(subjId => {
-        // Filter by subject
-        if (textbookState.filter !== 'all' && textbookState.filter !== subjId) {
-            return;
-        }
-        
-        const subj = STUDY_DATA[subjId];
-        if (!subj.chapters) return;
-        
-        subj.chapters.forEach(chapter => {
-            chapter.sections.forEach(section => {
-                const titleMatch = section.title.toLowerCase();
-                const contentMatch = section.content.toLowerCase();
-                
-                // AND search: all terms must match title or content
-                const isMatch = terms.every(term => titleMatch.includes(term) || contentMatch.includes(term));
-                
-                if (isMatch) {
-                    results.push({
-                        subjId: subjId,
-                        subjName: subj.name,
-                        chapterTitle: chapter.chapterTitle,
-                        filePath: chapter.filePath,
-                        sectionTitle: section.title,
-                        content: section.content
-                    });
-                }
+    for (const entry of index) {
+        if (textbookState.filter !== 'all' && textbookState.filter !== entry.subjId) continue;
+        const isMatch = terms.every(term => entry._titleLower.includes(term) || entry._contentLower.includes(term));
+        if (isMatch) {
+            results.push({
+                subjId: entry.subjId,
+                subjName: entry.subjName,
+                chapterTitle: entry.chapterTitle,
+                filePath: entry.filePath,
+                sectionTitle: entry.sectionTitle,
+                content: entry.content
             });
-        });
-    });
+        }
+    }
     
     // Update summary text
     summary.innerHTML = `총 <strong style="color: var(--color-primary);">${results.length}</strong>건의 관련 내용을 찾았습니다.`;

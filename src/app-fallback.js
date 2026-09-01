@@ -104,19 +104,19 @@
   }
 
   // ── 폴링 감지: 정상 초기화되면 즉시 종료, 아니면 데드라인에 복구 ──
-  console.log('[fallback] 폴링 시작 — __APP_INITIALIZED 대기 (15s 데드라인)');
+  console.debug('[fallback] 폴링 시작 — __APP_INITIALIZED 대기 (15s 데드라인)');
   var elapsed = 0;
   var timer = setInterval(function () {
     if (window.__APP_INITIALIZED) {
       clearInterval(timer);
       resetReloadCount();
-      console.log('[fallback] 앱 정상 초기화 확인 — 폴링 종료');
+      console.debug('[fallback] 앱 정상 초기화 확인 — 폴링 종료');
       return;
     }
     elapsed += POLL_MS;
     if (elapsed >= DEADLINE_MS) {
       clearInterval(timer);
-      console.log('[fallback] 데드라인 도달 — 복구 시도 (reload count: ' + getReloadCount() + ')');
+      console.debug('[fallback] 데드라인 도달 — 복구 시도 (reload count: ' + getReloadCount() + ')');
       attemptRecovery();
     }
   }, POLL_MS);

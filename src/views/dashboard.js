@@ -12,6 +12,38 @@ import { updatePomodoroUI } from './trainer.js';
  */
 let _dashboardStatsRefreshed = false;
 
+let _subjCountCache = null;
+let _subjCountCacheKey = '';
+
+function _getSubjCounts() {
+    const memKey = state.memorizedCards.size + ':' + state.weakCards.size + ':' + Object.keys(state.quizResults).length;
+    if (_subjCountCache && _subjCountCacheKey === memKey) return _subjCountCache;
+    _subjCountCacheKey = memKey;
+    const counts = {};
+    state.memorizedCards.forEach(id => {
+        const m = id.match(/^([a-z]+)_card_/);
+        if (m) counts[m[1]] = counts[m[1]] || { mem: 0, weak: 0, quizSolved: 0, quizCorrect: 0 };
+    });
+    state.weakCards.forEach(id => {
+        const m = id.match(/^([a-z]+)_card_/);
+        if (m) { counts[m[1]] = counts[m[1]] || { mem: 0, weak: 0, quizSolved: 0, quizCorrect: 0 }; counts[m[1]].weak++; }
+    });
+    Object.keys(state.quizResults).forEach(id => {
+        const m = id.match(/^([a-z]+)_quiz_/);
+        if (m) {
+            counts[m[1]] = counts[m[1]] || { mem: 0, weak: 0, quizSolved: 0, quizCorrect: 0 };
+            counts[m[1]].quizSolved++;
+            if (state.quizResults[id].correct) counts[m[1]].quizCorrect++;
+        }
+    });
+    state.memorizedCards.forEach(id => {
+        const m = id.match(/^([a-z]+)_card_/);
+        if (m) counts[m[1]].mem++;
+    });
+    _subjCountCache = counts;
+    return counts;
+}
+
 /**
  * 전역 학습 통계 데이터를 집계하고 UI 요소를 업데이트합니다.
  */
@@ -88,17 +120,19 @@ export function renderDashboard() {
         const totalSubjCards = (subjMeta.stats && subjMeta.stats.cards) || 0;
         const totalSubjQuizzes = (subjMeta.stats && subjMeta.stats.quizzes) || 0;
         
-        // 과목별 완료된 카드 수 (ID prefix 기반)
-        const memorizedSubjCards = [...state.memorizedCards].filter(id => id.startsWith(subjId + '_card_')).length;
+        // 과목별 완료된 카드 수 (캐시된 카운트 맵 사용)
+        const subjCounts = _getSubjCounts();
+        const sc = subjCounts[subjId] || { mem: 0, weak: 0, quizSolved: 0, quizCorrect: 0 };
+        const memorizedSubjCards = sc.mem;
         const progressPercent = totalSubjCards > 0 ? Math.round((memorizedSubjCards / totalSubjCards) * 100) : 0;
         
-        // 과목별 퀴즈 정답률 (ID prefix 기반)
-        const solvedSubjQuizzes = Object.keys(state.quizResults).filter(id => id.startsWith(subjId + '_quiz_'));
-        const correctSubjQuizzes = solvedSubjQuizzes.filter(id => state.quizResults[id].correct);
-        const quizRate = solvedSubjQuizzes.length > 0 ? Math.round((correctSubjQuizzes.length / solvedSubjQuizzes.length) * 100) : 0;
+        // 과목별 퀴즈 정답률 (캐시된 카운트 맵 사용)
+        const solvedSubjCount = sc.quizSolved;
+        const correctSubjCount = sc.quizCorrect;
+        const quizRate = solvedSubjCount > 0 ? Math.round((correctSubjCount / solvedSubjCount) * 100) : 0;
         
         // 과목별 헷갈린 카드 수
-        const weakSubjCards = [...state.weakCards].filter(id => id.startsWith(subjId + '_card_')).length;
+        const weakSubjCards = sc.weak;
         
         const cardHTML = `
             <div class="subject-card">
@@ -117,7 +151,7 @@ export function renderDashboard() {
                     </div>
                     <div class="subj-stat-item">
                         <span>퀴즈 정답률</span>
-                        <strong>${solvedSubjQuizzes.length > 0 ? quizRate + '%' : '-'}${solvedSubjQuizzes.length > 0 ? ' <span style=\"font-size:0.75rem; color:var(--color-text-muted);\">(' + solvedSubjQuizzes.length + '문)</span>' : ''}</strong>
+                        <strong>${solvedSubjCount > 0 ? quizRate + '%' : '-'}${solvedSubjCount > 0 ? ' <span style=\"font-size:0.75rem; color:var(--color-text-muted);\">(' + solvedSubjCount + '문)</span>' : ''}</strong>
                     </div>
                 </div>
                 <div class="subj-progress-group">

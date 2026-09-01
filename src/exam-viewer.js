@@ -176,17 +176,18 @@ body.exam-open{overflow:hidden;}
         el.id = 'exam-overlay';
         el.setAttribute('role', 'dialog');
         el.setAttribute('aria-modal', 'true');
+        el.setAttribute('aria-label', '문제집 뷰어');
         el.innerHTML = `
             <div class="exam-ov-bar">
-                <button type="button" class="exam-ov-btn" data-exam-close>
+                <button type="button" class="exam-ov-btn" data-exam-close aria-label="닫기">
                     <i class="fa-solid fa-arrow-left"></i> 닫기
                 </button>
-                <div class="exam-ov-title" id="exam-ov-title"></div>
-                <button type="button" class="exam-ov-btn primary" data-exam-print>
+                <div class="exam-ov-title" id="exam-ov-title" role="heading" aria-level="1"></div>
+                <button type="button" class="exam-ov-btn primary" data-exam-print aria-label="인쇄 또는 PDF 저장">
                     <i class="fa-solid fa-print"></i> 인쇄 / PDF
                 </button>
             </div>
-            <div class="exam-ov-scroll">
+            <div class="exam-ov-scroll" role="document" tabindex="0">
                 <article id="exam-article" class="study-section"></article>
             </div>`;
         document.body.appendChild(el);

@@ -6,6 +6,7 @@ import { switchView } from './navigation.js';
 import { examIdToSubjectId } from './exam-simulator.js';
 import { checkShortAnswer } from './trainer.js';
 import { updateGlobalStats } from './dashboard.js';
+import { shuffle } from '../utils.js';
 
 /**
  * 퀴즈 시작 로직
@@ -19,7 +20,7 @@ export function startQuiz() {
     }
     
     // 퀴즈 문제 목록 섞기 (Fisher-Yates Shuffle)
-    const shuffled = [...subjData.quizzes].sort(() => 0.5 - Math.random());
+    const shuffled = shuffle(subjData.quizzes);
     
     // 최대 10문제만 출제
     state.quiz.data = shuffled.slice(0, 10);
@@ -540,7 +541,7 @@ export function startWeakFocusQuiz() {
         }
     });
     
-    state.quiz.data = weakList.sort(() => 0.5 - Math.random()).slice(0, 10);
+    state.quiz.data = shuffle(weakList).slice(0, 10);
     state.quiz.currentIndex = 0;
     state.quiz.correctCount = 0;
     state.quiz.solvedList = [];
@@ -651,7 +652,7 @@ function _startDailyChallengeImpl() {
             allCards = allCards.concat(window.STUDY_DATA[subjId].cards.map(c => ({...c, subject: subjId})));
         });
     }
-    const selectedCards = allCards.sort(() => 0.5 - Math.random()).slice(0, 3);
+    const selectedCards = shuffle(allCards).slice(0, 3);
     selectedCards.forEach(c => {
         qPack.push({
             type: 'card',
@@ -668,7 +669,7 @@ function _startDailyChallengeImpl() {
             allQuizzes = allQuizzes.concat(window.STUDY_DATA[subjId].quizzes.map(q => ({...q, subject: subjId})));
         });
     }
-    const selectedQuizzes = allQuizzes.sort(() => 0.5 - Math.random()).slice(0, 3);
+    const selectedQuizzes = shuffle(allQuizzes).slice(0, 3);
     selectedQuizzes.forEach(q => {
         qPack.push({
             type: q.type === 'choice' ? 'choice' : 'short',

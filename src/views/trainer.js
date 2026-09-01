@@ -4,6 +4,7 @@ import { esc, safeTextWithBreaks } from '../sanitize.js';
 import { DataLoader } from '../data-loader.js';
 import { buildCalcQuestion } from '../trainer-calc.js';
 import { initScratchpadCanvas, clearScratchpad, toggleCalcScratchpad, toggleScratchpadEraser } from '../scratchpad.js';
+import { shuffle } from '../utils.js';
 
 /* =======================================================
    ⏱️ 집중 뽀모도로 타이머 (Pomodoro Study Timer)
@@ -285,7 +286,7 @@ export function startLimitsTrainer() {
     state.trainer.limits.currentIndex = 0;
     state.trainer.limits.correctCount = 0;
     state.trainer.limits.solvedList = [];
-    state.trainer.limits.shuffledData = [...LIMITS_DB].sort(() => 0.5 - Math.random());
+    state.trainer.limits.shuffledData = shuffle(LIMITS_DB);
     
     document.getElementById('trainer-menu-panel').style.display = 'none';
     document.getElementById('trainer-limits-panel').style.display = 'block';
@@ -388,7 +389,7 @@ function generateLimitsOptions(question) {
         }
     }
     
-    return [...optionsSet].sort(() => 0.5 - Math.random());
+    return shuffle([...optionsSet]);
 }
 
 export function submitLimitsAnswer(selectedBtn, selectedValue, correctValue) {
@@ -721,7 +722,7 @@ export function generateIngredientsQuestions() {
     const db = typeof window.INGREDIENTS_DATA !== 'undefined' ? window.INGREDIENTS_DATA : [];
     if (db.length === 0) return [];
     
-    const shuffledDb = [...db].sort(() => 0.5 - Math.random());
+    const shuffledDb = shuffle(db);
     
     for (let i = 0; i < Math.min(10, shuffledDb.length); i++) {
         const ing = shuffledDb[i];

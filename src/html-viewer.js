@@ -80,21 +80,24 @@ function _ensureOverlay() {
     if (_overlayEl) return _overlayEl;
     const el = document.createElement('div');
     el.id = 'html-ref-overlay';
+    el.setAttribute('role', 'dialog');
+    el.setAttribute('aria-modal', 'true');
+    el.setAttribute('aria-label', '참조자료 뷰어');
     el.innerHTML = `
         <div class="hr-ov-bar">
-            <button class="hr-ov-btn secondary" id="hr-close-btn"><i class="fa-solid fa-xmark"></i> 닫기</button>
-            <span class="hr-ov-title" id="hr-title"></span>
+            <button class="hr-ov-btn secondary" id="hr-close-btn" aria-label="닫기"><i class="fa-solid fa-xmark"></i> 닫기</button>
+            <span class="hr-ov-title" id="hr-title" role="heading" aria-level="1"></span>
             <div class="hr-ov-search">
-                <input type="text" id="hr-search-input" placeholder="검색어..." />
-                <span class="hr-search-count" id="hr-search-count"></span>
-                <button class="hr-ov-btn secondary" id="hr-search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
-                <button class="hr-ov-btn secondary" id="hr-prev-btn" title="이전 (Shift+Enter)"><i class="fa-solid fa-chevron-up"></i></button>
-                <button class="hr-ov-btn secondary" id="hr-next-btn" title="다음 (Enter)"><i class="fa-solid fa-chevron-down"></i></button>
+                <input type="text" id="hr-search-input" placeholder="검색어..." aria-label="검색어 입력" />
+                <span class="hr-search-count" id="hr-search-count" aria-live="polite"></span>
+                <button class="hr-ov-btn secondary" id="hr-search-btn" aria-label="검색"><i class="fa-solid fa-magnifying-glass"></i></button>
+                <button class="hr-ov-btn secondary" id="hr-prev-btn" title="이전 (Shift+Enter)" aria-label="이전 검색 결과"><i class="fa-solid fa-chevron-up"></i></button>
+                <button class="hr-ov-btn secondary" id="hr-next-btn" title="다음 (Enter)" aria-label="다음 검색 결과"><i class="fa-solid fa-chevron-down"></i></button>
             </div>
-            <button class="hr-ov-btn secondary" id="hr-print-btn"><i class="fa-solid fa-print"></i></button>
+            <button class="hr-ov-btn secondary" id="hr-print-btn" aria-label="인쇄"><i class="fa-solid fa-print"></i></button>
         </div>
-        <div class="hr-ov-scroll" id="hr-scroll">
-            <div class="hr-loading" id="hr-loading">
+        <div class="hr-ov-scroll" id="hr-scroll" role="document" tabindex="0">
+            <div class="hr-loading" id="hr-loading" role="status" aria-live="polite">
                 <div class="spinner"></div>
                 <div>문서 로딩 중...</div>
             </div>

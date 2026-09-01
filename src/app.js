@@ -1,7 +1,7 @@
 // app.js - 맞춤형화장품 조제관리사 학습 플랫폼 애플리케이션 로직
 import { state, loadProgress, saveProgress, cleanOrphansForSubject } from './state.js';
 import { escapeHTML, safeTextWithBreaks, esc } from './sanitize.js';
-import { getChosung } from './utils.js';
+import { getChosung, shuffle } from './utils.js';
 import { formatSectionContentForReader } from './reader-format.js';
 import { buildCalcQuestion } from './trainer-calc.js';
 import { renderPerformanceChart, aggregateSubjectRates, renderPassFailDiagnosis, renderRadarChart } from './charts.js';
@@ -315,11 +315,24 @@ ${linkCardsHtml}
     container.style.display = 'block';
 }
 
+function checkStorageWarning() {
+    if (!state._storageUnavailable) return;
+    const existing = document.getElementById('storage-warning-banner');
+    if (existing) return;
+    const banner = document.createElement('div');
+    banner.id = 'storage-warning-banner';
+    banner.style.cssText = 'position:fixed;bottom:0;left:0;right:0;z-index:99997;background:#e74c3c;color:#fff;padding:0.6rem 1rem;font-size:0.85rem;text-align:center;box-shadow:0 -2px 8px rgba(0,0,0,0.3);';
+    banner.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> 저장 공간이 부족하여 학습 진행상황이 저장되지 않습니다. 브라우저 데이터를 정리하거나 백업 후 진행 상황을 내보내세요.';
+    document.body.appendChild(banner);
+    banner.addEventListener('click', () => { banner.remove(); });
+}
+
 function initApp() {
     // 한 단계가 실패해도 나머지 버튼 연결/렌더가 죽지 않도록 각 단계를 격리한다.
     // (배포 간 캐시 스큐로 특정 요소/바인딩이 어긋나도 앱이 통째로 벽돌이 되는 것 방지)
-    const step = (label, fn) => { try { fn(); console.log('[init] ' + label + ' OK'); return true; } catch (e) { console.error('[init] ' + label + ' 실패:', e); return false; } };
+    const step = (label, fn) => { try { fn(); console.debug('[init] ' + label + ' OK'); return true; } catch (e) { console.error('[init] ' + label + ' 실패:', e); return false; } };
     step('loadProgress', loadProgress);
+    step('checkStorageWarning', checkStorageWarning);
     step('populateSubjectSelects', populateSubjectSelects);
     step('populateExamCards', populateExamCards);
     step('populateResourceCards', populateResourceCards);
@@ -337,7 +350,7 @@ function initApp() {
     // setupNavigation이 실패하면 마커를 설정하지 않아 폴백이 복구를 시도하게 함
     if (navOk) {
         window.__APP_INITIALIZED = true;
-        console.log('[init] 초기화 완료 — __APP_INITIALIZED = true');
+        console.debug('[init] 초기화 완료 — __APP_INITIALIZED = true');
     } else {
         console.error('[init] setupNavigation 실패 — __APP_INITIALIZED 미설정, 폴백 대기');
     }
@@ -410,7 +423,7 @@ function showOrientationToast(isLandscape) {
 function setupNavigation() {
     const navItems = document.querySelectorAll('.nav-item');
     const sections = document.querySelectorAll('.view-section');
-    console.log('[nav] nav-item 개수:', navItems.length, '/ view-section 개수:', sections.length);
+    console.debug('[nav] nav-item 개수:', navItems.length, '/ view-section 개수:', sections.length);
     const viewTitle = document.getElementById('view-title');
     const viewSubtitle = document.getElementById('view-subtitle');
     
@@ -776,9 +789,20 @@ function setupEventListeners() {
     
     // 2. 플래시카드 이벤트
     const cardEl = document.getElementById('flashcard-item');
-    cardEl.addEventListener('click', () => {
-        cardEl.classList.toggle('flipped');
-    });
+    if (cardEl) {
+        cardEl.setAttribute('role', 'button');
+        cardEl.setAttribute('tabindex', '0');
+        cardEl.setAttribute('aria-label', '플래시카드 — 클릭하여 뒷면 보기');
+        const flipCard = () => {
+            const isFlipped = cardEl.classList.toggle('flipped');
+            cardEl.setAttribute('aria-expanded', String(isFlipped));
+            cardEl.setAttribute('aria-label', isFlipped ? '플래시카드 — 클릭하여 앞면 보기' : '플래시카드 — 클릭하여 뒷면 보기');
+        };
+        cardEl.addEventListener('click', flipCard);
+        cardEl.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flipCard(); }
+        });
+    }
     
     document.getElementById('fc-subject-select').addEventListener('change', (e) => {
         state.flashcards.subject = e.target.value;
@@ -1106,7 +1130,7 @@ function startFocusSubjectStudy(subKey) {
     DataLoader.loadSubject(subKey).then(() => {
         if (typeof STUDY_DATA !== 'undefined' && STUDY_DATA[subKey]) {
             const subj = STUDY_DATA[subKey];
-            state.quiz.data = [...subj.quizzes].sort(() => 0.5 - Math.random()).slice(0, 10);
+            state.quiz.data = shuffle(subj.quizzes).slice(0, 10);
             state.quiz.currentIndex = 0;
             state.quiz.correctCount = 0;
             state.quiz.solvedList = [];
@@ -1141,13 +1165,13 @@ function setupPWAInstall() {
     let deferredPrompt = window.__deferredPrompt || null;
     const installBtn = document.getElementById('pwa-install-btn');
     
-    console.log('[PWA] 설치 버튼 초기화:', installBtn ? '발견됨' : '발견되지 않음');
-    console.log('[PWA] 조기 캡처된 deferredPrompt:', deferredPrompt ? '있음' : '없음');
+    console.debug('[PWA] 설치 버튼 초기화:', installBtn ? '발견됨' : '발견되지 않음');
+    console.debug('[PWA] 조기 캡처된 deferredPrompt:', deferredPrompt ? '있음' : '없음');
 
     // 이미 설치된 경우 버튼 숨기기 (즉시 실행)
     if (window.matchMedia('(display-mode: standalone)').matches ||
         window.navigator.standalone === true) {
-        console.log('[PWA] 이미 설치된 상태입니다.');
+        console.debug('[PWA] 이미 설치된 상태입니다.');
         if (installBtn) {
             installBtn.style.display = 'none';
         }
@@ -1161,14 +1185,14 @@ function setupPWAInstall() {
 
     // beforeinstallprompt 이벤트 추가 캡처 (조기 캡처가 놓친 경우 대비)
     window.addEventListener('beforeinstallprompt', (e) => {
-        console.log('[PWA] beforeinstallprompt 이벤트 발생');
+        console.debug('[PWA] beforeinstallprompt 이벤트 발생');
         e.preventDefault();
         deferredPrompt = e;
         window.__deferredPrompt = e;
         if (installBtn) {
             installBtn.style.display = 'inline-flex';
             installBtn.innerHTML = '<i class="fa-solid fa-download"></i> <span class="btn-text">앱 설치</span>';
-            console.log('[PWA] 설치 버튼 표시됨');
+            console.debug('[PWA] 설치 버튼 표시됨');
         }
     });
 
@@ -1177,7 +1201,7 @@ function setupPWAInstall() {
         deferredPrompt = window.__deferredPrompt;
         if (installBtn && deferredPrompt) {
             installBtn.style.display = 'inline-flex';
-            console.log('[PWA] 조기 캡처 이벤트 감지 — 설치 버튼 표시');
+            console.debug('[PWA] 조기 캡처 이벤트 감지 — 설치 버튼 표시');
         }
     });
 
@@ -1207,7 +1231,7 @@ function setupPWAInstall() {
     async function openInstallModal() {
         if (!installModal) return;
         const platform = detectPlatform();
-        console.log('[PWA] 설치 안내 모달 표시 - 플랫폼:', platform);
+        console.debug('[PWA] 설치 안내 모달 표시 - 플랫폼:', platform);
         const guideInapp = document.getElementById('pwa-guide-inapp');
         if (guideAndroid) guideAndroid.style.display = platform === 'android' ? 'block' : 'none';
         if (guideIos) guideIos.style.display = platform === 'ios' ? 'block' : 'none';
@@ -1341,22 +1365,22 @@ function setupPWAInstall() {
     // 설치 버튼 클릭 핸들러
     if (installBtn) {
         installBtn.addEventListener('click', async () => {
-            console.log('[PWA] 설치 버튼 클릭됨');
+            console.debug('[PWA] 설치 버튼 클릭됨');
             // window.__deferredPrompt에서 최신 값 동기화
             if (!deferredPrompt && window.__deferredPrompt) {
                 deferredPrompt = window.__deferredPrompt;
-                console.log('[PWA] window.__deferredPrompt에서 복구');
+                console.debug('[PWA] window.__deferredPrompt에서 복구');
             }
             if (!deferredPrompt) {
                 // 진단 정보 출력
-                console.log('[PWA] beforeinstallprompt 미발생 — 진단:');
-                console.log('[PWA]   SW 등록:', window.__swRegistered ? '성공' : '실패/미등록');
-                console.log('[PWA]   display-mode standalone:', window.matchMedia('(display-mode: standalone)').matches);
-                console.log('[PWA]   navigator.standalone:', window.navigator.standalone);
+                console.debug('[PWA] beforeinstallprompt 미발생 — 진단:');
+                console.debug('[PWA]   SW 등록:', window.__swRegistered ? '성공' : '실패/미등록');
+                console.debug('[PWA]   display-mode standalone:', window.matchMedia('(display-mode: standalone)').matches);
+                console.debug('[PWA]   navigator.standalone:', window.navigator.standalone);
                 if ('serviceWorker' in navigator) {
                     navigator.serviceWorker.getRegistration().then(reg => {
-                        console.log('[PWA]   SW 활성 상태:', reg ? reg.active?.state : '등록 없음');
-                    }).catch(e => console.log('[PWA]   SW 조회 실패:', e));
+                        console.debug('[PWA]   SW 활성 상태:', reg ? reg.active?.state : '등록 없음');
+                    }).catch(e => console.debug('[PWA]   SW 조회 실패:', e));
                 }
                 // 플랫폼별 설치 안내 모달 표시
                 openInstallModal();
@@ -1366,7 +1390,7 @@ function setupPWAInstall() {
             deferredPrompt.prompt();
             // 사용자 선택 대기
             const { outcome } = await deferredPrompt.userChoice;
-            console.log('[PWA] 설치 프롬프트 결과:', outcome);
+            console.debug('[PWA] 설치 프롬프트 결과:', outcome);
             // 프롬프트 사용 후 초기화
             deferredPrompt = null;
             // 버튼 숨기기
@@ -1376,7 +1400,7 @@ function setupPWAInstall() {
 
     // 앱 설치 완료 감지
     window.addEventListener('appinstalled', () => {
-        console.log('[PWA] 앱이 설치되었습니다.');
+        console.debug('[PWA] 앱이 설치되었습니다.');
         deferredPrompt = null;
         window.__deferredPrompt = null;
         if (installBtn) {
@@ -1390,7 +1414,7 @@ function setupPWAInstall() {
     // 인앱 브라우저 자동 감지 — Chrome으로 열기 안내 모달 자동 표시 (최초 1회)
     const platform = detectPlatform();
     if (platform === 'inapp') {
-        console.log('[PWA] 인앱 브라우저 감지 — Chrome으로 열기 안내');
+        console.debug('[PWA] 인앱 브라우저 감지 — Chrome으로 열기 안내');
         // 페이지 로드 완료 후 자동 표시
         const showInappGuide = () => {
             try {
@@ -1509,6 +1533,7 @@ window.triggerImport = triggerImport;
 // state.js의 saveProgress()가 `typeof updateGlobalStats === 'function'`로 참조하므로 노출 필요
 // (모듈-대-모듈이라 window에 걸어야 bare typeof가 해석됨)
 window.updateGlobalStats = updateGlobalStats;
+window.checkStorageWarning = checkStorageWarning;
 
 // data-click 위임에서 참조되지만 그동안 window에 노출되지 않아 배포판(CSP)에서 죽어 있던 핸들러들.
 // (대시보드 과목 바로가기 · 오답노트 카드 제외 · 데일리 챌린지 전체)

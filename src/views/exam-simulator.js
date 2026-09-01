@@ -5,6 +5,7 @@ import { checkShortAnswer } from './trainer.js';
 // [모바일 PWA 견고성] 레지스트리는 window 전역(가드)에서 읽는다(정적 import 하드 의존 지양).
 import { DataLoader } from '../data-loader.js';
 import { showGlobalLoading, hideGlobalLoading } from '../ui-utils.js';
+import { shuffle } from '../utils.js';
 
 // --- 5. 실전 모의고사 시뮬레이터 구현 ---
 let simState = {
@@ -96,7 +97,7 @@ function _startIntegratedMockExamImpl() {
 
     // 과목별 무작위 선택 함수
     const getRandomSample = (arr, count, subjectId) => {
-        const shuffled = [...arr].sort(() => 0.5 - Math.random());
+        const shuffled = shuffle(arr);
         return shuffled.slice(0, count).map(q => ({
             ...q,
             subject: subjectId // 과목 정보 태깅
@@ -833,7 +834,7 @@ function _startWeakExamImpl() {
     });
     
     // 무작위로 섞어서 20문항으로 자르기
-    const shuffled = questions.sort(() => 0.5 - Math.random()).slice(0, 20);
+    const shuffled = shuffle(questions).slice(0, 20);
     
     // 모의고사 세션 구동
     const mockExam = {
