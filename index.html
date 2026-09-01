@@ -46,9 +46,6 @@
                 <button type="button" data-click="ManualViewer.openManual" class="manual-nav-link" style="text-decoration: none;">
                     <i class="fa-solid fa-circle-info"></i> 사용자 매뉴얼
                 </button>
-                <button class="nav-item" data-target="textbook-reader-view">
-                    <i class="fa-solid fa-book-open"></i> 교재 본문 읽기
-                </button>
                 <button class="nav-item active" data-target="dashboard-view">
                     <i class="fa-solid fa-chart-pie"></i> 대시보드
                 </button>
@@ -67,6 +64,9 @@
                 <button class="nav-item" data-target="exam-view">
                     <i class="fa-solid fa-file-invoice"></i> 실전 예상문제집
                 </button>
+                <button class="nav-item" data-target="textbook-reader-view">
+                    <i class="fa-solid fa-book-open"></i> 교재 본문 읽기
+                </button>
                 <button class="nav-item" data-target="textbook-view">
                     <i class="fa-solid fa-book"></i> 교재 본문 검색
                 </button>
@@ -76,7 +76,7 @@
             </nav>
             <div class="sidebar-footer">
                 <p>© 2026 Cosmetic Pass</p>
-                <span>v1.0.0</span>
+                <span id="sidebar-version">v1.0.0</span>
             </div>
         </aside>
 
@@ -477,6 +477,7 @@
                     <i class="fa-solid fa-shield-heart"></i>
                     <h3>복습할 카드가 없습니다!</h3>
                     <p>플래시카드 학습 중에 "아직 헷갈림"으로 분류한 카드가 여기에 수집됩니다.</p>
+                    <button class="btn btn-primary" data-click="startSubjectStudy" data-arg="law" style="margin-top:0.75rem;"><i class="fa-solid fa-layer-group"></i> 플래시카드 학습하러 가기</button>
                 </div>
 
                 <div class="review-card-list" id="review-cards-list-container">
@@ -994,14 +995,6 @@
                 <i class="fa-solid fa-moon"></i>
                 <span>테마</span>
             </button>
-            <button type="button" data-click="ManualViewer.openManual" class="mobile-tab-item">
-                <i class="fa-solid fa-circle-info"></i>
-                <span>매뉴얼</span>
-            </button>
-            <button class="mobile-tab-item" data-target="textbook-reader-view">
-                <i class="fa-solid fa-book-open"></i>
-                <span>교재</span>
-            </button>
             <button class="mobile-tab-item active" data-target="dashboard-view">
                 <i class="fa-solid fa-chart-pie"></i>
                 <span>대시보드</span>
@@ -1018,13 +1011,17 @@
                 <i class="fa-solid fa-file-lines"></i>
                 <span>모의고사</span>
             </button>
+            <button class="mobile-tab-item" data-target="trainer-view">
+                <i class="fa-solid fa-dumbbell"></i>
+                <span>훈련소</span>
+            </button>
             <button class="mobile-tab-item" data-target="review-view">
                 <i class="fa-solid fa-star"></i>
                 <span>복습</span>
             </button>
-            <button class="mobile-tab-item" data-target="trainer-view">
-                <i class="fa-solid fa-dumbbell"></i>
-                <span>훈련소</span>
+            <button class="mobile-tab-item" data-target="textbook-reader-view">
+                <i class="fa-solid fa-book-open"></i>
+                <span>교재</span>
             </button>
             <button class="mobile-tab-item" data-target="textbook-view">
                 <i class="fa-solid fa-book"></i>
@@ -1033,6 +1030,10 @@
             <button class="mobile-tab-item" data-target="dictionary-view">
                 <i class="fa-solid fa-search"></i>
                 <span>성분검색</span>
+            </button>
+            <button type="button" data-click="ManualViewer.openManual" class="mobile-tab-item">
+                <i class="fa-solid fa-circle-info"></i>
+                <span>매뉴얼</span>
             </button>
         </nav>
     </div>

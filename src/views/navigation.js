@@ -26,12 +26,20 @@ export function switchView(targetView) {
         window.stopReaderAudio();
     }
 
-    saveScrollPosition(state.currentView);
-
     const navItem = document.querySelector(`.nav-item[data-target="${targetView}"]`);
     if (navItem) {
+        // click() 핸들러가 saveScrollPosition/restoreScrollPosition을 포함하므로
+        // 여기서는 중복 호출하지 않고 click만 트리거
         navItem.click();
+    } else {
+        // nav-item이 없는 뷰(예: exam-simulator 내부 뷰)는 직접 처리
+        saveScrollPosition(state.currentView);
+        const target = document.getElementById(targetView);
+        if (target) {
+            document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
+            target.classList.add('active');
+        }
+        state.currentView = targetView;
+        restoreScrollPosition(targetView);
     }
-
-    restoreScrollPosition(targetView);
 }

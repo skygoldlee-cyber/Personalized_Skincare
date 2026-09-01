@@ -341,6 +341,17 @@ function initApp() {
     } else {
         console.error('[init] setupNavigation 실패 — __APP_INITIALIZED 미설정, 폴백 대기');
     }
+
+    // 사이드바 버전 표시 동기화
+    const versionEl = document.getElementById('sidebar-version');
+    if (versionEl) {
+        navigator.serviceWorker?.getRegistration?.().then(reg => {
+            if (reg?.active?.scriptURL) {
+                const match = reg.active.scriptURL.match(/v\d+-\d{8}-[\w-]+/);
+                if (match) versionEl.textContent = match[0];
+            }
+        }).catch(() => {});
+    }
 }
 
 // --- 가로/세로 보기 ---
