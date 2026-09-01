@@ -224,8 +224,8 @@ export function saveProgress() {
         updateGlobalStats();
     }
     // 저장 실패 시 사용자 경고 배너 표시 (app.js에서 window.checkStorageWarning으로 노출)
-    if (state._storageUnavailable && typeof window !== 'undefined' && typeof window.checkStorageWarning === 'function') {
-        window.checkStorageWarning();
+    if (state._storageUnavailable && typeof window !== 'undefined' && typeof window['checkStorageWarning'] === 'function') {
+        window['checkStorageWarning']();
     }
 }
 
