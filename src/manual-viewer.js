@@ -238,16 +238,24 @@ body.manual-open{overflow:hidden;}
         _ensureMermaid()
             .then((mermaid) => {
                 try {
-                    // 즉시 로드 시절엔 initialize 호출이 없어 기본값(startOnLoad:true)이었으나,
-                    // 온디맨드 주입에서는 우리가 명시적으로 run() 하므로 startOnLoad 를 끈다.
                     const isLight = document.documentElement.classList.contains('light-theme');
                     mermaid.initialize({
                         startOnLoad: false,
-                        securityLevel: 'strict',
+                        securityLevel: 'loose',
                         theme: isLight ? 'default' : 'dark'
                     });
-                    mermaid.run({ querySelector: '#manual-article pre.mermaid' })
-                    .catch((e) => console.warn('[manual] mermaid.run() failed:', e));
+                    const nodeArr = Array.from(nodes);
+                    const renderNext = (i) => {
+                        if (i >= nodeArr.length) return;
+                        mermaid.run({ nodes: [nodeArr[i]] })
+                            .then(() => renderNext(i + 1))
+                            .catch((e) => {
+                                console.warn(`[manual] mermaid node ${i} failed:`, e?.message || e);
+                                nodeArr[i].innerHTML = '<span style="color:var(--color-text-muted);font-size:0.8rem;">[다이어그램 렌더링 실패]</span>';
+                                renderNext(i + 1);
+                            });
+                    };
+                    renderNext(0);
                 } catch (e) {
                     console.warn('[manual] mermaid render failed:', e);
                 }

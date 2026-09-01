@@ -180,9 +180,9 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
             .filter(k => k.keyword && k.keyword.length >= 2)
             .sort((a, b) => b.keyword.length - a.keyword.length);
         if (sorted.length > 0) {
-            // HTML 태그와 기존 <a> 링크를 안전한 플레이스홀더로 보호
+            // HTML 태그와 기존 <a> 링크, <pre> 블록 전체를 안전한 플레이스홀더로 보호
             const phs = [];
-            let processed = html.replace(/<a\s[^>]*>[\s\S]*?<\/a>|<[^>]+>/g, (m) => {
+            let processed = html.replace(/<pre class="mermaid">[\s\S]*?<\/pre>|<a\s[^>]*>[\s\S]*?<\/a>|<[^>]+>/g, (m) => {
                 const i = phs.length;
                 phs.push(m);
                 return `\uE000P${i}\uE001`;

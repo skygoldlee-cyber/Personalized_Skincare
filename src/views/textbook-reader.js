@@ -1120,10 +1120,28 @@ function _renderReaderMermaid(container) {
                 const isLight = document.documentElement.classList.contains('light-theme');
                 mermaid.initialize({
                     startOnLoad: false,
-                    securityLevel: 'strict',
+                    securityLevel: 'loose',
                     theme: isLight ? 'default' : 'dark'
                 });
-                mermaid.run({ nodes: Array.from(nodes) });
+                const nodeArr = Array.from(nodes);
+                let rendered = 0;
+                let failed = 0;
+                const renderNext = (i) => {
+                    if (i >= nodeArr.length) {
+                        if (failed > 0) console.warn(`[reader] mermaid: ${rendered} rendered, ${failed} failed`);
+                        return;
+                    }
+                    const node = nodeArr[i];
+                    mermaid.run({ nodes: [node] })
+                        .then(() => { rendered++; renderNext(i + 1); })
+                        .catch((e) => {
+                            failed++;
+                            console.warn(`[reader] mermaid node ${i} failed:`, e?.message || e);
+                            node.innerHTML = '<span style="color:var(--color-text-muted);font-size:0.8rem;">[다이어그램 렌더링 실패]</span>';
+                            renderNext(i + 1);
+                        });
+                };
+                renderNext(0);
             } catch (e) {
                 console.warn('[reader] mermaid render failed:', e);
             }
