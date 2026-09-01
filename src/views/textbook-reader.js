@@ -904,6 +904,18 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStor
         </div>
     `;
 
+    // Concept map + study aids
+    html += `
+        <div class="concept-map-container" style="margin: 1rem 0;">
+            <div id="concept-map-toggle" class="concept-map-toggle" style="cursor:pointer;display:flex;align-items:center;gap:0.4rem;padding:0.5rem 0.75rem;background:var(--bg-card);border:1px solid var(--border-color);border-radius:8px;font-size:0.85rem;font-weight:600;color:var(--color-primary);">
+                <i class="fa-solid fa-sitemap"></i> 개념 맵
+                <i class="fa-solid fa-chevron-down" style="margin-left:auto;font-size:0.75rem;"></i>
+            </div>
+            <div id="concept-map-body" class="concept-map-body expanded" style="margin-top:0.5rem;max-height:400px;overflow:auto;background:var(--bg-card);border:1px solid var(--border-color);border-radius:8px;padding:0.5rem;"></div>
+        </div>
+    `;
+    html += renderStudyAids(chapter);
+
     const subjRefFiles = REFERENCE_FILES[subjId] || [];
     const subjDirName = SUBJECT_DIR_MAP[subjId] || '';
 
@@ -1468,7 +1480,7 @@ function bindReferenceLinks() {
             e.preventDefault();
             const idxKey = a.dataset.glossary;
             if (idxKey) {
-                const target = document.getElementById(`glossary-${CSS.escape(idxKey)}`);
+                const target = document.getElementById(`glossary-${idxKey}`);
                 if (target) {
                     target.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     target.style.transition = 'background 0.5s ease';

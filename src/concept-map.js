@@ -638,7 +638,7 @@ export function renderConceptMap(container, chapter, opts = {}) {
                 e.stopPropagation();
                 const idxKey = link.getAttribute('data-glossary');
                 if (idxKey) {
-                    const target = document.getElementById(`glossary-${CSS.escape(idxKey)}`);
+                    const target = document.getElementById(`glossary-${idxKey}`);
                     if (target) {
                         target.scrollIntoView({ behavior: 'smooth', block: 'center' });
                         target.style.transition = 'background 0.5s ease';
