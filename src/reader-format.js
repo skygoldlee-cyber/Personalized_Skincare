@@ -118,20 +118,20 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
         html = html.replace(/<td>([^<]*?)\(L(\d+)\|(.+?\.pdf)\)([^<]*?)<\/td>/g,
             (match, before, lineNum, pdfFile, after) => {
                 const cellText = (before + after).replace(/\(L\d+\|.+?\.pdf\)/g, '').replace(/\(L\?\)/g, '').trim();
-                let keyword = cellText.split(/\s+/)[0] || cellText;
-                if (keyword.length < 2) keyword = cellText;
+                const words = cellText.split(/\s+/).filter(w => w.length >= 2);
+                const keyword = words.slice(0, 2).join(' ');
                 const resolved = resolveRefPath(pdfFile);
                 const usePath = resolved || refPath;
-                return `<td>${before}(<a href="#" data-ref-html="${escapeHTML(usePath)}" data-ref-search="${escapeHTML(keyword)}" data-ref-anchor="${escapeHTML(keyword)}" data-ref-line="${lineNum}" class="source-link">L${lineNum}</a>)${after}</td>`;
+                return `<td>${before}(<a href="#" data-ref-html="${escapeHTML(usePath)}" data-ref-search="${escapeHTML(keyword)}" data-ref-line="${lineNum}" class="source-link">L${lineNum}</a>)${after}</td>`;
             }
         );
         // (LNN) 패턴 → 동일 참조자료 링크
         html = html.replace(/<td>([^<]*?)\(L(\d+)\)([^<]*?)<\/td>/g,
             (match, before, lineNum, after) => {
                 const cellText = (before + after).replace(/\(L\d+\)/g, '').replace(/\(L\?\)/g, '').trim();
-                let keyword = cellText.split(/\s+/)[0] || cellText;
-                if (keyword.length < 2) keyword = cellText;
-                return `<td>${before}(<a href="#" data-ref-html="${escapeHTML(refPath)}" data-ref-search="${escapeHTML(keyword)}" data-ref-anchor="${escapeHTML(keyword)}" data-ref-line="${lineNum}" class="source-link">L${lineNum}</a>)${after}</td>`;
+                const words = cellText.split(/\s+/).filter(w => w.length >= 2);
+                const keyword = words.slice(0, 2).join(' ');
+                return `<td>${before}(<a href="#" data-ref-html="${escapeHTML(refPath)}" data-ref-search="${escapeHTML(keyword)}" data-ref-line="${lineNum}" class="source-link">L${lineNum}</a>)${after}</td>`;
             }
         );
         // td 외부에 남은 (LNN|file.pdf) 패턴도 처리 (fallback)
@@ -139,12 +139,12 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
             const resolved = resolveRefPath(pdfFile);
             const usePath = resolved || refPath;
             const keyword = `제${lineNum}조`;
-            return `(<a href="#" data-ref-html="${escapeHTML(usePath)}" data-ref-search="${escapeHTML(keyword)}" data-ref-anchor="${escapeHTML(keyword)}" data-ref-line="${lineNum}" class="source-link">L${lineNum}</a>)`;
+            return `(<a href="#" data-ref-html="${escapeHTML(usePath)}" data-ref-search="${escapeHTML(keyword)}" data-ref-line="${lineNum}" class="source-link">L${lineNum}</a>)`;
         });
         // td 외부에 남은 (LNN) 패턴도 처리 (fallback)
         html = html.replace(/\(L(\d+)\)/g, (match, lineNum) => {
             const keyword = `제${lineNum}조`;
-            return `(<a href="#" data-ref-html="${escapeHTML(refPath)}" data-ref-search="${escapeHTML(keyword)}" data-ref-anchor="${escapeHTML(keyword)}" data-ref-line="${lineNum}" class="source-link">L${lineNum}</a>)`;
+            return `(<a href="#" data-ref-html="${escapeHTML(refPath)}" data-ref-search="${escapeHTML(keyword)}" data-ref-line="${lineNum}" class="source-link">L${lineNum}</a>)`;
         });
     }
 
