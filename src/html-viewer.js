@@ -290,18 +290,37 @@ async function openHtmlViewer(htmlPath, searchKeyword, anchorId, lineNum) {
         }
 
         // 스크롤 타겟 찾기
-        // 우선순위: 검색 결과(키워드 매칭) > lineNum(N번째 <p>) > 앵커 ID > heading 텍스트
-        // L### 링크: 키워드 검색이 가장 정확 (셀 텍스트가 참조자료에 있으면 해당 위치로 스크롤)
-        // lineNum은 fallback (L### 번호가 HTML <p> 인덱스와 항상 일치하지 않으므로)
+        // 우선순위: lineNum 근처의 검색 결과 > lineNum(N번째 <p>) > 첫 번째 검색 결과 > 앵커 ID > heading 텍스트
         if (anchorId || lineNum) {
             let target = null;
 
-            // 1. 검색 결과가 있으면 첫 번째 결과로 스크롤 (키워드 매칭이 가장 정확)
-            if (_searchResults.length > 0) {
+            // 1. lineNum이 있고 검색 결과도 있으면: lineNum에 가장 가까운 검색 결과로 스크롤
+            if (lineNum && _searchResults.length > 0) {
+                if (!isMarkdown) {
+                    const blocks = content.querySelectorAll('p');
+                    const idx = parseInt(lineNum) - 1;
+                    // 각 검색 결과가 속한 <p>의 인덱스를 구하고, lineNum에 가장 가까운 것 선택
+                    let best = _searchResults[0];
+                    let bestDist = Infinity;
+                    for (const mark of _searchResults) {
+                        let p = mark.closest('p');
+                        if (!p) continue;
+                        const pIdx = Array.from(blocks).indexOf(p);
+                        const dist = pIdx >= 0 ? Math.abs(pIdx - idx) : Infinity;
+                        if (dist < bestDist) { bestDist = dist; best = mark; }
+                    }
+                    target = best;
+                } else {
+                    target = _searchResults[0];
+                }
+            }
+
+            // 2. lineNum이 없고 검색 결과만 있으면: 첫 번째 결과로 스크롤
+            if (!target && _searchResults.length > 0) {
                 target = _searchResults[0];
             }
 
-            // 2. lineNum fallback: N번째 <p> 요소 (HTML 파일에서만, p 태그가 원본 라인과 대략 대응)
+            // 3. lineNum fallback: N번째 <p> 요소 (HTML 파일에서만, p 태그가 원본 라인과 대략 대응)
             if (!target && lineNum && !isMarkdown) {
                 const blocks = content.querySelectorAll('p');
                 const idx = parseInt(lineNum) - 1;

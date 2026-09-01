@@ -119,7 +119,7 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
             (match, before, lineNum, pdfFile, after) => {
                 const cellText = (before + after).replace(/\(L\d+\|.+?\.pdf\)/g, '').replace(/\(L\?\)/g, '').trim();
                 const words = cellText.split(/\s+/).filter(w => w.length >= 2);
-                const keyword = words.slice(0, 4).join(' ').substring(0, 20);
+                const keyword = words[0] || '';
                 const resolved = resolveRefPath(pdfFile);
                 const usePath = resolved || refPath;
                 return `<td>${before}(<a href="#" data-ref-html="${escapeHTML(usePath)}" data-ref-search="${escapeHTML(keyword)}" data-ref-line="${lineNum}" class="source-link">L${lineNum}</a>)${after}</td>`;
@@ -130,7 +130,7 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
             (match, before, lineNum, after) => {
                 const cellText = (before + after).replace(/\(L\d+\)/g, '').replace(/\(L\?\)/g, '').trim();
                 const words = cellText.split(/\s+/).filter(w => w.length >= 2);
-                const keyword = words.slice(0, 4).join(' ').substring(0, 20);
+                const keyword = words[0] || '';
                 return `<td>${before}(<a href="#" data-ref-html="${escapeHTML(refPath)}" data-ref-search="${escapeHTML(keyword)}" data-ref-line="${lineNum}" class="source-link">L${lineNum}</a>)${after}</td>`;
             }
         );
