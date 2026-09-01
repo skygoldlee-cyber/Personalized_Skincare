@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v100-20260901-pdf-registry-refactor';   // PDF 레지스트리 중앙 설정 모듈 분리 (src/pdf-registry.js)
+const CACHE_VERSION = 'v101-20260901-ec732f2';   // SHELL_ASSETS에 pdf-registry.js, reader-format.js 추가
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
@@ -71,6 +71,8 @@ const SHELL_ASSETS = [
   './src/views/exam-simulator.js',
   './src/views/navigation.js',
   './src/pdf-viewer.js',
+  './src/pdf-registry.js',
+  './src/reader-format.js',
   './src/lib/pdf.min.mjs',
   './src/lib/pdf.worker.min.mjs',
   './src/concept-map.js',

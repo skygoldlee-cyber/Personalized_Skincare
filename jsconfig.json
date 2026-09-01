@@ -26,13 +26,17 @@
     "src/types.js",
     "src/state.js",
     "src/charts.js",
+    "src/sanitize.js",
+    "src/utils.js",
+    "src/data-loader.js",
+    "src/pdf-registry.js",
+    "src/reader-format.js",
     "data/registry.js",
     "data/audio_manifest.js"
   ],
   "exclude": [
     "node_modules",
     "vendor",
-    "data/subjects",
     "data/exams",
     "data/ingredients_data.*.js",
     "data/study_md.js",

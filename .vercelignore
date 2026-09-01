@@ -29,14 +29,15 @@ audiobook/mp3/
 data/study_data.js
 data/exam_data.js
 
-# ---------- 🗑️ 미사용 과목 번들 (런타임 MD 파싱으로 대체) ----------
+# ---------- 🗑️ 미사용 과목 번들 (런타임 MD 파싱으로 대체, 디렉토리 삭제됨) ----------
 # 교재/카드/퀴즈는 content/*.md 런타임 파싱으로 로드하므로 data/subjects/*.js 는
-# 더 이상 로드되지 않는다. `npm run build:data` 가 재생성하더라도 배포에서 제외한다.
+# 더 이상 로드되지 않는다. 디렉토리 자체도 삭제되었으나, 혹시 모를 로컬 잔재를 위해 규칙은 유지.
 data/subjects/
 
-# ---------- 🗑️ file:// 전용 폴백 번들 ----------
-# data/docs_md/는 file:// 프로토콜(로컬 직접 열기)뿐 아니라
-# 모바일 PWA에서 fetch 실패 시 폴백으로도 사용되므로 배포에 포함한다.
+# ---------- 🗑️ file:// 전용 폴백 번들 (배포 제외) ----------
+# data/exams_md/, data/study_md/는 file:// 프로토콜(로컬 직접 열기) 전용 폴백이다.
+# http(s) 배포에서는 content/*.md를 직접 fetch하므로 불필요하여 배포에서 제외한다.
+# (data/docs_md/는 PWA 오프라인 fetch 실패 시 폴백으로도 사용되므로 배포에 포함 = 제외 규칙 없음)
 data/exams_md/
 data/study_md/
 
@@ -52,11 +53,20 @@ data/study_md/
 .vercel/
 .vercel
 
-# ---------- 📂 아카이브된 원본 폴터 ----------
+# ---------- 📂 아카이브된 원본 폴더 ----------
 # content/와 동일한 MD 파일들의 중복 (archive/로 이동됨)
 archive/
 
-# ---------- 🔧 개발 도구 및 파이프라인 ----------
+# ---------- 📊 분석 보고서 (앱 미참조) ----------
+# content/report/는 개발/분석용 문서로 앱에서 참조하지 않음
+content/report/
+
+# ---------- � 참조자료 PDF (27MB, 앱 내 PDF 뷰어 사용) ----------
+# content/참조자료/ 하위 PDF 파일들은 앱 내 PDF.js 뷰어가 직접 fetch하므로 배포에 포함해야 함.
+# 총 42개 파일 약 27MB. Vercel 무료 플랜(100MB) 대비 상당 부분 차지.
+# 향후 용량 문제 시 외부 스토리지(Cloudflare R2, AWS S3) 이관 검토.
+
+# ---------- �🔧 개발 도구 및 파이프라인 ----------
 content/audiobook/
 tools/
 *.py
