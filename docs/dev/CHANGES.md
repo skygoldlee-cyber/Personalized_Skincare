@@ -591,6 +591,60 @@
 
 ---
 
+## 32. html_output 대용량 파일 MD 변환 및 body-only 추출 (2026-09-01)
+
+> **목표**: `html_output` 디렉토리의 HTML 파일들이 ~44.5MB로 배포 용량 부담이 큰 문제를 해결하기 위해, 대용량 법령 원문 3개를 Markdown으로 변환하고 나머지 38개는 `<head>`/`<style>`/base64 이미지를 제거하여 용량 절감
+
+### 문제 배경
+
+- `html_output` HTML 파일 42개 총 ~44.5MB가 Vercel 배포에 포함되어 업로드 시간 및 저장소 부담
+- 상위 3개 법령 원문 (기능성화장품 기준 11MB, KFCC_별표10 5.3MB, 화장품 안전기준 3.3MB)이 전체의 ~60% 차지
+- 이들은 순수 텍스트(조문)로 절대 좌표 기반 배치가 의미 없음 → Markdown 플로우 레이아웃이 오히려 모바일에서 가독성 향상
+- 나머지 파일들은 `<head>`/`<style>`(~2KB, 모든 파일 동일)과 base64 인라인 이미지가 불필요 (`html-viewer.js`는 `body.innerHTML`만 사용)
+
+### 수정 내역
+
+- **`content/utils/convert_html_output.py`** (신규): HTML→MD 변환 및 body-only 추출 Python 스크립트
+  - 대용량 3개: HTML 파싱 → `<p>` 태그를 top/left 좌표순 정렬 → 텍스트 추출, `<table class="pdf-table">`을 MD 표로 변환, 파일 참조 이미지는 `![](images/...)`로 변환, base64 이미지 제거
+  - 나머지 38개: `<body>` 내용만 추출, `<style>` 태그 및 base64 `data:` URI 이미지 제거
+  - CRLF 정규화 처리 (Windows 환경 대응)
+- **`src/pdf-registry.js`**: `MD_CONVERSION_TARGETS` Set 추가, `_toHtmlPath()`에서 대상 3개 파일에 대해 `.md` 확장자 반환
+- **`src/html-viewer.js`**:
+  - `parseMarkdown` import 추가
+  - `openHtmlViewer()`: `htmlPath.endsWith('.md')` 분기 — MD 파일은 `parseMarkdown()`으로 HTML 변환 후 주입, HTML 파일은 기존 `DOMParser` 방식 유지
+  - MD 렌더링 콘텐츠용 CSS 스타일 추가 (`h1`~`h3`, `p`, `ul`/`ol`/`li`, `table.reader-table`, `blockquote`, `img`, `hr`, `pre.reader-code-block`)
+  - MD 이미지 경로 절대 경로 변환 (HTML과 동일하게 처리)
+  - 타이틀 추출 정규식 `.html` → `.(html|md)` 확장
+- **`src/reader-format.js`**: 참조 링크 표시명에서 `.md` 확장자 제거 정규식 추가 (`/\.(html|md)$/`)
+- **`.gitignore`**: `!content/참조자료/html_output/**/*.md` 예외 추가 (MD 변환본 Git 추적)
+- **`sw.js`**: `CACHE_VERSION` → `v119-20260901-html-to-md`
+
+### 변환 결과
+
+| 파일 | 변환 전 | 변환 후 | 절감률 |
+|------|---------|---------|--------|
+| 기능성화장품 기준 및 시험방법... | 11,011KB | 925KB | 92% |
+| KFCC_별표10_일반시험법 | 5,346KB | 376KB | 93% |
+| 화장품 안전기준 등에 관한 규정... | 3,321KB | 482KB | 85% |
+| 나머지 38개 (body-only) | ~24.8MB | ~20.3MB | ~18% |
+| **전체** | **~44.5MB** | **~26MB** | **41%** |
+
+### 검증
+
+- `npm test` 88/88 통과
+- Vercel 배포 완료 (업로드 16.4MB, 이전 ~35MB 대비 절감)
+- MD 변환 파일에 표(table) 53개 라인 포함 확인
+- `resolveRefPath()` → `data-ref-html` → `openHtmlViewer()` 경로 일관성 확인
+
+### 핵심 개선점
+
+- **배포 용량 41% 절감**: 44.5MB → 26MB (18.5MB 절감)
+- **런타임 변환**: MD 파일은 `parseMarkdown()`으로 클라이언트에서 동적 HTML 렌더링 — 검색/하이라이트/인쇄 기능 동일 유지
+- **하이브리드 전략**: 법령 조문(텍스트 위주)은 MD, 별표/표류(레이아웃 중요)는 HTML body 유지
+- **모바일 가독성**: MD 변환 파일은 플로우 레이아웃으로 모바일에서 더 읽기 편함
+
+---
+
 ## 31. HTML 뷰어 iframe → fetch+DOM 주입 전환 및 검색 개선 (2026-09-01)
 
 > **목표**: iframe 기반 HTML 뷰어가 Vercel CSP `frame-ancestors`/`X-Frame-Options` 헤더 충돌로 로드되지 않는 문제를 근본 해결하고, 검색 기능을 개선

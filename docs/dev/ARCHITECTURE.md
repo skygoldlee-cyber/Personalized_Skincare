@@ -252,7 +252,9 @@ scratchpad.js (캔버스)            views/flashcard.js (플래시카드)
 reader-format.js (리더 포맷터)    views/quiz.js (퀴즈+복습)
 ui-utils.js (로딩 UI)             views/trainer.js (훈련소)
 types.js (JSDoc 타입 정의)        views/dictionary.js (성분 검색)
-                                 views/navigation.js (뷰 전환 유틸)
+html-viewer.js (참조자료 뷰어)    views/navigation.js (뷰 전환 유틸)
+pdf-registry.js (참조자료 레지스트리)
+markdown-parser.js (MD→HTML 파서)
 ```
 
 > `app.js`에 남은 함수: `startFocusSubjectStudy`(뷰 간 브릿지), `switchView`, 초기화/네비게이션/이벤트 바인딩. `examIdToSubjectId`는 `exam-simulator.js`에서 정의 후 `app.js`를 통해 re-export되어 `quiz.js`가 import.
@@ -886,7 +888,7 @@ cmd /c vercel --prod 2>&1
 | `content/manifest.json` | SSOT — 모든 빌드의 원천 | `subjects[].dir`, `chapters[].file` |
 | `sw.js` | `MD_ASSETS` 하드코딩 | 프리캐시 대상 MD 파일 경로 |
 | `src/manual-viewer.js` | `MD_SOURCES` 객체 | 학습안내서, 사용자매뉴얼 경로 |
-| `src/pdf-registry.js` | `SUBJECT_DIR_MAP`, `REF_DIRS`, `REFERENCE_FILES` | 참조자료 중앙 설정 (HTML 변환본 경로 자동 생성, 과목 변경 시 유일 수정 파일) |
+| `src/pdf-registry.js` | `SUBJECT_DIR_MAP`, `REF_DIRS`, `REFERENCE_FILES`, `MD_CONVERSION_TARGETS` | 참조자료 중앙 설정 (HTML/MD 변환본 경로 자동 생성, 대용량 3개는 `.md` 반환, 과목 변경 시 유일 수정 파일) |
 | `src/data-loader.js` | `manifest.subjects[].dir` 동적 참조 | 런타임 MD 로드 |
 | `src/textbook-parser.js` | `manifest.subjects[].dir` 동적 참조 | 런타임 MD 파싱 |
 | `tools/build/manifest-loader.js` | `manifest.json` 검증 | 빌드 시 파일 존재 확인 |
@@ -898,6 +900,7 @@ cmd /c vercel --prod 2>&1
 | `tools/check_parser_parity.js` | `manifest.subjects[].dir` 동적 참조 | 파서 정합성 검증 |
 | `content/utils/batch_convert.py` | `BATCH_TARGETS` 딕셔너리 | 배치 HTML 변환 대상 |
 | `content/utils/md_to_html.py` | `--in` 인자 (기본값 `학습안내서.md`) | 단일 HTML 변환 |
+| `content/utils/convert_html_output.py` | `MD_CONVERSION_TARGETS` Set (스크립트 내 하드코딩) | html_output 대용량 HTML→MD 변환 및 body-only 추출 |
 | `content/audiobook/generate_all_mp3.py` | 과목 키 참조 | 오디오북 생성 |
 
 ---
