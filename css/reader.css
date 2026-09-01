@@ -1982,6 +1982,30 @@ body.landscape-mode .glass-card {
     user-select: none;
 }
 
+/* 계층적 트리 노드 (대분류/중분류/소분류) */
+.concept-map-tree-node {
+    cursor: default;
+    transition: opacity 0.2s;
+}
+
+.concept-map-tree-link {
+    cursor: pointer;
+}
+
+.concept-map-tree-link:hover rect,
+.concept-map-tree-link:focus rect {
+    stroke-width: 2.5;
+    filter: brightness(1.15);
+}
+
+.concept-map-tree-link:focus {
+    outline: none;
+}
+
+.concept-map-svg.concept-map-tree {
+    max-width: 820px;
+}
+
 /* 모바일: 개념 맵 세로 레이아웃 최적화 */
 @media (max-width: 768px) {
     .concept-map-container {
@@ -2000,6 +2024,10 @@ body.landscape-mode .glass-card {
 
     .concept-map-svg.concept-map-desktop {
         min-width: 600px;
+    }
+
+    .concept-map-svg.concept-map-tree.concept-map-desktop {
+        min-width: 760px;
     }
 }
 
