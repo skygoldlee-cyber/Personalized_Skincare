@@ -71,6 +71,8 @@ function _ensureOverlay() {
                 <input type="text" id="hr-search-input" placeholder="검색어..." />
                 <span class="hr-search-count" id="hr-search-count"></span>
                 <button class="hr-ov-btn secondary" id="hr-search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                <button class="hr-ov-btn secondary" id="hr-prev-btn" title="이전 (Shift+Enter)"><i class="fa-solid fa-chevron-up"></i></button>
+                <button class="hr-ov-btn secondary" id="hr-next-btn" title="다음 (Enter)"><i class="fa-solid fa-chevron-down"></i></button>
             </div>
             <button class="hr-ov-btn secondary" id="hr-print-btn"><i class="fa-solid fa-print"></i></button>
         </div>
@@ -86,19 +88,28 @@ function _ensureOverlay() {
 
     el.querySelector('#hr-close-btn').addEventListener('click', close);
     el.querySelector('#hr-print-btn').addEventListener('click', () => {
-        const scroll = el.querySelector('#hr-scroll');
-        if (scroll) {
-            const printWin = window.open('', '_blank');
-            if (printWin) {
-                printWin.document.write('<html><head><title>인쇄</title></head><body>' + scroll.innerHTML + '</body></html>');
-                printWin.document.close();
-                printWin.print();
-            }
+        const content = el.querySelector('.hr-ov-content');
+        if (!content) return;
+        const printWin = window.open('', '_blank');
+        if (printWin) {
+            const styles = document.getElementById('html-viewer-styles');
+            printWin.document.write('<html><head><title>인쇄</title>');
+            if (styles) printWin.document.write('<style>' + styles.textContent + '</style>');
+            printWin.document.write('<style>#html-ref-overlay{position:static!important;display:block!important;background:#fff!important;}#html-ref-overlay .hr-ov-scroll{overflow:visible!important;}</style>');
+            printWin.document.write('</head><body><div id="html-ref-overlay" class="open"><div class="hr-ov-scroll">' + content.outerHTML + '</div></div></body></html>');
+            printWin.document.close();
+            printWin.print();
         }
     });
     el.querySelector('#hr-search-btn').addEventListener('click', () => _doSearch());
+    el.querySelector('#hr-prev-btn').addEventListener('click', () => _navigateSearch(-1));
+    el.querySelector('#hr-next-btn').addEventListener('click', () => _navigateSearch(1));
     el.querySelector('#hr-search-input').addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') _doSearch();
+        if (e.key === 'Enter') {
+            if (e.shiftKey) _navigateSearch(-1);
+            else if (_searchResults.length > 0) _navigateSearch(1);
+            else _doSearch();
+        }
     });
 
     el.addEventListener('keydown', (e) => {
@@ -145,7 +156,9 @@ async function openHtmlViewer(htmlPath, searchKeyword) {
         loading.innerHTML = '<div class="spinner"></div><div>문서 로딩 중...</div>';
     }
     loading.style.display = 'flex';
+    scroll.innerHTML = '';
     scroll.appendChild(loading);
+    scroll.scrollTop = 0;
 
     _searchResults = [];
     _searchIdx = -1;
@@ -173,7 +186,7 @@ async function openHtmlViewer(htmlPath, searchKeyword) {
             }
         });
 
-        loading.style.display = 'none';
+        loading.remove();
 
         // 콘텐츠 컨테이너 생성
         const content = document.createElement('div');
@@ -201,6 +214,23 @@ function _clearHighlights(container) {
         parent.replaceChild(document.createTextNode(m.textContent), m);
         parent.normalize();
     });
+}
+
+function _highlightInTextNode(textNode, lowerKw, kw) {
+    let current = textNode;
+    while (current && current.nodeType === Node.TEXT_NODE) {
+        const lt = current.textContent.toLowerCase();
+        const pos = lt.indexOf(lowerKw);
+        if (pos < 0) break;
+        const range = document.createRange();
+        range.setStart(current, pos);
+        range.setEnd(current, pos + kw.length);
+        const mark = document.createElement('mark');
+        mark.className = 'hr-highlight';
+        range.surroundContents(mark);
+        _searchResults.push(mark);
+        current = mark.nextSibling;
+    }
 }
 
 async function _doSearch(keyword) {
@@ -233,24 +263,7 @@ async function _doSearch(keyword) {
     }
 
     for (const textNode of textNodes) {
-        const text = textNode.textContent;
-        const lowerText = text.toLowerCase();
-        let idx = 0;
-        let pos = lowerText.indexOf(lowerKw, idx);
-        while (pos >= 0) {
-            const range = document.createRange();
-            range.setStart(textNode, pos);
-            range.setEnd(textNode, pos + kw.length);
-            const mark = document.createElement('mark');
-            mark.className = 'hr-highlight';
-            range.surroundContents(mark);
-            _searchResults.push(mark);
-            const nextNode = mark.nextSibling;
-            if (!nextNode || nextNode.nodeType !== Node.TEXT_NODE) break;
-            idx = 0;
-            pos = nextNode.textContent.toLowerCase().indexOf(lowerKw, idx);
-            break;
-        }
+        _highlightInTextNode(textNode, lowerKw, kw);
     }
 
     countEl.textContent = _searchResults.length > 0 ? `${_searchResults.length}개` : '없음';
@@ -266,6 +279,14 @@ function _scrollToResult(idx) {
     _searchResults.forEach(m => m.classList.remove('current'));
     _searchResults[idx].classList.add('current');
     _searchResults[idx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function _navigateSearch(dir) {
+    if (_searchResults.length === 0) return;
+    _searchIdx = (_searchIdx + dir + _searchResults.length) % _searchResults.length;
+    _scrollToResult(_searchIdx);
+    const countEl = _overlayEl.querySelector('#hr-search-count');
+    countEl.textContent = `${_searchIdx + 1}/${_searchResults.length}`;
 }
 
 // Public API
