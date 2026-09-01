@@ -211,7 +211,9 @@ function buildRefLinkAttrs(linkInfo, refPath) {
     }
     if (!html) return '';
     const line = linkInfo.lineNum || '';
-    const idxKey = `${html}|L${line}`;
+    // KEYWORD_INDEX 키: "파일명.md|L123" (경로 단축版)
+    const fileName = html.split('/').pop();
+    const idxKey = `${fileName}|L${line}`;
     const keyword = KEYWORD_INDEX[idxKey] || '';
     return `data-ref-html="${escapeAttr(html)}" data-ref-search="${escapeAttr(keyword)}" data-ref-line="${escapeAttr(line)}"`;
 }

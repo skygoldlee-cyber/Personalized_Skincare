@@ -6,6 +6,8 @@ let _overlayEl = null;
 let _contentEl = null;
 let _searchResults = [];
 let _searchIdx = -1;
+const _FETCH_CACHE_PREFIX = 'ref_doc_v1_';
+const _FETCH_CACHE_TTL = 24 * 60 * 60 * 1000; // 24시간
 
 function _injectStyles() {
     if (document.getElementById('html-viewer-styles')) return;
@@ -189,30 +191,45 @@ async function openHtmlViewer(htmlPath, searchKeyword, anchorId, lineNum) {
 
     try {
         const fileUrl = new URL(htmlPath, window.location.href).href;
-        const resp = await fetch(fileUrl);
-        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-        const rawText = await resp.text();
-
-        const baseUrl = fileUrl.substring(0, fileUrl.lastIndexOf('/') + 1);
         const isMarkdown = htmlPath.endsWith('.md');
-        let innerHTML;
+        const baseUrl = fileUrl.substring(0, fileUrl.lastIndexOf('/') + 1);
 
-        if (isMarkdown) {
-            // Markdown → HTML 변환
-            innerHTML = parseMarkdown(rawText, { allowInlineCode: false });
-        } else {
-            // HTML 파싱하여 body 내용 추출
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(rawText, 'text/html');
-
-            // 이미지 경로를 절대 경로로 변환
-            doc.querySelectorAll('img').forEach(img => {
-                const src = img.getAttribute('src');
-                if (src && !src.startsWith('http') && !src.startsWith('data:')) {
-                    img.src = new URL(src, baseUrl).href;
+        // sessionStorage 캐싱: 재방문 시 fetch 0회로 즉시 렌더링
+        const cacheKey = _FETCH_CACHE_PREFIX + fileUrl;
+        let innerHTML = null;
+        try {
+            const cached = sessionStorage.getItem(cacheKey);
+            if (cached) {
+                const parsed = JSON.parse(cached);
+                if (Date.now() - parsed.ts < _FETCH_CACHE_TTL) {
+                    innerHTML = parsed.html;
                 }
-            });
-            innerHTML = doc.body.innerHTML;
+            }
+        } catch {}
+
+        if (innerHTML === null) {
+            const resp = await fetch(fileUrl);
+            if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+            const rawText = await resp.text();
+
+            if (isMarkdown) {
+                innerHTML = parseMarkdown(rawText, { allowInlineCode: false });
+            } else {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(rawText, 'text/html');
+                doc.querySelectorAll('img').forEach(img => {
+                    const src = img.getAttribute('src');
+                    if (src && !src.startsWith('http') && !src.startsWith('data:')) {
+                        img.src = new URL(src, baseUrl).href;
+                    }
+                });
+                innerHTML = doc.body.innerHTML;
+            }
+
+            // 캐시 저장 (실패 시 무시)
+            try {
+                sessionStorage.setItem(cacheKey, JSON.stringify({ ts: Date.now(), html: innerHTML }));
+            } catch {}
         }
 
         loading.remove();
@@ -226,15 +243,21 @@ async function openHtmlViewer(htmlPath, searchKeyword, anchorId, lineNum) {
 
         // PDF→HTML 변환시 폰트별 <span> 분할 제거 (한글 키워드 검색을 위해)
         // 예: <span>알</span><span>코올</span> → 알코올 (단일 텍스트 노드)
+        // 최적화: span 목록을 먼저 수집한 후 일괄 처리, normalize는 부모별 1회만 호출
         if (!isMarkdown) {
-            content.querySelectorAll('span').forEach(span => {
+            const spans = content.querySelectorAll('span');
+            const parentsToNormalize = new Set();
+            for (const span of spans) {
                 const parent = span.parentNode;
                 while (span.firstChild) {
                     parent.insertBefore(span.firstChild, span);
                 }
                 parent.removeChild(span);
-                parent.normalize();
-            });
+                parentsToNormalize.add(parent);
+            }
+            for (const p of parentsToNormalize) {
+                p.normalize();
+            }
         }
 
         // MD의 경우 이미지 경로를 절대 경로로 변환
@@ -353,14 +376,34 @@ async function _doSearch(keyword, skipScroll) {
         }
     });
 
-    const textNodes = [];
+    // 1단계: 첫 매치를 빠르게 찾아 스크롤 (나머지는 idle에서 처리)
+    let firstMatch = null;
+    let remainingNodes = [];
     let node;
     while (node = walker.nextNode()) {
-        textNodes.push(node);
+        if (firstMatch === null) {
+            _highlightInTextNode(node, lowerKw, kw);
+            if (_searchResults.length > 0) {
+                firstMatch = _searchResults[0];
+            }
+        } else {
+            remainingNodes.push(node);
+        }
     }
 
-    for (const textNode of textNodes) {
-        _highlightInTextNode(textNode, lowerKw, kw);
+    // 2단계: 나머지 하이라이트는 requestIdleCallback으로 지연 처리
+    if (remainingNodes.length > 0) {
+        const highlightRest = (startIdx) => {
+            const endIdx = Math.min(startIdx + 50, remainingNodes.length);
+            for (let i = startIdx; i < endIdx; i++) {
+                _highlightInTextNode(remainingNodes[i], lowerKw, kw);
+            }
+            countEl.textContent = _searchResults.length > 0 ? `${_searchResults.length}개` : '없음';
+            if (endIdx < remainingNodes.length) {
+                (window.requestIdleCallback || window.setTimeout)(() => highlightRest(endIdx));
+            }
+        };
+        (window.requestIdleCallback || window.setTimeout)(() => highlightRest(0));
     }
 
     countEl.textContent = _searchResults.length > 0 ? `${_searchResults.length}개` : '없음';

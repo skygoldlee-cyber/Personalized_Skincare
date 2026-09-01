@@ -120,7 +120,7 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
             (match, before, lineNum, pdfFile, after) => {
                 const resolved = resolveRefPath(pdfFile);
                 const usePath = resolved || refPath;
-                const idxKey = `${usePath}|L${lineNum}`;
+                const idxKey = `${usePath.split('/').pop()}|L${lineNum}`;
                 const keyword = KEYWORD_INDEX[idxKey] || '';
                 return `<td>${before}(<a href="#" data-ref-html="${escapeHTML(usePath)}" data-ref-search="${escapeHTML(keyword)}" data-ref-line="${lineNum}" class="source-link">L${lineNum}</a>)${after}</td>`;
             }
@@ -128,7 +128,7 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
         // (LNN) 패턴 → 동일 참조자료 링크
         html = html.replace(/<td>([^<]*?)\(L(\d+)\)([^<]*?)<\/td>/g,
             (match, before, lineNum, after) => {
-                const idxKey = `${refPath}|L${lineNum}`;
+                const idxKey = `${refPath.split('/').pop()}|L${lineNum}`;
                 const keyword = KEYWORD_INDEX[idxKey] || '';
                 return `<td>${before}(<a href="#" data-ref-html="${escapeHTML(refPath)}" data-ref-search="${escapeHTML(keyword)}" data-ref-line="${lineNum}" class="source-link">L${lineNum}</a>)${after}</td>`;
             }
