@@ -2511,6 +2511,8 @@ body.landscape-mode .glass-card {
 }
 .reader-glossary .glossary-table {
     font-size: 0.85rem;
+    table-layout: fixed;
+    width: 100%;
 }
 .reader-glossary .glossary-table .glossary-term {
     font-weight: 700;
@@ -2522,12 +2524,13 @@ body.landscape-mode .glass-card {
     color: var(--color-text-main);
     line-height: 1.6;
     word-break: break-word;
+    width: auto;
 }
 .reader-glossary .glossary-table .glossary-ref {
     font-size: 0.78rem;
     color: var(--color-text-muted, #8b949e);
-    white-space: nowrap;
-    width: 100px;
+    word-break: break-word;
+    width: 120px;
 }
 .reader-glossary .glossary-table tr:target {
     background: rgba(250, 204, 21, 0.15) !important;
