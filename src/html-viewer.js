@@ -248,28 +248,14 @@ async function openHtmlViewer(htmlPath, searchKeyword, anchorId, lineNum) {
         }
 
         // 검색어 결정: L### 링크의 경우 lineNum 기반으로 실제 키워드 추출
+        // L### 번호 = 렌더링된 HTML의 N번째 <p> 요소 인덱스 (HTML/MD 공통)
         let effectiveSearch = searchKeyword;
         let mdLineText = null;
-        if (lineNum && isMarkdown) {
-            // MD 파일: 원본 텍스트의 N번째 라인을 추출하여 검색어로 사용
-            // (parseMarkdown 후 p 요소 수가 원본 라인과 불일치하므로)
-            // 빈 줄은 건너뛰고 의미 있는 라인을 찾음
-            const mdLines = rawText.split('\n');
-            const lineIdx = parseInt(lineNum) - 1;
-            if (lineIdx >= 0 && lineIdx < mdLines.length) {
-                let lineText = mdLines[lineIdx];
-                // 빈 줄이면 주변 라인에서 의미 있는 텍스트 찾기
-                if (!lineText.trim()) {
-                    for (let i = lineIdx + 1; i < Math.min(lineIdx + 5, mdLines.length); i++) {
-                        if (mdLines[i].trim()) { lineText = mdLines[i]; break; }
-                    }
-                    if (!lineText.trim()) {
-                        for (let i = lineIdx - 1; i >= Math.max(lineIdx - 5, 0); i--) {
-                            if (mdLines[i].trim()) { lineText = mdLines[i]; break; }
-                        }
-                    }
-                }
-                lineText = lineText.replace(/^#+\s*/, '').replace(/\*\*/g, '').replace(/!\[.*?\]\(.*?\)/g, '').replace(/\[([^]]+)\]\([^)]+\)/g, '$1').trim();
+        if (lineNum) {
+            const blocks = content.querySelectorAll('p');
+            const idx = parseInt(lineNum) - 1;
+            if (idx >= 0 && idx < blocks.length) {
+                const lineText = blocks[idx].textContent.replace(/\s+/g, ' ').trim();
                 if (lineText.length >= 2) {
                     effectiveSearch = lineText;
                     mdLineText = lineText;
@@ -296,23 +282,19 @@ async function openHtmlViewer(htmlPath, searchKeyword, anchorId, lineNum) {
 
             // 1. lineNum이 있고 검색 결과도 있으면: lineNum에 가장 가까운 검색 결과로 스크롤
             if (lineNum && _searchResults.length > 0) {
-                if (!isMarkdown) {
-                    const blocks = content.querySelectorAll('p');
-                    const idx = parseInt(lineNum) - 1;
-                    // 각 검색 결과가 속한 <p>의 인덱스를 구하고, lineNum에 가장 가까운 것 선택
-                    let best = _searchResults[0];
-                    let bestDist = Infinity;
-                    for (const mark of _searchResults) {
-                        let p = mark.closest('p');
-                        if (!p) continue;
-                        const pIdx = Array.from(blocks).indexOf(p);
-                        const dist = pIdx >= 0 ? Math.abs(pIdx - idx) : Infinity;
-                        if (dist < bestDist) { bestDist = dist; best = mark; }
-                    }
-                    target = best;
-                } else {
-                    target = _searchResults[0];
+                const blocks = content.querySelectorAll('p');
+                const idx = parseInt(lineNum) - 1;
+                // 각 검색 결과가 속한 <p>의 인덱스를 구하고, lineNum에 가장 가까운 것 선택
+                let best = _searchResults[0];
+                let bestDist = Infinity;
+                for (const mark of _searchResults) {
+                    let p = mark.closest('p');
+                    if (!p) continue;
+                    const pIdx = Array.from(blocks).indexOf(p);
+                    const dist = pIdx >= 0 ? Math.abs(pIdx - idx) : Infinity;
+                    if (dist < bestDist) { bestDist = dist; best = mark; }
                 }
+                target = best;
             }
 
             // 2. lineNum이 없고 검색 결과만 있으면: 첫 번째 결과로 스크롤
@@ -320,8 +302,8 @@ async function openHtmlViewer(htmlPath, searchKeyword, anchorId, lineNum) {
                 target = _searchResults[0];
             }
 
-            // 3. lineNum fallback: N번째 <p> 요소 (HTML 파일에서만, p 태그가 원본 라인과 대략 대응)
-            if (!target && lineNum && !isMarkdown) {
+            // 3. lineNum fallback: N번째 <p> 요소 (HTML/MD 공통, p 태그가 원본 라인과 대략 대응)
+            if (!target && lineNum) {
                 const blocks = content.querySelectorAll('p');
                 const idx = parseInt(lineNum) - 1;
                 if (idx >= 0 && idx < blocks.length) {
