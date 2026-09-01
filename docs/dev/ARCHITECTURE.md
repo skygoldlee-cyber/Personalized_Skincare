@@ -84,8 +84,8 @@
 │ │  │ 타입)   │ │ (리더 포맷)  │                          │ │
 │ │  └─────────┘ └──────────────┘                          │ │
 │ │  ┌──────────────┐ ┌──────────────┐                     │ │
-│ │  │pdf-registry  │ │html-viewer   │  (HTML 참조자료 뷰어)  │ │
-│ │  │  .js         │ │  .js         │  (iframe+검색)        │ │
+│ │  │pdf-registry │ │html-viewer   │  (HTML 참조자료 뷰어)  │ │
+│ │  │  .js         │ │  .js         │  (fetch+DOM+검색)     │ │
 │ │  └──────────────┘ └──────────────┘                     │ │
 │ │  ┌──────────────────────────────────────────────────┐  │ │
 │ │  │  views/ (뷰 컨트롤러 모듈)                          │  │ │
@@ -185,7 +185,7 @@
 | [`src/utils.js`](../../src/utils.js) | 의존성 없는 범용 헬퍼 (한글 초성 추출 `getChosung()` 등) |
 | [`src/sanitize.js`](../../src/sanitize.js) | HTML/XSS 방어 및 텍스트 정제 유틸리티 |
 | [`src/pdf-registry.js`](../../src/pdf-registry.js) | 참조자료 중앙 설정 모듈. 과목별 참조자료 매핑, 출처→HTML 파일명 매핑, HTML 경로 해석 (`REF_DIRS`, `resolveRefPath`, `mapSourceToRef`) |
-| [`src/html-viewer.js`](../../src/html-viewer.js) | 앱 내 HTML 참조자료 뷰어. iframe 기반 오버레이, DOM 텍스트 노드 순회 검색 + `<mark>` 하이라이트. PDF.js 기반 `pdf-viewer.js`를 대체 |
+| [`src/html-viewer.js`](../../src/html-viewer.js) | 앱 내 HTML 참조자료 뷰어. `fetch()`+`DOMParser`로 HTML 로드 후 DOM 직접 주입 (iframe 없음). 텍스트 노드 순회 검색 + `<mark>` 하이라이트, 검색 결과 내비게이션(이전/다음), 인쇄 지원. PDF.js 기반 `pdf-viewer.js`를 대체 |
 | [`src/reader-format.js`](../../src/reader-format.js) | 교재 리더 본문 포맷터. `parseMarkdown()` + HTML 참조 링크 변환 (`data-ref-html`, `data-ref-search`) + 참조자료 인라인 렌더링 |
 | [`src/exam-viewer.js`](../../src/exam-viewer.js) | 문제집(MD) 런타임 뷰어. `content/문제은행/*.md` fetch → 자체 MD→HTML 변환 → 인앱 전체화면 오버레이 렌더링. TOC 생성·인쇄·sessionStorage 캐시(24h)·`file://` 번들 폴리백(`data/exams_md/*.js`) 지원. **시험 제목은 registry에서 동적 조회** (하드코딩 없음) |
 

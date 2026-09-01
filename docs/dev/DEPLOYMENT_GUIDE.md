@@ -245,7 +245,6 @@ manifest-src 'self'
 |------|-----|------|
 | `X-Content-Type-Options` | `nosniff` | MIME 스니핑 방지 |
 | `Referrer-Policy` | `strict-origin-when-cross-origin` | Referrer 정보 제한 |
-| `X-Frame-Options` | `DENY` | iframe 삽입 차단 |
 | `Permissions-Policy` | `geolocation=(), microphone=(), camera=(), payment=(), usb=(), interest-cohort=()` | 디바이스 API 접근 차단 |
 
 ### 4-3. 캐시 정책

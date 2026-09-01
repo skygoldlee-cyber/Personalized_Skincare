@@ -591,6 +591,46 @@
 
 ---
 
+## 31. HTML 뷰어 iframe → fetch+DOM 주입 전환 및 검색 개선 (2026-09-01)
+
+> **목표**: iframe 기반 HTML 뷰어가 Vercel CSP `frame-ancestors`/`X-Frame-Options` 헤더 충돌로 로드되지 않는 문제를 근본 해결하고, 검색 기능을 개선
+
+### 문제 배경
+
+- iframe 방식이 Vercel의 `frame-ancestors: none` CSP 헤더와 충돌하여 "연결을 거부했습니다" 에러 발생
+- `frame-ancestors: self`로 변경 시도 → Vercel이 Unicode 경로 패턴 매칭 실패
+- 별도 CSP 규칙 추가 → catch-all 규칙이 우선 적용되어 효과 없음
+
+### 수정 내역
+
+- **`src/html-viewer.js`** (전면 재작성): iframe 방식 제거, `fetch()` + `DOMParser` + DOM 직접 주입 방식으로 전환
+  - `fetch()`로 HTML 파일 로드 → `DOMParser`로 파싱 → `body.innerHTML`을 오버레이 컨테이너에 직접 주입
+  - CSP `frame-ancestors`/`X-Frame-Options` 문제 원천 제거
+  - 이미지 상대 경로 → 절대 경로 자동 변환
+  - HTML 변환본 스타일을 오버레이 CSS로 직접 적용 (`.hr-ov-content` 하위 셀렉터)
+  - **검색 내비게이션 추가**: 이전/다음 버튼(`chevron-up/down`), `Enter`=다음, `Shift+Enter`=이전 키보드 단축키, 카운트 `1/N` 형식
+  - **다중 매치 검색 수정**: `_highlightInTextNode()` 헬퍼로 텍스트 노드 내 모든 매치 발견 (기존: 첫 매치만 발견 후 `break`)
+  - **스크롤 초기화**: 새 문서 로드 시 `scrollTop=0` + `innerHTML=''`로 이전 문서 잔류 방지
+  - **로딩 엘리먼트 정리**: `display:none` → `remove()`로 DOM에서 완전 제거
+  - **인쇄 기능 개선**: 인쇄 창에 뷰어 스타일시트 포함, `position:static` 오버라이드
+- **`vercel.json`**: CSP `frame-ancestors`를 `none`으로 복원 (iframe 불필요), `frame-src` 제거, `$schema` 제거 (VS Code 경고 해결)
+- **`.vercelignore`**: `*.html` 무시 + `!` negation 패턴 → `content/html/` 디렉토리 단위 제외로 변경 (Vercel이 negation+Unicode glob을 제대로 처리하지 못하는 문제 해결)
+- **`sw.js`**: `CACHE_VERSION` → `v112-20260901-html-viewer-improve`
+
+### 검증
+
+- `npm test` 88/88 통과
+- Vercel 배포 완료
+- 참조 링크 클릭 시 HTML 문서 정상 표시 확인
+
+### 핵심 개선점
+
+- **CSP 독립성**: iframe을 사용하지 않으므로 `frame-ancestors`/`X-Frame-Options` 설정에 영향받지 않음
+- **검색 정확도**: 텍스트 노드 내 모든 매치를 발견하여 누락 없이 하이라이트
+- **UX 개선**: 검색 결과 간 이동 버튼 + 키보드 단축키, 진행 표시 (`1/N`)
+
+---
+
 ## 30. PDF 뷰어 → HTML 뷰어 전환 (2026-09-01)
 
 > **목표**: PDF.js 기반 참조자료 뷰어의 페이지/라인 참조 오류를 근본 해결하기 위해, `html_output` 폴더의 HTML 변환본을 iframe으로 표시하고 DOM 텍스트 노드 직접 검색으로 정확한 하이라이트 제공
