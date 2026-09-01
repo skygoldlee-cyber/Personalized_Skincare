@@ -16,14 +16,14 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
     // 출처 파일 경로를 하이퍼링크로 변환
     // 패턴1: "출처: `../참조자료/...md`" (기본모드)
     // 패턴2: "출처: `1과목_참조자료/...md`" (이야기모드 — ../ 없음)
-    // → 사이트 루트 기준 절대경로로 변환
+    // → 앱 내 MD 뷰어(data-ref-md)로 열기
     html = html.replace(
         /출처:\s*`?(\.{1,2}\/[^\s`<]+\.md|[^\s`<.]+_참조자료\/[^\s`<]+\.md)`?/g,
         (match, path) => {
-            const absPath = path.replace(/^\.\.\/참조자료\//, './content/참조자료/')
-                                .replace(/^(\d+)과목_참조자료\//, './content/참조자료/과목$1/')
-                                .replace(/^\.\//, './');
-            return `출처: <a href="${escapeHTML(absPath)}" target="_blank" class="source-link"><i class="fa-solid fa-file-lines"></i> ${escapeHTML(path)}</a>`;
+            const absPath = path.replace(/^\.\.\/참조자료\//, 'content/참조자료/')
+                                .replace(/^(\d+)과목_참조자료\//, 'content/참조자료/과목$1/');
+            const displayName = path.split('/').pop().replace(/\.md$/, '');
+            return `출처: <a href="#" data-ref-md="${escapeHTML(absPath)}" class="source-link"><i class="fa-solid fa-file-lines"></i> ${escapeHTML(displayName)}</a>`;
         }
     );
 
@@ -76,14 +76,15 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
                 const path = `content/참조자료/${refDir}/${f.file}`;
                 return `<a class="ref-link-item" data-ref-md="${escapeHTML(path)}" style="display:inline-block;margin-right:0.8em;font-size:0.85em;"><i class="fa-solid ${icon}"></i> ${escapeHTML(f.name)}</a>`;
             }
-            // PDF 타입 → HTML 변환본 경로로 변환
-            const base = f.file.replace(/\.pdf$/, '');
-            const path = `content/참조자료/html_output/${base}/${base}.html`;
+            // PDF 타입 → resolveRefPath로 HTML 경로 변환
+            const path = resolveRefPath(f.file);
             return `<a href="#" data-ref-html="${escapeHTML(path)}" class="ref-link-item" style="display:inline-block;margin-right:0.8em;font-size:0.85em;"><i class="fa-solid ${icon}"></i> ${escapeHTML(f.name)}</a>`;
         }).join('');
         const refBlock = `<div class="reader-ref-inline" style="margin:0.4em 0;padding:0.4em 0.6em;border:1px solid var(--border-color,#30363d);border-radius:6px;font-size:0.82em;"><span style="opacity:0.7;">📚 과목별 참조자료:</span> ${refLinks}</div>`;
-        // 첫 번째 blockquote 종료 후 참조자료 블록 삽입
-        html = html.replace(/(<\/blockquote>)/, `$1${refBlock}`);
+        // 첫 번째 blockquote 종료 후 참조자료 블록 삽입 (단, 이미 reader-ref-inline이 있는 경우 중복 방지)
+        if (!html.includes('reader-ref-inline')) {
+            html = html.replace(/(<\/blockquote>)/, `$1${refBlock}`);
+        }
     }
 
     // 마인드맵 노드 상세 매핑: (LNN) → HTML 뷰어에서 키워드 검색
@@ -118,11 +119,13 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
         html = html.replace(/\(L(\d+)\|(.+?\.pdf)\)/g, (match, lineNum, pdfFile) => {
             const resolved = resolveRefPath(pdfFile);
             const usePath = resolved || refPath;
-            return `(<a href="#" data-ref-html="${escapeHTML(usePath)}" data-ref-search="" class="source-link">L${lineNum}</a>)`;
+            const keyword = `제${lineNum}조`;
+            return `(<a href="#" data-ref-html="${escapeHTML(usePath)}" data-ref-search="${escapeHTML(keyword)}" class="source-link">L${lineNum}</a>)`;
         });
         // td 외부에 남은 (LNN) 패턴도 처리 (fallback)
         html = html.replace(/\(L(\d+)\)/g, (match, lineNum) => {
-            return `(<a href="#" data-ref-html="${escapeHTML(refPath)}" data-ref-search="" class="source-link">L${lineNum}</a>)`;
+            const keyword = `제${lineNum}조`;
+            return `(<a href="#" data-ref-html="${escapeHTML(refPath)}" data-ref-search="${escapeHTML(keyword)}" class="source-link">L${lineNum}</a>)`;
         });
     }
 

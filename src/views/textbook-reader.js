@@ -7,7 +7,7 @@ import { renderStudyAids, bindStudyAidToggles, renderExamFilterToggle, applyExam
 import { openHtmlViewer } from '../html-viewer.js';
 import {
     SUBJECT_DIR_MAP, REFERENCE_FILES, REFERENCE_COMMON, REFERENCE_INGREDIENTS,
-    REFERENCE_LAW, mapSourceToRef
+    REFERENCE_LAW, mapSourceToRef, resolveRefPath
 } from '../pdf-registry.js';
 // [모바일 PWA 견고성] 오디오 매니페스트는 window 전역(가드)에서 읽는다(정적 import 하드 의존 지양).
 import { DataLoader } from '../data-loader.js';
@@ -869,7 +869,7 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStor
     }
     const chapterRefPath = mapSourceToRef(chapterSourceText);
     const subjRefFiles = REFERENCE_FILES[subjId] || [];
-    const subjDirName = REFERENCE_DIR_MAP[subjId] || '';
+    const subjDirName = SUBJECT_DIR_MAP[subjId] || '';
 
     chapter.sections.forEach((section, idx) => {
         const bookmarkKey = `${subjId}_${chapterIdx}_${idx}`;
@@ -1231,11 +1231,9 @@ function closeTableModal() {
 }
 
 // --- 참조자료 링크 기능 ---
-// 과목 키 → 참조자료 폴더명 매핑 (pdf-registry.js에서 import)
-const REFERENCE_DIR_MAP = SUBJECT_DIR_MAP;
 
 function buildReferenceLinks(subjId) {
-    const dirName = REFERENCE_DIR_MAP[subjId];
+    const dirName = SUBJECT_DIR_MAP[subjId];
     if (!dirName) return '';
     const subjectFiles = REFERENCE_FILES[subjId] || [];
     
@@ -1250,8 +1248,7 @@ function buildReferenceLinks(subjId) {
                 const path = `content/참조자료/${dirName}/${f.file}`;
                 links += `<a class="ref-link-item" data-ref-md="${esc(path)}"><i class="fa-solid ${icon}"></i> ${esc(f.name)}</a>`;
             } else {
-                const base = f.file.replace(/\.pdf$/, '');
-                const path = `content/참조자료/html_output/${base}/${base}.html`;
+                const path = resolveRefPath(f.file);
                 links += `<a href="#" data-ref-html="${esc(path)}" class="ref-link-item"><i class="fa-solid ${icon}"></i> ${esc(f.name)}</a>`;
             }
         });
@@ -1264,8 +1261,7 @@ function buildReferenceLinks(subjId) {
             const path = `content/참조자료/${f.dir}/${f.file}`;
             links += `<a class="ref-link-item" data-ref-md="${esc(path)}"><i class="fa-solid fa-file-lines"></i> ${esc(f.name)}</a>`;
         } else {
-            const base = f.file.replace(/\.pdf$/, '');
-            const path = `content/참조자료/html_output/${base}/${base}.html`;
+            const path = resolveRefPath(f.file);
             links += `<a href="#" data-ref-html="${esc(path)}" class="ref-link-item"><i class="fa-solid fa-file-lines"></i> ${esc(f.name)}</a>`;
         }
     });
@@ -1273,16 +1269,14 @@ function buildReferenceLinks(subjId) {
     // 법령원문
     links += `<div class="ref-group-label">법령원문</div>`;
     REFERENCE_LAW.forEach(f => {
-        const base = f.file.replace(/\.pdf$/, '');
-        const path = `content/참조자료/html_output/${base}/${base}.html`;
+        const path = resolveRefPath(f.file);
         links += `<a href="#" data-ref-html="${esc(path)}" class="ref-link-item"><i class="fa-solid fa-file-lines"></i> ${esc(f.name)}</a>`;
     });
     
     // 공통 참조자료
     links += `<div class="ref-group-label">공통 참조자료</div>`;
     REFERENCE_COMMON.forEach(f => {
-        const base = f.file.replace(/\.pdf$/, '');
-        const path = `content/참조자료/html_output/${base}/${base}.html`;
+        const path = resolveRefPath(f.file);
         links += `<a href="#" data-ref-html="${esc(path)}" class="ref-link-item"><i class="fa-solid fa-file-lines"></i> ${esc(f.name)}</a>`;
     });
     
