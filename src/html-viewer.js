@@ -33,7 +33,7 @@ function _injectStyles() {
   color:var(--color-text,#e6edf3);font-size:.85rem;}
 #html-ref-overlay .hr-ov-search .hr-search-count{font-size:.78rem;color:var(--color-text-muted,#8b949e);
   min-width:60px;}
-#html-ref-overlay .hr-ov-scroll{flex:1;overflow:auto;position:relative;background:#fff;}
+#html-ref-overlay .hr-ov-scroll{flex:1;overflow:auto;position:relative;background:#fff;min-height:0;}
 #html-ref-overlay .hr-ov-content{padding:24px;color:#1a1a1a;font-family:'Malgun Gothic','Noto Sans KR',sans-serif;line-height:1.6;}
 #html-ref-overlay .hr-ov-content h1.doc-title{border-bottom:2px solid #333;padding-bottom:8px;font-size:20px;}
 #html-ref-overlay .hr-ov-content .page{border:1px solid #ddd;margin:18px 0;padding:16px;background:#fff;page-break-after:always;}
