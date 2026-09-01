@@ -20,7 +20,7 @@ function _injectStyles() {
 #html-ref-overlay .hr-ov-bar{display:flex;align-items:center;gap:.6rem;
   padding:.6rem 1rem;background:var(--bg-card,#161b22);
   border-bottom:1px solid var(--border-color,#30363d);position:fixed;top:0;left:0;right:0;z-index:10001;}
-#html-ref-overlay .hr-ov-scroll{position:fixed;top:48px;left:0;right:0;bottom:0;overflow:auto;background:#fff;-webkit-overflow-scrolling:touch;}
+#html-ref-overlay .hr-ov-scroll{position:fixed!important;top:48px!important;left:0!important;right:0!important;bottom:0!important;overflow-y:scroll!important;overflow-x:auto!important;background:#fff!important;-webkit-overflow-scrolling:touch!important;}
 #html-ref-overlay .hr-ov-title{flex:1;font-size:1rem;font-weight:600;
   color:var(--color-text,#e6edf3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 #html-ref-overlay .hr-ov-btn{background:var(--color-primary,#1f6feb);color:#fff;border:none;
@@ -99,7 +99,7 @@ function _ensureOverlay() {
             </div>
             <button class="hr-ov-btn secondary" id="hr-print-btn" aria-label="인쇄"><i class="fa-solid fa-print"></i></button>
         </div>
-        <div class="hr-ov-scroll" id="hr-scroll" role="document" tabindex="0">
+        <div class="hr-ov-scroll" id="hr-scroll" role="document" tabindex="0" style="position:fixed;top:48px;left:0;right:0;bottom:0;overflow-y:scroll;overflow-x:auto;background:#fff;-webkit-overflow-scrolling:touch;">
             <div class="hr-loading" id="hr-loading" role="status" aria-live="polite">
                 <div class="spinner"></div>
                 <div>문서 로딩 중...</div>
