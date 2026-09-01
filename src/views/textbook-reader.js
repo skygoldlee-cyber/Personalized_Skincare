@@ -991,21 +991,27 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStor
     const cmapBody = container.querySelector('#concept-map-body');
     const cmapToggle = container.querySelector('#concept-map-toggle');
     if (cmapBody) {
-        const isLight = document.documentElement.classList.contains('light-theme');
-        renderConceptMap(cmapBody, chapter, {
-            isLightTheme: isLight,
-            isKeySection,
-            refPath: chapterRefPath,
-            onNodeClick: (sectionIdx) => {
-                const target = container.querySelector(`#reader-section-${sectionIdx}`);
-                if (target) {
-                    if (target.classList.contains('collapsed')) {
-                        target.classList.remove('collapsed');
+        try {
+            const isLight = document.documentElement.classList.contains('light-theme');
+            renderConceptMap(cmapBody, chapter, {
+                isLightTheme: isLight,
+                isKeySection,
+                refPath: chapterRefPath,
+                onNodeClick: (sectionIdx) => {
+                    const target = container.querySelector(`#reader-section-${sectionIdx}`);
+                    if (target) {
+                        if (target.classList.contains('collapsed')) {
+                            target.classList.remove('collapsed');
+                        }
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
-            }
-        });
+            });
+        } catch (e) {
+            console.warn('[reader] concept map render failed:', e);
+            cmapBody.style.display = 'none';
+            if (cmapToggle) cmapToggle.style.display = 'none';
+        }
     }
     if (cmapToggle) {
         cmapToggle.addEventListener('click', () => {

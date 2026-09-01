@@ -604,10 +604,18 @@ export function renderConceptMap(container, chapter, opts = {}) {
 
     const render = () => {
         const mobile = detectMobile();
-        const svgHtml = generateConceptMap(chapter, { ...opts, mobile });
+        let svgHtml;
+        try {
+            svgHtml = generateConceptMap(chapter, { ...opts, mobile });
+        } catch (e) {
+            console.warn('[concept-map] generateConceptMap failed:', e);
+            svgHtml = '';
+        }
         if (!svgHtml) {
             container.innerHTML = '';
             container.style.display = 'none';
+            const toggle = container.closest('.concept-map-container')?.querySelector('#concept-map-toggle');
+            if (toggle) toggle.style.display = 'none';
             return;
         }
         container.innerHTML = svgHtml;

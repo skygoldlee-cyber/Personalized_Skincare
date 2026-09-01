@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v144-20260901-conceptmap-studyaids';   // 개념맵 컨테이너 + 학습보조 추가 + CSS.escape 수정
+const CACHE_VERSION = 'v145-20260901-cmap-error-handling';   // 개념맵 에러 시 토글 숨김 + try/catch로 본문 렌더 보호
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
