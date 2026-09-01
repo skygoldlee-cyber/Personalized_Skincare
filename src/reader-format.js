@@ -83,18 +83,38 @@ export function formatSectionContentForReader(rawContent, filePath, pdfPath, ref
 
     // 마인드맵 노드 상세 매핑: (LNN) → PDF.js 뷰어에서 키워드 검색
     // 같은 td 셀 내의 텍스트를 키워드로 추출하여 PDF 검색에 사용
+    // 지원 형식: (L42) 동일 PDF, (L42|file.pdf) 타 PDF, (L?) 미발견
     if (pdfPath) {
-        // HTML에서 <td>...</td> 내부의 (LNN) 패턴을 처리
+        // (L?) 패턴 → 링크 없이 일반 텍스트로 렌더
+        html = html.replace(/<td>([^<]*?)\(L\?\)([^<]*?)<\/td>/g,
+            (match, before, after) => `<td>${before}(L?)${after}</td>`
+        );
+        // (LNN|file.pdf) 패턴 → 타 PDF 참조 링크 (파일명에 괄호가 있을 수 있으므로 .+? 사용)
+        html = html.replace(/<td>([^<]*?)\(L(\d+)\|(.+?\.pdf)\)([^<]*?)<\/td>/g,
+            (match, before, lineNum, pdfFile, after) => {
+                const cellText = (before + after).replace(/\(L\d+\|.+?\.pdf\)/g, '').replace(/\(L\?\)/g, '').trim();
+                let keyword = cellText.split(/\s+/)[0] || cellText;
+                if (keyword.length < 2) keyword = cellText;
+                const resolved = resolvePdfPath(pdfFile);
+                const usePath = resolved || pdfPath;
+                return `<td>${before}(<a href="#" data-pdf-path="${escapeHTML(usePath)}" data-pdf-search="${escapeHTML(keyword)}" class="source-link">L${lineNum}</a>)${after}</td>`;
+            }
+        );
+        // (LNN) 패턴 → 동일 PDF 참조 링크
         html = html.replace(/<td>([^<]*?)\(L(\d+)\)([^<]*?)<\/td>/g,
             (match, before, lineNum, after) => {
-                // 셀 내 텍스트에서 키워드 추출 (LNN) 자체는 제외
-                const cellText = (before + after).replace(/\(L\d+\)/g, '').trim();
-                // 의미 있는 키워드 추출 (첫 번째 공백 단어 또는 전체)
+                const cellText = (before + after).replace(/\(L\d+\)/g, '').replace(/\(L\?\)/g, '').trim();
                 let keyword = cellText.split(/\s+/)[0] || cellText;
                 if (keyword.length < 2) keyword = cellText;
                 return `<td>${before}(<a href="#" data-pdf-path="${escapeHTML(pdfPath)}" data-pdf-search="${escapeHTML(keyword)}" class="source-link">L${lineNum}</a>)${after}</td>`;
             }
         );
+        // td 외부에 남은 (LNN|file.pdf) 패턴도 처리 (fallback)
+        html = html.replace(/\(L(\d+)\|(.+?\.pdf)\)/g, (match, lineNum, pdfFile) => {
+            const resolved = resolvePdfPath(pdfFile);
+            const usePath = resolved || pdfPath;
+            return `(<a href="#" data-pdf-path="${escapeHTML(usePath)}" data-pdf-search="" class="source-link">L${lineNum}</a>)`;
+        });
         // td 외부에 남은 (LNN) 패턴도 처리 (fallback)
         html = html.replace(/\(L(\d+)\)/g, (match, lineNum) => {
             return `(<a href="#" data-pdf-path="${escapeHTML(pdfPath)}" data-pdf-search="" class="source-link">L${lineNum}</a>)`;

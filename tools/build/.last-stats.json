@@ -1,20 +1,20 @@
 {
   "subjects": {
     "law": {
-      "cards": 149,
-      "quizzes": 57
+      "cards": 164,
+      "quizzes": 60
     },
     "manufacturing": {
-      "cards": 501,
-      "quizzes": 125
+      "cards": 512,
+      "quizzes": 127
     },
     "safety": {
-      "cards": 169,
-      "quizzes": 49
+      "cards": 185,
+      "quizzes": 51
     },
     "understanding": {
-      "cards": 341,
-      "quizzes": 98
+      "cards": 357,
+      "quizzes": 109
     }
   },
   "exams": {
