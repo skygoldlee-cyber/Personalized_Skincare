@@ -591,6 +591,35 @@
 
 ---
 
+## 30. PDF 뷰어 → HTML 뷰어 전환 (2026-09-01)
+
+> **목표**: PDF.js 기반 참조자료 뷰어의 페이지/라인 참조 오류를 근본 해결하기 위해, `html_output` 폴더의 HTML 변환본을 iframe으로 표시하고 DOM 텍스트 노드 직접 검색으로 정확한 하이라이트 제공
+
+### 수정 내역
+
+- **`src/html-viewer.js`** (신규): iframe 기반 HTML 참조자료 뷰어 오버레이. DOM `TreeWalker`로 텍스트 노드 순회 → `<mark>` 하이라이트 + 스크롤. 검색어 자동 검색, 인쇄 지원
+- **`src/pdf-registry.js`**: `PDF_DIRS`→`REF_DIRS`, `SOURCE_PDF_MAP`→`SOURCE_REF_MAP`, `PDF_FILE_TO_PATH`→`REF_FILE_TO_PATH`, `PDF_REGISTRY`→`REF_REGISTRY`로 개명. `_toHtmlPath()` 함수로 PDF 파일명 → `html_output/{base}/{base}.html` 경로 자동 변환. `resolvePdfPath`→`resolveRefPath`, `mapSourceToPdf`→`mapSourceToRef`로 개명
+- **`src/reader-format.js`**: `data-pdf-path`→`data-ref-html`, `data-pdf-search`→`data-ref-search` 속성명 변경. `pdfPath` 파라미터→`refPath`로 개명. 참조자료 파일 목록의 PDF 타입을 HTML 경로로 변환. 아이콘 `fa-file-pdf`→`fa-file-lines`로 통일
+- **`src/views/textbook-reader.js`**: `openPdf` import→`openHtmlViewer` import. `mapSourceToPdf`→`mapSourceToRef`. `chapterPdfPath`→`chapterRefPath`, `pdfPath`→`refPath` 변수명 변경. `buildReferenceLinks()` 내 PDF 경로→HTML 경로 변환. `bindReferenceLinks()`에서 `data-pdf-path`→`data-ref-html` 바인딩
+- **`src/concept-map.js`**: `pdfPath`→`refPath` 파라미터/변수명 변경. `data-pdf-path`→`data-ref-html` 속성명 변경. `PdfViewer.openPdf`→`HtmlViewer.openHtmlViewer` 호출 변경
+- **`sw.js`**: `pdf-viewer.js`→`html-viewer.js` 캐시 대상 교체. `pdf.min.mjs`/`pdf.worker.min.mjs` 프리캐시 제거. `CACHE_VERSION` → `v103-20260901-html-viewer-docs`
+- **`.gitignore`**: `!content/참조자료/html_output/**/*.html` 예외 추가 (HTML 변환본 Git 추적)
+- **`.vercelignore`**: `!content/참조자료/html_output/**/*.html` 배포 포함. `content/참조자료/**/*.pdf` 배포 제외 (용량 절감 ~27MB)
+- **`docs/dev/ARCHITECTURE.md`**: `html-viewer.js` 모듈 추가, 아키텍처 다이어그램 갱신, 모듈 설명 갱신, content 변경 매트릭스 갱신 (`PDF_DIRS`→`REF_DIRS`), 참조 파일 목록 갱신
+
+### 검증
+
+- `npm test` 88/88 통과
+- Vercel 배포 완료
+
+### 핵심 개선점
+
+- **정확한 검색**: PDF.js의 근사치 하이라이트(`topRatio = 0.1 + i * 0.05`) 대신 DOM 텍스트 노드 직접 순회 → 정확한 텍스트 위치에 `<mark>` 배치
+- **배포 용량 절감**: PDF 27MB 제외, HTML 35MB 포함 (순증 8MB)
+- **PDF.js 의존성 제거**: `pdf.min.mjs`/`pdf.worker.min.mjs` 불필요
+
+---
+
 ## 29. PDF 제N조 검색어 자동 추가 및 레지스트리 중앙화 (2026-09-01)
 
 > **목표**: 출처 라인의 "제N조"를 PDF 링크 검색어로 자동 추출 (방안 C), PDF/참조자료 설정을 단일 모듈로 중앙화하여 과목 변경 시 수정 범위 최소화

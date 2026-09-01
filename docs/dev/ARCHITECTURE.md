@@ -83,10 +83,10 @@
 │ │  │(JSDoc   │ │  .js         │  (뷰 전환 유틸)           │ │
 │ │  │ 타입)   │ │ (리더 포맷)  │                          │ │
 │ │  └─────────┘ └──────────────┘                          │ │
-│ │  ┌──────────────┐                                      │ │
-│ │  │pdf-registry  │  (PDF/참조자료 중앙 설정)              │ │
-│ │  │  .js         │                                      │ │
-│ │  └──────────────┘                                      │ │
+│ │  ┌──────────────┐ ┌──────────────┐                     │ │
+│ │  │pdf-registry  │ │html-viewer   │  (HTML 참조자료 뷰어)  │ │
+│ │  │  .js         │ │  .js         │  (iframe+검색)        │ │
+│ │  └──────────────┘ └──────────────┘                     │ │
 │ │  ┌──────────────────────────────────────────────────┐  │ │
 │ │  │  views/ (뷰 컨트롤러 모듈)                          │  │ │
 │ │  │  dashboard · flashcard · quiz · trainer            │  │ │
@@ -184,8 +184,9 @@
 | [`src/state.js`](../../src/state.js) | 전역 상태 객체(`state`) 정의 + localStorage 영속성(`loadProgress`/`saveProgress`). 기본 과목은 `null`이며 `initApp()`에서 registry 첫 과목으로 설정 |
 | [`src/utils.js`](../../src/utils.js) | 의존성 없는 범용 헬퍼 (한글 초성 추출 `getChosung()` 등) |
 | [`src/sanitize.js`](../../src/sanitize.js) | HTML/XSS 방어 및 텍스트 정제 유틸리티 |
-| [`src/pdf-registry.js`](../../src/pdf-registry.js) | PDF/참조자료 중앙 설정 모듈. 과목별 참조자료 매핑, 출처→PDF 파일명 매핑, 파일 경로 해석 |
-| [`src/reader-format.js`](../../src/reader-format.js) | 교재 리더 본문 포맷터. `parseMarkdown()` + PDF 링크 변환 + 참조자료 인라인 렌더링 |
+| [`src/pdf-registry.js`](../../src/pdf-registry.js) | 참조자료 중앙 설정 모듈. 과목별 참조자료 매핑, 출처→HTML 파일명 매핑, HTML 경로 해석 (`REF_DIRS`, `resolveRefPath`, `mapSourceToRef`) |
+| [`src/html-viewer.js`](../../src/html-viewer.js) | 앱 내 HTML 참조자료 뷰어. iframe 기반 오버레이, DOM 텍스트 노드 순회 검색 + `<mark>` 하이라이트. PDF.js 기반 `pdf-viewer.js`를 대체 |
+| [`src/reader-format.js`](../../src/reader-format.js) | 교재 리더 본문 포맷터. `parseMarkdown()` + HTML 참조 링크 변환 (`data-ref-html`, `data-ref-search`) + 참조자료 인라인 렌더링 |
 | [`src/exam-viewer.js`](../../src/exam-viewer.js) | 문제집(MD) 런타임 뷰어. `content/문제은행/*.md` fetch → 자체 MD→HTML 변환 → 인앱 전체화면 오버레이 렌더링. TOC 생성·인쇄·sessionStorage 캐시(24h)·`file://` 번들 폴리백(`data/exams_md/*.js`) 지원. **시험 제목은 registry에서 동적 조회** (하드코딩 없음) |
 
 | 파일 | 내용 | 생성 주체 |
@@ -811,13 +812,13 @@ content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.j
 | | `content/utils/batch_convert.py` | `BATCH_TARGETS["교재"]` 경로 갱신 |
 | **문제은행 MD 변경** | `content/manifest.json` | `exams` 섹션의 파일 경로 갱신 |
 | | `content/utils/batch_convert.py` | `BATCH_TARGETS["문제은행"]` 경로 갱신 |
-| **참조자료 MD/PDF 변경** | `src/pdf-registry.js` | 참조자료 파일 목록·경로 매핑 (중앙 설정 모듈) |
+| **참조자료 MD/HTML 변경** | `src/pdf-registry.js` | 참조자료 파일 목록·경로 매핑 (중앙 설정 모듈, HTML 변환본 경로 자동 생성) |
 | | `tools/build/plugins/ingredients.plugin.js` | `INGREDIENTS_DIR` 경로 (원료 하위 폴더 변경 시) |
 | **학습안내서 MD 변경** | (파일명 동일 시 수정 불필요) | `manual-viewer.js`, `build_doc_bundles.js`, `sw.js`가 `content/학습안내서.md` 경로 참조 |
 | | `content/utils/batch_convert.py` | 파일명 변경 시 `BATCH_TARGETS["학습안내서"]` 갱신 |
 | **보고서 MD 변경** (`content/report/`) | `content/utils/batch_convert.py` | `BATCH_TARGETS["report"]` 경로 갱신 |
 | **새 과목 추가** | `content/manifest.json` | `subjects[]`에 새 과목 항목 추가 (`key`, `name`, `dir`, `chapters`) |
-| | `src/pdf-registry.js` | `SUBJECT_DIR_MAP`, `PDF_DIRS`, `REFERENCE_FILES`에 새 과목 항목 추가 |
+| | `src/pdf-registry.js` | `SUBJECT_DIR_MAP`, `REF_DIRS`, `REFERENCE_FILES`에 새 과목 항목 추가 |
 | | `sw.js` | `MD_ASSETS`에 새 과목 MD 경로 추가 |
 | | `content/utils/batch_convert.py` | `BATCH_TARGETS["교재"]`에 새 파일 추가 |
 | | `content/audiobook/` | 오디오북 파이프라인 스크립트에 새 과목 추가 (필요 시) |
@@ -885,7 +886,7 @@ cmd /c vercel --prod 2>&1
 | `content/manifest.json` | SSOT — 모든 빌드의 원천 | `subjects[].dir`, `chapters[].file` |
 | `sw.js` | `MD_ASSETS` 하드코딩 | 프리캐시 대상 MD 파일 경로 |
 | `src/manual-viewer.js` | `MD_SOURCES` 객체 | 학습안내서, 사용자매뉴얼 경로 |
-| `src/pdf-registry.js` | `SUBJECT_DIR_MAP`, `PDF_DIRS`, `REFERENCE_FILES` | PDF/참조자료 중앙 설정 (과목 변경 시 유일 수정 파일) |
+| `src/pdf-registry.js` | `SUBJECT_DIR_MAP`, `REF_DIRS`, `REFERENCE_FILES` | 참조자료 중앙 설정 (HTML 변환본 경로 자동 생성, 과목 변경 시 유일 수정 파일) |
 | `src/data-loader.js` | `manifest.subjects[].dir` 동적 참조 | 런타임 MD 로드 |
 | `src/textbook-parser.js` | `manifest.subjects[].dir` 동적 참조 | 런타임 MD 파싱 |
 | `tools/build/manifest-loader.js` | `manifest.json` 검증 | 빌드 시 파일 존재 확인 |
