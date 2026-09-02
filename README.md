@@ -257,7 +257,41 @@ python run_pipeline.py
 
 ---
 
-## 📦 Git 관리 참고
+## � 배포 파이프라인 (deploy.ps1)
+
+작업 완료 후 `tools/deploy.ps1` 한 번 실행하면 빌드 → 커밋/푸시 → Vercel 배포가 자동으로 처리됩니다.
+
+### 사용법
+
+```powershell
+# 기본: 빌드 → 커밋/푸시 → Vercel 배포
+.\tools\deploy.ps1 -Message "커밋 메시지"
+
+# SW CACHE_VERSION major bump 포함 (콘텐츠/구조 변경 시)
+.\tools\deploy.ps1 -Message "커밋 메시지" -Bump
+
+# 배포만 건너뛰고 커밋/푸시까지만
+.\tools\deploy.ps1 -Message "커밋 메시지" -Bump -SkipDeploy
+
+# npm으로 실행
+npm run deploy -- -Message "커밋 메시지"
+npm run deploy:bump -- -Message "커밋 메시지"
+```
+
+### 파이프라인 단계
+
+| 단계 | 설명 | 옵션 |
+|------|------|------|
+| 1. SW bump | `CACHE_VERSION` major 번호 증가 + 주석 갱신 | `-Bump` 시에만 |
+| 2. Build | `npm run build:data` (빌드 + 파서 등가성 검사) | 항상 |
+| 3. Git | `git add -A && git commit && git push` | `-SkipPush`로 생략 가능 |
+| 4. Deploy | `cmd /c vercel --prod` | `-SkipDeploy`로 생략 가능 |
+
+각 단계 실패 시 즉시 중단하고 에러를 출력합니다. `-Bump`를 생략하면 `stamp-sw-version.js`가 date + git hash로 버전을 자동 갱신합니다.
+
+---
+
+## �📦 Git 관리 참고
 
 대용량 파일은 Git 추적에서 제외됩니다 ([`.gitignore`](.gitignore)):
 
