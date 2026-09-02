@@ -2367,6 +2367,12 @@ body.landscape-mode .glass-card {
     font-variant-numeric: tabular-nums;
 }
 
+.number-drill-values {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+}
+
 .number-drill-item.is-key .number-drill-value {
     color: var(--warning);
 }

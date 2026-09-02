@@ -113,7 +113,7 @@ const EXCLUDE_PATTERNS = [
 export function extractNumberDrills(chapter) {
     const sections = chapter.sections || [];
     const result = [];
-    const globalSeen = new Set();
+    const globalSeenContext = new Set();
 
     sections.forEach(sec => {
         const lines = (sec.content || '').split('\n');
@@ -129,43 +129,42 @@ export function extractNumberDrills(chapter) {
             // 마커 라인 우선
             const isKey = trimmed.includes('🔖기출') || trimmed.includes('📌중요');
 
+            // 라인에서 모든 숫자+단위 추출
+            const numbers = [];
             let match;
             const localRegex = new RegExp(NUMBER_REGEX.source, 'g');
             while ((match = localRegex.exec(trimmed)) !== null) {
-                const number = match[1];
-                const unit = match[2];
-                const key = `${number}${unit}`;
-
-                // 전역 중복 제거 (같은 숫자+단위는 챕터 전체에서 1개만)
-                if (globalSeen.has(key)) continue;
-                globalSeen.add(key);
-
-                // 원본 문장 (섹션 제목 + 마커 제거, 숫자 유지) — 툴팁/표시용
-                let fullContext = trimmed
-                    .replace(/🔖기출/g, '')
-                    .replace(/📌중요/g, '')
-                    .replace(/\*\*/g, '')
-                    .trim();
-                if (sec.title && !fullContext.includes(sec.title)) {
-                    fullContext = `[${sec.title}] ${fullContext}`;
-                }
-
-                // 문장에서 숫자 부분만 빈칸으로 만들어 context 생성
-                let context = fullContext
-                    .replace(new RegExp(match[0].replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), '▓▓');
-
-                // 너무 길면 자름
-                if (context.length > 100) {
-                    const idx = context.indexOf('▓▓');
-                    if (idx > 30) context = '...' + context.substring(Math.max(0, idx - 40));
-                    if (context.length > 100) context = context.substring(0, 100) + '...';
-                }
-                if (fullContext.length > 200) {
-                    fullContext = fullContext.substring(0, 200) + '...';
-                }
-
-                entries.push({ number, unit, context, fullContext, isKey });
+                numbers.push({ number: match[1], unit: match[2] });
             }
+            if (numbers.length === 0) return;
+
+            // 원본 문장 (섹션 제목 + 마커 제거, 숫자 유지)
+            let fullContext = trimmed
+                .replace(/🔖기출/g, '')
+                .replace(/📌중요/g, '')
+                .replace(/\*\*/g, '')
+                .trim();
+            if (sec.title && !fullContext.includes(sec.title)) {
+                fullContext = `[${sec.title}] ${fullContext}`;
+            }
+            if (fullContext.length > 200) {
+                fullContext = fullContext.substring(0, 200) + '...';
+            }
+
+            // 같은 설명(fullContext)이 이미 있으면 숫자만 추가
+            if (globalSeenContext.has(fullContext)) {
+                const existing = entries.find(e => e.fullContext === fullContext);
+                if (existing) {
+                    numbers.forEach(n => {
+                        const dup = existing.numbers.some(en => en.number === n.number && en.unit === n.unit);
+                        if (!dup) existing.numbers.push(n);
+                    });
+                }
+                return;
+            }
+            globalSeenContext.add(fullContext);
+
+            entries.push({ numbers, fullContext, isKey });
         });
 
         if (entries.length > 0) {
@@ -200,11 +199,12 @@ export function renderNumberDrillCard(chapter) {
     const drills = extractNumberDrills(chapter);
     if (drills.length === 0) return '';
 
-    // 모든 항목을 평탄화 + 카테고리 분류
+    // 모든 항목을 평탄화 + 카테고리 분류 (첫 번째 숫자의 단위 기준)
     const allEntries = [];
     drills.forEach(d => {
         d.entries.forEach(e => {
-            allEntries.push({ ...e, sectionTitle: d.sectionTitle, category: categorizeEntry(e.unit) });
+            const category = categorizeEntry(e.numbers[0].unit);
+            allEntries.push({ ...e, sectionTitle: d.sectionTitle, category });
         });
     });
 
@@ -225,6 +225,19 @@ export function renderNumberDrillCard(chapter) {
             <div class="study-aid-body expanded" id="number-drill-body">
     `;
 
+    // 항목 렌더링 헬퍼: 여러 숫자를 하나의 카드에 표시
+    const renderItem = (e, isKey) => {
+        let h = `<div class="number-drill-item${isKey ? ' is-key' : ''}" title="${esc(e.fullContext)}">`;
+        h += `<div class="number-drill-values">`;
+        e.numbers.forEach(n => {
+            h += `<span class="number-drill-value">${esc(n.number)}<small>${esc(n.unit)}</small></span>`;
+        });
+        h += `</div>`;
+        h += `<span class="number-drill-context">${esc(e.fullContext)}</span>`;
+        h += `</div>`;
+        return h;
+    };
+
     // 1) 기출/중요 항목 — 카테고리별 분류, 항상 펼침
     if (keyEntries.length > 0) {
         html += `<div class="number-drill-section number-drill-key-section">`;
@@ -242,12 +255,7 @@ export function renderNumberDrillCard(chapter) {
             html += `<div class="number-drill-subsection">`;
             html += `<div class="number-drill-subsection-title">${cat.label} <small>(${items.length})</small></div>`;
             html += `<div class="number-drill-grid">`;
-            items.forEach(e => {
-                html += `<div class="number-drill-item is-key" title="${esc(e.fullContext || e.context)}">`;
-                html += `<span class="number-drill-value">${esc(e.number)}<small>${esc(e.unit)}</small></span>`;
-                html += `<span class="number-drill-context">${esc(e.fullContext || e.context)}</span>`;
-                html += `</div>`;
-            });
+            items.forEach(e => { html += renderItem(e, true); });
             html += `</div></div>`;
         });
 
@@ -274,12 +282,7 @@ export function renderNumberDrillCard(chapter) {
             html += `<div class="number-drill-subsection">`;
             html += `<div class="number-drill-subsection-title">${cat.label} <small>(${items.length})</small></div>`;
             html += `<div class="number-drill-grid">`;
-            items.forEach(e => {
-                html += `<div class="number-drill-item" title="${esc(e.fullContext || e.context)}">`;
-                html += `<span class="number-drill-value">${esc(e.number)}<small>${esc(e.unit)}</small></span>`;
-                html += `<span class="number-drill-context">${esc(e.fullContext || e.context)}</span>`;
-                html += `</div>`;
-            });
+            items.forEach(e => { html += renderItem(e, false); });
             html += `</div></div>`;
         });
 
