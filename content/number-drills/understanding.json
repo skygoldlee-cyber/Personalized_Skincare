@@ -1,45 +1,5 @@
 [
   {
-    "numbers": [{"number": "30", "unit": "일"}],
-    "context": "변경 등록·신고 일반 기한: 소재지·대표자 등 변경 시 30일 이내",
-    "isKey": false
-  },
-  {
-    "numbers": [{"number": "15", "unit": "일"}],
-    "context": "중대 유해사례 신속보고: 15일 이내 (①②③ 공통 최빈출)",
-    "isKey": true
-  },
-  {
-    "numbers": [{"number": "1", "unit": "년"}],
-    "context": "제품 사용기한 만료 후 자료 보존: 1년간",
-    "isKey": false
-  },
-  {
-    "numbers": [{"number": "12", "unit": "개월"}],
-    "context": "업무정지 합산 최대: 12개월",
-    "isKey": false
-  },
-  {
-    "numbers": [{"number": "3", "unit": "년"}],
-    "context": "조제관리사 결격: 자격취소 후 3년 미경과",
-    "isKey": true
-  },
-  {
-    "numbers": [{"number": "90", "unit": "일"}],
-    "context": "자격시험 시행 공고: 시험 90일 전",
-    "isKey": false
-  },
-  {
-    "numbers": [{"number": "6", "unit": "개월"}],
-    "context": "최초 교육: 자격 취득 후 6개월 이내",
-    "isKey": true
-  },
-  {
-    "numbers": [{"number": "50만", "unit": "원"}],
-    "context": "교육 미이수 과태료: 50만 원",
-    "isKey": false
-  },
-  {
     "numbers": [{"number": "28±3", "unit": "일"}],
     "context": "각화(각질형성) 주기: 28±3일",
     "isKey": true

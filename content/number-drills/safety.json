@@ -1,10 +1,5 @@
 [
   {
-    "numbers": [{"number": "15", "unit": "일"}],
-    "context": "중대 유해사례 신속보고: 15일 이내 식약처장에게 보고 (①②③ 공통 최빈출)",
-    "isKey": true
-  },
-  {
     "numbers": [{"number": "50", "unit": "㎍/g"}, {"number": "20", "unit": "㎍/g"}],
     "context": "납(Pb) 허용한도: 점토 분말제품 50 / 그 밖 20 ㎍/g 이하",
     "isKey": true

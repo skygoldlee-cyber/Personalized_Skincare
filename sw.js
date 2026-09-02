@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v196-20260903-number-drill-remove-pass-criteria';   // 합격 기준 60%/40% 항목 삭제 (농도·함량 카테고리 오분류)
+const CACHE_VERSION = 'v197-20260903-number-drill-cross-subject-dedup';   // 과목 간 중복 항목 제거 — 각 과목에 고유 항목만 유지
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
