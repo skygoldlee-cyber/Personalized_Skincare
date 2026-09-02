@@ -1397,6 +1397,17 @@ function _hidePreview() {
 }
 
 function bindReferenceLinks() {
+    // 기출문제 링크 → 앱 내 HTML 문제집 뷰어(ExamViewer)로 열기
+    document.querySelectorAll('[data-exam-md]').forEach(a => {
+        a.addEventListener('click', (e) => {
+            e.preventDefault();
+            const mdPath = a.dataset.examMd;
+            if (mdPath && window.ExamViewer && window.ExamViewer.openExam) {
+                window.ExamViewer.openExam(mdPath);
+            }
+        });
+    });
+
     document.querySelectorAll('[data-ref-md]').forEach(a => {
         a.addEventListener('click', (e) => {
             e.preventDefault();

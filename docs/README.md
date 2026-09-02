@@ -36,8 +36,8 @@ docs/
 | [PROJECT_MINDMAP.md](dev/PROJECT_MINDMAP.md) | 프로젝트 전체 구조 시각화 | Mermaid 마인드맵 — 설계 철학, 기능, 기술 스택, 데이터 파이프라인 |
 | [DEPLOY.md](dev/DEPLOY.md) | Git Push & Vercel 배포 절차 | 빌드 → 커밋/푸시 → 배포 파이프라인, 명령어별 실행 범위 |
 | [TEXTBOOK_AUTHORING_GUIDE.md](dev/TEXTBOOK_AUTHORING_GUIDE.md) | 교재 Markdown 작성 지침 | 디렉토리 구조, manifest.json, 카드/퀴즈 추출 규칙, 문제은행 형식, 빌드 검증 |
-| [CHANGES.md](dev/CHANGES.md) | 코드 변경 이력 (Changelog) | #41 이야기형 교재 5가지 서사 개선+외부 리뷰(🎭 전환 블록, 🎬 통합 에필로그, 따옴표 통일), #27 매뉴얼 재정리, #26 교재 5대 학습 보조 개선 |
-| [IMPROVEMENTS_REPORT.md](dev/IMPROVEMENTS_REPORT.md) | 보완 및 개선점 보고서 | 11개 섹션 개선 완료 (모듈 분할, ESM, 테스트, CI/CD, UI/UX, 콘텐츠 학습 보조, 매뉴얼 재정리, 이야기형 교재 서사 개선+외부 리뷰 반영 등) |
+| [CHANGES.md](dev/CHANGES.md) | 코드 변경 이력 (Changelog) | #42 기출문제 링크 클릭 시 문제집 HTML 뷰어 연동, #41 이야기형 교재 5가지 서사 개선+외부 리뷰, #27 매뉴얼 재정리, #26 교재 5대 학습 보조 개선 |
+| [IMPROVEMENTS_REPORT.md](dev/IMPROVEMENTS_REPORT.md) | 보완 및 개선점 보고서 | 12개 섹션 개선 완료 (모듈 분할, ESM, 테스트, CI/CD, UI/UX, 콘텐츠 학습 보조, 매뉴얼 재정리, 이야기형 교재 서사 개선, 기출문제 링크 연동 등) |
 
 ---
 

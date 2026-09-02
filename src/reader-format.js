@@ -14,6 +14,32 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
         allowMermaid: true
     });
 
+    // 기출문제 링크 → 앱 내 HTML 문제집 뷰어(ExamViewer)로 열기
+    // 마크다운 파서가 [text](기출문제/과목N_...)를 <a href="기출문제/과목N_...">text</a>로 변환한 후 처리
+    // 실제 파일은 content/문제은행/과목N_문제은행_교재인용.md 에 위치
+    html = html.replace(
+        /<a href="기출문제\/과목(\d+)[^"]*">([^<]+)<\/a>/g,
+        (match, subjNum, linkText) => {
+            const mdPath = `content/문제은행/과목${subjNum}_문제은행_교재인용.md`;
+            return `<a href="#" data-exam-md="${escapeHTML(mdPath)}" class="exam-link-btn" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.5rem 1rem;background:var(--color-primary,#1f6feb);color:#fff;border-radius:8px;text-decoration:none;font-weight:600;font-size:0.9rem;"><i class="fa-solid fa-pen-to-square"></i> ${escapeHTML(linkText)}</a>`;
+        }
+    );
+
+    // 참조자료 PDF 링크 → 앱 내 HTML 뷰어로 열기
+    // 마크다운 파서가 [file.pdf](../참조자료/...)를 <a href="../참조자료/...">file.pdf</a>로 변환한 후 처리
+    html = html.replace(
+        /<a href="((?:\.\.\/)?(?:참조자료|공통참조자료|\d과목_참조자료)\/[^"]+\.pdf)">([^<]+)<\/a>/g,
+        (match, rawPath, linkText) => {
+            const pdfFile = rawPath.split('/').pop();
+            const resolved = resolveRefPath(pdfFile);
+            if (resolved) {
+                const displayName = linkText.replace(/\.pdf$/, '');
+                return `<a href="#" data-ref-html="${escapeHTML(resolved)}" class="source-link"><i class="fa-solid fa-file-lines"></i> ${escapeHTML(displayName)}</a>`;
+            }
+            return match;
+        }
+    );
+
     // 출처 파일 경로를 하이퍼링크로 변환
     // 패턴1: "출처: `../참조자료/...md`" (기본모드)
     // 패턴2: "출처: `1과목_참조자료/...md`" (이야기모드 — ../ 없음)

@@ -1061,3 +1061,19 @@
 - Git commit `a3bc396` — 4과목 6 files changed, 478 insertions, 261 deletions
 - 외부 리뷰 후 추가 수정: Git commit `2ee7167` — 문서 갱신 포함 3 files changed
 - Vercel 배포 완료
+
+---
+
+## #42 — 교재 본문 기출문제 링크 클릭 시 문제집 HTML 뷰어로 이동 (2026-09-02)
+
+### 변경 내용
+
+1. **마크다운 링크 파싱 추가**: `markdown-parser.js`에 `[text](url)` → `<a href="url">text</a>` 변환 로직 추가 — 기존에는 마크다운 링크가 텍스트로만 렌더됨
+2. **기출문제 링크 → ExamViewer 연동**: `reader-format.js`에서 기출문제 링크(`기출문제/과목N_...`)를 `data-exam-md` 속성으로 변환, 실제 파일 경로(`content/문제은행/과목N_문제은행_교재인용.md`) 매핑
+3. **참조자료 PDF 링크 처리**: 표 내 `[file.pdf](../참조자료/...)` 링크도 `data-ref-html`로 변환하여 앱 내 HTML 뷰어에서 열리도록 처리
+4. **클릭 이벤트 바인딩**: `textbook-reader.js`의 `bindReferenceLinks()`에 `data-exam-md` 클릭 핸들러 추가 — `ExamViewer.openExam(mdPath)` 호출로 앱 내 전체화면 오버레이에 문제집 HTML 렌더링
+
+### 검증
+
+- `npm run build:data` 성공 (카드 1,162개, 퀴즈 330개, 파서 등가성 검사 통과)
+- Vercel 배포 완료

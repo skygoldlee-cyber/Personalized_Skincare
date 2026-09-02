@@ -72,6 +72,10 @@ export function parseMarkdown(mdText, options = {}) {
     html = html.replace(/FENCE_TOKEN(\w*)/g, '```$1');
     html = html.replace(/STAR_TOKEN/g, '*').replace(/BTICK_TOKEN/g, '`');
 
+    // 5-1. 마크다운 링크 [text](url) → <a href="url">text</a>
+    // (escapeHTML 통과 후이므로 &amp; 등은 이미 인코딩됨 — href에 그대로 사용)
+    html = html.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, '<a href="$2">$1</a>');
+
     // 6. 줄 단위 블록 파싱
     const lines = html.split(/\r?\n/);
     const output = [];
