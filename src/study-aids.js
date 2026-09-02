@@ -125,12 +125,15 @@ export function extractNumberDrills(chapter) {
                 if (globalSeen.has(key)) continue;
                 globalSeen.add(key);
 
-                // 원본 문장 (마커만 제거, 숫자 유지) — 툴팁용
+                // 원본 문장 (섹션 제목 + 마커 제거, 숫자 유지) — 툴팁/표시용
                 let fullContext = trimmed
                     .replace(/🔖기출/g, '')
                     .replace(/📌중요/g, '')
                     .replace(/\*\*/g, '')
                     .trim();
+                if (sec.title && !fullContext.includes(sec.title)) {
+                    fullContext = `[${sec.title}] ${fullContext}`;
+                }
 
                 // 문장에서 숫자 부분만 빈칸으로 만들어 context 생성
                 let context = fullContext
@@ -142,8 +145,8 @@ export function extractNumberDrills(chapter) {
                     if (idx > 30) context = '...' + context.substring(Math.max(0, idx - 40));
                     if (context.length > 100) context = context.substring(0, 100) + '...';
                 }
-                if (fullContext.length > 150) {
-                    fullContext = fullContext.substring(0, 150) + '...';
+                if (fullContext.length > 200) {
+                    fullContext = fullContext.substring(0, 200) + '...';
                 }
 
                 entries.push({ number, unit, context, fullContext, isKey });

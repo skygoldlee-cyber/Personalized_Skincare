@@ -2383,8 +2383,8 @@ body.landscape-mode .glass-card {
     word-break: keep-all;
     overflow-wrap: break-word;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
