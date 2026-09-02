@@ -91,7 +91,7 @@ export function renderExamHighlightCard(chapter) {
 
 // --- ③ 숫자·기한 자동 추출 ---
 
-const NUMBER_REGEX = /\b(\d+(?:\.\d+)?)\s*(%|세 이하|세 이상|개월|일|년|배|종|가지|개|시간|g|ml|kg|℃|도|분|초|주|ppm|㎛|회\/hr|개\/hr|개\/㎥|차|위|종류|가지|명|원)(?=\s|$|[,.;:)\]}'"!?])/g;
+const NUMBER_REGEX = /\b(\d+(?:\.\d+)?)\s*(%|세 이하|세 이상|개월|일|년|배|시간|g|ml|kg|℃|도|분|초|주|ppm|㎛|회\/hr|개\/hr|개\/㎥)(?=\s|$|[,.;:)\]}'"!?])/g;
 
 /**
  * 챕터에서 숫자+단위 패턴을 추출하여 암기표 데이터를 생성합니다.
@@ -101,11 +101,11 @@ const NUMBER_REGEX = /\b(\d+(?:\.\d+)?)\s*(%|세 이하|세 이상|개월|일|�
 export function extractNumberDrills(chapter) {
     const sections = chapter.sections || [];
     const result = [];
+    const globalSeen = new Set();
 
     sections.forEach(sec => {
         const lines = (sec.content || '').split('\n');
         const entries = [];
-        const seen = new Set();
 
         lines.forEach(line => {
             const trimmed = line.trim();
@@ -121,9 +121,9 @@ export function extractNumberDrills(chapter) {
                 const unit = match[2];
                 const key = `${number}${unit}`;
 
-                // 중복 제거 (같은 섹션 내)
-                if (seen.has(key)) continue;
-                seen.add(key);
+                // 전역 중복 제거 (같은 숫자+단위는 챕터 전체에서 1개만)
+                if (globalSeen.has(key)) continue;
+                globalSeen.add(key);
 
                 // 문장에서 숫자 부분만 빈칸으로 만들어 context 생성
                 let context = trimmed
