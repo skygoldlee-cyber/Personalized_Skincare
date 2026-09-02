@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v173-20260903-hardcode-remove';   // reader-format/app.js 하드코딩 제거, web-vitals 추가
+const CACHE_VERSION = 'v174-20260903-audio-sync-guide';   // 오디오 호스팅 가이드 통합, 이야기형 MP3 생성 완료
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
