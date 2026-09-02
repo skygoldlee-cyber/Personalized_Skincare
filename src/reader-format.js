@@ -82,9 +82,21 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
         }
     );
 
-    // 페이지 참조 제거: "본문 p.22", "본문 p.26~p.27" 등
+    // 페이지 참조 제거: 다양한 p.NN 패턴 정리
+    // 1. "참고: 본문 p.22~p.27" 등 참고 라인 전체 제거
     html = html.replace(/\*?\*?참고[^:]*:\s*본문\s*p\.\d+[^\n<]*/gi, '');
+    // 2. "본문 p.22", "본문 p.26~p.27" 등 본문 페이지 참조 제거
     html = html.replace(/본문\s*p\.\d+(?:\s*[~-]\s*p?\.\d+)?/gi, '');
+    // 3. 섹션 헤더에서 "p.NN — " 제거: <h2>p.22 — 제목</h2> → <h2>제목</h2>
+    html = html.replace(/(<h[234]>)p\.\d+\s*[—\-–]\s*/gi, '$1');
+    // 4. 괄호 안 페이지 범위 제거: "(p.80~83)", "(p.86~98)", "(p.139~144)" 등
+    html = html.replace(/\(\s*p\.\d+(?:\s*[~-]\s*p?\.\d+)?\s*\)/gi, '');
+    // 5. "법령노트 p.NN" 패턴에서 페이지 번호 제거
+    html = html.replace(/법령노트\s*p\.\d+/gi, '법령노트');
+    // 6. 출처 라인 끝의 "(p.NN~NN)" 제거 (이미 괄호 패턴에서 처리되지만, 남은 경우)
+    html = html.replace(/,?\s*p\.\d+(?:\s*[~-]\s*p?\.\d+)?\s*\)/gi, ')');
+    // 7. 독립적인 "p.NN" 텍스트 제거 (문맥상 페이지 번호만 남은 경우)
+    html = html.replace(/(?<![a-zA-Z])p\.\d+(?:\s*[~-]\s*p?\.\d+)?(?![a-zA])/gi, '');
 
     // 출처/참고 라인에 참조자료 하이퍼링크 추가 (앱 내 HTML 뷰어 사용)
     // 단, 이미 참조 링크가 있는 경우 중복 추가하지 않음
