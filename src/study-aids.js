@@ -91,7 +91,7 @@ export function renderExamHighlightCard(chapter) {
 
 // --- ③ 숫자·기한 자동 추출 ---
 
-const NUMBER_REGEX = /\b(\d+(?:\.\d+)?)\s*(%|ppm|일|개월|년|세 이하)(?=\s|$|[,.;:)]}'"!?])/g;
+const NUMBER_REGEX = /\b(\d+(?:\.\d+)?)\s*(%|ppm|일|세 이하)(?=\s|$|[,.;:)]}'"!?])/g;
 
 const EXCLUDE_PATTERNS = [
     /예상\s*소요\s*시간/,
@@ -184,7 +184,7 @@ export function extractNumberDrills(chapter) {
  * 단위별 카테고리 분류 + 기출/중요 우선 표시.
  */
 const UNIT_CATEGORIES = [
-    { label: '📅 기한·기간', units: ['일', '개월', '년'] },
+    { label: '📅 기한 (일)', units: ['일'] },
     { label: '💧 농도·함량', units: ['%', 'ppm'] },
     { label: '👶 연령 기준', units: ['세 이하'] },
 ];
