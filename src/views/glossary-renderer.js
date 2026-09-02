@@ -81,7 +81,15 @@ export function appendGlossaryTocItem(tocList) {
 
 let _glossaryBackBtn = null;
 let _glossarySavedScroll = null;
+let _glossarySavedContainer = null;
 let _glossarySavedLink = null;
+
+function _getScrollContainer() {
+    return document.querySelector('.textbook-reader-content')
+        || document.querySelector('.main-content')
+        || document.scrollingElement
+        || document.documentElement;
+}
 
 function _ensureBackBtn() {
     if (_glossaryBackBtn) return _glossaryBackBtn;
@@ -90,8 +98,8 @@ function _ensureBackBtn() {
     btn.innerHTML = '<i class="fa-solid fa-arrow-up"></i> 원래 위치로';
     btn.style.display = 'none';
     btn.addEventListener('click', () => {
-        if (_glossarySavedScroll !== null) {
-            window.scrollTo({ top: _glossarySavedScroll, behavior: 'smooth' });
+        if (_glossarySavedContainer && _glossarySavedScroll !== null) {
+            _glossarySavedContainer.scrollTo({ top: _glossarySavedScroll, behavior: 'smooth' });
         } else if (_glossarySavedLink) {
             _glossarySavedLink.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
@@ -106,7 +114,9 @@ export function scrollToGlossary(idxKey, sourceLink) {
     if (!idxKey) return;
     const target = document.getElementById(`glossary-${idxKey}`);
     if (!target) return;
-    _glossarySavedScroll = window.scrollY;
+    const container = _getScrollContainer();
+    _glossarySavedContainer = container;
+    _glossarySavedScroll = container.scrollTop;
     _glossarySavedLink = sourceLink || null;
     target.scrollIntoView({ behavior: 'smooth', block: 'center' });
     target.style.transition = 'background 0.5s ease';
