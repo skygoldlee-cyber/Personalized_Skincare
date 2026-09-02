@@ -931,3 +931,4 @@ cmd /c vercel --prod 2>&1
 - [`CHANGES.md`](CHANGES.md) — 코드 리뷰 및 아키텍처 개편 수정 이력 (Changelog)
 - [`IMPROVEMENTS_REPORT.md`](IMPROVEMENTS_REPORT.md) — 개선점 분석 및 구현 완료 보고서 (13항목 전부 ✅)
 - [`MD_TO_HTML_LOGIC.md`](MD_TO_HTML_LOGIC.md) — MD→HTML 변환·표시 로직 기술 문서
+- [`TESTING.md`](TESTING.md) — 단위 테스트 가이드 (145 tests: 135 unit + 10 DOM)
