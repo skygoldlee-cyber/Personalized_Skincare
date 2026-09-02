@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v182-20260903-number-drill-context-layout';   // 숫자·기한 암기표 문맥 표시 레이아웃 수정 (세로 배치)
+const CACHE_VERSION = 'v183-20260903-number-drill-full-context';   // 숫자·기한 암기표 설명에 숫자 포함 전체 문장 표시
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;

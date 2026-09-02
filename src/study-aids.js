@@ -227,7 +227,7 @@ export function renderNumberDrillCard(chapter) {
             items.forEach(e => {
                 html += `<div class="number-drill-item is-key" title="${esc(e.fullContext || e.context)}">`;
                 html += `<span class="number-drill-value">${esc(e.number)}<small>${esc(e.unit)}</small></span>`;
-                html += `<span class="number-drill-context">${esc(e.context)}</span>`;
+                html += `<span class="number-drill-context">${esc(e.fullContext || e.context)}</span>`;
                 html += `</div>`;
             });
             html += `</div></div>`;
@@ -259,7 +259,7 @@ export function renderNumberDrillCard(chapter) {
             items.forEach(e => {
                 html += `<div class="number-drill-item" title="${esc(e.fullContext || e.context)}">`;
                 html += `<span class="number-drill-value">${esc(e.number)}<small>${esc(e.unit)}</small></span>`;
-                html += `<span class="number-drill-context">${esc(e.context)}</span>`;
+                html += `<span class="number-drill-context">${esc(e.fullContext || e.context)}</span>`;
                 html += `</div>`;
             });
             html += `</div></div>`;
