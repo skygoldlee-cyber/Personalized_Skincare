@@ -740,7 +740,7 @@ function _startWeakExamImpl() {
         const filterNames = {};
         const subjects = (window.DATA_REGISTRY && window.DATA_REGISTRY.subjects) || [];
         subjects.forEach((sub, idx) => {
-            const shortName = sub.name.replace('의 이해', '').replace(' 및 품질관리', '').replace('유통화장품 ', '');
+            const shortName = sub.shortName || sub.name;
             filterNames[sub.key] = `${idx + 1}과목 (${shortName})`;
         });
         const filterName = filterNames[state.reviewFilter] || '선택한 과목';

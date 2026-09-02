@@ -307,7 +307,7 @@ export function renderPassFailDiagnosis() {
     subjects.forEach((sub, idx) => {
         const rate = getLatestRate(sub.key);
         if (rate !== null) {
-            const shortName = sub.name.replace('의 이해', '').replace(' 및 품질관리', '').replace('유통화장품 ', '');
+            const shortName = sub.shortName || sub.name;
             subjectsHTML += `
                 <div class="pred-subject-row ${rate < 60 ? 'danger' : ''}">
                     <span>${idx + 1}과목 (${shortName})</span>
@@ -429,7 +429,7 @@ export function renderRadarChart() {
         if (cos > 0.1) textAnchor = 'start';
         else if (cos < -0.1) textAnchor = 'end';
         
-        const shortName = sub.name.replace('의 이해', '').replace(' 및 품질관리', '').replace('유통화장품 ', '');
+        const shortName = sub.shortName || sub.name;
         svg += `<text class="radar-axis-label" x="${labelX}" y="${labelY}" text-anchor="${textAnchor}">${i+1}과목 (${shortName})</text>`;
     });
     
@@ -459,7 +459,7 @@ export function renderRadarChart() {
         const rate = subjectScores[idx];
         const rates = subjectRates[sub.key] || [];
         const examCount = rates.length;
-        const shortName = sub.name.replace('의 이해', '').replace(' 및 품질관리', '').replace('유통화장품 ', '');
+        const shortName = sub.shortName || sub.name;
         const status = rate < 60 ? '과락 위험' : '안정권';
         const statusColor = rate < 60 ? '#ef4444' : '#10b981';
         bindTooltip(dot,
