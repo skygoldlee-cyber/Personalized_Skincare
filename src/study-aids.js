@@ -154,18 +154,31 @@ export function extractNumberDrills(chapter) {
 
 /**
  * 숫자·기한 암기표 HTML을 생성합니다.
+ * 기출/중요 마커 항목을 최상단에 우선 배치하고, 일반 항목은 접힘 상태로 표시합니다.
  */
 export function renderNumberDrillCard(chapter) {
     const drills = extractNumberDrills(chapter);
     if (drills.length === 0) return '';
 
-    const totalEntries = drills.reduce((acc, d) => acc + d.entries.length, 0);
+    // 기출/중요 항목과 일반 항목 분리
+    const keyEntries = [];
+    const normalEntries = [];
+    drills.forEach(d => {
+        d.entries.forEach(e => {
+            const entry = { ...e, sectionTitle: d.sectionTitle };
+            if (e.isKey) keyEntries.push(entry);
+            else normalEntries.push(entry);
+        });
+    });
+
+    const totalEntries = keyEntries.length + normalEntries.length;
+    const keyCount = keyEntries.length;
 
     let html = `
         <div class="study-aid-card number-drill-card" id="number-drill-card">
             <div class="study-aid-header">
                 <i class="fa-solid fa-hashtag"></i>
-                <span>숫자·기한 암기표 — ${totalEntries}개</span>
+                <span>숫자·기한 암기표 — ${totalEntries}개${keyCount > 0 ? ` (기출 ${keyCount}개 우선)` : ''}</span>
                 <button class="study-aid-toggle" id="number-drill-toggle" title="펼치기/접기">
                     <i class="fa-solid fa-chevron-down"></i>
                 </button>
@@ -173,20 +186,37 @@ export function renderNumberDrillCard(chapter) {
             <div class="study-aid-body expanded" id="number-drill-body">
     `;
 
-    drills.forEach(d => {
-        html += `<div class="number-drill-section">`;
-        html += `<div class="number-drill-section-title">${esc(d.sectionTitle)}</div>`;
+    // 1) 기출/중요 항목 (항상 펼침)
+    if (keyEntries.length > 0) {
+        html += `<div class="number-drill-section number-drill-key-section">`;
+        html += `<div class="number-drill-section-title">📌 기출·중요 숫자 (${keyCount}개)</div>`;
         html += `<div class="number-drill-grid">`;
-        d.entries.forEach(e => {
-            const keyClass = e.isKey ? ' is-key' : '';
-            html += `<div class="number-drill-item${keyClass}">`;
+        keyEntries.forEach(e => {
+            html += `<div class="number-drill-item is-key">`;
             html += `<span class="number-drill-value">${esc(e.number)}<small>${esc(e.unit)}</small></span>`;
             html += `<span class="number-drill-context">${esc(e.context)}</span>`;
             html += `</div>`;
         });
         html += `</div>`;
         html += `</div>`;
-    });
+    }
+
+    // 2) 일반 항목 (기본 접힘)
+    if (normalEntries.length > 0) {
+        html += `<div class="number-drill-section">`;
+        html += `<div class="number-drill-section-title number-drill-normal-toggle" id="number-drill-normal-toggle">`;
+        html += `전체 숫자 (${normalEntries.length}개) <i class="fa-solid fa-chevron-down" style="font-size:0.7rem;margin-left:0.3rem;"></i>`;
+        html += `</div>`;
+        html += `<div class="number-drill-grid number-drill-normal-grid" id="number-drill-normal-grid" style="display:none;">`;
+        normalEntries.forEach(e => {
+            html += `<div class="number-drill-item">`;
+            html += `<span class="number-drill-value">${esc(e.number)}<small>${esc(e.unit)}</small></span>`;
+            html += `<span class="number-drill-context">${esc(e.context)}</span>`;
+            html += `</div>`;
+        });
+        html += `</div>`;
+        html += `</div>`;
+    }
 
     html += `
             </div>
@@ -510,4 +540,19 @@ export function bindStudyAidToggles(container) {
             btn.classList.toggle('collapsed', isCollapsed);
         });
     });
+
+    // 숫자·기한 암기표: 일반 항목 토글
+    const normalToggle = container.querySelector('#number-drill-normal-toggle');
+    if (normalToggle && !normalToggle.dataset.bound) {
+        normalToggle.dataset.bound = 'true';
+        normalToggle.style.cursor = 'pointer';
+        normalToggle.addEventListener('click', () => {
+            const grid = container.querySelector('#number-drill-normal-grid');
+            if (!grid) return;
+            const isHidden = grid.style.display === 'none';
+            grid.style.display = isHidden ? 'grid' : 'none';
+            const icon = normalToggle.querySelector('i');
+            if (icon) icon.style.transform = isHidden ? 'rotate(180deg)' : '';
+        });
+    }
 }

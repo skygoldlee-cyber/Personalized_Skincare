@@ -2289,6 +2289,24 @@ body.landscape-mode .glass-card {
     margin-bottom: 0;
 }
 
+.number-drill-key-section {
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 0.75rem;
+}
+
+.number-drill-normal-toggle {
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+    border-radius: 4px;
+    padding: 0.3rem 0.4rem;
+}
+
+.number-drill-normal-toggle:hover {
+    background: var(--bg-hover);
+}
+
 .number-drill-section-title {
     font-size: 0.8rem;
     font-weight: 700;
