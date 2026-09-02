@@ -100,22 +100,22 @@ test('extractNumberDrills: 숫자+단위 패턴 추출', () => {
     const chapter = {
         sections: [{
             title: '기준',
-            content: '안전기준: 0.5g 이하\n유지기간: 12ppm\n부피: 25ml',
+            content: '안전기준: 0.5% 이하\n유지기간: 12ppm\n변경 기한: 30일',
         }],
     };
     const result = extractNumberDrills(chapter);
     assert.ok(result.length > 0, '최소 1개 섹션');
     const allNums = result.flatMap(r => r.entries.flatMap(e => e.numbers.map(n => n.number + n.unit)));
-    assert.ok(allNums.some(n => n.includes('0.5g')), '0.5g 추출');
+    assert.ok(allNums.some(n => n.includes('0.5%')), '0.5% 추출');
     assert.ok(allNums.some(n => n.includes('12ppm')), '12ppm 추출');
-    assert.ok(allNums.some(n => n.includes('25ml')), '25ml 추출');
+    assert.ok(allNums.some(n => n.includes('30일')), '30일 추출');
 });
 
 test('extractNumberDrills: 중복 제거 (같은 문장)', () => {
     const chapter = {
         sections: [{
             title: '테스트',
-            content: '농도 10g 입니다\n농도 10g 입니다',
+            content: '농도 10% 입니다\n농도 10% 입니다',
         }],
     };
     const result = extractNumberDrills(chapter);
@@ -127,25 +127,25 @@ test('extractNumberDrills: 빈칸(▓▓) 치환 확인', () => {
     const chapter = {
         sections: [{
             title: '테스트',
-            content: '농도는 30g 이하',
+            content: '농도는 30% 이하',
         }],
     };
     const result = extractNumberDrills(chapter);
-    assert.ok(result[0].entries[0].fullContext.includes('30g'), '숫자가 포함된 원본 문장 저장');
+    assert.ok(result[0].entries[0].fullContext.includes('30%'), '숫자가 포함된 원본 문장 저장');
 });
 
 test('extractNumberDrills: isKey 플래그 (🔖기출/📌중요 라인)', () => {
     const chapter = {
         sections: [{
             title: '테스트',
-            content: '🔖기출 제한 농도 5g\n일반 농도 3g',
+            content: '🔖기출 제한 농도 5%\n일반 농도 3%',
         }],
     };
     const result = extractNumberDrills(chapter);
-    const fiveG = result[0].entries.find(e => e.numbers.some(n => n.number === '5'));
-    const threeG = result[0].entries.find(e => e.numbers.some(n => n.number === '3'));
-    assert.equal(fiveG.isKey, true, '기출 라인의 숫자는 isKey=true');
-    assert.equal(threeG.isKey, false, '일반 라인은 isKey=false');
+    const fiveP = result[0].entries.find(e => e.numbers.some(n => n.number === '5'));
+    const threeP = result[0].entries.find(e => e.numbers.some(n => n.number === '3'));
+    assert.equal(fiveP.isKey, true, '기출 라인의 숫자는 isKey=true');
+    assert.equal(threeP.isKey, false, '일반 라인은 isKey=false');
 });
 
 test('extractNumberDrills: 빈 챕터', () => {

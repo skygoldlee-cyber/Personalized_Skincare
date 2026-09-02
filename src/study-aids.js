@@ -91,7 +91,7 @@ export function renderExamHighlightCard(chapter) {
 
 // --- ③ 숫자·기한 자동 추출 ---
 
-const NUMBER_REGEX = /\b(\d+(?:\.\d+)?)\s*(%|세 이하|세 이상|개월|일|년|배|시간|g|ml|kg|℃|도|분|초|주|ppm|㎛|회\/hr|개\/hr|개\/㎥)(?=\s|$|[,.;:)\]}'"!?])/g;
+const NUMBER_REGEX = /\b(\d+(?:\.\d+)?)\s*(%|ppm|일|개월|년|세 이하|원)(?=\s|$|[,.;:)\]}'"!?])/g;
 
 const EXCLUDE_PATTERNS = [
     /예상\s*소요\s*시간/,
@@ -103,6 +103,7 @@ const EXCLUDE_PATTERNS = [
     /페이지\s*수/,
     /글자\s*수/,
     /단어\s*수/,
+    /포인트/,
 ];
 
 /**
@@ -180,12 +181,10 @@ export function extractNumberDrills(chapter) {
  * 단위별 카테고리 분류 + 기출/중요 우선 표시.
  */
 const UNIT_CATEGORIES = [
-    { label: '📅 기한·시간', units: ['일', '개월', '년', '주', '시간', '분', '초'] },
-    { label: '💧 농도·함량', units: ['%', '세 이하', '세 이상', 'ppm'] },
-    { label: '⚖️ 중량·용량', units: ['g', 'ml', 'kg'] },
-    { label: '🌡️ 온도', units: ['℃', '도'] },
-    { label: '📊 비율·배수', units: ['배'] },
-    { label: '📐 규격·기준', units: ['㎛', '회/hr', '개/hr', '개/㎥'] },
+    { label: '📅 기한·기간', units: ['일', '개월', '년'] },
+    { label: '💧 농도·함량', units: ['%', 'ppm'] },
+    { label: '👶 연령 기준', units: ['세 이하'] },
+    { label: '� 벌금·과태료', units: ['원'] },
 ];
 
 function categorizeEntry(unit) {
