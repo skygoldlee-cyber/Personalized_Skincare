@@ -219,7 +219,8 @@ export function renderNumberDrillCard(chapter) {
             html += `<div class="number-drill-subsection-title">${cat.label} <small>(${items.length})</small></div>`;
             html += `<div class="number-drill-grid">`;
             items.forEach(e => {
-                html += `<div class="number-drill-item is-key">`;
+                const fullText = `${e.number}${e.unit} — ${e.context}`;
+                html += `<div class="number-drill-item is-key" title="${esc(fullText)}">`;
                 html += `<span class="number-drill-value">${esc(e.number)}<small>${esc(e.unit)}</small></span>`;
                 html += `<span class="number-drill-context">${esc(e.context)}</span>`;
                 html += `</div>`;
@@ -251,7 +252,8 @@ export function renderNumberDrillCard(chapter) {
             html += `<div class="number-drill-subsection-title">${cat.label} <small>(${items.length})</small></div>`;
             html += `<div class="number-drill-grid">`;
             items.forEach(e => {
-                html += `<div class="number-drill-item">`;
+                const fullText = `${e.number}${e.unit} — ${e.context}`;
+                html += `<div class="number-drill-item" title="${esc(fullText)}">`;
                 html += `<span class="number-drill-value">${esc(e.number)}<small>${esc(e.unit)}</small></span>`;
                 html += `<span class="number-drill-context">${esc(e.context)}</span>`;
                 html += `</div>`;
