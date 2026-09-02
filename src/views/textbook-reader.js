@@ -1031,7 +1031,32 @@ function _renderReaderMermaid(container) {
                 mermaid.initialize({
                     startOnLoad: false,
                     securityLevel: 'loose',
-                    theme: isLight ? 'default' : 'dark'
+                    theme: isLight ? 'default' : 'dark',
+                    themeVariables: isLight ? {
+                        // 라이트 테마: 노드 배경을 밝게, 텍스트를 진하게
+                        primaryColor: '#f0f4ff',
+                        primaryTextColor: '#1a1a2e',
+                        primaryBorderColor: '#4a6fa5',
+                        lineColor: '#4a6fa5',
+                        secondaryColor: '#f5f5f5',
+                        tertiaryColor: '#e8eaf6',
+                        background: '#ffffff',
+                        mainBkg: '#f0f4ff',
+                        nodeTextColor: '#1a1a2e',
+                        fontSize: '14px'
+                    } : {
+                        // 다크 테마: 노드 배경을 진하게, 텍스트를 밝게
+                        primaryColor: '#2d2d44',
+                        primaryTextColor: '#e0e0e0',
+                        primaryBorderColor: '#7b8faf',
+                        lineColor: '#7b8faf',
+                        secondaryColor: '#1e1e2e',
+                        tertiaryColor: '#2a2a3e',
+                        background: '#1a1a2e',
+                        mainBkg: '#2d2d44',
+                        nodeTextColor: '#e0e0e0',
+                        fontSize: '14px'
+                    }
                 });
                 const nodeArr = Array.from(nodes);
                 let rendered = 0;
