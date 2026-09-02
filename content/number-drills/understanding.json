@@ -2,96 +2,115 @@
   {
     "numbers": [{"number": "28±3", "unit": "일"}],
     "context": "각화(각질형성) 주기: 28±3일",
-    "isKey": true
+    "isKey": true,
+    "category": "📅 기한·기간"
   },
   {
     "numbers": [{"number": "4.5~5.5", "unit": "pH"}],
     "context": "각질층 pH: 4.5~5.5 (약산성)",
-    "isKey": false
+    "isKey": false,
+    "category": "🧪 시험·측정"
   },
   {
     "numbers": [{"number": "58", "unit": "%"}, {"number": "31", "unit": "%"}, {"number": "11", "unit": "%"}],
     "context": "각질층 구성: 케라틴 58% · NMF 31% · 세포간지질 11%",
-    "isKey": true
+    "isKey": true,
+    "category": "💧 농도·함량"
   },
   {
     "numbers": [{"number": "10~20", "unit": "%"}],
     "context": "각질층 수분 함유: 10~20%",
-    "isKey": false
+    "isKey": false,
+    "category": "💧 농도·함량"
   },
   {
     "numbers": [{"number": "10~20", "unit": "층"}],
     "context": "각질층 두께: 약 10~20층",
-    "isKey": false
+    "isKey": false,
+    "category": "🧪 시험·측정"
   },
   {
     "numbers": [{"number": "2~5", "unit": "층"}],
     "context": "과립층: 2~5층",
-    "isKey": false
+    "isKey": false,
+    "category": "🧪 시험·측정"
   },
   {
     "numbers": [{"number": "40", "unit": "%"}, {"number": "12", "unit": "%"}, {"number": "12", "unit": "%"}, {"number": "7", "unit": "%"}],
     "context": "NMF 구성: 아미노산 40% · PCA 12% · 젖산염 12% · 요소 7%",
-    "isKey": false
+    "isKey": false,
+    "category": "💧 농도·함량"
   },
   {
     "numbers": [{"number": "10~40", "unit": "배"}],
     "context": "진피 두께: 표피의 10~40배, 피부의 90% 이상",
-    "isKey": false
+    "isKey": false,
+    "category": "🧪 시험·측정"
   },
   {
     "numbers": [{"number": "90", "unit": "%"}, {"number": "1.5~4.7", "unit": "%"}],
     "context": "진피 구성: 콜라겐 90% · 엘라스틴 1.5~4.7%",
-    "isKey": false
+    "isKey": false,
+    "category": "💧 농도·함량"
   },
   {
     "numbers": [{"number": "75", "unit": "%"}],
     "context": "콜라겐: 피부 건조 중량 75%, 아미노산 1,000개 결합 나선",
-    "isKey": false
+    "isKey": false,
+    "category": "💧 농도·함량"
   },
   {
     "numbers": [{"number": "0.3~0.5", "unit": "mm"}],
     "context": "모발 성장 속도: 1일 0.3~0.5mm",
-    "isKey": false
+    "isKey": false,
+    "category": "🧪 시험·측정"
   },
   {
     "numbers": [{"number": "50~100", "unit": "가닥"}],
     "context": "모발 정상 탈락량: 하루 50~100가닥",
-    "isKey": false
+    "isKey": false,
+    "category": "🧪 시험·측정"
   },
   {
     "numbers": [{"number": "3~6", "unit": "년"}, {"number": "80~90", "unit": "%"}],
     "context": "모발 성장기(Anagen): 3~6년 (전체 80~90%)",
-    "isKey": false
+    "isKey": false,
+    "category": "📅 기한·기간"
   },
   {
     "numbers": [{"number": "3", "unit": "주"}],
     "context": "모발 퇴행기(Catagen): 약 3주 (1~2%)",
-    "isKey": false
+    "isKey": false,
+    "category": "📅 기한·기간"
   },
   {
     "numbers": [{"number": "3~4", "unit": "개월"}],
     "context": "모발 휴지기(Telogen): 3~4개월 (10~15%)",
-    "isKey": false
+    "isKey": false,
+    "category": "📅 기한·기간"
   },
   {
     "numbers": [{"number": "3", "unit": "로트"}, {"number": "6", "unit": "개월"}],
     "context": "안정성시험 공통: 3로트 이상 · 6개월 이상",
-    "isKey": true
+    "isKey": true,
+    "category": "🧪 시험·측정"
   },
   {
     "numbers": [{"number": "15", "unit": "℃"}],
     "context": "안정성 가속시험: 장기보존 온도 +15℃ 이상 / 6개월 이상",
-    "isKey": true
+    "isKey": true,
+    "category": "🧪 시험·측정"
   },
   {
     "numbers": [{"number": "-15~45", "unit": "℃"}],
     "context": "안정성 가혹시험: -15 ~ 45℃ 동결·해동 반복",
-    "isKey": false
+    "isKey": false,
+    "category": "🧪 시험·측정"
   },
   {
     "numbers": [{"number": "5", "unit": "년"}],
     "context": "인체적용시험 연구자 경력: 5년 이상 · 헬싱키선언 준수",
-    "isKey": false
+    "isKey": false,
+    "category": "📅 기한·기간"
   }
 ]
