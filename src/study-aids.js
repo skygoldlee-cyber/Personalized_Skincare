@@ -120,7 +120,7 @@ const UNIT_CATEGORIES = [
     { label: '📅 기한·기간', units: ['일', '개월', '년', '주', '시간', '분', '초'] },
     { label: '💧 농도·함량', units: ['%', 'ppm', '㎍/g', 'IU/g'] },
     { label: '🧪 시험·측정', units: ['개/g', '회/hr', '℃', 'mmAq', '㎛', '로트', '개소', 'cm', 'mm', 'pH', '층', '배', '가닥', '회', '포인트', 'SPF', 'PA', '종', '요소', '단계'] },
-    { label: '🧬 제조·원료', units: ['HLB'] },
+    { label: '🧬 제조·품질', units: ['HLB'] },
     { label: '💰 금액', units: ['원'] },
 ];
 
