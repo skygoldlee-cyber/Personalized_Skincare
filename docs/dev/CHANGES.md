@@ -1077,3 +1077,21 @@
 
 - `npm run build:data` 성공 (카드 1,162개, 퀴즈 330개, 파서 등가성 검사 통과)
 - Vercel 배포 완료
+
+---
+
+## #43 — 용어집 링크 클릭 후 원래 위치로 돌아가기 (2026-09-02)
+
+### 변경 내용
+
+1. **`scrollToGlossary()` 공유 함수 추가**: `glossary-renderer.js`에 용어집 점프 + 원래 위치 복귀 기능을 통합한 공유 함수 추가. 클릭 시 스크롤 컨테이너(`.textbook-reader-content` / `.main-content`)의 `scrollTop`을 저장하고 용어집 테이블 해당 행으로 스크롤
+2. **플로팅 "원래 위치로" 버튼**: 용어집 점프 후 화면 우하단에 고정 버튼 표시. 클릭 시 저장된 위치로 smooth scroll 복귀 후 자동 숨김
+3. **`concept-map.js` 통합**: 개념 맵의 용어집 링크도 동일하게 `scrollToGlossary()` 사용하도록 수정
+4. **CSS 추가**: `css/reader.css`에 `.glossary-back-btn` 플로팅 버튼 스타일 추가 (fixed, 둥근 모서리, 호버 애니메이션)
+5. **SW 캐시 버전**: `v171` → `v172` bump
+
+### 검증
+
+- `npm test` 250 pass, 0 fail
+- Git commit `2ca7627` (기능 구현), `6cc2bac` (스크롤 컨테이너 수정), `172babf` (SW bump)
+- Vercel 배포 완료

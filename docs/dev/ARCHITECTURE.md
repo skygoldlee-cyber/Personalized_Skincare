@@ -935,6 +935,7 @@ cmd /c vercel --prod 2>&1
 - 과목 추가/제거 → `manifest.json` 수정 + `npm run build:data` 만으로 반영
 - 과목명 표시 → `manifest.json`의 `shortName` 필드를 동적 사용 (`app.js`, `charts.js`, `exam-simulator.js`)
 - 교재 파싱 로직 → 마커(🔖기출, 📌중요), 정규식, 카드 분류 로직은 모든 교재에 범용 적용
+- 용어집 링크 → 본문 중 용어집 키워드 자동 링크(`glossary-term-link`), (LNN) 참조 링크(`glossary-link`), 개념 맵 노드 링크 모두 `scrollToGlossary()` 공유 함수로 통합 — 점프 후 "원래 위치로" 플로팅 버튼으로 복귀
 
 ### 수정 필요성 등급
 
@@ -1025,7 +1026,7 @@ cmd /c vercel --prod 2>&1
 
 ---
 
-## �📎 관련 문서
+## �� 관련 문서
 
 - [`README.md`](../../README.md) — 프로젝트 소개 및 시작 가이드 (폴더 구조 포함)
 - [`DEPLOYMENT_GUIDE.md`](DEPLOYMENT_GUIDE.md) — Vercel 배포 및 오디오 호스팅 가이드
