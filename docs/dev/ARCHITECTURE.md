@@ -218,7 +218,6 @@ Personalized_Skincare/
 │   ├── ui-utils.js             #   로딩 UI 공통 유틸
 │   ├── utils.js                #   초성 추출, Fisher-Yates 셔플
 │   ├── globals.d.ts            #   전역 타입 선언
-│   ├── lib/                    #   (빈, 예비)
 │   └── views/                  #   뷰 컨트롤러 모듈
 │       ├── dashboard.js        #     대시보드 통계
 │       ├── flashcard.js        #     3D 플래시카드
@@ -273,7 +272,6 @@ Personalized_Skincare/
 │   ├── exams_md/               #   문제은행 MD 폴백 번들 (file:// 전용)
 │   ├── study_md/               #   교재 MD 폴백 번들 (과목별 분할, file:// 전용)
 │   ├── docs_md/                #   학습안내서/매뉴얼 MD 폴백 번들
-│   └── subjects/               #   (빈, 예비)
 │
 ├── tools/                      # 빌드/검증 도구
 │   ├── build/
