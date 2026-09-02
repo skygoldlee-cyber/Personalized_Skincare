@@ -1043,7 +1043,8 @@ function _renderReaderMermaid(container) {
                         background: '#ffffff',
                         mainBkg: '#f0f4ff',
                         nodeTextColor: '#1a1a2e',
-                        fontSize: '14px'
+                        fontSize: '14px',
+                        lineWidth: 1
                     } : {
                         // 다크 테마: 노드 배경을 진하게, 텍스트를 밝게
                         primaryColor: '#2d2d44',
@@ -1055,7 +1056,8 @@ function _renderReaderMermaid(container) {
                         background: '#1a1a2e',
                         mainBkg: '#2d2d44',
                         nodeTextColor: '#e0e0e0',
-                        fontSize: '14px'
+                        fontSize: '14px',
+                        lineWidth: 1
                     }
                 });
                 const nodeArr = Array.from(nodes);
