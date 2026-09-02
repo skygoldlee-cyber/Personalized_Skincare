@@ -1042,11 +1042,13 @@ function _renderReaderMermaid(container) {
                         return;
                     }
                     const node = nodeArr[i];
+                    const textContent = node.textContent.trim();
+                    console.log(`[reader] mermaid node ${i} textContent:`, JSON.stringify(textContent));
                     mermaid.run({ nodes: [node] })
                         .then(() => { rendered++; renderNext(i + 1); })
                         .catch((e) => {
                             failed++;
-                            console.warn(`[reader] mermaid node ${i} failed:`, e?.message || e);
+                            console.warn(`[reader] mermaid node ${i} failed:`, e?.message || e, '\ntextContent:', JSON.stringify(textContent), '\nerror:', e);
                             node.innerHTML = '<span style="color:var(--color-text-muted);font-size:0.8rem;">[다이어그램 렌더링 실패]</span>';
                             renderNext(i + 1);
                         });
