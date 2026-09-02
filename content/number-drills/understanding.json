@@ -30,11 +30,6 @@
     "isKey": false
   },
   {
-    "numbers": [{"number": "60", "unit": "%"}, {"number": "40", "unit": "%"}],
-    "context": "합격 기준: 전 과목 총점 60% 이상 & 매 과목 40% 이상",
-    "isKey": true
-  },
-  {
     "numbers": [{"number": "6", "unit": "개월"}],
     "context": "최초 교육: 자격 취득 후 6개월 이내",
     "isKey": true

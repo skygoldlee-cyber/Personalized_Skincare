@@ -105,11 +105,6 @@
     "isKey": false
   },
   {
-    "numbers": [{"number": "60", "unit": "%"}, {"number": "40", "unit": "%"}],
-    "context": "합격 기준: 전 과목 총점 60% 이상 & 매 과목 40% 이상",
-    "isKey": true
-  },
-  {
     "numbers": [{"number": "7", "unit": "일"}, {"number": "10", "unit": "일"}],
     "context": "조제관리사 변경신고 처리: 7일 (일반 처리 10일)",
     "isKey": false
