@@ -19,7 +19,9 @@
     "test:dom": "vitest run",
     "test:all": "node --test tests/unit/*.test.js && node tools/check_parser_parity.js && vitest run",
     "test:watch": "node --test --watch tests/unit/*.test.js",
-    "serve": "node serve.js"
+    "serve": "node serve.js",
+    "deploy": "pwsh -NoProfile -ExecutionPolicy Bypass -File tools/deploy.ps1",
+    "deploy:bump": "pwsh -NoProfile -ExecutionPolicy Bypass -File tools/deploy.ps1 -Bump"
   },
   "keywords": [
     "cosmetics",
