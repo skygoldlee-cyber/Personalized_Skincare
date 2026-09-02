@@ -120,7 +120,8 @@ const UNIT_CATEGORIES = [
     { label: '📅 기한·기간', units: ['일', '개월', '년', '주', '시간', '분', '초'] },
     { label: '💧 농도·함량', units: ['%', 'ppm', '㎍/g', 'IU/g'] },
     { label: '🧪 시험·측정', units: ['개/g', '회/hr', '℃', 'mmAq', '㎛', '로트', '개소', 'cm', 'mm', 'pH', '층', '배', '가닥', '회'] },
-    { label: '� 금액', units: ['원'] },
+    { label: '🧬 제조·원료', units: ['HLB'] },
+    { label: '💰 금액', units: ['원'] },
 ];
 
 function categorizeEntry(unit) {
@@ -134,10 +135,10 @@ export async function renderNumberDrillCard(subjId) {
     const entries = await loadNumberDrills(subjId);
     if (entries.length === 0) return '';
 
-    // 카테고리 분류 (첫 번째 숫자의 단위 기준)
+    // 카테고리 분류 (JSON category 필드 우선, 없으면 첫 번째 숫자 단위 기준)
     const allEntries = entries.map(e => ({
         ...e,
-        category: categorizeEntry(e.numbers[0].unit)
+        category: e.category || categorizeEntry(e.numbers[0].unit)
     }));
 
     const keyEntries = allEntries.filter(e => e.isKey);

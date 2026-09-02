@@ -1,32 +1,38 @@
 [
   {
-    "numbers": [{"number": "3", "unit": "~"}, {"number": "6", "unit": "~"}],
+    "numbers": [{"number": "3~6", "unit": "HLB"}],
     "context": "HLB 3~6: W/O(유중수형) 유화제",
-    "isKey": false
+    "isKey": false,
+    "category": "🧬 제조·원료"
   },
   {
-    "numbers": [{"number": "8", "unit": "~"}, {"number": "18", "unit": "~"}],
+    "numbers": [{"number": "8~18", "unit": "HLB"}],
     "context": "HLB 8~18: O/W(수중유형) 유화제",
-    "isKey": false
+    "isKey": false,
+    "category": "🧬 제조·원료"
   },
   {
     "numbers": [{"number": "2500", "unit": "IU/g"}, {"number": "1.0", "unit": "%"}],
     "context": "레티놀(주름개선 고시): 2,500 IU/g (1.0%)",
-    "isKey": false
+    "isKey": false,
+    "category": "🧬 제조·원료"
   },
   {
     "numbers": [{"number": "0.04", "unit": "%"}],
     "context": "아데노신(주름개선): 0.04%",
-    "isKey": false
+    "isKey": false,
+    "category": "🧬 제조·원료"
   },
   {
     "numbers": [{"number": "3.0", "unit": "%"}, {"number": "2.0", "unit": "%"}],
     "context": "과산화수소: 두발용 3.0% / 손톱경화용 2.0%",
-    "isKey": false
+    "isKey": false,
+    "category": "🧬 제조·원료"
   },
   {
     "numbers": [{"number": "12", "unit": "%"}],
     "context": "염모제 과산화수소: 12%까지",
-    "isKey": false
+    "isKey": false,
+    "category": "🧬 제조·원료"
   }
 ]
