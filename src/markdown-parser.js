@@ -53,7 +53,13 @@ export function parseMarkdown(mdText, options = {}) {
         for (let i = 0; i < fenceLines.length; i++) {
             if (/^FENCE_TOKEN/.test(fenceLines[i].trim())) { inFence = !inFence; continue; }
             if (inFence) {
-                fenceLines[i] = fenceLines[i].replace(/\*/g, 'STAR_TOKEN').replace(/`/g, 'BTICK_TOKEN');
+                fenceLines[i] = fenceLines[i]
+                    .replace(/\*/g, 'STAR_TOKEN')
+                    .replace(/`/g, 'BTICK_TOKEN')
+                    .replace(/\[/g, 'SBR_O_TOKEN')
+                    .replace(/\]/g, 'SBR_C_TOKEN')
+                    .replace(/\(/g, 'PAR_O_TOKEN')
+                    .replace(/\)/g, 'PAR_C_TOKEN');
             }
         }
         html = fenceLines.join('\n');
@@ -74,7 +80,12 @@ export function parseMarkdown(mdText, options = {}) {
 
     // 5-1. 마크다운 링크 [text](url) → <a href="url">text</a>
     // (escapeHTML 통과 후이므로 &amp; 등은 이미 인코딩됨 — href에 그대로 사용)
+    // (펜스 블록 내부의 []()는 토큰화되어 있으므로 변환되지 않음)
     html = html.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, '<a href="$2">$1</a>');
+
+    // 5-2. 펜스 블록 내부 []() 토큰 복원 (링크 파싱 후)
+    html = html.replace(/SBR_O_TOKEN/g, '[').replace(/SBR_C_TOKEN/g, ']')
+               .replace(/PAR_O_TOKEN/g, '(').replace(/PAR_C_TOKEN/g, ')');
 
     // 6. 줄 단위 블록 파싱
     const lines = html.split(/\r?\n/);
