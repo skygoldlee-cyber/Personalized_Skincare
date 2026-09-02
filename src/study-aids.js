@@ -154,24 +154,39 @@ export function extractNumberDrills(chapter) {
 
 /**
  * 숫자·기한 암기표 HTML을 생성합니다.
- * 기출/중요 마커 항목을 최상단에 우선 배치하고, 일반 항목은 접힘 상태로 표시합니다.
+ * 단위별 카테고리 분류 + 기출/중요 우선 표시.
  */
+const UNIT_CATEGORIES = [
+    { label: '📅 기한·시간', units: ['일', '개월', '년', '주', '시간', '분', '초'] },
+    { label: '💧 농도·함량', units: ['%', '세 이하', '세 이상', 'ppm'] },
+    { label: '⚖️ 중량·용량', units: ['g', 'ml', 'kg'] },
+    { label: '🌡️ 온도', units: ['℃', '도'] },
+    { label: '📊 비율·배수', units: ['배'] },
+    { label: '📐 규격·기준', units: ['㎛', '회/hr', '개/hr', '개/㎥'] },
+];
+
+function categorizeEntry(unit) {
+    for (const cat of UNIT_CATEGORIES) {
+        if (cat.units.includes(unit)) return cat.label;
+    }
+    return '기타';
+}
+
 export function renderNumberDrillCard(chapter) {
     const drills = extractNumberDrills(chapter);
     if (drills.length === 0) return '';
 
-    // 기출/중요 항목과 일반 항목 분리
-    const keyEntries = [];
-    const normalEntries = [];
+    // 모든 항목을 평탄화 + 카테고리 분류
+    const allEntries = [];
     drills.forEach(d => {
         d.entries.forEach(e => {
-            const entry = { ...e, sectionTitle: d.sectionTitle };
-            if (e.isKey) keyEntries.push(entry);
-            else normalEntries.push(entry);
+            allEntries.push({ ...e, sectionTitle: d.sectionTitle, category: categorizeEntry(e.unit) });
         });
     });
 
-    const totalEntries = keyEntries.length + normalEntries.length;
+    const keyEntries = allEntries.filter(e => e.isKey);
+    const normalEntries = allEntries.filter(e => !e.isKey);
+    const totalEntries = allEntries.length;
     const keyCount = keyEntries.length;
 
     let html = `
@@ -186,34 +201,64 @@ export function renderNumberDrillCard(chapter) {
             <div class="study-aid-body expanded" id="number-drill-body">
     `;
 
-    // 1) 기출/중요 항목 (항상 펼침)
+    // 1) 기출/중요 항목 — 카테고리별 분류, 항상 펼침
     if (keyEntries.length > 0) {
         html += `<div class="number-drill-section number-drill-key-section">`;
         html += `<div class="number-drill-section-title">📌 기출·중요 숫자 (${keyCount}개)</div>`;
-        html += `<div class="number-drill-grid">`;
+
+        const keyByCat = {};
         keyEntries.forEach(e => {
-            html += `<div class="number-drill-item is-key">`;
-            html += `<span class="number-drill-value">${esc(e.number)}<small>${esc(e.unit)}</small></span>`;
-            html += `<span class="number-drill-context">${esc(e.context)}</span>`;
-            html += `</div>`;
+            if (!keyByCat[e.category]) keyByCat[e.category] = [];
+            keyByCat[e.category].push(e);
         });
-        html += `</div>`;
+
+        UNIT_CATEGORIES.forEach(cat => {
+            const items = keyByCat[cat.label];
+            if (!items || items.length === 0) return;
+            html += `<div class="number-drill-subsection">`;
+            html += `<div class="number-drill-subsection-title">${cat.label} <small>(${items.length})</small></div>`;
+            html += `<div class="number-drill-grid">`;
+            items.forEach(e => {
+                html += `<div class="number-drill-item is-key">`;
+                html += `<span class="number-drill-value">${esc(e.number)}<small>${esc(e.unit)}</small></span>`;
+                html += `<span class="number-drill-context">${esc(e.context)}</span>`;
+                html += `</div>`;
+            });
+            html += `</div></div>`;
+        });
+
         html += `</div>`;
     }
 
-    // 2) 일반 항목 (기본 접힘)
+    // 2) 일반 항목 — 카테고리별 분류, 기본 접힘
     if (normalEntries.length > 0) {
         html += `<div class="number-drill-section">`;
         html += `<div class="number-drill-section-title number-drill-normal-toggle" id="number-drill-normal-toggle">`;
         html += `전체 숫자 (${normalEntries.length}개) <i class="fa-solid fa-chevron-down" style="font-size:0.7rem;margin-left:0.3rem;"></i>`;
         html += `</div>`;
-        html += `<div class="number-drill-grid number-drill-normal-grid" id="number-drill-normal-grid" style="display:none;">`;
+        html += `<div class="number-drill-normal-grid" id="number-drill-normal-grid" style="display:none;">`;
+
+        const normalByCat = {};
         normalEntries.forEach(e => {
-            html += `<div class="number-drill-item">`;
-            html += `<span class="number-drill-value">${esc(e.number)}<small>${esc(e.unit)}</small></span>`;
-            html += `<span class="number-drill-context">${esc(e.context)}</span>`;
-            html += `</div>`;
+            if (!normalByCat[e.category]) normalByCat[e.category] = [];
+            normalByCat[e.category].push(e);
         });
+
+        UNIT_CATEGORIES.forEach(cat => {
+            const items = normalByCat[cat.label];
+            if (!items || items.length === 0) return;
+            html += `<div class="number-drill-subsection">`;
+            html += `<div class="number-drill-subsection-title">${cat.label} <small>(${items.length})</small></div>`;
+            html += `<div class="number-drill-grid">`;
+            items.forEach(e => {
+                html += `<div class="number-drill-item">`;
+                html += `<span class="number-drill-value">${esc(e.number)}<small>${esc(e.unit)}</small></span>`;
+                html += `<span class="number-drill-context">${esc(e.context)}</span>`;
+                html += `</div>`;
+            });
+            html += `</div></div>`;
+        });
+
         html += `</div>`;
         html += `</div>`;
     }
