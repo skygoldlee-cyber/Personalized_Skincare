@@ -1,7 +1,7 @@
 # 🏛️ 설계 컨셉 & 아키텍처 (Architecture & Design Concept)
 
 > **대상 프로젝트**: Cosmetic Pass Master — 맞춤형화장품 조제관리사 스마트 학습 플랫폼
-> **최종 업데이트**: 2026-09-01
+> **최종 업데이트**: 2026-09-02
 > **목적**: 시스템의 설계 철학, 아키텍처 구조, 주요 설계 결정 사항을 설명
 
 ---
@@ -395,7 +395,7 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 | 8 | 그 외 App Shell (아이콘/이미지 등) | **Stale-While-Revalidate** | 빠른 표시 + 백그라운드 갱신 |
 
 ### 캐시 버전 관리
-- `CACHE_VERSION` 상수로 캐시 네임스페이스 관리 (현재 `v152-20260901-html-viewer-scrollbar-color`)
+- `CACHE_VERSION` 상수로 캐시 네임스페이스 관리 (현재 `v170-20260902-mermaid-css-split`)
 - **빌드 타임 자동 치환**: `tools/build/stamp-sw-version.js`가 빌드 완료 시 `CACHE_VERSION`을 `${prefix}-${YYYYMMDD}-${gitShort}` 형태로 자동 갱신 → 수동 관리 불필요
 - **배포 시 버전을 올리면 구 캐시 자동 정리** → 모바일 구버전 고착(Stale Cache) 문제 방지
 - `SHELL_ASSETS`에는 [`src/utils.js`](../../src/utils.js), [`src/trainer-calc.js`](../../src/trainer-calc.js) 등 분리된 모듈이 모두 프리캐시에 포함됨
@@ -731,7 +731,7 @@ content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.j
    - `ui-utils.js` 공통 UI 유틸 분리로 순환 의존성 방지
 
 3. **DOM 테스트 환경 도입** ✅
-   - Vitest + jsdom으로 DOM 렌더링/이벤트 테스트 기반 구축 (96 tests: 86 unit + 10 DOM)
+   - Vitest + jsdom으로 DOM 렌더링/이벤트 테스트 기반 구축 (135 tests: 115 unit + 20 DOM)
    - GitHub Actions CI로 push 시 자동 테스트 실행
 
 4. **타입 안정성 도입** ✅
@@ -790,7 +790,7 @@ content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.j
    - ~~④ 행정처분 비교표~~ (삭제 — 콘텐츠 본문 표로 충분)
    - `textbook-reader.js`에 토글 버튼과 렌더링 통합, `css/reader.css`에 반응형 스타일 추가
 
-16. **교재 본문 Mermaid 다이어그램 렌더링** ✅ (2026-09-01 개선)
+16. **교재 본문 Mermaid 다이어그램 렌더링** ✅ (2026-09-02 개선)
    - `reader-format.js`에 `allowMermaid: true` 옵션 → ```mermaid 코드블록을 `<pre class="mermaid">`로 변환
    - `textbook-reader.js`에 `_ensureMermaid()` + `_renderReaderMermaid()` 추가 (온디맨드 패턴)
    - `vendor/mermaid/mermaid.min.js` (3.3MB)는 mermaid 블록이 있는 챕터를 열 때만 동적 로드
@@ -798,6 +798,10 @@ content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.j
    - **키워드 링크 보호** (2026-09-01): `reader-format.js`에서 `<pre class="mermaid">` 블록을 플레이스홀더로 보호 → 용어집 자동 링크가 Mermaid 문법을 손상시키지 않음
    - `securityLevel: 'loose'`로 변경 (`<br/>` 등 HTML 태그 허용)
    - 교재 콘텐츠에 mindmap + flowchart 다이어그램 다수 포함
+   - **다이어그램 타입 감지 및 렌더링 분리** (2026-09-02): `_renderReaderMermaid()`에서 각 `pre.mermaid` 블록의 `textContent`를 검사하여 `mindmap`으로 시작하면 `mermaid-mindmap` 클래스, 그 외는 `mermaid-flowchart` 클래스 추가 → 타입별로 독립된 `mermaid.initialize()` 호출 (flowchart에만 `lineWidth: 1` themeVariable 적용, mindmap은 기본값 유지)
+   - **CSS 스타일 분리** (2026-09-02): `css/reader.css`에서 `.mermaid-flowchart`와 `.mermaid-mindmap` 선택자로 분리 — flowchart에만 `stroke-width: 1px`, `fill: none`, 노드 배경/테두리, 화살표 마커 스타일 적용, mindmap은 텍스트 대비만 조정 → 두 다이어그램 타입 간 스타일 간섭 원천 차단
+   - **마인드맵 들여쓰기 수정** (2026-09-02): `tools/fix-mindmap-indent.mjs` 스크립트로 4개 과목 교재 MD 파일의 mindmap 블록 들여쓰기를 계층 구조에 맞게 수정 (동일 들여쓰기 → root/1level/2level/3level 계층적 들여쓰기)
+   - **단위 테스트 추가** (2026-09-02): `tests/unit/mermaid-rendering.test.js` (23개 테스트) — 다이어그램 타입 감지, mindmap 들여쓰기 검증, 파서 출력 타입 감지, 파이프라인 통합, 실제 교재 파일 검증, CSS 클래스 분리 로직, `<br/>` 태그 보존
 
 17. **과목별 큐레이션 용어집 (Glossary Curation)** ✅ (2026-09-01)
    - `content/교재/glossary/subject{1-4}.json`: 과목별 큐레이션 용어 정의 파일 (수작성)
