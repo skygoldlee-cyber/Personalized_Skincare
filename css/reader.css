@@ -139,7 +139,7 @@
     color: var(--color-text-main);
 }
 
-/* Mermaid diagram container */
+/* Mermaid diagram container (공통) */
 pre.mermaid {
     background: transparent;
     border: none;
@@ -152,41 +152,47 @@ pre.mermaid svg {
     max-width: 100%;
     height: auto;
 }
-/* 모든 SVG path/line: 기본적으로 연결선 스타일 (1px, fill none) */
-pre.mermaid svg path,
-pre.mermaid svg line {
+
+/* === Flowchart 전용 스타일 === */
+/* 모든 SVG path/line: 1px 실선 */
+pre.mermaid-flowchart svg path,
+pre.mermaid-flowchart svg line {
     stroke: #7b8faf !important;
     stroke-width: 1px !important;
     fill: none !important;
 }
 /* 화살표 머리(marker 내부 path)는 채우기 적용 */
-pre.mermaid svg marker path,
-pre.mermaid svg defs marker path {
+pre.mermaid-flowchart svg marker path,
+pre.mermaid-flowchart svg defs marker path {
     fill: #7b8faf !important;
     stroke: #7b8faf !important;
     stroke-width: 1px !important;
 }
-/* 노드 도형: 배경/보더 오버라이드 (연결선 규칙보다 우선) */
-pre.mermaid .node rect,
-pre.mermaid .node circle,
-pre.mermaid .node ellipse,
-pre.mermaid .node polygon {
+/* 노드 도형: 배경/보더 */
+pre.mermaid-flowchart .node rect,
+pre.mermaid-flowchart .node circle,
+pre.mermaid-flowchart .node ellipse,
+pre.mermaid-flowchart .node polygon {
     fill: #2d2d44 !important;
     stroke: #7b8faf !important;
     stroke-width: 1px !important;
 }
-/* 노드 텍스트 대비 */
-pre.mermaid .nodeLabel,
-pre.mermaid .edgeLabel,
-pre.mermaid .cluster-label {
+/* 노드/엣지 텍스트 대비 */
+pre.mermaid-flowchart .nodeLabel,
+pre.mermaid-flowchart .edgeLabel,
+pre.mermaid-flowchart .cluster-label {
     color: #e0e0e0 !important;
     fill: #e0e0e0 !important;
 }
-pre.mermaid .edgeLabel {
+pre.mermaid-flowchart .edgeLabel {
     background-color: #1a1a2e !important;
 }
-/* Mermaid mindmap node text */
-pre.mermaid .mindmap-node text {
+
+/* === Mindmap 전용 스타일 === */
+/* mindmap은 mermaid 기본 렌더링을 유지, 텍스트 대비만 적용 */
+pre.mermaid-mindmap .mindmap-node text,
+pre.mermaid-mindmap .section-center text,
+pre.mermaid-mindmap .section-bkg text {
     fill: #e0e0e0 !important;
     color: #e0e0e0 !important;
 }
@@ -837,37 +843,40 @@ body.reader-focus-mode .reader-readable-width {
     background: #f0efe9 !important;
     color: #2b2b2b !important;
 }
-/* Mermaid light theme overrides */
-.reader-light-theme pre.mermaid svg path,
-.reader-light-theme pre.mermaid svg line {
+/* Mermaid light theme — Flowchart 전용 */
+.reader-light-theme pre.mermaid-flowchart svg path,
+.reader-light-theme pre.mermaid-flowchart svg line {
     stroke: #4a6fa5 !important;
     stroke-width: 1px !important;
     fill: none !important;
 }
-.reader-light-theme pre.mermaid svg marker path,
-.reader-light-theme pre.mermaid svg defs marker path {
+.reader-light-theme pre.mermaid-flowchart svg marker path,
+.reader-light-theme pre.mermaid-flowchart svg defs marker path {
     fill: #4a6fa5 !important;
     stroke: #4a6fa5 !important;
     stroke-width: 1px !important;
 }
-.reader-light-theme pre.mermaid .node rect,
-.reader-light-theme pre.mermaid .node circle,
-.reader-light-theme pre.mermaid .node ellipse,
-.reader-light-theme pre.mermaid .node polygon {
+.reader-light-theme pre.mermaid-flowchart .node rect,
+.reader-light-theme pre.mermaid-flowchart .node circle,
+.reader-light-theme pre.mermaid-flowchart .node ellipse,
+.reader-light-theme pre.mermaid-flowchart .node polygon {
     fill: #f0f4ff !important;
     stroke: #4a6fa5 !important;
     stroke-width: 1px !important;
 }
-.reader-light-theme pre.mermaid .nodeLabel,
-.reader-light-theme pre.mermaid .edgeLabel,
-.reader-light-theme pre.mermaid .cluster-label {
+.reader-light-theme pre.mermaid-flowchart .nodeLabel,
+.reader-light-theme pre.mermaid-flowchart .edgeLabel,
+.reader-light-theme pre.mermaid-flowchart .cluster-label {
     color: #1a1a2e !important;
     fill: #1a1a2e !important;
 }
-.reader-light-theme pre.mermaid .edgeLabel {
+.reader-light-theme pre.mermaid-flowchart .edgeLabel {
     background-color: #ffffff !important;
 }
-.reader-light-theme pre.mermaid .mindmap-node text {
+/* Mermaid light theme — Mindmap 전용 */
+.reader-light-theme pre.mermaid-mindmap .mindmap-node text,
+.reader-light-theme pre.mermaid-mindmap .section-center text,
+.reader-light-theme pre.mermaid-mindmap .section-bkg text {
     fill: #1a1a2e !important;
     color: #1a1a2e !important;
 }
