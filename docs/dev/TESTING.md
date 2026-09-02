@@ -22,9 +22,9 @@
 
 | 구분 | 프레임워크 | 환경 | 파일 위치 | 테스트 수 |
 |------|-----------|------|-----------|-----------|
-| **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 135 |
+| **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 250 |
 | **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 10 |
-| **합계** | | | | **145** |
+| **합계** | | | | **260** |
 
 ### 설계 원칙
 
@@ -32,13 +32,14 @@
 - **DOM 테스트 분리**: `localStorage`, `document` 등 브라우저 API가 필요한 테스트는 Vitest + jsdom 환경에서 실행
 - **회귀 가드**: CSP 위반(`delegation-guard`), Mermaid 렌더링 파이프라인 등 배포 후에만 발견되는 버그를 사전 차단
 - **실제 콘텐츠 검증**: 교재 MD 파일의 Mermaid 블록 들여쓰기, 문법 등 실제 콘텐츠를 대상으로 검증
+- **교재 무관 공통 테스트**: 합성 데이터(synthetic data)를 사용하여 교재 콘텐츠가 바뀌어도 로직 자체를 검증 (`study-aids`, `pdf-registry`, `glossary-query`, `markdown-parser-general`, `reader-format-general`)
 
 ---
 
 ## 2. 실행 명령어
 
 ```bash
-# Unit 테스트만 실행 (135개)
+# Unit 테스트만 실행 (250개)
 npm test
 # 또는
 npm run test:unit
@@ -84,7 +85,12 @@ npm run test:watch
 | 11 | `mermaid-reader-format.test.js` | 4 | `formatSectionContentForReader()` 처리 후 Mermaid 블록 보존 | `<br/>` 엔티티, 페이지 참조/용어집 링크 간섭 |
 | 12 | `mermaid-pipeline.test.js` | 4 | 전체 파이프라인: MD → HTML → Mermaid 블록 | HTML 태그 미혼입, 볼드/이탤릭/링크 비적용 |
 | 13 | `mermaid-rendering.test.js` | 23 | 다이어그램 타입 감지, mindmap 들여쓰기, CSS 클래스 분리, 실제 교재 파일 검증 | 2026-09-02 추가 |
-| | **합계** | **135** | | |
+| 14 | `study-aids.test.js` | 27 | `extractExamHighlights()`, `extractNumberDrills()`, `detectProcedureFlow()`, `detectAdminPenalty()`, `isKeySection()` | 합성 데이터, 교재 무관 |
+| 15 | `pdf-registry.test.js` | 21 | `resolveRefPath()`, `mapSourceToRef()`, `resolveKeywordRef()`, 데이터 구조 검증 | 합성 데이터, 교재 무관 |
+| 16 | `glossary-query.test.js` | 13 | `getGlossaryByRefFile()`, `getGlossaryByRefFiles()`, `getGlossaryEntry()`, `getAllGlossaryKeywords()` | 합성 데이터, 교재 무관 |
+| 17 | `markdown-parser-general.test.js` | 35 | 헤더, 표, 리스트, 인라인 서식, 코드블록, 인용문, 특수 토큰, 빈 입력 | 합성 데이터, 교재 무관 |
+| 18 | `reader-format-general.test.js` | 19 | 페이지 참조 제거, 기출문제/참조자료/출처 링크 변환, 용어집 자동 링크, Mermaid 보호 | 합성 데이터, 교재 무관 |
+| | **합계** | **250** | | |
 
 ### DOM 테스트 (`tests/dom/`)
 
@@ -179,7 +185,59 @@ npm run test:watch
 - **CSS 클래스 분리 로직**: mindmap → `mermaid-mindmap`, flowchart → `mermaid-flowchart` 클래스 할당
 - **`<br/>` 태그 보존**: mindmap과 flowchart 모두에서 `<br/>`이 엔티티로 보존됨
 
-### 4.5 DOM (Vitest + jsdom)
+### 4.5 학습 보조 (Study Aids) — 교재 무관, 합성 데이터
+
+#### `study-aids.test.js` (27개)
+- `extractExamHighlights()`: 🔖기출/📌중요 마커 라인 추출, 마커/볼드 제거, 표 행 제외, 120자 자름
+- `extractNumberDrills()`: 숫자+단위 정규식 매칭, 중복 제거(`Set`), 빈칸(`▓▓`) 치환, `isKey` 플래그
+- `detectProcedureFlow()`: 절차 키워드 감지, 번호/원문자 리스트 추출, 기한 추출, 단계 2개 미만 → null
+- `detectAdminPenalty()`: 행정처분 표 감지, 헤더/데이터 행 추출, 행 2개 미만 → null
+- `isKeySection()`: 🔖기출, 📌중요, 🎯 기출 마커 감지 (본문 + 제목)
+
+### 4.6 참조자료 레지스트리 (PDF Registry) — 교재 무관, 합성 데이터
+
+#### `pdf-registry.test.js` (21개)
+- `resolveRefPath()`: `content/` passthrough, 빈 입력, 등록/미등록 파일 → MD 경로 변환
+- `mapSourceToRef()`: `SOURCE_REF_MAP` 순차 매칭, `exclude` 정규식 동작, 매칭 없음
+- `resolveKeywordRef()`: `KEYWORD_REF_MAP` 패턴 매칭, `match`/`path`/`search` 반환
+- 데이터 구조 검증: `SUBJECT_DIR_MAP`, `REFERENCE_FILES`, `REFERENCE_COMMON`, `REFERENCE_LAW`, `SOURCE_REF_MAP`, `KEYWORD_REF_MAP`
+- `REF_FILE_TO_PATH` / `REF_REGISTRY`: 우선순위(과목N > 공통 > 법령원문) 검증
+
+### 4.7 용어집 쿼리 (Glossary Query) — 교재 무관, 합성 데이터
+
+#### `glossary-query.test.js` (13개)
+- `getGlossaryByRefFile()`: prefix 매칭, `seenKeys` 중복 방지, 빈/미존재 파일명
+- `getGlossaryByRefFiles()`: 다중 파일 수집, 중복 제거, null/빈 문자열 스킵
+- `getGlossaryEntry()`: 존재/비존재, 반환 객체 불변성 (spread copy)
+- `getAllGlossaryKeywords()`: 배열 반환, `{keyword, idxKey}` 구조, 일관성
+
+### 4.8 일반 마크다운 파싱 (Markdown Parser General) — 교재 무관, 합성 데이터
+
+#### `markdown-parser-general.test.js` (35개)
+- **헤더**: `#`→`<h1>`, `##`→`<h2>`, `###`→`<h3>`, `useReaderStyles` 시 `<h5 class="md-h3">`/`<h6 class="md-h4">`
+- **표**: 기본 테이블, 구분선 행 제외, 빈 셀 보존, `reader-table-wrapper` 클래스
+- **리스트**: ul(`-`), ol(번호), `useCustomListDiv` 시 `md-list-item` div 렌더링
+- **인라인 서식**: `**볼드**`→`<strong>`, `*이탤릭*`→`<em>`, `` `코드` ``→`<code>`, `[text](url)`→`<a>`, `allowItalics`/`allowInlineCode` 비활성화
+- **코드블록**: 기본 `<pre>`, 언어 지정, 내부 볼드/이탤릭/링크 미적용
+- **인용문**: `>`→`<blockquote>`, `useReaderStyles` 시 `md-quote`
+- **특수 토큰**: `<br/>`, `<sup>`, `&nbsp;`, HTML 이스케이프(`<script>` 차단)
+- **빈 입력**: 빈 문자열, 공백만
+- **구분선**: `---`→`<hr>`, `useReaderStyles` 시 `reader-hr`
+- **일반 문단**: `<p>`, `useReaderStyles` 시 `md-para`, `customSpacing` 시 빈 줄에 spacing div
+
+### 4.9 교재 리더 포맷팅 (Reader Format General) — 교재 무관, 합성 데이터
+
+#### `reader-format-general.test.js` (19개)
+- **페이지 참조 제거**: `본문 p.22`, `p.22~p.27`, 헤더 `p.NN — `, 괄호 `(p.80~83)`, `참고: 본문 p.22`
+- **기출문제 링크**: `[text](기출문제/과목N_...)` → `exam-link-btn` + `data-exam-md`
+- **참조자료 링크**: `[file.pdf](../참조자료/...)` → `source-link` + `data-ref-html`
+- **출처 링크**: `출처: \`...md\`` → `data-ref-md`, `출처: \`xxx.pdf\`` → `data-ref-html`
+- **Mermaid 블록 보호**: 페이지 참조 제거 시 Mermaid 내용 보존, 용어집 링크 미침투
+- **용어집 자동 링크**: `<p>` 내 키워드 링크, 기존 `<a>` 내 중복 방지, 2자 미만 제외, 긴 키워드 우선
+- **출처 Deep Linking**: `제N조` 추출 → `data-ref-search` 추가
+- **빈/최소 입력**: 빈 문자열, 일반 텍스트, 파라미터 없이 호출
+
+### 4.10 DOM (Vitest + jsdom)
 
 #### `backup.dom.test.js` (10개)
 - `getBackupKeys()`: 정적 키 + 동적 키(과목별 카드 ID) 수집
