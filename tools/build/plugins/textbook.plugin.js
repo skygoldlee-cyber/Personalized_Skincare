@@ -10,6 +10,7 @@ const cleanText = (text) => {
     .replace(/📌중요/g, '')
     .replace(/🎯\s*기출/g, '')
     .replace(/🎯\s*중요/g, '')
+    .replace(/★\s*필수/g, '')
     .trim();
 };
 
@@ -198,7 +199,7 @@ const parseMarkdownFile = (filePath, subjectId, filename, chapterKey, stableId) 
       if (isGenericTerm(cleanTerm)) return;
 
       const has기출 = /🔖기출|🎯\s*기출/.test(rawTerm) || /🔖기출|🎯\s*기출/.test(rawDesc);
-      const isKey = has기출 || /📌중요|🎯\s*중요/.test(rawTerm) || /📌중요|🎯\s*중요/.test(rawDesc);
+      const isKey = has기출 || /📌중요|🎯\s*중요/.test(rawTerm) || /📌중요|🎯\s*중요/.test(rawDesc) || /★\s*필수/.test(rawTerm) || /★\s*필수/.test(rawDesc);
       // definition에서도 (L숫자) 줄번호 참조 제거
       const cleanDesc = desc.replace(/\s*\(L\d+\)\s*/g, ' ').trim();
 

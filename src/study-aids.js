@@ -22,11 +22,12 @@ export function extractExamHighlights(chapter) {
             const trimmed = line.trim();
             if (!trimmed || trimmed.startsWith('|') || trimmed.startsWith('---')) return;
 
-            if (trimmed.includes('🔖기출') || trimmed.includes('📌중요')) {
+            if (trimmed.includes('🔖기출') || trimmed.includes('📌중요') || /★\s*필수/.test(trimmed)) {
                 // 마커 제거하고 의미있는 텍스트만 추출
                 let clean = trimmed
                     .replace(/🔖기출/g, '')
                     .replace(/📌중요/g, '')
+                    .replace(/★\s*필수/g, '')
                     .replace(/^\*\*([^*]+)\*\*/, '$1')
                     .replace(/\*\*/g, '')
                     .replace(/^[-•]\s*/, '')
@@ -481,7 +482,7 @@ export function isKeySection(sec) {
     const c = sec.content || '';
     const t = sec.title || '';
     const text = c + '\n' + t;
-    return text.includes('🔖기출') || text.includes('📌중요') || /🎯\s*기출/.test(text);
+    return text.includes('🔖기출') || text.includes('📌중요') || /🎯\s*기출/.test(text) || /★\s*필수/.test(text);
 }
 
 /**
