@@ -93,6 +93,18 @@ export function renderExamHighlightCard(chapter) {
 
 const NUMBER_REGEX = /\b(\d+(?:\.\d+)?)\s*(%|세 이하|세 이상|개월|일|년|배|시간|g|ml|kg|℃|도|분|초|주|ppm|㎛|회\/hr|개\/hr|개\/㎥)(?=\s|$|[,.;:)\]}'"!?])/g;
 
+const EXCLUDE_PATTERNS = [
+    /예상\s*소요\s*시간/,
+    /예상\s*학습\s*시간/,
+    /예상\s*학습\s*기간/,
+    /권장\s*학습\s*시간/,
+    /학습\s*소요\s*시간/,
+    /예상\s*시간/,
+    /페이지\s*수/,
+    /글자\s*수/,
+    /단어\s*수/,
+];
+
 /**
  * 챕터에서 숫자+단위 패턴을 추출하여 암기표 데이터를 생성합니다.
  * @param {object} chapter
@@ -110,6 +122,9 @@ export function extractNumberDrills(chapter) {
         lines.forEach(line => {
             const trimmed = line.trim();
             if (!trimmed || trimmed.startsWith('---') || trimmed.startsWith('|---')) return;
+
+            // 비암기 라인 제외 (예상 소요 시간 등)
+            if (EXCLUDE_PATTERNS.some(p => p.test(trimmed))) return;
 
             // 마커 라인 우선
             const isKey = trimmed.includes('🔖기출') || trimmed.includes('📌중요');
