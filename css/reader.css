@@ -171,9 +171,13 @@ pre.mermaid .edgeLabel {
 }
 pre.mermaid .edgePath .path {
     stroke: #7b8faf !important;
+    stroke-width: 1.5px !important;
 }
 pre.mermaid .flowchart-link {
     fill: #7b8faf !important;
+}
+pre.mermaid .edgePath marker {
+    transform: scale(0.85) !important;
 }
 /* Mermaid mindmap node text */
 pre.mermaid .mindmap-node text {
@@ -846,9 +850,13 @@ body.reader-focus-mode .reader-readable-width {
 }
 .reader-light-theme pre.mermaid .edgePath .path {
     stroke: #4a6fa5 !important;
+    stroke-width: 1.5px !important;
 }
 .reader-light-theme pre.mermaid .flowchart-link {
     fill: #4a6fa5 !important;
+}
+.reader-light-theme pre.mermaid .edgePath marker {
+    transform: scale(0.85) !important;
 }
 .reader-light-theme pre.mermaid .mindmap-node text {
     fill: #1a1a2e !important;
