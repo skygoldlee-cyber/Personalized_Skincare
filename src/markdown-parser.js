@@ -59,7 +59,12 @@ export function parseMarkdown(mdText, options = {}) {
                     .replace(/\[/g, 'SBR_O_TOKEN')
                     .replace(/\]/g, 'SBR_C_TOKEN')
                     .replace(/\(/g, 'PAR_O_TOKEN')
-                    .replace(/\)/g, 'PAR_C_TOKEN');
+                    .replace(/\)/g, 'PAR_C_TOKEN')
+                    .replace(/&lt;/g, 'LT_TOKEN')
+                    .replace(/&gt;/g, 'GT_TOKEN')
+                    .replace(/&quot;/g, 'QUOT_TOKEN')
+                    .replace(/&#39;/g, 'SQUOT_TOKEN')
+                    .replace(/<br>/g, 'BR_IN_FENCE');
             }
         }
         html = fenceLines.join('\n');
@@ -83,9 +88,15 @@ export function parseMarkdown(mdText, options = {}) {
     // (펜스 블록 내부의 []()는 토큰화되어 있으므로 변환되지 않음)
     html = html.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, '<a href="$2">$1</a>');
 
-    // 5-2. 펜스 블록 내부 []() 토큰 복원 (링크 파싱 후)
+    // 5-2. 펜스 블록 내부 토큰 복원 (링크 파싱 후)
+    // []() 리터럴 복원 + HTML 엔티티를 엔티티 형태로 복원
+    // (&lt; &gt; &quot; 그대로 유지 → 브라우저 textContent에서 < > " 로 디코딩됨)
+    // 이렇게 하면 < 가 HTML 태그 시작으로 해석되는 것을 방지
     html = html.replace(/SBR_O_TOKEN/g, '[').replace(/SBR_C_TOKEN/g, ']')
-               .replace(/PAR_O_TOKEN/g, '(').replace(/PAR_C_TOKEN/g, ')');
+               .replace(/PAR_O_TOKEN/g, '(').replace(/PAR_C_TOKEN/g, ')')
+               .replace(/LT_TOKEN/g, '&lt;').replace(/GT_TOKEN/g, '&gt;')
+               .replace(/QUOT_TOKEN/g, '&quot;').replace(/SQUOT_TOKEN/g, '&#39;')
+               .replace(/BR_IN_FENCE/g, '&lt;br/&gt;');
 
     // 6. 줄 단위 블록 파싱
     const lines = html.split(/\r?\n/);

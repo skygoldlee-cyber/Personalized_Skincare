@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v161-20260902-page-ref-cleanup';   // 교재 본문 p.NN 페이지 참조 표시 제거
+const CACHE_VERSION = 'v162-20260902-mermaid-entity-fix';   // mermaid 코드블록 내 HTML 엔티티(&lt; &gt; &quot;) 및 <br/> 텍스트 보존
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
