@@ -2345,8 +2345,8 @@ body.landscape-mode .glass-card {
 
 .number-drill-item {
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    flex-direction: column;
+    gap: 0.2rem;
     padding: 0.4rem 0.6rem;
     border: 1px solid var(--border-color);
     border-radius: 6px;
@@ -2364,7 +2364,6 @@ body.landscape-mode .glass-card {
     font-weight: 800;
     color: var(--color-primary);
     white-space: nowrap;
-    flex-shrink: 0;
     font-variant-numeric: tabular-nums;
 }
 
@@ -2380,10 +2379,14 @@ body.landscape-mode .glass-card {
 
 .number-drill-context {
     color: var(--color-text-muted);
-    line-height: 1.4;
+    line-height: 1.35;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
     overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 }
 
 /* ===== ④ 절차 플로우 ===== */
@@ -2478,10 +2481,6 @@ body.landscape-mode .glass-card {
 
     .number-drill-grid {
         grid-template-columns: 1fr;
-    }
-
-    .number-drill-context {
-        white-space: normal;
     }
 
     .admin-penalty-table {
