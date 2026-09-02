@@ -34,7 +34,8 @@
 | ❓ **기출 퀴즈** | 900+ 문항 풀이, 즉시 채점 및 해설 |
 | ⭐ **오답/중요 복습** | 틀린 문제·북마크 문제 집중 복습 |
 | 🏋️ **스마트 훈련소** | 취약 영역 집중 연습 |
-| 📝 **실전 예상문제집** | 과목별 모의고사 (100문항 × 다수 세트) + MD 문제집 인앱 뷰어 (목차·인쇄, 팝업 없음) |
+| � **중요 숫자 암기표** | 과목별 빈출 숫자 카테고리별 분류 (기한·기간 / 농도·함량 / 시험·측정 / 제조·원료 / 금액) |
+| � **실전 예상문제집** | 과목별 모의고사 (100문항 × 다수 세트) + MD 문제집 인앱 뷰어 (목차·인쇄, 팝업 없음) |
 | 🔍 **성분 검색 사전** | 사용 가능/금지/제한 화장품 성분 검색 (배합 한도 포함) |
 | 🎧 **오디오북** | TTS로 생성한 단원별 음성 강의 (MP3) |
 | ✏️ **스크래치패드** | HTML5 Canvas 손글씨 연습장 |
@@ -55,7 +56,7 @@
 - **반응형 모바일 레이아웃**: 하단 탭 바 네비게이션, safe-area-inset 대응, 100dvh 동적 뷰포트
 
 **테스트**
-- Node.js 내장 테스트 러너 (`node --test`) — 88 unit tests (sha256, sanitize, state, parser, trainer-calc, utils, delegation-guard)
+- Node.js 내장 테스트 러너 (`node --test`) — 248 unit tests (sha256, sanitize, state, parser, trainer-calc, utils, delegation-guard, study-aids)
 - Vitest + jsdom — 10 DOM tests (backup 모듈)
 - GitHub Actions CI — push 시 `npm test` + parser parity 자동 실행
 
@@ -138,12 +139,14 @@ Personalized Skincare/
 │   ├── 문제은행/                    ← 문제은행 MD (4개 파일)
 │   ├── 참조자료/                    ← 참조자료 (원료, 법령원문, 공통)
 │   ├── 학습안내서.md                ← 학습 안내서 (앱 내 뷰어 연동)
+│   ├── number-drills/               ← 중요 숫자 암기표 JSON (과목별 4개 파일)
+│   ├── 맞춤형화장품조제관리사_중요숫자_암기정리.md ← 숫자 암기표 원본 MD
 │   ├── report/                      ← 분석 보고서 MD
 │   ├── utils/                       ← Python 변환 스크립트 (md_to_html, batch_convert, check_laws)
 │   └── audiobook/                   ← 오디오북 파이프라인 (Python)
 │
 ├── 📂 tests/                        ← 자동화 테스트
-│   ├── unit/                        ← Node.js 내장 테스트 러너 (88 tests)
+│   ├── unit/                        ← Node.js 내장 테스트 러너 (248 tests)
 │   └── dom/                         ← Vitest + jsdom DOM 테스트 (10 tests)
 ├── 📂 .github/workflows/            ← GitHub Actions CI (test + parser parity)
 │

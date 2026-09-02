@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v202-20260903-category-rename-back';   // 🧬 제조·품질 → 🧬 제조·원료 카테고리명 환원
+const CACHE_VERSION = 'v203-20260903-doc-sync';   // 참조 MD·README 동기화 (합격기준 삭제, 섹션11 확장, 테스트 수 정정)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
