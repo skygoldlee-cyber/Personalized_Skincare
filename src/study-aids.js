@@ -108,6 +108,11 @@ const EXCLUDE_PATTERNS = [
     /사용기한/,
     /시행일/,
     /\d{1,2}\s*월\s*\d{1,2}\s*일/,
+    /핵심\s*키워드/,
+    /정답/,
+    /해설/,
+    /기억\s*태그/,
+    /한\s*줄\s*요약/,
 ];
 
 /**
@@ -119,6 +124,7 @@ export function extractNumberDrills(chapter) {
     const sections = chapter.sections || [];
     const result = [];
     const globalSeenContext = new Set();
+    const globalEntries = new Map();
 
     sections.forEach(sec => {
         const lines = (sec.content || '').split('\n');
@@ -130,6 +136,9 @@ export function extractNumberDrills(chapter) {
 
             // 표 행 제외 (성분별 농도 등 개별 데이터는 암기 대상이 아님)
             if (trimmed.startsWith('|')) return;
+
+            // 퀴즈 보기(①②③④) 제외
+            if (/^[①②③④⑤]/.test(trimmed)) return;
 
             // 비암기 라인 제외 (예상 소요 시간 등)
             if (EXCLUDE_PATTERNS.some(p => p.test(trimmed))) return;
@@ -146,12 +155,17 @@ export function extractNumberDrills(chapter) {
             }
             if (numbers.length === 0) return;
 
-            // 원본 문장 (섹션 제목 + 마커 제거, 숫자 유지)
-            let fullContext = trimmed
+            // 원본 문장 (마커 제거, 숫자 유지)
+            let rawContext = trimmed
                 .replace(/🔖기출/g, '')
                 .replace(/📌중요/g, '')
                 .replace(/\*\*/g, '')
+                .replace(/^>\s*/, '')
                 .trim();
+            // dedup key: 섹션 제목 제외, 문맥만으로 중복 판단
+            const dedupKey = rawContext.substring(0, 80);
+            // 표시용: 섹션 제목 포함
+            let fullContext = rawContext;
             if (sec.title && !fullContext.includes(sec.title)) {
                 fullContext = `[${sec.title}] ${fullContext}`;
             }
@@ -159,20 +173,22 @@ export function extractNumberDrills(chapter) {
                 fullContext = fullContext.substring(0, 200) + '...';
             }
 
-            // 같은 설명(fullContext)이 이미 있으면 숫자만 추가
-            if (globalSeenContext.has(fullContext)) {
-                const existing = entries.find(e => e.fullContext === fullContext);
-                if (existing) {
+            // 같은 내용(dedupKey)이 이미 있으면 숫자만 추가
+            if (globalSeenContext.has(dedupKey)) {
+                if (globalEntries.has(dedupKey)) {
+                    const existing = globalEntries.get(dedupKey);
                     numbers.forEach(n => {
                         const dup = existing.numbers.some(en => en.number === n.number && en.unit === n.unit);
                         if (!dup) existing.numbers.push(n);
                     });
+                    if (isKey && !existing.isKey) existing.isKey = true;
                 }
                 return;
             }
-            globalSeenContext.add(fullContext);
-
-            entries.push({ numbers, fullContext, isKey });
+            globalSeenContext.add(dedupKey);
+            const entry = { numbers, fullContext, isKey };
+            globalEntries.set(dedupKey, entry);
+            entries.push(entry);
         });
 
         if (entries.length > 0) {
