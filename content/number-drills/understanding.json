@@ -112,5 +112,167 @@
     "context": "인체적용시험 연구자 경력: 5년 이상 · 헬싱키선언 준수",
     "isKey": false,
     "category": "📅 기한·기간"
+  },
+  {
+    "numbers": [{"number": "2", "unit": "주"}],
+    "context": "연속 피부 자극시험: 동물에 2주간 반복 투여",
+    "isKey": false,
+    "category": "📅 기한·기간"
+  },
+  {
+    "numbers": [{"number": "3", "unit": "개월"}, {"number": "6", "unit": "개월"}, {"number": "1", "unit": "년"}],
+    "context": "장기보존시험 측정시기: 1년간 3개월마다, 2년 6개월마다, 이후 1년마다",
+    "isKey": true,
+    "category": "📅 기한·기간"
+  },
+  {
+    "numbers": [{"number": "50", "unit": "%"}],
+    "context": "세포간지질 세라마이드 함량: 50% 이상",
+    "isKey": true,
+    "category": "💧 농도·함량"
+  },
+  {
+    "numbers": [{"number": "41", "unit": "%"}, {"number": "25", "unit": "%"}, {"number": "16", "unit": "%"}, {"number": "12", "unit": "%"}],
+    "context": "피지 구성: 트리글리세라이드 41% · 왁스에스터 25% · 지방산 16% · 스쿠알렌 12%",
+    "isKey": false,
+    "category": "💧 농도·함량"
+  },
+  {
+    "numbers": [{"number": "10", "unit": "%"}],
+    "context": "건성 피부 기준: 각질층 수분 함량 10% 미만",
+    "isKey": true,
+    "category": "💧 농도·함량"
+  },
+  {
+    "numbers": [{"number": "0.2", "unit": "%"}],
+    "context": "티로시나아제: 약 0.2% 구리 함유 구리단백질 (멜라닌 형성 효소)",
+    "isKey": false,
+    "category": "💧 농도·함량"
+  },
+  {
+    "numbers": [{"number": "1.5~2.0", "unit": "m²"}],
+    "context": "피부 면적: 1.5~2.0m² (신체 최대 기관)",
+    "isKey": true,
+    "category": "🧪 시험·측정"
+  },
+  {
+    "numbers": [{"number": "4.0", "unit": "kg"}],
+    "context": "피부 무게: 약 4.0kg 이상",
+    "isKey": false,
+    "category": "🧪 시험·측정"
+  },
+  {
+    "numbers": [{"number": "4.5~6.5", "unit": "pH"}],
+    "context": "피부 전체 pH: 4.5~6.5",
+    "isKey": false,
+    "category": "🧪 시험·측정"
+  },
+  {
+    "numbers": [{"number": "2~3", "unit": "층"}],
+    "context": "투명층: 2~3층 (손바닥·발바닥만 존재)",
+    "isKey": false,
+    "category": "🧪 시험·측정"
+  },
+  {
+    "numbers": [{"number": "5~10", "unit": "층"}],
+    "context": "유극층: 5~10층 (표피에서 가장 두꺼운 층)",
+    "isKey": true,
+    "category": "🧪 시험·측정"
+  },
+  {
+    "numbers": [{"number": "4:1~10:1", "unit": "비율"}],
+    "context": "기저층 세포 비율: 각질형성세포:멜라닌세포 = 4:1~10:1",
+    "isKey": true,
+    "category": "🧪 시험·측정"
+  },
+  {
+    "numbers": [{"number": "10~20", "unit": "%"}],
+    "context": "멜라닌세포: 표피의 10~20% 차지 (피부색 결정)",
+    "isKey": true,
+    "category": "🧪 시험·측정"
+  },
+  {
+    "numbers": [{"number": "0.6~1.0", "unit": "%"}],
+    "context": "피부 호흡: 전체 호흡의 0.6~1.0%",
+    "isKey": false,
+    "category": "🧪 시험·측정"
+  },
+  {
+    "numbers": [{"number": "0.5~2.0", "unit": "L/일"}],
+    "context": "땀 분비량: 0.5~2.0L/일",
+    "isKey": false,
+    "category": "🧪 시험·측정"
+  },
+  {
+    "numbers": [{"number": "1.0~2.0", "unit": "g/일"}],
+    "context": "피지 분비량: 1.0~2.0g/일",
+    "isKey": false,
+    "category": "🧪 시험·측정"
+  },
+  {
+    "numbers": [{"number": "5.5~6.5", "unit": "pH"}],
+    "context": "아포크린선(대한선) pH: 5.5~6.5 (겨드랑이·서혜부, 모공 분비)",
+    "isKey": false,
+    "category": "🧪 시험·측정"
+  },
+  {
+    "numbers": [{"number": "3.8~5.6", "unit": "pH"}],
+    "context": "에크린선(소한선) pH: 3.8~5.6 (전신, 체온조절)",
+    "isKey": false,
+    "category": "🧪 시험·측정"
+  },
+  {
+    "numbers": [{"number": "5~15", "unit": "층"}],
+    "context": "모표피: 5~15층 비늘 모양 (무색투명, 화학저항 강)",
+    "isKey": true,
+    "category": "🧪 시험·측정"
+  },
+  {
+    "numbers": [{"number": "80~90", "unit": "%"}],
+    "context": "모피질: 모발의 80~90% 차지 (멜라닌 함유, 친수성)",
+    "isKey": true,
+    "category": "🧪 시험·측정"
+  },
+  {
+    "numbers": [{"number": "100", "unit": "Å"}],
+    "context": "모표피 에피큐티클 두께: 약 100Å (가장 바깥쪽 얇은 막)",
+    "isKey": false,
+    "category": "🧪 시험·측정"
+  },
+  {
+    "numbers": [{"number": "2~3", "unit": "개"}],
+    "context": "정상 두피: 모공 1개당 2~3개 모발 존재",
+    "isKey": false,
+    "category": "🧪 시험·측정"
+  },
+  {
+    "numbers": [{"number": "320~400", "unit": "nm"}],
+    "context": "UVA 파장: 320~400nm (광노화 원인)",
+    "isKey": true,
+    "category": "🧪 시험·측정"
+  },
+  {
+    "numbers": [{"number": "290~320", "unit": "nm"}],
+    "context": "UVB 파장: 290~320nm (일광화상·홍반 원인)",
+    "isKey": true,
+    "category": "🧪 시험·측정"
+  },
+  {
+    "numbers": [{"number": "200~290", "unit": "nm"}],
+    "context": "UVC 파장: 200~290nm (피부암·살균·소독)",
+    "isKey": true,
+    "category": "🧪 시험·측정"
+  },
+  {
+    "numbers": [{"number": "9", "unit": "종"}],
+    "context": "안전성시험 종류: 9종 (단회독성·1차피부자극·연속피부자극·안점막·감작성·광독성·광감작성·인체첩포·유전독성)",
+    "isKey": true,
+    "category": "🧬 제조·원료"
+  },
+  {
+    "numbers": [{"number": "3", "unit": "회"}],
+    "context": "가속시험 측정 횟수: 시험 개시 때 포함 최소 3번 측정",
+    "isKey": true,
+    "category": "🧬 제조·원료"
   }
 ]
