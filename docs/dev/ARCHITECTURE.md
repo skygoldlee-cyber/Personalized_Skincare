@@ -153,6 +153,200 @@
 | ~~`exams/`~~ | (삭제됨 — `content/문제은행/`로 이동) |
 | `docs/` | 프로젝트 문서 (`dev/` 개발 문서, `user/` 사용자 문서) |
 | `tools/` | 빌드 스크립트, 로컬 개발 서버, 검증 도구 |
+| `tests/` | 자동화 테스트 (`unit/` Node.js, `dom/` Vitest+jsdom) |
+| `vendor/` | 자체 호스팅 라이브러리 (FontAwesome, 웹폰트, Mermaid.js) |
+| `icons/` | PWA 아이콘 (192/512/maskable) |
+
+---
+
+## 🌳 계층적 디렉토리 구조
+
+```
+Personalized_Skincare/
+├── index.html                  # SPA 엔트리 포인트
+├── style.css                   # 메인 스타일 (base.css import)
+├── sw.js                       # Service Worker
+├── manifest.webmanifest        # PWA 매니페스트
+├── ping.txt                    # 오프라인 감지 프로브
+├── serve.js                    # 로컬 개발 서버
+├── package.json
+├── package-lock.json
+├── jsconfig.json               # JSDoc 타입 검사 설정
+├── vitest.config.mjs           # 테스트 설정
+├── vercel.json                 # Vercel 배포 + CSP 헤더
+├── .gitignore / .vercelignore
+├── README.md
+│
+├── .github/
+│   └── workflows/
+│       └── ci.yml              # GitHub Actions CI
+│
+├── icons/                      # PWA 아이콘 (192/512/maskable)
+│
+├── css/                        # UI 모듈별 스타일시트
+│   ├── base.css                #   전역, 레이아웃, 네비게이션, 스크롤바
+│   ├── dashboard.css           #   대시보드
+│   ├── study.css               #   플래시카드, 퀴즈
+│   ├── exam.css                #   모의고사, 배지
+│   ├── reader.css              #   교재 리더, 용어집, 학습보조, Mermaid
+│   └── trainer.css             #   훈련소, 계산기, 손글씨
+│
+├── src/                        # 애플리케이션 소스 (ESM)
+│   ├── app.js                  #   오케스트레이터 (초기화, 라우팅, 이벤트 위임)
+│   ├── app-fallback.js         #   ESM 로드 실패 시 자가 복구
+│   ├── pwa-install-capture.js  #   beforeinstallprompt 조기 캡처 + SW 등록
+│   ├── theme-init.js           #   FOUC 방지 (페인트 전 테마 적용)
+│   ├── state.js                #   전역 상태 + localStorage 영속성
+│   ├── data-loader.js          #   온디맨드 과목/시험 로딩
+│   ├── textbook-parser.js      #   런타임 MD → 카드/퀴즈/챕터 파싱
+│   ├── reader-format.js        #   MD→HTML 변환, 링크 재작성, 키워드 자동링크
+│   ├── markdown-parser.js      #   범용 MD→HTML 파서
+│   ├── pdf-registry.js         #   참조자료 중앙 설정 (과목 변경 시 유일 수정 파일)
+│   ├── html-viewer.js          #   참조자료 fetch+DOM 뷰어, 검색, 하이라이트
+│   ├── exam-viewer.js          #   문제은행 MD 런타임 뷰어
+│   ├── manual-viewer.js        #   학습안내서/매뉴얼 뷰어
+│   ├── glossary-query.js       #   용어집 조회 API
+│   ├── keyword-index.js        #   교재 셀→참조자료 키워드 매핑 (자동 생성)
+│   ├── concept-map.js          #   SVG 마인드맵 (용어집 링크 유지)
+│   ├── study-aids.js           #   기출 필터, 숫자 암기표
+│   ├── charts.js               #   SVG 레이더/꺾은선 차트 + 툴팁
+│   ├── sanitize.js             #   XSS 방어
+│   ├── sha256.js               #   안정적 ID 해시
+│   ├── trainer-calc.js         #   계산 훈련 문제 생성 (순수 로직)
+│   ├── scratchpad.js           #   손글씨 Canvas
+│   ├── types.js                #   JSDoc @typedef 타입 정의
+│   ├── ui-utils.js             #   로딩 UI 공통 유틸
+│   ├── utils.js                #   초성 추출, Fisher-Yates 셔플
+│   ├── globals.d.ts            #   전역 타입 선언
+│   ├── lib/                    #   (빈, 예비)
+│   └── views/                  #   뷰 컨트롤러 모듈
+│       ├── dashboard.js        #     대시보드 통계
+│       ├── flashcard.js        #     3D 플래시카드
+│       ├── quiz.js             #     퀴즈 + 복습 + 일일 챌린지
+│       ├── trainer.js          #     훈련소 UI
+│       ├── exam-simulator.js   #     모의고사 시뮬레이터
+│       ├── textbook-reader.js  #     교재 리더 + 오디오 + Media Session
+│       ├── textbook-search.js  #     교재 본문 검색
+│       ├── dictionary.js       #     성분 사전
+│       ├── backup.js           #     데이터 백업/복원
+│       ├── glossary-renderer.js #    용어집 렌더링 + scrollToGlossary()
+│       └── navigation.js       #     뷰 전환 유틸
+│
+├── content/                    # SSOT — 모든 교재/문제/참조자료 원본
+│   ├── manifest.json           #   과목/단원/시험/추천링크 메타데이터
+│   ├── 학습안내서.md
+│   ├── 교재/
+│   │   ├── glossary/           #   과목별 큐레이션 용어 정의 JSON (subject1~4)
+│   │   ├── law/                #   1과목 (본문 + 이야기형)
+│   │   ├── manufacturing/      #   2과목
+│   │   ├── safety/             #   3과목
+│   │   └── understanding/      #   4과목
+│   ├── 문제은행/                #   과목N_문제은행_교재인용.md (4개)
+│   ├── 참조자료/
+│   │   ├── ref_md/             #   HTML/MD 변환본 (42개, ~26MB)
+│   │   ├── 공통/               #   공통 참조자료
+│   │   ├── 과목1~4/            #   과목별 참조자료
+│   │   ├── 법령원문/           #   법령 원문
+│   │   └── 원료/               #   성분 원본 MD
+│   ├── audiobook/              #   Python TTS 파이프라인
+│   │   ├── run_pipeline.py     #     전체 파이프라인
+│   │   ├── md_chunker.py       #     MD 청크 분할
+│   │   ├── tts_elevenlabs.py   #     ElevenLabs TTS
+│   │   ├── tts_google_direct.py #    Google TTS
+│   │   ├── mp3_merger.py       #     MP3 병합
+│   │   ├── script_polisher.py  #     스크립트 정제
+│   │   ├── generate_all_mp3.py #     전 과목 일괄 생성
+│   │   └── mp3/                #     생성된 MP3 (gitignore)
+│   ├── report/                 #   분석 보고서 MD (4개)
+│   └── utils/                  #   Python 변환 스크립트
+│       ├── batch_convert.py    #     배치 HTML 변환
+│       ├── convert_ref_md.py   #     ref_md HTML→MD 변환
+│       ├── check_laws.py       #     법령 업데이트 검사
+│       └── md_to_html.py       #     단일 HTML 변환
+│
+├── data/                       # 빌드 타임 생성 (자동 생성, 직접 수정 금지)
+│   ├── registry.js             #   과목/시험/성분 메타
+│   ├── audio_manifest.js       #   오디오 챕터 매핑
+│   ├── id_migration.js         #   레거시 ID 마이그레이션
+│   ├── ingredients_data.*.js   #   성분 데이터 (해시 파일명)
+│   ├── exams/                  #   시험 데이터 번들 (해시 파일명)
+│   ├── exams_md/               #   문제은행 MD 폴백 번들 (file:// 전용)
+│   ├── study_md/               #   교재 MD 폴백 번들 (과목별 분할, file:// 전용)
+│   ├── docs_md/                #   학습안내서/매뉴얼 MD 폴백 번들
+│   └── subjects/               #   (빈, 예비)
+│
+├── tools/                      # 빌드/검증 도구
+│   ├── build/
+│   │   ├── index.js            #   메인 빌드 (registry, exams, ingredients)
+│   │   ├── manifest-loader.js  #   manifest.json 검증
+│   │   ├── schema.js           #   스키마 검증
+│   │   ├── id-factory.js       #   안정적 ID 생성
+│   │   ├── build_keyword_index.js # GLOSSARY_INDEX + 큐레이션 병합
+│   │   ├── report.js           #   빌드 통계
+│   │   ├── stamp-sw-version.js #   SW 캐시 버전 자동 스탬프
+│   │   └── plugins/
+│   │       ├── textbook.plugin.js
+│   │       ├── exams.plugin.js
+│   │       └── ingredients.plugin.js
+│   ├── build_doc_bundles.js    #   학습안내서/매뉴얼 폴백 번들
+│   ├── build_exam_bundles.js   #   문제은행 폴백 번들
+│   ├── build_study_md_bundle.js #  교재 폴백 번들 (과목별 분할)
+│   ├── check_parser_parity.js  #   빌드 파서 ↔ 런타임 파서 등가성 검증
+│   ├── verify-shell-assets.js  #   프리캐시 파일 존재 CI 검증
+│   ├── fix-mindmap-indent.mjs  #   Mermaid mindmap 들여쓰기 수정
+│   └── deploy.ps1              #   배포 스크립트
+│
+├── tests/                      # 자동화 테스트
+│   ├── unit/                   #   단위 테스트 (19개 파일, 250 tests)
+│   │   ├── delegation-guard.test.js
+│   │   ├── glossary-query.test.js
+│   │   ├── id-factory.test.js
+│   │   ├── markdown-parser-general.test.js
+│   │   ├── mermaid-*.test.js   #   Mermaid 렌더링 (5개)
+│   │   ├── pdf-registry.test.js
+│   │   ├── reader-format-general.test.js
+│   │   ├── sanitize.test.js
+│   │   ├── sha256.test.js
+│   │   ├── state.test.js
+│   │   ├── study-aids.test.js
+│   │   ├── textbook-parser.test.js
+│   │   ├── trainer-calc.test.js
+│   │   └── utils.test.js
+│   └── dom/                    #   DOM 테스트 (Vitest + jsdom)
+│       └── backup.dom.test.js
+│
+├── vendor/                     # 자체 호스팅 라이브러리
+│   ├── fontawesome/
+│   │   ├── css/all.min.css
+│   │   └── webfonts/           #   .woff2, .ttf
+│   ├── fonts/
+│   │   ├── fonts.css           #   @font-face 정의
+│   │   ├── noto-sans-kr-*.woff2 #  5 가중치
+│   │   └── outfit-*.woff2      #   4 가중치
+│   └── mermaid/
+│       └── mermaid.min.js      #   3.3MB, 온디맨드 로드
+│
+└── docs/                       # 프로젝트 문서
+    ├── README.md               #   문서 인덱스
+    ├── dev/                    #   개발자 문서
+    │   ├── ARCHITECTURE.md     #     아키텍처 설계서 (본 문서)
+    │   ├── SPEC.md             #     요구사양 명세서
+    │   ├── CHANGES.md          #     변경 이력
+    │   ├── TESTING.md          #     테스트 가이드
+    │   ├── DEPLOYMENT_GUIDE.md #     배포 가이드
+    │   ├── MULTI_MACHINE_SETUP.md
+    │   ├── PROJECT_MINDMAP.md
+    │   ├── FLASHCARD_LOGIC.md
+    │   ├── MD_TO_HTML_LOGIC.md
+    │   ├── TEXTBOOK_AUTHORING_GUIDE.md
+    │   ├── AUDIO_HOSTING_GUIDE.md
+    │   ├── SUBSCRIPTION_ROADMAP.md
+    │   ├── IMPROVEMENTS_REPORT.md
+    │   └── DEPLOY.md
+    └── user/
+        └── user_manual.md      #   사용자 매뉴얼
+```
+
 ---
 
 ## 🏗️ 계층별 상세 구조
