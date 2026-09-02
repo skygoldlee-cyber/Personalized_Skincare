@@ -89,114 +89,27 @@ export function renderExamHighlightCard(chapter) {
     return html;
 }
 
-// --- ③ 숫자·기한 자동 추출 ---
+// --- ③ 숫자·기한 암기표 (JSON 기반) ---
 
-const NUMBER_REGEX = /\b(\d+(?:\.\d+)?)\s*(%|ppm|일|세 이하)(?=\s|$|[,.;:)]}'"!?])/g;
-
-const EXCLUDE_PATTERNS = [
-    /예상\s*소요\s*시간/,
-    /예상\s*학습\s*시간/,
-    /예상\s*학습\s*기간/,
-    /권장\s*학습\s*시간/,
-    /학습\s*소요\s*시간/,
-    /예상\s*시간/,
-    /페이지\s*수/,
-    /글자\s*수/,
-    /단어\s*수/,
-    /포인트/,
-    /\d{4}\s*년\s*\d{1,2}\s*월\s*\d{1,2}\s*일/,
-    /사용기한/,
-    /시행일/,
-    /\d{1,2}\s*월\s*\d{1,2}\s*일/,
-    /핵심\s*키워드/,
-    /정답/,
-    /해설/,
-    /기억\s*태그/,
-    /한\s*줄\s*요약/,
-];
+const NUMBER_DRILL_CACHE = {};
 
 /**
- * 챕터에서 숫자+단위 패턴을 추출하여 암기표 데이터를 생성합니다.
- * @param {object} chapter
- * @returns {{ sectionTitle: string, entries: { number: string, unit: string, context: string }[] }[]}
+ * 과목별 JSON 파일에서 숫자 암기표 데이터를 로드합니다.
+ * @param {string} subjId - 과목 키 (law, manufacturing, safety, understanding)
+ * @returns {Promise<{ numbers: {number: string, unit: string}[], context: string, isKey: boolean }[]>}
  */
-export function extractNumberDrills(chapter) {
-    const sections = chapter.sections || [];
-    const result = [];
-    const globalSeenContext = new Set();
-    const globalEntries = new Map();
-
-    sections.forEach(sec => {
-        const lines = (sec.content || '').split('\n');
-        const entries = [];
-
-        lines.forEach(line => {
-            const trimmed = line.trim();
-            if (!trimmed || trimmed.startsWith('---') || trimmed.startsWith('|---')) return;
-
-            // 표 행 제외 (성분별 농도 등 개별 데이터는 암기 대상이 아님)
-            if (trimmed.startsWith('|')) return;
-
-            // 퀴즈 보기(①②③④) 제외
-            if (/^[①②③④⑤]/.test(trimmed)) return;
-
-            // 비암기 라인 제외 (예상 소요 시간 등)
-            if (EXCLUDE_PATTERNS.some(p => p.test(trimmed))) return;
-
-            // 마커 라인 우선
-            const isKey = trimmed.includes('🔖기출') || trimmed.includes('📌중요');
-
-            // 라인에서 모든 숫자+단위 추출
-            const numbers = [];
-            let match;
-            const localRegex = new RegExp(NUMBER_REGEX.source, 'g');
-            while ((match = localRegex.exec(trimmed)) !== null) {
-                numbers.push({ number: match[1], unit: match[2] });
-            }
-            if (numbers.length === 0) return;
-
-            // 원본 문장 (마커 제거, 숫자 유지)
-            let rawContext = trimmed
-                .replace(/🔖기출/g, '')
-                .replace(/📌중요/g, '')
-                .replace(/\*\*/g, '')
-                .replace(/^>\s*/, '')
-                .trim();
-            // dedup key: 섹션 제목 제외, 문맥만으로 중복 판단
-            const dedupKey = rawContext.substring(0, 80);
-            // 표시용: 섹션 제목 포함
-            let fullContext = rawContext;
-            if (sec.title && !fullContext.includes(sec.title)) {
-                fullContext = `[${sec.title}] ${fullContext}`;
-            }
-            if (fullContext.length > 200) {
-                fullContext = fullContext.substring(0, 200) + '...';
-            }
-
-            // 같은 내용(dedupKey)이 이미 있으면 숫자만 추가
-            if (globalSeenContext.has(dedupKey)) {
-                if (globalEntries.has(dedupKey)) {
-                    const existing = globalEntries.get(dedupKey);
-                    numbers.forEach(n => {
-                        const dup = existing.numbers.some(en => en.number === n.number && en.unit === n.unit);
-                        if (!dup) existing.numbers.push(n);
-                    });
-                    if (isKey && !existing.isKey) existing.isKey = true;
-                }
-                return;
-            }
-            globalSeenContext.add(dedupKey);
-            const entry = { numbers, fullContext, isKey };
-            globalEntries.set(dedupKey, entry);
-            entries.push(entry);
-        });
-
-        if (entries.length > 0) {
-            result.push({ sectionTitle: sec.title, entries });
-        }
-    });
-
-    return result;
+export async function loadNumberDrills(subjId) {
+    if (NUMBER_DRILL_CACHE[subjId]) return NUMBER_DRILL_CACHE[subjId];
+    try {
+        const resp = await fetch(`content/number-drills/${subjId}.json`);
+        if (!resp.ok) return [];
+        const data = await resp.json();
+        if (!Array.isArray(data)) return [];
+        NUMBER_DRILL_CACHE[subjId] = data;
+        return data;
+    } catch (e) {
+        return [];
+    }
 }
 
 /**
@@ -216,18 +129,15 @@ function categorizeEntry(unit) {
     return '기타';
 }
 
-export function renderNumberDrillCard(chapter) {
-    const drills = extractNumberDrills(chapter);
-    if (drills.length === 0) return '';
+export async function renderNumberDrillCard(subjId) {
+    const entries = await loadNumberDrills(subjId);
+    if (entries.length === 0) return '';
 
-    // 모든 항목을 평탄화 + 카테고리 분류 (첫 번째 숫자의 단위 기준)
-    const allEntries = [];
-    drills.forEach(d => {
-        d.entries.forEach(e => {
-            const category = categorizeEntry(e.numbers[0].unit);
-            allEntries.push({ ...e, sectionTitle: d.sectionTitle, category });
-        });
-    });
+    // 카테고리 분류 (첫 번째 숫자의 단위 기준)
+    const allEntries = entries.map(e => ({
+        ...e,
+        category: categorizeEntry(e.numbers[0].unit)
+    }));
 
     const keyEntries = allEntries.filter(e => e.isKey);
     const normalEntries = allEntries.filter(e => !e.isKey);
@@ -248,13 +158,13 @@ export function renderNumberDrillCard(chapter) {
 
     // 항목 렌더링 헬퍼: 여러 숫자를 하나의 카드에 표시
     const renderItem = (e, isKey) => {
-        let h = `<div class="number-drill-item${isKey ? ' is-key' : ''}" title="${esc(e.fullContext)}">`;
+        let h = `<div class="number-drill-item${isKey ? ' is-key' : ''}" title="${esc(e.context)}">`;
         h += `<div class="number-drill-values">`;
         e.numbers.forEach(n => {
             h += `<span class="number-drill-value">${esc(n.number)}<small>${esc(n.unit)}</small></span>`;
         });
         h += `</div>`;
-        h += `<span class="number-drill-context">${esc(e.fullContext)}</span>`;
+        h += `<span class="number-drill-context">${esc(e.context)}</span>`;
         h += `</div>`;
         return h;
     };
@@ -600,16 +510,18 @@ export function applyExamFilter(container, chapter, active) {
  * 모든 학습 보조 카드를 통합하여 HTML을 생성합니다.
  * 개념 맵 아래, 섹션 카드 위에 삽입됩니다.
  */
-export function renderStudyAids(chapter) {
+export async function renderStudyAids(chapter, subjId) {
     let html = '';
 
     // 기출 핵심 요약
     const highlightCard = renderExamHighlightCard(chapter);
     if (highlightCard) html += highlightCard;
 
-    // 숫자·기한 암기표
-    const numberCard = renderNumberDrillCard(chapter);
-    if (numberCard) html += numberCard;
+    // 숫자·기한 암기표 (JSON 기반)
+    if (subjId) {
+        const numberCard = await renderNumberDrillCard(subjId);
+        if (numberCard) html += numberCard;
+    }
 
     return html;
 }

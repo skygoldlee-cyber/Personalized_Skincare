@@ -765,7 +765,7 @@ function _filterMetaSections(chapter) {
     };
 }
 
-function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStoryMode) {
+async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStoryMode) {
     const container = document.getElementById('textbook-reader-container');
     if (!container) return;
 
@@ -879,7 +879,7 @@ function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStor
         </div>
     `;
 
-    html += renderStudyAids(chapter);
+    html += await renderStudyAids(chapter, subjId);
 
     const subjRefFiles = REFERENCE_FILES[subjId] || [];
     const subjDirName = SUBJECT_DIR_MAP[subjId] || '';

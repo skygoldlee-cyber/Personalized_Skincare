@@ -1,0 +1,17 @@
+[
+  {
+    "numbers": [{"number": "15", "unit": "일"}],
+    "context": "신속보고: 중대한 유해사례 발생 시 15일 이내 식약처장에게 보고",
+    "isKey": true
+  },
+  {
+    "numbers": [{"number": "5", "unit": "일"}],
+    "context": "회수계획서 제출 기한: 5일 이내 지방식약청장에게 제출",
+    "isKey": true
+  },
+  {
+    "numbers": [{"number": "3", "unit": "세 이하"}],
+    "context": "영유아 화장품: 3세 이하 영유아 대원료 사용 시 부작용 보고 의무",
+    "isKey": false
+  }
+]

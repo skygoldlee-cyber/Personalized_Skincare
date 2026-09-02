@@ -1,0 +1,37 @@
+[
+  {
+    "numbers": [{"number": "15", "unit": "일"}],
+    "context": "신속보고: 중대한 유해사례 등 안전성 정보를 알게 된 날로부터 15일 이내 식약처장에게 보고",
+    "isKey": true
+  },
+  {
+    "numbers": [{"number": "15", "unit": "일"}],
+    "context": "가등급 위해화장품 회수 기간: 15일 이내 (위해가 가장 심함 → 가장 빠름)",
+    "isKey": true
+  },
+  {
+    "numbers": [{"number": "30", "unit": "일"}],
+    "context": "나·다등급 위해화장품 회수 기간: 30일 이내",
+    "isKey": true
+  },
+  {
+    "numbers": [{"number": "5", "unit": "일"}],
+    "context": "회수계획서 제출: 회수 대상 화장품이라는 사실을 안 날부터 5일 이내 지방식약청장에게 제출",
+    "isKey": true
+  },
+  {
+    "numbers": [{"number": "95", "unit": "%"}],
+    "context": "행정처분 경감: 5분의 4(80%) 이상 회수 시 면제, 3분의 1(약33%) 이상 시 경감",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "0.5", "unit": "%"}],
+    "context": "안전기준: 특정 성분 함량 0.5% 이하 제한",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "1", "unit": "ppm"}],
+    "context": "중금속 허용 기준: 납 1ppm 이하",
+    "isKey": false
+  }
+]

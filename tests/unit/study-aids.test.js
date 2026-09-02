@@ -6,7 +6,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
     extractExamHighlights,
-    extractNumberDrills,
+    loadNumberDrills,
     detectProcedureFlow,
     detectAdminPenalty,
     isKeySection,
@@ -94,63 +94,39 @@ test('extractExamHighlights: 2자 이하 결과 제외', () => {
     assert.equal(result.length, 0, '2자 이하는 제외');
 });
 
-// ==================== extractNumberDrills ====================
+// ==================== loadNumberDrills ====================
 
-test('extractNumberDrills: 숫자+단위 패턴 추출', () => {
-    const chapter = {
-        sections: [{
-            title: '기준',
-            content: '안전기준: 0.5% 이하\n유지기간: 12ppm\n변경 기한: 30일',
-        }],
-    };
-    const result = extractNumberDrills(chapter);
-    assert.ok(result.length > 0, '최소 1개 섹션');
-    const allNums = result.flatMap(r => r.entries.flatMap(e => e.numbers.map(n => n.number + n.unit)));
-    assert.ok(allNums.some(n => n.includes('0.5%')), '0.5% 추출');
-    assert.ok(allNums.some(n => n.includes('12ppm')), '12ppm 추출');
-    assert.ok(allNums.some(n => n.includes('30일')), '30일 추출');
+test('loadNumberDrills: JSON 파일 로드 (fetch mock)', async () => {
+    const mockData = [
+        { numbers: [{ number: '15', unit: '일' }], context: '신속보고 15일 이내', isKey: true },
+        { numbers: [{ number: '5', unit: '일' }], context: '회수계획서 5일 이내', isKey: true },
+    ];
+    globalThis.fetch = async (url) => ({
+        ok: true,
+        json: async () => mockData,
+    });
+    const result = await loadNumberDrills('test');
+    assert.ok(Array.isArray(result), '배열 반환');
+    assert.equal(result.length, 2, '2개 항목');
+    assert.ok(result[0].numbers[0].number === '15', '첫 번째 숫자 15');
+    assert.ok(result[0].context.includes('15일'), '문맥에 15일 포함');
 });
 
-test('extractNumberDrills: 중복 제거 (같은 문장)', () => {
-    const chapter = {
-        sections: [{
-            title: '테스트',
-            content: '농도 10% 입니다\n농도 10% 입니다',
-        }],
-    };
-    const result = extractNumberDrills(chapter);
-    const entries = result[0].entries;
-    assert.equal(entries.length, 1, '동일 문장은 1개로 통합');
+test('loadNumberDrills: fetch 실패 시 빈 배열', async () => {
+    globalThis.fetch = async () => ({ ok: false });
+    const result = await loadNumberDrills('nonexistent');
+    assert.deepEqual(result, [], 'fetch 실패 시 빈 배열');
 });
 
-test('extractNumberDrills: 빈칸(▓▓) 치환 확인', () => {
-    const chapter = {
-        sections: [{
-            title: '테스트',
-            content: '농도는 30% 이하',
-        }],
+test('loadNumberDrills: 캐시 동작', async () => {
+    let callCount = 0;
+    globalThis.fetch = async () => {
+        callCount++;
+        return { ok: true, json: async () => [{ numbers: [{ number: '1', unit: '일' }], context: 'test', isKey: false }] };
     };
-    const result = extractNumberDrills(chapter);
-    assert.ok(result[0].entries[0].fullContext.includes('30%'), '숫자가 포함된 원본 문장 저장');
-});
-
-test('extractNumberDrills: isKey 플래그 (🔖기출/📌중요 라인)', () => {
-    const chapter = {
-        sections: [{
-            title: '테스트',
-            content: '🔖기출 제한 농도 5%\n일반 농도 3%',
-        }],
-    };
-    const result = extractNumberDrills(chapter);
-    const fiveP = result[0].entries.find(e => e.numbers.some(n => n.number === '5'));
-    const threeP = result[0].entries.find(e => e.numbers.some(n => n.number === '3'));
-    assert.equal(fiveP.isKey, true, '기출 라인의 숫자는 isKey=true');
-    assert.equal(threeP.isKey, false, '일반 라인은 isKey=false');
-});
-
-test('extractNumberDrills: 빈 챕터', () => {
-    assert.deepEqual(extractNumberDrills({ sections: [] }), []);
-    assert.deepEqual(extractNumberDrills({}), []);
+    await loadNumberDrills('cache-test');
+    await loadNumberDrills('cache-test');
+    assert.equal(callCount, 1, '두 번째 호출은 캐시에서 로드');
 });
 
 // ==================== detectProcedureFlow ====================
