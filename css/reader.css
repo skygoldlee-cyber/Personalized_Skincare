@@ -2275,7 +2275,7 @@ body.landscape-mode .glass-card {
     opacity: 0.25;
 }
 
-/* ===== ③ 숫자·기한 암기표 ===== */
+/* ===== ③ 중요 숫자 암기표 ===== */
 
 .number-drill-card {
     border-left: 3px solid var(--color-primary);

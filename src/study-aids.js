@@ -89,7 +89,7 @@ export function renderExamHighlightCard(chapter) {
     return html;
 }
 
-// --- ③ 숫자·기한 암기표 (JSON 기반) ---
+// --- ③ 중요 숫자 암기표 (JSON 기반) ---
 
 const NUMBER_DRILL_CACHE = {};
 
@@ -113,7 +113,7 @@ export async function loadNumberDrills(subjId) {
 }
 
 /**
- * 숫자·기한 암기표 HTML을 생성합니다.
+ * 중요 숫자 암기표 HTML을 생성합니다.
  * 단위별 카테고리 분류 + 기출/중요 우선 표시.
  */
 const UNIT_CATEGORIES = [
@@ -148,7 +148,7 @@ export async function renderNumberDrillCard(subjId) {
         <div class="study-aid-card number-drill-card" id="number-drill-card">
             <div class="study-aid-header">
                 <i class="fa-solid fa-hashtag"></i>
-                <span>숫자·기한 암기표 — ${totalEntries}개${keyCount > 0 ? ` (기출 ${keyCount}개 우선)` : ''}</span>
+                <span>중요 숫자 암기표 — ${totalEntries}개${keyCount > 0 ? ` (기출 ${keyCount}개 우선)` : ''}</span>
                 <button class="study-aid-toggle" id="number-drill-toggle" title="펼치기/접기">
                     <i class="fa-solid fa-chevron-down"></i>
                 </button>
@@ -517,7 +517,7 @@ export async function renderStudyAids(chapter, subjId) {
     const highlightCard = renderExamHighlightCard(chapter);
     if (highlightCard) html += highlightCard;
 
-    // 숫자·기한 암기표 (JSON 기반)
+    // 중요 숫자 암기표 (JSON 기반)
     if (subjId) {
         const numberCard = await renderNumberDrillCard(subjId);
         if (numberCard) html += numberCard;
@@ -546,7 +546,7 @@ export function bindStudyAidToggles(container) {
         });
     });
 
-    // 숫자·기한 암기표: 일반 항목 토글
+    // 중요 숫자 암기표: 일반 항목 토글
     const normalToggle = container.querySelector('#number-drill-normal-toggle');
     if (normalToggle && !normalToggle.dataset.bound) {
         normalToggle.dataset.bound = 'true';
