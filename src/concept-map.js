@@ -3,6 +3,7 @@
 // 대분류/중분류/소분류 테이블이 있으면 계층적 트리로 렌더링, 없으면 평면 섹션 나열.
 import { resolveRefPath } from './pdf-registry.js';
 import { getGlossaryEntry } from './glossary-query.js';
+import { scrollToGlossary } from './views/glossary-renderer.js';
 
 /**
  * 챕터 섹션 데이터를 받아 SVG 마인드맵을 생성합니다.
@@ -645,16 +646,7 @@ export function renderConceptMap(container, chapter, opts = {}) {
                 e.preventDefault();
                 e.stopPropagation();
                 const idxKey = link.getAttribute('data-glossary');
-                if (idxKey) {
-                    const target = document.getElementById(`glossary-${idxKey}`);
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        target.style.transition = 'background 0.5s ease';
-                        const origBg = target.style.background;
-                        target.style.background = 'rgba(250,204,21,0.25)';
-                        setTimeout(() => { target.style.background = origBg; }, 2000);
-                    }
-                }
+                scrollToGlossary(idxKey, link);
             });
             link.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {

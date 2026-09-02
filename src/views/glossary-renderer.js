@@ -79,6 +79,44 @@ export function appendGlossaryTocItem(tocList) {
     tocList.appendChild(glossaryTocItem);
 }
 
+let _glossaryBackBtn = null;
+let _glossarySavedScroll = null;
+let _glossarySavedLink = null;
+
+function _ensureBackBtn() {
+    if (_glossaryBackBtn) return _glossaryBackBtn;
+    const btn = document.createElement('button');
+    btn.className = 'glossary-back-btn';
+    btn.innerHTML = '<i class="fa-solid fa-arrow-up"></i> 원래 위치로';
+    btn.style.display = 'none';
+    btn.addEventListener('click', () => {
+        if (_glossarySavedScroll !== null) {
+            window.scrollTo({ top: _glossarySavedScroll, behavior: 'smooth' });
+        } else if (_glossarySavedLink) {
+            _glossarySavedLink.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        btn.style.display = 'none';
+    });
+    document.body.appendChild(btn);
+    _glossaryBackBtn = btn;
+    return btn;
+}
+
+export function scrollToGlossary(idxKey, sourceLink) {
+    if (!idxKey) return;
+    const target = document.getElementById(`glossary-${idxKey}`);
+    if (!target) return;
+    _glossarySavedScroll = window.scrollY;
+    _glossarySavedLink = sourceLink || null;
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    target.style.transition = 'background 0.5s ease';
+    const origBg = target.style.background;
+    target.style.background = 'rgba(250,204,21,0.25)';
+    setTimeout(() => { target.style.background = origBg; }, 2000);
+    const btn = _ensureBackBtn();
+    btn.style.display = 'inline-flex';
+}
+
 /**
  * 용어집 관련 이벤트를 바인딩합니다 (본문 내 자동 링크 클릭 → 용어집 스크롤).
  * @param {HTMLElement} container - 렌더링 컨테이너
@@ -87,17 +125,7 @@ export function bindGlossaryEvents(container) {
     container.querySelectorAll('[data-glossary]').forEach(a => {
         a.addEventListener('click', (e) => {
             e.preventDefault();
-            const idxKey = a.dataset.glossary;
-            if (idxKey) {
-                const target = document.getElementById(`glossary-${idxKey}`);
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    target.style.transition = 'background 0.5s ease';
-                    const origBg = target.style.background;
-                    target.style.background = 'rgba(250,204,21,0.25)';
-                    setTimeout(() => { target.style.background = origBg; }, 2000);
-                }
-            }
+            scrollToGlossary(a.dataset.glossary, a);
         });
     });
 }

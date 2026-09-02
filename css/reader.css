@@ -2682,3 +2682,41 @@ a.glossary-ref-link i {
 .reader-light-theme .reader-glossary .glossary-explanation {
     color: #2b2b2b !important;
 }
+
+/* === Glossary back-to-position floating button === */
+.glossary-back-btn {
+    position: fixed;
+    bottom: 5rem;
+    right: 1.5rem;
+    z-index: 9000;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem 1.1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #fff;
+    background: var(--color-primary, #1f6feb);
+    border: none;
+    border-radius: 2rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0.95;
+    animation: glossary-back-in 0.3s ease;
+}
+.glossary-back-btn:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+.glossary-back-btn:active {
+    transform: translateY(0);
+}
+.glossary-back-btn i {
+    font-size: 0.8rem;
+}
+@keyframes glossary-back-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 0.95; transform: translateY(0); }
+}
