@@ -91,7 +91,7 @@ export function renderExamHighlightCard(chapter) {
 
 // --- ③ 숫자·기한 자동 추출 ---
 
-const NUMBER_REGEX = /\b(\d+(?:\.\d+)?)\s*(%|ppm|일|개월|년|세 이하|원)(?=\s|$|[,.;:)\]}'"!?])/g;
+const NUMBER_REGEX = /\b(\d+(?:\.\d+)?)\s*(%|ppm|일|개월|년|세 이하)(?=\s|$|[,.;:)]}'"!?])/g;
 
 const EXCLUDE_PATTERNS = [
     /예상\s*소요\s*시간/,
@@ -123,6 +123,9 @@ export function extractNumberDrills(chapter) {
         lines.forEach(line => {
             const trimmed = line.trim();
             if (!trimmed || trimmed.startsWith('---') || trimmed.startsWith('|---')) return;
+
+            // 표 행 제외 (성분별 농도 등 개별 데이터는 암기 대상이 아님)
+            if (trimmed.startsWith('|')) return;
 
             // 비암기 라인 제외 (예상 소요 시간 등)
             if (EXCLUDE_PATTERNS.some(p => p.test(trimmed))) return;
@@ -184,7 +187,6 @@ const UNIT_CATEGORIES = [
     { label: '📅 기한·기간', units: ['일', '개월', '년'] },
     { label: '💧 농도·함량', units: ['%', 'ppm'] },
     { label: '👶 연령 기준', units: ['세 이하'] },
-    { label: '� 벌금·과태료', units: ['원'] },
 ];
 
 function categorizeEntry(unit) {
