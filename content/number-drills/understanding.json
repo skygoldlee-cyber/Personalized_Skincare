@@ -1,7 +1,142 @@
 [
   {
-    "numbers": [{"number": "3", "unit": "세 이하"}],
-    "context": "맞춤형 화장품: 3세 이하 영유아 대상 맞춤형 화장품 조제 시 부작용 보고 의무",
+    "numbers": [{"number": "30", "unit": "일"}],
+    "context": "변경 등록·신고 일반 기한: 소재지·대표자 등 변경 시 30일 이내",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "15", "unit": "일"}],
+    "context": "중대 유해사례 신속보고: 15일 이내 (①②③ 공통 최빈출)",
+    "isKey": true
+  },
+  {
+    "numbers": [{"number": "1", "unit": "년"}],
+    "context": "제품 사용기한 만료 후 자료 보존: 1년간",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "12", "unit": "개월"}],
+    "context": "업무정지 합산 최대: 12개월",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "3", "unit": "년"}],
+    "context": "조제관리사 결격: 자격취소 후 3년 미경과",
+    "isKey": true
+  },
+  {
+    "numbers": [{"number": "90", "unit": "일"}],
+    "context": "자격시험 시행 공고: 시험 90일 전",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "60", "unit": "%"}, {"number": "40", "unit": "%"}],
+    "context": "합격 기준: 전 과목 총점 60% 이상 & 매 과목 40% 이상",
+    "isKey": true
+  },
+  {
+    "numbers": [{"number": "6", "unit": "개월"}],
+    "context": "최초 교육: 자격 취득 후 6개월 이내",
+    "isKey": true
+  },
+  {
+    "numbers": [{"number": "50만", "unit": "원"}],
+    "context": "교육 미이수 과태료: 50만 원",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "28±3", "unit": "일"}],
+    "context": "각화(각질형성) 주기: 28±3일",
+    "isKey": true
+  },
+  {
+    "numbers": [{"number": "4.5~5.5", "unit": "pH"}],
+    "context": "각질층 pH: 4.5~5.5 (약산성)",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "58", "unit": "%"}, {"number": "31", "unit": "%"}, {"number": "11", "unit": "%"}],
+    "context": "각질층 구성: 케라틴 58% · NMF 31% · 세포간지질 11%",
+    "isKey": true
+  },
+  {
+    "numbers": [{"number": "10~20", "unit": "%"}],
+    "context": "각질층 수분 함유: 10~20%",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "10~20", "unit": "층"}],
+    "context": "각질층 두께: 약 10~20층",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "2~5", "unit": "층"}],
+    "context": "과립층: 2~5층",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "40", "unit": "%"}, {"number": "12", "unit": "%"}, {"number": "12", "unit": "%"}, {"number": "7", "unit": "%"}],
+    "context": "NMF 구성: 아미노산 40% · PCA 12% · 젖산염 12% · 요소 7%",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "10~40", "unit": "배"}],
+    "context": "진피 두께: 표피의 10~40배, 피부의 90% 이상",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "90", "unit": "%"}, {"number": "1.5~4.7", "unit": "%"}],
+    "context": "진피 구성: 콜라겐 90% · 엘라스틴 1.5~4.7%",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "75", "unit": "%"}],
+    "context": "콜라겐: 피부 건조 중량 75%, 아미노산 1,000개 결합 나선",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "0.3~0.5", "unit": "mm"}],
+    "context": "모발 성장 속도: 1일 0.3~0.5mm",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "50~100", "unit": "가닥"}],
+    "context": "모발 정상 탈락량: 하루 50~100가닥",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "3~6", "unit": "년"}, {"number": "80~90", "unit": "%"}],
+    "context": "모발 성장기(Anagen): 3~6년 (전체 80~90%)",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "3", "unit": "주"}],
+    "context": "모발 퇴행기(Catagen): 약 3주 (1~2%)",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "3~4", "unit": "개월"}],
+    "context": "모발 휴지기(Telogen): 3~4개월 (10~15%)",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "3", "unit": "로트"}, {"number": "6", "unit": "개월"}],
+    "context": "안정성시험 공통: 3로트 이상 · 6개월 이상",
+    "isKey": true
+  },
+  {
+    "numbers": [{"number": "15", "unit": "℃"}],
+    "context": "안정성 가속시험: 장기보존 온도 +15℃ 이상 / 6개월 이상",
+    "isKey": true
+  },
+  {
+    "numbers": [{"number": "-15~45", "unit": "℃"}],
+    "context": "안정성 가혹시험: -15 ~ 45℃ 동결·해동 반복",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "5", "unit": "년"}],
+    "context": "인체적용시험 연구자 경력: 5년 이상 · 헬싱키선언 준수",
     "isKey": false
   }
 ]

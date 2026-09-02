@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v194-20260903-number-drill-rename';   // 숫자·기한 암기표 → 중요 숫자 암기표 제목 변경
+const CACHE_VERSION = 'v195-20260903-number-drill-md-ref';   // 중요 숫자 암기표 — 참조 MD 기반으로 과목별 JSON 전면 업데이트
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;

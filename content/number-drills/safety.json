@@ -1,17 +1,207 @@
 [
   {
     "numbers": [{"number": "15", "unit": "일"}],
-    "context": "신속보고: 중대한 유해사례 발생 시 15일 이내 식약처장에게 보고",
+    "context": "중대 유해사례 신속보고: 15일 이내 식약처장에게 보고 (①②③ 공통 최빈출)",
     "isKey": true
   },
   {
-    "numbers": [{"number": "5", "unit": "일"}],
-    "context": "회수계획서 제출 기한: 5일 이내 지방식약청장에게 제출",
+    "numbers": [{"number": "50", "unit": "㎍/g"}, {"number": "20", "unit": "㎍/g"}],
+    "context": "납(Pb) 허용한도: 점토 분말제품 50 / 그 밖 20 ㎍/g 이하",
     "isKey": true
   },
   {
-    "numbers": [{"number": "3", "unit": "세 이하"}],
-    "context": "영유아 화장품: 3세 이하 영유아 대원료 사용 시 부작용 보고 의무",
+    "numbers": [{"number": "35", "unit": "㎍/g"}, {"number": "30", "unit": "㎍/g"}, {"number": "10", "unit": "㎍/g"}],
+    "context": "니켈(Ni) 허용한도: 눈화장 35 / 색조 30 / 그 밖 10 ㎍/g 이하",
+    "isKey": true
+  },
+  {
+    "numbers": [{"number": "10", "unit": "㎍/g"}],
+    "context": "비소(As) 허용한도: 10 ㎍/g 이하",
+    "isKey": true
+  },
+  {
+    "numbers": [{"number": "10", "unit": "㎍/g"}],
+    "context": "안티몬(Sb) 허용한도: 10 ㎍/g 이하",
+    "isKey": true
+  },
+  {
+    "numbers": [{"number": "5", "unit": "㎍/g"}],
+    "context": "카드뮴(Cd) 허용한도: 5 ㎍/g 이하",
+    "isKey": true
+  },
+  {
+    "numbers": [{"number": "1", "unit": "㎍/g"}],
+    "context": "수은(Hg) 허용한도: 1 ㎍/g 이하",
+    "isKey": true
+  },
+  {
+    "numbers": [{"number": "100", "unit": "㎍/g"}],
+    "context": "디옥산 허용한도: 100 ㎍/g 이하",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "0.2", "unit": "%"}, {"number": "0.002", "unit": "%"}],
+    "context": "메탄올 허용한도: 0.2(v/v)% 이하 (물휴지 0.002%)",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "2000", "unit": "㎍/g"}, {"number": "20", "unit": "㎍/g"}],
+    "context": "포름알데하이드 허용한도: 2,000 ㎍/g 이하 (물휴지 20)",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "100", "unit": "㎍/g"}],
+    "context": "프탈레이트류(DBP+BBP+DEHP) 총합: 100 ㎍/g 이하",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "500", "unit": "개/g"}],
+    "context": "미생물 한도 — 영유아용·눈화장용: 총호기성생균수 500 개/g(mL) 이하",
+    "isKey": true
+  },
+  {
+    "numbers": [{"number": "100", "unit": "개/g"}],
+    "context": "미생물 한도 — 물휴지: 세균·진균 각각 100 개/g(mL) 이하",
+    "isKey": true
+  },
+  {
+    "numbers": [{"number": "1000", "unit": "개/g"}],
+    "context": "미생물 한도 — 기타 화장품류: 총호기성생균수 1,000 개/g(mL) 이하",
+    "isKey": true
+  },
+  {
+    "numbers": [{"number": "3", "unit": "개"}, {"number": "97", "unit": "%"}],
+    "context": "내용량(1차): 제품 3개 평균이 표기량의 97% 이상",
+    "isKey": true
+  },
+  {
+    "numbers": [{"number": "6", "unit": "개"}, {"number": "9", "unit": "개"}],
+    "context": "내용량(재시험): 벗어나면 6개 추가 → 9개 평균 97% 이상",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "3.0~9.0", "unit": "pH"}],
+    "context": "액상 제품 pH: 3.0 ~ 9.0 (물 무함유·즉시 세정 제품 제외)",
+    "isKey": true
+  },
+  {
+    "numbers": [{"number": "0.1", "unit": "%"}],
+    "context": "화장비누 유리알칼리: 0.1% 이하",
+    "isKey": true
+  },
+  {
+    "numbers": [{"number": "20", "unit": "회/hr"}, {"number": "10", "unit": "회/hr"}],
+    "context": "청정도 등급: 1등급 20회/hr 이상 · 2등급 10회/hr 이상",
+    "isKey": true
+  },
+  {
+    "numbers": [{"number": "0.3", "unit": "㎛"}, {"number": "99.97", "unit": "%"}],
+    "context": "HEPA 필터: 0.3㎛ 99.97% 제거",
+    "isKey": true
+  },
+  {
+    "numbers": [{"number": "5", "unit": "㎛"}, {"number": "9", "unit": "mmAq"}],
+    "context": "Pre 필터: 5㎛ 입자, 압력손실 9 mmAq 이하",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "0.5", "unit": "㎛"}, {"number": "16", "unit": "mmAq"}],
+    "context": "Medium 필터: 0.5㎛ 입자, 압력손실 16 mmAq 이하",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "0.3", "unit": "㎛"}, {"number": "24", "unit": "mmAq"}],
+    "context": "HEPA 필터: 0.3㎛, 압력손실 24 mmAq 이하",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "30", "unit": "분"}],
+    "context": "낙하균(Koch법) 측정: 고청정 시설 노출 30분 이상",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "30", "unit": "cm"}],
+    "context": "낙하균 측정 위치: 벽에서 30cm 떨어진 곳",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "20~30", "unit": "cm"}],
+    "context": "낙하균 측정 높이(부득이 시): 바닥에서 20~30cm",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "5", "unit": "개소"}],
+    "context": "낙하균 작은 방 측정소: 약 5개소 (5개소 이하는 평가 곤란)",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "30~35", "unit": "℃"}, {"number": "48", "unit": "시간"}],
+    "context": "낙하균 세균용 배지 배양: 30~35℃ / 48시간 이상",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "20~25", "unit": "℃"}, {"number": "5", "unit": "일"}],
+    "context": "낙하균 진균용 배지 배양: 20~25℃ / 5일 이상",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "15", "unit": "초"}],
+    "context": "손 세정(비누 문지르기): 15초 이상",
+    "isKey": true
+  },
+  {
+    "numbers": [{"number": "99.9", "unit": "%"}],
+    "context": "이상적 소독제 조건(사멸): 소독 전 미생물 99.9% 이상 사멸",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "121", "unit": "℃"}, {"number": "20", "unit": "분"}],
+    "context": "면봉(검체채취용) 멸균: 121℃ / 20분",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "70~80", "unit": "%"}],
+    "context": "손 소독제 — 알코올: 70~80%",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "0.5~4.0", "unit": "%"}],
+    "context": "손 소독제 — 클로르헥시딘: 0.5~4.0%",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "3.0", "unit": "%"}],
+    "context": "손 소독제 — 헥사클로로펜: 3.0%",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "0.5~10", "unit": "%"}],
+    "context": "손 소독제 — 아이오도퍼: 0.5~10%",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "50", "unit": "ppm"}],
+    "context": "시설 소독 — 차아염소산나트륨: 50ppm 락스, 당일 조제·전량 폐기",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "3", "unit": "%"}],
+    "context": "시설 소독 — 크레졸수: 3% 수용액 (녹농균·결핵균 유효)",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "3", "unit": "%"}],
+    "context": "시설 소독 — 페놀수: 3% 수용액",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "20", "unit": "배"}],
+    "context": "시설 소독 — 벤잘코늄클로라이드: 10% → 20배 희석",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "10", "unit": "배"}],
+    "context": "시설 소독 — 글루콘산클로르헥시딘: 5% → 10배 희석",
     "isKey": false
   }
 ]

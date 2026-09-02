@@ -117,9 +117,10 @@ export async function loadNumberDrills(subjId) {
  * 단위별 카테고리 분류 + 기출/중요 우선 표시.
  */
 const UNIT_CATEGORIES = [
-    { label: '📅 기한 (일)', units: ['일'] },
-    { label: '💧 농도·함량', units: ['%', 'ppm'] },
-    { label: '👶 연령 기준', units: ['세 이하'] },
+    { label: '📅 기한·기간', units: ['일', '개월', '년', '주', '시간', '분', '초'] },
+    { label: '💧 농도·함량', units: ['%', 'ppm', '㎍/g', 'IU/g'] },
+    { label: '🧪 시험·측정', units: ['개/g', '회/hr', '℃', 'mmAq', '㎛', '로트', '개소', 'cm', 'mm', 'pH', '층', '배', '가닥', '회'] },
+    { label: '� 금액', units: ['원'] },
 ];
 
 function categorizeEntry(unit) {

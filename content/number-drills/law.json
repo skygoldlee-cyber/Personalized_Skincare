@@ -1,37 +1,142 @@
 [
   {
-    "numbers": [{"number": "15", "unit": "일"}],
-    "context": "신속보고: 중대한 유해사례 발생 시 알게 된 날로부터 15일 이내 식약처장에게 보고",
-    "isKey": true
-  },
-  {
-    "numbers": [{"number": "15", "unit": "일"}],
-    "context": "가등급 위해화장품 회수 기간: 15일 이내",
-    "isKey": true
-  },
-  {
     "numbers": [{"number": "30", "unit": "일"}],
-    "context": "나·다등급 위해화장품 회수 기간: 30일 이내",
-    "isKey": true
-  },
-  {
-    "numbers": [{"number": "5", "unit": "일"}],
-    "context": "회수계획서 제출 기한: 회수 대상 화장품이라는 사실을 안 날부터 5일 이내",
-    "isKey": true
-  },
-  {
-    "numbers": [{"number": "2", "unit": "년"}, {"number": "2", "unit": "년"}],
-    "context": "회수 계획 통보 자료 보관: 2년간 보관, 폐기확인서: 2년간 보관",
+    "context": "변경 등록·신고 일반 기한: 소재지·대표자 등 변경 시 30일 이내",
     "isKey": false
   },
   {
-    "numbers": [{"number": "3", "unit": "세 이하"}],
-    "context": "영유아 또는 어린이 사용 화장품: 3세 이하 영유아 대원료 사용 부작용 보고 의무",
+    "numbers": [{"number": "90", "unit": "일"}],
+    "context": "행정구역 개편에 따른 소재지 변경: 90일 이내",
     "isKey": false
   },
   {
-    "numbers": [{"number": "13", "unit": "세 이하"}],
-    "context": "어린이용 화장품: 13세 이하 어린이 대상 화장품 기준 적용",
+    "numbers": [{"number": "7", "unit": "일"}],
+    "context": "폐업·휴업 신고수리 통지: 처장이 신고받은 날부터 7일 이내",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "15", "unit": "일"}],
+    "context": "중대 유해사례 신속보고: 15일 이내 식약처장에게 보고 (①②③ 공통 최빈출)",
+    "isKey": true
+  },
+  {
+    "numbers": [{"number": "15", "unit": "일"}],
+    "context": "실증자료 제출: 요청받은 날부터 15일 이내",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "60", "unit": "일"}],
+    "context": "심사자료 보완: 보완일부터 60일 이내 (연장 요청 가능)",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "180", "unit": "일"}],
+    "context": "심사 결과 통지: 자료 제출일부터 180일 이내",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "15", "unit": "일"}],
+    "context": "과징금 미납 → 독촉장 발급: 기한 후 15일 이내",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "10", "unit": "일"}],
+    "context": "독촉장 납부기한: 발급일부터 10일 이내",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "1", "unit": "년"}],
+    "context": "제품 사용기한 만료 후 자료 보존: 1년간",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "72", "unit": "시간"}, {"number": "7", "unit": "일"}],
+    "context": "개인정보 유출 신고(1천명 이상): 72시간 이내, 홈페이지 7일 이상 게재",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "1", "unit": "년"}],
+    "context": "반복 위반 가중 기준: 최근 1년",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "1", "unit": "년"}],
+    "context": "처분효과 승계 기간: 처분 종료일부터 1년간",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "12", "unit": "개월"}],
+    "context": "업무정지 합산 최대: 12개월",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "10억", "unit": "원"}],
+    "context": "과징금(업무정지 갈음) 최대: 10억 원 이하",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "3", "unit": "년"}, {"number": "3천만", "unit": "원"}, {"number": "1", "unit": "년"}, {"number": "1천만", "unit": "원"}, {"number": "200만", "unit": "원"}],
+    "context": "벌칙 3단계: 3년 이하/3천만 원 · 1년 이하/1천만 원 · 200만 원 이하",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "100만", "unit": "원"}, {"number": "50만", "unit": "원"}],
+    "context": "과태료 2단계: 100만 원 · 50만 원 이하",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "1", "unit": "년"}],
+    "context": "영업 결격: 취소·형 선고 후 1년 미경과",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "3", "unit": "년"}],
+    "context": "조제관리사 결격: 자격취소 후 3년 미경과",
+    "isKey": true
+  },
+  {
+    "numbers": [{"number": "3", "unit": "년"}],
+    "context": "부정행위자 응시 제한: 처분일부터 3년",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "90", "unit": "일"}],
+    "context": "자격시험 시행 공고: 시험 90일 전",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "60", "unit": "%"}, {"number": "40", "unit": "%"}],
+    "context": "합격 기준: 전 과목 총점 60% 이상 & 매 과목 40% 이상",
+    "isKey": true
+  },
+  {
+    "numbers": [{"number": "7", "unit": "일"}, {"number": "10", "unit": "일"}],
+    "context": "조제관리사 변경신고 처리: 7일 (일반 처리 10일)",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "6", "unit": "개월"}],
+    "context": "최초 교육: 자격 취득 후 6개월 이내",
+    "isKey": true
+  },
+  {
+    "numbers": [{"number": "50만", "unit": "원"}],
+    "context": "교육 미이수 과태료: 50만 원",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "5", "unit": "년"}],
+    "context": "원료 사용기준 안전성 정기검토: 5년 주기",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "5", "unit": "년"}],
+    "context": "기능성화장품 실태조사: 5년마다",
+    "isKey": false
+  },
+  {
+    "numbers": [{"number": "3", "unit": "년"}],
+    "context": "고시 재검토기한: 매 3년",
     "isKey": false
   }
 ]
