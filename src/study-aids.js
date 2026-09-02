@@ -125,13 +125,16 @@ export function extractNumberDrills(chapter) {
                 if (globalSeen.has(key)) continue;
                 globalSeen.add(key);
 
-                // 문장에서 숫자 부분만 빈칸으로 만들어 context 생성
-                let context = trimmed
+                // 원본 문장 (마커만 제거, 숫자 유지) — 툴팁용
+                let fullContext = trimmed
                     .replace(/🔖기출/g, '')
                     .replace(/📌중요/g, '')
                     .replace(/\*\*/g, '')
-                    .replace(new RegExp(match[0].replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), '▓▓')
                     .trim();
+
+                // 문장에서 숫자 부분만 빈칸으로 만들어 context 생성
+                let context = fullContext
+                    .replace(new RegExp(match[0].replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), '▓▓');
 
                 // 너무 길면 자름
                 if (context.length > 100) {
@@ -139,8 +142,11 @@ export function extractNumberDrills(chapter) {
                     if (idx > 30) context = '...' + context.substring(Math.max(0, idx - 40));
                     if (context.length > 100) context = context.substring(0, 100) + '...';
                 }
+                if (fullContext.length > 150) {
+                    fullContext = fullContext.substring(0, 150) + '...';
+                }
 
-                entries.push({ number, unit, context, isKey });
+                entries.push({ number, unit, context, fullContext, isKey });
             }
         });
 
@@ -219,8 +225,7 @@ export function renderNumberDrillCard(chapter) {
             html += `<div class="number-drill-subsection-title">${cat.label} <small>(${items.length})</small></div>`;
             html += `<div class="number-drill-grid">`;
             items.forEach(e => {
-                const fullText = `${e.number}${e.unit} — ${e.context}`;
-                html += `<div class="number-drill-item is-key" title="${esc(fullText)}">`;
+                html += `<div class="number-drill-item is-key" title="${esc(e.fullContext || e.context)}">`;
                 html += `<span class="number-drill-value">${esc(e.number)}<small>${esc(e.unit)}</small></span>`;
                 html += `<span class="number-drill-context">${esc(e.context)}</span>`;
                 html += `</div>`;
@@ -252,8 +257,7 @@ export function renderNumberDrillCard(chapter) {
             html += `<div class="number-drill-subsection-title">${cat.label} <small>(${items.length})</small></div>`;
             html += `<div class="number-drill-grid">`;
             items.forEach(e => {
-                const fullText = `${e.number}${e.unit} — ${e.context}`;
-                html += `<div class="number-drill-item" title="${esc(fullText)}">`;
+                html += `<div class="number-drill-item" title="${esc(e.fullContext || e.context)}">`;
                 html += `<span class="number-drill-value">${esc(e.number)}<small>${esc(e.unit)}</small></span>`;
                 html += `<span class="number-drill-context">${esc(e.context)}</span>`;
                 html += `</div>`;
