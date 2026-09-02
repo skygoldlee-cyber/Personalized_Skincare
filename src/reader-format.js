@@ -83,6 +83,13 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
     );
 
     // 페이지 참조 제거: 다양한 p.NN 패턴 정리
+    // mermaid 블록을 플레이스홀더로 보호 (내부 p.NN 패턴이 손상되는 것 방지)
+    const _mermaidPhs = [];
+    html = html.replace(/<pre class="mermaid">[\s\S]*?<\/pre>/g, (m) => {
+        const i = _mermaidPhs.length;
+        _mermaidPhs.push(m);
+        return `\uE002M${i}\uE003`;
+    });
     // 1. "참고: 본문 p.22~p.27" 등 참고 라인 전체 제거
     html = html.replace(/\*?\*?참고[^:]*:\s*본문\s*p\.\d+[^\n<]*/gi, '');
     // 2. "본문 p.22", "본문 p.26~p.27" 등 본문 페이지 참조 제거
@@ -97,6 +104,8 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
     html = html.replace(/,?\s*p\.\d+(?:\s*[~-]\s*p?\.\d+)?\s*\)/gi, ')');
     // 7. 독립적인 "p.NN" 텍스트 제거 (문맥상 페이지 번호만 남은 경우)
     html = html.replace(/(?<![a-zA-Z])p\.\d+(?:\s*[~-]\s*p?\.\d+)?(?![a-zA])/gi, '');
+    // mermaid 블록 복원
+    html = html.replace(/\uE002M(\d+)\uE003/g, (m, i) => _mermaidPhs[parseInt(i)]);
 
     // 출처/참고 라인에 참조자료 하이퍼링크 추가 (앱 내 HTML 뷰어 사용)
     // 단, 이미 참조 링크가 있는 경우 중복 추가하지 않음
