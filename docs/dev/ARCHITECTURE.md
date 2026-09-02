@@ -920,7 +920,7 @@ content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.j
    - `ui-utils.js` 공통 UI 유틸 분리로 순환 의존성 방지
 
 3. **DOM 테스트 환경 도입** ✅
-   - Vitest + jsdom으로 DOM 렌더링/이벤트 테스트 기반 구축 (135 tests: 115 unit + 20 DOM)
+   - Vitest + jsdom으로 DOM 렌더링/이벤트 테스트 기반 구축 (260 tests: 250 unit + 10 DOM)
    - GitHub Actions CI로 push 시 자동 테스트 실행
 
 4. **타입 안정성 도입** ✅
@@ -963,13 +963,13 @@ content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.j
 
 13. **프로덕션 CSP 버그 수정** ✅
    - 백업 가져오기: `index.html` 인라인 `onchange=importData(event)` → CSP `script-src 'self'` 차단 → `backup.js`에서 `addEventListener('change')` 바인딩 (`setupImportListener`)
-   - Mermaid 제거: `vendor/mermaid/mermaid.min.js` (3.2MB)가 `unsafe-eval` 필요 → CSP 충돌 + 프리캐시 부담 → 텍스트 플로우차트로 대체, 런타임 의존 제거
+   - Mermaid 일시 제거: `vendor/mermaid/mermaid.min.js` (3.3MB)가 `unsafe-eval` 필요 → CSP 충돌 + 프리캐시 부담 → 이후 #16에서 온디맨드 방식으로 재도입 (필요 시에만 동적 로드)
    - CSS 캐시 스큐: `sw.js` CSS 라우팅 `networkFirst` → `cacheFirst`로 변경 (배포 전환 시 HTML/CSS 세대 불일치 방지)
    - 인코딩: `src/utils.js` mojibake 헤더 수정
 
-14. ~~**교재 리더 인터랙티브 개념 맵**~~ ❌ (2026-09-01 삭제)
-   - `src/concept-map.js`: 순수 SVG 마인드맵 생성기 — **삭제됨** (Mermaid 마인드맵이 콘텐츠에 직접 내장되어 중복 기능이 됨)
-   - `textbook-reader.js`에서 개념 맵 컨테이너 HTML, `renderConceptMap` 호출, 토글 이벤트, import 제거
+14. **교재 리더 인터랙티브 개념 맵** 🔁 (2026-09-01 축소 → 용어집 링크로 재활용)
+   - `src/concept-map.js`: 순수 SVG 마인드맵 생성기 — 개념 맵 컨테이너는 삭제되었으나, **용어집 링크 클릭 시 `scrollToGlossary()` 공유 함수로 재활용** 중
+   - `textbook-reader.js`에서 개념 맵 컨테이너 HTML, `renderConceptMap` 호출, 토글 이벤트 제거 — `concept-map.js`는 용어집 점프 기능 유지
 
 15. **교재 리더 학습 보조 도구** ✅ (2026-09-01 축소)
    - `src/study-aids.js`: 2가지 학습 보조 기능 (CSP-safe, 의존성 제로)
