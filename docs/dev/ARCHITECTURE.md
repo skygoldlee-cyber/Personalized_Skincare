@@ -212,6 +212,7 @@ Personalized_Skincare/
 │   ├── charts.js               #   SVG 레이더/꺾은선 차트 + 툴팁
 │   ├── sanitize.js             #   XSS 방어
 │   ├── sha256.js               #   안정적 ID 해시
+│   ├── web-vitals.js           #   Core Web Vitals (LCP/CLS/INP) 모니터링
 │   ├── trainer-calc.js         #   계산 훈련 문제 생성 (순수 로직)
 │   ├── scratchpad.js           #   손글씨 Canvas
 │   ├── types.js                #   JSDoc @typedef 타입 정의
@@ -930,8 +931,10 @@ content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.j
 5. **백엔드 연동 확장성 (필요 시)**
    - 상태 영속성 계층(`state.js`의 `saveProgress`)을 추상화핛두어, 향후 클라우드 동기화 시 해당 지점만 API 호출로 교체 가능하도록 설계
 
-6. **성능 계측**
-   - Core Web Vitals (LCP/CLS/INP) 기준 지속 모니터링, 대용량 데이터 지연 로딩 검토
+6. **성능 계측** ✅ (2026-09-03)
+   - `src/web-vitals.js`: PerformanceObserver API로 LCP/CLS/INP 측정 (zero-dependency)
+   - `app.js` 시작 시 `initWebVitals()` 호출, `pagehide` 시점에 `console.debug`로 최종 값 출력
+   - 대용량 데이터 지연 로딩은 기존 온디맨드 로딩(`DataLoader`)으로 이미 구현됨
 
 7. **인터랙티브 차트 툴팁** ✅
    - SVG 라인/레이더 차트에 hover/touch 툴팁 추가 (날짜, 점수, 증감, 과목별 합격 상태)
@@ -1155,19 +1158,21 @@ cmd /c vercel --prod 2>&1
 | 하드코딩 대상 | 위치 | 수정 조건 |
 |---------------|------|----------|
 | 기출문제 링크 패턴 `기출문제/과목N_...` | `reader-format.js:21` | 기출문제 파일명 규칙 변경 시 |
-| 문제은행 경로 `content/문제은행/과목${N}_문제은행_교재인용.md` | `reader-format.js:23` | 문제은행 파일명 규칙 변경 시 |
+| ~~문제은행 경로 `content/문제은행/과목${N}_문제은행_교재인용.md`~~ | ~~`reader-format.js:23`~~ | ✅ **제거됨** — `DATA_REGISTRY.exams[].file`에서 동적 조회 (2026-09-03) |
 | 참조자료 폴더명 `참조자료`, `공통참조자료`, `N과목_참조자료` | `reader-format.js:31` | 참조자료 폴더 구조 변경 시 |
 | 출처 경로 패턴 `../참조자료/...md`, `N과목_참조자료/...md` | `reader-format.js:48` | 참조자료 경로 규칙 변경 시 |
 
-> **개선 가능**: 기출문제 파일명을 `manifest.json`의 `exams[].file`에서 동적 참조하면 하드코딩 제거 가능
+> ~~**개선 가능**: 기출문제 파일명을 `manifest.json`의 `exams[].file`에서 동적 참조하면 하드코딩 제거 가능~~ ✅ **완료** (2026-09-03)
 
-### 3순위: `src/app.js` — **조건부** (UI 텍스트 하드코딩)
+### 3순위: `src/app.js` — **조건부** → ✅ **개선 완료** (2026-09-03)
 
 | 하드코딩 대상 | 위치 | 수정 조건 |
 |---------------|------|----------|
-| `'2026 시험 합격'` | `app.js:431` | 시험 연도 변경 시 |
-| `'교재 인용 1,000제 문제은행'` | `app.js:436` | 문제 수 변경 시 |
-| `'화장품 성분별 배합한도 및 고시 기준 통합 검색기'` | `app.js:439` | 자격증 종류 변경 시 |
+| ~~`'2026 시험 합격'`~~ | ~~`app.js:431`~~ | ✅ **제거됨** — `manifest.json` `uiText` + `contentYear`에서 동적 생성 |
+| ~~`'교재 인용 1,000제 문제은행'`~~ | ~~`app.js:436`~~ | ✅ **제거됨** — `manifest.json` `uiText` + `{totalQuestions}` 플레이스홀더로 동적 생성 |
+| ~~`'화장품 성분별 배합한도 및 고시 기준 통합 검색기'`~~ | ~~`app.js:439`~~ | ✅ **제거됨** — `manifest.json` `uiText.dictionary`에서 동적 조회 |
+
+> **개선 내용**: `manifest.json`에 `uiText` 섹션 추가, 빌드 시 `{year}`/`{totalQuestions}` 플레이스홀더 치환 후 `registry.js`에 포함. `app.js`는 `DATA_REGISTRY.uiText`에서 동적 조회 (fallback 포함).
 
 ### 4순위: `index.html` — **조건부** (자격증명 하드코딩)
 
@@ -1204,8 +1209,8 @@ cmd /c vercel --prod 2>&1
 | 파일 | 등급 | 같은 분야 교재 변경 | 다른 분야 교재 변경 |
 |------|------|-------------------|-------------------|
 | `pdf-registry.js` | **필수** | ⚠️ 수정 (참조자료 매핑) | ⚠️ 수정 |
-| `reader-format.js` | 조건부 | ✅ 수정 불필요 | ⚠️ 파일명 패턴 수정 |
-| `app.js` | 조건부 | ✅ 수정 불필요 (연도 제외) | ⚠️ UI 문구 수정 |
+| `reader-format.js` | 조건부 | ✅ 수정 불필요 | ⚠️ 참조자료 폴더명 패턴만 수정 (문제은행 경로는 동적 조회) |
+| `app.js` | ✅ 개선 | ✅ 수정 불필요 | ✅ 수정 불필요 (`manifest.json` `uiText`에서 동적) |
 | `index.html` | 조건부 | ✅ 수정 불필요 (연도 제외) | ⚠️ 자격증명 수정 |
 | `study-aids.js` | 조건부 | ✅ 수정 불필요 | ⚠️ 단위/키워드 수정 |
 | `trainer-calc.js` | 조건부 | ✅ 수정 불필요 | ⚠️ 계산 유형 수정 |

@@ -322,6 +322,25 @@ function main() {
     registry.resources = manifest.resources;
   }
 
+  // 5b. UI Text (뷰 제목/부제 — manifest에서 registry로 전달, 플레이스홀더 치환)
+  if (manifest.uiText) {
+    const totalQuestions = registry.exams.reduce((sum, e) =>
+      sum + (e.stats && e.stats.questions ? e.stats.questions : 0), 0);
+    const replacements = {
+      year: manifest.contentYear || '',
+      totalQuestions: String(totalQuestions)
+    };
+    const resolved = {};
+    for (const [viewKey, textObj] of Object.entries(manifest.uiText)) {
+      resolved[viewKey] = {};
+      for (const [field, template] of Object.entries(textObj)) {
+        resolved[viewKey][field] = template.replace(/\{(\w+)\}/g, (m, key) =>
+          replacements[key] !== undefined ? replacements[key] : m);
+      }
+    }
+    registry.uiText = resolved;
+  }
+
   // 6. Output Registry File
   const registryPath = path.join(DATA_DIR, 'registry.js');
   const registryJsContent = `// 자동 생성된 데이터 레지스트리 파일입니다. 수정하지 마십시오.

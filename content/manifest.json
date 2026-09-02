@@ -89,6 +89,17 @@
       "file": "과목4_문제은행_교재인용.md"
     }
   ],
+  "uiText": {
+    "dashboard": { "title": "학습 대시보드", "subtitle": "{year} 시험 합격을 위한 분석 및 스마트 툴" },
+    "flashcard": { "title": "개념 플래시카드", "subtitle": "과목별 핵심 개념을 카드로 뒤집으며 암기" },
+    "quiz": { "title": "기출 및 핵심 퀴즈", "subtitle": "빈칸 채우기형 퀴즈로 실전 완벽 대비" },
+    "review": { "title": "오답 및 중요 복습", "subtitle": "헷갈리거나 어려운 약점 카드 집중 복습" },
+    "trainer": { "title": "스마트 훈련소", "subtitle": "법령 수치 암기 및 배합 계산 트레이닝 센터" },
+    "exam": { "title": "실전 모의고사", "subtitle": "교재 인용 {totalQuestions}제 문제은행으로 과목별 모의고사 및 학습안내서 열람" },
+    "textbook": { "title": "교재 본문 검색", "subtitle": "교재의 모든 본문 내용을 실시간 키워드로 검색" },
+    "textbook-reader": { "title": "교재 본문 읽기", "subtitle": "과목과 단원을 선택하여 교재 본문을 읽기" },
+    "dictionary": { "title": "성분 검색 사전", "subtitle": "화장품 성분별 배합한도 및 고시 기준 통합 검색기" }
+  },
   "resources": {
     "sectionTitle": "추천 학습 유튜브 및 공식 레퍼런스",
     "sectionDesc": "시험 대비에 큰 도움이 되는 합격자 추천 유튜브 강의 및 공식 자격 정보를 확인하세요.",

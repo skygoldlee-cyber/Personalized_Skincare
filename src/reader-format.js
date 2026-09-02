@@ -16,11 +16,19 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
 
     // 기출문제 링크 → 앱 내 HTML 문제집 뷰어(ExamViewer)로 열기
     // 마크다운 파서가 [text](기출문제/과목N_...)를 <a href="기출문제/과목N_...">text</a>로 변환한 후 처리
-    // 실제 파일은 content/문제은행/과목N_문제은행_교재인용.md 에 위치
+    // 실제 파일 경로는 DATA_REGISTRY.exams에서 동적 조회 (하드코딩 제거)
+    const _examFileMap = {};
+    if (typeof window !== 'undefined' && window.DATA_REGISTRY && Array.isArray(window.DATA_REGISTRY.exams)) {
+        window.DATA_REGISTRY.exams.forEach(e => {
+            if (e.key && e.file) _examFileMap[e.key] = e.file;
+        });
+    }
     html = html.replace(
         /<a href="기출문제\/과목(\d+)[^"]*">([^<]+)<\/a>/g,
         (match, subjNum, linkText) => {
-            const mdPath = `content/문제은행/과목${subjNum}_문제은행_교재인용.md`;
+            const examKey = `subject${subjNum}`;
+            const fileName = _examFileMap[examKey] || `과목${subjNum}_문제은행_교재인용.md`;
+            const mdPath = `content/문제은행/${fileName}`;
             return `<a href="#" data-exam-md="${escapeHTML(mdPath)}" class="exam-link-btn" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.5rem 1rem;background:var(--color-primary,#1f6feb);color:#fff;border-radius:8px;text-decoration:none;font-weight:600;font-size:0.9rem;"><i class="fa-solid fa-pen-to-square"></i> ${escapeHTML(linkText)}</a>`;
         }
     );
