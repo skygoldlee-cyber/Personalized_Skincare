@@ -187,15 +187,22 @@ pre.mermaid-flowchart .cluster-label {
 pre.mermaid-flowchart .edgeLabel {
     background-color: #1a1a2e !important;
 }
+/* subgraph(cluster) 박스 배경 — 기본값(tertiaryColor, 밝음)이 흰 cluster-label과 충돌하므로 어둡게 */
+pre.mermaid-flowchart .cluster rect,
+pre.mermaid-flowchart .cluster {
+    fill: #24243e !important;
+    stroke: #7b8faf !important;
+    stroke-width: 1px !important;
+}
 
 /* === Mindmap 전용 스타일 === */
-/* mindmap은 Mermaid 기본 렌더링을 유지, 다크 모드에서만 텍스트 대비 적용 */
-pre.mermaid-mindmap:not(.reader-light-theme) .mindmap-node text,
-pre.mermaid-mindmap:not(.reader-light-theme) .section-center text,
-pre.mermaid-mindmap:not(.reader-light-theme) .section-bkg text {
-    fill: #ffffff !important;
-    color: #ffffff !important;
-}
+/* mindmap은 라이트/다크 공통으로 Mermaid 기본 렌더링을 유지한다.
+   Mermaid 기본 mindmap 노드는 밝은 파스텔 배경(cScale0=#fff4dd 등) +
+   배경에 맞춰 계산된 어두운 라벨(cScaleLabel)이라 그 자체로 대비가 확보된다.
+   과거에는 다크 모드에서 .mindmap-node text 를 흰색으로 강제했는데,
+   노드 배경(밝은 파스텔)은 그대로여서 '흰 글자 on 크림 배경'이 되어 오히려
+   라벨이 사라졌다. 따라서 텍스트 색 강제를 제거하고 기본값을 사용한다.
+   (다크 페이지에서는 밝은 카드처럼 표시된다.) */
 
 /* === Other 다이어그램 타입 (sequence, class, state, gantt, pie, timeline, gitGraph, quadrant, sankey, er) === */
 /* Mermaid 기본 테마를 유지하되 다크 모드 텍스트/배경 대비 보정 */
@@ -276,6 +283,17 @@ pre.mermaid-other .section2 {
 pre.mermaid-other .task {
     fill: #3a3a5c !important;
     stroke: #8a8aab !important;
+}
+/* state/ER 등 그룹(cluster) 박스 배경 — 기본값이 밝아서 흰 텍스트와 충돌하므로 어둡게 */
+pre.mermaid-other .cluster rect,
+pre.mermaid-other .cluster {
+    fill: #2e2e4a !important;
+    stroke: #7b8faf !important;
+    stroke-width: 1px !important;
+}
+/* sequence alt/opt/loop 라벨 박스 배경 — 기본값이 밝아서 흰 텍스트와 충돌하므로 어둡게 */
+pre.mermaid-other .labelBkg {
+    fill: #3a3a5c !important;
 }
 
 /* Reader horizontal rule */
@@ -953,6 +971,13 @@ body.reader-focus-mode .reader-readable-width {
 }
 .reader-light-theme pre.mermaid-flowchart .edgeLabel {
     background-color: #ffffff !important;
+}
+/* subgraph(cluster) 박스 배경 — 라이트 팔레트(연한 파랑) + 어두운 라벨 */
+.reader-light-theme pre.mermaid-flowchart .cluster rect,
+.reader-light-theme pre.mermaid-flowchart .cluster {
+    fill: #e8f1fb !important;
+    stroke: #1565c0 !important;
+    stroke-width: 1px !important;
 }
 /* Mermaid light theme — Mindmap 전용 */
 /* Mermaid default 테마가 노드 깊이별로 배경색+텍스트색을 자동 지정하므로 강제 오버라이드하지 않음 */
