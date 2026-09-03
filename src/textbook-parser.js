@@ -571,6 +571,7 @@ export function buildSubjectData(subjectMeta, mdByFile, opts = {}) {
         data.quizzes.push(...quizzes);
 
         const chapterData = parseTextbookContent(md, file, `content/${subjectMeta.dir}`);
+        chapterData.chapterKey = chapter.key;
         if (filePathMode === 'md') {
             // 원본 HTML은 제거되었으므로 링크를 .md 원문으로 변경
             chapterData.filePath = `./content/${subjectMeta.dir}/${file}`;

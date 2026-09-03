@@ -109,9 +109,6 @@ export function safeSetItem(key, value) {
 
 // 로컬스토리지에서 진도 가져오기
 export function loadProgress() {
-    // 2단계: 안정적 ID 마이그레이션 실행
-    migrateProgressV2();
-
     const memorized = safeGetItem('fc_memorized');
     const weak = safeGetItem('fc_weak');
     const quizzes = safeGetItem('quiz_results');
@@ -160,57 +157,6 @@ export function loadProgress() {
             state.trainer.pomodoro.sessionCount = parseInt(sessionCount) || 0;
         }
     }
-}
-
-// 1회성 안정 ID 마이그레이션 실행
-function migrateProgressV2() {
-    if (safeGetItem('fc_migrated_v2') === 'true') {
-        return;
-    }
-
-    if (typeof ID_MIGRATION_MAP === 'undefined') {
-        return; // 아직 로드되지 않음
-    }
-
-    console.debug('[Migration] Starting ID migration to stable hash-based IDs...');
-
-    const memorized = safeGetItem('fc_memorized');
-    const weak = safeGetItem('fc_weak');
-    const quizzes = safeGetItem('quiz_results');
-
-    if (memorized) {
-        try {
-            const arr = JSON.parse(memorized);
-            const migratedArr = arr.map(id => ID_MIGRATION_MAP[id] || id);
-            safeSetItem('fc_memorized', JSON.stringify(migratedArr));
-            console.debug(`[Migration] Migrated ${arr.length} memorized card IDs.`);
-        } catch (e) { console.error('[Migration] memorized cards migration error:', e); }
-    }
-
-    if (weak) {
-        try {
-            const arr = JSON.parse(weak);
-            const migratedArr = arr.map(id => ID_MIGRATION_MAP[id] || id);
-            safeSetItem('fc_weak', JSON.stringify(migratedArr));
-            console.debug(`[Migration] Migrated ${arr.length} weak card IDs.`);
-        } catch (e) { console.error('[Migration] weak cards migration error:', e); }
-    }
-
-    if (quizzes) {
-        try {
-            const obj = JSON.parse(quizzes);
-            const migratedObj = {};
-            Object.keys(obj).forEach(oldId => {
-                const newId = ID_MIGRATION_MAP[oldId] || oldId;
-                migratedObj[newId] = obj[oldId];
-            });
-            safeSetItem('quiz_results', JSON.stringify(migratedObj));
-            console.debug(`[Migration] Migrated ${Object.keys(obj).length} quiz result IDs.`);
-        } catch (e) { console.error('[Migration] quiz results migration error:', e); }
-    }
-
-    safeSetItem('fc_migrated_v2', 'true');
-    console.debug('[Migration] ID migration completed.');
 }
 
 // 로컬스토리지에 진도 저장

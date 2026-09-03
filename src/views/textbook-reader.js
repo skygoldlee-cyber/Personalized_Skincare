@@ -717,10 +717,14 @@ async function _loadStoryChapter(subjId, chapterIdx, originalChapter) {
     const cacheKey = `${subjId}:${chapterIdx}`;
     if (_storyChapterCache[cacheKey]) return _storyChapterCache[cacheKey];
 
-    const storyFile = originalChapter.fileName.replace(/_표준형\.md$/i, '_이야기형.md').replace(/\.md$/i, '_이야기형.md');
     const manifest = await DataLoader._getManifest();
     const subjMeta = manifest.subjects.find(s => s.key === subjId);
     if (!subjMeta) throw new Error('과목 메타데이터 없음: ' + subjId);
+
+    const chapterMeta = (subjMeta.chapters || []).find(c => c.key === originalChapter.chapterKey);
+    const storyFile = (chapterMeta && chapterMeta.storyFile)
+        ? chapterMeta.storyFile
+        : originalChapter.fileName.replace(/_표준형\.md$/i, '_이야기형.md').replace(/\.md$/i, '_이야기형.md');
 
     const relPath = `content/${subjMeta.dir}/${storyFile}`;
     const md = await DataLoader._getMd(relPath, subjId);
@@ -1011,6 +1015,8 @@ function _ensureMermaid() {
         const script = document.createElement('script');
         script.src = './vendor/mermaid/mermaid.min.js';
         script.async = true;
+        const nonce = crypto.getRandomValues(new Uint8Array(16));
+        script.nonce = Array.from(nonce).map(b => b.toString(16).padStart(2, '0')).join('');
         script.onload = () => {
             if (window.mermaid) resolve(window.mermaid);
             else reject(new Error('mermaid loaded but window.mermaid is undefined'));
@@ -1051,7 +1057,7 @@ function _renderReaderMermaid(container) {
                     if (!isMindmap) {
                         mermaid.initialize({
                             startOnLoad: false,
-                            securityLevel: 'loose',
+                            securityLevel: 'strict',
                             theme: isLight ? 'default' : 'dark',
                             themeVariables: isLight ? {
                                 primaryColor: '#f0f4ff',
@@ -1082,7 +1088,7 @@ function _renderReaderMermaid(container) {
                     } else {
                         mermaid.initialize({
                             startOnLoad: false,
-                            securityLevel: 'loose',
+                            securityLevel: 'strict',
                             theme: isLight ? 'default' : 'dark'
                         });
                     }

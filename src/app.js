@@ -130,10 +130,13 @@ import {
     showSimResultsSummary,
     startWeakExam
 } from './views/exam-simulator.js';
-import { switchView, saveScrollPosition, restoreScrollPosition } from './views/navigation.js';
+import { switchView } from './views/navigation.js';
+import { getViewTitles, navigateToView } from './router.js';
 
 // Re-export for backward compatibility (other modules may still reference app.js for these)
 export { switchView, examIdToSubjectId };
+// router.js에서 재수출 (네비게이션 유틸리티)
+export { saveScrollPosition, restoreScrollPosition } from './views/navigation.js';
 
 // --- 초기화 및 로컬스토리지 로드 ---
 function populateSubjectSelects() {
@@ -421,136 +424,95 @@ function showOrientationToast(isLandscape) {
 }
 
 // --- 네비게이션 제어 (SPA) ---
+// 라우터 로직은 ./router.js로 분리, app.js는 이벤트 바인딩만 담당
 function setupNavigation() {
     const navItems = document.querySelectorAll('.nav-item');
     const sections = document.querySelectorAll('.view-section');
     console.debug('[nav] nav-item 개수:', navItems.length, '/ view-section 개수:', sections.length);
-    const viewTitle = document.getElementById('view-title');
-    const viewSubtitle = document.getElementById('view-subtitle');
-    
+
     const registry = (typeof window !== 'undefined' && window.DATA_REGISTRY) || null;
-    const uiText = (registry && registry.uiText) || {};
-    const titlesMap = {
-        'dashboard-view': uiText.dashboard || { title: '학습 대시보드', subtitle: '시험 합격을 위한 분석 및 스마트 툴' },
-        'flashcard-view': uiText.flashcard || { title: '개념 플래시카드', subtitle: '과목별 핵심 개념을 카드로 뒤집으며 암기' },
-        'quiz-view': uiText.quiz || { title: '기출 및 핵심 퀴즈', subtitle: '빈칸 채우기형 퀴즈로 실전 완벽 대비' },
-        'review-view': uiText.review || { title: '오답 및 중요 복습', subtitle: '헷갈리거나 어려운 약점 카드 집중 복습' },
-        'trainer-view': uiText.trainer || { title: '스마트 훈련소', subtitle: '법령 수치 암기 및 배합 계산 트레이닝 센터' },
-        'exam-view': uiText.exam || { title: '실전 모의고사', subtitle: '문제은행으로 과목별 모의고사 및 학습안내서 열람' },
-        'textbook-view': uiText.textbook || { title: '교재 본문 검색', subtitle: '교재의 모든 본문 내용을 실시간 키워드로 검색' },
-        'textbook-reader-view': uiText['textbook-reader'] || { title: '교재 본문 읽기', subtitle: '과목과 단원을 선택하여 교재 본문을 읽기' },
-        'dictionary-view': uiText.dictionary || { title: '성분 검색 사전', subtitle: '화장품 성분별 배합한도 및 고시 기준 통합 검색기' }
+    const titlesMap = getViewTitles(registry);
+
+    // 뷰별 렌더 핸들러 맵 (router.js의 navigateToView에서 디스패치)
+    const viewRenderers = {
+        'dashboard-view': () => {
+            renderDashboard();
+            refreshDashboardStatsInBackground();
+            checkExamDraft();
+        },
+        'flashcard-view': () => {
+            showGlobalLoading('플래시카드를 불러오는 중입니다...');
+            DataLoader.loadSubject(state.flashcards.subject).then(() => {
+                hideGlobalLoading();
+                loadFlashcards();
+            }).catch(() => {
+                hideGlobalLoading();
+                loadFlashcards();
+            });
+        },
+        'review-view': () => {
+            showGlobalLoading('오답 및 중요 카드를 불러오는 중입니다...');
+            const loaderPromises = DataLoader.getSubjectList().map(s => DataLoader.loadSubject(s.key));
+            Promise.all(loaderPromises).then(() => {
+                hideGlobalLoading();
+                renderReviewList();
+            }).catch(() => {
+                hideGlobalLoading();
+                renderReviewList();
+            });
+        },
+        'trainer-view': () => {
+            initTrainer();
+        },
+        'textbook-view': () => {
+            showGlobalLoading('교재 검색용 데이터를 불러오는 중입니다...');
+            const loaderPromises = DataLoader.getSubjectList().map(s => DataLoader.loadSubject(s.key));
+            Promise.all(loaderPromises).then(() => {
+                hideGlobalLoading();
+                renderTextbookSearch();
+            }).catch(() => {
+                hideGlobalLoading();
+                renderTextbookSearch();
+            });
+        },
+        'textbook-reader-view': () => {
+            if (textbookReaderState.selectedSubject) {
+                showGlobalLoading('교재 본문을 불러오는 중입니다...');
+                DataLoader.loadSubject(textbookReaderState.selectedSubject).then(() => {
+                    hideGlobalLoading();
+                    renderTextbookReader();
+                }).catch(() => {
+                    hideGlobalLoading();
+                    renderTextbookReader();
+                });
+            } else {
+                renderTextbookReader();
+            }
+        },
+        'dictionary-view': () => {
+            showGlobalLoading('성분 사전을 불러오는 중입니다...');
+            DataLoader.loadIngredients().then(() => {
+                hideGlobalLoading();
+                renderDictionary();
+            }).catch(() => {
+                hideGlobalLoading();
+                renderDictionary();
+            });
+        }
     };
-    
+
+    const routerCtx = {
+        titlesMap,
+        handlers: {
+            viewRenderers,
+            stopReaderAudio
+        }
+    };
+
     navItems.forEach(item => {
         item.addEventListener('click', () => {
             const target = item.getAttribute('data-target');
-            
-            // 현재 뷰 스크롤 위치 저장
-            saveScrollPosition(state.currentView);
-            
-            // 네비게이션 활성화 클래스 변경 (사이드바 + 모바일 탭 바 모두 동기화)
-            navItems.forEach(nav => nav.classList.remove('active'));
-            item.classList.add('active');
-            
-            // 모바일 탭 바 활성화 상태 동기화
-            const mobileTabItems = document.querySelectorAll('.mobile-tab-item');
-            mobileTabItems.forEach(tab => {
-                tab.classList.remove('active');
-                if (tab.getAttribute('data-target') === target) {
-                    tab.classList.add('active');
-                }
-            });
-
-            // 교재 읽기 집중 모드 해제 (다른 뷰로 이동 시)
-            if (target !== 'textbook-reader-view' && document.body.classList.contains('reader-focus-mode')) {
-                document.body.classList.remove('reader-focus-mode');
-                const focusBtn = document.getElementById('reader-focus-toggle');
-                if (focusBtn) {
-                    focusBtn.classList.remove('active');
-                    focusBtn.innerHTML = '<i class="fa-solid fa-expand"></i> <span>집중 모드</span>';
-                }
-            }
-
-            // 리더 화면을 벗어나면 재생 중인 오디오 정지
-            if (target !== 'textbook-reader-view' && typeof stopReaderAudio === 'function') {
-                stopReaderAudio();
-            }
-            
-            // 섹션 토글
-            sections.forEach(sec => sec.classList.remove('active'));
-            document.getElementById(target).classList.add('active');
-            
-            // 헤더 텍스트 변경
-            if (titlesMap[target]) {
-                viewTitle.textContent = titlesMap[target].title;
-                viewSubtitle.textContent = titlesMap[target].subtitle;
-            }
-            
-            state.currentView = target;
-            
-            // 각 뷰 진입 시 렌더링 갱신
-            if (target === 'dashboard-view') {
-                renderDashboard();
-                refreshDashboardStatsInBackground();
-                checkExamDraft();
-            } else if (target === 'flashcard-view') {
-                showGlobalLoading('플래시카드를 불러오는 중입니다...');
-                DataLoader.loadSubject(state.flashcards.subject).then(() => {
-                    hideGlobalLoading();
-                    loadFlashcards();
-                }).catch(() => {
-                    hideGlobalLoading();
-                    loadFlashcards();
-                });
-            } else if (target === 'review-view') {
-                showGlobalLoading('오답 및 중요 카드를 불러오는 중입니다...');
-                const loaderPromises = DataLoader.getSubjectList().map(s => DataLoader.loadSubject(s.key));
-                Promise.all(loaderPromises).then(() => {
-                    hideGlobalLoading();
-                    renderReviewList();
-                }).catch(() => {
-                    hideGlobalLoading();
-                    renderReviewList();
-                });
-            } else if (target === 'trainer-view') {
-                initTrainer();
-            } else if (target === 'textbook-view') {
-                showGlobalLoading('교재 검색용 데이터를 불러오는 중입니다...');
-                const loaderPromises = DataLoader.getSubjectList().map(s => DataLoader.loadSubject(s.key));
-                Promise.all(loaderPromises).then(() => {
-                    hideGlobalLoading();
-                    renderTextbookSearch();
-                }).catch(() => {
-                    hideGlobalLoading();
-                    renderTextbookSearch();
-                });
-            } else if (target === 'textbook-reader-view') {
-                if (textbookReaderState.selectedSubject) {
-                    showGlobalLoading('교재 본문을 불러오는 중입니다...');
-                    DataLoader.loadSubject(textbookReaderState.selectedSubject).then(() => {
-                        hideGlobalLoading();
-                        renderTextbookReader();
-                    }).catch(() => {
-                        hideGlobalLoading();
-                        renderTextbookReader();
-                    });
-                } else {
-                    renderTextbookReader();
-                }
-            } else if (target === 'dictionary-view') {
-                showGlobalLoading('성분 사전을 불러오는 중입니다...');
-                DataLoader.loadIngredients().then(() => {
-                    hideGlobalLoading();
-                    renderDictionary();
-                }).catch(() => {
-                    hideGlobalLoading();
-                    renderDictionary();
-                });
-            }
-            
-            // 새 뷰 스크롤 위치 복원
-            restoreScrollPosition(target);
+            navigateToView(target, routerCtx);
         });
     });
 

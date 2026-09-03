@@ -566,6 +566,7 @@ module.exports = {
       }
 
       const chapterData = parseTextbookContent(filePath, file, `content/${subject.dir}`);
+      chapterData.chapterKey = chapter.key;
       data.chapters.push(chapterData);
     });
 

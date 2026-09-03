@@ -25,11 +25,6 @@ content/html/
 data/study_data.js
 data/exam_data.js
 
-# ---------- 🗑️ 미사용 과목 번들 (런타임 MD 파싱으로 대체, 디렉토리 삭제됨) ----------
-# 교재/카드/퀴즈는 content/*.md 런타임 파싱으로 로드하므로 data/subjects/*.js 는
-# 더 이상 로드되지 않는다. 디렉토리 자체도 삭제되었으나, 혹시 모를 로컬 잔재를 위해 규칙은 유지.
-data/subjects/
-
 # ---------- 🗑️ file:// 전용 폴백 번들 (배포 제외) ----------
 # data/exams_md/, data/study_md/는 file:// 프로토콜(로컬 직접 열기) 전용 폴백이다.
 # http(s) 배포에서는 content/*.md를 직접 fetch하므로 불필요하여 배포에서 제외한다.
@@ -37,13 +32,10 @@ data/subjects/
 data/exams_md/
 data/study_md/
 
-# ---------- ⏳ 일회성 ID 마이그레이션 맵 (유예 후 제거 가능) ----------
-# data/id_migration.js(약 63KB)는 레거시 ID → 안정 ID 일회성 이관용이며 현재는 필요하다.
-# 대다수 사용자가 마이그레이션(fc_migrated_v2)을 마친 뒤에는 배포에서 제외할 수 있다.
-# 제거 시 index.html의 <script src="data/id_migration.js"> 태그도 함께 제거할 것.
-# (state.js가 typeof ID_MIGRATION_MAP === 'undefined'를 가드하므로 안전)
-# 아래 줄의 주석을 해제하면 배포에서 제외된다:
-# data/id_migration.js
+# ---------- ⏳ 일회성 ID 마이그레이션 맵 (제거 완료) ----------
+# data/id_migration.js(약 63KB)는 레거시 ID → 안정 ID 일회성 이관용이었으나
+# 마이그레이션이 완료되어 index.html에서 제거 및 배포에서 제외됨.
+data/id_migration.js
 
 # ---------- 🔁 Vercel 빌드 캐시 ----------
 .vercel/
@@ -53,9 +45,8 @@ data/study_md/
 # content/와 동일한 MD 파일들의 중복 (archive/로 이동됨)
 archive/
 
-# ---------- 📊 분석 보고서 (앱 미참조) ----------
-# content/report/는 개발/분석용 문서로 앱에서 참조하지 않음
-content/report/
+# ---------- 📊 분석 보고서 (앱 미참조, docs/로 이관) ----------
+docs/report_archive/
 
 # ---------- 📖 참조자료 PDF (배포 제외 — HTML 변환본으로 대체) ----------
 # content/참조자료/ 하위 PDF 파일들은 ref_md의 HTML 변환본으로 대체되어 배포에서 제외.

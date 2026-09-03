@@ -1163,7 +1163,6 @@
     <!-- 정적 전역 데이터 및 라이브러리 로드 (클래식 스크립트 및 ESM) -->
     <script type="module" src="data/registry.js"></script>
     <script type="module" src="data/audio_manifest.js"></script>
-    <script src="data/id_migration.js" defer></script>
     <!-- mermaid(3.3MB)는 매뉴얼/문서 뷰에서만 쓰이므로 즉시 로드하지 않는다.
          src/manual-viewer.js 가 실제 다이어그램이 있을 때만 온디맨드로 주입한다.
          (크리티컬 패스에서 3.3MB 파싱/실행 제거 + CSP unsafe-eval 실행을 매뉴얼 열람 시로 국한) -->

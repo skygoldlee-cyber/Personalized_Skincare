@@ -220,6 +220,8 @@ body.manual-open{overflow:hidden;}
             const script = document.createElement('script');
             script.src = './vendor/mermaid/mermaid.min.js';
             script.async = true;
+            const nonce = crypto.getRandomValues(new Uint8Array(16));
+            script.nonce = Array.from(nonce).map(b => b.toString(16).padStart(2, '0')).join('');
             script.onload = () => {
                 if (window.mermaid) resolve(window.mermaid);
                 else reject(new Error('mermaid loaded but window.mermaid is undefined'));
@@ -241,7 +243,7 @@ body.manual-open{overflow:hidden;}
                     const isLight = document.documentElement.classList.contains('light-theme');
                     mermaid.initialize({
                         startOnLoad: false,
-                        securityLevel: 'loose',
+                        securityLevel: 'strict',
                         theme: isLight ? 'default' : 'dark'
                     });
                     const nodeArr = Array.from(nodes);
