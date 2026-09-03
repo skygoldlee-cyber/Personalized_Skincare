@@ -9,6 +9,10 @@ let _searchIdx = -1;
 const _FETCH_CACHE_PREFIX = 'ref_doc_v1_';
 const _FETCH_CACHE_TTL = 24 * 60 * 60 * 1000; // 24시간
 
+function escHtml(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
 function _injectStyles() {
     if (document.getElementById('html-viewer-styles')) return;
     const style = document.createElement('style');
@@ -102,7 +106,8 @@ function _ensureOverlay() {
                 <button class="hr-ov-btn secondary" id="hr-prev-btn" title="이전 (Shift+Enter)" aria-label="이전 검색 결과"><i class="fa-solid fa-chevron-up"></i></button>
                 <button class="hr-ov-btn secondary" id="hr-next-btn" title="다음 (Enter)" aria-label="다음 검색 결과"><i class="fa-solid fa-chevron-down"></i></button>
             </div>
-            <button class="hr-ov-btn secondary" id="hr-print-btn" aria-label="인쇄"><i class="fa-solid fa-print"></i></button>
+            <button class="hr-ov-btn secondary" id="hr-print-btn" aria-label="인쇄" title="인쇄"><i class="fa-solid fa-print"></i></button>
+            <button class="hr-ov-btn" id="hr-pdf-btn" aria-label="PDF 저장" title="PDF로 저장"><i class="fa-solid fa-file-pdf"></i> PDF 저장</button>
         </div>
         <div class="hr-ov-scroll" id="hr-scroll" role="document" tabindex="0" style="position:fixed;top:48px;left:0;right:0;bottom:0;overflow-y:scroll;overflow-x:auto;background:#fff;-webkit-overflow-scrolling:touch;">
             <div class="hr-loading" id="hr-loading" role="status" aria-live="polite">
@@ -115,20 +120,24 @@ function _ensureOverlay() {
     _overlayEl = el;
 
     el.querySelector('#hr-close-btn').addEventListener('click', close);
-    el.querySelector('#hr-print-btn').addEventListener('click', () => {
+    function _printContent(label) {
         const content = el.querySelector('.hr-ov-content');
         if (!content) return;
+        const titleEl = el.querySelector('#hr-title');
+        const docTitle = titleEl ? titleEl.textContent.trim() : '참조자료';
         const printWin = window.open('', '_blank');
         if (printWin) {
             const styles = document.getElementById('html-viewer-styles');
-            printWin.document.write('<html><head><title>인쇄</title>');
+            printWin.document.write('<html><head><title>' + escHtml(docTitle) + '</title>');
             if (styles) printWin.document.write('<style>' + styles.textContent + '</style>');
             printWin.document.write('<style>#html-ref-overlay{position:static!important;display:block!important;background:#fff!important;}#html-ref-overlay .hr-ov-scroll{overflow:visible!important;}</style>');
             printWin.document.write('</head><body><div id="html-ref-overlay" class="open"><div class="hr-ov-scroll">' + content.outerHTML + '</div></div></body></html>');
             printWin.document.close();
             printWin.print();
         }
-    });
+    }
+    el.querySelector('#hr-print-btn').addEventListener('click', () => _printContent('인쇄'));
+    el.querySelector('#hr-pdf-btn').addEventListener('click', () => _printContent('PDF 저장'));
     el.querySelector('#hr-search-btn').addEventListener('click', () => _doSearch());
     el.querySelector('#hr-prev-btn').addEventListener('click', () => _navigateSearch(-1));
     el.querySelector('#hr-next-btn').addEventListener('click', () => _navigateSearch(1));
