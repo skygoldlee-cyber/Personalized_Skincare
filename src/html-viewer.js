@@ -130,7 +130,7 @@ function _ensureOverlay() {
             const styles = document.getElementById('html-viewer-styles');
             printWin.document.write('<html><head><title>' + escHtml(docTitle) + '</title>');
             if (styles) printWin.document.write('<style>' + styles.textContent + '</style>');
-            printWin.document.write('<style>#html-ref-overlay{position:static!important;display:block!important;background:#fff!important;}#html-ref-overlay .hr-ov-scroll{overflow:visible!important;}</style>');
+            printWin.document.write('<style>#html-ref-overlay{position:static!important;display:block!important;background:#fff!important;}#html-ref-overlay .hr-ov-scroll{position:static!important;top:auto!important;left:auto!important;right:auto!important;bottom:auto!important;width:auto!important;height:auto!important;max-height:none!important;overflow:visible!important;}</style>');
             printWin.document.write('</head><body><div id="html-ref-overlay" class="open"><div class="hr-ov-scroll">' + content.outerHTML + '</div></div></body></html>');
             printWin.document.close();
             printWin.print();
