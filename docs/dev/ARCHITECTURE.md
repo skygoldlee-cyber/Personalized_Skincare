@@ -644,6 +644,7 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 
 **설계 결정사항**:
 - SW 등록을 `app.js`(deferred module)가 아닌 `pwa-install-capture.js`(클래직 스크립트, `<head>`)에서 수행 → Android Chrome이 SW 활성화 상태를 빨리 인식하여 `beforeinstallprompt` 발생 조건 충족
+- SW 업데이트 시 `updatefound`/`statechange`/`controllerchange` 3단계 추적 토스트 팝업으로 진행 상황 표시 (v207)
 - `manifest.webmanifest`의 `Content-Type`을 `vercel.json`에서 `application/manifest+json; charset=utf-8`으로 명시 → Android Chrome의 엄격한 Content-Type 검사 대응
 - 인앱 브라우저(WebView)는 구조적으로 `beforeinstallprompt`를 발생시키지 않으므로, 감지 시 "Chrome으로 열기" 안내만 제공 (코드 수정으로 해결 불가능한 환경적 제약)
 
@@ -675,12 +676,29 @@ Service Worker(`sw.js`)는 본 애플리케이션의 오프라인 지원과 캐�
   fetch 이벤트 활성화 (모든 요청 가로채 시작)
 
 [배포 후 재방문]
-  브라우저가 sw.js 바이트 비교 → 변경 감지 → 새 SW install
+  pwa-install-capture.js → reg.update() 강제 확인
+     │
+     ▼
+  브라우저가 sw.js 바이트 비교 → 변경 감지 → updatefound 이벤트
+     ├─ 🟢 토스트 팝업: "새 버전 확인 중..."
+     │
+     ▼
+  새 SW install (installing → installed)
      ├─ 새 CACHE_VERSION 캐시에 신버전 자산 프리캐시
+     ├─ statechange(installed) → 🟢 토스트: "새 버전 다운로드 완료 — 적용 준비 중..."
      ├─ skipWaiting() → 즉시 activate
+     ├─ statechange(activating) → 🟢 토스트: "새 버전 적용 중..."
      ├─ 구버전 캐시 전체 삭제
-     └─ controllerchange 이벤트 → 페이지 리로드 → 신버전 일관 서빙
+     └─ controllerchange 이벤트
+          ├─ 🟢 토스트: "새 버전 적용 완료 — 페이지를 새로고침합니다." (600ms 표시)
+          └─ 페이지 리로드 → 신버전 일관 서빙
 ```
+
+**SW 업데이트 진행 팝업** (v207 도입):
+- `pwa-install-capture.js`에서 `updatefound` → `statechange` → `controllerchange` 3단계를 추적하여 하단 중앙 토스트 팝업 표시
+- 비침습적: z-index 최고, 자동 페이드아웃 5초, 최초 등록 시 미표시 (업데이트 시에만)
+- `document.body` 미생성 시 `DOMContentLoaded`까지 대기 (`<head>` 실행 대응)
+- `reg.update()`로 페이지 로드마다 즉시 업데이트 확인 (브라우저 기본 ~24h 대기 불필요)
 
 **`precacheResilient()`의 역할** (v39 도입):
 - `cache.addAll()`은 원자성(all-or-nothing)을 가져 하나라도 404면 전체 reject → `skipWaiting()` 미실행

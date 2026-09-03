@@ -1,7 +1,7 @@
 # 📱 Vercel 배포 및 오디오북 호스팅 종합 가이드 (Deployment & Hosting)
 
 > **대상 프로젝트**: 맞춤형화장품 조제관리사 스마트 학습 플랫폼 (Cosmetic Pass Master)  
-> **최종 업데이트**: 2026-08-26  
+> **최종 업데이트**: 2026-09-03  
 > **목적**: Vercel 무료 Hobby 플랜(100MB 한도)에 맞춰 프로젝트 크기를 최적화하고, 대용량 오디오북을 연동하여 스마트폰 홈 화면에 설치(PWA)하는 배포 프로세스 가이드
 
 ---
@@ -188,6 +188,12 @@ Production:  https://personalized-skincare-study.vercel.app
 #### 4. 코드 커밋
 - `git add -A && git commit -m "..." && git push` — 로컬 변경사항이 원격과 동기화
 - 충돌 시 `git stash; git pull; git stash pop` 또는 `git checkout --theirs`로 해결
+
+#### 4-1. SW 캐시 버전 갱신 (배포 전 필수)
+- `sw.js`의 `CACHE_VERSION`을 배포마다 갱신해야 모바일 PWA에서 새 SW가 활성화됨
+- 형식: `v<번호>-<날짜>-<설명>` (예: `v207-20260903-sw-toast-fix`)
+- 버전을 올리지 않으면 모바일에서 구버전 캐시가 유지되어 변경사항 미반영
+- 갱신 후 사용자 재방문 시 `updatefound` → 토스트 팝업 표시 → 자동 리로드
 
 #### 5. 배포 실행
 - **터미널 직접 실행** (가장 확실): `vercel --prod`
