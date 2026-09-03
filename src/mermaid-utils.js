@@ -76,14 +76,14 @@ export function getMermaidInitOptions(type, isLight) {
                 lineWidth: 1
             } : {
                 primaryColor: '#2d2d44',
-                primaryTextColor: '#e0e0e0',
+                primaryTextColor: '#ffffff',
                 primaryBorderColor: '#7b8faf',
                 lineColor: '#7b8faf',
                 secondaryColor: '#1e1e2e',
                 tertiaryColor: '#2a2a3e',
                 background: '#1a1a2e',
                 mainBkg: '#2d2d44',
-                nodeTextColor: '#e0e0e0',
+                nodeTextColor: '#ffffff',
                 fontSize: '14px',
                 lineWidth: 1
             }
@@ -122,29 +122,29 @@ export function getMermaidInitOptions(type, isLight) {
         } : {
             // 다크: 배경은 중간 톤, 텍스트는 밝게
             primaryColor: '#3a3a5c',
-            primaryTextColor: '#e8e8e8',
+            primaryTextColor: '#ffffff',
             primaryBorderColor: '#8a8aab',
             lineColor: '#8a8aab',
             secondaryColor: '#2a2a3e',
             tertiaryColor: '#33334a',
             background: '#1a1a2e',
             mainBkg: '#3a3a5c',
-            nodeTextColor: '#e8e8e8',
+            nodeTextColor: '#ffffff',
             fontSize: '14px',
             // sequenceDiagram 전용
             actorBkg: '#3a3a5c',
             actorBorder: '#9fa8da',
-            actorTextColor: '#e8e8e8',
+            actorTextColor: '#ffffff',
             actorLineColor: '#666688',
             signalColor: '#b0b0cc',
-            signalTextColor: '#e8e8e8',
+            signalTextColor: '#ffffff',
             labelBoxBkgColor: '#3a3a5c',
-            labelTextColor: '#e8e8e8',
+            labelTextColor: '#ffffff',
             noteBkgColor: '#4a4a2e',
             noteTextColor: '#fff9c4',
             noteBorderColor: '#fbc02d',
             activationBkgColor: '#5c5c8a',
-            sequenceNumberColor: '#e8e8e8'
+            sequenceNumberColor: '#ffffff'
         }
     };
 }

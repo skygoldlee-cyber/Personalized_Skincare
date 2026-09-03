@@ -181,8 +181,8 @@ pre.mermaid-flowchart .node polygon {
 pre.mermaid-flowchart .nodeLabel,
 pre.mermaid-flowchart .edgeLabel,
 pre.mermaid-flowchart .cluster-label {
-    color: #e0e0e0 !important;
-    fill: #e0e0e0 !important;
+    color: #ffffff !important;
+    fill: #ffffff !important;
 }
 pre.mermaid-flowchart .edgeLabel {
     background-color: #1a1a2e !important;
@@ -193,15 +193,15 @@ pre.mermaid-flowchart .edgeLabel {
 pre.mermaid-mindmap .mindmap-node text,
 pre.mermaid-mindmap .section-center text,
 pre.mermaid-mindmap .section-bkg text {
-    fill: #e0e0e0 !important;
-    color: #e0e0e0 !important;
+    fill: #ffffff !important;
+    color: #ffffff !important;
 }
 
 /* === Other 다이어그램 타입 (sequence, class, state, gantt, pie, timeline, gitGraph, quadrant, sankey, er) === */
 /* Mermaid 기본 테마를 유지하되 다크 모드 텍스트/배경 대비 보정 */
 pre.mermaid-other text {
-    fill: #e8e8e8 !important;
-    color: #e8e8e8 !important;
+    fill: #ffffff !important;
+    color: #ffffff !important;
 }
 pre.mermaid-other .actor,
 pre.mermaid-other .note,
@@ -210,8 +210,8 @@ pre.mermaid-other .label,
 pre.mermaid-other .taskText,
 pre.mermaid-other .sectionTitle,
 pre.mermaid-other .titleText {
-    fill: #e8e8e8 !important;
-    color: #e8e8e8 !important;
+    fill: #ffffff !important;
+    color: #ffffff !important;
 }
 /* sequenceDiagram actor box 배경/보더 가시성 */
 pre.mermaid-other .actor {
