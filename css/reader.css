@@ -906,29 +906,29 @@ body.reader-focus-mode .reader-readable-width {
 /* Mermaid light theme — Flowchart 전용 */
 .reader-light-theme pre.mermaid-flowchart svg path,
 .reader-light-theme pre.mermaid-flowchart svg line {
-    stroke: #4a6fa5 !important;
+    stroke: #1565c0 !important;
     stroke-width: 1px !important;
     fill: none !important;
 }
 .reader-light-theme pre.mermaid-flowchart svg marker path,
 .reader-light-theme pre.mermaid-flowchart svg defs marker path {
-    fill: #4a6fa5 !important;
-    stroke: #4a6fa5 !important;
+    fill: #1565c0 !important;
+    stroke: #1565c0 !important;
     stroke-width: 1px !important;
 }
 .reader-light-theme pre.mermaid-flowchart .node rect,
 .reader-light-theme pre.mermaid-flowchart .node circle,
 .reader-light-theme pre.mermaid-flowchart .node ellipse,
 .reader-light-theme pre.mermaid-flowchart .node polygon {
-    fill: #f0f4ff !important;
-    stroke: #4a6fa5 !important;
+    fill: #bbdefb !important;
+    stroke: #1565c0 !important;
     stroke-width: 1px !important;
 }
 .reader-light-theme pre.mermaid-flowchart .nodeLabel,
 .reader-light-theme pre.mermaid-flowchart .edgeLabel,
 .reader-light-theme pre.mermaid-flowchart .cluster-label {
-    color: #1a1a2e !important;
-    fill: #1a1a2e !important;
+    color: #0d47a1 !important;
+    fill: #0d47a1 !important;
 }
 .reader-light-theme pre.mermaid-flowchart .edgeLabel {
     background-color: #ffffff !important;
@@ -939,6 +939,11 @@ body.reader-focus-mode .reader-readable-width {
 .reader-light-theme pre.mermaid-mindmap .section-bkg text {
     fill: #1a1a2e !important;
     color: #1a1a2e !important;
+}
+.reader-light-theme pre.mermaid-mindmap .mindmap-node,
+.reader-light-theme pre.mermaid-mindmap .section-center,
+.reader-light-theme pre.mermaid-mindmap .section-bkg {
+    opacity: 0.9 !important;
 }
 /* Mermaid light theme — Other 다이어그램 타입 */
 .reader-light-theme pre.mermaid-other text,
@@ -953,36 +958,41 @@ body.reader-focus-mode .reader-readable-width {
     color: #1a1a2e !important;
 }
 .reader-light-theme pre.mermaid-other .actor {
-    fill: #e8eaf6 !important;
-    stroke: #5c6bc0 !important;
+    fill: #c5cae9 !important;
+    stroke: #3949ab !important;
+    stroke-width: 1.5px !important;
 }
 .reader-light-theme pre.mermaid-other .actor-line {
-    stroke: #999 !important;
+    stroke: #666 !important;
+    stroke-width: 1px !important;
 }
 .reader-light-theme pre.mermaid-other .note {
-    fill: #fff9c4 !important;
-    stroke: #fbc02d !important;
+    fill: #fff59d !important;
+    stroke: #f57f17 !important;
+    stroke-width: 1px !important;
 }
 .reader-light-theme pre.mermaid-other .activation0,
 .reader-light-theme pre.mermaid-other .activation1,
 .reader-light-theme pre.mermaid-other .activation2 {
-    fill: #c5cae9 !important;
+    fill: #9fa8da !important;
+    opacity: 0.85 !important;
 }
 .reader-light-theme pre.mermaid-other .messageLine0,
 .reader-light-theme pre.mermaid-other .messageLine1 {
-    stroke: #555 !important;
+    stroke: #333 !important;
+    stroke-width: 1.5px !important;
 }
 .reader-light-theme pre.mermaid-other .label {
-    fill: #e8eaf6 !important;
+    fill: #c5cae9 !important;
 }
 .reader-light-theme pre.mermaid-other .section0,
 .reader-light-theme pre.mermaid-other .section1,
 .reader-light-theme pre.mermaid-other .section2 {
-    fill: #f5f5f5 !important;
+    fill: #e8eaf6 !important;
 }
 .reader-light-theme pre.mermaid-other .task {
-    fill: #e8eaf6 !important;
-    stroke: #5c6bc0 !important;
+    fill: #c5cae9 !important;
+    stroke: #3949ab !important;
 }
 .reader-light-theme .reader-section-num {
     color: #fff !important;

@@ -63,15 +63,15 @@ export function getMermaidInitOptions(type, isLight) {
         return {
             ...base,
             themeVariables: isLight ? {
-                primaryColor: '#f0f4ff',
-                primaryTextColor: '#1a1a2e',
-                primaryBorderColor: '#4a6fa5',
-                lineColor: '#4a6fa5',
-                secondaryColor: '#f5f5f5',
-                tertiaryColor: '#e8eaf6',
+                primaryColor: '#bbdefb',
+                primaryTextColor: '#0d47a1',
+                primaryBorderColor: '#1565c0',
+                lineColor: '#1565c0',
+                secondaryColor: '#e3f2fd',
+                tertiaryColor: '#90caf9',
                 background: '#ffffff',
-                mainBkg: '#f0f4ff',
-                nodeTextColor: '#1a1a2e',
+                mainBkg: '#bbdefb',
+                nodeTextColor: '#0d47a1',
                 fontSize: '14px',
                 lineWidth: 1
             } : {
@@ -94,30 +94,30 @@ export function getMermaidInitOptions(type, isLight) {
     return {
         ...base,
         themeVariables: isLight ? {
-            // 라이트: 배경은 밝게, 텍스트는 어둡게
-            primaryColor: '#f5f5f5',
+            // 라이트: 배경은 중간 명도, 텍스트는 어둡게, 보더는 진하게
+            primaryColor: '#c5cae9',
             primaryTextColor: '#1a1a2e',
-            primaryBorderColor: '#666',
-            lineColor: '#555',
-            secondaryColor: '#eaeaea',
-            tertiaryColor: '#e0e0e0',
+            primaryBorderColor: '#3949ab',
+            lineColor: '#333',
+            secondaryColor: '#e8eaf6',
+            tertiaryColor: '#d1c4e9',
             background: '#ffffff',
-            mainBkg: '#f5f5f5',
+            mainBkg: '#c5cae9',
             nodeTextColor: '#1a1a2e',
             fontSize: '14px',
             // sequenceDiagram 전용
-            actorBkg: '#e8eaf6',
-            actorBorder: '#5c6bc0',
+            actorBkg: '#c5cae9',
+            actorBorder: '#3949ab',
             actorTextColor: '#1a1a2e',
-            actorLineColor: '#999',
-            signalColor: '#555',
+            actorLineColor: '#666',
+            signalColor: '#333',
             signalTextColor: '#1a1a2e',
-            labelBoxBkgColor: '#e8eaf6',
+            labelBoxBkgColor: '#c5cae9',
             labelTextColor: '#1a1a2e',
-            noteBkgColor: '#fff9c4',
+            noteBkgColor: '#fff59d',
             noteTextColor: '#1a1a2e',
-            noteBorderColor: '#fbc02d',
-            activationBkgColor: '#c5cae9',
+            noteBorderColor: '#f57f17',
+            activationBkgColor: '#9fa8da',
             sequenceNumberColor: '#1a1a2e'
         } : {
             // 다크: 배경은 중간 톤, 텍스트는 밝게
