@@ -1095,3 +1095,63 @@
 - `npm test` 250 pass, 0 fail
 - Git commit `2ca7627` (기능 구현), `6cc2bac` (스크롤 컨테이너 수정), `172babf` (SW bump)
 - Vercel 배포 완료
+
+---
+
+## #44 — 화장품법 PDF 중복 제거 (2026-09-03)
+
+### 변경 내용
+
+1. **중복 PDF 삭제**: `content/참조자료/공통/화장품법(법률)(제20901호)(20260402).pdf` (22페이지, 186KB) 삭제 — `content/참조자료/법령원문/`의 30페이지 완전본(206KB)이 정본
+2. **pdf-registry.js 갱신**: `REF_DIRS['공통']`에서 화장품법 PDF 항목 제거, `REFERENCE_COMMON` 배열에서도 제거 — 법령원문 폴더의 30페이지 버전만 서비스
+
+### 검증
+
+- `npm test` 248 pass, 0 fail
+- Git commit `466cf66`
+- Vercel 배포 완료
+
+---
+
+## #45 — 전역 테이블 가로 스크롤 적용 (2026-09-03)
+
+### 배경
+
+교재 및 참조자료의 테이블이 컨테이너 너비를 초과할 때 셀 내용이 찌그러지거나 잘리는 문제. 기존에는 모바일 `@media`에서 `table{display:block;overflow-x:auto}`를 적용했으나 `display:block`이 테이블 셀 정렬을 깨뜨리는 부작용.
+
+### 변경 내용
+
+1. **`css/base.css` 전역 규칙 추가**: 모든 `<table>`에 `width:max-content; min-width:100%; border-collapse:collapse` 적용 — 좁은 테이블은 컨테이너를 채우고, 넓은 테이블은 콘텐츠 너비만큼 확장되어 wrapper의 `overflow-x:auto`가 가로 스크롤 담당
+2. **`css/reader.css` 개별 컴포넌트 정리**:
+   - `.reader-table`에서 `width`/`min-width` 제거 (전역 규칙에 위임)
+   - `.admin-penalty-table`에서 `width:100%` 제거 (전역 규칙에 위임)
+   - 모바일 `@media`의 `table{display:block;overflow-x:auto}` 제거 → wrapper 기반 스크롤로 통일
+   - `.glossary-table`은 `table-layout:fixed` 유지를 위해 `width:100%!important; min-width:unset!important`로 예외 처리
+3. **`src/html-viewer.js` 인라인 CSS 정리**: 참조자료 뷰어 및 인쇄 CSS에서 `width:max-content;min-width:100%` 제거 (전역 규칙에 위임)
+
+### 검증
+
+- `npm test` 248 pass, 0 fail
+- Git commit `b6f9992`
+- Vercel 배포 완료
+
+---
+
+## #46 — 교재 통합 검색 머메이드 다이어그램 렌더링 (2026-09-03)
+
+### 배경
+
+교재 본문 통합 검색 결과에서 머메이드 다이어그램이 포함된 섹션이 raw 텍스트(`graph TD ...`)로 출력되는 문제. 기존 `formatSectionContent`가 단순 텍스트 라인별 `<p>` 래핑만 수행하여 코드블록(```mermaid ... ```)을 처리하지 못함.
+
+### 변경 내용
+
+1. **`src/views/textbook-search.js` `formatSectionContent` 재작성**: 단순 라인별 래핑 → `parseMarkdown(rawContent, {allowMermaid:true, useReaderStyles:true, ...})` 기반으로 변경. 마크다운 코드블록, 머메이드, 테이블 등 모든 마크다운 요소 지원
+2. **검색어 하이라이트**: 마크다운 파싱 후에 적용하도록 순서 조정
+3. **머메이드 온디맨드 로드/렌더 추가**: `_ensureMermaid()` + `_renderSearchMermaid(container)` 함수 추가 — `textbook-reader.js`와 동일한 온디맨드 패턴 (다이어그램이 있을 때만 mermaid.min.js 로드)
+4. **검색 결과 렌더링 후 mermaid 실행**: `performTextbookSearch()` 마지막에 `_renderSearchMermaid(container)` 호출
+
+### 검증
+
+- `npm test` 248 pass, 0 fail
+- Git commit `f7934fa`
+- Vercel 배포 완료
