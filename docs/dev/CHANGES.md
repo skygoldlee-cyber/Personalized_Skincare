@@ -1188,3 +1188,73 @@
 - `npm test` 248 pass, 0 fail
 - Git commit `b9ad2ae` (기능 구현), `ed9c0f5` (SW bump)
 - Vercel 배포 완료
+
+---
+
+## #48 — Service Worker 업데이트 알림 토스트 팝업 (2026-09-03)
+
+### 배경
+
+PWA에서 새 Service Worker가 감지되어 백그라운드에서 새 데이터를 fetch할 때 사용자에게 진행 상황이 보이지 않아, 갑작스러운 페이지 리로드로 인해 현재 학습 중인 화면을 잃는 불편이 발생.
+
+### 변경 내용
+
+1. **`src/pwa-install-capture.js`**: SW `updatefound` → `statechange` → `controllerchange` 생명주기 이벤트를 3단계 토스트 팝업으로 추적
+   - 1단계: "새 버전 감지 — 다운로드 중..."
+   - 2단계: "설치 중..."
+   - 3단계: "업데이트 완료 — 페이지 새로고침" (자동 리로드)
+   - `document.body` 미준비 시 `DOMContentLoaded`까지 토스트 생성 지연
+   - 페이지 로드 시 `reg.update()` 강제 호출로 브라우저 기본 긴 업데이트 주기 단축
+2. **`docs/dev/ARCHITECTURE.md`**: SW Lifecycle 섹션에 토스트 팝업 알림 흐름 문서화
+3. **`docs/dev/DEPLOYMENT_GUIDE.md`**: 배포 체크리스트에 SW 캐시 버전 갱신 단계 추가
+
+### 검증
+
+- Git commit `860a5c5`
+- Vercel 배포 완료
+
+---
+
+## #49 — 참조자료 뷰어 PDF 저장 기능 (2026-09-03)
+
+### 배경
+
+참조자료를 앱 내에서만 열람할 수 있고 PDF 파일로 저장할 수 없는 문제. 원본 PDF(27.2MB)는 `.vercelignore`로 배포 제외되어 있어, MD 변환본(3.7MB)을 활용한 PDF 저장 방식 필요.
+
+### 변경 내용
+
+1. **`src/html-viewer.js`**: 툴바에 "PDF 저장" 버튼 추가 (파일 PDF 아이콘 + 텍스트)
+   - 기존 인쇄 버튼과 공통 `_printContent()` 함수 사용 → 브라우저 인쇄 다이얼로그에서 "PDF로 저장" 선택
+   - **전체 문서 출력 수정** (v210): 오버레이 스타일시트를 인쇄 창에 포함하지 않고, 인쇄 전용 CSS만 별도 주입 — `position:fixed; height:100vh; overflow:hidden` 등 오버레이 제약이 원인이었던 2페이지 잘림 문제 해결
+   - `content.innerHTML`를 직접 `<body>`에 주입하여 깔끔한 인쇄 문서 구조 생성
+   - `escHtml()` 헬퍼 추가로 문서 제목 XSS 방어
+2. **`docs/dev/ARCHITECTURE.md`**: `html-viewer.js` 및 `pdf-registry.js` 설명에 PDF 저장 기능 문서화, 다이어그램 라벨 갱신
+
+### 검증
+
+- Git commit `a008115` (버튼 추가), `9b89d35` (전체 출력 수정), `d16247b` (문서 갱신)
+- Vercel 배포 완료
+
+---
+
+## #50 — ref_md 구버전 _구 파일 정리 (2026-09-03)
+
+### 배경
+
+`content/참조자료/ref_md/`에 41개 MD 변환본 중 5개의 `_구` 접미사 구버전 파일이 레지스트리에 미등록된 dead data로 잔존. PDF↔MD 1:1 매칭 검증에서 5개 불일치 발견.
+
+### 변경 내용
+
+1. **5개 `_구` 디렉토리 삭제**:
+   - `안전기준_별표1_독성시험법_구/`
+   - `안전기준_별표1_색소_구/`
+   - `안전기준_별표2_기준시험방법작성요령_구/`
+   - `안전기준_별표3_자외선차단효과측정_구/`
+   - `안전기준_별표4_자료제출생략기능성_구/`
+2. **`src/pdf-registry.js`**: `REF_DIRS.과목2`에서 `안전기준_별표1_색소_구.pdf` 제거
+3. **정합성 검증**: MD 36개 = Registry 36개, 불일치 0건 확인
+
+### 검증
+
+- Git commit `87f3cae`
+- Vercel 배포 완료 (v211)

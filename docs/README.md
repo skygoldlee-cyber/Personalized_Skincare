@@ -35,12 +35,12 @@ docs/
 
 | 문서 | 설명 | 주요 내용 |
 |------|------|-----------|
-| [ARCHITECTURE.md](dev/ARCHITECTURE.md) | 시스템 아키텍처 및 설계 철학 | Zero-Backend, ESM 모듈 구조, 데이터 흐름, PWA/SW 전략, 테마 시스템 |
+| [ARCHITECTURE.md](dev/ARCHITECTURE.md) | 시스템 아키텍처 및 설계 철학 | Zero-Backend, ESM 모듈 구조, 데이터 흐름, PWA/SW 전략, SW 업데이트 토스트, 참조자료 PDF 저장, 테마 시스템 |
 | [AUDIO_HOSTING_GUIDE.md](dev/AUDIO_HOSTING_GUIDE.md) | 오디오북 호스팅 및 청취 가이드 | 아키텍처, 호스팅 방안 비교, GitHub Releases 적용 절차, 모바일 청취 동작 체인 |
 | [DEPLOYMENT_GUIDE.md](dev/DEPLOYMENT_GUIDE.md) | Vercel 배포 및 오디오 호스팅 | 용량 최적화, .vercelignore, CSP/캐시 정책, 배포 체크리스트, 트러블슈팅 |
 | [MULTI_MACHINE_SETUP.md](dev/MULTI_MACHINE_SETUP.md) | 다중 머신 개발 환경 설정 | GitHub SSH, Vercel CLI 인증, GitHub Actions 자동 배포 |
 | [TEXTBOOK_AUTHORING_GUIDE.md](dev/TEXTBOOK_AUTHORING_GUIDE.md) | 교재 Markdown 작성 지침 | 디렉토리 구조, manifest.json, 카드/퀴즈 추출 규칙, 문제은행 형식, 빌드 검증 |
-| [CHANGES.md](dev/CHANGES.md) | 코드 변경 이력 (Changelog) | #42 기출문제 링크 클릭 시 문제집 HTML 뷰어 연동, #41 이야기형 교재 5가지 서사 개선+외부 리뷰, #27 매뉴얼 재정리, #26 교재 5대 학습 보조 개선 |
+| [CHANGES.md](dev/CHANGES.md) | 코드 변경 이력 (Changelog) | #50 ref_md 구버전 정리, #49 참조자료 PDF 저장, #48 SW 업데이트 토스트, #47 Mermaid 다이어그램 확장, #46 검색 머메이드 렌더링 |
 | [SPEC.md](dev/SPEC.md) | 기능 명세 | 핵심 기능, 데이터 구조, 뷰 명세 |
 | [FLASHCARD_LOGIC.md](dev/FLASHCARD_LOGIC.md) | 플래시카드 로직 | 카드 생성, 난이도, 필터, 셔플 로직 |
 | [MD_TO_HTML_LOGIC.md](dev/MD_TO_HTML_LOGIC.md) | MD→HTML 변환 로직 | 런타임 파싱, 섹션 분할, 렌더링 |

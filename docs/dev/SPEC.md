@@ -1,7 +1,7 @@
 # 📋 요구사양 명세서 (Software Requirements Specification)
 
 > **프로젝트**: Cosmetic Pass Master — 맞춤형화장품 조제관리사 스마트 학습 플랫폼
-> **버전**: 1.2 (2026-09-03 기준 — #44~#47 변경사항 반영)
+> **버전**: 1.3 (2026-09-03 기준 — #48~#50 변경사항 반영: SW 업데이트 토스트, 참조자료 PDF 저장, ref_md 구버전 정리)
 > **문서 성격**: 구현 완료된 기능을 역공학하여 체계적으로 정리한 요구사양 명세서
 
 ---
@@ -165,11 +165,12 @@
 | RR-08 | 검색 내비게이션: 이전/다음 버튼, `Enter`/`Shift+Enter` 단축키, `1/N` 카운트 | ✅ |
 | RR-09 | sessionStorage 캐싱 (24h TTL) — 재방문 시 fetch 0회 | ✅ |
 | RR-10 | 검색 조기 종료: 첫 매치 즉시 스크롤, 나머지 `requestIdleCallback` 지연 하이라이트 | ✅ |
-| RR-11 | 대용량 HTML 3개 → Markdown 변환 (41% 용량 절감), 나머지 body-only 추출 | ✅ |
+| RR-11 | 전체 참조자료 PDF → MD 변환 (ref_md/ 36종 3.7MB, 원본 PDF 27.2MB는 배포 제외) | ✅ |
 | RR-12 | 참조자료 PDF 링크 → HTML 뷰어 변환 (`data-ref-html`) | ✅ |
 | RR-13 | `pdf-registry.js` 중앙 설정 모듈 (과목 변경 시 1개 파일만 수정) | ✅ |
-| RR-14 | 인쇄 기능 (뷰어 스타일시트 포함) | ✅ |
+| RR-14 | 인쇄 기능 (인쇄 전용 CSS 주입, 오버레이 제약 없이 전체 문서 출력) | ✅ |
 | RR-15 | 스크롤바 가시성 (뷰어 전용 스크롤바 스타일, 흰 배경에서 가시) | ✅ |
+| RR-16 | PDF 저장 버튼 (브라우저 인쇄 다이얼로그 → "PDF로 저장", 인쇄 전용 CSS로 전체 문서) | ✅ |
 
 ### 3.9 교재 검색 (Textbook Search)
 
@@ -264,6 +265,7 @@
 | P-02 | App Shell + 데이터 번들 프리캐시 (`precacheResilient`, `allSettled`) | ✅ |
 | P-03 | 캐시 스큐 방지 (navigation Cache First, 동일 세대 일관 서빙) | ✅ |
 | P-04 | `skipWaiting()` + `controllerchange` 자동 리로드 | ✅ |
+| P-04a | SW 업데이트 토스트 팝업 (3단계: 다운로드→설치→완료, `pwa-install-capture.js`) | ✅ |
 | P-05 | `CACHE_VERSION` 관리 (배포마다 버전업, 구 캐시 자동 정리) | ✅ |
 | P-06 | 구 해시 번들 선별 삭제 (`pruneStaleDataBundles`) | ✅ |
 | P-07 | PWA 설치 프롬프트 (`beforeinstallprompt` 조기 캡처, `<head>` 클래식 스크립트) | ✅ |
@@ -392,7 +394,7 @@
 |----|---------|-----------|
 | CS-01 | 교재: `content/교재/{과목키}/*.md` (본문 + 이야기형) | ✅ |
 | CS-02 | 문제은행: `content/문제은행/과목N_문제은행_교재인용.md` | ✅ |
-| CS-03 | 참조자료: `content/참조자료/ref_md/` (HTML/MD 변환본) | ✅ |
+| CS-03 | 참조자료: `content/참조자료/ref_md/` (MD 변환본 36종 3.7MB, 원본 PDF는 배포 제외) | ✅ |
 | CS-04 | 성분 원본: `content/참조자료/원료/` | ✅ |
 | CS-05 | 학습안내서: `content/학습안내서.md` | ✅ |
 | CS-06 | 용어집 큐레이션: `content/교재/glossary/subject{1-4}.json` | ✅ |
@@ -502,7 +504,7 @@
 | 모듈 | 책임 |
 |------|------|
 | `src/app-fallback.js` | ESM 로드 실패 시 단계적 복구 (SW update → 하드 리셋 → 수동) |
-| `src/pwa-install-capture.js` | `beforeinstallprompt` 조기 캡처 + SW 조기 등록 |
+| `src/pwa-install-capture.js` | `beforeinstallprompt` 조기 캡처 + SW 조기 등록 + 업데이트 토스트 |
 | `src/theme-init.js` | FOUC 방지 (페인트 전 테마 적용) |
 
 ### Service Worker

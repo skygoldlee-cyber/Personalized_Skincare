@@ -41,6 +41,8 @@
 | ✏️ **스크래치패드** | HTML5 Canvas 손글씨 연습장 |
 | 🌗 **라이트/다크 테마** | 시스템 테마 자동 감지 + 수동 토글 (헤더·모바일 탭 바), FOUC 없는 즉시 적용 |
 | 📱 **모바일 최적화** | 하단 탭 바 네비게이션, safe-area 대응, 스크롤 복원, 오프라인 감지, 가로/세로 보기 토글 |
+| 📄 **참조자료 PDF 저장** | 법령·별표·KFCC 등 참조자료 인앱 뷰어에서 PDF로 저장 (브라우저 인쇄 다이얼로그) |
+| 🔄 **SW 자동 업데이트** | 새 버전 감지 시 토스트 팝업으로 진행 상황 표시 후 자동 새로고침 |
 
 ---
 
@@ -56,7 +58,7 @@
 - **반응형 모바일 레이아웃**: 하단 탭 바 네비게이션, safe-area-inset 대응, 100dvh 동적 뷰포트
 
 **테스트**
-- Node.js 내장 테스트 러너 (`node --test`) — 248 unit tests (sha256, sanitize, state, parser, trainer-calc, utils, delegation-guard, study-aids)
+- Node.js 내장 테스트 러너 (`node --test`) — 250 unit tests (sha256, sanitize, state, parser, trainer-calc, utils, delegation-guard, study-aids, pdf-registry)
 - Vitest + jsdom — 11 DOM tests (backup, router)
 - GitHub Actions CI — push 시 `npm test` + parser parity 자동 실행
 
@@ -109,6 +111,11 @@ Personalized Skincare/
 │   ├── trainer-calc.js              ← 계산 훈련 문제 생성기
 │   ├── state.js                     ← 전역 상태 + localStorage 영속화
 │   ├── exam-viewer.js               ← 문제집(MD) 런타임 인앱 뷰어
+│   ├── html-viewer.js               ← 참조자료 인앱 뷰어 (검색·하이라이트·PDF 저장)
+│   ├── pdf-registry.js              ← 참조자료 중앙 레지스트리 (과목별 매핑·경로 해석)
+│   ├── manual-viewer.js             ← 매뉴얼/요약집 런타임 MD 뷰어 (Mermaid 지원)
+│   ├── mermaid-utils.js             ← Mermaid 다이어그램 타입 감지 공용 유틸
+│   ├── pwa-install-capture.js       ← SW 조기 등록 + 업데이트 토스트 + 설치 프롬프트 캡처
 │   ├── views/                       ← 뷰 컨트롤러 모듈 (app.js에서 분리)
 │   │   ├── dashboard.js             ← 대시보드 통계 및 챌린지
 │   │   ├── flashcard.js             ← 플래시카드 학습
@@ -139,7 +146,7 @@ Personalized Skincare/
 │   ├── manifest.json                ← 단일 진실 원천(SSOT): 과목/단원/파일 정의
 │   ├── 교재/                        ← 4과목 교재 MD (law, manufacturing, safety, understanding)
 │   ├── 문제은행/                    ← 문제은행 MD (4개 파일)
-│   ├── 참조자료/                    ← 참조자료 (원료, 법령원문, 공통)
+│   ├── 참조자료/                    ← 참조자료 (원본 PDF + ref_md/ MD 변환본 36종 3.7MB)
 │   ├── 학습안내서.md                ← 학습 안내서 (앱 내 뷰어 연동)
 │   ├── number-drills/               ← 중요 숫자 암기표 JSON (과목별 4개 파일)
 │   ├── 맞춤형화장품조제관리사_중요숫자_암기정리.md ← 숫자 암기표 원본 MD
@@ -147,7 +154,7 @@ Personalized Skincare/
 │   └── audiobook/                   ← 오디오북 파이프라인 (Python)
 │
 ├── 📂 tests/                        ← 자동화 테스트
-│   ├── unit/                        ← Node.js 내장 테스트 러너 (248 tests)
+│   ├── unit/                        ← Node.js 내장 테스트 러너 (250 tests)
 │   └── dom/                         ← Vitest + jsdom DOM 테스트 (11 tests)
 ├── 📂 .github/workflows/            ← GitHub Actions CI (test + parser parity)
 │
@@ -164,6 +171,7 @@ Personalized Skincare/
     │   ├── FLASHCARD_LOGIC.md       ← 플래시카드 로직 명세
     │   ├── MD_TO_HTML_LOGIC.md      ← MD→HTML 변환 로직
     │   ├── TESTING.md               ← 테스트 가이드
+    │   ├── STUDY_APP_DESIGN_GUIDE.md ← 학습 앱 설계 가이드 (다른 교재 적용용)
     │   └── SUBSCRIPTION_ROADMAP.md  ← 구독 로드맵
     ├── report_archive/              ← 분석 보고서 아카이브 (앱 미참조)
     └── user/                        ← 사용자 문서
