@@ -19,7 +19,7 @@ test('mermaid 출력에 HTML 태그가 없어야 함 (textContent만 있어야 �
         '```'
     ].join('\n');
 
-    const html = formatSectionContentForReader(rawContent, 'content/교재/law/1과목_화장품법의이해.md');
+    const html = formatSectionContentForReader(rawContent, 'content/교재/law/1과목_화장품법의이해_표준형.md');
     const content = extractMermaidContent(html);
     assert.ok(content, 'mermaid 블록이 있어야 함');
     
@@ -38,7 +38,7 @@ test('mermaid 출력에 <br> 실제 태그가 없어야 함', () => {
         '```'
     ].join('\n');
 
-    const html = formatSectionContentForReader(rawContent, 'content/교재/law/1과목_화장품법의이해.md');
+    const html = formatSectionContentForReader(rawContent, 'content/교재/law/1과목_화장품법의이해_표준형.md');
     const content = extractMermaidContent(html);
     assert.ok(content, 'mermaid 블록이 있어야 함');
     assert.ok(!content.includes('<br>'), '실제 <br> 태그가 있으면 안 됨 (엔티티여야 함)');
@@ -55,7 +55,7 @@ test('mermaid 출력에 <strong>, <em>, <a> 태그가 없어야 함', () => {
         '```'
     ].join('\n');
 
-    const html = formatSectionContentForReader(rawContent, 'content/교재/law/1과목_화장품법의이해.md');
+    const html = formatSectionContentForReader(rawContent, 'content/교재/law/1과목_화장품법의이해_표준형.md');
     const content = extractMermaidContent(html);
     assert.ok(content, 'mermaid 블록이 있어야 함');
     assert.ok(!content.includes('<strong>'), '<strong> 태그 없어야 함');
@@ -89,7 +89,7 @@ test('실제 교재 전체 섹션 파이프라인 — mermaid + 텍스트 + 테�
         '| 시행규칙 | 총리령 |',
     ].join('\n');
 
-    const html = formatSectionContentForReader(rawContent, 'content/교재/law/1과목_화장품법의이해.md');
+    const html = formatSectionContentForReader(rawContent, 'content/교재/law/1과목_화장품법의이해_표준형.md');
     
     // mermaid 블록 확인
     const content = extractMermaidContent(html);

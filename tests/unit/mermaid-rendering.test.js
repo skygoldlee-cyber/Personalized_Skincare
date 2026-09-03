@@ -264,7 +264,7 @@ test('파이프라인: mindmap 들여쓰기가 post-processing 후에도 유지�
         '   시행령',
         '```',
     ].join('\n');
-    const html = formatSectionContentForReader(rawContent, 'content/교재/law/1과목_화장품법의이해.md');
+    const html = formatSectionContentForReader(rawContent, 'content/교재/law/1과목_화장품법의이해_표준형.md');
     const blocks = extractAllMermaidBlocks(html);
     assert.equal(blocks.length, 1);
     const decoded = decodeEntities(blocks[0]);
@@ -283,7 +283,7 @@ test('파이프라인: flowchart 문법이 post-processing 후에도 유지됨',
         ' D -.->|"제외"| E',
         '```',
     ].join('\n');
-    const html = formatSectionContentForReader(rawContent, 'content/교재/law/1과목_화장품법의이해.md');
+    const html = formatSectionContentForReader(rawContent, 'content/교재/law/1과목_화장품법의이해_표준형.md');
     const blocks = extractAllMermaidBlocks(html);
     assert.equal(blocks.length, 1);
     const decoded = decodeEntities(blocks[0]);
@@ -296,10 +296,10 @@ test('파이프라인: flowchart 문법이 post-processing 후에도 유지됨',
 // === 테스트: 실제 교재 파일 검증 ===
 
 const TEXTBOOK_FILES = [
-    { name: '1과목_화장품법의이해', path: path.join(CONTENT_DIR, 'law/1과목_화장품법의이해.md') },
-    { name: '2과목_제조및품질관리', path: path.join(CONTENT_DIR, 'manufacturing/2과목_제조및품질관리.md') },
-    { name: '3과목_유통화장품안전관리', path: path.join(CONTENT_DIR, 'safety/3과목_유통화장품안전관리.md') },
-    { name: '4과목_맞춤형화장품의이해', path: path.join(CONTENT_DIR, 'understanding/4과목_맞춤형화장품의이해.md') },
+    { name: '1과목_화장품법의이해', path: path.join(CONTENT_DIR, 'law/1과목_화장품법의이해_표준형.md') },
+    { name: '2과목_제조및품질관리', path: path.join(CONTENT_DIR, 'manufacturing/2과목_제조및품질관리_표준형.md') },
+    { name: '3과목_유통화장품안전관리', path: path.join(CONTENT_DIR, 'safety/3과목_유통화장품안전관리_표준형.md') },
+    { name: '4과목_맞춤형화장품의이해', path: path.join(CONTENT_DIR, 'understanding/4과목_맞춤형화장품의이해_표준형.md') },
 ];
 
 for (const file of TEXTBOOK_FILES) {

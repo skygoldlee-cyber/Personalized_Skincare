@@ -32,7 +32,7 @@ test('formatSectionContentForReader: mermaid 블록이 post-processing 후에도
         '```'
     ].join('\n');
 
-    const html = formatSectionContentForReader(rawContent, 'content/교재/law/1과목_화장품법의이해.md');
+    const html = formatSectionContentForReader(rawContent, 'content/교재/law/1과목_화장품법의이해_표준형.md');
     const content = extractMermaidContent(html);
     assert.ok(content, 'mermaid 블록이 있어야 함');
     const decoded = decodeEntities(content);
@@ -52,7 +52,7 @@ test('formatSectionContentForReader: mermaid flowchart가 post-processing 후에
         '```'
     ].join('\n');
 
-    const html = formatSectionContentForReader(rawContent, 'content/교재/law/1과목_화장품법의이해.md');
+    const html = formatSectionContentForReader(rawContent, 'content/교재/law/1과목_화장품법의이해_표준형.md');
     const content = extractMermaidContent(html);
     assert.ok(content, 'mermaid 블록이 있어야 함');
     const decoded = decodeEntities(content);
@@ -76,7 +76,7 @@ test('formatSectionContentForReader: 페이지 참조 제거가 mermaid 블록�
         '본문 p.26~p.27도 참고.',
     ].join('\n');
 
-    const html = formatSectionContentForReader(rawContent, 'content/교재/law/1과목_화장품법의이해.md');
+    const html = formatSectionContentForReader(rawContent, 'content/교재/law/1과목_화장품법의이해_표준형.md');
     const content = extractMermaidContent(html);
     assert.ok(content, 'mermaid 블록이 있어야 함');
     const decoded = decodeEntities(content);
@@ -102,7 +102,7 @@ test('formatSectionContentForReader: glossary 키워드 링크가 mermaid 블록
 
     const html = formatSectionContentForReader(
         rawContent,
-        'content/교재/law/1과목_화장품법의이해.md',
+        'content/교재/law/1과목_화장품법의이해_표준형.md',
         null, null, null,
         glossaryKeywords
     );

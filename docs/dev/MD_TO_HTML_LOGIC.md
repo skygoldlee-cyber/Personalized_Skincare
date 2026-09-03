@@ -160,10 +160,10 @@ content/학습안내서.md      →  data/docs_md/학습안내서.js
 const MD_ASSETS = [
   './docs/user/user_manual.md',
   './content/학습안내서.md',
-  './content/교재/law/1과목_화장품법의이해.md',
-  './content/교재/manufacturing/2과목_제조및품질관리.md',
-  './content/교재/safety/3과목_유통화장품안전관리.md',
-  './content/교재/understanding/4과목_맞춤형화장품의이해.md'
+  './content/교재/law/1과목_화장품법의이해_표준형.md',
+  './content/교재/manufacturing/2과목_제조및품질관리_표준형.md',
+  './content/교재/safety/3과목_유통화장품안전관리_표준형.md',
+  './content/교재/understanding/4과목_맞춤형화장품의이해_표준형.md'
 ];
 ```
 
@@ -651,10 +651,10 @@ class RenderConfig:
 ```python
 BATCH_TARGETS = {
     "교재": [
-        "교재/law/1과목_화장품법의이해.md",
-        "교재/manufacturing/2과목_제조및품질관리.md",
-        "교재/safety/3과목_유통화장품안전관리.md",
-        "교재/understanding/4과목_맞춤형화장품의이해.md",
+        "교재/law/1과목_화장품법의이해_표준형.md",
+        "교재/manufacturing/2과목_제조및품질관리_표준형.md",
+        "교재/safety/3과목_유통화장품안전관리_표준형.md",
+        "교재/understanding/4과목_맞춤형화장품의이해_표준형.md",
     ],
     "학습안내서": ["학습안내서.md"],
     "report": [

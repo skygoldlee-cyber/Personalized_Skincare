@@ -717,7 +717,7 @@ async function _loadStoryChapter(subjId, chapterIdx, originalChapter) {
     const cacheKey = `${subjId}:${chapterIdx}`;
     if (_storyChapterCache[cacheKey]) return _storyChapterCache[cacheKey];
 
-    const storyFile = originalChapter.fileName.replace(/\.md$/i, '_이야기형.md');
+    const storyFile = originalChapter.fileName.replace(/_표준형\.md$/i, '_이야기형.md').replace(/\.md$/i, '_이야기형.md');
     const manifest = await DataLoader._getManifest();
     const subjMeta = manifest.subjects.find(s => s.key === subjId);
     if (!subjMeta) throw new Error('과목 메타데이터 없음: ' + subjId);

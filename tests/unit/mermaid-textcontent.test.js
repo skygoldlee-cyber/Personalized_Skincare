@@ -158,7 +158,7 @@ test('formatSectionContentForReader 전체 파이프라인 — textContent 시�
         '화장품법은 중요합니다.',
     ].join('\n');
 
-    const html = formatSectionContentForReader(rawContent, 'content/교재/law/1과목_화장품법의이해.md');
+    const html = formatSectionContentForReader(rawContent, 'content/교재/law/1과목_화장품법의이해_표준형.md');
     const content = extractMermaidContent(html);
     assert.ok(content, 'mermaid 블록이 있어야 함');
     
