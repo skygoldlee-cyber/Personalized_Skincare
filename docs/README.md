@@ -20,6 +20,7 @@ docs/
 │   ├── FLASHCARD_LOGIC.md     ← 플래시카드 로직 명세
 │   ├── MD_TO_HTML_LOGIC.md    ← MD→HTML 변환 로직
 │   ├── TESTING.md             ← 테스트 가이드
+│   ├── STUDY_APP_DESIGN_GUIDE.md ← 학습 앱 설계 가이드 (다른 교재 적용용)
 │   └── SUBSCRIPTION_ROADMAP.md ← 구독 로드맵
 ├── report_archive/            ← 분석 보고서 아카이브 (앱 미참조)
 └── user/                      ← 사용자 문서
@@ -44,6 +45,7 @@ docs/
 | [FLASHCARD_LOGIC.md](dev/FLASHCARD_LOGIC.md) | 플래시카드 로직 | 카드 생성, 난이도, 필터, 셔플 로직 |
 | [MD_TO_HTML_LOGIC.md](dev/MD_TO_HTML_LOGIC.md) | MD→HTML 변환 로직 | 런타임 파싱, 섹션 분할, 렌더링 |
 | [TESTING.md](dev/TESTING.md) | 테스트 가이드 | 유닛 테스트, DOM 테스트, 파서 등가성 검사 |
+| [STUDY_APP_DESIGN_GUIDE.md](dev/STUDY_APP_DESIGN_GUIDE.md) | 학습 앱 설계 가이드 | 설계 원칙, 기능/성능/UIUX 요구사항 템플릿, 분야별 커스터마이징, 새 교재 적용 체크리스트 |
 | [SUBSCRIPTION_ROADMAP.md](dev/SUBSCRIPTION_ROADMAP.md) | 구독 로드맵 | 향후 유료화 방향 |
 
 ---

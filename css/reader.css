@@ -197,6 +197,23 @@ pre.mermaid-mindmap .section-bkg text {
     color: #e0e0e0 !important;
 }
 
+/* === Other 다이어그램 타입 (sequence, class, state, gantt, pie, timeline, gitGraph, quadrant, sankey, er) === */
+/* Mermaid 기본 테마를 유지하되 다크 모드 텍스트 대비만 보정 */
+pre.mermaid-other text {
+    fill: #e0e0e0 !important;
+    color: #e0e0e0 !important;
+}
+pre.mermaid-other .actor,
+pre.mermaid-other .note,
+pre.mermaid-other .messageText,
+pre.mermaid-other .label,
+pre.mermaid-other .taskText,
+pre.mermaid-other .sectionTitle,
+pre.mermaid-other .titleText {
+    fill: #e0e0e0 !important;
+    color: #e0e0e0 !important;
+}
+
 /* Reader horizontal rule */
 .reader-hr {
     border: none;
@@ -877,6 +894,18 @@ body.reader-focus-mode .reader-readable-width {
 .reader-light-theme pre.mermaid-mindmap .mindmap-node text,
 .reader-light-theme pre.mermaid-mindmap .section-center text,
 .reader-light-theme pre.mermaid-mindmap .section-bkg text {
+    fill: #1a1a2e !important;
+    color: #1a1a2e !important;
+}
+/* Mermaid light theme — Other 다이어그램 타입 */
+.reader-light-theme pre.mermaid-other text,
+.reader-light-theme pre.mermaid-other .actor,
+.reader-light-theme pre.mermaid-other .note,
+.reader-light-theme pre.mermaid-other .messageText,
+.reader-light-theme pre.mermaid-other .label,
+.reader-light-theme pre.mermaid-other .taskText,
+.reader-light-theme pre.mermaid-other .sectionTitle,
+.reader-light-theme pre.mermaid-other .titleText {
     fill: #1a1a2e !important;
     color: #1a1a2e !important;
 }

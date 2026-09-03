@@ -3,6 +3,7 @@ import { escapeHTML, esc, safeTextWithBreaks } from '../sanitize.js';
 import { formatSectionContentForReader } from '../reader-format.js';
 import { parseTextbookContent } from '../textbook-parser.js';
 import { renderStudyAids, bindStudyAidToggles, renderExamFilterToggle, applyExamFilter, isKeySection } from '../study-aids.js';
+import { detectMermaidType, getMermaidClassName, getMermaidInitOptions } from '../mermaid-utils.js';
 import { openHtmlViewer } from '../html-viewer.js';
 import {
     SUBJECT_DIR_MAP, REFERENCE_FILES, REFERENCE_COMMON, REFERENCE_INGREDIENTS,
@@ -1036,13 +1037,11 @@ function _renderReaderMermaid(container) {
                 const isLight = document.documentElement.classList.contains('light-theme');
                 const nodeArr = Array.from(nodes);
                 // 각 노드의 diagram 타입 감지하여 클래스 추가
+                const nodeTypes = [];
                 nodeArr.forEach(node => {
-                    const text = node.textContent.trim();
-                    if (text.startsWith('mindmap')) {
-                        node.classList.add('mermaid-mindmap');
-                    } else {
-                        node.classList.add('mermaid-flowchart');
-                    }
+                    const type = detectMermaidType(node.textContent);
+                    nodeTypes.push(type);
+                    node.classList.add(getMermaidClassName(type));
                 });
                 let rendered = 0;
                 let failed = 0;
@@ -1052,46 +1051,8 @@ function _renderReaderMermaid(container) {
                         return;
                     }
                     const node = nodeArr[i];
-                    // flowchart에만 lineWidth 적용, mindmap은 기본값
-                    const isMindmap = node.classList.contains('mermaid-mindmap');
-                    if (!isMindmap) {
-                        mermaid.initialize({
-                            startOnLoad: false,
-                            securityLevel: 'strict',
-                            theme: isLight ? 'default' : 'dark',
-                            themeVariables: isLight ? {
-                                primaryColor: '#f0f4ff',
-                                primaryTextColor: '#1a1a2e',
-                                primaryBorderColor: '#4a6fa5',
-                                lineColor: '#4a6fa5',
-                                secondaryColor: '#f5f5f5',
-                                tertiaryColor: '#e8eaf6',
-                                background: '#ffffff',
-                                mainBkg: '#f0f4ff',
-                                nodeTextColor: '#1a1a2e',
-                                fontSize: '14px',
-                                lineWidth: 1
-                            } : {
-                                primaryColor: '#2d2d44',
-                                primaryTextColor: '#e0e0e0',
-                                primaryBorderColor: '#7b8faf',
-                                lineColor: '#7b8faf',
-                                secondaryColor: '#1e1e2e',
-                                tertiaryColor: '#2a2a3e',
-                                background: '#1a1a2e',
-                                mainBkg: '#2d2d44',
-                                nodeTextColor: '#e0e0e0',
-                                fontSize: '14px',
-                                lineWidth: 1
-                            }
-                        });
-                    } else {
-                        mermaid.initialize({
-                            startOnLoad: false,
-                            securityLevel: 'strict',
-                            theme: isLight ? 'default' : 'dark'
-                        });
-                    }
+                    const type = nodeTypes[i];
+                    mermaid.initialize(getMermaidInitOptions(type, isLight));
                     mermaid.run({ nodes: [node] })
                         .then(() => { rendered++; renderNext(i + 1); })
                         .catch((e) => {

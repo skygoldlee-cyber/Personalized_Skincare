@@ -1,6 +1,7 @@
 // views/textbook-search.js - 교재 검색 통합 로직 (Textbook Search Integration)
 import { escapeHTML, esc } from '../sanitize.js';
 import { parseMarkdown } from '../markdown-parser.js';
+import { detectMermaidType, getMermaidClassName, getMermaidInitOptions } from '../mermaid-utils.js';
 // [모바일 PWA 견고성] 레지스트리는 window 전역(가드)에서 읽는다(정적 import 하드 의존 지양).
 
 const textbookState = {
@@ -289,33 +290,17 @@ function _renderSearchMermaid(container) {
             try {
                 const isLight = document.documentElement.classList.contains('light-theme');
                 const nodeArr = Array.from(nodes);
+                const nodeTypes = [];
                 nodeArr.forEach(node => {
-                    const text = node.textContent.trim();
-                    if (text.startsWith('mindmap')) {
-                        node.classList.add('mermaid-mindmap');
-                    } else {
-                        node.classList.add('mermaid-flowchart');
-                    }
+                    const type = detectMermaidType(node.textContent);
+                    nodeTypes.push(type);
+                    node.classList.add(getMermaidClassName(type));
                 });
                 const renderNext = (i) => {
                     if (i >= nodeArr.length) return;
                     const node = nodeArr[i];
-                    const isMindmap = node.classList.contains('mermaid-mindmap');
-                    if (!isMindmap) {
-                        mermaid.initialize({
-                            startOnLoad: false,
-                            securityLevel: 'strict',
-                            theme: isLight ? 'default' : 'dark',
-                            themeVariables: isLight ? {
-                                primaryColor: '#f0f4ff',
-                                primaryTextColor: '#1a1a2e',
-                                primaryBorderColor: '#4a6fa5',
-                                lineColor: '#4a6fa5',
-                                secondaryColor: '#f5f5f5',
-                                tertiaryColor: '#e8eaf6',
-                            } : {}
-                        });
-                    }
+                    const type = nodeTypes[i];
+                    mermaid.initialize(getMermaidInitOptions(type, isLight));
                     mermaid.run({ nodes: [node] })
                         .then(() => renderNext(i + 1))
                         .catch((e) => {

@@ -8,6 +8,7 @@
 //   - 전역 테마(--bg-app, --color-text-main 등)를 자동으로 따라감
 
 import { escapeHTML } from './sanitize.js';
+import { detectMermaidType, getMermaidClassName, getMermaidInitOptions } from './mermaid-utils.js';
 import { parseMarkdown } from './markdown-parser.js';
 
 export const ManualViewer = (() => {
@@ -241,15 +242,19 @@ body.manual-open{overflow:hidden;}
             .then((mermaid) => {
                 try {
                     const isLight = document.documentElement.classList.contains('light-theme');
-                    mermaid.initialize({
-                        startOnLoad: false,
-                        securityLevel: 'strict',
-                        theme: isLight ? 'default' : 'dark'
-                    });
                     const nodeArr = Array.from(nodes);
+                    const nodeTypes = [];
+                    nodeArr.forEach(node => {
+                        const type = detectMermaidType(node.textContent);
+                        nodeTypes.push(type);
+                        node.classList.add(getMermaidClassName(type));
+                    });
                     const renderNext = (i) => {
                         if (i >= nodeArr.length) return;
-                        mermaid.run({ nodes: [nodeArr[i]] })
+                        const node = nodeArr[i];
+                        const type = nodeTypes[i];
+                        mermaid.initialize(getMermaidInitOptions(type, isLight));
+                        mermaid.run({ nodes: [node] })
                             .then(() => renderNext(i + 1))
                             .catch((e) => {
                                 console.warn(`[manual] mermaid node ${i} failed:`, e?.message || e);

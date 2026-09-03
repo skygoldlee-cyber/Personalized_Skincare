@@ -220,17 +220,142 @@ flowchart TD
 ```
 ```
 
-#### 3.5.3 렌더링 스타일 분리
+#### 3.5.3 추가 다이어그램 타입
 
-교재 리더는 다이어그램 타입을 자동 감지하여 타입별로 다른 스타일을 적용한다:
+Mermaid.js는 mindmap/flowchart 외에도 다음 타입을 지원합니다. 교재 MD에 ```` ```mermaid ```` 코드블록으로 작성하면 자동 렌더링됩니다.
+
+##### sequenceDiagram (순차도)
+
+행정처분 절차, 신고→심사→승인 흐름 등 상호작용 시퀀스를 표현:
+
+```markdown
+```mermaid
+sequenceDiagram
+    participant A as 화장품제조업자
+    participant B as 식약처
+    participant C as 지방식약청
+    A->>B: 제조업 등록 신청
+    B-->>A: 심사 중
+    B->>A: 등록 완료
+    A->>C: 책임판매업 등록 신청
+    C-->>A: 등록 완료
+```
+```
+
+##### gantt (간트 차트)
+
+시험 준비 타임라인, 법령 시행일정 등 일정 시각화:
+
+```markdown
+```mermaid
+gantt
+    title 화장품법 시행 일정
+    dateFormat YYYY-MM-DD
+    section 법률
+    공포 :2025-04-02, 1d
+    시행 :2026-04-02, 1d
+    section 시행령
+    공포 :2025-12-01, 1d
+    시행 :2026-04-02, 1d
+```
+```
+
+##### pie (파이 차트)
+
+출제 비율, 과목별 배점 등 비율 시각화:
+
+```markdown
+```mermaid
+pie title 과목별 출제 비율
+    "1과목 화장품법" : 25
+    "2과목 제조·품질" : 25
+    "3과목 안전관리" : 25
+    "4과목 맞춤형화장품" : 25
+```
+```
+
+##### timeline (타임라인)
+
+법령 연혁, 제도 변천 등 시간 흐름 시각화:
+
+```markdown
+```mermaid
+timeline
+    title 화장품법 연혁
+    1999 : 약사법에서 분리
+    2019 : 기능성화장품 11종 지정
+    2024 : 맞춤형화장품제 도입
+    2026 : 화장품법 전면 개정 시행
+```
+```
+
+##### stateDiagram-v2 (상태 다이어그램)
+
+제품 상태 변화, 허가 절차 상태 등:
+
+```markdown
+```mermaid
+stateDiagram-v2
+    [*] --> 미신청
+    미신청 --> 심사중: 신청서 제출
+    심사중 --> 승인: 심사 통과
+    심사중 --> 반려: 심사 실패
+    승인 --> 판매중: 제품 출시
+    판매중 --> [*]: 판매 종료
+    반려 --> 미신청: 재신청
+```
+```
+
+##### gitGraph (Git 그래프)
+
+법령 개정 이력, 제도 변천 등:
+
+```markdown
+```mermaid
+gitGraph
+    commit id: "1999 제정"
+    commit id: "2004 개정"
+    branch 기능성화장품
+    commit id: "2019 11종 지정"
+    merge 기능성화장품
+    commit id: "2024 맞춤형 도입"
+    commit id: "2026 전면 개정"
+```
+```
+
+##### quadrantChart (사분면 차트)
+
+기능성화장품 분류 (효능 vs 위험도) 등 2축 매트릭스:
+
+```markdown
+```mermaid
+quadrantChart
+    title 기능성화장품 분류
+    x-axis "낮은 효능" --> "높은 효능"
+    y-axis "낮은 위험" --> "높은 위험"
+    quadrant-1 "고효능·고위험"
+    quadrant-2 "저효능·고위험"
+    quadrant-3 "저효능·저위험"
+    quadrant-4 "고효능·저위험"
+    "미백": [0.7, 0.6]
+    "자외선차단": [0.8, 0.3]
+    "항노화": [0.6, 0.4]
+```
+```
+
+#### 3.5.4 렌더링 스타일 분리
+
+교재 리더는 다이어그램 타입을 자동 감지(`src/mermaid-utils.js`)하여 타입별로 다른 스타일을 적용한다:
 
 | 타입 | 감지 조건 | CSS 클래스 | 스타일 |
 |------|-----------|------------|-------|
-| mindmap | `textContent`가 `mindmap`으로 시작 | `mermaid-mindmap` | 텍스트 대비만 조정 (기본 Mermaid 스타일 유지) |
-| flowchart | 그 외 | `mermaid-flowchart` | `stroke-width: 1px`, 노드 배경/테두리, 얇은 화살표 |
+| mindmap | `mindmap`으로 시작 | `mermaid-mindmap` | 텍스트 대비만 조정 (기본 Mermaid 스타일 유지) |
+| flowchart | `flowchart` 또는 `graph`로 시작 | `mermaid-flowchart` | `stroke-width: 1px`, 노드 배경/테두리, 얇은 화살표 |
+| 기타 | `sequenceDiagram`, `gantt`, `pie`, `timeline`, `stateDiagram`, `gitGraph`, `quadrantChart`, `sankey`, `erDiagram`, `classDiagram` | `mermaid-other` | Mermaid 기본 테마, 텍스트 대비만 보정 |
 
 - flowchart에만 `lineWidth: 1` themeVariable 적용 → 연결선이 얇고 일관됨
 - mindmap은 Mermaid 기본 렌더링 스타일 유지 → 노드 색상/모양이 자연스럽게 표시
+- 기타 타입은 Mermaid 기본 테마를 그대로 사용 → 각 타입에 최적화된 렌더링
 
 ### 3.6 인라인 서식
 

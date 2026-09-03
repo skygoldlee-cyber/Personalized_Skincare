@@ -1,7 +1,7 @@
 # 📋 요구사양 명세서 (Software Requirements Specification)
 
 > **프로젝트**: Cosmetic Pass Master — 맞춤형화장품 조제관리사 스마트 학습 플랫폼
-> **버전**: 1.0 (2026-09-02 기준 구현 기능 전체 반영)
+> **버전**: 1.1 (2026-09-03 기준 — #44~#46 변경사항 반영)
 > **문서 성격**: 구현 완료된 기능을 역공학하여 체계적으로 정리한 요구사양 명세서
 
 ---
@@ -180,6 +180,8 @@
 | TS-03 | 250ms 디바운스 (모바일 타이핑 랙 감소) | ✅ |
 | TS-04 | 검색 결과 카드 토글 (더 보기/접기) | ✅ |
 | TS-05 | 검색 결과 카운트 (`aria-live="polite"`) | ✅ |
+| TS-06 | 검색 결과 마크다운 렌더링 (`parseMarkdown` 기반, 코드블록/테이블/머메이드 지원) | ✅ |
+| TS-07 | 검색 결과 Mermaid 다이어그램 온디맨드 렌더링 (`_renderSearchMermaid`) | ✅ |
 
 ### 3.10 성분 사전 (Dictionary)
 
@@ -313,6 +315,8 @@
 | PF-11 | ref_md 대용량 파일 MD 변환 (배포 용량 41% 절감) | ✅ |
 | PF-12 | `KEYWORD_INDEX` 경로 단축 (51KB → 14KB, 72% 절감) | ✅ |
 | PF-13 | Mermaid.js 온디맨드 로드 (3.3MB, mermaid 블록 있을 때만) | ✅ |
+| PF-14 | 전역 테이블 가로 스크롤 (CSS 전역 규칙으로 중복 스타일 제거, 렌더링 일관성) | ✅ |
+| PF-15 | 화장품법 PDF 중복 제거 (공통/ 22페이지 → 법령원문/ 30페이지 정본 통합) | ✅ |
 
 ### 4.5 접근성
 
@@ -333,6 +337,7 @@
 | R-04 | 스크롤 위치 복원 (뷰 전환 시) | ✅ |
 | R-05 | 그리드 종열 전환 (데스크톱 다열 → 모바일 단일 열) | ✅ |
 | R-06 | 인라인 스타일 오버라이드 패턴 (`[style*="..."]` + `!important`) | ✅ |
+| R-07 | 전역 테이블 가로 스크롤 (`width:max-content;min-width:100%` + wrapper `overflow-x:auto`) | ✅ |
 
 ### 4.7 테마 시스템
 
@@ -509,7 +514,7 @@
 
 | 항목 | 내용 |
 |------|------|
-| 단위 테스트 | 250개 (`tests/unit/`, Node.js) |
+| 단위 테스트 | 248개 (`tests/unit/`, Node.js) |
 | DOM 테스트 | Vitest + jsdom (`tests/dom/`) |
 | 회귀 가드 | `delegation-guard.test.js` (인라인 `on*=` 잔존 검출) |
 | CI | GitHub Actions (`npm test` + `check_parser_parity` + `verify:assets`) |
