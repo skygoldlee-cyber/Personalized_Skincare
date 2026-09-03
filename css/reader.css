@@ -198,10 +198,10 @@ pre.mermaid-mindmap .section-bkg text {
 }
 
 /* === Other 다이어그램 타입 (sequence, class, state, gantt, pie, timeline, gitGraph, quadrant, sankey, er) === */
-/* Mermaid 기본 테마를 유지하되 다크 모드 텍스트 대비만 보정 */
+/* Mermaid 기본 테마를 유지하되 다크 모드 텍스트/배경 대비 보정 */
 pre.mermaid-other text {
-    fill: #e0e0e0 !important;
-    color: #e0e0e0 !important;
+    fill: #e8e8e8 !important;
+    color: #e8e8e8 !important;
 }
 pre.mermaid-other .actor,
 pre.mermaid-other .note,
@@ -210,8 +210,51 @@ pre.mermaid-other .label,
 pre.mermaid-other .taskText,
 pre.mermaid-other .sectionTitle,
 pre.mermaid-other .titleText {
-    fill: #e0e0e0 !important;
-    color: #e0e0e0 !important;
+    fill: #e8e8e8 !important;
+    color: #e8e8e8 !important;
+}
+/* sequenceDiagram actor box 배경/보더 가시성 */
+pre.mermaid-other .actor {
+    fill: #3a3a5c !important;
+    stroke: #9fa8da !important;
+    stroke-width: 1.5px !important;
+}
+pre.mermaid-other .actor-line {
+    stroke: #666688 !important;
+    stroke-width: 1px !important;
+}
+/* sequenceDiagram note box */
+pre.mermaid-other .note {
+    fill: #4a4a2e !important;
+    stroke: #fbc02d !important;
+    stroke-width: 1px !important;
+}
+/* sequenceDiagram activation bar */
+pre.mermaid-other .activation0,
+pre.mermaid-other .activation1,
+pre.mermaid-other .activation2 {
+    fill: #5c5c8a !important;
+    opacity: 0.8 !important;
+}
+/* sequenceDiagram message arrow */
+pre.mermaid-other .messageLine0,
+pre.mermaid-other .messageLine1 {
+    stroke: #b0b0cc !important;
+    stroke-width: 1.5px !important;
+}
+/* sequenceDiagram label box */
+pre.mermaid-other .label {
+    fill: #3a3a5c !important;
+}
+/* gantt/pie 차트 영역 배경 */
+pre.mermaid-other .section0,
+pre.mermaid-other .section1,
+pre.mermaid-other .section2 {
+    fill: #2a2a3e !important;
+}
+pre.mermaid-other .task {
+    fill: #3a3a5c !important;
+    stroke: #8a8aab !important;
 }
 
 /* Reader horizontal rule */
@@ -908,6 +951,38 @@ body.reader-focus-mode .reader-readable-width {
 .reader-light-theme pre.mermaid-other .titleText {
     fill: #1a1a2e !important;
     color: #1a1a2e !important;
+}
+.reader-light-theme pre.mermaid-other .actor {
+    fill: #e8eaf6 !important;
+    stroke: #5c6bc0 !important;
+}
+.reader-light-theme pre.mermaid-other .actor-line {
+    stroke: #999 !important;
+}
+.reader-light-theme pre.mermaid-other .note {
+    fill: #fff9c4 !important;
+    stroke: #fbc02d !important;
+}
+.reader-light-theme pre.mermaid-other .activation0,
+.reader-light-theme pre.mermaid-other .activation1,
+.reader-light-theme pre.mermaid-other .activation2 {
+    fill: #c5cae9 !important;
+}
+.reader-light-theme pre.mermaid-other .messageLine0,
+.reader-light-theme pre.mermaid-other .messageLine1 {
+    stroke: #555 !important;
+}
+.reader-light-theme pre.mermaid-other .label {
+    fill: #e8eaf6 !important;
+}
+.reader-light-theme pre.mermaid-other .section0,
+.reader-light-theme pre.mermaid-other .section1,
+.reader-light-theme pre.mermaid-other .section2 {
+    fill: #f5f5f5 !important;
+}
+.reader-light-theme pre.mermaid-other .task {
+    fill: #e8eaf6 !important;
+    stroke: #5c6bc0 !important;
 }
 .reader-light-theme .reader-section-num {
     color: #fff !important;

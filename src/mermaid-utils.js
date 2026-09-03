@@ -90,6 +90,61 @@ export function getMermaidInitOptions(type, isLight) {
         };
     }
 
-    // mindmap, sequence, class, state, gantt, pie, etc. — 기본 테마만
-    return base;
+    // mindmap, sequence, class, state, gantt, pie, etc. — 기본 테마 + 대비 보정
+    return {
+        ...base,
+        themeVariables: isLight ? {
+            // 라이트: 배경은 밝게, 텍스트는 어둡게
+            primaryColor: '#f5f5f5',
+            primaryTextColor: '#1a1a2e',
+            primaryBorderColor: '#666',
+            lineColor: '#555',
+            secondaryColor: '#eaeaea',
+            tertiaryColor: '#e0e0e0',
+            background: '#ffffff',
+            mainBkg: '#f5f5f5',
+            nodeTextColor: '#1a1a2e',
+            fontSize: '14px',
+            // sequenceDiagram 전용
+            actorBkg: '#e8eaf6',
+            actorBorder: '#5c6bc0',
+            actorTextColor: '#1a1a2e',
+            actorLineColor: '#999',
+            signalColor: '#555',
+            signalTextColor: '#1a1a2e',
+            labelBoxBkgColor: '#e8eaf6',
+            labelTextColor: '#1a1a2e',
+            noteBkgColor: '#fff9c4',
+            noteTextColor: '#1a1a2e',
+            noteBorderColor: '#fbc02d',
+            activationBkgColor: '#c5cae9',
+            sequenceNumberColor: '#1a1a2e'
+        } : {
+            // 다크: 배경은 중간 톤, 텍스트는 밝게
+            primaryColor: '#3a3a5c',
+            primaryTextColor: '#e8e8e8',
+            primaryBorderColor: '#8a8aab',
+            lineColor: '#8a8aab',
+            secondaryColor: '#2a2a3e',
+            tertiaryColor: '#33334a',
+            background: '#1a1a2e',
+            mainBkg: '#3a3a5c',
+            nodeTextColor: '#e8e8e8',
+            fontSize: '14px',
+            // sequenceDiagram 전용
+            actorBkg: '#3a3a5c',
+            actorBorder: '#9fa8da',
+            actorTextColor: '#e8e8e8',
+            actorLineColor: '#666688',
+            signalColor: '#b0b0cc',
+            signalTextColor: '#e8e8e8',
+            labelBoxBkgColor: '#3a3a5c',
+            labelTextColor: '#e8e8e8',
+            noteBkgColor: '#4a4a2e',
+            noteTextColor: '#fff9c4',
+            noteBorderColor: '#fbc02d',
+            activationBkgColor: '#5c5c8a',
+            sequenceNumberColor: '#e8e8e8'
+        }
+    };
 }
