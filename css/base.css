@@ -347,6 +347,13 @@ body {
     background-color: rgba(245, 158, 11, 0.25);
 }
 
+/* Global Table Horizontal Scroll — 모든 테이블은 wrapper 내에서 가로 스크롤 */
+table {
+    width: max-content;
+    min-width: 100%;
+    border-collapse: collapse;
+}
+
 /* View Sections */
 .view-section {
     display: none;
