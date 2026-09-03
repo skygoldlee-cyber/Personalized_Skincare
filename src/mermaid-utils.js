@@ -90,7 +90,12 @@ export function getMermaidInitOptions(type, isLight) {
         };
     }
 
-    // mindmap, sequence, class, state, gantt, pie, etc. — 기본 테마 + 대비 보정
+    // mindmap은 Mermaid 기본 테마 색상 체계를 그대로 사용 (themeVariables 오버라이드 없음)
+    if (type === 'mindmap') {
+        return base;
+    }
+
+    // sequence, class, state, gantt, pie, etc. — 기본 테마 + 대비 보정
     return {
         ...base,
         themeVariables: isLight ? {

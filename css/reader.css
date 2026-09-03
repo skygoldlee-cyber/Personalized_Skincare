@@ -189,10 +189,10 @@ pre.mermaid-flowchart .edgeLabel {
 }
 
 /* === Mindmap 전용 스타일 === */
-/* mindmap은 mermaid 기본 렌더링을 유지, 텍스트 대비만 적용 */
-pre.mermaid-mindmap .mindmap-node text,
-pre.mermaid-mindmap .section-center text,
-pre.mermaid-mindmap .section-bkg text {
+/* mindmap은 Mermaid 기본 렌더링을 유지, 다크 모드에서만 텍스트 대비 적용 */
+pre.mermaid-mindmap:not(.reader-light-theme) .mindmap-node text,
+pre.mermaid-mindmap:not(.reader-light-theme) .section-center text,
+pre.mermaid-mindmap:not(.reader-light-theme) .section-bkg text {
     fill: #ffffff !important;
     color: #ffffff !important;
 }
