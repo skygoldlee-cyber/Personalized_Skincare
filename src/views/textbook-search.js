@@ -1,5 +1,6 @@
 // views/textbook-search.js - 교재 검색 통합 로직 (Textbook Search Integration)
 import { escapeHTML, esc } from '../sanitize.js';
+import { parseMarkdown } from '../markdown-parser.js';
 // [모바일 PWA 견고성] 레지스트리는 window 전역(가드)에서 읽는다(정적 import 하드 의존 지양).
 
 const textbookState = {
@@ -185,6 +186,9 @@ function performTextbookSearch() {
         `;
         container.insertAdjacentHTML('beforeend', cardHTML);
     });
+
+    // Mermaid 다이어그램 렌더링 (pre.mermaid 노드가 있을 때만 온디맨드 로드)
+    _renderSearchMermaid(container);
 }
 
 export function toggleTextbookCard(cardId) {
@@ -205,13 +209,17 @@ export function toggleTextbookCard(cardId) {
 }
 
 function formatSectionContent(rawContent, searchTerms = []) {
-    // 1. HTML 이스케이프
-    let html = escapeHTML(rawContent);
-    
-    // 2. 마크다운 볼드 처리
-    html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-    
-    // 3. 검색어 하이라이트
+    // parseMarkdown으로 마크다운 → HTML 변환 (코드블록, 머메이드, 테이블 등 지원)
+    let html = parseMarkdown(rawContent, {
+        useCustomListDiv: true,
+        useReaderStyles: true,
+        customSpacing: true,
+        allowItalics: false,
+        allowInlineCode: false,
+        allowMermaid: true
+    });
+
+    // 검색어 하이라이트 (마크다운 파싱 후 적용)
     if (searchTerms.length > 0) {
         searchTerms.forEach(term => {
             if (term.length > 0) {
@@ -219,24 +227,8 @@ function formatSectionContent(rawContent, searchTerms = []) {
             }
         });
     }
-    
-    // 4. 리스트 아이템 및 줄 바꿈
-    const lines = html.split(/\r?\n/);
-    const formattedLines = lines.map(line => {
-        const trimmed = line.trim();
-        if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
-            return `<div class="md-list-item"><span class="md-bullet">•</span> ${line.replace(/^[-*]\s+/, '')}</div>`;
-        }
-        if (trimmed.startsWith('|')) {
-            return `<div class="md-table-row">${line}</div>`;
-        }
-        if (trimmed === '') {
-            return '';
-        }
-        return `<p class="md-para">${line}</p>`;
-    });
-    
-    return formattedLines.join('');
+
+    return html;
 }
 
 function highlightTextInString(text, searchTerms = []) {
@@ -266,4 +258,76 @@ function highlightTextOutsideTags(html, term) {
 
 function escapeRegExp(string) {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+// --- Mermaid 온디맨드 로드 (textbook-reader.js 패턴과 동일) ---
+let _mermaidLoadPromise = null;
+function _ensureMermaid() {
+    if (window.mermaid) return Promise.resolve(window.mermaid);
+    if (_mermaidLoadPromise) return _mermaidLoadPromise;
+    _mermaidLoadPromise = new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = './vendor/mermaid/mermaid.min.js';
+        script.async = true;
+        const nonce = crypto.getRandomValues(new Uint8Array(16));
+        script.nonce = Array.from(nonce).map(b => b.toString(16).padStart(2, '0')).join('');
+        script.onload = () => {
+            if (window.mermaid) resolve(window.mermaid);
+            else reject(new Error('mermaid loaded but window.mermaid is undefined'));
+        };
+        script.onerror = (e) => { _mermaidLoadPromise = null; reject(e); };
+        document.head.appendChild(script);
+    });
+    return _mermaidLoadPromise;
+}
+
+function _renderSearchMermaid(container) {
+    const nodes = container ? container.querySelectorAll('pre.mermaid') : [];
+    if (nodes.length === 0) return;
+    _ensureMermaid()
+        .then((mermaid) => {
+            try {
+                const isLight = document.documentElement.classList.contains('light-theme');
+                const nodeArr = Array.from(nodes);
+                nodeArr.forEach(node => {
+                    const text = node.textContent.trim();
+                    if (text.startsWith('mindmap')) {
+                        node.classList.add('mermaid-mindmap');
+                    } else {
+                        node.classList.add('mermaid-flowchart');
+                    }
+                });
+                const renderNext = (i) => {
+                    if (i >= nodeArr.length) return;
+                    const node = nodeArr[i];
+                    const isMindmap = node.classList.contains('mermaid-mindmap');
+                    if (!isMindmap) {
+                        mermaid.initialize({
+                            startOnLoad: false,
+                            securityLevel: 'strict',
+                            theme: isLight ? 'default' : 'dark',
+                            themeVariables: isLight ? {
+                                primaryColor: '#f0f4ff',
+                                primaryTextColor: '#1a1a2e',
+                                primaryBorderColor: '#4a6fa5',
+                                lineColor: '#4a6fa5',
+                                secondaryColor: '#f5f5f5',
+                                tertiaryColor: '#e8eaf6',
+                            } : {}
+                        });
+                    }
+                    mermaid.run({ nodes: [node] })
+                        .then(() => renderNext(i + 1))
+                        .catch((e) => {
+                            console.warn(`[search] mermaid node ${i} failed:`, e?.message || e);
+                            node.innerHTML = '<span style="color:var(--color-text-muted);font-size:0.8rem;">[다이어그램 렌더링 실패]</span>';
+                            renderNext(i + 1);
+                        });
+                };
+                renderNext(0);
+            } catch (e) {
+                console.warn('[search] mermaid render failed:', e);
+            }
+        })
+        .catch((e) => console.warn('[search] mermaid load failed:', e));
 }
