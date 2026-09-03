@@ -99,8 +99,8 @@ export function getMermaidInitOptions(type, isLight) {
             primaryTextColor: '#1a1a2e',
             primaryBorderColor: '#3949ab',
             lineColor: '#333',
-            secondaryColor: '#e8eaf6',
-            tertiaryColor: '#d1c4e9',
+            secondaryColor: '#d1c4e9',
+            tertiaryColor: '#b39ddb',
             background: '#ffffff',
             mainBkg: '#c5cae9',
             nodeTextColor: '#1a1a2e',
@@ -117,7 +117,7 @@ export function getMermaidInitOptions(type, isLight) {
             noteBkgColor: '#fff59d',
             noteTextColor: '#1a1a2e',
             noteBorderColor: '#f57f17',
-            activationBkgColor: '#9fa8da',
+            activationBkgColor: '#7986cb',
             sequenceNumberColor: '#1a1a2e'
         } : {
             // 다크: 배경은 중간 톤, 텍스트는 밝게

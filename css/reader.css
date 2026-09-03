@@ -947,6 +947,8 @@ body.reader-focus-mode .reader-readable-width {
 .reader-light-theme pre.mermaid-other .note,
 .reader-light-theme pre.mermaid-other .messageText,
 .reader-light-theme pre.mermaid-other .label,
+.reader-light-theme pre.mermaid-other .labelText,
+.reader-light-theme pre.mermaid-other .loopText,
 .reader-light-theme pre.mermaid-other .taskText,
 .reader-light-theme pre.mermaid-other .sectionTitle,
 .reader-light-theme pre.mermaid-other .titleText {
@@ -970,7 +972,7 @@ body.reader-focus-mode .reader-readable-width {
 .reader-light-theme pre.mermaid-other .activation0,
 .reader-light-theme pre.mermaid-other .activation1,
 .reader-light-theme pre.mermaid-other .activation2 {
-    fill: #9fa8da !important;
+    fill: #7986cb !important;
     opacity: 0.85 !important;
 }
 .reader-light-theme pre.mermaid-other .messageLine0,
@@ -980,11 +982,22 @@ body.reader-focus-mode .reader-readable-width {
 }
 .reader-light-theme pre.mermaid-other .label {
     fill: #c5cae9 !important;
+    stroke: #3949ab !important;
+}
+/* alt/opt/loop 블록 배경 — secondaryColor/tertiaryColor 영역 */
+.reader-light-theme pre.mermaid-other .labelBkg {
+    fill: #d1c4e9 !important;
+}
+.reader-light-theme pre.mermaid-other .cluster rect,
+.reader-light-theme pre.mermaid-other .cluster {
+    fill: #d1c4e9 !important;
+    stroke: #5e35b1 !important;
+    stroke-width: 1.5px !important;
 }
 .reader-light-theme pre.mermaid-other .section0,
 .reader-light-theme pre.mermaid-other .section1,
 .reader-light-theme pre.mermaid-other .section2 {
-    fill: #e8eaf6 !important;
+    fill: #d1c4e9 !important;
 }
 .reader-light-theme pre.mermaid-other .task {
     fill: #c5cae9 !important;
