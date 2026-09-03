@@ -934,16 +934,12 @@ body.reader-focus-mode .reader-readable-width {
     background-color: #ffffff !important;
 }
 /* Mermaid light theme — Mindmap 전용 */
+/* Mermaid default 테마는 진한 색상 노드 배경 + 흰색 텍스트 사용 → 텍스트를 흰색으로 유지 */
 .reader-light-theme pre.mermaid-mindmap .mindmap-node text,
 .reader-light-theme pre.mermaid-mindmap .section-center text,
 .reader-light-theme pre.mermaid-mindmap .section-bkg text {
-    fill: #1a1a2e !important;
-    color: #1a1a2e !important;
-}
-.reader-light-theme pre.mermaid-mindmap .mindmap-node,
-.reader-light-theme pre.mermaid-mindmap .section-center,
-.reader-light-theme pre.mermaid-mindmap .section-bkg {
-    opacity: 0.9 !important;
+    fill: #ffffff !important;
+    color: #ffffff !important;
 }
 /* Mermaid light theme — Other 다이어그램 타입 */
 .reader-light-theme pre.mermaid-other text,
