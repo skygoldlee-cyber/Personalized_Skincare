@@ -221,6 +221,12 @@ pre.mermaid-other .actor {
     stroke: #9fa8da !important;
     stroke-width: 1.5px !important;
 }
+/* actor 내부 텍스트 — 배경 rect와 분리 */
+pre.mermaid-other .actor text,
+pre.mermaid-other g.actor text {
+    fill: #ffffff !important;
+    color: #ffffff !important;
+}
 pre.mermaid-other .actor-line {
     stroke: #8888aa !important;
     stroke-width: 1px !important;
@@ -230,6 +236,13 @@ pre.mermaid-other .note {
     fill: #4a4a2e !important;
     stroke: #fbc02d !important;
     stroke-width: 1px !important;
+}
+/* note 내부 텍스트 — 배경 rect와 분리 */
+pre.mermaid-other .note text,
+pre.mermaid-other .noteText,
+pre.mermaid-other g.note text {
+    fill: #ffffff !important;
+    color: #ffffff !important;
 }
 /* sequenceDiagram activation bar */
 pre.mermaid-other .activation0,
@@ -247,6 +260,12 @@ pre.mermaid-other .messageLine1 {
 /* sequenceDiagram label box */
 pre.mermaid-other .label {
     fill: #3a3a5c !important;
+}
+/* label 내부 텍스트 — 배경 rect와 분리 */
+pre.mermaid-other .label text,
+pre.mermaid-other g.label text {
+    fill: #ffffff !important;
+    color: #ffffff !important;
 }
 /* gantt/pie 차트 영역 배경 */
 pre.mermaid-other .section0,
@@ -956,6 +975,12 @@ body.reader-focus-mode .reader-readable-width {
     stroke: #3949ab !important;
     stroke-width: 1.5px !important;
 }
+/* actor 내부 텍스트 — 배경 rect와 분리 */
+.reader-light-theme pre.mermaid-other .actor text,
+.reader-light-theme pre.mermaid-other g.actor text {
+    fill: #1a1a2e !important;
+    color: #1a1a2e !important;
+}
 .reader-light-theme pre.mermaid-other .actor-line {
     stroke: #666 !important;
     stroke-width: 1px !important;
@@ -964,6 +989,13 @@ body.reader-focus-mode .reader-readable-width {
     fill: #fff59d !important;
     stroke: #f57f17 !important;
     stroke-width: 1px !important;
+}
+/* note 내부 텍스트 — .note rect 배경과 분리하여 명시적으로 어둡게 */
+.reader-light-theme pre.mermaid-other .note text,
+.reader-light-theme pre.mermaid-other .noteText,
+.reader-light-theme pre.mermaid-other g.note text {
+    fill: #1a1a2e !important;
+    color: #1a1a2e !important;
 }
 .reader-light-theme pre.mermaid-other .activation0,
 .reader-light-theme pre.mermaid-other .activation1,
@@ -979,6 +1011,12 @@ body.reader-focus-mode .reader-readable-width {
 .reader-light-theme pre.mermaid-other .label {
     fill: #c5cae9 !important;
     stroke: #3949ab !important;
+}
+/* label 내부 텍스트 — 배경 rect와 분리 */
+.reader-light-theme pre.mermaid-other .label text,
+.reader-light-theme pre.mermaid-other g.label text {
+    fill: #1a1a2e !important;
+    color: #1a1a2e !important;
 }
 /* alt/opt/loop 블록 배경 — secondaryColor/tertiaryColor 영역 */
 .reader-light-theme pre.mermaid-other .labelBkg {
