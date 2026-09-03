@@ -1155,3 +1155,36 @@
 - `npm test` 248 pass, 0 fail
 - Git commit `f7934fa`
 - Vercel 배포 완료
+
+---
+
+## #47 — Mermaid 추가 다이어그램 타입 지원 및 교재 sequenceDiagram 교체 (2026-09-03)
+
+### 배경
+
+교재에서 Mermaid mindmap/flowchart만 사용 중이었으나, 행정 절차 등 다행위자 상호작용을 시각화하기에 sequenceDiagram이 더 적합한 케이스가 존재. 또한 Mermaid.js가 지원하는 다른 다이어그램 타입(gantt, pie, timeline, stateDiagram, gitGraph, quadrantChart 등)도 추가 비용 없이 활용 가능.
+
+### 변경 내용
+
+1. **`src/mermaid-utils.js` 신규 추가**: 다이어그램 타입 감지 공용 유틸리티
+   - `detectMermaidType(text)`: 12종 타입 자동 감지 (mindmap, flowchart, sequence, class, state, gantt, pie, gitGraph, timeline, quadrant, sankey, er)
+   - `getMermaidClassName(type)`: CSS 클래스 반환 (`mermaid-mindmap` | `mermaid-flowchart` | `mermaid-other`)
+   - `getMermaidInitOptions(type, isLight)`: 타입별 Mermaid initialize 옵션 반환
+2. **3개 렌더링 모듈 리팩터링**: `textbook-reader.js`, `textbook-search.js`, `manual-viewer.js` — 하드코딩된 mindmap/flowchart 분기를 `mermaid-utils.js` 공용 함수로 교체
+3. **`css/reader.css` 스타일 추가**: `mermaid-other` 클래스 다크/라이트 테마 텍스트 대비 보정
+4. **문서 갱신**:
+   - `TEXTBOOK_AUTHORING_GUIDE.md`: 6종 추가 다이어그램 예시 (sequence, gantt, pie, timeline, state, gitGraph, quadrant) + 렌더링 스타일 분리 표 갱신
+   - `STUDY_APP_DESIGN_GUIDE.md`: Mermaid 다이어그램 섹션 12종 전체 표로 확장
+5. **교재 5곳 flowchart → sequenceDiagram 교체** (이야기형+표준형 각 10파일):
+   - 제3조 영업의 등록: 영업희망자↔식약처장↔지방식약청장 상호작용
+   - 제4조 기능성화장품 심사: 제조업자↔식약처장 심사/보고 절차
+   - 제5조의2 위해화장품 회수: 영업자↔식약처장 회수·공표·감경 절차
+   - 제24조 등록의 취소: 식약처장→영업자 행정처분 (의무/재량 + 과징금)
+   - 2과목 기능성화장품 심사 흐름도: 제조업자↔식약처 심사/보고 + 승인/보완/반려
+
+### 검증
+
+- `npm run build:data` 성공, 파서 등가성 검사 통과
+- `npm test` 248 pass, 0 fail
+- Git commit `b9ad2ae` (기능 구현), `ed9c0f5` (SW bump)
+- Vercel 배포 완료

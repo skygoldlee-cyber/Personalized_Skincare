@@ -1,7 +1,7 @@
 # 📋 요구사양 명세서 (Software Requirements Specification)
 
 > **프로젝트**: Cosmetic Pass Master — 맞춤형화장품 조제관리사 스마트 학습 플랫폼
-> **버전**: 1.1 (2026-09-03 기준 — #44~#46 변경사항 반영)
+> **버전**: 1.2 (2026-09-03 기준 — #44~#47 변경사항 반영)
 > **문서 성격**: 구현 완료된 기능을 역공학하여 체계적으로 정리한 요구사양 명세서
 
 ---
@@ -123,8 +123,8 @@
 | TR-03 | 단원 간 이동 (이전/다음 챕터) | ✅ |
 | TR-04 | 스크롤 위치 기억/복원 (뷰 전환 시) | ✅ |
 | TR-05 | 기출 마커(🔖기출) 및 중요 마커(📌중요) 하이라이트 | ✅ |
-| TR-06 | Mermaid 다이어그램 렌더링 (mindmap + flowchart, 온디맨드 로드) | ✅ |
-| TR-07 | 다이어그램 타입별 개별 렌더링 (하나 실패해도 나머지 정상) | ✅ |
+| TR-06 | Mermaid 다이어그램 렌더링 (mindmap + flowchart + sequence + gantt + pie + timeline + state + gitGraph + quadrant + class + er + sankey, 온디맨드 로드) | ✅ |
+| TR-07 | 다이어그램 타입별 개별 렌더링 (`mermaid-utils.js` 타입 감지, 하나 실패해도 나머지 정상) | ✅ |
 | TR-08 | 키워드 자동 링크 보호 (Mermaid 블록 내 용어집 링크 치환 방지) | ✅ |
 | TR-09 | 마크다운 링크 파싱 (`[text](url)` → `<a>` 변환) | ✅ |
 | TR-10 | 기출문제 링크 클릭 → 문제집 HTML 뷰어 오버레이 (ExamViewer 연동) | ✅ |
@@ -317,6 +317,7 @@
 | PF-13 | Mermaid.js 온디맨드 로드 (3.3MB, mermaid 블록 있을 때만) | ✅ |
 | PF-14 | 전역 테이블 가로 스크롤 (CSS 전역 규칙으로 중복 스타일 제거, 렌더링 일관성) | ✅ |
 | PF-15 | 화장품법 PDF 중복 제거 (공통/ 22페이지 → 법령원문/ 30페이지 정본 통합) | ✅ |
+| PF-16 | Mermaid 다이어그램 타입별 초기화 공용화 (`mermaid-utils.js`, 3개 모듈 중복 제거) | ✅ |
 
 ### 4.5 접근성
 
@@ -348,7 +349,7 @@
 | TH-03 | 테마 결정 우선순위: `localStorage` > `prefers-color-scheme` > 다크 | ✅ |
 | TH-04 | `themechange` 커스텀 이벤트 브로드캐스트 (모듈 간 동기화) | ✅ |
 | TH-05 | 교재 리더 테마 동기화 (`.reader-light-theme` 클래스) | ✅ |
-| TH-06 | Mermaid 다이어그램 테마별 렌더링 (dark/default) | ✅ |
+| TH-06 | Mermaid 다이어그램 테마별 렌더링 (dark/default, 타입별 CSS 클래스 분리: `mermaid-mindmap`/`mermaid-flowchart`/`mermaid-other`) | ✅ |
 
 ---
 
