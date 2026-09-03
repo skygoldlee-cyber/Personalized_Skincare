@@ -85,8 +85,8 @@
 │ │  │ 타입)   │ │ (리더 포맷)  │                          │ │
 │ │  └─────────┘ └──────────────┘                          │ │
 │ │  ┌──────────────┐ ┌──────────────┐                     │ │
-│ │  │pdf-registry │ │html-viewer   │  (HTML 참조자료 뷰어)  │ │
-│ │  │  .js         │ │  .js         │  (fetch+DOM+검색)     │ │
+│ │  │pdf-registry │ │html-viewer   │  (MD 참조자료 뷰어)    │ │
+│ │  │  .js         │ │  .js         │  (fetch+DOM+검색+PDF)  │ │
 │ │  └──────────────┘ └──────────────┘                     │ │
 │ │  ┌──────────────────────────────────────────────────┐  │ │
 │ │  │  views/ (뷰 컨트롤러 모듈)                          │  │ │
@@ -374,8 +374,8 @@ Personalized_Skincare/
 | [`src/state.js`](../../src/state.js) | 전역 상태 객체(`state`) 정의 + localStorage 영속성(`loadProgress`/`saveProgress`). 기본 과목은 `null`이며 `initApp()`에서 registry 첫 과목으로 설정 |
 | [`src/utils.js`](../../src/utils.js) | 의존성 없는 범용 헬퍼 (한글 초성 추출 `getChosung()` 등) |
 | [`src/sanitize.js`](../../src/sanitize.js) | HTML/XSS 방어 및 텍스트 정제 유틸리티 |
-| [`src/pdf-registry.js`](../../src/pdf-registry.js) | 참조자료 중앙 설정 모듈. 과목별 참조자료 매핑, 출처→HTML 파일명 매핑, HTML 경로 해석 (`REF_DIRS`, `resolveRefPath`, `mapSourceToRef`) |
-| [`src/html-viewer.js`](../../src/html-viewer.js) | 앱 내 HTML/MD 참조자료 뷰어. `fetch()`+`DOMParser`(HTML) 또는 `parseMarkdown()`(MD)로 로드 후 DOM 직접 주입 (iframe 없음). **키워드 기반 스크롤**: `KEYWORD_INDEX`에서 추출한 셀 텍스트 키워드로 검색→첫 번째 하이라이트로 스크롤 (L###은 스크롤에 사용하지 않음). **성능 최적화**: sessionStorage 캐싱(24h TTL)으로 재방문 시 즉시 렌더링, span 일괄 제거(normalize 호출 최소화), 검색 조기 종료(첫 매치 즉시 스크롤 + 나머지 `requestIdleCallback` 지연 하이라이트). 텍스트 노드 순회 검색 + `<mark>` 하이라이트, 검색 결과 내비게이션(이전/다음), 인쇄 지원 |
+| [`src/pdf-registry.js`](../../src/pdf-registry.js) | 참조자료 중앙 설정 모듈. 과목별 참조자료 매핑, 출처→PDF 파일명 매핑, MD 변환본 경로 자동 생성 (`REF_DIRS`, `resolveRefPath`, `mapSourceToRef`). 원본 PDF는 `.vercelignore`로 배포 제외, `ref_md/*.md` 변환본(3.7MB)으로 인앱 뷰어+PDF 저장 지원 |
+| [`src/html-viewer.js`](../../src/html-viewer.js) | 앱 내 HTML/MD 참조자료 뷰어. `fetch()`+`DOMParser`(HTML) 또는 `parseMarkdown()`(MD)로 로드 후 DOM 직접 주입 (iframe 없음). **키워드 기반 스크롤**: `KEYWORD_INDEX`에서 추출한 셀 텍스트 키워드로 검색→첫 번째 하이라이트로 스크롤 (L###은 스크롤에 사용하지 않음). **성능 최적화**: sessionStorage 캐싱(24h TTL)으로 재방문 시 즉시 렌더링, span 일괄 제거(normalize 호출 최소화), 검색 조기 종료(첫 매치 즉시 스크롤 + 나머지 `requestIdleCallback` 지연 하이라이트). 텍스트 노드 순회 검색 + `<mark>` 하이라이트, 검색 결과 내비게이션(이전/다음), 인쇄 지원. **PDF 저장** (v210 도입): 인쇄 전용 CSS로 오버레이 제약 없이 전체 문서를 브라우저 인쇄 다이얼로그로 출력 → "PDF로 저장" 선택 가능 |
 | [`src/reader-format.js`](../../src/reader-format.js) | 교재 리더 본문 포맷터. `parseMarkdown()` + HTML 참조 링크 변환 (`data-ref-html`, `data-ref-search`) + 참조자료 인라인 렌더링 |
 | [`src/exam-viewer.js`](../../src/exam-viewer.js) | 문제집(MD) 런타임 뷰어. `content/문제은행/*.md` fetch → 자체 MD→HTML 변환 → 인앱 전체화면 오버레이 렌더링. TOC 생성·인쇄·sessionStorage 캐시(24h)·`file://` 번들 폴리백(`data/exams_md/*.js`) 지원. **시험 제목은 registry에서 동적 조회** (하드코딩 없음) |
 
@@ -441,7 +441,7 @@ scratchpad.js (캔버스)            views/flashcard.js (플래시카드)
 reader-format.js (리더 포맷터+키워드 자동링크+L### 확장)    views/quiz.js (퀴즈+복습)
 ui-utils.js (로딩 UI)             views/daily-challenge.js (데일리 챌린지)
 types.js (JSDoc 타입 정의)        views/trainer.js (훈련소)
-html-viewer.js (참조자료 뷰어+키워드 기반 스크롤)    views/pomodoro.js (뽀모도로 타이머)
+html-viewer.js (참조자료 뷰어+키워드 스크롤+PDF 저장)    views/pomodoro.js (뽀모도로 타이머)
 pdf-registry.js (참조자료 레지스트리+KEYWORD_REF_MAP 자동링크)  views/dictionary.js (성분 검색)
 keyword-index.js (KEYWORD_INDEX: 교재 셀→참조자료 키워드 매핑)  views/navigation.js (뷰 전환 유틸)
 markdown-parser.js (MD→HTML 파서)  views/glossary-renderer.js (용어집 렌더링)
