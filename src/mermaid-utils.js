@@ -75,14 +75,14 @@ export function getMermaidInitOptions(type, isLight) {
                 fontSize: '14px',
                 lineWidth: 1
             } : {
-                primaryColor: '#2d2d44',
+                primaryColor: '#33334a',
                 primaryTextColor: '#ffffff',
                 primaryBorderColor: '#7b8faf',
                 lineColor: '#7b8faf',
                 secondaryColor: '#1e1e2e',
                 tertiaryColor: '#2a2a3e',
                 background: '#1a1a2e',
-                mainBkg: '#2d2d44',
+                mainBkg: '#33334a',
                 nodeTextColor: '#ffffff',
                 fontSize: '14px',
                 lineWidth: 1
@@ -99,8 +99,8 @@ export function getMermaidInitOptions(type, isLight) {
             primaryTextColor: '#1a1a2e',
             primaryBorderColor: '#3949ab',
             lineColor: '#333',
-            secondaryColor: '#d1c4e9',
-            tertiaryColor: '#b39ddb',
+            secondaryColor: '#b39ddb',
+            tertiaryColor: '#9575cd',
             background: '#ffffff',
             mainBkg: '#c5cae9',
             nodeTextColor: '#1a1a2e',
@@ -117,7 +117,7 @@ export function getMermaidInitOptions(type, isLight) {
             noteBkgColor: '#fff59d',
             noteTextColor: '#1a1a2e',
             noteBorderColor: '#f57f17',
-            activationBkgColor: '#7986cb',
+            activationBkgColor: '#5c6bc0',
             sequenceNumberColor: '#1a1a2e'
         } : {
             // 다크: 배경은 중간 톤, 텍스트는 밝게
@@ -125,8 +125,8 @@ export function getMermaidInitOptions(type, isLight) {
             primaryTextColor: '#ffffff',
             primaryBorderColor: '#8a8aab',
             lineColor: '#8a8aab',
-            secondaryColor: '#2a2a3e',
-            tertiaryColor: '#33334a',
+            secondaryColor: '#2e2e4a',
+            tertiaryColor: '#383858',
             background: '#1a1a2e',
             mainBkg: '#3a3a5c',
             nodeTextColor: '#ffffff',
@@ -135,7 +135,7 @@ export function getMermaidInitOptions(type, isLight) {
             actorBkg: '#3a3a5c',
             actorBorder: '#9fa8da',
             actorTextColor: '#ffffff',
-            actorLineColor: '#666688',
+            actorLineColor: '#8888aa',
             signalColor: '#b0b0cc',
             signalTextColor: '#ffffff',
             labelBoxBkgColor: '#3a3a5c',

@@ -173,7 +173,7 @@ pre.mermaid-flowchart .node rect,
 pre.mermaid-flowchart .node circle,
 pre.mermaid-flowchart .node ellipse,
 pre.mermaid-flowchart .node polygon {
-    fill: #2d2d44 !important;
+    fill: #33334a !important;
     stroke: #7b8faf !important;
     stroke-width: 1px !important;
 }
@@ -222,7 +222,7 @@ pre.mermaid-other .actor {
     stroke-width: 1.5px !important;
 }
 pre.mermaid-other .actor-line {
-    stroke: #666688 !important;
+    stroke: #8888aa !important;
     stroke-width: 1px !important;
 }
 /* sequenceDiagram note box */
@@ -252,7 +252,7 @@ pre.mermaid-other .label {
 pre.mermaid-other .section0,
 pre.mermaid-other .section1,
 pre.mermaid-other .section2 {
-    fill: #2a2a3e !important;
+    fill: #2e2e4a !important;
 }
 pre.mermaid-other .task {
     fill: #3a3a5c !important;
@@ -936,13 +936,7 @@ body.reader-focus-mode .reader-readable-width {
     background-color: #ffffff !important;
 }
 /* Mermaid light theme — Mindmap 전용 */
-/* Mermaid default 테마는 진한 색상 노드 배경 + 흰색 텍스트 사용 → 텍스트를 흰색으로 유지 */
-.reader-light-theme pre.mermaid-mindmap .mindmap-node text,
-.reader-light-theme pre.mermaid-mindmap .section-center text,
-.reader-light-theme pre.mermaid-mindmap .section-bkg text {
-    fill: #ffffff !important;
-    color: #ffffff !important;
-}
+/* Mermaid default 테마가 노드 깊이별로 배경색+텍스트색을 자동 지정하므로 강제 오버라이드하지 않음 */
 /* Mermaid light theme — Other 다이어그램 타입 */
 .reader-light-theme pre.mermaid-other text,
 .reader-light-theme pre.mermaid-other .actor,
@@ -974,7 +968,7 @@ body.reader-focus-mode .reader-readable-width {
 .reader-light-theme pre.mermaid-other .activation0,
 .reader-light-theme pre.mermaid-other .activation1,
 .reader-light-theme pre.mermaid-other .activation2 {
-    fill: #7986cb !important;
+    fill: #5c6bc0 !important;
     opacity: 0.85 !important;
 }
 .reader-light-theme pre.mermaid-other .messageLine0,
@@ -988,18 +982,18 @@ body.reader-focus-mode .reader-readable-width {
 }
 /* alt/opt/loop 블록 배경 — secondaryColor/tertiaryColor 영역 */
 .reader-light-theme pre.mermaid-other .labelBkg {
-    fill: #d1c4e9 !important;
+    fill: #b39ddb !important;
 }
 .reader-light-theme pre.mermaid-other .cluster rect,
 .reader-light-theme pre.mermaid-other .cluster {
-    fill: #d1c4e9 !important;
-    stroke: #5e35b1 !important;
+    fill: #b39ddb !important;
+    stroke: #4527a0 !important;
     stroke-width: 1.5px !important;
 }
 .reader-light-theme pre.mermaid-other .section0,
 .reader-light-theme pre.mermaid-other .section1,
 .reader-light-theme pre.mermaid-other .section2 {
-    fill: #d1c4e9 !important;
+    fill: #b39ddb !important;
 }
 .reader-light-theme pre.mermaid-other .task {
     fill: #c5cae9 !important;
