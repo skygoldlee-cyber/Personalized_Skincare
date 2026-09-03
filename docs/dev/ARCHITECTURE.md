@@ -1,7 +1,7 @@
 # 🏛️ 설계 컨셉 & 아키텍처 (Architecture & Design Concept)
 
 > **대상 프로젝트**: Cosmetic Pass Master — 맞춤형화장품 조제관리사 스마트 학습 플랫폼
-> **최종 업데이트**: 2026-09-02
+> **최종 업데이트**: 2026-09-03
 > **목적**: 시스템의 설계 철학, 아키텍처 구조, 주요 설계 결정 사항을 설명
 
 ---
@@ -70,9 +70,9 @@
 │ ┌─────────────────────────────────────────────────────────┐ │
 │ │                    Application Layer                     │ │
 │ │  ┌─────────┐ ┌─────────┐ ┌────────────┐ ┌────────────┐ │ │
-│ │  │ app.js  │ │charts.js│ │scratchpad  │ │trainer-    │ │ │
-│ │  │ (라우팅· │ │ (SVG    │ │  .js       │ │ calc.js    │ │ │
-│ │  │  렌더링) │ │  차트)  │ │ (캔버스)   │ │ (문제생성) │ │ │
+│ │  │ app.js  │ │router.js│ │scratchpad  │ │trainer-    │ │ │
+│ │  │ (초기화· │ │ (SPA    │ │  .js       │ │ calc.js    │ │ │
+│ │  │ 이벤트) │ │ 라우팅) │ │ (캔버스)   │ │ (문제생성) │ │ │
 │ │  └─────────┘ └─────────┘ └────────────┘ └────────────┘ │ │
 │ │  ┌─────────┐ ┌─────────┐ ┌────────────┐                │ │
 │ │  │state.js │ │utils.js │ │ ui-utils   │  sanitize.js  │ │
@@ -90,15 +90,15 @@
 │ │  └──────────────┘ └──────────────┘                     │ │
 │ │  ┌──────────────────────────────────────────────────┐  │ │
 │ │  │  views/ (뷰 컨트롤러 모듈)                          │  │ │
-│ │  │  dashboard · flashcard · quiz · trainer            │  │ │
-│ │  │  dictionary · backup · textbook-search             │  │ │
-│ │  │  textbook-reader · exam-simulator                  │  │ │
+│ │  │  dashboard · flashcard · quiz · daily-challenge    │  │ │
+│ │  │  trainer · pomodoro · dictionary · backup          │  │ │
+│ │  │  textbook-search · textbook-reader · exam-simulator│  │ │
+│ │  │  glossary-renderer · navigation                    │  │ │
 │ │  └──────────────────────────────────────────────────┘  │ │
 │ └─────────────────────────────────────────────────────────┘ │
 │ ┌─────────────────────────────────────────────────────────┐ │
 │ │                       Data Layer                         │ │
 │ │  registry.js · ingredients_data.js · audio_manifest.js    │ │
-│ │  id_migration.js     (빌드 타임 생성, 불변)                │ │
 │ └─────────────────────────────────────────────────────────┘ │
 │ ┌─────────────────────────────────────────────────────────┐ │
 │ │                    Persistence Layer                     │ │
@@ -192,7 +192,8 @@ Personalized_Skincare/
 │   └── trainer.css             #   훈련소, 계산기, 손글씨
 │
 ├── src/                        # 애플리케이션 소스 (ESM)
-│   ├── app.js                  #   오케스트레이터 (초기화, 라우팅, 이벤트 위임)
+│   ├── app.js                  #   오케스트레이터 (초기화, 이벤트 위임, 라우터 연결)
+│   ├── router.js               #   SPA 라우터 (뷰 타이틀 맵, 네비게이션 디스패치)
 │   ├── app-fallback.js         #   ESM 로드 실패 시 자가 복구
 │   ├── pwa-install-capture.js  #   beforeinstallprompt 조기 캡처 + SW 등록
 │   ├── theme-init.js           #   FOUC 방지 (페인트 전 테마 적용)
@@ -222,8 +223,10 @@ Personalized_Skincare/
 │   └── views/                  #   뷰 컨트롤러 모듈
 │       ├── dashboard.js        #     대시보드 통계
 │       ├── flashcard.js        #     3D 플래시카드
-│       ├── quiz.js             #     퀴즈 + 복습 + 일일 챌린지
+│       ├── quiz.js             #     퀴즈 + 복습
+│       ├── daily-challenge.js  #     데일리 챌린지 (quiz.js에서 분리)
 │       ├── trainer.js          #     훈련소 UI
+│       ├── pomodoro.js         #     뽀모도로 타이머 (trainer.js에서 분리)
 │       ├── exam-simulator.js   #     모의고사 시뮬레이터
 │       ├── textbook-reader.js  #     교재 리더 + 오디오 + Media Session
 │       ├── textbook-search.js  #     교재 본문 검색
@@ -257,7 +260,6 @@ Personalized_Skincare/
 │   │   ├── script_polisher.py  #     스크립트 정제
 │   │   ├── generate_all_mp3.py #     전 과목 일괄 생성
 │   │   └── mp3/                #     생성된 MP3 (gitignore)
-│   ├── report/                 #   분석 보고서 MD (4개)
 │   └── utils/                  #   Python 변환 스크립트
 │       ├── batch_convert.py    #     배치 HTML 변환
 │       ├── convert_ref_md.py   #     ref_md HTML→MD 변환
@@ -267,7 +269,6 @@ Personalized_Skincare/
 ├── data/                       # 빌드 타임 생성 (자동 생성, 직접 수정 금지)
 │   ├── registry.js             #   과목/시험/성분 메타
 │   ├── audio_manifest.js       #   오디오 챕터 매핑
-│   ├── id_migration.js         #   레거시 ID 마이그레이션
 │   ├── ingredients_data.*.js   #   성분 데이터 (해시 파일명)
 │   ├── exams/                  #   시험 데이터 번들 (해시 파일명)
 │   ├── exams_md/               #   문제은행 MD 폴백 번들 (file:// 전용)
@@ -292,11 +293,10 @@ Personalized_Skincare/
 │   ├── build_study_md_bundle.js #  교재 폴백 번들 (과목별 분할)
 │   ├── check_parser_parity.js  #   빌드 파서 ↔ 런타임 파서 등가성 검증
 │   ├── verify-shell-assets.js  #   프리캐시 파일 존재 CI 검증
-│   ├── fix-mindmap-indent.mjs  #   Mermaid mindmap 들여쓰기 수정
-│   └── deploy.ps1              #   배포 스크립트
+│   └── fix-mindmap-indent.mjs  #   Mermaid mindmap 들여쓰기 수정
 │
 ├── tests/                      # 자동화 테스트
-│   ├── unit/                   #   단위 테스트 (19개 파일, 250 tests)
+│   ├── unit/                   #   단위 테스트 (19개 파일, 248 tests)
 │   │   ├── delegation-guard.test.js
 │   │   ├── glossary-query.test.js
 │   │   ├── id-factory.test.js
@@ -312,7 +312,8 @@ Personalized_Skincare/
 │   │   ├── trainer-calc.test.js
 │   │   └── utils.test.js
 │   └── dom/                    #   DOM 테스트 (Vitest + jsdom)
-│       └── backup.dom.test.js
+│       ├── backup.dom.test.js
+│       └── router.dom.test.js
 │
 ├── vendor/                     # 자체 호스팅 라이브러리
 │   ├── fontawesome/
@@ -334,14 +335,12 @@ Personalized_Skincare/
     │   ├── TESTING.md          #     테스트 가이드
     │   ├── DEPLOYMENT_GUIDE.md #     배포 가이드
     │   ├── MULTI_MACHINE_SETUP.md
-    │   ├── PROJECT_MINDMAP.md
     │   ├── FLASHCARD_LOGIC.md
     │   ├── MD_TO_HTML_LOGIC.md
     │   ├── TEXTBOOK_AUTHORING_GUIDE.md
     │   ├── AUDIO_HOSTING_GUIDE.md
-    │   ├── SUBSCRIPTION_ROADMAP.md
-    │   ├── IMPROVEMENTS_REPORT.md
-    │   └── DEPLOY.md
+    │   └── SUBSCRIPTION_ROADMAP.md
+    ├── report_archive/         #   분석 보고서 아카이브 (앱 미참조)
     └── user/
         └── user_manual.md      #   사용자 매뉴얼
 ```
@@ -367,7 +366,8 @@ Personalized_Skincare/
 
 | 모듈 | 책임 |
 |------|------|
-| [`src/app.js`](../../src/app.js) | **메인 오케스트레이터** (~1,400줄). 초기화(`initApp`), SPA 라우팅, **이벤트 위임 바인딩**(`data-click`/`data-input`/`data-args` + `resolveDelegatedHandler`/`parseDelegatedArgs`), `startFocusSubjectStudy` 등 뷰 간 브릿지 함수. `populateExamCards()`로 registry 기반 시험 카드 동적 생성 |
+| [`src/app.js`](../../src/app.js) | **메인 오케스트레이터**. 초기화(`initApp`), **이벤트 위임 바인딩**(`data-click`/`data-input`/`data-args` + `resolveDelegatedHandler`/`parseDelegatedArgs`), `startFocusSubjectStudy` 등 뷰 간 브릿지 함수. `populateExamCards()`로 registry 기반 시험 카드 동적 생성. 라우팅은 `router.js`에 위임 |
+| [`src/router.js`](../../src/router.js) | **SPA 라우터**. `getViewTitles()`로 뷰 타이틀/서브타이틀 맵 생성, `navigateToView()`로 뷰 전환 디스패치 (active 클래스 토글, 헤더 갱신, 뷰 렌더러 호출, 오디오 정지, 포커스 모드 해제) |
 | [`src/charts.js`](../../src/charts.js) | SVG 기반 차트 생성 (레이더 차트, 성적 꺾은선 그래프). **인터랙티브 툴팁**(hover/touch) 지원. 외부 차트 라이브러리 미사용 |
 | [`src/scratchpad.js`](../../src/scratchpad.js) | HTML5 Canvas 손글씨 연습장 (계산 문제 풀이용) |
 | [`src/trainer-calc.js`](../../src/trainer-calc.js) | 계산 훈련 문제 생성기. **순수 로직** — DOM 의존 없이 문제 데이터 객첼만 반환 |
@@ -414,15 +414,14 @@ Personalized_Skincare/
 <body> 하단 (DOMContentLoaded 이후)
   3. data/registry.js       (type=module — 번들 메타, window.DATA_REGISTRY 할당)
   4. data/audio_manifest.js (type=module — 오디오 경로, window.AUDIO_MANIFEST 할당)
-  5. data/id_migration.js   (defer — 일회성 마이그레이션 맵)
-  6. vendor/mermaid/mermaid.min.js (defer — 다이어그램 렌더링)
-  7. src/app.js             (type=module — ESM 진입점, 모든 src/ 모듈을 내부 import)
-  8. src/app-fallback.js    (defer — ESM 로드 실패 시 자동 복구, app.js와 독립 실행)
+  5. vendor/mermaid/mermaid.min.js (defer — 다이어그램 렌더링)
+  6. src/app.js             (type=module — ESM 진입점, 모든 src/ 모듈을 내부 import)
+  7. src/app-fallback.js    (defer — ESM 로드 실패 시 자동 복구, app.js와 독립 실행)
 ```
 
 ### 모듈화 전략: "점진적 모듈화 (Progressive Modularization)"
 
-거대한 단일 `app.js`(원래 약 4,900줄)를 한 번에 ES Modules로 전환하는 대신, **부수효과 없는 순수 로직부터 글로벌 스코프 스크립트로 점진 분리**하는 전략을 채택했습니다. 2026-08-25 기준 `app.js`는 **1,154줄**로 축소되었고, 9개 뷰 컨트롤러 모듈이 `src/views/`에 분리되었습니다.
+거대한 단일 `app.js`(원래 약 4,900줄)를 한 번에 ES Modules로 전환하는 대신, **부수효과 없는 순수 로직부터 글로벌 스코프 스크립트로 점진 분리**하는 전략을 채택했습니다. 2026-09-03 기준 `app.js`는 **약 1,300줄**로 축소되었고, 라우팅 로직은 `router.js`로 분리, 11개 뷰 컨트롤러 모듈이 `src/views/`에 분리되었습니다.
 
 **분리 원칙**:
 1. **DOM 의존성 없는 순수 로직 우선 분리** → `trainer-calc.js`(문제 생성), `utils.js`(초성 추출), `reader-format.js`(리더 포맷터)
@@ -440,15 +439,16 @@ charts.js (시각화+인터랙티브 툴팁) views/exam-simulator.js (모의고�
 sanitize.js (보안)                views/dashboard.js (대시보드)
 scratchpad.js (캔버스)            views/flashcard.js (플래시카드)
 reader-format.js (리더 포맷터+키워드 자동링크+L### 확장)    views/quiz.js (퀴즈+복습)
-ui-utils.js (로딩 UI)             views/trainer.js (훈련소)
-types.js (JSDoc 타입 정의)        views/dictionary.js (성분 검색)
-html-viewer.js (참조자료 뷰어+키워드 기반 스크롤)    views/navigation.js (뷰 전환 유틸)
-pdf-registry.js (참조자료 레지스트리+KEYWORD_REF_MAP 자동링크)
-keyword-index.js (KEYWORD_INDEX: 교재 셀→참조자료 키워드 매핑)
-markdown-parser.js (MD→HTML 파서)
+ui-utils.js (로딩 UI)             views/daily-challenge.js (데일리 챌린지)
+types.js (JSDoc 타입 정의)        views/trainer.js (훈련소)
+html-viewer.js (참조자료 뷰어+키워드 기반 스크롤)    views/pomodoro.js (뽀모도로 타이머)
+pdf-registry.js (참조자료 레지스트리+KEYWORD_REF_MAP 자동링크)  views/dictionary.js (성분 검색)
+keyword-index.js (KEYWORD_INDEX: 교재 셀→참조자료 키워드 매핑)  views/navigation.js (뷰 전환 유틸)
+markdown-parser.js (MD→HTML 파서)  views/glossary-renderer.js (용어집 렌더링)
+router.js (SPA 라우터: 타이틀 맵+네비게이션 디스패치)
 ```
 
-> `app.js`에 남은 함수: `startFocusSubjectStudy`(뷰 간 브릿지), `switchView`, 초기화/네비게이션/이벤트 바인딩. `examIdToSubjectId`는 `exam-simulator.js`에서 정의 후 `app.js`를 통해 re-export되어 `quiz.js`가 import.
+> `app.js`에 남은 함수: `startFocusSubjectStudy`(뷰 간 브릿지), 초기화/이벤트 바인딩. 라우팅은 `router.js`의 `navigateToView()`로 위임. `examIdToSubjectId`는 `exam-simulator.js`에서 정의 후 `app.js`를 통해 re-export되어 `quiz.js`가 import.
 
 ---
 
@@ -585,7 +585,7 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 | 8 | 그 외 App Shell (아이콘/이미지 등) | **Stale-While-Revalidate** | 빠른 표시 + 백그라운드 갱신 |
 
 ### 캐시 버전 관리
-- `CACHE_VERSION` 상수로 캐시 네임스페이스 관리 (현재 `v170-20260902-mermaid-css-split`)
+- `CACHE_VERSION` 상수로 캐시 네임스페이스 관리 (빌드 시 자동 갱신)
 - **빌드 타임 자동 치환**: `tools/build/stamp-sw-version.js`가 빌드 완료 시 `CACHE_VERSION`을 `${prefix}-${YYYYMMDD}-${gitShort}` 형태로 자동 갱신 → 수동 관리 불필요
 - **배포 시 버전을 올리면 구 캐시 자동 정리** → 모바일 구버전 고착(Stale Cache) 문제 방지
 - `SHELL_ASSETS`에는 [`src/utils.js`](../../src/utils.js), [`src/trainer-calc.js`](../../src/trainer-calc.js) 등 분리된 모듈이 모두 프리캐시에 포함됨
@@ -917,11 +917,12 @@ content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.j
    - 모든 `src/` 모듈이 ESM `import`/`export` 사용 → 명시적 의존성 그래프 확립
 
 2. **추가 도메인 로직 분리** ✅
-   - `backup.js`, `textbook-search.js`, `textbook-reader.js`, `exam-simulator.js` 등 9개 뷰 컨트롤러 모듈 분리 완료
+   - `backup.js`, `textbook-search.js`, `textbook-reader.js`, `exam-simulator.js`, `daily-challenge.js`, `pomodoro.js`, `glossary-renderer.js`, `navigation.js` 등 11개 뷰 컨트롤러 모듈 분리 완료
+   - `router.js`로 SPA 라우팅 로직 분리 (뷰 타이틀 맵, 네비게이션 디스패치)
    - `ui-utils.js` 공통 UI 유틸 분리로 순환 의존성 방지
 
 3. **DOM 테스트 환경 도입** ✅
-   - Vitest + jsdom으로 DOM 렌더링/이벤트 테스트 기반 구축 (260 tests: 250 unit + 10 DOM)
+   - Vitest + jsdom으로 DOM 렌더링/이벤트 테스트 기반 구축 (259 tests: 248 unit + 11 DOM)
    - GitHub Actions CI로 push 시 자동 테스트 실행
 
 4. **타입 안정성 도입** ✅
@@ -988,7 +989,7 @@ content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.j
    - `vendor/mermaid/mermaid.min.js` (3.3MB)는 mermaid 블록이 있는 챕터를 열 때만 동적 로드
    - **개별 렌더링** (2026-09-01): `mermaid.run()`을 노드별로 개별 호출 → 하나의 다이어그램 실패가 전체 렌더링을 중단시키지 않음
    - **키워드 링크 보호** (2026-09-01): `reader-format.js`에서 `<pre class="mermaid">` 블록을 플레이스홀더로 보호 → 용어집 자동 링크가 Mermaid 문법을 손상시키지 않음
-   - `securityLevel: 'loose'`로 변경 (`<br/>` 등 HTML 태그 허용)
+   - `securityLevel: 'strict'`로 변경 (XSS 방어 강화, 동적 script tag에 crypto nonce 추가)
    - 교재 콘텐츠에 mindmap + flowchart 다이어그램 다수 포함
    - **다이어그램 타입 감지 및 렌더링 분리** (2026-09-02): `_renderReaderMermaid()`에서 각 `pre.mermaid` 블록의 `textContent`를 검사하여 `mindmap`으로 시작하면 `mermaid-mindmap` 클래스, 그 외는 `mermaid-flowchart` 클래스 추가 → 타입별로 독립된 `mermaid.initialize()` 호출 (flowchart에만 `lineWidth: 1` themeVariable 적용, mindmap은 기본값 유지)
    - **CSS 스타일 분리** (2026-09-02): `css/reader.css`에서 `.mermaid-flowchart`와 `.mermaid-mindmap` 선택자로 분리 — flowchart에만 `stroke-width: 1px`, `fill: none`, 노드 배경/테두리, 화살표 마커 스타일 적용, mindmap은 텍스트 대비만 조정 → 두 다이어그램 타입 간 스타일 간섭 원천 차단
@@ -1227,6 +1228,5 @@ cmd /c vercel --prod 2>&1
 - [`AUDIO_HOSTING_GUIDE.md`](AUDIO_HOSTING_GUIDE.md) — 오디오북 호스팅 및 청취 가이드
 - [`MULTI_MACHINE_SETUP.md`](MULTI_MACHINE_SETUP.md) — 다중 머신 개발 환경 설정
 - [`CHANGES.md`](CHANGES.md) — 코드 리뷰 및 아키텍처 개편 수정 이력 (Changelog)
-- [`IMPROVEMENTS_REPORT.md`](IMPROVEMENTS_REPORT.md) — 개선점 분석 및 구현 완료 보고서 (13항목 전부 ✅)
 - [`MD_TO_HTML_LOGIC.md`](MD_TO_HTML_LOGIC.md) — MD→HTML 변환·표시 로직 기술 문서
-- [`TESTING.md`](TESTING.md) — 단위 테스트 가이드 (260 tests: 250 unit + 10 DOM)
+- [`TESTING.md`](TESTING.md) — 단위 테스트 가이드 (259 tests: 248 unit + 11 DOM)

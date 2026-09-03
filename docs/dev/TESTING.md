@@ -1,6 +1,6 @@
 # 🧪 단위 테스트 가이드 (Unit Testing Guide)
 
-> **작성일**: 2026-09-02
+> **작성일**: 2026-09-03
 > **대상**: `tests/` 디렉토리의 자동화 테스트 (Unit + DOM)
 > **프레임워크**: Node.js 내장 `node:test` (Unit) + Vitest/jsdom (DOM)
 
@@ -22,9 +22,9 @@
 
 | 구분 | 프레임워크 | 환경 | 파일 위치 | 테스트 수 |
 |------|-----------|------|-----------|-----------|
-| **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 250 |
-| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 10 |
-| **합계** | | | | **260** |
+| **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 248 |
+| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 11 |
+| **합계** | | | | **259** |
 
 ### 설계 원칙
 
@@ -39,12 +39,12 @@
 ## 2. 실행 명령어
 
 ```bash
-# Unit 테스트만 실행 (250개)
+# Unit 테스트만 실행 (248개)
 npm test
 # 또는
 npm run test:unit
 
-# DOM 테스트만 실행 (10개)
+# DOM 테스트만 실행 (11개)
 npm run test:dom
 
 # 전체 실행 (Unit + 파서 정합성 + DOM)
@@ -90,14 +90,15 @@ npm run test:watch
 | 16 | `glossary-query.test.js` | 13 | `getGlossaryByRefFile()`, `getGlossaryByRefFiles()`, `getGlossaryEntry()`, `getAllGlossaryKeywords()` | 합성 데이터, 교재 무관 |
 | 17 | `markdown-parser-general.test.js` | 35 | 헤더, 표, 리스트, 인라인 서식, 코드블록, 인용문, 특수 토큰, 빈 입력 | 합성 데이터, 교재 무관 |
 | 18 | `reader-format-general.test.js` | 19 | 페이지 참조 제거, 기출문제/참조자료/출처 링크 변환, 용어집 자동 링크, Mermaid 보호 | 합성 데이터, 교재 무관 |
-| | **합계** | **250** | | |
+| | **합계** | **248** | | |
 
 ### DOM 테스트 (`tests/dom/`)
 
 | # | 파일 | 테스트 수 | 검증 대상 | 비고 |
 |---|------|-----------|-----------|------|
 | 1 | `backup.dom.test.js` | 10 | `getBackupKeys()`, `exportData()`, `triggerImport()`, `importData()` | localStorage + DOM 조작 |
-| | **합계** | **10** | | |
+| 2 | `router.dom.test.js` | 11 | `getViewTitles()`, `navigateToView()` | 뷰 타이틀 맵, active 클래스 동기화, 렌더러 호출, 오디오 정지, 포커스 모드 | 2026-09-03 추가 |
+| | **합계** | **11** | | |
 
 ---
 
@@ -246,6 +247,17 @@ npm run test:watch
 - `importData()`: JSON 복원, 화이트리스트 검증, localStorage 복원
 - `beforeEach`로 `localStorage.clear()` + `document.body.innerHTML = ''` 초기화
 
+#### `router.dom.test.js` (11개) — 2026-09-03 추가
+- `getViewTitles()`: 뷰 ID → 타이틀/서브타이틀 맵 생성, `null` 입력 시 기본값
+- `navigateToView()`: 
+  - active 클래스 토글 (이전 뷰 비활성, 새 뷰 활성)
+  - 헤더 타이틀/서브타이틀 갱신
+  - 뷰 렌더러 호출 (등록된 렌더러만)
+  - `textbook-reader-view`가 아닐 때 `stopReaderAudio` 호출
+  - `textbook-reader-view`로 이동 시 `stopReaderAudio` 미호출
+  - 포커스 모드 해제 (`body.focus-mode` 클래스 제거)
+  - `data-view` 속성 기반 네비게이션
+
 ---
 
 ## 5. 새 테스트 작성 가이드
@@ -340,7 +352,7 @@ function detectDiagramType(textContent) {
 | 패턴 | 위치 | 예시 |
 |------|------|------|
 | `<모듈명>.test.js` | `tests/unit/` | `sanitize.test.js`, `state.test.js` |
-| `<모듈명>.dom.test.js` | `tests/dom/` | `backup.dom.test.js` |
+| `<모듈명>.dom.test.js` | `tests/dom/` | `backup.dom.test.js`, `router.dom.test.js` |
 | `<기능명>-<층위>.test.js` | `tests/unit/` | `mermaid-parser.test.js`, `mermaid-rendering.test.js` |
 
 ---

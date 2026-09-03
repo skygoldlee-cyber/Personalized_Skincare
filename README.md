@@ -57,7 +57,7 @@
 
 **테스트**
 - Node.js 내장 테스트 러너 (`node --test`) — 248 unit tests (sha256, sanitize, state, parser, trainer-calc, utils, delegation-guard, study-aids)
-- Vitest + jsdom — 10 DOM tests (backup 모듈)
+- Vitest + jsdom — 11 DOM tests (backup, router)
 - GitHub Actions CI — push 시 `npm test` + parser parity 자동 실행
 
 **데이터 파이프라인** (빌드 타임)
@@ -65,7 +65,6 @@
   - `tools/build/index.js` → `data/registry.js` + `data/exams/*.hash.js` + `data/ingredients_data.*.js`
   - `tools/build_exam_bundles.js` → `data/exams_md/*.js` (문제은행 MD file:// 폴리백 번들)
   - `tools/build_study_md_bundle.js` → `data/study_md/` (교재 MD file:// 폴백, 과목별 분할)
-  - `tools/build/index.js` → `data/id_migration.js` (id-factory 플러그인)
   - 런타임: `src/data-loader.js`가 registry를 보고 필요한 과목/시험만 온디맨드 로드
 
 **오디오북 파이프라인** (`content/audiobook/`)
@@ -102,6 +101,7 @@ Personalized Skincare/
 ├── 📂 src/                          ← ✅ 배포 (애플리케이션 소스; ESM 모듈화)
 │   ├── sanitize.js                  ← XSS 방어(esc/safeTextWithBreaks)
 │   ├── data-loader.js               ← 레지스트리 기반 온디맨드 번들 로더(DataLoader)
+│   ├── router.js                    ← SPA 라우터 (뷰 타이틀 맵, 네비게이션 디스패치)
 │   ├── utils.js                     ← 범용 헬퍼(한글 초성 추출 등)
 │   ├── ui-utils.js                  ← 공통 UI 유틸(로딩 오버레이/spinner)
 │   ├── charts.js                    ← SVG 차트 및 합격 진단
@@ -113,19 +113,21 @@ Personalized Skincare/
 │   │   ├── dashboard.js             ← 대시보드 통계 및 챌린지
 │   │   ├── flashcard.js             ← 플래시카드 학습
 │   │   ├── quiz.js                  ← 기출 퀴즈 및 오답 복습
+│   │   ├── daily-challenge.js       ← 데일리 챌린지 (quiz.js에서 분리)
 │   │   ├── trainer.js               ← 스마트 훈련소
+│   │   ├── pomodoro.js              ← 뽀모도로 타이머 (trainer.js에서 분리)
 │   │   ├── dictionary.js            ← 성분 검색 사전
 │   │   ├── backup.js                ← 데이터 백업/복원
 │   │   ├── textbook-search.js       ← 교재 본문 검색
 │   │   ├── textbook-reader.js       ← 교재 리더 + 오디오 재생
+│   │   ├── glossary-renderer.js     ← 용어집 렌더링
+│   │   ├── navigation.js            ← 뷰 전환 유틸
 │   │   └── exam-simulator.js        ← 실전 모의고사 시뮬레이터
-│   └── app.js                       ← 메인 앱 (라우팅, 공통 렌더러, 초기화)
+│   └── app.js                       ← 메인 앱 (초기화, 이벤트 위임, 라우터 연결)
 │
 ├── 📂 data/                         ← ✅ 배포 (빌드 산출물 — 수정 금지)
 │   ├── registry.js                  ← 번들 목록/메타
-│   ├── id_migration.js              ← 레거시 ID ➔ 안정 ID 일회성 매핑
 │   ├── audio_manifest.js            ← 오디오 파일 경로 매니페스트
-│   ├── subjects/<key>.<hash>.js     ← 과목별 학습 번들 (레거시, 미사용)
 │   ├── exams/<key>.<hash>.js        ← 시험별 문항 번들
 │   ├── exams_md/<stem>.js           ← 문제집 MD 번들 (file:// 프로토콜 폴백)
 │   ├── study_md/                    ← 교재 MD file:// 폴백 (과목별 분할)
@@ -141,13 +143,12 @@ Personalized Skincare/
 │   ├── 학습안내서.md                ← 학습 안내서 (앱 내 뷰어 연동)
 │   ├── number-drills/               ← 중요 숫자 암기표 JSON (과목별 4개 파일)
 │   ├── 맞춤형화장품조제관리사_중요숫자_암기정리.md ← 숫자 암기표 원본 MD
-│   ├── report/                      ← 분석 보고서 MD
 │   ├── utils/                       ← Python 변환 스크립트 (md_to_html, batch_convert, check_laws)
 │   └── audiobook/                   ← 오디오북 파이프라인 (Python)
 │
 ├── 📂 tests/                        ← 자동화 테스트
 │   ├── unit/                        ← Node.js 내장 테스트 러너 (248 tests)
-│   └── dom/                         ← Vitest + jsdom DOM 테스트 (10 tests)
+│   └── dom/                         ← Vitest + jsdom DOM 테스트 (11 tests)
 ├── 📂 .github/workflows/            ← GitHub Actions CI (test + parser parity)
 │
 └── 📂 docs/                         ← 문서 (개발 + 사용자)
@@ -157,14 +158,19 @@ Personalized Skincare/
     │   ├── AUDIO_HOSTING_GUIDE.md   ← 오디오북 호스팅 및 청취 가이드
     │   ├── DEPLOYMENT_GUIDE.md      ← Vercel 배포 및 오디오 호스팅 가이드
     │   ├── MULTI_MACHINE_SETUP.md   ← 멀티 머신 개발 환경 설정
-    │   ├── PROJECT_MINDMAP.md       ← 프로젝트 전체 구조 마인드맵
-    │   ├── CHANGES.md               ← 코드 리뷰 수정 내역
-    │   └── IMPROVEMENTS_REPORT.md   ← 보완 및 개선점 보고서
+    │   ├── TEXTBOOK_AUTHORING_GUIDE.md ← 교재 Markdown 작성 지침
+    │   ├── CHANGES.md               ← 코드 변경 이력 (Changelog)
+    │   ├── SPEC.md                  ← 기능 명세
+    │   ├── FLASHCARD_LOGIC.md       ← 플래시카드 로직 명세
+    │   ├── MD_TO_HTML_LOGIC.md      ← MD→HTML 변환 로직
+    │   ├── TESTING.md               ← 테스트 가이드
+    │   └── SUBSCRIPTION_ROADMAP.md  ← 구독 로드맵
+    ├── report_archive/              ← 분석 보고서 아카이브 (앱 미참조)
     └── user/                        ← 사용자 문서
         └── user_manual.md           ← 사용자 매뉴얼 (앱 내 뷰어 연동)
 ```
 
-> **범례:** ✅ 배포 포함 · ❌ 배포 제외 · 🆕 최신 모듈러 개편 반영 (2026-08-25)
+> **범례:** ✅ 배포 포함 · ❌ 배포 제외 · 🆕 최신 모듈러 개편 반영 (2026-09-03)
 
 자세한 설계 컨셉과 상세 아키텍처는 [`docs/dev/ARCHITECTURE.md`](docs/dev/ARCHITECTURE.md)를 참고하세요.
 전체 문서 목록은 [`docs/README.md`](docs/README.md)를 참고하세요.
@@ -260,37 +266,22 @@ python run_pipeline.py
 
 ---
 
-## � 배포 파이프라인 (deploy.ps1)
+## 🚀 배포 파이프라인
 
-작업 완료 후 `tools/deploy.ps1` 한 번 실행하면 빌드 → 커밋/푸시 → Vercel 배포가 자동으로 처리됩니다.
+작업 완료 후 다음 순서로 실행하면 빌드 → 커밋/푸시 → Vercel 배포가 처리됩니다.
 
-### 사용법
+```bash
+# 1. 데이터 빌드 (빌드 + 파서 등가성 검사 + SW 버전 자동 스탬프)
+npm run build:data
 
-```powershell
-# 기본: 빌드 → 커밋/푸시 → Vercel 배포
-.\tools\deploy.ps1 -Message "커밋 메시지"
+# 2. Git 커밋 & 푸시
+git add -A && git commit -m "<커밋 메시지>" && git push
 
-# SW CACHE_VERSION major bump 포함 (콘텐츠/구조 변경 시)
-.\tools\deploy.ps1 -Message "커밋 메시지" -Bump
-
-# 배포만 건너뛰고 커밋/푸시까지만
-.\tools\deploy.ps1 -Message "커밋 메시지" -Bump -SkipDeploy
-
-# npm으로 실행
-npm run deploy -- -Message "커밋 메시지"
-npm run deploy:bump -- -Message "커밋 메시지"
+# 3. Vercel 배포
+cmd /c vercel --prod
 ```
 
-### 파이프라인 단계
-
-| 단계 | 설명 | 옵션 |
-|------|------|------|
-| 1. SW bump | `CACHE_VERSION` major 번호 증가 + 주석 갱신 | `-Bump` 시에만 |
-| 2. Build | `npm run build:data` (빌드 + 파서 등가성 검사) | 항상 |
-| 3. Git | `git add -A && git commit && git push` | `-SkipPush`로 생략 가능 |
-| 4. Deploy | `cmd /c vercel --prod` | `-SkipDeploy`로 생략 가능 |
-
-각 단계 실패 시 즉시 중단하고 에러를 출력합니다. `-Bump`를 생략하면 `stamp-sw-version.js`가 date + git hash로 버전을 자동 갱신합니다.
+> `stamp-sw-version.js`가 빌드 시 `CACHE_VERSION`을 date + git hash로 자동 갱신합니다.
 
 ---
 

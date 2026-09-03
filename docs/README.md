@@ -10,7 +10,7 @@
 docs/
 ├── README.md                  ← 본 파일 (문서 인덱스)
 ├── dev/                       ← 개발 문서
-│   ├── ARCHITECTURE.md        ← 아키텍처 및 설계 철학 (마인드맵·개선이력 포함)
+│   ├── ARCHITECTURE.md        ← 아키텍처 및 설계 철학
 │   ├── AUDIO_HOSTING_GUIDE.md ← 오디오북 호스팅 및 청취 가이드
 │   ├── DEPLOYMENT_GUIDE.md    ← Vercel 배포 및 호스팅 가이드 (Git Push 절차 포함)
 │   ├── MULTI_MACHINE_SETUP.md ← 다중 머신 개발 환경 설정
@@ -71,5 +71,5 @@ docs/
 
 - **업데이트 날짜**: 각 문서 상단에 `최종 업데이트` 명시
 - **링크**: 상대 경로 사용 (`../`, `dev/`, `user/`)
-- **Mermaid 다이어그램**: CSP `unsafe-eval` 허용으로 인앱 및 GitHub 렌더링 지원
+- **Mermaid 다이어그램**: `securityLevel: 'strict'` + crypto nonce로 인앱 및 GitHub 렌더링 지원
 - **인코딩**: UTF-8 (BOM 없음)
