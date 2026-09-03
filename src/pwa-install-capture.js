@@ -25,14 +25,22 @@
         reg.addEventListener('updatefound', function () {
           var newWorker = reg.installing;
           if (!newWorker) return;
+          console.log('[PWA] SW updatefound — 새 버전 다운로드 시작');
           showSWUpdateToast('새 버전 확인 중...');
           newWorker.addEventListener('statechange', function () {
+            console.log('[PWA] SW statechange:', newWorker.state);
             if (newWorker.state === 'installed') {
               showSWUpdateToast('새 버전 다운로드 완료 — 적용 준비 중...');
             } else if (newWorker.state === 'activating') {
               showSWUpdateToast('새 버전 적용 중...');
             }
           });
+        });
+
+        // 페이지 로드 시 브라우저 기본 업데이트 확인 외에 추가로 reg.update() 호출.
+        // 브라우저는 기본적으로 ~24h마다 자동 확인하지만, 즉시 확인하도록 강제.
+        reg.update().catch(function (e) {
+          // 오프라인 등 실패는 무해 — 조용히 무시
         });
 
         // controllerchange: 기존 SW가 있던 상태에서 교체된 경우(=업데이트)만 리로드.
@@ -52,36 +60,47 @@
   }
 
   // --- SW 업데이트 토스트 팝업 (자체完結型 — 모듈 로드 전 독립 동작) ---
+  // 주의: 이 스크립트는 <head>에서 실행되므로 document.body가 아직 없을 수 있음.
+  // updatefound는 보통 다음 방문 시 발생하지만, 빠른 연속 배포 시 body 생성 전에
+  // 발생할 수 있으므로 body 대기를 포함한다.
   var swToastTimer = null;
   function showSWUpdateToast(message, isFinal) {
-    var toast = document.getElementById('sw-update-toast');
-    if (!toast) {
-      toast = document.createElement('div');
-      toast.id = 'sw-update-toast';
-      toast.style.cssText = [
-        'position:fixed', 'bottom:20px', 'left:50%', 'transform:translateX(-50%)',
-        'background:rgba(11,15,25,0.92)', 'color:#fff', 'padding:12px 24px',
-        'border-radius:12px', 'font-size:14px', 'font-weight:500',
-        'z-index:2147483647', 'box-shadow:0 4px 20px rgba(0,0,0,0.3)',
-        'backdrop-filter:blur(8px)', '-webkit-backdrop-filter:blur(8px)',
-        'display:flex', 'align-items:center', 'gap:10px',
-        'opacity:0', 'transition:opacity 0.3s ease',
-        'max-width:90vw', 'text-align:center',
-        'font-family:system-ui,-apple-system,sans-serif'
-      ].join(';');
-      document.body.appendChild(toast);
+    function renderToast() {
+      var toast = document.getElementById('sw-update-toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'sw-update-toast';
+        toast.style.cssText = [
+          'position:fixed', 'bottom:20px', 'left:50%', 'transform:translateX(-50%)',
+          'background:rgba(11,15,25,0.92)', 'color:#fff', 'padding:12px 24px',
+          'border-radius:12px', 'font-size:14px', 'font-weight:500',
+          'z-index:2147483647', 'box-shadow:0 4px 20px rgba(0,0,0,0.3)',
+          'backdrop-filter:blur(8px)', '-webkit-backdrop-filter:blur(8px)',
+          'display:flex', 'align-items:center', 'gap:10px',
+          'opacity:0', 'transition:opacity 0.3s ease',
+          'max-width:90vw', 'text-align:center',
+          'font-family:system-ui,-apple-system,sans-serif'
+        ].join(';');
+        document.body.appendChild(toast);
+      }
+      toast.innerHTML = '<span style="display:inline-block;width:16px;height:16px;'
+        + 'border:2px solid rgba(255,255,255,0.2);border-top-color:#4ade80;'
+        + 'border-radius:50%;animation:sw-spin 0.8s linear infinite;'
+        + (isFinal ? 'animation:none;border-color:#4ade80;' : '')
+        + '"></span><span>' + message + '</span>';
+      toast.style.opacity = '1';
+      if (swToastTimer) clearTimeout(swToastTimer);
+      if (!isFinal) {
+        swToastTimer = setTimeout(function () {
+          toast.style.opacity = '0';
+        }, 5000);
+      }
     }
-    toast.innerHTML = '<span style="display:inline-block;width:16px;height:16px;'
-      + 'border:2px solid rgba(255,255,255,0.2);border-top-color:#4ade80;'
-      + 'border-radius:50%;animation:sw-spin 0.8s linear infinite;'
-      + (isFinal ? 'animation:none;border-color:#4ade80;' : '')
-      + '"></span><span>' + message + '</span>';
-    toast.style.opacity = '1';
-    if (swToastTimer) clearTimeout(swToastTimer);
-    if (!isFinal) {
-      swToastTimer = setTimeout(function () {
-        toast.style.opacity = '0';
-      }, 5000);
+    if (document.body) {
+      renderToast();
+    } else {
+      // body가 아직 파싱되지 않았으면 DOMContentLoaded 후 렌더
+      document.addEventListener('DOMContentLoaded', renderToast, { once: true });
     }
   }
   // 토스트용 스피너 애니메이션 CSS 주입 (중복 방지)
