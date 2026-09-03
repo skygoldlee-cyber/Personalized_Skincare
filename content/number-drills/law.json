@@ -160,5 +160,23 @@
     "context": "고시 재검토기한: 매 3년",
     "isKey": false,
     "category": "📅 기한·기간"
+  },
+  {
+    "numbers": [{"number": "60", "unit": "%"}, {"number": "40", "unit": "%"}],
+    "context": "자격시험 합격 기준: 매 과목 40% 이상 · 전체 60% 이상",
+    "isKey": true,
+    "category": "🧪 시험·측정"
+  },
+  {
+    "numbers": [{"number": "11", "unit": "월"}, {"number": "30", "unit": "일"}],
+    "context": "교육계획 제출: 전년도 11월 30일까지 식약처장에게 제출",
+    "isKey": false,
+    "category": "📅 기한·기간"
+  },
+  {
+    "numbers": [{"number": "1", "unit": "월"}, {"number": "31", "unit": "일"}],
+    "context": "교육 실적 보고: 매년 1월 31일까지 전년도 교육 실적 보고",
+    "isKey": false,
+    "category": "📅 기한·기간"
   }
 ]

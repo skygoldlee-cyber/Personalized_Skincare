@@ -238,5 +238,11 @@
     "context": "시설 소독 — 글루콘산클로르헥시딘: 5% → 10배 희석",
     "isKey": false,
     "category": "🧪 시험·측정"
+  },
+  {
+    "numbers": [{"number": "10", "unit": "mL"}],
+    "context": "소용량 화장품: 10mL(g) 이하 포장 (전성분 표시 간소화 대상)",
+    "isKey": true,
+    "category": "🧪 시험·측정"
   }
 ]

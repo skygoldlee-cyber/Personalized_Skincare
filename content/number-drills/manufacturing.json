@@ -1,17 +1,5 @@
 [
   {
-    "numbers": [{"number": "3~6", "unit": "HLB"}],
-    "context": "HLB 3~6: W/O(유중수형) 유화제",
-    "isKey": true,
-    "category": "🧬 제조·원료"
-  },
-  {
-    "numbers": [{"number": "8~18", "unit": "HLB"}],
-    "context": "HLB 8~18: O/W(수중유형) 유화제, 세정제, 가용화제",
-    "isKey": true,
-    "category": "🧬 제조·원료"
-  },
-  {
     "numbers": [{"number": "1~3", "unit": "HLB"}],
     "context": "HLB 1~3: 소포제(거품제거제)",
     "isKey": false,
@@ -128,6 +116,24 @@
   {
     "numbers": [{"number": "5", "unit": "단계"}],
     "context": "법정색소 사용 기준별 5단계 제한 (안전성 확인된 색소만 화장품 사용 허가)",
+    "isKey": false,
+    "category": "🧬 제조·원료"
+  },
+  {
+    "numbers": [{"number": "25.0", "unit": "%"}],
+    "context": "티타늄디옥사이드: 25.0% 이하 (자외선차단제)",
+    "isKey": true,
+    "category": "🧬 제조·원료"
+  },
+  {
+    "numbers": [{"number": "25", "unit": "종"}],
+    "context": "향료 알레르기 유발 성분 25종: 씻어내는 제품 0.01%, 씻어내지 않는 제품 0.001% 초과 시 해당 성분 명칭 기재",
+    "isKey": true,
+    "category": "🧬 제조·원료"
+  },
+  {
+    "numbers": [{"number": "0.01", "unit": "%"}, {"number": "0.001", "unit": "%"}],
+    "context": "향료 알레르기 25종: 씻어내는 제품 0.01%, 씻어내지 않는 제품 0.001% 초과 시 명칭 기재",
     "isKey": false,
     "category": "🧬 제조·원료"
   }
