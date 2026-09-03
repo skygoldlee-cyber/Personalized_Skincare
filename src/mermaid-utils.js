@@ -141,7 +141,7 @@ export function getMermaidInitOptions(type, isLight) {
             labelBoxBkgColor: '#3a3a5c',
             labelTextColor: '#ffffff',
             noteBkgColor: '#4a4a2e',
-            noteTextColor: '#fff9c4',
+            noteTextColor: '#ffffff',
             noteBorderColor: '#fbc02d',
             activationBkgColor: '#5c5c8a',
             sequenceNumberColor: '#ffffff'

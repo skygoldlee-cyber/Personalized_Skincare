@@ -207,6 +207,8 @@ pre.mermaid-other .actor,
 pre.mermaid-other .note,
 pre.mermaid-other .messageText,
 pre.mermaid-other .label,
+pre.mermaid-other .labelText,
+pre.mermaid-other .loopText,
 pre.mermaid-other .taskText,
 pre.mermaid-other .sectionTitle,
 pre.mermaid-other .titleText {
