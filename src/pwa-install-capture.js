@@ -22,20 +22,40 @@
         // updatefound: 브라우저가 새 SW를 다운로드하기 시작하면 발생.
         // installing → installed → activating → activated 상태 변화를 추적하여
         // 사용자에게 비침습적 토스트 팝업으로 진행 상황을 표시한다.
+        //
+        // ⚠️ 중요: 브라우저는 페이지 탐색 시 자동으로 SW 업데이트를 확인한다.
+        // 이 스크립트(<head>) 실행 전에 이미 updatefound가 발생했을 수 있으므로,
+        // register() 완료 후 reg.waiting / reg.installing을 즉시 확인해야 한다.
+        function trackWorkerState(worker) {
+          worker.addEventListener('statechange', function () {
+            console.log('[PWA] SW statechange:', worker.state);
+            if (worker.state === 'installed') {
+              showSWUpdateToast('새 버전 다운로드 완료 — 적용 준비 중...');
+            } else if (worker.state === 'activating') {
+              showSWUpdateToast('새 버전 적용 중...');
+            }
+          });
+        }
+
         reg.addEventListener('updatefound', function () {
           var newWorker = reg.installing;
           if (!newWorker) return;
           console.log('[PWA] SW updatefound — 새 버전 다운로드 시작');
           showSWUpdateToast('새 버전 확인 중...');
-          newWorker.addEventListener('statechange', function () {
-            console.log('[PWA] SW statechange:', newWorker.state);
-            if (newWorker.state === 'installed') {
-              showSWUpdateToast('새 버전 다운로드 완료 — 적용 준비 중...');
-            } else if (newWorker.state === 'activating') {
-              showSWUpdateToast('새 버전 적용 중...');
-            }
-          });
+          trackWorkerState(newWorker);
         });
+
+        // 브라우저 자동 확인으로 이미 updatefound가 발생한 경우 보정:
+        // reg.waiting = 설치 완료·대기 중 (skipWaiting으로 곧 activate)
+        // reg.installing = 다운로드/설치 진행 중
+        if (reg.waiting) {
+          console.log('[PWA] SW 이미 대기 중 — 토스트 표시');
+          showSWUpdateToast('새 버전 적용 준비 중...');
+        } else if (reg.installing) {
+          console.log('[PWA] SW 이미 설치 중 — 토스트 표시');
+          showSWUpdateToast('새 버전 확인 중...');
+          trackWorkerState(reg.installing);
+        }
 
         // 페이지 로드 시 브라우저 기본 업데이트 확인 외에 추가로 reg.update() 호출.
         // 브라우저는 기본적으로 ~24h마다 자동 확인하지만, 즉시 확인하도록 강제.
