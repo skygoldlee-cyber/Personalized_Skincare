@@ -90,9 +90,11 @@ export function getMermaidInitOptions(type, isLight) {
         };
     }
 
-    // mindmap은 Mermaid 기본 테마 색상 체계를 그대로 사용 (themeVariables 오버라이드 없음)
+    // mindmap은 다크모드에서도 'default' 테마 사용 — 밝은 파스텔 배경 + 어두운 텍스트가
+    // 다크 페이지 위에서 "밝은 카드"처럼 표시되어 대비가 가장 좋음.
+    // 'dark' 테마는 노드 배경이 어두워져 텍스트 대비가 급격히 저하됨.
     if (type === 'mindmap') {
-        return base;
+        return { ...base, theme: 'default' };
     }
 
     // sequence, class, state, gantt, pie, etc. — 기본 테마 + 대비 보정

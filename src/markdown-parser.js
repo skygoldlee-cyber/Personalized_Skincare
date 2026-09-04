@@ -132,11 +132,27 @@ export function parseMarkdown(mdText, options = {}) {
         });
         if (dataRows.length === 0) { tableRows = []; return; }
         let tableHTML = '<div class="reader-table-wrapper"><table class="reader-table">';
-        dataRows.forEach((row, idx) => {
-            const cells = splitTableCells(row);
-            const tag = idx === 0 ? 'th' : 'td';
-            tableHTML += '<tr>' + cells.map(c => `<${tag}>${c}</${tag}>`).join('') + '</tr>';
-        });
+        // thead: 첫 행을 헤더로 처리
+        const headerCells = splitTableCells(dataRows[0]);
+        tableHTML += '<thead><tr>' + headerCells.map(c => `<th>${c}</th>`).join('') + '</tr></thead>';
+        // tbody: 나머지 행을 본문으로 처리
+        tableHTML += '<tbody>';
+        for (let idx = 1; idx < dataRows.length; idx++) {
+            const cells = splitTableCells(dataRows[idx]);
+            // 첫 번째 셀에 내용이 있으면 group-start 클래스 부여 (대분류 변경 지점)
+            const isGroupStart = cells[0] && cells[0].trim() !== '';
+            const rowClass = isGroupStart ? ' class="group-start"' : '';
+            tableHTML += `<tr${rowClass}>`;
+            tableHTML += cells.map(c => {
+                const isEmpty = c.trim() === '';
+                // — 기호를 span으로 감싸서 스타일링 가능하게 함
+                const styled = c.replace(/—/g, '<span class="md-dash">—</span>');
+                const cellClass = isEmpty ? ' class="cell-empty"' : '';
+                return `<td${cellClass}>${styled}</td>`;
+            }).join('');
+            tableHTML += '</tr>';
+        }
+        tableHTML += '</tbody>';
         tableHTML += '</table></div>';
         output.push(tableHTML);
         tableRows = [];

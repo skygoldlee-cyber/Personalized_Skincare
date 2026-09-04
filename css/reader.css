@@ -123,6 +123,36 @@
     font-weight: 600;
 }
 
+/* Table group separator — 대분류가 바뀌는 행에 상단 구분선 */
+.reader-table tbody tr.group-start td {
+    border-top: 2px solid rgba(6, 182, 212, 0.25);
+}
+.reader-table tbody tr.group-start:first-child td {
+    border-top: none;
+}
+
+/* Empty cell — 중복 제거 후 빈 셀은 투명하게 처리 */
+.reader-table td.cell-empty {
+    color: transparent;
+    user-select: none;
+}
+
+/* — 기호 스타일링 — 흐릿하게 */
+.reader-table .md-dash {
+    color: var(--color-text-muted);
+    opacity: 0.5;
+}
+
+/* 핵심 포인트 열(마지막 열) 강조 */
+.reader-table td:last-child {
+    color: var(--color-text-main);
+    font-weight: 500;
+}
+.reader-table tbody tr.group-start td:first-child {
+    color: var(--color-primary);
+    font-weight: 700;
+}
+
 /* Reader code block (concept diagrams) */
 .reader-code-block {
     background: rgba(0, 0, 0, 0.35);
@@ -932,6 +962,20 @@ body.reader-focus-mode .reader-readable-width {
 }
 .reader-light-theme .reader-table tr:hover td {
     background: rgba(6, 182, 212, 0.08) !important;
+}
+/* Light theme: group separator + empty cell + dash */
+.reader-light-theme .reader-table tbody tr.group-start td {
+    border-top-color: rgba(6, 182, 212, 0.3) !important;
+}
+.reader-light-theme .reader-table td.cell-empty {
+    color: transparent !important;
+}
+.reader-light-theme .reader-table .md-dash {
+    color: #999 !important;
+    opacity: 0.6 !important;
+}
+.reader-light-theme .reader-table tbody tr.group-start td:first-child {
+    color: #0e7490 !important;
 }
 .reader-light-theme .md-quote,
 .reader-light-theme .textbook-reader-section-content .md-quote {
