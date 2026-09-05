@@ -541,6 +541,10 @@ pre.mermaid-other .labelBkg {
     padding-left: 2.5rem;
     font-size: 0.78rem;
 }
+.reader-toc-item.toc-level-3 {
+    padding-left: 3.5rem;
+    font-size: 0.76rem;
+}
 .reader-toc-item .toc-text {
     flex: 1;
     min-width: 0;
@@ -583,7 +587,7 @@ pre.mermaid-other .labelBkg {
     word-break: keep-all;
 }
 .reader-toc-sub-item.toc-sub-level-1 {
-    padding-left: 3.2rem;
+    padding-left: 4.2rem;
     font-size: 0.74rem;
 }
 .reader-toc-sub-item:hover {
