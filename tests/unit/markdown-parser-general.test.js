@@ -55,7 +55,7 @@ test('표: 빈 셀 보존', () => {
     const md = '| A | B |\n| --- | --- |\n| 1 |  |';
     const html = parseMarkdown(md);
     assert.ok(html.includes('<td>1</td>'), '첫 셀');
-    assert.ok(html.includes('<td></td>'), '빈 셀 보존');
+    assert.ok(html.includes('<td class="cell-empty"></td>'), '빈 셀 보존');
 });
 
 test('표: reader-table-wrapper 클래스', () => {
