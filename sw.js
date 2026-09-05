@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v234-20260905-subj134-nonchapter-fix';   // 1·3·4과목 중복체크리스트 제거 + 참조자료 헤더 강등 + 1과목 이야기형 최종복습 추가
+const CACHE_VERSION = 'v235-20260905-remove-part-src';   // 2·4과목 원서 페이지 출처 라인 제거
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
