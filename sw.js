@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v231-20260905-ref-header-demote';   // 전 과목 참조문서 제N조/제N장 헤더 ## → ### 강등
+const CACHE_VERSION = 'v232-20260905-subj1-mindmap-add';   // 1과목 표준형 과목 시각화 섹션 추가 + 이야기형 TOC 통일
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
