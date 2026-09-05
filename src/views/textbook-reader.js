@@ -787,10 +787,10 @@ function _hasOwnNumber(title) {
     return /^\d+\./.test(t) || /^\(\d+\)/.test(t) || /^[①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳]/.test(t) || /Chapter\s+\d+/i.test(t);
 }
 
-/** 참조문서 헤더 (01_화장품법, 07_CGMP 등) — TOC에서 제외 */
-function _isRefDocHeader(title) {
+/** 참조문서 헤더 (01_화장품법 등) — 앞의 NN_ 접두사 제거 */
+function _cleanRefTitle(title) {
     const t = (title || '').trim();
-    return /^\d+_/.test(t);
+    return t.replace(/^\d+_/, '');
 }
 
 /** 섹션 본문에서 ### / #### 하위 헤딩 추출 */
@@ -841,7 +841,8 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
         let inChapter = false;
 
         // 헬퍼: 섹션 아이템 + 하위 헤딩 HTML 생성 (하위 헤딩은 기본 접힘)
-        const buildSectionItem = (section, idx, minLevel) => {
+        const buildSectionItem = (section, idx, minLevel, displayTitle) => {
+            const title = displayTitle || section.title;
             const level = Math.max(minLevel, _getTocLevel(section.title));
             const subHeadings = _extractSubHeadings(section.content);
             const hasChildren = subHeadings.length > 0;
@@ -849,7 +850,7 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
             if (hasChildren) {
                 html += `<i class="fa-solid fa-chevron-right toc-toggle-icon"></i>`;
             }
-            html += `<span class="toc-text">${esc(section.title)}</span>`;
+            html += `<span class="toc-text">${esc(title)}</span>`;
             html += `</div>`;
             if (hasChildren) {
                 html += `<div class="reader-toc-children collapsed" data-parent-idx="${idx}">`;
@@ -866,8 +867,8 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
 
         let hasSeenNumbered = false;
         chapter.sections.forEach((section, idx) => {
-            // 참조문서 헤더 (01_화장품법 등) — TOC에서 제외
-            if (_isRefDocHeader(section.title)) return;
+            // 참조문서 헤더 (01_화장품법 등) — NN_ 접두사 제거
+            const displayTitle = _cleanRefTitle(section.title);
 
             const isChapterHeader = /Chapter\s+\d+/i.test(section.title);
             const level = _getTocLevel(section.title);
@@ -888,17 +889,17 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
                 if (isNumberedChild) {
                     // 번호 있는 섹션 → Chapter 자식
                     hasSeenNumbered = true;
-                    tocHtml += buildSectionItem(section, idx, 1);
+                    tocHtml += buildSectionItem(section, idx, 1, displayTitle);
                 } else if (hasSeenNumbered) {
                     // 번호 섹션 이후 비번호 섹션 → Chapter 종료, 최상위 레벨
                     tocHtml += `</div>`;
                     inChapter = false;
-                    tocHtml += buildSectionItem(section, idx, 0);
+                    tocHtml += buildSectionItem(section, idx, 0, displayTitle);
                 }
                 // else: Chapter 헤더 직후 비번호 섹션 (intro) → TOC에서 생략
             } else {
                 // Chapter 밖 — 최상위 레벨
-                tocHtml += buildSectionItem(section, idx, 0);
+                tocHtml += buildSectionItem(section, idx, 0, displayTitle);
             }
         });
         if (inChapter) tocHtml += `</div>`; // close last chapter children
