@@ -503,8 +503,9 @@ pre.mermaid-other .labelBkg {
 .reader-toc-item {
     display: flex;
     align-items: flex-start;
-    gap: 0.5rem;
-    padding: 0.5rem 0.65rem;
+    flex-wrap: nowrap;
+    gap: 0.35rem;
+    padding: 0.4rem 0.65rem;
     border-radius: var(--radius-sm);
     font-size: 0.82rem;
     line-height: 1.4;
@@ -513,6 +514,7 @@ pre.mermaid-other .labelBkg {
     border-left: 3px solid transparent;
     transition: all 0.15s ease;
     word-break: keep-all;
+    overflow: hidden;
 }
 .reader-toc-item:hover {
     color: var(--color-text-main);
@@ -569,6 +571,9 @@ pre.mermaid-other .labelBkg {
 .reader-toc-item .toc-text {
     flex: 1;
     min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 /* B: TOC 접기/펼치기 */

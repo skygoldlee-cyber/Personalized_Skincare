@@ -828,20 +828,20 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
         let tocHtml = '';
         let inChapter = false;
 
-        // 헬퍼: 섹션 아이템 + 하위 헤딩 HTML 생성
+        // 헬퍼: 섹션 아이템 + 하위 헤딩 HTML 생성 (하위 헤딩은 기본 접힘)
         const buildSectionItem = (section, idx, minLevel) => {
             const level = Math.max(minLevel, _getTocLevel(section.title));
             const subHeadings = _extractSubHeadings(section.content);
             const hasChildren = subHeadings.length > 0;
             let html = `<div class="reader-toc-item toc-level-${level}${hasChildren ? ' has-children' : ''}" data-section-idx="${idx}">`;
             if (hasChildren) {
-                html += `<i class="fa-solid fa-chevron-down toc-toggle-icon"></i>`;
+                html += `<i class="fa-solid fa-chevron-right toc-toggle-icon"></i>`;
             }
             html += `<span class="toc-num">${idx + 1}</span>`;
             html += `<span class="toc-text">${esc(section.title)}</span>`;
             html += `</div>`;
             if (hasChildren) {
-                html += `<div class="reader-toc-children" data-parent-idx="${idx}">`;
+                html += `<div class="reader-toc-children collapsed" data-parent-idx="${idx}">`;
                 subHeadings.forEach((sh, hIdx) => {
                     const subLevel = sh.level === 3 ? 0 : 1;
                     html += `<div class="reader-toc-sub-item toc-sub-level-${subLevel}" data-section-idx="${idx}" data-heading-idx="${hIdx}">`;
@@ -855,6 +855,10 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
 
         chapter.sections.forEach((section, idx) => {
             const isChapterHeader = /Chapter\s+\d+/i.test(section.title);
+            // 📖 섹션이면서 다음 섹션이 Chapter 헤더면 — Chapter 소개이므로 상위 레벨 처리
+            const isChapterIntro = /^📖/.test(section.title) &&
+                idx + 1 < chapter.sections.length &&
+                /Chapter\s+\d+/i.test(chapter.sections[idx + 1].title);
             if (isChapterHeader) {
                 if (inChapter) tocHtml += `</div>`; // close previous chapter children
                 // Chapter parent item
@@ -862,9 +866,13 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
                 tocHtml += `<i class="fa-solid fa-chevron-down toc-toggle-icon"></i>`;
                 tocHtml += `<span class="toc-text">${esc(section.title)}</span>`;
                 tocHtml += `</div>`;
-                // Start chapter children container
+                // Start chapter children container (기본 펼침)
                 tocHtml += `<div class="reader-toc-children" data-parent-idx="${idx}">`;
                 inChapter = true;
+            } else if (isChapterIntro) {
+                // Chapter 직전 📖 소개 — 상위 레벨 (이전 챕터 닫기)
+                if (inChapter) { tocHtml += `</div>`; inChapter = false; }
+                tocHtml += buildSectionItem(section, idx, 0);
             } else if (inChapter) {
                 // Child under current chapter — minimum level 1
                 tocHtml += buildSectionItem(section, idx, 1);
