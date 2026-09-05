@@ -594,6 +594,12 @@ pre.mermaid-other .labelBkg {
     transition: max-height 0.3s ease, opacity 0.2s ease;
     opacity: 1;
 }
+/* Chapter 하위 children 컨테이너 — 들여쓰기 + 좌측 보더 */
+.reader-toc-children.toc-chapter-children {
+    padding-left: 0.75rem;
+    margin-left: 0.5rem;
+    border-left: 2px solid var(--border-color);
+}
 .reader-toc-children.collapsed {
     max-height: 0;
     opacity: 0;

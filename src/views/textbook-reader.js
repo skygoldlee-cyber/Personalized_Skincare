@@ -875,7 +875,7 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
                 tocHtml += `<span class="toc-text">${esc(section.title)}</span>`;
                 tocHtml += `</div>`;
                 // Start chapter children container (기본 펼침)
-                tocHtml += `<div class="reader-toc-children" data-parent-idx="${idx}">`;
+                tocHtml += `<div class="reader-toc-children toc-chapter-children" data-parent-idx="${idx}">`;
                 inChapter = true;
             } else if (isChapterIntro) {
                 // Chapter 직전 📖 소개 — 상위 레벨 (이전 챕터 닫기)
