@@ -533,6 +533,27 @@ pre.mermaid-other .labelBkg {
 }
 
 /* A: TOC 계층 들여쓰기 */
+.reader-toc-item.toc-chapter {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-text-main);
+    padding: 0.6rem 0.65rem;
+    margin-top: 0.4rem;
+    border-left: 3px solid var(--color-primary);
+    background: rgba(6, 182, 212, 0.06);
+    border-radius: var(--radius-sm);
+}
+.reader-toc-item.toc-chapter .toc-toggle-icon {
+    flex-shrink: 0;
+    font-size: 0.7rem;
+    margin-top: 3px;
+    color: var(--color-primary);
+    cursor: pointer;
+}
+.reader-toc-item.toc-chapter .toc-text {
+    flex: 1;
+    min-width: 0;
+}
 .reader-toc-item.toc-level-1 {
     padding-left: 1.5rem;
     font-size: 0.8rem;

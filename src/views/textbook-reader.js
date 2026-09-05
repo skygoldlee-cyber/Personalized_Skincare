@@ -822,44 +822,74 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
 
     const bookmarks = getReaderBookmarks();
 
-    // Build TOC (A: 계층 들여쓰기, B: 접기/펼치기, F: 하위 헤딩)
+    // Build TOC (A: 계층 들여쓰기, B: 접기/펼치기, D: 브레드크럼, F: 하위 헤딩)
     const tocList = document.getElementById('reader-toc-list');
     if (tocList) {
         let tocHtml = '';
-        chapter.sections.forEach((section, idx) => {
-            const level = _getTocLevel(section.title);
+        let inChapter = false;
+
+        // 헬퍼: 섹션 아이템 + 하위 헤딩 HTML 생성
+        const buildSectionItem = (section, idx, minLevel) => {
+            const level = Math.max(minLevel, _getTocLevel(section.title));
             const subHeadings = _extractSubHeadings(section.content);
             const hasChildren = subHeadings.length > 0;
-            tocHtml += `<div class="reader-toc-item toc-level-${level}${hasChildren ? ' has-children' : ''}" data-section-idx="${idx}">`;
+            let html = `<div class="reader-toc-item toc-level-${level}${hasChildren ? ' has-children' : ''}" data-section-idx="${idx}">`;
             if (hasChildren) {
-                tocHtml += `<i class="fa-solid fa-chevron-down toc-toggle-icon"></i>`;
+                html += `<i class="fa-solid fa-chevron-down toc-toggle-icon"></i>`;
             }
-            tocHtml += `<span class="toc-num">${idx + 1}</span>`;
-            tocHtml += `<span class="toc-text">${esc(section.title)}</span>`;
-            tocHtml += `</div>`;
+            html += `<span class="toc-num">${idx + 1}</span>`;
+            html += `<span class="toc-text">${esc(section.title)}</span>`;
+            html += `</div>`;
             if (hasChildren) {
-                tocHtml += `<div class="reader-toc-children" data-parent-idx="${idx}">`;
+                html += `<div class="reader-toc-children" data-parent-idx="${idx}">`;
                 subHeadings.forEach((sh, hIdx) => {
                     const subLevel = sh.level === 3 ? 0 : 1;
-                    tocHtml += `<div class="reader-toc-sub-item toc-sub-level-${subLevel}" data-section-idx="${idx}" data-heading-idx="${hIdx}">`;
-                    tocHtml += `<span class="toc-sub-text">${esc(sh.title)}</span>`;
-                    tocHtml += `</div>`;
+                    html += `<div class="reader-toc-sub-item toc-sub-level-${subLevel}" data-section-idx="${idx}" data-heading-idx="${hIdx}">`;
+                    html += `<span class="toc-sub-text">${esc(sh.title)}</span>`;
+                    html += `</div>`;
                 });
+                html += `</div>`;
+            }
+            return html;
+        };
+
+        chapter.sections.forEach((section, idx) => {
+            const isChapterHeader = /Chapter\s+\d+/i.test(section.title);
+            if (isChapterHeader) {
+                if (inChapter) tocHtml += `</div>`; // close previous chapter children
+                // Chapter parent item
+                tocHtml += `<div class="reader-toc-item toc-chapter" data-section-idx="${idx}">`;
+                tocHtml += `<i class="fa-solid fa-chevron-down toc-toggle-icon"></i>`;
+                tocHtml += `<span class="toc-text">${esc(section.title)}</span>`;
                 tocHtml += `</div>`;
+                // Start chapter children container
+                tocHtml += `<div class="reader-toc-children" data-parent-idx="${idx}">`;
+                inChapter = true;
+            } else if (inChapter) {
+                // Child under current chapter — minimum level 1
+                tocHtml += buildSectionItem(section, idx, 1);
+            } else {
+                // Before any chapter — top level
+                tocHtml += buildSectionItem(section, idx, 0);
             }
         });
+        if (inChapter) tocHtml += `</div>`; // close last chapter children
+
         tocList.innerHTML = tocHtml;
 
-        // Bind TOC item clicks — section scroll
+        // Bind TOC item clicks — section scroll + toggle (B)
         tocList.querySelectorAll('.reader-toc-item').forEach(item => {
             item.addEventListener('click', (e) => {
-                // 토글 아이콘 클릭 시 하위 항목 접기/펼치기 (B)
                 const toggleIcon = e.target.closest('.toc-toggle-icon');
                 const idx = parseInt(item.dataset.sectionIdx);
                 if (toggleIcon) {
-                    const children = tocList.querySelector(`.reader-toc-children[data-parent-idx="${idx}"]`);
-                    if (children) {
-                        const collapsed = children.classList.toggle('collapsed');
+                    // 토글: 바로 다음 형제 children 컨테이너 찾기
+                    let next = item.nextElementSibling;
+                    while (next && !next.classList.contains('reader-toc-children')) {
+                        next = next.nextElementSibling;
+                    }
+                    if (next && next.dataset.parentIdx == idx) {
+                        const collapsed = next.classList.toggle('collapsed');
                         toggleIcon.classList.toggle('fa-chevron-down', !collapsed);
                         toggleIcon.classList.toggle('fa-chevron-right', collapsed);
                     }
