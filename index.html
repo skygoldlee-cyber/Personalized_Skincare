@@ -908,6 +908,9 @@
                         <button class="reader-tool-btn" id="reader-focus-toggle" title="집중 모드 (주변 UI 숨기기)">
                             <i class="fa-solid fa-expand"></i> <span>집중 모드</span>
                         </button>
+                        <button class="reader-tool-btn reader-toc-mobile-toggle" id="reader-toc-mobile-btn" title="목차 열기">
+                            <i class="fa-solid fa-list"></i> <span>목차</span>
+                        </button>
                     </div>
                     <div class="reader-toolbar-divider"></div>
                     <div class="reader-toolbar-group">
@@ -931,6 +934,7 @@
                             <!-- Populated dynamically -->
                         </nav>
                     </aside>
+                    <div id="reader-toc-backdrop" class="reader-toc-backdrop" style="display:none;"></div>
 
                     <div id="textbook-reader-container" class="textbook-reader-content">
                         <div class="empty-state">

@@ -23,14 +23,14 @@ test('헤더: ### → <h3>', () => {
     assert.ok(html.includes('<h3>소소제목</h3>'), 'h3 변환');
 });
 
-test('헤더: useReaderStyles 시 ### → <h5 class="md-h3">', () => {
+test('헤더: useReaderStyles 시 ### → <h3 class="md-h3">', () => {
     const html = parseMarkdown('### 제목', { useReaderStyles: true });
-    assert.ok(html.includes('<h5 class="md-h3">'), 'reader 스타일 h5 변환');
+    assert.ok(html.includes('<h3 class="md-h3">'), 'reader 스타일 h3 변환');
 });
 
-test('헤더: useReaderStyles 시 #### → <h6 class="md-h4">', () => {
+test('헤더: useReaderStyles 시 #### → <h4 class="md-h4">', () => {
     const html = parseMarkdown('#### 제목', { useReaderStyles: true });
-    assert.ok(html.includes('<h6 class="md-h4">'), 'reader 스타일 h6 변환');
+    assert.ok(html.includes('<h4 class="md-h4">'), 'reader 스타일 h4 변환');
 });
 
 // ==================== 표 ====================

@@ -532,6 +532,136 @@ pre.mermaid-other .labelBkg {
     margin-top: 1px;
 }
 
+/* A: TOC 계층 들여쓰기 */
+.reader-toc-item.toc-level-1 {
+    padding-left: 1.5rem;
+    font-size: 0.8rem;
+}
+.reader-toc-item.toc-level-2 {
+    padding-left: 2.5rem;
+    font-size: 0.78rem;
+}
+.reader-toc-item .toc-text {
+    flex: 1;
+    min-width: 0;
+}
+
+/* B: TOC 접기/펼치기 */
+.reader-toc-item.has-children .toc-toggle-icon {
+    flex-shrink: 0;
+    font-size: 0.7rem;
+    margin-top: 3px;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+.reader-toc-children {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    overflow: hidden;
+    max-height: 2000px;
+    transition: max-height 0.3s ease, opacity 0.2s ease;
+    opacity: 1;
+}
+.reader-toc-children.collapsed {
+    max-height: 0;
+    opacity: 0;
+}
+
+/* F: TOC 하위 항목 */
+.reader-toc-sub-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 0.3rem 0.5rem 0.3rem 2.2rem;
+    font-size: 0.76rem;
+    line-height: 1.35;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    border-left: 2px solid transparent;
+    transition: all 0.15s ease;
+    word-break: keep-all;
+}
+.reader-toc-sub-item.toc-sub-level-1 {
+    padding-left: 3.2rem;
+    font-size: 0.74rem;
+}
+.reader-toc-sub-item:hover {
+    color: var(--color-text-main);
+    background: rgba(255, 255, 255, 0.03);
+}
+.reader-toc-sub-item .toc-sub-text {
+    flex: 1;
+    min-width: 0;
+}
+
+/* D: 브레드크럼 */
+.reader-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 1rem;
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    flex-wrap: wrap;
+}
+.reader-breadcrumb .breadcrumb-subject {
+    color: var(--color-primary);
+    font-weight: 600;
+}
+.reader-breadcrumb .breadcrumb-chapter {
+    color: var(--color-text-main);
+    font-weight: 500;
+}
+.reader-breadcrumb .breadcrumb-section {
+    color: var(--color-text-muted);
+}
+.reader-breadcrumb .breadcrumb-sep {
+    font-size: 0.6rem;
+    opacity: 0.5;
+}
+
+/* C: 모바일 TOC 드로어 */
+.reader-toc-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1400;
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+}
+.reader-toc-mobile-toggle {
+    display: none;
+}
+
+/* C: 모바일에서 TOC를 슬라이드 드로어로 전환 */
+@media (max-width: 1100px) {
+    .reader-toc {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 280px;
+        max-height: none;
+        z-index: 1500;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        border-radius: 0;
+        padding-top: 1.5rem;
+        overflow-y: auto;
+    }
+    .reader-toc.mobile-open {
+        transform: translateX(0);
+    }
+    .reader-toc-mobile-toggle {
+        display: inline-flex;
+    }
+}
+
 /* Reader content area — typography optimization */
 .textbook-reader-content {
     flex: 1;
@@ -1126,12 +1256,7 @@ body.reader-focus-mode .reader-readable-width {
     color: #0e7490 !important;
 }
 
-/* Responsive for reader layout */
-@media (max-width: 1100px) {
-    .reader-toc {
-        display: none !important;
-    }
-}
+/* Responsive for reader layout — TOC drawer handled above */
 @media (max-width: 768px), (orientation: landscape) and (max-height: 500px) {
     .reader-chapter-nav {
         flex-direction: column;
@@ -2798,7 +2923,7 @@ body.landscape-mode .glass-card {
 }
 
 /* 1. 이야기 서브헤딩 (### 📖) — 범위 제한: md-quote 전까지만 */
-.story-mode .textbook-reader-section-content h5.md-h3 {
+.story-mode .textbook-reader-section-content h3.md-h3 {
     color: #b8860b;
     font-weight: 700;
     border-left: 3px solid #b8860b;
@@ -2807,13 +2932,13 @@ body.landscape-mode .glass-card {
 }
 
 /* 이야기 본문 문단 — h5 이후 형제 중 md-quote가 아닌 것만 */
-.story-mode .textbook-reader-section-content h5.md-h3 ~ p,
-.story-mode .textbook-reader-section-content h5.md-h3 ~ div.md-para {
+.story-mode .textbook-reader-section-content h3.md-h3 ~ p,
+.story-mode .textbook-reader-section-content h3.md-h3 ~ div.md-para {
     color: #8b6914;
 }
 
 /* 1. 범위 제한: 한 줄 요약(md-quote)은 이야기 색상 제외 */
-.story-mode .textbook-reader-section-content h5.md-h3 ~ div.md-quote {
+.story-mode .textbook-reader-section-content h3.md-h3 ~ div.md-quote {
     color: var(--color-text-main);
 }
 
@@ -2825,7 +2950,7 @@ body.landscape-mode .glass-card {
 }
 
 /* 7. 대사(인용구) 스타일 — > "..." 형태 */
-.story-mode .textbook-reader-section-content h5.md-h3 ~ div.md-quote {
+.story-mode .textbook-reader-section-content h3.md-h3 ~ div.md-quote {
     border-left: 3px solid #d4a017;
     background: rgba(212,160,23,0.06);
     padding: 0.6rem 0.9rem;
@@ -2836,15 +2961,15 @@ body.landscape-mode .glass-card {
 
 /* 2. 다크모드 대응 */
 @media (prefers-color-scheme: dark) {
-    .story-mode .textbook-reader-section-content h5.md-h3 {
+    .story-mode .textbook-reader-section-content h3.md-h3 {
         color: #e0c060;
         border-left-color: #e0c060;
     }
-    .story-mode .textbook-reader-section-content h5.md-h3 ~ p,
-    .story-mode .textbook-reader-section-content h5.md-h3 ~ div.md-para {
+    .story-mode .textbook-reader-section-content h3.md-h3 ~ p,
+    .story-mode .textbook-reader-section-content h3.md-h3 ~ div.md-para {
         color: #d4b878;
     }
-    .story-mode .textbook-reader-section-content h5.md-h3 ~ div.md-quote {
+    .story-mode .textbook-reader-section-content h3.md-h3 ~ div.md-quote {
         color: #e8d090;
         background: rgba(224,192,96,0.08);
         border-left-color: #e0c060;

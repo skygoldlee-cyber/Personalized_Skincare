@@ -770,6 +770,41 @@ function _filterMetaSections(chapter) {
     };
 }
 
+// --- TOC 계층 구조 헬퍼 (A: 들여쓰기, F: 하위 헤딩) ---
+
+/** 섹션 제목의 번호 패턴에서 TOC 들여쓰기 레벨 감지 */
+function _getTocLevel(title) {
+    const t = (title || '').trim();
+    if (/^\(\d+\)/.test(t)) return 1;       // (1), (2) ...
+    if (/^[①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳]/.test(t)) return 2; // ①②③ ...
+    return 0;                                  // 1., 2. 또는 무번호
+}
+
+/** 섹션 본문에서 ### / #### 하위 헤딩 추출 */
+function _extractSubHeadings(content) {
+    if (!content) return [];
+    const lines = content.split('\n');
+    const headings = [];
+    let inCodeBlock = false;
+    for (const line of lines) {
+        const trimmed = line.trim();
+        if (trimmed.startsWith('```')) { inCodeBlock = !inCodeBlock; continue; }
+        if (inCodeBlock) continue;
+        if (trimmed.startsWith('### ') && !trimmed.startsWith('#### ')) {
+            headings.push({ level: 3, title: trimmed.replace(/^###\s+/, '').trim() });
+        } else if (trimmed.startsWith('#### ')) {
+            headings.push({ level: 4, title: trimmed.replace(/^####\s+/, '').trim() });
+        }
+    }
+    return headings;
+}
+
+/** 하위 헤딩용 슬러그 ID 생성 */
+let _headingIdCounter = 0;
+function _makeHeadingId(sectionIdx, headingIdx) {
+    return `reader-h-${sectionIdx}-${headingIdx}`;
+}
+
 async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, isStoryMode) {
     const container = document.getElementById('textbook-reader-container');
     if (!container) return;
@@ -786,26 +821,73 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
 
     const bookmarks = getReaderBookmarks();
 
-    // Build TOC
+    // Build TOC (A: 계층 들여쓰기, B: 접기/펼치기, F: 하위 헤딩)
     const tocList = document.getElementById('reader-toc-list');
     if (tocList) {
-        let tocHtml = chapter.sections.map((section, idx) => `
-            <div class="reader-toc-item" data-section-idx="${idx}">
-                <span class="toc-num">${idx + 1}</span>
-                <span>${esc(section.title)}</span>
-            </div>
-        `).join('');
+        let tocHtml = '';
+        chapter.sections.forEach((section, idx) => {
+            const level = _getTocLevel(section.title);
+            const subHeadings = _extractSubHeadings(section.content);
+            const hasChildren = subHeadings.length > 0;
+            tocHtml += `<div class="reader-toc-item toc-level-${level}${hasChildren ? ' has-children' : ''}" data-section-idx="${idx}">`;
+            if (hasChildren) {
+                tocHtml += `<i class="fa-solid fa-chevron-down toc-toggle-icon"></i>`;
+            }
+            tocHtml += `<span class="toc-num">${idx + 1}</span>`;
+            tocHtml += `<span class="toc-text">${esc(section.title)}</span>`;
+            tocHtml += `</div>`;
+            if (hasChildren) {
+                tocHtml += `<div class="reader-toc-children" data-parent-idx="${idx}">`;
+                subHeadings.forEach((sh, hIdx) => {
+                    const subLevel = sh.level === 3 ? 0 : 1;
+                    tocHtml += `<div class="reader-toc-sub-item toc-sub-level-${subLevel}" data-section-idx="${idx}" data-heading-idx="${hIdx}">`;
+                    tocHtml += `<span class="toc-sub-text">${esc(sh.title)}</span>`;
+                    tocHtml += `</div>`;
+                });
+                tocHtml += `</div>`;
+            }
+        });
         tocList.innerHTML = tocHtml;
+
+        // Bind TOC item clicks — section scroll
         tocList.querySelectorAll('.reader-toc-item').forEach(item => {
-            item.addEventListener('click', () => {
+            item.addEventListener('click', (e) => {
+                // 토글 아이콘 클릭 시 하위 항목 접기/펼치기 (B)
+                const toggleIcon = e.target.closest('.toc-toggle-icon');
                 const idx = parseInt(item.dataset.sectionIdx);
+                if (toggleIcon) {
+                    const children = tocList.querySelector(`.reader-toc-children[data-parent-idx="${idx}"]`);
+                    if (children) {
+                        const collapsed = children.classList.toggle('collapsed');
+                        toggleIcon.classList.toggle('fa-chevron-down', !collapsed);
+                        toggleIcon.classList.toggle('fa-chevron-right', collapsed);
+                    }
+                    return;
+                }
+                // 섹션으로 스크롤
                 const target = document.getElementById(`reader-section-${idx}`);
                 if (target) {
-                    // Expand if collapsed
                     if (target.classList.contains('collapsed')) {
                         target.classList.remove('collapsed');
                     }
                     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Bind sub-item clicks — heading scroll (F)
+        tocList.querySelectorAll('.reader-toc-sub-item').forEach(sub => {
+            sub.addEventListener('click', () => {
+                const secIdx = parseInt(sub.dataset.sectionIdx);
+                const hIdx = parseInt(sub.dataset.headingIdx);
+                const sectionEl = document.getElementById(`reader-section-${secIdx}`);
+                if (!sectionEl) return;
+                if (sectionEl.classList.contains('collapsed')) {
+                    sectionEl.classList.remove('collapsed');
+                }
+                const headings = sectionEl.querySelectorAll('h3.md-h3, h4.md-h4');
+                if (headings[hIdx]) {
+                    headings[hIdx].scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             });
         });
@@ -885,6 +967,15 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
     `;
 
     html += await renderStudyAids(chapter, subjId);
+
+    // D: 브레드크럼
+    html += `<div class="reader-breadcrumb" id="reader-breadcrumb">
+        <span class="breadcrumb-subject">${esc(subj.name)}</span>
+        <i class="fa-solid fa-chevron-right breadcrumb-sep"></i>
+        <span class="breadcrumb-chapter">${esc(chapter.chapterTitle)}</span>
+        <i class="fa-solid fa-chevron-right breadcrumb-sep"></i>
+        <span class="breadcrumb-section" id="breadcrumb-current-section">-</span>
+    </div>`;
 
     const subjRefFiles = REFERENCE_FILES[subjId] || [];
     const subjDirName = SUBJECT_DIR_MAP[subjId] || '';
@@ -1132,7 +1223,7 @@ function bindReaderScrollEvents() {
         const backBtn = document.getElementById('reader-back-to-top');
         if (backBtn) backBtn.style.display = container.scrollTop > 400 ? 'block' : 'none';
 
-        // Scroll spy — highlight current section in TOC
+        // Scroll spy — highlight current section in TOC + breadcrumb (D)
         const cards = container.querySelectorAll('.reader-section-card');
         const containerTop = container.getBoundingClientRect().top;
         let currentIdx = -1;
@@ -1146,6 +1237,12 @@ function bindReaderScrollEvents() {
         document.querySelectorAll('.reader-toc-item').forEach(item => {
             item.classList.toggle('active', parseInt(item.dataset.sectionIdx) === currentIdx);
         });
+        // D: 브레드크럼 현재 섹션 업데이트
+        const breadcrumbEl = document.getElementById('breadcrumb-current-section');
+        if (breadcrumbEl && currentIdx >= 0) {
+            const card = container.querySelector(`.reader-section-card[data-section-idx="${currentIdx}"] .reader-section-title`);
+            if (card) breadcrumbEl.textContent = card.textContent.trim();
+        }
     });
 
     // Back to top click
@@ -1167,6 +1264,9 @@ function initReaderToolbar() {
     const collapseAllBtn = document.getElementById('reader-collapse-all');
     const modalClose = document.getElementById('reader-table-modal-close');
     const modal = document.getElementById('reader-table-modal');
+    const tocMobileBtn = document.getElementById('reader-toc-mobile-btn');
+    const tocBackdrop = document.getElementById('reader-toc-backdrop');
+    const tocAside = document.getElementById('reader-toc');
 
     if (decBtn && !decBtn.dataset.bound) {
         decBtn.dataset.bound = 'true';
@@ -1203,6 +1303,29 @@ function initReaderToolbar() {
                 ? '<i class="fa-solid fa-compress"></i> <span>집중 해제</span>'
                 : '<i class="fa-solid fa-expand"></i> <span>집중 모드</span>';
         });
+    }
+    // C: 모바일 TOC 드로어 토글
+    if (tocMobileBtn && !tocMobileBtn.dataset.bound) {
+        tocMobileBtn.dataset.bound = 'true';
+        const closeMobileToc = () => {
+            if (tocAside) tocAside.classList.remove('mobile-open');
+            if (tocBackdrop) tocBackdrop.style.display = 'none';
+        };
+        tocMobileBtn.addEventListener('click', () => {
+            if (tocAside && tocBackdrop) {
+                const isOpen = tocAside.classList.toggle('mobile-open');
+                tocBackdrop.style.display = isOpen ? 'block' : 'none';
+            }
+        });
+        if (tocBackdrop) tocBackdrop.addEventListener('click', closeMobileToc);
+        // TOC 항목 클릭 시 자동 닫기
+        if (tocAside) {
+            tocAside.addEventListener('click', (e) => {
+                if (e.target.closest('.reader-toc-item') || e.target.closest('.reader-toc-sub-item')) {
+                    setTimeout(closeMobileToc, 300);
+                }
+            });
+        }
     }
     if (expandAllBtn && !expandAllBtn.dataset.bound) {
         expandAllBtn.dataset.bound = 'true';

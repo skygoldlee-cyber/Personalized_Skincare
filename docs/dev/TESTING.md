@@ -215,7 +215,7 @@ npm run test:watch
 ### 4.8 일반 마크다운 파싱 (Markdown Parser General) — 교재 무관, 합성 데이터
 
 #### `markdown-parser-general.test.js` (35개)
-- **헤더**: `#`→`<h1>`, `##`→`<h2>`, `###`→`<h3>`, `useReaderStyles` 시 `<h5 class="md-h3">`/`<h6 class="md-h4">`
+- **헤더**: `#`→`<h1>`, `##`→`<h2>`, `###`→`<h3>`, `useReaderStyles` 시 `<h3 class="md-h3">`/`<h4 class="md-h4">`
 - **표**: 기본 테이블, 구분선 행 제외, 빈 셀 보존, `reader-table-wrapper` 클래스
 - **리스트**: ul(`-`), ol(번호), `useCustomListDiv` 시 `md-list-item` div 렌더링
 - **인라인 서식**: `**볼드**`→`<strong>`, `*이탤릭*`→`<em>`, `` `코드` ``→`<code>`, `[text](url)`→`<a>`, `allowItalics`/`allowInlineCode` 비활성화
