@@ -1050,7 +1050,7 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
             <div class="reader-section-card" id="reader-section-${idx}" data-section-idx="${idx}">
                 <div class="reader-section-header" data-section-idx="${idx}">
                     <i class="fa-solid fa-chevron-down reader-section-toggle"></i>
-                    <span class="reader-section-num">${idx + 1}</span>
+                    ${_hasOwnNumber(section.title) ? `<span class="reader-section-num">${idx + 1}</span>` : ''}
                     <h4 class="reader-section-title">${esc(section.title)}</h4>
                     <button class="reader-bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" data-bookmark-key="${esc(bookmarkKey)}" title="북마크 ${isBookmarked ? '제거' : '추가'}">
                         <i class="fa-${isBookmarked ? 'solid' : 'regular'} fa-bookmark"></i>
