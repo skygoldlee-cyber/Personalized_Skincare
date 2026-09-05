@@ -29,6 +29,7 @@ const MIME = {
     '.woff': 'font/woff',
     '.woff2': 'font/woff2',
     '.ttf': 'font/ttf',
+    '.pdf': 'application/pdf',
 };
 
 function send(res, status, headers, body) {
