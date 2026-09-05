@@ -38,7 +38,7 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
     html = html.replace(
         /<a href="((?:\.\.\/)?(?:참조자료|공통참조자료|\d과목_참조자료)\/[^"]+\.pdf)">([^<]+)<\/a>/g,
         (match, rawPath, linkText) => {
-            const pdfFile = rawPath.split('/').pop();
+            const pdfFile = decodeURIComponent(rawPath.split('/').pop());
             const resolved = resolveRefPath(pdfFile);
             if (resolved) {
                 const displayName = linkText.replace(/\.pdf$/, '');
