@@ -481,6 +481,7 @@ const parseTextbookContent = (filePath, filename, subjectDir) => {
   
   let currentSectionTitle = '개요';
   let currentSectionLines = [];
+  let currentSubsections = [];
   
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
@@ -498,11 +499,38 @@ const parseTextbookContent = (filePath, filename, subjectDir) => {
       if (currentSectionLines.length > 0) {
         sections.push({
           title: currentSectionTitle,
-          content: currentSectionLines.join('\n').trim()
+          content: currentSectionLines.join('\n').trim(),
+          subsections: currentSubsections
         });
       }
       currentSectionTitle = trimmed.substring(3).trim();
       currentSectionLines = [];
+      currentSubsections = [];
+      continue;
+    }
+    
+    if (trimmed.startsWith('### ')) {
+      const subTitle = trimmed.substring(4).trim();
+      const subLines = [];
+      for (i++; i < lines.length; i++) {
+        const subTrimmed = lines[i].trim();
+        if (subTrimmed.startsWith('# ')) {
+          if (!chapterTitleSet) {
+            chapterTitle = subTrimmed.substring(2).trim();
+            chapterTitleSet = true;
+          }
+          break;
+        }
+        if (subTrimmed.startsWith('## ') || subTrimmed.startsWith('### ')) {
+          i--;
+          break;
+        }
+        subLines.push(lines[i]);
+      }
+      currentSubsections.push({
+        title: subTitle,
+        content: subLines.join('\n').trim()
+      });
       continue;
     }
     
@@ -512,7 +540,8 @@ const parseTextbookContent = (filePath, filename, subjectDir) => {
   if (currentSectionLines.length > 0) {
     sections.push({
       title: currentSectionTitle,
-      content: currentSectionLines.join('\n').trim()
+      content: currentSectionLines.join('\n').trim(),
+      subsections: currentSubsections
     });
   }
   

@@ -67,6 +67,7 @@ function parseMindmapTree(chapter) {
     const sections = chapter.sections || [];
     const root = { title: chapter.chapterTitle || '', children: [] };
     let hasAnyTable = false;
+    let hasAnySubsection = false;
 
     for (let si = 0; si < sections.length; si++) {
         const sec = sections[si];
@@ -121,13 +122,24 @@ function parseMindmapTree(chapter) {
                     }
                 }
             }
+        } else if (sec.subsections && sec.subsections.length > 0) {
+            // 테이블이 없으면 ### 하위 섹션을 하위 노드로 사용
+            hasAnySubsection = true;
+            for (const sub of sec.subsections) {
+                secNode.children.push({
+                    title: sub.title,
+                    level: 2,
+                    children: [],
+                    linkInfo: null
+                });
+            }
         }
 
         root.children.push(secNode);
     }
 
-    // 테이블이 하나도 없으면 null 반환 → 평면 레이아웃 fallback
-    if (!hasAnyTable) return null;
+    // 테이블이나 하위 섹션이 하나도 없으면 null 반환 → 평면 레이아웃 fallback
+    if (!hasAnyTable && !hasAnySubsection) return null;
     return root;
 }
 
