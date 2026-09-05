@@ -843,9 +843,6 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
             if (hasChildren) {
                 html += `<i class="fa-solid fa-chevron-right toc-toggle-icon"></i>`;
             }
-            if (!_hasOwnNumber(section.title)) {
-                html += `<span class="toc-num">${idx + 1}</span>`;
-            }
             html += `<span class="toc-text">${esc(section.title)}</span>`;
             html += `</div>`;
             if (hasChildren) {
