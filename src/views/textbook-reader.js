@@ -1043,9 +1043,17 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
     chapter.sections.forEach((section, idx) => {
         const bookmarkKey = `${subjId}_${chapterIdx}_${idx}`;
         const isBookmarked = bookmarks.includes(bookmarkKey);
-        const secSrcMatch = (section.content || '').match(/📌\s*\*\*출처\*\*[:：]\s*(.+?)(?:\||\n)/);
+        const allContent = [section.content || '', ...((section.subsections || []).map(s => s.content || ''))].join('\n');
+        const secSrcMatch = allContent.match(/📌\s*\*\*출처\*\*[:：]\s*(.+?)(?:\||\n)/);
         const secRefPath = secSrcMatch ? mapSourceToRef(secSrcMatch[1]) : null;
         const refPath = secRefPath || chapterRefPath;
+        let sectionHtml = formatSectionContentForReader(section.content, chapter.filePath, refPath, subjRefFiles, subjDirName, glossaryItems);
+        if (section.subsections && section.subsections.length > 0) {
+            for (const sub of section.subsections) {
+                sectionHtml += `<h5 class="reader-subsection-title">${esc(sub.title)}</h5>`;
+                sectionHtml += `<div class="reader-subsection-content">${formatSectionContentForReader(sub.content, chapter.filePath, refPath, subjRefFiles, subjDirName, glossaryItems)}</div>`;
+            }
+        }
         html += `
             <div class="reader-section-card" id="reader-section-${idx}" data-section-idx="${idx}">
                 <div class="reader-section-header" data-section-idx="${idx}">
@@ -1058,7 +1066,7 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
                 </div>
                 <div class="reader-section-body">
                     <div class="textbook-reader-section-content">
-                        ${formatSectionContentForReader(section.content, chapter.filePath, refPath, subjRefFiles, subjDirName, glossaryItems)}
+                        ${sectionHtml}
                     </div>
                 </div>
             </div>

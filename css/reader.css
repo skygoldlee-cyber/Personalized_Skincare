@@ -813,6 +813,19 @@ pre.mermaid-other .labelBkg {
     display: none;
 }
 
+.reader-subsection-title {
+    font-size: calc(1.1rem * var(--reader-font-scale, 1));
+    color: var(--color-primary);
+    font-weight: 700;
+    margin-top: 1.75rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--border-color);
+}
+.reader-subsection-content {
+    margin-bottom: 1rem;
+}
+
 /* Optimized typography inside reader */
 .textbook-reader-content .textbook-reader-section-content {
     line-height: 2.05;

@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v240-20260906-pdf-link-decode';   // reader-format.js: URL 인코딩된 PDF 파일명 decodeURIComponent 처리
+const CACHE_VERSION = 'v241-20260906-subsection-render';   // reader: ### 서브섹션 렌더링 추가 (참조자료 출처 링크 표시)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
