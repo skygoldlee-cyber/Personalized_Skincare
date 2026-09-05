@@ -787,6 +787,12 @@ function _hasOwnNumber(title) {
     return /^\d+\./.test(t) || /^\(\d+\)/.test(t) || /^[①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳]/.test(t) || /Chapter\s+\d+/i.test(t);
 }
 
+/** 참조문서 헤더 (01_화장품법, 07_CGMP 등) — TOC에서 제외 */
+function _isRefDocHeader(title) {
+    const t = (title || '').trim();
+    return /^\d+_/.test(t);
+}
+
 /** 섹션 본문에서 ### / #### 하위 헤딩 추출 */
 function _extractSubHeadings(content) {
     if (!content) return [];
@@ -860,6 +866,9 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
 
         let hasSeenNumbered = false;
         chapter.sections.forEach((section, idx) => {
+            // 참조문서 헤더 (01_화장품법 등) — TOC에서 제외
+            if (_isRefDocHeader(section.title)) return;
+
             const isChapterHeader = /Chapter\s+\d+/i.test(section.title);
             const level = _getTocLevel(section.title);
             const isNumberedChild = level >= 1; // 1., (1), ①
