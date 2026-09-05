@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v227-20260905-ch01-restructure';   // 1과목 Ch01 19절 → 5대주제 + (n) 하위 구조로 재편
+const CACHE_VERSION = 'v228-20260905-subj234-restructure';   // 2~4과목 번호체계 정리 (대주제 + (n) 하위 구조)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
