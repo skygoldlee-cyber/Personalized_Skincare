@@ -781,6 +781,12 @@ function _getTocLevel(title) {
     return 0;                               // Chapter, 📖, 📊, ✅, 출처, 제N조 등
 }
 
+/** 제목이 자체 번호를 가지고 있으면 toc-num 순번을 표시하지 않음 */
+function _hasOwnNumber(title) {
+    const t = (title || '').trim();
+    return /^\d+\./.test(t) || /^\(\d+\)/.test(t) || /^[①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳]/.test(t) || /Chapter\s+\d+/i.test(t);
+}
+
 /** 섹션 본문에서 ### / #### 하위 헤딩 추출 */
 function _extractSubHeadings(content) {
     if (!content) return [];
@@ -837,7 +843,9 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
             if (hasChildren) {
                 html += `<i class="fa-solid fa-chevron-right toc-toggle-icon"></i>`;
             }
-            html += `<span class="toc-num">${idx + 1}</span>`;
+            if (!_hasOwnNumber(section.title)) {
+                html += `<span class="toc-num">${idx + 1}</span>`;
+            }
             html += `<span class="toc-text">${esc(section.title)}</span>`;
             html += `</div>`;
             if (hasChildren) {
