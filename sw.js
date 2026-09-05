@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v236-20260906-subsection-mindmap';   // ### 하위 섹션 마인드맵 노드 지원
+const CACHE_VERSION = 'v237-20260906-layout-principles';   // 교재 3영역 배치 원칙 적용: # 남용 제거, 참조자료 ## 강등, 복습 순서 통일
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
