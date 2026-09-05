@@ -861,12 +861,12 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
             return html;
         };
 
+        let hasSeenNumbered = false;
         chapter.sections.forEach((section, idx) => {
             const isChapterHeader = /Chapter\s+\d+/i.test(section.title);
-            // 📖 섹션이면서 다음 섹션이 Chapter 헤더면 — Chapter 소개이므로 상위 레벨 처리
-            const isChapterIntro = /^📖/.test(section.title) &&
-                idx + 1 < chapter.sections.length &&
-                /Chapter\s+\d+/i.test(chapter.sections[idx + 1].title);
+            const level = _getTocLevel(section.title);
+            const isNumberedChild = level >= 1; // 1., (1), ①
+
             if (isChapterHeader) {
                 if (inChapter) tocHtml += `</div>`; // close previous chapter children
                 // Chapter parent item
@@ -877,15 +877,21 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
                 // Start chapter children container (기본 펼침)
                 tocHtml += `<div class="reader-toc-children toc-chapter-children" data-parent-idx="${idx}">`;
                 inChapter = true;
-            } else if (isChapterIntro) {
-                // Chapter 직전 📖 소개 — 상위 레벨 (이전 챕터 닫기)
-                if (inChapter) { tocHtml += `</div>`; inChapter = false; }
-                tocHtml += buildSectionItem(section, idx, 0);
+                hasSeenNumbered = false;
             } else if (inChapter) {
-                // Child under current chapter — minimum level 1
-                tocHtml += buildSectionItem(section, idx, 1);
+                if (isNumberedChild) {
+                    // 번호 있는 섹션 → Chapter 자식
+                    hasSeenNumbered = true;
+                    tocHtml += buildSectionItem(section, idx, 1);
+                } else if (hasSeenNumbered) {
+                    // 번호 섹션 이후 비번호 섹션 → Chapter 종료, 최상위 레벨
+                    tocHtml += `</div>`;
+                    inChapter = false;
+                    tocHtml += buildSectionItem(section, idx, 0);
+                }
+                // else: Chapter 헤더 직후 비번호 섹션 (intro) → TOC에서 생략
             } else {
-                // Before any chapter — top level
+                // Chapter 밖 — 최상위 레벨
                 tocHtml += buildSectionItem(section, idx, 0);
             }
         });

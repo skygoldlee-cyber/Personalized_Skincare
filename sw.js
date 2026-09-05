@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v218-20260904-toc-indent';   // TOC Chapter 하위 들여쓰기 + 좌측 보더 추가
+const CACHE_VERSION = 'v219-20260904-toc-tree';   // TOC 트리 구조 — 번호 섹션만 Chapter 자식, 비번호는 최상위
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
