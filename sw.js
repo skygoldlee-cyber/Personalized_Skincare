@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v255-20260907-textbook-images';   // 교재 리더 이미지 지원: 피부·모발 단면도 인포그래픽 추가 + 마크다운 이미지 파싱
+const CACHE_VERSION = 'v256-20260907-image-path-fix';   // 이미지 경로 상대→절대 수정 (/content/교재/understanding/images/...)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
