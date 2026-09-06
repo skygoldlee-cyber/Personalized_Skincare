@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v253-20260906-subject3-sa-to-mc';   // 과목3 단답형 81문제 → 5지선다형 변환 (공식 출제기준: 과목3은 선다형만)
+const CACHE_VERSION = 'v254-20260907-quiz-review-fix';   // 과목3·4 검토 수정: Q208 정답, Q153 보기, Q82 청정도 Class 100, Q85/Q233 단위 ft³, Q286 비율, Q102 순서, Q185/Q200 오탈자, Q84/Q132 구분
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
