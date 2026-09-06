@@ -83,7 +83,11 @@ export function parseMarkdown(mdText, options = {}) {
     html = html.replace(/FENCE_TOKEN(\w*)/g, '```$1');
     html = html.replace(/STAR_TOKEN/g, '*').replace(/BTICK_TOKEN/g, '`');
 
-    // 5-1. 마크다운 링크 [text](url) → <a href="url">text</a>
+    // 5-1. 마크다운 이미지 ![alt](url) → <img src="url" alt="alt">
+    // (링크 파싱 전에 처리하여 ![alt](url)가 [text](url)로 변환되지 않도록 함)
+    html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" class="reader-img" loading="lazy">');
+
+    // 5-2. 마크다운 링크 [text](url) → <a href="url">text</a>
     // (escapeHTML 통과 후이므로 &amp; 등은 이미 인코딩됨 — href에 그대로 사용)
     // (펜스 블록 내부의 []()는 토큰화되어 있으므로 변환되지 않음)
     // URL에 괄호가 포함된 경우(예: 화장품법(법률)(제20901호).pdf)를 처리하기 위해

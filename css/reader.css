@@ -77,6 +77,17 @@
     font-weight: 600;
 }
 
+/* Reader image styles */
+.textbook-reader-section-content .reader-img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 1.5rem auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+}
+
 /* Reader table styles */
 .reader-table-wrapper {
     overflow-x: auto;
