@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v257-20260907-skin-functions-12';   // 피부 기능 12가지 마인드맵+매핑 테이블 6개→12개 확장
+const CACHE_VERSION = 'v258-20260907-story-skin-functions-12';   // 이야기형 피부 기능 12가지 마인드맵+매핑 테이블 동기화
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
