@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v251-20260906-subject3-quiz-fix';   // 과목3 24개 문항 오류 수정 (물휴지 포름알데히드·회수벌칙·정답필드오염·재작업·청정도등급 등)
+const CACHE_VERSION = 'v252-20260906-subject4-quiz-fix';   // 과목4 15개 문항 오류 수정 (정답오염 Q273-Q281, 멜라닌→세포명, 실온·알레르기한도·페녹시에탄올 등)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
