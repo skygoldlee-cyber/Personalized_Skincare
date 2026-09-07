@@ -3,7 +3,7 @@
 export const DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2026",
-  "generatedAt": "2026-09-07T02:10:18.102Z",
+  "generatedAt": "2026-09-07T04:41:55.443Z",
   "subjects": [
     {
       "key": "law",
@@ -22,7 +22,7 @@ export const DATA_REGISTRY = {
       "order": 2,
       "name": "화장품 제조 및 품질관리",
       "shortName": "제조·품질",
-      "contentHash": "31b94521",
+      "contentHash": "be87d59f",
       "stats": {
         "cards": 541,
         "quizzes": 130,
@@ -61,9 +61,9 @@ export const DATA_REGISTRY = {
       "part": 1,
       "title": "화장품법의 이해 (100제)",
       "file": "과목1_문제은행_교재인용.md",
-      "bundle": "./data/exams/subject1.dc09cec0.js",
+      "bundle": "./data/exams/subject1.9579e408.js",
       "global": "EXAM_DATA_subject1",
-      "contentHash": "dc09cec0",
+      "contentHash": "9579e408",
       "stats": {
         "questions": 100
       }
@@ -74,9 +74,9 @@ export const DATA_REGISTRY = {
       "part": 1,
       "title": "화장품 제조 및 품질관리 (250제)",
       "file": "과목2_문제은행_교재인용.md",
-      "bundle": "./data/exams/subject2.b6f1b953.js",
+      "bundle": "./data/exams/subject2.8c1b4115.js",
       "global": "EXAM_DATA_subject2",
-      "contentHash": "b6f1b953",
+      "contentHash": "8c1b4115",
       "stats": {
         "questions": 250
       }
@@ -87,9 +87,9 @@ export const DATA_REGISTRY = {
       "part": 1,
       "title": "유통화장품 안전관리 (250제)",
       "file": "과목3_문제은행_교재인용.md",
-      "bundle": "./data/exams/subject3.7552fd9b.js",
+      "bundle": "./data/exams/subject3.9ca84c66.js",
       "global": "EXAM_DATA_subject3",
-      "contentHash": "7552fd9b",
+      "contentHash": "9ca84c66",
       "stats": {
         "questions": 250
       }
@@ -100,9 +100,9 @@ export const DATA_REGISTRY = {
       "part": 1,
       "title": "맞춤형화장품의 이해 (400제)",
       "file": "과목4_문제은행_교재인용.md",
-      "bundle": "./data/exams/subject4.235996c5.js",
+      "bundle": "./data/exams/subject4.dabe550a.js",
       "global": "EXAM_DATA_subject4",
-      "contentHash": "235996c5",
+      "contentHash": "dabe550a",
       "stats": {
         "questions": 400
       }
