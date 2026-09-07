@@ -422,7 +422,7 @@ body.exam-open{overflow:hidden;}
     function _goBack() {
         if (_navStack.length === 0) return;
         const prev = _navStack.pop();
-        // 현재 스크롤 위치 저장하지 않고 이전 문서로 복귀
+        _currentMdPath = prev.mdPath;
         _openExamInternal(prev.mdPath, prev.lineNum, prev.scrollPos);
     }
 

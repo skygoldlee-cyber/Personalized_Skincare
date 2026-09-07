@@ -1,1 +1,1 @@
-feat: add back button to return to previous document after opening citation link
+fix: update _currentMdPath in _goBack so back button works repeatedly
