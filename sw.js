@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v260-20260907-exam-fixes';   // 정답노출 제거 + 인용링크 156건 수정 + 라벨 교재로 통일
+const CACHE_VERSION = 'v261-20260907-6874a94';   // 10건 실결함 수정: Q277/Q278/Q279 정답링크≠근거링크, Q280/Q281 블록병합, Q355 중복근거, Q15 빈근거, Q63/Q152 잘못된근거
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
