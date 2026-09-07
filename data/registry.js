@@ -3,7 +3,7 @@
 export const DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2026",
-  "generatedAt": "2026-09-06T12:12:27.613Z",
+  "generatedAt": "2026-09-07T02:10:18.102Z",
   "subjects": [
     {
       "key": "law",
@@ -46,7 +46,7 @@ export const DATA_REGISTRY = {
       "order": 4,
       "name": "맞춤형화장품의 이해",
       "shortName": "맞춤형화장품",
-      "contentHash": "595fd8a9",
+      "contentHash": "70714a6a",
       "stats": {
         "cards": 335,
         "quizzes": 100,
@@ -61,9 +61,9 @@ export const DATA_REGISTRY = {
       "part": 1,
       "title": "화장품법의 이해 (100제)",
       "file": "과목1_문제은행_교재인용.md",
-      "bundle": "./data/exams/subject1.b72f4bee.js",
+      "bundle": "./data/exams/subject1.dc09cec0.js",
       "global": "EXAM_DATA_subject1",
-      "contentHash": "b72f4bee",
+      "contentHash": "dc09cec0",
       "stats": {
         "questions": 100
       }
@@ -74,9 +74,9 @@ export const DATA_REGISTRY = {
       "part": 1,
       "title": "화장품 제조 및 품질관리 (250제)",
       "file": "과목2_문제은행_교재인용.md",
-      "bundle": "./data/exams/subject2.282500c5.js",
+      "bundle": "./data/exams/subject2.b6f1b953.js",
       "global": "EXAM_DATA_subject2",
-      "contentHash": "282500c5",
+      "contentHash": "b6f1b953",
       "stats": {
         "questions": 250
       }
@@ -87,9 +87,9 @@ export const DATA_REGISTRY = {
       "part": 1,
       "title": "유통화장품 안전관리 (250제)",
       "file": "과목3_문제은행_교재인용.md",
-      "bundle": "./data/exams/subject3.1e84f780.js",
+      "bundle": "./data/exams/subject3.7552fd9b.js",
       "global": "EXAM_DATA_subject3",
-      "contentHash": "1e84f780",
+      "contentHash": "7552fd9b",
       "stats": {
         "questions": 250
       }
@@ -100,9 +100,9 @@ export const DATA_REGISTRY = {
       "part": 1,
       "title": "맞춤형화장품의 이해 (400제)",
       "file": "과목4_문제은행_교재인용.md",
-      "bundle": "./data/exams/subject4.a5ee6c20.js",
+      "bundle": "./data/exams/subject4.235996c5.js",
       "global": "EXAM_DATA_subject4",
-      "contentHash": "a5ee6c20",
+      "contentHash": "235996c5",
       "stats": {
         "questions": 400
       }
