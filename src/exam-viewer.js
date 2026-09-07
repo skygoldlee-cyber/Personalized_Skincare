@@ -26,6 +26,9 @@ export const ExamViewer = (() => {
     const CACHE_PREFIX = 'exam_md_cache_v5_';
     const CACHE_TTL = 24 * 60 * 60 * 1000; // 24시간
 
+    // 네비게이션 히스토리 스택 (인용 링크 이동 후 뒤로가기용)
+    const _navStack = []; // [{ mdPath, lineNum, scrollPos }]
+
     /* =========================================================
        캐시 (sessionStorage, TTL 24h) — 본문 HTML만 저장
        ========================================================= */
@@ -85,6 +88,7 @@ export const ExamViewer = (() => {
        ========================================================= */
     let _overlayEl = null;
     let _historyPushed = false;
+    let _currentMdPath = null;
 
     function _injectStylesOnce() {
         if (document.getElementById('exam-overlay-style')) return;
@@ -182,7 +186,10 @@ body.exam-open{overflow:hidden;}
         el.innerHTML = `
             <div class="exam-ov-bar">
                 <button type="button" class="exam-ov-btn" data-exam-close aria-label="닫기">
-                    <i class="fa-solid fa-arrow-left"></i> 닫기
+                    <i class="fa-solid fa-xmark"></i> 닫기
+                </button>
+                <button type="button" class="exam-ov-btn" data-exam-back aria-label="이전 문서로" style="display:none">
+                    <i class="fa-solid fa-arrow-left"></i> 뒤로
                 </button>
                 <div class="exam-ov-title" id="exam-ov-title" role="heading" aria-level="1"></div>
                 <button type="button" class="exam-ov-btn primary" data-exam-print aria-label="인쇄 또는 PDF 저장">
@@ -194,7 +201,8 @@ body.exam-open{overflow:hidden;}
             </div>`;
         document.body.appendChild(el);
 
-        el.querySelector('[data-exam-close]').addEventListener('click', close);
+        el.querySelector('[data-exam-close]').addEventListener('click', () => close());
+        el.querySelector('[data-exam-back]').addEventListener('click', () => _goBack());
         el.querySelector('[data-exam-print]').addEventListener('click', () => window.print());
         _overlayEl = el;
         return el;
@@ -317,6 +325,8 @@ body.exam-open{overflow:hidden;}
         document.body.classList.remove('exam-open');
         document.removeEventListener('keydown', _onKeydown);
         window.removeEventListener('popstate', _onPopstate);
+        _navStack.length = 0; // 히스토리 초기화
+        _currentMdPath = null;
         if (_historyPushed && !fromPopstate) {
             _historyPushed = false;
             try { history.back(); } catch (e) { /* noop */ }
@@ -401,11 +411,37 @@ body.exam-open{overflow:hidden;}
     /* =========================================================
        메인 엔트리
        ========================================================= */
-    async function openExam(mdPath, lineNum) {
+    function _updateBackButton() {
+        if (!_overlayEl) return;
+        const backBtn = _overlayEl.querySelector('[data-exam-back]');
+        if (backBtn) {
+            backBtn.style.display = _navStack.length > 0 ? '' : 'none';
+        }
+    }
+
+    function _goBack() {
+        if (_navStack.length === 0) return;
+        const prev = _navStack.pop();
+        // 현재 스크롤 위치 저장하지 않고 이전 문서로 복귀
+        _openExamInternal(prev.mdPath, prev.lineNum, prev.scrollPos);
+    }
+
+    async function _openExamInternal(mdPath, lineNum, restoreScrollPos) {
         const title = _titleFromPath(mdPath);
 
         const cached = _getCached(mdPath);
-        if (cached) { _renderBody(title, cached.html, mdPath); _open(); if (lineNum) _scrollToLine(lineNum, cached.mdText); return; }
+        if (cached) {
+            _renderBody(title, cached.html, mdPath);
+            _open();
+            _updateBackButton();
+            if (lineNum) {
+                _scrollToLine(lineNum, cached.mdText);
+            } else if (restoreScrollPos != null) {
+                const scroll = _overlayEl.querySelector('.exam-ov-scroll');
+                if (scroll) scroll.scrollTop = restoreScrollPos;
+            }
+            return;
+        }
 
         _showLoading(title);
 
@@ -414,11 +450,32 @@ body.exam-open{overflow:hidden;}
             const bodyHtml = _mdToHtml(mdText);
             _setCached(mdPath, bodyHtml, mdText);
             _renderBody(title, bodyHtml, mdPath);
-            if (lineNum) _scrollToLine(lineNum, mdText);
+            _updateBackButton();
+            if (lineNum) {
+                _scrollToLine(lineNum, mdText);
+            } else if (restoreScrollPos != null) {
+                const scroll = _overlayEl.querySelector('.exam-ov-scroll');
+                if (scroll) scroll.scrollTop = restoreScrollPos;
+            }
         } catch (err) {
             console.error('Exam load failed:', err);
             _showError(title, err && err.message ? err.message : String(err));
         }
+    }
+
+    async function openExam(mdPath, lineNum) {
+        // 이미 열려있는 상태에서 다른 파일을 여는 경우 (인용 링크 클릭)
+        // 현재 문서를 히스토리에 저장
+        if (isOpen() && _currentMdPath && _currentMdPath !== mdPath) {
+            const scroll = _overlayEl.querySelector('.exam-ov-scroll');
+            _navStack.push({
+                mdPath: _currentMdPath,
+                lineNum: null,
+                scrollPos: scroll ? scroll.scrollTop : 0
+            });
+        }
+        _currentMdPath = mdPath;
+        await _openExamInternal(mdPath, lineNum);
     }
 
     /* =========================================================

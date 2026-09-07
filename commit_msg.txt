@@ -1,1 +1,1 @@
-fix: line-based highlight for citation links using data-md-line attributes instead of fragile text matching
+feat: add back button to return to previous document after opening citation link
