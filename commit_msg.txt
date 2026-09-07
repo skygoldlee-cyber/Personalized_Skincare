@@ -1,1 +1,1 @@
-fix: bump exam viewer cache to v3 to invalidate old HTML with broken citation links
+fix: citation link always shows same position - store mdText in cache for line scroll, strip leading slash for path consistency

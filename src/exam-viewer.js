@@ -22,8 +22,8 @@ import { escapeHTML } from './sanitize.js';
 import { parseMarkdown } from './markdown-parser.js';
 
 export const ExamViewer = (() => {
-    // 캐시 포맷 변경: v3 — 인용 링크 angle bracket 처리 수정으로 재생성 필요
-    const CACHE_PREFIX = 'exam_md_cache_v3_';
+    // 캐시 포맷 변경: v4 — mdText를 함께 캐싱하여 라인 스크롤 지원
+    const CACHE_PREFIX = 'exam_md_cache_v4_';
     const CACHE_TTL = 24 * 60 * 60 * 1000; // 24시간
 
     /* =========================================================
@@ -42,17 +42,18 @@ export const ExamViewer = (() => {
                 sessionStorage.removeItem(_cacheKey(mdPath));
                 return null;
             }
-            return entry.html;
+            return entry; // { html, mdText } 반환
         } catch (e) {
             return null;
         }
     }
 
-    function _setCached(mdPath, html) {
+    function _setCached(mdPath, html, mdText) {
         try {
             sessionStorage.setItem(_cacheKey(mdPath), JSON.stringify({
                 timestamp: Date.now(),
-                html: html
+                html: html,
+                mdText: mdText || null
             }));
         } catch (e) {
             // QuotaExceededError 등은 무시 (다음에 재변환)
@@ -255,6 +256,8 @@ body.exam-open{overflow:hidden;}
                     } else {
                         resolved = decodeURIComponent(new URL(href, location.href).pathname);
                     }
+                    // 선행 슬래시 제거 (대시보드에서 열 때와 경로 일치)
+                    resolved = resolved.replace(/^\//, '');
                 } catch (err) { resolved = href.replace(/^\.\.\//, 'content/').replace(/\.\.\//g, ''); }
                 const lineMatch = href.match(/#L(\d+)$/);
                 const lineNum = lineMatch ? parseInt(lineMatch[1]) : null;
@@ -401,14 +404,14 @@ body.exam-open{overflow:hidden;}
         const title = _titleFromPath(mdPath);
 
         const cached = _getCached(mdPath);
-        if (cached) { _renderBody(title, cached, mdPath); _open(); if (lineNum) _scrollToLine(lineNum); return; }
+        if (cached) { _renderBody(title, cached.html, mdPath); _open(); if (lineNum) _scrollToLine(lineNum, cached.mdText); return; }
 
         _showLoading(title);
 
         try {
             const mdText = await _loadMd(mdPath);
             const bodyHtml = _mdToHtml(mdText);
-            _setCached(mdPath, bodyHtml);
+            _setCached(mdPath, bodyHtml, mdText);
             _renderBody(title, bodyHtml, mdPath);
             if (lineNum) _scrollToLine(lineNum, mdText);
         } catch (err) {
