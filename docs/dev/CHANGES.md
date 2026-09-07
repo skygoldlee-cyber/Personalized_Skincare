@@ -1298,3 +1298,48 @@ PWA에서 새 Service Worker가 감지되어 백그라운드에서 새 데이터
 
 - `npm run build:data` 성공, 파서 등가성 검사 통과
 - 빌드 데이터(`data/exams/`, `data/registry.js`, `sw.js`) 갱신 완료
+
+---
+
+## 📌 인용 링크 기능 개선 (2026-09-07)
+
+### 배경
+
+PWA에서 교재 근거 인용 링크(`[교재: L####](<../교재/.../*.md#L####>)`) 클릭 시 404 오류, 동일 내용 반복 표시, 하이라이트 미작동 등의 문제가 순차적으로 발생함.
+
+### 변경 내용
+
+1. **Service Worker 캐시 분리** (`sw.js`)
+   - `MD_ASSETS`(교재/문제은행 MD)를 `SHELL_CACHE` → `DATA_CACHE`로 이관
+   - 배포 시 `SHELL_CACHE` 전체 삭제로 인해 26MB 교재 MD가 매 배포마다 재다운로드되는 문제 해결
+   - `MD_PATTERN` fetch handler를 단순화하여 항상 `DATA_CACHE` 사용
+
+2. **마크다운 파서 URL 수정** (`src/markdown-parser.js`)
+   - 인용 링크 URL의 꺾쇠 괄호(`<>`)가 `escapeHTML`에 의해 `&lt;`/`&gt;`로 변환되어 잘못된 href 생성
+   - 링크 파싱 단계에서 `&lt;`/`&gt;` 엔티티를 제거하여 올바른 URL 복원
+
+3. **인용 링크 클릭 인터셉트** (`src/exam-viewer.js`)
+   - 문제집 뷰어 내의 `.md` 링크 클릭 시 브라우저 네비게이션 대신 오버레이 내에서 교재 파일 열기
+   - 상대경로 해결: `new URL(href, baseDir)` 기반으로 절대경로 생성 후 선행 `/` 제거
+
+4. **라인 기반 하이라이트** (`src/markdown-parser.js`, `src/exam-viewer.js`)
+   - `parseMarkdown`에 `addLineNumbers` 옵션 추가: 각 HTML 요소에 `data-md-line="N"` 속성 부여
+   - `_scrollToLine`을 텍스트 매칭 → `data-md-line` 속성 기반 매칭으로 전면 개편
+   - 정확한 라인 번호 매칭, 테이블 행 단위 스크롤, 비례 스크롤 폴백 유지
+   - 하이라이트 CSS 개선: 펄스 애니메이션(1.5s × 2회), 노란색 배경, 5초 지속
+
+5. **뒤로가기 네비게이션** (`src/exam-viewer.js`)
+   - 인용 링크로 교재 파일을 연 후 이전 문제집으로 돌아가는 "뒤로" 버튼 추가
+   - `_navStack` 히스토리 스택: 현재 문서 경로와 스크롤 위치 저장
+   - `openExam`에서 다른 파일 열 시 현재 문서를 스택에 push
+   - `_goBack`에서 스택 pop 후 이전 문서 복원 (스크롤 위치도 복원)
+
+6. **sessionStorage 캐시 버전 갱신** (v4 → v5)
+   - HTML 포맷 변경(`data-md-line` 속성 추가)으로 캐시 무효화
+
+### 검증
+
+- `npm test` 248개 단위 테스트 전수 통과
+- `npm run build:data` 성공, 파서 등가성 검사 통과
+- 인용 라인 번호 전수검증: 828개 링크(과목1: 74, 과목2: 213, 과목3: 195, 과목4: 346) 0개 오류
+- Vercel 프로덕션 배포 완료

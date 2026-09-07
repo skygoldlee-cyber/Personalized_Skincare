@@ -204,7 +204,7 @@ Personalized_Skincare/
 │   ├── markdown-parser.js      #   범용 MD→HTML 파서
 │   ├── pdf-registry.js         #   참조자료 중앙 설정 (과목 변경 시 유일 수정 파일)
 │   ├── html-viewer.js          #   참조자료 fetch+DOM 뷰어, 검색, 하이라이트
-│   ├── exam-viewer.js          #   문제은행 MD 런타임 뷰어
+│   ├── exam-viewer.js          #   문제은행 MD 런타임 뷰어 (인용 링크 네비게이션, 라인 하이라이트)
 │   ├── manual-viewer.js        #   학습안내서/매뉴얼 뷰어
 │   ├── glossary-query.js       #   용어집 조회 API
 │   ├── keyword-index.js        #   교재 셀→참조자료 키워드 매핑 (자동 생성)
@@ -727,9 +727,7 @@ Service Worker(`sw.js`)는 본 애플리케이션의 오프라인 지원과 캐�
   │     ├─ registry.js? ──► Network First (DATA_CACHE) — 최신 메타 확인
   │     └─ 그 외? ──► Cache First (DATA_CACHE) — 해시 파일명으로 자연 갱신
   │
-  ├─ *.md?
-  │     ├─ /ref_md/ 경로? ──► Cache First (DATA_CACHE) — 배포 간 유지 (26MB 참조자료)
-  │     └─ 그 외? ──► Cache First (SHELL_CACHE) — 정적 마크다운 원본
+  ├─ *.md? ──► Cache First (DATA_CACHE) — 교재/문제은행/참조자료 MD (배포 간 유지)
   │
   ├─ /ref_md/*.html? ──► Cache First (DATA_CACHE) — 배포 간 유지 (body-only 참조자료)
   │
@@ -824,6 +822,47 @@ app-fallback.js 폴링 시작 (400ms 간격, 15s 데드라인)
 - `SHELL_ASSETS` / `DATA_ASSETS`에 나열된 모든 파일이 저장소에 존재하는지 확인
 - 누락 발견 시 `exit code 1`로 CI 실패 → 배포 차단
 - `npm run verify:assets` 또는 `node tools/verify-shell-assets.js`로 실행
+
+### 7. 문제은행 인용 링크 시스템 (exam-viewer.js)
+
+문제은행 MD 파일 내의 교재 인용 링크(`[교재: L####](<../교재/.../*.md#L####>)`)를 클릭하면, 브라우저 네비게이션 없이 오버레이 내에서 교재 파일을 열고 해당 라인을 하이라이트하는 시스템입니다.
+
+#### 구성 요소
+
+| 구성 요소 | 위치 | 역할 |
+|-----------|------|------|
+| **`addLineNumbers` 옵션** | [`src/markdown-parser.js`](../../src/markdown-parser.js) | `parseMarkdown` 호출 시 `addLineNumbers: true`로 각 HTML 요소에 `data-md-line="N"` 속성 부여 (N = MD 원본 라인 번호) |
+| **인용 링크 클릭 인터셉트** | [`src/exam-viewer.js`](../../src/exam-viewer.js) `_renderBody` | 뷰어 내 `.md` 링크 클릭 시 `e.preventDefault()` 후 `openExam(mdPath, lineNum)` 호출 |
+| **`_scrollToLine`** | [`src/exam-viewer.js`](../../src/exam-viewer.js) | `data-md-line` 속성 기반으로 정확한 라인 매칭 → `scrollIntoView({ block: 'center' })` + 펄스 하이라이트 |
+| **네비게이션 스택** | [`src/exam-viewer.js`](../../src/exam-viewer.js) `_navStack` | 인용 링크 이동 시 현재 문서 경로와 스크롤 위치를 push, "뒤로" 버튼으로 pop |
+| **sessionStorage 캐시** | [`src/exam-viewer.js`](../../src/exam-viewer.js) | 렌더링된 HTML과 MD 원문을 캐시(v5), 재열람 시 즉시 표시 + 라인 스크롤 지원 |
+
+#### 데이터 흐름
+
+```
+문제집 뷰어에서 [교재: L1241] 링크 클릭
+  │
+  ├─ 클릭 인터셉트: e.preventDefault()
+  ├─ 상대경로 해결: new URL(href, baseDir) → 절대경로
+  ├─ _navStack.push({ 현재 mdPath, scrollPos })
+  │
+  └─ openExam(교재path, 1241)
+       │
+       ├─ 캐시 hit? → _renderBody(캐시된 HTML)
+       ├─ 캐시 miss? → _loadMd → _mdToHtml(addLineNumbers:true) → 캐시 저장 → _renderBody
+       │
+       └─ _scrollToLine(1241, mdText)
+            │
+            ├─ [data-md-line="1241"] 요소 검색
+            ├─ 정확 매칭? → scrollIntoView + 하이라이트
+            ├─ 없으면 가장 가까운 이전 라인 요소
+            └─ 테이블? → 테이블 내 가장 가까운 행(row)으로 스크롤
+```
+
+#### 하이라이트 CSS
+
+- `exam-line-highlight` 클래스: 노란색 배경(`rgba(250,204,21,.35)`), 펄스 애니메이션(1.5s × 2회), 5초 후 자동 제거
+- `scrollIntoView({ behavior: 'smooth', block: 'center' })`로 대상 요소를 화면 중앙에 배치
 
 ---
 
