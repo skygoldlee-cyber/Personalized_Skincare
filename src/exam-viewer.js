@@ -158,9 +158,10 @@ html.light-theme #exam-overlay #exam-article pre.reader-code-block{background:rg
   border-top-color:var(--color-primary);border-radius:50%;animation:exam-spin 1s linear infinite;}
 @keyframes exam-spin{to{transform:rotate(360deg);}}
 body.exam-open{overflow:hidden;}
-#exam-overlay .exam-line-highlight{background:rgba(250,204,21,.25);border-radius:4px;
-  animation:exam-line-fade .3s ease;}
-@keyframes exam-line-fade{from{background:rgba(250,204,21,.5);}to{background:rgba(250,204,21,.25);}}
+#exam-overlay .exam-line-highlight{background:rgba(250,204,21,.35);border-radius:4px;
+  padding:2px 4px;margin:-2px -4px;
+  animation:exam-line-pulse 1.5s ease-in-out 2;}
+@keyframes exam-line-pulse{0%,100%{background:rgba(250,204,21,.35);}50%{background:rgba(250,204,21,.6);}}
 @media print{
   body.exam-open>*:not(#exam-overlay){display:none !important;}
   #exam-overlay{position:static !important;display:block !important;}
@@ -429,13 +430,21 @@ body.exam-open{overflow:hidden;}
         const scroll = el.querySelector('.exam-ov-scroll');
         if (!scroll) return;
 
+        // 하이라이트 헬퍼: 타겟 요소에 하이라이트 클래스 추가
+        function highlightElement(target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            target.classList.add('exam-line-highlight');
+            setTimeout(() => target.classList.remove('exam-line-highlight'), 5000);
+        }
+
         // 캐시된 경우 mdText가 없으므로 텍스트 검색 불가 → 비례 스크롤로 폴백
         if (!mdText) {
             scroll.scrollTop = scroll.scrollHeight * 0.3;
             return;
         }
 
-        const lines = mdText.split('\n');
+        // CRLF 정규화
+        const lines = mdText.replace(/\r\n/g, '\n').split('\n');
         if (lineNum < 1 || lineNum > lines.length) return;
 
         // 타겟 라인의 텍스트에서 마크다운 기호를 제거한 검색 키워드 추출
@@ -445,19 +454,29 @@ body.exam-open{overflow:hidden;}
         if (targetText.length >= 2) {
             const article = el.querySelector('#exam-article');
             if (article) {
+                // 검색 키워드가 너무 길면 앞 40자만 사용 (HTML 렌더링 후 텍스트가 분할될 수 있음)
+                const searchKey = targetText.substring(0, 40);
                 const allEls = article.querySelectorAll('*');
                 for (const e of allEls) {
-                    if (e.children.length === 0 && e.textContent.includes(targetText)) {
-                        e.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        e.classList.add('exam-line-highlight');
-                        setTimeout(() => e.classList.remove('exam-line-highlight'), 3000);
+                    if (e.children.length === 0 && e.textContent.includes(searchKey)) {
+                        highlightElement(e);
                         return;
+                    }
+                }
+                // 키워드를 더 짧게 줄여서 재시도 (앞 20자)
+                if (searchKey.length > 20) {
+                    const shortKey = searchKey.substring(0, 20);
+                    for (const e of allEls) {
+                        if (e.children.length === 0 && e.textContent.includes(shortKey)) {
+                            highlightElement(e);
+                            return;
+                        }
                     }
                 }
             }
         }
 
-        // 폴백: 라인 번호 비율로 스크롤
+        // 폴백: 라인 번호 비율로 스크롤 후 근처 요소 하이라이트
         const ratio = (lineNum - 1) / lines.length;
         scroll.scrollTop = scroll.scrollHeight * ratio;
     }

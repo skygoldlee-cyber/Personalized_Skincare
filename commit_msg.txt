@@ -1,1 +1,1 @@
-fix: citation link always shows same position - store mdText in cache for line scroll, strip leading slash for path consistency
+feat: improve citation line highlight - CRLF handling, shorter keyword matching, pulse animation, longer duration
