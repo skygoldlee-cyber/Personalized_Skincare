@@ -20,6 +20,7 @@
 
 import { escapeHTML } from './sanitize.js';
 import { parseMarkdown } from './markdown-parser.js';
+import { resolveRefPath } from './pdf-registry.js';
 
 export const ExamViewer = (() => {
     // 캐시 포맷 변경: v5 — data-md-line 속성 추가로 라인 기반 스크롤 지원
@@ -246,6 +247,20 @@ body.exam-open{overflow:hidden;}
                 if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
         }
+        // PDF 참조 링크 인터셉트: .pdf 링크를 대응하는 .md 경로로 변환하여 오버레이에서 열기
+        article.querySelectorAll('a[href]').forEach(a => {
+            const href = a.getAttribute('href') || '';
+            if (!/\.pdf$/i.test(href)) return;
+            const pdfFile = decodeURIComponent(href.split('/').pop());
+            const mdPath = resolveRefPath(pdfFile);
+            if (mdPath) {
+                a.setAttribute('href', mdPath);
+                a.classList.add('source-link');
+                const icon = a.querySelector('i');
+                if (!icon) a.insertAdjacentHTML('afterbegin', '<i class="fa-solid fa-file-lines"></i> ');
+            }
+        });
+
         // 교재 인용 링크(../교재/.../*.md#LNN) 클릭 → 오버레이 내에서 교재 열기
         article.querySelectorAll('a[href]').forEach(a => {
             const href = a.getAttribute('href') || '';
