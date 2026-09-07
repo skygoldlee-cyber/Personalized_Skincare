@@ -22,8 +22,8 @@ import { escapeHTML } from './sanitize.js';
 import { parseMarkdown } from './markdown-parser.js';
 
 export const ExamViewer = (() => {
-    // 캐시 포맷 변경(전체 문서 → 본문 HTML)으로 v2 로 bump
-    const CACHE_PREFIX = 'exam_md_cache_v2_';
+    // 캐시 포맷 변경: v3 — 인용 링크 angle bracket 처리 수정으로 재생성 필요
+    const CACHE_PREFIX = 'exam_md_cache_v3_';
     const CACHE_TTL = 24 * 60 * 60 * 1000; // 24시간
 
     /* =========================================================
