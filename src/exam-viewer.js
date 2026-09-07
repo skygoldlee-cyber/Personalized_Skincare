@@ -211,11 +211,12 @@ body.exam-open{overflow:hidden;}
         return `<details class="exam-ov-toc"><summary><i class="fa-solid fa-list"></i> 목차</summary>${items}</details>`;
     }
 
-    function _renderBody(title, bodyHtml) {
+    function _renderBody(title, bodyHtml, mdPath) {
         const el = _ensureOverlay();
         el.querySelector('#exam-ov-title').textContent = title;
         const article = el.querySelector('#exam-article');
         article.innerHTML = bodyHtml;
+        article.dataset.examMdpath = mdPath || '';
 
         // 목차를 본문 앞에 삽입 (오버레이 스크롤 컨테이너 안쪽 상단)
         const scroll = el.querySelector('.exam-ov-scroll');
@@ -235,6 +236,32 @@ body.exam-open{overflow:hidden;}
                 if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
         }
+        // 교재 인용 링크(../교재/.../*.md#LNN) 클릭 → 오버레이 내에서 교재 열기
+        article.querySelectorAll('a[href]').forEach(a => {
+            const href = a.getAttribute('href') || '';
+            if (!/\.md(#L(\d+))?$/i.test(href)) return;
+            a.addEventListener('click', (e) => {
+                e.preventDefault();
+                // 현재 문제집 경로를 기준으로 상대 경로 해석
+                const basePath = a.closest('[data-exam-mdpath]');
+                const currentPath = basePath
+                    ? basePath.dataset.examMdpath
+                    : (a.dataset.examMdpath || '');
+                let resolved = href;
+                try {
+                    if (currentPath) {
+                        const baseDir = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
+                        resolved = decodeURIComponent(new URL(href, new URL(baseDir, location.href)).pathname);
+                    } else {
+                        resolved = decodeURIComponent(new URL(href, location.href).pathname);
+                    }
+                } catch (err) { resolved = href.replace(/^\.\.\//, 'content/').replace(/\.\.\//g, ''); }
+                const lineMatch = href.match(/#L(\d+)$/);
+                const lineNum = lineMatch ? parseInt(lineMatch[1]) : null;
+                openExam(resolved, lineNum);
+            });
+        });
+
         scroll.scrollTop = 0;
     }
 
@@ -374,7 +401,7 @@ body.exam-open{overflow:hidden;}
         const title = _titleFromPath(mdPath);
 
         const cached = _getCached(mdPath);
-        if (cached) { _renderBody(title, cached); _open(); if (lineNum) _scrollToLine(lineNum); return; }
+        if (cached) { _renderBody(title, cached, mdPath); _open(); if (lineNum) _scrollToLine(lineNum); return; }
 
         _showLoading(title);
 
@@ -382,7 +409,7 @@ body.exam-open{overflow:hidden;}
             const mdText = await _loadMd(mdPath);
             const bodyHtml = _mdToHtml(mdText);
             _setCached(mdPath, bodyHtml);
-            _renderBody(title, bodyHtml);
+            _renderBody(title, bodyHtml, mdPath);
             if (lineNum) _scrollToLine(lineNum, mdText);
         } catch (err) {
             console.error('Exam load failed:', err);

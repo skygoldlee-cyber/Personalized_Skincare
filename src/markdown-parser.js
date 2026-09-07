@@ -92,7 +92,14 @@ export function parseMarkdown(mdText, options = {}) {
     // (펜스 블록 내부의 []()는 토큰화되어 있으므로 변환되지 않음)
     // URL에 괄호가 포함된 경우(예: 화장품법(법률)(제20901호).pdf)를 처리하기 위해
     // 마지막 ) 까지 greedy 매칭 (URL 인코딩된 %28 %29는 영향 없음)
-    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
+    // 마크다운 <url> 문법(angle bracket URL)의 &lt; &gt; 를 제거하여 유효한 href 생성
+    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (m, text, rawUrl) => {
+        let url = rawUrl;
+        if (/^&lt;.+&gt;$/.test(url)) {
+            url = url.replace(/^&lt;/, '').replace(/&gt;$/, '');
+        }
+        return '<a href="' + url + '">' + text + '</a>';
+    });
 
     // 5-2. 펜스 블록 내부 토큰 복원 (링크 파싱 후)
     // []() 리터럴 복원 + HTML 엔티티를 엔티티 형태로 복원
