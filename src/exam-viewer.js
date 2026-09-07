@@ -22,8 +22,8 @@ import { escapeHTML } from './sanitize.js';
 import { parseMarkdown } from './markdown-parser.js';
 
 export const ExamViewer = (() => {
-    // 캐시 포맷 변경: v4 — mdText를 함께 캐싱하여 라인 스크롤 지원
-    const CACHE_PREFIX = 'exam_md_cache_v4_';
+    // 캐시 포맷 변경: v5 — data-md-line 속성 추가로 라인 기반 스크롤 지원
+    const CACHE_PREFIX = 'exam_md_cache_v5_';
     const CACHE_TTL = 24 * 60 * 60 * 1000; // 24시간
 
     /* =========================================================
@@ -64,7 +64,7 @@ export const ExamViewer = (() => {
        마크다운 → HTML 변환 (기존 로직 그대로 — 정상 동작 확인됨)
        ========================================================= */
     function _mdToHtml(mdText) {
-        return parseMarkdown(mdText, { allowMermaid: false });
+        return parseMarkdown(mdText, { allowMermaid: false, addLineNumbers: true });
     }
 
     /* =========================================================
@@ -422,7 +422,7 @@ body.exam-open{overflow:hidden;}
     }
 
     /* =========================================================
-       라인 스크롤 헬퍼 (LNN 링크용)
+       라인 스크롤 헬퍼 (LNN 링크용) — data-md-line 기반
        ========================================================= */
     function _scrollToLine(lineNum, mdText) {
         const el = _overlayEl;
@@ -430,55 +430,82 @@ body.exam-open{overflow:hidden;}
         const scroll = el.querySelector('.exam-ov-scroll');
         if (!scroll) return;
 
-        // 하이라이트 헬퍼: 타겟 요소에 하이라이트 클래스 추가
+        const article = el.querySelector('#exam-article');
+        if (!article) return;
+
+        // 하이라이트 헬퍼
         function highlightElement(target) {
             target.scrollIntoView({ behavior: 'smooth', block: 'center' });
             target.classList.add('exam-line-highlight');
             setTimeout(() => target.classList.remove('exam-line-highlight'), 5000);
         }
 
-        // 캐시된 경우 mdText가 없으므로 텍스트 검색 불가 → 비례 스크롤로 폴백
-        if (!mdText) {
-            scroll.scrollTop = scroll.scrollHeight * 0.3;
+        // data-md-line 속성을 가진 요소들 수집
+        const lineEls = article.querySelectorAll('[data-md-line]');
+        if (lineEls.length === 0) {
+            // 폴백: 비례 스크롤
+            if (mdText) {
+                const lines = mdText.replace(/\r\n/g, '\n').split('\n');
+                const ratio = (lineNum - 1) / lines.length;
+                scroll.scrollTop = scroll.scrollHeight * ratio;
+            }
             return;
         }
 
-        // CRLF 정규화
-        const lines = mdText.replace(/\r\n/g, '\n').split('\n');
-        if (lineNum < 1 || lineNum > lines.length) return;
+        // lineNum에 가장 가까운 요소 찾기 (data-md-line <= lineNum 중 최대)
+        let bestEl = null;
+        let bestLine = 0;
+        let bestDiff = Infinity;
 
-        // 타겟 라인의 텍스트에서 마크다운 기호를 제거한 검색 키워드 추출
-        const targetLine = lines[lineNum - 1];
-        const targetText = targetLine.replace(/[#>*`~\-\[\]\(\)!|_]/g, '').trim();
-
-        if (targetText.length >= 2) {
-            const article = el.querySelector('#exam-article');
-            if (article) {
-                // 검색 키워드가 너무 길면 앞 40자만 사용 (HTML 렌더링 후 텍스트가 분할될 수 있음)
-                const searchKey = targetText.substring(0, 40);
-                const allEls = article.querySelectorAll('*');
-                for (const e of allEls) {
-                    if (e.children.length === 0 && e.textContent.includes(searchKey)) {
-                        highlightElement(e);
-                        return;
-                    }
-                }
-                // 키워드를 더 짧게 줄여서 재시도 (앞 20자)
-                if (searchKey.length > 20) {
-                    const shortKey = searchKey.substring(0, 20);
-                    for (const e of allEls) {
-                        if (e.children.length === 0 && e.textContent.includes(shortKey)) {
-                            highlightElement(e);
-                            return;
-                        }
-                    }
-                }
+        // 정확히 일치하는 요소가 있으면 우선 선택
+        for (const e of lineEls) {
+            const elLine = parseInt(e.getAttribute('data-md-line'));
+            if (elLine === lineNum) {
+                bestEl = e;
+                break;
+            }
+            const diff = lineNum - elLine;
+            if (diff >= 0 && diff < bestDiff) {
+                bestDiff = diff;
+                bestEl = e;
+                bestLine = elLine;
             }
         }
 
-        // 폴백: 라인 번호 비율로 스크롤 후 근처 요소 하이라이트
-        const ratio = (lineNum - 1) / lines.length;
-        scroll.scrollTop = scroll.scrollHeight * ratio;
+        if (bestEl) {
+            // 테이블 내부의 특정 행을 찾는 경우: 테이블 내에서 근접 행 찾기
+            if (bestEl.classList.contains('reader-table-wrapper')) {
+                // 테이블 행들 중에서 가장 가까운 행 찾기
+                const rows = bestEl.querySelectorAll('tbody tr');
+                if (rows.length > 0 && mdText) {
+                    const lines = mdText.replace(/\r\n/g, '\n').split('\n');
+                    const tableStart = parseInt(bestEl.getAttribute('data-md-line'));
+                    // 테이블 내에서 목표 라인과 가장 가까운 행 찾기
+                    let bestRow = rows[0];
+                    let minRowDiff = Infinity;
+                    rows.forEach((row, idx) => {
+                        // 각 행은 대략 1줄 (헤더 + 구분선 제외)
+                        const rowLine = tableStart + idx + 2; // 헤더(1) + 구분선(1)
+                        const diff = Math.abs(rowLine - lineNum);
+                        if (diff < minRowDiff) {
+                            minRowDiff = diff;
+                            bestRow = row;
+                        }
+                    });
+                    highlightElement(bestRow);
+                    return;
+                }
+            }
+            highlightElement(bestEl);
+            return;
+        }
+
+        // 폴백: 비례 스크롤
+        if (mdText) {
+            const lines = mdText.replace(/\r\n/g, '\n').split('\n');
+            const ratio = (lineNum - 1) / lines.length;
+            scroll.scrollTop = scroll.scrollHeight * ratio;
+        }
     }
 
     return {

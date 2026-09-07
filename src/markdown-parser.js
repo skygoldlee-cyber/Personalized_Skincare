@@ -20,7 +20,8 @@ export function parseMarkdown(mdText, options = {}) {
         useReaderStyles = false,
         customSpacing = false,
         allowItalics = true,
-        allowInlineCode = true
+        allowInlineCode = true,
+        addLineNumbers = false
     } = options;
 
     let html = String(mdText);
@@ -136,6 +137,7 @@ export function parseMarkdown(mdText, options = {}) {
             .map(c => c.trim().replace(/PIPE_ESC_TOKEN/g, '|'));
     };
 
+    let _lastTableLine = 0;
     const flushTable = () => {
         if (tableRows.length === 0) return;
         const dataRows = tableRows.filter(row => {
@@ -144,7 +146,9 @@ export function parseMarkdown(mdText, options = {}) {
             return !(cells.length > 0 && cells.every(c => /^:?-+:?$/.test(c)));
         });
         if (dataRows.length === 0) { tableRows = []; return; }
-        let tableHTML = '<div class="reader-table-wrapper"><table class="reader-table">';
+        const tableLineNo = _lastTableLine - tableRows.length + 1;
+        const lineAttr = addLineNumbers ? ` data-md-line="${tableLineNo}"` : '';
+        let tableHTML = '<div class="reader-table-wrapper"' + lineAttr + '><table class="reader-table">';
         // thead: 첫 행을 헤더로 처리
         const headerCells = splitTableCells(dataRows[0]);
         tableHTML += '<thead><tr>' + headerCells.map(c => `<th>${c}</th>`).join('') + '</tr></thead>';
@@ -171,38 +175,51 @@ export function parseMarkdown(mdText, options = {}) {
         tableRows = [];
     };
 
+    let _quoteStartLine = 0;
     const flushQuote = () => {
         if (quoteLines.length === 0) return;
+        const lineAttr = addLineNumbers ? ` data-md-line="${_quoteStartLine}"` : '';
         if (useReaderStyles) {
-            output.push(`<div class="md-quote">${quoteLines.join('<br>')}</div>`);
+            output.push(`<div class="md-quote"${lineAttr}>${quoteLines.join('<br>')}</div>`);
         } else {
-            output.push(`<blockquote><p>${quoteLines.join('<br>')}</p></blockquote>`);
+            output.push(`<blockquote${lineAttr}><p>${quoteLines.join('<br>')}</p></blockquote>`);
         }
         quoteLines = [];
     };
 
+    let _codeStartLine = 0;
     const flushCode = () => {
         if (codeLines.length === 0) { codeLang = ''; return; }
+        const lineAttr = addLineNumbers ? ` data-md-line="${_codeStartLine}"` : '';
         if (allowMermaid && codeLang === 'mermaid') {
-            output.push(`<pre class="mermaid">${codeLines.join('\n')}</pre>`);
+            output.push(`<pre class="mermaid"${lineAttr}>${codeLines.join('\n')}</pre>`);
         } else if (useReaderStyles) {
-            output.push(`<pre class="reader-code-block">${codeLines.join('\n')}</pre>`);
+            output.push(`<pre class="reader-code-block"${lineAttr}>${codeLines.join('\n')}</pre>`);
         } else {
-            output.push(`<pre class="reader-code-block"><code>${codeLines.join('\n')}</code></pre>`);
+            output.push(`<pre class="reader-code-block"${lineAttr}><code>${codeLines.join('\n')}</code></pre>`);
         }
         codeLines = [];
         codeLang = '';
     };
 
+    let _listStartLine = 0;
     const flushList = () => {
         if (listItems.length === 0) return;
         const tag = listType === 'ol' ? 'ol' : 'ul';
-        output.push(`<${tag}>${listItems.map(li => `<li>${li}</li>`).join('')}</${tag}>`);
+        const lineAttr = addLineNumbers ? ` data-md-line="${_listStartLine}"` : '';
+        output.push(`<${tag}${lineAttr}>${listItems.map(li => `<li>${li}</li>`).join('')}</${tag}>`);
         listItems = [];
         listType = null;
     };
 
+    let _lineNo = 0;
+    function _wrapWithLine(html, lineNo) {
+        if (!addLineNumbers) return html;
+        return html.replace(/^(<\w+)/, `$1 data-md-line="${lineNo}"`);
+    }
+
     lines.forEach(line => {
+        _lineNo++;
         const trimmed = line.trim();
 
         // 6-1. 코드블록 시작/끝 감지
@@ -218,6 +235,7 @@ export function parseMarkdown(mdText, options = {}) {
             return;
         }
         if (inCodeBlock) {
+            if (codeLines.length === 0) _codeStartLine = _lineNo;
             codeLines.push(line);
             return;
         }
@@ -226,6 +244,7 @@ export function parseMarkdown(mdText, options = {}) {
         if (trimmed.startsWith('|')) {
             flushQuote(); flushList();
             tableRows.push(line);
+            _lastTableLine = _lineNo;
             return;
         } else {
             flushTable();
@@ -235,6 +254,7 @@ export function parseMarkdown(mdText, options = {}) {
         const GT_ENTITY = '&' + 'gt;';
         if (trimmed.startsWith(GT_ENTITY) || trimmed.startsWith('>')) {
             flushList();
+            if (quoteLines.length === 0) _quoteStartLine = _lineNo;
             let qText = trimmed;
             if (qText.startsWith(GT_ENTITY)) qText = qText.slice(4);
             else qText = qText.slice(1);
@@ -257,11 +277,11 @@ export function parseMarkdown(mdText, options = {}) {
             const ulMatch = trimmed.match(/^[-*]\s+(.+)$/);
             const olMatch = trimmed.match(/^\d+[.)]\s+(.+)$/);
             if (ulMatch) {
-                if (listType !== 'ul') { flushList(); listType = 'ul'; }
+                if (listType !== 'ul') { flushList(); listType = 'ul'; _listStartLine = _lineNo; }
                 listItems.push(ulMatch[1]);
                 return;
             } else if (olMatch) {
-                if (listType !== 'ol') { flushList(); listType = 'ol'; }
+                if (listType !== 'ol') { flushList(); listType = 'ol'; _listStartLine = _lineNo; }
                 listItems.push(olMatch[1]);
                 return;
             } else {
@@ -272,17 +292,17 @@ export function parseMarkdown(mdText, options = {}) {
         // 6-5. 헤더 파싱
         if (useReaderStyles) {
             if (trimmed.startsWith('#### ')) {
-                output.push(`<h4 class="md-h4">${line.replace(/^####\s+/, '')}</h4>`);
+                output.push(_wrapWithLine(`<h4 class="md-h4">${line.replace(/^####\s+/, '')}</h4>`, _lineNo));
                 return;
             }
             if (trimmed.startsWith('### ')) {
-                output.push(`<h3 class="md-h3">${line.replace(/^###\s+/, '')}</h3>`);
+                output.push(_wrapWithLine(`<h3 class="md-h3">${line.replace(/^###\s+/, '')}</h3>`, _lineNo));
                 return;
             }
         } else {
-            if (trimmed.startsWith('### ')) { output.push(`<h3>${trimmed.slice(4)}</h3>`); return; }
-            if (trimmed.startsWith('## ')) { output.push(`<h2>${trimmed.slice(3)}</h2>`); return; }
-            if (trimmed.startsWith('# ')) { output.push(`<h1>${trimmed.slice(2)}</h1>`); return; }
+            if (trimmed.startsWith('### ')) { output.push(_wrapWithLine(`<h3>${trimmed.slice(4)}</h3>`, _lineNo)); return; }
+            if (trimmed.startsWith('## ')) { output.push(_wrapWithLine(`<h2>${trimmed.slice(3)}</h2>`, _lineNo)); return; }
+            if (trimmed.startsWith('# ')) { output.push(_wrapWithLine(`<h1>${trimmed.slice(2)}</h1>`, _lineNo)); return; }
         }
 
         // 6-6. 구분선 파싱
@@ -305,9 +325,9 @@ export function parseMarkdown(mdText, options = {}) {
 
         // 6-8. 일반 문단 파싱
         if (useReaderStyles) {
-            output.push(`<p class="md-para">${line}</p>`);
+            output.push(_wrapWithLine(`<p class="md-para">${line}</p>`, _lineNo));
         } else {
-            output.push(`<p>${line}</p>`);
+            output.push(_wrapWithLine(`<p>${line}</p>`, _lineNo));
         }
     });
 

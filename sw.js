@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v262-20260907-b8d690e';   // 54건 인용근거 검증: 🎯기출 마커 없는 라인 인용 수정, 문항-근거 불일치 10건 재교체, 구분선 서식 복구
+const CACHE_VERSION = 'v262-20260907-714d317';   // 54건 인용근거 검증: 🎯기출 마커 없는 라인 인용 수정, 문항-근거 불일치 10건 재교체, 구분선 서식 복구
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;

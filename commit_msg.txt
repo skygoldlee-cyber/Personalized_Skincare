@@ -1,1 +1,1 @@
-feat: improve citation line highlight - CRLF handling, shorter keyword matching, pulse animation, longer duration
+fix: line-based highlight for citation links using data-md-line attributes instead of fragile text matching
