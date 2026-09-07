@@ -1,0 +1,388 @@
+과목1 Q2 (MISCITE_from교재): FIXED - L289 → L1241 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q3 (MISCITE_from교재): FIXED - L309 → L691 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q5 (MISCITE_from교재): FIXED - L545 → L1853 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q9 (MISCITE_from교재): FIXED - L1007 → L718 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q10 (MISCITE_from교재): FIXED - L233 → L927 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q11 (MISCITE_from교재): FIXED - L477 → L1836 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q12 (MISCITE_from교재): FIXED - L162 → L693 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q14 (MISCITE_from교재): FIXED - L2015 → L1243 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q15 (MISCITE_from교재): FIXED - L843 → L1242 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q16 (MISCITE_from교재): FIXED - L843 → L1242 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q17 (MISCITE_from교재): FIXED - L233 → L927 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q18 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목1 Q19 (MISCITE_from교재): FIXED - L162 → L693 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q20 (MISCITE_from교재): FIXED - L289 → L1241 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q22 (NO_CITE): SKIP - answer block not found
+과목1 Q23 (MISCITE_from교재): FIXED - L275 → L612 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q24 (MISCITE_from교재): FIXED - L309 → L691 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q25 (MISCITE_from교재): FIXED - L271 → L961 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q27 (MISCITE_from교재): FIXED - L843 → L1242 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q28 (MISCITE_from교재): FIXED - L2015 → L1243 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q31 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목1 Q32 (MISCITE_from교재): FIXED - L1115 → L928 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q33 (LINE_DRIFT): NOT FOUND in textbook - needs manual review
+과목1 Q35 (LINE_DRIFT): NOT FOUND in textbook - needs manual review
+과목1 Q36 (MISCITE_from교재): FIXED - L233 → L927 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q38 (MISCITE_from교재): FIXED - L1115 → L928 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q40 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목1 Q41 (MISCITE_from교재): FIXED - L545 → L1853 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q43 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목1 Q44 (MISCITE_from교재): FIXED - L2051 → L1252 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q45 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목1 Q46 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목1 Q47 (NO_CITE): SKIP - answer block not found
+과목1 Q48 (MISCITE_from교재): FIXED - L1007 → L718 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q49 (MISCITE_from교재): FIXED - L2051 → L1252 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q50 (MISCITE_from교재): FIXED - L1009 → L1820 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q54 (MISCITE_from교재): NOT FOUND in textbook - needs manual review
+과목1 Q56 (MISCITE_from교재): FIXED - L1555 → L1115 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q58 (MISCITE_from교재): FIXED - L2663 → L804 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q59 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목1 Q62 (MISCITE_from교재): FIXED - L275 → L612 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q63 (LINE_DRIFT): FIXED - L3597 → L569 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q64 (MISCITE_from교재): FIXED - L2233 → L613 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q65 (MISCITE_from교재): FIXED - L233 → L927 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q70 (MISCITE_from교재): FIXED - L162 → L693 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q71 (MISCITE_from교재): FIXED - L162 → L693 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q75 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목1 Q77 (MISCITE_from교재): SKIP - already correct (L1133)
+과목1 Q81 (MISCITE_from교재): FIXED - L1651 → L547 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q83 (MISCITE_from교재): FIXED - L1007 → L718 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q84 (MISCITE_from교재): FIXED - L275 → L612 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q87 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목1 Q89 (MISCITE_from교재): FIXED - L1115 → L928 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q92 (MISCITE_from교재): FIXED - L2233 → L613 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q93 (MISCITE_from교재): FIXED - L1007 → L718 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q95 (MISCITE_from교재): FIXED - L429 → L1630 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q96 (MISCITE_from교재): FIXED - L2015 → L1243 in ../교재/law/1과목_화장품법의이해_표준형.md
+과목1 Q100 (LINE_DRIFT): SKIP - answer block not found
+과목2 Q5 (MISCITE_from교재): FIXED - L3630 → L2508 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q8 (MISCITE_from교재): FIXED - L299 → L3020 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q9 (MISCITE_from교재): FIXED - L9903 → L3388 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q12 (MISCITE_from교재): FIXED - L1287 → L824 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q15 (MISCITE_from교재): FIXED - L218 → L3475 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q21 (MISCITE_from교재): SKIP - already correct (L1694)
+과목2 Q22 (MISCITE_from교재): FIXED - L631 → L2500 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q23 (LINE_DRIFT): FIXED - L707 → L2368 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q25 (MISCITE_from교재): FIXED - L47 → L3389 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q28 (MISCITE_from교재): SKIP - already correct (L1204)
+과목2 Q33 (MISCITE_from교재): FIXED - L1547 → L1297 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q37 (MISCITE_from교재): FIXED - L147 → L2050 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q38 (MISCITE_from교재): FIXED - L635 → L2379 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q43 (MISCITE_from교재): FIXED - L1287 → L824 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q49 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목2 Q51 (MISCITE_from교재): FIXED - L1459 → L3923 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q53 (MISCITE_from교재): FIXED - L3918 → L75 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q55 (MISCITE_from교재): FIXED - L565 → L3390 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q62 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목2 Q63 (MISCITE_from교재): SKIP - already correct (L1334)
+과목2 Q66 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목2 Q68 (MISCITE_from교재): SKIP - already correct (L1204)
+과목2 Q70 (MISCITE_from교재): SKIP - already correct (L4197)
+과목2 Q73 (MISCITE_from교재): FIXED - L4015 → L3899 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q74 (MISCITE_from교재): FIXED - L565 → L3390 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q75 (MISCITE_from교재): FIXED - L181 → L3504 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q77 (MISCITE_from교재): FIXED - L3918 → L75 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q78 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목2 Q84 (MISCITE_from교재): FIXED - L181 → L3504 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q86 (LINE_DRIFT): FIXED - L3864 → L3710 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q87 (MISCITE_from교재): FIXED - L1459 → L3923 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q93 (MISCITE_from교재): FIXED - L4427 → L3836 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q96 (MISCITE_from교재): FIXED - L1565 → L1304 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q100 (MISCITE_from교재): SKIP - already correct (L2415)
+과목2 Q101 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목2 Q104 (MISCITE_from교재): SKIP - already correct (L3719)
+과목2 Q108 (MISCITE_from교재): SKIP - already correct (L3713)
+과목2 Q109 (MISCITE_from교재): SKIP - already correct (L88)
+과목2 Q111 (MISCITE_from교재): FIXED - L249 → L3193 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q115 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목2 Q116 (MISCITE_from교재): SKIP - already correct (L3410)
+과목2 Q125 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목2 Q131 (MISCITE_from교재): FIXED - L249 → L3193 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q135 (MISCITE_from교재): SKIP - already correct (L4208)
+과목2 Q141 (MISCITE_from교재): FIXED - L147 → L2050 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q143 (MISCITE_from교재): NOT FOUND in textbook - needs manual review
+과목2 Q144 (MISCITE_from교재): SKIP - already correct (L3730)
+과목2 Q146 (MISCITE_from교재): SKIP - already correct (L1204)
+과목2 Q148 (MISCITE_from교재): FIXED - L1459 → L3927 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q151 (MISCITE_from교재): SKIP - already correct (L1224)
+과목2 Q152 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목2 Q154 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목2 Q157 (MISCITE_from교재): SKIP - already correct (L89)
+과목2 Q159 (LINE_DRIFT): FIXED - L1796 → L3897 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q160 (MISCITE_from교재): SKIP - already correct (L88)
+과목2 Q162 (MISCITE_from교재): SKIP - already correct (L3097)
+과목2 Q165 (MISCITE_from교재): SKIP - already correct (L1343)
+과목2 Q166 (MISCITE_from교재): SKIP - already correct (L2326)
+과목2 Q169 (MISCITE_from교재): FIXED - L291 → L3002 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q170 (MISCITE_from교재): SKIP - already correct (L3709)
+과목2 Q172 (MISCITE_from교재): SKIP - already correct (L88)
+과목2 Q173 (MISCITE_from교재): SKIP - already correct (L4194)
+과목2 Q176 (MISCITE_from교재): SKIP - already correct (L3410)
+과목2 Q178 (MISCITE_from교재): FIXED - L213 → L2994 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q179 (MISCITE_from교재): FIXED - L41 → L2053 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q181 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목2 Q186 (MISCITE_from교재): SKIP - already correct (L88)
+과목2 Q188 (MISCITE_from교재): SKIP - already correct (L88)
+과목2 Q189 (MISCITE_from교재): SKIP - already correct (L1204)
+과목2 Q191 (MISCITE_from교재): SKIP - already correct (L3213)
+과목2 Q193 (MISCITE_from교재): FIXED - L565 → L3390 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q196 (MISCITE_from교재): FIXED - L7820 → L3837 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q197 (MISCITE_from교재): FIXED - L291 → L3002 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q198 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목2 Q199 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목2 Q202 (MISCITE_from교재): FIXED - L5087 → L3835 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q203 (MISCITE_from교재): SKIP - already correct (L2323)
+과목2 Q206 (MISCITE_from교재): FIXED - L181 → L3504 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q209 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목2 Q214 (MISCITE_from교재): SKIP - already correct (L2668)
+과목2 Q217 (MISCITE_from교재): FIXED - L43 → L2110 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q219 (MISCITE_from교재): SKIP - already correct (L89)
+과목2 Q220 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목2 Q221 (MISCITE_from교재): FIXED - L9903 → L3388 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q223 (MISCITE_from교재): FIXED - L181 → L3504 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q226 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목2 Q227 (MISCITE_from교재): FIXED - L291 → L3002 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q229 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목2 Q230 (MISCITE_from교재): SKIP - already correct (L3410)
+과목2 Q232 (MISCITE_from교재): FIXED - L7820 → L3837 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q233 (MISCITE_from교재): FIXED - L1201 → L2604 in ../교재/manufacturing/2과목_제조및품질관리_표준형.md
+과목2 Q236 (MISCITE_from교재): SKIP - already correct (L3556)
+과목2 Q239 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목2 Q242 (MISCITE_from교재): SKIP - already correct (L51)
+과목2 Q248 (MISCITE_from교재): SKIP - already correct (L4194)
+과목2 Q250 (QUOTE_NOTFOUND): SKIP - answer block not found
+과목3 Q7 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목3 Q8 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목3 Q9 (MISCITE_from교재): SKIP - already correct (L3398)
+과목3 Q10 (MISCITE_from교재): SKIP - already correct (L3398)
+과목3 Q11 (MISCITE_from교재): SKIP - already correct (L3398)
+과목3 Q12 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목3 Q13 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목3 Q17 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목3 Q21 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목3 Q23 (MISCITE_from교재): SKIP - already correct (L3417)
+과목3 Q30 (MISCITE_from교재): SKIP - already correct (L2456)
+과목3 Q31 (MISCITE_from교재): FIXED - L1253 → L2210 in ../교재/safety/3과목_유통화장품안전관리_표준형.md
+과목3 Q35 (MISCITE_from교재): SKIP - already correct (L3408)
+과목3 Q37 (LINE_DRIFT): FIXED - L285 → L1280 in ../교재/safety/3과목_유통화장품안전관리_표준형.md
+과목3 Q43 (MISCITE_from교재): SKIP - already correct (L3408)
+과목3 Q52 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목3 Q55 (MISCITE_from교재): SKIP - already correct (L67)
+과목3 Q58 (MISCITE_from교재): SKIP - already correct (L67)
+과목3 Q63 (MISCITE_from교재): SKIP - already correct (L67)
+과목3 Q65 (MISCITE_from교재): SKIP - already correct (L2604)
+과목3 Q66 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목3 Q68 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목3 Q74 (MISCITE_from교재): SKIP - already correct (L3408)
+과목3 Q79 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목3 Q82 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목3 Q84 (MISCITE_from교재): SKIP - already correct (L1328)
+과목3 Q88 (MISCITE_from교재): SKIP - already correct (L67)
+과목3 Q90 (MISCITE_from교재): SKIP - already correct (L638)
+과목3 Q95 (MISCITE_from교재): SKIP - already correct (L3398)
+과목3 Q98 (MISCITE_from교재): SKIP - already correct (L615)
+과목3 Q100 (MISCITE_from교재): NOT FOUND in textbook - needs manual review
+과목3 Q102 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목3 Q103 (MISCITE_from교재): SKIP - already correct (L3408)
+과목3 Q108 (MISCITE_from교재): SKIP - already correct (L312)
+과목3 Q110 (MISCITE_from교재): SKIP - already correct (L312)
+과목3 Q117 (MISCITE_from교재): SKIP - already correct (L1919)
+과목3 Q129 (MISCITE_from교재): FIXED - L1639 → L2160 in ../교재/safety/3과목_유통화장품안전관리_표준형.md
+과목3 Q136 (MISCITE_from교재): SKIP - already correct (L312)
+과목3 Q147 (MISCITE_from교재): SKIP - already correct (L1100)
+과목3 Q150 (MISCITE_from교재): SKIP - already correct (L1986)
+과목3 Q158 (MISCITE_from교재): SKIP - already correct (L2380)
+과목3 Q168 (MISCITE_from교재): FIXED - L966 → L2358 in ../교재/safety/3과목_유통화장품안전관리_표준형.md
+과목3 Q170 (MISCITE_from교재): FIXED - L123 → L2553 in ../교재/safety/3과목_유통화장품안전관리_표준형.md
+과목3 Q171 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목3 Q175 (MISCITE_from교재): SKIP - already correct (L2049)
+과목3 Q176 (MISCITE_from교재): SKIP - already correct (L2594)
+과목3 Q179 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목3 Q181 (MISCITE_from교재): SKIP - already correct (L2604)
+과목3 Q183 (MISCITE_from교재): SKIP - already correct (L2586)
+과목3 Q186 (MISCITE_from교재): SKIP - already correct (L1328)
+과목3 Q189 (MISCITE_from교재): FIXED - L20790 → L1970 in ../교재/safety/3과목_유통화장품안전관리_표준형.md
+과목3 Q198 (MISCITE_from교재): FIXED - L123 → L2553 in ../교재/safety/3과목_유통화장품안전관리_표준형.md
+과목3 Q199 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목3 Q203 (MISCITE_from교재): SKIP - already correct (L1863)
+과목3 Q204 (MISCITE_from교재): SKIP - already correct (L76)
+과목3 Q206 (MISCITE_from교재): SKIP - already correct (L3437)
+과목3 Q208 (MISCITE_from교재): SKIP - already correct (L2604)
+과목3 Q209 (MISCITE_from교재): SKIP - already correct (L3408)
+과목3 Q210 (MISCITE_from교재): SKIP - already correct (L2588)
+과목3 Q211 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목3 Q213 (MISCITE_from교재): SKIP - already correct (L67)
+과목3 Q215 (MISCITE_from교재): FIXED - L123 → L2553 in ../교재/safety/3과목_유통화장품안전관리_표준형.md
+과목3 Q216 (MISCITE_from교재): SKIP - already correct (L70)
+과목3 Q217 (MISCITE_from교재): FIXED - L1593 → L1088 in ../교재/safety/3과목_유통화장품안전관리_표준형.md
+과목3 Q219 (MISCITE_from교재): SKIP - already correct (L1862)
+과목3 Q225 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목3 Q233 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목3 Q234 (MISCITE_from교재): SKIP - already correct (L2580)
+과목3 Q241 (MISCITE_from교재): FIXED - L285 → L1260 in ../교재/safety/3과목_유통화장품안전관리_표준형.md
+과목3 Q242 (MISCITE_from교재): SKIP - already correct (L3416)
+과목4 Q9 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목4 Q10 (MISCITE_from교재): SKIP - already correct (L1392)
+과목4 Q12 (MISCITE_from교재): FIXED - L1219 → L604 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q17 (MISCITE_from교재): FIXED - L54 → L610 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q20 (MISCITE_from교재): SKIP - already correct (L4155)
+과목4 Q21 (MISCITE_from교재): SKIP - already correct (L1182)
+과목4 Q28 (MISCITE_from교재): FIXED - L54 → L610 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q30 (MISCITE_from교재): FIXED - L1219 → L604 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q32 (MISCITE_from교재): SKIP - already correct (L4155)
+과목4 Q34 (LINE_DRIFT): FIXED - L935 → L2415 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q41 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목4 Q43 (MISCITE_from교재): SKIP - already correct (L1182)
+과목4 Q44 (MISCITE_from교재): FIXED - L437 → L597 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q49 (MISCITE_from교재): SKIP - already correct (L2956)
+과목4 Q52 (MISCITE_from교재): SKIP - already correct (L1392)
+과목4 Q53 (MISCITE_from교재): FIXED - L437 → L597 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q55 (MISCITE_from교재): SKIP - already correct (L1442)
+과목4 Q56 (MISCITE_from교재): FIXED - L491 → L2414 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q60 (LINE_DRIFT): FIXED - L935 → L2415 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q63 (MISCITE_from교재): SKIP - already correct (L2822)
+과목4 Q66 (NO_CITE): SKIP - answer block not found
+과목4 Q69 (MISCITE_from교재): SKIP - already correct (L2956)
+과목4 Q73 (MISCITE_from교재): SKIP - already correct (L2822)
+과목4 Q75 (MISCITE_from교재): FIXED - L1219 → L604 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q76 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목4 Q79 (MISCITE_from교재): SKIP - already correct (L2956)
+과목4 Q82 (MISCITE_from교재): FIXED - L559 → L612 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q84 (MISCITE_from교재): FIXED - L437 → L597 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q85 (MISCITE_from교재): FIXED - L1219 → L604 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q87 (MISCITE_from교재): NOT FOUND in textbook - needs manual review
+과목4 Q91 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목4 Q92 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목4 Q102 (LINE_DRIFT): FIXED - L935 → L2415 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q106 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목4 Q108 (MISCITE_from교재): SKIP - already correct (L1534)
+과목4 Q109 (MISCITE_from교재): FIXED - L559 → L612 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q110 (MISCITE_from교재): SKIP - already correct (L851)
+과목4 Q111 (MISCITE_from교재): SKIP - already correct (L1534)
+과목4 Q114 (MISCITE_from교재): FIXED - L1123 → L2633 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q117 (MISCITE_from교재): SKIP - already correct (L1442)
+과목4 Q121 (MISCITE_from교재): FIXED - L163 → L2425 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q125 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목4 Q129 (MISCITE_from교재): FIXED - L54 → L610 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q131 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목4 Q132 (MISCITE_from교재): FIXED - L491 → L2414 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q133 (MISCITE_from교재): SKIP - already correct (L2956)
+과목4 Q134 (MISCITE_from교재): SKIP - already correct (L2956)
+과목4 Q141 (MISCITE_from교재): FIXED - L517 → L601 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q142 (QUOTE_NOTFOUND): SKIP - answer block not found
+과목4 Q146 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목4 Q147 (MISCITE_from교재): FIXED - L1123 → L2633 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q153 (MISCITE_from교재): SKIP - already correct (L1392)
+과목4 Q159 (MISCITE_from교재): SKIP - already correct (L1683)
+과목4 Q161 (MISCITE_from교재): SKIP - already correct (L1442)
+과목4 Q162 (MISCITE_from교재): FIXED - L54 → L610 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q165 (MISCITE_from교재): FIXED - L1151 → L3295 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q167 (MISCITE_from교재): FIXED - L1549 → L2784 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q168 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목4 Q173 (MISCITE_from교재): FIXED - L1219 → L604 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q174 (MISCITE_from교재): SKIP - already correct (L1208)
+과목4 Q175 (MISCITE_from교재): FIXED - L54 → L611 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q177 (MISCITE_from교재): FIXED - L1219 → L604 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q178 (MISCITE_from교재): FIXED - L1219 → L604 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q181 (MISCITE_from교재): SKIP - already correct (L653)
+과목4 Q182 (MISCITE_from교재): FIXED - L437 → L597 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q184 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목4 Q186 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목4 Q190 (MISCITE_from교재): SKIP - already correct (L906)
+과목4 Q192 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목4 Q193 (MISCITE_from교재): FIXED - L437 → L597 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q201 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목4 Q203 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목4 Q204 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목4 Q207 (MISCITE_from교재): FIXED - L63 → L633 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q211 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목4 Q212 (LINE_DRIFT): FIXED - L213 → L725 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q213 (MISCITE_from교재): FIXED - L54 → L610 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q214 (MISCITE_from교재): FIXED - L1123 → L2633 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q216 (MISCITE_from교재): SKIP - already correct (L2338)
+과목4 Q220 (MISCITE_from교재): FIXED - L1219 → L604 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q222 (MISCITE_from교재): FIXED - L477 → L126 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q223 (MISCITE_from교재): FIXED - L61 → L576 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q224 (MISCITE_from교재): SKIP - already correct (L1185)
+과목4 Q226 (MISCITE_from교재): SKIP - already correct (L1185)
+과목4 Q227 (MISCITE_from교재): FIXED - L1151 → L3295 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q229 (MISCITE_from교재): SKIP - already correct (L3451)
+과목4 Q231 (MISCITE_from교재): FIXED - L1219 → L604 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q237 (MISCITE_from교재): FIXED - L573 → L613 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q239 (MISCITE_from교재): FIXED - L169 → L614 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q244 (MISCITE_from교재): SKIP - already correct (L1442)
+과목4 Q248 (MISCITE_from교재): FIXED - L491 → L2414 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q249 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목4 Q255 (MISCITE_from교재): FIXED - L163 → L2425 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q256 (MISCITE_from교재): SKIP - already correct (L853)
+과목4 Q261 (MISCITE_from교재): SKIP - already correct (L1392)
+과목4 Q262 (MISCITE_from교재): SKIP - already correct (L1394)
+과목4 Q267 (MISCITE_from교재): SKIP - already correct (L1372)
+과목4 Q270 (MISCITE_from교재): SKIP - already correct (L1393)
+과목4 Q273 (MISCITE_from교재): FIXED - L437 → L597 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q274 (MISCITE_from교재): SKIP - already correct (L1182)
+과목4 Q276 (MISCITE_from교재): SKIP - already correct (L1605)
+과목4 Q277 (LINE_DRIFT): SKIP - already correct (L1200)
+과목4 Q278 (LINE_DRIFT): SKIP - already correct (L1396)
+과목4 Q279 (LINE_DRIFT): SKIP - already correct (L506)
+과목4 Q280 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목4 Q281 (LINE_DRIFT): FIXED - L221 → L3185 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q286 (MISCITE_from교재): SKIP - already correct (L1392)
+과목4 Q287 (MISCITE_from교재): SKIP - already correct (L3509)
+과목4 Q288 (MISCITE_from교재): SKIP - already correct (L4155)
+과목4 Q289 (MISCITE_from교재): SKIP - already correct (L1442)
+과목4 Q293 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목4 Q294 (MISCITE_from교재): SKIP - already correct (L3719)
+과목4 Q296 (MISCITE_from교재): FIXED - L579 → L2758 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q297 (LINE_DRIFT): FIXED - L935 → L2415 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q298 (MISCITE_from교재): FIXED - L54 → L611 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q300 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목4 Q303 (MISCITE_from교재): SKIP - already correct (L2956)
+과목4 Q304 (MISCITE_from교재): SKIP - already correct (L1698)
+과목4 Q305 (MISCITE_from교재): SKIP - already correct (L1182)
+과목4 Q306 (MISCITE_from교재): FIXED - L437 → L597 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q308 (MISCITE_from교재): FIXED - L63 → L633 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q309 (MISCITE_from교재): SKIP - already correct (L1681)
+과목4 Q310 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목4 Q311 (MISCITE_from교재): SKIP - already correct (L2822)
+과목4 Q312 (MISCITE_from교재): SKIP - already correct (L3254)
+과목4 Q315 (MISCITE_from교재): SKIP - already correct (L2822)
+과목4 Q316 (MISCITE_from교재): SKIP - already correct (L889)
+과목4 Q321 (MISCITE_from교재): SKIP - already correct (L2822)
+과목4 Q323 (MISCITE_from교재): SKIP - already correct (L1689)
+과목4 Q325 (MISCITE_from교재): SKIP - already correct (L2822)
+과목4 Q326 (MISCITE_from교재): FIXED - L579 → L2758 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q327 (MISCITE_from교재): SKIP - already correct (L2957)
+과목4 Q328 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목4 Q330 (MISCITE_from교재): SKIP - already correct (L1698)
+과목4 Q331 (MISCITE_from교재): SKIP - already correct (L2956)
+과목4 Q334 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목4 Q339 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목4 Q341 (LINE_DRIFT): FIXED - L213 → L725 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q342 (MISCITE_from교재): SKIP - already correct (L1546)
+과목4 Q343 (LINE_DRIFT): FIXED - L935 → L2415 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q345 (MISCITE_from교재): SKIP - already correct (L3835)
+과목4 Q346 (MISCITE_from교재): SKIP - already correct (L1698)
+과목4 Q348 (MISCITE_from교재): SKIP - already correct (L1547)
+과목4 Q351 (MISCITE_from교재): SKIP - already correct (L1689)
+과목4 Q352 (MISCITE_from교재): SKIP - already correct (L1683)
+과목4 Q355 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목4 Q359 (MISCITE_from교재): FIXED - L3290 → L2655 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q364 (MISCITE_from교재): FIXED - L163 → L2425 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q365 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목4 Q366 (MISCITE_from교재): SKIP - already correct (L1208)
+과목4 Q367 (MISCITE_from교재): SKIP - already correct (L1698)
+과목4 Q369 (MISCITE_from교재): FIXED - L63 → L633 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q370 (MISCITE_from교재): SKIP - already correct (L2956)
+과목4 Q371 (MISCITE_from교재): SKIP - already correct (L2956)
+과목4 Q372 (MISCITE_from교재): SKIP - already correct (L71)
+과목4 Q375 (MISCITE_from교재): SKIP - already correct (L1683)
+과목4 Q381 (LINE_DRIFT): FIXED - L213 → L725 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q383 (MISCITE_from교재): SKIP - already correct (L1546)
+과목4 Q386 (MISCITE_from교재): FIXED - L63 → L926 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q390 (MISCITE_from교재): FIXED - L659 → L4231 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q395 (QUOTE_NOTFOUND): SKIP - rewritten summary, needs manual review
+과목4 Q398 (MISCITE_from교재): FIXED - L517 → L601 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q399 (MISCITE_from교재): FIXED - L4532 → L55 in ../교재/understanding/4과목_맞춤형화장품의이해_표준형.md
+과목4 Q400 (QUOTE_NOTFOUND): SKIP - answer block not found
