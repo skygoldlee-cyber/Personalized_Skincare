@@ -253,13 +253,19 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
                 return `\uE000P${i}\uE001`;
             });
             // 단일 패스 교대 정규식으로 모든 키워드 동시 매칭
-            // 한국어 단어 경계: 키워드 앞뒤에 한글 음절이 있으면 매칭하지 않음
-            // (예: "용제"가 "사용제한" 내부에 매칭되는 것 방지)
+            // 한국어 단어 경계: 키워드 앞뒤 모두 한글 음절이 있으면(=더 긴 단어의 일부) 매칭하지 않음
+            // 조사(을, 를, 이, 가 등)가 뒤에 오는 경우는 매칭 허용
             const pattern = sorted.map(k => k.keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|');
-            const re = new RegExp(`(?<![가-힣])(${pattern})(?![가-힣])`, 'g');
-            processed = processed.replace(re, (match) => {
+            const re = new RegExp(`(${pattern})`, 'g');
+            processed = processed.replace(re, (match, _g1, offset, str) => {
                 const item = sorted.find(k => k.keyword === match);
                 if (!item) return match;
+                // 앞뒤가 모두 한글 음절이면 더 긴 단어의 일부로 간주하여 스킵
+                const before = offset > 0 ? str[offset - 1] : '';
+                const afterIdx = offset + match.length;
+                const after = afterIdx < str.length ? str[afterIdx] : '';
+                const isKorean = (ch) => /[가-힣]/.test(ch);
+                if (isKorean(before) && isKorean(after)) return match;
                 return `<a href="#glossary-${escapeHTML(item.idxKey)}" data-glossary="${escapeHTML(item.idxKey)}" class="glossary-term-link">${escapeHTML(match)}</a>`;
             });
             // 플레이스홀더 복원

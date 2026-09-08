@@ -526,6 +526,7 @@ pre.mermaid-other .labelBkg {
     transition: all 0.15s ease;
     word-break: keep-all;
     overflow: hidden;
+    position: relative;
 }
 .reader-toc-item:hover {
     color: var(--color-text-main);
@@ -586,6 +587,36 @@ pre.mermaid-other .labelBkg {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+.reader-toc-item:hover,
+.reader-toc-sub-item:hover {
+    overflow: visible;
+}
+.reader-toc-item:hover::after,
+.reader-toc-sub-item:hover::after {
+    content: attr(title);
+    position: absolute;
+    left: 0;
+    top: 100%;
+    z-index: 200;
+    padding: 0.4rem 0.7rem;
+    background: rgba(15, 23, 42, 0.96);
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 400;
+    line-height: 1.4;
+    border-radius: 6px;
+    white-space: normal;
+    word-break: keep-all;
+    max-width: 320px;
+    min-width: 120px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    pointer-events: none;
+    margin-top: 4px;
+}
+.reader-light-theme .reader-toc-item:hover::after,
+.reader-light-theme .reader-toc-sub-item:hover::after {
+    background: rgba(30, 41, 59, 0.95);
+}
 
 /* B: TOC 접기/펼치기 */
 .reader-toc-item.has-children .toc-toggle-icon {
@@ -628,6 +659,7 @@ pre.mermaid-other .labelBkg {
     border-left: 2px solid transparent;
     transition: all 0.15s ease;
     word-break: keep-all;
+    position: relative;
 }
 .reader-toc-sub-item.toc-sub-level-1 {
     padding-left: 4.2rem;
