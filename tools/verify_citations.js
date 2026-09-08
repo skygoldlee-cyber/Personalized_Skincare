@@ -14,28 +14,28 @@ const baseDir = path.join(__dirname, '..', 'content');
 const subjects = [
   {
     name: '과목1',
-    examFile: path.join(baseDir, '문제은행', '과목1_문제은행_교재인용.md'),
+    examFile: path.join(baseDir, '문제은행', '과목1_문제.md'),
     textbookFile: path.join(baseDir, '교재', 'law', '1과목_화장품법의이해_표준형.md'),
     questions: [18, 22, 31, 40, 43, 45, 46, 47, 54, 59, 75, 87],
     txPath: '../교재/law/1과목_화장품법의이해_표준형.md',
   },
   {
     name: '과목2',
-    examFile: path.join(baseDir, '문제은행', '과목2_문제은행_교재인용.md'),
+    examFile: path.join(baseDir, '문제은행', '과목2_문제.md'),
     textbookFile: path.join(baseDir, '교재', 'manufacturing', '2과목_제조및품질관리_표준형.md'),
     questions: [62, 66, 78, 101, 115, 125, 143, 152, 154, 181, 198, 199, 209, 220, 229, 239],
     txPath: '../교재/manufacturing/2과목_제조및품질관리_표준형.md',
   },
   {
     name: '과목3',
-    examFile: path.join(baseDir, '문제은행', '과목3_문제은행_교재인용.md'),
+    examFile: path.join(baseDir, '문제은행', '과목3_문제.md'),
     textbookFile: path.join(baseDir, '교재', 'safety', '3과목_유통화장품안전관리_표준형.md'),
     questions: [7, 8, 17, 21, 68, 79, 82, 100, 102, 171, 179, 199, 225, 233],
     txPath: '../교재/safety/3과목_유통화장품안전관리_표준형.md',
   },
   {
     name: '과목4',
-    examFile: path.join(baseDir, '문제은행', '과목4_문제은행_교재인용.md'),
+    examFile: path.join(baseDir, '문제은행', '과목4_문제.md'),
     textbookFile: path.join(baseDir, '교재', 'understanding', '4과목_맞춤형화장품의이해_표준형.md'),
     questions: [15, 41, 66, 87, 91, 92, 125, 131, 168, 279, 362, 400],
     txPath: '../교재/understanding/4과목_맞춤형화장품의이해_표준형.md',

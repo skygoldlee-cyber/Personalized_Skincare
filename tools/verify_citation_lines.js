@@ -11,10 +11,10 @@ const fs = require('fs');
 const path = require('path');
 
 const EXAM_FILES = [
-    'content/문제은행/과목1_문제은행_교재인용.md',
-    'content/문제은행/과목2_문제은행_교재인용.md',
-    'content/문제은행/과목3_문제은행_교재인용.md',
-    'content/문제은행/과목4_문제은행_교재인용.md',
+    'content/문제은행/과목1_문제.md',
+    'content/문제은행/과목2_문제.md',
+    'content/문제은행/과목3_문제.md',
+    'content/문제은행/과목4_문제.md',
 ];
 
 const ROOT = path.resolve(__dirname, '..');

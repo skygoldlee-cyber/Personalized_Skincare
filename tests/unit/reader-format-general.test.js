@@ -43,7 +43,7 @@ test('기출문제 링크: [text](기출문제/과목N_...) → exam-link-btn', 
     const html = formatSectionContentForReader(md);
     assert.ok(html.includes('exam-link-btn'), 'exam-link-btn 클래스');
     assert.ok(html.includes('data-exam-md'), 'data-exam-md 속성');
-    assert.ok(html.includes('과목1_문제은행_교재인용.md'), '실제 경로로 변환');
+    assert.ok(html.includes('과목1_문제.md'), '실제 경로로 변환');
 });
 
 // ==================== 참조자료 PDF 링크 변환 ====================

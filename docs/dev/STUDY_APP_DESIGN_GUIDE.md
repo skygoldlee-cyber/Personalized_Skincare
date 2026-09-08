@@ -311,7 +311,7 @@ Browser (Client)
       "subject": "subjectKey",     // 위 subjects[].key와 매칭
       "part": 1,
       "title": "문제은행 제목",
-      "file": "과목1_문제은행_교재인용.md"
+      "file": "과목1_문제.md"
     }
   ],
   "uiText": {
@@ -344,7 +344,7 @@ content/
 │   ├── subject2/
 │   └── ...
 ├── 문제은행/
-│   ├── 과목1_문제은행_교재인용.md
+│   ├── 과목1_문제.md
 │   └── ...
 ├── 참조자료/                   ← 학습 보조 자료
 │   ├── 공통/                   ← 공통 참조자료
