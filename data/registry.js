@@ -3,7 +3,7 @@
 export const DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2026",
-  "generatedAt": "2026-09-08T02:36:19.468Z",
+  "generatedAt": "2026-09-08T04:32:00.103Z",
   "subjects": [
     {
       "key": "law",
@@ -100,9 +100,9 @@ export const DATA_REGISTRY = {
       "part": 1,
       "title": "맞춤형화장품의 이해 (400제)",
       "file": "과목4_문제은행_교재인용.md",
-      "bundle": "./data/exams/subject4.8f5d3017.js",
+      "bundle": "./data/exams/subject4.ae399099.js",
       "global": "EXAM_DATA_subject4",
-      "contentHash": "8f5d3017",
+      "contentHash": "ae399099",
       "stats": {
         "questions": 400
       }
