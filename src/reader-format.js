@@ -253,8 +253,10 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
                 return `\uE000P${i}\uE001`;
             });
             // 단일 패스 교대 정규식으로 모든 키워드 동시 매칭
+            // 한국어 단어 경계: 키워드 앞뒤에 한글 음절이 있으면 매칭하지 않음
+            // (예: "용제"가 "사용제한" 내부에 매칭되는 것 방지)
             const pattern = sorted.map(k => k.keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|');
-            const re = new RegExp(`(${pattern})`, 'g');
+            const re = new RegExp(`(?<![가-힣])(${pattern})(?![가-힣])`, 'g');
             processed = processed.replace(re, (match) => {
                 const item = sorted.find(k => k.keyword === match);
                 if (!item) return match;
