@@ -1,15 +1,4 @@
-fix: 과목 변경 시 단원 선택이 이전 상태로 고정되는 오류 수정
-
-원인:
-- 과목 변경 시 populateChapterSelect가 비동기(.then())로 호출되어
-  그 사이 단원 드롭다운이 이전 과목의 단원 목록과 선택값을 유지
-- populateChapterSelect 후 chapterSelect.value를 명시적으로 리셋하지 않아
-  새 과목에 동일 인덱스 단원이 있으면 이전 선택값이 유지됨
-
-수정:
-- 과목 변경 핸들러: 즉시 chapterSelect.innerHTML 리셋 + value='' 추가
-- populateChapterSelect: 함수 끝에 chapterSelect.value = '' 추가
-  (복원 경로에서는 이후 chapterSelect.value = selectedChapter로 덮어쓰므로 영향 없음)
+chore: bump CACHE_VERSION to e330be1 (과목 변경 시 단원 선택 리셋 수정)
 
 Generated with [Devin](https://devin.ai)
 
