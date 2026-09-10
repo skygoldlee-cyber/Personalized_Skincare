@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v269-20260910-f500c5d';   // Noto Color Emoji 웹폰트 적용 (PC/모바일 이모지 통일)
+const CACHE_VERSION = 'v269-20260910-ec55341';   // Noto Color Emoji 셀프 호스팅 (CSP 준수)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
