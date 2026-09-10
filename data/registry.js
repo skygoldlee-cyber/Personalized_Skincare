@@ -3,7 +3,7 @@
 export const DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2026",
-  "generatedAt": "2026-09-10T16:34:03.041Z",
+  "generatedAt": "2026-09-10T16:40:17.490Z",
   "subjects": [
     {
       "key": "law",
@@ -46,7 +46,7 @@ export const DATA_REGISTRY = {
       "order": 4,
       "name": "맞춤형화장품의 이해",
       "shortName": "맞춤형화장품",
-      "contentHash": "c1252d23",
+      "contentHash": "45dbe2a4",
       "stats": {
         "cards": 357,
         "quizzes": 104,
