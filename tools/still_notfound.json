@@ -1,41 +1,20 @@
 [
   {
-    "examFile": "content/문제은행/과목3_문제.md",
-    "relPath": "../교재/safety/3과목_유통화장품안전관리_표준형.md",
-    "oldLineNum": 2519,
-    "oldLineContent": "| **카드뮴** | 5μg/g 이하 | 색조, 눈화장, 두발용 |",
+    "examFile": "content/문제은행/과목2_문제.md",
+    "relPath": "../교재/manufacturing/2과목_제조및품질관리_표준형.md",
+    "oldLineNum": 3725,
+    "oldLineContent": "> **정답**: ②",
     "phrases": [
-      "카드뮴 5μg/g 이하 색조, 눈화장, 두발용",
-      "카드뮴 5μg",
-      "g 이하 색조"
+      "정답: ②"
     ]
   },
   {
-    "examFile": "content/문제은행/과목3_문제.md",
-    "relPath": "../교재/safety/3과목_유통화장품안전관리_표준형.md",
-    "oldLineNum": 2710,
-    "oldLineContent": "",
-    "phrases": []
-  },
-  {
-    "examFile": "content/문제은행/과목3_문제.md",
-    "relPath": "../교재/safety/3과목_유통화장품안전관리_표준형.md",
-    "oldLineNum": 2819,
-    "oldLineContent": "",
-    "phrases": []
-  },
-  {
-    "examFile": "content/문제은행/과목3_문제.md",
-    "relPath": "../교재/safety/3과목_유통화장품안전관리_표준형.md",
-    "oldLineNum": 2964,
-    "oldLineContent": "---",
-    "phrases": []
-  },
-  {
-    "examFile": "content/문제은행/과목3_문제.md",
-    "relPath": "../교재/safety/3과목_유통화장품안전관리_표준형.md",
-    "oldLineNum": 2887,
-    "oldLineContent": "",
-    "phrases": []
+    "examFile": "content/문제은행/과목2_문제.md",
+    "relPath": "../교재/manufacturing/2과목_제조및품질관리_표준형.md",
+    "oldLineNum": 3836,
+    "oldLineContent": "| 고득점 TIP | 시험에서 고득점을 위한 중요 팁 | 컬럼 |",
+    "phrases": [
+      "고득점 TIP 시험에서 고득점을 위한 중요 팁 컬럼"
+    ]
   }
 ]
