@@ -3,7 +3,7 @@
 export const DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2026",
-  "generatedAt": "2026-09-10T17:46:17.629Z",
+  "generatedAt": "2026-09-10T18:01:41.928Z",
   "subjects": [
     {
       "key": "law",
@@ -22,7 +22,7 @@ export const DATA_REGISTRY = {
       "order": 2,
       "name": "화장품 제조 및 품질관리",
       "shortName": "제조·품질",
-      "contentHash": "4cb66aaf",
+      "contentHash": "bb832027",
       "stats": {
         "cards": 378,
         "quizzes": 132,

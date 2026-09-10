@@ -5,6 +5,13 @@
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 > registry↔번들 14개 실재 확인 · 비ASCII 콘텐츠 파일 0 · `vercel.json` JSON 유효.
 
+## 2026-09-11 원료 DB 링크 텍스트 한국어로 변경
+
+- `approved_ingredients.md` → `사용가능원료.md`
+- `banned_ingredients.md` → `사용금지원료.md`
+- `restricted_ingredients.md` → `사용제한원료.md`
+- 2과목 표준형/이야기형 모두 수정
+
 ## 2026-09-11 원료 DB 링크 404 오류 수정
 
 ### `../참조자료/원료/` 링크 처리 추가
