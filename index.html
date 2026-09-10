@@ -94,7 +94,7 @@
                         <i class="fa-solid fa-moon"></i>
                     </button>
                     <!-- 가로/세로 보기 토글 버튼 (모바일 전용) -->
-                    <button id="orientation-toggle-btn" class="btn btn-secondary" title="가로/세로 보기 전환">
+                    <button id="orientation-toggle-btn" class="btn btn-secondary" title="가로/세로 보기 전환" aria-label="가로/세로 보기 전환">
                         <i class="fa-solid fa-rotate"></i>
                     </button>
                     <!-- PWA 설치 버튼 (beforeinstallprompt 이벤트 발생 시 표시) -->
@@ -425,7 +425,7 @@
                             </div>
 
                             <div class="quiz-input-group" id="quiz-input-group">
-                                <input type="text" id="quiz-answer-input" class="form-input" placeholder="정답을 입력하세요 (띄어쓰기 유의)" autocomplete="off">
+                                <input type="text" id="quiz-answer-input" class="form-input" placeholder="정답을 입력하세요 (띄어쓰기 유의)" autocomplete="off" aria-label="정답 입력">
                                 <button id="submit-quiz-btn" class="btn btn-primary">정답 제출</button>
                             </div>
 
@@ -616,7 +616,7 @@
                                 </h2>
 
                                 <div class="calc-input-group" style="display: flex; gap: 1rem; align-items: center; max-width: 500px; margin-bottom: 1.5rem;">
-                                    <input type="number" step="any" id="calc-answer-input" class="form-input" placeholder="정답을 입력하세요 (예: 12.34)" autocomplete="off">
+                                    <input type="number" step="any" id="calc-answer-input" class="form-input" placeholder="정답을 입력하세요 (예: 12.34)" autocomplete="off" aria-label="계산 정답 입력">
                                     <span class="calc-unit" id="calc-unit-text">g</span>
                                     <button id="submit-calc-btn" class="btn btn-primary" data-click="submitCalcAnswer">정답 제출</button>
                                 </div>
@@ -708,7 +708,7 @@
 
                                 <!-- Text Input Wrapper -->
                                 <div class="calc-input-group" id="ing-input-container" style="display: none; gap: 1rem; align-items: center; max-width: 500px; margin-bottom: 2rem;">
-                                    <input type="text" id="ing-answer-input" class="form-input" placeholder="정답 입력 (예: 1.0% 또는 기재해야 한다)" autocomplete="off">
+                                    <input type="text" id="ing-answer-input" class="form-input" placeholder="정답 입력 (예: 1.0% 또는 기재해야 한다)" autocomplete="off" aria-label="원료 정답 입력">
                                     <button id="submit-ing-btn" class="btn btn-primary" data-click="submitIngAnswer">정답 제출</button>
                                 </div>
 
@@ -858,7 +858,7 @@
                     <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1.5rem;">
                         <div class="search-input-wrapper" style="position: relative; flex: 1;">
                             <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 1.25rem; top: 50%; transform: translateY(-50%); color: var(--color-text-muted);"></i>
-                            <input type="text" id="textbook-search-input" class="form-input" placeholder="검색할 키워드를 입력하세요 (예: 안전용기, 페녹시에탄올, 미생물)" style="padding-left: 3rem; width: 100%;">
+                            <input type="text" id="textbook-search-input" class="form-input" placeholder="검색할 키워드를 입력하세요 (예: 안전용기, 페녹시에탄올, 미생물)" style="padding-left: 3rem; width: 100%;" aria-label="교재 검색어 입력">
                         </div>
                         <button class="btn btn-secondary" data-click="clearTextbookSearch" style="height: 52px; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-xmark"></i> 초기화</button>
                     </div>
@@ -924,7 +924,7 @@
                         <button class="reader-tool-btn" id="reader-font-decrease" title="글자 작게">A-</button>
                         <span id="reader-font-size-display" class="reader-font-size-display">100%</span>
                         <button class="reader-tool-btn" id="reader-font-increase" title="글자 크게">A+</button>
-                        <button class="reader-tool-btn" id="reader-font-reset" title="기본 크기로"><i class="fa-solid fa-rotate-left"></i></button>
+                        <button class="reader-tool-btn" id="reader-font-reset" title="기본 크기로" aria-label="글자 크기 기본값"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i></button>
                     </div>
                     <div class="reader-toolbar-divider"></div>
                     <div class="reader-toolbar-group">
@@ -969,15 +969,15 @@
                 </div>
 
                 <!-- Back to top button -->
-                <button id="reader-back-to-top" class="reader-back-to-top" style="display:none;" title="맨 위로">
-                    <i class="fa-solid fa-arrow-up"></i>
+                <button id="reader-back-to-top" class="reader-back-to-top" style="display:none;" title="맨 위로" aria-label="맨 위로">
+                    <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
                 </button>
 
                 <!-- Table fullscreen modal -->
                 <div id="reader-table-modal" class="reader-table-modal" style="display:none;">
                     <div class="reader-table-modal-backdrop"></div>
                     <div class="reader-table-modal-content">
-                        <button class="reader-table-modal-close" id="reader-table-modal-close"><i class="fa-solid fa-xmark"></i></button>
+                        <button class="reader-table-modal-close" id="reader-table-modal-close" aria-label="표 모달 닫기"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
                         <div id="reader-table-modal-body" class="reader-table-modal-body"></div>
                     </div>
                 </div>
@@ -995,7 +995,7 @@
                     <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1.5rem;">
                         <div class="search-input-wrapper" style="position: relative; flex: 1;">
                             <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 1.25rem; top: 50%; transform: translateY(-50%); color: var(--color-text-muted);"></i>
-                            <input type="text" id="dict-search-input" class="form-input" placeholder="성분명, 영문명 또는 초성을 입력하여 실시간 검색 (예: 페녹시, glycerin, ㄱㄹㅅㄹ)" style="padding-left: 3rem; width: 100%;">
+                            <input type="text" id="dict-search-input" class="form-input" placeholder="성분명, 영문명 또는 초성을 입력하여 실시간 검색 (예: 페녹시, glycerin, ㄱㄹㅅㄹ)" style="padding-left: 3rem; width: 100%;" aria-label="성분 검색어 입력">
                         </div>
                         <button class="btn btn-secondary" data-click="clearDictSearch" style="height: 52px; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-xmark"></i> 초기화</button>
                     </div>

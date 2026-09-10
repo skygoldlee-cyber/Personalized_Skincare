@@ -55,7 +55,7 @@
     font-size: 1.5rem;
     font-weight: 700;
     font-family: 'Outfit', sans-serif;
-    color: #ffffff;
+    color: var(--color-text-main);
     margin-bottom: 0.35rem;
 }
 
@@ -136,7 +136,7 @@
     font-size: 1.1rem;
     font-weight: 700;
     margin-bottom: 0.25rem;
-    color: #ffffff;
+    color: var(--color-text-main);
 }
 
 .light-theme .subj-header h4 {
@@ -239,18 +239,18 @@
     background-color: rgba(255,255,255,0.05);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-sm);
-    color: #ffffff;
+    color: var(--color-text-main);
     padding: 0.5rem 2rem 0.5rem 1rem;
     font-family: var(--font-app);
-    font-size: 0.9rem;
+    font-size: 1rem; /* iOS 자동 확대 방지 (16px 이상) */
     outline: none;
     cursor: pointer;
     transition: border-color 0.2s;
 }
 
 .form-select option {
-    background-color: #111827;
-    color: #ffffff;
+    background-color: var(--bg-sidebar);
+    color: var(--color-text-main);
 }
 
 .light-theme .form-select {

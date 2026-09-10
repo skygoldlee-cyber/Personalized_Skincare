@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v278-20260910-040f843';   // TOC 네이티브 title 툴팁 제거 (data-toc-title 사용)
+const CACHE_VERSION = 'v279-20260910-fc2313d';   // UI/UX 접근성 개선 (포커스 트랩, aria-label, 키보드, iOS 폰트)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;

@@ -108,7 +108,8 @@ import {
     showGlobalLoading,
     hideGlobalLoading,
     showToast,
-    showConfirm
+    showConfirm,
+    trapFocus
 } from './ui-utils.js';
 import {
     simState,
@@ -376,10 +377,36 @@ function initApp() {
 
 // --- 가로/세로 보기 ---
 // 실제 기기 회전 + 반응형 CSS가 가로/세로를 직접 처리하므로
-// 별도 토글 버튼은 사용하지 않는다. 과거에 저장된 landscape-mode 잔존 상태만 정리한다.
+// 가로/세로 보기 토글 — landscape-mode 클래스를 토글하고 상태를 저장
 function setupOrientationToggle() {
-    document.body.classList.remove('landscape-mode');
-    try { localStorage.removeItem('preferredOrientation'); } catch (e) {}
+    const btn = document.getElementById('orientation-toggle-btn');
+    if (!btn) return;
+
+    // 초기 상태 복원
+    try {
+        const saved = localStorage.getItem('preferredOrientation');
+        if (saved === 'landscape') {
+            document.body.classList.add('landscape-mode');
+            btn.querySelector('i').className = 'fa-solid fa-mobile-screen';
+        }
+    } catch (e) { /* 무시 */ }
+
+    btn.addEventListener('click', () => {
+        const isLandscape = document.body.classList.toggle('landscape-mode');
+        try {
+            if (isLandscape) {
+                localStorage.setItem('preferredOrientation', 'landscape');
+            } else {
+                localStorage.removeItem('preferredOrientation');
+            }
+        } catch (e) { /* 무시 */ }
+        // 아이콘 업데이트
+        const icon = btn.querySelector('i');
+        if (icon) {
+            icon.className = isLandscape ? 'fa-solid fa-mobile-screen' : 'fa-solid fa-mobile-screen-button';
+        }
+        showOrientationToast(isLandscape);
+    });
 }
 
 // 방향 전환 알림 표시
@@ -450,6 +477,7 @@ function setupNavigation() {
                 loadFlashcards();
             }).catch(() => {
                 hideGlobalLoading();
+                showToast('플래시카드 데이터를 불러오지 못했습니다.', 'error');
                 loadFlashcards();
             });
         },
@@ -461,6 +489,7 @@ function setupNavigation() {
                 renderReviewList();
             }).catch(() => {
                 hideGlobalLoading();
+                showToast('복습 데이터를 불러오지 못했습니다.', 'error');
                 renderReviewList();
             });
         },
@@ -475,6 +504,7 @@ function setupNavigation() {
                 renderTextbookSearch();
             }).catch(() => {
                 hideGlobalLoading();
+                showToast('교재 검색 데이터를 불러오지 못했습니다.', 'error');
                 renderTextbookSearch();
             });
         },
@@ -486,6 +516,7 @@ function setupNavigation() {
                     renderTextbookReader();
                 }).catch(() => {
                     hideGlobalLoading();
+                    showToast('교재 본문 데이터를 불러오지 못했습니다.', 'error');
                     renderTextbookReader();
                 });
             } else {
@@ -499,6 +530,7 @@ function setupNavigation() {
                 renderDictionary();
             }).catch(() => {
                 hideGlobalLoading();
+                showToast('성분 사전 데이터를 불러오지 못했습니다.', 'error');
                 renderDictionary();
             });
         }
@@ -768,7 +800,16 @@ function setupEventListeners() {
             cardEl.setAttribute('aria-expanded', String(isFlipped));
             cardEl.setAttribute('aria-label', isFlipped ? '플래시카드 — 클릭하여 앞면 보기' : '플래시카드 — 클릭하여 뒷면 보기');
         };
-        cardEl.addEventListener('click', flipCard);
+        cardEl.addEventListener('click', (e) => {
+            // 터치 스와이프 후 합성 click 이벤트 중복 방지
+            if (cardEl._swipeHandled) {
+                cardEl._swipeHandled = false;
+                e.preventDefault();
+                e.stopPropagation();
+                return;
+            }
+            flipCard();
+        });
         cardEl.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flipCard(); }
         });
@@ -784,6 +825,7 @@ function setupEventListeners() {
             _swipeStartY = t.clientY;
             _swipeStartT = Date.now();
             _swipeMoved = false;
+            cardEl._swipeHandled = false;
         }, { passive: true });
         cardEl.addEventListener('touchmove', () => { _swipeMoved = true; }, { passive: true });
         cardEl.addEventListener('touchend', (e) => {
@@ -795,6 +837,7 @@ function setupEventListeners() {
             // 가로 이동이 세로 이동보다 크고 임계값 초과 시 좌우 스와이프
             if (Math.abs(dx) > SWIPE_THRESHOLD && Math.abs(dx) > Math.abs(dy) * 1.5 && dt < SWIPE_TIME_MAX) {
                 e.preventDefault();
+                cardEl._swipeHandled = true; // 합성 click 중복 방지
                 const prevBtn = document.getElementById('fc-prev-btn');
                 const nextBtn = document.getElementById('fc-next-btn');
                 if (dx > 0 && prevBtn) prevBtn.click(); // 오른쪽 스와이프 → 이전
@@ -803,6 +846,7 @@ function setupEventListeners() {
             // 가로 이동이 작고 세로 이동이 위쪽이며 임계값 초과 시 뒤집기 (click과 중복 방지 위해 _swipeMoved 체크)
             else if (_swipeMoved && dy < -SWIPE_THRESHOLD && Math.abs(dx) < SWIPE_THRESHOLD * 0.5) {
                 e.preventDefault();
+                cardEl._swipeHandled = true; // 합성 click 중복 방지
                 flipCard();
             }
             // 스와이프가 아닌 단순 탭은 click 이벤트가 자동 발생하므로 뒤집기 처리 위임
@@ -944,6 +988,7 @@ function setupEventListeners() {
             startQuiz();
         }).catch(() => {
             hideGlobalLoading();
+            showToast('퀴즈 데이터를 불러오지 못했습니다.', 'error');
             startQuiz();
         });
     });
@@ -1102,6 +1147,19 @@ function setupEventListeners() {
         handler(...args);
     });
 
+    // 키보드 접근성: [data-click] 요소에서 Enter/Space 시 클릭 트리거
+    document.body.addEventListener('keydown', (e) => {
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+        const targetEl = e.target instanceof Element ? e.target : e.target.parentElement;
+        if (!targetEl) return;
+        const el = targetEl.closest('[data-click]');
+        if (!el) return;
+        // 네이티브 버튼/링크/입력은 자체 키보드 처리가 있으므로 제외
+        if (el.tagName === 'BUTTON' || el.tagName === 'A' || el.tagName === 'INPUT' || el.tagName === 'SELECT' || el.tagName === 'TEXTAREA') return;
+        e.preventDefault();
+        el.click();
+    });
+
     // 입력 이벤트 위임 (range 슬라이더 등). 인라인 oninput 속성(CSP 차단) 대체.
     document.body.addEventListener('input', (e) => {
         const targetEl = e.target instanceof Element ? e.target : e.target.parentElement;
@@ -1117,6 +1175,42 @@ function setupEventListeners() {
         }
         handler(el.value);
     });
+
+    // 키보드 접근성: [data-click] div 요소에 tabindex/role 부여
+    enhanceDataClickAccessibility();
+}
+
+function enhanceDataClickAccessibility() {
+    document.querySelectorAll('[data-click]').forEach(el => {
+        if (el.tagName === 'BUTTON' || el.tagName === 'A' || el.tagName === 'INPUT' || el.tagName === 'SELECT' || el.tagName === 'TEXTAREA') return;
+        if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
+        if (!el.hasAttribute('role')) el.setAttribute('role', 'button');
+    });
+}
+
+// 동적 콘텐츠에도 접근성 속성 자동 부여
+const _dataClickObserver = new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+        for (const node of mutation.addedNodes) {
+            if (node.nodeType !== Node.ELEMENT_NODE) continue;
+            if (node.matches && node.matches('[data-click]')) {
+                if (node.tagName !== 'BUTTON' && node.tagName !== 'A' && node.tagName !== 'INPUT' && node.tagName !== 'SELECT' && node.tagName !== 'TEXTAREA') {
+                    if (!node.hasAttribute('tabindex')) node.setAttribute('tabindex', '0');
+                    if (!node.hasAttribute('role')) node.setAttribute('role', 'button');
+                }
+            }
+            if (node.querySelectorAll) {
+                node.querySelectorAll('[data-click]').forEach(el => {
+                    if (el.tagName === 'BUTTON' || el.tagName === 'A' || el.tagName === 'INPUT' || el.tagName === 'SELECT' || el.tagName === 'TEXTAREA') return;
+                    if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
+                    if (!el.hasAttribute('role')) el.setAttribute('role', 'button');
+                });
+            }
+        }
+    }
+});
+if (document.body) {
+    _dataClickObserver.observe(document.body, { childList: true, subtree: true });
 }
 
 
@@ -1352,12 +1446,19 @@ function setupPWAInstall() {
 
         installModal.style.display = 'flex';
         document.body.style.overflow = 'hidden';
+        // 포커스 트랩 적용
+        if (installModal._untrapFocus) installModal._untrapFocus();
+        installModal._untrapFocus = trapFocus(installModal);
     }
 
     function closeInstallModal() {
         if (!installModal) return;
         installModal.style.display = 'none';
         document.body.style.overflow = '';
+        if (installModal._untrapFocus) {
+            installModal._untrapFocus();
+            installModal._untrapFocus = null;
+        }
     }
 
     if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeInstallModal);

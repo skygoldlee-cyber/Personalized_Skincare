@@ -12,7 +12,7 @@ import {
 import { collectGlossaryItems, renderGlossaryTable, appendGlossaryTocItem, bindGlossaryEvents } from './glossary-renderer.js';
 // [모바일 PWA 견고성] 오디오 매니페스트는 window 전역(가드)에서 읽는다(정적 import 하드 의존 지양).
 import { DataLoader } from '../data-loader.js';
-import { showToast } from '../ui-utils.js';
+import { showToast, trapFocus } from '../ui-utils.js';
 
 // --- 교재 본문 읽기 (Textbook Reader) ---
 let textbookReaderState = {
@@ -1537,11 +1537,20 @@ function openTableModal(wrapper) {
     body.innerHTML = '';
     body.appendChild(table.cloneNode(true));
     modal.style.display = 'flex';
+    // 포커스 트랩 적용
+    if (modal._untrapFocus) modal._untrapFocus();
+    modal._untrapFocus = trapFocus(modal, wrapper);
 }
 
 function closeTableModal() {
     const modal = document.getElementById('reader-table-modal');
-    if (modal) modal.style.display = 'none';
+    if (modal) {
+        modal.style.display = 'none';
+        if (modal._untrapFocus) {
+            modal._untrapFocus();
+            modal._untrapFocus = null;
+        }
+    }
 }
 
 // --- 참조자료 링크 기능 ---

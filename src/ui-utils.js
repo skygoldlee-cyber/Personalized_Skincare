@@ -83,6 +83,8 @@ export function showToast(message, type = 'info', duration = 3000) {
     if (!toast) {
         toast = document.createElement('div');
         toast.id = 'app-toast';
+        toast.setAttribute('role', 'status');
+        toast.setAttribute('aria-live', 'polite');
         toast.style.cssText = `
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9);
             background: rgba(15, 23, 42, 0.95); color: #fff; padding: 1rem 1.5rem;
@@ -159,7 +161,10 @@ export function showConfirm(message, title = '확인') {
         const close = (result) => {
             overlay.style.opacity = '0';
             overlay.querySelector('.app-confirm-dialog').style.transform = 'scale(0.95)';
-            setTimeout(() => overlay.remove(), 200);
+            setTimeout(() => {
+                untrapFocus();
+                overlay.remove();
+            }, 200);
             resolve(result);
         };
 
@@ -171,8 +176,8 @@ export function showConfirm(message, title = '확인') {
             if (e.key === 'Escape') { document.removeEventListener('keydown', onKey); close(false); }
         };
         document.addEventListener('keydown', onKey);
-        // 포커스
-        overlay.querySelector('.app-confirm-ok').focus();
+        // 포커스 트랩 적용
+        const untrapFocus = trapFocus(overlay.querySelector('.app-confirm-dialog'));
     });
 }
 
@@ -180,4 +185,64 @@ function escapeHtml(str) {
     const div = document.createElement('div');
     div.textContent = String(str);
     return div.innerHTML;
+}
+
+/* =========================================================
+   B2: 모달 포커스 트랩 유틸리티 (접근성)
+   ========================================================= */
+
+const FOCUSABLE_SELECTOR = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+/**
+ * 모달 내 포커스를 트랩하고, 닫힐 때 초점을 반환.
+ * @param {HTMLElement} modalEl - 포커스를 트랩할 모달 컨테이너
+ * @param {HTMLElement} [triggerEl] - 모달을 열은 트리거 요소 (닫힐 때 초점 반환)
+ * @returns {() => void} trap 해제 함수 (모달 닫힐 때 호출)
+ */
+export function trapFocus(modalEl, triggerEl) {
+    if (!modalEl) return () => {};
+
+    const previouslyFocused = triggerEl || document.activeElement;
+
+    // 첫 포커스 가능 요소로 초점 이동
+    const focusables = modalEl.querySelectorAll(FOCUSABLE_SELECTOR);
+    if (focusables.length > 0) {
+        focusables[0].focus();
+    } else {
+        modalEl.setAttribute('tabindex', '-1');
+        modalEl.focus();
+    }
+
+    const onKeydown = (e) => {
+        if (e.key !== 'Tab') return;
+        const currentFocusables = modalEl.querySelectorAll(FOCUSABLE_SELECTOR);
+        if (currentFocusables.length === 0) {
+            e.preventDefault();
+            return;
+        }
+        const first = currentFocusables[0];
+        const last = currentFocusables[currentFocusables.length - 1];
+
+        if (e.shiftKey) {
+            if (document.activeElement === first || !modalEl.contains(document.activeElement)) {
+                e.preventDefault();
+                last.focus();
+            }
+        } else {
+            if (document.activeElement === last || !modalEl.contains(document.activeElement)) {
+                e.preventDefault();
+                first.focus();
+            }
+        }
+    };
+
+    modalEl.addEventListener('keydown', onKeydown);
+
+    // 해제 함수: 이벤트 리스너 제거 + 초점 반환
+    return () => {
+        modalEl.removeEventListener('keydown', onKeydown);
+        if (previouslyFocused && typeof previouslyFocused.focus === 'function') {
+            previouslyFocused.focus();
+        }
+    };
 }
