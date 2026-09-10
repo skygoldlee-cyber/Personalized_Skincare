@@ -613,6 +613,7 @@ pre.mermaid-other .labelBkg {
     padding: 0.4rem 0.7rem;
     background: rgba(15, 23, 42, 0.96);
     color: #fff;
+    font-family: var(--font-app);
     font-size: 0.78rem;
     font-weight: 400;
     line-height: 1.4;
