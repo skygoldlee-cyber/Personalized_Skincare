@@ -12,6 +12,8 @@ const textbookState = {
 
 let _searchIndex = null;
 let _searchIndexKeys = null;
+let _invertedIndex = null; // 3. 역색인: 단어 → Set<entryIndex>
+let _invertedIndexKeys = null;
 
 function _getSearchIndex() {
     const STUDY_DATA = (typeof window !== 'undefined' && window.STUDY_DATA) ? window.STUDY_DATA : {};
@@ -37,7 +39,32 @@ function _getSearchIndex() {
             });
         });
     });
+    // 3. 역색인 구축 — 각 섹션의 텍스트를 토큰화하여 단어→섹션 인덱스 생성
+    _buildInvertedIndex();
     return _searchIndex;
+}
+
+// 3. 역색인 구축 — 한국어는 공백 기준 토큰화 + 2-gram 보조
+function _buildInvertedIndex() {
+    _invertedIndex = new Map();
+    _invertedIndexKeys = _searchIndexKeys;
+    
+    _searchIndex.forEach((entry, idx) => {
+        const text = (entry._titleLower + ' ' + entry._contentLower);
+        // 공백 기준 토큰화
+        const tokens = text.split(/\s+/).filter(t => t.length >= 2);
+        tokens.forEach(token => {
+            // 완전 단어 인덱스
+            if (!_invertedIndex.has(token)) _invertedIndex.set(token, new Set());
+            _invertedIndex.get(token).add(idx);
+            // 2-gram 인덱스 (부분 매칭용)
+            for (let i = 0; i < token.length - 1; i++) {
+                const bigram = token.substring(i, i + 2);
+                if (!_invertedIndex.has(bigram)) _invertedIndex.set(bigram, new Set());
+                _invertedIndex.get(bigram).add(idx);
+            }
+        });
+    });
 }
 
 export function renderTextbookSearch() {
@@ -115,7 +142,36 @@ function performTextbookSearch() {
     const index = _getSearchIndex();
     const results = [];
     
-    for (const entry of index) {
+    // 3. 역색인 활용 — 각 검색어에 대해 후보 섹션 집합을 구하고 교집합 계산
+    let candidateIndices = null;
+    for (const term of terms) {
+        let termMatches = new Set();
+        // 역색인에서 완전 매칭
+        if (_invertedIndex && _invertedIndex.has(term)) {
+            termMatches = new Set(_invertedIndex.get(term));
+        } else if (_invertedIndex) {
+            // 부분 매칭 — 역색인에서 term을 포함하는 토큰 검색
+            for (const [token, indices] of _invertedIndex) {
+                if (token.includes(term)) {
+                    indices.forEach(i => termMatches.add(i));
+                }
+            }
+        }
+        if (candidateIndices === null) {
+            candidateIndices = termMatches;
+        } else {
+            // 교집합
+            candidateIndices = new Set([...candidateIndices].filter(i => termMatches.has(i)));
+        }
+        if (candidateIndices.size === 0) break;
+    }
+    
+    // 역색인 결과가 있으면 해당 섹션만 검사, 없으면 전체 검사 (fallback)
+    const searchEntries = (candidateIndices && candidateIndices.size > 0)
+        ? [...candidateIndices].map(i => ({ entry: index[i], originalIdx: i }))
+        : index.map((entry, i) => ({ entry, originalIdx: i }));
+    
+    for (const { entry, originalIdx } of searchEntries) {
         if (textbookState.filter !== 'all' && textbookState.filter !== entry.subjId) continue;
         const isMatch = terms.every(term => entry._titleLower.includes(term) || entry._contentLower.includes(term));
         if (isMatch) {

@@ -10,6 +10,7 @@ import { DataLoader } from './data-loader.js';
 import { ExamViewer } from './exam-viewer.js';
 import { ManualViewer } from './manual-viewer.js';
 import { initWebVitals } from './web-vitals.js';
+import { updateCardSchedule, getDueCount, clearAllSchedules } from './spaced-repetition.js';
 
 // --- 뷰 컨트롤러 모듈 임포트 ---
 import {
@@ -728,7 +729,9 @@ function setupEventListeners() {
             'pomo_session_date',
             'study_streak',
             'study_streak_last_date',
-            'calc_history'
+            'calc_history',
+            'fc_spaced_repetition', // 2. 간격 반복 (SM-2)
+            'readerLastPosition'    // 1. 교재 읽기 이어하기
         ];
         keysToRemove.forEach(k => { try { localStorage.removeItem(k); } catch(_) {} });
         
@@ -865,6 +868,7 @@ function setupEventListeners() {
         
         state.memorizedCards.add(currentCard.id);
         state.weakCards.delete(currentCard.id);
+        updateCardSchedule(currentCard.id, true); // 2. 간격 반복 (SM-2)
         saveProgress();
         
         // 시각 효과 피드백 후 다음 카드로
@@ -882,6 +886,7 @@ function setupEventListeners() {
         
         state.weakCards.add(currentCard.id);
         state.memorizedCards.delete(currentCard.id);
+        updateCardSchedule(currentCard.id, false); // 2. 간격 반복 (SM-2)
         saveProgress();
         
         // 시각 효과 피드백 후 다음 카드로

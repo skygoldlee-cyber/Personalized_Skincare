@@ -6,6 +6,7 @@ import { renderPerformanceChart, renderPassFailDiagnosis, renderRadarChart } fro
 import { switchView } from './navigation.js';
 import { updateStreakAndDailyUI } from './quiz.js';
 import { updatePomodoroUI } from './trainer.js';
+import { getDueCount } from '../spaced-repetition.js';
 
 /**
  * @type {boolean}
@@ -73,6 +74,10 @@ export function updateGlobalStats() {
     if (memorizedCardsEl) memorizedCardsEl.textContent = state.memorizedCards.size;
     if (weakCardsEl) weakCardsEl.textContent = state.weakCards.size;
     if (reviewCardEl) reviewCardEl.textContent = state.weakCards.size;
+    
+    // 2. 간격 반복 — 오늘 복습 대기 카드 수
+    const dueReviewEl = document.getElementById('due-review-count');
+    if (dueReviewEl) dueReviewEl.textContent = getDueCount();
     
     // 전체 진척도 퍼센트 계산
     const totalProgress = totalCards > 0 ? Math.round((state.memorizedCards.size / totalCards) * 100) : 0;
@@ -181,6 +186,99 @@ export function renderDashboard() {
     renderRadarChart();
     updateStreakAndDailyUI();
     updatePomodoroUI();
+    
+    // 4. 학습 통계/분석 강화 — 과목별 정답률 히트맵 + 약점 과목 추천
+    _renderSubjectHeatmap(subjects);
+    _renderWeakSubjectRecommendation(subjects);
+}
+
+// 4. 과목별 정답률 히트맵 렌더링
+function _renderSubjectHeatmap(subjects) {
+    const heatmapEl = document.getElementById('subject-heatmap');
+    if (!heatmapEl) return;
+    const subjCounts = _getSubjCounts();
+    
+    let html = '<div class="heatmap-grid">';
+    subjects.forEach(subj => {
+        const sc = subjCounts[subj.key] || { mem: 0, weak: 0, quizSolved: 0, quizCorrect: 0 };
+        const rate = sc.quizSolved > 0 ? Math.round((sc.quizCorrect / sc.quizSolved) * 100) : -1;
+        // 색상: 80%+ = 초록, 60-79% = 주황, 40-59% = 빨강, <40% = 진빨강, 미응시 = 회색
+        let color, label;
+        if (rate < 0) { color = '#374151'; label = '미응시'; }
+        else if (rate >= 80) { color = '#10b981'; label = rate + '%'; }
+        else if (rate >= 60) { color = '#f59e0b'; label = rate + '%'; }
+        else if (rate >= 40) { color = '#ef4444'; label = rate + '%'; }
+        else { color = '#991b1b'; label = rate + '%'; }
+        
+        html += `
+            <div class="heatmap-cell" title="${esc(subj.name)}: ${rate < 0 ? '미응시' : rate + '% 정답률 (' + sc.quizSolved + '문)'}" style="background:${color};">
+                <span class="heatmap-label">${esc(subj.name.substring(0, 6))}</span>
+                <span class="heatmap-value">${label}</span>
+            </div>
+        `;
+    });
+    html += '</div>';
+    heatmapEl.innerHTML = html;
+}
+
+// 4. 약점 과목 자동 추천
+function _renderWeakSubjectRecommendation(subjects) {
+    const recEl = document.getElementById('weak-subject-recommendation');
+    if (!recEl) return;
+    const subjCounts = _getSubjCounts();
+    
+    // 정답률이 가장 낮은 과목 (최소 3문 이상 푼 과목만)
+    let weakest = null;
+    let weakestRate = 101;
+    subjects.forEach(subj => {
+        const sc = subjCounts[subj.key] || { quizSolved: 0, quizCorrect: 0 };
+        if (sc.quizSolved >= 3) {
+            const rate = sc.quizCorrect / sc.quizSolved;
+            if (rate < weakestRate) {
+                weakestRate = rate;
+                weakest = subj;
+            }
+        }
+    });
+    
+    // 헷갈린 카드가 가장 많은 과목
+    let mostWeak = null;
+    let mostWeakCount = 0;
+    subjects.forEach(subj => {
+        const sc = subjCounts[subj.key] || { weak: 0 };
+        if (sc.weak > mostWeakCount) {
+            mostWeakCount = sc.weak;
+            mostWeak = subj;
+        }
+    });
+    
+    if (!weakest && !mostWeak) {
+        recEl.innerHTML = '<p class="rec-empty">아직 충분한 학습 데이터가 없습니다. 퀴즈를 풀어보세요!</p>';
+        return;
+    }
+    
+    let html = '<div class="rec-list">';
+    if (weakest) {
+        const rate = Math.round(weakestRate * 100);
+        html += `
+            <div class="rec-item">
+                <i class="fa-solid fa-bullseye" style="color:#ef4444;"></i>
+                <span>정답률 최저: <strong>${esc(weakest.name)}</strong> (${rate}%)</span>
+                <button class="btn btn-sm btn-primary" data-click="startSubjectQuiz" data-arg="${weakest.key}">풀기</button>
+            </div>
+        `;
+    }
+    if (mostWeak && mostWeakCount > 0) {
+        html += `
+            <div class="rec-item">
+                <i class="fa-solid fa-triangle-exclamation" style="color:#f59e0b;"></i>
+                <span>헷갈린 카드最多: <strong>${esc(mostWeak.name)}</strong> (${mostWeakCount}장)</span>
+                <button class="btn btn-sm btn-secondary" data-click="startSubjectStudy" data-arg="${mostWeak.key}">학습</button>
+            </div>
+        `;
+    }
+    html += '</div>';
+    recEl.innerHTML = html;
 }
 
 /**

@@ -21,6 +21,46 @@ let textbookReaderState = {
     storyMode: false
 };
 
+// 1. 교재 읽기 이어하기 — localStorage 영속화
+const READER_POSITION_KEY = 'readerLastPosition';
+let _scrollSaveTimer = null;
+
+function saveReaderPosition() {
+    try {
+        const container = document.getElementById('textbook-reader-container');
+        const scrollTop = container ? Math.round(container.scrollTop) : 0;
+        const pos = {
+            subject: textbookReaderState.selectedSubject || '',
+            chapter: textbookReaderState.selectedChapter || '',
+            scrollTop: scrollTop,
+            storyMode: textbookReaderState.storyMode || false,
+            ts: Date.now()
+        };
+        localStorage.setItem(READER_POSITION_KEY, JSON.stringify(pos));
+    } catch (e) { /* noop */ }
+}
+
+function loadReaderPosition() {
+    try {
+        const raw = localStorage.getItem(READER_POSITION_KEY);
+        if (!raw) return null;
+        const pos = JSON.parse(raw);
+        // 30일 이상 지난 위치는 무시
+        if (pos.ts && (Date.now() - pos.ts > 30 * 24 * 60 * 60 * 1000)) return null;
+        return pos;
+    } catch (e) { return null; }
+}
+
+function clearReaderPosition() {
+    try { localStorage.removeItem(READER_POSITION_KEY); } catch (e) { /* noop */ }
+}
+
+// 스크롤 위치 저장 (디바운스: 1초 후 저장)
+function scheduleSaveReaderPosition() {
+    if (_scrollSaveTimer) clearTimeout(_scrollSaveTimer);
+    _scrollSaveTimer = setTimeout(saveReaderPosition, 1000);
+}
+
 // --- 이야기형 MD 캐시: { "subjId:chapterIdx": { chapterTitle, sections, filePath } } ---
 // LRU 캐시: 최대 항목 수를 초과하면 가장 오래된 항목 제거 (메모리 누수 방지)
 const _storyChapterCache = {};
@@ -604,13 +644,32 @@ export function renderTextbookReader() {
         textbookReaderState.selectedSubject = previousValue;
     }
     
+    // 1. 교재 읽기 이어하기 — 저장된 위치 복원
+    const savedPos = (!previousValue && !textbookReaderState.selectedSubject) ? loadReaderPosition() : null;
+    
     // Restore previous selections
+    if (savedPos && savedPos.subject) {
+        textbookReaderState.selectedSubject = savedPos.subject;
+        textbookReaderState.selectedChapter = savedPos.chapter;
+        textbookReaderState.storyMode = savedPos.storyMode || false;
+    }
+    
     if (textbookReaderState.selectedSubject) {
         subjectSelect.value = textbookReaderState.selectedSubject;
         populateChapterSelect(textbookReaderState.selectedSubject);
         if (textbookReaderState.selectedChapter) {
             chapterSelect.value = textbookReaderState.selectedChapter;
-            renderChapterContent(textbookReaderState.selectedSubject, textbookReaderState.selectedChapter);
+            renderChapterContent(textbookReaderState.selectedSubject, textbookReaderState.selectedChapter).then(() => {
+                // 스크롤 위치 복원 (콘텐츠 렌더링 후)
+                if (savedPos && savedPos.scrollTop > 0) {
+                    const container = document.getElementById('textbook-reader-container');
+                    if (container) {
+                        requestAnimationFrame(() => {
+                            container.scrollTop = savedPos.scrollTop;
+                        });
+                    }
+                }
+            });
         }
     }
     
@@ -622,6 +681,7 @@ export function renderTextbookReader() {
             const subjId = e.target.value;
             textbookReaderState.selectedSubject = subjId;
             textbookReaderState.selectedChapter = '';
+            saveReaderPosition(); // 1. 교재 읽기 이어하기
             const hadAudio = !!readerAudioState.audio;
             stopReaderAudio();
             if (hadAudio) showAudioToast('과목이 변경되어 오디오 재생이 중지되었습니다.');
@@ -654,6 +714,7 @@ export function renderTextbookReader() {
         chapterSelect.addEventListener('change', (e) => {
             const chapterIdx = e.target.value;
             textbookReaderState.selectedChapter = chapterIdx;
+            saveReaderPosition(); // 1. 교재 읽기 이어하기
             
             if (chapterIdx && textbookReaderState.selectedSubject) {
                 renderChapterContent(textbookReaderState.selectedSubject, parseInt(chapterIdx));
@@ -1158,6 +1219,7 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
             if (btn.disabled) return;
             const navIdx = parseInt(btn.dataset.navIdx);
             textbookReaderState.selectedChapter = String(navIdx);
+            saveReaderPosition(); // 1. 교재 읽기 이어하기
             const chapterSelect = document.getElementById('reader-chapter-select');
             if (chapterSelect) chapterSelect.value = String(navIdx);
             renderChapterContent(subjId, navIdx);
@@ -1324,6 +1386,9 @@ function bindReaderScrollEvents() {
             // Back to top visibility
             const backBtn = document.getElementById('reader-back-to-top');
             if (backBtn) backBtn.style.display = container.scrollTop > 400 ? 'block' : 'none';
+
+            // 1. 교재 읽기 이어하기 — 스크롤 위치 저장 (디바운스)
+            scheduleSaveReaderPosition();
 
             // Scroll spy — highlight current section in TOC + breadcrumb (D)
             const containerTop = container.getBoundingClientRect().top;
