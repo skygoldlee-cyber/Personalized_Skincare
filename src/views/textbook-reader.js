@@ -1390,7 +1390,7 @@ function bindReaderScrollEvents() {
             }
             // Back to top visibility
             const backBtn = document.getElementById('reader-back-to-top');
-            if (backBtn) backBtn.style.display = container.scrollTop > 400 ? 'block' : 'none';
+            if (backBtn) backBtn.classList.toggle('is-hidden', container.scrollTop <= 400);
 
             // 1. 교재 읽기 이어하기 — 스크롤 위치 저장 (디바운스)
             scheduleSaveReaderPosition();

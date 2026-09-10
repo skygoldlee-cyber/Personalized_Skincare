@@ -110,7 +110,7 @@
             <!-- Dashboard View -->
             <section id="dashboard-view" class="view-section active">
                 <!-- Draft Resume Banner (New Feature 1) -->
-                <div id="draft-resume-banner" style="display: none; background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(239, 68, 68, 0.15) 100%); border: 1px solid var(--color-warning); border-radius: 8px; padding: 1rem 1.5rem; margin-bottom: 1.5rem; justify-content: space-between; align-items: center; gap: 1rem; width: 100%;">
+                <div id="draft-resume-banner" class="is-hidden" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(239, 68, 68, 0.15) 100%); border: 1px solid var(--color-warning); border-radius: 8px; padding: 1rem 1.5rem; margin-bottom: 1.5rem; justify-content: space-between; align-items: center; gap: 1rem; width: 100%;">
                     <div style="display: flex; align-items: center; gap: 0.75rem;">
                         <i class="fa-solid fa-file-pen" style="font-size: 1.5rem; color: var(--color-warning);"></i>
                         <div style="text-align: left;">
@@ -370,8 +370,8 @@
                     <button id="fc-prev-btn" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> 이전</button>
                     <div class="fc-status-indicator">
                         <span id="fc-current-index">0</span> / <span id="fc-total-count">0</span>
-                        <span class="fc-progress-badge" id="fc-memorized-badge" style="display:none; color:var(--color-success); font-size:0.8em; margin-left:0.5em;"><i class="fa-solid fa-circle-check"></i> <span id="fc-memorized-count">0</span></span>
-                        <span class="fc-progress-badge" id="fc-weak-badge" style="display:none; color:var(--color-danger); font-size:0.8em; margin-left:0.5em;"><i class="fa-solid fa-circle-xmark"></i> <span id="fc-weak-count">0</span></span>
+                        <span class="fc-progress-badge is-hidden" id="fc-memorized-badge" style="color:var(--color-success); font-size:0.8em; margin-left:0.5em;"><i class="fa-solid fa-circle-check"></i> <span id="fc-memorized-count">0</span></span>
+                        <span class="fc-progress-badge is-hidden" id="fc-weak-badge" style="color:var(--color-danger); font-size:0.8em; margin-left:0.5em;"><i class="fa-solid fa-circle-xmark"></i> <span id="fc-weak-count">0</span></span>
                     </div>
                     <button id="fc-next-btn" class="btn btn-secondary">다음 <i class="fa-solid fa-arrow-right"></i></button>
                 </div>
@@ -416,10 +416,10 @@
                             <h2 class="quiz-question-text" id="quiz-question">여기는 [ 빈칸 ] 입니다.</h2>
                             
                             <!-- 객관식 선택지 컨테이너 -->
-                            <div id="quiz-options-container" style="display:none; margin-bottom:1rem;"></div>
+                            <div id="quiz-options-container" class="is-hidden" style="margin-bottom:1rem;"></div>
 
                             <!-- OX 선택 컨테이너 -->
-                            <div id="quiz-ox-container" style="display:none; gap:1rem; margin-bottom:1rem;">
+                            <div id="quiz-ox-container" class="is-hidden" style="gap:1rem; margin-bottom:1rem;">
                                 <button class="btn btn-secondary quiz-ox-btn" data-ox="O" style="flex:1; font-size:1.5rem; font-weight:700;">O</button>
                                 <button class="btn btn-secondary quiz-ox-btn" data-ox="X" style="flex:1; font-size:1.5rem; font-weight:700;">X</button>
                             </div>
@@ -627,7 +627,7 @@
                                         <i class="fa-solid fa-pencil"></i> ✏️ 계산 연습장 열기
                                     </button>
                                     
-                                    <div id="calc-scratchpad-container" style="display: none; margin-top: 1rem; border: 1px solid var(--color-border); border-radius: 8px; background: #fff; padding: 0.5rem; max-width: 500px;">
+                                    <div id="calc-scratchpad-container" class="is-hidden" style="margin-top: 1rem; border: 1px solid var(--color-border); border-radius: 8px; background: #fff; padding: 0.5rem; max-width: 500px;">
                                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; padding: 0 0.5rem;">
                                             <span style="color: #333; font-size: 0.8rem; font-weight: bold;"><i class="fa-solid fa-palette"></i> 계산 연습장</span>
                                             <div style="display: flex; gap: 0.5rem;">
@@ -651,12 +651,12 @@
                                 </div>
 
                                 <!-- Accordion Solution -->
-                                <div class="solution-accordion" id="calc-solution-panel" style="display: none; margin-bottom: 1.5rem;">
+                                <div class="solution-accordion is-hidden" id="calc-solution-panel" style="margin-bottom: 1.5rem;">
                                     <div class="solution-header" data-click="toggleSolutionAccordion">
                                         <span><i class="fa-solid fa-square-root-variable"></i> 단계별 풀이 공식 보기</span>
                                         <i class="fa-solid fa-chevron-down" id="solution-chevron"></i>
                                     </div>
-                                    <div class="solution-body" id="calc-solution-body" style="display: none; padding: 1.5rem; background: var(--color-bg-darker); border-radius: 0 0 8px 8px; font-family: monospace; font-size: 1rem; line-height: 1.6; border-top: 1px solid var(--color-border);">
+                                    <div class="solution-body is-hidden" id="calc-solution-body" style="padding: 1.5rem; background: var(--color-bg-darker); border-radius: 0 0 8px 8px; font-family: monospace; font-size: 1rem; line-height: 1.6; border-top: 1px solid var(--color-border);">
                                         풀이 공식 설명...
                                     </div>
                                 </div>
@@ -707,7 +707,7 @@
                                 </div>
 
                                 <!-- Text Input Wrapper -->
-                                <div class="calc-input-group" id="ing-input-container" style="display: none; gap: 1rem; align-items: center; max-width: 500px; margin-bottom: 2rem;">
+                                <div class="calc-input-group is-hidden" id="ing-input-container" style="gap: 1rem; align-items: center; max-width: 500px; margin-bottom: 2rem;">
                                     <input type="text" id="ing-answer-input" class="form-input" placeholder="정답 입력 (예: 1.0% 또는 기재해야 한다)" autocomplete="off" aria-label="원료 정답 입력">
                                     <button id="submit-ing-btn" class="btn btn-primary" data-click="submitIngAnswer">정답 제출</button>
                                 </div>
@@ -817,14 +817,14 @@
                 </div>
 
                 <!-- 3. Simulation Results Panel -->
-                <div id="sim-result-panel" style="display: none; text-align: center; padding: 3rem 1.5rem;">
+                <div id="sim-result-panel" class="is-hidden" style="text-align: center; padding: 3rem 1.5rem;">
                     <i class="fa-solid fa-square-poll-vertical trophy-icon" style="font-size: 4rem; color: var(--color-secondary); margin-bottom: 1.5rem; display: inline-block;"></i>
                     <h2 id="sim-result-title">모의고사 종료</h2>
                     <p class="result-score-summary" style="font-size: 1.3rem; margin: 1rem 0;">점수: <span id="sim-result-score">0 / 100</span> (<span id="sim-result-rate">0%</span>)</p>
                     <p class="result-desc" style="color: var(--color-text-muted); margin-bottom: 1rem;">틀린 문제들은 복습 및 오답 분석 탭에 즉시 연동됩니다.</p>
                     
                     <!-- 과목별 성적 상세 분석 (신규 Feature 2) -->
-                    <div id="sim-result-breakdown" style="max-width: 480px; margin: 1.5rem auto; text-align: left; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); padding: 1.25rem; border-radius: 8px; display: none;">
+                    <div id="sim-result-breakdown" class="is-hidden" style="max-width: 480px; margin: 1.5rem auto; text-align: left; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); padding: 1.25rem; border-radius: 8px;">
                         <!-- Dynamic injection of subject scores & failure diagnostic -->
                     </div>
                     
@@ -887,7 +887,7 @@
             <!-- Textbook Reader View -->
             <section id="textbook-reader-view" class="view-section">
                 <!-- Reading Progress Bar (fixed at top of view) -->
-                <div id="reader-progress-bar" class="reader-progress-bar" style="display:none;">
+                <div id="reader-progress-bar" class="reader-progress-bar is-hidden">
                     <div id="reader-progress-fill" class="reader-progress-fill"></div>
                 </div>
 
@@ -918,7 +918,7 @@
                 </div>
 
                 <!-- Reading Convenience Toolbar -->
-                <div id="reader-toolbar" class="reader-toolbar" style="display:none;">
+                <div id="reader-toolbar" class="reader-toolbar is-hidden">
                     <div class="reader-toolbar-group">
                         <span class="reader-toolbar-label"><i class="fa-solid fa-text-height"></i> 글자 크기</span>
                         <button class="reader-tool-btn" id="reader-font-decrease" title="글자 작게">A-</button>
@@ -949,7 +949,7 @@
                 <!-- Reader Layout: TOC sidebar + Content -->
                 <div id="reader-layout" class="reader-layout">
                     <!-- TOC Sidebar (sections of current chapter) -->
-                    <aside id="reader-toc" class="reader-toc" style="display:none;">
+                    <aside id="reader-toc" class="reader-toc is-hidden">
                         <div class="reader-toc-header">
                             <i class="fa-solid fa-list"></i> 목차
                         </div>
@@ -957,7 +957,7 @@
                             <!-- Populated dynamically -->
                         </nav>
                     </aside>
-                    <div id="reader-toc-backdrop" class="reader-toc-backdrop" style="display:none;"></div>
+                    <div id="reader-toc-backdrop" class="reader-toc-backdrop is-hidden"></div>
 
                     <div id="textbook-reader-container" class="textbook-reader-content">
                         <div class="empty-state">
@@ -969,12 +969,12 @@
                 </div>
 
                 <!-- Back to top button -->
-                <button id="reader-back-to-top" class="reader-back-to-top" style="display:none;" title="맨 위로" aria-label="맨 위로">
+                <button id="reader-back-to-top" class="reader-back-to-top is-hidden" title="맨 위로" aria-label="맨 위로">
                     <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
                 </button>
 
                 <!-- Table fullscreen modal -->
-                <div id="reader-table-modal" class="reader-table-modal" style="display:none;">
+                <div id="reader-table-modal" class="reader-table-modal is-hidden">
                     <div class="reader-table-modal-backdrop"></div>
                     <div class="reader-table-modal-content">
                         <button class="reader-table-modal-close" id="reader-table-modal-close" aria-label="표 모달 닫기"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
@@ -1180,7 +1180,7 @@
             </div>
 
             <!-- PWA 진단 정보 (디버그용) -->
-            <div class="pwa-modal-body" id="pwa-diagnostics" style="display: none; border-top: 1px solid var(--border-color, rgba(255,255,255,0.08)); padding-top: 1rem; margin-top: 0.5rem;">
+            <div class="pwa-modal-body is-hidden" id="pwa-diagnostics" style="border-top: 1px solid var(--border-color, rgba(255,255,255,0.08)); padding-top: 1rem; margin-top: 0.5rem;">
                 <p class="pwa-modal-lead" style="font-size: 0.85rem; opacity: 0.7;">설치 프롬프트가 자동으로 뜨지 않는 원인 진단:</p>
                 <div id="pwa-diag-content" style="font-size: 0.8rem; line-height: 1.6; color: var(--color-text-muted, #9aa3b2); font-family: monospace; white-space: pre-wrap;"></div>
             </div>
