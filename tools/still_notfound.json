@@ -1,20 +1,20 @@
 [
   {
-    "examFile": "content/문제은행/과목2_문제.md",
-    "relPath": "../교재/manufacturing/2과목_제조및품질관리_표준형.md",
-    "oldLineNum": 3725,
-    "oldLineContent": "> **정답**: ②",
+    "examFile": "content/문제은행/과목3_문제.md",
+    "relPath": "../교재/safety/3과목_유통화장품안전관리_표준형.md",
+    "oldLineNum": 2770,
+    "oldLineContent": "|  | 선한선출 | 품질 양호한 것부터 출고 |",
     "phrases": [
-      "정답: ②"
+      "선한선출 품질 양호한 것부터 출고"
     ]
   },
   {
-    "examFile": "content/문제은행/과목2_문제.md",
-    "relPath": "../교재/manufacturing/2과목_제조및품질관리_표준형.md",
-    "oldLineNum": 3836,
-    "oldLineContent": "| 고득점 TIP | 시험에서 고득점을 위한 중요 팁 | 컬럼 |",
+    "examFile": "content/문제은행/과목3_문제.md",
+    "relPath": "../교재/safety/3과목_유통화장품안전관리_표준형.md",
+    "oldLineNum": 2650,
+    "oldLineContent": "| **일탈** | CGMP 규정을 벗어난 행위. |",
     "phrases": [
-      "고득점 TIP 시험에서 고득점을 위한 중요 팁 컬럼"
+      "일탈 CGMP 규정을 벗어난 행위."
     ]
   }
 ]
