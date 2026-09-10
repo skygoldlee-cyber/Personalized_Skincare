@@ -1656,3 +1656,30 @@ PWA에서 교재 근거 인용 링크(`[교재: L####](<../교재/.../*.md#L####
 - `npm run build:data` 성공 (파서 등가성 검사 통과)
 - `npm test` 248 pass, 0 fail
 - CACHE_VERSION → `v287-20260910-glossary`
+
+---
+
+## #59 — 핵심 용어 정리 영어 약어 full name 병기 (2026-09-10)
+
+> **목표**: 8개 교재 파일의 "📖 핵심 용어 정리" 섹션에서 영어 약어에 full name 병기
+
+### 배경
+
+- 핵심 용어 정리 재작성(#56)에서 대부분의 약어에 full name이 병기되었으나 일부 누락 항목 존재
+- 교재 본문에서만 사용되고 full name이 없는 약어: KFCC, CCTV, TEWL, NMF, UVB, UVA, GTIN, GS1, PEG, GMO, PVC, PSF, IPBC, HEPA, HPLC, TLC, TOC, CFU, HLB, SCI 등
+
+### 변경 내용
+
+**표준형 4개 파일**:
+- 1과목: KFCC(Korean Functional Cosmetics Codex), CCTV(Closed-Circuit Television)
+- 2과목: TEWL(Trans-Epidermal Water Loss), NMF(Natural Moisturizing Factor), UVB(Ultraviolet B), UVA(Ultraviolet A), GTIN(Global Trade Item Number), GS1(Global Standards 1), PEG(Polyethylene Glycol), GMO(Genetically Modified Organism), IPBC(Iodo-Propynyl Butyl Carbamate)
+- 3과목: HEPA(High Efficiency Particulate Air), HPLC(High Performance Liquid Chromatography), TLC(Thin Layer Chromatography), TOC(Total Organic Carbon)
+- 4과목: NMF(Natural Moisturizing Factor), HLB(Hydrophilic-Lipophilic Balance), SCI(Science Citation Index)
+
+**이야기형 4개 파일**: 동일 약어에 동일 full name 병기
+
+### 검증
+
+- `npm run build:data` 성공 (파서 등가성 검사 통과)
+- `npm test` 248 pass, 0 fail
+- CACHE_VERSION → `v288-20260910-glossary-fullname`
