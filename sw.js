@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v269-20260910-9ff82e8';   // 교재본문 읽기 보완·개선 (URL 인코딩, 다크 테마, LRU 캐시, 스크롤 최적화)
+const CACHE_VERSION = 'v269-20260910-911b7f2';   // 교재읽기 모바일 UX 개선 (12건)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
