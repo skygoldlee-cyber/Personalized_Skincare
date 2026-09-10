@@ -619,13 +619,6 @@ export function renderTextbookReader() {
     
     if (!subjectSelect || !chapterSelect || !container) return;
 
-    console.log('[Reader] renderTextbookReader called', {
-        subjectSelectValue: subjectSelect.value,
-        selectedSubject: textbookReaderState.selectedSubject,
-        selectedChapter: textbookReaderState.selectedChapter,
-        bound: subjectSelect.dataset.bound
-    });
-
     // Initialize reader convenience toolbar (font size, theme, focus mode, etc.)
     initReaderToolbar();
     
@@ -666,7 +659,6 @@ export function renderTextbookReader() {
         populateChapterSelect(textbookReaderState.selectedSubject);
         if (textbookReaderState.selectedChapter) {
             chapterSelect.value = textbookReaderState.selectedChapter;
-            console.log('[Reader] restoring chapter', { subject: textbookReaderState.selectedSubject, chapter: textbookReaderState.selectedChapter });
             renderChapterContent(textbookReaderState.selectedSubject, textbookReaderState.selectedChapter).then(() => {
                 // 스크롤 위치 복원 (콘텐츠 렌더링 후)
                 if (savedPos && savedPos.scrollTop > 0) {
@@ -687,7 +679,6 @@ export function renderTextbookReader() {
         
         subjectSelect.addEventListener('change', (e) => {
             const subjId = e.target.value;
-            console.log('[Reader] subject change event fired', { subjId, previousSubject: textbookReaderState.selectedSubject });
             textbookReaderState.selectedSubject = subjId;
             textbookReaderState.selectedChapter = '';
             saveReaderPosition(); // 1. 교재 읽기 이어하기
@@ -770,12 +761,12 @@ function populateChapterSelect(subjId) {
 
 function renderChapterContent(subjId, chapterIdx) {
     const container = document.getElementById('textbook-reader-container');
-    if (!container) return;
+    if (!container) return Promise.resolve();
 
     chapterIdx = parseInt(chapterIdx);
     const STUDY_DATA = (typeof window !== 'undefined' && window.STUDY_DATA) ? window.STUDY_DATA : {};
     const subj = STUDY_DATA[subjId];
-    if (!subj || !subj.chapters || isNaN(chapterIdx) || !subj.chapters[chapterIdx]) return;
+    if (!subj || !subj.chapters || isNaN(chapterIdx) || !subj.chapters[chapterIdx]) return Promise.resolve();
 
     const originalChapter = subj.chapters[chapterIdx];
 
@@ -791,7 +782,7 @@ function renderChapterContent(subjId, chapterIdx) {
 
     const isStory = textbookReaderState.storyMode;
     if (isStory) {
-        _loadStoryChapter(subjId, chapterIdx, originalChapter).then(chapter => {
+        return _loadStoryChapter(subjId, chapterIdx, originalChapter).then(chapter => {
             _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, true);
         }).catch(err => {
             console.warn('[Story Mode] 이야기형 MD 로드 실패, 기본 모드로 전환:', err);
@@ -802,6 +793,7 @@ function renderChapterContent(subjId, chapterIdx) {
     } else {
         const filteredChapter = _filterMetaSections(originalChapter);
         _renderChapterContentInternal(subjId, chapterIdx, subj, filteredChapter, false);
+        return Promise.resolve();
     }
 }
 
