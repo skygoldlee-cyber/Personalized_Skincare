@@ -309,13 +309,52 @@ for (const [idxKey, entry] of Object.entries(GLOSSARY_INDEX)) {
     }
 }
 
+// --- glossary JSON의 미등록 항목을 GLOSSARY_INDEX에 추가 등록 ---
+// 교재 본문에 (LNN|file.pdf) 링크가 없어서 GLOSSARY_INDEX에 등록되지 않은
+// 큐레이션 정의를 과목별 대표 참조문서를 refDoc으로 하여 추가 등록.
+// 이를 통해 "중요 용어 해설" 섹션에서 glossary JSON의 모든 정의가 표시됨.
+const SUBJECT_DEFAULT_REFDOC = {
+    '과목1': '화장품법(법률)(제20901호)(20260402)',
+    '과목2': '우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822)',
+    '과목3': '우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822)',
+    '과목4': '화장품법 시행규칙(총리령)(제02109호)(20260402)',
+};
+let addedCount = 0;
+for (const [keyword, candidates] of curatedMap) {
+    for (const cand of candidates) {
+        const subjectId = cand.subjectId;
+        if (!subjectId) continue;
+        // 이미 해당 과목에 같은 키워드가 GLOSSARY_INDEX에 있는지 확인
+        const alreadyExists = Object.entries(GLOSSARY_INDEX).some(
+            ([, entry]) => entry.keyword === keyword && entry.subjectId === subjectId
+        );
+        if (alreadyExists) continue;
+        // 과목별 대표 refDoc
+        const refDoc = SUBJECT_DEFAULT_REFDOC[subjectId] || '';
+        if (!refDoc) continue;
+        // 가상 idxKey: "glossary:과목N:키워드"
+        const idxKey = `glossary:${subjectId}:${keyword}`;
+        GLOSSARY_INDEX[idxKey] = {
+            keyword,
+            explanation: cand.definition,
+            refDoc,
+            subjectId,
+            curated: true,
+        };
+        addedCount++;
+    }
+}
+
 // --- 출력 파일 작성 ---
 const jsonStr = JSON.stringify(GLOSSARY_INDEX);
 const output = `// src/keyword-index.js — 용어집 인덱스 (참조문서에서 추출한 키워드 + 설명)
 // 자동 생성됨: node tools/build/build_keyword_index.js
-// 키: "파일명.md|L라인번호" → 값: { keyword, explanation, refDoc, subjectId, curated? }
-// **참조문서에서 키워드가 검색되는 경우만 등록** (검색 불가 → 미등록 → 런타임에 L? 처리)
-// **큐레이션 정의**: content/교재/glossary/subject{N}.json에서 정의가 있으면 explanation을 덮어쓰고 curated=true 설정
+// 키: "파일명.md|L라인번호" 또는 "glossary:과목N:키워드" (큐레이션 전용)
+// → 값: { keyword, explanation, refDoc, subjectId, curated? }
+// **참조문서에서 키워드가 검색되는 경우만 자동 등록** (검색 불가 → 미등록 → 런타임에 L? 처리)
+// **큐레이션 정의**: content/교재/glossary/subject{N}.json에서 정의가 있으면
+//   1) 기존 자동 등록 항목의 explanation을 덮어쓰고 curated=true 설정
+//   2) 미등록 키워드는 과목별 대표 참조문서를 refDoc으로 하여 추가 등록
 export const GLOSSARY_INDEX = ${jsonStr};
 `;
 
@@ -327,7 +366,7 @@ console.log(`등록 (참조문서에 키워드 존재): ${totalRegistered}`);
 console.log(`미등록 (참조문서에 키워드 없음): ${totalSkipped}`);
 console.log(`등록률: ${totalChecked > 0 ? Math.round(totalRegistered / totalChecked * 100) : 0}%`);
 console.log(`GLOSSARY_INDEX 항목 수: ${Object.keys(GLOSSARY_INDEX).length}`);
-console.log(`큐레이션 정의: ${curatedCount}개 로드, ${mergedCount}개 병합`);
+console.log(`큐레이션 정의: ${curatedCount}개 로드, ${mergedCount}개 병합, ${addedCount}개 추가 등록`);
 console.log(`출력: ${path.relative(ROOT, OUTPUT)}`);
 if (skipped.length > 0) {
     console.log('\n미등록 샘플 (최대 20개):');

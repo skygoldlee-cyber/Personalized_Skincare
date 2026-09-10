@@ -1057,7 +1057,7 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
     const chapterRefPath = mapSourceToRef(chapterSourceText);
 
     // --- 용어집 항목 사전 계산 (glossary-renderer 모듈 위임) ---
-    const glossaryItems = collectGlossaryItems(chapter.sections, chapterRefPath, mapSourceToRef);
+    const glossaryItems = collectGlossaryItems(chapter.sections, chapterRefPath, mapSourceToRef, subjId);
     const hasGlossary = glossaryItems.length > 0;
 
     // TOC에 용어집 항목 추가

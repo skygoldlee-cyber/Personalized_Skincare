@@ -22,6 +22,24 @@ export function getGlossaryByRefFile(refFileName, seenKeys) {
 }
 
 /**
+ * 특정 과목의 모든 용어집 항목을 반환합니다.
+ * glossary JSON에서 추가 등록된 항목(idxKey가 "glossary:" 접두사)도 포함.
+ * @param {string} subjectId - 과목 ID (예: "과목1")
+ * @param {Set<string>} [seenKeys] - 중복 방지용 Set (선택)
+ * @returns {Array<{idxKey:string, keyword:string, explanation:string, refDoc:string, curated?:boolean}>}
+ */
+export function getGlossaryBySubject(subjectId, seenKeys) {
+    const results = [];
+    for (const [idxKey, entry] of Object.entries(GLOSSARY_INDEX)) {
+        if (entry.subjectId === subjectId && (!seenKeys || !seenKeys.has(idxKey))) {
+            results.push({ idxKey, ...entry });
+            if (seenKeys) seenKeys.add(idxKey);
+        }
+    }
+    return results;
+}
+
+/**
  * 여러 참조문서 파일명에 대해 용어집 항목들을 수집합니다.
  * @param {string[]} refFileNames - 참조문서 파일명 배열
  * @returns {Array<{idxKey:string, keyword:string, explanation:string, refDoc:string, curated?:boolean}>}

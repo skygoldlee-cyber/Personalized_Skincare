@@ -3,19 +3,22 @@
 // 데이터 접근은 glossary-query.js를 통해 추상화됩니다.
 import { esc } from '../sanitize.js';
 import { resolveRefPath } from '../pdf-registry.js';
-import { getGlossaryByRefFile } from '../glossary-query.js';
+import { getGlossaryByRefFile, getGlossaryBySubject } from '../glossary-query.js';
 
 /**
  * 챕터의 섹션들을 순회하며 용어집 항목을 수집합니다.
+ * 출처 기반 수집 + 과목 ID 기반 수집(glossary JSON 큐레이션 전체)을 병합합니다.
  * @param {Array} sections - 챕터 섹션 배열
  * @param {string|null} chapterRefPath - 챕터 대표 참조문서 경로
  * @param {function} mapSourceToRefFn - 출처 텍스트 → 참조문서 경로 매핑 함수
+ * @param {string} [subjectId] - 과목 ID (예: "과목1") — glossary JSON 전체 항목 수집용
  * @returns {Array<{idxKey:string, keyword:string, explanation:string, refDoc:string, curated?:boolean}>}
  */
-export function collectGlossaryItems(sections, chapterRefPath, mapSourceToRefFn) {
+export function collectGlossaryItems(sections, chapterRefPath, mapSourceToRefFn, subjectId) {
     const seenKeys = new Set();
     const glossaryItems = [];
 
+    // 1) 출처(참조문서) 기반 수집 (기존 로직)
     for (const s of sections) {
         const secSrcM = (s.content || '').match(/📌\s*\*\*출처\*\*[:：]\s*(.+?)(?:\||\n)/);
         const secRefP = secSrcM ? mapSourceToRefFn(secSrcM[1]) : null;
@@ -25,6 +28,12 @@ export function collectGlossaryItems(sections, chapterRefPath, mapSourceToRefFn)
             const items = getGlossaryByRefFile(refFileName, seenKeys);
             glossaryItems.push(...items);
         }
+    }
+
+    // 2) 과목 ID 기반 수집 (glossary JSON 큐레이션 전체 — "glossary:" 접두사 항목 포함)
+    if (subjectId) {
+        const items = getGlossaryBySubject(subjectId, seenKeys);
+        glossaryItems.push(...items);
     }
 
     return glossaryItems;

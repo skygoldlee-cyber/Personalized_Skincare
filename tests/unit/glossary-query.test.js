@@ -111,7 +111,8 @@ test('getAllGlossaryKeywords: 항목 구조 {keyword, idxKey}', () => {
         const item = result[0];
         assert.ok(typeof item.keyword === 'string', 'keyword는 string');
         assert.ok(typeof item.idxKey === 'string', 'idxKey는 string');
-        assert.ok(item.idxKey.includes('|'), 'idxKey에 | 구분자');
+        // idxKey 형식: "파일명.md|L라인번호" 또는 "glossary:과목N:키워드"
+        assert.ok(item.idxKey.includes('|') || item.idxKey.startsWith('glossary:'), 'idxKey에 | 구분자 또는 glossary: 접두사');
     }
 });
 

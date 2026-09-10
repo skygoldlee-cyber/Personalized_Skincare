@@ -1601,3 +1601,58 @@ PWA에서 교재 근거 인용 링크(`[교재: L####](<../교재/.../*.md#L####
 - Git commit `bb2c657` (링크 동기화), `b512f24` (SW bump)
 - CACHE_VERSION → `v286-20260910-bb2c657`
 - Vercel 배포 완료: https://personalized-skincare-study.vercel.app
+
+---
+
+## #58 — 중요 용어 해설 품질 개선 (2026-09-10)
+
+> **목표**: 교재 리더의 "📖 중요 용어 해설" 섹션이 glossary JSON의 양질 정의 156개를 모두 표시하도록 개선
+
+### 배경
+
+- "중요 용어 해설"은 `glossary-renderer.js`가 런타임에 동적 렌더링하는 섹션 (교재 MD에 직접 작성되지 않음)
+- 기존: 교재 본문의 `(LNN|file.pdf)` 링크 기반으로만 GLOSSARY_INDEX에 등록 → 69개 항목
+- 핵심 용어 정리 재작성으로 `(LNN|file.pdf)` 패턴이 제거되면서 자동 추출 0건으로 감소
+- glossary JSON에 156개 양질 정의가 있었으나, 본문 링크가 없어 GLOSSARY_INDEX에 등록되지 못함
+- 과목4는 큐레이션 정의가 1건도 반영되지 않았던 상태
+
+### 변경 내용
+
+1. **`tools/build/build_keyword_index.js` 개선**
+   - glossary JSON의 모든 정의를 GLOSSARY_INDEX에 추가 등록하는 로직 신설
+   - 교재 본문 링크 기반 자동 추출 + glossary JSON 기반 큐레이션 등록을 이원화
+   - 미등록 큐레이션 항목은 과목별 대표 참조문서를 refDoc으로 하여 `glossary:과목N:키워드` 형식의 idxKey로 추가
+   - 과목별 대표 참조문서 매핑:
+     - 과목1: 화장품법(법률)(제20901호)(20260402)
+     - 과목2: 우수화장품 제조 및 품질관리기준
+     - 과목3: 우수화장품 제조 및 품질관리기준 (CGMP)
+     - 과목4: 화장품법 시행규칙
+
+2. **`src/glossary-query.js`**: `getGlossaryBySubject(subjectId)` 함수 추가
+   - 과목 ID 기준으로 GLOSSARY_INDEX의 모든 항목을 반환 (glossary: 접두사 항목 포함)
+
+3. **`src/views/glossary-renderer.js`**: `collectGlossaryItems()` 시그니처 확장
+   - `subjectId` 파라미터 추가 (선택적)
+   - 기존 출처(refFileName) 기반 수집 + 과목 ID 기반 수집을 병합
+   - 중복 제거 (seenKeys Set 유지)
+
+4. **`src/views/textbook-reader.js`**: `collectGlossaryItems()` 호출 시 `subjId` 전달
+
+5. **`tests/unit/glossary-query.test.js`**: idxKey 형식 검증 테스트 업데이트
+   - `|` 구분자 또는 `glossary:` 접두사 둘 다 허용
+
+### 결과
+
+| 과목 | 기존 항목 수 | 개선 후 항목 수 |
+|------|------------|----------------|
+| 과목1 | 12 (큐레이션 11) | 23 (전체 큐레이션) |
+| 과목2 | 26 (큐레이션 18) | 52 (전체 큐레이션) |
+| 과목3 | 16 (큐레이션 1) | 45 (전체 큐레이션) |
+| 과목4 | 15 (큐레이션 0) | 36 (전체 큐레이션) |
+| **총계** | **69** | **156** |
+
+### 검증
+
+- `npm run build:data` 성공 (파서 등가성 검사 통과)
+- `npm test` 248 pass, 0 fail
+- CACHE_VERSION → `v287-20260910-glossary`
