@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v294-20260910-mindmap-add';   // 마인드맵 없는 4개 챕터 보완 (2과목 Ch02/Ch04/Ch05, 4과목 Ch05)
+const CACHE_VERSION = 'v295-20260910-ch-overview';   // 챕터 첫 마인드맵을 전체 개요로 교체 (7개 챕터 × 표준/이야기형)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
