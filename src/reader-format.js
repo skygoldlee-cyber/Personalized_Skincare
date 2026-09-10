@@ -36,6 +36,15 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
         }
     );
 
+    // 과목간 교차 참조 링크 → 교재 리더 내 과목 이동
+    // 마크다운 파서가 [text](subj:law)를 <a href="subj:law">text</a>로 변환한 후 처리
+    html = html.replace(
+        /<a href="subj:([a-z]+)">([^<]+)<\/a>/g,
+        (match, subjKey, linkText) => {
+            return `<a href="#" data-ref-subject="${escapeHTML(subjKey)}" class="cross-subject-link" style="color:var(--color-primary,#1f6feb);text-decoration:underline dotted;font-weight:600;">${escapeHTML(linkText)}</a>`;
+        }
+    );
+
     // [DEPRECATED] 참조자료 PDF 링크 → 앱 내 HTML 뷰어로 열기
     // 2026-09 교재 전수조사 이후 모든 PDF 링크가 ref_md MD 링크로 변환됨.
     // 이 브랜치는 레거시 호환용 fallback으로만 유지 (향후 제거 예정).

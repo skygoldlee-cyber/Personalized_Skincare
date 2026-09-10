@@ -5,6 +5,27 @@
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 > registry↔번들 14개 실재 확인 · 비ASCII 콘텐츠 파일 0 · `vercel.json` JSON 유효.
 
+## 2026-09-11 과목간 교차 참조 하이퍼링크 추가
+
+### "관련 과목" 섹션 교차 참조 링크 변환
+- 교재 전체 "관련 과목" 섹션 70개 교차 참조를 Markdown 링크로 변환
+- 패턴: `N과목 M챕터 "챕터명"` → `[N과목 M챕터 "챕터명"](subj:subjectKey)`
+- 1과목: 8개, 2과목: 16개, 3과목: 18개, 4과목: 28개
+- 표준형/이야기형 모두 수정
+
+### 교재 리더 과목 이동 기능 추가
+- `reader-format.js`: `subj:` URL을 `data-ref-subject` 속성으로 변환
+- `textbook-reader.js`: `data-ref-subject` 클릭 핸들러 추가
+  - 과목 선택 드롭다운 업데이트
+  - change 이벤트 트리거로 과목 전환
+  - 컨테이너 스크롤 상단으로 이동
+
+### 검증
+- `node --check`: 성공
+- `npm run build:data`: 성공
+- `npm test`: 248 passed, 0 failed
+- `npm run test:dom`: 21 passed, 0 failed
+
 ## 2026-09-11 교재 본문 읽기 단원 선택 UI 제거
 
 ### 단원 선택 UI 제거

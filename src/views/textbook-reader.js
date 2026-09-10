@@ -1742,4 +1742,23 @@ function bindReferenceLinks() {
             _hidePreview();
         }, { passive: true });
     });
+
+    // 과목간 교차 참조 링크 → 교재 리더 내 과목 이동
+    document.querySelectorAll('[data-ref-subject]').forEach(a => {
+        a.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetSubject = a.dataset.refSubject;
+            if (!targetSubject) return;
+            // 과목 선택 드롭다운 업데이트
+            const subjectSelect = document.getElementById('reader-subject-select');
+            if (subjectSelect) {
+                subjectSelect.value = targetSubject;
+                // change 이벤트 트리거
+                subjectSelect.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+            // 컨테이너 스크롤 상단으로
+            const container = document.getElementById('textbook-reader-container');
+            if (container) container.scrollTop = 0;
+        });
+    });
 }
