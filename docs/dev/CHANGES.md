@@ -1537,3 +1537,67 @@ PWA에서 교재 근거 인용 링크(`[교재: L####](<../교재/.../*.md#L####
 - Git commits: `1ec317e` (1차), `cf709e0` (2차), `5e454fe` (3차 TOC 버그 수정), `ffe45f3` (4차 잔여 변환)
 - CACHE_VERSION: v279 → v280 → v281 → v282 → v283
 - Vercel 배포 완료: https://personalized-skincare-study.vercel.app
+
+---
+
+## #56 — 핵심 용어 정리 시험집중형 재작성 + 영어 약어 full name 병기 (2026-09-10)
+
+> **목표**: 4과목 표준형·이야기형 교재의 `## 📖 핵심 용어 정리` 섹션을 시험 출제 빈도·함정·숫자 중심의 실전 요약표로 재작성하고, 영어 약어에 영문 full name 병기
+
+### 변경 내용
+
+1. **핵심 용어 정리 표 재작성** (8개 교재 파일, 20개 섹션)
+   - **표준형**: 1과목(2섹션), 2과목(6섹션), 3과목(5섹션), 4과목(7섹션)
+   - **이야기형**: 1과목(2섹션), 2과목(6섹션), 3과목(5섹션), 4과목(7섹션)
+   - 기존 단순 용어-설명 2열 표 → 주제별 분류 + 핵심 포인트 + 빈출 표시 + 숫자 강조 구조로 재구성
+   - 정의, 시험 구분, 임계값, 법적 예외, 공식, 절차, 고빈도 암기 포인트 포함
+
+2. **영어 약어 full name 병기**
+   - `TEWL` → `TEWL (Trans-Epidermal Water Loss)`
+   - `HLB` → `HLB (Hydrophilic-Lipophilic Balance)`
+   - `CMC` → 제형: `Critical Micelle Concentration` / 모발: `Cell Membrane Complex` (문맥별 구분)
+   - `CGMP` → `Cosmetic Good Manufacturing Practice`
+   - `HEPA`, `HPLC (High Performance Liquid Chromatography)`, `TLC (Thin Layer Chromatography)`, `TOC (Total Organic Carbon)`, `CFU (Colony-Forming Unit)`, `SOP (Standard Operating Procedure)`, `NMF (Natural Moisturizing Factor)`, `DHT (Dihydrotestosterone)`, `PCA (Pyrrolidone Carboxylic Acid)`
+   - `UVA/UVB/UVC` 파장 영역 표기
+   - 포장재: `LDPE (Low Density Polyethylene)`, `HDPE (High Density Polyethylene)`, `PP (Polypropylene)`, `PS (Polystyrene)`, `AS (Acrylonitrile Styrene)`, `ABS (Acrylonitrile Butadiene Styrene)`, `PET (Polyethylene Terephthalate)`
+   - 프탈레이트: `DBP (Dibutyl Phthalate)`, `BBP (Butyl Benzyl Phthalate)`, `DEHP (Di(2-ethylhexyl) Phthalate)`
+
+### 검증
+
+- `npm run build:data` 성공 (파서 등가성 검사 통과)
+- `npm test` 248 pass, 0 fail
+- Git commit `35c6d9f`
+- Vercel 배포 완료
+
+---
+
+## #57 — 문제은행 인용 링크 라인 번호 동기화 (2026-09-10)
+
+> **목표**: 핵심 용어 정리 재작성으로 인해 교재 라인 번호가 변경되어, 문제은행 999개 인용 링크 중 153개가 잘못된 위치를 가리키던 문제 수정
+
+### 변경 내용
+
+1. **자동 동기화** (`tools/fix_citation_lines.js` 신규)
+   - 기존 fingerprint 매칭으로 846개는 자동 해결
+   - 나머지는 git history(`git show HEAD~1:<교재파일>`)에서 이전 교재 내용을 가져와 구문 검색으로 138개 자동 매핑
+   - main 링크와 evidence(근거) 링크를 모두 갱신 (중복 제거 없이 동일 라인 번호 공유)
+
+2. **수동 매핑** (`tools/fix_manual_citations.js` 신규)
+   - 재작성된 섹션에서 내용이 완전히 바뀌어 자동 검색이 불가능한 15개 항목
+   - 각 항목의 이전 내용을 확인하고 현재 교재에서 해당 개념의 새 위치를 수동 지정
+   - 예: 소르빅애씨드 L2415→L2475, 히알루론산 L3672→L3785, 탱크 L1791→L1837, 섬유아세포 L1208→L1237 등
+
+3. **보조 도구 신규 추가**
+   - `tools/extract_notfound.js`: 미발견 인용 링크 상세 추출 (evidenceText 포함)
+   - `tools/fix_citation_lines.js`: fingerprint + git history 기반 자동 동기화
+   - `tools/fix_manual_citations.js`: 수동 매핑 적용
+   - `tools/notfound_citations.json`, `tools/still_notfound.json`: 중간 산출물
+
+### 검증
+
+- `node tools/sync_citation_lines.js`: **999개 링크 모두 동일 (미발견 0)**
+- `npm run build:data` 성공 (파서 등가성 검사 통과)
+- `npm test` 248 pass, 0 fail
+- Git commit `bb2c657` (링크 동기화), `b512f24` (SW bump)
+- CACHE_VERSION → `v286-20260910-bb2c657`
+- Vercel 배포 완료: https://personalized-skincare-study.vercel.app
