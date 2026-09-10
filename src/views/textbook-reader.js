@@ -21,7 +21,23 @@ let textbookReaderState = {
 };
 
 // --- 이야기형 MD 캐시: { "subjId:chapterIdx": { chapterTitle, sections, filePath } } ---
+// LRU 캐시: 최대 항목 수를 초과하면 가장 오래된 항목 제거 (메모리 누수 방지)
 const _storyChapterCache = {};
+const _STORY_CACHE_MAX_ENTRIES = 10;
+let _storyCacheKeyOrder = [];
+
+function _touchStoryCacheKey(key) {
+    const idx = _storyCacheKeyOrder.indexOf(key);
+    if (idx >= 0) _storyCacheKeyOrder.splice(idx, 1);
+    _storyCacheKeyOrder.push(key);
+}
+
+function _evictStoryCacheIfNeeded() {
+    while (_storyCacheKeyOrder.length > _STORY_CACHE_MAX_ENTRIES) {
+        const oldest = _storyCacheKeyOrder.shift();
+        delete _storyChapterCache[oldest];
+    }
+}
 
 // --- 오디오북 플레이어 ---
 let readerAudioState = {
@@ -716,7 +732,10 @@ function renderChapterContent(subjId, chapterIdx) {
 
 async function _loadStoryChapter(subjId, chapterIdx, originalChapter) {
     const cacheKey = `${subjId}:${chapterIdx}`;
-    if (_storyChapterCache[cacheKey]) return _storyChapterCache[cacheKey];
+    if (_storyChapterCache[cacheKey]) {
+        _touchStoryCacheKey(cacheKey); // LRU: 캐시 히트 시 최근 사용 위치로 이동
+        return _storyChapterCache[cacheKey];
+    }
 
     const manifest = await DataLoader._getManifest();
     const subjMeta = manifest.subjects.find(s => s.key === subjId);
@@ -740,6 +759,8 @@ async function _loadStoryChapter(subjId, chapterIdx, originalChapter) {
     };
 
     _storyChapterCache[cacheKey] = storyChapter;
+    _touchStoryCacheKey(cacheKey);
+    _evictStoryCacheIfNeeded();
     return storyChapter;
 }
 
@@ -1279,39 +1300,53 @@ function bindReaderScrollEvents() {
     if (!container || readerScrollBound) return;
     readerScrollBound = true;
 
-    container.addEventListener('scroll', () => {
-        // Progress bar
-        const progressFill = document.getElementById('reader-progress-fill');
-        if (progressFill) {
-            const max = container.scrollHeight - container.clientHeight;
-            const pct = max > 0 ? (container.scrollTop / max) * 100 : 0;
-            progressFill.style.width = pct + '%';
-        }
-        // Back to top visibility
-        const backBtn = document.getElementById('reader-back-to-top');
-        if (backBtn) backBtn.style.display = container.scrollTop > 400 ? 'block' : 'none';
+    // rAF 디바운스: 매 스크롤 프레임마다 querySelectorAll 호출을 방지
+    // 연속 스크롤 중에는 1회만 처리하고, 다음 프레임에서 갱신
+    let scrollRafId = null;
+    let cachedCards = null; // 카드 목록 캐싱 (단원 전환 시 초기화됨)
 
-        // Scroll spy — highlight current section in TOC + breadcrumb (D)
-        const cards = container.querySelectorAll('.reader-section-card');
-        const containerTop = container.getBoundingClientRect().top;
-        let currentIdx = -1;
-        cards.forEach(card => {
-            const rect = card.getBoundingClientRect();
-            if (rect.top - containerTop < 120) {
-                currentIdx = parseInt(card.dataset.sectionIdx);
+    const handleScroll = () => {
+        if (scrollRafId !== null) return;
+        scrollRafId = requestAnimationFrame(() => {
+            scrollRafId = null;
+            // 카드 목록 캐싱: 단원 전환 시 초기화되므로 여기서 지연 캐싱
+            if (!cachedCards || !cachedCards.length || !cachedCards[0].isConnected) {
+                cachedCards = container.querySelectorAll('.reader-section-card');
             }
-            card.classList.toggle('current-section', parseInt(card.dataset.sectionIdx) === currentIdx);
+            // Progress bar
+            const progressFill = document.getElementById('reader-progress-fill');
+            if (progressFill) {
+                const max = container.scrollHeight - container.clientHeight;
+                const pct = max > 0 ? (container.scrollTop / max) * 100 : 0;
+                progressFill.style.width = pct + '%';
+            }
+            // Back to top visibility
+            const backBtn = document.getElementById('reader-back-to-top');
+            if (backBtn) backBtn.style.display = container.scrollTop > 400 ? 'block' : 'none';
+
+            // Scroll spy — highlight current section in TOC + breadcrumb (D)
+            const containerTop = container.getBoundingClientRect().top;
+            let currentIdx = -1;
+            cachedCards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                if (rect.top - containerTop < 120) {
+                    currentIdx = parseInt(card.dataset.sectionIdx);
+                }
+                card.classList.toggle('current-section', parseInt(card.dataset.sectionIdx) === currentIdx);
+            });
+            document.querySelectorAll('.reader-toc-item').forEach(item => {
+                item.classList.toggle('active', parseInt(item.dataset.sectionIdx) === currentIdx);
+            });
+            // D: 브레드크럼 현재 섹션 업데이트
+            const breadcrumbEl = document.getElementById('breadcrumb-current-section');
+            if (breadcrumbEl && currentIdx >= 0) {
+                const card = container.querySelector(`.reader-section-card[data-section-idx="${currentIdx}"] .reader-section-title`);
+                if (card) breadcrumbEl.textContent = card.textContent.trim();
+            }
         });
-        document.querySelectorAll('.reader-toc-item').forEach(item => {
-            item.classList.toggle('active', parseInt(item.dataset.sectionIdx) === currentIdx);
-        });
-        // D: 브레드크럼 현재 섹션 업데이트
-        const breadcrumbEl = document.getElementById('breadcrumb-current-section');
-        if (breadcrumbEl && currentIdx >= 0) {
-            const card = container.querySelector(`.reader-section-card[data-section-idx="${currentIdx}"] .reader-section-title`);
-            if (card) breadcrumbEl.textContent = card.textContent.trim();
-        }
-    });
+    };
+
+    container.addEventListener('scroll', handleScroll, { passive: true });
 
     // Back to top click
     const backBtn = document.getElementById('reader-back-to-top');
@@ -1386,11 +1421,11 @@ function initReaderToolbar() {
             }
         });
         if (tocBackdrop) tocBackdrop.addEventListener('click', closeMobileToc);
-        // TOC 항목 클릭 시 자동 닫기
+        // TOC 항목 클릭 시 즉시 드로어 닫기 (스크롤 애니메이션과 겹침 방지)
         if (tocAside) {
             tocAside.addEventListener('click', (e) => {
                 if (e.target.closest('.reader-toc-item') || e.target.closest('.reader-toc-sub-item')) {
-                    setTimeout(closeMobileToc, 300);
+                    closeMobileToc();
                 }
             });
         }
@@ -1649,17 +1684,23 @@ function bindReferenceLinks() {
             clearTimeout(_previewTimer);
             _hidePreview();
         });
-        // 롱프레스 프리뷰 (모바일)
+        // 롱프레스 프리뷰 (모바일) — 시각적 힌트: 600ms 동안 링크를 활성화 스타일로 표시
         a.addEventListener('touchstart', () => {
             clearTimeout(_previewTouchTimer);
-            _previewTouchTimer = setTimeout(() => _showPreview(a), 600);
+            a.classList.add('ref-longpress-active');
+            _previewTouchTimer = setTimeout(() => {
+                a.classList.remove('ref-longpress-active');
+                _showPreview(a);
+            }, 600);
         }, { passive: true });
         a.addEventListener('touchend', () => {
             clearTimeout(_previewTouchTimer);
+            a.classList.remove('ref-longpress-active');
             setTimeout(_hidePreview, 3000);
         }, { passive: true });
         a.addEventListener('touchmove', () => {
             clearTimeout(_previewTouchTimer);
+            a.classList.remove('ref-longpress-active');
             _hidePreview();
         }, { passive: true });
     });

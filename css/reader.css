@@ -2997,6 +2997,17 @@ body.landscape-mode .glass-card {
     margin-right: 0.2rem;
 }
 
+/* 모바일 롱프레스 시각적 힌트: 600ms 대기 중 링크를 활성화 상태로 표시 */
+.source-link.ref-longpress-active,
+.keyword-ref-link.ref-longpress-active,
+.ref-link-item.ref-longpress-active {
+    background: rgba(31, 111, 235, 0.15);
+    box-shadow: 0 0 0 2px var(--color-primary, #1f6feb);
+    border-radius: 4px;
+    opacity: 0.85;
+    transition: background 0.1s ease, box-shadow 0.1s ease;
+}
+
 /* 3. 이야기형 배지 */
 .badge-story {
     background: linear-gradient(135deg, #f0c674, #b8860b);

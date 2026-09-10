@@ -8,6 +8,41 @@ let _searchResults = [];
 let _searchIdx = -1;
 const _FETCH_CACHE_PREFIX = 'ref_doc_v1_';
 const _FETCH_CACHE_TTL = 24 * 60 * 60 * 1000; // 24시간
+// LRU 캐시 제한: sessionStorage 용량(5-10MB) 초과 방지를 위해 최대 항목 수 제한
+const _FETCH_CACHE_MAX_ENTRIES = 8;
+// 캐시 키 순서 관리 (LRU): 가장 최근 사용된 키가 맨 뒤
+let _cacheKeyOrder = [];
+
+// LRU 캐시에서 키를 최근 사용 위치로 이동 (없으면 추가)
+function _touchCacheKey(key) {
+    const idx = _cacheKeyOrder.indexOf(key);
+    if (idx >= 0) _cacheKeyOrder.splice(idx, 1);
+    _cacheKeyOrder.push(key);
+}
+
+// 캐시 항목 수가 한도 초과 시 가장 오래된 항목(LRU) 제거
+function _evictCacheIfNeeded() {
+    while (_cacheKeyOrder.length > _FETCH_CACHE_MAX_ENTRIES) {
+        const oldest = _cacheKeyOrder.shift();
+        try { sessionStorage.removeItem(oldest); } catch {}
+    }
+}
+
+// 캐시 키 목록을 sessionStorage에서 복원 (세션 시작 시 1회)
+function _restoreCacheKeyOrder() {
+    if (_cacheKeyOrder.length > 0) return;
+    try {
+        const order = sessionStorage.getItem(_FETCH_CACHE_PREFIX + '__lru_order__');
+        if (order) _cacheKeyOrder = JSON.parse(order) || [];
+    } catch {}
+}
+
+// 캐시 키 목록을 sessionStorage에 저장 (LRU 순서 영속화)
+function _persistCacheKeyOrder() {
+    try {
+        sessionStorage.setItem(_FETCH_CACHE_PREFIX + '__lru_order__', JSON.stringify(_cacheKeyOrder));
+    } catch {}
+}
 
 function escHtml(s) {
     return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -24,12 +59,15 @@ function _injectStyles() {
 #html-ref-overlay .hr-ov-bar{display:flex;align-items:center;gap:.6rem;
   padding:.6rem 1rem;background:var(--bg-card,#161b22);
   border-bottom:1px solid var(--border-color,#30363d);position:fixed;top:0;left:0;right:0;z-index:10001;}
+/* 스크롤 영역: 테마별 배경/글자색 (기본=라이트, .dark-theme 오버레이 시=다크) */
 #html-ref-overlay .hr-ov-scroll{position:fixed!important;top:48px!important;left:0!important;right:0!important;bottom:0!important;overflow-y:scroll!important;overflow-x:auto!important;background:#fff!important;-webkit-overflow-scrolling:touch!important;}
+#html-ref-overlay.dark-theme .hr-ov-scroll{background:#0d1117!important;}
 #html-ref-overlay .hr-ov-scroll::-webkit-scrollbar{width:12px;height:12px;}
 #html-ref-overlay .hr-ov-scroll::-webkit-scrollbar-track{background:#f0f0f0;}
 #html-ref-overlay .hr-ov-scroll::-webkit-scrollbar-thumb{background:#888;border-radius:6px;}
 #html-ref-overlay .hr-ov-scroll::-webkit-scrollbar-thumb:hover{background:#555;}
 #html-ref-overlay .hr-ov-scroll{scrollbar-width:thin;scrollbar-color:#888 #f0f0f0;}
+#html-ref-overlay.dark-theme .hr-ov-scroll{scrollbar-color:#444 #0d1117;}
 #html-ref-overlay .hr-ov-title{flex:1;font-size:1rem;font-weight:600;
   color:var(--color-text,#e6edf3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 #html-ref-overlay .hr-ov-btn{background:var(--color-primary,#1f6feb);color:#fff;border:none;
@@ -43,24 +81,36 @@ function _injectStyles() {
   color:var(--color-text,#e6edf3);font-size:.85rem;}
 #html-ref-overlay .hr-ov-search .hr-search-count{font-size:.78rem;color:var(--color-text-muted,#8b949e);
   min-width:60px;}
-/* scroll area positioned absolutely — no flexbox dependency */
+/* 콘텐츠: 라이트(기본)와 다크 테마 분기 */
 #html-ref-overlay .hr-ov-content{padding:24px;color:#1a1a1a;font-family:'Malgun Gothic','Noto Sans KR',sans-serif;line-height:1.6;}
+#html-ref-overlay.dark-theme .hr-ov-content{color:#e6edf3;}
 #html-ref-overlay .hr-ov-content h1.doc-title{border-bottom:2px solid #333;padding-bottom:8px;font-size:20px;}
+#html-ref-overlay.dark-theme .hr-ov-content h1.doc-title,
+#html-ref-overlay.dark-theme .hr-ov-content h1{border-bottom-color:#30363d;}
 #html-ref-overlay .hr-ov-content .page{border:1px solid #ddd;margin:18px 0;padding:16px;background:#fff;page-break-after:always;}
+#html-ref-overlay.dark-theme .hr-ov-content .page{border-color:#30363d;background:#161b22;}
 #html-ref-overlay .hr-ov-content .page-header{color:#888;font-size:12px;margin-bottom:8px;border-bottom:1px dashed #ccc;padding-bottom:4px;}
+#html-ref-overlay.dark-theme .hr-ov-content .page-header{color:#8b949e;border-bottom-color:#30363d;}
 #html-ref-overlay .hr-ov-content .text-layer{position:relative;}
 #html-ref-overlay .hr-ov-content .text-layer p{position:absolute;margin:0;white-space:pre-wrap;}
 #html-ref-overlay .hr-ov-content table.pdf-table{border-collapse:collapse;margin:10px 0;font-size:13px;width:auto;}
 #html-ref-overlay .hr-ov-content table.pdf-table th,
 #html-ref-overlay .hr-ov-content table.pdf-table td{border:1px solid #999;padding:4px 8px;vertical-align:top;}
+#html-ref-overlay.dark-theme .hr-ov-content table.pdf-table th,
+#html-ref-overlay.dark-theme .hr-ov-content table.pdf-table td{border-color:#30363d;}
 #html-ref-overlay .hr-ov-content table.pdf-table tr:nth-child(even){background:#f7f7f7;}
+#html-ref-overlay.dark-theme .hr-ov-content table.pdf-table tr:nth-child(even){background:#161b22;}
 #html-ref-overlay .hr-ov-content .images{margin-top:10px;}
 #html-ref-overlay .hr-ov-content .images img{max-width:100%;border:1px solid #eee;margin:4px 0;display:block;}
+#html-ref-overlay.dark-theme .hr-ov-content .images img{border-color:#30363d;}
 #html-ref-overlay .hr-ov-content .section-label{font-weight:bold;color:#0a5;font-size:12px;margin-top:10px;}
+#html-ref-overlay.dark-theme .hr-ov-content .section-label{color:#3fb950;}
 #html-ref-overlay .hr-ov-content .empty{color:#aaa;font-style:italic;font-size:12px;}
+#html-ref-overlay.dark-theme .hr-ov-content .empty{color:#8b949e;}
 /* MD 변환 콘텐츠 스타일 (parseMarkdown 출력) */
 #html-ref-overlay .hr-ov-content h1{border-bottom:2px solid #333;padding-bottom:8px;font-size:20px;margin:1em 0 .5em;}
 #html-ref-overlay .hr-ov-content h2{font-size:17px;margin:1.2em 0 .4em;border-bottom:1px solid #ddd;padding-bottom:4px;}
+#html-ref-overlay.dark-theme .hr-ov-content h2{border-bottom-color:#30363d;}
 #html-ref-overlay .hr-ov-content h3{font-size:15px;margin:1em 0 .3em;}
 #html-ref-overlay .hr-ov-content p{margin:.4em 0;}
 #html-ref-overlay .hr-ov-content ul,#html-ref-overlay .hr-ov-content ol{margin:.4em 0;padding-left:1.8em;}
@@ -69,11 +119,18 @@ function _injectStyles() {
 #html-ref-overlay .hr-ov-content table.reader-table{border-collapse:collapse;margin:10px 0;font-size:13px;}
 #html-ref-overlay .hr-ov-content table.reader-table th,
 #html-ref-overlay .hr-ov-content table.reader-table td{border:1px solid #999;padding:4px 8px;vertical-align:top;}
+#html-ref-overlay.dark-theme .hr-ov-content table.reader-table th,
+#html-ref-overlay.dark-theme .hr-ov-content table.reader-table td{border-color:#30363d;}
 #html-ref-overlay .hr-ov-content table.reader-table tr:nth-child(even){background:#f7f7f7;}
+#html-ref-overlay.dark-theme .hr-ov-content table.reader-table tr:nth-child(even){background:#161b22;}
 #html-ref-overlay .hr-ov-content pre.reader-code-block{background:#f5f5f5;padding:12px;border-radius:6px;overflow-x:auto;font-size:13px;margin:10px 0;}
+#html-ref-overlay.dark-theme .hr-ov-content pre.reader-code-block{background:#161b22;color:#e6edf3;}
 #html-ref-overlay .hr-ov-content blockquote{border-left:3px solid #ccc;margin:10px 0;padding:6px 14px;color:#555;}
+#html-ref-overlay.dark-theme .hr-ov-content blockquote{border-left-color:#30363d;color:#8b949e;}
 #html-ref-overlay .hr-ov-content img{max-width:100%;border:1px solid #eee;margin:4px 0;display:block;}
+#html-ref-overlay.dark-theme .hr-ov-content img{border-color:#30363d;}
 #html-ref-overlay .hr-ov-content hr{border:none;border-top:1px solid #ddd;margin:20px 0;}
+#html-ref-overlay.dark-theme .hr-ov-content hr{border-top-color:#30363d;}
 #html-ref-overlay .hr-loading{display:flex;flex-direction:column;align-items:center;
   justify-content:center;min-height:60vh;gap:18px;color:var(--color-text-muted,#8b949e);}
 #html-ref-overlay .hr-loading .spinner{width:44px;height:44px;border:4px solid var(--border-color,#30363d);
@@ -151,11 +208,26 @@ function _ensureOverlay() {
         if (e.key === 'Escape') close();
     });
 
+    // 테마 변경 시 오버레이가 열려 있으면 즉시 동기화
+    document.addEventListener('themechange', () => {
+        if (_overlayEl && _overlayEl.classList.contains('open')) {
+            const isLight = window.AppTheme
+                ? window.AppTheme.isLight()
+                : document.documentElement.classList.contains('light-theme');
+            _overlayEl.classList.toggle('dark-theme', !isLight);
+        }
+    });
+
     return el;
 }
 
 function _open() {
     const el = _ensureOverlay();
+    // 다크 테마 동기화: window.AppTheme가 있으면 그 기준, 없으면 <html>.light-theme 부재로 판정
+    const isLight = window.AppTheme
+        ? window.AppTheme.isLight()
+        : document.documentElement.classList.contains('light-theme');
+    el.classList.toggle('dark-theme', !isLight);
     el.classList.add('open');
     document.body.style.overflow = 'hidden';
 }
@@ -202,6 +274,9 @@ async function openHtmlViewer(htmlPath, searchKeyword, anchorId, lineNum) {
 
     _open();
 
+    // LRU 캐시 키 순서 복원 (세션 시작 시 1회)
+    _restoreCacheKeyOrder();
+
     try {
         const fileUrl = new URL(htmlPath, window.location.href).href;
         const isMarkdown = htmlPath.endsWith('.md');
@@ -216,6 +291,7 @@ async function openHtmlViewer(htmlPath, searchKeyword, anchorId, lineNum) {
                 const parsed = JSON.parse(cached);
                 if (Date.now() - parsed.ts < _FETCH_CACHE_TTL) {
                     innerHTML = parsed.html;
+                    _touchCacheKey(cacheKey); // LRU: 캐시 히트 시 최근 사용 위치로 이동
                 }
             }
         } catch {}
@@ -239,9 +315,12 @@ async function openHtmlViewer(htmlPath, searchKeyword, anchorId, lineNum) {
                 innerHTML = doc.body.innerHTML;
             }
 
-            // 캐시 저장 (실패 시 무시)
+            // 캐시 저장 (LRU: 새 항목 추가 후 한도 초과 시 가장 오래된 항목 제거)
             try {
+                _touchCacheKey(cacheKey);
+                _evictCacheIfNeeded();
                 sessionStorage.setItem(cacheKey, JSON.stringify({ ts: Date.now(), html: innerHTML }));
+                _persistCacheKeyOrder();
             } catch {}
         }
 

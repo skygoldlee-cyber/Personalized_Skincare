@@ -1,10 +1,15 @@
-// src/pdf-registry.js — 참조자료 중앙 설정 모듈 (HTML 변환본 기반)
+// src/pdf-registry.js — 참조자료 중앙 설정 모듈 (MD 변환본 기반)
 // ================================================================
 // 과목이 변경될 때 이 파일만 수정하면 됩니다.
 // reader-format.js와 textbook-reader.js는 이 파일을 import하여 사용합니다.
 //
 // 참조자료는 content/참조자료/ref_md/ 하위의 MD 변환본을 사용합니다.
 // 각 파일은 {파일명(확장자 제거)}/{파일명(확장자 제거)}.md 구조로 배치됩니다.
+//
+// 참고: 레지스트리의 `file` 필드는 원본 PDF 파일명을 키로 사용하지만,
+//       실제 서비스되는 것은 _toMdPath()로 변환된 ref_md/{base}/{base}.md 입니다.
+//       type:'pdf'는 "원본이 PDF"임을 의미하며, 런타임에는 MD로 서비스됩니다.
+//       type:'md'는 처음부터 MD로 작성된 참조자료(원료 목록 등)입니다.
 //
 // 수정 가이드:
 // 1. 새 과목 추가 → SUBJECT_DIR_MAP, REF_DIRS, REFERENCE_FILES에 항목 추가
@@ -20,7 +25,7 @@ export const SUBJECT_DIR_MAP = {
     'understanding': '과목4'
 };
 
-// --- 폴더별 참조자료 파일 목록 (원본 PDF 파일명, HTML 경로는 자동 변환) ---
+// --- 폴더별 참조자료 파일 목록 (원본 PDF 파일명, MD 경로는 _toMdPath로 자동 변환) ---
 // 우선순위: 과목N > 공통 > 법령원문 (같은 파일명이면 먼저 등록된 폴더가 우선)
 export const REF_DIRS = {
     '법령원문': [
@@ -165,7 +170,13 @@ export const REFERENCE_COMMON = [
     { name: '시행규칙 별표9 수수료', file: '시행규칙_별표9_수수료.pdf', type: 'pdf', dir: '공통' },
     { name: 'CGMP 별표1 공정별분류', file: 'CGMP_별표1_공정별분류.pdf', type: 'pdf', dir: '공통' },
     { name: 'CGMP 별표2 실시상황평가표', file: 'CGMP_별표2_실시상황평가표.pdf', type: 'pdf', dir: '공통' },
-    { name: 'CGMP 별표3 적합업소로고', file: 'CGMP_별표3_적합업소로고.pdf', type: 'pdf', dir: '공통' }
+    { name: 'CGMP 별표3 적합업소로고', file: 'CGMP_별표3_적합업소로고.pdf', type: 'pdf', dir: '공통' },
+    // ——— 구 안전기준 별표 (폐지/개정 전 원문 보존용, _구 접미사) ———
+    { name: '[구] 별표1 독성시험법', file: '안전기준_별표1_독성시험법_구.pdf', type: 'pdf', dir: '공통' },
+    { name: '[구] 별표2 기준시험방법작성요령', file: '안전기준_별표2_기준시험방법작성요령_구.pdf', type: 'pdf', dir: '공통' },
+    { name: '[구] 별표3 자외선차단효과측정', file: '안전기준_별표3_자외선차단효과측정_구.pdf', type: 'pdf', dir: '공통' },
+    { name: '[구] 별표4 자료제출생략기능성', file: '안전기준_별표4_자료제출생략기능성_구.pdf', type: 'pdf', dir: '공통' },
+    { name: '[구] 별표1 색소', file: '안전기준_별표1_색소_구.pdf', type: 'pdf', dir: '공통' }
 ];
 
 // --- 원료 참조자료 ---
@@ -191,23 +202,23 @@ export const REFERENCE_LAW = [
 // 파생 맵 (수정 불필요 — 위의 설정에서 자동 생성됨)
 // ================================================================
 
-// HTML 기본 경로: content/참조자료/ref_md/{basename}/{basename}.md
+// MD 기본 경로: content/참조자료/ref_md/{basename}/{basename}.md
 // basename = 파일명에서 .pdf 확장자 제거
 // 전체 참조자료를 MD로 변환 (한글 엔티티 인코딩 문제 해결 + 용량 절감)
 const MD_CONVERSION_TARGETS = null; // null = 전체 MD 변환
 
-function _toHtmlPath(fileName) {
+function _toMdPath(fileName) {
     const base = fileName.replace(/\.pdf$/, '');
     const ext = '.md';
     return `content/참조자료/ref_md/${base}/${base}${ext}`;
 }
 
-// 파일명 → HTML 경로 매핑 (reader-format.js용, 우선순위: 과목N > 공통 > 법령원문)
+// 파일명 → MD 경로 매핑 (reader-format.js용, 우선순위: 과목N > 공통 > 법령원문)
 const _DIR_PRIORITY = ['과목4', '과목3', '과목2', '과목1', '공통', '법령원문'];
 export const REF_FILE_TO_PATH = {};
 for (const dir of _DIR_PRIORITY) {
     for (const f of REF_DIRS[dir] || []) {
-        if (!REF_FILE_TO_PATH[f]) REF_FILE_TO_PATH[f] = _toHtmlPath(f);
+        if (!REF_FILE_TO_PATH[f]) REF_FILE_TO_PATH[f] = _toMdPath(f);
     }
 }
 
@@ -241,7 +252,7 @@ export function mapSourceToRef(sourceText) {
     }
     if (!refFile) return '';
 
-    return _toHtmlPath(refFile);
+    return _toMdPath(refFile);
 }
 
 // --- 본문 키워드 자동 링크 헬퍼 ---
