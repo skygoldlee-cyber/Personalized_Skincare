@@ -1,4 +1,5 @@
 // views/backup.js - 로컬 데이터 백업 및 복원 (Data Backup & Restore)
+import { showToast } from '../ui-utils.js';
 
 export function getBackupKeys() {
     // 정적 키 목록 + 날짜 기반 동적 키(daily_completed_YYYY-MM-DD)를 모두 수집
@@ -41,7 +42,7 @@ export function exportData() {
     downloadAnchor.click();
     downloadAnchor.remove();
     
-    alert('학습 데이터 백업 파일 다운로드가 완료되었습니다!');
+    showToast('학습 데이터 백업 파일 다운로드가 완료되었습니다!', 'success');
 }
 
 export function triggerImport() {
@@ -93,13 +94,13 @@ export function importData(event) {
             });
             
             if (restoredCount > 0) {
-                alert('학습 데이터 복원이 성공적으로 완료되었습니다! 페이지를 새로고침하여 적용합니다.');
+                showToast('학습 데이터 복원이 성공적으로 완료되었습니다! 페이지를 새로고침하여 적용합니다.', 'success');
                 location.reload();
             } else {
-                alert('가져올 유효한 학습 데이터 키가 존재하지 않습니다.');
+                showToast('가져올 유효한 학습 데이터 키가 존재하지 않습니다.', 'warning');
             }
         } catch (err) {
-            alert('유효하지 않은 백업 파일입니다. 백업 데이터 복원 실패.');
+            showToast('유효하지 않은 백업 파일입니다. 백업 데이터 복원 실패.', 'error');
         }
     };
     reader.readAsText(file);

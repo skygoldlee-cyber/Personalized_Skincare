@@ -1,24 +1,26 @@
-feat: 모바일 UI/UX 개선 1~2단계 (U1-U4)
+feat: 접근성 + 알림 UX 개선 3단계 (A1 + B1 + A4)
 
-U1: 모바일 터치 피드백 추가
-- 섹션 카드, TOC 항목, 섹션 헤더, 네비게이션 아이템, 툴 버튼, 표 확장 버튼,
-  참조 링크, 네비 버튼에 :active 의사 클래스 추가
-- 터치 시 즉각적인 시각적 피드백 (배경색/스케일 변화)
+A1: 키보드 접근성 — :focus-visible 포커스 링
+- base.css에 :focus-visible 전역 규칙 추가
+- 마우스 클릭 시 포커스 링 숨김, 키보드 탐색 시 2px primary 색상 링 표시
 
-U3: 플래시카드 모바일 빠른 평가 개선
-- 모바일에서 카드/컨트롤/평가 버튼 크기 최적화
-- 평가 버튼 flex:1로 양쪽 꽉 채움, 48px 터치 영역 확보
-- 카드 폭 100% (max 360px), 패딩/폰트 축소로 화면 활용도 개선
+B1: alert/confirm → 커스텀 토스트/모달
+- ui-utils.js에 showToast(), showConfirm() 컴포넌트 추가
+- 토스트: 중앙 정렬, 타입별 아이콘/색상 (info/success/warning/error)
+- 컨펌 모달: Promise 기반, 백드롱 클릭/Escape로 취소, 44px 터치 영역
+- 30곳의 alert/confirm을 커스텀 컴포넌트로 교체
+  - app.js: 진도 초기화, 시험 제출, 퀴즈 로드 실패
+  - textbook-reader.js: 오디오 없음, 오디오 로드 실패
+  - quiz.js: 퀴즈 없음, 답변 미입력
+  - daily-challenge.js: 이미 완료, 로드 실패, 종료 확인, 정답 미입력, 완료
+  - trainer.js: 숫자 오류, 정답 미입력
+  - pomodoro.js: 집중 종료, 휴식 종료
+  - exam-simulator.js: 로드 실패, 데이터 불완전, 세션 복원 실패, 시간 만료, 복습 실패
+  - backup.js: 백업 완료, 복원 성공/실패
 
-U2: 플래시카드 좌우 스와이프 제스처
-- 좌우 스와이프: 카드 전환 (오른쪽→이전, 왼쪽→다음)
-- 위로 스와이프: 카드 뒤집기
-- 50px 임계값, 500ms 시간 제한으로 탭과 구분
-
-U4: 개념 맵 트리 모바일 레이아웃 개선
-- 모바일 감지 기준 480px → 768px로 상향 (CSS 미디어쿼리와 통일)
-- 트리 모바일 SVG 폭 320px → 360px, max-width:100%로 가변 폭
-- 소형 화면(≤480px) 폰트 축소
+A4: 전정 감각 민감 사용자 — prefers-reduced-motion
+- base.css에 @media (prefers-reduced-motion: reduce) 전역 규칙 추가
+- 모든 애니메이션/전환 0.01ms로 축소, scroll-behavior auto
 
 Generated with [Devin](https://devin.ai)
 

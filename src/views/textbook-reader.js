@@ -12,6 +12,7 @@ import {
 import { collectGlossaryItems, renderGlossaryTable, appendGlossaryTocItem, bindGlossaryEvents } from './glossary-renderer.js';
 // [모바일 PWA 견고성] 오디오 매니페스트는 window 전역(가드)에서 읽는다(정적 import 하드 의존 지양).
 import { DataLoader } from '../data-loader.js';
+import { showToast } from '../ui-utils.js';
 
 // --- 교재 본문 읽기 (Textbook Reader) ---
 let textbookReaderState = {
@@ -430,7 +431,7 @@ export function toggleReaderAudio(subjId, chapterIdx) {
     const chapter = subj.chapters[chapterIdx];
     const audioPath = getAudioPathForChapter(subjId, chapter);
     if (!audioPath) {
-        alert('이 단원은 오디오 파일이 없습니다.');
+        showToast('이 단원은 오디오 파일이 없습니다.', 'warning');
         return;
     }
 
@@ -535,7 +536,7 @@ export function toggleReaderAudio(subjId, chapterIdx) {
         };
         const msg = msgMap[code] || '오디오를 불러올 수 없습니다.';
         setAudioStatus(msg);
-        alert(msg + '\n\n경로: ' + audioPath);
+        showToast(msg + ' (경로: ' + audioPath + ')', 'error', 4000);
         stopReaderAudio();
     });
 

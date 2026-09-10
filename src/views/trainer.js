@@ -6,6 +6,7 @@ import { buildCalcQuestion } from '../trainer-calc.js';
 import { initScratchpadCanvas, clearScratchpad, toggleCalcScratchpad, toggleScratchpadEraser } from '../scratchpad.js';
 import { shuffle } from '../utils.js';
 import { togglePomodoro, tickPomodoro, resetPomodoro, updatePomodoroUI } from './pomodoro.js';
+import { showToast } from '../ui-utils.js';
 
 // 뽀모도로 함수 재수출 (app.js 호환성 유지)
 export { togglePomodoro, tickPomodoro, resetPomodoro, updatePomodoroUI };
@@ -399,7 +400,7 @@ export function submitCalcAnswer() {
     const userVal = parseFloat(input.value);
     
     if (isNaN(userVal)) {
-        alert("올바른 숫자를 입력해 주세요!");
+        showToast("올바른 숫자를 입력해 주세요!", "warning");
         return;
     }
     
@@ -760,7 +761,7 @@ export function submitIngAnswer() {
     const userInput = input.value.trim();
     
     if (!userInput) {
-        alert('정답을 입력하세요!');
+        showToast('정답을 입력하세요!', 'warning');
         return;
     }
     

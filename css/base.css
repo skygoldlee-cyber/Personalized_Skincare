@@ -75,6 +75,14 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
+/* A1: 키보드 접근성 — :focus-visible로 마우스 클릭 시 포커스 링 숨김, 키보드 탐색 시 표시 */
+:focus { outline: none; }
+:focus-visible {
+    outline: 2px solid var(--color-primary, #06b6d4);
+    outline-offset: 2px;
+    border-radius: 3px;
+}
+
 /* Scrollbar Style */
 ::-webkit-scrollbar {
     width: 6px;
@@ -89,6 +97,16 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.25);
+}
+
+/* A4: 전정 감각 민감 사용자 — 애니메이션/전환 축소 */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 }
 
 /* App Container */

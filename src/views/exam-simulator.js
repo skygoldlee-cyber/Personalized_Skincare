@@ -4,7 +4,7 @@ import { esc, safeTextWithBreaks } from '../sanitize.js';
 import { checkShortAnswer } from './trainer.js';
 // [모바일 PWA 견고성] 레지스트리는 window 전역(가드)에서 읽는다(정적 import 하드 의존 지양).
 import { DataLoader } from '../data-loader.js';
-import { showGlobalLoading, hideGlobalLoading } from '../ui-utils.js';
+import { showGlobalLoading, hideGlobalLoading, showToast } from '../ui-utils.js';
 import { shuffle } from '../utils.js';
 
 // --- 5. 실전 모의고사 시뮬레이터 구현 ---
@@ -52,7 +52,7 @@ export function startMockExamSim(examId) {
     }).catch(err => {
         hideGlobalLoading();
         console.error(err);
-        alert("모의고사 데이터를 로드하지 못했습니다.");
+        showToast("모의고사 데이터를 로드하지 못했습니다.", "error");
     });
 }
 
@@ -65,7 +65,7 @@ export function startIntegratedMockExam() {
     }).catch(err => {
         hideGlobalLoading();
         console.error(err);
-        alert("모의고사 데이터를 로드하지 못했습니다.");
+        showToast("모의고사 데이터를 로드하지 못했습니다.", "error");
     });
 }
 
@@ -91,7 +91,7 @@ function _startIntegratedMockExamImpl() {
     });
 
     if (s1Questions.length === 0 || s2Questions.length === 0 || s3Questions.length === 0 || s4Questions.length === 0) {
-        alert("모의고사 데이터가 불완전합니다. 모든 과목의 모의고사가 정상 로드되었는지 확인하세요.");
+        showToast("모의고사 데이터가 불완전합니다. 모든 과목의 모의고사가 정상 로드되었는지 확인하세요.", "error");
         return;
     }
 
@@ -237,7 +237,7 @@ export function resumeSimDraft() {
         
     } catch(e) {
         console.error("Failed to resume draft: ", e);
-        alert("저장된 모의고사 세션을 불러오지 못했습니다.");
+        showToast("저장된 모의고사 세션을 불러오지 못했습니다.", "error");
     }
 }
 
@@ -277,7 +277,7 @@ export function tickSimTimer() {
         clearInterval(simState.timerInterval);
         const timeEl = document.getElementById('sim-time-left');
         if (timeEl) timeEl.textContent = '00:00';
-        alert("제한 시간이 만료되었습니다. 답안지가 자동 제출됩니다.");
+        showToast("제한 시간이 만료되었습니다. 답안지가 자동 제출됩니다.", "warning", 4000);
         submitExam();
         return;
     }
@@ -697,7 +697,7 @@ export function startWeakExam() {
         _startWeakExamImpl();
     }).catch(err => {
         console.error(err);
-        alert("복습 데이터를 로드하지 못했습니다.");
+        showToast("복습 데이터를 로드하지 못했습니다.", "error");
     });
 }
 
@@ -744,7 +744,7 @@ function _startWeakExamImpl() {
             filterNames[sub.key] = `${idx + 1}과목 (${shortName})`;
         });
         const filterName = filterNames[state.reviewFilter] || '선택한 과목';
-        alert(`복습할 헷갈린 카드나 오답 퀴즈가 없습니다! (${filterName})\n플래시카드나 기출 퀴즈를 학습하여 약점 데이터를 모아보세요.`);
+        showToast(`복습할 헷갈린 카드나 오답 퀴즈가 없습니다! (${filterName})\n플래시카드나 기출 퀴즈를 학습하여 약점 데이터를 모아보세요.`, "info", 4000);
         return;
     }
     

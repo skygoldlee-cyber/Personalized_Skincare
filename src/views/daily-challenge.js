@@ -4,6 +4,7 @@ import { safeTextWithBreaks, esc } from '../sanitize.js';
 import { DataLoader } from '../data-loader.js';
 import { checkShortAnswer } from './trainer.js';
 import { shuffle } from '../utils.js';
+import { showToast, showConfirm } from '../ui-utils.js';
 
 /* =======================================================
    🧩 일일 5분 데일리 챌린지 (Daily 5-Min Challenge) & Streak
@@ -73,7 +74,7 @@ export function startDailyChallenge() {
     const todayStr = new Date().toISOString().split('T')[0];
     const todayCompleted = safeGetItem(`daily_completed_${todayStr}`);
     if (todayCompleted) {
-        alert('오늘의 데일리 챌린지를 이미 달성하셨습니다! 내일 다시 도전해 주세요.');
+        showToast('오늘의 데일리 챌린지를 이미 달성하셨습니다! 내일 다시 도전해 주세요.', 'info');
         return;
     }
     
@@ -82,7 +83,7 @@ export function startDailyChallenge() {
         _startDailyChallengeImpl();
     }).catch(err => {
         console.error(err);
-        alert("챌린지 데이터를 로드하지 못했습니다.");
+        showToast("챌린지 데이터를 로드하지 못했습니다.", "error");
     });
 }
 
@@ -207,8 +208,9 @@ export function showDailyModal() {
     renderDailyStep();
 }
 
-export function closeDailyModal() {
-    if (confirm('도중에 나가시면 데일리 미션 진도가 저장되지 않습니다. 정말 나가시겠습니까?')) {
+export async function closeDailyModal() {
+    const ok = await showConfirm('도중에 나가시면 데일리 미션 진도가 저장되지 않습니다. 정말 나가시겠습니까?', '데일리 챌린지 종료');
+    if (ok) {
         const modal = document.getElementById('daily-challenge-modal');
         if (modal) modal.remove();
     }
@@ -332,7 +334,7 @@ export function submitDailyShortAnswer() {
     if (!input) return;
     const userInput = input.value.trim();
     if (!userInput) {
-        alert('정답을 입력하세요!');
+        showToast('정답을 입력하세요!', 'warning');
         return;
     }
     
@@ -385,7 +387,7 @@ export function finishDailyChallenge() {
     const modal = document.getElementById('daily-challenge-modal');
     if (modal) modal.remove();
     
-    alert(`🎉 일일 데일리 챌린지를 완수하셨습니다!\n획득 점수: ${dailyState.correctCount} / ${dailyState.questions.length} 개`);
+    showToast(`🎉 일일 데일리 챌린지를 완수하셨습니다!\n획득 점수: ${dailyState.correctCount} / ${dailyState.questions.length} 개`, 'success', 4000);
     
     const todayStr = new Date().toISOString().split('T')[0];
     safeSetItem(`daily_completed_${todayStr}`, "true");

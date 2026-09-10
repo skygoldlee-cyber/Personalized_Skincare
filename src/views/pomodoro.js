@@ -1,5 +1,6 @@
 // src/views/pomodoro.js - 뽀모도로 타이머 로직 (trainer.js에서 분리)
 import { state, safeSetItem } from '../state.js';
+import { showToast } from '../ui-utils.js';
 
 /* =======================================================
    ⏱️ 집중 뽀모도로 타이머 (Pomodoro Study Timer)
@@ -81,8 +82,7 @@ export function tickPomodoro() {
             safeSetItem('pomo_total_time_date', new Date().toISOString().split('T')[0]);
             safeSetItem('pomo_session_count', pomoState.sessionCount);
 
-            alert("집중 25분이 끝났습니다! 5분간 휴식하세요.");
-
+            showToast("집중 25분이 끝났습니다! 5분간 휴식하세요.", "success");
             pomoState.status = 'break';
             pomoState.timeLeft = 5 * 60; // 5분 휴식
             if (statusLabel) {
@@ -92,7 +92,7 @@ export function tickPomodoro() {
             if (startBtn) startBtn.innerHTML = '<i class="fa-solid fa-play"></i> 휴식 시작';
             if (pomoTime) pomoTime.classList.add('break-active');
         } else {
-            alert("휴식이 끝났습니다! 다시 힘내볼까요?");
+            showToast("휴식이 끝났습니다! 다시 힘내볼까요?", "info");
             pomoState.status = 'idle';
             pomoState.timeLeft = 25 * 60;
             if (statusLabel) {

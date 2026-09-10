@@ -7,6 +7,7 @@ import { examIdToSubjectId } from './exam-simulator.js';
 import { checkShortAnswer } from './trainer.js';
 import { updateGlobalStats } from './dashboard.js';
 import { shuffle } from '../utils.js';
+import { showToast } from '../ui-utils.js';
 import {
     dailyState,
     updateStreakAndDailyUI,
@@ -43,7 +44,7 @@ export function startQuiz() {
     const subjId = state.quiz.subject;
     const subjData = (window.STUDY_DATA && window.STUDY_DATA[subjId]);
     if (!subjData || subjData.quizzes.length === 0) {
-        alert("이 과목에는 출제 가능한 퀴즈가 없습니다.");
+        showToast("이 과목에는 출제 가능한 퀴즈가 없습니다.", "warning");
         return;
     }
     
@@ -172,7 +173,7 @@ export function submitQuizAnswer() {
     const userAnswer = input.value.trim();
     
     if (!userAnswer) {
-        alert("답변을 입력해 주세요!");
+        showToast("답변을 입력해 주세요!", "warning");
         return;
     }
     

@@ -105,7 +105,9 @@ import {
     showLoading,
     hideLoading,
     showGlobalLoading,
-    hideGlobalLoading
+    hideGlobalLoading,
+    showToast,
+    showConfirm
 } from './ui-utils.js';
 import {
     simState,
@@ -703,53 +705,53 @@ initApp = function() {
 // --- 이벤트 리스너 정의 ---
 function setupEventListeners() {
     // 1. 진도 초기화 버튼
-    document.getElementById('reset-progress-btn').addEventListener('click', () => {
-        if (confirm("정말 모든 학습 진도를 초기화하시겠습니까?\n외운 카드, 오답 정보, 모의고사 성적 이력, 연속 학습일, 계산 기록이 모두 지워집니다.")) {
-            // 인메모리 상태 초기화
-            state.memorizedCards.clear();
-            state.weakCards.clear();
-            state.quizResults = {};
-            state.trainer.pomodoro.totalTimeToday = 0;
-            state.trainer.pomodoro.sessionCount = 0;
-            
-            // 로컬스토리지에 남아있는 모든 학습 데이터 키 제거
-            const keysToRemove = [
-                'fc_memorized',
-                'fc_weak',
-                'quiz_results',
-                'sim_results_history',
-                'sim_draft_session',
-                'pomo_total_time',
-                'pomo_total_time_date',
-                'pomo_session_count',
-                'pomo_session_date',
-                'study_streak',
-                'study_streak_last_date',
-                'calc_history'
-            ];
-            keysToRemove.forEach(k => { try { localStorage.removeItem(k); } catch(_) {} });
-            
-            // 날짜 기반 동적 키(daily_completed_*) 일괄 제거
-            const dynamicKeys = [];
-            try {
-                for (let i = 0; i < localStorage.length; i++) {
-                    const key = localStorage.key(i);
-                    if (key && key.startsWith('daily_completed_')) {
-                        dynamicKeys.push(key);
-                    }
+    document.getElementById('reset-progress-btn').addEventListener('click', async () => {
+        const ok = await showConfirm("정말 모든 학습 진도를 초기화하시겠습니까?\n외운 카드, 오답 정보, 모의고사 성적 이력, 연속 학습일, 계산 기록이 모두 지워집니다.", "학습 진도 초기화");
+        if (!ok) return;
+        // 인메모리 상태 초기화
+        state.memorizedCards.clear();
+        state.weakCards.clear();
+        state.quizResults = {};
+        state.trainer.pomodoro.totalTimeToday = 0;
+        state.trainer.pomodoro.sessionCount = 0;
+        
+        // 로컬스토리지에 남아있는 모든 학습 데이터 키 제거
+        const keysToRemove = [
+            'fc_memorized',
+            'fc_weak',
+            'quiz_results',
+            'sim_results_history',
+            'sim_draft_session',
+            'pomo_total_time',
+            'pomo_total_time_date',
+            'pomo_session_count',
+            'pomo_session_date',
+            'study_streak',
+            'study_streak_last_date',
+            'calc_history'
+        ];
+        keysToRemove.forEach(k => { try { localStorage.removeItem(k); } catch(_) {} });
+        
+        // 날짜 기반 동적 키(daily_completed_*) 일괄 제거
+        const dynamicKeys = [];
+        try {
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key && key.startsWith('daily_completed_')) {
+                    dynamicKeys.push(key);
                 }
-            } catch(_) {}
-            dynamicKeys.forEach(k => { try { localStorage.removeItem(k); } catch(_) {} });
-            
-            saveProgress();
-            
-            // 현재 활성화 뷰 새로고침
-            if (state.currentView === 'dashboard-view') renderDashboard();
-            else if (state.currentView === 'flashcard-view') loadFlashcards();
-            else if (state.currentView === 'review-view') renderReviewList();
-            
-            alert("학습 진도가 모두 초기화되었습니다.");
-        }
+            }
+        } catch(_) {}
+        dynamicKeys.forEach(k => { try { localStorage.removeItem(k); } catch(_) {} });
+        
+        saveProgress();
+        
+        // 현재 활성화 뷰 새로고침
+        if (state.currentView === 'dashboard-view') renderDashboard();
+        else if (state.currentView === 'flashcard-view') loadFlashcards();
+        else if (state.currentView === 'review-view') renderReviewList();
+        
+        showToast("학습 진도가 모두 초기화되었습니다.", "success");
     });
     
     // 2. 플래시카드 이벤트
@@ -1017,10 +1019,9 @@ function setupEventListeners() {
         }
     });
     
-    document.getElementById('sim-submit-exam-btn').addEventListener('click', () => {
-        if (confirm("정말로 답안지를 제출하고 시험을 종료하시겠습니까?")) {
-            submitExam();
-        }
+    document.getElementById('sim-submit-exam-btn').addEventListener('click', async () => {
+        const ok = await showConfirm("정말로 답안지를 제출하고 시험을 종료하시겠습니까?", "시험 제출");
+        if (ok) submitExam();
     });
     
     // 6. 성분 검색 사전 실시간 검색 이벤트 디바운스 바인딩
@@ -1148,7 +1149,7 @@ function startFocusSubjectStudy(subKey) {
         }
     }).catch(err => {
         console.error(err);
-        alert("퀴즈 데이터를 로드하지 못했습니다.");
+        showToast("퀴즈 데이터를 로드하지 못했습니다.", "error");
     });
 }
 
