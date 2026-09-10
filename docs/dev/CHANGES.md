@@ -5,6 +5,26 @@
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 > registry↔번들 14개 실재 확인 · 비ASCII 콘텐츠 파일 0 · `vercel.json` JSON 유효.
 
+## 2026-09-11 과목간 교차 참조 챕터 섹션 연관관계 표시
+
+### 교차 참조 링크 챕터 앵커 추가
+- 70개 교차 참조 링크에 챕터 앵커 추가: `subj:law` → `subj:law#ch01`
+- 패턴: `N과목 M챕터` → `#ch0M` 앵커
+- 표준형/이야기형 모두 수정
+
+### 교재 리더 챕터 섹션 스크롤 기능 추가
+- `reader-format.js`: `subj:key#chNN` URL을 `data-ref-subject` + `data-ref-chapter` 속성으로 변환
+- `textbook-reader.js`: `data-ref-chapter` 클릭 시 해당 챕터 섹션으로 스크롤
+  - 과목 전환 후 콘텐츠 로드 대기 (800ms)
+  - "Chapter 01" 패턴 매칭으로 섹션 검색
+  - 섹션 펼치기 및 스크롤
+
+### 검증
+- `node --check`: 성공
+- `npm run build:data`: 성공
+- `npm test`: 248 passed, 0 failed
+- `npm run test:dom`: 21 passed, 0 failed
+
 ## 2026-09-11 과목간 교차 참조 하이퍼링크 추가
 
 ### "관련 과목" 섹션 교차 참조 링크 변환

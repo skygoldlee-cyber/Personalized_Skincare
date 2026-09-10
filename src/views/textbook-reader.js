@@ -1743,11 +1743,12 @@ function bindReferenceLinks() {
         }, { passive: true });
     });
 
-    // 과목간 교차 참조 링크 → 교재 리더 내 과목 이동
+    // 과목간 교차 참조 링크 → 교재 리더 내 과목 이동 + 챕터 섹션 스크롤
     document.querySelectorAll('[data-ref-subject]').forEach(a => {
         a.addEventListener('click', (e) => {
             e.preventDefault();
             const targetSubject = a.dataset.refSubject;
+            const targetChapter = a.dataset.refChapter || '';
             if (!targetSubject) return;
             // 과목 선택 드롭다운 업데이트
             const subjectSelect = document.getElementById('reader-subject-select');
@@ -1756,9 +1757,46 @@ function bindReferenceLinks() {
                 // change 이벤트 트리거
                 subjectSelect.dispatchEvent(new Event('change', { bubbles: true }));
             }
-            // 컨테이너 스크롤 상단으로
-            const container = document.getElementById('textbook-reader-container');
-            if (container) container.scrollTop = 0;
+            // 챕터 앵커가 있으면 해당 섹션으로 스크롤 (콘텐츠 로드 후)
+            if (targetChapter) {
+                // 콘텐츠 렌더링 대기 후 섹션 검색
+                setTimeout(() => {
+                    const container = document.getElementById('textbook-reader-container');
+                    if (!container) return;
+                    // 챕터 앵커: ch01 → "Chapter 01" 패턴 매칭
+                    const chNum = targetChapter.replace(/^ch/, '');
+                    const chNumPadded = chNum.padStart(2, '0');
+                    // 섹션 카드 중 제목에 "Chapter 01" 또는 "Chapter 1" 포함한 것 찾기
+                    const sectionCards = container.querySelectorAll('.reader-section-card');
+                    let foundSection = null;
+                    sectionCards.forEach(card => {
+                        if (foundSection) return;
+                        const titleEl = card.querySelector('.reader-section-title');
+                        if (titleEl) {
+                            const title = titleEl.textContent || '';
+                            // "Chapter 01" 또는 "Chapter 1" 패턴 매칭
+                            if (title.includes('Chapter ' + chNumPadded) || title.includes('Chapter ' + parseInt(chNum))) {
+                                foundSection = card;
+                            }
+                        }
+                    });
+                    if (foundSection) {
+                        // 섹션 펼치기 (접혀있을 수 있음)
+                        if (foundSection.classList.contains('collapsed')) {
+                            foundSection.classList.remove('collapsed');
+                        }
+                        // 섹션으로 스크롤
+                        foundSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    } else {
+                        // 매칭 실패 시 상단으로
+                        container.scrollTop = 0;
+                    }
+                }, 800); // 콘텐츠 로드 대기
+            } else {
+                // 챕터 앵커 없으면 상단으로
+                const container = document.getElementById('textbook-reader-container');
+                if (container) container.scrollTop = 0;
+            }
         });
     });
 }

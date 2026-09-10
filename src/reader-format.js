@@ -36,8 +36,16 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
         }
     );
 
-    // 과목간 교차 참조 링크 → 교재 리더 내 과목 이동
-    // 마크다운 파서가 [text](subj:law)를 <a href="subj:law">text</a>로 변환한 후 처리
+    // 과목간 교차 참조 링크 → 교재 리더 내 과목 이동 + 챕터 섹션 스크롤
+    // 마크다운 파서가 [text](subj:law#ch01)를 <a href="subj:law#ch01">text</a>로 변환한 후 처리
+    // 패턴 1: subj:key#chNN (챕터 앵커 포함)
+    html = html.replace(
+        /<a href="subj:([a-z]+)#(ch\d+)">([^<]+)<\/a>/g,
+        (match, subjKey, chapterAnchor, linkText) => {
+            return `<a href="#" data-ref-subject="${escapeHTML(subjKey)}" data-ref-chapter="${escapeHTML(chapterAnchor)}" class="cross-subject-link" style="color:var(--color-primary,#1f6feb);text-decoration:underline dotted;font-weight:600;">${escapeHTML(linkText)}</a>`;
+        }
+    );
+    // 패턴 2: subj:key (챕터 앵커 없음 - 레거시 호환)
     html = html.replace(
         /<a href="subj:([a-z]+)">([^<]+)<\/a>/g,
         (match, subjKey, linkText) => {
