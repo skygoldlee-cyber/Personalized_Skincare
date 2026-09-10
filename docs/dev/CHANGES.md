@@ -5,6 +5,19 @@
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 > registry↔번들 14개 실재 확인 · 비ASCII 콘텐츠 파일 0 · `vercel.json` JSON 유효.
 
+## 2026-09-11 교재 전체 참조문서 하이퍼링크 전수 변환
+
+### 2과목 백쿼트 참조문서 마크다운 링크 변환
+- 2과목 표준형 3개, 이야기형 8개 = 11개 백쿼트 참조문서를 마크다운 하이퍼링크로 변환
+- `../참조자료/원료/banned_ingredients.md` → 마크다운 링크
+- `../참조자료/원료/approved_ingredients.md` → 마크다운 링크
+- `사용 불가 원료.md` (존재하지 않는 파일) → `banned_ingredients.md`로 대체
+- 교재 전체 참조문서 하이퍼링크 전수조사: 8개 파일 모두 ✅ 하이퍼링크 없는 참조문서 0개
+
+### 검증
+- `npm run build:data`: 성공
+- `npm test`: 248 passed, 0 failed
+
 ## 2026-09-11 교재 전체 매핑 표 별표 하이퍼링크 전수 추가
 
 ### 매핑 표 별표 참조 링크 전수 추가
