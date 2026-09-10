@@ -614,10 +614,9 @@ export { textbookReaderState };
 
 export function renderTextbookReader() {
     const subjectSelect = document.getElementById('reader-subject-select');
-    const chapterSelect = document.getElementById('reader-chapter-select');
     const container = document.getElementById('textbook-reader-container');
     
-    if (!subjectSelect || !chapterSelect || !container) return;
+    if (!subjectSelect || !container) return;
 
     // Initialize reader convenience toolbar (font size, theme, focus mode, etc.)
     initReaderToolbar();
@@ -650,27 +649,27 @@ export function renderTextbookReader() {
     // Restore previous selections
     if (savedPos && savedPos.subject) {
         textbookReaderState.selectedSubject = savedPos.subject;
-        textbookReaderState.selectedChapter = savedPos.chapter;
+        textbookReaderState.selectedChapter = savedPos.chapter || '0';
         textbookReaderState.storyMode = savedPos.storyMode || false;
     }
     
     if (textbookReaderState.selectedSubject) {
         subjectSelect.value = textbookReaderState.selectedSubject;
-        populateChapterSelect(textbookReaderState.selectedSubject);
-        if (textbookReaderState.selectedChapter) {
-            chapterSelect.value = textbookReaderState.selectedChapter;
-            renderChapterContent(textbookReaderState.selectedSubject, textbookReaderState.selectedChapter).then(() => {
+        // 단원 선택 UI 제거: 과목 선택 시 자동으로 chapter 0(전체) 로드
+        textbookReaderState.selectedChapter = '0';
+        DataLoader.loadSubject(textbookReaderState.selectedSubject).then(() => {
+            renderChapterContent(textbookReaderState.selectedSubject, 0).then(() => {
                 // 스크롤 위치 복원 (콘텐츠 렌더링 후)
                 if (savedPos && savedPos.scrollTop > 0) {
-                    const container = document.getElementById('textbook-reader-container');
-                    if (container) {
+                    const cont = document.getElementById('textbook-reader-container');
+                    if (cont) {
                         requestAnimationFrame(() => {
-                            container.scrollTop = savedPos.scrollTop;
+                            cont.scrollTop = savedPos.scrollTop;
                         });
                     }
                 }
             });
-        }
+        });
     }
     
     // Bind events only once
@@ -680,46 +679,27 @@ export function renderTextbookReader() {
         subjectSelect.addEventListener('change', (e) => {
             const subjId = e.target.value;
             textbookReaderState.selectedSubject = subjId;
-            textbookReaderState.selectedChapter = '';
-            saveReaderPosition(); // 1. 교재 읽기 이어하기
             const hadAudio = !!readerAudioState.audio;
             stopReaderAudio();
             if (hadAudio) showAudioToast('과목이 변경되어 오디오 재생이 중지되었습니다.');
             
             if (subjId) {
-                chapterSelect.disabled = false;
-                chapterSelect.innerHTML = '<option value="">단원을 선택하세요</option>';
-                chapterSelect.value = '';
+                // 단원 선택 UI 제거: 과목 선택 시 자동으로 chapter 0(전체) 로드
+                textbookReaderState.selectedChapter = '0';
+                saveReaderPosition(); // 1. 교재 읽기 이어하기
                 DataLoader.loadSubject(subjId).then(() => {
-                    populateChapterSelect(subjId);
+                    renderChapterContent(subjId, 0);
                 });
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fa-solid fa-book-open" style="font-size: 3rem; color: var(--color-text-muted); margin-bottom: 1rem; display: block;"></i>
-                        <h3>단원을 선택하세요</h3>
-                        <p>위에서 단원을 선택하면 해당 교재의 본문 내용이 표시됩니다.</p>
-                    </div>
-                `;
             } else {
-                chapterSelect.disabled = true;
-                chapterSelect.innerHTML = '<option value="">단원을 선택하세요</option>';
+                textbookReaderState.selectedChapter = '';
+                saveReaderPosition();
                 container.innerHTML = `
                     <div class="empty-state">
                         <i class="fa-solid fa-book-open" style="font-size: 3rem; color: var(--color-text-muted); margin-bottom: 1rem; display: block;"></i>
                         <h3>읽을 교재를 선택하세요</h3>
-                        <p>위에서 과목과 단원을 선택하면 해당 교재의 본문 내용이 표시됩니다.</p>
+                        <p>위에서 과목을 선택하면 해당 교재의 본문 내용이 표시됩니다.</p>
                     </div>
                 `;
-            }
-        });
-        
-        chapterSelect.addEventListener('change', (e) => {
-            const chapterIdx = e.target.value;
-            textbookReaderState.selectedChapter = chapterIdx;
-            saveReaderPosition(); // 1. 교재 읽기 이어하기
-            
-            if (chapterIdx && textbookReaderState.selectedSubject) {
-                renderChapterContent(textbookReaderState.selectedSubject, parseInt(chapterIdx));
             }
         });
     }
@@ -737,26 +717,6 @@ export function renderTextbookReader() {
             }
         });
     }
-}
-
-function populateChapterSelect(subjId) {
-    const chapterSelect = document.getElementById('reader-chapter-select');
-    if (!chapterSelect) return;
-    
-    chapterSelect.innerHTML = '<option value="">단원을 선택하세요</option>';
-    
-    const STUDY_DATA = (typeof window !== 'undefined' && window.STUDY_DATA) ? window.STUDY_DATA : {};
-    const subj = STUDY_DATA[subjId];
-    if (!subj || !subj.chapters) return;
-    
-    subj.chapters.forEach((chapter, idx) => {
-        const option = document.createElement('option');
-        option.value = idx;
-        option.textContent = chapter.chapterTitle;
-        chapterSelect.appendChild(option);
-    });
-    
-    chapterSelect.value = '';
 }
 
 function renderChapterContent(subjId, chapterIdx) {
@@ -1225,8 +1185,6 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
             const navIdx = parseInt(btn.dataset.navIdx);
             textbookReaderState.selectedChapter = String(navIdx);
             saveReaderPosition(); // 1. 교재 읽기 이어하기
-            const chapterSelect = document.getElementById('reader-chapter-select');
-            if (chapterSelect) chapterSelect.value = String(navIdx);
             renderChapterContent(subjId, navIdx);
             container.scrollTop = 0;
         });

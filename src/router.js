@@ -17,7 +17,7 @@ export function getViewTitles(registry) {
         'trainer-view': uiText.trainer || { title: '스마트 훈련소', subtitle: '법령 수치 암기 및 배합 계산 트레이닝 센터' },
         'exam-view': uiText.exam || { title: '실전 모의고사', subtitle: '문제은행으로 과목별 모의고사 및 학습안내서 열람' },
         'textbook-view': uiText.textbook || { title: '교재 본문 검색', subtitle: '교재의 모든 본문 내용을 실시간 키워드로 검색' },
-        'textbook-reader-view': uiText['textbook-reader'] || { title: '교재 본문 읽기', subtitle: '과목과 단원을 선택하여 교재 본문을 읽기' },
+        'textbook-reader-view': uiText['textbook-reader'] || { title: '교재 본문 읽기', subtitle: '과목을 선택하여 교재 본문을 읽기' },
         'dictionary-view': uiText.dictionary || { title: '성분 검색 사전', subtitle: '화장품 성분별 배합한도 및 고시 기준 통합 검색기' }
     };
 }

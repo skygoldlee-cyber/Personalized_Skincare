@@ -5,6 +5,21 @@
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 > registry↔번들 14개 실재 확인 · 비ASCII 콘텐츠 파일 0 · `vercel.json` JSON 유효.
 
+## 2026-09-11 교재 본문 읽기 단원 선택 UI 제거
+
+### 단원 선택 UI 제거
+- 각 과목당 chapter가 1개뿐이라 단원 선택이 의미 없음
+- index.html에서 단원 선택 드롭다운 제거
+- textbook-reader.js에서 chapterSelect 참조 제거, 과목 선택 시 자동으로 chapter 0(전체) 로드
+- populateChapterSelect 함수 제거
+- 부제목/안내문 수정: "과목과 단원을 선택하여" → "과목을 선택하여"
+
+### 검증
+- `node --check`: 성공
+- `npm run build:data`: 성공
+- `npm test`: 248 passed, 0 failed
+- `npm run test:dom`: 21 passed, 0 failed
+
 ## 2026-09-11 교재 전체 참조문서 하이퍼링크 전수 변환
 
 ### 2과목 백쿼트 참조문서 마크다운 링크 변환

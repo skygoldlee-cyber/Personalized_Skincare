@@ -3,7 +3,7 @@
 export const DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2026",
-  "generatedAt": "2026-09-10T17:07:14.697Z",
+  "generatedAt": "2026-09-10T17:13:08.921Z",
   "subjects": [
     {
       "key": "law",
@@ -230,7 +230,7 @@ export const DATA_REGISTRY = {
     },
     "textbook-reader": {
       "title": "교재 본문 읽기",
-      "subtitle": "과목과 단원을 선택하여 교재 본문을 읽기"
+      "subtitle": "과목을 선택하여 교재 본문을 읽기"
     },
     "dictionary": {
       "title": "성분 검색 사전",
