@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v285-20260910-cleanup';   // _구 레지스트리 잔존 제거, 브랜드 통일, DOM 테스트 수정, AGENTS.md 보완
+const CACHE_VERSION = 'v286-20260910-fail-cutoff';   // 과락 기준 60→40 수정 (실제 시험 기준), 학습 공략법 1과목 과락 면피 6/10→4/10 수정
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
