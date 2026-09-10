@@ -1,153 +1,120 @@
 [
   {
-    "examFile": "content/문제은행/과목1_문제.md",
-    "relPath": "../교재/law/1과목_화장품법의이해_표준형.md",
-    "oldLineNum": 1853,
+    "examFile": "content/문제은행/과목3_문제.md",
+    "relPath": "../교재/safety/3과목_유통화장품안전관리_표준형.md",
+    "oldLineNum": 2468,
+    "oldLineContent": "",
+    "phrases": []
+  },
+  {
+    "examFile": "content/문제은행/과목3_문제.md",
+    "relPath": "../교재/safety/3과목_유통화장품안전관리_표준형.md",
+    "oldLineNum": 2918,
+    "oldLineContent": "",
+    "phrases": []
+  },
+  {
+    "examFile": "content/문제은행/과목3_문제.md",
+    "relPath": "../교재/safety/3과목_유통화장품안전관리_표준형.md",
+    "oldLineNum": 2042,
+    "oldLineContent": "| 주요설비 | 제조 및 품질 관련 문서에 명기된 설비로 제품의 품질에 영향을 미치는 필수적인 설비 |",
+    "phrases": [
+      "주요설비 제조 및 품질 관련 문서에 명기된 설비로 제품의 품질에 영향을 미치는 필수적인 설비"
+    ]
+  },
+  {
+    "examFile": "content/문제은행/과목3_문제.md",
+    "relPath": "../교재/safety/3과목_유통화장품안전관리_표준형.md",
+    "oldLineNum": 1320,
+    "oldLineContent": "> **정답**: ④",
+    "phrases": [
+      "정답: ④"
+    ]
+  },
+  {
+    "examFile": "content/문제은행/과목3_문제.md",
+    "relPath": "../교재/safety/3과목_유통화장품안전관리_표준형.md",
+    "oldLineNum": 1371,
+    "oldLineContent": "| 아이오도퍼 | 세포 단백질 합성 저해와 세포막 변성에 의한 소독 효과 | 0.5~10% 농도로 사용 |",
+    "phrases": [
+      "아이오도퍼 세포 단백질 합성 저해와 세포막 변성에 의한 소독 효과 0.5~10% 농도로 사용"
+    ]
+  },
+  {
+    "examFile": "content/문제은행/과목3_문제.md",
+    "relPath": "../교재/safety/3과목_유통화장품안전관리_표준형.md",
+    "oldLineNum": 2704,
+    "oldLineContent": "",
+    "phrases": []
+  },
+  {
+    "examFile": "content/문제은행/과목3_문제.md",
+    "relPath": "../교재/safety/3과목_유통화장품안전관리_표준형.md",
+    "oldLineNum": 2082,
+    "oldLineContent": " │",
+    "phrases": []
+  },
+  {
+    "examFile": "content/문제은행/과목3_문제.md",
+    "relPath": "../교재/safety/3과목_유통화장품안전관리_표준형.md",
+    "oldLineNum": 1399,
+    "oldLineContent": "| --- | --- | --- | --- |",
+    "phrases": [
+      "--- --- --- ---"
+    ]
+  },
+  {
+    "examFile": "content/문제은행/과목3_문제.md",
+    "relPath": "../교재/safety/3과목_유통화장품안전관리_표준형.md",
+    "oldLineNum": 2044,
+    "oldLineContent": "| 내부감사 | 제조 및 품질과 관련한 결과가 계획된 사항과 일치하는지의 여부와 제조 및 품질관리가 효과적으로 실행되고 목적 달성에 적합한지 여부를 결정하기 위한 회사 내 자격이 있는 직원에 의해 행해지는 체계적이고 독립적인 조사 |",
+    "phrases": [
+      "내부감사 제조 및 품질과 관련한 결과가 계획된 사항과 일치하는지의 여부와 제조 및 품질관리가 효과적으로 실행되고 목적 달성에 적합한지 여부를 결정하기 위한 회사 내 자격이 있는 직원에 의해 행해지는 체계적이고 독립적인 조사"
+    ]
+  },
+  {
+    "examFile": "content/문제은행/과목3_문제.md",
+    "relPath": "../교재/safety/3과목_유통화장품안전관리_표준형.md",
+    "oldLineNum": 2566,
+    "oldLineContent": "| **시험 중** | 황색 | 검체 채취·시험 중 | 대기 |",
+    "phrases": [
+      "시험 중 황색 검체 채취·시험 중 대기",
+      "시험 중 황색 검체 채취",
+      "시험 중 대기"
+    ]
+  },
+  {
+    "examFile": "content/문제은행/과목3_문제.md",
+    "relPath": "../교재/safety/3과목_유통화장품안전관리_표준형.md",
+    "oldLineNum": 2938,
+    "oldLineContent": "",
+    "phrases": []
+  },
+  {
+    "examFile": "content/문제은행/과목3_문제.md",
+    "relPath": "../교재/safety/3과목_유통화장품안전관리_표준형.md",
+    "oldLineNum": 2656,
+    "oldLineContent": "| **디옥산** | **100μg/g** 이하. |",
+    "phrases": [
+      "디옥산 100μg/g 이하.",
+      "디옥산 100μg",
+      "g 이하."
+    ]
+  },
+  {
+    "examFile": "content/문제은행/과목3_문제.md",
+    "relPath": "../교재/safety/3과목_유통화장품안전관리_표준형.md",
+    "oldLineNum": 1300,
+    "oldLineContent": "",
+    "phrases": []
+  },
+  {
+    "examFile": "content/문제은행/과목3_문제.md",
+    "relPath": "../교재/safety/3과목_유통화장품안전관리_표준형.md",
+    "oldLineNum": 3173,
     "oldLineContent": "| 용어 | 핵심 포인트 |",
     "phrases": [
       "용어 핵심 포인트"
-    ]
-  },
-  {
-    "examFile": "content/문제은행/과목1_문제.md",
-    "relPath": "../교재/law/1과목_화장품법의이해_표준형.md",
-    "oldLineNum": 1252,
-    "oldLineContent": "| 50만 원 | • 화장품의 생산실적 또는 수입실적 또는 화장품 원료의 목록 등을 보고하지 않은 자<br>• 맞춤형화장품 원료의 목록을 보고하지 않은 자<br>• 책임판매관리자 및 맞춤형화장품조제관리사가 매년 화장품의 안전성 확보 및 품질관리에 관한 교육을 받지 않는",
-    "phrases": [
-      "50만 원 • 화장품의 생산실적 또는 수입실적 또는 화장품 원료의 목록 등을 보고하지 않은 자 • 맞춤형화장품 원료의 목록을 보고하지 않은 자 • 책임판매관리자 및 맞춤형화장품조제관리사가 매년 화장품의 안전성 확보 및 품질관리에 관한 교육을 받지 않는 경우 • 식품의약품안전처장이 필요 시 영업자에게 화장품 관련 법령 및 제도에 관한 교육을 명할 시 그 명령을 위반한 자 • 폐업신고를 하지 않은 자 • 화장품의 판매가격을 표시하지 않은 자"
-    ]
-  },
-  {
-    "examFile": "content/문제은행/과목2_문제.md",
-    "relPath": "../교재/manufacturing/2과목_제조및품질관리_표준형.md",
-    "oldLineNum": 2323,
-    "oldLineContent": "",
-    "phrases": []
-  },
-  {
-    "examFile": "content/문제은행/과목2_문제.md",
-    "relPath": "../교재/manufacturing/2과목_제조및품질관리_표준형.md",
-    "oldLineNum": 1178,
-    "oldLineContent": "| 광범위 방부 효과 | 여러 종류의 미생물과 넓은 온도 및 pH 범위에서 방부 효과가 있어야 함 |",
-    "phrases": [
-      "광범위 방부 효과 여러 종류의 미생물과 넓은 온도 및 pH 범위에서 방부 효과가 있어야 함"
-    ]
-  },
-  {
-    "examFile": "content/문제은행/과목2_문제.md",
-    "relPath": "../교재/manufacturing/2과목_제조및품질관리_표준형.md",
-    "oldLineNum": 2432,
-    "oldLineContent": "| 클로로펜 | 0.05% |  |",
-    "phrases": [
-      "클로로펜 0.05%"
-    ]
-  },
-  {
-    "examFile": "content/문제은행/과목2_문제.md",
-    "relPath": "../교재/manufacturing/2과목_제조및품질관리_표준형.md",
-    "oldLineNum": 3162,
-    "oldLineContent": "",
-    "phrases": []
-  },
-  {
-    "examFile": "content/문제은행/과목2_문제.md",
-    "relPath": "../교재/manufacturing/2과목_제조및품질관리_표준형.md",
-    "oldLineNum": 3888,
-    "oldLineContent": "| **아밀신나밀알코올** | Amyl Cinnamyl Alcohol | 향료 | 유상층 | 아밀신나밀알코올은 화장품에 향을 부여하는 향료 성분으로, 착향제 알레르기 유발 성분 25종에 해당하는 성분입니다. | 민감성 | 권장 | 착향 알레르기 유발 성분 25종 |",
-    "phrases": [
-      "아밀신나밀알코올 Amyl Cinnamyl Alcohol 향료 유상층 아밀신나밀알코올은 화장품에 향을 부여하는 향료 성분으로, 착향제 알레르기 유발 성분 25종에 해당하는 성분입니다. 민감성 권장 착향 알레르기 유발 성분 25종",
-      "아밀신나밀알코올 Amyl Cinnamyl Alcohol 향료 유상층 아밀신나밀알코올은 화장품에 향을 부여하는 향료 성분으로",
-      "착향제 알레르기 유발 성분 25종에 해당하는 성분입니다. 민감성 권장 착향 알레르기 유발 성분 25종"
-    ]
-  },
-  {
-    "examFile": "content/문제은행/과목2_문제.md",
-    "relPath": "../교재/manufacturing/2과목_제조및품질관리_표준형.md",
-    "oldLineNum": 1224,
-    "oldLineContent": "| 토코페릴아세테이트 | 토코페롤의 아세틱애씨드 에스터 |",
-    "phrases": [
-      "토코페릴아세테이트 토코페롤의 아세틱애씨드 에스터"
-    ]
-  },
-  {
-    "examFile": "content/문제은행/과목2_문제.md",
-    "relPath": "../교재/manufacturing/2과목_제조및품질관리_표준형.md",
-    "oldLineNum": 1892,
-    "oldLineContent": "| 기초화장품 공정 ⑧ | 저장 및 출하 | 전동지게차 및 오토 피커를 사용하여 저장 창고에 적재 및 출하 |",
-    "phrases": [
-      "기초화장품 공정 ⑧ 저장 및 출하 전동지게차 및 오토 피커를 사용하여 저장 창고에 적재 및 출하"
-    ]
-  },
-  {
-    "examFile": "content/문제은행/과목2_문제.md",
-    "relPath": "../교재/manufacturing/2과목_제조및품질관리_표준형.md",
-    "oldLineNum": 2071,
-    "oldLineContent": "| 대분류 | 중분류 | 핵심 포인트 |",
-    "phrases": [
-      "대분류 중분류 핵심 포인트"
-    ]
-  },
-  {
-    "examFile": "content/문제은행/과목3_문제.md",
-    "relPath": "../교재/safety/3과목_유통화장품안전관리_표준형.md",
-    "oldLineNum": 1817,
-    "oldLineContent": "| **탱크** | - 공정 단계 및 완성된 포뮬레이션 과정에서 공정 중 또는 보관용 원료를 저장하기 위해 사용함<br>- 주로 316스테인리스 스틸을 사용하며, 주형 물질 또는 거친 표면은 제품이 뭉치게 되어 화장품에는 추천하지 않음<br>- 미생물학적으로 민감하지 ",
-    "phrases": [
-      "탱크 - 공정 단계 및 완성된 포뮬레이션 과정에서 공정 중 또는 보관용 원료를 저장하기 위해 사용함 - 주로 316스테인리스 스틸을 사용하며, 주형 물질 또는 거친 표면은 제품이 뭉치게 되어 화장품에는 추천하지 않음 - 미생물학적으로 민감하지 않은 물질이나 제품에는 유리로 안을 댄 강화유리섬유 폴리에스터와 플라스틱으로 안을 댄 탱크를 사용함 - 모든 용접, 결합은 가능한 한 매끄럽고 평면이어야 함 - 외부 표면의 코팅은 제품에 대해 저항력이 있어야 함",
-      "주형 물질 또는 거친 표면은 제품이 뭉치게 되어 화장품에는 추천하지 않음 - 미생물학적으로 민감하지 않은 물질이나 제품에는 유리로 안을 댄 강화유리섬유 폴리에스터와 플라스틱으로 안을 댄 탱크를 사용함 - 모든 용접",
-      "탱크 - 공정 단계 및 완성된 포뮬레이션 과정에서 공정 중 또는 보관용 원료를 저장하기 위해 사용함 - 주로 316스테인리스 스틸을 사용하며"
-    ]
-  },
-  {
-    "examFile": "content/문제은행/과목3_문제.md",
-    "relPath": "../교재/safety/3과목_유통화장품안전관리_표준형.md",
-    "oldLineNum": 2815,
-    "oldLineContent": " ↓",
-    "phrases": []
-  },
-  {
-    "examFile": "content/문제은행/과목3_문제.md",
-    "relPath": "../교재/safety/3과목_유통화장품안전관리_표준형.md",
-    "oldLineNum": 2206,
-    "oldLineContent": "| 청정등급 | 부유입자 및 미생물이 유입되거나 잔류하는 것을 통제하여 일정 수준 이하로 유지되도록 관리하는 구역의 관리 수준을 정한 등급 |",
-    "phrases": [
-      "청정등급 부유입자 및 미생물이 유입되거나 잔류하는 것을 통제하여 일정 수준 이하로 유지되도록 관리하는 구역의 관리 수준을 정한 등급"
-    ]
-  },
-  {
-    "examFile": "content/문제은행/과목3_문제.md",
-    "relPath": "../교재/safety/3과목_유통화장품안전관리_표준형.md",
-    "oldLineNum": 2707,
-    "oldLineContent": "> 📋 **학습 가이드**",
-    "phrases": [
-      "📋 학습 가이드"
-    ]
-  },
-  {
-    "examFile": "content/문제은행/과목3_문제.md",
-    "relPath": "../교재/safety/3과목_유통화장품안전관리_표준형.md",
-    "oldLineNum": 1414,
-    "oldLineContent": "| 보호안경 | 필요 시 | 필요 시 |  | 해당 없음 | ○ |",
-    "phrases": [
-      "보호안경 필요 시 필요 시 해당 없음 ○"
-    ]
-  },
-  {
-    "examFile": "content/문제은행/과목3_문제.md",
-    "relPath": "../교재/safety/3과목_유통화장품안전관리_표준형.md",
-    "oldLineNum": 2340,
-    "oldLineContent": "---",
-    "phrases": []
-  },
-  {
-    "examFile": "content/문제은행/과목3_문제.md",
-    "relPath": "../교재/safety/3과목_유통화장품안전관리_표준형.md",
-    "oldLineNum": 1823,
-    "oldLineContent": "| **칭량장치** | - 원료, 제조 과정 중 재료 및 완제품에서 요구되는 성분표 양과 기준을 만족하는지를 보증하기 위해 중량적으로 측정하는 장치<br>- 칭량 작업에 간섭하지 않는다면 보호적인 피복제로 칠할 수 있음 |",
-    "phrases": [
-      "칭량장치 - 원료, 제조 과정 중 재료 및 완제품에서 요구되는 성분표 양과 기준을 만족하는지를 보증하기 위해 중량적으로 측정하는 장치 - 칭량 작업에 간섭하지 않는다면 보호적인 피복제로 칠할 수 있음",
-      "제조 과정 중 재료 및 완제품에서 요구되는 성분표 양과 기준을 만족하는지를 보증하기 위해 중량적으로 측정하는 장치 - 칭량 작업에 간섭하지 않는다면 보호적인 피복제로 칠할 수 있음",
-      "칭량장치 - 원료"
     ]
   }
 ]
