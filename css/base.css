@@ -68,6 +68,9 @@
     --shadow-glow-danger: 0 0 15px rgba(239, 68, 68, 0.3);
     --shadow-glow-warning: 0 0 15px rgba(245, 158, 11, 0.3);
 
+    /* Responsive Breakpoints (참조용 — CSS @media에서 직접 사용) */
+    /* --bp-sm: 480px; --bp-md: 768px; --bp-lg: 900px; --bp-xl: 1200px; */
+
     --font-app: 'Noto Sans KR', 'Outfit', 'Noto Color Emoji', sans-serif;
 }
 
@@ -103,6 +106,11 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+/* 유틸리티 클래스 — 인라인 style="display:none" 대체 */
+.is-hidden {
+    display: none !important;
 }
 
 body {

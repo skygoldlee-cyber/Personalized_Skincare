@@ -667,7 +667,7 @@
     }
 }
 
-@media (max-width: 992px) {
+@media (max-width: 900px) {
     .analytics-grid {
         grid-template-columns: 1fr;
     }
