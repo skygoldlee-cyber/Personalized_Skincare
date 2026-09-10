@@ -619,6 +619,13 @@ export function renderTextbookReader() {
     
     if (!subjectSelect || !chapterSelect || !container) return;
 
+    console.log('[Reader] renderTextbookReader called', {
+        subjectSelectValue: subjectSelect.value,
+        selectedSubject: textbookReaderState.selectedSubject,
+        selectedChapter: textbookReaderState.selectedChapter,
+        bound: subjectSelect.dataset.bound
+    });
+
     // Initialize reader convenience toolbar (font size, theme, focus mode, etc.)
     initReaderToolbar();
     
@@ -659,6 +666,7 @@ export function renderTextbookReader() {
         populateChapterSelect(textbookReaderState.selectedSubject);
         if (textbookReaderState.selectedChapter) {
             chapterSelect.value = textbookReaderState.selectedChapter;
+            console.log('[Reader] restoring chapter', { subject: textbookReaderState.selectedSubject, chapter: textbookReaderState.selectedChapter });
             renderChapterContent(textbookReaderState.selectedSubject, textbookReaderState.selectedChapter).then(() => {
                 // 스크롤 위치 복원 (콘텐츠 렌더링 후)
                 if (savedPos && savedPos.scrollTop > 0) {
@@ -679,6 +687,7 @@ export function renderTextbookReader() {
         
         subjectSelect.addEventListener('change', (e) => {
             const subjId = e.target.value;
+            console.log('[Reader] subject change event fired', { subjId, previousSubject: textbookReaderState.selectedSubject });
             textbookReaderState.selectedSubject = subjId;
             textbookReaderState.selectedChapter = '';
             saveReaderPosition(); // 1. 교재 읽기 이어하기
