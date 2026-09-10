@@ -443,7 +443,7 @@ export function stopReaderAudio() {
     }
     const ui = getAudioUI();
     if (ui.btn) ui.btn.innerHTML = '<i class="fa-solid fa-headphones"></i> 오디오 듣기';
-    if (ui.playerArea) ui.playerArea.style.display = 'none';
+    if (ui.playerArea) ui.playerArea.classList.add('is-hidden');
     setAudioStatus('');
 }
 
@@ -489,7 +489,7 @@ export function toggleReaderAudio(subjId, chapterIdx) {
     }
 
     // 플레이어 영역 표시 + 로딩 표시
-    if (ui.playerArea) ui.playerArea.style.display = 'block';
+    if (ui.playerArea) ui.playerArea.classList.remove('is-hidden');
     if (ui.label) ui.label.textContent = chapter.chapterTitle;
     setAudioStatus('로딩 중…');
     if (ui.btn) ui.btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 로딩';
@@ -916,9 +916,9 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
     const toolbar = document.getElementById('reader-toolbar');
     const toc = document.getElementById('reader-toc');
     const progressBar = document.getElementById('reader-progress-bar');
-    if (toolbar) toolbar.style.display = 'flex';
-    if (toc) toc.style.display = 'block';
-    if (progressBar) progressBar.style.display = 'block';
+    if (toolbar) toolbar.classList.remove('is-hidden');
+    if (toc) toc.classList.remove('is-hidden');
+    if (progressBar) progressBar.classList.remove('is-hidden');
 
     const bookmarks = getReaderBookmarks();
 
@@ -1483,7 +1483,7 @@ function initReaderToolbar() {
         tocMobileBtn.dataset.bound = 'true';
         const closeMobileToc = () => {
             if (tocAside) tocAside.classList.remove('mobile-open');
-            if (tocBackdrop) tocBackdrop.style.display = 'none';
+            if (tocBackdrop) tocBackdrop.classList.add('is-hidden');
         };
         tocMobileBtn.addEventListener('click', () => {
             if (tocAside && tocBackdrop) {
@@ -1536,7 +1536,7 @@ function openTableModal(wrapper) {
     if (!table) return;
     body.innerHTML = '';
     body.appendChild(table.cloneNode(true));
-    modal.style.display = 'flex';
+    modal.classList.remove('is-hidden');
     // 포커스 트랩 적용
     if (modal._untrapFocus) modal._untrapFocus();
     modal._untrapFocus = trapFocus(modal, wrapper);
@@ -1545,7 +1545,7 @@ function openTableModal(wrapper) {
 function closeTableModal() {
     const modal = document.getElementById('reader-table-modal');
     if (modal) {
-        modal.style.display = 'none';
+        modal.classList.add('is-hidden');
         if (modal._untrapFocus) {
             modal._untrapFocus();
             modal._untrapFocus = null;
@@ -1655,7 +1655,7 @@ async function _showPreview(linkEl) {
 
     const el = _ensurePreviewEl();
     el.innerHTML = '<div style="opacity:0.6;">로딩 중...</div>';
-    el.style.display = 'block';
+    el.classList.remove('is-hidden');
 
     try {
         if (!_previewCache[path]) {
@@ -1710,7 +1710,7 @@ async function _showPreview(linkEl) {
 }
 
 function _hidePreview() {
-    if (_previewEl) _previewEl.style.display = 'none';
+    if (_previewEl) _previewEl.classList.add('is-hidden');
 }
 
 function bindReferenceLinks() {

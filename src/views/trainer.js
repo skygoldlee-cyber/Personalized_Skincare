@@ -6,7 +6,7 @@ import { buildCalcQuestion } from '../trainer-calc.js';
 import { initScratchpadCanvas, clearScratchpad, toggleCalcScratchpad, toggleScratchpadEraser } from '../scratchpad.js';
 import { shuffle } from '../utils.js';
 import { togglePomodoro, tickPomodoro, resetPomodoro, updatePomodoroUI } from './pomodoro.js';
-import { showToast } from '../ui-utils.js';
+import { showToast, vibrate, HAPTIC } from '../ui-utils.js';
 
 // 뽀모도로 함수 재수출 (app.js 호환성 유지)
 export { togglePomodoro, tickPomodoro, resetPomodoro, updatePomodoroUI };
@@ -121,8 +121,8 @@ export function startLimitsTrainer() {
     state.trainer.limits.solvedList = [];
     state.trainer.limits.shuffledData = shuffle(LIMITS_DB);
     
-    document.getElementById('trainer-menu-panel').style.display = 'none';
-    document.getElementById('trainer-limits-panel').style.display = 'block';
+    document.getElementById('trainer-menu-panel').classList.add('is-hidden');
+    document.getElementById('trainer-limits-panel').classList.remove('is-hidden');
     
     renderLimitsQuestion();
 }
@@ -177,8 +177,8 @@ export function renderLimitsQuestion() {
     
     const feedbackPanel = document.getElementById('limits-feedback-panel');
     const nextBtn = document.getElementById('next-limits-btn');
-    if (feedbackPanel) feedbackPanel.style.display = 'none';
-    if (nextBtn) nextBtn.style.display = 'none';
+    if (feedbackPanel) feedbackPanel.classList.add('is-hidden');
+    if (nextBtn) nextBtn.classList.add('is-hidden');
 }
 
 function generateLimitsOptions(question) {
@@ -227,6 +227,7 @@ function generateLimitsOptions(question) {
 
 export function submitLimitsAnswer(selectedBtn, selectedValue, correctValue) {
     const isCorrect = (selectedValue === correctValue);
+    vibrate(isCorrect ? HAPTIC.correct : HAPTIC.wrong);
     const container = document.getElementById('limits-options-container');
     if (!container) return;
     const buttons = container.querySelectorAll('.limits-opt-btn');
@@ -259,7 +260,7 @@ export function submitLimitsAnswer(selectedBtn, selectedValue, correctValue) {
     const feedbackTitle = document.getElementById('limits-feedback-title');
     const feedbackDesc = document.getElementById('limits-feedback-desc');
     
-    if (feedbackPanel) feedbackPanel.style.display = 'flex';
+    if (feedbackPanel) feedbackPanel.classList.remove('is-hidden');
     if (isCorrect) {
         if (feedbackPanel) feedbackPanel.classList.remove('incorrect');
         if (feedbackTitle) feedbackTitle.textContent = '정답입니다!';
@@ -270,7 +271,7 @@ export function submitLimitsAnswer(selectedBtn, selectedValue, correctValue) {
     if (feedbackDesc) feedbackDesc.textContent = currentQ.explanation;
     
     const nextBtn = document.getElementById('next-limits-btn');
-    if (nextBtn) nextBtn.style.display = 'inline-flex';
+    if (nextBtn) nextBtn.classList.remove('is-hidden');
 }
 
 export function nextLimitsQuestion() {
@@ -340,12 +341,12 @@ export function startCalcPractice() {
     
     const menuPanel = document.getElementById('trainer-menu-panel');
     const calcPanel = document.getElementById('trainer-calc-panel');
-    if (menuPanel) menuPanel.style.display = 'none';
-    if (calcPanel) calcPanel.style.display = 'block';
+    if (menuPanel) menuPanel.classList.add('is-hidden');
+    if (calcPanel) calcPanel.classList.remove('is-hidden');
     
     const scratchpadContainer = document.getElementById('calc-scratchpad-container');
     const toggleBtn = document.getElementById('calc-scratchpad-toggle');
-    if (scratchpadContainer) scratchpadContainer.style.display = 'none';
+    if (scratchpadContainer) scratchpadContainer.classList.add('is-hidden');
     if (toggleBtn) toggleBtn.innerHTML = '<i class="fa-solid fa-pencil"></i> ✏️ 계산 연습장 열기';
     
     renderCalcHistory();
@@ -376,15 +377,15 @@ export function generateCalcQuestion() {
     }
     
     if (submitBtn) submitBtn.disabled = false;
-    if (feedbackPanel) feedbackPanel.style.display = 'none';
-    if (solutionPanel) solutionPanel.style.display = 'none';
-    if (nextBtn) nextBtn.style.display = 'none';
+    if (feedbackPanel) feedbackPanel.classList.add('is-hidden');
+    if (solutionPanel) solutionPanel.classList.add('is-hidden');
+    if (nextBtn) nextBtn.classList.add('is-hidden');
     
     const header = document.querySelector('.solution-header');
     if (header) {
         header.classList.remove('active');
         const body = document.getElementById('calc-solution-body');
-        if (body) body.style.display = 'none';
+        if (body) body.classList.add('is-hidden');
     }
     
     if (typeof clearScratchpad === 'function') {
@@ -412,6 +413,7 @@ export function submitCalcAnswer() {
     
     const correctVal = parseFloat(currentQ.answer);
     const isCorrect = Math.abs(userVal - correctVal) <= 0.02;
+    vibrate(isCorrect ? HAPTIC.correct : HAPTIC.wrong);
     
     if (isCorrect) {
         calcState.correctCount++;
@@ -426,7 +428,7 @@ export function submitCalcAnswer() {
     const solutionPanel = document.getElementById('calc-solution-panel');
     const nextBtn = document.getElementById('next-calc-btn');
 
-    if (feedbackPanel) feedbackPanel.style.display = 'flex';
+    if (feedbackPanel) feedbackPanel.classList.remove('is-hidden');
     if (isCorrect) {
         if (feedbackPanel) feedbackPanel.classList.remove('incorrect');
         if (feedbackTitle) feedbackTitle.textContent = '정답입니다!';
@@ -438,8 +440,8 @@ export function submitCalcAnswer() {
     }
     
     if (solutionBody) solutionBody.innerHTML = currentQ.solution;
-    if (solutionPanel) solutionPanel.style.display = 'block';
-    if (nextBtn) nextBtn.style.display = 'inline-flex';
+    if (solutionPanel) solutionPanel.classList.remove('is-hidden');
+    if (nextBtn) nextBtn.classList.remove('is-hidden');
 }
 
 export function toggleSolutionAccordion() {
@@ -450,10 +452,10 @@ export function toggleSolutionAccordion() {
     
     if (isVisible) {
         if (header) header.classList.remove('active');
-        body.style.display = 'none';
+        body.classList.add('is-hidden');
     } else {
         if (header) header.classList.add('active');
-        body.style.display = 'block';
+        body.classList.remove('is-hidden');
     }
 }
 
@@ -544,8 +546,8 @@ export function startIngredientsChallenge() {
     
     const menuPanel = document.getElementById('trainer-menu-panel');
     const ingPanel = document.getElementById('trainer-ingredients-panel');
-    if (menuPanel) menuPanel.style.display = 'none';
-    if (ingPanel) ingPanel.style.display = 'block';
+    if (menuPanel) menuPanel.classList.add('is-hidden');
+    if (ingPanel) ingPanel.classList.remove('is-hidden');
     
     renderIngQuestion();
 }
@@ -698,7 +700,7 @@ export function renderIngQuestion() {
     
     if (currentQ.type === 'choice') {
         if (optionsContainer) optionsContainer.style.display = 'grid';
-        if (inputContainer) inputContainer.style.display = 'none';
+        if (inputContainer) inputContainer.classList.add('is-hidden');
         
         const optionIndicators = ['A', 'B', 'C', 'D'];
         currentQ.options.forEach((optValue, idx) => {
@@ -711,18 +713,19 @@ export function renderIngQuestion() {
             if (optionsContainer) optionsContainer.appendChild(btn);
         });
     } else {
-        if (optionsContainer) optionsContainer.style.display = 'none';
-        if (inputContainer) inputContainer.style.display = 'flex';
+        if (optionsContainer) optionsContainer.classList.add('is-hidden');
+        if (inputContainer) inputContainer.classList.remove('is-hidden');
     }
     
     const feedbackPanel = document.getElementById('ing-feedback-panel');
     const nextBtn = document.getElementById('next-ing-btn');
-    if (feedbackPanel) feedbackPanel.style.display = 'none';
-    if (nextBtn) nextBtn.style.display = 'none';
+    if (feedbackPanel) feedbackPanel.classList.add('is-hidden');
+    if (nextBtn) nextBtn.classList.add('is-hidden');
 }
 
 export function submitIngChoiceAnswer(selectedBtn, selectedValue, correctValue) {
     const isCorrect = (selectedValue === correctValue);
+    vibrate(isCorrect ? HAPTIC.correct : HAPTIC.wrong);
     const container = document.getElementById('ing-options-container');
     if (!container) return;
     const buttons = container.querySelectorAll('.limits-opt-btn');
@@ -766,6 +769,7 @@ export function submitIngAnswer() {
     }
     
     const isCorrect = checkShortAnswer(userInput, currentQ.correct);
+    vibrate(isCorrect ? HAPTIC.correct : HAPTIC.wrong);
     if (isCorrect) {
         ingState.correctCount++;
     }
@@ -789,7 +793,7 @@ export function showIngFeedback(isCorrect, correctValue) {
     const feedbackTitle = document.getElementById('ing-feedback-title');
     const feedbackDesc = document.getElementById('ing-feedback-desc');
     
-    if (feedbackPanel) feedbackPanel.style.display = 'flex';
+    if (feedbackPanel) feedbackPanel.classList.remove('is-hidden');
     if (feedbackTitle) {
         if (isCorrect) {
             feedbackPanel.classList.remove('incorrect');
@@ -802,7 +806,7 @@ export function showIngFeedback(isCorrect, correctValue) {
     if (feedbackDesc) feedbackDesc.innerHTML = safeTextWithBreaks(currentQ.explanation);
     
     const nextBtn = document.getElementById('next-ing-btn');
-    if (nextBtn) nextBtn.style.display = 'inline-flex';
+    if (nextBtn) nextBtn.classList.remove('is-hidden');
     
     const submitBtn = document.getElementById('submit-ing-btn');
     if (submitBtn) {
@@ -890,10 +894,10 @@ export function initTrainer() {
     const calcPanel = document.getElementById('trainer-calc-panel');
     const ingPanel = document.getElementById('trainer-ingredients-panel');
 
-    if (menuPanel) menuPanel.style.display = 'block';
-    if (limitsPanel) limitsPanel.style.display = 'none';
-    if (calcPanel) calcPanel.style.display = 'none';
-    if (ingPanel) ingPanel.style.display = 'none';
+    if (menuPanel) menuPanel.classList.remove('is-hidden');
+    if (limitsPanel) limitsPanel.classList.add('is-hidden');
+    if (calcPanel) calcPanel.classList.add('is-hidden');
+    if (ingPanel) ingPanel.classList.add('is-hidden');
 }
 
 export function exitTrainerSubView() {

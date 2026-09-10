@@ -4,7 +4,7 @@ import { esc, safeTextWithBreaks } from '../sanitize.js';
 import { checkShortAnswer } from './trainer.js';
 // [모바일 PWA 견고성] 레지스트리는 window 전역(가드)에서 읽는다(정적 import 하드 의존 지양).
 import { DataLoader } from '../data-loader.js';
-import { showGlobalLoading, hideGlobalLoading, showToast } from '../ui-utils.js';
+import { showGlobalLoading, hideGlobalLoading, showToast, vibrate, HAPTIC } from '../ui-utils.js';
 import { shuffle } from '../utils.js';
 
 // --- 5. 실전 모의고사 시뮬레이터 구현 ---
@@ -30,10 +30,10 @@ export function startSimSession(examData) {
     simState.wrongQuestions = [];
 
     // UI 전환
-    document.getElementById('exam-list-panel').style.display = 'none';
-    document.getElementById('sim-result-panel').style.display = 'none';
-    document.getElementById('sim-review-panel').style.display = 'none';
-    document.getElementById('sim-arena-panel').style.display = 'block';
+    document.getElementById('exam-list-panel').classList.add('is-hidden');
+    document.getElementById('sim-result-panel').classList.add('is-hidden');
+    document.getElementById('sim-review-panel').classList.add('is-hidden');
+    document.getElementById('sim-arena-panel').classList.remove('is-hidden');
 
     // 타이머 및 OMR 렌더링
     document.getElementById('sim-exam-title').textContent = examData.title;
@@ -155,7 +155,7 @@ export function saveSimDraft() {
 export function clearSimDraft() {
     localStorage.removeItem('sim_draft_session');
     const banner = document.getElementById('draft-resume-banner');
-    if (banner) banner.style.display = 'none';
+    if (banner) banner.classList.add('is-hidden');
 }
 
 export function checkExamDraft() {
@@ -175,12 +175,12 @@ export function checkExamDraft() {
             if (titleEl) titleEl.textContent = `📝 진행 중인 모의고사: ${draft.examTitle}`;
             if (descEl) descEl.textContent = `이전 진행 상태 복구 가능 (남은 시간: ${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}, 풀이한 문항: ${Object.keys(draft.userAnswers).length}/${draft.questions.length})`;
             
-            banner.style.display = 'flex';
+            banner.classList.remove('is-hidden');
         } catch(e) {
-            banner.style.display = 'none';
+            banner.classList.add('is-hidden');
         }
     } else {
-        banner.style.display = 'none';
+        banner.classList.add('is-hidden');
     }
 }
 
@@ -202,10 +202,10 @@ export function resumeSimDraft() {
         simState.timeLeft = draft.timeLeft;
         simState.wrongQuestions = [];
         
-        document.getElementById('exam-list-panel').style.display = 'none';
-        document.getElementById('sim-result-panel').style.display = 'none';
-        document.getElementById('sim-review-panel').style.display = 'none';
-        document.getElementById('sim-arena-panel').style.display = 'block';
+        document.getElementById('exam-list-panel').classList.add('is-hidden');
+        document.getElementById('sim-result-panel').classList.add('is-hidden');
+        document.getElementById('sim-review-panel').classList.add('is-hidden');
+        document.getElementById('sim-arena-panel').classList.remove('is-hidden');
 
         document.getElementById('sim-exam-title').textContent = draft.examTitle;
         renderOMRSheet();
@@ -233,7 +233,7 @@ export function resumeSimDraft() {
         });
         
         const banner = document.getElementById('draft-resume-banner');
-        if (banner) banner.style.display = 'none';
+        if (banner) banner.classList.add('is-hidden');
         
     } catch(e) {
         console.error("Failed to resume draft: ", e);
@@ -245,10 +245,10 @@ export function exitSimArena() {
     if (simState.timerInterval) clearInterval(simState.timerInterval);
     
     // UI 전환
-    document.getElementById('sim-arena-panel').style.display = 'none';
-    document.getElementById('sim-result-panel').style.display = 'none';
-    document.getElementById('sim-review-panel').style.display = 'none';
-    document.getElementById('exam-list-panel').style.display = 'block';
+    document.getElementById('sim-arena-panel').classList.add('is-hidden');
+    document.getElementById('sim-result-panel').classList.add('is-hidden');
+    document.getElementById('sim-review-panel').classList.add('is-hidden');
+    document.getElementById('exam-list-panel').classList.remove('is-hidden');
     
     // 대시보드 갱신하여 배너 확인
     checkExamDraft();
@@ -429,11 +429,11 @@ export function renderSimQuestion() {
     }
     
     if (simState.currentIndex === simState.data.questions.length - 1) {
-        nextBtn.style.display = 'none';
-        submitBtn.style.display = 'inline-flex';
+        nextBtn.classList.add('is-hidden');
+        submitBtn.classList.remove('is-hidden');
     } else {
-        nextBtn.style.display = 'inline-flex';
-        submitBtn.style.display = 'none';
+        nextBtn.classList.remove('is-hidden');
+        submitBtn.classList.add('is-hidden');
     }
     
     updateOMRProgress();
@@ -469,6 +469,7 @@ export function submitExam() {
         const userAns = simState.userAnswers[q.id] || '';
         
         const isCorrect = checkShortAnswer(userAns, q.answer);
+        vibrate(isCorrect ? HAPTIC.correct : HAPTIC.wrong);
         
         if (isCorrect) {
             score++;
@@ -521,8 +522,8 @@ export function submitExam() {
     }
     
     // 결과 패널 세팅
-    document.getElementById('sim-arena-panel').style.display = 'none';
-    document.getElementById('sim-result-panel').style.display = 'block';
+    document.getElementById('sim-arena-panel').classList.add('is-hidden');
+    document.getElementById('sim-result-panel').classList.remove('is-hidden');
     
     document.getElementById('sim-result-score').textContent = `${score} / ${total} 개`;
     const rate = Math.round((score / total) * 100);
@@ -622,7 +623,7 @@ export function submitExam() {
         }
         
         breakdownContainer.innerHTML = breakdownHTML;
-        breakdownContainer.style.display = 'block';
+        breakdownContainer.classList.remove('is-hidden');
     }
 }
 
@@ -642,8 +643,8 @@ export function examIdToSubjectId(examId) {
 }
 
 export function showSimAnswerReview() {
-    document.getElementById('sim-result-panel').style.display = 'none';
-    document.getElementById('sim-review-panel').style.display = 'block';
+    document.getElementById('sim-result-panel').classList.add('is-hidden');
+    document.getElementById('sim-review-panel').classList.remove('is-hidden');
     
     const container = document.getElementById('sim-review-list-container');
     container.innerHTML = '';
@@ -684,8 +685,8 @@ export function showSimAnswerReview() {
 }
 
 export function showSimResultsSummary() {
-    document.getElementById('sim-review-panel').style.display = 'none';
-    document.getElementById('sim-result-panel').style.display = 'block';
+    document.getElementById('sim-review-panel').classList.add('is-hidden');
+    document.getElementById('sim-result-panel').classList.remove('is-hidden');
 }
 
 /* =======================================================

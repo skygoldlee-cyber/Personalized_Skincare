@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v280-20260910-fb8ffc1';   // 미디어 쿼리 통일, !important 제거, h1~h6 위계 정리
+const CACHE_VERSION = 'v281-20260910-1ec317e';   // 인쇄 분리, 햅틱, 키보드 단축키, aria-live, 터치타깃, 오프라인 폴백
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
@@ -396,11 +396,24 @@ async function staleWhileRevalidate(request, cacheName) {
   return cached || (await networkPromise) || offlineFallback(request);
 }
 
-/** 오프라인 폴리백: 페이지 요청이면 캐시된 index.html 반환 */
+/** 오프라인 폴리백: 페이지 요청이면 캐시된 index.html 반환, 이미지는 빈 투명 PNG */
 async function offlineFallback(request) {
   if (request.mode === 'navigate') {
     const cached = await caches.match('./index.html');
     if (cached) return cached;
   }
+  // 이미지 요청은 1x1 투명 PNG 반환 (UI 깨짐 방지)
+  if (request.destination === 'image') {
+    const transparentPng = Uint8Array.from(atob(
+      'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='
+    ), c => c.charCodeAt(0));
+    return new Response(transparentPng, {
+      status: 200,
+      headers: { 'Content-Type': 'image/png', 'Cache-Control': 'no-store' }
+    });
+  }
+  // 기존 캐시에서 유사 요청 시도
+  const cachedMatch = await caches.match(request);
+  if (cachedMatch) return cachedMatch;
   return Response.error();
 }

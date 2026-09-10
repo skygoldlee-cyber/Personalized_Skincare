@@ -107,10 +107,10 @@ export function renderFlashcard() {
     if (starEl) {
         if (card.isKey) {
             starEl.classList.add('active');
-            starEl.style.display = 'block';
+            starEl.classList.remove('is-hidden');
         } else {
             starEl.classList.remove('active');
-            starEl.style.display = 'none';
+            starEl.classList.add('is-hidden');
         }
     }
     

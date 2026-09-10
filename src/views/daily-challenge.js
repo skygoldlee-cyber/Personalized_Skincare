@@ -221,8 +221,8 @@ export function renderDailyStep() {
     
     document.getElementById('daily-modal-progress').textContent = `진행: ${dailyState.currentIndex + 1} / ${dailyState.questions.length}`;
     document.getElementById('daily-modal-bar').style.width = `${((dailyState.currentIndex + 1) / dailyState.questions.length) * 100}%`;
-    document.getElementById('daily-modal-feedback').style.display = 'none';
-    document.getElementById('daily-modal-next-btn').style.display = 'none';
+    document.getElementById('daily-modal-feedback').classList.add('is-hidden');
+    document.getElementById('daily-modal-next-btn').classList.add('is-hidden');
     
     const qBody = document.getElementById('daily-modal-q-body');
     qBody.innerHTML = `<h4 style="font-size: 1.15rem; line-height: 1.8; font-weight: 500;">${safeTextWithBreaks(q.question)}</h4>`;
@@ -289,7 +289,7 @@ export function submitDailyCardAnswer(isMemorized) {
     const title = document.getElementById('daily-modal-feedback-title');
     const desc = document.getElementById('daily-modal-feedback-desc');
     
-    if (feedback) feedback.style.display = 'flex';
+    if (feedback) feedback.classList.remove('is-hidden');
     if (feedback) feedback.classList.remove('incorrect');
     if (title) title.textContent = isMemorized ? '완벽히 외운 카드로 분류했습니다.' : '헷갈린 복습 카드로 분류했습니다.';
     if (desc) desc.textContent = `용어: ${dailyState.questions[dailyState.currentIndex].correct}`;
@@ -304,7 +304,7 @@ export function submitDailyCardAnswer(isMemorized) {
     saveProgress();
     
     const nextBtn = document.getElementById('daily-modal-next-btn');
-    if (nextBtn) nextBtn.style.display = 'inline-flex';
+    if (nextBtn) nextBtn.classList.remove('is-hidden');
 }
 
 export function submitDailyChoiceAnswer(selectedBtn, selectedValue, correctValue) {
@@ -358,7 +358,7 @@ export function showDailyFeedback(isCorrect, correctValue) {
     const title = document.getElementById('daily-modal-feedback-title');
     const desc = document.getElementById('daily-modal-feedback-desc');
     
-    if (feedback) feedback.style.display = 'flex';
+    if (feedback) feedback.classList.remove('is-hidden');
     if (title) {
         if (isCorrect) {
             feedback.classList.remove('incorrect');
@@ -371,7 +371,7 @@ export function showDailyFeedback(isCorrect, correctValue) {
     if (desc) desc.innerHTML = safeTextWithBreaks(q.explanation || '안전 기준 고시 해설을 확인하세요.');
     
     const nextBtn = document.getElementById('daily-modal-next-btn');
-    if (nextBtn) nextBtn.style.display = 'inline-flex';
+    if (nextBtn) nextBtn.classList.remove('is-hidden');
 }
 
 export function nextDailyStep() {

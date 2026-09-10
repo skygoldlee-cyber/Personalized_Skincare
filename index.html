@@ -28,8 +28,8 @@
 </head>
 <body class="dark-theme">
     <!-- Offline Banner (오프라인 상태 표시) -->
-    <div class="offline-banner" id="offline-banner">
-        <i class="fa-solid fa-wifi"></i> 인터넷 연결이 끊어졌습니다. 일부 기능이 제한될 수 있습니다.
+    <div class="offline-banner" id="offline-banner" role="status" aria-live="polite">
+        <i class="fa-solid fa-wifi" aria-hidden="true"></i> 인터넷 연결이 끊어졌습니다. 일부 기능이 제한될 수 있습니다.
     </div>
 
     <div class="app-container">
@@ -577,7 +577,7 @@
                                 </div>
 
                                 <!-- Feedback Panel -->
-                                <div class="quiz-feedback is-hidden" id="limits-feedback-panel" >
+                                <div class="quiz-feedback is-hidden" id="limits-feedback-panel" role="status" aria-live="polite">
                                     <div class="feedback-icon" id="limits-feedback-icon">
                                         <i class="fa-solid fa-check"></i>
                                     </div>
@@ -631,8 +631,8 @@
                                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; padding: 0 0.5rem;">
                                             <span style="color: #333; font-size: 0.8rem; font-weight: bold;"><i class="fa-solid fa-palette"></i> 계산 연습장</span>
                                             <div style="display: flex; gap: 0.5rem;">
-                                                <button class="btn" data-click="clearScratchpad" style="padding: 2px 8px; font-size: 0.7rem; background: #ef4444; color: #fff; border: none; border-radius: 4px; cursor: pointer;">모두 지우기</button>
-                                                <button class="btn" id="scratchpad-eraser-btn" data-click="toggleScratchpadEraser" style="padding: 2px 8px; font-size: 0.7rem; background: #6b7280; color: #fff; border: none; border-radius: 4px; cursor: pointer;">지우개</button>
+                                                <button class="btn" data-click="clearScratchpad" style="padding: 0.5rem 0.75rem; font-size: 0.7rem; background: #ef4444; color: #fff; border: none; border-radius: 4px; cursor: pointer; min-height: 44px;">모두 지우기</button>
+                                                <button class="btn" id="scratchpad-eraser-btn" data-click="toggleScratchpadEraser" style="padding: 0.5rem 0.75rem; font-size: 0.7rem; background: #6b7280; color: #fff; border: none; border-radius: 4px; cursor: pointer; min-height: 44px;">지우개</button>
                                             </div>
                                         </div>
                                         <canvas id="scratchpad-canvas" width="480" height="200" style="border: 1px dashed #ccc; border-radius: 4px; background: #fdfdfd; cursor: crosshair; display: block; width: 100%; height: 200px; touch-action: none;"></canvas>
@@ -640,7 +640,7 @@
                                 </div>
 
                                 <!-- Feedback Panel -->
-                                <div class="quiz-feedback" id="calc-feedback-panel" style="display: none; margin-bottom: 1.5rem;">
+                                <div class="quiz-feedback is-hidden" id="calc-feedback-panel" role="status" aria-live="polite" style="margin-bottom: 1.5rem;">
                                     <div class="feedback-icon" id="calc-feedback-icon">
                                         <i class="fa-solid fa-check"></i>
                                     </div>
@@ -713,7 +713,7 @@
                                 </div>
 
                                 <!-- Feedback Panel -->
-                                <div class="quiz-feedback is-hidden" id="ing-feedback-panel" >
+                                <div class="quiz-feedback is-hidden" id="ing-feedback-panel" role="status" aria-live="polite">
                                     <div class="feedback-icon" id="ing-feedback-icon">
                                         <i class="fa-solid fa-check"></i>
                                     </div>

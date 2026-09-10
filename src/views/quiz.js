@@ -7,7 +7,7 @@ import { examIdToSubjectId } from './exam-simulator.js';
 import { checkShortAnswer } from './trainer.js';
 import { updateGlobalStats } from './dashboard.js';
 import { shuffle } from '../utils.js';
-import { showToast } from '../ui-utils.js';
+import { showToast, vibrate, HAPTIC } from '../ui-utils.js';
 import {
     dailyState,
     updateStreakAndDailyUI,
@@ -63,10 +63,10 @@ export function startQuiz() {
     const arenaPanelEl = document.getElementById('quiz-arena-panel');
     const progressHeaderEl = document.querySelector('.quiz-progress-header');
 
-    if (emptyStateEl) emptyStateEl.style.display = 'none';
-    if (resultPanelEl) resultPanelEl.style.display = 'none';
-    if (arenaPanelEl) arenaPanelEl.style.display = 'block';
-    if (progressHeaderEl) progressHeaderEl.style.display = 'flex';
+    if (emptyStateEl) emptyStateEl.classList.add('is-hidden');
+    if (resultPanelEl) resultPanelEl.classList.add('is-hidden');
+    if (arenaPanelEl) arenaPanelEl.classList.remove('is-hidden');
+    if (progressHeaderEl) progressHeaderEl.classList.remove('is-hidden');
     
     renderQuizQuestion();
 }
@@ -113,17 +113,17 @@ export function renderQuizQuestion() {
     const quizType = currentQuiz.type || 'short';
     
     // 모든 입력 영역 초기화
-    if (optionsContainer) { optionsContainer.innerHTML = ''; optionsContainer.style.display = 'none'; }
-    if (oxContainer) { oxContainer.style.display = 'none'; }
-    if (inputGroup) inputGroup.style.display = 'none';
-    if (submitBtn) submitBtn.style.display = 'none';
-    if (nextBtn) nextBtn.style.display = 'none';
-    if (feedbackPanel) feedbackPanel.style.display = 'none';
+    if (optionsContainer) { optionsContainer.innerHTML = ''; optionsContainer.classList.add('is-hidden'); }
+    if (oxContainer) { oxContainer.classList.add('is-hidden'); }
+    if (inputGroup) inputGroup.classList.add('is-hidden');
+    if (submitBtn) submitBtn.classList.add('is-hidden');
+    if (nextBtn) nextBtn.classList.add('is-hidden');
+    if (feedbackPanel) feedbackPanel.classList.add('is-hidden');
 
     if (quizType === 'choice' && currentQuiz.options && currentQuiz.options.length > 0) {
         // 객관식
         if (optionsContainer) {
-            optionsContainer.style.display = 'block';
+            optionsContainer.classList.remove('is-hidden');
             const optionIndicators = ['①', '②', '③', '④', '⑤'];
             currentQuiz.options.forEach((opt, idx) => {
                 const btn = document.createElement('button');
@@ -140,7 +140,7 @@ export function renderQuizQuestion() {
     } else if (quizType === 'ox') {
         // OX 진위형
         if (oxContainer) {
-            oxContainer.style.display = 'flex';
+            oxContainer.classList.remove('is-hidden');
             oxContainer.querySelectorAll('.quiz-ox-btn').forEach(btn => {
                 btn.disabled = false;
                 btn.classList.remove('correct', 'incorrect');
@@ -152,8 +152,8 @@ export function renderQuizQuestion() {
         }
     } else {
         // 단답형 (기존 로직)
-        if (inputGroup) inputGroup.style.display = 'flex';
-        if (submitBtn) submitBtn.style.display = 'block';
+        if (inputGroup) inputGroup.classList.remove('is-hidden');
+        if (submitBtn) submitBtn.classList.remove('is-hidden');
         if (inputEl) {
             inputEl.value = '';
             inputEl.disabled = false;
@@ -179,10 +179,11 @@ export function submitQuizAnswer() {
     
     input.disabled = true;
     const submitBtn = document.getElementById('submit-quiz-btn');
-    if (submitBtn) submitBtn.style.display = 'none';
+    if (submitBtn) submitBtn.classList.add('is-hidden');
     
     // 정답 체크 (주관식 유사어 매칭 엔진 적용)
     const isCorrect = checkShortAnswer(userAnswer, currentQuiz.answer);
+    vibrate(isCorrect ? HAPTIC.correct : HAPTIC.wrong);
     
     // 점수 및 상태 누적
     if (isCorrect) {
@@ -209,7 +210,7 @@ export function submitQuizAnswer() {
     const feedbackTitle = document.getElementById('feedback-result-title');
     const feedbackAnswer = document.getElementById('feedback-correct-answer');
     
-    if (feedbackPanel) feedbackPanel.style.display = 'flex';
+    if (feedbackPanel) feedbackPanel.classList.remove('is-hidden');
     if (feedbackAnswer) feedbackAnswer.textContent = currentQuiz.answer;
     
     if (isCorrect) {
@@ -225,7 +226,7 @@ export function submitQuizAnswer() {
     
     // 다음 버튼 활성화
     const nextBtn = document.getElementById('next-quiz-btn');
-    if (nextBtn) nextBtn.style.display = 'block';
+    if (nextBtn) nextBtn.classList.remove('is-hidden');
 }
 
 /**
@@ -235,6 +236,7 @@ export function submitQuizChoiceAnswer(selectedBtn, selectedValue, correctValue)
     const quizState = state.quiz;
     const currentQuiz = quizState.data[quizState.currentIndex];
     const isCorrect = (selectedValue === correctValue);
+    vibrate(isCorrect ? HAPTIC.correct : HAPTIC.wrong);
     
     // 모든 옵션 버튼 비활성화
     const optionsContainer = document.getElementById('quiz-options-container');
@@ -280,7 +282,7 @@ export function submitQuizChoiceAnswer(selectedBtn, selectedValue, correctValue)
     const feedbackTitle = document.getElementById('feedback-result-title');
     const feedbackAnswer = document.getElementById('feedback-correct-answer');
     
-    if (feedbackPanel) feedbackPanel.style.display = 'flex';
+    if (feedbackPanel) feedbackPanel.classList.remove('is-hidden');
     if (feedbackAnswer) feedbackAnswer.textContent = correctValue;
     
     if (isCorrect) {
@@ -294,7 +296,7 @@ export function submitQuizChoiceAnswer(selectedBtn, selectedValue, correctValue)
     saveProgress();
     
     const nextBtn = document.getElementById('next-quiz-btn');
-    if (nextBtn) nextBtn.style.display = 'block';
+    if (nextBtn) nextBtn.classList.remove('is-hidden');
 }
 
 /**
@@ -323,9 +325,9 @@ export function renderQuizResult() {
     const progressHeaderEl = document.querySelector('.quiz-progress-header');
     const resultPanelEl = document.getElementById('quiz-result-panel');
 
-    if (arenaPanelEl) arenaPanelEl.style.display = 'none';
-    if (progressHeaderEl) progressHeaderEl.style.display = 'none';
-    if (resultPanelEl) resultPanelEl.style.display = 'block';
+    if (arenaPanelEl) arenaPanelEl.classList.add('is-hidden');
+    if (progressHeaderEl) progressHeaderEl.classList.add('is-hidden');
+    if (resultPanelEl) resultPanelEl.classList.remove('is-hidden');
     
     // 점수 채우기
     const correctNumEl = document.getElementById('result-correct-num');
@@ -422,10 +424,10 @@ export function renderReviewList() {
     const focusQuizBtn = document.getElementById('start-weak-quiz-btn');
     
     if (state.weakCards.size === 0) {
-        if (emptyStateEl) emptyStateEl.style.display = 'flex';
-        if (focusQuizBtn) focusQuizBtn.style.display = 'none';
-        if (examBtn) examBtn.style.display = 'none';
-        if (printBtn) printBtn.style.display = 'none';
+        if (emptyStateEl) emptyStateEl.classList.remove('is-hidden');
+        if (focusQuizBtn) focusQuizBtn.classList.add('is-hidden');
+        if (examBtn) examBtn.classList.add('is-hidden');
+        if (printBtn) printBtn.classList.add('is-hidden');
         return;
     }
     
@@ -438,29 +440,29 @@ export function renderReviewList() {
     
     if (allCards.length === 0) {
         if (emptyStateEl) {
-            emptyStateEl.style.display = 'flex';
+            emptyStateEl.classList.remove('is-hidden');
             const h3 = emptyStateEl.querySelector('h3');
             const p = emptyStateEl.querySelector('p');
             if (h3) h3.textContent = '이 과목에 해당하는 복습 카드가 없습니다!';
             if (p) p.textContent = '다른 과목 필터를 선택하거나 전체 보기를 누르세요.';
         }
-        if (focusQuizBtn) focusQuizBtn.style.display = 'none';
-        if (examBtn) examBtn.style.display = 'none';
-        if (printBtn) printBtn.style.display = 'none';
+        if (focusQuizBtn) focusQuizBtn.classList.add('is-hidden');
+        if (examBtn) examBtn.classList.add('is-hidden');
+        if (printBtn) printBtn.classList.add('is-hidden');
         return;
     }
     
     if (emptyStateEl) {
-        emptyStateEl.style.display = 'none';
+        emptyStateEl.classList.add('is-hidden');
         const h3 = emptyStateEl.querySelector('h3');
         const p = emptyStateEl.querySelector('p');
         if (h3) h3.textContent = '복습할 카드가 없습니다!';
         if (p) p.textContent = '플래시카드 학습 중에 "아직 헷갈림"으로 분류한 카드가 여기에 수집됩니다.';
     }
     
-    if (focusQuizBtn) focusQuizBtn.style.display = 'inline-flex';
-    if (examBtn) examBtn.style.display = 'inline-flex';
-    if (printBtn) printBtn.style.display = 'inline-flex';
+    if (focusQuizBtn) focusQuizBtn.classList.remove('is-hidden');
+    if (examBtn) examBtn.classList.remove('is-hidden');
+    if (printBtn) printBtn.classList.remove('is-hidden');
     
     allCards.forEach(card => {
         const itemHTML = `
@@ -582,10 +584,10 @@ export function startWeakFocusQuiz() {
     const arenaPanelEl = document.getElementById('quiz-arena-panel');
     const progressHeaderEl = document.querySelector('.quiz-progress-header');
 
-    if (emptyStateEl) emptyStateEl.style.display = 'none';
-    if (resultPanelEl) resultPanelEl.style.display = 'none';
-    if (arenaPanelEl) arenaPanelEl.style.display = 'block';
-    if (progressHeaderEl) progressHeaderEl.style.display = 'flex';
+    if (emptyStateEl) emptyStateEl.classList.add('is-hidden');
+    if (resultPanelEl) resultPanelEl.classList.add('is-hidden');
+    if (arenaPanelEl) arenaPanelEl.classList.remove('is-hidden');
+    if (progressHeaderEl) progressHeaderEl.classList.remove('is-hidden');
     
     renderQuizQuestion();
 }

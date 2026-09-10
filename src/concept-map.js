@@ -626,13 +626,13 @@ export function renderConceptMap(container, chapter, opts = {}) {
         }
         if (!svgHtml) {
             container.innerHTML = '';
-            container.style.display = 'none';
+            container.classList.add('is-hidden');
             const toggle = container.closest('.concept-map-container')?.querySelector('#concept-map-toggle');
-            if (toggle) toggle.style.display = 'none';
+            if (toggle) toggle.classList.add('is-hidden');
             return;
         }
         container.innerHTML = svgHtml;
-        container.style.display = 'block';
+        container.classList.remove('is-hidden');
         bindNodes(onNodeClick);
         // 스크롤 indicator 갱신 (DOM 렌더 후)
         requestAnimationFrame(updateScrollIndicator);

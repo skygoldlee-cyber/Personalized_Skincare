@@ -149,9 +149,9 @@ function createIngredientCard(ing) {
     card.addEventListener('click', () => {
         const details = card.querySelector('.dict-card-details');
         if (details.style.display === 'none') {
-            details.style.display = 'flex';
+            details.classList.remove('is-hidden');
         } else {
-            details.style.display = 'none';
+            details.classList.add('is-hidden');
         }
     });
     

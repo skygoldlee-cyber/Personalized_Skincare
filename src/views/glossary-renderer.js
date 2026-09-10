@@ -96,14 +96,14 @@ function _ensureBackBtn() {
     const btn = document.createElement('button');
     btn.className = 'glossary-back-btn';
     btn.innerHTML = '<i class="fa-solid fa-arrow-up"></i> 원래 위치로';
-    btn.style.display = 'none';
+    btn.classList.add('is-hidden');
     btn.addEventListener('click', () => {
         if (_glossarySavedContainer && _glossarySavedScroll !== null) {
             _glossarySavedContainer.scrollTo({ top: _glossarySavedScroll, behavior: 'smooth' });
         } else if (_glossarySavedLink) {
             _glossarySavedLink.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-        btn.style.display = 'none';
+        btn.classList.add('is-hidden');
     });
     document.body.appendChild(btn);
     _glossaryBackBtn = btn;
@@ -124,7 +124,7 @@ export function scrollToGlossary(idxKey, sourceLink) {
     target.style.background = 'rgba(250,204,21,0.25)';
     setTimeout(() => { target.style.background = origBg; }, 2000);
     const btn = _ensureBackBtn();
-    btn.style.display = 'inline-flex';
+    btn.classList.remove('is-hidden');
 }
 
 /**

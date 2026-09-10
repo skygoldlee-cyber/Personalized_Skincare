@@ -427,6 +427,14 @@ table {
     border-collapse: collapse;
 }
 
+/* table 래퍼가 없는 경우 가로 스크롤 방어 */
+.view-section > table,
+.view-section > div > table:not(.reader-table) {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
 /* View Sections */
 .view-section {
     display: none;

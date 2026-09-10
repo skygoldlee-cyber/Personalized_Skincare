@@ -49,7 +49,7 @@ export function showGlobalLoading(message = '로딩 중...') {
         document.body.appendChild(overlay);
     }
     document.getElementById('global-loading-message').textContent = message;
-    overlay.style.display = 'flex';
+    overlay.classList.remove('is-hidden');
     overlay.style.opacity = '1';
 }
 
@@ -58,7 +58,7 @@ export function hideGlobalLoading() {
     if (overlay) {
         overlay.style.opacity = '0';
         setTimeout(() => {
-            overlay.style.display = 'none';
+            overlay.classList.add('is-hidden');
         }, 200);
     }
 }
@@ -71,6 +71,16 @@ spinnerStyle.textContent = `
     }
 `;
 document.head.appendChild(spinnerStyle);
+
+/* =========================================================
+   햅틱 피드백 (모바일 정답/오답 진동)
+   ========================================================= */
+export function vibrate(pattern) {
+    if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+        try { navigator.vibrate(pattern); } catch (_) { /* no-op */ }
+    }
+}
+export const HAPTIC = { correct: 30, wrong: [40, 30, 40], tap: 10 };
 
 /* =========================================================
    B1: 커스텀 토스트 및 컨펌 모달 — alert/confirm 대체

@@ -320,7 +320,7 @@ ${summaryCardsHtml}
                     <div class="exam-list-grid">
 ${linkCardsHtml}
                     </div>`;
-    container.style.display = 'block';
+    container.classList.remove('is-hidden');
 }
 
 function checkStorageWarning() {
@@ -716,7 +716,7 @@ function setupModalBackHandler() {
             const openModals = document.querySelectorAll('.modal, .modal-content, [id$="-modal"]');
             openModals.forEach(modal => {
                 if (modal.style.display !== 'none' && modal.style.display !== '') {
-                    modal.style.display = 'none';
+                    modal.classList.add('is-hidden');
                 }
             });
             modalOpenState = false;
@@ -1178,6 +1178,48 @@ function setupEventListeners() {
 
     // 키보드 접근성: [data-click] div 요소에 tabindex/role 부여
     enhanceDataClickAccessibility();
+
+    // 퀴즈/훈련소 객관식 숫자키 1-5 / OX O,P 단축키
+    document.addEventListener('keydown', (e) => {
+        if (state.currentView !== 'quiz-view' && state.currentView !== 'trainer-view') return;
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') return;
+        if (e.ctrlKey || e.metaKey || e.altKey) return;
+
+        // 객관식: 1-5
+        const numMatch = /^([1-5])$/.exec(e.key);
+        if (numMatch) {
+            const idx = parseInt(numMatch[1], 10) - 1;
+            const containers = [
+                document.getElementById('quiz-options-container'),
+                document.getElementById('limits-options-container'),
+                document.getElementById('ing-options-container')
+            ].filter(Boolean);
+            for (const c of containers) {
+                if (c.classList.contains('is-hidden')) continue;
+                const btns = c.querySelectorAll('.limits-opt-btn');
+                if (btns[idx] && !btns[idx].disabled) {
+                    e.preventDefault();
+                    btns[idx].click();
+                    return;
+                }
+            }
+        }
+
+        // OX: o/p
+        if (e.key === 'o' || e.key === 'O') {
+            const oxBtns = document.querySelectorAll('.quiz-ox-btn');
+            if (oxBtns.length && !oxBtns[0].disabled) {
+                e.preventDefault();
+                oxBtns[0].click();
+            }
+        } else if (e.key === 'p' || e.key === 'P') {
+            const oxBtns = document.querySelectorAll('.quiz-ox-btn');
+            if (oxBtns.length > 1 && !oxBtns[1].disabled) {
+                e.preventDefault();
+                oxBtns[1].click();
+            }
+        }
+    });
 }
 
 function enhanceDataClickAccessibility() {
@@ -1236,9 +1278,9 @@ function startFocusSubjectStudy(subKey) {
             state.quiz.solvedList = [];
             
             // 퀴즈 화면 초기화 및 활성화
-            document.getElementById('quiz-setup-panel').style.display = 'none';
-            document.getElementById('quiz-result-panel').style.display = 'none';
-            document.getElementById('quiz-arena-panel').style.display = 'block';
+            document.getElementById('quiz-setup-panel').classList.add('is-hidden');
+            document.getElementById('quiz-result-panel').classList.add('is-hidden');
+            document.getElementById('quiz-arena-panel').classList.remove('is-hidden');
             document.getElementById('quiz-q-category').textContent = subj.name;
             
             renderQuizQuestion();
@@ -1273,14 +1315,14 @@ function setupPWAInstall() {
         window.navigator.standalone === true) {
         console.debug('[PWA] 이미 설치된 상태입니다.');
         if (installBtn) {
-            installBtn.style.display = 'none';
+            installBtn.classList.add('is-hidden');
         }
         return;
     }
 
     // 이미 조기 캡처된 이벤트가 있으면 버튼 즉시 표시
     if (deferredPrompt && installBtn) {
-        installBtn.style.display = 'inline-flex';
+        installBtn.classList.remove('is-hidden');
     }
 
     // beforeinstallprompt 이벤트 추가 캡처 (조기 캡처가 놓친 경우 대비)
@@ -1290,7 +1332,7 @@ function setupPWAInstall() {
         deferredPrompt = e;
         window.__deferredPrompt = e;
         if (installBtn) {
-            installBtn.style.display = 'inline-flex';
+            installBtn.classList.remove('is-hidden');
             installBtn.innerHTML = '<i class="fa-solid fa-download"></i> <span class="btn-text">앱 설치</span>';
             console.debug('[PWA] 설치 버튼 표시됨');
         }
@@ -1300,7 +1342,7 @@ function setupPWAInstall() {
     window.addEventListener('pwa-install-available', () => {
         deferredPrompt = window.__deferredPrompt;
         if (installBtn && deferredPrompt) {
-            installBtn.style.display = 'inline-flex';
+            installBtn.classList.remove('is-hidden');
             console.debug('[PWA] 조기 캡처 이벤트 감지 — 설치 버튼 표시');
         }
     });
@@ -1417,7 +1459,7 @@ function setupPWAInstall() {
             lines.push('• UA: ' + (navigator.userAgent || '').substring(0, 90));
 
             diagContent.textContent = lines.join('\n');
-            diagEl.style.display = 'block';
+            diagEl.classList.remove('is-hidden');
 
             // 프롬프트가 실제로 잡혀 있으면 모달 안에서 바로 설치할 수 있는 버튼 제공
             const directBtnId = 'pwa-direct-install-btn';
@@ -1438,13 +1480,13 @@ function setupPWAInstall() {
                     });
                     if (diagEl.parentNode) diagEl.parentNode.insertBefore(directBtn, diagEl);
                 }
-                directBtn.style.display = 'inline-flex';
+                directBtn.classList.remove('is-hidden');
             } else if (directBtn) {
-                directBtn.style.display = 'none';
+                directBtn.classList.add('is-hidden');
             }
         }
 
-        installModal.style.display = 'flex';
+        installModal.classList.remove('is-hidden');
         document.body.style.overflow = 'hidden';
         // 포커스 트랩 적용
         if (installModal._untrapFocus) installModal._untrapFocus();
@@ -1453,7 +1495,7 @@ function setupPWAInstall() {
 
     function closeInstallModal() {
         if (!installModal) return;
-        installModal.style.display = 'none';
+        installModal.classList.add('is-hidden');
         document.body.style.overflow = '';
         if (installModal._untrapFocus) {
             installModal._untrapFocus();
@@ -1501,7 +1543,7 @@ function setupPWAInstall() {
             // 프롬프트 사용 후 초기화
             deferredPrompt = null;
             // 버튼 숨기기
-            installBtn.style.display = 'none';
+            installBtn.classList.add('is-hidden');
         });
     }
 
@@ -1511,7 +1553,7 @@ function setupPWAInstall() {
         deferredPrompt = null;
         window.__deferredPrompt = null;
         if (installBtn) {
-            installBtn.style.display = 'none';
+            installBtn.classList.add('is-hidden');
         }
     });
 

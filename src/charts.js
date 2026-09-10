@@ -77,14 +77,14 @@ export function renderPerformanceChart() {
     }
     
     if (history.length === 0) {
-        if (emptyMsg) emptyMsg.style.display = 'flex';
+        if (emptyMsg) emptyMsg.classList.remove('is-hidden');
         // Remove old SVG if exists
         const oldSvg = wrapper.querySelector('svg');
         if (oldSvg) oldSvg.remove();
         return;
     }
     
-    if (emptyMsg) emptyMsg.style.display = 'none';
+    if (emptyMsg) emptyMsg.classList.add('is-hidden');
     const oldSvg = wrapper.querySelector('svg');
     if (oldSvg) oldSvg.remove();
     
@@ -350,13 +350,13 @@ export function renderRadarChart() {
     }
     
     if (history.length === 0) {
-        if (emptyMsg) emptyMsg.style.display = 'flex';
+        if (emptyMsg) emptyMsg.classList.remove('is-hidden');
         const oldSvg = wrapper.querySelector('svg');
         if (oldSvg) oldSvg.remove();
         return;
     }
     
-    if (emptyMsg) emptyMsg.style.display = 'none';
+    if (emptyMsg) emptyMsg.classList.add('is-hidden');
     const oldSvg = wrapper.querySelector('svg');
     if (oldSvg) oldSvg.remove();
     
@@ -368,7 +368,7 @@ export function renderRadarChart() {
     if (N < 3) {
         if (emptyMsg) {
             emptyMsg.textContent = "레이더 차트 분석은 최소 3개 과목 이상 필요합니다.";
-            emptyMsg.style.display = 'flex';
+            emptyMsg.classList.remove('is-hidden');
         }
         return;
     }

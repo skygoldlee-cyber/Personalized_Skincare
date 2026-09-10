@@ -13,14 +13,14 @@ export function toggleCalcScratchpad() {
     
     const isHidden = container.style.display === 'none';
     if (isHidden) {
-        container.style.display = 'block';
+        container.classList.remove('is-hidden');
         toggleBtn.innerHTML = '<i class="fa-solid fa-xmark"></i> ✏️ 계산 연습장 닫기';
         
         if (!scratchpadCanvasInitialized) {
             initScratchpadCanvas();
         }
     } else {
-        container.style.display = 'none';
+        container.classList.add('is-hidden');
         toggleBtn.innerHTML = '<i class="fa-solid fa-pencil"></i> ✏️ 계산 연습장 열기';
     }
 }

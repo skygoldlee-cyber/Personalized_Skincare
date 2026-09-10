@@ -2111,8 +2111,8 @@ body.reader-focus-mode .reader-readable-width {
     color: var(--color-text-muted, #9aa3b2);
     font-size: 1.2rem;
     cursor: pointer;
-    width: 36px;
-    height: 36px;
+    width: 44px;
+    height: 44px;
     border-radius: 8px;
     display: flex;
     align-items: center;
