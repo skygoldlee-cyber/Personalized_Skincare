@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v292-20260910-toc-unify';   // 1과목 표준형 Ch01 목차 부제 제거 (표준형 목차 형식 통일)
+const CACHE_VERSION = 'v293-20260910-format-review';   // 교재 표시형식 전체 리뷰 및 통일 (이야기형 📖→📚, 출처 링크, 구조 정리)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
