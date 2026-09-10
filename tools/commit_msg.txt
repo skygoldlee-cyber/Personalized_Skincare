@@ -1,4 +1,13 @@
-chore: bump CACHE_VERSION to 91649ef (사용자 매뉴얼 전면 갱신)
+docs: CHANGES/SPEC/ARCHITECTURE/README 갱신 — 사용자 매뉴얼 전면 갱신 반영
+
+갱신 대상:
+- docs/dev/CHANGES.md: #54 엔트리 추가 (사용자 매뉴얼 전면 갱신, SW 캐시 bump)
+- docs/dev/SPEC.md: v1.5 — TR-14~18(storyMode/TOC/브레드크럼/스크롤스파이),
+  F-10(난이도 필터), SA-04~05(학습보조 축소/개념맵 삭제), R-08~09(가로세로 전환/localStorage 용량) 추가
+- docs/dev/ARCHITECTURE.md: 19~26번 항목 추가(storyMode/TOC/이전다음단원/역색인/학습통계/ARIA/가로세로/localStorage),
+  reader-format.js 인라인 프리뷰 툴팁 설명 보강, study-aids.js 변경가이드 표 정정(미사용 키워드 명시)
+- README.md: 역색인 검색/참조자료 연결/접근성/콘텐츠 품질 감사/localStorage 용량 안내/Media Session API 추가
+- docs/README.md: CHANGES.md/ARCHITECTURE.md/FLASHCARD_LOGIC.md/user_manual.md 설명 갱신
 
 Generated with [Devin](https://devin.ai)
 

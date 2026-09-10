@@ -378,7 +378,7 @@ Personalized_Skincare/
 | [`src/sanitize.js`](../../src/sanitize.js) | HTML/XSS 방어 및 텍스트 정제 유틸리티 |
 | [`src/pdf-registry.js`](../../src/pdf-registry.js) | 참조자료 중앙 설정 모듈. 과목별 참조자료 매핑, 출처→PDF 파일명 매핑, MD 변환본 경로 자동 생성 (`REF_DIRS`, `resolveRefPath`, `mapSourceToRef`). 원본 PDF는 `.vercelignore`로 배포 제외, `ref_md/*.md` 변환본(3.7MB)으로 인앱 뷰어+PDF 저장 지원 |
 | [`src/html-viewer.js`](../../src/html-viewer.js) | 앱 내 HTML/MD 참조자료 뷰어. `fetch()`+`DOMParser`(HTML) 또는 `parseMarkdown()`(MD)로 로드 후 DOM 직접 주입 (iframe 없음). **키워드 기반 스크롤**: `KEYWORD_INDEX`에서 추출한 셀 텍스트 키워드로 검색→첫 번째 하이라이트로 스크롤 (L###은 스크롤에 사용하지 않음). **성능 최적화**: sessionStorage 캐싱(24h TTL)으로 재방문 시 즉시 렌더링, span 일괄 제거(normalize 호출 최소화), 검색 조기 종료(첫 매치 즉시 스크롤 + 나머지 `requestIdleCallback` 지연 하이라이트). 텍스트 노드 순회 검색 + `<mark>` 하이라이트, 검색 결과 내비게이션(이전/다음), 인쇄 지원. **PDF 저장** (v210 도입): 인쇄 전용 CSS로 오버레이 제약 없이 전체 문서를 브라우저 인쇄 다이얼로그로 출력 → "PDF로 저장" 선택 가능 |
-| [`src/reader-format.js`](../../src/reader-format.js) | 교재 리더 본문 포맷터. `parseMarkdown()` + HTML 참조 링크 변환 (`data-ref-html`, `data-ref-search`) + 참조자료 인라인 렌더링 |
+| [`src/reader-format.js`](../../src/reader-format.js) | 교재 리더 본문 포맷터. `parseMarkdown()` + HTML 참조 링크 변환 (`data-ref-html`, `data-ref-search`) + 참조자료 인라인 렌더링. **참조자료 인라인 프리뷰 툴팁** (데스크톱 hover 400ms / 모바일 롱프레스 600ms, 200자 스니펫) |
 | [`src/exam-viewer.js`](../../src/exam-viewer.js) | 문제집(MD) 런타임 뷰어. `content/문제은행/*.md` fetch → 자체 MD→HTML 변환 → 인앱 전체화면 오버레이 렌더링. TOC 생성·인쇄·sessionStorage 캐시(24h)·`file://` 번들 폴리백(`data/exams_md/*.js`) 지원. **시험 제목은 registry에서 동적 조회** (하드코딩 없음) |
 
 | 파일 | 내용 | 생성 주체 |
@@ -1067,6 +1067,38 @@ content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.j
    - **해결**: `src/html-viewer.js`에 뷰어 전용 스크롤바 스타일 추가 (`#888` thumb, `#f0f0f0` track, 12px 폭)
    - **구조 개선**: 오버레이를 flexbox에서 절대 위치(`position:fixed`) 기반으로 변경 — 브라우저별 flexbox 구현 차이에 영향받지 않고 스크롤 영역 확보
 
+19. **교재 리더 이야기형 모드 (Story Mode)** ✅ (2026-09-10)
+   - `textbook-reader.js`: `storyMode` 상태 토글 (표준형 ↔ 이야기형 MD 전환, `localStorage` 영속화)
+   - `_이야기형.md` 파일 로드 실패 시 기본 모드로 자동 폴백 + 토스트 안내
+
+20. **교재 리더 TOC/브레드크럼/스크롤 스파이** ✅ (2026-09-10)
+   - 계층형 TOC (챕터/섹션 접기·펼치기, 하위 헤딩 표시)
+   - 모바일 TOC 드로어 (오버레이, 백드롭 클릭 닫기, 항목 클릭 시 즉시 닫기)
+   - 브레드크럼 (과목 > 단원 > 현재 섹션, 스크롤 스파이 연동)
+   - 스크롤 스파이 (`requestAnimationFrame` 스로틀링, 현재 섹션 TOC/브레드크럼 자동 하이라이트)
+
+21. **교재 리더 이전/다음 단원 이동** ✅ (2026-09-10)
+   - `textbook-reader.js`: 교재 본문 하단에 이전/다음 단원 버튼 (대상 단원명 표시, 단원 간 연속 학습)
+
+22. **교재 검색 역색인 (Inverted Index)** ✅ (2026-09-10)
+   - `textbook-search.js`: 공백 토큰화 + 2-gram 보조 인덱스 구축, 후보 섹션 교집합 계산
+   - 자동 캐싱 (과목 키 변경 시에만 재구축, 반복 검색 성능 향상)
+
+23. **대시보드 학습 통계/약점 분석** ✅ (2026-09-10)
+   - `dashboard.js`: 과목별 정답률 히트맵 (색상 코딩: 80%+ 초록, 60-79% 주황, 40-59% 빨강, <40% 진빨강, 미응시 회색)
+   - 약점 과목 자동 추천 (정답률 최저 + 헷갈린 카드最多, "풀기"/"학습" 버튼)
+
+24. **접근성 ARIA 속성** ✅ (2026-09-10)
+   - 오버레이: `role="dialog"`, `aria-modal`, `aria-label`
+   - 검색 결과 카운트/퀴즈 피드백: `aria-live="polite"`
+   - 플래시카드: `role="button"`, `aria-expanded`
+
+25. **모바일 가로/세로 보기 전환** ✅ (2026-09-10)
+   - `index.html`: `orientation-toggle-btn` (모바일 헤더 회전 아이콘, 강제 가로 레이아웃 전환)
+
+26. **localStorage 용량 초과 안내** ✅ (2026-09-10)
+   - `state.js`: `QuotaExceededError` 감지 시 하단 고정 경고 배너 표시
+
 ---
 
 ## 📋 `content/` 내용 변경 시 수정 파일 및 절차 가이드
@@ -1247,8 +1279,8 @@ cmd /c vercel --prod 2>&1
 | 하드코딩 대상 | 위치 | 수정 조건 |
 |---------------|------|----------|
 | `NUMBER_REGEX` 단위 목록 (`%`, `개월`, `g`, `ml`, `ppm` 등) | `study-aids.js:94` | 완전히 다른 분야 교재로 변경 시 |
-| `PROCEDURE_KEYWORDS` (`신고`, `승인`, `등록` 등) | `study-aids.js:201` | 완전히 다른 분야 교재로 변경 시 |
-| `detectAdminPenalty` 키워드 (`행정처분`) | `study-aids.js:332` | 완전히 다른 분야 교재로 변경 시 |
+| ~~`PROCEDURE_KEYWORDS`~~ (미사용 — 절차 플로우 삭제됨) | `study-aids.js:237` | (참고용 잔존, `renderStudyAids()`에서 미호출) |
+| ~~`detectAdminPenalty` 키워드~~ (미사용 — 행정처분 비교표 삭제됨) | `study-aids.js:363` | (참고용 잔존, `renderStudyAids()`에서 미호출) |
 
 > 같은 화장품 분야 내에서 교재 버전이 바뀌는 경우 수정 불필요
 

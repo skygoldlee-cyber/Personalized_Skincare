@@ -35,14 +35,14 @@ docs/
 
 | 문서 | 설명 | 주요 내용 |
 |------|------|-----------|
-| [ARCHITECTURE.md](dev/ARCHITECTURE.md) | 시스템 아키텍처 및 설계 철학 | Zero-Backend, ESM 모듈 구조, 데이터 흐름, PWA/SW 전략, SW 업데이트 토스트, 참조자료 PDF 저장, 테마 시스템 |
+| [ARCHITECTURE.md](dev/ARCHITECTURE.md) | 시스템 아키텍처 및 설계 철학 | Zero-Backend, ESM 모듈 구조, 데이터 흐름, PWA/SW 전략, SW 업데이트 토스트, 참조자료 PDF 저장, 테마 시스템, SM-2 간격 반복(`spaced-repetition.js`), 카드 품질 감사(`audit_card_quality.js`), 역색인 검색, 학습 통계/약점 분석 |
 | [AUDIO_HOSTING_GUIDE.md](dev/AUDIO_HOSTING_GUIDE.md) | 오디오북 호스팅 및 청취 가이드 | 아키텍처, 호스팅 방안 비교, GitHub Releases 적용 절차, 모바일 청취 동작 체인 |
 | [DEPLOYMENT_GUIDE.md](dev/DEPLOYMENT_GUIDE.md) | Vercel 배포 및 오디오 호스팅 | 용량 최적화, .vercelignore, CSP/캐시 정책, 배포 체크리스트, 트러블슈팅 |
 | [MULTI_MACHINE_SETUP.md](dev/MULTI_MACHINE_SETUP.md) | 다중 머신 개발 환경 설정 | GitHub SSH, Vercel CLI 인증, GitHub Actions 자동 배포 |
 | [TEXTBOOK_AUTHORING_GUIDE.md](dev/TEXTBOOK_AUTHORING_GUIDE.md) | 교재 Markdown 작성 지침 | 디렉토리 구조, manifest.json, 카드/퀴즈 추출 규칙, 문제은행 형식, 빌드 검증 |
-| [CHANGES.md](dev/CHANGES.md) | 코드 변경 이력 (Changelog) | #53 학습 핵심 기능 5종, #52 접근성+알림 3단계, #51 인용 줄번호 수정, #50 ref_md 정리, #49 참조자료 PDF 저장, #48 SW 업데이트 토스트, #47 Mermaid 확장 |
+| [CHANGES.md](dev/CHANGES.md) | 코드 변경 이력 (Changelog) | #54 사용자 매뉴얼 전면 갱신, #53 학습 핵심 기능 5종, #52 접근성+알림 3단계, #51 인용 줄번호 수정, #50 ref_md 정리, #49 참조자료 PDF 저장, #48 SW 업데이트 토스트, #47 Mermaid 확장 |
 | [SPEC.md](dev/SPEC.md) | 기능 명세 | 핵심 기능, 데이터 구조, 뷰 명세 |
-| [FLASHCARD_LOGIC.md](dev/FLASHCARD_LOGIC.md) | 플래시카드 로직 | 카드 생성, 난이도, 필터, 셔플 로직 |
+| [FLASHCARD_LOGIC.md](dev/FLASHCARD_LOGIC.md) | 플래시카드 로직 | 카드 생성, 난이도, 필터, 셔플 로직, SM-2 간격 반복 알고리즘 |
 | [MD_TO_HTML_LOGIC.md](dev/MD_TO_HTML_LOGIC.md) | MD→HTML 변환 로직 | 런타임 파싱, 섹션 분할, 렌더링 |
 | [TESTING.md](dev/TESTING.md) | 테스트 가이드 | 유닛 테스트, DOM 테스트, 파서 등가성 검사 |
 | [STUDY_APP_DESIGN_GUIDE.md](dev/STUDY_APP_DESIGN_GUIDE.md) | 학습 앱 설계 가이드 | 설계 원칙, 기능/성능/UIUX 요구사항 템플릿, 분야별 커스터마이징, 새 교재 적용 체크리스트 |
@@ -54,7 +54,7 @@ docs/
 
 | 문서 | 설명 | 접근 방법 |
 |------|------|-----------|
-| [user_manual.md](user/user_manual.md) | 사용자 매뉴얼 | 앱 내 "매뉴얼" 메뉴 또는 직접 열기 |
+| [user_manual.md](user/user_manual.md) | 사용자 매뉴얼 | 앱 내 "매뉴얼" 메뉴 또는 직접 열기 — 이야기형 모드, SM-2 간격 반복, 학습 통계/약점 분석, 접근성, 역색인 검색 등 최신 UI/UX 반영 |
 | [학습안내서.md](../content/학습안내서.md) | 학습 안내서 | 앱 내 "요약집" 메뉴 또는 직접 열기 (`content/` 폴더) |
 
 > 사용자 문서는 앱의 `manual-viewer.js`가 런타임에 fetch하여 인앱 오버레이로 렌더링합니다.
