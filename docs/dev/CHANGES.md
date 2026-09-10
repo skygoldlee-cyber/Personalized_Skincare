@@ -5,6 +5,17 @@
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 > registry↔번들 14개 실재 확인 · 비ASCII 콘텐츠 파일 0 · `vercel.json` JSON 유효.
 
+## 2026-09-11 원료 DB 링크 404 오류 수정
+
+### `../참조자료/원료/` 링크 처리 추가
+- `reader-format.js`: `../참조자료/원료/*.md` 링크를 `data-ref-html`로 변환하는 패턴 추가
+- 기존에는 `../참조자료/ref_md/` 패턴만 처리하여 `approved_ingredients.md`, `banned_ingredients.md` 링크가 404 오류 발생
+
+### 검증
+- `node --check`: 성공
+- `npm test`: 248 passed, 0 failed
+- `npm run test:dom`: 21 passed, 0 failed
+
 ## 2026-09-11 참조 자료 섹션 하이퍼링크 목록으로 교체
 
 ### "📚 참조 자료" 섹션 요약 설명 제거, 링크 목록으로 교체

@@ -80,6 +80,16 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
         }
     );
 
+    // 원료 DB MD 파일 링크 → 앱 내 HTML 뷰어로 열기
+    // 마크다운 파서가 [text](../참조자료/원료/....md)를 <a href="../참조자료/원료/....md">text</a>로 변환한 후 처리
+    html = html.replace(
+        /<a href="((?:\.\.\/)?참조자료\/원료\/[^"]+\.md)">([^<]+)<\/a>/g,
+        (match, rawPath, linkText) => {
+            const absPath = decodeURIComponent(rawPath.replace(/^\.\.\/참조자료\//, 'content/참조자료/'));
+            return `<a href="#" data-ref-html="${escapeHTML(absPath)}" class="source-link"><i class="fa-solid fa-file-lines"></i> ${escapeHTML(linkText)}</a>`;
+        }
+    );
+
     // 출처 파일 경로를 하이퍼링크로 변환
     // 패턴1: "출처: `../참조자료/...md`" (기본모드)
     // 패턴2: "출처: `1과목_참조자료/...md`" (이야기모드 — ../ 없음)
