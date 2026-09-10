@@ -767,6 +767,41 @@ function setupEventListeners() {
         cardEl.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flipCard(); }
         });
+
+        // U2: 모바일 좌우 스와이프 제스처 — 좌우 카드 전환, 위로 스와이프 시 뒤집기
+        let _swipeStartX = 0, _swipeStartY = 0, _swipeStartT = 0, _swipeMoved = false;
+        const SWIPE_THRESHOLD = 50; // px — 이 거리 이상 이동 시 스와이프로 간주
+        const SWIPE_TIME_MAX = 500; // ms — 이 시간 내에 끝나야 스와이프
+        cardEl.addEventListener('touchstart', (e) => {
+            if (e.touches.length !== 1) return;
+            const t = e.touches[0];
+            _swipeStartX = t.clientX;
+            _swipeStartY = t.clientY;
+            _swipeStartT = Date.now();
+            _swipeMoved = false;
+        }, { passive: true });
+        cardEl.addEventListener('touchmove', () => { _swipeMoved = true; }, { passive: true });
+        cardEl.addEventListener('touchend', (e) => {
+            if (e.changedTouches.length !== 1) return;
+            const t = e.changedTouches[0];
+            const dx = t.clientX - _swipeStartX;
+            const dy = t.clientY - _swipeStartY;
+            const dt = Date.now() - _swipeStartT;
+            // 가로 이동이 세로 이동보다 크고 임계값 초과 시 좌우 스와이프
+            if (Math.abs(dx) > SWIPE_THRESHOLD && Math.abs(dx) > Math.abs(dy) * 1.5 && dt < SWIPE_TIME_MAX) {
+                e.preventDefault();
+                const prevBtn = document.getElementById('fc-prev-btn');
+                const nextBtn = document.getElementById('fc-next-btn');
+                if (dx > 0 && prevBtn) prevBtn.click(); // 오른쪽 스와이프 → 이전
+                else if (dx < 0 && nextBtn) nextBtn.click(); // 왼쪽 스와이프 → 다음
+            }
+            // 가로 이동이 작고 세로 이동이 위쪽이며 임계값 초과 시 뒤집기 (click과 중복 방지 위해 _swipeMoved 체크)
+            else if (_swipeMoved && dy < -SWIPE_THRESHOLD && Math.abs(dx) < SWIPE_THRESHOLD * 0.5) {
+                e.preventDefault();
+                flipCard();
+            }
+            // 스와이프가 아닌 단순 탭은 click 이벤트가 자동 발생하므로 뒤집기 처리 위임
+        }, { passive: false });
     }
     
     document.getElementById('fc-subject-select').addEventListener('change', (e) => {

@@ -202,6 +202,54 @@
     border-radius: var(--radius-md);
 }
 
+/* U3: 모바일 플래시카드 빠른 평가 — 하단 고정 + 컨트롤 통합 */
+@media (max-width: 768px), (orientation: landscape) and (max-height: 500px) {
+    .flashcard-arena {
+        margin: 1.5rem 0 0.5rem;
+    }
+    .flashcard-wrapper {
+        width: 100%;
+        max-width: 360px;
+        height: 280px;
+    }
+    .flashcard-face {
+        padding: 1.5rem;
+    }
+    #card-front-term {
+        font-size: 1.6rem;
+    }
+    #card-back-definition {
+        font-size: 1rem;
+    }
+    .card-definition-container {
+        max-height: 140px;
+    }
+    /* 컨트롤 + 평가 버튼을 하단에 고정 */
+    .flashcard-controls {
+        gap: 0.75rem;
+        margin-bottom: 0.75rem;
+    }
+    .flashcard-controls .btn {
+        min-width: 44px;
+        min-height: 44px;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.85rem;
+    }
+    .fc-status-indicator {
+        font-size: 0.9rem;
+    }
+    .flashcard-actions {
+        gap: 0.75rem;
+        margin-top: 0.5rem;
+    }
+    .flashcard-actions button {
+        flex: 1;
+        padding: 0.7rem 0.5rem;
+        font-size: 0.85rem;
+        min-height: 48px;
+    }
+}
+
 /* Quiz UI Components */
 .quiz-progress-header {
     display: flex;

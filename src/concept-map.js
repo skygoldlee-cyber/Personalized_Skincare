@@ -233,7 +233,7 @@ function buildRefLinkAttrs(linkInfo, refPath) {
 }
 
 function generateTreeMobile(chapter, tree, colors, svgNS, rootR, rootLabel, levelStyles, refPath) {
-    const svgWidth = 320;
+    const svgWidth = 360;
     const centerX = svgWidth / 2;
     const rootY = rootR + 10;
     const indentStep = 24;
@@ -602,10 +602,10 @@ export function renderConceptMap(container, chapter, opts = {}) {
     if (!container) return;
     const { onNodeClick } = opts;
 
-    // 모바일 감지: 컨테이너 폭이 480px 미만이면 세로 레이아웃
+    // 모바일 감지: 컨테이너 폭이 768px 미만이면 세로 레이아웃 (CSS 미디어쿼리와 통일)
     const detectMobile = () => {
         const w = container.clientWidth || window.innerWidth;
-        return w < 480;
+        return w < 768;
     };
 
     const updateScrollIndicator = () => {

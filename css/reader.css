@@ -458,6 +458,12 @@ pre.mermaid-other .labelBkg {
     border-color: var(--color-primary);
     color: var(--color-primary);
 }
+/* U1: 모바일 터치 피드백 */
+.reader-tool-btn:active {
+    transform: scale(0.95);
+    background: rgba(6, 182, 212, 0.2);
+    transition: transform 0.05s ease, background 0.05s ease;
+}
 .reader-tool-btn.active {
     background: rgba(6, 182, 212, 0.2);
     border-color: var(--color-primary);
@@ -531,6 +537,12 @@ pre.mermaid-other .labelBkg {
 .reader-toc-item:hover {
     color: var(--color-text-main);
     background: rgba(255, 255, 255, 0.04);
+}
+/* U1: 모바일 터치 피드백 */
+.reader-toc-item:active,
+.reader-toc-sub-item:active {
+    background: rgba(6, 182, 212, 0.12);
+    transition: background 0.05s ease;
 }
 .reader-toc-item.active {
     color: var(--color-primary);
@@ -767,6 +779,12 @@ pre.mermaid-other .labelBkg {
 .reader-section-card:hover {
     border-color: rgba(6, 182, 212, 0.25);
 }
+/* U1: 모바일 터치 피드백 */
+.reader-section-card:active {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 1px rgba(6, 182, 212, 0.2);
+    transition: border-color 0.05s ease, box-shadow 0.05s ease;
+}
 .reader-section-card.current-section {
     border-color: var(--color-primary);
     box-shadow: 0 0 0 1px rgba(6, 182, 212, 0.3), var(--shadow-md);
@@ -793,6 +811,11 @@ pre.mermaid-other .labelBkg {
 }
 .reader-section-header:hover {
     background: rgba(6, 182, 212, 0.06);
+}
+/* U1: 모바일 터치 피드백 */
+.reader-section-header:active {
+    background: rgba(6, 182, 212, 0.12);
+    transition: background 0.05s ease;
 }
 .reader-section-toggle {
     color: var(--color-primary);
@@ -950,6 +973,12 @@ pre.mermaid-other .labelBkg {
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
 }
+/* U1: 모바일 터치 피드백 */
+.reader-nav-btn:active:not(:disabled) {
+    transform: scale(0.98);
+    background: rgba(6, 182, 212, 0.12);
+    transition: transform 0.05s ease, background 0.05s ease;
+}
 .reader-nav-btn:disabled {
     opacity: 0.35;
     cursor: not-allowed;
@@ -1044,6 +1073,11 @@ pre.mermaid-other .labelBkg {
 .reader-table-expand-btn:hover {
     color: var(--color-primary);
     border-color: var(--color-primary);
+}
+/* U1: 모바일 터치 피드백 */
+.reader-table-expand-btn:active {
+    transform: scale(0.92);
+    transition: transform 0.05s ease;
 }
 
 /* Table fullscreen modal */
@@ -2665,7 +2699,7 @@ body.landscape-mode .glass-card {
 
     .concept-map-svg.concept-map-mobile {
         width: 100%;
-        max-width: 320px;
+        max-width: 100%;
         min-width: unset;
     }
 
@@ -2675,6 +2709,13 @@ body.landscape-mode .glass-card {
 
     .concept-map-svg.concept-map-tree.concept-map-desktop {
         min-width: 760px;
+    }
+}
+
+/* U4: 소형 모바일 (≤480px) — 트리 모바일 레이아웃 폭 최적화 */
+@media (max-width: 480px) {
+    .concept-map-svg.concept-map-mobile {
+        font-size: 0.85rem;
     }
 }
 
@@ -3079,6 +3120,11 @@ body.landscape-mode .glass-card {
 .ref-link-item:hover {
     background: rgba(6, 182, 212, 0.1);
     color: var(--color-primary);
+}
+/* U1: 모바일 터치 피드백 */
+.ref-link-item:active {
+    background: rgba(6, 182, 212, 0.18);
+    transition: background 0.05s ease;
 }
 .ref-link-item i {
     flex-shrink: 0;
