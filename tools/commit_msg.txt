@@ -1,37 +1,13 @@
-feat: 학습 핵심 기능 5종 추가 (이어하기/간격반복/검색성능/통계/품질감사)
+docs: 학습 핵심 기능 5종 + 접근성/알림 개선 문서 갱신
 
-1. 교재 읽기 이어하기 (Reading Resume)
-- textbook-reader.js: localStorage에 과목/챕터/스크롤 위치 저장
-- 30일 이상 지난 위치는 자동 만료
-- 스크롤 위치는 1초 디바운스로 저장
-- 과목/챕터 전환 시 즉시 저장
-
-2. 간격 반복 (Spaced Repetition - SM-2)
-- spaced-repetition.js: SM-2 알고리즘 구현
-- 각 카드에 repetition, easiness, nextReview 저장
-- "외움" → 1일/3일/7일/14일... 간격 확장
-- "헷갈림" → 1일부터 재시작
-- 대시보드에 "오늘 복습" 카드 수 표시
-- 진도 초기화 시 SM-2 데이터도 초기화
-
-3. 교재 검색 성능 개선 (역색인)
-- textbook-search.js: inverted index 구축
-- 공백 기준 토큰화 + 2-gram 보조 인덱스
-- 검색 시 역색인에서 후보 섹션 교집합 계산
-- 선형 검색 대신 인덱스 기반 검색으로 성능 개선
-
-4. 학습 통계/분석 강화
-- dashboard.js: 과목별 정답률 히트맵 + 약점 과목 추천
-- 정답률 색상 코딩 (80%+ 초록, 60-79% 주황, 40-59% 빨강, <40% 진빨강)
-- 정답률 최저 과목 + 헷갈린 카드最多 과목 자동 추천
-- index.html: 히트맵/추천 영역 추가
-- dashboard.css: 히트맵/추천 스타일 추가
-
-5. 콘텐츠 품질 점검 도구
-- tools/audit_card_quality.js: 카드 품질 자동 감사
-- 점검 항목: 짧은 설명, 중복, 의미 없음, 긴/짧은 term, 빈 definition, 저품질
-- 참조자료 링크 유효성 감사 (파일 존재 여부)
-- package.json: npm run audit:cards 스크립트 추가
+갱신 대상:
+- docs/user/user_manual.md: 16~20절 추가 (이어하기, 간격반복, 학습통계, 접근성, 검색성능)
+- docs/dev/CHANGES.md: #52(접근성+알림 3단계), #53(학습 핵심 기능 5종) 추가
+- docs/dev/SPEC.md: 버전 1.4, D-08~10, F-07~09, TR-11~13, TS-08~09, A-05~07, CQ-01~04, BP-08 추가
+- docs/dev/ARCHITECTURE.md: spaced-repetition.js, audit_card_quality.js 모듈 추가, ui-utils.js 설명 갱신
+- docs/dev/FLASHCARD_LOGIC.md: 간격 반복(SM-2) 섹션 추가, 최종 업데이트 2026-09-10
+- docs/README.md: CHANGES.md 최신 항목 갱신
+- README.md: 대시보드/교재/플래시카드 기능 설명 갱신
 
 Generated with [Devin](https://devin.ai)
 

@@ -40,7 +40,7 @@ docs/
 | [DEPLOYMENT_GUIDE.md](dev/DEPLOYMENT_GUIDE.md) | Vercel 배포 및 오디오 호스팅 | 용량 최적화, .vercelignore, CSP/캐시 정책, 배포 체크리스트, 트러블슈팅 |
 | [MULTI_MACHINE_SETUP.md](dev/MULTI_MACHINE_SETUP.md) | 다중 머신 개발 환경 설정 | GitHub SSH, Vercel CLI 인증, GitHub Actions 자동 배포 |
 | [TEXTBOOK_AUTHORING_GUIDE.md](dev/TEXTBOOK_AUTHORING_GUIDE.md) | 교재 Markdown 작성 지침 | 디렉토리 구조, manifest.json, 카드/퀴즈 추출 규칙, 문제은행 형식, 빌드 검증 |
-| [CHANGES.md](dev/CHANGES.md) | 코드 변경 이력 (Changelog) | #50 ref_md 구버전 정리, #49 참조자료 PDF 저장, #48 SW 업데이트 토스트, #47 Mermaid 다이어그램 확장, #46 검색 머메이드 렌더링 |
+| [CHANGES.md](dev/CHANGES.md) | 코드 변경 이력 (Changelog) | #53 학습 핵심 기능 5종, #52 접근성+알림 3단계, #51 인용 줄번호 수정, #50 ref_md 정리, #49 참조자료 PDF 저장, #48 SW 업데이트 토스트, #47 Mermaid 확장 |
 | [SPEC.md](dev/SPEC.md) | 기능 명세 | 핵심 기능, 데이터 구조, 뷰 명세 |
 | [FLASHCARD_LOGIC.md](dev/FLASHCARD_LOGIC.md) | 플래시카드 로직 | 카드 생성, 난이도, 필터, 셔플 로직 |
 | [MD_TO_HTML_LOGIC.md](dev/MD_TO_HTML_LOGIC.md) | MD→HTML 변환 로직 | 런타임 파싱, 섹션 분할, 렌더링 |

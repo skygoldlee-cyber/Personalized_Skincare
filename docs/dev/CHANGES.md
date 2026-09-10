@@ -1343,3 +1343,78 @@ PWA에서 교재 근거 인용 링크(`[교재: L####](<../교재/.../*.md#L####
 - `npm run build:data` 성공, 파서 등가성 검사 통과
 - 인용 라인 번호 전수검증: 828개 링크(과목1: 74, 과목2: 213, 과목3: 195, 과목4: 346) 0개 오류
 - Vercel 프로덕션 배포 완료
+
+---
+
+## #52 — 접근성 + 알림 UX 개선 3단계 (A1 + B1 + A4) (2026-09-10)
+
+> **목표**: 키보드 접근성, 네이티브 대화상자 대체, 전정 감각 민감 사용자 지원
+
+### 변경 내용
+
+1. **A1: `:focus-visible` 포커스 링** (`css/base.css`)
+   - 전역 `:focus-visible` 규칙 추가 — 마우스 클릭 시 포커스 링 숨김, 키보드 탐색 시 2px primary 색상 링 표시
+
+2. **B1: alert/confirm → 커스텀 토스트/모달** (`src/ui-utils.js` + 9개 뷰 모듈)
+   - `showToast(message, type, duration)`: 중앙 정렬, 타입별 아이콘/색상 (info/success/warning/error)
+   - `showConfirm(message, title)`: Promise 기반 컨펌 모달, 백드롭 클릭/Escape로 취소, 44px 터치 영역
+   - 30곳의 `alert`/`confirm`을 커스텀 컴포넌트로 교체
+     - `app.js`: 진도 초기화, 시험 제출, 퀴즈 로드 실패
+     - `textbook-reader.js`: 오디오 없음, 오디오 로드 실패
+     - `quiz.js`: 퀴즈 없음, 답변 미입력
+     - `daily-challenge.js`: 이미 완료, 로드 실패, 종료 확인, 정답 미입력, 완료
+     - `trainer.js`: 숫자 오류, 정답 미입력
+     - `pomodoro.js`: 집중 종료, 휴식 종료
+     - `exam-simulator.js`: 로드 실패, 데이터 불완전, 세션 복원 실패, 시간 만료, 복습 실패
+     - `backup.js`: 백업 완료, 복원 성공/실패
+
+3. **A4: `prefers-reduced-motion`** (`css/base.css`)
+   - `@media (prefers-reduced-motion: reduce)` 전역 규칙 추가
+   - 모든 애니메이션/전환 0.01ms로 축소, `scroll-behavior: auto`
+
+### 검증
+
+- Git commit `4747442` (A1+B1+A4), `33537e6` (SW bump)
+- CACHE_VERSION → `v271-20260910-4747442`
+- Vercel 배포 완료
+
+---
+
+## #53 — 학습 핵심 기능 5종 추가 (2026-09-10)
+
+> **목표**: 교재 읽기 이어하기, 간격 반복, 검색 성능, 학습 통계, 콘텐츠 품질 감사
+
+### 변경 내용
+
+1. **교재 읽기 이어하기 (Reading Resume)** (`src/views/textbook-reader.js`)
+   - localStorage에 과목/챕터/스크롤 위치 저장 (1초 디바운스)
+   - 30일 이상 지난 위치 자동 만료
+   - 과목/챕터 전환 시 즉시 저장, 앱 재시작 시 마지막 위치 복원
+   - 진도 초기화 시 위치 데이터도 함께 초기화
+
+2. **간격 반복 (Spaced Repetition — SM-2)** (`src/spaced-repetition.js` 신규)
+   - SM-2 알고리즘 구현: `repetition`, `easiness`, `nextReview` 저장
+   - "외움" → 1일/3일/7일/14일... 간격 확장, "헷갈림" → 1일부터 재시작
+   - 대시보드에 "오늘 복습" 카드 수 표시 (`index.html`, `dashboard.js`)
+   - 진도 초기화 시 SM-2 데이터도 초기화
+
+3. **교재 검색 성능 개선 (역색인)** (`src/views/textbook-search.js`)
+   - inverted index 구축: 공백 기준 토큰화 + 2-gram 보조 인덱스
+   - 검색 시 역색인에서 후보 섹션 교집합 계산 → 선형 검색 대비 성능 개선
+   - 자동 캐싱으로 반복 검색 더 빠름
+
+4. **학습 통계/분석 강화** (`src/views/dashboard.js`, `css/dashboard.css`, `index.html`)
+   - 과목별 정답률 히트맵: 색상 코딩 (80%+ 초록, 60-79% 주황, 40-59% 빨강, <40% 진빨강, 미응시 회색)
+   - 약점 과목 자동 추천: 정답률 최저 과목 + 헷갈린 카드最多 과목
+   - 추천 카드에 "풀기"/"학습" 버튼으로 바로 이동
+
+5. **콘텐츠 품질 점검 도구** (`tools/audit_card_quality.js` 신규)
+   - 카드 품질 자동 감사: 짧은 설명, 중복, 의미 없음, 긴/짧은 term, 빈 definition, 저품질
+   - 참조자료 링크 유효성 감사 (파일 존재 여부)
+   - `npm run audit:cards` 스크립트 추가 (`package.json`)
+
+### 검증
+
+- Git commit `d7040bc` (5종 기능), `7464306` (SW bump)
+- CACHE_VERSION → `v272-20260910-d7040bc`
+- Vercel 배포 완료: https://personalized-skincare-study.vercel.app

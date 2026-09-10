@@ -210,6 +210,7 @@ Personalized_Skincare/
 │   ├── keyword-index.js        #   교재 셀→참조자료 키워드 매핑 (자동 생성)
 │   ├── concept-map.js          #   SVG 마인드맵 (용어집 링크 유지)
 │   ├── study-aids.js           #   기출 필터, 숫자 암기표
+│   ├── spaced-repetition.js    #   SM-2 간격 반복 알고리즘, 복습 스케줄링
 │   ├── charts.js               #   SVG 레이더/꺾은선 차트 + 툴팁
 │   ├── sanitize.js             #   XSS 방어
 │   ├── sha256.js               #   안정적 ID 해시
@@ -217,7 +218,7 @@ Personalized_Skincare/
 │   ├── trainer-calc.js         #   계산 훈련 문제 생성 (순수 로직)
 │   ├── scratchpad.js           #   손글씨 Canvas
 │   ├── types.js                #   JSDoc @typedef 타입 정의
-│   ├── ui-utils.js             #   로딩 UI 공통 유틸
+│   ├── ui-utils.js             #   로딩 UI, 커스텀 토스트/컨펌 모달 (showToast/showConfirm)
 │   ├── utils.js                #   초성 추출, Fisher-Yates 셔플
 │   ├── globals.d.ts            #   전역 타입 선언
 │   └── views/                  #   뷰 컨트롤러 모듈
@@ -293,6 +294,7 @@ Personalized_Skincare/
 │   ├── build_study_md_bundle.js #  교재 폴백 번들 (과목별 분할)
 │   ├── check_parser_parity.js  #   빌드 파서 ↔ 런타임 파서 등가성 검증
 │   ├── verify-shell-assets.js  #   프리캐시 파일 존재 CI 검증
+│   ├── audit_card_quality.js  #   카드 품질 자동 감사 (npm run audit:cards)
 │   └── fix-mindmap-indent.mjs  #   Mermaid mindmap 들여쓰기 수정
 │
 ├── tests/                      # 자동화 테스트

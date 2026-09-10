@@ -1,7 +1,7 @@
 # 🎴 플래시카드 생성 로직 설계문서
 
-> **최종 업데이트**: 2026-08-31
-> **관련 파일**: `src/textbook-parser.js`, `tools/build/plugins/textbook.plugin.js`, `src/views/flashcard.js`, `src/state.js`, `index.html`, `css/study.css`
+> **최종 업데이트**: 2026-09-10
+> **관련 파일**: `src/textbook-parser.js`, `tools/build/plugins/textbook.plugin.js`, `src/views/flashcard.js`, `src/state.js`, `src/spaced-repetition.js`, `index.html`, `css/study.css`
 
 ---
 
@@ -365,7 +365,52 @@ if (fcConfig.sortBy === 'importance') {
 
 ---
 
-## 🔒 파서 등가성
+## � 간격 반복 (Spaced Repetition — SM-2)
+
+> **관련 파일**: `src/spaced-repetition.js`, `src/state.js`, `src/views/flashcard.js`, `src/views/dashboard.js`
+
+### 개요
+
+플래시카드 평가("외움"/"헷갈림") 시 SM-2 알고리즘이 다음 복습 시점을 자동 계산한다. 기존 `memorizedCards`/`weakCards` Set과 함께 동작하며, 복습 시점을 예측해 주는 보조 기능이다.
+
+### 카드별 스케줄 메타데이터
+
+```javascript
+// localStorage 키: 'sr_card_<cardId>'
+{
+    cardId: 'a1b2c3',
+    repetition: 3,        // 연속 정답 횟수
+    easiness: 2.5,        // 난이도 계수 (1.3~2.8, 기본 2.5)
+    interval: 7,          // 다음 복습까지의 일수
+    nextReview: 1727740800000,  // 다음 복습 시점 (timestamp)
+    lastReview: 1727136000000   // 마지막 복습 시점
+}
+```
+
+### 알고리즘
+
+| 평가 | 동작 |
+|------|------|
+| "외움" (easy) | `repetition++`, `interval = 1→3→7→14→30→...` 확장, `easiness += 0.1` (최대 2.8) |
+| "헷갈림" (hard) | `repetition = 0`, `interval = 1` 리셋, `easiness -= 0.2` (최소 1.3) |
+
+### 오늘 복습 카드
+
+```javascript
+// spaced-repetition.js
+getCardsDueToday()  // nextReview <= Date.now()인 카드 ID 배열 반환
+getDueCount()       // 오늘 복습 대상 카드 수
+```
+
+대시보드에서 `getDueCount()`를 호출하여 "오늘 복습" 카드 수를 표시한다.
+
+### 진도 초기화 연동
+
+`state.resetProgress()` 실행 시 간격 반복 스케줄 데이터도 함께 초기화된다 (`spaced-repetition.js`의 `clearAllSchedules()` 호출).
+
+---
+
+## �🔒 파서 등가성
 
 ### 원칙
 

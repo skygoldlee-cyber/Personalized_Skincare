@@ -1,7 +1,7 @@
 # 📋 요구사양 명세서 (Software Requirements Specification)
 
 > **프로젝트**: Cosmetic Pass Master — 맞춤형화장품 조제관리사 스마트 학습 플랫폼
-> **버전**: 1.3 (2026-09-03 기준 — #48~#50 변경사항 반영: SW 업데이트 토스트, 참조자료 PDF 저장, ref_md 구버전 정리)
+> **버전**: 1.4 (2026-09-10 기준 — #52~#53 변경사항 반영: 접근성+알림 3단계, 학습 핵심 기능 5종)
 > **문서 성격**: 구현 완료된 기능을 역공학하여 체계적으로 정리한 요구사양 명세서
 
 ---
@@ -78,6 +78,9 @@
 | D-05 | 추천 링크/유튜브 채널 카드 (manifest.json `resources` 기반 동적 생성) | ✅ |
 | D-06 | 시험 카드 (registry 기반 동적 생성, 하드코딩 없음) | ✅ |
 | D-07 | 일일 챌린지 모달 (데일리 학습 카드) | ✅ |
+| D-08 | 오늘 복습 카드 수 표시 (SM-2 간격 반복 연동) | ✅ |
+| D-09 | 과목별 정답률 히트맵 (색상 코딩: 80%+ 초록, 60-79% 주황, 40-59% 빨강, <40% 진빨강, 미응시 회색) | ✅ |
+| D-10 | 약점 과목 자동 추천 (정답률 최저 + 헷갈린 카드最多, "풀기"/"학습" 버튼) | ✅ |
 
 ### 3.2 플래시카드 (Flashcard)
 
@@ -89,6 +92,9 @@
 | F-04 | "외웠어요" / "헷갈려요" 카드 분류 (Set 기반 O(1) 조회) | ✅ |
 | F-05 | 카드 셔플 (Fisher-Yates 공정 셔플) | ✅ |
 | F-06 | 과목별 카드 필터링 | ✅ |
+| F-07 | SM-2 간격 반복 스케줄링 ("외움" → 간격 확장, "헷갈림" → 1일 리셋, `spaced-repetition.js`) | ✅ |
+| F-08 | 카드별 복습 메타데이터 (repetition, easiness, nextReview, interval) localStorage 영속화 | ✅ |
+| F-09 | 진도 초기화 시 간격 반복 데이터 함께 초기화 | ✅ |
 
 ### 3.3 퀴즈 (Quiz)
 
@@ -128,6 +134,9 @@
 | TR-08 | 키워드 자동 링크 보호 (Mermaid 블록 내 용어집 링크 치환 방지) | ✅ |
 | TR-09 | 마크다운 링크 파싱 (`[text](url)` → `<a>` 변환) | ✅ |
 | TR-10 | 기출문제 링크 클릭 → 문제집 HTML 뷰어 오버레이 (ExamViewer 연동) | ✅ |
+| TR-11 | 교재 읽기 이어하기: 과목/챕터/스크롤 위치 localStorage 저장 (1초 디바운스, 30일 만료) | ✅ |
+| TR-12 | 앱 재시작 시 마지막 읽던 위치 자동 복원 | ✅ |
+| TR-13 | 과목/챕터 전환 시 위치 즉시 저장, 진도 초기화 시 위치 데이터 초기화 | ✅ |
 
 ### 3.6 교재 리더 — 학습 보조 도구
 
@@ -183,6 +192,8 @@
 | TS-05 | 검색 결과 카운트 (`aria-live="polite"`) | ✅ |
 | TS-06 | 검색 결과 마크다운 렌더링 (`parseMarkdown` 기반, 코드블록/테이블/머메이드 지원) | ✅ |
 | TS-07 | 검색 결과 Mermaid 다이어그램 온디맨드 렌더링 (`_renderSearchMermaid`) | ✅ |
+| TS-08 | 역색인(inverted index) 기반 검색: 공백 토큰화 + 2-gram 보조 인덱스, 후보 교집합 계산 | ✅ |
+| TS-09 | 역색인 자동 캐싱 (과목 키 변경 시에만 재구축, 반복 검색 성능 향상) | ✅ |
 
 ### 3.10 성분 사전 (Dictionary)
 
@@ -242,6 +253,15 @@
 | MV-02 | Mermaid 다이어그램 렌더링 (온디맨드, 테마별 dark/default) | ✅ |
 | MV-03 | `popstate` 타이밍 가드 (open 후 300ms 이내 이벤트 무시) | ✅ |
 | MV-04 | `file://` 폴백 번들 (`data/docs_md/*.js`) | ✅ |
+
+### 3.17 콘텐츠 품질 감사 (Content Quality Audit)
+
+| ID | 요구사양 | 구현 상태 |
+|----|---------|-----------|
+| CQ-01 | 카드 품질 자동 감사 (짧은 설명, 중복, 의미 없음, 긴/짧은 term, 빈 definition, 저품질) | ✅ |
+| CQ-02 | 참조자료 링크 유효성 감사 (`data-ref-html` 파일 존재 여부) | ✅ |
+| CQ-03 | `npm run audit:cards` 스크립트 (`tools/audit_card_quality.js`) | ✅ |
+| CQ-04 | 심각도 분류 (ERROR/WARN) 및 요약 리포트 출력 | ✅ |
 
 ### 3.16 차트 및 시각화 (Charts)
 
@@ -329,6 +349,9 @@
 | A-02 | 플래시카드 키보드 지원 (`role="button"`, `tabindex="0"`, Enter/Space) | ✅ |
 | A-03 | 라이트 모드 WCAG AA 대비 (배지 색상 4.5:1 이상) | ✅ |
 | A-04 | 터치 타겟 최소 44×44px | ✅ |
+| A-05 | `:focus-visible` 포커스 링 (키보드 탐색 시 2px primary 링, 마우스 클릭 시 숨김) | ✅ |
+| A-06 | `prefers-reduced-motion` 전역 대응 (애니메이션/전환 0.01ms 축소, `scroll-behavior: auto`) | ✅ |
+| A-07 | 커스텀 토스트/컨펌 모달 (`showToast`, `showConfirm`) — 네이티브 `alert()`/`confirm()` 대체 | ✅ |
 
 ### 4.6 반응형 & 모바일
 
@@ -387,6 +410,7 @@
 | BP-05 | 빌드 파서 ↔ 런타임 파서 등가성 검증 (`check_parser_parity.js`) | ✅ |
 | BP-06 | `GLOSSARY_INDEX` 자동 생성 + 큐레이션 JSON 병합 (`build_keyword_index.js`) | ✅ |
 | BP-07 | SW 캐시 버전 자동 스탬프 (`stamp-sw-version.js`) | ✅ |
+| BP-08 | 콘텐츠 품질 감사 (`audit_card_quality.js`, `npm run audit:cards`) | ✅ |
 
 ### 5.4 콘텐츠 구조
 
@@ -482,6 +506,8 @@
 | 키워드 인덱스 | `src/keyword-index.js` | 교재 셀→참조자료 키워드 매핑 (자동 생성) |
 | 용어집 렌더러 | `src/views/glossary-renderer.js` | 용어집 테이블 렌더링, `scrollToGlossary()` 공유 함수 |
 | 학습 보조 | `src/study-aids.js` | 기출 필터, 숫자 암기표 |
+| 간격 반복 | `src/spaced-repetition.js` | SM-2 알고리즘, 복습 스케줄링, 오늘 복습 카드 수 |
+| 콘텐츠 감사 | `tools/audit_card_quality.js` | 카드 품질 자동 감사, 참조자료 링크 유효성 검사 |
 | 개념 맵 | `src/concept-map.js` | SVG 마인드맵 (콘텐츠 내장 Mermaid로 대체, 용어집 링크만 유지) |
 
 ### 뷰 컨트롤러 (`src/views/`)
