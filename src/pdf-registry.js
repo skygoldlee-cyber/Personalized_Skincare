@@ -170,13 +170,7 @@ export const REFERENCE_COMMON = [
     { name: '시행규칙 별표9 수수료', file: '시행규칙_별표9_수수료.pdf', type: 'pdf', dir: '공통' },
     { name: 'CGMP 별표1 공정별분류', file: 'CGMP_별표1_공정별분류.pdf', type: 'pdf', dir: '공통' },
     { name: 'CGMP 별표2 실시상황평가표', file: 'CGMP_별표2_실시상황평가표.pdf', type: 'pdf', dir: '공통' },
-    { name: 'CGMP 별표3 적합업소로고', file: 'CGMP_별표3_적합업소로고.pdf', type: 'pdf', dir: '공통' },
-    // ——— 구 안전기준 별표 (폐지/개정 전 원문 보존용, _구 접미사) ———
-    { name: '[구] 별표1 독성시험법', file: '안전기준_별표1_독성시험법_구.pdf', type: 'pdf', dir: '공통' },
-    { name: '[구] 별표2 기준시험방법작성요령', file: '안전기준_별표2_기준시험방법작성요령_구.pdf', type: 'pdf', dir: '공통' },
-    { name: '[구] 별표3 자외선차단효과측정', file: '안전기준_별표3_자외선차단효과측정_구.pdf', type: 'pdf', dir: '공통' },
-    { name: '[구] 별표4 자료제출생략기능성', file: '안전기준_별표4_자료제출생략기능성_구.pdf', type: 'pdf', dir: '공통' },
-    { name: '[구] 별표1 색소', file: '안전기준_별표1_색소_구.pdf', type: 'pdf', dir: '공통' }
+    { name: 'CGMP 별표3 적합업소로고', file: 'CGMP_별표3_적합업소로고.pdf', type: 'pdf', dir: '공통' }
 ];
 
 // --- 원료 참조자료 ---

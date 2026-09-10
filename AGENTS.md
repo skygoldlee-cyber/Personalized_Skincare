@@ -32,6 +32,9 @@ npm.cmd run serve                      # http://localhost:3000
 
 # 배포
 vercel --prod --yes                    # Vercel 프로덕션 배포
+
+# 감사
+npm.cmd run audit:cards                 # 카드 품질 자동 감사 (짧은 설명, 중복, 참조 링크 유효성)
 ```
 
 ## 디렉토리 구조
@@ -121,7 +124,7 @@ docs/                   # 개발 문서
 - **Mermaid `!important`**: `css/reader.css`의 Mermaid 규칙 `!important`는 제거 금지 (Mermaid 라이브러리 인라인 스타일 덮어쓰기용)
 - **콘텐츠 편집 후**: `npm.cmd run build:data` 실행 후 `data/` 번들 커밋 필요
 - **CSP**: `vercel.json`에 `script-src 'self'` (인라인 스크립트 금지)
-- **DOM 테스트**: `tests/dom/backup.dom.test.js`에 2개 알려진 실패 있음 (export/import alert 관련, UI 변경과 무관)
+- **DOM 테스트**: `tests/dom/backup.dom.test.js` — `showToast` 모킹 기반 10개 테스트 통과 (alert → showToast 교체 반영)
 
 ## 관련 문서
 

@@ -1,6 +1,13 @@
 import { describe, it, beforeEach, expect, vi } from 'vitest';
 import { getBackupKeys, exportData, triggerImport, importData } from '../../src/views/backup.js';
 
+// showToast 모킹 — backup.js는 alert 대신 showToast를 사용
+vi.mock('../../src/ui-utils.js', () => ({
+    showToast: vi.fn(),
+}));
+
+import { showToast } from '../../src/ui-utils.js';
+
 describe('backup.js — DOM 테스트', () => {
     beforeEach(() => {
         localStorage.clear();
@@ -51,13 +58,15 @@ describe('backup.js — DOM 테스트', () => {
                 return el;
             });
 
-            // alert 모킹
+            // showToast 모킹
             vi.spyOn(window, 'alert').mockImplementation(() => {});
+            const showToastSpy = vi.mocked(showToast);
+            showToastSpy.mockClear();
 
             exportData();
 
             expect(clickSpy).toHaveBeenCalledOnce();
-            expect(window.alert).toHaveBeenCalledOnce();
+            expect(showToastSpy).toHaveBeenCalledOnce();
 
             vi.restoreAllMocks();
         });
@@ -147,7 +156,8 @@ describe('backup.js — DOM 테스트', () => {
                 type: 'application/json',
             });
 
-            const alertSpy = vi.spyOn(window, 'alert').mockImplementation(() => {});
+            const showToastSpy = vi.mocked(showToast);
+            showToastSpy.mockClear();
 
             const event = { target: { files: [file] } };
 
@@ -155,8 +165,9 @@ describe('backup.js — DOM 테스트', () => {
                 importData(event);
 
                 setTimeout(() => {
-                    expect(alertSpy).toHaveBeenCalledWith(
-                        expect.stringContaining('유효하지 않은 백업 파일')
+                    expect(showToastSpy).toHaveBeenCalledWith(
+                        expect.stringContaining('유효하지 않은 백업 파일'),
+                        'error'
                     );
                     resolve();
                 }, 100);
