@@ -112,6 +112,12 @@
 .is-hidden {
     display: none !important;
 }
+.is-flex {
+    display: flex !important;
+}
+.is-grid {
+    display: grid !important;
+}
 
 body {
     font-family: var(--font-app);

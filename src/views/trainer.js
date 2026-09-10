@@ -699,7 +699,7 @@ export function renderIngQuestion() {
     if (answerInput) answerInput.value = '';
     
     if (currentQ.type === 'choice') {
-        if (optionsContainer) optionsContainer.style.display = 'grid';
+        if (optionsContainer) optionsContainer.classList.remove('is-hidden');
         if (inputContainer) inputContainer.classList.add('is-hidden');
         
         const optionIndicators = ['A', 'B', 'C', 'D'];

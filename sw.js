@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v282-20260910-cf709e0';   // display:none 인라인 스타일 누락분 .is-hidden 변환 (TOC 사이드바 안보임 버그 수정)
+const CACHE_VERSION = 'v283-20260910-5e454fe';   // 잔여 style.display 3건 classList 변환, .is-flex/.is-grid 유틸리티 추가
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;

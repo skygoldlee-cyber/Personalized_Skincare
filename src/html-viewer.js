@@ -262,7 +262,7 @@ async function openHtmlViewer(htmlPath, searchKeyword, anchorId, lineNum) {
         loading.className = 'hr-loading';
         loading.innerHTML = '<div class="spinner"></div><div>문서 로딩 중...</div>';
     }
-    loading.style.display = 'flex';
+    loading.classList.remove('is-hidden');
     scroll.innerHTML = '';
     scroll.appendChild(loading);
     scroll.scrollTop = 0;
@@ -414,7 +414,7 @@ async function openHtmlViewer(htmlPath, searchKeyword, anchorId, lineNum) {
     } catch (err) {
         console.error('HTML viewer load failed:', err);
         loading.innerHTML = `<div style="color:var(--color-danger,#f85149);">문서 로딩 실패: ${err && err.message ? err.message : String(err)}</div>`;
-        loading.style.display = 'flex';
+        loading.classList.remove('is-hidden');
     }
 }
 
