@@ -49,7 +49,7 @@ src/                    # ES Modules (app.js, router.js, state.js, ui-utils.js, 
   views/                # 뷰 컨트롤러 (textbook-reader.js, quiz.js, trainer.js, exam-simulator.js, ...)
 css/                    # 스타일시트 모듈 (base.css, reader.css, trainer.css, exam.css, dashboard.css, study.css, print.css)
 content/                # 교재/문제은행/참조자료 Markdown 원본
-  교재/                  # 4과목 19단원 MD 파일
+  교재/                  # 4과목 20챕터 MD 파일 (표준형 20 + 이야기형 20)
   문제은행/              # 과목별 문제은행 MD
   참조자료/              # 법령원문/별표/참조자료 (HTML/MD)
   audiobook/            # 오디오북 MP3 + 매니페스트

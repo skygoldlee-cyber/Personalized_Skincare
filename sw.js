@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v290-20260910-glossary-sync';   // � 용어 정리 표준/이야기 동기화 (누락 용어 보완, 용어명 통일)
+const CACHE_VERSION = 'v291-20260910-doc-sync';   // 📌 용어 정리 관련 문서 갱신 (TEXTBOOK_AUTHORING_GUIDE, AGENTS, user_manual, SPEC)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
