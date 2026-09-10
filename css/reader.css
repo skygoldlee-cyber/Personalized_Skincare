@@ -724,7 +724,7 @@ pre.mermaid-other .labelBkg {
         top: 0;
         left: 0;
         bottom: 0;
-        width: 280px;
+        width: min(280px, 85vw); /* M6: 작은 화면에서 화면 폭의 85%로 제한 */
         max-height: none;
         z-index: 1500;
         transform: translateX(-100%);
@@ -1362,6 +1362,117 @@ body.reader-focus-mode .reader-readable-width {
     .reader-back-to-top {
         bottom: 1.25rem;
         right: 1.25rem;
+    }
+    /* M1: 챕터 헤더 메타 영역 모바일 2열 그리드 재배치 */
+    .reader-chapter-header-card {
+        padding: 1.1rem 1.1rem;
+    }
+    .reader-chapter-meta {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem 0.75rem;
+        font-size: 0.78rem;
+    }
+    .reader-chapter-meta > * {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        justify-content: flex-start;
+    }
+    /* 참조자료 드롭다운과 오디오 버튼은 전체 폭 차지 */
+    .reader-chapter-meta > #reader-ref-dropdown,
+    .reader-chapter-meta > #reader-audio-toggle-btn {
+        grid-column: 1 / -1;
+    }
+    .reader-chapter-meta > #reader-ref-dropdown summary {
+        width: 100%;
+        justify-content: center;
+    }
+    .reader-chapter-meta > #reader-audio-toggle-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    /* M3: 참조자료 드롭다운 패널 모바일 폭 조정 (320px 고정 → 화면 폭 기반) */
+    .reader-ref-panel {
+        min-width: unset !important;
+        width: calc(100vw - 2rem) !important;
+        max-width: 360px !important;
+        left: 0 !important;
+        right: auto !important;
+    }
+    /* M2: 오디오 플레이어 컨트롤 모바일 2행 분리 (재생/시간/시크바 / 속도/스크롤) */
+    #reader-audio-controls {
+        flex-wrap: wrap;
+        gap: 0.4rem 0.5rem !important;
+    }
+    #reader-audio-controls > #reader-audio-playpause-btn,
+    #reader-audio-controls > #reader-audio-current,
+    #reader-audio-controls > #reader-audio-seek,
+    #reader-audio-controls > #reader-audio-duration {
+        flex: 0 0 auto;
+    }
+    #reader-audio-controls > #reader-audio-seek {
+        flex: 1 1 auto;
+        min-width: 120px;
+    }
+    #reader-audio-controls > #reader-audio-rate-btn,
+    #reader-audio-controls > #reader-audio-scroll-btn {
+        flex: 1 1 calc(50% - 0.25rem);
+        min-width: 0;
+    }
+    /* M4: 표 확장 버튼 터치 영역 확대 (28px → 40px) */
+    .reader-table-expand-btn {
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 0.9rem !important;
+    }
+    /* M5: 표 모달 닫기 버튼 터치 영역 확대 (34px → 44px) */
+    .reader-table-modal-close {
+        width: 44px !important;
+        height: 44px !important;
+        font-size: 1.15rem !important;
+    }
+    /* M7: 섹션 헤더 패딩 모바일 축소 (1.1rem 1.5rem → 0.9rem 1rem) */
+    .reader-section-header {
+        padding: 0.9rem 1rem !important;
+        gap: 0.5rem !important;
+    }
+    /* M9: 리더 툴바 버튼 터치 영역 44px 보장 */
+    .reader-toolbar button,
+    #reader-font-decrease,
+    #reader-font-increase,
+    #reader-font-reset,
+    #reader-focus-toggle,
+    #reader-expand-all,
+    #reader-collapse-all {
+        min-width: 44px;
+        min-height: 44px;
+        padding: 0.5rem 0.75rem !important;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    /* M10: 참조자료 프리뷰 툴팁 너비 모바일 제한 (420px → 화면 폭 - 1.5rem) */
+    #ref-preview-tooltip {
+        max-width: calc(100vw - 1.5rem) !important;
+    }
+    /* M11: 브레드크럼 모바일 축약 — 과목/단원 숨김, 현재 섹션만 강조 */
+    .reader-breadcrumb .breadcrumb-subject,
+    .reader-breadcrumb .breadcrumb-chapter,
+    .reader-breadcrumb .breadcrumb-sep {
+        display: none;
+    }
+    .reader-breadcrumb .breadcrumb-section {
+        color: var(--color-text-main);
+        font-weight: 500;
+        font-size: 0.82rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    /* M12: 오디오 토스트 모바일 위치 조정 (하단 탭바 겹침 방지) */
+    #reader-audio-toast {
+        bottom: calc(80px + env(safe-area-inset-bottom, 0px)) !important;
     }
 }
 
