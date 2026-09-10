@@ -29,7 +29,7 @@
     --radius-md: 16px;
     --radius-lg: 24px;
     
-    --font-app: 'Noto Sans KR', 'Outfit', sans-serif;
+    --font-app: 'Noto Sans KR', 'Outfit', 'Noto Color Emoji', sans-serif;
 }
 
 /* Light Theme Overrides */

@@ -82,7 +82,7 @@ function _injectStyles() {
 #html-ref-overlay .hr-ov-search .hr-search-count{font-size:.78rem;color:var(--color-text-muted,#8b949e);
   min-width:60px;}
 /* 콘텐츠: 라이트(기본)와 다크 테마 분기 */
-#html-ref-overlay .hr-ov-content{padding:24px;color:#1a1a1a;font-family:'Malgun Gothic','Noto Sans KR',sans-serif;line-height:1.6;}
+#html-ref-overlay .hr-ov-content{padding:24px;color:#1a1a1a;font-family:'Malgun Gothic','Noto Sans KR','Noto Color Emoji',sans-serif;line-height:1.6;}
 #html-ref-overlay.dark-theme .hr-ov-content{color:#e6edf3;}
 #html-ref-overlay .hr-ov-content h1.doc-title{border-bottom:2px solid #333;padding-bottom:8px;font-size:20px;}
 #html-ref-overlay.dark-theme .hr-ov-content h1.doc-title,
@@ -185,7 +185,7 @@ function _ensureOverlay() {
         const printWin = window.open('', '_blank');
         if (printWin) {
             printWin.document.write('<html><head><meta charset="utf-8"><title>' + escHtml(docTitle) + '</title>');
-            printWin.document.write('<style>*{margin:0;padding:0;box-sizing:border-box;}body{font-family:"Malgun Gothic","Noto Sans KR",sans-serif;color:#1a1a1a;line-height:1.6;padding:24px;}h1.doc-title{border-bottom:2px solid #333;padding-bottom:8px;font-size:20px;margin-bottom:16px;}h1{font-size:20px;margin:1em 0 .5em;}h2{font-size:17px;margin:1.2em 0 .4em;border-bottom:1px solid #ddd;padding-bottom:4px;}h3{font-size:15px;margin:1em 0 .3em;}p{margin:.4em 0;}ul,ol{margin:.4em 0;padding-left:1.8em;}li{margin:.2em 0;}table{border-collapse:collapse;margin:10px 0;font-size:13px;}th,td{border:1px solid #999;padding:4px 8px;vertical-align:top;}tr:nth-child(even){background:#f7f7f7;}pre{background:#f5f5f5;padding:12px;border-radius:6px;overflow-x:auto;font-size:13px;margin:10px 0;}blockquote{border-left:3px solid #ccc;margin:10px 0;padding:6px 14px;color:#555;}img{max-width:100%;border:1px solid #eee;margin:4px 0;display:block;}hr{border:none;border-top:1px solid #ddd;margin:20px 0;}.reader-table-wrapper{overflow:visible;margin:10px 0;}mark{background:transparent;}</style>');
+            printWin.document.write('<style>*{margin:0;padding:0;box-sizing:border-box;}body{font-family:"Malgun Gothic","Noto Sans KR","Noto Color Emoji",sans-serif;color:#1a1a1a;line-height:1.6;padding:24px;}h1.doc-title{border-bottom:2px solid #333;padding-bottom:8px;font-size:20px;margin-bottom:16px;}h1{font-size:20px;margin:1em 0 .5em;}h2{font-size:17px;margin:1.2em 0 .4em;border-bottom:1px solid #ddd;padding-bottom:4px;}h3{font-size:15px;margin:1em 0 .3em;}p{margin:.4em 0;}ul,ol{margin:.4em 0;padding-left:1.8em;}li{margin:.2em 0;}table{border-collapse:collapse;margin:10px 0;font-size:13px;}th,td{border:1px solid #999;padding:4px 8px;vertical-align:top;}tr:nth-child(even){background:#f7f7f7;}pre{background:#f5f5f5;padding:12px;border-radius:6px;overflow-x:auto;font-size:13px;margin:10px 0;}blockquote{border-left:3px solid #ccc;margin:10px 0;padding:6px 14px;color:#555;}img{max-width:100%;border:1px solid #eee;margin:4px 0;display:block;}hr{border:none;border-top:1px solid #ddd;margin:20px 0;}.reader-table-wrapper{overflow:visible;margin:10px 0;}mark{background:transparent;}</style>');
             printWin.document.write('</head><body>' + content.innerHTML + '</body></html>');
             printWin.document.close();
             printWin.print();
