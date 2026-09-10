@@ -1,5 +1,14 @@
 /* Noto Sans KR and Outfit self-hosted fonts */
 
+/* noto-color-emoji-400 (이모지 렌더링 통일: PC/모바일 동일한 구글 Noto Color Emoji 사용) */
+@font-face {
+  font-family: 'Noto Color Emoji';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('noto-color-emoji-400.woff2') format('woff2');
+}
+
 /* noto-sans-kr-300 */
 @font-face {
   font-family: 'Noto Sans KR';

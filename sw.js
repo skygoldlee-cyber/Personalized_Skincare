@@ -95,6 +95,8 @@ const SHELL_ASSETS = [
   './vendor/fonts/outfit-400.woff2',
   './vendor/fonts/outfit-600.woff2',
   './vendor/fonts/outfit-800.woff2',
+  // Noto Color Emoji (이모지 렌더링 통일: PC/모바일 동일)
+  './vendor/fonts/noto-color-emoji-400.woff2',
   // Mermaid(3.3MB) — 매뉴얼/교재 리더의 다이어그램 렌더링에 필요.
   //   온디맨드 로드이지만 PWA 오프라인 환경에서도 다이어그램이 표시되도록 프리캐시에 포함.
   './vendor/mermaid/mermaid.min.js'

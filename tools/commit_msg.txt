@@ -1,18 +1,16 @@
-feat: Noto Color Emoji 웹폰트 적용 — PC/모바일 이모지 렌더링 통일
+fix: Noto Color Emoji 셀프 호스팅 전환 (CSP 준수 + fonts.css 로딩 누락 수정)
 
-기존: --font-app에 이모지 폰트 미지정으로 OS별 기본 이모지가 렌더링됨
-  - Windows: Segoe UI Emoji (단순/평면적)
-  - iOS/macOS: Apple Color Emoji (입체적/사실적)
-  - Android: Noto Color Emoji (구글 스타일)
+문제: 이전 커밋에서 Google Fonts CDN으로 로드 시도했으나 CSP font-src 'self'이
+차단하여 웹폰트가 로드되지 않음. 또한 vendor/fonts/fonts.css가 style.css에
+import되지 않아 기존 폰트(@font-face)도 로드되지 않았던 문제 발견.
 
-변경:
-- index.html: Google Fonts CDN으로 Noto Color Emoji 웹폰트 로드
-- base.css: --font-app에 'Noto Color Emoji' 추가
-- reader.css: monospace 폰트 스택 2곳에 'Noto Color Emoji' 추가
-- html-viewer.js: 참조자료 뷰어/인쇄 폰트 스택에 'Noto Color Emoji' 추가
+수정:
+- index.html: Google Fonts CDN 링크 제거 (CSP 위반)
+- vendor/fonts/fonts.css: Noto Color Emoji @font-face 추가 (5.5MB woff2)
+- style.css: fonts.css import 추가 (누락된 @font-face 로딩 수정)
+- sw.js: noto-color-emoji-400.woff2 pre-cache 추가
 
-효과: 모든 플랫폼에서 동일한 구글 Noto Color Emoji 스타일로 렌더링
-오프라인: font-display:swap으로 시스템 이모지 폰트가 fallback 동작
+효과: CSP 준수하면서 PC/모바일 동일한 Noto Color Emoji 렌더링, 오프라인 지원
 
 Generated with [Devin](https://devin.ai)
 

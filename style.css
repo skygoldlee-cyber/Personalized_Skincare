@@ -2,6 +2,7 @@
  * 이 파일은 전체 스타일시트의 진입점입니다.
  * 개별 UI 모듈의 세부 스타일은 css/ 폴더 아래의 파일들에 분리 정의되어 있습니다.
  */
+@import url('./vendor/fonts/fonts.css');
 @import url('./css/base.css');
 @import url('./css/dashboard.css');
 @import url('./css/study.css');
