@@ -1454,3 +1454,86 @@ PWA에서 교재 근거 인용 링크(`[교재: L####](<../교재/.../*.md#L####
 - Git commit `91649ef` (매뉴얼 갱신), `080e42b` (SW bump)
 - CACHE_VERSION → `v273-20260910-91649ef`
 - Vercel 배포 완료: https://personalized-skincare-study.vercel.app
+
+---
+
+## #55 — UI/UX 정적 리뷰 기반 1~4차 순차 개선 (2026-09-10)
+
+> **목표**: 정적 코드 기반 UI/UX 리뷰에서 식별된 4개 개선항목을 순차 적용하여 렌더링 일관성, 접근성, 반응형 동작, 시각적 위계 정합
+
+### 1차: 미디어 쿼리 통합 + !important 제거 + 인라인 스타일/헤딩 위계 정리
+
+- **미디어 쿼리 통합** (`css/reader.css`, `css/trainer.css`, `css/exam.css`, `css/base.css`)
+  - 브레이크포인트 992/1024/1100px → 900px 통일 (3단계: 768/900/1200)
+  - reader.css 480px 중첩 @media 해결 → 외부 480px 블록으로 병합
+  - base.css 브레이크포인트 토큰 주석 추가
+- **!important 제거** (`css/reader.css`)
+  - `.reader-light-theme` 블록 !important 38건 제거 (변수화된 색상, 명시도로 덮어쓰기 가능)
+  - Mermaid 다이어그램 !important는 기본 규칙도 !important 사용하므로 유지
+- **인라인 스타일 제거** (`css/base.css`, `index.html`)
+  - `.is-hidden` 유틸리티 클래스 추가
+  - `style="display: none;"` 26건 → `class="is-hidden"` 교체
+- **h1~h6 위계 정리** (`index.html`)
+  - 인쇄용 `h1` → `h2` + `aria-hidden="true"` (페이지당 단일 h1 유지)
+  - `h5` 6건 → `h3`/`h4` 강등 (위계 역행 해결)
+  - 결과: h1 1개, h5 0개
+
+### 2차: 접근성 + 햅틱 + 키보드 단축키 + 오프라인 폴백 등 13항목
+
+1. **trainer.css 인쇄 스타일 분리** (`css/print.css` 신규, `css/trainer.css`, `style.css`)
+   - `@media print` 블록 145줄을 `css/print.css`로 분리
+   - `style.css`에 `print.css` import 추가
+   - 인쇄용 `h1` → `h2` (위계 정리 연장)
+2. **reader.css Mermaid !important** — 유지 (Mermaid 라이브러리 인라인 스타일 덮어쓰기용)
+3. **JS element.style.display 조작 리팩토링** (13개 JS 파일)
+   - `style.display = 'none'` → `classList.add('is-hidden')` (80건)
+   - `style.display = 'block'/'flex'/'inline-flex'` → `classList.remove('is-hidden')` (68건)
+   - 비교문/grid 패턴 보존, 총 148건 교체
+4. **동적 피드백 영역 aria-live 확대** (`index.html`)
+   - `offline-banner`: `role="status" aria-live="polite"`
+   - `limits/calc/ing feedback panel`: `role="status" aria-live="polite"`
+5. **터치 타깃 44px 보강** (`css/dashboard.css`, `index.html`, `css/reader.css`)
+   - `.rec-item .btn-sm` min-height 32px → 44px
+   - scratchpad 버튼 padding 2px 8px → 0.5rem 0.75rem + min-height 44px
+   - `.pwa-modal-close` 36×36px → 44×44px
+6. **글로벌 table 가로 스크롤 방어** (`css/base.css`)
+   - `.view-section > table`, `.view-section > div > table`에 `display: block; overflow-x: auto; -webkit-overflow-scrolling: touch`
+7. **오프라인 non-navigate fallback** (`sw.js`)
+   - 이미지 요청 시 1×1 투명 PNG 반환 (UI 깨짐 방지)
+   - 기존 캐시에서 유사 요청 폴백 추가
+8. **로딩 스켈레톤 UI** — 스킵 (현재 스피너로 충분, 범용 스켈레톤은 데이터 구조 의존성 높음)
+9. **햅틱 피드백** (`src/ui-utils.js`, `src/views/trainer.js`, `src/views/quiz.js`, `src/views/exam-simulator.js`)
+   - `vibrate(pattern)` / `HAPTIC` 상수 추가 (correct: 30ms, wrong: [40,30,40], tap: 10ms)
+   - trainer.js 4개, quiz.js 2개, exam-simulator.js 1개 정답/오답 처리에 vibrate 적용
+10. **키보드 단축키 확대** (`src/app.js`)
+    - 퀴즈/훈련소 객관식 숫자키 1-5 단축키
+    - OX 진위형 o/p 단축키
+11. **PWA orientation 검토** — 유지 (`any`가 학습앱에 적절)
+12. **미사용 CSS 제거** — 스킵 (런타임 Chrome DevTools Coverage 필요)
+13. **런타임 접근성 검증** — 스킵 (Lighthouse/axe-core + 실기기 테스트 필요, 추후 권장)
+
+### 3차: TOC 사이드바 안보임 버그 긴급 수정
+
+- **원인**: 2차 리팩토링에서 JS의 `style.display = 'block'/'none'`을 `classList.add/remove('is-hidden')`로 교체했으나, `index.html`의 인라인 `style="display:none;"` (공백 없는 패턴) 17건이 누락됨. JS에서 `classList.remove('is-hidden')`를 호출해도 인라인 `style="display:none;"`가 남아 요소가 숨겨진 상태로 유지됨.
+- **수정**: `index.html`의 모든 `style="display:none;"` / `style="display: none;"` 인라인 스타일을 `class="is-hidden"`으로 변환 (17건)
+  - `#reader-toc` (TOC 사이드바 — 핵심 버그), `#reader-toc-backdrop`, `#reader-toolbar`, `#reader-progress-bar`, `#reader-back-to-top`, `#reader-table-modal`
+  - `#quiz-options-container`, `#quiz-ox-container`, `#fc-memorized-badge`, `#fc-weak-badge`
+  - `#draft-resume-banner`, `#sim-result-panel`, `#sim-result-breakdown`
+  - `#calc-scratchpad-container`, `#calc-solution-panel`, `#calc-solution-body`
+  - `#ing-input-container`, `#pwa-diagnostics`
+- **추가 수정**: `textbook-reader.js`의 `reader-back-to-top` 토글을 `classList.toggle('is-hidden')`로 변경
+
+### 4차: 잔여 style.display 3건 classList 변환
+
+- **`css/base.css`**: `.is-flex`, `.is-grid` 유틸리티 클래스 추가
+- **`src/views/trainer.js`**: `optionsContainer.style.display = 'grid'` → `classList.remove('is-hidden')` (인라인 `display:grid`가 이미 있어 복원됨)
+- **`src/html-viewer.js`**: `loading.style.display = 'flex'` 2건 → `classList.remove('is-hidden')` (`.hr-loading` CSS가 `display:flex` 제공)
+- **결과**: `src/` 폴더 내 `style.display = '...'` 패턴 0건 달성
+
+### 검증
+
+- `node --check` 14개 JS 파일 문법 검증 통과
+- `npm test` 248개 유닛 테스트 전체 통과
+- Git commits: `1ec317e` (1차), `cf709e0` (2차), `5e454fe` (3차 TOC 버그 수정), `ffe45f3` (4차 잔여 변환)
+- CACHE_VERSION: v279 → v280 → v281 → v282 → v283
+- Vercel 배포 완료: https://personalized-skincare-study.vercel.app
