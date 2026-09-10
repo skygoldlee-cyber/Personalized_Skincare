@@ -688,6 +688,8 @@ export function renderTextbookReader() {
             
             if (subjId) {
                 chapterSelect.disabled = false;
+                chapterSelect.innerHTML = '<option value="">단원을 선택하세요</option>';
+                chapterSelect.value = '';
                 DataLoader.loadSubject(subjId).then(() => {
                     populateChapterSelect(subjId);
                 });
@@ -753,6 +755,8 @@ function populateChapterSelect(subjId) {
         option.textContent = chapter.chapterTitle;
         chapterSelect.appendChild(option);
     });
+    
+    chapterSelect.value = '';
 }
 
 function renderChapterContent(subjId, chapterIdx) {
