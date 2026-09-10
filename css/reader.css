@@ -605,7 +605,7 @@ pre.mermaid-other .labelBkg {
 }
 .reader-toc-item:hover::after,
 .reader-toc-sub-item:hover::after {
-    content: attr(title);
+    content: attr(data-toc-title);
     position: absolute;
     left: 0;
     top: 100%;

@@ -934,7 +934,7 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
             const level = Math.max(minLevel, _getTocLevel(section.title));
             const subHeadings = _extractSubHeadings(section.content);
             const hasChildren = subHeadings.length > 0;
-            let html = `<div class="reader-toc-item toc-level-${level}${hasChildren ? ' has-children' : ''}" data-section-idx="${idx}" title="${esc(title)}">`;
+            let html = `<div class="reader-toc-item toc-level-${level}${hasChildren ? ' has-children' : ''}" data-section-idx="${idx}" data-toc-title="${esc(title)}">`;
             if (hasChildren) {
                 html += `<i class="fa-solid fa-chevron-right toc-toggle-icon"></i>`;
             }
@@ -944,7 +944,7 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
                 html += `<div class="reader-toc-children collapsed" data-parent-idx="${idx}">`;
                 subHeadings.forEach((sh, hIdx) => {
                     const subLevel = sh.level === 3 ? 0 : 1;
-                    html += `<div class="reader-toc-sub-item toc-sub-level-${subLevel}" data-section-idx="${idx}" data-heading-idx="${hIdx}" title="${esc(sh.title)}">`;
+                    html += `<div class="reader-toc-sub-item toc-sub-level-${subLevel}" data-section-idx="${idx}" data-heading-idx="${hIdx}" data-toc-title="${esc(sh.title)}">`;
                     html += `<span class="toc-sub-text">${esc(sh.title)}</span>`;
                     html += `</div>`;
                 });
@@ -965,7 +965,7 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
             if (isChapterHeader) {
                 if (inChapter) tocHtml += `</div>`; // close previous chapter children
                 // Chapter parent item
-                tocHtml += `<div class="reader-toc-item toc-chapter" data-section-idx="${idx}" title="${esc(section.title)}">`;
+                tocHtml += `<div class="reader-toc-item toc-chapter" data-section-idx="${idx}" data-toc-title="${esc(section.title)}">`;
                 tocHtml += `<i class="fa-solid fa-chevron-down toc-toggle-icon"></i>`;
                 tocHtml += `<span class="toc-text">${esc(section.title)}</span>`;
                 tocHtml += `</div>`;
