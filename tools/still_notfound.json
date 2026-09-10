@@ -1,45 +1,134 @@
 [
   {
-    "examFile": "content/문제은행/과목4_문제.md",
-    "relPath": "../교재/understanding/4과목_맞춤형화장품의이해_표준형.md",
-    "oldLineNum": 2822,
-    "oldLineContent": "---",
-    "phrases": []
-  },
-  {
-    "examFile": "content/문제은행/과목4_문제.md",
-    "relPath": "../교재/understanding/4과목_맞춤형화장품의이해_표준형.md",
-    "oldLineNum": 2551,
-    "oldLineContent": "| 구분 | 내용 |",
+    "examFile": "content/문제은행/과목2_문제.md",
+    "relPath": "../교재/manufacturing/2과목_제조및품질관리_표준형.md",
+    "oldLineNum": 3499,
+    "oldLineContent": "| --- | --- |",
     "phrases": [
-      "구분 내용"
+      "--- ---"
     ]
   },
   {
-    "examFile": "content/문제은행/과목4_문제.md",
-    "relPath": "../교재/understanding/4과목_맞춤형화장품의이해_표준형.md",
-    "oldLineNum": 2952,
+    "examFile": "content/문제은행/과목2_문제.md",
+    "relPath": "../교재/manufacturing/2과목_제조및품질관리_표준형.md",
+    "oldLineNum": 3887,
+    "oldLineContent": "| **아이소유제놀** | Isoeugenol | 향료 | 유상층 | 아이소유제놀은 화장품에 향을 부여하는 향료 성분으로, 유럽 연합에서 지정한 착향제 알레르기 유발 성분 25종 성분입니다. | 민감성 | 권장 | 착향 알레르기 유발 성분 25종 |",
+    "phrases": [
+      "아이소유제놀 Isoeugenol 향료 유상층 아이소유제놀은 화장품에 향을 부여하는 향료 성분으로, 유럽 연합에서 지정한 착향제 알레르기 유발 성분 25종 성분입니다. 민감성 권장 착향 알레르기 유발 성분 25종",
+      "유럽 연합에서 지정한 착향제 알레르기 유발 성분 25종 성분입니다. 민감성 권장 착향 알레르기 유발 성분 25종",
+      "아이소유제놀 Isoeugenol 향료 유상층 아이소유제놀은 화장품에 향을 부여하는 향료 성분으로"
+    ]
+  },
+  {
+    "examFile": "content/문제은행/과목2_문제.md",
+    "relPath": "../교재/manufacturing/2과목_제조및품질관리_표준형.md",
+    "oldLineNum": 3889,
+    "oldLineContent": "| **벤질살리실레이트** | Benzyl Salicylate | 향료 | 유상층 | 화장품에 향을 부여하는 착향제 알레르기 유발 성분 25종 중 하나로, 민감성 피부에 주의가 필요한 향료 성분입니다. | 민감성 | 권장 | 착향 알레르기 유발 성분 25종 |",
+    "phrases": [
+      "벤질살리실레이트 Benzyl Salicylate 향료 유상층 화장품에 향을 부여하는 착향제 알레르기 유발 성분 25종 중 하나로, 민감성 피부에 주의가 필요한 향료 성분입니다. 민감성 권장 착향 알레르기 유발 성분 25종",
+      "벤질살리실레이트 Benzyl Salicylate 향료 유상층 화장품에 향을 부여하는 착향제 알레르기 유발 성분 25종 중 하나로",
+      "민감성 피부에 주의가 필요한 향료 성분입니다. 민감성 권장 착향 알레르기 유발 성분 25종"
+    ]
+  },
+  {
+    "examFile": "content/문제은행/과목2_문제.md",
+    "relPath": "../교재/manufacturing/2과목_제조및품질관리_표준형.md",
+    "oldLineNum": 3918,
+    "oldLineContent": "| 파라벤류 | 0.1~0.8% | 단일 0.4% / 혼합 0.8% |  | 메칠파라벤 사용금지 |",
+    "phrases": [
+      "파라벤류 0.1~0.8% 단일 0.4% / 혼합 0.8% 메칠파라벤 사용금지",
+      "파라벤류 0.1~0.8% 단일 0.4%",
+      "혼합 0.8% 메칠파라벤 사용금지"
+    ]
+  },
+  {
+    "examFile": "content/문제은행/과목2_문제.md",
+    "relPath": "../교재/manufacturing/2과목_제조및품질관리_표준형.md",
+    "oldLineNum": 3899,
+    "oldLineContent": "| **시트로넬올** | Citronellol | 향료 | 유상층 | 향료로 사용되는 시트로넬올은 착향제 알레르기 유발 성분 25종에 속하며 민감성 피부에 주의가 필요한 성분입니다. | 민감성 | 권장 | 착향 알레르기 유발 성분 25종 |",
+    "phrases": [
+      "시트로넬올 Citronellol 향료 유상층 향료로 사용되는 시트로넬올은 착향제 알레르기 유발 성분 25종에 속하며 민감성 피부에 주의가 필요한 성분입니다. 민감성 권장 착향 알레르기 유발 성분 25종"
+    ]
+  },
+  {
+    "examFile": "content/문제은행/과목2_문제.md",
+    "relPath": "../교재/manufacturing/2과목_제조및품질관리_표준형.md",
+    "oldLineNum": 2912,
     "oldLineContent": "| 용어 | 핵심 포인트 |",
     "phrases": [
       "용어 핵심 포인트"
     ]
   },
   {
-    "examFile": "content/문제은행/과목4_문제.md",
-    "relPath": "../교재/understanding/4과목_맞춤형화장품의이해_표준형.md",
-    "oldLineNum": 2633,
-    "oldLineContent": "| 구분 | 실증 대상 | 비고 |",
+    "examFile": "content/문제은행/과목2_문제.md",
+    "relPath": "../교재/manufacturing/2과목_제조및품질관리_표준형.md",
+    "oldLineNum": 2475,
+    "oldLineContent": "| 소르빅애씨드 및 그 염류 | 소르빅애씨드로서 0.6% |  |",
     "phrases": [
-      "구분 실증 대상 비고"
+      "소르빅애씨드 및 그 염류 소르빅애씨드로서 0.6%"
+    ]
+  },
+  {
+    "examFile": "content/문제은행/과목2_문제.md",
+    "relPath": "../교재/manufacturing/2과목_제조및품질관리_표준형.md",
+    "oldLineNum": 3713,
+    "oldLineContent": "| **신속보고** | 책임판매업자 → **15일 이내** 식약처장 보고. 중대 유해사례. |",
+    "phrases": [
+      "신속보고 책임판매업자 → 15일 이내 식약처장 보고. 중대 유해사례."
+    ]
+  },
+  {
+    "examFile": "content/문제은행/과목2_문제.md",
+    "relPath": "../교재/manufacturing/2과목_제조및품질관리_표준형.md",
+    "oldLineNum": 2144,
+    "oldLineContent": "| --- | --- |",
+    "phrases": [
+      "--- ---"
+    ]
+  },
+  {
+    "examFile": "content/문제은행/과목2_문제.md",
+    "relPath": "../교재/manufacturing/2과목_제조및품질관리_표준형.md",
+    "oldLineNum": 3897,
+    "oldLineContent": "| **리날룰** | Linalool | 향료 | 유상층 | 향을 부여하는 착향제 성분으로, 민감성 피부에 알레르기를 유발할 수 있는 25종 중 하나인 성분입니다. | 민감성 | 권장 | 착향 알레르기 유발 성분 25종 |",
+    "phrases": [
+      "리날룰 Linalool 향료 유상층 향을 부여하는 착향제 성분으로, 민감성 피부에 알레르기를 유발할 수 있는 25종 중 하나인 성분입니다. 민감성 권장 착향 알레르기 유발 성분 25종",
+      "민감성 피부에 알레르기를 유발할 수 있는 25종 중 하나인 성분입니다. 민감성 권장 착향 알레르기 유발 성분 25종",
+      "리날룰 Linalool 향료 유상층 향을 부여하는 착향제 성분으로"
+    ]
+  },
+  {
+    "examFile": "content/문제은행/과목2_문제.md",
+    "relPath": "../교재/manufacturing/2과목_제조및품질관리_표준형.md",
+    "oldLineNum": 2668,
+    "oldLineContent": "| 천연 유래 원료 | 유기농 유래 원료 | 유기농 원료를 이 고시에서 허용하는 화학적 또는 생물학적 공정에 따라 가공한 원료 |",
+    "phrases": [
+      "천연 유래 원료 유기농 유래 원료 유기농 원료를 이 고시에서 허용하는 화학적 또는 생물학적 공정에 따라 가공한 원료"
+    ]
+  },
+  {
+    "examFile": "content/문제은행/과목2_문제.md",
+    "relPath": "../교재/manufacturing/2과목_제조및품질관리_표준형.md",
+    "oldLineNum": 2604,
+    "oldLineContent": "| 벤질벤조에이트 | 시트랄 |",
+    "phrases": [
+      "벤질벤조에이트 시트랄"
     ]
   },
   {
     "examFile": "content/문제은행/과목4_문제.md",
     "relPath": "../교재/understanding/4과목_맞춤형화장품의이해_표준형.md",
-    "oldLineNum": 3254,
-    "oldLineContent": "| 항목 | 내용 |",
+    "oldLineNum": 3509,
+    "oldLineContent": "---",
+    "phrases": []
+  },
+  {
+    "examFile": "content/문제은행/과목4_문제.md",
+    "relPath": "../교재/understanding/4과목_맞춤형화장품의이해_표준형.md",
+    "oldLineNum": 3903,
+    "oldLineContent": "| 충진기 | 용도 | 대상 제품 |",
     "phrases": [
-      "항목 내용"
+      "충진기 용도 대상 제품"
     ]
   }
 ]
