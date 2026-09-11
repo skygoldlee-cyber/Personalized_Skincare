@@ -1,4 +1,4 @@
-﻿# 🧴 Pass → Practice 전략: Formula OS — 합격 후 실무 플랫폼 전환
+# 🧴 Pass → Practice 전략: Formula OS — 합격 후 실무 플랫폼 전환
 
 > **작성일**: 2026-09-11
 > **개정일**: 2026-09-12 — 종합 리뷰 반영: Formula OS 핵심 격상, AI 배합 참고 한 단계 뒤로, verified 세분화, MVP 축소(Phase 5-A), 고객 개인정보 최소화, 법적 한도 ≠ 안전성 UI 분리, ingredient_practice 관계형 분리, 법령 알림 Actionable Alert 강화, Pass Pro vs Practice Pro 분리, Practice 타깃 확장, Knowledge Flywheel
