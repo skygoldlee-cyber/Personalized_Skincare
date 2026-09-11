@@ -58,7 +58,7 @@
 
 .trainer-menu-card h4 {
     font-size: var(--text-lg-sm);
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     color: var(--color-text-main);
 }
 
@@ -71,7 +71,7 @@
 .trainer-card-btn {
     margin-top: auto;
     font-size: var(--text-1rem);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--color-primary);
     display: flex;
     align-items: center;
@@ -98,7 +98,7 @@
     color: var(--color-text-main);
     font-size: var(--text-md);
     font-family: var(--font-app);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     cursor: pointer;
     text-align: left;
     transition: all 0.2s;
@@ -140,7 +140,7 @@
     align-items: center;
     justify-content: center;
     font-size: var(--text-sm-md);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--color-text-muted);
 }
 
@@ -157,7 +157,7 @@
 /* Calculator Practice Styles */
 .calc-unit {
     font-size: var(--text-lg-1);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--color-text-muted);
 }
 
@@ -175,7 +175,7 @@
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     font-size: var(--text-base);
     color: var(--color-text-muted);
     transition: all 0.2s;
@@ -212,7 +212,7 @@
     align-items: center;
     gap: 0.85rem;
     font-size: var(--text-base);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     text-align: left;
     cursor: pointer;
     transition: var(--transition-base);
@@ -261,14 +261,14 @@
 
 .pomo-title-group h4 {
     font-size: var(--text-lg-sm);
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
 }
 
 .pomodoro-status {
     background: var(--bg-active);
     color: var(--color-text-muted);
     font-size: var(--text-sm);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     padding: 0.2rem 0.6rem;
     border-radius: var(--radius-sm);
     text-transform: uppercase;
@@ -292,7 +292,7 @@
 .timer-display {
     font-size: 3.75rem;
     font-family: 'Outfit', sans-serif;
-    font-weight: 800;
+    font-weight: var(--font-weight-extrabold);
     text-align: center;
     color: var(--color-primary);
     letter-spacing: 2px;
@@ -333,7 +333,7 @@
 
 .analytics-card h5 {
     font-size: var(--text-md-lg);
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     color: var(--color-text-main);
     border-bottom: 1px solid var(--border-color);
     padding-bottom: var(--space-3);
@@ -435,7 +435,7 @@
 .chart-label {
     fill: var(--color-text-muted);
     font-size: var(--text-xs);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     text-anchor: middle;
     font-family: 'Outfit', sans-serif;
 }
@@ -443,7 +443,7 @@
 .chart-value-label {
     fill: var(--color-on-brand);
     font-size: var(--text-sm);
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     text-anchor: middle;
     font-family: 'Outfit', sans-serif;
 }
@@ -465,13 +465,13 @@
 
 .pred-score-text {
     font-size: 1.5rem;
-    font-weight: 800;
+    font-weight: var(--font-weight-extrabold);
 }
 
 .pred-status-badge {
     padding: 0.3rem 0.8rem;
     font-size: var(--text-sm-md);
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     border-radius: var(--radius-sm);
 }
 
@@ -517,7 +517,7 @@
 
 .pred-subject-row.danger {
     color: var(--color-danger);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
 }
 
 /* Ïù∏ÏáÑ ÏµúÏ†ÅÌôî Ïä§ÌÉÄÏùºÏùÄ css/print.cssÎ°ú Î∂ÑÎ¶¨Îê® */
@@ -566,7 +566,7 @@
 
 .dict-card-title {
     font-size: var(--text-md-lg);
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     color: var(--color-text-main);
 }
 
@@ -580,7 +580,7 @@
     padding: 0.25rem 0.5rem;
     border-radius: var(--radius-xs);
     font-size: var(--text-xs-sm);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     white-space: nowrap;
 }
 
@@ -622,7 +622,7 @@
 .dict-detail-value {
     color: var(--color-text-main);
     text-align: right;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
 }
 
 .dict-card-tip {
@@ -666,7 +666,7 @@
 .radar-axis-label {
     font-size: var(--text-xs-sm);
     fill: var(--color-text-muted);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     text-anchor: middle;
 }
 
@@ -760,7 +760,7 @@
 .textbook-card-path {
     font-size: var(--text-sm-md);
     color: var(--color-text-muted);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
 }
 
 .textbook-card-path i {
@@ -770,7 +770,7 @@
 
 .textbook-card-title {
     font-size: var(--text-lg-1);
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     color: var(--color-text-main);
     margin-bottom: var(--space-4);
 }
@@ -813,7 +813,7 @@
 mark.txt-highlight {
     background: var(--primary-tint-25);
     color: var(--color-primary);
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     padding: 0 2px;
     border-radius: var(--radius-xs);
     border-bottom: 2px solid var(--color-primary);
@@ -847,7 +847,7 @@ mark.txt-highlight {
 }
 
 
-/* === ƒƒ∆˜≥Õ∆Æ ≈¨∑°Ω∫ ? ¿Œ∂Û¿Œ Ω∫≈∏¿œ ¡¶∞≈øÎ === */
+/* === ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ∆Æ ≈¨ÔøΩÔøΩÔøΩÔøΩ ? ÔøΩŒ∂ÔøΩÔøΩÔøΩ ÔøΩÔøΩ≈∏ÔøΩÔøΩ ÔøΩÔøΩÔøΩ≈øÔøΩ === */
 
 /* Calculator Panel */
 .calc-input-row {
@@ -973,7 +973,7 @@ mark.txt-highlight {
 .textbook-filter-btn {
     padding: 0.4rem 0.8rem;
     font-size: var(--text-sm);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     cursor: pointer;
     border-radius: var(--radius-xs);
     background: var(--bg-subtle);

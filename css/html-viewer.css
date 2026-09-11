@@ -15,7 +15,7 @@
 #html-ref-overlay .hr-ov-scroll::-webkit-scrollbar-thumb:hover{background:#555;}
 #html-ref-overlay .hr-ov-scroll{scrollbar-width:thin;scrollbar-color:#888 #f0f0f0;}
 #html-ref-overlay.dark-theme .hr-ov-scroll{scrollbar-color:#444 #0d1117;}
-#html-ref-overlay .hr-ov-title{flex:1;font-size:1rem;font-weight:600;
+#html-ref-overlay .hr-ov-title{flex:1;font-size:1rem;font-weight: var(--font-weight-semibold);
   color:var(--color-text,#e6edf3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 #html-ref-overlay .hr-ov-btn{background:var(--color-primary,#1f6feb);color:#fff;border:none;
   border-radius:8px;padding:.4rem .8rem;cursor:pointer;font-size:.85rem;flex-shrink:0;}

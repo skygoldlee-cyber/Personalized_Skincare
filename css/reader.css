@@ -123,7 +123,7 @@
     color: var(--color-text-main);
     margin-top: var(--space-5);
     margin-bottom: var(--space-3);
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
 }
 
 .textbook-reader-section-content .md-h4 {
@@ -131,7 +131,7 @@
     color: var(--color-text-main);
     margin-top: 1.25rem;
     margin-bottom: var(--space-2);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
 }
 
 .textbook-reader-section-content .md-quote {
@@ -146,7 +146,7 @@
 
 .textbook-reader-section-content strong {
     color: var(--color-primary);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
 }
 
 /* Reader image styles */
@@ -178,7 +178,7 @@
 .reader-table th {
     background: var(--primary-tint-12);
     color: var(--color-primary);
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     padding: 0.75rem 1rem;
     text-align: left;
     border-bottom: 2px solid var(--color-primary);
@@ -203,7 +203,7 @@
 .reader-table sup {
     color: var(--color-warning);
     font-size: var(--text-xs-sm);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
 }
 
 /* Table group separator — 대분류가 바뀌는 행에 상단 구분선 */
@@ -229,11 +229,11 @@
 /* 핵심 포인트 열(마지막 열) 강조 */
 .reader-table td:last-child {
     color: var(--color-text-main);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
 }
 .reader-table tbody tr.group-start td:first-child {
     color: var(--color-primary);
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
 }
 
 /* Reader code block (concept diagrams) */
@@ -499,7 +499,7 @@ pre.mermaid-other .labelBkg {
 .reader-toolbar-label {
     font-size: var(--text-sm);
     color: var(--color-text-muted);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     display: flex;
     align-items: center;
     gap: 0.35rem;
@@ -517,7 +517,7 @@ pre.mermaid-other .labelBkg {
     border-radius: var(--radius-sm);
     font-family: var(--font-app);
     font-size: var(--text-sm-md);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -572,7 +572,7 @@ pre.mermaid-other .labelBkg {
 }
 .reader-toc-header {
     font-size: var(--text-sm-md);
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     color: var(--color-text-main);
     padding-bottom: 0.6rem;
     margin-bottom: 0.6rem;
@@ -620,11 +620,11 @@ pre.mermaid-other .labelBkg {
     color: var(--color-primary);
     background: var(--primary-tint-10);
     border-left-color: var(--color-primary);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
 }
 .reader-toc-item .toc-num {
     color: var(--color-primary);
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     flex-shrink: 0;
     font-size: var(--text-xs-sm);
     margin-top: 1px;
@@ -633,7 +633,7 @@ pre.mermaid-other .labelBkg {
 /* A: TOC 계층 들여쓰기 */
 .reader-toc-item.toc-chapter {
     font-size: var(--text-sm-md);
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     color: var(--color-text-main);
     padding: 0.6rem 0.65rem;
     margin-top: 0.4rem;
@@ -687,7 +687,7 @@ pre.mermaid-other .labelBkg {
     color: var(--color-on-brand);
     font-family: var(--font-app);
     font-size: var(--text-2xs);
-    font-weight: 400;
+    font-weight: var(--font-weight-regular);
     line-height: 1.4;
     border-radius: var(--radius-xs);
     white-space: normal;
@@ -775,11 +775,11 @@ pre.mermaid-other .labelBkg {
 }
 .reader-breadcrumb .breadcrumb-subject {
     color: var(--color-primary);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
 }
 .reader-breadcrumb .breadcrumb-chapter {
     color: var(--color-text-main);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
 }
 .reader-breadcrumb .breadcrumb-section {
     color: var(--color-text-muted);
@@ -903,7 +903,7 @@ pre.mermaid-other .labelBkg {
     background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
     color: var(--color-on-brand);
     font-size: var(--text-2xs);
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     min-width: 26px;
     height: 26px;
     border-radius: var(--radius-sm);
@@ -916,7 +916,7 @@ pre.mermaid-other .labelBkg {
 .reader-section-title {
     font-size: calc(1.15rem * var(--reader-font-scale, 1));
     color: var(--color-primary);
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     margin: 0;
     flex: 1;
     line-height: 1.4;
@@ -955,7 +955,7 @@ pre.mermaid-other .labelBkg {
 .reader-subsection-title {
     font-size: calc(1.1rem * var(--reader-font-scale, 1));
     color: var(--color-primary);
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     margin-top: 1.75rem;
     margin-bottom: var(--space-3);
     padding-bottom: 0.4rem;
@@ -1059,14 +1059,14 @@ pre.mermaid-other .labelBkg {
 .reader-nav-btn .nav-dir {
     font-size: var(--text-xs-sm);
     color: var(--color-primary);
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     display: flex;
     align-items: center;
     gap: 0.4rem;
 }
 .reader-nav-btn .nav-title {
     font-size: var(--text-base);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     line-height: 1.4;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -1581,7 +1581,7 @@ body.reader-focus-mode .reader-readable-width {
     }
     .reader-breadcrumb .breadcrumb-section {
         color: var(--color-text-main);
-        font-weight: 500;
+        font-weight: var(--font-weight-medium);
         font-size: var(--text-sm-2);
         overflow: hidden;
         text-overflow: ellipsis;
@@ -1888,7 +1888,7 @@ body.reader-focus-mode .reader-readable-width {
         padding: 0.4rem 0.5rem;
         color: var(--color-text-muted);
         font-size: var(--text-2xs);
-        font-weight: 500;
+        font-weight: var(--font-weight-medium);
         text-decoration: none;
         border: none;
         background: transparent;
@@ -2234,7 +2234,7 @@ body.reader-focus-mode .reader-readable-width {
     background: var(--color-primary);
     color: var(--color-on-brand);
     font-size: var(--text-sm-md);
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2830,7 +2830,7 @@ body.landscape-mode .glass-card {
 }
 
 .study-aid-header span {
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--color-text-main);
 }
 
@@ -2886,7 +2886,7 @@ body.landscape-mode .glass-card {
 
 .exam-highlight-section-title {
     font-size: var(--text-sm);
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     color: var(--color-primary);
     margin-bottom: 0.4rem;
     padding-bottom: var(--space-1);
@@ -2994,20 +2994,20 @@ body.landscape-mode .glass-card {
 
 .number-drill-subsection-title {
     font-size: var(--text-2xs);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--color-text-muted);
     margin-bottom: 0.3rem;
     padding-left: 0.2rem;
 }
 
 .number-drill-subsection-title small {
-    font-weight: 400;
+    font-weight: var(--font-weight-regular);
     opacity: 0.7;
 }
 
 .number-drill-section-title {
     font-size: var(--text-sm);
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     color: var(--color-primary);
     margin-bottom: 0.4rem;
     padding-bottom: var(--space-1);
@@ -3038,7 +3038,7 @@ body.landscape-mode .glass-card {
 
 .number-drill-value {
     font-size: var(--text-md-lg);
-    font-weight: 800;
+    font-weight: var(--font-weight-extrabold);
     color: var(--color-primary);
     white-space: nowrap;
     font-variant-numeric: tabular-nums;
@@ -3056,7 +3056,7 @@ body.landscape-mode .glass-card {
 
 .number-drill-value small {
     font-size: var(--text-2xs);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     margin-left: 2px;
 }
 
@@ -3115,7 +3115,7 @@ body.landscape-mode .glass-card {
     background: var(--bg-hover);
     padding: 0.5rem 0.6rem;
     text-align: left;
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     color: var(--color-text-main);
     border-bottom: 2px solid var(--border-color);
     white-space: nowrap;
@@ -3130,7 +3130,7 @@ body.landscape-mode .glass-card {
 
 .admin-penalty-table tr.is-key td {
     background: var(--highlight-amber-bg);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
 }
 
 .admin-penalty-table tr.zebra td {
@@ -3180,7 +3180,7 @@ body.landscape-mode .glass-card {
 .reader-ref-dropdown summary::marker { display: none; }
 .ref-group-label {
     font-size: var(--text-2xs);
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     color: var(--color-primary);
     margin: 0.5rem 0 0.25rem;
     padding-bottom: 0.2rem;
@@ -3269,7 +3269,7 @@ body.landscape-mode .glass-card {
 /* 1. 이야기 서브헤딩 (### 📖) — 범위 제한: md-quote 전까지만 */
 .story-mode .textbook-reader-section-content h3.md-h3 {
     color: var(--story-heading);
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     border-left: 3px solid var(--story-heading);
     padding-left: 0.6rem;
     margin-top: 1.2rem;
@@ -3314,7 +3314,7 @@ body.landscape-mode .glass-card {
 .reader-glossary .glossary-title {
     margin: 0 0 0.75rem 0;
     font-size: var(--text-1rem);
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     color: var(--color-primary);
 }
 .reader-glossary .glossary-table {
@@ -3324,7 +3324,7 @@ body.landscape-mode .glass-card {
     min-width: unset !important;
 }
 .reader-glossary .glossary-table .glossary-term {
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     color: var(--color-primary);
     white-space: nowrap;
     width: 120px;
@@ -3354,7 +3354,7 @@ body.landscape-mode .glass-card {
 a.glossary-link {
     color: var(--color-primary);
     text-decoration: none;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     cursor: pointer;
 }
 a.glossary-link:hover {
@@ -3367,7 +3367,7 @@ a.glossary-term-link {
     text-decoration: underline dotted;
     text-underline-offset: 2px;
     cursor: pointer;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
 }
 a.glossary-term-link:hover {
     text-decoration: underline;
@@ -3408,7 +3408,7 @@ a.glossary-ref-link i {
     gap: 0.4rem;
     padding: 0.6rem 1.1rem;
     font-size: var(--text-sm-md);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--color-on-brand);
     background: var(--color-primary);
     border: none;

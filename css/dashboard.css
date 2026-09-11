@@ -53,7 +53,7 @@
 
 .stat-value {
     font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     font-family: 'Outfit', sans-serif;
     color: var(--color-text-main);
     margin-bottom: 0.35rem;
@@ -95,7 +95,7 @@
 
 .section-title h3 {
     font-size: var(--text-lg-sm);
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     display: flex;
     align-items: center;
     gap: var(--space-2);
@@ -134,7 +134,7 @@
 
 .subj-header h4 {
     font-size: var(--text-md-lg);
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     margin-bottom: var(--space-1);
     color: var(--color-text-main);
 }
@@ -146,7 +146,7 @@
 .subj-header span {
     font-size: var(--text-xs-sm);
     color: var(--color-primary);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
 }
 
 .subj-stats-summary {
@@ -176,7 +176,7 @@
 
 .subj-stat-item strong {
     font-size: var(--text-md-lg);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     font-family: 'Outfit', sans-serif;
     margin-top: 0.15rem;
 }
@@ -232,7 +232,7 @@
 .filter-group label {
     font-size: var(--text-sm-md);
     color: var(--color-text-muted);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
 }
 
 .form-select {
@@ -278,7 +278,7 @@
 }
 .heatmap-cell:hover { transform: scale(1.05); }
 .heatmap-label { font-size: var(--text-xs-sm); opacity: 0.9; margin-bottom: var(--space-1); }
-.heatmap-value { font-size: var(--text-md-lg); font-weight: 700; }
+.heatmap-value { font-size: var(--text-md-lg); font-weight: var(--font-weight-bold); }
 
 .recommendation-container { margin-top: var(--space-4); }
 .rec-list { display: flex; flex-direction: column; gap: var(--space-3); }
@@ -324,7 +324,7 @@
 .draft-banner-title {
     margin: 0;
     font-size: var(--text-1rem);
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     color: var(--color-text-main);
 }
 .draft-banner-desc {
@@ -369,7 +369,7 @@
 }
 .daily-challenge-title {
     font-size: var(--text-lg);
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     margin: 0;
 }
 .daily-challenge-desc {
@@ -387,7 +387,7 @@
 /* Backup Restore Card */
 .backup-card-title {
     font-size: var(--text-lg);
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     margin-bottom: var(--space-3);
     display: flex;
     align-items: center;
@@ -409,7 +409,7 @@
     color: var(--color-warning);
     padding: var(--space-2) var(--space-4);
     border-radius: var(--radius-lg);
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     font-size: var(--text-base);
 }
 

@@ -155,6 +155,14 @@
 
     /* Layout */
     --sidebar-width: 260px;
+
+    /* Font Weight Scale */
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --font-weight-extrabold: 800;
+
     --radius-2xs: 2px;
     --radius-xs: 4px;
     --radius-sm: 8px;
@@ -394,7 +402,7 @@
 .badge-pill {
     padding: 0.4rem 1rem;
     font-size: var(--text-sm-md);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     display: inline-flex;
     align-items: center;
     gap: var(--space-1);
@@ -420,7 +428,7 @@
 .icon-stat {
     flex: 1;
     font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
 }
 .empty-state-icon {
     font-size: 3rem;
@@ -443,8 +451,8 @@
 .text-danger { color: var(--color-danger); }
 .text-warning { color: var(--color-warning); }
 .text-secondary { color: var(--color-secondary); }
-.font-bold { font-weight: 700; }
-.font-semibold { font-weight: 600; }
+.font-bold { font-weight: var(--font-weight-bold); }
+.font-semibold { font-weight: var(--font-weight-semibold); }
 .grid-2fr-1fr { display: grid; grid-template-columns: 2fr 1fr; }
 .display-contents { display: contents; }
 .cursor-pointer { cursor: pointer; }
@@ -534,7 +542,7 @@ body {
 .logo-text h1 {
     font-family: 'Outfit', sans-serif;
     font-size: 1.4rem;
-    font-weight: 800;
+    font-weight: var(--font-weight-extrabold);
     letter-spacing: -0.5px;
     line-height: 1.1;
     background: linear-gradient(to right, #ffffff, #d1d5db);
@@ -555,7 +563,7 @@ body {
     color: var(--color-primary);
     text-transform: uppercase;
     letter-spacing: 2px;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
 }
 
 .nav-menu {
@@ -576,7 +584,7 @@ body {
     align-items: center;
     gap: 0.85rem;
     font-size: var(--text-base);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     text-align: left;
     cursor: pointer;
     transition: var(--transition-base);
@@ -660,7 +668,7 @@ body {
 
 .header-title h2 {
     font-size: var(--text-xl);
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     letter-spacing: -0.5px;
     margin-bottom: var(--space-1);
 }
@@ -676,7 +684,7 @@ body {
     border-radius: var(--radius-sm);
     font-family: var(--font-app);
     font-size: var(--text-md-sm);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     border: 1px solid transparent;
     cursor: pointer;
     display: inline-flex;
