@@ -76,7 +76,7 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
     html = html.replace(
         /<a href="((?:\.\.\/)?참조자료\/ref_md\/[^"]+\.md)">([^<]+)<\/a>/g,
         (match, rawPath, linkText) => {
-            const absPath = decodeURIComponent(rawPath.replace(/^\.\.\/참조자료\//, 'content/참조자료/'));
+            const absPath = normalizeRefPath(rawPath);
             return `<a href="#" data-ref-html="${escapeHTML(absPath)}" class="source-link"><i class="fa-solid fa-file-lines"></i> ${escapeHTML(linkText)}</a>`;
         }
     );
@@ -86,7 +86,7 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
     html = html.replace(
         /<a href="((?:\.\.\/)?참조자료\/원료\/[^"]+\.md)">([^<]+)<\/a>/g,
         (match, rawPath, linkText) => {
-            const absPath = decodeURIComponent(rawPath.replace(/^\.\.\/참조자료\//, 'content/참조자료/'));
+            const absPath = normalizeRefPath(rawPath);
             return `<a href="#" data-ref-html="${escapeHTML(absPath)}" class="source-link"><i class="fa-solid fa-file-lines"></i> ${escapeHTML(linkText)}</a>`;
         }
     );
@@ -174,7 +174,7 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
         const refLinks = refFiles.map(f => {
             const icon = 'fa-file-lines';
             if (f.type === 'md') {
-                const path = `content/참조자료/${refDir}/${f.file}`;
+                const path = PATHS.REFERENCE_FILE(refDir, f.file);
                 return `<a class="ref-link-item" data-ref-md="${escapeHTML(path)}" style="display:inline-block;margin-right:0.8em;font-size:0.85em;"><i class="fa-solid ${icon}"></i> ${escapeHTML(f.name)}</a>`;
             }
             // PDF 타입 → resolveRefPath로 HTML 경로 변환

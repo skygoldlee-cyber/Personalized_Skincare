@@ -103,7 +103,7 @@ const NUMBER_DRILL_CACHE = {};
 export async function loadNumberDrills(subjId) {
     if (NUMBER_DRILL_CACHE[subjId]) return NUMBER_DRILL_CACHE[subjId];
     try {
-        const resp = await fetch(`PATHS.NUMBER_DRILLS(subjId)`);
+        const resp = await fetch(PATHS.NUMBER_DRILLS(subjId));
         if (!resp.ok) return [];
         const data = await resp.json();
         if (!Array.isArray(data)) return [];

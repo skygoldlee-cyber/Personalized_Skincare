@@ -28,7 +28,7 @@ export function startSimSession(examData) {
     simState.data = examData;
     simState.currentIndex = 0;
     simState.userAnswers = {};
-    simState.timeLeft = examData.examData.questions.length * TIMING.EXAM_TIME_PER_QUESTION_SEC; // 문항당 1분 기산
+    simState.timeLeft = examData.questions.length * TIMING.EXAM_TIME_PER_QUESTION_SEC; // 문항당 1분 기산
     simState.wrongQuestions = [];
 
     // UI 전환
