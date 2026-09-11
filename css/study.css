@@ -37,12 +37,12 @@
     border: 1px solid var(--border-color);
     display: flex;
     flex-direction: column;
-    padding: 2.5rem;
+    padding: var(--space-7);
     justify-content: space-between;
 }
 
 .light-theme .flashcard-face {
-    border-color: rgba(0, 0, 0, 0.1);
+    border-color: var(--border-subtle);
 }
 
 .flashcard-front {
@@ -148,7 +148,7 @@
     width: 100%;
     max-height: 190px;
     overflow-y: auto;
-    padding-right: 0.5rem;
+    padding-right: var(--space-2);
 }
 
 #card-back-definition {
@@ -167,7 +167,7 @@
 .flip-hint {
     font-size: 0.8rem;
     color: var(--color-text-muted);
-    margin-top: 1.5rem;
+    margin-top: var(--space-5);
     display: flex;
     align-items: center;
     gap: 0.35rem;
@@ -178,8 +178,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 2rem;
-    margin-bottom: 2rem;
+    gap: var(--space-6);
+    margin-bottom: var(--space-6);
 }
 
 .fc-status-indicator {
@@ -191,8 +191,8 @@
 .flashcard-actions {
     display: flex;
     justify-content: center;
-    gap: 1.5rem;
-    margin-top: 1rem;
+    gap: var(--space-5);
+    margin-top: var(--space-4);
 }
 
 .flashcard-actions button {
@@ -213,7 +213,7 @@
         height: 280px;
     }
     .flashcard-face {
-        padding: 1.5rem;
+        padding: var(--space-5);
     }
     #card-front-term {
         font-size: 1.6rem;
@@ -226,8 +226,8 @@
     }
     /* 컨트롤 + 평가 버튼을 하단에 고정 */
     .flashcard-controls {
-        gap: 0.75rem;
-        margin-bottom: 0.75rem;
+        gap: var(--space-3);
+        margin-bottom: var(--space-3);
     }
     .flashcard-controls .btn {
         min-width: 44px;
@@ -239,8 +239,8 @@
         font-size: 0.9rem;
     }
     .flashcard-actions {
-        gap: 0.75rem;
-        margin-top: 0.5rem;
+        gap: var(--space-3);
+        margin-top: var(--space-2);
     }
     .flashcard-actions button {
         flex: 1;
@@ -254,8 +254,8 @@
 .quiz-progress-header {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    margin-bottom: 2rem;
+    gap: var(--space-2);
+    margin-bottom: var(--space-6);
 }
 
 .quiz-score-indicator {
@@ -268,7 +268,7 @@
     background-color: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
-    padding: 2.5rem;
+    padding: var(--space-7);
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
     box-shadow: var(--shadow-lg);
@@ -288,7 +288,7 @@
 .quiz-context {
     font-size: 0.85rem;
     color: var(--color-text-muted);
-    margin-left: 0.75rem;
+    margin-left: var(--space-3);
 }
 
 .quiz-body {
@@ -299,7 +299,7 @@
     font-size: 1.45rem;
     font-weight: 500;
     line-height: 1.7;
-    margin-bottom: 2.5rem;
+    margin-bottom: var(--space-7);
     color: var(--color-text-main);
     word-break: keep-all;
 }
@@ -317,7 +317,7 @@
 
 .quiz-input-group {
     display: flex;
-    gap: 1rem;
+    gap: var(--space-4);
 }
 
 .form-input {
@@ -330,13 +330,13 @@
     font-family: var(--font-app);
     font-size: 1rem;
     outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition: border-color var(--transition-base), box-shadow var(--transition-base);
 }
 
 .light-theme .form-input {
-    background-color: #ffffff;
+    background-color: var(--color-on-brand);
     color: var(--color-text-main);
-    border-color: rgba(0,0,0,0.12);
+    border-color: var(--border-color);
 }
 
 .form-input:focus {
@@ -353,7 +353,7 @@
     border: 1px solid var(--success-tint-20);
     border-radius: var(--radius-md);
     padding: 1.25rem 1.5rem;
-    margin-top: 2rem;
+    margin-top: var(--space-6);
     animation: slideUp 0.3s ease forwards;
 }
 
@@ -423,20 +423,20 @@
 .trophy-icon {
     font-size: 4rem;
     color: var(--color-warning);
-    margin-bottom: 1.5rem;
+    margin-bottom: var(--space-5);
     filter: drop-shadow(0 4px 15px var(--warning-tint-40));
 }
 
 .quiz-results-card h2 {
     font-size: 1.8rem;
     font-weight: 700;
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--space-2);
 }
 
 .result-score-summary {
     font-size: 1.15rem;
     color: var(--color-text-muted);
-    margin-bottom: 2.5rem;
+    margin-bottom: var(--space-7);
 }
 
 .result-score-summary span {
@@ -446,7 +446,7 @@
 
 .result-actions {
     display: flex;
-    gap: 1rem;
+    gap: var(--space-4);
     justify-content: center;
 }
 
@@ -460,8 +460,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
-    margin-top: 1rem;
+    gap: var(--space-4);
+    margin-top: var(--space-4);
 }
 
 .empty-state i {
@@ -487,7 +487,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
+    margin-bottom: var(--space-6);
 }
 
 .review-stats .badge {
@@ -502,7 +502,7 @@
 .review-card-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1rem;
+    gap: var(--space-4);
 }
 
 .review-card-item {
@@ -512,9 +512,9 @@
     padding: 1.25rem 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: var(--space-3);
     position: relative;
-    transition: border-color 0.2s;
+    transition: border-color var(--transition-base);
 }
 
 .review-card-item:hover {

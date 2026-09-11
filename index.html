@@ -43,7 +43,7 @@
                 </div>
             </div>
             <nav class="nav-menu">
-                <button type="button" data-click="ManualViewer.openManual" class="manual-nav-link" style="text-decoration: none;">
+                <button type="button" data-click="ManualViewer.openManual" class="manual-nav-link" class="">
                     <i class="fa-solid fa-circle-info"></i> 사용자 매뉴얼
                 </button>
                 <button class="nav-item active" data-target="dashboard-view">
@@ -111,16 +111,16 @@
             <section id="dashboard-view" class="view-section active">
                 <!-- Draft Resume Banner (New Feature 1) -->
                 <div id="draft-resume-banner" class="is-hidden" style="background: linear-gradient(135deg, var(--warning-tint-15) 0%, var(--danger-tint-15) 100%); border: 1px solid var(--color-warning); border-radius: 8px; padding: 1rem 1.5rem; margin-bottom: 1.5rem; justify-content: space-between; align-items: center; gap: 1rem; width: 100%;">
-                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <div class="flex-center gap-3">
                         <i class="fa-solid fa-file-pen" style="font-size: 1.5rem; color: var(--color-warning);"></i>
-                        <div style="text-align: left;">
+                        <div class="text-left">
                             <h3 style="margin: 0; font-size: 1rem; font-weight: 700; color: var(--color-text-main);" id="draft-banner-title">진행 중인 모의고사가 있습니다.</h3>
                             <p style="margin: 0.25rem 0 0 0; font-size: 0.85rem; color: var(--color-text-muted);" id="draft-banner-desc">남은 시간: --:--</p>
                         </div>
                     </div>
-                    <div style="display: flex; gap: 0.5rem; flex-shrink: 0;">
-                        <button class="btn btn-warning" data-click="resumeSimDraft" style="padding: 0.4rem 1rem; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.25rem;"><i class="fa-solid fa-play"></i> 이어서 풀기</button>
-                        <button class="btn btn-secondary" data-click="clearSimDraft" style="padding: 0.4rem 1rem; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.25rem;"><i class="fa-solid fa-trash"></i> 새로 시작</button>
+                    <div class="flex-row gap-2">
+                        <button class="btn btn-warning" data-click="resumeSimDraft" class="badge-pill"><i class="fa-solid fa-play"></i> 이어서 풀기</button>
+                        <button class="btn btn-secondary" data-click="clearSimDraft" class="badge-pill"><i class="fa-solid fa-trash"></i> 새로 시작</button>
                     </div>
                 </div>
 
@@ -132,7 +132,7 @@
                             <h3>총 학습 진척도</h3>
                             <div class="stat-value" id="total-progress-val">0%</div>
                             <div class="progress-bar-container">
-                                <div class="progress-bar" id="total-progress-bar" style="width: 0%"></div>
+                                <div class="progress-bar" id="total-progress-bar" class="progress-bar-fill"></div>
                             </div>
                         </div>
                     </div>
@@ -175,7 +175,7 @@
                     <!-- 1. Daily 5-Min Challenge Card -->
                     <div class="glass-card daily-challenge-card" style="padding: 2rem; position: relative; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md);">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
-                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                            <div class="flex-center gap-3">
                                 <i class="fa-solid fa-calendar-day" style="font-size: 1.5rem; color: var(--color-success);"></i>
                                 <h4 style="font-size: 1.25rem; font-weight: 700; margin: 0;">일일 5분 데일리 챌린지</h4>
                             </div>
@@ -186,7 +186,7 @@
                         <p style="color: var(--color-text-muted); line-height: 1.6; margin-bottom: 1.5rem; font-size: 0.95rem;">
                             매일 한 번 플래시카드, 퀴즈, 계산기, 원료 안전성이 배합된 5분 압축 세트를 풀며 시험 합격 실천 습관을 다집니다.
                         </p>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div class="flex-between">
                             <span id="daily-challenge-status" class="badge" style="background: var(--bg-active); color: var(--color-text-muted); padding: 0.5rem 1rem;">오늘 미션 미완료</span>
                             <button id="start-daily-btn" class="btn btn-success" data-click="startDailyChallenge">
                                 <i class="fa-solid fa-play"></i> 챌린지 시작
@@ -197,16 +197,16 @@
                     <!-- 2. Data Backup & Restore Card -->
                     <div class="glass-card backup-restore-card" style="padding: 2rem; display: flex; flex-direction: column; justify-content: space-between; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md);">
                         <div>
-                            <h4 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-database color-primary" style="color: var(--color-primary);"></i> 데이터 관리</h4>
+                            <h4 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-database color-primary" class="text-primary"></i> 데이터 관리</h4>
                             <p style="color: var(--color-text-muted); font-size: 0.85rem; line-height: 1.5; margin-bottom: 1.5rem;">
                                 나의 공부 진척도, 모의고사 기록, 오답 노트를 파일로 안전하게 백업 및 복원합니다.
                             </p>
                         </div>
-                        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-                            <button class="btn btn-secondary" data-click="exportData" style="width: 100%; justify-content: center;">
+                        <div class="flex-col gap-3">
+                            <button class="btn btn-secondary" data-click="exportData" class="w-full justify-center">
                                 <i class="fa-solid fa-download"></i> 데이터 백업
                             </button>
-                            <button class="btn btn-secondary" data-click="triggerImport" style="width: 100%; justify-content: center;">
+                            <button class="btn btn-secondary" data-click="triggerImport" class="w-full justify-center">
                                 <i class="fa-solid fa-upload"></i> 백업 가져오기
                             </button>
                             <input type="file" id="import-file-input" class="is-hidden" accept=".json">
@@ -249,7 +249,7 @@
                 <div class="section-title" style="margin-top: 2.5rem;">
                     <h3>과목별 정답률 히트맵</h3>
                 </div>
-                <div id="subject-heatmap" class="heatmap-container" style="margin-bottom: 2rem;">
+                <div id="subject-heatmap" class="heatmap-container" class="mb-6">
                     <!-- 과목별 정답률 히트맵 (dashboard.js에서 렌더링) -->
                 </div>
 
@@ -272,7 +272,7 @@
                             <div class="empty-chart-state" id="empty-chart-msg">
                                 <i class="fa-solid fa-chart-line"></i>
                                 <p>모의고사를 풀면 성적 추이 그래프가 나타납니다.</p>
-                                <button class="btn btn-primary" data-click="startIntegratedMockExam" style="margin-top:0.75rem;"><i class="fa-solid fa-clock"></i> 지금 모의고사 시작</button>
+                                <button class="btn btn-primary" data-click="startIntegratedMockExam" class="mt-3"><i class="fa-solid fa-clock"></i> 지금 모의고사 시작</button>
                             </div>
                         </div>
                     </div>
@@ -283,7 +283,7 @@
                             <div class="empty-chart-state" id="empty-radar-msg">
                                 <i class="fa-solid fa-chart-pie"></i>
                                 <p>모의고사를 풀면 역량 차트가 나타납니다.</p>
-                                <button class="btn btn-primary" data-click="startIntegratedMockExam" style="margin-top:0.75rem;"><i class="fa-solid fa-clock"></i> 지금 모의고사 시작</button>
+                                <button class="btn btn-primary" data-click="startIntegratedMockExam" class="mt-3"><i class="fa-solid fa-clock"></i> 지금 모의고사 시작</button>
                             </div>
                         </div>
                     </div>
@@ -294,7 +294,7 @@
                             <div class="prediction-placeholder">
                                 <i class="fa-solid fa-user-doctor"></i>
                                 <p>모의고사 점수를 토대로 과락 및 평균 통과 여부를 진단합니다.</p>
-                                <button class="btn btn-primary" data-click="startIntegratedMockExam" style="margin-top:0.75rem;"><i class="fa-solid fa-clock"></i> 지금 모의고사 시작</button>
+                                <button class="btn btn-primary" data-click="startIntegratedMockExam" class="mt-3"><i class="fa-solid fa-clock"></i> 지금 모의고사 시작</button>
                             </div>
                         </div>
                     </div>
@@ -397,7 +397,7 @@
                 <!-- Quiz Progress Area -->
                 <div class="quiz-progress-header is-hidden" >
                     <div class="progress-bar-container">
-                        <div class="progress-bar" id="quiz-run-progress" style="width: 0%"></div>
+                        <div class="progress-bar" id="quiz-run-progress" class="progress-bar-fill"></div>
                     </div>
                     <div class="quiz-score-indicator">
                         진행: <span id="quiz-curr-idx">1</span>/<span id="quiz-total-idx">10</span> | 
@@ -420,8 +420,8 @@
 
                             <!-- OX 선택 컨테이너 -->
                             <div id="quiz-ox-container" class="is-hidden" style="gap:1rem; margin-bottom:1rem;">
-                                <button class="btn btn-secondary quiz-ox-btn" data-ox="O" style="flex:1; font-size:1.5rem; font-weight:700;">O</button>
-                                <button class="btn btn-secondary quiz-ox-btn" data-ox="X" style="flex:1; font-size:1.5rem; font-weight:700;">X</button>
+                                <button class="btn btn-secondary quiz-ox-btn" data-ox="O" class="icon-stat">O</button>
+                                <button class="btn btn-secondary quiz-ox-btn" data-ox="X" class="icon-stat">X</button>
                             </div>
 
                             <div class="quiz-input-group" id="quiz-input-group">
@@ -478,7 +478,7 @@
                     <div class="review-stats">
                         <span class="badge"><i class="fa-solid fa-triangle-exclamation"></i> 헷갈린 카드: <strong id="review-card-count">0</strong></span>
                     </div>
-                    <div class="review-actions-group" style="display: flex; gap: 1rem;">
+                    <div class="review-actions-group" class="flex-row gap-4">
                         <button id="start-weak-quiz-btn" class="btn btn-warning is-hidden" >
                             <i class="fa-solid fa-bolt"></i> 헷갈린 카드 집중 퀴즈 시작
                         </button>
@@ -500,7 +500,7 @@
                     <i class="fa-solid fa-shield-heart"></i>
                     <h3>복습할 카드가 없습니다!</h3>
                     <p>플래시카드 학습 중에 "아직 헷갈림"으로 분류한 카드가 여기에 수집됩니다.</p>
-                    <button class="btn btn-primary" data-click="startSubjectStudy" data-arg="law" style="margin-top:0.75rem;"><i class="fa-solid fa-layer-group"></i> 플래시카드 학습하러 가기</button>
+                    <button class="btn btn-primary" data-click="startSubjectStudy" data-arg="law" class="mt-3"><i class="fa-solid fa-layer-group"></i> 플래시카드 학습하러 가기</button>
                 </div>
 
                 <div class="review-card-list" id="review-cards-list-container">
@@ -548,7 +548,7 @@
 
                 <!-- 2. Limits Trainer Panel -->
                 <div id="trainer-limits-panel" class="is-hidden">
-                    <div class="sim-arena-header" style="margin-bottom: 2rem;">
+                    <div class="sim-arena-header" class="mb-6">
                         <button class="btn btn-secondary" data-click="exitTrainerSubView"><i class="fa-solid fa-arrow-left"></i> 나가기</button>
                         <div class="sim-title-group">
                             <h4>핵심 수치 암기 마스터</h4>
@@ -556,8 +556,8 @@
                         </div>
                     </div>
 
-                    <div class="quiz-progress-header" style="margin-bottom: 1.5rem;">
-                        <div class="quiz-progress-bar-bg"><div class="quiz-progress-bar-fill" id="limits-progress-bar" style="width: 0%;"></div></div>
+                    <div class="quiz-progress-header" class="mb-5">
+                        <div class="quiz-progress-bar-bg"><div class="quiz-progress-bar-fill" id="limits-progress-bar" class="progress-bar-fill"></div></div>
                     </div>
 
                     <div class="trainer-arena">
@@ -572,7 +572,7 @@
                                 </h2>
                                 
                                 <!-- Multiple Choice Options Grid -->
-                                <div class="limits-options-grid" id="limits-options-container" style="margin-bottom: 2rem;">
+                                <div class="limits-options-grid" id="limits-options-container" class="mb-6">
                                     <!-- 4 buttons populated by JS -->
                                 </div>
 
@@ -587,7 +587,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="quiz-card-footer" style="justify-content: flex-end;">
+                            <div class="quiz-card-footer" class="justify-end">
                                 <button id="next-limits-btn" class="btn btn-success is-hidden"  data-click="nextLimitsQuestion">다음 문제 <i class="fa-solid fa-arrow-right"></i></button>
                             </div>
                         </div>
@@ -596,7 +596,7 @@
 
                 <!-- 3. Blending Calculator Panel -->
                 <div id="trainer-calc-panel" class="is-hidden">
-                    <div class="sim-arena-header" style="margin-bottom: 2rem;">
+                    <div class="sim-arena-header" class="mb-6">
                         <button class="btn btn-secondary" data-click="exitTrainerSubView"><i class="fa-solid fa-arrow-left"></i> 나가기</button>
                         <div class="sim-title-group">
                             <h4>원료 배합 계산 연습기</h4>
@@ -622,12 +622,12 @@
                                 </div>
 
                                 <!-- Scratchpad Toggle & Canvas (New Feature 4) -->
-                                <div style="margin-bottom: 1.5rem;">
+                                <div class="mb-5">
                                     <button class="btn btn-secondary" id="calc-scratchpad-toggle" data-click="toggleCalcScratchpad" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 0.25rem;">
                                         <i class="fa-solid fa-pencil"></i> ✏️ 계산 연습장 열기
                                     </button>
                                     
-                                    <div id="calc-scratchpad-container" class="is-hidden" style="margin-top: 1rem; border: 1px solid var(--color-border); border-radius: 8px; background: #fff; padding: 0.5rem; max-width: 500px;">
+                                    <div id="calc-scratchpad-container" class="is-hidden" style="margin-top: 1rem; border: 1px solid var(--border-color); border-radius: 8px; background: #fff; padding: 0.5rem; max-width: 500px;">
                                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; padding: 0 0.5rem;">
                                             <span style="color: var(--color-text-main); font-size: 0.8rem; font-weight: bold;"><i class="fa-solid fa-palette"></i> 계산 연습장</span>
                                             <div style="display: flex; gap: 0.5rem;">
@@ -640,7 +640,7 @@
                                 </div>
 
                                 <!-- Feedback Panel -->
-                                <div class="quiz-feedback is-hidden" id="calc-feedback-panel" role="status" aria-live="polite" style="margin-bottom: 1.5rem;">
+                                <div class="quiz-feedback is-hidden" id="calc-feedback-panel" role="status" aria-live="polite" class="mb-5">
                                     <div class="feedback-icon" id="calc-feedback-icon">
                                         <i class="fa-solid fa-check"></i>
                                     </div>
@@ -651,12 +651,12 @@
                                 </div>
 
                                 <!-- Accordion Solution -->
-                                <div class="solution-accordion is-hidden" id="calc-solution-panel" style="margin-bottom: 1.5rem;">
+                                <div class="solution-accordion is-hidden" id="calc-solution-panel" class="mb-5">
                                     <div class="solution-header" data-click="toggleSolutionAccordion">
                                         <span><i class="fa-solid fa-square-root-variable"></i> 단계별 풀이 공식 보기</span>
                                         <i class="fa-solid fa-chevron-down" id="solution-chevron"></i>
                                     </div>
-                                    <div class="solution-body is-hidden" id="calc-solution-body" style="padding: 1.5rem; background: var(--color-bg-darker); border-radius: 0 0 8px 8px; font-family: monospace; font-size: 1rem; line-height: 1.6; border-top: 1px solid var(--color-border);">
+                                    <div class="solution-body is-hidden" id="calc-solution-body" style="padding: 1.5rem; background: var(--bg-sidebar); border-radius: 0 0 8px 8px; font-family: monospace; font-size: 1rem; line-height: 1.6; border-top: 1px solid var(--border-color);">
                                         풀이 공식 설명...
                                     </div>
                                 </div>
@@ -664,12 +664,12 @@
                                 <!-- 계산 기록 히스토리 (신규 Feature 4) -->
                                 <div class="calc-history-panel" id="calc-history-panel" style="margin-top: 2rem; border-top: 1px solid var(--bg-active); padding-top: 1.5rem;">
                                     <h4 style="font-size: 0.9rem; margin-bottom: 1rem; color: var(--color-text-muted); display: flex; align-items: center; gap: 0.25rem;"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i> 최근 계산 문제 풀이 기록 (최대 5회)</h4>
-                                    <div id="calc-history-list" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                                    <div id="calc-history-list" class="flex-col gap-3">
                                         <!-- Dynamic list of previous calculations -->
                                     </div>
                                 </div>
                             </div>
-                            <div class="quiz-card-footer" style="justify-content: flex-end;">
+                            <div class="quiz-card-footer" class="justify-end">
                                 <button id="next-calc-btn" class="btn btn-success is-hidden"  data-click="generateCalcQuestion">다음 문제 생성 <i class="fa-solid fa-arrow-right"></i></button>
                             </div>
                         </div>
@@ -678,7 +678,7 @@
 
                 <!-- 4. Ingredients Challenge Panel -->
                 <div id="trainer-ingredients-panel" class="is-hidden">
-                    <div class="sim-arena-header" style="margin-bottom: 2rem;">
+                    <div class="sim-arena-header" class="mb-6">
                         <button class="btn btn-secondary" data-click="exitTrainerSubView"><i class="fa-solid fa-arrow-left"></i> 나가기</button>
                         <div class="sim-title-group">
                             <h4>원료 안전성 챌린지</h4>
@@ -686,8 +686,8 @@
                         </div>
                     </div>
 
-                    <div class="quiz-progress-header" style="margin-bottom: 1.5rem;">
-                        <div class="quiz-progress-bar-bg"><div class="quiz-progress-bar-fill" id="ing-progress-bar" style="width: 0%;"></div></div>
+                    <div class="quiz-progress-header" class="mb-5">
+                        <div class="quiz-progress-bar-bg"><div class="quiz-progress-bar-fill" id="ing-progress-bar" class="progress-bar-fill"></div></div>
                     </div>
 
                     <div class="trainer-arena">
@@ -723,7 +723,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="quiz-card-footer" style="justify-content: flex-end;">
+                            <div class="quiz-card-footer" class="justify-end">
                                 <button id="next-ing-btn" class="btn btn-success is-hidden"  data-click="nextIngQuestion">다음 문제 <i class="fa-solid fa-arrow-right"></i></button>
                             </div>
                         </div>
@@ -742,7 +742,7 @@
                     
                     <div class="exam-list-grid">
                         <!-- 1~4과목 통합 실전 모의고사 (신규) -->
-                        <div class="exam-card-item highlight-card" style="grid-column: 1 / -1; background: linear-gradient(135deg, var(--primary-tint-10) 0%, var(--secondary-tint-10) 100%); border: 1px solid var(--color-primary-light, var(--color-primary)); position: relative; overflow: hidden;">
+                        <div class="exam-card-item highlight-card" style="grid-column: 1 / -1; background: linear-gradient(135deg, var(--primary-tint-10) 0%, var(--secondary-tint-10) 100%); border: 1px solid var(--color-primary); position: relative; overflow: hidden;">
                             <div class="exam-card-badge" style="background: var(--color-primary); color: var(--color-on-brand); display: inline-block; padding: 0.25rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: bold; margin-bottom: 0.75rem;">종합 평가</div>
                             <span style="position: absolute; top: 1rem; right: 1rem; color: var(--color-primary); font-size: 0.8rem; font-weight: bold; background: var(--primary-tint-10); padding: 2px 8px; border-radius: 20px;"><i class="fa-solid fa-star"></i> 추천</span>
                             <h4 class="exam-card-title" style="margin-top: 0; font-size: 1.25rem; font-weight: 700;">통합 실전 모의고사 (100제)</h4>
@@ -759,7 +759,7 @@
                         <div class="exam-card-item full-width-card">
                             <div class="exam-card-badge badge-gray">학습 부록</div>
                             <h4 class="exam-card-title">학습안내서</h4>
-                            <div class="exam-card-btns" style="display: flex; gap: 1rem;">
+                            <div class="exam-card-btns" class="flex-row gap-4">
                                 <a href="#" data-click="ManualViewer.openSummary" class="exam-btn-link"><i class="fa-solid fa-book"></i> 학습안내서</a>
                             </div>
                         </div>
@@ -853,18 +853,18 @@
                     <p>교재 본문(화장품법, 제조/품질관리, 안전관리, 맞춤형화장품 이해) 전체 내용을 키워드로 검색하여 관련 내용을 빠르게 확인하세요.</p>
                 </div>
 
-                <div class="textbook-control-panel" style="margin-bottom: 2rem;">
+                <div class="textbook-control-panel" class="mb-6">
                     <!-- Search Bar -->
-                    <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1.5rem;">
-                        <div class="search-input-wrapper" style="position: relative; flex: 1;">
-                            <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 1.25rem; top: 50%; transform: translateY(-50%); color: var(--color-text-muted);"></i>
-                            <input type="text" id="textbook-search-input" class="form-input" placeholder="검색할 키워드를 입력하세요 (예: 안전용기, 페녹시에탄올, 미생물)" style="padding-left: 3rem; width: 100%;" aria-label="교재 검색어 입력">
+                    <div class="flex-center gap-4 mb-5">
+                        <div class="search-input-wrapper" class="relative flex-1">
+                            <i class="fa-solid fa-magnifying-glass" class="search-input-icon"></i>
+                            <input type="text" id="textbook-search-input" class="form-input" placeholder="검색할 키워드를 입력하세요 (예: 안전용기, 페녹시에탄올, 미생물)" class="search-input" aria-label="교재 검색어 입력">
                         </div>
-                        <button class="btn btn-secondary" data-click="clearTextbookSearch" style="height: 52px; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-xmark"></i> 초기화</button>
+                        <button class="btn btn-secondary" data-click="clearTextbookSearch" class="flex-center gap-2"><i class="fa-solid fa-xmark"></i> 초기화</button>
                     </div>
 
                     <!-- Subject Filter Buttons -->
-                    <div class="textbook-filter-buttons" id="textbook-filter-buttons" style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                    <div class="textbook-filter-buttons" id="textbook-filter-buttons" class="flex-row gap-3 flex-wrap">
                         <button class="btn btn-secondary active-filter" data-filter="all" data-click="setTextbookFilter" data-arg="all">전체 과목</button>
                     </div>
                 </div>
@@ -877,7 +877,7 @@
                 <!-- Search Results Container -->
                 <div class="textbook-results-list" id="textbook-results-container">
                     <div class="empty-state">
-                        <i class="fa-solid fa-book-open" style="font-size: 3rem; color: var(--color-text-muted); margin-bottom: 1rem; display: block;"></i>
+                        <i class="fa-solid fa-book-open" class="empty-state-icon"></i>
                         <h3>검색어를 입력하세요</h3>
                         <p>위 검색창에 궁금한 교재 키워드를 입력하고 검색 결과를 확인하세요.</p>
                     </div>
@@ -896,7 +896,7 @@
                     <p>과목을 선택하여 교재 본문을 편안하게 읽으세요. 모든 내용이 바로 표시됩니다.</p>
                 </div>
 
-                <div class="textbook-reader-controls" style="margin-bottom: 1.5rem;">
+                <div class="textbook-reader-controls" class="mb-5">
                     <div style="display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;">
                         <div class="filter-group">
                             <label for="reader-subject-select">과목 선택</label>
@@ -906,7 +906,7 @@
                         </div>
                         <label style="display: inline-flex; align-items: center; gap: 0.4rem; cursor: pointer; font-size: 0.9rem; user-select: none; white-space: nowrap;">
                             <input type="checkbox" id="reader-story-mode-toggle" style="width: 1.1rem; height: 1.1rem; accent-color: var(--color-primary); cursor: pointer;">
-                            <i class="fa-solid fa-book-open-reader" style="color: var(--color-primary);"></i> 이야기형
+                            <i class="fa-solid fa-book-open-reader" class="text-primary"></i> 이야기형
                         </label>
                     </div>
                 </div>
@@ -955,7 +955,7 @@
 
                     <div id="textbook-reader-container" class="textbook-reader-content">
                         <div class="empty-state">
-                            <i class="fa-solid fa-book-open" style="font-size: 3rem; color: var(--color-text-muted); margin-bottom: 1rem; display: block;"></i>
+                            <i class="fa-solid fa-book-open" class="empty-state-icon"></i>
                             <h3>읽을 교재를 선택하세요</h3>
                             <p>위에서 과목을 선택하면 해당 교재의 본문 내용이 표시됩니다.</p>
                         </div>
@@ -984,18 +984,18 @@
                     <p>사용가능(approved), 사용제한(restricted), 사용금지(banned) 성분들의 배합 한도 및 시험 중요 팁을 실시간 검색해 확인하세요.</p>
                 </div>
 
-                <div class="dictionary-control-panel" style="margin-bottom: 2rem;">
+                <div class="dictionary-control-panel" class="mb-6">
                     <!-- Search Bar -->
-                    <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1.5rem;">
-                        <div class="search-input-wrapper" style="position: relative; flex: 1;">
-                            <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 1.25rem; top: 50%; transform: translateY(-50%); color: var(--color-text-muted);"></i>
-                            <input type="text" id="dict-search-input" class="form-input" placeholder="성분명, 영문명 또는 초성을 입력하여 실시간 검색 (예: 페녹시, glycerin, ㄱㄹㅅㄹ)" style="padding-left: 3rem; width: 100%;" aria-label="성분 검색어 입력">
+                    <div class="flex-center gap-4 mb-5">
+                        <div class="search-input-wrapper" class="relative flex-1">
+                            <i class="fa-solid fa-magnifying-glass" class="search-input-icon"></i>
+                            <input type="text" id="dict-search-input" class="form-input" placeholder="성분명, 영문명 또는 초성을 입력하여 실시간 검색 (예: 페녹시, glycerin, ㄱㄹㅅㄹ)" class="search-input" aria-label="성분 검색어 입력">
                         </div>
-                        <button class="btn btn-secondary" data-click="clearDictSearch" style="height: 52px; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-xmark"></i> 초기화</button>
+                        <button class="btn btn-secondary" data-click="clearDictSearch" class="flex-center gap-2"><i class="fa-solid fa-xmark"></i> 초기화</button>
                     </div>
 
                     <!-- Category Filter Buttons -->
-                    <div class="dict-filter-buttons" style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                    <div class="dict-filter-buttons" class="flex-row gap-3 flex-wrap">
                         <button class="btn btn-secondary active-filter" data-filter="all" data-click="setDictFilter" data-arg="all">전체 성분</button>
                         <button class="btn btn-secondary" data-filter="approved" data-click="setDictFilter" data-arg="approved">🟢 사용 가능 원료</button>
                         <button class="btn btn-secondary" data-filter="restricted" data-click="setDictFilter" data-arg="restricted">🟡 사용 제한 원료</button>
@@ -1154,7 +1154,7 @@
 
             <!-- 인앱 브라우저(WebView) 안내 — Chrome으로 열기 -->
             <div class="pwa-modal-body is-hidden" id="pwa-guide-inapp" >
-                <p class="pwa-modal-lead" style="color: var(--color-primary-light, var(--color-primary));"><i class="fa-solid fa-triangle-exclamation"></i> 현재 인앱 브라우저에서 열려 있습니다</p>
+                <p class="pwa-modal-lead" class="text-primary"><i class="fa-solid fa-triangle-exclamation"></i> 현재 인앱 브라우저에서 열려 있습니다</p>
                 <p class="pwa-step-text" style="margin-bottom: 1rem;">카카오톡·Instagram·Facebook 등 인앱 브라우저에서는 앱 설치가 지원되지 않습니다. <strong>Chrome 브라우저</strong>에서 열어주세요.</p>
                 <ol class="pwa-steps">
                     <li>

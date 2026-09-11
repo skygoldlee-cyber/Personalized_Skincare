@@ -5,13 +5,13 @@
 }
 
 .section-title-area {
-    margin-bottom: 2rem;
+    margin-bottom: var(--space-6);
 }
 
 .section-title-area h3 {
     font-size: 1.5rem;
     font-weight: 700;
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--space-2);
     color: var(--color-text-main);
 }
 
@@ -23,18 +23,18 @@
 .exam-list-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-    padding-bottom: 3rem;
+    gap: var(--space-5);
+    padding-bottom: var(--space-8);
 }
 
 .exam-card-item {
     background-color: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
-    padding: 1.5rem;
+    padding: var(--space-5);
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: var(--space-4);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
@@ -48,7 +48,7 @@
 }
 
 .light-theme .exam-card-item:hover {
-    border-color: rgba(0, 0, 0, 0.12);
+    border-color: var(--border-color);
 }
 
 .exam-card-badge {
@@ -128,28 +128,28 @@
 .exam-card-btns {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: var(--space-3);
     margin-top: auto;
 }
 
 .grid-btns {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    gap: 0.5rem;
+    gap: var(--space-2);
 }
 
 .exam-btn-link {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: var(--space-2);
     padding: 0.75rem 1rem;
     border-radius: var(--radius-sm);
     font-size: 0.9rem;
     font-weight: 600;
     text-decoration: none;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: var(--transition-base);
     border: 1px solid var(--border-color);
 }
 
@@ -191,7 +191,7 @@
 .full-width-card .exam-card-btns {
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: var(--space-4);
 }
 
 .full-width-card .exam-btn-link {
@@ -217,7 +217,7 @@
         padding: 1rem 1.5rem;
     }
     .logo-area {
-        margin-bottom: 1rem;
+        margin-bottom: var(--space-4);
     }
     .nav-menu {
         flex-direction: row;
@@ -231,10 +231,10 @@
         height: auto;
     }
     .app-header {
-        padding: 1.5rem;
+        padding: var(--space-5);
     }
     .view-section {
-        padding: 1.5rem;
+        padding: var(--space-5);
     }
     .flashcard-wrapper {
         width: 100%;
@@ -245,7 +245,7 @@
 /* Custom buttons and layouts for Mock Exam Grid */
 .flex-btns {
     display: flex;
-    gap: 0.75rem;
+    gap: var(--space-3);
 }
 .flex-btns a, .flex-btns button {
     flex: 1;
@@ -254,13 +254,13 @@
 .grid-btns-3 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 0.75rem;
+    gap: var(--space-3);
 }
 
 .grid-btns-2 {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
+    gap: var(--space-3);
 }
 
 .exam-btn-pair {
@@ -273,13 +273,13 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: var(--space-2);
     padding: 0.65rem 0.85rem;
     border-radius: var(--radius-sm);
     font-size: 0.85rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: var(--transition-base);
     border: 1px solid var(--secondary-tint-20);
     background-color: var(--secondary-tint-10);
     color: var(--color-secondary);
@@ -308,8 +308,8 @@
     background-color: rgba(17, 24, 39, 0.6);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
-    padding: 1.5rem;
-    margin-bottom: 2rem;
+    padding: var(--space-5);
+    margin-bottom: var(--space-6);
     -webkit-backdrop-filter: blur(16px);
     backdrop-filter: blur(16px);
     animation: fadeIn 0.4s ease-out;
@@ -321,15 +321,15 @@
     align-items: center;
     border-bottom: 1px solid var(--border-color);
     padding-bottom: 1.25rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: var(--space-5);
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: var(--space-4);
 }
 
 .sim-title-group {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: var(--space-5);
     flex-wrap: wrap;
 }
 
@@ -342,7 +342,7 @@
 .sim-timer {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--space-2);
     background-color: var(--danger-tint-15);
     color: var(--color-danger);
     border: 1px solid var(--danger-tint-30);
@@ -357,7 +357,7 @@
 .sim-content-layout {
     display: grid;
     grid-template-columns: 1fr 320px;
-    gap: 1.5rem;
+    gap: var(--space-5);
 }
 
 @media (max-width: 900px) {
@@ -395,7 +395,7 @@
 .sim-q-text {
     font-size: 1.25rem;
     line-height: 1.7;
-    margin-bottom: 2rem;
+    margin-bottom: var(--space-6);
     color: var(--color-on-brand);
     word-break: keep-all;
 }
@@ -413,9 +413,9 @@
     padding: 0.95rem 1.25rem;
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: var(--space-4);
     cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: var(--transition-smooth);
 }
 
 .sim-option-item:hover {
@@ -448,7 +448,7 @@
 }
 
 .sim-input-wrapper {
-    margin-top: 1rem;
+    margin-top: var(--space-4);
     max-width: 500px;
 }
 
@@ -475,9 +475,9 @@
 .omr-header {
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: var(--space-1);
     border-bottom: 1px solid var(--border-subtle);
-    padding-bottom: 0.75rem;
+    padding-bottom: var(--space-3);
 }
 
 .omr-header h5 {
@@ -501,7 +501,7 @@
     gap: 0.55rem;
     overflow-y: auto;
     flex-grow: 1;
-    padding-right: 0.25rem;
+    padding-right: var(--space-1);
 }
 
 /* Custom Scrollbar for OMR grid */
@@ -525,7 +525,7 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: var(--transition-base);
 }
 
 .omr-bubble:hover {
@@ -564,8 +564,8 @@
     background-color: rgba(17, 24, 39, 0.5);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
-    padding: 1.5rem;
-    margin-bottom: 2rem;
+    padding: var(--space-5);
+    margin-bottom: var(--space-6);
     -webkit-backdrop-filter: blur(16px);
     backdrop-filter: blur(16px);
     animation: fadeIn 0.3s ease;
@@ -574,10 +574,10 @@
 .sim-review-header {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: var(--space-5);
     border-bottom: 1px solid var(--border-color);
-    padding-bottom: 1rem;
-    margin-bottom: 1.5rem;
+    padding-bottom: var(--space-4);
+    margin-bottom: var(--space-5);
 }
 
 .sim-review-header h4 {
@@ -589,26 +589,26 @@
 .sim-review-list {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: var(--space-5);
     max-height: 70vh;
     overflow-y: auto;
-    padding-right: 0.5rem;
+    padding-right: var(--space-2);
 }
 
 .sim-review-item {
     background-color: rgba(0, 0, 0, 0.25);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-md);
-    padding: 1.5rem;
+    padding: var(--space-5);
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: var(--space-4);
 }
 
 .review-item-header {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: var(--space-3);
 }
 
 .review-item-q-text {
@@ -630,7 +630,7 @@
 .review-q-options li {
     font-size: 0.9rem;
     color: var(--color-text-muted);
-    padding-left: 0.5rem;
+    padding-left: var(--space-2);
     border-left: 2px solid var(--border-subtle);
 }
 

@@ -87,7 +87,14 @@
     --shadow-lg: 0 10px 25px rgba(0,0,0,0.5);
     --glow-primary: 0 0 15px rgba(6, 182, 212, 0.3);
     --glow-success: 0 0 15px rgba(16, 189, 129, 0.3);
-    
+
+    /* Transitions */
+    --transition-fast: 0.15s ease;
+    --transition-base: 0.2s ease;
+    --transition-slow: 0.3s ease;
+    --transition-bounce: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    --transition-smooth: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
     /* Layout */
     --sidebar-width: 260px;
     --radius-sm: 8px;
@@ -120,8 +127,13 @@
 
     /* Z-index Scale */
     --z-base: 1;
+    --z-raised: 5;
+    --z-overlay: 10;
+    --z-dropdown: 50;
+    --z-popover: 200;
     --z-sticky: 100;
     --z-drawer: 1400;
+    --z-drawer-overlay: 1500;
     --z-modal: 2000;
     --z-toast: 9000;
     --z-loading: 99999;
@@ -270,6 +282,76 @@
     display: grid !important;
 }
 
+/* 레이아웃 유틸리티 — 인라인 style 제거용 */
+.flex-row { display: flex; }
+.flex-col { display: flex; flex-direction: column; }
+.flex-center { display: flex; align-items: center; }
+.flex-between { display: flex; justify-content: space-between; align-items: center; }
+.flex-end { display: flex; justify-content: flex-end; }
+.flex-wrap { flex-wrap: wrap; }
+.flex-1 { flex: 1; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.justify-end { justify-content: flex-end; }
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-primary { color: var(--color-primary); }
+.w-full { width: 100%; }
+.relative { position: relative; }
+
+/* 간격 유틸리티 — --space-* 토큰 기반 */
+.mt-3 { margin-top: var(--space-3); }
+.mb-3 { margin-bottom: var(--space-3); }
+.mb-5 { margin-bottom: var(--space-5); }
+.mb-6 { margin-bottom: var(--space-6); }
+.mb-7 { margin-bottom: var(--space-7); }
+.mb-8 { margin-bottom: var(--space-8); }
+.gap-2 { gap: var(--space-2); }
+.gap-3 { gap: var(--space-3); }
+.gap-4 { gap: var(--space-4); }
+.gap-5 { gap: var(--space-5); }
+.gap-6 { gap: var(--space-6); }
+
+/* 컴포넌트 유틸리티 — index.html 반복 인라인 스타일 제거용 */
+.badge-pill {
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+}
+.search-input-wrap {
+    position: relative;
+    flex: 1;
+}
+.search-input-icon {
+    position: absolute;
+    left: 1.25rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-muted);
+}
+.search-input {
+    padding-left: var(--space-8);
+    width: 100%;
+}
+.progress-bar-fill {
+    width: 0%;
+}
+.icon-stat {
+    flex: 1;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+.empty-state-icon {
+    font-size: 3rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-4);
+    display: block;
+}
+
 body {
     font-family: var(--font-app);
     background-color: var(--bg-app);
@@ -283,7 +365,7 @@ body {
 /* A1: 키보드 접근성 — :focus-visible로 마우스 클릭 시 포커스 링 숨김, 키보드 탐색 시 표시 */
 :focus { outline: none; }
 :focus-visible {
-    outline: 2px solid var(--color-primary, #06b6d4);
+    outline: 2px solid var(--color-primary);
     outline-offset: 2px;
     border-radius: 3px;
 }
@@ -330,14 +412,14 @@ body {
     display: flex;
     flex-direction: column;
     padding: 2rem 1.5rem;
-    z-index: 10;
+    z-index: var(--z-overlay);
 }
 
 .logo-area {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 3rem;
+    gap: var(--space-3);
+    margin-bottom: var(--space-8);
 }
 
 .logo-icon {
@@ -379,7 +461,7 @@ body {
 .nav-menu {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: var(--space-2);
     flex: 1;
 }
 
@@ -397,13 +479,13 @@ body {
     font-weight: 500;
     text-align: left;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: var(--transition-base);
 }
 
 .nav-item i {
     font-size: 1.1rem;
     width: 20px;
-    transition: transform 0.2s ease;
+    transition: transform var(--transition-base);
 }
 
 .nav-item:hover {
@@ -412,7 +494,7 @@ body {
 }
 
 .light-theme .nav-item:hover {
-    background-color: rgba(0, 0, 0, 0.04);
+    background-color: var(--bg-muted);
 }
 
 .nav-item:hover i {
@@ -441,7 +523,7 @@ body {
 }
 
 .sidebar-footer {
-    padding-top: 1.5rem;
+    padding-top: var(--space-5);
     border-top: 1px solid var(--border-color);
     font-size: 0.75rem;
     color: var(--color-text-muted);
@@ -480,7 +562,7 @@ body {
     font-size: 1.6rem;
     font-weight: 700;
     letter-spacing: -0.5px;
-    margin-bottom: 0.25rem;
+    margin-bottom: var(--space-1);
 }
 
 .header-title p {
@@ -499,13 +581,13 @@ body {
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    gap: var(--space-2);
+    transition: var(--transition-smooth);
 }
 
 .btn-primary {
     background: linear-gradient(135deg, var(--color-primary), #0891b2);
-    color: #ffffff;
+    color: var(--color-on-brand);
     box-shadow: 0 4px 10px var(--primary-tint-20);
 }
 
@@ -525,13 +607,13 @@ body {
 }
 
 .light-theme .btn-secondary {
-    background-color: rgba(0,0,0,0.04);
+    background-color: var(--bg-muted);
     border-color: var(--border-color);
     color: var(--color-text-main);
 }
 
 .light-theme .btn-secondary:hover {
-    background-color: rgba(0,0,0,0.08);
+    background-color: var(--bg-active);
 }
 
 .btn-success {

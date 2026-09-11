@@ -75,7 +75,7 @@
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
-    padding: 2rem;
+    padding: var(--space-6);
     max-height: calc(100vh - 280px);
     overflow-y: auto;
 }
@@ -83,8 +83,8 @@
 .textbook-reader-section-title {
     font-size: 1.25rem;
     color: var(--color-primary);
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-2);
     border-bottom: 2px solid var(--color-primary);
     display: inline-block;
 }
@@ -95,15 +95,15 @@
 }
 
 .textbook-reader-section-content .md-para {
-    margin-bottom: 1rem;
+    margin-bottom: var(--space-4);
     font-size: 1rem;
 }
 
 .textbook-reader-section-content .md-list-item {
     display: flex;
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
-    padding-left: 0.5rem;
+    gap: var(--space-2);
+    margin-bottom: var(--space-2);
+    padding-left: var(--space-2);
 }
 
 .textbook-reader-section-content .md-table-row {
@@ -111,7 +111,7 @@
     background: rgba(0, 0, 0, 0.15);
     padding: 0.5rem 0.75rem;
     border-radius: 6px;
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--space-2);
     white-space: pre-wrap;
     font-size: 0.9rem;
     border-left: 3px solid var(--color-secondary);
@@ -121,8 +121,8 @@
 .textbook-reader-section-content .md-h3 {
     font-size: 1.1rem;
     color: var(--color-text-main);
-    margin-top: 1.5rem;
-    margin-bottom: 0.75rem;
+    margin-top: var(--space-5);
+    margin-bottom: var(--space-3);
     font-weight: 700;
 }
 
@@ -130,7 +130,7 @@
     font-size: 1rem;
     color: var(--color-text-main);
     margin-top: 1.25rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--space-2);
     font-weight: 600;
 }
 
@@ -435,7 +435,7 @@ pre.mermaid-other .labelBkg {
 /* Responsive */
 @media (max-width: 768px), (orientation: landscape) and (max-height: 500px) {
     .textbook-reader-content {
-        padding: 1rem;
+        padding: var(--space-4);
         max-height: calc(100vh - 220px);
     }
     
@@ -457,12 +457,12 @@ pre.mermaid-other .labelBkg {
 .reader-progress-bar {
     position: sticky;
     top: 0;
-    z-index: 50;
+    z-index: var(--z-dropdown);
     width: 100%;
     height: 4px;
     background: var(--bg-hover);
     border-radius: 2px;
-    margin-bottom: 1rem;
+    margin-bottom: var(--space-4);
     overflow: hidden;
 }
 .reader-progress-fill {
@@ -478,23 +478,23 @@ pre.mermaid-other .labelBkg {
 .reader-toolbar {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: var(--space-4);
     flex-wrap: wrap;
     padding: 0.75rem 1.25rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: var(--space-5);
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     position: sticky;
     top: 8px;
-    z-index: 40;
+    z-index: var(--z-dropdown);
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
 }
 .reader-toolbar-group {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--space-2);
 }
 .reader-toolbar-label {
     font-size: 0.8rem;
@@ -522,7 +522,7 @@ pre.mermaid-other .labelBkg {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    transition: all 0.2s ease;
+    transition: var(--transition-base);
     white-space: nowrap;
 }
 .reader-tool-btn:hover {
@@ -568,7 +568,7 @@ pre.mermaid-other .labelBkg {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
-    padding: 1rem;
+    padding: var(--space-4);
 }
 .reader-toc-header {
     font-size: 0.85rem;
@@ -579,7 +579,7 @@ pre.mermaid-other .labelBkg {
     border-bottom: 1px solid var(--border-color);
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--space-2);
 }
 .reader-toc-header i {
     color: var(--color-primary);
@@ -601,7 +601,7 @@ pre.mermaid-other .labelBkg {
     color: var(--color-text-muted);
     cursor: pointer;
     border-left: 3px solid transparent;
-    transition: all 0.15s ease;
+    transition: var(--transition-fast);
     word-break: keep-all;
     overflow: hidden;
     position: relative;
@@ -653,11 +653,11 @@ pre.mermaid-other .labelBkg {
     min-width: 0;
 }
 .reader-toc-item.toc-level-1 {
-    padding-left: 1.5rem;
+    padding-left: var(--space-5);
     font-size: 0.8rem;
 }
 .reader-toc-item.toc-level-2 {
-    padding-left: 2.5rem;
+    padding-left: var(--space-7);
     font-size: 0.78rem;
 }
 .reader-toc-item.toc-level-3 {
@@ -681,10 +681,10 @@ pre.mermaid-other .labelBkg {
     position: absolute;
     left: 0;
     top: 100%;
-    z-index: 200;
+    z-index: var(--z-popover);
     padding: 0.4rem 0.7rem;
     background: rgba(15, 23, 42, 0.96);
-    color: #fff;
+    color: var(--color-on-brand);
     font-family: var(--font-app);
     font-size: 0.78rem;
     font-weight: 400;
@@ -718,13 +718,13 @@ pre.mermaid-other .labelBkg {
     gap: 1px;
     overflow: hidden;
     max-height: 2000px;
-    transition: max-height 0.3s ease, opacity 0.2s ease;
+    transition: max-height var(--transition-slow), opacity var(--transition-base);
     opacity: 1;
 }
 /* Chapter 하위 children 컨테이너 — 들여쓰기 + 좌측 보더 */
 .reader-toc-children.toc-chapter-children {
-    padding-left: 0.75rem;
-    margin-left: 0.5rem;
+    padding-left: var(--space-3);
+    margin-left: var(--space-2);
     border-left: 2px solid var(--border-color);
 }
 .reader-toc-children.collapsed {
@@ -742,7 +742,7 @@ pre.mermaid-other .labelBkg {
     color: var(--color-text-muted);
     cursor: pointer;
     border-left: 2px solid transparent;
-    transition: all 0.15s ease;
+    transition: var(--transition-fast);
     word-break: keep-all;
     position: relative;
 }
@@ -765,7 +765,7 @@ pre.mermaid-other .labelBkg {
     align-items: center;
     gap: 0.4rem;
     padding: 0.5rem 0.75rem;
-    margin-bottom: 1rem;
+    margin-bottom: var(--space-4);
     font-size: 0.78rem;
     color: var(--color-text-muted);
     background: var(--bg-card);
@@ -794,7 +794,7 @@ pre.mermaid-other .labelBkg {
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.5);
-    z-index: 1400;
+    z-index: var(--z-drawer);
     -webkit-backdrop-filter: blur(2px);
     backdrop-filter: blur(2px);
 }
@@ -811,11 +811,11 @@ pre.mermaid-other .labelBkg {
         bottom: 0;
         width: min(280px, 85vw); /* M6: 작은 화면에서 화면 폭의 85%로 제한 */
         max-height: none;
-        z-index: 1500;
+        z-index: var(--z-drawer-overlay);
         transform: translateX(-100%);
-        transition: transform 0.3s ease;
+        transition: transform var(--transition-slow);
         border-radius: 0;
-        padding-top: 1.5rem;
+        padding-top: var(--space-5);
         overflow-y: auto;
     }
     .reader-toc.mobile-open {
@@ -847,7 +847,7 @@ pre.mermaid-other .labelBkg {
     border-radius: var(--radius-md);
     margin-bottom: 1.75rem;
     overflow: hidden;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    transition: border-color var(--transition-base), box-shadow var(--transition-base);
 }
 .reader-section-card:hover {
     border-color: var(--primary-tint-25);
@@ -874,7 +874,7 @@ pre.mermaid-other .labelBkg {
 .reader-section-header {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: var(--space-3);
     padding: 1.1rem 1.5rem;
     cursor: pointer;
     user-select: none;
@@ -901,7 +901,7 @@ pre.mermaid-other .labelBkg {
 }
 .reader-section-num {
     background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
-    color: #fff;
+    color: var(--color-on-brand);
     font-size: 0.72rem;
     font-weight: 700;
     min-width: 26px;
@@ -932,7 +932,7 @@ pre.mermaid-other .labelBkg {
     cursor: pointer;
     padding: 0.35rem;
     border-radius: 6px;
-    transition: all 0.2s ease;
+    transition: var(--transition-base);
     flex-shrink: 0;
 }
 .reader-bookmark-btn:hover {
@@ -957,12 +957,12 @@ pre.mermaid-other .labelBkg {
     color: var(--color-primary);
     font-weight: 700;
     margin-top: 1.75rem;
-    margin-bottom: 0.75rem;
+    margin-bottom: var(--space-3);
     padding-bottom: 0.4rem;
     border-bottom: 1px solid var(--border-color);
 }
 .reader-subsection-content {
-    margin-bottom: 1rem;
+    margin-bottom: var(--space-4);
 }
 
 /* Optimized typography inside reader */
@@ -1011,7 +1011,7 @@ pre.mermaid-other .labelBkg {
 .reader-chapter-meta {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: var(--space-4);
     flex-wrap: wrap;
     font-size: 0.82rem;
     color: var(--color-text-muted);
@@ -1021,7 +1021,7 @@ pre.mermaid-other .labelBkg {
 .reader-chapter-nav {
     display: flex;
     justify-content: space-between;
-    gap: 1rem;
+    gap: var(--space-4);
     margin-top: 2.25rem;
 }
 .reader-nav-btn {
@@ -1035,7 +1035,7 @@ pre.mermaid-other .labelBkg {
     text-align: left;
     color: var(--color-text-main);
     font-family: var(--font-app);
-    transition: all 0.2s ease;
+    transition: var(--transition-base);
     display: flex;
     flex-direction: column;
     gap: 0.3rem;
@@ -1091,11 +1091,11 @@ pre.mermaid-other .labelBkg {
     height: 46px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--color-primary), #0891b2);
-    color: #fff;
+    color: var(--color-on-brand);
     border: none;
     font-size: 1.05rem;
     cursor: pointer;
-    z-index: 60;
+    z-index: var(--z-dropdown);
     box-shadow: 0 4px 14px var(--primary-tint-40);
     transition: all 0.25s ease;
     opacity: 0.9;
@@ -1115,7 +1115,7 @@ pre.mermaid-other .labelBkg {
 .reader-table th {
     position: sticky;
     top: 0;
-    z-index: 2;
+    z-index: var(--z-raised);
     background: #16233a;
     box-shadow: 0 2px 0 var(--color-primary);
 }
@@ -1129,7 +1129,7 @@ pre.mermaid-other .labelBkg {
     position: absolute;
     top: 6px;
     right: 6px;
-    z-index: 3;
+    z-index: var(--z-raised);
     background: rgba(11, 15, 25, 0.85);
     border: 1px solid var(--border-color);
     color: var(--color-text-muted);
@@ -1141,7 +1141,7 @@ pre.mermaid-other .labelBkg {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s ease;
+    transition: var(--transition-base);
 }
 .reader-table-expand-btn:hover {
     color: var(--color-primary);
@@ -1157,7 +1157,7 @@ pre.mermaid-other .labelBkg {
 .reader-table-modal {
     position: fixed;
     inset: 0;
-    z-index: 200;
+    z-index: var(--z-popover);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1176,7 +1176,7 @@ pre.mermaid-other .labelBkg {
     background: var(--bg-sidebar);
     border: 1px solid var(--border-color-active);
     border-radius: var(--radius-md);
-    padding: 1.5rem;
+    padding: var(--space-5);
     overflow: auto;
     box-shadow: var(--shadow-lg);
     animation: fadeIn 0.25s ease;
@@ -1193,7 +1193,7 @@ pre.mermaid-other .labelBkg {
     border-radius: 8px;
     cursor: pointer;
     font-size: 1rem;
-    z-index: 5;
+    z-index: var(--z-raised);
 }
 .reader-table-modal-close:hover {
     background: var(--danger-tint-30);
@@ -1446,7 +1446,7 @@ body.reader-focus-mode .reader-readable-width {
     stroke: var(--mermaid-task-stroke) !important;
 }
 .reader-light-theme .reader-section-num {
-    color: #fff;
+    color: var(--color-on-brand);
 }
 .reader-light-theme .reader-table-expand-btn {
     background: var(--overlay-bg);
@@ -1623,7 +1623,7 @@ body.reader-focus-mode .reader-readable-width {
         border-bottom: 1px solid var(--border-color);
     }
     .logo-area {
-        margin-bottom: 0.75rem;
+        margin-bottom: var(--space-3);
     }
     .logo-text h1 {
         font-size: 1.2rem;
@@ -1633,7 +1633,7 @@ body.reader-focus-mode .reader-readable-width {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
         gap: 0.4rem;
-        padding-bottom: 0.25rem;
+        padding-bottom: var(--space-1);
     }
     .nav-menu::-webkit-scrollbar {
         height: 4px;
@@ -1783,7 +1783,7 @@ body.reader-focus-mode .reader-readable-width {
         padding: 1rem 1.25rem;
         position: sticky;
         top: 0;
-        z-index: 100;
+        z-index: var(--z-sticky);
         background: rgba(11, 15, 25, 0.95);
         -webkit-backdrop-filter: blur(12px);
         backdrop-filter: blur(12px);
@@ -1822,7 +1822,7 @@ body.reader-focus-mode .reader-readable-width {
     .header-actions {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: var(--space-2);
         flex-shrink: 0;
         /* 헤더 타이틀이 길어져도 버튼 영역 유지 */
         margin-left: auto;
@@ -1830,16 +1830,16 @@ body.reader-focus-mode .reader-readable-width {
 
     /* PWA 설치 버튼 모바일 최적화 */
     #pwa-install-btn {
-        margin-right: 0.25rem;
+        margin-right: var(--space-1);
         font-size: 0.85rem;
         white-space: nowrap;
         /* 모바일에서 확실히 보이도록 z-index 및 위치 조정 */
         position: relative;
-        z-index: 10;
+        z-index: var(--z-overlay);
     }
 
     #pwa-install-btn i {
-        margin-right: 0.25rem;
+        margin-right: var(--space-1);
     }
 
     /* 소형 화면에서 버튼 텍스트 숨기고 아이콘만 표시 — 480px 이하 */
@@ -1863,10 +1863,10 @@ body.reader-focus-mode .reader-readable-width {
         display: flex;
         justify-content: flex-start;
         align-items: flex-start;
-        padding-top: 0.5rem;
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
-        z-index: 1000;
+        padding-top: var(--space-2);
+        padding-left: var(--space-2);
+        padding-right: var(--space-2);
+        z-index: var(--z-drawer);
         -webkit-backdrop-filter: blur(12px);
         backdrop-filter: blur(12px);
         overflow-x: auto;
@@ -1893,7 +1893,7 @@ body.reader-focus-mode .reader-readable-width {
         border: none;
         background: transparent;
         cursor: pointer;
-        transition: color 0.2s ease, transform 0.1s ease;
+        transition: color var(--transition-base), transform var(--transition-fast);
         flex: 0 0 auto;
         min-width: 60px;
         max-width: 72px;
@@ -1983,7 +1983,7 @@ body.reader-focus-mode .reader-readable-width {
 
     .flashcard-controls {
         flex-wrap: wrap;
-        gap: 0.5rem;
+        gap: var(--space-2);
     }
 
     .flashcard-controls .btn {
@@ -2061,11 +2061,11 @@ body.reader-focus-mode .reader-readable-width {
     background: var(--color-danger);
     color: white;
     text-align: center;
-    padding: 0.5rem;
+    padding: var(--space-2);
     font-size: 0.8rem;
-    z-index: 9999;
+    z-index: var(--z-toast);
     transform: translateY(-100%);
-    transition: transform 0.3s ease;
+    transition: transform var(--transition-slow);
 }
 
 .offline-banner.show {
@@ -2127,11 +2127,11 @@ body.reader-focus-mode .reader-readable-width {
 .pwa-install-modal {
     position: fixed;
     inset: 0;
-    z-index: 2000;
+    z-index: var(--z-modal);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1rem;
+    padding: var(--space-4);
 }
 
 .pwa-modal-backdrop {
@@ -2148,7 +2148,7 @@ body.reader-focus-mode .reader-readable-width {
     max-width: 420px;
     max-height: 86vh;
     overflow-y: auto;
-    background: var(--bg-card, #171d2b);
+    background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: 16px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
@@ -2171,16 +2171,16 @@ body.reader-focus-mode .reader-readable-width {
 .pwa-modal-header h3 {
     margin: 0;
     font-size: 1.05rem;
-    color: var(--color-text-main, #e8eaed);
+    color: var(--color-text-main);
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--space-2);
 }
 
 .pwa-modal-close {
     background: transparent;
     border: none;
-    color: var(--color-text-muted, #9aa3b2);
+    color: var(--color-text-muted);
     font-size: 1.2rem;
     cursor: pointer;
     width: 44px;
@@ -2189,12 +2189,12 @@ body.reader-focus-mode .reader-readable-width {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.15s ease, color 0.15s ease;
+    transition: background var(--transition-fast), color var(--transition-fast);
 }
 
 .pwa-modal-close:hover {
     background: var(--bg-hover);
-    color: var(--color-text-main, #e8eaed);
+    color: var(--color-text-main);
 }
 
 .pwa-modal-body {
@@ -2203,7 +2203,7 @@ body.reader-focus-mode .reader-readable-width {
 
 .pwa-modal-lead {
     margin: 0 0 1rem;
-    color: var(--color-text-main, #e8eaed);
+    color: var(--color-text-main);
     font-size: 0.95rem;
 }
 
@@ -2231,8 +2231,8 @@ body.reader-focus-mode .reader-readable-width {
     width: 26px;
     height: 26px;
     border-radius: 50%;
-    background: var(--color-primary, #06b6d4);
-    color: #fff;
+    background: var(--color-primary);
+    color: var(--color-on-brand);
     font-size: 0.85rem;
     font-weight: 700;
     display: flex;
@@ -2242,13 +2242,13 @@ body.reader-focus-mode .reader-readable-width {
 
 .pwa-step-text {
     grid-area: text;
-    color: var(--color-text-main, #e8eaed);
+    color: var(--color-text-main);
     font-size: 0.9rem;
     line-height: 1.45;
 }
 
 .pwa-step-text strong {
-    color: var(--color-primary-light, var(--color-primary, #06b6d4));
+    color: var(--color-primary-light, var(--color-primary));
 }
 
 .pwa-step-illust {
@@ -2267,14 +2267,14 @@ body.reader-focus-mode .reader-readable-width {
     background: var(--primary-tint-8);
     border: 1px solid var(--primary-tint-20);
     border-radius: 10px;
-    color: var(--color-text-muted, #9aa3b2);
+    color: var(--color-text-muted);
     font-size: 0.83rem;
     line-height: 1.5;
 }
 
 .pwa-tip i {
-    color: var(--color-primary, #06b6d4);
-    margin-right: 0.25rem;
+    color: var(--color-primary);
+    margin-right: var(--space-1);
 }
 
 @media (max-width: 480px) {
@@ -2282,7 +2282,7 @@ body.reader-focus-mode .reader-readable-width {
         max-width: 94vw;
     }
     .pwa-modal-body {
-        padding: 1rem;
+        padding: var(--space-4);
     }
 }
 
@@ -2300,7 +2300,7 @@ body.reader-focus-mode .reader-readable-width {
     border-radius: 8px !important;
     transition: transform 0.3s ease !important;
     position: relative !important;
-    z-index: 100 !important;
+    z-index: var(--z-sticky) !important;
     pointer-events: auto !important;
     cursor: pointer !important;
 }
@@ -2581,15 +2581,15 @@ body.landscape-mode .glass-card {
 /* 3) 반투명 흰색 인터랙티브 배경 → 라이트에서 대비 확보 */
 .light-theme .sim-option-item,
 .light-theme .omr-bubble {
-    background-color: rgba(0, 0, 0, 0.03);
+    background-color: var(--bg-subtle);
 }
 .light-theme .sim-option-item:hover {
-    background-color: rgba(0, 0, 0, 0.06);
-    border-color: rgba(0, 0, 0, 0.15);
+    background-color: var(--bg-hover);
+    border-color: var(--border-strong);
 }
 .light-theme .omr-bubble:hover {
-    background-color: rgba(0, 0, 0, 0.06);
-    border-color: rgba(0, 0, 0, 0.2);
+    background-color: var(--bg-hover);
+    border-color: var(--border-strong);
     color: var(--color-text-main);
 }
 .light-theme .omr-bubble.active,
@@ -2602,7 +2602,7 @@ body.landscape-mode .glass-card {
 .light-theme .filter-bar,
 .light-theme .review-answer-panel,
 .light-theme .empty-state {
-    background-color: rgba(0, 0, 0, 0.02);
+    background-color: var(--bg-subtle);
 }
 
 /* 5) 교재 카드 접힘 페이드: 어두운 색 → 라이트 배경색으로 페이드 */
@@ -2612,7 +2612,7 @@ body.landscape-mode .glass-card {
 
 /* 6) 테마 토글 버튼 아이콘 미세 정렬 */
 #theme-toggle-btn {
-    padding: 0.5rem;
+    padding: var(--space-2);
     min-width: 40px;
     justify-content: center;
 }
@@ -2625,8 +2625,8 @@ body.landscape-mode .glass-card {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
-    padding: 1rem;
-    margin-bottom: 1.5rem;
+    padding: var(--space-4);
+    margin-bottom: var(--space-5);
     overflow-x: auto;
     position: relative;
 }
@@ -2651,8 +2651,8 @@ body.landscape-mode .glass-card {
 .concept-map-header {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 0.75rem;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
     font-size: 0.85rem;
     color: var(--color-text-muted);
 }
@@ -2687,7 +2687,7 @@ body.landscape-mode .glass-card {
 }
 
 .concept-map-body {
-    transition: max-height 0.3s ease, opacity 0.2s ease;
+    transition: max-height var(--transition-slow), opacity var(--transition-base);
     overflow: hidden;
 }
 
@@ -2739,7 +2739,7 @@ body.landscape-mode .glass-card {
 }
 
 .concept-map-rect {
-    transition: stroke-width 0.15s, filter 0.15s;
+    transition: stroke-width var(--transition-fast), filter var(--transition-fast);
 }
 
 .concept-map-node-text {
@@ -2809,16 +2809,16 @@ body.landscape-mode .glass-card {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
-    padding: 1rem;
-    margin-bottom: 1.5rem;
+    padding: var(--space-4);
+    margin-bottom: var(--space-5);
     position: relative;
 }
 
 .study-aid-header {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 0.75rem;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
     font-size: 0.85rem;
     color: var(--color-text-muted);
     cursor: pointer;
@@ -2842,7 +2842,7 @@ body.landscape-mode .glass-card {
     cursor: pointer;
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
-    transition: background 0.15s, transform 0.2s;
+    transition: background var(--transition-fast), transform var(--transition-base);
 }
 
 .study-aid-toggle:hover {
@@ -2854,7 +2854,7 @@ body.landscape-mode .glass-card {
 }
 
 .study-aid-body {
-    transition: max-height 0.3s ease, opacity 0.2s ease;
+    transition: max-height var(--transition-slow), opacity var(--transition-base);
     overflow: hidden;
 }
 
@@ -2877,7 +2877,7 @@ body.landscape-mode .glass-card {
 }
 
 .exam-highlight-section {
-    margin-bottom: 0.75rem;
+    margin-bottom: var(--space-3);
 }
 
 .exam-highlight-section:last-child {
@@ -2889,7 +2889,7 @@ body.landscape-mode .glass-card {
     font-weight: 700;
     color: var(--color-primary);
     margin-bottom: 0.4rem;
-    padding-bottom: 0.25rem;
+    padding-bottom: var(--space-1);
     border-bottom: 1px dashed var(--border-color);
 }
 
@@ -2937,14 +2937,14 @@ body.landscape-mode .glass-card {
 
 .exam-filter-btn.active {
     background: var(--warning);
-    color: #fff;
+    color: var(--color-on-brand);
     border-color: var(--warning);
 }
 
 /* 기출 필터 dimmed 섹션 */
 .reader-section-card.exam-filter-dimmed {
     opacity: 0.25;
-    transition: opacity 0.3s ease;
+    transition: opacity var(--transition-slow);
     pointer-events: none;
 }
 
@@ -2959,7 +2959,7 @@ body.landscape-mode .glass-card {
 }
 
 .number-drill-section {
-    margin-bottom: 0.75rem;
+    margin-bottom: var(--space-3);
 }
 
 .number-drill-section:last-child {
@@ -2967,9 +2967,9 @@ body.landscape-mode .glass-card {
 }
 
 .number-drill-key-section {
-    padding-bottom: 0.75rem;
+    padding-bottom: var(--space-3);
     border-bottom: 1px solid var(--border-color);
-    margin-bottom: 0.75rem;
+    margin-bottom: var(--space-3);
 }
 
 .number-drill-normal-toggle {
@@ -3010,14 +3010,14 @@ body.landscape-mode .glass-card {
     font-weight: 700;
     color: var(--color-primary);
     margin-bottom: 0.4rem;
-    padding-bottom: 0.25rem;
+    padding-bottom: var(--space-1);
     border-bottom: 1px dashed var(--border-color);
 }
 
 .number-drill-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 0.5rem;
+    gap: var(--space-2);
 }
 
 .number-drill-item {
@@ -3141,7 +3141,7 @@ body.landscape-mode .glass-card {
     position: sticky;
     left: 0;
     background: var(--bg-card);
-    z-index: 1;
+    z-index: var(--z-base);
     min-width: 120px;
     max-width: 200px;
 }
@@ -3192,7 +3192,7 @@ body.landscape-mode .glass-card {
 .ref-link-item {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--space-2);
     padding: 0.4rem 0.5rem;
     font-size: 0.82rem;
     color: var(--color-text-main);
@@ -3243,10 +3243,10 @@ body.landscape-mode .glass-card {
 .keyword-ref-link.ref-longpress-active,
 .ref-link-item.ref-longpress-active {
     background: rgba(31, 111, 235, 0.15);
-    box-shadow: 0 0 0 2px var(--color-primary, #1f6feb);
+    box-shadow: 0 0 0 2px var(--color-primary);
     border-radius: 4px;
     opacity: 0.85;
-    transition: background 0.1s ease, box-shadow 0.1s ease;
+    transition: background var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 /* 3. 이야기형 배지 */
@@ -3290,7 +3290,7 @@ body.landscape-mode .glass-card {
 .story-mode .reader-section-card:first-child .textbook-reader-section-content {
     background: var(--story-prologue-bg);
     border-radius: 8px;
-    padding: 1rem;
+    padding: var(--space-4);
 }
 
 /* 7. 대사(인용구) 스타일 — > "..." 형태 */
@@ -3306,7 +3306,7 @@ body.landscape-mode .glass-card {
 /* === Glossary table (중요 용어 해설) === */
 .reader-glossary {
     margin: 2rem 0 1rem 0;
-    padding: 1rem;
+    padding: var(--space-4);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md, 8px);
     background: var(--primary-tint-3);
@@ -3337,7 +3337,7 @@ body.landscape-mode .glass-card {
 }
 .reader-glossary .glossary-table .glossary-ref {
     font-size: 0.78rem;
-    color: var(--color-text-muted, #8b949e);
+    color: var(--color-text-muted);
     word-break: break-word;
     width: 120px;
 }
@@ -3352,7 +3352,7 @@ body.landscape-mode .glass-card {
 
 /* Glossary link (LNN) in table cells */
 a.glossary-link {
-    color: var(--color-primary, #1f6feb);
+    color: var(--color-primary);
     text-decoration: none;
     font-weight: 600;
     cursor: pointer;
@@ -3363,7 +3363,7 @@ a.glossary-link:hover {
 
 /* Glossary term auto-link in body text */
 a.glossary-term-link {
-    color: var(--color-primary, #1f6feb);
+    color: var(--color-primary);
     text-decoration: underline dotted;
     text-underline-offset: 2px;
     cursor: pointer;
@@ -3377,7 +3377,7 @@ a.glossary-term-link:hover {
 
 /* Glossary ref link (출처 하이퍼링크) */
 a.glossary-ref-link {
-    color: var(--color-primary, #1f6feb);
+    color: var(--color-primary);
     text-decoration: none;
     font-size: 0.78rem;
     cursor: pointer;
@@ -3402,20 +3402,20 @@ a.glossary-ref-link i {
     position: fixed;
     bottom: 5rem;
     right: 1.5rem;
-    z-index: 9000;
+    z-index: var(--z-toast);
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
     padding: 0.6rem 1.1rem;
     font-size: 0.85rem;
     font-weight: 600;
-    color: #fff;
-    background: var(--color-primary, #1f6feb);
+    color: var(--color-on-brand);
+    background: var(--color-primary);
     border: none;
     border-radius: 2rem;
     cursor: pointer;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    transition: opacity var(--transition-slow), transform var(--transition-slow);
     opacity: 0.95;
     animation: glossary-back-in 0.3s ease;
 }
