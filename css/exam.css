@@ -86,9 +86,9 @@
 }
 
 .badge-gray {
-    background-color: rgba(156, 163, 175, 0.15);
+    background-color: var(--gray-tint-15);
     color: var(--color-text-main);
-    border: 1px solid rgba(156, 163, 175, 0.3);
+    border: 1px solid var(--gray-tint-30);
 }
 
 .light-theme .badge-gray {
@@ -168,7 +168,7 @@
 .highlight-card {
     border-color: var(--border-color-active);
     box-shadow: var(--glow-primary);
-    background: linear-gradient(135deg, rgba(31, 41, 55, 0.8), rgba(17, 24, 39, 0.8));
+    background: linear-gradient(135deg, var(--overlay-bg-slate-80), var(--overlay-bg-dark-80));
 }
 
 .highlight-card .exam-btn-link {
@@ -185,7 +185,7 @@
 
 .full-width-card {
     grid-column: 1 / -1;
-    background-color: rgba(17, 24, 39, 0.4);
+    background-color: var(--overlay-bg-dark-40);
 }
 
 .full-width-card .exam-card-btns {
@@ -305,7 +305,7 @@
 
 /* --- Simulation Arena Styles --- */
 #sim-arena-panel {
-    background-color: rgba(17, 24, 39, 0.6);
+    background-color: var(--overlay-bg-dark-60);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
     padding: var(--space-5);
@@ -371,7 +371,7 @@
 }
 
 .sim-question-card {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: var(--overlay-bg-faint);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-md);
     display: flex;
@@ -462,7 +462,7 @@
 
 /* OMR Panel Styles */
 .sim-omr-panel {
-    background-color: rgba(0, 0, 0, 0.25);
+    background-color: var(--overlay-bg-light);
     border: 1px solid var(--border-faint);
     border-radius: var(--radius-md);
     padding: 1.25rem;
@@ -548,7 +548,7 @@
 
 /* Simulator Results Panel */
 #sim-result-panel {
-    background-color: rgba(17, 24, 39, 0.6);
+    background-color: var(--overlay-bg-dark-60);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
     -webkit-backdrop-filter: blur(16px);
@@ -561,7 +561,7 @@
 
 /* Answer Review Styles */
 #sim-review-panel {
-    background-color: rgba(17, 24, 39, 0.5);
+    background-color: var(--overlay-bg-dark-50);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
     padding: var(--space-5);
@@ -596,7 +596,7 @@
 }
 
 .sim-review-item {
-    background-color: rgba(0, 0, 0, 0.25);
+    background-color: var(--overlay-bg-light);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-md);
     padding: var(--space-5);
@@ -677,7 +677,7 @@
 }
 
 
-/* === ÄÄÆ÷³ÍÆ® Å¬·¡½º ? ÀÎ¶óÀÎ ½ºÅ¸ÀÏ Á¦°Å¿ë === */
+/* === ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® Å¬ï¿½ï¿½ï¿½ï¿½ ? ï¿½Î¶ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½Å¿ï¿½ === */
 
 /* Exam Highlight Card */
 .highlight-card {

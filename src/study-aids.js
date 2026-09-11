@@ -2,6 +2,7 @@
 // 순수 함수 기반, CSP-safe, 외부 의존성 없음
 
 import { escapeHTML as esc } from './sanitize.js';
+import { PATHS } from './paths.js';
 
 // --- ② 기출 핵심 요약 ---
 
@@ -102,7 +103,7 @@ const NUMBER_DRILL_CACHE = {};
 export async function loadNumberDrills(subjId) {
     if (NUMBER_DRILL_CACHE[subjId]) return NUMBER_DRILL_CACHE[subjId];
     try {
-        const resp = await fetch(`content/number-drills/${subjId}.json`);
+        const resp = await fetch(`PATHS.NUMBER_DRILLS(subjId)`);
         if (!resp.ok) return [];
         const data = await resp.json();
         if (!Array.isArray(data)) return [];

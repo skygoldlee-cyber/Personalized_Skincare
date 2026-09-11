@@ -10,12 +10,13 @@
 import { escapeHTML } from './sanitize.js';
 import { detectMermaidType, getMermaidClassName, getMermaidInitOptions } from './mermaid-utils.js';
 import { parseMarkdown } from './markdown-parser.js';
+import { PATHS } from './paths.js';
 
 export const ManualViewer = (() => {
     // 지원하는 마크다운 소스 정의
     const MD_SOURCES = {
-        'user_manual': { path: 'docs/user/user_manual.md', title: '사용자 매뉴얼' },
-        'study_summary': { path: 'content/학습안내서.md', title: '학습 안내서' }
+        'user_manual': { path: PATHS.USER_MANUAL, title: '사용자 매뉴얼' },
+        'study_summary': { path: PATHS.STUDY_GUIDE, title: '학습 안내서' }
     };
     const CACHE_PREFIX = 'manual_md_cache_v3_';
     const CACHE_TTL = 24 * 60 * 60 * 1000; // 24시간
@@ -219,7 +220,7 @@ body.manual-open{overflow:hidden;}
         if (_mermaidLoadPromise) return _mermaidLoadPromise;
         _mermaidLoadPromise = new Promise((resolve, reject) => {
             const script = document.createElement('script');
-            script.src = './vendor/mermaid/mermaid.min.js';
+            script.src = PATHS.VENDOR_MERMAID;
             script.async = true;
             const nonce = crypto.getRandomValues(new Uint8Array(16));
             script.nonce = Array.from(nonce).map(b => b.toString(16).padStart(2, '0')).join('');

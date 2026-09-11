@@ -3,6 +3,8 @@
 //   1) beforeinstallprompt 이벤트를 놓칠 수 있음
 //   2) SW 등록이 늦어져 Chrome이 PWA 설치 가능 판정을 내리지 못할 수 있음
 // 이 스크립트는 <head>에서 즉시 실행되어 두 문제를 해결.
+// 참고: classic 스크립트이므로 config/timing.js를 import할 수 없음.
+// 600ms(PWA_RELOAD_DELAY_MS), 5000ms(PWA_TOAST_HIDE_MS)는 src/config/timing.js와 동기화 필요.
 (function () {
   'use strict';
   window.__deferredPrompt = null;

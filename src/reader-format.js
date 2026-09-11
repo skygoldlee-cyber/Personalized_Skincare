@@ -3,6 +3,7 @@
 // O(n×k) 비용이 발생 (n=HTML 길이, k=정규식 수). 단일 패스 파서 또는 DOM 기반 후처리로
 // 통합하면 성능 개선 가능. 다만 현재 측정된 병목이 아니므로 장기 개선으로 deferral.
 import { parseMarkdown } from './markdown-parser.js';
+import { PATHS, normalizeRefPath } from './paths.js';
 import { escapeHTML } from './sanitize.js';
 import { resolveRefPath, KEYWORD_REF_MAP } from './pdf-registry.js';
 import { getGlossaryEntry } from './glossary-query.js';
@@ -31,7 +32,7 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
         (match, subjNum, linkText) => {
             const examKey = `subject${subjNum}`;
             const fileName = _examFileMap[examKey] || `과목${subjNum}_문제.md`;
-            const mdPath = `content/문제은행/${fileName}`;
+            const mdPath = PATHS.EXAM_BANK(fileName);
             return `<a href="#" data-exam-md="${escapeHTML(mdPath)}" class="exam-link-btn" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.5rem 1rem;background:var(--color-primary,#1f6feb);color:#fff;border-radius:8px;text-decoration:none;font-weight:600;font-size:0.9rem;"><i class="fa-solid fa-pen-to-square"></i> ${escapeHTML(linkText)}</a>`;
         }
     );

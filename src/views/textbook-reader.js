@@ -14,6 +14,8 @@ import { collectGlossaryItems, renderGlossaryTable, appendGlossaryTocItem, bindG
 import { DataLoader } from '../data-loader.js';
 import { showToast, trapFocus } from '../ui-utils.js';
 import { STORAGE_KEYS } from '../storage-keys.js';
+import { TIMING } from '../config/timing.js';
+import { PATHS } from '../paths.js';
 
 // --- 교재 본문 읽기 (Textbook Reader) ---
 let textbookReaderState = {
@@ -126,7 +128,7 @@ function getAudioPathForChapter(subjId, chapter) {
         const num = m[1];
         const title = m[2].trim().replace(/\s+/g, '_');
         const chNo = num.padStart(2, '0');
-        localPath = `content/audiobook/mp3/${subjId}/ch${chNo}_${num}_${title}.mp3`;
+        localPath = `PATHS.AUDIOBOOK_MP3(subjId, chNo, num, title)`;
     }
 
     // 3) 외부 CDN URL 변환 (audio_manifest.js 의 getAudioUrl — window 전역, 없으면 로컬 경로 그대로)
@@ -519,7 +521,7 @@ export function toggleReaderAudio(subjId, chapterIdx) {
         if (resume > 0 && resume < audio.duration - 5) {
             audio.currentTime = resume;
             setAudioStatus(formatAudioTime(resume) + '부터 이어듣기');
-            setTimeout(() => setAudioStatus(''), 2500);
+            setTimeout(() => setAudioStatus(''), TIMING.AUDIO_STATUS_CLEAR_MS);
         } else {
             setAudioStatus('');
         }
@@ -774,15 +776,15 @@ async function _loadStoryChapter(subjId, chapterIdx, originalChapter) {
         ? chapterMeta.storyFile
         : originalChapter.fileName.replace(/_표준형\.md$/i, '_이야기형.md').replace(/\.md$/i, '_이야기형.md');
 
-    const relPath = `content/${subjMeta.dir}/${storyFile}`;
+    const relPath = `PATHS.TEXTBOOK_FILE(subjMeta.dir, storyFile)`;
     const md = await DataLoader._getMd(relPath, subjId);
-    const subjectDir = `content/${subjMeta.dir}`;
+    const subjectDir = `PATHS.TEXTBOOK_DIR(subjMeta.dir)`;
     const parsed = parseTextbookContent(md, storyFile, subjectDir);
 
     const storyChapter = {
         chapterTitle: parsed.chapterTitle,
         sections: parsed.sections.filter(s => !_isStoryMetaSection(s.title)),
-        filePath: `./content/${subjMeta.dir}/${storyFile}`,
+        filePath: `./PATHS.TEXTBOOK_FILE(subjMeta.dir, storyFile)`,
         fileName: storyFile
     };
 
@@ -1221,7 +1223,7 @@ function _ensureMermaid() {
     if (_mermaidLoadPromise) return _mermaidLoadPromise;
     _mermaidLoadPromise = new Promise((resolve, reject) => {
         const script = document.createElement('script');
-        script.src = './vendor/mermaid/mermaid.min.js';
+        script.src = PATHS.VENDOR_MERMAID;
         script.async = true;
         const nonce = crypto.getRandomValues(new Uint8Array(16));
         script.nonce = Array.from(nonce).map(b => b.toString(16).padStart(2, '0')).join('');
@@ -1525,10 +1527,10 @@ function buildReferenceLinks(subjId, contextRefPath) {
     if (contextRefPath) {
         const contextName = contextRefPath.split('/').pop().replace(/\.(html|md)$/, '');
         const allRefs = [
-            ...subjectFiles.map(f => ({ ...f, path: f.type === 'md' ? `content/참조자료/${dirName}/${f.file}` : resolveRefPath(f.file) })),
+            ...subjectFiles.map(f => ({ ...f, path: f.type === 'md' ? `PATHS.REFERENCE_FILE(dirName, f.file)` : resolveRefPath(f.file) })),
             ...REFERENCE_COMMON.map(f => ({ ...f, path: resolveRefPath(f.file) })),
             ...REFERENCE_LAW.map(f => ({ ...f, path: resolveRefPath(f.file) })),
-            ...REFERENCE_INGREDIENTS.map(f => ({ ...f, path: f.type === 'md' ? `content/참조자료/${f.dir}/${f.file}` : resolveRefPath(f.file) }))
+            ...REFERENCE_INGREDIENTS.map(f => ({ ...f, path: f.type === 'md' ? `PATHS.REFERENCE_FILE(f.dir, f.file)` : resolveRefPath(f.file) }))
         ];
         const matched = allRefs.filter(r => r.path === contextRefPath);
         const related = allRefs.filter(r => r.path !== contextRefPath && r.type !== 'md' && contextRefPath.endsWith(r.path?.split('/').pop() || ''));
@@ -1553,7 +1555,7 @@ function buildReferenceLinks(subjId, contextRefPath) {
         subjectFiles.forEach(f => {
             const icon = 'fa-file-lines';
             if (f.type === 'md') {
-                const path = `content/참조자료/${dirName}/${f.file}`;
+                const path = `PATHS.REFERENCE_FILE(dirName, f.file)`;
                 links += `<a class="ref-link-item" data-ref-md="${esc(path)}"><i class="fa-solid ${icon}"></i> ${esc(f.name)}</a>`;
             } else {
                 const path = resolveRefPath(f.file);
@@ -1566,7 +1568,7 @@ function buildReferenceLinks(subjId, contextRefPath) {
     links += `<div class="ref-group-label">원료 참조자료</div>`;
     REFERENCE_INGREDIENTS.forEach(f => {
         if (f.type === 'md') {
-            const path = `content/참조자료/${f.dir}/${f.file}`;
+            const path = `PATHS.REFERENCE_FILE(f.dir, f.file)`;
             links += `<a class="ref-link-item" data-ref-md="${esc(path)}"><i class="fa-solid fa-file-lines"></i> ${esc(f.name)}</a>`;
         } else {
             const path = resolveRefPath(f.file);
@@ -1717,7 +1719,7 @@ function bindReferenceLinks() {
         // 호버 프리뷰 (데스크톱)
         a.addEventListener('mouseenter', () => {
             clearTimeout(_previewTimer);
-            _previewTimer = setTimeout(() => _showPreview(a), 400);
+            _previewTimer = setTimeout(() => _showPreview(a), TIMING.PREVIEW_HOVER_MS);
         });
         a.addEventListener('mouseleave', () => {
             clearTimeout(_previewTimer);
@@ -1730,12 +1732,12 @@ function bindReferenceLinks() {
             _previewTouchTimer = setTimeout(() => {
                 a.classList.remove('ref-longpress-active');
                 _showPreview(a);
-            }, 600);
+            }, TIMING.PREVIEW_LONG_PRESS_MS);
         }, { passive: true });
         a.addEventListener('touchend', () => {
             clearTimeout(_previewTouchTimer);
             a.classList.remove('ref-longpress-active');
-            setTimeout(_hidePreview, 3000);
+            setTimeout(_hidePreview, TIMING.PREVIEW_HIDE_MS);
         }, { passive: true });
         a.addEventListener('touchmove', () => {
             clearTimeout(_previewTouchTimer);

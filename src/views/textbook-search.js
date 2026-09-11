@@ -2,6 +2,8 @@
 import { escapeHTML, esc } from '../sanitize.js';
 import { parseMarkdown } from '../markdown-parser.js';
 import { detectMermaidType, getMermaidClassName, getMermaidInitOptions } from '../mermaid-utils.js';
+import { TIMING } from '../config/timing.js';
+import { PATHS } from '../paths.js';
 // [모바일 PWA 견고성] 레지스트리는 window 전역(가드)에서 읽는다(정적 import 하드 의존 지양).
 
 const textbookState = {
@@ -79,7 +81,7 @@ export function renderTextbookSearch() {
             textbookState.debounceTimer = setTimeout(() => {
                 textbookState.searchQuery = e.target.value.trim();
                 performTextbookSearch();
-            }, 250); // 250ms debounce
+            }, TIMING.SEARCH_DEBOUNCE_MS);
         });
         
         searchInput.addEventListener('keydown', (e) => {
@@ -324,7 +326,7 @@ function _ensureMermaid() {
     if (_mermaidLoadPromise) return _mermaidLoadPromise;
     _mermaidLoadPromise = new Promise((resolve, reject) => {
         const script = document.createElement('script');
-        script.src = './vendor/mermaid/mermaid.min.js';
+        script.src = PATHS.VENDOR_MERMAID;
         script.async = true;
         const nonce = crypto.getRandomValues(new Uint8Array(16));
         script.nonce = Array.from(nonce).map(b => b.toString(16).padStart(2, '0')).join('');

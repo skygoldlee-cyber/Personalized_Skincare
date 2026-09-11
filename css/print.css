@@ -101,7 +101,7 @@
     .review-card-item {
         background: var(--print-bg) !important;
         color: var(--print-fg) !important;
-        border: 1px solid #000000 !important;
+        border: 1px solid var(--print-fg) !important;
         border-radius: var(--print-radius) !important;
         padding: 1.5rem !important;
         box-shadow: none !important;
@@ -112,7 +112,7 @@
     .review-card-item h4 {
         color: var(--print-fg) !important;
         font-size: 1.1rem !important;
-        border-bottom: 1px solid #000000 !important;
+        border-bottom: 1px solid var(--print-fg) !important;
         padding-bottom: 0.5rem !important;
         margin-bottom: 0.75rem !important;
     }
@@ -130,21 +130,21 @@
 
     .review-q-options li {
         color: var(--print-fg) !important;
-        border-left: 2px solid #555555 !important;
+        border-left: 2px solid var(--print-muted) !important;
         padding-left: 0.5rem !important;
         margin-bottom: 0.25rem !important;
     }
 
     .review-answer-panel {
         background: var(--print-bg-subtle) !important;
-        border: 1px dashed #000000 !important;
+        border: 1px dashed var(--print-fg) !important;
         color: var(--print-fg) !important;
         padding: 0.75rem 1rem !important;
         margin-bottom: 0.75rem !important;
     }
 
     .review-explanation-panel {
-        border-top: 1px dashed #000000 !important;
+        border-top: 1px dashed var(--print-fg) !important;
         padding-top: 0.75rem !important;
     }
 
@@ -155,7 +155,7 @@
     }
 
     .review-explanation-panel p {
-        color: #333333 !important;
+        color: var(--print-fg) !important;
     }
 
     .color-danger {
@@ -169,8 +169,8 @@
     }
 
     .badge {
-        background: #e5e7eb !important;
+        background: var(--print-border) !important;
         color: var(--print-fg) !important;
-        border: 1px solid #000000 !important;
+        border: 1px solid var(--print-fg) !important;
     }
 }

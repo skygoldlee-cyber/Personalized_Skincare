@@ -2,6 +2,7 @@
 import { state, safeSetItem } from '../state.js';
 import { showToast } from '../ui-utils.js';
 import { STORAGE_KEYS } from '../storage-keys.js';
+import { TIMING } from '../config/timing.js';
 
 /* =======================================================
    ⏱️ 집중 뽀모도로 타이머 (Pomodoro Study Timer)
@@ -18,7 +19,7 @@ export function togglePomodoro() {
 
         if (pomoState.status === 'idle') {
             pomoState.status = 'work';
-            pomoState.timeLeft = 25 * 60; // 25분
+            pomoState.timeLeft = TIMING.POMODORO_WORK_SEC; // 25분
         }
 
         // 일시 정지 후 재개 및 시작 시 시점 기록
@@ -40,7 +41,7 @@ export function togglePomodoro() {
         }
 
         if (pomoState.timerId) clearInterval(pomoState.timerId);
-        pomoState.timerId = setInterval(tickPomodoro, 200); // 200ms 간격 정밀 갱신
+        pomoState.timerId = setInterval(tickPomodoro, TIMING.POMODORO_TICK_MS); // 200ms 간격 정밀 갱신
     } else {
         // 일시 정지
         pomoState.isRunning = false;
@@ -85,7 +86,7 @@ export function tickPomodoro() {
 
             showToast("집중 25분이 끝났습니다! 5분간 휴식하세요.", "success");
             pomoState.status = 'break';
-            pomoState.timeLeft = 5 * 60; // 5분 휴식
+            pomoState.timeLeft = TIMING.POMODORO_BREAK_SEC; // 5분 휴식
             if (statusLabel) {
                 statusLabel.textContent = '휴식 대기';
                 statusLabel.className = 'pomodoro-status break';
@@ -95,7 +96,7 @@ export function tickPomodoro() {
         } else {
             showToast("휴식이 끝났습니다! 다시 힘내볼까요?", "info");
             pomoState.status = 'idle';
-            pomoState.timeLeft = 25 * 60;
+            pomoState.timeLeft = TIMING.POMODORO_WORK_SEC;
             if (statusLabel) {
                 statusLabel.textContent = '대기 중';
                 statusLabel.className = 'pomodoro-status';
@@ -114,7 +115,7 @@ export function resetPomodoro() {
 
     pomoState.isRunning = false;
     pomoState.status = 'idle';
-    pomoState.timeLeft = 25 * 60;
+    pomoState.timeLeft = TIMING.POMODORO_WORK_SEC;
 
     const statusLabel = document.getElementById('pomo-status');
     const startBtn = document.getElementById('pomo-start-btn');

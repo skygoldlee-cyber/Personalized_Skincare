@@ -7,6 +7,7 @@ import { DataLoader } from '../data-loader.js';
 import { showGlobalLoading, hideGlobalLoading, showToast, vibrate, HAPTIC } from '../ui-utils.js';
 import { shuffle } from '../utils.js';
 import { STORAGE_KEYS } from '../storage-keys.js';
+import { TIMING } from '../config/timing.js';
 
 // --- 5. 실전 모의고사 시뮬레이터 구현 ---
 let simState = {
@@ -27,7 +28,7 @@ export function startSimSession(examData) {
     simState.data = examData;
     simState.currentIndex = 0;
     simState.userAnswers = {};
-    simState.timeLeft = examData.questions.length * 60; // 문항당 1분 기산
+    simState.timeLeft = examData.examData.questions.length * TIMING.EXAM_TIME_PER_QUESTION_SEC; // 문항당 1분 기산
     simState.wrongQuestions = [];
 
     // UI 전환
@@ -265,7 +266,7 @@ export function startSimTimer() {
     if (simState.timerInterval) clearInterval(simState.timerInterval);
     // 현재 남은 시간을 기준으로 종료 시각을 고정
     simState.endTime = Date.now() + (simState.timeLeft * 1000);
-    simState.timerInterval = setInterval(tickSimTimer, 500); // 500ms 간격 갱신
+    simState.timerInterval = setInterval(tickSimTimer, TIMING.EXAM_TIMER_TICK_MS); // 500ms 간격 갱신
     tickSimTimer();
 }
 

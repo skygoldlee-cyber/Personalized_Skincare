@@ -3,6 +3,9 @@
 //        content/*.md 를 런타임에 fetch → src/textbook-parser.js 로 파싱하여 조립한다.
 //        - http(s): content/manifest.json + content/**/*.md 라이브 fetch (항상 최신, 재빌드 불필요)
 //        - file://: fetch 차단되므로 data/study_md/ 분할 폴백 번들에서 원문/매니페스트 조회
+
+import { TIMING } from './config/timing.js';
+import { PATHS } from './paths.js';
 //        exam/ingredients 는 기존 레지스트리 번들 방식을 그대로 유지한다.
 import { cleanOrphansForSubject } from './state.js';
 import { buildSubjectData } from './textbook-parser.js';
@@ -14,9 +17,9 @@ var EXAM_DATA = {};
 var INGREDIENTS_DATA = [];
 
 const IS_FILE = (typeof location !== 'undefined' && location.protocol === 'file:');
-const STUDY_MD_MANIFEST_BUNDLE = './data/study_md/manifest.js';  // file:// 폴백 manifest
-const STUDY_MD_SUBJECT_BUNDLE = (key) => `./data/study_md/${key}.js`;  // file:// 폴백 과목별 MD
-const MANIFEST_URL = './content/manifest.json';
+const STUDY_MD_MANIFEST_BUNDLE = PATHS.STUDY_MD_MANIFEST_BUNDLE;  // file:// 폴백 manifest
+const STUDY_MD_SUBJECT_BUNDLE = PATHS.STUDY_MD_SUBJECT_BUNDLE;  // file:// 폴백 과목별 MD
+const MANIFEST_URL = PATHS.MANIFEST_URL;
 
 export const DataLoader = {
     registry: null,
@@ -47,13 +50,13 @@ export const DataLoader = {
                         resolve();
                     } else if (existing.dataset.loaded === 'error') {
                         existing.remove();
-                        if (remaining > 0) setTimeout(() => attemptLoad(remaining - 1), 100);
+                        if (remaining > 0) setTimeout(() => attemptLoad(remaining - 1), TIMING.SCRIPT_RETRY_DELAY_MS);
                         else reject(new Error(`Script load failed after retries: ${url}`));
                     } else {
                         existing.addEventListener('load', () => resolve());
                         existing.addEventListener('error', (e) => {
                             existing.dataset.loaded = 'error';
-                            if (remaining > 0) { existing.remove(); setTimeout(() => attemptLoad(remaining - 1), 100); }
+                            if (remaining > 0) { existing.remove(); setTimeout(() => attemptLoad(remaining - 1), TIMING.SCRIPT_RETRY_DELAY_MS); }
                             else reject(e);
                         });
                     }
@@ -66,7 +69,7 @@ export const DataLoader = {
                 script.onload = () => { script.dataset.loaded = 'true'; resolve(); };
                 script.onerror = (e) => {
                     script.dataset.loaded = 'error';
-                    if (remaining > 0) { script.remove(); setTimeout(() => attemptLoad(remaining - 1), 100); }
+                    if (remaining > 0) { script.remove(); setTimeout(() => attemptLoad(remaining - 1), TIMING.SCRIPT_RETRY_DELAY_MS); }
                     else reject(e);
                 };
                 document.head.appendChild(script);

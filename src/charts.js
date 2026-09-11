@@ -4,6 +4,7 @@
 // 로드가 실패할 때 이 모듈(및 상위 app.js) 전체가 실행되지 않아 흰 화면이 되므로 지양.
 
 import { STORAGE_KEYS } from './storage-keys.js';
+import { TIMING } from './config/timing.js';
 
 /* =======================================================
    📊 공통 툴팁 유틸리티 (Interactive Tooltip)
@@ -43,7 +44,7 @@ function showChartTooltip(html, x, y) {
 function hideChartTooltip() {
     _tooltipHideTimer = setTimeout(() => {
         if (_chartTooltip) _chartTooltip.style.opacity = '0';
-    }, 100);
+    }, TIMING.CHART_TOOLTIP_HIDE_MS);
 }
 
 /** SVG 요소에 hover + touch 툴팁 이벤트 바인딩 */
@@ -58,7 +59,7 @@ function bindTooltip(el, html) {
         if (t) showChartTooltip(html, t.clientX, t.clientY);
     }, { passive: true });
     el.addEventListener('touchend', () => {
-        setTimeout(() => hideChartTooltip(), 2000);
+        setTimeout(() => hideChartTooltip(), TIMING.CHART_TOOLTIP_TOUCH_HIDE_MS);
     }, { passive: true });
 }
 
