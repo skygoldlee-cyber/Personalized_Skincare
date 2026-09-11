@@ -108,7 +108,7 @@
 
 .textbook-reader-section-content .md-table-row {
     font-family: 'Noto Sans KR', 'Noto Color Emoji', monospace;
-    background: rgba(0, 0, 0, 0.15);
+    background: var(--overlay-bg-faint);
     padding: 0.5rem 0.75rem;
     border-radius: var(--radius-xs);
     margin-bottom: var(--space-2);
@@ -157,7 +157,7 @@
     margin: 1.5rem auto;
     border-radius: var(--radius-md);
     border: 1px solid var(--border-color);
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--shadow-card-lift);
 }
 
 /* Reader table styles */
@@ -238,7 +238,7 @@
 
 /* Reader code block (concept diagrams) */
 .reader-code-block {
-    background: rgba(0, 0, 0, 0.35);
+    background: var(--overlay-bg-light);
     border: 1px solid var(--border-color);
     border-left: 3px solid var(--color-secondary);
     border-radius: var(--radius-sm);
@@ -683,7 +683,7 @@ pre.mermaid-other .labelBkg {
     top: 100%;
     z-index: var(--z-popover);
     padding: 0.4rem 0.7rem;
-    background: rgba(15, 23, 42, 0.96);
+    background: var(--tooltip-bg);
     color: var(--color-on-brand);
     font-family: var(--font-app);
     font-size: var(--text-2xs);
@@ -694,13 +694,13 @@ pre.mermaid-other .labelBkg {
     word-break: keep-all;
     max-width: 320px;
     min-width: 120px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    box-shadow: var(--shadow-tooltip);
     pointer-events: none;
     margin-top: 4px;
 }
 .reader-light-theme .reader-toc-item:hover::after,
 .reader-light-theme .reader-toc-sub-item:hover::after {
-    background: rgba(30, 41, 59, 0.95);
+    background: var(--popover-bg);
 }
 
 /* B: TOC 접기/펼치기 */
@@ -793,7 +793,7 @@ pre.mermaid-other .labelBkg {
 .reader-toc-backdrop {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: var(--overlay-bg);
     z-index: var(--z-drawer);
     -webkit-backdrop-filter: blur(2px);
     backdrop-filter: blur(2px);
@@ -1090,7 +1090,7 @@ pre.mermaid-other .labelBkg {
     width: 46px;
     height: 46px;
     border-radius: var(--radius-full);
-    background: linear-gradient(135deg, var(--color-primary), #0891b2);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
     color: var(--color-on-brand);
     border: none;
     font-size: var(--text-md);
@@ -1116,7 +1116,7 @@ pre.mermaid-other .labelBkg {
     position: sticky;
     top: 0;
     z-index: var(--z-raised);
-    background: #16233a;
+    background: var(--bg-deep);
     box-shadow: 0 2px 0 var(--color-primary);
 }
 .reader-table tr:nth-child(even) td {
@@ -1130,7 +1130,7 @@ pre.mermaid-other .labelBkg {
     top: 6px;
     right: 6px;
     z-index: var(--z-raised);
-    background: rgba(11, 15, 25, 0.85);
+    background: var(--drawer-bg);
     border: 1px solid var(--border-color);
     color: var(--color-text-muted);
     width: 28px;
@@ -1165,7 +1165,7 @@ pre.mermaid-other .labelBkg {
 .reader-table-modal-backdrop {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.75);
+    background: var(--overlay-bg-strong);
     -webkit-backdrop-filter: blur(4px);
     backdrop-filter: blur(4px);
 }
@@ -1280,24 +1280,24 @@ body.reader-focus-mode .reader-readable-width {
     background: var(--primary-tint-12);
 }
 .reader-light-theme .reader-tool-btn {
-    background: #ffffff;
-    border-color: #d8d3c8;
-    color: #2b2b2b;
+    background: var(--reader-light-bg);
+    border-color: var(--reader-light-border);
+    color: var(--reader-light-text);
 }
 .reader-light-theme .reader-tool-btn:hover {
     background: var(--primary-tint-12);
     color: var(--color-primary-light);
-    border-color: #06b6d4;
+    border-color: var(--color-primary);
 }
 .reader-light-theme .reader-table th {
-    background: #e8f4f8;
+    background: var(--reader-light-table-header);
     color: var(--color-primary-light);
 }
 .reader-light-theme .reader-table tr:nth-child(even) td {
-    background: rgba(0, 0, 0, 0.03);
+    background: var(--overlay-bg-soft);
 }
 .reader-light-theme .reader-table tr:nth-child(odd) td {
-    background: #ffffff;
+    background: var(--reader-light-bg);
 }
 .reader-light-theme .reader-table tr:hover td {
     background: var(--primary-tint-8);
@@ -1310,7 +1310,7 @@ body.reader-focus-mode .reader-readable-width {
     color: transparent;
 }
 .reader-light-theme .reader-table .md-dash {
-    color: #999;
+    color: var(--reader-light-muted);
     opacity: 0.6;
 }
 .reader-light-theme .reader-table tbody tr.group-start td:first-child {
@@ -1319,11 +1319,11 @@ body.reader-focus-mode .reader-readable-width {
 .reader-light-theme .md-quote,
 .reader-light-theme .textbook-reader-section-content .md-quote {
     background: var(--warning-tint-10);
-    color: #4a4a4a;
+    color: var(--reader-light-quote-text);
 }
 .reader-light-theme .reader-code-block {
-    background: #f0efe9;
-    color: #2b2b2b;
+    background: var(--reader-light-code-bg);
+    color: var(--reader-light-text);
 }
 /* Mermaid light theme — Flowchart 전용 */
 .reader-light-theme pre.mermaid-flowchart svg path,
@@ -1450,10 +1450,10 @@ body.reader-focus-mode .reader-readable-width {
 }
 .reader-light-theme .reader-table-expand-btn {
     background: var(--overlay-bg);
-    color: #6b6b6b;
+    color: var(--reader-light-quote-text);
 }
 .reader-light-theme .reader-bookmark-btn {
-    color: #9a9a9a;
+    color: var(--reader-light-muted);
 }
 .reader-light-theme .reader-bookmark-btn.bookmarked {
     color: var(--color-warning-dark);
@@ -1784,7 +1784,7 @@ body.reader-focus-mode .reader-readable-width {
         position: sticky;
         top: 0;
         z-index: var(--z-sticky);
-        background: rgba(11, 15, 25, 0.95);
+        background: var(--drawer-bg);
         -webkit-backdrop-filter: blur(12px);
         backdrop-filter: blur(12px);
         /* 모바일에서 헤더가 넘치지 않도록 */
@@ -2137,7 +2137,7 @@ body.reader-focus-mode .reader-readable-width {
 .pwa-modal-backdrop {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.65);
+    background: var(--overlay-bg-modal);
     -webkit-backdrop-filter: blur(4px);
     backdrop-filter: blur(4px);
 }
@@ -3033,7 +3033,7 @@ body.landscape-mode .glass-card {
 
 .number-drill-item.is-key {
     border-color: var(--warning);
-    background: rgba(250, 171, 0, 0.06);
+    background: var(--highlight-amber-faint);
 }
 
 .number-drill-value {
@@ -3075,7 +3075,7 @@ body.landscape-mode .glass-card {
 /* ===== ④ 절차 플로우 ===== */
 
 .procedure-flow-card {
-    border-left: 3px solid #8b5cf6;
+    border-left: 3px solid var(--color-secondary);
 }
 
 .procedure-flow-svg {
@@ -3098,7 +3098,7 @@ body.landscape-mode .glass-card {
 /* ===== ⑤ 행정처분 계단 ===== */
 
 .admin-penalty-card {
-    border-left: 3px solid #ef4444;
+    border-left: 3px solid var(--color-danger);
 }
 
 .admin-penalty-table-wrapper {
@@ -3129,7 +3129,7 @@ body.landscape-mode .glass-card {
 }
 
 .admin-penalty-table tr.is-key td {
-    background: rgba(250, 171, 0, 0.08);
+    background: var(--highlight-amber-bg);
     font-weight: 600;
 }
 
@@ -3147,7 +3147,7 @@ body.landscape-mode .glass-card {
 }
 
 .admin-penalty-table tr.is-key .sticky-col {
-    background: rgba(250, 171, 0, 0.08);
+    background: var(--highlight-amber-bg);
 }
 
 .admin-penalty-table tr.zebra .sticky-col {
@@ -3242,7 +3242,7 @@ body.landscape-mode .glass-card {
 .source-link.ref-longpress-active,
 .keyword-ref-link.ref-longpress-active,
 .ref-link-item.ref-longpress-active {
-    background: rgba(31, 111, 235, 0.15);
+    background: var(--info-tint-15);
     box-shadow: 0 0 0 2px var(--color-primary);
     border-radius: var(--radius-xs);
     opacity: 0.85;
@@ -3342,12 +3342,12 @@ body.landscape-mode .glass-card {
     width: 120px;
 }
 .reader-glossary .glossary-table tr:target {
-    background: rgba(250, 204, 21, 0.15) !important;
+    background: var(--highlight-yellow-bg) !important;
     animation: glossary-flash 2s ease;
 }
 @keyframes glossary-flash {
-    0%, 100% { background: rgba(250, 204, 21, 0.15); }
-    50% { background: rgba(250, 204, 21, 0.25); }
+    0%, 100% { background: var(--highlight-yellow-bg); }
+    50% { background: var(--highlight-yellow-strong); }
 }
 
 /* Glossary link (LNN) in table cells */
@@ -3414,7 +3414,7 @@ a.glossary-ref-link i {
     border: none;
     border-radius: 2rem;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--shadow-popover);
     transition: opacity var(--transition-slow), transform var(--transition-slow);
     opacity: 0.95;
     animation: glossary-back-in 0.3s ease;
@@ -3422,7 +3422,7 @@ a.glossary-ref-link i {
 .glossary-back-btn:hover {
     opacity: 1;
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    box-shadow: var(--shadow-popover-lg);
 }
 .glossary-back-btn:active {
     transform: translateY(0);
@@ -3435,7 +3435,7 @@ a.glossary-ref-link i {
     to { opacity: 0.95; transform: translateY(0); }
 }
 
-/* === ������Ʈ Ŭ���� ? �ζ��� ��Ÿ�� ���ſ� === */
+/* === ������Ʈ Ŭ���� ? �ζ��� ��Ÿ�� ���ſ� === */
 
 /* Reader Empty States */
 .reader-empty-state {

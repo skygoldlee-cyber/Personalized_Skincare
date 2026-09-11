@@ -103,6 +103,38 @@
     --glow-danger: 0 0 15px rgba(239, 68, 68, 0.3);
     --shadow-modal: 0 20px 60px rgba(0, 0, 0, 0.5);
 
+    /* Overlay & Tooltip 특화 토큰 */
+    --overlay-bg: rgba(0, 0, 0, 0.5);
+    --overlay-bg-strong: rgba(0, 0, 0, 0.75);
+    --overlay-bg-modal: rgba(0, 0, 0, 0.65);
+    --overlay-bg-light: rgba(0, 0, 0, 0.35);
+    --overlay-bg-faint: rgba(0, 0, 0, 0.15);
+    --overlay-bg-soft: rgba(0, 0, 0, 0.03);
+    --tooltip-bg: rgba(15, 23, 42, 0.96);
+    --popover-bg: rgba(30, 41, 59, 0.95);
+    --drawer-bg: rgba(11, 15, 25, 0.95);
+    --shadow-tooltip: 0 4px 16px rgba(0, 0, 0, 0.35);
+    --shadow-popover: 0 4px 12px rgba(0, 0, 0, 0.3);
+    --shadow-popover-lg: 0 6px 16px rgba(0, 0, 0, 0.4);
+    --shadow-card-lift: 0 2px 12px rgba(0, 0, 0, 0.15);
+
+    /* Reader 라이트 테마 특화 토큰 */
+    --reader-light-bg: #ffffff;
+    --reader-light-border: #d8d3c8;
+    --reader-light-text: #2b2b2b;
+    --reader-light-muted: #999;
+    --reader-light-quote-text: #4a4a4a;
+    --reader-light-code-bg: #f0efe9;
+    --reader-light-table-header: #e8f4f8;
+    --bg-deep: #16233a;
+
+    /* 하이라이트/애니메이션 색상 토큰 */
+    --highlight-amber-faint: rgba(250, 171, 0, 0.06);
+    --highlight-amber-bg: rgba(250, 171, 0, 0.08);
+    --highlight-yellow-bg: rgba(250, 204, 21, 0.15);
+    --highlight-yellow-strong: rgba(250, 204, 21, 0.25);
+    --info-tint-15: rgba(31, 111, 235, 0.15);
+
     /* Transitions */
     --transition-fast: 0.15s ease;
     --transition-base: 0.2s ease;
