@@ -39,21 +39,21 @@
 }
 
 .icon-orange {
-    background: rgba(245, 158, 11, 0.12);
+    background: var(--warning-tint-12);
     color: var(--color-warning);
-    border: 1px solid rgba(245, 158, 11, 0.25);
+    border: 1px solid var(--warning-tint-25);
 }
 
 .icon-blue {
-    background: rgba(6, 182, 212, 0.12);
+    background: var(--primary-tint-12);
     color: var(--color-primary);
-    border: 1px solid rgba(6, 182, 212, 0.25);
+    border: 1px solid var(--primary-tint-25);
 }
 
 .icon-green {
-    background: rgba(16, 185, 129, 0.12);
+    background: var(--success-tint-12);
     color: var(--color-success);
-    border: 1px solid rgba(16, 185, 129, 0.25);
+    border: 1px solid var(--success-tint-25);
 }
 
 .trainer-menu-card h4 {
@@ -114,14 +114,14 @@
 }
 
 .limits-opt-btn.correct {
-    background: rgba(16, 185, 129, 0.15) !important;
+    background: var(--success-tint-15) !important;
     border-color: var(--color-success) !important;
     color: var(--color-success) !important;
     box-shadow: var(--glow-success);
 }
 
 .limits-opt-btn.incorrect {
-    background: rgba(239, 68, 68, 0.15) !important;
+    background: var(--danger-tint-15) !important;
     border-color: var(--color-danger) !important;
     color: var(--color-danger) !important;
 }
@@ -275,12 +275,12 @@
 }
 
 .pomodoro-status.work {
-    background: rgba(6, 182, 212, 0.15);
+    background: var(--primary-tint-15);
     color: var(--color-primary);
 }
 
 .pomodoro-status.break {
-    background: rgba(16, 185, 129, 0.15);
+    background: var(--success-tint-15);
     color: var(--color-success);
 }
 
@@ -297,7 +297,7 @@
     color: var(--color-primary);
     letter-spacing: 2px;
     margin: 0.5rem 0;
-    text-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+    text-shadow: 0 0 20px var(--primary-tint-40);
 }
 
 .timer-display.break-active {
@@ -401,7 +401,7 @@
     stroke-width: 3.5;
     fill: none;
     stroke-linecap: round;
-    filter: drop-shadow(0 4px 8px rgba(6, 182, 212, 0.4));
+    filter: drop-shadow(0 4px 8px var(--primary-tint-40));
 }
 
 .chart-area {
@@ -476,21 +476,21 @@
 }
 
 .pred-status-badge.pass {
-    background: rgba(16, 185, 129, 0.15);
+    background: var(--success-tint-15);
     color: var(--color-success);
-    border: 1px solid rgba(16, 185, 129, 0.3);
+    border: 1px solid var(--success-tint-30);
 }
 
 .pred-status-badge.warning {
-    background: rgba(245, 158, 11, 0.15);
+    background: var(--warning-tint-15);
     color: var(--color-warning);
-    border: 1px solid rgba(245, 158, 11, 0.3);
+    border: 1px solid var(--warning-tint-30);
 }
 
 .pred-status-badge.fail {
-    background: rgba(239, 68, 68, 0.15);
+    background: var(--danger-tint-15);
     color: var(--color-danger);
-    border: 1px solid rgba(239, 68, 68, 0.3);
+    border: 1px solid var(--danger-tint-30);
 }
 
 .pred-advice-box {
@@ -585,17 +585,17 @@
 }
 
 .dict-badge.approved {
-    background: rgba(16, 185, 129, 0.12);
+    background: var(--success-tint-12);
     color: var(--color-success);
 }
 
 .dict-badge.restricted {
-    background: rgba(245, 158, 11, 0.12);
+    background: var(--warning-tint-12);
     color: var(--color-warning);
 }
 
 .dict-badge.banned {
-    background: rgba(239, 68, 68, 0.12);
+    background: var(--danger-tint-12);
     color: var(--color-danger);
 }
 
@@ -671,10 +671,10 @@
 }
 
 .radar-polygon {
-    fill: rgba(139, 92, 246, 0.25);
+    fill: var(--secondary-tint-25);
     stroke: var(--color-secondary);
     stroke-width: 2px;
-    filter: drop-shadow(0 0 4px rgba(139, 92, 246, 0.4));
+    filter: drop-shadow(0 0 4px var(--secondary-tint-40));
     transition: all 0.5s ease-in-out;
 }
 
@@ -745,7 +745,7 @@
     transform: translateY(-2px);
     border-color: var(--border-color-active);
     background: var(--bg-card-hover);
-    box-shadow: var(--shadow-lg), 0 0 15px rgba(6, 182, 212, 0.1);
+    box-shadow: var(--shadow-lg), 0 0 15px var(--primary-tint-10);
 }
 
 .textbook-card-header {
@@ -811,7 +811,7 @@
 
 /* Highlights */
 mark.txt-highlight {
-    background: rgba(6, 182, 212, 0.25);
+    background: var(--primary-tint-25);
     color: var(--color-primary);
     font-weight: 700;
     padding: 0 2px;

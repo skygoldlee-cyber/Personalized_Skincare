@@ -62,27 +62,27 @@
 }
 
 .badge-cyan {
-    background-color: rgba(6, 182, 212, 0.15);
+    background-color: var(--primary-tint-15);
     color: var(--color-primary);
-    border: 1px solid rgba(6, 182, 212, 0.3);
+    border: 1px solid var(--primary-tint-30);
 }
 
 .badge-violet {
-    background-color: rgba(139, 92, 246, 0.15);
+    background-color: var(--secondary-tint-15);
     color: var(--color-secondary);
-    border: 1px solid rgba(139, 92, 246, 0.3);
+    border: 1px solid var(--secondary-tint-30);
 }
 
 .badge-emerald {
-    background-color: rgba(16, 185, 129, 0.15);
+    background-color: var(--success-tint-15);
     color: var(--color-success);
-    border: 1px solid rgba(16, 185, 129, 0.3);
+    border: 1px solid var(--success-tint-30);
 }
 
 .badge-amber {
-    background-color: rgba(245, 158, 11, 0.15);
+    background-color: var(--warning-tint-15);
     color: var(--color-warning);
-    border: 1px solid rgba(245, 158, 11, 0.3);
+    border: 1px solid var(--warning-tint-30);
 }
 
 .badge-gray {
@@ -154,14 +154,14 @@
 }
 
 .exam-card-item:not(.highlight-card) .exam-btn-link {
-    background-color: rgba(6, 182, 212, 0.1);
+    background-color: var(--primary-tint-10);
     color: var(--color-primary);
-    border-color: rgba(6, 182, 212, 0.2);
+    border-color: var(--primary-tint-20);
 }
 
 .exam-card-item:not(.highlight-card) .exam-btn-link:hover {
     background-color: var(--color-primary);
-    color: #ffffff;
+    color: var(--color-on-brand);
     box-shadow: var(--glow-primary);
 }
 
@@ -172,15 +172,15 @@
 }
 
 .highlight-card .exam-btn-link {
-    background-color: rgba(139, 92, 246, 0.1);
+    background-color: var(--secondary-tint-10);
     color: var(--color-secondary);
-    border-color: rgba(139, 92, 246, 0.2);
+    border-color: var(--secondary-tint-20);
 }
 
 .highlight-card .exam-btn-link:hover {
     background-color: var(--color-secondary);
-    color: #ffffff;
-    box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
+    color: var(--color-on-brand);
+    box-shadow: 0 0 15px var(--secondary-tint-40);
 }
 
 .full-width-card {
@@ -280,26 +280,26 @@
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
-    border: 1px solid rgba(139, 92, 246, 0.2);
-    background-color: rgba(139, 92, 246, 0.1);
+    border: 1px solid var(--secondary-tint-20);
+    background-color: var(--secondary-tint-10);
     color: var(--color-secondary);
 }
 
 .exam-btn-sim:hover {
     background-color: var(--color-secondary);
-    color: #ffffff;
-    box-shadow: 0 0 12px rgba(139, 92, 246, 0.4);
+    color: var(--color-on-brand);
+    box-shadow: 0 0 12px var(--secondary-tint-40);
 }
 
 .btn-cyan {
-    background-color: rgba(6, 182, 212, 0.1);
+    background-color: var(--primary-tint-10);
     color: var(--color-primary);
-    border: 1px solid rgba(6, 182, 212, 0.2);
+    border: 1px solid var(--primary-tint-20);
 }
 
 .btn-cyan:hover {
     background-color: var(--color-primary);
-    color: #ffffff;
+    color: var(--color-on-brand);
     box-shadow: var(--glow-primary);
 }
 
@@ -336,16 +336,16 @@
 .sim-title-group h4 {
     font-size: 1.25rem;
     font-weight: 700;
-    color: #ffffff;
+    color: var(--color-on-brand);
 }
 
 .sim-timer {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background-color: rgba(239, 68, 68, 0.15);
+    background-color: var(--danger-tint-15);
     color: var(--color-danger);
-    border: 1px solid rgba(239, 68, 68, 0.3);
+    border: 1px solid var(--danger-tint-30);
     padding: 0.4rem 0.95rem;
     border-radius: 50px;
     font-size: 0.9rem;
@@ -396,7 +396,7 @@
     font-size: 1.25rem;
     line-height: 1.7;
     margin-bottom: 2rem;
-    color: #ffffff;
+    color: var(--color-on-brand);
     word-break: keep-all;
 }
 
@@ -425,9 +425,9 @@
 }
 
 .sim-option-item.active {
-    background-color: rgba(139, 92, 246, 0.12);
+    background-color: var(--secondary-tint-12);
     border-color: var(--color-secondary);
-    box-shadow: 0 0 10px rgba(139, 92, 246, 0.2);
+    box-shadow: 0 0 10px var(--secondary-tint-20);
 }
 
 .sim-option-item .opt-num {
@@ -438,7 +438,7 @@
 }
 
 .sim-option-item.active .opt-num {
-    color: #ffffff;
+    color: var(--color-on-brand);
     text-shadow: 0 0 8px var(--color-secondary);
 }
 
@@ -483,7 +483,7 @@
 .omr-header h5 {
     font-size: 1rem;
     font-weight: 700;
-    color: #ffffff;
+    color: var(--color-on-brand);
 }
 
 .omr-progress {
@@ -531,11 +531,11 @@
 .omr-bubble:hover {
     background-color: var(--bg-active);
     border-color: var(--border-strong);
-    color: #ffffff;
+    color: var(--color-on-brand);
 }
 
 .omr-bubble.solved {
-    background-color: rgba(16, 185, 129, 0.15);
+    background-color: var(--success-tint-15);
     border-color: var(--color-success);
     color: var(--color-success);
 }
@@ -543,7 +543,7 @@
 .omr-bubble.active {
     box-shadow: 0 0 0 2px var(--color-secondary);
     border-color: var(--color-secondary);
-    color: #ffffff;
+    color: var(--color-on-brand);
 }
 
 /* Simulator Results Panel */
@@ -583,7 +583,7 @@
 .sim-review-header h4 {
     font-size: 1.25rem;
     font-weight: 700;
-    color: #ffffff;
+    color: var(--color-on-brand);
 }
 
 .sim-review-list {
@@ -614,7 +614,7 @@
 .review-item-q-text {
     font-size: 1.05rem;
     line-height: 1.6;
-    color: #ffffff;
+    color: var(--color-on-brand);
     word-break: keep-all;
 }
 

@@ -29,6 +29,57 @@
     --color-warning: #f59e0b;      /* Amber Gold */
     --color-text-main: #f3f4f6;    /* Warm White */
     --color-text-muted: #9ca3af;   /* Muted Gray */
+    --color-on-brand: #ffffff;     /* 브랜드 색 배경 위 텍스트 (다크/라이트 공통) */
+
+    /* Brand Tints — 배경/보더 틴트 (반복되는 rgba(brand, alpha) 대체) */
+    --primary-tint-5: rgba(6, 182, 212, 0.05);
+    --primary-tint-8: rgba(6, 182, 212, 0.08);
+    --primary-tint-10: rgba(6, 182, 212, 0.1);
+    --primary-tint-12: rgba(6, 182, 212, 0.12);
+    --primary-tint-15: rgba(6, 182, 212, 0.15);
+    --primary-tint-18: rgba(6, 182, 212, 0.18);
+    --primary-tint-20: rgba(6, 182, 212, 0.2);
+    --primary-tint-25: rgba(6, 182, 212, 0.25);
+    --primary-tint-30: rgba(6, 182, 212, 0.3);
+    --primary-tint-40: rgba(6, 182, 212, 0.4);
+    --primary-tint-3: rgba(6, 182, 212, 0.03);
+    --primary-tint-4: rgba(6, 182, 212, 0.04);
+    --primary-tint-6: rgba(6, 182, 212, 0.06);
+    --primary-tint-50: rgba(6, 182, 212, 0.5);
+    --primary-tint-55: rgba(6, 182, 212, 0.55);
+    --primary-tint-60: rgba(6, 182, 212, 0.6);
+    --secondary-tint-4: rgba(139, 92, 246, 0.04);
+    --secondary-tint-5: rgba(139, 92, 246, 0.05);
+    --secondary-tint-6: rgba(139, 92, 246, 0.06);
+    --secondary-tint-10: rgba(139, 92, 246, 0.1);
+    --secondary-tint-12: rgba(139, 92, 246, 0.12);
+    --secondary-tint-15: rgba(139, 92, 246, 0.15);
+    --secondary-tint-20: rgba(139, 92, 246, 0.2);
+    --secondary-tint-25: rgba(139, 92, 246, 0.25);
+    --secondary-tint-30: rgba(139, 92, 246, 0.3);
+    --secondary-tint-40: rgba(139, 92, 246, 0.4);
+    --success-tint-8: rgba(16, 185, 129, 0.08);
+    --success-tint-10: rgba(16, 185, 129, 0.1);
+    --success-tint-12: rgba(16, 185, 129, 0.12);
+    --success-tint-15: rgba(16, 185, 129, 0.15);
+    --success-tint-20: rgba(16, 185, 129, 0.2);
+    --success-tint-25: rgba(16, 185, 129, 0.25);
+    --success-tint-30: rgba(16, 185, 129, 0.3);
+    --danger-tint-8: rgba(239, 68, 68, 0.08);
+    --danger-tint-10: rgba(239, 68, 68, 0.1);
+    --danger-tint-12: rgba(239, 68, 68, 0.12);
+    --danger-tint-15: rgba(239, 68, 68, 0.15);
+    --danger-tint-20: rgba(239, 68, 68, 0.2);
+    --danger-tint-25: rgba(239, 68, 68, 0.25);
+    --danger-tint-30: rgba(239, 68, 68, 0.3);
+    --warning-tint-8: rgba(245, 158, 11, 0.08);
+    --warning-tint-10: rgba(245, 158, 11, 0.1);
+    --warning-tint-12: rgba(245, 158, 11, 0.12);
+    --warning-tint-15: rgba(245, 158, 11, 0.15);
+    --warning-tint-25: rgba(245, 158, 11, 0.25);
+    --warning-tint-30: rgba(245, 158, 11, 0.3);
+    --warning-tint-20: rgba(245, 158, 11, 0.2);
+    --warning-tint-40: rgba(245, 158, 11, 0.4);
     
     /* Shadows & Glows */
     --shadow-sm: 0 2px 4px rgba(0,0,0,0.2);
@@ -295,7 +346,7 @@ body {
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 2px 8px rgba(6, 182, 212, 0.4));
+    filter: drop-shadow(0 2px 8px var(--primary-tint-40));
 }
 
 .logo-text h1 {
@@ -369,20 +420,20 @@ body {
 }
 /* U1: 모바일 터치 피드백 */
 .nav-item:active {
-    background-color: rgba(6, 182, 212, 0.12);
+    background-color: var(--primary-tint-12);
     transform: scale(0.98);
     transition: background-color 0.05s ease, transform 0.05s ease;
 }
 
 .nav-item.active {
     color: var(--color-text-main);
-    background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(139, 92, 246, 0.05));
+    background: linear-gradient(135deg, var(--primary-tint-15), var(--secondary-tint-5));
     border-left: 3px solid var(--color-primary);
     box-shadow: var(--shadow-sm);
 }
 
 .light-theme .nav-item.active {
-    background: linear-gradient(135deg, rgba(6, 182, 212, 0.12), rgba(139, 92, 246, 0.04));
+    background: linear-gradient(135deg, var(--primary-tint-12), var(--secondary-tint-4));
 }
 
 .nav-item.active i {
@@ -411,7 +462,7 @@ body {
     flex-direction: column;
     overflow-y: auto;
     position: relative;
-    background: radial-gradient(circle at 80% 10%, rgba(6, 182, 212, 0.05), transparent 45%),
+    background: radial-gradient(circle at 80% 10%, var(--primary-tint-5), transparent 45%),
                 radial-gradient(circle at 10% 90%, rgba(139, 92, 246, 0.03), transparent 45%);
 }
 
@@ -455,11 +506,11 @@ body {
 .btn-primary {
     background: linear-gradient(135deg, var(--color-primary), #0891b2);
     color: #ffffff;
-    box-shadow: 0 4px 10px rgba(6, 182, 212, 0.2);
+    box-shadow: 0 4px 10px var(--primary-tint-20);
 }
 
 .btn-primary:hover {
-    box-shadow: 0 6px 15px rgba(6, 182, 212, 0.4);
+    box-shadow: 0 6px 15px var(--primary-tint-40);
     transform: translateY(-1px);
 }
 
@@ -484,8 +535,8 @@ body {
 }
 
 .btn-success {
-    background-color: rgba(16, 185, 129, 0.15);
-    border-color: rgba(16, 185, 129, 0.3);
+    background-color: var(--success-tint-15);
+    border-color: var(--success-tint-30);
     color: #a7f3d0;
 }
 
@@ -494,13 +545,13 @@ body {
 }
 
 .btn-success:hover {
-    background-color: rgba(16, 185, 129, 0.25);
+    background-color: var(--success-tint-25);
     box-shadow: var(--glow-success);
 }
 
 .btn-danger {
-    background-color: rgba(239, 68, 68, 0.15);
-    border-color: rgba(239, 68, 68, 0.3);
+    background-color: var(--danger-tint-15);
+    border-color: var(--danger-tint-30);
     color: #fca5a5;
 }
 
@@ -509,12 +560,12 @@ body {
 }
 
 .btn-danger:hover {
-    background-color: rgba(239, 68, 68, 0.25);
+    background-color: var(--danger-tint-25);
 }
 
 .btn-warning {
-    background-color: rgba(245, 158, 11, 0.15);
-    border-color: rgba(245, 158, 11, 0.3);
+    background-color: var(--warning-tint-15);
+    border-color: var(--warning-tint-30);
     color: #fde68a;
 }
 
@@ -523,7 +574,7 @@ body {
 }
 
 .btn-warning:hover {
-    background-color: rgba(245, 158, 11, 0.25);
+    background-color: var(--warning-tint-25);
 }
 
 /* Global Table Horizontal Scroll — 모든 테이블은 wrapper 내에서 가로 스크롤 */

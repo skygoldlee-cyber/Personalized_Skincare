@@ -60,7 +60,7 @@
     right: 0;
     width: 150px;
     height: 150px;
-    background: radial-gradient(circle, rgba(6, 182, 212, 0.05) 0%, transparent 70%);
+    background: radial-gradient(circle, var(--primary-tint-5) 0%, transparent 70%);
     pointer-events: none;
 }
 
@@ -88,8 +88,8 @@
 .card-badge {
     font-size: 0.75rem;
     font-weight: 600;
-    background-color: rgba(6, 182, 212, 0.1);
-    border: 1px solid rgba(6, 182, 212, 0.2);
+    background-color: var(--primary-tint-10);
+    border: 1px solid var(--primary-tint-20);
     color: var(--color-primary);
     padding: 0.25rem 0.75rem;
     border-radius: 50px;
@@ -104,11 +104,11 @@
     letter-spacing: 0.3px;
 }
 
-.card-type-badge[data-type="penalty"] { background: rgba(239,68,68,0.12); color: #dc2626; }
-.card-type-badge[data-type="prohibition"] { background: rgba(239,68,68,0.08); color: #b91c1c; }
-.card-type-badge[data-type="exception"] { background: rgba(245,158,11,0.12); color: #d97706; }
+.card-type-badge[data-type="penalty"] { background: var(--danger-tint-12); color: #dc2626; }
+.card-type-badge[data-type="prohibition"] { background: var(--danger-tint-8); color: #b91c1c; }
+.card-type-badge[data-type="exception"] { background: var(--warning-tint-12); color: #d97706; }
 .card-type-badge[data-type="number"] { background: rgba(59,130,246,0.12); color: #2563eb; }
-.card-type-badge[data-type="requirement"] { background: rgba(139,92,246,0.12); color: #7c3aed; }
+.card-type-badge[data-type="requirement"] { background: var(--secondary-tint-12); color: #7c3aed; }
 .card-type-badge[data-type="comparison"] { background: rgba(20,184,166,0.12); color: #0d9488; }
 .card-type-badge[data-type="procedure"] { background: rgba(34,197,94,0.12); color: #16a34a; }
 .card-type-badge[data-type="definition"] { background: rgba(107,114,128,0.12); color: #6b7280; }
@@ -276,9 +276,9 @@
 }
 
 .badge-quiz-cat {
-    background: rgba(139, 92, 246, 0.1);
+    background: var(--secondary-tint-10);
     color: var(--color-secondary);
-    border: 1px solid rgba(139, 92, 246, 0.2);
+    border: 1px solid var(--secondary-tint-20);
     padding: 0.25rem 0.75rem;
     border-radius: 50px;
     font-size: 0.75rem;
@@ -311,7 +311,7 @@
 .quiz-question-text strong {
     color: var(--color-primary);
     font-weight: 700;
-    border-bottom: 2px dashed rgba(6, 182, 212, 0.6);
+    border-bottom: 2px dashed var(--primary-tint-60);
     padding: 0 4px;
 }
 
@@ -341,7 +341,7 @@
 
 .form-input:focus {
     border-color: var(--color-primary);
-    box-shadow: 0 0 10px rgba(6, 182, 212, 0.15);
+    box-shadow: 0 0 10px var(--primary-tint-15);
 }
 
 /* Quiz Feedback Panel */
@@ -349,8 +349,8 @@
     display: flex;
     align-items: center;
     gap: 1.25rem;
-    background-color: rgba(16, 185, 129, 0.08);
-    border: 1px solid rgba(16, 185, 129, 0.2);
+    background-color: var(--success-tint-8);
+    border: 1px solid var(--success-tint-20);
     border-radius: var(--radius-md);
     padding: 1.25rem 1.5rem;
     margin-top: 2rem;
@@ -358,8 +358,8 @@
 }
 
 .quiz-feedback.incorrect {
-    background-color: rgba(239, 68, 68, 0.08);
-    border: 1px solid rgba(239, 68, 68, 0.2);
+    background-color: var(--danger-tint-8);
+    border: 1px solid var(--danger-tint-20);
 }
 
 @keyframes slideUp {
@@ -378,12 +378,12 @@
 }
 
 .quiz-feedback:not(.incorrect) .feedback-icon {
-    background-color: rgba(16, 185, 129, 0.2);
+    background-color: var(--success-tint-20);
     color: var(--color-success);
 }
 
 .quiz-feedback.incorrect .feedback-icon {
-    background-color: rgba(239, 68, 68, 0.2);
+    background-color: var(--danger-tint-20);
     color: var(--color-danger);
 }
 
@@ -424,7 +424,7 @@
     font-size: 4rem;
     color: var(--color-warning);
     margin-bottom: 1.5rem;
-    filter: drop-shadow(0 4px 15px rgba(245, 158, 11, 0.4));
+    filter: drop-shadow(0 4px 15px var(--warning-tint-40));
 }
 
 .quiz-results-card h2 {
@@ -491,9 +491,9 @@
 }
 
 .review-stats .badge {
-    background-color: rgba(245, 158, 11, 0.1);
+    background-color: var(--warning-tint-10);
     color: var(--color-warning);
-    border: 1px solid rgba(245, 158, 11, 0.2);
+    border: 1px solid var(--warning-tint-20);
     padding: 0.4rem 1rem;
     border-radius: 50px;
     font-size: 0.85rem;
@@ -518,7 +518,7 @@
 }
 
 .review-card-item:hover {
-    border-color: rgba(245, 158, 11, 0.4);
+    border-color: var(--warning-tint-40);
 }
 
 .review-card-item-header {

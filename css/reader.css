@@ -1,4 +1,76 @@
 /* Textbook Reader Styles */
+
+/* === Mermaid & Story Mode Design Tokens === */
+:root {
+    /* Mermaid 다크 테마 */
+    --mermaid-stroke: #7b8faf;
+    --mermaid-node-fill: #33334a;
+    --mermaid-text: #ffffff;
+    --mermaid-edge-label-bg: #1a1a2e;
+    --mermaid-cluster-fill: #24243e;
+    --mermaid-cluster-stroke: #7b8faf;
+    --mermaid-actor-fill: #3a3a5c;
+    --mermaid-actor-stroke: #9fa8da;
+    --mermaid-actor-line: #8888aa;
+    --mermaid-note-fill: #4a4a2e;
+    --mermaid-note-stroke: #fbc02d;
+    --mermaid-activation-fill: #5c5c8a;
+    --mermaid-message-line: #b0b0cc;
+    --mermaid-label-fill: #3a3a5c;
+    --mermaid-section-fill: #2e2e4a;
+    --mermaid-task-fill: #3a3a5c;
+    --mermaid-task-stroke: #8a8aab;
+    --mermaid-label-bkg: #3a3a5c;
+    --mermaid-other-text: #ffffff;
+
+    /* Story 모드 — 라이트/기본 */
+    --story-heading: #b8860b;
+    --story-text: #8b6914;
+    --story-quote-border: #d4a017;
+    --story-quote-bg: rgba(212, 160, 23, 0.06);
+    --story-quote-text: #6b5410;
+    --story-prologue-bg: linear-gradient(135deg, rgba(184, 134, 11, 0.04), rgba(184, 134, 11, 0.01));
+    --story-badge-gradient: linear-gradient(135deg, #f0c674, #b8860b);
+}
+
+/* Story 모드 — 다크 (prefers-color-scheme) */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --story-heading: #e0c060;
+        --story-text: #d4b878;
+        --story-quote-border: #e0c060;
+        --story-quote-bg: rgba(224, 192, 96, 0.08);
+        --story-quote-text: #e8d090;
+        --story-prologue-bg: linear-gradient(135deg, rgba(224, 192, 96, 0.06), rgba(224, 192, 96, 0.02));
+        --story-badge-gradient: linear-gradient(135deg, #d4a017, #8b6914);
+    }
+}
+
+/* Mermaid 라이트 테마 (.reader-light-theme) */
+.reader-light-theme {
+    --mermaid-stroke: #1565c0;
+    --mermaid-node-fill: #bbdefb;
+    --mermaid-text: #0d47a1;
+    --mermaid-edge-label-bg: #ffffff;
+    --mermaid-cluster-fill: #e8f1fb;
+    --mermaid-cluster-stroke: #1565c0;
+    --mermaid-actor-fill: #c5cae9;
+    --mermaid-actor-stroke: #3949ab;
+    --mermaid-actor-line: #666666;
+    --mermaid-note-fill: #fff59d;
+    --mermaid-note-stroke: #f57f17;
+    --mermaid-activation-fill: #5c6bc0;
+    --mermaid-message-line: #333333;
+    --mermaid-label-fill: #c5cae9;
+    --mermaid-label-stroke: #3949ab;
+    --mermaid-section-fill: #b39ddb;
+    --mermaid-task-fill: #c5cae9;
+    --mermaid-task-stroke: #3949ab;
+    --mermaid-label-bkg: #b39ddb;
+    --mermaid-cluster-stroke: #4527a0;
+    --mermaid-other-text: #1a1a2e;
+}
+
 .textbook-reader-content {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
@@ -63,7 +135,7 @@
 }
 
 .textbook-reader-section-content .md-quote {
-    background: rgba(6, 182, 212, 0.08);
+    background: var(--primary-tint-8);
     border-left: 3px solid var(--color-primary);
     padding: 0.75rem 1rem;
     margin: 1rem 0;
@@ -104,7 +176,7 @@
 }
 
 .reader-table th {
-    background: rgba(6, 182, 212, 0.12);
+    background: var(--primary-tint-12);
     color: var(--color-primary);
     font-weight: 700;
     padding: 0.75rem 1rem;
@@ -125,7 +197,7 @@
 }
 
 .reader-table tr:hover td {
-    background: rgba(6, 182, 212, 0.05);
+    background: var(--primary-tint-5);
 }
 
 .reader-table sup {
@@ -136,7 +208,7 @@
 
 /* Table group separator — 대분류가 바뀌는 행에 상단 구분선 */
 .reader-table tbody tr.group-start td {
-    border-top: 2px solid rgba(6, 182, 212, 0.25);
+    border-top: 2px solid var(--primary-tint-25);
 }
 .reader-table tbody tr.group-start:first-child td {
     border-top: none;
@@ -198,15 +270,15 @@ pre.mermaid svg {
 /* 모든 SVG path/line: 1px 실선 */
 pre.mermaid-flowchart svg path,
 pre.mermaid-flowchart svg line {
-    stroke: #7b8faf !important;
+    stroke: var(--mermaid-stroke) !important;
     stroke-width: 1px !important;
     fill: none !important;
 }
 /* 화살표 머리(marker 내부 path)는 채우기 적용 */
 pre.mermaid-flowchart svg marker path,
 pre.mermaid-flowchart svg defs marker path {
-    fill: #7b8faf !important;
-    stroke: #7b8faf !important;
+    fill: var(--mermaid-stroke) !important;
+    stroke: var(--mermaid-stroke) !important;
     stroke-width: 1px !important;
 }
 /* 노드 도형: 배경/보더 */
@@ -214,25 +286,25 @@ pre.mermaid-flowchart .node rect,
 pre.mermaid-flowchart .node circle,
 pre.mermaid-flowchart .node ellipse,
 pre.mermaid-flowchart .node polygon {
-    fill: #33334a !important;
-    stroke: #7b8faf !important;
+    fill: var(--mermaid-node-fill) !important;
+    stroke: var(--mermaid-stroke) !important;
     stroke-width: 1px !important;
 }
 /* 노드/엣지 텍스트 대비 */
 pre.mermaid-flowchart .nodeLabel,
 pre.mermaid-flowchart .edgeLabel,
 pre.mermaid-flowchart .cluster-label {
-    color: #ffffff !important;
-    fill: #ffffff !important;
+    color: var(--mermaid-text) !important;
+    fill: var(--mermaid-text) !important;
 }
 pre.mermaid-flowchart .edgeLabel {
-    background-color: #1a1a2e !important;
+    background-color: var(--mermaid-edge-label-bg) !important;
 }
 /* subgraph(cluster) 박스 배경 — 기본값(tertiaryColor, 밝음)이 흰 cluster-label과 충돌하므로 어둡게 */
 pre.mermaid-flowchart .cluster rect,
 pre.mermaid-flowchart .cluster {
-    fill: #24243e !important;
-    stroke: #7b8faf !important;
+    fill: var(--mermaid-cluster-fill) !important;
+    stroke: var(--mermaid-cluster-stroke) !important;
     stroke-width: 1px !important;
 }
 
@@ -248,8 +320,8 @@ pre.mermaid-flowchart .cluster {
 /* === Other 다이어그램 타입 (sequence, class, state, gantt, pie, timeline, gitGraph, quadrant, sankey, er) === */
 /* Mermaid 기본 테마를 유지하되 다크 모드 텍스트/배경 대비 보정 */
 pre.mermaid-other text {
-    fill: #ffffff !important;
-    color: #ffffff !important;
+    fill: var(--mermaid-text) !important;
+    color: var(--mermaid-text) !important;
 }
 pre.mermaid-other .actor,
 pre.mermaid-other .note,
@@ -260,81 +332,81 @@ pre.mermaid-other .loopText,
 pre.mermaid-other .taskText,
 pre.mermaid-other .sectionTitle,
 pre.mermaid-other .titleText {
-    fill: #ffffff !important;
-    color: #ffffff !important;
+    fill: var(--mermaid-text) !important;
+    color: var(--mermaid-text) !important;
 }
 /* sequenceDiagram actor box 배경/보더 가시성 */
 pre.mermaid-other .actor {
-    fill: #3a3a5c !important;
-    stroke: #9fa8da !important;
+    fill: var(--mermaid-actor-fill) !important;
+    stroke: var(--mermaid-actor-stroke) !important;
     stroke-width: 1.5px !important;
 }
 /* actor 내부 텍스트 — 배경 rect와 분리 */
 pre.mermaid-other .actor text,
 pre.mermaid-other g.actor text {
-    fill: #ffffff !important;
-    color: #ffffff !important;
+    fill: var(--mermaid-text) !important;
+    color: var(--mermaid-text) !important;
 }
 pre.mermaid-other .actor-line {
-    stroke: #8888aa !important;
+    stroke: var(--mermaid-actor-line) !important;
     stroke-width: 1px !important;
 }
 /* sequenceDiagram note box */
 pre.mermaid-other .note {
-    fill: #4a4a2e !important;
-    stroke: #fbc02d !important;
+    fill: var(--mermaid-note-fill) !important;
+    stroke: var(--mermaid-note-stroke) !important;
     stroke-width: 1px !important;
 }
 /* note 내부 텍스트 — 배경 rect와 분리 */
 pre.mermaid-other .note text,
 pre.mermaid-other .noteText,
 pre.mermaid-other g.note text {
-    fill: #ffffff !important;
-    color: #ffffff !important;
+    fill: var(--mermaid-text) !important;
+    color: var(--mermaid-text) !important;
 }
 /* sequenceDiagram activation bar */
 pre.mermaid-other .activation0,
 pre.mermaid-other .activation1,
 pre.mermaid-other .activation2 {
-    fill: #5c5c8a !important;
+    fill: var(--mermaid-activation-fill) !important;
     opacity: 0.8 !important;
 }
 /* sequenceDiagram message arrow */
 pre.mermaid-other .messageLine0,
 pre.mermaid-other .messageLine1 {
-    stroke: #b0b0cc !important;
+    stroke: var(--mermaid-message-line) !important;
     stroke-width: 1.5px !important;
 }
 /* sequenceDiagram label box */
 pre.mermaid-other .label {
-    fill: #3a3a5c !important;
+    fill: var(--mermaid-label-fill) !important;
 }
 /* label 내부 텍스트 — 배경 rect와 분리 */
 pre.mermaid-other .label text,
 pre.mermaid-other g.label text {
-    fill: #ffffff !important;
-    color: #ffffff !important;
+    fill: var(--mermaid-text) !important;
+    color: var(--mermaid-text) !important;
 }
 /* gantt/pie 차트 영역 배경 */
 pre.mermaid-other .section0,
 pre.mermaid-other .section1,
 pre.mermaid-other .section2 {
-    fill: #2e2e4a !important;
+    fill: var(--mermaid-section-fill) !important;
 }
 pre.mermaid-other .task {
-    fill: #3a3a5c !important;
-    stroke: #8a8aab !important;
+    fill: var(--mermaid-task-fill) !important;
+    stroke: var(--mermaid-task-stroke) !important;
 }
 /* state/ER 등 그룹(cluster) 박스 배경 — 기본값이 밝아서 흰 텍스트와 충돌하므로 어둡게 */
 pre.mermaid-other .cluster rect,
 pre.mermaid-other .cluster {
-    fill: #2e2e4a !important;
-    stroke: #7b8faf !important;
+    fill: var(--mermaid-section-fill) !important;
+    stroke: var(--mermaid-stroke) !important;
     stroke-width: 1px !important;
 }
 /* sequence alt/opt/loop 라벨 박스 배경 — 기본값이 밝아서 흰 텍스트와 충돌하므로 어둡게 */
 pre.mermaid-other .labelBkg {
-    fill: #3a3a5c !important;
+    fill: var(--mermaid-label-bkg) !important;
 }
 
 /* Reader horizontal rule */
@@ -346,7 +418,7 @@ pre.mermaid-other .labelBkg {
 
 /* Quote styling improvements */
 .md-quote {
-    background: rgba(245, 158, 11, 0.08);
+    background: var(--warning-tint-8);
     border-left: 3px solid var(--color-warning);
     padding: 0.85rem 1.1rem;
     margin: 1rem 0;
@@ -399,7 +471,7 @@ pre.mermaid-other .labelBkg {
     background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
     border-radius: 2px;
     transition: width 0.15s ease-out;
-    box-shadow: 0 0 8px rgba(6, 182, 212, 0.5);
+    box-shadow: 0 0 8px var(--primary-tint-50);
 }
 
 /* Reader toolbar */
@@ -454,18 +526,18 @@ pre.mermaid-other .labelBkg {
     white-space: nowrap;
 }
 .reader-tool-btn:hover {
-    background: rgba(6, 182, 212, 0.15);
+    background: var(--primary-tint-15);
     border-color: var(--color-primary);
     color: var(--color-primary);
 }
 /* U1: 모바일 터치 피드백 */
 .reader-tool-btn:active {
     transform: scale(0.95);
-    background: rgba(6, 182, 212, 0.2);
+    background: var(--primary-tint-20);
     transition: transform 0.05s ease, background 0.05s ease;
 }
 .reader-tool-btn.active {
-    background: rgba(6, 182, 212, 0.2);
+    background: var(--primary-tint-20);
     border-color: var(--color-primary);
     color: var(--color-primary);
     box-shadow: var(--glow-primary);
@@ -541,12 +613,12 @@ pre.mermaid-other .labelBkg {
 /* U1: 모바일 터치 피드백 */
 .reader-toc-item:active,
 .reader-toc-sub-item:active {
-    background: rgba(6, 182, 212, 0.12);
+    background: var(--primary-tint-12);
     transition: background 0.05s ease;
 }
 .reader-toc-item.active {
     color: var(--color-primary);
-    background: rgba(6, 182, 212, 0.1);
+    background: var(--primary-tint-10);
     border-left-color: var(--color-primary);
     font-weight: 600;
 }
@@ -566,7 +638,7 @@ pre.mermaid-other .labelBkg {
     padding: 0.6rem 0.65rem;
     margin-top: 0.4rem;
     border-left: 3px solid var(--color-primary);
-    background: rgba(6, 182, 212, 0.06);
+    background: var(--primary-tint-6);
     border-radius: var(--radius-sm);
 }
 .reader-toc-item.toc-chapter .toc-toggle-icon {
@@ -778,24 +850,24 @@ pre.mermaid-other .labelBkg {
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 .reader-section-card:hover {
-    border-color: rgba(6, 182, 212, 0.25);
+    border-color: var(--primary-tint-25);
 }
 /* U1: 모바일 터치 피드백 */
 .reader-section-card:active {
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 1px rgba(6, 182, 212, 0.2);
+    box-shadow: 0 0 0 1px var(--primary-tint-20);
     transition: border-color 0.05s ease, box-shadow 0.05s ease;
 }
 .reader-section-card.current-section {
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 1px rgba(6, 182, 212, 0.3), var(--shadow-md);
+    box-shadow: 0 0 0 1px var(--primary-tint-30), var(--shadow-md);
 }
 .reader-section-card.current-section .reader-section-title {
     color: var(--color-primary);
 }
 #reader-audio-scroll-btn.active {
-    background: rgba(6, 182, 212, 0.18);
-    border-color: rgba(6, 182, 212, 0.5);
+    background: var(--primary-tint-18);
+    border-color: var(--primary-tint-50);
     color: var(--color-primary);
 }
 
@@ -811,11 +883,11 @@ pre.mermaid-other .labelBkg {
     transition: background 0.15s ease;
 }
 .reader-section-header:hover {
-    background: rgba(6, 182, 212, 0.06);
+    background: var(--primary-tint-6);
 }
 /* U1: 모바일 터치 피드백 */
 .reader-section-header:active {
-    background: rgba(6, 182, 212, 0.12);
+    background: var(--primary-tint-12);
     transition: background 0.05s ease;
 }
 .reader-section-toggle {
@@ -865,7 +937,7 @@ pre.mermaid-other .labelBkg {
 }
 .reader-bookmark-btn:hover {
     color: var(--color-warning);
-    background: rgba(245, 158, 11, 0.1);
+    background: var(--warning-tint-10);
     transform: scale(1.15);
 }
 .reader-bookmark-btn.bookmarked {
@@ -925,7 +997,7 @@ pre.mermaid-other .labelBkg {
 
 /* Chapter header card */
 .reader-chapter-header-card {
-    background: linear-gradient(135deg, rgba(6, 182, 212, 0.08), rgba(139, 92, 246, 0.06));
+    background: linear-gradient(135deg, var(--primary-tint-8), var(--secondary-tint-6));
     border: 1px solid var(--border-color-active);
     border-radius: var(--radius-md);
     padding: 1.5rem 1.75rem;
@@ -970,14 +1042,14 @@ pre.mermaid-other .labelBkg {
 }
 .reader-nav-btn:hover:not(:disabled) {
     border-color: var(--color-primary);
-    background: rgba(6, 182, 212, 0.06);
+    background: var(--primary-tint-6);
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
 }
 /* U1: 모바일 터치 피드백 */
 .reader-nav-btn:active:not(:disabled) {
     transform: scale(0.98);
-    background: rgba(6, 182, 212, 0.12);
+    background: var(--primary-tint-12);
     transition: transform 0.05s ease, background 0.05s ease;
 }
 .reader-nav-btn:disabled {
@@ -1024,13 +1096,13 @@ pre.mermaid-other .labelBkg {
     font-size: 1.05rem;
     cursor: pointer;
     z-index: 60;
-    box-shadow: 0 4px 14px rgba(6, 182, 212, 0.4);
+    box-shadow: 0 4px 14px var(--primary-tint-40);
     transition: all 0.25s ease;
     opacity: 0.9;
 }
 .reader-back-to-top:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(6, 182, 212, 0.55);
+    box-shadow: 0 8px 20px var(--primary-tint-55);
     opacity: 1;
 }
 
@@ -1113,8 +1185,8 @@ pre.mermaid-other .labelBkg {
     position: sticky;
     top: 0;
     float: right;
-    background: rgba(239, 68, 68, 0.15);
-    border: 1px solid rgba(239, 68, 68, 0.3);
+    background: var(--danger-tint-15);
+    border: 1px solid var(--danger-tint-30);
     color: #fca5a5;
     width: 34px;
     height: 34px;
@@ -1124,7 +1196,7 @@ pre.mermaid-other .labelBkg {
     z-index: 5;
 }
 .reader-table-modal-close:hover {
-    background: rgba(239, 68, 68, 0.3);
+    background: var(--danger-tint-30);
 }
 .reader-table-modal-body .reader-table {
     font-size: 0.95rem;
@@ -1151,7 +1223,7 @@ body.reader-focus-mode .reader-readable-width {
     max-width: 52rem;
 }
 #reader-focus-toggle.active {
-    background: rgba(139, 92, 246, 0.2);
+    background: var(--secondary-tint-20);
     border-color: var(--color-secondary);
     color: var(--color-secondary);
 }
@@ -1180,7 +1252,7 @@ body.reader-focus-mode .reader-readable-width {
     border-bottom-color: var(--reader-border);
 }
 .reader-light-theme .reader-chapter-header-card {
-    background: linear-gradient(135deg, rgba(6, 182, 212, 0.08), rgba(139, 92, 246, 0.05));
+    background: linear-gradient(135deg, var(--primary-tint-8), var(--secondary-tint-5));
     border-color: var(--reader-chapter-border);
 }
 .reader-light-theme .textbook-reader-section-content,
@@ -1205,7 +1277,7 @@ body.reader-focus-mode .reader-readable-width {
     background: var(--reader-hover-bg);
 }
 .reader-light-theme .reader-toc-item.active {
-    background: rgba(6, 182, 212, 0.12);
+    background: var(--primary-tint-12);
 }
 .reader-light-theme .reader-tool-btn {
     background: #ffffff;
@@ -1213,7 +1285,7 @@ body.reader-focus-mode .reader-readable-width {
     color: #2b2b2b;
 }
 .reader-light-theme .reader-tool-btn:hover {
-    background: rgba(6, 182, 212, 0.12);
+    background: var(--primary-tint-12);
     color: #0e7490;
     border-color: #06b6d4;
 }
@@ -1228,11 +1300,11 @@ body.reader-focus-mode .reader-readable-width {
     background: #ffffff;
 }
 .reader-light-theme .reader-table tr:hover td {
-    background: rgba(6, 182, 212, 0.08);
+    background: var(--primary-tint-8);
 }
 /* Light theme: group separator + empty cell + dash */
 .reader-light-theme .reader-table tbody tr.group-start td {
-    border-top-color: rgba(6, 182, 212, 0.3);
+    border-top-color: var(--primary-tint-30);
 }
 .reader-light-theme .reader-table td.cell-empty {
     color: transparent;
@@ -1246,7 +1318,7 @@ body.reader-focus-mode .reader-readable-width {
 }
 .reader-light-theme .md-quote,
 .reader-light-theme .textbook-reader-section-content .md-quote {
-    background: rgba(245, 158, 11, 0.1);
+    background: var(--warning-tint-10);
     color: #4a4a4a;
 }
 .reader-light-theme .reader-code-block {
@@ -1256,38 +1328,38 @@ body.reader-focus-mode .reader-readable-width {
 /* Mermaid light theme — Flowchart 전용 */
 .reader-light-theme pre.mermaid-flowchart svg path,
 .reader-light-theme pre.mermaid-flowchart svg line {
-    stroke: #1565c0 !important;
+    stroke: var(--mermaid-stroke) !important;
     stroke-width: 1px !important;
     fill: none !important;
 }
 .reader-light-theme pre.mermaid-flowchart svg marker path,
 .reader-light-theme pre.mermaid-flowchart svg defs marker path {
-    fill: #1565c0 !important;
-    stroke: #1565c0 !important;
+    fill: var(--mermaid-stroke) !important;
+    stroke: var(--mermaid-stroke) !important;
     stroke-width: 1px !important;
 }
 .reader-light-theme pre.mermaid-flowchart .node rect,
 .reader-light-theme pre.mermaid-flowchart .node circle,
 .reader-light-theme pre.mermaid-flowchart .node ellipse,
 .reader-light-theme pre.mermaid-flowchart .node polygon {
-    fill: #bbdefb !important;
-    stroke: #1565c0 !important;
+    fill: var(--mermaid-node-fill) !important;
+    stroke: var(--mermaid-stroke) !important;
     stroke-width: 1px !important;
 }
 .reader-light-theme pre.mermaid-flowchart .nodeLabel,
 .reader-light-theme pre.mermaid-flowchart .edgeLabel,
 .reader-light-theme pre.mermaid-flowchart .cluster-label {
-    color: #0d47a1 !important;
-    fill: #0d47a1 !important;
+    color: var(--mermaid-text) !important;
+    fill: var(--mermaid-text) !important;
 }
 .reader-light-theme pre.mermaid-flowchart .edgeLabel {
-    background-color: #ffffff !important;
+    background-color: var(--mermaid-edge-label-bg) !important;
 }
 /* subgraph(cluster) 박스 배경 — 라이트 팔레트(연한 파랑) + 어두운 라벨 */
 .reader-light-theme pre.mermaid-flowchart .cluster rect,
 .reader-light-theme pre.mermaid-flowchart .cluster {
-    fill: #e8f1fb !important;
-    stroke: #1565c0 !important;
+    fill: var(--mermaid-cluster-fill) !important;
+    stroke: var(--mermaid-stroke) !important;
     stroke-width: 1px !important;
 }
 /* Mermaid light theme — Mindmap 전용 */
@@ -1303,75 +1375,75 @@ body.reader-focus-mode .reader-readable-width {
 .reader-light-theme pre.mermaid-other .taskText,
 .reader-light-theme pre.mermaid-other .sectionTitle,
 .reader-light-theme pre.mermaid-other .titleText {
-    fill: #1a1a2e !important;
-    color: #1a1a2e !important;
+    fill: var(--mermaid-other-text) !important;
+    color: var(--mermaid-other-text) !important;
 }
 .reader-light-theme pre.mermaid-other .actor {
-    fill: #c5cae9 !important;
-    stroke: #3949ab !important;
+    fill: var(--mermaid-actor-fill) !important;
+    stroke: var(--mermaid-actor-stroke) !important;
     stroke-width: 1.5px !important;
 }
 /* actor 내부 텍스트 — 배경 rect와 분리 */
 .reader-light-theme pre.mermaid-other .actor text,
 .reader-light-theme pre.mermaid-other g.actor text {
-    fill: #1a1a2e !important;
-    color: #1a1a2e !important;
+    fill: var(--mermaid-other-text) !important;
+    color: var(--mermaid-other-text) !important;
 }
 .reader-light-theme pre.mermaid-other .actor-line {
-    stroke: #666 !important;
+    stroke: var(--mermaid-actor-line) !important;
     stroke-width: 1px !important;
 }
 .reader-light-theme pre.mermaid-other .note {
-    fill: #fff59d !important;
-    stroke: #f57f17 !important;
+    fill: var(--mermaid-note-fill) !important;
+    stroke: var(--mermaid-note-stroke) !important;
     stroke-width: 1px !important;
 }
 /* note 내부 텍스트 — .note rect 배경과 분리하여 명시적으로 어둡게 */
 .reader-light-theme pre.mermaid-other .note text,
 .reader-light-theme pre.mermaid-other .noteText,
 .reader-light-theme pre.mermaid-other g.note text {
-    fill: #1a1a2e !important;
-    color: #1a1a2e !important;
+    fill: var(--mermaid-other-text) !important;
+    color: var(--mermaid-other-text) !important;
 }
 .reader-light-theme pre.mermaid-other .activation0,
 .reader-light-theme pre.mermaid-other .activation1,
 .reader-light-theme pre.mermaid-other .activation2 {
-    fill: #5c6bc0 !important;
+    fill: var(--mermaid-activation-fill) !important;
     opacity: 0.85 !important;
 }
 .reader-light-theme pre.mermaid-other .messageLine0,
 .reader-light-theme pre.mermaid-other .messageLine1 {
-    stroke: #333 !important;
+    stroke: var(--mermaid-message-line) !important;
     stroke-width: 1.5px !important;
 }
 .reader-light-theme pre.mermaid-other .label {
-    fill: #c5cae9 !important;
-    stroke: #3949ab !important;
+    fill: var(--mermaid-label-fill) !important;
+    stroke: var(--mermaid-label-stroke) !important;
 }
 /* label 내부 텍스트 — 배경 rect와 분리 */
 .reader-light-theme pre.mermaid-other .label text,
 .reader-light-theme pre.mermaid-other g.label text {
-    fill: #1a1a2e !important;
-    color: #1a1a2e !important;
+    fill: var(--mermaid-other-text) !important;
+    color: var(--mermaid-other-text) !important;
 }
 /* alt/opt/loop 블록 배경 — secondaryColor/tertiaryColor 영역 */
 .reader-light-theme pre.mermaid-other .labelBkg {
-    fill: #b39ddb !important;
+    fill: var(--mermaid-label-bkg) !important;
 }
 .reader-light-theme pre.mermaid-other .cluster rect,
 .reader-light-theme pre.mermaid-other .cluster {
-    fill: #b39ddb !important;
-    stroke: #4527a0 !important;
+    fill: var(--mermaid-section-fill) !important;
+    stroke: var(--mermaid-cluster-stroke) !important;
     stroke-width: 1.5px !important;
 }
 .reader-light-theme pre.mermaid-other .section0,
 .reader-light-theme pre.mermaid-other .section1,
 .reader-light-theme pre.mermaid-other .section2 {
-    fill: #b39ddb !important;
+    fill: var(--mermaid-section-fill) !important;
 }
 .reader-light-theme pre.mermaid-other .task {
-    fill: #c5cae9 !important;
-    stroke: #3949ab !important;
+    fill: var(--mermaid-task-fill) !important;
+    stroke: var(--mermaid-task-stroke) !important;
 }
 .reader-light-theme .reader-section-num {
     color: #fff;
@@ -2192,8 +2264,8 @@ body.reader-focus-mode .reader-readable-width {
 .pwa-tip {
     margin: 1.1rem 0 0;
     padding: 0.75rem 0.9rem;
-    background: rgba(6, 182, 212, 0.08);
-    border: 1px solid rgba(6, 182, 212, 0.2);
+    background: var(--primary-tint-8);
+    border: 1px solid var(--primary-tint-20);
     border-radius: 10px;
     color: var(--color-text-muted, #9aa3b2);
     font-size: 0.83rem;
@@ -2503,7 +2575,7 @@ body.landscape-mode .glass-card {
     background-color: var(--bg-card);
 }
 .light-theme .highlight-card {
-    background: linear-gradient(135deg, rgba(6, 182, 212, 0.06), rgba(139, 92, 246, 0.04));
+    background: linear-gradient(135deg, var(--primary-tint-6), var(--secondary-tint-4));
 }
 
 /* 3) 반투명 흰색 인터랙티브 배경 → 라이트에서 대비 확보 */
@@ -3130,12 +3202,12 @@ body.landscape-mode .glass-card {
     transition: background 0.15s ease;
 }
 .ref-link-item:hover {
-    background: rgba(6, 182, 212, 0.1);
+    background: var(--primary-tint-10);
     color: var(--color-primary);
 }
 /* U1: 모바일 터치 피드백 */
 .ref-link-item:active {
-    background: rgba(6, 182, 212, 0.18);
+    background: var(--primary-tint-18);
     transition: background 0.05s ease;
 }
 .ref-link-item i {
@@ -3179,8 +3251,8 @@ body.landscape-mode .glass-card {
 
 /* 3. 이야기형 배지 */
 .badge-story {
-    background: linear-gradient(135deg, #f0c674, #b8860b);
-    color: #fff;
+    background: var(--story-badge-gradient);
+    color: var(--color-on-brand);
     font-size: 0.78rem;
     padding: 0.2rem 0.6rem;
     border-radius: 999px;
@@ -3196,9 +3268,9 @@ body.landscape-mode .glass-card {
 
 /* 1. 이야기 서브헤딩 (### 📖) — 범위 제한: md-quote 전까지만 */
 .story-mode .textbook-reader-section-content h3.md-h3 {
-    color: #b8860b;
+    color: var(--story-heading);
     font-weight: 700;
-    border-left: 3px solid #b8860b;
+    border-left: 3px solid var(--story-heading);
     padding-left: 0.6rem;
     margin-top: 1.2rem;
 }
@@ -3206,7 +3278,7 @@ body.landscape-mode .glass-card {
 /* 이야기 본문 문단 — h5 이후 형제 중 md-quote가 아닌 것만 */
 .story-mode .textbook-reader-section-content h3.md-h3 ~ p,
 .story-mode .textbook-reader-section-content h3.md-h3 ~ div.md-para {
-    color: #8b6914;
+    color: var(--story-text);
 }
 
 /* 1. 범위 제한: 한 줄 요약(md-quote)은 이야기 색상 제외 */
@@ -3216,42 +3288,19 @@ body.landscape-mode .glass-card {
 
 /* 5. 프롤로그/등장인물 소개 — 첫 섹션의 개요 배경색 */
 .story-mode .reader-section-card:first-child .textbook-reader-section-content {
-    background: linear-gradient(135deg, rgba(184,134,11,0.04), rgba(184,134,11,0.01));
+    background: var(--story-prologue-bg);
     border-radius: 8px;
     padding: 1rem;
 }
 
 /* 7. 대사(인용구) 스타일 — > "..." 형태 */
 .story-mode .textbook-reader-section-content h3.md-h3 ~ div.md-quote {
-    border-left: 3px solid #d4a017;
-    background: rgba(212,160,23,0.06);
+    border-left: 3px solid var(--story-quote-border);
+    background: var(--story-quote-bg);
     padding: 0.6rem 0.9rem;
     border-radius: 0 6px 6px 0;
     font-style: italic;
-    color: #6b5410;
-}
-
-/* 2. 다크모드 대응 */
-@media (prefers-color-scheme: dark) {
-    .story-mode .textbook-reader-section-content h3.md-h3 {
-        color: #e0c060;
-        border-left-color: #e0c060;
-    }
-    .story-mode .textbook-reader-section-content h3.md-h3 ~ p,
-    .story-mode .textbook-reader-section-content h3.md-h3 ~ div.md-para {
-        color: #d4b878;
-    }
-    .story-mode .textbook-reader-section-content h3.md-h3 ~ div.md-quote {
-        color: #e8d090;
-        background: rgba(224,192,96,0.08);
-        border-left-color: #e0c060;
-    }
-    .story-mode .reader-section-card:first-child .textbook-reader-section-content {
-        background: linear-gradient(135deg, rgba(224,192,96,0.06), rgba(224,192,96,0.02));
-    }
-    .badge-story {
-        background: linear-gradient(135deg, #d4a017, #8b6914);
-    }
+    color: var(--story-quote-text);
 }
 
 /* === Glossary table (중요 용어 해설) === */
@@ -3260,7 +3309,7 @@ body.landscape-mode .glass-card {
     padding: 1rem;
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md, 8px);
-    background: rgba(6, 182, 212, 0.03);
+    background: var(--primary-tint-3);
 }
 .reader-glossary .glossary-title {
     margin: 0 0 0.75rem 0;
@@ -3322,7 +3371,7 @@ a.glossary-term-link {
 }
 a.glossary-term-link:hover {
     text-decoration: underline;
-    background: rgba(6, 182, 212, 0.08);
+    background: var(--primary-tint-8);
     border-radius: 2px;
 }
 
@@ -3342,7 +3391,7 @@ a.glossary-ref-link i {
 
 /* Light theme overrides for glossary */
 .reader-light-theme .reader-glossary {
-    background: rgba(6, 182, 212, 0.04);
+    background: var(--primary-tint-4);
 }
 .reader-light-theme .reader-glossary .glossary-explanation {
     color: #2b2b2b !important;
