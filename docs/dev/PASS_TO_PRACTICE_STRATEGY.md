@@ -1,7 +1,9 @@
-# 🧴 Pass → Practice 전략: Formula OS — 합격 후 실무 플랫폼 전환
+# 🧴 Cosmetic Master — Pass → Practice 전략: Formula OS
 
+> **브랜드 구조**: **Cosmetic Master** (상위 브랜드) = **Pass Master** (Pass Loop, 시험 합격) + **Formula OS** (Practice Loop, 실무)
+>
 > **작성일**: 2026-09-11
-> **개정일**: 2026-09-12 — 종합 리뷰 반영: Formula OS 핵심 격상, AI 배합 참고 한 단계 뒤로, verified 세분화, MVP 축소(Phase 5-A), 고객 개인정보 최소화, 법적 한도 ≠ 안전성 UI 분리, ingredient_practice 관계형 분리, 법령 알림 Actionable Alert 강화, Pass Pro vs Practice Pro 분리, Practice 타깃 확장, Knowledge Flywheel
+> **개정일**: 2026-09-12 — 종합 리뷰 반영: Formula OS 핵심 격상, AI 배합 참고 한 단계 뒤로, verified 세분화, MVP 축소(Phase 5-A), 고객 개인정보 최소화, 법적 한도 ≠ 안전성 UI 분리, ingredient_practice 관계형 분리, 법령 알림 Actionable Alert 강화, Pass Pro vs Practice Pro 분리, Practice 타깃 확장, Knowledge Flywheel, 상위 브랜드 Cosmetic Master 적용
 > **목적**: 합격 후 이탈하는 일반 자격증 플랫폼과 달리, 맞춤형화장품조제관리사의 특성을 활용하여 **합격 후에도 계속 머무는 실무 플랫폼** 으로 확장하는 전략
 > **관련 문서**: [FEATURE_PROPOSALS.md](FEATURE_PROPOSALS.md), [SUBSCRIPTION_ROADMAP.md](SUBSCRIPTION_ROADMAP.md), [READER_FEEDBACK_DESIGN.md](READER_FEEDBACK_DESIGN.md)
 
@@ -47,16 +49,16 @@
 
 ### 1.0 제품 정의: Formula OS
 
-> **Cosmetic Pass Master의 진짜 경쟁력은 AI가 아닙니다.**
+> **Cosmetic Master의 진짜 경쟁력은 AI가 아닙니다.**
 > **수험생을 조제 실무자로 전환시키고, 그 사람이 사용하는 포뮬러·원료·규정·업무 데이터를 계속 축적하게 만드는 구조입니다.**
 
 ```
-Cosmetic Pass Master
+Cosmetic Master (상위 브랜드)
         │
-        ├── PASS (시험)
+        ├── Pass Master (Pass Loop — 시험)
         │    └─ 자격증 합격을 빠르게
         │
-        └── PRACTICE (실무) = Formula OS
+        └── Formula OS (Practice Loop — 실무)
              ├─ 원료 DB
              ├─ 배합 계산
              ├─ 포뮬러 작성·저장
@@ -800,7 +802,7 @@ flowchart TD
 
 ```
 
-> 시간이 지나면서 Cosmetic Pass Master만의 **실무 데이터 자산**이 됩니다.
+> 시간이 지나면서 Cosmetic Master만의 **실무 데이터 자산**이 됩니다.
 > 단, 검증되지 않은 크라우드 데이터는 "참고"로만 분류하고, AI 학습 데이터에서 제외합니다. (§10 참조)
 
 ### 9.4 READER_FEEDBACK_DESIGN.md와의 연결
