@@ -6,6 +6,7 @@ import { checkShortAnswer } from './trainer.js';
 import { DataLoader } from '../data-loader.js';
 import { showGlobalLoading, hideGlobalLoading, showToast, vibrate, HAPTIC } from '../ui-utils.js';
 import { shuffle } from '../utils.js';
+import { STORAGE_KEYS } from '../storage-keys.js';
 
 // --- 5. 실전 모의고사 시뮬레이터 구현 ---
 let simState = {
@@ -149,11 +150,11 @@ export function saveSimDraft() {
         currentIndex: simState.currentIndex,
         questions: simState.data.questions
     };
-    localStorage.setItem('sim_draft_session', JSON.stringify(draft));
+    localStorage.setItem(STORAGE_KEYS.SIM_DRAFT_SESSION, JSON.stringify(draft));
 }
 
 export function clearSimDraft() {
-    localStorage.removeItem('sim_draft_session');
+    localStorage.removeItem(STORAGE_KEYS.SIM_DRAFT_SESSION);
     const banner = document.getElementById('draft-resume-banner');
     if (banner) banner.classList.add('is-hidden');
 }
@@ -162,7 +163,7 @@ export function checkExamDraft() {
     const banner = document.getElementById('draft-resume-banner');
     if (!banner) return;
     
-    const saved = localStorage.getItem('sim_draft_session');
+    const saved = localStorage.getItem(STORAGE_KEYS.SIM_DRAFT_SESSION);
     if (saved) {
         try {
             const draft = JSON.parse(saved);
@@ -185,7 +186,7 @@ export function checkExamDraft() {
 }
 
 export function resumeSimDraft() {
-    const saved = localStorage.getItem('sim_draft_session');
+    const saved = localStorage.getItem(STORAGE_KEYS.SIM_DRAFT_SESSION);
     if (!saved) return;
     
     try {

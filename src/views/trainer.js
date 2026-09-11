@@ -7,6 +7,7 @@ import { initScratchpadCanvas, clearScratchpad, toggleCalcScratchpad, toggleScra
 import { shuffle } from '../utils.js';
 import { togglePomodoro, tickPomodoro, resetPomodoro, updatePomodoroUI } from './pomodoro.js';
 import { showToast, vibrate, HAPTIC } from '../ui-utils.js';
+import { STORAGE_KEYS } from '../storage-keys.js';
 
 // 뽀모도로 함수 재수출 (app.js 호환성 유지)
 export { togglePomodoro, tickPomodoro, resetPomodoro, updatePomodoroUI };
@@ -463,7 +464,7 @@ export function renderCalcHistory() {
     const listContainer = document.getElementById('calc-history-list');
     if (!listContainer) return;
     
-    const historyJSON = safeGetItem('calc_history');
+    const historyJSON = safeGetItem(STORAGE_KEYS.CALC_HISTORY);
     let history = [];
     if (historyJSON) {
         try {
@@ -504,7 +505,7 @@ export function renderCalcHistory() {
 }
 
 export function addCalcHistoryItem(questionText, type, userVal, correctAns, isCorrect, unit) {
-    const historyJSON = safeGetItem('calc_history');
+    const historyJSON = safeGetItem(STORAGE_KEYS.CALC_HISTORY);
     let history = [];
     if (historyJSON) {
         try {
@@ -530,7 +531,7 @@ export function addCalcHistoryItem(questionText, type, userVal, correctAns, isCo
         history = history.slice(0, 5);
     }
     
-    safeSetItem('calc_history', JSON.stringify(history));
+    safeSetItem(STORAGE_KEYS.CALC_HISTORY, JSON.stringify(history));
     renderCalcHistory();
 }
 

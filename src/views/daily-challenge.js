@@ -5,6 +5,7 @@ import { DataLoader } from '../data-loader.js';
 import { checkShortAnswer } from './trainer.js';
 import { shuffle } from '../utils.js';
 import { showToast, showConfirm } from '../ui-utils.js';
+import { STORAGE_KEYS, dailyCompletedKey } from '../storage-keys.js';
 
 /* =======================================================
    🧩 일일 5분 데일리 챌린지 (Daily 5-Min Challenge) & Streak
@@ -25,8 +26,8 @@ export function updateStreakAndDailyUI() {
     
     if (!streakDaysEl) return;
     
-    let streak = parseInt(safeGetItem('study_streak')) || 0;
-    const lastDate = safeGetItem('study_streak_last_date');
+    let streak = parseInt(safeGetItem(STORAGE_KEYS.STUDY_STREAK)) || 0;
+    const lastDate = safeGetItem(STORAGE_KEYS.STUDY_STREAK_LAST_DATE);
     const todayStr = new Date().toISOString().split('T')[0];
     
     if (lastDate) {
@@ -37,7 +38,7 @@ export function updateStreakAndDailyUI() {
         
         if (diffDays > 1) {
             streak = 0;
-            safeSetItem('study_streak', 0);
+            safeSetItem(STORAGE_KEYS.STUDY_STREAK, 0);
         }
     } else {
         streak = 0;
@@ -45,7 +46,7 @@ export function updateStreakAndDailyUI() {
     
     streakDaysEl.textContent = streak;
     
-    const todayCompleted = safeGetItem(`daily_completed_${todayStr}`);
+    const todayCompleted = safeGetItem(dailyCompletedKey(todayStr));
     if (todayCompleted) {
         if (challengeStatusEl) {
             challengeStatusEl.textContent = '🟢 오늘 미션 완료!';
@@ -72,7 +73,7 @@ export function updateStreakAndDailyUI() {
  */
 export function startDailyChallenge() {
     const todayStr = new Date().toISOString().split('T')[0];
-    const todayCompleted = safeGetItem(`daily_completed_${todayStr}`);
+    const todayCompleted = safeGetItem(dailyCompletedKey(todayStr));
     if (todayCompleted) {
         showToast('오늘의 데일리 챌린지를 이미 달성하셨습니다! 내일 다시 도전해 주세요.', 'info');
         return;
@@ -390,15 +391,15 @@ export function finishDailyChallenge() {
     showToast(`🎉 일일 데일리 챌린지를 완수하셨습니다!\n획득 점수: ${dailyState.correctCount} / ${dailyState.questions.length} 개`, 'success', 4000);
     
     const todayStr = new Date().toISOString().split('T')[0];
-    safeSetItem(`daily_completed_${todayStr}`, "true");
+    safeSetItem(dailyCompletedKey(todayStr), "true");
     
-    let streak = parseInt(safeGetItem('study_streak')) || 0;
-    const lastDate = safeGetItem('study_streak_last_date');
+    let streak = parseInt(safeGetItem(STORAGE_KEYS.STUDY_STREAK)) || 0;
+    const lastDate = safeGetItem(STORAGE_KEYS.STUDY_STREAK_LAST_DATE);
     
     if (lastDate !== todayStr) {
         streak++;
-        safeSetItem('study_streak', streak);
-        safeSetItem('study_streak_last_date', todayStr);
+        safeSetItem(STORAGE_KEYS.STUDY_STREAK, streak);
+        safeSetItem(STORAGE_KEYS.STUDY_STREAK_LAST_DATE, todayStr);
     }
     
     updateStreakAndDailyUI();

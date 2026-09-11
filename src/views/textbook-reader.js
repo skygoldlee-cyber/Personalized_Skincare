@@ -13,6 +13,7 @@ import { collectGlossaryItems, renderGlossaryTable, appendGlossaryTocItem, bindG
 // [모바일 PWA 견고성] 오디오 매니페스트는 window 전역(가드)에서 읽는다(정적 import 하드 의존 지양).
 import { DataLoader } from '../data-loader.js';
 import { showToast, trapFocus } from '../ui-utils.js';
+import { STORAGE_KEYS } from '../storage-keys.js';
 
 // --- 교재 본문 읽기 (Textbook Reader) ---
 let textbookReaderState = {
@@ -22,7 +23,7 @@ let textbookReaderState = {
 };
 
 // 1. 교재 읽기 이어하기 — localStorage 영속화
-const READER_POSITION_KEY = 'readerLastPosition';
+const READER_POSITION_KEY = STORAGE_KEYS.READER_LAST_POSITION;
 let _scrollSaveTimer = null;
 
 function saveReaderPosition() {
@@ -1278,12 +1279,12 @@ function _renderReaderMermaid(container) {
 
 // --- Reader convenience feature state & logic ---
 let readerChapterContext = { subjId: '', chapterIdx: 0 };
-let readerFontScale = parseFloat(localStorage.getItem('readerFontScale')) || 1;
+let readerFontScale = parseFloat(localStorage.getItem(STORAGE_KEYS.READER_FONT_SCALE)) || 1;
 let readerScrollBound = false;
 
 function getReaderBookmarks() {
     try {
-        return JSON.parse(localStorage.getItem('readerBookmarks')) || [];
+        return JSON.parse(localStorage.getItem(STORAGE_KEYS.READER_BOOKMARKS)) || [];
     } catch { return []; }
 }
 
@@ -1301,7 +1302,7 @@ function toggleReaderBookmark(key, btn) {
         btn.querySelector('i').className = 'fa-solid fa-bookmark';
         btn.title = '북마크 제거';
     }
-    localStorage.setItem('readerBookmarks', JSON.stringify(bookmarks));
+    localStorage.setItem(STORAGE_KEYS.READER_BOOKMARKS, JSON.stringify(bookmarks));
 }
 
 function applyReaderFontScale() {
@@ -1309,7 +1310,7 @@ function applyReaderFontScale() {
     const display = document.getElementById('reader-font-size-display');
     if (container) container.style.setProperty('--reader-font-scale', readerFontScale);
     if (display) display.textContent = Math.round(readerFontScale * 100) + '%';
-    localStorage.setItem('readerFontScale', readerFontScale);
+    localStorage.setItem(STORAGE_KEYS.READER_FONT_SCALE, readerFontScale);
 }
 
 function applyReaderThemeClass() {

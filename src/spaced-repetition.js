@@ -7,8 +7,9 @@
 // - lastReview: 마지막 복습 날짜
 
 import { safeGetItem, safeSetItem } from './state.js';
+import { STORAGE_KEYS } from './storage-keys.js';
 
-const SR_KEY = 'fc_spaced_repetition';
+const SR_KEY = STORAGE_KEYS.FC_SPACED_REPETITION;
 
 /**
  * SM-2 알고리즘 — 품질 점수(0-5)에 따라 다음 복습 간격 계산

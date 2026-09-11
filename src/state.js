@@ -8,6 +8,8 @@
 // 참고: saveProgress()는 대시보드 통계 갱신을 위해 app.js의 updateGlobalStats()를
 // 호출합니다. 전역 함수 참조이므로 모듈 분리 후에도 동작은 동일합니다.
 
+import { STORAGE_KEYS } from './storage-keys.js';
+
 /* =======================================================
    📦 전역 학습 상태 객체 (Global Application State)
    ======================================================= */
@@ -109,9 +111,9 @@ export function safeSetItem(key, value) {
 
 // 로컬스토리지에서 진도 가져오기
 export function loadProgress() {
-    const memorized = safeGetItem('fc_memorized');
-    const weak = safeGetItem('fc_weak');
-    const quizzes = safeGetItem('quiz_results');
+    const memorized = safeGetItem(STORAGE_KEYS.FC_MEMORIZED);
+    const weak = safeGetItem(STORAGE_KEYS.FC_WEAK);
+    const quizzes = safeGetItem(STORAGE_KEYS.QUIZ_RESULTS);
 
     if (memorized) {
         try {
@@ -132,27 +134,27 @@ export function loadProgress() {
     }
 
     // 뽀모도로 누적 시간은 "오늘" 기준이므로, 날짜가 바뀌었으면 0으로 리셋
-    const pomoDate = safeGetItem('pomo_total_time_date');
+    const pomoDate = safeGetItem(STORAGE_KEYS.POMO_TOTAL_TIME_DATE);
     const todayStr = new Date().toISOString().split('T')[0];
     if (pomoDate !== todayStr) {
         state.trainer.pomodoro.totalTimeToday = 0;
-        safeSetItem('pomo_total_time', '0');
-        safeSetItem('pomo_total_time_date', todayStr);
+        safeSetItem(STORAGE_KEYS.POMO_TOTAL_TIME, '0');
+        safeSetItem(STORAGE_KEYS.POMO_TOTAL_TIME_DATE, todayStr);
     } else {
-        const totalPomo = safeGetItem('pomo_total_time');
+        const totalPomo = safeGetItem(STORAGE_KEYS.POMO_TOTAL_TIME);
         if (totalPomo) {
             state.trainer.pomodoro.totalTimeToday = parseInt(totalPomo) || 0;
         }
     }
-    
+
     // 뽀모도로 세션 카운트 로드 (오늘 기준)
-    const pomoSessionDate = safeGetItem('pomo_session_date');
+    const pomoSessionDate = safeGetItem(STORAGE_KEYS.POMO_SESSION_DATE);
     if (pomoSessionDate !== todayStr) {
         state.trainer.pomodoro.sessionCount = 0;
-        safeSetItem('pomo_session_count', '0');
-        safeSetItem('pomo_session_date', todayStr);
+        safeSetItem(STORAGE_KEYS.POMO_SESSION_COUNT, '0');
+        safeSetItem(STORAGE_KEYS.POMO_SESSION_DATE, todayStr);
     } else {
-        const sessionCount = safeGetItem('pomo_session_count');
+        const sessionCount = safeGetItem(STORAGE_KEYS.POMO_SESSION_COUNT);
         if (sessionCount) {
             state.trainer.pomodoro.sessionCount = parseInt(sessionCount) || 0;
         }
@@ -161,9 +163,9 @@ export function loadProgress() {
 
 // 로컬스토리지에 진도 저장
 export function saveProgress() {
-    safeSetItem('fc_memorized', JSON.stringify([...state.memorizedCards]));
-    safeSetItem('fc_weak', JSON.stringify([...state.weakCards]));
-    safeSetItem('quiz_results', JSON.stringify(state.quizResults));
+    safeSetItem(STORAGE_KEYS.FC_MEMORIZED, JSON.stringify([...state.memorizedCards]));
+    safeSetItem(STORAGE_KEYS.FC_WEAK, JSON.stringify([...state.weakCards]));
+    safeSetItem(STORAGE_KEYS.QUIZ_RESULTS, JSON.stringify(state.quizResults));
 
     // 대시보드 글로벌 통계 갱신 (app.js에 정의된 전역 함수; 로드 순서상 런타임에 사용 가능)
     if (typeof updateGlobalStats === 'function') {

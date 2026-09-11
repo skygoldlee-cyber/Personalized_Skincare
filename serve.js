@@ -1,5 +1,5 @@
 // 정적 파일 서버 (HTTP Range 지원) - 오디오 탐색(시크) 안정화용
-// 사용: node serve.js  [포트 기본 8000]
+// 사용: node serve.js [포트]  또는  PORT=포트 node serve.js  (기본 3000)
 // 외부 라이브러리 없이 Node 내장 모듈만 사용.
 const http = require('http');
 const fs = require('fs');
@@ -7,7 +7,7 @@ const path = require('path');
 const { URL } = require('url');
 
 const ROOT = __dirname;
-const PORT = parseInt(process.argv[2], 10) || 8000;
+const PORT = parseInt(process.argv[2], 10) || parseInt(process.env.PORT, 10) || 3000;
 
 const MIME = {
     '.html': 'text/html; charset=utf-8',

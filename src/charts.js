@@ -3,6 +3,8 @@
 // 채우는 window 전역을 "가드"해서 읽는다. 정적 import 로 하드 의존하면, 레지스트리 파일
 // 로드가 실패할 때 이 모듈(및 상위 app.js) 전체가 실행되지 않아 흰 화면이 되므로 지양.
 
+import { STORAGE_KEYS } from './storage-keys.js';
+
 /* =======================================================
    📊 공통 툴팁 유틸리티 (Interactive Tooltip)
    ======================================================= */
@@ -69,7 +71,7 @@ export function renderPerformanceChart() {
     if (!wrapper) return;
     
     let history = [];
-    const saved = localStorage.getItem('sim_results_history');
+    const saved = localStorage.getItem(STORAGE_KEYS.SIM_RESULTS_HISTORY);
     if (saved) {
         try {
             history = JSON.parse(saved);
@@ -238,7 +240,7 @@ export function renderPassFailDiagnosis() {
     if (!area) return;
     
     let history = [];
-    const saved = localStorage.getItem('sim_results_history');
+    const saved = localStorage.getItem(STORAGE_KEYS.SIM_RESULTS_HISTORY);
     if (saved) {
         try {
             history = JSON.parse(saved);
@@ -342,7 +344,7 @@ export function renderRadarChart() {
     if (!wrapper) return;
     
     let history = [];
-    const saved = localStorage.getItem('sim_results_history');
+    const saved = localStorage.getItem(STORAGE_KEYS.SIM_RESULTS_HISTORY);
     if (saved) {
         try {
             history = JSON.parse(saved);

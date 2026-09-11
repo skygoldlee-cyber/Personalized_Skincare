@@ -11,6 +11,7 @@ import { ExamViewer } from './exam-viewer.js';
 import { ManualViewer } from './manual-viewer.js';
 import { initWebVitals } from './web-vitals.js';
 import { updateCardSchedule, getDueCount, clearAllSchedules } from './spaced-repetition.js';
+import { STORAGE_KEYS, RESET_KEYS, isDailyCompletedKey } from './storage-keys.js';
 
 // --- 뷰 컨트롤러 모듈 임포트 ---
 import {
@@ -384,7 +385,7 @@ function setupOrientationToggle() {
 
     // 초기 상태 복원
     try {
-        const saved = localStorage.getItem('preferredOrientation');
+        const saved = localStorage.getItem(STORAGE_KEYS.PREFERRED_ORIENTATION);
         if (saved === 'landscape') {
             document.body.classList.add('landscape-mode');
             btn.querySelector('i').className = 'fa-solid fa-mobile-screen';
@@ -395,9 +396,9 @@ function setupOrientationToggle() {
         const isLandscape = document.body.classList.toggle('landscape-mode');
         try {
             if (isLandscape) {
-                localStorage.setItem('preferredOrientation', 'landscape');
+                localStorage.setItem(STORAGE_KEYS.PREFERRED_ORIENTATION, 'landscape');
             } else {
-                localStorage.removeItem('preferredOrientation');
+                localStorage.removeItem(STORAGE_KEYS.PREFERRED_ORIENTATION);
             }
         } catch (e) { /* 무시 */ }
         // 아이콘 업데이트
@@ -749,30 +750,15 @@ function setupEventListeners() {
         state.trainer.pomodoro.sessionCount = 0;
         
         // 로컬스토리지에 남아있는 모든 학습 데이터 키 제거
-        const keysToRemove = [
-            'fc_memorized',
-            'fc_weak',
-            'quiz_results',
-            'sim_results_history',
-            'sim_draft_session',
-            'pomo_total_time',
-            'pomo_total_time_date',
-            'pomo_session_count',
-            'pomo_session_date',
-            'study_streak',
-            'study_streak_last_date',
-            'calc_history',
-            'fc_spaced_repetition', // 2. 간격 반복 (SM-2)
-            'readerLastPosition'    // 1. 교재 읽기 이어하기
-        ];
+        const keysToRemove = RESET_KEYS;
         keysToRemove.forEach(k => { try { localStorage.removeItem(k); } catch(_) {} });
-        
+
         // 날짜 기반 동적 키(daily_completed_*) 일괄 제거
         const dynamicKeys = [];
         try {
             for (let i = 0; i < localStorage.length; i++) {
                 const key = localStorage.key(i);
-                if (key && key.startsWith('daily_completed_')) {
+                if (key && isDailyCompletedKey(key)) {
                     dynamicKeys.push(key);
                 }
             }
@@ -1567,9 +1553,9 @@ function setupPWAInstall() {
         // 페이지 로드 완료 후 자동 표시
         const showInappGuide = () => {
             try {
-                const seen = sessionStorage.getItem('__inappGuideShown');
+                const seen = sessionStorage.getItem(STORAGE_KEYS.INAPP_GUIDE_SHOWN);
                 if (seen) return;
-                sessionStorage.setItem('__inappGuideShown', '1');
+                sessionStorage.setItem(STORAGE_KEYS.INAPP_GUIDE_SHOWN, '1');
                 openInstallModal();
             } catch (e) {
                 openInstallModal();
@@ -1590,7 +1576,7 @@ function setupThemeToggle() {
     function apply(light) {
         root.classList.toggle('light-theme', light);
         if (meta) meta.setAttribute('content', light ? '#dde3ec' : '#0b0f19');
-        try { localStorage.setItem('appTheme', light ? 'light' : 'dark'); } catch (e) {}
+        try { localStorage.setItem(STORAGE_KEYS.APP_THEME, light ? 'light' : 'dark'); } catch (e) {}
         // 리더 등 다른 모듈이 동일한 테마 상태를 공유하도록 이벤트 브로드캐스트
         document.dispatchEvent(new CustomEvent('themechange', { detail: { light: light } }));
     }
@@ -1624,7 +1610,7 @@ function setupThemeToggle() {
     if (window.matchMedia) {
         var mq = window.matchMedia('(prefers-color-scheme: light)');
         var onChange = function (e) {
-            if (localStorage.getItem('appTheme')) return;
+            if (localStorage.getItem(STORAGE_KEYS.APP_THEME)) return;
             apply(e.matches);
         };
         if (mq.addEventListener) mq.addEventListener('change', onChange);
