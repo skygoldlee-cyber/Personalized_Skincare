@@ -6,9 +6,20 @@
     --bg-card-hover: rgba(31, 41, 55, 0.85);
     --border-color: rgba(255, 255, 255, 0.08);
     --border-color-active: rgba(6, 182, 212, 0.4);
-    --bg-subtle: rgba(255, 255, 255, 0.03);
-    --bg-subtle-hover: rgba(255, 255, 255, 0.06);
-    --border-subtle: rgba(255, 255, 255, 0.05);
+
+    /* Subtle background/border tiers (하드코딩 rgba(255,255,255,0.0X) 대체) */
+    --bg-subtle: rgba(255, 255, 255, 0.02);       /* 매우 희미한 배경 */
+    --bg-muted: rgba(255, 255, 255, 0.04);        /* 희미한 배경 */
+    --bg-hover: rgba(255, 255, 255, 0.06);         /* hover 배경 */
+    --bg-active: rgba(255, 255, 255, 0.08);        /* active/강조 배경 */
+    --bg-elevated: rgba(255, 255, 255, 0.1);       /* 떠 있는 배경 */
+    --border-faint: rgba(255, 255, 255, 0.03);     /* 매우 희미한 테두리 */
+    --border-subtle: rgba(255, 255, 255, 0.05);    /* 희미한 테두리 */
+    --border-strong: rgba(255, 255, 255, 0.15);    /* 강한 테두리 */
+    --overlay-bg: rgba(255, 255, 255, 0.9);        /* 모달/오버레이 배경 */
+    --stroke-subtle: rgba(255, 255, 255, 0.05);   /* SVG stroke 희미 */
+    --stroke-medium: rgba(255, 255, 255, 0.08);   /* SVG stroke 중간 */
+    --stroke-strong: rgba(255, 255, 255, 0.12);   /* SVG stroke 강함 */
     
     /* Brand Colors */
     --color-primary: #06b6d4;      /* Luminous Cyan */
@@ -85,9 +96,20 @@
     --bg-card-hover: #f9fafb;
     --border-color: rgba(15, 23, 42, 0.15);
     --border-color-active: rgba(6, 182, 212, 0.5);
-    --bg-subtle: rgba(15, 23, 42, 0.03);
-    --bg-subtle-hover: rgba(15, 23, 42, 0.06);
-    --border-subtle: rgba(15, 23, 42, 0.08);
+
+    /* Subtle background/border tiers — 라이트모드는 어두운 색으로 대비 */
+    --bg-subtle: rgba(15, 23, 42, 0.025);
+    --bg-muted: rgba(15, 23, 42, 0.04);
+    --bg-hover: rgba(15, 23, 42, 0.06);
+    --bg-active: rgba(15, 23, 42, 0.08);
+    --bg-elevated: rgba(15, 23, 42, 0.1);
+    --border-faint: rgba(15, 23, 42, 0.06);
+    --border-subtle: rgba(15, 23, 42, 0.1);
+    --border-strong: rgba(15, 23, 42, 0.25);
+    --overlay-bg: rgba(255, 255, 255, 0.9);
+    --stroke-subtle: rgba(15, 23, 42, 0.06);
+    --stroke-medium: rgba(15, 23, 42, 0.1);
+    --stroke-strong: rgba(15, 23, 42, 0.15);
     
     --color-text-main: #1f2937;
     --color-text-muted: #4b5563;
@@ -105,27 +127,6 @@
 }
 .light-theme ::-webkit-scrollbar-thumb:hover {
     background: rgba(0, 0, 0, 0.22);
-}
-
-/* Light-mode: 하드코딩된 rgba(255,255,255,0.0X) 박스 배경/테두리를 대비되게 오버라이드 */
-.light-theme .stat-card,
-.light-theme .quiz-card,
-.light-theme .rec-item,
-.light-theme .reader-section-card,
-.light-theme .reader-chapter-header-card,
-.light-theme .reader-toolbar,
-.light-theme .reader-toc,
-.light-theme .exam-card-item,
-.light-theme .highlight-card,
-.light-theme .full-width-card,
-.light-theme .sim-question-card,
-.light-theme .sim-main-panel,
-.light-theme .trainer-menu-card,
-.light-theme .pomodoro-card,
-.light-theme .analytics-card,
-.light-theme .solution-accordion {
-    background: var(--bg-subtle);
-    border: 1px solid var(--border-color);
 }
 
 /* Reset & Base Styles */
@@ -173,11 +174,11 @@ body {
     background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--bg-elevated);
     border-radius: var(--radius-sm);
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.25);
+    background: var(--border-strong);
 }
 
 /* A4: 전정 감각 민감 사용자 — 애니메이션/전환 축소 */
@@ -284,7 +285,7 @@ body {
 
 .nav-item:hover {
     color: var(--color-text-main);
-    background-color: rgba(255, 255, 255, 0.03);
+    background-color: var(--bg-subtle);
 }
 
 .light-theme .nav-item:hover {
@@ -391,13 +392,13 @@ body {
 }
 
 .btn-secondary {
-    background-color: rgba(255,255,255,0.05);
+    background-color: var(--bg-muted);
     border-color: var(--border-color);
     color: var(--color-text-main);
 }
 
 .btn-secondary:hover {
-    background-color: rgba(255,255,255,0.1);
+    background-color: var(--bg-elevated);
 }
 
 .light-theme .btn-secondary {

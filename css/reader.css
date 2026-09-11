@@ -121,7 +121,7 @@
 }
 
 .reader-table tr:nth-child(even) td {
-    background: rgba(255, 255, 255, 0.02);
+    background: var(--bg-subtle);
 }
 
 .reader-table tr:hover td {
@@ -388,7 +388,7 @@ pre.mermaid-other .labelBkg {
     z-index: 50;
     width: 100%;
     height: 4px;
-    background: rgba(255, 255, 255, 0.06);
+    background: var(--bg-hover);
     border-radius: 2px;
     margin-bottom: 1rem;
     overflow: hidden;
@@ -438,7 +438,7 @@ pre.mermaid-other .labelBkg {
     background: var(--border-color);
 }
 .reader-tool-btn {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--bg-muted);
     border: 1px solid var(--border-color);
     color: var(--color-text-main);
     padding: 0.4rem 0.75rem;
@@ -536,7 +536,7 @@ pre.mermaid-other .labelBkg {
 }
 .reader-toc-item:hover {
     color: var(--color-text-main);
-    background: rgba(255, 255, 255, 0.04);
+    background: var(--bg-muted);
 }
 /* U1: 모바일 터치 피드백 */
 .reader-toc-item:active,
@@ -680,7 +680,7 @@ pre.mermaid-other .labelBkg {
 }
 .reader-toc-sub-item:hover {
     color: var(--color-text-main);
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--bg-subtle);
 }
 .reader-toc-sub-item .toc-sub-text {
     flex: 1;
@@ -806,7 +806,7 @@ pre.mermaid-other .labelBkg {
     padding: 1.1rem 1.5rem;
     cursor: pointer;
     user-select: none;
-    background: rgba(255, 255, 255, 0.02);
+    background: var(--bg-subtle);
     border-bottom: 1px solid var(--border-color);
     transition: background 0.15s ease;
 }
@@ -1048,10 +1048,10 @@ pre.mermaid-other .labelBkg {
     box-shadow: 0 2px 0 var(--color-primary);
 }
 .reader-table tr:nth-child(even) td {
-    background: rgba(255, 255, 255, 0.035);
+    background: var(--bg-muted);
 }
 .reader-table tr:nth-child(odd) td {
-    background: rgba(255, 255, 255, 0.005);
+    background: var(--bg-subtle);
 }
 .reader-table-expand-btn {
     position: absolute;
@@ -1377,7 +1377,7 @@ body.reader-focus-mode .reader-readable-width {
     color: #fff;
 }
 .reader-light-theme .reader-table-expand-btn {
-    background: rgba(255, 255, 255, 0.9);
+    background: var(--overlay-bg);
     color: #6b6b6b;
 }
 .reader-light-theme .reader-bookmark-btn {
@@ -1963,7 +1963,7 @@ body.reader-focus-mode .reader-readable-width {
 
     /* 스켈레톤 로딩 애니메이션 */
     .skeleton {
-        background: linear-gradient(90deg, var(--bg-card) 25%, rgba(255,255,255,0.05) 50%, var(--bg-card) 75%);
+        background: linear-gradient(90deg, var(--bg-card) 25%, var(--bg-muted) 50%, var(--bg-card) 75%);
         background-size: 200% 100%;
         animation: skeleton-loading 1.5s infinite;
         border-radius: var(--radius-sm);
@@ -2077,7 +2077,7 @@ body.reader-focus-mode .reader-readable-width {
     max-height: 86vh;
     overflow-y: auto;
     background: var(--bg-card, #171d2b);
-    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+    border: 1px solid var(--border-color);
     border-radius: 16px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
     animation: pwaModalIn 0.25s ease;
@@ -2093,7 +2093,7 @@ body.reader-focus-mode .reader-readable-width {
     align-items: center;
     justify-content: space-between;
     padding: 1.1rem 1.25rem;
-    border-bottom: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+    border-bottom: 1px solid var(--border-color);
 }
 
 .pwa-modal-header h3 {
@@ -2121,7 +2121,7 @@ body.reader-focus-mode .reader-readable-width {
 }
 
 .pwa-modal-close:hover {
-    background: rgba(255, 255, 255, 0.06);
+    background: var(--bg-hover);
     color: var(--color-text-main, #e8eaed);
 }
 
@@ -2185,7 +2185,7 @@ body.reader-focus-mode .reader-readable-width {
     max-width: 260px;
     height: auto;
     border-radius: 10px;
-    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+    border: 1px solid var(--border-color);
     margin-top: 0.4rem;
 }
 
@@ -2494,7 +2494,7 @@ body.landscape-mode .glass-card {
 
 /* 2) 하드코딩된 어두운 패널 배경 → 라이트 카드 배경 */
 .light-theme .app-header {
-    background: rgba(255, 255, 255, 0.85);
+    background: var(--overlay-bg);
 }
 .light-theme #sim-arena-panel,
 .light-theme #sim-result-panel,
@@ -3062,7 +3062,7 @@ body.landscape-mode .glass-card {
 }
 
 .admin-penalty-table tr.zebra td {
-    background: rgba(255, 255, 255, 0.02);
+    background: var(--bg-subtle);
 }
 
 .admin-penalty-table .sticky-col {
@@ -3079,7 +3079,7 @@ body.landscape-mode .glass-card {
 }
 
 .admin-penalty-table tr.zebra .sticky-col {
-    background: rgba(255, 255, 255, 0.04);
+    background: var(--bg-muted);
 }
 
 /* ===== 학습 보조 모바일 ===== */
