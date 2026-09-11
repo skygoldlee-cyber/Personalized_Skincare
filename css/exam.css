@@ -16,7 +16,7 @@
 }
 
 .section-title-area p {
-    font-size: 0.95rem;
+    font-size: var(--text-base);
     color: var(--color-text-muted);
 }
 
@@ -55,7 +55,7 @@
     align-self: flex-start;
     padding: 0.35rem 0.75rem;
     border-radius: var(--radius-sm);
-    font-size: 0.75rem;
+    font-size: var(--text-xs-sm);
     font-weight: 700;
     letter-spacing: 0.5px;
     text-transform: uppercase;
@@ -92,34 +92,34 @@
 }
 
 .light-theme .badge-gray {
-    color: #4b5563;
+    color: var(--color-text-muted);
 }
 
 .light-theme .badge-cyan {
-    color: #0e7490;
+    color: var(--color-primary-light);
 }
 
 .light-theme .badge-violet {
-    color: #6d28d9;
+    color: var(--color-secondary-dark);
 }
 
 .light-theme .badge-emerald {
-    color: #047857;
+    color: var(--color-success-dark);
 }
 
 .light-theme .badge-amber {
-    color: #92400e;
+    color: var(--color-warning-darker);
 }
 
 .exam-card-title {
-    font-size: 1.15rem;
+    font-size: var(--text-lg-sm);
     font-weight: 700;
     color: var(--color-text-main);
     line-height: 1.3;
 }
 
 .exam-card-desc {
-    font-size: 0.88rem;
+    font-size: var(--text-sm-md);
     color: var(--color-text-muted);
     line-height: 1.5;
     flex-grow: 1;
@@ -145,7 +145,7 @@
     gap: var(--space-2);
     padding: 0.75rem 1rem;
     border-radius: var(--radius-sm);
-    font-size: 0.9rem;
+    font-size: var(--text-md-sm);
     font-weight: 600;
     text-decoration: none;
     cursor: pointer;
@@ -276,7 +276,7 @@
     gap: var(--space-2);
     padding: 0.65rem 0.85rem;
     border-radius: var(--radius-sm);
-    font-size: 0.85rem;
+    font-size: var(--text-sm-md);
     font-weight: 600;
     cursor: pointer;
     transition: var(--transition-base);
@@ -334,7 +334,7 @@
 }
 
 .sim-title-group h4 {
-    font-size: 1.25rem;
+    font-size: var(--text-lg);
     font-weight: 700;
     color: var(--color-on-brand);
 }
@@ -347,8 +347,8 @@
     color: var(--color-danger);
     border: 1px solid var(--danger-tint-30);
     padding: 0.4rem 0.95rem;
-    border-radius: 50px;
-    font-size: 0.9rem;
+    border-radius: var(--radius-pill);
+    font-size: var(--text-md-sm);
     font-weight: 700;
     letter-spacing: 0.5px;
     font-family: monospace;
@@ -393,7 +393,7 @@
 }
 
 .sim-q-text {
-    font-size: 1.25rem;
+    font-size: var(--text-lg);
     line-height: 1.7;
     margin-bottom: var(--space-6);
     color: var(--color-on-brand);
@@ -432,7 +432,7 @@
 
 .sim-option-item .opt-num {
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: var(--text-md-lg);
     color: var(--color-secondary);
     min-width: 24px;
 }
@@ -443,7 +443,7 @@
 }
 
 .sim-option-item .opt-text {
-    font-size: 0.98rem;
+    font-size: var(--text-base);
     color: var(--color-text-main);
 }
 
@@ -481,13 +481,13 @@
 }
 
 .omr-header h5 {
-    font-size: 1rem;
+    font-size: var(--text-1rem);
     font-weight: 700;
     color: var(--color-on-brand);
 }
 
 .omr-progress {
-    font-size: 0.82rem;
+    font-size: var(--text-sm-2);
     color: var(--color-text-muted);
 }
 
@@ -510,16 +510,16 @@
 }
 .omr-grid-container::-webkit-scrollbar-thumb {
     background-color: var(--bg-elevated);
-    border-radius: 4px;
+    border-radius: var(--radius-xs);
 }
 
 .omr-bubble {
     aspect-ratio: 1;
-    border-radius: 50%;
+    border-radius: var(--radius-full);
     border: 1px solid var(--border-color);
     background-color: var(--bg-subtle);
     color: var(--color-text-muted);
-    font-size: 0.8rem;
+    font-size: var(--text-sm);
     font-weight: 600;
     display: flex;
     align-items: center;
@@ -581,7 +581,7 @@
 }
 
 .sim-review-header h4 {
-    font-size: 1.25rem;
+    font-size: var(--text-lg);
     font-weight: 700;
     color: var(--color-on-brand);
 }
@@ -612,7 +612,7 @@
 }
 
 .review-item-q-text {
-    font-size: 1.05rem;
+    font-size: var(--text-md);
     line-height: 1.6;
     color: var(--color-on-brand);
     word-break: keep-all;
@@ -628,7 +628,7 @@
 }
 
 .review-q-options li {
-    font-size: 0.9rem;
+    font-size: var(--text-md-sm);
     color: var(--color-text-muted);
     padding-left: var(--space-2);
     border-left: 2px solid var(--border-subtle);
@@ -645,7 +645,7 @@
 }
 
 .review-answer-panel p {
-    font-size: 0.95rem;
+    font-size: var(--text-base);
     margin: 0;
 }
 
@@ -663,14 +663,14 @@
 }
 
 .review-explanation-panel h5 {
-    font-size: 0.9rem;
+    font-size: var(--text-md-sm);
     font-weight: 700;
     color: var(--color-secondary);
     margin-bottom: 0.35rem;
 }
 
 .review-explanation-panel p {
-    font-size: 0.88rem;
+    font-size: var(--text-sm-md);
     line-height: 1.5;
     color: var(--color-text-muted);
     margin: 0;

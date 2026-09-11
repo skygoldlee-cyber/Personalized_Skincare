@@ -81,7 +81,7 @@
 }
 
 .textbook-reader-section-title {
-    font-size: 1.25rem;
+    font-size: var(--text-lg);
     color: var(--color-primary);
     margin-bottom: var(--space-4);
     padding-bottom: var(--space-2);
@@ -96,7 +96,7 @@
 
 .textbook-reader-section-content .md-para {
     margin-bottom: var(--space-4);
-    font-size: 1rem;
+    font-size: var(--text-1rem);
 }
 
 .textbook-reader-section-content .md-list-item {
@@ -110,16 +110,16 @@
     font-family: 'Noto Sans KR', 'Noto Color Emoji', monospace;
     background: rgba(0, 0, 0, 0.15);
     padding: 0.5rem 0.75rem;
-    border-radius: 6px;
+    border-radius: var(--radius-xs);
     margin-bottom: var(--space-2);
     white-space: pre-wrap;
-    font-size: 0.9rem;
+    font-size: var(--text-md-sm);
     border-left: 3px solid var(--color-secondary);
     overflow-x: auto;
 }
 
 .textbook-reader-section-content .md-h3 {
-    font-size: 1.1rem;
+    font-size: var(--text-md-lg);
     color: var(--color-text-main);
     margin-top: var(--space-5);
     margin-bottom: var(--space-3);
@@ -127,7 +127,7 @@
 }
 
 .textbook-reader-section-content .md-h4 {
-    font-size: 1rem;
+    font-size: var(--text-1rem);
     color: var(--color-text-main);
     margin-top: 1.25rem;
     margin-bottom: var(--space-2);
@@ -171,7 +171,7 @@
 
 .reader-table {
     border-collapse: collapse;
-    font-size: 0.9rem;
+    font-size: var(--text-md-sm);
     line-height: 1.6;
 }
 
@@ -202,7 +202,7 @@
 
 .reader-table sup {
     color: var(--color-warning);
-    font-size: 0.75rem;
+    font-size: var(--text-xs-sm);
     font-weight: 600;
 }
 
@@ -245,7 +245,7 @@
     padding: 1rem 1.25rem;
     margin: 1rem 0 1.5rem 0;
     font-family: 'Noto Sans KR', 'Noto Color Emoji', monospace;
-    font-size: 0.85rem;
+    font-size: var(--text-sm-md);
     line-height: 1.7;
     white-space: pre;
     overflow-x: auto;
@@ -425,7 +425,7 @@ pre.mermaid-other .labelBkg {
     border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
     color: var(--color-text-main);
     line-height: 1.7;
-    font-size: 0.95rem;
+    font-size: var(--text-base);
 }
 
 .md-quote strong {
@@ -461,7 +461,7 @@ pre.mermaid-other .labelBkg {
     width: 100%;
     height: 4px;
     background: var(--bg-hover);
-    border-radius: 2px;
+    border-radius: var(--radius-2xs);
     margin-bottom: var(--space-4);
     overflow: hidden;
 }
@@ -469,7 +469,7 @@ pre.mermaid-other .labelBkg {
     height: 100%;
     width: 0%;
     background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
-    border-radius: 2px;
+    border-radius: var(--radius-2xs);
     transition: width 0.15s ease-out;
     box-shadow: 0 0 8px var(--primary-tint-50);
 }
@@ -497,7 +497,7 @@ pre.mermaid-other .labelBkg {
     gap: var(--space-2);
 }
 .reader-toolbar-label {
-    font-size: 0.8rem;
+    font-size: var(--text-sm);
     color: var(--color-text-muted);
     font-weight: 600;
     display: flex;
@@ -516,7 +516,7 @@ pre.mermaid-other .labelBkg {
     padding: 0.4rem 0.75rem;
     border-radius: var(--radius-sm);
     font-family: var(--font-app);
-    font-size: 0.85rem;
+    font-size: var(--text-sm-md);
     font-weight: 600;
     cursor: pointer;
     display: inline-flex;
@@ -543,7 +543,7 @@ pre.mermaid-other .labelBkg {
     box-shadow: var(--glow-primary);
 }
 .reader-font-size-display {
-    font-size: 0.8rem;
+    font-size: var(--text-sm);
     color: var(--color-text-muted);
     min-width: 44px;
     text-align: center;
@@ -571,7 +571,7 @@ pre.mermaid-other .labelBkg {
     padding: var(--space-4);
 }
 .reader-toc-header {
-    font-size: 0.85rem;
+    font-size: var(--text-sm-md);
     font-weight: 700;
     color: var(--color-text-main);
     padding-bottom: 0.6rem;
@@ -596,7 +596,7 @@ pre.mermaid-other .labelBkg {
     gap: 0.35rem;
     padding: 0.4rem 0.65rem;
     border-radius: var(--radius-sm);
-    font-size: 0.82rem;
+    font-size: var(--text-sm-2);
     line-height: 1.4;
     color: var(--color-text-muted);
     cursor: pointer;
@@ -626,13 +626,13 @@ pre.mermaid-other .labelBkg {
     color: var(--color-primary);
     font-weight: 700;
     flex-shrink: 0;
-    font-size: 0.75rem;
+    font-size: var(--text-xs-sm);
     margin-top: 1px;
 }
 
 /* A: TOC 계층 들여쓰기 */
 .reader-toc-item.toc-chapter {
-    font-size: 0.85rem;
+    font-size: var(--text-sm-md);
     font-weight: 700;
     color: var(--color-text-main);
     padding: 0.6rem 0.65rem;
@@ -643,7 +643,7 @@ pre.mermaid-other .labelBkg {
 }
 .reader-toc-item.toc-chapter .toc-toggle-icon {
     flex-shrink: 0;
-    font-size: 0.7rem;
+    font-size: var(--text-xs);
     margin-top: 3px;
     color: var(--color-primary);
     cursor: pointer;
@@ -654,15 +654,15 @@ pre.mermaid-other .labelBkg {
 }
 .reader-toc-item.toc-level-1 {
     padding-left: var(--space-5);
-    font-size: 0.8rem;
+    font-size: var(--text-sm);
 }
 .reader-toc-item.toc-level-2 {
     padding-left: var(--space-7);
-    font-size: 0.78rem;
+    font-size: var(--text-2xs);
 }
 .reader-toc-item.toc-level-3 {
     padding-left: 3.5rem;
-    font-size: 0.76rem;
+    font-size: var(--text-2xs);
 }
 .reader-toc-item .toc-text {
     flex: 1;
@@ -686,10 +686,10 @@ pre.mermaid-other .labelBkg {
     background: rgba(15, 23, 42, 0.96);
     color: var(--color-on-brand);
     font-family: var(--font-app);
-    font-size: 0.78rem;
+    font-size: var(--text-2xs);
     font-weight: 400;
     line-height: 1.4;
-    border-radius: 6px;
+    border-radius: var(--radius-xs);
     white-space: normal;
     word-break: keep-all;
     max-width: 320px;
@@ -706,7 +706,7 @@ pre.mermaid-other .labelBkg {
 /* B: TOC 접기/펼치기 */
 .reader-toc-item.has-children .toc-toggle-icon {
     flex-shrink: 0;
-    font-size: 0.7rem;
+    font-size: var(--text-xs);
     margin-top: 3px;
     color: var(--color-text-muted);
     cursor: pointer;
@@ -737,7 +737,7 @@ pre.mermaid-other .labelBkg {
     display: flex;
     align-items: flex-start;
     padding: 0.3rem 0.5rem 0.3rem 2.2rem;
-    font-size: 0.76rem;
+    font-size: var(--text-2xs);
     line-height: 1.35;
     color: var(--color-text-muted);
     cursor: pointer;
@@ -748,7 +748,7 @@ pre.mermaid-other .labelBkg {
 }
 .reader-toc-sub-item.toc-sub-level-1 {
     padding-left: 4.2rem;
-    font-size: 0.74rem;
+    font-size: var(--text-2xs);
 }
 .reader-toc-sub-item:hover {
     color: var(--color-text-main);
@@ -766,7 +766,7 @@ pre.mermaid-other .labelBkg {
     gap: 0.4rem;
     padding: 0.5rem 0.75rem;
     margin-bottom: var(--space-4);
-    font-size: 0.78rem;
+    font-size: var(--text-2xs);
     color: var(--color-text-muted);
     background: var(--bg-card);
     border: 1px solid var(--border-color);
@@ -785,7 +785,7 @@ pre.mermaid-other .labelBkg {
     color: var(--color-text-muted);
 }
 .reader-breadcrumb .breadcrumb-sep {
-    font-size: 0.6rem;
+    font-size: var(--text-2xs);
     opacity: 0.5;
 }
 
@@ -892,7 +892,7 @@ pre.mermaid-other .labelBkg {
 }
 .reader-section-toggle {
     color: var(--color-primary);
-    font-size: 0.85rem;
+    font-size: var(--text-sm-md);
     transition: transform 0.25s ease;
     flex-shrink: 0;
 }
@@ -902,11 +902,11 @@ pre.mermaid-other .labelBkg {
 .reader-section-num {
     background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
     color: var(--color-on-brand);
-    font-size: 0.72rem;
+    font-size: var(--text-2xs);
     font-weight: 700;
     min-width: 26px;
     height: 26px;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -928,10 +928,10 @@ pre.mermaid-other .labelBkg {
     background: transparent;
     border: none;
     color: var(--color-text-muted);
-    font-size: 1rem;
+    font-size: var(--text-1rem);
     cursor: pointer;
     padding: 0.35rem;
-    border-radius: 6px;
+    border-radius: var(--radius-xs);
     transition: var(--transition-base);
     flex-shrink: 0;
 }
@@ -1013,7 +1013,7 @@ pre.mermaid-other .labelBkg {
     align-items: center;
     gap: var(--space-4);
     flex-wrap: wrap;
-    font-size: 0.82rem;
+    font-size: var(--text-sm-2);
     color: var(--color-text-muted);
 }
 
@@ -1057,7 +1057,7 @@ pre.mermaid-other .labelBkg {
     cursor: not-allowed;
 }
 .reader-nav-btn .nav-dir {
-    font-size: 0.75rem;
+    font-size: var(--text-xs-sm);
     color: var(--color-primary);
     font-weight: 700;
     display: flex;
@@ -1065,7 +1065,7 @@ pre.mermaid-other .labelBkg {
     gap: 0.4rem;
 }
 .reader-nav-btn .nav-title {
-    font-size: 0.92rem;
+    font-size: var(--text-base);
     font-weight: 600;
     line-height: 1.4;
     display: -webkit-box;
@@ -1089,11 +1089,11 @@ pre.mermaid-other .labelBkg {
     right: 2rem;
     width: 46px;
     height: 46px;
-    border-radius: 50%;
+    border-radius: var(--radius-full);
     background: linear-gradient(135deg, var(--color-primary), #0891b2);
     color: var(--color-on-brand);
     border: none;
-    font-size: 1.05rem;
+    font-size: var(--text-md);
     cursor: pointer;
     z-index: var(--z-dropdown);
     box-shadow: 0 4px 14px var(--primary-tint-40);
@@ -1135,9 +1135,9 @@ pre.mermaid-other .labelBkg {
     color: var(--color-text-muted);
     width: 28px;
     height: 28px;
-    border-radius: 6px;
+    border-radius: var(--radius-xs);
     cursor: pointer;
-    font-size: 0.75rem;
+    font-size: var(--text-xs-sm);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1187,19 +1187,19 @@ pre.mermaid-other .labelBkg {
     float: right;
     background: var(--danger-tint-15);
     border: 1px solid var(--danger-tint-30);
-    color: #fca5a5;
+    color: var(--color-danger-light);
     width: 34px;
     height: 34px;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     cursor: pointer;
-    font-size: 1rem;
+    font-size: var(--text-1rem);
     z-index: var(--z-raised);
 }
 .reader-table-modal-close:hover {
     background: var(--danger-tint-30);
 }
 .reader-table-modal-body .reader-table {
-    font-size: 0.95rem;
+    font-size: var(--text-base);
 }
 
 /* Focus mode — hide surrounding UI, content goes full width */
@@ -1286,12 +1286,12 @@ body.reader-focus-mode .reader-readable-width {
 }
 .reader-light-theme .reader-tool-btn:hover {
     background: var(--primary-tint-12);
-    color: #0e7490;
+    color: var(--color-primary-light);
     border-color: #06b6d4;
 }
 .reader-light-theme .reader-table th {
     background: #e8f4f8;
-    color: #0e7490;
+    color: var(--color-primary-light);
 }
 .reader-light-theme .reader-table tr:nth-child(even) td {
     background: rgba(0, 0, 0, 0.03);
@@ -1314,7 +1314,7 @@ body.reader-focus-mode .reader-readable-width {
     opacity: 0.6;
 }
 .reader-light-theme .reader-table tbody tr.group-start td:first-child {
-    color: #0e7490;
+    color: var(--color-primary-light);
 }
 .reader-light-theme .md-quote,
 .reader-light-theme .textbook-reader-section-content .md-quote {
@@ -1456,13 +1456,13 @@ body.reader-focus-mode .reader-readable-width {
     color: #9a9a9a;
 }
 .reader-light-theme .reader-bookmark-btn.bookmarked {
-    color: #d97706;
+    color: var(--color-warning-dark);
 }
 .reader-light-theme .badge-cyan {
-    color: #0e7490;
+    color: var(--color-primary-light);
 }
 .reader-light-theme .textbook-reader-section-content strong {
-    color: #0e7490;
+    color: var(--color-primary-light);
 }
 
 /* Responsive for reader layout — TOC drawer handled above */
@@ -1488,7 +1488,7 @@ body.reader-focus-mode .reader-readable-width {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 0.5rem 0.75rem;
-        font-size: 0.78rem;
+        font-size: var(--text-2xs);
     }
     .reader-chapter-meta > * {
         display: inline-flex;
@@ -1582,7 +1582,7 @@ body.reader-focus-mode .reader-readable-width {
     .reader-breadcrumb .breadcrumb-section {
         color: var(--color-text-main);
         font-weight: 500;
-        font-size: 0.82rem;
+        font-size: var(--text-sm-2);
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -1626,7 +1626,7 @@ body.reader-focus-mode .reader-readable-width {
         margin-bottom: var(--space-3);
     }
     .logo-text h1 {
-        font-size: 1.2rem;
+        font-size: var(--text-lg-1);
     }
     .nav-menu {
         flex-direction: row;
@@ -1640,7 +1640,7 @@ body.reader-focus-mode .reader-readable-width {
     }
     .nav-item {
         padding: 0.55rem 0.85rem;
-        font-size: 0.85rem;
+        font-size: var(--text-sm-md);
         flex: 0 0 auto;
     }
     .nav-item.active {
@@ -1662,7 +1662,7 @@ body.reader-focus-mode .reader-readable-width {
     /* 헤더 타이틀 크기 */
     .app-header h2,
     .app-header .page-title {
-        font-size: 1.35rem;
+        font-size: var(--text-lg-sm);
         line-height: 1.25;
     }
 
@@ -1738,7 +1738,7 @@ body.reader-focus-mode .reader-readable-width {
     }
 
     .btn, button, input, select, textarea {
-        font-size: 1rem;
+        font-size: var(--text-1rem);
     }
 
     .modal-content,
@@ -1793,7 +1793,7 @@ body.reader-focus-mode .reader-readable-width {
     }
 
     .app-header h2 {
-        font-size: 1.25rem;
+        font-size: var(--text-lg);
         /* 타이틀이 너무 길면 말줄임 */
         white-space: nowrap;
         overflow: hidden;
@@ -1803,7 +1803,7 @@ body.reader-focus-mode .reader-readable-width {
     }
 
     .app-header p {
-        font-size: 0.8rem;
+        font-size: var(--text-sm);
         display: none; /* 부제목 숨김으로 공간 확보 */
     }
 
@@ -1831,7 +1831,7 @@ body.reader-focus-mode .reader-readable-width {
     /* PWA 설치 버튼 모바일 최적화 */
     #pwa-install-btn {
         margin-right: var(--space-1);
-        font-size: 0.85rem;
+        font-size: var(--text-sm-md);
         white-space: nowrap;
         /* 모바일에서 확실히 보이도록 z-index 및 위치 조정 */
         position: relative;
@@ -1887,7 +1887,7 @@ body.reader-focus-mode .reader-readable-width {
         gap: 0.2rem;
         padding: 0.4rem 0.5rem;
         color: var(--color-text-muted);
-        font-size: 0.6rem;
+        font-size: var(--text-2xs);
         font-weight: 500;
         text-decoration: none;
         border: none;
@@ -1901,7 +1901,7 @@ body.reader-focus-mode .reader-readable-width {
     }
 
     .mobile-tab-item i {
-        font-size: 1.2rem;
+        font-size: var(--text-lg-1);
     }
 
     .mobile-tab-item.active {
@@ -1929,7 +1929,7 @@ body.reader-focus-mode .reader-readable-width {
     .stat-icon {
         width: 40px;
         height: 40px;
-        font-size: 1.2rem;
+        font-size: var(--text-lg-1);
     }
 
     .stat-info h3 {
@@ -2062,7 +2062,7 @@ body.reader-focus-mode .reader-readable-width {
     color: white;
     text-align: center;
     padding: var(--space-2);
-    font-size: 0.8rem;
+    font-size: var(--text-sm);
     z-index: var(--z-toast);
     transform: translateY(-100%);
     transition: transform var(--transition-slow);
@@ -2084,7 +2084,7 @@ body.reader-focus-mode .reader-readable-width {
 
     .app-header h2,
     .app-header .page-title {
-        font-size: 1.15rem;
+        font-size: var(--text-lg-sm);
     }
 
     .flashcard-wrapper {
@@ -2092,12 +2092,12 @@ body.reader-focus-mode .reader-readable-width {
     }
 
     .nav-item {
-        font-size: 0.8rem;
+        font-size: var(--text-sm);
         padding: 0.5rem 0.7rem;
     }
 
     body {
-        font-size: 0.95rem;
+        font-size: var(--text-base);
     }
 }
 
@@ -2112,7 +2112,7 @@ body.reader-focus-mode .reader-readable-width {
     }
 
     .mobile-tab-item i {
-        font-size: 1.35rem;
+        font-size: var(--text-lg-sm);
     }
 
     .mobile-tab-item {
@@ -2150,8 +2150,8 @@ body.reader-focus-mode .reader-readable-width {
     overflow-y: auto;
     background: var(--bg-card);
     border: 1px solid var(--border-color);
-    border-radius: 16px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-modal);
     animation: pwaModalIn 0.25s ease;
 }
 
@@ -2170,7 +2170,7 @@ body.reader-focus-mode .reader-readable-width {
 
 .pwa-modal-header h3 {
     margin: 0;
-    font-size: 1.05rem;
+    font-size: var(--text-md);
     color: var(--color-text-main);
     display: flex;
     align-items: center;
@@ -2181,11 +2181,11 @@ body.reader-focus-mode .reader-readable-width {
     background: transparent;
     border: none;
     color: var(--color-text-muted);
-    font-size: 1.2rem;
+    font-size: var(--text-lg-1);
     cursor: pointer;
     width: 44px;
     height: 44px;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2204,7 +2204,7 @@ body.reader-focus-mode .reader-readable-width {
 .pwa-modal-lead {
     margin: 0 0 1rem;
     color: var(--color-text-main);
-    font-size: 0.95rem;
+    font-size: var(--text-base);
 }
 
 .pwa-steps {
@@ -2230,10 +2230,10 @@ body.reader-focus-mode .reader-readable-width {
     grid-area: num;
     width: 26px;
     height: 26px;
-    border-radius: 50%;
+    border-radius: var(--radius-full);
     background: var(--color-primary);
     color: var(--color-on-brand);
-    font-size: 0.85rem;
+    font-size: var(--text-sm-md);
     font-weight: 700;
     display: flex;
     align-items: center;
@@ -2243,7 +2243,7 @@ body.reader-focus-mode .reader-readable-width {
 .pwa-step-text {
     grid-area: text;
     color: var(--color-text-main);
-    font-size: 0.9rem;
+    font-size: var(--text-md-sm);
     line-height: 1.45;
 }
 
@@ -2256,7 +2256,7 @@ body.reader-focus-mode .reader-readable-width {
     width: 100%;
     max-width: 260px;
     height: auto;
-    border-radius: 10px;
+    border-radius: var(--radius-sm);
     border: 1px solid var(--border-color);
     margin-top: 0.4rem;
 }
@@ -2266,9 +2266,9 @@ body.reader-focus-mode .reader-readable-width {
     padding: 0.75rem 0.9rem;
     background: var(--primary-tint-8);
     border: 1px solid var(--primary-tint-20);
-    border-radius: 10px;
+    border-radius: var(--radius-sm);
     color: var(--color-text-muted);
-    font-size: 0.83rem;
+    font-size: var(--text-sm-2);
     line-height: 1.5;
 }
 
@@ -2653,7 +2653,7 @@ body.landscape-mode .glass-card {
     align-items: center;
     gap: var(--space-2);
     margin-bottom: var(--space-3);
-    font-size: 0.85rem;
+    font-size: var(--text-sm-md);
     color: var(--color-text-muted);
 }
 
@@ -2665,9 +2665,9 @@ body.landscape-mode .glass-card {
     margin-left: auto;
     background: none;
     border: 1px solid var(--border-color);
-    border-radius: 6px;
+    border-radius: var(--radius-xs);
     padding: 0.25rem 0.6rem;
-    font-size: 0.78rem;
+    font-size: var(--text-2xs);
     color: var(--color-text-muted);
     cursor: pointer;
     transition: all 0.2s;
@@ -2799,7 +2799,7 @@ body.landscape-mode .glass-card {
 /* U4: 소형 모바일 (≤480px) — 트리 모바일 레이아웃 폭 최적화 */
 @media (max-width: 480px) {
     .concept-map-svg.concept-map-mobile {
-        font-size: 0.85rem;
+        font-size: var(--text-sm-md);
     }
 }
 
@@ -2819,14 +2819,14 @@ body.landscape-mode .glass-card {
     align-items: center;
     gap: var(--space-2);
     margin-bottom: var(--space-3);
-    font-size: 0.85rem;
+    font-size: var(--text-sm-md);
     color: var(--color-text-muted);
     cursor: pointer;
 }
 
 .study-aid-header i {
     color: var(--color-primary);
-    font-size: 0.9rem;
+    font-size: var(--text-md-sm);
 }
 
 .study-aid-header span {
@@ -2841,7 +2841,7 @@ body.landscape-mode .glass-card {
     color: var(--color-text-muted);
     cursor: pointer;
     padding: 0.25rem 0.5rem;
-    border-radius: 4px;
+    border-radius: var(--radius-xs);
     transition: background var(--transition-fast), transform var(--transition-base);
 }
 
@@ -2885,7 +2885,7 @@ body.landscape-mode .glass-card {
 }
 
 .exam-highlight-section-title {
-    font-size: 0.8rem;
+    font-size: var(--text-sm);
     font-weight: 700;
     color: var(--color-primary);
     margin-bottom: 0.4rem;
@@ -2900,7 +2900,7 @@ body.landscape-mode .glass-card {
 }
 
 .exam-highlight-list li {
-    font-size: 0.82rem;
+    font-size: var(--text-sm-2);
     line-height: 1.5;
     color: var(--color-text-main);
     padding: 0.2rem 0 0.2rem 1rem;
@@ -2912,7 +2912,7 @@ body.landscape-mode .glass-card {
     position: absolute;
     left: 0;
     top: 0.15rem;
-    font-size: 0.7rem;
+    font-size: var(--text-xs);
 }
 
 /* 기출 필터 토글 버튼 */
@@ -2920,9 +2920,9 @@ body.landscape-mode .glass-card {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    font-size: 0.78rem;
+    font-size: var(--text-2xs);
     padding: 0.35rem 0.75rem;
-    border-radius: 6px;
+    border-radius: var(--radius-xs);
     border: 1px solid var(--border-color);
     background: var(--bg-card);
     color: var(--color-text-muted);
@@ -2976,7 +2976,7 @@ body.landscape-mode .glass-card {
     cursor: pointer;
     user-select: none;
     transition: background 0.15s;
-    border-radius: 4px;
+    border-radius: var(--radius-xs);
     padding: 0.3rem 0.4rem;
 }
 
@@ -2993,7 +2993,7 @@ body.landscape-mode .glass-card {
 }
 
 .number-drill-subsection-title {
-    font-size: 0.72rem;
+    font-size: var(--text-2xs);
     font-weight: 600;
     color: var(--color-text-muted);
     margin-bottom: 0.3rem;
@@ -3006,7 +3006,7 @@ body.landscape-mode .glass-card {
 }
 
 .number-drill-section-title {
-    font-size: 0.8rem;
+    font-size: var(--text-sm);
     font-weight: 700;
     color: var(--color-primary);
     margin-bottom: 0.4rem;
@@ -3026,8 +3026,8 @@ body.landscape-mode .glass-card {
     gap: 0.2rem;
     padding: 0.4rem 0.6rem;
     border: 1px solid var(--border-color);
-    border-radius: 6px;
-    font-size: 0.78rem;
+    border-radius: var(--radius-xs);
+    font-size: var(--text-2xs);
     background: var(--bg-main);
 }
 
@@ -3037,7 +3037,7 @@ body.landscape-mode .glass-card {
 }
 
 .number-drill-value {
-    font-size: 1.1rem;
+    font-size: var(--text-md-lg);
     font-weight: 800;
     color: var(--color-primary);
     white-space: nowrap;
@@ -3055,7 +3055,7 @@ body.landscape-mode .glass-card {
 }
 
 .number-drill-value small {
-    font-size: 0.65rem;
+    font-size: var(--text-2xs);
     font-weight: 600;
     margin-left: 2px;
 }
@@ -3108,7 +3108,7 @@ body.landscape-mode .glass-card {
 
 .admin-penalty-table {
     border-collapse: collapse;
-    font-size: 0.78rem;
+    font-size: var(--text-2xs);
 }
 
 .admin-penalty-table th {
@@ -3166,7 +3166,7 @@ body.landscape-mode .glass-card {
     }
 
     .admin-penalty-table {
-        font-size: 0.72rem;
+        font-size: var(--text-2xs);
     }
 
     .admin-penalty-table .sticky-col {
@@ -3179,7 +3179,7 @@ body.landscape-mode .glass-card {
 .reader-ref-dropdown summary::-webkit-details-marker { display: none; }
 .reader-ref-dropdown summary::marker { display: none; }
 .ref-group-label {
-    font-size: 0.72rem;
+    font-size: var(--text-2xs);
     font-weight: 700;
     color: var(--color-primary);
     margin: 0.5rem 0 0.25rem;
@@ -3194,10 +3194,10 @@ body.landscape-mode .glass-card {
     align-items: center;
     gap: var(--space-2);
     padding: 0.4rem 0.5rem;
-    font-size: 0.82rem;
+    font-size: var(--text-sm-2);
     color: var(--color-text-main);
     text-decoration: none;
-    border-radius: 6px;
+    border-radius: var(--radius-xs);
     cursor: pointer;
     transition: background 0.15s ease;
 }
@@ -3214,7 +3214,7 @@ body.landscape-mode .glass-card {
     flex-shrink: 0;
     width: 1.1rem;
     text-align: center;
-    font-size: 0.85rem;
+    font-size: var(--text-sm-md);
     color: var(--color-text-muted);
 }
 .ref-link-item:hover i {
@@ -3227,7 +3227,7 @@ body.landscape-mode .glass-card {
 .source-link {
     color: var(--color-primary);
     text-decoration: none;
-    font-size: 0.85rem;
+    font-size: var(--text-sm-md);
     font-family: monospace;
     word-break: break-all;
 }
@@ -3244,7 +3244,7 @@ body.landscape-mode .glass-card {
 .ref-link-item.ref-longpress-active {
     background: rgba(31, 111, 235, 0.15);
     box-shadow: 0 0 0 2px var(--color-primary);
-    border-radius: 4px;
+    border-radius: var(--radius-xs);
     opacity: 0.85;
     transition: background var(--transition-fast), box-shadow var(--transition-fast);
 }
@@ -3253,9 +3253,9 @@ body.landscape-mode .glass-card {
 .badge-story {
     background: var(--story-badge-gradient);
     color: var(--color-on-brand);
-    font-size: 0.78rem;
+    font-size: var(--text-2xs);
     padding: 0.2rem 0.6rem;
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     display: inline-flex;
     align-items: center;
     gap: 0.3rem;
@@ -3289,7 +3289,7 @@ body.landscape-mode .glass-card {
 /* 5. 프롤로그/등장인물 소개 — 첫 섹션의 개요 배경색 */
 .story-mode .reader-section-card:first-child .textbook-reader-section-content {
     background: var(--story-prologue-bg);
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     padding: var(--space-4);
 }
 
@@ -3313,12 +3313,12 @@ body.landscape-mode .glass-card {
 }
 .reader-glossary .glossary-title {
     margin: 0 0 0.75rem 0;
-    font-size: 1rem;
+    font-size: var(--text-1rem);
     font-weight: 700;
     color: var(--color-primary);
 }
 .reader-glossary .glossary-table {
-    font-size: 0.85rem;
+    font-size: var(--text-sm-md);
     table-layout: fixed;
     width: 100% !important;
     min-width: unset !important;
@@ -3336,7 +3336,7 @@ body.landscape-mode .glass-card {
     width: auto;
 }
 .reader-glossary .glossary-table .glossary-ref {
-    font-size: 0.78rem;
+    font-size: var(--text-2xs);
     color: var(--color-text-muted);
     word-break: break-word;
     width: 120px;
@@ -3372,14 +3372,14 @@ a.glossary-term-link {
 a.glossary-term-link:hover {
     text-decoration: underline;
     background: var(--primary-tint-8);
-    border-radius: 2px;
+    border-radius: var(--radius-2xs);
 }
 
 /* Glossary ref link (출처 하이퍼링크) */
 a.glossary-ref-link {
     color: var(--color-primary);
     text-decoration: none;
-    font-size: 0.78rem;
+    font-size: var(--text-2xs);
     cursor: pointer;
 }
 a.glossary-ref-link:hover {
@@ -3407,7 +3407,7 @@ a.glossary-ref-link i {
     align-items: center;
     gap: 0.4rem;
     padding: 0.6rem 1.1rem;
-    font-size: 0.85rem;
+    font-size: var(--text-sm-md);
     font-weight: 600;
     color: var(--color-on-brand);
     background: var(--color-primary);
@@ -3428,7 +3428,7 @@ a.glossary-ref-link i {
     transform: translateY(0);
 }
 .glossary-back-btn i {
-    font-size: 0.8rem;
+    font-size: var(--text-sm);
 }
 @keyframes glossary-back-in {
     from { opacity: 0; transform: translateY(10px); }

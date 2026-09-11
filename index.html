@@ -43,7 +43,7 @@
                 </div>
             </div>
             <nav class="nav-menu">
-                <button type="button" data-click="ManualViewer.openManual" class="manual-nav-link" class="">
+                <button type="button" data-click="ManualViewer.openManual" class="manual-nav-link">
                     <i class="fa-solid fa-circle-info"></i> 사용자 매뉴얼
                 </button>
                 <button class="nav-item active" data-target="dashboard-view">
@@ -119,8 +119,8 @@
                         </div>
                     </div>
                     <div class="flex-row gap-2">
-                        <button class="btn btn-warning" data-click="resumeSimDraft" class="badge-pill"><i class="fa-solid fa-play"></i> 이어서 풀기</button>
-                        <button class="btn btn-secondary" data-click="clearSimDraft" class="badge-pill"><i class="fa-solid fa-trash"></i> 새로 시작</button>
+                        <button class="btn btn-warning badge-pill" data-click="resumeSimDraft"><i class="fa-solid fa-play"></i> 이어서 풀기</button>
+                        <button class="btn btn-secondary badge-pill" data-click="clearSimDraft"><i class="fa-solid fa-trash"></i> 새로 시작</button>
                     </div>
                 </div>
 
@@ -132,7 +132,7 @@
                             <h3>총 학습 진척도</h3>
                             <div class="stat-value" id="total-progress-val">0%</div>
                             <div class="progress-bar-container">
-                                <div class="progress-bar" id="total-progress-bar" class="progress-bar-fill"></div>
+                                <div class="progress-bar progress-bar-fill" id="total-progress-bar"></div>
                             </div>
                         </div>
                     </div>
@@ -197,16 +197,16 @@
                     <!-- 2. Data Backup & Restore Card -->
                     <div class="glass-card backup-restore-card" style="padding: 2rem; display: flex; flex-direction: column; justify-content: space-between; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md);">
                         <div>
-                            <h4 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-database color-primary" class="text-primary"></i> 데이터 관리</h4>
+                            <h4 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-database color-primary text-primary"></i> 데이터 관리</h4>
                             <p style="color: var(--color-text-muted); font-size: 0.85rem; line-height: 1.5; margin-bottom: 1.5rem;">
                                 나의 공부 진척도, 모의고사 기록, 오답 노트를 파일로 안전하게 백업 및 복원합니다.
                             </p>
                         </div>
                         <div class="flex-col gap-3">
-                            <button class="btn btn-secondary" data-click="exportData" class="w-full justify-center">
+                            <button class="btn btn-secondary w-full justify-center" data-click="exportData">
                                 <i class="fa-solid fa-download"></i> 데이터 백업
                             </button>
-                            <button class="btn btn-secondary" data-click="triggerImport" class="w-full justify-center">
+                            <button class="btn btn-secondary w-full justify-center" data-click="triggerImport">
                                 <i class="fa-solid fa-upload"></i> 백업 가져오기
                             </button>
                             <input type="file" id="import-file-input" class="is-hidden" accept=".json">
@@ -249,7 +249,7 @@
                 <div class="section-title" style="margin-top: 2.5rem;">
                     <h3>과목별 정답률 히트맵</h3>
                 </div>
-                <div id="subject-heatmap" class="heatmap-container" class="mb-6">
+                <div id="subject-heatmap" class="heatmap-container mb-6">
                     <!-- 과목별 정답률 히트맵 (dashboard.js에서 렌더링) -->
                 </div>
 
@@ -272,7 +272,7 @@
                             <div class="empty-chart-state" id="empty-chart-msg">
                                 <i class="fa-solid fa-chart-line"></i>
                                 <p>모의고사를 풀면 성적 추이 그래프가 나타납니다.</p>
-                                <button class="btn btn-primary" data-click="startIntegratedMockExam" class="mt-3"><i class="fa-solid fa-clock"></i> 지금 모의고사 시작</button>
+                                <button class="btn btn-primary mt-3" data-click="startIntegratedMockExam"><i class="fa-solid fa-clock"></i> 지금 모의고사 시작</button>
                             </div>
                         </div>
                     </div>
@@ -283,7 +283,7 @@
                             <div class="empty-chart-state" id="empty-radar-msg">
                                 <i class="fa-solid fa-chart-pie"></i>
                                 <p>모의고사를 풀면 역량 차트가 나타납니다.</p>
-                                <button class="btn btn-primary" data-click="startIntegratedMockExam" class="mt-3"><i class="fa-solid fa-clock"></i> 지금 모의고사 시작</button>
+                                <button class="btn btn-primary mt-3" data-click="startIntegratedMockExam"><i class="fa-solid fa-clock"></i> 지금 모의고사 시작</button>
                             </div>
                         </div>
                     </div>
@@ -294,7 +294,7 @@
                             <div class="prediction-placeholder">
                                 <i class="fa-solid fa-user-doctor"></i>
                                 <p>모의고사 점수를 토대로 과락 및 평균 통과 여부를 진단합니다.</p>
-                                <button class="btn btn-primary" data-click="startIntegratedMockExam" class="mt-3"><i class="fa-solid fa-clock"></i> 지금 모의고사 시작</button>
+                                <button class="btn btn-primary mt-3" data-click="startIntegratedMockExam"><i class="fa-solid fa-clock"></i> 지금 모의고사 시작</button>
                             </div>
                         </div>
                     </div>
@@ -397,7 +397,7 @@
                 <!-- Quiz Progress Area -->
                 <div class="quiz-progress-header is-hidden" >
                     <div class="progress-bar-container">
-                        <div class="progress-bar" id="quiz-run-progress" class="progress-bar-fill"></div>
+                        <div class="progress-bar progress-bar-fill" id="quiz-run-progress"></div>
                     </div>
                     <div class="quiz-score-indicator">
                         진행: <span id="quiz-curr-idx">1</span>/<span id="quiz-total-idx">10</span> | 
@@ -420,8 +420,8 @@
 
                             <!-- OX 선택 컨테이너 -->
                             <div id="quiz-ox-container" class="is-hidden" style="gap:1rem; margin-bottom:1rem;">
-                                <button class="btn btn-secondary quiz-ox-btn" data-ox="O" class="icon-stat">O</button>
-                                <button class="btn btn-secondary quiz-ox-btn" data-ox="X" class="icon-stat">X</button>
+                                <button class="btn btn-secondary quiz-ox-btn icon-stat" data-ox="O">O</button>
+                                <button class="btn btn-secondary quiz-ox-btn icon-stat" data-ox="X">X</button>
                             </div>
 
                             <div class="quiz-input-group" id="quiz-input-group">
@@ -478,7 +478,7 @@
                     <div class="review-stats">
                         <span class="badge"><i class="fa-solid fa-triangle-exclamation"></i> 헷갈린 카드: <strong id="review-card-count">0</strong></span>
                     </div>
-                    <div class="review-actions-group" class="flex-row gap-4">
+                    <div class="review-actions-group flex-row gap-4">
                         <button id="start-weak-quiz-btn" class="btn btn-warning is-hidden" >
                             <i class="fa-solid fa-bolt"></i> 헷갈린 카드 집중 퀴즈 시작
                         </button>
@@ -500,7 +500,7 @@
                     <i class="fa-solid fa-shield-heart"></i>
                     <h3>복습할 카드가 없습니다!</h3>
                     <p>플래시카드 학습 중에 "아직 헷갈림"으로 분류한 카드가 여기에 수집됩니다.</p>
-                    <button class="btn btn-primary" data-click="startSubjectStudy" data-arg="law" class="mt-3"><i class="fa-solid fa-layer-group"></i> 플래시카드 학습하러 가기</button>
+                    <button class="btn btn-primary mt-3" data-click="startSubjectStudy" data-arg="law"><i class="fa-solid fa-layer-group"></i> 플래시카드 학습하러 가기</button>
                 </div>
 
                 <div class="review-card-list" id="review-cards-list-container">
@@ -548,7 +548,7 @@
 
                 <!-- 2. Limits Trainer Panel -->
                 <div id="trainer-limits-panel" class="is-hidden">
-                    <div class="sim-arena-header" class="mb-6">
+                    <div class="sim-arena-header mb-6">
                         <button class="btn btn-secondary" data-click="exitTrainerSubView"><i class="fa-solid fa-arrow-left"></i> 나가기</button>
                         <div class="sim-title-group">
                             <h4>핵심 수치 암기 마스터</h4>
@@ -556,8 +556,8 @@
                         </div>
                     </div>
 
-                    <div class="quiz-progress-header" class="mb-5">
-                        <div class="quiz-progress-bar-bg"><div class="quiz-progress-bar-fill" id="limits-progress-bar" class="progress-bar-fill"></div></div>
+                    <div class="quiz-progress-header mb-5">
+                        <div class="quiz-progress-bar-bg"><div class="quiz-progress-bar-fill progress-bar-fill" id="limits-progress-bar"></div></div>
                     </div>
 
                     <div class="trainer-arena">
@@ -572,7 +572,7 @@
                                 </h2>
                                 
                                 <!-- Multiple Choice Options Grid -->
-                                <div class="limits-options-grid" id="limits-options-container" class="mb-6">
+                                <div class="limits-options-grid mb-6" id="limits-options-container">
                                     <!-- 4 buttons populated by JS -->
                                 </div>
 
@@ -587,7 +587,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="quiz-card-footer" class="justify-end">
+                            <div class="quiz-card-footer justify-end">
                                 <button id="next-limits-btn" class="btn btn-success is-hidden"  data-click="nextLimitsQuestion">다음 문제 <i class="fa-solid fa-arrow-right"></i></button>
                             </div>
                         </div>
@@ -596,7 +596,7 @@
 
                 <!-- 3. Blending Calculator Panel -->
                 <div id="trainer-calc-panel" class="is-hidden">
-                    <div class="sim-arena-header" class="mb-6">
+                    <div class="sim-arena-header mb-6">
                         <button class="btn btn-secondary" data-click="exitTrainerSubView"><i class="fa-solid fa-arrow-left"></i> 나가기</button>
                         <div class="sim-title-group">
                             <h4>원료 배합 계산 연습기</h4>
@@ -640,7 +640,7 @@
                                 </div>
 
                                 <!-- Feedback Panel -->
-                                <div class="quiz-feedback is-hidden" id="calc-feedback-panel" role="status" aria-live="polite" class="mb-5">
+                                <div class="quiz-feedback is-hidden mb-5" id="calc-feedback-panel" role="status" aria-live="polite">
                                     <div class="feedback-icon" id="calc-feedback-icon">
                                         <i class="fa-solid fa-check"></i>
                                     </div>
@@ -651,7 +651,7 @@
                                 </div>
 
                                 <!-- Accordion Solution -->
-                                <div class="solution-accordion is-hidden" id="calc-solution-panel" class="mb-5">
+                                <div class="solution-accordion is-hidden mb-5" id="calc-solution-panel">
                                     <div class="solution-header" data-click="toggleSolutionAccordion">
                                         <span><i class="fa-solid fa-square-root-variable"></i> 단계별 풀이 공식 보기</span>
                                         <i class="fa-solid fa-chevron-down" id="solution-chevron"></i>
@@ -669,7 +669,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="quiz-card-footer" class="justify-end">
+                            <div class="quiz-card-footer justify-end">
                                 <button id="next-calc-btn" class="btn btn-success is-hidden"  data-click="generateCalcQuestion">다음 문제 생성 <i class="fa-solid fa-arrow-right"></i></button>
                             </div>
                         </div>
@@ -678,7 +678,7 @@
 
                 <!-- 4. Ingredients Challenge Panel -->
                 <div id="trainer-ingredients-panel" class="is-hidden">
-                    <div class="sim-arena-header" class="mb-6">
+                    <div class="sim-arena-header mb-6">
                         <button class="btn btn-secondary" data-click="exitTrainerSubView"><i class="fa-solid fa-arrow-left"></i> 나가기</button>
                         <div class="sim-title-group">
                             <h4>원료 안전성 챌린지</h4>
@@ -686,8 +686,8 @@
                         </div>
                     </div>
 
-                    <div class="quiz-progress-header" class="mb-5">
-                        <div class="quiz-progress-bar-bg"><div class="quiz-progress-bar-fill" id="ing-progress-bar" class="progress-bar-fill"></div></div>
+                    <div class="quiz-progress-header mb-5">
+                        <div class="quiz-progress-bar-bg"><div class="quiz-progress-bar-fill progress-bar-fill" id="ing-progress-bar"></div></div>
                     </div>
 
                     <div class="trainer-arena">
@@ -723,7 +723,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="quiz-card-footer" class="justify-end">
+                            <div class="quiz-card-footer justify-end">
                                 <button id="next-ing-btn" class="btn btn-success is-hidden"  data-click="nextIngQuestion">다음 문제 <i class="fa-solid fa-arrow-right"></i></button>
                             </div>
                         </div>
@@ -759,7 +759,7 @@
                         <div class="exam-card-item full-width-card">
                             <div class="exam-card-badge badge-gray">학습 부록</div>
                             <h4 class="exam-card-title">학습안내서</h4>
-                            <div class="exam-card-btns" class="flex-row gap-4">
+                            <div class="exam-card-btns flex-row gap-4">
                                 <a href="#" data-click="ManualViewer.openSummary" class="exam-btn-link"><i class="fa-solid fa-book"></i> 학습안내서</a>
                             </div>
                         </div>
@@ -853,18 +853,18 @@
                     <p>교재 본문(화장품법, 제조/품질관리, 안전관리, 맞춤형화장품 이해) 전체 내용을 키워드로 검색하여 관련 내용을 빠르게 확인하세요.</p>
                 </div>
 
-                <div class="textbook-control-panel" class="mb-6">
+                <div class="textbook-control-panel mb-6">
                     <!-- Search Bar -->
                     <div class="flex-center gap-4 mb-5">
-                        <div class="search-input-wrapper" class="relative flex-1">
-                            <i class="fa-solid fa-magnifying-glass" class="search-input-icon"></i>
-                            <input type="text" id="textbook-search-input" class="form-input" placeholder="검색할 키워드를 입력하세요 (예: 안전용기, 페녹시에탄올, 미생물)" class="search-input" aria-label="교재 검색어 입력">
+                        <div class="search-input-wrapper relative flex-1">
+                            <i class="fa-solid fa-magnifying-glass search-input-icon"></i>
+                            <input type="text" id="textbook-search-input" class="form-input search-input" placeholder="검색할 키워드를 입력하세요 (예: 안전용기, 페녹시에탄올, 미생물)" aria-label="교재 검색어 입력">
                         </div>
-                        <button class="btn btn-secondary" data-click="clearTextbookSearch" class="flex-center gap-2"><i class="fa-solid fa-xmark"></i> 초기화</button>
+                        <button class="btn btn-secondary flex-center gap-2" data-click="clearTextbookSearch"><i class="fa-solid fa-xmark"></i> 초기화</button>
                     </div>
 
                     <!-- Subject Filter Buttons -->
-                    <div class="textbook-filter-buttons" id="textbook-filter-buttons" class="flex-row gap-3 flex-wrap">
+                    <div class="textbook-filter-buttons flex-row gap-3 flex-wrap" id="textbook-filter-buttons">
                         <button class="btn btn-secondary active-filter" data-filter="all" data-click="setTextbookFilter" data-arg="all">전체 과목</button>
                     </div>
                 </div>
@@ -877,7 +877,7 @@
                 <!-- Search Results Container -->
                 <div class="textbook-results-list" id="textbook-results-container">
                     <div class="empty-state">
-                        <i class="fa-solid fa-book-open" class="empty-state-icon"></i>
+                        <i class="fa-solid fa-book-open empty-state-icon"></i>
                         <h3>검색어를 입력하세요</h3>
                         <p>위 검색창에 궁금한 교재 키워드를 입력하고 검색 결과를 확인하세요.</p>
                     </div>
@@ -896,7 +896,7 @@
                     <p>과목을 선택하여 교재 본문을 편안하게 읽으세요. 모든 내용이 바로 표시됩니다.</p>
                 </div>
 
-                <div class="textbook-reader-controls" class="mb-5">
+                <div class="textbook-reader-controls mb-5">
                     <div style="display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;">
                         <div class="filter-group">
                             <label for="reader-subject-select">과목 선택</label>
@@ -906,7 +906,7 @@
                         </div>
                         <label style="display: inline-flex; align-items: center; gap: 0.4rem; cursor: pointer; font-size: 0.9rem; user-select: none; white-space: nowrap;">
                             <input type="checkbox" id="reader-story-mode-toggle" style="width: 1.1rem; height: 1.1rem; accent-color: var(--color-primary); cursor: pointer;">
-                            <i class="fa-solid fa-book-open-reader" class="text-primary"></i> 이야기형
+                            <i class="fa-solid fa-book-open-reader text-primary"></i> 이야기형
                         </label>
                     </div>
                 </div>
@@ -955,7 +955,7 @@
 
                     <div id="textbook-reader-container" class="textbook-reader-content">
                         <div class="empty-state">
-                            <i class="fa-solid fa-book-open" class="empty-state-icon"></i>
+                            <i class="fa-solid fa-book-open empty-state-icon"></i>
                             <h3>읽을 교재를 선택하세요</h3>
                             <p>위에서 과목을 선택하면 해당 교재의 본문 내용이 표시됩니다.</p>
                         </div>
@@ -984,18 +984,18 @@
                     <p>사용가능(approved), 사용제한(restricted), 사용금지(banned) 성분들의 배합 한도 및 시험 중요 팁을 실시간 검색해 확인하세요.</p>
                 </div>
 
-                <div class="dictionary-control-panel" class="mb-6">
+                <div class="dictionary-control-panel mb-6">
                     <!-- Search Bar -->
                     <div class="flex-center gap-4 mb-5">
-                        <div class="search-input-wrapper" class="relative flex-1">
-                            <i class="fa-solid fa-magnifying-glass" class="search-input-icon"></i>
-                            <input type="text" id="dict-search-input" class="form-input" placeholder="성분명, 영문명 또는 초성을 입력하여 실시간 검색 (예: 페녹시, glycerin, ㄱㄹㅅㄹ)" class="search-input" aria-label="성분 검색어 입력">
+                        <div class="search-input-wrapper relative flex-1">
+                            <i class="fa-solid fa-magnifying-glass search-input-icon"></i>
+                            <input type="text" id="dict-search-input" class="form-input search-input" placeholder="성분명, 영문명 또는 초성을 입력하여 실시간 검색 (예: 페녹시, glycerin, ㄱㄹㅅㄹ)" aria-label="성분 검색어 입력">
                         </div>
-                        <button class="btn btn-secondary" data-click="clearDictSearch" class="flex-center gap-2"><i class="fa-solid fa-xmark"></i> 초기화</button>
+                        <button class="btn btn-secondary flex-center gap-2" data-click="clearDictSearch"><i class="fa-solid fa-xmark"></i> 초기화</button>
                     </div>
 
                     <!-- Category Filter Buttons -->
-                    <div class="dict-filter-buttons" class="flex-row gap-3 flex-wrap">
+                    <div class="dict-filter-buttons flex-row gap-3 flex-wrap">
                         <button class="btn btn-secondary active-filter" data-filter="all" data-click="setDictFilter" data-arg="all">전체 성분</button>
                         <button class="btn btn-secondary" data-filter="approved" data-click="setDictFilter" data-arg="approved">🟢 사용 가능 원료</button>
                         <button class="btn btn-secondary" data-filter="restricted" data-click="setDictFilter" data-arg="restricted">🟡 사용 제한 원료</button>
@@ -1154,7 +1154,7 @@
 
             <!-- 인앱 브라우저(WebView) 안내 — Chrome으로 열기 -->
             <div class="pwa-modal-body is-hidden" id="pwa-guide-inapp" >
-                <p class="pwa-modal-lead" class="text-primary"><i class="fa-solid fa-triangle-exclamation"></i> 현재 인앱 브라우저에서 열려 있습니다</p>
+                <p class="pwa-modal-lead text-primary"><i class="fa-solid fa-triangle-exclamation"></i> 현재 인앱 브라우저에서 열려 있습니다</p>
                 <p class="pwa-step-text" style="margin-bottom: 1rem;">카카오톡·Instagram·Facebook 등 인앱 브라우저에서는 앱 설치가 지원되지 않습니다. <strong>Chrome 브라우저</strong>에서 열어주세요.</p>
                 <ol class="pwa-steps">
                     <li>
