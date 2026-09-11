@@ -43,7 +43,7 @@
 | 큐레이션 | 개발자가 직접 Markdown 편집 | 관리자 대시보드 승인/거부 |
 | 저장 | `content/피드백/*.md` | Supabase `passing_stories`, `error_reports` 테이블 |
 | 표시 | 정적 렌더링 | 실시간 fetch + 캐시 |
-| 접근 | 전체 공개 | Pro 구독자 전체, 무료는 미리보기 3건 |
+| 접근 | 전체 공개 | Pro 전체, 무료 로그인 미리보기 3건, 미로그인 정적 번들 3건 |
 | 백엔드 | 불필요 (Zero-Backend 유지) | Supabase (Auth + RLS) |
 
 ### 1.3 표시 위치
@@ -62,6 +62,7 @@
   "id": "ps_001",
   "author": "익명",
   "examYear": 2026,
+  "examSession": 2,
   "examMonth": 8,
   "score": 82,
   "studyPeriod": "3개월",
@@ -78,7 +79,8 @@
 | `id` | string | 고유 식별자 (`ps_001` 형식) |
 | `author` | string | 작성자명 (기본 "익명") |
 | `examYear` | int | 시험 연도 |
-| `examMonth` | int | 시험 회차 (월) |
+| `examSession` | int | 시험 회차 (연 2회 기준: 1 또는 2) |
+| `examMonth` | int | 시험 월 (정보 표시용, examSession과 독립) |
 | `score` | int | 취득 점수 |
 | `studyPeriod` | string | 학습 기간 (예: "3개월") |
 | `subject` | string | 과목 키 (`law`, `manufacturing`, `safety`, `understanding`) |
@@ -96,8 +98,8 @@
   "chapter": "ch02",
   "location": "2.1절 용어 정의",
   "errorType": "typo",
-  "description": "'보습'이 '보습'으로 중복 표기",
-  "correction": "'보습' 한 번으로 수정",
+  "description": "'유화'가 '유와'로 오기",
+  "correction": "'유화'로 수정",
   "status": "fixed",
   "submittedAt": "2026-09-01"
 }
@@ -119,7 +121,7 @@
 
 | `errorType` | 설명 | 예시 |
 |-------------|------|------|
-| `typo` | 오탈자 | "보습" 중복, 띄어쓰기 오류 |
+| `typo` | 오탈자 | "유화"→"유와" 오기, 띄어쓰기 오류 |
 | `content` | 내용 오류 | 법령 조문 번호 불일치, 설명 오류 |
 | `reference` | 참조 링크 오류 | 깨진 링크, 잘못된 교차 참조 |
 
@@ -142,6 +144,7 @@ content/피드백/
 id: ps_001
 author: 익명
 examYear: 2026
+examSession: 2
 examMonth: 8
 score: 82
 studyPeriod: 3개월
@@ -170,15 +173,15 @@ subject: manufacturing
 chapter: ch02
 location: 2.1절 용어 정의
 errorType: typo
-description: "'보습'이 '보습'으로 중복 표기"
-correction: "'보습' 한 번으로 수정"
+description: "'유화'가 '유와'로 오기"
+correction: "'유화'로 수정"
 status: fixed
 submittedAt: 2026-09-01
 ---
 
 ## 2과목 2챕터 오탈자
 
-2.1절 용어 정의에서 '보습'이 중복 표기되어 있습니다.
+2.1절 용어 정의에서 '유화'가 '유와'로 오기되어 있습니다.
 ```
 
 ### 3.4 프론트엔드 구성
@@ -209,7 +212,7 @@ submittedAt: 2026-09-01
 │                                              │
 │  [탭 1: 합격 수기 목록]                       │
 │  ┌──────────────────────────────────────┐   │
-│  │ 🏆 익명 · 2026년 8회 · 82점            │   │
+│  │ 🏆 익명 · 2026년 2회차(8월) · 82점       │   │
 │  │ 학습기간: 3개월 · 1과목                │   │
 │  │ "1과목 법령은 암기보다 흐름..."        │   │
 │  │ 💡 매일 30분 카드 학습                 │   │
@@ -221,7 +224,7 @@ submittedAt: 2026-09-01
 │  [탭 2: 오류 제보 목록]                       │
 │  ┌──────────────────────────────────────┐   │
 │  │ ✅ [수정됨] 2과목 2챕터                │   │
-│  │ 오탈자: '보습' 중복 표기              │   │
+│  │ 오탈자: '유화'→'유와' 오기                │   │
 │  └──────────────────────────────────────┘   │
 └─────────────────────────────────────────────┘
 ```
@@ -291,6 +294,7 @@ CREATE TABLE passing_stories (
     user_id UUID REFERENCES auth.users(id),
     author TEXT DEFAULT '익명',
     exam_year INT,
+    exam_session INT CHECK (exam_session IN (1, 2)),
     exam_month INT,
     score INT,
     study_period TEXT,
@@ -345,6 +349,27 @@ CREATE POLICY "error_reports_insert_own"
     ON error_reports FOR INSERT
     WITH CHECK (auth.uid() = user_id);
 
+-- UPDATE/DELETE 정책 (명시적 의도):
+-- 일반 사용자의 UPDATE/DELETE는 허용하지 않음.
+-- 의도: 승인 후 콘텐츠 변형 방지, 제출 기록 보존.
+-- 단, 제출 직후 오타 수정 UX가 필요하면 아래 정책을 활성화:
+-- CREATE POLICY "passing_stories_update_own_draft"
+--     ON passing_stories FOR UPDATE
+--     USING (auth.uid() = user_id AND approved = false);
+-- (승인 전 draft 상태에서만 수정 허용)
+CREATE POLICY "passing_stories_no_user_update"
+    ON passing_stories FOR UPDATE
+    USING (false);
+CREATE POLICY "passing_stories_no_user_delete"
+    ON passing_stories FOR DELETE
+    USING (false);
+CREATE POLICY "error_reports_no_user_update"
+    ON error_reports FOR UPDATE
+    USING (false);
+CREATE POLICY "error_reports_no_user_delete"
+    ON error_reports FOR DELETE
+    USING (false);
+
 -- 관리자: 모든 항목 조회 및 상태/승인 변경
 CREATE POLICY "admin_all_access"
     ON passing_stories FOR ALL
@@ -373,7 +398,7 @@ CREATE POLICY "admin_all_access_errors"
 ┌─────────────────────────────────────────────┐
 │  ✍️ 합격 수기 작성                            │
 │                                              │
-│  시험 연도: [2026] 월: [8]                   │
+│  시험 연도: [2026] 회차: [2▼] 월: [8]      │
 │  점수: [82]  학습기간: [3개월]               │
 │  과목: [1과목 ▼]                             │
 │  작성자명: [익명]                            │
@@ -408,14 +433,25 @@ CREATE POLICY "admin_all_access_errors"
 
 ### 4.4 접근 제어
 
+> **리뷰 피드백 반영**: 접근 등급을 4단계로 명확히 분리하고,
+> 미로그인 미리보기의 RLS 구현 방식을 명시했습니다.
+
 | 사용자 유형 | 합격 수기 | 오류 제보 | 제출 권한 |
 |------------|----------|----------|----------|
-| 무료 (미로그인) | 미리보기 3건 | 미리보기 3건 | ❌ |
+| 미로그인 | 미리보기 3건 (정적 번들) | 미리보기 3건 (정적 번들) | ❌ |
+| 무료 로그인 | 미리보기 3건 | 미리보기 3건 | ✅ |
 | Pro 구독자 | 전체 열람 | 전체 열람 | ✅ |
 | 관리자 | 전체 + 승인/거부 | 전체 + 상태 변경 | ✅ |
 
+**미로그인 미리보기 구현 방식**:
+- 미리보기 3건은 RLS가 아닌 **정적 번들**(`data/feedback.js`)로만 제공
+- 정적 번들은 빌드 시 `approved=true` 항목 중 최신 3건만 포함
+- Supabase RLS는 인증 사용자에게만 적용 (미로그인은 Supabase 접근 불가)
+- 이렇게 하면 RLS 정책은 "인증 필수"를 유지하면서 미로그인도 일부 체험 가능
+
 > **게이팅 주의**: SUBSCRIPTION_ROADMAP §5.1에 따라 클라이언트 게이팅은 UX일 뿐이다.
 > 실제 접근 통제는 Supabase RLS 정책으로 서버에서만 적용한다.
+> 단, 미로그인 미리보기는 정적 번들이므로 RLS 대상이 아니다.
 
 ### 4.5 큐레이션 워크플로우
 
@@ -615,6 +651,13 @@ Phase 1 (현재)     Phase 2 (구독 전환)        Phase 3 (커뮤니티)      
 
 ### 10.3 데이터 모델 (예정)
 
+> **참고**: 아래 SQL 스키마는 방향성 제시용입니다.
+> Phase 2를 실제로 내보고 사용자 반응을 본 뒤 확정해도 늦지 않습니다 (YAGNI).
+> 현재 확정하면 실제 요구와 안 맞아 버려질 가능성이 큽니다.
+
+<details>
+<summary>SQL 스키마 (펼쳐 보기)</summary>
+
 ```sql
 -- 스터디 그룹
 CREATE TABLE study_groups (
@@ -622,7 +665,7 @@ CREATE TABLE study_groups (
     name TEXT NOT NULL,
     subject TEXT,
     target_exam_year INT,
-    target_exam_month INT,
+    target_exam_session INT,
     description TEXT,
     created_by UUID REFERENCES auth.users(id),
     created_at TIMESTAMPTZ DEFAULT NOW()
@@ -683,6 +726,8 @@ CREATE TABLE notifications (
 );
 ```
 
+</details>
+
 ### 10.4 RLS 정책 방향
 
 | 테이블 | 조회 | 작성 | 수정/삭제 |
@@ -723,6 +768,23 @@ CREATE TABLE notifications (
 | 검색 | 전문 검색 (Supabase pg_trgm 또는 외부 검색 엔진) |
 | 오프라인 | 커뮤니티는 온라인 전용 (오프라인 학습 강점과 분리) |
 | 비용 | Supabase Realtime 연결 수, 행 수 기반 과금 — 트래픽 모니터링 필수 |
+
+### 10.6.1 솔로 운영자 관리 부담 (확장 결정 기준)
+
+> **리뷰 피드백 반영**: 커뮤니티는 기능이 어려운 게 아니라 **운영이 어렵습니다**.
+> 질문·답변, 토론, 학습일기, 신고 시스템까지 가면 콘텐츠 모더레이션이 상근 업무가 됩니다.
+
+확장 결정 시 반드시 다음 기준을 확인해야 합니다:
+
+| 질문 | 기준 |
+|------|------|
+| 매일 모더레이션 시간 확보 가능? | 일 30분 이상 불가 → Phase 3 보류 |
+| 신고 처리 SLA | 24시간 내 응답 불가 → 커뮤니티 신뢰 하락 |
+| 스팸 대응 | 자동 필터링 없이 수동만 → 확장 금지 |
+| 초기 사용자 수 | DAU 50 미만 → 커뮤니티 활성화 안 됨 (매몰 비용) |
+
+> **권장**: Phase 2(단방향 피드백)를 먼저 내보고, 실제 사용자 반응과 모더레이션 부담을 측정한 뒤 Phase 3 확장 여부를 결정하세요.
+> "내가 매일 이걸 관리할 수 있나"가 1차 기준입니다.
 
 ### 10.7 단계별 의존 관계
 
