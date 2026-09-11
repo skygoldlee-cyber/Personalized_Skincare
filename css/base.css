@@ -195,7 +195,9 @@
 .pwa-step-num,
 .pwa-tip,
 .subj-stats-summary,
-.progress-bar-container {
+.progress-bar-container,
+.glass-card,
+#draft-resume-banner {
     box-shadow: var(--shadow-md);
 }
 
