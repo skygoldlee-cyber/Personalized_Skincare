@@ -1589,7 +1589,7 @@ function setupThemeToggle() {
     function isLight() { return root.classList.contains('light-theme'); }
     function apply(light) {
         root.classList.toggle('light-theme', light);
-        if (meta) meta.setAttribute('content', light ? '#eef1f6' : '#0b0f19');
+        if (meta) meta.setAttribute('content', light ? '#dde3ec' : '#0b0f19');
         try { localStorage.setItem('appTheme', light ? 'light' : 'dark'); } catch (e) {}
         // 리더 등 다른 모듈이 동일한 테마 상태를 공유하도록 이벤트 브로드캐스트
         document.dispatchEvent(new CustomEvent('themechange', { detail: { light: light } }));
