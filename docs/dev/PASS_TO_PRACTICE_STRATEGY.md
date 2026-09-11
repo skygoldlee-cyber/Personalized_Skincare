@@ -183,6 +183,24 @@ flowchart LR
 > **원칙**: 배합량 수치 데이터는 A등급(공식)만 표시합니다.
 > B등급 이하의 수치는 "참고"로만 표시하고, 단정적 표현을 피합니다.
 
+### 2.6 신뢰성 등급 ↔ source ↔ verified 교차 매핑
+
+세 분류 체계(신뢰성 등급 / `source` enum / `verified` 플래그)의 대응 관계:
+
+| 신뢰성 등급 | `source` 값 | `verified` | AI 학습 데이터 | 비고 |
+|------------|------------|-----------|---------------|------|
+| **A (공식)** | `official` | `true` (자동) | ✅ 포함 | 식약처 고시·법령 일치 시 자동 승격 |
+| **B (학술)** | `community` | `true` (관리자 수동) | ✅ 포함 | 학술 논문 근거 확인 후 관리자 승격 |
+| **C (커뮤니티)** | `community` | `false` | ❌ 제외 | 3명 이상 동일 보고 시 관리자 검토 대기 큐 신호 |
+| **D (미검증)** | `community` 또는 `ai` | `false` | ❌ 제외 | 개인 경험, AI 생성 데이터 |
+
+> **구현 가이드**:
+> - `source = 'official'` → 자동 `verified = true`
+> - `source = 'community'` + 학술 근거 → 관리자 검토 후 `verified = true`
+> - `source = 'community'` + 3명 이상 동일 보고 → 관리자 검토 대기 큐 신호 (여전히 `verified = false`)
+> - `source = 'ai'` → 항상 `verified = false` (AI 생성 데이터는 검증 대상)
+> - AI 학습 데이터 필터: `SELECT * FROM ingredient_practice WHERE verified = true`
+
 ---
 
 ## 3. AI 배합 참고 (Killer Feature)
@@ -755,12 +773,18 @@ flowchart TD
 | 원료 기본 정보 | 식약처 공식 고시와 일치 | 시스템 (자동) | 자동 true |
 | 배합량 한도 | 법령 원문과 일치 | 시스템 (자동) | 자동 true |
 | 원료 궁합 | 학술 논문 근거 존재 | 관리자 (수동) | 수동 true/false |
-| 배합 패턴 | 3명 이상 조제관리사 동일 패턴 보고 | 시스템 (반자동) | 자동 true |
+| 배합 패턴 | 3명 이상 동일 패턴 보고 | 관리자 (검토 대기 큐) | **false (신호만)** |
 | 개인 경험 | (검증 불가) | — | 항상 false |
 | 고객 반응 | (주관적) | — | 항상 false |
 
 > **원칙**: `verified = false`인 데이터는 UI에 "커뮤니티 경험"으로만 표시하고,
 > AI 학습 데이터에서 **제외**합니다.
+>
+> **리뷰 피드백 반영**: "3명 이상 동일 보고 → 자동 verified=true"는 제거했습니다.
+> "다수가 그렇게 한다"는 안전성의 근거가 아닙니다 — 3명이 똑같이 틀릴 수 있고,
+> 초기 사용자 수가 적을 때 담합·자기강화가 발생할 수 있습니다.
+> 자동 승격 경로는 **공식 고시 일치**와 **법령 원문 일치** 두 가지로만 제한합니다.
+> "3명 이상 동일 보고"는 관리자 검토 대기 큐에 올리는 **신호**로만 사용합니다.
 
 ### 10.3 `ingredient_practice` 테이블 verified 플래그 운영
 
@@ -771,10 +795,10 @@ flowchart TD
 -- 3. source = 'community' + 관리자 검토 → verified = true/false (수동)
 -- 4. source = 'ai' → verified = false (AI 생성 데이터는 검증 대상)
 
--- 검증 기준:
+-- 검증 기준 (자동 승격은 공식/법령 일치 두 가지로만 제한):
 -- 1. 공식 고시/법령과 일치 → 자동 verified = true
 -- 2. 학술 논문 근거 존재 → 관리자 검토 후 verified = true
--- 3. 3명 이상 동일 보고 → 반자동 verified = true
+-- 3. 3명 이상 동일 보고 → 관리자 검토 대기 큐 신호 (verified=false 유지)
 -- 4. 개인 경험/주관적 평가 → verified = false (영구)
 
 -- AI 학습 데이터 필터:
@@ -906,6 +930,7 @@ CREATE TABLE formulas (
     version INT DEFAULT 1,
     parent_version INT,
     status TEXT DEFAULT 'draft' CHECK (status IN ('draft', 'final', 'archived')),
+    -- ingredients의 limit/limitSource는 "작성 당시 한도 스냅샷" (아래 설계 원칙 참조)
     ingredients JSONB NOT NULL, -- [{ name, inci, concentration, unit, limit, limitSource, withinLimit }]
     total_volume NUMERIC,
     total_unit TEXT,
@@ -966,6 +991,31 @@ CREATE TABLE regulation_updates (
 | `ingredient_practice` | 전체 (인증 사용자) | Practice Pro | 관리자 + 작성자 |
 | `regulation_updates` | 전체 (인증 사용자) | 관리자만 | 관리자만 |
 
+### 12.4 `formulas.ingredients` limit 스냅샷 설계 원칙
+
+> **리뷰 피드백 반영**: `ingredients` JSONB에 `limit`, `limitSource`, `withinLimit`를 저장하면
+> 법령 개정 시 한도가 바뀌어도 저장된 포뮬러는 옛날 한도를 들고 있습니다.
+> 이는 §7.3 "법령 개정 시 기존 포뮬러 영향 분석"과 충돌합니다.
+
+**설계 원칙**:
+
+1. **`limit`은 "작성 당시 한도 스냅샷"** — 포뮬러 작성 시점의 공식 고시 한도를 기록
+2. **진실 원천(source of truth)은 현행 고시 테이블** — `ingredient_practice` 또는 별도 `regulation_limits` 테이블
+3. **영향 분석은 항상 현행 고시와 재대조** — §7.3의 영향 분석은 스냅샷이 아닌 현행 한도로 재계산
+4. **UI 표시**: 포뮬러 조회 시 "작성 당시 한도: 2.0%" + "현행 한도: 1.5%" 두 값을 모두 표시
+
+```sql
+-- 영향 분석 쿼리 예시 (스냅샷이 아닌 현행 한도로 재대조):
+-- SELECT f.id, f.name, i.name, i.concentration,
+--        i.limit AS snapshot_limit,        -- 작성 당시 한도
+--        r.current_limit AS current_limit,  -- 현행 고시 한도
+--        (i.concentration > r.current_limit) AS exceeds_current
+-- FROM formulas f, jsonb_array_elements(f.ingredients) AS i,
+--      regulation_limits r
+-- WHERE r.ingredient_name = i->>'name'
+--   AND (i->>'concentration')::numeric > r.current_limit;
+```
+
 ---
 
 ## 13. 리스크 및 완화책
@@ -991,7 +1041,7 @@ CREATE TABLE regulation_updates (
 | 검토 항목 | 검토 내용 | 검토 주체 |
 |----------|----------|----------|
 | 화장품법 | AI 배합 참고의 법적 위치, 책임 소재 | 화장품법 전문 변호사 |
-| 약사법 | "처방" 용어 사용 가능 여부, 의료 행위 해당 여부 | 약사법 전문 변호사 |
+| 약사법 | "배합/포뮬러" 용어가 약사법·화장품법상 안전한지 확인, 의료 행위 해당 여부 | 약사법 전문 변호사 |
 | 제품책임법 | AI 제안 원료로 인한 피부 문제 시 책임 | 제품책임법 전문 변호사 |
 | 개인정보보호법 | 고객 정보(피부 타입, concerns) 수집·저장 | 개인정보보호 전문 변호사 |
 | 전자상거래법 | 구독 모델, 무료 체험, 자동 결제 | 전자상거래법 전문 변호사 |
