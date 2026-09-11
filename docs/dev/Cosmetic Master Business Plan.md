@@ -1,7 +1,9 @@
-# 📘 Cosmetic Pass Master 사업기획서
+# 📘 Cosmetic Master 사업기획서
 
 **"합격시키고, 합격 후에도 계속 쓰게 만드는 조제관리사 Formula OS"**
 
+> **브랜드 구조**: **Cosmetic Master** (상위 브랜드) = **Pass Master** (Pass Loop, 시험 합격) + **Formula OS** (Practice Loop, 실무)
+>
 > **작성일**: 2026-09-12
 > **기반 문서**: PASS_TO_PRACTICE_STRATEGY.md, FEATURE_PROPOSALS.md, SUBSCRIPTION_ROADMAP.md, READER_FEEDBACK_DESIGN.md
 > **성격**: 투자·협업·내부 의사결정용 사업기획서 (제품 전략 문서를 사업 관점으로 재구성 + 시장·마케팅·세일즈 추가)
@@ -29,7 +31,7 @@
 
 ## 1. Executive Summary
 
-**Cosmetic Pass Master**는 맞춤형화장품조제관리사 시험 합격을 돕는 학습 플랫폼에서 출발해, 합격 후 실무까지 이어지는 **조제관리사 전용 Formula OS**로 확장하는 서비스다.
+**Cosmetic Master**는 맞춤형화장품조제관리사 시험 합격을 돕는 **Pass Master**(Pass Loop)에서 출발해, 합격 후 실무까지 이어지는 **Formula OS**(Practice Loop)로 확장하는 2축 서비스다.
 
 일반 자격증 플랫폼은 합격과 동시에 구독자가 이탈한다. 그러나 맞춤형화장품조제관리사는 자격 취득 자체가 목적이 아니라 **맞춤형화장품판매업의 법정 필수 인력**이 되기 위한 관문이며, 취득 후에도 원료 검색·배합 설계·법령 준수·고객 기록이라는 실무 지식이 계속 필요하다. 이 산업 특성을 활용해 "합격 = 이탈"을 "합격 = 다음 단계(실무) 진입"으로 재정의하는 것이 핵심 전략이다.
 
@@ -116,7 +118,10 @@
 
 ## 4. 제품: 두 개의 루프
 
-### 4.1 Pass Loop (시험 학습)
+> **Cosmetic Master** = **Pass Master** (Pass Loop) + **Formula OS** (Practice Loop)
+> 두 루프는 하나의 지식 그래프로 통합되며, 사용자는 합격 전후를 끊김 없이 이동한다.
+
+### 4.1 Pass Master = Pass Loop (시험 학습)
 
 교재 읽기 → 핵심 개념 추출 → 플래시카드 암기 → 문제 풀이 → 오답 분석 → 취약 개념 발견 → AI 학습 경로 추천 → 반복 복습(SM-2) → 모의고사 → 합격 예측 → 시험 직전 집중 학습 → 합격. 개별 엔진(교재 파서, 카드 자동 추출, SM-2, 모의고사)은 이미 구현 완성도가 높고, 남은 과제는 단계 간 "파이프라인" 연결(오답→재학습→AI 추천)이다.
 
