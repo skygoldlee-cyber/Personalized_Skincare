@@ -1,7 +1,7 @@
-# 🧴 Pass → Practice 전략: 합격 후 실무 플랫폼 전환
+﻿# 🧴 Pass → Practice 전략: Formula OS — 합격 후 실무 플랫폼 전환
 
 > **작성일**: 2026-09-11
-> **개정일**: 2026-09-11 — 리뷰 피드백 반영: 생성 vs 검증 분리, 용어 정정(처방→배합/포뮬러), 합격 판정 방식 명확화, Flywheel 검증 게이트 정의, Free/Pro 경계 재검토, 법률 검토 필수 명시
+> **개정일**: 2026-09-12 — 종합 리뷰 반영: Formula OS 핵심 격상, AI 배합 참고 한 단계 뒤로, verified 세분화, MVP 축소(Phase 5-A), 고객 개인정보 최소화, 법적 한도 ≠ 안전성 UI 분리, ingredient_practice 관계형 분리, 법령 알림 Actionable Alert 강화, Pass Pro vs Practice Pro 분리, Practice 타깃 확장, Knowledge Flywheel
 > **목적**: 합격 후 이탈하는 일반 자격증 플랫폼과 달리, 맞춤형화장품조제관리사의 특성을 활용하여 **합격 후에도 계속 머무는 실무 플랫폼** 으로 확장하는 전략
 > **관련 문서**: [FEATURE_PROPOSALS.md](FEATURE_PROPOSALS.md), [SUBSCRIPTION_ROADMAP.md](SUBSCRIPTION_ROADMAP.md), [READER_FEEDBACK_DESIGN.md](READER_FEEDBACK_DESIGN.md)
 
@@ -9,9 +9,9 @@
 
 ## 📑 목차
 
-1. [핵심 전략: Pass Loop → Practice Loop](#1-핵심-전략-pass-loop--practice-loop)
+1. [핵심 전략: Formula OS — Pass Loop → Practice Loop](#1-핵심-전략-formula-os--pass-loop--practice-loop)
 2. [조제관리사 실무 DB](#2-조제관리사-실무-db)
-3. [AI 배합 참고 (Killer Feature)](#3-ai-배합-참고-killer-feature)
+3. [AI 배합 참고 (Formula OS 구성 요소)](#3-ai-배합-참고-formula-os-구성-요소)
 4. [시험용 데이터 ↔ 실무용 데이터 통합](#4-시험용-데이터--실무용-데이터-통합)
 5. [실무 모드 진입 UX](#5-실무-모드-진입-ux)
 6. [포뮬러 라이브러리](#6-포뮬러-라이브러리)
@@ -43,7 +43,33 @@
 
 ---
 
-## 1. 핵심 전략: Pass Loop → Practice Loop
+## 1. 핵심 전략: Formula OS — Pass Loop → Practice Loop
+
+### 1.0 제품 정의: Formula OS
+
+> **Cosmetic Pass Master의 진짜 경쟁력은 AI가 아닙니다.**
+> **수험생을 조제 실무자로 전환시키고, 그 사람이 사용하는 포뮬러·원료·규정·업무 데이터를 계속 축적하게 만드는 구조입니다.**
+
+```
+Cosmetic Pass Master
+        │
+        ├── PASS (시험)
+        │    └─ 자격증 합격을 빠르게
+        │
+        └── PRACTICE (실무) = Formula OS
+             ├─ 원료 DB
+             ├─ 배합 계산
+             ├─ 포뮬러 작성·저장
+             ├─ 포뮬러 버전 관리
+             ├─ 규정 검증·영향 분석
+             ├─ 고객별 기록
+             └─ AI 배합 참고 (가장 나중, 법률 검토 후)
+```
+
+> **리뷰 피드백 반영**: AI 배합 참고를 Killer Feature에서 한 단계 뒤로 조정했습니다.
+> AI는 경쟁사가 쉽게 따라 할 수 있지만, 사용자가 1~2년간 축적한 포뮬러 + 고객 이력 + 수정 이력 + 원료 경험 데이터는 쉽게 복제할 수 없습니다.
+> **Formula OS가 제품의 핵심이며, AI는 그 안의 보조 구성 요소**입니다.
+> 장기적으로 "조제관리사를 위한 Formula OS" 포지션까지 갈 수 있습니다.
 
 ### 1.1 문제 인식
 
@@ -185,25 +211,37 @@ flowchart LR
 
 ### 2.6 신뢰성 등급 ↔ source ↔ verified 교차 매핑
 
-세 분류 체계(신뢰성 등급 / `source` enum / `verified` 플래그)의 대응 관계:
+> **리뷰 피드백 반영**: `verified` 불리언 하나로 모든 검증을 표현하기에는 부족합니다.
+> 식약처 고시 사용한도 확인과 논문 원료 궁합 확인은 전혀 다른 검증입니다.
+> 장기적으로 `regulation_verified` / `scientific_verified` / `editor_verified` / `community_evidence`로 분리합니다.
 
-| 신뢰성 등급 | `source` 값 | `verified` | AI 학습 데이터 | 비고 |
-|------------|------------|-----------|---------------|------|
-| **A (공식)** | `official` | `true` (자동) | ✅ 포함 | 식약처 고시·법령 일치 시 자동 승격 |
-| **B (학술)** | `community` | `true` (관리자 수동) | ✅ 포함 | 학술 논문 근거 확인 후 관리자 승격 |
-| **C (커뮤니티)** | `community` | `false` | ❌ 제외 | 3명 이상 동일 보고 시 관리자 검토 대기 큐 신호 |
-| **D (미검증)** | `community` 또는 `ai` | `false` | ❌ 제외 | 개인 경험, AI 생성 데이터 |
+세 분류 체계(신뢰성 등급 / `source` enum / 검증 축)의 대응 관계:
+
+| 신뢰성 등급 | `source` 값 | `regulation_verified` | `scientific_verified` | `editor_verified` | `community_evidence` | AI 학습 | 비고 |
+|------------|------------|----------------------|----------------------|-------------------|---------------------|---------|------|
+| **A (공식)** | `official` | ✅ 자동 | — | — | — | ✅ 포함 | 식약처 고시·법령 일치 시 자동 |
+| **B (학술)** | `community` | — | ✅ (관리자) | ✅ (관리자) | — | ✅ 포함 | 학술 논문 근거 확인 후 승격 |
+| **C (커뮤니티)** | `community` | — | — | ❌ | N건 | ❌ 제외 | 3명+ 동일 보고 → 관리자 검토 대기 큐 |
+| **D (미검증)** | `community`/`ai` | — | — | ❌ | — | ❌ 제외 | 개인 경험, AI 생성 |
+
+> **UI 표시 예시** (단일 `verified` 대신 다축 표시):
+> ```
+> 규정 검증      ✅
+> 학술 검증      ✅
+> 관리자 검토    ❌
+> 커뮤니티 경험  12건
+> ```
 
 > **구현 가이드**:
-> - `source = 'official'` → 자동 `verified = true`
-> - `source = 'community'` + 학술 근거 → 관리자 검토 후 `verified = true`
-> - `source = 'community'` + 3명 이상 동일 보고 → 관리자 검토 대기 큐 신호 (여전히 `verified = false`)
-> - `source = 'ai'` → 항상 `verified = false` (AI 생성 데이터는 검증 대상)
-> - AI 학습 데이터 필터: `SELECT * FROM ingredient_practice WHERE verified = true`
+> - `source = 'official'` → `regulation_verified = true` (자동)
+> - `source = 'community'` + 학술 근거 → 관리자 검토 후 `scientific_verified = true`
+> - `source = 'community'` + 3명 이상 동일 보고 → 관리자 검토 대기 큐 신호 (여전히 `editor_verified = false`)
+> - `source = 'ai'` → 모든 검증 춸 false (AI 생성 데이터는 검증 대상)
+> - AI 학습 데이터 필터: `WHERE regulation_verified = true OR scientific_verified = true`
 
 ---
 
-## 3. AI 배합 참고 (Killer Feature)
+## 3. AI 배합 참고 (Formula OS 구성 요소)
 
 ### 3.1 핵심 설계 원칙: 생성 vs 검증 분리
 
@@ -282,7 +320,11 @@ flowchart TD
 │  │ • 히알루론산 + 고농도 비타민 C 주의  │   │
 │  │ • 알란토인 0.1% 초과 시 주의        │   │
 │  │                                      │   │
-│  │ ✅ 법적 한도: 모든 원료 한도 내      │   │
+│  │ ✅ 규정 확인: 현행 기준상 배합 한도  │   │
+│  │    초과 없음                          │   │
+│  │ ⚠️ 안전성 판단: 시스템에서 보증하지  │   │
+│  │    않음                               │   │
+│  │ 👤 최종 판단: 조제 담당자             │   │
 │  │                                      │   │
 │  │ [이 배합 채택] [수정] [다른 후보]   │   │
 │  └──────────────────────────────────────┘   │
@@ -303,6 +345,7 @@ flowchart TD
 | **참고용 명시** | 모든 결과에 "참고용" 안내문 표시 | UI 하단 고정 안내문 |
 | **최종 결정권** | 조제관리사가 최종 배합을 결정하고 기록 | 사용자 확인 버튼 필수 |
 | **법적 한도 검증** | 모든 원료 배합량이 법정 한도 내인지 자동 검증 | 공식 고시 데이터 기반 |
+| **규정 ≠ 안전성 명시** | "한도 내" ≠ "안전함" — UI에서 분리 표시 | 규정 확인 ✅ / 안전성 ⚠️ / 최종 판단 👤 |
 | **금지 원료 필터** | 사용 금지 원료는 조합 후보에서 원천 제외 | `banned_ingredients.md` 연동 |
 | **알레르기 표시** | 알레르기 유발 향료 25종 자동 감지 및 경고 | 별표 4 향료 목록 연동 |
 | **제한 원료 경고** | 별표 2 제한 원료 사용 시 직접 배합 불가 안내 | `restricted_ingredients.md` 연동 |
@@ -369,6 +412,7 @@ flowchart TD
 ### 5.1 핵심 설계 원칙: 합격 여부 불문, 누구나 실무 모드 사용 가능
 
 > **실무 모드는 합격자 전용이 아닙니다.** 합격 여부와 무관하게 누구나 실무 모드를 켤 수 있습니다.
+> **합격자 ≠ 실무자, 실무자 ≠ 반드시 합격자** — Practice 타깃은 합격자가 아닌 조제 실무자 전반입니다.
 
 이유:
 
@@ -376,6 +420,15 @@ flowchart TD
 - 합격자 자가 보고에 의존하면, 미합격자도 실무 모드를 쓸 수 있습니다.
 - 차라리 "실무 모드는 누구나 켤 수 있다"로 가는 것이 솔직하고 진입장벽을 낮춥니다.
 - 수험생도 실무 모드를 미리 체험해보면 Practice Pro 전환 동기가 됩니다.
+
+**Practice 타깃 사용자**:
+
+| 타깃 | 설명 |
+|------|------|
+| ① 맞춤형화장품조제관리사 | 자격 취득 후 실무 종사자 |
+| ② 맞춤형화장품 관련 종사자 | 조제·제조·판매 실무자 (합격 여부 불문) |
+| ③ 화장품 제조/판매 실무자 | 원료·배합·규정 실무 담당자 |
+| ④ 조제를 배우는 사람 | 수험생, 예비 조제관리사 |
 
 ### 5.2 실무 모드 진입 화면
 
@@ -562,11 +615,15 @@ flowchart TD
 
 화장품 관련 법령·고시가 개정되면 실무 종사자에게 즉시 알립니다. 시험이 끝난 사용자도 계속 들어오게 만드는 이유가 됩니다.
 
-### 7.2 알림 구조
+### 7.2 알림 구조 (Actionable Alert)
+
+> **리뷰 피드백 반영**: 법령 업데이트 알림은 단순 Notification이 아닌 **Actionable Alert**입니다.
+> "새로운 AI 기능을 사용할 수 있습니다"보다 **"당신이 만든 포뮬러 3개가 이번 규정 변경의 영향을 받을 수 있습니다"**가 훨씬 강한 방문 이유입니다.
+> 이 기능은 Practice Pro의 핵심 유료 가치입니다.
 
 ```
 ┌─────────────────────────────────────────────┐
-│  🔔 화장품 관련 규정 업데이트                │
+│  🔔 규정 변경 — 내 포뮬러 3개 영향           │
 │                                              │
 │  2026년 9월 10일 새로운 고시가 반영되었습니다.│
 │                                              │
@@ -575,9 +632,12 @@ flowchart TD
 │  • 표시 기준 변경 (별표 4)                   │
 │  • 배합 기준 변경                             │
 │                                              │
-│  [내 포뮬러에 영향 확인]                      │
-│  → 3개 포뮬러가 영향을 받을 수 있습니다.      │
+│  ⚠️ 내 포뮬러 영향:                          │
+│  ① 세럼 A — 원료 X 한도 초과                 │
+│  ② 크림 B — 표시 기준 변경                   │
+│  ③ 토닉 C — 사용 제한 원료 추가              │
 │                                              │
+│  [영향 확인 및 수정]                         │
 │  [전체 변경사항 보기]                        │
 └─────────────────────────────────────────────┘
 ```
@@ -635,12 +695,28 @@ flowchart TD
 
 ### 8.3 가격 전략
 
-| 플랜 | 가격 | 대상 | 핵심 가치 |
-|------|------|------|----------|
-| Free | ₩0 | 수험생 (체험) | 1과목 학습, 일일 10문제 |
-| Pass Pro | ₩9,900/월 | 수험생 (전체) | 전 과목, AI 추천, 합격 예측 |
-| Practice Pro | ₩14,900/월 | 실무 종사자 | 원료 DB, 배합 참고, 포뮬러 관리 |
-| Practice Pro + 전환 혜택 | ₩9,900/월 | 기존 Pass Pro → Practice 전환 | 동일 가격으로 전환 |
+> **리뷰 피드백 반영**: Pass Pro와 Practice Pro는 "기능을 더 많이 제공하는 버전"이 아니라 **목적이 다른 서비스**입니다.
+
+| 플랜 | 가격 | 대상 | 핵심 목적 | 핵심 가치 |
+|------|------|------|----------|----------|
+| Free | ₩0 | 수험생 (체험) | 전 과목 학습 루프 경험 | 깊이 제한 (분량/AI/심층분석) |
+| Pass Pro | ₩9,900/월 | 수험생 (전체) | **합격을 빠르게** | 시간 절약 (전 과목, AI 추천, 합격 예측) |
+| Practice Pro | ₩14,900/월 | 실무 종사자 | **업무 시간을 줄이게** | 업무시간 절약 (원료 DB, 포뮬러, 규정 영향 분석) |
+| Practice Pro + 전환 혜택 | ₩9,900/월 | 기존 Pass Pro → Practice 전환 | 동일 가격으로 전환 | 동일 가격 유지 |
+
+**Pass Pro vs Practice Pro 기능 분담**:
+
+| 기능 | Pass Pro | Practice Pro |
+|------|----------|--------------|
+| 교재 | ◎ | ○ |
+| 문제 | ◎ | △ |
+| AI 학습 경로 | ◎ | - |
+| 원료 DB | ○ | ◎ |
+| 계산기 | ○ | ◎ |
+| 포뮬러 | △ | ◎ |
+| 규정 영향 분석 | - | ◎ |
+| 고객 기록 | - | ◎ |
+| 버전 관리 | - | ◎ |
 
 ### 8.4 Pass Pro 존재 이유 재검토
 
@@ -742,23 +818,38 @@ flowchart TD
 
 ### 10.1 구조 (검증 게이트 포함)
 
+> **리뷰 피드백 반영**: 초기에는 AI 학습 Flywheel보다 **Knowledge Flywheel**로 시작합니다.
+> 초기에는 AI 학습 데이터가 충분하지 않을 가능성이 높으므로,
+> 검증된 데이터 → 검색/추천 품질 향상 → 실무 효율 증가 → 사용자 증가로 시작하고,
+> 데이터가 충분히 쌓인 후 AI 모델/RAG 개선을 추가합니다.
+
+**Phase 1: Knowledge Flywheel (초기 MVP)**
+
 ```mermaid
 flowchart TD
     A[시험 사용자] --> B[학습 데이터<br/>카드, 퀴즈, 오답]
     B --> C[합격]
     C --> D[실무 사용자]
     D --> E[포뮬러 데이터<br/>원료 조합, 배합량, 고객 반응]
-    E --> F[원료/제형 데이터 축적]
-    F --> GATE{"검증 게이트<br/>공식 데이터/학술 근거 교차 검증"}
+    E --> F[검증된 지식 축적<br/>규정/학술 검증 데이터]
+    F --> G[검색/추천 품질 향상]
+    G --> H[실무 효율 증가]
+    H --> I[사용자 증가]
+    I -.->|순환| A
+```
+
+**Phase 2: AI Flywheel (데이터 축적 후)**
+
+```mermaid
+flowchart TD
+    F[검증된 데이터 축적] --> GATE{"검증 게이트<br/>공식 데이터/학술 근거 교차 검증"}
     GATE -->|검증 통과| H[검증된 데이터만<br/>AI 학습 데이터로 승격]
     GATE -->|검증 미통과| H2[AI 학습에서 제외]
     H --> I[AI 배합 참고 정확도 향상<br/>검증된 데이터만]
     I --> J[실무 가치 증가]
     J --> K[사용자 증가]
     K --> L[더 많은 데이터]
-    L --> M[더 좋은 서비스]
-    M -.->|순환| A
-
+    L -.->|순환| F
 ```
 
 ### 10.2 검증 게이트 상세
@@ -786,23 +877,25 @@ flowchart TD
 > 자동 승격 경로는 **공식 고시 일치**와 **법령 원문 일치** 두 가지로만 제한합니다.
 > "3명 이상 동일 보고"는 관리자 검토 대기 큐에 올리는 **신호**로만 사용합니다.
 
-### 10.3 `ingredient_practice` 테이블 verified 플래그 운영
+### 10.3 `ingredient_practice` 테이블 다축 검증 운영
 
 ```sql
--- verified 플래그 운영 규칙:
--- 1. source = 'official' → verified = true (자동)
--- 2. source = 'community' → verified = false (기본값)
--- 3. source = 'community' + 관리자 검토 → verified = true/false (수동)
--- 4. source = 'ai' → verified = false (AI 생성 데이터는 검증 대상)
+-- 다축 검증 플래그 운영 규칙 (verified 단일 불리언 → 4축 분리):
+-- 1. source = 'official' → regulation_verified = true (자동)
+-- 2. source = 'community' → 모든 검증 춸 false (기본값)
+-- 3. source = 'community' + 학술 근거 → 관리자 검토 후 scientific_verified = true
+-- 4. source = 'community' + 3명+ 동일 보고 → 관리자 검토 대기 큐 신호 (editor_verified = false)
+-- 5. source = 'ai' → 모든 검증 춸 false (AI 생성 데이터는 검증 대상)
 
 -- 검증 기준 (자동 승격은 공식/법령 일치 두 가지로만 제한):
--- 1. 공식 고시/법령과 일치 → 자동 verified = true
--- 2. 학술 논문 근거 존재 → 관리자 검토 후 verified = true
--- 3. 3명 이상 동일 보고 → 관리자 검토 대기 큐 신호 (verified=false 유지)
--- 4. 개인 경험/주관적 평가 → verified = false (영구)
+-- 1. 공식 고시/법령과 일치 → regulation_verified = true (자동)
+-- 2. 학술 논문 근거 존재 → 관리자 검토 후 scientific_verified = true
+-- 3. 3명 이상 동일 보고 → 관리자 검토 대기 큐 신호 (editor_verified = false)
+-- 4. 개인 경험/주관적 평가 → 모든 검증 춸 false (영구)
 
--- AI 학습 데이터 필터:
--- SELECT * FROM ingredient_practice WHERE verified = true;
+-- AI 학습 데이터 필터 (다축):
+-- SELECT * FROM ingredient_practice
+-- WHERE regulation_verified = true OR scientific_verified = true;
 ```
 
 ### 10.4 Flywheel 단계별 지표
@@ -874,35 +967,49 @@ Phase 5 — Practice Platform (실무)  ← 신규
 | 키워드 인덱스 (`keyword-index.js`) | 원료 ↔ 법령 교차 참조 | `GLOSSARY_INDEX` 확장 |
 | 독자 피드백 (`READER_FEEDBACK_DESIGN`) | 합격자 커뮤니티 | Phase 3~4 연동 |
 
-### 11.4 구현 우선순위 (리뷰 피드백 반영)
+### 11.4 구현 우선순위 (리뷰 피드백 반영 — MVP 극소화)
+
+> **리뷰 피드백 반영**: Phase 5를 전부 개발하지 말고 **극도로 줄인 Phase 5-A**를 먼저 출시합니다.
+> 가장 중요한 지표: **"사용자가 한 달 후에도 다시 포뮬러를 만들러 오는가?"**
+> 이 검증 없이 5-B/C/D를 개발하면 매몰 비용 위험이 큽니다.
 
 ```mermaid
 flowchart TD
-    subgraph P1 ["1순위 (즉시, 위험 낮음, 기존 데이터 재사용)"]
-        P1A["🧴 원료/성분 실무 DB<br/>(기존 데이터 재사용)"]
-        P1B["⚖️ 배합량 계산기<br/>(기존 trainer-calc.js 재사용)"]
-        P1C["📋 포뮬러 작성·저장<br/>(localStorage)"]
+    subgraph P5A ["Phase 5-A (MVP — 즉시, 위험 낮음)"]
+        P5A1["🧴 원료 DB<br/>검색 → 상세 → 규정 → 사용 정보"]
+        P5A2["⚖️ 배합 계산기<br/>총량 + 배합률 → 실제 투입량"]
+        P5A3["📋 My Formula<br/>생성 → 저장 → 수정 → 복제"]
+        P5A4["✅ 규정 Check<br/>원료 + 사용량 → 현행 기준 확인"]
     end
-    P1 --> V1["실무 사용자가 실제로 머무는지 검증<br/>Lock-in 효과 이미 발생"]
-    V1 --> P2
-    subgraph P2 ["2순위 (Supabase 연동 후, 법률 검토 완료 후)"]
-        P2A["🧪 AI 배합 참고<br/>(생성·검증 분리, 법률 검토 필수)"]
-        P2B["🔄 포뮬러 버전 관리"]
-        P2C["👤 고객별 조제 기록"]
-        P2D["🔔 법령·고시 업데이트 알림"]
+    P5A --> V5A["검증: 한 달 후 재방문 여부<br/>(포뮬러 생성 지속 여부)"]
+    V5A --> P5B
+    subgraph P5B ["Phase 5-B (재방문 확인 후)"]
+        P5B1["🔄 포뮬러 버전 관리"]
+        P5B2["👤 고객별 기록"]
+        P5B3["🔔 법령 업데이트 알림<br/>(Actionable Alert)"]
+        P5B4["� 포뮬러 영향 분석"]
     end
-    P2 --> P3
-    subgraph P3 ["3순위 (커뮤니티 확장)"]
-        P3A["👥 조제관리사 커뮤니티"]
-        P3B["💬 배합 사례 공유"]
+    P5B --> P5C
+    subgraph P5C ["Phase 5-C (데이터 축적 후, 법률 검토 후)"]
+        P5C1["🧪 AI 배합 참고<br/>(생성·검증 분리)"]
     end
-
+    P5C --> P5D
+    subgraph P5D ["Phase 5-D (커뮤니티 확장)"]
+        P5D1["👥 조제관리사 커뮤니티"]
+        P5D2["💬 배합 사례 공유"]
+    end
 ```
 
-> **리뷰 피드백 반영**: AI 배합 참고(2순위)는 **법률 검토 완료 전까지 착수하지 않습니다**.
-> 대신 1순위(원료 DB + 배합량 계산기 + 포뮬러 저장)를 먼저 내서
+| Phase | 기능 | 시점 | 검증 게이트 |
+|-------|------|------|------------|
+| **5-A** | 원료 DB + 계산기 + My Formula + 규정 Check | 즉시 | 한 달 후 재방문 여부 |
+| **5-B** | 버전 관리 + 고객 기록 + 법령 알림 + 영향 분석 | 5-A 검증 후 | — |
+| **5-C** | AI 배합 참고 | 데이터 축적 후 + 법률 검토 후 | 법률 검토 완료 |
+| **5-D** | 커뮤니티 + 배합 사례 공유 | 5-C 안정화 후 | DAU 50+ |
+
+> **핵심 원칙**: AI 생성은 가장 나중에, 가장 조심스럽게.
+> 5-A(원료 DB + 배합량 계산기 + 포뮬러 저장 + 규정 Check)를 먼저 내서
 > 실무 사용자가 실제로 머무는지부터 검증합니다.
-> AI 생성은 가장 나중에, 가장 조심스럽게.
 
 ---
 
@@ -941,33 +1048,74 @@ CREATE TABLE formulas (
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 고객
+-- 고객 (개인정보 최소수집 — 리뷰 피드백 반영)
+-- 초기 MVP에서는 name 대신 customer_code 사용.
+-- 실제 이름/연락처가 필요한 단계가 오면 별도 개인정보 영역으로 분리.
 CREATE TABLE customers (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID REFERENCES auth.users(id),
-    name TEXT,
+    customer_code TEXT NOT NULL, -- "CUST-001", "CUST-002" (name 대신)
     skin_type TEXT,
     concerns TEXT[],
     notes TEXT,
+    -- 개인정보 분리 영역 (필요 시 별도 테이블로 이관):
+    -- real_name TEXT,  -- 초기 MVP에서는 수집하지 않음
+    -- contact TEXT,    -- 초기 MVP에서는 수집하지 않음
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 원료 실무 정보 (크라우드소싱 확장 가능, 검증 게이트 포함)
-CREATE TABLE ingredient_practice (
+-- 원료 실무 정보 (관계형 분리 — 리뷰 피드백 반영)
+-- 단일 TEXT/TEXT[] 대신 제형별 사용량, 궁합, 규정을 관계형 테이블로 분리.
+CREATE TABLE ingredients (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    ingredient_name TEXT NOT NULL,
+    name TEXT NOT NULL,
     inci_name TEXT,
-    form_type TEXT, -- toner, serum, cream, etc.
-    recommended_range TEXT, -- "0.1% ~ 2.0%"
-    compatibility_good TEXT[], -- 잘 맞는 성분
-    compatibility_caution TEXT[], -- 주의 성분
-    formula_use TEXT[], -- 배합 활용 태그
+    type TEXT, -- 보습제, 방부제, 등
+    function TEXT,
     source TEXT, -- 'official' | 'community' | 'ai'
-    verified BOOLEAN DEFAULT FALSE,
-    verified_by TEXT, -- 'system' | 'admin:<name>' | 'auto:3+reports'
+    regulation_verified BOOLEAN DEFAULT FALSE,
+    scientific_verified BOOLEAN DEFAULT FALSE,
+    editor_verified BOOLEAN DEFAULT FALSE,
+    community_evidence_count INT DEFAULT 0,
+    verified_by TEXT,
     verified_at TIMESTAMPTZ,
-    verification_basis TEXT, -- 검증 근거 (공식 고시명, 논문 DOI 등)
+    verification_basis TEXT,
     created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 제형별 사용량 (히알루론산: 토너 0.1~0.5, 세럼 0.5~2.0, 크림 0.1~1.0)
+CREATE TABLE ingredient_usage (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    ingredient_id UUID REFERENCES ingredients(id) ON DELETE CASCADE,
+    form_type TEXT NOT NULL, -- toner, serum, cream, etc.
+    min_range NUMERIC,
+    max_range NUMERIC,
+    unit TEXT DEFAULT '%',
+    source TEXT,
+    scientific_verified BOOLEAN DEFAULT FALSE
+);
+
+-- 원료 궁합 (관계형)
+CREATE TABLE ingredient_compatibility (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    ingredient_id_a UUID REFERENCES ingredients(id) ON DELETE CASCADE,
+    ingredient_id_b UUID REFERENCES ingredients(id) ON DELETE CASCADE,
+    compatibility TEXT CHECK (compatibility IN ('good', 'caution', 'avoid')),
+    note TEXT,
+    source TEXT,
+    scientific_verified BOOLEAN DEFAULT FALSE
+);
+
+-- 규정 한도 (별도 진실 원천 — §12.4 limit 스냅샷과 연동)
+CREATE TABLE regulation_limits (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    ingredient_id UUID REFERENCES ingredients(id) ON DELETE CASCADE,
+    regulation_name TEXT NOT NULL, -- "별표 2", "식약처 고시 제2024-xx호"
+    current_limit NUMERIC,
+    unit TEXT DEFAULT '%',
+    effective_date DATE,
+    source TEXT DEFAULT 'official',
+    regulation_verified BOOLEAN DEFAULT TRUE
 );
 
 -- 법령 업데이트 이력
@@ -988,7 +1136,10 @@ CREATE TABLE regulation_updates (
 |--------|------|------|-----------|
 | `formulas` | 본인만 | 본인만 | 본인만 |
 | `customers` | 본인만 | 본인만 | 본인만 |
-| `ingredient_practice` | 전체 (인증 사용자) | Practice Pro | 관리자 + 작성자 |
+| `ingredients` | 전체 (인증 사용자) | Practice Pro | 관리자 + 작성자 |
+| `ingredient_usage` | 전체 (인증 사용자) | Practice Pro | 관리자 + 작성자 |
+| `ingredient_compatibility` | 전체 (인증 사용자) | Practice Pro | 관리자 + 작성자 |
+| `regulation_limits` | 전체 (인증 사용자) | 관리자만 | 관리자만 |
 | `regulation_updates` | 전체 (인증 사용자) | 관리자만 | 관리자만 |
 
 ### 12.4 `formulas.ingredients` limit 스냅샷 설계 원칙
@@ -1046,20 +1197,22 @@ CREATE TABLE regulation_updates (
 | 개인정보보호법 | 고객 정보(피부 타입, concerns) 수집·저장 | 개인정보보호 전문 변호사 |
 | 전자상거래법 | 구독 모델, 무료 체험, 자동 결제 | 전자상거래법 전문 변호사 |
 
-### 13.3 구현 순서 (리뷰 피드백 반영)
+### 13.3 구현 순서 (리뷰 피드백 반영 — MVP 극소화)
 
-> §11.4의 구현 우선순위 다이어그램을 참조하세요.
+> §11.4의 Phase 5-A/B/C/D 구현 우선순위를 참조하세요.
 
 ```mermaid
 flowchart LR
-    P1["1순위<br/>원료 DB + 계산기 + 포뮬러 저장<br/>(즉시, 위험 낮음)"] --> V["실무 사용자 체류 검증"]
-    V --> P2["2순위<br/>AI 배합 참고 + 버전 관리 +<br/>고객 기록 + 법령 알림<br/>(법률 검토 완료 후)"]
-    P2 --> P3["3순위<br/>커뮤니티 + 배합 사례 공유"]
-
+    P5A["Phase 5-A<br/>원료 DB + 계산기 +<br/>My Formula + 규정 Check<br/>(즉시, 위험 낮음)"] --> V["한 달 후 재방문 검증"]
+    V --> P5B["Phase 5-B<br/>버전 관리 + 고객 기록 +<br/>법령 알림 + 영향 분석"]
+    P5B --> P5C["Phase 5-C<br/>AI 배합 참고<br/>(데이터 축적 + 법률 검토 후)"]
+    P5C --> P5D["Phase 5-D<br/>커뮤니티 + 배합 사례 공유"]
 ```
 
 > **핵심 원칙**: AI 생성은 가장 나중에, 가장 조심스럽게.
-> 원료 DB + 배합량 검증 계산기(1순위)를 먼저 내서 실무 사용자가 실제로 머무는지부터 검증합니다.
+> Phase 5-A(원료 DB + 배합량 계산기 + 포뮬러 저장 + 규정 Check)를 먼저 내서
+> 실무 사용자가 실제로 머무는지부터 검증합니다.
+> **"사용자가 한 달 후에도 다시 포뮬러를 만들러 오는가?"**가 1차 검증 기준입니다.
 
 ---
 
