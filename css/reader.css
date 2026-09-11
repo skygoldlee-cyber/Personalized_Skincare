@@ -3434,3 +3434,105 @@ a.glossary-ref-link i {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 0.95; transform: translateY(0); }
 }
+
+/* === 컴포넌트 클래스 ? 인라인 스타일 제거용 === */
+
+/* Reader Empty States */
+.reader-empty-state {
+    text-align: center;
+    padding: var(--space-8) var(--space-5);
+}
+.reader-empty-icon-lg {
+    font-size: 4rem;
+    color: var(--color-secondary);
+    margin-bottom: var(--space-5);
+    display: inline-block;
+}
+.reader-empty-title {
+    font-size: var(--text-lg-sm);
+    margin: var(--space-4) 0;
+}
+.reader-empty-desc {
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-4);
+}
+.reader-empty-notice {
+    max-width: 480px;
+    margin: var(--space-5) auto;
+    text-align: left;
+    background: var(--bg-subtle);
+    border: 1px solid var(--bg-active);
+    border-radius: var(--radius-sm);
+    padding: var(--space-4);
+    font-size: var(--text-sm-md);
+    line-height: var(--lh-body);
+    color: var(--color-text-muted);
+}
+.reader-empty-actions {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-4);
+}
+
+/* Reader Control Panel */
+.reader-control-panel {
+    margin-bottom: var(--space-5);
+    color: var(--color-text-muted);
+    font-size: var(--text-base);
+}
+.reader-mode-buttons {
+    display: flex;
+    gap: var(--space-5);
+    align-items: center;
+    flex-wrap: wrap;
+}
+.reader-mode-btn {
+    min-width: 220px;
+}
+.reader-mode-checkbox {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    cursor: pointer;
+    font-size: var(--text-md-sm);
+    user-select: none;
+    white-space: nowrap;
+}
+.reader-mode-checkbox input {
+    width: 1.1rem;
+    height: 1.1rem;
+    accent-color: var(--color-primary);
+    cursor: pointer;
+}
+
+/* Reader Question Text */
+.reader-q-text-lg {
+    font-size: var(--text-lg-1);
+    line-height: var(--lh-loose);
+    margin-bottom: var(--space-6);
+}
+.reader-q-text-md {
+    font-size: var(--text-lg);
+    line-height: var(--lh-loose);
+    margin-bottom: var(--space-5);
+}
+
+/* PWA Modal */
+.pwa-modal-footer {
+    border-top: 1px solid var(--border-color);
+    padding-top: var(--space-4);
+    margin-top: var(--space-2);
+}
+.pwa-modal-footer-label {
+    font-size: var(--text-sm-md);
+    opacity: 0.7;
+}
+.pwa-modal-footer-url {
+    font-size: var(--text-sm);
+    line-height: var(--lh-body);
+    color: var(--color-text-muted);
+    font-family: monospace;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

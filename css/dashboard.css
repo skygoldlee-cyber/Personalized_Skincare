@@ -303,6 +303,116 @@
     font-size: var(--text-md-sm);
 }
 
+/* === 컴포넌트 클래스 — 인라인 스타일 제거용 === */
+
+/* Draft Resume Banner */
+.draft-banner {
+    background: linear-gradient(135deg, var(--warning-tint-15) 0%, var(--danger-tint-15) 100%);
+    border: 1px solid var(--color-warning);
+    border-radius: var(--radius-sm);
+    padding: var(--space-4) var(--space-5);
+    margin-bottom: var(--space-5);
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-4);
+    width: 100%;
+}
+.draft-banner-icon {
+    font-size: var(--text-xl);
+    color: var(--color-warning);
+}
+.draft-banner-title {
+    margin: 0;
+    font-size: var(--text-1rem);
+    font-weight: 700;
+    color: var(--color-text-main);
+}
+.draft-banner-desc {
+    margin: var(--space-1) 0 0 0;
+    font-size: var(--text-sm-md);
+    color: var(--color-text-muted);
+}
+
+/* Daily Challenge Card */
+.daily-challenge-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--space-6);
+    margin-top: var(--space-5);
+    margin-bottom: var(--space-5);
+}
+.glass-card-base {
+    padding: var(--space-6);
+    position: relative;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+}
+.glass-card-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: var(--space-6);
+}
+.daily-challenge-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+}
+.daily-challenge-icon {
+    font-size: var(--text-xl);
+    color: var(--color-success);
+}
+.daily-challenge-title {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    margin: 0;
+}
+.daily-challenge-desc {
+    color: var(--color-text-muted);
+    line-height: var(--lh-body);
+    margin-bottom: var(--space-5);
+    font-size: var(--text-base);
+}
+.daily-challenge-badge {
+    background: var(--bg-active);
+    color: var(--color-text-muted);
+    padding: var(--space-2) var(--space-4);
+}
+
+/* Backup Restore Card */
+.backup-card-title {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    margin-bottom: var(--space-3);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+.backup-card-desc {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm-md);
+    line-height: 1.5;
+    margin-bottom: var(--space-5);
+}
+
+/* Streak Badge */
+.streak-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--warning-tint-12);
+    color: var(--color-warning);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-lg);
+    font-weight: 700;
+    font-size: var(--text-base);
+}
+
 .form-checkbox {
     width: 16px;
     height: 16px;

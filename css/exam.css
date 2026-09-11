@@ -676,3 +676,59 @@
     margin: 0;
 }
 
+
+/* === 컴포넌트 클래스 ? 인라인 스타일 제거용 === */
+
+/* Exam Highlight Card */
+.highlight-card {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, var(--primary-tint-10) 0%, var(--secondary-tint-10) 100%);
+    border: 1px solid var(--color-primary);
+    position: relative;
+    overflow: hidden;
+}
+.highlight-card-badge {
+    background: var(--color-primary);
+    color: var(--color-on-brand);
+    display: inline-block;
+    padding: var(--space-1) 0.6rem;
+    border-radius: var(--radius-xs);
+    font-size: var(--text-sm);
+    font-weight: bold;
+}
+.highlight-card-icon {
+    position: absolute;
+    top: var(--space-4);
+    right: var(--space-4);
+    color: var(--color-primary);
+    font-size: var(--text-sm);
+    font-weight: bold;
+    background: var(--primary-tint-10);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-xs);
+}
+.highlight-card-title {
+    margin-top: 0;
+    font-size: var(--text-lg);
+    font-weight: 700;
+}
+.highlight-card-desc {
+    margin: 0.5rem 0 var(--space-4) 0;
+    font-size: var(--text-md-sm);
+    line-height: 1.5;
+    color: var(--color-text-muted);
+}
+.highlight-card-btns {
+    justify-content: flex-start;
+    gap: var(--space-3);
+}
+.highlight-card-btn {
+    padding: 0.6rem 1.2rem;
+    font-size: var(--text-md-sm);
+    font-weight: 600;
+    border-radius: var(--radius-xs);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+}

@@ -382,6 +382,29 @@
     display: block;
 }
 
+/* 추가 유틸리티 — 인라인 스타일 제거용 */
+.mt-2 { margin-top: var(--space-2); }
+.mt-4 { margin-top: var(--space-4); }
+.mt-5 { margin-top: var(--space-5); }
+.mt-6 { margin-top: var(--space-6); }
+.mt-7 { margin-top: var(--space-7); }
+.mb-2 { margin-bottom: var(--space-2); }
+.mb-4 { margin-bottom: var(--space-4); }
+.ml-2 { margin-left: var(--space-2); }
+.text-muted { color: var(--color-text-muted); }
+.text-success { color: var(--color-success); }
+.text-danger { color: var(--color-danger); }
+.text-warning { color: var(--color-warning); }
+.text-secondary { color: var(--color-secondary); }
+.font-bold { font-weight: 700; }
+.font-semibold { font-weight: 600; }
+.grid-2fr-1fr { display: grid; grid-template-columns: 2fr 1fr; }
+.display-contents { display: contents; }
+.cursor-pointer { cursor: pointer; }
+.cursor-crosshair { cursor: crosshair; }
+.whitespace-nowrap { white-space: nowrap; }
+.user-select-none { user-select: none; }
+
 body {
     font-family: var(--font-app);
     background-color: var(--bg-app);

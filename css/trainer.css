@@ -846,3 +846,143 @@ mark.txt-highlight {
     border-left: 3px solid var(--color-secondary);
 }
 
+
+/* === 컴포넌트 클래스 ? 인라인 스타일 제거용 === */
+
+/* Calculator Panel */
+.calc-input-row {
+    display: flex;
+    gap: var(--space-4);
+    align-items: center;
+    max-width: 500px;
+    margin-bottom: var(--space-5);
+}
+.calc-action-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: var(--text-sm);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+}
+.calc-scratchpad {
+    margin-top: var(--space-4);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    background: var(--color-on-brand);
+    padding: var(--space-2);
+    max-width: 500px;
+}
+.calc-scratchpad-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-2);
+    padding: 0 var(--space-2);
+}
+.calc-scratchpad-label {
+    color: var(--color-text-main);
+    font-size: var(--text-sm);
+    font-weight: bold;
+}
+.calc-scratchpad-actions {
+    display: flex;
+    gap: var(--space-2);
+}
+.calc-scratchpad-btn {
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-xs);
+    background: var(--color-danger);
+    color: var(--color-on-brand);
+    border: none;
+    cursor: pointer;
+    border-radius: var(--radius-xs);
+}
+.calc-scratchpad-btn-clear {
+    background: var(--color-text-muted);
+}
+.calc-scratchpad-canvas {
+    border: 1px dashed var(--border-color);
+    border-radius: var(--radius-xs);
+    background: #fdfdfd;
+    cursor: crosshair;
+    display: block;
+    width: 100%;
+    height: 200px;
+}
+.calc-solution-body {
+    padding: var(--space-5);
+    background: var(--bg-sidebar);
+    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+    font-family: monospace;
+    font-size: var(--text-1rem);
+    line-height: var(--lh-body);
+    border-top: 1px solid var(--border-color);
+}
+.calc-formula-section {
+    margin-top: var(--space-6);
+    border-top: 1px solid var(--bg-active);
+    padding-top: var(--space-5);
+}
+.calc-formula-label {
+    font-size: var(--text-md-sm);
+    margin-bottom: var(--space-4);
+    color: var(--color-text-muted);
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+}
+
+/* Ingredients Challenge */
+.ing-question-text {
+    font-size: var(--text-lg-sm);
+    line-height: var(--lh-loose);
+    margin-bottom: var(--space-6);
+}
+.ing-options-grid {
+    margin-bottom: var(--space-6);
+    display: grid;
+    gap: var(--space-4);
+}
+.ing-input-row {
+    gap: var(--space-4);
+    align-items: center;
+    max-width: 500px;
+    margin-bottom: var(--space-6);
+}
+
+/* Quiz Feedback Indicators */
+.quiz-feedback-correct {
+    color: var(--color-success);
+    font-size: 0.8em;
+    margin-left: 0.5em;
+}
+.quiz-feedback-wrong {
+    color: var(--color-danger);
+    font-size: 0.8em;
+    margin-left: 0.5em;
+}
+
+/* Textbook Filter Buttons */
+.textbook-filter-btns {
+    display: flex;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+    margin-bottom: var(--space-5);
+    flex-wrap: wrap;
+}
+.textbook-filter-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: var(--radius-xs);
+    background: var(--bg-subtle);
+    border: 1px solid var(--border-color);
+    color: var(--color-text-muted);
+    transition: var(--transition-base);
+}
+.textbook-filter-btn.active {
+    background: var(--color-primary);
+    color: var(--color-on-brand);
+    border-color: var(--color-primary);
+}
