@@ -167,8 +167,6 @@ flowchart LR
     K --> PRACTICE
     X --> PRACTICE
 
-    style EXISTING fill:#f3f4f6,stroke:#6b7280
-    style PRACTICE fill:#dcfce7,stroke:#16a34a
 ```
 
 ### 2.5 데이터 신뢰성 등급
@@ -233,9 +231,6 @@ flowchart TD
     end
     G --> H["👤 사용자: 최종 배합 확정 및 조제 기록"]
 
-    style AI fill:#e0f2fe,stroke:#0284c7
-    style USER fill:#fef3c7,stroke:#d97706
-    style SYS fill:#dcfce7,stroke:#16a34a
 ```
 
 ### 3.4 Wireframe
@@ -317,8 +312,6 @@ graph LR
     PRACTICE --> P4["조제 기록: 실제 사용 이력"]
     PRACTICE --> P5["관련 규정: 식약처 고시"]
 
-    style EXAM fill:#dbeafe,stroke:#2563eb
-    style PRACTICE fill:#dcfce7,stroke:#16a34a
 ```
 
 ### 4.2 데이터 통합 구조
@@ -336,10 +329,6 @@ flowchart TD
     X --> EXAM["📖 시험 모드<br/>(카드, 퀴즈, 모의고사)"]
     X --> PRACTICE["🧴 실무 모드<br/>(배합, 원료, 계산)"]
 
-    style DB fill:#f3f4f6,stroke:#6b7280
-    style X fill:#fef3c7,stroke:#d97706
-    style EXAM fill:#dbeafe,stroke:#2563eb
-    style PRACTICE fill:#dcfce7,stroke:#16a34a
 ```
 
 ### 4.3 기존 인프라 재사용
@@ -715,9 +704,6 @@ flowchart TD
     E --> ASSET["실무 데이터 자산 축적"]
     F --> ASSET
 
-    style GATE fill:#fef3c7,stroke:#d97706
-    style E fill:#dcfce7,stroke:#16a34a
-    style F fill:#fee2e2,stroke:#ef4444
 ```
 
 > 시간이 지나면서 Cosmetic Pass Master만의 **실무 데이터 자산**이 됩니다.
@@ -755,9 +741,6 @@ flowchart TD
     L --> M[더 좋은 서비스]
     M -.->|순환| A
 
-    style GATE fill:#fef3c7,stroke:#d97706
-    style H fill:#dcfce7,stroke:#16a34a
-    style H2 fill:#fee2e2,stroke:#ef4444
 ```
 
 ### 10.2 검증 게이트 상세
@@ -890,10 +873,6 @@ flowchart TD
         P3B["💬 배합 사례 공유"]
     end
 
-    style P1 fill:#dcfce7,stroke:#16a34a
-    style P2 fill:#fef3c7,stroke:#d97706
-    style P3 fill:#dbeafe,stroke:#2563eb
-    style V1 fill:#f3f4f6,stroke:#6b7280
 ```
 
 > **리뷰 피드백 반영**: AI 배합 참고(2순위)는 **법률 검토 완료 전까지 착수하지 않습니다**.
@@ -1027,10 +1006,6 @@ flowchart LR
     V --> P2["2순위<br/>AI 배합 참고 + 버전 관리 +<br/>고객 기록 + 법령 알림<br/>(법률 검토 완료 후)"]
     P2 --> P3["3순위<br/>커뮤니티 + 배합 사례 공유"]
 
-    style P1 fill:#dcfce7,stroke:#16a34a
-    style P2 fill:#fef3c7,stroke:#d97706
-    style P3 fill:#dbeafe,stroke:#2563eb
-    style V fill:#f3f4f6,stroke:#6b7280
 ```
 
 > **핵심 원칙**: AI 생성은 가장 나중에, 가장 조심스럽게.

@@ -641,9 +641,6 @@ flowchart TD
     L --> M[더 좋은 서비스]
     M -.->|순환| A
 
-    style G fill:#fef3c7,stroke:#d97706
-    style H fill:#dcfce7,stroke:#16a34a
-    style H2 fill:#fee2e2,stroke:#ef4444
 ```
 
 > 이 구조가 만들어지면 **단순 자격증 문제은행과 완전히 다른 사업**이 됩니다.
@@ -718,11 +715,6 @@ flowchart LR
     P4 --> P5
     P1 -.->|핵심 루프 완성 후| P5
 
-    style P1 fill:#dcfce7,stroke:#16a34a
-    style P2 fill:#dbeafe,stroke:#2563eb
-    style P3 fill:#fef3c7,stroke:#d97706
-    style P4 fill:#f3f4f6,stroke:#6b7280
-    style P5 fill:#fce7f3,stroke:#db2777
 ```
 
 ```
