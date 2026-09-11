@@ -6,6 +6,9 @@
     --bg-card-hover: rgba(31, 41, 55, 0.85);
     --border-color: rgba(255, 255, 255, 0.08);
     --border-color-active: rgba(6, 182, 212, 0.4);
+    --bg-subtle: rgba(255, 255, 255, 0.03);
+    --bg-subtle-hover: rgba(255, 255, 255, 0.06);
+    --border-subtle: rgba(255, 255, 255, 0.05);
     
     /* Brand Colors */
     --color-primary: #06b6d4;      /* Luminous Cyan */
@@ -76,19 +79,22 @@
 
 /* Light Theme Overrides */
 .light-theme {
-    --bg-app: #f5f7fa;
+    --bg-app: #eef1f6;
     --bg-sidebar: #ffffff;
-    --bg-card: rgba(255, 255, 255, 0.85);
-    --bg-card-hover: rgba(255, 255, 255, 0.95);
-    --border-color: rgba(0, 0, 0, 0.08);
+    --bg-card: #ffffff;
+    --bg-card-hover: #f9fafb;
+    --border-color: rgba(15, 23, 42, 0.15);
     --border-color-active: rgba(6, 182, 212, 0.5);
+    --bg-subtle: rgba(15, 23, 42, 0.03);
+    --bg-subtle-hover: rgba(15, 23, 42, 0.06);
+    --border-subtle: rgba(15, 23, 42, 0.08);
     
     --color-text-main: #1f2937;
     --color-text-muted: #4b5563;
     
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
-    --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
-    --shadow-lg: 0 10px 25px rgba(0,0,0,0.12);
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.10);
+    --shadow-lg: 0 10px 25px rgba(0,0,0,0.15);
     --glow-primary: 0 0 15px rgba(6, 182, 212, 0.15);
     --glow-success: 0 0 15px rgba(16, 189, 129, 0.15);
 }
@@ -99,6 +105,27 @@
 }
 .light-theme ::-webkit-scrollbar-thumb:hover {
     background: rgba(0, 0, 0, 0.22);
+}
+
+/* Light-mode: 하드코딩된 rgba(255,255,255,0.0X) 박스 배경/테두리를 대비되게 오버라이드 */
+.light-theme .stat-card,
+.light-theme .quiz-card,
+.light-theme .rec-item,
+.light-theme .reader-section-card,
+.light-theme .reader-chapter-header-card,
+.light-theme .reader-toolbar,
+.light-theme .reader-toc,
+.light-theme .exam-card-item,
+.light-theme .highlight-card,
+.light-theme .full-width-card,
+.light-theme .sim-question-card,
+.light-theme .sim-main-panel,
+.light-theme .trainer-menu-card,
+.light-theme .pomodoro-card,
+.light-theme .analytics-card,
+.light-theme .solution-accordion {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border-color);
 }
 
 /* Reset & Base Styles */
