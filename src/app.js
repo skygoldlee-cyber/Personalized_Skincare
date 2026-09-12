@@ -2,7 +2,7 @@
 import { state, loadProgress, saveProgress } from './state.js';
 import { esc } from './sanitize.js';
 import { shuffle } from './utils.js';
-import { initScratchpadCanvas, clearScratchpad, toggleCalcScratchpad, toggleScratchpadEraser } from './scratchpad.js';
+import { clearScratchpad, toggleCalcScratchpad, toggleScratchpadEraser } from './scratchpad.js';
 import { DataLoader } from './data-loader.js';
 import { ExamViewer } from './exam-viewer.js';
 import { ManualViewer } from './manual-viewer.js';

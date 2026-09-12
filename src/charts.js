@@ -220,7 +220,7 @@ export function renderPerformanceChart() {
    📊 과목별 정답률 집계 (공통 헬퍼)
    - content/manifest.json에서 생성된 DATA_REGISTRY를 사용해 동적으로 과목별 집계
    ======================================================= */
-export function aggregateSubjectRates(history) {
+function aggregateSubjectRates(history) {
     const subjectRates = {};
     const subjects = (window.DATA_REGISTRY && window.DATA_REGISTRY.subjects) || [];
     subjects.forEach(sub => {

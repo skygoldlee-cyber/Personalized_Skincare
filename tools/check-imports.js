@@ -98,6 +98,7 @@ function parseImports(src) {
             continue;
         }
         const names = [];
+        const aliases = new Map(); // imported name → local alias (for unused detection)
         const starMatch = clause.match(/^\*\s+as\s+(\w+)$/);
 
         if (starMatch) {
@@ -114,13 +115,18 @@ function parseImports(src) {
                 for (let part of braceContent[1].split(',')) {
                     part = part.trim();
                     if (!part) continue;
-                    // "A as B" → imported name is "A" (the original export)
-                    const asMatch = part.match(/^(\w+)\s+as\s+(?:\w+)$/);
-                    names.push(asMatch ? asMatch[1] : part);
+                    // "A as B" → imported name is "A" (the original export), local is "B"
+                    const asMatch = part.match(/^(\w+)\s+as\s+(\w+)$/);
+                    if (asMatch) {
+                        names.push(asMatch[1]);
+                        aliases.set(asMatch[1], asMatch[2]);
+                    } else {
+                        names.push(part);
+                    }
                 }
             }
         }
-        imports.push({ modulePath, names, isSideEffect: false });
+        imports.push({ modulePath, names, aliases, isSideEffect: false });
     }
     return imports;
 }
@@ -266,8 +272,10 @@ function main() {
 
                 // unused import 검출: 본문에서 참조되지 않는 import
                 // 단, window.X = X 패턴은 참조로 간주
+                // alias가 있는 경우 local alias를 본문에서 검색
                 if (name !== 'default') {
-                    const refRe = new RegExp('\\b' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b');
+                    const localName = (imp.aliases && imp.aliases.get(name)) || name;
+                    const refRe = new RegExp('\\b' + localName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b');
                     if (!refRe.test(bodySrc)) {
                         warnings.push(
                             `${relFile}: '${name}'을(를) import하지만 사용하지 않음 (unused import)`

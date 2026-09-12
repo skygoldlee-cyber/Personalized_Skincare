@@ -62,7 +62,7 @@ export function renderDictionary() {
 /**
  * 그리드 스페이서 가상 스크롤 엔진
  */
-export function renderDictionaryVirtual() {
+function renderDictionaryVirtual() {
     const container = document.getElementById('dict-results-container');
     const scrollEl = document.querySelector('.main-content');
     if (!container || !scrollEl) return;
@@ -161,7 +161,7 @@ function createIngredientCard(ing) {
 /**
  * 스크롤바 이동 시 동작하는 리스너 등록
  */
-export function setupDictionaryVirtualScroll() {
+function setupDictionaryVirtualScroll() {
     if (isScrollBound) return;
     const scrollEl = document.querySelector('.main-content');
     if (!scrollEl) return;

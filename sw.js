@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v334-20260912-app-modularization';   // setupOfflineDetection 분리 + unused 검출 + 런타임 에러 안전망
+const CACHE_VERSION = 'v335-20260912-unused-cleanup';   // 43개 unused import/export 정리 + checker alias 인식
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;

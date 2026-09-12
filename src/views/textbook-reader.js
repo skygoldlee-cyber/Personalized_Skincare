@@ -1,8 +1,8 @@
 // views/textbook-reader.js - 교재 본문 읽기 및 오디오북 플레이어 (Textbook Reader + Audio)
-import { escapeHTML, esc, safeTextWithBreaks } from '../sanitize.js';
+import { esc } from '../sanitize.js';
 import { formatSectionContentForReader } from '../reader-format.js';
 import { parseTextbookContent } from '../textbook-parser.js';
-import { renderStudyAids, bindStudyAidToggles, renderExamFilterToggle, applyExamFilter, isKeySection } from '../study-aids.js';
+import { renderStudyAids, bindStudyAidToggles, renderExamFilterToggle, applyExamFilter } from '../study-aids.js';
 import { detectMermaidType, getMermaidClassName, getMermaidInitOptions } from '../mermaid-utils.js';
 import { openHtmlViewer } from '../html-viewer.js';
 import {
@@ -24,20 +24,16 @@ import {
 } from './reader-audio.js';
 
 export {
-    readerAudioState,
-    showAudioToast,
-    persistCurrentAudioPos,
     stopReaderAudio,
     toggleReaderAudio,
     toggleReaderPlayPause,
     cycleReaderAudioRate,
     seekReaderAudio,
-    toggleReaderAutoScroll,
-    getAudioPathForChapter
+    toggleReaderAutoScroll
 };
 // [모바일 PWA 견고성] 오디오 매니페스트는 window 전역(가드)에서 읽는다(정적 import 하드 의존 지양).
 import { DataLoader } from '../data-loader.js';
-import { showToast, trapFocus } from '../ui-utils.js';
+import { trapFocus } from '../ui-utils.js';
 import { STORAGE_KEYS } from '../storage-keys.js';
 import { TIMING } from '../config/timing.js';
 import { PATHS } from '../paths.js';

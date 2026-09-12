@@ -10,7 +10,7 @@ import { STORAGE_KEYS, dailyCompletedKey } from '../storage-keys.js';
 /* =======================================================
    🧩 일일 5분 데일리 챌린지 (Daily 5-Min Challenge) & Streak
    ======================================================= */
-export const dailyState = {
+const dailyState = {
     currentIndex: 0,
     correctCount: 0,
     questions: []
@@ -166,7 +166,7 @@ function _startDailyChallengeImpl() {
     showDailyModal();
 }
 
-export function showDailyModal() {
+function showDailyModal() {
     const oldModal = document.getElementById('daily-challenge-modal');
     if (oldModal) oldModal.remove();
     

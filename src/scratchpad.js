@@ -25,7 +25,7 @@ export function toggleCalcScratchpad() {
     }
 }
 
-export function initScratchpadCanvas() {
+function initScratchpadCanvas() {
     const canvas = document.getElementById('scratchpad-canvas');
     if (!canvas) return;
     if (scratchpadCanvasInitialized) return;

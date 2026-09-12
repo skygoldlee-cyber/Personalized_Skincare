@@ -1,6 +1,6 @@
 // ui-utils.js - 로딩 오버레이 및 스피너 UI 유틸리티 (공통 모듈)
 
-export function showLoading(containerId, message = '로딩 중...') {
+function showLoading(containerId, message = '로딩 중...') {
     const container = document.getElementById(containerId);
     if (!container) return;
     
@@ -12,7 +12,7 @@ export function showLoading(containerId, message = '로딩 중...') {
     `;
 }
 
-export function hideLoading(containerId) {
+function hideLoading(containerId) {
     const container = document.getElementById(containerId);
     if (!container) return;
     const loading = container.querySelector('.loading-state');

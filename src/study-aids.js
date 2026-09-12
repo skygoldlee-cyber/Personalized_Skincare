@@ -1,7 +1,7 @@
 // src/study-aids.js — 교재 학습 보조 모듈 (기출 필터, 숫자 암기표, 절차 플로우, 비교 시각화)
 // 순수 함수 기반, CSP-safe, 외부 의존성 없음
 
-import { escapeHTML as esc } from './sanitize.js';
+import { escapeHTML as esc } from './sanitize.js';  // escapeHTML을 esc로 alias하여 사용
 import { PATHS } from './paths.js';
 
 // --- ② 기출 핵심 요약 ---
@@ -133,7 +133,7 @@ function categorizeEntry(unit) {
     return '기타';
 }
 
-export async function renderNumberDrillCard(subjId) {
+async function renderNumberDrillCard(subjId) {
     const entries = await loadNumberDrills(subjId);
     if (entries.length === 0) return '';
 

@@ -61,6 +61,6 @@ export function initWebVitals() {
     });
 }
 
-export function getWebVitals() {
+function getWebVitals() {
     return { lcp: _lcpValue, cls: _clsValue, inp: _inpValue };
 }

@@ -452,4 +452,4 @@ window.HtmlViewer = {
     close
 };
 
-export { openHtmlViewer, close };
+export { openHtmlViewer };

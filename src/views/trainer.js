@@ -1,11 +1,8 @@
 // src/views/trainer.js - 스마트 훈련소, 계산 연습기, 배합한도 수치 훈련 로직 (뽀모도로는 pomodoro.js로 분리)
-import { state, saveProgress, safeGetItem, safeSetItem } from '../state.js';
-import { esc, safeTextWithBreaks } from '../sanitize.js';
-import { initScratchpadCanvas, clearScratchpad, toggleCalcScratchpad, toggleScratchpadEraser } from '../scratchpad.js';
+import { state } from '../state.js';
+import { esc } from '../sanitize.js';
 import { shuffle } from '../utils.js';
-import { togglePomodoro, tickPomodoro, resetPomodoro, updatePomodoroUI } from './pomodoro.js';
-import { showToast, vibrate, HAPTIC } from '../ui-utils.js';
-import { STORAGE_KEYS } from '../storage-keys.js';
+import { vibrate, HAPTIC } from '../ui-utils.js';
 import {
     startCalcPractice,
     generateCalcQuestion,

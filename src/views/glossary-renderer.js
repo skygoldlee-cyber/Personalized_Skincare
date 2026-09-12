@@ -139,7 +139,7 @@ export function scrollToGlossary(idxKey, sourceLink) {
  * 용어집 관련 이벤트를 바인딩합니다 (본문 내 자동 링크 클릭 → 용어집 스크롤).
  * @param {HTMLElement} container - 렌더링 컨테이너
  */
-export function bindGlossaryEvents(container) {
+function bindGlossaryEvents(container) {
     container.querySelectorAll('[data-glossary]').forEach(a => {
         a.addEventListener('click', (e) => {
             e.preventDefault();

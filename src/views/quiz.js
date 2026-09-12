@@ -1,7 +1,6 @@
 // src/views/quiz.js - 기출 퀴즈 및 오답 복습 뷰 로직 (데일리 챌린지는 daily-challenge.js로 분리)
-import { state, saveProgress, safeGetItem, safeSetItem } from '../state.js';
+import { state, saveProgress } from '../state.js';
 import { safeTextWithBreaks, esc } from '../sanitize.js';
-import { DataLoader } from '../data-loader.js';
 import { switchView } from './navigation.js';
 import { examIdToSubjectId } from './exam-simulator.js';
 import { checkShortAnswer } from './trainer.js';
@@ -204,7 +203,7 @@ export function submitQuizAnswer() {
 /**
  * 퀴즈 정답 제출 (객관식 / OX)
  */
-export function submitQuizChoiceAnswer(selectedBtn, selectedValue, correctValue) {
+function submitQuizChoiceAnswer(selectedBtn, selectedValue, correctValue) {
     const quizState = state.quiz;
     const currentQuiz = quizState.data[quizState.currentIndex];
     const isCorrect = (selectedValue === correctValue);

@@ -1,5 +1,5 @@
 // src/views/dashboard.js - 대시보드 뷰 로직 및 전역 통계 관리
-import { state, saveProgress } from '../state.js';
+import { state } from '../state.js';
 import { esc } from '../sanitize.js';
 import { DataLoader } from '../data-loader.js';
 import { renderPerformanceChart, renderPassFailDiagnosis, renderRadarChart } from '../charts.js';

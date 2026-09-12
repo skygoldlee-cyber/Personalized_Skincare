@@ -9,7 +9,6 @@ import { shuffle } from '../utils.js';
 import { STORAGE_KEYS } from '../storage-keys.js';
 import { TIMING } from '../config/timing.js';
 import { simState } from './exam-sim-state.js';
-import { showSimAnswerReview, showSimResultsSummary } from './exam-sim-review.js';
 
 // --- 5. 실전 모의고사 시뮬레이터 구현 ---
 export { simState };
