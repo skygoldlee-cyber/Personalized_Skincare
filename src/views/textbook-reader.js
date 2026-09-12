@@ -10,7 +10,7 @@ import {
     REFERENCE_LAW, mapSourceToRef, resolveRefPath
 } from '../pdf-registry.js';
 import { collectGlossaryItems, renderGlossaryTable, appendGlossaryTocItem, scrollToGlossary } from './glossary-renderer.js';
-export {
+import {
     readerAudioState,
     showAudioToast,
     persistCurrentAudioPos,
@@ -21,6 +21,18 @@ export {
     seekReaderAudio,
     toggleReaderAutoScroll
 } from './reader-audio.js';
+
+export {
+    readerAudioState,
+    showAudioToast,
+    persistCurrentAudioPos,
+    stopReaderAudio,
+    toggleReaderAudio,
+    toggleReaderPlayPause,
+    cycleReaderAudioRate,
+    seekReaderAudio,
+    toggleReaderAutoScroll
+};
 // [모바일 PWA 견고성] 오디오 매니페스트는 window 전역(가드)에서 읽는다(정적 import 하드 의존 지양).
 import { DataLoader } from '../data-loader.js';
 import { showToast, trapFocus } from '../ui-utils.js';
