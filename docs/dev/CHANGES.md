@@ -5,6 +5,31 @@
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 > registry↔번들 14개 실재 확인 · 비ASCII 콘텐츠 파일 0 · `vercel.json` JSON 유효.
 
+## 2026-09-12 content 변경 유연성 개선 + 사용자 매뉴얼 갱신
+
+> content/ 폴더 변경 시 소스 코드 수정 없이 JSON/MD 파일만 편집하면 빌드 파이프라인이 자동 처리하도록 개선.
+
+### refactor — content 변경 유연성 6개 항목 (b2dd72b)
+- **#1 pdf-registry.js 자동 생성**: `content/references.json` 신규 생성(SSOT), `tools/build/build-pdf-registry.js`로 빌드 시 자동 생성
+- **#2 sw.js MD_ASSETS 자동 갱신**: `tools/build/index.js`에서 manifest 기반으로 MD_ASSETS 배열 자동 생성, 이야기형 파일 자동 포함
+- **#3 exam-simulator.js 동적화**: `subject1-4` 접두사 매칭 → registry.exams의 subject 필드 기반 동적 그룹화, 문제 수 manifest.integratedExam에서 관리
+- **#4 빌드 파이프라인 통합**: `build:data` 한 번으로 pdf-registry → keyword-index → index → study-md → exam-bundles → audio-manifest → check:parser 순차 실행
+- **#5 audio_manifest.js 자동 생성**: `tools/build/build-audio-manifest.js` 디렉토리 스캔, 기존 매니페스트 보존
+- **#6 index.html 정적 텍스트 동적화**: "1,000제" 등 하드코딩 제거, populateExamCards()에서 registry 기반 동적 치환
+- **build_keyword_index.js 중복 제거**: REF_DIRS/SUBJECT_DIR_TO_ID 하드코딩 → references.json에서 로드
+- **검증**: npm test 248 pass, check:imports 54파일 0오류, verify:assets 81개, build:data 전체 파이프라인 성공
+- **SW**: v337-20260912-content-flexibility
+
+### docs — content 변경 작업 절차 가이드 (f287309)
+- `docs/dev/CONTENT_WORKFLOW.md` 신규 작성: 변경 유형별 매트릭스, 빌드 파이프라인 순서도(Mermaid), 검증 플로우차트, 배포 워크플로우
+- AGENTS.md 관련 문서 섹션에 CONTENT_WORKFLOW.md 추가
+
+### docs — 사용자 매뉴얼 갱신
+- 단원 수 정정: "19개 단원"/"20챕터" → "4과목 4챕터" (실제 manifest 기반)
+- 과목별 문제 수 정정: 1과목 100제, 2과목 250제, 3과목 250제, 4과목 400제 (총 1,000제)
+- 통합 모의고사: manifest 기반 동적 관리 안내 추가
+- 오디오북: "19개 단원" → "4개 단원"
+
 ## 2026-09-12 리팩토링 잔여 이슈 정리 + scratchpad import 복원
 
 > 리팩토링 후 잔여 이슈 10개 정리 및 파생 버그 1건 수정.
