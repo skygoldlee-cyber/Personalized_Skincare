@@ -300,6 +300,16 @@ body.manual-open{overflow:hidden;}
         }
         scroll.scrollTop = 0;
 
+        // 외부 링크(http, /docs 등) 클릭 시 새 창으로 열기
+        article.addEventListener('click', function onLinkClick(e) {
+            const a = e.target.closest('a');
+            if (!a) return;
+            const href = a.getAttribute('href');
+            if (!href || href.startsWith('#')) return; // 내부 앵커는 무시
+            e.preventDefault();
+            window.open(href, '_blank', 'noopener,noreferrer');
+        });
+
         // Mermaid 렌더링 실행
         _renderMermaid();
     }
