@@ -5,6 +5,36 @@
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 > registry↔번들 14개 실재 확인 · 비ASCII 콘텐츠 파일 0 · `vercel.json` JSON 유효.
 
+## 2026-09-12 리팩토링 후 import/export 누락 3종 수정
+
+> P0-P3 리팩토링(모듈 분할) 직후 발생한 import/export 연결 누락.
+> `app.js` 전체 ES 모듈 로드 실패 → 네비게이션 메뉴 동작 안 함.
+
+### fix 1 — dashboard.js updatePomodoroUI import 경로 수정 (564357e)
+- **원인**: `trainer.js` 리팩토링 시 pomodoro 로직이 `pomodoro.js`로 분리. `dashboard.js`가 여전히 `trainer.js`에서 `updatePomodoroUI`를 import → SyntaxError
+- **수정**: `dashboard.js` import 경로를 `./trainer.js` → `./pomodoro.js`로 변경
+- **SW**: v326-20260912-fix-pomodoro-import
+
+### fix 2 — textbook-reader.js reader-audio.js re-export 추가 (afdfde0)
+- **원인**: `textbook-reader.js` 분리 시 `reader-audio.js`에서 import만 하고 re-export하지 않음. `app.js`가 `textbook-reader.js`에서 `cycleReaderAudioRate` 등을 import 시도 → SyntaxError
+- **수정**: `textbook-reader.js`에서 `import { ... } from './reader-audio.js'` + `export { ... }` 분리 (내부 사용 + 외부 re-export)
+- **SW**: v327→v328-20260912-fix-reader-audio-import
+
+### fix 3 — reader-audio.js getAudioPathForChapter export 추가 (6a63556)
+- **원인**: `reader-audio.js`의 `getAudioPathForChapter`가 `function`으로만 선언되고 `export`되지 않음. `textbook-reader.js`의 `_renderChapterContentInternal`에서 참조 → ReferenceError
+- **수정**: `reader-audio.js`에서 `function` → `export function` 변경. `textbook-reader.js` import/re-export에 추가
+- **SW**: v329-20260912-fix-getAudioPathForChapter
+
+### 예방 조치 — check:imports 스크립트 추가
+- `tools/check-imports.js`: src/ 내 모든 ES 모듈의 import/export 교차 검증 (53개 파일)
+- `npm run check:imports` 및 `npm run test:all`에 포함
+- 리팩토링 후 배포 전 깨진 import를 자동 감지
+
+### 검증
+- `npm test`: 248 passed, 0 failed
+- `npm run check:imports`: 53개 파일, 오류 없음
+- 프로덕션 HTTP 200
+
 ## 2026-09-12 P0-P3 단계적 리팩토링 (하드코딩 최소화 · 모듈 분할 · 접근성 · 보안)
 
 ### P0 (보안/접근성/순환의존성)
