@@ -290,6 +290,29 @@ ${btnsHtml}
 
         container.insertAdjacentHTML('beforeend', cardHtml);
     });
+
+    // 정적 텍스트 동적 치환 (manifest 기반)
+    const totalAllQuestions = exams.reduce((sum, e) => sum + (e.stats && e.stats.questions || 0), 0);
+    const subjCounts = subjects.map((s, i) => {
+        const subjExams = exams.filter(e => e.subject === s.key);
+        const count = subjExams.reduce((sum, e) => sum + (e.stats && e.stats.questions || 0), 0);
+        return count;
+    });
+    const subtitleEl = document.getElementById('exam-view-subtitle');
+    if (subtitleEl && totalAllQuestions > 0) {
+        const countStr = subjCounts.join('·');
+        subtitleEl.textContent = `교재 인용 기반 ${totalAllQuestions}제 문제은행(과목별 ${countStr}제)으로 과목별 모의고사를 보고, 학습안내서로 핵심을 요약할 수 있습니다.`;
+    }
+
+    // 통합 모의고사 제목/버튼 동적 치환
+    const integratedConfig = registry.integratedExam ? registry.integratedExam.questionsPerSubject : null;
+    if (integratedConfig) {
+        const integratedTotal = Object.values(integratedConfig).reduce((a, b) => a + b, 0);
+        const titleEl = document.getElementById('integrated-exam-title');
+        if (titleEl) titleEl.textContent = `통합 실전 모의고사 (${integratedTotal}제)`;
+        const btnEl = document.getElementById('integrated-exam-btn');
+        if (btnEl) btnEl.innerHTML = `<i class="fa-solid fa-clock" aria-hidden="true"></i> 통합 모의고사 시작 (${integratedTotal}분)`;
+    }
 }
 
 function populateResourceCards() {

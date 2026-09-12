@@ -1,5 +1,5 @@
 // 자동 생성: 오디오 매니페스트 (audio_manifest.js)
-// audiobook/_gen_manifest.js 로 재생성 가능. 수동 편집 주의.
+// tools/build/build-audio-manifest.js로 재생성 가능. 수동 편집 주의.
 //
 // [Vercel 배포용 수정]
 // - AUDIO_BASE_URL: 오디오 파일이 호스팅된 외부 CDN/스토리지 주소
@@ -12,7 +12,7 @@
 //    2) Cloudflare R2 / AWS S3 / GCS에 업로드
 //    3) 별도 Vercel 프로젝트로 오디오만 배포
 /** @type {string|null} */
-export const AUDIO_BASE_URL = null; // null = 로컬 개발 모드, 문자열 = 외부 CDN URL
+export const AUDIO_BASE_URL = null;
 
 /** @type {import('../src/types.js').AudioManifest} */
 export const AUDIO_MANIFEST = {

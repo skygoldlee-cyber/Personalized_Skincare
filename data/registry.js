@@ -3,7 +3,7 @@
 export const DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2026",
-  "generatedAt": "2026-09-10T18:09:32.827Z",
+  "generatedAt": "2026-09-12T07:14:34.726Z",
   "subjects": [
     {
       "key": "law",
@@ -198,6 +198,14 @@ export const DATA_REGISTRY = {
         "linkText": "공식 유튜브"
       }
     ]
+  },
+  "integratedExam": {
+    "questionsPerSubject": {
+      "law": 10,
+      "manufacturing": 25,
+      "safety": 25,
+      "understanding": 40
+    }
   },
   "uiText": {
     "dashboard": {

@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v336-20260912-app-split-event-listeners';   // setupEventListeners 분리 + concept-map CSS 정리 + 문서 갱신
+const CACHE_VERSION = 'v337-20260912-content-flexibility';   // content 변경 유연성 개선 (pdf-registry 자동 생성, sw.js MD_ASSETS 자동 갱신, exam-simulator 동적화, 빌드 파이프라인 통합)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
@@ -132,12 +132,15 @@ const DATA_ASSETS = [
 
 /** 설치 시 프리캐시할 마크다운 문서 (매뉴얼·요약집 — 오프라인 보장) */
 const MD_ASSETS = [
-  './docs/user/user_manual.md',
   './content/학습안내서.md',
   './content/교재/law/1과목_화장품법의이해_표준형.md',
+  './content/교재/law/1과목_화장품법의이해_이야기형.md',
   './content/교재/manufacturing/2과목_제조및품질관리_표준형.md',
+  './content/교재/manufacturing/2과목_제조및품질관리_이야기형.md',
   './content/교재/safety/3과목_유통화장품안전관리_표준형.md',
+  './content/교재/safety/3과목_유통화장품안전관리_이야기형.md',
   './content/교재/understanding/4과목_맞춤형화장품의이해_표준형.md',
+  './content/교재/understanding/4과목_맞춤형화장품의이해_이야기형.md',
   './content/문제은행/과목1_문제.md',
   './content/문제은행/과목2_문제.md',
   './content/문제은행/과목3_문제.md',

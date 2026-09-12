@@ -93,6 +93,14 @@
       "file": "과목4_문제.md"
     }
   ],
+  "integratedExam": {
+    "questionsPerSubject": {
+      "law": 10,
+      "manufacturing": 25,
+      "safety": 25,
+      "understanding": 40
+    }
+  },
   "uiText": {
     "dashboard": { "title": "학습 대시보드", "subtitle": "{year} 시험 합격을 위한 분석 및 스마트 툴" },
     "flashcard": { "title": "개념 플래시카드", "subtitle": "과목별 핵심 개념을 카드로 뒤집으며 암기" },

@@ -322,6 +322,11 @@ function main() {
     registry.resources = manifest.resources;
   }
 
+  // 5a. Integrated Exam config (통합 모의고사 과목별 문제 수)
+  if (manifest.integratedExam) {
+    registry.integratedExam = manifest.integratedExam;
+  }
+
   // 5b. UI Text (뷰 제목/부제 — manifest에서 registry로 전달, 플레이스홀더 치환)
   if (manifest.uiText) {
     const totalQuestions = registry.exams.reduce((sum, e) =>
@@ -370,8 +375,22 @@ if (typeof window !== 'undefined') {
     const assetsBlock = 'const DATA_ASSETS = [\n' + assetsToCache.map(a => `  '${a}'`).join(',\n') + '\n];';
     swContent = swContent.replace(/const DATA_ASSETS = \[[^\]]*\];?/s, assetsBlock);
 
+    // MD_ASSETS 자동 갱신: manifest 기반으로 교재/문제은행/학습안내서 MD 경로 생성
+    const mdAssets = ['./content/학습안내서.md'];
+    for (const subj of manifest.subjects) {
+      for (const ch of subj.chapters) {
+        mdAssets.push(`./content/${subj.dir}/${ch.file}`);
+        if (ch.storyFile) mdAssets.push(`./content/${subj.dir}/${ch.storyFile}`);
+      }
+    }
+    for (const exam of manifest.exams) {
+      mdAssets.push(`./content/문제은행/${exam.file}`);
+    }
+    const mdBlock = 'const MD_ASSETS = [\n' + mdAssets.map(a => `  '${a}'`).join(',\n') + '\n];';
+    swContent = swContent.replace(/const MD_ASSETS = \[[^\]]*\];?/s, mdBlock);
+
     fs.writeFileSync(swPath, swContent, 'utf-8');
-    console.log('sw.js pre-cache assets updated.');
+    console.log('sw.js pre-cache assets updated (DATA_ASSETS + MD_ASSETS).');
     
     // 자동화된 서비스 워커 버전 관리 (stampSwVersion) 연동
     try {

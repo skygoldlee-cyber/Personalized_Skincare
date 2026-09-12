@@ -63,27 +63,49 @@ export function startIntegratedMockExam() {
 }
 
 function _startIntegratedMockExamImpl() {
-    // 과목별 문제들 동적 수집 ( subject1, subject2_p1, subject4_p3 등 접두사 기준 자동 분류 )
-    const s1Questions = [];
-    const s2Questions = [];
-    const s3Questions = [];
-    const s4Questions = [];
+    // 과목별 문제들 동적 수집 (registry 기반 — 과목 키별 자동 분류)
+    const registry = (typeof window !== 'undefined' && window.DATA_REGISTRY) ? window.DATA_REGISTRY : null;
+    const integratedConfig = registry && registry.integratedExam ? registry.integratedExam.questionsPerSubject : null;
+    const subjects = registry && registry.subjects ? registry.subjects : [];
+
+    // 과목별 문제 버킷 (동적 생성)
+    const subjectQuestions = {};
+    const subjectCounts = {};
+    for (const subj of subjects) {
+        subjectQuestions[subj.key] = [];
+        subjectCounts[subj.key] = integratedConfig ? (integratedConfig[subj.key] || 0) : 0;
+    }
 
     const EXAM_DATA = (typeof window !== 'undefined' && window.EXAM_DATA) ? window.EXAM_DATA : {};
+
+    // registry.exams에서 examId → subject 매핑 구축
+    const examToSubject = {};
+    if (registry && registry.exams) {
+        for (const exam of registry.exams) {
+            examToSubject[exam.key] = exam.subject;
+        }
+    }
+
     Object.keys(EXAM_DATA).forEach(examId => {
         const questions = EXAM_DATA[examId].questions || [];
-        if (examId.startsWith('subject1')) {
-            s1Questions.push(...questions);
-        } else if (examId.startsWith('subject2')) {
-            s2Questions.push(...questions);
-        } else if (examId.startsWith('subject3')) {
-            s3Questions.push(...questions);
-        } else if (examId.startsWith('subject4')) {
-            s4Questions.push(...questions);
+        // registry 매핑 우선, 없으면 접두사 폴백 (subject1 → law 등)
+        let subjKey = examToSubject[examId];
+        if (!subjKey) {
+            // 폴백: examId 접두사 → registry.subjects 순서 기반 매칭
+            const prefixMatch = examId.match(/^(subject\d+)/);
+            if (prefixMatch) {
+                const idx = parseInt(prefixMatch[1].replace('subject', '')) - 1;
+                if (subjects[idx]) subjKey = subjects[idx].key;
+            }
+        }
+        if (subjKey && subjectQuestions[subjKey]) {
+            subjectQuestions[subjKey].push(...questions);
         }
     });
 
-    if (s1Questions.length === 0 || s2Questions.length === 0 || s3Questions.length === 0 || s4Questions.length === 0) {
+    // 모든 과목에 문제가 있는지 확인
+    const missingSubjects = subjects.filter(s => subjectQuestions[s.key].length === 0);
+    if (missingSubjects.length > 0) {
         showToast("모의고사 데이터가 불완전합니다. 모든 과목의 모의고사가 정상 로드되었는지 확인하세요.", "error");
         return;
     }
@@ -97,28 +119,29 @@ function _startIntegratedMockExamImpl() {
         }));
     };
 
-    const s1Selected = getRandomSample(s1Questions, 10, 'subject1');
-    const s2Selected = getRandomSample(s2Questions, 25, 'subject2');
-    const s3Selected = getRandomSample(s3Questions, 25, 'subject3');
-    const s4Selected = getRandomSample(s4Questions, 40, 'subject4');
+    // 과목별 샘플링 (registry에서 동적 조회)
+    const selectedBySubject = {};
+    for (const subj of subjects) {
+        const count = subjectCounts[subj.key];
+        if (count > 0) {
+            selectedBySubject[subj.key] = getRandomSample(subjectQuestions[subj.key], count, subj.key);
+        }
+    }
+    const allSelected = subjects.flatMap(s => selectedBySubject[s.key] || []);
 
-    // 100문항 결합
-    const combinedQuestions = [
-        ...s1Selected,
-        ...s2Selected,
-        ...s3Selected,
-        ...s4Selected
-    ];
+    // 문항 결합
+    const combinedQuestions = allSelected;
 
-    // 문항 번호를 1부터 100까지 순차적으로 재지정
+    // 문항 번호를 1부터 순차적으로 재지정
     combinedQuestions.forEach((q, index) => {
         q.num = index + 1;
         q.id = `integrated_q${index + 1}`;
     });
 
+    const totalQuestions = combinedQuestions.length;
     const integratedExam = {
         id: 'integrated',
-        title: '1~4과목 통합 실전 모의고사 (100제)',
+        title: `1~4과목 통합 실전 모의고사 (${totalQuestions}제)`,
         questions: combinedQuestions
     };
 
