@@ -678,10 +678,13 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
             e.stopPropagation();
             const jumpText = (link.dataset.tocJump || '').trim();
             if (!jumpText) return;
-            // 목차 항목 텍스트가 포함된 섹션 찾기 (부분 매칭)
+            // 이모지 제거한 정규화 텍스트 (매칭용)
+            const normalize = (s) => s.replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2190}-\u{21FF}\u{2B00}-\u{2BFF}]/gu, '').replace(/\s+/g, ' ').trim();
+            const jumpNorm = normalize(jumpText);
+            // 목차 항목 텍스트가 포함된 섹션 찾기
             const sectionCards = container.querySelectorAll('.reader-section-card');
             let found = null;
-            // 1순위: 섹션 제목이 목차 항목을 포함
+            // 1순위: 정확 매칭 (이모지 포함)
             sectionCards.forEach(card => {
                 const titleEl = card.querySelector('.reader-section-title');
                 if (!titleEl) return;
@@ -690,7 +693,18 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
                     found = card;
                 }
             });
-            // 2순위: Chapter NN 매칭 (목차 "Chapter 01." → 섹션 "📚 Chapter 01. xxx")
+            // 2순위: 이모지 무시 매칭
+            if (!found && jumpNorm) {
+                sectionCards.forEach(card => {
+                    const titleEl = card.querySelector('.reader-section-title');
+                    if (!titleEl) return;
+                    const titleNorm = normalize(titleEl.textContent.trim());
+                    if (titleNorm && (titleNorm.includes(jumpNorm) || jumpNorm.includes(titleNorm))) {
+                        found = card;
+                    }
+                });
+            }
+            // 3순위: Chapter NN 매칭 (목차 "Chapter 01." → 섹션 "📚 Chapter 01. xxx")
             if (!found && /Chapter\s+\d+/i.test(jumpText)) {
                 const chMatch = jumpText.match(/Chapter\s+(\d+)/i);
                 if (chMatch) {
@@ -703,6 +717,33 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
                             found = card;
                         }
                     });
+                }
+            }
+            // 4순위: 키워드 기반 매칭 (핵심 명사 추출)
+            if (!found && jumpNorm) {
+                // 핵심 키워드 추출 (2자 이상 한글/영어 단어)
+                const keywords = jumpNorm.match(/[\uac00-\ud7a3]{2,}|[A-Za-z]{2,}/g) || [];
+                if (keywords.length > 0) {
+                    let bestMatch = null;
+                    let bestScore = 0;
+                    sectionCards.forEach(card => {
+                        const titleEl = card.querySelector('.reader-section-title');
+                        if (!titleEl) return;
+                        const titleNorm = normalize(titleEl.textContent.trim());
+                        if (!titleNorm) return;
+                        let score = 0;
+                        keywords.forEach(kw => {
+                            if (titleNorm.includes(kw)) score += kw.length;
+                        });
+                        if (score > bestScore) {
+                            bestScore = score;
+                            bestMatch = card;
+                        }
+                    });
+                    // 키워드의 50% 이상 매칭 시 채택
+                    if (bestMatch && bestScore >= keywords.join('').length * 0.5) {
+                        found = bestMatch;
+                    }
                 }
             }
             if (found) {
