@@ -1,0 +1,239 @@
+/* css/ui-overlay.css — 동적 UI 오버레이 (토스트, 컨펌 모달, 글로벌 로딩)
+ * ui-utils.js에서 생성되는 동적 요소의 스타일을 여기로 분리.
+ * 요소는 JS로 동적 생성되지만 CSS는 정적 로드 시점에 이미 사용 가능.
+ */
+
+/* 스피너 애니메이션 (ui-utils.js에서 inline <style>로 주입하던 것을 중앙화) */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── 글로벌 로딩 오버레이 ── */
+#global-loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(11, 15, 25, 0.7);
+  backdrop-filter: blur(5px);
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  transition: opacity 0.2s ease;
+  opacity: 0;
+}
+#global-loading-overlay.is-visible {
+  opacity: 1;
+}
+#global-loading-overlay .spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-top-color: var(--color-primary);
+  border-radius: var(--radius-full);
+  animation: spin 1s linear infinite;
+  margin-bottom: 1.25rem;
+}
+#global-loading-overlay #global-loading-message {
+  font-weight: var(--font-weight-semibold);
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+/* ── 토스트 알림 ── */
+#app-toast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  background: rgba(15, 23, 42, 0.95);
+  color: #fff;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: var(--font-weight-medium);
+  z-index: 99998;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+  max-width: 90vw;
+  text-align: center;
+  line-height: 1.5;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+#app-toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* ── 컨펌 모달 ── */
+#app-confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 99997;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+#app-confirm-overlay.is-visible {
+  opacity: 1;
+}
+.app-confirm-dialog {
+  background: var(--bg-card, #1a1a2e);
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  max-width: 400px;
+  width: 90vw;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+  transform: scale(0.95);
+  transition: transform 0.2s ease;
+}
+.app-confirm-dialog.is-visible {
+  transform: scale(1);
+}
+.app-confirm-dialog h3 {
+  margin: 0 0 0.75rem;
+  font-size: 1.1rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-main, #fff);
+}
+.app-confirm-dialog p {
+  margin: 0 0 1.5rem;
+  font-size: 0.95rem;
+  color: var(--color-text-muted, #9ca3af);
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+.app-confirm-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+.app-confirm-cancel,
+.app-confirm-ok {
+  padding: 0.65rem 1.5rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  min-height: 44px;
+  min-width: 80px;
+  font-family: inherit;
+}
+.app-confirm-cancel {
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.15));
+  background: transparent;
+  color: var(--color-text-muted, #9ca3af);
+}
+.app-confirm-ok {
+  border: none;
+  background: linear-gradient(135deg, var(--color-primary, #06b6d4), var(--color-secondary, #8b5cf6));
+  color: #fff;
+}
+
+/* ── 필터 버튼 (리뷰/교재 과목 필터) ── */
+.filter-btn {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  border-radius: var(--radius-xs);
+}
+
+/* ── 저장공간 경고 배너 ── */
+#storage-warning-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 99997;
+  background: #e74c3c;
+  color: #fff;
+  padding: 0.6rem 1rem;
+  font-size: 0.85rem;
+  text-align: center;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* ── 방향 전환 토스트 ── */
+.orientation-toast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  animation: orientationToastIn 0.3s ease;
+}
+.orientation-toast .orientation-toast-icon {
+  font-size: 1.5rem;
+  color: var(--color-primary);
+}
+.orientation-toast .orientation-toast-text {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-main);
+}
+
+/* ── PWA 직접 설치 버튼 ── */
+.install-direct-btn {
+  margin: 0.5rem 0 0.25rem;
+  width: 100%;
+  justify-content: center;
+}
+
+/* ── 네비게이션 초기화 실패 배너 ── */
+.nav-init-fail-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 99998;
+  background: #c0392b;
+  color: #fff;
+  padding: 0.5rem;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+/* ── 차트 툴팁 (charts.js에서 동적 생성) ── */
+.chart-tooltip {
+  position: fixed;
+  z-index: 9000;
+  pointer-events: none;
+  background: rgba(15, 23, 42, 0.96);
+  color: #fff;
+  border: 1px solid rgba(6, 182, 212, 0.5);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.4;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  max-width: 240px;
+  white-space: nowrap;
+}
+.chart-tooltip.is-visible {
+  opacity: 1;
+}

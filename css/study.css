@@ -46,11 +46,11 @@
 }
 
 .flashcard-front {
-    background: linear-gradient(135deg, rgba(31, 41, 55, 0.95), rgba(17, 24, 39, 0.95));
+    background: var(--flashcard-front-bg);
 }
 
 .light-theme .flashcard-front {
-    background: linear-gradient(135deg, #ffffff, #f8fafc);
+    background: var(--flashcard-front-bg-light);
 }
 
 .flashcard-front::after {
@@ -65,12 +65,12 @@
 }
 
 .flashcard-back {
-    background: linear-gradient(135deg, rgba(17, 24, 39, 0.95), rgba(31, 41, 55, 0.95));
+    background: var(--flashcard-back-bg);
     transform: rotateY(180deg);
 }
 
 .light-theme .flashcard-back {
-    background: linear-gradient(135deg, #f8fafc, #ffffff);
+    background: var(--flashcard-back-bg-light);
 }
 
 .card-header {
@@ -107,11 +107,11 @@
 .card-type-badge[data-type="penalty"] { background: var(--danger-tint-12); color: var(--color-danger-dark); }
 .card-type-badge[data-type="prohibition"] { background: var(--danger-tint-8); color: var(--color-danger-darker); }
 .card-type-badge[data-type="exception"] { background: var(--warning-tint-12); color: var(--color-warning-dark); }
-.card-type-badge[data-type="number"] { background: rgba(59,130,246,0.12); color: #2563eb; }
+.card-type-badge[data-type="number"] { background: var(--info-tint-12); color: var(--color-info); }
 .card-type-badge[data-type="requirement"] { background: var(--secondary-tint-12); color: var(--color-secondary-dark); }
-.card-type-badge[data-type="comparison"] { background: rgba(20,184,166,0.12); color: #0d9488; }
-.card-type-badge[data-type="procedure"] { background: rgba(34,197,94,0.12); color: var(--color-success); }
-.card-type-badge[data-type="definition"] { background: rgba(107,114,128,0.12); color: var(--color-text-muted); }
+.card-type-badge[data-type="comparison"] { background: var(--teal-tint-12); color: var(--color-teal); }
+.card-type-badge[data-type="procedure"] { background: var(--green-tint-12); color: var(--color-success); }
+.card-type-badge[data-type="definition"] { background: var(--gray-tint-12); color: var(--color-text-muted); }
 
 .card-key-icon {
     font-size: var(--text-md-lg);
@@ -322,7 +322,7 @@
 
 .form-input {
     flex: 1;
-    background-color: rgba(0,0,0,0.25);
+    background-color: var(--bg-input);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-sm);
     color: var(--color-text-main);
@@ -334,7 +334,7 @@
 }
 
 .light-theme .form-input {
-    background-color: var(--color-on-brand);
+    background-color: var(--bg-input);
     color: var(--color-text-main);
     border-color: var(--border-color);
 }
@@ -442,6 +442,15 @@
 .result-score-summary span {
     font-weight: 700;
     color: var(--color-text-main);
+}
+
+/* 오답 리뷰 개별 아이템 (quiz.js에서 동적 생성) */
+.quiz-review-item {
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    background: var(--bg-card);
 }
 
 .result-actions {

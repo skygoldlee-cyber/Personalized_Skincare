@@ -144,13 +144,12 @@ function showAudioToast(msg) {
     if (!toast) {
         toast = document.createElement('div');
         toast.id = 'reader-audio-toast';
-        toast.style.cssText = 'position:fixed;left:50%;bottom:2rem;transform:translateX(-50%);background:rgba(15,23,42,0.95);color:#fff;padding:0.6rem 1.1rem;border-radius:8px;font-size:0.85rem;z-index:9999;border:1px solid rgba(6,182,212,0.4);box-shadow:0 4px 16px rgba(0,0,0,0.4);opacity:0;transition:opacity 0.25s;pointer-events:none;max-width:90%;';
         document.body.appendChild(toast);
     }
     toast.textContent = msg;
-    toast.style.opacity = '1';
+    toast.classList.add('is-visible');
     if (_audioToastTimer) clearTimeout(_audioToastTimer);
-    _audioToastTimer = setTimeout(() => { toast.style.opacity = '0'; }, 2200);
+    _audioToastTimer = setTimeout(() => { toast.classList.remove('is-visible'); }, 2200);
 }
 
 /** 초를 "mm:ss" (1시간 이상이면 "h:mm:ss") 형식으로 변환 */
@@ -1605,7 +1604,7 @@ function _ensurePreviewEl() {
     _previewEl = document.createElement('div');
     _previewEl.id = 'ref-preview-tooltip';
     _previewEl.setAttribute('role', 'tooltip');
-    _previewEl.style.cssText = 'position:fixed;z-index:10001;display:none;max-width:420px;max-height:280px;overflow-y:auto;background:var(--bg-card,#161b22);border:1px solid var(--border-color,#30363d);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.3);padding:12px 14px;font-size:0.85rem;line-height:1.5;color:var(--color-text,#e6edf3);pointer-events:none;';
+    _previewEl.classList.add('is-hidden');
     document.body.appendChild(_previewEl);
     return _previewEl;
 }

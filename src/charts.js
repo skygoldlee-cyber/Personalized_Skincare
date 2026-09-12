@@ -16,12 +16,6 @@ function getChartTooltip() {
     if (_chartTooltip) return _chartTooltip;
     _chartTooltip = document.createElement('div');
     _chartTooltip.className = 'chart-tooltip';
-    _chartTooltip.style.cssText =
-        'position:fixed;z-index:9000;pointer-events:none;' +
-        'background:rgba(15,23,42,0.96);color:#fff;border:1px solid rgba(6,182,212,0.5);' +
-        'border-radius:8px;padding:0.5rem 0.75rem;font-size:0.8rem;font-weight:600;' +
-        'line-height:1.4;box-shadow:0 4px 16px rgba(0,0,0,0.4);' +
-        'opacity:0;transition:opacity 0.15s ease;max-width:240px;white-space:nowrap;';
     document.body.appendChild(_chartTooltip);
     return _chartTooltip;
 }
@@ -29,7 +23,7 @@ function getChartTooltip() {
 function showChartTooltip(html, x, y) {
     const tip = getChartTooltip();
     tip.innerHTML = html;
-    tip.style.opacity = '1';
+    tip.classList.add('is-visible');
     // 위치 보정: 화면 경계 넘지 않도록
     const rect = tip.getBoundingClientRect();
     let left = x + 12;
@@ -43,7 +37,7 @@ function showChartTooltip(html, x, y) {
 
 function hideChartTooltip() {
     _tooltipHideTimer = setTimeout(() => {
-        if (_chartTooltip) _chartTooltip.style.opacity = '0';
+        if (_chartTooltip) _chartTooltip.classList.remove('is-visible');
     }, TIMING.CHART_TOOLTIP_HIDE_MS);
 }
 

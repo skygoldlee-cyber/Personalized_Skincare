@@ -77,9 +77,8 @@ export function renderGlossaryTable(glossaryItems) {
 export function appendGlossaryTocItem(tocList) {
     if (!tocList) return;
     const glossaryTocItem = document.createElement('div');
-    glossaryTocItem.className = 'reader-toc-item';
+    glossaryTocItem.className = 'reader-toc-item glossary-toc';
     glossaryTocItem.dataset.glossaryScroll = '1';
-    glossaryTocItem.style.cssText = 'margin-top:0.4rem;border-top:1px solid var(--border-color,#30363d);padding-top:0.4rem;';
     glossaryTocItem.innerHTML = '<span class="toc-num"><i class="fa-solid fa-book-bookmark"></i></span><span>중요 용어 해설</span>';
     glossaryTocItem.addEventListener('click', () => {
         const target = document.getElementById('reader-glossary');

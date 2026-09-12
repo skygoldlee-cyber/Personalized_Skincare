@@ -350,7 +350,7 @@ export function renderQuizResult() {
             reviewListEl.innerHTML = `<h3 style="margin-bottom:0.75rem; font-size:1.1rem;"><i class="fa-solid fa-triangle-exclamation"></i> 오답 리뷰 (${wrongAnswers.length}문제)</h3>`;
             wrongAnswers.forEach((s, idx) => {
                 const item = document.createElement('div');
-                item.style.cssText = 'padding:0.75rem; margin-bottom:0.5rem; border:1px solid var(--border-color); border-radius:8px; background:var(--bg-card);';
+                item.className = 'quiz-review-item';
                 item.innerHTML = `
                     <div style="font-size:0.85rem; color:var(--color-text-muted); margin-bottom:0.3rem;">Q${idx + 1}</div>
                     <p style="font-size:0.9rem; margin-bottom:0.4rem;">${safeTextWithBreaks(s.question)}</p>

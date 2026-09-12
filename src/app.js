@@ -203,7 +203,6 @@ function populateSubjectSelects() {
             btn.setAttribute('data-filter', subj.key);
             btn.setAttribute('data-click', 'setReviewFilter');
             btn.setAttribute('data-arg', subj.key);
-            btn.style.cssText = 'padding: 0.4rem 0.8rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; border-radius: 4px;';
             btn.textContent = `${idx + 1}과목 (${shortName})`;
             reviewFilterGroup.appendChild(btn);
         });
@@ -331,7 +330,6 @@ function checkStorageWarning() {
     if (existing) return;
     const banner = document.createElement('div');
     banner.id = 'storage-warning-banner';
-    banner.style.cssText = 'position:fixed;bottom:0;left:0;right:0;z-index:99997;background:#e74c3c;color:#fff;padding:0.6rem 1rem;font-size:0.85rem;text-align:center;box-shadow:0 -2px 8px rgba(0,0,0,0.3);';
     banner.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> 저장 공간이 부족하여 학습 진행상황이 저장되지 않습니다. 브라우저 데이터를 정리하거나 백업 후 진행 상황을 내보내세요.';
     document.body.appendChild(banner);
     banner.addEventListener('click', () => { banner.remove(); });
@@ -419,35 +417,18 @@ function showOrientationToast(isLandscape) {
     
     const toast = document.createElement('div');
     toast.className = 'orientation-toast';
-    toast.style.cssText = `
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: var(--bg-card);
-        border: 1px solid var(--border-color);
-        border-radius: 12px;
-        padding: 1rem 1.5rem;
-        z-index: 10000;
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-        animation: orientationToastIn 0.3s ease;
-    `;
-    
+
     const icon = document.createElement('i');
-    icon.className = isLandscape ? 'fa-solid fa-mobile-screen' : 'fa-solid fa-mobile-screen-button';
-    icon.style.cssText = 'font-size: 1.5rem; color: var(--color-primary);';
-    
+    icon.className = `${isLandscape ? 'fa-solid fa-mobile-screen' : 'fa-solid fa-mobile-screen-button'} orientation-toast-icon`;
+
     const text = document.createElement('span');
+    text.className = 'orientation-toast-text';
     text.textContent = isLandscape ? '가로 보기 모드' : '세로 보기 모드';
-    text.style.cssText = 'font-weight: 600; color: var(--color-text-main);';
-    
+
     toast.appendChild(icon);
     toast.appendChild(text);
     document.body.appendChild(toast);
-    
+
     // 2초 후 자동 제거
     setTimeout(() => {
         toast.style.animation = 'orientationToastOut 0.3s ease';
@@ -1455,8 +1436,7 @@ function setupPWAInstall() {
                 if (!directBtn) {
                     directBtn = document.createElement('button');
                     directBtn.id = directBtnId;
-                    directBtn.className = 'btn btn-primary';
-                    directBtn.style.cssText = 'margin:0.5rem 0 0.25rem;width:100%;justify-content:center;';
+                    directBtn.className = 'btn btn-primary install-direct-btn';
                     directBtn.innerHTML = '<i class="fa-solid fa-download"></i> 지금 설치';
                     directBtn.addEventListener('click', async () => {
                         const pr = window.__deferredPrompt;
@@ -1694,7 +1674,7 @@ function startAppInit() {
     setTimeout(() => {
         if (!window.__APP_INITIALIZED) {
             var d = document.createElement('div');
-            d.style.cssText = 'position:fixed;bottom:0;left:0;right:0;z-index:99998;background:#c0392b;color:#fff;padding:0.5rem;font-size:0.8rem;text-align:center;';
+            d.className = 'nav-init-fail-banner';
             d.textContent = '네비게이션 초기화 실패 — 캐시 정리 후 새로고침 중... (15초 대기)';
             document.body.appendChild(d);
         }
