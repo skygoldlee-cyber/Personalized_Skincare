@@ -3,7 +3,7 @@
 export const DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2026",
-  "generatedAt": "2026-09-12T10:48:01.323Z",
+  "generatedAt": "2026-09-12T10:52:32.179Z",
   "subjects": [
     {
       "key": "law",
