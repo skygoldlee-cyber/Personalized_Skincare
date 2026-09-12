@@ -4,7 +4,7 @@ import { esc } from '../sanitize.js';
 import { DataLoader } from '../data-loader.js';
 import { renderPerformanceChart, renderPassFailDiagnosis, renderRadarChart } from '../charts.js';
 import { switchView } from './navigation.js';
-import { updateStreakAndDailyUI } from './quiz.js';
+import { updateStreakAndDailyUI } from './daily-challenge.js';
 import { updatePomodoroUI } from './trainer.js';
 import { getDueCount } from '../spaced-repetition.js';
 

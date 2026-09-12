@@ -216,6 +216,21 @@ async function openHtmlViewer(htmlPath, searchKeyword, anchorId, lineNum) {
             } else {
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(rawText, 'text/html');
+                // XSS 방어: <script>, 이벤트 핸들러, javascript: URI 제거
+                doc.querySelectorAll('script').forEach(el => el.remove());
+                doc.querySelectorAll('*').forEach(el => {
+                    // on* 이벤트 핸들러 속성 제거
+                    for (const attr of Array.from(el.attributes)) {
+                        if (attr.name.startsWith('on')) {
+                            el.removeAttribute(attr.name);
+                        }
+                        // javascript: URI 제거 (href, src, action 등)
+                        if ((attr.name === 'href' || attr.name === 'src' || attr.name === 'action' || attr.name === 'formaction') &&
+                            attr.value && attr.value.trim().toLowerCase().startsWith('javascript:')) {
+                            el.removeAttribute(attr.name);
+                        }
+                    }
+                });
                 doc.querySelectorAll('img').forEach(img => {
                     const src = img.getAttribute('src');
                     if (src && !src.startsWith('http') && !src.startsWith('data:')) {

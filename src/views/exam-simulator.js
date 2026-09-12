@@ -307,8 +307,17 @@ export function renderOMRSheet() {
         bubble.className = 'omr-bubble';
         bubble.id = `omr-b-${i}`;
         bubble.textContent = i + 1;
+        bubble.setAttribute('role', 'button');
+        bubble.setAttribute('tabindex', '0');
+        bubble.setAttribute('aria-label', `문제 ${i + 1}번으로 이동`);
         bubble.addEventListener('click', () => {
             jumpToSimQuestion(i);
+        });
+        bubble.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                jumpToSimQuestion(i);
+            }
         });
         omrGrid.appendChild(bubble);
     }
@@ -377,9 +386,18 @@ export function renderSimQuestion() {
             
             const btn = document.createElement('div');
             btn.className = `sim-option-item ${isSelected ? 'active' : ''}`;
+            btn.setAttribute('role', 'button');
+            btn.setAttribute('tabindex', '0');
+            btn.setAttribute('aria-label', `선택지 ${idx + 1}: ${optText}`);
             btn.innerHTML = `<span class="opt-num">${esc(ind)}</span> <span class="opt-text">${esc(optText)}</span>`;
             btn.addEventListener('click', () => {
                 saveSimAnswer(q.id, ind);
+            });
+            btn.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    saveSimAnswer(q.id, ind);
+                }
             });
             container.appendChild(btn);
         });
@@ -388,9 +406,18 @@ export function renderSimQuestion() {
             const isSelected = (savedAns === optVal);
             const btn = document.createElement('div');
             btn.className = `sim-option-item ${isSelected ? 'active' : ''}`;
+            btn.setAttribute('role', 'button');
+            btn.setAttribute('tabindex', '0');
+            btn.setAttribute('aria-label', `선택지 ${optVal}`);
             btn.innerHTML = `<span class="opt-num"><i class="fa-solid ${optVal === 'O' ? 'fa-circle' : 'fa-xmark'}"></i></span> <span class="opt-text">${optVal} 퀴즈</span>`;
             btn.addEventListener('click', () => {
                 saveSimAnswer(q.id, optVal);
+            });
+            btn.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    saveSimAnswer(q.id, optVal);
+                }
             });
             container.appendChild(btn);
         });
