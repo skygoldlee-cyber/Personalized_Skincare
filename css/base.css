@@ -45,6 +45,10 @@
     --color-text-main: #f3f4f6;    /* Warm White */
     --color-text-muted: #9ca3af;   /* Muted Gray */
     --color-on-brand: #ffffff;     /* 브랜드 색 배경 위 텍스트 (다크/라이트 공통) */
+    --bg-canvas: #fdfdfd;          /* 스크래치패드 캔버스 배경 */
+    --color-danger-tint: #fca5a5;  /* danger 틴트 (과락 경고 텍스트 등) */
+    --color-success-tint: #a7f3d0;  /* success 틴트 (합격 안정권 텍스트 등) */
+    --color-warning-tint: #fde68a; /* warning 틴트 (평균 미달 텍스트 등) */
 
     /* Brand Tints — 배경/보더 틴트 (반복되는 rgba(brand, alpha) 대체) */
     --primary-tint-5: rgba(6, 182, 212, 0.05);
@@ -289,6 +293,10 @@
     
     --color-text-main: #1f2937;
     --color-text-muted: #4b5563;
+    --bg-canvas: #ffffff;
+    --color-danger-tint: #dc2626;
+    --color-success-tint: #047857;
+    --color-warning-tint: #92400e;
     
     --shadow-sm: 0 1px 4px rgba(0,0,0,0.15);
     --shadow-md: 0 4px 16px rgba(0,0,0,0.18);

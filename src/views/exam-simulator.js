@@ -555,7 +555,7 @@ export function submitExam() {
     if (breakdownContainer) {
         breakdownContainer.innerHTML = '';
         
-        let breakdownHTML = `<h4 style="margin-top: 0; margin-bottom: 1rem; color: #fff; font-size: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;"><i class="fa-solid fa-chart-pie color-primary" style="color: var(--color-primary);"></i> 과목별 성적 상세 분석</h4>`;
+        let breakdownHTML = `<h4 style="margin-top: 0; margin-bottom: 1rem; color: var(--color-on-brand); font-size: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;"><i class="fa-solid fa-chart-pie color-primary" style="color: var(--color-primary);"></i> 과목별 성적 상세 분석</h4>`;
         breakdownHTML += `<div style="display: flex; flex-direction: column; gap: 0.75rem;">`;
         
         const subjNames = {};
@@ -574,15 +574,15 @@ export function submitExam() {
                     failedSubjects.push({ id: subj, name: subjNames[subj], rate: subRate });
                 }
                 
-                const progressColor = isFail ? '#ef4444' : (subRate >= 60 ? '#10b981' : '#f59e0b');
+                const progressColor = isFail ? 'var(--color-danger)' : (subRate >= 60 ? 'var(--color-success)' : 'var(--color-warning)');
                 
                 breakdownHTML += `
                     <div>
                         <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.25rem;">
-                            <span style="font-weight: 600; color: #e5e7eb;">${esc(subjNames[subj])}</span>
+                            <span style="font-weight: 600; color: var(--color-text-muted);">${esc(subjNames[subj])}</span>
                             <span style="color: ${progressColor}; font-weight: 700;">
                                 ${data.score} / ${data.total} (${subRate}%)
-                                ${isFail ? ' <span style="background:#ef4444; color:#fff; font-size:0.7rem; padding:1px 4px; border-radius:3px; margin-left:3px;">과락</span>' : ''}
+                                ${isFail ? ' <span style="background:var(--color-danger); color:var(--color-on-brand); font-size:0.7rem; padding:1px 4px; border-radius:3px; margin-left:3px;">과락</span>' : ''}
                             </span>
                         </div>
                         <div style="background: rgba(255,255,255,0.05); height: 6px; border-radius: 3px; overflow: hidden; width: 100%;">
@@ -599,8 +599,8 @@ export function submitExam() {
         if (failedSubjects.length > 0) {
             breakdownHTML += `
                 <div style="margin-top: 1.25rem; padding: 0.75rem 1rem; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 6px;">
-                    <h5 style="margin: 0 0 0.5rem 0; color: #ef4444; font-size: 0.9rem; font-weight: bold;"><i class="fa-solid fa-triangle-exclamation"></i> 과락 주의 경고!</h5>
-                    <p style="margin: 0; font-size: 0.8rem; color: #fca5a5; line-height: 1.5;">
+                    <h5 style="margin: 0 0 0.5rem 0; color: var(--color-danger); font-size: 0.9rem; font-weight: bold;"><i class="fa-solid fa-triangle-exclamation"></i> 과락 주의 경고!</h5>
+                    <p style="margin: 0; font-size: 0.8rem; color: var(--color-danger-tint, #fca5a5); line-height: 1.5;">
                         실제 시험 기준 한 과목이라도 40점 미만(100점 환산) 득점 시 전체 평균이 60점을 넘어도 불합격 처리됩니다. 아래 추천 학습으로 약점을 빠르게 보완해 보세요.
                     </p>
                     <div style="margin-top: 0.75rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
@@ -609,7 +609,7 @@ export function submitExam() {
             failedSubjects.forEach(f => {
                 const subKey = f.id;
                 breakdownHTML += `
-                    <button class="btn" data-click="startFocusSubjectStudy" data-arg="${subKey}" style="padding: 3px 8px; font-size: 0.75rem; background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5; cursor: pointer; border-radius: 4px; display: inline-flex; align-items: center; gap: 0.25rem;">
+                    <button class="btn" data-click="startFocusSubjectStudy" data-arg="${subKey}" style="padding: 3px 8px; font-size: 0.75rem; background: rgba(239, 68, 68, 0.2); border: 1px solid var(--color-danger); color: var(--color-danger-tint, #fca5a5); cursor: pointer; border-radius: 4px; display: inline-flex; align-items: center; gap: 0.25rem;">
                         <i class="fa-solid fa-bolt"></i> ${esc(f.name.split(':')[0])} 퀴즈 풀기
                     </button>
                 `;
@@ -625,8 +625,8 @@ export function submitExam() {
             if (overallRate >= 60) {
                 breakdownHTML += `
                     <div style="margin-top: 1.25rem; padding: 0.75rem 1rem; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 6px;">
-                        <h5 style="margin: 0 0 0.25rem 0; color: #10b981; font-size: 0.9rem; font-weight: bold;"><i class="fa-solid fa-circle-check"></i> 합격 예측: 합격 안정권</h5>
-                        <p style="margin: 0; font-size: 0.8rem; color: #a7f3d0; line-height: 1.5;">
+                        <h5 style="margin: 0 0 0.25rem 0; color: var(--color-success); font-size: 0.9rem; font-weight: bold;"><i class="fa-solid fa-circle-check"></i> 합격 예측: 합격 안정권</h5>
+                        <p style="margin: 0; font-size: 0.8rem; color: var(--color-success-tint, #a7f3d0); line-height: 1.5;">
                             전체 정답률 60% 이상 및 모든 과목 과락 패스 요건을 완벽히 충족하셨습니다! 이 컨디션을 실제 시험장까지 유지해 보세요.
                         </p>
                     </div>
@@ -634,8 +634,8 @@ export function submitExam() {
             } else {
                 breakdownHTML += `
                     <div style="margin-top: 1.25rem; padding: 0.75rem 1rem; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.2); border-radius: 6px;">
-                        <h5 style="margin: 0 0 0.25rem 0; color: #f59e0b; font-size: 0.9rem; font-weight: bold;"><i class="fa-solid fa-circle-exclamation"></i> 합격 예측: 전체 평균 미달</h5>
-                        <p style="margin: 0; font-size: 0.8rem; color: #fde68a; line-height: 1.5;">
+                        <h5 style="margin: 0 0 0.25rem 0; color: var(--color-warning); font-size: 0.9rem; font-weight: bold;"><i class="fa-solid fa-circle-exclamation"></i> 합격 예측: 전체 평균 미달</h5>
+                        <p style="margin: 0; font-size: 0.8rem; color: var(--color-warning-tint, #fde68a); line-height: 1.5;">
                             과락은 면했으나 합격 커트라인인 전체 평균 60%에 도달하지 못했습니다. 오답 해설 풀이를 통해 부족한 이론을 보완해 보세요.
                         </p>
                     </div>

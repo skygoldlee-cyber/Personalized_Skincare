@@ -202,11 +202,11 @@ function _renderSubjectHeatmap(subjects) {
     const _style = getComputedStyle(document.documentElement);
     const _c = (v) => _style.getPropertyValue(v).trim();
     const colors = {
-        none: _c('--color-text-muted') || '#374151',
-        high: _c('--color-success') || '#10b981',
-        mid: _c('--color-warning') || '#f59e0b',
-        low: _c('--color-danger') || '#ef4444',
-        vlow: _c('--color-danger-darkest') || '#991b1b'
+        none: _c('--color-text-muted'),
+        high: _c('--color-success'),
+        mid: _c('--color-warning'),
+        low: _c('--color-danger'),
+        vlow: _c('--color-danger-darkest')
     };
 
     let html = '<div class="heatmap-grid">';

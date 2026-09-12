@@ -79,7 +79,7 @@ export function showToast(message, type = 'info', duration = 3000) {
     const icon = icons[type] || icons.info;
     const colorVar = cssVars[type] || cssVars.info;
     const style = getComputedStyle(document.documentElement);
-    const color = style.getPropertyValue(colorVar).trim() || '#06b6d4';
+    const color = style.getPropertyValue(colorVar).trim();
     toast.innerHTML = `<i class="fa-solid ${icon}" style="color:${color}; margin-right:0.5rem;"></i>${escapeHtml(message)}`;
     toast.classList.add('is-visible');
     if (_toastTimer) clearTimeout(_toastTimer);
