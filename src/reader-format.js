@@ -1,7 +1,7 @@
 // src/reader-format.js - 교재 리더 본문 포맷터 (순수 함수, ESM)
-// TODO(장기개선): 현재 10+개의 정규식이 HTML 문자열에 순차적으로 replace를 적용하여
-// O(n×k) 비용이 발생 (n=HTML 길이, k=정규식 수). 단일 패스 파서 또는 DOM 기반 후처리로
-// 통합하면 성능 개선 가능. 다만 현재 측정된 병목이 아니므로 장기 개선으로 deferral.
+// 참고: 다수의 정규식이 HTML 문자열에 순차적으로 replace를 적용하여 O(n×k) 비용이 발생
+// (n=HTML 길이, k=정규식 수). 단일 패스 파서 또는 DOM 기반 후처리로 통합하면 성능 개선
+// 가능하나, 현재 측정된 병목이 아니므로 장기 개선으로 보류.
 import { parseMarkdown } from './markdown-parser.js';
 import { PATHS, normalizeRefPath } from './paths.js';
 import { escapeHTML } from './sanitize.js';

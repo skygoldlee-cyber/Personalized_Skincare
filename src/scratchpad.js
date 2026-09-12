@@ -28,7 +28,8 @@ export function toggleCalcScratchpad() {
 export function initScratchpadCanvas() {
     const canvas = document.getElementById('scratchpad-canvas');
     if (!canvas) return;
-    
+    if (scratchpadCanvasInitialized) return;
+
     const ctx = canvas.getContext('2d');
     
     ctx.lineWidth = 3;

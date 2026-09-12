@@ -22,21 +22,6 @@ import {
     finishDailyChallenge
 } from './daily-challenge.js';
 
-// 데일리 챌린지 함수 재수출 (app.js 호환성 유지)
-export {
-    dailyState,
-    updateStreakAndDailyUI,
-    startDailyChallenge,
-    closeDailyModal,
-    renderDailyStep,
-    submitDailyCardAnswer,
-    submitDailyChoiceAnswer,
-    submitDailyShortAnswer,
-    showDailyFeedback,
-    nextDailyStep,
-    finishDailyChallenge
-};
-
 /**
  * 퀴즈 시작 로직
  */

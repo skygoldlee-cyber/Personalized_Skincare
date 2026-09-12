@@ -35,8 +35,7 @@ function _getSearchIndex() {
                     filePath: chapter.filePath,
                     sectionTitle: section.title,
                     content: section.content,
-                    _titleLower: section.title.toLowerCase(),
-                    _contentLower: section.content.toLowerCase()
+                    _searchText: (section.title + ' ' + section.content).toLowerCase()
                 });
             });
         });
@@ -52,7 +51,7 @@ function _buildInvertedIndex() {
     _invertedIndexKeys = _searchIndexKeys;
     
     _searchIndex.forEach((entry, idx) => {
-        const text = (entry._titleLower + ' ' + entry._contentLower);
+        const text = entry._searchText;
         // 공백 기준 토큰화
         const tokens = text.split(/\s+/).filter(t => t.length >= 2);
         tokens.forEach(token => {
@@ -175,7 +174,7 @@ function performTextbookSearch() {
     
     for (const { entry, originalIdx } of searchEntries) {
         if (textbookState.filter !== 'all' && textbookState.filter !== entry.subjId) continue;
-        const isMatch = terms.every(term => entry._titleLower.includes(term) || entry._contentLower.includes(term));
+        const isMatch = terms.every(term => entry._searchText.includes(term));
         if (isMatch) {
             results.push({
                 subjId: entry.subjId,

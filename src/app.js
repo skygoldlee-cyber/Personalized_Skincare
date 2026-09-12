@@ -38,7 +38,9 @@ import {
     renderReviewList,
     removeWeakCard,
     setReviewFilter,
-    startWeakFocusQuiz,
+    startWeakFocusQuiz
+} from './views/quiz.js';
+import {
     updateStreakAndDailyUI,
     startDailyChallenge,
     closeDailyModal,
@@ -49,7 +51,7 @@ import {
     showDailyFeedback,
     nextDailyStep,
     finishDailyChallenge
-} from './views/quiz.js';
+} from './views/daily-challenge.js';
 import {
     initTrainer,
     exitTrainerSubView,
@@ -69,13 +71,15 @@ import {
     submitIngAnswer,
     showIngFeedback,
     nextIngQuestion,
-    togglePomodoro,
-    tickPomodoro,
-    resetPomodoro,
-    updatePomodoroUI,
     renderCalcHistory,
     addCalcHistoryItem
 } from './views/trainer.js';
+import {
+    togglePomodoro,
+    tickPomodoro,
+    resetPomodoro,
+    updatePomodoroUI
+} from './views/pomodoro.js';
 import {
     dictState,
     renderDictionary,

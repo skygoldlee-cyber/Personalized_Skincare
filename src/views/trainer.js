@@ -9,9 +9,6 @@ import { togglePomodoro, tickPomodoro, resetPomodoro, updatePomodoroUI } from '.
 import { showToast, vibrate, HAPTIC } from '../ui-utils.js';
 import { STORAGE_KEYS } from '../storage-keys.js';
 
-// 뽀모도로 함수 재수출 (app.js 호환성 유지)
-export { togglePomodoro, tickPomodoro, resetPomodoro, updatePomodoroUI };
-
 /* =======================================================
    🧠 주관식 유사어 채점 엔진 (Smart Synonym Matcher)
    ======================================================= */
