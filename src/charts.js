@@ -7,6 +7,26 @@ import { STORAGE_KEYS } from './storage-keys.js';
 import { TIMING } from './config/timing.js';
 
 /* =======================================================
+   📊 SIM_RESULTS_HISTORY 캐싱 (중복 읽기 방지)
+   ======================================================= */
+let _simResultsCache = null;
+let _simResultsCacheRaw = null;
+
+function getSimResults() {
+    const raw = localStorage.getItem(STORAGE_KEYS.SIM_RESULTS_HISTORY);
+    if (raw === _simResultsCacheRaw && _simResultsCache !== null) {
+        return _simResultsCache;
+    }
+    _simResultsCacheRaw = raw;
+    try {
+        _simResultsCache = raw ? JSON.parse(raw) : [];
+    } catch {
+        _simResultsCache = [];
+    }
+    return _simResultsCache;
+}
+
+/* =======================================================
    📊 공통 툴팁 유틸리티 (Interactive Tooltip)
    ======================================================= */
 let _chartTooltip = null;
@@ -65,13 +85,7 @@ export function renderPerformanceChart() {
     const emptyMsg = document.getElementById('empty-chart-msg');
     if (!wrapper) return;
     
-    let history = [];
-    const saved = localStorage.getItem(STORAGE_KEYS.SIM_RESULTS_HISTORY);
-    if (saved) {
-        try {
-            history = JSON.parse(saved);
-        } catch(e) {}
-    }
+    const history = getSimResults();
     
     if (history.length === 0) {
         if (emptyMsg) emptyMsg.classList.remove('is-hidden');
@@ -234,13 +248,7 @@ export function renderPassFailDiagnosis() {
     const area = document.getElementById('prediction-result-area');
     if (!area) return;
     
-    let history = [];
-    const saved = localStorage.getItem(STORAGE_KEYS.SIM_RESULTS_HISTORY);
-    if (saved) {
-        try {
-            history = JSON.parse(saved);
-        } catch(e) {}
-    }
+    const history = getSimResults();
     
     if (history.length === 0) {
         area.innerHTML = `
@@ -338,13 +346,7 @@ export function renderRadarChart() {
     const emptyMsg = document.getElementById('empty-radar-msg');
     if (!wrapper) return;
     
-    let history = [];
-    const saved = localStorage.getItem(STORAGE_KEYS.SIM_RESULTS_HISTORY);
-    if (saved) {
-        try {
-            history = JSON.parse(saved);
-        } catch(e) {}
-    }
+    const history = getSimResults();
     
     if (history.length === 0) {
         if (emptyMsg) emptyMsg.classList.remove('is-hidden');

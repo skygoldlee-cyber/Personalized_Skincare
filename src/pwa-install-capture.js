@@ -18,7 +18,6 @@
     navigator.serviceWorker.register('./sw.js')
       .then(function (reg) {
         window.__swRegistered = true;
-        console.log('[PWA] SW 조기 등록 성공:', reg.scope);
 
         // --- SW 업데이트 진행 팝업 ---
         // updatefound: 브라우저가 새 SW를 다운로드하기 시작하면 발생.
@@ -30,7 +29,6 @@
         // register() 완료 후 reg.waiting / reg.installing을 즉시 확인해야 한다.
         function trackWorkerState(worker) {
           worker.addEventListener('statechange', function () {
-            console.log('[PWA] SW statechange:', worker.state);
             if (worker.state === 'installed') {
               showSWUpdateToast('새 버전 다운로드 완료 — 적용 준비 중...');
             } else if (worker.state === 'activating') {
@@ -42,7 +40,6 @@
         reg.addEventListener('updatefound', function () {
           var newWorker = reg.installing;
           if (!newWorker) return;
-          console.log('[PWA] SW updatefound — 새 버전 다운로드 시작');
           showSWUpdateToast('새 버전 확인 중...');
           trackWorkerState(newWorker);
         });
@@ -51,10 +48,8 @@
         // reg.waiting = 설치 완료·대기 중 (skipWaiting으로 곧 activate)
         // reg.installing = 다운로드/설치 진행 중
         if (reg.waiting) {
-          console.log('[PWA] SW 이미 대기 중 — 토스트 표시');
           showSWUpdateToast('새 버전 적용 준비 중...');
         } else if (reg.installing) {
-          console.log('[PWA] SW 이미 설치 중 — 토스트 표시');
           showSWUpdateToast('새 버전 확인 중...');
           trackWorkerState(reg.installing);
         }
@@ -138,7 +133,6 @@
     e.preventDefault();
     window.__deferredPrompt = e;
     window.__pwaInstallReady = true;
-    console.log('[PWA] beforeinstallprompt 캡처 성공');
     window.dispatchEvent(new CustomEvent('pwa-install-available'));
   });
 
@@ -146,7 +140,6 @@
   window.addEventListener('appinstalled', function () {
     window.__deferredPrompt = null;
     window.__pwaInstallReady = false;
-    console.log('[PWA] 앱 설치 완료');
     window.dispatchEvent(new CustomEvent('pwa-installed'));
   });
 })();
