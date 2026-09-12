@@ -214,7 +214,6 @@ Personalized_Skincare/
 │   ├── manual-viewer.js        #   학습안내서/매뉴얼 뷰어
 │   ├── glossary-query.js       #   용어집 조회 API
 │   ├── keyword-index.js        #   교재 셀→참조자료 키워드 매핑 (자동 생성)
-│   ├── concept-map.js          #   SVG 마인드맵 (용어집 링크 유지)
 │   ├── study-aids.js           #   기출 필터, 숫자 암기표
 │   ├── spaced-repetition.js    #   SM-2 간격 반복 알고리즘, 복습 스케줄링
 │   ├── charts.js               #   SVG 레이더/꺾은선 차트 + 툴팁
@@ -1045,9 +1044,9 @@ content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.j
    - CSS 캐시 스큐: `sw.js` CSS 라우팅 `networkFirst` → `cacheFirst`로 변경 (배포 전환 시 HTML/CSS 세대 불일치 방지)
    - 인코딩: `src/utils.js` mojibake 헤더 수정
 
-14. **교재 리더 인터랙티브 개념 맵** 🔁 (2026-09-01 축소 → 용어집 링크로 재활용)
-   - `src/concept-map.js`: 순수 SVG 마인드맵 생성기 — 개념 맵 컨테이너는 삭제되었으나, **용어집 링크 클릭 시 `scrollToGlossary()` 공유 함수로 재활용** 중
-   - `textbook-reader.js`에서 개념 맵 컨테이너 HTML, `renderConceptMap` 호출, 토글 이벤트 제거 — `concept-map.js`는 용어집 점프 기능 유지
+14. **교재 리더 인터랙티브 개념 맵** ✅ (2026-09-12 완전 삭제)
+   - `src/concept-map.js`: 과거 순수 SVG 마인드맵 생성기 — 개념 맵 컨테이너는 2026-09-01 삭제, 용어집 링크 기능만 잔존하다가 2026-09-12 dead code로 분류되어 완전 삭제
+   - `textbook-reader.js`에서 개념 맵 컨테이너 HTML, `renderConceptMap` 호출, 토글 이벤트는 이미 제거됨
 
 15. **교재 리더 학습 보조 도구** ✅ (2026-09-01 축소)
    - `src/study-aids.js`: 2가지 학습 보조 기능 (CSP-safe, 의존성 제로)

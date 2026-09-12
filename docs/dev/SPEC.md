@@ -152,7 +152,7 @@
 | SA-02 | 기출 핵심 요약 카드 표시 | ✅ |
 | SA-03 | 숫자·기한 빈칸 카드: 정규식으로 숫자/기한/횟수 자동 추출 → 챕터별 암기표 | ✅ |
 | SA-04 | 학습 보조 도구 축소: 4종 → 2종 (절차 플로우·행정처분 비교표 삭제, Mermaid 다이어그램으로 대체) | ✅ |
-| SA-05 | 개념 맵(concept-map) 섹션 삭제 (콘텐츠 내장 Mermaid 마인드맵으로 대체, `concept-map.js`는 용어집 링크 클릭 시 `scrollToGlossary()` 공유 함수로만 잔존) | ✅ |
+| SA-05 | 개념 맵(concept-map) 섹션 삭제 (콘텐츠 내장 Mermaid 마인드맵으로 대체, `concept-map.js`는 2026-09-12 dead code로 분류되어 완전 삭제) | ✅ |
 
 ### 3.7 교재 리더 — 용어집 (Glossary)
 
@@ -518,7 +518,6 @@
 | 학습 보조 | `src/study-aids.js` | 기출 필터, 숫자 암기표 |
 | 간격 반복 | `src/spaced-repetition.js` | SM-2 알고리즘, 복습 스케줄링, 오늘 복습 카드 수 |
 | 콘텐츠 감사 | `tools/audit_card_quality.js` | 카드 품질 자동 감사, 참조자료 링크 유효성 검사 |
-| 개념 맵 | `src/concept-map.js` | SVG 마인드맵 (콘텐츠 내장 Mermaid로 대체, 용어집 링크만 유지) |
 
 ### 뷰 컨트롤러 (`src/views/`)
 

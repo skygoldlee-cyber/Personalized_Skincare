@@ -5,6 +5,36 @@
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 > registry↔번들 14개 실재 확인 · 비ASCII 콘텐츠 파일 0 · `vercel.json` JSON 유효.
 
+## 2026-09-12 리팩토링 잔여 이슈 정리 + scratchpad import 복원
+
+> 리팩토링 후 잔여 이슈 10개 정리 및 파생 버그 1건 수정.
+
+### refactor — 잔여 이슈 10개 정리 (0834542)
+- **Dead code 제거**: `src/concept-map.js` (700+ 라인) 삭제, `sw.js` 캐시 리스트에서도 제거
+- **미사용 import 제거**:
+  - `app.js`: 16개 미사용 import + scratchpad 3개 + ui-utils 3개 + dead re-export 2줄
+  - `quiz.js`: `daily-challenge.js` 11개 미사용 import
+- **내부 전용 함수 export 제거**:
+  - `spaced-repetition.js`: 7개 함수 (sm2, getDueCards, getCardSchedule, loadSchedules, saveSchedules, removeCardSchedule, clearAllSchedules)
+  - `study-aids.js`: 4개 렌더링 헬퍼 (renderExamHighlightCard, renderNumberDrillCard, renderProcedureFlowCard, renderAdminPenaltyCard)
+- **하드코딩 색상 → CSS 변수**: ui-utils.js, dashboard.js, charts.js, trainer-calc-practice.js, study-aids.js, scratchpad.js, app.js, css/trainer.css, css/reader.css
+- **style.display 읽기 → classList.contains('is-hidden')**: app.js 5곳
+- **index.html 인라인 style → CSS 클래스**: calc-scratchpad-btn min-height, calc-scratchpad-canvas touch-action
+- **AGENTS.md 업데이트**: CSS 모듈 목록 (ui-overlay.css, html-viewer.css 추가), check:imports 명령어/체크리스트 추가
+- **SW**: v331-20260912-refactor-cleanup
+
+### fix — scratchpad import 복원 (6e743ab)
+- **원인**: 잔여 이슈 정리 중 `scratchpad.js`의 4개 함수를 미사용 import로 판단하여 제거했으나, `app.js:1272-1274`에서 `window` 전역 노출용으로 참조 중이었음 → `ReferenceError: clearScratchpad is not defined`
+- **수정**: `scratchpad.js` import 블록 복원 (initScratchpadCanvas, clearScratchpad, toggleCalcScratchpad, toggleScratchpadEraser)
+- **교훈**: `check:imports`는 import된 이름이 export되는지만 검증. `window.X = X` 패턴으로 참조하는 경우 미사용 import 제거 시 주의 필요
+- **SW**: v332-20260912-fix-scratchpad-import
+
+### 검증
+- `npm test`: 248 pass, 0 fail
+- `npm run check:imports`: 52개 파일, 오류 없음
+- `npm run verify:assets`: 79개 자산 확인
+- 프로덕션 HTTP 200
+
 ## 2026-09-12 리팩토링 후 import/export 누락 3종 수정
 
 > P0-P3 리팩토링(모듈 분할) 직후 발생한 import/export 연결 누락.
