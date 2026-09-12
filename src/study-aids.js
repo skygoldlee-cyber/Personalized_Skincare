@@ -203,7 +203,7 @@ async function renderNumberDrillCard(subjId) {
         html += `<div class="number-drill-section-title number-drill-normal-toggle" id="number-drill-normal-toggle">`;
         html += `전체 숫자 (${normalEntries.length}개) <i class="fa-solid fa-chevron-down" style="font-size:0.7rem;margin-left:0.3rem;"></i>`;
         html += `</div>`;
-        html += `<div class="number-drill-normal-grid" id="number-drill-normal-grid" style="display:none;">`;
+        html += `<div class="number-drill-normal-grid is-hidden" id="number-drill-normal-grid">`;
 
         const normalByCat = {};
         normalEntries.forEach(e => {
