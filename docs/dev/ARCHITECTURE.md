@@ -897,8 +897,22 @@ app-fallback.js 폴링 시작 (400ms 간격, 15s 데드라인)
 
 ### CSS 설계 원칙
 - **CSS 변수 기반 디자인 토큰**: `--color-primary`, `--bg-card`, `--radius-md` 등으로 테마 일관성 유지
-- **모바일 미디어 쿼리는 파일 후반부 배치**: CSS 캐스케이드 우선순위 확보 (동일 특이성 시 나중 선언이 승리)
+- **모바일 미디어 쿼리는 파일 후반부 배치**: CSS 캐시케이드 우선순위 확보 (동일 특이성 시 나중 선언이 승리)
 - **인라인 스타일 오버라이드 패턴**: HTML 인라인 `grid-template-columns` 등은 모바일에서 `[style*="..."]` 속성 선택자 + `!important`로 재정의
+
+### 하드코딩 색상 예외 허용 목록 (CSS 변수 적용 불가/의도적)
+
+다음 파일들은 CSS 변수 대신 고정 색상값을 사용하며, 정리 대상이 아님:
+
+| 파일 | 사유 |
+|------|------|
+| `src/app-fallback.js` | 초기 로드 시 DOM 미구성 상태에서 실행 — `getComputedStyle` 호출 불가 |
+| `src/theme-init.js`, `src/theme-toggle.js` | 테마 초기화 자체 — CSS 변수 정의 전 실행 |
+| `src/mermaid-utils.js` | Mermaid 테마 정의 자체 — Mermaid 라이브러리에 색상값 전달 |
+| `src/html-viewer.js` | 외부 콘텐츠 격리 스타일링 — 독립적인 색상 체계 |
+| `src/reader-format.js` | GitHub 스타일 코드 블록 테마 — 고정 스타일 매칭 필요 |
+| `src/views/textbook-reader.js` | 코드 블록 하이라이트 — reader-format.js와 동일한 고정 색상 |
+| `src/exam-viewer.js`, `src/manual-viewer.js` | 인쇄용 고정 색상 — `@media print` 대응 |
 
 ---
 

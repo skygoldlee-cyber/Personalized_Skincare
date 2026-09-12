@@ -11,6 +11,11 @@
 
 ### refactor — 잔여 이슈 10개 정리 (0834542)
 - **Dead code 제거**: `src/concept-map.js` (700+ 라인) 삭제, `sw.js` 캐시 리스트에서도 제거
+  > **이력 일원화**: concept-map.js는 아래 단계를 거쳐 완전 삭제됨.
+  > 1. 신규 추가 (초기): 순수 SVG 인터랙티브 마인드맵 생성기
+  > 2. 축소 (2026-09-01): 개념 맵 컨테이너 삭제, 용어집 링크 기능만 잔존
+  > 3. 완전 삭제 (2026-09-12, 0834542): dead code 분류, CSS 잔존도 2026-09-12 정리
+  > 관련 과거 엔트리: line 984(신규), 1096(축소), 1336(파라미터 변경), 1504(통합)
 - **미사용 import 제거**:
   - `app.js`: 16개 미사용 import + scratchpad 3개 + ui-utils 3개 + dead re-export 2줄
   - `quiz.js`: `daily-challenge.js` 11개 미사용 import

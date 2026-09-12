@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v335-20260912-unused-cleanup';   // 43개 unused import/export 정리 + checker alias 인식
+const CACHE_VERSION = 'v336-20260912-app-split-event-listeners';   // setupEventListeners 분리 + concept-map CSS 정리 + 문서 갱신
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
@@ -86,6 +86,7 @@ const SHELL_ASSETS = [
   './src/views/exam-sim-state.js',
   './src/views/exam-sim-review.js',
   './src/views/offline-detection.js',
+  './src/views/event-listeners.js',
   './src/views/navigation.js',
   './src/html-viewer.js',
   './src/pdf-registry.js',

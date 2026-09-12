@@ -46,8 +46,57 @@ style.css               # CSS 진입점 (@import로 모듈 로드)
 sw.js                   # Service Worker
 manifest.webmanifest    # PWA 매니페스트
 serve.js                # 로컬 개발 서버
-src/                    # ES Modules (app.js, router.js, state.js, ui-utils.js, pwa-install.js, theme-toggle.js, ...)
-  views/                # 뷰 컨트롤러 (textbook-reader.js, reader-audio.js, quiz.js, trainer.js, trainer-calc-practice.js, trainer-ingredients.js, exam-simulator.js, exam-sim-state.js, exam-sim-review.js, ...)
+src/                    # ES Modules
+  app.js                # 메인 애플리케이션 로직 (초기화, 이벤트 위임, 라우팅)
+  app-fallback.js       # ESM 로드 실패 시 자동 복구 (모바일 PWA 대응)
+  router.js             # 뷰 라우터 (navigateToView, getViewTitles)
+  navigation.js         # 뷰 전환 (switchView) — views/navigation.js
+  state.js              # 전역 상태 + localStorage 저장 (saveProgress, safeGet/SetItem)
+  ui-utils.js           # showToast, showConfirm, showGlobalLoading, trapFocus
+  sanitize.js           # XSS 방어 (escapeHTML, safeTextWithBreaks)
+  data-loader.js        # 온디맨드 콘텐츠 로더 (DataLoader)
+  scratchpad.js          # 스크래치패드 캔버스 (계산 연습용)
+  spaced-repetition.js  # SM-2 간격 반복 알고리즘
+  study-aids.js         # 기출 필터, 숫자 암기표
+  charts.js             # SVG 레이더/꺾은선 차트
+  pdf-registry.js       # 참조자료 경로 매핑
+  html-viewer.js        # 외부 HTML 콘텐츠 뷰어
+  reader-format.js      # 교재 본문 포맷터
+  textbook-parser.js    # 교재 MD 파서
+  markdown-parser.js    # 공통 MD 파서
+  mermaid-utils.js       # Mermaid 다이어그램 설정
+  keyword-index.js      # 교재 셀→참조자료 키워드 매핑
+  web-vitals.js         # Core Web Vitals 모니터링
+  sha256.js             # 안정적 ID 해시
+  utils.js              # 공통 유틸리티 (shuffle 등)
+  storage-keys.js       # localStorage 키 중앙 관리
+  paths.js              # 파일 경로 상수 중앙 관리
+  pwa-install.js        # PWA 설치 프롬프트 설정
+  theme-init.js         # 테마 초기화 (즉시 실행)
+  theme-toggle.js       # 테마 토글 UI
+  config/
+    timing.js           # 타이밍 상수 (PWA 프로브, 스와이프 임계값 등)
+    cache.js            # 캐시 설정 상수
+  views/                # 뷰 컨트롤러
+    textbook-reader.js  # 교재 리더 (본문 + 참조자료)
+    reader-audio.js     # 오디오북 플레이어
+    textbook-search.js # 교재 검색 (역색인)
+    quiz.js             # 기출 퀴즈
+    daily-challenge.js  # 데일리 챌린지
+    dashboard.js        # 대시보드 (통계, 히트맵)
+    trainer.js          # 스마트 훈련소 허브 (재수출)
+    trainer-calc-practice.js  # 계산 연습기
+    trainer-ingredients.js    # 원료 배합 챌린지
+    pomodoro.js         # 뽀모도로 타이머
+    exam-simulator.js   # 실전 모의고사 시뮬레이터
+    exam-sim-state.js   # 시뮬레이터 상태
+    exam-sim-review.js  # 시뮬레이터 결과 리뷰
+    dictionary.js       # 용어집
+    glossary-renderer.js # 용어집 렌더링
+    backup.js           # 백업/복원
+    offline-detection.js # 오프라인 감지 (app.js에서 분리)
+    manual-viewer.js    # 학습안내서 뷰어
+    exam-viewer.js      # 문제집 뷰어
 css/                    # 스타일시트 모듈 (base.css, reader.css, reader-mermaid.css, trainer.css, exam.css, dashboard.css, study.css, print.css, ui-overlay.css, html-viewer.css)
 content/                # 교재/문제은행/참조자료 Markdown 원본
   교재/                  # 4과목 20챕터 MD 파일 (표준형 20 + 이야기형 20)
