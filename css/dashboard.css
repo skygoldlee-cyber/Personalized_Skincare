@@ -337,10 +337,15 @@
 /* Daily Challenge Card */
 .daily-challenge-grid {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 2fr 1fr 1fr;
     gap: var(--space-6);
     margin-top: var(--space-5);
     margin-bottom: var(--space-5);
+}
+@media (max-width: 900px) {
+    .daily-challenge-grid {
+        grid-template-columns: 1fr;
+    }
 }
 .glass-card-base {
     padding: var(--space-6);
