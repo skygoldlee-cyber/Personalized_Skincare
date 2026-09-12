@@ -19,7 +19,8 @@ import {
     toggleReaderPlayPause,
     cycleReaderAudioRate,
     seekReaderAudio,
-    toggleReaderAutoScroll
+    toggleReaderAutoScroll,
+    getAudioPathForChapter
 } from './reader-audio.js';
 
 export {
@@ -31,7 +32,8 @@ export {
     toggleReaderPlayPause,
     cycleReaderAudioRate,
     seekReaderAudio,
-    toggleReaderAutoScroll
+    toggleReaderAutoScroll,
+    getAudioPathForChapter
 };
 // [모바일 PWA 견고성] 오디오 매니페스트는 window 전역(가드)에서 읽는다(정적 import 하드 의존 지양).
 import { DataLoader } from '../data-loader.js';

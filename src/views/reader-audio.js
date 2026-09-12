@@ -23,7 +23,7 @@ const READER_AUDIO_RATE_KEY = 'readerAudioRate';
 // 자동 스크롤 설정 저장 키
 const READER_AUDIO_AUTOSCROLL_KEY = 'readerAudioAutoScroll';
 
-function getAudioPathForChapter(subjId, chapter) {
+export function getAudioPathForChapter(subjId, chapter) {
     let localPath = null;
 
     // 1) 매니페스트 우선 (단원 인덱스 기반)
