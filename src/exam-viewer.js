@@ -21,11 +21,12 @@
 import { escapeHTML } from './sanitize.js';
 import { parseMarkdown } from './markdown-parser.js';
 import { resolveRefPath } from './pdf-registry.js';
+import { CACHE } from './config/cache.js';
 
 export const ExamViewer = (() => {
     // 캐시 포맷 변경: v5 — data-md-line 속성 추가로 라인 기반 스크롤 지원
     const CACHE_PREFIX = 'exam_md_cache_v5_';
-    const CACHE_TTL = 24 * 60 * 60 * 1000; // 24시간
+    const CACHE_TTL = CACHE.EXAM_CACHE_TTL_MS; // 24시간
 
     // 네비게이션 히스토리 스택 (인용 링크 이동 후 뒤로가기용)
     const _navStack = []; // [{ mdPath, lineNum, scrollPos }]

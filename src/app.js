@@ -12,6 +12,7 @@ import { ManualViewer } from './manual-viewer.js';
 import { initWebVitals } from './web-vitals.js';
 import { updateCardSchedule, getDueCount, clearAllSchedules } from './spaced-repetition.js';
 import { STORAGE_KEYS, RESET_KEYS, isDailyCompletedKey } from './storage-keys.js';
+import { TIMING } from './config/timing.js';
 
 // --- 뷰 컨트롤러 모듈 임포트 ---
 import {
@@ -582,8 +583,8 @@ function setupOfflineDetection() {
     let probeInFlight = false;
     let failStreak = 0;
     const FAIL_THRESHOLD = isStandalone ? 4 : 3; // 오탐 억제: 임계치 상향
-    const PROBE_TIMEOUT = 8000;
-    const WAKE_GRACE_MS = 15000;                  // 콜드스타트/절전복귀 유예 확대
+    const PROBE_TIMEOUT = TIMING.PWA_PROBE_TIMEOUT_MS;
+    const WAKE_GRACE_MS = TIMING.PWA_WAKE_GRACE_MS;                  // 콜드스타트/절전복귀 유예 확대
     let checkIntervalId = null;
     let isOfflineMode = false;
     let lastWakeTime = Date.now();
@@ -802,8 +803,8 @@ function setupEventListeners() {
 
         // U2: 모바일 좌우 스와이프 제스처 — 좌우 카드 전환, 위로 스와이프 시 뒤집기
         let _swipeStartX = 0, _swipeStartY = 0, _swipeStartT = 0, _swipeMoved = false;
-        const SWIPE_THRESHOLD = 50; // px — 이 거리 이상 이동 시 스와이프로 간주
-        const SWIPE_TIME_MAX = 500; // ms — 이 시간 내에 끝나야 스와이프
+        const SWIPE_THRESHOLD = TIMING.SWIPE_THRESHOLD_PX; // px — 이 거리 이상 이동 시 스와이프로 간주
+        const SWIPE_TIME_MAX = TIMING.SWIPE_TIME_MAX_MS; // ms — 이 시간 내에 끝나야 스와이프
         cardEl.addEventListener('touchstart', (e) => {
             if (e.touches.length !== 1) return;
             const t = e.touches[0];

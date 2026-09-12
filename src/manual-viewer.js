@@ -11,6 +11,7 @@ import { escapeHTML } from './sanitize.js';
 import { detectMermaidType, getMermaidClassName, getMermaidInitOptions } from './mermaid-utils.js';
 import { parseMarkdown } from './markdown-parser.js';
 import { PATHS } from './paths.js';
+import { CACHE } from './config/cache.js';
 
 export const ManualViewer = (() => {
     // 지원하는 마크다운 소스 정의
@@ -19,7 +20,7 @@ export const ManualViewer = (() => {
         'study_summary': { path: PATHS.STUDY_GUIDE, title: '학습 안내서' }
     };
     const CACHE_PREFIX = 'manual_md_cache_v3_';
-    const CACHE_TTL = 24 * 60 * 60 * 1000; // 24시간
+    const CACHE_TTL = CACHE.MANUAL_CACHE_TTL_MS; // 24시간
     let _currentTitle = '';
     let _currentBodyHtml = '';
 

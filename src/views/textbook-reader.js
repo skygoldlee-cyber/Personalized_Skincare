@@ -16,6 +16,7 @@ import { showToast, trapFocus } from '../ui-utils.js';
 import { STORAGE_KEYS } from '../storage-keys.js';
 import { TIMING } from '../config/timing.js';
 import { PATHS } from '../paths.js';
+import { CACHE } from '../config/cache.js';
 
 // --- 교재 본문 읽기 (Textbook Reader) ---
 let textbookReaderState = {
@@ -67,7 +68,7 @@ function scheduleSaveReaderPosition() {
 // --- 이야기형 MD 캐시: { "subjId:chapterIdx": { chapterTitle, sections, filePath } } ---
 // LRU 캐시: 최대 항목 수를 초과하면 가장 오래된 항목 제거 (메모리 누수 방지)
 const _storyChapterCache = {};
-const _STORY_CACHE_MAX_ENTRIES = 10;
+const _STORY_CACHE_MAX_ENTRIES = CACHE.STORY_CACHE_MAX_ENTRIES;
 let _storyCacheKeyOrder = [];
 
 function _touchStoryCacheKey(key) {

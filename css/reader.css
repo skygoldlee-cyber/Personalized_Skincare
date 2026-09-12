@@ -3536,3 +3536,6 @@ a.glossary-ref-link i {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+.pwa-diag-content {
+    white-space: pre-wrap;
+}

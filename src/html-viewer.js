@@ -1,15 +1,16 @@
 // src/html-viewer.js — 앱 내 HTML 참조자료 뷰어 오버레이 (검색 + 하이라이트)
 // ref_md의 HTML/MD 변환본을 fetch로 로드하여 DOM에 직접 주입 (iframe 없음)
 import { parseMarkdown } from './markdown-parser.js';
+import { CACHE } from './config/cache.js';
 
 let _overlayEl = null;
 let _contentEl = null;
 let _searchResults = [];
 let _searchIdx = -1;
 const _FETCH_CACHE_PREFIX = 'ref_doc_v1_';
-const _FETCH_CACHE_TTL = 24 * 60 * 60 * 1000; // 24시간
+const _FETCH_CACHE_TTL = CACHE.FETCH_CACHE_TTL_MS; // 24시간
 // LRU 캐시 제한: sessionStorage 용량(5-10MB) 초과 방지를 위해 최대 항목 수 제한
-const _FETCH_CACHE_MAX_ENTRIES = 8;
+const _FETCH_CACHE_MAX_ENTRIES = CACHE.FETCH_CACHE_MAX_ENTRIES;
 // 캐시 키 순서 관리 (LRU): 가장 최근 사용된 키가 맨 뒤
 let _cacheKeyOrder = [];
 
