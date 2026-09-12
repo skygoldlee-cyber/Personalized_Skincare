@@ -54,9 +54,8 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
         }
     );
 
-    // [DEPRECATED] 참조자료 PDF 링크 → 앱 내 HTML 뷰어로 열기
+    // 참조자료 PDF 링크 → 앱 내 HTML 뷰어로 열기 (레거시 fallback)
     // 2026-09 교재 전수조사 이후 모든 PDF 링크가 ref_md MD 링크로 변환됨.
-    // 이 브랜치는 레거시 호환용 fallback으로만 유지 (향후 제거 예정).
     // 마크다운 파서가 [file.pdf](../참조자료/...)를 <a href="../참조자료/...">file.pdf</a>로 변환한 후 처리
     html = html.replace(
         /<a href="((?:\.\.\/)?(?:참조자료|공통참조자료|\d과목_참조자료)\/[^"]+\.pdf)">([^<]+)<\/a>/g,
@@ -105,7 +104,7 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
         }
     );
 
-    // [DEPRECATED] 출처: `xxx.pdf` 패턴 → HTML 뷰어 링크로 변환 (표시 텍스트에서 .pdf 확장자 제거)
+    // 출처: `xxx.pdf` 패턴 → HTML 뷰어 링크로 변환 (표시 텍스트에서 .pdf 확장자 제거)
     // 2026-09 교재 전수조사 이후 모든 PDF 출처 링크가 ref_md MD 링크로 변환됨.
     // allowInlineCode=false이므로 백틱이 그대로 남음 — 레거시 fallback으로 유지
     html = html.replace(
@@ -120,7 +119,7 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
         }
     );
 
-    // [DEPRECATED] **참조 PDF**: `xxx.pdf` 패턴 → HTML 뷰어 링크로 변환 (라벨을 '참조 자료'로 변경, .pdf 확장자 제거)
+    // **참조 PDF**: `xxx.pdf` 패턴 → HTML 뷰어 링크로 변환 (라벨을 '참조 자료'로 변경, .pdf 확장자 제거)
     // 2026-09 교재 전수조사 이후 모든 PDF 참조 링크가 ref_md MD 링크로 변환됨.
     // 마크다운 파서 거친 후: <strong>참조 PDF</strong>: `xxx.pdf` (백틱 그대로) — 레거시 fallback으로 유지
     html = html.replace(

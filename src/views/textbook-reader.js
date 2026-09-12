@@ -1038,7 +1038,7 @@ function initReaderToolbar() {
         modal.dataset.bound = 'true';
         modal.querySelector('.reader-table-modal-backdrop').addEventListener('click', closeTableModal);
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal.style.display !== 'none') closeTableModal();
+            if (e.key === 'Escape' && !modal.classList.contains('is-hidden')) closeTableModal();
         });
     }
 }

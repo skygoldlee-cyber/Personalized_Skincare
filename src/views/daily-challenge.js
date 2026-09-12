@@ -210,7 +210,13 @@ function showDailyModal() {
 }
 
 export async function closeDailyModal() {
-    const ok = await showConfirm('도중에 나가시면 데일리 미션 진도가 저장되지 않습니다. 정말 나가시겠습니까?', '데일리 챌린지 종료');
+    let ok = false;
+    try {
+        ok = await showConfirm('도중에 나가시면 데일리 미션 진도가 저장되지 않습니다. 정말 나가시겠습니까?', '데일리 챌린지 종료');
+    } catch (e) {
+        // showConfirm 거부/에러 시 안전하게 모달 유지
+        return;
+    }
     if (ok) {
         const modal = document.getElementById('daily-challenge-modal');
         if (modal) modal.remove();
