@@ -28,6 +28,10 @@ npm.cmd run check:imports              # src/ 내 ES 모듈 import/export 교차
 npm.cmd run stamp:sw                   # sw.js CACHE_VERSION을 커밋 해시로 스탬프
 npm.cmd run verify:assets              # SHELL_ASSETS/DATA_ASSETS 파일 존재 검증
 
+# 콘텐츠 동기화
+node tools/sync_citation_lines.js      # 문제은행 인용 라인번호 동기화 (교재 변경 후)
+node tools/sync_citation_lines.js --check  # 변경사항 확인만 (수정 안 함)
+
 # 로컬 서버
 npm.cmd run serve                      # http://localhost:3000
 
@@ -99,7 +103,7 @@ src/                    # ES Modules
     exam-viewer.js      # 문제집 뷰어
 css/                    # 스타일시트 모듈 (base.css, reader.css, reader-mermaid.css, trainer.css, exam.css, dashboard.css, study.css, print.css, ui-overlay.css, html-viewer.css)
 content/                # 교재/문제은행/참조자료 Markdown 원본
-  교재/                  # 4과목 20챕터 MD 파일 (표준형 20 + 이야기형 20)
+  교재/                  # 4과목 MD 파일 (표준형 8 + 이야기형 8 = 16파일, 총 20챕터)
   문제은행/              # 과목별 문제은행 MD
   참조자료/              # 법령원문/별표/참조자료 (HTML/MD)
   audiobook/            # 오디오북 MP3 + 매니페스트
@@ -107,6 +111,7 @@ content/                # 교재/문제은행/참조자료 Markdown 원본
 data/                   # 빌드 생성 번들 (registry.js, subjects/, exams/, ingredients_data.js)
 tools/                  # 빌드 스크립트
   build/                # 데이터 파이프라인 (manifest → registry + 해시 번들)
+  sync_citation_lines.js # 문제은행 인용 링크 라인번호 동기화 (교재 변경 시)
 vendor/                 # 자체 호스팅 자산 (fonts/, fontawesome/)
 tests/                  # 테스트
   unit/                 # node --test 유닛 테스트
