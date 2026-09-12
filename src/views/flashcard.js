@@ -95,12 +95,12 @@ export function renderFlashcard() {
     if (frontTypeEl) {
         frontTypeEl.textContent = typeLabel;
         frontTypeEl.setAttribute('data-type', card.cardType || 'definition');
-        frontTypeEl.style.display = typeLabel ? 'inline-block' : 'none';
+        frontTypeEl.classList.toggle('is-hidden', !typeLabel);
     }
     if (backTypeEl) {
         backTypeEl.textContent = typeLabel;
         backTypeEl.setAttribute('data-type', card.cardType || 'definition');
-        backTypeEl.style.display = typeLabel ? 'inline-block' : 'none';
+        backTypeEl.classList.toggle('is-hidden', !typeLabel);
     }
     
     // 기출 표시 제어
@@ -125,9 +125,9 @@ export function renderFlashcard() {
     const memCountEl = document.getElementById('fc-memorized-count');
     const weakBadge = document.getElementById('fc-weak-badge');
     const weakCountEl = document.getElementById('fc-weak-count');
-    if (memBadge) { memBadge.style.display = memorizedCount > 0 ? 'inline' : 'none'; }
+    if (memBadge) { memBadge.classList.toggle('is-hidden', memorizedCount === 0); }
     if (memCountEl) memCountEl.textContent = memorizedCount;
-    if (weakBadge) { weakBadge.style.display = weakCount > 0 ? 'inline' : 'none'; }
+    if (weakBadge) { weakBadge.classList.toggle('is-hidden', weakCount === 0); }
     if (weakCountEl) weakCountEl.textContent = weakCount;
     
     // 진도 버튼들 스타일 동적 제어
@@ -137,7 +137,7 @@ export function renderFlashcard() {
     if (easyBtn) {
         if (state.memorizedCards.has(card.id)) {
             easyBtn.style.opacity = '1';
-            easyBtn.style.boxShadow = '0 0 10px rgba(16, 185, 129, 0.4)';
+            easyBtn.style.boxShadow = '0 0 10px var(--success-tint-40)';
         } else {
             easyBtn.style.opacity = '0.7';
             easyBtn.style.boxShadow = 'none';
@@ -147,7 +147,7 @@ export function renderFlashcard() {
     if (hardBtn) {
         if (state.weakCards.has(card.id)) {
             hardBtn.style.opacity = '1';
-            hardBtn.style.boxShadow = '0 0 10px rgba(239, 68, 68, 0.4)';
+            hardBtn.style.boxShadow = '0 0 10px var(--danger-tint-40)';
         } else {
             hardBtn.style.opacity = '0.7';
             hardBtn.style.boxShadow = 'none';

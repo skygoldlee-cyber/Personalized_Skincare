@@ -11,7 +11,7 @@ export function toggleCalcScratchpad() {
     const toggleBtn = document.getElementById('calc-scratchpad-toggle');
     if (!container) return;
     
-    const isHidden = container.style.display === 'none';
+    const isHidden = container.classList.contains('is-hidden');
     if (isHidden) {
         container.classList.remove('is-hidden');
         toggleBtn.innerHTML = '<i class="fa-solid fa-xmark"></i> ✏️ 계산 연습장 닫기';
@@ -111,6 +111,6 @@ export function toggleScratchpadEraser() {
         ctx.strokeStyle = '#1e293b';
         ctx.lineWidth = 3;
         eraserBtn.textContent = '지우개';
-        eraserBtn.style.background = '#6b7280';
+        eraserBtn.style.background = 'var(--color-gray)';
     }
 }

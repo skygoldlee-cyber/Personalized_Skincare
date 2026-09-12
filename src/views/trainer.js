@@ -449,7 +449,7 @@ export function toggleSolutionAccordion() {
     const header = document.querySelector('.solution-header');
     const body = document.getElementById('calc-solution-body');
     if (!body) return;
-    const isVisible = (body.style.display === 'block');
+    const isVisible = !body.classList.contains('is-hidden');
     
     if (isVisible) {
         if (header) header.classList.remove('active');

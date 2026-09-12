@@ -558,8 +558,8 @@ export function bindStudyAidToggles(container) {
         normalToggle.addEventListener('click', () => {
             const grid = container.querySelector('#number-drill-normal-grid');
             if (!grid) return;
-            const isHidden = grid.style.display === 'none';
-            grid.style.display = isHidden ? 'grid' : 'none';
+            const isHidden = grid.classList.contains('is-hidden');
+            grid.classList.toggle('is-hidden');
             const icon = normalToggle.querySelector('i');
             if (icon) icon.style.transform = isHidden ? 'rotate(180deg)' : '';
         });

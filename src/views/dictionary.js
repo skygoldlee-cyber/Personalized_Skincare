@@ -148,7 +148,7 @@ function createIngredientCard(ing) {
     
     card.addEventListener('click', () => {
         const details = card.querySelector('.dict-card-details');
-        if (details.style.display === 'none') {
+        if (details.classList.contains('is-hidden')) {
             details.classList.remove('is-hidden');
         } else {
             details.classList.add('is-hidden');

@@ -425,9 +425,9 @@ export function renderSimQuestion() {
     const submitBtn = document.getElementById('sim-submit-exam-btn');
     
     if (simState.currentIndex === 0) {
-        prevBtn.style.visibility = 'hidden';
+        prevBtn.classList.add('is-hidden');
     } else {
-        prevBtn.style.visibility = 'visible';
+        prevBtn.classList.remove('is-hidden');
     }
     
     if (simState.currentIndex === simState.data.questions.length - 1) {

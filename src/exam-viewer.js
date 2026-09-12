@@ -431,7 +431,7 @@ body.exam-open{overflow:hidden;}
         if (!_overlayEl) return;
         const backBtn = _overlayEl.querySelector('[data-exam-back]');
         if (backBtn) {
-            backBtn.style.display = _navStack.length > 0 ? '' : 'none';
+            backBtn.classList.toggle('is-hidden', _navStack.length === 0);
         }
     }
 

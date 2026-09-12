@@ -513,7 +513,7 @@ export function setReviewFilter(filterType) {
             btn.classList.add('active');
             btn.style.background = 'var(--color-primary)';
             btn.style.borderColor = 'var(--color-primary)';
-            btn.style.color = '#fff';
+            btn.style.color = 'var(--color-on-brand)';
         } else {
             btn.classList.remove('active');
             btn.style.background = '';

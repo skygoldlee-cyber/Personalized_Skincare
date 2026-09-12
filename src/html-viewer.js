@@ -139,13 +139,13 @@ function _open() {
         : document.documentElement.classList.contains('light-theme');
     el.classList.toggle('dark-theme', !isLight);
     el.classList.add('open');
-    document.body.style.overflow = 'hidden';
+    document.body.classList.add('no-scroll');
 }
 
 function close() {
     if (_overlayEl) {
         _overlayEl.classList.remove('open');
-        document.body.style.overflow = '';
+        document.body.classList.remove('no-scroll');
     }
     _searchResults = [];
     _searchIdx = -1;
@@ -317,7 +317,7 @@ async function openHtmlViewer(htmlPath, searchKeyword, anchorId, lineNum) {
                 target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 target.style.transition = 'background 0.5s ease';
                 const origBg = target.style.background;
-                target.style.background = 'rgba(250,204,21,0.25)';
+                target.style.background = 'var(--highlight-yellow-strong)';
                 setTimeout(() => { target.style.background = origBg; }, 1500);
             }
         }

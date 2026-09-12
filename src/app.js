@@ -1343,10 +1343,10 @@ function setupPWAInstall() {
         const platform = detectPlatform();
         console.debug('[PWA] 설치 안내 모달 표시 - 플랫폼:', platform);
         const guideInapp = document.getElementById('pwa-guide-inapp');
-        if (guideAndroid) guideAndroid.style.display = platform === 'android' ? 'block' : 'none';
-        if (guideIos) guideIos.style.display = platform === 'ios' ? 'block' : 'none';
-        if (guideGeneric) guideGeneric.style.display = platform === 'generic' ? 'block' : 'none';
-        if (guideInapp) guideInapp.style.display = platform === 'inapp' ? 'block' : 'none';
+        if (guideAndroid) guideAndroid.classList.toggle('is-hidden', platform !== 'android');
+        if (guideIos) guideIos.classList.toggle('is-hidden', platform !== 'ios');
+        if (guideGeneric) guideGeneric.classList.toggle('is-hidden', platform !== 'generic');
+        if (guideInapp) guideInapp.classList.toggle('is-hidden', platform !== 'inapp');
 
         // 진단 정보 수집 및 표시
         const diagEl = document.getElementById('pwa-diagnostics');
@@ -1454,7 +1454,7 @@ function setupPWAInstall() {
         }
 
         installModal.classList.remove('is-hidden');
-        document.body.style.overflow = 'hidden';
+        document.body.classList.add('no-scroll');
         // 포커스 트랩 적용
         if (installModal._untrapFocus) installModal._untrapFocus();
         installModal._untrapFocus = trapFocus(installModal);
@@ -1463,7 +1463,7 @@ function setupPWAInstall() {
     function closeInstallModal() {
         if (!installModal) return;
         installModal.classList.add('is-hidden');
-        document.body.style.overflow = '';
+        document.body.classList.remove('no-scroll');
         if (installModal._untrapFocus) {
             installModal._untrapFocus();
             installModal._untrapFocus = null;
@@ -1473,7 +1473,7 @@ function setupPWAInstall() {
     if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeInstallModal);
     if (modalBackdrop) modalBackdrop.addEventListener('click', closeInstallModal);
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && installModal && installModal.style.display === 'flex') {
+        if (e.key === 'Escape' && installModal && !installModal.classList.contains('is-hidden')) {
             closeInstallModal();
         }
     });

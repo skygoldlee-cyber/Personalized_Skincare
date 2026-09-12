@@ -388,7 +388,7 @@ function setAudioStatus(msg) {
     const ui = getAudioUI();
     if (ui.status) {
         ui.status.textContent = msg || '';
-        ui.status.style.display = msg ? 'inline' : 'none';
+        ui.status.classList.toggle('is-hidden', !msg);
     }
 }
 
@@ -1449,7 +1449,7 @@ function initReaderToolbar() {
         tocMobileBtn.addEventListener('click', () => {
             if (tocAside && tocBackdrop) {
                 const isOpen = tocAside.classList.toggle('mobile-open');
-                tocBackdrop.style.display = isOpen ? 'block' : 'none';
+                tocBackdrop.classList.toggle('is-hidden', !isOpen);
             }
         });
         if (tocBackdrop) tocBackdrop.addEventListener('click', closeMobileToc);

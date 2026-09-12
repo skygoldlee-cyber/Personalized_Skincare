@@ -31,9 +31,12 @@
     --color-success: #10b981;      /* Emerald Green */
     --color-success-dark: #047857;
     --color-success-light: #34d399;
+    --color-success-lighter: #a7f3d0;
+    --color-success-darker: #065f46;
     --color-danger: #ef4444;       /* Coral Red */
     --color-danger-dark: #dc2626;
     --color-danger-darker: #b91c1c;
+    --color-danger-darkest: #991b1b;
     --color-danger-light: #f87171;
     --color-warning: #f59e0b;      /* Amber Gold */
     --color-warning-dark: #d97706;
@@ -77,6 +80,7 @@
     --success-tint-20: rgba(16, 185, 129, 0.2);
     --success-tint-25: rgba(16, 185, 129, 0.25);
     --success-tint-30: rgba(16, 185, 129, 0.3);
+    --success-tint-40: rgba(16, 185, 129, 0.4);
     --danger-tint-8: rgba(239, 68, 68, 0.08);
     --danger-tint-10: rgba(239, 68, 68, 0.1);
     --danger-tint-12: rgba(239, 68, 68, 0.12);
@@ -84,6 +88,7 @@
     --danger-tint-20: rgba(239, 68, 68, 0.2);
     --danger-tint-25: rgba(239, 68, 68, 0.25);
     --danger-tint-30: rgba(239, 68, 68, 0.3);
+    --danger-tint-40: rgba(239, 68, 68, 0.4);
     --warning-tint-8: rgba(245, 158, 11, 0.08);
     --warning-tint-10: rgba(245, 158, 11, 0.1);
     --warning-tint-12: rgba(245, 158, 11, 0.12);
@@ -100,6 +105,7 @@
     --color-teal: #0d9488;
     --green-tint-12: rgba(34, 197, 94, 0.12);
     --gray-tint-12: rgba(107, 114, 128, 0.12);
+    --color-gray: #6b7280;
 
     /* Flashcard face gradients */
     --flashcard-front-bg: linear-gradient(135deg, rgba(31, 41, 55, 0.95), rgba(17, 24, 39, 0.95));
@@ -149,6 +155,11 @@
     --reader-light-code-bg: #f0efe9;
     --reader-light-table-header: #e8f4f8;
     --bg-deep: #16233a;
+    --logo-text-gradient: linear-gradient(to right, #ffffff, #d1d5db);
+    --color-banner-warning: #e74c3c;
+    --color-banner-error: #c0392b;
+    --white-tint-10: rgba(255, 255, 255, 0.1);
+    --tooltip-bg: rgba(15, 23, 42, 0.96);
 
     /* 하이라이트/애니메이션 색상 토큰 */
     --highlight-amber-faint: rgba(250, 171, 0, 0.06);
@@ -382,6 +393,9 @@
 .is-grid {
     display: grid !important;
 }
+body.no-scroll {
+    overflow: hidden;
+}
 
 /* 레이아웃 유틸리티 — 인라인 style 제거용 */
 .flex-row { display: flex; }
@@ -561,7 +575,7 @@ body {
     font-weight: var(--font-weight-extrabold);
     letter-spacing: -0.5px;
     line-height: 1.1;
-    background: linear-gradient(to right, #ffffff, #d1d5db);
+    background: var(--logo-text-gradient);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -710,7 +724,7 @@ body {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, var(--color-primary), #0891b2);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
     color: var(--color-on-brand);
     box-shadow: 0 4px 10px var(--primary-tint-20);
 }
@@ -743,11 +757,11 @@ body {
 .btn-success {
     background-color: var(--success-tint-15);
     border-color: var(--success-tint-30);
-    color: #a7f3d0;
+    color: var(--color-success-lighter);
 }
 
 .light-theme .btn-success {
-    color: #065f46;
+    color: var(--color-success-darker);
 }
 
 .btn-success:hover {
@@ -762,7 +776,7 @@ body {
 }
 
 .light-theme .btn-danger {
-    color: #991b1b;
+    color: var(--color-danger-darkest);
 }
 
 .btn-danger:hover {

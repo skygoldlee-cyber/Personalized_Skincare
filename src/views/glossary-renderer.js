@@ -129,7 +129,7 @@ export function scrollToGlossary(idxKey, sourceLink) {
     target.scrollIntoView({ behavior: 'smooth', block: 'center' });
     target.style.transition = 'background 0.5s ease';
     const origBg = target.style.background;
-    target.style.background = 'rgba(250,204,21,0.25)';
+    target.style.background = 'var(--highlight-yellow-strong)';
     setTimeout(() => { target.style.background = origBg; }, 2000);
     const btn = _ensureBackBtn();
     btn.classList.remove('is-hidden');
