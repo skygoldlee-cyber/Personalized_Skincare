@@ -5,6 +5,47 @@
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 > registry↔번들 14개 실재 확인 · 비ASCII 콘텐츠 파일 0 · `vercel.json` JSON 유효.
 
+## 2026-09-12 P0-P3 단계적 리팩토링 (하드코딩 최소화 · 모듈 분할 · 접근성 · 보안)
+
+### P0 (보안/접근성/순환의존성)
+- `quiz.js` ↔ `dashboard.js` 순환 의존성 해소: `dashboard.js`가 `daily-challenge.js` 직접 import
+- `html-viewer.js` innerHTML XSS 방어: DOMParser 기반 sanitize (script/on\*/javascript: 제거)
+- `exam-simulator.js` OMR 버블/시뮬레이터 옵션: `role="button"`, `tabindex="0"`, `aria-label`, Enter/Space 핸들러
+
+### P1 (성능/접근성/에러처리)
+- `textbook-reader.js` 참조 링크: 매 렌더링 addEventListener → document 단일 위임 리스너 + `data-ref-bound` 가드
+- z-index 하드코딩 → CSS 토큰 통일 (`--z-modal-overlay`, `--z-orientation-toast`, `--z-html-viewer`, `--z-banner`, `--z-toast-top`)
+- `index.html` 장식용 `<i>` 아이콘 122개에 `aria-hidden="true"` 일괄 추가
+- `app.js`/`textbook-reader.js` await try/catch 래핑 (PWA userChoice, renderStudyAids)
+
+### P2 (God Module 분할)
+- `app.js` → `src/pwa-install.js` (289라인) + `src/theme-toggle.js` (54라인) 추출 — 1,688 → 1,359라인 (19.5% 감소)
+- `textbook-reader.js` → `src/views/reader-audio.js` (533라인) 추출 — 1,805 → 1,292라인 (28.4% 감소)
+- `charts.js` localStorage 캐싱: 3개 함수 중복 읽기 → 모듈 스코프 `getSimResults()` 캐싱
+- `pwa-install-capture.js` console.log 7개 제거 (console.error 1개 유지)
+
+### P3 (구조 개선/메모리/lifecycle)
+- 재수출 패턴 제거: `app.js`가 `daily-challenge.js`/`pomodoro.js` 직접 import (quiz.js/trainer.js 재수출 블록 제거)
+- `reader.css` → `css/reader-mermaid.css` (451라인) 분할 — 3,588 → 3,139라인 (12.5% 감소)
+- `textbook-search.js` 메모리 최적화: `_titleLower` + `_contentLower` → `_searchText` 단일 필드 통합
+- `scratchpad.js` `initScratchpadCanvas` 중복 등록 방지 가드 추가
+- `reader-format.js` TODO 정규식 체인 코멘트 정리 (장기 개선으로 보류 명시)
+- `trainer.js` → `src/views/trainer-calc-practice.js` (210라인) + `src/views/trainer-ingredients.js` (357라인) 추출 — 906 → 371라인 (59% 감소)
+- `exam-simulator.js` → `src/views/exam-sim-state.js` (10라인) + `src/views/exam-sim-review.js` (50라인) 추출 — 856 → 826라인
+
+### 하드코딩 최소화 (AGENTS.md 위반 해결)
+- `style.display = '...'` 패턴 → `classList.toggle('is-hidden')` 전환 (11개 파일)
+- `body.style.overflow` → `body.no-scroll` CSS 클래스
+- JS 하드코딩 색상 → CSS 변수 (`--color-gray`, `--success-tint-40`, `--danger-tint-40`, `--highlight-yellow-strong`, `--color-on-brand`)
+- `base.css` 컴포넌트 색상 토큰화 (`--color-success-lighter`, `--color-success-darker`, `--color-danger-darkest`, `--logo-text-gradient`)
+- `ui-overlay.css` 배너/툴팁 색상 토큰화 (`--color-banner-warning`, `--color-banner-error`, `--white-tint-10`, `--tooltip-bg`)
+
+### 검증
+- `node --check`: 모든 변경 JS 파일 통과
+- `npm test`: 248 passed, 0 failed
+- `npm run test:dom`: 21 passed, 0 failed
+- 프로덕션 HTTP 200
+
 ## 2026-09-11 "참조 자료 (법령 원문 · 별표)"를 "참조 자료 (법령 원문)"로 변경
 
 - "별표" 제거: 참조 자료 섹션은 법령 원문 링크 목록이므로 "별표" 표기 불필요

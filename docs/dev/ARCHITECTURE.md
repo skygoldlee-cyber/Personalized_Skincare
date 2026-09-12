@@ -1,7 +1,7 @@
 # 🏛️ 설계 컨셉 & 아키텍처 (Architecture & Design Concept)
 
 > **대상 프로젝트**: Cosmetic Pass Master — 맞춤형화장품 조제관리사 스마트 학습 플랫폼
-> **최종 업데이트**: 2026-09-03
+> **최종 업데이트**: 2026-09-12
 > **목적**: 시스템의 설계 철학, 아키텍처 구조, 주요 설계 결정 사항을 설명
 
 ---
@@ -91,9 +91,15 @@
 │ │  ┌──────────────────────────────────────────────────┐  │ │
 │ │  │  views/ (뷰 컨트롤러 모듈)                          │  │ │
 │ │  │  dashboard · flashcard · quiz · daily-challenge    │  │ │
-│ │  │  trainer · pomodoro · dictionary · backup          │  │ │
-│ │  │  textbook-search · textbook-reader · exam-simulator│  │ │
-│ │  │  glossary-renderer · navigation                    │  │ │
+│ │  │  trainer · trainer-calc-practice                  │  │ │
+│ │  │  trainer-ingredients · pomodoro · dictionary      │  │ │
+│ │  │  backup · textbook-search · textbook-reader        │  │ │
+│ │  │  reader-audio · exam-simulator · exam-sim-state   │  │ │
+│ │  │  exam-sim-review · glossary-renderer · navigation  │  │ │
+│ │  └──────────────────────────────────────────────────┘  │ │
+│ │  ┌──────────────────────────────────────────────────┐  │ │
+│ │  │  app/ (app.js에서 추출된 모듈)                      │  │ │
+│ │  │  pwa-install · theme-toggle · pwa-install-capture  │  │ │
 │ │  └──────────────────────────────────────────────────┘  │ │
 │ └─────────────────────────────────────────────────────────┘ │
 │ ┌─────────────────────────────────────────────────────────┐ │
@@ -423,31 +429,36 @@ Personalized_Skincare/
 
 ### 모듈화 전략: "점진적 모듈화 (Progressive Modularization)"
 
-거대한 단일 `app.js`(원래 약 4,900줄)를 한 번에 ES Modules로 전환하는 대신, **부수효과 없는 순수 로직부터 글로벌 스코프 스크립트로 점진 분리**하는 전략을 채택했습니다. 2026-09-03 기준 `app.js`는 **약 1,300줄**로 축소되었고, 라우팅 로직은 `router.js`로 분리, 11개 뷰 컨트롤러 모듈이 `src/views/`에 분리되었습니다.
+거대한 단일 `app.js`(원래 약 4,900줄)를 한 번에 ES Modules로 전환하는 대신, **부수효과 없는 순수 로직부터 글로벌 스코프 스크립트로 점진 분리**하는 전략을 채택했습니다. 2026-09-12 기준 `app.js`는 **약 1,360줄**로 축소되었고, 라우팅 로직은 `router.js`로 분리, 17개 뷰 컨트롤러 모듈이 `src/views/`에 분리되었습니다.
 
 **분리 원칙**:
 1. **DOM 의존성 없는 순수 로직 우선 분리** → `trainer-calc.js`(문제 생성), `utils.js`(초성 추출), `reader-format.js`(리더 포맷터)
 2. **상태·영속성 로직 분리** → `state.js`
 3. **뷰 컨트롤러 분리** → `src/views/` 디렉터리에 과목별/기능별 모듈 추출
 4. **공통 UI 유틸 분리** → `ui-utils.js`(로딩 오버레이) — 순환 의존성 방지
-5. **ES Modules 전환 대비**: 각 파일을 `export` 추가만으로 변환 가능하도록 순수 선언으로 구성
+5. **God Module 분할** → `app.js`에서 `pwa-install.js`/`theme-toggle.js` 추출, `textbook-reader.js`에서 `reader-audio.js` 추출, `trainer.js`에서 `trainer-calc-practice.js`/`trainer-ingredients.js` 추출, `exam-simulator.js`에서 `exam-sim-state.js`/`exam-sim-review.js` 추출
+6. **재수출 패턴 제거** → `app.js`가 `daily-challenge.js`/`pomodoro.js`를 직접 import
 
 ```
 [분리 완료]
 utils.js (헬퍼·Fisher-Yates shuffle)  views/backup.js (백업/복원)
 trainer-calc.js (문제 생성)       views/textbook-search.js (교재 검색)
-state.js (상태·영속성)            views/textbook-reader.js (리더+오디오+Media Session)
-charts.js (시각화+인터랙티브 툴팁) views/exam-simulator.js (모의고사+오답 복습)
-sanitize.js (보안)                views/dashboard.js (대시보드)
-scratchpad.js (캔버스)            views/flashcard.js (플래시카드)
-reader-format.js (리더 포맷터+키워드 자동링크+L### 확장)    views/quiz.js (퀴즈+복습)
-ui-utils.js (로딩 UI)             views/daily-challenge.js (데일리 챌린지)
-types.js (JSDoc 타입 정의)        views/trainer.js (훈련소)
-html-viewer.js (참조자료 뷰어+키워드 스크롤+PDF 저장)    views/pomodoro.js (뽀모도로 타이머)
-pdf-registry.js (참조자료 레지스트리+KEYWORD_REF_MAP 자동링크)  views/dictionary.js (성분 검색)
-keyword-index.js (KEYWORD_INDEX: 교재 셀→참조자료 키워드 매핑)  views/navigation.js (뷰 전환 유틸)
-markdown-parser.js (MD→HTML 파서)  views/glossary-renderer.js (용어집 렌더링)
-router.js (SPA 라우터: 타이틀 맵+네비게이션 디스패치)
+state.js (상태·영속성)            views/textbook-reader.js (리더+TOC+참조링크)
+charts.js (시각화+인터랙티브 툴팁) views/reader-audio.js (오디오북+Media Session)
+sanitize.js (보안)                views/exam-simulator.js (모의고사+오답 복습)
+scratchpad.js (캔버스)            views/exam-sim-state.js (시뮬레이터 상태)
+reader-format.js (리더 포맷터+키워드 자동링크+L### 확장)  views/exam-sim-review.js (시뮬레이터 리뷰)
+ui-utils.js (로딩 UI)             views/dashboard.js (대시보드)
+types.js (JSDoc 타입 정의)        views/flashcard.js (플래시카드)
+html-viewer.js (참조자료 뷰어+키워드 스크롤+PDF 저장)    views/quiz.js (퀴즈+복습)
+pdf-registry.js (참조자료 레지스트리+KEYWORD_REF_MAP 자동링크)  views/daily-challenge.js (데일리 챌린지)
+keyword-index.js (KEYWORD_INDEX: 교재 셀→참조자료 키워드 매핑)  views/trainer.js (훈련소 메뉴+배합한도)
+markdown-parser.js (MD→HTML 파서)  views/trainer-calc-practice.js (계산 연습기)
+router.js (SPA 라우터: 타이틀 맵+네비게이션 디스패치)  views/trainer-ingredients.js (원료 안전성 챌린지)
+pwa-install.js (PWA 설치 프롬프트)  views/pomodoro.js (뽀모도로 타이머)
+theme-toggle.js (테마 토글)        views/dictionary.js (성분 검색)
+pwa-install-capture.js (SW 등록+beforeinstallprompt 캡처)  views/navigation.js (뷰 전환 유틸)
+                                  views/glossary-renderer.js (용어집 렌더링)
 ```
 
 > `app.js`에 남은 함수: `startFocusSubjectStudy`(뷰 간 브릿지), 초기화/이벤트 바인딩. 라우팅은 `router.js`의 `navigateToView()`로 위임. `examIdToSubjectId`는 `exam-simulator.js`에서 정의 후 `app.js`를 통해 re-export되어 `quiz.js`가 import.
@@ -899,6 +910,10 @@ app-fallback.js 폴링 시작 (400ms 간격, 15s 데드라인)
 ### 1. XSS 방어 ([`src/sanitize.js`](../../src/sanitize.js))
 - 사용자 데이터를 DOM에 삽입할 때 텍스트 정제(sanitize) 적용
 - 신뢰할 수 있는 코드 생성 HTML(숫자 + `<strong>` 등)만 `innerHTML` 허용, raw 사용자 입력은 이스케이프
+
+### 1b. 외부 HTML sanitize ([`src/html-viewer.js`](../../src/html-viewer.js))
+- fetch한 참조자료 HTML을 `innerHTML` 삽입 전 DOMParser 기반 sanitize 수행 (외부 라이브러리 없음)
+- `<script>` 요소 제거, `on*` 이벤트 핸들러 속성 제거, `javascript:` URI 제거 (`href`/`src`/`action`/`formaction`)
 
 ### 2. 백업 복원 화이트리스트
 - `importData()`에서 `ALLOWED_KEYS`에 정의된 키만 localStorage에 복원
