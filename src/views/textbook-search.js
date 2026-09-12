@@ -29,14 +29,21 @@ function _getSearchIndex() {
         subj.chapters.forEach(chapter => {
             if (!chapter.sections) return;
             chapter.sections.forEach(section => {
+                // subsections의 content도 검색 인덱스에 포함
+                let fullContent = section.content || '';
+                if (section.subsections && section.subsections.length) {
+                    section.subsections.forEach(sub => {
+                        fullContent += '\n' + (sub.title || '') + '\n' + (sub.content || '');
+                    });
+                }
                 _searchIndex.push({
                     subjId,
                     subjName: subj.name,
                     chapterTitle: chapter.chapterTitle,
                     filePath: chapter.filePath,
                     sectionTitle: section.title,
-                    content: section.content,
-                    _searchText: (section.title + ' ' + section.content).toLowerCase()
+                    content: fullContent,
+                    _searchText: (section.title + ' ' + fullContent).toLowerCase()
                 });
             });
         });
