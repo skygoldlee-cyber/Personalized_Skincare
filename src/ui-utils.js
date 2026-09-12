@@ -73,11 +73,13 @@ export function showToast(message, type = 'info', duration = 3000) {
         toast.setAttribute('aria-live', 'polite');
         document.body.appendChild(toast);
     }
-    // 타입별 아이콘/색상
+    // 타입별 아이콘/색상 (CSS 변수에서 읽기)
     const icons = { info: 'fa-circle-info', success: 'fa-circle-check', warning: 'fa-triangle-exclamation', error: 'fa-circle-xmark' };
-    const colors = { info: '#06b6d4', success: '#10b981', warning: '#f59e0b', error: '#ef4444' };
+    const cssVars = { info: '--color-primary', success: '--color-success', warning: '--color-warning', error: '--color-danger' };
     const icon = icons[type] || icons.info;
-    const color = colors[type] || colors.info;
+    const colorVar = cssVars[type] || cssVars.info;
+    const style = getComputedStyle(document.documentElement);
+    const color = style.getPropertyValue(colorVar).trim() || '#06b6d4';
     toast.innerHTML = `<i class="fa-solid ${icon}" style="color:${color}; margin-right:0.5rem;"></i>${escapeHtml(message)}`;
     toast.classList.add('is-visible');
     if (_toastTimer) clearTimeout(_toastTimer);

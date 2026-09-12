@@ -54,7 +54,7 @@ export function extractExamHighlights(chapter) {
 /**
  * 기출 핵심 요약 카드 HTML을 생성합니다.
  */
-export function renderExamHighlightCard(chapter) {
+function renderExamHighlightCard(chapter) {
     const highlights = extractExamHighlights(chapter);
     if (highlights.length === 0) return '';
 
@@ -290,7 +290,7 @@ export function detectProcedureFlow(chapter) {
 /**
  * 절차 플로우를 순수 SVG로 렌더링합니다.
  */
-export function renderProcedureFlowCard(chapter) {
+function renderProcedureFlowCard(chapter) {
     const flow = detectProcedureFlow(chapter);
     if (!flow) return '';
 
@@ -315,7 +315,7 @@ export function renderProcedureFlowCard(chapter) {
 
         // 스텝 번호 원
         svg += `<circle cx="${boxX + 20}" cy="${y + stepH / 2}" r="14" fill="var(--color-primary)" class="procedure-step-circle"/>`;
-        svg += `<text x="${boxX + 20}" y="${y + stepH / 2 + 4}" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">${i + 1}</text>`;
+        svg += `<text x="${boxX + 20}" y="${y + stepH / 2 + 4}" text-anchor="middle" fill="var(--color-on-brand)" font-size="12" font-weight="700">${i + 1}</text>`;
 
         // 라벨
         const label = step.label.length > 28 ? step.label.substring(0, 27) + '…' : step.label;
@@ -411,7 +411,7 @@ export function detectAdminPenalty(chapter) {
 /**
  * 행정처분 계단형 시각화 HTML을 생성합니다.
  */
-export function renderAdminPenaltyCard(chapter) {
+function renderAdminPenaltyCard(chapter) {
     const penalty = detectAdminPenalty(chapter);
     if (!penalty) return '';
 

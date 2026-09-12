@@ -169,8 +169,8 @@ export function renderCalcHistory() {
                 </div>
                 <div style="color: var(--color-text-muted); line-height: 1.4; margin-bottom: 0.25rem;">${safeTextWithBreaks(item.question)}</div>
                 <div style="display: flex; gap: 1rem; margin-top: 0.25rem; font-size: 0.75rem; border-top: 1px dashed rgba(255,255,255,0.05); padding-top: 0.25rem;">
-                    <span style="color: #9ca3af;">내가 입력한 값: <strong style="color: #fff;">${esc(item.userVal)}${esc(item.unit)}</strong></span>
-                    <span style="color: #9ca3af;">실제 정답: <strong style="color: var(--color-success);">${esc(item.correctAns)}${esc(item.unit)}</strong></span>
+                    <span style="color: var(--color-text-muted);">내가 입력한 값: <strong style="color: var(--color-on-brand);">${esc(item.userVal)}${esc(item.unit)}</strong></span>
+                    <span style="color: var(--color-text-muted);">실제 정답: <strong style="color: var(--color-success);">${esc(item.correctAns)}${esc(item.unit)}</strong></span>
                 </div>
             </div>
         `;

@@ -34,7 +34,8 @@ export function initScratchpadCanvas() {
     
     ctx.lineWidth = 3;
     ctx.lineCap = 'round';
-    ctx.strokeStyle = '#1e293b'; // Slate 800
+    const _style = getComputedStyle(document.documentElement);
+    ctx.strokeStyle = _style.getPropertyValue('--color-text-main').trim() || '#1e293b';
     
     function getCoords(e) {
         const rect = canvas.getBoundingClientRect();
@@ -104,12 +105,14 @@ export function toggleScratchpadEraser() {
     
     isEraser = !isEraser;
     if (isEraser) {
-        ctx.strokeStyle = '#fdfdfd'; // matches bg
+        const _style = getComputedStyle(document.documentElement);
+        ctx.strokeStyle = _style.getPropertyValue('--bg-canvas').trim() || '#fdfdfd';
         ctx.lineWidth = 12;
         eraserBtn.textContent = '연필 모드';
         eraserBtn.style.background = 'var(--color-primary)';
     } else {
-        ctx.strokeStyle = '#1e293b';
+        const _style2 = getComputedStyle(document.documentElement);
+        ctx.strokeStyle = _style2.getPropertyValue('--color-text-main').trim() || '#1e293b';
         ctx.lineWidth = 3;
         eraserBtn.textContent = '지우개';
         eraserBtn.style.background = 'var(--color-gray)';

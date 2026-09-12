@@ -6,6 +6,20 @@
 import { STORAGE_KEYS } from './storage-keys.js';
 import { TIMING } from './config/timing.js';
 
+// CSS 변수에서 색상 읽기 (하드코딩 대체)
+function cssVar(name, fallback) {
+    try {
+        const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+        return v || fallback;
+    } catch (e) { return fallback; }
+}
+const CHART_COLORS = {
+    primary: () => cssVar('--color-primary', '#06b6d4'),
+    success: () => cssVar('--color-success', '#10b981'),
+    danger: () => cssVar('--color-danger', '#ef4444'),
+    white: '#ffffff'
+};
+
 /* =======================================================
    📊 SIM_RESULTS_HISTORY 캐싱 (중복 읽기 방지)
    ======================================================= */
@@ -113,11 +127,12 @@ export function renderPerformanceChart() {
     const chartWidth = width - paddingLeft - paddingRight;
     const chartHeight = height - paddingTop - paddingBottom;
     
+    const primary = CHART_COLORS.primary();
     let svgContent = `<svg class="chart-svg" viewBox="0 0 ${width} ${height}" style="width: 100%; height: 100%;">
         <defs>
             <linearGradient id="chart-gradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.3"/>
-                <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.0"/>
+                <stop offset="0%" stop-color="${primary}" stop-opacity="0.3"/>
+                <stop offset="100%" stop-color="${primary}" stop-opacity="0.0"/>
             </linearGradient>
         </defs>
     `;
@@ -190,11 +205,11 @@ export function renderPerformanceChart() {
         const d = recentData[idx];
         const delta = idx > 0 ? d.rate - recentData[idx - 1].rate : null;
         const deltaHtml = delta !== null
-            ? `<span style="color:${delta >= 0 ? '#10b981' : '#ef4444'};">${delta >= 0 ? '▲' : '▼'} ${Math.abs(delta)}%</span>`
+            ? `<span style="color:${delta >= 0 ? CHART_COLORS.success() : CHART_COLORS.danger()};">${delta >= 0 ? '▲' : '▼'} ${Math.abs(delta)}%</span>`
             : '';
         bindTooltip(dot,
             `<div>${d.date}</div>` +
-            `<div style="font-size:1.1rem;color:#06b6d4;">${d.rate}%</div>` +
+            `<div style="font-size:1.1rem;color:${CHART_COLORS.primary()};">${d.rate}%</div>` +
             (deltaHtml ? `<div style="margin-top:2px;">${deltaHtml}</div>` : '') +
             `<div style="margin-top:2px;color:rgba(255,255,255,0.6);font-size:0.72rem;">최근 평균 ${recentAvg}%</div>`
         );
@@ -444,7 +459,7 @@ export function renderRadarChart() {
     subjects.forEach((sub, i) => {
         const p = getPoint(i, subjectScores[i]);
         svg += `<circle class="radar-point radar-point-interactive" cx="${p.x}" cy="${p.y}" data-idx="${i}" />`;
-        svg += `<text x="${p.x}" y="${p.y - 8}" fill="#ffffff" font-size="10" font-weight="700" text-anchor="middle">${subjectScores[i]}%</text>`;
+        svg += `<text x="${p.x}" y="${p.y - 8}" fill="${CHART_COLORS.white}" font-size="10" font-weight="700" text-anchor="middle">${subjectScores[i]}%</text>`;
     });
     
     svg += `</svg>`;
@@ -460,10 +475,10 @@ export function renderRadarChart() {
         const examCount = rates.length;
         const shortName = sub.shortName || sub.name;
         const status = rate < 60 ? '과락 위험' : '안정권';
-        const statusColor = rate < 60 ? '#ef4444' : '#10b981';
+        const statusColor = rate < 60 ? CHART_COLORS.danger() : CHART_COLORS.success();
         bindTooltip(dot,
             `<div style="font-size:0.85rem;">${idx + 1}과목: ${shortName}</div>` +
-            `<div style="font-size:1.1rem;color:#06b6d4;margin-top:2px;">${rate}%</div>` +
+            `<div style="font-size:1.1rem;color:${CHART_COLORS.primary()};margin-top:2px;">${rate}%</div>` +
             `<div style="margin-top:2px;color:${statusColor};">${status}</div>` +
             `<div style="margin-top:2px;color:rgba(255,255,255,0.6);font-size:0.72rem;">응시 ${examCount}회 · 전체 평균 ${overallAvg}%</div>`
         );

@@ -8,19 +8,6 @@ import { checkShortAnswer } from './trainer.js';
 import { updateGlobalStats } from './dashboard.js';
 import { shuffle } from '../utils.js';
 import { showToast, vibrate, HAPTIC } from '../ui-utils.js';
-import {
-    dailyState,
-    updateStreakAndDailyUI,
-    startDailyChallenge,
-    closeDailyModal,
-    renderDailyStep,
-    submitDailyCardAnswer,
-    submitDailyChoiceAnswer,
-    submitDailyShortAnswer,
-    showDailyFeedback,
-    nextDailyStep,
-    finishDailyChallenge
-} from './daily-challenge.js';
 
 /**
  * 퀴즈 시작 로직

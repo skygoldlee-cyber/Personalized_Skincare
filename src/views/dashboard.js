@@ -198,17 +198,27 @@ function _renderSubjectHeatmap(subjects) {
     if (!heatmapEl) return;
     const subjCounts = _getSubjCounts();
     
+    // 색상 (CSS 변수에서 읽기)
+    const _style = getComputedStyle(document.documentElement);
+    const _c = (v) => _style.getPropertyValue(v).trim();
+    const colors = {
+        none: _c('--color-text-muted') || '#374151',
+        high: _c('--color-success') || '#10b981',
+        mid: _c('--color-warning') || '#f59e0b',
+        low: _c('--color-danger') || '#ef4444',
+        vlow: _c('--color-danger-darkest') || '#991b1b'
+    };
+
     let html = '<div class="heatmap-grid">';
     subjects.forEach(subj => {
         const sc = subjCounts[subj.key] || { mem: 0, weak: 0, quizSolved: 0, quizCorrect: 0 };
         const rate = sc.quizSolved > 0 ? Math.round((sc.quizCorrect / sc.quizSolved) * 100) : -1;
-        // 색상: 80%+ = 초록, 60-79% = 주황, 40-59% = 빨강, <40% = 진빨강, 미응시 = 회색
         let color, label;
-        if (rate < 0) { color = '#374151'; label = '미응시'; }
-        else if (rate >= 80) { color = '#10b981'; label = rate + '%'; }
-        else if (rate >= 60) { color = '#f59e0b'; label = rate + '%'; }
-        else if (rate >= 40) { color = '#ef4444'; label = rate + '%'; }
-        else { color = '#991b1b'; label = rate + '%'; }
+        if (rate < 0) { color = colors.none; label = '미응시'; }
+        else if (rate >= 80) { color = colors.high; label = rate + '%'; }
+        else if (rate >= 60) { color = colors.mid; label = rate + '%'; }
+        else if (rate >= 40) { color = colors.low; label = rate + '%'; }
+        else { color = colors.vlow; label = rate + '%'; }
         
         html += `
             <div class="heatmap-cell" title="${esc(subj.name)}: ${rate < 0 ? '미응시' : rate + '% 정답률 (' + sc.quizSolved + '문)'}" style="background:${color};">
@@ -262,7 +272,7 @@ function _renderWeakSubjectRecommendation(subjects) {
         const rate = Math.round(weakestRate * 100);
         html += `
             <div class="rec-item">
-                <i class="fa-solid fa-bullseye" style="color:#ef4444;"></i>
+                <i class="fa-solid fa-bullseye" style="color:var(--color-danger);"></i>
                 <span>정답률 최저: <strong>${esc(weakest.name)}</strong> (${rate}%)</span>
                 <button class="btn btn-sm btn-primary" data-click="startSubjectQuiz" data-arg="${weakest.key}">풀기</button>
             </div>
@@ -271,7 +281,7 @@ function _renderWeakSubjectRecommendation(subjects) {
     if (mostWeak && mostWeakCount > 0) {
         html += `
             <div class="rec-item">
-                <i class="fa-solid fa-triangle-exclamation" style="color:#f59e0b;"></i>
+                <i class="fa-solid fa-triangle-exclamation" style="color:var(--color-warning);"></i>
                 <span>헷갈린 카드最多: <strong>${esc(mostWeak.name)}</strong> (${mostWeakCount}장)</span>
                 <button class="btn btn-sm btn-secondary" data-click="startSubjectStudy" data-arg="${mostWeak.key}">학습</button>
             </div>

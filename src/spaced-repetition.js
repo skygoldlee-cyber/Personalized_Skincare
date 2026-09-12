@@ -18,7 +18,7 @@ const SR_KEY = STORAGE_KEYS.FC_SPACED_REPETITION;
  * @param {number} quality - 품질 점수 (0=완전히 틀림, 5=완벽)
  * @returns {{interval: number, repetition: number, easiness: number}}
  */
-export function sm2(repetition, easiness, quality) {
+function sm2(repetition, easiness, quality) {
     let newEF = easiness;
     let newRep = repetition;
 
@@ -88,7 +88,7 @@ export function updateCardSchedule(cardId, knew) {
  * 오늘 복습해야 할 카드 ID 목록 반환
  * @returns {string[]} 오늘 복습할 카드 ID 목록
  */
-export function getDueCards() {
+function getDueCards() {
     const schedules = loadSchedules();
     const todayStr = new Date().toISOString().split('T')[0];
     return Object.keys(schedules).filter(id => schedules[id].nextReview <= todayStr);
@@ -99,7 +99,7 @@ export function getDueCards() {
  * @param {string} cardId
  * @returns {{repetition: number, easiness: number, nextReview: string, lastReview: string|null}|null}
  */
-export function getCardSchedule(cardId) {
+function getCardSchedule(cardId) {
     const schedules = loadSchedules();
     return schedules[cardId] || null;
 }
@@ -116,7 +116,7 @@ export function getDueCount() {
  * 복습 스케줄 전체 로드
  * @returns {Object} { cardId: { repetition, easiness, nextReview, lastReview } }
  */
-export function loadSchedules() {
+function loadSchedules() {
     try {
         const raw = safeGetItem(SR_KEY);
         return raw ? JSON.parse(raw) : {};
@@ -129,7 +129,7 @@ export function loadSchedules() {
  * 복습 스케줄 전체 저장
  * @param {Object} schedules
  */
-export function saveSchedules(schedules) {
+function saveSchedules(schedules) {
     safeSetItem(SR_KEY, JSON.stringify(schedules));
 }
 
@@ -137,7 +137,7 @@ export function saveSchedules(schedules) {
  * 특정 카드의 복습 스케줄 삭제
  * @param {string} cardId
  */
-export function removeCardSchedule(cardId) {
+function removeCardSchedule(cardId) {
     const schedules = loadSchedules();
     delete schedules[cardId];
     saveSchedules(schedules);
@@ -146,6 +146,6 @@ export function removeCardSchedule(cardId) {
 /**
  * 모든 복습 스케줄 초기화
  */
-export function clearAllSchedules() {
+function clearAllSchedules() {
     saveSchedules({});
 }

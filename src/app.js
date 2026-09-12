@@ -1,16 +1,12 @@
 // app.js - 맞춤형화장품 조제관리사 학습 플랫폼 애플리케이션 로직
-import { state, loadProgress, saveProgress, cleanOrphansForSubject } from './state.js';
-import { escapeHTML, safeTextWithBreaks, esc } from './sanitize.js';
-import { getChosung, shuffle } from './utils.js';
-import { formatSectionContentForReader } from './reader-format.js';
-import { buildCalcQuestion } from './trainer-calc.js';
-import { renderPerformanceChart, aggregateSubjectRates, renderPassFailDiagnosis, renderRadarChart } from './charts.js';
-import { initScratchpadCanvas, clearScratchpad, toggleCalcScratchpad, toggleScratchpadEraser } from './scratchpad.js';
+import { state, loadProgress, saveProgress } from './state.js';
+import { esc } from './sanitize.js';
+import { shuffle } from './utils.js';
 import { DataLoader } from './data-loader.js';
 import { ExamViewer } from './exam-viewer.js';
 import { ManualViewer } from './manual-viewer.js';
 import { initWebVitals } from './web-vitals.js';
-import { updateCardSchedule, getDueCount, clearAllSchedules } from './spaced-repetition.js';
+import { updateCardSchedule } from './spaced-repetition.js';
 import { STORAGE_KEYS, RESET_KEYS, isDailyCompletedKey } from './storage-keys.js';
 import { TIMING } from './config/timing.js';
 import { setupPWAInstall } from './pwa-install.js';
@@ -111,13 +107,10 @@ import {
     toggleReaderAutoScroll
 } from './views/textbook-reader.js';
 import {
-    showLoading,
-    hideLoading,
     showGlobalLoading,
     hideGlobalLoading,
     showToast,
-    showConfirm,
-    trapFocus
+    showConfirm
 } from './ui-utils.js';
 import {
     simState,
@@ -146,11 +139,6 @@ import {
 } from './views/exam-sim-review.js';
 import { switchView } from './views/navigation.js';
 import { getViewTitles, navigateToView } from './router.js';
-
-// Re-export for backward compatibility (other modules may still reference app.js for these)
-export { switchView, examIdToSubjectId };
-// router.js에서 재수출 (네비게이션 유틸리티)
-export { saveScrollPosition, restoreScrollPosition } from './views/navigation.js';
 
 // --- 초기화 및 로컬스토리지 로드 ---
 function populateSubjectSelects() {
@@ -202,7 +190,7 @@ function populateSubjectSelects() {
     const reviewFilterGroup = document.getElementById('review-filter-group');
     if (reviewFilterGroup) {
         reviewFilterGroup.innerHTML = `
-            <button class="btn btn-secondary filter-btn active" data-filter="all" data-click="setReviewFilter" data-arg="all" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; border-radius: 4px; background: var(--color-primary); border-color: var(--color-primary); color: #fff;">전체</button>
+            <button class="btn btn-secondary filter-btn active" data-filter="all" data-click="setReviewFilter" data-arg="all" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; border-radius: 4px; background: var(--color-primary); border-color: var(--color-primary); color: var(--color-on-brand);">전체</button>
         `;
         subjects.forEach((subj, idx) => {
             const shortName = subj.shortName || subj.name;
@@ -680,8 +668,7 @@ function setupModalBackHandler() {
                 if (target.classList.contains('modal') ||
                     target.classList.contains('modal-content') ||
                     target.id === 'reader-table-modal') {
-                    const isVisible = target.style.display !== 'none' &&
-                                     target.style.display !== '' ||
+                    const isVisible = !target.classList.contains('is-hidden') &&
                                      getComputedStyle(target).display !== 'none';
                     
                     if (isVisible && !modalOpenState) {
@@ -706,7 +693,7 @@ function setupModalBackHandler() {
             // 열린 모달 찾아서 닫기
             const openModals = document.querySelectorAll('.modal, .modal-content, [id$="-modal"]');
             openModals.forEach(modal => {
-                if (modal.style.display !== 'none' && modal.style.display !== '') {
+                if (!modal.classList.contains('is-hidden') && getComputedStyle(modal).display !== 'none') {
                     modal.classList.add('is-hidden');
                 }
             });
@@ -979,9 +966,9 @@ function setupEventListeners() {
             const submitBtn = document.getElementById('submit-quiz-btn');
             const nextBtn = document.getElementById('next-quiz-btn');
             
-            if (submitBtn.style.display !== 'none') {
+            if (!submitBtn.classList.contains('is-hidden')) {
                 submitQuizAnswer();
-            } else if (nextBtn.style.display !== 'none') {
+            } else if (!nextBtn.classList.contains('is-hidden')) {
                 nextQuizQuestion();
             }
         }

@@ -24,6 +24,7 @@ npm.cmd run test:all                   # 전체 테스트 (unit + parser + dom)
 # 빌드
 npm.cmd run build:data                 # content/*.md → data/ 번들 생성
 npm.cmd run check:parser               # 빌드 파서 ↔ 런타임 파서 등가성 검증
+npm.cmd run check:imports              # src/ 내 ES 모듈 import/export 교차 검증
 npm.cmd run stamp:sw                   # sw.js CACHE_VERSION을 커밋 해시로 스탬프
 npm.cmd run verify:assets              # SHELL_ASSETS/DATA_ASSETS 파일 존재 검증
 
@@ -47,7 +48,7 @@ manifest.webmanifest    # PWA 매니페스트
 serve.js                # 로컬 개발 서버
 src/                    # ES Modules (app.js, router.js, state.js, ui-utils.js, pwa-install.js, theme-toggle.js, ...)
   views/                # 뷰 컨트롤러 (textbook-reader.js, reader-audio.js, quiz.js, trainer.js, trainer-calc-practice.js, trainer-ingredients.js, exam-simulator.js, exam-sim-state.js, exam-sim-review.js, ...)
-css/                    # 스타일시트 모듈 (base.css, reader.css, reader-mermaid.css, trainer.css, exam.css, dashboard.css, study.css, print.css)
+css/                    # 스타일시트 모듈 (base.css, reader.css, reader-mermaid.css, trainer.css, exam.css, dashboard.css, study.css, print.css, ui-overlay.css, html-viewer.css)
 content/                # 교재/문제은행/참조자료 Markdown 원본
   교재/                  # 4과목 20챕터 MD 파일 (표준형 20 + 이야기형 20)
   문제은행/              # 과목별 문제은행 MD
@@ -113,9 +114,10 @@ docs/                   # 개발 문서
 1. `node --check` — 수정한 JS 파일 문법 검증
 2. `npm.cmd test` — 유닛 테스트 248개 통과 확인
 3. `npm.cmd run check:parser` — 콘텐츠 변경 시 파서 등가성 검증
-4. `npm.cmd run verify:assets` — SHELL_ASSETS 파일 존재 확인
-5. `git status` — 임시 파일(`_temp_*.js`, `.git/COMMIT_MSG.txt`) 제거 확인
-6. `sw.js` `CACHE_VERSION` bump 확인
+4. `npm.cmd run check:imports` — src/ 내 ES 모듈 import/export 교차 검증
+5. `npm.cmd run verify:assets` — SHELL_ASSETS 파일 존재 확인
+6. `git status` — 임시 파일(`_temp_*.js`, `.git/COMMIT_MSG.txt`) 제거 확인
+7. `sw.js` `CACHE_VERSION` bump 확인
 7. Vercel 배포 후 `https://personalized-skincare-study.vercel.app` 200 OK 확인
 
 ## 주의사항

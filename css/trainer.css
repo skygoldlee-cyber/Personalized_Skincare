@@ -896,6 +896,7 @@ mark.txt-highlight {
     border: none;
     cursor: pointer;
     border-radius: var(--radius-xs);
+    min-height: 44px;
 }
 .calc-scratchpad-btn-clear {
     background: var(--color-text-muted);
@@ -903,8 +904,9 @@ mark.txt-highlight {
 .calc-scratchpad-canvas {
     border: 1px dashed var(--border-color);
     border-radius: var(--radius-xs);
-    background: #fdfdfd;
+    background: var(--bg-canvas, #fdfdfd);
     cursor: crosshair;
+    touch-action: none;
     display: block;
     width: 100%;
     height: 200px;
