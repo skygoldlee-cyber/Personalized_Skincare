@@ -274,7 +274,10 @@ function _renderWeakSubjectRecommendation(subjects) {
             <div class="rec-item">
                 <i class="fa-solid fa-bullseye" style="color:var(--color-danger);"></i>
                 <span>정답률 최저: <strong>${esc(weakest.name)}</strong> (${rate}%)</span>
-                <button class="btn btn-sm btn-primary" data-click="startSubjectQuiz" data-arg="${weakest.key}">풀기</button>
+                <div class="rec-actions">
+                    <button class="btn btn-sm btn-primary" data-click="startSubjectQuiz" data-arg="${weakest.key}"><i class="fa-solid fa-play"></i> 퀴즈</button>
+                    <button class="btn btn-sm btn-secondary" data-click="startSubjectReader" data-arg="${weakest.key}"><i class="fa-solid fa-book-open"></i> 교재</button>
+                </div>
             </div>
         `;
     }
@@ -283,7 +286,10 @@ function _renderWeakSubjectRecommendation(subjects) {
             <div class="rec-item">
                 <i class="fa-solid fa-triangle-exclamation" style="color:var(--color-warning);"></i>
                 <span>헷갈린 카드最多: <strong>${esc(mostWeak.name)}</strong> (${mostWeakCount}장)</span>
-                <button class="btn btn-sm btn-secondary" data-click="startSubjectStudy" data-arg="${mostWeak.key}">학습</button>
+                <div class="rec-actions">
+                    <button class="btn btn-sm btn-secondary" data-click="startSubjectStudy" data-arg="${mostWeak.key}"><i class="fa-solid fa-layer-group"></i> 카드</button>
+                    <button class="btn btn-sm btn-secondary" data-click="startSubjectReader" data-arg="${mostWeak.key}"><i class="fa-solid fa-book-open"></i> 교재</button>
+                </div>
             </div>
         `;
     }
@@ -314,4 +320,14 @@ export function startSubjectQuiz(subjId) {
     switchView('quiz-view');
     const startQuizBtn = document.getElementById('start-quiz-btn');
     if (startQuizBtn) startQuizBtn.click();
+}
+
+/**
+ * 특정 과목의 교재 읽기를 시작합니다. (약점 → 교재 딥링크)
+ * @param {string} subjId
+ */
+export function startSubjectReader(subjId) {
+    const select = document.getElementById('reader-subject-select');
+    if (select) select.value = subjId;
+    switchView('textbook-reader-view');
 }

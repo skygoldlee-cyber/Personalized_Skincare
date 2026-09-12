@@ -288,6 +288,7 @@
     background: var(--bg-muted); border: 1px solid var(--border-color);
 }
 .rec-item span { flex: 1; font-size: var(--text-md-sm); }
+.rec-actions { display: flex; gap: 0.5rem; flex-shrink: 0; }
 .rec-item .btn-sm { padding: 0.35rem 0.875rem; font-size: var(--text-sm); min-height: 44px; min-width: 44px; }
 .rec-empty { color: var(--color-text-muted); text-align: center; padding: var(--space-5); font-size: var(--text-md-sm); }
 

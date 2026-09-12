@@ -163,9 +163,29 @@ export function loadProgress() {
 
 // 로컬스토리지에 진도 저장
 export function saveProgress() {
+    const prevMemCount = state._prevMemCount || 0;
+    const prevQuizCount = state._prevQuizCount || 0;
+
     safeSetItem(STORAGE_KEYS.FC_MEMORIZED, JSON.stringify([...state.memorizedCards]));
     safeSetItem(STORAGE_KEYS.FC_WEAK, JSON.stringify([...state.weakCards]));
     safeSetItem(STORAGE_KEYS.QUIZ_RESULTS, JSON.stringify(state.quizResults));
+
+    // 학습 활동 기록 (증분만)
+    const memDelta = state.memorizedCards.size - prevMemCount;
+    const quizDelta = Object.keys(state.quizResults).length - prevQuizCount;
+    if (memDelta > 0 || quizDelta > 0) {
+        try {
+            // 동적 import로 순환 참조 방지
+            import('./study-tracker.js').then(({ recordStudyActivity }) => {
+                const correctDelta = quizDelta > 0
+                    ? Object.values(state.quizResults).slice(-quizDelta).filter(r => r && r.correct).length
+                    : 0;
+                recordStudyActivity({ cards: Math.max(0, memDelta), quizzes: Math.max(0, quizDelta), correct: correctDelta });
+            }).catch(() => {});
+        } catch (e) { /* noop */ }
+    }
+    state._prevMemCount = state.memorizedCards.size;
+    state._prevQuizCount = Object.keys(state.quizResults).length;
 
     // 대시보드 글로벌 통계 갱신 (app.js에 정의된 전역 함수; 로드 순서상 런타임에 사용 가능)
     if (typeof updateGlobalStats === 'function') {

@@ -1,0 +1,189 @@
+/* css/study-calendar.css — 학습 캘린더/목표 스타일 */
+
+/* === 목표 요약 카드 === */
+.study-goals-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+@media (max-width: 768px) {
+    .study-goals-summary {
+        grid-template-columns: 1fr;
+    }
+}
+.goal-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+    text-align: center;
+}
+.goal-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.75rem;
+}
+.goal-card-header i {
+    color: var(--color-primary);
+}
+.goal-progress-ring {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: conic-gradient(var(--color-primary) calc(var(--p, 0) * 1%), var(--border-color) 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 0.75rem;
+    position: relative;
+}
+.goal-progress-ring::before {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border-radius: 50%;
+    background: var(--bg-card);
+}
+.goal-percent {
+    position: relative;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-primary);
+}
+.goal-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+.goal-detail-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+}
+.goal-detail-row span {
+    color: var(--color-text-muted);
+}
+.goal-detail-row strong {
+    color: var(--color-text-main);
+}
+
+/* === 목표 설정 버튼 === */
+.goal-settings-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1.5rem;
+}
+
+/* === 캘린더 네비게이션 === */
+.calendar-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+.calendar-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-text-main);
+    min-width: 140px;
+    text-align: center;
+}
+
+/* === 캘린더 그리드 === */
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    max-width: 480px;
+    margin: 0 auto;
+}
+.calendar-weekday {
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    padding: 0.5rem 0;
+}
+.calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    position: relative;
+    transition: all 0.15s ease;
+}
+.calendar-day.empty {
+    border: none;
+    background: transparent;
+}
+.calendar-day.studied {
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(6, 182, 212, 0.05));
+    border-color: rgba(6, 182, 212, 0.4);
+}
+.calendar-day.today {
+    border: 2px solid var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.2);
+}
+.calendar-day .day-num {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-text-main);
+}
+.calendar-day.studied .day-num {
+    color: var(--color-primary);
+}
+.calendar-day .stamp {
+    position: absolute;
+    bottom: 3px;
+    font-size: 0.6rem;
+    color: var(--color-primary);
+}
+
+/* === 범례 === */
+.calendar-legend {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1.25rem;
+    flex-wrap: wrap;
+}
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+}
+.legend-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+}
+.legend-studied {
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(6, 182, 212, 0.05));
+    border-color: rgba(6, 182, 212, 0.4);
+}
+.legend-today {
+    border: 2px solid var(--color-primary);
+    background: var(--bg-card);
+}
+.legend-empty {
+    background: var(--bg-card);
+}
+
+/* === 목표 설정 모달 === */
+#goal-settings-modal .glass-card {
+    max-height: 90vh;
+    overflow-y: auto;
+}

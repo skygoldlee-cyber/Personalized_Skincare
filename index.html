@@ -73,6 +73,9 @@
                 <button class="nav-item" data-target="dictionary-view">
                     <i class="fa-solid fa-search" aria-hidden="true"></i> 성분 검색 사전
                 </button>
+                <button class="nav-item" data-target="calendar-view">
+                    <i class="fa-solid fa-calendar-check" aria-hidden="true"></i> 학습 캘린더
+                </button>
             </nav>
             <div class="sidebar-footer">
                 <p>© Cosmetic Master</p>
@@ -1032,6 +1035,15 @@
                     <!-- Populated dynamically via JS -->
                 </div>
             </section>
+
+            <!-- 학습 캘린더 -->
+            <section id="calendar-view" class="view-section">
+                <div class="section-title-area">
+                    <h3>📅 학습 캘린더</h3>
+                    <p>날짜별 학습 기록과 목표 달성률을 한눈에 확인하세요. 매일 꾸준히 학습하여 streak를 유지하세요.</p>
+                </div>
+                <div id="study-calendar-content"></div>
+            </section>
         </main>
 
         <!-- Mobile Bottom Tab Bar (모바일 하단 네비게이션) -->
@@ -1075,6 +1087,10 @@
             <button class="mobile-tab-item" data-target="dictionary-view">
                 <i class="fa-solid fa-search" aria-hidden="true"></i>
                 <span>성분검색</span>
+            </button>
+            <button class="mobile-tab-item" data-target="calendar-view">
+                <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
+                <span>캘린더</span>
             </button>
             <button type="button" data-click="ManualViewer.openManual" class="mobile-tab-item">
                 <i class="fa-solid fa-circle-info" aria-hidden="true"></i>

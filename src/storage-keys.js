@@ -25,6 +25,12 @@ export const STORAGE_KEYS = {
   STUDY_STREAK_LAST_DATE: 'study_streak_last_date',
   DAILY_COMPLETED_PREFIX: 'daily_completed_',
 
+  // 학습 캘린더 (날짜별 학습 여부)
+  STUDY_CALENDAR: 'study_calendar',  // { "2026-09-12": { cards: 5, quizzes: 3, correct: 2 } }
+
+  // 학습 목표
+  STUDY_GOALS: 'study_goals',  // { dailyCards: 50, dailyQuizzes: 10, weeklyStudyDays: 5 }
+
   // 트레이너
   CALC_HISTORY: 'calc_history',
 
@@ -53,6 +59,8 @@ export const BACKUP_KEYS = [
   STORAGE_KEYS.POMO_TOTAL_TIME_DATE,
   STORAGE_KEYS.STUDY_STREAK,
   STORAGE_KEYS.STUDY_STREAK_LAST_DATE,
+  STORAGE_KEYS.STUDY_CALENDAR,
+  STORAGE_KEYS.STUDY_GOALS,
   STORAGE_KEYS.CALC_HISTORY,
   STORAGE_KEYS.FC_MIGRATED_V2,
 ];

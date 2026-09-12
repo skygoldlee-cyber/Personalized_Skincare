@@ -17,7 +17,8 @@ import {
     refreshDashboardStatsInBackground,
     renderDashboard,
     startSubjectStudy,
-    startSubjectQuiz
+    startSubjectQuiz,
+    startSubjectReader
 } from './views/dashboard.js';
 import {
     loadFlashcards,
@@ -82,6 +83,15 @@ import {
     setDictFilter,
     clearDictSearch
 } from './views/dictionary.js';
+import {
+    renderStudyCalendar,
+    prevCalendarMonth,
+    nextCalendarMonth,
+    openGoalSettings,
+    closeGoalSettings,
+    saveGoalSettings
+} from './views/study-calendar.js';
+import { recordStudyActivity } from './study-tracker.js';
 import {
     getBackupKeys,
     exportData,
@@ -551,6 +561,9 @@ function setupNavigation() {
                 showToast('성분 사전 데이터를 불러오지 못했습니다.', 'error');
                 renderDictionary();
             });
+        },
+        'calendar-view': () => {
+            renderStudyCalendar();
         }
     };
 
@@ -730,6 +743,15 @@ window.toggleTextbookCard = toggleTextbookCard;
 window.toggleReaderAudio = toggleReaderAudio;
 window.stopReaderAudio = stopReaderAudio;
 window.toggleReaderPlayPause = toggleReaderPlayPause;
+
+// 학습 캘린더/목표
+window.renderStudyCalendar = renderStudyCalendar;
+window.prevCalendarMonth = prevCalendarMonth;
+window.nextCalendarMonth = nextCalendarMonth;
+window.openGoalSettings = openGoalSettings;
+window.closeGoalSettings = closeGoalSettings;
+window.saveGoalSettings = saveGoalSettings;
+window.recordStudyActivity = recordStudyActivity;
 window.seekReaderAudio = seekReaderAudio;
 window.cycleReaderAudioRate = cycleReaderAudioRate;
 window.toggleReaderAutoScroll = toggleReaderAutoScroll;
@@ -769,6 +791,7 @@ window.checkStorageWarning = checkStorageWarning;
 // (대시보드 과목 바로가기 · 오답노트 카드 제외 · 데일리 챌린지 전체)
 window.startSubjectStudy = startSubjectStudy;
 window.startSubjectQuiz = startSubjectQuiz;
+window.startSubjectReader = startSubjectReader;
 window.removeWeakCard = removeWeakCard;
 window.closeDailyModal = closeDailyModal;
 window.nextDailyStep = nextDailyStep;
