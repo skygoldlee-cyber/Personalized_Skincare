@@ -181,6 +181,7 @@ docs/                   # 개발 문서
 
 - `docs/dev/ARCHITECTURE.md` — 시스템 아키텍처 상세
 - `docs/dev/DEPLOYMENT_GUIDE.md` — 배포 가이드
+- `docs/dev/CONTENT_WORKFLOW.md` — content 변경 시 작업 절차 가이드
 - `docs/dev/CHANGES.md` — 변경 이력
 - `docs/dev/TESTING.md` — 테스트 가이드
 - `docs/dev/TEXTBOOK_AUTHORING_GUIDE.md` — 교재 작성 가이드
