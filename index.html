@@ -889,6 +889,7 @@
                 <!-- Reading Progress Bar (fixed at top of view) -->
                 <div id="reader-progress-bar" class="reader-progress-bar is-hidden">
                     <div id="reader-progress-fill" class="reader-progress-fill"></div>
+                    <span id="reader-section-progress" class="reader-section-progress"></span>
                 </div>
                 <!-- Sticky current section heading -->
                 <div id="reader-sticky-heading" class="reader-sticky-heading is-hidden">
@@ -941,6 +942,16 @@
                         <button class="reader-tool-btn reader-toc-mobile-toggle" id="reader-toc-mobile-btn" title="목차 열기">
                             <i class="fa-solid fa-list" aria-hidden="true"></i> <span>목차</span>
                         </button>
+                    </div>
+                    <div class="reader-toolbar-divider"></div>
+                    <div class="reader-toolbar-group">
+                        <div class="reader-search-box">
+                            <input type="text" id="reader-in-content-search" placeholder="본문 검색..." aria-label="본문 내 검색">
+                            <span id="reader-search-count" class="reader-search-count"></span>
+                            <button class="reader-tool-btn reader-search-nav-btn" id="reader-search-prev" title="이전 검색 결과" aria-label="이전 검색 결과"><i class="fa-solid fa-chevron-up" aria-hidden="true"></i></button>
+                            <button class="reader-tool-btn reader-search-nav-btn" id="reader-search-next" title="다음 검색 결과" aria-label="다음 검색 결과"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                            <button class="reader-tool-btn reader-search-nav-btn" id="reader-search-clear" title="검색 닫기" aria-label="검색 닫기"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+                        </div>
                     </div>
                     <div class="reader-toolbar-divider"></div>
                     <div class="reader-toolbar-group">

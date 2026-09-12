@@ -630,6 +630,7 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
     const prevChapter = chapterIdx > 0 ? subj.chapters[chapterIdx - 1] : null;
     const nextChapter = chapterIdx < subj.chapters.length - 1 ? subj.chapters[chapterIdx + 1] : null;
     html += `
+        <div class="reader-chapter-end-marker" role="separator" aria-label="단원 끝">— 단원 끝 —</div>
         <div class="reader-chapter-nav">
             <button class="reader-nav-btn prev" ${prevChapter ? '' : 'disabled'} data-nav-idx="${chapterIdx - 1}">
                 <span class="nav-dir"><i class="fa-solid fa-arrow-left"></i> 이전 단원</span>
@@ -966,6 +967,13 @@ function bindReaderScrollEvents() {
                 const card = container.querySelector(`.reader-section-card[data-section-idx="${currentIdx}"] .reader-section-title`);
                 if (card) breadcrumbEl.textContent = card.textContent.trim();
             }
+            // Section progress (e.g. "3/5 섹션")
+            const sectionProgress = document.getElementById('reader-section-progress');
+            if (sectionProgress && cachedCards.length) {
+                const totalSections = cachedCards.length;
+                const currentSection = currentIdx >= 0 ? currentIdx + 1 : 0;
+                sectionProgress.textContent = `${currentSection}/${totalSections} 섹션`;
+            }
             // Sticky heading: show current section title when scrolled past its header
             const stickyHeading = document.getElementById('reader-sticky-heading');
             const stickyText = document.getElementById('reader-sticky-heading-text');
@@ -1075,6 +1083,115 @@ function initReaderToolbar() {
                 ? '<i class="fa-solid fa-compress"></i> <span>집중 해제</span>'
                 : '<i class="fa-solid fa-expand"></i> <span>집중 모드</span>';
         });
+    }
+    // P2-7: 본문 내 검색 하이라이트
+    const searchInput = document.getElementById('reader-in-content-search');
+    const searchCount = document.getElementById('reader-search-count');
+    const searchPrev = document.getElementById('reader-search-prev');
+    const searchNext = document.getElementById('reader-search-next');
+    const searchClear = document.getElementById('reader-search-clear');
+    if (searchInput && !searchInput.dataset.bound) {
+        searchInput.dataset.bound = 'true';
+        let searchDebounce = null;
+        let currentMatchIdx = 0;
+        const scrollToMatch = (idx) => {
+            const container = document.getElementById('textbook-reader-view');
+            if (!container) return;
+            const marks = container.querySelectorAll('.reader-search-highlight');
+            if (!marks.length) return;
+            currentMatchIdx = ((idx % marks.length) + marks.length) % marks.length;
+            marks.forEach((m, i) => m.classList.toggle('current-match', i === currentMatchIdx));
+            const target = marks[currentMatchIdx];
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            if (searchCount) searchCount.textContent = `${currentMatchIdx + 1}/${marks.length}`;
+        };
+        const performSearch = () => {
+            const container = document.getElementById('textbook-reader-view');
+            if (!container) return;
+            const query = searchInput.value.trim();
+            // Clear previous highlights
+            container.querySelectorAll('.reader-search-highlight').forEach(el => {
+                const parent = el.parentNode;
+                parent.replaceChild(document.createTextNode(el.textContent), el);
+                parent.normalize();
+            });
+            if (!query || query.length < 2) {
+                if (searchCount) searchCount.textContent = '';
+                return;
+            }
+            // Expand all sections for search
+            container.querySelectorAll('.reader-section-card.collapsed').forEach(c => c.classList.remove('collapsed'));
+            // Highlight matches in text nodes
+            const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT, {
+                acceptNode: (node) => {
+                    if (!node.textContent.trim()) return NodeFilter.FILTER_REJECT;
+                    const parent = node.parentNode;
+                    if (parent.classList.contains('reader-search-highlight')) return NodeFilter.FILTER_REJECT;
+                    if (['SCRIPT', 'STYLE', 'INPUT', 'TEXTAREA'].includes(parent.nodeName)) return NodeFilter.FILTER_REJECT;
+                    return NodeFilter.FILTER_ACCEPT;
+                }
+            });
+            const textNodes = [];
+            let node;
+            while ((node = walker.nextNode())) textNodes.push(node);
+            const lowerQuery = query.toLowerCase();
+            let matchCount = 0;
+            textNodes.forEach(textNode => {
+                const text = textNode.textContent;
+                const lowerText = text.toLowerCase();
+                let idx = lowerText.indexOf(lowerQuery);
+                if (idx === -1) return;
+                const frag = document.createDocumentFragment();
+                let lastIdx = 0;
+                while (idx !== -1) {
+                    if (idx > lastIdx) frag.appendChild(document.createTextNode(text.slice(lastIdx, idx)));
+                    const mark = document.createElement('span');
+                    mark.className = 'reader-search-highlight';
+                    mark.textContent = text.slice(idx, idx + query.length);
+                    frag.appendChild(mark);
+                    matchCount++;
+                    lastIdx = idx + query.length;
+                    idx = lowerText.indexOf(lowerQuery, lastIdx);
+                }
+                if (lastIdx < text.length) frag.appendChild(document.createTextNode(text.slice(lastIdx)));
+                textNode.parentNode.replaceChild(frag, textNode);
+            });
+            currentMatchIdx = 0;
+            if (searchCount) searchCount.textContent = matchCount > 0 ? `1/${matchCount}` : '결과 없음';
+            if (matchCount > 0) scrollToMatch(0);
+        };
+        searchInput.addEventListener('input', () => {
+            clearTimeout(searchDebounce);
+            searchDebounce = setTimeout(performSearch, 300);
+        });
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') { e.preventDefault(); performSearch(); }
+            if (e.key === 'Escape') { searchInput.value = ''; performSearch(); searchInput.blur(); }
+        });
+        if (searchPrev && !searchPrev.dataset.bound) {
+            searchPrev.dataset.bound = 'true';
+            searchPrev.addEventListener('click', () => {
+                const container = document.getElementById('textbook-reader-view');
+                const marks = container ? container.querySelectorAll('.reader-search-highlight') : [];
+                if (marks.length) scrollToMatch(currentMatchIdx - 1);
+            });
+        }
+        if (searchNext && !searchNext.dataset.bound) {
+            searchNext.dataset.bound = 'true';
+            searchNext.addEventListener('click', () => {
+                const container = document.getElementById('textbook-reader-view');
+                const marks = container ? container.querySelectorAll('.reader-search-highlight') : [];
+                if (marks.length) scrollToMatch(currentMatchIdx + 1);
+            });
+        }
+        if (searchClear && !searchClear.dataset.bound) {
+            searchClear.dataset.bound = 'true';
+            searchClear.addEventListener('click', () => {
+                searchInput.value = '';
+                performSearch();
+                searchInput.focus();
+            });
+        }
     }
     // C: 모바일 TOC 드로어 토글
     if (tocMobileBtn && !tocMobileBtn.dataset.bound) {

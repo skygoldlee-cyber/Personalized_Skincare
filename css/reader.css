@@ -24,6 +24,16 @@
     transition: width 0.15s ease-out;
     box-shadow: 0 0 8px var(--primary-tint-50);
 }
+.reader-section-progress {
+    position: absolute;
+    right: 0.5rem;
+    top: -1.4rem;
+    font-size: var(--text-2xs);
+    color: var(--color-text-muted);
+    font-weight: var(--font-weight-medium);
+    white-space: nowrap;
+    pointer-events: none;
+}
 
 /* Sticky current section heading */
 .reader-sticky-heading {
@@ -89,6 +99,49 @@
     width: 1px;
     height: 22px;
     background: var(--border-color);
+}
+/* In-content search */
+.reader-search-box {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    position: relative;
+}
+.reader-search-box input {
+    width: 100px;
+    padding: 0.3rem 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-size: var(--text-sm);
+    font-family: var(--font-app);
+    background: var(--bg-input);
+    color: var(--color-text-main);
+    transition: width 0.2s ease;
+}
+.reader-search-box input:focus {
+    width: 140px;
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px var(--primary-tint-50);
+}
+.reader-search-count {
+    font-size: var(--text-2xs);
+    color: var(--color-text-muted);
+    min-width: 2.5rem;
+    text-align: center;
+}
+.reader-search-nav-btn {
+    padding: 0.3rem 0.4rem;
+    font-size: var(--text-xs);
+}
+.reader-search-highlight {
+    background: var(--warning-tint-50, rgba(255, 200, 0, 0.3));
+    border-radius: 2px;
+    padding: 0 1px;
+}
+.reader-search-highlight.current-match {
+    background: var(--warning, #f59e0b);
+    color: white;
 }
 .reader-tool-btn {
     background: var(--bg-muted);
@@ -543,13 +596,29 @@
     font-size: calc(1.1rem * var(--reader-font-scale, 1));
     color: var(--color-primary);
     font-weight: var(--font-weight-bold);
-    margin-top: 1.75rem;
+    margin-top: 2.25rem;
     margin-bottom: var(--space-3);
     padding-bottom: 0.4rem;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 2px solid var(--primary-tint-25);
+    position: relative;
+}
+.reader-subsection-title::before {
+    content: '';
+    position: absolute;
+    left: -0.75rem;
+    top: 0.1rem;
+    bottom: 0.4rem;
+    width: 3px;
+    border-radius: 2px;
+    background: var(--color-primary);
+    opacity: 0.6;
+}
+.reader-subsection-title:first-child {
+    margin-top: 0;
 }
 .reader-subsection-content {
-    margin-bottom: var(--space-4);
+    margin-bottom: var(--space-5);
+    padding-left: 0.5rem;
 }
 
 /* Optimized typography inside reader */
@@ -585,6 +654,19 @@
     padding: 0.6rem 0.9rem;
     border-radius: 0 6px 6px 0;
     margin: 0.8rem 0;
+}
+/* P3-9: 이 장의 질문 강조 */
+.textbook-reader-content .md-quote strong {
+    color: var(--color-primary);
+}
+/* P3-9: 챕터 끝 시각적 구분자 */
+.reader-chapter-end-marker {
+    text-align: center;
+    margin: 2.5rem 0 1rem;
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    letter-spacing: 0.3rem;
+    user-select: none;
 }
 
 /* Chapter header card */
@@ -703,6 +785,28 @@
     position: relative;
     max-height: 480px;
     overflow: auto;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+}
+/* P1-4: 긴 표 스크롤 표시 그라데이션 */
+.reader-table-wrapper::before,
+.reader-table-wrapper::after {
+    content: '';
+    position: sticky;
+    left: 0;
+    right: 0;
+    height: 12px;
+    display: block;
+    z-index: var(--z-raised, 5);
+    pointer-events: none;
+}
+.reader-table-wrapper::before {
+    top: 0;
+    background: linear-gradient(to bottom, var(--bg-card, rgba(0,0,0,0.05)), transparent);
+}
+.reader-table-wrapper::after {
+    bottom: 0;
+    background: linear-gradient(to top, var(--bg-card, rgba(0,0,0,0.05)), transparent);
 }
 .reader-table th {
     position: sticky;
