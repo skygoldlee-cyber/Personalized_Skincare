@@ -62,6 +62,7 @@ src/                    # ES Modules
   scratchpad.js          # 스크래치패드 캔버스 (계산 연습용)
   spaced-repetition.js  # SM-2 간격 반복 알고리즘
   study-aids.js         # 기출 필터, 숫자 암기표
+  study-tracker.js      # 학습 캘린더/목표 추적 헬퍼 (recordStudyActivity, getStudyGoals)
   charts.js             # SVG 레이더/꺾은선 차트
   pdf-registry.js       # 참조자료 경로 매핑
   html-viewer.js        # 외부 HTML 콘텐츠 뷰어
@@ -96,12 +97,13 @@ src/                    # ES Modules
     exam-sim-state.js   # 시뮬레이터 상태
     exam-sim-review.js  # 시뮬레이터 결과 리뷰
     dictionary.js       # 용어집
+    study-calendar.js    # 학습 캘린더/목표 뷰
     glossary-renderer.js # 용어집 렌더링
     backup.js           # 백업/복원
     offline-detection.js # 오프라인 감지 (app.js에서 분리)
     manual-viewer.js    # 학습안내서 뷰어
     exam-viewer.js      # 문제집 뷰어
-css/                    # 스타일시트 모듈 (base.css, reader.css, reader-mermaid.css, trainer.css, exam.css, dashboard.css, study.css, print.css, ui-overlay.css, html-viewer.css)
+css/                    # 스타일시트 모듈 (base.css, reader.css, reader-mermaid.css, trainer.css, exam.css, dashboard.css, study.css, study-calendar.css, print.css, ui-overlay.css, html-viewer.css)
 content/                # 교재/문제은행/참조자료 Markdown 원본
   교재/                  # 4과목 MD 파일 (표준형 8 + 이야기형 8 = 16파일, 총 20챕터)
   문제은행/              # 과목별 문제은행 MD

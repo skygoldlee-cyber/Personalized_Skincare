@@ -215,6 +215,7 @@ Personalized_Skincare/
 │   ├── glossary-query.js       #   용어집 조회 API
 │   ├── keyword-index.js        #   교재 셀→참조자료 키워드 매핑 (자동 생성)
 │   ├── study-aids.js           #   기출 필터, 숫자 암기표
+│   ├── study-tracker.js        #   학습 캘린더/목표 추적 (recordStudyActivity, getStudyGoals)
 │   ├── spaced-repetition.js    #   SM-2 간격 반복 알고리즘, 복습 스케줄링
 │   ├── charts.js               #   SVG 레이더/꺾은선 차트 + 툴팁
 │   ├── sanitize.js             #   XSS 방어
@@ -237,6 +238,7 @@ Personalized_Skincare/
 │       ├── textbook-reader.js  #     교재 리더 + 오디오 + Media Session
 │       ├── textbook-search.js  #     교재 본문 검색
 │       ├── dictionary.js       #     성분 사전
+│       ├── study-calendar.js   #     학습 캘린더/목표 뷰
 │       ├── backup.js           #     데이터 백업/복원
 │       ├── glossary-renderer.js #    용어집 렌더링 + scrollToGlossary()
 │       └── navigation.js       #     뷰 전환 유틸
@@ -365,9 +367,9 @@ Personalized_Skincare/
 | [`manifest.webmanifest`](../../manifest.webmanifest) | PWA 매니페스트 (앱 이름, 아이콘, 테마 색상) |
 
 **SPA 뷰 전환 방식**:
-- 9개의 `<section class="view-section">`이 하나의 HTML에 공존
+- 10개의 `<section class="view-section">`이 하나의 HTML에 공존
 - `switchView(targetView)`가 `.active` 클래스를 토글하여 화면 전환 (페이지 리로드 없음)
-- 뷰 목록: dashboard / flashcard / quiz / review / trainer / exam / textbook / textbook-reader / dictionary
+- 뷰 목록: dashboard / flashcard / quiz / review / trainer / exam / textbook / textbook-reader / dictionary / calendar
 
 ### 2. Application Layer (응용 계층)
 
@@ -378,7 +380,8 @@ Personalized_Skincare/
 | [`src/charts.js`](../../src/charts.js) | SVG 기반 차트 생성 (레이더 차트, 성적 꺾은선 그래프). **인터랙티브 툴팁**(hover/touch) 지원. 외부 차트 라이브러리 미사용 |
 | [`src/scratchpad.js`](../../src/scratchpad.js) | HTML5 Canvas 손글씨 연습장 (계산 문제 풀이용) |
 | [`src/trainer-calc.js`](../../src/trainer-calc.js) | 계산 훈련 문제 생성기. **순수 로직** — DOM 의존 없이 문제 데이터 객첼만 반환 |
-| [`src/state.js`](../../src/state.js) | 전역 상태 객체(`state`) 정의 + localStorage 영속성(`loadProgress`/`saveProgress`). 기본 과목은 `null`이며 `initApp()`에서 registry 첫 과목으로 설정 |
+| [`src/state.js`](../../src/state.js) | 전역 상태 객체(`state`) 정의 + localStorage 영속성(`loadProgress`/`saveProgress`). 기본 과목은 `null`이며 `initApp()`에서 registry 첫 과목으로 설정. `saveProgress()`에서 학습 활동 증분을 `study-tracker.js`로 자동 기록 |
+| [`src/study-tracker.js`](../../src/study-tracker.js) | 학습 캘린더/목표 추적 헬퍼. 날짜별 학습 활동 기록(`recordStudyActivity`), 학습 목표 조회/저장(`getStudyGoals`/`setStudyGoals`), 오늘/이번주/이번달 달성률 계산 |
 | [`src/utils.js`](../../src/utils.js) | 의존성 없는 범용 헬퍼 (한글 초성 추출 `getChosung()` 등) |
 | [`src/sanitize.js`](../../src/sanitize.js) | HTML/XSS 방어 및 텍스트 정제 유틸리티 |
 | [`src/pdf-registry.js`](../../src/pdf-registry.js) | 참조자료 중앙 설정 모듈. 과목별 참조자료 매핑, 출처→PDF 파일명 매핑, MD 변환본 경로 자동 생성 (`REF_DIRS`, `resolveRefPath`, `mapSourceToRef`). 원본 PDF는 `.vercelignore`로 배포 제외, `ref_md/*.md` 변환본(3.7MB)으로 인앱 뷰어+PDF 저장 지원 |
@@ -428,7 +431,7 @@ Personalized_Skincare/
 
 ### 모듈화 전략: "점진적 모듈화 (Progressive Modularization)"
 
-거대한 단일 `app.js`(원래 약 4,900줄)를 한 번에 ES Modules로 전환하는 대신, **부수효과 없는 순수 로직부터 글로벌 스코프 스크립트로 점진 분리**하는 전략을 채택했습니다. 2026-09-12 기준 `app.js`는 **약 1,360줄**로 축소되었고, 라우팅 로직은 `router.js`로 분리, 17개 뷰 컨트롤러 모듈이 `src/views/`에 분리되었습니다.
+거대한 단일 `app.js`(원래 약 4,900줄)를 한 번에 ES Modules로 전환하는 대신, **부수효과 없는 순수 로직부터 글로벌 스코프 스크립트로 점진 분리**하는 전략을 채택했습니다. 2026-09-13 기준 `app.js`는 **약 1,360줄**로 축소되었고, 라우팅 로직은 `router.js`로 분리, 18개 뷰 컨트롤러 모듈이 `src/views/`에 분리되었습니다.
 
 **분리 원칙**:
 1. **DOM 의존성 없는 순수 로직 우선 분리** → `trainer-calc.js`(문제 생성), `utils.js`(초성 추출), `reader-format.js`(리더 포맷터)
@@ -458,6 +461,7 @@ pwa-install.js (PWA 설치 프롬프트)  views/pomodoro.js (뽀모도로 타이
 theme-toggle.js (테마 토글)        views/dictionary.js (성분 검색)
 pwa-install-capture.js (SW 등록+beforeinstallprompt 캡처)  views/navigation.js (뷰 전환 유틸)
                                   views/glossary-renderer.js (용어집 렌더링)
+study-tracker.js (학습 캘린더/목표 추적)  views/study-calendar.js (학습 캘린더 뷰)
 ```
 
 > `app.js`에 남은 함수: `startFocusSubjectStudy`(뷰 간 브릿지), 초기화/이벤트 바인딩. 라우팅은 `router.js`의 `navigateToView()`로 위임. `examIdToSubjectId`는 `exam-simulator.js`에서 정의 후 `app.js`를 통해 re-export되어 `quiz.js`가 import.
@@ -540,6 +544,7 @@ const state = {
 | 구분 | 예시 | 저장 위치 | 이유 |
 |------|------|-----------|------|
 | **영속 상태** | 외운 카드, 오답, 성적 기록 | localStorage | 세션 간 유지 필요 |
+| **학습 기록** | 날짜별 카드/퀴즈/정답 수, 학습 목표 | localStorage (`study_calendar`, `study_goals`) | 캘린더/목표 달성률 추적 |
 | **세션 상태** | 현재 퀴즈 진행 인덱스, 필터 | 메모리만 | 새로고침 시 초기화가 자연스러움 |
 | **파생 상태** | 대시보드 통계, 차트 데이터 | 렌더 시 계산 | 원본으로부터 계산 가능 (중복 저장 방지) |
 
