@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v325-20260912-96a4bbc';   // 참조 자료 섹션 제목 단순화
+const CACHE_VERSION = 'v325-20260912-835d599';   // 참조 자료 섹션 제목 단순화
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
@@ -83,6 +83,8 @@ const SHELL_ASSETS = [
   './src/views/textbook-reader.js',
   './src/views/reader-audio.js',
   './src/views/exam-simulator.js',
+  './src/views/exam-sim-state.js',
+  './src/views/exam-sim-review.js',
   './src/views/navigation.js',
   './src/html-viewer.js',
   './src/pdf-registry.js',

@@ -138,10 +138,12 @@ import {
     saveSimAnswer,
     submitExam,
     examIdToSubjectId,
-    showSimAnswerReview,
-    showSimResultsSummary,
     startWeakExam
 } from './views/exam-simulator.js';
+import {
+    showSimAnswerReview,
+    showSimResultsSummary
+} from './views/exam-sim-review.js';
 import { switchView } from './views/navigation.js';
 import { getViewTitles, navigateToView } from './router.js';
 
