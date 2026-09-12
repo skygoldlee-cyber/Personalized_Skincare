@@ -1,11 +1,11 @@
 /* css/html-viewer.css — 참조자료 HTML 뷰어 오버레이 스타일 (html-viewer.js에서 추출) */
 
-#html-ref-overlay{position:fixed;top:0;left:0;right:0;bottom:0;width:100vw;height:100vh;height:100dvh;z-index:10000;display:none;
+#html-ref-overlay{position:fixed;top:0;left:0;right:0;bottom:0;width:100vw;height:100vh;height:100dvh;z-index:var(--z-orientation-toast);display:none;
   background:var(--bg-overlay,rgba(0,0,0,.85));backdrop-filter:blur(4px);}
 #html-ref-overlay.open{display:block;overflow:hidden;}
 #html-ref-overlay .hr-ov-bar{display:flex;align-items:center;gap:.6rem;
   padding:.6rem 1rem;background:var(--bg-card,#161b22);
-  border-bottom:1px solid var(--border-color,#30363d);position:fixed;top:0;left:0;right:0;z-index:10001;}
+  border-bottom:1px solid var(--border-color,#30363d);position:fixed;top:0;left:0;right:0;z-index:var(--z-html-viewer);}
 /* 스크롤 영역: 테마별 배경/글자색 (기본=라이트, .dark-theme 오버레이 시=다크) */
 #html-ref-overlay .hr-ov-scroll{position:fixed!important;top:48px!important;left:0!important;right:0!important;bottom:0!important;overflow-y:scroll!important;overflow-x:auto!important;background:#fff!important;-webkit-overflow-scrolling:touch!important;}
 #html-ref-overlay.dark-theme .hr-ov-scroll{background:#0d1117!important;}

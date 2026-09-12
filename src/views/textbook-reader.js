@@ -9,7 +9,7 @@ import {
     SUBJECT_DIR_MAP, REFERENCE_FILES, REFERENCE_COMMON, REFERENCE_INGREDIENTS,
     REFERENCE_LAW, mapSourceToRef, resolveRefPath
 } from '../pdf-registry.js';
-import { collectGlossaryItems, renderGlossaryTable, appendGlossaryTocItem, bindGlossaryEvents } from './glossary-renderer.js';
+import { collectGlossaryItems, renderGlossaryTable, appendGlossaryTocItem, scrollToGlossary } from './glossary-renderer.js';
 // [모바일 PWA 견고성] 오디오 매니페스트는 window 전역(가드)에서 읽는다(정적 import 하드 의존 지양).
 import { DataLoader } from '../data-loader.js';
 import { showToast, trapFocus } from '../ui-utils.js';
@@ -1077,7 +1077,11 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
         </div>
     `;
 
-    html += await renderStudyAids(chapter, subjId);
+    try {
+        html += await renderStudyAids(chapter, subjId);
+    } catch (err) {
+        console.warn('[Reader] 학습 보조 렌더링 실패:', err);
+    }
 
     // D: 브레드크럼
     html += `<div class="reader-breadcrumb" id="reader-breadcrumb">
@@ -1674,36 +1678,32 @@ function _hidePreview() {
     if (_previewEl) _previewEl.classList.add('is-hidden');
 }
 
-function bindReferenceLinks() {
-    // 기출문제 링크 → 앱 내 HTML 문제집 뷰어(ExamViewer)로 열기
-    document.querySelectorAll('[data-exam-md]').forEach(a => {
-        a.addEventListener('click', (e) => {
+let _refLinksDelegationInitialized = false;
+function _initRefLinkDelegation() {
+    if (_refLinksDelegationInitialized) return;
+    _refLinksDelegationInitialized = true;
+    // click 이벤트 위임: document에서 단일 리스너로 처리
+    document.addEventListener('click', (e) => {
+        const a = e.target.closest('[data-exam-md], [data-ref-md], [data-ref-html], [data-ref-subject], [data-glossary]');
+        if (!a) return;
+        if (a.hasAttribute('data-exam-md')) {
             e.preventDefault();
             const mdPath = a.dataset.examMd;
             if (mdPath && window.ExamViewer && window.ExamViewer.openExam) {
                 window.ExamViewer.openExam(mdPath);
             }
-        });
-    });
-
-    document.querySelectorAll('[data-ref-md]').forEach(a => {
-        a.addEventListener('click', (e) => {
+            return;
+        }
+        if (a.hasAttribute('data-ref-md')) {
             e.preventDefault();
             const mdPath = a.dataset.refMd;
             const lineNum = a.dataset.refLine ? parseInt(a.dataset.refLine) : null;
             if (window.ExamViewer && window.ExamViewer.openExam) {
                 window.ExamViewer.openExam(mdPath, lineNum);
             }
-        });
-    });
-
-    // 용어집 앵커 바인딩: glossary-renderer 모듈 위임
-    bindGlossaryEvents(document);
-
-    // HTML 뷰어 바인딩: data-ref-html 속성을 가진 모든 링크
-    document.querySelectorAll('[data-ref-html]').forEach(a => {
-        // 클릭 → 뷰어 열기
-        a.addEventListener('click', (e) => {
+            return;
+        }
+        if (a.hasAttribute('data-ref-html')) {
             e.preventDefault();
             clearTimeout(_previewTimer);
             clearTimeout(_previewTouchTimer);
@@ -1715,40 +1715,9 @@ function bindReferenceLinks() {
             if (refHtmlPath) {
                 openHtmlViewer(refHtmlPath, searchKeyword, anchorId, lineNum);
             }
-        });
-        // 호버 프리뷰 (데스크톱)
-        a.addEventListener('mouseenter', () => {
-            clearTimeout(_previewTimer);
-            _previewTimer = setTimeout(() => _showPreview(a), TIMING.PREVIEW_HOVER_MS);
-        });
-        a.addEventListener('mouseleave', () => {
-            clearTimeout(_previewTimer);
-            _hidePreview();
-        });
-        // 롱프레스 프리뷰 (모바일) — 시각적 힌트: 600ms 동안 링크를 활성화 스타일로 표시
-        a.addEventListener('touchstart', () => {
-            clearTimeout(_previewTouchTimer);
-            a.classList.add('ref-longpress-active');
-            _previewTouchTimer = setTimeout(() => {
-                a.classList.remove('ref-longpress-active');
-                _showPreview(a);
-            }, TIMING.PREVIEW_LONG_PRESS_MS);
-        }, { passive: true });
-        a.addEventListener('touchend', () => {
-            clearTimeout(_previewTouchTimer);
-            a.classList.remove('ref-longpress-active');
-            setTimeout(_hidePreview, TIMING.PREVIEW_HIDE_MS);
-        }, { passive: true });
-        a.addEventListener('touchmove', () => {
-            clearTimeout(_previewTouchTimer);
-            a.classList.remove('ref-longpress-active');
-            _hidePreview();
-        }, { passive: true });
-    });
-
-    // 과목간 교차 참조 링크 → 교재 리더 내 과목 이동 + 챕터 섹션 스크롤
-    document.querySelectorAll('[data-ref-subject]').forEach(a => {
-        a.addEventListener('click', (e) => {
+            return;
+        }
+        if (a.hasAttribute('data-ref-subject')) {
             e.preventDefault();
             const targetSubject = a.dataset.refSubject;
             const targetChapter = a.dataset.refChapter || '';
@@ -1800,6 +1769,52 @@ function bindReferenceLinks() {
                 const container = document.getElementById('textbook-reader-container');
                 if (container) container.scrollTop = 0;
             }
+            return;
+        }
+        if (a.hasAttribute('data-glossary')) {
+            e.preventDefault();
+            scrollToGlossary(a.dataset.glossary, a);
+            return;
+        }
+    });
+}
+
+function bindReferenceLinks() {
+    // click 이벤트 위임 초기화 (1회만 등록)
+    _initRefLinkDelegation();
+
+    // 용어집 앵커 바인딩은 click 위임으로 처리되므로 별도 호출 불필요
+
+    // HTML 뷰어 호버/터치 프리뷰 (mouseenter/mouseleave/touch는 위임 불가 → 가드 사용)
+    document.querySelectorAll('[data-ref-html]:not([data-ref-bound])').forEach(a => {
+        a.setAttribute('data-ref-bound', 'true');
+        // 호버 프리뷰 (데스크톱)
+        a.addEventListener('mouseenter', () => {
+            clearTimeout(_previewTimer);
+            _previewTimer = setTimeout(() => _showPreview(a), TIMING.PREVIEW_HOVER_MS);
         });
+        a.addEventListener('mouseleave', () => {
+            clearTimeout(_previewTimer);
+            _hidePreview();
+        });
+        // 롱프레스 프리뷰 (모바일) — 시각적 힌트: 600ms 동안 링크를 활성화 스타일로 표시
+        a.addEventListener('touchstart', () => {
+            clearTimeout(_previewTouchTimer);
+            a.classList.add('ref-longpress-active');
+            _previewTouchTimer = setTimeout(() => {
+                a.classList.remove('ref-longpress-active');
+                _showPreview(a);
+            }, TIMING.PREVIEW_LONG_PRESS_MS);
+        }, { passive: true });
+        a.addEventListener('touchend', () => {
+            clearTimeout(_previewTouchTimer);
+            a.classList.remove('ref-longpress-active');
+            setTimeout(_hidePreview, TIMING.PREVIEW_HIDE_MS);
+        }, { passive: true });
+        a.addEventListener('touchmove', () => {
+            clearTimeout(_previewTouchTimer);
+            a.classList.remove('ref-longpress-active');
+            _hidePreview();
+        }, { passive: true });
     });
 }

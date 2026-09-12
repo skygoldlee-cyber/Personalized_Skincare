@@ -1505,8 +1505,12 @@ function setupPWAInstall() {
             // 설치 프롬프트 표시
             deferredPrompt.prompt();
             // 사용자 선택 대기
-            const { outcome } = await deferredPrompt.userChoice;
-            console.debug('[PWA] 설치 프롬프트 결과:', outcome);
+            try {
+                const { outcome } = await deferredPrompt.userChoice;
+                console.debug('[PWA] 설치 프롬프트 결과:', outcome);
+            } catch (err) {
+                console.debug('[PWA] 설치 프롬프트 대기 중 오류:', err);
+            }
             // 프롬프트 사용 후 초기화
             deferredPrompt = null;
             // 버튼 숨기기

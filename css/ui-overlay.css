@@ -17,7 +17,7 @@
   height: 100%;
   background: rgba(11, 15, 25, 0.7);
   backdrop-filter: blur(5px);
-  z-index: 99999;
+  z-index: var(--z-loading);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -56,7 +56,7 @@
   border-radius: 12px;
   font-size: 0.95rem;
   font-weight: var(--font-weight-medium);
-  z-index: 99998;
+  z-index: var(--z-toast-top);
   border: 1px solid var(--white-tint-10);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
   opacity: 0;
@@ -78,7 +78,7 @@
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 99997;
+  z-index: var(--z-banner);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -159,7 +159,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 99997;
+  z-index: var(--z-banner);
   background: var(--color-banner-warning);
   color: var(--color-on-brand);
   padding: 0.6rem 1rem;
@@ -178,7 +178,7 @@
   border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 1rem 1.5rem;
-  z-index: 10000;
+  z-index: var(--z-orientation-toast);
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -207,7 +207,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 99998;
+  z-index: var(--z-toast-top);
   background: var(--color-banner-error);
   color: var(--color-on-brand);
   padding: 0.5rem;
@@ -218,7 +218,7 @@
 /* ── 차트 툴팁 (charts.js에서 동적 생성) ── */
 .chart-tooltip {
   position: fixed;
-  z-index: 9000;
+  z-index: var(--z-toast);
   pointer-events: none;
   background: var(--tooltip-bg);
   color: var(--color-on-brand);

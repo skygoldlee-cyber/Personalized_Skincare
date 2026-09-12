@@ -243,6 +243,11 @@
     --z-drawer-overlay: 1500;
     --z-modal: 2000;
     --z-toast: 9000;
+    --z-modal-overlay: 9999;
+    --z-orientation-toast: 10000;
+    --z-html-viewer: 10001;
+    --z-banner: 99997;
+    --z-toast-top: 99998;
     --z-loading: 99999;
 
     /* Shadow/Glow Tokens */

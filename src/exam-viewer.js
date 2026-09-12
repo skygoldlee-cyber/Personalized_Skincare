@@ -101,7 +101,7 @@ export const ExamViewer = (() => {
         // (이전에는 존재하지 않는 --bg-color/--text-color/--card-bg/--text-muted 를 참조해
         //  항상 라이트 폰트 기본값으로 떨어져 전역 테마가 적용되지 않던 문제 수정)
         style.textContent = `
-#exam-overlay{position:fixed;inset:0;z-index:9999;display:none;flex-direction:column;
+#exam-overlay{position:fixed;inset:0;z-index:var(--z-modal-overlay);display:none;flex-direction:column;
   background:var(--bg-app);color:var(--color-text-main);}
 #exam-overlay.open{display:flex;}
 #exam-overlay .exam-ov-bar{display:flex;align-items:center;gap:12px;flex:0 0 auto;
