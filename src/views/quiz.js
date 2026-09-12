@@ -48,6 +48,7 @@ export function startQuiz() {
 export function renderQuizQuestion() {
     const quizState = state.quiz;
     const currentQuiz = quizState.data[quizState.currentIndex];
+    if (!currentQuiz) return;
     
     // 진도 바
     const progressPercent = Math.round((quizState.currentIndex / quizState.data.length) * 100);
@@ -139,6 +140,10 @@ export function renderQuizQuestion() {
 export function submitQuizAnswer() {
     const quizState = state.quiz;
     const currentQuiz = quizState.data[quizState.currentIndex];
+    if (!currentQuiz) {
+        showToast("퀴즈 데이터를 불러오지 못했습니다.", "error");
+        return;
+    }
     const input = document.getElementById('quiz-answer-input');
     if (!input) return;
     const userAnswer = input.value.trim();
@@ -206,6 +211,7 @@ export function submitQuizAnswer() {
 function submitQuizChoiceAnswer(selectedBtn, selectedValue, correctValue) {
     const quizState = state.quiz;
     const currentQuiz = quizState.data[quizState.currentIndex];
+    if (!currentQuiz) return;
     const isCorrect = (selectedValue === correctValue);
     vibrate(isCorrect ? HAPTIC.correct : HAPTIC.wrong);
     
@@ -514,7 +520,10 @@ export function startWeakFocusQuiz() {
             const parts = card.id.replace('weak_sim_', '').split('_q');
             const examId = parts[0];
             const qNum = parseInt(parts[1]);
-            const q = window.EXAM_DATA[examId].questions.find(quest => quest.num === qNum);
+            if (!window.EXAM_DATA || !window.EXAM_DATA[examId] || isNaN(qNum)) return null;
+            const exam = window.EXAM_DATA[examId];
+            const q = exam.questions.find(quest => quest.num === qNum);
+            if (!q) return null;
             
             let qText = q.question;
             if (q.options && q.options.length) {
@@ -543,7 +552,7 @@ export function startWeakFocusQuiz() {
         }
     });
     
-    state.quiz.data = shuffle(weakList).slice(0, 10);
+    state.quiz.data = shuffle(weakList.filter(Boolean)).slice(0, 10);
     state.quiz.currentIndex = 0;
     state.quiz.correctCount = 0;
     state.quiz.solvedList = [];

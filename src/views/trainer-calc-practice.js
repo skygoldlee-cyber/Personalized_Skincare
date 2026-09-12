@@ -71,6 +71,7 @@ export function generateCalcQuestion() {
 export function submitCalcAnswer() {
     const calcState = state.trainer.calc;
     const currentQ = calcState.currentQuestion;
+    if (!currentQ) return;
     const input = document.getElementById('calc-answer-input');
     if (!input) return;
     const userVal = parseFloat(input.value);

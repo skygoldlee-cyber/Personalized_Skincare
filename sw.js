@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v337-20260912-content-flexibility';   // content 변경 유연성 개선 (pdf-registry 자동 생성, sw.js MD_ASSETS 자동 갱신, exam-simulator 동적화, 빌드 파이프라인 통합)
+const CACHE_VERSION = 'v338-20260912-robustness';   // 소스코드 강건성 개선 (배열 bounds 체크, localStorage try/catch, DOM null 체크, Promise .catch, 무한 루프 안전장치)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;

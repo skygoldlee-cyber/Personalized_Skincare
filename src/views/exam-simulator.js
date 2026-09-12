@@ -23,13 +23,18 @@ export function startSimSession(examData) {
     simState.wrongQuestions = [];
 
     // UI 전환
-    document.getElementById('exam-list-panel').classList.add('is-hidden');
-    document.getElementById('sim-result-panel').classList.add('is-hidden');
-    document.getElementById('sim-review-panel').classList.add('is-hidden');
-    document.getElementById('sim-arena-panel').classList.remove('is-hidden');
+    const examListPanel = document.getElementById('exam-list-panel');
+    const simResultPanel = document.getElementById('sim-result-panel');
+    const simReviewPanel = document.getElementById('sim-review-panel');
+    const simArenaPanel = document.getElementById('sim-arena-panel');
+    if (examListPanel) examListPanel.classList.add('is-hidden');
+    if (simResultPanel) simResultPanel.classList.add('is-hidden');
+    if (simReviewPanel) simReviewPanel.classList.add('is-hidden');
+    if (simArenaPanel) simArenaPanel.classList.remove('is-hidden');
 
     // 타이머 및 OMR 렌더링
-    document.getElementById('sim-exam-title').textContent = examData.title;
+    const simExamTitle = document.getElementById('sim-exam-title');
+    if (simExamTitle) simExamTitle.textContent = examData.title;
     renderOMRSheet();
     renderSimQuestion();
 
@@ -139,17 +144,23 @@ function _startIntegratedMockExamImpl() {
     });
 
     const totalQuestions = combinedQuestions.length;
+    const subjectCount = subjects.length;
     const integratedExam = {
         id: 'integrated',
-        title: `1~4과목 통합 실전 모의고사 (${totalQuestions}제)`,
+        title: subjects.length > 0
+            ? `1~${subjectCount}과목 통합 실전 모의고사 (${totalQuestions}제)`
+            : `통합 실전 모의고사 (${totalQuestions}제)`,
         questions: combinedQuestions
     };
 
     // UI 전환
     state.currentView = 'exam-view';
-    document.getElementById('dashboard-view').classList.remove('active');
-    document.getElementById('review-view').classList.remove('active');
-    document.getElementById('exam-view').classList.add('active');
+    const dashboardView = document.getElementById('dashboard-view');
+    const reviewView = document.getElementById('review-view');
+    const examView = document.getElementById('exam-view');
+    if (dashboardView) dashboardView.classList.remove('active');
+    if (reviewView) reviewView.classList.remove('active');
+    if (examView) examView.classList.add('active');
 
     // OMR Sheet, Timer 활성화
     startSimSession(integratedExam);
@@ -165,11 +176,11 @@ export function saveSimDraft() {
         currentIndex: simState.currentIndex,
         questions: simState.data.questions
     };
-    localStorage.setItem(STORAGE_KEYS.SIM_DRAFT_SESSION, JSON.stringify(draft));
+    try { localStorage.setItem(STORAGE_KEYS.SIM_DRAFT_SESSION, JSON.stringify(draft)); } catch (e) { /* noop */ }
 }
 
 export function clearSimDraft() {
-    localStorage.removeItem(STORAGE_KEYS.SIM_DRAFT_SESSION);
+    try { localStorage.removeItem(STORAGE_KEYS.SIM_DRAFT_SESSION); } catch (e) { /* noop */ }
     const banner = document.getElementById('draft-resume-banner');
     if (banner) banner.classList.add('is-hidden');
 }
@@ -178,7 +189,8 @@ export function checkExamDraft() {
     const banner = document.getElementById('draft-resume-banner');
     if (!banner) return;
     
-    const saved = localStorage.getItem(STORAGE_KEYS.SIM_DRAFT_SESSION);
+    let saved;
+    try { saved = localStorage.getItem(STORAGE_KEYS.SIM_DRAFT_SESSION); } catch (e) { saved = null; }
     if (saved) {
         try {
             const draft = JSON.parse(saved);
@@ -201,7 +213,8 @@ export function checkExamDraft() {
 }
 
 export function resumeSimDraft() {
-    const saved = localStorage.getItem(STORAGE_KEYS.SIM_DRAFT_SESSION);
+    let saved;
+    try { saved = localStorage.getItem(STORAGE_KEYS.SIM_DRAFT_SESSION); } catch (e) { saved = null; }
     if (!saved) return;
     
     try {
@@ -218,12 +231,17 @@ export function resumeSimDraft() {
         simState.timeLeft = draft.timeLeft;
         simState.wrongQuestions = [];
         
-        document.getElementById('exam-list-panel').classList.add('is-hidden');
-        document.getElementById('sim-result-panel').classList.add('is-hidden');
-        document.getElementById('sim-review-panel').classList.add('is-hidden');
-        document.getElementById('sim-arena-panel').classList.remove('is-hidden');
+        const _examListPanel = document.getElementById('exam-list-panel');
+        const _simResultPanel = document.getElementById('sim-result-panel');
+        const _simReviewPanel = document.getElementById('sim-review-panel');
+        const _simArenaPanel = document.getElementById('sim-arena-panel');
+        if (_examListPanel) _examListPanel.classList.add('is-hidden');
+        if (_simResultPanel) _simResultPanel.classList.add('is-hidden');
+        if (_simReviewPanel) _simReviewPanel.classList.add('is-hidden');
+        if (_simArenaPanel) _simArenaPanel.classList.remove('is-hidden');
 
-        document.getElementById('sim-exam-title').textContent = draft.examTitle;
+        const _simExamTitle = document.getElementById('sim-exam-title');
+        if (_simExamTitle) _simExamTitle.textContent = draft.examTitle;
         renderOMRSheet();
         renderSimQuestion();
 
@@ -261,10 +279,14 @@ export function exitSimArena() {
     if (simState.timerInterval) clearInterval(simState.timerInterval);
     
     // UI 전환
-    document.getElementById('sim-arena-panel').classList.add('is-hidden');
-    document.getElementById('sim-result-panel').classList.add('is-hidden');
-    document.getElementById('sim-review-panel').classList.add('is-hidden');
-    document.getElementById('exam-list-panel').classList.remove('is-hidden');
+    const _arena = document.getElementById('sim-arena-panel');
+    const _result = document.getElementById('sim-result-panel');
+    const _review = document.getElementById('sim-review-panel');
+    const _list = document.getElementById('exam-list-panel');
+    if (_arena) _arena.classList.add('is-hidden');
+    if (_result) _result.classList.add('is-hidden');
+    if (_review) _review.classList.add('is-hidden');
+    if (_list) _list.classList.remove('is-hidden');
     
     // 대시보드 갱신하여 배너 확인
     checkExamDraft();
@@ -374,17 +396,21 @@ export function jumpToSimQuestion(index) {
 
 export function renderSimQuestion() {
     const q = simState.data.questions[simState.currentIndex];
+    if (!q) return;
     
     // 문제 정보 주입
-    document.getElementById('sim-q-num').textContent = `Q ${simState.currentIndex + 1} / ${simState.data.questions.length}`;
+    const qNumEl = document.getElementById('sim-q-num');
+    if (qNumEl) qNumEl.textContent = `Q ${simState.currentIndex + 1} / ${simState.data.questions.length}`;
     
     let typeName = '단답형';
     if (q.type === 'choice') typeName = '객관식 5지선다';
     else if (q.type === 'ox') typeName = '진위형 OX';
-    document.getElementById('sim-q-type').textContent = typeName;
+    const qTypeEl = document.getElementById('sim-q-type');
+    if (qTypeEl) qTypeEl.textContent = typeName;
     
     // 개행 문자를 BR 태그로 치환해 질문 가독성 보장
-    document.getElementById('sim-q-text').innerHTML = safeTextWithBreaks(q.question);
+    const qTextEl = document.getElementById('sim-q-text');
+    if (qTextEl) qTextEl.innerHTML = safeTextWithBreaks(q.question);
     
     // 옵션 컨테이너 채우기
     const container = document.getElementById('sim-options-container');
@@ -565,12 +591,16 @@ export function submitExam() {
     }
     
     // 결과 패널 세팅
-    document.getElementById('sim-arena-panel').classList.add('is-hidden');
-    document.getElementById('sim-result-panel').classList.remove('is-hidden');
+    const _arenaPanel = document.getElementById('sim-arena-panel');
+    const _resultPanel = document.getElementById('sim-result-panel');
+    if (_arenaPanel) _arenaPanel.classList.add('is-hidden');
+    if (_resultPanel) _resultPanel.classList.remove('is-hidden');
     
-    document.getElementById('sim-result-score').textContent = `${score} / ${total} 개`;
+    const _scoreEl = document.getElementById('sim-result-score');
+    if (_scoreEl) _scoreEl.textContent = `${score} / ${total} 개`;
     const rate = Math.round((score / total) * 100);
-    document.getElementById('sim-result-rate').textContent = `${rate}%`;
+    const _rateEl = document.getElementById('sim-result-rate');
+    if (_rateEl) _rateEl.textContent = `${rate}%`;
 
     // 과목별 상세 보고서 생성 (신규 Feature 2)
     const breakdownContainer = document.getElementById('sim-result-breakdown');
@@ -841,9 +871,12 @@ function _startWeakExamImpl() {
     
     // OMR 및 타이머 제어용 데이터 이식
     state.currentView = 'exam-view';
-    document.getElementById('dashboard-view').classList.remove('active');
-    document.getElementById('review-view').classList.remove('active');
-    document.getElementById('exam-view').classList.add('active');
+    const _dashView = document.getElementById('dashboard-view');
+    const _revView = document.getElementById('review-view');
+    const _examView = document.getElementById('exam-view');
+    if (_dashView) _dashView.classList.remove('active');
+    if (_revView) _revView.classList.remove('active');
+    if (_examView) _examView.classList.add('active');
     
     // OMR Sheet, Timer 활성화
     startSimSession(mockExam);

@@ -188,12 +188,13 @@ export const DataLoader = {
      * @returns {import('./types.js').SubjectMeta[]}
      */
     getSubjectList() {
-        return this.registry.subjects;
+        return (this.registry && this.registry.subjects) || [];
     },
 
     /** Load an exam's bundle on demand (기존 유지) */
     async loadExam(key) {
         if (this._loadedExams[key]) return this._loadedExams[key];
+        if (!this.registry || !this.registry.exams) throw new Error('Registry not loaded');
         const meta = this.registry.exams.find(e => e.key === key);
         if (!meta) throw new Error(`Exam metadata not found for key: ${key}`);
         await this._loadScript(meta.bundle);

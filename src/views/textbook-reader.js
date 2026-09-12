@@ -163,8 +163,8 @@ export function renderTextbookReader() {
                         });
                     }
                 }
-            });
-        });
+            }).catch(err => console.error('renderChapterContent failed:', err));
+        }).catch(err => console.error('loadSubject failed:', err));
     }
     
     // Bind events only once
@@ -184,7 +184,7 @@ export function renderTextbookReader() {
                 saveReaderPosition(); // 1. 교재 읽기 이어하기
                 DataLoader.loadSubject(subjId).then(() => {
                     renderChapterContent(subjId, 0);
-                });
+                }).catch(err => console.error('loadSubject failed:', err));
             } else {
                 textbookReaderState.selectedChapter = '';
                 saveReaderPosition();
@@ -777,7 +777,7 @@ function _renderReaderMermaid(container) {
 
 // --- Reader convenience feature state & logic ---
 let readerChapterContext = { subjId: '', chapterIdx: 0 };
-let readerFontScale = parseFloat(localStorage.getItem(STORAGE_KEYS.READER_FONT_SCALE)) || 1;
+let readerFontScale = (() => { try { return parseFloat(localStorage.getItem(STORAGE_KEYS.READER_FONT_SCALE)) || 1; } catch (e) { return 1; } })();
 let readerScrollBound = false;
 
 function getReaderBookmarks() {
@@ -800,7 +800,7 @@ function toggleReaderBookmark(key, btn) {
         btn.querySelector('i').className = 'fa-solid fa-bookmark';
         btn.title = '북마크 제거';
     }
-    localStorage.setItem(STORAGE_KEYS.READER_BOOKMARKS, JSON.stringify(bookmarks));
+    try { localStorage.setItem(STORAGE_KEYS.READER_BOOKMARKS, JSON.stringify(bookmarks)); } catch (e) { /* noop */ }
 }
 
 function applyReaderFontScale() {
@@ -808,7 +808,7 @@ function applyReaderFontScale() {
     const display = document.getElementById('reader-font-size-display');
     if (container) container.style.setProperty('--reader-font-scale', readerFontScale);
     if (display) display.textContent = Math.round(readerFontScale * 100) + '%';
-    localStorage.setItem(STORAGE_KEYS.READER_FONT_SCALE, readerFontScale);
+    try { localStorage.setItem(STORAGE_KEYS.READER_FONT_SCALE, readerFontScale); } catch (e) { /* noop */ }
 }
 
 function applyReaderThemeClass() {

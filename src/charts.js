@@ -27,7 +27,8 @@ let _simResultsCache = null;
 let _simResultsCacheRaw = null;
 
 function getSimResults() {
-    const raw = localStorage.getItem(STORAGE_KEYS.SIM_RESULTS_HISTORY);
+    let raw;
+    try { raw = localStorage.getItem(STORAGE_KEYS.SIM_RESULTS_HISTORY); } catch (e) { raw = null; }
     if (raw === _simResultsCacheRaw && _simResultsCache !== null) {
         return _simResultsCache;
     }

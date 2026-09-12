@@ -240,7 +240,9 @@ function generateLimitsOptions(question) {
         }
     }
     
-    while (optionsSet.size < 4) {
+    let _safety = 0;
+    while (optionsSet.size < 4 && _safety < 100) {
+        _safety++;
         const fallback = String((parseFloat(correctValue) || 1) * (optionsSet.size + 2));
         if (fallback !== correctValue) {
             optionsSet.add(fallback);

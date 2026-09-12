@@ -27,6 +27,7 @@ function _getSearchIndex() {
         const subj = STUDY_DATA[subjId];
         if (!subj.chapters) return;
         subj.chapters.forEach(chapter => {
+            if (!chapter.sections) return;
             chapter.sections.forEach(section => {
                 _searchIndex.push({
                     subjId,

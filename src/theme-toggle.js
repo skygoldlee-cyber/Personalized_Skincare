@@ -45,7 +45,9 @@ export function setupThemeToggle() {
     if (window.matchMedia) {
         var mq = window.matchMedia('(prefers-color-scheme: light)');
         var onChange = function (e) {
-            if (localStorage.getItem(STORAGE_KEYS.APP_THEME)) return;
+            var hasTheme;
+            try { hasTheme = localStorage.getItem(STORAGE_KEYS.APP_THEME); } catch (_) { hasTheme = null; }
+            if (hasTheme) return;
             apply(e.matches);
         };
         if (mq.addEventListener) mq.addEventListener('change', onChange);
