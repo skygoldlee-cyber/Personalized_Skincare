@@ -319,8 +319,8 @@
 .reader-toc-sub-item:hover::after {
     content: attr(data-toc-title);
     position: absolute;
-    left: 0;
-    top: 100%;
+    left: 100%;
+    top: 0;
     z-index: var(--z-popover);
     padding: 0.4rem 0.7rem;
     background: var(--tooltip-bg);
@@ -336,7 +336,7 @@
     min-width: 120px;
     box-shadow: var(--shadow-tooltip);
     pointer-events: none;
-    margin-top: 4px;
+    margin-left: 6px;
 }
 .reader-light-theme .reader-toc-item:hover::after,
 .reader-light-theme .reader-toc-sub-item:hover::after {
