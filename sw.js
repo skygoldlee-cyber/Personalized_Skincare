@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v325-20260912-b169d25';   // 참조 자료 섹션 제목 단순화
+const CACHE_VERSION = 'v325-20260912-b1800eb';   // 참조 자료 섹션 제목 단순화
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
@@ -73,6 +73,8 @@ const SHELL_ASSETS = [
   './src/views/flashcard.js',
   './src/views/quiz.js',
   './src/views/trainer.js',
+  './src/views/trainer-calc-practice.js',
+  './src/views/trainer-ingredients.js',
   './src/views/dictionary.js',
   './content/교재/understanding/images/피부의 구조 단면도 보완_인포그래픽.png',
   './content/교재/understanding/images/모발의 구조 단면도 보완_인포그래픽.png',
