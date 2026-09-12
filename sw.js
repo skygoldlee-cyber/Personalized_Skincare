@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v343-20260912-945ad48';   // 가독성 향상: 줄 간격 조절, sticky 헤딩, 인용구 강조
+const CACHE_VERSION = 'v343-20260912-284464f';   // 가독성 향상: 줄 간격 조절, sticky 헤딩, 인용구 강조
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
@@ -313,12 +313,14 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 4-1) 마크다운 원본 파일 → Cache First (content/exams/*.md 등, 정적 원본)
+  // 4-1) 마크다운 원본 파일 → Stale-While-Revalidate (content/exams/*.md 등, 정적 원본)
   //      단, ref_md/*.md는 DATA_CACHE(배포 간 유지)로 분리 — SHELL_CACHE는 배포마다 전체 삭제되므로
   //      26MB 참조자료 MD가 매 배포마다 재다운로드되는 것을 방지.
+  //      교재 MD는 SW 업데이트와 무관하게 백그라운드 갱신되도록 SWR 적용
+  //      (cacheFirst일 때 SW가 갱신되지 않으면 구버전 MD가 영구 서빙되는 문제 방지)
   if (MD_PATTERN.test(url.pathname)) {
     const targetCache = url.pathname.includes('/ref_md/') ? DATA_CACHE : SHELL_CACHE;
-    event.respondWith(cacheFirst(request, targetCache));
+    event.respondWith(staleWhileRevalidate(request, targetCache));
     return;
   }
 
