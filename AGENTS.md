@@ -133,6 +133,13 @@ docs/                   # 개발 문서
 - 인라인 `onclick`/`oninput` 금지 (CSP 차단) → `data-click`/`data-input` 사용
 - `element.style.display = '...'` 금지 → `classList.add/remove('is-hidden')` 사용
 - `alert()`/`confirm()` 금지 → `showToast()`/`showConfirm()` 사용 (src/ui-utils.js)
+- **강건성 규칙** (상세: `docs/dev/ARCHITECTURE.md` 강건성 가이드라인 섹션):
+  - 배열 접근 후 bounds 체크: `if (!item) return;`
+  - `window.X` 접근 시 존재 체크: `window.X && window.X[key]`
+  - `parseInt()` 결과 `isNaN()` 체크
+  - `localStorage` 접근 시 `try/catch` 래핑 (또는 `safeGetItem`/`safeSetItem` 사용)
+  - `document.getElementById()` 결과 null 체크
+  - Promise 체인에 `.catch()` 추가
 
 ### CSS
 - `style.css`가 진입점, `@import`로 `css/*.css` 로드

@@ -5,6 +5,36 @@
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 > registry↔번들 14개 실재 확인 · 비ASCII 콘텐츠 파일 0 · `vercel.json` JSON 유효.
 
+## 2026-09-12 소스코드 강건성 개선 (20개 항목)
+
+> 강건성 리뷰(병렬 서브에이전트 2개 + 직접 조사)에서 식별된 20개 항목 일괄 수정.
+
+### 🔴 높음 — TypeError 방지 (8건)
+- **quiz.js:517**: `window.EXAM_DATA[examId].questions` → 존재 체크 + `isNaN(qNum)` 검증 + `filter(Boolean)`
+- **quiz.js:141,208,50**: `quizState.data[currentIndex]` bounds 체크 (`if (!currentQuiz) return`)
+- **exam-simulator.js:376**: `renderSimQuestion` bounds 체크 + DOM null 체크
+- **exam-simulator.js:168**: `saveSimDraft` localStorage try/catch (QuotaExceededError 대응)
+- **textbook-reader.js:780**: 모듈 로드 시점 localStorage try/catch (Safari 프라이빗 모드 대응)
+- **textbook-reader.js:155,185**: Promise 체인 `.catch()` 추가 (unhandled rejection 방지)
+- **exam-simulator.js 5곳**: `startSimSession`/`resumeSimDraft`/`exitSimArena`/`submitExam`/`startWeakExam` DOM null 체크
+- **backup.js:63**: `JSON.parse` 결과 null/object 타입 검증
+
+### 🟡 중간 — 예외 상황 대응 (8건)
+- **trainer.js:243**: `while` 루프 무한 루프 안전장치 (`_safety < 100`)
+- **textbook-reader.js, backup.js, charts.js, theme-toggle.js**: localStorage 접근 try/catch 래핑 (12곳)
+- **exam-simulator.js:149**: 통합 모의고사 제목 "1~4과목" → `subjects.length` 기반 동적 생성
+
+### 🟢 낮음 — 기능 안정성 (4건)
+- **data-loader.js:191,197**: `getSubjectList`/`loadExam` registry null 체크
+- **textbook-search.js:30**: `chapter.sections` undefined 체크
+- **trainer-calc-practice.js:73**: `currentQ` undefined 체크
+
+### 검증
+- `npm test`: 248 pass, 0 fail
+- `npm run check:imports`: 54개 파일, 0개 오류
+- `npm run verify:assets`: 81개 자산 확인
+- **SW**: v338-20260912-robustness
+
 ## 2026-09-12 content 변경 유연성 개선 + 사용자 매뉴얼 갱신
 
 > content/ 폴더 변경 시 소스 코드 수정 없이 JSON/MD 파일만 편집하면 빌드 파이프라인이 자동 처리하도록 개선.

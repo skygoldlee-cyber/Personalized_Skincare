@@ -944,6 +944,42 @@ app-fallback.js 폴링 시작 (400ms 간격, 15s 데드라인)
 
 ---
 
+## 🛡️ 강건성 가이드라인 (Robustness Guidelines)
+
+> 2026-09-12 강건성 리뷰(20개 항목 수정)에서 확립된 코딩 규칙. 신규 코드 작성 시 준수 필수.
+
+### 1. 배열 접근 시 bounds 체크
+- `array[index]` 접근 후 반드시 `if (!item) return;` 또는 `if (!item) { showToast(...); return; }` 추가
+- 특히 `quizState.data[currentIndex]`, `simState.data.questions[currentIndex]` 등 상태 기반 인덱스 접근
+
+### 2. window 전역 데이터 접근 시 존재 체크
+- `window.EXAM_DATA[examId]` → `window.EXAM_DATA && window.EXAM_DATA[examId]` 가드
+- `window.DATA_REGISTRY` → `typeof window !== 'undefined' && window.DATA_REGISTRY` 가드
+- `parseInt()` 결과 → `isNaN()` 체크
+
+### 3. localStorage 접근 시 try/catch
+- `localStorage.setItem/getItem/removeItem`은 Safari 프라이빗 모드, 용량 초과, 스토리지 비활성 환경에서 예외 발생
+- `state.js`의 `safeGetItem`/`safeSetItem` 래퍼 사용 권장
+- 직접 접근 시 반드시 `try { ... } catch (e) { /* noop */ }` 래핑
+
+### 4. DOM 요소 접근 시 null 체크
+- `document.getElementById('id').classList.add(...)` → `const el = document.getElementById('id'); if (el) el.classList.add(...);`
+- 특히 `exam-simulator.js` 등 뷰 전환 시 다수 DOM 요소 동시 조작
+
+### 5. Promise 체인에 .catch() 추가
+- `.then()` 체인에는 항상 `.catch(err => console.error(...))` 추가
+- unhandled rejection은 런타임 에러 안전망에서 감지되지만, 명시적 catch로 원인 추적 용이
+
+### 6. 무한 루프 안전장치
+- `while (condition)` 루프에는 카운터 기반 종료 조건 추가 (`_safety < 100`)
+- 정규식 `exec` 루프는 `g` flag로 종료 보장
+
+### 7. JSON.parse 결과 검증
+- `JSON.parse(raw)` 결과가 `null`이거나 예상 타입이 아닐 수 있음
+- `if (!data || typeof data !== 'object')` 검증 후 사용
+
+---
+
 ## ⚙️ 데이터 파이프라인 (빌드 타임 + 런타임)
 
 시험 문항·성분 사전은 빌드 타임에 해시드 번들로 생성하고, **교재 본문·카드·퀴즈는 런타임에 `content/*.md`를 직접 파싱**합니다(재빌드 없이 최신 반영).
