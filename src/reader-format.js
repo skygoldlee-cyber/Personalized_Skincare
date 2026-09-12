@@ -8,7 +8,7 @@ import { escapeHTML } from './sanitize.js';
 import { resolveRefPath, KEYWORD_REF_MAP } from './pdf-registry.js';
 import { getGlossaryEntry } from './glossary-query.js';
 
-export function formatSectionContentForReader(rawContent, filePath, refPath, refFiles, refDir, glossaryKeywords) {
+export function formatSectionContentForReader(rawContent, filePath, refPath, refFiles, refDir, glossaryKeywords, sectionTitle) {
     let html = parseMarkdown(rawContent, {
         useCustomListDiv: true,
         useReaderStyles: true,
@@ -17,6 +17,22 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
         allowInlineCode: false,
         allowMermaid: true
     });
+
+    // 본문 목차(## 📋 목차) 섹션의 리스트 항목 → 대응 섹션으로 스크롤되는 하이퍼링크 변환
+    // 마크다운 파서가 - **Chapter 01.** xxx를 <div class="md-list-item">...<span>...</span></div>로 변환
+    // 사이드바 TOC와 동일하게 data-toc-jump 속성을 부여하여 textbook-reader.js에서 위임 처리
+    if (sectionTitle && /^📋\s*목차/.test(sectionTitle)) {
+        html = html.replace(/<div class="md-list-item"[^>]*>([\s\S]*?)<\/div>/gi, (match, inner) => {
+            // 내부 텍스트 추출 (HTML 태그 제거, 불릿/앞뒤 공백 정제)
+            const fullText = inner.replace(/<[^>]+>/g, '').replace(/&[^;]+;/g, ' ').replace(/^[•·]\s*/, '').trim();
+            if (!fullText) return match;
+            // span 내부를 링크로 감쌈
+            const linkedInner = inner.replace(/<span>([\s\S]*?)<\/span>/, (m, spanContent) => {
+                return `<span><a href="#" data-toc-jump="${escapeHTML(fullText)}" class="toc-jump-link" style="color:var(--color-primary,#1f6feb);text-decoration:underline dotted;cursor:pointer;">${spanContent}</a></span>`;
+            });
+            return `<div class="md-list-item" style="padding-left: 0.5rem;">${linkedInner}</div>`;
+        });
+    }
 
     // 기출문제 링크 → 앱 내 HTML 문제집 뷰어(ExamViewer)로 열기
     // 마크다운 파서가 [text](기출문제/과목N_...)를 <a href="기출문제/과목N_...">text</a>로 변환한 후 처리

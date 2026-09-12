@@ -596,11 +596,11 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
         const secSrcMatch = allContent.match(/📌\s*\*\*출처\*\*[:：]\s*(.+?)(?:\||\n)/);
         const secRefPath = secSrcMatch ? mapSourceToRef(secSrcMatch[1]) : null;
         const refPath = secRefPath || chapterRefPath;
-        let sectionHtml = formatSectionContentForReader(section.content, chapter.filePath, refPath, subjRefFiles, subjDirName, glossaryItems);
+        let sectionHtml = formatSectionContentForReader(section.content, chapter.filePath, refPath, subjRefFiles, subjDirName, glossaryItems, section.title);
         if (section.subsections && section.subsections.length > 0) {
             for (const sub of section.subsections) {
                 sectionHtml += `<h5 class="reader-subsection-title">${esc(sub.title)}</h5>`;
-                sectionHtml += `<div class="reader-subsection-content">${formatSectionContentForReader(sub.content, chapter.filePath, refPath, subjRefFiles, subjDirName, glossaryItems)}</div>`;
+                sectionHtml += `<div class="reader-subsection-content">${formatSectionContentForReader(sub.content, chapter.filePath, refPath, subjRefFiles, subjDirName, glossaryItems, sub.title)}</div>`;
             }
         }
         html += `
@@ -668,6 +668,49 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
             if (e.target.closest('.reader-bookmark-btn')) return;
             const card = header.closest('.reader-section-card');
             if (card) card.classList.toggle('collapsed');
+        });
+    });
+
+    // 본문 목차 하이퍼링크 → 대응 섹션으로 스크롤
+    container.querySelectorAll('a[data-toc-jump]').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const jumpText = (link.dataset.tocJump || '').trim();
+            if (!jumpText) return;
+            // 목차 항목 텍스트가 포함된 섹션 찾기 (부분 매칭)
+            const sectionCards = container.querySelectorAll('.reader-section-card');
+            let found = null;
+            // 1순위: 섹션 제목이 목차 항목을 포함
+            sectionCards.forEach(card => {
+                const titleEl = card.querySelector('.reader-section-title');
+                if (!titleEl) return;
+                const title = titleEl.textContent.trim();
+                if (title.includes(jumpText) || jumpText.includes(title)) {
+                    found = card;
+                }
+            });
+            // 2순위: Chapter NN 매칭 (목차 "Chapter 01." → 섹션 "📚 Chapter 01. xxx")
+            if (!found && /Chapter\s+\d+/i.test(jumpText)) {
+                const chMatch = jumpText.match(/Chapter\s+(\d+)/i);
+                if (chMatch) {
+                    const chNum = chMatch[1];
+                    sectionCards.forEach(card => {
+                        const titleEl = card.querySelector('.reader-section-title');
+                        if (!titleEl) return;
+                        const title = titleEl.textContent.trim();
+                        if (new RegExp('Chapter\\s+' + chNum + '\\b', 'i').test(title)) {
+                            found = card;
+                        }
+                    });
+                }
+            }
+            if (found) {
+                if (found.classList.contains('collapsed')) {
+                    found.classList.remove('collapsed');
+                }
+                found.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
         });
     });
 
