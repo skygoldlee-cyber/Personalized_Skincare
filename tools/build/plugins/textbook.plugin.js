@@ -319,7 +319,7 @@ const parseMarkdownFile = (filePath, subjectId, filename, chapterKey, stableId) 
     if (line.startsWith('## ')) {
       currentSection = line.substring(3).trim();
       skipSection = currentSection.startsWith('🧭')
-        || currentSection.startsWith('🎯 과목 시각화')
+        || currentSection.startsWith('🗺️ 과목 지도')
         || currentSection.startsWith('📋 별표')
         || currentSection.startsWith('📊')
         || currentSection.startsWith('🔢')
