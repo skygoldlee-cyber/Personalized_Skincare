@@ -197,5 +197,4 @@ docs/                   # 개발 문서
 - `docs/dev/CHANGES.md` — 변경 이력
 - `docs/dev/TESTING.md` — 테스트 가이드
 - `docs/dev/TEXTBOOK_AUTHORING_GUIDE.md` — 교재 작성 가이드
-- `docs/dev/DEV_MODE_DESIGN.md` — 개발자모드/고객모드 구분 설계방안
 - `docs/user/user_manual.md` — 사용자 매뉴얼
