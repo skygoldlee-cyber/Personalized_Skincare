@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v341-20260912-linebreak-cleanup';   // 교재 본문 불필요한 줄바뀜 전수 정리 (보기 빈 줄, 한 줄 핵심, 해설 분리)
+const CACHE_VERSION = 'v342-20260912-table-hover-dark';   // 다크모드 테이블 행 hover 배경색 추가
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;

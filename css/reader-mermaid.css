@@ -197,7 +197,7 @@
 }
 
 .reader-table tr:hover td {
-    background: var(--primary-tint-5);
+    background: var(--primary-tint-15);
 }
 
 .reader-table sup {

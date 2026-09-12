@@ -682,6 +682,9 @@
 .reader-table tr:nth-child(odd) td {
     background: var(--bg-subtle);
 }
+.reader-table tr:hover td {
+    background: var(--primary-tint-15);
+}
 .reader-table-expand-btn {
     position: absolute;
     top: 6px;
