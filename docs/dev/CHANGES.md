@@ -3,6 +3,21 @@
 > 대상: Personalized_Skincare (Cosmetic Pass Master) 배포판
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
+
+## 2026-09-12 가독성 향상 기능 4종 추가
+
+> 교재 리더 가독성 향상을 위한 4개 기능 순차 적용.
+
+### 추가 기능
+- **#1 줄 간격 조절**: 툴바에 줄 간격 버튼 그룹 추가 (1.4~2.6, 0.1 단위). `--reader-line-height` CSS 변수 + localStorage 저장. 본문 및 인용구 line-height에 적용
+- **#2 읽기 진행률 표시줄**: 이미 구현되어 있음 (상단 sticky progress bar, 스크롤 위치 기반 0–100%)
+- **#3 현재 섹션 헤딩 sticky**: 스크롤 시 현재 섹션 제목이 상단에 sticky로 표시. 섹션 헤더가 화면 상단을 넘어갈 때 표시, 100px 미만 스크롤 시 숨김
+- **#4 인용구 강조 스타일**: 기본 모드 blockquote에 좌측 보더(3px primary) + 배경색(primary-tint-8) + 패딩 + 라운드 코너 추가. 라이트 테마는 warning 색상 적용
+
+### 검증
+- `npm test`: 248 pass, 0 fail
+- `npm run check:imports`: 54개 파일, 0개 오류
+- `npm run verify:assets`: 81개 자산 확인
 > registry↔번들 14개 실재 확인 · 비ASCII 콘텐츠 파일 0 · `vercel.json` JSON 유효.
 
 ## 2026-09-12 교재 본문 불필요한 줄바뀜 전수 정리

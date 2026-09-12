@@ -890,6 +890,11 @@
                 <div id="reader-progress-bar" class="reader-progress-bar is-hidden">
                     <div id="reader-progress-fill" class="reader-progress-fill"></div>
                 </div>
+                <!-- Sticky current section heading -->
+                <div id="reader-sticky-heading" class="reader-sticky-heading is-hidden">
+                    <i class="fa-solid fa-bookmark text-primary" aria-hidden="true"></i>
+                    <span id="reader-sticky-heading-text"></span>
+                </div>
 
                 <div class="section-title-area">
                     <h3>📖 교재 본문 읽기</h3>
@@ -919,6 +924,14 @@
                         <span id="reader-font-size-display" class="reader-font-size-display">100%</span>
                         <button class="reader-tool-btn" id="reader-font-increase" title="글자 크게">A+</button>
                         <button class="reader-tool-btn" id="reader-font-reset" title="기본 크기로" aria-label="글자 크기 기본값"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="reader-toolbar-divider"></div>
+                    <div class="reader-toolbar-group">
+                        <span class="reader-toolbar-label"><i class="fa-solid fa-arrows-up-down" aria-hidden="true"></i> 줄 간격</span>
+                        <button class="reader-tool-btn" id="reader-line-height-decrease" title="줄 간격 좁게" aria-label="줄 간격 좁게"><i class="fa-solid fa-minus" aria-hidden="true"></i></button>
+                        <span id="reader-line-height-display" class="reader-font-size-display">2.0</span>
+                        <button class="reader-tool-btn" id="reader-line-height-increase" title="줄 간격 넓게" aria-label="줄 간격 넓게"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+                        <button class="reader-tool-btn" id="reader-line-height-reset" title="줄 간격 기본값" aria-label="줄 간격 기본값"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i></button>
                     </div>
                     <div class="reader-toolbar-divider"></div>
                     <div class="reader-toolbar-group">

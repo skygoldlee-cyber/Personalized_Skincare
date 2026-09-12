@@ -25,6 +25,36 @@
     box-shadow: 0 0 8px var(--primary-tint-50);
 }
 
+/* Sticky current section heading */
+.reader-sticky-heading {
+    position: sticky;
+    top: 4px;
+    z-index: var(--z-dropdown);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.9rem;
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--space-3);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-text-main);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+    transition: opacity 0.2s ease;
+}
+.reader-sticky-heading.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+.reader-sticky-heading i {
+    font-size: 0.8rem;
+    flex-shrink: 0;
+}
+
 /* Reader toolbar */
 .reader-toolbar {
     display: flex;
@@ -524,7 +554,7 @@
 
 /* Optimized typography inside reader */
 .textbook-reader-content .textbook-reader-section-content {
-    line-height: 2.05;
+    line-height: var(--reader-line-height, 2.05);
     font-size: calc(1.06rem * var(--reader-font-scale, 1));
     color: var(--color-text-main);
     word-break: keep-all;
@@ -549,7 +579,12 @@
 }
 .textbook-reader-content .textbook-reader-section-content .md-quote {
     font-size: calc(1rem * var(--reader-font-scale, 1));
-    line-height: 1.9;
+    line-height: var(--reader-line-height, 2.05);
+    border-left: 3px solid var(--color-primary);
+    background: var(--primary-tint-8);
+    padding: 0.6rem 0.9rem;
+    border-radius: 0 6px 6px 0;
+    margin: 0.8rem 0;
 }
 
 /* Chapter header card */
@@ -880,6 +915,7 @@ body.reader-focus-mode .reader-readable-width {
 .reader-light-theme .textbook-reader-section-content .md-quote {
     background: var(--warning-tint-10);
     color: var(--reader-light-quote-text);
+    border-left: 3px solid var(--color-warning);
 }
 .reader-light-theme .reader-code-block {
     background: var(--reader-light-code-bg);

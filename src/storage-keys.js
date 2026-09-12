@@ -31,6 +31,7 @@ export const STORAGE_KEYS = {
   // 교재 리더
   READER_LAST_POSITION: 'readerLastPosition',
   READER_FONT_SCALE: 'readerFontScale',
+  READER_LINE_HEIGHT: 'readerLineHeight',
   READER_BOOKMARKS: 'readerBookmarks',
 
   // 설정

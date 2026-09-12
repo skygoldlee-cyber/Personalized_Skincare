@@ -371,9 +371,11 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
     const toolbar = document.getElementById('reader-toolbar');
     const toc = document.getElementById('reader-toc');
     const progressBar = document.getElementById('reader-progress-bar');
+    const stickyHeading = document.getElementById('reader-sticky-heading');
     if (toolbar) toolbar.classList.remove('is-hidden');
     if (toc) toc.classList.remove('is-hidden');
     if (progressBar) progressBar.classList.remove('is-hidden');
+    if (stickyHeading) stickyHeading.classList.add('is-hidden'); // hidden until scroll
 
     const bookmarks = getReaderBookmarks();
 
@@ -703,6 +705,7 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
     container.scrollTop = 0;
     bindReaderScrollEvents();
     applyReaderFontScale();
+    applyReaderLineHeight();
     applyReaderThemeClass();
 
     // Mermaid 다이어그램 렌더링 (pre.mermaid 노드가 있을 때만 온디맨드 로드)
@@ -778,6 +781,7 @@ function _renderReaderMermaid(container) {
 // --- Reader convenience feature state & logic ---
 let readerChapterContext = { subjId: '', chapterIdx: 0 };
 let readerFontScale = (() => { try { return parseFloat(localStorage.getItem(STORAGE_KEYS.READER_FONT_SCALE)) || 1; } catch (e) { return 1; } })();
+let readerLineHeight = (() => { try { return parseFloat(localStorage.getItem(STORAGE_KEYS.READER_LINE_HEIGHT)) || 2.05; } catch (e) { return 2.05; } })();
 let readerScrollBound = false;
 
 function getReaderBookmarks() {
@@ -809,6 +813,14 @@ function applyReaderFontScale() {
     if (container) container.style.setProperty('--reader-font-scale', readerFontScale);
     if (display) display.textContent = Math.round(readerFontScale * 100) + '%';
     try { localStorage.setItem(STORAGE_KEYS.READER_FONT_SCALE, readerFontScale); } catch (e) { /* noop */ }
+}
+
+function applyReaderLineHeight() {
+    const container = document.getElementById('textbook-reader-container');
+    const display = document.getElementById('reader-line-height-display');
+    if (container) container.style.setProperty('--reader-line-height', readerLineHeight);
+    if (display) display.textContent = readerLineHeight.toFixed(2);
+    try { localStorage.setItem(STORAGE_KEYS.READER_LINE_HEIGHT, readerLineHeight); } catch (e) { /* noop */ }
 }
 
 function applyReaderThemeClass() {
@@ -871,6 +883,28 @@ function bindReaderScrollEvents() {
                 const card = container.querySelector(`.reader-section-card[data-section-idx="${currentIdx}"] .reader-section-title`);
                 if (card) breadcrumbEl.textContent = card.textContent.trim();
             }
+            // Sticky heading: show current section title when scrolled past its header
+            const stickyHeading = document.getElementById('reader-sticky-heading');
+            const stickyText = document.getElementById('reader-sticky-heading-text');
+            if (stickyHeading && stickyText) {
+                if (currentIdx >= 0) {
+                    const currentCard = container.querySelector(`.reader-section-card[data-section-idx="${currentIdx}"]`);
+                    if (currentCard) {
+                        const headerEl = currentCard.querySelector('.reader-section-header');
+                        const titleEl = currentCard.querySelector('.reader-section-title');
+                        if (headerEl && titleEl) {
+                            const headerRect = headerEl.getBoundingClientRect();
+                            const containerTop2 = container.getBoundingClientRect().top;
+                            // Show sticky heading when the section header is scrolled above the container top
+                            const showSticky = (headerRect.top - containerTop2) < 0 && container.scrollTop > 100;
+                            stickyHeading.classList.toggle('is-hidden', !showSticky);
+                            if (showSticky) stickyText.textContent = titleEl.textContent.trim();
+                        }
+                    }
+                } else {
+                    stickyHeading.classList.add('is-hidden');
+                }
+            }
         });
     };
 
@@ -890,6 +924,9 @@ function initReaderToolbar() {
     const decBtn = document.getElementById('reader-font-decrease');
     const incBtn = document.getElementById('reader-font-increase');
     const resetBtn = document.getElementById('reader-font-reset');
+    const lhDecBtn = document.getElementById('reader-line-height-decrease');
+    const lhIncBtn = document.getElementById('reader-line-height-increase');
+    const lhResetBtn = document.getElementById('reader-line-height-reset');
     const focusBtn = document.getElementById('reader-focus-toggle');
     const expandAllBtn = document.getElementById('reader-expand-all');
     const collapseAllBtn = document.getElementById('reader-collapse-all');
@@ -918,6 +955,27 @@ function initReaderToolbar() {
         resetBtn.addEventListener('click', () => {
             readerFontScale = 1;
             applyReaderFontScale();
+        });
+    }
+    if (lhDecBtn && !lhDecBtn.dataset.bound) {
+        lhDecBtn.dataset.bound = 'true';
+        lhDecBtn.addEventListener('click', () => {
+            readerLineHeight = Math.max(1.4, +(readerLineHeight - 0.1).toFixed(2));
+            applyReaderLineHeight();
+        });
+    }
+    if (lhIncBtn && !lhIncBtn.dataset.bound) {
+        lhIncBtn.dataset.bound = 'true';
+        lhIncBtn.addEventListener('click', () => {
+            readerLineHeight = Math.min(2.6, +(readerLineHeight + 0.1).toFixed(2));
+            applyReaderLineHeight();
+        });
+    }
+    if (lhResetBtn && !lhResetBtn.dataset.bound) {
+        lhResetBtn.dataset.bound = 'true';
+        lhResetBtn.addEventListener('click', () => {
+            readerLineHeight = 2.05;
+            applyReaderLineHeight();
         });
     }
     // 헤더 등 다른 곳에서 테마가 바뀌면 리더도 즉시 동기화
