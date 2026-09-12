@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v340-20260912-checklist-oneline';   // 1과목 결격사유 체크리스트 항목 한 줄 정리
+const CACHE_VERSION = 'v341-20260912-linebreak-cleanup';   // 교재 본문 불필요한 줄바뀜 전수 정리 (보기 빈 줄, 한 줄 핵심, 해설 분리)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
