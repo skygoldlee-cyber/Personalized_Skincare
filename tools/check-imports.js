@@ -200,6 +200,7 @@ function resolveModule(importerDir, modulePath) {
 function main() {
     const files = collectJsFiles(SRC_DIR);
     const errors = [];
+    const warnings = [];
 
     // 각 파일의 exports를 미리 수집
     const moduleExports = new Map(); // filepath → Set of export names
@@ -218,6 +219,9 @@ function main() {
         const imports = parseImports(src);
         const importerDir = path.dirname(file);
         const relFile = path.relative(ROOT, file).replace(/\\/g, '/');
+
+        // unused import 검출용: import 라인 제거한 본문
+        const bodySrc = src.replace(/^\s*import\s.*$/gm, '');
 
         for (const imp of imports) {
             const resolved = resolveModule(importerDir, imp.modulePath);
@@ -259,6 +263,69 @@ function main() {
                         `${relResolved}에서 export하지 않음`
                     );
                 }
+
+                // unused import 검출: 본문에서 참조되지 않는 import
+                // 단, window.X = X 패턴은 참조로 간주
+                if (name !== 'default') {
+                    const refRe = new RegExp('\\b' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b');
+                    if (!refRe.test(bodySrc)) {
+                        warnings.push(
+                            `${relFile}: '${name}'을(를) import하지만 사용하지 않음 (unused import)`
+                        );
+                    }
+                }
+            }
+        }
+    }
+
+    // --- unused export 검출 ---
+    // 각 export가 다른 파일에서 import되는지 추적
+    const allImports = new Set(); // "filepath::name" 형태
+    for (const file of files) {
+        const src = fs.readFileSync(file, 'utf8');
+        const imports = parseImports(src);
+        const importerDir = path.dirname(file);
+        for (const imp of imports) {
+            const resolved = resolveModule(importerDir, imp.modulePath);
+            if (!resolved) continue;
+            for (const name of imp.names) {
+                if (name === '*' || name === 'default') continue;
+                allImports.add(resolved + '::' + name);
+            }
+        }
+    }
+
+    for (const file of files) {
+        const exports = moduleExports.get(file) || new Set();
+        const relFile = path.relative(ROOT, file).replace(/\\/g, '/');
+        for (const name of exports) {
+            if (name === 'default') continue;
+            // star re-export가 있는 모듈은 정확한 검출이 어려우므로 스킵
+            const starTargets = moduleStarReExports.get(file) || [];
+            if (starTargets.length > 0) continue;
+            if (!allImports.has(file + '::' + name)) {
+                // 테스트 파일에서 import하는지 확인
+                const testDir = path.join(ROOT, 'tests');
+                if (fs.existsSync(testDir)) {
+                    let testUses = false;
+                    for (const tf of collectJsFiles(testDir)) {
+                        const tsrc = fs.readFileSync(tf, 'utf8');
+                        const timports = parseImports(tsrc);
+                        const tdir = path.dirname(tf);
+                        for (const timp of timports) {
+                            const tresolved = resolveModule(tdir, timp.modulePath);
+                            if (tresolved === file && timp.names.includes(name)) {
+                                testUses = true;
+                                break;
+                            }
+                        }
+                        if (testUses) break;
+                    }
+                    if (testUses) continue;
+                }
+                warnings.push(
+                    `${relFile}: '${name}'을(를) export하지만 아무 모듈에서 import하지 않음 (unused export)`
+                );
             }
         }
     }
@@ -270,10 +337,25 @@ function main() {
             console.error('  ' + e);
         }
         console.error(`\n총 ${errors.length}개 오류`);
+    }
+
+    if (warnings.length > 0) {
+        console.warn('\n⚠️  Unused Import/Export 경고:\n');
+        for (const w of warnings) {
+            console.warn('  ' + w);
+        }
+        console.warn(`\n총 ${warnings.length}개 경고`);
+    }
+
+    if (errors.length > 0) {
         process.exit(1);
     }
 
-    console.log(`✅ Import/Export 검증 통과 — ${files.length}개 파일, 오류 없음`);
+    if (warnings.length > 0) {
+        console.log(`\n✅ Import/Export 검증 통과 — ${files.length}개 파일, ${errors.length}개 오류, ${warnings.length}개 경고`);
+    } else {
+        console.log(`✅ Import/Export 검증 통과 — ${files.length}개 파일, 오류 없음`);
+    }
 }
 
 main();

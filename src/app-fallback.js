@@ -141,7 +141,7 @@
     title.style.cssText = 'margin:0;font-size:1.25rem;';
 
     var desc = document.createElement('p');
-    desc.textContent = '저장된 캐시가 손상되었을 수 있습니다. 아래 버튼을 누르면 캐시를 정리하고 새로 불러옵니다. (네트워크 연결을 확인해주세요)';
+    desc.textContent = '앱 로드에 실패했습니다. 저장된 캐시 손상 또는 최근 업데이트 문제일 수 있습니다. 아래 버튼을 누르면 캐시를 정리하고 새로 불러옵니다. 반복 발생 시 네트워크 연결을 확인해주세요.';
     desc.style.cssText = 'margin:0;opacity:0.75;max-width:320px;line-height:1.6;';
 
     var btn = document.createElement('button');
