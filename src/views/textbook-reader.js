@@ -495,6 +495,38 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
                 }
             });
         });
+
+        // TOC 툴팁 (JavaScript 기반 — 컨테이너 overflow로 인한 잘림 방지)
+        let tocTooltip = document.getElementById('toc-tooltip');
+        if (!tocTooltip) {
+            tocTooltip = document.createElement('div');
+            tocTooltip.id = 'toc-tooltip';
+            tocTooltip.setAttribute('role', 'tooltip');
+            document.body.appendChild(tocTooltip);
+        }
+        const showTocTooltip = (el) => {
+            const title = el.dataset.tocTitle;
+            if (!title) return;
+            tocTooltip.textContent = title;
+            const rect = el.getBoundingClientRect();
+            tocTooltip.style.left = (rect.right + 6) + 'px';
+            tocTooltip.style.top = rect.top + 'px';
+            // 화면 오른쪽을 넘어가면 왼쪽에 표시
+            const tipRect = tocTooltip.getBoundingClientRect();
+            if (tipRect.right > window.innerWidth - 8) {
+                tocTooltip.style.left = (rect.left - tipRect.width - 6) + 'px';
+            }
+            tocTooltip.classList.add('is-visible');
+        };
+        const hideTocTooltip = () => {
+            tocTooltip.classList.remove('is-visible');
+        };
+        tocList.querySelectorAll('.reader-toc-item, .reader-toc-sub-item').forEach(el => {
+            el.addEventListener('mouseenter', () => showTocTooltip(el));
+            el.addEventListener('mouseleave', hideTocTooltip);
+            el.addEventListener('focus', () => showTocTooltip(el));
+            el.addEventListener('blur', hideTocTooltip);
+        });
     }
 
     // Estimate reading time (Korean ~500 chars/min)

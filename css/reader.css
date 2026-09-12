@@ -315,12 +315,9 @@
 .reader-toc-sub-item:hover {
     overflow: visible;
 }
-.reader-toc-item:hover::after,
-.reader-toc-sub-item:hover::after {
-    content: attr(data-toc-title);
-    position: absolute;
-    left: 100%;
-    top: 0;
+/* TOC 툴팁은 JavaScript로 처리 (css/reader.css의 ::after는 컨테이너 overflow로 잘림) */
+#toc-tooltip {
+    position: fixed;
     z-index: var(--z-popover);
     padding: 0.4rem 0.7rem;
     background: var(--tooltip-bg);
@@ -336,11 +333,15 @@
     min-width: 120px;
     box-shadow: var(--shadow-tooltip);
     pointer-events: none;
-    margin-left: 6px;
+    opacity: 0;
+    transition: opacity 0.15s ease;
 }
-.reader-light-theme .reader-toc-item:hover::after,
-.reader-light-theme .reader-toc-sub-item:hover::after {
+#toc-tooltip.is-visible {
+    opacity: 1;
+}
+.reader-light-theme #toc-tooltip {
     background: var(--popover-bg);
+    color: var(--color-text-main);
 }
 
 /* B: TOC 접기/펼치기 */
