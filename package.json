@@ -4,7 +4,7 @@
   "description": "맞춤형화장품 조제관리사 자격시험 스마트 학습 플랫폼",
   "main": "serve.js",
   "scripts": {
-    "build:data": "npm run build:pdf-registry && npm run build:keyword-index && node tools/build/index.js && npm run build:study-md && npm run build:exam-bundles && npm run build:audio-manifest",
+    "build:data": "npm run build:pdf-registry && npm run build:keyword-index && node tools/build/index.js && npm run build:study-md && npm run build:exam-bundles && npm run build:audio-manifest && npm run sync:citations",
     "build:data:law": "node tools/build/index.js --only law",
     "build:data:manufacturing": "node tools/build/index.js --only manufacturing",
     "build:data:safety": "node tools/build/index.js --only safety",
@@ -13,6 +13,7 @@
     "build:keyword-index": "node tools/build/build_keyword_index.js",
     "build:exam-bundles": "node tools/build_exam_bundles.js",
     "build:audio-manifest": "node tools/build/build-audio-manifest.js",
+    "sync:citations": "node tools/sync_citation_lines.js",
     "postbuild:data": "npm run check:parser",
     "check:parser": "node tools/check_parser_parity.js",
     "check:imports": "node tools/check-imports.js",

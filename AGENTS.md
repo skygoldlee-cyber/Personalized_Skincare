@@ -28,8 +28,8 @@ npm.cmd run check:imports              # src/ 내 ES 모듈 import/export 교차
 npm.cmd run stamp:sw                   # sw.js CACHE_VERSION을 커밋 해시로 스탬프
 npm.cmd run verify:assets              # SHELL_ASSETS/DATA_ASSETS 파일 존재 검증
 
-# 콘텐츠 동기화
-node tools/sync_citation_lines.js      # 문제은행 인용 라인번호 동기화 (교재 변경 후)
+# 콘텐츠 동기화 (build:data에 자동 통합됨)
+npm.cmd run sync:citations              # 문제은행 인용 라인번호 동기화
 node tools/sync_citation_lines.js --check  # 변경사항 확인만 (수정 안 함)
 
 # 로컬 서버

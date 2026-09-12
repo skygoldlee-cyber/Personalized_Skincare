@@ -526,7 +526,22 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
             el.addEventListener('mouseleave', hideTocTooltip);
             el.addEventListener('focus', () => showTocTooltip(el));
             el.addEventListener('blur', hideTocTooltip);
+            // 모바일 터치 지원: 첫 탭에만 툴팁 표시, 스크롤/핀치 줌과 구분
+            let touchShown = false;
+            el.addEventListener('touchstart', () => {
+                if (!touchShown) {
+                    showTocTooltip(el);
+                    touchShown = true;
+                    setTimeout(() => { touchShown = false; }, 2500);
+                }
+            }, { passive: true });
         });
+        // 모바일: 빈 곳 탭 시 툴팁 숨김
+        tocList.addEventListener('touchstart', (e) => {
+            if (!e.target.closest('.reader-toc-item, .reader-toc-sub-item')) {
+                hideTocTooltip();
+            }
+        }, { passive: true });
     }
 
     // Estimate reading time (Korean ~500 chars/min)
