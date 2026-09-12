@@ -1018,6 +1018,65 @@ content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.j
 - **매니페스트 자체 검증**: 매니페스트 파일 내 `chapters[].file`이 실제 경로에 존재하는지, 시험 정보(`exams[].subject`)가 등록된 과목을 바르게 지목하는지 정합성을 대조합니다.
 - **파싱 마커 감시**: 마크다운 파일에 `🔖기출` 마커가 달려 있음에도 정답 빈칸이 누락되어 퀴즈가 생성되지 않은 비정상 행을 감지하여 빌드 시 경고 로그로 가시화합니다.
 
+### 📄 참조자료 아키텍처 (PDF → MD 변환)
+
+법령 원문·별표·식약처 고시 등 참조자료는 **원본 PDF를 직접 서비스하지 않고, MD로 변환하여 서비스**합니다. 이 설계는 PWA 환경에서 다음 7가지 이점을 제공합니다.
+
+#### 파이프라인
+
+```
+[원본 PDF]                    [빌드 타임 변환]                    [런타임 서비스]
+content/참조자료/*.pdf  →  tools/build  →  content/참조자료/ref_md/{base}/{base}.md
+                         (PDF→MD 추출)        ↓
+                                              DataLoader fetch + parseMarkdown
+                                                   ↓
+                                              html-viewer.js (data-ref-html)
+```
+
+- **SSOT**: [`content/references.json`](../../content/references.json)이 참조자료 중앙 설정
+- **자동 생성**: [`tools/build/build-pdf-registry.js`](../../tools/build/build-pdf-registry.js)가 `references.json` → `src/pdf-registry.js` 자동 생성
+- **매핑 키**: PDF 파일명은 `pdf-registry.js`의 `resolveRefPath()`에서 MD 경로 조회 키로만 사용 (직접 fetch 안 함)
+
+#### PDF 직접 참조 대비 우위
+
+| 영역 | PDF 직접 참조 | MD 변환 (현재) |
+|------|-------------|----------------|
+| **오프라인 가용성** | PDF.js 1MB+ 라이브러리 + PDF 파일 이중 캐시 | MD 파일만 캐시 (10-100KB/개), 라이브러리 불필요 |
+| **검색 통합** | PDF 텍스트 추출 필요 (OCR/파서) | MD 파일 grep/인덱싱으로 즉시 검색, `textbook-search.js` 인덱스 통합 가능 |
+| **크로스 레퍼런스** | PDF 페이지/좌표 기반 (불안정) | `(L123\|file.pdf)` 패턴 → 특정 줄 하이라이트, `../교재/.../*.md#LNN` 양방향 연결 |
+| **렌더링 일관성** | PDF 고정 스타일, 테마 미적용 | CSS 변수로 라이트/다크 테마 자동 적용, 리더 툴바 글꼴 크기 연동 |
+| **콘텐츠 편집** | PDF 편집 도구 필요, 바이너리 diff 불가 | 텍스트 편집기로 즉시 수정, Git 텍스트 diff로 변경 추적 |
+| **성능** | PDF.js 다운로드 + 파싱 지연 (수백 ms) | 라이브러리 없음, MD 파싱 < 50ms, 메모리는 텍스트 문자열만 |
+| **보안 (CSP)** | PDF.js 호환성 별도 검증 필요 | 기존 `script-src 'self'` 정책 그대로 적용, `html-viewer.js` DOMParser sanitize 적용 |
+
+#### PDF 파일명 참조 루틴 (간접 참조)
+
+PDF 파일명은 매핑 키로만 사용되며, 실제 서비스되는 것은 변환된 MD 경로입니다.
+
+| 루틴 | 위치 | 동작 |
+|------|------|------|
+| `resolveRefPath()` | `src/pdf-registry.js:242` | PDF 파일명 → MD 경로 조회 (`REF_FILE_TO_PATH` 테이블) |
+| `_toMdPath()` | `src/pdf-registry.js:217` | `xxx.pdf` → `content/참조자료/ref_md/xxx/xxx.md` 변환 |
+| `mapSourceToRef()` | `src/pdf-registry.js:248` | 출처 텍스트 → PDF 파일명 → MD 경로 |
+| PDF 링크 인터셉트 | `src/reader-format.js:61,111,126` | 교재 본문 PDF 링크 → `data-ref-html` MD 링크 변환 |
+| PDF 링크 인터셉트 | `src/exam-viewer.js:251-263` | 시험 문제 HTML PDF 링크 → MD 경로 치환 |
+| 용어집 참조 | `src/views/glossary-renderer.js:52` | `refDoc + '.pdf'` → MD 경로 조회 |
+| 참조자료 목록 | `src/views/textbook-reader.js:1084-1087` | 사이드바 PDF 파일명 → MD 경로 변환 |
+
+#### 자산 현황
+
+| 항목 | 개수 | 비고 |
+|------|-----:|------|
+| `content/참조자료/` 내 PDF 원본 | 41개 | 레지스트리 매핑 키로만 사용 (직접 서비스 안 함) |
+| `content/참조자료/ref_md/` 내 MD 파일 | 41개 | 실제 서비스되는 참조자료 |
+| `sw.js` PDF 캐시 | 0개 | PDF는 캐시하지 않음 |
+
+#### 제약
+
+- **원본 레이아웃 손실**: PDF의 표/이미지 배치가 MD 변환 시 단순화됨
+- **변환 파이프라인 유지**: `tools/build` 스크립트 유지 필요
+- **수동 변환**: PDF → MD 변환은 빌드 타임 1회 수동 (런타임 자동 아님)
+
 ---
 
 ## ⚖️ 주요 설계 결정 및 근거
