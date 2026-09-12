@@ -496,7 +496,7 @@ const parseTextbookContent = (filePath, filename, subjectDir) => {
     }
     
     if (trimmed.startsWith('## ')) {
-      if (currentSectionLines.length > 0) {
+      if (currentSectionLines.length > 0 || currentSubsections.length > 0) {
         sections.push({
           title: currentSectionTitle,
           content: currentSectionLines.join('\n').trim(),
@@ -537,7 +537,7 @@ const parseTextbookContent = (filePath, filename, subjectDir) => {
     currentSectionLines.push(line);
   }
   
-  if (currentSectionLines.length > 0) {
+  if (currentSectionLines.length > 0 || currentSubsections.length > 0) {
     sections.push({
       title: currentSectionTitle,
       content: currentSectionLines.join('\n').trim(),
