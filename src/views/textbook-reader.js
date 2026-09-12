@@ -10,7 +10,7 @@ import {
     REFERENCE_LAW, mapSourceToRef, resolveRefPath
 } from '../pdf-registry.js';
 import { collectGlossaryItems, renderGlossaryTable, appendGlossaryTocItem, scrollToGlossary } from './glossary-renderer.js';
-import {
+export {
     readerAudioState,
     showAudioToast,
     persistCurrentAudioPos,
