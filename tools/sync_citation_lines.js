@@ -69,7 +69,20 @@ function extractFingerprint(lineText) {
  * @returns {number|null} 새 라인 번호 (1-indexed), 미발견 시 null
  */
 function findLineByFingerprint(lines, fingerprint, originalLineNum) {
-    if (!fingerprint) return null;
+    // 0. 빈 fingerprint: 주변 ±10 라인에서 가장 가까운 의미 있는 라인 반환
+    if (!fingerprint) {
+        const searchStart = Math.max(0, originalLineNum - 11);
+        const searchEnd = Math.min(lines.length, originalLineNum + 10);
+        // 먼저 아래 방향 검색 (일반적으로 내용이 아래에 있음)
+        for (let i = originalLineNum; i < searchEnd; i++) {
+            if (extractFingerprint(lines[i])) return i + 1;
+        }
+        // 위 방향 검색
+        for (let i = originalLineNum - 2; i >= searchStart; i--) {
+            if (extractFingerprint(lines[i])) return i + 1;
+        }
+        return null;
+    }
 
     // 1. 원래 라인 번호에서 정확히 일치하는지 확인 (가장 빠름)
     if (originalLineNum <= lines.length) {
