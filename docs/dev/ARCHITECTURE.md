@@ -195,7 +195,12 @@ Personalized_Skincare/
 │   ├── study.css               #   플래시카드, 퀴즈
 │   ├── exam.css                #   모의고사, 배지
 │   ├── reader.css              #   교재 리더, 용어집, 학습보조, Mermaid
-│   └── trainer.css             #   훈련소, 계산기, 손글씨
+│   ├── reader-mermaid.css      #   Mermaid 다이어그램 전용 스타일
+│   ├── trainer.css             #   훈련소, 계산기, 손글씨
+│   ├── html-viewer.css         #   참조자료 HTML 뷰어
+│   ├── ui-overlay.css          #   오버레이, 모달, 토스트
+│   ├── study-calendar.css      #   학습 캘린더, 목표 달성률
+│   └── print.css               #   인쇄 전용
 │
 ├── src/                        # 애플리케이션 소스 (ESM)
 │   ├── app.js                  #   오케스트레이터 (초기화, 이벤트 위임, 라우터 연결)
@@ -214,6 +219,8 @@ Personalized_Skincare/
 │   ├── manual-viewer.js        #   학습안내서/매뉴얼 뷰어
 │   ├── glossary-query.js       #   용어집 조회 API
 │   ├── keyword-index.js        #   교재 셀→참조자료 키워드 매핑 (자동 생성)
+│   ├── paths.js                #   파일 경로 상수 중앙 관리
+│   ├── storage-keys.js         #   localStorage 키 중앙 관리
 │   ├── study-aids.js           #   기출 필터, 숫자 암기표
 │   ├── study-tracker.js        #   학습 캘린더/목표 추적 (recordStudyActivity, getStudyGoals)
 │   ├── spaced-repetition.js    #   SM-2 간격 반복 알고리즘, 복습 스케줄링
@@ -235,17 +242,24 @@ Personalized_Skincare/
 │       ├── trainer.js          #     훈련소 UI
 │       ├── pomodoro.js         #     뽀모도로 타이머 (trainer.js에서 분리)
 │       ├── exam-simulator.js   #     모의고사 시뮬레이터
+│       ├── exam-sim-state.js   #     시뮬레이터 상태
+│       ├── exam-sim-review.js  #     시뮬레이터 결과 리뷰
 │       ├── textbook-reader.js  #     교재 리더 + 오디오 + Media Session
+│       ├── reader-audio.js    #     오디오북 플레이어
 │       ├── textbook-search.js  #     교재 본문 검색
 │       ├── dictionary.js       #     성분 사전
 │       ├── study-calendar.js   #     학습 캘린더/목표 뷰
 │       ├── backup.js           #     데이터 백업/복원
 │       ├── glossary-renderer.js #    용어집 렌더링 + scrollToGlossary()
+│       ├── event-listeners.js  #     이벤트 리스너 일괄 바인딩
+│       ├── offline-detection.js #    오프라인 감지
 │       └── navigation.js       #     뷰 전환 유틸
 │
 ├── content/                    # SSOT — 모든 교재/문제/참조자료 원본
 │   ├── manifest.json           #   과목/단원/시험/추천링크 메타데이터
+│   ├── references.json         #   참조자료 메타데이터
 │   ├── 학습안내서.md
+│   ├── 맞춤형화장품조제관리사_중요숫자_암기정리.md
 │   ├── 교재/
 │   │   ├── glossary/           #   과목별 큐레이션 용어 정의 JSON (subject1~4)
 │   │   ├── law/                #   1과목 (본문 + 이야기형)
@@ -259,6 +273,8 @@ Personalized_Skincare/
 │   │   ├── 과목1~4/            #   과목별 참조자료
 │   │   ├── 법령원문/           #   법령 원문
 │   │   └── 원료/               #   성분 원본 MD
+│   ├── html/                   #   HTML 콘텐츠 (학습안내서 등)
+│   ├── number-drills/          #   숫자 암기 드릴 데이터
 │   ├── audiobook/              #   Python TTS 파이프라인
 │   │   ├── run_pipeline.py     #     전체 파이프라인
 │   │   ├── md_chunker.py       #     MD 청크 분할
@@ -278,7 +294,9 @@ Personalized_Skincare/
 │   ├── registry.js             #   과목/시험/성분 메타
 │   ├── audio_manifest.js       #   오디오 챕터 매핑
 │   ├── ingredients_data.*.js   #   성분 데이터 (해시 파일명)
+│   ├── id_migration.js         #   ID 마이그레이션 스크립트
 │   ├── exams/                  #   시험 데이터 번들 (해시 파일명)
+│   ├── subjects/               #   과목별 카드/퀴즈 번들
 │   ├── exams_md/               #   문제은행 MD 폴백 번들 (file:// 전용)
 │   ├── study_md/               #   교재 MD 폴백 번들 (과목별 분할, file:// 전용)
 │   ├── docs_md/                #   학습안내서/매뉴얼 MD 폴백 번들
@@ -290,6 +308,8 @@ Personalized_Skincare/
 │   │   ├── schema.js           #   스키마 검증
 │   │   ├── id-factory.js       #   안정적 ID 생성
 │   │   ├── build_keyword_index.js # GLOSSARY_INDEX + 큐레이션 병합
+│   │   ├── build-audio-manifest.js # 오디오 챕터 매니페스트 생성
+│   │   ├── build-pdf-registry.js # PDF 레지스트리 생성
 │   │   ├── report.js           #   빌드 통계
 │   │   ├── stamp-sw-version.js #   SW 캐시 버전 자동 스탬프
 │   │   └── plugins/
@@ -300,17 +320,33 @@ Personalized_Skincare/
 │   ├── build_exam_bundles.js   #   문제은행 폴백 번들
 │   ├── build_study_md_bundle.js #  교재 폴백 번들 (과목별 분할)
 │   ├── check_parser_parity.js  #   빌드 파서 ↔ 런타임 파서 등가성 검증
+│   ├── check-imports.js        #   ES 모듈 import/export 교차 검증
 │   ├── verify-shell-assets.js  #   프리캐시 파일 존재 CI 검증
 │   ├── audit_card_quality.js  #   카드 품질 자동 감사 (npm run audit:cards)
+│   ├── audit_citation_links.js #  인용 링크 감사
+│   ├── audit_hyperlinks.js     #   하이퍼링크 감사
+│   ├── sync_citation_lines.js  #   문제은행 인용 라인번호 동기화 (build:data에 통합)
+│   ├── check_pdf_to_md_mapping.js # PDF→MD 매핑 검사
+│   ├── convert_pdf_links_to_md.js # PDF 링크→MD 변환
+│   ├── normalize_url_encoding.js # URL 인코딩 정규화
+│   ├── extract_notfound.js     #   404 인용 추출
+│   ├── fix_citation_lines.js   #   인용 라인번호 수동 수정
+│   ├── fix_manual_citations.js #   매뉴얼 인용 수정
+│   ├── verify_citation_lines.js #  인용 라인번호 검증
+│   ├── verify_citations.js     #   인용 검증
 │   └── fix-mindmap-indent.mjs  #   Mermaid mindmap 들여쓰기 수정
 │
 ├── tests/                      # 자동화 테스트
-│   ├── unit/                   #   단위 테스트 (19개 파일, 248 tests)
+│   ├── unit/                   #   단위 테스트 (18개 파일, 248 tests)
 │   │   ├── delegation-guard.test.js
 │   │   ├── glossary-query.test.js
 │   │   ├── id-factory.test.js
 │   │   ├── markdown-parser-general.test.js
-│   │   ├── mermaid-*.test.js   #   Mermaid 렌더링 (5개)
+│   │   ├── mermaid-parser.test.js
+│   │   ├── mermaid-pipeline.test.js
+│   │   ├── mermaid-reader-format.test.js
+│   │   ├── mermaid-rendering.test.js
+│   │   ├── mermaid-textcontent.test.js
 │   │   ├── pdf-registry.test.js
 │   │   ├── reader-format-general.test.js
 │   │   ├── sanitize.test.js
@@ -343,15 +379,27 @@ Personalized_Skincare/
     │   ├── CHANGES.md          #     변경 이력
     │   ├── TESTING.md          #     테스트 가이드
     │   ├── DEPLOYMENT_GUIDE.md #     배포 가이드
+    │   ├── CONTENT_WORKFLOW.md #     콘텐츠 변경 시 작업 절차
     │   ├── MULTI_MACHINE_SETUP.md
     │   ├── FLASHCARD_LOGIC.md
     │   ├── MD_TO_HTML_LOGIC.md
     │   ├── TEXTBOOK_AUTHORING_GUIDE.md
     │   ├── AUDIO_HOSTING_GUIDE.md
-    │   └── SUBSCRIPTION_ROADMAP.md
+    │   ├── SUBSCRIPTION_ROADMAP.md
+    │   ├── FEATURE_PROPOSALS.md #    기능 제안 (Pass Core Loop)
+    │   ├── PASS_CORE_LOOP_REVIEW.md # 합격 핵심 루프 리뷰
+    │   ├── PASS_TO_PRACTICE_STRATEGY.md # 합격→실무 전략
+    │   ├── READER_FEEDBACK_DESIGN.md #  교재 리더 피드백 설계
+    │   ├── STUDY_APP_DESIGN_GUIDE.md #  학습 앱 디자인 가이드
+    │   └── Cosmetic Master Business Plan.md
     ├── report_archive/         #   분석 보고서 아카이브 (앱 미참조)
     └── user/
-        └── user_manual.md      #   사용자 매뉴얼
+        ├── user_manual.md      #   사용자 매뉴얼
+        ├── exam_strategy.md    #   시험 전략
+        ├── subject1_numbers.md #   1과목 핵심 숫자
+        ├── subject2_numbers.md #   2과목 핵심 숫자
+        ├── subject3_numbers.md #   3과목 핵심 숫자
+        └── subject4_numbers.md #   4과목 핵심 숫자
 ```
 
 ---
