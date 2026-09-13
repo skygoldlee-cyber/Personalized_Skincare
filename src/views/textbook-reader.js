@@ -680,21 +680,8 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
         html += renderGlossaryTable(glossaryItems);
     }
 
-    // Prev / Next chapter navigation
-    const prevChapter = chapterIdx > 0 ? subj.chapters[chapterIdx - 1] : null;
-    const nextChapter = chapterIdx < subj.chapters.length - 1 ? subj.chapters[chapterIdx + 1] : null;
     html += `
         <div class="reader-chapter-end-marker" role="separator" aria-label="단원 끝">— 단원 끝 —</div>
-        <div class="reader-chapter-nav">
-            <button class="reader-nav-btn prev" ${prevChapter ? '' : 'disabled'} data-nav-idx="${chapterIdx - 1}">
-                <span class="nav-dir"><i class="fa-solid fa-arrow-left"></i> 이전 단원</span>
-                <span class="nav-title">${prevChapter ? esc(prevChapter.chapterTitle) : '이전 단원 없음'}</span>
-            </button>
-            <button class="reader-nav-btn next" ${nextChapter ? '' : 'disabled'} data-nav-idx="${chapterIdx + 1}">
-                <span class="nav-dir">다음 단원 <i class="fa-solid fa-arrow-right"></i></span>
-                <span class="nav-title">${nextChapter ? esc(nextChapter.chapterTitle) : '다음 단원 없음'}</span>
-            </button>
-        </div>
         </div><!-- /reader-readable-width -->
     `;
 
@@ -814,18 +801,6 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
             toggleReaderBookmark(btn.dataset.bookmarkKey, btn);
-        });
-    });
-
-    // Prev/Next nav buttons
-    container.querySelectorAll('.reader-nav-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            if (btn.disabled) return;
-            const navIdx = parseInt(btn.dataset.navIdx);
-            textbookReaderState.selectedChapter = String(navIdx);
-            saveReaderPosition(); // 1. 교재 읽기 이어하기
-            renderChapterContent(subjId, navIdx);
-            container.scrollTop = 0;
         });
     });
 
