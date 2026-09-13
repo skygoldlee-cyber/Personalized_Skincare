@@ -4,6 +4,36 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-13 교재 리더 UI 개선 — 챕터 헤더 카드/브레드크럼 제거
+
+> 모바일에서 교재 개요 위 내용이 표시되지 않는 문제 해결
+
+### 챕터 헤더 카드 제거 + 툴바 통합
+- `reader-chapter-header-card` 제거 (과목명 배지, 챕터 제목, 섹션 수, 예상 읽기 시간)
+- 핵심 기능을 `reader-toolbar`의 `reader-chapter-actions-group`로 통합:
+  - 기출 필터 토글, 원본 MD 링크, 참조자료 드롭다운, 오디오 듣기 버튼
+- 오디오 플레이어 영역을 툴바 아래 별도 영역(`reader-audio-player-area`)으로 이동
+- 과목 선택 해제 시 액션 그룹/오디오 플레이어 초기화
+- CSS: `reader-chapter-header-card` `display:none` (레거시 호환)
+
+### 브레드크럼 제거
+- `reader-breadcrumb` 제거 (과목명 = 챕터 제목 중복)
+- 현재 섹션 위치는 사이드바 TOC 하이라이트 + sticky heading + 진행률 바로 표시
+- CSS: `.reader-breadcrumb` `display:none` (레거시 호환)
+- 모바일 브레드크럼 축약 규칙 제거
+
+### 검증
+- `build:data`: 파서 등가성 ✓
+- `npm.cmd test`: 248 pass / 0 fail
+- `npm.cmd run test:dom`: 21 pass / 0 fail
+- 인용 라인 동기화: 1070개 링크 전부 동일 (변경 없음)
+- 프로덕션 HTTP 200, sw.js `v360-20260913-2902c75` 반영
+
+### 커밋
+- `c8857f2` — 챕터 헤더 카드 제거 + 핵심 기능 툴바 통합
+- `2902c75` — 브레드크럼 제거 (과목/챕터/섹션 중복 정보)
+- `0f0bb67` — sw.js CACHE_VERSION 재스탬프
+
 ## 2026-09-13 P0 학습 동기부여 기능 3종 + 학습 안내서 접근성 개선
 
 > 이번 세션 작업: 학습 캘린더, 약점 분석 강화, 학습 목표 설정, 학습 안내서 바로가기 추가

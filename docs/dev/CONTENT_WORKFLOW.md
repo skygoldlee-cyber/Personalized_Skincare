@@ -168,8 +168,16 @@ npm.cmd run build:audio-manifest     # 오디오 매니페스트만
 
 1. `content/교재/{과목}/{파일명}.md` 편집 (표준형, 이야기형 모두)
 2. `npm.cmd run build:data` 실행
-3. `npm.cmd test` 통과 확인
-4. 커밋 + 배포
+3. **인용 라인 동기화** (교재 라인 변경 시):
+   ```powershell
+   node tools/sync_citation_lines.js --check   # 변경사항 확인만
+   node tools/sync_citation_lines.js            # 실제 동기화 실행
+   ```
+   - 문제은행의 인용 링크(`[label: L####](<path#L####>)`) 라인 번호를 교재 변경에 맞춰 자동 갱신
+   - 지문(fingerprint) 기반 매칭으로 라인 이동 추적
+   - 미발견 항목은 수동 확인 필요 (exit code 1)
+4. `npm.cmd test` 통과 확인
+5. 커밋 + 배포
 
 ### 3.2 과목 추가
 
