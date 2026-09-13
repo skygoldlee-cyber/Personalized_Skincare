@@ -3,14 +3,14 @@
 export const DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2026",
-  "generatedAt": "2026-09-13T09:11:15.008Z",
+  "generatedAt": "2026-09-13T09:16:15.435Z",
   "subjects": [
     {
       "key": "law",
       "order": 1,
       "name": "화장품법의 이해",
       "shortName": "화장품법",
-      "contentHash": "d3434c72",
+      "contentHash": "060f767f",
       "stats": {
         "cards": 174,
         "quizzes": 75,
@@ -22,7 +22,7 @@ export const DATA_REGISTRY = {
       "order": 2,
       "name": "화장품 제조 및 품질관리",
       "shortName": "제조·품질",
-      "contentHash": "e26fb20f",
+      "contentHash": "b610b744",
       "stats": {
         "cards": 378,
         "quizzes": 132,
@@ -34,7 +34,7 @@ export const DATA_REGISTRY = {
       "order": 3,
       "name": "유통화장품 안전관리",
       "shortName": "안전관리",
-      "contentHash": "46e59b87",
+      "contentHash": "d1e351b0",
       "stats": {
         "cards": 167,
         "quizzes": 49,
@@ -46,7 +46,7 @@ export const DATA_REGISTRY = {
       "order": 4,
       "name": "맞춤형화장품의 이해",
       "shortName": "맞춤형화장품",
-      "contentHash": "1869f156",
+      "contentHash": "483fc2a9",
       "stats": {
         "cards": 342,
         "quizzes": 100,
@@ -61,9 +61,9 @@ export const DATA_REGISTRY = {
       "part": 1,
       "title": "화장품법의 이해 (100제)",
       "file": "과목1_문제.md",
-      "bundle": "./data/exams/subject1.14d8804f.js",
+      "bundle": "./data/exams/subject1.8ae92428.js",
       "global": "EXAM_DATA_subject1",
-      "contentHash": "14d8804f",
+      "contentHash": "8ae92428",
       "stats": {
         "questions": 100
       }
@@ -74,9 +74,9 @@ export const DATA_REGISTRY = {
       "part": 1,
       "title": "화장품 제조 및 품질관리 (250제)",
       "file": "과목2_문제.md",
-      "bundle": "./data/exams/subject2.826223d4.js",
+      "bundle": "./data/exams/subject2.e5c9463f.js",
       "global": "EXAM_DATA_subject2",
-      "contentHash": "826223d4",
+      "contentHash": "e5c9463f",
       "stats": {
         "questions": 250
       }
@@ -87,9 +87,9 @@ export const DATA_REGISTRY = {
       "part": 1,
       "title": "유통화장품 안전관리 (250제)",
       "file": "과목3_문제.md",
-      "bundle": "./data/exams/subject3.7d303001.js",
+      "bundle": "./data/exams/subject3.c249390e.js",
       "global": "EXAM_DATA_subject3",
-      "contentHash": "7d303001",
+      "contentHash": "c249390e",
       "stats": {
         "questions": 250
       }
@@ -100,9 +100,9 @@ export const DATA_REGISTRY = {
       "part": 1,
       "title": "맞춤형화장품의 이해 (400제)",
       "file": "과목4_문제.md",
-      "bundle": "./data/exams/subject4.5f721835.js",
+      "bundle": "./data/exams/subject4.2a438ffb.js",
       "global": "EXAM_DATA_subject4",
-      "contentHash": "5f721835",
+      "contentHash": "2a438ffb",
       "stats": {
         "questions": 400
       }
