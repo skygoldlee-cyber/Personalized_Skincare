@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v352-20260913-jaerye-summary';   // 제재 체계 요약 및 과징금 vs 과태료 차이 설명 추가
+const CACHE_VERSION = 'v353-20260913-sw-redeploy';   // SW 캐시 bump 재배포 (업데이트 토스트 확인용)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
