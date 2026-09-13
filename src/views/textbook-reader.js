@@ -1068,6 +1068,7 @@ function initReaderToolbar() {
     const focusBtn = document.getElementById('reader-focus-toggle');
     const expandAllBtn = document.getElementById('reader-expand-all');
     const collapseAllBtn = document.getElementById('reader-collapse-all');
+    const toolbarToggleBtn = document.getElementById('reader-toolbar-toggle');
     const modalClose = document.getElementById('reader-table-modal-close');
     const modal = document.getElementById('reader-table-modal');
     const tocMobileBtn = document.getElementById('reader-toc-mobile-btn');
@@ -1114,6 +1115,15 @@ function initReaderToolbar() {
         lhResetBtn.addEventListener('click', () => {
             readerLineHeight = 2.05;
             applyReaderLineHeight();
+        });
+    }
+    if (toolbarToggleBtn && !toolbarToggleBtn.dataset.bound) {
+        toolbarToggleBtn.dataset.bound = 'true';
+        toolbarToggleBtn.addEventListener('click', () => {
+            const toolbar = document.getElementById('reader-toolbar');
+            if (!toolbar) return;
+            const collapsed = toolbar.classList.toggle('collapsed');
+            toolbarToggleBtn.setAttribute('aria-expanded', String(!collapsed));
         });
     }
     // 헤더 등 다른 곳에서 테마가 바뀌면 리더도 즉시 동기화
