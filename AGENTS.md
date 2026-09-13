@@ -199,4 +199,5 @@ docs/                   # 개발 문서
 - `docs/dev/CHANGES.md` — 변경 이력
 - `docs/dev/TESTING.md` — 테스트 가이드
 - `docs/dev/TEXTBOOK_AUTHORING_GUIDE.md` — 교재 작성 가이드
+- `docs/dev/NUMBERING_SYSTEM.md` — 교재 번호체계 가이드 (십진법)
 - `docs/user/user_manual.md` — 사용자 매뉴얼
