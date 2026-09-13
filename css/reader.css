@@ -704,25 +704,19 @@
     user-select: none;
 }
 
-/* Chapter header card */
+/* Chapter header card — 제거됨 (툴바로 통합), 레거시 호환용 유지 */
 .reader-chapter-header-card {
-    background: linear-gradient(135deg, var(--primary-tint-8), var(--secondary-tint-6));
-    border: 1px solid var(--border-color-active);
-    border-radius: var(--radius-md);
-    padding: 1.5rem 1.75rem;
-    margin-bottom: 1.75rem;
+    display: none;
 }
-.reader-chapter-header-card h3 {
-    font-size: calc(1.5rem * var(--reader-font-scale, 1));
-    margin: 0.6rem 0 0.75rem 0;
-    line-height: 1.35;
-}
-.reader-chapter-meta {
-    display: flex;
-    align-items: center;
-    gap: var(--space-4);
-    flex-wrap: wrap;
-    font-size: var(--text-sm-2);
+
+/* 오디오 플레이어 영역 (툴바 아래) */
+.reader-audio-player-area {
+    margin: 0.5rem 0 1rem 0;
+    padding: 0.75rem 0.9rem;
+    background: rgba(6, 182, 212, 0.08);
+    border: 1px solid rgba(6, 182, 212, 0.25);
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
     color: var(--color-text-muted);
 }
 
@@ -985,10 +979,6 @@ body.reader-focus-mode .reader-readable-width {
     background: var(--reader-bg-header);
     border-bottom-color: var(--reader-border);
 }
-.reader-light-theme .reader-chapter-header-card {
-    background: linear-gradient(135deg, var(--primary-tint-8), var(--secondary-tint-5));
-    border-color: var(--reader-chapter-border);
-}
 .reader-light-theme .textbook-reader-section-content,
 .reader-light-theme .textbook-reader-section-content .md-para,
 .reader-light-theme .reader-table td,
@@ -1001,7 +991,6 @@ body.reader-focus-mode .reader-readable-width {
     color: var(--reader-accent);
 }
 .reader-light-theme .reader-toc-item,
-.reader-light-theme .reader-chapter-meta,
 .reader-light-theme .reader-toolbar-label,
 .reader-light-theme .reader-font-size-display {
     color: var(--reader-text-muted);
@@ -1235,34 +1224,9 @@ body.reader-focus-mode .reader-readable-width {
         bottom: 1.25rem;
         right: 1.25rem;
     }
-    /* M1: 챕터 헤더 메타 영역 모바일 2열 그리드 재배치 */
-    .reader-chapter-header-card {
-        padding: 1.1rem 1.1rem;
-    }
+    /* M1: 챕터 헤더 카드 제거됨 — 툴바로 통합 */
     .reader-chapter-meta {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.5rem 0.75rem;
-        font-size: var(--text-2xs);
-    }
-    .reader-chapter-meta > * {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.3rem;
-        justify-content: flex-start;
-    }
-    /* 참조자료 드롭다운과 오디오 버튼은 전체 폭 차지 */
-    .reader-chapter-meta > #reader-ref-dropdown,
-    .reader-chapter-meta > #reader-audio-toggle-btn {
-        grid-column: 1 / -1;
-    }
-    .reader-chapter-meta > #reader-ref-dropdown summary {
-        width: 100%;
-        justify-content: center;
-    }
-    .reader-chapter-meta > #reader-audio-toggle-btn {
-        width: 100%;
-        justify-content: center;
+        display: none;
     }
     /* M3: 참조자료 드롭다운 패널 모바일 폭 조정 (320px 고정 → 화면 폭 기반) */
     .reader-ref-panel {

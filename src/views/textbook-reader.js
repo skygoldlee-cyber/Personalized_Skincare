@@ -195,6 +195,11 @@ export function renderTextbookReader() {
                         <p>위에서 과목을 선택하면 해당 교재의 본문 내용이 표시됩니다.</p>
                     </div>
                 `;
+                // 챕터 액션 그룹 및 오디오 플레이어 초기화
+                const ag = document.getElementById('reader-chapter-actions-group');
+                if (ag) ag.innerHTML = '';
+                const ap = document.getElementById('reader-audio-player-area');
+                if (ap) { ap.classList.add('is-hidden'); ap.innerHTML = ''; }
             }
         });
     }
@@ -570,52 +575,61 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
 
     let html = `
         <div class="reader-readable-width">
-        <div class="reader-chapter-header-card">
-            <span class="badge badge-cyan">${esc(subj.name)}</span>
-            ${isStoryMode ? '<span class="badge badge-story"><i class="fa-solid fa-book-open-reader"></i> 이야기형</span>' : ''}
-            <h3>${esc(chapter.chapterTitle)}</h3>
-            <div class="reader-chapter-meta">
-                <span><i class="fa-solid fa-layer-group"></i> 섹션 ${chapter.sections.length}개</span>
-                <span><i class="fa-regular fa-clock"></i> 예상 읽기 시간 약 ${readMinutes}분</span>
-                ${isStoryMode ? '' : renderExamFilterToggle()}
-                <a href="${esc(chapter.filePath)}" target="_blank" class="btn btn-secondary" style="display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; padding: 0.35rem 0.75rem;">
-                    <i class="fa-solid fa-arrow-up-right-from-square"></i> 원본 MD
-                </a>
-                <details id="reader-ref-dropdown" class="reader-ref-dropdown" style="display: inline-block; position: relative;">
-                    <summary class="btn btn-secondary" style="display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; padding: 0.35rem 0.75rem; cursor: pointer; list-style: none;">
-                        <i class="fa-solid fa-book-bookmark"></i> 참조자료
-                    </summary>
-                    <div class="reader-ref-panel" style="position: absolute; top: 100%; left: 0; z-index: 100; margin-top: 0.4rem; min-width: 320px; max-height: 400px; overflow-y: auto; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,0.25); padding: 0.6rem;">
-                        ${buildReferenceLinks(subjId, chapterRefPath)}
-                    </div>
-                </details>
-                ${hasAudio ? `
-                <button id="reader-audio-toggle-btn" class="btn btn-secondary" data-click="toggleReaderAudio" data-args='["${subjId}", ${chapterIdx}]' style="display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; padding: 0.35rem 0.75rem;">
-                    <i class="fa-solid fa-headphones"></i> 오디오 듣기
-                </button>` : ''}
-            </div>
-            ${hasAudio ? `
-            <div id="reader-audio-player-area" style="display: none; margin-top: 0.75rem; padding: 0.75rem 0.9rem; background: rgba(6, 182, 212, 0.08); border: 1px solid rgba(6, 182, 212, 0.25); border-radius: 8px; font-size: 0.85rem; color: var(--color-text-muted);">
-                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.55rem;">
-                    <i class="fa-solid fa-circle-play" style="color: var(--color-primary);"></i>
-                    <span id="reader-audio-now-playing" style="color: var(--color-text-main); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></span>
-                    <span id="reader-audio-status" style="margin-left: auto; font-size: 0.78rem; color: var(--warning); display: none;"></span>
-                </div>
-                <div id="reader-audio-controls" style="display: flex; align-items: center; gap: 0.6rem;">
-                    <button id="reader-audio-playpause-btn" class="btn btn-secondary" data-click="toggleReaderPlayPause" title="재생" style="display: inline-flex; align-items: center; justify-content: center; width: 2rem; height: 2rem; padding: 0; border-radius: 50%; flex-shrink: 0;">
-                        <i class="fa-solid fa-play"></i>
-                    </button>
-                    <span id="reader-audio-current" style="font-variant-numeric: tabular-nums; flex-shrink: 0;">0:00</span>
-                    <input type="range" id="reader-audio-seek" min="0" max="100" value="0" step="0.1" disabled data-input="seekReaderAudio" style="flex: 1; accent-color: var(--color-primary); cursor: pointer; height: 4px;">
-                    <span id="reader-audio-duration" style="font-variant-numeric: tabular-nums; flex-shrink: 0;">0:00</span>
-                    <button id="reader-audio-rate-btn" class="btn btn-secondary" data-click="cycleReaderAudioRate" title="재생 속도" style="font-size: 0.78rem; padding: 0.25rem 0.5rem; flex-shrink: 0; min-width: 3rem;">1x</button>
-                    <button id="reader-audio-scroll-btn" class="btn btn-secondary" data-click="toggleReaderAutoScroll" title="오디오 위치에 맞춰 자동으로 스크롤" style="font-size: 0.78rem; padding: 0.25rem 0.5rem; flex-shrink: 0; white-space: nowrap;">
-                        <i class="fa-solid fa-arrows-up-down"></i> 스크롤 따라가기
-                    </button>
-                </div>
-            </div>` : ''}
-        </div>
     `;
+
+    // --- 챕터 액션을 툴바에 동적 주입 ---
+    const actionsGroup = document.getElementById('reader-chapter-actions-group');
+    if (actionsGroup) {
+        let actionsHtml = '';
+        if (!isStoryMode) {
+            actionsHtml += renderExamFilterToggle();
+        }
+        actionsHtml += `<a href="${esc(chapter.filePath)}" target="_blank" class="reader-tool-btn" title="원본 MD 열기" style="text-decoration:none;">
+            <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> 원본
+        </a>`;
+        actionsHtml += `<details id="reader-ref-dropdown" class="reader-ref-dropdown" style="display:inline-block;position:relative;">
+            <summary class="reader-tool-btn" title="참조자료" style="cursor:pointer;list-style:none;">
+                <i class="fa-solid fa-book-bookmark" aria-hidden="true"></i> 참조자료
+            </summary>
+            <div class="reader-ref-panel" style="position:absolute;top:100%;right:0;z-index:100;margin-top:0.4rem;min-width:320px;max-height:400px;overflow-y:auto;background:var(--bg-card);border:1px solid var(--border-color);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,0.25);padding:0.6rem;">
+                ${buildReferenceLinks(subjId, chapterRefPath)}
+            </div>
+        </details>`;
+        if (hasAudio) {
+            actionsHtml += `<button id="reader-audio-toggle-btn" class="reader-tool-btn" data-click="toggleReaderAudio" data-args='["${subjId}", ${chapterIdx}]' title="오디오 듣기">
+                <i class="fa-solid fa-headphones" aria-hidden="true"></i> 오디오
+            </button>`;
+        }
+        actionsGroup.innerHTML = actionsHtml;
+    }
+
+    // --- 오디오 플레이어 영역을 툴바 아래로 이동 ---
+    const audioPlayerArea = document.getElementById('reader-audio-player-area');
+    if (audioPlayerArea && hasAudio) {
+        audioPlayerArea.classList.remove('is-hidden');
+        audioPlayerArea.innerHTML = `
+            <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.55rem;">
+                <i class="fa-solid fa-circle-play" style="color: var(--color-primary);"></i>
+                <span id="reader-audio-now-playing" style="color: var(--color-text-main); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></span>
+                <span id="reader-audio-status" style="margin-left: auto; font-size: 0.78rem; color: var(--warning); display: none;"></span>
+            </div>
+            <div id="reader-audio-controls" style="display: flex; align-items: center; gap: 0.6rem;">
+                <button id="reader-audio-playpause-btn" class="btn btn-secondary" data-click="toggleReaderPlayPause" title="재생" style="display: inline-flex; align-items: center; justify-content: center; width: 2rem; height: 2rem; padding: 0; border-radius: 50%; flex-shrink: 0;">
+                    <i class="fa-solid fa-play"></i>
+                </button>
+                <span id="reader-audio-current" style="font-variant-numeric: tabular-nums; flex-shrink: 0;">0:00</span>
+                <input type="range" id="reader-audio-seek" min="0" max="100" value="0" step="0.1" disabled data-input="seekReaderAudio" style="flex: 1; accent-color: var(--color-primary); cursor: pointer; height: 4px;">
+                <span id="reader-audio-duration" style="font-variant-numeric: tabular-nums; flex-shrink: 0;">0:00</span>
+                <button id="reader-audio-rate-btn" class="btn btn-secondary" data-click="cycleReaderAudioRate" title="재생 속도" style="font-size: 0.78rem; padding: 0.25rem 0.5rem; flex-shrink: 0; min-width: 3rem;">1x</button>
+                <button id="reader-audio-scroll-btn" class="btn btn-secondary" data-click="toggleReaderAutoScroll" title="오디오 위치에 맞춰 자동으로 스크롤" style="font-size: 0.78rem; padding: 0.25rem 0.5rem; flex-shrink: 0; white-space: nowrap;">
+                    <i class="fa-solid fa-arrows-up-down"></i> 스크롤 따라가기
+                </button>
+            </div>
+        `;
+    } else if (audioPlayerArea) {
+        audioPlayerArea.classList.add('is-hidden');
+        audioPlayerArea.innerHTML = '';
+    }
 
     try {
         html += await renderStudyAids(chapter, subjId);
