@@ -3,17 +3,17 @@
 export const DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2026",
-  "generatedAt": "2026-09-13T06:12:39.161Z",
+  "generatedAt": "2026-09-13T06:26:10.732Z",
   "subjects": [
     {
       "key": "law",
       "order": 1,
       "name": "화장품법의 이해",
       "shortName": "화장품법",
-      "contentHash": "21f2e721",
+      "contentHash": "c02ac949",
       "stats": {
         "cards": 170,
-        "quizzes": 74,
+        "quizzes": 73,
         "chapters": 1
       }
     },

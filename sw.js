@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v355-20260913-tilde-escape-fix';   // 제3조의2\~제3조의8 백슬래시 제거 (~는 특수문자 아님)
+const CACHE_VERSION = 'v356-20260913-gasok-exam-fix';   // 가속시험 항목/기간 정정 (동일 항목, 6개월 이상 조정 가능)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
