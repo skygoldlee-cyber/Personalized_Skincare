@@ -317,16 +317,16 @@ function _filterMetaSections(chapter) {
 /** 섹션 제목의 번호 패턴에서 TOC 들여쓰기 레벨 감지 */
 function _getTocLevel(title) {
     const t = (title || '').trim();
-    if (/^[①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳]/.test(t)) return 3; // ①②③ ...
-    if (/^\(\d+\)/.test(t)) return 2;       // (1), (2) ...
-    if (/^\d+\./.test(t)) return 1;         // 1., 2. ...
-    return 0;                               // Chapter, 📖, 📊, ✅, 출처, 제N조 등
+    if (/^\d+\.\d+\.\d+/.test(t)) return 3;   // 1.1.1 (3단계)
+    if (/^\d+\.\d+/.test(t)) return 2;         // 1.1 (2단계)
+    if (/^\d+\./.test(t)) return 1;           // 1. (1단계)
+    return 0;                                  // Chapter, 📖, 📊, ✅, 출처, 제N조 등
 }
 
 /** 제목이 자체 번호를 가지고 있으면 toc-num 순번을 표시하지 않음 */
 function _hasOwnNumber(title) {
     const t = (title || '').trim();
-    return /^\d+\./.test(t) || /^\(\d+\)/.test(t) || /^[①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳]/.test(t) || /Chapter\s+\d+/i.test(t);
+    return /^\d+\./.test(t) || /^\(\d+\)/.test(t) || /Chapter\s+\d+/i.test(t);
 }
 
 /** 참조문서 헤더 (01_화장품법 등) — 앞의 NN_ 접두사 제거 */
