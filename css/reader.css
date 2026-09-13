@@ -648,11 +648,13 @@
 }
 .textbook-reader-content .textbook-reader-section-content .md-h3 {
     font-size: calc(1.2rem * var(--reader-font-scale, 1));
+    font-weight: 700;
     margin-top: 1.75rem;
     margin-bottom: 0.85rem;
 }
 .textbook-reader-content .textbook-reader-section-content .md-h4 {
     font-size: calc(1.1rem * var(--reader-font-scale, 1));
+    font-weight: 600;
     margin-top: 1.4rem;
     margin-bottom: 0.65rem;
 }
