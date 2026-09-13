@@ -1219,6 +1219,18 @@ body.reader-focus-mode .reader-readable-width {
         flex-wrap: nowrap;
         overflow: hidden;
     }
+    /* M: 모바일에서 토글 버튼은 한 행 독차지, inner는 다음 행 */
+    .reader-toolbar:not(.collapsed) {
+        flex-wrap: wrap;
+        overflow: visible;
+    }
+    .reader-toolbar:not(.collapsed) .reader-toolbar-toggle {
+        width: 100%;
+        margin-bottom: 0.25rem;
+    }
+    .reader-toolbar:not(.collapsed) .reader-toolbar-inner {
+        width: 100%;
+    }
     .reader-back-to-top {
         bottom: 1.25rem;
         right: 1.25rem;
