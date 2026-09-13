@@ -637,14 +637,7 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
         console.warn('[Reader] 학습 보조 렌더링 실패:', err);
     }
 
-    // D: 브레드크럼
-    html += `<div class="reader-breadcrumb" id="reader-breadcrumb">
-        <span class="breadcrumb-subject">${esc(subj.name)}</span>
-        <i class="fa-solid fa-chevron-right breadcrumb-sep"></i>
-        <span class="breadcrumb-chapter">${esc(chapter.chapterTitle)}</span>
-        <i class="fa-solid fa-chevron-right breadcrumb-sep"></i>
-        <span class="breadcrumb-section" id="breadcrumb-current-section">-</span>
-    </div>`;
+    // D: 브레드크럼 — 제거됨 (TOC 하이라이트 + sticky heading으로 대체)
 
     const subjRefFiles = REFERENCE_FILES[subjId] || [];
     const subjDirName = SUBJECT_DIR_MAP[subjId] || '';
@@ -1022,12 +1015,7 @@ function bindReaderScrollEvents() {
             document.querySelectorAll('.reader-toc-item').forEach(item => {
                 item.classList.toggle('active', parseInt(item.dataset.sectionIdx) === currentIdx);
             });
-            // D: 브레드크럼 현재 섹션 업데이트
-            const breadcrumbEl = document.getElementById('breadcrumb-current-section');
-            if (breadcrumbEl && currentIdx >= 0) {
-                const card = container.querySelector(`.reader-section-card[data-section-idx="${currentIdx}"] .reader-section-title`);
-                if (card) breadcrumbEl.textContent = card.textContent.trim();
-            }
+            // D: 브레드크럼 제거됨 — sticky heading으로 대체
             // Section progress (e.g. "3/5 섹션")
             const sectionProgress = document.getElementById('reader-section-progress');
             if (sectionProgress && cachedCards.length) {

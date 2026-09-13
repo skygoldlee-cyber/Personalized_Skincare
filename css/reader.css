@@ -434,34 +434,9 @@
     min-width: 0;
 }
 
-/* D: 브레드크럼 */
+/* D: 브레드크럼 — 제거됨 (TOC 하이라이트 + sticky heading으로 대체), 레거시 호환 */
 .reader-breadcrumb {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.5rem 0.75rem;
-    margin-bottom: var(--space-4);
-    font-size: var(--text-2xs);
-    color: var(--color-text-muted);
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-sm);
-    flex-wrap: wrap;
-}
-.reader-breadcrumb .breadcrumb-subject {
-    color: var(--color-primary);
-    font-weight: var(--font-weight-semibold);
-}
-.reader-breadcrumb .breadcrumb-chapter {
-    color: var(--color-text-main);
-    font-weight: var(--font-weight-medium);
-}
-.reader-breadcrumb .breadcrumb-section {
-    color: var(--color-text-muted);
-}
-.reader-breadcrumb .breadcrumb-sep {
-    font-size: var(--text-2xs);
-    opacity: 0.5;
+    display: none;
 }
 
 /* C: 모바일 TOC 드로어 */
@@ -1292,20 +1267,7 @@ body.reader-focus-mode .reader-readable-width {
     #ref-preview-tooltip {
         max-width: calc(100vw - 1.5rem) !important;
     }
-    /* M11: 브레드크럼 모바일 축약 — 과목/단원 숨김, 현재 섹션만 강조 */
-    .reader-breadcrumb .breadcrumb-subject,
-    .reader-breadcrumb .breadcrumb-chapter,
-    .reader-breadcrumb .breadcrumb-sep {
-        display: none;
-    }
-    .reader-breadcrumb .breadcrumb-section {
-        color: var(--color-text-main);
-        font-weight: var(--font-weight-medium);
-        font-size: var(--text-sm-2);
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
+    /* M11: 브레드크럼 제거됨 */
     /* M12: 오디오 토스트 모바일 위치 조정 (하단 탭바 겹침 방지) */
     #reader-audio-toast {
         bottom: calc(80px + env(safe-area-inset-bottom, 0px)) !important;
