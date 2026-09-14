@@ -650,7 +650,8 @@
     padding: 0.8rem 1rem;
     text-align: center;
     font-size: calc(1.1rem * var(--reader-font-scale, 1));
-    background: var(--reader-light-code-bg, rgba(0,0,0,0.03));
+    color: inherit;
+    background: rgba(128, 128, 128, 0.08);
     border-radius: 6px;
     overflow-x: auto;
 }
