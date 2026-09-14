@@ -3,14 +3,14 @@
 export const DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2026",
-  "generatedAt": "2026-09-14T01:49:47.435Z",
+  "generatedAt": "2026-09-14T01:53:56.488Z",
   "subjects": [
     {
       "key": "law",
       "order": 1,
       "name": "화장품법의 이해",
       "shortName": "화장품법",
-      "contentHash": "a83bbd77",
+      "contentHash": "abc703a8",
       "stats": {
         "cards": 174,
         "quizzes": 74,
@@ -22,7 +22,7 @@ export const DATA_REGISTRY = {
       "order": 2,
       "name": "화장품 제조 및 품질관리",
       "shortName": "제조·품질",
-      "contentHash": "e87ec301",
+      "contentHash": "755abf34",
       "stats": {
         "cards": 378,
         "quizzes": 132,
@@ -46,7 +46,7 @@ export const DATA_REGISTRY = {
       "order": 4,
       "name": "맞춤형화장품의 이해",
       "shortName": "맞춤형화장품",
-      "contentHash": "b3727a5e",
+      "contentHash": "aa14731f",
       "stats": {
         "cards": 343,
         "quizzes": 100,
@@ -61,9 +61,9 @@ export const DATA_REGISTRY = {
       "part": 1,
       "title": "화장품법의 이해 (100제)",
       "file": "과목1_문제.md",
-      "bundle": "./data/exams/subject1.f61a3ac4.js",
+      "bundle": "./data/exams/subject1.6a86546d.js",
       "global": "EXAM_DATA_subject1",
-      "contentHash": "f61a3ac4",
+      "contentHash": "6a86546d",
       "stats": {
         "questions": 100
       }
@@ -74,9 +74,9 @@ export const DATA_REGISTRY = {
       "part": 1,
       "title": "화장품 제조 및 품질관리 (250제)",
       "file": "과목2_문제.md",
-      "bundle": "./data/exams/subject2.dab9a59e.js",
+      "bundle": "./data/exams/subject2.d901dc12.js",
       "global": "EXAM_DATA_subject2",
-      "contentHash": "dab9a59e",
+      "contentHash": "d901dc12",
       "stats": {
         "questions": 250
       }
@@ -100,9 +100,9 @@ export const DATA_REGISTRY = {
       "part": 1,
       "title": "맞춤형화장품의 이해 (400제)",
       "file": "과목4_문제.md",
-      "bundle": "./data/exams/subject4.07e86848.js",
+      "bundle": "./data/exams/subject4.5b6f9748.js",
       "global": "EXAM_DATA_subject4",
-      "contentHash": "07e86848",
+      "contentHash": "5b6f9748",
       "stats": {
         "questions": 400
       }
