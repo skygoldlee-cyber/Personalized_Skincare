@@ -3,7 +3,7 @@
 export const DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2026",
-  "generatedAt": "2026-09-14T04:54:38.607Z",
+  "generatedAt": "2026-09-14T05:12:33.642Z",
   "subjects": [
     {
       "key": "law",
@@ -22,7 +22,7 @@ export const DATA_REGISTRY = {
       "order": 2,
       "name": "화장품 제조 및 품질관리",
       "shortName": "제조·품질",
-      "contentHash": "2dd365f7",
+      "contentHash": "87d69d98",
       "stats": {
         "cards": 380,
         "quizzes": 134,
@@ -34,7 +34,7 @@ export const DATA_REGISTRY = {
       "order": 3,
       "name": "유통화장품 안전관리",
       "shortName": "안전관리",
-      "contentHash": "cc5952c4",
+      "contentHash": "5639e10c",
       "stats": {
         "cards": 186,
         "quizzes": 53,
@@ -46,7 +46,7 @@ export const DATA_REGISTRY = {
       "order": 4,
       "name": "맞춤형화장품의 이해",
       "shortName": "맞춤형화장품",
-      "contentHash": "be54990f",
+      "contentHash": "250ee4b5",
       "stats": {
         "cards": 346,
         "quizzes": 100,
@@ -74,9 +74,9 @@ export const DATA_REGISTRY = {
       "part": 1,
       "title": "화장품 제조 및 품질관리 (250제)",
       "file": "과목2_문제.md",
-      "bundle": "./data/exams/subject2.4064d889.js",
+      "bundle": "./data/exams/subject2.477aabfd.js",
       "global": "EXAM_DATA_subject2",
-      "contentHash": "4064d889",
+      "contentHash": "477aabfd",
       "stats": {
         "questions": 250
       }
@@ -87,9 +87,9 @@ export const DATA_REGISTRY = {
       "part": 1,
       "title": "유통화장품 안전관리 (250제)",
       "file": "과목3_문제.md",
-      "bundle": "./data/exams/subject3.a68e3b0a.js",
+      "bundle": "./data/exams/subject3.cafdab7d.js",
       "global": "EXAM_DATA_subject3",
-      "contentHash": "a68e3b0a",
+      "contentHash": "cafdab7d",
       "stats": {
         "questions": 250
       }
@@ -100,9 +100,9 @@ export const DATA_REGISTRY = {
       "part": 1,
       "title": "맞춤형화장품의 이해 (400제)",
       "file": "과목4_문제.md",
-      "bundle": "./data/exams/subject4.85773861.js",
+      "bundle": "./data/exams/subject4.96b9f380.js",
       "global": "EXAM_DATA_subject4",
-      "contentHash": "85773861",
+      "contentHash": "96b9f380",
       "stats": {
         "questions": 400
       }
