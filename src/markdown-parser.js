@@ -291,6 +291,10 @@ export function parseMarkdown(mdText, options = {}) {
 
         // 6-5. 헤더 파싱
         if (useReaderStyles) {
+            if (trimmed.startsWith('##### ')) {
+                output.push(_wrapWithLine(`<h5 class="md-h5">${line.replace(/^#####\s+/, '')}</h5>`, _lineNo));
+                return;
+            }
             if (trimmed.startsWith('#### ')) {
                 output.push(_wrapWithLine(`<h4 class="md-h4">${line.replace(/^####\s+/, '')}</h4>`, _lineNo));
                 return;

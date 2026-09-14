@@ -659,6 +659,12 @@
     margin-top: 1.4rem;
     margin-bottom: 0.65rem;
 }
+.textbook-reader-content .textbook-reader-section-content .md-h5 {
+    font-size: calc(1.02rem * var(--reader-font-scale, 1));
+    font-weight: 600;
+    margin-top: 1.1rem;
+    margin-bottom: 0.5rem;
+}
 .textbook-reader-content .textbook-reader-section-content .md-quote {
     font-size: calc(1rem * var(--reader-font-scale, 1));
     line-height: var(--reader-line-height, 2.05);
@@ -901,7 +907,8 @@ body.reader-focus-mode .reader-readable-width {
 .reader-light-theme .textbook-reader-section-content .md-para,
 .reader-light-theme .reader-table td,
 .reader-light-theme .textbook-reader-section-content .md-h3,
-.reader-light-theme .textbook-reader-section-content .md-h4 {
+.reader-light-theme .textbook-reader-section-content .md-h4,
+.reader-light-theme .textbook-reader-section-content .md-h5 {
     color: var(--reader-text);
 }
 .reader-light-theme .reader-section-title,
