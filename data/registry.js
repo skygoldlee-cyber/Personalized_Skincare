@@ -3,7 +3,7 @@
 export const DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2026",
-  "generatedAt": "2026-09-14T09:56:09.722Z",
+  "generatedAt": "2026-09-14T10:01:38.743Z",
   "subjects": [
     {
       "key": "law",
@@ -22,7 +22,7 @@ export const DATA_REGISTRY = {
       "order": 2,
       "name": "화장품 제조 및 품질관리",
       "shortName": "제조·품질",
-      "contentHash": "5aa49dd4",
+      "contentHash": "bab2150e",
       "stats": {
         "cards": 370,
         "quizzes": 133,
@@ -61,9 +61,9 @@ export const DATA_REGISTRY = {
       "part": 1,
       "title": "화장품법의 이해 (100제)",
       "file": "과목1_문제.md",
-      "bundle": "./data/exams/subject1.3d282153.js",
+      "bundle": "./data/exams/subject1.80112c8e.js",
       "global": "EXAM_DATA_subject1",
-      "contentHash": "3d282153",
+      "contentHash": "80112c8e",
       "stats": {
         "questions": 100
       }
@@ -74,9 +74,9 @@ export const DATA_REGISTRY = {
       "part": 1,
       "title": "화장품 제조 및 품질관리 (250제)",
       "file": "과목2_문제.md",
-      "bundle": "./data/exams/subject2.118b944a.js",
+      "bundle": "./data/exams/subject2.bd153ec1.js",
       "global": "EXAM_DATA_subject2",
-      "contentHash": "118b944a",
+      "contentHash": "bd153ec1",
       "stats": {
         "questions": 250
       }
@@ -87,9 +87,9 @@ export const DATA_REGISTRY = {
       "part": 1,
       "title": "유통화장품 안전관리 (250제)",
       "file": "과목3_문제.md",
-      "bundle": "./data/exams/subject3.cafdab7d.js",
+      "bundle": "./data/exams/subject3.15f8c85b.js",
       "global": "EXAM_DATA_subject3",
-      "contentHash": "cafdab7d",
+      "contentHash": "15f8c85b",
       "stats": {
         "questions": 250
       }
@@ -100,9 +100,9 @@ export const DATA_REGISTRY = {
       "part": 1,
       "title": "맞춤형화장품의 이해 (400제)",
       "file": "과목4_문제.md",
-      "bundle": "./data/exams/subject4.96b9f380.js",
+      "bundle": "./data/exams/subject4.0166d019.js",
       "global": "EXAM_DATA_subject4",
-      "contentHash": "96b9f380",
+      "contentHash": "0166d019",
       "stats": {
         "questions": 400
       }
