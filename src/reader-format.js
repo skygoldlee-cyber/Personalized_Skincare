@@ -326,15 +326,23 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
     // --- 마인드맵 노드 상세 매핑 표: 중분류 셀을 섹션 점프 링크로 자동 변환 ---
     // "🗺️ 마인드맵 노드 상세 매핑" 다음에 오는 표의 2번째 열(중분류)을
     // data-toc-jump 링크로 변환하여 해당 섹션으로 바로 이동 가능하게 함.
-    // 마인드맵 노드 → 섹션 내용 점프 (암기 학습 효율 향상)
+    // 단, 대분류(1열)가 "Ch"로 시작하는 전체 마인드맵 매핑 표만 변환.
+    // 챕터별 매핑 표(대분류가 마인드맵 노드명)는 섹션 내 세부 내용이므로 링크화 제외.
     html = html.replace(
         /(<div class="md-quote"><strong>🗺️ 마인드맵 노드 상세 매핑<\/strong><\/div>[\s\S]*?<div class="reader-table-wrapper">[\s\S]*?<tbody>)([\s\S]*?)(<\/tbody>)/g,
         (match, before, tbody, after) => {
+            // 첫 번째 데이터 행의 대분류가 "Ch"로 시작하는지 확인
+            const firstRowMatch = tbody.match(/<tr[^>]*>([\s\S]*?)<\/tr>/);
+            if (!firstRowMatch) return match;
+            const firstTdMatch = firstRowMatch[1].match(/<td[^>]*>([\s\S]*?)<\/td>/);
+            if (!firstTdMatch) return match;
+            const firstCat = firstTdMatch[1].replace(/<[^>]+>/g, '').trim();
+            // 대분류가 "Ch"로 시작하지 않으면 링크화하지 않음 (챕터별 매핑 표)
+            if (!/^Ch\d/i.test(firstCat)) return match;
             // tbody 내의 각 <tr>에서 2번째 <td>를 링크로 변환
             const linked = tbody.replace(/<tr([^>]*)>([\s\S]*?)<\/tr>/g, (m, trAttr, trContent) => {
                 // <td>들을 분리
                 const tds = [];
-                let pos = 0;
                 const tdRe = /<td([^>]*)>([\s\S]*?)<\/td>/g;
                 let tdMatch;
                 while ((tdMatch = tdRe.exec(trContent)) !== null) {
