@@ -644,6 +644,30 @@
     margin-bottom: 1.35rem;
     font-size: calc(1.06rem * var(--reader-font-scale, 1));
 }
+/* $$...$$ 수식 블록 (KaTeX 없이 HTML/CSS 분수 렌더링) */
+.textbook-reader-content .textbook-reader-section-content .math-block {
+    margin: 1.2rem 0;
+    padding: 0.8rem 1rem;
+    text-align: center;
+    font-size: calc(1.1rem * var(--reader-font-scale, 1));
+    background: var(--reader-light-code-bg, rgba(0,0,0,0.03));
+    border-radius: 6px;
+    overflow-x: auto;
+}
+.textbook-reader-content .textbook-reader-section-content .math-frac {
+    display: inline-flex;
+    flex-direction: column;
+    vertical-align: middle;
+    text-align: center;
+    margin: 0 0.3em;
+}
+.textbook-reader-content .textbook-reader-section-content .math-num {
+    padding: 0 0.4em 0.1em;
+    border-bottom: 1.5px solid currentColor;
+}
+.textbook-reader-content .textbook-reader-section-content .math-den {
+    padding: 0.1em 0.4em 0;
+}
 .textbook-reader-content .textbook-reader-section-content .md-list-item {
     margin-bottom: 0.65rem;
 }

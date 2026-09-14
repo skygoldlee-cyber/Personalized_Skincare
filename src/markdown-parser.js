@@ -32,6 +32,14 @@ export function parseMarkdown(mdText, options = {}) {
     html = html.replace(/<\/sup>/gi, 'SUP_C');
     html = html.replace(/&nbsp;/gi, 'NBSP_TOKEN');
 
+    // 1-1. $$...$$ 수식 블록을 플레이스홀더로 보호 (HTML 이스케이프 전)
+    const _mathBlocks = [];
+    html = html.replace(/\$\$([\s\S]*?)\$\$/g, (m, formula) => {
+        const i = _mathBlocks.length;
+        _mathBlocks.push(formula.trim());
+        return `MATHBLOCK_TOKEN${i}END_TOKEN`;
+    });
+
     // 2. HTML 이스케이프
     html = escapeHTML(html);
 
@@ -40,6 +48,12 @@ export function parseMarkdown(mdText, options = {}) {
     html = html.replace(/SUP_O/gi, '<sup>');
     html = html.replace(/SUP_C/gi, '</sup>');
     html = html.replace(/NBSP_TOKEN/gi, '&nbsp;');
+
+    // 3-1. $$...$$ 수식 블록을 HTML 분수로 변환
+    html = html.replace(/MATHBLOCK_TOKEN(\d+)END_TOKEN/g, (m, i) => {
+        const formula = _mathBlocks[parseInt(i)];
+        return convertMathToHtml(formula);
+    });
 
     // 4. 펜스 라인 토큰 치환 (```언어)
     html = html.replace(/^```(\w*).*$/gm, (m, lang) => 'FENCE_TOKEN' + (lang || ''));
@@ -342,4 +356,32 @@ export function parseMarkdown(mdText, options = {}) {
     flushList();
 
     return output.join('\n');
+}
+
+/**
+ * 간단한 LaTeX 수식을 HTML로 변환 (KaTeX 없이 \frac 분수만 지원)
+ * @param {string} formula - $$ ... $$ 내부의 LaTeX 수식 문자열
+ * @returns {string} HTML 문자열
+ */
+function convertMathToHtml(formula) {
+    // 이미 HTML 이스케이프된 상태이므로 < > 등 복원 불필요
+    // \frac{분자}{분모} → HTML 분수 구조로 변환
+    let html = formula;
+    // \times → × 기호
+    html = html.replace(/\\times/g, '&times;');
+    // \frac{A}{B} → <span class="math-frac"><span class="math-num">A</span><span class="math-den">B</span></span>
+    // 중첩 분수 지원 (최대 3단계)
+    for (let depth = 0; depth < 3; depth++) {
+        const prev = html;
+        html = html.replace(/\\frac\{([^{}]*)\}\{([^{}]*)\}/g,
+            '<span class="math-frac"><span class="math-num">$1</span><span class="math-den">$2</span></span>');
+        if (html === prev) break;
+    }
+    // 남은 역슬래시 제거 (미지원 명령)
+    html = html.replace(/\\([a-zA-Z]+)/g, '$1');
+    // 남은 $ 기호 제거
+    html = html.replace(/\$/g, '');
+    // 공백 정리
+    html = html.replace(/\\\s/g, ' ').replace(/\s+/g, ' ').trim();
+    return `<div class="math-block">${html}</div>`;
 }
