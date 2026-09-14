@@ -3,7 +3,7 @@
 export const DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2026",
-  "generatedAt": "2026-09-14T01:59:01.503Z",
+  "generatedAt": "2026-09-14T02:04:50.694Z",
   "subjects": [
     {
       "key": "law",
@@ -87,9 +87,9 @@ export const DATA_REGISTRY = {
       "part": 1,
       "title": "유통화장품 안전관리 (250제)",
       "file": "과목3_문제.md",
-      "bundle": "./data/exams/subject3.4ebd598c.js",
+      "bundle": "./data/exams/subject3.b9892b61.js",
       "global": "EXAM_DATA_subject3",
-      "contentHash": "4ebd598c",
+      "contentHash": "b9892b61",
       "stats": {
         "questions": 250
       }

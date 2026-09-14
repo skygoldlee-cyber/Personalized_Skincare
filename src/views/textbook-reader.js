@@ -787,6 +787,17 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
                     }
                 }
             }
+            // 5순위: 섹션 본문 내용에서 텍스트 검색 (마인드맵 매핑 표 링크용)
+            if (!found && jumpNorm) {
+                sectionCards.forEach(card => {
+                    const body = card.querySelector('.reader-section-body');
+                    if (!body) return;
+                    const bodyText = body.textContent || '';
+                    if (bodyText.includes(jumpNorm)) {
+                        found = card;
+                    }
+                });
+            }
             if (found) {
                 if (found.classList.contains('collapsed')) {
                     found.classList.remove('collapsed');

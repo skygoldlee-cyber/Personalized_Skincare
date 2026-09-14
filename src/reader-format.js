@@ -323,5 +323,34 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
         }
     }
 
+    // --- 마인드맵 노드 상세 매핑 표: 중분류 셀을 섹션 점프 링크로 자동 변환 ---
+    // "🗺️ 마인드맵 노드 상세 매핑" 다음에 오는 표의 2번째 열(중분류)을
+    // data-toc-jump 링크로 변환하여 해당 섹션으로 바로 이동 가능하게 함.
+    // 마인드맵 노드 → 섹션 내용 점프 (암기 학습 효율 향상)
+    html = html.replace(
+        /(<div class="md-quote"><strong>🗺️ 마인드맵 노드 상세 매핑<\/strong><\/div>[\s\S]*?<div class="reader-table-wrapper">[\s\S]*?<tbody>)([\s\S]*?)(<\/tbody>)/g,
+        (match, before, tbody, after) => {
+            // tbody 내의 각 <tr>에서 2번째 <td>를 링크로 변환
+            const linked = tbody.replace(/<tr([^>]*)>([\s\S]*?)<\/tr>/g, (m, trAttr, trContent) => {
+                // <td>들을 분리
+                const tds = [];
+                let pos = 0;
+                const tdRe = /<td([^>]*)>([\s\S]*?)<\/td>/g;
+                let tdMatch;
+                while ((tdMatch = tdRe.exec(trContent)) !== null) {
+                    tds.push({ full: tdMatch[0], attr: tdMatch[1], content: tdMatch[2] });
+                }
+                if (tds.length < 2) return m;
+                // 2번째 td (중분류)의 텍스트 추출
+                const midText = tds[1].content.replace(/<[^>]+>/g, '').trim();
+                if (!midText) return m;
+                // 링크로 변환
+                tds[1].full = `<td${tds[1].attr}><a href="#" data-toc-jump="${escapeHTML(midText)}" class="mindmap-jump-link" style="color:var(--color-primary,#1f6feb);text-decoration:underline dotted;cursor:pointer;">${tds[1].content}</a></td>`;
+                return `<tr${trAttr}>${tds.map(t => t.full).join('')}</tr>`;
+            });
+            return before + linked + after;
+        }
+    );
+
     return html;
 }
