@@ -3,7 +3,7 @@
 export const DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2026",
-  "generatedAt": "2026-09-14T13:36:35.137Z",
+  "generatedAt": "2026-09-14T14:07:14.329Z",
   "subjects": [
     {
       "key": "law",
@@ -22,10 +22,10 @@ export const DATA_REGISTRY = {
       "order": 2,
       "name": "화장품 제조 및 품질관리",
       "shortName": "제조·품질",
-      "contentHash": "fef731f1",
+      "contentHash": "1c9b1632",
       "stats": {
-        "cards": 371,
-        "quizzes": 133,
+        "cards": 370,
+        "quizzes": 132,
         "chapters": 1
       }
     },
@@ -74,9 +74,9 @@ export const DATA_REGISTRY = {
       "part": 1,
       "title": "화장품 제조 및 품질관리 (250제)",
       "file": "과목2_문제.md",
-      "bundle": "./data/exams/subject2.5db08727.js",
+      "bundle": "./data/exams/subject2.ab1b544f.js",
       "global": "EXAM_DATA_subject2",
-      "contentHash": "5db08727",
+      "contentHash": "ab1b544f",
       "stats": {
         "questions": 250
       }
