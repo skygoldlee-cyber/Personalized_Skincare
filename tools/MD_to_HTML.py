@@ -331,13 +331,29 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     }
     html[data-theme="light"] .drawer-backdrop, html:has(#themeSwitch:checked) .drawer-backdrop{ background: rgba(15, 23, 42, 0.25); }
 
+    /* 모바일 주소창 영역을 제외한 동적 뷰포트 높이(100dvh)를 사용하고,
+       flex column + min-height:0 로 nav가 패널 안에서 스크롨되도록 한다.
+       (Tailwind h-[calc(100vh-6rem)]에 의존하면 헤더 높이 초과 시
+       마지막 목차 항목이 화면 밖으로 잘려 스크롨 불가) */
     .drawer-panel {
       height: 100vh;
+      height: 100dvh;
       max-width: 22rem;
       width: 85vw;
       background: var(--panel);
       border-left: 1px solid var(--border);
       box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    #tocMobile {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      padding-bottom: env(safe-area-inset-bottom, 0px);
     }
 
     /* CSS-only TOC 드로어 토글: checkbox #tocSwitch 체크 시 표시 */
@@ -1531,7 +1547,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
           <input id="tocSearchMobile" type="search" placeholder="Search..." class="w-full rounded-xl border border-slate-200/10 bg-white/5 px-3 py-2 text-sm" />
         </div>
       </div>
-      <nav id="tocMobile" class="h-[calc(100vh-6rem)] overflow-auto p-3 text-sm">
+      <nav id="tocMobile" class="p-3 text-sm">
         %%TOC_HTML%%
       </nav>
     </div>
