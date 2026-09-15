@@ -121,6 +121,33 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>%%TITLE%%</title>
 
+  <!-- 독립 테마 토글: 다른 스크립트에 의존하지 않음 (모바일 안전) -->
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('doc_theme');
+        var mode = saved || ((window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark');
+        document.documentElement.dataset.theme = mode;
+        if (mode === 'dark') document.documentElement.classList.add('doc-bg');
+      } catch (e) {
+        document.documentElement.dataset.theme = 'dark';
+      }
+      window._toggleTheme = function () {
+        var cur = document.documentElement.dataset.theme || 'dark';
+        var next = (cur === 'dark') ? 'light' : 'dark';
+        document.documentElement.dataset.theme = next;
+        try { localStorage.setItem('doc_theme', next); } catch (e) {}
+        if (next === 'light') {
+          document.documentElement.classList.remove('doc-bg');
+        } else {
+          document.documentElement.classList.add('doc-bg');
+        }
+        var btn = document.getElementById('btnThemeFab');
+        if (btn) btn.textContent = (next === 'light') ? 'Theme: Light' : 'Theme: Dark';
+      };
+    })();
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -1458,7 +1485,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     }
   </script>
 
-  <button id="btnThemeFab" type="button" class="theme-fab">Theme</button>
+  <button id="btnThemeFab" type="button" class="theme-fab" onclick="window._toggleTheme && window._toggleTheme()">Theme</button>
 
   <script>
     (function () {
@@ -1676,20 +1703,20 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
         mode = (mode === 'dark') ? 'light' : 'dark';
         try { localStorage.setItem('doc_theme', mode); } catch (e) {}
         apply(mode);
-        showToast(mode === 'light' ? 'Light mode' : 'Dark mode');
+        try { showToast(mode === 'light' ? 'Light mode' : 'Dark mode'); } catch (e) {}
       }
 
-      if (btnFab) {
-        btnFab.addEventListener('click', toggleTheme);
-        // 모바일 터치 지원: click 이벤트가 지연되거나 누락되는 경우 대비
-        var touchHandled = false;
-        btnFab.addEventListener('touchend', function (e) {
-          if (touchHandled) return;
-          touchHandled = true;
-          e.preventDefault();
-          toggleTheme();
-          setTimeout(function () { touchHandled = false; }, 500);
-        }, { passive: false });
+      // 테마 토글은 <head>의 window._toggleTheme가 처리 (모바일 안전)
+      // 기존 toggleTheme는 Mermaid 재렌더링을 위해 유지
+      if (btnFab && window._toggleTheme) {
+        var origToggle = window._toggleTheme;
+        window._toggleTheme = function () {
+          origToggle();
+          try {
+            mode = document.documentElement.dataset.theme || 'dark';
+            renderMermaid(mode);
+          } catch (e) {}
+        };
       }
 
       if (btnAutoFold) {
