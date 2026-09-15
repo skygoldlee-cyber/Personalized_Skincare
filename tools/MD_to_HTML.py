@@ -987,6 +987,11 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       margin: 1rem 0;
       text-align: center;
       overflow: auto;
+      background: #ffffff;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      color: #1e293b !important;
     }
     .mermaid-svg svg {
       display: block;
@@ -994,15 +999,22 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       max-width: 100% !important;
       height: auto !important;
     }
-    /* SVGs are pre-rendered with dark theme; in light mode, apply a subtle
-       background + filter so text/shapes remain readable. */
-    html[data-theme="light"] .mermaid-svg {
-      background: #f8fafc;
-      border-radius: 0.5rem;
-      padding: 0.5rem;
+
+    /* Pre-rendered SVG as <img>: fully isolated from external CSS.
+       다크/라이트 모드 전환과 무관하게 SVG 자체 색상 유지. */
+    .mermaid-img {
+      margin: 1rem 0;
+      text-align: center;
+      background: #ffffff;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 0.75rem;
+      padding: 1rem;
     }
-    html[data-theme="light"] .mermaid-svg svg {
-      filter: invert(0.88) hue-rotate(180deg) saturate(1.2);
+    .mermaid-img img {
+      max-width: 100% !important;
+      height: auto !important;
+      display: block;
+      margin: 0 auto;
     }
 
     /* Dark mode: improve mermaid node shape visibility */
@@ -1015,25 +1027,13 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       fill-opacity: 0.92 !important;
     }
 
-    /* Pre-rendered SVG: make connection lines/paths more visible in dark mode */
-    .mermaid-svg svg path.edge,
-    .mermaid-svg svg path.flowchart-link,
-    .mermaid-svg svg .edgePath path,
-    .mermaid-svg svg .mindmap-node path,
-    .mermaid-svg svg line {
-      stroke: #93c5fd !important;
-      stroke-width: 2px !important;
-      stroke-opacity: 0.85 !important;
-    }
-    .mermaid-svg svg path:not([fill]):not([fill="none"]) {
-      stroke: #93c5fd !important;
-    }
-
-    /* Ensure labels remain visible regardless of mermaid theme defaults */
-    .mermaid svg text,
-    .mermaid svg .label text,
-    .mermaid svg .edgeLabel,
-    .mermaid svg .edgeLabel text {
+    /* Ensure labels remain visible for client-rendered mermaid only.
+       Pre-rendered SVGs (.mermaid-svg) already have correct fill colors
+       from mermaid.ink default theme. */
+    .mermaid:not(.mermaid-svg) svg text,
+    .mermaid:not(.mermaid-svg) svg .label text,
+    .mermaid:not(.mermaid-svg) svg .edgeLabel,
+    .mermaid:not(.mermaid-svg) svg .edgeLabel text {
       fill: currentColor !important;
       color: currentColor !important;
     }
@@ -1535,10 +1535,10 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
           if (!fill || fill === 'none' || fill === 'transparent' || fill.indexOf('url(') === 0) return null;
           return fill;
         }
-        var containers = document.querySelectorAll('.mermaid, .mermaid-svg');
+        var containers = document.querySelectorAll('.mermaid');
         for (var ci = 0; ci < containers.length; ci++) {
           var cont = containers[ci];
-          var isPre = cont.classList.contains('mermaid-svg');
+          var isPre = false;
           var nodes = cont.querySelectorAll('.mindmap-node');
           for (var ni = 0; ni < nodes.length; ni++) {
             var g = nodes[ni];
@@ -3190,18 +3190,25 @@ def _prerender_mermaid_to_svg(html_body: str, progress_cb=None) -> str:
             except Exception:
                 pass
 
+        # 메인 웹앱(src/mermaid-utils.js)과 동일한 전략:
+        # mindmap은 항상 'default' 테마로 렌더링 (밝은 파스텔 배경 + 어두운 텍스트).
+        # dark 테마는 노드 배경이 어두워져 텍스트 대비가 급격히 저하됨.
+        # flowchart 등 다른 타입도 동일하게 default로 렌더링하여
+        # 다크 페이지 위에서 "밝은 카드"처럼 표시.
+        first_line = src.split('\n')[0].strip().lower()
+        # 모든 다이어그램을 default 테마로 렌더링
         encoded = base64.urlsafe_b64encode(src.encode("utf-8")).decode("ascii")
-        url = f"https://mermaid.ink/svg/{encoded}?theme=dark&bgColor=0f172a"
+        url = f"https://mermaid.ink/svg/{encoded}?theme=default&bgColor=ffffff"
 
+        svg = None
         for _attempt in range(2):
             try:
                 req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
                 with urllib.request.urlopen(req, timeout=15) as resp:
                     svg = resp.read().decode("utf-8", errors="replace")
-
                 if svg and "<svg" in svg:
-                    return f'<div class="mermaid-svg">{svg}</div>'
-                break
+                    break
+                svg = None
             except Exception as e:
                 if _attempt < 1:
                     _time.sleep(1)
@@ -3211,6 +3218,18 @@ def _prerender_mermaid_to_svg(html_body: str, progress_cb=None) -> str:
                 except Exception:
                     pass
                 break
+
+        if svg:
+            # SVG를 <img> 태그로 인라인 임베드하여 외부 CSS의 영향을
+            # 완전히 차단. data: URI로 인라인 SVG를 사용하면 다크/라이트
+            # 모드 전환과 무관하게 SVG 자체 색상이 유지됨.
+            svg_b64 = base64.b64encode(svg.encode("utf-8")).decode("ascii")
+            return (
+                f'<div class="mermaid-img">'
+                f'<img src="data:image/svg+xml;base64,{svg_b64}"'
+                f' alt="Mermaid diagram" />'
+                f"</div>"
+            )
 
         # Fallback: keep original div for client-side rendering
         return m.group(0)
