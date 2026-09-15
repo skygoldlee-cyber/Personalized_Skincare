@@ -291,21 +291,26 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       position: fixed;
       right: 18px;
       bottom: 18px;
-      z-index: 9999;
+      z-index: 99999;
       border: 1px solid rgba(226, 232, 240, 0.18);
       background: rgba(2, 6, 23, 0.75);
       color: var(--fg);
-      padding: 0.65rem 0.85rem;
+      padding: 0.75rem 1rem;
       border-radius: 9999px;
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       font-weight: 700;
       box-shadow: var(--shadow);
       cursor: pointer;
       user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       pointer-events: auto;
+      min-height: 44px;
+      min-width: 44px;
     }
     .theme-fab:hover { background: rgba(2, 6, 23, 0.88); }
     html[data-theme="light"] .theme-fab {
@@ -1643,8 +1648,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
           document.body.classList.add('doc-bg');
         }
         if (btnFab) btnFab.textContent = (mode === 'light') ? 'Theme: Light' : 'Theme: Dark';
-        renderMermaid(mode);
-        setAutoFold(getAutoFold());
+        try { renderMermaid(mode); } catch (e) {}
+        try { setAutoFold(getAutoFold()); } catch (e) {}
       }
 
       var saved = null;
@@ -1674,7 +1679,18 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
         showToast(mode === 'light' ? 'Light mode' : 'Dark mode');
       }
 
-      if (btnFab) btnFab.addEventListener('click', toggleTheme);
+      if (btnFab) {
+        btnFab.addEventListener('click', toggleTheme);
+        // 모바일 터치 지원: click 이벤트가 지연되거나 누락되는 경우 대비
+        var touchHandled = false;
+        btnFab.addEventListener('touchend', function (e) {
+          if (touchHandled) return;
+          touchHandled = true;
+          e.preventDefault();
+          toggleTheme();
+          setTimeout(function () { touchHandled = false; }, 500);
+        }, { passive: false });
+      }
 
       if (btnAutoFold) {
         setAutoFold(getAutoFold());
