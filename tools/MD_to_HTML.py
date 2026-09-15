@@ -11,6 +11,42 @@ import urllib.request
 from dataclasses import dataclass
 
 
+# =============================================================================
+# 모바일 file:// 디버깅 및 해결 이력 (2025-01)
+#
+# 모바일 Chrome/Safari에서 로컬 HTML 파일(file:// 또는 content://)을 열면
+# 인라인 <script>가 전혀 실행되지 않는 보안 정책이 적용된다.
+# 이 환경에서 작동하도록 하기 위해 아래와 같은 CSS-only/구조적 해결을 적용했다.
+#
+# [발견된 이슈 및 해결]
+# 1. 테마 토글 버튼 미응답 (모바일)
+#    - 원인: 인라인 JS 차단 + 라이트박스 오버레이(z-index:10000)가 버튼을 가림
+#    - 해결: CSS-only checkbox/label 토글 + :has() 선택자, 버튼 z-index 2147483000
+#
+# 2. 본문 내 목차 링크 미응답 (모바일)
+#    - 원인 A: 마크다운 원본의 목차가 일반 텍스트(•)로 작성되어 링크가 아님
+#    - 원인 B: 일부 파일의 마크다운 링크 href가 잘못된 앵커(#-텍스트)를 가리킴
+#    - 원인 C: backdrop-filter가 stacking context를 생성하여 앵커 이동을 방해
+#    - 해결: _linkify_inline_toc()로 • 항목 및 <ol> 안 <a>의 href를 올바른 id로 변환
+#           + 모든 backdrop-filter 제거 (CSS blur 대신 opacity 사용)
+#
+# 3. 모바일 TOC 드로어 미작동
+#    - 원인: 인라인 JS 차단으로 drawer-hidden 클래스 토글 불가
+#    - 해결: #tocSwitch checkbox + :has() 선택자로 CSS-only 드로어 구현
+#           TOC 링크를 <label for="tocSwitch">로 감싸 링크 클릭 시 드로어 자동 닫기
+#
+# 4. 모바일 좌우 여백 없음
+#    - 원인: Tailwind CDN 미로드 시 .px-4 등 유틸리티 미적용
+#    - 해결: article에 직접 padding: 0 1rem 추가
+#
+# [모바일 file:// 호환성 원칙]
+# - 인라인 <script>는 실행되지 않으므로, 중요 기능은 CSS-only로 구현
+# - checkbox/label + :has() 선택자로 토글/드로어 등 UI 상태 관리
+# - backdrop-filter는 stacking context를 생성해 앵커 이동을 방해 → 사용 금지
+# - 기본 <a href="#id"> 앵커 동작은 JS 없이도 작동하므로 활용
+# - Tailwind CDN은 로드되지 않을 수 있으므로, 필수 레이아웃은 CSS로 직접 보장
+# =============================================================================
+
 
 # UX toggles (can be overridden via CLI)
 COLLAPSE_CODEBLOCK_MIN_LINES = 35
@@ -121,7 +157,9 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>%%TITLE%%</title>
 
-  <!-- 독립 테마 토글: 다른 스크립트에 의존하지 않음 (모바일 안전) -->
+  <!-- 테마 FOUC 방지: localStorage에서 테마 읽어 checkbox 체크.
+       모바일 file:// 에서 인라인 스크립트가 차단되면 무시되고,
+       CSS 기본값(다크)이 적용된다. JS가 작동하는 환경에서만 실행. -->
   <script>
     (function () {
       try {
@@ -129,22 +167,14 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
         var mode = saved || ((window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark');
         document.documentElement.dataset.theme = mode;
         if (mode === 'dark') document.documentElement.classList.add('doc-bg');
+        // checkbox 동기화 (body 로드 전이므로 DOMContentLoaded에서 처리)
+        document.addEventListener('DOMContentLoaded', function () {
+          var cb = document.getElementById('themeSwitch');
+          if (cb) cb.checked = (mode === 'light');
+        });
       } catch (e) {
         document.documentElement.dataset.theme = 'dark';
       }
-      window._toggleTheme = function () {
-        var cur = document.documentElement.dataset.theme || 'dark';
-        var next = (cur === 'dark') ? 'light' : 'dark';
-        document.documentElement.dataset.theme = next;
-        try { localStorage.setItem('doc_theme', next); } catch (e) {}
-        if (next === 'light') {
-          document.documentElement.classList.remove('doc-bg');
-        } else {
-          document.documentElement.classList.add('doc-bg');
-        }
-        var btn = document.getElementById('btnThemeFab');
-        if (btn) btn.textContent = (next === 'light') ? 'Theme: Light' : 'Theme: Dark';
-      };
     })();
   </script>
 
@@ -276,10 +306,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     /* Mobile TOC drawer */
     .drawer-backdrop {
       background: rgba(2, 6, 23, 0.55);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
     }
-    html[data-theme="light"] .drawer-backdrop { background: rgba(15, 23, 42, 0.25); }
+    html[data-theme="light"], html:has(#themeSwitch:checked) .drawer-backdrop { background: rgba(15, 23, 42, 0.25); }
 
     .drawer-panel {
       height: 100vh;
@@ -290,7 +318,20 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       box-shadow: var(--shadow);
     }
 
-    .drawer-hidden { display: none; }
+    /* CSS-only TOC 드로어 토글: checkbox #tocSwitch 체크 시 표시 */
+    .toc-switch {
+      position: fixed;
+      width: 0;
+      height: 0;
+      opacity: 0;
+      pointer-events: none;
+    }
+    #tocDrawer { display: none; }
+    #tocSwitch:checked ~ #tocDrawer { display: block; }
+    /* 데스크톱(1024px+)에서는 사이드바 TOC를 쓰므로 모바일 드로어 비활성화 */
+    @media (min-width: 1024px) {
+      #tocSwitch:checked ~ #tocDrawer { display: none; }
+    }
 
     /* Toast */
     #toast {
@@ -308,9 +349,20 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       display: none;
       z-index: 60;
     }
-    html[data-theme="light"] #toast {
+    html[data-theme="light"], html:has(#themeSwitch:checked) #toast {
       background: rgba(255, 255, 255, 0.92);
       color: rgba(15, 23, 42, 0.92);
+    }
+
+    /* CSS-only 테마 토글: checkbox를 숨기고 label로 토글 (JS 없이도 작동) */
+    .theme-switch {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 0;
+      height: 0;
+      opacity: 0;
+      pointer-events: none;
     }
 
     /* Floating Theme button (failsafe when topbar buttons are hidden/clipped) */
@@ -340,7 +392,12 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       min-width: 44px;
     }
     .theme-fab:hover { background: rgba(2, 6, 23, 0.88); }
-    html[data-theme="light"] .theme-fab {
+    /* checkbox 상태에 따라 label 텍스트 변경 (JS 없이도 작동) */
+    #btnThemeFab::after { content: "Theme: Dark"; }
+    html:has(#themeSwitch:checked) #btnThemeFab::after { content: "Theme: Light"; }
+    /* JS가 작동할 때 data-theme 기반 텍스트 (checkbox 미체크 상태에서 data-theme=light인 경우) */
+    html[data-theme="light"]:not(:has(#themeSwitch:checked)) #btnThemeFab::after { content: "Theme: Light"; }
+    html[data-theme="light"], html:has(#themeSwitch:checked) .theme-fab {
       background: rgba(255, 255, 255, 0.92);
       color: rgba(15, 23, 42, 0.92);
       border: 1px solid rgba(15, 23, 42, 0.14);
@@ -369,7 +426,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       user-select: none;
     }
     .expand-btn:hover { background: rgba(226, 232, 240, 0.10); }
-    html[data-theme="light"] .expand-btn { background: rgba(255, 255, 255, 0.70); }
+    html[data-theme="light"], html:has(#themeSwitch:checked) .expand-btn { background: rgba(255, 255, 255, 0.70); }
 
     .admonition {
       border: 1px solid var(--border);
@@ -404,7 +461,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       --a6: rgba(250,204,21,1);   /* amber */
     }
 
-    [data-theme="light"] {
+    [data-theme="light"], html:has(#themeSwitch:checked) {
       color-scheme: light;
       --fg: rgba(15, 23, 42, 0.92);
       --muted: rgba(15, 23, 42, 0.72);
@@ -431,17 +488,13 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       background: var(--panel);
       border: 1px solid var(--border);
       box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
       color: var(--fg);
       position: relative;
       contain: none;
     }
 
-    html[data-theme="light"] .glass {
+    html[data-theme="light"], html:has(#themeSwitch:checked) .glass {
       background: rgba(232, 236, 241, 0.88);
-      backdrop-filter: none;
-      -webkit-backdrop-filter: none;
     }
 
     body {
@@ -449,25 +502,25 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       background: #020617;
     }
 
-    html[data-theme="light"] body {
+    html[data-theme="light"], html:has(#themeSwitch:checked) body {
       background: #d4d8de; /* muted slate */
     }
 
-    html[data-theme="light"] .doc-bg {
+    html[data-theme="light"], html:has(#themeSwitch:checked) .doc-bg {
       background: radial-gradient(1200px 700px at 25% -10%, rgba(37,99,235,0.10), transparent 60%),
                   radial-gradient(900px 600px at 80% 0%, rgba(124,58,237,0.08), transparent 55%),
                   linear-gradient(180deg, #e8ecf1 0%, #d4d8de 60%, #e8ecf1 100%);
     }
 
     .doc-subtitle { color: rgba(226, 232, 240, 0.70); }
-    html[data-theme="light"] .doc-subtitle { color: var(--muted); }
+    html[data-theme="light"], html:has(#themeSwitch:checked) .doc-subtitle { color: var(--muted); }
 
     .brand-badge {
       background: rgba(226, 232, 240, 0.08);
       border: 1px solid rgba(226, 232, 240, 0.10);
       color: var(--fg);
     }
-    html[data-theme="light"] .brand-badge {
+    html[data-theme="light"], html:has(#themeSwitch:checked) .brand-badge {
       background: rgba(255, 255, 255, 0.70);
       border: 1px solid rgba(15, 23, 42, 0.10);
       color: var(--fg);
@@ -479,12 +532,12 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       color: var(--fg);
     }
     .theme-btn:hover { background: rgba(226, 232, 240, 0.16); }
-    html[data-theme="light"] .theme-btn {
+    html[data-theme="light"], html:has(#themeSwitch:checked) .theme-btn {
       border: 1px solid rgba(15, 23, 42, 0.10);
       background: rgba(255, 255, 255, 0.70);
       color: var(--fg);
     }
-    html[data-theme="light"] .theme-btn:hover { background: rgba(255, 255, 255, 0.90); }
+    html[data-theme="light"], html:has(#themeSwitch:checked) .theme-btn:hover { background: rgba(255, 255, 255, 0.90); }
 
     #searchOverlay {
       position: fixed;
@@ -513,7 +566,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       font-size: 0.95rem;
       outline: none;
     }
-    html[data-theme="light"] .search-input {
+    html[data-theme="light"], html:has(#themeSwitch:checked) .search-input {
       background: rgba(255, 255, 255, 0.80);
     }
     .search-meta {
@@ -529,7 +582,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       padding: 0.02rem 0.12rem;
       border-radius: 0.25rem;
     }
-    html[data-theme="light"] mark.search-mark {
+    html[data-theme="light"], html:has(#themeSwitch:checked) mark.search-mark {
       background: rgba(234, 179, 8, 0.22);
       border-color: rgba(234, 179, 8, 0.28);
     }
@@ -537,7 +590,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       background: rgba(59, 130, 246, 0.28);
       border-color: rgba(59, 130, 246, 0.34);
     }
-    html[data-theme="light"] mark.search-mark.search-active {
+    html[data-theme="light"], html:has(#themeSwitch:checked) mark.search-mark.search-active {
       background: rgba(37, 99, 235, 0.18);
       border-color: rgba(37, 99, 235, 0.22);
     }
@@ -580,55 +633,55 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     .highlight .gp { color: #ff4689; font-weight: bold; }
 
     /* Pygments codehilite token colors — light (GitHub-inspired) */
-    html[data-theme="light"] .highlight .hll { background-color: #ffffcc; }
-    html[data-theme="light"] .highlight .c, html[data-theme="light"] .highlight .ch,
-    html[data-theme="light"] .highlight .cm, html[data-theme="light"] .highlight .cp,
-    html[data-theme="light"] .highlight .cpf, html[data-theme="light"] .highlight .c1,
-    html[data-theme="light"] .highlight .cs { color: #6a737d; font-style: italic; }
-    html[data-theme="light"] .highlight .k, html[data-theme="light"] .highlight .kc,
-    html[data-theme="light"] .highlight .kd, html[data-theme="light"] .highlight .kp,
-    html[data-theme="light"] .highlight .kr, html[data-theme="light"] .highlight .kt,
-    html[data-theme="light"] .highlight .kn { color: #d73a49; }
-    html[data-theme="light"] .highlight .o,
-    html[data-theme="light"] .highlight .ow { color: #d73a49; }
-    html[data-theme="light"] .highlight .n, html[data-theme="light"] .highlight .nb,
-    html[data-theme="light"] .highlight .ni, html[data-theme="light"] .highlight .nl,
-    html[data-theme="light"] .highlight .nn, html[data-theme="light"] .highlight .nv,
-    html[data-theme="light"] .highlight .bp, html[data-theme="light"] .highlight .vc,
-    html[data-theme="light"] .highlight .vg, html[data-theme="light"] .highlight .vi,
-    html[data-theme="light"] .highlight .vm, html[data-theme="light"] .highlight .py { color: #24292e; }
-    html[data-theme="light"] .highlight .na { color: #005cc5; }
-    html[data-theme="light"] .highlight .nc, html[data-theme="light"] .highlight .nd,
-    html[data-theme="light"] .highlight .ne, html[data-theme="light"] .highlight .nf,
-    html[data-theme="light"] .highlight .nx, html[data-theme="light"] .highlight .fm { color: #6f42c1; }
-    html[data-theme="light"] .highlight .nt { color: #22863a; }
-    html[data-theme="light"] .highlight .no { color: #005cc5; }
-    html[data-theme="light"] .highlight .s, html[data-theme="light"] .highlight .sa,
-    html[data-theme="light"] .highlight .sb, html[data-theme="light"] .highlight .sc,
-    html[data-theme="light"] .highlight .dl, html[data-theme="light"] .highlight .sd,
-    html[data-theme="light"] .highlight .s2, html[data-theme="light"] .highlight .sh,
-    html[data-theme="light"] .highlight .si, html[data-theme="light"] .highlight .sx,
-    html[data-theme="light"] .highlight .sr, html[data-theme="light"] .highlight .s1,
-    html[data-theme="light"] .highlight .ss, html[data-theme="light"] .highlight .se { color: #032f62; }
-    html[data-theme="light"] .highlight .m, html[data-theme="light"] .highlight .mb,
-    html[data-theme="light"] .highlight .mf, html[data-theme="light"] .highlight .mh,
-    html[data-theme="light"] .highlight .mi, html[data-theme="light"] .highlight .mo,
-    html[data-theme="light"] .highlight .il { color: #005cc5; }
-    html[data-theme="light"] .highlight .l,
-    html[data-theme="light"] .highlight .ld { color: #005cc5; }
-    html[data-theme="light"] .highlight .p,
-    html[data-theme="light"] .highlight .pm { color: #24292e; }
-    html[data-theme="light"] .highlight .w { color: #24292e; }
-    html[data-theme="light"] .highlight .err { color: #cb2431; }
-    html[data-theme="light"] .highlight .g, html[data-theme="light"] .highlight .ge,
-    html[data-theme="light"] .highlight .gr, html[data-theme="light"] .highlight .gh,
-    html[data-theme="light"] .highlight .gs, html[data-theme="light"] .highlight .gt,
-    html[data-theme="light"] .highlight .gu, html[data-theme="light"] .highlight .esc,
-    html[data-theme="light"] .highlight .x { color: #24292e; }
-    html[data-theme="light"] .highlight .gd { color: #cb2431; }
-    html[data-theme="light"] .highlight .gi { color: #22863a; }
-    html[data-theme="light"] .highlight .gp { color: #005cc5; font-weight: bold; }
-    html[data-theme="light"] .highlight .go { color: #6a737d; }
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .hll { background-color: #ffffcc; }
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .c, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .ch,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .cm, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .cp,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .cpf, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .c1,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .cs { color: #6a737d; font-style: italic; }
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .k, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .kc,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .kd, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .kp,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .kr, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .kt,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .kn { color: #d73a49; }
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .o,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .ow { color: #d73a49; }
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .n, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .nb,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .ni, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .nl,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .nn, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .nv,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .bp, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .vc,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .vg, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .vi,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .vm, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .py { color: #24292e; }
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .na { color: #005cc5; }
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .nc, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .nd,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .ne, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .nf,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .nx, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .fm { color: #6f42c1; }
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .nt { color: #22863a; }
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .no { color: #005cc5; }
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .s, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .sa,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .sb, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .sc,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .dl, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .sd,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .s2, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .sh,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .si, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .sx,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .sr, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .s1,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .ss, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .se { color: #032f62; }
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .m, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .mb,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .mf, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .mh,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .mi, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .mo,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .il { color: #005cc5; }
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .l,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .ld { color: #005cc5; }
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .p,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .pm { color: #24292e; }
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .w { color: #24292e; }
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .err { color: #cb2431; }
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .g, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .ge,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .gr, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .gh,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .gs, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .gt,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .gu, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .esc,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .x { color: #24292e; }
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .gd { color: #cb2431; }
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .gi { color: #22863a; }
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .gp { color: #005cc5; font-weight: bold; }
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .go { color: #6a737d; }
 
     /* nicer scrollbars (webkit only) */
     #toc::-webkit-scrollbar, article pre::-webkit-scrollbar { height: 10px; width: 10px; }
@@ -641,7 +694,9 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 
     #toc ul { list-style: none; padding-left: 0; margin: 0.25rem 0 0; }
     #toc li { margin: 0.125rem 0; }
-    #toc a {
+    /* TOC 링크를 감싼 label: 링크처럼 표시 (모바일 드로어 자동 닫기용) */
+    .toc-link { display: block; cursor: pointer; }
+    #toc a, #tocMobile a {
       display: block;
       padding: 0.35rem 0.5rem;
       border-radius: 0.6rem;
@@ -699,17 +754,17 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       padding: 0.02rem 0.18rem;
       border-radius: 0.25rem;
     }
-    html[data-theme="light"] .toc-mark {
+    html[data-theme="light"], html:has(#themeSwitch:checked) .toc-mark {
       background: rgba(234, 179, 8, 0.24);
       border-color: rgba(234, 179, 8, 0.30);
     }
 
     .toc-title { color: var(--fg); }
     .toc-subtitle { color: var(--muted); }
-    html[data-theme="light"] .toc-title { color: rgba(15, 23, 42, 0.92); }
-    html[data-theme="light"] .toc-subtitle { color: rgba(15, 23, 42, 0.72); }
+    html[data-theme="light"], html:has(#themeSwitch:checked) .toc-title { color: rgba(15, 23, 42, 0.92); }
+    html[data-theme="light"], html:has(#themeSwitch:checked) .toc-subtitle { color: rgba(15, 23, 42, 0.72); }
 
-    article { color: var(--fg); line-height: 1.75; font-size: 1.0625rem; max-width: clamp(72ch, 82vw, 96ch); margin-left: auto; margin-right: auto; }
+    article { color: var(--fg); line-height: 1.75; font-size: 1.0625rem; max-width: clamp(72ch, 82vw, 96ch); margin-left: auto; margin-right: auto; padding: 0 1rem; }
     article p { color: var(--fg); margin: 1rem 0; }
     article li { color: var(--fg); margin: 0.25rem 0; }
     article ul, article ol { padding-left: 1.5rem; margin: 0.5rem 0; }
@@ -724,7 +779,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     article a { color: var(--a1); text-decoration: underline; text-underline-offset: 3px; }
     article a:hover { color: var(--a4); }
     article strong { color: rgba(248, 250, 252, 0.98); font-weight: 700; }
-    html[data-theme="light"] article strong { color: rgba(15, 23, 42, 0.98); }
+    html[data-theme="light"], html:has(#themeSwitch:checked) article strong { color: rgba(15, 23, 42, 0.98); }
     article em { color: var(--muted); font-style: italic; }
     article .headerlink {
       opacity: 0;
@@ -778,7 +833,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       padding: 0.12rem 0.35rem;
       border-radius: 0.45rem;
     }
-    html[data-theme="light"] article code {
+    html[data-theme="light"], html:has(#themeSwitch:checked) article code {
       background: rgba(148, 163, 184, 0.14);
       border: 1px solid rgba(148, 163, 184, 0.22);
       color: rgba(15, 23, 42, 0.92);
@@ -799,21 +854,21 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       font-kerning: none;
       line-height: 1.52;
     }
-    html[data-theme="light"] article pre {
+    html[data-theme="light"], html:has(#themeSwitch:checked) article pre {
       background: #f6f8fa;
       border: 1px solid rgba(15, 23, 42, 0.12);
       color: #24292e;
     }
-    html[data-theme="light"] article pre code {
+    html[data-theme="light"], html:has(#themeSwitch:checked) article pre code {
       color: #24292e;
     }
-    html[data-theme="light"] .highlight,
-    html[data-theme="light"] .highlight pre,
-    html[data-theme="light"] .highlight pre code {
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight pre,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight pre code {
       color: #24292e !important;
       background: #f6f8fa !important;
     }
-    html[data-theme="light"] .highlight {
+    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight {
       border-radius: 0.9rem;
     }
     article pre code {
@@ -867,49 +922,49 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       color: rgba(226, 232, 240, 0.92);
       background: transparent;
     }
-    html[data-theme="light"] .hljs {
+    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs {
       color: #24292e;
     }
-    html[data-theme="light"] .hljs-comment,
-    html[data-theme="light"] .hljs-quote {
+    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-comment,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-quote {
       color: #6a737d;
     }
-    html[data-theme="light"] .hljs-keyword,
-    html[data-theme="light"] .hljs-selector-tag,
-    html[data-theme="light"] .hljs-subst {
+    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-keyword,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-selector-tag,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-subst {
       color: #d73a49;
     }
-    html[data-theme="light"] .hljs-string,
-    html[data-theme="light"] .hljs-doctag,
-    html[data-theme="light"] .hljs-regexp {
+    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-string,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-doctag,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-regexp {
       color: #032f62;
     }
-    html[data-theme="light"] .hljs-title,
-    html[data-theme="light"] .hljs-section,
-    html[data-theme="light"] .hljs-selector-id,
-    html[data-theme="light"] .hljs-selector-class {
+    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-title,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-section,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-selector-id,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-selector-class {
       color: #6f42c1;
     }
-    html[data-theme="light"] .hljs-number,
-    html[data-theme="light"] .hljs-literal,
-    html[data-theme="light"] .hljs-symbol,
-    html[data-theme="light"] .hljs-bullet {
+    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-number,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-literal,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-symbol,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-bullet {
       color: #005cc5;
     }
-    html[data-theme="light"] .hljs-attr,
-    html[data-theme="light"] .hljs-attribute,
-    html[data-theme="light"] .hljs-variable,
-    html[data-theme="light"] .hljs-template-variable,
-    html[data-theme="light"] .hljs-type {
+    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-attr,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-attribute,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-variable,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-template-variable,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-type {
       color: #005cc5;
     }
-    html[data-theme="light"] .hljs-built_in,
-    html[data-theme="light"] .hljs-builtin-name {
+    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-built_in,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-builtin-name {
       color: #e36209;
     }
-    html[data-theme="light"] .hljs-meta,
-    html[data-theme="light"] .hljs-meta-keyword,
-    html[data-theme="light"] .hljs-meta-string {
+    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-meta,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-meta-keyword,
+    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-meta-string {
       color: #6a737d;
     }
     .hljs-comment,
@@ -1004,7 +1059,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       margin: 1rem 0;
       color: rgba(226, 232, 240, 0.92);
     }
-    html[data-theme="light"] .mermaid {
+    html[data-theme="light"], html:has(#themeSwitch:checked) .mermaid {
       background: rgba(232, 236, 241, 0.65);
       border: 1px solid rgba(15, 23, 42, 0.18);
       color: rgba(15, 23, 42, 0.92);
@@ -1100,7 +1155,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       color: rgba(254, 226, 226, 0.92);
       margin-bottom: 0.5rem;
     }
-    html[data-theme="light"] .mermaid-error-title {
+    html[data-theme="light"], html:has(#themeSwitch:checked) .mermaid-error-title {
       color: rgba(190, 18, 60, 0.92);
     }
     .mermaid-error details {
@@ -1123,7 +1178,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       color: rgba(226, 232, 240, 0.92);
       overflow: auto;
     }
-    html[data-theme="light"] .mermaid-error pre.mermaid-error-msg {
+    html[data-theme="light"], html:has(#themeSwitch:checked) .mermaid-error pre.mermaid-error-msg {
       background: rgba(15, 23, 42, 0.06);
       color: rgba(15, 23, 42, 0.88);
     }
@@ -1146,7 +1201,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       user-select: none;
     }
     .copy-btn:hover { background: rgba(226, 232, 240, 0.10); }
-    html[data-theme="light"] .copy-btn {
+    html[data-theme="light"], html:has(#themeSwitch:checked) .copy-btn {
       background: rgba(255, 255, 255, 0.70);
     }
 
@@ -1165,7 +1220,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       text-transform: uppercase;
       letter-spacing: 0.03em;
     }
-    html[data-theme="light"] .lang-label {
+    html[data-theme="light"], html:has(#themeSwitch:checked) .lang-label {
       color: rgba(100, 116, 139, 0.8);
     }
 
@@ -1192,18 +1247,18 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     article th { background: rgba(59, 130, 246, 0.10); font-weight: 600; color: rgba(224, 231, 255, 0.98); }
     article tbody tr:nth-child(even) { background: rgba(148, 163, 184, 0.04); }
     article tbody tr:hover { background: rgba(148, 163, 184, 0.08); }
-    html[data-theme="light"] article th {
+    html[data-theme="light"], html:has(#themeSwitch:checked) article th {
       background: rgba(37, 99, 235, 0.08);
       color: rgba(15, 23, 42, 0.92);
     }
-    html[data-theme="light"] article td {
+    html[data-theme="light"], html:has(#themeSwitch:checked) article td {
       border-color: rgba(15, 23, 42, 0.10);
     }
-    html[data-theme="light"] article th {
+    html[data-theme="light"], html:has(#themeSwitch:checked) article th {
       border-color: rgba(15, 23, 42, 0.12);
     }
-    html[data-theme="light"] article tbody tr:nth-child(even) { background: rgba(15, 23, 42, 0.03); }
-    html[data-theme="light"] article tbody tr:hover { background: rgba(15, 23, 42, 0.05); }
+    html[data-theme="light"], html:has(#themeSwitch:checked) article tbody tr:nth-child(even) { background: rgba(15, 23, 42, 0.03); }
+    html[data-theme="light"], html:has(#themeSwitch:checked) article tbody tr:hover { background: rgba(15, 23, 42, 0.05); }
     /* Enhanced Practical Notes & Callouts */
     article blockquote {
       border-left: 4px solid rgba(99, 102, 241, 0.65);
@@ -1215,7 +1270,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       box-shadow: 0 4px 15px rgba(0,0,0,0.1);
       position: relative;
     }
-    html[data-theme="light"] article blockquote {
+    html[data-theme="light"], html:has(#themeSwitch:checked) article blockquote {
       border-left-color: rgba(99, 102, 241, 0.75);
       background: rgba(99, 102, 241, 0.06);
       color: var(--fg);
@@ -1227,7 +1282,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       border: 1px solid rgba(16, 185, 129, 0.25);
       border-left-width: 4px;
     }
-    html[data-theme="light"] article blockquote.callout-sop {
+    html[data-theme="light"], html:has(#themeSwitch:checked) article blockquote.callout-sop {
       background: linear-gradient(135deg, rgba(16, 185, 129, 0.14), rgba(16, 185, 129, 0.04));
       border-color: rgba(16, 185, 129, 0.35);
     }
@@ -1238,7 +1293,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       border: 1px solid rgba(245, 158, 11, 0.25);
       border-left-width: 4px;
     }
-    html[data-theme="light"] article blockquote.callout-trouble {
+    html[data-theme="light"], html:has(#themeSwitch:checked) article blockquote.callout-trouble {
       background: linear-gradient(135deg, rgba(245, 158, 11, 0.14), rgba(245, 158, 11, 0.04));
       border-color: rgba(245, 158, 11, 0.35);
     }
@@ -1249,7 +1304,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       border: 1px solid rgba(244, 63, 94, 0.25);
       border-left-width: 4px;
     }
-    html[data-theme="light"] article blockquote.callout-warning {
+    html[data-theme="light"], html:has(#themeSwitch:checked) article blockquote.callout-warning {
       background: linear-gradient(135deg, rgba(244, 63, 94, 0.14), rgba(244, 63, 94, 0.04));
       border-color: rgba(244, 63, 94, 0.35);
     }
@@ -1260,7 +1315,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       border: 1px solid rgba(99, 102, 241, 0.25);
       border-left-width: 4px;
     }
-    html[data-theme="light"] article blockquote.callout-form {
+    html[data-theme="light"], html:has(#themeSwitch:checked) article blockquote.callout-form {
       background: linear-gradient(135deg, rgba(99, 102, 241, 0.14), rgba(99, 102, 241, 0.04));
       border-color: rgba(99, 102, 241, 0.35);
     }
@@ -1271,7 +1326,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       border: 1px solid rgba(6, 182, 212, 0.25);
       border-left-width: 4px;
     }
-    html[data-theme="light"] article blockquote.callout-character {
+    html[data-theme="light"], html:has(#themeSwitch:checked) article blockquote.callout-character {
       background: linear-gradient(135deg, rgba(6, 182, 212, 0.14), rgba(6, 182, 212, 0.04));
       border-color: rgba(6, 182, 212, 0.35);
     }
@@ -1282,7 +1337,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       border: 1px solid rgba(168, 85, 247, 0.25);
       border-left-width: 4px;
     }
-    html[data-theme="light"] article blockquote.callout-exam {
+    html[data-theme="light"], html:has(#themeSwitch:checked) article blockquote.callout-exam {
       background: linear-gradient(135deg, rgba(168, 85, 247, 0.14), rgba(168, 85, 247, 0.04));
       border-color: rgba(168, 85, 247, 0.35);
     }
@@ -1309,7 +1364,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       transition: opacity 0.2s;
     }
     .back-to-top:hover { background: rgba(2, 6, 23, 0.88); }
-    html[data-theme="light"] .back-to-top {
+    html[data-theme="light"], html:has(#themeSwitch:checked) .back-to-top {
       background: rgba(255, 255, 255, 0.92);
       color: rgba(15, 23, 42, 0.92);
       border: 1px solid rgba(15, 23, 42, 0.14);
@@ -1332,11 +1387,26 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       border-radius: 0.75rem;
       box-shadow: 0 20px 60px rgba(0,0,0,0.5);
     }
-    html[data-theme="light"] .lightbox-overlay {
+    html[data-theme="light"], html:has(#themeSwitch:checked) .lightbox-overlay {
       background: rgba(255, 255, 255, 0.90);
     }
     article img {
       cursor: zoom-in;
+    }
+
+    /* 모바일에서 테마 버튼 클릭이 안 되는 문제 방어:
+       라이트박스/검색 오버레이는 활성화 전에는 화면을 덮어도 탭을 가로채지
+       않도록 pointer-events를 끈다. (Tailwind 등으로 display 제어가 어긋나
+       투명하게 남아도 버튼 클릭을 막지 않게 하는 안전장치.)
+       활성 상태(display:flex / [data-open="1"])일 때만 이벤트를 받는다. */
+    .lightbox-overlay { pointer-events: none; }
+    .lightbox-overlay[style*="flex"] { pointer-events: auto; }
+    #searchOverlay { pointer-events: none; }
+    #searchOverlay[data-open="1"] { pointer-events: auto; }
+    /* 테마 버튼은 항상 최상단에서 탭을 받는다. */
+    .theme-fab {
+      pointer-events: auto !important;
+      z-index: 2147483000 !important;
     }
 
     /* TOC progress */
@@ -1350,9 +1420,14 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     .topbar {
       background: var(--panel);
       border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
       overflow: visible;
+    }
+
+    /* 앵커(목차) 이동 시 대상 heading이 sticky 헤더 뒤에 숨지 않도록
+       스크롤 여백을 준다. 헤더 높이(약 60px)보다 넉넉하게 잡는다. */
+    article h1, article h2, article h3, article h4, article h5, article h6,
+    :target {
+      scroll-margin-top: 5rem;
     }
 
     /* Print styles */
@@ -1381,7 +1456,9 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   </style>
 </head>
 
-<body class="doc-bg min-h-screen">
+<body class="min-h-screen">
+  <!-- CSS-only TOC 드로어 토글: checkbox + label (JS 없이도 열고 닫기 가능) -->
+  <input type="checkbox" id="tocSwitch" class="toc-switch" />
   <header class="topbar sticky top-0 z-50">
     <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
       <div class="flex items-center gap-3">
@@ -1392,7 +1469,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
         </div>
       </div>
       <div class="flex items-center gap-3">
-        <button id="btnToc" class="theme-btn sm:hidden inline-flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium">TOC</button>
+        <label for="tocSwitch" id="btnToc" class="theme-btn sm:hidden inline-flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium">TOC</label>
         <button id="btnSearch" class="theme-btn inline-flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium">Search</button>
         <button id="btnAutoFold" class="theme-btn inline-flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium">AutoFold</button>
         <button id="btnFold" class="theme-btn inline-flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium">Fold</button>
@@ -1410,9 +1487,9 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     </div>
   </div>
 
-  <!-- Mobile TOC Drawer -->
-  <div id="tocDrawer" class="drawer-hidden fixed inset-0 z-40">
-    <div id="tocBackdrop" class="drawer-backdrop fixed inset-0"></div>
+  <!-- Mobile TOC Drawer: checkbox #tocSwitch 체크 시 표시 (CSS-only) -->
+  <div id="tocDrawer" class="fixed inset-0 z-40">
+    <label for="tocSwitch" id="tocBackdrop" class="drawer-backdrop fixed inset-0"></label>
     <div class="fixed right-0 top-0 drawer-panel">
       <div class="p-4 border-b" style="border-color: var(--border);">
         <div class="flex items-center justify-between">
@@ -1422,7 +1499,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
           </div>
           <div class="flex items-center gap-2">
             <button id="btnAutoFoldMobile" class="theme-btn rounded-xl px-3 py-2 text-xs font-medium">AutoFold</button>
-            <button id="btnTocClose" class="theme-btn rounded-xl px-3 py-2 text-xs font-medium">Close</button>
+            <label for="tocSwitch" id="btnTocClose" class="theme-btn rounded-xl px-3 py-2 text-xs font-medium">Close</label>
           </div>
         </div>
         <div class="mt-3">
@@ -1485,7 +1562,10 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     }
   </script>
 
-  <button id="btnThemeFab" type="button" class="theme-fab" onclick="window._toggleTheme && window._toggleTheme()">Theme</button>
+  <!-- CSS-only 테마 토글: checkbox + label (JS 없이도 작동, 모바일 file:// 대응).
+       JS가 작동하면 change 이벤트로 data-theme 동기화 + localStorage 저장 + Mermaid 재렌더. -->
+  <input type="checkbox" id="themeSwitch" class="theme-switch" />
+  <label for="themeSwitch" id="btnThemeFab" class="theme-fab">Theme</label>
 
   <script>
     (function () {
@@ -1669,12 +1749,19 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 
       function apply(mode) {
         root.dataset.theme = mode;
+        // doc-bg는 <html>(documentElement)에만 적용한다. <head>의 초기 테마
+        // 스크립트는 파싱 도중 <body>가 아직 없을 수 있어 documentElement를
+        // 대상으로 쓴다. 여기서도 같은 요소에 맞춰야 테마 전환 시 배경이
+        // 어긋나지 않는다. (과거 <body> 대상 코드가 남긴 클래스는 함께 제거)
+        document.body.classList.remove('doc-bg');
         if (mode === 'light') {
-          document.body.classList.remove('doc-bg');
+          root.classList.remove('doc-bg');
         } else {
-          document.body.classList.add('doc-bg');
+          root.classList.add('doc-bg');
         }
-        if (btnFab) btnFab.textContent = (mode === 'light') ? 'Theme: Light' : 'Theme: Dark';
+        // checkbox 동기화 (label 텍스트는 CSS ::after로 처리되므로 JS textContent 불필요)
+        var cb = document.getElementById('themeSwitch');
+        if (cb) cb.checked = (mode === 'light');
         try { renderMermaid(mode); } catch (e) {}
         try { setAutoFold(getAutoFold()); } catch (e) {}
       }
@@ -1699,25 +1786,22 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
         try { fixMindmapContrast(); } catch (e) {}
       });
 
-      function toggleTheme() {
-        mode = (mode === 'dark') ? 'light' : 'dark';
-        try { localStorage.setItem('doc_theme', mode); } catch (e) {}
-        apply(mode);
-        try { showToast(mode === 'light' ? 'Light mode' : 'Dark mode'); } catch (e) {}
+      // 테마 토글: checkbox change 이벤트 기반.
+      // label(#btnThemeFab)을 클릭하면 checkbox가 자동 토글 → change 발생.
+      // JS가 차단된 환경(모바일 file://)에서는 CSS :has()만으로 토글 작동.
+      var themeCb = document.getElementById('themeSwitch');
+      if (themeCb) {
+        themeCb.addEventListener('change', function () {
+          mode = themeCb.checked ? 'light' : 'dark';
+          try { localStorage.setItem('doc_theme', mode); } catch (e) {}
+          apply(mode);
+          try { showToast(mode === 'light' ? 'Light mode' : 'Dark mode'); } catch (e) {}
+        });
       }
-
-      // 테마 토글은 <head>의 window._toggleTheme가 처리 (모바일 안전)
-      // 기존 toggleTheme는 Mermaid 재렌더링을 위해 유지
-      if (btnFab && window._toggleTheme) {
-        var origToggle = window._toggleTheme;
-        window._toggleTheme = function () {
-          origToggle();
-          try {
-            mode = document.documentElement.dataset.theme || 'dark';
-            renderMermaid(mode);
-          } catch (e) {}
-        };
-      }
+      // 외부 호출용 (다른 스크립트에서 테마 토글 필요 시)
+      window._toggleTheme = function () {
+        if (themeCb) themeCb.click();
+      };
 
       if (btnAutoFold) {
         setAutoFold(getAutoFold());
@@ -2073,12 +2157,12 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       var btnClose = document.getElementById('btnTocClose');
 
       function openDrawer() {
-        if (!drawer) return;
-        drawer.classList.remove('drawer-hidden');
+        var cb = document.getElementById('tocSwitch');
+        if (cb) cb.checked = true;
       }
       function closeDrawer() {
-        if (!drawer) return;
-        drawer.classList.add('drawer-hidden');
+        var cb = document.getElementById('tocSwitch');
+        if (cb) cb.checked = false;
       }
 
       if (btnToc) btnToc.addEventListener('click', openDrawer);
@@ -2087,6 +2171,32 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       document.addEventListener('keydown', function (e) {
         if (e && e.key === 'Escape') closeDrawer();
       });
+
+      // 모바일 드로어 안의 목차 링크를 누르면 드로어를 닫아, 이동한 위치가
+      // 보이도록 한다. 드로어는 fixed inset-0으로 화면 전체를 덮기 때문에
+      // 닫지 않으면 앵커 이동이 일어나도 사용자에게는 아무 변화가 없는 것처럼
+      // 보인다. 앵커 기본 동작(해시 이동)은 막지 않는다.
+      var tocMobileNav = document.getElementById('tocMobile');
+      if (tocMobileNav) {
+        tocMobileNav.addEventListener('click', function (e) {
+          var a = e.target && e.target.closest ? e.target.closest('a[href^="#"]') : null;
+          if (!a) return;
+          var id = (a.getAttribute('href') || '').slice(1);
+          // 드로어를 닫은 뒤, 레이아웃이 반영된 다음 대상으로 스크롤한다.
+          closeDrawer();
+          if (id) {
+            var target = document.getElementById(id);
+            if (target) {
+              e.preventDefault();
+              setTimeout(function () {
+                try { target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+                catch (e2) { try { target.scrollIntoView(true); } catch (e3) {} }
+                try { history.replaceState(null, '', '#' + id); } catch (e4) {}
+              }, 60);
+            }
+          }
+        });
+      }
     });
   </script>
 
@@ -3375,6 +3485,96 @@ def markdown_to_tailwind_html(md_text: str, title: str = "Document", config: Ren
         flags=re.IGNORECASE,
     )
 
+    # 본문 내 일반 텍스트 목차(•로 시작하는 항목)를 하이퍼링크로 변환.
+    # md.toc에서 헤딩 텍스트→ID 매핑을 추출하고, 본문의 목차 항목 텍스트와
+    # 매칭하여 <a href="#ID">텍스트</a>로 변환한다.
+    # 모바일 file://에서도 기본 앵커 동작으로 스크롤 이동 작동.
+    def _build_heading_map(toc_html_str: str) -> dict:
+        """toc_html에서 {헤딩텍스트: id} 매핑을 추출한다."""
+        mapping = {}
+        if not toc_html_str:
+            return mapping
+        for m in re.finditer(r'<a\s+href="#([^"]+)"[^>]*>(.*?)</a>', toc_html_str, re.DOTALL):
+            hid = m.group(1)
+            htext = re.sub(r'<[^>]+>', '', m.group(2)).strip()
+            if htext and hid:
+                mapping[htext] = hid
+        return mapping
+
+    def _linkify_inline_toc(body_html: str, heading_map: dict) -> str:
+        """본문의 목차 항목을 하이퍼링크로 변환/수정.
+        1) •로 시작하는 일반 텍스트 항목 → <a href="#id">로 변환
+        2) <ol>/<ul> 안의 <li><a> 항목 중 href가 잘못된 경우 → 올바른 id로 수정
+        '📋 목차' 헤딩 아래의 첫 번째 블록만 처리한다."""
+        if not heading_map:
+            return body_html
+
+        def _find_heading_id(plain_text: str) -> str:
+            """plain_text와 매칭되는 헤딩 id를 찾는다."""
+            # 정확 매칭
+            for htext, hid in heading_map.items():
+                if plain_text == htext:
+                    return hid
+            # 부분 매칭
+            for htext, hid in heading_map.items():
+                if plain_text and (plain_text in htext or htext in plain_text):
+                    return hid
+            return None
+
+        def _linkify_p_content(p_attrs: str, content: str) -> str:
+            if '•' not in content:
+                return f'<p{p_attrs}>{content}</p>'
+            lines = content.split('\n')
+            new_lines = []
+            for line in lines:
+                stripped = line.lstrip()
+                if not stripped.startswith('•'):
+                    new_lines.append(line)
+                    continue
+                after_bullet = stripped[1:].strip()
+                plain = re.sub(r'<[^>]+>', '', after_bullet).strip()
+                matched_id = _find_heading_id(plain)
+                if matched_id:
+                    new_line = line.replace(
+                        after_bullet,
+                        f'<a href="#{matched_id}">{after_bullet}</a>',
+                        1,
+                    )
+                    new_lines.append(new_line)
+                else:
+                    new_lines.append(line)
+            return f'<p{p_attrs}>{chr(10).join(new_lines)}</p>'
+
+        def _fix_ol_links(ol_attrs: str, content: str) -> str:
+            """<ol> 안의 <li><a href="#잘못된-id"> 텍스트</a>에서
+            텍스트를 헤딩과 매칭하여 올바른 id로 수정한다."""
+            def _fix_a_tag(m: re.Match) -> str:
+                href = m.group(1)
+                text = m.group(2)
+                # 텍스트에서 HTML 태그 제거
+                plain = re.sub(r'<[^>]+>', '', text).strip()
+                matched_id = _find_heading_id(plain)
+                if matched_id:
+                    return f'<a href="#{matched_id}">{text}</a>'
+                return m.group(0)
+            return f'<ol{ol_attrs}>{re.sub(r"<a\s+href=\"#([^\"]+)\"[^>]*>([\s\S]*?)</a>", _fix_a_tag, content, flags=re.DOTALL)}</ol>'
+
+        # '📋 목차' 헤딩 직후의 첫 번째 블록(<p> 또는 <ol>)만 변환.
+        pattern = re.compile(
+            r'(<h2[^>]*>[^<]*📋\s*목차.*?</h2>\s*)(?:<p([^>]*)>([\s\S]*?)</p>|<ol([^>]*)>([\s\S]*?)</ol>)',
+            re.IGNORECASE | re.DOTALL,
+        )
+
+        def _toc_heading_replacer(m: re.Match) -> str:
+            heading = m.group(1)
+            if m.group(2) is not None:  # <p> 블록
+                return heading + _linkify_p_content(m.group(2), m.group(3))
+            elif m.group(4) is not None:  # <ol> 블록
+                return heading + _fix_ol_links(m.group(4), m.group(5))
+            return m.group(0)
+
+        return pattern.sub(_toc_heading_replacer, body_html)
+
     # Pre-render Mermaid diagrams to inline SVG at build time (mobile mode).
     # This eliminates all client-side JS dependency — diagrams work on any
     # mobile browser without loading the 3.4MB mermaid.min.js library.
@@ -3382,8 +3582,24 @@ def markdown_to_tailwind_html(md_text: str, title: str = "Document", config: Ren
     if bool(getattr(config, "prerender_mermaid", True)):
         html_body = _prerender_mermaid_to_svg(html_body, progress_cb=progress_cb)
 
+    # 본문 내 일반 텍스트 목차(• 항목)를 하이퍼링크로 변환.
+    # toc_html이 label로 감싸지기 전의 원본에서 heading_map을 추출한다.
+    heading_map = _build_heading_map(toc_html)
+    html_body = _linkify_inline_toc(html_body, heading_map)
+
     doc_html = HTML_TEMPLATE
     doc_html = doc_html.replace("%%TITLE%%", title)
+    # 모바일 TOC 링크 클릭 시 드로어 자동 닫기 (CSS-only):
+    # 각 TOC 링크를 <label for="tocSwitch">로 감싸면, 링크 클릭 시 label이
+    # checkbox를 토글하여 드로어가 닫히고, 링크의 기본 동작(해시 이동)도 유지됨.
+    # JS가 차단된 모바일 file:// 환경에서도 작동.
+    if toc_html:
+        toc_html = re.sub(
+            r'(<a\s+href="#[^"]*"[^>]*>)(.*?)(</a>)',
+            r'<label for="tocSwitch" class="toc-link">\1\2\3</label>',
+            toc_html,
+            flags=re.DOTALL,
+        )
     doc_html = doc_html.replace("%%TOC_HTML%%", toc_html)
     doc_html = doc_html.replace("%%BODY_HTML%%", html_body)
     doc_html = doc_html.replace("%%COLLAPSE_MIN_LINES%%", str(int(config.collapse_codeblock_min_lines)))
