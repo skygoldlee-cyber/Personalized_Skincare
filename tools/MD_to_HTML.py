@@ -5,6 +5,7 @@ import html
 import re
 import argparse
 import base64
+import hashlib
 import json
 import sys
 import urllib.request
@@ -67,6 +68,15 @@ MERMAID_CDN_URLS = (
 )
 # The library is multi-MB; anything much smaller is an error page, not the lib.
 _MERMAID_MIN_BYTES = 200_000
+
+# Known-good SRI hashes for Mermaid 11.x CDN builds (sha384 base64).
+# If a CDN returns content whose hash doesn't match, it's rejected.
+# None = skip SRI check (fallback to size-only validation).
+MERMAID_SRI_HASHES: dict[str, str | None] = {
+    "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js": None,
+    "https://unpkg.com/mermaid@11/dist/mermaid.min.js": None,
+    "https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.17.2/mermaid.min.js": None,
+}
 
 # In-memory cache for the Mermaid library (no disk writes).
 _MERMAID_JS_MEMORY: str | None = None
@@ -131,6 +141,18 @@ def _ensure_mermaid_js(assets_dir: Path | None = None) -> str | None:
     for url in MERMAID_CDN_URLS:
         text = _download_text(url)
         if text:
+            # SRI 검증: 알려진 해시가 있으면 검증, 없으면 크기만 검증
+            expected_hash = MERMAID_SRI_HASHES.get(url)
+            if expected_hash is not None:
+                actual_hash = base64.b64encode(
+                    hashlib.sha384(text.encode("utf-8")).digest()
+                ).decode("ascii")
+                if actual_hash != expected_hash:
+                    try:
+                        print(f"[Mermaid SRI mismatch] {url}", file=sys.stderr)
+                    except Exception:
+                        pass
+                    continue  # 해시 불일치 → 다음 CDN 시도
             _MERMAID_JS_MEMORY = text
             return text
     return None
@@ -459,6 +481,32 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       --a4: rgba(20,184,166,1);   /* teal */
       --a5: rgba(244,63,94,1);    /* rose */
       --a6: rgba(250,204,21,1);   /* amber */
+
+      /* Pygments codehilite token colors — dark (Monokai-inspired) */
+      --hl-hll-bg: #49483e;
+      --hl-comment: #959077;
+      --hl-keyword: #66d9ef;
+      --hl-kn: #ff4689;
+      --hl-operator: #ff4689;
+      --hl-name: #f8f8f2;
+      --hl-attr: #a6e22e;
+      --hl-class: #a6e22e;
+      --hl-fm: #f8f8f2;
+      --hl-tag: #ff4689;
+      --hl-constant: #66d9ef;
+      --hl-string: #e6db74;
+      --hl-escape: #ae81ff;
+      --hl-number: #ae81ff;
+      --hl-literal: #ae81ff;
+      --hl-punct: #f8f8f2;
+      --hl-w: #f8f8f2;
+      --hl-err: #ed007e;
+      --hl-generic: #f8f8f2;
+      --hl-gd: #ff4689;
+      --hl-gi: #a6e22e;
+      --hl-gp: #ff4689;
+      --hl-go: #f8f8f2;
+      --hl-comment-style: normal;
     }
 
     [data-theme="light"], html:has(#themeSwitch:checked) {
@@ -475,6 +523,32 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       --a4: rgba(13, 148, 136, 1);
       --a5: rgba(225, 29, 72, 1);
       --a6: rgba(202, 138, 4, 1);
+
+      /* Pygments codehilite token colors — light (GitHub-inspired) */
+      --hl-hll-bg: #ffffcc;
+      --hl-comment: #6a737d;
+      --hl-keyword: #d73a49;
+      --hl-kn: #d73a49;
+      --hl-operator: #d73a49;
+      --hl-name: #24292e;
+      --hl-attr: #005cc5;
+      --hl-class: #6f42c1;
+      --hl-fm: #6f42c1;
+      --hl-tag: #22863a;
+      --hl-constant: #005cc5;
+      --hl-string: #032f62;
+      --hl-escape: #032f62;
+      --hl-number: #005cc5;
+      --hl-literal: #005cc5;
+      --hl-punct: #24292e;
+      --hl-w: #24292e;
+      --hl-err: #cb2431;
+      --hl-generic: #24292e;
+      --hl-gd: #cb2431;
+      --hl-gi: #22863a;
+      --hl-gp: #005cc5;
+      --hl-go: #6a737d;
+      --hl-comment-style: italic;
     }
 
     .doc-bg {
@@ -595,93 +669,44 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       border-color: rgba(37, 99, 235, 0.22);
     }
 
-    /* Pygments codehilite token colors — dark (Monokai-inspired) */
-    .highlight .hll { background-color: #49483e; }
+    /* Pygments codehilite token colors — theme-aware via CSS variables */
+    .highlight .hll { background-color: var(--hl-hll-bg); }
     .highlight .c, .highlight .ch, .highlight .cm, .highlight .cp,
-    .highlight .cpf, .highlight .c1, .highlight .cs { color: #959077; }
+    .highlight .cpf, .highlight .c1, .highlight .cs { color: var(--hl-comment); font-style: var(--hl-comment-style); }
     .highlight .k, .highlight .kc, .highlight .kd, .highlight .kp,
-    .highlight .kr, .highlight .kt { color: #66d9ef; }
-    .highlight .kn { color: #ff4689; }
-    .highlight .o, .highlight .ow { color: #ff4689; }
+    .highlight .kr, .highlight .kt { color: var(--hl-keyword); }
+    .highlight .kn { color: var(--hl-kn); }
+    .highlight .o, .highlight .ow { color: var(--hl-operator); }
     .highlight .n, .highlight .nb, .highlight .ni, .highlight .nl,
     .highlight .nn, .highlight .nv, .highlight .bp,
     .highlight .vc, .highlight .vg, .highlight .vi, .highlight .vm,
-    .highlight .py, .highlight .fm { color: #f8f8f2; }
-    .highlight .na, .highlight .nc, .highlight .nd, .highlight .ne,
-    .highlight .nf, .highlight .nx { color: #a6e22e; }
-    .highlight .nt { color: #ff4689; }
-    .highlight .no { color: #66d9ef; }
+    .highlight .py { color: var(--hl-name); }
+    .highlight .fm { color: var(--hl-fm); }
+    .highlight .na { color: var(--hl-attr); }
+    .highlight .nc, .highlight .nd, .highlight .ne,
+    .highlight .nf, .highlight .nx { color: var(--hl-class); }
+    .highlight .nt { color: var(--hl-tag); }
+    .highlight .no { color: var(--hl-constant); }
     .highlight .s, .highlight .sa, .highlight .sb, .highlight .sc,
     .highlight .dl, .highlight .sd, .highlight .s2, .highlight .sh,
     .highlight .si, .highlight .sx, .highlight .sr, .highlight .s1,
-    .highlight .ss { color: #e6db74; }
-    .highlight .se { color: #ae81ff; }
+    .highlight .ss { color: var(--hl-string); }
+    .highlight .se { color: var(--hl-escape); }
     .highlight .m, .highlight .mb, .highlight .mf, .highlight .mh,
-    .highlight .mi, .highlight .mo, .highlight .il { color: #ae81ff; }
-    .highlight .l, .highlight .ld { color: #ae81ff; }
-    .highlight .p, .highlight .pm { color: #f8f8f2; }
-    .highlight .w { color: #f8f8f2; }
-    .highlight .err { color: #ed007e; }
+    .highlight .mi, .highlight .mo, .highlight .il { color: var(--hl-number); }
+    .highlight .l, .highlight .ld { color: var(--hl-literal); }
+    .highlight .p, .highlight .pm { color: var(--hl-punct); }
+    .highlight .w { color: var(--hl-w); }
+    .highlight .err { color: var(--hl-err); }
     .highlight .g, .highlight .ge, .highlight .gr, .highlight .gh,
     .highlight .gs, .highlight .gt, .highlight .gu,
-    .highlight .gi, .highlight .gd, .highlight .go, .highlight .gp,
-    .highlight .ges, .highlight .esc, .highlight .x { color: #f8f8f2; }
+    .highlight .ges, .highlight .esc, .highlight .x { color: var(--hl-generic); }
     .highlight .ge { font-style: italic; }
     .highlight .gs { font-weight: bold; }
-    .highlight .gd { color: #ff4689; }
-    .highlight .gi { color: #a6e22e; }
-    .highlight .gp { color: #ff4689; font-weight: bold; }
-
-    /* Pygments codehilite token colors — light (GitHub-inspired) */
-    html[data-theme="light"] .highlight .hll, html:has(#themeSwitch:checked) .highlight .hll{ background-color: #ffffcc; }
-    html[data-theme="light"] .highlight .c, html:has(#themeSwitch:checked) .highlight .c, html[data-theme="light"] .highlight .ch, html:has(#themeSwitch:checked) .highlight .ch,
-    html[data-theme="light"] .highlight .cm, html:has(#themeSwitch:checked) .highlight .cm, html[data-theme="light"] .highlight .cp, html:has(#themeSwitch:checked) .highlight .cp,
-    html[data-theme="light"] .highlight .cpf, html:has(#themeSwitch:checked) .highlight .cpf, html[data-theme="light"] .highlight .c1, html:has(#themeSwitch:checked) .highlight .c1,
-    html[data-theme="light"] .highlight .cs, html:has(#themeSwitch:checked) .highlight .cs{ color: #6a737d; font-style: italic; }
-    html[data-theme="light"] .highlight .k, html:has(#themeSwitch:checked) .highlight .k, html[data-theme="light"] .highlight .kc, html:has(#themeSwitch:checked) .highlight .kc,
-    html[data-theme="light"] .highlight .kd, html:has(#themeSwitch:checked) .highlight .kd, html[data-theme="light"] .highlight .kp, html:has(#themeSwitch:checked) .highlight .kp,
-    html[data-theme="light"] .highlight .kr, html:has(#themeSwitch:checked) .highlight .kr, html[data-theme="light"] .highlight .kt, html:has(#themeSwitch:checked) .highlight .kt,
-    html[data-theme="light"] .highlight .kn, html:has(#themeSwitch:checked) .highlight .kn{ color: #d73a49; }
-    html[data-theme="light"] .highlight .o, html:has(#themeSwitch:checked) .highlight .o,
-    html[data-theme="light"] .highlight .ow, html:has(#themeSwitch:checked) .highlight .ow{ color: #d73a49; }
-    html[data-theme="light"] .highlight .n, html:has(#themeSwitch:checked) .highlight .n, html[data-theme="light"] .highlight .nb, html:has(#themeSwitch:checked) .highlight .nb,
-    html[data-theme="light"] .highlight .ni, html:has(#themeSwitch:checked) .highlight .ni, html[data-theme="light"] .highlight .nl, html:has(#themeSwitch:checked) .highlight .nl,
-    html[data-theme="light"] .highlight .nn, html:has(#themeSwitch:checked) .highlight .nn, html[data-theme="light"] .highlight .nv, html:has(#themeSwitch:checked) .highlight .nv,
-    html[data-theme="light"] .highlight .bp, html:has(#themeSwitch:checked) .highlight .bp, html[data-theme="light"] .highlight .vc, html:has(#themeSwitch:checked) .highlight .vc,
-    html[data-theme="light"] .highlight .vg, html:has(#themeSwitch:checked) .highlight .vg, html[data-theme="light"] .highlight .vi, html:has(#themeSwitch:checked) .highlight .vi,
-    html[data-theme="light"] .highlight .vm, html:has(#themeSwitch:checked) .highlight .vm, html[data-theme="light"] .highlight .py, html:has(#themeSwitch:checked) .highlight .py{ color: #24292e; }
-    html[data-theme="light"] .highlight .na, html:has(#themeSwitch:checked) .highlight .na{ color: #005cc5; }
-    html[data-theme="light"] .highlight .nc, html:has(#themeSwitch:checked) .highlight .nc, html[data-theme="light"] .highlight .nd, html:has(#themeSwitch:checked) .highlight .nd,
-    html[data-theme="light"] .highlight .ne, html:has(#themeSwitch:checked) .highlight .ne, html[data-theme="light"] .highlight .nf, html:has(#themeSwitch:checked) .highlight .nf,
-    html[data-theme="light"] .highlight .nx, html:has(#themeSwitch:checked) .highlight .nx, html[data-theme="light"] .highlight .fm, html:has(#themeSwitch:checked) .highlight .fm{ color: #6f42c1; }
-    html[data-theme="light"] .highlight .nt, html:has(#themeSwitch:checked) .highlight .nt{ color: #22863a; }
-    html[data-theme="light"] .highlight .no, html:has(#themeSwitch:checked) .highlight .no{ color: #005cc5; }
-    html[data-theme="light"] .highlight .s, html:has(#themeSwitch:checked) .highlight .s, html[data-theme="light"] .highlight .sa, html:has(#themeSwitch:checked) .highlight .sa,
-    html[data-theme="light"] .highlight .sb, html:has(#themeSwitch:checked) .highlight .sb, html[data-theme="light"] .highlight .sc, html:has(#themeSwitch:checked) .highlight .sc,
-    html[data-theme="light"] .highlight .dl, html:has(#themeSwitch:checked) .highlight .dl, html[data-theme="light"] .highlight .sd, html:has(#themeSwitch:checked) .highlight .sd,
-    html[data-theme="light"] .highlight .s2, html:has(#themeSwitch:checked) .highlight .s2, html[data-theme="light"] .highlight .sh, html:has(#themeSwitch:checked) .highlight .sh,
-    html[data-theme="light"] .highlight .si, html:has(#themeSwitch:checked) .highlight .si, html[data-theme="light"] .highlight .sx, html:has(#themeSwitch:checked) .highlight .sx,
-    html[data-theme="light"] .highlight .sr, html:has(#themeSwitch:checked) .highlight .sr, html[data-theme="light"] .highlight .s1, html:has(#themeSwitch:checked) .highlight .s1,
-    html[data-theme="light"] .highlight .ss, html:has(#themeSwitch:checked) .highlight .ss, html[data-theme="light"] .highlight .se, html:has(#themeSwitch:checked) .highlight .se{ color: #032f62; }
-    html[data-theme="light"] .highlight .m, html:has(#themeSwitch:checked) .highlight .m, html[data-theme="light"] .highlight .mb, html:has(#themeSwitch:checked) .highlight .mb,
-    html[data-theme="light"] .highlight .mf, html:has(#themeSwitch:checked) .highlight .mf, html[data-theme="light"] .highlight .mh, html:has(#themeSwitch:checked) .highlight .mh,
-    html[data-theme="light"] .highlight .mi, html:has(#themeSwitch:checked) .highlight .mi, html[data-theme="light"] .highlight .mo, html:has(#themeSwitch:checked) .highlight .mo,
-    html[data-theme="light"] .highlight .il, html:has(#themeSwitch:checked) .highlight .il{ color: #005cc5; }
-    html[data-theme="light"] .highlight .l, html:has(#themeSwitch:checked) .highlight .l,
-    html[data-theme="light"] .highlight .ld, html:has(#themeSwitch:checked) .highlight .ld{ color: #005cc5; }
-    html[data-theme="light"] .highlight .p, html:has(#themeSwitch:checked) .highlight .p,
-    html[data-theme="light"] .highlight .pm, html:has(#themeSwitch:checked) .highlight .pm{ color: #24292e; }
-    html[data-theme="light"] .highlight .w, html:has(#themeSwitch:checked) .highlight .w{ color: #24292e; }
-    html[data-theme="light"] .highlight .err, html:has(#themeSwitch:checked) .highlight .err{ color: #cb2431; }
-    html[data-theme="light"] .highlight .g, html:has(#themeSwitch:checked) .highlight .g, html[data-theme="light"] .highlight .ge, html:has(#themeSwitch:checked) .highlight .ge,
-    html[data-theme="light"] .highlight .gr, html:has(#themeSwitch:checked) .highlight .gr, html[data-theme="light"] .highlight .gh, html:has(#themeSwitch:checked) .highlight .gh,
-    html[data-theme="light"] .highlight .gs, html:has(#themeSwitch:checked) .highlight .gs, html[data-theme="light"] .highlight .gt, html:has(#themeSwitch:checked) .highlight .gt,
-    html[data-theme="light"] .highlight .gu, html:has(#themeSwitch:checked) .highlight .gu, html[data-theme="light"] .highlight .esc, html:has(#themeSwitch:checked) .highlight .esc,
-    html[data-theme="light"] .highlight .x, html:has(#themeSwitch:checked) .highlight .x{ color: #24292e; }
-    html[data-theme="light"] .highlight .gd, html:has(#themeSwitch:checked) .highlight .gd{ color: #cb2431; }
-    html[data-theme="light"] .highlight .gi, html:has(#themeSwitch:checked) .highlight .gi{ color: #22863a; }
-    html[data-theme="light"] .highlight .gp, html:has(#themeSwitch:checked) .highlight .gp{ color: #005cc5; font-weight: bold; }
-    html[data-theme="light"] .highlight .go, html:has(#themeSwitch:checked) .highlight .go{ color: #6a737d; }
+    .highlight .gd { color: var(--hl-gd); }
+    .highlight .gi { color: var(--hl-gi); }
+    .highlight .gp { color: var(--hl-gp); font-weight: bold; }
+    .highlight .go { color: var(--hl-go); }
 
     /* nicer scrollbars (webkit only) */
     #toc::-webkit-scrollbar, article pre::-webkit-scrollbar { height: 10px; width: 10px; }
@@ -1458,7 +1483,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 
 <body class="min-h-screen">
   <!-- CSS-only TOC 드로어 토글: checkbox + label (JS 없이도 열고 닫기 가능) -->
-  <input type="checkbox" id="tocSwitch" class="toc-switch" />
+  <input type="checkbox" id="tocSwitch" class="toc-switch" aria-label="목차 드로어 열기/닫기" />
   <header class="topbar sticky top-0 z-50">
     <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
       <div class="flex items-center gap-3">
@@ -1564,7 +1589,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 
   <!-- CSS-only 테마 토글: checkbox + label (JS 없이도 작동, 모바일 file:// 대응).
        JS가 작동하면 change 이벤트로 data-theme 동기화 + localStorage 저장 + Mermaid 재렌더. -->
-  <input type="checkbox" id="themeSwitch" class="theme-switch" />
+  <input type="checkbox" id="themeSwitch" class="theme-switch" aria-label="다크/라이트 테마 전환" />
   <label for="themeSwitch" id="btnThemeFab" class="theme-fab">Theme</label>
 
   <script>
@@ -3143,7 +3168,7 @@ def _inline_mermaid_fences(md_text: str) -> str:
 
             # sanitize_mermaid_line 이 '' 를 반환한 라인 제거
             src = "\n".join(ln for ln in buf if ln != '')
-            safe_src = src.replace("&", "&amp;")
+            safe_src = html.escape(src, quote=False)
             # 후처리: 이미 ["label"] 로 감싸인 노드 레이블 내부의 " 를 ' 로 교체.
             # node_pat_sq lookahead 가 건너뛴 케이스 대응.
             # xychart x-axis/y-axis 배열 형태 ["a","b","c"] 는 제외.
@@ -3359,7 +3384,11 @@ def _prerender_mermaid_to_svg(html_body: str, progress_cb=None) -> str:
                 req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
                 with urllib.request.urlopen(req, timeout=15) as resp:
                     svg = resp.read().decode("utf-8", errors="replace")
-                if svg and "<svg" in svg:
+                if svg and svg.strip().startswith("<svg") and "</svg>" in svg:
+                    # SVG에서 악의적 요소 제거 (XSS 방어)
+                    svg = re.sub(r"<script[\s\S]*?</script>", "", svg, flags=re.IGNORECASE)
+                    svg = re.sub(r'\son\w+\s*=\s*"[^"]*"', "", svg)
+                    svg = re.sub(r"\son\w+\s*=\s*'[^']*'", "", svg)
                     break
                 svg = None
             except Exception as e:
