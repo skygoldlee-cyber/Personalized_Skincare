@@ -307,7 +307,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     .drawer-backdrop {
       background: rgba(2, 6, 23, 0.55);
     }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .drawer-backdrop { background: rgba(15, 23, 42, 0.25); }
+    html[data-theme="light"] .drawer-backdrop, html:has(#themeSwitch:checked) .drawer-backdrop{ background: rgba(15, 23, 42, 0.25); }
 
     .drawer-panel {
       height: 100vh;
@@ -349,7 +349,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       display: none;
       z-index: 60;
     }
-    html[data-theme="light"], html:has(#themeSwitch:checked) #toast {
+    html[data-theme="light"] #toast, html:has(#themeSwitch:checked) #toast{
       background: rgba(255, 255, 255, 0.92);
       color: rgba(15, 23, 42, 0.92);
     }
@@ -397,7 +397,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     html:has(#themeSwitch:checked) #btnThemeFab::after { content: "Theme: Light"; }
     /* JS가 작동할 때 data-theme 기반 텍스트 (checkbox 미체크 상태에서 data-theme=light인 경우) */
     html[data-theme="light"]:not(:has(#themeSwitch:checked)) #btnThemeFab::after { content: "Theme: Light"; }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .theme-fab {
+    html[data-theme="light"] .theme-fab, html:has(#themeSwitch:checked) .theme-fab{
       background: rgba(255, 255, 255, 0.92);
       color: rgba(15, 23, 42, 0.92);
       border: 1px solid rgba(15, 23, 42, 0.14);
@@ -426,7 +426,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       user-select: none;
     }
     .expand-btn:hover { background: rgba(226, 232, 240, 0.10); }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .expand-btn { background: rgba(255, 255, 255, 0.70); }
+    html[data-theme="light"] .expand-btn, html:has(#themeSwitch:checked) .expand-btn{ background: rgba(255, 255, 255, 0.70); }
 
     .admonition {
       border: 1px solid var(--border);
@@ -493,7 +493,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       contain: none;
     }
 
-    html[data-theme="light"], html:has(#themeSwitch:checked) .glass {
+    html[data-theme="light"] .glass, html:has(#themeSwitch:checked) .glass{
       background: rgba(232, 236, 241, 0.88);
     }
 
@@ -502,25 +502,25 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       background: #020617;
     }
 
-    html[data-theme="light"], html:has(#themeSwitch:checked) body {
+    html[data-theme="light"] body, html:has(#themeSwitch:checked) body{
       background: #d4d8de; /* muted slate */
     }
 
-    html[data-theme="light"], html:has(#themeSwitch:checked) .doc-bg {
+    html[data-theme="light"] .doc-bg, html:has(#themeSwitch:checked) .doc-bg{
       background: radial-gradient(1200px 700px at 25% -10%, rgba(37,99,235,0.10), transparent 60%),
                   radial-gradient(900px 600px at 80% 0%, rgba(124,58,237,0.08), transparent 55%),
                   linear-gradient(180deg, #e8ecf1 0%, #d4d8de 60%, #e8ecf1 100%);
     }
 
     .doc-subtitle { color: rgba(226, 232, 240, 0.70); }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .doc-subtitle { color: var(--muted); }
+    html[data-theme="light"] .doc-subtitle, html:has(#themeSwitch:checked) .doc-subtitle{ color: var(--muted); }
 
     .brand-badge {
       background: rgba(226, 232, 240, 0.08);
       border: 1px solid rgba(226, 232, 240, 0.10);
       color: var(--fg);
     }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .brand-badge {
+    html[data-theme="light"] .brand-badge, html:has(#themeSwitch:checked) .brand-badge{
       background: rgba(255, 255, 255, 0.70);
       border: 1px solid rgba(15, 23, 42, 0.10);
       color: var(--fg);
@@ -532,12 +532,12 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       color: var(--fg);
     }
     .theme-btn:hover { background: rgba(226, 232, 240, 0.16); }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .theme-btn {
+    html[data-theme="light"] .theme-btn, html:has(#themeSwitch:checked) .theme-btn{
       border: 1px solid rgba(15, 23, 42, 0.10);
       background: rgba(255, 255, 255, 0.70);
       color: var(--fg);
     }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .theme-btn:hover { background: rgba(255, 255, 255, 0.90); }
+    html[data-theme="light"] .theme-btn:hover, html:has(#themeSwitch:checked) .theme-btn:hover{ background: rgba(255, 255, 255, 0.90); }
 
     #searchOverlay {
       position: fixed;
@@ -566,7 +566,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       font-size: 0.95rem;
       outline: none;
     }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .search-input {
+    html[data-theme="light"] .search-input, html:has(#themeSwitch:checked) .search-input{
       background: rgba(255, 255, 255, 0.80);
     }
     .search-meta {
@@ -582,7 +582,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       padding: 0.02rem 0.12rem;
       border-radius: 0.25rem;
     }
-    html[data-theme="light"], html:has(#themeSwitch:checked) mark.search-mark {
+    html[data-theme="light"] mark.search-mark, html:has(#themeSwitch:checked) mark.search-mark{
       background: rgba(234, 179, 8, 0.22);
       border-color: rgba(234, 179, 8, 0.28);
     }
@@ -590,7 +590,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       background: rgba(59, 130, 246, 0.28);
       border-color: rgba(59, 130, 246, 0.34);
     }
-    html[data-theme="light"], html:has(#themeSwitch:checked) mark.search-mark.search-active {
+    html[data-theme="light"] mark.search-mark.search-active, html:has(#themeSwitch:checked) mark.search-mark.search-active{
       background: rgba(37, 99, 235, 0.18);
       border-color: rgba(37, 99, 235, 0.22);
     }
@@ -633,55 +633,55 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     .highlight .gp { color: #ff4689; font-weight: bold; }
 
     /* Pygments codehilite token colors — light (GitHub-inspired) */
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .hll { background-color: #ffffcc; }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .c, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .ch,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .cm, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .cp,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .cpf, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .c1,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .cs { color: #6a737d; font-style: italic; }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .k, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .kc,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .kd, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .kp,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .kr, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .kt,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .kn { color: #d73a49; }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .o,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .ow { color: #d73a49; }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .n, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .nb,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .ni, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .nl,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .nn, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .nv,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .bp, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .vc,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .vg, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .vi,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .vm, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .py { color: #24292e; }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .na { color: #005cc5; }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .nc, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .nd,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .ne, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .nf,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .nx, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .fm { color: #6f42c1; }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .nt { color: #22863a; }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .no { color: #005cc5; }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .s, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .sa,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .sb, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .sc,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .dl, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .sd,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .s2, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .sh,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .si, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .sx,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .sr, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .s1,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .ss, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .se { color: #032f62; }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .m, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .mb,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .mf, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .mh,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .mi, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .mo,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .il { color: #005cc5; }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .l,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .ld { color: #005cc5; }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .p,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .pm { color: #24292e; }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .w { color: #24292e; }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .err { color: #cb2431; }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .g, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .ge,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .gr, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .gh,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .gs, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .gt,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .gu, html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .esc,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .x { color: #24292e; }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .gd { color: #cb2431; }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .gi { color: #22863a; }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .gp { color: #005cc5; font-weight: bold; }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight .go { color: #6a737d; }
+    html[data-theme="light"] .highlight .hll, html:has(#themeSwitch:checked) .highlight .hll{ background-color: #ffffcc; }
+    html[data-theme="light"] .highlight .c, html:has(#themeSwitch:checked) .highlight .c, html[data-theme="light"] .highlight .ch, html:has(#themeSwitch:checked) .highlight .ch,
+    html[data-theme="light"] .highlight .cm, html:has(#themeSwitch:checked) .highlight .cm, html[data-theme="light"] .highlight .cp, html:has(#themeSwitch:checked) .highlight .cp,
+    html[data-theme="light"] .highlight .cpf, html:has(#themeSwitch:checked) .highlight .cpf, html[data-theme="light"] .highlight .c1, html:has(#themeSwitch:checked) .highlight .c1,
+    html[data-theme="light"] .highlight .cs, html:has(#themeSwitch:checked) .highlight .cs{ color: #6a737d; font-style: italic; }
+    html[data-theme="light"] .highlight .k, html:has(#themeSwitch:checked) .highlight .k, html[data-theme="light"] .highlight .kc, html:has(#themeSwitch:checked) .highlight .kc,
+    html[data-theme="light"] .highlight .kd, html:has(#themeSwitch:checked) .highlight .kd, html[data-theme="light"] .highlight .kp, html:has(#themeSwitch:checked) .highlight .kp,
+    html[data-theme="light"] .highlight .kr, html:has(#themeSwitch:checked) .highlight .kr, html[data-theme="light"] .highlight .kt, html:has(#themeSwitch:checked) .highlight .kt,
+    html[data-theme="light"] .highlight .kn, html:has(#themeSwitch:checked) .highlight .kn{ color: #d73a49; }
+    html[data-theme="light"] .highlight .o, html:has(#themeSwitch:checked) .highlight .o,
+    html[data-theme="light"] .highlight .ow, html:has(#themeSwitch:checked) .highlight .ow{ color: #d73a49; }
+    html[data-theme="light"] .highlight .n, html:has(#themeSwitch:checked) .highlight .n, html[data-theme="light"] .highlight .nb, html:has(#themeSwitch:checked) .highlight .nb,
+    html[data-theme="light"] .highlight .ni, html:has(#themeSwitch:checked) .highlight .ni, html[data-theme="light"] .highlight .nl, html:has(#themeSwitch:checked) .highlight .nl,
+    html[data-theme="light"] .highlight .nn, html:has(#themeSwitch:checked) .highlight .nn, html[data-theme="light"] .highlight .nv, html:has(#themeSwitch:checked) .highlight .nv,
+    html[data-theme="light"] .highlight .bp, html:has(#themeSwitch:checked) .highlight .bp, html[data-theme="light"] .highlight .vc, html:has(#themeSwitch:checked) .highlight .vc,
+    html[data-theme="light"] .highlight .vg, html:has(#themeSwitch:checked) .highlight .vg, html[data-theme="light"] .highlight .vi, html:has(#themeSwitch:checked) .highlight .vi,
+    html[data-theme="light"] .highlight .vm, html:has(#themeSwitch:checked) .highlight .vm, html[data-theme="light"] .highlight .py, html:has(#themeSwitch:checked) .highlight .py{ color: #24292e; }
+    html[data-theme="light"] .highlight .na, html:has(#themeSwitch:checked) .highlight .na{ color: #005cc5; }
+    html[data-theme="light"] .highlight .nc, html:has(#themeSwitch:checked) .highlight .nc, html[data-theme="light"] .highlight .nd, html:has(#themeSwitch:checked) .highlight .nd,
+    html[data-theme="light"] .highlight .ne, html:has(#themeSwitch:checked) .highlight .ne, html[data-theme="light"] .highlight .nf, html:has(#themeSwitch:checked) .highlight .nf,
+    html[data-theme="light"] .highlight .nx, html:has(#themeSwitch:checked) .highlight .nx, html[data-theme="light"] .highlight .fm, html:has(#themeSwitch:checked) .highlight .fm{ color: #6f42c1; }
+    html[data-theme="light"] .highlight .nt, html:has(#themeSwitch:checked) .highlight .nt{ color: #22863a; }
+    html[data-theme="light"] .highlight .no, html:has(#themeSwitch:checked) .highlight .no{ color: #005cc5; }
+    html[data-theme="light"] .highlight .s, html:has(#themeSwitch:checked) .highlight .s, html[data-theme="light"] .highlight .sa, html:has(#themeSwitch:checked) .highlight .sa,
+    html[data-theme="light"] .highlight .sb, html:has(#themeSwitch:checked) .highlight .sb, html[data-theme="light"] .highlight .sc, html:has(#themeSwitch:checked) .highlight .sc,
+    html[data-theme="light"] .highlight .dl, html:has(#themeSwitch:checked) .highlight .dl, html[data-theme="light"] .highlight .sd, html:has(#themeSwitch:checked) .highlight .sd,
+    html[data-theme="light"] .highlight .s2, html:has(#themeSwitch:checked) .highlight .s2, html[data-theme="light"] .highlight .sh, html:has(#themeSwitch:checked) .highlight .sh,
+    html[data-theme="light"] .highlight .si, html:has(#themeSwitch:checked) .highlight .si, html[data-theme="light"] .highlight .sx, html:has(#themeSwitch:checked) .highlight .sx,
+    html[data-theme="light"] .highlight .sr, html:has(#themeSwitch:checked) .highlight .sr, html[data-theme="light"] .highlight .s1, html:has(#themeSwitch:checked) .highlight .s1,
+    html[data-theme="light"] .highlight .ss, html:has(#themeSwitch:checked) .highlight .ss, html[data-theme="light"] .highlight .se, html:has(#themeSwitch:checked) .highlight .se{ color: #032f62; }
+    html[data-theme="light"] .highlight .m, html:has(#themeSwitch:checked) .highlight .m, html[data-theme="light"] .highlight .mb, html:has(#themeSwitch:checked) .highlight .mb,
+    html[data-theme="light"] .highlight .mf, html:has(#themeSwitch:checked) .highlight .mf, html[data-theme="light"] .highlight .mh, html:has(#themeSwitch:checked) .highlight .mh,
+    html[data-theme="light"] .highlight .mi, html:has(#themeSwitch:checked) .highlight .mi, html[data-theme="light"] .highlight .mo, html:has(#themeSwitch:checked) .highlight .mo,
+    html[data-theme="light"] .highlight .il, html:has(#themeSwitch:checked) .highlight .il{ color: #005cc5; }
+    html[data-theme="light"] .highlight .l, html:has(#themeSwitch:checked) .highlight .l,
+    html[data-theme="light"] .highlight .ld, html:has(#themeSwitch:checked) .highlight .ld{ color: #005cc5; }
+    html[data-theme="light"] .highlight .p, html:has(#themeSwitch:checked) .highlight .p,
+    html[data-theme="light"] .highlight .pm, html:has(#themeSwitch:checked) .highlight .pm{ color: #24292e; }
+    html[data-theme="light"] .highlight .w, html:has(#themeSwitch:checked) .highlight .w{ color: #24292e; }
+    html[data-theme="light"] .highlight .err, html:has(#themeSwitch:checked) .highlight .err{ color: #cb2431; }
+    html[data-theme="light"] .highlight .g, html:has(#themeSwitch:checked) .highlight .g, html[data-theme="light"] .highlight .ge, html:has(#themeSwitch:checked) .highlight .ge,
+    html[data-theme="light"] .highlight .gr, html:has(#themeSwitch:checked) .highlight .gr, html[data-theme="light"] .highlight .gh, html:has(#themeSwitch:checked) .highlight .gh,
+    html[data-theme="light"] .highlight .gs, html:has(#themeSwitch:checked) .highlight .gs, html[data-theme="light"] .highlight .gt, html:has(#themeSwitch:checked) .highlight .gt,
+    html[data-theme="light"] .highlight .gu, html:has(#themeSwitch:checked) .highlight .gu, html[data-theme="light"] .highlight .esc, html:has(#themeSwitch:checked) .highlight .esc,
+    html[data-theme="light"] .highlight .x, html:has(#themeSwitch:checked) .highlight .x{ color: #24292e; }
+    html[data-theme="light"] .highlight .gd, html:has(#themeSwitch:checked) .highlight .gd{ color: #cb2431; }
+    html[data-theme="light"] .highlight .gi, html:has(#themeSwitch:checked) .highlight .gi{ color: #22863a; }
+    html[data-theme="light"] .highlight .gp, html:has(#themeSwitch:checked) .highlight .gp{ color: #005cc5; font-weight: bold; }
+    html[data-theme="light"] .highlight .go, html:has(#themeSwitch:checked) .highlight .go{ color: #6a737d; }
 
     /* nicer scrollbars (webkit only) */
     #toc::-webkit-scrollbar, article pre::-webkit-scrollbar { height: 10px; width: 10px; }
@@ -754,15 +754,15 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       padding: 0.02rem 0.18rem;
       border-radius: 0.25rem;
     }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .toc-mark {
+    html[data-theme="light"] .toc-mark, html:has(#themeSwitch:checked) .toc-mark{
       background: rgba(234, 179, 8, 0.24);
       border-color: rgba(234, 179, 8, 0.30);
     }
 
     .toc-title { color: var(--fg); }
     .toc-subtitle { color: var(--muted); }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .toc-title { color: rgba(15, 23, 42, 0.92); }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .toc-subtitle { color: rgba(15, 23, 42, 0.72); }
+    html[data-theme="light"] .toc-title, html:has(#themeSwitch:checked) .toc-title{ color: rgba(15, 23, 42, 0.92); }
+    html[data-theme="light"] .toc-subtitle, html:has(#themeSwitch:checked) .toc-subtitle{ color: rgba(15, 23, 42, 0.72); }
 
     article { color: var(--fg); line-height: 1.75; font-size: 1.0625rem; max-width: clamp(72ch, 82vw, 96ch); margin-left: auto; margin-right: auto; padding: 0 1rem; }
     article p { color: var(--fg); margin: 1rem 0; }
@@ -779,7 +779,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     article a { color: var(--a1); text-decoration: underline; text-underline-offset: 3px; }
     article a:hover { color: var(--a4); }
     article strong { color: rgba(248, 250, 252, 0.98); font-weight: 700; }
-    html[data-theme="light"], html:has(#themeSwitch:checked) article strong { color: rgba(15, 23, 42, 0.98); }
+    html[data-theme="light"] article strong, html:has(#themeSwitch:checked) article strong{ color: rgba(15, 23, 42, 0.98); }
     article em { color: var(--muted); font-style: italic; }
     article .headerlink {
       opacity: 0;
@@ -833,7 +833,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       padding: 0.12rem 0.35rem;
       border-radius: 0.45rem;
     }
-    html[data-theme="light"], html:has(#themeSwitch:checked) article code {
+    html[data-theme="light"] article code, html:has(#themeSwitch:checked) article code{
       background: rgba(148, 163, 184, 0.14);
       border: 1px solid rgba(148, 163, 184, 0.22);
       color: rgba(15, 23, 42, 0.92);
@@ -854,21 +854,21 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       font-kerning: none;
       line-height: 1.52;
     }
-    html[data-theme="light"], html:has(#themeSwitch:checked) article pre {
+    html[data-theme="light"] article pre, html:has(#themeSwitch:checked) article pre{
       background: #f6f8fa;
       border: 1px solid rgba(15, 23, 42, 0.12);
       color: #24292e;
     }
-    html[data-theme="light"], html:has(#themeSwitch:checked) article pre code {
+    html[data-theme="light"] article pre code, html:has(#themeSwitch:checked) article pre code{
       color: #24292e;
     }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight pre,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight pre code {
+    html[data-theme="light"] .highlight, html:has(#themeSwitch:checked) .highlight,
+    html[data-theme="light"] .highlight pre, html:has(#themeSwitch:checked) .highlight pre,
+    html[data-theme="light"] .highlight pre code, html:has(#themeSwitch:checked) .highlight pre code{
       color: #24292e !important;
       background: #f6f8fa !important;
     }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .highlight {
+    html[data-theme="light"] .highlight, html:has(#themeSwitch:checked) .highlight{
       border-radius: 0.9rem;
     }
     article pre code {
@@ -922,49 +922,49 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       color: rgba(226, 232, 240, 0.92);
       background: transparent;
     }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs {
+    html[data-theme="light"] .hljs, html:has(#themeSwitch:checked) .hljs{
       color: #24292e;
     }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-comment,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-quote {
+    html[data-theme="light"] .hljs-comment, html:has(#themeSwitch:checked) .hljs-comment,
+    html[data-theme="light"] .hljs-quote, html:has(#themeSwitch:checked) .hljs-quote{
       color: #6a737d;
     }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-keyword,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-selector-tag,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-subst {
+    html[data-theme="light"] .hljs-keyword, html:has(#themeSwitch:checked) .hljs-keyword,
+    html[data-theme="light"] .hljs-selector-tag, html:has(#themeSwitch:checked) .hljs-selector-tag,
+    html[data-theme="light"] .hljs-subst, html:has(#themeSwitch:checked) .hljs-subst{
       color: #d73a49;
     }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-string,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-doctag,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-regexp {
+    html[data-theme="light"] .hljs-string, html:has(#themeSwitch:checked) .hljs-string,
+    html[data-theme="light"] .hljs-doctag, html:has(#themeSwitch:checked) .hljs-doctag,
+    html[data-theme="light"] .hljs-regexp, html:has(#themeSwitch:checked) .hljs-regexp{
       color: #032f62;
     }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-title,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-section,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-selector-id,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-selector-class {
+    html[data-theme="light"] .hljs-title, html:has(#themeSwitch:checked) .hljs-title,
+    html[data-theme="light"] .hljs-section, html:has(#themeSwitch:checked) .hljs-section,
+    html[data-theme="light"] .hljs-selector-id, html:has(#themeSwitch:checked) .hljs-selector-id,
+    html[data-theme="light"] .hljs-selector-class, html:has(#themeSwitch:checked) .hljs-selector-class{
       color: #6f42c1;
     }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-number,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-literal,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-symbol,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-bullet {
+    html[data-theme="light"] .hljs-number, html:has(#themeSwitch:checked) .hljs-number,
+    html[data-theme="light"] .hljs-literal, html:has(#themeSwitch:checked) .hljs-literal,
+    html[data-theme="light"] .hljs-symbol, html:has(#themeSwitch:checked) .hljs-symbol,
+    html[data-theme="light"] .hljs-bullet, html:has(#themeSwitch:checked) .hljs-bullet{
       color: #005cc5;
     }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-attr,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-attribute,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-variable,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-template-variable,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-type {
+    html[data-theme="light"] .hljs-attr, html:has(#themeSwitch:checked) .hljs-attr,
+    html[data-theme="light"] .hljs-attribute, html:has(#themeSwitch:checked) .hljs-attribute,
+    html[data-theme="light"] .hljs-variable, html:has(#themeSwitch:checked) .hljs-variable,
+    html[data-theme="light"] .hljs-template-variable, html:has(#themeSwitch:checked) .hljs-template-variable,
+    html[data-theme="light"] .hljs-type, html:has(#themeSwitch:checked) .hljs-type{
       color: #005cc5;
     }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-built_in,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-builtin-name {
+    html[data-theme="light"] .hljs-built_in, html:has(#themeSwitch:checked) .hljs-built_in,
+    html[data-theme="light"] .hljs-builtin-name, html:has(#themeSwitch:checked) .hljs-builtin-name{
       color: #e36209;
     }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-meta,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-meta-keyword,
-    html[data-theme="light"], html:has(#themeSwitch:checked) .hljs-meta-string {
+    html[data-theme="light"] .hljs-meta, html:has(#themeSwitch:checked) .hljs-meta,
+    html[data-theme="light"] .hljs-meta-keyword, html:has(#themeSwitch:checked) .hljs-meta-keyword,
+    html[data-theme="light"] .hljs-meta-string, html:has(#themeSwitch:checked) .hljs-meta-string{
       color: #6a737d;
     }
     .hljs-comment,
@@ -1059,7 +1059,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       margin: 1rem 0;
       color: rgba(226, 232, 240, 0.92);
     }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .mermaid {
+    html[data-theme="light"] .mermaid, html:has(#themeSwitch:checked) .mermaid{
       background: rgba(232, 236, 241, 0.65);
       border: 1px solid rgba(15, 23, 42, 0.18);
       color: rgba(15, 23, 42, 0.92);
@@ -1155,7 +1155,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       color: rgba(254, 226, 226, 0.92);
       margin-bottom: 0.5rem;
     }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .mermaid-error-title {
+    html[data-theme="light"] .mermaid-error-title, html:has(#themeSwitch:checked) .mermaid-error-title{
       color: rgba(190, 18, 60, 0.92);
     }
     .mermaid-error details {
@@ -1178,7 +1178,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       color: rgba(226, 232, 240, 0.92);
       overflow: auto;
     }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .mermaid-error pre.mermaid-error-msg {
+    html[data-theme="light"] .mermaid-error pre.mermaid-error-msg, html:has(#themeSwitch:checked) .mermaid-error pre.mermaid-error-msg{
       background: rgba(15, 23, 42, 0.06);
       color: rgba(15, 23, 42, 0.88);
     }
@@ -1201,7 +1201,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       user-select: none;
     }
     .copy-btn:hover { background: rgba(226, 232, 240, 0.10); }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .copy-btn {
+    html[data-theme="light"] .copy-btn, html:has(#themeSwitch:checked) .copy-btn{
       background: rgba(255, 255, 255, 0.70);
     }
 
@@ -1220,7 +1220,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       text-transform: uppercase;
       letter-spacing: 0.03em;
     }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .lang-label {
+    html[data-theme="light"] .lang-label, html:has(#themeSwitch:checked) .lang-label{
       color: rgba(100, 116, 139, 0.8);
     }
 
@@ -1247,18 +1247,18 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     article th { background: rgba(59, 130, 246, 0.10); font-weight: 600; color: rgba(224, 231, 255, 0.98); }
     article tbody tr:nth-child(even) { background: rgba(148, 163, 184, 0.04); }
     article tbody tr:hover { background: rgba(148, 163, 184, 0.08); }
-    html[data-theme="light"], html:has(#themeSwitch:checked) article th {
+    html[data-theme="light"] article th, html:has(#themeSwitch:checked) article th{
       background: rgba(37, 99, 235, 0.08);
       color: rgba(15, 23, 42, 0.92);
     }
-    html[data-theme="light"], html:has(#themeSwitch:checked) article td {
+    html[data-theme="light"] article td, html:has(#themeSwitch:checked) article td{
       border-color: rgba(15, 23, 42, 0.10);
     }
-    html[data-theme="light"], html:has(#themeSwitch:checked) article th {
+    html[data-theme="light"] article th, html:has(#themeSwitch:checked) article th{
       border-color: rgba(15, 23, 42, 0.12);
     }
-    html[data-theme="light"], html:has(#themeSwitch:checked) article tbody tr:nth-child(even) { background: rgba(15, 23, 42, 0.03); }
-    html[data-theme="light"], html:has(#themeSwitch:checked) article tbody tr:hover { background: rgba(15, 23, 42, 0.05); }
+    html[data-theme="light"] article tbody tr:nth-child(even), html:has(#themeSwitch:checked) article tbody tr:nth-child(even){ background: rgba(15, 23, 42, 0.03); }
+    html[data-theme="light"] article tbody tr:hover, html:has(#themeSwitch:checked) article tbody tr:hover{ background: rgba(15, 23, 42, 0.05); }
     /* Enhanced Practical Notes & Callouts */
     article blockquote {
       border-left: 4px solid rgba(99, 102, 241, 0.65);
@@ -1270,7 +1270,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       box-shadow: 0 4px 15px rgba(0,0,0,0.1);
       position: relative;
     }
-    html[data-theme="light"], html:has(#themeSwitch:checked) article blockquote {
+    html[data-theme="light"] article blockquote, html:has(#themeSwitch:checked) article blockquote{
       border-left-color: rgba(99, 102, 241, 0.75);
       background: rgba(99, 102, 241, 0.06);
       color: var(--fg);
@@ -1282,7 +1282,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       border: 1px solid rgba(16, 185, 129, 0.25);
       border-left-width: 4px;
     }
-    html[data-theme="light"], html:has(#themeSwitch:checked) article blockquote.callout-sop {
+    html[data-theme="light"] article blockquote.callout-sop, html:has(#themeSwitch:checked) article blockquote.callout-sop{
       background: linear-gradient(135deg, rgba(16, 185, 129, 0.14), rgba(16, 185, 129, 0.04));
       border-color: rgba(16, 185, 129, 0.35);
     }
@@ -1293,7 +1293,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       border: 1px solid rgba(245, 158, 11, 0.25);
       border-left-width: 4px;
     }
-    html[data-theme="light"], html:has(#themeSwitch:checked) article blockquote.callout-trouble {
+    html[data-theme="light"] article blockquote.callout-trouble, html:has(#themeSwitch:checked) article blockquote.callout-trouble{
       background: linear-gradient(135deg, rgba(245, 158, 11, 0.14), rgba(245, 158, 11, 0.04));
       border-color: rgba(245, 158, 11, 0.35);
     }
@@ -1304,7 +1304,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       border: 1px solid rgba(244, 63, 94, 0.25);
       border-left-width: 4px;
     }
-    html[data-theme="light"], html:has(#themeSwitch:checked) article blockquote.callout-warning {
+    html[data-theme="light"] article blockquote.callout-warning, html:has(#themeSwitch:checked) article blockquote.callout-warning{
       background: linear-gradient(135deg, rgba(244, 63, 94, 0.14), rgba(244, 63, 94, 0.04));
       border-color: rgba(244, 63, 94, 0.35);
     }
@@ -1315,7 +1315,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       border: 1px solid rgba(99, 102, 241, 0.25);
       border-left-width: 4px;
     }
-    html[data-theme="light"], html:has(#themeSwitch:checked) article blockquote.callout-form {
+    html[data-theme="light"] article blockquote.callout-form, html:has(#themeSwitch:checked) article blockquote.callout-form{
       background: linear-gradient(135deg, rgba(99, 102, 241, 0.14), rgba(99, 102, 241, 0.04));
       border-color: rgba(99, 102, 241, 0.35);
     }
@@ -1326,7 +1326,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       border: 1px solid rgba(6, 182, 212, 0.25);
       border-left-width: 4px;
     }
-    html[data-theme="light"], html:has(#themeSwitch:checked) article blockquote.callout-character {
+    html[data-theme="light"] article blockquote.callout-character, html:has(#themeSwitch:checked) article blockquote.callout-character{
       background: linear-gradient(135deg, rgba(6, 182, 212, 0.14), rgba(6, 182, 212, 0.04));
       border-color: rgba(6, 182, 212, 0.35);
     }
@@ -1337,7 +1337,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       border: 1px solid rgba(168, 85, 247, 0.25);
       border-left-width: 4px;
     }
-    html[data-theme="light"], html:has(#themeSwitch:checked) article blockquote.callout-exam {
+    html[data-theme="light"] article blockquote.callout-exam, html:has(#themeSwitch:checked) article blockquote.callout-exam{
       background: linear-gradient(135deg, rgba(168, 85, 247, 0.14), rgba(168, 85, 247, 0.04));
       border-color: rgba(168, 85, 247, 0.35);
     }
@@ -1364,7 +1364,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       transition: opacity 0.2s;
     }
     .back-to-top:hover { background: rgba(2, 6, 23, 0.88); }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .back-to-top {
+    html[data-theme="light"] .back-to-top, html:has(#themeSwitch:checked) .back-to-top{
       background: rgba(255, 255, 255, 0.92);
       color: rgba(15, 23, 42, 0.92);
       border: 1px solid rgba(15, 23, 42, 0.14);
@@ -1387,7 +1387,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       border-radius: 0.75rem;
       box-shadow: 0 20px 60px rgba(0,0,0,0.5);
     }
-    html[data-theme="light"], html:has(#themeSwitch:checked) .lightbox-overlay {
+    html[data-theme="light"] .lightbox-overlay, html:has(#themeSwitch:checked) .lightbox-overlay{
       background: rgba(255, 255, 255, 0.90);
     }
     article img {
@@ -3588,7 +3588,8 @@ def markdown_to_tailwind_html(md_text: str, title: str = "Document", config: Ren
     html_body = _linkify_inline_toc(html_body, heading_map)
 
     doc_html = HTML_TEMPLATE
-    doc_html = doc_html.replace("%%TITLE%%", title)
+    # 제목에 <, >, & 등이 있어도 <title>/헤더 마크업이 깨지지 않도록 이스케이프.
+    doc_html = doc_html.replace("%%TITLE%%", html.escape(title))
     # 모바일 TOC 링크 클릭 시 드로어 자동 닫기 (CSS-only):
     # 각 TOC 링크를 <label for="tocSwitch">로 감싸면, 링크 클릭 시 label이
     # checkbox를 토글하여 드로어가 닫히고, 링크의 기본 동작(해시 이동)도 유지됨.
