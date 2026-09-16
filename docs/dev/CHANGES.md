@@ -4,6 +4,69 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-16 교재 리더 모바일 UX — 엣지 스와이프 TOC·툴바 자동 숨김·힌트 탭
+
+> **목표**: PWA 교재 리더에 모던 모바일 네비게이션 패턴 적용
+
+### 엣지 스와이프 TOC (5591fd2)
+
+- 화면 왼쪽 끝(24px)에서 오른쪽 스와이프 → TOC 드로어 오픈
+- 드로어 열린 상태에서 왼쪽 스와이프 → 닫기 (배경 탭도 유지)
+- `#reader-layout`에 바인딩 — `reader-toc`가 container의 형제라 열린 드로어의 터치가 container에 도달하지 않기 때문
+- 세로 스크롤 보호: `|dy| > |dx|`이면 스와이프 취소
+- 툴바 자동 숨김: 아래로 스크롤 시 숨김, 위로 올리면 복귀 (`.reader-toolbar-auto-hidden`)
+
+### 드로어 가로 오버플로 수정 (8330eee)
+
+- 증상: 스와이프로 드로어를 연 후 항목 끝 텍스트("…스트")가 노출
+- 원인: `.reader-toc`에 `overflow-y: auto`만 지정 → `overflow-x`도 `auto`로 계산되어 가로 스크롤 가능
+- 수정: `overflow-x: hidden` + `overscroll-behavior-x: none` + `touch-action: pan-y`
+
+### 엣지 힌트 탭 (f767195)
+
+- `#reader-toc-edge-hint`: 왼쪽 끝 8px×72px pill, `MD_to_HTML.py`의 `.toc-edge-hint`와 동일 패턴
+- 표시 조건: TOC 로드 + 900px 이하 — `.reader-toc:not(.is-hidden) ~ .reader-toc-edge-hint`
+- 드로어 열림 시 sibling selector로 자동 숨김, 탭으로도 드로어 오픈 가능
+- z-index: `var(--z-drawer) - 1` (드로어/백드롭 아래, 본문 위)
+
+### TOC 툴팁 모바일 제거 (0e98b50, d069358)
+
+- 증상: 스와이프 후 "…근거한 고객정보관리" 같은 텍스트가 화면에 잔류
+- 원인: `touchstart`로 표시된 `#toc-tooltip`이 `mouseleave`/`blur` 없이 계속 `is-visible` 상태로 남음
+- 1차: 터치 툴팁 2.5초 자동 숨김 + 클릭/드로어 닫힘 시 숨김
+- 2차(최종): 모바일은 탭 즉시 네비게이션되므로 툴팁 불필요 → `@media (hover: hover)` 기기에서만 바인딩
+- `:hover` 시 `overflow: visible` 확장도 `(hover: hover)`로 제한 — 모바일 sticky-hover로 nowrap 텍스트가 항목 밖으로 넘치는 문제 차단
+
+### 검증
+
+- `npm test`: 248 pass, 0 fail
+- CACHE_VERSION → `v360-20260916-0e98b50`
+
+## 2026-09-15 MD_to_HTML.py 도구 + 참조자료 Mermaid 시각화·모바일 대응
+
+> **목표**: 참조자료 MD를 단독 HTML로 변환하는 도구 추가 및 모바일 file:// 환경 대응
+
+### 참조자료 콘텐츠 개선
+
+- `d5e7b37` — 핵심암기 Ch01·Ch03에 Mermaid 다이어그램 9개 추가 (보습 4종·색소 5단계·기능성 11가지·향수 / 사용금지 5그룹·보존제·자외선차단제 한도·염모제·AHA)
+- `962b327` / `57672f7` — Ch03 AHA 섹션 보강 후 4개 항목 구조로 재구성 (AHA 정의·기준 / 대표 5종 / 살리실릭애씨드 13세 vs 3세 혼동 포인트 / IPBC·트리클로산)
+- `3251537` / `183a6ae` — Ch01/Ch03 핵심암기 13개 개선점 + 암기 용이성 개선
+
+### tools/MD_to_HTML.py 신규 (8a79906)
+
+- Markdown → 단독 HTML 변환 (Tailwind CDN + highlight.js + mermaid.ink 프리렌더)
+- CSS-only 테마 토글(checkbox+label)·TOC 드로어 — 모바일 file:// 환경에서 인라인 JS 미실행 대응
+- Mermaid는 `theme=default`로 렌더 후 base64 `<img>` 임베드 — 외부 CSS `color`/`fill` 상속으로 글자가 안 보이는 문제 차단 (07c2829)
+- 왼쪽 끝 스와이프로 TOC 드로어 오픈 + `.toc-edge-hint` 힌트 탭 (08d435a)
+- 읽기 진행률 바: CSS 스크롤 구동 애니메이션(`animation-timeline: scroll()`)으로 JS 없이 동작, 미지원 시 JS `width` 폴백
+- topbar 자동 숨김 + 이어읽기(스크롤 위치 localStorage 복원) — JS 필요, file:// 제약 있음
+- 모바일 대응 이력: 테마버튼 터치 미응답(06a2c3d), `<head>` 독립 스크립트(bfb6c7f), file:// 호환(1c19092), 드로어 마지막 항목 잘림(72da003)
+
+### 검증
+
+- `npm test`: 248 pass, 0 fail
+- `check:parser`: 파서 등가성 통과
+
 ## 2026-09-14 두음 암기법(Acrostic Mnemonics) 전 과목 적용
 
 > **목표**: 각 섹션의 핵심 암기 항목을 첫 글자 조합으로 암기 효율 향상

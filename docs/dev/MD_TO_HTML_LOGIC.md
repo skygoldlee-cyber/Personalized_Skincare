@@ -561,7 +561,9 @@ CLI 옵션:
        — <blockquote> → callout 분류 (SOP/trouble/warning/form/character/exam)
        — <pre><code class="language-mermaid"> → <div class="mermaid"> (포스트 처리)
   ↓ 7. Mermaid 사전 렌더링 (prerender_mermaid=True 시)
-       — mermaid.ink API로 SVG 렌더링 → <div class="mermaid-svg"> 교체
+       — mermaid.ink API로 SVG 렌더링 → base64 <img> 임베드
+       — theme=default 고정 (밝은 카드 배경 — 다크/라이트 모두 대비 확보)
+       — 외부 CSS 상속 차단을 위해 인라인 <svg> 대신 <img> 사용
        — 실패 시 원본 <div class="mermaid"> 유지 (클라이언트 사이드 폴백)
   ↓ 8. Mermaid 라이브러리 임베드 (embed_mermaid=True 시)
        — CDN에서 mermaid.min.js (~3.5MB) 다운로드 → <script> 인라인 교체
@@ -591,9 +593,12 @@ class RenderConfig:
 |------|------|
 | **Tailwind CSS** | CDN 로드 + CDN 차단 시 폴백 CSS (내장 최소 유틸리티 클래스) |
 | **highlight.js** | 코드 블록 구문 강조 (CDN + 폴백 테마 내장) |
-| **Mermaid** | 사전 SVG 렌더링(모바일) 또는 클라이언트 사이드 렌더링(PC) |
-| **다크/라이트 테마** | `localStorage` 영속화, `prefers-color-scheme` 감지, FAB 버튼 |
-| **TOC 사이드바** | 데스크톱: sticky 사이드바, 모바일: 드로어, 검색 + AutoFold + scroll-spy |
+| **Mermaid** | 사전 SVG 렌더링 → base64 `<img>` 임베드 (외부 CSS 격리), 실패 시 클라이언트 사이드 렌더링 폴백 |
+| **다크/라이트 테마** | CSS-only 토글(`#themeSwitch` checkbox + label — 인라인 JS 불필요), `localStorage` 영속화, `prefers-color-scheme` 감지 |
+| **TOC 드로어** | 모바일: 왼쪽 끝 스와이프 오픈 + `.toc-edge-hint` 힌트 탭(CSS-only 폴백), 왼쪽 스와이프/배경 탭으로 닫기. 검색 + AutoFold + scroll-spy |
+| **읽기 진행률 바** | 상단 3px 바 — CSS 스크롤 구동(`animation-timeline: scroll()`)으로 JS 없이 동작, 미지원 시 JS `width` 폴백 |
+| **topbar 자동 숨김** | 아래로 스크롤 시 숨김, 위로 올리면 복귀 (JS 필요 — file:// 미지원) |
+| **이어읽기** | 스크롤 위치 localStorage 저장, 재방문 시 복원 배너 (JS 필요 — file:// 미지원) |
 | **인문서 검색** | `Ctrl+K` / `/` 단축키, IME 조합 중 실시간 검색, `mark.search-mark` 하이라이트 |
 | **코드 블록 UX** | Copy 버튼, 언어 라벨, 줄 수 기반 접기/펼치기 (localStorage 영속화) |
 | **ASCII 다이어그램** | 박스 그리기 문자 감지 → `ascii-diagram` 클래스, D2Coding/NanumGothicCoding 폰트 |
@@ -606,10 +611,11 @@ class RenderConfig:
 
 `@/c:\Project\Personalized_Skincare\content\utils\md_to_html.py:3167-3233`
 
-- `<div class="mermaid">` 블록을 mermaid.ink API(`https://mermaid.ink/svg/{base64}?theme=dark&bgColor=0f172a`)로 SVG 변환
-- 변환 성공 시 `<div class="mermaid-svg">{svg}</div>`로 교체
+- `<div class="mermaid">` 블록을 mermaid.ink API(`https://mermaid.ink/svg/{base64}?theme=default`)로 SVG 변환
+- 변환 성공 시 SVG를 base64 인코딩하여 `<img src="data:image/svg+xml;base64,...">`로 임베드
+  - 인라인 `<svg>`는 외부 CSS의 `color`/`fill`/`currentColor` 상속으로 다크 모드에서 글자가 안 보이는 문제가 있어 `<img>`로 격리
+  - `theme=default` 고정: 밝은 배경 + 어두운 텍스트 조합이 다크/라이트 페이지 모두에서 대비 확보
 - 실패 시 원본 `<div class="mermaid">` 유지 → 클라이언트 사이드 렌더링 폴백
-- 라이트 테마에서 SVG에 `filter: invert(0.88) hue-rotate(180deg)` 적용
 
 ### 9.7 Mermaid 라이브러리 임베드
 
