@@ -35,6 +35,9 @@ from dataclasses import dataclass
 #    - 원인: 인라인 JS 차단으로 drawer-hidden 클래스 토글 불가
 #    - 해결: #tocSwitch checkbox + :has() 선택자로 CSS-only 드로어 구현
 #           TOC 링크를 <label for="tocSwitch">로 감싸 링크 클릭 시 드로어 자동 닫기
+#    - 추가: 별도 TOC 버튼 대신 왼쪽 끝 스와이프 제스처로 오픈 (모던 패턴)
+#            왼쪽 가장자리에 작은 힌트 탭(<label>)을 두어 JS 없는 환경에서도
+#            탭으로 열 수 있도록 폴백 유지
 #
 # 4. 모바일 좌우 여백 없음
 #    - 원인: Tailwind CDN 미로드 시 .px-4 등 유틸리티 미적용
@@ -341,12 +344,34 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       max-width: 22rem;
       width: 85vw;
       background: var(--panel);
-      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
       box-shadow: var(--shadow);
       display: flex;
       flex-direction: column;
       overflow: hidden;
     }
+
+    /* 왼쪽 가장자리 스와이프 힌트 탭.
+       JS 없는 환경(file://)에서는 label 탭으로 드로어를 열고,
+       JS 환경에서는 왼쪽 끝 스와이프 제스처로 연다. */
+    .toc-edge-hint {
+      position: fixed;
+      left: 0;
+      top: 35%;
+      width: 8px;
+      height: 72px;
+      border-radius: 0 8px 8px 0;
+      background: rgba(148, 163, 184, 0.35);
+      z-index: 30;
+      display: none;
+      cursor: pointer;
+    }
+    html[data-theme="light"] .toc-edge-hint,
+    html:has(#themeSwitch:checked) .toc-edge-hint {
+      background: rgba(15, 23, 42, 0.25);
+    }
+    @media (max-width: 1023px) { .toc-edge-hint { display: block; } }
+    #tocSwitch:checked ~ .toc-edge-hint { display: none; }
     #tocMobile {
       flex: 1;
       min-height: 0;
@@ -1500,6 +1525,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 <body class="min-h-screen">
   <!-- CSS-only TOC 드로어 토글: checkbox + label (JS 없이도 열고 닫기 가능) -->
   <input type="checkbox" id="tocSwitch" class="toc-switch" aria-label="목차 드로어 열기/닫기" />
+  <!-- 왼쪽 가장자리 힌트 탭: 탭하면 드로어 오픈 (JS 없는 환경 폴백) -->
+  <label for="tocSwitch" class="toc-edge-hint" aria-label="목차 열기"></label>
   <header class="topbar sticky top-0 z-50">
     <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
       <div class="flex items-center gap-3">
@@ -1510,7 +1537,6 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
         </div>
       </div>
       <div class="flex items-center gap-3">
-        <label for="tocSwitch" id="btnToc" class="theme-btn sm:hidden inline-flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium">TOC</label>
         <button id="btnSearch" class="theme-btn inline-flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium">Search</button>
         <button id="btnAutoFold" class="theme-btn inline-flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium">AutoFold</button>
         <button id="btnFold" class="theme-btn inline-flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium">Fold</button>
@@ -1531,7 +1557,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   <!-- Mobile TOC Drawer: checkbox #tocSwitch 체크 시 표시 (CSS-only) -->
   <div id="tocDrawer" class="fixed inset-0 z-40">
     <label for="tocSwitch" id="tocBackdrop" class="drawer-backdrop fixed inset-0"></label>
-    <div class="fixed right-0 top-0 drawer-panel">
+    <div class="fixed left-0 top-0 drawer-panel">
       <div class="p-4 border-b" style="border-color: var(--border);">
         <div class="flex items-center justify-between">
           <div>
@@ -2192,26 +2218,61 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      var btnToc = document.getElementById('btnToc');
       var drawer = document.getElementById('tocDrawer');
       var backdrop = document.getElementById('tocBackdrop');
       var btnClose = document.getElementById('btnTocClose');
+      var tocCb = document.getElementById('tocSwitch');
 
       function openDrawer() {
-        var cb = document.getElementById('tocSwitch');
-        if (cb) cb.checked = true;
+        if (tocCb) tocCb.checked = true;
       }
       function closeDrawer() {
-        var cb = document.getElementById('tocSwitch');
-        if (cb) cb.checked = false;
+        if (tocCb) tocCb.checked = false;
       }
 
-      if (btnToc) btnToc.addEventListener('click', openDrawer);
       if (btnClose) btnClose.addEventListener('click', closeDrawer);
       if (backdrop) backdrop.addEventListener('click', closeDrawer);
       document.addEventListener('keydown', function (e) {
         if (e && e.key === 'Escape') closeDrawer();
       });
+
+      // 왼쪽 가장자리 스와이프로 TOC 드로어 열기 (모바일 표준 패턴)
+      // - 화면 왼쪽 끝(24px 이내)에서 오른쪽으로 스와이프 → 드로어 오픈
+      // - 드로어가 열린 상태에서 왼쪽으로 스와이프 → 드로어 닫기
+      (function () {
+        if (!tocCb) return;
+        var EDGE = 24;     // 왼쪽 끝 인식 영역 (px)
+        var THRESH = 48;   // 스와이프 인식 최소 거리 (px)
+        var startX = 0, startY = 0, tracking = false, wasOpen = false;
+
+        document.addEventListener('touchstart', function (e) {
+          if (!e.touches || e.touches.length !== 1) { tracking = false; return; }
+          var t = e.touches[0];
+          if (!tocCb.checked && t.clientX <= EDGE) {
+            tracking = true; wasOpen = false;
+            startX = t.clientX; startY = t.clientY;
+          } else if (tocCb.checked) {
+            tracking = true; wasOpen = true;
+            startX = t.clientX; startY = t.clientY;
+          } else {
+            tracking = false;
+          }
+        }, { passive: true });
+
+        document.addEventListener('touchmove', function (e) {
+          if (!tracking) return;
+          var t = e.touches[0];
+          var dx = t.clientX - startX;
+          var dy = t.clientY - startY;
+          // 세로 스크롤 의도면 취소
+          if (Math.abs(dy) > Math.abs(dx)) { tracking = false; return; }
+          if (!wasOpen && dx > THRESH) { openDrawer(); tracking = false; }
+          else if (wasOpen && dx < -THRESH) { closeDrawer(); tracking = false; }
+        }, { passive: true });
+
+        document.addEventListener('touchend', function () { tracking = false; }, { passive: true });
+        document.addEventListener('touchcancel', function () { tracking = false; }, { passive: true });
+      })();
 
       // 모바일 드로어 안의 목차 링크를 누르면 드로어를 닫아, 이동한 위치가
       // 보이도록 한다. 드로어는 fixed inset-0으로 화면 전체를 덮기 때문에
