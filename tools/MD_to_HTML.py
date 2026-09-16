@@ -358,13 +358,19 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       position: fixed;
       left: 0;
       top: 35%;
-      width: 8px;
+      width: 10px;
       height: 72px;
       border-radius: 0 8px 8px 0;
       background: rgba(148, 163, 184, 0.35);
       z-index: 30;
       display: none;
       cursor: pointer;
+      /* 최초 진입 시 짧게 강조해 발견성을 높인다 (CSS-only, JS 불필요) */
+      animation: edgeHintPulse 1.6s ease-in-out 0.8s 3;
+    }
+    @keyframes edgeHintPulse {
+      0%, 100% { width: 10px; opacity: 0.6; }
+      50%      { width: 16px; opacity: 1; }
     }
     html[data-theme="light"] .toc-edge-hint,
     html:has(#themeSwitch:checked) .toc-edge-hint {
@@ -1525,6 +1531,19 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       to { transform: scaleX(1); }
     }
 
+    /* 모션 감축 설정 시 자동 숨김/진행률 애니메이션을 비활성화한다.
+       진행률 바는 애니메이션 없이 최종 상태(scaleX(1)=가득 참)로 표시되지
+       않도록 JS 폴백이 width를 계속 갱신하도록 둔다 — CSS 애니메이션만 끈다. */
+    @media (prefers-reduced-motion: reduce) {
+      .topbar { transition: none; }
+      #readingProgress { transition: none; }
+      .toc-edge-hint { animation: none; }
+      @supports (animation-timeline: scroll()) {
+        /* transform을 해제하고 width를 JS 폴백이 갱신할 수 있게 0으로 둔다 */
+        #readingProgress { animation: none; transform: none; width: 0; }
+      }
+    }
+
     /* 이어읽기 제안 버튼 (하단 중앙) */
     #resumeBtn {
       position: fixed;
@@ -1547,6 +1566,9 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       white-space: nowrap;
     }
     #resumeBtn.show { display: inline-flex; align-items: center; gap: 0.35rem; }
+    /* TOC 드로어가 열린 동안에는 이어읽기 버튼을 숨긴다.
+       (resumeBtn z-index 65 > 드로어 z-40 이므로 백드롭 위에 떠 보이는 것 방지) */
+    #tocSwitch:checked ~ #resumeBtn { display: none !important; }
     html[data-theme="light"] #resumeBtn,
     html:has(#themeSwitch:checked) #resumeBtn {
       background: rgba(255, 255, 255, 0.95);
@@ -2382,8 +2404,11 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       var SAVE_KEY = 'doc_scroll:' + (location.pathname || 'doc');
 
       // CSS 스크롤 구동 애니메이션이 지원되면 JS로 width를 갱신하지 않는다
-      // (둘 다 적용되면 width% × scaleX로 진행률이 이중 반영됨)
-      var cssScrollProgress = !!(window.CSS && CSS.supports && CSS.supports('animation-timeline: scroll()'));
+      // (둘 다 적용되면 width% × scaleX로 진행률이 이중 반영됨).
+      // 단, prefers-reduced-motion 환경에서는 CSS 애니메이션이 꺼져 있으므로
+      // JS 폴백이 동작해야 한다.
+      var reduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+      var cssScrollProgress = !reduceMotion && !!(window.CSS && CSS.supports && CSS.supports('animation-timeline: scroll()'));
 
       function onScroll() {
         var y = window.scrollY || docEl.scrollTop || 0;
