@@ -192,6 +192,15 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
         var mode = saved || ((window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark');
         document.documentElement.dataset.theme = mode;
         if (mode === 'dark') document.documentElement.classList.add('doc-bg');
+        // 글자 크기 복원 (doc_fontsize: 0=작게 ~ 4=크게, 기본 2)
+        var fs = localStorage.getItem('doc_fontsize');
+        if (fs !== null) {
+          var sizes = ['0.9375rem', '1.0rem', '1.0625rem', '1.1875rem', '1.3125rem'];
+          var fi = parseInt(fs, 10);
+          if (!isNaN(fi) && fi >= 0 && fi < sizes.length) {
+            document.documentElement.style.setProperty('--article-fs', sizes[fi]);
+          }
+        }
         // checkbox 동기화 (body 로드 전이므로 DOMContentLoaded에서 처리)
         document.addEventListener('DOMContentLoaded', function () {
           var cb = document.getElementById('themeSwitch');
@@ -324,6 +333,23 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     .border { border-width: 1px; }
     .shadow-xl { box-shadow: 0 20px 60px rgba(2,6,23,0.35); }
     .transition { transition: all 0.2s ease; }
+
+    /* Skip link: 키보드/스크린리더용 본문 바로가기 (포커스 시에만 표시) */
+    .skip-link {
+      position: fixed;
+      top: -4rem;
+      left: 1rem;
+      z-index: 80;
+      padding: 0.6rem 1rem;
+      border-radius: 0.75rem;
+      background: var(--a1);
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: top 0.2s ease;
+    }
+    .skip-link:focus { top: 0.75rem; }
 
     .sm\:hidden { display: block; }
     @media (min-width: 640px) { .sm\:hidden { display: none; } }
@@ -521,6 +547,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       --panel: rgba(15, 23, 42, 0.55);
       --border: rgba(148, 163, 184, 0.16);
       --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      --table-cover: #101b30; /* body #020617 + panel rgba(15,23,42,.55) 합성색 */
 
       --a1: rgba(59,130,246,1);   /* blue */
       --a2: rgba(168,85,247,1);   /* violet */
@@ -563,6 +590,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       --panel: rgba(232, 236, 241, 0.88);
       --border: rgba(15, 23, 42, 0.14);
       --shadow: 0 10px 25px rgba(2, 6, 23, 0.10);
+      --table-cover: #e4e8ee; /* body #d4d8de + panel rgba(232,236,241,.88) 합성색 */
 
       --a1: rgba(37, 99, 235, 1);
       --a2: rgba(124, 58, 237, 1);
@@ -836,7 +864,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     html[data-theme="light"] .toc-title, html:has(#themeSwitch:checked) .toc-title{ color: rgba(15, 23, 42, 0.92); }
     html[data-theme="light"] .toc-subtitle, html:has(#themeSwitch:checked) .toc-subtitle{ color: rgba(15, 23, 42, 0.72); }
 
-    article { color: var(--fg); line-height: 1.75; font-size: 1.0625rem; max-width: clamp(72ch, 82vw, 96ch); margin-left: auto; margin-right: auto; padding: 0 1rem; }
+    article { color: var(--fg); line-height: 1.75; font-size: var(--article-fs, 1.0625rem); max-width: clamp(72ch, 82vw, 96ch); margin-left: auto; margin-right: auto; padding: 0 1rem; }
     article p { color: var(--fg); margin: 1rem 0; }
     article li { color: var(--fg); margin: 0.25rem 0; }
     article ul, article ol { padding-left: 1.5rem; margin: 0.5rem 0; }
@@ -1301,6 +1329,16 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       max-width: 100%;
       -webkit-overflow-scrolling: touch;
       margin: 1.25rem 0;
+      /* 스크롤 가능 방향을 가장자리 그림자로 표시 (background-attachment: local/scroll 기법) */
+      background-image:
+        linear-gradient(to right, var(--table-cover) 50%, rgba(0,0,0,0)),
+        linear-gradient(to left, var(--table-cover) 50%, rgba(0,0,0,0)),
+        radial-gradient(farthest-side at 0 50%, rgba(0,0,0,0.30), rgba(0,0,0,0)),
+        radial-gradient(farthest-side at 100% 50%, rgba(0,0,0,0.30), rgba(0,0,0,0));
+      background-position: left center, right center, left center, right center;
+      background-repeat: no-repeat;
+      background-size: 24px 100%, 24px 100%, 14px 100%, 14px 100%;
+      background-attachment: local, local, scroll, scroll;
     }
     .table-wrap table {
       width: max-content;
@@ -1611,6 +1649,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 </head>
 
 <body class="min-h-screen">
+  <a class="skip-link" href="#mainContent">본문으로 바로가기</a>
   <!-- CSS-only TOC 드로어 토글: checkbox + label (JS 없이도 열고 닫기 가능) -->
   <input type="checkbox" id="tocSwitch" class="toc-switch" aria-label="목차 드로어 열기/닫기" />
   <!-- 왼쪽 가장자리 힌트 탭: 탭하면 드로어 오픈 (JS 없는 환경 폴백) -->
@@ -1625,6 +1664,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
         </div>
       </div>
       <div class="flex items-center gap-3">
+        <button id="btnFontMinus" class="theme-btn inline-flex items-center gap-1 rounded-xl px-2.5 py-2 text-xs font-medium" aria-label="글자 크기 줄이기">A&#8722;</button>
+        <button id="btnFontPlus" class="theme-btn inline-flex items-center gap-1 rounded-xl px-2.5 py-2 text-xs font-medium" aria-label="글자 크기 키우기">A+</button>
         <button id="btnSearch" class="theme-btn inline-flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium">Search</button>
         <button id="btnAutoFold" class="theme-btn inline-flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium">AutoFold</button>
         <button id="btnFold" class="theme-btn inline-flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium">Fold</button>
@@ -1686,7 +1727,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
         </div>
       </aside>
 
-      <main class="lg:col-span-9">
+      <main id="mainContent" class="lg:col-span-9" tabindex="-1">
         <article class="glass rounded-2xl px-6 sm:px-8 py-8">
           %%BODY_HTML%%
         </article>
@@ -1977,6 +2018,27 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
           showToast(next ? 'AutoFold On' : 'AutoFold Off');
         });
       }
+
+      // 글자 크기 조절 (A−/A+): --article-fs 변경 + localStorage 저장
+      var FS_SIZES = ['0.9375rem', '1.0rem', '1.0625rem', '1.1875rem', '1.3125rem'];
+      var FS_LABELS = ['아주 작게', '작게', '기본', '크게', '아주 크게'];
+      function getFontIdx() {
+        try {
+          var v = parseInt(localStorage.getItem('doc_fontsize'), 10);
+          if (isNaN(v)) return 2;
+          return Math.max(0, Math.min(FS_SIZES.length - 1, v));
+        } catch (e) { return 2; }
+      }
+      function setFontIdx(i) {
+        i = Math.max(0, Math.min(FS_SIZES.length - 1, i));
+        document.documentElement.style.setProperty('--article-fs', FS_SIZES[i]);
+        try { localStorage.setItem('doc_fontsize', String(i)); } catch (e) {}
+        showToast('글자 크기: ' + FS_LABELS[i]);
+      }
+      var btnFontMinus = document.getElementById('btnFontMinus');
+      var btnFontPlus = document.getElementById('btnFontPlus');
+      if (btnFontMinus) btnFontMinus.addEventListener('click', function () { setFontIdx(getFontIdx() - 1); });
+      if (btnFontPlus) btnFontPlus.addEventListener('click', function () { setFontIdx(getFontIdx() + 1); });
     })();
   </script>
 
@@ -2971,13 +3033,16 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
             }
           } catch (e) {}
 
+          // 활성 링크를 각자 속한 TOC nav의 중앙으로 스크롤 (데스크톱/모바일 양쪽)
           try {
-            var a = arr[0];
-            var container = toc || tocMobile;
-            if (container) {
-              var top = a.offsetTop - container.clientHeight / 2;
-              if (top < 0) top = 0;
-              container.scrollTop = top;
+            for (var x2 = 0; x2 < arr.length; x2++) {
+              var a2 = arr[x2];
+              var nav = a2.closest ? a2.closest('nav') : null;
+              if (nav) {
+                var top = a2.offsetTop - nav.clientHeight / 2;
+                if (top < 0) top = 0;
+                nav.scrollTop = top;
+              }
             }
           } catch (e) {}
         }
@@ -3033,6 +3098,14 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
           currentId = initId;
           setActive(currentId);
         }
+      }
+
+      // 모바일 드로어가 열릴 때 현재 읽는 섹션으로 목차 스크롤
+      var tocSwitchEl = document.getElementById('tocSwitch');
+      if (tocSwitchEl) {
+        tocSwitchEl.addEventListener('change', function () {
+          if (tocSwitchEl.checked && currentId) setActive(currentId);
+        });
       }
     });
   </script>
