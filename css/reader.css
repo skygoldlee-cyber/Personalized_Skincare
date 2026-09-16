@@ -81,6 +81,13 @@
     z-index: var(--z-dropdown);
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+/* 스크롤 다운 시 툴바 자동 숨김 (몰입형 독서) — 위로 스크롤하면 복귀 */
+.reader-toolbar.toolbar-auto-hidden {
+    transform: translateY(calc(-100% - 16px));
+    opacity: 0;
+    pointer-events: none;
 }
 .reader-toolbar-toggle {
     display: none;

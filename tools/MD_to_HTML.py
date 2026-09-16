@@ -1487,6 +1487,71 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       background: var(--panel);
       border-bottom: 1px solid var(--border);
       overflow: visible;
+      transition: transform 0.25s ease;
+    }
+    /* 스크롤 다운 시 topbar 자동 숨김 (몰입형 독서) */
+    .topbar.topbar-hidden { transform: translateY(-100%); }
+
+    /* 읽기 진행률 바 — 최상단 고정, topbar가 숨어도 유지 */
+    #readingProgress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0%;
+      background: linear-gradient(90deg, #38bdf8, #a78bfa);
+      z-index: 65;
+      transition: width 0.08s linear;
+      pointer-events: none;
+    }
+    html[data-theme="light"] #readingProgress,
+    html:has(#themeSwitch:checked) #readingProgress {
+      background: linear-gradient(90deg, #0284c7, #7c3aed);
+    }
+    /* CSS 스크롤 구동 애니메이션: JS 없는 모바일 file:// 환경에서도
+       진행률 바가 동작한다 (Chrome 115+, Safari 26+).
+       지원하는 브라우저에서는 아래 JS 폴백이 자동으로 비활성화된다. */
+    @supports (animation-timeline: scroll()) {
+      #readingProgress {
+        width: 100%;
+        transform-origin: 0 50%;
+        transform: scaleX(0);
+        transition: none;
+        animation: readingProgressFill linear both;
+        animation-timeline: scroll(root);
+      }
+    }
+    @keyframes readingProgressFill {
+      to { transform: scaleX(1); }
+    }
+
+    /* 이어읽기 제안 버튼 (하단 중앙) */
+    #resumeBtn {
+      position: fixed;
+      left: 50%;
+      bottom: 100px;
+      transform: translateX(-50%);
+      z-index: 65;
+      display: none;
+      border: 1px solid rgba(226, 232, 240, 0.18);
+      background: rgba(2, 6, 23, 0.85);
+      color: var(--fg);
+      padding: 0.6rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: rgba(0,0,0,0);
+      white-space: nowrap;
+    }
+    #resumeBtn.show { display: inline-flex; align-items: center; gap: 0.35rem; }
+    html[data-theme="light"] #resumeBtn,
+    html:has(#themeSwitch:checked) #resumeBtn {
+      background: rgba(255, 255, 255, 0.95);
+      color: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(15, 23, 42, 0.14);
     }
 
     /* 앵커(목차) 이동 시 대상 heading이 sticky 헤더 뒤에 숨지 않도록
@@ -1500,7 +1565,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     @media print {
       header.topbar, .theme-fab, #toast, #tocDrawer,
       aside, .copy-btn, .expand-btn, .lang-label,
-      .back-to-top, .lightbox-overlay, #searchOverlay { display: none !important; }
+      .back-to-top, .lightbox-overlay, #searchOverlay,
+      #readingProgress, #resumeBtn, .toc-edge-hint { display: none !important; }
       article { max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
       article pre, .highlight pre {
         white-space: pre-wrap !important;
@@ -1607,6 +1673,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   </div>
 
   <div id="toast" role="status" aria-live="polite"></div>
+  <div id="readingProgress" aria-hidden="true"></div>
+  <button id="resumeBtn" type="button">&#8635; 이어읽기</button>
   <button id="btnBackToTop" type="button" class="back-to-top" aria-label="Back to top">&#8593;</button>
   <div id="lightbox" class="lightbox-overlay"><img id="lightboxImg" src="" alt="" /></div>
 
@@ -2299,6 +2367,84 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
           }
         });
       }
+    });
+  </script>
+
+  <script>
+    // 읽기 UX 3종: 진행률 바, topbar 자동 숨김, 이어읽기(스크롤 위치 복원)
+    document.addEventListener('DOMContentLoaded', function () {
+      var topbar = document.querySelector('.topbar');
+      var progress = document.getElementById('readingProgress');
+      var resumeBtn = document.getElementById('resumeBtn');
+      var docEl = document.documentElement;
+      var lastY = window.scrollY || 0;
+      var ticking = false;
+      var SAVE_KEY = 'doc_scroll:' + (location.pathname || 'doc');
+
+      // CSS 스크롤 구동 애니메이션이 지원되면 JS로 width를 갱신하지 않는다
+      // (둘 다 적용되면 width% × scaleX로 진행률이 이중 반영됨)
+      var cssScrollProgress = !!(window.CSS && CSS.supports && CSS.supports('animation-timeline: scroll()'));
+
+      function onScroll() {
+        var y = window.scrollY || docEl.scrollTop || 0;
+        var max = docEl.scrollHeight - window.innerHeight;
+        // 1) 진행률 바 (CSS 미지원 브라우저용 JS 폴백)
+        if (progress && !cssScrollProgress) {
+          var pct = max > 0 ? Math.min(100, Math.max(0, (y / max) * 100)) : 0;
+          progress.style.width = pct + '%';
+        }
+        // 2) topbar 자동 숨김: 아래로 스크롤 시 숨기고 위로 올리면 표시
+        if (topbar) {
+          if (y > lastY + 6 && y > 90) topbar.classList.add('topbar-hidden');
+          else if (y < lastY - 6 || y <= 90) topbar.classList.remove('topbar-hidden');
+        }
+        lastY = y;
+      }
+      window.addEventListener('scroll', function () {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(function () { ticking = false; onScroll(); });
+        }
+      }, { passive: true });
+      onScroll();
+
+      // 3) 이어읽기: 스크롤 위치를 localStorage에 저장 (debounce)
+      var saveT = null;
+      function savePos() {
+        try {
+          var y = window.scrollY || 0;
+          var max = docEl.scrollHeight - window.innerHeight;
+          if (max > 0 && y / max >= 0.98) localStorage.removeItem(SAVE_KEY); // 끝까지 읽음
+          else localStorage.setItem(SAVE_KEY, String(Math.round(y)));
+        } catch (e) {}
+      }
+      window.addEventListener('scroll', function () {
+        if (saveT) clearTimeout(saveT);
+        saveT = setTimeout(savePos, 400);
+      }, { passive: true });
+      window.addEventListener('pagehide', savePos);
+      window.addEventListener('beforeunload', savePos);
+
+      // 재방문 시 이어읽기 제안 — 해시 링크(#anchor)로 직접 진입한 경우는 제외
+      try {
+        var saved = parseInt(localStorage.getItem(SAVE_KEY) || '0', 10);
+        var maxPos = docEl.scrollHeight - window.innerHeight;
+        if (resumeBtn && saved > 300 && !location.hash && maxPos > 0) {
+          resumeBtn.textContent = '↺ 이어읽기 ' + Math.round(saved / maxPos * 100) + '%';
+          resumeBtn.classList.add('show');
+          var hide = function () { resumeBtn.classList.remove('show'); };
+          resumeBtn.addEventListener('click', function () {
+            try { window.scrollTo({ top: saved, behavior: 'smooth' }); }
+            catch (e) { window.scrollTo(0, saved); }
+            hide();
+          });
+          // 수동 스크롤/터치/키 입력 시 제안 숨김 (프로그램 스크롤에는 반응 안 함)
+          ['wheel', 'touchmove', 'keydown'].forEach(function (ev) {
+            window.addEventListener(ev, hide, { once: true, passive: true });
+          });
+          setTimeout(hide, 12000);
+        }
+      } catch (e) {}
     });
   </script>
 

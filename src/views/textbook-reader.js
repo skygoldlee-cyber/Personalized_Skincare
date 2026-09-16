@@ -965,6 +965,7 @@ function bindReaderScrollEvents() {
     // 연속 스크롤 중에는 1회만 처리하고, 다음 프레임에서 갱신
     let scrollRafId = null;
     let cachedCards = null; // 카드 목록 캐싱 (단원 전환 시 초기화됨)
+    let lastScrollY = 0; // 툴바 자동 숨김용 이전 스크롤 위치
 
     const handleScroll = () => {
         if (scrollRafId !== null) return;
@@ -981,6 +982,14 @@ function bindReaderScrollEvents() {
                 const pct = max > 0 ? (container.scrollTop / max) * 100 : 0;
                 progressFill.style.width = pct + '%';
             }
+            // Toolbar auto-hide: 아래로 스크롤 시 숨기고 위로 올리면 표시 (몰입형 독서)
+            const toolbarEl = document.getElementById('reader-toolbar');
+            const curY = container.scrollTop;
+            if (toolbarEl) {
+                if (curY > lastScrollY + 6 && curY > 140) toolbarEl.classList.add('toolbar-auto-hidden');
+                else if (curY < lastScrollY - 6 || curY <= 140) toolbarEl.classList.remove('toolbar-auto-hidden');
+            }
+            lastScrollY = curY;
             // Back to top visibility
             const backBtn = document.getElementById('reader-back-to-top');
             if (backBtn) backBtn.classList.toggle('is-hidden', container.scrollTop <= 400);
@@ -1044,6 +1053,57 @@ function bindReaderScrollEvents() {
             container.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
+
+    // 왼쪽 가장자리 스와이프 → 모바일 TOC 드로어 오픈/닫기 (모던 네비게이션 패턴)
+    // - 화면 왼쪽 끝(24px 이내)에서 오른쪽으로 스와이프 → 드로어 오픈
+    // - 드로어가 열린 상태에서 왼쪽으로 스와이프 → 드로어 닫기
+    // - 세로 스크롤 의도(|dy|>|dx|)는 무시
+    // ※ reader-toc는 container의 형제라 열린 드로어의 터치가 container에
+    //   도달하지 않으므로 공통 부모 #reader-layout에 바인딩한다.
+    const readerLayout = document.getElementById('reader-layout');
+    const swipeHost = readerLayout || container;
+    const SWIPE_EDGE = 24;   // 왼쪽 끝 인식 영역 (px)
+    const SWIPE_MIN = 48;    // 스와이프 인식 최소 거리 (px)
+    let swStartX = 0, swStartY = 0, swTracking = false, swWasOpen = false;
+    const isMobileTocMode = () => {
+        try { return window.matchMedia('(max-width: 900px)').matches; }
+        catch (e) { return false; }
+    };
+    swipeHost.addEventListener('touchstart', (e) => {
+        if (!isMobileTocMode() || !e.touches || e.touches.length !== 1) { swTracking = false; return; }
+        const tocAside = document.getElementById('reader-toc');
+        if (!tocAside || tocAside.classList.contains('is-hidden')) { swTracking = false; return; }
+        const t = e.touches[0];
+        const isOpen = tocAside.classList.contains('mobile-open');
+        if ((!isOpen && t.clientX <= SWIPE_EDGE) || isOpen) {
+            swTracking = true; swWasOpen = isOpen;
+            swStartX = t.clientX; swStartY = t.clientY;
+        } else {
+            swTracking = false;
+        }
+    }, { passive: true });
+    swipeHost.addEventListener('touchmove', (e) => {
+        if (!swTracking) return;
+        const tocAside = document.getElementById('reader-toc');
+        const tocBackdrop = document.getElementById('reader-toc-backdrop');
+        if (!tocAside) { swTracking = false; return; }
+        const t = e.touches[0];
+        const dx = t.clientX - swStartX;
+        const dy = t.clientY - swStartY;
+        if (Math.abs(dy) > Math.abs(dx)) { swTracking = false; return; }
+        if (!swWasOpen && dx > SWIPE_MIN) {
+            tocAside.classList.add('mobile-open');
+            if (tocBackdrop) tocBackdrop.classList.remove('is-hidden');
+            swTracking = false;
+        } else if (swWasOpen && dx < -SWIPE_MIN) {
+            tocAside.classList.remove('mobile-open');
+            if (tocBackdrop) tocBackdrop.classList.add('is-hidden');
+            swTracking = false;
+        }
+    }, { passive: true });
+    const swipeEnd = () => { swTracking = false; };
+    swipeHost.addEventListener('touchend', swipeEnd, { passive: true });
+    swipeHost.addEventListener('touchcancel', swipeEnd, { passive: true });
 }
 
 function initReaderToolbar() {
