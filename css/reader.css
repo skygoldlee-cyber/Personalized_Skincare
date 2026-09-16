@@ -474,6 +474,9 @@
         border-radius: 0;
         padding-top: var(--space-5);
         overflow-y: auto;
+        overflow-x: hidden; /* 가로 스크롤 방지 — 엣지 스와이프 후 손가락이 계속 움직일 때 항목 끝부분("…스트")이 보이는 문제 방지 */
+        overscroll-behavior-x: none;
+        touch-action: pan-y; /* 드로어 내부에서 세로 스크롤만 허용 (가로 패닝 차단) */
     }
     .reader-toc.mobile-open {
         transform: translateX(0);
