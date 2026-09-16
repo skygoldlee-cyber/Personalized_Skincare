@@ -352,9 +352,13 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-.reader-toc-item:hover,
-.reader-toc-sub-item:hover {
-    overflow: visible;
+/* hover 시 잘린 텍스트 확장 표시 — 실제 hover 가능 기기(데스크톱)에만 적용.
+   모바일은 탭 후 :hover가 고정(sticky)되어 nowrap 텍스트가 항목 밖으로 넘치는 문제 방지 */
+@media (hover: hover) {
+    .reader-toc-item:hover,
+    .reader-toc-sub-item:hover {
+        overflow: visible;
+    }
 }
 /* TOC 툴팁은 JavaScript로 처리 (css/reader.css의 ::after는 컨테이너 overflow로 잘림) */
 #toc-tooltip {

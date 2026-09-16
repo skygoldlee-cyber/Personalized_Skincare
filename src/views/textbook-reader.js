@@ -531,13 +531,16 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
             el.addEventListener('mouseleave', hideTocTooltip);
             el.addEventListener('focus', () => showTocTooltip(el));
             el.addEventListener('blur', hideTocTooltip);
+            // 항목 탭 → 네비게이션/토글 시 툴팁이 화면에 잔류하지 않도록 숨김
+            el.addEventListener('click', hideTocTooltip);
             // 모바일 터치 지원: 첫 탭에만 툴팁 표시, 스크롤/핀치 줌과 구분
             let touchShown = false;
             el.addEventListener('touchstart', () => {
                 if (!touchShown) {
                     showTocTooltip(el);
                     touchShown = true;
-                    setTimeout(() => { touchShown = false; }, 2500);
+                    // 터치에서는 mouseleave가 발생하지 않으므로 타임아웃으로 반드시 숨김
+                    setTimeout(() => { touchShown = false; hideTocTooltip(); }, 2500);
                 }
             }, { passive: true });
         });
@@ -1098,6 +1101,8 @@ function bindReaderScrollEvents() {
         } else if (swWasOpen && dx < -SWIPE_MIN) {
             tocAside.classList.remove('mobile-open');
             if (tocBackdrop) tocBackdrop.classList.add('is-hidden');
+            const tip = document.getElementById('toc-tooltip');
+            if (tip) tip.classList.remove('is-visible');
             swTracking = false;
         }
     }, { passive: true });
@@ -1318,6 +1323,8 @@ function initReaderToolbar() {
         const closeMobileToc = () => {
             if (tocAside) tocAside.classList.remove('mobile-open');
             if (tocBackdrop) tocBackdrop.classList.add('is-hidden');
+            const tip = document.getElementById('toc-tooltip');
+            if (tip) tip.classList.remove('is-visible');
         };
         tocMobileBtn.addEventListener('click', () => {
             if (tocAside && tocBackdrop) {
