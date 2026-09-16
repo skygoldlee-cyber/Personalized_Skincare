@@ -1104,6 +1104,20 @@ function bindReaderScrollEvents() {
     const swipeEnd = () => { swTracking = false; };
     swipeHost.addEventListener('touchend', swipeEnd, { passive: true });
     swipeHost.addEventListener('touchcancel', swipeEnd, { passive: true });
+
+    // 엣지 힌트 탭 클릭 → 드로어 오픈 (스와이프 대안)
+    const edgeHint = document.getElementById('reader-toc-edge-hint');
+    if (edgeHint && !edgeHint.dataset.bound) {
+        edgeHint.dataset.bound = 'true';
+        edgeHint.addEventListener('click', () => {
+            const tocAside = document.getElementById('reader-toc');
+            const tocBackdrop = document.getElementById('reader-toc-backdrop');
+            if (tocAside && !tocAside.classList.contains('is-hidden')) {
+                tocAside.classList.add('mobile-open');
+                if (tocBackdrop) tocBackdrop.classList.remove('is-hidden');
+            }
+        });
+    }
 }
 
 function initReaderToolbar() {

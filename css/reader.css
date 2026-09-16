@@ -459,6 +459,37 @@
     display: none;
 }
 
+/* 왼쪽 가장자리 스와이프 힌트 탭 — TOC 로드 시에만 표시, 드로어 열리면 숨김.
+   MD_to_HTML.py의 .toc-edge-hint와 동일한 패턴. 탭으로도 드로어 오픈 가능. */
+.reader-toc-edge-hint {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 40%;
+    width: 8px;
+    height: 72px;
+    padding: 0;
+    border: 0;
+    border-radius: 0 8px 8px 0;
+    background: var(--color-primary);
+    opacity: 0.35;
+    z-index: calc(var(--z-drawer) - 1); /* 드로어/백드롭(1400) 아래, 본문 위 */
+    cursor: pointer;
+    transition: opacity 0.2s ease, width 0.2s ease;
+    touch-action: none; /* 탭에서 스크롤로 오인되지 않도록 */
+}
+.reader-toc-edge-hint:hover,
+.reader-toc-edge-hint:active {
+    opacity: 0.7;
+    width: 12px;
+}
+@media (max-width: 900px) {
+    /* TOC가 로드된 경우(=is-hidden 해제)만 표시 */
+    .reader-toc:not(.is-hidden) ~ .reader-toc-edge-hint { display: block; }
+    /* 드로어가 열리면 힌트 숨김 */
+    .reader-toc.mobile-open ~ .reader-toc-edge-hint { display: none; }
+}
+
 /* C: 모바일에서 TOC를 슬라이드 드로어로 전환 */
 @media (max-width: 900px) {
     .reader-toc {
