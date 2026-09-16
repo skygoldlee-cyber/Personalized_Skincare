@@ -526,30 +526,17 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
         const hideTocTooltip = () => {
             tocTooltip.classList.remove('is-visible');
         };
-        tocList.querySelectorAll('.reader-toc-item, .reader-toc-sub-item').forEach(el => {
-            el.addEventListener('mouseenter', () => showTocTooltip(el));
-            el.addEventListener('mouseleave', hideTocTooltip);
-            el.addEventListener('focus', () => showTocTooltip(el));
-            el.addEventListener('blur', hideTocTooltip);
-            // 항목 탭 → 네비게이션/토글 시 툴팁이 화면에 잔류하지 않도록 숨김
-            el.addEventListener('click', hideTocTooltip);
-            // 모바일 터치 지원: 첫 탭에만 툴팁 표시, 스크롤/핀치 줌과 구분
-            let touchShown = false;
-            el.addEventListener('touchstart', () => {
-                if (!touchShown) {
-                    showTocTooltip(el);
-                    touchShown = true;
-                    // 터치에서는 mouseleave가 발생하지 않으므로 타임아웃으로 반드시 숨김
-                    setTimeout(() => { touchShown = false; hideTocTooltip(); }, 2500);
-                }
-            }, { passive: true });
-        });
-        // 모바일: 빈 곳 탭 시 툴팁 숨김
-        tocList.addEventListener('touchstart', (e) => {
-            if (!e.target.closest('.reader-toc-item, .reader-toc-sub-item')) {
-                hideTocTooltip();
-            }
-        }, { passive: true });
+        // TOC 툴팁은 hover 가능 기기(데스크톱)에서만 의미 있음 —
+        // 모바일은 탭 즉시 네비게이션되어 툴팁이 잔류/깜빡임만 유발
+        const hoverCapable = window.matchMedia && window.matchMedia('(hover: hover)').matches;
+        if (hoverCapable) {
+            tocList.querySelectorAll('.reader-toc-item, .reader-toc-sub-item').forEach(el => {
+                el.addEventListener('mouseenter', () => showTocTooltip(el));
+                el.addEventListener('mouseleave', hideTocTooltip);
+                el.addEventListener('focus', () => showTocTooltip(el));
+                el.addEventListener('blur', hideTocTooltip);
+            });
+        }
     }
 
     // Estimate reading time (Korean ~500 chars/min)
