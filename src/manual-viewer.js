@@ -17,7 +17,8 @@ export const ManualViewer = (() => {
     // 지원하는 마크다운 소스 정의
     const MD_SOURCES = {
         'user_manual': { path: PATHS.USER_MANUAL, title: '사용자 매뉴얼' },
-        'study_summary': { path: PATHS.STUDY_GUIDE, title: '학습 안내서' }
+        'study_summary': { path: PATHS.STUDY_GUIDE, title: '학습 안내서' },
+        'exam_plan': { path: PATHS.EXAM_PLAN, title: '시험 직전 학습 플랜' }
     };
     const CACHE_PREFIX = 'manual_md_cache_v3_';
     const CACHE_TTL = CACHE.MANUAL_CACHE_TTL_MS; // 24시간
@@ -494,6 +495,7 @@ body.manual-open{overflow:hidden;}
     // 편의 메서드
     function openManual() { return openDocument('user_manual'); }
     function openSummary() { return openDocument('study_summary'); }
+    function openExamPlan() { return openDocument('exam_plan'); }
 
     // 테마 변경 이벤트 발생 시 머메이드 다이어그램 다시 렌더링
     document.addEventListener('themechange', () => {
@@ -509,6 +511,7 @@ body.manual-open{overflow:hidden;}
         openDocument,
         openManual,
         openSummary,
+        openExamPlan,
         close,
         isOpen,
         _mdToHtml,  // 테스트용 노출
