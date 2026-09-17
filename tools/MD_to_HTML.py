@@ -331,7 +331,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     .w-full { width: 100%; }
     .border-b { border-bottom-width: 1px; }
     .border { border-width: 1px; }
-    .shadow-xl { box-shadow: 0 20px 60px rgba(2,6,23,0.35); }
+    .shadow-xl { box-shadow: var(--shadow-xl); }
     .transition { transition: all 0.2s ease; }
 
     /* Skip link: 키보드/스크린리더용 본문 바로가기 (포커스 시에만 표시) */
@@ -468,7 +468,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       cursor: pointer;
       user-select: none;
       -webkit-user-select: none;
-      -webkit-tap-highlight-color: transparent;
+      -webkit-tap-highlight-color: var(--tap-highlight);
       touch-action: manipulation;
       display: inline-flex;
       align-items: center;
@@ -488,8 +488,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     .codewrap.collapsed {
       max-height: 18rem;
       overflow: hidden;
-      mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(0,0,0,0));
-      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(0,0,0,0));
+      mask-image: var(--collapse-mask);
+      -webkit-mask-image: var(--collapse-mask);
     }
     .expand-btn {
       position: absolute;
@@ -671,6 +671,17 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       --callout-form-accent: #6366f1;
       --callout-character-accent: #06b6d4;
       --callout-exam-accent: #a855f7;
+
+      /* ===== 효과·인쇄 (테마 무관) ===== */
+      --shadow-xl: 0 20px 60px rgba(2, 6, 23, 0.35);
+      --quote-shadow: 0 4px 15px rgba(0, 0, 0, 0.10);
+      --lightbox-img-shadow: 0 20px 60px rgba(0, 0, 0, 0.50);
+      --edge-shadow: rgba(0, 0, 0, 0.30);
+      --collapse-mask: linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(0,0,0,0));
+      --tap-highlight: transparent;
+      --print-code-border: #cccccc;
+      --print-code-bg: #f6f8fa;
+      --print-code-fg: #24292e;
     }
 
     [data-theme="light"], html:has(#themeSwitch:checked) {
@@ -1373,8 +1384,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       background-image:
         linear-gradient(to right, var(--table-cover) 50%, rgba(0,0,0,0)),
         linear-gradient(to left, var(--table-cover) 50%, rgba(0,0,0,0)),
-        radial-gradient(farthest-side at 0 50%, rgba(0,0,0,0.30), rgba(0,0,0,0)),
-        radial-gradient(farthest-side at 100% 50%, rgba(0,0,0,0.30), rgba(0,0,0,0));
+        radial-gradient(farthest-side at 0 50%, var(--edge-shadow), rgba(0,0,0,0)),
+        radial-gradient(farthest-side at 100% 50%, var(--edge-shadow), rgba(0,0,0,0));
       background-position: left center, right center, left center, right center;
       background-repeat: no-repeat;
       background-size: 24px 100%, 24px 100%, 14px 100%, 14px 100%;
@@ -1405,7 +1416,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       background: var(--quote-bg);
       border-radius: 0.75rem;
       color: var(--fg);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      box-shadow: var(--quote-shadow);
       position: relative;
     }
     /* SOP Callouts (Emerald/Green) */
@@ -1489,7 +1500,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       max-width: 92vw;
       max-height: 92vh;
       border-radius: 0.75rem;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      box-shadow: var(--lightbox-img-shadow);
     }
     article img {
       cursor: zoom-in;
@@ -1587,7 +1598,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       box-shadow: var(--shadow);
       cursor: pointer;
       touch-action: manipulation;
-      -webkit-tap-highlight-color: rgba(0,0,0,0);
+      -webkit-tap-highlight-color: var(--tap-highlight);
       white-space: nowrap;
     }
     #resumeBtn.show { display: inline-flex; align-items: center; gap: 0.35rem; }
@@ -1612,9 +1623,9 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       article pre, .highlight pre {
         white-space: pre-wrap !important;
         word-break: break-word !important;
-        border: 1px solid #ccc !important;
-        background: #f6f8fa !important;
-        color: #24292e !important;
+        border: 1px solid var(--print-code-border) !important;
+        background: var(--print-code-bg) !important;
+        color: var(--print-code-fg) !important;
       }
       .codewrap.collapsed {
         max-height: none !important;
