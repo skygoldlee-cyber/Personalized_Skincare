@@ -953,11 +953,11 @@ body.reader-focus-mode .reader-readable-width {
 
 /* Light reading theme (scoped to reader only) */
 .reader-light-theme {
-    --reader-bg: #efece3;
-    --reader-bg-header: #e6e1d4;
-    --reader-border: #d2ccbd;
-    --reader-text: #2b2b2b;
-    --reader-text-muted: #6b6b6b;
+    --reader-bg: #e9e3d1;
+    --reader-bg-header: #ded8c4;
+    --reader-border: #c6bfa9;
+    --reader-text: #3f3a2d;
+    --reader-text-muted: #7a7260;
     --reader-accent: #0e7490;
     --reader-hover-bg: rgba(0, 0, 0, 0.05);
     --reader-chapter-border: #b8e0e8;
