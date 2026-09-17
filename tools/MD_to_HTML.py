@@ -3900,7 +3900,8 @@ def markdown_to_tailwind_html(md_text: str, title: str = "Document", config: Ren
         """본문의 목차 항목을 하이퍼링크로 변환/수정.
         1) •로 시작하는 일반 텍스트 항목 → <a href="#id">로 변환
         2) <ol>/<ul> 안의 <li><a> 항목 중 href가 잘못된 경우 → 올바른 id로 수정
-        '📋 목차' 헤딩 아래의 첫 번째 블록만 처리한다."""
+        '목차'/'TOC'/'Table of Contents'를 포함하는 h2 헤딩 아래의
+        첫 번째 블록만 처리한다."""
         if not heading_map:
             return body_html
 
@@ -3954,9 +3955,10 @@ def markdown_to_tailwind_html(md_text: str, title: str = "Document", config: Ren
                 return m.group(0)
             return f'<{tag}{attrs}>{re.sub(r"<a\s+href=\"#([^\"]+)\"[^>]*>([\s\S]*?)</a>", _fix_a_tag, content, flags=re.DOTALL)}</{tag}>'
 
-        # '📋 목차' 헤딩 직후의 첫 번째 블록(<p>, <ol> 또는 <ul>)만 변환.
+        # 목차 헤딩('목차'/'TOC'/'Table of Contents'를 포함하는 h2) 직후의
+        # 첫 번째 블록(<p>, <ol> 또는 <ul>)만 변환.
         pattern = re.compile(
-            r'(<h2[^>]*>[^<]*📋\s*목차.*?</h2>\s*)(?:<p([^>]*)>([\s\S]*?)</p>|<(ol|ul)([^>]*)>([\s\S]*?)</\4>)',
+            r'(<h2[^>]*>[^<]*?(?:목차|toc|table\s+of\s+contents).*?</h2>\s*)(?:<p([^>]*)>([\s\S]*?)</p>|<(ol|ul)([^>]*)>([\s\S]*?)</\4>)',
             re.IGNORECASE | re.DOTALL,
         )
 
@@ -4476,7 +4478,7 @@ if __name__ == "__main__":
         "--in",
         dest="in_paths",
         nargs="+",
-        default=["학습안내서.md"],
+        default=None,
         help="입력 Markdown 파일(들). 여러 개 또는 glob 패턴 지원 (예: \"content/**/*.md\").",
     )
     parser.add_argument(
@@ -4508,6 +4510,9 @@ if __name__ == "__main__":
     # Default to GUI unless --cli is provided.
     if not bool(args.cli):
         raise SystemExit(run_gui())
+
+    if not args.in_paths:
+        raise SystemExit("--in is required in --cli mode. (Run without --cli to launch the GUI.)")
 
     in_paths = _expand_input_paths(list(args.in_paths))
     if not in_paths:
