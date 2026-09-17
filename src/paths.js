@@ -29,6 +29,9 @@ export const PATHS = {
   // 학습 안내서
   STUDY_GUIDE: 'content/학습안내서.md',
 
+  // 두음법 암기 총정리
+  MNEMONIC_GUIDE: 'content/두음법_암기_총정리.md',
+
   // 매니페스트
   MANIFEST_URL: './content/manifest.json',
 
