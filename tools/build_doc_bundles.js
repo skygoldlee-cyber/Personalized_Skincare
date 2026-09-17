@@ -30,7 +30,6 @@ const OUT_DIR = path.join(ROOT, 'data', 'docs_md');
 const DOC_FILES = [
     { file: 'user_manual.md', dir: path.join(ROOT, 'docs', 'user'), key: 'docs/user/user_manual.md' },
     { file: '학습안내서.md', dir: path.join(ROOT, 'content'), key: 'content/학습안내서.md' },
-    { file: '시험직전_D-2_최종학습플랜.md', dir: path.join(ROOT, 'content'), key: 'content/시험직전_D-2_최종학습플랜.md' },
     { file: '두음법_암기_총정리.md', dir: path.join(ROOT, 'content'), key: 'content/두음법_암기_총정리.md' }
 ];
 

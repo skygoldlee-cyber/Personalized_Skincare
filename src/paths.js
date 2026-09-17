@@ -29,9 +29,6 @@ export const PATHS = {
   // 학습 안내서
   STUDY_GUIDE: 'content/학습안내서.md',
 
-  // 시험 직전 학습 플랜
-  EXAM_PLAN: 'content/시험직전_D-2_최종학습플랜.md',
-
   // 두음법 암기 총정리
   MNEMONIC_GUIDE: 'content/두음법_암기_총정리.md',
 
