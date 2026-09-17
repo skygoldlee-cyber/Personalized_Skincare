@@ -276,16 +276,52 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   </script>
 
   <style>
-    /* --- Tailwind utility subset (fully inlined — no runtime CDN) ---
-       Only the utilities actually used by this template are declared.
-    */
+    /* --- Tailwind preflight subset (fully inlined — no runtime CDN) ---
+       Minimal reset the template relied on from the Tailwind CDN build. */
+    *, ::before, ::after {
+      box-sizing: border-box;
+      border-width: 0;
+      border-style: solid;
+      border-color: #e5e7eb;
+    }
     html {
+      line-height: 1.5;
+      -webkit-text-size-adjust: 100%;
+      tab-size: 4;
       /* color-scheme: dark uses an overlay root scrollbar while light uses a
          classic ~15px scrollbar — reserving the gutter keeps the layout from
          shifting left (and clipping right-edge text) on theme toggle. */
       scrollbar-gutter: stable;
     }
+    body { margin: 0; }
+    hr { height: 0; border-top-width: 1px; }
+    h1, h2, h3, h4, h5, h6 { font-size: inherit; font-weight: inherit; }
+    p, h1, h2, h3, h4, h5, h6, figure, blockquote, dl, dd, ul, ol, pre, fieldset, legend {
+      margin: 0;
+      padding: 0;
+    }
+    ul, ol { list-style: none; }
+    button, input, select, textarea {
+      font: inherit;
+      color: inherit;
+      margin: 0;
+      padding: 0;
+      background: transparent;
+    }
+    button, [type="button"], [type="search"] { -webkit-appearance: none; appearance: none; }
+    button { cursor: pointer; }
+    a { color: inherit; text-decoration: inherit; }
+    img, svg, video, canvas { display: block; vertical-align: middle; }
+    img, video { max-width: 100%; height: auto; }
+    table { border-collapse: collapse; }
+    pre, code, kbd, samp {
+      font-family: "Cascadia Mono", "Cascadia Mono PL", Consolas, "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, "Liberation Mono", "Courier New", monospace;
+      font-size: 1em;
+    }
 
+    /* --- Tailwind utility subset ---
+       Only the utilities actually used by this template are declared.
+    */
     body {
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
     }
