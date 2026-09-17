@@ -445,8 +445,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       z-index: 60;
     }
     html[data-theme="light"] #toast, html:has(#themeSwitch:checked) #toast{
-      background: rgba(255, 255, 255, 0.92);
-      color: rgba(15, 23, 42, 0.92);
+      background: rgba(233, 228, 212, 0.94);
+      color: rgba(63, 58, 45, 0.95);
     }
 
     /* CSS-only 테마 토글: checkbox를 숨기고 label로 토글 (JS 없이도 작동) */
@@ -493,8 +493,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     /* JS가 작동할 때 data-theme 기반 텍스트 (checkbox 미체크 상태에서 data-theme=light인 경우) */
     html[data-theme="light"]:not(:has(#themeSwitch:checked)) #btnThemeFab::after { content: "Theme: Light"; }
     html[data-theme="light"] .theme-fab, html:has(#themeSwitch:checked) .theme-fab{
-      background: rgba(255, 255, 255, 0.92);
-      color: rgba(15, 23, 42, 0.92);
+      background: rgba(233, 228, 212, 0.94);
+      color: rgba(63, 58, 45, 0.95);
       border: 1px solid rgba(15, 23, 42, 0.14);
     }
 
@@ -521,7 +521,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       user-select: none;
     }
     .expand-btn:hover { background: rgba(226, 232, 240, 0.10); }
-    html[data-theme="light"] .expand-btn, html:has(#themeSwitch:checked) .expand-btn{ background: rgba(255, 255, 255, 0.70); }
+    html[data-theme="light"] .expand-btn, html:has(#themeSwitch:checked) .expand-btn{ background: rgba(233, 228, 212, 0.75); }
 
     .admonition {
       border: 1px solid var(--border);
@@ -585,12 +585,12 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 
     [data-theme="light"], html:has(#themeSwitch:checked) {
       color-scheme: light;
-      --fg: rgba(15, 23, 42, 0.92);
-      --muted: rgba(15, 23, 42, 0.72);
-      --panel: rgba(232, 236, 241, 0.88);
-      --border: rgba(15, 23, 42, 0.14);
+      --fg: rgba(63, 58, 45, 0.95);
+      --muted: rgba(122, 114, 96, 1);
+      --panel: rgba(233, 228, 212, 0.90);
+      --border: rgba(63, 58, 45, 0.16);
       --shadow: 0 10px 25px rgba(2, 6, 23, 0.10);
-      --table-cover: #e4e8ee; /* body #d4d8de + panel rgba(232,236,241,.88) 합성색 */
+      --table-cover: #e6e1d1; /* body #cdc8ba + panel rgba(233,228,212,.90) 합성색 */
 
       --a1: rgba(37, 99, 235, 1);
       --a2: rgba(124, 58, 237, 1);
@@ -600,7 +600,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       --a6: rgba(202, 138, 4, 1);
 
       /* Pygments codehilite token colors — light (GitHub-inspired) */
-      --hl-hll-bg: #ffffcc;
+      --hl-hll-bg: #f2e9c6;
       --hl-comment: #6a737d;
       --hl-keyword: #d73a49;
       --hl-kn: #d73a49;
@@ -643,7 +643,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     }
 
     html[data-theme="light"] .glass, html:has(#themeSwitch:checked) .glass{
-      background: rgba(232, 236, 241, 0.88);
+      background: rgba(233, 228, 212, 0.90);
     }
 
     body {
@@ -652,13 +652,13 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     }
 
     html[data-theme="light"] body, html:has(#themeSwitch:checked) body{
-      background: #d4d8de; /* muted slate */
+      background: #cdc8ba; /* warm sepia — 장시간 독서용 저명도 */
     }
 
     html[data-theme="light"] .doc-bg, html:has(#themeSwitch:checked) .doc-bg{
       background: radial-gradient(1200px 700px at 25% -10%, rgba(37,99,235,0.10), transparent 60%),
                   radial-gradient(900px 600px at 80% 0%, rgba(124,58,237,0.08), transparent 55%),
-                  linear-gradient(180deg, #e8ecf1 0%, #d4d8de 60%, #e8ecf1 100%);
+                  linear-gradient(180deg, #ded8c6 0%, #cdc8ba 60%, #ded8c6 100%);
     }
 
     .doc-subtitle { color: rgba(226, 232, 240, 0.70); }
@@ -670,7 +670,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       color: var(--fg);
     }
     html[data-theme="light"] .brand-badge, html:has(#themeSwitch:checked) .brand-badge{
-      background: rgba(255, 255, 255, 0.70);
+      background: rgba(233, 228, 212, 0.72);
       border: 1px solid rgba(15, 23, 42, 0.10);
       color: var(--fg);
     }
@@ -683,10 +683,10 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     .theme-btn:hover { background: rgba(226, 232, 240, 0.16); }
     html[data-theme="light"] .theme-btn, html:has(#themeSwitch:checked) .theme-btn{
       border: 1px solid rgba(15, 23, 42, 0.10);
-      background: rgba(255, 255, 255, 0.70);
+      background: rgba(233, 228, 212, 0.72);
       color: var(--fg);
     }
-    html[data-theme="light"] .theme-btn:hover, html:has(#themeSwitch:checked) .theme-btn:hover{ background: rgba(255, 255, 255, 0.90); }
+    html[data-theme="light"] .theme-btn:hover, html:has(#themeSwitch:checked) .theme-btn:hover{ background: rgba(233, 228, 212, 0.95); }
 
     #searchOverlay {
       position: fixed;
@@ -716,7 +716,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       outline: none;
     }
     html[data-theme="light"] .search-input, html:has(#themeSwitch:checked) .search-input{
-      background: rgba(255, 255, 255, 0.80);
+      background: rgba(233, 228, 212, 0.85);
     }
     .search-meta {
       color: var(--muted);
@@ -955,18 +955,18 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       line-height: 1.52;
     }
     html[data-theme="light"] article pre, html:has(#themeSwitch:checked) article pre{
-      background: #f6f8fa;
-      border: 1px solid rgba(15, 23, 42, 0.12);
-      color: #24292e;
+      background: #e6e0cb;
+      border: 1px solid rgba(63, 58, 45, 0.14);
+      color: #3f3a2d;
     }
     html[data-theme="light"] article pre code, html:has(#themeSwitch:checked) article pre code{
-      color: #24292e;
+      color: #3f3a2d;
     }
     html[data-theme="light"] .highlight, html:has(#themeSwitch:checked) .highlight,
     html[data-theme="light"] .highlight pre, html:has(#themeSwitch:checked) .highlight pre,
     html[data-theme="light"] .highlight pre code, html:has(#themeSwitch:checked) .highlight pre code{
-      color: #24292e !important;
-      background: #f6f8fa !important;
+      color: #3f3a2d !important;
+      background: #e6e0cb !important;
     }
     html[data-theme="light"] .highlight, html:has(#themeSwitch:checked) .highlight{
       border-radius: 0.9rem;
@@ -1174,7 +1174,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       margin: 1rem 0;
       text-align: center;
       overflow: auto;
-      background: #ffffff;
+      background: #e9e3d1;
       border: 1px solid rgba(148, 163, 184, 0.25);
       border-radius: 0.75rem;
       padding: 1rem;
@@ -1192,7 +1192,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     .mermaid-img {
       margin: 1rem 0;
       text-align: center;
-      background: #ffffff;
+      background: #e9e3d1;
       border: 1px solid rgba(148, 163, 184, 0.25);
       border-radius: 0.75rem;
       padding: 1rem;
@@ -1302,7 +1302,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     }
     .copy-btn:hover { background: rgba(226, 232, 240, 0.10); }
     html[data-theme="light"] .copy-btn, html:has(#themeSwitch:checked) .copy-btn{
-      background: rgba(255, 255, 255, 0.70);
+      background: rgba(233, 228, 212, 0.75);
     }
 
     .lang-label {
@@ -1475,8 +1475,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     }
     .back-to-top:hover { background: rgba(2, 6, 23, 0.88); }
     html[data-theme="light"] .back-to-top, html:has(#themeSwitch:checked) .back-to-top{
-      background: rgba(255, 255, 255, 0.92);
-      color: rgba(15, 23, 42, 0.92);
+      background: rgba(233, 228, 212, 0.94);
+      color: rgba(63, 58, 45, 0.95);
       border: 1px solid rgba(15, 23, 42, 0.14);
     }
 
@@ -1498,7 +1498,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       box-shadow: 0 20px 60px rgba(0,0,0,0.5);
     }
     html[data-theme="light"] .lightbox-overlay, html:has(#themeSwitch:checked) .lightbox-overlay{
-      background: rgba(255, 255, 255, 0.90);
+      background: rgba(233, 228, 212, 0.92);
     }
     article img {
       cursor: zoom-in;
@@ -1609,8 +1609,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     #tocSwitch:checked ~ #resumeBtn { display: none !important; }
     html[data-theme="light"] #resumeBtn,
     html:has(#themeSwitch:checked) #resumeBtn {
-      background: rgba(255, 255, 255, 0.95);
-      color: rgba(15, 23, 42, 0.92);
+      background: rgba(233, 228, 212, 0.95);
+      color: rgba(63, 58, 45, 0.95);
       border: 1px solid rgba(15, 23, 42, 0.14);
     }
 
