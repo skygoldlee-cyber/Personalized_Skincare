@@ -5,9 +5,11 @@ import html
 import re
 import argparse
 import base64
+import glob
 import hashlib
 import json
 import sys
+import time
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
@@ -58,6 +60,17 @@ COLLAPSE_CODEBLOCK_MIN_LINES = 35
 
 # ASCII/박스 드로잉 다이어그램 감지용 문자 집합 (여러 파이프라인 함수에서 공용)
 BOX_CHARS = frozenset("┌┐└┘├┤┬┴┼│─═╔╗╚╝╠╣╦╩╬┃━▲▼◀▶")
+
+# blockquote → 콜아웃 카드 분류 규칙. (CSS 클래스, 키워드 튜플) 쌍이며
+# 위에서부터 순서대로 평가되어 첫 매칭이 적용된다.
+CALLOUT_RULES: tuple[tuple[str, tuple[str, ...]], ...] = (
+    ("callout-sop", ("📋", "[CÔTELEAF SOP]", "[SOP]", "체크리스트")),
+    ("callout-trouble", ("🚨", "[현장 트러블슈팅]", "[트러블슈팅]", "트러블슈팅")),
+    ("callout-warning", ("⚠️", "[감시원 단골 지적]", "[단속 방지]", "단골 지적", "행정처분 방지")),
+    ("callout-form", ("📑", "[CÔTELEAF 실무 서식]", "[실무 서식]")),
+    ("callout-character", ("💡", "민수", "지연", "현우", "수진")),
+    ("callout-exam", ("🎯", "🧠", "기출", "암기")),
+)
 
 # Embed the Mermaid library directly into the generated HTML by default.
 # The CDN build (mermaid.min.js) is ~3.5MB; on mobile in-app browsers
@@ -3665,8 +3678,6 @@ def _prerender_mermaid_to_svg(html_body: str, progress_cb=None) -> str:
     if total == 0:
         return html_body
 
-    import time as _time
-
     # 진행 표시용 라벨 (다이어그램 소스 첫 줄)
     labels = [html.unescape(m.group(1)).strip().split('\n')[0][:60] for m in matches]
 
@@ -3685,7 +3696,7 @@ def _prerender_mermaid_to_svg(html_body: str, progress_cb=None) -> str:
         url = f"https://mermaid.ink/svg/{encoded}?theme=default&bgColor=ffffff"
 
         svg = None
-        for _attempt in range(2):
+        for _attempt in range(3):
             try:
                 req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
                 with urllib.request.urlopen(req, timeout=15) as resp:
@@ -3698,8 +3709,8 @@ def _prerender_mermaid_to_svg(html_body: str, progress_cb=None) -> str:
                     break
                 svg = None
             except Exception as e:
-                if _attempt < 1:
-                    _time.sleep(1)
+                if _attempt < 2:
+                    time.sleep(1.5 * (_attempt + 1))  # 503 레이트리밋 대비 백오프
                     continue
                 try:
                     print(f"[Mermaid pre-render failed] {e}", file=sys.stderr)
@@ -3817,18 +3828,10 @@ def markdown_to_tailwind_html(md_text: str, title: str = "Document", config: Ren
         tag_attrs = m.group(1)
         content = m.group(2)
         cls = "callout-card"
-        if any(kw in content for kw in ["📋", "[CÔTELEAF SOP]", "[SOP]", "체크리스트"]):
-            cls += " callout-sop"
-        elif any(kw in content for kw in ["🚨", "[현장 트러블슈팅]", "[트러블슈팅]", "트러블슈팅"]):
-            cls += " callout-trouble"
-        elif any(kw in content for kw in ["⚠️", "[감시원 단골 지적]", "[단속 방지]", "단골 지적", "행정처분 방지"]):
-            cls += " callout-warning"
-        elif any(kw in content for kw in ["📑", "[CÔTELEAF 실무 서식]", "[실무 서식]"]):
-            cls += " callout-form"
-        elif any(kw in content for kw in ["💡", "민수", "지연", "현우", "수진"]):
-            cls += " callout-character"
-        elif any(kw in content for kw in ["🎯", "🧠", "기출", "암기"]):
-            cls += " callout-exam"
+        for rule_cls, keywords in CALLOUT_RULES:
+            if any(kw in content for kw in keywords):
+                cls += f" {rule_cls}"
+                break
         return f'<blockquote class="{cls}"{tag_attrs}>{content}</blockquote>'
 
     html_body = re.sub(
@@ -3932,7 +3935,7 @@ def markdown_to_tailwind_html(md_text: str, title: str = "Document", config: Ren
     # This eliminates all client-side JS dependency — diagrams work on any
     # mobile browser without loading the 3.4MB mermaid.min.js library.
     # Skipped in PC mode for lighter HTML; Mermaid renders client-side via CDN.
-    if bool(getattr(config, "prerender_mermaid", True)):
+    if config.prerender_mermaid:
         html_body = _prerender_mermaid_to_svg(html_body, progress_cb=progress_cb)
 
     # 본문 내 일반 텍스트 목차(• 항목)를 하이퍼링크로 변환.
@@ -3967,12 +3970,63 @@ def markdown_to_tailwind_html(md_text: str, title: str = "Document", config: Ren
     # Embed Mermaid by default so diagrams render on mobile / in-app browsers
     # that fail to load the large CDN script. Best-effort: if the library can't
     # be fetched (offline, no cache), the CDN <script> tag stays as a fallback.
-    if bool(getattr(config, "embed_mermaid", True)):
+    #
+    # 사전 렌더링으로 모든 다이어그램이 <img> SVG로 변환되어
+    # <div class="mermaid">가 하나도 남지 않으면 클라이언트 렌더링 경로가
+    # 필요 없으므로, ~3.5MB mermaid.min.js를 임베드하는 대신 스크립트 태그
+    # 자체를 제거해 생성 파일 크기를 크게 줄인다.
+    needs_mermaid_runtime = '<div class="mermaid"' in html_body
+    if needs_mermaid_runtime and config.embed_mermaid:
         mm_js = _ensure_mermaid_js()
         if mm_js:
             doc_html = _embed_mermaid_js(doc_html, mm_js)
+    elif not needs_mermaid_runtime:
+        doc_html = re.sub(
+            r'\s*<script src="' + re.escape(MERMAID_CDN_URLS[0]) + r'"></script>',
+            '',
+            doc_html,
+        )
 
     return doc_html
+
+
+def convert_markdown_file(
+    in_path: Path,
+    out_path: Path | None = None,
+    title: str | None = None,
+    config: RenderConfig | None = None,
+    progress_cb=None,
+) -> Path:
+    """단일 Markdown 파일을 standalone HTML로 변환·저장하고 출력 경로를 반환한다."""
+    md_text = in_path.read_text(encoding="utf-8")
+    out_path = out_path or in_path.with_suffix(".html")
+    out_html = markdown_to_tailwind_html(
+        md_text, title=title or in_path.stem, config=config, progress_cb=progress_cb
+    )
+    out_path.write_text(out_html, encoding="utf-8")
+    return out_path
+
+
+def _expand_input_paths(patterns: list[str]) -> list[Path]:
+    """--in 인자들을 실제 파일 경로 목록으로 확장한다 (glob 패턴 지원)."""
+    paths: list[Path] = []
+    for pat in patterns:
+        matched = glob.glob(pat, recursive=True) if glob.has_magic(pat) else []
+        if matched:
+            paths.extend(Path(m) for m in sorted(matched))
+        elif Path(pat).is_file():
+            paths.append(Path(pat))
+        else:
+            print(f"[skip] input not found: {pat}", file=sys.stderr)
+
+    seen: set[str] = set()
+    unique: list[Path] = []
+    for p in paths:
+        key = str(p.resolve())
+        if key not in seen:
+            seen.add(key)
+            unique.append(p)
+    return unique
 
 
 def run_gui() -> int:
@@ -4396,18 +4450,22 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--in",
-        dest="in_path",
-        default="학습안내서.md",
+        dest="in_paths",
+        nargs="+",
+        default=["학습안내서.md"],
+        help="입력 Markdown 파일(들). 여러 개 또는 glob 패턴 지원 (예: \"content/**/*.md\").",
     )
     parser.add_argument(
         "--out",
         dest="out_path",
         default=None,
+        help="출력 HTML 경로. 단일 입력일 때만 사용 가능.",
     )
     parser.add_argument(
         "--title",
         dest="title",
         default=None,
+        help="문서 제목. 단일 입력일 때만 사용 가능.",
     )
     parser.add_argument(
         "--collapse-min-lines",
@@ -4421,11 +4479,15 @@ if __name__ == "__main__":
     if not bool(args.cli):
         raise SystemExit(run_gui())
 
-    in_path = Path(args.in_path)
-    out_path = Path(args.out_path) if args.out_path else in_path.with_suffix('.html')
+    in_paths = _expand_input_paths(list(args.in_paths))
+    if not in_paths:
+        raise SystemExit("No input files matched.")
 
-    if not in_path.exists() or not in_path.is_file():
-        raise SystemExit(f"Input file not found: {in_path}")
+    single = len(in_paths) == 1
+    if args.out_path and not single:
+        raise SystemExit("--out can only be used with a single input file.")
+    if args.title and not single:
+        raise SystemExit("--title can only be used with a single input file.")
 
     if args.collapse_min_lines is not None and int(args.collapse_min_lines) > 0:
         collapse_min_lines = int(args.collapse_min_lines)
@@ -4438,9 +4500,22 @@ if __name__ == "__main__":
         prerender_mermaid=bool(args.prerender_mermaid),
     )
 
-    md_text = in_path.read_text(encoding="utf-8")
-    title = args.title if args.title is not None else in_path.stem
-    out_html = markdown_to_tailwind_html(md_text, title=title, config=render_config)
-    out_path.write_text(out_html, encoding="utf-8")
+    done = 0
+    for in_path in in_paths:
+        out_path = Path(args.out_path) if (args.out_path and single) else None
+        try:
+            written = convert_markdown_file(
+                in_path,
+                out_path=out_path,
+                title=args.title if single else None,
+                config=render_config,
+            )
+            print(str(written))
+            done += 1
+        except Exception as e:
+            print(f"[error] {in_path}: {e}", file=sys.stderr)
 
-    print(str(out_path))
+    if not single:
+        print(f"Converted {done}/{len(in_paths)} file(s).", file=sys.stderr)
+    if done == 0:
+        raise SystemExit("All conversions failed.")
