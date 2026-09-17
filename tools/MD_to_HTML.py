@@ -4120,27 +4120,14 @@ def run_gui() -> int:
 
     r4 = row("Options")
 
-    chk_mobile = QCheckBox("모바일용 (SVG 사전 렌더링 + 라이브러리 임베드)")
+    chk_mobile = QCheckBox("모바일용 (SVG 사전 렌더링)")
     chk_mobile.setChecked(True)
     chk_mobile.setToolTip(
-        "체크: Mermaid 다이어그램을 빌드 시 SVG로 사전 렌더링 + 3.5MB 라이브러리 인라인\n"
-        "      → 모바일/in-app 브라우저에서 오프라인 렌더링 보장 (HTML 크기 증가)\n"
+        "체크: Mermaid 다이어그램을 빌드 시 SVG로 사전 렌더링\n"
+        "      → 모바일/in-app 브라우저에서 JS 없이도 표시, HTML도 가벼움 (~0.3MB)\n"
+        "      ※ 사전 렌더링에 실패한 다이어그램이 있으면 3.5MB 라이브러리를\n"
+        "        자동 임베드하여 폴백 렌더링 보장\n"
         "해제: CDN 스크립트로 클라이언트 사이드 렌더링 (가벼운 HTML, PC 권장)"
-    )
-
-    def _sync_mobile(state):
-        is_on = bool(state)
-        chk_embed_mermaid.setChecked(is_on)
-        chk_embed_mermaid.setEnabled(not is_on)
-
-    chk_mobile.toggled.connect(_sync_mobile)
-
-    chk_embed_mermaid = QCheckBox("Mermaid 라이브러리 임베드")
-    chk_embed_mermaid.setChecked(EMBED_MERMAID)
-    chk_embed_mermaid.setToolTip(
-        "Mermaid 라이브러리(3.5MB)를 HTML에 인라인\n"
-        "모바일/in-app 브라우저에서 CDN 로딩 실패 시에도 렌더링 보장\n"
-        "(메모리 캐시 사용 — 디스크 파일 생성 안 함)"
     )
 
     r4.addSpacing(10)
@@ -4149,7 +4136,6 @@ def run_gui() -> int:
 
     r4.addSpacing(10)
     r4.addWidget(chk_mobile)
-    r4.addWidget(chk_embed_mermaid)
     r4.addStretch(1)
     root.addLayout(r4)
 
@@ -4263,7 +4249,9 @@ def run_gui() -> int:
 
         render_config = RenderConfig(
             collapse_codeblock_min_lines=int(spin_collapse.value()),
-            embed_mermaid=bool(chk_embed_mermaid.isChecked()),
+            # 모바일 모드에서는 사전 렌더링 실패분의 폴백으로만 사용되므로 항상 켠다.
+            # (성공 시 임베드되지 않아 크기 비용 없음) / PC 모드는 CDN 사용.
+            embed_mermaid=bool(chk_mobile.isChecked()),
             prerender_mermaid=bool(chk_mobile.isChecked()),
         )
 
@@ -4350,7 +4338,6 @@ def run_gui() -> int:
                 settings.setValue("out_path", str(out_path))
                 settings.setValue("title", str(title_edit.text()))
                 settings.setValue("collapse_min_lines", int(spin_collapse.value()))
-                settings.setValue("embed_mermaid", 1 if chk_embed_mermaid.isChecked() else 0)
                 settings.setValue("prerender_mermaid", 1 if chk_mobile.isChecked() else 0)
             except Exception:
                 pass
@@ -4391,7 +4378,6 @@ def run_gui() -> int:
     # Restore previous session
     try:
         prev_collapse = int(settings.value("collapse_min_lines", COLLAPSE_CODEBLOCK_MIN_LINES) or COLLAPSE_CODEBLOCK_MIN_LINES)
-        prev_embed_mermaid = int(settings.value("embed_mermaid", 1 if EMBED_MERMAID else 0) or 0)
         prev_prerender = int(settings.value("prerender_mermaid", 1) or 0)
 
         # Keep input/output fields empty on launch so placeholders (*.md/*.html) are visible.
@@ -4405,7 +4391,6 @@ def run_gui() -> int:
             pass
         spin_collapse.setValue(prev_collapse)
         chk_mobile.setChecked(bool(prev_prerender))
-        chk_embed_mermaid.setChecked(bool(prev_embed_mermaid) or bool(prev_prerender))
     except Exception:
         pass
 
