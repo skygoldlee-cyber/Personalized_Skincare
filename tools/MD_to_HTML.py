@@ -4083,7 +4083,6 @@ def run_gui() -> int:
             QFileDialog,
             QMessageBox,
             QCheckBox,
-            QSpinBox,
             QComboBox,
         )
         from PySide6.QtCore import Qt, QSettings, QUrl
@@ -4153,12 +4152,6 @@ def run_gui() -> int:
     r3.addWidget(title_edit)
     root.addLayout(r3)
 
-    spin_collapse = QSpinBox()
-    spin_collapse.setRange(0, 9999)
-    spin_collapse.setValue(COLLAPSE_CODEBLOCK_MIN_LINES)
-    spin_collapse.setSingleStep(5)
-    spin_collapse.setToolTip("0 = Off")
-
     r4 = row("Options")
 
     chk_mobile = QCheckBox("모바일용 (SVG 사전 렌더링)")
@@ -4171,11 +4164,6 @@ def run_gui() -> int:
         "해제: CDN 스크립트로 클라이언트 사이드 렌더링 (가벼운 HTML, PC 권장)"
     )
 
-    r4.addSpacing(10)
-    r4.addWidget(QLabel("Fold min lines"))
-    r4.addWidget(spin_collapse)
-
-    r4.addSpacing(10)
     r4.addWidget(chk_mobile)
     r4.addStretch(1)
     root.addLayout(r4)
@@ -4289,7 +4277,6 @@ def run_gui() -> int:
             return
 
         render_config = RenderConfig(
-            collapse_codeblock_min_lines=int(spin_collapse.value()),
             # 모바일 모드에서는 사전 렌더링 실패분의 폴백으로만 사용되므로 항상 켠다.
             # (성공 시 임베드되지 않아 크기 비용 없음) / PC 모드는 CDN 사용.
             embed_mermaid=bool(chk_mobile.isChecked()),
@@ -4378,7 +4365,6 @@ def run_gui() -> int:
                 settings.setValue("in_path", str(in_path))
                 settings.setValue("out_path", str(out_path))
                 settings.setValue("title", str(title_edit.text()))
-                settings.setValue("collapse_min_lines", int(spin_collapse.value()))
                 settings.setValue("prerender_mermaid", 1 if chk_mobile.isChecked() else 0)
             except Exception:
                 pass
@@ -4418,7 +4404,6 @@ def run_gui() -> int:
 
     # Restore previous session
     try:
-        prev_collapse = int(settings.value("collapse_min_lines", COLLAPSE_CODEBLOCK_MIN_LINES) or COLLAPSE_CODEBLOCK_MIN_LINES)
         prev_prerender = int(settings.value("prerender_mermaid", 1) or 0)
 
         # Keep input/output fields empty on launch so placeholders (*.md/*.html) are visible.
@@ -4430,7 +4415,6 @@ def run_gui() -> int:
             out_manually_set["value"] = False
         except Exception:
             pass
-        spin_collapse.setValue(prev_collapse)
         chk_mobile.setChecked(bool(prev_prerender))
     except Exception:
         pass
