@@ -343,7 +343,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       padding: 0.6rem 1rem;
       border-radius: 0.75rem;
       background: var(--a1);
-      color: #fff;
+      color: var(--on-accent);
       font-size: 0.85rem;
       font-weight: 600;
       text-decoration: none;
@@ -520,10 +520,10 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       margin-bottom: 0.5rem;
       color: var(--fg);
     }
-    .admonition.note { border-left: 4px solid rgba(59,130,246,0.65); }
-    .admonition.tip { border-left: 4px solid rgba(34,197,94,0.65); }
-    .admonition.warning { border-left: 4px solid rgba(250,204,21,0.65); }
-    .admonition.danger { border-left: 4px solid rgba(244,63,94,0.65); }
+    .admonition.note { border-left: 4px solid var(--admonition-note); }
+    .admonition.tip { border-left: 4px solid var(--admonition-tip); }
+    .admonition.warning { border-left: 4px solid var(--admonition-warning); }
+    .admonition.danger { border-left: 4px solid var(--admonition-danger); }
 
     :root {
       color-scheme: dark;
@@ -642,6 +642,35 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       --callout-exam-border: rgba(168, 85, 247, 0.25);
       --lightbox-bg: rgba(0, 0, 0, 0.85);
       --progress-bg: linear-gradient(90deg, #38bdf8, #a78bfa);
+
+      /* ===== 공통 액센트 (테마 무관 — 라이트/다크 양쪽에서 같은 값) ===== */
+      --on-accent: #fff;
+      --toc-active-bg: rgba(20, 184, 166, 0.14);
+      --toc-active-border: rgba(20, 184, 166, 0.28);
+      --toc-hover-bg: rgba(20, 184, 166, 0.12);
+      --toc-guide: rgba(148, 163, 184, 0.14);
+      --scrollbar-thumb: rgba(148, 163, 184, 0.24);
+      --scrollbar-thumb-hover: rgba(148, 163, 184, 0.34);
+      --scrollbar-track: rgba(2, 6, 23, 0.65);
+      --h2-bar: linear-gradient(90deg, rgba(168,85,247,0.95), rgba(59,130,246,0.75), rgba(20,184,166,0.75));
+      --admonition-note: rgba(59, 130, 246, 0.65);
+      --admonition-tip: rgba(34, 197, 94, 0.65);
+      --admonition-warning: rgba(250, 204, 21, 0.65);
+      --admonition-danger: rgba(244, 63, 94, 0.65);
+      --diff-add-bg: rgba(34, 197, 94, 0.12);
+      --diff-del-bg: rgba(244, 63, 94, 0.12);
+      --mermaid-img-border: rgba(148, 163, 184, 0.25);
+      --mermaid-img-fg: #1e293b;
+      --mermaid-fallback-bg: rgba(2, 6, 23, 0.85);
+      --mermaid-err-border: rgba(244, 63, 94, 0.22);
+      --mermaid-err-tint: rgba(244, 63, 94, 0.04);
+      --err-msg-border: rgba(148, 163, 184, 0.18);
+      --callout-sop-accent: #10b981;
+      --callout-trouble-accent: #f59e0b;
+      --callout-warning-accent: #f43f5e;
+      --callout-form-accent: #6366f1;
+      --callout-character-accent: #06b6d4;
+      --callout-exam-accent: #a855f7;
     }
 
     [data-theme="light"], html:has(#themeSwitch:checked) {
@@ -882,11 +911,11 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     /* nicer scrollbars (webkit only) */
     #toc::-webkit-scrollbar, article pre::-webkit-scrollbar { height: 10px; width: 10px; }
     #toc::-webkit-scrollbar-thumb, article pre::-webkit-scrollbar-thumb {
-      background: rgba(148, 163, 184, 0.24);
+      background: var(--scrollbar-thumb);
       border-radius: 9999px;
-      border: 2px solid rgba(2,6,23,0.65);
+      border: 2px solid var(--scrollbar-track);
     }
-    #toc::-webkit-scrollbar-thumb:hover, article pre::-webkit-scrollbar-thumb:hover { background: rgba(148, 163, 184, 0.34); }
+    #toc::-webkit-scrollbar-thumb:hover, article pre::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }
 
     #toc ul { list-style: none; padding-left: 0; margin: 0.25rem 0 0; }
     #toc li { margin: 0.125rem 0; }
@@ -899,10 +928,10 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       color: var(--muted);
       text-decoration: none;
     }
-    #toc a:hover { background: rgba(20, 184, 166, 0.12); color: var(--fg); }
+    #toc a:hover { background: var(--toc-hover-bg); color: var(--fg); }
     #toc a.toc-active {
-      background: rgba(20, 184, 166, 0.14);
-      border: 1px solid rgba(20, 184, 166, 0.28);
+      background: var(--toc-active-bg);
+      border: 1px solid var(--toc-active-border);
       font-weight: 600;
     }
     #toc .toc > ul { margin-top: 0.25rem; }
@@ -937,7 +966,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     }
     .toc-children {
       margin-left: 0.75rem;
-      border-left: 1px solid rgba(148, 163, 184, 0.14);
+      border-left: 1px solid var(--toc-guide);
       padding-left: 0.5rem;
       margin-top: 0.15rem;
     }
@@ -1007,7 +1036,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       height: 2px;
       width: 2.5rem;
       margin-bottom: 0.7rem;
-      background: linear-gradient(90deg, rgba(168,85,247,0.95), rgba(59,130,246,0.75), rgba(20,184,166,0.75));
+      background: var(--h2-bar);
       border-radius: 9999px;
     }
     article h3 { font-size: 1.25rem; line-height: 1.75rem; margin: 1.75rem 0 0.5rem; color: var(--a4); }
@@ -1143,8 +1172,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     }
     .hljs-emphasis { font-style: italic; }
     .hljs-strong { font-weight: 700; }
-    .hljs-addition { background: rgba(34, 197, 94, 0.12); }
-    .hljs-deletion { background: rgba(244, 63, 94, 0.12); }
+    .hljs-addition { background: var(--diff-add-bg); }
+    .hljs-deletion { background: var(--diff-del-bg); }
     /* --- end highlight.js fallback theme --- */
 
     article pre, article pre code, .highlight pre, .highlight pre code {
@@ -1199,10 +1228,10 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       text-align: center;
       overflow: auto;
       background: var(--mermaid-img-bg);
-      border: 1px solid rgba(148, 163, 184, 0.25);
+      border: 1px solid var(--mermaid-img-border);
       border-radius: 0.75rem;
       padding: 1rem;
-      color: #1e293b !important;
+      color: var(--mermaid-img-fg) !important;
     }
     .mermaid-svg svg {
       display: block;
@@ -1217,7 +1246,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       margin: 1rem 0;
       text-align: center;
       background: var(--mermaid-img-bg);
-      border: 1px solid rgba(148, 163, 184, 0.25);
+      border: 1px solid var(--mermaid-img-border);
       border-radius: 0.75rem;
       padding: 1rem;
     }
@@ -1258,8 +1287,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       letter-spacing: 0;
       font-family: "Cascadia Mono", "Cascadia Mono PL", Consolas, "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, "Liberation Mono", "Courier New", monospace;
       line-height: 1.35;
-      background: rgba(2, 6, 23, 0.85);
-      border: 1px solid rgba(244, 63, 94, 0.22);
+      background: var(--mermaid-fallback-bg);
+      border: 1px solid var(--mermaid-err-border);
       border-radius: 0.9rem;
       padding: 1rem;
       overflow: auto;
@@ -1267,8 +1296,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     }
 
     .mermaid-error {
-      border: 1px solid rgba(244, 63, 94, 0.22);
-      background: rgba(244, 63, 94, 0.04);
+      border: 1px solid var(--mermaid-err-border);
+      background: var(--mermaid-err-tint);
       border-radius: 0.9rem;
       padding: 0.85rem;
       margin: 1rem 0;
@@ -1293,7 +1322,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       white-space: pre-wrap;
       word-break: break-word;
       background: var(--mermaid-err-bg);
-      border: 1px solid rgba(148, 163, 184, 0.18);
+      border: 1px solid var(--err-msg-border);
       border-radius: 0.75rem;
       padding: 0.6rem 0.7rem;
       color: var(--mermaid-err-fg);
@@ -1381,42 +1410,42 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     }
     /* SOP Callouts (Emerald/Green) */
     article blockquote.callout-sop {
-      border-left: 4px solid #10b981;
+      border-left: 4px solid var(--callout-sop-accent);
       background: var(--callout-sop-bg);
       border: 1px solid var(--callout-sop-border);
       border-left-width: 4px;
     }
     /* Troubleshooting Callouts (Amber/Orange) */
     article blockquote.callout-trouble {
-      border-left: 4px solid #f59e0b;
+      border-left: 4px solid var(--callout-trouble-accent);
       background: var(--callout-trouble-bg);
       border: 1px solid var(--callout-trouble-border);
       border-left-width: 4px;
     }
     /* Inspection Warning Callouts (Rose/Red) */
     article blockquote.callout-warning {
-      border-left: 4px solid #f43f5e;
+      border-left: 4px solid var(--callout-warning-accent);
       background: var(--callout-warning-bg);
       border: 1px solid var(--callout-warning-border);
       border-left-width: 4px;
     }
     /* Form & Document Sample Callouts (Indigo/Blue) */
     article blockquote.callout-form {
-      border-left: 4px solid #6366f1;
+      border-left: 4px solid var(--callout-form-accent);
       background: var(--callout-form-bg);
       border: 1px solid var(--callout-form-border);
       border-left-width: 4px;
     }
     /* Character Note Callouts (Cyan/Sky) */
     article blockquote.callout-character {
-      border-left: 4px solid #06b6d4;
+      border-left: 4px solid var(--callout-character-accent);
       background: var(--callout-character-bg);
       border: 1px solid var(--callout-character-border);
       border-left-width: 4px;
     }
     /* Exam & Quiz Focus Callouts (Purple/Violet) */
     article blockquote.callout-exam {
-      border-left: 4px solid #a855f7;
+      border-left: 4px solid var(--callout-exam-accent);
       background: var(--callout-exam-bg);
       border: 1px solid var(--callout-exam-border);
       border-left-width: 4px;
