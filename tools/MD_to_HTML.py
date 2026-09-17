@@ -61,16 +61,52 @@ COLLAPSE_CODEBLOCK_MIN_LINES = 35
 # ASCII/박스 드로잉 다이어그램 감지용 문자 집합 (여러 파이프라인 함수에서 공용)
 BOX_CHARS = frozenset("┌┐└┘├┤┬┴┼│─═╔╗╚╝╠╣╦╩╬┃━▲▼◀▶")
 
-# blockquote → 콜아웃 카드 분류 규칙. (CSS 클래스, 키워드 튜플) 쌍이며
-# 위에서부터 순서대로 평가되어 첫 매칭이 적용된다.
-CALLOUT_RULES: tuple[tuple[str, tuple[str, ...]], ...] = (
-    ("callout-sop", ("📋", "[CÔTELEAF SOP]", "[SOP]", "체크리스트")),
-    ("callout-trouble", ("🚨", "[현장 트러블슈팅]", "[트러블슈팅]", "트러블슈팅")),
-    ("callout-warning", ("⚠️", "[감시원 단골 지적]", "[단속 방지]", "단골 지적", "행정처분 방지")),
-    ("callout-form", ("📑", "[CÔTELEAF 실무 서식]", "[실무 서식]")),
-    ("callout-character", ("💡", "민수", "지연", "현우", "수진")),
-    ("callout-exam", ("🎯", "🧠", "기출", "암기")),
+# blockquote → 콜아웃 카드 분류 기본 규칙 (범용 이모지 마커만 포함).
+# 프로젝트 특화 키워드(인물명·문서 태그 등)는 스크립트 옆의
+# callout_rules.json 또는 --callout-rules로 주입한다.
+# (CSS 클래스, 키워드 튜플) 쌍이며 위에서부터 순서대로 평가되어 첫 매칭이 적용된다.
+CALLOUT_RULES_DEFAULT: tuple[tuple[str, tuple[str, ...]], ...] = (
+    ("callout-sop", ("📋",)),
+    ("callout-trouble", ("🚨",)),
+    ("callout-warning", ("⚠️",)),
+    ("callout-form", ("📑",)),
+    ("callout-character", ("💡",)),
+    ("callout-exam", ("🎯", "🧠")),
 )
+
+_CALLOUT_RULES_CACHE: tuple[tuple[str, tuple[str, ...]], ...] | None = None
+
+
+def _resolve_callout_rules(rules_file: str | Path | None = None) -> tuple[tuple[str, tuple[str, ...]], ...]:
+    """콜아웃 분류 규칙을 결정한다.
+
+    우선순위: --callout-rules 명시 경로 → 스크립트 옆 callout_rules.json → 기본값.
+    rules_file이 None이면 결과를 캐시한다 (변환마다 반복 로드 방지).
+    """
+    global _CALLOUT_RULES_CACHE
+    if rules_file is None and _CALLOUT_RULES_CACHE is not None:
+        return _CALLOUT_RULES_CACHE
+
+    candidates = [Path(rules_file)] if rules_file else [Path(__file__).with_name("callout_rules.json")]
+    for cand in candidates:
+        try:
+            if cand.is_file():
+                data = json.loads(cand.read_text(encoding="utf-8"))
+                rules = tuple(
+                    (str(r["class"]), tuple(str(k) for k in r["keywords"]))
+                    for r in data.get("rules", [])
+                    if r.get("class") and r.get("keywords")
+                )
+                if rules:
+                    if rules_file is None:
+                        _CALLOUT_RULES_CACHE = rules
+                    return rules
+        except Exception as e:
+            print(f"[callout_rules] failed to load {cand}: {e}", file=sys.stderr)
+
+    if rules_file is None:
+        _CALLOUT_RULES_CACHE = CALLOUT_RULES_DEFAULT
+    return CALLOUT_RULES_DEFAULT
 
 # Embed the Mermaid library directly into the generated HTML by default.
 # The CDN build (mermaid.min.js) is ~3.5MB; on mobile in-app browsers
@@ -105,6 +141,7 @@ class RenderConfig:
     collapse_codeblock_min_lines: int = COLLAPSE_CODEBLOCK_MIN_LINES
     embed_mermaid: bool = EMBED_MERMAID
     prerender_mermaid: bool = True
+    callout_rules_file: str | None = None
 
 
 def _read_text_if_exists(path: Path) -> str | None:
@@ -3824,11 +3861,13 @@ def markdown_to_tailwind_html(md_text: str, title: str = "Document", config: Ren
     )
 
     # Classify blockquotes into high-contrast, beautiful callout cards
+    callout_rules = _resolve_callout_rules(config.callout_rules_file)
+
     def _classify_blockquote(m: re.Match) -> str:
         tag_attrs = m.group(1)
         content = m.group(2)
         cls = "callout-card"
-        for rule_cls, keywords in CALLOUT_RULES:
+        for rule_cls, keywords in callout_rules:
             if any(kw in content for kw in keywords):
                 cls += f" {rule_cls}"
                 break
@@ -4458,6 +4497,12 @@ if __name__ == "__main__":
         type=int,
         default=COLLAPSE_CODEBLOCK_MIN_LINES,
     )
+    parser.add_argument(
+        "--callout-rules",
+        dest="callout_rules",
+        default=None,
+        help="콜아웃 분류 규칙 JSON 경로. 미지정 시 스크립트 옆 callout_rules.json을 사용하고, 없으면 기본 이모지 규칙.",
+    )
     args = parser.parse_args()
 
     # Default to GUI unless --cli is provided.
@@ -4483,6 +4528,7 @@ if __name__ == "__main__":
         collapse_codeblock_min_lines=collapse_min_lines,
         embed_mermaid=bool(args.embed_mermaid),
         prerender_mermaid=bool(args.prerender_mermaid),
+        callout_rules_file=args.callout_rules,
     )
 
     done = 0
