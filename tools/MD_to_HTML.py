@@ -11,6 +11,7 @@ import json
 import sys
 import time
 import urllib.request
+import zlib
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 
@@ -263,43 +264,6 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     })();
   </script>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'media',
-      theme: {
-        extend: {
-          typography: {
-            DEFAULT: {
-              css: {
-                maxWidth: '100%',
-              }
-            }
-          }
-        }
-      }
-    }
-  </script>
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      try {
-        // Only highlight code blocks NOT already processed by Pygments codehilite
-        document.querySelectorAll('pre code').forEach(function (el) {
-          if (!el.closest('.highlight')) {
-            hljs.highlightElement(el);
-          }
-        });
-      } catch (e) {}
-    });
-  </script>
-
   <script src="%%MERMAID_CDN_URL%%"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -312,9 +276,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   </script>
 
   <style>
-    /* --- Tailwind Fallback (CDN blocked) ---
-       This project normally uses Tailwind CDN. If the CDN is blocked,
-       these minimal utility class fallbacks keep the doc readable.
+    /* --- Tailwind utility subset (fully inlined — no runtime CDN) ---
+       Only the utilities actually used by this template are declared.
     */
     body {
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
@@ -384,6 +347,27 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     .border { border-width: 1px; }
     .shadow-xl { box-shadow: var(--shadow-xl); }
     .transition { transition: all 0.2s ease; }
+
+    .gap-1 { gap: 0.25rem; }
+    .gap-2 { gap: 0.5rem; }
+    .gap-6 { gap: 1.5rem; }
+    .px-2\.5 { padding-left: 0.625rem; padding-right: 0.625rem; }
+    .px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
+    .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+    .mt-0\.5 { margin-top: 0.125rem; }
+    .h-9 { height: 2.25rem; }
+    .w-9 { width: 2.25rem; }
+    .h-\[calc\(100vh-10rem\)\] { height: calc(100vh - 10rem); }
+    .place-items-center { place-items: center; }
+    .left-0 { left: 0; }
+    .z-50 { z-index: 50; }
+    .scroll-smooth { scroll-behavior: smooth; }
+    .bg-white\/5 { background-color: rgba(255, 255, 255, 0.05); }
+    .border-slate-200\/10 { border-color: rgba(226, 232, 240, 0.1); }
+    @media (min-width: 640px) {
+      .sm\:px-8 { padding-left: 2rem; padding-right: 2rem; }
+    }
 
     /* Skip link: 키보드/스크린리더용 본문 바로가기 (포커스 시에만 표시) */
     .skip-link {
@@ -1913,6 +1897,9 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 
       function renderMermaid(mode) {
         try {
+          // All diagrams pre-rendered to SVG (or none exist): skip the
+          // ~3.5MB CDN/embedded runtime fetch entirely.
+          if (!document.querySelector('.mermaid')) return;
           if (!window.mermaid) {
             ensureMermaidLoading();
             renderMermaid._waited = (renderMermaid._waited || 0) + 1;
@@ -3739,10 +3726,6 @@ def _prerender_mermaid_to_svg(html_body: str, progress_cb=None) -> str:
                 with urllib.request.urlopen(req, timeout=15) as resp:
                     svg = resp.read().decode("utf-8", errors="replace")
                 if svg and svg.strip().startswith("<svg") and "</svg>" in svg:
-                    # SVG에서 악의적 요소 제거 (XSS 방어)
-                    svg = re.sub(r"<script[\s\S]*?</script>", "", svg, flags=re.IGNORECASE)
-                    svg = re.sub(r'\son\w+\s*=\s*"[^"]*"', "", svg)
-                    svg = re.sub(r"\son\w+\s*=\s*'[^']*'", "", svg)
                     break
                 svg = None
             except Exception as e:
@@ -3754,6 +3737,28 @@ def _prerender_mermaid_to_svg(html_body: str, progress_cb=None) -> str:
                 except Exception:
                     pass
                 break
+
+        if svg is None:
+            # Fallback renderer: kroki.io (deflate + base64url path encoding).
+            # Transparent-background SVG sits on .mermaid-img's own background.
+            try:
+                kdata = base64.urlsafe_b64encode(
+                    zlib.compress(src.encode("utf-8"), 9)
+                ).decode("ascii")
+                kurl = f"https://kroki.io/mermaid/svg/{kdata}"
+                req = urllib.request.Request(kurl, headers={"User-Agent": "Mozilla/5.0"})
+                with urllib.request.urlopen(req, timeout=15) as resp:
+                    cand = resp.read().decode("utf-8", errors="replace")
+                if cand and cand.strip().startswith("<svg") and "</svg>" in cand:
+                    svg = cand
+            except Exception:
+                pass
+
+        if svg:
+            # SVG에서 악의적 요소 제거 (XSS 방어)
+            svg = re.sub(r"<script[\s\S]*?</script>", "", svg, flags=re.IGNORECASE)
+            svg = re.sub(r'\son\w+\s*=\s*"[^"]*"', "", svg)
+            svg = re.sub(r"\son\w+\s*=\s*'[^']*'", "", svg)
 
         if svg:
             # SVG를 <img> 태그로 인라인 임베드하여 외부 CSS의 영향을
@@ -3999,7 +4004,6 @@ def markdown_to_tailwind_html(md_text: str, title: str = "Document", config: Ren
             flags=re.DOTALL,
         )
     doc_html = doc_html.replace("%%TOC_HTML%%", toc_html)
-    doc_html = doc_html.replace("%%BODY_HTML%%", html_body)
     doc_html = doc_html.replace("%%COLLAPSE_MIN_LINES%%", str(int(config.collapse_codeblock_min_lines)))
     doc_html = doc_html.replace("%%MERMAID_CDN_URL%%", MERMAID_CDN_URLS[0])
     doc_html = doc_html.replace(
@@ -4028,6 +4032,14 @@ def markdown_to_tailwind_html(md_text: str, title: str = "Document", config: Ren
             doc_html,
         )
 
+    # Verify all template placeholders were substituted before inserting the
+    # body — checking at this point also avoids false positives from literal
+    # "%%FOO%%" text inside the document body itself.
+    leftover = sorted(set(re.findall(r'%%[A-Z][A-Z0-9_]+%%', doc_html)) - {"%%BODY_HTML%%"})
+    if leftover:
+        raise RuntimeError(f"Unsubstituted template placeholders: {leftover}")
+
+    doc_html = doc_html.replace("%%BODY_HTML%%", html_body)
     return doc_html
 
 
