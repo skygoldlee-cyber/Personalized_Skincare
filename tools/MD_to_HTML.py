@@ -279,6 +279,13 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     /* --- Tailwind utility subset (fully inlined — no runtime CDN) ---
        Only the utilities actually used by this template are declared.
     */
+    html {
+      /* color-scheme: dark uses an overlay root scrollbar while light uses a
+         classic ~15px scrollbar — reserving the gutter keeps the layout from
+         shifting left (and clipping right-edge text) on theme toggle. */
+      scrollbar-gutter: stable;
+    }
+
     body {
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
     }
