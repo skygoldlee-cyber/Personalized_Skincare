@@ -9,6 +9,7 @@ import hashlib
 import json
 import sys
 import urllib.request
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 
 
@@ -54,7 +55,9 @@ from dataclasses import dataclass
 
 # UX toggles (can be overridden via CLI)
 COLLAPSE_CODEBLOCK_MIN_LINES = 35
-MERMAID_SANITIZE_MODE = "auto"  # auto|on|off
+
+# ASCII/박스 드로잉 다이어그램 감지용 문자 집합 (여러 파이프라인 함수에서 공용)
+BOX_CHARS = frozenset("┌┐└┘├┤┬┴┼│─═╔╗╚╝╠╣╦╩╬┃━▲▼◀▶")
 
 # Embed the Mermaid library directly into the generated HTML by default.
 # The CDN build (mermaid.min.js) is ~3.5MB; on mobile in-app browsers
@@ -69,17 +72,16 @@ MERMAID_CDN_URLS = (
     "https://unpkg.com/mermaid@11/dist/mermaid.min.js",
     "https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.17.2/mermaid.min.js",
 )
+# ESM 빌드는 CDN 폴백의 최후 수단으로 사용 (생성 HTML 내 JS가 import)
+MERMAID_ESM_URL = "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"
 # The library is multi-MB; anything much smaller is an error page, not the lib.
 _MERMAID_MIN_BYTES = 200_000
 
 # Known-good SRI hashes for Mermaid 11.x CDN builds (sha384 base64).
 # If a CDN returns content whose hash doesn't match, it's rejected.
 # None = skip SRI check (fallback to size-only validation).
-MERMAID_SRI_HASHES: dict[str, str | None] = {
-    "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js": None,
-    "https://unpkg.com/mermaid@11/dist/mermaid.min.js": None,
-    "https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.17.2/mermaid.min.js": None,
-}
+# URL을 추가할 때는 MERMAID_CDN_URLS에 넣고, 해시가 확인되면 여기서 덮어쓴다.
+MERMAID_SRI_HASHES: dict[str, str | None] = dict.fromkeys(MERMAID_CDN_URLS)
 
 # In-memory cache for the Mermaid library (no disk writes).
 _MERMAID_JS_MEMORY: str | None = None
@@ -88,7 +90,6 @@ _MERMAID_JS_MEMORY: str | None = None
 @dataclass(frozen=True)
 class RenderConfig:
     collapse_codeblock_min_lines: int = COLLAPSE_CODEBLOCK_MIN_LINES
-    mermaid_sanitize_mode: str = MERMAID_SANITIZE_MODE
     embed_mermaid: bool = EMBED_MERMAID
     prerender_mermaid: bool = True
 
@@ -170,7 +171,7 @@ def _embed_mermaid_js(doc_html: str, js_text: str) -> str:
     safe = re.sub(r"</script", r"<\\/script", js_text, flags=re.IGNORECASE)
     inline = "<script>\n" + safe + "\n</script>"
     return doc_html.replace(
-        '<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>',
+        f'<script src="{MERMAID_CDN_URLS[0]}"></script>',
         inline,
     )
 
@@ -249,7 +250,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     });
   </script>
 
-  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <script src="%%MERMAID_CDN_URL%%"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       try {
@@ -1784,11 +1785,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       function ensureMermaidLoading() {
         if (ensureMermaidLoading._started || window.mermaid) return;
         ensureMermaidLoading._started = true;
-        var cdns = [
-          'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
-          'https://unpkg.com/mermaid@11/dist/mermaid.min.js',
-          'https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.17.2/mermaid.min.js'
-        ];
+        var cdns = [%%MERMAID_CDN_URLS_JS%%];
         var i = 0;
         function tryEsm() {
           if (window.mermaid) return;
@@ -1796,7 +1793,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
             var m = document.createElement('script');
             m.type = 'module';
             m.textContent =
-              "import m from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';" +
+              "import m from '%%MERMAID_ESM_URL%%';" +
               "window.mermaid = m;";
             document.head.appendChild(m);
           } catch (e) {}
@@ -3202,7 +3199,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 
 
 def _auto_fence_ascii_diagrams(md_text: str) -> str:
-    box_chars = set("┌┐└┘├┤┬┴┼│─═╔╗╚╝╠╣╦╩╬┃━▲▼◀▶")
+    box_chars = BOX_CHARS
     lines = md_text.splitlines()
     out: list[str] = []
 
@@ -3557,7 +3554,7 @@ def _normalize_diagram_codeblocks(md_text: str) -> str:
     non-breaking spaces, or full-width spaces inside the diagram.
     """
 
-    box_chars = set("┌┐└┘├┤┬┴┼│─═╔╗╚╝╠╣╦╩╬┃━▲▼◀▶")
+    box_chars = BOX_CHARS
     lines = md_text.splitlines()
     out: list[str] = []
 
@@ -3612,7 +3609,7 @@ def _tag_fenced_diagram_blocks_as_text(md_text: str) -> str:
     """If a fenced code block has no language and contains box-drawing chars,
     tag it as ```text to avoid unwanted syntax highlighting and font fallback."""
 
-    box_chars = set("┌┐└┘├┤┬┴┼│─═╔╗╚╝╠╣╦╩╬┃━▲▼◀▶")
+    box_chars = BOX_CHARS
     lines = md_text.splitlines()
     out: list[str] = []
 
@@ -3670,23 +3667,19 @@ def _prerender_mermaid_to_svg(html_body: str, progress_cb=None) -> str:
 
     import time as _time
 
-    def _replace_one(idx: int, m: re.Match) -> str:
+    # 진행 표시용 라벨 (다이어그램 소스 첫 줄)
+    labels = [html.unescape(m.group(1)).strip().split('\n')[0][:60] for m in matches]
+
+    def _render_one(m: re.Match) -> str:
         src = html.unescape(m.group(1)).strip()
         if not src:
             return m.group(0)
-
-        if progress_cb:
-            try:
-                progress_cb(idx + 1, total, src.split('\n')[0][:60])
-            except Exception:
-                pass
 
         # 메인 웹앱(src/mermaid-utils.js)과 동일한 전략:
         # mindmap은 항상 'default' 테마로 렌더링 (밝은 파스텔 배경 + 어두운 텍스트).
         # dark 테마는 노드 배경이 어두워져 텍스트 대비가 급격히 저하됨.
         # flowchart 등 다른 타입도 동일하게 default로 렌더링하여
         # 다크 페이지 위에서 "밝은 카드"처럼 표시.
-        first_line = src.split('\n')[0].strip().lower()
         # 모든 다이어그램을 default 테마로 렌더링
         encoded = base64.urlsafe_b64encode(src.encode("utf-8")).decode("ascii")
         url = f"https://mermaid.ink/svg/{encoded}?theme=default&bgColor=ffffff"
@@ -3729,12 +3722,30 @@ def _prerender_mermaid_to_svg(html_body: str, progress_cb=None) -> str:
         # Fallback: keep original div for client-side rendering
         return m.group(0)
 
-    # Process and rebuild
+    # 다이어그램 렌더링은 네트워크 바운드이므로 병렬 처리한다.
+    # 결과는 원래 순서대로 재조립하고, progress_cb는 이 스레드에서만 호출한다.
+    replacements: list[str] = [m.group(0) for m in matches]
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        fut_map = {pool.submit(_render_one, m): i for i, m in enumerate(matches)}
+        done = 0
+        for fut in as_completed(fut_map):
+            i = fut_map[fut]
+            try:
+                replacements[i] = fut.result()
+            except Exception:
+                replacements[i] = matches[i].group(0)
+            done += 1
+            if progress_cb:
+                try:
+                    progress_cb(done, total, labels[i])
+                except Exception:
+                    pass
+
     result = []
     last_end = 0
     for idx, m in enumerate(matches):
         result.append(html_body[last_end:m.start()])
-        result.append(_replace_one(idx, m))
+        result.append(replacements[idx])
         last_end = m.end()
     result.append(html_body[last_end:])
 
@@ -3946,7 +3957,12 @@ def markdown_to_tailwind_html(md_text: str, title: str = "Document", config: Ren
     doc_html = doc_html.replace("%%TOC_HTML%%", toc_html)
     doc_html = doc_html.replace("%%BODY_HTML%%", html_body)
     doc_html = doc_html.replace("%%COLLAPSE_MIN_LINES%%", str(int(config.collapse_codeblock_min_lines)))
-    doc_html = doc_html.replace("%%MERMAID_SANITIZE_MODE%%", str(config.mermaid_sanitize_mode))
+    doc_html = doc_html.replace("%%MERMAID_CDN_URL%%", MERMAID_CDN_URLS[0])
+    doc_html = doc_html.replace(
+        "%%MERMAID_CDN_URLS_JS%%",
+        ", ".join(f"'{u}'" for u in MERMAID_CDN_URLS),
+    )
+    doc_html = doc_html.replace("%%MERMAID_ESM_URL%%", MERMAID_ESM_URL)
 
     # Embed Mermaid by default so diagrams render on mobile / in-app browsers
     # that fail to load the large CDN script. Best-effort: if the library can't
@@ -4048,10 +4064,6 @@ def run_gui() -> int:
     spin_collapse.setSingleStep(5)
     spin_collapse.setToolTip("0 = Off")
 
-    combo_sanitize = QComboBox()
-    combo_sanitize.addItems(["auto", "on", "off"])
-    combo_sanitize.setCurrentText(MERMAID_SANITIZE_MODE)
-
     r4 = row("Options")
 
     chk_mobile = QCheckBox("모바일용 (SVG 사전 렌더링 + 라이브러리 임베드)")
@@ -4080,10 +4092,6 @@ def run_gui() -> int:
     r4.addSpacing(10)
     r4.addWidget(QLabel("Fold min lines"))
     r4.addWidget(spin_collapse)
-
-    r4.addSpacing(10)
-    r4.addWidget(QLabel("Mermaid sanitize"))
-    r4.addWidget(combo_sanitize)
 
     r4.addSpacing(10)
     r4.addWidget(chk_mobile)
@@ -4201,7 +4209,6 @@ def run_gui() -> int:
 
         render_config = RenderConfig(
             collapse_codeblock_min_lines=int(spin_collapse.value()),
-            mermaid_sanitize_mode=str(combo_sanitize.currentText() or "auto"),
             embed_mermaid=bool(chk_embed_mermaid.isChecked()),
             prerender_mermaid=bool(chk_mobile.isChecked()),
         )
@@ -4289,7 +4296,6 @@ def run_gui() -> int:
                 settings.setValue("out_path", str(out_path))
                 settings.setValue("title", str(title_edit.text()))
                 settings.setValue("collapse_min_lines", int(spin_collapse.value()))
-                settings.setValue("mermaid_sanitize", str(combo_sanitize.currentText()))
                 settings.setValue("embed_mermaid", 1 if chk_embed_mermaid.isChecked() else 0)
                 settings.setValue("prerender_mermaid", 1 if chk_mobile.isChecked() else 0)
             except Exception:
@@ -4331,7 +4337,6 @@ def run_gui() -> int:
     # Restore previous session
     try:
         prev_collapse = int(settings.value("collapse_min_lines", COLLAPSE_CODEBLOCK_MIN_LINES) or COLLAPSE_CODEBLOCK_MIN_LINES)
-        prev_sanitize = str(settings.value("mermaid_sanitize", MERMAID_SANITIZE_MODE) or MERMAID_SANITIZE_MODE)
         prev_embed_mermaid = int(settings.value("embed_mermaid", 1 if EMBED_MERMAID else 0) or 0)
         prev_prerender = int(settings.value("prerender_mermaid", 1) or 0)
 
@@ -4345,8 +4350,6 @@ def run_gui() -> int:
         except Exception:
             pass
         spin_collapse.setValue(prev_collapse)
-        if prev_sanitize:
-            combo_sanitize.setCurrentText(prev_sanitize)
         chk_mobile.setChecked(bool(prev_prerender))
         chk_embed_mermaid.setChecked(bool(prev_embed_mermaid) or bool(prev_prerender))
     except Exception:
@@ -4412,12 +4415,6 @@ if __name__ == "__main__":
         type=int,
         default=COLLAPSE_CODEBLOCK_MIN_LINES,
     )
-    parser.add_argument(
-        "--mermaid-sanitize",
-        dest="mermaid_sanitize",
-        choices=["auto", "on", "off"],
-        default=MERMAID_SANITIZE_MODE,
-    )
     args = parser.parse_args()
 
     # Default to GUI unless --cli is provided.
@@ -4437,7 +4434,6 @@ if __name__ == "__main__":
 
     render_config = RenderConfig(
         collapse_codeblock_min_lines=collapse_min_lines,
-        mermaid_sanitize_mode=str(args.mermaid_sanitize or MERMAID_SANITIZE_MODE),
         embed_mermaid=bool(args.embed_mermaid),
         prerender_mermaid=bool(args.prerender_mermaid),
     )
