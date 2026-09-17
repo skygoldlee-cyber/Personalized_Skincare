@@ -114,8 +114,8 @@
     /* Flashcard face gradients */
     --flashcard-front-bg: linear-gradient(135deg, rgba(31, 41, 55, 0.95), rgba(17, 24, 39, 0.95));
     --flashcard-back-bg: linear-gradient(135deg, rgba(17, 24, 39, 0.95), rgba(31, 41, 55, 0.95));
-    --flashcard-front-bg-light: linear-gradient(135deg, #ffffff, #f8fafc);
-    --flashcard-back-bg-light: linear-gradient(135deg, #f8fafc, #ffffff);
+    --flashcard-front-bg-light: linear-gradient(135deg, #faf9f6, #f3f2ec);
+    --flashcard-back-bg-light: linear-gradient(135deg, #f3f2ec, #faf9f6);
     
     /* Shadows & Glows */
     --shadow-sm: 0 2px 4px rgba(0,0,0,0.2);
@@ -151,7 +151,7 @@
     --shadow-card-lift: 0 2px 12px rgba(0, 0, 0, 0.15);
 
     /* Reader 라이트 테마 특화 토큰 */
-    --reader-light-bg: #ffffff;
+    --reader-light-bg: #f8f7f4;
     --reader-light-border: #d8d3c8;
     --reader-light-text: #2b2b2b;
     --reader-light-muted: #999;
@@ -270,9 +270,9 @@
 /* Light Theme Overrides */
 .light-theme {
     --bg-app: #dde3ec;
-    --bg-sidebar: #ffffff;
-    --bg-card: #ffffff;
-    --bg-card-hover: #f9fafb;
+    --bg-sidebar: #f5f4f0;
+    --bg-card: #faf9f6;
+    --bg-card-hover: #f0efe9;
     --border-color: rgba(15, 23, 42, 0.2);
     --border-color-active: rgba(6, 182, 212, 0.5);
 
@@ -282,18 +282,18 @@
     --bg-hover: rgba(15, 23, 42, 0.08);
     --bg-active: rgba(15, 23, 42, 0.1);
     --bg-elevated: rgba(15, 23, 42, 0.12);
-    --bg-input: var(--color-on-brand);
+    --bg-input: #f5f4f0;
     --border-faint: rgba(15, 23, 42, 0.1);
     --border-subtle: rgba(15, 23, 42, 0.15);
     --border-strong: rgba(15, 23, 42, 0.3);
-    --overlay-bg: rgba(255, 255, 255, 0.95);
+    --overlay-bg: rgba(250, 249, 246, 0.95);
     --stroke-subtle: rgba(15, 23, 42, 0.1);
     --stroke-medium: rgba(15, 23, 42, 0.15);
     --stroke-strong: rgba(15, 23, 42, 0.2);
     
     --color-text-main: #1f2937;
     --color-text-muted: #4b5563;
-    --bg-canvas: #ffffff;
+    --bg-canvas: #faf9f5;
     --color-danger-tint: #dc2626;
     --color-success-tint: #047857;
     --color-warning-tint: #92400e;
