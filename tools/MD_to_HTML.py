@@ -356,9 +356,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 
     /* Mobile TOC drawer */
     .drawer-backdrop {
-      background: rgba(2, 6, 23, 0.55);
+      background: var(--backdrop);
     }
-    html[data-theme="light"] .drawer-backdrop, html:has(#themeSwitch:checked) .drawer-backdrop{ background: rgba(15, 23, 42, 0.25); }
 
     /* 모바일 주소창 영역을 제외한 동적 뷰포트 높이(100dvh)를 사용하고,
        flex column + min-height:0 로 nav가 패널 안에서 스크롨되도록 한다.
@@ -387,7 +386,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       width: 10px;
       height: 72px;
       border-radius: 0 8px 8px 0;
-      background: rgba(148, 163, 184, 0.35);
+      background: var(--edge-hint);
       z-index: 30;
       display: none;
       cursor: pointer;
@@ -397,10 +396,6 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     @keyframes edgeHintPulse {
       0%, 100% { width: 10px; opacity: 0.6; }
       50%      { width: 16px; opacity: 1; }
-    }
-    html[data-theme="light"] .toc-edge-hint,
-    html:has(#themeSwitch:checked) .toc-edge-hint {
-      background: rgba(15, 23, 42, 0.25);
     }
     @media (max-width: 1023px) { .toc-edge-hint { display: block; } }
     #tocSwitch:checked ~ .toc-edge-hint { display: none; }
@@ -437,16 +432,12 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       padding: 0.6rem 0.9rem;
       border-radius: 9999px;
       border: 1px solid var(--border);
-      background: rgba(2, 6, 23, 0.72);
+      background: var(--floating-bg);
       color: var(--fg);
       font-size: 0.85rem;
       box-shadow: var(--shadow);
       display: none;
       z-index: 60;
-    }
-    html[data-theme="light"] #toast, html:has(#themeSwitch:checked) #toast{
-      background: rgba(233, 228, 212, 0.94);
-      color: rgba(63, 58, 45, 0.95);
     }
 
     /* CSS-only 테마 토글: checkbox를 숨기고 label로 토글 (JS 없이도 작동) */
@@ -466,8 +457,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       right: 18px;
       bottom: 18px;
       z-index: 99999;
-      border: 1px solid rgba(226, 232, 240, 0.18);
-      background: rgba(2, 6, 23, 0.75);
+      border: 1px solid var(--floating-border);
+      background: var(--floating-bg);
       color: var(--fg);
       padding: 0.75rem 1rem;
       border-radius: 9999px;
@@ -486,17 +477,12 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       min-height: 44px;
       min-width: 44px;
     }
-    .theme-fab:hover { background: rgba(2, 6, 23, 0.88); }
+    .theme-fab:hover { background: var(--floating-hover); }
     /* checkbox 상태에 따라 label 텍스트 변경 (JS 없이도 작동) */
     #btnThemeFab::after { content: "Theme: Dark"; }
     html:has(#themeSwitch:checked) #btnThemeFab::after { content: "Theme: Light"; }
     /* JS가 작동할 때 data-theme 기반 텍스트 (checkbox 미체크 상태에서 data-theme=light인 경우) */
     html[data-theme="light"]:not(:has(#themeSwitch:checked)) #btnThemeFab::after { content: "Theme: Light"; }
-    html[data-theme="light"] .theme-fab, html:has(#themeSwitch:checked) .theme-fab{
-      background: rgba(233, 228, 212, 0.94);
-      color: rgba(63, 58, 45, 0.95);
-      border: 1px solid rgba(15, 23, 42, 0.14);
-    }
 
     /* Collapsible code blocks */
     .codewrap.collapsed {
@@ -515,13 +501,12 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       line-height: 1rem;
       font-weight: 600;
       border: 1px solid var(--border);
-      background: rgba(226, 232, 240, 0.06);
+      background: var(--btn-bg);
       color: var(--fg);
       cursor: pointer;
       user-select: none;
     }
-    .expand-btn:hover { background: rgba(226, 232, 240, 0.10); }
-    html[data-theme="light"] .expand-btn, html:has(#themeSwitch:checked) .expand-btn{ background: rgba(233, 228, 212, 0.75); }
+    .expand-btn:hover { background: var(--btn-hover); }
 
     .admonition {
       border: 1px solid var(--border);
@@ -581,6 +566,82 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       --hl-gp: #ff4689;
       --hl-go: #f8f8f2;
       --hl-comment-style: normal;
+
+      /* ===== 테마 서피스 (다크) — 아래 light 블록과 1:1 대응. 색상은 여기서만 관리 ===== */
+      --page-bg: #020617;
+      --doc-bg: radial-gradient(1200px 700px at 20% -10%, rgba(59,130,246,0.18), transparent 60%),
+                radial-gradient(900px 600px at 80% 10%, rgba(168,85,247,0.14), transparent 55%),
+                radial-gradient(1000px 700px at 40% 110%, rgba(34,197,94,0.10), transparent 60%),
+                linear-gradient(180deg, #030712 0%, #020617 55%, #030712 100%);
+      --backdrop: rgba(2, 6, 23, 0.55);
+      --edge-hint: rgba(148, 163, 184, 0.35);
+      --subtitle-fg: rgba(226, 232, 240, 0.70);
+      --badge-bg: rgba(226, 232, 240, 0.08);
+      --badge-border: rgba(226, 232, 240, 0.10);
+      --hover-bg: rgba(226, 232, 240, 0.08);
+      --floating-bg: rgba(2, 6, 23, 0.75);
+      --floating-hover: rgba(2, 6, 23, 0.88);
+      --floating-border: rgba(226, 232, 240, 0.18);
+      --resume-bg: rgba(2, 6, 23, 0.85);
+      --tbtn-bg: rgba(226, 232, 240, 0.10);
+      --tbtn-hover: rgba(226, 232, 240, 0.16);
+      --tbtn-border: rgba(226, 232, 240, 0.18);
+      --btn-bg: rgba(226, 232, 240, 0.06);
+      --btn-hover: rgba(226, 232, 240, 0.10);
+      --input-bg: rgba(255, 255, 255, 0.06);
+      --mark-bg: rgba(250, 204, 21, 0.30);
+      --mark-border: rgba(250, 204, 21, 0.32);
+      --mark-active-bg: rgba(59, 130, 246, 0.28);
+      --mark-active-border: rgba(59, 130, 246, 0.34);
+      --toc-mark-bg: rgba(250, 204, 21, 0.22);
+      --toc-mark-border: rgba(250, 204, 21, 0.22);
+      --toc-title: var(--fg);
+      --toc-subtitle: var(--muted);
+      --strong: rgba(248, 250, 252, 0.98);
+      --code-inline-bg: rgba(148, 163, 184, 0.12);
+      --code-inline-border: rgba(148, 163, 184, 0.18);
+      --code-inline-fg: var(--fg);
+      --code-bg: rgba(2, 6, 23, 0.85);
+      --code-border: rgba(59, 130, 246, 0.18);
+      --code-fg: var(--fg);
+      --hljs-fg: rgba(226, 232, 240, 0.92);
+      --hljs-comment: rgba(148, 163, 184, 0.80);
+      --hljs-keyword: rgba(168, 85, 247, 0.95);
+      --hljs-string: rgba(34, 197, 94, 0.95);
+      --hljs-title: rgba(59, 130, 246, 0.95);
+      --hljs-number: rgba(250, 204, 21, 0.95);
+      --hljs-attr: rgba(94, 234, 212, 0.95);
+      --hljs-builtin: rgba(244, 63, 94, 0.95);
+      --hljs-meta: rgba(203, 213, 225, 0.95);
+      --mermaid-bg: rgba(15, 23, 42, 0.75);
+      --mermaid-border: rgba(59, 130, 246, 0.22);
+      --mermaid-fg: rgba(226, 232, 240, 0.92);
+      --mermaid-img-bg: #e9e3d1;
+      --mermaid-err-bg: rgba(2, 6, 23, 0.55);
+      --mermaid-err-fg: rgba(226, 232, 240, 0.92);
+      --mermaid-err-title: rgba(254, 226, 226, 0.92);
+      --th-bg: rgba(59, 130, 246, 0.10);
+      --th-fg: rgba(224, 231, 255, 0.98);
+      --th-border: rgba(148, 163, 184, 0.18);
+      --td-border: rgba(148, 163, 184, 0.18);
+      --tr-even: rgba(148, 163, 184, 0.04);
+      --tr-hover: rgba(148, 163, 184, 0.08);
+      --quote-border: rgba(99, 102, 241, 0.65);
+      --quote-bg: rgba(99, 102, 241, 0.07);
+      --callout-sop-bg: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(16, 185, 129, 0.03));
+      --callout-sop-border: rgba(16, 185, 129, 0.25);
+      --callout-trouble-bg: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(245, 158, 11, 0.03));
+      --callout-trouble-border: rgba(245, 158, 11, 0.25);
+      --callout-warning-bg: linear-gradient(135deg, rgba(244, 63, 94, 0.12), rgba(244, 63, 94, 0.03));
+      --callout-warning-border: rgba(244, 63, 94, 0.25);
+      --callout-form-bg: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(99, 102, 241, 0.03));
+      --callout-form-border: rgba(99, 102, 241, 0.25);
+      --callout-character-bg: linear-gradient(135deg, rgba(6, 182, 212, 0.12), rgba(6, 182, 212, 0.03));
+      --callout-character-border: rgba(6, 182, 212, 0.25);
+      --callout-exam-bg: linear-gradient(135deg, rgba(168, 85, 247, 0.12), rgba(168, 85, 247, 0.03));
+      --callout-exam-border: rgba(168, 85, 247, 0.25);
+      --lightbox-bg: rgba(0, 0, 0, 0.85);
+      --progress-bg: linear-gradient(90deg, #38bdf8, #a78bfa);
     }
 
     [data-theme="light"], html:has(#themeSwitch:checked) {
@@ -624,13 +685,85 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       --hl-gp: #005cc5;
       --hl-go: #6a737d;
       --hl-comment-style: italic;
+
+      /* ===== 테마 서피스 (라이트) — 위 :root 블록과 1:1 대응 ===== */
+      --page-bg: #cdc8ba;
+      --doc-bg: radial-gradient(1200px 700px at 25% -10%, rgba(37,99,235,0.10), transparent 60%),
+                radial-gradient(900px 600px at 80% 0%, rgba(124,58,237,0.08), transparent 55%),
+                linear-gradient(180deg, #ded8c6 0%, #cdc8ba 60%, #ded8c6 100%);
+      --backdrop: rgba(15, 23, 42, 0.25);
+      --edge-hint: rgba(15, 23, 42, 0.25);
+      --subtitle-fg: var(--muted);
+      --badge-bg: rgba(233, 228, 212, 0.72);
+      --badge-border: rgba(15, 23, 42, 0.10);
+      --hover-bg: rgba(15, 23, 42, 0.06);
+      --floating-bg: rgba(233, 228, 212, 0.94);
+      --floating-hover: rgba(243, 239, 228, 0.98);
+      --floating-border: rgba(15, 23, 42, 0.14);
+      --resume-bg: rgba(233, 228, 212, 0.95);
+      --tbtn-bg: rgba(233, 228, 212, 0.72);
+      --tbtn-hover: rgba(233, 228, 212, 0.95);
+      --tbtn-border: rgba(15, 23, 42, 0.10);
+      --btn-bg: rgba(233, 228, 212, 0.75);
+      --btn-hover: rgba(233, 228, 212, 0.95);
+      --input-bg: rgba(233, 228, 212, 0.85);
+      --mark-bg: rgba(234, 179, 8, 0.22);
+      --mark-border: rgba(234, 179, 8, 0.28);
+      --mark-active-bg: rgba(37, 99, 235, 0.18);
+      --mark-active-border: rgba(37, 99, 235, 0.22);
+      --toc-mark-bg: rgba(234, 179, 8, 0.24);
+      --toc-mark-border: rgba(234, 179, 8, 0.30);
+      --toc-title: var(--fg);
+      --toc-subtitle: var(--muted);
+      --strong: rgba(63, 58, 45, 0.98);
+      --code-inline-bg: rgba(148, 163, 184, 0.14);
+      --code-inline-border: rgba(148, 163, 184, 0.22);
+      --code-inline-fg: rgba(63, 58, 45, 0.92);
+      --code-bg: #e6e0cb;
+      --code-border: rgba(63, 58, 45, 0.14);
+      --code-fg: #3f3a2d;
+      --hljs-fg: #24292e;
+      --hljs-comment: #6a737d;
+      --hljs-keyword: #d73a49;
+      --hljs-string: #032f62;
+      --hljs-title: #6f42c1;
+      --hljs-number: #005cc5;
+      --hljs-attr: #005cc5;
+      --hljs-builtin: #e36209;
+      --hljs-meta: #6a737d;
+      --mermaid-bg: rgba(233, 228, 212, 0.75);
+      --mermaid-border: rgba(63, 58, 45, 0.18);
+      --mermaid-fg: rgba(63, 58, 45, 0.92);
+      --mermaid-img-bg: #e9e3d1;
+      --mermaid-err-bg: rgba(15, 23, 42, 0.06);
+      --mermaid-err-fg: rgba(63, 58, 45, 0.88);
+      --mermaid-err-title: rgba(190, 18, 60, 0.92);
+      --th-bg: rgba(37, 99, 235, 0.08);
+      --th-fg: rgba(63, 58, 45, 0.95);
+      --th-border: rgba(15, 23, 42, 0.12);
+      --td-border: rgba(15, 23, 42, 0.10);
+      --tr-even: rgba(15, 23, 42, 0.03);
+      --tr-hover: rgba(15, 23, 42, 0.05);
+      --quote-border: rgba(99, 102, 241, 0.75);
+      --quote-bg: rgba(99, 102, 241, 0.06);
+      --callout-sop-bg: linear-gradient(135deg, rgba(16, 185, 129, 0.14), rgba(16, 185, 129, 0.04));
+      --callout-sop-border: rgba(16, 185, 129, 0.35);
+      --callout-trouble-bg: linear-gradient(135deg, rgba(245, 158, 11, 0.14), rgba(245, 158, 11, 0.04));
+      --callout-trouble-border: rgba(245, 158, 11, 0.35);
+      --callout-warning-bg: linear-gradient(135deg, rgba(244, 63, 94, 0.14), rgba(244, 63, 94, 0.04));
+      --callout-warning-border: rgba(244, 63, 94, 0.35);
+      --callout-form-bg: linear-gradient(135deg, rgba(99, 102, 241, 0.14), rgba(99, 102, 241, 0.04));
+      --callout-form-border: rgba(99, 102, 241, 0.35);
+      --callout-character-bg: linear-gradient(135deg, rgba(6, 182, 212, 0.14), rgba(6, 182, 212, 0.04));
+      --callout-character-border: rgba(6, 182, 212, 0.35);
+      --callout-exam-bg: linear-gradient(135deg, rgba(168, 85, 247, 0.14), rgba(168, 85, 247, 0.04));
+      --callout-exam-border: rgba(168, 85, 247, 0.35);
+      --lightbox-bg: rgba(233, 228, 212, 0.92);
+      --progress-bg: linear-gradient(90deg, #0284c7, #7c3aed);
     }
 
     .doc-bg {
-      background: radial-gradient(1200px 700px at 20% -10%, rgba(59,130,246,0.18), transparent 60%),
-                  radial-gradient(900px 600px at 80% 10%, rgba(168,85,247,0.14), transparent 55%),
-                  radial-gradient(1000px 700px at 40% 110%, rgba(34,197,94,0.10), transparent 60%),
-                  linear-gradient(180deg, #030712 0%, #020617 55%, #030712 100%);
+      background: var(--doc-bg);
     }
 
     .glass {
@@ -642,51 +775,25 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       contain: none;
     }
 
-    html[data-theme="light"] .glass, html:has(#themeSwitch:checked) .glass{
-      background: rgba(233, 228, 212, 0.90);
-    }
-
     body {
       color: var(--fg);
-      background: #020617;
+      background: var(--page-bg);
     }
 
-    html[data-theme="light"] body, html:has(#themeSwitch:checked) body{
-      background: #cdc8ba; /* warm sepia — 장시간 독서용 저명도 */
-    }
-
-    html[data-theme="light"] .doc-bg, html:has(#themeSwitch:checked) .doc-bg{
-      background: radial-gradient(1200px 700px at 25% -10%, rgba(37,99,235,0.10), transparent 60%),
-                  radial-gradient(900px 600px at 80% 0%, rgba(124,58,237,0.08), transparent 55%),
-                  linear-gradient(180deg, #ded8c6 0%, #cdc8ba 60%, #ded8c6 100%);
-    }
-
-    .doc-subtitle { color: rgba(226, 232, 240, 0.70); }
-    html[data-theme="light"] .doc-subtitle, html:has(#themeSwitch:checked) .doc-subtitle{ color: var(--muted); }
+    .doc-subtitle { color: var(--subtitle-fg); }
 
     .brand-badge {
-      background: rgba(226, 232, 240, 0.08);
-      border: 1px solid rgba(226, 232, 240, 0.10);
-      color: var(--fg);
-    }
-    html[data-theme="light"] .brand-badge, html:has(#themeSwitch:checked) .brand-badge{
-      background: rgba(233, 228, 212, 0.72);
-      border: 1px solid rgba(15, 23, 42, 0.10);
+      background: var(--badge-bg);
+      border: 1px solid var(--badge-border);
       color: var(--fg);
     }
 
     .theme-btn {
-      border: 1px solid rgba(226, 232, 240, 0.18);
-      background: rgba(226, 232, 240, 0.10);
+      border: 1px solid var(--tbtn-border);
+      background: var(--tbtn-bg);
       color: var(--fg);
     }
-    .theme-btn:hover { background: rgba(226, 232, 240, 0.16); }
-    html[data-theme="light"] .theme-btn, html:has(#themeSwitch:checked) .theme-btn{
-      border: 1px solid rgba(15, 23, 42, 0.10);
-      background: rgba(233, 228, 212, 0.72);
-      color: var(--fg);
-    }
-    html[data-theme="light"] .theme-btn:hover, html:has(#themeSwitch:checked) .theme-btn:hover{ background: rgba(233, 228, 212, 0.95); }
+    .theme-btn:hover { background: var(--tbtn-hover); }
 
     #searchOverlay {
       position: fixed;
@@ -709,14 +816,11 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       flex: 1;
       border-radius: 0.9rem;
       border: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.06);
+      background: var(--input-bg);
       color: var(--fg);
       padding: 0.6rem 0.75rem;
       font-size: 0.95rem;
       outline: none;
-    }
-    html[data-theme="light"] .search-input, html:has(#themeSwitch:checked) .search-input{
-      background: rgba(233, 228, 212, 0.85);
     }
     .search-meta {
       color: var(--muted);
@@ -725,23 +829,15 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       padding: 0 0.25rem;
     }
     mark.search-mark {
-      background: rgba(250, 204, 21, 0.30);
-      border: 1px solid rgba(250, 204, 21, 0.32);
+      background: var(--mark-bg);
+      border: 1px solid var(--mark-border);
       color: inherit;
       padding: 0.02rem 0.12rem;
       border-radius: 0.25rem;
     }
-    html[data-theme="light"] mark.search-mark, html:has(#themeSwitch:checked) mark.search-mark{
-      background: rgba(234, 179, 8, 0.22);
-      border-color: rgba(234, 179, 8, 0.28);
-    }
     mark.search-mark.search-active {
-      background: rgba(59, 130, 246, 0.28);
-      border-color: rgba(59, 130, 246, 0.34);
-    }
-    html[data-theme="light"] mark.search-mark.search-active, html:has(#themeSwitch:checked) mark.search-mark.search-active{
-      background: rgba(37, 99, 235, 0.18);
-      border-color: rgba(37, 99, 235, 0.22);
+      background: var(--mark-active-bg);
+      border-color: var(--mark-active-border);
     }
 
     /* Pygments codehilite token colors — theme-aware via CSS variables */
@@ -835,7 +931,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       line-height: 1;
     }
     .toc-toggle:hover {
-      background: rgba(226, 232, 240, 0.08);
+      background: var(--hover-bg);
       border-color: var(--border);
       color: var(--fg);
     }
@@ -848,21 +944,15 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     .toc-collapsed .toc-children { display: none; }
 
     .toc-mark {
-      background: rgba(250, 204, 21, 0.22);
-      border: 1px solid rgba(250, 204, 21, 0.22);
+      background: var(--toc-mark-bg);
+      border: 1px solid var(--toc-mark-border);
       color: inherit;
       padding: 0.02rem 0.18rem;
       border-radius: 0.25rem;
     }
-    html[data-theme="light"] .toc-mark, html:has(#themeSwitch:checked) .toc-mark{
-      background: rgba(234, 179, 8, 0.24);
-      border-color: rgba(234, 179, 8, 0.30);
-    }
 
-    .toc-title { color: var(--fg); }
-    .toc-subtitle { color: var(--muted); }
-    html[data-theme="light"] .toc-title, html:has(#themeSwitch:checked) .toc-title{ color: rgba(15, 23, 42, 0.92); }
-    html[data-theme="light"] .toc-subtitle, html:has(#themeSwitch:checked) .toc-subtitle{ color: rgba(15, 23, 42, 0.72); }
+    .toc-title { color: var(--toc-title); }
+    .toc-subtitle { color: var(--toc-subtitle); }
 
     article { color: var(--fg); line-height: 1.75; font-size: var(--article-fs, 1.0625rem); max-width: clamp(72ch, 82vw, 96ch); margin-left: auto; margin-right: auto; padding: 0 1rem; }
     article p { color: var(--fg); margin: 1rem 0; }
@@ -878,8 +968,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     }
     article a { color: var(--a1); text-decoration: underline; text-underline-offset: 3px; }
     article a:hover { color: var(--a4); }
-    article strong { color: rgba(248, 250, 252, 0.98); font-weight: 700; }
-    html[data-theme="light"] article strong, html:has(#themeSwitch:checked) article strong{ color: rgba(15, 23, 42, 0.98); }
+    article strong { color: var(--strong); font-weight: 700; }
     article em { color: var(--muted); font-style: italic; }
     article .headerlink {
       opacity: 0;
@@ -927,20 +1016,15 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     article code {
       font-family: "Cascadia Mono", "Cascadia Mono PL", Consolas, "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, "Liberation Mono", "Courier New", monospace;
       font-size: 0.95em;
-      background: rgba(148, 163, 184, 0.12);
-      border: 1px solid rgba(148, 163, 184, 0.18);
-      color: var(--fg);
+      background: var(--code-inline-bg);
+      border: 1px solid var(--code-inline-border);
+      color: var(--code-inline-fg);
       padding: 0.12rem 0.35rem;
       border-radius: 0.45rem;
     }
-    html[data-theme="light"] article code, html:has(#themeSwitch:checked) article code{
-      background: rgba(148, 163, 184, 0.14);
-      border: 1px solid rgba(148, 163, 184, 0.22);
-      color: rgba(15, 23, 42, 0.92);
-    }
     article pre {
-      background: rgba(2, 6, 23, 0.85);
-      border: 1px solid rgba(59, 130, 246, 0.18);
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
       border-radius: 0.9rem;
       padding: 1rem;
       overflow: auto;
@@ -953,24 +1037,14 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       font-family: "Cascadia Mono", "Cascadia Mono PL", Consolas, "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, "Liberation Mono", "Courier New", monospace;
       font-kerning: none;
       line-height: 1.52;
+      color: var(--code-fg);
     }
-    html[data-theme="light"] article pre, html:has(#themeSwitch:checked) article pre{
-      background: #e6e0cb;
-      border: 1px solid rgba(63, 58, 45, 0.14);
-      color: #3f3a2d;
+    /* codehilite 외부 테마(hljs CDN CSS)보다 우선하도록 !important 유지 */
+    .highlight, .highlight pre, .highlight pre code {
+      color: var(--code-fg) !important;
+      background: var(--code-bg) !important;
     }
-    html[data-theme="light"] article pre code, html:has(#themeSwitch:checked) article pre code{
-      color: #3f3a2d;
-    }
-    html[data-theme="light"] .highlight, html:has(#themeSwitch:checked) .highlight,
-    html[data-theme="light"] .highlight pre, html:has(#themeSwitch:checked) .highlight pre,
-    html[data-theme="light"] .highlight pre code, html:has(#themeSwitch:checked) .highlight pre code{
-      color: #3f3a2d !important;
-      background: #e6e0cb !important;
-    }
-    html[data-theme="light"] .highlight, html:has(#themeSwitch:checked) .highlight{
-      border-radius: 0.9rem;
-    }
+    .highlight { border-radius: 0.9rem; }
     article pre code {
       background: transparent;
       border: none;
@@ -1019,98 +1093,53 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       display: block;
       overflow-x: auto;
       padding: 0;
-      color: rgba(226, 232, 240, 0.92);
+      color: var(--hljs-fg);
       background: transparent;
-    }
-    html[data-theme="light"] .hljs, html:has(#themeSwitch:checked) .hljs{
-      color: #24292e;
-    }
-    html[data-theme="light"] .hljs-comment, html:has(#themeSwitch:checked) .hljs-comment,
-    html[data-theme="light"] .hljs-quote, html:has(#themeSwitch:checked) .hljs-quote{
-      color: #6a737d;
-    }
-    html[data-theme="light"] .hljs-keyword, html:has(#themeSwitch:checked) .hljs-keyword,
-    html[data-theme="light"] .hljs-selector-tag, html:has(#themeSwitch:checked) .hljs-selector-tag,
-    html[data-theme="light"] .hljs-subst, html:has(#themeSwitch:checked) .hljs-subst{
-      color: #d73a49;
-    }
-    html[data-theme="light"] .hljs-string, html:has(#themeSwitch:checked) .hljs-string,
-    html[data-theme="light"] .hljs-doctag, html:has(#themeSwitch:checked) .hljs-doctag,
-    html[data-theme="light"] .hljs-regexp, html:has(#themeSwitch:checked) .hljs-regexp{
-      color: #032f62;
-    }
-    html[data-theme="light"] .hljs-title, html:has(#themeSwitch:checked) .hljs-title,
-    html[data-theme="light"] .hljs-section, html:has(#themeSwitch:checked) .hljs-section,
-    html[data-theme="light"] .hljs-selector-id, html:has(#themeSwitch:checked) .hljs-selector-id,
-    html[data-theme="light"] .hljs-selector-class, html:has(#themeSwitch:checked) .hljs-selector-class{
-      color: #6f42c1;
-    }
-    html[data-theme="light"] .hljs-number, html:has(#themeSwitch:checked) .hljs-number,
-    html[data-theme="light"] .hljs-literal, html:has(#themeSwitch:checked) .hljs-literal,
-    html[data-theme="light"] .hljs-symbol, html:has(#themeSwitch:checked) .hljs-symbol,
-    html[data-theme="light"] .hljs-bullet, html:has(#themeSwitch:checked) .hljs-bullet{
-      color: #005cc5;
-    }
-    html[data-theme="light"] .hljs-attr, html:has(#themeSwitch:checked) .hljs-attr,
-    html[data-theme="light"] .hljs-attribute, html:has(#themeSwitch:checked) .hljs-attribute,
-    html[data-theme="light"] .hljs-variable, html:has(#themeSwitch:checked) .hljs-variable,
-    html[data-theme="light"] .hljs-template-variable, html:has(#themeSwitch:checked) .hljs-template-variable,
-    html[data-theme="light"] .hljs-type, html:has(#themeSwitch:checked) .hljs-type{
-      color: #005cc5;
-    }
-    html[data-theme="light"] .hljs-built_in, html:has(#themeSwitch:checked) .hljs-built_in,
-    html[data-theme="light"] .hljs-builtin-name, html:has(#themeSwitch:checked) .hljs-builtin-name{
-      color: #e36209;
-    }
-    html[data-theme="light"] .hljs-meta, html:has(#themeSwitch:checked) .hljs-meta,
-    html[data-theme="light"] .hljs-meta-keyword, html:has(#themeSwitch:checked) .hljs-meta-keyword,
-    html[data-theme="light"] .hljs-meta-string, html:has(#themeSwitch:checked) .hljs-meta-string{
-      color: #6a737d;
     }
     .hljs-comment,
     .hljs-quote {
-      color: rgba(148, 163, 184, 0.80);
+      color: var(--hljs-comment);
       font-style: italic;
     }
     .hljs-keyword,
     .hljs-selector-tag,
     .hljs-subst {
-      color: rgba(168, 85, 247, 0.95);
+      color: var(--hljs-keyword);
       font-weight: 600;
     }
     .hljs-string,
     .hljs-doctag,
     .hljs-regexp {
-      color: rgba(34, 197, 94, 0.95);
+      color: var(--hljs-string);
     }
     .hljs-title,
     .hljs-section,
     .hljs-selector-id,
     .hljs-selector-class {
-      color: rgba(59, 130, 246, 0.95);
+      color: var(--hljs-title);
       font-weight: 600;
     }
     .hljs-number,
     .hljs-literal,
     .hljs-symbol,
     .hljs-bullet {
-      color: rgba(250, 204, 21, 0.95);
+      color: var(--hljs-number);
     }
     .hljs-attr,
     .hljs-attribute,
     .hljs-variable,
     .hljs-template-variable,
     .hljs-type {
-      color: rgba(94, 234, 212, 0.95);
+      color: var(--hljs-attr);
     }
     .hljs-built_in,
     .hljs-builtin-name {
-      color: rgba(244, 63, 94, 0.95);
+      color: var(--hljs-builtin);
     }
     .hljs-meta,
     .hljs-meta-keyword,
     .hljs-meta-string {
-      color: rgba(203, 213, 225, 0.95);
+      color: var(--hljs-meta);
     }
     .hljs-emphasis { font-style: italic; }
     .hljs-strong { font-weight: 700; }
@@ -1151,18 +1180,13 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       font-family: "Cascadia Mono", "Cascadia Mono PL", Consolas, "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, "Liberation Mono", "Courier New", monospace;
       font-kerning: none;
       line-height: 1.35;
-      background: rgba(15, 23, 42, 0.75);
-      border: 1px solid rgba(59, 130, 246, 0.22);
+      background: var(--mermaid-bg);
+      border: 1px solid var(--mermaid-border);
       border-radius: 0.9rem;
       padding: 1rem;
       overflow: auto;
       margin: 1rem 0;
-      color: rgba(226, 232, 240, 0.92);
-    }
-    html[data-theme="light"] .mermaid, html:has(#themeSwitch:checked) .mermaid{
-      background: rgba(232, 236, 241, 0.65);
-      border: 1px solid rgba(15, 23, 42, 0.18);
-      color: rgba(15, 23, 42, 0.92);
+      color: var(--mermaid-fg);
     }
 
     .mermaid svg {
@@ -1174,7 +1198,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       margin: 1rem 0;
       text-align: center;
       overflow: auto;
-      background: #e9e3d1;
+      background: var(--mermaid-img-bg);
       border: 1px solid rgba(148, 163, 184, 0.25);
       border-radius: 0.75rem;
       padding: 1rem;
@@ -1192,7 +1216,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     .mermaid-img {
       margin: 1rem 0;
       text-align: center;
-      background: #e9e3d1;
+      background: var(--mermaid-img-bg);
       border: 1px solid rgba(148, 163, 184, 0.25);
       border-radius: 0.75rem;
       padding: 1rem;
@@ -1252,11 +1276,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     .mermaid-error-title {
       font-weight: 800;
       font-size: 0.9rem;
-      color: rgba(254, 226, 226, 0.92);
+      color: var(--mermaid-err-title);
       margin-bottom: 0.5rem;
-    }
-    html[data-theme="light"] .mermaid-error-title, html:has(#themeSwitch:checked) .mermaid-error-title{
-      color: rgba(190, 18, 60, 0.92);
     }
     .mermaid-error details {
       margin-top: 0.6rem;
@@ -1271,16 +1292,12 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       margin-top: 0.5rem;
       white-space: pre-wrap;
       word-break: break-word;
-      background: rgba(2, 6, 23, 0.55);
+      background: var(--mermaid-err-bg);
       border: 1px solid rgba(148, 163, 184, 0.18);
       border-radius: 0.75rem;
       padding: 0.6rem 0.7rem;
-      color: rgba(226, 232, 240, 0.92);
+      color: var(--mermaid-err-fg);
       overflow: auto;
-    }
-    html[data-theme="light"] .mermaid-error pre.mermaid-error-msg, html:has(#themeSwitch:checked) .mermaid-error pre.mermaid-error-msg{
-      background: rgba(15, 23, 42, 0.06);
-      color: rgba(15, 23, 42, 0.88);
     }
 
     /* Copy button for code blocks */
@@ -1295,15 +1312,12 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       line-height: 1rem;
       font-weight: 600;
       border: 1px solid var(--border);
-      background: rgba(226, 232, 240, 0.06);
+      background: var(--btn-bg);
       color: var(--fg);
       cursor: pointer;
       user-select: none;
     }
-    .copy-btn:hover { background: rgba(226, 232, 240, 0.10); }
-    html[data-theme="light"] .copy-btn, html:has(#themeSwitch:checked) .copy-btn{
-      background: rgba(233, 228, 212, 0.75);
-    }
+    .copy-btn:hover { background: var(--btn-hover); }
 
     .lang-label {
       position: absolute;
@@ -1314,14 +1328,11 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       font-size: 0.7rem;
       line-height: 1rem;
       font-weight: 600;
-      color: rgba(148, 163, 184, 0.7);
+      color: var(--muted);
       user-select: none;
       pointer-events: none;
       text-transform: uppercase;
       letter-spacing: 0.03em;
-    }
-    html[data-theme="light"] .lang-label, html:has(#themeSwitch:checked) .lang-label{
-      color: rgba(100, 116, 139, 0.8);
     }
 
     .table-wrap {
@@ -1347,109 +1358,68 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       margin: 0;
     }
     article th, article td {
-      border: 1px solid rgba(148, 163, 184, 0.18);
+      border: 1px solid var(--td-border);
       padding: 0.65rem 0.85rem;
       vertical-align: top;
       overflow-wrap: break-word;
       word-break: keep-all;
       hyphens: auto;
     }
-    article th { background: rgba(59, 130, 246, 0.10); font-weight: 600; color: rgba(224, 231, 255, 0.98); }
-    article tbody tr:nth-child(even) { background: rgba(148, 163, 184, 0.04); }
-    article tbody tr:hover { background: rgba(148, 163, 184, 0.08); }
-    html[data-theme="light"] article th, html:has(#themeSwitch:checked) article th{
-      background: rgba(37, 99, 235, 0.08);
-      color: rgba(15, 23, 42, 0.92);
-    }
-    html[data-theme="light"] article td, html:has(#themeSwitch:checked) article td{
-      border-color: rgba(15, 23, 42, 0.10);
-    }
-    html[data-theme="light"] article th, html:has(#themeSwitch:checked) article th{
-      border-color: rgba(15, 23, 42, 0.12);
-    }
-    html[data-theme="light"] article tbody tr:nth-child(even), html:has(#themeSwitch:checked) article tbody tr:nth-child(even){ background: rgba(15, 23, 42, 0.03); }
-    html[data-theme="light"] article tbody tr:hover, html:has(#themeSwitch:checked) article tbody tr:hover{ background: rgba(15, 23, 42, 0.05); }
+    article th { background: var(--th-bg); font-weight: 600; color: var(--th-fg); border-color: var(--th-border); }
+    article tbody tr:nth-child(even) { background: var(--tr-even); }
+    article tbody tr:hover { background: var(--tr-hover); }
     /* Enhanced Practical Notes & Callouts */
     article blockquote {
-      border-left: 4px solid rgba(99, 102, 241, 0.65);
+      border-left: 4px solid var(--quote-border);
       padding: 0.85rem 1.15rem;
       margin: 1.25rem 0;
-      background: rgba(99, 102, 241, 0.07);
+      background: var(--quote-bg);
       border-radius: 0.75rem;
       color: var(--fg);
       box-shadow: 0 4px 15px rgba(0,0,0,0.1);
       position: relative;
     }
-    html[data-theme="light"] article blockquote, html:has(#themeSwitch:checked) article blockquote{
-      border-left-color: rgba(99, 102, 241, 0.75);
-      background: rgba(99, 102, 241, 0.06);
-      color: var(--fg);
-    }
     /* SOP Callouts (Emerald/Green) */
     article blockquote.callout-sop {
       border-left: 4px solid #10b981;
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(16, 185, 129, 0.03));
-      border: 1px solid rgba(16, 185, 129, 0.25);
+      background: var(--callout-sop-bg);
+      border: 1px solid var(--callout-sop-border);
       border-left-width: 4px;
-    }
-    html[data-theme="light"] article blockquote.callout-sop, html:has(#themeSwitch:checked) article blockquote.callout-sop{
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.14), rgba(16, 185, 129, 0.04));
-      border-color: rgba(16, 185, 129, 0.35);
     }
     /* Troubleshooting Callouts (Amber/Orange) */
     article blockquote.callout-trouble {
       border-left: 4px solid #f59e0b;
-      background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(245, 158, 11, 0.03));
-      border: 1px solid rgba(245, 158, 11, 0.25);
+      background: var(--callout-trouble-bg);
+      border: 1px solid var(--callout-trouble-border);
       border-left-width: 4px;
-    }
-    html[data-theme="light"] article blockquote.callout-trouble, html:has(#themeSwitch:checked) article blockquote.callout-trouble{
-      background: linear-gradient(135deg, rgba(245, 158, 11, 0.14), rgba(245, 158, 11, 0.04));
-      border-color: rgba(245, 158, 11, 0.35);
     }
     /* Inspection Warning Callouts (Rose/Red) */
     article blockquote.callout-warning {
       border-left: 4px solid #f43f5e;
-      background: linear-gradient(135deg, rgba(244, 63, 94, 0.12), rgba(244, 63, 94, 0.03));
-      border: 1px solid rgba(244, 63, 94, 0.25);
+      background: var(--callout-warning-bg);
+      border: 1px solid var(--callout-warning-border);
       border-left-width: 4px;
-    }
-    html[data-theme="light"] article blockquote.callout-warning, html:has(#themeSwitch:checked) article blockquote.callout-warning{
-      background: linear-gradient(135deg, rgba(244, 63, 94, 0.14), rgba(244, 63, 94, 0.04));
-      border-color: rgba(244, 63, 94, 0.35);
     }
     /* Form & Document Sample Callouts (Indigo/Blue) */
     article blockquote.callout-form {
       border-left: 4px solid #6366f1;
-      background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(99, 102, 241, 0.03));
-      border: 1px solid rgba(99, 102, 241, 0.25);
+      background: var(--callout-form-bg);
+      border: 1px solid var(--callout-form-border);
       border-left-width: 4px;
-    }
-    html[data-theme="light"] article blockquote.callout-form, html:has(#themeSwitch:checked) article blockquote.callout-form{
-      background: linear-gradient(135deg, rgba(99, 102, 241, 0.14), rgba(99, 102, 241, 0.04));
-      border-color: rgba(99, 102, 241, 0.35);
     }
     /* Character Note Callouts (Cyan/Sky) */
     article blockquote.callout-character {
       border-left: 4px solid #06b6d4;
-      background: linear-gradient(135deg, rgba(6, 182, 212, 0.12), rgba(6, 182, 212, 0.03));
-      border: 1px solid rgba(6, 182, 212, 0.25);
+      background: var(--callout-character-bg);
+      border: 1px solid var(--callout-character-border);
       border-left-width: 4px;
-    }
-    html[data-theme="light"] article blockquote.callout-character, html:has(#themeSwitch:checked) article blockquote.callout-character{
-      background: linear-gradient(135deg, rgba(6, 182, 212, 0.14), rgba(6, 182, 212, 0.04));
-      border-color: rgba(6, 182, 212, 0.35);
     }
     /* Exam & Quiz Focus Callouts (Purple/Violet) */
     article blockquote.callout-exam {
       border-left: 4px solid #a855f7;
-      background: linear-gradient(135deg, rgba(168, 85, 247, 0.12), rgba(168, 85, 247, 0.03));
-      border: 1px solid rgba(168, 85, 247, 0.25);
+      background: var(--callout-exam-bg);
+      border: 1px solid var(--callout-exam-border);
       border-left-width: 4px;
-    }
-    html[data-theme="light"] article blockquote.callout-exam, html:has(#themeSwitch:checked) article blockquote.callout-exam{
-      background: linear-gradient(135deg, rgba(168, 85, 247, 0.14), rgba(168, 85, 247, 0.04));
-      border-color: rgba(168, 85, 247, 0.35);
     }
 
     /* Back to Top button */
@@ -1461,8 +1431,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       width: 2.5rem;
       height: 2.5rem;
       border-radius: 9999px;
-      border: 1px solid rgba(226, 232, 240, 0.18);
-      background: rgba(2, 6, 23, 0.75);
+      border: 1px solid var(--floating-border);
+      background: var(--floating-bg);
       color: var(--fg);
       font-size: 1.2rem;
       line-height: 1;
@@ -1473,19 +1443,14 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       box-shadow: var(--shadow);
       transition: opacity 0.2s;
     }
-    .back-to-top:hover { background: rgba(2, 6, 23, 0.88); }
-    html[data-theme="light"] .back-to-top, html:has(#themeSwitch:checked) .back-to-top{
-      background: rgba(233, 228, 212, 0.94);
-      color: rgba(63, 58, 45, 0.95);
-      border: 1px solid rgba(15, 23, 42, 0.14);
-    }
+    .back-to-top:hover { background: var(--floating-hover); }
 
     /* Lightbox */
     .lightbox-overlay {
       position: fixed;
       inset: 0;
       z-index: 10000;
-      background: rgba(0, 0, 0, 0.85);
+      background: var(--lightbox-bg);
       display: none;
       align-items: center;
       justify-content: center;
@@ -1496,9 +1461,6 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       max-height: 92vh;
       border-radius: 0.75rem;
       box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-    }
-    html[data-theme="light"] .lightbox-overlay, html:has(#themeSwitch:checked) .lightbox-overlay{
-      background: rgba(233, 228, 212, 0.92);
     }
     article img {
       cursor: zoom-in;
@@ -1543,14 +1505,10 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       left: 0;
       height: 3px;
       width: 0%;
-      background: linear-gradient(90deg, #38bdf8, #a78bfa);
+      background: var(--progress-bg);
       z-index: 65;
       transition: width 0.08s linear;
       pointer-events: none;
-    }
-    html[data-theme="light"] #readingProgress,
-    html:has(#themeSwitch:checked) #readingProgress {
-      background: linear-gradient(90deg, #0284c7, #7c3aed);
     }
     /* CSS 스크롤 구동 애니메이션: JS 없는 모바일 file:// 환경에서도
        진행률 바가 동작한다 (Chrome 115+, Safari 26+).
@@ -1590,8 +1548,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       transform: translateX(-50%);
       z-index: 65;
       display: none;
-      border: 1px solid rgba(226, 232, 240, 0.18);
-      background: rgba(2, 6, 23, 0.85);
+      border: 1px solid var(--floating-border);
+      background: var(--resume-bg);
       color: var(--fg);
       padding: 0.6rem 1rem;
       border-radius: 9999px;
@@ -1607,12 +1565,6 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     /* TOC 드로어가 열린 동안에는 이어읽기 버튼을 숨긴다.
        (resumeBtn z-index 65 > 드로어 z-40 이므로 백드롭 위에 떠 보이는 것 방지) */
     #tocSwitch:checked ~ #resumeBtn { display: none !important; }
-    html[data-theme="light"] #resumeBtn,
-    html:has(#themeSwitch:checked) #resumeBtn {
-      background: rgba(233, 228, 212, 0.95);
-      color: rgba(63, 58, 45, 0.95);
-      border: 1px solid rgba(15, 23, 42, 0.14);
-    }
 
     /* 앵커(목차) 이동 시 대상 heading이 sticky 헤더 뒤에 숨지 않도록
        스크롤 여백을 준다. 헤더 높이(약 60px)보다 넉넉하게 잡는다. */
