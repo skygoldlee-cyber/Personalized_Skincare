@@ -3898,8 +3898,8 @@ def markdown_to_tailwind_html(md_text: str, title: str = "Document", config: Ren
                     new_lines.append(line)
             return f'<p{p_attrs}>{chr(10).join(new_lines)}</p>'
 
-        def _fix_ol_links(ol_attrs: str, content: str) -> str:
-            """<ol> 안의 <li><a href="#잘못된-id"> 텍스트</a>에서
+        def _fix_list_links(tag: str, attrs: str, content: str) -> str:
+            """<ol>/<ul> 안의 <li><a href="#잘못된-id"> 텍스트</a>에서
             텍스트를 헤딩과 매칭하여 올바른 id로 수정한다."""
             def _fix_a_tag(m: re.Match) -> str:
                 href = m.group(1)
@@ -3910,11 +3910,11 @@ def markdown_to_tailwind_html(md_text: str, title: str = "Document", config: Ren
                 if matched_id:
                     return f'<a href="#{matched_id}">{text}</a>'
                 return m.group(0)
-            return f'<ol{ol_attrs}>{re.sub(r"<a\s+href=\"#([^\"]+)\"[^>]*>([\s\S]*?)</a>", _fix_a_tag, content, flags=re.DOTALL)}</ol>'
+            return f'<{tag}{attrs}>{re.sub(r"<a\s+href=\"#([^\"]+)\"[^>]*>([\s\S]*?)</a>", _fix_a_tag, content, flags=re.DOTALL)}</{tag}>'
 
-        # '📋 목차' 헤딩 직후의 첫 번째 블록(<p> 또는 <ol>)만 변환.
+        # '📋 목차' 헤딩 직후의 첫 번째 블록(<p>, <ol> 또는 <ul>)만 변환.
         pattern = re.compile(
-            r'(<h2[^>]*>[^<]*📋\s*목차.*?</h2>\s*)(?:<p([^>]*)>([\s\S]*?)</p>|<ol([^>]*)>([\s\S]*?)</ol>)',
+            r'(<h2[^>]*>[^<]*📋\s*목차.*?</h2>\s*)(?:<p([^>]*)>([\s\S]*?)</p>|<(ol|ul)([^>]*)>([\s\S]*?)</\4>)',
             re.IGNORECASE | re.DOTALL,
         )
 
@@ -3922,8 +3922,8 @@ def markdown_to_tailwind_html(md_text: str, title: str = "Document", config: Ren
             heading = m.group(1)
             if m.group(2) is not None:  # <p> 블록
                 return heading + _linkify_p_content(m.group(2), m.group(3))
-            elif m.group(4) is not None:  # <ol> 블록
-                return heading + _fix_ol_links(m.group(4), m.group(5))
+            elif m.group(4) is not None:  # <ol>/<ul> 블록
+                return heading + _fix_list_links(m.group(4), m.group(5), m.group(6))
             return m.group(0)
 
         return pattern.sub(_toc_heading_replacer, body_html)
