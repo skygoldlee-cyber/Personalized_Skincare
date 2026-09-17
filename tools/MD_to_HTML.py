@@ -292,6 +292,9 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
          classic ~15px scrollbar — reserving the gutter keeps the layout from
          shifting left (and clipping right-edge text) on theme toggle. */
       scrollbar-gutter: stable;
+      /* 어떤 요소가 넘쳐도 문서 자체는 수평 스크롤하지 않는다
+         (표·코드블록은 자체 래퍼 안에서 스크롤). */
+      overflow-x: clip;
     }
     body { margin: 0; }
     hr { height: 0; border-top-width: 1px; }
@@ -1612,6 +1615,12 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       border-bottom: 1px solid var(--border);
       overflow: visible;
       transition: transform 0.25s ease;
+    }
+    /* 좁은 화면에서 헤더 버튼 행이 뷰포트를 넘어 페이지 전체에 수평
+       스크롤이 생기는 것을 방지 — 버튼을 다음 줄로 줄바꿈한다. */
+    @media (max-width: 640px) {
+      .topbar > div { flex-wrap: wrap; row-gap: 0.5rem; }
+      .topbar .theme-btn { padding: 0.4rem 0.55rem; }
     }
     /* 스크롤 다운 시 topbar 자동 숨김 (몰입형 독서) */
     .topbar.topbar-hidden { transform: translateY(-100%); }
