@@ -953,9 +953,9 @@ body.reader-focus-mode .reader-readable-width {
 
 /* Light reading theme (scoped to reader only) */
 .reader-light-theme {
-    --reader-bg: #f8f7f4;
-    --reader-bg-header: #f0eee8;
-    --reader-border: #e2ddd3;
+    --reader-bg: #efece3;
+    --reader-bg-header: #e6e1d4;
+    --reader-border: #d2ccbd;
     --reader-text: #2b2b2b;
     --reader-text-muted: #6b6b6b;
     --reader-accent: #0e7490;
