@@ -154,7 +154,7 @@ Personalized Skincare/
 │   ├── 참조자료/                    ← 참조자료 (원본 PDF + ref_md/ MD 변환본 36종 3.7MB)
 │   ├── 학습안내서.md                ← 학습 안내서 (앱 내 뷰어 연동)
 │   ├── number-drills/               ← 중요 숫자 암기표 JSON (과목별 4개 파일)
-│   ├── 맞춤형화장품조제관리사_중요숫자_암기정리.md ← 숫자 암기표 원본 MD
+│   ├── 두음법_암기_총정리.md        ← 두음법+중요숫자 통합 암기 문서 (앱 내 뷰어 연동)
 │   ├── utils/                       ← Python 변환 스크립트 (md_to_html, batch_convert, check_laws)
 │   └── audiobook/                   ← 오디오북 파이프라인 (Python)
 │
