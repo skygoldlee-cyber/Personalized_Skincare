@@ -565,6 +565,64 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     /* JS가 작동할 때 data-theme 기반 텍스트 (checkbox 미체크 상태에서 data-theme=light인 경우) */
     html[data-theme="light"]:not(:has(#themeSwitch:checked)) #btnThemeFab::after { content: "Theme: Light"; }
 
+    /* 글자 크기 선택 — CSS-only (radio + :has()). JS는 localStorage 저장·복원만
+       담당하므로 JS가 차단된 모바일 file:// 뷰어에서도 동작한다. */
+    #fsPanel { display: none; }
+    html:has(#fsSwitch:checked) #fsPanel { display: block; }
+    #fsPanel .drawer-backdrop { position: fixed; inset: 0; z-index: 68; background: transparent; }
+    .fs-pop {
+      position: fixed;
+      top: 4rem;
+      right: 1rem;
+      z-index: 69;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      padding: 0.5rem;
+      border-radius: 0.75rem;
+      min-width: 8rem;
+    }
+    .fs-pop label {
+      padding: 0.55rem 0.9rem;
+      border-radius: 0.5rem;
+      font-size: 0.85rem;
+      cursor: pointer;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: var(--tap-highlight);
+      touch-action: manipulation;
+    }
+    .fs-pop label:hover { background: var(--tbtn-hover); }
+    html:has(#fs0:checked) .fs-pop label[for="fs0"],
+    html:has(#fs1:checked) .fs-pop label[for="fs1"],
+    html:has(#fs2:checked) .fs-pop label[for="fs2"],
+    html:has(#fs3:checked) .fs-pop label[for="fs3"],
+    html:has(#fs4:checked) .fs-pop label[for="fs4"] {
+      background: var(--a1);
+      color: var(--on-accent);
+      font-weight: 600;
+    }
+    html:has(#fs0:checked) { --article-fs: 0.9375rem; }
+    html:has(#fs1:checked) { --article-fs: 1.0rem; }
+    html:has(#fs2:checked) { --article-fs: 1.0625rem; }
+    html:has(#fs3:checked) { --article-fs: 1.1875rem; }
+    html:has(#fs4:checked) { --article-fs: 1.3125rem; }
+
+    /* JS가 차단된 뷰어(모바일 file://)에서 죽은 버튼이 남지 않도록
+       JS 의존 컨트롤은 숨겨 두고, 스크립트가 실행되면 표시한다. */
+    .js-only { display: none !important; }
+
+    /* JS 차단 환경 안내 — JS가 실행되면 제거된다. */
+    .nojs-note {
+      margin: 0 0.75rem 0.75rem;
+      padding: 0.6rem 0.9rem;
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      font-size: 0.72rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
     /* Collapsible code blocks */
     .codewrap.collapsed {
       max-height: 18rem;
@@ -1746,11 +1804,10 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
         </div>
       </div>
       <div class="flex items-center gap-3">
-        <button id="btnFontMinus" class="theme-btn inline-flex items-center gap-1 rounded-xl px-2.5 py-2 text-xs font-medium" aria-label="글자 크기 줄이기">A&#8722;</button>
-        <button id="btnFontPlus" class="theme-btn inline-flex items-center gap-1 rounded-xl px-2.5 py-2 text-xs font-medium" aria-label="글자 크기 키우기">A+</button>
-        <button id="btnSearch" class="theme-btn inline-flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium">Search</button>
-        <button id="btnAutoFold" class="theme-btn inline-flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium">AutoFold</button>
-        <button id="btnFold" class="theme-btn inline-flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium">Fold</button>
+        <label for="fsSwitch" id="btnFont" class="theme-btn inline-flex items-center gap-1 rounded-xl px-2.5 py-2 text-xs font-medium" role="button" aria-label="글자 크기 선택" style="cursor:pointer">Aa</label>
+        <button id="btnSearch" class="theme-btn js-only inline-flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium">Search</button>
+        <button id="btnAutoFold" class="theme-btn js-only inline-flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium">AutoFold</button>
+        <button id="btnFold" class="theme-btn js-only inline-flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium">Fold</button>
       </div>
     </div>
   </header>
@@ -1776,8 +1833,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
             <div class="toc-subtitle text-xs mt-0.5">Heading 기반 자동 생성</div>
           </div>
           <div class="flex items-center gap-2">
-            <button id="btnAutoFoldMobile" class="theme-btn rounded-xl px-3 py-2 text-xs font-medium">AutoFold</button>
-            <button id="btnFoldMobile" class="theme-btn rounded-xl px-3 py-2 text-xs font-medium">Fold</button>
+            <button id="btnAutoFoldMobile" class="theme-btn js-only rounded-xl px-3 py-2 text-xs font-medium">AutoFold</button>
+            <button id="btnFoldMobile" class="theme-btn js-only rounded-xl px-3 py-2 text-xs font-medium">Fold</button>
             <label for="tocSwitch" id="btnTocClose" class="theme-btn rounded-xl px-3 py-2 text-xs font-medium">Close</label>
           </div>
         </div>
@@ -1788,6 +1845,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       <nav id="tocMobile" class="p-3 text-sm">
         %%TOC_HTML%%
       </nav>
+      <div class="nojs-note">검색·접기·크기 저장 등 일부 기능은 외부 브라우저(Chrome·Safari)로 열면 사용할 수 있습니다.</div>
     </div>
   </div>
 
@@ -1847,6 +1905,21 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
        JS가 작동하면 change 이벤트로 data-theme 동기화 + localStorage 저장 + Mermaid 재렌더. -->
   <input type="checkbox" id="themeSwitch" class="theme-switch" aria-label="다크/라이트 테마 전환" />
   <label for="themeSwitch" id="btnThemeFab" class="theme-fab">Theme</label>
+
+  <!-- CSS-only 글자 크기 선택: radio + :has() — JS 없이도 동작 (모바일 file:// 대응).
+       JS가 작동하면 change 이벤트로 localStorage 저장 + 선택값 복원. -->
+  <input type="checkbox" id="fsSwitch" class="theme-switch" aria-label="글자 크기 패널" />
+  <input type="radio" name="docfs" id="fs0" class="theme-switch" /><input type="radio" name="docfs" id="fs1" class="theme-switch" /><input type="radio" name="docfs" id="fs2" class="theme-switch" checked /><input type="radio" name="docfs" id="fs3" class="theme-switch" /><input type="radio" name="docfs" id="fs4" class="theme-switch" />
+  <div id="fsPanel">
+    <label for="fsSwitch" class="drawer-backdrop"></label>
+    <div class="fs-pop glass">
+      <label for="fs0">아주 작게</label>
+      <label for="fs1">작게</label>
+      <label for="fs2">기본</label>
+      <label for="fs3">크게</label>
+      <label for="fs4">아주 크게</label>
+    </div>
+  </div>
 
   <script>
     (function () {
@@ -2101,9 +2174,16 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
         });
       }
 
-      // 글자 크기 조절 (A−/A+): --article-fs 변경 + localStorage 저장
+      // 글자 크기 선택: radio + :has() CSS가 실제 적용을 담당하므로
+      // JS 차단 환경에서도 동작. JS는 localStorage 저장·복원과 패널 닫기만 한다.
       var FS_SIZES = ['0.9375rem', '1.0rem', '1.0625rem', '1.1875rem', '1.3125rem'];
       var FS_LABELS = ['아주 작게', '작게', '기본', '크게', '아주 크게'];
+      var fsInputs = [
+        document.getElementById('fs0'), document.getElementById('fs1'),
+        document.getElementById('fs2'), document.getElementById('fs3'),
+        document.getElementById('fs4')
+      ];
+      var fsSwitch = document.getElementById('fsSwitch');
       function getFontIdx() {
         try {
           var v = parseInt(localStorage.getItem('doc_fontsize'), 10);
@@ -2111,21 +2191,39 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
           return Math.max(0, Math.min(FS_SIZES.length - 1, v));
         } catch (e) { return 2; }
       }
-      function setFontIdx(i) {
+      function setFontIdx(i, quiet) {
         i = Math.max(0, Math.min(FS_SIZES.length - 1, i));
-        document.documentElement.style.setProperty('--article-fs', FS_SIZES[i]);
+        if (fsInputs[i]) fsInputs[i].checked = true;
         try { localStorage.setItem('doc_fontsize', String(i)); } catch (e) {}
-        showToast('글자 크기: ' + FS_LABELS[i]);
+        if (!quiet) showToast('글자 크기: ' + FS_LABELS[i]);
       }
-      var btnFontMinus = document.getElementById('btnFontMinus');
-      var btnFontPlus = document.getElementById('btnFontPlus');
-      if (btnFontMinus) btnFontMinus.addEventListener('click', function () { setFontIdx(getFontIdx() - 1); });
-      if (btnFontPlus) btnFontPlus.addEventListener('click', function () { setFontIdx(getFontIdx() + 1); });
+      setFontIdx(getFontIdx(), true);
+      for (var fi = 0; fi < fsInputs.length; fi++) {
+        (function (idx) {
+          var el = fsInputs[idx];
+          if (!el) return;
+          el.addEventListener('change', function () {
+            if (!el.checked) return;
+            setFontIdx(idx);
+            if (fsSwitch) fsSwitch.checked = false;
+          });
+        })(fi);
+      }
     })();
   </script>
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
+      // JS가 실행되면 JS 의존 컨트롤을 표시하고 no-JS 안내를 제거한다.
+      // (차단된 뷰어에서는 .js-only가 숨겨진 채로 남아 죽은 버튼이 되지 않음)
+      var jsOnly = document.querySelectorAll('.js-only');
+      for (var j = 0; j < jsOnly.length; j++) jsOnly[j].classList.remove('js-only');
+      var nojs = document.querySelectorAll('.nojs-note');
+      for (var k = 0; k < nojs.length; k++) {
+        var nel = nojs[k];
+        if (nel && nel.parentNode) nel.parentNode.removeChild(nel);
+      }
+
       var btnSearch = document.getElementById('btnSearch');
       var overlay = document.getElementById('searchOverlay');
       var input = document.getElementById('searchInput');
