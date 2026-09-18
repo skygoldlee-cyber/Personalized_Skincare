@@ -29,7 +29,7 @@ export const PATHS = {
   // 학습 안내서
   STUDY_GUIDE: 'content/학습안내서.md',
 
-  // 두음법 암기 총정리
+  // 두음법·숫자 암기 총정리 (두음법 Part 1 + 중요 숫자 Part 2 통합 문서)
   MNEMONIC_GUIDE: 'content/두음법_암기_총정리.md',
 
   // 매니페스트

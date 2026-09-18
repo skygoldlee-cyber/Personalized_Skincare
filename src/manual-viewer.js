@@ -18,7 +18,7 @@ export const ManualViewer = (() => {
     const MD_SOURCES = {
         'user_manual': { path: PATHS.USER_MANUAL, title: '사용자 매뉴얼' },
         'study_summary': { path: PATHS.STUDY_GUIDE, title: '학습 안내서' },
-        'mnemonic_guide': { path: PATHS.MNEMONIC_GUIDE, title: '두음법 암기 총정리' }
+        'mnemonic_guide': { path: PATHS.MNEMONIC_GUIDE, title: '두음법·숫자 암기 총정리' }
     };
     const CACHE_PREFIX = 'manual_md_cache_v3_';
     const CACHE_TTL = CACHE.MANUAL_CACHE_TTL_MS; // 24시간

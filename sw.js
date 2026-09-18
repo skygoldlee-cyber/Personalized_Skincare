@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v363-20260918-05eafc0';   // Part 2 중요 숫자 마인드맵 2종 추가 (전체 지도·함정 맵)
+const CACHE_VERSION = 'v364-20260918-docs-sync';   // 두음법·숫자 통합 문서 관련 UI 라벨·문서 갱신 (CHANGES 추가)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
