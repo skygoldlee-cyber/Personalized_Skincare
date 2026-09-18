@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v366-20260918-subj-links';   // 매뉴얼 뷰어 subj: 교재링크 연결 + 함정표 확장·상세표 보완
+const CACHE_VERSION = 'v366-20260918-fef79db';   // 매뉴얼 뷰어 subj: 교재링크 연결 + 함정표 확장·상세표 보완
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
