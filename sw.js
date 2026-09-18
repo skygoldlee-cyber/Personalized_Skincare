@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v367-20260918-5c776db';   // 실전 모의고사 부록 카드의 D-5 학습 플랜 링크 제거
+const CACHE_VERSION = 'v368-20260918-mnemonic-polish';   // 두음법·숫자 총정리 개선 (D-번호·출처태그·혼동쌍·30초 회상)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
