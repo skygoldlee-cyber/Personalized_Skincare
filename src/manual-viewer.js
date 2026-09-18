@@ -10,6 +10,7 @@
 import { escapeHTML } from './sanitize.js';
 import { detectMermaidType, getMermaidClassName, getMermaidInitOptions } from './mermaid-utils.js';
 import { parseMarkdown } from './markdown-parser.js';
+import { openSubjectChapter } from './views/textbook-reader.js';
 import { PATHS } from './paths.js';
 import { CACHE } from './config/cache.js';
 
@@ -308,6 +309,15 @@ body.manual-open{overflow:hidden;}
             const href = a.getAttribute('href');
             if (!href || href.startsWith('#')) return; // 내부 앵커는 무시
             e.preventDefault();
+            // 교재 바로가기 (subj:과목#chNN) → 오버레이 닫고 교재 리더 해당 과목·챕터로 이동
+            const subjMatch = href.match(/^subj:([a-z]+)(?:#(ch\d+))?$/);
+            if (subjMatch) {
+                close();
+                const navItem = document.querySelector('.nav-item[data-target="textbook-reader-view"]');
+                if (navItem) navItem.click();
+                openSubjectChapter(subjMatch[1], subjMatch[2] || '');
+                return;
+            }
             window.open(href, '_blank', 'noopener,noreferrer');
         });
 
