@@ -5,10 +5,14 @@ import html
 import re
 import argparse
 import base64
+import glob
 import hashlib
 import json
 import sys
+import time
 import urllib.request
+import zlib
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 
 
@@ -54,7 +58,56 @@ from dataclasses import dataclass
 
 # UX toggles (can be overridden via CLI)
 COLLAPSE_CODEBLOCK_MIN_LINES = 35
-MERMAID_SANITIZE_MODE = "auto"  # auto|on|off
+
+# ASCII/박스 드로잉 다이어그램 감지용 문자 집합 (여러 파이프라인 함수에서 공용)
+BOX_CHARS = frozenset("┌┐└┘├┤┬┴┼│─═╔╗╚╝╠╣╦╩╬┃━▲▼◀▶")
+
+# blockquote → 콜아웃 카드 분류 기본 규칙 (범용 이모지 마커만 포함).
+# 프로젝트 특화 키워드(인물명·문서 태그 등)는 스크립트 옆의
+# callout_rules.json 또는 --callout-rules로 주입한다.
+# (CSS 클래스, 키워드 튜플) 쌍이며 위에서부터 순서대로 평가되어 첫 매칭이 적용된다.
+CALLOUT_RULES_DEFAULT: tuple[tuple[str, tuple[str, ...]], ...] = (
+    ("callout-sop", ("📋",)),
+    ("callout-trouble", ("🚨",)),
+    ("callout-warning", ("⚠️",)),
+    ("callout-form", ("📑",)),
+    ("callout-character", ("💡",)),
+    ("callout-exam", ("🎯", "🧠")),
+)
+
+_CALLOUT_RULES_CACHE: tuple[tuple[str, tuple[str, ...]], ...] | None = None
+
+
+def _resolve_callout_rules(rules_file: str | Path | None = None) -> tuple[tuple[str, tuple[str, ...]], ...]:
+    """콜아웃 분류 규칙을 결정한다.
+
+    우선순위: --callout-rules 명시 경로 → 스크립트 옆 callout_rules.json → 기본값.
+    rules_file이 None이면 결과를 캐시한다 (변환마다 반복 로드 방지).
+    """
+    global _CALLOUT_RULES_CACHE
+    if rules_file is None and _CALLOUT_RULES_CACHE is not None:
+        return _CALLOUT_RULES_CACHE
+
+    candidates = [Path(rules_file)] if rules_file else [Path(__file__).with_name("callout_rules.json")]
+    for cand in candidates:
+        try:
+            if cand.is_file():
+                data = json.loads(cand.read_text(encoding="utf-8"))
+                rules = tuple(
+                    (str(r["class"]), tuple(str(k) for k in r["keywords"]))
+                    for r in data.get("rules", [])
+                    if r.get("class") and r.get("keywords")
+                )
+                if rules:
+                    if rules_file is None:
+                        _CALLOUT_RULES_CACHE = rules
+                    return rules
+        except Exception as e:
+            print(f"[callout_rules] failed to load {cand}: {e}", file=sys.stderr)
+
+    if rules_file is None:
+        _CALLOUT_RULES_CACHE = CALLOUT_RULES_DEFAULT
+    return CALLOUT_RULES_DEFAULT
 
 # Embed the Mermaid library directly into the generated HTML by default.
 # The CDN build (mermaid.min.js) is ~3.5MB; on mobile in-app browsers
@@ -69,17 +122,16 @@ MERMAID_CDN_URLS = (
     "https://unpkg.com/mermaid@11/dist/mermaid.min.js",
     "https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.17.2/mermaid.min.js",
 )
+# ESM 빌드는 CDN 폴백의 최후 수단으로 사용 (생성 HTML 내 JS가 import)
+MERMAID_ESM_URL = "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"
 # The library is multi-MB; anything much smaller is an error page, not the lib.
 _MERMAID_MIN_BYTES = 200_000
 
 # Known-good SRI hashes for Mermaid 11.x CDN builds (sha384 base64).
 # If a CDN returns content whose hash doesn't match, it's rejected.
 # None = skip SRI check (fallback to size-only validation).
-MERMAID_SRI_HASHES: dict[str, str | None] = {
-    "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js": None,
-    "https://unpkg.com/mermaid@11/dist/mermaid.min.js": None,
-    "https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.17.2/mermaid.min.js": None,
-}
+# URL을 추가할 때는 MERMAID_CDN_URLS에 넣고, 해시가 확인되면 여기서 덮어쓴다.
+MERMAID_SRI_HASHES: dict[str, str | None] = dict.fromkeys(MERMAID_CDN_URLS)
 
 # In-memory cache for the Mermaid library (no disk writes).
 _MERMAID_JS_MEMORY: str | None = None
@@ -88,9 +140,9 @@ _MERMAID_JS_MEMORY: str | None = None
 @dataclass(frozen=True)
 class RenderConfig:
     collapse_codeblock_min_lines: int = COLLAPSE_CODEBLOCK_MIN_LINES
-    mermaid_sanitize_mode: str = MERMAID_SANITIZE_MODE
     embed_mermaid: bool = EMBED_MERMAID
     prerender_mermaid: bool = True
+    callout_rules_file: str | None = None
 
 
 def _read_text_if_exists(path: Path) -> str | None:
@@ -170,7 +222,7 @@ def _embed_mermaid_js(doc_html: str, js_text: str) -> str:
     safe = re.sub(r"</script", r"<\\/script", js_text, flags=re.IGNORECASE)
     inline = "<script>\n" + safe + "\n</script>"
     return doc_html.replace(
-        '<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>',
+        f'<script src="{MERMAID_CDN_URLS[0]}"></script>',
         inline,
     )
 
@@ -212,44 +264,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     })();
   </script>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'media',
-      theme: {
-        extend: {
-          typography: {
-            DEFAULT: {
-              css: {
-                maxWidth: '100%',
-              }
-            }
-          }
-        }
-      }
-    }
-  </script>
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      try {
-        // Only highlight code blocks NOT already processed by Pygments codehilite
-        document.querySelectorAll('pre code').forEach(function (el) {
-          if (!el.closest('.highlight')) {
-            hljs.highlightElement(el);
-          }
-        });
-      } catch (e) {}
-    });
-  </script>
-
-  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <script src="%%MERMAID_CDN_URL%%"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       try {
@@ -261,9 +276,54 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   </script>
 
   <style>
-    /* --- Tailwind Fallback (CDN blocked) ---
-       This project normally uses Tailwind CDN. If the CDN is blocked,
-       these minimal utility class fallbacks keep the doc readable.
+    /* --- Tailwind preflight subset (fully inlined — no runtime CDN) ---
+       Minimal reset the template relied on from the Tailwind CDN build. */
+    *, ::before, ::after {
+      box-sizing: border-box;
+      border-width: 0;
+      border-style: solid;
+      border-color: #e5e7eb;
+    }
+    html {
+      line-height: 1.5;
+      -webkit-text-size-adjust: 100%;
+      tab-size: 4;
+      /* color-scheme: dark uses an overlay root scrollbar while light uses a
+         classic ~15px scrollbar — reserving the gutter keeps the layout from
+         shifting left (and clipping right-edge text) on theme toggle. */
+      scrollbar-gutter: stable;
+      /* 어떤 요소가 넘쳐도 문서 자체는 수평 스크롤하지 않는다
+         (표·코드블록은 자체 래퍼 안에서 스크롤). */
+      overflow-x: clip;
+    }
+    body { margin: 0; }
+    hr { height: 0; border-top-width: 1px; }
+    h1, h2, h3, h4, h5, h6 { font-size: inherit; font-weight: inherit; }
+    p, h1, h2, h3, h4, h5, h6, figure, blockquote, dl, dd, ul, ol, pre, fieldset, legend {
+      margin: 0;
+      padding: 0;
+    }
+    ul, ol { list-style: none; }
+    button, input, select, textarea {
+      font: inherit;
+      color: inherit;
+      margin: 0;
+      padding: 0;
+      background: transparent;
+    }
+    button, [type="button"], [type="search"] { -webkit-appearance: none; appearance: none; }
+    button { cursor: pointer; }
+    a { color: inherit; text-decoration: inherit; }
+    img, svg, video, canvas { display: block; vertical-align: middle; }
+    img, video { max-width: 100%; height: auto; }
+    table { border-collapse: collapse; }
+    pre, code, kbd, samp {
+      font-family: "Cascadia Mono", "Cascadia Mono PL", Consolas, "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, "Liberation Mono", "Courier New", monospace;
+      font-size: 1em;
+    }
+
+    /* --- Tailwind utility subset ---
+       Only the utilities actually used by this template are declared.
     */
     body {
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
@@ -331,8 +391,29 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     .w-full { width: 100%; }
     .border-b { border-bottom-width: 1px; }
     .border { border-width: 1px; }
-    .shadow-xl { box-shadow: 0 20px 60px rgba(2,6,23,0.35); }
+    .shadow-xl { box-shadow: var(--shadow-xl); }
     .transition { transition: all 0.2s ease; }
+
+    .gap-1 { gap: 0.25rem; }
+    .gap-2 { gap: 0.5rem; }
+    .gap-6 { gap: 1.5rem; }
+    .px-2\.5 { padding-left: 0.625rem; padding-right: 0.625rem; }
+    .px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
+    .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+    .mt-0\.5 { margin-top: 0.125rem; }
+    .h-9 { height: 2.25rem; }
+    .w-9 { width: 2.25rem; }
+    .h-\[calc\(100vh-10rem\)\] { height: calc(100vh - 10rem); }
+    .place-items-center { place-items: center; }
+    .left-0 { left: 0; }
+    .z-50 { z-index: 50; }
+    .scroll-smooth { scroll-behavior: smooth; }
+    .bg-white\/5 { background-color: rgba(255, 255, 255, 0.05); }
+    .border-slate-200\/10 { border-color: rgba(226, 232, 240, 0.1); }
+    @media (min-width: 640px) {
+      .sm\:px-8 { padding-left: 2rem; padding-right: 2rem; }
+    }
 
     /* Skip link: 키보드/스크린리더용 본문 바로가기 (포커스 시에만 표시) */
     .skip-link {
@@ -343,7 +424,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       padding: 0.6rem 1rem;
       border-radius: 0.75rem;
       background: var(--a1);
-      color: #fff;
+      color: var(--on-accent);
       font-size: 0.85rem;
       font-weight: 600;
       text-decoration: none;
@@ -356,9 +437,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 
     /* Mobile TOC drawer */
     .drawer-backdrop {
-      background: rgba(2, 6, 23, 0.55);
+      background: var(--backdrop);
     }
-    html[data-theme="light"] .drawer-backdrop, html:has(#themeSwitch:checked) .drawer-backdrop{ background: rgba(15, 23, 42, 0.25); }
 
     /* 모바일 주소창 영역을 제외한 동적 뷰포트 높이(100dvh)를 사용하고,
        flex column + min-height:0 로 nav가 패널 안에서 스크롨되도록 한다.
@@ -387,7 +467,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       width: 10px;
       height: 72px;
       border-radius: 0 8px 8px 0;
-      background: rgba(148, 163, 184, 0.35);
+      background: var(--edge-hint);
       z-index: 30;
       display: none;
       cursor: pointer;
@@ -397,10 +477,6 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     @keyframes edgeHintPulse {
       0%, 100% { width: 10px; opacity: 0.6; }
       50%      { width: 16px; opacity: 1; }
-    }
-    html[data-theme="light"] .toc-edge-hint,
-    html:has(#themeSwitch:checked) .toc-edge-hint {
-      background: rgba(15, 23, 42, 0.25);
     }
     @media (max-width: 1023px) { .toc-edge-hint { display: block; } }
     #tocSwitch:checked ~ .toc-edge-hint { display: none; }
@@ -437,16 +513,12 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       padding: 0.6rem 0.9rem;
       border-radius: 9999px;
       border: 1px solid var(--border);
-      background: rgba(2, 6, 23, 0.72);
+      background: var(--floating-bg);
       color: var(--fg);
       font-size: 0.85rem;
       box-shadow: var(--shadow);
       display: none;
       z-index: 60;
-    }
-    html[data-theme="light"] #toast, html:has(#themeSwitch:checked) #toast{
-      background: rgba(255, 255, 255, 0.92);
-      color: rgba(15, 23, 42, 0.92);
     }
 
     /* CSS-only 테마 토글: checkbox를 숨기고 label로 토글 (JS 없이도 작동) */
@@ -466,8 +538,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       right: 18px;
       bottom: 18px;
       z-index: 99999;
-      border: 1px solid rgba(226, 232, 240, 0.18);
-      background: rgba(2, 6, 23, 0.75);
+      border: 1px solid var(--floating-border);
+      background: var(--floating-bg);
       color: var(--fg);
       padding: 0.75rem 1rem;
       border-radius: 9999px;
@@ -477,7 +549,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       cursor: pointer;
       user-select: none;
       -webkit-user-select: none;
-      -webkit-tap-highlight-color: transparent;
+      -webkit-tap-highlight-color: var(--tap-highlight);
       touch-action: manipulation;
       display: inline-flex;
       align-items: center;
@@ -486,24 +558,19 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       min-height: 44px;
       min-width: 44px;
     }
-    .theme-fab:hover { background: rgba(2, 6, 23, 0.88); }
+    .theme-fab:hover { background: var(--floating-hover); }
     /* checkbox 상태에 따라 label 텍스트 변경 (JS 없이도 작동) */
     #btnThemeFab::after { content: "Theme: Dark"; }
     html:has(#themeSwitch:checked) #btnThemeFab::after { content: "Theme: Light"; }
     /* JS가 작동할 때 data-theme 기반 텍스트 (checkbox 미체크 상태에서 data-theme=light인 경우) */
     html[data-theme="light"]:not(:has(#themeSwitch:checked)) #btnThemeFab::after { content: "Theme: Light"; }
-    html[data-theme="light"] .theme-fab, html:has(#themeSwitch:checked) .theme-fab{
-      background: rgba(255, 255, 255, 0.92);
-      color: rgba(15, 23, 42, 0.92);
-      border: 1px solid rgba(15, 23, 42, 0.14);
-    }
 
     /* Collapsible code blocks */
     .codewrap.collapsed {
       max-height: 18rem;
       overflow: hidden;
-      mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(0,0,0,0));
-      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(0,0,0,0));
+      mask-image: var(--collapse-mask);
+      -webkit-mask-image: var(--collapse-mask);
     }
     .expand-btn {
       position: absolute;
@@ -515,13 +582,12 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       line-height: 1rem;
       font-weight: 600;
       border: 1px solid var(--border);
-      background: rgba(226, 232, 240, 0.06);
+      background: var(--btn-bg);
       color: var(--fg);
       cursor: pointer;
       user-select: none;
     }
-    .expand-btn:hover { background: rgba(226, 232, 240, 0.10); }
-    html[data-theme="light"] .expand-btn, html:has(#themeSwitch:checked) .expand-btn{ background: rgba(255, 255, 255, 0.70); }
+    .expand-btn:hover { background: var(--btn-hover); }
 
     .admonition {
       border: 1px solid var(--border);
@@ -535,10 +601,10 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       margin-bottom: 0.5rem;
       color: var(--fg);
     }
-    .admonition.note { border-left: 4px solid rgba(59,130,246,0.65); }
-    .admonition.tip { border-left: 4px solid rgba(34,197,94,0.65); }
-    .admonition.warning { border-left: 4px solid rgba(250,204,21,0.65); }
-    .admonition.danger { border-left: 4px solid rgba(244,63,94,0.65); }
+    .admonition.note { border-left: 4px solid var(--admonition-note); }
+    .admonition.tip { border-left: 4px solid var(--admonition-tip); }
+    .admonition.warning { border-left: 4px solid var(--admonition-warning); }
+    .admonition.danger { border-left: 4px solid var(--admonition-danger); }
 
     :root {
       color-scheme: dark;
@@ -581,16 +647,132 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       --hl-gp: #ff4689;
       --hl-go: #f8f8f2;
       --hl-comment-style: normal;
+
+      /* ===== 테마 서피스 (다크) — 아래 light 블록과 1:1 대응. 색상은 여기서만 관리 ===== */
+      --page-bg: #020617;
+      --doc-bg: radial-gradient(1200px 700px at 20% -10%, rgba(59,130,246,0.18), transparent 60%),
+                radial-gradient(900px 600px at 80% 10%, rgba(168,85,247,0.14), transparent 55%),
+                radial-gradient(1000px 700px at 40% 110%, rgba(34,197,94,0.10), transparent 60%),
+                linear-gradient(180deg, #030712 0%, #020617 55%, #030712 100%);
+      --backdrop: rgba(2, 6, 23, 0.55);
+      --edge-hint: rgba(148, 163, 184, 0.35);
+      --subtitle-fg: rgba(226, 232, 240, 0.70);
+      --badge-bg: rgba(226, 232, 240, 0.08);
+      --badge-border: rgba(226, 232, 240, 0.10);
+      --hover-bg: rgba(226, 232, 240, 0.08);
+      --floating-bg: rgba(2, 6, 23, 0.75);
+      --floating-hover: rgba(2, 6, 23, 0.88);
+      --floating-border: rgba(226, 232, 240, 0.18);
+      --resume-bg: rgba(2, 6, 23, 0.85);
+      --tbtn-bg: rgba(226, 232, 240, 0.10);
+      --tbtn-hover: rgba(226, 232, 240, 0.16);
+      --tbtn-border: rgba(226, 232, 240, 0.18);
+      --btn-bg: rgba(226, 232, 240, 0.06);
+      --btn-hover: rgba(226, 232, 240, 0.10);
+      --input-bg: rgba(255, 255, 255, 0.06);
+      --mark-bg: rgba(250, 204, 21, 0.30);
+      --mark-border: rgba(250, 204, 21, 0.32);
+      --mark-active-bg: rgba(59, 130, 246, 0.28);
+      --mark-active-border: rgba(59, 130, 246, 0.34);
+      --toc-mark-bg: rgba(250, 204, 21, 0.22);
+      --toc-mark-border: rgba(250, 204, 21, 0.22);
+      --toc-title: var(--fg);
+      --toc-subtitle: var(--muted);
+      --strong: rgba(248, 250, 252, 0.98);
+      --code-inline-bg: rgba(148, 163, 184, 0.12);
+      --code-inline-border: rgba(148, 163, 184, 0.18);
+      --code-inline-fg: var(--fg);
+      --code-bg: rgba(2, 6, 23, 0.85);
+      --code-border: rgba(59, 130, 246, 0.18);
+      --code-fg: var(--fg);
+      --hljs-fg: rgba(226, 232, 240, 0.92);
+      --hljs-comment: rgba(148, 163, 184, 0.80);
+      --hljs-keyword: rgba(168, 85, 247, 0.95);
+      --hljs-string: rgba(34, 197, 94, 0.95);
+      --hljs-title: rgba(59, 130, 246, 0.95);
+      --hljs-number: rgba(250, 204, 21, 0.95);
+      --hljs-attr: rgba(94, 234, 212, 0.95);
+      --hljs-builtin: rgba(244, 63, 94, 0.95);
+      --hljs-meta: rgba(203, 213, 225, 0.95);
+      --mermaid-bg: rgba(15, 23, 42, 0.75);
+      --mermaid-border: rgba(59, 130, 246, 0.22);
+      --mermaid-fg: rgba(226, 232, 240, 0.92);
+      --mermaid-img-bg: #e9e3d1;
+      --mermaid-err-bg: rgba(2, 6, 23, 0.55);
+      --mermaid-err-fg: rgba(226, 232, 240, 0.92);
+      --mermaid-err-title: rgba(254, 226, 226, 0.92);
+      --th-bg: rgba(59, 130, 246, 0.10);
+      --th-fg: rgba(224, 231, 255, 0.98);
+      --th-border: rgba(148, 163, 184, 0.18);
+      --td-border: rgba(148, 163, 184, 0.18);
+      --tr-even: rgba(148, 163, 184, 0.04);
+      --tr-hover: rgba(148, 163, 184, 0.08);
+      --quote-border: rgba(99, 102, 241, 0.65);
+      --quote-bg: rgba(99, 102, 241, 0.07);
+      --callout-sop-bg: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(16, 185, 129, 0.03));
+      --callout-sop-border: rgba(16, 185, 129, 0.25);
+      --callout-trouble-bg: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(245, 158, 11, 0.03));
+      --callout-trouble-border: rgba(245, 158, 11, 0.25);
+      --callout-warning-bg: linear-gradient(135deg, rgba(244, 63, 94, 0.12), rgba(244, 63, 94, 0.03));
+      --callout-warning-border: rgba(244, 63, 94, 0.25);
+      --callout-form-bg: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(99, 102, 241, 0.03));
+      --callout-form-border: rgba(99, 102, 241, 0.25);
+      --callout-character-bg: linear-gradient(135deg, rgba(6, 182, 212, 0.12), rgba(6, 182, 212, 0.03));
+      --callout-character-border: rgba(6, 182, 212, 0.25);
+      --callout-exam-bg: linear-gradient(135deg, rgba(168, 85, 247, 0.12), rgba(168, 85, 247, 0.03));
+      --callout-exam-border: rgba(168, 85, 247, 0.25);
+      --lightbox-bg: rgba(0, 0, 0, 0.85);
+      --progress-bg: linear-gradient(90deg, #38bdf8, #a78bfa);
+
+      /* ===== 공통 액센트 (테마 무관 — 라이트/다크 양쪽에서 같은 값) ===== */
+      --on-accent: #fff;
+      --toc-active-bg: rgba(20, 184, 166, 0.14);
+      --toc-active-border: rgba(20, 184, 166, 0.28);
+      --toc-hover-bg: rgba(20, 184, 166, 0.12);
+      --toc-guide: rgba(148, 163, 184, 0.14);
+      --scrollbar-thumb: rgba(148, 163, 184, 0.24);
+      --scrollbar-thumb-hover: rgba(148, 163, 184, 0.34);
+      --scrollbar-track: rgba(2, 6, 23, 0.65);
+      --h2-bar: linear-gradient(90deg, rgba(168,85,247,0.95), rgba(59,130,246,0.75), rgba(20,184,166,0.75));
+      --admonition-note: rgba(59, 130, 246, 0.65);
+      --admonition-tip: rgba(34, 197, 94, 0.65);
+      --admonition-warning: rgba(250, 204, 21, 0.65);
+      --admonition-danger: rgba(244, 63, 94, 0.65);
+      --diff-add-bg: rgba(34, 197, 94, 0.12);
+      --diff-del-bg: rgba(244, 63, 94, 0.12);
+      --mermaid-img-border: rgba(148, 163, 184, 0.25);
+      --mermaid-img-fg: #1e293b;
+      --mermaid-fallback-bg: rgba(2, 6, 23, 0.85);
+      --mermaid-err-border: rgba(244, 63, 94, 0.22);
+      --mermaid-err-tint: rgba(244, 63, 94, 0.04);
+      --err-msg-border: rgba(148, 163, 184, 0.18);
+      --callout-sop-accent: #10b981;
+      --callout-trouble-accent: #f59e0b;
+      --callout-warning-accent: #f43f5e;
+      --callout-form-accent: #6366f1;
+      --callout-character-accent: #06b6d4;
+      --callout-exam-accent: #a855f7;
+
+      /* ===== 효과·인쇄 (테마 무관) ===== */
+      --shadow-xl: 0 20px 60px rgba(2, 6, 23, 0.35);
+      --quote-shadow: 0 4px 15px rgba(0, 0, 0, 0.10);
+      --lightbox-img-shadow: 0 20px 60px rgba(0, 0, 0, 0.50);
+      --edge-shadow: rgba(0, 0, 0, 0.30);
+      --collapse-mask: linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(0,0,0,0));
+      --tap-highlight: transparent;
+      --print-code-border: #cccccc;
+      --print-code-bg: #f6f8fa;
+      --print-code-fg: #24292e;
     }
 
     [data-theme="light"], html:has(#themeSwitch:checked) {
       color-scheme: light;
-      --fg: rgba(15, 23, 42, 0.92);
-      --muted: rgba(15, 23, 42, 0.72);
-      --panel: rgba(232, 236, 241, 0.88);
-      --border: rgba(15, 23, 42, 0.14);
+      --fg: rgba(63, 58, 45, 0.95);
+      --muted: rgba(122, 114, 96, 1);
+      --panel: rgba(233, 228, 212, 0.90);
+      --border: rgba(63, 58, 45, 0.16);
       --shadow: 0 10px 25px rgba(2, 6, 23, 0.10);
-      --table-cover: #e4e8ee; /* body #d4d8de + panel rgba(232,236,241,.88) 합성색 */
+      --table-cover: #e6e1d1; /* body #cdc8ba + panel rgba(233,228,212,.90) 합성색 */
 
       --a1: rgba(37, 99, 235, 1);
       --a2: rgba(124, 58, 237, 1);
@@ -600,7 +782,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       --a6: rgba(202, 138, 4, 1);
 
       /* Pygments codehilite token colors — light (GitHub-inspired) */
-      --hl-hll-bg: #ffffcc;
+      --hl-hll-bg: #f2e9c6;
       --hl-comment: #6a737d;
       --hl-keyword: #d73a49;
       --hl-kn: #d73a49;
@@ -624,13 +806,85 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       --hl-gp: #005cc5;
       --hl-go: #6a737d;
       --hl-comment-style: italic;
+
+      /* ===== 테마 서피스 (라이트) — 위 :root 블록과 1:1 대응 ===== */
+      --page-bg: #cdc8ba;
+      --doc-bg: radial-gradient(1200px 700px at 25% -10%, rgba(37,99,235,0.10), transparent 60%),
+                radial-gradient(900px 600px at 80% 0%, rgba(124,58,237,0.08), transparent 55%),
+                linear-gradient(180deg, #ded8c6 0%, #cdc8ba 60%, #ded8c6 100%);
+      --backdrop: rgba(15, 23, 42, 0.25);
+      --edge-hint: rgba(15, 23, 42, 0.25);
+      --subtitle-fg: var(--muted);
+      --badge-bg: rgba(233, 228, 212, 0.72);
+      --badge-border: rgba(15, 23, 42, 0.10);
+      --hover-bg: rgba(15, 23, 42, 0.06);
+      --floating-bg: rgba(233, 228, 212, 0.94);
+      --floating-hover: rgba(243, 239, 228, 0.98);
+      --floating-border: rgba(15, 23, 42, 0.14);
+      --resume-bg: rgba(233, 228, 212, 0.95);
+      --tbtn-bg: rgba(233, 228, 212, 0.72);
+      --tbtn-hover: rgba(233, 228, 212, 0.95);
+      --tbtn-border: rgba(15, 23, 42, 0.10);
+      --btn-bg: rgba(233, 228, 212, 0.75);
+      --btn-hover: rgba(233, 228, 212, 0.95);
+      --input-bg: rgba(233, 228, 212, 0.85);
+      --mark-bg: rgba(234, 179, 8, 0.22);
+      --mark-border: rgba(234, 179, 8, 0.28);
+      --mark-active-bg: rgba(37, 99, 235, 0.18);
+      --mark-active-border: rgba(37, 99, 235, 0.22);
+      --toc-mark-bg: rgba(234, 179, 8, 0.24);
+      --toc-mark-border: rgba(234, 179, 8, 0.30);
+      --toc-title: var(--fg);
+      --toc-subtitle: var(--muted);
+      --strong: rgba(63, 58, 45, 0.98);
+      --code-inline-bg: rgba(148, 163, 184, 0.14);
+      --code-inline-border: rgba(148, 163, 184, 0.22);
+      --code-inline-fg: rgba(63, 58, 45, 0.92);
+      --code-bg: #e6e0cb;
+      --code-border: rgba(63, 58, 45, 0.14);
+      --code-fg: #3f3a2d;
+      --hljs-fg: #24292e;
+      --hljs-comment: #6a737d;
+      --hljs-keyword: #d73a49;
+      --hljs-string: #032f62;
+      --hljs-title: #6f42c1;
+      --hljs-number: #005cc5;
+      --hljs-attr: #005cc5;
+      --hljs-builtin: #e36209;
+      --hljs-meta: #6a737d;
+      --mermaid-bg: rgba(233, 228, 212, 0.75);
+      --mermaid-border: rgba(63, 58, 45, 0.18);
+      --mermaid-fg: rgba(63, 58, 45, 0.92);
+      --mermaid-img-bg: #e9e3d1;
+      --mermaid-err-bg: rgba(15, 23, 42, 0.06);
+      --mermaid-err-fg: rgba(63, 58, 45, 0.88);
+      --mermaid-err-title: rgba(190, 18, 60, 0.92);
+      --th-bg: rgba(37, 99, 235, 0.08);
+      --th-fg: rgba(63, 58, 45, 0.95);
+      --th-border: rgba(15, 23, 42, 0.12);
+      --td-border: rgba(15, 23, 42, 0.10);
+      --tr-even: rgba(15, 23, 42, 0.03);
+      --tr-hover: rgba(15, 23, 42, 0.05);
+      --quote-border: rgba(99, 102, 241, 0.75);
+      --quote-bg: rgba(99, 102, 241, 0.06);
+      --callout-sop-bg: linear-gradient(135deg, rgba(16, 185, 129, 0.14), rgba(16, 185, 129, 0.04));
+      --callout-sop-border: rgba(16, 185, 129, 0.35);
+      --callout-trouble-bg: linear-gradient(135deg, rgba(245, 158, 11, 0.14), rgba(245, 158, 11, 0.04));
+      --callout-trouble-border: rgba(245, 158, 11, 0.35);
+      --callout-warning-bg: linear-gradient(135deg, rgba(244, 63, 94, 0.14), rgba(244, 63, 94, 0.04));
+      --callout-warning-border: rgba(244, 63, 94, 0.35);
+      --callout-form-bg: linear-gradient(135deg, rgba(99, 102, 241, 0.14), rgba(99, 102, 241, 0.04));
+      --callout-form-border: rgba(99, 102, 241, 0.35);
+      --callout-character-bg: linear-gradient(135deg, rgba(6, 182, 212, 0.14), rgba(6, 182, 212, 0.04));
+      --callout-character-border: rgba(6, 182, 212, 0.35);
+      --callout-exam-bg: linear-gradient(135deg, rgba(168, 85, 247, 0.14), rgba(168, 85, 247, 0.04));
+      --callout-exam-border: rgba(168, 85, 247, 0.35);
+      --lightbox-bg: rgba(233, 228, 212, 0.92);
+      --progress-bg: linear-gradient(90deg, #0284c7, #7c3aed);
     }
 
     .doc-bg {
-      background: radial-gradient(1200px 700px at 20% -10%, rgba(59,130,246,0.18), transparent 60%),
-                  radial-gradient(900px 600px at 80% 10%, rgba(168,85,247,0.14), transparent 55%),
-                  radial-gradient(1000px 700px at 40% 110%, rgba(34,197,94,0.10), transparent 60%),
-                  linear-gradient(180deg, #030712 0%, #020617 55%, #030712 100%);
+      background: var(--doc-bg);
     }
 
     .glass {
@@ -642,51 +896,25 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       contain: none;
     }
 
-    html[data-theme="light"] .glass, html:has(#themeSwitch:checked) .glass{
-      background: rgba(232, 236, 241, 0.88);
-    }
-
     body {
       color: var(--fg);
-      background: #020617;
+      background: var(--page-bg);
     }
 
-    html[data-theme="light"] body, html:has(#themeSwitch:checked) body{
-      background: #d4d8de; /* muted slate */
-    }
-
-    html[data-theme="light"] .doc-bg, html:has(#themeSwitch:checked) .doc-bg{
-      background: radial-gradient(1200px 700px at 25% -10%, rgba(37,99,235,0.10), transparent 60%),
-                  radial-gradient(900px 600px at 80% 0%, rgba(124,58,237,0.08), transparent 55%),
-                  linear-gradient(180deg, #e8ecf1 0%, #d4d8de 60%, #e8ecf1 100%);
-    }
-
-    .doc-subtitle { color: rgba(226, 232, 240, 0.70); }
-    html[data-theme="light"] .doc-subtitle, html:has(#themeSwitch:checked) .doc-subtitle{ color: var(--muted); }
+    .doc-subtitle { color: var(--subtitle-fg); }
 
     .brand-badge {
-      background: rgba(226, 232, 240, 0.08);
-      border: 1px solid rgba(226, 232, 240, 0.10);
-      color: var(--fg);
-    }
-    html[data-theme="light"] .brand-badge, html:has(#themeSwitch:checked) .brand-badge{
-      background: rgba(255, 255, 255, 0.70);
-      border: 1px solid rgba(15, 23, 42, 0.10);
+      background: var(--badge-bg);
+      border: 1px solid var(--badge-border);
       color: var(--fg);
     }
 
     .theme-btn {
-      border: 1px solid rgba(226, 232, 240, 0.18);
-      background: rgba(226, 232, 240, 0.10);
+      border: 1px solid var(--tbtn-border);
+      background: var(--tbtn-bg);
       color: var(--fg);
     }
-    .theme-btn:hover { background: rgba(226, 232, 240, 0.16); }
-    html[data-theme="light"] .theme-btn, html:has(#themeSwitch:checked) .theme-btn{
-      border: 1px solid rgba(15, 23, 42, 0.10);
-      background: rgba(255, 255, 255, 0.70);
-      color: var(--fg);
-    }
-    html[data-theme="light"] .theme-btn:hover, html:has(#themeSwitch:checked) .theme-btn:hover{ background: rgba(255, 255, 255, 0.90); }
+    .theme-btn:hover { background: var(--tbtn-hover); }
 
     #searchOverlay {
       position: fixed;
@@ -709,14 +937,11 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       flex: 1;
       border-radius: 0.9rem;
       border: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.06);
+      background: var(--input-bg);
       color: var(--fg);
       padding: 0.6rem 0.75rem;
       font-size: 0.95rem;
       outline: none;
-    }
-    html[data-theme="light"] .search-input, html:has(#themeSwitch:checked) .search-input{
-      background: rgba(255, 255, 255, 0.80);
     }
     .search-meta {
       color: var(--muted);
@@ -725,23 +950,15 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       padding: 0 0.25rem;
     }
     mark.search-mark {
-      background: rgba(250, 204, 21, 0.30);
-      border: 1px solid rgba(250, 204, 21, 0.32);
+      background: var(--mark-bg);
+      border: 1px solid var(--mark-border);
       color: inherit;
       padding: 0.02rem 0.12rem;
       border-radius: 0.25rem;
     }
-    html[data-theme="light"] mark.search-mark, html:has(#themeSwitch:checked) mark.search-mark{
-      background: rgba(234, 179, 8, 0.22);
-      border-color: rgba(234, 179, 8, 0.28);
-    }
     mark.search-mark.search-active {
-      background: rgba(59, 130, 246, 0.28);
-      border-color: rgba(59, 130, 246, 0.34);
-    }
-    html[data-theme="light"] mark.search-mark.search-active, html:has(#themeSwitch:checked) mark.search-mark.search-active{
-      background: rgba(37, 99, 235, 0.18);
-      border-color: rgba(37, 99, 235, 0.22);
+      background: var(--mark-active-bg);
+      border-color: var(--mark-active-border);
     }
 
     /* Pygments codehilite token colors — theme-aware via CSS variables */
@@ -786,11 +1003,11 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     /* nicer scrollbars (webkit only) */
     #toc::-webkit-scrollbar, article pre::-webkit-scrollbar { height: 10px; width: 10px; }
     #toc::-webkit-scrollbar-thumb, article pre::-webkit-scrollbar-thumb {
-      background: rgba(148, 163, 184, 0.24);
+      background: var(--scrollbar-thumb);
       border-radius: 9999px;
-      border: 2px solid rgba(2,6,23,0.65);
+      border: 2px solid var(--scrollbar-track);
     }
-    #toc::-webkit-scrollbar-thumb:hover, article pre::-webkit-scrollbar-thumb:hover { background: rgba(148, 163, 184, 0.34); }
+    #toc::-webkit-scrollbar-thumb:hover, article pre::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }
 
     #toc ul { list-style: none; padding-left: 0; margin: 0.25rem 0 0; }
     #toc li { margin: 0.125rem 0; }
@@ -803,10 +1020,10 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       color: var(--muted);
       text-decoration: none;
     }
-    #toc a:hover { background: rgba(20, 184, 166, 0.12); color: var(--fg); }
+    #toc a:hover { background: var(--toc-hover-bg); color: var(--fg); }
     #toc a.toc-active {
-      background: rgba(20, 184, 166, 0.14);
-      border: 1px solid rgba(20, 184, 166, 0.28);
+      background: var(--toc-active-bg);
+      border: 1px solid var(--toc-active-border);
       font-weight: 600;
     }
     #toc .toc > ul { margin-top: 0.25rem; }
@@ -835,34 +1052,28 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       line-height: 1;
     }
     .toc-toggle:hover {
-      background: rgba(226, 232, 240, 0.08);
+      background: var(--hover-bg);
       border-color: var(--border);
       color: var(--fg);
     }
     .toc-children {
       margin-left: 0.75rem;
-      border-left: 1px solid rgba(148, 163, 184, 0.14);
+      border-left: 1px solid var(--toc-guide);
       padding-left: 0.5rem;
       margin-top: 0.15rem;
     }
     .toc-collapsed .toc-children { display: none; }
 
     .toc-mark {
-      background: rgba(250, 204, 21, 0.22);
-      border: 1px solid rgba(250, 204, 21, 0.22);
+      background: var(--toc-mark-bg);
+      border: 1px solid var(--toc-mark-border);
       color: inherit;
       padding: 0.02rem 0.18rem;
       border-radius: 0.25rem;
     }
-    html[data-theme="light"] .toc-mark, html:has(#themeSwitch:checked) .toc-mark{
-      background: rgba(234, 179, 8, 0.24);
-      border-color: rgba(234, 179, 8, 0.30);
-    }
 
-    .toc-title { color: var(--fg); }
-    .toc-subtitle { color: var(--muted); }
-    html[data-theme="light"] .toc-title, html:has(#themeSwitch:checked) .toc-title{ color: rgba(15, 23, 42, 0.92); }
-    html[data-theme="light"] .toc-subtitle, html:has(#themeSwitch:checked) .toc-subtitle{ color: rgba(15, 23, 42, 0.72); }
+    .toc-title { color: var(--toc-title); }
+    .toc-subtitle { color: var(--toc-subtitle); }
 
     article { color: var(--fg); line-height: 1.75; font-size: var(--article-fs, 1.0625rem); max-width: clamp(72ch, 82vw, 96ch); margin-left: auto; margin-right: auto; padding: 0 1rem; }
     article p { color: var(--fg); margin: 1rem 0; }
@@ -878,8 +1089,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     }
     article a { color: var(--a1); text-decoration: underline; text-underline-offset: 3px; }
     article a:hover { color: var(--a4); }
-    article strong { color: rgba(248, 250, 252, 0.98); font-weight: 700; }
-    html[data-theme="light"] article strong, html:has(#themeSwitch:checked) article strong{ color: rgba(15, 23, 42, 0.98); }
+    article strong { color: var(--strong); font-weight: 700; }
     article em { color: var(--muted); font-style: italic; }
     article .headerlink {
       opacity: 0;
@@ -918,7 +1128,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       height: 2px;
       width: 2.5rem;
       margin-bottom: 0.7rem;
-      background: linear-gradient(90deg, rgba(168,85,247,0.95), rgba(59,130,246,0.75), rgba(20,184,166,0.75));
+      background: var(--h2-bar);
       border-radius: 9999px;
     }
     article h3 { font-size: 1.25rem; line-height: 1.75rem; margin: 1.75rem 0 0.5rem; color: var(--a4); }
@@ -927,20 +1137,15 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     article code {
       font-family: "Cascadia Mono", "Cascadia Mono PL", Consolas, "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, "Liberation Mono", "Courier New", monospace;
       font-size: 0.95em;
-      background: rgba(148, 163, 184, 0.12);
-      border: 1px solid rgba(148, 163, 184, 0.18);
-      color: var(--fg);
+      background: var(--code-inline-bg);
+      border: 1px solid var(--code-inline-border);
+      color: var(--code-inline-fg);
       padding: 0.12rem 0.35rem;
       border-radius: 0.45rem;
     }
-    html[data-theme="light"] article code, html:has(#themeSwitch:checked) article code{
-      background: rgba(148, 163, 184, 0.14);
-      border: 1px solid rgba(148, 163, 184, 0.22);
-      color: rgba(15, 23, 42, 0.92);
-    }
     article pre {
-      background: rgba(2, 6, 23, 0.85);
-      border: 1px solid rgba(59, 130, 246, 0.18);
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
       border-radius: 0.9rem;
       padding: 1rem;
       overflow: auto;
@@ -953,24 +1158,14 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       font-family: "Cascadia Mono", "Cascadia Mono PL", Consolas, "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, "Liberation Mono", "Courier New", monospace;
       font-kerning: none;
       line-height: 1.52;
+      color: var(--code-fg);
     }
-    html[data-theme="light"] article pre, html:has(#themeSwitch:checked) article pre{
-      background: #f6f8fa;
-      border: 1px solid rgba(15, 23, 42, 0.12);
-      color: #24292e;
+    /* codehilite 외부 테마(hljs CDN CSS)보다 우선하도록 !important 유지 */
+    .highlight, .highlight pre, .highlight pre code {
+      color: var(--code-fg) !important;
+      background: var(--code-bg) !important;
     }
-    html[data-theme="light"] article pre code, html:has(#themeSwitch:checked) article pre code{
-      color: #24292e;
-    }
-    html[data-theme="light"] .highlight, html:has(#themeSwitch:checked) .highlight,
-    html[data-theme="light"] .highlight pre, html:has(#themeSwitch:checked) .highlight pre,
-    html[data-theme="light"] .highlight pre code, html:has(#themeSwitch:checked) .highlight pre code{
-      color: #24292e !important;
-      background: #f6f8fa !important;
-    }
-    html[data-theme="light"] .highlight, html:has(#themeSwitch:checked) .highlight{
-      border-radius: 0.9rem;
-    }
+    .highlight { border-radius: 0.9rem; }
     article pre code {
       background: transparent;
       border: none;
@@ -1019,103 +1214,58 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       display: block;
       overflow-x: auto;
       padding: 0;
-      color: rgba(226, 232, 240, 0.92);
+      color: var(--hljs-fg);
       background: transparent;
-    }
-    html[data-theme="light"] .hljs, html:has(#themeSwitch:checked) .hljs{
-      color: #24292e;
-    }
-    html[data-theme="light"] .hljs-comment, html:has(#themeSwitch:checked) .hljs-comment,
-    html[data-theme="light"] .hljs-quote, html:has(#themeSwitch:checked) .hljs-quote{
-      color: #6a737d;
-    }
-    html[data-theme="light"] .hljs-keyword, html:has(#themeSwitch:checked) .hljs-keyword,
-    html[data-theme="light"] .hljs-selector-tag, html:has(#themeSwitch:checked) .hljs-selector-tag,
-    html[data-theme="light"] .hljs-subst, html:has(#themeSwitch:checked) .hljs-subst{
-      color: #d73a49;
-    }
-    html[data-theme="light"] .hljs-string, html:has(#themeSwitch:checked) .hljs-string,
-    html[data-theme="light"] .hljs-doctag, html:has(#themeSwitch:checked) .hljs-doctag,
-    html[data-theme="light"] .hljs-regexp, html:has(#themeSwitch:checked) .hljs-regexp{
-      color: #032f62;
-    }
-    html[data-theme="light"] .hljs-title, html:has(#themeSwitch:checked) .hljs-title,
-    html[data-theme="light"] .hljs-section, html:has(#themeSwitch:checked) .hljs-section,
-    html[data-theme="light"] .hljs-selector-id, html:has(#themeSwitch:checked) .hljs-selector-id,
-    html[data-theme="light"] .hljs-selector-class, html:has(#themeSwitch:checked) .hljs-selector-class{
-      color: #6f42c1;
-    }
-    html[data-theme="light"] .hljs-number, html:has(#themeSwitch:checked) .hljs-number,
-    html[data-theme="light"] .hljs-literal, html:has(#themeSwitch:checked) .hljs-literal,
-    html[data-theme="light"] .hljs-symbol, html:has(#themeSwitch:checked) .hljs-symbol,
-    html[data-theme="light"] .hljs-bullet, html:has(#themeSwitch:checked) .hljs-bullet{
-      color: #005cc5;
-    }
-    html[data-theme="light"] .hljs-attr, html:has(#themeSwitch:checked) .hljs-attr,
-    html[data-theme="light"] .hljs-attribute, html:has(#themeSwitch:checked) .hljs-attribute,
-    html[data-theme="light"] .hljs-variable, html:has(#themeSwitch:checked) .hljs-variable,
-    html[data-theme="light"] .hljs-template-variable, html:has(#themeSwitch:checked) .hljs-template-variable,
-    html[data-theme="light"] .hljs-type, html:has(#themeSwitch:checked) .hljs-type{
-      color: #005cc5;
-    }
-    html[data-theme="light"] .hljs-built_in, html:has(#themeSwitch:checked) .hljs-built_in,
-    html[data-theme="light"] .hljs-builtin-name, html:has(#themeSwitch:checked) .hljs-builtin-name{
-      color: #e36209;
-    }
-    html[data-theme="light"] .hljs-meta, html:has(#themeSwitch:checked) .hljs-meta,
-    html[data-theme="light"] .hljs-meta-keyword, html:has(#themeSwitch:checked) .hljs-meta-keyword,
-    html[data-theme="light"] .hljs-meta-string, html:has(#themeSwitch:checked) .hljs-meta-string{
-      color: #6a737d;
     }
     .hljs-comment,
     .hljs-quote {
-      color: rgba(148, 163, 184, 0.80);
+      color: var(--hljs-comment);
       font-style: italic;
     }
     .hljs-keyword,
     .hljs-selector-tag,
     .hljs-subst {
-      color: rgba(168, 85, 247, 0.95);
+      color: var(--hljs-keyword);
       font-weight: 600;
     }
     .hljs-string,
     .hljs-doctag,
     .hljs-regexp {
-      color: rgba(34, 197, 94, 0.95);
+      color: var(--hljs-string);
     }
     .hljs-title,
     .hljs-section,
     .hljs-selector-id,
     .hljs-selector-class {
-      color: rgba(59, 130, 246, 0.95);
+      color: var(--hljs-title);
       font-weight: 600;
     }
     .hljs-number,
     .hljs-literal,
     .hljs-symbol,
     .hljs-bullet {
-      color: rgba(250, 204, 21, 0.95);
+      color: var(--hljs-number);
     }
     .hljs-attr,
     .hljs-attribute,
     .hljs-variable,
     .hljs-template-variable,
     .hljs-type {
-      color: rgba(94, 234, 212, 0.95);
+      color: var(--hljs-attr);
     }
     .hljs-built_in,
     .hljs-builtin-name {
-      color: rgba(244, 63, 94, 0.95);
+      color: var(--hljs-builtin);
     }
     .hljs-meta,
     .hljs-meta-keyword,
     .hljs-meta-string {
-      color: rgba(203, 213, 225, 0.95);
+      color: var(--hljs-meta);
     }
     .hljs-emphasis { font-style: italic; }
     .hljs-strong { font-weight: 700; }
-    .hljs-addition { background: rgba(34, 197, 94, 0.12); }
-    .hljs-deletion { background: rgba(244, 63, 94, 0.12); }
+    .hljs-addition { background: var(--diff-add-bg); }
+    .hljs-deletion { background: var(--diff-del-bg); }
     /* --- end highlight.js fallback theme --- */
 
     article pre, article pre code, .highlight pre, .highlight pre code {
@@ -1151,18 +1301,13 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       font-family: "Cascadia Mono", "Cascadia Mono PL", Consolas, "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, "Liberation Mono", "Courier New", monospace;
       font-kerning: none;
       line-height: 1.35;
-      background: rgba(15, 23, 42, 0.75);
-      border: 1px solid rgba(59, 130, 246, 0.22);
+      background: var(--mermaid-bg);
+      border: 1px solid var(--mermaid-border);
       border-radius: 0.9rem;
       padding: 1rem;
       overflow: auto;
       margin: 1rem 0;
-      color: rgba(226, 232, 240, 0.92);
-    }
-    html[data-theme="light"] .mermaid, html:has(#themeSwitch:checked) .mermaid{
-      background: rgba(232, 236, 241, 0.65);
-      border: 1px solid rgba(15, 23, 42, 0.18);
-      color: rgba(15, 23, 42, 0.92);
+      color: var(--mermaid-fg);
     }
 
     .mermaid svg {
@@ -1174,11 +1319,11 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       margin: 1rem 0;
       text-align: center;
       overflow: auto;
-      background: #ffffff;
-      border: 1px solid rgba(148, 163, 184, 0.25);
+      background: var(--mermaid-img-bg);
+      border: 1px solid var(--mermaid-img-border);
       border-radius: 0.75rem;
       padding: 1rem;
-      color: #1e293b !important;
+      color: var(--mermaid-img-fg) !important;
     }
     .mermaid-svg svg {
       display: block;
@@ -1192,8 +1337,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     .mermaid-img {
       margin: 1rem 0;
       text-align: center;
-      background: #ffffff;
-      border: 1px solid rgba(148, 163, 184, 0.25);
+      background: var(--mermaid-img-bg);
+      border: 1px solid var(--mermaid-img-border);
       border-radius: 0.75rem;
       padding: 1rem;
     }
@@ -1234,8 +1379,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       letter-spacing: 0;
       font-family: "Cascadia Mono", "Cascadia Mono PL", Consolas, "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, "Liberation Mono", "Courier New", monospace;
       line-height: 1.35;
-      background: rgba(2, 6, 23, 0.85);
-      border: 1px solid rgba(244, 63, 94, 0.22);
+      background: var(--mermaid-fallback-bg);
+      border: 1px solid var(--mermaid-err-border);
       border-radius: 0.9rem;
       padding: 1rem;
       overflow: auto;
@@ -1243,8 +1388,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     }
 
     .mermaid-error {
-      border: 1px solid rgba(244, 63, 94, 0.22);
-      background: rgba(244, 63, 94, 0.04);
+      border: 1px solid var(--mermaid-err-border);
+      background: var(--mermaid-err-tint);
       border-radius: 0.9rem;
       padding: 0.85rem;
       margin: 1rem 0;
@@ -1252,11 +1397,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     .mermaid-error-title {
       font-weight: 800;
       font-size: 0.9rem;
-      color: rgba(254, 226, 226, 0.92);
+      color: var(--mermaid-err-title);
       margin-bottom: 0.5rem;
-    }
-    html[data-theme="light"] .mermaid-error-title, html:has(#themeSwitch:checked) .mermaid-error-title{
-      color: rgba(190, 18, 60, 0.92);
     }
     .mermaid-error details {
       margin-top: 0.6rem;
@@ -1271,16 +1413,12 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       margin-top: 0.5rem;
       white-space: pre-wrap;
       word-break: break-word;
-      background: rgba(2, 6, 23, 0.55);
-      border: 1px solid rgba(148, 163, 184, 0.18);
+      background: var(--mermaid-err-bg);
+      border: 1px solid var(--err-msg-border);
       border-radius: 0.75rem;
       padding: 0.6rem 0.7rem;
-      color: rgba(226, 232, 240, 0.92);
+      color: var(--mermaid-err-fg);
       overflow: auto;
-    }
-    html[data-theme="light"] .mermaid-error pre.mermaid-error-msg, html:has(#themeSwitch:checked) .mermaid-error pre.mermaid-error-msg{
-      background: rgba(15, 23, 42, 0.06);
-      color: rgba(15, 23, 42, 0.88);
     }
 
     /* Copy button for code blocks */
@@ -1295,15 +1433,12 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       line-height: 1rem;
       font-weight: 600;
       border: 1px solid var(--border);
-      background: rgba(226, 232, 240, 0.06);
+      background: var(--btn-bg);
       color: var(--fg);
       cursor: pointer;
       user-select: none;
     }
-    .copy-btn:hover { background: rgba(226, 232, 240, 0.10); }
-    html[data-theme="light"] .copy-btn, html:has(#themeSwitch:checked) .copy-btn{
-      background: rgba(255, 255, 255, 0.70);
-    }
+    .copy-btn:hover { background: var(--btn-hover); }
 
     .lang-label {
       position: absolute;
@@ -1314,14 +1449,11 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       font-size: 0.7rem;
       line-height: 1rem;
       font-weight: 600;
-      color: rgba(148, 163, 184, 0.7);
+      color: var(--muted);
       user-select: none;
       pointer-events: none;
       text-transform: uppercase;
       letter-spacing: 0.03em;
-    }
-    html[data-theme="light"] .lang-label, html:has(#themeSwitch:checked) .lang-label{
-      color: rgba(100, 116, 139, 0.8);
     }
 
     .table-wrap {
@@ -1333,8 +1465,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       background-image:
         linear-gradient(to right, var(--table-cover) 50%, rgba(0,0,0,0)),
         linear-gradient(to left, var(--table-cover) 50%, rgba(0,0,0,0)),
-        radial-gradient(farthest-side at 0 50%, rgba(0,0,0,0.30), rgba(0,0,0,0)),
-        radial-gradient(farthest-side at 100% 50%, rgba(0,0,0,0.30), rgba(0,0,0,0));
+        radial-gradient(farthest-side at 0 50%, var(--edge-shadow), rgba(0,0,0,0)),
+        radial-gradient(farthest-side at 100% 50%, var(--edge-shadow), rgba(0,0,0,0));
       background-position: left center, right center, left center, right center;
       background-repeat: no-repeat;
       background-size: 24px 100%, 24px 100%, 14px 100%, 14px 100%;
@@ -1347,109 +1479,68 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       margin: 0;
     }
     article th, article td {
-      border: 1px solid rgba(148, 163, 184, 0.18);
+      border: 1px solid var(--td-border);
       padding: 0.65rem 0.85rem;
       vertical-align: top;
       overflow-wrap: break-word;
       word-break: keep-all;
       hyphens: auto;
     }
-    article th { background: rgba(59, 130, 246, 0.10); font-weight: 600; color: rgba(224, 231, 255, 0.98); }
-    article tbody tr:nth-child(even) { background: rgba(148, 163, 184, 0.04); }
-    article tbody tr:hover { background: rgba(148, 163, 184, 0.08); }
-    html[data-theme="light"] article th, html:has(#themeSwitch:checked) article th{
-      background: rgba(37, 99, 235, 0.08);
-      color: rgba(15, 23, 42, 0.92);
-    }
-    html[data-theme="light"] article td, html:has(#themeSwitch:checked) article td{
-      border-color: rgba(15, 23, 42, 0.10);
-    }
-    html[data-theme="light"] article th, html:has(#themeSwitch:checked) article th{
-      border-color: rgba(15, 23, 42, 0.12);
-    }
-    html[data-theme="light"] article tbody tr:nth-child(even), html:has(#themeSwitch:checked) article tbody tr:nth-child(even){ background: rgba(15, 23, 42, 0.03); }
-    html[data-theme="light"] article tbody tr:hover, html:has(#themeSwitch:checked) article tbody tr:hover{ background: rgba(15, 23, 42, 0.05); }
+    article th { background: var(--th-bg); font-weight: 600; color: var(--th-fg); border-color: var(--th-border); }
+    article tbody tr:nth-child(even) { background: var(--tr-even); }
+    article tbody tr:hover { background: var(--tr-hover); }
     /* Enhanced Practical Notes & Callouts */
     article blockquote {
-      border-left: 4px solid rgba(99, 102, 241, 0.65);
+      border-left: 4px solid var(--quote-border);
       padding: 0.85rem 1.15rem;
       margin: 1.25rem 0;
-      background: rgba(99, 102, 241, 0.07);
+      background: var(--quote-bg);
       border-radius: 0.75rem;
       color: var(--fg);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      box-shadow: var(--quote-shadow);
       position: relative;
-    }
-    html[data-theme="light"] article blockquote, html:has(#themeSwitch:checked) article blockquote{
-      border-left-color: rgba(99, 102, 241, 0.75);
-      background: rgba(99, 102, 241, 0.06);
-      color: var(--fg);
     }
     /* SOP Callouts (Emerald/Green) */
     article blockquote.callout-sop {
-      border-left: 4px solid #10b981;
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(16, 185, 129, 0.03));
-      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-left: 4px solid var(--callout-sop-accent);
+      background: var(--callout-sop-bg);
+      border: 1px solid var(--callout-sop-border);
       border-left-width: 4px;
-    }
-    html[data-theme="light"] article blockquote.callout-sop, html:has(#themeSwitch:checked) article blockquote.callout-sop{
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.14), rgba(16, 185, 129, 0.04));
-      border-color: rgba(16, 185, 129, 0.35);
     }
     /* Troubleshooting Callouts (Amber/Orange) */
     article blockquote.callout-trouble {
-      border-left: 4px solid #f59e0b;
-      background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(245, 158, 11, 0.03));
-      border: 1px solid rgba(245, 158, 11, 0.25);
+      border-left: 4px solid var(--callout-trouble-accent);
+      background: var(--callout-trouble-bg);
+      border: 1px solid var(--callout-trouble-border);
       border-left-width: 4px;
-    }
-    html[data-theme="light"] article blockquote.callout-trouble, html:has(#themeSwitch:checked) article blockquote.callout-trouble{
-      background: linear-gradient(135deg, rgba(245, 158, 11, 0.14), rgba(245, 158, 11, 0.04));
-      border-color: rgba(245, 158, 11, 0.35);
     }
     /* Inspection Warning Callouts (Rose/Red) */
     article blockquote.callout-warning {
-      border-left: 4px solid #f43f5e;
-      background: linear-gradient(135deg, rgba(244, 63, 94, 0.12), rgba(244, 63, 94, 0.03));
-      border: 1px solid rgba(244, 63, 94, 0.25);
+      border-left: 4px solid var(--callout-warning-accent);
+      background: var(--callout-warning-bg);
+      border: 1px solid var(--callout-warning-border);
       border-left-width: 4px;
-    }
-    html[data-theme="light"] article blockquote.callout-warning, html:has(#themeSwitch:checked) article blockquote.callout-warning{
-      background: linear-gradient(135deg, rgba(244, 63, 94, 0.14), rgba(244, 63, 94, 0.04));
-      border-color: rgba(244, 63, 94, 0.35);
     }
     /* Form & Document Sample Callouts (Indigo/Blue) */
     article blockquote.callout-form {
-      border-left: 4px solid #6366f1;
-      background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(99, 102, 241, 0.03));
-      border: 1px solid rgba(99, 102, 241, 0.25);
+      border-left: 4px solid var(--callout-form-accent);
+      background: var(--callout-form-bg);
+      border: 1px solid var(--callout-form-border);
       border-left-width: 4px;
-    }
-    html[data-theme="light"] article blockquote.callout-form, html:has(#themeSwitch:checked) article blockquote.callout-form{
-      background: linear-gradient(135deg, rgba(99, 102, 241, 0.14), rgba(99, 102, 241, 0.04));
-      border-color: rgba(99, 102, 241, 0.35);
     }
     /* Character Note Callouts (Cyan/Sky) */
     article blockquote.callout-character {
-      border-left: 4px solid #06b6d4;
-      background: linear-gradient(135deg, rgba(6, 182, 212, 0.12), rgba(6, 182, 212, 0.03));
-      border: 1px solid rgba(6, 182, 212, 0.25);
+      border-left: 4px solid var(--callout-character-accent);
+      background: var(--callout-character-bg);
+      border: 1px solid var(--callout-character-border);
       border-left-width: 4px;
-    }
-    html[data-theme="light"] article blockquote.callout-character, html:has(#themeSwitch:checked) article blockquote.callout-character{
-      background: linear-gradient(135deg, rgba(6, 182, 212, 0.14), rgba(6, 182, 212, 0.04));
-      border-color: rgba(6, 182, 212, 0.35);
     }
     /* Exam & Quiz Focus Callouts (Purple/Violet) */
     article blockquote.callout-exam {
-      border-left: 4px solid #a855f7;
-      background: linear-gradient(135deg, rgba(168, 85, 247, 0.12), rgba(168, 85, 247, 0.03));
-      border: 1px solid rgba(168, 85, 247, 0.25);
+      border-left: 4px solid var(--callout-exam-accent);
+      background: var(--callout-exam-bg);
+      border: 1px solid var(--callout-exam-border);
       border-left-width: 4px;
-    }
-    html[data-theme="light"] article blockquote.callout-exam, html:has(#themeSwitch:checked) article blockquote.callout-exam{
-      background: linear-gradient(135deg, rgba(168, 85, 247, 0.14), rgba(168, 85, 247, 0.04));
-      border-color: rgba(168, 85, 247, 0.35);
     }
 
     /* Back to Top button */
@@ -1461,8 +1552,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       width: 2.5rem;
       height: 2.5rem;
       border-radius: 9999px;
-      border: 1px solid rgba(226, 232, 240, 0.18);
-      background: rgba(2, 6, 23, 0.75);
+      border: 1px solid var(--floating-border);
+      background: var(--floating-bg);
       color: var(--fg);
       font-size: 1.2rem;
       line-height: 1;
@@ -1473,19 +1564,14 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       box-shadow: var(--shadow);
       transition: opacity 0.2s;
     }
-    .back-to-top:hover { background: rgba(2, 6, 23, 0.88); }
-    html[data-theme="light"] .back-to-top, html:has(#themeSwitch:checked) .back-to-top{
-      background: rgba(255, 255, 255, 0.92);
-      color: rgba(15, 23, 42, 0.92);
-      border: 1px solid rgba(15, 23, 42, 0.14);
-    }
+    .back-to-top:hover { background: var(--floating-hover); }
 
     /* Lightbox */
     .lightbox-overlay {
       position: fixed;
       inset: 0;
       z-index: 10000;
-      background: rgba(0, 0, 0, 0.85);
+      background: var(--lightbox-bg);
       display: none;
       align-items: center;
       justify-content: center;
@@ -1495,10 +1581,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       max-width: 92vw;
       max-height: 92vh;
       border-radius: 0.75rem;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-    }
-    html[data-theme="light"] .lightbox-overlay, html:has(#themeSwitch:checked) .lightbox-overlay{
-      background: rgba(255, 255, 255, 0.90);
+      box-shadow: var(--lightbox-img-shadow);
     }
     article img {
       cursor: zoom-in;
@@ -1533,6 +1616,12 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       overflow: visible;
       transition: transform 0.25s ease;
     }
+    /* 좁은 화면에서 헤더 버튼 행이 뷰포트를 넘어 페이지 전체에 수평
+       스크롤이 생기는 것을 방지 — 버튼을 다음 줄로 줄바꿈한다. */
+    @media (max-width: 640px) {
+      .topbar > div { flex-wrap: wrap; row-gap: 0.5rem; }
+      .topbar .theme-btn { padding: 0.4rem 0.55rem; }
+    }
     /* 스크롤 다운 시 topbar 자동 숨김 (몰입형 독서) */
     .topbar.topbar-hidden { transform: translateY(-100%); }
 
@@ -1543,14 +1632,10 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       left: 0;
       height: 3px;
       width: 0%;
-      background: linear-gradient(90deg, #38bdf8, #a78bfa);
+      background: var(--progress-bg);
       z-index: 65;
       transition: width 0.08s linear;
       pointer-events: none;
-    }
-    html[data-theme="light"] #readingProgress,
-    html:has(#themeSwitch:checked) #readingProgress {
-      background: linear-gradient(90deg, #0284c7, #7c3aed);
     }
     /* CSS 스크롤 구동 애니메이션: JS 없는 모바일 file:// 환경에서도
        진행률 바가 동작한다 (Chrome 115+, Safari 26+).
@@ -1590,8 +1675,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       transform: translateX(-50%);
       z-index: 65;
       display: none;
-      border: 1px solid rgba(226, 232, 240, 0.18);
-      background: rgba(2, 6, 23, 0.85);
+      border: 1px solid var(--floating-border);
+      background: var(--resume-bg);
       color: var(--fg);
       padding: 0.6rem 1rem;
       border-radius: 9999px;
@@ -1600,19 +1685,13 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       box-shadow: var(--shadow);
       cursor: pointer;
       touch-action: manipulation;
-      -webkit-tap-highlight-color: rgba(0,0,0,0);
+      -webkit-tap-highlight-color: var(--tap-highlight);
       white-space: nowrap;
     }
     #resumeBtn.show { display: inline-flex; align-items: center; gap: 0.35rem; }
     /* TOC 드로어가 열린 동안에는 이어읽기 버튼을 숨긴다.
        (resumeBtn z-index 65 > 드로어 z-40 이므로 백드롭 위에 떠 보이는 것 방지) */
     #tocSwitch:checked ~ #resumeBtn { display: none !important; }
-    html[data-theme="light"] #resumeBtn,
-    html:has(#themeSwitch:checked) #resumeBtn {
-      background: rgba(255, 255, 255, 0.95);
-      color: rgba(15, 23, 42, 0.92);
-      border: 1px solid rgba(15, 23, 42, 0.14);
-    }
 
     /* 앵커(목차) 이동 시 대상 heading이 sticky 헤더 뒤에 숨지 않도록
        스크롤 여백을 준다. 헤더 높이(약 60px)보다 넉넉하게 잡는다. */
@@ -1631,9 +1710,9 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       article pre, .highlight pre {
         white-space: pre-wrap !important;
         word-break: break-word !important;
-        border: 1px solid #ccc !important;
-        background: #f6f8fa !important;
-        color: #24292e !important;
+        border: 1px solid var(--print-code-border) !important;
+        background: var(--print-code-bg) !important;
+        color: var(--print-code-fg) !important;
       }
       .codewrap.collapsed {
         max-height: none !important;
@@ -1792,11 +1871,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       function ensureMermaidLoading() {
         if (ensureMermaidLoading._started || window.mermaid) return;
         ensureMermaidLoading._started = true;
-        var cdns = [
-          'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js',
-          'https://unpkg.com/mermaid@11/dist/mermaid.min.js',
-          'https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.17.2/mermaid.min.js'
-        ];
+        var cdns = [%%MERMAID_CDN_URLS_JS%%];
         var i = 0;
         function tryEsm() {
           if (window.mermaid) return;
@@ -1804,7 +1879,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
             var m = document.createElement('script');
             m.type = 'module';
             m.textContent =
-              "import m from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';" +
+              "import m from '%%MERMAID_ESM_URL%%';" +
               "window.mermaid = m;";
             document.head.appendChild(m);
           } catch (e) {}
@@ -1874,6 +1949,9 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 
       function renderMermaid(mode) {
         try {
+          // All diagrams pre-rendered to SVG (or none exist): skip the
+          // ~3.5MB CDN/embedded runtime fetch entirely.
+          if (!document.querySelector('.mermaid')) return;
           if (!window.mermaid) {
             ensureMermaidLoading();
             renderMermaid._waited = (renderMermaid._waited || 0) + 1;
@@ -3210,7 +3288,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 
 
 def _auto_fence_ascii_diagrams(md_text: str) -> str:
-    box_chars = set("┌┐└┘├┤┬┴┼│─═╔╗╚╝╠╣╦╩╬┃━▲▼◀▶")
+    box_chars = BOX_CHARS
     lines = md_text.splitlines()
     out: list[str] = []
 
@@ -3565,7 +3643,7 @@ def _normalize_diagram_codeblocks(md_text: str) -> str:
     non-breaking spaces, or full-width spaces inside the diagram.
     """
 
-    box_chars = set("┌┐└┘├┤┬┴┼│─═╔╗╚╝╠╣╦╩╬┃━▲▼◀▶")
+    box_chars = BOX_CHARS
     lines = md_text.splitlines()
     out: list[str] = []
 
@@ -3620,7 +3698,7 @@ def _tag_fenced_diagram_blocks_as_text(md_text: str) -> str:
     """If a fenced code block has no language and contains box-drawing chars,
     tag it as ```text to avoid unwanted syntax highlighting and font fallback."""
 
-    box_chars = set("┌┐└┘├┤┬┴┼│─═╔╗╚╝╠╣╦╩╬┃━▲▼◀▶")
+    box_chars = BOX_CHARS
     lines = md_text.splitlines()
     out: list[str] = []
 
@@ -3676,51 +3754,63 @@ def _prerender_mermaid_to_svg(html_body: str, progress_cb=None) -> str:
     if total == 0:
         return html_body
 
-    import time as _time
+    # 진행 표시용 라벨 (다이어그램 소스 첫 줄)
+    labels = [html.unescape(m.group(1)).strip().split('\n')[0][:60] for m in matches]
 
-    def _replace_one(idx: int, m: re.Match) -> str:
+    def _render_one(m: re.Match) -> str:
         src = html.unescape(m.group(1)).strip()
         if not src:
             return m.group(0)
-
-        if progress_cb:
-            try:
-                progress_cb(idx + 1, total, src.split('\n')[0][:60])
-            except Exception:
-                pass
 
         # 메인 웹앱(src/mermaid-utils.js)과 동일한 전략:
         # mindmap은 항상 'default' 테마로 렌더링 (밝은 파스텔 배경 + 어두운 텍스트).
         # dark 테마는 노드 배경이 어두워져 텍스트 대비가 급격히 저하됨.
         # flowchart 등 다른 타입도 동일하게 default로 렌더링하여
         # 다크 페이지 위에서 "밝은 카드"처럼 표시.
-        first_line = src.split('\n')[0].strip().lower()
         # 모든 다이어그램을 default 테마로 렌더링
         encoded = base64.urlsafe_b64encode(src.encode("utf-8")).decode("ascii")
         url = f"https://mermaid.ink/svg/{encoded}?theme=default&bgColor=ffffff"
 
         svg = None
-        for _attempt in range(2):
+        for _attempt in range(3):
             try:
                 req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
                 with urllib.request.urlopen(req, timeout=15) as resp:
                     svg = resp.read().decode("utf-8", errors="replace")
                 if svg and svg.strip().startswith("<svg") and "</svg>" in svg:
-                    # SVG에서 악의적 요소 제거 (XSS 방어)
-                    svg = re.sub(r"<script[\s\S]*?</script>", "", svg, flags=re.IGNORECASE)
-                    svg = re.sub(r'\son\w+\s*=\s*"[^"]*"', "", svg)
-                    svg = re.sub(r"\son\w+\s*=\s*'[^']*'", "", svg)
                     break
                 svg = None
             except Exception as e:
-                if _attempt < 1:
-                    _time.sleep(1)
+                if _attempt < 2:
+                    time.sleep(1.5 * (_attempt + 1))  # 503 레이트리밋 대비 백오프
                     continue
                 try:
                     print(f"[Mermaid pre-render failed] {e}", file=sys.stderr)
                 except Exception:
                     pass
                 break
+
+        if svg is None:
+            # Fallback renderer: kroki.io (deflate + base64url path encoding).
+            # Transparent-background SVG sits on .mermaid-img's own background.
+            try:
+                kdata = base64.urlsafe_b64encode(
+                    zlib.compress(src.encode("utf-8"), 9)
+                ).decode("ascii")
+                kurl = f"https://kroki.io/mermaid/svg/{kdata}"
+                req = urllib.request.Request(kurl, headers={"User-Agent": "Mozilla/5.0"})
+                with urllib.request.urlopen(req, timeout=15) as resp:
+                    cand = resp.read().decode("utf-8", errors="replace")
+                if cand and cand.strip().startswith("<svg") and "</svg>" in cand:
+                    svg = cand
+            except Exception:
+                pass
+
+        if svg:
+            # SVG에서 악의적 요소 제거 (XSS 방어)
+            svg = re.sub(r"<script[\s\S]*?</script>", "", svg, flags=re.IGNORECASE)
+            svg = re.sub(r'\son\w+\s*=\s*"[^"]*"', "", svg)
+            svg = re.sub(r"\son\w+\s*=\s*'[^']*'", "", svg)
 
         if svg:
             # SVG를 <img> 태그로 인라인 임베드하여 외부 CSS의 영향을
@@ -3737,12 +3827,30 @@ def _prerender_mermaid_to_svg(html_body: str, progress_cb=None) -> str:
         # Fallback: keep original div for client-side rendering
         return m.group(0)
 
-    # Process and rebuild
+    # 다이어그램 렌더링은 네트워크 바운드이므로 병렬 처리한다.
+    # 결과는 원래 순서대로 재조립하고, progress_cb는 이 스레드에서만 호출한다.
+    replacements: list[str] = [m.group(0) for m in matches]
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        fut_map = {pool.submit(_render_one, m): i for i, m in enumerate(matches)}
+        done = 0
+        for fut in as_completed(fut_map):
+            i = fut_map[fut]
+            try:
+                replacements[i] = fut.result()
+            except Exception:
+                replacements[i] = matches[i].group(0)
+            done += 1
+            if progress_cb:
+                try:
+                    progress_cb(done, total, labels[i])
+                except Exception:
+                    pass
+
     result = []
     last_end = 0
     for idx, m in enumerate(matches):
         result.append(html_body[last_end:m.start()])
-        result.append(_replace_one(idx, m))
+        result.append(replacements[idx])
         last_end = m.end()
     result.append(html_body[last_end:])
 
@@ -3810,22 +3918,16 @@ def markdown_to_tailwind_html(md_text: str, title: str = "Document", config: Ren
     )
 
     # Classify blockquotes into high-contrast, beautiful callout cards
+    callout_rules = _resolve_callout_rules(config.callout_rules_file)
+
     def _classify_blockquote(m: re.Match) -> str:
         tag_attrs = m.group(1)
         content = m.group(2)
         cls = "callout-card"
-        if any(kw in content for kw in ["📋", "[CÔTELEAF SOP]", "[SOP]", "체크리스트"]):
-            cls += " callout-sop"
-        elif any(kw in content for kw in ["🚨", "[현장 트러블슈팅]", "[트러블슈팅]", "트러블슈팅"]):
-            cls += " callout-trouble"
-        elif any(kw in content for kw in ["⚠️", "[감시원 단골 지적]", "[단속 방지]", "단골 지적", "행정처분 방지"]):
-            cls += " callout-warning"
-        elif any(kw in content for kw in ["📑", "[CÔTELEAF 실무 서식]", "[실무 서식]"]):
-            cls += " callout-form"
-        elif any(kw in content for kw in ["💡", "민수", "지연", "현우", "수진"]):
-            cls += " callout-character"
-        elif any(kw in content for kw in ["🎯", "🧠", "기출", "암기"]):
-            cls += " callout-exam"
+        for rule_cls, keywords in callout_rules:
+            if any(kw in content for kw in keywords):
+                cls += f" {rule_cls}"
+                break
         return f'<blockquote class="{cls}"{tag_attrs}>{content}</blockquote>'
 
     html_body = re.sub(
@@ -3855,7 +3957,8 @@ def markdown_to_tailwind_html(md_text: str, title: str = "Document", config: Ren
         """본문의 목차 항목을 하이퍼링크로 변환/수정.
         1) •로 시작하는 일반 텍스트 항목 → <a href="#id">로 변환
         2) <ol>/<ul> 안의 <li><a> 항목 중 href가 잘못된 경우 → 올바른 id로 수정
-        '📋 목차' 헤딩 아래의 첫 번째 블록만 처리한다."""
+        '목차'/'TOC'/'Table of Contents'를 포함하는 h2 헤딩 아래의
+        첫 번째 블록만 처리한다."""
         if not heading_map:
             return body_html
 
@@ -3895,8 +3998,8 @@ def markdown_to_tailwind_html(md_text: str, title: str = "Document", config: Ren
                     new_lines.append(line)
             return f'<p{p_attrs}>{chr(10).join(new_lines)}</p>'
 
-        def _fix_ol_links(ol_attrs: str, content: str) -> str:
-            """<ol> 안의 <li><a href="#잘못된-id"> 텍스트</a>에서
+        def _fix_list_links(tag: str, attrs: str, content: str) -> str:
+            """<ol>/<ul> 안의 <li><a href="#잘못된-id"> 텍스트</a>에서
             텍스트를 헤딩과 매칭하여 올바른 id로 수정한다."""
             def _fix_a_tag(m: re.Match) -> str:
                 href = m.group(1)
@@ -3907,11 +4010,12 @@ def markdown_to_tailwind_html(md_text: str, title: str = "Document", config: Ren
                 if matched_id:
                     return f'<a href="#{matched_id}">{text}</a>'
                 return m.group(0)
-            return f'<ol{ol_attrs}>{re.sub(r"<a\s+href=\"#([^\"]+)\"[^>]*>([\s\S]*?)</a>", _fix_a_tag, content, flags=re.DOTALL)}</ol>'
+            return f'<{tag}{attrs}>{re.sub(r"<a\s+href=\"#([^\"]+)\"[^>]*>([\s\S]*?)</a>", _fix_a_tag, content, flags=re.DOTALL)}</{tag}>'
 
-        # '📋 목차' 헤딩 직후의 첫 번째 블록(<p> 또는 <ol>)만 변환.
+        # 목차 헤딩('목차'/'TOC'/'Table of Contents'를 포함하는 h2) 직후의
+        # 첫 번째 블록(<p>, <ol> 또는 <ul>)만 변환.
         pattern = re.compile(
-            r'(<h2[^>]*>[^<]*📋\s*목차.*?</h2>\s*)(?:<p([^>]*)>([\s\S]*?)</p>|<ol([^>]*)>([\s\S]*?)</ol>)',
+            r'(<h2[^>]*>[^<]*?(?:목차|toc|table\s+of\s+contents).*?</h2>\s*)(?:<p([^>]*)>([\s\S]*?)</p>|<(ol|ul)([^>]*)>([\s\S]*?)</\4>)',
             re.IGNORECASE | re.DOTALL,
         )
 
@@ -3919,8 +4023,8 @@ def markdown_to_tailwind_html(md_text: str, title: str = "Document", config: Ren
             heading = m.group(1)
             if m.group(2) is not None:  # <p> 블록
                 return heading + _linkify_p_content(m.group(2), m.group(3))
-            elif m.group(4) is not None:  # <ol> 블록
-                return heading + _fix_ol_links(m.group(4), m.group(5))
+            elif m.group(4) is not None:  # <ol>/<ul> 블록
+                return heading + _fix_list_links(m.group(4), m.group(5), m.group(6))
             return m.group(0)
 
         return pattern.sub(_toc_heading_replacer, body_html)
@@ -3929,7 +4033,7 @@ def markdown_to_tailwind_html(md_text: str, title: str = "Document", config: Ren
     # This eliminates all client-side JS dependency — diagrams work on any
     # mobile browser without loading the 3.4MB mermaid.min.js library.
     # Skipped in PC mode for lighter HTML; Mermaid renders client-side via CDN.
-    if bool(getattr(config, "prerender_mermaid", True)):
+    if config.prerender_mermaid:
         html_body = _prerender_mermaid_to_svg(html_body, progress_cb=progress_cb)
 
     # 본문 내 일반 텍스트 목차(• 항목)를 하이퍼링크로 변환.
@@ -3952,19 +4056,82 @@ def markdown_to_tailwind_html(md_text: str, title: str = "Document", config: Ren
             flags=re.DOTALL,
         )
     doc_html = doc_html.replace("%%TOC_HTML%%", toc_html)
-    doc_html = doc_html.replace("%%BODY_HTML%%", html_body)
     doc_html = doc_html.replace("%%COLLAPSE_MIN_LINES%%", str(int(config.collapse_codeblock_min_lines)))
-    doc_html = doc_html.replace("%%MERMAID_SANITIZE_MODE%%", str(config.mermaid_sanitize_mode))
+    doc_html = doc_html.replace("%%MERMAID_CDN_URL%%", MERMAID_CDN_URLS[0])
+    doc_html = doc_html.replace(
+        "%%MERMAID_CDN_URLS_JS%%",
+        ", ".join(f"'{u}'" for u in MERMAID_CDN_URLS),
+    )
+    doc_html = doc_html.replace("%%MERMAID_ESM_URL%%", MERMAID_ESM_URL)
 
     # Embed Mermaid by default so diagrams render on mobile / in-app browsers
     # that fail to load the large CDN script. Best-effort: if the library can't
     # be fetched (offline, no cache), the CDN <script> tag stays as a fallback.
-    if bool(getattr(config, "embed_mermaid", True)):
+    #
+    # 사전 렌더링으로 모든 다이어그램이 <img> SVG로 변환되어
+    # <div class="mermaid">가 하나도 남지 않으면 클라이언트 렌더링 경로가
+    # 필요 없으므로, ~3.5MB mermaid.min.js를 임베드하는 대신 스크립트 태그
+    # 자체를 제거해 생성 파일 크기를 크게 줄인다.
+    needs_mermaid_runtime = '<div class="mermaid"' in html_body
+    if needs_mermaid_runtime and config.embed_mermaid:
         mm_js = _ensure_mermaid_js()
         if mm_js:
             doc_html = _embed_mermaid_js(doc_html, mm_js)
+    elif not needs_mermaid_runtime:
+        doc_html = re.sub(
+            r'\s*<script src="' + re.escape(MERMAID_CDN_URLS[0]) + r'"></script>',
+            '',
+            doc_html,
+        )
 
+    # Verify all template placeholders were substituted before inserting the
+    # body — checking at this point also avoids false positives from literal
+    # "%%FOO%%" text inside the document body itself.
+    leftover = sorted(set(re.findall(r'%%[A-Z][A-Z0-9_]+%%', doc_html)) - {"%%BODY_HTML%%"})
+    if leftover:
+        raise RuntimeError(f"Unsubstituted template placeholders: {leftover}")
+
+    doc_html = doc_html.replace("%%BODY_HTML%%", html_body)
     return doc_html
+
+
+def convert_markdown_file(
+    in_path: Path,
+    out_path: Path | None = None,
+    title: str | None = None,
+    config: RenderConfig | None = None,
+    progress_cb=None,
+) -> Path:
+    """단일 Markdown 파일을 standalone HTML로 변환·저장하고 출력 경로를 반환한다."""
+    md_text = in_path.read_text(encoding="utf-8")
+    out_path = out_path or in_path.with_suffix(".html")
+    out_html = markdown_to_tailwind_html(
+        md_text, title=title or in_path.stem, config=config, progress_cb=progress_cb
+    )
+    out_path.write_text(out_html, encoding="utf-8")
+    return out_path
+
+
+def _expand_input_paths(patterns: list[str]) -> list[Path]:
+    """--in 인자들을 실제 파일 경로 목록으로 확장한다 (glob 패턴 지원)."""
+    paths: list[Path] = []
+    for pat in patterns:
+        matched = glob.glob(pat, recursive=True) if glob.has_magic(pat) else []
+        if matched:
+            paths.extend(Path(m) for m in sorted(matched))
+        elif Path(pat).is_file():
+            paths.append(Path(pat))
+        else:
+            print(f"[skip] input not found: {pat}", file=sys.stderr)
+
+    seen: set[str] = set()
+    unique: list[Path] = []
+    for p in paths:
+        key = str(p.resolve())
+        if key not in seen:
+            seen.add(key)
+            unique.append(p)
+    return unique
 
 
 def run_gui() -> int:
@@ -3980,7 +4147,6 @@ def run_gui() -> int:
             QFileDialog,
             QMessageBox,
             QCheckBox,
-            QSpinBox,
             QComboBox,
         )
         from PySide6.QtCore import Qt, QSettings, QUrl
@@ -4050,52 +4216,19 @@ def run_gui() -> int:
     r3.addWidget(title_edit)
     root.addLayout(r3)
 
-    spin_collapse = QSpinBox()
-    spin_collapse.setRange(0, 9999)
-    spin_collapse.setValue(COLLAPSE_CODEBLOCK_MIN_LINES)
-    spin_collapse.setSingleStep(5)
-    spin_collapse.setToolTip("0 = Off")
-
-    combo_sanitize = QComboBox()
-    combo_sanitize.addItems(["auto", "on", "off"])
-    combo_sanitize.setCurrentText(MERMAID_SANITIZE_MODE)
-
     r4 = row("Options")
 
-    chk_mobile = QCheckBox("모바일용 (SVG 사전 렌더링 + 라이브러리 임베드)")
+    chk_mobile = QCheckBox("모바일용 (SVG 사전 렌더링)")
     chk_mobile.setChecked(True)
     chk_mobile.setToolTip(
-        "체크: Mermaid 다이어그램을 빌드 시 SVG로 사전 렌더링 + 3.5MB 라이브러리 인라인\n"
-        "      → 모바일/in-app 브라우저에서 오프라인 렌더링 보장 (HTML 크기 증가)\n"
+        "체크: Mermaid 다이어그램을 빌드 시 SVG로 사전 렌더링\n"
+        "      → 모바일/in-app 브라우저에서 JS 없이도 표시, HTML도 가벼움 (~0.3MB)\n"
+        "      ※ 사전 렌더링에 실패한 다이어그램이 있으면 3.5MB 라이브러리를\n"
+        "        자동 임베드하여 폴백 렌더링 보장\n"
         "해제: CDN 스크립트로 클라이언트 사이드 렌더링 (가벼운 HTML, PC 권장)"
     )
 
-    def _sync_mobile(state):
-        is_on = bool(state)
-        chk_embed_mermaid.setChecked(is_on)
-        chk_embed_mermaid.setEnabled(not is_on)
-
-    chk_mobile.toggled.connect(_sync_mobile)
-
-    chk_embed_mermaid = QCheckBox("Mermaid 라이브러리 임베드")
-    chk_embed_mermaid.setChecked(EMBED_MERMAID)
-    chk_embed_mermaid.setToolTip(
-        "Mermaid 라이브러리(3.5MB)를 HTML에 인라인\n"
-        "모바일/in-app 브라우저에서 CDN 로딩 실패 시에도 렌더링 보장\n"
-        "(메모리 캐시 사용 — 디스크 파일 생성 안 함)"
-    )
-
-    r4.addSpacing(10)
-    r4.addWidget(QLabel("Fold min lines"))
-    r4.addWidget(spin_collapse)
-
-    r4.addSpacing(10)
-    r4.addWidget(QLabel("Mermaid sanitize"))
-    r4.addWidget(combo_sanitize)
-
-    r4.addSpacing(10)
     r4.addWidget(chk_mobile)
-    r4.addWidget(chk_embed_mermaid)
     r4.addStretch(1)
     root.addLayout(r4)
 
@@ -4208,9 +4341,9 @@ def run_gui() -> int:
             return
 
         render_config = RenderConfig(
-            collapse_codeblock_min_lines=int(spin_collapse.value()),
-            mermaid_sanitize_mode=str(combo_sanitize.currentText() or "auto"),
-            embed_mermaid=bool(chk_embed_mermaid.isChecked()),
+            # 모바일 모드에서는 사전 렌더링 실패분의 폴백으로만 사용되므로 항상 켠다.
+            # (성공 시 임베드되지 않아 크기 비용 없음) / PC 모드는 CDN 사용.
+            embed_mermaid=bool(chk_mobile.isChecked()),
             prerender_mermaid=bool(chk_mobile.isChecked()),
         )
 
@@ -4296,9 +4429,6 @@ def run_gui() -> int:
                 settings.setValue("in_path", str(in_path))
                 settings.setValue("out_path", str(out_path))
                 settings.setValue("title", str(title_edit.text()))
-                settings.setValue("collapse_min_lines", int(spin_collapse.value()))
-                settings.setValue("mermaid_sanitize", str(combo_sanitize.currentText()))
-                settings.setValue("embed_mermaid", 1 if chk_embed_mermaid.isChecked() else 0)
                 settings.setValue("prerender_mermaid", 1 if chk_mobile.isChecked() else 0)
             except Exception:
                 pass
@@ -4338,9 +4468,6 @@ def run_gui() -> int:
 
     # Restore previous session
     try:
-        prev_collapse = int(settings.value("collapse_min_lines", COLLAPSE_CODEBLOCK_MIN_LINES) or COLLAPSE_CODEBLOCK_MIN_LINES)
-        prev_sanitize = str(settings.value("mermaid_sanitize", MERMAID_SANITIZE_MODE) or MERMAID_SANITIZE_MODE)
-        prev_embed_mermaid = int(settings.value("embed_mermaid", 1 if EMBED_MERMAID else 0) or 0)
         prev_prerender = int(settings.value("prerender_mermaid", 1) or 0)
 
         # Keep input/output fields empty on launch so placeholders (*.md/*.html) are visible.
@@ -4352,11 +4479,7 @@ def run_gui() -> int:
             out_manually_set["value"] = False
         except Exception:
             pass
-        spin_collapse.setValue(prev_collapse)
-        if prev_sanitize:
-            combo_sanitize.setCurrentText(prev_sanitize)
         chk_mobile.setChecked(bool(prev_prerender))
-        chk_embed_mermaid.setChecked(bool(prev_embed_mermaid) or bool(prev_prerender))
     except Exception:
         pass
 
@@ -4401,18 +4524,22 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--in",
-        dest="in_path",
-        default="학습안내서.md",
+        dest="in_paths",
+        nargs="+",
+        default=None,
+        help="입력 Markdown 파일(들). 여러 개 또는 glob 패턴 지원 (예: \"content/**/*.md\").",
     )
     parser.add_argument(
         "--out",
         dest="out_path",
         default=None,
+        help="출력 HTML 경로. 단일 입력일 때만 사용 가능.",
     )
     parser.add_argument(
         "--title",
         dest="title",
         default=None,
+        help="문서 제목. 단일 입력일 때만 사용 가능.",
     )
     parser.add_argument(
         "--collapse-min-lines",
@@ -4421,10 +4548,10 @@ if __name__ == "__main__":
         default=COLLAPSE_CODEBLOCK_MIN_LINES,
     )
     parser.add_argument(
-        "--mermaid-sanitize",
-        dest="mermaid_sanitize",
-        choices=["auto", "on", "off"],
-        default=MERMAID_SANITIZE_MODE,
+        "--callout-rules",
+        dest="callout_rules",
+        default=None,
+        help="콜아웃 분류 규칙 JSON 경로. 미지정 시 스크립트 옆 callout_rules.json을 사용하고, 없으면 기본 이모지 규칙.",
     )
     args = parser.parse_args()
 
@@ -4432,11 +4559,18 @@ if __name__ == "__main__":
     if not bool(args.cli):
         raise SystemExit(run_gui())
 
-    in_path = Path(args.in_path)
-    out_path = Path(args.out_path) if args.out_path else in_path.with_suffix('.html')
+    if not args.in_paths:
+        raise SystemExit("--in is required in --cli mode. (Run without --cli to launch the GUI.)")
 
-    if not in_path.exists() or not in_path.is_file():
-        raise SystemExit(f"Input file not found: {in_path}")
+    in_paths = _expand_input_paths(list(args.in_paths))
+    if not in_paths:
+        raise SystemExit("No input files matched.")
+
+    single = len(in_paths) == 1
+    if args.out_path and not single:
+        raise SystemExit("--out can only be used with a single input file.")
+    if args.title and not single:
+        raise SystemExit("--title can only be used with a single input file.")
 
     if args.collapse_min_lines is not None and int(args.collapse_min_lines) > 0:
         collapse_min_lines = int(args.collapse_min_lines)
@@ -4445,14 +4579,27 @@ if __name__ == "__main__":
 
     render_config = RenderConfig(
         collapse_codeblock_min_lines=collapse_min_lines,
-        mermaid_sanitize_mode=str(args.mermaid_sanitize or MERMAID_SANITIZE_MODE),
         embed_mermaid=bool(args.embed_mermaid),
         prerender_mermaid=bool(args.prerender_mermaid),
+        callout_rules_file=args.callout_rules,
     )
 
-    md_text = in_path.read_text(encoding="utf-8")
-    title = args.title if args.title is not None else in_path.stem
-    out_html = markdown_to_tailwind_html(md_text, title=title, config=render_config)
-    out_path.write_text(out_html, encoding="utf-8")
+    done = 0
+    for in_path in in_paths:
+        out_path = Path(args.out_path) if (args.out_path and single) else None
+        try:
+            written = convert_markdown_file(
+                in_path,
+                out_path=out_path,
+                title=args.title if single else None,
+                config=render_config,
+            )
+            print(str(written))
+            done += 1
+        except Exception as e:
+            print(f"[error] {in_path}: {e}", file=sys.stderr)
 
-    print(str(out_path))
+    if not single:
+        print(f"Converted {done}/{len(in_paths)} file(s).", file=sys.stderr)
+    if done == 0:
+        raise SystemExit("All conversions failed.")

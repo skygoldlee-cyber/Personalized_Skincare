@@ -26,7 +26,8 @@
     "test:all": "node --test tests/unit/*.test.js && node tools/check_parser_parity.js && node tools/check-imports.js && vitest run",
     "test:watch": "node --test --watch tests/unit/*.test.js",
     "serve": "node serve.js",
-    "audit:cards": "node tools/audit_card_quality.js"
+    "audit:cards": "node tools/audit_card_quality.js",
+    "deploy": "node tools/deploy.js"
   },
   "keywords": [
     "cosmetics",

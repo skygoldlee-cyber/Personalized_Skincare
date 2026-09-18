@@ -254,13 +254,13 @@
 }
 
 .light-theme .form-select {
-    background-color: var(--color-on-brand);
+    background-color: var(--bg-input);
     color: var(--color-text-main);
     border-color: var(--border-color);
 }
 
 .light-theme .form-select option {
-    background-color: var(--color-on-brand);
+    background-color: var(--bg-input);
     color: var(--color-text-main);
 }
 

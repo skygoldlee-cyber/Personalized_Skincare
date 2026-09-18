@@ -1,0 +1,11 @@
+{
+  "_comment": "MD_to_HTML.py blockquote 콜아웃 분류 규칙 — 위에서부터 첫 매칭 적용. 이 프로젝트 콘텐츠 전용 키워드. 도구를 다른 곳에서 쓸 때는 이 파일이 없으면 기본 이모지 규칙만 적용됨.",
+  "rules": [
+    {"class": "callout-sop", "keywords": ["📋", "[CÔTELEAF SOP]", "[SOP]", "체크리스트"]},
+    {"class": "callout-trouble", "keywords": ["🚨", "[현장 트러블슈팅]", "[트러블슈팅]", "트러블슈팅"]},
+    {"class": "callout-warning", "keywords": ["⚠️", "[감시원 단골 지적]", "[단속 방지]", "단골 지적", "행정처분 방지"]},
+    {"class": "callout-form", "keywords": ["📑", "[CÔTELEAF 실무 서식]", "[실무 서식]"]},
+    {"class": "callout-character", "keywords": ["💡", "민수", "지연", "현우", "수진"]},
+    {"class": "callout-exam", "keywords": ["🎯", "🧠", "기출", "암기"]}
+  ]
+}

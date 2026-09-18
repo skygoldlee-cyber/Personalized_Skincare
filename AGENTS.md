@@ -37,7 +37,9 @@ node tools/sync_citation_lines.js --check  # 변경사항 확인만 (수정 안 
 npm.cmd run serve                      # http://localhost:3000
 
 # 배포
-vercel --prod --yes                    # Vercel 프로덕션 배포
+npm.cmd run deploy                     # 배포 가드(clean tree + origin/main 동기화 확인) → sw 스탬프 자동 커밋·푸시 → vercel --prod 실행
+# ※ 사용자가 "배포"라고 요청하면 이 명령 하나로 전체 단계 수행
+# ※ `vercel --prod` 직접 실행 금지 — 미푸시 커밋/미커밋 변경이 프로덕션에 올라감
 
 # 감사
 npm.cmd run audit:cards                 # 카드 품질 자동 감사 (짧은 설명, 중복, 참조 링크 유효성)

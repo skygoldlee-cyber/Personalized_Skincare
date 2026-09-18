@@ -76,7 +76,7 @@ function _ensureOverlay() {
             <button class="hr-ov-btn secondary" id="hr-print-btn" aria-label="인쇄" title="인쇄"><i class="fa-solid fa-print"></i></button>
             <button class="hr-ov-btn" id="hr-pdf-btn" aria-label="PDF 저장" title="PDF로 저장"><i class="fa-solid fa-file-pdf"></i> PDF 저장</button>
         </div>
-        <div class="hr-ov-scroll" id="hr-scroll" role="document" tabindex="0" style="position:fixed;top:48px;left:0;right:0;bottom:0;overflow-y:scroll;overflow-x:auto;background:#fff;-webkit-overflow-scrolling:touch;">
+        <div class="hr-ov-scroll" id="hr-scroll" role="document" tabindex="0" style="position:fixed;top:48px;left:0;right:0;bottom:0;overflow-y:scroll;overflow-x:auto;-webkit-overflow-scrolling:touch;">
             <div class="hr-loading" id="hr-loading" role="status" aria-live="polite">
                 <div class="spinner"></div>
                 <div>문서 로딩 중...</div>

@@ -114,8 +114,8 @@
     /* Flashcard face gradients */
     --flashcard-front-bg: linear-gradient(135deg, rgba(31, 41, 55, 0.95), rgba(17, 24, 39, 0.95));
     --flashcard-back-bg: linear-gradient(135deg, rgba(17, 24, 39, 0.95), rgba(31, 41, 55, 0.95));
-    --flashcard-front-bg-light: linear-gradient(135deg, #ffffff, #f8fafc);
-    --flashcard-back-bg-light: linear-gradient(135deg, #f8fafc, #ffffff);
+    --flashcard-front-bg-light: linear-gradient(135deg, #e9e4d4, #dcd6c2);
+    --flashcard-back-bg-light: linear-gradient(135deg, #dcd6c2, #e9e4d4);
     
     /* Shadows & Glows */
     --shadow-sm: 0 2px 4px rgba(0,0,0,0.2);
@@ -151,13 +151,13 @@
     --shadow-card-lift: 0 2px 12px rgba(0, 0, 0, 0.15);
 
     /* Reader 라이트 테마 특화 토큰 */
-    --reader-light-bg: #ffffff;
-    --reader-light-border: #d8d3c8;
-    --reader-light-text: #2b2b2b;
-    --reader-light-muted: #999;
-    --reader-light-quote-text: #4a4a4a;
-    --reader-light-code-bg: #f0efe9;
-    --reader-light-table-header: #e8f4f8;
+    --reader-light-bg: #e9e3d1;
+    --reader-light-border: #c6bfa9;
+    --reader-light-text: #3f3a2d;
+    --reader-light-muted: #7a7260;
+    --reader-light-quote-text: #4a4436;
+    --reader-light-code-bg: #ddd6c1;
+    --reader-light-table-header: #d9dccb;
     --bg-deep: #16233a;
     --logo-text-gradient: linear-gradient(to right, #ffffff, #d1d5db);
     --color-banner-warning: #e74c3c;
@@ -269,10 +269,10 @@
 
 /* Light Theme Overrides */
 .light-theme {
-    --bg-app: #dde3ec;
-    --bg-sidebar: #ffffff;
-    --bg-card: #ffffff;
-    --bg-card-hover: #f9fafb;
+    --bg-app: #cdc8ba;
+    --bg-sidebar: #e0dccb;
+    --bg-card: #e9e4d4;
+    --bg-card-hover: #ded9c7;
     --border-color: rgba(15, 23, 42, 0.2);
     --border-color-active: rgba(6, 182, 212, 0.5);
 
@@ -282,18 +282,18 @@
     --bg-hover: rgba(15, 23, 42, 0.08);
     --bg-active: rgba(15, 23, 42, 0.1);
     --bg-elevated: rgba(15, 23, 42, 0.12);
-    --bg-input: var(--color-on-brand);
+    --bg-input: #ded9c7;
     --border-faint: rgba(15, 23, 42, 0.1);
     --border-subtle: rgba(15, 23, 42, 0.15);
     --border-strong: rgba(15, 23, 42, 0.3);
-    --overlay-bg: rgba(255, 255, 255, 0.95);
+    --overlay-bg: rgba(233, 228, 212, 0.95);
     --stroke-subtle: rgba(15, 23, 42, 0.1);
     --stroke-medium: rgba(15, 23, 42, 0.15);
     --stroke-strong: rgba(15, 23, 42, 0.2);
     
     --color-text-main: #1f2937;
     --color-text-muted: #4b5563;
-    --bg-canvas: #ffffff;
+    --bg-canvas: #e5e0cd;
     --color-danger-tint: #dc2626;
     --color-success-tint: #047857;
     --color-warning-tint: #92400e;
