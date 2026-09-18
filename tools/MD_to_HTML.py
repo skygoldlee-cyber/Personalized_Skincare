@@ -1820,7 +1820,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       <div class="flex items-center gap-3">
         <div class="brand-badge h-9 w-9 rounded-xl grid place-items-center font-bold">MD</div>
         <div class="leading-tight">
-          <div class="doc-subtitle text-xs">Documentation</div>
+          <div class="doc-subtitle text-xs">Documentation · %%BUILD%%</div>
           <div class="text-sm font-semibold">%%TITLE%%</div>
         </div>
       </div>
@@ -4169,6 +4169,8 @@ def markdown_to_tailwind_html(md_text: str, title: str = "Document", config: Ren
     doc_html = HTML_TEMPLATE
     # 제목에 <, >, & 등이 있어도 <title>/헤더 마크업이 깨지지 않도록 이스케이프.
     doc_html = doc_html.replace("%%TITLE%%", html.escape(title))
+    # 빌드 표시: 구버전/신버전 파일 구별용 (모바일 전송 파일 혼동 방지)
+    doc_html = doc_html.replace("%%BUILD%%", "b" + time.strftime("%m%d%H%M"))
     # 모바일 TOC 링크 클릭 시 드로어 자동 닫기 (CSS-only):
     # 각 TOC 링크를 <label for="tocSwitch">로 감싸면, 링크 클릭 시 label이
     # checkbox를 토글하여 드로어가 닫히고, 링크의 기본 동작(해시 이동)도 유지됨.
