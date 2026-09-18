@@ -559,16 +559,18 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       min-width: 44px;
     }
     .theme-fab:hover { background: var(--floating-hover); }
-    /* checkbox 상태에 따라 label 텍스트 변경 (JS 없이도 작동) */
+    /* checkbox 상태에 따라 label 텍스트 변경 (JS 없이도 작동)
+       input들은 body 맨 앞에 두고 ~ 형제 선택자를 쓴다 — :has() 미지원
+       뷰어(구형 WebView 등)에서도 동작. */
     #btnThemeFab::after { content: "Theme: Dark"; }
-    html:has(#themeSwitch:checked) #btnThemeFab::after { content: "Theme: Light"; }
+    #themeSwitch:checked ~ #btnThemeFab::after { content: "Theme: Light"; }
     /* JS가 작동할 때 data-theme 기반 텍스트 (checkbox 미체크 상태에서 data-theme=light인 경우) */
-    html[data-theme="light"]:not(:has(#themeSwitch:checked)) #btnThemeFab::after { content: "Theme: Light"; }
+    html[data-theme="light"] #btnThemeFab::after { content: "Theme: Light"; }
 
-    /* 글자 크기 선택 — CSS-only (radio + :has()). JS는 localStorage 저장·복원만
+    /* 글자 크기 선택 — CSS-only (radio + ~ 형제 선택자). JS는 localStorage 저장·복원만
        담당하므로 JS가 차단된 모바일 file:// 뷰어에서도 동작한다. */
     #fsPanel { display: none; }
-    html:has(#fsSwitch:checked) #fsPanel { display: block; }
+    #fsSwitch:checked ~ #fsPanel { display: block; }
     #fsPanel .drawer-backdrop { position: fixed; inset: 0; z-index: 68; background: transparent; }
     .fs-pop {
       position: fixed;
@@ -593,20 +595,20 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       touch-action: manipulation;
     }
     .fs-pop label:hover { background: var(--tbtn-hover); }
-    html:has(#fs0:checked) .fs-pop label[for="fs0"],
-    html:has(#fs1:checked) .fs-pop label[for="fs1"],
-    html:has(#fs2:checked) .fs-pop label[for="fs2"],
-    html:has(#fs3:checked) .fs-pop label[for="fs3"],
-    html:has(#fs4:checked) .fs-pop label[for="fs4"] {
+    #fs0:checked ~ #fsPanel .fs-pop label[for="fs0"],
+    #fs1:checked ~ #fsPanel .fs-pop label[for="fs1"],
+    #fs2:checked ~ #fsPanel .fs-pop label[for="fs2"],
+    #fs3:checked ~ #fsPanel .fs-pop label[for="fs3"],
+    #fs4:checked ~ #fsPanel .fs-pop label[for="fs4"] {
       background: var(--a1);
       color: var(--on-accent);
       font-weight: 600;
     }
-    html:has(#fs0:checked) { --article-fs: 0.9375rem; }
-    html:has(#fs1:checked) { --article-fs: 1.0rem; }
-    html:has(#fs2:checked) { --article-fs: 1.0625rem; }
-    html:has(#fs3:checked) { --article-fs: 1.1875rem; }
-    html:has(#fs4:checked) { --article-fs: 1.3125rem; }
+    #fs0:checked ~ #docContent { --article-fs: 0.9375rem; }
+    #fs1:checked ~ #docContent { --article-fs: 1.0rem; }
+    #fs2:checked ~ #docContent { --article-fs: 1.0625rem; }
+    #fs3:checked ~ #docContent { --article-fs: 1.1875rem; }
+    #fs4:checked ~ #docContent { --article-fs: 1.3125rem; }
 
     /* JS가 차단된 뷰어(모바일 file://)에서 죽은 버튼이 남지 않도록
        JS 의존 컨트롤은 숨겨 두고, 스크립트가 실행되면 표시한다. */
@@ -823,7 +825,9 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       --print-code-fg: #24292e;
     }
 
-    [data-theme="light"], html:has(#themeSwitch:checked) {
+    /* :has() 없이 라이트 적용: themeSwitch가 body 맨 앞에 있으므로
+       ~ * 가 모든 표시 요소(각 형제 + 자손 상속)에 변수를 전달한다. */
+    [data-theme="light"], #themeSwitch:checked ~ * {
       color-scheme: light;
       --fg: rgba(63, 58, 45, 0.95);
       --muted: rgba(122, 114, 96, 1);
@@ -943,6 +947,17 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 
     .doc-bg {
       background: var(--doc-bg);
+    }
+
+    /* 페이지 배경 레이어: body는 :checked ~ 선택자가 닿지 않으므로
+       화면 전체를 덮는 전용 형제 요소로 테마 배경을 칠한다.
+       (doc-bg의 베이스 레이어가 불투명이라 html/body 배경을 가림) */
+    #pageBg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background: var(--doc-bg);
+      pointer-events: none;
     }
 
     .glass {
@@ -1790,8 +1805,14 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 
 <body class="min-h-screen">
   <a class="skip-link" href="#mainContent">본문으로 바로가기</a>
-  <!-- CSS-only TOC 드로어 토글: checkbox + label (JS 없이도 열고 닫기 가능) -->
+  <!-- CSS-only 컨트롤 입력: :has() 미지원 뷰어 대응을 위해 ~ 형제 선택자를
+       쓰므로, 모든 표시 요소보다 앞(body 최상단)에 둔다 -->
   <input type="checkbox" id="tocSwitch" class="toc-switch" aria-label="목차 드로어 열기/닫기" />
+  <input type="checkbox" id="themeSwitch" class="theme-switch" aria-label="다크/라이트 테마 전환" />
+  <input type="checkbox" id="fsSwitch" class="theme-switch" aria-label="글자 크기 패널" />
+  <input type="radio" name="docfs" id="fs0" class="theme-switch" /><input type="radio" name="docfs" id="fs1" class="theme-switch" /><input type="radio" name="docfs" id="fs2" class="theme-switch" checked /><input type="radio" name="docfs" id="fs3" class="theme-switch" /><input type="radio" name="docfs" id="fs4" class="theme-switch" />
+  <!-- 테마 배경 레이어 (body에는 ~ 선택자가 닿지 않아 별도 요소로 칠함) -->
+  <div id="pageBg" aria-hidden="true"></div>
   <!-- 왼쪽 가장자리 힌트 탭: 탭하면 드로어 오픈 (JS 없는 환경 폴백) -->
   <label for="tocSwitch" class="toc-edge-hint" aria-label="목차 열기"></label>
   <header class="topbar sticky top-0 z-50">
@@ -1849,7 +1870,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     </div>
   </div>
 
-  <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 py-8">
+  <div id="docContent" class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 py-8">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
       <aside class="hidden lg:block lg:col-span-3">
         <div class="sticky top-24">
@@ -1901,15 +1922,12 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     }
   </script>
 
-  <!-- CSS-only 테마 토글: checkbox + label (JS 없이도 작동, 모바일 file:// 대응).
+  <!-- 테마 토글 label: input은 body 최상단에 있음 (JS 없이도 작동, 모바일 file:// 대응).
        JS가 작동하면 change 이벤트로 data-theme 동기화 + localStorage 저장 + Mermaid 재렌더. -->
-  <input type="checkbox" id="themeSwitch" class="theme-switch" aria-label="다크/라이트 테마 전환" />
   <label for="themeSwitch" id="btnThemeFab" class="theme-fab">Theme</label>
 
-  <!-- CSS-only 글자 크기 선택: radio + :has() — JS 없이도 동작 (모바일 file:// 대응).
+  <!-- 글자 크기 패널: radio input은 body 최상단에 있음 — JS 없이도 동작.
        JS가 작동하면 change 이벤트로 localStorage 저장 + 선택값 복원. -->
-  <input type="checkbox" id="fsSwitch" class="theme-switch" aria-label="글자 크기 패널" />
-  <input type="radio" name="docfs" id="fs0" class="theme-switch" /><input type="radio" name="docfs" id="fs1" class="theme-switch" /><input type="radio" name="docfs" id="fs2" class="theme-switch" checked /><input type="radio" name="docfs" id="fs3" class="theme-switch" /><input type="radio" name="docfs" id="fs4" class="theme-switch" />
   <div id="fsPanel">
     <label for="fsSwitch" class="drawer-backdrop"></label>
     <div class="fs-pop glass">
@@ -2141,7 +2159,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 
       // 테마 토글: checkbox change 이벤트 기반.
       // label(#btnThemeFab)을 클릭하면 checkbox가 자동 토글 → change 발생.
-      // JS가 차단된 환경(모바일 file://)에서는 CSS :has()만으로 토글 작동.
+      // JS가 차단된 환경(모바일 file://)에서는 CSS ~ 형제 선택자만으로 토글 작동.
       var themeCb = document.getElementById('themeSwitch');
       if (themeCb) {
         themeCb.addEventListener('change', function () {
@@ -2174,7 +2192,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
         });
       }
 
-      // 글자 크기 선택: radio + :has() CSS가 실제 적용을 담당하므로
+      // 글자 크기 선택: radio + ~ 형제 선택자 CSS가 실제 적용을 담당하므로
       // JS 차단 환경에서도 동작. JS는 localStorage 저장·복원과 패널 닫기만 한다.
       var FS_SIZES = ['0.9375rem', '1.0rem', '1.0625rem', '1.1875rem', '1.3125rem'];
       var FS_LABELS = ['아주 작게', '작게', '기본', '크게', '아주 크게'];
