@@ -572,7 +572,9 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     #fsPanel { display: none; }
     #fsSwitch:checked ~ #fsPanel { display: block; }
     #fsPanel .drawer-backdrop { position: fixed; inset: 0; z-index: 68; background: transparent; }
-    .fs-pop {
+    /* #fsPanel 스코프로 specificity를 올린다 — .glass(후순위)의
+       position:relative가 fixed를 덮어쓰지 않도록. */
+    #fsPanel .fs-pop {
       position: fixed;
       top: 4rem;
       right: 1rem;
