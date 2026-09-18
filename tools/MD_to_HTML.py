@@ -1617,10 +1617,13 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       transition: transform 0.25s ease;
     }
     /* 좁은 화면에서 헤더 버튼 행이 뷰포트를 넘어 페이지 전체에 수평
-       스크롤이 생기는 것을 방지 — 버튼을 다음 줄로 줄바꿈한다. */
+       스크롤이 생기는 것을 방지 — 버튼을 다음 줄로 줄바꿈한다.
+       AutoFold·Fold는 목차 드로어에 동일 버튼이 있으므로 모바일에서는
+       숨겨 헤더를 A−/A+/Search 한 줄로 유지한다. */
     @media (max-width: 640px) {
       .topbar > div { flex-wrap: wrap; row-gap: 0.5rem; }
       .topbar .theme-btn { padding: 0.4rem 0.55rem; }
+      #btnAutoFold, #btnFold { display: none; }
     }
     /* 스크롤 다운 시 topbar 자동 숨김 (몰입형 독서) */
     .topbar.topbar-hidden { transform: translateY(-100%); }
@@ -1774,6 +1777,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
           </div>
           <div class="flex items-center gap-2">
             <button id="btnAutoFoldMobile" class="theme-btn rounded-xl px-3 py-2 text-xs font-medium">AutoFold</button>
+            <button id="btnFoldMobile" class="theme-btn rounded-xl px-3 py-2 text-xs font-medium">Fold</button>
             <label for="tocSwitch" id="btnTocClose" class="theme-btn rounded-xl px-3 py-2 text-xs font-medium">Close</label>
           </div>
         </div>
@@ -2616,6 +2620,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       var btnFold = document.getElementById('btnFold');
+      var btnFoldMobile = document.getElementById('btnFoldMobile');
 
       function getFoldMinLinesDefault() {
         return %%COLLAPSE_MIN_LINES%%;
@@ -2635,7 +2640,9 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 
       function setFoldMinLines(n) {
         try { localStorage.setItem('doc_collapse_min_lines', String(n)); } catch (e) {}
-        if (btnFold) btnFold.textContent = (n <= 0) ? 'Fold: Off' : ('Fold: ' + n);
+        var label = (n <= 0) ? 'Fold: Off' : ('Fold: ' + n);
+        if (btnFold) btnFold.textContent = label;
+        if (btnFoldMobile) btnFoldMobile.textContent = label;
       }
 
       function isExpanded(codeId) {
@@ -2802,10 +2809,10 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       }
 
       // Fold button behavior
-      if (btnFold) {
+      if (btnFold || btnFoldMobile) {
         var cur = getFoldMinLines();
         setFoldMinLines(cur);
-        btnFold.addEventListener('click', function () {
+        var cycleFold = function () {
           var steps = [0, 20, 35, 60];
           var v = getFoldMinLines();
           var idx = 0;
@@ -2815,7 +2822,9 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
           var next = steps[(idx + 1) % steps.length];
           setFoldMinLines(next);
           applyFoldAll();
-        });
+        };
+        if (btnFold) btnFold.addEventListener('click', cycleFold);
+        if (btnFoldMobile) btnFoldMobile.addEventListener('click', cycleFold);
       }
     });
   </script>
