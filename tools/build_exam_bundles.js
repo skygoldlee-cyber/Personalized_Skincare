@@ -6,7 +6,8 @@
  * JS 번들로 굽는다. → file:// 로 index.html을 더블클릭해도 fetch 없이
  * 문제집을 열 수 있게 하기 위함.
  *
- * 입력 : content/문제은행/*.md
+ * 입력 : content/문제은행/<manifest.json의 exams[].file>
+ *        (manifest 미등록 MD — 설계 문서, 생성 산출물(*_합답형.md) 등 — 은 번들하지 않음)
  * 출력 : data/exams_md/<파일명>.js
  *        각 파일은 다음 형태로 전역에 등록한다.
  *          (window.__EXAM_MD__ = window.__EXAM_MD__ || {})["content/문제은행/<파일명>.md"] = "<마크다운>";
@@ -25,6 +26,7 @@ const path = require('path');
 const ROOT = path.resolve(__dirname, '..');
 const SRC_DIR = path.join(ROOT, 'content', '문제은행');
 const OUT_DIR = path.join(ROOT, 'data', 'exams_md');
+const MANIFEST = path.join(ROOT, 'content', 'manifest.json');
 
 const AUTOGEN_HEADER = '// 자동 생성된 문제집 번들입니다. 수정하지 마십시오. (tools/build_exam_bundles.js)';
 
@@ -34,12 +36,17 @@ function main() {
         process.exit(1);
     }
 
+    // manifest.json에 등록된 시험 파일만 번들한다.
+    // 문제은행 폴더의 다른 MD(설계 문서, *_합답형.md 등 생성 산출물)는 뷰어 대상이 아니다.
+    const manifest = JSON.parse(fs.readFileSync(MANIFEST, 'utf8'));
+    const examFiles = new Set((manifest.exams || []).map((e) => e.file));
+
     const mdFiles = fs.readdirSync(SRC_DIR)
-        .filter((f) => f.toLowerCase().endsWith('.md'))
+        .filter((f) => f.toLowerCase().endsWith('.md') && examFiles.has(f))
         .sort();
 
     if (mdFiles.length === 0) {
-        console.error(`[build:exams] ${SRC_DIR} 에 .md 파일이 없습니다.`);
+        console.error(`[build:exams] manifest에 등록된 문제집 MD가 ${SRC_DIR} 에 없습니다.`);
         process.exit(1);
     }
 
@@ -70,6 +77,15 @@ function main() {
         const bytes = Buffer.byteLength(body, 'utf8');
         totalBytes += bytes;
         generated.push({ file, out: path.relative(ROOT, outPath), kb: (bytes / 1024).toFixed(1) });
+    }
+
+    // manifest에서 빠진 파일의 stale 번들 정리
+    const keep = new Set(mdFiles.map((f) => f.replace(/\.md$/i, '') + '.js'));
+    for (const f of fs.readdirSync(OUT_DIR)) {
+        if (f.endsWith('.js') && !keep.has(f)) {
+            fs.unlinkSync(path.join(OUT_DIR, f));
+            console.log(`  ✗ stale 번들 제거: ${f}`);
+        }
     }
 
     console.log('[build:exams] 문제집 번들 생성 완료');

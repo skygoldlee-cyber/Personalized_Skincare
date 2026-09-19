@@ -355,7 +355,7 @@ flowchart LR
 | `data/subjects/*.js` | `tools/build/index.js` | `content/교재/*.md` |
 | `data/exams/*.js` | `tools/build/index.js` | `content/문제은행/*.md` |
 | `data/study_md/*.js` | `tools/build_study_md_bundle.js` | `content/교재/*.md` |
-| `data/exams_md/*.js` | `tools/build_exam_bundles.js` | `content/문제은행/*.md` |
+| `data/exams_md/*.js` | `tools/build_exam_bundles.js` | `content/문제은행/*.md` (manifest `exams` 등록분만) |
 | `data/audio_manifest.js` | `tools/build/build-audio-manifest.js` | `content/audiobook/mp3/` |
 | `data/drills/ox_subject*.js` | `tools/build_ox_drills.js` | `data/exams/*.js` (객관식) |
 | `data/drills/combo_subject*.js` | `tools/build_combo_drills.js` | `data/exams/*.js` (객관식+단답형) |

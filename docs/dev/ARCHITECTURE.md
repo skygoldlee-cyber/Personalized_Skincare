@@ -266,7 +266,7 @@ Personalized_Skincare/
 │   │   ├── manufacturing/      #   2과목
 │   │   ├── safety/             #   3과목
 │   │   └── understanding/      #   4과목
-│   ├── 문제은행/                #   과목N_문제.md (4개)
+│   ├── 문제은행/                #   과목N_문제.md (4개, manifest 등록) + 과목N_합답형.md (생성 산출물) + 합답형 학습전략.md
 │   ├── 참조자료/
 │   │   ├── ref_md/             #   HTML/MD 변환본 (42개, ~26MB)
 │   │   ├── 공통/               #   공통 참조자료
@@ -389,6 +389,7 @@ Personalized_Skincare/
     │   ├── CONTENT_WORKFLOW.md #     콘텐츠 변경 시 작업 절차
     │   ├── MULTI_MACHINE_SETUP.md
     │   ├── FLASHCARD_LOGIC.md
+    │   ├── QUESTION_SCHEMA_DESIGN.md #  문항 스키마 + 합답형 변환 설계 (구 문제은행/문항 스키마 설계.md)
     │   ├── MD_TO_HTML_LOGIC.md
     │   ├── TEXTBOOK_AUTHORING_GUIDE.md
     │   ├── AUDIO_HOSTING_GUIDE.md
@@ -1075,7 +1076,7 @@ data/exams/subjectN.*.js ──► build_ox_drills.js    ──► data/drills/o
 ```
 
 - **스키마**: `single`/`combo`/`short`/`ox` 4유형. combo는 진술 `truth`에서 정답 조합을 **도출**(`deriveComboAnswer`)하고 `validateQuestion`으로 유일성을 검증 — 정답 오타를 구조적으로 차단.
-- **합답형 변환**(상세: [`content/문제은행/문항 스키마 설계.md`](../../content/문제은행/문항%20스키마%20설계.md) §6): 객관식은 선지를 `fact`(명제 진위)/`answer`(정답 여부) 모드로 진술화, 단답형은 정답 풀링(유형 분류 + 모호성 필터)으로 오답 진술을 구성. 과목당 100/250/250/400 = 1,000문.
+- **합답형 변환**(상세: [`QUESTION_SCHEMA_DESIGN.md`](./QUESTION_SCHEMA_DESIGN.md) §6): 객관식은 선지를 `fact`(명제 진위)/`answer`(정답 여부) 모드로 진술화, 단답형은 정답 풀링(유형 분류 + 모호성 필터)으로 오답 진술을 구성. 과목당 100/250/250/400 = 1,000문.
 - **진술 원자 추적**: 진술의 `sid`(`stableId`)를 O/X·합답형이 공유 → [`src/statement-tracker.js`](../../src/statement-tracker.js)가 `perStatement.judgedCorrect` 오판을 `sid` 단위로 `statement_stats` + SM-2 큐(`spaced-repetition.js`)에 누적. 약한 진술은 다음 드릴 세션에 우선 출제.
 - **런타임**: `DataLoader.loadOxDrills(N)`/`loadComboDrills(N)`가 `data/drills/` 번들을 클래식 `<script>` 주입으로 로드(`file://` 호환). 합답형은 수작업 파일럿(`combo_pilot.js`)과 자동 번들을 병합. UI는 `views/trainer-drills.js` + 트레이너 패널(`index.html`).
 - **캐시**: `data/drills/`는 레지스트리 미등록 번들이라 `sw.js`의 `pruneStaleDataBundles`에서 `ALWAYS_KEEP`으로 명시 보존.

@@ -203,4 +203,5 @@ docs/                   # 개발 문서
 - `docs/dev/TESTING.md` — 테스트 가이드
 - `docs/dev/TEXTBOOK_AUTHORING_GUIDE.md` — 교재 작성 가이드
 - `docs/dev/NUMBERING_SYSTEM.md` — 교재 번호체계 가이드 (십진법)
+- `docs/dev/QUESTION_SCHEMA_DESIGN.md` — 문항 스키마 + 합답형 변환 파이프라인 설계
 - `docs/user/user_manual.md` — 사용자 매뉴얼
