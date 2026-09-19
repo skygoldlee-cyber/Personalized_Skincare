@@ -104,7 +104,7 @@ export function renderQuizQuestion() {
                 btn.style.marginBottom = '0.75rem';
                 btn.innerHTML = `<span class="limits-opt-num">${esc(optionIndicators[idx] || String(idx + 1))}</span> <span class="limits-opt-text">${esc(opt)}</span>`;
                 btn.addEventListener('click', () => {
-                    submitQuizChoiceAnswer(btn, opt, currentQuiz.answer);
+                    submitQuizChoiceAnswer(btn, optionIndicators[idx] || String(idx + 1), currentQuiz.answer);
                 });
                 optionsContainer.appendChild(btn);
             });
@@ -221,8 +221,8 @@ function submitQuizChoiceAnswer(selectedBtn, selectedValue, correctValue) {
     if (optionsContainer) {
         optionsContainer.querySelectorAll('button').forEach(btn => {
             btn.disabled = true;
-            const textSpan = btn.querySelector('.limits-opt-text');
-            if (textSpan && textSpan.textContent === correctValue) {
+            const numSpan = btn.querySelector('.limits-opt-num');
+            if (numSpan && numSpan.textContent === correctValue) {
                 btn.classList.add('correct');
             }
         });

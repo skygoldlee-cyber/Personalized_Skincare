@@ -537,7 +537,10 @@ export function submitExam() {
         const q = simState.data.questions[i];
         const userAns = simState.userAnswers[q.id] || '';
         
-        const isCorrect = checkShortAnswer(userAns, q.answer);
+        // 객관식/OX는 선택지 기호(①~⑤, O/X)를 직접 비교, 단답형만 텍스트 정규화 채점
+        const isCorrect = (q.type === 'choice' || q.type === 'ox')
+            ? (userAns === q.answer)
+            : checkShortAnswer(userAns, q.answer);
         vibrate(isCorrect ? HAPTIC.correct : HAPTIC.wrong);
         
         if (isCorrect) {

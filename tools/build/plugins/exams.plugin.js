@@ -29,8 +29,9 @@ const parseExamFile = (filePath, examId, examTitle) => {
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i].trim();
 
-    if (line.includes('정답 및 해설') || line.includes('정답 및 해설편') || line.includes('💡 [정답 및 해설')) {
+    if (line.includes('정답 및 해설') || line.includes('정답 및 해설편') || line.includes('💡 [정답 및 해설') || line.includes('정답 및 교재 근거')) {
       isParsingAnswers = true;
+      currentQuestion = null;
       continue;
     }
 
@@ -45,7 +46,7 @@ const parseExamFile = (filePath, examId, examTitle) => {
           type = 'choice';
         } else if (line.includes('[단답형]') || qText.includes('빈칸') || qText.includes('알맞은')) {
           type = 'blank';
-        } else if (qText.includes('(O / X)') || line.includes('OX 퀴즈') || qNum >= 71 && qNum <= 100 || qNum >= 171 && qNum <= 200 || qNum >= 271 && qNum <= 300) {
+        } else if (qText.includes('(O / X)') || line.includes('OX 퀴즈')) {
           type = 'ox';
         }
 
@@ -74,6 +75,42 @@ const parseExamFile = (filePath, examId, examTitle) => {
         }
       }
     } else {
+      // 섹션 헤더(### 정답 등) → 이전 정답 엔트리 종료
+      if (line.startsWith('##')) {
+        currentQuestion = null;
+        continue;
+      }
+
+      // 신형식: **Q273.** 단독 라인 → 정답 엔트리 시작
+      const qEntryMatch = line.match(/^\*\*Q(\d+)[.:：]?\s*\*\*\s*$/i);
+      if (qEntryMatch) {
+        const qNum = parseInt(qEntryMatch[1]);
+        answersMap[qNum] = { answer: '', explanation: '' };
+        currentQuestion = answersMap[qNum];
+        continue;
+      }
+
+      // 신형식: > **정답: X** [교재:...]
+      const newAnsMatch = line.match(/^>\s*\*\*정답\s*[:：]\s*(.+?)\*\*/);
+      if (newAnsMatch) {
+        if (currentQuestion) {
+          currentQuestion.answer = newAnsMatch[1].replace(/\[([^\]]*)\]\([^)]*\)/g, '$1').replace(/\*\*/g, '').trim();
+        }
+        continue;
+      }
+
+      // 신형식: > **허용 정답:** a, b → 단답형 허용 답안 병합 (쉼표 구분)
+      const acceptMatch = line.match(/^>\s*\*\*허용\s*정답[:：]?\s*\*\*\s*[:：]?\s*(.+)$/);
+      if (acceptMatch) {
+        if (currentQuestion) {
+          const extra = acceptMatch[1].replace(/\*\*/g, '').trim();
+          if (extra) {
+            currentQuestion.answer = currentQuestion.answer ? currentQuestion.answer + ', ' + extra : extra;
+          }
+        }
+        continue;
+      }
+
       let ansMatch = line.match(ansRegex1) || line.match(ansRegex2) || line.match(ansRegex3) || line.match(ansRegex4) || line.match(ansRegexAlt);
       if (ansMatch) {
         const qNum = parseInt(ansMatch[1]);
@@ -88,6 +125,14 @@ const parseExamFile = (filePath, examId, examTitle) => {
       }
 
       if (currentQuestion) {
+        // 신형식: > 교재 근거 블록 인용 → 해설로 수집 (마커·링크 정리)
+        if (line.startsWith('>')) {
+          const cleaned = line.replace(/^>\s*/, '').replace(/\[([^\]]*)\]\([^)]*\)/g, '$1').replace(/\*\*/g, '').trim();
+          if (cleaned) {
+            currentQuestion.explanation = currentQuestion.explanation ? currentQuestion.explanation + '\n' + cleaned : cleaned;
+          }
+          continue;
+        }
         let expMatch = line.match(explanationRegex);
         if (expMatch) {
           currentQuestion.explanation = expMatch[1].trim();
