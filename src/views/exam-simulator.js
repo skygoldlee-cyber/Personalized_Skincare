@@ -54,6 +54,63 @@ export function startMockExamSim(examId) {
     });
 }
 
+/* =======================================================
+   ㄱㄴㄷ 합답형 모의고사 — combo 드릴 번들을 시뮬레이터 형식으로 변환
+   ======================================================= */
+const SIM_OPTION_INDICATORS = ['①', '②', '③', '④', '⑤'];
+
+/**
+ * combo 문항 → 시뮬레이터 문항 평탄화
+ * (citation·진술 목록을 question 본문에 편입해 아레나·리뷰 양쪽에서 표시,
+ *  options.members를 문자열 배열로, 정답을 지시자 기호로 변환)
+ */
+function comboToSimQuestion(q, subjKey) {
+    const stmtLines = (q.statements || []).map(s => `${s.id}. ${s.text}`);
+    const ansIdx = (q.options || []).findIndex(o => o.id === q.answer);
+    return {
+        ...q,
+        subject: subjKey,
+        type: 'combo',
+        question: [q.citation, q.stem, stmtLines.join('\n')].filter(Boolean).join('\n\n'),
+        options: (q.options || []).map(o => (o.members || []).join(', ')),
+        answer: SIM_OPTION_INDICATORS[ansIdx] || q.answer,
+        explanation: q.explain || ''
+    };
+}
+
+const COMBO_PREFIX_SUBJ = { law: 1, manufacturing: 2, safety: 3, understanding: 4 };
+
+/**
+ * 과목별 합답형 모의고사 시작 — data/drills/combo_subjectN.js 로드
+ * @param {string|number} subjectNum 1~4
+ */
+export function startComboMockExam(subjectNum) {
+    const num = parseInt(subjectNum, 10);
+    if (isNaN(num) || num < 1 || num > 4) return;
+    showGlobalLoading('합답형 모의고사 데이터를 불러오는 중입니다...');
+    DataLoader.loadComboDrills(num).then(questions => {
+        hideGlobalLoading();
+        const subjects = (window.DATA_REGISTRY && window.DATA_REGISTRY.subjects) || [];
+        const subjMeta = subjects[num - 1];
+        const subjKey = subjMeta ? subjMeta.key : `subject${num}`;
+        const subjName = subjMeta ? (subjMeta.shortName || subjMeta.name) : `${num}과목`;
+        const simQuestions = questions.map(q => comboToSimQuestion(q, subjKey));
+        if (simQuestions.length === 0) {
+            showToast('이 과목의 합답형 문항이 없습니다.', 'warning');
+            return;
+        }
+        startSimSession({
+            id: `combo_subject${num}`,
+            title: `${subjName} 합답형 모의고사 (${simQuestions.length}제)`,
+            questions: simQuestions
+        });
+    }).catch(err => {
+        hideGlobalLoading();
+        console.error(err);
+        showToast('합답형 데이터를 불러오지 못했습니다.', 'error');
+    });
+}
+
 export function startIntegratedMockExam() {
     showGlobalLoading('통합 모의고사 데이터를 불러오는 중입니다...');
     const loaderPromises = DataLoader.registry.exams.map(e => DataLoader.loadExam(e.key));
@@ -405,6 +462,7 @@ export function renderSimQuestion() {
     let typeName = '단답형';
     if (q.type === 'choice') typeName = '객관식 5지선다';
     else if (q.type === 'ox') typeName = '진위형 OX';
+    else if (q.type === 'combo') typeName = '합답형 ㄱㄴㄷ';
     const qTypeEl = document.getElementById('sim-q-type');
     if (qTypeEl) qTypeEl.textContent = typeName;
     
@@ -418,7 +476,7 @@ export function renderSimQuestion() {
     
     const savedAns = simState.userAnswers[q.id] || '';
     
-    if (q.type === 'choice') {
+    if (q.type === 'choice' || q.type === 'combo') {
         const optionIndicators = ['①', '②', '③', '④', '⑤'];
         q.options.forEach((optText, idx) => {
             const ind = optionIndicators[idx] || String(idx + 1);
@@ -538,7 +596,7 @@ export function submitExam() {
         const userAns = simState.userAnswers[q.id] || '';
         
         // 객관식/OX는 선택지 기호(①~⑤, O/X)를 직접 비교, 단답형만 텍스트 정규화 채점
-        const isCorrect = (q.type === 'choice' || q.type === 'ox')
+        const isCorrect = (q.type === 'choice' || q.type === 'ox' || q.type === 'combo')
             ? (userAns === q.answer)
             : checkShortAnswer(userAns, q.answer);
         vibrate(isCorrect ? HAPTIC.correct : HAPTIC.wrong);
@@ -723,6 +781,13 @@ export function examIdToSubjectId(examId) {
    ======================================================= */
 export function startWeakExam() {
     const loaderPromises = DataLoader.getSubjectList().map(s => DataLoader.loadSubject(s.key));
+    // 합답형 모의고사 오답이 있으면 해당 과목의 combo 번들도 함께 로드
+    const comboSubsNeeded = new Set();
+    (state.weakCards || new Set()).forEach(cardId => {
+        const m = cardId.match(/^weak_sim_([a-z]+)_combo_/);
+        if (m && COMBO_PREFIX_SUBJ[m[1]]) comboSubsNeeded.add(COMBO_PREFIX_SUBJ[m[1]]);
+    });
+    comboSubsNeeded.forEach(n => loaderPromises.push(DataLoader.loadComboDrills(n)));
     Promise.all(loaderPromises).then(() => {
         _startWeakExamImpl();
     }).catch(err => {
@@ -821,6 +886,20 @@ function _startWeakExamImpl() {
                     foundQ = q;
                     foundSubj = examIdToSubjectId(examId);
                     break;
+                }
+            }
+            // 합답형 오답: COMBO_DRILLS_subjectN 번들에서 검색 (id 형식: <subjKey>_combo_<hash>)
+            if (!foundQ) {
+                const subjects = (window.DATA_REGISTRY && window.DATA_REGISTRY.subjects) || [];
+                for (let n = 1; n <= 4 && !foundQ; n++) {
+                    const bundle = (typeof window !== 'undefined') ? window[`COMBO_DRILLS_subject${n}`] : null;
+                    if (!Array.isArray(bundle)) continue;
+                    const q = bundle.find(qq => qq.id === origQId);
+                    if (q) {
+                        const subjKey = subjects[n - 1] ? subjects[n - 1].key : `subject${n}`;
+                        foundQ = comboToSimQuestion(q, subjKey);
+                        foundSubj = subjKey;
+                    }
                 }
             }
             if (foundQ) {

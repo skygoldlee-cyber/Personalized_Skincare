@@ -4,6 +4,15 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-20 합답형 모의고사 — 실전 시뮬레이터 연동
+
+- `populateExamCards`(app.js): 과목 카드에 "합답형 문제집"(`과목N_합답형.md` 열람) + "합답형 풀기"(`startComboMockExam`) 버튼 쌍 추가
+- `startComboMockExam(N)` + `comboToSimQuestion`(exam-simulator.js): `loadComboDrills(N)` 로드 후 시뮬 형식 평탄화 — citation·진술 목록을 question 본문에 편입, `options[].members` 문자열화, 정답 id → 지시자 기호 변환
+- `renderSimQuestion`: `combo` 유형을 객관식과 동일 옵션 UI로 렌더, 유형 라벨 "합답형 ㄱㄴㄷ"
+- `submitExam`: combo를 choice/ox와 동일하게 지시자 비교 채점
+- `startWeakExam`: `weak_sim_<subj>_combo_*` 카드 감지 시 해당 과목 combo 번들을 함께 로드, `COMBO_DRILLS_subjectN` 검색 폴백으로 합답형 오답 복습 지원
+- `exam-sim-review.js`: `combo` 유형 배지 "합답형" 추가
+
 ## 2026-09-19 합답형 학습 체계 구축 — 스키마·변환기·드릴 UI·약점 추적
 
 > **목표**: `docs/dev/QUESTION_SCHEMA_DESIGN.md` + `docs/dev/COMBO_STUDY_STRATEGY.md`를 실제 앱 파이프라인에 구현 — 진술(sid) 원자 단위로 O/X·합답형·약점 추적을 통합

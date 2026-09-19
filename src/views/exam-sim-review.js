@@ -26,7 +26,7 @@ export function showSimAnswerReview() {
             <div class="sim-review-item">
                 <div class="review-item-header">
                     <span class="badge badge-quiz-cat">Q ${q.num}</span>
-                    <span class="badge badge-quiz-type">${q.type === 'choice' ? '객관식' : q.type === 'ox' ? '진위형' : '단답형'}</span>
+                    <span class="badge badge-quiz-type">${q.type === 'choice' ? '객관식' : q.type === 'ox' ? '진위형' : q.type === 'combo' ? '합답형' : '단답형'}</span>
                 </div>
                 <p class="review-item-q-text">${safeTextWithBreaks(q.question)}</p>
                 ${optionsHTML}
