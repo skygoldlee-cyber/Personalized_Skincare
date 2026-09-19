@@ -20,7 +20,21 @@
  * 사용: npm run deploy
  */
 const { execSync, spawnSync } = require('child_process');
+const fs = require('fs');
+const path = require('path');
 const { stampSwVersion } = require('./build/stamp-sw-version.js');
+
+// 팀 프로젝트는 개인 계정 기본 스코프로는 배포가 거부되므로(Not authorized),
+// .vercel/project.json의 orgId를 --scope로 명시한다. 개인 프로젝트(orgId 없음)면 생략.
+function vercelScopeArgs() {
+    try {
+        const p = path.join(__dirname, '..', '.vercel', 'project.json');
+        const { orgId } = JSON.parse(fs.readFileSync(p, 'utf8'));
+        return orgId ? ['--scope', orgId] : [];
+    } catch {
+        return [];
+    }
+}
 
 function git(args) {
     return execSync(`git ${args}`, { encoding: 'utf8' }).trim();
@@ -82,7 +96,7 @@ function main() {
         console.log(`✅ sw.js 스탬프 커밋·푸시 완료 (${stamp.newValue})\n`);
     }
 
-    const result = spawnSync('vercel', ['--prod', '--yes'], {
+    const result = spawnSync('vercel', ['--prod', '--yes', ...vercelScopeArgs()], {
         stdio: 'inherit',
         shell: true,
     });
