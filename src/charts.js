@@ -24,6 +24,7 @@ const CHART_COLORS = {
 /* =======================================================
    📊 SIM_RESULTS_HISTORY 캐싱 (중복 읽기 방지)
    ======================================================= */
+/** @type {any[]|null} */
 let _simResultsCache = null;
 let _simResultsCacheRaw = null;
 
@@ -35,7 +36,8 @@ function getSimResults() {
     }
     _simResultsCacheRaw = raw;
     try {
-        _simResultsCache = raw ? JSON.parse(raw) : [];
+        const parsed = raw ? JSON.parse(raw) : [];
+        _simResultsCache = Array.isArray(parsed) ? parsed : [];
     } catch {
         _simResultsCache = [];
     }
@@ -45,7 +47,9 @@ function getSimResults() {
 /* =======================================================
    📊 공통 툴팁 유틸리티 (Interactive Tooltip)
    ======================================================= */
+/** @type {HTMLDivElement|null} */
 let _chartTooltip = null;
+/** @type {number|null} */
 let _tooltipHideTimer = null;
 
 function getChartTooltip() {

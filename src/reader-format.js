@@ -5,7 +5,7 @@
 import { parseMarkdown } from './markdown-parser.js';
 import { PATHS, normalizeRefPath } from './paths.js';
 import { escapeHTML } from './sanitize.js';
-import { resolveRefPath, KEYWORD_REF_MAP } from './pdf-registry.js';
+import { resolveRefPath, getRefTables } from './pdf-registry.js';
 import { getGlossaryEntry } from './glossary-query.js';
 
 export function formatSectionContentForReader(rawContent, filePath, refPath, refFiles, refDir, glossaryKeywords, sectionTitle) {
@@ -208,7 +208,7 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
     // <p>와 <li> 내 텍스트 노드만 처리 (기존 <a> 태그, <td>, 출처 라인 제외)
     html = html.replace(/<(p|li)>([^<]*)<\/\1>/g, (match, tag, text) => {
         let result = text;
-        for (const entry of KEYWORD_REF_MAP) {
+        for (const entry of (getRefTables().KEYWORD_REF_MAP || [])) {
             const re = new RegExp(entry.pattern.source, entry.pattern.flags.replace(/g$/, ''));
             if (re.test(result) && !result.includes('data-ref-html')) {
                 const path = resolveRefPath(entry.file);

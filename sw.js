@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v369-20260919-cf1e721';   // 전과목 숫자암기 통합정리 고유 수치를 Part 2에 이식
+const CACHE_VERSION = 'v369-20260919-b80d8e8';   // 전과목 숫자암기 통합정리 고유 수치를 Part 2에 이식
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
@@ -67,6 +67,18 @@ const SHELL_ASSETS = [
   './src/app.js',
   './src/app-fallback.js',
   './src/ui-utils.js',
+  './src/pwa-manifest.js',
+  './src/router.js',
+  './src/types.js',
+  './src/glossary-query.js',
+  './src/keyword-index.js',
+  './src/mermaid-utils.js',
+  './src/mermaid-render.js',
+  './src/web-vitals.js',
+  './src/views/daily-challenge.js',
+  './src/views/glossary-renderer.js',
+  './src/views/pomodoro.js',
+  './src/views/study-calendar.js',
   // data/registry.js, data/audio_manifest.js, data/exams.js: 이전 app.js ESM import 그래프에
   // 포함되었으나 window 전역 참조 방식으로 변경되어 별도 프리캐시 필요 (오프라인 최초 실행 대비)
   './data/registry.js',

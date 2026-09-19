@@ -135,7 +135,7 @@ export function safeRemoveItem(key) {
 
 /**
  * 현재 시험 네임스페이스에 속한 실제 저장 키 열거 (접두사 필터에 사용).
- * @param {function(string):boolean} matchUnscoped - 비접두사 키명을 받는 매처
+ * @param {(key: string) => boolean} matchUnscoped - 비접두사 키명을 받는 매처
  * @returns {string[]} 매칭된 실제(접두사 포함) 키 배열
  */
 export function listScopedKeys(matchUnscoped) {

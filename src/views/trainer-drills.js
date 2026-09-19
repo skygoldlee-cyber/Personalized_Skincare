@@ -70,15 +70,92 @@ function renderDrillSubjectButtons(gridId, clickAction) {
     ).join('');
 }
 
-/** 패널 열기 (과목 선택 화면) */
-export function openOxDrillSetup() {
-    state.trainer.activeSubView = 'oxdrill';
-    renderDrillSubjectButtons('oxdrill-subject-grid', 'startOxDrill');
+const NUM_FOCUS_TAGS = new Set(['수치', '한도', '기한', '구성비', '처분기준']);
+
+/* =======================================================
+   드릴 타입 공통 설정 — O/X · 합답형은 setup→arena→result 골격이 동일하고
+   문항 렌더/제출만 다르므로 타입별 설정으로 파이프라인을 공유한다.
+   ======================================================= */
+const DRILL_TYPES = {
+    ox: {
+        subView: 'oxdrill',
+        label: 'O/X',
+        title: 'O/X 드릴',
+        ids: { panel: 'trainer-oxdrill-panel', grid: 'oxdrill-subject-grid', setup: 'oxdrill-setup', arena: 'oxdrill-arena', result: 'oxdrill-result' },
+        otherPanels: ['trainer-menu-panel', 'trainer-weak-panel', 'trainer-combo-panel'],
+        startAction: 'startOxDrill',
+        stateOf: () => state.trainer.oxdrill,
+        load: (n) => DataLoader.loadOxDrills(n),
+        sidsOf: (i) => [i.sid],
+        initState: (st) => {},
+        renderQuestion: () => renderOxDrillQuestion(),
+        renderResult: () => renderOxDrillResult(),
+        // 특수 모드: 'weak'=취약·복습 진술만(전 과목), 'num'=수치 집중(전 과목),
+        // 'concept:<cid>'=혼동쌍 집중, 'sid:<sid>'=단건 재시도
+        isSpecial: (s) => s === 'weak' || s === 'num' || s.startsWith('concept:') || s.startsWith('sid:'),
+        filterSpecial: (items, special) => {
+            const conceptMatch = special.match(/^concept:(.+)$/);
+            const sidMatch = special.match(/^sid:(.+)$/);
+            if (special === 'weak') {
+                const weakSids = new Set(getWeakStatements().map(w => w.sid));
+                const dueSids = new Set(getDueStatementSids());
+                return items.filter(i => i.sid && (weakSids.has(i.sid) || dueSids.has(i.sid)));
+            }
+            if (special === 'num') {
+                return items.filter(i => (i.tags || []).some(t => NUM_FOCUS_TAGS.has(t)));
+            }
+            if (conceptMatch) {
+                // 해당 conceptId의 취약(졸업 포함) 진술 sids로 O/X 문항 필터
+                const cid = conceptMatch[1];
+                const sids = new Set(getWeakStatements(undefined, true)
+                    .filter(w => w.cid === cid).map(w => w.sid));
+                return items.filter(i => i.sid && sids.has(i.sid));
+            }
+            if (sidMatch) {
+                return items.filter(i => i.sid === sidMatch[1]);
+            }
+            return items;
+        }
+    },
+    combo: {
+        subView: 'combo',
+        label: '합답형',
+        title: '합답형 드릴',
+        ids: { panel: 'trainer-combo-panel', grid: 'combo-subject-grid', setup: 'combo-setup', arena: 'combo-arena', result: 'combo-result' },
+        otherPanels: ['trainer-menu-panel', 'trainer-weak-panel', 'trainer-oxdrill-panel'],
+        startAction: 'startComboDrill',
+        stateOf: () => state.trainer.combo,
+        load: (n) => DataLoader.loadComboDrills(n),
+        sidsOf: (q) => (q.statements || []).map(s => s.sid),
+        initState: (st) => { st.judgments = {}; },
+        renderQuestion: () => renderComboQuestion(),
+        renderResult: () => renderComboResult(),
+        isSpecial: (s) => s === 'weak' || s === 'num',
+        filterSpecial: (items, special) => {
+            if (special === 'weak') {
+                const weakSids = new Set(getWeakStatements().map(w => w.sid));
+                const dueSids = new Set(getDueStatementSids());
+                return items.filter(q => (q.statements || []).some(s =>
+                    s.sid && (weakSids.has(s.sid) || dueSids.has(s.sid))));
+            }
+            if (special === 'num') {
+                return items.filter(q => (q.tags || []).some(t => NUM_FOCUS_TAGS.has(t)));
+            }
+            return items;
+        }
+    }
+};
+
+/** 패널 열기 (과목 선택 화면) — 두 드릴 공통 골격 */
+function openDrillSetup(type) {
+    const cfg = DRILL_TYPES[type];
+    state.trainer.activeSubView = cfg.subView;
+    renderDrillSubjectButtons(cfg.ids.grid, cfg.startAction);
     const menu = document.getElementById('trainer-menu-panel');
-    const panel = document.getElementById('trainer-oxdrill-panel');
-    const setup = document.getElementById('oxdrill-setup');
-    const arena = document.getElementById('oxdrill-arena');
-    const result = document.getElementById('oxdrill-result');
+    const panel = document.getElementById(cfg.ids.panel);
+    const setup = document.getElementById(cfg.ids.setup);
+    const arena = document.getElementById(cfg.ids.arena);
+    const result = document.getElementById(cfg.ids.result);
     if (menu) menu.classList.add('is-hidden');
     if (panel) panel.classList.remove('is-hidden');
     if (setup) setup.classList.remove('is-hidden');
@@ -88,73 +165,101 @@ export function openOxDrillSetup() {
 }
 
 /**
- * 과목별 O/X 드릴 시작 — 취약 진술(sid) 우선 편성
- * @param {string|number} subjectNum 1~4
+ * 드릴 시작 공통 골격 — 취약 진술 우선 편성 + 특수 모드 필터
+ * @param {'ox'|'combo'} type
+ * @param {string|number} subjectNum 과목 order 번호 또는 특수 모드 문자열
  */
-const NUM_FOCUS_TAGS = new Set(['수치', '한도', '기한', '구성비', '처분기준']);
-
-export function startOxDrill(subjectNum) {
-    // 특수 모드: 'weak'=취약·복습 진술만(전 과목), 'num'=수치·한도·기한 집중(전 과목) — 전략 ③④
-    // 'concept:<cid>'=해당 개념의 취약 진술만(혼동쌍 집중), 'sid:<sid>'=단건 재시도 (전략 ⑤·오판 즉시 복습)
+function startDrill(type, subjectNum) {
+    const cfg = DRILL_TYPES[type];
     const special = String(subjectNum);
-    const conceptMatch = special.match(/^concept:(.+)$/);
-    const sidMatch = special.match(/^sid:(.+)$/);
-    const isSpecial = special === 'weak' || special === 'num' || !!conceptMatch || !!sidMatch;
+    const isSpecial = cfg.isSpecial(special);
     const num = parseInt(subjectNum, 10);
     const subjectOrders = DataLoader.getSubjectOrders();
     if (!isSpecial && (isNaN(num) || !subjectOrders.includes(num))) return;
     // 취약 리뷰 등 다른 서브뷰에서 호출돼도 자기 패널을 표시한다
-    ['trainer-menu-panel', 'trainer-weak-panel', 'trainer-combo-panel'].forEach(id => {
+    cfg.otherPanels.forEach(id => {
         const el = document.getElementById(id);
         if (el) el.classList.add('is-hidden');
     });
-    const ownPanel = document.getElementById('trainer-oxdrill-panel');
+    const ownPanel = document.getElementById(cfg.ids.panel);
     if (ownPanel) ownPanel.classList.remove('is-hidden');
-    state.trainer.activeSubView = 'oxdrill';
+    state.trainer.activeSubView = cfg.subView;
 
     const load = isSpecial
-        ? Promise.all(subjectOrders.map(n => DataLoader.loadOxDrills(n))).then(all => all.flat())
-        : DataLoader.loadOxDrills(num);
+        ? Promise.all(subjectOrders.map(n => cfg.load(n))).then(all => all.flat())
+        : cfg.load(num);
     load.then(items => {
-        const st = state.trainer.oxdrill;
+        const st = cfg.stateOf();
         st.subject = isSpecial ? 0 : num;
         st.mode = isSpecial ? special : '';
-        if (special === 'weak') {
-            const weakSids = new Set(getWeakStatements().map(w => w.sid));
-            const dueSids = new Set(getDueStatementSids());
-            items = items.filter(i => i.sid && (weakSids.has(i.sid) || dueSids.has(i.sid)));
-        } else if (special === 'num') {
-            items = items.filter(i => (i.tags || []).some(t => NUM_FOCUS_TAGS.has(t)));
-        } else if (conceptMatch) {
-            // 해당 conceptId의 취약(졸업 포함) 진술 sids로 O/X 문항 필터
-            const cid = conceptMatch[1];
-            const sids = new Set(getWeakStatements(undefined, true)
-                .filter(w => w.cid === cid).map(w => w.sid));
-            items = items.filter(i => i.sid && sids.has(i.sid));
-        } else if (sidMatch) {
-            items = items.filter(i => i.sid === sidMatch[1]);
-        }
-        st.data = pickDrillItems(items, drillCountFor(items));
+        items = cfg.filterSpecial(items, special);
+        st.data = pickPrioritized(items, drillCountFor(items), cfg.sidsOf);
         st.currentIndex = 0;
         st.correctCount = 0;
         st.solvedList = [];
+        cfg.initState(st);
 
         if (st.data.length === 0) {
-            showToast(isSpecial ? '이 조건에 맞는 문항이 없습니다.' : '이 과목에는 출제 가능한 O/X 문항이 없습니다.', 'warning');
+            showToast(isSpecial ? '이 조건에 맞는 문항이 없습니다.' : `이 과목에는 출제 가능한 ${cfg.label} 문항이 없습니다.`, 'warning');
             return;
         }
 
-        const setup = document.getElementById('oxdrill-setup');
-        const arena = document.getElementById('oxdrill-arena');
-        const result = document.getElementById('oxdrill-result');
+        const setup = document.getElementById(cfg.ids.setup);
+        const arena = document.getElementById(cfg.ids.arena);
+        const result = document.getElementById(cfg.ids.result);
         if (setup) setup.classList.add('is-hidden');
         if (result) result.classList.add('is-hidden');
         if (arena) arena.classList.remove('is-hidden');
-        renderOxDrillQuestion();
+        cfg.renderQuestion();
     }).catch(err => {
         console.error(err);
-        showToast('O/X 드릴 데이터를 불러오지 못했습니다.', 'error');
+        showToast(`${cfg.label} 드릴 데이터를 불러오지 못했습니다.`, 'error');
     });
+}
+
+/** 다음 문항으로 진행 — 두 드릴 공통 골격 */
+function nextDrill(type) {
+    const cfg = DRILL_TYPES[type];
+    const st = cfg.stateOf();
+    st.currentIndex++;
+    if (st.currentIndex >= st.data.length) cfg.renderResult();
+    else cfg.renderQuestion();
+}
+
+/**
+ * 드릴 결과 화면 공통 골격 — 점수/통계 라인 + 리뷰 목록 + 액션 버튼.
+ * @param {'ox'|'combo'} type
+ * @param {string} statLine 취약 진술 통계 문구 (HTML)
+ * @param {string} reviewInnerHTML 리뷰 항목 HTML
+ * @param {boolean} hasReviewItems 취약 리뷰 버튼 표시 여부
+ */
+function renderDrillResult(type, statLine, reviewInnerHTML, hasReviewItems) {
+    const cfg = DRILL_TYPES[type];
+    const st = cfg.stateOf();
+    const arena = document.getElementById(cfg.ids.arena);
+    const result = document.getElementById(cfg.ids.result);
+    if (arena) arena.classList.add('is-hidden');
+    if (!result) return;
+    result.classList.remove('is-hidden');
+
+    const total = st.data.length;
+    const rate = total > 0 ? Math.round((st.correctCount / total) * 100) : 0;
+
+    result.innerHTML = `
+        <div class="trainer-arena" style="text-align:center;">
+            <i class="fa-solid fa-trophy trophy-icon"></i>
+            <h2>${cfg.title} 완료!</h2>
+            <p class="result-score-summary">정답수: <strong>${st.correctCount}</strong> / ${total} (${rate}%)</p>
+            <p style="color:var(--color-text-muted); font-size:0.85rem;">${statLine}</p>
+            <div style="text-align:left; margin:1.5rem 0; max-width:600px; margin-left:auto; margin-right:auto;">
+                ${reviewInnerHTML}
+            </div>
+            <div class="result-actions" style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+                <button class="btn btn-primary" data-click="${cfg.startAction}" data-arg="${st.mode || st.subject}"><i class="fa-solid fa-rotate-left"></i> 다시 풀기</button>
+                ${hasReviewItems ? '<button class="btn btn-warning" data-click="openWeakReview"><i class="fa-solid fa-crosshairs"></i> 취약 진술 리뷰</button>' : ''}
+                <button class="btn btn-secondary" data-click="exitTrainerSubView"><i class="fa-solid fa-house"></i> 메뉴로</button>
+            </div>
+        </div>`;
 }
 
 /**
@@ -172,10 +277,14 @@ function pickPrioritized(items, count, sidsOf) {
     return shuffle([...picked, ...shuffle(rest).slice(0, count - picked.length)]);
 }
 
-/** 취약 진술 문항 우선 편성 (O/X: 문항 sid 기준) */
-function pickDrillItems(items, count) {
-    return pickPrioritized(items, count, i => [i.sid]);
-}
+/** 패널 열기 (과목 선택 화면) */
+export function openOxDrillSetup() { openDrillSetup('ox'); }
+
+/**
+ * 과목별 O/X 드릴 시작 — 취약 진술(sid) 우선 편성
+ * @param {string|number} subjectNum 1~4
+ */
+export function startOxDrill(subjectNum) { startDrill('ox', subjectNum); }
 
 function renderOxDrillQuestion() {
     const st = state.trainer.oxdrill;
@@ -260,50 +369,25 @@ function submitOxDrillAnswer(selectedBtn, val) {
     if (nextBtn) nextBtn.classList.remove('is-hidden');
 }
 
-export function nextOxDrill() {
-    const st = state.trainer.oxdrill;
-    st.currentIndex++;
-    if (st.currentIndex >= st.data.length) renderOxDrillResult();
-    else renderOxDrillQuestion();
-}
+export function nextOxDrill() { nextDrill('ox'); }
 
 function renderOxDrillResult() {
     const st = state.trainer.oxdrill;
-    const arena = document.getElementById('oxdrill-arena');
-    const result = document.getElementById('oxdrill-result');
-    if (arena) arena.classList.add('is-hidden');
-    if (!result) return;
-    result.classList.remove('is-hidden');
-
-    const total = st.data.length;
-    const rate = total > 0 ? Math.round((st.correctCount / total) * 100) : 0;
     const wrong = st.solvedList.filter(s => !s.correct);
     const weakCount = getWeakStatements().length;
-
-    result.innerHTML = `
-        <div class="trainer-arena" style="text-align:center;">
-            <i class="fa-solid fa-trophy trophy-icon"></i>
-            <h2>O/X 드릴 완료!</h2>
-            <p class="result-score-summary">정답수: <strong>${st.correctCount}</strong> / ${total} (${rate}%)</p>
-            <p style="color:var(--color-text-muted); font-size:0.85rem;">누적 취약 진술: ${weakCount}개 (오판 진술은 다음 세션에 우선 출제됩니다)</p>
-            <div style="text-align:left; margin:1.5rem 0; max-width:600px; margin-left:auto; margin-right:auto;">
-                ${wrong.length === 0
-                    ? '<p style="text-align:center; color:var(--color-success); font-weight:600;"><i class="fa-solid fa-circle-check"></i> 모든 문제를 맞혔습니다!</p>'
-                    : `<h3 style="margin-bottom:0.75rem; font-size:1.1rem;"><i class="fa-solid fa-triangle-exclamation"></i> 오답 리뷰 (${wrong.length}문제)</h3>` +
-                      wrong.map((s, i) => `
-                        <div style="padding:0.75rem; margin-bottom:0.5rem; border:1px solid var(--border-color); border-radius:8px; background:var(--bg-card);">
-                            <div style="font-size:0.85rem; color:var(--color-text-muted); margin-bottom:0.3rem;">Q${i + 1}</div>
-                            <p style="font-size:0.9rem; margin-bottom:0.4rem;">${safeTextWithBreaks(s.question)}</p>
-                            <p style="font-size:0.85rem; color:var(--color-danger);">내 답: ${esc(s.selected)}</p>
-                            <p style="font-size:0.85rem; color:var(--color-success);">정답: <strong>${esc(s.correctAnswer)}</strong></p>
-                        </div>`).join('')}
-            </div>
-            <div class="result-actions" style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
-                <button class="btn btn-primary" data-click="startOxDrill" data-arg="${st.mode || st.subject}"><i class="fa-solid fa-rotate-left"></i> 다시 풀기</button>
-                ${wrong.length > 0 ? '<button class="btn btn-warning" data-click="openWeakReview"><i class="fa-solid fa-crosshairs"></i> 취약 진술 리뷰</button>' : ''}
-                <button class="btn btn-secondary" data-click="exitTrainerSubView"><i class="fa-solid fa-house"></i> 메뉴로</button>
-            </div>
-        </div>`;
+    const reviewHTML = wrong.length === 0
+        ? '<p style="text-align:center; color:var(--color-success); font-weight:600;"><i class="fa-solid fa-circle-check"></i> 모든 문제를 맞혔습니다!</p>'
+        : `<h3 style="margin-bottom:0.75rem; font-size:1.1rem;"><i class="fa-solid fa-triangle-exclamation"></i> 오답 리뷰 (${wrong.length}문제)</h3>` +
+          wrong.map((s, i) => `
+            <div style="padding:0.75rem; margin-bottom:0.5rem; border:1px solid var(--border-color); border-radius:8px; background:var(--bg-card);">
+                <div style="font-size:0.85rem; color:var(--color-text-muted); margin-bottom:0.3rem;">Q${i + 1}</div>
+                <p style="font-size:0.9rem; margin-bottom:0.4rem;">${safeTextWithBreaks(s.question)}</p>
+                <p style="font-size:0.85rem; color:var(--color-danger);">내 답: ${esc(s.selected)}</p>
+                <p style="font-size:0.85rem; color:var(--color-success);">정답: <strong>${esc(s.correctAnswer)}</strong></p>
+            </div>`).join('');
+    renderDrillResult('ox',
+        `누적 취약 진술: ${weakCount}개 (오판 진술은 다음 세션에 우선 출제됩니다)`,
+        reviewHTML, wrong.length > 0);
 }
 
 /* =======================================================
@@ -311,85 +395,13 @@ function renderOxDrillResult() {
    ======================================================= */
 
 /** 패널 열기 (과목 선택 화면) */
-export function openComboDrillSetup() {
-    state.trainer.activeSubView = 'combo';
-    renderDrillSubjectButtons('combo-subject-grid', 'startComboDrill');
-    const menu = document.getElementById('trainer-menu-panel');
-    const panel = document.getElementById('trainer-combo-panel');
-    const setup = document.getElementById('combo-setup');
-    const arena = document.getElementById('combo-arena');
-    const result = document.getElementById('combo-result');
-    if (menu) menu.classList.add('is-hidden');
-    if (panel) panel.classList.remove('is-hidden');
-    if (setup) setup.classList.remove('is-hidden');
-    if (arena) arena.classList.add('is-hidden');
-    if (result) result.classList.add('is-hidden');
-    updateDueBadges();
-}
+export function openComboDrillSetup() { openDrillSetup('combo'); }
 
 /**
  * 과목별 합답형 드릴 시작 — 취약 진술(sid) 포함 문항 우선 편성
  * @param {string|number} subjectNum 과목 order 번호
  */
-export function startComboDrill(subjectNum) {
-    // 특수 모드: 'weak'=취약·복습 진술 포함 문항(전 과목), 'num'=수치·한도·기한 집중(전 과목)
-    const special = String(subjectNum);
-    const isSpecial = special === 'weak' || special === 'num';
-    const num = parseInt(subjectNum, 10);
-    const subjectOrders = DataLoader.getSubjectOrders();
-    if (!isSpecial && (isNaN(num) || !subjectOrders.includes(num))) return;
-    ['trainer-menu-panel', 'trainer-weak-panel', 'trainer-oxdrill-panel'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.classList.add('is-hidden');
-    });
-    const ownPanel = document.getElementById('trainer-combo-panel');
-    if (ownPanel) ownPanel.classList.remove('is-hidden');
-    state.trainer.activeSubView = 'combo';
-
-    const load = isSpecial
-        ? Promise.all(subjectOrders.map(n => DataLoader.loadComboDrills(n))).then(all => all.flat())
-        : DataLoader.loadComboDrills(num);
-    load.then(questions => {
-        const st = state.trainer.combo;
-        st.subject = isSpecial ? 0 : num;
-        st.mode = isSpecial ? special : '';
-        if (special === 'weak') {
-            const weakSids = new Set(getWeakStatements().map(w => w.sid));
-            const dueSids = new Set(getDueStatementSids());
-            questions = questions.filter(q => (q.statements || []).some(s =>
-                s.sid && (weakSids.has(s.sid) || dueSids.has(s.sid))));
-        } else if (special === 'num') {
-            questions = questions.filter(q => (q.tags || []).some(t => NUM_FOCUS_TAGS.has(t)));
-        }
-        st.data = pickComboItems(questions, drillCountFor(questions));
-        st.currentIndex = 0;
-        st.correctCount = 0;
-        st.solvedList = [];
-        st.judgments = {};
-
-        if (st.data.length === 0) {
-            showToast(isSpecial ? '이 조건에 맞는 문항이 없습니다.' : '이 과목에는 출제 가능한 합답형 문항이 없습니다.', 'warning');
-            return;
-        }
-
-        const setup = document.getElementById('combo-setup');
-        const arena = document.getElementById('combo-arena');
-        const result = document.getElementById('combo-result');
-        if (setup) setup.classList.add('is-hidden');
-        if (result) result.classList.add('is-hidden');
-        if (arena) arena.classList.remove('is-hidden');
-        state.trainer.activeSubView = 'combo';
-        renderComboQuestion();
-    }).catch(err => {
-        console.error(err);
-        showToast('합답형 드릴 데이터를 불러오지 못했습니다.', 'error');
-    });
-}
-
-/** 진술 중 취약 sid를 포함하는 문항 우선 편성 (combo: 진술 sids 기준) */
-function pickComboItems(items, count) {
-    return pickPrioritized(items, count, q => (q.statements || []).map(s => s.sid));
-}
+export function startComboDrill(subjectNum) { startDrill('combo', subjectNum); }
 
 function renderComboQuestion() {
     const st = state.trainer.combo;
@@ -604,24 +616,10 @@ function submitComboAnswer(selectedBtn, optId, optIdx) {
     if (nextBtn) nextBtn.classList.remove('is-hidden');
 }
 
-export function nextComboDrill() {
-    const st = state.trainer.combo;
-    st.currentIndex++;
-    if (st.currentIndex >= st.data.length) renderComboResult();
-    else renderComboQuestion();
-}
+export function nextComboDrill() { nextDrill('combo'); }
 
 function renderComboResult() {
     const st = state.trainer.combo;
-    const arena = document.getElementById('combo-arena');
-    const result = document.getElementById('combo-result');
-    if (arena) arena.classList.add('is-hidden');
-    if (!result) return;
-    result.classList.remove('is-hidden');
-
-    const total = st.data.length;
-    const rate = total > 0 ? Math.round((st.correctCount / total) * 100) : 0;
-    const wrong = st.solvedList.filter(s => !s.correct);
     const weakCount = getWeakStatements().length;
 
     // 세션에서 오판한 진술 모음 (중복 sid 제거)
@@ -636,30 +634,19 @@ function renderComboResult() {
         });
     });
 
-    result.innerHTML = `
-        <div class="trainer-arena" style="text-align:center;">
-            <i class="fa-solid fa-trophy trophy-icon"></i>
-            <h2>합답형 드릴 완료!</h2>
-            <p class="result-score-summary">정답수: <strong>${st.correctCount}</strong> / ${total} (${rate}%)</p>
-            <p style="color:var(--color-text-muted); font-size:0.85rem;">누적 취약 진술: ${weakCount}개 · 이번 세션 오판 진술: ${misjudged.length}개</p>
-            <div style="text-align:left; margin:1.5rem 0; max-width:600px; margin-left:auto; margin-right:auto;">
-                ${misjudged.length === 0
-                    ? '<p style="text-align:center; color:var(--color-success); font-weight:600;"><i class="fa-solid fa-circle-check"></i> 모든 진술을 정확히 판정했습니다!</p>'
-                    : `<h3 style="margin-bottom:0.75rem; font-size:1.1rem;"><i class="fa-solid fa-triangle-exclamation"></i> 오판 진술 리뷰 (${misjudged.length}개)</h3>` +
-                      misjudged.map(p => `
-                        <div style="padding:0.75rem; margin-bottom:0.5rem; border:1px solid var(--border-color); border-radius:8px; background:var(--bg-card);">
-                            <p style="font-size:0.85rem; margin-bottom:0.4rem;"><strong>${esc(p.id)}</strong> — 정답 ${p.truth ? 'O' : 'X'}, 내 판정 ${p.userJudged ? 'O' : 'X'}</p>
-                            ${p.text ? `<p style="font-size:0.9rem; margin-bottom:0.4rem;">${safeTextWithBreaks(p.text)}</p>` : ''}
-                            ${p.explain ? `<p style="font-size:0.85rem; color:var(--color-text-muted);">${safeTextWithBreaks(p.explain)}</p>` : ''}
-                            ${p.sid ? `<button class="btn btn-secondary weak-retry-btn" data-click="startOxDrill" data-arg="sid:${esc(p.sid)}"><i class="fa-solid fa-circle-half-stroke"></i> 이 진술 O/X로 재시도</button>` : ''}
-                        </div>`).join('')}
-            </div>
-            <div class="result-actions" style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
-                <button class="btn btn-primary" data-click="startComboDrill" data-arg="${st.mode || st.subject}"><i class="fa-solid fa-rotate-left"></i> 다시 풀기</button>
-                ${misjudged.length > 0 ? '<button class="btn btn-warning" data-click="openWeakReview"><i class="fa-solid fa-crosshairs"></i> 취약 진술 리뷰</button>' : ''}
-                <button class="btn btn-secondary" data-click="exitTrainerSubView"><i class="fa-solid fa-house"></i> 메뉴로</button>
-            </div>
-        </div>`;
+    const reviewHTML = misjudged.length === 0
+        ? '<p style="text-align:center; color:var(--color-success); font-weight:600;"><i class="fa-solid fa-circle-check"></i> 모든 진술을 정확히 판정했습니다!</p>'
+        : `<h3 style="margin-bottom:0.75rem; font-size:1.1rem;"><i class="fa-solid fa-triangle-exclamation"></i> 오판 진술 리뷰 (${misjudged.length}개)</h3>` +
+          misjudged.map(p => `
+            <div style="padding:0.75rem; margin-bottom:0.5rem; border:1px solid var(--border-color); border-radius:8px; background:var(--bg-card);">
+                <p style="font-size:0.85rem; margin-bottom:0.4rem;"><strong>${esc(p.id)}</strong> — 정답 ${p.truth ? 'O' : 'X'}, 내 판정 ${p.userJudged ? 'O' : 'X'}</p>
+                ${p.text ? `<p style="font-size:0.9rem; margin-bottom:0.4rem;">${safeTextWithBreaks(p.text)}</p>` : ''}
+                ${p.explain ? `<p style="font-size:0.85rem; color:var(--color-text-muted);">${safeTextWithBreaks(p.explain)}</p>` : ''}
+                ${p.sid ? `<button class="btn btn-secondary weak-retry-btn" data-click="startOxDrill" data-arg="sid:${esc(p.sid)}"><i class="fa-solid fa-circle-half-stroke"></i> 이 진술 O/X로 재시도</button>` : ''}
+            </div>`).join('');
+    renderDrillResult('combo',
+        `누적 취약 진술: ${weakCount}개 · 이번 세션 오판 진술: ${misjudged.length}개`,
+        reviewHTML, misjudged.length > 0);
 }
 
 /* =======================================================

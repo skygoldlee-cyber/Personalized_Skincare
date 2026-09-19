@@ -4,6 +4,29 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-20 전체 리뷰 후속 + 리팩토링 12항목
+
+### 전체 리뷰 후속 수정 (cf1e721)
+- SW `cache.put` 전략 함수 전부 `await` (respondWith settle 후 SW 종료로 캐시 유실 방지)
+- `_loadScript` 리스너 부착 후 `dataset.loaded` 재확인 (settle 경합 방어)
+- `getSubjectOrders` `Number.isFinite` 필터, `manifest.subjects` 배열 가드
+- `types.js` 주석 정정 + `exams.json`에 `data/exams/` 겸용 주의 명시
+
+### 리팩토링 12항목
+1. **data-loader 틱 일원화**: 호출부 `setTimeout(r,0)` 10곳 → `_loadScript` 내부 resolve로 흡수
+2. **checkJs 진단 정리**: textbook-parser/charts/exam-context/state/markdown-parser/audio_manifest 잔여 진단 해소
+3. **테마 키 드리프트 가드**: `storage-key-sync.test.js` — theme-init/exam-context 리터럴 ↔ STORAGE_KEYS 일치 강제
+4. **app.js 핸들러 브리지 통합**: 개별 `window.X=` 나열 → `DELEGATED_HANDLERS` 단일 맵 + `Object.assign(window, ...)`, delegation-guard 테스트가 맵 구조 인식
+5. **Mermaid 공용화**: `src/mermaid-render.js` 신규 — reader/search/manual-viewer의 동일 코드 3벌(~185행) 통합
+6. **시뮬레이터 결과 분리**: `submitExam`의 결과 렌더링(과목/단원 분석, 과락·합격 피드백) + `_chapterForQuestion` → `exam-sim-review.js` 이관 (simulator 1,104→938행)
+7. **드릴 파이프라인 공용화**: `trainer-drills.js` O/X·합답형 setup/start/next/result 골격 → `DRILL_TYPES` 설정 맵 + 공용 함수, 공개 API 래퍼 유지
+8. **참조자료 멀티시험화**: `pdf-registry.js`/`keyword-index.js` 생성 모듈을 시험별 테이블 맵(`_EXAM_TABLES`/`_EXAM_GLOSSARY_INDEX`)으로 전환, `getRefTables()`/`getGlossaryIndex()`가 활성 시험 해석. 빌드 도구는 exams.json 전체 순회, 파생 경로는 시험별 contentRoot로 계산
+9. **sw 자산 집계**: `MD_ASSETS`/`DATA_ASSETS` 생성이 모든 시험 순회 + 디스크 존재 확인으로 변경 (기존: 기본 시험만)
+10. **data/exams/ 경로 중복**: exams.json note에 겸용 주의 명시 (cf1e721에서 처리)
+11. **동적 PWA 매니페스트**: `src/pwa-manifest.js` — 활성 시험 이름/설명으로 blob 매니페스트 주입(정적 파일은 폴백), `vercel.json` `manifest-src`에 `blob:` 허용
+12. **테스트 보강**: `exam-context.test.js`(활성 시험 해석/네임스페이스/레거시 정리 12건) + `data-loader.test.js`(레지스트리 조회 7건) 신규, `pdf-registry.test.js`를 getRefTables 기반으로 갱신
+- **+α**: `SHELL_ASSETS` 프리캐시 누락 모듈 12개 보충 (router/pomodoro/study-calendar 등)
+
 ## 2026-09-20 모의고사 결과 분석 강화 + 합답형 버튼 단일화
 
 - **합답형 모의고사 버튼 단일화** (39eec88): 과목 카드의 40문/60문/전체 3칩 → "합답형 모의고사" 버튼 1개. 클릭 시 카드 내 문항 수 선택 행 펼침(20/40/60/전체 N문, 풀 크기에 맞춰 필터링). `data/drills/combo_index.js` 신규(과목별 실제 문항 수, 파일럿 포함 — 102/250/250/408)로 "전체 N문" 표기. `DataLoader.loadComboIndex`/`getComboCount` 추가

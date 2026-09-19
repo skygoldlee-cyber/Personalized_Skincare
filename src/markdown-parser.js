@@ -11,6 +11,7 @@ import { escapeHTML } from './sanitize.js';
  * @param {boolean} [options.customSpacing=false] - 빈 줄 발생 시 <div style="height: 0.5rem;"></div> 추가 여부
  * @param {boolean} [options.allowItalics=true] - 이탤릭체(*) 지원 여부
  * @param {boolean} [options.allowInlineCode=true] - 인라인 코드(`) 지원 여부
+ * @param {boolean} [options.addLineNumbers=false] - 원문 라인 번호 주석 추가 여부
  * @returns {string} 변환된 HTML 문자열
  */
 export function parseMarkdown(mdText, options = {}) {
@@ -136,6 +137,7 @@ export function parseMarkdown(mdText, options = {}) {
     let inCodeBlock = false;
     let codeLang = '';
     let listItems = [];
+    /** @type {'ul'|'ol'|null} */
     let listType = null;
 
     // 마크다운 표 셀 분리: 양끝 파이프 1개씩만 제거하고 내부 빈 셀은 보존한다.

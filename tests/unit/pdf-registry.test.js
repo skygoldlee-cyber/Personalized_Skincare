@@ -8,15 +8,20 @@ import {
     resolveRefPath,
     mapSourceToRef,
     resolveKeywordRef,
-    REF_FILE_TO_PATH,
-    REF_REGISTRY,
-    SOURCE_REF_MAP,
-    KEYWORD_REF_MAP,
-    REFERENCE_FILES,
-    REFERENCE_COMMON,
-    REFERENCE_LAW,
-    SUBJECT_DIR_MAP,
+    getRefTables,
 } from '../../src/pdf-registry.js';
+
+// 시험별 테이블 — 활성 시험 해석 결과 (기본 시험 cosmetic)
+const {
+    REF_FILE_TO_PATH = {},
+    REF_REGISTRY = {},
+    SOURCE_REF_MAP = [],
+    KEYWORD_REF_MAP = [],
+    REFERENCE_FILES = {},
+    REFERENCE_COMMON = [],
+    REFERENCE_LAW = [],
+    SUBJECT_DIR_MAP = {},
+} = getRefTables();
 
 // ==================== resolveRefPath ====================
 

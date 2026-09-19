@@ -1,9 +1,8 @@
 // views/textbook-search.js - 교재 검색 통합 로직 (Textbook Search Integration)
 import { escapeHTML, esc } from '../sanitize.js';
 import { parseMarkdown } from '../markdown-parser.js';
-import { detectMermaidType, getMermaidClassName, getMermaidInitOptions } from '../mermaid-utils.js';
+import { renderMermaidIn } from '../mermaid-render.js';
 import { TIMING } from '../config/timing.js';
-import { PATHS } from '../paths.js';
 // [모바일 PWA 견고성] 레지스트리는 window 전역(가드)에서 읽는다(정적 import 하드 의존 지양).
 
 const textbookState = {
@@ -254,7 +253,7 @@ function performTextbookSearch() {
     });
 
     // Mermaid 다이어그램 렌더링 (pre.mermaid 노드가 있을 때만 온디맨드 로드)
-    _renderSearchMermaid(container);
+    renderMermaidIn(container, '[search]');
 }
 
 export function toggleTextbookCard(cardId) {
@@ -326,58 +325,3 @@ function escapeRegExp(string) {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-// --- Mermaid 온디맨드 로드 (textbook-reader.js 패턴과 동일) ---
-let _mermaidLoadPromise = null;
-function _ensureMermaid() {
-    if (window.mermaid) return Promise.resolve(window.mermaid);
-    if (_mermaidLoadPromise) return _mermaidLoadPromise;
-    _mermaidLoadPromise = new Promise((resolve, reject) => {
-        const script = document.createElement('script');
-        script.src = PATHS.VENDOR_MERMAID;
-        script.async = true;
-        const nonce = crypto.getRandomValues(new Uint8Array(16));
-        script.nonce = Array.from(nonce).map(b => b.toString(16).padStart(2, '0')).join('');
-        script.onload = () => {
-            if (window.mermaid) resolve(window.mermaid);
-            else reject(new Error('mermaid loaded but window.mermaid is undefined'));
-        };
-        script.onerror = (e) => { _mermaidLoadPromise = null; reject(e); };
-        document.head.appendChild(script);
-    });
-    return _mermaidLoadPromise;
-}
-
-function _renderSearchMermaid(container) {
-    const nodes = container ? container.querySelectorAll('pre.mermaid') : [];
-    if (nodes.length === 0) return;
-    _ensureMermaid()
-        .then((mermaid) => {
-            try {
-                const isLight = document.documentElement.classList.contains('light-theme');
-                const nodeArr = Array.from(nodes);
-                const nodeTypes = [];
-                nodeArr.forEach(node => {
-                    const type = detectMermaidType(node.textContent);
-                    nodeTypes.push(type);
-                    node.classList.add(getMermaidClassName(type));
-                });
-                const renderNext = (i) => {
-                    if (i >= nodeArr.length) return;
-                    const node = nodeArr[i];
-                    const type = nodeTypes[i];
-                    mermaid.initialize(getMermaidInitOptions(type, isLight));
-                    mermaid.run({ nodes: [node] })
-                        .then(() => renderNext(i + 1))
-                        .catch((e) => {
-                            console.warn(`[search] mermaid node ${i} failed:`, e?.message || e);
-                            node.innerHTML = '<span style="color:var(--color-text-muted);font-size:0.8rem;">[다이어그램 렌더링 실패]</span>';
-                            renderNext(i + 1);
-                        });
-                };
-                renderNext(0);
-            } catch (e) {
-                console.warn('[search] mermaid render failed:', e);
-            }
-        })
-        .catch((e) => console.warn('[search] mermaid load failed:', e));
-}

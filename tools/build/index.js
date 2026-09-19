@@ -434,26 +434,40 @@ if (typeof window !== 'undefined') {
     console.log('Updating sw.js (DATA_ASSETS/CACHE_VERSION)...');
     let swContent = fs.readFileSync(swPath, 'utf-8');
 
-    const assetsToCache = [
-      `./${EXAM_DATA_ROOT}/registry.js`,
-      `./${EXAM_DATA_ROOT}/audio_manifest.js`
-    ];
+    // 모든 시험의 자산을 집계 (프리캐시는 앱 셸 차원이므로 전 시험 포함)
+    const { getExamTargets } = require('./exam-targets');
+    const allTargets = getExamTargets(WORKSPACE_DIR);
+
+    const assetsToCache = [];
+    const mdAssets = [];
+    for (const t of allTargets) {
+      // 존재하는 경량 번들만 프리캐시 (없는 파일은 precache 실패/404 방지)
+      for (const rel of ['registry.js', 'audio_manifest.js']) {
+        if (fs.existsSync(path.join(WORKSPACE_DIR, t.dataRoot, rel))) {
+          assetsToCache.push(`./${t.dataRoot}/${rel}`);
+        }
+      }
+      const tm = t.manifest;
+      if (!tm) continue;
+      // MD_ASSETS: manifest 기반으로 교재/문제은행/학습안내서 MD 경로 생성 (디스크 존재 확인)
+      const pushMd = (rel) => {
+        if (fs.existsSync(path.join(WORKSPACE_DIR, rel))) mdAssets.push(`./${rel}`);
+      };
+      pushMd(`${t.contentRoot}/학습안내서.md`);
+      for (const subj of tm.subjects || []) {
+        for (const ch of subj.chapters || []) {
+          pushMd(`${t.contentRoot}/${subj.dir}/${ch.file}`);
+          if (ch.storyFile) pushMd(`${t.contentRoot}/${subj.dir}/${ch.storyFile}`);
+        }
+      }
+      for (const exam of tm.exams || []) {
+        pushMd(`${t.contentRoot}/문제은행/${exam.file}`);
+      }
+    }
     void generatedFiles; // 참고용 수집 — 프리캐시 목록에는 포함하지 않음
 
     const assetsBlock = 'const DATA_ASSETS = [\n' + assetsToCache.map(a => `  '${a}'`).join(',\n') + '\n];';
     swContent = swContent.replace(/const DATA_ASSETS = \[[^\]]*\];?/s, assetsBlock);
-
-    // MD_ASSETS 자동 갱신: manifest 기반으로 교재/문제은행/학습안내서 MD 경로 생성
-    const mdAssets = [`./${EXAM_CONTENT_ROOT}/학습안내서.md`];
-    for (const subj of manifest.subjects) {
-      for (const ch of subj.chapters) {
-        mdAssets.push(`./${EXAM_CONTENT_ROOT}/${subj.dir}/${ch.file}`);
-        if (ch.storyFile) mdAssets.push(`./${EXAM_CONTENT_ROOT}/${subj.dir}/${ch.storyFile}`);
-      }
-    }
-    for (const exam of manifest.exams) {
-      mdAssets.push(`./${EXAM_CONTENT_ROOT}/문제은행/${exam.file}`);
-    }
     const mdBlock = 'const MD_ASSETS = [\n' + mdAssets.map(a => `  '${a}'`).join(',\n') + '\n];';
     swContent = swContent.replace(/const MD_ASSETS = \[[^\]]*\];?/s, mdBlock);
 

@@ -767,97 +767,57 @@ function printReviewNotes() {
 
 // --- Textbook Reader 모듈은 ./views/textbook-reader.js로 추출됨 ---
 
-// data-click 기반 이벤트 위임을 위한 전역 API 노출
-window.ManualViewer = ManualViewer;
-window.ExamViewer = ExamViewer;
-window.DataLoader = DataLoader;
-window.clearScratchpad = clearScratchpad;
-window.toggleCalcScratchpad = toggleCalcScratchpad;
-window.toggleScratchpadEraser = toggleScratchpadEraser;
-
-window.clearDictSearch = clearDictSearch;
-window.clearSimDraft = clearSimDraft;
-window.clearTextbookSearch = clearTextbookSearch;
-window.setTextbookFilter = setTextbookFilter;
-window.toggleTextbookCard = toggleTextbookCard;
-window.toggleReaderAudio = toggleReaderAudio;
-window.stopReaderAudio = stopReaderAudio;
-window.toggleReaderPlayPause = toggleReaderPlayPause;
-
-// 학습 캘린더/목표
-window.renderStudyCalendar = renderStudyCalendar;
-window.prevCalendarMonth = prevCalendarMonth;
-window.nextCalendarMonth = nextCalendarMonth;
-window.openGoalSettings = openGoalSettings;
-window.closeGoalSettings = closeGoalSettings;
-window.saveGoalSettings = saveGoalSettings;
-window.recordStudyActivity = recordStudyActivity;
-window.seekReaderAudio = seekReaderAudio;
-window.cycleReaderAudioRate = cycleReaderAudioRate;
-window.toggleReaderAutoScroll = toggleReaderAutoScroll;
-window.exitSimArena = exitSimArena;
-window.exitTrainerSubView = exitTrainerSubView;
-window.exportData = exportData;
-window.generateCalcQuestion = generateCalcQuestion;
-window.nextIngQuestion = nextIngQuestion;
-window.nextLimitsQuestion = nextLimitsQuestion;
-window.printReviewNotes = printReviewNotes;
-window.resetPomodoro = resetPomodoro;
-window.resumeSimDraft = resumeSimDraft;
-window.setDictFilter = setDictFilter;
-window.setReviewFilter = setReviewFilter;
-window.startFocusSubjectStudy = startFocusSubjectStudy;
-window.setTextbookFilter = setTextbookFilter;
-window.showSimAnswerReview = showSimAnswerReview;
-window.showSimResultsSummary = showSimResultsSummary;
-window.startCalcPractice = startCalcPractice;
-window.startDailyChallenge = startDailyChallenge;
-window.startIngredientsChallenge = startIngredientsChallenge;
-window.startIntegratedMockExam = startIntegratedMockExam;
-window.startLimitsTrainer = startLimitsTrainer;
-window.openOxDrillSetup = openOxDrillSetup;
-window.startOxDrill = startOxDrill;
-window.nextOxDrill = nextOxDrill;
-window.openComboDrillSetup = openComboDrillSetup;
-window.startComboDrill = startComboDrill;
-window.nextComboDrill = nextComboDrill;
-window.submitComboJudgments = submitComboJudgments;
-window.openWeakReview = openWeakReview;
-window.setWeakFilter = setWeakFilter;
-window.setDrillCount = setDrillCount;
-window.startMockExamSim = startMockExamSim;
-window.startComboMockExam = startComboMockExam;
-window.startWeakExam = startWeakExam;
-window.submitCalcAnswer = submitCalcAnswer;
-window.submitIngAnswer = submitIngAnswer;
-window.togglePomodoro = togglePomodoro;
-window.toggleSolutionAccordion = toggleSolutionAccordion;
-window.triggerImport = triggerImport;
-// state.js의 saveProgress()가 `typeof updateGlobalStats === 'function'`로 참조하므로 노출 필요
-// (모듈-대-모듈이라 window에 걸어야 bare typeof가 해석됨)
-window.updateGlobalStats = updateGlobalStats;
-window.checkStorageWarning = checkStorageWarning;
-window.showExamSelect = showExamSelect;
-window.selectExamAction = selectExamAction;
-/** 합답형 모의고사 문항 수 선택 행 토글 — 다른 과목의 열린 행은 닫는다 */
-window.toggleComboPicker = function (rowId) {
-    const row = document.getElementById(rowId);
-    if (!row) return;
-    const willOpen = row.classList.contains('is-hidden');
-    document.querySelectorAll('.combo-count-row').forEach(r => r.classList.add('is-hidden'));
-    if (willOpen) row.classList.remove('is-hidden');
+// data-click 기반 이벤트 위임을 위한 전역 API 노출.
+// 위임 디스패처(resolveDelegatedHandler)는 window에서만 핸들러를 조회하므로
+// 여기 등록이 누락되면 클릭이 조용히 죽는다 — tests/unit/delegation-guard.test.js가
+// 모든 data-click/data-input 참조와 이 맵의 교차 일치를 강제 검증한다.
+const DELEGATED_HANDLERS = {
+    // 뷰어/로더 객체
+    ManualViewer, ExamViewer, DataLoader,
+    // 스크래치패드
+    clearScratchpad, toggleCalcScratchpad, toggleScratchpadEraser,
+    // 교재 검색/리더/오디오
+    clearTextbookSearch, setTextbookFilter, toggleTextbookCard,
+    toggleReaderAudio, stopReaderAudio, toggleReaderPlayPause,
+    seekReaderAudio, cycleReaderAudioRate, toggleReaderAutoScroll,
+    // 학습 캘린더/목표
+    renderStudyCalendar, prevCalendarMonth, nextCalendarMonth,
+    openGoalSettings, closeGoalSettings, saveGoalSettings, recordStudyActivity,
+    // 모의고사/시뮬레이터
+    exitSimArena, clearSimDraft, resumeSimDraft, showSimAnswerReview,
+    showSimResultsSummary, startMockExamSim, startComboMockExam,
+    startIntegratedMockExam, startWeakExam, startFocusSubjectStudy,
+    // 훈련소 드릴 (O/X·합답형·약점)
+    openOxDrillSetup, startOxDrill, nextOxDrill,
+    openComboDrillSetup, startComboDrill, nextComboDrill, submitComboJudgments,
+    openWeakReview, setWeakFilter, setDrillCount,
+    // 훈련소 (제한값·계산·원료·뽀모도로)
+    exitTrainerSubView, startLimitsTrainer, nextLimitsQuestion,
+    startCalcPractice, generateCalcQuestion, submitCalcAnswer,
+    startIngredientsChallenge, nextIngQuestion, submitIngAnswer,
+    toggleSolutionAccordion, togglePomodoro, resetPomodoro,
+    // 대시보드/리뷰/백업 (과거 브리지 누락으로 배포판에서 죽어 있던 핸들러 포함)
+    startSubjectStudy, startSubjectQuiz, startSubjectReader,
+    removeWeakCard, setReviewFilter, printReviewNotes,
+    exportData, triggerImport, checkStorageWarning,
+    // 데일리 챌린지
+    startDailyChallenge, closeDailyModal, nextDailyStep,
+    submitDailyCardAnswer, submitDailyShortAnswer,
+    // 사전/시험 전환
+    clearDictSearch, setDictFilter, showExamSelect, selectExamAction,
+    /** 합답형 모의고사 문항 수 선택 행 토글 — 다른 과목의 열린 행은 닫는다 */
+    toggleComboPicker(rowId) {
+        const row = document.getElementById(rowId);
+        if (!row) return;
+        const willOpen = row.classList.contains('is-hidden');
+        document.querySelectorAll('.combo-count-row').forEach(r => r.classList.add('is-hidden'));
+        if (willOpen) row.classList.remove('is-hidden');
+    },
+    // state.js의 saveProgress()가 `typeof updateGlobalStats === 'function'`로 참조하므로 노출 필요
+    // (모듈-대-모듈이라 window에 걸어야 bare typeof가 해석됨)
+    updateGlobalStats,
 };
-
-// data-click 위임에서 참조되지만 그동안 window에 노출되지 않아 배포판(CSP)에서 죽어 있던 핸들러들.
-// (대시보드 과목 바로가기 · 오답노트 카드 제외 · 데일리 챌린지 전체)
-window.startSubjectStudy = startSubjectStudy;
-window.startSubjectQuiz = startSubjectQuiz;
-window.startSubjectReader = startSubjectReader;
-window.removeWeakCard = removeWeakCard;
-window.closeDailyModal = closeDailyModal;
-window.nextDailyStep = nextDailyStep;
-window.submitDailyCardAnswer = submitDailyCardAnswer;
-window.submitDailyShortAnswer = submitDailyShortAnswer;
+Object.assign(window, DELEGATED_HANDLERS);
 
 
 // =======================================================

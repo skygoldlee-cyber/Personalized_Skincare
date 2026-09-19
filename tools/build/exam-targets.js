@@ -22,6 +22,7 @@ function getExamTargets(workspaceDir) {
         const manifestPath = path.join(workspaceDir, contentRoot, 'manifest.json');
         return {
             id: e.id,
+            isDefault: !!e.default,
             contentRoot,
             dataRoot,
             manifestPath,

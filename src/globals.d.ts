@@ -15,8 +15,10 @@ declare global {
     /** data/registry.js 가 바인딩하는 전역 레지스트리(클래식 스크립트 호환용) */
     DATA_REGISTRY?: import('./types.js').DataRegistry;
     /** data/audio_manifest.js 바인딩 */
-    AUDIO_MANIFEST?: import('./types.js').AudioManifest;
+    /** 시험 id → 시험별 오디오 매니페스트 */
+    AUDIO_MANIFEST?: Record<string, import('./types.js').AudioManifest>;
     AUDIO_BASE_URL?: string | null;
+    getAudioManifest?: (examId?: string) => import('./types.js').AudioManifest | Record<string, import('./types.js').AudioManifest> | undefined;
     getAudioUrl?: (localPath: string | null) => string | null;
     /** data-loader 가 채우는 온디맨드 데이터 캐시 */
     STUDY_DATA?: Record<string, any>;
@@ -48,4 +50,10 @@ declare global {
 
   /** app.js 가 정의하는 전역 통계 갱신 함수. state.js 가 저장 후 호출. */
   function updateGlobalStats(): void;
+
+  /**
+   * Node 환경 전용 전역 — 브라우저에는 없으므로 `typeof process !== 'undefined'`
+   * 가드 후에만 접근한다 (tools/* 의 Node 빌드 스크립트가 같은 모듈을 재사용할 때 사용).
+   */
+  var process: { env: Record<string, string | undefined> } | undefined;
 }

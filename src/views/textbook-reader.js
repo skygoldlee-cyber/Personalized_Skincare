@@ -3,11 +3,10 @@ import { esc } from '../sanitize.js';
 import { formatSectionContentForReader } from '../reader-format.js';
 import { parseTextbookContent } from '../textbook-parser.js';
 import { renderStudyAids, bindStudyAidToggles, renderExamFilterToggle, applyExamFilter } from '../study-aids.js';
-import { detectMermaidType, getMermaidClassName, getMermaidInitOptions } from '../mermaid-utils.js';
+import { renderMermaidIn } from '../mermaid-render.js';
 import { openHtmlViewer } from '../html-viewer.js';
 import {
-    SUBJECT_DIR_MAP, REFERENCE_FILES, REFERENCE_COMMON, REFERENCE_INGREDIENTS,
-    REFERENCE_LAW, mapSourceToRef, resolveRefPath
+    getRefTables, mapSourceToRef, resolveRefPath
 } from '../pdf-registry.js';
 import { collectGlossaryItems, renderGlossaryTable, appendGlossaryTocItem, scrollToGlossary } from './glossary-renderer.js';
 import {
@@ -692,8 +691,9 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
 
     // D: 브레드크럼 — 제거됨 (TOC 하이라이트 + sticky heading으로 대체)
 
-    const subjRefFiles = REFERENCE_FILES[subjId] || [];
-    const subjDirName = SUBJECT_DIR_MAP[subjId] || '';
+    const _rt = getRefTables();
+    const subjRefFiles = (_rt.REFERENCE_FILES || {})[subjId] || [];
+    const subjDirName = (_rt.SUBJECT_DIR_MAP || {})[subjId] || '';
 
     chapter.sections.forEach((section, idx) => {
         const bookmarkKey = `${subjId}_${chapterIdx}_${idx}`;
@@ -886,73 +886,10 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
     applyReaderThemeClass();
 
     // Mermaid 다이어그램 렌더링 (pre.mermaid 노드가 있을 때만 온디맨드 로드)
-    _renderReaderMermaid(container);
+    renderMermaidIn(container, '[reader]');
 
     // 참조자료 링크 이벤트 바인딩
     bindReferenceLinks();
-}
-
-// --- Mermaid 온디맨드 로드 (manual-viewer.js 패턴과 동일) ---
-let _mermaidLoadPromise = null;
-function _ensureMermaid() {
-    if (window.mermaid) return Promise.resolve(window.mermaid);
-    if (_mermaidLoadPromise) return _mermaidLoadPromise;
-    _mermaidLoadPromise = new Promise((resolve, reject) => {
-        const script = document.createElement('script');
-        script.src = PATHS.VENDOR_MERMAID;
-        script.async = true;
-        const nonce = crypto.getRandomValues(new Uint8Array(16));
-        script.nonce = Array.from(nonce).map(b => b.toString(16).padStart(2, '0')).join('');
-        script.onload = () => {
-            if (window.mermaid) resolve(window.mermaid);
-            else reject(new Error('mermaid loaded but window.mermaid is undefined'));
-        };
-        script.onerror = (e) => { _mermaidLoadPromise = null; reject(e); };
-        document.head.appendChild(script);
-    });
-    return _mermaidLoadPromise;
-}
-
-function _renderReaderMermaid(container) {
-    const nodes = container ? container.querySelectorAll('pre.mermaid') : [];
-    if (nodes.length === 0) return;
-    _ensureMermaid()
-        .then((mermaid) => {
-            try {
-                const isLight = document.documentElement.classList.contains('light-theme');
-                const nodeArr = Array.from(nodes);
-                // 각 노드의 diagram 타입 감지하여 클래스 추가
-                const nodeTypes = [];
-                nodeArr.forEach(node => {
-                    const type = detectMermaidType(node.textContent);
-                    nodeTypes.push(type);
-                    node.classList.add(getMermaidClassName(type));
-                });
-                let rendered = 0;
-                let failed = 0;
-                const renderNext = (i) => {
-                    if (i >= nodeArr.length) {
-                        if (failed > 0) console.warn(`[reader] mermaid: ${rendered} rendered, ${failed} failed`);
-                        return;
-                    }
-                    const node = nodeArr[i];
-                    const type = nodeTypes[i];
-                    mermaid.initialize(getMermaidInitOptions(type, isLight));
-                    mermaid.run({ nodes: [node] })
-                        .then(() => { rendered++; renderNext(i + 1); })
-                        .catch((e) => {
-                            failed++;
-                            console.warn(`[reader] mermaid node ${i} failed:`, e?.message || e);
-                            node.innerHTML = '<span style="color:var(--color-text-muted);font-size:0.8rem;">[다이어그램 렌더링 실패]</span>';
-                            renderNext(i + 1);
-                        });
-                };
-                renderNext(0);
-            } catch (e) {
-                console.warn('[reader] mermaid render failed:', e);
-            }
-        })
-        .catch((e) => console.warn('[reader] mermaid load failed:', e));
 }
 
 // --- Reader convenience feature state & logic ---
@@ -1447,6 +1384,12 @@ function closeTableModal() {
 // --- 참조자료 링크 기능 ---
 
 function buildReferenceLinks(subjId, contextRefPath) {
+    const _rt = getRefTables();
+    const SUBJECT_DIR_MAP = _rt.SUBJECT_DIR_MAP || {};
+    const REFERENCE_FILES = _rt.REFERENCE_FILES || {};
+    const REFERENCE_COMMON = _rt.REFERENCE_COMMON || [];
+    const REFERENCE_INGREDIENTS = _rt.REFERENCE_INGREDIENTS || [];
+    const REFERENCE_LAW = _rt.REFERENCE_LAW || [];
     const dirName = SUBJECT_DIR_MAP[subjId];
     if (!dirName) return '';
     const subjectFiles = REFERENCE_FILES[subjId] || [];

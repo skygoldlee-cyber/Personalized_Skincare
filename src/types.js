@@ -74,12 +74,26 @@
  */
 
 /**
+ * 드릴(O/X·합답형) 세션 상태.
+ * @typedef {Object} DrillSessionState
+ * @property {?number}  subject       과목 order (특수 모드는 0)
+ * @property {string}   mode          '' | 'weak' | 'num'
+ * @property {Array<*>} data          현재 세션 문항
+ * @property {number}   currentIndex  현재 문항 인덱스
+ * @property {number}   correctCount  정답 수
+ * @property {Array<*>} solvedList    제출 기록
+ * @property {Object.<string, *>} [judgments] 진술별 O/X 판정 (합답형 전용)
+ */
+
+/**
  * 스마트 훈련소 세션 상태.
  * @typedef {Object} TrainerState
  * @property {'menu'|'limits'|'calc'|'ingredients'|string} activeSubView 활성 하위 뷰
  * @property {TrainerLimitsState}      limits
  * @property {TrainerCalcState}        calc
  * @property {TrainerIngredientsState} ingredients
+ * @property {DrillSessionState}       oxdrill
+ * @property {DrillSessionState}       combo
  * @property {PomodoroState}           pomodoro
  */
 
@@ -95,6 +109,8 @@
  * @property {QuizSessionState}       quiz
  * @property {TrainerState}           trainer
  * @property {boolean} [_storageUnavailable] localStorage 사용 불가 감지 플래그
+ * @property {number}  [_prevMemCount]   이전 외운 카드 수 (변동 감지용)
+ * @property {number}  [_prevQuizCount]  이전 퀴즈 결과 수 (변동 감지용)
  */
 
 /**
@@ -253,8 +269,19 @@
    ======================================================= */
 
 /**
- * 오디오 매니페스트: 과목 키 → { 단원인덱스: 로컬 mp3 경로 }.
+ * 오디오 매니페스트(시험 1개 분): 과목 키 → { 단원인덱스: 로컬 mp3 경로 }.
+ * 전역 AUDIO_MANIFEST는 시험 id → 이 타입으로 한 단계 더 감싼다 (Record<string, AudioManifest>).
  * @typedef {Object.<string, Object.<string, string>>} AudioManifest
+ */
+
+/**
+ * content/manifest.json의 과목 항목 (런타임 파싱 소스).
+ * @typedef {Object} ManifestSubject
+ * @property {string}   key      과목 키(예: 'law')
+ * @property {number}   order    정렬 순서
+ * @property {string}   name     표시 이름
+ * @property {string}   dir      contentRoot 상대 디렉터리 (예: '교재/law')
+ * @property {Array<{key:string, title:string, file:string, storyFile?:string}>} chapters
  */
 
 // 런타임 export는 없습니다. (타입 전용 모듈)

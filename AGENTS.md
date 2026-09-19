@@ -17,7 +17,7 @@
 
 ```powershell
 # 테스트
-npm.cmd test                          # 유닛 테스트 (node --test, 248개)
+npm.cmd test                          # 유닛 테스트 (node --test, 294개)
 npm.cmd run test:dom                  # DOM 테스트 (Vitest + jsdom)
 npm.cmd run test:all                   # 전체 테스트 (unit + parser + dom)
 
@@ -67,13 +67,16 @@ src/                    # ES Modules
   study-aids.js         # 기출 필터, 숫자 암기표
   study-tracker.js      # 학습 캘린더/목표 추적 헬퍼 (recordStudyActivity, getStudyGoals)
   charts.js             # SVG 레이더/꺾은선 차트
-  pdf-registry.js       # 참조자료 경로 매핑
+  pdf-registry.js       # 참조자료 경로 매핑 (시험별 테이블 — getRefTables())
+  glossary-query.js     # 용어집 인덱스 쿼리 API (getGlossaryIndex())
   html-viewer.js        # 외부 HTML 콘텐츠 뷰어
   reader-format.js      # 교재 본문 포맷터
   textbook-parser.js    # 교재 MD 파서
   markdown-parser.js    # 공통 MD 파서
   mermaid-utils.js       # Mermaid 다이어그램 설정
-  keyword-index.js      # 교재 셀→참조자료 키워드 매핑
+  mermaid-render.js      # Mermaid 지연 로딩 + 컨테이너 렌더링 (reader/search/manual 공용)
+  pwa-manifest.js        # 시험별 동적 PWA 매니페스트 (클래식 스크립트, blob 주입)
+  keyword-index.js      # 교재 셀→참조자료 키워드 매핑 (시험별 — 자동 생성)
   web-vitals.js         # Core Web Vitals 모니터링
   sha256.js             # 안정적 ID 해시
   utils.js              # 공통 유틸리티 (shuffle 등)
@@ -193,7 +196,7 @@ docs/                   # 개발 문서
 ## 검증 체크리스트 (변경 후 필수)
 
 1. `node --check` — 수정한 JS 파일 문법 검증
-2. `npm.cmd test` — 유닛 테스트 248개 통과 확인
+2. `npm.cmd test` — 유닛 테스트 294개 통과 확인
 3. `npm.cmd run check:parser` — 콘텐츠 변경 시 파서 등가성 검증
 4. `npm.cmd run check:imports` — src/ 내 ES 모듈 import/export 교차 검증
 5. `npm.cmd run verify:assets` — SHELL_ASSETS 파일 존재 확인

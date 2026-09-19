@@ -73,7 +73,6 @@ export const DataLoader = {
         }
         if (exam.registryBundle) {
             await this._loadScript('./' + exam.registryBundle.replace(/^\.\//, ''));
-            await new Promise(r => setTimeout(r, 0));
             if (dynGlobal()) {
                 this.registry = dynGlobal();
                 this._registryExamId = exam.id;
@@ -98,14 +97,20 @@ export const DataLoader = {
         return subjects.map(s => s.order).filter(Number.isFinite);
     },
 
-    /** Dynamic script loading utility with load caching and retry */
+    /**
+     * Dynamic script loading utility with load caching and retry.
+     * resolve는 매크로태스크 한 틱 뒤에 이뤄져, 클래식 스크립트가 설정한
+     * window 전역이 호출부에서 반드시 보이는 것을 보장한다 (호출부의 개별
+     * setTimeout(0) 대기를 이곳에 일원화).
+     */
     _loadScript(url, retries = 2) {
         return new Promise((resolve, reject) => {
+            const done = () => setTimeout(() => resolve(undefined), 0);
             const attemptLoad = (remaining) => {
                 const existing = /** @type {HTMLScriptElement|null} */ (document.querySelector(`script[src="${url}"]`));
                 if (existing) {
                     if (existing.dataset.loaded === 'true') {
-                        resolve(undefined);
+                        done();
                     } else if (existing.dataset.loaded === 'error') {
                         existing.remove();
                         if (remaining > 0) setTimeout(() => attemptLoad(remaining - 1), TIMING.SCRIPT_RETRY_DELAY_MS);
@@ -116,10 +121,10 @@ export const DataLoader = {
                             if (remaining > 0) { existing.remove(); setTimeout(() => attemptLoad(remaining - 1), TIMING.SCRIPT_RETRY_DELAY_MS); }
                             else reject(e);
                         };
-                        existing.addEventListener('load', () => resolve(undefined));
+                        existing.addEventListener('load', done);
                         existing.addEventListener('error', onError);
                         // querySelector → 리스너 부착 사이에 settle됐을 수 있는 경합 방어
-                        if (existing.dataset.loaded === 'true') resolve(undefined);
+                        if (existing.dataset.loaded === 'true') done();
                         else if (existing.dataset.loaded === 'error') onError(new Error(`Script load failed: ${url}`));
                     }
                     return;
@@ -128,7 +133,7 @@ export const DataLoader = {
                 script.src = url;
                 script.async = true;
                 script.dataset.loaded = 'false';
-                script.onload = () => { script.dataset.loaded = 'true'; resolve(undefined); };
+                script.onload = () => { script.dataset.loaded = 'true'; done(); };
                 script.onerror = (e) => {
                     script.dataset.loaded = 'error';
                     if (remaining > 0) { script.remove(); setTimeout(() => attemptLoad(remaining - 1), TIMING.SCRIPT_RETRY_DELAY_MS); }
@@ -145,7 +150,6 @@ export const DataLoader = {
         if (this._fallbackManifestInjected && window.__STUDY_MD_MANIFEST__) return window.__STUDY_MD_MANIFEST__;
         if (!window.__STUDY_MD_MANIFEST__) {
             await this._loadScript(PATHS.STUDY_MD_MANIFEST_BUNDLE);
-            await new Promise(r => setTimeout(r, 0));
         }
         this._fallbackManifestInjected = true;
         if (!window.__STUDY_MD_MANIFEST__) {
@@ -163,7 +167,6 @@ export const DataLoader = {
         if (!window.__STUDY_MD_FILES__) window.__STUDY_MD_FILES__ = {};
         if (!window.__STUDY_MD_FILES__[subjectKey]) {
             await this._loadScript(PATHS.STUDY_MD_SUBJECT_BUNDLE(subjectKey));
-            await new Promise(r => setTimeout(r, 0));
         }
         this._fallbackSubjectInjected[subjectKey] = true;
         const files = window.__STUDY_MD_FILES__ && window.__STUDY_MD_FILES__[subjectKey];
@@ -286,7 +289,6 @@ export const DataLoader = {
         const meta = this.registry.exams.find(e => e.key === key);
         if (!meta) throw new Error(`Exam metadata not found for key: ${key}`);
         await this._loadScript(meta.bundle);
-        await new Promise(r => setTimeout(r, 0));
         const data = /** @type {any} */ (window)[meta.global];
         if (!data) throw new Error(`Exam data is empty or invalid: ${meta.global}`);
         this._loadedExams[key] = data;
@@ -322,7 +324,6 @@ export const DataLoader = {
         const key = this._examKeyForOrder(subjectNum);
         if (this._loadedDrills[key]) return this._loadedDrills[key];
         await this._loadScript(`./${dataPath(`drills/ox_${key}.js`)}`);
-        await new Promise(r => setTimeout(r, 0));
         const data = /** @type {any} */ (window)[`OX_DRILLS_${key}`];
         if (!Array.isArray(data)) throw new Error(`O/X 드릴 데이터를 찾을 수 없습니다: ${key}`);
         this._loadedDrills[key] = data;
@@ -343,15 +344,13 @@ export const DataLoader = {
         if (this._loadedDrills[key]) return this._loadedDrills[key];
 
         await this._loadScript(`./${dataPath(`drills/combo_${examKey}.js`)}`);
-        await new Promise(r => setTimeout(r, 0));
         const auto = /** @type {any} */ (window)[`COMBO_DRILLS_${examKey}`] || [];
 
         // 파일럿(수작업)은 과목1·4에만 존재 — 없어도 자동 번들로 동작
         if (!this._loadedDrills.comboPilot) {
             try {
                 await this._loadScript(`./${dataPath('drills/combo_pilot.js')}`);
-                await new Promise(r => setTimeout(r, 0));
-            } catch (e) {
+                } catch (e) {
                 console.warn('[DataLoader] combo_pilot.js 로드 실패 — 자동 번들만 사용', e);
             }
             this._loadedDrills.comboPilot = (window.COMBO_PILOT && window.COMBO_PILOT.questions) || [];
@@ -373,7 +372,6 @@ export const DataLoader = {
         if (this._comboIndex) return this._comboIndex;
         try {
             await this._loadScript(`./${dataPath('drills/combo_index.js')}`);
-            await new Promise(r => setTimeout(r, 0));
         } catch (e) {
             console.warn('[DataLoader] combo_index.js 로드 실패 — 합답형 문항 수 표시 생략', e);
         }
@@ -401,7 +399,6 @@ export const DataLoader = {
         if (this._questionChapters) return this._questionChapters;
         try {
             await this._loadScript(`./${dataPath('question_chapters.js')}`);
-            await new Promise(r => setTimeout(r, 0));
         } catch (e) {
             console.warn('[DataLoader] question_chapters.js 로드 실패 — 단원별 분석 생략', e);
         }
@@ -422,7 +419,6 @@ export const DataLoader = {
         const meta = this.registry && this.registry.ingredients;
         if (!meta) throw new Error(`Ingredients metadata not found`);
         await this._loadScript(meta.bundle);
-        await new Promise(r => setTimeout(r, 0));
         const data = /** @type {import('./types.js').Ingredient[]|undefined} */ (/** @type {any} */ (window)[meta.global]);
         if (!data || (Array.isArray(data) && data.length === 0)) {
             throw new Error(`Ingredients data is empty or invalid: ${meta.global}`);
@@ -434,6 +430,6 @@ export const DataLoader = {
 };
 
 // Auto-init: 레지스트리 전역이 준비되어 있으면 즉시 초기화(없으면 이후 init 재호출 대비).
-if (window.DATA_REGISTRY) {
+if (typeof window !== 'undefined' && window.DATA_REGISTRY) {
     DataLoader.init();
 }

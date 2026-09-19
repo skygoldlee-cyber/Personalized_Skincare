@@ -1,7 +1,7 @@
 // src/glossary-query.js — 용어집 데이터 접근 추상화 계층
 // GLOSSARY_INDEX 데이터 구조를 캡슐화하고, 뷰 모듈에 쿼리 API를 제공합니다.
 // 데이터 구조가 변경되어도 이 파일만 수정하면 됩니다.
-import { GLOSSARY_INDEX } from './keyword-index.js';
+import { getGlossaryIndex } from './keyword-index.js';
 
 /**
  * 특정 참조문서 파일명에 해당하는 용어집 항목들을 반환합니다.
@@ -12,7 +12,7 @@ import { GLOSSARY_INDEX } from './keyword-index.js';
 export function getGlossaryByRefFile(refFileName, seenKeys) {
     const results = [];
     const prefix = refFileName + '|';
-    for (const [idxKey, entry] of Object.entries(GLOSSARY_INDEX)) {
+    for (const [idxKey, entry] of Object.entries(getGlossaryIndex())) {
         if (idxKey.startsWith(prefix) && (!seenKeys || !seenKeys.has(idxKey))) {
             results.push({ idxKey, ...entry });
             if (seenKeys) seenKeys.add(idxKey);
@@ -30,7 +30,7 @@ export function getGlossaryByRefFile(refFileName, seenKeys) {
  */
 export function getGlossaryBySubject(subjectId, seenKeys) {
     const results = [];
-    for (const [idxKey, entry] of Object.entries(GLOSSARY_INDEX)) {
+    for (const [idxKey, entry] of Object.entries(getGlossaryIndex())) {
         if (entry.subjectId === subjectId && (!seenKeys || !seenKeys.has(idxKey))) {
             results.push({ idxKey, ...entry });
             if (seenKeys) seenKeys.add(idxKey);
@@ -60,7 +60,7 @@ export function getGlossaryByRefFiles(refFileNames) {
  * @returns {{keyword:string, explanation:string, refDoc:string, curated?:boolean}|null}
  */
 export function getGlossaryEntry(idxKey) {
-    const entry = GLOSSARY_INDEX[idxKey];
+    const entry = getGlossaryIndex()[idxKey];
     return entry ? { ...entry } : null;
 }
 
@@ -69,6 +69,6 @@ export function getGlossaryEntry(idxKey) {
  * @returns {Array<{keyword:string, idxKey:string}>}
  */
 export function getAllGlossaryKeywords() {
-    return Object.entries(GLOSSARY_INDEX)
+    return Object.entries(getGlossaryIndex())
         .map(([idxKey, entry]) => ({ keyword: entry.keyword, idxKey }));
 }

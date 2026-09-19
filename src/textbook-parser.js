@@ -157,7 +157,7 @@ function isValidQuiz(type, question, answer) {
 
 function basenameNoMd(filename) {
     // path.basename(filename, '.md') 동등: 경로 구분자 제거 후 .md 확장자 제거
-    const base = String(filename).split(/[\\/]/).pop();
+    const base = String(filename).split(/[\\/]/).pop() || '';
     return base.endsWith('.md') ? base.slice(0, -3) : base;
 }
 
@@ -574,18 +574,18 @@ function parseTextbookContent(content, filename, subjectDir) {
 
 /**
  * 한 과목의 모든 챕터 MD를 파싱해 STUDY_DATA[key] 형태로 조립.
- * @param {object} subjectMeta - manifest.json subjects[] 항목 { key, order, name, dir, chapters:[{key,title,file}] }
+ * @param {import('./types.js').ManifestSubject} subjectMeta - manifest.json subjects[] 항목
  * @param {Record<string,string>} mdByFile - { '1.cosmetic-law.md': '<md text>', ... }
- * @param {object} [opts] - { filePathMode: 'html'|'md' } 원본 링크 경로 확장자 (기본 'md')
+ * @param {{filePathMode?: 'html'|'md'}} [opts] - 원본 링크 경로 확장자 (기본 'md')
  * @returns {{name:string, cards:Array, quizzes:Array, chapters:Array}}
  */
 export function buildSubjectData(subjectMeta, mdByFile, opts = {}) {
     const filePathMode = opts.filePathMode || 'md';
     const data = {
         name: `${subjectMeta.order}과목: ${subjectMeta.name}`,
-        cards: [],
-        quizzes: [],
-        chapters: []
+        cards: /** @type {import('./types.js').Card[]} */ ([]),
+        quizzes: /** @type {import('./types.js').Quiz[]} */ ([]),
+        chapters: /** @type {any[]} */ ([])
     };
 
     const chapters = subjectMeta.chapters || [];
@@ -610,6 +610,7 @@ export function buildSubjectData(subjectMeta, mdByFile, opts = {}) {
     });
 
     // 중복 카드 제거 (같은 chapter 내 용어 사전 표와 본문 표 간 용어 중복 대응)
+    /** @type {import('./types.js').Card[]} */
     const uniqueCards = [];
     const cardMap = new Set();
     data.cards.forEach(c => {
@@ -621,6 +622,7 @@ export function buildSubjectData(subjectMeta, mdByFile, opts = {}) {
     data.cards = uniqueCards;
 
     // 중복 퀴즈 제거 (빌드 build()와 동일 로직)
+    /** @type {import('./types.js').Quiz[]} */
     const uniqueQuizzes = [];
     const quizMap = new Set();
     data.quizzes.forEach(q => {

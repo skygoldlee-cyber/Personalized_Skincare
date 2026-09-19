@@ -62,6 +62,10 @@ const DELEGATED_ATTR_RE = /data-(?:click|input)=(?:"([^"${}]+)"|'([^'${}]+)')/g;
 
 // app.js 의 window.<name> = 브리지 수집
 const WINDOW_BRIDGE_RE = /window\.([A-Za-z_$][\w$]*)\s*=/g;
+// DELEGATED_HANDLERS 맵(Object.assign(window, ...))의 키도 브리지로 인정
+const REGISTRY_BLOCK_RE = /const DELEGATED_HANDLERS = \{([\s\S]*?)\};/;
+// 블록 내 // 주석을 제거한 뒤, `키,` `키:` `메서드(` 형태의 식별자를 모두 수집
+const REGISTRY_KEY_RE = /([A-Za-z_$][\w$]*)\s*(?:,|:|\()/g;
 
 test('shipped HTML에 인라인 on*= 이벤트 핸들러가 없다 (CSP 차단 방지)', () => {
     const offenders = [];
@@ -100,12 +104,19 @@ test('모든 data-click / data-input 핸들러는 window에 브리지되어 있�
         }
     }
 
-    // 2) app.js 의 window.* 브리지 수집
+    // 2) app.js 의 window.* 브리지 수집 (직접 할당 + DELEGATED_HANDLERS 맵 키)
     const appText = fs.readFileSync(APP_JS, 'utf8');
     const bridged = new Set();
     let b;
     WINDOW_BRIDGE_RE.lastIndex = 0;
     while ((b = WINDOW_BRIDGE_RE.exec(appText))) bridged.add(b[1]);
+    const regMatch = appText.match(REGISTRY_BLOCK_RE);
+    if (regMatch) {
+        const block = regMatch[1].replace(/\/\/[^\n]*/g, '');
+        REGISTRY_KEY_RE.lastIndex = 0;
+        let k;
+        while ((k = REGISTRY_KEY_RE.exec(block))) bridged.add(k[1]);
+    }
 
     // 3) 교차 검증
     const missing = [];
@@ -119,6 +130,6 @@ test('모든 data-click / data-input 핸들러는 window에 브리지되어 있�
     assert.deepEqual(
         missing,
         [],
-        'window 브리지 누락 (app.js에 window.<name> = <name>; 추가 필요):\n' + missing.join('\n')
+        'window 브리지 누락 (app.js의 DELEGATED_HANDLERS 맵에 추가 필요):\n' + missing.join('\n')
     );
 });

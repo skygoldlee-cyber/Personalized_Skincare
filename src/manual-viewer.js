@@ -8,7 +8,7 @@
 //   - 전역 테마(--bg-app, --color-text-main 등)를 자동으로 따라감
 
 import { escapeHTML } from './sanitize.js';
-import { detectMermaidType, getMermaidClassName, getMermaidInitOptions } from './mermaid-utils.js';
+import { renderMermaidIn } from './mermaid-render.js';
 import { parseMarkdown } from './markdown-parser.js';
 import { openSubjectChapter } from './views/textbook-reader.js';
 import { PATHS } from './paths.js';
@@ -217,62 +217,9 @@ body.manual-open{overflow:hidden;}
     }
 
     // mermaid(3.3MB)는 index.html 에서 즉시 로드하지 않고, 매뉴얼에 실제 다이어그램이
-    // 있을 때만 여기서 온디맨드로 1회 주입한다. 중복 주입/경쟁은 모듈 스코프 Promise 로 방지.
-    let _mermaidLoadPromise = null;
-    function _ensureMermaid() {
-        if (window.mermaid) return Promise.resolve(window.mermaid);
-        if (_mermaidLoadPromise) return _mermaidLoadPromise;
-        _mermaidLoadPromise = new Promise((resolve, reject) => {
-            const script = document.createElement('script');
-            script.src = PATHS.VENDOR_MERMAID;
-            script.async = true;
-            const nonce = crypto.getRandomValues(new Uint8Array(16));
-            script.nonce = Array.from(nonce).map(b => b.toString(16).padStart(2, '0')).join('');
-            script.onload = () => {
-                if (window.mermaid) resolve(window.mermaid);
-                else reject(new Error('mermaid loaded but window.mermaid is undefined'));
-            };
-            script.onerror = (e) => { _mermaidLoadPromise = null; reject(e); };
-            document.head.appendChild(script);
-        });
-        return _mermaidLoadPromise;
-    }
-
+    // 있을 때만 mermaid-render.js에서 온디맨드로 1회 주입한다.
     function _renderMermaid() {
-        // 다이어그램이 없으면 mermaid 를 아예 로드하지 않는다(대다수 세션).
-        const nodes = document.querySelectorAll('#manual-article pre.mermaid');
-        if (nodes.length === 0) return;
-
-        _ensureMermaid()
-            .then((mermaid) => {
-                try {
-                    const isLight = document.documentElement.classList.contains('light-theme');
-                    const nodeArr = Array.from(nodes);
-                    const nodeTypes = [];
-                    nodeArr.forEach(node => {
-                        const type = detectMermaidType(node.textContent);
-                        nodeTypes.push(type);
-                        node.classList.add(getMermaidClassName(type));
-                    });
-                    const renderNext = (i) => {
-                        if (i >= nodeArr.length) return;
-                        const node = nodeArr[i];
-                        const type = nodeTypes[i];
-                        mermaid.initialize(getMermaidInitOptions(type, isLight));
-                        mermaid.run({ nodes: [node] })
-                            .then(() => renderNext(i + 1))
-                            .catch((e) => {
-                                console.warn(`[manual] mermaid node ${i} failed:`, e?.message || e);
-                                nodeArr[i].innerHTML = '<span style="color:var(--color-text-muted);font-size:0.8rem;">[다이어그램 렌더링 실패]</span>';
-                                renderNext(i + 1);
-                            });
-                    };
-                    renderNext(0);
-                } catch (e) {
-                    console.warn('[manual] mermaid render failed:', e);
-                }
-            })
-            .catch((e) => console.warn('[manual] mermaid load failed:', e));
+        renderMermaidIn(document.getElementById('manual-article'), '[manual]');
     }
 
     function _renderBody(title, bodyHtml) {
