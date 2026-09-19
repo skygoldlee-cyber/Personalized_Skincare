@@ -243,6 +243,7 @@ function renderComboQuestion() {
     const bar = document.getElementById('combo-progress-bar');
     const ind = document.getElementById('combo-progress-indicator');
     const catEl = document.getElementById('combo-q-category');
+    const citEl = document.getElementById('combo-citation');
     const stemEl = document.getElementById('combo-stem');
     const stmtsEl = document.getElementById('combo-statements');
     const optsEl = document.getElementById('combo-options-container');
@@ -252,6 +253,8 @@ function renderComboQuestion() {
     if (bar) bar.style.width = `${Math.round((st.currentIndex / st.data.length) * 100)}%`;
     if (ind) ind.textContent = `문제 ${st.currentIndex + 1} / ${st.data.length}`;
     if (catEl) catEl.textContent = `과목${q.subject} · 합답형`;
+    // 합답형 규칙: 출처·인용은 문제 서두에 명기 (stem 앞 표시)
+    if (citEl) citEl.textContent = q.citation || '';
     if (stemEl) stemEl.innerHTML = safeTextWithBreaks(q.stem || '');
     if (feedback) feedback.classList.add('is-hidden');
     if (nextBtn) nextBtn.classList.add('is-hidden');

@@ -27,6 +27,10 @@ if (!bundle || !Array.isArray(bundle.questions)) {
 let errors = 0;
 for (const q of bundle.questions) {
   const errs = validateQuestion(q);
+  // 합답형 저작 규칙: 문제 서두에 출처·인용 명기 필수
+  if (!q.citation || typeof q.citation !== 'string' || !q.citation.trim()) {
+    errs.push('citation 필드 없음 — 합답형은 문제 서두에 출처·인용 명기 필수');
+  }
   const answer = deriveComboAnswer(q);
   const optIds = new Set(q.options.map(o => o.id));
   if (!optIds.has(answer)) {

@@ -5,6 +5,7 @@
  * 로드: DataLoader.loadComboDrills() → window.COMBO_PILOT
  *
  * 저작 원칙 (합답형 학습전략 §3):
+ *  - citation 필수 — 출처·인용을 문제 서두에 명기 (렌더링 시 stem 앞 표시)
  *  - 모든 진술은 원문항의 📖 교재 근거 표에 실재하는 사실로 작성
  *  - 거짓 진술은 혼동쌍(주체 바꿔치기·수치 변경·범위 왜곡)으로 구성
  *  - 오답 옵션은 정답 조합과 진술 1개만 다른 근접 오지 우선
@@ -16,6 +17,7 @@ window.COMBO_PILOT = {
     /* ── 과목4: 피부학 ── */
     {
       id: 'cb-04-001', subject: 4, type: 'combo', tags: ['구조', '생리'], points: 5,
+      citation: '📖 교재: L1247 (한선·땀샘)',
       stem: '다음 보기 중 에크린선(소한선)에 대한 설명으로 옳은 것을 모두 고른 것은?',
       statements: [
         { id: 'ㄱ', sid: 'st-04-0285a', conceptId: '한선-구분', text: '입술, 음부, 손톱을 제외한 전신에 분포하며 손바닥·발바닥·이마에 특히 많다', truth: true },
@@ -35,6 +37,7 @@ window.COMBO_PILOT = {
     },
     {
       id: 'cb-04-002', subject: 4, type: 'combo', tags: ['수치', '구조'], points: 5,
+      citation: '📖 교재: L1469 (색소침착 피부·자외선)',
       stem: '다음 보기 중 자외선의 종류와 특성에 대한 설명으로 옳은 것을 모두 고른 것은?',
       statements: [
         { id: 'ㄱ', sid: 'st-04-0380a', conceptId: '자외선-파장', text: 'UVA는 320~400nm의 장파장으로 광노화의 원인이다', truth: true },
@@ -54,6 +57,7 @@ window.COMBO_PILOT = {
     },
     {
       id: 'cb-04-003', subject: 4, type: 'combo', tags: ['구조'], points: 5,
+      citation: '📖 교재: L1346 (에피큐티클)',
       stem: '다음 보기 중 모발의 에피큐티클(Epicuticle)에 대한 설명으로 옳은 것을 모두 고른 것은?',
       statements: [
         { id: 'ㄱ', sid: 'st-04-0324a', conceptId: '모발-큐티클', text: '모발 가장 바깥쪽의 얇은 막으로 시스틴 함유량이 많다', truth: true },
@@ -73,6 +77,7 @@ window.COMBO_PILOT = {
     },
     {
       id: 'cb-04-004', subject: 4, type: 'combo', tags: ['구조', '생리'], points: 5,
+      citation: '📖 교재: L1162, L1196 (기저층 세포)',
       stem: '다음 보기 중 기저층에 존재하는 세포에 대한 설명으로 옳은 것을 모두 고른 것은?',
       statements: [
         { id: 'ㄱ', sid: 'st-04-0299a', conceptId: '기저층-세포', text: '각질형성세포(케라티노사이트)는 각질층을 구성하는 각질세포를 만든다', truth: true },
@@ -92,6 +97,7 @@ window.COMBO_PILOT = {
     },
     {
       id: 'cb-04-005', subject: 4, type: 'combo', tags: ['구조', '수치'], points: 5,
+      citation: '📖 교재: L1158 (각질층·표피 구조)',
       stem: '다음 보기 중 각질층과 표피 구조에 대한 설명으로 옳은 것을 모두 고른 것은?',
       statements: [
         { id: 'ㄱ', sid: 'st-04-0276a', conceptId: '각질층-구성', text: '각질층은 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5의 약산성이다', truth: true },
@@ -111,6 +117,7 @@ window.COMBO_PILOT = {
     },
     {
       id: 'cb-04-006', subject: 4, type: 'combo', tags: ['생리', '수치'], points: 5,
+      citation: '📖 교재: L1158, L1196 (각화주기·과립층)',
       stem: '다음 보기 중 각화 과정과 표피 각 층의 기능에 대한 설명으로 옳은 것을 모두 고른 것은?',
       statements: [
         { id: 'ㄱ', sid: 'st-04-0299d', conceptId: '각화주기', text: '각화주기(턴오버)는 기저층에서 생성된 세포가 각질층까지 이동·탈락하는 약 28일 주기이다', truth: true },
@@ -130,6 +137,7 @@ window.COMBO_PILOT = {
     },
     {
       id: 'cb-04-007', subject: 4, type: 'combo', tags: ['절차', '기한'], points: 5,
+      citation: '📖 교재: L588, 제8조의3 (변경신고)',
       stem: '다음 보기 중 맞춤형화장품판매업의 변경신고에 대한 설명으로 옳은 것을 모두 고른 것은?',
       statements: [
         { id: 'ㄱ', sid: 'st-04-0298a', conceptId: '변경신고-대상', text: '판매업소의 상호 또는 소재지 변경은 변경신고 대상이다', truth: true },
@@ -149,6 +157,7 @@ window.COMBO_PILOT = {
     },
     {
       id: 'cb-04-008', subject: 4, type: 'combo', tags: ['금지원료', '정의'], points: 5,
+      citation: '📖 교재: L610, 제5조 (사용 가능 원료)',
       stem: '다음 보기 중 맞춤형화장품에 사용 가능한 원료에 대한 설명으로 옳은 것을 모두 고른 것은?',
       statements: [
         { id: 'ㄱ', sid: 'st-04-0369a', conceptId: '사용원료-범위', text: '맞춤형화장품 조제에는 식약처장이 고시하는 사용 가능 원료에 한정된다', truth: true },
@@ -169,6 +178,7 @@ window.COMBO_PILOT = {
     /* ── 과목1: 법령 ── */
     {
       id: 'cb-01-001', subject: 1, type: 'combo', tags: ['처분기준'], points: 5,
+      citation: '📖 교재: L969~970 (벌칙 표)',
       stem: '다음 보기 중 화장품법상 벌칙의 구분에 대한 설명으로 옳은 것을 모두 고른 것은?',
       statements: [
         { id: 'ㄱ', sid: 'st-01-0002a', conceptId: '벌칙-구분', text: '맞춤형화장품판매업의 신고·변경신고 위반은 3년 이하 징역 또는 3천만 원 이하 벌금 대상이다', truth: true },
@@ -188,6 +198,7 @@ window.COMBO_PILOT = {
     },
     {
       id: 'cb-01-002', subject: 1, type: 'combo', tags: ['처분기준'], points: 5,
+      citation: '📖 교재: L869 (4차 위반 등록취소)',
       stem: '다음 보기 중 4차 위반 시 영업 등록취소 대상이 되는 행위를 모두 고른 것은?',
       statements: [
         { id: 'ㄱ', sid: 'st-01-0056a', conceptId: '등록취소-사유', text: '제조소·화장품책임판매업소의 소재지를 변경(미신고)한 경우', truth: true },

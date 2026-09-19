@@ -35,6 +35,7 @@
  * @property {1|2|3|4} subject           // 과목 번호
  * @property {'single'|'combo'|'short'|'ox'} type
  * @property {string} stem               // 문제 발문
+ * @property {string} [citation]         // combo 필수: 출처·인용 — 문제 서두(stem 앞)에 표기
  * @property {number} points             // 배점(과목 합이 100/250/250/400 되도록 배분)
  * @property {Statement[]} [statements]  // combo 전용
  * @property {Option[]} [options]        // single/combo
@@ -121,6 +122,8 @@ function validateQuestion(q) {
       errs.push('single answer와 correct 옵션 불일치');
   } else if (q.type === 'combo') {
     if (!q.statements || q.statements.length < 2) errs.push('combo 진술 부족');
+    // 저작 규칙: 합답형은 출처·인용을 문제 서두에 명기해야 한다
+    if (!q.citation || !String(q.citation).trim()) errs.push('combo citation 없음 — 문제 서두 출처·인용 명기 필수');
     const ids = new Set();
     (q.statements || []).forEach(s => {
       if (ids.has(s.id)) errs.push(`진술 id 중복: ${s.id}`);
@@ -262,6 +265,7 @@ const SAMPLE_QUESTIONS = [
   },
   {
     id: 'q-04-137', subject: 4, type: 'combo', points: 8,
+    citation: '📖 화장품법 제3조의2 (예시 출처)',
     stem: '맞춤형화장품 혼합·소분에 관한 설명으로 옳은 것을 모두 고른 것은?',
     statements: [
       { id: 'ㄱ', sid: 'st-04-0001', conceptId: '혼합소분범위',
