@@ -13,7 +13,7 @@
  *   mode 'answer' — 회상형·분류형 선지(고유명사·수치): truth = 정답 여부
  *                   → 발문 꼬리를 "…모두 고른 것은?"으로 변환 (극성 보존)
  *   mode 'blank'  — 단답형: 정답 + 과목 정답 풀 오답 추첨으로 진술 구성
- *                   다중 빈칸은 (A)/(B) 각각 1문항 생성
+ *                   다중 빈칸은 (A)만 1문항 생성 — 총량 1,000문(100/250/250/400) 유지
  *   '위 ①②③ 모두'류 메타 선지가 정답이면 원형 숫자 개수만큼 실질 선지를 참으로 처리
  *
  *   진술 explain은 중복 저장하지 않음(문항 explain으로 폴백) — 번들 크기 절감
@@ -213,7 +213,7 @@ function pickDistractors(q, pool, count, rng, acceptsRaw) {
 
 /**
  * 단답형 → combo 문항 변환
- * @param {string} blankLabel 'A' | 'B' — 다중 빈칸 문항은 빈칸별로 1문씩 생성
+ * @param {string} blankLabel 항상 'A' — seed/sid/id 안정성을 위해 라벨 형식 유지 (1,000문 총량 정책으로 (B) 생성 중단)
  */
 function buildBlankCombo(q, blankLabel, examKey, exam, pools, globalPool, genOpts) {
   const subject = SUBJECT_NUM[examKey];
@@ -300,7 +300,7 @@ function buildCitation(q, examKey, explanation) {
 function buildComboItems(examKey, exam, genOpts, pools, globalPool) {
   const items = [];
   const stats = {
-    choice: 0, fact: 0, answer: 0, blank: 0, blankB: 0,
+    choice: 0, fact: 0, answer: 0, blank: 0,
     skipComboStem: 0, skipStem: 0, skipNoTruth: 0, skipFew: 0, skipBlank: 0,
     allOfAbove: 0, errors: [],
   };
@@ -309,12 +309,9 @@ function buildComboItems(examKey, exam, genOpts, pools, globalPool) {
 
   for (const q of exam.questions) {
     if (q.type === 'blank') {
-      const hasB = /\(\s*B\s*\)|\*\*\[\s*\(B\)/.test(q.question);
-      for (const label of hasB ? ['A', 'B'] : ['A']) {
-        const it = buildBlankCombo(q, label, examKey, exam, pools, globalPool, genOpts);
-        if (it) { items.push(it); label === 'B' ? stats.blankB++ : stats.blank++; }
-        else { stats.skipBlank++; stats.errors.push(`${q.id}: 단답형(${label}) 변환 실패 (오답 풀 부족)`); }
-      }
+      const it = buildBlankCombo(q, 'A', examKey, exam, pools, globalPool, genOpts);
+      if (it) { items.push(it); stats.blank++; }
+      else { stats.skipBlank++; stats.errors.push(`${q.id}: 단답형 변환 실패 (오답 풀 부족)`); }
       continue;
     }
     if (q.type !== 'choice') continue;
@@ -523,7 +520,7 @@ async function main() {
     }
 
     totalItems += valid.length;
-    console.log(`[combo-drills] ${key}: choice ${stats.choice} + blank → combo ${valid.length} (fact ${stats.fact}/answer ${stats.answer}/blank ${stats.blank}+B${stats.blankB}, 조합발문 스킵 ${stats.skipComboStem}, '모두'복구 ${stats.allOfAbove})`);
+    console.log(`[combo-drills] ${key}: choice ${stats.choice} + blank → combo ${valid.length} (fact ${stats.fact}/answer ${stats.answer}/blank ${stats.blank}, 조합발문 스킵 ${stats.skipComboStem}, '모두'복구 ${stats.allOfAbove})`);
     const allErrs = [...stats.errors, ...errs];
     if (allErrs.length) {
       console.log(`  ⚠ 오류 ${allErrs.length}건:`);

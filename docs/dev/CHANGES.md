@@ -4,6 +4,12 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-20 합답형 총량 1,000문 조정 — 다중 빈칸 (B) 생성 중단
+
+- `build_combo_drills.js`: 다중 빈칸 문항의 `(B)` 변형 생성을 중단하고 `(A)`만 변환 — 과목1 −1, 과목2 −4 → 총 **1,000문**(100/250/250/400)
+- `buildBlankCombo`의 `blankLabel` 파라미터는 seed/sid/id 안정성을 위해 유지 — 기존 (A) 문항의 id·sid·문구 변경 없음 (추적 데이터 보존)
+- 문서: `ARCHITECTURE.md`·`QUESTION_SCHEMA_DESIGN.md` §6-3/6-5의 산출 정합 갱신
+
 ## 2026-09-20 합답형 모의고사 — 실전 시뮬레이터 연동
 
 - `populateExamCards`(app.js): 과목 카드에 "합답형 문제집"(`과목N_합답형.md` 열람) + "합답형 풀기"(`startComboMockExam`) 버튼 쌍 추가

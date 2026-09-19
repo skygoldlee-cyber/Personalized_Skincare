@@ -324,7 +324,7 @@ Personalized_Skincare/
 │   ├── build_exam_bundles.js   #   문제은행 폴백 번들
 │   ├── build_study_md_bundle.js #  교재 폴백 번들 (과목별 분할)
 │   ├── build_ox_drills.js      #   O/X 드릴 생성기 (객관식 → 진위형 3,700+문)
-│   ├── build_combo_drills.js   #   합답형 변환기 (choice+blank → 1,005문 + 과목N_합답형.md)
+│   ├── build_combo_drills.js   #   합답형 변환기 (choice+blank → 1,000문 + 과목N_합답형.md)
 │   ├── check_combo_pilot.js    #   합답형 파일럿 검증 (check:combo)
 │   ├── check_parser_parity.js  #   빌드 파서 ↔ 런타임 파서 등가성 검증
 │   ├── check-imports.js        #   ES 모듈 import/export 교차 검증
@@ -1056,7 +1056,7 @@ content/**/*.md ───(런타임 fetch)──► src/data-loader.js + src/tex
 content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.js ──► data/study_md/ (과목별 분할)
 
 data/exams/*.js ──► tools/build_ox_drills.js    ──► data/drills/ox_subject*.js   (O/X 3,700+문)
-data/exams/*.js ──► tools/build_combo_drills.js ──► data/drills/combo_subject*.js (합답형 1,005문)
+data/exams/*.js ──► tools/build_combo_drills.js ──► data/drills/combo_subject*.js (합답형 1,000문)
                 └──────────────────────────────► content/문제은행/과목N_합답형.md (검토용 MD)
 ```
 
@@ -1077,7 +1077,7 @@ data/exams/subjectN.*.js ──► build_ox_drills.js    ──► data/drills/o
 ```
 
 - **스키마**: `single`/`combo`/`short`/`ox` 4유형. combo는 진술 `truth`에서 정답 조합을 **도출**(`deriveComboAnswer`)하고 `validateQuestion`으로 유일성을 검증 — 정답 오타를 구조적으로 차단.
-- **합답형 변환**(상세: [`QUESTION_SCHEMA_DESIGN.md`](./QUESTION_SCHEMA_DESIGN.md) §6): 객관식은 선지를 `fact`(명제 진위)/`answer`(정답 여부) 모드로 진술화, 단답형은 정답 풀링(유형 분류 + 모호성 필터)으로 오답 진술을 구성. 과목당 101/254/250/400 = 1,005문 (다중 빈칸 (B) +5).
+- **합답형 변환**(상세: [`QUESTION_SCHEMA_DESIGN.md`](./QUESTION_SCHEMA_DESIGN.md) §6): 객관식은 선지를 `fact`(명제 진위)/`answer`(정답 여부) 모드로 진술화, 단답형은 정답 풀링(유형 분류 + 모호성 필터)으로 오답 진술을 구성. 과목당 100/250/250/400 = 1,000문 (다중 빈칸은 (A)만 변환).
 - **진술 원자 추적**: 진술의 `sid`(`stableId`)를 O/X·합답형이 공유 → [`src/statement-tracker.js`](../../src/statement-tracker.js)가 `perStatement.judgedCorrect` 판정을 `sid` 단위로 `statement_stats` `{j, w, lw, t, truth, cid, last, streak}` + SM-2 큐(`spaced-repetition.js`)에 누적. **연속 정답 3회(`WEAK_GRADUATE_STREAK`) 시 취약 목록 졸업**, 재오판 시 복귀. 드릴 편성은 **SM-2 기한 도래(`getDueStatementSids`) → 오판 진술 → 임의** 순.
 - **드릴 모드**: 과목별(1~4) 외에 전 과목 특수 모드 `weak`(취약·복습 진술 필터)·`num`(수치·한도·기한 태그 필터 — `inferTags` 부여분) 지원, 출제 수 10/20/전체 선택. 합답형은 진술별 O/X 토글 2단계 응시 + 판정과 모순되는 선지 실시간 소거 표시(시험장 소거 전술 훈련).
 - **취약 진술 리뷰 패널**: 누적 통계 열람 — conceptId 개념 그룹핑(참/거짓 혼동쌍 2단 대조), 복습 대상 필터, 최근 판정 배지, 졸업 수 표시, 바로 드릴 진입.
