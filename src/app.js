@@ -303,15 +303,21 @@ function populateExamCards() {
                                 </div>`;
         }).join('\n');
 
-        // ㄱㄴㄷ 합답형: 문제집 MD 열람 + 합답형 모의고사 (문항 수 선택 칩)
+        // ㄱㄴㄷ 합답형: 문제집 MD 열람 + 합답형 모의고사 (버튼 클릭 시 문항 수 선택 행 펼침)
         // comboFile이 manifest에 선언되면 우선 사용, 없으면 과목{order}_합답형.md 규약
         const comboFile = (subjExams.find(e => e.comboFile) || {}).comboFile || `과목${subj.order}_합답형.md`;
+        // 프리셋은 실제 풀보다 작을 때만 표시, "전체"는 실제 문항 수 표기
+        const comboTotal = DataLoader.getComboCount(subj.order);
+        const comboChips = [20, 40, 60]
+            .filter(n => !comboTotal || n < comboTotal)
+            .map(n => `<button class="exam-btn-sim combo-count-chip" data-click="startComboMockExam" data-arg="${idx + 1}:${n}">${n}문</button>`)
+            .concat(`<button class="exam-btn-sim combo-count-chip" data-click="startComboMockExam" data-arg="${idx + 1}">${comboTotal ? `전체 ${comboTotal}문` : '전체'}</button>`)
+            .join('\n                                            ');
         const comboPair = `                                <div class="exam-btn-pair">
                                     <button data-click="ExamViewer.openExam" data-arg="${contentPath(`문제은행/${comboFile}`)}" class="exam-btn-link"><i class="fa-solid fa-file-lines"></i> 합답형 문제집</button>
-                                    <div class="combo-count-row">
-                                        <button class="exam-btn-sim combo-count-chip" data-click="startComboMockExam" data-arg="${idx + 1}:40">합답형 40문</button>
-                                        <button class="exam-btn-sim combo-count-chip" data-click="startComboMockExam" data-arg="${idx + 1}:60">60문</button>
-                                        <button class="exam-btn-sim combo-count-chip" data-click="startComboMockExam" data-arg="${idx + 1}">전체</button>
+                                    <button class="exam-btn-sim" data-click="toggleComboPicker" data-arg="combo-picker-${idx + 1}"><i class="fa-solid fa-circle-play"></i> 합답형 모의고사</button>
+                                    <div class="combo-count-row is-hidden" id="combo-picker-${idx + 1}">
+                                            ${comboChips}
                                     </div>
                                 </div>`;
         const allBtnsHtml = `${btnsHtml}\n${comboPair}`;
@@ -831,6 +837,14 @@ window.updateGlobalStats = updateGlobalStats;
 window.checkStorageWarning = checkStorageWarning;
 window.showExamSelect = showExamSelect;
 window.selectExamAction = selectExamAction;
+/** 합답형 모의고사 문항 수 선택 행 토글 — 다른 과목의 열린 행은 닫는다 */
+window.toggleComboPicker = function (rowId) {
+    const row = document.getElementById(rowId);
+    if (!row) return;
+    const willOpen = row.classList.contains('is-hidden');
+    document.querySelectorAll('.combo-count-row').forEach(r => r.classList.add('is-hidden'));
+    if (willOpen) row.classList.remove('is-hidden');
+};
 
 // data-click 위임에서 참조되지만 그동안 window에 노출되지 않아 배포판(CSP)에서 죽어 있던 핸들러들.
 // (대시보드 과목 바로가기 · 오답노트 카드 제외 · 데일리 챌린지 전체)
@@ -875,6 +889,7 @@ function applyFeatureFlags() {
 async function initExamContext() {
     DataLoader.init();
     await DataLoader.ensureRegistry();
+    await DataLoader.loadComboIndex();
     applyExamBranding();
     applyFeatureFlags();
     purgeLegacyStorage(

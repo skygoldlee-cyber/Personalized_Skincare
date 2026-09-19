@@ -500,6 +500,7 @@ async function buildForExam(target) {
 
   let totalItems = 0;
   let totalErrors = 0;
+  const comboCounts = {};
 
   for (const [key, { data, file }] of Object.entries(examDataMap)) {
     const { items, stats } = buildComboItems(key, data, generateComboOptions, pools, globalPool);
@@ -529,6 +530,7 @@ async function buildForExam(target) {
       }
     }
 
+    comboCounts[key] = valid.length;
     totalItems += valid.length;
     console.log(`[combo-drills] ${key}: choice ${stats.choice} + blank → combo ${valid.length} (fact ${stats.fact}/answer ${stats.answer}/blank ${stats.blank}, 조합발문 스킵 ${stats.skipComboStem}, '모두'복구 ${stats.allOfAbove})`);
     const allErrs = [...stats.errors, ...errs];
@@ -537,6 +539,29 @@ async function buildForExam(target) {
       allErrs.slice(0, 8).forEach(e => console.log('   -', e));
       if (allErrs.length > 8) console.log(`   … 외 ${allErrs.length - 8}건`);
     }
+  }
+
+  // 과목별 합답형 문항 수 인덱스 — 모의고사 카드의 "전체 N문" 라벨용.
+  // 수작업 파일럿(combo_pilot.js) 문항도 과목별로 합산해 실제 응시 풀과 일치시킨다.
+  if (!DRY_RUN) {
+    const pilotPath = path.join(OUT_DIR, 'combo_pilot.js');
+    if (fs.existsSync(pilotPath)) {
+      try {
+        const sandbox = { window: {} };
+        require('vm').runInNewContext(fs.readFileSync(pilotPath, 'utf8'), sandbox);
+        const pilotQs = (sandbox.window.COMBO_PILOT && sandbox.window.COMBO_PILOT.questions) || [];
+        for (const q of pilotQs) {
+          const pKey = Object.keys(SUBJECT_NUM).find(k => SUBJECT_NUM[k] === q.subject);
+          if (pKey && comboCounts[pKey] != null) comboCounts[pKey]++;
+        }
+      } catch (e) {
+        console.warn(`[combo-drills] ${target.id}: combo_pilot.js 집계 실패 — 자동 변환분만 인덱싱`, e.message);
+      }
+    }
+    const idxBody = '// 자동 생성된 합답형 문항 수 인덱스입니다. 수정하지 마십시오. (tools/build_combo_drills.js)\n' +
+      `var COMBO_INDEX = ${JSON.stringify(comboCounts)};\n` +
+      'window.COMBO_INDEX = COMBO_INDEX;\n';
+    fs.writeFileSync(path.join(OUT_DIR, 'combo_index.js'), idxBody, 'utf8');
   }
 
   console.log(`[combo-drills] ${target.id}: 총 ${totalItems}개 합답형 문항 생성${DRY_RUN ? ' (dry-run)' : ''}, 오류 ${totalErrors}건 → ${path.relative(ROOT, OUT_DIR)}/`);
