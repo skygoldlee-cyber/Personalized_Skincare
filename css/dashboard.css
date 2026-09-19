@@ -428,3 +428,67 @@
     cursor: pointer;
 }
 
+
+/* ============================================================
+   시험 선택 (멀티시험 플랫폼)
+   ============================================================ */
+.exam-select-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: var(--space-4, 1rem);
+    margin-top: var(--space-4, 1rem);
+}
+.exam-select-card {
+    background: var(--color-surface, rgba(255,255,255,0.03));
+    border: 1px solid var(--color-border, rgba(255,255,255,0.08));
+    border-radius: var(--radius-lg, 12px);
+    padding: var(--space-5, 1.25rem);
+    cursor: pointer;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+    text-align: center;
+}
+.exam-select-card:hover, .exam-select-card:focus-visible {
+    transform: translateY(-2px);
+    border-color: var(--color-primary);
+    outline: none;
+}
+.exam-select-card.current {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 1px var(--color-primary);
+}
+.exam-select-icon {
+    font-size: 1.75rem;
+    color: var(--color-primary);
+    margin-bottom: var(--space-3, 0.75rem);
+}
+.exam-select-card h4 {
+    margin: 0 0 var(--space-2, 0.5rem);
+    font-size: var(--text-lg, 1.05rem);
+}
+.exam-select-card p {
+    margin: 0 0 var(--space-3, 0.75rem);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm-md, 0.85rem);
+    line-height: 1.5;
+}
+.exam-select-meta {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-2, 0.5rem);
+    align-items: center;
+}
+.exam-select-year {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm, 0.8rem);
+}
+.exam-select-current {
+    color: var(--color-primary);
+    font-size: var(--text-sm, 0.8rem);
+    font-weight: var(--font-weight-bold, 600);
+}
+
+/* 사이드바 시험 전환 버튼 */
+.exam-switch-btn {
+    width: 100%;
+    margin-bottom: var(--space-2, 0.5rem);
+}

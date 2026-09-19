@@ -1,12 +1,40 @@
 // tools/build/build-audio-manifest.js
-// content/audiobook/mp3/ 디렉토리 스캔 → data/audio_manifest.js 자동 생성
+// 각 시험의 {contentRoot}/audiobook/mp3/ 디렉토리 스캔 → data/audio_manifest.js 자동 생성
+// [멀티시험] content/exams.json의 모든 시험을 순회해 시험 id 키로 분리된 매니페스트를
+//           단일 파일(data/audio_manifest.js — 항상 앱 공용 data 루트)로 발행한다.
+//           런타임(reader-audio.js)은 활성 시험 id로 자신의 매니페스트를 선택한다.
 // 실행: node tools/build/build-audio-manifest.js
 const fs = require('fs');
 const path = require('path');
+const { getExamTargets } = require('./exam-targets');
 
 const WORKSPACE_DIR = path.resolve(__dirname, '..', '..');
-const AUDIO_DIR = path.join(WORKSPACE_DIR, 'content', 'audiobook', 'mp3');
 const OUT_PATH = path.join(WORKSPACE_DIR, 'data', 'audio_manifest.js');
+
+function scanExamAudio(target) {
+  const audioDir = path.join(WORKSPACE_DIR, target.contentRoot, 'audiobook', 'mp3');
+  const manifest = {};
+  if (!fs.existsSync(audioDir)) return manifest;
+
+  const subjectDirs = fs.readdirSync(audioDir).filter(d =>
+    fs.statSync(path.join(audioDir, d)).isDirectory()
+  );
+
+  for (const subjKey of subjectDirs) {
+    const subjPath = path.join(audioDir, subjKey);
+    const mp3Files = fs.readdirSync(subjPath)
+      .filter(f => f.endsWith('.mp3'))
+      .sort();
+
+    if (mp3Files.length > 0) {
+      manifest[subjKey] = {};
+      mp3Files.forEach((file, idx) => {
+        manifest[subjKey][String(idx)] = `${target.contentRoot}/audiobook/mp3/${subjKey}/${file}`;
+      });
+    }
+  }
+  return manifest;
+}
 
 function build() {
   // 기존 파일에서 AUDIO_BASE_URL과 AUDIO_MANIFEST 보존
@@ -24,30 +52,15 @@ function build() {
   }
 
   const manifest = {};
-
-  // mp3 디렉토리가 있으면 스캔, 없으면 기존 매니페스트 유지
-  if (fs.existsSync(AUDIO_DIR)) {
-    const subjectDirs = fs.readdirSync(AUDIO_DIR).filter(d =>
-      fs.statSync(path.join(AUDIO_DIR, d)).isDirectory()
-    );
-
-    for (const subjKey of subjectDirs) {
-      const subjPath = path.join(AUDIO_DIR, subjKey);
-      const mp3Files = fs.readdirSync(subjPath)
-        .filter(f => f.endsWith('.mp3'))
-        .sort();
-
-      if (mp3Files.length > 0) {
-        manifest[subjKey] = {};
-        mp3Files.forEach((file, idx) => {
-          manifest[subjKey][String(idx)] = `content/audiobook/mp3/${subjKey}/${file}`;
-        });
-      }
+  for (const target of getExamTargets(WORKSPACE_DIR)) {
+    const scanned = scanExamAudio(target);
+    if (Object.keys(scanned).length > 0) {
+      manifest[target.id] = scanned;
+    } else if (existingManifest && existingManifest[target.id]) {
+      // 스캔 결과가 비어있으면(오디오 미커밋 등) 기존 매니페스트 보존
+      manifest[target.id] = existingManifest[target.id];
     }
   }
-
-  // 스캔 결과가 비어있으면 기존 매니페스트 유속
-  const finalManifest = Object.keys(manifest).length > 0 ? manifest : (existingManifest || {});
 
   const output = `// 자동 생성: 오디오 매니페스트 (audio_manifest.js)
 // tools/build/build-audio-manifest.js로 재생성 가능. 수동 편집 주의.
@@ -62,11 +75,24 @@ function build() {
 //    1) GitHub Releases에 MP3 업로드 후 raw URL 사용
 //    2) Cloudflare R2 / AWS S3 / GCS에 업로드
 //    3) 별도 Vercel 프로젝트로 오디오만 배포
+//
+// [멀티시험] AUDIO_MANIFEST는 시험 id 키로 분리된다:
+//    AUDIO_MANIFEST['<examId>'][<subjectKey>][<chapterIdx>] = '<contentRoot>/audiobook/...'
 /** @type {string|null} */
 export const AUDIO_BASE_URL = ${audioBaseUrl};
 
-/** @type {import('../src/types.js').AudioManifest} */
-export const AUDIO_MANIFEST = ${JSON.stringify(finalManifest, null, 2)};
+/** @type {Object<string, import('../src/types.js').AudioManifest>} */
+export const AUDIO_MANIFEST = ${JSON.stringify(manifest, null, 2)};
+
+/**
+ * 활성 시험의 오디오 매니페스트를 반환한다.
+ * 시험 키가 없으면(구형 단일 매니페스트 형식) 전체를 그대로 돌려준다.
+ * @param {string} examId
+ */
+export function getAudioManifest(examId) {
+  if (examId && AUDIO_MANIFEST && AUDIO_MANIFEST[examId]) return AUDIO_MANIFEST[examId];
+  return AUDIO_MANIFEST;
+}
 
 /**
  * 오디오 파일의 실제 접근 URL을 반환한다.
@@ -89,13 +115,16 @@ export function getAudioUrl(localPath) {
 if (typeof window !== "undefined") {
   window.AUDIO_MANIFEST = AUDIO_MANIFEST;
   window.AUDIO_BASE_URL = AUDIO_BASE_URL;
+  window.getAudioManifest = getAudioManifest;
   window.getAudioUrl = getAudioUrl;
 }
 `;
 
   fs.writeFileSync(OUT_PATH, output, 'utf-8');
   console.log('Generated: data/audio_manifest.js');
-  console.log('Subjects:', Object.keys(finalManifest).join(', '));
+  for (const [examId, m] of Object.entries(manifest)) {
+    console.log(`  [${examId}] subjects: ${Object.keys(m).join(', ')}`);
+  }
 }
 
 build();

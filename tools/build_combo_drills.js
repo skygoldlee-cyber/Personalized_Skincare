@@ -33,12 +33,18 @@ const fs = require('fs');
 const path = require('path');
 const { stableId } = require('./build/id-factory.js');
 const { inferTags } = require('./drill-utils.js');
+const { getExamTargets, getSubjectMaps } = require('./build/exam-targets.js');
 
 const ROOT = path.resolve(__dirname, '..');
-const EXAMS_DIR = path.join(ROOT, 'data', 'exams');
-const OUT_DIR = path.join(ROOT, 'data', 'drills');
-const MD_DIR = path.join(ROOT, 'content', '문제은행');
 const DRY_RUN = process.argv.includes('--dry-run');
+
+// [멀티시험] 시험별 {dataRoot}/exams → {dataRoot}/drills + {contentRoot}/문제은행 순회.
+// 과목 매핑은 시험별 manifest에서 파생된다 (main 루프에서 설정).
+let SUBJECT_NUM = {};
+let SUBJECT_KEY = {};
+let SUBJECT_TITLE = {};
+let OUT_DIR = path.join(ROOT, 'data', 'drills');
+let MD_DIR = path.join(ROOT, 'content', '문제은행');
 
 const AUTOGEN_HEADER = '// 자동 생성된 합답형 드릴 데이터입니다. 수정하지 마십시오. (tools/build_combo_drills.js)';
 
@@ -139,8 +145,6 @@ function loadExamFile(filePath) {
   return { key: m[1], data: JSON.parse(m[2]) };
 }
 
-const SUBJECT_NUM = { subject1: 1, subject2: 2, subject3: 3, subject4: 4 };
-const SUBJECT_KEY = { subject1: 'law', subject2: 'manufacturing', subject3: 'safety', subject4: 'understanding' };
 const CIRCLED = ['①', '②', '③', '④', '⑤', '⑥', '⑦', '⑧', '⑨', '⑩'];
 const STMT_LABELS = ['ㄱ', 'ㄴ', 'ㄷ', 'ㄹ', 'ㅁ', 'ㅂ'];
 
@@ -403,10 +407,6 @@ function buildComboItems(examKey, exam, genOpts, pools, globalPool) {
 /* ---------- Markdown 내보내기 (content/문제은행/ 형식과 동일) ---------- */
 
 const OPT_INDICATORS = ['①', '②', '③', '④', '⑤', '⑥'];
-const SUBJECT_TITLE = {
-  1: '화장품법의 이해', 2: '화장품 제조 및 품질관리',
-  3: '화장품 안전성 및 안전관리', 4: '맞춤형화장품의 이해',
-};
 
 /**
  * 과목별 combo 문항을 문제은행 MD 형식으로 직렬화.
@@ -415,7 +415,7 @@ const SUBJECT_TITLE = {
  */
 function toSubjectMd(subject, questions) {
   const lines = [
-    `# 제${subject}과목: ${SUBJECT_TITLE[subject] || ''} 합답형 (ㄱㄴㄷㄹ 조합)`,
+    `# ${subject ? `제${subject}과목: ` : ''}${SUBJECT_TITLE[subject] || '합답형'} 합답형 (ㄱㄴㄷㄹ 조합)`,
     '',
     '> **화장품조제관리사 필기시험 대비** (합답형)',
     '> 문제에 집중할 수 있도록 정답과 교재 근거는 파일 끝에 모아 제공합니다.',
@@ -464,17 +464,25 @@ function toSubjectMd(subject, questions) {
 
 /* ---------- 메인 ---------- */
 
-async function main() {
+async function buildForExam(target) {
+  const EXAMS_DIR = path.join(ROOT, target.dataRoot, 'exams');
+  OUT_DIR = path.join(ROOT, target.dataRoot, 'drills');
+  MD_DIR = path.join(ROOT, target.contentRoot, '문제은행');
+  if (!target.manifest) {
+    console.warn(`[combo-drills] ${target.id}: manifest 없음 — 건너뜀`);
+    return;
+  }
+  ({ SUBJECT_NUM, SUBJECT_KEY, SUBJECT_TITLE } = getSubjectMaps(target.manifest));
   if (!fs.existsSync(EXAMS_DIR)) {
-    console.error(`[combo-drills] 입력 폴더 없음: ${EXAMS_DIR}`);
-    process.exit(1);
+    console.warn(`[combo-drills] ${target.id}: 입력 폴더 없음(${EXAMS_DIR}) — 건너뜀`);
+    return;
   }
   fs.mkdirSync(OUT_DIR, { recursive: true });
 
   const files = fs.readdirSync(EXAMS_DIR).filter(f => f.endsWith('.js')).sort();
   if (!files.length) {
-    console.error('[combo-drills] data/exams에 번들이 없습니다. npm run build:data 먼저 실행하세요.');
-    process.exit(1);
+    console.warn(`[combo-drills] ${target.id}: ${target.dataRoot}/exams에 번들이 없습니다 — 건너뜀`);
+    return;
   }
 
   // 스키마 검증·옵션 생성 (ESM 모듈을 CJS에서 동적 import — Windows 절대경로는 file:// URL 필요)
@@ -509,14 +517,16 @@ async function main() {
 
     if (!DRY_RUN) {
       const body = AUTOGEN_HEADER + '\n' +
-        `// 원본: data/exams/${file} — mode: fact(명제 조합) ${stats.fact}문 / answer(정답 조합) ${stats.answer}문\n` +
+        `// 원본: ${target.dataRoot}/exams/${file} — mode: fact(명제 조합) ${stats.fact}문 / answer(정답 조합) ${stats.answer}문\n` +
         `var COMBO_DRILLS_${key} = ` + JSON.stringify(valid, null, 1) + ';\n';
       fs.writeFileSync(path.join(OUT_DIR, `combo_${key}.js`), body, 'utf8');
 
       // 문제은행 MD 형식 산출물 — 자동 변환분만 (과목당 100/250/250/400 구성)
       const subjectNum = SUBJECT_NUM[key];
-      const mdPath = path.join(MD_DIR, `과목${subjectNum}_합답형.md`);
-      fs.writeFileSync(mdPath, toSubjectMd(subjectNum, valid), 'utf8');
+      if (subjectNum && fs.existsSync(MD_DIR)) {
+        const mdPath = path.join(MD_DIR, `과목${subjectNum}_합답형.md`);
+        fs.writeFileSync(mdPath, toSubjectMd(subjectNum, valid), 'utf8');
+      }
     }
 
     totalItems += valid.length;
@@ -529,7 +539,13 @@ async function main() {
     }
   }
 
-  console.log(`[combo-drills] 총 ${totalItems}개 합답형 문항 생성${DRY_RUN ? ' (dry-run)' : ''}, 오류 ${totalErrors}건 → ${path.relative(ROOT, OUT_DIR)}/`);
+  console.log(`[combo-drills] ${target.id}: 총 ${totalItems}개 합답형 문항 생성${DRY_RUN ? ' (dry-run)' : ''}, 오류 ${totalErrors}건 → ${path.relative(ROOT, OUT_DIR)}/`);
+}
+
+async function main() {
+  for (const target of getExamTargets(ROOT)) {
+    await buildForExam(target);
+  }
 }
 
 main().catch(e => { console.error(e); process.exit(1); });

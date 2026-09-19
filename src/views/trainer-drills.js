@@ -60,9 +60,20 @@ export function updateDueBadges() {
    ⭕❌ O/X 판정 드릴
    ======================================================= */
 
+/** 과목 버튼 그리드 동적 생성 — registry.subjects 기반 (과목 수/이름은 시험별 manifest가 결정) */
+function renderDrillSubjectButtons(gridId, clickAction) {
+    const grid = document.getElementById(gridId);
+    if (!grid) return;
+    const subjects = DataLoader.getSubjectList();
+    grid.innerHTML = subjects.map(s =>
+        `<button class="btn btn-secondary" data-click="${clickAction}" data-arg="${s.order}" style="padding:1rem;">${s.order}과목<br><small>${esc(s.shortName || s.name)}</small></button>`
+    ).join('');
+}
+
 /** 패널 열기 (과목 선택 화면) */
 export function openOxDrillSetup() {
     state.trainer.activeSubView = 'oxdrill';
+    renderDrillSubjectButtons('oxdrill-subject-grid', 'startOxDrill');
     const menu = document.getElementById('trainer-menu-panel');
     const panel = document.getElementById('trainer-oxdrill-panel');
     const setup = document.getElementById('oxdrill-setup');
@@ -90,7 +101,8 @@ export function startOxDrill(subjectNum) {
     const sidMatch = special.match(/^sid:(.+)$/);
     const isSpecial = special === 'weak' || special === 'num' || !!conceptMatch || !!sidMatch;
     const num = parseInt(subjectNum, 10);
-    if (!isSpecial && (isNaN(num) || num < 1 || num > 4)) return;
+    const subjectOrders = DataLoader.getSubjectOrders();
+    if (!isSpecial && (isNaN(num) || !subjectOrders.includes(num))) return;
     // 취약 리뷰 등 다른 서브뷰에서 호출돼도 자기 패널을 표시한다
     ['trainer-menu-panel', 'trainer-weak-panel', 'trainer-combo-panel'].forEach(id => {
         const el = document.getElementById(id);
@@ -101,7 +113,7 @@ export function startOxDrill(subjectNum) {
     state.trainer.activeSubView = 'oxdrill';
 
     const load = isSpecial
-        ? Promise.all([1, 2, 3, 4].map(n => DataLoader.loadOxDrills(n))).then(all => all.flat())
+        ? Promise.all(subjectOrders.map(n => DataLoader.loadOxDrills(n))).then(all => all.flat())
         : DataLoader.loadOxDrills(num);
     load.then(items => {
         const st = state.trainer.oxdrill;
@@ -301,6 +313,7 @@ function renderOxDrillResult() {
 /** 패널 열기 (과목 선택 화면) */
 export function openComboDrillSetup() {
     state.trainer.activeSubView = 'combo';
+    renderDrillSubjectButtons('combo-subject-grid', 'startComboDrill');
     const menu = document.getElementById('trainer-menu-panel');
     const panel = document.getElementById('trainer-combo-panel');
     const setup = document.getElementById('combo-setup');
@@ -316,14 +329,15 @@ export function openComboDrillSetup() {
 
 /**
  * 과목별 합답형 드릴 시작 — 취약 진술(sid) 포함 문항 우선 편성
- * @param {string|number} subjectNum 1~4
+ * @param {string|number} subjectNum 과목 order 번호
  */
 export function startComboDrill(subjectNum) {
     // 특수 모드: 'weak'=취약·복습 진술 포함 문항(전 과목), 'num'=수치·한도·기한 집중(전 과목)
     const special = String(subjectNum);
     const isSpecial = special === 'weak' || special === 'num';
     const num = parseInt(subjectNum, 10);
-    if (!isSpecial && (isNaN(num) || num < 1 || num > 4)) return;
+    const subjectOrders = DataLoader.getSubjectOrders();
+    if (!isSpecial && (isNaN(num) || !subjectOrders.includes(num))) return;
     ['trainer-menu-panel', 'trainer-weak-panel', 'trainer-oxdrill-panel'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.classList.add('is-hidden');
@@ -333,7 +347,7 @@ export function startComboDrill(subjectNum) {
     state.trainer.activeSubView = 'combo';
 
     const load = isSpecial
-        ? Promise.all([1, 2, 3, 4].map(n => DataLoader.loadComboDrills(n))).then(all => all.flat())
+        ? Promise.all(subjectOrders.map(n => DataLoader.loadComboDrills(n))).then(all => all.flat())
         : DataLoader.loadComboDrills(num);
     load.then(questions => {
         const st = state.trainer.combo;
@@ -713,18 +727,19 @@ function renderWeakReview() {
     // 과목별 진술 마스터 진행도 — 판정/취약/졸업 집계 (전략 ③ 목표 시각화)
     const masteryEl = document.getElementById('weak-mastery');
     if (masteryEl) {
-        const perSub = { 1: { j: 0, w: 0, g: 0 }, 2: { j: 0, w: 0, g: 0 }, 3: { j: 0, w: 0, g: 0 }, 4: { j: 0, w: 0, g: 0 } };
+        const perSub = {};
         Object.entries(getAllStatementStats()).forEach(([sid, v]) => {
             const sub = sidSubject(sid);
             if (!sub || !v.j) return;
-            perSub[sub].j++;
+            const m = perSub[sub] || (perSub[sub] = { j: 0, w: 0, g: 0 });
+            m.j++;
             if (v.w > 0) {
-                if ((v.streak || 0) >= WEAK_GRADUATE_STREAK) perSub[sub].g++;
-                else perSub[sub].w++;
+                if ((v.streak || 0) >= WEAK_GRADUATE_STREAK) m.g++;
+                else m.w++;
             }
         });
         masteryEl.innerHTML = `<div class="weak-mastery-grid">` +
-            [1, 2, 3, 4].map(n => {
+            Object.keys(perSub).sort((a, b) => a - b).map(n => {
                 const m = perSub[n];
                 if (!m.j) return '';
                 return `<div class="weak-mastery-cell"><strong>과목${n}</strong><span>판정 ${m.j} · 취약 ${m.w} · 졸업 ${m.g}</span></div>`;

@@ -1,5 +1,6 @@
 import { describe, it, beforeEach, expect, vi } from 'vitest';
 import { getBackupKeys, exportData, triggerImport, importData } from '../../src/views/backup.js';
+import { scopedKey } from '../../src/exam-context.js';
 
 // showToast 모킹 — backup.js는 alert 대신 showToast를 사용
 vi.mock('../../src/ui-utils.js', () => ({
@@ -26,8 +27,9 @@ describe('backup.js — DOM 테스트', () => {
         });
 
         it('daily_completed_ 동적 키를 포함', () => {
-            localStorage.setItem('daily_completed_2025-01-01', '5');
-            localStorage.setItem('daily_completed_2025-01-02', '3');
+            // 진도 키는 시험 네임스페이스(<examId>:key)로 저장된다
+            localStorage.setItem(scopedKey('daily_completed_2025-01-01'), '5');
+            localStorage.setItem(scopedKey('daily_completed_2025-01-02'), '3');
             const keys = getBackupKeys();
             expect(keys).toContain('daily_completed_2025-01-01');
             expect(keys).toContain('daily_completed_2025-01-02');
@@ -116,9 +118,10 @@ describe('backup.js — DOM 테스트', () => {
 
                 // FileReader.onload은 비동기이므로 약간 대기
                 setTimeout(() => {
-                    expect(localStorage.getItem('fc_memorized')).toBe(JSON.stringify(['card1']));
-                    expect(localStorage.getItem('fc_weak')).toBe(JSON.stringify(['card2']));
-                    expect(localStorage.getItem('study_streak')).toBe('3');
+                    // 복원은 현재 활성 시험의 네임스페이스에 기록된다
+                    expect(localStorage.getItem(scopedKey('fc_memorized'))).toBe(JSON.stringify(['card1']));
+                    expect(localStorage.getItem(scopedKey('fc_weak'))).toBe(JSON.stringify(['card2']));
+                    expect(localStorage.getItem(scopedKey('study_streak'))).toBe('3');
                     resolve();
                 }, 100);
             });
@@ -144,7 +147,8 @@ describe('backup.js — DOM 테스트', () => {
                 importData(event);
 
                 setTimeout(() => {
-                    expect(localStorage.getItem('fc_memorized')).toBe(JSON.stringify(['card1']));
+                    expect(localStorage.getItem(scopedKey('fc_memorized'))).toBe(JSON.stringify(['card1']));
+                    expect(localStorage.getItem(scopedKey('malicious_key'))).toBeNull();
                     expect(localStorage.getItem('malicious_key')).toBeNull();
                     resolve();
                 }, 100);

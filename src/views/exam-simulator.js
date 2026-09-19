@@ -1,5 +1,5 @@
 // views/exam-simulator.js - 실전 모의고사 시뮬레이터 (Exam Simulator)
-import { state, saveProgress } from '../state.js';
+import { state, saveProgress, safeGetItem, safeSetItem, safeRemoveItem } from '../state.js';
 import { esc, safeTextWithBreaks } from '../sanitize.js';
 import { checkShortAnswer } from './trainer.js';
 // [모바일 PWA 견고성] 레지스트리는 window 전역(가드)에서 읽는다(정적 import 하드 의존 지양).
@@ -100,7 +100,12 @@ function deriveComboJudgments(q, userAns) {
     }));
 }
 
-const COMBO_PREFIX_SUBJ = { law: 1, manufacturing: 2, safety: 3, understanding: 4 };
+// 합답형 번들 과목 번호 조회 (combo 오답 복습 시 과목 번들 로드용) — registry.subjects의 order 기반
+function comboSubjOrder(subjKey) {
+    const subjects = (window.DATA_REGISTRY && window.DATA_REGISTRY.subjects) || [];
+    const s = subjects.find(x => x.key === subjKey);
+    return s ? s.order : null;
+}
 
 /**
  * 과목별 합답형 모의고사 시작 — data/drills/combo_subjectN.js 로드
@@ -109,13 +114,14 @@ const COMBO_PREFIX_SUBJ = { law: 1, manufacturing: 2, safety: 3, understanding: 
 export function startComboMockExam(arg) {
     const [numStr, countStr] = String(arg).split(':');
     const num = parseInt(numStr, 10);
-    if (isNaN(num) || num < 1 || num > 4) return;
+    const orders = DataLoader.getSubjectOrders();
+    if (isNaN(num) || !orders.includes(num)) return;
     const want = countStr ? parseInt(countStr, 10) : NaN;
     showGlobalLoading('합답형 모의고사 데이터를 불러오는 중입니다...');
     DataLoader.loadComboDrills(num).then(questions => {
         hideGlobalLoading();
         const subjects = (window.DATA_REGISTRY && window.DATA_REGISTRY.subjects) || [];
-        const subjMeta = subjects[num - 1];
+        const subjMeta = subjects.find(s => s.order === num);
         const subjKey = subjMeta ? subjMeta.key : `subject${num}`;
         const subjName = subjMeta ? (subjMeta.shortName || subjMeta.name) : `${num}과목`;
         const picked = (!isNaN(want) && want > 0 && want < questions.length)
@@ -143,7 +149,7 @@ export function startIntegratedMockExam() {
     const mixCombo = !!(document.getElementById('integrated-mix-combo') && document.getElementById('integrated-mix-combo').checked);
     showGlobalLoading('통합 모의고사 데이터를 불러오는 중입니다...');
     const loaderPromises = DataLoader.registry.exams.map(e => DataLoader.loadExam(e.key));
-    if (mixCombo) [1, 2, 3, 4].forEach(n => loaderPromises.push(DataLoader.loadComboDrills(n)));
+    if (mixCombo) DataLoader.getSubjectOrders().forEach(n => loaderPromises.push(DataLoader.loadComboDrills(n)));
     Promise.all(loaderPromises).then(() => {
         hideGlobalLoading();
         _startIntegratedMockExamImpl(mixCombo);
@@ -281,11 +287,11 @@ export function saveSimDraft() {
         currentIndex: simState.currentIndex,
         questions: simState.data.questions
     };
-    try { localStorage.setItem(STORAGE_KEYS.SIM_DRAFT_SESSION, JSON.stringify(draft)); } catch (e) { /* noop */ }
+    safeSetItem(STORAGE_KEYS.SIM_DRAFT_SESSION, JSON.stringify(draft));
 }
 
 export function clearSimDraft() {
-    try { localStorage.removeItem(STORAGE_KEYS.SIM_DRAFT_SESSION); } catch (e) { /* noop */ }
+    safeRemoveItem(STORAGE_KEYS.SIM_DRAFT_SESSION);
     const banner = document.getElementById('draft-resume-banner');
     if (banner) banner.classList.add('is-hidden');
 }
@@ -294,8 +300,7 @@ export function checkExamDraft() {
     const banner = document.getElementById('draft-resume-banner');
     if (!banner) return;
     
-    let saved;
-    try { saved = localStorage.getItem(STORAGE_KEYS.SIM_DRAFT_SESSION); } catch (e) { saved = null; }
+    const saved = safeGetItem(STORAGE_KEYS.SIM_DRAFT_SESSION);
     if (saved) {
         try {
             const draft = JSON.parse(saved);
@@ -318,8 +323,7 @@ export function checkExamDraft() {
 }
 
 export function resumeSimDraft() {
-    let saved;
-    try { saved = localStorage.getItem(STORAGE_KEYS.SIM_DRAFT_SESSION); } catch (e) { saved = null; }
+    const saved = safeGetItem(STORAGE_KEYS.SIM_DRAFT_SESSION);
     if (!saved) return;
     
     try {
@@ -839,7 +843,10 @@ export function startWeakExam() {
     const comboSubsNeeded = new Set();
     (state.weakCards || new Set()).forEach(cardId => {
         const m = cardId.match(/^weak_sim_([a-z]+)_combo_/);
-        if (m && COMBO_PREFIX_SUBJ[m[1]]) comboSubsNeeded.add(COMBO_PREFIX_SUBJ[m[1]]);
+        if (m) {
+            const order = comboSubjOrder(m[1]);
+            if (order) comboSubsNeeded.add(order);
+        }
     });
     comboSubsNeeded.forEach(n => loaderPromises.push(DataLoader.loadComboDrills(n)));
     Promise.all(loaderPromises).then(() => {
@@ -945,14 +952,14 @@ function _startWeakExamImpl() {
             // 합답형 오답: COMBO_DRILLS_subjectN 번들에서 검색 (id 형식: <subjKey>_combo_<hash>)
             if (!foundQ) {
                 const subjects = (window.DATA_REGISTRY && window.DATA_REGISTRY.subjects) || [];
-                for (let n = 1; n <= 4 && !foundQ; n++) {
-                    const bundle = (typeof window !== 'undefined') ? window[`COMBO_DRILLS_subject${n}`] : null;
+                for (const s of subjects) {
+                    if (foundQ) break;
+                    const bundle = (typeof window !== 'undefined') ? window[`COMBO_DRILLS_subject${s.order}`] : null;
                     if (!Array.isArray(bundle)) continue;
                     const q = bundle.find(qq => qq.id === origQId);
                     if (q) {
-                        const subjKey = subjects[n - 1] ? subjects[n - 1].key : `subject${n}`;
-                        foundQ = comboToSimQuestion(q, subjKey);
-                        foundSubj = subjKey;
+                        foundQ = comboToSimQuestion(q, s.key);
+                        foundSubj = s.key;
                     }
                 }
             }

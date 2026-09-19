@@ -1,7 +1,9 @@
 // views/reader-audio.js — 오디오북 플레이어 (textbook-reader.js에서 추출)
 import { showToast } from '../ui-utils.js';
+import { safeGetItem, safeSetItem, safeRemoveItem } from '../state.js';
 import { TIMING } from '../config/timing.js';
 import { PATHS } from '../paths.js';
+import { getActiveExamId } from '../exam-context.js';
 
 // --- 오디오북 플레이어 상태 ---
 export const readerAudioState = {
@@ -31,7 +33,10 @@ export function getAudioPathForChapter(subjId, chapter) {
         const STUDY_DATA = (typeof window !== 'undefined' && window.STUDY_DATA) ? window.STUDY_DATA : {};
         const chapters = (STUDY_DATA[subjId] && STUDY_DATA[subjId].chapters) || [];
         const idx = chapters.indexOf(chapter);
-        const manifest = (typeof window !== 'undefined' && window.AUDIO_MANIFEST) || null;
+        // [멀티시험] AUDIO_MANIFEST는 시험 id 키로 분리 — getAudioManifest로 활성 시험분 선택
+        const pickManifest = (typeof window !== 'undefined' && window.getAudioManifest) || null;
+        const manifest = pickManifest ? pickManifest(getActiveExamId())
+            : ((typeof window !== 'undefined' && window.AUDIO_MANIFEST) || null);
         if (manifest &&
             manifest[subjId] && idx >= 0 && manifest[subjId][idx]) {
             localPath = manifest[subjId][idx];
@@ -86,7 +91,7 @@ function formatAudioTime(sec) {
 /** 이어보기 위치를 localStorage에서 읽기 */
 function getSavedAudioPos(src) {
     try {
-        const v = localStorage.getItem(READER_AUDIO_POS_PREFIX + src);
+        const v = safeGetItem(READER_AUDIO_POS_PREFIX + src);
         const n = v ? parseFloat(v) : 0;
         return (isFinite(n) && n > 0) ? n : 0;
     } catch (e) { return 0; }
@@ -98,9 +103,9 @@ function saveAudioPos(src, pos, duration) {
         if (!src) return;
         // 끝에서 5초 이내 또는 95% 이상 들었으면 저장 위치 삭제(다음 재생은 처음부터)
         if (isFinite(duration) && duration > 0 && (pos >= duration - 5 || pos / duration >= 0.95)) {
-            localStorage.removeItem(READER_AUDIO_POS_PREFIX + src);
+            safeRemoveItem(READER_AUDIO_POS_PREFIX + src);
         } else if (pos > 3) { // 3초 이하는 저장하지 않음(사실상 처음)
-            localStorage.setItem(READER_AUDIO_POS_PREFIX + src, String(pos));
+            safeSetItem(READER_AUDIO_POS_PREFIX + src, String(pos));
         }
     } catch (e) { /* noop */ }
 }
@@ -256,12 +261,12 @@ function syncScrollWithAudio() {
 /** 자동 스크롤 설정 저장/불러오기 */
 function getSavedAutoScroll() {
     try {
-        const v = localStorage.getItem(READER_AUDIO_AUTOSCROLL_KEY);
+        const v = safeGetItem(READER_AUDIO_AUTOSCROLL_KEY);
         return v === null ? true : v === '1';
     } catch (e) { return true; }
 }
 function saveAutoScroll(enabled) {
-    try { localStorage.setItem(READER_AUDIO_AUTOSCROLL_KEY, enabled ? '1' : '0'); } catch (e) { /* noop */ }
+    safeSetItem(READER_AUDIO_AUTOSCROLL_KEY, enabled ? '1' : '0');
 }
 
 /** 자동 스크롤 토글 버튼 UI 갱신 */
@@ -314,7 +319,7 @@ function setAudioStatus(msg) {
 /** 저장된 재생 속도 적용 */
 function getSavedRate() {
     try {
-        const v = parseFloat(localStorage.getItem(READER_AUDIO_RATE_KEY));
+        const v = parseFloat(safeGetItem(READER_AUDIO_RATE_KEY));
         return (isFinite(v) && v >= 0.5 && v <= 3) ? v : 1;
     } catch (e) { return 1; }
 }
@@ -328,7 +333,7 @@ export function cycleReaderAudioRate() {
     idx = (idx + 1) % rates.length;
     const newRate = rates[idx];
     if (a) a.playbackRate = newRate;
-    try { localStorage.setItem(READER_AUDIO_RATE_KEY, String(newRate)); } catch (e) { /* noop */ }
+    safeSetItem(READER_AUDIO_RATE_KEY, String(newRate));
     const ui = getAudioUI();
     if (ui.rateBtn) ui.rateBtn.textContent = newRate + 'x';
 }

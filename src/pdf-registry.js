@@ -209,19 +209,26 @@ export const REFERENCE_LAW = [
 // 파생 맵 (수정 불필요 — 위의 설정에서 자동 생성됨)
 // ================================================================
 
-// MD 기본 경로: content/참조자료/ref_md/{basename}/{basename}.md
+import { contentPath } from './exam-context.js';
+
+// MD 기본 경로: {contentRoot}/참조자료/ref_md/{basename}/{basename}.md
 // basename = 파일명에서 .pdf 확장자 제거
 // 전체 참조자료를 MD로 변환 (한글 엔티티 인코딩 문제 해결 + 용량 절감)
+// [멀티시험] 경로는 활성 시험의 contentRoot를 따른다.
 const MD_CONVERSION_TARGETS = null; // null = 전체 MD 변환
 
 function _toMdPath(fileName) {
     const base = fileName.replace(/\.pdf$/, '');
     const ext = '.md';
-    return `content/참조자료/ref_md/${base}/${base}${ext}`;
+    return contentPath(`참조자료/ref_md/${base}/${base}${ext}`);
 }
 
 // 파일명 → MD 경로 매핑 (reader-format.js용, 우선순위: 과목N > 공통 > 법령원문)
-const _DIR_PRIORITY = ['과목4', '과목3', '과목2', '과목1', '공통', '법령원문'];
+// REF_DIRS 키에서 과목N 폴더를 번호 내림차순으로, 그 뒤 공통/법령원문/기타 순
+const _DIR_PRIORITY = [
+    ...Object.keys(REF_DIRS).filter(d => /^과목\d+$/.test(d)).sort((a, b) => parseInt(b.slice(2), 10) - parseInt(a.slice(2), 10)),
+    ...Object.keys(REF_DIRS).filter(d => !/^과목\d+$/.test(d))
+];
 export const REF_FILE_TO_PATH = {};
 for (const dir of _DIR_PRIORITY) {
     for (const f of REF_DIRS[dir] || []) {
@@ -241,7 +248,7 @@ for (const dir of _DIR_PRIORITY) {
 
 export function resolveRefPath(fileName) {
     if (!fileName) return '';
-    if (fileName.startsWith('content/')) return fileName;
+    if (fileName.startsWith(contentPath(''))) return fileName;
     return REF_FILE_TO_PATH[fileName] || '';
 }
 

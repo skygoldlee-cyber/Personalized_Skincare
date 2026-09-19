@@ -113,8 +113,9 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
     html = html.replace(
         /출처:\s*`?(\.{1,2}\/[^\s`<]+\.md|[^\s`<.]+_참조자료\/[^\s`<]+\.md)`?/g,
         (match, path) => {
-            const absPath = path.replace(/^\.\.\/참조자료\//, 'content/참조자료/')
-                                .replace(/^(\d+)과목_참조자료\//, 'content/참조자료/과목$1/');
+            const refBase = PATHS.REFERENCE_BASE + '/';
+            const absPath = path.replace(/^\.\.\/참조자료\//, refBase)
+                                .replace(/^(\d+)과목_참조자료\//, `${refBase}과목$1/`);
             const displayName = path.split('/').pop().replace(/\.md$/, '');
             return `출처: <a href="#" data-ref-md="${escapeHTML(absPath)}" class="source-link"><i class="fa-solid fa-file-lines"></i> ${escapeHTML(displayName)}</a>`;
         }

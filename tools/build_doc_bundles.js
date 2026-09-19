@@ -21,57 +21,65 @@
 
 const fs = require('fs');
 const path = require('path');
+const { getExamTargets } = require('./build/exam-targets');
 
 const ROOT = path.resolve(__dirname, '..');
-const OUT_DIR = path.join(ROOT, 'data', 'docs_md');
 
-// 번들로 구울 문서 목록 (src/manual-viewer.js 의 MD_SOURCES 와 동기화 유지)
-// path: 원본 파일의 루트 상대 경로, key: manual-viewer.js MD_SOURCES[].path 와 동일
-const DOC_FILES = [
-    { file: 'user_manual.md', dir: path.join(ROOT, 'docs', 'user'), key: 'docs/user/user_manual.md' },
-    { file: '학습안내서.md', dir: path.join(ROOT, 'content'), key: 'content/학습안내서.md' },
-    { file: '두음법_암기_총정리.md', dir: path.join(ROOT, 'content'), key: 'content/두음법_암기_총정리.md' }
+// 앱 공용 문서 — 시험과 무관, 항상 data/docs_md/ 에 출력
+// (src/manual-viewer.js 의 MD_SOURCES 와 동기화 유지)
+const GLOBAL_DOCS = [
+    { file: 'user_manual.md', dir: path.join(ROOT, 'docs', 'user'), key: 'docs/user/user_manual.md' }
 ];
+
+// 시험별 문서 — 각 시험의 {contentRoot}/ 아래 파일을 {dataRoot}/docs_md/ 에 출력.
+// key는 contentPath() 결과와 동일해야 한다 ('{contentRoot}/학습안내서.md').
+const EXAM_DOC_FILES = ['학습안내서.md', '두음법_암기_총정리.md'];
 
 const AUTOGEN_HEADER = '// 자동 생성된 문서 번들입니다. 수정하지 마십시오. (tools/build_doc_bundles.js)';
 
-function main() {
-    fs.mkdirSync(OUT_DIR, { recursive: true });
+function writeBundle(outDir, srcPath, key, file, generated) {
+    const md = fs.readFileSync(srcPath, 'utf8');
+    const body =
+        AUTOGEN_HEADER + '\n' +
+        `// 원본: ${key}\n` +
+        '(window.__DOC_MD__ = window.__DOC_MD__ || {})[' +
+        JSON.stringify(key) + '] = ' + JSON.stringify(md) + ';\n';
+    const stem = file.replace(/\.md$/i, '');
+    const outPath = path.join(outDir, stem + '.js');
+    fs.writeFileSync(outPath, body, 'utf8');
+    generated.push({ key, out: path.relative(ROOT, outPath), bytes: Buffer.byteLength(body, 'utf8') });
+}
 
-    let totalBytes = 0;
+function main() {
     const generated = [];
     const missing = [];
 
-    for (const doc of DOC_FILES) {
+    // 1) 앱 공용 문서 → data/docs_md/
+    const globalOut = path.join(ROOT, 'data', 'docs_md');
+    fs.mkdirSync(globalOut, { recursive: true });
+    for (const doc of GLOBAL_DOCS) {
         const srcPath = path.join(doc.dir, doc.file);
-        if (!fs.existsSync(srcPath)) {
-            missing.push(doc.key);
-            continue;
-        }
-        const md = fs.readFileSync(srcPath, 'utf8');
-
-        // manual-viewer.js MD_SOURCES[].path 와 정확히 동일한 키 (항상 POSIX 슬래시)
-        const key = doc.key;
-
-        // JSON.stringify 로 문자열 리터럴을 안전하게 생성
-        const body =
-            AUTOGEN_HEADER + '\n' +
-            `// 원본: ${doc.key}\n` +
-            '(window.__DOC_MD__ = window.__DOC_MD__ || {})[' +
-            JSON.stringify(key) + '] = ' + JSON.stringify(md) + ';\n';
-
-        const stem = doc.file.replace(/\.md$/i, '');
-        const outPath = path.join(OUT_DIR, stem + '.js');
-        fs.writeFileSync(outPath, body, 'utf8');
-
-        const bytes = Buffer.byteLength(body, 'utf8');
-        totalBytes += bytes;
-        generated.push({ key: doc.key, out: path.relative(ROOT, outPath), kb: (bytes / 1024).toFixed(1) });
+        if (!fs.existsSync(srcPath)) { missing.push(doc.key); continue; }
+        writeBundle(globalOut, srcPath, doc.key, doc.file, generated);
     }
 
+    // 2) 시험별 문서 → {dataRoot}/docs_md/
+    for (const target of getExamTargets(ROOT)) {
+        const outDir = path.join(ROOT, target.dataRoot, 'docs_md');
+        fs.mkdirSync(outDir, { recursive: true });
+        for (const file of EXAM_DOC_FILES) {
+            const srcPath = path.join(ROOT, target.contentRoot, file);
+            const key = `${target.contentRoot}/${file}`;
+            if (!fs.existsSync(srcPath)) { missing.push(key); continue; }
+            writeBundle(outDir, srcPath, key, file, generated);
+        }
+    }
+
+    let totalBytes = 0;
     console.log('[build:docs] 문서 번들 생성 완료');
     for (const g of generated) {
-        console.log(`  ✓ ${g.key}  →  ${g.out}  (${g.kb} KB)`);
+        totalBytes += g.bytes;
+        console.log(`  ✓ ${g.key}  →  ${g.out}  (${(g.bytes / 1024).toFixed(1)} KB)`);
     }
     if (missing.length > 0) {
         console.warn(`  ⚠ 누락된 원본: ${missing.join(', ')}`);

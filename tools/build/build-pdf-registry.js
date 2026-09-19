@@ -1,16 +1,22 @@
 // tools/build/build-pdf-registry.js
-// content/references.json → src/pdf-registry.js 자동 생성
+// {contentRoot}/references.json → src/pdf-registry.js 자동 생성
 // 참조자료 추가/삭제/변경 시 references.json만 수정하면 됨 (빌드 시 pdf-registry.js 재생성)
+//
+// [멀티시험] EXAM_CONTENT_ROOT env로 대상 시험의 콘텐츠 루트를 지정할 수 있다
+//   (기본값 'content' = 기본 시험). 출력은 공유 모듈 src/pdf-registry.js 하나이며,
+//   경로는 런타임에 contentPath()로 활성 시험 루트 기준으로 해석된다.
+//   ※ 키워드/참조 매핑 자체는 시험별 데이터 — 현재는 기본 시험(cosmetic) 전용.
 const fs = require('fs');
 const path = require('path');
 
 const WORKSPACE_DIR = path.resolve(__dirname, '..', '..');
-const refsPath = path.join(WORKSPACE_DIR, 'content', 'references.json');
+const CONTENT_ROOT = process.env.EXAM_CONTENT_ROOT || 'content';
+const refsPath = path.join(WORKSPACE_DIR, CONTENT_ROOT, 'references.json');
 const outPath = path.join(WORKSPACE_DIR, 'src', 'pdf-registry.js');
 
 function build() {
   if (!fs.existsSync(refsPath)) {
-    console.warn('content/references.json not found — skipping pdf-registry.js generation');
+    console.warn(`${CONTENT_ROOT}/references.json not found — skipping pdf-registry.js generation`);
     return;
   }
   const refs = JSON.parse(fs.readFileSync(refsPath, 'utf-8'));
@@ -125,19 +131,26 @@ ${lawJs}
 // 파생 맵 (수정 불필요 — 위의 설정에서 자동 생성됨)
 // ================================================================
 
-// MD 기본 경로: content/참조자료/ref_md/{basename}/{basename}.md
+import { contentPath } from './exam-context.js';
+
+// MD 기본 경로: {contentRoot}/참조자료/ref_md/{basename}/{basename}.md
 // basename = 파일명에서 .pdf 확장자 제거
 // 전체 참조자료를 MD로 변환 (한글 엔티티 인코딩 문제 해결 + 용량 절감)
+// [멀티시험] 경로는 활성 시험의 contentRoot를 따른다.
 const MD_CONVERSION_TARGETS = null; // null = 전체 MD 변환
 
 function _toMdPath(fileName) {
     const base = fileName.replace(/\\.pdf$/, '');
     const ext = '.md';
-    return \`content/참조자료/ref_md/\${base}/\${base}\${ext}\`;
+    return contentPath(\`참조자료/ref_md/\${base}/\${base}\${ext}\`);
 }
 
 // 파일명 → MD 경로 매핑 (reader-format.js용, 우선순위: 과목N > 공통 > 법령원문)
-const _DIR_PRIORITY = ['과목4', '과목3', '과목2', '과목1', '공통', '법령원문'];
+// REF_DIRS 키에서 과목N 폴더를 번호 내림차순으로, 그 뒤 공통/법령원문/기타 순
+const _DIR_PRIORITY = [
+    ...Object.keys(REF_DIRS).filter(d => /^과목\\d+$/.test(d)).sort((a, b) => parseInt(b.slice(2), 10) - parseInt(a.slice(2), 10)),
+    ...Object.keys(REF_DIRS).filter(d => !/^과목\\d+$/.test(d))
+];
 export const REF_FILE_TO_PATH = {};
 for (const dir of _DIR_PRIORITY) {
     for (const f of REF_DIRS[dir] || []) {
@@ -157,7 +170,7 @@ for (const dir of _DIR_PRIORITY) {
 
 export function resolveRefPath(fileName) {
     if (!fileName) return '';
-    if (fileName.startsWith('content/')) return fileName;
+    if (fileName.startsWith(contentPath(''))) return fileName;
     return REF_FILE_TO_PATH[fileName] || '';
 }
 

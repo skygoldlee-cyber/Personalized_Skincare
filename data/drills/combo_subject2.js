@@ -1,5 +1,5 @@
 // 자동 생성된 합답형 드릴 데이터입니다. 수정하지 마십시오. (tools/build_combo_drills.js)
-// 원본: data/exams/subject2.0de8cf7c.js — mode: fact(명제 조합) 18문 / answer(정답 조합) 139문
+// 원본: data/exams/subject2.304bb62f.js — mode: fact(명제 조합) 18문 / answer(정답 조합) 139문
 var COMBO_DRILLS_subject2 = [
  {
   "id": "manufacturing_combo_f62cd4",
@@ -10360,41 +10360,41 @@ var COMBO_DRILLS_subject2 = [
   "subject": 2,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L3476 (출처: 과목2 문제은행 Q113)",
+  "citation": "📖 교재: L3477 (출처: 과목2 문제은행 Q113)",
   "stem": "위해화장품 위해성 평가 중 위해도 결정(Risk Characterization) 단계의 설명으로 옳은 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "manufacturing_st_bb8a7d",
-    "conceptId": "L3476",
+    "conceptId": "L3477",
     "text": "인체 노출 시나리오를 작성하는 단계",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "manufacturing_st_8539d8",
-    "conceptId": "L3476",
+    "conceptId": "L3477",
     "text": "물질의 독성 정보를 수집하는 단계",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "manufacturing_st_d7ba34",
-    "conceptId": "L3476",
+    "conceptId": "L3477",
     "text": "위험성 확인, 용량-반응 평가, 노출 평가의 모든 정보를 종합하여 실제 인체에 미치는 위해의 가능성과 강도를 최종 판정하는 단계",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "manufacturing_st_6cc46d",
-    "conceptId": "L3476",
+    "conceptId": "L3477",
     "text": "회수 대상 품목을 폐기하는 단계",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "manufacturing_st_22fd5d",
-    "conceptId": "L3476",
+    "conceptId": "L3477",
     "text": "공급 업체의 자격 적합성을 검토하는 단계",
     "truth": false
    }
@@ -10442,7 +10442,7 @@ var COMBO_DRILLS_subject2 = [
    "정답판정"
   ],
   "derivedFrom": "subject2_q113",
-  "explain": "📖 교재 근거 (교재: L3476):\n> 해설: 위해성 평가 4단계는 위험성 확인→위험성 결정→노출 평가→위해도 결정 순서이다. 위험성 확인은 독성 자료로 잠재적 성질을 과학적으로 확인, 위험성 결정은 인체노출 허용량 산출, 노출 평가는 사용 노출 수준 산출, 위해도 결정은 유해 영향 발생 가능성 판단이다.",
+  "explain": "📖 교재 근거 (교재: L3477):\n> 해설: 위해성 평가 4단계는 위험성 확인→위험성 결정→노출 평가→위해도 결정 순서이다. 위험성 확인은 독성 자료로 잠재적 성질을 과학적으로 확인, 위험성 결정은 인체노출 허용량 산출, 노출 평가는 사용 노출 수준 산출, 위해도 결정은 유해 영향 발생 가능성 판단이다.",
   "source": "화장품 제조 및 품질관리 (250제)",
   "answer": "1"
  },

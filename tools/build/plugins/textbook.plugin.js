@@ -559,7 +559,7 @@ const parseTextbookContent = (filePath, filename, subjectDir) => {
 module.exports = {
   name: 'textbook',
   build(subject, ctx) {
-    const subjPath = path.join(ctx.workspaceDir, 'content', subject.dir);
+    const subjPath = path.join(ctx.workspaceDir, ctx.contentRoot || 'content', subject.dir);
     if (!fs.existsSync(subjPath)) {
       throw new Error(`Directory not found: ${subjPath}`);
     }

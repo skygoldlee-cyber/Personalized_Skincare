@@ -9,6 +9,7 @@ import { PATHS } from './paths.js';
 //        exam/ingredients 는 기존 레지스트리 번들 방식을 그대로 유지한다.
 import { cleanOrphansForSubject } from './state.js';
 import { buildSubjectData } from './textbook-parser.js';
+import { getActiveExam, contentPath, dataPath } from './exam-context.js';
 // [모바일 PWA 견고성] 레지스트리는 window 전역(가드)에서 읽는다. 정적 import 로 하드 의존하면
 // 레지스트리 로드 실패 시 app.js 모듈 그래프 전체가 죽어 흰 화면이 되므로 지양.
 
@@ -17,12 +18,10 @@ var EXAM_DATA = {};
 var INGREDIENTS_DATA = [];
 
 const IS_FILE = (typeof location !== 'undefined' && location.protocol === 'file:');
-const STUDY_MD_MANIFEST_BUNDLE = PATHS.STUDY_MD_MANIFEST_BUNDLE;  // file:// 폴백 manifest
-const STUDY_MD_SUBJECT_BUNDLE = PATHS.STUDY_MD_SUBJECT_BUNDLE;  // file:// 폴백 과목별 MD
-const MANIFEST_URL = PATHS.MANIFEST_URL;
 
 export const DataLoader = {
     registry: null,
+    exam: null,
     _loaded: {},
     _loadedExams: {},
     _loadedDrills: {},
@@ -33,12 +32,53 @@ export const DataLoader = {
 
     /**
      * Initialize from the global registry (index.html의 module 태그가 채운 window 전역).
+     * 멀티시험: 기본 시험은 index.html의 정적 <script>가 DATA_REGISTRY를 채우고,
+     * 다른 시험은 ensureRegistry()가 dataRoot의 레지스트리 번들을 동적 로드한다.
      * @returns {void}
      */
     init() {
-        this.registry = window.DATA_REGISTRY;
+        this.exam = getActiveExam();
+        this.registry = window.DATA_REGISTRY || null;
         if (typeof window.STUDY_DATA === 'undefined') window.STUDY_DATA = {};
         if (typeof window.EXAM_DATA === 'undefined') window.EXAM_DATA = {};
+    },
+
+    /**
+     * 활성 시험의 레지스트리 확보 (비기본 시험은 번들을 동적 로드).
+     * 기본 시험은 index.html의 정적 <script src="data/registry.js">가 이미 제공한다.
+     */
+    async ensureRegistry() {
+        const exam = this.exam || getActiveExam();
+        if (!exam) return;
+        const globalName = exam.registryGlobal || 'DATA_REGISTRY';
+        // 기본 시험: 정적 로드된 전역이 있으면 그대로 사용
+        if (exam.default && window.DATA_REGISTRY) {
+            this.registry = window.DATA_REGISTRY;
+            return;
+        }
+        if (window[globalName] && this._registryExamId === exam.id) {
+            this.registry = window[globalName];
+            return;
+        }
+        if (exam.registryBundle) {
+            await this._loadScript('./' + exam.registryBundle.replace(/^\.\//, ''));
+            await new Promise(r => setTimeout(r, 0));
+            if (window[globalName]) {
+                this.registry = window[globalName];
+                this._registryExamId = exam.id;
+            }
+        }
+    },
+
+    /** 활성 시험의 기능 플래그 */
+    getFeatures() {
+        return (this.exam && this.exam.features) || {};
+    },
+
+    /** 과목 번호 목록 (드릴/시뮬레이터의 subjectN 번호 = manifest order) */
+    getSubjectOrders() {
+        const subjects = (this.registry && this.registry.subjects) || [];
+        return subjects.map(s => s.order);
     },
 
     /** Dynamic script loading utility with load caching and retry */
@@ -83,7 +123,7 @@ export const DataLoader = {
     async _ensureFallbackManifest() {
         if (this._fallbackManifestInjected && window.__STUDY_MD_MANIFEST__) return window.__STUDY_MD_MANIFEST__;
         if (!window.__STUDY_MD_MANIFEST__) {
-            await this._loadScript(STUDY_MD_MANIFEST_BUNDLE);
+            await this._loadScript(PATHS.STUDY_MD_MANIFEST_BUNDLE);
             await new Promise(r => setTimeout(r, 0));
         }
         this._fallbackManifestInjected = true;
@@ -101,7 +141,7 @@ export const DataLoader = {
         }
         if (!window.__STUDY_MD_FILES__) window.__STUDY_MD_FILES__ = {};
         if (!window.__STUDY_MD_FILES__[subjectKey]) {
-            await this._loadScript(STUDY_MD_SUBJECT_BUNDLE(subjectKey));
+            await this._loadScript(PATHS.STUDY_MD_SUBJECT_BUNDLE(subjectKey));
             await new Promise(r => setTimeout(r, 0));
         }
         this._fallbackSubjectInjected[subjectKey] = true;
@@ -117,7 +157,7 @@ export const DataLoader = {
         if (this._manifest) return this._manifest;
         if (!IS_FILE) {
             try {
-                const res = await fetch(MANIFEST_URL, { cache: 'no-cache' });
+                const res = await fetch(PATHS.MANIFEST_URL, { cache: 'no-cache' });
                 if (res.ok) { this._manifest = await res.json(); return this._manifest; }
             } catch (e) { /* 폴백으로 진행 */ }
         }
@@ -135,10 +175,13 @@ export const DataLoader = {
             } catch (e) { /* 폴백으로 진행 */ }
         }
         if (!subjectKey) {
-            // relPath에서 subjectKey 추출: content/{dir}/{file} → manifest에서 dir 매칭
+            // relPath에서 subjectKey 추출: {contentRoot}/{dir}/{file} → manifest에서 dir 접두사 매칭
+            // manifest의 dir은 contentRoot 상대 경로이므로 먼저 루트 접두사를 제거한다.
             const manifest = await this._getManifest();
-            const dir = relPath.split('/')[1];
-            const subj = manifest.subjects.find(s => s.dir === dir);
+            const rootPrefix = contentPath(''); // 'content/' 또는 'content/exams/<id>/'
+            let rel = relPath.replace(/^\.\//, '');
+            if (rel.startsWith(rootPrefix)) rel = rel.slice(rootPrefix.length);
+            const subj = manifest.subjects.find(s => rel === s.dir || rel.startsWith(s.dir + '/'));
             subjectKey = subj ? subj.key : null;
         }
         if (!subjectKey) throw new Error(`과목을 식별할 수 없습니다: ${relPath}`);
@@ -158,7 +201,7 @@ export const DataLoader = {
 
         const mdByFile = {};
         for (const ch of subjMeta.chapters) {
-            mdByFile[ch.file] = await this._getMd(`content/${subjMeta.dir}/${ch.file}`, key);
+            mdByFile[ch.file] = await this._getMd(contentPath(`${subjMeta.dir}/${ch.file}`), key);
         }
 
         const data = buildSubjectData(subjMeta, mdByFile, { filePathMode: 'md' });
@@ -226,14 +269,33 @@ export const DataLoader = {
     },
 
     /**
-     * 과목별 O/X 드릴 번들 로드 (data/drills/ox_subjectN.js → window.OX_DRILLS_subjectN)
-     * @param {number|string} subjectNum 1~4
+     * 과목 order → 시험(exam) 번들 키 해석.
+     * registry.exams[].subject ↔ registry.subjects[].key 연결로 파생한다.
+     * (기존 'subjectN' 명명 규칙과의 하위 호환 폴백 유지)
+     * @param {number|string} subjectNum 과목 order
+     * @returns {string} exam key (예: 'subject1')
+     */
+    _examKeyForOrder(subjectNum) {
+        const num = parseInt(subjectNum, 10);
+        const subjects = (this.registry && this.registry.subjects) || [];
+        const exams = (this.registry && this.registry.exams) || [];
+        const subj = subjects.find(s => s.order === num);
+        if (subj) {
+            const exam = exams.find(e => e.subject === subj.key);
+            if (exam) return exam.key;
+        }
+        return `subject${num}`;
+    },
+
+    /**
+     * 과목별 O/X 드릴 번들 로드 ({dataRoot}/drills/ox_<examKey>.js → window.OX_DRILLS_<examKey>)
+     * @param {number|string} subjectNum 과목 order (1~N)
      * @returns {Promise<Array>} ox 문항 배열
      */
     async loadOxDrills(subjectNum) {
-        const key = `subject${subjectNum}`;
+        const key = this._examKeyForOrder(subjectNum);
         if (this._loadedDrills[key]) return this._loadedDrills[key];
-        await this._loadScript(`./data/drills/ox_${key}.js`);
+        await this._loadScript(`./${dataPath(`drills/ox_${key}.js`)}`);
         await new Promise(r => setTimeout(r, 0));
         const data = window[`OX_DRILLS_${key}`];
         if (!Array.isArray(data)) throw new Error(`O/X 드릴 데이터를 찾을 수 없습니다: ${key}`);
@@ -243,24 +305,25 @@ export const DataLoader = {
 
     /**
      * 과목별 합답형(combo) 드릴 번들 로드 — 자동 변환 번들 + 수작업 파일럿 병합
-     * (data/drills/combo_subjectN.js → window.COMBO_DRILLS_subjectN,
-     *  data/drills/combo_pilot.js → window.COMBO_PILOT 중 해당 과목분)
-     * @param {number|string} subjectNum 1~4
+     * ({dataRoot}/drills/combo_subjectN.js → window.COMBO_DRILLS_subjectN,
+     *  {dataRoot}/drills/combo_pilot.js → window.COMBO_PILOT 중 해당 과목분)
+     * @param {number|string} subjectNum 과목 order (1~N)
      * @returns {Promise<Array>} combo 문항 배열
      */
     async loadComboDrills(subjectNum) {
         const num = parseInt(subjectNum, 10);
-        const key = `combo_subject${num}`;
+        const examKey = this._examKeyForOrder(num);
+        const key = `combo_${examKey}`;
         if (this._loadedDrills[key]) return this._loadedDrills[key];
 
-        await this._loadScript(`./data/drills/combo_subject${num}.js`);
+        await this._loadScript(`./${dataPath(`drills/combo_${examKey}.js`)}`);
         await new Promise(r => setTimeout(r, 0));
-        const auto = window[`COMBO_DRILLS_subject${num}`] || [];
+        const auto = window[`COMBO_DRILLS_${examKey}`] || [];
 
         // 파일럿(수작업)은 과목1·4에만 존재 — 없어도 자동 번들로 동작
         if (!this._loadedDrills.comboPilot) {
             try {
-                await this._loadScript('./data/drills/combo_pilot.js');
+                await this._loadScript(`./${dataPath('drills/combo_pilot.js')}`);
                 await new Promise(r => setTimeout(r, 0));
             } catch (e) {
                 console.warn('[DataLoader] combo_pilot.js 로드 실패 — 자동 번들만 사용', e);

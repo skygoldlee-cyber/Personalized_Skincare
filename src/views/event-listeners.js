@@ -1,5 +1,5 @@
 // src/views/event-listeners.js — 이벤트 리스너 설정 (app.js에서 분리)
-import { state, saveProgress } from '../state.js';
+import { state, saveProgress, safeRemoveItem, listScopedKeys } from '../state.js';
 import { shuffle } from '../utils.js';
 import { DataLoader } from '../data-loader.js';
 import { ManualViewer } from '../manual-viewer.js';
@@ -36,21 +36,11 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
         state.trainer.pomodoro.totalTimeToday = 0;
         state.trainer.pomodoro.sessionCount = 0;
         
-        // 로컬스토리지에 남아있는 모든 학습 데이터 키 제거
-        const keysToRemove = RESET_KEYS;
-        keysToRemove.forEach(k => { try { localStorage.removeItem(k); } catch(_) {} });
+        // 로컬스토리지에 남아있는 현재 시험의 학습 데이터 키 제거 (시험별 네임스페이스)
+        RESET_KEYS.forEach(k => safeRemoveItem(k));
 
         // 날짜 기반 동적 키(daily_completed_*) 일괄 제거
-        const dynamicKeys = [];
-        try {
-            for (let i = 0; i < localStorage.length; i++) {
-                const key = localStorage.key(i);
-                if (key && isDailyCompletedKey(key)) {
-                    dynamicKeys.push(key);
-                }
-            }
-        } catch(_) {}
-        dynamicKeys.forEach(k => { try { localStorage.removeItem(k); } catch(_) {} });
+        listScopedKeys(isDailyCompletedKey).forEach(k => { try { localStorage.removeItem(k); } catch(_) {} });
         
         saveProgress();
         

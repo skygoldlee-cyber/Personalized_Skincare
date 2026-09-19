@@ -5,6 +5,7 @@ import {
 } from '../../src/statement-tracker.js';
 import { gradeAnswer } from '../../src/questions.js';
 import { STORAGE_KEYS } from '../../src/storage-keys.js';
+import { scopedKey } from '../../src/exam-context.js';
 
 // --- localStorage 모킹 (state.test.js와 동일 패턴) ---
 
@@ -114,10 +115,10 @@ test('getDueStatementSids: 오판 진술은 내일 복습 대기 아님(당일 �
 test('getDueStatementSids: 과거 nextReview는 due로 검출', () => {
     recordStatementJudgments([{ sid: 'a', judgedCorrect: true }]);
     // 스케줄을 과거로 조작
-    const raw = mockStorage.getItem(STORAGE_KEYS.FC_SPACED_REPETITION);
+    const raw = mockStorage.getItem(scopedKey(STORAGE_KEYS.FC_SPACED_REPETITION));
     const sch = JSON.parse(raw);
     sch['a'].nextReview = '2000-01-01';
-    mockStorage.setItem(STORAGE_KEYS.FC_SPACED_REPETITION, JSON.stringify(sch));
+    mockStorage.setItem(scopedKey(STORAGE_KEYS.FC_SPACED_REPETITION), JSON.stringify(sch));
     assert.deepEqual(getDueStatementSids(), ['a']);
 });
 
@@ -126,7 +127,7 @@ test('recordStatementJudgments: 정답 선택은 오판 누적 없이 SM-2만 �
     recordStatementJudgments(res.perStatement);
     assert.equal(getWeakStatements().length, 0);
     // 스케줄은 3개 sid 모두 생성됨
-    const sch = JSON.parse(mockStorage.getItem(STORAGE_KEYS.FC_SPACED_REPETITION));
+    const sch = JSON.parse(mockStorage.getItem(scopedKey(STORAGE_KEYS.FC_SPACED_REPETITION)));
     assert.equal(Object.keys(sch).length, 3);
     assert.equal(sch['st-t-1'].repetition, 1);
 });

@@ -115,14 +115,14 @@ function toSupplementCard(subjectKey, q) {
  *   targets: 과목별 표시 목표치, files: 생성된 보충 번들 경로(과목키 → './data/supplements/…')
  */
 function buildSupplements(manifest, rawCounts, ctx) {
-  const outDir = path.join(ctx.workspaceDir, 'data', 'supplements');
+  const outDir = path.join(ctx.workspaceDir, ctx.dataRoot || 'data', 'supplements');
   fs.mkdirSync(outDir, { recursive: true });
 
   // 과목키 → 문제은행 문항 수 / 문항 목록 (manifest.exams[].subject 기준 병합)
   const bankCount = {};
   const bankQuestions = {};
   manifest.exams.forEach(exam => {
-    const filePath = path.join(ctx.workspaceDir, 'content', '문제은행', exam.file);
+    const filePath = path.join(ctx.workspaceDir, ctx.contentRoot || 'content', '문제은행', exam.file);
     const parsed = parseExamFile(filePath, exam.key, exam.title);
     bankCount[exam.subject] = (bankCount[exam.subject] || 0) + parsed.questions.length;
     bankQuestions[exam.subject] = (bankQuestions[exam.subject] || []).concat(parsed.questions);
@@ -169,7 +169,7 @@ function buildSupplements(manifest, rawCounts, ctx) {
       `// 자동 생성된 문제은행 보충 학습 데이터입니다. 수정하지 마십시오. (tools/build/supplements.js)\n` +
       `var STUDY_SUPPLEMENT_${key} = ${JSON.stringify({ cards, quizzes }, null, 2)};\n`;
     fs.writeFileSync(path.join(outDir, filename), jsContent, 'utf-8');
-    files[key] = `./data/supplements/${filename}`;
+    files[key] = `./${ctx.dataRoot || 'data'}/supplements/${filename}`;
     generated[key] = { cards: cards.length, quizzes: quizzes.length };
     console.log(`- Supplement ${key}: cards +${cards.length}, quizzes +${quizzes.length} (목표 ${tCards}/${tQuizzes})`);
   });

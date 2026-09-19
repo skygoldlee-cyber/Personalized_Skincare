@@ -21,6 +21,7 @@
 import { escapeHTML } from './sanitize.js';
 import { parseMarkdown } from './markdown-parser.js';
 import { resolveRefPath } from './pdf-registry.js';
+import { contentPath, dataPath } from './exam-context.js';
 import { CACHE } from './config/cache.js';
 
 export const ExamViewer = (() => {
@@ -283,7 +284,7 @@ body.exam-open{overflow:hidden;}
                     }
                     // 선행 슬래시 제거 (대시보드에서 열 때와 경로 일치)
                     resolved = resolved.replace(/^\//, '');
-                } catch (err) { resolved = href.replace(/^\.\.\//, 'content/').replace(/\.\.\//g, ''); }
+                } catch (err) { resolved = href.replace(/^\.\.\//, contentPath('')).replace(/\.\.\//g, ''); }
                 const lineMatch = href.match(/#L(\d+)$/);
                 const lineNum = lineMatch ? parseInt(lineMatch[1]) : null;
                 openExam(resolved, lineNum);
@@ -355,10 +356,10 @@ body.exam-open{overflow:hidden;}
        마크다운 로드 소스 (프로토콜별)
        ========================================================= */
 
-    // 'content/exams/subject1_100_questions.md' → 'data/exams_md/subject1_100_questions.js'
+    // '{contentRoot}/문제은행/과목1_문제.md' → '{dataRoot}/exams_md/과목1_문제.js'
     function _bundlePathFor(mdPath) {
         const stem = mdPath.split('/').pop().replace(/\.md$/i, '');
-        return 'data/exams_md/' + stem + '.js';
+        return dataPath('exams_md/') + stem + '.js';
     }
 
     // 클래식 <script> 동적 주입 (file:// 에서도 동작). 재사용/캐시 처리 포함.

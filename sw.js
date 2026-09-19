@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v369-20260919-8a06dea';   // 전과목 숫자암기 통합정리 고유 수치를 Part 2에 이식
+const CACHE_VERSION = 'v369-20260919-66c49d9';   // 전과목 숫자암기 통합정리 고유 수치를 Part 2에 이식
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
@@ -39,6 +39,7 @@ const SHELL_ASSETS = [
   './css/reader-mermaid.css',
   './css/html-viewer.css',
   './css/ui-overlay.css',
+  './css/study-calendar.css',
   './manifest.webmanifest',
   './ping.txt',
   './src/theme-init.js',
@@ -55,6 +56,7 @@ const SHELL_ASSETS = [
   './src/config/timing.js',
   './src/config/cache.js',
   './src/paths.js',
+  './src/exam-context.js',
   './src/reader-format.js',
   './src/exam-viewer.js',
   './src/manual-viewer.js',
@@ -65,10 +67,11 @@ const SHELL_ASSETS = [
   './src/app.js',
   './src/app-fallback.js',
   './src/ui-utils.js',
-  // data/registry.js, data/audio_manifest.js: 이전 app.js ESM import 그래프에 포함되었으나
-  // window 전역 참조 방식으로 변경되어 별도 프리캐시 필요 (오프라인 최초 실행 대비)
+  // data/registry.js, data/audio_manifest.js, data/exams.js: 이전 app.js ESM import 그래프에
+  // 포함되었으나 window 전역 참조 방식으로 변경되어 별도 프리캐시 필요 (오프라인 최초 실행 대비)
   './data/registry.js',
   './data/audio_manifest.js',
+  './data/exams.js',
   './src/views/dashboard.js',
   './src/views/flashcard.js',
   './src/views/quiz.js',
@@ -93,6 +96,7 @@ const SHELL_ASSETS = [
   './src/views/offline-detection.js',
   './src/views/event-listeners.js',
   './src/views/navigation.js',
+  './src/views/exam-select.js',
   './src/html-viewer.js',
   './src/pdf-registry.js',
   './src/study-aids.js',
@@ -247,8 +251,8 @@ async function pruneStaleDataBundles() {
     const referenced = new Set(text.match(/\.\/data\/[A-Za-z0-9_./-]+\.js/g) || []);
     referenced.add('./data/registry.js');
     referenced.add('./data/audio_manifest.js');
-    // data/drills/, data/supplements/ 는 프루닝에서 항상 보존 (레지스트리 경로도 수집되지만 이중 안전장치)
-    const ALWAYS_KEEP = /\/data\/(drills|supplements)\//;
+    // data/drills/, data/supplements/, data/exams*(시험 레지스트리·타 시험 번들)는 프루닝에서 항상 보존
+    const ALWAYS_KEEP = /\/data\/(drills|supplements|exams)\b/;
     const refSuffixes = [...referenced].map((r) => r.replace(/^\.\//, '/'));
 
     const requests = await cache.keys();
@@ -313,7 +317,7 @@ self.addEventListener('fetch', (event) => {
   // 4) 학습 데이터 파일 → Cache First (단, registry.js는 최신 변경사항 확인을 위해 Network First 적용)
   // (루트/서브디렉터리 배포 모두 대응: 경로 어디에 있든 /data/ 세그먼트 매칭)
   if (url.pathname.includes('/data/')) {
-    if (url.pathname.endsWith('registry.js')) {
+    if (url.pathname.endsWith('registry.js') || url.pathname.endsWith('/data/exams.js')) {
       event.respondWith(networkFirst(request, DATA_CACHE));
     } else {
       event.respondWith(cacheFirst(request, DATA_CACHE));

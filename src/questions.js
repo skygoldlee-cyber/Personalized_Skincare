@@ -220,22 +220,22 @@ function gradeAnswer(q, response) {
  * @param {Record<string,string|Object>} responses  { [questionId]: response }
  */
 function scoreExam(questions, responses) {
-  const bySubject = { 1: { earned: 0, max: 0 }, 2: { earned: 0, max: 0 },
-                      3: { earned: 0, max: 0 }, 4: { earned: 0, max: 0 } };
+  const bySubject = {};
   let totalEarned = 0, totalMax = 0;
   const details = [];
 
   for (const q of questions) {
     const r = gradeAnswer(q, responses[q.id]);
-    bySubject[q.subject].earned += r.earned;
-    bySubject[q.subject].max += r.max;
+    const bucket = bySubject[q.subject] || (bySubject[q.subject] = { earned: 0, max: 0 });
+    bucket.earned += r.earned;
+    bucket.max += r.max;
     totalEarned += r.earned;
     totalMax += r.max;
     details.push({ id: q.id, subject: q.subject, ...r });
   }
 
   let subjectPass = true;
-  for (const s of [1, 2, 3, 4]) {
+  for (const s of Object.keys(bySubject)) {
     const sub = bySubject[s];
     sub.pct = sub.max ? sub.earned / sub.max : 0;
     sub.pass = sub.pct >= PASS_SUBJECT;      // 과목별 40%

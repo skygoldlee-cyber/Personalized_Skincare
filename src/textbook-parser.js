@@ -3,6 +3,7 @@
 // 목표: 기존 빌드 산출물(data/subjects/*.js)과 카드/퀴즈/챕터/ID가 바이트 단위로 동일.
 // 어떤 정규식/분기/트림도 결과를 바꾸지 않도록 원본 로직을 그대로 유지한다.
 import { stableId } from './sha256.js';
+import { contentPath } from './exam-context.js';
 
 const cleanText = (text) => {
     if (!text) return '';
@@ -599,11 +600,11 @@ export function buildSubjectData(subjectMeta, mdByFile, opts = {}) {
         data.cards.push(...cards);
         data.quizzes.push(...quizzes);
 
-        const chapterData = parseTextbookContent(md, file, `content/${subjectMeta.dir}`);
+        const chapterData = parseTextbookContent(md, file, contentPath(subjectMeta.dir));
         chapterData.chapterKey = chapter.key;
         if (filePathMode === 'md') {
             // 원본 HTML은 제거되었으므로 링크를 .md 원문으로 변경
-            chapterData.filePath = `./content/${subjectMeta.dir}/${file}`;
+            chapterData.filePath = `./${contentPath(`${subjectMeta.dir}/${file}`)}`;
         }
         data.chapters.push(chapterData);
     });

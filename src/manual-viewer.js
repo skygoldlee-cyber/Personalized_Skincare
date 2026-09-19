@@ -12,6 +12,7 @@ import { detectMermaidType, getMermaidClassName, getMermaidInitOptions } from '.
 import { parseMarkdown } from './markdown-parser.js';
 import { openSubjectChapter } from './views/textbook-reader.js';
 import { PATHS } from './paths.js';
+import { dataPath } from './exam-context.js';
 import { CACHE } from './config/cache.js';
 
 export const ManualViewer = (() => {
@@ -407,12 +408,14 @@ body.manual-open{overflow:hidden;}
        data/docs_md/<stem>.js 를 클래식 <script>로 주입 — file:// 에서도 동작)
        --------------------------------------------------------- */
 
-    // 'docs/user_manual.md' → 'data/docs_md/user_manual.js'
+    // 'docs/user_manual.md' → 'data/docs_md/user_manual.js' (앱 공용 문서)
+    // 'content/학습안내서.md' → '{dataRoot}/docs_md/학습안내서.js' (시험별 문서 — 멀티시험)
     function _bundlePathFor(sourceKey) {
         const src = MD_SOURCES[sourceKey];
         if (!src) return null;
         const stem = src.path.split('/').pop().replace(/\.md$/i, '');
-        return 'data/docs_md/' + stem + '.js';
+        const base = src.path.startsWith('docs/') ? 'data' : null;
+        return (base ? `${base}/docs_md/` : dataPath('docs_md/')) + stem + '.js';
     }
 
     // 클래식 <script> 동적 주입 (file:// 에서도 동작). 재사용/캐시 처리 포함.

@@ -133,6 +133,17 @@ docs/                   # 개발 문서
 3. **DataLoader 온디맨드**: `content/*.md`를 런타임 fetch + parseMarkdown으로 렌더링
 4. **Service Worker**: Cache First (HTML/JS/CSS), DATA_CACHE (MD/참조자료, 배포 간 유지)
 5. **이벤트 위임**: `data-click`/`data-arg` 속성 기반, CSP `script-src 'self'` 호환
+6. **멀티시험 플랫폼**: 시험별 `contentRoot`/`dataRoot` 분리 — 아래 "멀티시험 구조" 참조
+
+## 멀티시험 구조
+
+- **시험 레지스트리**: `content/exams.json` → `data/exams.js` 번들(`window.EXAMS_LIST`, `npm run build:data`에 포함). 각 시험 엔트리: `id`, `name`, `title`/`logoMain`/`logoSub`(브랜딩), `desc`, `icon`, `year`, `default`, `contentRoot`, `dataRoot`, `registryBundle`, `registryGlobal`, `features`(기능 플래그)
+- **시험별 루트**: 기본 시험은 `content/`·`data/` 그대로. 추가 시험은 `content/exams/<id>/`(manifest.json + 교재/문제은행/참조자료)와 `data/exams/<id>/`(registry.js, exams/, drills/, study_md/, docs_md/, supplements/) 구조
+- **시험 컨텍스트**: `src/exam-context.js` — `contentPath()`/`dataPath()`(경로 해석), `hasFeature()`(기능 게이팅), `selectExam()`(전환 = `location.reload()`로 모듈 상태 리셋), `scopedKey()`(진도 네임스페이스 `<examId>:key`)
+- **진도 격리**: `safeGetItem`/`safeSetItem` 등이 자동으로 시험 접두사 적용. 테마·리더 설정 등 `GLOBAL_KEYS`만 비네임스페이스. 백업 파일은 비접두사 논리 키(시험 간 호환)
+- **새 시험 추가 절차**: ① `content/exams/<id>/`에 manifest.json + 교재/문제은행 배치 ② `content/exams.json`에 엔트리 추가 ③ `npm.cmd run build:data && npm.cmd run build:drills` → 끝 (앱 로직 변경 불필요)
+- **기능 플래그**: `features`에 없는 기능은 `data-feature` 속성/`hasFeature()`로 자동 숨김 — 성분사전·원료배합·계산연습·오디오북·참조자료 등 도메인 특화 기능
+- **Node 도구**: `EXAM_ID`/`EXAM_CONTENT_ROOT`/`EXAM_DATA_ROOT` env로 대상 시험 지정 (예: `EXAM_ID=<id> node tools/build/index.js`)
 
 ## 코드 스타일 및 규칙
 

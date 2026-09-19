@@ -3,6 +3,10 @@
 // 참조문서에서 키워드를 찾아 주변 문맥을 설명으로 추출
 // **참조문서에서 키워드가 검색되는 경우만 등록** (검색 불가 → 미등록 → 런타임에 L? 처리)
 // 실행: node tools/build/build_keyword_index.js
+//
+// [멀티시험] 기본 시험(content/) 전용 — 출력 src/keyword-index.js는 공유 모듈이고
+//   참조자료 키워드 기능은 시험 features.refDocs 플래그로 게이트된다.
+//   다른 시험에 적용하려면 시험별 인덱스 파일 분리가 필요하다 (구조적 개선 항목).
 
 import fs from 'fs';
 import path from 'path';

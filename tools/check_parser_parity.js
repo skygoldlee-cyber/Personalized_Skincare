@@ -16,11 +16,7 @@ const path = require('path');
 const ROOT = path.resolve(__dirname, '..');
 const plugin = require('./build/plugins/textbook.plugin.js');
 const idFactory = require('./build/id-factory.js');
-
-function readManifest() {
-    const p = path.join(ROOT, 'content', 'manifest.json');
-    return JSON.parse(fs.readFileSync(p, 'utf-8'));
-}
+const { getExamTargets } = require('./build/exam-targets.js');
 
 function firstDiff(aArr, bArr, label) {
     const n = Math.max(aArr.length, bArr.length);
@@ -41,19 +37,31 @@ async function main() {
     // 런타임 파서는 ESM (src/package.json: type=module) → 동적 import 로 로드
     const { buildSubjectData } = await import('../src/textbook-parser.js');
 
-    const manifest = readManifest();
+    // [멀티시험] content/exams.json의 모든 시험 manifest를 순회 검증한다.
+    const targets = getExamTargets(ROOT).filter(t => t.manifest);
     let allOk = true;
     const summary = [];
 
+    for (const target of targets) {
+        const manifest = target.manifest;
+        summary.push(`■ [${target.id}] ${target.contentRoot}`);
+
     for (const subject of manifest.subjects) {
         // 1) 빌드 파서
-        const buildData = plugin.build(subject, { workspaceDir: ROOT, idFactory });
+        const buildData = plugin.build(subject, {
+            workspaceDir: ROOT, idFactory,
+            contentRoot: target.contentRoot, dataRoot: target.dataRoot
+        });
 
         // 2) 런타임 파서 (filePath 확장자까지 맞추기 위해 html 모드 사용)
+        //    exam-context는 Node에서 EXAM_CONTENT_ROOT/EXAM_ID env로 활성 시험을 해석한다.
+        process.env.EXAM_CONTENT_ROOT = target.contentRoot;
+        process.env.EXAM_DATA_ROOT = target.dataRoot;
+        process.env.EXAM_ID = target.id;
         const mdByFile = {};
         for (const ch of subject.chapters) {
             mdByFile[ch.file] = fs.readFileSync(
-                path.join(ROOT, 'content', subject.dir, ch.file), 'utf-8'
+                path.join(ROOT, target.contentRoot, subject.dir, ch.file), 'utf-8'
             );
         }
         const runtimeData = buildSubjectData(subject, mdByFile, { filePathMode: 'html' });
@@ -79,6 +87,7 @@ async function main() {
         if (!ok) {
             summary.push('    ' + problems.join('\n    '));
         }
+    }
     }
 
     console.log('교재 파서 등가성 검사 (build plugin ↔ runtime parser)');

@@ -70,7 +70,7 @@
                 <button class="nav-item" data-target="textbook-view">
                     <i class="fa-solid fa-book" aria-hidden="true"></i> 교재 본문 검색
                 </button>
-                <button class="nav-item" data-target="dictionary-view">
+                <button class="nav-item" data-target="dictionary-view" data-feature="dictionary">
                     <i class="fa-solid fa-search" aria-hidden="true"></i> 성분 검색 사전
                 </button>
                 <button class="nav-item" data-target="calendar-view">
@@ -78,6 +78,9 @@
                 </button>
             </nav>
             <div class="sidebar-footer">
+                <button type="button" class="btn btn-secondary exam-switch-btn" data-click="showExamSelect" title="다른 시험으로 전환">
+                    <i class="fa-solid fa-arrow-right-arrow-left" aria-hidden="true"></i> 시험 전환
+                </button>
                 <p>© Cosmetic Master</p>
                 <span id="sidebar-version">v1.0.0</span>
             </div>
@@ -233,7 +236,7 @@
                 </div>
 
                 <!-- Pomodoro Timer Row -->
-                <div class="pomo-section-container mt-5 mb-7">
+                <div class="pomo-section-container mt-5 mb-7" data-feature="pomodoro">
                     <div class="pomodoro-card">
                         <div class="pomodoro-header">
                             <div class="pomo-title-group">
@@ -544,7 +547,7 @@
                             <span class="trainer-card-btn">훈련 시작 <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
                         </div>
 
-                        <div class="trainer-menu-card" data-click="startCalcPractice">
+                        <div class="trainer-menu-card" data-click="startCalcPractice" data-feature="calcPractice">
                             <div class="trainer-card-icon icon-blue">
                                 <i class="fa-solid fa-calculator" aria-hidden="true"></i>
                             </div>
@@ -553,7 +556,7 @@
                             <span class="trainer-card-btn">연습 시작 <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
                         </div>
 
-                        <div class="trainer-menu-card" data-click="startIngredientsChallenge">
+                        <div class="trainer-menu-card" data-click="startIngredientsChallenge" data-feature="ingredients">
                             <div class="trainer-card-icon icon-green">
                                 <i class="fa-solid fa-flask" aria-hidden="true"></i>
                             </div>
@@ -665,11 +668,8 @@
                                         <button class="btn btn-secondary drill-count-chip" data-click="setDrillCount" data-arg="20" style="padding:0.3rem 0.9rem; font-size:0.85rem;">20문</button>
                                         <button class="btn btn-secondary drill-count-chip" data-click="setDrillCount" data-arg="all" style="padding:0.3rem 0.9rem; font-size:0.85rem;">전체</button>
                                     </div>
-                                    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:0.75rem; max-width:480px; margin:0 auto;">
-                                        <button class="btn btn-secondary" data-click="startOxDrill" data-arg="1" style="padding:1rem;">1과목<br><small>화장품법</small></button>
-                                        <button class="btn btn-secondary" data-click="startOxDrill" data-arg="2" style="padding:1rem;">2과목<br><small>제조·품질</small></button>
-                                        <button class="btn btn-secondary" data-click="startOxDrill" data-arg="3" style="padding:1rem;">3과목<br><small>안전관리</small></button>
-                                        <button class="btn btn-secondary" data-click="startOxDrill" data-arg="4" style="padding:1rem;">4과목<br><small>맞춤형화장품</small></button>
+                                    <div id="oxdrill-subject-grid" style="display:grid; grid-template-columns:repeat(2,1fr); gap:0.75rem; max-width:480px; margin:0 auto;">
+                                        <!-- 과목 버튼은 registry 기반으로 동적 생성됩니다 -->
                                     </div>
                                     <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; max-width:480px; margin:0.75rem auto 0;">
                                         <button class="btn btn-warning" data-click="startOxDrill" data-arg="weak" style="padding:0.75rem;"><i class="fa-solid fa-crosshairs"></i> 취약·복습 진술만<br><small>전 과목</small></button>
@@ -739,11 +739,8 @@
                                         <button class="btn btn-secondary drill-count-chip" data-click="setDrillCount" data-arg="20" style="padding:0.3rem 0.9rem; font-size:0.85rem;">20문</button>
                                         <button class="btn btn-secondary drill-count-chip" data-click="setDrillCount" data-arg="all" style="padding:0.3rem 0.9rem; font-size:0.85rem;">전체</button>
                                     </div>
-                                    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:0.75rem; max-width:480px; margin:0 auto;">
-                                        <button class="btn btn-secondary" data-click="startComboDrill" data-arg="1" style="padding:1rem;">1과목<br><small>화장품법</small></button>
-                                        <button class="btn btn-secondary" data-click="startComboDrill" data-arg="2" style="padding:1rem;">2과목<br><small>제조·품질</small></button>
-                                        <button class="btn btn-secondary" data-click="startComboDrill" data-arg="3" style="padding:1rem;">3과목<br><small>안전관리</small></button>
-                                        <button class="btn btn-secondary" data-click="startComboDrill" data-arg="4" style="padding:1rem;">4과목<br><small>맞춤형 이해</small></button>
+                                    <div id="combo-subject-grid" style="display:grid; grid-template-columns:repeat(2,1fr); gap:0.75rem; max-width:480px; margin:0 auto;">
+                                        <!-- 과목 버튼은 registry 기반으로 동적 생성됩니다 -->
                                     </div>
                                     <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; max-width:480px; margin:0.75rem auto 0;">
                                         <button class="btn btn-warning" data-click="startComboDrill" data-arg="weak" style="padding:0.75rem;"><i class="fa-solid fa-crosshairs"></i> 취약·복습 진술 문항<br><small>전 과목</small></button>
@@ -979,7 +976,7 @@
                         <div id="exam-cards-dynamic" class="display-contents"></div>
 
                         <!-- 부록 요약본 -->
-                        <div class="exam-card-item full-width-card">
+                        <div class="exam-card-item full-width-card" data-feature="appendixDocs">
                             <div class="exam-card-badge badge-gray">학습 부록</div>
                             <div class="exam-card-btns flex-row gap-4">
                                 <a href="#" data-click="ManualViewer.openMnemonicGuide" class="exam-btn-link"><i class="fa-solid fa-brain" aria-hidden="true"></i> 두음법·숫자 총정리</a>
@@ -1265,6 +1262,15 @@
                 </div>
             </section>
 
+            <!-- 시험 선택 (멀티시험 플랫폼 홈) -->
+            <section id="exam-select-view" class="view-section">
+                <div class="section-title-area">
+                    <h3>📚 시험 선택</h3>
+                    <p>학습할 시험을 선택하세요. 진도·캘린더·통계는 시험별로 독립 관리됩니다.</p>
+                </div>
+                <div id="exam-select-list" class="exam-select-grid"></div>
+            </section>
+
             <!-- 학습 캘린더 -->
             <section id="calendar-view" class="view-section">
                 <div class="section-title-area">
@@ -1313,7 +1319,7 @@
                 <i class="fa-solid fa-book" aria-hidden="true"></i>
                 <span>교재검색</span>
             </button>
-            <button class="mobile-tab-item" data-target="dictionary-view">
+            <button class="mobile-tab-item" data-target="dictionary-view" data-feature="dictionary">
                 <i class="fa-solid fa-search" aria-hidden="true"></i>
                 <span>성분검색</span>
             </button>
@@ -1451,6 +1457,8 @@
     </div>
 
     <!-- 정적 전역 데이터 및 라이브러리 로드 (클래식 스크립트 및 ESM) -->
+    <!-- 시험 레지스트리 (멀티시험): 클래식 번들 — file://에서도 동기 로드됨 -->
+    <script src="data/exams.js"></script>
     <script type="module" src="data/registry.js"></script>
     <script type="module" src="data/audio_manifest.js"></script>
     <!-- mermaid(3.3MB)는 매뉴얼/문서 뷰에서만 쓰이므로 즉시 로드하지 않는다.

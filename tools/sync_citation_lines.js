@@ -18,15 +18,24 @@
  */
 const fs = require('fs');
 const path = require('path');
-
-const EXAM_FILES = [
-    'content/문제은행/과목1_문제.md',
-    'content/문제은행/과목2_문제.md',
-    'content/문제은행/과목3_문제.md',
-    'content/문제은행/과목4_문제.md',
-];
+const { getExamTargets } = require('./build/exam-targets');
 
 const ROOT = path.resolve(__dirname, '..');
+
+// [멀티시험] 각 시험의 {contentRoot}/문제은행/ 아래 manifest 등록 파일을 대상으로 한다.
+function collectExamFiles() {
+    const files = [];
+    for (const target of getExamTargets(ROOT)) {
+        if (!target.manifest) continue;
+        for (const exam of target.manifest.exams || []) {
+            const rel = `${target.contentRoot}/문제은행/${exam.file}`;
+            if (!files.includes(rel)) files.push(rel);
+        }
+    }
+    return files;
+}
+
+const EXAM_FILES = collectExamFiles();
 const FINGERPRINT_FILE = path.join(ROOT, 'tools', 'citation_fingerprints.json');
 
 // Match citation link patterns: [라벨 ... L####](<path#L####>)

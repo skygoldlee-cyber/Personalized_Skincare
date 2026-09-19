@@ -25,10 +25,15 @@ const fs = require('fs');
 const path = require('path');
 const { stableId } = require('./build/id-factory.js');
 const { inferTags } = require('./drill-utils.js');
+const { getExamTargets, getSubjectMaps } = require('./build/exam-targets.js');
 
 const ROOT = path.resolve(__dirname, '..');
-const EXAMS_DIR = path.join(ROOT, 'data', 'exams');
-const OUT_DIR = path.join(ROOT, 'data', 'drills');
+
+// [멀티시험] 시험별 {dataRoot}/exams → {dataRoot}/drills 순회.
+// SUBJECT_NUM/SUBJECT_KEY는 시험별 manifest에서 파생된다 (main 루프에서 설정).
+let SUBJECT_NUM = {};
+let SUBJECT_KEY = {};
+let OUT_DIR = path.join(ROOT, 'data', 'drills');
 
 const AUTOGEN_HEADER = '// 자동 생성된 O/X 드릴 데이터입니다. 수정하지 마십시오. (tools/build_ox_drills.js)';
 
@@ -77,8 +82,6 @@ function loadExamFile(filePath) {
   return { key: m[1], data: JSON.parse(m[2]) };
 }
 
-const SUBJECT_NUM = { subject1: 1, subject2: 2, subject3: 3, subject4: 4 };
-const SUBJECT_KEY = { subject1: 'law', subject2: 'manufacturing', subject3: 'safety', subject4: 'understanding' };
 const CIRCLED = ['①', '②', '③', '④', '⑤', '⑥', '⑦', '⑧', '⑨', '⑩'];
 
 function buildOxItems(examKey, exam) {
@@ -87,6 +90,9 @@ function buildOxItems(examKey, exam) {
   const seen = new Set();
   const subject = SUBJECT_NUM[examKey];
   const subjKey = SUBJECT_KEY[examKey] || examKey;
+  if (typeof subject !== 'number' || isNaN(subject)) {
+    throw new Error(`[ox-drills] '${examKey}'의 과목 번호를 manifest에서 해석할 수 없습니다`);
+  }
 
   for (const q of exam.questions) {
     if (q.type !== 'choice') continue;
@@ -137,17 +143,24 @@ function buildOxItems(examKey, exam) {
 
 /* ---------- 메인 ---------- */
 
-async function main() {
+async function buildForExam(target) {
+  const EXAMS_DIR = path.join(ROOT, target.dataRoot, 'exams');
+  OUT_DIR = path.join(ROOT, target.dataRoot, 'drills');
+  if (!target.manifest) {
+    console.warn(`[ox-drills] ${target.id}: manifest 없음 — 건너뜀`);
+    return;
+  }
+  ({ SUBJECT_NUM, SUBJECT_KEY } = getSubjectMaps(target.manifest));
   if (!fs.existsSync(EXAMS_DIR)) {
-    console.error(`[ox-drills] 입력 폴더 없음: ${EXAMS_DIR}`);
-    process.exit(1);
+    console.warn(`[ox-drills] ${target.id}: 입력 폴더 없음(${EXAMS_DIR}) — 건너뜀`);
+    return;
   }
   fs.mkdirSync(OUT_DIR, { recursive: true });
 
   const files = fs.readdirSync(EXAMS_DIR).filter(f => f.endsWith('.js')).sort();
   if (!files.length) {
-    console.error('[ox-drills] data/exams에 번들이 없습니다. npm run build:data 먼저 실행하세요.');
-    process.exit(1);
+    console.warn(`[ox-drills] ${target.id}: ${target.dataRoot}/exams에 번들이 없습니다 — 건너뜀`);
+    return;
   }
 
   // 스키마 검증용 (ESM 모듈을 CJS에서 동적 import — Windows 절대경로는 file:// URL 필요)
@@ -170,7 +183,7 @@ async function main() {
     totalErrors += errs.length;
 
     const body = AUTOGEN_HEADER + '\n' +
-      `// 원본: data/exams/${file} — mode: fact(명제 판정) ${stats.fact}문 / answer(정답 판정) ${stats.answer}문\n` +
+      `// 원본: ${target.dataRoot}/exams/${file} — mode: fact(명제 판정) ${stats.fact}문 / answer(정답 판정) ${stats.answer}문\n` +
       `var OX_DRILLS_${key} = ` + JSON.stringify(items, null, 1) + ';\n';
     const outPath = path.join(OUT_DIR, `ox_${key}.js`);
     fs.writeFileSync(outPath, body, 'utf8');
@@ -183,7 +196,13 @@ async function main() {
     }
   }
 
-  console.log(`[ox-drills] 총 ${totalItems}개 O/X 문항 생성, 검증 오류 ${totalErrors}건 → ${path.relative(ROOT, OUT_DIR)}/`);
+  console.log(`[ox-drills] ${target.id}: 총 ${totalItems}개 O/X 문항 생성, 검증 오류 ${totalErrors}건 → ${path.relative(ROOT, OUT_DIR)}/`);
+}
+
+async function main() {
+  for (const target of getExamTargets(ROOT)) {
+    await buildForExam(target);
+  }
 }
 
 main().catch(e => { console.error(e); process.exit(1); });

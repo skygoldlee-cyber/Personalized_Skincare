@@ -163,6 +163,8 @@ import { switchView } from './views/navigation.js';
 import { setupOfflineDetection } from './views/offline-detection.js';
 import { setupEventListeners } from './views/event-listeners.js';
 import { getViewTitles, navigateToView } from './router.js';
+import { contentPath, getActiveExam, getCurrentExamId, purgeLegacyStorage, hasFeature } from './exam-context.js';
+import { renderExamSelect, showExamSelect, selectExamAction } from './views/exam-select.js';
 
 // --- 런타임 에러 안전망 (런타임 ReferenceError 등을 사용자에게 알림) ---
 window.addEventListener('error', function (event) {
@@ -296,14 +298,16 @@ function populateExamCards() {
                 : '시뮬레이터 시작';
             const btnClass = subjExams.length > 1 ? '' : ' btn-cyan';
             return `                                <div class="exam-btn-pair">
-                                    <button data-click="ExamViewer.openExam" data-arg="content/문제은행/${exam.file}" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> ${pdfLabel}</button>
+                                    <button data-click="ExamViewer.openExam" data-arg="${contentPath(`문제은행/${exam.file}`)}" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> ${pdfLabel}</button>
                                     <button class="exam-btn-sim${btnClass}" data-click="startMockExamSim" data-arg="${exam.key}"><i class="fa-solid fa-circle-play"></i> ${simLabel}</button>
                                 </div>`;
         }).join('\n');
 
         // ㄱㄴㄷ 합답형: 문제집 MD 열람 + 합답형 모의고사 (문항 수 선택 칩)
+        // comboFile이 manifest에 선언되면 우선 사용, 없으면 과목{order}_합답형.md 규약
+        const comboFile = (subjExams.find(e => e.comboFile) || {}).comboFile || `과목${subj.order}_합답형.md`;
         const comboPair = `                                <div class="exam-btn-pair">
-                                    <button data-click="ExamViewer.openExam" data-arg="content/문제은행/과목${idx + 1}_합답형.md" class="exam-btn-link"><i class="fa-solid fa-file-lines"></i> 합답형 문제집</button>
+                                    <button data-click="ExamViewer.openExam" data-arg="${contentPath(`문제은행/${comboFile}`)}" class="exam-btn-link"><i class="fa-solid fa-file-lines"></i> 합답형 문제집</button>
                                     <div class="combo-count-row">
                                         <button class="exam-btn-sim combo-count-chip" data-click="startComboMockExam" data-arg="${idx + 1}:40">합답형 40문</button>
                                         <button class="exam-btn-sim combo-count-chip" data-click="startComboMockExam" data-arg="${idx + 1}:60">60문</button>
@@ -589,6 +593,9 @@ function setupNavigation() {
         },
         'calendar-view': () => {
             renderStudyCalendar();
+        },
+        'exam-select-view': () => {
+            renderExamSelect();
         }
     };
 
@@ -822,6 +829,8 @@ window.triggerImport = triggerImport;
 // (모듈-대-모듈이라 window에 걸어야 bare typeof가 해석됨)
 window.updateGlobalStats = updateGlobalStats;
 window.checkStorageWarning = checkStorageWarning;
+window.showExamSelect = showExamSelect;
+window.selectExamAction = selectExamAction;
 
 // data-click 위임에서 참조되지만 그동안 window에 노출되지 않아 배포판(CSP)에서 죽어 있던 핸들러들.
 // (대시보드 과목 바로가기 · 오답노트 카드 제외 · 데일리 챌린지 전체)
@@ -835,10 +844,58 @@ window.submitDailyCardAnswer = submitDailyCardAnswer;
 window.submitDailyShortAnswer = submitDailyShortAnswer;
 
 
+// =======================================================
+// 멀티시험 컨텍스트 초기화
+// =======================================================
+
+/** 활성 시험의 브랜딩을 DOM에 반영 (문서 제목 + 사이드바 로고) */
+function applyExamBranding() {
+    const exam = getActiveExam();
+    if (!exam) return;
+    if (exam.title) document.title = exam.title;
+    const logoMain = document.querySelector('.logo-text h1');
+    const logoSub = document.querySelector('.logo-text span');
+    if (logoMain && exam.logoMain) logoMain.textContent = exam.logoMain;
+    if (logoSub && exam.logoSub) logoSub.textContent = exam.logoSub;
+}
+
+/** 활성 시험의 features 플래그에 따라 도메인 특화 UI 숨김 (data-feature 속성 기반) */
+function applyFeatureFlags() {
+    document.querySelectorAll('[data-feature]').forEach(el => {
+        if (!hasFeature(el.dataset.feature)) el.classList.add('is-hidden');
+    });
+}
+
+/**
+ * 시험 컨텍스트 초기화 — initApp보다 먼저 실행된다.
+ * 1) 활성 시험 해석 + 레지스트리 확보(비기본 시험은 번들 동적 로드)
+ * 2) 브랜딩/기능 플래그 적용
+ * 3) 레거시(비네임스페이스) 진도 키 1회 정리 — 시험별 격리 정책
+ */
+async function initExamContext() {
+    DataLoader.init();
+    await DataLoader.ensureRegistry();
+    applyExamBranding();
+    applyFeatureFlags();
+    purgeLegacyStorage(
+        Object.values(STORAGE_KEYS),
+        [STORAGE_KEYS.DAILY_COMPLETED_PREFIX, 'readerAudioPos_']
+    );
+}
+
 // 윈도우 로드 시 구동 (DOMContentLoaded 이미 완료 시 즉시 실행 대응)
-function startAppInit() {
+async function startAppInit() {
     initWebVitals();
+    try {
+        await initExamContext();
+    } catch (e) {
+        console.error('[init] 시험 컨텍스트 초기화 실패 — 기본 시험으로 계속:', e);
+    }
     initApp();
+    // 시험 미선택 상태(최초 실행/신규 시험 추가 후)면 시험 선택 화면을 홈으로 표시
+    if (!getCurrentExamId()) {
+        try { showExamSelect(); } catch (e) { console.error('[init] 시험 선택 뷰 실패:', e); }
+    }
     // DOM이 완전히 로드된 후 토글 버튼 설정
     setTimeout(() => {
         setupOrientationToggle();

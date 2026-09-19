@@ -11,24 +11,39 @@
 //    1) GitHub Releases에 MP3 업로드 후 raw URL 사용
 //    2) Cloudflare R2 / AWS S3 / GCS에 업로드
 //    3) 별도 Vercel 프로젝트로 오디오만 배포
+//
+// [멀티시험] AUDIO_MANIFEST는 시험 id 키로 분리된다:
+//    AUDIO_MANIFEST['<examId>'][<subjectKey>][<chapterIdx>] = '<contentRoot>/audiobook/...'
 /** @type {string|null} */
 export const AUDIO_BASE_URL = null;
 
-/** @type {import('../src/types.js').AudioManifest} */
+/** @type {Object<string, import('../src/types.js').AudioManifest>} */
 export const AUDIO_MANIFEST = {
-  "law": {
-    "0": "content/audiobook/mp3/law/ch01_1과목_화장품법의이해_이야기형.mp3"
-  },
-  "manufacturing": {
-    "0": "content/audiobook/mp3/manufacturing/ch02_2과목_제조및품질관리_이야기형.mp3"
-  },
-  "safety": {
-    "0": "content/audiobook/mp3/safety/ch03_3과목_유통화장품안전관리_이야기형.mp3"
-  },
-  "understanding": {
-    "0": "content/audiobook/mp3/understanding/ch04_4과목_맞춤형화장품의이해_이야기형.mp3"
+  "cosmetic": {
+    "law": {
+      "0": "content/audiobook/mp3/law/ch01_1과목_화장품법의이해_이야기형.mp3"
+    },
+    "manufacturing": {
+      "0": "content/audiobook/mp3/manufacturing/ch02_2과목_제조및품질관리_이야기형.mp3"
+    },
+    "safety": {
+      "0": "content/audiobook/mp3/safety/ch03_3과목_유통화장품안전관리_이야기형.mp3"
+    },
+    "understanding": {
+      "0": "content/audiobook/mp3/understanding/ch04_4과목_맞춤형화장품의이해_이야기형.mp3"
+    }
   }
 };
+
+/**
+ * 활성 시험의 오디오 매니페스트를 반환한다.
+ * 시험 키가 없으면(구형 단일 매니페스트 형식) 전체를 그대로 돌려준다.
+ * @param {string} examId
+ */
+export function getAudioManifest(examId) {
+  if (examId && AUDIO_MANIFEST && AUDIO_MANIFEST[examId]) return AUDIO_MANIFEST[examId];
+  return AUDIO_MANIFEST;
+}
 
 /**
  * 오디오 파일의 실제 접근 URL을 반환한다.
@@ -51,5 +66,6 @@ export function getAudioUrl(localPath) {
 if (typeof window !== "undefined") {
   window.AUDIO_MANIFEST = AUDIO_MANIFEST;
   window.AUDIO_BASE_URL = AUDIO_BASE_URL;
+  window.getAudioManifest = getAudioManifest;
   window.getAudioUrl = getAudioUrl;
 }

@@ -1,53 +1,52 @@
-#!/usr/bin/env node
-/* ============================================================
- * tools/build_exam_bundles.js
- * ------------------------------------------------------------
- * content/exams/*.md (실전 예상문제집 원본)을 클래식 <script>로 불러올 수 있는
- * JS 번들로 굽는다. → file:// 로 index.html을 더블클릭해도 fetch 없이
- * 문제집을 열 수 있게 하기 위함.
- *
- * 입력 : content/문제은행/<manifest.json의 exams[].file>
- *        (manifest 미등록 MD — 설계 문서, 생성 산출물(*_합답형.md) 등 — 은 번들하지 않음)
- * 출력 : data/exams_md/<파일명>.js
- *        각 파일은 다음 형태로 전역에 등록한다.
- *          (window.__EXAM_MD__ = window.__EXAM_MD__ || {})["content/문제은행/<파일명>.md"] = "<마크다운>";
- *        키는 app.js의 ExamViewer.openExam('content/문제은행/...md') 과 정확히 일치한다.
- *
- * 사용 : node tools/build_exam_bundles.js
- *        (.md 를 수정하면 다시 실행할 것)
- *
- * 의존성 없음 (Node 내장 모듈만 사용).
- * ============================================================ */
+// tools/build_exam_bundles.js — 문제은행 MD → {dataRoot}/exams_md/<stem>.js 번들 생성
+// ============================================================
+// 입력 : {contentRoot}/문제은행/<manifest.json의 exams[].file>
+//        (manifest 미등록 MD — 설계 문서, 생성 산출물(*_합답형.md) 등 — 은 번들하지 않음)
+// 출력 : {dataRoot}/exams_md/<stem>.js  (window.__EXAM_MD__["<contentRoot>/문제은행/<file>"] = "...")
+//
+// [멀티시험] content/exams.json의 모든 시험을 순회한다.
+//   - 기본 시험(cosmetic): content/문제은행 → data/exams_md/
+//   - 추가 시험: content/exams/<id>/문제은행 → data/exams/<id>/exams_md/
+// file:// 환경에서는 fetch가 차단되므로 이 번들이 뷰어의 유일한 데이터 소스다.
+// ============================================================
 'use strict';
 
 const fs = require('fs');
 const path = require('path');
+const { getExamTargets } = require('./build/exam-targets');
 
 const ROOT = path.resolve(__dirname, '..');
-const SRC_DIR = path.join(ROOT, 'content', '문제은행');
-const OUT_DIR = path.join(ROOT, 'data', 'exams_md');
-const MANIFEST = path.join(ROOT, 'content', 'manifest.json');
-
 const AUTOGEN_HEADER = '// 자동 생성된 문제집 번들입니다. 수정하지 마십시오. (tools/build_exam_bundles.js)';
 
-function main() {
+function buildForExam(target) {
+    const SRC_DIR = path.join(ROOT, target.contentRoot, '문제은행');
+    const OUT_DIR = path.join(ROOT, target.dataRoot, 'exams_md');
+
+    if (!target.manifest) {
+        console.warn(`[build:exams] ${target.id}: manifest 없음(${target.manifestPath}) — 건너뜀`);
+        return;
+    }
     if (!fs.existsSync(SRC_DIR)) {
-        console.error(`[build:exams] 원본 폴더가 없습니다: ${SRC_DIR}`);
-        process.exit(1);
+        console.warn(`[build:exams] ${target.id}: 원본 폴더 없음(${SRC_DIR}) — 건너뜀`);
+        return;
     }
 
     // manifest.json에 등록된 시험 파일만 번들한다.
     // 문제은행 폴더의 다른 MD(설계 문서, *_합답형.md 등 생성 산출물)는 뷰어 대상이 아니다.
-    const manifest = JSON.parse(fs.readFileSync(MANIFEST, 'utf8'));
-    const examFiles = new Set((manifest.exams || []).map((e) => e.file));
+    const examFiles = new Set((target.manifest.exams || []).map((e) => e.file));
+    // 합답형 문제집(과목N_합답형.md 또는 exams[].comboFile)도 뷰어 대상
+    (target.manifest.exams || []).forEach((e) => { if (e.comboFile) examFiles.add(e.comboFile); });
+    for (const f of fs.readdirSync(SRC_DIR)) {
+        if (/_합답형\.md$/i.test(f)) examFiles.add(f);
+    }
 
     const mdFiles = fs.readdirSync(SRC_DIR)
         .filter((f) => f.toLowerCase().endsWith('.md') && examFiles.has(f))
         .sort();
 
     if (mdFiles.length === 0) {
-        console.error(`[build:exams] manifest에 등록된 문제집 MD가 ${SRC_DIR} 에 없습니다.`);
-        process.exit(1);
+        console.warn(`[build:exams] ${target.id}: manifest에 등록된 문제집 MD가 ${SRC_DIR} 에 없습니다 — 건너뜀`);
+        return;
     }
 
     fs.mkdirSync(OUT_DIR, { recursive: true });
@@ -59,14 +58,14 @@ function main() {
         const srcPath = path.join(SRC_DIR, file);
         const md = fs.readFileSync(srcPath, 'utf8');
 
-        // openExam()에 넘어오는 경로와 정확히 동일한 키 (항상 POSIX 슬래시)
-        const key = 'content/문제은행/' + file;
+        // openExam()에 넘어오는 경로와 정확히 동일한 키 (항상 POSIX 슬래시, contentRoot 포함)
+        const key = `${target.contentRoot}/문제은행/${file}`;
 
         // JSON.stringify 로 문자열 리터럴을 안전하게 생성
         //  → 따옴표/역슬래시/개행/유니코드/${ 등 모두 이스케이프 처리됨
         const body =
             AUTOGEN_HEADER + '\n' +
-            `// 원본: content/문제은행/${file}\n` +
+            `// 원본: ${key}\n` +
             '(window.__EXAM_MD__ = window.__EXAM_MD__ || {})[' +
             JSON.stringify(key) + '] = ' + JSON.stringify(md) + ';\n';
 
@@ -88,12 +87,17 @@ function main() {
         }
     }
 
-    console.log('[build:exams] 문제집 번들 생성 완료');
+    console.log(`[build:exams] ${target.id} 문제집 번들 생성 완료 (${target.contentRoot} → ${target.dataRoot}/exams_md)`);
     for (const g of generated) {
         console.log(`  ✓ ${g.file}  →  ${g.out}  (${g.kb} KB)`);
     }
     console.log(`  총 ${generated.length}개, ${(totalBytes / 1024).toFixed(1)} KB`);
-    console.log('  이후 content/exams/*.md 를 수정하면 이 스크립트를 다시 실행하세요.');
+}
+
+function main() {
+    for (const target of getExamTargets(ROOT)) {
+        buildForExam(target);
+    }
 }
 
 main();

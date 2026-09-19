@@ -4,6 +4,42 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-20 멀티시험 플랫폼 아키텍처 (구조 개편)
+
+여러 시험 과목을 병행 지원하는 구조로 전환. 신규 시험 없이 기존 cosmetic 시험으로 구조 검증.
+
+### 결정 사항
+- **전량 시험별 분리** — 각 시험이 독립 `contentRoot`/`dataRoot` 보유
+- **구조만 검증** — 새 시험 콘텐츠는 추가하지 않음
+- **기존 진도 초기화** — 레거시(비네임스페이스) 진도 키 1회 삭제 정책
+- **홈 = 시험 선택** — 미선택 상태에서 시험 피커가 홈
+
+### 콘텐츠/데이터 계층
+- `content/exams.json` (신규) — 시험 레지스트리 소스: id/name/desc/icon/year/default/contentRoot/dataRoot/registryBundle/registryGlobal/features
+- `data/exams.js` (신규, `tools/build_exams_list.js`) — file:// 호환용 클래식 번들 (`window.EXAMS_LIST`)
+- 기본 시험(cosmetic): `content/`·`data/` 루트 유지. 추가 시험: `content/exams/<id>/` + `data/exams/<id>/`
+
+### 런타임
+- `src/exam-context.js` (신규, 리프 모듈) — 활성 시험 해석(`getActiveExam`), `selectExam`(리로드 전환), `hasFeature`, `contentPath`/`dataPath`, `scopedKey`/`unscopedKey`, `purgeLegacyStorage`. Node 도구용 `EXAM_ID`/`EXAM_CONTENT_ROOT`/`EXAM_DATA_ROOT` env 폴백 포함
+- `src/state.js` — `safeGetItem`/`safeSetItem`/`safeRemoveItem`/`listScopedKeys`가 시험 네임스페이스(`<examId>:key`) 적용. 앱 전역 키(테마·리더 설정 등 `GLOBAL_KEYS`)는 비네임스페이스 유지
+- `src/data-loader.js` — `init()`이 활성 시험 해석, `ensureRegistry()`가 비기본 시험 레지스트리 번들을 클래식 스크립트로 동적 로드. `getSubjectOrders()`·`_examKeyForOrder()`(order → exam key 해석) 추가, 드릴/MD/문제은행 경로를 `dataPath`/`contentPath` 기반으로
+- `src/paths.js` — 전 경로를 `contentPath`/`dataPath` 기반 getter로
+- `src/views/exam-select.js` (신규) — 시험 선택 카드 뷰. `index.html`에 `exam-select-view` 섹션 + 시험 전환 버튼 추가
+- `src/views/backup.js` — 백업 파일은 비접두사 논리 키 유지(시험 간 호환), 복원은 현재 활성 시험 네임스페이스에 기록
+- 기능 게이팅: `data-feature` 속성 기반 — dictionary/calcPractice/ingredients/appendixDocs/pomodoro는 HTML 속성, audiobook/refDocs는 리더 동적 버튼(`hasFeature`)으로 게이트
+- `data/audio_manifest.js` — 시험 id 키로 분리된 단일 매니페스트(`AUDIO_MANIFEST['<examId>']`), `getAudioManifest(examId)` 헬퍼 추가, `reader-audio.js`가 활성 시험분 선택
+
+### 빌드 파이프라인
+- `tools/build/exam-targets.js` (신규) — `getExamTargets()`(exams.json → contentRoot/dataRoot/manifest 해석), `getSubjectMaps()`(manifest → SUBJECT_NUM/KEY/TITLE 파생 — 기존 하드코딩 테이블 대체)
+- `tools/build_all_data.js` (신규) — `build:data`가 모든 시험을 순회 빌드 (`EXAM_ID`로 `tools/build/index.js` 재실행). `--only` 인자 패스스루
+- `tools/build/index.js` — `EXAM_ID`/`EXAM_CONTENT_ROOT`/`EXAM_DATA_ROOT` 지원, 레지스트리 `bundle` 경로를 `{dataRoot}` 기준으로, 비기본 시험은 `DATA_REGISTRY_<id>` 전역명 + `var`-only(클래식 스크립트 주입 호환). sw.js 프리캐시 갱신은 기본 시험만
+- 시험 순회로 일반화: `build_ox_drills.js`, `build_combo_drills.js`(과목 매핑/출력 디렉터리/MD 산출물), `build_exam_bundles.js`, `build_study_md_bundle.js`(storyFile 포함), `build_doc_bundles.js`, `build-audio-manifest.js`, `sync_citation_lines.js`, `check_parser_parity.js`
+- `build-pdf-registry.js`/`build_keyword_index.js` — 기본 시험 전용 유지 + `EXAM_CONTENT_ROOT` env 지원 (공유 모듈 출력이라 시험별 분리는 후속 과제)
+- `supplements.js` — `ctx.contentRoot`/`ctx.dataRoot` 사용, 보충 번들 경로 `{dataRoot}/supplements/`
+
+### 검증
+- `node --check` 전 파일 통과, 유닛 273개 + DOM 21개 통과 (테스트는 `scopedKey` 네임스페이스 반영), `check:parser` 4과목 등가성 일치, `check:imports` 0 오류, `verify:assets` 90개
+
 ## 2026-09-20 학습 캘린더 표시 오류 수정
 
 - **캘린더 뷰 크래시**: `getWeeklyGoalProgress`가 dead code 정리 시 삭제된 `isStudiedOn`을 여전히 호출 → ReferenceError로 `renderStudyCalendar`가 innerHTML 도달 전 중단(뷰 전체 빈 화면). 인라인 항목 검사로 교체 (`study-tracker.js`)

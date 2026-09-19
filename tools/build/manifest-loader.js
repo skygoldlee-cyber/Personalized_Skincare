@@ -8,6 +8,10 @@ function loadAndValidateManifest(manifestPath, workspaceDir) {
 
   const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'));
 
+  // [멀티시험] manifest가 위치한 디렉터리 = 해당 시험의 contentRoot
+  // (기본 시험: content/, 추가 시험: content/exams/<id>/)
+  const contentDir = path.dirname(manifestPath);
+
   if (manifest.schemaVersion !== 1) {
     throw new Error(`Unsupported schemaVersion: ${manifest.schemaVersion}`);
   }
@@ -39,7 +43,7 @@ function loadAndValidateManifest(manifestPath, workspaceDir) {
       }
 
       // Check file existence
-      const filePath = path.join(workspaceDir, 'content', subj.dir, chap.file);
+      const filePath = path.join(contentDir, subj.dir, chap.file);
       if (!fs.existsSync(filePath)) {
         throw new Error(`${cPrefix}: File does not exist at: ${filePath}`);
       }
@@ -67,7 +71,7 @@ function loadAndValidateManifest(manifestPath, workspaceDir) {
     }
 
     // Check file existence
-    const filePath = path.join(workspaceDir, 'content', '문제은행', exam.file);
+    const filePath = path.join(contentDir, '문제은행', exam.file);
     if (!fs.existsSync(filePath)) {
       throw new Error(`${prefix}: File does not exist at: ${filePath}`);
     }

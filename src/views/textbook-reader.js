@@ -33,6 +33,8 @@ export {
 };
 // [모바일 PWA 견고성] 오디오 매니페스트는 window 전역(가드)에서 읽는다(정적 import 하드 의존 지양).
 import { DataLoader } from '../data-loader.js';
+import { hasFeature } from '../exam-context.js';
+import { safeGetItem, safeSetItem, safeRemoveItem } from '../state.js';
 import { trapFocus } from '../ui-utils.js';
 import { STORAGE_KEYS } from '../storage-keys.js';
 import { TIMING } from '../config/timing.js';
@@ -61,13 +63,13 @@ function saveReaderPosition() {
             storyMode: textbookReaderState.storyMode || false,
             ts: Date.now()
         };
-        localStorage.setItem(READER_POSITION_KEY, JSON.stringify(pos));
+        safeSetItem(READER_POSITION_KEY, JSON.stringify(pos));
     } catch (e) { /* noop */ }
 }
 
 function loadReaderPosition() {
     try {
-        const raw = localStorage.getItem(READER_POSITION_KEY);
+        const raw = safeGetItem(READER_POSITION_KEY);
         if (!raw) return null;
         const pos = JSON.parse(raw);
         // 30일 이상 지난 위치는 무시
@@ -77,7 +79,7 @@ function loadReaderPosition() {
 }
 
 function clearReaderPosition() {
-    try { localStorage.removeItem(READER_POSITION_KEY); } catch (e) { /* noop */ }
+    safeRemoveItem(READER_POSITION_KEY);
 }
 
 // 스크롤 위치 저장 (디바운스: 1초 후 저장)
@@ -600,8 +602,10 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
     const totalChars = chapter.sections.reduce((acc, s) => acc + (s.content ? s.content.length : 0), 0);
     const readMinutes = Math.max(1, Math.round(totalChars / 500));
 
-    const audioPath = getAudioPathForChapter(subjId, chapter);
+    // [멀티시험] 오디오북·참조자료는 시험 features 플래그로 게이트
+    const audioPath = hasFeature('audiobook') ? getAudioPathForChapter(subjId, chapter) : null;
     const hasAudio = !!audioPath;
+    const refsEnabled = hasFeature('refDocs');
 
     // 챕터 전체에서 출처 텍스트 추출 (컨텍스트 사이드바 + L-line PDF 링크용)
     let chapterSourceText = '';
@@ -634,14 +638,16 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
         actionsHtml += `<a href="${esc(chapter.filePath)}" target="_blank" class="reader-tool-btn" title="원본 MD 열기" style="text-decoration:none;">
             <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> 원본
         </a>`;
-        actionsHtml += `<details id="reader-ref-dropdown" class="reader-ref-dropdown" style="display:inline-block;position:relative;">
-            <summary class="reader-tool-btn" title="참조자료" style="cursor:pointer;list-style:none;">
-                <i class="fa-solid fa-book-bookmark" aria-hidden="true"></i> 참조자료
-            </summary>
-            <div class="reader-ref-panel" style="position:absolute;top:100%;right:0;z-index:100;margin-top:0.4rem;min-width:320px;max-height:400px;overflow-y:auto;background:var(--bg-card);border:1px solid var(--border-color);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,0.25);padding:0.6rem;">
-                ${buildReferenceLinks(subjId, chapterRefPath)}
-            </div>
-        </details>`;
+        if (refsEnabled) {
+            actionsHtml += `<details id="reader-ref-dropdown" class="reader-ref-dropdown" style="display:inline-block;position:relative;">
+                <summary class="reader-tool-btn" title="참조자료" style="cursor:pointer;list-style:none;">
+                    <i class="fa-solid fa-book-bookmark" aria-hidden="true"></i> 참조자료
+                </summary>
+                <div class="reader-ref-panel" style="position:absolute;top:100%;right:0;z-index:100;margin-top:0.4rem;min-width:320px;max-height:400px;overflow-y:auto;background:var(--bg-card);border:1px solid var(--border-color);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,0.25);padding:0.6rem;">
+                    ${buildReferenceLinks(subjId, chapterRefPath)}
+                </div>
+            </details>`;
+        }
         if (hasAudio) {
             actionsHtml += `<button id="reader-audio-toggle-btn" class="reader-tool-btn" data-click="toggleReaderAudio" data-args='["${subjId}", ${chapterIdx}]' title="오디오 듣기">
                 <i class="fa-solid fa-headphones" aria-hidden="true"></i> 오디오
@@ -951,13 +957,13 @@ function _renderReaderMermaid(container) {
 
 // --- Reader convenience feature state & logic ---
 let readerChapterContext = { subjId: '', chapterIdx: 0 };
-let readerFontScale = (() => { try { return parseFloat(localStorage.getItem(STORAGE_KEYS.READER_FONT_SCALE)) || 1; } catch (e) { return 1; } })();
-let readerLineHeight = (() => { try { return parseFloat(localStorage.getItem(STORAGE_KEYS.READER_LINE_HEIGHT)) || 2.05; } catch (e) { return 2.05; } })();
+let readerFontScale = (() => { try { return parseFloat(safeGetItem(STORAGE_KEYS.READER_FONT_SCALE)) || 1; } catch (e) { return 1; } })();
+let readerLineHeight = (() => { try { return parseFloat(safeGetItem(STORAGE_KEYS.READER_LINE_HEIGHT)) || 2.05; } catch (e) { return 2.05; } })();
 let readerScrollBound = false;
 
 function getReaderBookmarks() {
     try {
-        return JSON.parse(localStorage.getItem(STORAGE_KEYS.READER_BOOKMARKS)) || [];
+        return JSON.parse(safeGetItem(STORAGE_KEYS.READER_BOOKMARKS)) || [];
     } catch { return []; }
 }
 
@@ -975,7 +981,7 @@ function toggleReaderBookmark(key, btn) {
         btn.querySelector('i').className = 'fa-solid fa-bookmark';
         btn.title = '북마크 제거';
     }
-    try { localStorage.setItem(STORAGE_KEYS.READER_BOOKMARKS, JSON.stringify(bookmarks)); } catch (e) { /* noop */ }
+    safeSetItem(STORAGE_KEYS.READER_BOOKMARKS, JSON.stringify(bookmarks));
 }
 
 function applyReaderFontScale() {
@@ -983,7 +989,7 @@ function applyReaderFontScale() {
     const display = document.getElementById('reader-font-size-display');
     if (container) container.style.setProperty('--reader-font-scale', readerFontScale);
     if (display) display.textContent = Math.round(readerFontScale * 100) + '%';
-    try { localStorage.setItem(STORAGE_KEYS.READER_FONT_SCALE, readerFontScale); } catch (e) { /* noop */ }
+    safeSetItem(STORAGE_KEYS.READER_FONT_SCALE, readerFontScale);
 }
 
 function applyReaderLineHeight() {
@@ -991,7 +997,7 @@ function applyReaderLineHeight() {
     const display = document.getElementById('reader-line-height-display');
     if (container) container.style.setProperty('--reader-line-height', readerLineHeight);
     if (display) display.textContent = readerLineHeight.toFixed(2);
-    try { localStorage.setItem(STORAGE_KEYS.READER_LINE_HEIGHT, readerLineHeight); } catch (e) { /* noop */ }
+    safeSetItem(STORAGE_KEYS.READER_LINE_HEIGHT, readerLineHeight);
 }
 
 function applyReaderThemeClass() {

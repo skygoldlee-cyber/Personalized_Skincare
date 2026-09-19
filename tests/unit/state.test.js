@@ -1,6 +1,7 @@
 import { test, beforeEach, afterEach } from 'node:test';
 import assert from 'node:assert/strict';
 import { state, loadProgress, saveProgress, cleanOrphansForSubject } from '../../src/state.js';
+import { scopedKey } from '../../src/exam-context.js';
 
 // --- localStorage 모킹 ---
 
@@ -56,7 +57,7 @@ test('loadProgress: 빈 localStorage에서 정상 동작', () => {
 });
 
 test('loadProgress: 외운 카드 로드', () => {
-    mockStorage.setItem('fc_memorized', JSON.stringify(['law_card_abc123', 'safety_card_def456']));
+    mockStorage.setItem(scopedKey('fc_memorized'), JSON.stringify(['law_card_abc123', 'safety_card_def456']));
     loadProgress();
     assert.equal(state.memorizedCards.size, 2);
     assert.ok(state.memorizedCards.has('law_card_abc123'));
@@ -64,14 +65,14 @@ test('loadProgress: 외운 카드 로드', () => {
 });
 
 test('loadProgress: 약점 카드 로드', () => {
-    mockStorage.setItem('fc_weak', JSON.stringify(['law_card_xyz789']));
+    mockStorage.setItem(scopedKey('fc_weak'), JSON.stringify(['law_card_xyz789']));
     loadProgress();
     assert.equal(state.weakCards.size, 1);
     assert.ok(state.weakCards.has('law_card_xyz789'));
 });
 
 test('loadProgress: 퀴즈 결과 로드', () => {
-    mockStorage.setItem('quiz_results', JSON.stringify({
+    mockStorage.setItem(scopedKey('quiz_results'), JSON.stringify({
         'law_quiz_001': { solved: true, correct: true },
         'safety_quiz_002': { solved: true, correct: false }
     }));
@@ -82,9 +83,9 @@ test('loadProgress: 퀴즈 결과 로드', () => {
 });
 
 test('loadProgress: 손상된 JSON은 무시', () => {
-    mockStorage.setItem('fc_memorized', '{invalid json}');
-    mockStorage.setItem('fc_weak', 'not json at all');
-    mockStorage.setItem('quiz_results', '}}}broken');
+    mockStorage.setItem(scopedKey('fc_memorized'), '{invalid json}');
+    mockStorage.setItem(scopedKey('fc_weak'), 'not json at all');
+    mockStorage.setItem(scopedKey('quiz_results'), '}}}broken');
     // 에러를 던지지 않고 정상 진행되어야 함
     loadProgress();
     assert.equal(state.memorizedCards.size, 0);
@@ -93,20 +94,20 @@ test('loadProgress: 손상된 JSON은 무시', () => {
 });
 
 test('loadProgress: 뽀모도로 날짜 리셋 (날짜가 다르면 0)', () => {
-    mockStorage.setItem('pomo_total_time_date', '2020-01-01');
-    mockStorage.setItem('pomo_total_time', '3600');
+    mockStorage.setItem(scopedKey('pomo_total_time_date'), '2020-01-01');
+    mockStorage.setItem(scopedKey('pomo_total_time'), '3600');
     loadProgress();
     assert.equal(state.trainer.pomodoro.totalTimeToday, 0);
     // 오늘 날짜로 저장되어야 함
     const todayStr = new Date().toISOString().split('T')[0];
-    assert.equal(mockStorage.getItem('pomo_total_time_date'), todayStr);
-    assert.equal(mockStorage.getItem('pomo_total_time'), '0');
+    assert.equal(mockStorage.getItem(scopedKey('pomo_total_time_date')), todayStr);
+    assert.equal(mockStorage.getItem(scopedKey('pomo_total_time')), '0');
 });
 
 test('loadProgress: 뽀모도로 같은 날이면 누적 시간 유지', () => {
     const todayStr = new Date().toISOString().split('T')[0];
-    mockStorage.setItem('pomo_total_time_date', todayStr);
-    mockStorage.setItem('pomo_total_time', '1800');
+    mockStorage.setItem(scopedKey('pomo_total_time_date'), todayStr);
+    mockStorage.setItem(scopedKey('pomo_total_time'), '1800');
     loadProgress();
     assert.equal(state.trainer.pomodoro.totalTimeToday, 1800);
 });
@@ -121,30 +122,30 @@ test('saveProgress: 외운 카드/약점 카드/퀴즈 결과 저장', () => {
 
     saveProgress();
 
-    const savedMem = JSON.parse(mockStorage.getItem('fc_memorized'));
+    const savedMem = JSON.parse(mockStorage.getItem(scopedKey('fc_memorized')));
     assert.equal(savedMem.length, 2);
     assert.ok(savedMem.includes('law_card_abc'));
 
-    const savedWeak = JSON.parse(mockStorage.getItem('fc_weak'));
+    const savedWeak = JSON.parse(mockStorage.getItem(scopedKey('fc_weak')));
     assert.equal(savedWeak.length, 1);
     assert.equal(savedWeak[0], 'law_card_xyz');
 
-    const savedQuiz = JSON.parse(mockStorage.getItem('quiz_results'));
+    const savedQuiz = JSON.parse(mockStorage.getItem(scopedKey('quiz_results')));
     assert.equal(savedQuiz['law_quiz_001'].correct, true);
 });
 
 test('saveProgress: 빈 상태 저장', () => {
     saveProgress();
-    assert.equal(JSON.parse(mockStorage.getItem('fc_memorized')).length, 0);
-    assert.equal(JSON.parse(mockStorage.getItem('fc_weak')).length, 0);
-    assert.equal(Object.keys(JSON.parse(mockStorage.getItem('quiz_results'))).length, 0);
+    assert.equal(JSON.parse(mockStorage.getItem(scopedKey('fc_memorized'))).length, 0);
+    assert.equal(JSON.parse(mockStorage.getItem(scopedKey('fc_weak'))).length, 0);
+    assert.equal(Object.keys(JSON.parse(mockStorage.getItem(scopedKey('quiz_results')))).length, 0);
 });
 
 test('saveProgress: updateGlobalStats 없어도 정상 동작', () => {
     state.memorizedCards.add('test_card');
     // updateGlobalStats는 전역 함수이므로 정의되지 않아도 에러 없이 진행
     saveProgress();
-    assert.ok(mockStorage.getItem('fc_memorized') !== null);
+    assert.ok(mockStorage.getItem(scopedKey('fc_memorized')) !== null);
 });
 
 // --- cleanOrphansForSubject 테스트 ---

@@ -9,6 +9,7 @@
 // 호출합니다. 전역 함수 참조이므로 모듈 분리 후에도 동작은 동일합니다.
 
 import { STORAGE_KEYS } from './storage-keys.js';
+import { scopedKey, unscopedKey } from './exam-context.js';
 
 /* =======================================================
    📦 전역 학습 상태 객체 (Global Application State)
@@ -101,7 +102,7 @@ export const state = {
 // - 쓰기 실패: false 반환 + 1회 콘솔 경고(반복 스팸 방지)
 export function safeGetItem(key) {
     try {
-        return localStorage.getItem(key);
+        return localStorage.getItem(scopedKey(key));
     } catch (e) {
         return null;
     }
@@ -112,7 +113,7 @@ let storageWarnEmitted = false;
 
 export function safeSetItem(key, value) {
     try {
-        localStorage.setItem(key, value);
+        localStorage.setItem(scopedKey(key), value);
         return true;
     } catch (e) {
         if (!storageWarnEmitted) {
@@ -124,6 +125,29 @@ export function safeSetItem(key, value) {
         try { state._storageUnavailable = true; } catch (_) {}
         return false;
     }
+}
+
+export function safeRemoveItem(key) {
+    try {
+        localStorage.removeItem(scopedKey(key));
+    } catch (e) { /* noop */ }
+}
+
+/**
+ * 현재 시험 네임스페이스에 속한 실제 저장 키 열거 (접두사 필터에 사용).
+ * @param {function(string):boolean} matchUnscoped - 비접두사 키명을 받는 매처
+ * @returns {string[]} 매칭된 실제(접두사 포함) 키 배열
+ */
+export function listScopedKeys(matchUnscoped) {
+    const out = [];
+    try {
+        for (let i = 0; i < localStorage.length; i++) {
+            const raw = localStorage.key(i);
+            const unscoped = unscopedKey(raw);
+            if (unscoped !== null && matchUnscoped(unscoped)) out.push(raw);
+        }
+    } catch (e) { /* noop */ }
+    return out;
 }
 
 // 로컬스토리지에서 진도 가져오기

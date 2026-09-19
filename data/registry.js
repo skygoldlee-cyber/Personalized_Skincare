@@ -1,9 +1,8 @@
 // 자동 생성된 데이터 레지스트리 파일입니다. 수정하지 마십시오.
-/** @type {import('../src/types.js').DataRegistry} */
-export const DATA_REGISTRY = {
+var DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2026",
-  "generatedAt": "2026-09-19T11:20:49.829Z",
+  "generatedAt": "2026-09-19T13:01:02.327Z",
   "subjects": [
     {
       "key": "law",

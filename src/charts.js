@@ -4,6 +4,7 @@
 // 로드가 실패할 때 이 모듈(및 상위 app.js) 전체가 실행되지 않아 흰 화면이 되므로 지양.
 
 import { STORAGE_KEYS } from './storage-keys.js';
+import { safeGetItem } from './state.js';
 import { TIMING } from './config/timing.js';
 
 // CSS 변수에서 색상 읽기 (하드코딩 대체)
@@ -28,7 +29,7 @@ let _simResultsCacheRaw = null;
 
 function getSimResults() {
     let raw;
-    try { raw = localStorage.getItem(STORAGE_KEYS.SIM_RESULTS_HISTORY); } catch (e) { raw = null; }
+    raw = safeGetItem(STORAGE_KEYS.SIM_RESULTS_HISTORY);
     if (raw === _simResultsCacheRaw && _simResultsCache !== null) {
         return _simResultsCache;
     }
