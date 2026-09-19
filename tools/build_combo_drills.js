@@ -30,6 +30,8 @@ const { stableId } = require('./build/id-factory.js');
 const ROOT = path.resolve(__dirname, '..');
 const EXAMS_DIR = path.join(ROOT, 'data', 'exams');
 const OUT_DIR = path.join(ROOT, 'data', 'drills');
+const MD_DIR = path.join(ROOT, 'content', '문제은행');
+const PILOT_PATH = path.join(OUT_DIR, 'combo_pilot.js');
 const DRY_RUN = process.argv.includes('--dry-run');
 
 const AUTOGEN_HEADER = '// 자동 생성된 합답형 드릴 데이터입니다. 수정하지 마십시오. (tools/build_combo_drills.js)';
@@ -242,6 +244,81 @@ function buildComboItems(examKey, exam, genOpts) {
   return { items, stats };
 }
 
+/* ---------- Markdown 내보내기 (content/문제은행/ 형식과 동일) ---------- */
+
+const OPT_INDICATORS = ['①', '②', '③', '④', '⑤', '⑥'];
+const SUBJECT_TITLE = {
+  1: '화장품법의 이해', 2: '화장품 제조 및 품질관리',
+  3: '화장품 안전성 및 안전관리', 4: '맞춤형화장품의 이해',
+};
+
+/** 수작업 파일럿 로드 (없으면 빈 배열) — JS 객체 리터럴이므로 vm으로 평가 */
+function loadPilot() {
+  if (!fs.existsSync(PILOT_PATH)) return [];
+  const vm = require('vm');
+  const sandbox = {};
+  sandbox.window = sandbox;
+  vm.createContext(sandbox);
+  vm.runInContext(fs.readFileSync(PILOT_PATH, 'utf8'), sandbox);
+  return (sandbox.COMBO_PILOT && sandbox.COMBO_PILOT.questions) || [];
+}
+
+/**
+ * 과목별 combo 문항을 문제은행 MD 형식으로 직렬화.
+ * 문제부: ### Qn. 발문 / citation / ㄱ~ㅁ 진술 / ①~⑤ 조합 선지
+ * 정답부: **Qn.** / 정답 조합 / 진술별 O·X 판정표 / 해설(교재 근거)
+ */
+function toSubjectMd(subject, questions) {
+  const pilot = questions.filter(q => String(q.id).startsWith('cb-'));
+  const auto = questions.filter(q => !String(q.id).startsWith('cb-'));
+  const lines = [
+    `# 제${subject}과목: ${SUBJECT_TITLE[subject] || ''} 합답형 (ㄱㄴㄷㄹ 조합)`,
+    '',
+    '> **화장품조제관리사 필기시험 대비** (합답형)',
+    '> 문제에 집중할 수 있도록 정답과 교재 근거는 파일 끝에 모아 제공합니다.',
+    `> ⚠ 자동 생성 파일 (tools/build_combo_drills.js) — 직접 수정하지 마십시오.`,
+    '',
+    `총 ${questions.length}제 (수작업 파일럿 ${pilot.length}제 + 자동 변환 ${auto.length}제)`,
+    '',
+    '---',
+    '',
+    `## 📝 [합답형: 옳은 것을 모두 고르시오]`,
+    '',
+  ];
+
+  const answers = [];
+  questions.forEach((q, i) => {
+    const num = i + 1;
+    const isPilot = String(q.id).startsWith('cb-');
+    lines.push(`### Q${num}. ${q.stem}${isPilot ? ' *(수작업 파일럿)*' : ''}`);
+    lines.push(`${q.citation}`);
+    lines.push('');
+    q.statements.forEach(s => lines.push(`${s.id}. ${s.text}`));
+    lines.push('');
+    q.options.forEach((o, idx) => lines.push(`${OPT_INDICATORS[idx]} ${o.members.join(', ')}`));
+    lines.push('', '---', '');
+    answers.push({ num, q });
+  });
+
+  lines.push('## 🔑 정답 및 교재 근거', '');
+  for (const { num, q } of answers) {
+    const trueIds = q.statements.filter(s => s.truth).map(s => s.id);
+    // 파일럿은 answer 미보유 — truth 집합과 일치하는 옵션으로 도출
+    const trueSet = new Set(trueIds);
+    const eq = o => (o.members || []).length === trueSet.size && o.members.every(m => trueSet.has(m));
+    const ansIdx = q.options.findIndex(o => (q.answer && o.id === q.answer) || (!q.answer && eq(o)));
+    const ansLabel = OPT_INDICATORS[ansIdx] || q.answer || '?';
+    lines.push(`**Q${num}.**`);
+    lines.push(`> **정답: ${ansLabel} (${trueIds.join(', ')})**`);
+    lines.push(`> 진술 판정: ${q.statements.map(s => `${s.id} ${s.truth ? 'O' : 'X'}`).join(' · ')}`);
+    lines.push(`> ${q.citation.replace(/^📖\s*/, '📖 ')}`);
+    const exp = String(q.explain || '').trim();
+    if (exp) exp.split('\n').forEach(l => lines.push(`> ${l.trim()}`));
+    lines.push('');
+  }
+  return lines.join('\n');
+}
+
 /* ---------- 메인 ---------- */
 
 async function main() {
@@ -262,6 +339,7 @@ async function main() {
   const { validateQuestion, deriveComboAnswer, generateComboOptions } =
     await import(pathToFileURL(path.join(ROOT, 'src', 'questions.js')).href);
 
+  const pilotAll = loadPilot();
   let totalItems = 0;
   let totalErrors = 0;
 
@@ -285,6 +363,12 @@ async function main() {
         `// 원본: data/exams/${file} — mode: fact(명제 조합) ${stats.fact}문 / answer(정답 조합) ${stats.answer}문\n` +
         `var COMBO_DRILLS_${key} = ` + JSON.stringify(valid, null, 1) + ';\n';
       fs.writeFileSync(path.join(OUT_DIR, `combo_${key}.js`), body, 'utf8');
+
+      // 문제은행 MD 형식 산출물 — 수작업 파일럿을 앞에 병합 (검토용)
+      const subjectNum = SUBJECT_NUM[key];
+      const merged = [...pilotAll.filter(q => q.subject === subjectNum), ...valid];
+      const mdPath = path.join(MD_DIR, `과목${subjectNum}_합답형.md`);
+      fs.writeFileSync(mdPath, toSubjectMd(subjectNum, merged), 'utf8');
     }
 
     totalItems += valid.length;
