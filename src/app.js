@@ -342,10 +342,11 @@ ${allBtnsHtml}
     const integratedConfig = registry.integratedExam ? registry.integratedExam.questionsPerSubject : null;
     if (integratedConfig) {
         const integratedTotal = Object.values(integratedConfig).reduce((a, b) => a + b, 0);
+        const examTimeMin = (registry.integratedExam && registry.integratedExam.examTimeMin) || integratedTotal;
         const titleEl = document.getElementById('integrated-exam-title');
         if (titleEl) titleEl.textContent = `통합 실전 모의고사 (${integratedTotal}제)`;
         const btnEl = document.getElementById('integrated-exam-btn');
-        if (btnEl) btnEl.innerHTML = `<i class="fa-solid fa-clock" aria-hidden="true"></i> 통합 모의고사 시작 (${integratedTotal}분)`;
+        if (btnEl) btnEl.innerHTML = `<i class="fa-solid fa-clock" aria-hidden="true"></i> 통합 모의고사 시작 (${examTimeMin}분)`;
     }
 }
 

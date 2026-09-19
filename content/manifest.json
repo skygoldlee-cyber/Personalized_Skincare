@@ -99,7 +99,8 @@
       "manufacturing": 25,
       "safety": 25,
       "understanding": 40
-    }
+    },
+    "examTimeMin": 120
   },
   "uiText": {
     "dashboard": { "title": "학습 대시보드", "subtitle": "{year} 시험 합격을 위한 분석 및 스마트 툴" },

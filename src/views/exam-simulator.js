@@ -20,7 +20,8 @@ export function startSimSession(examData) {
     simState.data = examData;
     simState.currentIndex = 0;
     simState.userAnswers = {};
-    simState.timeLeft = examData.questions.length * TIMING.EXAM_TIME_PER_QUESTION_SEC; // 문항당 1분 기산
+    // 문항당 1분 기산, 실전 형식(통합 모의고사)은 명시된 제한시간 우선 (실제 시험: 100문/120분)
+    simState.timeLeft = examData.timeLimitSec || examData.questions.length * TIMING.EXAM_TIME_PER_QUESTION_SEC;
     simState.wrongQuestions = [];
 
     // UI 전환
@@ -252,7 +253,9 @@ function _startIntegratedMockExamImpl(mixCombo = false) {
         title: subjects.length > 0
             ? `1~${subjectCount}과목 통합 실전 모의고사 (${totalQuestions}제)`
             : `통합 실전 모의고사 (${totalQuestions}제)`,
-        questions: combinedQuestions
+        questions: combinedQuestions,
+        // 실제 시험 시간: manifest integratedExam.examTimeMin (100문/120분)
+        timeLimitSec: ((registry && registry.integratedExam && registry.integratedExam.examTimeMin) || 120) * 60
     };
 
     // UI 전환
