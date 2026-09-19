@@ -1078,10 +1078,12 @@ data/exams/subjectN.*.js ──► build_ox_drills.js    ──► data/drills/o
 
 - **스키마**: `single`/`combo`/`short`/`ox` 4유형. combo는 진술 `truth`에서 정답 조합을 **도출**(`deriveComboAnswer`)하고 `validateQuestion`으로 유일성을 검증 — 정답 오타를 구조적으로 차단.
 - **합답형 변환**(상세: [`QUESTION_SCHEMA_DESIGN.md`](./QUESTION_SCHEMA_DESIGN.md) §6): 객관식은 선지를 `fact`(명제 진위)/`answer`(정답 여부) 모드로 진술화, 단답형은 정답 풀링(유형 분류 + 모호성 필터)으로 오답 진술을 구성. 과목당 101/254/250/400 = 1,005문 (다중 빈칸 (B) +5).
-- **진술 원자 추적**: 진술의 `sid`(`stableId`)를 O/X·합답형이 공유 → [`src/statement-tracker.js`](../../src/statement-tracker.js)가 `perStatement.judgedCorrect` 오판을 `sid` 단위로 `statement_stats`(텍스트·truth·conceptId 포함) + SM-2 큐(`spaced-repetition.js`)에 누적. 드릴 편성은 **SM-2 기한 도래(`getDueStatementSids`) → 오판 진술 → 임의** 순이며, 트레이너의 "취약 진술 리뷰" 패널이 누적 통계를 열람·과목 드릴로 연결.
+- **진술 원자 추적**: 진술의 `sid`(`stableId`)를 O/X·합답형이 공유 → [`src/statement-tracker.js`](../../src/statement-tracker.js)가 `perStatement.judgedCorrect` 판정을 `sid` 단위로 `statement_stats` `{j, w, lw, t, truth, cid, last, streak}` + SM-2 큐(`spaced-repetition.js`)에 누적. **연속 정답 3회(`WEAK_GRADUATE_STREAK`) 시 취약 목록 졸업**, 재오판 시 복귀. 드릴 편성은 **SM-2 기한 도래(`getDueStatementSids`) → 오판 진술 → 임의** 순.
+- **드릴 모드**: 과목별(1~4) 외에 전 과목 특수 모드 `weak`(취약·복습 진술 필터)·`num`(수치·한도·기한 태그 필터 — `inferTags` 부여분) 지원, 출제 수 10/20/전체 선택. 합답형은 진술별 O/X 토글 2단계 응시 + 판정과 모순되는 선지 실시간 소거 표시(시험장 소거 전술 훈련).
+- **취약 진술 리뷰 패널**: 누적 통계 열람 — conceptId 개념 그룹핑(참/거짓 혼동쌍 2단 대조), 복습 대상 필터, 최근 판정 배지, 졸업 수 표시, 바로 드릴 진입.
 - **런타임**: `DataLoader.loadOxDrills(N)`/`loadComboDrills(N)`가 `data/drills/` 번들을 클래식 `<script>` 주입으로 로드(`file://` 호환). 합답형은 수작업 파일럿(`combo_pilot.js`)과 자동 번들을 병합. UI는 `views/trainer-drills.js` + 트레이너 패널(`index.html`).
 - **캐시**: `data/drills/`는 레지스트리 미등록 번들이라 `sw.js`의 `pruneStaleDataBundles`에서 `ALWAYS_KEEP`으로 명시 보존.
-- **재생성**: `npm run build:drills` (O/X + 합답형 일괄), `npm run check:combo` (파일럿 검증).
+- **재생성·검증**: `npm run build:drills` (O/X + 합답형 일괄), `npm run check:combo` (파일럿 + 생성 번들 5개 전체 스키마·citation·채점 스모크 검증).
 
 **오디오북 파이프라인** ([`content/audiobook/`](../../content/audiobook/README.md))은 Python 기반 별도 파이프라인으로, MD 청크 분할 → TTS → MP3 병합을 수행합니다.
 

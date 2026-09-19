@@ -67,6 +67,7 @@
 - **취약 리뷰 툴바**: 복습 대상 필터, 최근 판정 배지(`last`), 바로 드릴 버튼, 졸업 수 표시
 - **버그**: 취약 리뷰 '드릴' 버튼 무반응 — `startOxDrill`/`startComboDrill`이 자기 패널을 표시하지 않던 문제 수정
 - **접근성**: 진술 판정 버튼 `aria-pressed`
+- **정리**: `check:imports` 경고 전량 해소 — 미사용 import/export·dead code(`getRecentStudyDays`/`isStudiedOn`) 제거, 내부 전용 상수 export 정리 → 59개 파일 경고 0
 
 ## 2026-09-18 중요숫자 암기정리 → 두음법 총정리 통합 + Part 2 설명·마인드맵 보강
 

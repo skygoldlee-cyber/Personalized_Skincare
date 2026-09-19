@@ -127,8 +127,9 @@
 
 ```js
 perStatement = [
-  { id: 'ㄴ', sid: 'st-04-0002', truth: false, userJudged: true,  judgedCorrect: false, explain: '…' },
-  //                                         ^^^^^^^^^^^^^^^^ "ㄴ을 O로 착각" 자동 검출
+  { id: 'ㄴ', sid: 'st-04-0002', conceptId: 'L1247', text: '진술 본문…',
+    truth: false, userJudged: true, judgedCorrect: false, explain: '…' },
+  //                       ^^^^^^^^^^^^^^^^ "ㄴ을 O로 착각" 자동 검출
 ]
 ```
 
@@ -207,8 +208,10 @@ O/X 드릴 문항을 담는 유형. combo의 `statements[]`와 single의 `option
 - **모의고사** → `scoreExam()`이 과목별 집계 후 **총점 60% + 과목별 40% 과락**을 그대로 판정.
 - **오답노트** → `details[]` 또는 개별 `gradeAnswer` 결과에서 `question.id` + 사용자 응답을 저장.
 - **O/X 드릴** → combo `statements[]`와 single `options[].truth`를 펼쳐 `type:'ox'` 문항으로 자동 생성.
-- **약한 진술 추적** → `perStatement.judgedCorrect === false`인 진술의 `sid`를 누적해
-  SM-2 간격반복 큐(`spaced-repetition.js`)에 재출제 카드로 등록. `conceptId`로 혼동쌍 대조 화면 구성.
+- **약한 진술 추적** → `perStatement.judgedCorrect` 판정을 `sid` 단위 `statement_stats`
+  `{j, w, lw, t, truth, cid, last, streak}`에 누적 + SM-2 간격반복 큐(`spaced-repetition.js`) 등록.
+  연속 정답 3회 시 취약 목록 졸업(재오판 시 복귀). `conceptId`로 혼동쌍 대조 화면 구성.
+  `last`=최근 판정 정오, `streak`=연속 정답 수.
 
 ---
 
