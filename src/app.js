@@ -79,7 +79,8 @@ import {
     nextComboDrill,
     submitComboJudgments,
     openWeakReview,
-    setWeakFilter
+    setWeakFilter,
+    setDrillCount
 } from './views/trainer-drills.js';
 import {
     togglePomodoro,
@@ -795,6 +796,7 @@ window.nextComboDrill = nextComboDrill;
 window.submitComboJudgments = submitComboJudgments;
 window.openWeakReview = openWeakReview;
 window.setWeakFilter = setWeakFilter;
+window.setDrillCount = setDrillCount;
 window.startMockExamSim = startMockExamSim;
 window.startWeakExam = startWeakExam;
 window.submitCalcAnswer = submitCalcAnswer;

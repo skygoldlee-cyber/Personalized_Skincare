@@ -1190,6 +1190,14 @@ mark.txt-highlight {
     margin: 0;
 }
 
+/* 출제 수 칩 */
+.drill-count-chip.active {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    font-weight: var(--font-weight-semibold);
+    background: var(--primary-tint-10, rgba(59, 130, 246, 0.08));
+}
+
 /* 취약 리뷰 툴바·필터·최근 판정 배지 */
 .weak-toolbar {
     display: flex;

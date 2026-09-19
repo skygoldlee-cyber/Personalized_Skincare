@@ -18,6 +18,21 @@ import { recordStudyActivity } from '../study-tracker.js';
 const DRILL_COUNT = 10;
 const OPTION_INDICATORS = ['①', '②', '③', '④', '⑤'];
 
+// 출제 수 설정 — 10/20/'all' (두 드릴 setup의 칩에서 공유)
+let drillCountSetting = DRILL_COUNT;
+
+/** 출제 수 칩 전환 — data-arg: '10' | '20' | 'all' */
+export function setDrillCount(v) {
+    drillCountSetting = v === 'all' ? 'all' : (parseInt(v, 10) || DRILL_COUNT);
+    document.querySelectorAll('.drill-count-chip').forEach(chip => {
+        chip.classList.toggle('active', chip.dataset.arg === String(v));
+    });
+}
+
+function drillCountFor(items) {
+    return drillCountSetting === 'all' ? items.length : drillCountSetting;
+}
+
 /* =======================================================
    ⭕❌ O/X 판정 드릴
    ======================================================= */
@@ -72,7 +87,7 @@ export function startOxDrill(subjectNum) {
         } else if (special === 'num') {
             items = items.filter(i => (i.tags || []).some(t => NUM_FOCUS_TAGS.has(t)));
         }
-        st.data = pickDrillItems(items, DRILL_COUNT);
+        st.data = pickDrillItems(items, drillCountFor(items));
         st.currentIndex = 0;
         st.correctCount = 0;
         st.solvedList = [];
@@ -267,8 +282,11 @@ export function openComboDrillSetup() {
  * @param {string|number} subjectNum 1~4
  */
 export function startComboDrill(subjectNum) {
+    // 특수 모드: 'weak'=취약·복습 진술 포함 문항(전 과목), 'num'=수치·한도·기한 집중(전 과목)
+    const special = String(subjectNum);
+    const isSpecial = special === 'weak' || special === 'num';
     const num = parseInt(subjectNum, 10);
-    if (isNaN(num) || num < 1 || num > 4) return;
+    if (!isSpecial && (isNaN(num) || num < 1 || num > 4)) return;
     ['trainer-menu-panel', 'trainer-weak-panel', 'trainer-oxdrill-panel'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.classList.add('is-hidden');
@@ -276,17 +294,30 @@ export function startComboDrill(subjectNum) {
     const ownPanel = document.getElementById('trainer-combo-panel');
     if (ownPanel) ownPanel.classList.remove('is-hidden');
     state.trainer.activeSubView = 'combo';
-    DataLoader.loadComboDrills(num).then(questions => {
+
+    const load = isSpecial
+        ? Promise.all([1, 2, 3, 4].map(n => DataLoader.loadComboDrills(n))).then(all => all.flat())
+        : DataLoader.loadComboDrills(num);
+    load.then(questions => {
         const st = state.trainer.combo;
-        st.subject = num;
-        st.data = pickComboItems(questions, DRILL_COUNT);
+        st.subject = isSpecial ? 0 : num;
+        st.mode = isSpecial ? special : '';
+        if (special === 'weak') {
+            const weakSids = new Set(getWeakStatements().map(w => w.sid));
+            const dueSids = new Set(getDueStatementSids());
+            questions = questions.filter(q => (q.statements || []).some(s =>
+                s.sid && (weakSids.has(s.sid) || dueSids.has(s.sid))));
+        } else if (special === 'num') {
+            questions = questions.filter(q => (q.tags || []).some(t => NUM_FOCUS_TAGS.has(t)));
+        }
+        st.data = pickComboItems(questions, drillCountFor(questions));
         st.currentIndex = 0;
         st.correctCount = 0;
         st.solvedList = [];
         st.judgments = {};
 
         if (st.data.length === 0) {
-            showToast('이 과목에는 출제 가능한 합답형 문항이 없습니다.', 'warning');
+            showToast(isSpecial ? '이 조건에 맞는 문항이 없습니다.' : '이 과목에는 출제 가능한 합답형 문항이 없습니다.', 'warning');
             return;
         }
 
@@ -572,7 +603,7 @@ function renderComboResult() {
                         </div>`).join('')}
             </div>
             <div class="result-actions" style="display:flex; gap:1rem; justify-content:center;">
-                <button class="btn btn-primary" data-click="startComboDrill" data-arg="${st.subject}"><i class="fa-solid fa-rotate-left"></i> 다시 풀기</button>
+                <button class="btn btn-primary" data-click="startComboDrill" data-arg="${st.mode || st.subject}"><i class="fa-solid fa-rotate-left"></i> 다시 풀기</button>
                 <button class="btn btn-secondary" data-click="exitTrainerSubView"><i class="fa-solid fa-house"></i> 메뉴로</button>
             </div>
         </div>`;
@@ -633,15 +664,16 @@ function renderWeakReview() {
     const summaryEl = document.getElementById('weak-summary');
     if (!listEl) return;
 
-    const weak = getWeakStatements(); // w 내림차순 (t=텍스트, truth, cid 포함)
+    const weak = getWeakStatements(); // 졸업(연속 정답) 제외, w 내림차순
+    const graduated = getWeakStatements(undefined, true).length - weak.length;
     const due = new Set(getDueStatementSids());
     const dueCount = weak.filter(w => due.has(w.sid)).length;
     const shown = weakFilter === 'due' ? weak.filter(w => due.has(w.sid)) : weak;
 
     if (summaryEl) {
         summaryEl.innerHTML = weak.length === 0
-            ? '아직 오판 이력이 없습니다. O/X·합답형 드릴을 풀면 진술 단위로 추적됩니다.'
-            : `취약 진술 ${weak.length}개 · 오늘 복습 대상 ${dueCount}개
+            ? (graduated > 0 ? '모든 취약 진술을 졸업했습니다.' : '아직 오판 이력이 없습니다. O/X·합답형 드릴을 풀면 진술 단위로 추적됩니다.')
+            : `취약 진술 ${weak.length}개 · 오늘 복습 대상 ${dueCount}개${graduated ? ` · 졸업 ${graduated}개` : ''}
                <span class="weak-toolbar">
                    <button class="btn btn-primary weak-drill-btn" data-click="startOxDrill" data-arg="weak"><i class="fa-solid fa-crosshairs"></i> 취약·복습 드릴</button>
                    <button class="btn btn-secondary weak-filter-btn${weakFilter === 'all' ? ' active' : ''}" data-click="setWeakFilter" data-arg="all">전체</button>

@@ -13,6 +13,9 @@ import { updateCardSchedule } from './spaced-repetition.js';
 
 const STATS_KEY = STORAGE_KEYS.STATEMENT_STATS;
 
+// 연속 정답 N회면 취약 목록에서 졸업 (SM-2 스케줄은 계속 유지 — 복습 주기는 별개)
+export const WEAK_GRADUATE_STREAK = 3;
+
 /**
  * gradeAnswer()의 perStatement 결과를 기록한다.
  * @param {Array<{sid?: string, judgedCorrect?: boolean}>} perStatement
@@ -26,9 +29,10 @@ export function recordStatementJudgments(perStatement) {
     for (const s of perStatement) {
         if (!s || !s.sid || typeof s.judgedCorrect !== 'boolean') continue;
         updateCardSchedule(s.sid, s.judgedCorrect);
-        const cur = stats[s.sid] || { j: 0, w: 0, lw: null, t: '', truth: null, cid: null, last: null };
+        const cur = stats[s.sid] || { j: 0, w: 0, lw: null, t: '', truth: null, cid: null, last: null, streak: 0 };
         cur.j += 1;
         cur.last = s.judgedCorrect;
+        cur.streak = s.judgedCorrect ? (cur.streak || 0) + 1 : 0;
         if (s.text) cur.t = s.text;
         if (typeof s.truth === 'boolean') cur.truth = s.truth;
         if (s.conceptId) cur.cid = s.conceptId;
@@ -54,13 +58,15 @@ export function getStatementStat(sid) {
 
 /**
  * 약한 진술 목록 — 오판 횟수 내림차순, 동률이면 최근 오판일 우선
+ * 연속 정답 WEAK_GRADUATE_STREAK회 도달 진술은 졸업 처리(기본 제외)
  * @param {number} [limit]
+ * @param {boolean} [includeGraduated] 졸업 진술도 포함할지
  * @returns {Array<{sid: string, j: number, w: number, lw: string|null}>}
  */
-export function getWeakStatements(limit) {
+export function getWeakStatements(limit, includeGraduated = false) {
     const stats = loadStats();
     const weak = Object.entries(stats)
-        .filter(([, v]) => v.w > 0)
+        .filter(([, v]) => v.w > 0 && (includeGraduated || (v.streak || 0) < WEAK_GRADUATE_STREAK))
         .map(([sid, v]) => ({ sid, ...v }))
         .sort((a, b) => (b.w - a.w) || String(b.lw).localeCompare(String(a.lw)));
     return typeof limit === 'number' ? weak.slice(0, limit) : weak;

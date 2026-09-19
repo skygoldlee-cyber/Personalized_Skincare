@@ -655,7 +655,12 @@
                             <div class="quiz-card">
                                 <div class="quiz-body" style="text-align:center;">
                                     <h2 class="quiz-question-text reader-q-text-lg">과목을 선택하세요</h2>
-                                    <p style="color:var(--color-text-muted); margin-bottom:1.5rem;">복습 기한이 도래한 진술과 오판 진술이 우선 출제됩니다 (10문)</p>
+                                    <p style="color:var(--color-text-muted); margin-bottom:0.75rem;">복습 기한이 도래한 진술과 오판 진술이 우선 출제됩니다</p>
+                                    <div style="display:flex; gap:0.5rem; justify-content:center; margin-bottom:1.5rem;">
+                                        <button class="btn btn-secondary drill-count-chip active" data-click="setDrillCount" data-arg="10" style="padding:0.3rem 0.9rem; font-size:0.85rem;">10문</button>
+                                        <button class="btn btn-secondary drill-count-chip" data-click="setDrillCount" data-arg="20" style="padding:0.3rem 0.9rem; font-size:0.85rem;">20문</button>
+                                        <button class="btn btn-secondary drill-count-chip" data-click="setDrillCount" data-arg="all" style="padding:0.3rem 0.9rem; font-size:0.85rem;">전체</button>
+                                    </div>
                                     <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:0.75rem; max-width:480px; margin:0 auto;">
                                         <button class="btn btn-secondary" data-click="startOxDrill" data-arg="1" style="padding:1rem;">1과목<br><small>화장품법</small></button>
                                         <button class="btn btn-secondary" data-click="startOxDrill" data-arg="2" style="padding:1rem;">2과목<br><small>제조·품질</small></button>
@@ -723,12 +728,21 @@
                             <div class="quiz-card">
                                 <div class="quiz-body" style="text-align:center;">
                                     <h2 class="quiz-question-text reader-q-text-lg">과목을 선택하세요</h2>
-                                    <p style="color:var(--color-text-muted); margin-bottom:1.5rem;">복습 기한 도래·오판 진술을 포함한 문항이 우선 출제됩니다 (10문)</p>
+                                    <p style="color:var(--color-text-muted); margin-bottom:0.75rem;">복습 기한 도래·오판 진술을 포함한 문항이 우선 출제됩니다</p>
+                                    <div style="display:flex; gap:0.5rem; justify-content:center; margin-bottom:1.5rem;">
+                                        <button class="btn btn-secondary drill-count-chip active" data-click="setDrillCount" data-arg="10" style="padding:0.3rem 0.9rem; font-size:0.85rem;">10문</button>
+                                        <button class="btn btn-secondary drill-count-chip" data-click="setDrillCount" data-arg="20" style="padding:0.3rem 0.9rem; font-size:0.85rem;">20문</button>
+                                        <button class="btn btn-secondary drill-count-chip" data-click="setDrillCount" data-arg="all" style="padding:0.3rem 0.9rem; font-size:0.85rem;">전체</button>
+                                    </div>
                                     <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:0.75rem; max-width:480px; margin:0 auto;">
                                         <button class="btn btn-secondary" data-click="startComboDrill" data-arg="1" style="padding:1rem;">1과목<br><small>화장품법</small></button>
                                         <button class="btn btn-secondary" data-click="startComboDrill" data-arg="2" style="padding:1rem;">2과목<br><small>제조·품질</small></button>
                                         <button class="btn btn-secondary" data-click="startComboDrill" data-arg="3" style="padding:1rem;">3과목<br><small>안전관리</small></button>
                                         <button class="btn btn-secondary" data-click="startComboDrill" data-arg="4" style="padding:1rem;">4과목<br><small>맞춤형 이해</small></button>
+                                    </div>
+                                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; max-width:480px; margin:0.75rem auto 0;">
+                                        <button class="btn btn-warning" data-click="startComboDrill" data-arg="weak" style="padding:0.75rem;"><i class="fa-solid fa-crosshairs"></i> 취약·복습 진술 문항<br><small>전 과목</small></button>
+                                        <button class="btn btn-secondary" data-click="startComboDrill" data-arg="num" style="padding:0.75rem;"><i class="fa-solid fa-hashtag"></i> 수치·한도·기한 집중<br><small>전 과목</small></button>
                                     </div>
                                 </div>
                             </div>

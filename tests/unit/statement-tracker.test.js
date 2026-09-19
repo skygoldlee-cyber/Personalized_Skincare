@@ -59,8 +59,9 @@ test('recordStatementJudgments: 오판 진술만 오판 통계 누적', () => {
     const res = gradeAnswer(comboQ, { optionId: '2' });
     const n = recordStatementJudgments(res.perStatement);
     assert.equal(n, 3);
-    assert.deepEqual(getStatementStat('st-t-1'), { j: 1, w: 0, lw: null, t: '참1', truth: true, cid: null, last: true });
+    assert.deepEqual(getStatementStat('st-t-1'), { j: 1, w: 0, lw: null, t: '참1', truth: true, cid: null, last: true, streak: 1 });
     assert.equal(getStatementStat('st-t-3').last, false); // 오판 진술의 최근 판정 = 오답
+    assert.equal(getStatementStat('st-t-3').streak, 0);   // 오판 시 연속 정답 초기화
     assert.equal(getStatementStat('st-t-3').w, 1);
     assert.ok(getStatementStat('st-t-3').lw);
 });
@@ -88,6 +89,19 @@ test('getWeakStatements: 오판 많은 순 정렬', () => {
     assert.equal(weak[0].w, 2);
     assert.equal(weak.length, 2);
     assert.equal(getWeakStatements(1).length, 1);
+});
+
+test('getWeakStatements: 연속 정답 3회면 졸업, 재오판 시 복귀', () => {
+    recordStatementJudgments([{ sid: 'a', judgedCorrect: false }]);
+    assert.equal(getWeakStatements().length, 1);
+    recordStatementJudgments([{ sid: 'a', judgedCorrect: true }]);
+    recordStatementJudgments([{ sid: 'a', judgedCorrect: true }]);
+    assert.equal(getWeakStatements().length, 1, '연속 정답 2회는 아직 취약');
+    recordStatementJudgments([{ sid: 'a', judgedCorrect: true }]);
+    assert.equal(getWeakStatements().length, 0, '연속 정답 3회 → 졸업');
+    assert.equal(getWeakStatements(undefined, true).length, 1, '졸업 포함 조회 시 노출');
+    recordStatementJudgments([{ sid: 'a', judgedCorrect: false }]);
+    assert.equal(getWeakStatements().length, 1, '재오판 시 취약 목록 복귀');
 });
 
 test('getDueStatementSids: 오판 진술은 내일 복습 대기 아님(당일 기록 시 오늘 due)', () => {

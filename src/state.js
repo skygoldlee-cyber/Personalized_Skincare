@@ -72,7 +72,8 @@ export const state = {
             solvedList: []
         },
         combo: {
-            subject: null,      // 1~4
+            subject: null,      // 1~4 (특수 모드는 0)
+            mode: '',           // '' | 'weak' | 'num'
             data: [],
             currentIndex: 0,
             correctCount: 0,
