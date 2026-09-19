@@ -21,6 +21,7 @@ export function renderStudyCalendar() {
     const todayProgress = getTodayGoalProgress();
     const weeklyProgress = getWeeklyGoalProgress();
     const monthlyDays = getMonthlyStudyDays(_currentYear, _currentMonth);
+    const daysInMonth = new Date(_currentYear, _currentMonth + 1, 0).getDate();
 
     container.innerHTML = `
         <div class="study-calendar-wrapper">
@@ -31,7 +32,7 @@ export function renderStudyCalendar() {
                         <i class="fa-solid fa-bullseye" aria-hidden="true"></i>
                         <span>오늘 목표</span>
                     </div>
-                    <div class="goal-progress-ring" data-percent="${todayProgress.overallPercent}">
+                    <div class="goal-progress-ring" style="--p:${todayProgress.overallPercent}">
                         <span class="goal-percent">${todayProgress.overallPercent}%</span>
                     </div>
                     <div class="goal-detail">
@@ -50,7 +51,7 @@ export function renderStudyCalendar() {
                         <i class="fa-solid fa-calendar-week" aria-hidden="true"></i>
                         <span>이번 주 목표</span>
                     </div>
-                    <div class="goal-progress-ring" data-percent="${weeklyProgress.percent}">
+                    <div class="goal-progress-ring" style="--p:${weeklyProgress.percent}">
                         <span class="goal-percent">${weeklyProgress.percent}%</span>
                     </div>
                     <div class="goal-detail">
@@ -65,7 +66,7 @@ export function renderStudyCalendar() {
                         <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
                         <span>이번 달</span>
                     </div>
-                    <div class="goal-progress-ring" data-percent="${Math.min(100, Math.round(monthlyDays / 30 * 100))}">
+                    <div class="goal-progress-ring" style="--p:${Math.min(100, Math.round(monthlyDays / daysInMonth * 100))}">
                         <span class="goal-percent">${monthlyDays}일</span>
                     </div>
                     <div class="goal-detail">

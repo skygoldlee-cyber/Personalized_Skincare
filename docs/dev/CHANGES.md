@@ -4,6 +4,13 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-20 학습 캘린더 표시 오류 수정
+
+- **캘린더 뷰 크래시**: `getWeeklyGoalProgress`가 dead code 정리 시 삭제된 `isStudiedOn`을 여전히 호출 → ReferenceError로 `renderStudyCalendar`가 innerHTML 도달 전 중단(뷰 전체 빈 화면). 인라인 항목 검사로 교체 (`study-tracker.js`)
+- **목표 링 항상 0%**: JS가 `data-percent` 속성만 쓰고 CSS는 `var(--p, 0)`를 읽어 `--p` 미설정 → conic-gradient 채움이 항상 0%. 링 요소에 `style="--p:N"` 부여 (`study-calendar.js`)
+- **UTC 날짜 버그**: `getTodayStr`/주간 집계가 `toISOString()`(UTC) 기준이라 KST 00:00~09:00에 "오늘"이 어제로 기록·표시 → 로컬 날짜 헬퍼 `_localDateStr`로 교체
+- 이번 달 링 비율 분모를 고정 30일 → 실제 월 일수(`daysInMonth`)로 정정
+
 ## 2026-09-20 과목별 카드·퀴즈 수량을 문제은행 출제 비중으로 보정
 
 ### 배경

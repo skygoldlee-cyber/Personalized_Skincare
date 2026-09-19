@@ -8,10 +8,19 @@ import { STORAGE_KEYS } from './storage-keys.js';
    ======================================================= */
 
 /**
- * 오늘 날짜 문자열 반환 (YYYY-MM-DD)
+ * 로컬 날짜 문자열 반환 (YYYY-MM-DD)
+ */
+function _localDateStr(d) {
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${d.getFullYear()}-${m}-${day}`;
+}
+
+/**
+ * 오늘 날짜 문자열 반환 (YYYY-MM-DD, 로컬 기준)
  */
 export function getTodayStr() {
-    return new Date().toISOString().split('T')[0];
+    return _localDateStr(new Date());
 }
 
 /**
@@ -129,8 +138,8 @@ export function getWeeklyGoalProgress() {
         const d = new Date(monday);
         d.setDate(monday.getDate() + i);
         if (d > today) break;
-        const dateStr = d.toISOString().split('T')[0];
-        if (isStudiedOn(dateStr)) studyDays++;
+        const entry = cal[_localDateStr(d)];
+        if (entry && (entry.cards > 0 || entry.quizzes > 0)) studyDays++;
     }
     const percent = goals.weeklyStudyDays > 0 ? Math.min(100, Math.round((studyDays / goals.weeklyStudyDays) * 100)) : 0;
     return {
