@@ -41,9 +41,14 @@ export function openOxDrillSetup() {
  * 과목별 O/X 드릴 시작 — 취약 진술(sid) 우선 편성
  * @param {string|number} subjectNum 1~4
  */
+const NUM_FOCUS_TAGS = new Set(['수치', '한도', '기한', '구성비', '처분기준']);
+
 export function startOxDrill(subjectNum) {
+    // 특수 모드: 'weak'=취약·복습 진술만(전 과목), 'num'=수치·한도·기한 집중(전 과목) — 전략 ③④
+    const special = String(subjectNum);
+    const isSpecial = special === 'weak' || special === 'num';
     const num = parseInt(subjectNum, 10);
-    if (isNaN(num) || num < 1 || num > 4) return;
+    if (!isSpecial && (isNaN(num) || num < 1 || num > 4)) return;
     // 취약 리뷰 등 다른 서브뷰에서 호출돼도 자기 패널을 표시한다
     ['trainer-menu-panel', 'trainer-weak-panel', 'trainer-combo-panel'].forEach(id => {
         const el = document.getElementById(id);
@@ -52,16 +57,28 @@ export function startOxDrill(subjectNum) {
     const ownPanel = document.getElementById('trainer-oxdrill-panel');
     if (ownPanel) ownPanel.classList.remove('is-hidden');
     state.trainer.activeSubView = 'oxdrill';
-    DataLoader.loadOxDrills(num).then(items => {
+
+    const load = isSpecial
+        ? Promise.all([1, 2, 3, 4].map(n => DataLoader.loadOxDrills(n))).then(all => all.flat())
+        : DataLoader.loadOxDrills(num);
+    load.then(items => {
         const st = state.trainer.oxdrill;
-        st.subject = num;
+        st.subject = isSpecial ? 0 : num;
+        st.mode = isSpecial ? special : '';
+        if (special === 'weak') {
+            const weakSids = new Set(getWeakStatements().map(w => w.sid));
+            const dueSids = new Set(getDueStatementSids());
+            items = items.filter(i => i.sid && (weakSids.has(i.sid) || dueSids.has(i.sid)));
+        } else if (special === 'num') {
+            items = items.filter(i => (i.tags || []).some(t => NUM_FOCUS_TAGS.has(t)));
+        }
         st.data = pickDrillItems(items, DRILL_COUNT);
         st.currentIndex = 0;
         st.correctCount = 0;
         st.solvedList = [];
 
         if (st.data.length === 0) {
-            showToast('이 과목에는 출제 가능한 O/X 문항이 없습니다.', 'warning');
+            showToast(isSpecial ? '이 조건에 맞는 문항이 없습니다.' : '이 과목에는 출제 가능한 O/X 문항이 없습니다.', 'warning');
             return;
         }
 
@@ -220,7 +237,7 @@ function renderOxDrillResult() {
                         </div>`).join('')}
             </div>
             <div class="result-actions" style="display:flex; gap:1rem; justify-content:center;">
-                <button class="btn btn-primary" data-click="startOxDrill" data-arg="${st.subject}"><i class="fa-solid fa-rotate-left"></i> 다시 풀기</button>
+                <button class="btn btn-primary" data-click="startOxDrill" data-arg="${st.mode || st.subject}"><i class="fa-solid fa-rotate-left"></i> 다시 풀기</button>
                 <button class="btn btn-secondary" data-click="exitTrainerSubView"><i class="fa-solid fa-house"></i> 메뉴로</button>
             </div>
         </div>`;
@@ -323,8 +340,8 @@ function renderComboQuestion() {
                 <span class="combo-stmt-id">${esc(s.id)}</span>
                 <span class="combo-stmt-text">${safeTextWithBreaks(s.text)}</span>
                 <span class="combo-judge-btns" role="group" aria-label="진술 ${esc(s.id)} 판정">
-                    <button type="button" class="combo-judge-btn" data-v="true">O</button>
-                    <button type="button" class="combo-judge-btn" data-v="false">X</button>
+                    <button type="button" class="combo-judge-btn" data-v="true" aria-pressed="false">O</button>
+                    <button type="button" class="combo-judge-btn" data-v="false" aria-pressed="false">X</button>
                 </span>
             </div>`).join('');
         stmtsEl.querySelectorAll('.combo-judge-btn').forEach(btn => {
@@ -358,8 +375,11 @@ function toggleComboJudgment(btn) {
     const val = btn.dataset.v === 'true';
     if (st.judgments[stmtId] === val) delete st.judgments[stmtId];
     else st.judgments[stmtId] = val;
-    row.querySelectorAll('.combo-judge-btn').forEach(b =>
-        b.classList.toggle('active', st.judgments[stmtId] === (b.dataset.v === 'true')));
+    row.querySelectorAll('.combo-judge-btn').forEach(b => {
+        const on = st.judgments[stmtId] === (b.dataset.v === 'true');
+        b.classList.toggle('active', on);
+        b.setAttribute('aria-pressed', String(on));
+    });
     updateComboJudgeHint(q);
 }
 
@@ -583,6 +603,31 @@ export function openWeakReview() {
     renderWeakReview();
 }
 
+let weakFilter = 'all'; // 'all' | 'due' — 취약 리뷰 필터
+
+/** 취약 리뷰 필터 전환 */
+export function setWeakFilter(filter) {
+    weakFilter = filter === 'due' ? 'due' : 'all';
+    renderWeakReview();
+}
+
+/** 취약 진술 행 렌더 — O/X 배지·과목·복습 대상·오판 통계·최근 판정 */
+function weakRow(w, due) {
+    const sub = sidSubject(w.sid);
+    const dueBadge = due.has(w.sid) ? '<span class="weak-due-badge">복습 대상</span>' : '';
+    const lastBadge = w.last === true ? '<span class="weak-last is-ok">최근 정답</span>'
+        : w.last === false ? '<span class="weak-last is-bad">최근 오판</span>' : '';
+    return `<div class="weak-row">
+        <div class="weak-row-head">
+            <span class="weak-truth ${w.truth ? 'is-o' : 'is-x'}">${w.truth === true ? 'O' : w.truth === false ? 'X' : '?'}</span>
+            ${sub ? `<span class="weak-subject">과목${sub}</span>` : ''}
+            ${dueBadge}${lastBadge}
+            <span class="weak-stat">오판 ${w.w}회 / 판정 ${w.j}회${w.lw ? ` · 최근 ${w.lw}` : ''}</span>
+        </div>
+        <p class="weak-text">${safeTextWithBreaks(w.t || `(${w.sid})`)}</p>
+    </div>`;
+}
+
 function renderWeakReview() {
     const listEl = document.getElementById('weak-list');
     const summaryEl = document.getElementById('weak-summary');
@@ -590,21 +635,28 @@ function renderWeakReview() {
 
     const weak = getWeakStatements(); // w 내림차순 (t=텍스트, truth, cid 포함)
     const due = new Set(getDueStatementSids());
+    const dueCount = weak.filter(w => due.has(w.sid)).length;
+    const shown = weakFilter === 'due' ? weak.filter(w => due.has(w.sid)) : weak;
 
     if (summaryEl) {
-        summaryEl.textContent = weak.length === 0
+        summaryEl.innerHTML = weak.length === 0
             ? '아직 오판 이력이 없습니다. O/X·합답형 드릴을 풀면 진술 단위로 추적됩니다.'
-            : `취약 진술 ${weak.length}개 · 오늘 복습 대상 ${weak.filter(w => due.has(w.sid)).length}개`;
+            : `취약 진술 ${weak.length}개 · 오늘 복습 대상 ${dueCount}개
+               <span class="weak-toolbar">
+                   <button class="btn btn-primary weak-drill-btn" data-click="startOxDrill" data-arg="weak"><i class="fa-solid fa-crosshairs"></i> 취약·복습 드릴</button>
+                   <button class="btn btn-secondary weak-filter-btn${weakFilter === 'all' ? ' active' : ''}" data-click="setWeakFilter" data-arg="all">전체</button>
+                   <button class="btn btn-secondary weak-filter-btn${weakFilter === 'due' ? ' active' : ''}" data-click="setWeakFilter" data-arg="due">복습 대상만</button>
+               </span>`;
     }
 
-    if (weak.length === 0) {
-        listEl.innerHTML = '<p style="text-align:center; color:var(--color-text-muted); padding:2rem 0;">기록된 취약 진술이 없습니다.</p>';
+    if (shown.length === 0) {
+        listEl.innerHTML = `<p style="text-align:center; color:var(--color-text-muted); padding:2rem 0;">${weak.length === 0 ? '기록된 취약 진술이 없습니다.' : '복습 대상 진술이 없습니다.'}</p>`;
         return;
     }
 
     // conceptId 클러스터링 — 같은 교재 구간(L####)의 진술을 개념 그룹으로 묶음
     const groups = new Map();
-    for (const w of weak) {
+    for (const w of shown) {
         const key = w.cid || `solo:${w.sid}`;
         if (!groups.has(key)) groups.set(key, { cid: w.cid, items: [] });
         groups.get(key).items.push(w);
@@ -617,20 +669,15 @@ function renderWeakReview() {
         const header = g.cid && g.items.length > 1
             ? `<div class="weak-group-header"><i class="fa-solid fa-link"></i> 개념 ${esc(g.cid)} — 취약 진술 ${g.items.length}개 (혼동쌍 후보)</div>`
             : '';
-        const rows = g.items.map(w => {
-            const sub = sidSubject(w.sid);
-            const dueBadge = due.has(w.sid) ? '<span class="weak-due-badge">복습 대상</span>' : '';
-            return `<div class="weak-row">
-                <div class="weak-row-head">
-                    <span class="weak-truth ${w.truth ? 'is-o' : 'is-x'}">${w.truth === true ? 'O' : w.truth === false ? 'X' : '?'}</span>
-                    ${sub ? `<span class="weak-subject">과목${sub}</span>` : ''}
-                    ${dueBadge}
-                    <span class="weak-stat">오판 ${w.w}회 / 판정 ${w.j}회${w.lw ? ` · 최근 ${w.lw}` : ''}</span>
-                    ${sub ? `<button class="btn btn-secondary weak-drill-btn" data-click="startOxDrill" data-arg="${sub}">드릴</button>` : ''}
-                </div>
-                <p class="weak-text">${safeTextWithBreaks(w.t || `(${w.sid})`)}</p>
-            </div>`;
-        }).join('');
+        // 혼동쌍 대조: 참·거짓 진술이 섞인 그룹은 2단으로 나란히 배치 (전략 ⑤)
+        const oItems = g.items.filter(i => i.truth === true);
+        const xItems = g.items.filter(i => i.truth !== true);
+        const rows = (oItems.length > 0 && xItems.length > 0)
+            ? `<div class="weak-pair">
+                <div class="weak-col is-o"><div class="weak-col-head">참 진술</div>${oItems.map(w => weakRow(w, due)).join('')}</div>
+                <div class="weak-col is-x"><div class="weak-col-head">거짓(함정) 진술</div>${xItems.map(w => weakRow(w, due)).join('')}</div>
+               </div>`
+            : g.items.map(w => weakRow(w, due)).join('');
         return `<div class="weak-group">${header}${rows}</div>`;
     }).join('');
 }

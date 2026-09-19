@@ -64,7 +64,8 @@ export const state = {
             solvedList: []
         },
         oxdrill: {
-            subject: null,      // 1~4
+            subject: null,      // 1~4 (특수 모드는 0)
+            mode: '',           // '' | 'weak'(취약·복습) | 'num'(수치·기한)
             data: [],
             currentIndex: 0,
             correctCount: 0,
@@ -75,7 +76,8 @@ export const state = {
             data: [],
             currentIndex: 0,
             correctCount: 0,
-            solvedList: []
+            solvedList: [],
+            judgments: {}       // 진술별 O/X 판정 (2단계 응시)
         },
         pomodoro: {
             timerId: null,

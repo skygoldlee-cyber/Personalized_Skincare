@@ -1189,3 +1189,56 @@ mark.txt-highlight {
     line-height: 1.6;
     margin: 0;
 }
+
+/* 취약 리뷰 툴바·필터·최근 판정 배지 */
+.weak-toolbar {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 0.75rem;
+}
+.weak-filter-btn {
+    padding: 0.25rem 0.75rem;
+    font-size: var(--text-xs);
+}
+.weak-filter-btn.active {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    font-weight: var(--font-weight-semibold);
+}
+.weak-last {
+    font-size: var(--text-xs);
+    border-radius: var(--radius-full);
+    padding: 0.1rem 0.5rem;
+}
+.weak-last.is-ok {
+    background: var(--success-tint-15, rgba(46, 160, 67, 0.15));
+    color: var(--color-success);
+}
+.weak-last.is-bad {
+    background: var(--danger-tint-15, rgba(220, 60, 60, 0.15));
+    color: var(--color-danger);
+}
+
+/* 혼동쌍 대조 — 참/거짓 진술 2단 배치 (전략 ⑤) */
+.weak-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+}
+.weak-col-head {
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: 0.4rem;
+}
+.weak-col.is-o .weak-col-head {
+    color: var(--color-success);
+}
+.weak-col.is-x .weak-col-head {
+    color: var(--color-danger);
+}
+@media (max-width: 600px) {
+    .weak-pair {
+        grid-template-columns: 1fr;
+    }
+}
