@@ -211,28 +211,62 @@ function renderOxDrillResult() {
    ㄱㄴㄷㄹ 합답형(combo) 드릴
    ======================================================= */
 
-export function startComboDrill() {
-    DataLoader.loadComboDrills().then(bundle => {
+/** 패널 열기 (과목 선택 화면) */
+export function openComboDrillSetup() {
+    state.trainer.activeSubView = 'combo';
+    const menu = document.getElementById('trainer-menu-panel');
+    const panel = document.getElementById('trainer-combo-panel');
+    const setup = document.getElementById('combo-setup');
+    const arena = document.getElementById('combo-arena');
+    const result = document.getElementById('combo-result');
+    if (menu) menu.classList.add('is-hidden');
+    if (panel) panel.classList.remove('is-hidden');
+    if (setup) setup.classList.remove('is-hidden');
+    if (arena) arena.classList.add('is-hidden');
+    if (result) result.classList.add('is-hidden');
+}
+
+/**
+ * 과목별 합답형 드릴 시작 — 취약 진술(sid) 포함 문항 우선 편성
+ * @param {string|number} subjectNum 1~4
+ */
+export function startComboDrill(subjectNum) {
+    const num = parseInt(subjectNum, 10);
+    if (isNaN(num) || num < 1 || num > 4) return;
+    DataLoader.loadComboDrills(num).then(questions => {
         const st = state.trainer.combo;
-        st.data = shuffle(bundle.questions).slice(0, DRILL_COUNT);
+        st.subject = num;
+        st.data = pickComboItems(questions, DRILL_COUNT);
         st.currentIndex = 0;
         st.correctCount = 0;
         st.solvedList = [];
 
-        const menu = document.getElementById('trainer-menu-panel');
-        const panel = document.getElementById('trainer-combo-panel');
+        if (st.data.length === 0) {
+            showToast('이 과목에는 출제 가능한 합답형 문항이 없습니다.', 'warning');
+            return;
+        }
+
+        const setup = document.getElementById('combo-setup');
         const arena = document.getElementById('combo-arena');
         const result = document.getElementById('combo-result');
-        if (menu) menu.classList.add('is-hidden');
-        if (panel) panel.classList.remove('is-hidden');
-        if (arena) arena.classList.remove('is-hidden');
+        if (setup) setup.classList.add('is-hidden');
         if (result) result.classList.add('is-hidden');
+        if (arena) arena.classList.remove('is-hidden');
         state.trainer.activeSubView = 'combo';
         renderComboQuestion();
     }).catch(err => {
         console.error(err);
         showToast('합답형 드릴 데이터를 불러오지 못했습니다.', 'error');
     });
+}
+
+/** 진술 중 취약 sid를 포함하는 문항을 최대 절반까지 우선 편성 */
+function pickComboItems(items, count) {
+    const weakSids = new Set(getWeakStatements().map(w => w.sid));
+    const hasWeak = q => (q.statements || []).some(s => s.sid && weakSids.has(s.sid));
+    const weakPick = shuffle(items.filter(hasWeak)).slice(0, Math.ceil(count / 2));
+    const restPick = shuffle(items.filter(q => !hasWeak(q))).slice(0, count - weakPick.length);
+    return shuffle([...weakPick, ...restPick]);
 }
 
 function renderComboQuestion() {
@@ -397,7 +431,7 @@ function renderComboResult() {
                         </div>`).join('')}
             </div>
             <div class="result-actions" style="display:flex; gap:1rem; justify-content:center;">
-                <button class="btn btn-primary" data-click="startComboDrill"><i class="fa-solid fa-rotate-left"></i> 다시 풀기</button>
+                <button class="btn btn-primary" data-click="startComboDrill" data-arg="${st.subject}"><i class="fa-solid fa-rotate-left"></i> 다시 풀기</button>
                 <button class="btn btn-secondary" data-click="exitTrainerSubView"><i class="fa-solid fa-house"></i> 메뉴로</button>
             </div>
         </div>`;

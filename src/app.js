@@ -74,6 +74,7 @@ import {
     openOxDrillSetup,
     startOxDrill,
     nextOxDrill,
+    openComboDrillSetup,
     startComboDrill,
     nextComboDrill
 } from './views/trainer-drills.js';
@@ -785,6 +786,7 @@ window.startLimitsTrainer = startLimitsTrainer;
 window.openOxDrillSetup = openOxDrillSetup;
 window.startOxDrill = startOxDrill;
 window.nextOxDrill = nextOxDrill;
+window.openComboDrillSetup = openComboDrillSetup;
 window.startComboDrill = startComboDrill;
 window.nextComboDrill = nextComboDrill;
 window.startMockExamSim = startMockExamSim;

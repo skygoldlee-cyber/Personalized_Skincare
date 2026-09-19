@@ -18,6 +18,7 @@
     "check:parser": "node tools/check_parser_parity.js",
     "check:imports": "node tools/check-imports.js",
     "check:combo": "node tools/check_combo_pilot.js",
+    "build:drills": "node tools/build_ox_drills.js && node tools/build_combo_drills.js",
     "stamp:sw": "node tools/build/stamp-sw-version.js",
     "verify:assets": "node tools/verify-shell-assets.js",
     "build:study-md": "node tools/build_study_md_bundle.js",

@@ -571,12 +571,12 @@
                             <span class="trainer-card-btn">드릴 시작 <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
                         </div>
 
-                        <div class="trainer-menu-card" data-click="startComboDrill">
+                        <div class="trainer-menu-card" data-click="openComboDrillSetup">
                             <div class="trainer-card-icon icon-blue">
                                 <i class="fa-solid fa-list-check" aria-hidden="true"></i>
                             </div>
                             <h4>합답형 훈련</h4>
-                            <p>ㄱㄴㄷㄹ 진술의 참/거짓을 판정하고 옳은 조합을 고르는 실전형 훈련입니다. 진술별 오판이 자동 추적됩니다.</p>
+                            <p>기출 문항을 ㄱㄴㄷㄹ 진술 조합으로 변환한 750+ 문항으로 옳은 조합을 고르는 실전 훈련입니다. 진술별 오판이 자동 추적됩니다.</p>
                             <span class="trainer-card-btn">훈련 시작 <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
                         </div>
                     </div>
@@ -704,7 +704,25 @@
                         </div>
                     </div>
 
-                    <div id="combo-arena">
+                    <!-- 과목 선택 -->
+                    <div id="combo-setup">
+                        <div class="trainer-arena">
+                            <div class="quiz-card">
+                                <div class="quiz-body" style="text-align:center;">
+                                    <h2 class="quiz-question-text reader-q-text-lg">과목을 선택하세요</h2>
+                                    <p style="color:var(--color-text-muted); margin-bottom:1.5rem;">오판 이력이 있는 진술을 포함한 문항이 우선 출제됩니다 (10문)</p>
+                                    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:0.75rem; max-width:480px; margin:0 auto;">
+                                        <button class="btn btn-secondary" data-click="startComboDrill" data-arg="1" style="padding:1rem;">1과목<br><small>화장품법</small></button>
+                                        <button class="btn btn-secondary" data-click="startComboDrill" data-arg="2" style="padding:1rem;">2과목<br><small>제조·품질</small></button>
+                                        <button class="btn btn-secondary" data-click="startComboDrill" data-arg="3" style="padding:1rem;">3과목<br><small>안전관리</small></button>
+                                        <button class="btn btn-secondary" data-click="startComboDrill" data-arg="4" style="padding:1rem;">4과목<br><small>맞춤형 이해</small></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="combo-arena" class="is-hidden">
                         <div class="quiz-progress-header mb-5">
                             <div class="quiz-progress-bar-bg"><div class="quiz-progress-bar-fill progress-bar-fill" id="combo-progress-bar"></div></div>
                         </div>

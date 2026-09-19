@@ -224,17 +224,37 @@ export const DataLoader = {
     },
 
     /**
-     * 합답형(combo) 드릴 번들 로드 (data/drills/combo_pilot.js → window.COMBO_PILOT)
-     * @returns {Promise<Object>} { source, questions[] }
+     * 과목별 합답형(combo) 드릴 번들 로드 — 자동 변환 번들 + 수작업 파일럿 병합
+     * (data/drills/combo_subjectN.js → window.COMBO_DRILLS_subjectN,
+     *  data/drills/combo_pilot.js → window.COMBO_PILOT 중 해당 과목분)
+     * @param {number|string} subjectNum 1~4
+     * @returns {Promise<Array>} combo 문항 배열
      */
-    async loadComboDrills() {
-        if (this._loadedDrills.combo) return this._loadedDrills.combo;
-        await this._loadScript('./data/drills/combo_pilot.js');
+    async loadComboDrills(subjectNum) {
+        const num = parseInt(subjectNum, 10);
+        const key = `combo_subject${num}`;
+        if (this._loadedDrills[key]) return this._loadedDrills[key];
+
+        await this._loadScript(`./data/drills/combo_subject${num}.js`);
         await new Promise(r => setTimeout(r, 0));
-        const data = window.COMBO_PILOT;
-        if (!data || !Array.isArray(data.questions)) throw new Error('합답형 드릴 데이터를 찾을 수 없습니다');
-        this._loadedDrills.combo = data;
-        return data;
+        const auto = window[`COMBO_DRILLS_subject${num}`] || [];
+
+        // 파일럿(수작업)은 과목1·4에만 존재 — 없어도 자동 번들로 동작
+        if (!this._loadedDrills.comboPilot) {
+            try {
+                await this._loadScript('./data/drills/combo_pilot.js');
+                await new Promise(r => setTimeout(r, 0));
+            } catch (e) {
+                console.warn('[DataLoader] combo_pilot.js 로드 실패 — 자동 번들만 사용', e);
+            }
+            this._loadedDrills.comboPilot = (window.COMBO_PILOT && window.COMBO_PILOT.questions) || [];
+        }
+        const pilot = this._loadedDrills.comboPilot.filter(q => q.subject === num);
+
+        const questions = [...pilot, ...auto];
+        if (!questions.length) throw new Error(`합답형 드릴 데이터를 찾을 수 없습니다: ${key}`);
+        this._loadedDrills[key] = questions;
+        return questions;
     },
 
     /**

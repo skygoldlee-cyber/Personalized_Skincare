@@ -71,6 +71,7 @@ export const state = {
             solvedList: []
         },
         combo: {
+            subject: null,      // 1~4
             data: [],
             currentIndex: 0,
             correctCount: 0,
