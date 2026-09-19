@@ -24,6 +24,19 @@ declare global {
     INGREDIENTS_DATA?: import('./types.js').Ingredient[];
     /** file:// 폴백 교재 번들 (build_study_md_bundle.js) */
     __STUDY_MD__?: { manifest?: any; files?: Record<string, string> };
+    /** file:// 폴백 매니페스트 (data/study_md/manifest.js) */
+    __STUDY_MD_MANIFEST__?: any;
+    /** file:// 폴백 과목별 MD 원문 맵 (data/study_md/<key>.js) */
+    __STUDY_MD_FILES__?: Record<string, Record<string, string>>;
+    /** 시험 목록 번들 (data/exams.js) */
+    EXAMS_LIST?: { exams?: import('./types.js').ExamDef[] };
+    /** 합답형 파일럿 번들 (data/drills/combo_pilot.js) */
+    COMBO_PILOT?: { questions?: Array<{ subject?: number; [k: string]: any }> };
+    /** 합답형 문항 수 인덱스 (data/drills/combo_index.js) */
+    COMBO_INDEX?: Record<string, number>;
+    /** 문항→단원 매핑 인덱스 (data/question_chapters.js) */
+    QUESTION_CHAPTERS?: Record<string, string>;
+    CHAPTER_RANGES?: Record<string, any>;
     /** 문제집 file:// 폴백 번들 (build_exam_bundles.js) */
     __EXAM_MD__?: Record<string, string>;
     /** 안정 ID 마이그레이션 맵 (data/id_migration.js) */

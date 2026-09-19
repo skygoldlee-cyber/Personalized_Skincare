@@ -178,6 +178,8 @@
  * @property {string}      [shortName] 축약 표시 이름 (필터 버튼 등)
  * @property {string}      contentHash 콘텐츠 해시(콘텐츠 지문)
  * @property {BundleStats} stats
+ * @property {string}      [supplement]       보충 데이터 번들 경로 (data/supplements/)
+ * @property {string}      [supplementGlobal] 보충 데이터 전역 변수명
  */
 
 /**
@@ -223,6 +225,27 @@
  * @property {ExamMeta[]}      exams
  * @property {IngredientsMeta} ingredients
  * @property {ResourcesMeta}   [resources]
+ */
+
+/**
+ * 시험 레지스트리 엔트리 (content/exams.json → data/exams.js의 EXAMS_LIST).
+ * @typedef {Object} ExamDef
+ * @property {string}   id
+ * @property {string}   [name]
+ * @property {string}   [shortName]
+ * @property {string}   [title]
+ * @property {string}   [logoMain]
+ * @property {string}   [logoSub]
+ * @property {string}   [desc]
+ * @property {string}   [icon]
+ * @property {string}   [year]
+ * @property {boolean}  [default]
+ * @property {string}   [contentRoot]
+ * @property {string}   [dataRoot]
+ * @property {string}   [manifestPath]
+ * @property {string}   [registryBundle]
+ * @property {string}   [registryGlobal]
+ * @property {Object.<string, boolean>} [features]
  */
 
 /* =======================================================
