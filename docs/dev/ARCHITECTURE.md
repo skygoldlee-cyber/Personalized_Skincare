@@ -16,15 +16,16 @@
 6. [모듈 설계](#-모듈-설계)
 7. [데이터 흐름](#-데이터-흐름)
 8. [상태 관리 전략](#-상태-관리-전략)
-9. [테마 시스템 (라이트/다크)](#-테마-시스템-라이트다크)
-10. [PWA & 오프라인 전략](#-pwa--오프라인-전략)
-11. [Service Worker 동작 메커니즘](#-service-worker-동작-메커니즘)
-12. [반응형 & 모바일 설계](#-반응형--모바일-설계)
-13. [보안 설계](#-보안-설계)
-14. [빌드 타임 데이터 파이프라인](#-빌드-타임-데이터-파이프라인)
-15. [주요 설계 결정 및 근거](#-주요-설계-결정-및-근거)
-16. [향후 확장 방향](#-향후-확장-방향)
-17. [`content/` 내용 변경 시 수정 파일 및 절차 가이드](#content-내용-변경-시-수정-파일-및-절차-가이드)
+9. [멀티시험 플랫폼 구조](#-멀티시험-플랫폼-구조)
+10. [테마 시스템 (라이트/다크)](#-테마-시스템-라이트다크)
+11. [PWA & 오프라인 전략](#-pwa--오프라인-전략)
+12. [Service Worker 동작 메커니즘](#-service-worker-동작-메커니즘)
+13. [반응형 & 모바일 설계](#-반응형--모바일-설계)
+14. [보안 설계](#-보안-설계)
+15. [빌드 타임 데이터 파이프라인](#-빌드-타임-데이터-파이프라인)
+16. [주요 설계 결정 및 근거](#-주요-설계-결정-및-근거)
+17. [향후 확장 방향](#-향후-확장-방향)
+18. [`content/` 내용 변경 시 수정 파일 및 절차 가이드](#content-내용-변경-시-수정-파일-및-절차-가이드)
 
 ---
 
@@ -610,6 +611,42 @@ const state = {
 
 ### Set 사용 근거
 `memorizedCards`, `weakCards`에 `Set`을 사용하여 **O(1) 조회 + 자동 중복 제거**를 보장합니다. localStorage 저장 시에는 `Array.from()`으로 직렬화, 로드 시 `new Set()`으로 복원합니다.
+
+---
+
+## 🧪 멀티시험 플랫폼 구조
+
+여러 자격시험 과목을 하나의 앱에서 병행 지원하기 위한 레지스트리 주도 구조입니다 (2026-09-20 도입, `e0ff585`).
+
+### 시험 레지스트리
+- **소스**: `content/exams.json` — 시험 엔트리(`id`, `name`, 브랜딩 `title`/`logoMain`/`logoSub`, `desc`, `icon`, `year`, `default`, `contentRoot`, `dataRoot`, `registryBundle`, `registryGlobal`, `features` 기능 플래그)
+- **번들**: `data/exams.js` — `window.EXAMS_LIST` 클래식 스크립트 (`file://` 호환, `build:data` 체인에 포함)
+- **기본 시험(cosmetic)**: `content/`·`data/` 루트 유지. 추가 시험은 `content/exams/<id>/` + `data/exams/<id>/`에 독립 루트 보유
+
+### 시험 컨텍스트 (`src/exam-context.js`, 리프 모듈)
+- `getActiveExam()`/`getExamList()` — `current_exam` localStorage 키 + `EXAMS_LIST`로 활성 시험 해석
+- `contentPath(rel)`/`dataPath(rel)` — 모든 콘텐츠·데이터 경로는 활성 시험의 루트 기준으로 해석 (`src/paths.js`, `data-loader.js` 전 경로가 이를 사용)
+- `selectExam(id)` — 시험 전환은 `location.reload()`로 수행해 모듈 상태·전역 캐시를 완전 리셋
+- `hasFeature(name)` — 도메인 특화 기능(성분사전/계산연습/원료배합/오디오북/참조자료/뽀모도로/부록문서)을 시험별 `features` 플래그로 게이팅. HTML은 `data-feature` 속성, 동적 버튼은 `hasFeature()` 분기
+- `scopedKey(key)` — 진도 localStorage 키를 `<examId>:key`로 네임스페이스. 앱 전역 키(테마·리더 설정 등 `GLOBAL_KEYS`)는 비네임스페이스 유지. `purgeLegacyStorage()`가 마이그레이션 1회에 레거시 비네임스페이스 진도 키 정리
+
+### 시험 선택/전환
+- `src/views/exam-select.js` — 시험 선택 카드 뷰(`exam-select-view`). `current_exam` 미설정 시 홈으로 표시
+- 데스크톱 사이드바 푸터 + 모바일 탭 바의 "시험 전환" 버튼 → `showExamSelect()` → 카드 선택 시 `selectExam()` → 리로드
+
+### 레지스트리 로딩
+- 기본 시험: `data/registry.js` 정적 로드 (`window.DATA_REGISTRY`)
+- 비기본 시험: `DataLoader.ensureRegistry()`가 `{dataRoot}/registry.js`를 클래식 스크립트로 동적 주입 (`DATA_REGISTRY_<examId>` 전역 — ESM export 불가라 `var` + `window` 할당 형태로 생성)
+
+### 빌드 순회
+- `tools/build/exam-targets.js` — `getExamTargets()`가 exams.json을 순회해 시험별 contentRoot/dataRoot/manifest 해석, `getSubjectMaps()`가 manifest에서 과목 매핑 파생(기존 `subject1~4` 하드코딩 테이블 대체)
+- `tools/build_all_data.js` — `build:data`가 모든 시험을 `EXAM_ID`로 순회 빌드. ox/combo 드릴, exam/study_md/doc 번들, audio_manifest, citations, parser parity 모두 시험 순회형
+- **공유 모듈 예외**: `src/pdf-registry.js`, `keyword-index.js`는 단일 공유 출력이라 기본 시험 바인딩 유지 — 비기본 시험에 참조자료 기능이 필요하면 시험별 파일 분리가 후속 과제
+
+### 새 시험 추가 절차
+1. `content/exams/<id>/`에 `manifest.json` + `교재/` + `문제은행/` 배치
+2. `content/exams.json`에 엔트리 추가 (기능 플래그 포함)
+3. `npm.cmd run build:data && npm.cmd run build:drills` — 앱 로직 변경 불필요
 
 ---
 

@@ -7,6 +7,8 @@
 
 ## 1. 디렉토리 구조
 
+> **참고 (멀티시험)**: 아래 `content/`는 각 시험의 `contentRoot`입니다. 기본 시험은 `content/`, 추가 시험은 `content/exams/<id>/`이며 내부 구조는 동일합니다.
+
 ```
 content/
 ├── manifest.json          ← 모든 교재/문제은행의 경로를 여기서 관리

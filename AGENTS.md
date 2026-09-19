@@ -78,7 +78,8 @@ src/                    # ES Modules
   sha256.js             # 안정적 ID 해시
   utils.js              # 공통 유틸리티 (shuffle 등)
   storage-keys.js       # localStorage 키 중앙 관리
-  paths.js              # 파일 경로 상수 중앙 관리
+  paths.js              # 파일 경로 상수 중앙 관리 (시험 루트 인지형)
+  exam-context.js       # 활성 시험 해석/전환, scopedKey 네임스페이스, hasFeature
   pwa-install.js        # PWA 설치 프롬프트 설정
   theme-init.js         # 테마 초기화 (즉시 실행)
   theme-toggle.js       # 테마 토글 UI
@@ -106,8 +107,11 @@ src/                    # ES Modules
     offline-detection.js # 오프라인 감지 (app.js에서 분리)
     manual-viewer.js    # 학습안내서 뷰어
     exam-viewer.js      # 문제집 뷰어
+    exam-select.js      # 시험 선택/전환 뷰
 css/                    # 스타일시트 모듈 (base.css, reader.css, reader-mermaid.css, trainer.css, exam.css, dashboard.css, study.css, study-calendar.css, print.css, ui-overlay.css, html-viewer.css)
-content/                # 교재/문제은행/참조자료 Markdown 원본
+content/                # 교재/문제은행/참조자료 Markdown 원본 (기본 시험 cosmetic의 contentRoot)
+  exams.json            # 시험 레지스트리 (멀티시험 엔트리 — 멀티시험 구조 섹션 참조)
+  exams/<id>/           # 추가 시험의 독립 콘텐츠 루트 (동일 내부 구조)
   교재/                  # 4과목 MD 파일 (표준형 8 + 이야기형 8 = 16파일, 총 20챕터)
   문제은행/              # 과목별 문제은행 MD
   참조자료/              # 법령원문/별표/참조자료 (HTML/MD)

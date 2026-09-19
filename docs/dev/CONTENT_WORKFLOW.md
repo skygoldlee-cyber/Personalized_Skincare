@@ -6,6 +6,8 @@
 
 이 프로젝트는 `content/` 폴더의 Markdown/JSON 파일이 **단일 소스 오브 트루스(SSOT)** 역할을 합니다. 소스 코드(`src/`)를 직접 수정하지 않고, content 파일과 매니페스트만 편집하면 빌드 파이프라인이 나머지를 자동 처리합니다.
 
+> **멀티시험 구조 (2026-09-20~)**: 이 문서의 `content/`·`data/` 경로는 각 시험의 `contentRoot`/`dataRoot`를 의미합니다. 기본 시험(cosmetic)은 `content/`·`data/` 루트이며, 추가 시험은 `content/exams/<id>/`·`data/exams/<id>/` 루트를 갖습니다. `build:data`는 `content/exams.json`의 모든 시험을 순회 빌드하므로 절차는 동일합니다. 새 시험 추가는 `AGENTS.md`의 "멀티시험 구조" 섹션을 참조하세요.
+
 ```mermaid
 flowchart LR
     subgraph SSOT["content/ (단일 소스 오브 트루스)"]
