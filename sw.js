@@ -385,7 +385,8 @@ async function networkFirst(request, cacheName) {
     const response = await fetch(request);
     if (response.ok) {
       const cache = await caches.open(cacheName);
-      cache.put(request, response.clone());
+      // respondWith settle 후 SW 종료로 쓰기가 드랍되지 않도록 완료를 기다린다
+      await cache.put(request, response.clone());
     }
     return response;
   } catch (error) {
@@ -404,7 +405,7 @@ async function cacheFirst(request, cacheName) {
     const response = await fetch(request);
     if (response.ok) {
       const cache = await caches.open(cacheName);
-      cache.put(request, response.clone());
+      await cache.put(request, response.clone());
     }
     return response;
   } catch (error) {
@@ -418,8 +419,8 @@ async function staleWhileRevalidate(request, cacheName) {
   const cached = await cache.match(request);
 
   const networkPromise = fetch(request)
-    .then((response) => {
-      if (response.ok) cache.put(request, response.clone());
+    .then(async (response) => {
+      if (response.ok) await cache.put(request, response.clone());
       return response;
     })
     .catch(() => null);

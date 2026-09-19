@@ -95,7 +95,7 @@ export const DataLoader = {
     /** 과목 번호 목록 (드릴/시뮬레이터의 subjectN 번호 = manifest order) */
     getSubjectOrders() {
         const subjects = (this.registry && this.registry.subjects) || [];
-        return subjects.map(s => s.order);
+        return subjects.map(s => s.order).filter(Number.isFinite);
     },
 
     /** Dynamic script loading utility with load caching and retry */
@@ -111,12 +111,16 @@ export const DataLoader = {
                         if (remaining > 0) setTimeout(() => attemptLoad(remaining - 1), TIMING.SCRIPT_RETRY_DELAY_MS);
                         else reject(new Error(`Script load failed after retries: ${url}`));
                     } else {
-                        existing.addEventListener('load', () => resolve(undefined));
-                        existing.addEventListener('error', (e) => {
+                        const onError = (e) => {
                             existing.dataset.loaded = 'error';
                             if (remaining > 0) { existing.remove(); setTimeout(() => attemptLoad(remaining - 1), TIMING.SCRIPT_RETRY_DELAY_MS); }
                             else reject(e);
-                        });
+                        };
+                        existing.addEventListener('load', () => resolve(undefined));
+                        existing.addEventListener('error', onError);
+                        // querySelector → 리스너 부착 사이에 settle됐을 수 있는 경합 방어
+                        if (existing.dataset.loaded === 'true') resolve(undefined);
+                        else if (existing.dataset.loaded === 'error') onError(new Error(`Script load failed: ${url}`));
                     }
                     return;
                 }
@@ -200,7 +204,8 @@ export const DataLoader = {
             const rootPrefix = contentPath(''); // 'content/' 또는 'content/exams/<id>/'
             let rel = relPath.replace(/^\.\//, '');
             if (rel.startsWith(rootPrefix)) rel = rel.slice(rootPrefix.length);
-            const subj = manifest.subjects.find(s => rel === s.dir || rel.startsWith(s.dir + '/'));
+            const manifestSubjects = (manifest && Array.isArray(manifest.subjects)) ? manifest.subjects : [];
+            const subj = manifestSubjects.find(s => rel === s.dir || rel.startsWith(s.dir + '/'));
             subjectKey = subj ? subj.key : null;
         }
         if (!subjectKey) throw new Error(`과목을 식별할 수 없습니다: ${relPath}`);
@@ -215,7 +220,8 @@ export const DataLoader = {
         if (this._loaded[key]) return this._loaded[key];
 
         const manifest = await this._getManifest();
-        const subjMeta = manifest.subjects.find(s => s.key === key);
+        const manifestSubjects = (manifest && Array.isArray(manifest.subjects)) ? manifest.subjects : [];
+        const subjMeta = manifestSubjects.find(s => s.key === key);
         if (!subjMeta) throw new Error(`Subject metadata not found for key: ${key}`);
 
         /** @type {Object.<string, string>} */
