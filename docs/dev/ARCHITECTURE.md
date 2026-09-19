@@ -640,7 +640,8 @@ const state = {
 
 ### 빌드 순회
 - `tools/build/exam-targets.js` — `getExamTargets()`가 exams.json을 순회해 시험별 contentRoot/dataRoot/manifest 해석, `getSubjectMaps()`가 manifest에서 과목 매핑 파생(기존 `subject1~4` 하드코딩 테이블 대체)
-- `tools/build_all_data.js` — `build:data`가 모든 시험을 `EXAM_ID`로 순회 빌드. ox/combo 드릴, exam/study_md/doc 번들, audio_manifest, citations, parser parity 모두 시험 순회형
+- `tools/build_all_data.js` — `build:data`가 모든 시험을 `EXAM_ID`로 순회 빌드. ox/combo 드릴, exam/study_md/doc 번들, audio_manifest, citations, parser parity, question_chapters(문항→단원 매핑) 모두 시험 순회형
+- 인덱스 번들: `{dataRoot}/drills/combo_index.js`(과목별 합답형 문항 수), `{dataRoot}/question_chapters.js`(문항id→단원 + 과목별 라인 경계) — 결과 화면 라벨/단원별 취약 분석용, `DataLoader.loadComboIndex`/`loadQuestionChapters`로 로드
 - **공유 모듈 예외**: `src/pdf-registry.js`, `keyword-index.js`는 단일 공유 출력이라 기본 시험 바인딩 유지 — 비기본 시험에 참조자료 기능이 필요하면 시험별 파일 분리가 후속 과제
 
 ### 새 시험 추가 절차
