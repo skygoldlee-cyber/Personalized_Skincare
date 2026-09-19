@@ -251,6 +251,7 @@ async function pruneStaleDataBundles() {
     const referenced = new Set(text.match(/\.\/data\/[A-Za-z0-9_./-]+\.js/g) || []);
     referenced.add('./data/registry.js');
     referenced.add('./data/audio_manifest.js');
+    referenced.add('./data/question_chapters.js'); // 단원별 취약 분석 인덱스 (init 시 로드)
     // data/drills/, data/supplements/, data/exams*(시험 레지스트리·타 시험 번들)는 프루닝에서 항상 보존
     const ALWAYS_KEEP = /\/data\/(drills|supplements|exams)\b/;
     const refSuffixes = [...referenced].map((r) => r.replace(/^\.\//, '/'));

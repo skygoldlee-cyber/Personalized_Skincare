@@ -628,6 +628,29 @@ export function saveSimAnswer(qId, value, triggerRender = true) {
     saveSimDraft();
 }
 
+/**
+ * 문항의 교재 단원(챕터) 해석 — QUESTION_CHAPTERS(문항id→단원) 우선,
+ * combo는 "출처: 과목N 문제은행 Qn"으로 원문항을 거슬러 매핑, 실패 시 citation L번호→라인 경계
+ */
+function _chapterForQuestion(q, subjKey, qc) {
+    if (q.type === 'combo') {
+        const src = (q.citation || '').match(/출처:\s*과목(\d+) 문제은행 Q(\d+)/);
+        if (src) {
+            const srcKey = DataLoader._examKeyForOrder(parseInt(src[1], 10));
+            const title = qc.questions[`${srcKey}_q${src[2]}`];
+            if (title) return title;
+        }
+        const m = (q.citation || '').match(/L(\d+)/);
+        const ranges = qc.ranges[subjKey];
+        if (!m || !ranges) return null;
+        const line = parseInt(m[1], 10);
+        let cur = null;
+        for (const [ln, t] of ranges) { if (line >= ln) cur = t; else break; }
+        return cur;
+    }
+    return qc.questions[q.id] || null;
+}
+
 export function submitExam() {
     if (simState.timerInterval) clearInterval(simState.timerInterval);
     
@@ -642,6 +665,13 @@ export function submitExam() {
     subjects.forEach(sub => {
         subjectScores[sub.key] = { score: 0, total: 0 };
     });
+    
+    // 단원(챕터)별 집계용 — question_chapters.js 인덱스 (미로드 시 빈 객체)
+    const qc = (DataLoader._questionChapters) || {
+        questions: window.QUESTION_CHAPTERS || {},
+        ranges: window.CHAPTER_RANGES || {}
+    };
+    const chapterStats = {};
     
     for (let i = 0; i < total; i++) {
         const q = simState.data.questions[i];
@@ -686,6 +716,12 @@ export function submitExam() {
             if (isCorrect) {
                 subjectScores[subj].score++;
             }
+            // 단원별 집계 — 교재 인용이 없는 문항은 '기타(참조자료)'로 묶음
+            const chTitle = _chapterForQuestion(q, subj, qc) || '기타 (법령·참조자료)';
+            const cBucket = chapterStats[subj] || (chapterStats[subj] = {});
+            const c = cBucket[chTitle] || (cBucket[chTitle] = { score: 0, total: 0 });
+            c.total++;
+            if (isCorrect) c.score++;
         }
     }
     
@@ -746,14 +782,16 @@ export function submitExam() {
                 }
                 
                 const progressColor = isFail ? 'var(--color-danger)' : (subRate >= 60 ? 'var(--color-success)' : 'var(--color-warning)');
+                const hasWrongs = data.score < data.total;
                 
                 breakdownHTML += `
                     <div>
-                        <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.25rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; margin-bottom: 0.25rem;">
                             <span style="font-weight: 600; color: var(--color-text-muted);">${esc(subjNames[subj])}</span>
-                            <span style="color: ${progressColor}; font-weight: 700;">
+                            <span style="color: ${progressColor}; font-weight: 700; display: inline-flex; align-items: center; gap: 0.4rem;">
                                 ${data.score} / ${data.total} (${subRate}%)
-                                ${isFail ? ' <span style="background:var(--color-danger); color:var(--color-on-brand); font-size:0.7rem; padding:1px 4px; border-radius:3px; margin-left:3px;">과락</span>' : ''}
+                                ${isFail ? ' <span style="background:var(--color-danger); color:var(--color-on-brand); font-size:0.7rem; padding:1px 4px; border-radius:3px;">과락</span>' : ''}
+                                ${hasWrongs ? `<button class="btn" data-click="startFocusSubjectStudy" data-arg="${subj}" title="이 과목 집중 퀴즈" style="padding: 1px 7px; font-size: 0.72rem; border: 1px solid ${progressColor}; color: ${progressColor}; background: transparent; border-radius: 4px; cursor: pointer;"><i class="fa-solid fa-bolt"></i> 복습</button>` : ''}
                             </span>
                         </div>
                         <div style="background: rgba(255,255,255,0.05); height: 6px; border-radius: 3px; overflow: hidden; width: 100%;">
@@ -765,6 +803,46 @@ export function submitExam() {
         });
         
         breakdownHTML += `</div>`;
+        
+        // 단원별 취약 분석 — 오답이 있는 단원을 정답률 낮은 순으로 표시
+        const chapterRows = [];
+        Object.keys(chapterStats).forEach(subj => {
+            Object.keys(chapterStats[subj]).forEach(title => {
+                const c = chapterStats[subj][title];
+                if (c.score >= c.total) return; // 전부 정답인 단원은 생략
+                chapterRows.push({
+                    subj,
+                    label: `${subjNames[subj] ? subjNames[subj].split(':')[0] : subj} · ${title}`,
+                    score: c.score,
+                    total: c.total,
+                    rate: Math.round((c.score / c.total) * 100)
+                });
+            });
+        });
+        chapterRows.sort((a, b) => (a.rate - b.rate) || (b.total - a.total));
+        
+        if (chapterRows.length) {
+            breakdownHTML += `<h5 style="margin: 1.25rem 0 0.75rem 0; color: var(--color-on-brand); font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 0.9rem;"><i class="fa-solid fa-layer-group" style="color: var(--color-warning);"></i> 단원별 취약 분석 <span style="font-weight: 400; font-size: 0.75rem; color: var(--color-text-muted);">(오답 포함 단원, 정답률 낮은 순)</span></h5>`;
+            breakdownHTML += `<div style="display: flex; flex-direction: column; gap: 0.5rem;">`;
+            chapterRows.slice(0, 10).forEach(r => {
+                const rColor = r.rate < 40 ? 'var(--color-danger)' : (r.rate >= 80 ? 'var(--color-success)' : 'var(--color-warning)');
+                breakdownHTML += `
+                    <div>
+                        <div style="display: flex; justify-content: space-between; font-size: 0.78rem; margin-bottom: 0.15rem;">
+                            <span style="color: var(--color-text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${esc(r.label)}</span>
+                            <span style="color: ${rColor}; font-weight: 700; flex-shrink: 0; margin-left: 0.5rem;">${r.score} / ${r.total} (${r.rate}%)</span>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.05); height: 4px; border-radius: 2px; overflow: hidden; width: 100%;">
+                            <div style="background: ${rColor}; width: ${r.rate}%; height: 100%;"></div>
+                        </div>
+                    </div>
+                `;
+            });
+            if (chapterRows.length > 10) {
+                breakdownHTML += `<p style="margin: 0.25rem 0 0; font-size: 0.72rem; color: var(--color-text-muted);">… 외 ${chapterRows.length - 10}개 단원</p>`;
+            }
+            breakdownHTML += `</div>`;
+        }
         
         // 과락 분석 및 추천 피드백
         if (failedSubjects.length > 0) {

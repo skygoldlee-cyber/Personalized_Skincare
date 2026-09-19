@@ -890,6 +890,7 @@ async function initExamContext() {
     DataLoader.init();
     await DataLoader.ensureRegistry();
     await DataLoader.loadComboIndex();
+    await DataLoader.loadQuestionChapters();
     applyExamBranding();
     applyFeatureFlags();
     purgeLegacyStorage(

@@ -339,6 +339,54 @@ export const DataLoader = {
     },
 
     /**
+     * 과목별 합답형 문항 수 인덱스 로드 — {dataRoot}/drills/combo_index.js → window.COMBO_INDEX
+     * 모의고사 카드의 "전체 N문" 라벨에 사용. 없어도 앱 동작에는 영향 없음.
+     * @returns {Promise<Object>} { <examKey>: count }
+     */
+    async loadComboIndex() {
+        if (this._comboIndex) return this._comboIndex;
+        try {
+            await this._loadScript(`./${dataPath('drills/combo_index.js')}`);
+            await new Promise(r => setTimeout(r, 0));
+        } catch (e) {
+            console.warn('[DataLoader] combo_index.js 로드 실패 — 합답형 문항 수 표시 생략', e);
+        }
+        this._comboIndex = window.COMBO_INDEX || {};
+        return this._comboIndex;
+    },
+
+    /**
+     * 과목의 합답형 총 문항 수 조회 (인덱스 미로드/없으면 0)
+     * @param {number|string} subjectNum 과목 order
+     * @returns {number}
+     */
+    getComboCount(subjectNum) {
+        const key = this._examKeyForOrder(parseInt(subjectNum, 10));
+        const idx = this._comboIndex || window.COMBO_INDEX || {};
+        return idx[key] || 0;
+    },
+
+    /**
+     * 문항→교재 챕터 매핑 인덱스 로드 — {dataRoot}/question_chapters.js
+     * → window.QUESTION_CHAPTERS (문항id→단원명), window.CHAPTER_RANGES (과목→라인 경계)
+     * 모의고사 결과의 "단원별 취약 분석"에 사용. 없어도 앱 동작에는 영향 없음.
+     */
+    async loadQuestionChapters() {
+        if (this._questionChapters) return this._questionChapters;
+        try {
+            await this._loadScript(`./${dataPath('question_chapters.js')}`);
+            await new Promise(r => setTimeout(r, 0));
+        } catch (e) {
+            console.warn('[DataLoader] question_chapters.js 로드 실패 — 단원별 분석 생략', e);
+        }
+        this._questionChapters = {
+            questions: window.QUESTION_CHAPTERS || {},
+            ranges: window.CHAPTER_RANGES || {}
+        };
+        return this._questionChapters;
+    },
+
+    /**
      * Load the ingredients database bundle on demand.
      * (온디맨드 번들은 file:// 호환을 위해 클래식 <script> 주입 방식을 유지한다.)
      * @returns {Promise<import('./types.js').Ingredient[]>}
