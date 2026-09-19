@@ -304,6 +304,8 @@ Personalized_Skincare/
 │   │   ├── ox_subject*.js      #     O/X 판정 드릴 (build_ox_drills.js)
 │   │   ├── combo_subject*.js   #     합답형 드릴 자동 변환 (build_combo_drills.js)
 │   │   └── combo_pilot.js      #     합답형 수작업 파일럿 (check:combo 검증)
+│   ├── supplements/            #   문제은행 보충 카드/퀴즈 (tools/build/supplements.js)
+│   │                           #     부족 과목을 출제 비중 목표치까지 보충, 런타임 loadSubject 병합
 │
 ├── tools/                      # 빌드/검증 도구
 │   ├── build/
@@ -320,6 +322,7 @@ Personalized_Skincare/
 │   │       ├── textbook.plugin.js
 │   │       ├── exams.plugin.js
 │   │       └── ingredients.plugin.js
+│   ├── build/supplements.js    #   문제은행 비율 기반 카드/퀴즈 목표 배분 + 보충 번들 (build:data 내 3.5단계)
 │   ├── build_doc_bundles.js    #   학습안내서/매뉴얼 폴백 번들
 │   ├── build_exam_bundles.js   #   문제은행 폴백 번들
 │   ├── build_study_md_bundle.js #  교재 폴백 번들 (과목별 분할)

@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v369-20260919-ec63e25';   // 전과목 숫자암기 통합정리 고유 수치를 Part 2에 이식
+const CACHE_VERSION = 'v369-20260919-3c57b37';   // 전과목 숫자암기 통합정리 고유 수치를 Part 2에 이식
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
@@ -247,8 +247,8 @@ async function pruneStaleDataBundles() {
     const referenced = new Set(text.match(/\.\/data\/[A-Za-z0-9_./-]+\.js/g) || []);
     referenced.add('./data/registry.js');
     referenced.add('./data/audio_manifest.js');
-    // data/drills/ 는 레지스트리 미등록 번들(별도 생성기) — 프루닝에서 항상 보존
-    const ALWAYS_KEEP = /\/data\/drills\//;
+    // data/drills/, data/supplements/ 는 프루닝에서 항상 보존 (레지스트리 경로도 수집되지만 이중 안전장치)
+    const ALWAYS_KEEP = /\/data\/(drills|supplements)\//;
     const refSuffixes = [...referenced].map((r) => r.replace(/^\.\//, '/'));
 
     const requests = await cache.keys();

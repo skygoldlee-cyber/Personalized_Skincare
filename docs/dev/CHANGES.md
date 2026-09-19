@@ -4,6 +4,21 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-20 과목별 카드·퀴즈 수량을 문제은행 출제 비중으로 보정
+
+### 배경
+
+카드/퀴즈는 교재(용어 표·확인문제)에서 파생되어 수량이 교재 분량에 좌우되므로 문제은행 문항 비율(100/250/250/400 ≈ 10:25:25:40)과 괴리 — 1·2과목 과다, 3·4과목 부족.
+
+### 구현 (혼합 방식)
+
+- `tools/build/supplements.js` (신규): 전체 카드/퀴즈 수를 문제은행 비율로 **최대잔여 비례 배분**해 과목별 목표치 산출. 부족분은 문제은행 문항을 균등 간격 샘플링해 변환 — 카드(`{key}_card_*`, `문제 → 정답·해설`), 퀴즈(`{key}_quiz_*`, choice/ox/blank 그대로). 카드·퀴즈 풀은 상호 배타적 선택. 산출물 `data/supplements/{key}.js` (`var STUDY_SUPPLEMENT_{key}` — 클래식 스크립트라 file:// 호환)
+- `tools/build/index.js`: 섹션 3.5 보충 단계 추가. 레지스트리 `subjects[].stats`에 `sourceCards/sourceQuizzes`(교재 원본), `targetCards/targetQuizzes`(목표) 기록, `stats.cards/quizzes`는 표시 수치 `min(원본+보충, 목표)`. 보충 과목은 `supplement`/`supplementGlobal` 경로 등록
+- `src/data-loader.js`: `loadSubject`가 레지스트리 `supplement` 번들을 `_loadScript`로 로드해 `data.cards`/`data.quizzes`에 병합 (실패 시 경고 후 계속)
+- `src/views/dashboard.js`: `_displayCounts()` — `targetCards/targetQuizzes` 존재 시 표시 수치를 상한 적용. 과목 카드·전체 통계·진도율 모두 목표 기준 (암기 수/진도율 100% 클램프). 실제 카드 덱은 전량 학습 가능
+- `sw.js`: 프루닝 보존 대상에 `data/supplements/` 추가
+- 결과: 표시 수치 108/36, 270/90, 270/90, 433/143 (카드·퀴즈 각각 문제은행 비율과 정확히 일치); safety +84카드/+37퀴즈, understanding +86카드/+43퀴즈 보충 번들 생성
+
 ## 2026-09-20 합답형 학습 통합 강화 — 추적 연동·리뷰·편성 보완 11항목
 
 ### 시뮬레이터 ↔ 진술 추적 통합

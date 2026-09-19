@@ -48,12 +48,20 @@ function _getSubjCounts() {
 /**
  * 전역 학습 통계 데이터를 집계하고 UI 요소를 업데이트합니다.
  */
+/** 문제은행 출제 비중 목표치(targetCards/targetQuizzes)가 있으면 표시 수치를 상한 적용 */
+function _displayCounts(subjMeta) {
+    const stats = (subjMeta && subjMeta.stats) || {};
+    const cards = (stats.targetCards > 0) ? Math.min(stats.cards || 0, stats.targetCards) : (stats.cards || 0);
+    const quizzes = (stats.targetQuizzes > 0) ? Math.min(stats.quizzes || 0, stats.targetQuizzes) : (stats.quizzes || 0);
+    return { cards, quizzes };
+}
+
 export function updateGlobalStats() {
     // 1. 전체 카드 통계
     let totalCards = 0;
     if (typeof DataLoader !== 'undefined' && DataLoader.registry) {
         DataLoader.getSubjectList().forEach(subj => {
-            totalCards += (subj.stats && subj.stats.cards) || 0;
+            totalCards += _displayCounts(subj).cards;
         });
     } else if (typeof window.STUDY_DATA !== 'undefined' && window.STUDY_DATA) {
         Object.keys(window.STUDY_DATA).forEach(subj => {
@@ -122,14 +130,15 @@ export function renderDashboard() {
     
     subjects.forEach(subjMeta => {
         const subjId = subjMeta.key;
-        const totalSubjCards = (subjMeta.stats && subjMeta.stats.cards) || 0;
-        const totalSubjQuizzes = (subjMeta.stats && subjMeta.stats.quizzes) || 0;
+        const disp = _displayCounts(subjMeta);
+        const totalSubjCards = disp.cards;
+        const totalSubjQuizzes = disp.quizzes;
         
-        // 과목별 완료된 카드 수 (캐시된 카운트 맵 사용)
+        // 과목별 완료된 카드 수 (캐시된 카운트 맵 사용, 표시 목표치 상한)
         const subjCounts = _getSubjCounts();
         const sc = subjCounts[subjId] || { mem: 0, weak: 0, quizSolved: 0, quizCorrect: 0 };
-        const memorizedSubjCards = sc.mem;
-        const progressPercent = totalSubjCards > 0 ? Math.round((memorizedSubjCards / totalSubjCards) * 100) : 0;
+        const memorizedSubjCards = Math.min(sc.mem, totalSubjCards);
+        const progressPercent = totalSubjCards > 0 ? Math.min(100, Math.round((memorizedSubjCards / totalSubjCards) * 100)) : 0;
         
         // 과목별 퀴즈 정답률 (캐시된 카운트 맵 사용)
         const solvedSubjCount = sc.quizSolved;

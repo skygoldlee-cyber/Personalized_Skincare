@@ -213,7 +213,10 @@ function main() {
         stats: {
           cards: data.cards.length,
           quizzes: data.quizzes.length,
-          chapters: data.chapters.length
+          chapters: data.chapters.length,
+          // 교재 파생 원본 수량 — 표시 상한(targetCards) 및 보충 번들 계산의 기준
+          sourceCards: data.cards.length,
+          sourceQuizzes: data.quizzes.length
         }
       });
 
@@ -281,6 +284,48 @@ function main() {
       process.exit(1);
     }
   });
+
+  // 3.5 Supplements — 문제은행 출제 비중 기준 카드/퀴즈 목표 산출 + 부족 과목 보충 번들 생성
+  // (교재 파생 수량이 문제은행 비율과 괴리되므로, 부족분은 문제은행 문항을 카드/퀴즈로 변환해
+  //  data/supplements/ 번들로 채우고, 초과분은 stats.targetCards/Quizzes 표시 상한으로 조정)
+  {
+    const { buildSupplements } = require('./supplements');
+    console.log('Building Study Supplements (문제은행 비율 기반 목표치)...');
+    try {
+      const rawCounts = {};
+      registry.subjects.forEach(s => {
+        const prior = priorSubjectByKey[s.key];
+        rawCounts[s.key] = {
+          cards: (s.stats && s.stats.sourceCards) || (s.stats && s.stats.cards) || 0,
+          quizzes: (s.stats && s.stats.sourceQuizzes) || (s.stats && s.stats.quizzes) || 0
+        };
+        // 미재빌드 과목의 레지스트리 항목은 이전 stats 그대로 — source 필드가 없으면 위에서 보완
+        if (prior && !(s.stats && s.stats.sourceCards) && s.stats) {
+          s.stats.sourceCards = s.stats.cards;
+          s.stats.sourceQuizzes = s.stats.quizzes;
+        }
+      });
+      const { targets, files, generated } = buildSupplements(manifest, rawCounts, ctx);
+      registry.subjects.forEach(s => {
+        const t = targets[s.key];
+        if (!t) return;
+        const raw = rawCounts[s.key];
+        const gen = generated[s.key] || { cards: 0, quizzes: 0 };
+        s.stats.targetCards = t.cards;
+        s.stats.targetQuizzes = t.quizzes;
+        // 표시 수치 = min(원본+보충, 목표) — 초과 과목은 목표 상한, 부족 과목은 보충 후 실수량
+        s.stats.cards = Math.min(raw.cards + gen.cards, t.cards);
+        s.stats.quizzes = Math.min(raw.quizzes + gen.quizzes, t.quizzes);
+        if (files[s.key]) {
+          s.supplement = files[s.key];
+          s.supplementGlobal = `STUDY_SUPPLEMENT_${s.key}`;
+        }
+      });
+    } catch (e) {
+      console.error('Supplement build failed:', e.stack);
+      process.exit(1);
+    }
+  }
 
   // 4. Ingredients (전체 빌드 또는 이전 항목이 없을 때만 재빌드)
   const ingredientsPlugin = require('./plugins/ingredients.plugin');

@@ -162,6 +162,24 @@ export const DataLoader = {
         }
 
         const data = buildSubjectData(subjMeta, mdByFile, { filePathMode: 'md' });
+
+        // 문제은행 보충 카드/퀴즈 병합 (레지스트리가 제공하는 경우 — 출제 비중 보정용)
+        const regSubj = (this.registry && Array.isArray(this.registry.subjects))
+            ? this.registry.subjects.find(s => s.key === key)
+            : null;
+        if (regSubj && regSubj.supplement) {
+            try {
+                await this._loadScript(regSubj.supplement);
+                const supp = window[regSubj.supplementGlobal || `STUDY_SUPPLEMENT_${key}`];
+                if (supp) {
+                    if (Array.isArray(supp.cards)) data.cards.push(...supp.cards);
+                    if (Array.isArray(supp.quizzes)) data.quizzes.push(...supp.quizzes);
+                }
+            } catch (e) {
+                console.warn(`[DataLoader] 보충 데이터 로드 실패 (${key}):`, e);
+            }
+        }
+
         this._loaded[key] = data;
         window.STUDY_DATA[key] = data;
         this._updateRegistryStats(key, data);

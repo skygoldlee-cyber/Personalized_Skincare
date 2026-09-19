@@ -3,7 +3,7 @@
 export const DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2026",
-  "generatedAt": "2026-09-19T11:04:44.793Z",
+  "generatedAt": "2026-09-19T11:20:49.829Z",
   "subjects": [
     {
       "key": "law",
@@ -12,9 +12,13 @@ export const DATA_REGISTRY = {
       "shortName": "화장품법",
       "contentHash": "85b16e8b",
       "stats": {
-        "cards": 178,
-        "quizzes": 74,
-        "chapters": 1
+        "cards": 108,
+        "quizzes": 36,
+        "chapters": 1,
+        "sourceCards": 178,
+        "sourceQuizzes": 74,
+        "targetCards": 108,
+        "targetQuizzes": 36
       }
     },
     {
@@ -24,9 +28,13 @@ export const DATA_REGISTRY = {
       "shortName": "제조·품질",
       "contentHash": "8063d470",
       "stats": {
-        "cards": 370,
-        "quizzes": 132,
-        "chapters": 1
+        "cards": 270,
+        "quizzes": 90,
+        "chapters": 1,
+        "sourceCards": 370,
+        "sourceQuizzes": 132,
+        "targetCards": 270,
+        "targetQuizzes": 90
       }
     },
     {
@@ -36,10 +44,16 @@ export const DATA_REGISTRY = {
       "shortName": "안전관리",
       "contentHash": "250d105e",
       "stats": {
-        "cards": 186,
-        "quizzes": 53,
-        "chapters": 1
-      }
+        "cards": 270,
+        "quizzes": 90,
+        "chapters": 1,
+        "sourceCards": 186,
+        "sourceQuizzes": 53,
+        "targetCards": 270,
+        "targetQuizzes": 90
+      },
+      "supplement": "./data/supplements/safety.js",
+      "supplementGlobal": "STUDY_SUPPLEMENT_safety"
     },
     {
       "key": "understanding",
@@ -48,10 +62,16 @@ export const DATA_REGISTRY = {
       "shortName": "맞춤형화장품",
       "contentHash": "8045190e",
       "stats": {
-        "cards": 347,
-        "quizzes": 100,
-        "chapters": 1
-      }
+        "cards": 433,
+        "quizzes": 143,
+        "chapters": 1,
+        "sourceCards": 347,
+        "sourceQuizzes": 100,
+        "targetCards": 433,
+        "targetQuizzes": 143
+      },
+      "supplement": "./data/supplements/understanding.js",
+      "supplementGlobal": "STUDY_SUPPLEMENT_understanding"
     }
   ],
   "exams": [
