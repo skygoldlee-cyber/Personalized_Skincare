@@ -269,6 +269,14 @@
     gap: 0.35rem;
 }
 
+/* 버튼 쌍 하단의 유형 안내 캡션 */
+.exam-btn-caption {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    text-align: center;
+    line-height: 1.3;
+}
+
 .exam-btn-sim {
     display: inline-flex;
     align-items: center;
