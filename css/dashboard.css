@@ -490,5 +490,4 @@
 /* 사이드바 시험 전환 버튼 */
 .exam-switch-btn {
     width: 100%;
-    margin-bottom: var(--space-2, 0.5rem);
 }

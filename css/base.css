@@ -674,6 +674,14 @@ body {
     font-size: var(--text-xs-sm);
     color: var(--color-text-muted);
     display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-3);
+}
+
+/* 시험 전환 버튼이 ©/버전 텍스트를 가리지 않도록 별도 행으로 분리 */
+.sidebar-footer-meta {
+    display: flex;
     justify-content: space-between;
     align-items: center;
 }
