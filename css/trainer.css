@@ -1066,3 +1066,116 @@ mark.txt-highlight {
     color: var(--color-text-muted);
     line-height: 1.5;
 }
+
+/* 합답형 진술 판정 버튼 (2단계 응시) */
+.combo-judge-btns {
+    flex-shrink: 0;
+    display: inline-flex;
+    gap: 0.25rem;
+}
+.combo-judge-btn {
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    background: var(--bg-card);
+    color: var(--color-text-muted);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--text-sm);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.combo-judge-btn:hover:not(:disabled) {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+.combo-judge-btn.active[data-v="true"] {
+    background: var(--color-success);
+    border-color: var(--color-success);
+    color: #fff;
+}
+.combo-judge-btn.active[data-v="false"] {
+    background: var(--color-danger);
+    border-color: var(--color-danger);
+    color: #fff;
+}
+.combo-judge-btn:disabled {
+    opacity: 0.55;
+    cursor: default;
+}
+
+/* 취약 진술 리뷰 */
+.weak-group {
+    margin-bottom: 1rem;
+}
+.weak-group-header {
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary);
+    padding: 0.4rem 0.75rem;
+    margin-bottom: 0.4rem;
+    background: var(--bg-subtle);
+    border-left: 3px solid var(--color-primary);
+    border-radius: var(--radius-xs);
+}
+.weak-row {
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    background: var(--bg-card);
+}
+.weak-row-head {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.4rem;
+    font-size: var(--text-sm);
+}
+.weak-truth {
+    display: inline-flex;
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-full);
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--font-weight-bold);
+}
+.weak-truth.is-o {
+    background: var(--success-tint-15, rgba(46, 160, 67, 0.15));
+    color: var(--color-success);
+}
+.weak-truth.is-x {
+    background: var(--danger-tint-15, rgba(220, 60, 60, 0.15));
+    color: var(--color-danger);
+}
+.weak-subject {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-full);
+    padding: 0.1rem 0.5rem;
+}
+.weak-due-badge {
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-warning, #b8860b);
+    border: 1px solid var(--color-warning, #b8860b);
+    border-radius: var(--radius-full);
+    padding: 0.1rem 0.5rem;
+}
+.weak-stat {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+}
+.weak-drill-btn {
+    margin-left: auto;
+    padding: 0.2rem 0.75rem;
+    font-size: var(--text-xs);
+}
+.weak-text {
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    margin: 0;
+}

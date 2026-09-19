@@ -1,8 +1,9 @@
 /**
- * combo_pilot.js 검증 — 스키마 검증 + 정답 유일성 + perStatement 채점 경로 확인
+ * 합답형(combo) 번들 검증 — 스키마 검증 + 정답 유일성 + perStatement 채점 경로 확인
+ * 대상: data/drills/combo_pilot.js (수작업) + data/drills/combo_subject*.js (자동 생성)
  * 실행: node tools/check_combo_pilot.js
  */
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import path from 'node:path';
 import vm from 'node:vm';
@@ -13,19 +14,19 @@ const { validateQuestion, deriveComboAnswer, gradeAnswer } = await import(
   pathToFileURL(path.join(src, 'src', 'questions.js')).href
 );
 
-const code = await readFile(path.join(src, 'data', 'drills', 'combo_pilot.js'), 'utf8');
-const sandbox = { window: {} };
-vm.createContext(sandbox);
-vm.runInContext(code, sandbox);
-const bundle = sandbox.window.COMBO_PILOT;
+const DRILLS_DIR = path.join(src, 'data', 'drills');
 
-if (!bundle || !Array.isArray(bundle.questions)) {
-  console.error('COMBO_PILOT 번들을 읽지 못했습니다');
-  process.exit(1);
+function loadBundle(file, globalName) {
+  return readFile(file, 'utf8').then(code => {
+    const sandbox = { window: {} };
+    vm.createContext(sandbox);
+    vm.runInContext(code, sandbox);
+    return sandbox.window[globalName] ?? sandbox[globalName];
+  });
 }
 
-let errors = 0;
-for (const q of bundle.questions) {
+/** 문항 1개 검증 — 오류 문자열 배열 반환 */
+function checkQuestion(q) {
   const errs = validateQuestion(q);
   // 합답형 저작 규칙: 문제 서두에 출처·인용 명기 필수
   if (!q.citation || typeof q.citation !== 'string' || !q.citation.trim()) {
@@ -50,16 +51,52 @@ for (const q of bundle.questions) {
   if (res && res.perStatement && res.perStatement.some(s => !s.judgedCorrect)) {
     errs.push('정답 선택인데 오판 진술 존재');
   }
+  return errs;
+}
+
+let errors = 0;
+
+// ── 수작업 파일럿 ─────────────────────────────────────────────
+const bundle = await loadBundle(path.join(DRILLS_DIR, 'combo_pilot.js'), 'COMBO_PILOT');
+if (!bundle || !Array.isArray(bundle.questions)) {
+  console.error('COMBO_PILOT 번들을 읽지 못했습니다');
+  process.exit(1);
+}
+for (const q of bundle.questions) {
+  const errs = checkQuestion(q);
   if (errs.length) {
     errors += errs.length;
     console.error(`[${q.id}] ${errs.join(' / ')}`);
   }
 }
-
 console.log(`[combo-pilot] ${bundle.questions.length}문항 검증 — ${errors ? errors + '건 오류' : '오류 없음'}`);
 for (const q of bundle.questions) {
   const truth = q.statements.filter(s => s.truth).map(s => s.id).join('');
   const nTrue = q.statements.filter(s => s.truth).length;
   console.log(`  ${q.id} ${q.subject} | 진술 ${q.statements.length}(참 ${nTrue}) | 정답 ${deriveComboAnswer(q)}번 [${truth}] | ${q.derivedFrom}`);
 }
+
+// ── 자동 생성 번들 (존재하면) ─────────────────────────────────
+const files = (await readdir(DRILLS_DIR).catch(() => []))
+  .filter(f => /^combo_subject\d+\.js$/.test(f));
+for (const f of files) {
+  const varName = `COMBO_DRILLS_${f.replace(/^combo_|\.js$/g, '')}`; // COMBO_DRILLS_subjectN
+  const qs = await loadBundle(path.join(DRILLS_DIR, f), varName);
+  if (!Array.isArray(qs)) {
+    console.error(`[${f}] ${varName} 번들을 읽지 못했습니다`);
+    errors++;
+    continue;
+  }
+  let fErr = 0;
+  for (const q of qs) {
+    const errs = checkQuestion(q);
+    if (errs.length) {
+      fErr += errs.length;
+      if (fErr <= 8) console.error(`  [${q.id}] ${errs.join(' / ')}`);
+    }
+  }
+  errors += fErr;
+  console.log(`[${f}] ${qs.length}문항 검증 — ${fErr ? fErr + '건 오류' : '오류 없음'}`);
+}
+
 process.exit(errors ? 1 : 0);

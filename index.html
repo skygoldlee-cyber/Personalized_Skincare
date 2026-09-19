@@ -576,8 +576,17 @@
                                 <i class="fa-solid fa-list-check" aria-hidden="true"></i>
                             </div>
                             <h4>합답형 훈련</h4>
-                            <p>기출 문항을 ㄱㄴㄷㄹ 진술 조합으로 변환한 750+ 문항으로 옳은 조합을 고르는 실전 훈련입니다. 진술별 오판이 자동 추적됩니다.</p>
+                            <p>기출 문항을 ㄱㄴㄷㄹ 진술 조합으로 변환한 1,000 문항으로 옳은 조합을 고르는 실전 훈련입니다. 진술별 오판이 자동 추적됩니다.</p>
                             <span class="trainer-card-btn">훈련 시작 <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
+                        </div>
+
+                        <div class="trainer-menu-card" data-click="openWeakReview">
+                            <div class="trainer-card-icon icon-orange">
+                                <i class="fa-solid fa-crosshairs" aria-hidden="true"></i>
+                            </div>
+                            <h4>취약 진술 리뷰</h4>
+                            <p>O/X·합답형에서 오판한 진술을 개념별로 모아봅니다. 같은 교재 구간의 취약 진술은 혼동쌍으로 묶어 표시합니다.</p>
+                            <span class="trainer-card-btn">리뷰 열기 <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
                         </div>
                     </div>
                 </div>
@@ -735,7 +744,8 @@
                                 <div class="quiz-body">
                                     <p id="combo-citation" style="font-size:0.8rem; color:var(--color-text-muted); margin-bottom:0.5rem;"></p>
                                     <h2 class="quiz-question-text reader-q-text-lg" id="combo-stem" style="margin-bottom:1rem;"></h2>
-                                    <div id="combo-statements" style="margin-bottom:1.25rem;"></div>
+                                    <div id="combo-statements" style="margin-bottom:0.5rem;"></div>
+                                    <p id="combo-judge-hint" style="font-size:0.8rem; color:var(--color-text-muted); margin:0 0 1rem;"></p>
                                     <div class="limits-options-grid mb-6" id="combo-options-container"></div>
                                     <div class="quiz-feedback is-hidden" id="combo-feedback-panel" role="status" aria-live="polite">
                                         <div class="feedback-icon" id="combo-feedback-icon">
@@ -749,6 +759,7 @@
                                     </div>
                                 </div>
                                 <div class="quiz-card-footer justify-end">
+                                    <button id="combo-judge-submit" class="btn btn-primary" data-click="submitComboJudgments" disabled style="margin-right:auto;"><i class="fa-solid fa-check-double" aria-hidden="true"></i> 진술 판정 제출</button>
                                     <button id="next-combo-btn" class="btn btn-success is-hidden" data-click="nextComboDrill">다음 문제 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
                                 </div>
                             </div>
@@ -757,6 +768,25 @@
 
                     <!-- 결과 -->
                     <div id="combo-result" class="is-hidden"></div>
+                </div>
+
+                <!-- 4-2. 취약 진술 리뷰 Panel -->
+                <div id="trainer-weak-panel" class="is-hidden">
+                    <div class="sim-arena-header mb-6">
+                        <button class="btn btn-secondary" data-click="exitTrainerSubView"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
+                        <div class="sim-title-group">
+                            <h4>취약 진술 리뷰</h4>
+                            <span class="badge badge-quiz-cat">진술 단위 약점</span>
+                        </div>
+                    </div>
+                    <div class="trainer-arena">
+                        <div class="quiz-card">
+                            <div class="quiz-body">
+                                <p id="weak-summary" style="color:var(--color-text-muted); margin-bottom:1rem;"></p>
+                                <div id="weak-list"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- 5. Blending Calculator Panel -->

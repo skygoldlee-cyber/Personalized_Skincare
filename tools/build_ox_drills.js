@@ -24,6 +24,7 @@
 const fs = require('fs');
 const path = require('path');
 const { stableId } = require('./build/id-factory.js');
+const { inferTags } = require('./drill-utils.js');
 
 const ROOT = path.resolve(__dirname, '..');
 const EXAMS_DIR = path.join(ROOT, 'data', 'exams');
@@ -125,7 +126,8 @@ function buildOxItems(examKey, exam) {
         sid: stableId(subjKey, 'bank', 'st', `${q.id}|${idx}|${statement}`),
         derivedFrom: `${q.id}#${idx + 1}`,
         explain: q.explanation || '',
-        tags: [mode === 'fact' ? '명제판정' : '정답판정'],
+        tags: [mode === 'fact' ? '명제판정' : '정답판정',
+          ...inferTags(context || '', statement)],
         source: exam.title || examKey,
       });
     });

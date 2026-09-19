@@ -76,7 +76,9 @@ import {
     nextOxDrill,
     openComboDrillSetup,
     startComboDrill,
-    nextComboDrill
+    nextComboDrill,
+    submitComboJudgments,
+    openWeakReview
 } from './views/trainer-drills.js';
 import {
     togglePomodoro,
@@ -789,6 +791,8 @@ window.nextOxDrill = nextOxDrill;
 window.openComboDrillSetup = openComboDrillSetup;
 window.startComboDrill = startComboDrill;
 window.nextComboDrill = nextComboDrill;
+window.submitComboJudgments = submitComboJudgments;
+window.openWeakReview = openWeakReview;
 window.startMockExamSim = startMockExamSim;
 window.startWeakExam = startWeakExam;
 window.submitCalcAnswer = submitCalcAnswer;

@@ -83,7 +83,7 @@ function deriveComboAnswer(q) {
  * 반환값을 q.options에 넣기 전 validateQuestion으로 정답 유일성을 재확인할 것.
  * (진술이 적어 조합이 부족하면 count 미만으로 반환될 수 있음)
  */
-function generateComboOptions(allIds, truthIds, { count = 5, rng = Math.random } = {}) {
+function generateComboOptions(allIds, truthIds, { count = 5, rng = Math.random, banFull = false } = {}) {
   const truthSet = new Set(truthIds);
   const eq = (arr) => arr.length === truthSet.size && arr.every(id => truthSet.has(id));
   const seen = new Set([[...truthIds].sort().join(',')]);
@@ -92,6 +92,8 @@ function generateComboOptions(allIds, truthIds, { count = 5, rng = Math.random }
   let guard = 0;
   while (options.length < count && guard++ < 500) {
     const size = 1 + Math.floor(rng() * allIds.length);
+    // banFull: 정답이 전체 집합이 아닐 때 "모두 고르기" 오지를 제한 (패턴 단조로움 방지)
+    if (banFull && size === allIds.length) continue;
     const members = [...allIds].sort(() => rng() - 0.5).slice(0, size);
     const key = members.slice().sort().join(',');
     if (seen.has(key) || eq(members)) continue;
@@ -191,6 +193,8 @@ function gradeAnswer(q, response) {
       return {
         id: s.id,
         sid: s.sid,
+        conceptId: s.conceptId,
+        text: s.text,
         truth: s.truth,
         userJudged,
         judgedCorrect: userJudged === null ? null : userJudged === s.truth,

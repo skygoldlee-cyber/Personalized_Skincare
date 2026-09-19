@@ -12,7 +12,13 @@
  *                   → 발문은 "…으로 옳은 것을 모두 고른 것은?"으로 긍정 정규화
  *   mode 'answer' — 회상형·분류형 선지(고유명사·수치): truth = 정답 여부
  *                   → 발문 꼬리를 "…모두 고른 것은?"으로 변환 (극성 보존)
+ *   mode 'blank'  — 단답형: 정답 + 과목 정답 풀 오답 추첨으로 진술 구성
+ *                   다중 빈칸은 (A)/(B) 각각 1문항 생성
  *   '위 ①②③ 모두'류 메타 선지가 정답이면 원형 숫자 개수만큼 실질 선지를 참으로 처리
+ *
+ *   진술 explain은 중복 저장하지 않음(문항 explain으로 폴백) — 번들 크기 절감
+ *   conceptId = explanation의 첫 교재 L#### (같은 구간 진술 = 개념 클러스터)
+ *   id = stableId(문항 id) — 재생성 순서와 무관하게 안정
  *
  * 제외: ㄱㄴㄷ 조합형 발문, 참 진술 0개 그룹, 진술 2개 미만
  *
@@ -26,6 +32,7 @@
 const fs = require('fs');
 const path = require('path');
 const { stableId } = require('./build/id-factory.js');
+const { inferTags } = require('./drill-utils.js');
 
 const ROOT = path.resolve(__dirname, '..');
 const EXAMS_DIR = path.join(ROOT, 'data', 'exams');
@@ -167,11 +174,14 @@ function buildAnswerPools(examDataMap) {
     const pool = { num: new Map(), term: new Map() };
     for (const q of exam.questions) {
       if (q.type !== 'blank') continue;
-      const canonical = String(q.answer || '').split(',')[0].trim();
-      if (!canonical) continue;
-      const entry = { text: canonical, qid: q.id };
-      pool[answerType(canonical)].set(normKey(canonical), entry);
-      global[answerType(canonical)].set(normKey(canonical), entry);
+      const parts = String(q.answer || '').split(',').map(s => s.trim()).filter(Boolean);
+      // 다중 빈칸은 (A)=parts[0], (B)=parts[1]을 각각 풀에 등록 — 나머지는 허용 답안 변형
+      const blanks = /\(\s*B\s*\)|\*\*\[\s*\(B\)/.test(q.question) ? parts.slice(0, 2) : parts.slice(0, 1);
+      for (const canonical of blanks) {
+        const entry = { text: canonical, qid: q.id };
+        pool[answerType(canonical)].set(normKey(canonical), entry);
+        global[answerType(canonical)].set(normKey(canonical), entry);
+      }
     }
     bySubject[key] = pool;
   }
@@ -182,8 +192,9 @@ function buildAnswerPools(examDataMap) {
  * 오답 선지 선정: 같은 유형(수치/용어) 풀에서 추첨하되,
  * 정답(허용 답안 전부)과 정규화 후 부분문자열 관계면 모호하므로 제외.
  */
-function pickDistractors(q, pool, count, rng) {
-  const accepts = String(q.answer || '').split(',').map(s => normKey(s)).filter(Boolean);
+function pickDistractors(q, pool, count, rng, acceptsRaw) {
+  const accepts = (acceptsRaw || String(q.answer || '').split(','))
+    .map(s => normKey(s)).filter(Boolean);
   const canonical = accepts[0];
   const ambiguous = (cand) =>
     accepts.some(a => a.includes(cand) || cand.includes(a));
@@ -200,18 +211,23 @@ function pickDistractors(q, pool, count, rng) {
   return others.slice(0, count).map(e => e.text);
 }
 
-/** 단답형 → combo 문항 변환 */
-function buildBlankCombo(q, idx, examKey, exam, pools, globalPool, genOpts) {
+/**
+ * 단답형 → combo 문항 변환
+ * @param {string} blankLabel 'A' | 'B' — 다중 빈칸 문항은 빈칸별로 1문씩 생성
+ */
+function buildBlankCombo(q, blankLabel, examKey, exam, pools, globalPool, genOpts) {
   const subject = SUBJECT_NUM[examKey];
   const subjKey = SUBJECT_KEY[examKey] || examKey;
-  const canonical = String(q.answer || '').split(',')[0].trim();
+  const parts = String(q.answer || '').split(',').map(s => s.trim()).filter(Boolean);
+  const canonical = blankLabel === 'B' ? parts[1] : parts[0];
   if (!canonical) return null;
+  const accepts = blankLabel === 'B' ? [canonical] : parts;
 
-  const rng = seededRng(q.id + '|blank');
-  let distractors = pickDistractors(q, pools[examKey], 4, rng);
+  const rng = seededRng(q.id + '|blank' + blankLabel);
+  let distractors = pickDistractors(q, pools[examKey], 4, rng, accepts);
   // 과목 내 풀이 부족하면 전체 풀로 보충 (과목3 blank 1문 등)
   if (distractors.length < 4) {
-    const extra = pickDistractors(q, globalPool, 4 - distractors.length, rng)
+    const extra = pickDistractors(q, globalPool, 4 - distractors.length, rng, accepts)
       .filter(t => !distractors.includes(t) && normKey(t) !== normKey(canonical));
     distractors = [...distractors, ...extra];
   }
@@ -226,32 +242,46 @@ function buildBlankCombo(q, idx, examKey, exam, pools, globalPool, genOpts) {
     const j = Math.floor(rng() * (i + 1));
     [stmts[i], stmts[j]] = [stmts[j], stmts[i]];
   }
+  const conceptId = extractConceptId(q.explanation, q.id);
   const statements = stmts.map((s, i) => ({
     id: STMT_LABELS[i],
-    sid: stableId(subjKey, 'bank', 'st', `${q.id}|blank${i}|${s.text}`),
+    sid: stableId(subjKey, 'bank', 'st', `${q.id}|blank${blankLabel}${i}|${s.text}`),
+    conceptId,
     text: s.text,
     truth: s.truth,
-    explain: q.explanation || '',
   }));
 
-  const stem = `${cleanBlankStem(q.question)} — (A)에 해당하는 것을 모두 고르시오.`;
+  const stem = `${cleanBlankStem(q.question)} — (${blankLabel})에 해당하는 것을 모두 고르시오.`;
   const allIds = statements.map(s => s.id);
   const truthIds = statements.filter(s => s.truth).map(s => s.id);
 
   return {
-    id: `combo-${String(subject).padStart(2, '0')}-${String(idx).padStart(4, '0')}`,
+    id: stableId(subjKey, 'bank', 'combo', `${q.id}|${blankLabel}`),
     subject,
     type: 'combo',
     points: 4,
     citation: buildCitation(q, examKey, q.explanation),
     stem,
     statements,
-    options: genOpts(allIds, truthIds, { count: 5, rng: seededRng(q.id) }),
-    tags: ['자동변환', '정답판정'],
+    options: genOpts(allIds, truthIds, {
+      count: 5, rng: seededRng(q.id + '|' + blankLabel),
+      banFull: truthIds.length !== allIds.length,
+    }),
+    tags: ['자동변환', '정답판정', ...inferTags(stem, ...statements.map(s => s.text))],
     derivedFrom: q.id,
     explain: q.explanation || '',
     source: exam.title || examKey,
   };
+}
+
+/**
+ * conceptId 도출: explanation의 첫 교재 라인(L####) — 같은 교재 구간의 진술을
+ * "개념 클러스터"로 묶어 혼동쌍 대조 학습(전략 §2-⑤)과 취약 진술 그룹핑에 사용.
+ * 교재 근거가 없으면 원문 id로 폴백 (같은 문항의 진술끼리라도 묶임).
+ */
+function extractConceptId(explanation, qid) {
+  const m = String(explanation || '').match(/L\d{3,5}/);
+  return m ? m[0] : `q:${qid}`;
 }
 
 /** explanation에서 '교재: Lxxxx'·법령 근거를 추출해 citation 생성 */
@@ -270,7 +300,7 @@ function buildCitation(q, examKey, explanation) {
 function buildComboItems(examKey, exam, genOpts, pools, globalPool) {
   const items = [];
   const stats = {
-    choice: 0, fact: 0, answer: 0, blank: 0,
+    choice: 0, fact: 0, answer: 0, blank: 0, blankB: 0,
     skipComboStem: 0, skipStem: 0, skipNoTruth: 0, skipFew: 0, skipBlank: 0,
     allOfAbove: 0, errors: [],
   };
@@ -279,9 +309,12 @@ function buildComboItems(examKey, exam, genOpts, pools, globalPool) {
 
   for (const q of exam.questions) {
     if (q.type === 'blank') {
-      const it = buildBlankCombo(q, items.length + 1, examKey, exam, pools, globalPool, genOpts);
-      if (it) { items.push(it); stats.blank++; }
-      else { stats.skipBlank++; stats.errors.push(`${q.id}: 단답형 변환 실패 (오답 풀 부족)`); }
+      const hasB = /\(\s*B\s*\)|\*\*\[\s*\(B\)/.test(q.question);
+      for (const label of hasB ? ['A', 'B'] : ['A']) {
+        const it = buildBlankCombo(q, label, examKey, exam, pools, globalPool, genOpts);
+        if (it) { items.push(it); label === 'B' ? stats.blankB++ : stats.blank++; }
+        else { stats.skipBlank++; stats.errors.push(`${q.id}: 단답형(${label}) 변환 실패 (오답 풀 부족)`); }
+      }
       continue;
     }
     if (q.type !== 'choice') continue;
@@ -306,6 +339,7 @@ function buildComboItems(examKey, exam, genOpts, pools, globalPool) {
     }
 
     // 진술 구성: 자기참조 선지 제외, 라벨 ㄱㄴㄷㄹㅁ 부여
+    const conceptId = extractConceptId(q.explanation, q.id);
     const statements = [];
     q.options.forEach((optText, idx) => {
       if (SELF_REF_RE.test(optText)) return;
@@ -320,9 +354,9 @@ function buildComboItems(examKey, exam, genOpts, pools, globalPool) {
       statements.push({
         id: STMT_LABELS[statements.length],
         sid: stableId(subjKey, 'bank', 'st', `${q.id}|${idx}|${String(optText).trim()}`),
+        conceptId,
         text: String(optText).trim(),
         truth,
-        explain: q.explanation || '',
       });
     });
 
@@ -346,10 +380,11 @@ function buildComboItems(examKey, exam, genOpts, pools, globalPool) {
     const options = genOpts(allIds, truthIds, {
       count: 5,
       rng: seededRng(q.id),
+      banFull: truthIds.length !== allIds.length,
     });
 
     items.push({
-      id: `combo-${String(subject).padStart(2, '0')}-${String(items.length + 1).padStart(4, '0')}`,
+      id: stableId(subjKey, 'bank', 'combo', q.id),
       subject,
       type: 'combo',
       points: 4,
@@ -357,7 +392,8 @@ function buildComboItems(examKey, exam, genOpts, pools, globalPool) {
       stem,
       statements,
       options,
-      tags: ['자동변환', mode === 'fact' ? '명제판정' : '정답판정'],
+      tags: ['자동변환', mode === 'fact' ? '명제판정' : '정답판정',
+        ...inferTags(stem, ...statements.map(s => s.text))],
       derivedFrom: q.id,
       explain: q.explanation || '',
       source: exam.title || examKey,
@@ -487,7 +523,7 @@ async function main() {
     }
 
     totalItems += valid.length;
-    console.log(`[combo-drills] ${key}: choice ${stats.choice} + blank → combo ${valid.length} (fact ${stats.fact}/answer ${stats.answer}/blank ${stats.blank}, 조합발문 스킵 ${stats.skipComboStem}, '모두'복구 ${stats.allOfAbove})`);
+    console.log(`[combo-drills] ${key}: choice ${stats.choice} + blank → combo ${valid.length} (fact ${stats.fact}/answer ${stats.answer}/blank ${stats.blank}+B${stats.blankB}, 조합발문 스킵 ${stats.skipComboStem}, '모두'복구 ${stats.allOfAbove})`);
     const allErrs = [...stats.errors, ...errs];
     if (allErrs.length) {
       console.log(`  ⚠ 오류 ${allErrs.length}건:`);

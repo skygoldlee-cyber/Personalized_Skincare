@@ -160,3 +160,31 @@ test('scoreExam: 과목별 집계 + 총점 60%/과목 40% 판정', () => {
   assert.equal(failSubj.passed, false);
   assert.ok(failSubj.totalPct >= 0.6, '총점은 60% 이상인데 과락으로 불합격이어야 함');
 });
+
+// ── generateComboOptions banFull ─────────────────────────────
+
+test('generateComboOptions: banFull이면 전체집합 오지를 만들지 않음', () => {
+    const allIds = ['ㄱ', 'ㄴ', 'ㄷ', 'ㄹ'];
+    const opts = generateComboOptions(allIds, ['ㄱ'], { count: 5, banFull: true });
+    assert.equal(opts.length, 5);
+    assert.ok(!opts.some(o => o.members.length === allIds.length),
+        '전체 진술 집합 오지가 포함되면 안 됨');
+    // 정답 옵션은 반드시 존재
+    assert.ok(opts.some(o => o.members.length === 1 && o.members[0] === 'ㄱ'));
+});
+
+test('generateComboOptions: 정답이 전체집합이면 banFull 없이 정상 생성', () => {
+    const allIds = ['ㄱ', 'ㄴ', 'ㄷ'];
+    const opts = generateComboOptions(allIds, ['ㄱ', 'ㄴ', 'ㄷ'], { count: 5 });
+    assert.ok(opts.some(o => o.members.length === 3));
+});
+
+// ── perStatement text/conceptId ──────────────────────────────
+
+test('gradeAnswer: perStatement에 진술 text·conceptId 포함', () => {
+    const q = SAMPLE_QUESTIONS.find(x => x.type === 'combo');
+    const res = gradeAnswer(q, { optionId: q.answer });
+    const s0 = res.perStatement[0];
+    assert.equal(s0.text, q.statements[0].text);
+    assert.equal(s0.conceptId, q.statements[0].conceptId);
+});

@@ -12,7 +12,7 @@ import { shuffle } from '../utils.js';
 import { vibrate, showToast, HAPTIC } from '../ui-utils.js';
 import { DataLoader } from '../data-loader.js';
 import { gradeAnswer } from '../questions.js';
-import { recordStatementJudgments, getWeakStatements } from '../statement-tracker.js';
+import { recordStatementJudgments, getWeakStatements, getDueStatementSids } from '../statement-tracker.js';
 import { recordStudyActivity } from '../study-tracker.js';
 
 const DRILL_COUNT = 10;
@@ -70,14 +70,24 @@ export function startOxDrill(subjectNum) {
     });
 }
 
-/** 취약 진술 문항을 최대 절반까지 우선 편성하고 나머지는 무작위로 채움 */
-function pickDrillItems(items, count) {
+/**
+ * 기한 도래 진술(SM-2) → 오판 진술 순으로 최대 절반까지 우선 편성, 나머지는 무작위.
+ * @param {Function} sidsOf 문항 → sid 배열 (ox는 [i.sid], combo는 진술 sids)
+ */
+function pickPrioritized(items, count, sidsOf) {
+    const dueSids = new Set(getDueStatementSids());
     const weakSids = new Set(getWeakStatements().map(w => w.sid));
-    const weakPool = items.filter(i => i.sid && weakSids.has(i.sid));
-    const restPool = items.filter(i => !i.sid || !weakSids.has(i.sid));
-    const weakPick = shuffle(weakPool).slice(0, Math.ceil(count / 2));
-    const restPick = shuffle(restPool).slice(0, count - weakPick.length);
-    return shuffle([...weakPick, ...restPick]);
+    const hit = (i, set) => sidsOf(i).some(s => s && set.has(s));
+    const due = items.filter(i => hit(i, dueSids));
+    const weak = items.filter(i => !hit(i, dueSids) && hit(i, weakSids));
+    const rest = items.filter(i => !hit(i, dueSids) && !hit(i, weakSids));
+    const picked = [...shuffle(due), ...shuffle(weak)].slice(0, Math.ceil(count / 2));
+    return shuffle([...picked, ...shuffle(rest).slice(0, count - picked.length)]);
+}
+
+/** 취약 진술 문항 우선 편성 (O/X: 문항 sid 기준) */
+function pickDrillItems(items, count) {
+    return pickPrioritized(items, count, i => [i.sid]);
 }
 
 function renderOxDrillQuestion() {
@@ -125,7 +135,8 @@ function submitOxDrillAnswer(selectedBtn, val) {
     vibrate(isCorrect ? HAPTIC.correct : HAPTIC.wrong);
 
     // 진술 단위 추적 — ox 문항 자체가 1진술이므로 sid에 판정 결과를 기록
-    recordStatementJudgments([{ sid: q.sid, judgedCorrect: isCorrect }]);
+    // text/truth도 함께 저장해 취약 진술 리뷰에서 원문을 표시한다
+    recordStatementJudgments([{ sid: q.sid, judgedCorrect: isCorrect, text: q.statement, truth: q.truth }]);
     recordStudyActivity({ quizzes: 1, correct: isCorrect ? 1 : 0 });
 
     const oxBox = document.getElementById('oxdrill-ox-container');
@@ -240,6 +251,7 @@ export function startComboDrill(subjectNum) {
         st.currentIndex = 0;
         st.correctCount = 0;
         st.solvedList = [];
+        st.judgments = {};
 
         if (st.data.length === 0) {
             showToast('이 과목에는 출제 가능한 합답형 문항이 없습니다.', 'warning');
@@ -260,19 +272,16 @@ export function startComboDrill(subjectNum) {
     });
 }
 
-/** 진술 중 취약 sid를 포함하는 문항을 최대 절반까지 우선 편성 */
+/** 진술 중 취약 sid를 포함하는 문항 우선 편성 (combo: 진술 sids 기준) */
 function pickComboItems(items, count) {
-    const weakSids = new Set(getWeakStatements().map(w => w.sid));
-    const hasWeak = q => (q.statements || []).some(s => s.sid && weakSids.has(s.sid));
-    const weakPick = shuffle(items.filter(hasWeak)).slice(0, Math.ceil(count / 2));
-    const restPick = shuffle(items.filter(q => !hasWeak(q))).slice(0, count - weakPick.length);
-    return shuffle([...weakPick, ...restPick]);
+    return pickPrioritized(items, count, q => (q.statements || []).map(s => s.sid));
 }
 
 function renderComboQuestion() {
     const st = state.trainer.combo;
     const q = st.data[st.currentIndex];
     if (!q) return;
+    st.judgments = {}; // 진술별 O/X 판정 (2단계 응시) 초기화
 
     const bar = document.getElementById('combo-progress-bar');
     const ind = document.getElementById('combo-progress-indicator');
@@ -298,7 +307,15 @@ function renderComboQuestion() {
             `<div class="combo-stmt" data-stmt-id="${esc(s.id)}">
                 <span class="combo-stmt-id">${esc(s.id)}</span>
                 <span class="combo-stmt-text">${safeTextWithBreaks(s.text)}</span>
+                <span class="combo-judge-btns" role="group" aria-label="진술 ${esc(s.id)} 판정">
+                    <button type="button" class="combo-judge-btn" data-v="true">O</button>
+                    <button type="button" class="combo-judge-btn" data-v="false">X</button>
+                </span>
             </div>`).join('');
+        stmtsEl.querySelectorAll('.combo-judge-btn').forEach(btn => {
+            btn.addEventListener('click', () => toggleComboJudgment(btn));
+        });
+        updateComboJudgeHint(q);
     }
 
     if (optsEl) {
@@ -315,12 +332,73 @@ function renderComboQuestion() {
     }
 }
 
+/** 진술 O/X 토글 — 같은 버튼 재클릭 시 해제 */
+function toggleComboJudgment(btn) {
+    const st = state.trainer.combo;
+    const q = st.data[st.currentIndex];
+    if (!q) return;
+    const row = btn.closest('.combo-stmt');
+    const stmtId = row && row.dataset.stmtId;
+    if (!stmtId) return;
+    const val = btn.dataset.v === 'true';
+    if (st.judgments[stmtId] === val) delete st.judgments[stmtId];
+    else st.judgments[stmtId] = val;
+    row.querySelectorAll('.combo-judge-btn').forEach(b =>
+        b.classList.toggle('active', st.judgments[stmtId] === (b.dataset.v === 'true')));
+    updateComboJudgeHint(q);
+}
+
+/** members 집합과 정확히 일치하는 옵션 탐색 */
+function findComboOption(q, idSet) {
+    return (q.options || []).find(o =>
+        (o.members || []).length === idSet.size && o.members.every(m => idSet.has(m)));
+}
+
+/** 판정 진행 힌트 + 제출 버튼 활성화 갱신 */
+function updateComboJudgeHint(q) {
+    const st = state.trainer.combo;
+    const hint = document.getElementById('combo-judge-hint');
+    const submitBtn = document.getElementById('combo-judge-submit');
+    const total = q.statements.length;
+    const judged = Object.keys(st.judgments).length;
+    if (hint) {
+        if (judged === 0) {
+            hint.textContent = '각 진술을 O/X로 판정한 뒤 제출하거나, 아래에서 조합을 바로 고르세요.';
+        } else if (judged < total) {
+            hint.textContent = `진술 판정 중… ${judged}/${total}`;
+        } else {
+            const trueSet = new Set(q.statements.filter(s => st.judgments[s.id]).map(s => s.id));
+            const opt = findComboOption(q, trueSet);
+            const label = [...trueSet].join(',') || '(없음)';
+            hint.textContent = opt
+                ? `판정 조합 ${label} — 선지 ${OPTION_INDICATORS[q.options.indexOf(opt)]}와 일치합니다.`
+                : `판정 조합 ${label} — 일치하는 선지가 없습니다.`;
+        }
+    }
+    if (submitBtn) submitBtn.disabled = judged < total;
+}
+
+/** 2단계 응시: 전 진술 판정 후 제출 — 판정 집합과 일치하는 선지로 응답 (없으면 판정만 제출) */
+export function submitComboJudgments() {
+    const st = state.trainer.combo;
+    const q = st.data[st.currentIndex];
+    if (!q) return;
+    if (q.statements.some(s => !(s.id in st.judgments))) {
+        showToast('모든 진술을 O/X로 판정해 주세요.', 'warning');
+        return;
+    }
+    const trueSet = new Set(q.statements.filter(s => st.judgments[s.id]).map(s => s.id));
+    const opt = findComboOption(q, trueSet);
+    submitComboAnswer(null, opt ? opt.id : null, opt ? q.options.indexOf(opt) : -1);
+}
+
 function submitComboAnswer(selectedBtn, optId, optIdx) {
     const st = state.trainer.combo;
     const q = st.data[st.currentIndex];
     if (!q) return;
 
-    const res = gradeAnswer(q, { optionId: optId });
+    const judgments = Object.keys(st.judgments || {}).length ? st.judgments : null;
+    const res = gradeAnswer(q, { optionId: optId, judgments });
     const isCorrect = res.correct;
     vibrate(isCorrect ? HAPTIC.correct : HAPTIC.wrong);
 
@@ -336,10 +414,22 @@ function submitComboAnswer(selectedBtn, optId, optIdx) {
             if (idx === correctIdx) btn.classList.add('correct');
         });
     }
-    if (!isCorrect) selectedBtn.classList.add('incorrect');
+    if (!isCorrect && selectedBtn) selectedBtn.classList.add('incorrect');
     else st.correctCount++;
 
-    const selectedLabel = OPTION_INDICATORS[optIdx] || optId;
+    // 진술 판정 버튼 잠금 (제출 후 변경 불가)
+    const stmtsArea = document.getElementById('combo-statements');
+    if (stmtsArea) stmtsArea.querySelectorAll('.combo-judge-btn').forEach(b => { b.disabled = true; });
+    const judgeSubmit = document.getElementById('combo-judge-submit');
+    if (judgeSubmit) judgeSubmit.disabled = true;
+
+    // 판정 모드(선지 미일치)일 때는 판정 조합 자체를 선택 라벨로 표시
+    const judgedSet = judgments
+        ? q.statements.filter(s => judgments[s.id]).map(s => s.id).join(',')
+        : null;
+    const selectedLabel = optIdx >= 0
+        ? (OPTION_INDICATORS[optIdx] || optId)
+        : (judgedSet !== null ? `판정(${judgedSet || '없음'})` : '—');
     const correctLabel = correctIdx >= 0 ? OPTION_INDICATORS[correctIdx] : res.correctAnswer;
     st.solvedList.push({
         question: q.stem,
@@ -427,6 +517,7 @@ function renderComboResult() {
                       misjudged.map(p => `
                         <div style="padding:0.75rem; margin-bottom:0.5rem; border:1px solid var(--border-color); border-radius:8px; background:var(--bg-card);">
                             <p style="font-size:0.85rem; margin-bottom:0.4rem;"><strong>${esc(p.id)}</strong> — 정답 ${p.truth ? 'O' : 'X'}, 내 판정 ${p.userJudged ? 'O' : 'X'}</p>
+                            ${p.text ? `<p style="font-size:0.9rem; margin-bottom:0.4rem;">${safeTextWithBreaks(p.text)}</p>` : ''}
                             ${p.explain ? `<p style="font-size:0.85rem; color:var(--color-text-muted);">${safeTextWithBreaks(p.explain)}</p>` : ''}
                         </div>`).join('')}
             </div>
@@ -435,4 +526,81 @@ function renderComboResult() {
                 <button class="btn btn-secondary" data-click="exitTrainerSubView"><i class="fa-solid fa-house"></i> 메뉴로</button>
             </div>
         </div>`;
+}
+
+/* =======================================================
+   🎯 취약 진술 리뷰 — 누적 오판 진술 열람 + 개념 그룹핑
+   ======================================================= */
+
+const SID_SUBJECT = { law: 1, manufacturing: 2, safety: 3, understanding: 4 };
+
+/** sid → 과목 번호 (생성형 prefix 또는 파일럿 st-0N- 형식) */
+function sidSubject(sid) {
+    const s = String(sid || '');
+    const m = s.match(/^(law|manufacturing|safety|understanding)_/);
+    if (m) return SID_SUBJECT[m[1]];
+    const p = s.match(/^st-0(\d)-/);
+    return p ? parseInt(p[1], 10) : null;
+}
+
+/** 취약 진술 패널 열기 */
+export function openWeakReview() {
+    state.trainer.activeSubView = 'weak';
+    const menu = document.getElementById('trainer-menu-panel');
+    const panel = document.getElementById('trainer-weak-panel');
+    if (menu) menu.classList.add('is-hidden');
+    if (panel) panel.classList.remove('is-hidden');
+    renderWeakReview();
+}
+
+function renderWeakReview() {
+    const listEl = document.getElementById('weak-list');
+    const summaryEl = document.getElementById('weak-summary');
+    if (!listEl) return;
+
+    const weak = getWeakStatements(); // w 내림차순 (t=텍스트, truth, cid 포함)
+    const due = new Set(getDueStatementSids());
+
+    if (summaryEl) {
+        summaryEl.textContent = weak.length === 0
+            ? '아직 오판 이력이 없습니다. O/X·합답형 드릴을 풀면 진술 단위로 추적됩니다.'
+            : `취약 진술 ${weak.length}개 · 오늘 복습 대상 ${weak.filter(w => due.has(w.sid)).length}개`;
+    }
+
+    if (weak.length === 0) {
+        listEl.innerHTML = '<p style="text-align:center; color:var(--color-text-muted); padding:2rem 0;">기록된 취약 진술이 없습니다.</p>';
+        return;
+    }
+
+    // conceptId 클러스터링 — 같은 교재 구간(L####)의 진술을 개념 그룹으로 묶음
+    const groups = new Map();
+    for (const w of weak) {
+        const key = w.cid || `solo:${w.sid}`;
+        if (!groups.has(key)) groups.set(key, { cid: w.cid, items: [] });
+        groups.get(key).items.push(w);
+    }
+    // 그룹 정렬: 최대 오판 횟수 내림차순
+    const sorted = [...groups.values()].sort(
+        (a, b) => Math.max(...b.items.map(i => i.w)) - Math.max(...a.items.map(i => i.w)));
+
+    listEl.innerHTML = sorted.map(g => {
+        const header = g.cid && g.items.length > 1
+            ? `<div class="weak-group-header"><i class="fa-solid fa-link"></i> 개념 ${esc(g.cid)} — 취약 진술 ${g.items.length}개 (혼동쌍 후보)</div>`
+            : '';
+        const rows = g.items.map(w => {
+            const sub = sidSubject(w.sid);
+            const dueBadge = due.has(w.sid) ? '<span class="weak-due-badge">복습 대상</span>' : '';
+            return `<div class="weak-row">
+                <div class="weak-row-head">
+                    <span class="weak-truth ${w.truth ? 'is-o' : 'is-x'}">${w.truth === true ? 'O' : w.truth === false ? 'X' : '?'}</span>
+                    ${sub ? `<span class="weak-subject">과목${sub}</span>` : ''}
+                    ${dueBadge}
+                    <span class="weak-stat">오판 ${w.w}회 / 판정 ${w.j}회${w.lw ? ` · 최근 ${w.lw}` : ''}</span>
+                    ${sub ? `<button class="btn btn-secondary weak-drill-btn" data-click="startOxDrill" data-arg="${sub}">드릴</button>` : ''}
+                </div>
+                <p class="weak-text">${safeTextWithBreaks(w.t || `(${w.sid})`)}</p>
+            </div>`;
+        }).join('');
+        return `<div class="weak-group">${header}${rows}</div>`;
+    }).join('');
 }

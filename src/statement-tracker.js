@@ -2,7 +2,8 @@
 //
 // gradeAnswer()의 perStatement 결과를 두 저장소로 연결한다:
 // - fc_spaced_repetition: sid를 카드 ID로 사용해 SM-2 스케줄 갱신 (복습 시점 관리)
-// - statement_stats: 진술별 판정 누적 통계 { sid: { j, w, lw } } (약점 리스트용)
+// - statement_stats: 진술별 판정 누적 통계 { sid: { j, w, lw, t, truth, cid } } (약점 리스트용)
+//   t=진술 텍스트, truth=정답 O/X, cid=conceptId(개념 그룹) — 취약 진술 리뷰 화면용 메타
 //
 // sid(진술 전역 안정 ID)가 없는 진술은 문항 안에서만 유효하므로 추적하지 않는다.
 
@@ -25,8 +26,11 @@ export function recordStatementJudgments(perStatement) {
     for (const s of perStatement) {
         if (!s || !s.sid || typeof s.judgedCorrect !== 'boolean') continue;
         updateCardSchedule(s.sid, s.judgedCorrect);
-        const cur = stats[s.sid] || { j: 0, w: 0, lw: null };
+        const cur = stats[s.sid] || { j: 0, w: 0, lw: null, t: '', truth: null, cid: null };
         cur.j += 1;
+        if (s.text) cur.t = s.text;
+        if (typeof s.truth === 'boolean') cur.truth = s.truth;
+        if (s.conceptId) cur.cid = s.conceptId;
         if (!s.judgedCorrect) {
             cur.w += 1;
             cur.lw = today;

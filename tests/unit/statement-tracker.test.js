@@ -59,7 +59,7 @@ test('recordStatementJudgments: 오판 진술만 오판 통계 누적', () => {
     const res = gradeAnswer(comboQ, { optionId: '2' });
     const n = recordStatementJudgments(res.perStatement);
     assert.equal(n, 3);
-    assert.deepEqual(getStatementStat('st-t-1'), { j: 1, w: 0, lw: null });
+    assert.deepEqual(getStatementStat('st-t-1'), { j: 1, w: 0, lw: null, t: '참1', truth: true, cid: null });
     assert.equal(getStatementStat('st-t-3').w, 1);
     assert.ok(getStatementStat('st-t-3').lw);
 });
