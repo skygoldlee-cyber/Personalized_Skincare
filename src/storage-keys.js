@@ -34,6 +34,9 @@ export const STORAGE_KEYS = {
   // 트레이너
   CALC_HISTORY: 'calc_history',
 
+  // 합답형/OX 진술 단위 오판 통계 (statement-tracker.js)
+  STATEMENT_STATS: 'statement_stats',
+
   // 교재 리더
   READER_LAST_POSITION: 'readerLastPosition',
   READER_FONT_SCALE: 'readerFontScale',
@@ -63,6 +66,7 @@ export const BACKUP_KEYS = [
   STORAGE_KEYS.STUDY_GOALS,
   STORAGE_KEYS.CALC_HISTORY,
   STORAGE_KEYS.FC_MIGRATED_V2,
+  STORAGE_KEYS.STATEMENT_STATS,
 ];
 
 // 전체 초기화(Reset Progress) 시 제거할 키 목록
