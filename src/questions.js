@@ -40,9 +40,12 @@
  * @property {Option[]} [options]        // single/combo
  * @property {string} [answer]           // single/combo 정답 옵션 id (combo는 도출값과 일치해야 함)
  * @property {string[]} [accept]         // short: 허용 정답 표기들
- * @property {string} [statement]        // ox 전용: 판정 대상 진술
+ * @property {string} [statement]        // ox 전용: 판정 대상 진술(선지 텍스트)
  * @property {boolean} [truth]           // ox 전용: 진술의 참/거짓
- * @property {string} [derivedFrom]      // ox 전용: 원본 문항·진술 역추적 (예: 'q-04-137#ㄴ')
+ * @property {string} [context]          // ox 전용: 발문 맥락 (fact=정제된 주제, answer=원 발문)
+ * @property {'fact'|'answer'} [mode]    // ox 전용: 'fact'=내용 진위 판정 / 'answer'=정답 여부 판정
+ * @property {string} [sid]              // ox/공통: 진술 안정 ID — 오답·SM-2 큐 키
+ * @property {string} [derivedFrom]      // ox 전용: 원본 문항·선지 역추적 (예: 'subject4_q1#4')
  * @property {string} [explain]          // 전체 해설(선택)
  * @property {number} [difficulty]       // 1~5
  * @property {string[]} [tags]           // STANDARD_TAGS 어휘 권장
