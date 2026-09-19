@@ -3,7 +3,7 @@
  * tools/build_combo_drills.js
  * ------------------------------------------------------------
  * data/exams/subjectN.*.js (choice 문항)를 합답형(combo) 드릴 문항으로 변환한다.
- * 합답형 학습전략 §2-①: single 문항의 각 보기를 진술 원자로 펼치고
+ * docs/dev/COMBO_STUDY_STRATEGY.md §2-①: single 문항의 각 보기를 진술 원자로 펼치고
  * truth(명제 참/거짓 또는 정답 여부)로 정답 조합을 도출한다.
  *
  * 변환 규칙

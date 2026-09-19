@@ -4,7 +4,7 @@
  * 스키마: docs/dev/QUESTION_SCHEMA_DESIGN.md (combo 유형)
  * 로드: DataLoader.loadComboDrills() → window.COMBO_PILOT
  *
- * 저작 원칙 (합답형 학습전략 §3):
+ * 저작 원칙 (docs/dev/COMBO_STUDY_STRATEGY.md §3):
  *  - citation 필수 — 출처·인용을 문제 서두에 명기 (렌더링 시 stem 앞 표시)
  *  - 모든 진술은 원문항의 📖 교재 근거 표에 실재하는 사실로 작성
  *  - 거짓 진술은 혼동쌍(주체 바꿔치기·수치 변경·범위 왜곡)으로 구성

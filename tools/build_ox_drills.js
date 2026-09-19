@@ -3,7 +3,7 @@
  * tools/build_ox_drills.js
  * ------------------------------------------------------------
  * data/exams/subjectN.*.js (choice 문항)를 O/X 진위형 드릴 문항으로 펼친다.
- * 합답형 학습전략 §4-①: combo의 진술·single의 보기를 참/거짓 원자로 변환해
+ * docs/dev/COMBO_STUDY_STRATEGY.md §4-①: combo의 진술·single의 보기를 참/거짓 원자로 변환해
  * 진술 정확도(p)를 직접 훈련하는 문항을 자동 생성한다.
  *
  * 출력 형식 (src/questions.js 스키마, type:'ox'):

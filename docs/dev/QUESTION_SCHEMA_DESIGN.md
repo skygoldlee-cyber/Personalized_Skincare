@@ -35,7 +35,7 @@
 | `single` | 단일정답 5지선다 | `options[].correct` | 옵션 id |
 | `combo` | 합답형(ㄱㄴㄷ 조합) | 진술 `truth`로 **도출** | 옵션 id (또는 2단계 응시용 `{optionId, judgments}`) |
 | `short` | 단답형(81~100번) | `accept[]` 표기 목록 | 입력 문자열 |
-| `ox` | 진위형 — 진술 1개의 참/거짓 판정. O/X 드릴 산출물을 담는 유형 (합답형 학습전략 §4-①) | `truth` | `'O'`/`'X'`/boolean |
+| `ox` | 진위형 — 진술 1개의 참/거짓 판정. O/X 드릴 산출물을 담는 유형 ([COMBO_STUDY_STRATEGY.md](./COMBO_STUDY_STRATEGY.md) §4-①) | `truth` | `'O'`/`'X'`/boolean |
 
 ---
 
@@ -115,7 +115,7 @@
 
 - `id` — 문항 내 라벨 (`ㄱ`, `ㄴ`, …)
 - `sid` — **전역 안정 ID**. 진술은 문항이 아니라 독립 추적 가능한 학습 원자다
-  (합답형 학습전략 §2-①③). 오답 통계·SM-2 간격반복 큐의 키로 사용해,
+  ([COMBO_STUDY_STRATEGY.md](./COMBO_STUDY_STRATEGY.md) §2-①③). 오답 통계·SM-2 간격반복 큐의 키로 사용해,
   같은 지식이 여러 문항에 중복 출제돼도 오판이 한 곳으로 누적된다.
 - `conceptId` — 혼동쌍·관련 진술 그룹 (예: `'신고주체'` — "신고 vs 등록" 진술들을 묶어
   나란히 대조하는 학습 화면을 자동 구성, 전략 §2-⑤).
@@ -180,7 +180,7 @@ O/X 드릴 문항을 담는 유형. combo의 `statements[]`와 single의 `option
 ### 태그 표준 어휘 (`STANDARD_TAGS`)
 
 `tags`는 고정 어휘를 권장한다 — "숫자·한도·기한만 모은 카드 덱" 같은 주제별
-자동 필터(합답형 학습전략 §2-④)의 기반:
+자동 필터([COMBO_STUDY_STRATEGY.md](./COMBO_STUDY_STRATEGY.md) §2-④)의 기반:
 
 ```
 수치 | 한도 | 기한 | 금지원료 | 처분기준 | 구성비 | 절차 | 정의

@@ -266,7 +266,7 @@ Personalized_Skincare/
 │   │   ├── manufacturing/      #   2과목
 │   │   ├── safety/             #   3과목
 │   │   └── understanding/      #   4과목
-│   ├── 문제은행/                #   과목N_문제.md (4개, manifest 등록) + 과목N_합답형.md (생성 산출물) + 합답형 학습전략.md
+│   ├── 문제은행/                #   과목N_문제.md (4개, manifest 등록) + 과목N_합답형.md (생성 산출물)
 │   ├── 참조자료/
 │   │   ├── ref_md/             #   HTML/MD 변환본 (42개, ~26MB)
 │   │   ├── 공통/               #   공통 참조자료
@@ -390,6 +390,7 @@ Personalized_Skincare/
     │   ├── MULTI_MACHINE_SETUP.md
     │   ├── FLASHCARD_LOGIC.md
     │   ├── QUESTION_SCHEMA_DESIGN.md #  문항 스키마 + 합답형 변환 설계 (구 문제은행/문항 스키마 설계.md)
+    │   ├── COMBO_STUDY_STRATEGY.md  #     합답형 학습전략 — 진술 원자 단위 학습법 (구 문제은행/합답형 학습전략.md)
     │   ├── MD_TO_HTML_LOGIC.md
     │   ├── TEXTBOOK_AUTHORING_GUIDE.md
     │   ├── AUDIO_HOSTING_GUIDE.md
