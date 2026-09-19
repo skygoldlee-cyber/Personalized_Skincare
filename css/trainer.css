@@ -946,6 +946,7 @@ mark.txt-highlight {
     gap: var(--space-4);
 }
 .ing-input-row {
+    display: flex;
     gap: var(--space-4);
     align-items: center;
     max-width: 500px;
