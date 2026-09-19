@@ -31,7 +31,6 @@ const ROOT = path.resolve(__dirname, '..');
 const EXAMS_DIR = path.join(ROOT, 'data', 'exams');
 const OUT_DIR = path.join(ROOT, 'data', 'drills');
 const MD_DIR = path.join(ROOT, 'content', '문제은행');
-const PILOT_PATH = path.join(OUT_DIR, 'combo_pilot.js');
 const DRY_RUN = process.argv.includes('--dry-run');
 
 const AUTOGEN_HEADER = '// 자동 생성된 합답형 드릴 데이터입니다. 수정하지 마십시오. (tools/build_combo_drills.js)';
@@ -40,7 +39,8 @@ const AUTOGEN_HEADER = '// 자동 생성된 합답형 드릴 데이터입니다.
 
 const NEG_DESC_RE = /옳지 ?않은|맞지 않는|틀린|잘못된|올바르지 않은|적합하지 않은|바람직하지 않은|부적절한|적절하지 않은|맞는 것이 아닌|일치하지 않는|거리가 먼|다른 것은|다른 하나는|해당하지 않는|해당되지 않는/;
 const DESC_RE = /설명|내용|사항|방법|특징|작용|관한|대한|서술|순서|나열/;
-const COMBO_STEM_RE = /모두 고른|조합|ㄱ|ㄴ/;
+// 진짜 ㄱㄴㄷ 조합 발문만 제외 ("조합 향료", "성분과 함량의 조합" 등은 일반 객관식)
+const COMBO_STEM_RE = /모두 고른|ㄱ\s*[.)]/;
 const SELF_REF_RE = /[①②③④⑤⑥⑦⑧⑨⑩]/;
 const ALL_OF_ABOVE_RE = /모두|전부/;
 const SENT_END_RE = /(다|음|함|임|됨|까|나|요)\.?$/;
@@ -137,6 +137,123 @@ const SUBJECT_KEY = { subject1: 'law', subject2: 'manufacturing', subject3: 'saf
 const CIRCLED = ['①', '②', '③', '④', '⑤', '⑥', '⑦', '⑧', '⑨', '⑩'];
 const STMT_LABELS = ['ㄱ', 'ㄴ', 'ㄷ', 'ㄹ', 'ㅁ', 'ㅂ'];
 
+/* ---------- 단답형 → 합답형 변환 (정답 풀링) ---------- */
+
+const BLANK_MARKER_RE = /\*+\[\s*\((A|B)\)\s*\]\s*\*+/g;
+
+/** 빈칸 마커 `**[ (A) ]**` → `(A)` 평문화 */
+function cleanBlankStem(stem) {
+  return String(stem || '').replace(/\s+/g, ' ').replace(BLANK_MARKER_RE, '($1)').trim();
+}
+
+/** 정답 유형 분류: 숫자 포함 → 'num' (수치끼리 풀링), 아니면 'term' */
+function answerType(text) {
+  return /\d/.test(text) ? 'num' : 'term';
+}
+
+/** 정규화 비교키 — 모호성 검사용 (공백·대소문자·괄호 무시) */
+function normKey(s) {
+  return String(s).toLowerCase().replace(/[\s()[\]{}]/g, '');
+}
+
+/**
+ * 단답형 정답 풀 구축: 과목별 + 전체 백업 풀.
+ * 각 문항의 허용 정답 첫 번째를 대표 정답으로 등록.
+ */
+function buildAnswerPools(examDataMap) {
+  const bySubject = {};
+  const global = { num: new Map(), term: new Map() };
+  for (const [key, { data: exam }] of Object.entries(examDataMap)) {
+    const pool = { num: new Map(), term: new Map() };
+    for (const q of exam.questions) {
+      if (q.type !== 'blank') continue;
+      const canonical = String(q.answer || '').split(',')[0].trim();
+      if (!canonical) continue;
+      const entry = { text: canonical, qid: q.id };
+      pool[answerType(canonical)].set(normKey(canonical), entry);
+      global[answerType(canonical)].set(normKey(canonical), entry);
+    }
+    bySubject[key] = pool;
+  }
+  return { bySubject, global };
+}
+
+/**
+ * 오답 선지 선정: 같은 유형(수치/용어) 풀에서 추첨하되,
+ * 정답(허용 답안 전부)과 정규화 후 부분문자열 관계면 모호하므로 제외.
+ */
+function pickDistractors(q, pool, count, rng) {
+  const accepts = String(q.answer || '').split(',').map(s => normKey(s)).filter(Boolean);
+  const canonical = accepts[0];
+  const ambiguous = (cand) =>
+    accepts.some(a => a.includes(cand) || cand.includes(a));
+
+  const sameType = pool[answerType(canonical)] || new Map();
+  const others = [...sameType.values()]
+    .filter(e => e.qid !== q.id && !ambiguous(normKey(e.text)));
+
+  // 섞어서 count개 추첨
+  for (let i = others.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [others[i], others[j]] = [others[j], others[i]];
+  }
+  return others.slice(0, count).map(e => e.text);
+}
+
+/** 단답형 → combo 문항 변환 */
+function buildBlankCombo(q, idx, examKey, exam, pools, globalPool, genOpts) {
+  const subject = SUBJECT_NUM[examKey];
+  const subjKey = SUBJECT_KEY[examKey] || examKey;
+  const canonical = String(q.answer || '').split(',')[0].trim();
+  if (!canonical) return null;
+
+  const rng = seededRng(q.id + '|blank');
+  let distractors = pickDistractors(q, pools[examKey], 4, rng);
+  // 과목 내 풀이 부족하면 전체 풀로 보충 (과목3 blank 1문 등)
+  if (distractors.length < 4) {
+    const extra = pickDistractors(q, globalPool, 4 - distractors.length, rng)
+      .filter(t => !distractors.includes(t) && normKey(t) !== normKey(canonical));
+    distractors = [...distractors, ...extra];
+  }
+  if (distractors.length < 2) return null; // 진술 3개 미만이면 합답형 성립 불가
+
+  // 정답 + 오답을 seeded 셔플 → ㄱㄴㄷㄹㅁ 라벨
+  const stmts = [
+    { text: canonical, truth: true },
+    ...distractors.map(t => ({ text: t, truth: false })),
+  ];
+  for (let i = stmts.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [stmts[i], stmts[j]] = [stmts[j], stmts[i]];
+  }
+  const statements = stmts.map((s, i) => ({
+    id: STMT_LABELS[i],
+    sid: stableId(subjKey, 'bank', 'st', `${q.id}|blank${i}|${s.text}`),
+    text: s.text,
+    truth: s.truth,
+    explain: q.explanation || '',
+  }));
+
+  const stem = `${cleanBlankStem(q.question)} — (A)에 해당하는 것을 모두 고르시오.`;
+  const allIds = statements.map(s => s.id);
+  const truthIds = statements.filter(s => s.truth).map(s => s.id);
+
+  return {
+    id: `combo-${String(subject).padStart(2, '0')}-${String(idx).padStart(4, '0')}`,
+    subject,
+    type: 'combo',
+    points: 4,
+    citation: buildCitation(q, examKey, q.explanation),
+    stem,
+    statements,
+    options: genOpts(allIds, truthIds, { count: 5, rng: seededRng(q.id) }),
+    tags: ['자동변환', '정답판정'],
+    derivedFrom: q.id,
+    explain: q.explanation || '',
+    source: exam.title || examKey,
+  };
+}
+
 /** explanation에서 '교재: Lxxxx'·법령 근거를 추출해 citation 생성 */
 function buildCitation(q, examKey, explanation) {
   const qNum = (q.id.match(/_q(\d+)/) || [])[1] || q.id;
@@ -150,17 +267,23 @@ function buildCitation(q, examKey, explanation) {
     : `📖 출처: ${srcLabel}`;
 }
 
-function buildComboItems(examKey, exam, genOpts) {
+function buildComboItems(examKey, exam, genOpts, pools, globalPool) {
   const items = [];
   const stats = {
-    choice: 0, fact: 0, answer: 0,
-    skipComboStem: 0, skipStem: 0, skipNoTruth: 0, skipFew: 0,
+    choice: 0, fact: 0, answer: 0, blank: 0,
+    skipComboStem: 0, skipStem: 0, skipNoTruth: 0, skipFew: 0, skipBlank: 0,
     allOfAbove: 0, errors: [],
   };
   const subject = SUBJECT_NUM[examKey];
   const subjKey = SUBJECT_KEY[examKey] || examKey;
 
   for (const q of exam.questions) {
+    if (q.type === 'blank') {
+      const it = buildBlankCombo(q, items.length + 1, examKey, exam, pools, globalPool, genOpts);
+      if (it) { items.push(it); stats.blank++; }
+      else { stats.skipBlank++; stats.errors.push(`${q.id}: 단답형 변환 실패 (오답 풀 부족)`); }
+      continue;
+    }
     if (q.type !== 'choice') continue;
     stats.choice++;
 
@@ -252,25 +375,12 @@ const SUBJECT_TITLE = {
   3: '화장품 안전성 및 안전관리', 4: '맞춤형화장품의 이해',
 };
 
-/** 수작업 파일럿 로드 (없으면 빈 배열) — JS 객체 리터럴이므로 vm으로 평가 */
-function loadPilot() {
-  if (!fs.existsSync(PILOT_PATH)) return [];
-  const vm = require('vm');
-  const sandbox = {};
-  sandbox.window = sandbox;
-  vm.createContext(sandbox);
-  vm.runInContext(fs.readFileSync(PILOT_PATH, 'utf8'), sandbox);
-  return (sandbox.COMBO_PILOT && sandbox.COMBO_PILOT.questions) || [];
-}
-
 /**
  * 과목별 combo 문항을 문제은행 MD 형식으로 직렬화.
  * 문제부: ### Qn. 발문 / citation / ㄱ~ㅁ 진술 / ①~⑤ 조합 선지
  * 정답부: **Qn.** / 정답 조합 / 진술별 O·X 판정표 / 해설(교재 근거)
  */
 function toSubjectMd(subject, questions) {
-  const pilot = questions.filter(q => String(q.id).startsWith('cb-'));
-  const auto = questions.filter(q => !String(q.id).startsWith('cb-'));
   const lines = [
     `# 제${subject}과목: ${SUBJECT_TITLE[subject] || ''} 합답형 (ㄱㄴㄷㄹ 조합)`,
     '',
@@ -278,7 +388,7 @@ function toSubjectMd(subject, questions) {
     '> 문제에 집중할 수 있도록 정답과 교재 근거는 파일 끝에 모아 제공합니다.',
     `> ⚠ 자동 생성 파일 (tools/build_combo_drills.js) — 직접 수정하지 마십시오.`,
     '',
-    `총 ${questions.length}제 (수작업 파일럿 ${pilot.length}제 + 자동 변환 ${auto.length}제)`,
+    `총 ${questions.length}제`,
     '',
     '---',
     '',
@@ -339,13 +449,19 @@ async function main() {
   const { validateQuestion, deriveComboAnswer, generateComboOptions } =
     await import(pathToFileURL(path.join(ROOT, 'src', 'questions.js')).href);
 
-  const pilotAll = loadPilot();
+  // 단답형 오답 선지 풀: 전체 번들을 먼저 로드해 과목별+전체 풀 구축
+  const examDataMap = {};
+  for (const file of files) {
+    const { key, data } = loadExamFile(path.join(EXAMS_DIR, file));
+    examDataMap[key] = { data, file };
+  }
+  const { bySubject: pools, global: globalPool } = buildAnswerPools(examDataMap);
+
   let totalItems = 0;
   let totalErrors = 0;
 
-  for (const file of files) {
-    const { key, data } = loadExamFile(path.join(EXAMS_DIR, file));
-    const { items, stats } = buildComboItems(key, data, generateComboOptions);
+  for (const [key, { data, file }] of Object.entries(examDataMap)) {
+    const { items, stats } = buildComboItems(key, data, generateComboOptions, pools, globalPool);
 
     // 검증: 스키마 무결성 + 도출 정답을 answer로 고정
     const errs = [];
@@ -364,15 +480,14 @@ async function main() {
         `var COMBO_DRILLS_${key} = ` + JSON.stringify(valid, null, 1) + ';\n';
       fs.writeFileSync(path.join(OUT_DIR, `combo_${key}.js`), body, 'utf8');
 
-      // 문제은행 MD 형식 산출물 — 수작업 파일럿을 앞에 병합 (검토용)
+      // 문제은행 MD 형식 산출물 — 자동 변환분만 (과목당 100/250/250/400 구성)
       const subjectNum = SUBJECT_NUM[key];
-      const merged = [...pilotAll.filter(q => q.subject === subjectNum), ...valid];
       const mdPath = path.join(MD_DIR, `과목${subjectNum}_합답형.md`);
-      fs.writeFileSync(mdPath, toSubjectMd(subjectNum, merged), 'utf8');
+      fs.writeFileSync(mdPath, toSubjectMd(subjectNum, valid), 'utf8');
     }
 
     totalItems += valid.length;
-    console.log(`[combo-drills] ${key}: choice ${stats.choice} → combo ${valid.length} (fact ${stats.fact}/answer ${stats.answer}, 조합발문 스킵 ${stats.skipComboStem}, '모두'복구 ${stats.allOfAbove})`);
+    console.log(`[combo-drills] ${key}: choice ${stats.choice} + blank → combo ${valid.length} (fact ${stats.fact}/answer ${stats.answer}/blank ${stats.blank}, 조합발문 스킵 ${stats.skipComboStem}, '모두'복구 ${stats.allOfAbove})`);
     const allErrs = [...stats.errors, ...errs];
     if (allErrs.length) {
       console.log(`  ⚠ 오류 ${allErrs.length}건:`);

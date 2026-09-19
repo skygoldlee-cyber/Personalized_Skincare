@@ -1,5 +1,5 @@
 // 자동 생성된 합답형 드릴 데이터입니다. 수정하지 마십시오. (tools/build_combo_drills.js)
-// 원본: data/exams/subject4.a4f758f7.js — mode: fact(명제 조합) 18문 / answer(정답 조합) 254문
+// 원본: data/exams/subject4.a4f758f7.js — mode: fact(명제 조합) 18문 / answer(정답 조합) 257문
 var COMBO_DRILLS_subject4 = [
  {
   "id": "combo-04-0001",
@@ -3093,6 +3093,99 @@ var COMBO_DRILLS_subject4 = [
   "subject": 4,
   "type": "combo",
   "points": 4,
+  "citation": "📖 교재: L2517 (출처: 과목4 문제은행 Q34)",
+  "stem": "다음 중 화장품의 사용 기한 표시 중 '개봉 후 사용 기간'을 나타내는 국제 표준 기호(심볼)와 표기 형식의 조합으로 옳은 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_a98aa1",
+    "text": "H 모양 기호 (예: 12H)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2517):\n| 1차 포장만으로 구성되는 화장품의 외부포장 / 화장품의 외부 포장<br>(1차 포장에 2차 포장을 추가한 경우) | • 화장품의 명칭<br>• 영업자의 상호 및 주소<br>• 해당 화장품 제조에 사용된 모든 성분(인체에 무해한 소량 함유 성분 등 총리령으로 정하는 성분은 제외)<br>• 내용물의 용량 또는 중량<br>• 제조번호(식별번호)<br>• 사용기한 또는 개봉 후 사용기간(개봉 후 사용기간의 경우 제조연월일 병기)<br>• 가격<br>• 기능성화장품의 경우 '기능성화장품'이라는 글자 또는 기능성화장품을 나타내는 도안으로서 식품의약품안전처장이 정하는 도안<br>• 사용할 때의 주의사항<br>• 그 밖에 총리령으로 정하는 사항<br>&nbsp;&nbsp;- 기능성화장품의 경우 심사받거나 보고한..."
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_b7fd65",
+    "text": "M 모양 기호 (예: 12M -> 개봉 후 12개월 사용 가능)",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L2517):\n| 1차 포장만으로 구성되는 화장품의 외부포장 / 화장품의 외부 포장<br>(1차 포장에 2차 포장을 추가한 경우) | • 화장품의 명칭<br>• 영업자의 상호 및 주소<br>• 해당 화장품 제조에 사용된 모든 성분(인체에 무해한 소량 함유 성분 등 총리령으로 정하는 성분은 제외)<br>• 내용물의 용량 또는 중량<br>• 제조번호(식별번호)<br>• 사용기한 또는 개봉 후 사용기간(개봉 후 사용기간의 경우 제조연월일 병기)<br>• 가격<br>• 기능성화장품의 경우 '기능성화장품'이라는 글자 또는 기능성화장품을 나타내는 도안으로서 식품의약품안전처장이 정하는 도안<br>• 사용할 때의 주의사항<br>• 그 밖에 총리령으로 정하는 사항<br>&nbsp;&nbsp;- 기능성화장품의 경우 심사받거나 보고한..."
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_307e56",
+    "text": "D 모양 기호 (예: 12D)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2517):\n| 1차 포장만으로 구성되는 화장품의 외부포장 / 화장품의 외부 포장<br>(1차 포장에 2차 포장을 추가한 경우) | • 화장품의 명칭<br>• 영업자의 상호 및 주소<br>• 해당 화장품 제조에 사용된 모든 성분(인체에 무해한 소량 함유 성분 등 총리령으로 정하는 성분은 제외)<br>• 내용물의 용량 또는 중량<br>• 제조번호(식별번호)<br>• 사용기한 또는 개봉 후 사용기간(개봉 후 사용기간의 경우 제조연월일 병기)<br>• 가격<br>• 기능성화장품의 경우 '기능성화장품'이라는 글자 또는 기능성화장품을 나타내는 도안으로서 식품의약품안전처장이 정하는 도안<br>• 사용할 때의 주의사항<br>• 그 밖에 총리령으로 정하는 사항<br>&nbsp;&nbsp;- 기능성화장품의 경우 심사받거나 보고한..."
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_36bc40",
+    "text": "Y 모양 기호 (예: 12Y)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2517):\n| 1차 포장만으로 구성되는 화장품의 외부포장 / 화장품의 외부 포장<br>(1차 포장에 2차 포장을 추가한 경우) | • 화장품의 명칭<br>• 영업자의 상호 및 주소<br>• 해당 화장품 제조에 사용된 모든 성분(인체에 무해한 소량 함유 성분 등 총리령으로 정하는 성분은 제외)<br>• 내용물의 용량 또는 중량<br>• 제조번호(식별번호)<br>• 사용기한 또는 개봉 후 사용기간(개봉 후 사용기간의 경우 제조연월일 병기)<br>• 가격<br>• 기능성화장품의 경우 '기능성화장품'이라는 글자 또는 기능성화장품을 나타내는 도안으로서 식품의약품안전처장이 정하는 도안<br>• 사용할 때의 주의사항<br>• 그 밖에 총리령으로 정하는 사항<br>&nbsp;&nbsp;- 기능성화장품의 경우 심사받거나 보고한..."
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_a44856",
+    "text": "W 모양 기호 (예: 12W)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2517):\n| 1차 포장만으로 구성되는 화장품의 외부포장 / 화장품의 외부 포장<br>(1차 포장에 2차 포장을 추가한 경우) | • 화장품의 명칭<br>• 영업자의 상호 및 주소<br>• 해당 화장품 제조에 사용된 모든 성분(인체에 무해한 소량 함유 성분 등 총리령으로 정하는 성분은 제외)<br>• 내용물의 용량 또는 중량<br>• 제조번호(식별번호)<br>• 사용기한 또는 개봉 후 사용기간(개봉 후 사용기간의 경우 제조연월일 병기)<br>• 가격<br>• 기능성화장품의 경우 '기능성화장품'이라는 글자 또는 기능성화장품을 나타내는 도안으로서 식품의약품안전처장이 정하는 도안<br>• 사용할 때의 주의사항<br>• 그 밖에 총리령으로 정하는 사항<br>&nbsp;&nbsp;- 기능성화장품의 경우 심사받거나 보고한..."
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㅁ",
+     "ㄹ",
+     "ㄷ",
+     "ㄴ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q34",
+  "explain": "📖 교재 근거 (교재: L2517):\n| 1차 포장만으로 구성되는 화장품의 외부포장 / 화장품의 외부 포장<br>(1차 포장에 2차 포장을 추가한 경우) | • 화장품의 명칭<br>• 영업자의 상호 및 주소<br>• 해당 화장품 제조에 사용된 모든 성분(인체에 무해한 소량 함유 성분 등 총리령으로 정하는 성분은 제외)<br>• 내용물의 용량 또는 중량<br>• 제조번호(식별번호)<br>• 사용기한 또는 개봉 후 사용기간(개봉 후 사용기간의 경우 제조연월일 병기)<br>• 가격<br>• 기능성화장품의 경우 '기능성화장품'이라는 글자 또는 기능성화장품을 나타내는 도안으로서 식품의약품안전처장이 정하는 도안<br>• 사용할 때의 주의사항<br>• 그 밖에 총리령으로 정하는 사항<br>&nbsp;&nbsp;- 기능성화장품의 경우 심사받거나 보고한...",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "2"
+ },
+ {
+  "id": "combo-04-0035",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
   "citation": "📖 교재: L1213 (출처: 과목4 문제은행 Q35)",
   "stem": "다음 중 피부의 표피 및 진피에 존재하는 탄력 섬유(엘라스틴)의 합성을 돕고 콜라겐 합성을 유도하여 주름 개선 기능성을 나타내는 대표적인 비타민 A 유도체 성분에 해당하는 것을 모두 고른 것은?",
   "statements": [
@@ -3182,7 +3275,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0035",
+  "id": "combo-04-0036",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -3276,7 +3369,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0036",
+  "id": "combo-04-0037",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -3372,7 +3465,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0037",
+  "id": "combo-04-0038",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -3465,7 +3558,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0038",
+  "id": "combo-04-0039",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -3556,7 +3649,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0039",
+  "id": "combo-04-0040",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -3648,7 +3741,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0040",
+  "id": "combo-04-0041",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -3743,7 +3836,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0041",
+  "id": "combo-04-0042",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -3837,7 +3930,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0042",
+  "id": "combo-04-0043",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -3930,7 +4023,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0043",
+  "id": "combo-04-0044",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -4020,7 +4113,102 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0044",
+  "id": "combo-04-0045",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1439 (출처: 과목4 문제은행 Q45)",
+  "stem": "다음 중 pH 측정기(수소이온농도계)의 전극 오차를 교정하기 위해 사용되는 완충 용액(Buffer Solution)의 표준 pH 값들의 조합으로 가장 널리 쓰이는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_77bd71",
+    "text": "pH 1.0, 5.0, 9.0",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1439):\n| 기기를 이용한 판독법 | • 유수분 측정기, 우드램프, pH 측정기, 확대경, 피부 분석기를 통해 피부 상태 분석<br>• 세안 후 일정 시간이 지난 후에 측정하여 피부 상태 판독 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_055eb0",
+    "text": "pH 3.0, 8.0, 11.0",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1439):\n| 기기를 이용한 판독법 | • 유수분 측정기, 우드램프, pH 측정기, 확대경, 피부 분석기를 통해 피부 상태 분석<br>• 세안 후 일정 시간이 지난 후에 측정하여 피부 상태 판독 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_ca6fdc",
+    "text": "pH 2.0, 6.0, 12.0",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1439):\n| 기기를 이용한 판독법 | • 유수분 측정기, 우드램프, pH 측정기, 확대경, 피부 분석기를 통해 피부 상태 분석<br>• 세안 후 일정 시간이 지난 후에 측정하여 피부 상태 판독 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_cdbc47",
+    "text": "pH 4.01, 7.00, 10.01",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1439):\n| 기기를 이용한 판독법 | • 유수분 측정기, 우드램프, pH 측정기, 확대경, 피부 분석기를 통해 피부 상태 분석<br>• 세안 후 일정 시간이 지난 후에 측정하여 피부 상태 판독 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_ab9a17",
+    "text": "pH 5.5, 7.0, 8.5",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1439):\n| 기기를 이용한 판독법 | • 유수분 측정기, 우드램프, pH 측정기, 확대경, 피부 분석기를 통해 피부 상태 분석<br>• 세안 후 일정 시간이 지난 후에 측정하여 피부 상태 판독 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㅁ",
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㅁ",
+     "ㄷ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q45",
+  "explain": "📖 교재 근거 (교재: L1439):\n| 기기를 이용한 판독법 | • 유수분 측정기, 우드램프, pH 측정기, 확대경, 피부 분석기를 통해 피부 상태 분석<br>• 세안 후 일정 시간이 지난 후에 측정하여 피부 상태 판독 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "2"
+ },
+ {
+  "id": "combo-04-0046",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -4114,7 +4302,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0045",
+  "id": "combo-04-0047",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -4208,7 +4396,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0046",
+  "id": "combo-04-0048",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -4300,7 +4488,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0047",
+  "id": "combo-04-0049",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -4392,7 +4580,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0048",
+  "id": "combo-04-0050",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -4482,7 +4670,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0049",
+  "id": "combo-04-0051",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -4575,7 +4763,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0050",
+  "id": "combo-04-0052",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -4667,7 +4855,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0051",
+  "id": "combo-04-0053",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -4762,7 +4950,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0052",
+  "id": "combo-04-0054",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -4857,7 +5045,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0053",
+  "id": "combo-04-0055",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -4946,7 +5134,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0054",
+  "id": "combo-04-0056",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -5037,7 +5225,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0055",
+  "id": "combo-04-0057",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -5135,7 +5323,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0056",
+  "id": "combo-04-0058",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -5226,7 +5414,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0057",
+  "id": "combo-04-0059",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -5319,7 +5507,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0058",
+  "id": "combo-04-0060",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -5414,7 +5602,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0059",
+  "id": "combo-04-0061",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -5502,7 +5690,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0060",
+  "id": "combo-04-0062",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -5594,7 +5782,100 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0061",
+  "id": "combo-04-0063",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L2946 (출처: 과목4 문제은행 Q63)",
+  "stem": "향료 성분 중 나무 향(우디 향)을 내는 조합 향료에 포함되며 전성분 의무 표시 알레르기 유발 유효 물질에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_d3cc4c",
+    "text": "판테놀",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2946):\n| 알레르기 유발 성분 | 착향제 중 25종 의무 표시 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_205666",
+    "text": "자일리톨",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2946):\n| 알레르기 유발 성분 | 착향제 중 25종 의무 표시 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_b6b474",
+    "text": "오크모스추출물 (Oakmoss Extract)",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L2946):\n| 알레르기 유발 성분 | 착향제 중 25종 의무 표시 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_6637f1",
+    "text": "베타인",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2946):\n| 알레르기 유발 성분 | 착향제 중 25종 의무 표시 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_31b2b6",
+    "text": "카보머",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2946):\n| 알레르기 유발 성분 | 착향제 중 25종 의무 표시 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ",
+     "ㄷ",
+     "ㅁ",
+     "ㄴ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q63",
+  "explain": "📖 교재 근거 (교재: L2946):\n| 알레르기 유발 성분 | 착향제 중 25종 의무 표시 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "4"
+ },
+ {
+  "id": "combo-04-0064",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -5685,7 +5966,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0062",
+  "id": "combo-04-0065",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -5778,7 +6059,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0063",
+  "id": "combo-04-0066",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -5867,7 +6148,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0064",
+  "id": "combo-04-0067",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -5957,7 +6238,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0065",
+  "id": "combo-04-0068",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -6051,7 +6332,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0066",
+  "id": "combo-04-0069",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -6144,7 +6425,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0067",
+  "id": "combo-04-0070",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -6235,7 +6516,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0068",
+  "id": "combo-04-0071",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -6327,7 +6608,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0069",
+  "id": "combo-04-0072",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -6422,7 +6703,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0070",
+  "id": "combo-04-0073",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -6513,7 +6794,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0071",
+  "id": "combo-04-0074",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -6607,7 +6888,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0072",
+  "id": "combo-04-0075",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -6698,7 +6979,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0073",
+  "id": "combo-04-0076",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -6792,7 +7073,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0074",
+  "id": "combo-04-0077",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -6887,7 +7168,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0075",
+  "id": "combo-04-0078",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -6981,7 +7262,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0076",
+  "id": "combo-04-0079",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -7073,7 +7354,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0077",
+  "id": "combo-04-0080",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -7166,7 +7447,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0078",
+  "id": "combo-04-0081",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -7262,7 +7543,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0079",
+  "id": "combo-04-0082",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -7359,7 +7640,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0080",
+  "id": "combo-04-0083",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -7454,7 +7735,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0081",
+  "id": "combo-04-0084",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -7548,7 +7829,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0082",
+  "id": "combo-04-0085",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -7643,7 +7924,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0083",
+  "id": "combo-04-0086",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -7739,7 +8020,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0084",
+  "id": "combo-04-0087",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -7832,7 +8113,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0085",
+  "id": "combo-04-0088",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -7925,7 +8206,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0086",
+  "id": "combo-04-0089",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -8020,7 +8301,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0087",
+  "id": "combo-04-0090",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -8114,7 +8395,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0088",
+  "id": "combo-04-0091",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -8207,7 +8488,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0089",
+  "id": "combo-04-0092",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -8302,7 +8583,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0090",
+  "id": "combo-04-0093",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -8392,7 +8673,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0091",
+  "id": "combo-04-0094",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -8485,7 +8766,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0092",
+  "id": "combo-04-0095",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -8580,7 +8861,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0093",
+  "id": "combo-04-0096",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -8677,7 +8958,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0094",
+  "id": "combo-04-0097",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -8770,7 +9051,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0095",
+  "id": "combo-04-0098",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -8861,7 +9142,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0096",
+  "id": "combo-04-0099",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -8950,7 +9231,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0097",
+  "id": "combo-04-0100",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -9043,7 +9324,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0098",
+  "id": "combo-04-0101",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -9140,7 +9421,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0099",
+  "id": "combo-04-0102",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -9232,7 +9513,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0100",
+  "id": "combo-04-0103",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -9326,7 +9607,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0101",
+  "id": "combo-04-0104",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -9422,7 +9703,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0102",
+  "id": "combo-04-0105",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -9516,7 +9797,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0103",
+  "id": "combo-04-0106",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -9610,7 +9891,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0104",
+  "id": "combo-04-0107",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -9702,7 +9983,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0105",
+  "id": "combo-04-0108",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -9797,7 +10078,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0106",
+  "id": "combo-04-0109",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -9890,7 +10171,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0107",
+  "id": "combo-04-0110",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -9984,7 +10265,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0108",
+  "id": "combo-04-0111",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -10076,7 +10357,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0109",
+  "id": "combo-04-0112",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -10169,7 +10450,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0110",
+  "id": "combo-04-0113",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -10263,7 +10544,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0111",
+  "id": "combo-04-0114",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -10354,7 +10635,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0112",
+  "id": "combo-04-0115",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -10440,7 +10721,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0113",
+  "id": "combo-04-0116",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -10531,7 +10812,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0114",
+  "id": "combo-04-0117",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -10624,7 +10905,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0115",
+  "id": "combo-04-0118",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -10714,7 +10995,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0116",
+  "id": "combo-04-0119",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -10803,7 +11084,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0117",
+  "id": "combo-04-0120",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -10897,7 +11178,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0118",
+  "id": "combo-04-0121",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -10993,7 +11274,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0119",
+  "id": "combo-04-0122",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -11085,7 +11366,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0120",
+  "id": "combo-04-0123",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -11176,7 +11457,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0121",
+  "id": "combo-04-0124",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -11271,7 +11552,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0122",
+  "id": "combo-04-0125",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -11362,7 +11643,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0123",
+  "id": "combo-04-0126",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -11458,7 +11739,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0124",
+  "id": "combo-04-0127",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -11553,7 +11834,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0125",
+  "id": "combo-04-0128",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -11647,7 +11928,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0126",
+  "id": "combo-04-0129",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -11741,7 +12022,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0127",
+  "id": "combo-04-0130",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -11833,7 +12114,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0128",
+  "id": "combo-04-0131",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -11927,7 +12208,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0129",
+  "id": "combo-04-0132",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -12020,7 +12301,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0130",
+  "id": "combo-04-0133",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -12109,7 +12390,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0131",
+  "id": "combo-04-0134",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -12196,7 +12477,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0132",
+  "id": "combo-04-0135",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -12291,7 +12572,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0133",
+  "id": "combo-04-0136",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -12384,7 +12665,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0134",
+  "id": "combo-04-0137",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -12479,7 +12760,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0135",
+  "id": "combo-04-0138",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -12571,7 +12852,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0136",
+  "id": "combo-04-0139",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -12665,7 +12946,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0137",
+  "id": "combo-04-0140",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -12760,7 +13041,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0138",
+  "id": "combo-04-0141",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -12855,7 +13136,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0139",
+  "id": "combo-04-0142",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -12944,7 +13225,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0140",
+  "id": "combo-04-0143",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -13037,7 +13318,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0141",
+  "id": "combo-04-0144",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -13130,7 +13411,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0142",
+  "id": "combo-04-0145",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -13225,7 +13506,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0143",
+  "id": "combo-04-0146",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -13319,7 +13600,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0144",
+  "id": "combo-04-0147",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -13412,7 +13693,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0145",
+  "id": "combo-04-0148",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -13507,7 +13788,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0146",
+  "id": "combo-04-0149",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -13597,7 +13878,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0147",
+  "id": "combo-04-0150",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -13691,7 +13972,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0148",
+  "id": "combo-04-0151",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -13784,7 +14065,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0149",
+  "id": "combo-04-0152",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -13877,7 +14158,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0150",
+  "id": "combo-04-0153",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -13969,7 +14250,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0151",
+  "id": "combo-04-0154",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -14064,7 +14345,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0152",
+  "id": "combo-04-0155",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -14155,7 +14436,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0153",
+  "id": "combo-04-0156",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -14249,7 +14530,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0154",
+  "id": "combo-04-0157",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -14341,7 +14622,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0155",
+  "id": "combo-04-0158",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -14428,7 +14709,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0156",
+  "id": "combo-04-0159",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -14523,7 +14804,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0157",
+  "id": "combo-04-0160",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -14617,7 +14898,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0158",
+  "id": "combo-04-0161",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -14712,7 +14993,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0159",
+  "id": "combo-04-0162",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -14805,7 +15086,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0160",
+  "id": "combo-04-0163",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -14899,7 +15180,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0161",
+  "id": "combo-04-0164",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -14993,7 +15274,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0162",
+  "id": "combo-04-0165",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -15086,7 +15367,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0163",
+  "id": "combo-04-0166",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -15177,7 +15458,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0164",
+  "id": "combo-04-0167",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -15271,7 +15552,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0165",
+  "id": "combo-04-0168",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -15368,7 +15649,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0166",
+  "id": "combo-04-0169",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -15459,7 +15740,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0167",
+  "id": "combo-04-0170",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -15555,7 +15836,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0168",
+  "id": "combo-04-0171",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -15650,7 +15931,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0169",
+  "id": "combo-04-0172",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -15744,7 +16025,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0170",
+  "id": "combo-04-0173",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -15836,7 +16117,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0171",
+  "id": "combo-04-0174",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -15932,7 +16213,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0172",
+  "id": "combo-04-0175",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -16023,7 +16304,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0173",
+  "id": "combo-04-0176",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -16113,7 +16394,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0174",
+  "id": "combo-04-0177",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -16203,7 +16484,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0175",
+  "id": "combo-04-0178",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -16300,7 +16581,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0176",
+  "id": "combo-04-0179",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -16392,7 +16673,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0177",
+  "id": "combo-04-0180",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -16484,7 +16765,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0178",
+  "id": "combo-04-0181",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -16579,7 +16860,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0179",
+  "id": "combo-04-0182",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -16671,7 +16952,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0180",
+  "id": "combo-04-0183",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -16764,7 +17045,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0181",
+  "id": "combo-04-0184",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -16855,7 +17136,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0182",
+  "id": "combo-04-0185",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -16947,7 +17228,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0183",
+  "id": "combo-04-0186",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -17038,7 +17319,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0184",
+  "id": "combo-04-0187",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -17131,7 +17412,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0185",
+  "id": "combo-04-0188",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -17228,7 +17509,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0186",
+  "id": "combo-04-0189",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -17323,7 +17604,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0187",
+  "id": "combo-04-0190",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -17414,7 +17695,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0188",
+  "id": "combo-04-0191",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -17509,7 +17790,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0189",
+  "id": "combo-04-0192",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -17603,7 +17884,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0190",
+  "id": "combo-04-0193",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -17694,7 +17975,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0191",
+  "id": "combo-04-0194",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -17789,7 +18070,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0192",
+  "id": "combo-04-0195",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -17878,7 +18159,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0193",
+  "id": "combo-04-0196",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -17974,7 +18255,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0194",
+  "id": "combo-04-0197",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -18065,7 +18346,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0195",
+  "id": "combo-04-0198",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -18159,7 +18440,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0196",
+  "id": "combo-04-0199",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -18254,7 +18535,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0197",
+  "id": "combo-04-0200",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -18348,7 +18629,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0198",
+  "id": "combo-04-0201",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -18441,7 +18722,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0199",
+  "id": "combo-04-0202",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -18536,7 +18817,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0200",
+  "id": "combo-04-0203",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -18628,7 +18909,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0201",
+  "id": "combo-04-0204",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -18723,7 +19004,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0202",
+  "id": "combo-04-0205",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -18815,7 +19096,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0203",
+  "id": "combo-04-0206",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -18910,7 +19191,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0204",
+  "id": "combo-04-0207",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -19001,7 +19282,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0205",
+  "id": "combo-04-0208",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -19091,7 +19372,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0206",
+  "id": "combo-04-0209",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -19184,7 +19465,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0207",
+  "id": "combo-04-0210",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -19280,7 +19561,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0208",
+  "id": "combo-04-0211",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -19372,7 +19653,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0209",
+  "id": "combo-04-0212",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -19461,7 +19742,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0210",
+  "id": "combo-04-0213",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -19556,7 +19837,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0211",
+  "id": "combo-04-0214",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -19647,7 +19928,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0212",
+  "id": "combo-04-0215",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -19736,7 +20017,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0213",
+  "id": "combo-04-0216",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -19830,7 +20111,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0214",
+  "id": "combo-04-0217",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -19921,7 +20202,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0215",
+  "id": "combo-04-0218",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -20013,7 +20294,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0216",
+  "id": "combo-04-0219",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -20106,7 +20387,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0217",
+  "id": "combo-04-0220",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -20199,7 +20480,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0218",
+  "id": "combo-04-0221",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -20295,7 +20576,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0219",
+  "id": "combo-04-0222",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -20388,7 +20669,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0220",
+  "id": "combo-04-0223",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -20480,7 +20761,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0221",
+  "id": "combo-04-0224",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -20573,7 +20854,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0222",
+  "id": "combo-04-0225",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -20665,7 +20946,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0223",
+  "id": "combo-04-0226",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -20756,7 +21037,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0224",
+  "id": "combo-04-0227",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -20851,7 +21132,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0225",
+  "id": "combo-04-0228",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -20943,7 +21224,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0226",
+  "id": "combo-04-0229",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -21033,7 +21314,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0227",
+  "id": "combo-04-0230",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -21129,7 +21410,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0228",
+  "id": "combo-04-0231",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -21217,7 +21498,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0229",
+  "id": "combo-04-0232",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -21308,7 +21589,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0230",
+  "id": "combo-04-0233",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -21400,7 +21681,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0231",
+  "id": "combo-04-0234",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -21493,7 +21774,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0232",
+  "id": "combo-04-0235",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -21584,7 +21865,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0233",
+  "id": "combo-04-0236",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -21679,7 +21960,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0234",
+  "id": "combo-04-0237",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -21776,7 +22057,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0235",
+  "id": "combo-04-0238",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -21870,7 +22151,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0236",
+  "id": "combo-04-0239",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -21964,7 +22245,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0237",
+  "id": "combo-04-0240",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -22057,7 +22338,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0238",
+  "id": "combo-04-0241",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -22148,7 +22429,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0239",
+  "id": "combo-04-0242",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -22241,7 +22522,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0240",
+  "id": "combo-04-0243",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -22338,7 +22619,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0241",
+  "id": "combo-04-0244",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -22426,7 +22707,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0242",
+  "id": "combo-04-0245",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -22520,7 +22801,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0243",
+  "id": "combo-04-0246",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -22616,7 +22897,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0244",
+  "id": "combo-04-0247",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -22709,7 +22990,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0245",
+  "id": "combo-04-0248",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -22804,7 +23085,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0246",
+  "id": "combo-04-0249",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -22896,7 +23177,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0247",
+  "id": "combo-04-0250",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -22987,7 +23268,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0248",
+  "id": "combo-04-0251",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -23078,7 +23359,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0249",
+  "id": "combo-04-0252",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -23169,7 +23450,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0250",
+  "id": "combo-04-0253",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -23262,7 +23543,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0251",
+  "id": "combo-04-0254",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -23357,7 +23638,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0252",
+  "id": "combo-04-0255",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -23450,7 +23731,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0253",
+  "id": "combo-04-0256",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -23542,7 +23823,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0254",
+  "id": "combo-04-0257",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -23637,7 +23918,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0255",
+  "id": "combo-04-0258",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -23733,7 +24014,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0256",
+  "id": "combo-04-0259",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -23826,7 +24107,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0257",
+  "id": "combo-04-0260",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -23919,7 +24200,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0258",
+  "id": "combo-04-0261",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -24014,7 +24295,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0259",
+  "id": "combo-04-0262",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -24109,7 +24390,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0260",
+  "id": "combo-04-0263",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -24201,7 +24482,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0261",
+  "id": "combo-04-0264",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -24291,7 +24572,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0262",
+  "id": "combo-04-0265",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -24383,7 +24664,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0263",
+  "id": "combo-04-0266",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -24474,7 +24755,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0264",
+  "id": "combo-04-0267",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -24567,7 +24848,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0265",
+  "id": "combo-04-0268",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -24662,7 +24943,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "3"
  },
  {
-  "id": "combo-04-0266",
+  "id": "combo-04-0269",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -24754,7 +25035,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0267",
+  "id": "combo-04-0270",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -24847,7 +25128,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "4"
  },
  {
-  "id": "combo-04-0268",
+  "id": "combo-04-0271",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -24934,7 +25215,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "2"
  },
  {
-  "id": "combo-04-0269",
+  "id": "combo-04-0272",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -25031,7 +25312,561 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0270",
+  "id": "combo-04-0273",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L574 (출처: 과목4 문제은행 Q273)",
+  "stem": "맞춤형화장품의 혼합 및 소분 업무를 전문적으로 수행하기 위해 국가 자격시험을 거쳐 선발된 전문 자격 소지자의 공식 명칭은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_205d7d",
+    "text": "라멜라바디(층판소기관)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L574):\n| 제3조의4<br>맞춤형화장품 조제관리사 자격시험 | • 화장품과 원료 등에 대해 식품의약품안전처장이 실시하는 자격시험에 합격해야 함<br>• 거짓이나 그 밖의 부정한 방법으로 자격시험에 응시한 사람 또는 자격시험에서 부정행위를 한 사람에 대하여는 그 자격시험을 정지시키거나 합격을 무효로 함. 이 경우 자격시험이 정지되거나 합격이 무효가 된 사람은 그 처분이 있은 날부터 3년간 자격시험에 응시 불가<br>• 자격시험의 관리 및 자격증 발급 등에 관한 업무를 효과적으로 수행하기 위해 필요한 전문인력과 시설을 갖춘 기관 또는 단체를 시험운영기관으로 지정하여 시험업무를 위탁할 수 있음<br>• 자격시험의 시기, 절차, 방법, 시험과목, 자격증의 발급, 시험운영기관의 지정 등 자격시험에 필요한 사항은 총리..."
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_0e0c7a",
+    "text": "맞춤형화장품 조제관리사",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L574):\n| 제3조의4<br>맞춤형화장품 조제관리사 자격시험 | • 화장품과 원료 등에 대해 식품의약품안전처장이 실시하는 자격시험에 합격해야 함<br>• 거짓이나 그 밖의 부정한 방법으로 자격시험에 응시한 사람 또는 자격시험에서 부정행위를 한 사람에 대하여는 그 자격시험을 정지시키거나 합격을 무효로 함. 이 경우 자격시험이 정지되거나 합격이 무효가 된 사람은 그 처분이 있은 날부터 3년간 자격시험에 응시 불가<br>• 자격시험의 관리 및 자격증 발급 등에 관한 업무를 효과적으로 수행하기 위해 필요한 전문인력과 시설을 갖춘 기관 또는 단체를 시험운영기관으로 지정하여 시험업무를 위탁할 수 있음<br>• 자격시험의 시기, 절차, 방법, 시험과목, 자격증의 발급, 시험운영기관의 지정 등 자격시험에 필요한 사항은 총리..."
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_7fc30d",
+    "text": "망상",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L574):\n| 제3조의4<br>맞춤형화장품 조제관리사 자격시험 | • 화장품과 원료 등에 대해 식품의약품안전처장이 실시하는 자격시험에 합격해야 함<br>• 거짓이나 그 밖의 부정한 방법으로 자격시험에 응시한 사람 또는 자격시험에서 부정행위를 한 사람에 대하여는 그 자격시험을 정지시키거나 합격을 무효로 함. 이 경우 자격시험이 정지되거나 합격이 무효가 된 사람은 그 처분이 있은 날부터 3년간 자격시험에 응시 불가<br>• 자격시험의 관리 및 자격증 발급 등에 관한 업무를 효과적으로 수행하기 위해 필요한 전문인력과 시설을 갖춘 기관 또는 단체를 시험운영기관으로 지정하여 시험업무를 위탁할 수 있음<br>• 자격시험의 시기, 절차, 방법, 시험과목, 자격증의 발급, 시험운영기관의 지정 등 자격시험에 필요한 사항은 총리..."
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_1dd9cc",
+    "text": "멜라닌형성",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L574):\n| 제3조의4<br>맞춤형화장품 조제관리사 자격시험 | • 화장품과 원료 등에 대해 식품의약품안전처장이 실시하는 자격시험에 합격해야 함<br>• 거짓이나 그 밖의 부정한 방법으로 자격시험에 응시한 사람 또는 자격시험에서 부정행위를 한 사람에 대하여는 그 자격시험을 정지시키거나 합격을 무효로 함. 이 경우 자격시험이 정지되거나 합격이 무효가 된 사람은 그 처분이 있은 날부터 3년간 자격시험에 응시 불가<br>• 자격시험의 관리 및 자격증 발급 등에 관한 업무를 효과적으로 수행하기 위해 필요한 전문인력과 시설을 갖춘 기관 또는 단체를 시험운영기관으로 지정하여 시험업무를 위탁할 수 있음<br>• 자격시험의 시기, 절차, 방법, 시험과목, 자격증의 발급, 시험운영기관의 지정 등 자격시험에 필요한 사항은 총리..."
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_96d8f2",
+    "text": "등전",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L574):\n| 제3조의4<br>맞춤형화장품 조제관리사 자격시험 | • 화장품과 원료 등에 대해 식품의약품안전처장이 실시하는 자격시험에 합격해야 함<br>• 거짓이나 그 밖의 부정한 방법으로 자격시험에 응시한 사람 또는 자격시험에서 부정행위를 한 사람에 대하여는 그 자격시험을 정지시키거나 합격을 무효로 함. 이 경우 자격시험이 정지되거나 합격이 무효가 된 사람은 그 처분이 있은 날부터 3년간 자격시험에 응시 불가<br>• 자격시험의 관리 및 자격증 발급 등에 관한 업무를 효과적으로 수행하기 위해 필요한 전문인력과 시설을 갖춘 기관 또는 단체를 시험운영기관으로 지정하여 시험업무를 위탁할 수 있음<br>• 자격시험의 시기, 절차, 방법, 시험과목, 자격증의 발급, 시험운영기관의 지정 등 자격시험에 필요한 사항은 총리..."
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄹ",
+     "ㄱ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㅁ",
+     "ㄹ",
+     "ㄷ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q273",
+  "explain": "📖 교재 근거 (교재: L574):\n| 제3조의4<br>맞춤형화장품 조제관리사 자격시험 | • 화장품과 원료 등에 대해 식품의약품안전처장이 실시하는 자격시험에 합격해야 함<br>• 거짓이나 그 밖의 부정한 방법으로 자격시험에 응시한 사람 또는 자격시험에서 부정행위를 한 사람에 대하여는 그 자격시험을 정지시키거나 합격을 무효로 함. 이 경우 자격시험이 정지되거나 합격이 무효가 된 사람은 그 처분이 있은 날부터 3년간 자격시험에 응시 불가<br>• 자격시험의 관리 및 자격증 발급 등에 관한 업무를 효과적으로 수행하기 위해 필요한 전문인력과 시설을 갖춘 기관 또는 단체를 시험운영기관으로 지정하여 시험업무를 위탁할 수 있음<br>• 자격시험의 시기, 절차, 방법, 시험과목, 자격증의 발급, 시험운영기관의 지정 등 자격시험에 필요한 사항은 총리...",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "4"
+ },
+ {
+  "id": "combo-04-0274",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1195 (출처: 과목4 문제은행 Q274)",
+  "stem": "피부 표피의 가시층(유극층)에 분포하며 면역 담당 세포로 외부 침입 항원을 인식하여 티세포(T-cell)에 정보를 전달하는 면역 세포의 이름은 (A) 세포이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_28db17",
+    "text": "랑게르한스",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1195):\n| 유극층 | 랑게르한스세포(Langerhans cell) | • 면역반응 조절에 관여하는 세포<br>• 외부 이물질인 항원을 면역담당세포 T-림프구에 전달하는 역할 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_822989",
+    "text": "티올(SH)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1195):\n| 유극층 | 랑게르한스세포(Langerhans cell) | • 면역반응 조절에 관여하는 세포<br>• 외부 이물질인 항원을 면역담당세포 T-림프구에 전달하는 역할 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_41f3a4",
+    "text": "알레르기",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1195):\n| 유극층 | 랑게르한스세포(Langerhans cell) | • 면역반응 조절에 관여하는 세포<br>• 외부 이물질인 항원을 면역담당세포 T-림프구에 전달하는 역할 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_9f68f0",
+    "text": "수분",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1195):\n| 유극층 | 랑게르한스세포(Langerhans cell) | • 면역반응 조절에 관여하는 세포<br>• 외부 이물질인 항원을 면역담당세포 T-림프구에 전달하는 역할 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_872529",
+    "text": "PA",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1195):\n| 유극층 | 랑게르한스세포(Langerhans cell) | • 면역반응 조절에 관여하는 세포<br>• 외부 이물질인 항원을 면역담당세포 T-림프구에 전달하는 역할 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ",
+     "ㄱ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ",
+     "ㄷ",
+     "ㄱ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q274",
+  "explain": "📖 교재 근거 (교재: L1195):\n| 유극층 | 랑게르한스세포(Langerhans cell) | • 면역반응 조절에 관여하는 세포<br>• 외부 이물질인 항원을 면역담당세포 T-림프구에 전달하는 역할 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "1"
+ },
+ {
+  "id": "combo-04-0275",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1213 (출처: 과목4 문제은행 Q275)",
+  "stem": "피부의 진피층을 구성하는 주요 결합 섬유 중 콜라겐(교원섬유) 사이를 그물망처럼 연결하여 피부에 복원력과 신축성을 주는 탄력 섬유의 한글 명칭은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_462e1e",
+    "text": "관능",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1213):\n| 망상층(Reticular Layer) 🎯 기출 | • 진피의 대부분을 차지하는 그물 모양(망상구조)의 결합조직<br>• 교원섬유(콜라겐) 90%, 탄력섬유(엘라스틴) 1.5~4.7%, 기질로 구성됨<br>• 모세혈관은 거의 없으며, 림프관, 한선, 피지선, 신경 등이 존재함 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_e03bbb",
+    "text": "멜라닌형성세포",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1213):\n| 망상층(Reticular Layer) 🎯 기출 | • 진피의 대부분을 차지하는 그물 모양(망상구조)의 결합조직<br>• 교원섬유(콜라겐) 90%, 탄력섬유(엘라스틴) 1.5~4.7%, 기질로 구성됨<br>• 모세혈관은 거의 없으며, 림프관, 한선, 피지선, 신경 등이 존재함 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_588e9c",
+    "text": "칭량",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1213):\n| 망상층(Reticular Layer) 🎯 기출 | • 진피의 대부분을 차지하는 그물 모양(망상구조)의 결합조직<br>• 교원섬유(콜라겐) 90%, 탄력섬유(엘라스틴) 1.5~4.7%, 기질로 구성됨<br>• 모세혈관은 거의 없으며, 림프관, 한선, 피지선, 신경 등이 존재함 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_1b8a4c",
+    "text": "리모넨",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1213):\n| 망상층(Reticular Layer) 🎯 기출 | • 진피의 대부분을 차지하는 그물 모양(망상구조)의 결합조직<br>• 교원섬유(콜라겐) 90%, 탄력섬유(엘라스틴) 1.5~4.7%, 기질로 구성됨<br>• 모세혈관은 거의 없으며, 림프관, 한선, 피지선, 신경 등이 존재함 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_abda3b",
+    "text": "엘라스틴",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1213):\n| 망상층(Reticular Layer) 🎯 기출 | • 진피의 대부분을 차지하는 그물 모양(망상구조)의 결합조직<br>• 교원섬유(콜라겐) 90%, 탄력섬유(엘라스틴) 1.5~4.7%, 기질로 구성됨<br>• 모세혈관은 거의 없으며, 림프관, 한선, 피지선, 신경 등이 존재함 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㄴ",
+     "ㅁ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q275",
+  "explain": "📖 교재 근거 (교재: L1213):\n| 망상층(Reticular Layer) 🎯 기출 | • 진피의 대부분을 차지하는 그물 모양(망상구조)의 결합조직<br>• 교원섬유(콜라겐) 90%, 탄력섬유(엘라스틴) 1.5~4.7%, 기질로 구성됨<br>• 모세혈관은 거의 없으며, 림프관, 한선, 피지선, 신경 등이 존재함 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "4"
+ },
+ {
+  "id": "combo-04-0276",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1158 (출처: 과목4 문제은행 Q276)",
+  "stem": "각질층의 세포간지질은 물을 좋아하는 친수기 층과 기름을 좋아하는 친유기 층이 교대로 번갈아 층상 구조를 이루고 있는데, 이러한 다층 구조의 명칭을 (A) 구조라고 부른다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_88dbcc",
+    "text": "분동(추)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1158):\n| 각질층<br>(Horny Layer) 🎯 기출 | • 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5 정도의 약산성<br>• 피부의 가장 바깥에 위치하여 수분 손실을 막고, 피부장벽 역할을 하여 피부 보호 및 세균 침입 방어<br>• 각질과 세포간지질이 벽돌 구조인 라멜라 구조<br>• 케라틴 약 58%, 천연보습인자(NMF) 약 31%, 세포간지질 약 11%로 구성<br>• 각질층은 천연보습인자(NMF)를 통해 10~20%의 수분 함유<br>&nbsp;&nbsp;* 필라그린(Fillaggrin): 각질층 형성에 중요한 역할을 하는 단백질로, 각질층에서 단백질 분해 효소에 의해 분해되어 천연보습인자(NMF)를 구성하는 아미노산을 이룸<br>&nbsp;&nbsp;* 세라마이드: 지질막의 주성분으로 피부 표면의 손실되는 수분을 방어하고 외부로부터 유해 물질의 침투를 막음<br>&nbsp;&nbsp;* 각화주기(각질형성주기): 기저층에서 만들어진 세포가 모양이 변하며 각질층까지 올라와 일정 기간 머무르다 탈락되는 주기로, 보통 28±3일로 봄 |\n| 투명층<br>(Clear Layer) | • 2~3층의 무핵세포층으로 손바닥과 발바닥에 존재함<br>• 엘라이딘(Elaidin)이라는 반유동성 물질이 수분 침투를 방지함 |\n| 과립층<br>(Granular Layer) | • 2~5층의 편평형 또는 방추형세포층<br>• 각화 과정이 시작되는 곳으로 빛을 산란시켜 자외선을 흡수함<br>• 케라토하이알린(Keratohyalin) 과립 존재<br>• 수분저지막이 존재하여 외부 이물질 방어 및 수분 증발 방지 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_6070d9",
+    "text": "NMF(천연보습인자)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1158):\n| 각질층<br>(Horny Layer) 🎯 기출 | • 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5 정도의 약산성<br>• 피부의 가장 바깥에 위치하여 수분 손실을 막고, 피부장벽 역할을 하여 피부 보호 및 세균 침입 방어<br>• 각질과 세포간지질이 벽돌 구조인 라멜라 구조<br>• 케라틴 약 58%, 천연보습인자(NMF) 약 31%, 세포간지질 약 11%로 구성<br>• 각질층은 천연보습인자(NMF)를 통해 10~20%의 수분 함유<br>&nbsp;&nbsp;* 필라그린(Fillaggrin): 각질층 형성에 중요한 역할을 하는 단백질로, 각질층에서 단백질 분해 효소에 의해 분해되어 천연보습인자(NMF)를 구성하는 아미노산을 이룸<br>&nbsp;&nbsp;* 세라마이드: 지질막의 주성분으로 피부 표면의 손실되는 수분을 방어하고 외부로부터 유해 물질의 침투를 막음<br>&nbsp;&nbsp;* 각화주기(각질형성주기): 기저층에서 만들어진 세포가 모양이 변하며 각질층까지 올라와 일정 기간 머무르다 탈락되는 주기로, 보통 28±3일로 봄 |\n| 투명층<br>(Clear Layer) | • 2~3층의 무핵세포층으로 손바닥과 발바닥에 존재함<br>• 엘라이딘(Elaidin)이라는 반유동성 물질이 수분 침투를 방지함 |\n| 과립층<br>(Granular Layer) | • 2~5층의 편평형 또는 방추형세포층<br>• 각화 과정이 시작되는 곳으로 빛을 산란시켜 자외선을 흡수함<br>• 케라토하이알린(Keratohyalin) 과립 존재<br>• 수분저지막이 존재하여 외부 이물질 방어 및 수분 증발 방지 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_2ed09b",
+    "text": "관능",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1158):\n| 각질층<br>(Horny Layer) 🎯 기출 | • 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5 정도의 약산성<br>• 피부의 가장 바깥에 위치하여 수분 손실을 막고, 피부장벽 역할을 하여 피부 보호 및 세균 침입 방어<br>• 각질과 세포간지질이 벽돌 구조인 라멜라 구조<br>• 케라틴 약 58%, 천연보습인자(NMF) 약 31%, 세포간지질 약 11%로 구성<br>• 각질층은 천연보습인자(NMF)를 통해 10~20%의 수분 함유<br>&nbsp;&nbsp;* 필라그린(Fillaggrin): 각질층 형성에 중요한 역할을 하는 단백질로, 각질층에서 단백질 분해 효소에 의해 분해되어 천연보습인자(NMF)를 구성하는 아미노산을 이룸<br>&nbsp;&nbsp;* 세라마이드: 지질막의 주성분으로 피부 표면의 손실되는 수분을 방어하고 외부로부터 유해 물질의 침투를 막음<br>&nbsp;&nbsp;* 각화주기(각질형성주기): 기저층에서 만들어진 세포가 모양이 변하며 각질층까지 올라와 일정 기간 머무르다 탈락되는 주기로, 보통 28±3일로 봄 |\n| 투명층<br>(Clear Layer) | • 2~3층의 무핵세포층으로 손바닥과 발바닥에 존재함<br>• 엘라이딘(Elaidin)이라는 반유동성 물질이 수분 침투를 방지함 |\n| 과립층<br>(Granular Layer) | • 2~5층의 편평형 또는 방추형세포층<br>• 각화 과정이 시작되는 곳으로 빛을 산란시켜 자외선을 흡수함<br>• 케라토하이알린(Keratohyalin) 과립 존재<br>• 수분저지막이 존재하여 외부 이물질 방어 및 수분 증발 방지 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_130957",
+    "text": "라멜라",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1158):\n| 각질층<br>(Horny Layer) 🎯 기출 | • 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5 정도의 약산성<br>• 피부의 가장 바깥에 위치하여 수분 손실을 막고, 피부장벽 역할을 하여 피부 보호 및 세균 침입 방어<br>• 각질과 세포간지질이 벽돌 구조인 라멜라 구조<br>• 케라틴 약 58%, 천연보습인자(NMF) 약 31%, 세포간지질 약 11%로 구성<br>• 각질층은 천연보습인자(NMF)를 통해 10~20%의 수분 함유<br>&nbsp;&nbsp;* 필라그린(Fillaggrin): 각질층 형성에 중요한 역할을 하는 단백질로, 각질층에서 단백질 분해 효소에 의해 분해되어 천연보습인자(NMF)를 구성하는 아미노산을 이룸<br>&nbsp;&nbsp;* 세라마이드: 지질막의 주성분으로 피부 표면의 손실되는 수분을 방어하고 외부로부터 유해 물질의 침투를 막음<br>&nbsp;&nbsp;* 각화주기(각질형성주기): 기저층에서 만들어진 세포가 모양이 변하며 각질층까지 올라와 일정 기간 머무르다 탈락되는 주기로, 보통 28±3일로 봄 |\n| 투명층<br>(Clear Layer) | • 2~3층의 무핵세포층으로 손바닥과 발바닥에 존재함<br>• 엘라이딘(Elaidin)이라는 반유동성 물질이 수분 침투를 방지함 |\n| 과립층<br>(Granular Layer) | • 2~5층의 편평형 또는 방추형세포층<br>• 각화 과정이 시작되는 곳으로 빛을 산란시켜 자외선을 흡수함<br>• 케라토하이알린(Keratohyalin) 과립 존재<br>• 수분저지막이 존재하여 외부 이물질 방어 및 수분 증발 방지 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_293498",
+    "text": "표준",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1158):\n| 각질층<br>(Horny Layer) 🎯 기출 | • 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5 정도의 약산성<br>• 피부의 가장 바깥에 위치하여 수분 손실을 막고, 피부장벽 역할을 하여 피부 보호 및 세균 침입 방어<br>• 각질과 세포간지질이 벽돌 구조인 라멜라 구조<br>• 케라틴 약 58%, 천연보습인자(NMF) 약 31%, 세포간지질 약 11%로 구성<br>• 각질층은 천연보습인자(NMF)를 통해 10~20%의 수분 함유<br>&nbsp;&nbsp;* 필라그린(Fillaggrin): 각질층 형성에 중요한 역할을 하는 단백질로, 각질층에서 단백질 분해 효소에 의해 분해되어 천연보습인자(NMF)를 구성하는 아미노산을 이룸<br>&nbsp;&nbsp;* 세라마이드: 지질막의 주성분으로 피부 표면의 손실되는 수분을 방어하고 외부로부터 유해 물질의 침투를 막음<br>&nbsp;&nbsp;* 각화주기(각질형성주기): 기저층에서 만들어진 세포가 모양이 변하며 각질층까지 올라와 일정 기간 머무르다 탈락되는 주기로, 보통 28±3일로 봄 |\n| 투명층<br>(Clear Layer) | • 2~3층의 무핵세포층으로 손바닥과 발바닥에 존재함<br>• 엘라이딘(Elaidin)이라는 반유동성 물질이 수분 침투를 방지함 |\n| 과립층<br>(Granular Layer) | • 2~5층의 편평형 또는 방추형세포층<br>• 각화 과정이 시작되는 곳으로 빛을 산란시켜 자외선을 흡수함<br>• 케라토하이알린(Keratohyalin) 과립 존재<br>• 수분저지막이 존재하여 외부 이물질 방어 및 수분 증발 방지 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ",
+     "ㅁ",
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ",
+     "ㄴ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q276",
+  "explain": "📖 교재 근거 (교재: L1158):\n| 각질층<br>(Horny Layer) 🎯 기출 | • 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5 정도의 약산성<br>• 피부의 가장 바깥에 위치하여 수분 손실을 막고, 피부장벽 역할을 하여 피부 보호 및 세균 침입 방어<br>• 각질과 세포간지질이 벽돌 구조인 라멜라 구조<br>• 케라틴 약 58%, 천연보습인자(NMF) 약 31%, 세포간지질 약 11%로 구성<br>• 각질층은 천연보습인자(NMF)를 통해 10~20%의 수분 함유<br>&nbsp;&nbsp;* 필라그린(Fillaggrin): 각질층 형성에 중요한 역할을 하는 단백질로, 각질층에서 단백질 분해 효소에 의해 분해되어 천연보습인자(NMF)를 구성하는 아미노산을 이룸<br>&nbsp;&nbsp;* 세라마이드: 지질막의 주성분으로 피부 표면의 손실되는 수분을 방어하고 외부로부터 유해 물질의 침투를 막음<br>&nbsp;&nbsp;* 각화주기(각질형성주기): 기저층에서 만들어진 세포가 모양이 변하며 각질층까지 올라와 일정 기간 머무르다 탈락되는 주기로, 보통 28±3일로 봄 |\n| 투명층<br>(Clear Layer) | • 2~3층의 무핵세포층으로 손바닥과 발바닥에 존재함<br>• 엘라이딘(Elaidin)이라는 반유동성 물질이 수분 침투를 방지함 |\n| 과립층<br>(Granular Layer) | • 2~5층의 편평형 또는 방추형세포층<br>• 각화 과정이 시작되는 곳으로 빛을 산란시켜 자외선을 흡수함<br>• 케라토하이알린(Keratohyalin) 과립 존재<br>• 수분저지막이 존재하여 외부 이물질 방어 및 수분 증발 방지 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "4"
+ },
+ {
+  "id": "combo-04-0277",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 출처: 과목4 문제은행 Q277",
+  "stem": "피지선에서 분비되는 유성 물질 중 화학 구조상 탄소 간 이중결합을 가져 산화되기 쉬운 불포화 탄화수소로 피지의 약 12%를 차지하는 특유의 유성 성분 명칭은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_9018be",
+    "text": "스쿠알렌",
+    "truth": true,
+    "explain": "📖 교재 근거 (L1256):\n| 스쿠알렌 | 12% |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_e5ddc5",
+    "text": "필라그린",
+    "truth": false,
+    "explain": "📖 교재 근거 (L1256):\n| 스쿠알렌 | 12% |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_705afa",
+    "text": "티로시나아제",
+    "truth": false,
+    "explain": "📖 교재 근거 (L1256):\n| 스쿠알렌 | 12% |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_a83d48",
+    "text": "랑게르한스",
+    "truth": false,
+    "explain": "📖 교재 근거 (L1256):\n| 스쿠알렌 | 12% |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_4de944",
+    "text": "격리",
+    "truth": false,
+    "explain": "📖 교재 근거 (L1256):\n| 스쿠알렌 | 12% |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ",
+     "ㄷ",
+     "ㅁ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q277",
+  "explain": "📖 교재 근거 (L1256):\n| 스쿠알렌 | 12% |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "4"
+ },
+ {
+  "id": "combo-04-0278",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1400 (출처: 과목4 문제은행 Q278)",
+  "stem": "모발의 일생 중 성장과 세포 분열이 멈추고 급격히 위축되어 모낭의 길이가 축소되는 시기로 모발의 약 1%를 차지하는 시기를 (A)기라고 한다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_f407ca",
+    "text": "NMF(천연보습인자)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1400):\n모발의 성장주기 순환: 성장기(3~6년, 모유두의 활발한 세포분열) → 퇴행기(약 3주, 모모세포 분열 감소·모유두 분리 시작) → 휴지기(3~4개월, 모낭과 모유두 완전 분리·성장기 반복)"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_99495c",
+    "text": "cP",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1400):\n모발의 성장주기 순환: 성장기(3~6년, 모유두의 활발한 세포분열) → 퇴행기(약 3주, 모모세포 분열 감소·모유두 분리 시작) → 휴지기(3~4개월, 모낭과 모유두 완전 분리·성장기 반복)"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_1f237c",
+    "text": "퇴행(catagen)",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1400):\n모발의 성장주기 순환: 성장기(3~6년, 모유두의 활발한 세포분열) → 퇴행기(약 3주, 모모세포 분열 감소·모유두 분리 시작) → 휴지기(3~4개월, 모낭과 모유두 완전 분리·성장기 반복)"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_a3b047",
+    "text": "이온",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1400):\n모발의 성장주기 순환: 성장기(3~6년, 모유두의 활발한 세포분열) → 퇴행기(약 3주, 모모세포 분열 감소·모유두 분리 시작) → 휴지기(3~4개월, 모낭과 모유두 완전 분리·성장기 반복)"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_deb3a8",
+    "text": "히알루론산",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1400):\n모발의 성장주기 순환: 성장기(3~6년, 모유두의 활발한 세포분열) → 퇴행기(약 3주, 모모세포 분열 감소·모유두 분리 시작) → 휴지기(3~4개월, 모낭과 모유두 완전 분리·성장기 반복)"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ",
+     "ㄱ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㅁ",
+     "ㄹ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㅁ",
+     "ㄷ",
+     "ㄹ",
+     "ㄴ",
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q278",
+  "explain": "📖 교재 근거 (교재: L1400):\n모발의 성장주기 순환: 성장기(3~6년, 모유두의 활발한 세포분열) → 퇴행기(약 3주, 모모세포 분열 감소·모유두 분리 시작) → 휴지기(3~4개월, 모낭과 모유두 완전 분리·성장기 반복)",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "3"
+ },
+ {
+  "id": "combo-04-0279",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -25122,7 +25957,7612 @@ var COMBO_DRILLS_subject4 = [
   "answer": "5"
  },
  {
-  "id": "combo-04-0271",
+  "id": "combo-04-0280",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 출처: 과목4 문제은행 Q280",
+  "stem": "맞춤형화장품 조제에 사용되는 원료의 질량이 최종 제품 200g 중 1.0%를 배합해야 할 때, 계량해야 하는 원료의 실제 질량은 (A)g이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_20cf91",
+    "text": "0.1",
+    "truth": false,
+    "explain": "📖 법령 근거 (L579):\n> 해설: 200g × 1.0% = 2g. 배합 비율 1.0%의 원료 질량은 200 × 0.01 = 2g이다."
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_d0a952",
+    "text": "0.04",
+    "truth": false,
+    "explain": "📖 법령 근거 (L579):\n> 해설: 200g × 1.0% = 2g. 배합 비율 1.0%의 원료 질량은 200 × 0.01 = 2g이다."
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_f0ce06",
+    "text": "2",
+    "truth": true,
+    "explain": "📖 법령 근거 (L579):\n> 해설: 200g × 1.0% = 2g. 배합 비율 1.0%의 원료 질량은 200 × 0.01 = 2g이다."
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_7acb5c",
+    "text": "1~30",
+    "truth": false,
+    "explain": "📖 법령 근거 (L579):\n> 해설: 200g × 1.0% = 2g. 배합 비율 1.0%의 원료 질량은 200 × 0.01 = 2g이다."
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_e23a69",
+    "text": "0.001",
+    "truth": false,
+    "explain": "📖 법령 근거 (L579):\n> 해설: 200g × 1.0% = 2g. 배합 비율 1.0%의 원료 질량은 200 × 0.01 = 2g이다."
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ",
+     "ㄴ",
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q280",
+  "explain": "📖 법령 근거 (L579):\n> 해설: 200g × 1.0% = 2g. 배합 비율 1.0%의 원료 질량은 200 × 0.01 = 2g이다.",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "1"
+ },
+ {
+  "id": "combo-04-0281",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1359 (출처: 과목4 문제은행 Q281)",
+  "stem": "화장품의 점성(Viscosity) 정도를 측정하기 위해 점도계를 활용하여 얻어지는 품질 지표 수치의 단위를 기호로 (A)(이)라고 한다. (센티포아즈로 읽음) — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_077945",
+    "text": "cP",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1359):\n한 줄 요약: 지용성(A·D·E·F·K) + 수용성(B군·C·P) — 피부 재생·항산화·보습·염증 완화 등.\n🧠 두음법: 지용성 = A·D·E·F·K, 수용성 = B·C·P"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_3e0fe3",
+    "text": "KCl",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1359):\n한 줄 요약: 지용성(A·D·E·F·K) + 수용성(B군·C·P) — 피부 재생·항산화·보습·염증 완화 등.\n🧠 두음법: 지용성 = A·D·E·F·K, 수용성 = B·C·P"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_e33682",
+    "text": "스쿠알렌",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1359):\n한 줄 요약: 지용성(A·D·E·F·K) + 수용성(B군·C·P) — 피부 재생·항산화·보습·염증 완화 등.\n🧠 두음법: 지용성 = A·D·E·F·K, 수용성 = B·C·P"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_f5652b",
+    "text": "사용 가능",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1359):\n한 줄 요약: 지용성(A·D·E·F·K) + 수용성(B군·C·P) — 피부 재생·항산화·보습·염증 완화 등.\n🧠 두음법: 지용성 = A·D·E·F·K, 수용성 = B·C·P"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_fc4ea2",
+    "text": "리모넨",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1359):\n한 줄 요약: 지용성(A·D·E·F·K) + 수용성(B군·C·P) — 피부 재생·항산화·보습·염증 완화 등.\n🧠 두음법: 지용성 = A·D·E·F·K, 수용성 = B·C·P"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ",
+     "ㅁ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㅁ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q281",
+  "explain": "📖 교재 근거 (교재: L1359):\n한 줄 요약: 지용성(A·D·E·F·K) + 수용성(B군·C·P) — 피부 재생·항산화·보습·염증 완화 등.\n🧠 두음법: 지용성 = A·D·E·F·K, 수용성 = B·C·P",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "5"
+ },
+ {
+  "id": "combo-04-0282",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1454 (출처: 과목4 문제은행 Q282)",
+  "stem": "피부 장벽이 손상되었을 때 피부 표피를 통해 수분이 외부로 증발하는 물리적 양을 나타내는 수치를 영문 약어 (A)(이)라고 한다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_f75003",
+    "text": "콜레스테롤",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1454):\n> 용어 - 경피수분손실량(TEWL) 🎯 기출: 피부 표면에서 증발되는 수분량(TEWL: Transepidermal Water Loss)으로 건성 피부와 손상 피부는 값이 높으며, 피부 장벽기능 이상과 관련 있음"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_83319b",
+    "text": "기저",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1454):\n> 용어 - 경피수분손실량(TEWL) 🎯 기출: 피부 표면에서 증발되는 수분량(TEWL: Transepidermal Water Loss)으로 건성 피부와 손상 피부는 값이 높으며, 피부 장벽기능 이상과 관련 있음"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_63a261",
+    "text": "TEWL",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1454):\n> 용어 - 경피수분손실량(TEWL) 🎯 기출: 피부 표면에서 증발되는 수분량(TEWL: Transepidermal Water Loss)으로 건성 피부와 손상 피부는 값이 높으며, 피부 장벽기능 이상과 관련 있음"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_1ecc4f",
+    "text": "페녹시에탄올",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1454):\n> 용어 - 경피수분손실량(TEWL) 🎯 기출: 피부 표면에서 증발되는 수분량(TEWL: Transepidermal Water Loss)으로 건성 피부와 손상 피부는 값이 높으며, 피부 장벽기능 이상과 관련 있음"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_36a1ec",
+    "text": "약산",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1454):\n> 용어 - 경피수분손실량(TEWL) 🎯 기출: 피부 표면에서 증발되는 수분량(TEWL: Transepidermal Water Loss)으로 건성 피부와 손상 피부는 값이 높으며, 피부 장벽기능 이상과 관련 있음"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ",
+     "ㄷ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㅁ",
+     "ㄱ",
+     "ㄷ",
+     "ㄹ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q282",
+  "explain": "📖 교재 근거 (교재: L1454):\n> 용어 - 경피수분손실량(TEWL) 🎯 기출: 피부 표면에서 증발되는 수분량(TEWL: Transepidermal Water Loss)으로 건성 피부와 손상 피부는 값이 높으며, 피부 장벽기능 이상과 관련 있음",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "5"
+ },
+ {
+  "id": "combo-04-0283",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L113 (출처: 과목4 문제은행 Q283)",
+  "stem": "표피의 기저층에 위치하며 자외선 자극을 받아 멜라닌 색소(Melanin)를 형성해 피부 세포 핵을 보호하는 나뭇가지 모양의 세포 명칭은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_80edfa",
+    "text": "멜라닌형성세포",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L113):\n| 기저층 (멜라닌형성세포) | 멜라닌형성세포(멜라노사이트, Melanocyte) 🎯 기출 | • 멜라닌을 합성하여 각질형성세포에 멜라닌이 축적된 멜라노솜(Melanosome)을 공급하는 세포<br>• 피부색과 털색을 결정함<br>• 표피의 5~25%를 차지하며, 세포 내에 확산하면 검게 보임 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_c9bef6",
+    "text": "유기",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L113):\n| 기저층 (멜라닌형성세포) | 멜라닌형성세포(멜라노사이트, Melanocyte) 🎯 기출 | • 멜라닌을 합성하여 각질형성세포에 멜라닌이 축적된 멜라노솜(Melanosome)을 공급하는 세포<br>• 피부색과 털색을 결정함<br>• 표피의 5~25%를 차지하며, 세포 내에 확산하면 검게 보임 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_540d6a",
+    "text": "맞춤형화장품 조제관리사",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L113):\n| 기저층 (멜라닌형성세포) | 멜라닌형성세포(멜라노사이트, Melanocyte) 🎯 기출 | • 멜라닌을 합성하여 각질형성세포에 멜라닌이 축적된 멜라노솜(Melanosome)을 공급하는 세포<br>• 피부색과 털색을 결정함<br>• 표피의 5~25%를 차지하며, 세포 내에 확산하면 검게 보임 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_2e321e",
+    "text": "기저",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L113):\n| 기저층 (멜라닌형성세포) | 멜라닌형성세포(멜라노사이트, Melanocyte) 🎯 기출 | • 멜라닌을 합성하여 각질형성세포에 멜라닌이 축적된 멜라노솜(Melanosome)을 공급하는 세포<br>• 피부색과 털색을 결정함<br>• 표피의 5~25%를 차지하며, 세포 내에 확산하면 검게 보임 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_78b3a8",
+    "text": "부식(방식)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L113):\n| 기저층 (멜라닌형성세포) | 멜라닌형성세포(멜라노사이트, Melanocyte) 🎯 기출 | • 멜라닌을 합성하여 각질형성세포에 멜라닌이 축적된 멜라노솜(Melanosome)을 공급하는 세포<br>• 피부색과 털색을 결정함<br>• 표피의 5~25%를 차지하며, 세포 내에 확산하면 검게 보임 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ",
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ",
+     "ㄹ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q283",
+  "explain": "📖 교재 근거 (교재: L113):\n| 기저층 (멜라닌형성세포) | 멜라닌형성세포(멜라노사이트, Melanocyte) 🎯 기출 | • 멜라닌을 합성하여 각질형성세포에 멜라닌이 축적된 멜라노솜(Melanosome)을 공급하는 세포<br>• 피부색과 털색을 결정함<br>• 표피의 5~25%를 차지하며, 세포 내에 확산하면 검게 보임 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "1"
+ },
+ {
+  "id": "combo-04-0284",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1233 (출처: 과목4 문제은행 Q284)",
+  "stem": "진피의 기질 성분 중 자기 무게의 1,000배 이상의 수분을 끌어당기는 천연 다당류 계열의 강력 보습 인자 성분 명칭은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_a28867",
+    "text": "수평",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1233):\n> 용어 - 기질: 교원섬유와 탄력섬유를 채워주는 물질로 히알루론산, 콘드로이친 황산, 헤파린 황산염 등으로 구성된 뮤코다당체임"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_b022a6",
+    "text": "anagen(성장)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1233):\n> 용어 - 기질: 교원섬유와 탄력섬유를 채워주는 물질로 히알루론산, 콘드로이친 황산, 헤파린 황산염 등으로 구성된 뮤코다당체임"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_6742ef",
+    "text": "스쿠알렌",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1233):\n> 용어 - 기질: 교원섬유와 탄력섬유를 채워주는 물질로 히알루론산, 콘드로이친 황산, 헤파린 황산염 등으로 구성된 뮤코다당체임"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_13679c",
+    "text": "히알루론산",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1233):\n> 용어 - 기질: 교원섬유와 탄력섬유를 채워주는 물질로 히알루론산, 콘드로이친 황산, 헤파린 황산염 등으로 구성된 뮤코다당체임"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_a3f7d3",
+    "text": "NMF",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1233):\n> 용어 - 기질: 교원섬유와 탄력섬유를 채워주는 물질로 히알루론산, 콘드로이친 황산, 헤파린 황산염 등으로 구성된 뮤코다당체임"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄱ",
+     "ㄹ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㅁ",
+     "ㄹ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q284",
+  "explain": "📖 교재 근거 (교재: L1233):\n> 용어 - 기질: 교원섬유와 탄력섬유를 채워주는 물질로 히알루론산, 콘드로이친 황산, 헤파린 황산염 등으로 구성된 뮤코다당체임",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "3"
+ },
+ {
+  "id": "combo-04-0285",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1247 (출처: 과목4 문제은행 Q285)",
+  "stem": "땀샘 중 전신에 분포하며 냄새가 없고 99%가 수분으로 이루어진 맑은 땀을 배출하는 일반적인 한선의 명칭은 (A) 한선(소한선)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_ddc8c3",
+    "text": "성장(anagen)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1247):\n| 한선(땀샘) - 에크린선(소한선) | • 입술, 음부, 손톱을 제외한 전신에 분포하며, 특히 손바닥, 발바닥, 이마에 많이 분포되어 있음<br>• 표피로 직접 분비하며 무색, 무취<br>• pH 3.8~5.6<br>• 체온조절 기능 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_438459",
+    "text": "리모넨",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1247):\n| 한선(땀샘) - 에크린선(소한선) | • 입술, 음부, 손톱을 제외한 전신에 분포하며, 특히 손바닥, 발바닥, 이마에 많이 분포되어 있음<br>• 표피로 직접 분비하며 무색, 무취<br>• pH 3.8~5.6<br>• 체온조절 기능 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_c1a696",
+    "text": "나이아신아마이드",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1247):\n| 한선(땀샘) - 에크린선(소한선) | • 입술, 음부, 손톱을 제외한 전신에 분포하며, 특히 손바닥, 발바닥, 이마에 많이 분포되어 있음<br>• 표피로 직접 분비하며 무색, 무취<br>• pH 3.8~5.6<br>• 체온조절 기능 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_10513c",
+    "text": "에크린",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1247):\n| 한선(땀샘) - 에크린선(소한선) | • 입술, 음부, 손톱을 제외한 전신에 분포하며, 특히 손바닥, 발바닥, 이마에 많이 분포되어 있음<br>• 표피로 직접 분비하며 무색, 무취<br>• pH 3.8~5.6<br>• 체온조절 기능 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_726f65",
+    "text": "교정(Calibration)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1247):\n| 한선(땀샘) - 에크린선(소한선) | • 입술, 음부, 손톱을 제외한 전신에 분포하며, 특히 손바닥, 발바닥, 이마에 많이 분포되어 있음<br>• 표피로 직접 분비하며 무색, 무취<br>• pH 3.8~5.6<br>• 체온조절 기능 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q285",
+  "explain": "📖 교재 근거 (교재: L1247):\n| 한선(땀샘) - 에크린선(소한선) | • 입술, 음부, 손톱을 제외한 전신에 분포하며, 특히 손바닥, 발바닥, 이마에 많이 분포되어 있음<br>• 표피로 직접 분비하며 무색, 무취<br>• pH 3.8~5.6<br>• 체온조절 기능 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "1"
+ },
+ {
+  "id": "combo-04-0286",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1396 (출처: 과목4 문제은행 Q286)",
+  "stem": "모발의 성장 주기 중 세포 분열이 가장 활발하여 모발이 계속 성장하는 단계로 전체 모발의 80 ~ 90%를 차지하는 시기는 (A)기이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_8e94ab",
+    "text": "성장(anagen)",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1396):\n| 성장기(Anagen) | 3~6년 | • 전체 모발의 80~90%가 이 시기에 해당함<br>• 모모세포의 활발한 활동 시기<br>• 여자가 남자에 비해 성장주기가 긺 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_a5b521",
+    "text": "리모넨",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1396):\n| 성장기(Anagen) | 3~6년 | • 전체 모발의 80~90%가 이 시기에 해당함<br>• 모모세포의 활발한 활동 시기<br>• 여자가 남자에 비해 성장주기가 긺 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_f225d3",
+    "text": "세라마이드",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1396):\n| 성장기(Anagen) | 3~6년 | • 전체 모발의 80~90%가 이 시기에 해당함<br>• 모모세포의 활발한 활동 시기<br>• 여자가 남자에 비해 성장주기가 긺 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_ea1f20",
+    "text": "소독(세척·소독)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1396):\n| 성장기(Anagen) | 3~6년 | • 전체 모발의 80~90%가 이 시기에 해당함<br>• 모모세포의 활발한 활동 시기<br>• 여자가 남자에 비해 성장주기가 긺 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_ab2710",
+    "text": "NMF",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1396):\n| 성장기(Anagen) | 3~6년 | • 전체 모발의 80~90%가 이 시기에 해당함<br>• 모모세포의 활발한 활동 시기<br>• 여자가 남자에 비해 성장주기가 긺 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㅁ",
+     "ㄹ",
+     "ㄱ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q286",
+  "explain": "📖 교재 근거 (교재: L1396):\n| 성장기(Anagen) | 3~6년 | • 전체 모발의 80~90%가 이 시기에 해당함<br>• 모모세포의 활발한 활동 시기<br>• 여자가 남자에 비해 성장주기가 긺 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "5"
+ },
+ {
+  "id": "combo-04-0287",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L431 (출처: 과목4 문제은행 Q287)",
+  "stem": "조제관리사가 제품 조제 완료 후 용기에 덜어 담아 밀폐 포장하는 기계적/실무적 작업을 (A)(이)라고 한다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_b5c983",
+    "text": "UVB",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L431):\nB --> C[\"충진<br/>내용물을 용기에 주입\"]"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_a319c7",
+    "text": "교정(Calibration)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L431):\nB --> C[\"충진<br/>내용물을 용기에 주입\"]"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_e3aeb0",
+    "text": "C",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L431):\nB --> C[\"충진<br/>내용물을 용기에 주입\"]"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_b085a9",
+    "text": "충진",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L431):\nB --> C[\"충진<br/>내용물을 용기에 주입\"]"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_3a1457",
+    "text": "부식(방식)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L431):\nB --> C[\"충진<br/>내용물을 용기에 주입\"]"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ",
+     "ㄱ",
+     "ㅁ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q287",
+  "explain": "📖 교재 근거 (교재: L431):\nB --> C[\"충진<br/>내용물을 용기에 주입\"]",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "3"
+ },
+ {
+  "id": "combo-04-0288",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 출처: 과목4 문제은행 Q288",
+  "stem": "맞춤형화장품 조제 시 보존제 및 (A) 차단 성분은 농도 계산의 오류로 부작용을 일으킬 위험이 매우 커 단독 분말 형태로 임의 배합하는 것이 엄격히 차단된다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_5a99d6",
+    "text": "조제",
+    "truth": false,
+    "explain": "📖 교재 근거 (L2178):\n| 사용제한 원료 | 보존제·자외선차단제·염모제 | 별표 2 — 사용 제한 원료 (제한 필요 원료) |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_78abb6",
+    "text": "자외선",
+    "truth": true,
+    "explain": "📖 교재 근거 (L2178):\n| 사용제한 원료 | 보존제·자외선차단제·염모제 | 별표 2 — 사용 제한 원료 (제한 필요 원료) |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_94bc15",
+    "text": "cP",
+    "truth": false,
+    "explain": "📖 교재 근거 (L2178):\n| 사용제한 원료 | 보존제·자외선차단제·염모제 | 별표 2 — 사용 제한 원료 (제한 필요 원료) |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_3277b2",
+    "text": "엘라스틴",
+    "truth": false,
+    "explain": "📖 교재 근거 (L2178):\n| 사용제한 원료 | 보존제·자외선차단제·염모제 | 별표 2 — 사용 제한 원료 (제한 필요 원료) |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_6a00d9",
+    "text": "부식(방식)",
+    "truth": false,
+    "explain": "📖 교재 근거 (L2178):\n| 사용제한 원료 | 보존제·자외선차단제·염모제 | 별표 2 — 사용 제한 원료 (제한 필요 원료) |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㅁ",
+     "ㄱ",
+     "ㄹ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q288",
+  "explain": "📖 교재 근거 (L2178):\n| 사용제한 원료 | 보존제·자외선차단제·염모제 | 별표 2 — 사용 제한 원료 (제한 필요 원료) |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "4"
+ },
+ {
+  "id": "combo-04-0289",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 출처: 과목4 문제은행 Q289",
+  "stem": "고객의 피부 민감성 및 건조도를 수치적으로 측정하기 위해 매장에서 표피 최외곽 각질층의 전기 전도도나 저항을 이용해 측정하는 품질 기기는 (A)측정기이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_74e819",
+    "text": "NMF(천연보습인자)",
+    "truth": false,
+    "explain": "📖 교재 근거 (L1447):\n| 수분 🎯 기출 | • 전기전도도를 통해 피부 각질층의 수분량 측정<br>• 피부 수분 증발량인 경피수분손실량(TEWL) 측정 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_4a8736",
+    "text": "코르네오데스모좀",
+    "truth": false,
+    "explain": "📖 교재 근거 (L1447):\n| 수분 🎯 기출 | • 전기전도도를 통해 피부 각질층의 수분량 측정<br>• 피부 수분 증발량인 경피수분손실량(TEWL) 측정 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_62dd62",
+    "text": "수분",
+    "truth": true,
+    "explain": "📖 교재 근거 (L1447):\n| 수분 🎯 기출 | • 전기전도도를 통해 피부 각질층의 수분량 측정<br>• 피부 수분 증발량인 경피수분손실량(TEWL) 측정 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_73669a",
+    "text": "엘라스틴",
+    "truth": false,
+    "explain": "📖 교재 근거 (L1447):\n| 수분 🎯 기출 | • 전기전도도를 통해 피부 각질층의 수분량 측정<br>• 피부 수분 증발량인 경피수분손실량(TEWL) 측정 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_06e024",
+    "text": "UVB",
+    "truth": false,
+    "explain": "📖 교재 근거 (L1447):\n| 수분 🎯 기출 | • 전기전도도를 통해 피부 각질층의 수분량 측정<br>• 피부 수분 증발량인 경피수분손실량(TEWL) 측정 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ",
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q289",
+  "explain": "📖 교재 근거 (L1447):\n| 수분 🎯 기출 | • 전기전도도를 통해 피부 각질층의 수분량 측정<br>• 피부 수분 증발량인 경피수분손실량(TEWL) 측정 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "1"
+ },
+ {
+  "id": "combo-04-0290",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 출처: 과목4 문제은행 Q290",
+  "stem": "화장품 내용물을 덜어서 소량 분할 판매하는 행위를 화장품법상 (A)(이)라고 정의한다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_22f973",
+    "text": "섬유아",
+    "truth": false,
+    "explain": "📖 교재 근거 (1.cosmetic-law: L30):\n② 제조 또는 수입된 화장품의 내용물을 소분(小分)한 화장품 (다만, 고형비누 등 화장품의 내용물을 단순 소분한 화장품은 제외함)"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_ef76ba",
+    "text": "코르네오데스모좀",
+    "truth": false,
+    "explain": "📖 교재 근거 (1.cosmetic-law: L30):\n② 제조 또는 수입된 화장품의 내용물을 소분(小分)한 화장품 (다만, 고형비누 등 화장품의 내용물을 단순 소분한 화장품은 제외함)"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_ee0468",
+    "text": "망상",
+    "truth": false,
+    "explain": "📖 교재 근거 (1.cosmetic-law: L30):\n② 제조 또는 수입된 화장품의 내용물을 소분(小分)한 화장품 (다만, 고형비누 등 화장품의 내용물을 단순 소분한 화장품은 제외함)"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_0a949a",
+    "text": "멜라닌형성",
+    "truth": false,
+    "explain": "📖 교재 근거 (1.cosmetic-law: L30):\n② 제조 또는 수입된 화장품의 내용물을 소분(小分)한 화장품 (다만, 고형비누 등 화장품의 내용물을 단순 소분한 화장품은 제외함)"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_a39260",
+    "text": "소분",
+    "truth": true,
+    "explain": "📖 교재 근거 (1.cosmetic-law: L30):\n② 제조 또는 수입된 화장품의 내용물을 소분(小分)한 화장품 (다만, 고형비누 등 화장품의 내용물을 단순 소분한 화장품은 제외함)"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㄷ",
+     "ㅁ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q290",
+  "explain": "📖 교재 근거 (1.cosmetic-law: L30):\n② 제조 또는 수입된 화장품의 내용물을 소분(小分)한 화장품 (다만, 고형비누 등 화장품의 내용물을 단순 소분한 화장품은 제외함)",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "1"
+ },
+ {
+  "id": "combo-04-0291",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1835 (출처: 과목4 문제은행 Q291)",
+  "stem": "조제관리사가 제품의 향취, 색상, 성상 등을 오직 자신의 감각(눈, 코, 피부 촉감 등)을 이용해 판정하는 품질 평가법을 (A) 평가라고 한다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_a874ed",
+    "text": "KCl",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1835):\n> 관능평가 = 인간의 오감으로 화장품 품질(외관·색상·향·사용감)을 측정·분석·평가 후 통계 처리."
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_84791e",
+    "text": "메니스커스",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1835):\n> 관능평가 = 인간의 오감으로 화장품 품질(외관·색상·향·사용감)을 측정·분석·평가 후 통계 처리."
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_68c9ab",
+    "text": "섬유아",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1835):\n> 관능평가 = 인간의 오감으로 화장품 품질(외관·색상·향·사용감)을 측정·분석·평가 후 통계 처리."
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_c85c70",
+    "text": "맞춤형화장품 조제관리사",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1835):\n> 관능평가 = 인간의 오감으로 화장품 품질(외관·색상·향·사용감)을 측정·분석·평가 후 통계 처리."
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_050bcb",
+    "text": "관능",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1835):\n> 관능평가 = 인간의 오감으로 화장품 품질(외관·색상·향·사용감)을 측정·분석·평가 후 통계 처리."
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㄷ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㅁ",
+     "ㄹ",
+     "ㄷ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q291",
+  "explain": "📖 교재 근거 (교재: L1835):\n> 관능평가 = 인간의 오감으로 화장품 품질(외관·색상·향·사용감)을 측정·분석·평가 후 통계 처리.",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "4"
+ },
+ {
+  "id": "combo-04-0292",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L2660 (출처: 과목4 문제은행 Q292)",
+  "stem": "식약처 고시 주름개선 기능성 고시 성분 중 아데노신의 의무 배합 수치는 최종 완성 제품 중 (A)%이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_3f0d4b",
+    "text": "2",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2660):\n| 원료 관련 (기능성 오인) | 기능성화장품으로 심사(보고)하지 아니한 제품에 '식약처 미백 고시 성분 ○○ 함유' 등의 표현 | - |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_beb599",
+    "text": "0.04",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L2660):\n| 원료 관련 (기능성 오인) | 기능성화장품으로 심사(보고)하지 아니한 제품에 '식약처 미백 고시 성분 ○○ 함유' 등의 표현 | - |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_06845a",
+    "text": "28",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2660):\n| 원료 관련 (기능성 오인) | 기능성화장품으로 심사(보고)하지 아니한 제품에 '식약처 미백 고시 성분 ○○ 함유' 등의 표현 | - |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_ec8cec",
+    "text": "1~30",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2660):\n| 원료 관련 (기능성 오인) | 기능성화장품으로 심사(보고)하지 아니한 제품에 '식약처 미백 고시 성분 ○○ 함유' 등의 표현 | - |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_d1a865",
+    "text": "0.1",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2660):\n| 원료 관련 (기능성 오인) | 기능성화장품으로 심사(보고)하지 아니한 제품에 '식약처 미백 고시 성분 ○○ 함유' 등의 표현 | - |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ",
+     "ㄱ",
+     "ㄹ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㅁ",
+     "ㄴ",
+     "ㄱ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q292",
+  "explain": "📖 교재 근거 (교재: L2660):\n| 원료 관련 (기능성 오인) | 기능성화장품으로 심사(보고)하지 아니한 제품에 '식약처 미백 고시 성분 ○○ 함유' 등의 표현 | - |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "5"
+ },
+ {
+  "id": "combo-04-0293",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1684 (출처: 과목4 문제은행 Q293)",
+  "stem": "각질 세포 사이의 틈을 메워 주며 피부 장벽 세포간 지질의 핵심 역할을 수행하는 세라마이드, 콜레스테롤, 그리고 (A)은 3대 핵심 세포간지질이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_0cfa9a",
+    "text": "엘라스틴",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1684):\n| 세포간지질 | 세라마이드 50% 이상, 콜레스테롤, 지방산 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_657971",
+    "text": "자유지방산",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1684):\n| 세포간지질 | 세라마이드 50% 이상, 콜레스테롤, 지방산 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_9131d5",
+    "text": "아데노신",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1684):\n| 세포간지질 | 세라마이드 50% 이상, 콜레스테롤, 지방산 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_50a830",
+    "text": "온도",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1684):\n| 세포간지질 | 세라마이드 50% 이상, 콜레스테롤, 지방산 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_d7c1f2",
+    "text": "칭량",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1684):\n| 세포간지질 | 세라마이드 50% 이상, 콜레스테롤, 지방산 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ",
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ",
+     "ㄴ",
+     "ㄹ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q293",
+  "explain": "📖 교재 근거 (교재: L1684):\n| 세포간지질 | 세라마이드 50% 이상, 콜레스테롤, 지방산 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "3"
+ },
+ {
+  "id": "combo-04-0294",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L3903 (출처: 과목4 문제은행 Q294)",
+  "stem": "자외선 차단 성분 중 백탁이 없고 자외선을 흡수하여 열에너지로 소실시키는 유기 자외선 차단 필터 성분을 (A) 자외선 차단제라고 부른다. (물리적 차단제와 구분) — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_3d2496",
+    "text": "헤미데스모좀",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3903):\n| 튜브 | 튜브 제품 | 폼클렌징·자외선 차단제 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_c5553e",
+    "text": "스쿠알렌",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3903):\n| 튜브 | 튜브 제품 | 폼클렌징·자외선 차단제 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_9b57cd",
+    "text": "세라마이드",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3903):\n| 튜브 | 튜브 제품 | 폼클렌징·자외선 차단제 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_8fc497",
+    "text": "유기",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L3903):\n| 튜브 | 튜브 제품 | 폼클렌징·자외선 차단제 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_f0a685",
+    "text": "티올(SH)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3903):\n| 튜브 | 튜브 제품 | 폼클렌징·자외선 차단제 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ",
+     "ㄷ",
+     "ㄴ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㅁ",
+     "ㄷ",
+     "ㄴ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q294",
+  "explain": "📖 교재 근거 (교재: L3903):\n| 튜브 | 튜브 제품 | 폼클렌징·자외선 차단제 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "4"
+ },
+ {
+  "id": "combo-04-0295",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L3389 (출처: 과목4 문제은행 Q295)",
+  "stem": "조제관리사가 정밀 계량 시 약 스푼이나 약 주걱으로 미량의 고체 가루 원료를 저울 위 시약지에 덜어내는 행위를 (A)(이)라고 한다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_0eb0b8",
+    "text": "라멜라",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3389):\n> 칭량(전자저울·메스실린더) + 혼합(호모게나이저·디스퍼·오버헤드스터러) + 소분(스패츌러·디스펜서·피펫) + 측정(pH미터·점도계·경도계) + 살균(자외선 살균기)."
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_bd8008",
+    "text": "계면활성제",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3389):\n> 칭량(전자저울·메스실린더) + 혼합(호모게나이저·디스퍼·오버헤드스터러) + 소분(스패츌러·디스펜서·피펫) + 측정(pH미터·점도계·경도계) + 살균(자외선 살균기)."
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_be52c9",
+    "text": "메스실린더(또는 피펫)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3389):\n> 칭량(전자저울·메스실린더) + 혼합(호모게나이저·디스퍼·오버헤드스터러) + 소분(스패츌러·디스펜서·피펫) + 측정(pH미터·점도계·경도계) + 살균(자외선 살균기)."
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_ba3103",
+    "text": "제조번호",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3389):\n> 칭량(전자저울·메스실린더) + 혼합(호모게나이저·디스퍼·오버헤드스터러) + 소분(스패츌러·디스펜서·피펫) + 측정(pH미터·점도계·경도계) + 살균(자외선 살균기)."
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_7d08a1",
+    "text": "칭량",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L3389):\n> 칭량(전자저울·메스실린더) + 혼합(호모게나이저·디스퍼·오버헤드스터러) + 소분(스패츌러·디스펜서·피펫) + 측정(pH미터·점도계·경도계) + 살균(자외선 살균기)."
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㅁ",
+     "ㄷ",
+     "ㄹ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ",
+     "ㄴ",
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄱ",
+     "ㄹ",
+     "ㅁ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q295",
+  "explain": "📖 교재 근거 (교재: L3389):\n> 칭량(전자저울·메스실린더) + 혼합(호모게나이저·디스퍼·오버헤드스터러) + 소분(스패츌러·디스펜서·피펫) + 측정(pH미터·점도계·경도계) + 살균(자외선 살균기).",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "1"
+ },
+ {
+  "id": "combo-04-0296",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L2858 (출처: 과목4 문제은행 Q296)",
+  "stem": "맞춤형화장품의 1차 용기 포장 시 화장품 명칭, 상호, 제조번호와 함께 의무 기재해야 하는 사용 유효 기간 표시 사항은 (A) 또는 개봉 후 사용 기간이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_99766c",
+    "text": "세라마이드",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2858):\n> 해설: 1차 포장 필수 기재사항은 화장품의 명칭, 영업자의 상호, 제조번호(식별번호), 사용기한 또는 개봉 후 사용기간이다. 전성분 표시는 2차 포장(외부포장)에 기재해야 한다."
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_f58073",
+    "text": "맞춤형화장품 조제관리사",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2858):\n> 해설: 1차 포장 필수 기재사항은 화장품의 명칭, 영업자의 상호, 제조번호(식별번호), 사용기한 또는 개봉 후 사용기간이다. 전성분 표시는 2차 포장(외부포장)에 기재해야 한다."
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_e6a200",
+    "text": "라멜라",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2858):\n> 해설: 1차 포장 필수 기재사항은 화장품의 명칭, 영업자의 상호, 제조번호(식별번호), 사용기한 또는 개봉 후 사용기간이다. 전성분 표시는 2차 포장(외부포장)에 기재해야 한다."
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_73f94b",
+    "text": "사용기한",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L2858):\n> 해설: 1차 포장 필수 기재사항은 화장품의 명칭, 영업자의 상호, 제조번호(식별번호), 사용기한 또는 개봉 후 사용기간이다. 전성분 표시는 2차 포장(외부포장)에 기재해야 한다."
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_36cf67",
+    "text": "유두",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2858):\n> 해설: 1차 포장 필수 기재사항은 화장품의 명칭, 영업자의 상호, 제조번호(식별번호), 사용기한 또는 개봉 후 사용기간이다. 전성분 표시는 2차 포장(외부포장)에 기재해야 한다."
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ",
+     "ㄴ",
+     "ㄱ",
+     "ㅁ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㅁ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ",
+     "ㄴ",
+     "ㄱ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q296",
+  "explain": "📖 교재 근거 (교재: L2858):\n> 해설: 1차 포장 필수 기재사항은 화장품의 명칭, 영업자의 상호, 제조번호(식별번호), 사용기한 또는 개봉 후 사용기간이다. 전성분 표시는 2차 포장(외부포장)에 기재해야 한다.",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "4"
+ },
+ {
+  "id": "combo-04-0297",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L102 (출처: 과목4 문제은행 Q297)",
+  "stem": "식약처 미백 기능성 고시 성분 중 함량 한도가 2.0% ~ 5.0%인 대표적인 비타민 B3 유도체 성분명은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_466d6a",
+    "text": "충진",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L102):\n| 미백 – 나이아신아마이드 | 2.0~5.0% |\n| 미백 – 알부틴 | 2.0~5.0% |\n| 미백 – 유용성 감초 추출물 | 0.05% |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_abffd3",
+    "text": "헤미데스모좀",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L102):\n| 미백 – 나이아신아마이드 | 2.0~5.0% |\n| 미백 – 알부틴 | 2.0~5.0% |\n| 미백 – 유용성 감초 추출물 | 0.05% |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_afd325",
+    "text": "나이아신아마이드",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L102):\n| 미백 – 나이아신아마이드 | 2.0~5.0% |\n| 미백 – 알부틴 | 2.0~5.0% |\n| 미백 – 유용성 감초 추출물 | 0.05% |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_cf9bf1",
+    "text": "발(스크류)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L102):\n| 미백 – 나이아신아마이드 | 2.0~5.0% |\n| 미백 – 알부틴 | 2.0~5.0% |\n| 미백 – 유용성 감초 추출물 | 0.05% |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_dbbb5c",
+    "text": "사용 가능",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L102):\n| 미백 – 나이아신아마이드 | 2.0~5.0% |\n| 미백 – 알부틴 | 2.0~5.0% |\n| 미백 – 유용성 감초 추출물 | 0.05% |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄱ",
+     "ㄹ",
+     "ㅁ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q297",
+  "explain": "📖 교재 근거 (교재: L102):\n| 미백 – 나이아신아마이드 | 2.0~5.0% |\n| 미백 – 알부틴 | 2.0~5.0% |\n| 미백 – 유용성 감초 추출물 | 0.05% |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "1"
+ },
+ {
+  "id": "combo-04-0298",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L588 (출처: 과목4 문제은행 Q298)",
+  "stem": "맞춤형화장품판매업소의 조제실 내 세균 번식을 억제하고 청결을 유지하기 위해 사용하는 가장 보편적인 알코올 소독제 농도는 (A)%이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_359382",
+    "text": "0.002",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L588):\n| 제8조의3<br>맞춤형화장품 판매업의 변경신고 | • 맞춤형화장품판매업자가 다음의 사항을 변경하는 경우에는 변경신고를 해야 함<br>&nbsp;&nbsp;- 맞춤형화장품판매업자를 변경하는 경우<br>&nbsp;&nbsp;- 맞춤형화장품판매업소의 상호 또는 소재지를 변경하는 경우<br>&nbsp;&nbsp;- 맞춤형화장품조제관리사를 변경하는 경우<br>• 신고기한: 변경이 있는 날부터 30일 이내에 관할 지방식품의약품안전청장에게 신고<br>• 행정기관 처리기한: 변경신고서(전자문서 포함) 접수 후 10일 이내 처리 (단, 조제관리사 변경신고는 7일 이내 처리) |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_3f184e",
+    "text": "70",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L588):\n| 제8조의3<br>맞춤형화장품 판매업의 변경신고 | • 맞춤형화장품판매업자가 다음의 사항을 변경하는 경우에는 변경신고를 해야 함<br>&nbsp;&nbsp;- 맞춤형화장품판매업자를 변경하는 경우<br>&nbsp;&nbsp;- 맞춤형화장품판매업소의 상호 또는 소재지를 변경하는 경우<br>&nbsp;&nbsp;- 맞춤형화장품조제관리사를 변경하는 경우<br>• 신고기한: 변경이 있는 날부터 30일 이내에 관할 지방식품의약품안전청장에게 신고<br>• 행정기관 처리기한: 변경신고서(전자문서 포함) 접수 후 10일 이내 처리 (단, 조제관리사 변경신고는 7일 이내 처리) |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_b8c197",
+    "text": "0.001",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L588):\n| 제8조의3<br>맞춤형화장품 판매업의 변경신고 | • 맞춤형화장품판매업자가 다음의 사항을 변경하는 경우에는 변경신고를 해야 함<br>&nbsp;&nbsp;- 맞춤형화장품판매업자를 변경하는 경우<br>&nbsp;&nbsp;- 맞춤형화장품판매업소의 상호 또는 소재지를 변경하는 경우<br>&nbsp;&nbsp;- 맞춤형화장품조제관리사를 변경하는 경우<br>• 신고기한: 변경이 있는 날부터 30일 이내에 관할 지방식품의약품안전청장에게 신고<br>• 행정기관 처리기한: 변경신고서(전자문서 포함) 접수 후 10일 이내 처리 (단, 조제관리사 변경신고는 7일 이내 처리) |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_6c30a4",
+    "text": "0.3",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L588):\n| 제8조의3<br>맞춤형화장품 판매업의 변경신고 | • 맞춤형화장품판매업자가 다음의 사항을 변경하는 경우에는 변경신고를 해야 함<br>&nbsp;&nbsp;- 맞춤형화장품판매업자를 변경하는 경우<br>&nbsp;&nbsp;- 맞춤형화장품판매업소의 상호 또는 소재지를 변경하는 경우<br>&nbsp;&nbsp;- 맞춤형화장품조제관리사를 변경하는 경우<br>• 신고기한: 변경이 있는 날부터 30일 이내에 관할 지방식품의약품안전청장에게 신고<br>• 행정기관 처리기한: 변경신고서(전자문서 포함) 접수 후 10일 이내 처리 (단, 조제관리사 변경신고는 7일 이내 처리) |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_d7ee8f",
+    "text": "28",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L588):\n| 제8조의3<br>맞춤형화장품 판매업의 변경신고 | • 맞춤형화장품판매업자가 다음의 사항을 변경하는 경우에는 변경신고를 해야 함<br>&nbsp;&nbsp;- 맞춤형화장품판매업자를 변경하는 경우<br>&nbsp;&nbsp;- 맞춤형화장품판매업소의 상호 또는 소재지를 변경하는 경우<br>&nbsp;&nbsp;- 맞춤형화장품조제관리사를 변경하는 경우<br>• 신고기한: 변경이 있는 날부터 30일 이내에 관할 지방식품의약품안전청장에게 신고<br>• 행정기관 처리기한: 변경신고서(전자문서 포함) 접수 후 10일 이내 처리 (단, 조제관리사 변경신고는 7일 이내 처리) |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㅁ",
+     "ㄹ",
+     "ㄷ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㅁ",
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q298",
+  "explain": "📖 교재 근거 (교재: L588):\n| 제8조의3<br>맞춤형화장품 판매업의 변경신고 | • 맞춤형화장품판매업자가 다음의 사항을 변경하는 경우에는 변경신고를 해야 함<br>&nbsp;&nbsp;- 맞춤형화장품판매업자를 변경하는 경우<br>&nbsp;&nbsp;- 맞춤형화장품판매업소의 상호 또는 소재지를 변경하는 경우<br>&nbsp;&nbsp;- 맞춤형화장품조제관리사를 변경하는 경우<br>• 신고기한: 변경이 있는 날부터 30일 이내에 관할 지방식품의약품안전청장에게 신고<br>• 행정기관 처리기한: 변경신고서(전자문서 포함) 접수 후 10일 이내 처리 (단, 조제관리사 변경신고는 7일 이내 처리) |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "3"
+ },
+ {
+  "id": "combo-04-0299",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1196 (출처: 과목4 문제은행 Q299)",
+  "stem": "각질 형성 세포가 기저층에서 탄생하여 최종 각질로 탈락하기까지의 각질화 과정을 세포 (A) 주기라고 칭한다. (약 28일 소요) — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_ff5252",
+    "text": "유기",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1196):\n| 기저층 (각질형성세포) | 각질형성세포(케라티노사이트, Keratinocyte) | • 각질층을 구성하는 각질세포를 만드는 세포<br>• 각화주기: 기저층에서 세포가 만들어지고 각질층까지 이동하여 서서히 떨어지는 과정으로 28일 정도 주기로 교체됨 |\n| 기저층 (멜라닌형성세포) | 멜라닌형성세포(멜라노사이트, Melanocyte) 🎯 기출 | • 멜라닌을 합성하여 각질형성세포에 멜라닌이 축적된 멜라노솜(Melanosome)을 공급하는 세포<br>• 피부색과 털색을 결정함<br>• 표피의 10~20%를 차지하며, 세포 내에 확산하면 검게 보임 |\n| 기저층 (머켈세포) | 머켈세포(Merkel cell) 🎯 기출 | • 신경말단과 연결되어 촉각을 감지하는 세포<br>• 손가락 끝, 입술처럼 민감한 피부에 다량 존재함 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_d91674",
+    "text": "교체(턴오버)",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1196):\n| 기저층 (각질형성세포) | 각질형성세포(케라티노사이트, Keratinocyte) | • 각질층을 구성하는 각질세포를 만드는 세포<br>• 각화주기: 기저층에서 세포가 만들어지고 각질층까지 이동하여 서서히 떨어지는 과정으로 28일 정도 주기로 교체됨 |\n| 기저층 (멜라닌형성세포) | 멜라닌형성세포(멜라노사이트, Melanocyte) 🎯 기출 | • 멜라닌을 합성하여 각질형성세포에 멜라닌이 축적된 멜라노솜(Melanosome)을 공급하는 세포<br>• 피부색과 털색을 결정함<br>• 표피의 10~20%를 차지하며, 세포 내에 확산하면 검게 보임 |\n| 기저층 (머켈세포) | 머켈세포(Merkel cell) 🎯 기출 | • 신경말단과 연결되어 촉각을 감지하는 세포<br>• 손가락 끝, 입술처럼 민감한 피부에 다량 존재함 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_2b4ca0",
+    "text": "UVA",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1196):\n| 기저층 (각질형성세포) | 각질형성세포(케라티노사이트, Keratinocyte) | • 각질층을 구성하는 각질세포를 만드는 세포<br>• 각화주기: 기저층에서 세포가 만들어지고 각질층까지 이동하여 서서히 떨어지는 과정으로 28일 정도 주기로 교체됨 |\n| 기저층 (멜라닌형성세포) | 멜라닌형성세포(멜라노사이트, Melanocyte) 🎯 기출 | • 멜라닌을 합성하여 각질형성세포에 멜라닌이 축적된 멜라노솜(Melanosome)을 공급하는 세포<br>• 피부색과 털색을 결정함<br>• 표피의 10~20%를 차지하며, 세포 내에 확산하면 검게 보임 |\n| 기저층 (머켈세포) | 머켈세포(Merkel cell) 🎯 기출 | • 신경말단과 연결되어 촉각을 감지하는 세포<br>• 손가락 끝, 입술처럼 민감한 피부에 다량 존재함 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_afb505",
+    "text": "초임계",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1196):\n| 기저층 (각질형성세포) | 각질형성세포(케라티노사이트, Keratinocyte) | • 각질층을 구성하는 각질세포를 만드는 세포<br>• 각화주기: 기저층에서 세포가 만들어지고 각질층까지 이동하여 서서히 떨어지는 과정으로 28일 정도 주기로 교체됨 |\n| 기저층 (멜라닌형성세포) | 멜라닌형성세포(멜라노사이트, Melanocyte) 🎯 기출 | • 멜라닌을 합성하여 각질형성세포에 멜라닌이 축적된 멜라노솜(Melanosome)을 공급하는 세포<br>• 피부색과 털색을 결정함<br>• 표피의 10~20%를 차지하며, 세포 내에 확산하면 검게 보임 |\n| 기저층 (머켈세포) | 머켈세포(Merkel cell) 🎯 기출 | • 신경말단과 연결되어 촉각을 감지하는 세포<br>• 손가락 끝, 입술처럼 민감한 피부에 다량 존재함 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_ecd01a",
+    "text": "라멜라",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1196):\n| 기저층 (각질형성세포) | 각질형성세포(케라티노사이트, Keratinocyte) | • 각질층을 구성하는 각질세포를 만드는 세포<br>• 각화주기: 기저층에서 세포가 만들어지고 각질층까지 이동하여 서서히 떨어지는 과정으로 28일 정도 주기로 교체됨 |\n| 기저층 (멜라닌형성세포) | 멜라닌형성세포(멜라노사이트, Melanocyte) 🎯 기출 | • 멜라닌을 합성하여 각질형성세포에 멜라닌이 축적된 멜라노솜(Melanosome)을 공급하는 세포<br>• 피부색과 털색을 결정함<br>• 표피의 10~20%를 차지하며, 세포 내에 확산하면 검게 보임 |\n| 기저층 (머켈세포) | 머켈세포(Merkel cell) 🎯 기출 | • 신경말단과 연결되어 촉각을 감지하는 세포<br>• 손가락 끝, 입술처럼 민감한 피부에 다량 존재함 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄹ",
+     "ㄱ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ",
+     "ㄷ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ",
+     "ㅁ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q299",
+  "explain": "📖 교재 근거 (교재: L1196):\n| 기저층 (각질형성세포) | 각질형성세포(케라티노사이트, Keratinocyte) | • 각질층을 구성하는 각질세포를 만드는 세포<br>• 각화주기: 기저층에서 세포가 만들어지고 각질층까지 이동하여 서서히 떨어지는 과정으로 28일 정도 주기로 교체됨 |\n| 기저층 (멜라닌형성세포) | 멜라닌형성세포(멜라노사이트, Melanocyte) 🎯 기출 | • 멜라닌을 합성하여 각질형성세포에 멜라닌이 축적된 멜라노솜(Melanosome)을 공급하는 세포<br>• 피부색과 털색을 결정함<br>• 표피의 10~20%를 차지하며, 세포 내에 확산하면 검게 보임 |\n| 기저층 (머켈세포) | 머켈세포(Merkel cell) 🎯 기출 | • 신경말단과 연결되어 촉각을 감지하는 세포<br>• 손가락 끝, 입술처럼 민감한 피부에 다량 존재함 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "2"
+ },
+ {
+  "id": "combo-04-0300",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L137 (출처: 과목4 문제은행 Q300)",
+  "stem": "피부 진피 속에서 콜라겐과 엘라스틴, 히알루론산을 직접 합성해 내는 능력을 가진 진피 핵심 세포의 한글 명칭은 (A)세포이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_0d6e6b",
+    "text": "섬유아",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L137):\n| 섬유아세포 | 결합조직세포로 세포외기질인 콜라겐과 엘라스틴 생성 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_09581d",
+    "text": "TEWL",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L137):\n| 섬유아세포 | 결합조직세포로 세포외기질인 콜라겐과 엘라스틴 생성 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_3c8ea3",
+    "text": "리날",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L137):\n| 섬유아세포 | 결합조직세포로 세포외기질인 콜라겐과 엘라스틴 생성 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_b6024e",
+    "text": "충진",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L137):\n| 섬유아세포 | 결합조직세포로 세포외기질인 콜라겐과 엘라스틴 생성 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_6ae636",
+    "text": "PA",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L137):\n| 섬유아세포 | 결합조직세포로 세포외기질인 콜라겐과 엘라스틴 생성 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ",
+     "ㄱ",
+     "ㅁ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q300",
+  "explain": "📖 교재 근거 (교재: L137):\n| 섬유아세포 | 결합조직세포로 세포외기질인 콜라겐과 엘라스틴 생성 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "5"
+ },
+ {
+  "id": "combo-04-0301",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1158 (출처: 과목4 문제은행 Q301)",
+  "stem": "모발의 구성 성분 중 대부분(80 ~ 90%)을 차지하는 질기고 단단한 불용성 단백질의 이름은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_19cdca",
+    "text": "분동(추)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1158):\n| 망상층(Reticular Layer) 🎯 기출 | • 진피의 대부분을 차지하는 그물 모양(망상구조)의 결합조직<br>• 교원섬유(콜라겐) 90%, 탄력섬유(엘라스틴) 1.5~4.7%, 기질로 구성됨<br>• 모세혈관은 거의 없으며, 림프관, 한선, 피지선, 신경 등이 존재함 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_8687bc",
+    "text": "PA",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1158):\n| 망상층(Reticular Layer) 🎯 기출 | • 진피의 대부분을 차지하는 그물 모양(망상구조)의 결합조직<br>• 교원섬유(콜라겐) 90%, 탄력섬유(엘라스틴) 1.5~4.7%, 기질로 구성됨<br>• 모세혈관은 거의 없으며, 림프관, 한선, 피지선, 신경 등이 존재함 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_bd9c7e",
+    "text": "케라틴",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1158):\n| 망상층(Reticular Layer) 🎯 기출 | • 진피의 대부분을 차지하는 그물 모양(망상구조)의 결합조직<br>• 교원섬유(콜라겐) 90%, 탄력섬유(엘라스틴) 1.5~4.7%, 기질로 구성됨<br>• 모세혈관은 거의 없으며, 림프관, 한선, 피지선, 신경 등이 존재함 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_26fc45",
+    "text": "이황화(disulfide)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1158):\n| 망상층(Reticular Layer) 🎯 기출 | • 진피의 대부분을 차지하는 그물 모양(망상구조)의 결합조직<br>• 교원섬유(콜라겐) 90%, 탄력섬유(엘라스틴) 1.5~4.7%, 기질로 구성됨<br>• 모세혈관은 거의 없으며, 림프관, 한선, 피지선, 신경 등이 존재함 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_4dd004",
+    "text": "제조번호",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1158):\n| 망상층(Reticular Layer) 🎯 기출 | • 진피의 대부분을 차지하는 그물 모양(망상구조)의 결합조직<br>• 교원섬유(콜라겐) 90%, 탄력섬유(엘라스틴) 1.5~4.7%, 기질로 구성됨<br>• 모세혈관은 거의 없으며, 림프관, 한선, 피지선, 신경 등이 존재함 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㅁ",
+     "ㄹ",
+     "ㄷ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄹ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ",
+     "ㄴ",
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q301",
+  "explain": "📖 교재 근거 (교재: L1158):\n| 망상층(Reticular Layer) 🎯 기출 | • 진피의 대부분을 차지하는 그물 모양(망상구조)의 결합조직<br>• 교원섬유(콜라겐) 90%, 탄력섬유(엘라스틴) 1.5~4.7%, 기질로 구성됨<br>• 모세혈관은 거의 없으며, 림프관, 한선, 피지선, 신경 등이 존재함 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "3"
+ },
+ {
+  "id": "combo-04-0302",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1636 (출처: 과목4 문제은행 Q302)",
+  "stem": "모발의 일생 중 세포 분열이 완전히 멈추고 서서히 빠지기를 대기하는 휴식 단계로 모발의 약 10 ~ 15%를 차지하는 성장 주기의 이름은 (A)기이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_50f2f7",
+    "text": "휴지(telogen)",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1636):\n> 해설: 성장기는 3~6년 지속되며 전체 모발의 80~90%가 해당한다. 퇴행기는 약 3주(1~2%), 휴지기는 3~4개월(10~15%)이다. 여성이 남성보다 성장주기가 길다."
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_683f67",
+    "text": "오크모스",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1636):\n> 해설: 성장기는 3~6년 지속되며 전체 모발의 80~90%가 해당한다. 퇴행기는 약 3주(1~2%), 휴지기는 3~4개월(10~15%)이다. 여성이 남성보다 성장주기가 길다."
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_3b490b",
+    "text": "알레르기",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1636):\n> 해설: 성장기는 3~6년 지속되며 전체 모발의 80~90%가 해당한다. 퇴행기는 약 3주(1~2%), 휴지기는 3~4개월(10~15%)이다. 여성이 남성보다 성장주기가 길다."
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_6532c0",
+    "text": "제라니올",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1636):\n> 해설: 성장기는 3~6년 지속되며 전체 모발의 80~90%가 해당한다. 퇴행기는 약 3주(1~2%), 휴지기는 3~4개월(10~15%)이다. 여성이 남성보다 성장주기가 길다."
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_5c8f6a",
+    "text": "아데노신",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1636):\n> 해설: 성장기는 3~6년 지속되며 전체 모발의 80~90%가 해당한다. 퇴행기는 약 3주(1~2%), 휴지기는 3~4개월(10~15%)이다. 여성이 남성보다 성장주기가 길다."
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ",
+     "ㄱ",
+     "ㄴ",
+     "ㅁ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㅁ",
+     "ㄹ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q302",
+  "explain": "📖 교재 근거 (교재: L1636):\n> 해설: 성장기는 3~6년 지속되며 전체 모발의 80~90%가 해당한다. 퇴행기는 약 3주(1~2%), 휴지기는 3~4개월(10~15%)이다. 여성이 남성보다 성장주기가 길다.",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "3"
+ },
+ {
+  "id": "combo-04-0303",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L3103 (출처: 과목4 문제은행 Q303)",
+  "stem": "알레르기 유발 성분 25종은 사용 후 씻어내는 제품에 (A)% 초과 함유 시 전성분에 명칭을 표시해야 한다. (수치 기준) — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_5d7895",
+    "text": "2",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3103):\n| 향료 | • 향을 내기 위해 사용<br>• 알레르기 유발 25종 중 씻어내는 제품은 0.01%, 씻어내지 않는 제품은 0.001% 초과 시 해당 성분 명칭 기재 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_a1fd78",
+    "text": "0.01",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L3103):\n| 향료 | • 향을 내기 위해 사용<br>• 알레르기 유발 25종 중 씻어내는 제품은 0.01%, 씻어내지 않는 제품은 0.001% 초과 시 해당 성분 명칭 기재 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_ce0e09",
+    "text": "0.04",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3103):\n| 향료 | • 향을 내기 위해 사용<br>• 알레르기 유발 25종 중 씻어내는 제품은 0.01%, 씻어내지 않는 제품은 0.001% 초과 시 해당 성분 명칭 기재 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_8587ed",
+    "text": "0.002",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3103):\n| 향료 | • 향을 내기 위해 사용<br>• 알레르기 유발 25종 중 씻어내는 제품은 0.01%, 씻어내지 않는 제품은 0.001% 초과 시 해당 성분 명칭 기재 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_c40232",
+    "text": "0.1",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3103):\n| 향료 | • 향을 내기 위해 사용<br>• 알레르기 유발 25종 중 씻어내는 제품은 0.01%, 씻어내지 않는 제품은 0.001% 초과 시 해당 성분 명칭 기재 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ",
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㅁ",
+     "ㄹ",
+     "ㄷ",
+     "ㄴ",
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q303",
+  "explain": "📖 교재 근거 (교재: L3103):\n| 향료 | • 향을 내기 위해 사용<br>• 알레르기 유발 25종 중 씻어내는 제품은 0.01%, 씻어내지 않는 제품은 0.001% 초과 시 해당 성분 명칭 기재 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "2"
+ },
+ {
+  "id": "combo-04-0304",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 출처: 과목4 문제은행 Q304",
+  "stem": "파마약 1제(환원제)에 의해 단절되는 모발 내 두 황(S) 원자 간의 화학 결합 명칭은 (A) 결합이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_5cafb4",
+    "text": "사용 가능",
+    "truth": false,
+    "explain": "📖 교재 근거 (KFCC_별표10_일반시험법: L11650):\n이황화탄소(Carbon Disulfide)"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_8143dd",
+    "text": "랑게르한스",
+    "truth": false,
+    "explain": "📖 교재 근거 (KFCC_별표10_일반시험법: L11650):\n이황화탄소(Carbon Disulfide)"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_17d108",
+    "text": "라멜라바디(층판소기관)",
+    "truth": false,
+    "explain": "📖 교재 근거 (KFCC_별표10_일반시험법: L11650):\n이황화탄소(Carbon Disulfide)"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_366192",
+    "text": "소독(세척·소독)",
+    "truth": false,
+    "explain": "📖 교재 근거 (KFCC_별표10_일반시험법: L11650):\n이황화탄소(Carbon Disulfide)"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_d88f80",
+    "text": "이황화(disulfide)",
+    "truth": true,
+    "explain": "📖 교재 근거 (KFCC_별표10_일반시험법: L11650):\n이황화탄소(Carbon Disulfide)"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㅁ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ",
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q304",
+  "explain": "📖 교재 근거 (KFCC_별표10_일반시험법: L11650):\n이황화탄소(Carbon Disulfide)",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "1"
+ },
+ {
+  "id": "combo-04-0305",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1195 (출처: 과목4 문제은행 Q305)",
+  "stem": "표피의 유극층에 상주하며 외부 유입 항원을 림프구에 보고하여 면역 반응을 촉발하는 성상 세포는 (A) 세포이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_b1fe50",
+    "text": "멜라닌형성",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1195):\n| 유극층 | 랑게르한스세포(Langerhans cell) | • 면역반응 조절에 관여하는 세포<br>• 외부 이물질인 항원을 면역담당세포 T-림프구에 전달하는 역할 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_1642d2",
+    "text": "관능",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1195):\n| 유극층 | 랑게르한스세포(Langerhans cell) | • 면역반응 조절에 관여하는 세포<br>• 외부 이물질인 항원을 면역담당세포 T-림프구에 전달하는 역할 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_fb1b4b",
+    "text": "에크린",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1195):\n| 유극층 | 랑게르한스세포(Langerhans cell) | • 면역반응 조절에 관여하는 세포<br>• 외부 이물질인 항원을 면역담당세포 T-림프구에 전달하는 역할 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_5e1c10",
+    "text": "콜레스테롤",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1195):\n| 유극층 | 랑게르한스세포(Langerhans cell) | • 면역반응 조절에 관여하는 세포<br>• 외부 이물질인 항원을 면역담당세포 T-림프구에 전달하는 역할 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_54e4e3",
+    "text": "랑게르한스",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1195):\n| 유극층 | 랑게르한스세포(Langerhans cell) | • 면역반응 조절에 관여하는 세포<br>• 외부 이물질인 항원을 면역담당세포 T-림프구에 전달하는 역할 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ",
+     "ㄷ",
+     "ㄴ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㅁ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ",
+     "ㄷ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q305",
+  "explain": "📖 교재 근거 (교재: L1195):\n| 유극층 | 랑게르한스세포(Langerhans cell) | • 면역반응 조절에 관여하는 세포<br>• 외부 이물질인 항원을 면역담당세포 T-림프구에 전달하는 역할 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "4"
+ },
+ {
+  "id": "combo-04-0306",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L2094 (출처: 과목4 문제은행 Q306)",
+  "stem": "전자저울의 영점을 초기화하고 눈금 오차를 정기 점검하는 기기 관리 행위를 (A)(이)라고 한다. (영문 Calibration) — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_3a223d",
+    "text": "콜레스테롤",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2094):\n| ③ 품질관리기준서 | 시험·검사 품질 관리 | 검체 채취 방법·주의사항·오염방지, 시험시설·기구 점검(교정·성능), 안정성시험, 검체 관리, 표준품·시약 관리, 위탁시험 검체 송부·판정, 기타 필요 사항 |\n| ④ 제조위생관리기준서 🎯 기출 | 작업 환경 위생 관리 | 작업원 건강관리·상태 파악·조치, 수세·소독 방법, 작업복장 규격·세탁·착용, 작업실 청소·소독·주기, 청소 상태 평가, 제조시설 세척·평가, 기타 필요 사항 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_798430",
+    "text": "티로시나아제",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2094):\n| ③ 품질관리기준서 | 시험·검사 품질 관리 | 검체 채취 방법·주의사항·오염방지, 시험시설·기구 점검(교정·성능), 안정성시험, 검체 관리, 표준품·시약 관리, 위탁시험 검체 송부·판정, 기타 필요 사항 |\n| ④ 제조위생관리기준서 🎯 기출 | 작업 환경 위생 관리 | 작업원 건강관리·상태 파악·조치, 수세·소독 방법, 작업복장 규격·세탁·착용, 작업실 청소·소독·주기, 청소 상태 평가, 제조시설 세척·평가, 기타 필요 사항 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_20b390",
+    "text": "트랜스글루타미나아제",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2094):\n| ③ 품질관리기준서 | 시험·검사 품질 관리 | 검체 채취 방법·주의사항·오염방지, 시험시설·기구 점검(교정·성능), 안정성시험, 검체 관리, 표준품·시약 관리, 위탁시험 검체 송부·판정, 기타 필요 사항 |\n| ④ 제조위생관리기준서 🎯 기출 | 작업 환경 위생 관리 | 작업원 건강관리·상태 파악·조치, 수세·소독 방법, 작업복장 규격·세탁·착용, 작업실 청소·소독·주기, 청소 상태 평가, 제조시설 세척·평가, 기타 필요 사항 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_3b58fe",
+    "text": "교정(Calibration)",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L2094):\n| ③ 품질관리기준서 | 시험·검사 품질 관리 | 검체 채취 방법·주의사항·오염방지, 시험시설·기구 점검(교정·성능), 안정성시험, 검체 관리, 표준품·시약 관리, 위탁시험 검체 송부·판정, 기타 필요 사항 |\n| ④ 제조위생관리기준서 🎯 기출 | 작업 환경 위생 관리 | 작업원 건강관리·상태 파악·조치, 수세·소독 방법, 작업복장 규격·세탁·착용, 작업실 청소·소독·주기, 청소 상태 평가, 제조시설 세척·평가, 기타 필요 사항 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_8b135f",
+    "text": "관능",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2094):\n| ③ 품질관리기준서 | 시험·검사 품질 관리 | 검체 채취 방법·주의사항·오염방지, 시험시설·기구 점검(교정·성능), 안정성시험, 검체 관리, 표준품·시약 관리, 위탁시험 검체 송부·판정, 기타 필요 사항 |\n| ④ 제조위생관리기준서 🎯 기출 | 작업 환경 위생 관리 | 작업원 건강관리·상태 파악·조치, 수세·소독 방법, 작업복장 규격·세탁·착용, 작업실 청소·소독·주기, 청소 상태 평가, 제조시설 세척·평가, 기타 필요 사항 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㅁ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄱ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q306",
+  "explain": "📖 교재 근거 (교재: L2094):\n| ③ 품질관리기준서 | 시험·검사 품질 관리 | 검체 채취 방법·주의사항·오염방지, 시험시설·기구 점검(교정·성능), 안정성시험, 검체 관리, 표준품·시약 관리, 위탁시험 검체 송부·판정, 기타 필요 사항 |\n| ④ 제조위생관리기준서 🎯 기출 | 작업 환경 위생 관리 | 작업원 건강관리·상태 파악·조치, 수세·소독 방법, 작업복장 규격·세탁·착용, 작업실 청소·소독·주기, 청소 상태 평가, 제조시설 세척·평가, 기타 필요 사항 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "1"
+ },
+ {
+  "id": "combo-04-0307",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L2060 (출처: 과목4 문제은행 Q307)",
+  "stem": "pH 측정기의 교정을 위해 표준 고정 수치로 제작된 수용액을 pH (A) 용액이라고 부른다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_fc6b45",
+    "text": "이황화(disulfide)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2060):\n| 관능평가 순서 | 표준품 선정 → 검체 채취·기준 마련 → 시험 → 적합 판정·기록 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_da414a",
+    "text": "표준",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L2060):\n| 관능평가 순서 | 표준품 선정 → 검체 채취·기준 마련 → 시험 → 적합 판정·기록 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_05b3c1",
+    "text": "격리",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2060):\n| 관능평가 순서 | 표준품 선정 → 검체 채취·기준 마련 → 시험 → 적합 판정·기록 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_4f5285",
+    "text": "방풍실(드래프트실드)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2060):\n| 관능평가 순서 | 표준품 선정 → 검체 채취·기준 마련 → 시험 → 적합 판정·기록 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_781e4a",
+    "text": "망상",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2060):\n| 관능평가 순서 | 표준품 선정 → 검체 채취·기준 마련 → 시험 → 적합 판정·기록 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ",
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㅁ",
+     "ㄹ",
+     "ㄴ",
+     "ㄱ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q307",
+  "explain": "📖 교재 근거 (교재: L2060):\n| 관능평가 순서 | 표준품 선정 → 검체 채취·기준 마련 → 시험 → 적합 판정·기록 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "4"
+ },
+ {
+  "id": "combo-04-0308",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L610 (출처: 과목4 문제은행 Q308)",
+  "stem": "배합 한도가 0.05%인 기능성 원료 B를 벌크 200g에 첨가하려 할 때, 최대로 처방 가능한 원료 B의 양은 (A)g이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_f8847f",
+    "text": "0.001",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L610):\n| 제5조<br>맞춤형화장품에 사용 가능한 원료 | 아래의 원료를 제외한 원료는 맞춤형화장품에 사용 가능<br>• 화장품에 사용할 수 없는 원료<br>• 화장품에 사용상의 제한이 필요한 원료<br>• 사전심사를 받지 않았거나 보고서를 제출하지 않은 기능성화장품 고시 원료 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_e9ea55",
+    "text": "0.01",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L610):\n| 제5조<br>맞춤형화장품에 사용 가능한 원료 | 아래의 원료를 제외한 원료는 맞춤형화장품에 사용 가능<br>• 화장품에 사용할 수 없는 원료<br>• 화장품에 사용상의 제한이 필요한 원료<br>• 사전심사를 받지 않았거나 보고서를 제출하지 않은 기능성화장품 고시 원료 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_e57667",
+    "text": "2",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L610):\n| 제5조<br>맞춤형화장품에 사용 가능한 원료 | 아래의 원료를 제외한 원료는 맞춤형화장품에 사용 가능<br>• 화장품에 사용할 수 없는 원료<br>• 화장품에 사용상의 제한이 필요한 원료<br>• 사전심사를 받지 않았거나 보고서를 제출하지 않은 기능성화장품 고시 원료 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_2082c4",
+    "text": "0.1",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L610):\n| 제5조<br>맞춤형화장품에 사용 가능한 원료 | 아래의 원료를 제외한 원료는 맞춤형화장품에 사용 가능<br>• 화장품에 사용할 수 없는 원료<br>• 화장품에 사용상의 제한이 필요한 원료<br>• 사전심사를 받지 않았거나 보고서를 제출하지 않은 기능성화장품 고시 원료 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_00c5f0",
+    "text": "0.002",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L610):\n| 제5조<br>맞춤형화장품에 사용 가능한 원료 | 아래의 원료를 제외한 원료는 맞춤형화장품에 사용 가능<br>• 화장품에 사용할 수 없는 원료<br>• 화장품에 사용상의 제한이 필요한 원료<br>• 사전심사를 받지 않았거나 보고서를 제출하지 않은 기능성화장품 고시 원료 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㅁ",
+     "ㄹ",
+     "ㄷ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㅁ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q308",
+  "explain": "📖 교재 근거 (교재: L610):\n| 제5조<br>맞춤형화장품에 사용 가능한 원료 | 아래의 원료를 제외한 원료는 맞춤형화장품에 사용 가능<br>• 화장품에 사용할 수 없는 원료<br>• 화장품에 사용상의 제한이 필요한 원료<br>• 사전심사를 받지 않았거나 보고서를 제출하지 않은 기능성화장품 고시 원료 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "5"
+ },
+ {
+  "id": "combo-04-0309",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 출처: 과목4 문제은행 Q309",
+  "stem": "천연보습인자(NMF)의 모체가 되는 표피 과립층 단백질은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_cd52eb",
+    "text": "멜라닌",
+    "truth": false,
+    "explain": "📖 교재 근거 (2.physiology: L478):\n| 필라그린 | 각질층 형성 단백질, 분해되어 NMF 아미노산 생성 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_a4b878",
+    "text": "티로시나아제",
+    "truth": false,
+    "explain": "📖 교재 근거 (2.physiology: L478):\n| 필라그린 | 각질층 형성 단백질, 분해되어 NMF 아미노산 생성 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_f0cbb2",
+    "text": "리날",
+    "truth": false,
+    "explain": "📖 교재 근거 (2.physiology: L478):\n| 필라그린 | 각질층 형성 단백질, 분해되어 NMF 아미노산 생성 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_5b1732",
+    "text": "이온",
+    "truth": false,
+    "explain": "📖 교재 근거 (2.physiology: L478):\n| 필라그린 | 각질층 형성 단백질, 분해되어 NMF 아미노산 생성 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_44b0dd",
+    "text": "필라그린",
+    "truth": true,
+    "explain": "📖 교재 근거 (2.physiology: L478):\n| 필라그린 | 각질층 형성 단백질, 분해되어 NMF 아미노산 생성 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㅁ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q309",
+  "explain": "📖 교재 근거 (2.physiology: L478):\n| 필라그린 | 각질층 형성 단백질, 분해되어 NMF 아미노산 생성 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "4"
+ },
+ {
+  "id": "combo-04-0310",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1720 (출처: 과목4 문제은행 Q310)",
+  "stem": "모발의 단백질 중 약 80~90%를 차지하는 질긴 섬유상 단백질은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_484050",
+    "text": "등전",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1720):\n| 모피질 | 80~90%, 멜라닌 함유, 친수성, 케라틴 단백질 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_46b8da",
+    "text": "메니스커스",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1720):\n| 모피질 | 80~90%, 멜라닌 함유, 친수성, 케라틴 단백질 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_9c9309",
+    "text": "케라틴",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1720):\n| 모피질 | 80~90%, 멜라닌 함유, 친수성, 케라틴 단백질 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_dafe75",
+    "text": "기저",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1720):\n| 모피질 | 80~90%, 멜라닌 함유, 친수성, 케라틴 단백질 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_4c89c6",
+    "text": "초임계",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1720):\n| 모피질 | 80~90%, 멜라닌 함유, 친수성, 케라틴 단백질 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㅁ",
+     "ㄹ",
+     "ㄷ",
+     "ㄴ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ",
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q310",
+  "explain": "📖 교재 근거 (교재: L1720):\n| 모피질 | 80~90%, 멜라닌 함유, 친수성, 케라틴 단백질 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "3"
+ },
+ {
+  "id": "combo-04-0311",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L2557 (출처: 과목4 문제은행 Q311)",
+  "stem": "알레르기 유발 성분 리스트 중 장미 등 꽃향기를 구성하며 전성분 표시 의무가 있는 성분명은 (A)이다. (Linalool 등 다수 중 표준 고시명 중 하나) — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_81ac77",
+    "text": "분동(추)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2557):\n| 제라니올 | 쿠마린 |\n| 아니스알코올 | 파네솔 |\n| 신나밀알코올 |  |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_bc2823",
+    "text": "메니스커스",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2557):\n| 제라니올 | 쿠마린 |\n| 아니스알코올 | 파네솔 |\n| 신나밀알코올 |  |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_e06b69",
+    "text": "제라니올",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L2557):\n| 제라니올 | 쿠마린 |\n| 아니스알코올 | 파네솔 |\n| 신나밀알코올 |  |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_8aee4f",
+    "text": "초임계",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2557):\n| 제라니올 | 쿠마린 |\n| 아니스알코올 | 파네솔 |\n| 신나밀알코올 |  |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_b4dbd0",
+    "text": "케라틴",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2557):\n| 제라니올 | 쿠마린 |\n| 아니스알코올 | 파네솔 |\n| 신나밀알코올 |  |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ",
+     "ㄷ",
+     "ㅁ",
+     "ㄴ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ",
+     "ㄷ",
+     "ㄱ",
+     "ㄴ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q311",
+  "explain": "📖 교재 근거 (교재: L2557):\n| 제라니올 | 쿠마린 |\n| 아니스알코올 | 파네솔 |\n| 신나밀알코올 |  |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "2"
+ },
+ {
+  "id": "combo-04-0312",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 출처: 과목4 문제은행 Q312",
+  "stem": "피펫으로 액체를 취할 때 액체의 양을 읽는 굴곡진 계면 부위를 (A)(이)라고 부른다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_53df27",
+    "text": "cP",
+    "truth": false,
+    "explain": "📖 교재 근거 (KFCC_별표10_일반시험법: L1903):\n규정온도에서비중부액계가정지했을때메니스커스의상연에서비중의눈금"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_7a66b2",
+    "text": "NMF(천연보습인자)",
+    "truth": false,
+    "explain": "📖 교재 근거 (KFCC_별표10_일반시험법: L1903):\n규정온도에서비중부액계가정지했을때메니스커스의상연에서비중의눈금"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_ea6257",
+    "text": "소독(세척·소독)",
+    "truth": false,
+    "explain": "📖 교재 근거 (KFCC_별표10_일반시험법: L1903):\n규정온도에서비중부액계가정지했을때메니스커스의상연에서비중의눈금"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_a19645",
+    "text": "헤미데스모좀",
+    "truth": false,
+    "explain": "📖 교재 근거 (KFCC_별표10_일반시험법: L1903):\n규정온도에서비중부액계가정지했을때메니스커스의상연에서비중의눈금"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_da97ad",
+    "text": "메니스커스",
+    "truth": true,
+    "explain": "📖 교재 근거 (KFCC_별표10_일반시험법: L1903):\n규정온도에서비중부액계가정지했을때메니스커스의상연에서비중의눈금"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㅁ",
+     "ㄷ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q312",
+  "explain": "📖 교재 근거 (KFCC_별표10_일반시험법: L1903):\n규정온도에서비중부액계가정지했을때메니스커스의상연에서비중의눈금",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "4"
+ },
+ {
+  "id": "combo-04-0313",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L113 (출처: 과목4 문제은행 Q313)",
+  "stem": "표피의 기저층에 위치하며 자외선 B에 반응하여 어두운 흑갈색 색소를 분비하는 세포는 (A) 세포이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_058cdc",
+    "text": "이황화(disulfide)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L113):\n| 기저층 (멜라닌형성세포) | 멜라닌형성세포(멜라노사이트, Melanocyte) 🎯 기출 | • 멜라닌을 합성하여 각질형성세포에 멜라닌이 축적된 멜라노솜(Melanosome)을 공급하는 세포<br>• 피부색과 털색을 결정함<br>• 표피의 5~25%를 차지하며, 세포 내에 확산하면 검게 보임 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_44564d",
+    "text": "멜라닌형성",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L113):\n| 기저층 (멜라닌형성세포) | 멜라닌형성세포(멜라노사이트, Melanocyte) 🎯 기출 | • 멜라닌을 합성하여 각질형성세포에 멜라닌이 축적된 멜라노솜(Melanosome)을 공급하는 세포<br>• 피부색과 털색을 결정함<br>• 표피의 5~25%를 차지하며, 세포 내에 확산하면 검게 보임 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_bcfe7b",
+    "text": "칭량",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L113):\n| 기저층 (멜라닌형성세포) | 멜라닌형성세포(멜라노사이트, Melanocyte) 🎯 기출 | • 멜라닌을 합성하여 각질형성세포에 멜라닌이 축적된 멜라노솜(Melanosome)을 공급하는 세포<br>• 피부색과 털색을 결정함<br>• 표피의 5~25%를 차지하며, 세포 내에 확산하면 검게 보임 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_44ac0f",
+    "text": "소분",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L113):\n| 기저층 (멜라닌형성세포) | 멜라닌형성세포(멜라노사이트, Melanocyte) 🎯 기출 | • 멜라닌을 합성하여 각질형성세포에 멜라닌이 축적된 멜라노솜(Melanosome)을 공급하는 세포<br>• 피부색과 털색을 결정함<br>• 표피의 5~25%를 차지하며, 세포 내에 확산하면 검게 보임 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_f5366f",
+    "text": "큐티클",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L113):\n| 기저층 (멜라닌형성세포) | 멜라닌형성세포(멜라노사이트, Melanocyte) 🎯 기출 | • 멜라닌을 합성하여 각질형성세포에 멜라닌이 축적된 멜라노솜(Melanosome)을 공급하는 세포<br>• 피부색과 털색을 결정함<br>• 표피의 5~25%를 차지하며, 세포 내에 확산하면 검게 보임 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㅁ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ",
+     "ㅁ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q313",
+  "explain": "📖 교재 근거 (교재: L113):\n| 기저층 (멜라닌형성세포) | 멜라닌형성세포(멜라노사이트, Melanocyte) 🎯 기출 | • 멜라닌을 합성하여 각질형성세포에 멜라닌이 축적된 멜라노솜(Melanosome)을 공급하는 세포<br>• 피부색과 털색을 결정함<br>• 표피의 5~25%를 차지하며, 세포 내에 확산하면 검게 보임 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "5"
+ },
+ {
+  "id": "combo-04-0314",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 출처: 과목4 문제은행 Q314",
+  "stem": "모발 단백질 중 아미노산 시스테인이 보유한 시스틴 결합의 모태가 되는 황화수소 작용기는 (A)기이다. (영문 Thiol) — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_497ebc",
+    "text": "티올(SH)",
+    "truth": true,
+    "explain": "📖 교재 근거 (L1346):\n| 에피큐티클(Epicuticle) | • 가장 바깥쪽의 두께 100Å 정도의 얇은 막<br>• 아미노산 중 시스틴의 함유량이 많음<br>• 각질 용해성 또는 단백질 용해성의 약품(친유성, 알칼리 용액)에 대한 저항성이 가장 강한 층<br>• 수증기는 통하지만 물은 통과하지 못하는 구조로 딱딱하고 부서지기 쉽기 때문에 물리적인 자극에 약함 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_395853",
+    "text": "충진",
+    "truth": false,
+    "explain": "📖 교재 근거 (L1346):\n| 에피큐티클(Epicuticle) | • 가장 바깥쪽의 두께 100Å 정도의 얇은 막<br>• 아미노산 중 시스틴의 함유량이 많음<br>• 각질 용해성 또는 단백질 용해성의 약품(친유성, 알칼리 용액)에 대한 저항성이 가장 강한 층<br>• 수증기는 통하지만 물은 통과하지 못하는 구조로 딱딱하고 부서지기 쉽기 때문에 물리적인 자극에 약함 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_ecdb13",
+    "text": "알레르기",
+    "truth": false,
+    "explain": "📖 교재 근거 (L1346):\n| 에피큐티클(Epicuticle) | • 가장 바깥쪽의 두께 100Å 정도의 얇은 막<br>• 아미노산 중 시스틴의 함유량이 많음<br>• 각질 용해성 또는 단백질 용해성의 약품(친유성, 알칼리 용액)에 대한 저항성이 가장 강한 층<br>• 수증기는 통하지만 물은 통과하지 못하는 구조로 딱딱하고 부서지기 쉽기 때문에 물리적인 자극에 약함 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_2f70bf",
+    "text": "NMF",
+    "truth": false,
+    "explain": "📖 교재 근거 (L1346):\n| 에피큐티클(Epicuticle) | • 가장 바깥쪽의 두께 100Å 정도의 얇은 막<br>• 아미노산 중 시스틴의 함유량이 많음<br>• 각질 용해성 또는 단백질 용해성의 약품(친유성, 알칼리 용액)에 대한 저항성이 가장 강한 층<br>• 수증기는 통하지만 물은 통과하지 못하는 구조로 딱딱하고 부서지기 쉽기 때문에 물리적인 자극에 약함 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_ca2793",
+    "text": "유기",
+    "truth": false,
+    "explain": "📖 교재 근거 (L1346):\n| 에피큐티클(Epicuticle) | • 가장 바깥쪽의 두께 100Å 정도의 얇은 막<br>• 아미노산 중 시스틴의 함유량이 많음<br>• 각질 용해성 또는 단백질 용해성의 약품(친유성, 알칼리 용액)에 대한 저항성이 가장 강한 층<br>• 수증기는 통하지만 물은 통과하지 못하는 구조로 딱딱하고 부서지기 쉽기 때문에 물리적인 자극에 약함 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㅁ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q314",
+  "explain": "📖 교재 근거 (L1346):\n| 에피큐티클(Epicuticle) | • 가장 바깥쪽의 두께 100Å 정도의 얇은 막<br>• 아미노산 중 시스틴의 함유량이 많음<br>• 각질 용해성 또는 단백질 용해성의 약품(친유성, 알칼리 용액)에 대한 저항성이 가장 강한 층<br>• 수증기는 통하지만 물은 통과하지 못하는 구조로 딱딱하고 부서지기 쉽기 때문에 물리적인 자극에 약함 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "5"
+ },
+ {
+  "id": "combo-04-0315",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L2946 (출처: 과목4 문제은행 Q315)",
+  "stem": "시트러스 향 성분 중 알레르기 유발 유효 물질로 고시된 대표적인 휘발성 화합물은 (A)이다. (Limonene) — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_5349a5",
+    "text": "제조번호",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2946):\n| 알레르기 유발 성분 | 착향제 중 25종 의무 표시 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_19e15c",
+    "text": "큐티클",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2946):\n| 알레르기 유발 성분 | 착향제 중 25종 의무 표시 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_3f82af",
+    "text": "제라니",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2946):\n| 알레르기 유발 성분 | 착향제 중 25종 의무 표시 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_82193c",
+    "text": "코르네오데스모좀",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2946):\n| 알레르기 유발 성분 | 착향제 중 25종 의무 표시 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_e8646e",
+    "text": "리모넨",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L2946):\n| 알레르기 유발 성분 | 착향제 중 25종 의무 표시 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㅁ",
+     "ㄹ",
+     "ㄷ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q315",
+  "explain": "📖 교재 근거 (교재: L2946):\n| 알레르기 유발 성분 | 착향제 중 25종 의무 표시 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "1"
+ },
+ {
+  "id": "combo-04-0316",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L863 (출처: 과목4 문제은행 Q316)",
+  "stem": "pH 측정 시 용액의 온도 편차에 의해 발생하는 오차를 전극이 스스로 연산 보정하는 시스템 명칭은 자동 (A) 보상이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_e2bf28",
+    "text": "수평",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L863):\n| 가속시험 | 단기 안정성 예측 | 장기보존 온도+15℃ 이상, 3로트 이상 | 6개월 이상(조정 가능) | 최소 3번 측정 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_73b1e6",
+    "text": "C",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L863):\n| 가속시험 | 단기 안정성 예측 | 장기보존 온도+15℃ 이상, 3로트 이상 | 6개월 이상(조정 가능) | 최소 3번 측정 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_be0faa",
+    "text": "메니스커스",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L863):\n| 가속시험 | 단기 안정성 예측 | 장기보존 온도+15℃ 이상, 3로트 이상 | 6개월 이상(조정 가능) | 최소 3번 측정 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_4bbf0c",
+    "text": "온도",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L863):\n| 가속시험 | 단기 안정성 예측 | 장기보존 온도+15℃ 이상, 3로트 이상 | 6개월 이상(조정 가능) | 최소 3번 측정 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_8af6c0",
+    "text": "필라그린",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L863):\n| 가속시험 | 단기 안정성 예측 | 장기보존 온도+15℃ 이상, 3로트 이상 | 6개월 이상(조정 가능) | 최소 3번 측정 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㅁ",
+     "ㄹ",
+     "ㄷ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ",
+     "ㄴ",
+     "ㅁ",
+     "ㄹ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㅁ",
+     "ㄴ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q316",
+  "explain": "📖 교재 근거 (교재: L863):\n| 가속시험 | 단기 안정성 예측 | 장기보존 온도+15℃ 이상, 3로트 이상 | 6개월 이상(조정 가능) | 최소 3번 측정 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "2"
+ },
+ {
+  "id": "combo-04-0317",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L3389 (출처: 과목4 문제은행 Q317)",
+  "stem": "저울 칭량 전 수평 확인을 위해 기포 수평계의 공기 방울이 중앙 원에 오도록 조절하는 발 부품은 수평 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_38a9c5",
+    "text": "발(스크류)",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L3389):\n> 칭량(전자저울·메스실린더) + 혼합(호모게나이저·디스퍼·오버헤드스터러) + 소분(스패츌러·디스펜서·피펫) + 측정(pH미터·점도계·경도계) + 살균(자외선 살균기)."
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_e362e5",
+    "text": "소분",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3389):\n> 칭량(전자저울·메스실린더) + 혼합(호모게나이저·디스퍼·오버헤드스터러) + 소분(스패츌러·디스펜서·피펫) + 측정(pH미터·점도계·경도계) + 살균(자외선 살균기)."
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_cabf5a",
+    "text": "C",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3389):\n> 칭량(전자저울·메스실린더) + 혼합(호모게나이저·디스퍼·오버헤드스터러) + 소분(스패츌러·디스펜서·피펫) + 측정(pH미터·점도계·경도계) + 살균(자외선 살균기)."
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_9a9b08",
+    "text": "멜라닌",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3389):\n> 칭량(전자저울·메스실린더) + 혼합(호모게나이저·디스퍼·오버헤드스터러) + 소분(스패츌러·디스펜서·피펫) + 측정(pH미터·점도계·경도계) + 살균(자외선 살균기)."
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_d4c88d",
+    "text": "cP",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3389):\n> 칭량(전자저울·메스실린더) + 혼합(호모게나이저·디스퍼·오버헤드스터러) + 소분(스패츌러·디스펜서·피펫) + 측정(pH미터·점도계·경도계) + 살균(자외선 살균기)."
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ",
+     "ㄱ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄱ",
+     "ㅁ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q317",
+  "explain": "📖 교재 근거 (교재: L3389):\n> 칭량(전자저울·메스실린더) + 혼합(호모게나이저·디스퍼·오버헤드스터러) + 소분(스패츌러·디스펜서·피펫) + 측정(pH미터·점도계·경도계) + 살균(자외선 살균기).",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "2"
+ },
+ {
+  "id": "combo-04-0318",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L610 (출처: 과목4 문제은행 Q318)",
+  "stem": "배합 제한 농도가 0.1%인 원료 C를 최종 완제품 300g 내에 혼합하고자 할 때 넣어야 하는 원료 C의 한계 함량은 (A)g이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_fd38a3",
+    "text": "0.04",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L610):\n| 제5조<br>맞춤형화장품에 사용 가능한 원료 | 아래의 원료를 제외한 원료는 맞춤형화장품에 사용 가능<br>• 화장품에 사용할 수 없는 원료<br>• 화장품에 사용상의 제한이 필요한 원료<br>• 사전심사를 받지 않았거나 보고서를 제출하지 않은 기능성화장품 고시 원료 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_339675",
+    "text": "28",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L610):\n| 제5조<br>맞춤형화장품에 사용 가능한 원료 | 아래의 원료를 제외한 원료는 맞춤형화장품에 사용 가능<br>• 화장품에 사용할 수 없는 원료<br>• 화장품에 사용상의 제한이 필요한 원료<br>• 사전심사를 받지 않았거나 보고서를 제출하지 않은 기능성화장품 고시 원료 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_f64802",
+    "text": "0.002",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L610):\n| 제5조<br>맞춤형화장품에 사용 가능한 원료 | 아래의 원료를 제외한 원료는 맞춤형화장품에 사용 가능<br>• 화장품에 사용할 수 없는 원료<br>• 화장품에 사용상의 제한이 필요한 원료<br>• 사전심사를 받지 않았거나 보고서를 제출하지 않은 기능성화장품 고시 원료 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_bdac44",
+    "text": "0.1",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L610):\n| 제5조<br>맞춤형화장품에 사용 가능한 원료 | 아래의 원료를 제외한 원료는 맞춤형화장품에 사용 가능<br>• 화장품에 사용할 수 없는 원료<br>• 화장품에 사용상의 제한이 필요한 원료<br>• 사전심사를 받지 않았거나 보고서를 제출하지 않은 기능성화장품 고시 원료 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_b583f7",
+    "text": "0.3",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L610):\n| 제5조<br>맞춤형화장품에 사용 가능한 원료 | 아래의 원료를 제외한 원료는 맞춤형화장품에 사용 가능<br>• 화장품에 사용할 수 없는 원료<br>• 화장품에 사용상의 제한이 필요한 원료<br>• 사전심사를 받지 않았거나 보고서를 제출하지 않은 기능성화장품 고시 원료 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㅁ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ",
+     "ㄴ",
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㅁ",
+     "ㄹ",
+     "ㄷ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q318",
+  "explain": "📖 교재 근거 (교재: L610):\n| 제5조<br>맞춤형화장품에 사용 가능한 원료 | 아래의 원료를 제외한 원료는 맞춤형화장품에 사용 가능<br>• 화장품에 사용할 수 없는 원료<br>• 화장품에 사용상의 제한이 필요한 원료<br>• 사전심사를 받지 않았거나 보고서를 제출하지 않은 기능성화장품 고시 원료 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "3"
+ },
+ {
+  "id": "combo-04-0319",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L31 (출처: 과목4 문제은행 Q319)",
+  "stem": "표피의 각질형성세포가 분열하여 기저층에서 각질층까지 올라와 탈락하기까지 소요되는 약 28일의 주기명을 각화 (A)(이)라고 한다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_820222",
+    "text": "제라니올",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L31):\n| 피부·모발 생리 | 피부 5층 / 표피 4대 세포 / 모발 3층·성장주기 |\n| → 실무 | 관능평가 · 제품상담 · 제품안내 → 혼합·소분 → 충진·포장 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_acdf0f",
+    "text": "주기(턴오버)",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L31):\n| 피부·모발 생리 | 피부 5층 / 표피 4대 세포 / 모발 3층·성장주기 |\n| → 실무 | 관능평가 · 제품상담 · 제품안내 → 혼합·소분 → 충진·포장 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_b355f7",
+    "text": "NMF",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L31):\n| 피부·모발 생리 | 피부 5층 / 표피 4대 세포 / 모발 3층·성장주기 |\n| → 실무 | 관능평가 · 제품상담 · 제품안내 → 혼합·소분 → 충진·포장 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_0161f7",
+    "text": "퇴행(catagen)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L31):\n| 피부·모발 생리 | 피부 5층 / 표피 4대 세포 / 모발 3층·성장주기 |\n| → 실무 | 관능평가 · 제품상담 · 제품안내 → 혼합·소분 → 충진·포장 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_e920ef",
+    "text": "멜라닌형성세포",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L31):\n| 피부·모발 생리 | 피부 5층 / 표피 4대 세포 / 모발 3층·성장주기 |\n| → 실무 | 관능평가 · 제품상담 · 제품안내 → 혼합·소분 → 충진·포장 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ",
+     "ㄴ",
+     "ㅁ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㅁ",
+     "ㄹ",
+     "ㄷ",
+     "ㄴ",
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q319",
+  "explain": "📖 교재 근거 (교재: L31):\n| 피부·모발 생리 | 피부 5층 / 표피 4대 세포 / 모발 3층·성장주기 |\n| → 실무 | 관능평가 · 제품상담 · 제품안내 → 혼합·소분 → 충진·포장 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "2"
+ },
+ {
+  "id": "combo-04-0320",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1357 (출처: 과목4 문제은행 Q320)",
+  "stem": "아미노산의 전기 음성 작용기와 양성 작용기 간의 정전기적 이온 결합이 극대화되는 모발 고유의 pH 지점을 모발 (A)점이라고 부른다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_87df42",
+    "text": "오크모스",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1357):\n- 퍼머넌트·염색 시술 시 모피질의 결합이 약해지면 모발 손상이 발생함"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_3bef5d",
+    "text": "코르네오데스모좀",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1357):\n- 퍼머넌트·염색 시술 시 모피질의 결합이 약해지면 모발 손상이 발생함"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_98e6d8",
+    "text": "메스실린더(또는 피펫)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1357):\n- 퍼머넌트·염색 시술 시 모피질의 결합이 약해지면 모발 손상이 발생함"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_d88bfe",
+    "text": "등전",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1357):\n- 퍼머넌트·염색 시술 시 모피질의 결합이 약해지면 모발 손상이 발생함"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_1847bb",
+    "text": "사용기한",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1357):\n- 퍼머넌트·염색 시술 시 모피질의 결합이 약해지면 모발 손상이 발생함"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㄴ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㅁ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ",
+     "ㅁ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㅁ",
+     "ㄱ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q320",
+  "explain": "📖 교재 근거 (교재: L1357):\n- 퍼머넌트·염색 시술 시 모피질의 결합이 약해지면 모발 손상이 발생함",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "2"
+ },
+ {
+  "id": "combo-04-0321",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L2946 (출처: 과목4 문제은행 Q321)",
+  "stem": "우디 향 조합 오일에 포함되며 25종 알레르기 유발 물질로 등재된 이끼 유래 추출물 성분명은 (A)추출물이다. (Oakmoss) — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_fc5c8a",
+    "text": "각질",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2946):\n| 알레르기 유발 성분 | 착향제 중 25종 의무 표시 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_a93966",
+    "text": "오크모스",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L2946):\n| 알레르기 유발 성분 | 착향제 중 25종 의무 표시 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_f11317",
+    "text": "콜레스테롤",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2946):\n| 알레르기 유발 성분 | 착향제 중 25종 의무 표시 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_23b758",
+    "text": "수분",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2946):\n| 알레르기 유발 성분 | 착향제 중 25종 의무 표시 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_742b18",
+    "text": "온도",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2946):\n| 알레르기 유발 성분 | 착향제 중 25종 의무 표시 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ",
+     "ㅁ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㅁ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q321",
+  "explain": "📖 교재 근거 (교재: L2946):\n| 알레르기 유발 성분 | 착향제 중 25종 의무 표시 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "3"
+ },
+ {
+  "id": "combo-04-0322",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L2641 (출처: 과목4 문제은행 Q322)",
+  "stem": "에탄올 소독액 희석 제조 시, 소독 효능이 가장 뛰어난 농도는 부피 대비 약 (A)% 수용액이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_2f4d47",
+    "text": "70",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L2641):\n| 질병을 진단·치료·경감·처치 또는 예방, 의학적 효능·효과 관련 | 아토피, 심신피로 회복, 노인소양증, 항염·진통, 이뇨, 항진균·항바이러스, 통증 경감, 찰과상·화상 치료·회복, 관절·림프선 등 피부 이외 신체 특정 부위에 사용하여 의학적 효능·효과 표방, 모낭충, 건선, 살균·소독, 해독, 항암, 근육 이완, 면역 강화, 항알레르기, 기저귀 발진 | - |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_faa752",
+    "text": "2",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2641):\n| 질병을 진단·치료·경감·처치 또는 예방, 의학적 효능·효과 관련 | 아토피, 심신피로 회복, 노인소양증, 항염·진통, 이뇨, 항진균·항바이러스, 통증 경감, 찰과상·화상 치료·회복, 관절·림프선 등 피부 이외 신체 특정 부위에 사용하여 의학적 효능·효과 표방, 모낭충, 건선, 살균·소독, 해독, 항암, 근육 이완, 면역 강화, 항알레르기, 기저귀 발진 | - |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_b2496b",
+    "text": "0.001",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2641):\n| 질병을 진단·치료·경감·처치 또는 예방, 의학적 효능·효과 관련 | 아토피, 심신피로 회복, 노인소양증, 항염·진통, 이뇨, 항진균·항바이러스, 통증 경감, 찰과상·화상 치료·회복, 관절·림프선 등 피부 이외 신체 특정 부위에 사용하여 의학적 효능·효과 표방, 모낭충, 건선, 살균·소독, 해독, 항암, 근육 이완, 면역 강화, 항알레르기, 기저귀 발진 | - |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_000043",
+    "text": "0.01",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2641):\n| 질병을 진단·치료·경감·처치 또는 예방, 의학적 효능·효과 관련 | 아토피, 심신피로 회복, 노인소양증, 항염·진통, 이뇨, 항진균·항바이러스, 통증 경감, 찰과상·화상 치료·회복, 관절·림프선 등 피부 이외 신체 특정 부위에 사용하여 의학적 효능·효과 표방, 모낭충, 건선, 살균·소독, 해독, 항암, 근육 이완, 면역 강화, 항알레르기, 기저귀 발진 | - |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_ba4e68",
+    "text": "28",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2641):\n| 질병을 진단·치료·경감·처치 또는 예방, 의학적 효능·효과 관련 | 아토피, 심신피로 회복, 노인소양증, 항염·진통, 이뇨, 항진균·항바이러스, 통증 경감, 찰과상·화상 치료·회복, 관절·림프선 등 피부 이외 신체 특정 부위에 사용하여 의학적 효능·효과 표방, 모낭충, 건선, 살균·소독, 해독, 항암, 근육 이완, 면역 강화, 항알레르기, 기저귀 발진 | - |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ",
+     "ㄷ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㅁ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q322",
+  "explain": "📖 교재 근거 (교재: L2641):\n| 질병을 진단·치료·경감·처치 또는 예방, 의학적 효능·효과 관련 | 아토피, 심신피로 회복, 노인소양증, 항염·진통, 이뇨, 항진균·항바이러스, 통증 경감, 찰과상·화상 치료·회복, 관절·림프선 등 피부 이외 신체 특정 부위에 사용하여 의학적 효능·효과 표방, 모낭충, 건선, 살균·소독, 해독, 항암, 근육 이완, 면역 강화, 항알레르기, 기저귀 발진 | - |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "2"
+ },
+ {
+  "id": "combo-04-0323",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1703 (출처: 과목4 문제은행 Q323)",
+  "stem": "진피 속에서 수분을 수천 배 결합하여 볼륨감을 유지하는 다당류 수성 물질은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_a19143",
+    "text": "히알루론산",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1703):\n| 기질 | 히알루론산, 콘드로이친 황산, 헤파린 황산염 (뮤코다당체) |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_665c6f",
+    "text": "교체(턴오버)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1703):\n| 기질 | 히알루론산, 콘드로이친 황산, 헤파린 황산염 (뮤코다당체) |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_19876d",
+    "text": "휴지(telogen)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1703):\n| 기질 | 히알루론산, 콘드로이친 황산, 헤파린 황산염 (뮤코다당체) |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_ad6c36",
+    "text": "제라니올",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1703):\n| 기질 | 히알루론산, 콘드로이친 황산, 헤파린 황산염 (뮤코다당체) |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_0911be",
+    "text": "퇴행(catagen)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1703):\n| 기질 | 히알루론산, 콘드로이친 황산, 헤파린 황산염 (뮤코다당체) |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㅁ",
+     "ㄱ",
+     "ㄹ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ",
+     "ㄷ",
+     "ㄴ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ",
+     "ㄷ",
+     "ㅁ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q323",
+  "explain": "📖 교재 근거 (교재: L1703):\n| 기질 | 히알루론산, 콘드로이친 황산, 헤파린 황산염 (뮤코다당체) |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "5"
+ },
+ {
+  "id": "combo-04-0324",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 출처: 과목4 문제은행 Q324",
+  "stem": "모발 구조 중 외부 물리 자극을 방지하기 위해 기와 모양으로 중첩 정렬된 외곽 껍질층은 모(A)이다. (Cuticle) — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_c6426a",
+    "text": "큐티클",
+    "truth": true,
+    "explain": "📖 교재 근거 (L1346):\n| 에피큐티클(Epicuticle) | • 가장 바깥쪽의 두께 100Å 정도의 얇은 막<br>• 아미노산 중 시스틴의 함유량이 많음<br>• 각질 용해성 또는 단백질 용해성의 약품(친유성, 알칼리 용액)에 대한 저항성이 가장 강한 층<br>• 수증기는 통하지만 물은 통과하지 못하는 구조로 딱딱하고 부서지기 쉽기 때문에 물리적인 자극에 약함 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_ebdf0c",
+    "text": "격리",
+    "truth": false,
+    "explain": "📖 교재 근거 (L1346):\n| 에피큐티클(Epicuticle) | • 가장 바깥쪽의 두께 100Å 정도의 얇은 막<br>• 아미노산 중 시스틴의 함유량이 많음<br>• 각질 용해성 또는 단백질 용해성의 약품(친유성, 알칼리 용액)에 대한 저항성이 가장 강한 층<br>• 수증기는 통하지만 물은 통과하지 못하는 구조로 딱딱하고 부서지기 쉽기 때문에 물리적인 자극에 약함 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_d00787",
+    "text": "스핑고신",
+    "truth": false,
+    "explain": "📖 교재 근거 (L1346):\n| 에피큐티클(Epicuticle) | • 가장 바깥쪽의 두께 100Å 정도의 얇은 막<br>• 아미노산 중 시스틴의 함유량이 많음<br>• 각질 용해성 또는 단백질 용해성의 약품(친유성, 알칼리 용액)에 대한 저항성이 가장 강한 층<br>• 수증기는 통하지만 물은 통과하지 못하는 구조로 딱딱하고 부서지기 쉽기 때문에 물리적인 자극에 약함 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_de0426",
+    "text": "헤미데스모좀",
+    "truth": false,
+    "explain": "📖 교재 근거 (L1346):\n| 에피큐티클(Epicuticle) | • 가장 바깥쪽의 두께 100Å 정도의 얇은 막<br>• 아미노산 중 시스틴의 함유량이 많음<br>• 각질 용해성 또는 단백질 용해성의 약품(친유성, 알칼리 용액)에 대한 저항성이 가장 강한 층<br>• 수증기는 통하지만 물은 통과하지 못하는 구조로 딱딱하고 부서지기 쉽기 때문에 물리적인 자극에 약함 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_c0a777",
+    "text": "섬유아",
+    "truth": false,
+    "explain": "📖 교재 근거 (L1346):\n| 에피큐티클(Epicuticle) | • 가장 바깥쪽의 두께 100Å 정도의 얇은 막<br>• 아미노산 중 시스틴의 함유량이 많음<br>• 각질 용해성 또는 단백질 용해성의 약품(친유성, 알칼리 용액)에 대한 저항성이 가장 강한 층<br>• 수증기는 통하지만 물은 통과하지 못하는 구조로 딱딱하고 부서지기 쉽기 때문에 물리적인 자극에 약함 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ",
+     "ㅁ",
+     "ㄹ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q324",
+  "explain": "📖 교재 근거 (L1346):\n| 에피큐티클(Epicuticle) | • 가장 바깥쪽의 두께 100Å 정도의 얇은 막<br>• 아미노산 중 시스틴의 함유량이 많음<br>• 각질 용해성 또는 단백질 용해성의 약품(친유성, 알칼리 용액)에 대한 저항성이 가장 강한 층<br>• 수증기는 통하지만 물은 통과하지 못하는 구조로 딱딱하고 부서지기 쉽기 때문에 물리적인 자극에 약함 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "3"
+ },
+ {
+  "id": "combo-04-0325",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L2946 (출처: 과목4 문제은행 Q325)",
+  "stem": "장미향 오일 등에 포함되며 알레르기 유발 성분으로 등재된 모노테르펜 알코올 화합물명은 (A)올이다. (Geraniol) — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_f7bf4c",
+    "text": "충진",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2946):\n| 알레르기 유발 성분 | 착향제 중 25종 의무 표시 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_b40cc5",
+    "text": "맞춤형화장품 조제관리사",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2946):\n| 알레르기 유발 성분 | 착향제 중 25종 의무 표시 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_b223a9",
+    "text": "제라니",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L2946):\n| 알레르기 유발 성분 | 착향제 중 25종 의무 표시 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_194fb8",
+    "text": "관능",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2946):\n| 알레르기 유발 성분 | 착향제 중 25종 의무 표시 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_4f8210",
+    "text": "부식(방식)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2946):\n| 알레르기 유발 성분 | 착향제 중 25종 의무 표시 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㅁ",
+     "ㄷ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㅁ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ",
+     "ㅁ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q325",
+  "explain": "📖 교재 근거 (교재: L2946):\n| 알레르기 유발 성분 | 착향제 중 25종 의무 표시 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "4"
+ },
+ {
+  "id": "combo-04-0326",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L2858 (출처: 과목4 문제은행 Q326)",
+  "stem": "화장품 1차 용기에 기재할 면적이 부족할 시 필수 기재 중 생략하여 2차 상자에만 적을 수 있는 대표 항목은 (A) 성분이다. (표시 성분 범위) — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_86a868",
+    "text": "전성분",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L2858):\n> 해설: 1차 포장 필수 기재사항은 화장품의 명칭, 영업자의 상호, 제조번호(식별번호), 사용기한 또는 개봉 후 사용기간이다. 전성분 표시는 2차 포장(외부포장)에 기재해야 한다."
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_a726db",
+    "text": "오크모스",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2858):\n> 해설: 1차 포장 필수 기재사항은 화장품의 명칭, 영업자의 상호, 제조번호(식별번호), 사용기한 또는 개봉 후 사용기간이다. 전성분 표시는 2차 포장(외부포장)에 기재해야 한다."
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_32e47b",
+    "text": "교정(Calibration)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2858):\n> 해설: 1차 포장 필수 기재사항은 화장품의 명칭, 영업자의 상호, 제조번호(식별번호), 사용기한 또는 개봉 후 사용기간이다. 전성분 표시는 2차 포장(외부포장)에 기재해야 한다."
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_3b7f3c",
+    "text": "수평",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2858):\n> 해설: 1차 포장 필수 기재사항은 화장품의 명칭, 영업자의 상호, 제조번호(식별번호), 사용기한 또는 개봉 후 사용기간이다. 전성분 표시는 2차 포장(외부포장)에 기재해야 한다."
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_9f2099",
+    "text": "리날",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2858):\n> 해설: 1차 포장 필수 기재사항은 화장품의 명칭, 영업자의 상호, 제조번호(식별번호), 사용기한 또는 개봉 후 사용기간이다. 전성분 표시는 2차 포장(외부포장)에 기재해야 한다."
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ",
+     "ㅁ",
+     "ㄴ",
+     "ㄹ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ",
+     "ㅁ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㅁ",
+     "ㄹ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q326",
+  "explain": "📖 교재 근거 (교재: L2858):\n> 해설: 1차 포장 필수 기재사항은 화장품의 명칭, 영업자의 상호, 제조번호(식별번호), 사용기한 또는 개봉 후 사용기간이다. 전성분 표시는 2차 포장(외부포장)에 기재해야 한다.",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "1"
+ },
+ {
+  "id": "combo-04-0327",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L3104 (출처: 과목4 문제은행 Q327)",
+  "stem": "저울 칭량 시 바람에 의한 지시값 흔들림을 막기 위해 저울 주위에 설치하는 투명 창 설비는 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_0815f8",
+    "text": "수평",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3104):\n| 보존제 | 미생물로부터의 변질을 막기 위해 사용 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_b6c98d",
+    "text": "나이아신아마이드",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3104):\n| 보존제 | 미생물로부터의 변질을 막기 위해 사용 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_a7d45c",
+    "text": "수분",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3104):\n| 보존제 | 미생물로부터의 변질을 막기 위해 사용 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_f20086",
+    "text": "자유지방산",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3104):\n| 보존제 | 미생물로부터의 변질을 막기 위해 사용 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_7d5de1",
+    "text": "방풍실(드래프트실드)",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L3104):\n| 보존제 | 미생물로부터의 변질을 막기 위해 사용 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ",
+     "ㄴ",
+     "ㄱ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㅁ",
+     "ㄹ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q327",
+  "explain": "📖 교재 근거 (교재: L3104):\n| 보존제 | 미생물로부터의 변질을 막기 위해 사용 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "2"
+ },
+ {
+  "id": "combo-04-0328",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 출처: 과목4 문제은행 Q328",
+  "stem": "완제품 500g 제조 시 특정 원료 D를 배합 한도인 0.2%로 채워 조제하려 한다. 처방 중량은 (A)g이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_771d42",
+    "text": "0.04",
+    "truth": false,
+    "explain": "📖 교재 근거 (4.consulting: L197):\n| 메탄올 허용 한도 | 0.2%(v/v), 물휴지 0.002% 이하 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_ab1d43",
+    "text": "1",
+    "truth": true,
+    "explain": "📖 교재 근거 (4.consulting: L197):\n| 메탄올 허용 한도 | 0.2%(v/v), 물휴지 0.002% 이하 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_539ac9",
+    "text": "70",
+    "truth": false,
+    "explain": "📖 교재 근거 (4.consulting: L197):\n| 메탄올 허용 한도 | 0.2%(v/v), 물휴지 0.002% 이하 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_8f52d3",
+    "text": "0.3",
+    "truth": false,
+    "explain": "📖 교재 근거 (4.consulting: L197):\n| 메탄올 허용 한도 | 0.2%(v/v), 물휴지 0.002% 이하 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_cd601a",
+    "text": "0.002",
+    "truth": false,
+    "explain": "📖 교재 근거 (4.consulting: L197):\n| 메탄올 허용 한도 | 0.2%(v/v), 물휴지 0.002% 이하 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ",
+     "ㄴ",
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㅁ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q328",
+  "explain": "📖 교재 근거 (4.consulting: L197):\n| 메탄올 허용 한도 | 0.2%(v/v), 물휴지 0.002% 이하 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "3"
+ },
+ {
+  "id": "combo-04-0329",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1150 (출처: 과목4 문제은행 Q329)",
+  "stem": "세라마이드의 화학 구조 형성 시 기저 뼈대를 구성하는 긴 사슬형 아미노알코올은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_2043c1",
+    "text": "스핑고신",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1150):\n피부는 가장 바깥 부분부터 표피, 진피, 피하조직의 3가지 구조로 이루어져 있다."
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_f1fe2f",
+    "text": "엘라스틴",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1150):\n피부는 가장 바깥 부분부터 표피, 진피, 피하조직의 3가지 구조로 이루어져 있다."
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_7b7b52",
+    "text": "교체(턴오버)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1150):\n피부는 가장 바깥 부분부터 표피, 진피, 피하조직의 3가지 구조로 이루어져 있다."
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_2c3e5e",
+    "text": "TEWL",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1150):\n피부는 가장 바깥 부분부터 표피, 진피, 피하조직의 3가지 구조로 이루어져 있다."
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_852420",
+    "text": "멜라닌형성",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1150):\n피부는 가장 바깥 부분부터 표피, 진피, 피하조직의 3가지 구조로 이루어져 있다."
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㅁ",
+     "ㄱ",
+     "ㄹ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㄱ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q329",
+  "explain": "📖 교재 근거 (교재: L1150):\n피부는 가장 바깥 부분부터 표피, 진피, 피하조직의 3가지 구조로 이루어져 있다.",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "5"
+ },
+ {
+  "id": "combo-04-0330",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1722 (출처: 과목4 문제은행 Q330)",
+  "stem": "모발 단백질 결합 중 수분 흡수 시 끊어졌다가 건조 시 재결합하는 일시적 셋팅 결합은 (A) 결합이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_e2e348",
+    "text": "헤미데스모좀",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1722):\n| 모발 4대 결합 | 시스틴·이온·수소·펩타이드 결합 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_0be938",
+    "text": "수소",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1722):\n| 모발 4대 결합 | 시스틴·이온·수소·펩타이드 결합 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_626a26",
+    "text": "교체(턴오버)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1722):\n| 모발 4대 결합 | 시스틴·이온·수소·펩타이드 결합 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_9ed296",
+    "text": "관능",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1722):\n| 모발 4대 결합 | 시스틴·이온·수소·펩타이드 결합 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_9cece2",
+    "text": "사용 가능",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1722):\n| 모발 4대 결합 | 시스틴·이온·수소·펩타이드 결합 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ",
+     "ㄱ",
+     "ㅁ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q330",
+  "explain": "📖 교재 근거 (교재: L1722):\n| 모발 4대 결합 | 시스틴·이온·수소·펩타이드 결합 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "2"
+ },
+ {
+  "id": "combo-04-0331",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L3103 (출처: 과목4 문제은행 Q331)",
+  "stem": "알레르기 향료 물질 중 시트러스 껍질 오일에 풍부한 리모넨과 쌍을 이루는 꽃향 향료 유효 성분명은 (A)올이다. (Linalool) — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_05d9d0",
+    "text": "리날",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L3103):\n| 향료 | • 향을 내기 위해 사용<br>• 알레르기 유발 25종 중 씻어내는 제품은 0.01%, 씻어내지 않는 제품은 0.001% 초과 시 해당 성분 명칭 기재 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_eb6e93",
+    "text": "사용 가능",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3103):\n| 향료 | • 향을 내기 위해 사용<br>• 알레르기 유발 25종 중 씻어내는 제품은 0.01%, 씻어내지 않는 제품은 0.001% 초과 시 해당 성분 명칭 기재 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_551a8a",
+    "text": "소분",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3103):\n| 향료 | • 향을 내기 위해 사용<br>• 알레르기 유발 25종 중 씻어내는 제품은 0.01%, 씻어내지 않는 제품은 0.001% 초과 시 해당 성분 명칭 기재 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_4c8a70",
+    "text": "방풍실(드래프트실드)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3103):\n| 향료 | • 향을 내기 위해 사용<br>• 알레르기 유발 25종 중 씻어내는 제품은 0.01%, 씻어내지 않는 제품은 0.001% 초과 시 해당 성분 명칭 기재 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_6112ea",
+    "text": "자유지방산",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3103):\n| 향료 | • 향을 내기 위해 사용<br>• 알레르기 유발 25종 중 씻어내는 제품은 0.01%, 씻어내지 않는 제품은 0.001% 초과 시 해당 성분 명칭 기재 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㅁ",
+     "ㄹ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄹ",
+     "ㄱ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q331",
+  "explain": "📖 교재 근거 (교재: L3103):\n| 향료 | • 향을 내기 위해 사용<br>• 알레르기 유발 25종 중 씻어내는 제품은 0.01%, 씻어내지 않는 제품은 0.001% 초과 시 해당 성분 명칭 기재 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "3"
+ },
+ {
+  "id": "combo-04-0332",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1439 (출처: 과목4 문제은행 Q332)",
+  "stem": "pH 측정 시 유리전극 표면의 유리막 손상 방지 및 이온 평형 상태 보존을 위해 담가 보관하는 용액은 (A) 용액이다. (화학식 KCl) — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_805a05",
+    "text": "유두",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1439):\n| 기기를 이용한 판독법 | • 유수분 측정기, 우드램프, pH 측정기, 확대경, 피부 분석기를 통해 피부 상태 분석<br>• 세안 후 일정 시간이 지난 후에 측정하여 피부 상태 판독 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_50778d",
+    "text": "에크린",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1439):\n| 기기를 이용한 판독법 | • 유수분 측정기, 우드램프, pH 측정기, 확대경, 피부 분석기를 통해 피부 상태 분석<br>• 세안 후 일정 시간이 지난 후에 측정하여 피부 상태 판독 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_687951",
+    "text": "격리",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1439):\n| 기기를 이용한 판독법 | • 유수분 측정기, 우드램프, pH 측정기, 확대경, 피부 분석기를 통해 피부 상태 분석<br>• 세안 후 일정 시간이 지난 후에 측정하여 피부 상태 판독 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_eea761",
+    "text": "KCl",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1439):\n| 기기를 이용한 판독법 | • 유수분 측정기, 우드램프, pH 측정기, 확대경, 피부 분석기를 통해 피부 상태 분석<br>• 세안 후 일정 시간이 지난 후에 측정하여 피부 상태 판독 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_307ba4",
+    "text": "자외선",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1439):\n| 기기를 이용한 판독법 | • 유수분 측정기, 우드램프, pH 측정기, 확대경, 피부 분석기를 통해 피부 상태 분석<br>• 세안 후 일정 시간이 지난 후에 측정하여 피부 상태 판독 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ",
+     "ㄴ",
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q332",
+  "explain": "📖 교재 근거 (교재: L1439):\n| 기기를 이용한 판독법 | • 유수분 측정기, 우드램프, pH 측정기, 확대경, 피부 분석기를 통해 피부 상태 분석<br>• 세안 후 일정 시간이 지난 후에 측정하여 피부 상태 판독 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "4"
+ },
+ {
+  "id": "combo-04-0333",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1161 (출처: 과목4 문제은행 Q333)",
+  "stem": "표피 세포 간 결합 장치 중 기저세포를 기저막에 고정시키는 장치는 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_86bc3c",
+    "text": "교차",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1161):\n| 유극층<br>(Spinous Layer) | • 5~10층의 다각형 유핵세포층으로 표피에서 가장 두꺼운 층<br>• 림프액이 흘러 림프순환을 통해 영양 공급 및 노폐물 배출<br>• 면역기능을 담당하는 랑게르한스세포 존재 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_e11d04",
+    "text": "기저",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1161):\n| 유극층<br>(Spinous Layer) | • 5~10층의 다각형 유핵세포층으로 표피에서 가장 두꺼운 층<br>• 림프액이 흘러 림프순환을 통해 영양 공급 및 노폐물 배출<br>• 면역기능을 담당하는 랑게르한스세포 존재 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_fa1fae",
+    "text": "이온",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1161):\n| 유극층<br>(Spinous Layer) | • 5~10층의 다각형 유핵세포층으로 표피에서 가장 두꺼운 층<br>• 림프액이 흘러 림프순환을 통해 영양 공급 및 노폐물 배출<br>• 면역기능을 담당하는 랑게르한스세포 존재 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_b032a2",
+    "text": "헤미데스모좀",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1161):\n| 유극층<br>(Spinous Layer) | • 5~10층의 다각형 유핵세포층으로 표피에서 가장 두꺼운 층<br>• 림프액이 흘러 림프순환을 통해 영양 공급 및 노폐물 배출<br>• 면역기능을 담당하는 랑게르한스세포 존재 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_120840",
+    "text": "각질",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1161):\n| 유극층<br>(Spinous Layer) | • 5~10층의 다각형 유핵세포층으로 표피에서 가장 두꺼운 층<br>• 림프액이 흘러 림프순환을 통해 영양 공급 및 노폐물 배출<br>• 면역기능을 담당하는 랑게르한스세포 존재 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ",
+     "ㄷ",
+     "ㅁ",
+     "ㄴ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q333",
+  "explain": "📖 교재 근거 (교재: L1161):\n| 유극층<br>(Spinous Layer) | • 5~10층의 다각형 유핵세포층으로 표피에서 가장 두꺼운 층<br>• 림프액이 흘러 림프순환을 통해 영양 공급 및 노폐물 배출<br>• 면역기능을 담당하는 랑게르한스세포 존재 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "5"
+ },
+ {
+  "id": "combo-04-0334",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L883 (출처: 과목4 문제은행 Q334)",
+  "stem": "작업대 및 조제 기구 소독에 잔류물 없이 안전하게 사용되는 에탄올 수용액의 최적 살균 농도는 (A)%이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_058514",
+    "text": "70",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L883):\n> ③ 전 과목 총점의 70% 이상, 매 과목 만점의 50% 이상"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_77bb67",
+    "text": "0.01",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L883):\n> ③ 전 과목 총점의 70% 이상, 매 과목 만점의 50% 이상"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_14da84",
+    "text": "0.002",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L883):\n> ③ 전 과목 총점의 70% 이상, 매 과목 만점의 50% 이상"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_d20612",
+    "text": "1~30",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L883):\n> ③ 전 과목 총점의 70% 이상, 매 과목 만점의 50% 이상"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_5560fd",
+    "text": "0.04",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L883):\n> ③ 전 과목 총점의 70% 이상, 매 과목 만점의 50% 이상"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㅁ",
+     "ㄱ",
+     "ㄹ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q334",
+  "explain": "📖 교재 근거 (교재: L883):\n> ③ 전 과목 총점의 70% 이상, 매 과목 만점의 50% 이상",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "5"
+ },
+ {
+  "id": "combo-04-0335",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L113 (출처: 과목4 문제은행 Q335)",
+  "stem": "표피의 최외각 각질 세포 결합 장치로 각화 주기에 맞춰 각질분해효소에 의해 자연 해제되는 단백질 결합체는 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_beaf69",
+    "text": "멜라닌형성세포",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L113):\n| 기저층 (멜라닌형성세포) | 멜라닌형성세포(멜라노사이트, Melanocyte) 🎯 기출 | • 멜라닌을 합성하여 각질형성세포에 멜라닌이 축적된 멜라노솜(Melanosome)을 공급하는 세포<br>• 피부색과 털색을 결정함<br>• 표피의 5~25%를 차지하며, 세포 내에 확산하면 검게 보임 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_2732c6",
+    "text": "폐기",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L113):\n| 기저층 (멜라닌형성세포) | 멜라닌형성세포(멜라노사이트, Melanocyte) 🎯 기출 | • 멜라닌을 합성하여 각질형성세포에 멜라닌이 축적된 멜라노솜(Melanosome)을 공급하는 세포<br>• 피부색과 털색을 결정함<br>• 표피의 5~25%를 차지하며, 세포 내에 확산하면 검게 보임 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_110ecc",
+    "text": "전성분",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L113):\n| 기저층 (멜라닌형성세포) | 멜라닌형성세포(멜라노사이트, Melanocyte) 🎯 기출 | • 멜라닌을 합성하여 각질형성세포에 멜라닌이 축적된 멜라노솜(Melanosome)을 공급하는 세포<br>• 피부색과 털색을 결정함<br>• 표피의 5~25%를 차지하며, 세포 내에 확산하면 검게 보임 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_ba2fb5",
+    "text": "자외선",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L113):\n| 기저층 (멜라닌형성세포) | 멜라닌형성세포(멜라노사이트, Melanocyte) 🎯 기출 | • 멜라닌을 합성하여 각질형성세포에 멜라닌이 축적된 멜라노솜(Melanosome)을 공급하는 세포<br>• 피부색과 털색을 결정함<br>• 표피의 5~25%를 차지하며, 세포 내에 확산하면 검게 보임 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_15b581",
+    "text": "코르네오데스모좀",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L113):\n| 기저층 (멜라닌형성세포) | 멜라닌형성세포(멜라노사이트, Melanocyte) 🎯 기출 | • 멜라닌을 합성하여 각질형성세포에 멜라닌이 축적된 멜라노솜(Melanosome)을 공급하는 세포<br>• 피부색과 털색을 결정함<br>• 표피의 5~25%를 차지하며, 세포 내에 확산하면 검게 보임 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q335",
+  "explain": "📖 교재 근거 (교재: L113):\n| 기저층 (멜라닌형성세포) | 멜라닌형성세포(멜라노사이트, Melanocyte) 🎯 기출 | • 멜라닌을 합성하여 각질형성세포에 멜라닌이 축적된 멜라노솜(Melanosome)을 공급하는 세포<br>• 피부색과 털색을 결정함<br>• 표피의 5~25%를 차지하며, 세포 내에 확산하면 검게 보임 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "5"
+ },
+ {
+  "id": "combo-04-0336",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L752 (출처: 과목4 문제은행 Q336)",
+  "stem": "질량 측정 시 지시 오차를 보정하기 위해 표준 중량을 가진 원통형 금속체 도구를 (A)이라 한다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_21a03a",
+    "text": "퇴행(catagen)",
+    "truth": false,
+    "explain": "📖 법령 근거 (교재: L752):\n| 자외선 차단지수(SPF) 설정 근거자료 | 자외선 차단 효과 측정 방법 및 기준·일본(JCIA)·호주/뉴질랜드(AS/NZS)·미국(FDA)·유럽(Cosmetics Europe) 또는 국제표준화기구(ISO 24444) 등의 자외선 차단지수 측정 방법에 의한 자료 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_d36481",
+    "text": "탈각(박리)",
+    "truth": false,
+    "explain": "📖 법령 근거 (교재: L752):\n| 자외선 차단지수(SPF) 설정 근거자료 | 자외선 차단 효과 측정 방법 및 기준·일본(JCIA)·호주/뉴질랜드(AS/NZS)·미국(FDA)·유럽(Cosmetics Europe) 또는 국제표준화기구(ISO 24444) 등의 자외선 차단지수 측정 방법에 의한 자료 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_5f7f73",
+    "text": "cP",
+    "truth": false,
+    "explain": "📖 법령 근거 (교재: L752):\n| 자외선 차단지수(SPF) 설정 근거자료 | 자외선 차단 효과 측정 방법 및 기준·일본(JCIA)·호주/뉴질랜드(AS/NZS)·미국(FDA)·유럽(Cosmetics Europe) 또는 국제표준화기구(ISO 24444) 등의 자외선 차단지수 측정 방법에 의한 자료 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_6a6f54",
+    "text": "분동(추)",
+    "truth": true,
+    "explain": "📖 법령 근거 (교재: L752):\n| 자외선 차단지수(SPF) 설정 근거자료 | 자외선 차단 효과 측정 방법 및 기준·일본(JCIA)·호주/뉴질랜드(AS/NZS)·미국(FDA)·유럽(Cosmetics Europe) 또는 국제표준화기구(ISO 24444) 등의 자외선 차단지수 측정 방법에 의한 자료 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_898b95",
+    "text": "스핑고신",
+    "truth": false,
+    "explain": "📖 법령 근거 (교재: L752):\n| 자외선 차단지수(SPF) 설정 근거자료 | 자외선 차단 효과 측정 방법 및 기준·일본(JCIA)·호주/뉴질랜드(AS/NZS)·미국(FDA)·유럽(Cosmetics Europe) 또는 국제표준화기구(ISO 24444) 등의 자외선 차단지수 측정 방법에 의한 자료 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㅁ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ",
+     "ㅁ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q336",
+  "explain": "📖 법령 근거 (교재: L752):\n| 자외선 차단지수(SPF) 설정 근거자료 | 자외선 차단 효과 측정 방법 및 기준·일본(JCIA)·호주/뉴질랜드(AS/NZS)·미국(FDA)·유럽(Cosmetics Europe) 또는 국제표준화기구(ISO 24444) 등의 자외선 차단지수 측정 방법에 의한 자료 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "2"
+ },
+ {
+  "id": "combo-04-0337",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L3005 (출처: 과목4 문제은행 Q337)",
+  "stem": "식약처 고시상 온도의 정의 중 실온의 기준 범위 온도는 (A)℃이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_c6de8b",
+    "text": "0.3",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3005):\n> - 핵심 키워드: 수성/유성/계면활성제, 제형 안정성(투입 순서·온도 편차·회전속도·진공세기), pH 범위(미산성 5.0~6.5·약산성 3.0~5.0), 온도(표준 20℃·상온 15~25℃·실온 1~30℃), 호모게나이저(유화·터빈형) vs 디스퍼(가용화·고속교반), 혼합·소분 안전관리(품질성적서 확인·손 소독·포장용기 오염 확인)"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_6e76d3",
+    "text": "1~30",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L3005):\n> - 핵심 키워드: 수성/유성/계면활성제, 제형 안정성(투입 순서·온도 편차·회전속도·진공세기), pH 범위(미산성 5.0~6.5·약산성 3.0~5.0), 온도(표준 20℃·상온 15~25℃·실온 1~30℃), 호모게나이저(유화·터빈형) vs 디스퍼(가용화·고속교반), 혼합·소분 안전관리(품질성적서 확인·손 소독·포장용기 오염 확인)"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_2f5849",
+    "text": "70",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3005):\n> - 핵심 키워드: 수성/유성/계면활성제, 제형 안정성(투입 순서·온도 편차·회전속도·진공세기), pH 범위(미산성 5.0~6.5·약산성 3.0~5.0), 온도(표준 20℃·상온 15~25℃·실온 1~30℃), 호모게나이저(유화·터빈형) vs 디스퍼(가용화·고속교반), 혼합·소분 안전관리(품질성적서 확인·손 소독·포장용기 오염 확인)"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_0a716e",
+    "text": "28",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3005):\n> - 핵심 키워드: 수성/유성/계면활성제, 제형 안정성(투입 순서·온도 편차·회전속도·진공세기), pH 범위(미산성 5.0~6.5·약산성 3.0~5.0), 온도(표준 20℃·상온 15~25℃·실온 1~30℃), 호모게나이저(유화·터빈형) vs 디스퍼(가용화·고속교반), 혼합·소분 안전관리(품질성적서 확인·손 소독·포장용기 오염 확인)"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_e434e4",
+    "text": "2",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3005):\n> - 핵심 키워드: 수성/유성/계면활성제, 제형 안정성(투입 순서·온도 편차·회전속도·진공세기), pH 범위(미산성 5.0~6.5·약산성 3.0~5.0), 온도(표준 20℃·상온 15~25℃·실온 1~30℃), 호모게나이저(유화·터빈형) vs 디스퍼(가용화·고속교반), 혼합·소분 안전관리(품질성적서 확인·손 소독·포장용기 오염 확인)"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q337",
+  "explain": "📖 교재 근거 (교재: L3005):\n> - 핵심 키워드: 수성/유성/계면활성제, 제형 안정성(투입 순서·온도 편차·회전속도·진공세기), pH 범위(미산성 5.0~6.5·약산성 3.0~5.0), 온도(표준 20℃·상온 15~25℃·실온 1~30℃), 호모게나이저(유화·터빈형) vs 디스퍼(가용화·고속교반), 혼합·소분 안전관리(품질성적서 확인·손 소독·포장용기 오염 확인)",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "1"
+ },
+ {
+  "id": "combo-04-0338",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 출처: 과목4 문제은행 Q338",
+  "stem": "진피 속에서 탄력 기능을 담당하는 주요 스프링 형태의 탄성 섬유 단백질은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_e21337",
+    "text": "엘라스틴",
+    "truth": true,
+    "explain": "📖 교재 근거 (2.physiology: L147):\n> 용어 - 탄력섬유(엘라스틴): 본래의 모습으로 되돌아가려는 회복 기능과 탄력성이 있는 단백질로, 피부에 1.5~4.8% 정도의 함량으로 존재함"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_406362",
+    "text": "주기(턴오버)",
+    "truth": false,
+    "explain": "📖 교재 근거 (2.physiology: L147):\n> 용어 - 탄력섬유(엘라스틴): 본래의 모습으로 되돌아가려는 회복 기능과 탄력성이 있는 단백질로, 피부에 1.5~4.8% 정도의 함량으로 존재함"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_bcb74d",
+    "text": "티로시나아제",
+    "truth": false,
+    "explain": "📖 교재 근거 (2.physiology: L147):\n> 용어 - 탄력섬유(엘라스틴): 본래의 모습으로 되돌아가려는 회복 기능과 탄력성이 있는 단백질로, 피부에 1.5~4.8% 정도의 함량으로 존재함"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_33c399",
+    "text": "소독(세척·소독)",
+    "truth": false,
+    "explain": "📖 교재 근거 (2.physiology: L147):\n> 용어 - 탄력섬유(엘라스틴): 본래의 모습으로 되돌아가려는 회복 기능과 탄력성이 있는 단백질로, 피부에 1.5~4.8% 정도의 함량으로 존재함"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_f59a43",
+    "text": "초임계",
+    "truth": false,
+    "explain": "📖 교재 근거 (2.physiology: L147):\n> 용어 - 탄력섬유(엘라스틴): 본래의 모습으로 되돌아가려는 회복 기능과 탄력성이 있는 단백질로, 피부에 1.5~4.8% 정도의 함량으로 존재함"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄹ",
+     "ㅁ",
+     "ㄱ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㅁ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄱ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q338",
+  "explain": "📖 교재 근거 (2.physiology: L147):\n> 용어 - 탄력섬유(엘라스틴): 본래의 모습으로 되돌아가려는 회복 기능과 탄력성이 있는 단백질로, 피부에 1.5~4.8% 정도의 함량으로 존재함",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "1"
+ },
+ {
+  "id": "combo-04-0339",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1684 (출처: 과목4 문제은행 Q339)",
+  "stem": "장벽 복원에 유효한 세포간지질 3대 성분은 세라마이드, 자유지방산 및 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_720104",
+    "text": "교차",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1684):\n| 세포간지질 | 세라마이드 50% 이상, 콜레스테롤, 지방산 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_0601d9",
+    "text": "약산",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1684):\n| 세포간지질 | 세라마이드 50% 이상, 콜레스테롤, 지방산 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_88e2a8",
+    "text": "오크모스",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1684):\n| 세포간지질 | 세라마이드 50% 이상, 콜레스테롤, 지방산 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_5305c9",
+    "text": "콜레스테롤",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1684):\n| 세포간지질 | 세라마이드 50% 이상, 콜레스테롤, 지방산 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_8ee3ab",
+    "text": "메스실린더(또는 피펫)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1684):\n| 세포간지질 | 세라마이드 50% 이상, 콜레스테롤, 지방산 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㅁ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㅁ",
+     "ㄹ",
+     "ㄴ",
+     "ㄷ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q339",
+  "explain": "📖 교재 근거 (교재: L1684):\n| 세포간지질 | 세라마이드 50% 이상, 콜레스테롤, 지방산 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "1"
+ },
+ {
+  "id": "combo-04-0340",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 출처: 과목4 문제은행 Q340",
+  "stem": "맞춤형화장품 조제 시 향료 오일 리모넨(Limonene)이 2% 함유된 에센셜 오일 원료를 씻어내지 않는 화장품 벌크에 0.1% 농도로 첨가하여 조제하였다. 이때 최종 화장품 내 리모넨의 농도는 (A)%이며, 고시 기준인 0.001%를 초과하므로 전성분에 명칭을 표시해야 한다. (수치 입력) — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_7e10a4",
+    "text": "0.01",
+    "truth": false,
+    "explain": "📖 법령 근거 (화장품 안전기준 등에 관한 규정(식품의약품안: L109(제2026-19호)(20260318)/화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318).md#L109>)):\n8. 메탄올 : 0.2(v/v)%이하, 물휴지는 0.002%(v/v)이하"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_156e15",
+    "text": "0.1",
+    "truth": false,
+    "explain": "📖 법령 근거 (화장품 안전기준 등에 관한 규정(식품의약품안: L109(제2026-19호)(20260318)/화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318).md#L109>)):\n8. 메탄올 : 0.2(v/v)%이하, 물휴지는 0.002%(v/v)이하"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_ff4257",
+    "text": "0.002",
+    "truth": true,
+    "explain": "📖 법령 근거 (화장품 안전기준 등에 관한 규정(식품의약품안: L109(제2026-19호)(20260318)/화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318).md#L109>)):\n8. 메탄올 : 0.2(v/v)%이하, 물휴지는 0.002%(v/v)이하"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_a43354",
+    "text": "0.04",
+    "truth": false,
+    "explain": "📖 법령 근거 (화장품 안전기준 등에 관한 규정(식품의약품안: L109(제2026-19호)(20260318)/화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318).md#L109>)):\n8. 메탄올 : 0.2(v/v)%이하, 물휴지는 0.002%(v/v)이하"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_609be4",
+    "text": "0.3",
+    "truth": false,
+    "explain": "📖 법령 근거 (화장품 안전기준 등에 관한 규정(식품의약품안: L109(제2026-19호)(20260318)/화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318).md#L109>)):\n8. 메탄올 : 0.2(v/v)%이하, 물휴지는 0.002%(v/v)이하"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ",
+     "ㄱ",
+     "ㅁ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ",
+     "ㅁ",
+     "ㄱ",
+     "ㄴ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q340",
+  "explain": "📖 법령 근거 (화장품 안전기준 등에 관한 규정(식품의약품안: L109(제2026-19호)(20260318)/화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318).md#L109>)):\n8. 메탄올 : 0.2(v/v)%이하, 물휴지는 0.002%(v/v)이하",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "2"
+ },
+ {
+  "id": "combo-04-0341",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L698 (출처: 과목4 문제은행 Q341)",
+  "stem": "자외선 A(UVA)를 차단하여 피부 흑화 및 색소 침착을 방지하는 차단 정도를 나타내는 지수는 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_4b8787",
+    "text": "UVB",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L698):\n| 자외선 차단 기능 제품 | • 자외선 차단지수(SPF) 설정 근거 자료<br>• 내수성 자외선 차단지수(SPF) 설정 근거 자료<br>• 자외선A 차단등급(PA) 설정 근거 자료 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_dae091",
+    "text": "에크린",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L698):\n| 자외선 차단 기능 제품 | • 자외선 차단지수(SPF) 설정 근거 자료<br>• 내수성 자외선 차단지수(SPF) 설정 근거 자료<br>• 자외선A 차단등급(PA) 설정 근거 자료 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_8c023a",
+    "text": "제라니",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L698):\n| 자외선 차단 기능 제품 | • 자외선 차단지수(SPF) 설정 근거 자료<br>• 내수성 자외선 차단지수(SPF) 설정 근거 자료<br>• 자외선A 차단등급(PA) 설정 근거 자료 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_dd7681",
+    "text": "PA",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L698):\n| 자외선 차단 기능 제품 | • 자외선 차단지수(SPF) 설정 근거 자료<br>• 내수성 자외선 차단지수(SPF) 설정 근거 자료<br>• 자외선A 차단등급(PA) 설정 근거 자료 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_1eda29",
+    "text": "지질",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L698):\n| 자외선 차단 기능 제품 | • 자외선 차단지수(SPF) 설정 근거 자료<br>• 내수성 자외선 차단지수(SPF) 설정 근거 자료<br>• 자외선A 차단등급(PA) 설정 근거 자료 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ",
+     "ㅁ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q341",
+  "explain": "📖 교재 근거 (교재: L698):\n| 자외선 차단 기능 제품 | • 자외선 차단지수(SPF) 설정 근거 자료<br>• 내수성 자외선 차단지수(SPF) 설정 근거 자료<br>• 자외선A 차단등급(PA) 설정 근거 자료 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "2"
+ },
+ {
+  "id": "combo-04-0342",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1549 (출처: 과목4 문제은행 Q342)",
+  "stem": "유극층에 상주하며 외부 항원 물질을 포획하여 면역 세포에 경보를 알리는 성상 돌기 세포는 (A) 세포이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_824d0c",
+    "text": "교정(Calibration)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1549):\n| 랑게르한스세포 | 유극층 | 면역반응 조절, 항원 전달 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_d49e4a",
+    "text": "히알루론산",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1549):\n| 랑게르한스세포 | 유극층 | 면역반응 조절, 항원 전달 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_9d3579",
+    "text": "초임계",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1549):\n| 랑게르한스세포 | 유극층 | 면역반응 조절, 항원 전달 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_f8a735",
+    "text": "C",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1549):\n| 랑게르한스세포 | 유극층 | 면역반응 조절, 항원 전달 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_6ffe5c",
+    "text": "랑게르한스",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1549):\n| 랑게르한스세포 | 유극층 | 면역반응 조절, 항원 전달 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㅁ",
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ",
+     "ㄷ",
+     "ㄴ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q342",
+  "explain": "📖 교재 근거 (교재: L1549):\n| 랑게르한스세포 | 유극층 | 면역반응 조절, 항원 전달 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "2"
+ },
+ {
+  "id": "combo-04-0343",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L2517 (출처: 과목4 문제은행 Q343)",
+  "stem": "식약처 고시상 미백 기능성 원료로 등록된 알부틴의 안전 사용 함량 기준 최저치는 (A)%이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_490131",
+    "text": "0.01",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2517):\n| 1차 포장만으로 구성되는 화장품의 외부포장 / 화장품의 외부 포장<br>(1차 포장에 2차 포장을 추가한 경우) | • 화장품의 명칭<br>• 영업자의 상호 및 주소<br>• 해당 화장품 제조에 사용된 모든 성분(인체에 무해한 소량 함유 성분 등 총리령으로 정하는 성분은 제외)<br>• 내용물의 용량 또는 중량<br>• 제조번호(식별번호)<br>• 사용기한 또는 개봉 후 사용기간(개봉 후 사용기간의 경우 제조연월일 병기)<br>• 가격<br>• 기능성화장품의 경우 '기능성화장품'이라는 글자 또는 기능성화장품을 나타내는 도안으로서 식품의약품안전처장이 정하는 도안<br>• 사용할 때의 주의사항<br>• 그 밖에 총리령으로 정하는 사항<br>&nbsp;&nbsp;- 기능성화장품의 경우 심사받거나 보고한..."
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_8af0d7",
+    "text": "1",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2517):\n| 1차 포장만으로 구성되는 화장품의 외부포장 / 화장품의 외부 포장<br>(1차 포장에 2차 포장을 추가한 경우) | • 화장품의 명칭<br>• 영업자의 상호 및 주소<br>• 해당 화장품 제조에 사용된 모든 성분(인체에 무해한 소량 함유 성분 등 총리령으로 정하는 성분은 제외)<br>• 내용물의 용량 또는 중량<br>• 제조번호(식별번호)<br>• 사용기한 또는 개봉 후 사용기간(개봉 후 사용기간의 경우 제조연월일 병기)<br>• 가격<br>• 기능성화장품의 경우 '기능성화장품'이라는 글자 또는 기능성화장품을 나타내는 도안으로서 식품의약품안전처장이 정하는 도안<br>• 사용할 때의 주의사항<br>• 그 밖에 총리령으로 정하는 사항<br>&nbsp;&nbsp;- 기능성화장품의 경우 심사받거나 보고한..."
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_f00f1d",
+    "text": "0.1",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2517):\n| 1차 포장만으로 구성되는 화장품의 외부포장 / 화장품의 외부 포장<br>(1차 포장에 2차 포장을 추가한 경우) | • 화장품의 명칭<br>• 영업자의 상호 및 주소<br>• 해당 화장품 제조에 사용된 모든 성분(인체에 무해한 소량 함유 성분 등 총리령으로 정하는 성분은 제외)<br>• 내용물의 용량 또는 중량<br>• 제조번호(식별번호)<br>• 사용기한 또는 개봉 후 사용기간(개봉 후 사용기간의 경우 제조연월일 병기)<br>• 가격<br>• 기능성화장품의 경우 '기능성화장품'이라는 글자 또는 기능성화장품을 나타내는 도안으로서 식품의약품안전처장이 정하는 도안<br>• 사용할 때의 주의사항<br>• 그 밖에 총리령으로 정하는 사항<br>&nbsp;&nbsp;- 기능성화장품의 경우 심사받거나 보고한..."
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_40be72",
+    "text": "2",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L2517):\n| 1차 포장만으로 구성되는 화장품의 외부포장 / 화장품의 외부 포장<br>(1차 포장에 2차 포장을 추가한 경우) | • 화장품의 명칭<br>• 영업자의 상호 및 주소<br>• 해당 화장품 제조에 사용된 모든 성분(인체에 무해한 소량 함유 성분 등 총리령으로 정하는 성분은 제외)<br>• 내용물의 용량 또는 중량<br>• 제조번호(식별번호)<br>• 사용기한 또는 개봉 후 사용기간(개봉 후 사용기간의 경우 제조연월일 병기)<br>• 가격<br>• 기능성화장품의 경우 '기능성화장품'이라는 글자 또는 기능성화장품을 나타내는 도안으로서 식품의약품안전처장이 정하는 도안<br>• 사용할 때의 주의사항<br>• 그 밖에 총리령으로 정하는 사항<br>&nbsp;&nbsp;- 기능성화장품의 경우 심사받거나 보고한..."
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_90dfc7",
+    "text": "0.04",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2517):\n| 1차 포장만으로 구성되는 화장품의 외부포장 / 화장품의 외부 포장<br>(1차 포장에 2차 포장을 추가한 경우) | • 화장품의 명칭<br>• 영업자의 상호 및 주소<br>• 해당 화장품 제조에 사용된 모든 성분(인체에 무해한 소량 함유 성분 등 총리령으로 정하는 성분은 제외)<br>• 내용물의 용량 또는 중량<br>• 제조번호(식별번호)<br>• 사용기한 또는 개봉 후 사용기간(개봉 후 사용기간의 경우 제조연월일 병기)<br>• 가격<br>• 기능성화장품의 경우 '기능성화장품'이라는 글자 또는 기능성화장품을 나타내는 도안으로서 식품의약품안전처장이 정하는 도안<br>• 사용할 때의 주의사항<br>• 그 밖에 총리령으로 정하는 사항<br>&nbsp;&nbsp;- 기능성화장품의 경우 심사받거나 보고한..."
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ",
+     "ㄷ",
+     "ㄴ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q343",
+  "explain": "📖 교재 근거 (교재: L2517):\n| 1차 포장만으로 구성되는 화장품의 외부포장 / 화장품의 외부 포장<br>(1차 포장에 2차 포장을 추가한 경우) | • 화장품의 명칭<br>• 영업자의 상호 및 주소<br>• 해당 화장품 제조에 사용된 모든 성분(인체에 무해한 소량 함유 성분 등 총리령으로 정하는 성분은 제외)<br>• 내용물의 용량 또는 중량<br>• 제조번호(식별번호)<br>• 사용기한 또는 개봉 후 사용기간(개봉 후 사용기간의 경우 제조연월일 병기)<br>• 가격<br>• 기능성화장품의 경우 '기능성화장품'이라는 글자 또는 기능성화장품을 나타내는 도안으로서 식품의약품안전처장이 정하는 도안<br>• 사용할 때의 주의사항<br>• 그 밖에 총리령으로 정하는 사항<br>&nbsp;&nbsp;- 기능성화장품의 경우 심사받거나 보고한...",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "5"
+ },
+ {
+  "id": "combo-04-0344",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L840 (출처: 과목4 문제은행 Q344)",
+  "stem": "아크릴산 중합체로 화장품의 제형 안정을 돕는 대표적인 합성 점증 유화 보조제는 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_99a4f7",
+    "text": "휴지(telogen)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L840):\n• 합성: 카복시비닐폴리머(카보머)\n• 피막형성제: 폴리비닐알코올, 폴리비닐피롤리돈, 나이트로셀룰로스"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_1e4a41",
+    "text": "KCl",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L840):\n• 합성: 카복시비닐폴리머(카보머)\n• 피막형성제: 폴리비닐알코올, 폴리비닐피롤리돈, 나이트로셀룰로스"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_8cf3d1",
+    "text": "카보머",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L840):\n• 합성: 카복시비닐폴리머(카보머)\n• 피막형성제: 폴리비닐알코올, 폴리비닐피롤리돈, 나이트로셀룰로스"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_dcc5d7",
+    "text": "MSDS",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L840):\n• 합성: 카복시비닐폴리머(카보머)\n• 피막형성제: 폴리비닐알코올, 폴리비닐피롤리돈, 나이트로셀룰로스"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_253456",
+    "text": "히알루론산",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L840):\n• 합성: 카복시비닐폴리머(카보머)\n• 피막형성제: 폴리비닐알코올, 폴리비닐피롤리돈, 나이트로셀룰로스"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q344",
+  "explain": "📖 교재 근거 (교재: L840):\n• 합성: 카복시비닐폴리머(카보머)\n• 피막형성제: 폴리비닐알코올, 폴리비닐피롤리돈, 나이트로셀룰로스",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "2"
+ },
+ {
+  "id": "combo-04-0345",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L4044 (출처: 과목4 문제은행 Q345)",
+  "stem": "계량 시 미세한 호흡 공기 흐름이나 바람에 의한 질량 오차를 차단하는 유리 케이스는 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_eb5f95",
+    "text": "트랜스글루타미나아제",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L4044):\n| 포장횟수 제외 | 필름·종이·재사용 파우치·에코백·틴케이스 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_843017",
+    "text": "이온",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L4044):\n| 포장횟수 제외 | 필름·종이·재사용 파우치·에코백·틴케이스 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_b15b3f",
+    "text": "방풍실(드래프트실드)",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L4044):\n| 포장횟수 제외 | 필름·종이·재사용 파우치·에코백·틴케이스 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_b7971b",
+    "text": "스쿠알렌",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L4044):\n| 포장횟수 제외 | 필름·종이·재사용 파우치·에코백·틴케이스 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_437e94",
+    "text": "세라마이드",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L4044):\n| 포장횟수 제외 | 필름·종이·재사용 파우치·에코백·틴케이스 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄹ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㅁ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q345",
+  "explain": "📖 교재 근거 (교재: L4044):\n| 포장횟수 제외 | 필름·종이·재사용 파우치·에코백·틴케이스 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "4"
+ },
+ {
+  "id": "combo-04-0346",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1722 (출처: 과목4 문제은행 Q346)",
+  "stem": "모발 내부의 결합 중 pH 조건에 따라 결합 세기가 결정되며 수렴 지점에서 가장 단단한 정전기 인력을 이루는 것은 (A) 결합이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_28cc17",
+    "text": "자외선",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1722):\n| 모발 4대 결합 | 시스틴·이온·수소·펩타이드 결합 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_8d2826",
+    "text": "교차",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1722):\n| 모발 4대 결합 | 시스틴·이온·수소·펩타이드 결합 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_6ae7bf",
+    "text": "표준",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1722):\n| 모발 4대 결합 | 시스틴·이온·수소·펩타이드 결합 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_bc3f52",
+    "text": "이온",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1722):\n| 모발 4대 결합 | 시스틴·이온·수소·펩타이드 결합 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_cd94d3",
+    "text": "부식(방식)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1722):\n| 모발 4대 결합 | 시스틴·이온·수소·펩타이드 결합 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㅁ",
+     "ㄷ",
+     "ㄹ",
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q346",
+  "explain": "📖 교재 근거 (교재: L1722):\n| 모발 4대 결합 | 시스틴·이온·수소·펩타이드 결합 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "1"
+ },
+ {
+  "id": "combo-04-0347",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L163 (출처: 과목4 문제은행 Q347)",
+  "stem": "유기 유해 잔류물 없이 저온에서 향 성분 등 열변성 유효 물질을 완벽 추출하는 친환경 공정은 (A) 추출법이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_b77f2a",
+    "text": "수분",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L163):\n### (1) 유효성 또는 기능에 관한 자료 🎯 기출"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_925cd5",
+    "text": "분동(추)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L163):\n### (1) 유효성 또는 기능에 관한 자료 🎯 기출"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_a8bc17",
+    "text": "NMF(천연보습인자)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L163):\n### (1) 유효성 또는 기능에 관한 자료 🎯 기출"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_992300",
+    "text": "초임계",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L163):\n### (1) 유효성 또는 기능에 관한 자료 🎯 기출"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_378221",
+    "text": "표준",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L163):\n### (1) 유효성 또는 기능에 관한 자료 🎯 기출"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q347",
+  "explain": "📖 교재 근거 (교재: L163):\n### (1) 유효성 또는 기능에 관한 자료 🎯 기출",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "3"
+ },
+ {
+  "id": "combo-04-0348",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 출처: 과목4 문제은행 Q348",
+  "stem": "표피층의 기저 분열 세포가 각 각화 층을 거쳐 각질 외벽으로 이탈 탈락하는 턴오버 기간은 평균 (A)일이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_69f2aa",
+    "text": "1~30",
+    "truth": false,
+    "explain": "📖 교재 근거 (L1551):\n| 각질형성세포 | 기저층 | 각질세포 생성, 각화주기 28일 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_0351d5",
+    "text": "0.1",
+    "truth": false,
+    "explain": "📖 교재 근거 (L1551):\n| 각질형성세포 | 기저층 | 각질세포 생성, 각화주기 28일 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_c6963b",
+    "text": "28",
+    "truth": true,
+    "explain": "📖 교재 근거 (L1551):\n| 각질형성세포 | 기저층 | 각질세포 생성, 각화주기 28일 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_bf10a6",
+    "text": "0.01",
+    "truth": false,
+    "explain": "📖 교재 근거 (L1551):\n| 각질형성세포 | 기저층 | 각질세포 생성, 각화주기 28일 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_7746da",
+    "text": "0.04",
+    "truth": false,
+    "explain": "📖 교재 근거 (L1551):\n| 각질형성세포 | 기저층 | 각질세포 생성, 각화주기 28일 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ",
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㅁ",
+     "ㄹ",
+     "ㄷ",
+     "ㄴ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ",
+     "ㄴ",
+     "ㅁ",
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q348",
+  "explain": "📖 교재 근거 (L1551):\n| 각질형성세포 | 기저층 | 각질세포 생성, 각화주기 28일 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "3"
+ },
+ {
+  "id": "combo-04-0349",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1233 (출처: 과목4 문제은행 Q349)",
+  "stem": "피부 장벽 이중층을 구성하는 지질 골격 핵심 물질로 친유성 18탄소 아미노알코올은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_b385c6",
+    "text": "아데노신",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1233):\n> 용어 - 기질: 교원섬유와 탄력섬유를 채워주는 물질로 히알루론산, 콘드로이친 황산, 헤파린 황산염 등으로 구성된 뮤코다당체임"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_29c691",
+    "text": "관능",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1233):\n> 용어 - 기질: 교원섬유와 탄력섬유를 채워주는 물질로 히알루론산, 콘드로이친 황산, 헤파린 황산염 등으로 구성된 뮤코다당체임"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_929f9a",
+    "text": "각질",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1233):\n> 용어 - 기질: 교원섬유와 탄력섬유를 채워주는 물질로 히알루론산, 콘드로이친 황산, 헤파린 황산염 등으로 구성된 뮤코다당체임"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_29cf3d",
+    "text": "스핑고신",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1233):\n> 용어 - 기질: 교원섬유와 탄력섬유를 채워주는 물질로 히알루론산, 콘드로이친 황산, 헤파린 황산염 등으로 구성된 뮤코다당체임"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_2397d0",
+    "text": "멜라닌형성",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1233):\n> 용어 - 기질: 교원섬유와 탄력섬유를 채워주는 물질로 히알루론산, 콘드로이친 황산, 헤파린 황산염 등으로 구성된 뮤코다당체임"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㅁ",
+     "ㄹ",
+     "ㄷ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q349",
+  "explain": "📖 교재 근거 (교재: L1233):\n> 용어 - 기질: 교원섬유와 탄력섬유를 채워주는 물질로 히알루론산, 콘드로이친 황산, 헤파린 황산염 등으로 구성된 뮤코다당체임",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "1"
+ },
+ {
+  "id": "combo-04-0350",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 출처: 과목4 문제은행 Q350",
+  "stem": "액체 표면 장력으로 U자 곡선을 이루는 칭량 용기 내부 용액의 메인 계면 명칭은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_0dab54",
+    "text": "멜라닌형성세포",
+    "truth": false,
+    "explain": "📖 교재 근거 (KFCC_별표10_일반시험법: L1903):\n규정온도에서비중부액계가정지했을때메니스커스의상연에서비중의눈금"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_b50c16",
+    "text": "사용기한",
+    "truth": false,
+    "explain": "📖 교재 근거 (KFCC_별표10_일반시험법: L1903):\n규정온도에서비중부액계가정지했을때메니스커스의상연에서비중의눈금"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_0f07a2",
+    "text": "메스실린더(또는 피펫)",
+    "truth": false,
+    "explain": "📖 교재 근거 (KFCC_별표10_일반시험법: L1903):\n규정온도에서비중부액계가정지했을때메니스커스의상연에서비중의눈금"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_d8d71c",
+    "text": "이온",
+    "truth": false,
+    "explain": "📖 교재 근거 (KFCC_별표10_일반시험법: L1903):\n규정온도에서비중부액계가정지했을때메니스커스의상연에서비중의눈금"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_af196e",
+    "text": "메니스커스",
+    "truth": true,
+    "explain": "📖 교재 근거 (KFCC_별표10_일반시험법: L1903):\n규정온도에서비중부액계가정지했을때메니스커스의상연에서비중의눈금"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㅁ",
+     "ㄹ",
+     "ㄷ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q350",
+  "explain": "📖 교재 근거 (KFCC_별표10_일반시험법: L1903):\n규정온도에서비중부액계가정지했을때메니스커스의상연에서비중의눈금",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "5"
+ },
+ {
+  "id": "combo-04-0351",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1703 (출처: 과목4 문제은행 Q351)",
+  "stem": "진피 속에서 자석처럼 물 분자를 약 1000배 끌어당겨 부피와 보습을 제공하는 천연 점질성 뮤코다당류는 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_6105fa",
+    "text": "히알루론산",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1703):\n| 기질 | 히알루론산, 콘드로이친 황산, 헤파린 황산염 (뮤코다당체) |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_d77467",
+    "text": "수소",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1703):\n| 기질 | 히알루론산, 콘드로이친 황산, 헤파린 황산염 (뮤코다당체) |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_d9ce11",
+    "text": "충진",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1703):\n| 기질 | 히알루론산, 콘드로이친 황산, 헤파린 황산염 (뮤코다당체) |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_0e14a6",
+    "text": "오크모스",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1703):\n| 기질 | 히알루론산, 콘드로이친 황산, 헤파린 황산염 (뮤코다당체) |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_c17775",
+    "text": "아데노신",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1703):\n| 기질 | 히알루론산, 콘드로이친 황산, 헤파린 황산염 (뮤코다당체) |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ",
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q351",
+  "explain": "📖 교재 근거 (교재: L1703):\n| 기질 | 히알루론산, 콘드로이친 황산, 헤파린 황산염 (뮤코다당체) |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "5"
+ },
+ {
+  "id": "combo-04-0352",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1692 (출처: 과목4 문제은행 Q352)",
+  "stem": "멜라닌 형성 세포에서 티로신 아미노산을 산화 촉진하여 갈색 색소로 합성 유도하는 핵심 단백질 효소는 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_6e9f23",
+    "text": "티로시나아제",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1692):\n| 멜라닌 형성 | 티로신→티로시나아제→도파→도파퀴논→멜라닌 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_dc0201",
+    "text": "이온",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1692):\n| 멜라닌 형성 | 티로신→티로시나아제→도파→도파퀴논→멜라닌 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_1bbba1",
+    "text": "알레르기",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1692):\n| 멜라닌 형성 | 티로신→티로시나아제→도파→도파퀴논→멜라닌 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_c23886",
+    "text": "부식(방식)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1692):\n| 멜라닌 형성 | 티로신→티로시나아제→도파→도파퀴논→멜라닌 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_d28315",
+    "text": "코르네오데스모좀",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1692):\n| 멜라닌 형성 | 티로신→티로시나아제→도파→도파퀴논→멜라닌 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㅁ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㅁ",
+     "ㄷ",
+     "ㄴ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q352",
+  "explain": "📖 교재 근거 (교재: L1692):\n| 멜라닌 형성 | 티로신→티로시나아제→도파→도파퀴논→멜라닌 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "5"
+ },
+ {
+  "id": "combo-04-0353",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L804 (출처: 과목4 문제은행 Q353)",
+  "stem": "차아염소산나트륨 용액 사용 시 금속 기구의 표면 손상을 예방하는 화학 작용은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_d11cd0",
+    "text": "교차",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L804):\n| 장기보존시험 (조건·항목) | • 3로트 이상 선정<br>• 시중 유통 제품과 동일 처방, 제형, 포장용기를 사용함<br>• 유통 조건과 유사하게 보존 | • 일반시험: 균등성, 향취, 색상, 사용감, 액상, 유화형, 내온성 시험<br>• 물리적시험: 비중, 융점, 경도, pH, 유화상태, 점도 등<br>• 화학적시험: 시험물 가용성 성분, 에테르불용 및 에탄올 가용성 성분, 에테르 가용성 불검화물 등<br>• 미생물학적시험: 정상적 사용 시 미생물 증식 억제 능력 여부<br>• 용기적합성시험: 제품과 용기의 상호작용(용기의 제품 흡수, 부식, 화학적 반응)에 대한 적합성 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_5fd336",
+    "text": "UVB",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L804):\n| 장기보존시험 (조건·항목) | • 3로트 이상 선정<br>• 시중 유통 제품과 동일 처방, 제형, 포장용기를 사용함<br>• 유통 조건과 유사하게 보존 | • 일반시험: 균등성, 향취, 색상, 사용감, 액상, 유화형, 내온성 시험<br>• 물리적시험: 비중, 융점, 경도, pH, 유화상태, 점도 등<br>• 화학적시험: 시험물 가용성 성분, 에테르불용 및 에탄올 가용성 성분, 에테르 가용성 불검화물 등<br>• 미생물학적시험: 정상적 사용 시 미생물 증식 억제 능력 여부<br>• 용기적합성시험: 제품과 용기의 상호작용(용기의 제품 흡수, 부식, 화학적 반응)에 대한 적합성 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_2733a3",
+    "text": "유기",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L804):\n| 장기보존시험 (조건·항목) | • 3로트 이상 선정<br>• 시중 유통 제품과 동일 처방, 제형, 포장용기를 사용함<br>• 유통 조건과 유사하게 보존 | • 일반시험: 균등성, 향취, 색상, 사용감, 액상, 유화형, 내온성 시험<br>• 물리적시험: 비중, 융점, 경도, pH, 유화상태, 점도 등<br>• 화학적시험: 시험물 가용성 성분, 에테르불용 및 에탄올 가용성 성분, 에테르 가용성 불검화물 등<br>• 미생물학적시험: 정상적 사용 시 미생물 증식 억제 능력 여부<br>• 용기적합성시험: 제품과 용기의 상호작용(용기의 제품 흡수, 부식, 화학적 반응)에 대한 적합성 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_f86774",
+    "text": "부식(방식)",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L804):\n| 장기보존시험 (조건·항목) | • 3로트 이상 선정<br>• 시중 유통 제품과 동일 처방, 제형, 포장용기를 사용함<br>• 유통 조건과 유사하게 보존 | • 일반시험: 균등성, 향취, 색상, 사용감, 액상, 유화형, 내온성 시험<br>• 물리적시험: 비중, 융점, 경도, pH, 유화상태, 점도 등<br>• 화학적시험: 시험물 가용성 성분, 에테르불용 및 에탄올 가용성 성분, 에테르 가용성 불검화물 등<br>• 미생물학적시험: 정상적 사용 시 미생물 증식 억제 능력 여부<br>• 용기적합성시험: 제품과 용기의 상호작용(용기의 제품 흡수, 부식, 화학적 반응)에 대한 적합성 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_961806",
+    "text": "맞춤형화장품 조제관리사",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L804):\n| 장기보존시험 (조건·항목) | • 3로트 이상 선정<br>• 시중 유통 제품과 동일 처방, 제형, 포장용기를 사용함<br>• 유통 조건과 유사하게 보존 | • 일반시험: 균등성, 향취, 색상, 사용감, 액상, 유화형, 내온성 시험<br>• 물리적시험: 비중, 융점, 경도, pH, 유화상태, 점도 등<br>• 화학적시험: 시험물 가용성 성분, 에테르불용 및 에탄올 가용성 성분, 에테르 가용성 불검화물 등<br>• 미생물학적시험: 정상적 사용 시 미생물 증식 억제 능력 여부<br>• 용기적합성시험: 제품과 용기의 상호작용(용기의 제품 흡수, 부식, 화학적 반응)에 대한 적합성 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ",
+     "ㅁ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄱ",
+     "ㅁ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q353",
+  "explain": "📖 교재 근거 (교재: L804):\n| 장기보존시험 (조건·항목) | • 3로트 이상 선정<br>• 시중 유통 제품과 동일 처방, 제형, 포장용기를 사용함<br>• 유통 조건과 유사하게 보존 | • 일반시험: 균등성, 향취, 색상, 사용감, 액상, 유화형, 내온성 시험<br>• 물리적시험: 비중, 융점, 경도, pH, 유화상태, 점도 등<br>• 화학적시험: 시험물 가용성 성분, 에테르불용 및 에탄올 가용성 성분, 에테르 가용성 불검화물 등<br>• 미생물학적시험: 정상적 사용 시 미생물 증식 억제 능력 여부<br>• 용기적합성시험: 제품과 용기의 상호작용(용기의 제품 흡수, 부식, 화학적 반응)에 대한 적합성 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "5"
+ },
+ {
+  "id": "combo-04-0354",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1166 (출처: 과목4 문제은행 Q354)",
+  "stem": "각질 세포 내에 과립 단백질인 필라그린이 분해되면서 축적되어 세포 보습을 유지하는 보습 성분군은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_170570",
+    "text": "NMF(천연보습인자)",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1166):\n> 참고 - 천연보습인자(NMF) 구성 성분"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_81edc4",
+    "text": "리모넨",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1166):\n> 참고 - 천연보습인자(NMF) 구성 성분"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_613f92",
+    "text": "멜라닌형성세포",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1166):\n> 참고 - 천연보습인자(NMF) 구성 성분"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_90df91",
+    "text": "사용 가능",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1166):\n> 참고 - 천연보습인자(NMF) 구성 성분"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_5fe9b5",
+    "text": "기저",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1166):\n> 참고 - 천연보습인자(NMF) 구성 성분"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ",
+     "ㄷ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㅁ",
+     "ㄹ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ",
+     "ㅁ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄹ",
+     "ㅁ",
+     "ㄱ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q354",
+  "explain": "📖 교재 근거 (교재: L1166):\n> 참고 - 천연보습인자(NMF) 구성 성분",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "4"
+ },
+ {
+  "id": "combo-04-0355",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 출처: 과목4 문제은행 Q355",
+  "stem": "유기 용매 중 보존제 배합 한도로 최종 제품 내 '1.0% 이하' 함량으로 처방 한계가 그어진 화학 알코올은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_99be82",
+    "text": "소분",
+    "truth": false,
+    "explain": "📖 교재 근거 (L2272):\n| 페녹시에탄올 `🎯 기출` | 1.0% |  |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_a8f864",
+    "text": "초임계",
+    "truth": false,
+    "explain": "📖 교재 근거 (L2272):\n| 페녹시에탄올 `🎯 기출` | 1.0% |  |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_47735c",
+    "text": "페녹시에탄올",
+    "truth": true,
+    "explain": "📖 교재 근거 (L2272):\n| 페녹시에탄올 `🎯 기출` | 1.0% |  |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_e0ee2c",
+    "text": "멜라닌형성",
+    "truth": false,
+    "explain": "📖 교재 근거 (L2272):\n| 페녹시에탄올 `🎯 기출` | 1.0% |  |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_f04c65",
+    "text": "UVB",
+    "truth": false,
+    "explain": "📖 교재 근거 (L2272):\n| 페녹시에탄올 `🎯 기출` | 1.0% |  |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ",
+     "ㄷ",
+     "ㄴ",
+     "ㅁ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㅁ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q355",
+  "explain": "📖 교재 근거 (L2272):\n| 페녹시에탄올 `🎯 기출` | 1.0% |  |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "1"
+ },
+ {
+  "id": "combo-04-0356",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L105 (출처: 과목4 문제은행 Q356)",
+  "stem": "식약처 고시상 주름개선 고시 기능성 유효 함량이 0.04%인 수용성 활성 성분은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_180951",
+    "text": "방풍실(드래프트실드)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L105):\n| 주름 – 아데노신 | 0.04% |\n| 주름 – 레티놀 | 2,500IU/g |\n| 제모 – 치오글리콜산 | 산으로서 3.0~4.5% (pH 7.0~12.7) |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_5dabcb",
+    "text": "지질",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L105):\n| 주름 – 아데노신 | 0.04% |\n| 주름 – 레티놀 | 2,500IU/g |\n| 제모 – 치오글리콜산 | 산으로서 3.0~4.5% (pH 7.0~12.7) |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_9a36fa",
+    "text": "스핑고신",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L105):\n| 주름 – 아데노신 | 0.04% |\n| 주름 – 레티놀 | 2,500IU/g |\n| 제모 – 치오글리콜산 | 산으로서 3.0~4.5% (pH 7.0~12.7) |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_6d1027",
+    "text": "티올(SH)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L105):\n| 주름 – 아데노신 | 0.04% |\n| 주름 – 레티놀 | 2,500IU/g |\n| 제모 – 치오글리콜산 | 산으로서 3.0~4.5% (pH 7.0~12.7) |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_997d15",
+    "text": "아데노신",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L105):\n| 주름 – 아데노신 | 0.04% |\n| 주름 – 레티놀 | 2,500IU/g |\n| 제모 – 치오글리콜산 | 산으로서 3.0~4.5% (pH 7.0~12.7) |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ",
+     "ㄷ",
+     "ㅁ",
+     "ㄴ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄹ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ",
+     "ㅁ",
+     "ㄴ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q356",
+  "explain": "📖 교재 근거 (교재: L105):\n| 주름 – 아데노신 | 0.04% |\n| 주름 – 레티놀 | 2,500IU/g |\n| 제모 – 치오글리콜산 | 산으로서 3.0~4.5% (pH 7.0~12.7) |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "1"
+ },
+ {
+  "id": "combo-04-0357",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 출처: 과목4 문제은행 Q357",
+  "stem": "소분이나 혼합 등 조제 완료 후 직접 용기에 붙이는 라벨에 의무 기재하는 고유 번호는 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_2425e2",
+    "text": "격리",
+    "truth": false,
+    "explain": "📖 법령 근거 (5.guideline: L80):\n⑦ 제조번호는 사용기한(또는 개봉 후 사용기간)과 쉽게 구별되도록 기재·표시해야 하며, 개봉 후 사용기간을 표시하는 경우에는 병행 표기해야 하는 제조연월일(맞춤형화장품의 경우에는 혼합·소분일)도 각각 구별이 가능하도록 기재·표시해야 한다."
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_db9b09",
+    "text": "UVB",
+    "truth": false,
+    "explain": "📖 법령 근거 (5.guideline: L80):\n⑦ 제조번호는 사용기한(또는 개봉 후 사용기간)과 쉽게 구별되도록 기재·표시해야 하며, 개봉 후 사용기간을 표시하는 경우에는 병행 표기해야 하는 제조연월일(맞춤형화장품의 경우에는 혼합·소분일)도 각각 구별이 가능하도록 기재·표시해야 한다."
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_419013",
+    "text": "약산",
+    "truth": false,
+    "explain": "📖 법령 근거 (5.guideline: L80):\n⑦ 제조번호는 사용기한(또는 개봉 후 사용기간)과 쉽게 구별되도록 기재·표시해야 하며, 개봉 후 사용기간을 표시하는 경우에는 병행 표기해야 하는 제조연월일(맞춤형화장품의 경우에는 혼합·소분일)도 각각 구별이 가능하도록 기재·표시해야 한다."
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_bd32ab",
+    "text": "제조번호",
+    "truth": true,
+    "explain": "📖 법령 근거 (5.guideline: L80):\n⑦ 제조번호는 사용기한(또는 개봉 후 사용기간)과 쉽게 구별되도록 기재·표시해야 하며, 개봉 후 사용기간을 표시하는 경우에는 병행 표기해야 하는 제조연월일(맞춤형화장품의 경우에는 혼합·소분일)도 각각 구별이 가능하도록 기재·표시해야 한다."
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_84a13f",
+    "text": "충진",
+    "truth": false,
+    "explain": "📖 법령 근거 (5.guideline: L80):\n⑦ 제조번호는 사용기한(또는 개봉 후 사용기간)과 쉽게 구별되도록 기재·표시해야 하며, 개봉 후 사용기간을 표시하는 경우에는 병행 표기해야 하는 제조연월일(맞춤형화장품의 경우에는 혼합·소분일)도 각각 구별이 가능하도록 기재·표시해야 한다."
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㅁ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㅁ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q357",
+  "explain": "📖 법령 근거 (5.guideline: L80):\n⑦ 제조번호는 사용기한(또는 개봉 후 사용기간)과 쉽게 구별되도록 기재·표시해야 하며, 개봉 후 사용기간을 표시하는 경우에는 병행 표기해야 하는 제조연월일(맞춤형화장품의 경우에는 혼합·소분일)도 각각 구별이 가능하도록 기재·표시해야 한다.",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "1"
+ },
+ {
+  "id": "combo-04-0358",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1355 (출처: 과목4 문제은행 Q358)",
+  "stem": "표피 각화 세포 외벽 형성에 관여하며 칼슘 이온 농도에 의존하여 단백질 교차 결합을 돕는 효소는 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_c24970",
+    "text": "트랜스글루타미나아제",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1355):\n- 피질세포(케라틴 단백질)와 세포 간 결합물질(밀단결합·펩티드)로 구성됨"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_7e0424",
+    "text": "폐기",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1355):\n- 피질세포(케라틴 단백질)와 세포 간 결합물질(밀단결합·펩티드)로 구성됨"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_be619d",
+    "text": "유기",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1355):\n- 피질세포(케라틴 단백질)와 세포 간 결합물질(밀단결합·펩티드)로 구성됨"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_94f650",
+    "text": "수소",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1355):\n- 피질세포(케라틴 단백질)와 세포 간 결합물질(밀단결합·펩티드)로 구성됨"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_879910",
+    "text": "세라마이드",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1355):\n- 피질세포(케라틴 단백질)와 세포 간 결합물질(밀단결합·펩티드)로 구성됨"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㅁ",
+     "ㄹ",
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ",
+     "ㄷ",
+     "ㅁ",
+     "ㄴ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ",
+     "ㄱ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q358",
+  "explain": "📖 교재 근거 (교재: L1355):\n- 피질세포(케라틴 단백질)와 세포 간 결합물질(밀단결합·펩티드)로 구성됨",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "1"
+ },
+ {
+  "id": "combo-04-0359",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L2757 (출처: 과목4 문제은행 Q359)",
+  "stem": "조제실 내에서 여러 원료를 한 스패튤라로 번갈아 칭량할 때 원료끼리 오염이 침적되는 상태를 (A) 오염이라 한다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_aba2b5",
+    "text": "수평",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2757):\n| 장비·기구 위생 | 사용 전 위생 상태 점검, 사용 후 오염 없도록 세척 | |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_b30871",
+    "text": "관능",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2757):\n| 장비·기구 위생 | 사용 전 위생 상태 점검, 사용 후 오염 없도록 세척 | |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_b04d41",
+    "text": "건조",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2757):\n| 장비·기구 위생 | 사용 전 위생 상태 점검, 사용 후 오염 없도록 세척 | |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_9cebe0",
+    "text": "제라니올",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2757):\n| 장비·기구 위생 | 사용 전 위생 상태 점검, 사용 후 오염 없도록 세척 | |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_de09b2",
+    "text": "교차",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L2757):\n| 장비·기구 위생 | 사용 전 위생 상태 점검, 사용 후 오염 없도록 세척 | |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ",
+     "ㅁ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㅁ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㅁ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q359",
+  "explain": "📖 교재 근거 (교재: L2757):\n| 장비·기구 위생 | 사용 전 위생 상태 점검, 사용 후 오염 없도록 세척 | |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "4"
+ },
+ {
+  "id": "combo-04-0360",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L3099 (출처: 과목4 문제은행 Q360)",
+  "stem": "친수성과 친유성 구조를 한 분자에 지녀 기름과 물의 계면 장력을 내려 우유빛 분산을 돕는 원료는 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_c0db12",
+    "text": "계면활성제",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L3099):\n| 계면활성제 | • 유성과 수성의 경계면에 흡착하여 성질을 변화시킴<br>• 습윤, 세정 효과, 대전 방지 등의 기능, 표면장력을 낮춤<br>• 음이온성, 양이온성, 양쪽성, 비이온성 계면활성제 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_f59f48",
+    "text": "온도",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3099):\n| 계면활성제 | • 유성과 수성의 경계면에 흡착하여 성질을 변화시킴<br>• 습윤, 세정 효과, 대전 방지 등의 기능, 표면장력을 낮춤<br>• 음이온성, 양이온성, 양쪽성, 비이온성 계면활성제 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_e14ca4",
+    "text": "기저",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3099):\n| 계면활성제 | • 유성과 수성의 경계면에 흡착하여 성질을 변화시킴<br>• 습윤, 세정 효과, 대전 방지 등의 기능, 표면장력을 낮춤<br>• 음이온성, 양이온성, 양쪽성, 비이온성 계면활성제 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_155adb",
+    "text": "유기",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3099):\n| 계면활성제 | • 유성과 수성의 경계면에 흡착하여 성질을 변화시킴<br>• 습윤, 세정 효과, 대전 방지 등의 기능, 표면장력을 낮춤<br>• 음이온성, 양이온성, 양쪽성, 비이온성 계면활성제 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_2065aa",
+    "text": "부식(방식)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3099):\n| 계면활성제 | • 유성과 수성의 경계면에 흡착하여 성질을 변화시킴<br>• 습윤, 세정 효과, 대전 방지 등의 기능, 표면장력을 낮춤<br>• 음이온성, 양이온성, 양쪽성, 비이온성 계면활성제 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ",
+     "ㄴ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ",
+     "ㄷ",
+     "ㄴ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q360",
+  "explain": "📖 교재 근거 (교재: L3099):\n| 계면활성제 | • 유성과 수성의 경계면에 흡착하여 성질을 변화시킴<br>• 습윤, 세정 효과, 대전 방지 등의 기능, 표면장력을 낮춤<br>• 음이온성, 양이온성, 양쪽성, 비이온성 계면활성제 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "3"
+ },
+ {
+  "id": "combo-04-0361",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1162 (출처: 과목4 문제은행 Q361)",
+  "stem": "과립층의 각질형성세포 내에서 합성되어 세포 밖으로 지질 성분을 밀어내어 분비하는 층판 모양의 미세소기관은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_e18e3a",
+    "text": "메니스커스",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1162):\n| 기저층<br>(Basal Layer) | • 단층의 원추형 유핵세포층<br>• 진피의 모세혈관으로부터 영양분과 산소를 공급받아 세포분열 촉진<br>• 각질형성세포(케라티노사이트), 멜라닌형성세포(멜라노사이트), 머켈세포 존재<br>• 각질형성세포와 멜라닌형성세포는 4:1~10:1 비율로 존재함 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_b72a37",
+    "text": "페녹시에탄올",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1162):\n| 기저층<br>(Basal Layer) | • 단층의 원추형 유핵세포층<br>• 진피의 모세혈관으로부터 영양분과 산소를 공급받아 세포분열 촉진<br>• 각질형성세포(케라티노사이트), 멜라닌형성세포(멜라노사이트), 머켈세포 존재<br>• 각질형성세포와 멜라닌형성세포는 4:1~10:1 비율로 존재함 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_d7dd26",
+    "text": "소독(세척·소독)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1162):\n| 기저층<br>(Basal Layer) | • 단층의 원추형 유핵세포층<br>• 진피의 모세혈관으로부터 영양분과 산소를 공급받아 세포분열 촉진<br>• 각질형성세포(케라티노사이트), 멜라닌형성세포(멜라노사이트), 머켈세포 존재<br>• 각질형성세포와 멜라닌형성세포는 4:1~10:1 비율로 존재함 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_b3864b",
+    "text": "이온",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1162):\n| 기저층<br>(Basal Layer) | • 단층의 원추형 유핵세포층<br>• 진피의 모세혈관으로부터 영양분과 산소를 공급받아 세포분열 촉진<br>• 각질형성세포(케라티노사이트), 멜라닌형성세포(멜라노사이트), 머켈세포 존재<br>• 각질형성세포와 멜라닌형성세포는 4:1~10:1 비율로 존재함 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_c3b386",
+    "text": "라멜라바디(층판소기관)",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1162):\n| 기저층<br>(Basal Layer) | • 단층의 원추형 유핵세포층<br>• 진피의 모세혈관으로부터 영양분과 산소를 공급받아 세포분열 촉진<br>• 각질형성세포(케라티노사이트), 멜라닌형성세포(멜라노사이트), 머켈세포 존재<br>• 각질형성세포와 멜라닌형성세포는 4:1~10:1 비율로 존재함 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㅁ",
+     "ㄴ",
+     "ㄹ",
+     "ㄱ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ",
+     "ㄱ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q361",
+  "explain": "📖 교재 근거 (교재: L1162):\n| 기저층<br>(Basal Layer) | • 단층의 원추형 유핵세포층<br>• 진피의 모세혈관으로부터 영양분과 산소를 공급받아 세포분열 촉진<br>• 각질형성세포(케라티노사이트), 멜라닌형성세포(멜라노사이트), 머켈세포 존재<br>• 각질형성세포와 멜라닌형성세포는 4:1~10:1 비율로 존재함 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "1"
+ },
+ {
+  "id": "combo-04-0362",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -25213,7 +33653,3436 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "combo-04-0272",
+  "id": "combo-04-0363",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L510 (출처: 과목4 문제은행 Q363)",
+  "stem": "맞춤형화장품의 혼합·소분 업무를 전담하는 전문 인력의 명칭은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_6fbaf4",
+    "text": "유기",
+    "truth": false,
+    "explain": "📖 법령 근거 (교재: L510):\n② 제1항에 따라 맞춤형화장품판매업을 신고하려는 자는 총리령으로 정하는 시설기준을 갖추어야 하며, 맞춤형화장품의 혼합ㆍ소분 등 품질ㆍ안전 관리 업무에 종사하는 자(이하 “맞춤형화장품조제관리사”라 한다)를 두어야 한다."
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_8f78ac",
+    "text": "자유지방산",
+    "truth": false,
+    "explain": "📖 법령 근거 (교재: L510):\n② 제1항에 따라 맞춤형화장품판매업을 신고하려는 자는 총리령으로 정하는 시설기준을 갖추어야 하며, 맞춤형화장품의 혼합ㆍ소분 등 품질ㆍ안전 관리 업무에 종사하는 자(이하 “맞춤형화장품조제관리사”라 한다)를 두어야 한다."
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_da816e",
+    "text": "퇴행(catagen)",
+    "truth": false,
+    "explain": "📖 법령 근거 (교재: L510):\n② 제1항에 따라 맞춤형화장품판매업을 신고하려는 자는 총리령으로 정하는 시설기준을 갖추어야 하며, 맞춤형화장품의 혼합ㆍ소분 등 품질ㆍ안전 관리 업무에 종사하는 자(이하 “맞춤형화장품조제관리사”라 한다)를 두어야 한다."
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_484405",
+    "text": "헤미데스모좀",
+    "truth": false,
+    "explain": "📖 법령 근거 (교재: L510):\n② 제1항에 따라 맞춤형화장품판매업을 신고하려는 자는 총리령으로 정하는 시설기준을 갖추어야 하며, 맞춤형화장품의 혼합ㆍ소분 등 품질ㆍ안전 관리 업무에 종사하는 자(이하 “맞춤형화장품조제관리사”라 한다)를 두어야 한다."
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_364466",
+    "text": "맞춤형화장품 조제관리사",
+    "truth": true,
+    "explain": "📖 법령 근거 (교재: L510):\n② 제1항에 따라 맞춤형화장품판매업을 신고하려는 자는 총리령으로 정하는 시설기준을 갖추어야 하며, 맞춤형화장품의 혼합ㆍ소분 등 품질ㆍ안전 관리 업무에 종사하는 자(이하 “맞춤형화장품조제관리사”라 한다)를 두어야 한다."
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ",
+     "ㅁ",
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㅁ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ",
+     "ㄴ",
+     "ㄹ",
+     "ㄱ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q363",
+  "explain": "📖 법령 근거 (교재: L510):\n② 제1항에 따라 맞춤형화장품판매업을 신고하려는 자는 총리령으로 정하는 시설기준을 갖추어야 하며, 맞춤형화장품의 혼합ㆍ소분 등 품질ㆍ안전 관리 업무에 종사하는 자(이하 “맞춤형화장품조제관리사”라 한다)를 두어야 한다.",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "3"
+ },
+ {
+  "id": "combo-04-0364",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L2527 (출처: 과목4 문제은행 Q364)",
+  "stem": "피부의 표피층 중 가장 바깥쪽에 위치하며 피부 장벽 역할을 하는 층은 (A)층이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_f4fd4a",
+    "text": "각질",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L2527):\n- 피부장벽(피부의 가장 바깥쪽에 존재하는 각질층의 표피)의 기능을 회복하여 가려움 등의 개선에 도움을 주는 화장품"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_77f914",
+    "text": "멜라닌형성세포",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2527):\n- 피부장벽(피부의 가장 바깥쪽에 존재하는 각질층의 표피)의 기능을 회복하여 가려움 등의 개선에 도움을 주는 화장품"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_0526d7",
+    "text": "MSDS",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2527):\n- 피부장벽(피부의 가장 바깥쪽에 존재하는 각질층의 표피)의 기능을 회복하여 가려움 등의 개선에 도움을 주는 화장품"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_72cd53",
+    "text": "수평",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2527):\n- 피부장벽(피부의 가장 바깥쪽에 존재하는 각질층의 표피)의 기능을 회복하여 가려움 등의 개선에 도움을 주는 화장품"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_0832c8",
+    "text": "사용기한",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2527):\n- 피부장벽(피부의 가장 바깥쪽에 존재하는 각질층의 표피)의 기능을 회복하여 가려움 등의 개선에 도움을 주는 화장품"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ",
+     "ㄷ",
+     "ㄴ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q364",
+  "explain": "📖 교재 근거 (교재: L2527):\n- 피부장벽(피부의 가장 바깥쪽에 존재하는 각질층의 표피)의 기능을 회복하여 가려움 등의 개선에 도움을 주는 화장품",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "1"
+ },
+ {
+  "id": "combo-04-0365",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L54 (출처: 과목4 문제은행 Q365)",
+  "stem": "천연보습인자의 영문 약자는 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_91a292",
+    "text": "MSDS",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L54):\n| 각질층 구성 | 케라틴 58% · NMF 31% · 지질 11% |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_59c918",
+    "text": "제라니올",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L54):\n| 각질층 구성 | 케라틴 58% · NMF 31% · 지질 11% |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_65af5d",
+    "text": "티로시나아제",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L54):\n| 각질층 구성 | 케라틴 58% · NMF 31% · 지질 11% |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_18ff39",
+    "text": "교체(턴오버)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L54):\n| 각질층 구성 | 케라틴 58% · NMF 31% · 지질 11% |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_2ebbf0",
+    "text": "NMF",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L54):\n| 각질층 구성 | 케라틴 58% · NMF 31% · 지질 11% |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㅁ",
+     "ㄹ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q365",
+  "explain": "📖 교재 근거 (교재: L54):\n| 각질층 구성 | 케라틴 58% · NMF 31% · 지질 11% |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "3"
+ },
+ {
+  "id": "combo-04-0366",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1221 (출처: 과목4 문제은행 Q366)",
+  "stem": "피부의 진피층을 구성하는 두 가지 주요 섬유는 콜라겐과 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_709862",
+    "text": "카보머",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1221):\n| 섬유아세포 | 결합조직세포로 세포외기질인 콜라겐과 엘라스틴 생성 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_1c8787",
+    "text": "UVB",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1221):\n| 섬유아세포 | 결합조직세포로 세포외기질인 콜라겐과 엘라스틴 생성 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_1fd326",
+    "text": "엘라스틴",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1221):\n| 섬유아세포 | 결합조직세포로 세포외기질인 콜라겐과 엘라스틴 생성 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_6b49b1",
+    "text": "사용기한",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1221):\n| 섬유아세포 | 결합조직세포로 세포외기질인 콜라겐과 엘라스틴 생성 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_d9594a",
+    "text": "탈각(박리)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1221):\n| 섬유아세포 | 결합조직세포로 세포외기질인 콜라겐과 엘라스틴 생성 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ",
+     "ㄴ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㅁ",
+     "ㄹ",
+     "ㄷ",
+     "ㄴ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q366",
+  "explain": "📖 교재 근거 (교재: L1221):\n| 섬유아세포 | 결합조직세포로 세포외기질인 콜라겐과 엘라스틴 생성 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "5"
+ },
+ {
+  "id": "combo-04-0367",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 출처: 과목4 문제은행 Q367",
+  "stem": "모발의 탄력을 유지하는 결합 중 펌제 1제(환원제)에 의해 끊어지는 결합은 (A) 결합이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_f95fcf",
+    "text": "이황화(disulfide)",
+    "truth": true,
+    "explain": "📖 교재 근거 (KFCC_별표10_일반시험법: L11650):\n이황화탄소(Carbon Disulfide)"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_59f21e",
+    "text": "맞춤형화장품 조제관리사",
+    "truth": false,
+    "explain": "📖 교재 근거 (KFCC_별표10_일반시험법: L11650):\n이황화탄소(Carbon Disulfide)"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_e9db8a",
+    "text": "제라니올",
+    "truth": false,
+    "explain": "📖 교재 근거 (KFCC_별표10_일반시험법: L11650):\n이황화탄소(Carbon Disulfide)"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_18b764",
+    "text": "조제",
+    "truth": false,
+    "explain": "📖 교재 근거 (KFCC_별표10_일반시험법: L11650):\n이황화탄소(Carbon Disulfide)"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_6920e4",
+    "text": "표준",
+    "truth": false,
+    "explain": "📖 교재 근거 (KFCC_별표10_일반시험법: L11650):\n이황화탄소(Carbon Disulfide)"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㅁ",
+     "ㄹ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ",
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q367",
+  "explain": "📖 교재 근거 (KFCC_별표10_일반시험법: L11650):\n이황화탄소(Carbon Disulfide)",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "3"
+ },
+ {
+  "id": "combo-04-0368",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L3005 (출처: 과목4 문제은행 Q368)",
+  "stem": "피부의 pH는 일반적으로 (A)성 범위(4.5~6.0)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_97b0b0",
+    "text": "약산",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L3005):\n> - 핵심 키워드: 수성/유성/계면활성제, 제형 안정성(투입 순서·온도 편차·회전속도·진공세기), pH 범위(미산성 5.0~6.5·약산성 3.0~5.0), 온도(표준 20℃·상온 15~25℃·실온 1~30℃), 호모게나이저(유화·터빈형) vs 디스퍼(가용화·고속교반), 혼합·소분 안전관리(품질성적서 확인·손 소독·포장용기 오염 확인)"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_144fe6",
+    "text": "격리",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3005):\n> - 핵심 키워드: 수성/유성/계면활성제, 제형 안정성(투입 순서·온도 편차·회전속도·진공세기), pH 범위(미산성 5.0~6.5·약산성 3.0~5.0), 온도(표준 20℃·상온 15~25℃·실온 1~30℃), 호모게나이저(유화·터빈형) vs 디스퍼(가용화·고속교반), 혼합·소분 안전관리(품질성적서 확인·손 소독·포장용기 오염 확인)"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_56d4ca",
+    "text": "소독(세척·소독)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3005):\n> - 핵심 키워드: 수성/유성/계면활성제, 제형 안정성(투입 순서·온도 편차·회전속도·진공세기), pH 범위(미산성 5.0~6.5·약산성 3.0~5.0), 온도(표준 20℃·상온 15~25℃·실온 1~30℃), 호모게나이저(유화·터빈형) vs 디스퍼(가용화·고속교반), 혼합·소분 안전관리(품질성적서 확인·손 소독·포장용기 오염 확인)"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_d954fa",
+    "text": "UVA",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3005):\n> - 핵심 키워드: 수성/유성/계면활성제, 제형 안정성(투입 순서·온도 편차·회전속도·진공세기), pH 범위(미산성 5.0~6.5·약산성 3.0~5.0), 온도(표준 20℃·상온 15~25℃·실온 1~30℃), 호모게나이저(유화·터빈형) vs 디스퍼(가용화·고속교반), 혼합·소분 안전관리(품질성적서 확인·손 소독·포장용기 오염 확인)"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_237aca",
+    "text": "제조번호",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3005):\n> - 핵심 키워드: 수성/유성/계면활성제, 제형 안정성(투입 순서·온도 편차·회전속도·진공세기), pH 범위(미산성 5.0~6.5·약산성 3.0~5.0), 온도(표준 20℃·상온 15~25℃·실온 1~30℃), 호모게나이저(유화·터빈형) vs 디스퍼(가용화·고속교반), 혼합·소분 안전관리(품질성적서 확인·손 소독·포장용기 오염 확인)"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ",
+     "ㄴ",
+     "ㅁ",
+     "ㄷ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㅁ",
+     "ㄹ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q368",
+  "explain": "📖 교재 근거 (교재: L3005):\n> - 핵심 키워드: 수성/유성/계면활성제, 제형 안정성(투입 순서·온도 편차·회전속도·진공세기), pH 범위(미산성 5.0~6.5·약산성 3.0~5.0), 온도(표준 20℃·상온 15~25℃·실온 1~30℃), 호모게나이저(유화·터빈형) vs 디스퍼(가용화·고속교반), 혼합·소분 안전관리(품질성적서 확인·손 소독·포장용기 오염 확인)",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "2"
+ },
+ {
+  "id": "combo-04-0369",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L610 (출처: 과목4 문제은행 Q369)",
+  "stem": "맞춤형화장품 조제에 사용할 수 있는 원료는 식약처장이 고시하는 (A) 원료에 한정된다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_cb03e1",
+    "text": "UVA",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L610):\n| 제5조<br>맞춤형화장품에 사용 가능한 원료 | 아래의 원료를 제외한 원료는 맞춤형화장품에 사용 가능<br>• 화장품에 사용할 수 없는 원료<br>• 화장품에 사용상의 제한이 필요한 원료<br>• 사전심사를 받지 않았거나 보고서를 제출하지 않은 기능성화장품 고시 원료 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_e0978e",
+    "text": "리날",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L610):\n| 제5조<br>맞춤형화장품에 사용 가능한 원료 | 아래의 원료를 제외한 원료는 맞춤형화장품에 사용 가능<br>• 화장품에 사용할 수 없는 원료<br>• 화장품에 사용상의 제한이 필요한 원료<br>• 사전심사를 받지 않았거나 보고서를 제출하지 않은 기능성화장품 고시 원료 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_8391b2",
+    "text": "스핑고신",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L610):\n| 제5조<br>맞춤형화장품에 사용 가능한 원료 | 아래의 원료를 제외한 원료는 맞춤형화장품에 사용 가능<br>• 화장품에 사용할 수 없는 원료<br>• 화장품에 사용상의 제한이 필요한 원료<br>• 사전심사를 받지 않았거나 보고서를 제출하지 않은 기능성화장품 고시 원료 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_36dc52",
+    "text": "사용 가능",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L610):\n| 제5조<br>맞춤형화장품에 사용 가능한 원료 | 아래의 원료를 제외한 원료는 맞춤형화장품에 사용 가능<br>• 화장품에 사용할 수 없는 원료<br>• 화장품에 사용상의 제한이 필요한 원료<br>• 사전심사를 받지 않았거나 보고서를 제출하지 않은 기능성화장품 고시 원료 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_c0b423",
+    "text": "오크모스",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L610):\n| 제5조<br>맞춤형화장품에 사용 가능한 원료 | 아래의 원료를 제외한 원료는 맞춤형화장품에 사용 가능<br>• 화장품에 사용할 수 없는 원료<br>• 화장품에 사용상의 제한이 필요한 원료<br>• 사전심사를 받지 않았거나 보고서를 제출하지 않은 기능성화장품 고시 원료 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄱ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㄷ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q369",
+  "explain": "📖 교재 근거 (교재: L610):\n| 제5조<br>맞춤형화장품에 사용 가능한 원료 | 아래의 원료를 제외한 원료는 맞춤형화장품에 사용 가능<br>• 화장품에 사용할 수 없는 원료<br>• 화장품에 사용상의 제한이 필요한 원료<br>• 사전심사를 받지 않았거나 보고서를 제출하지 않은 기능성화장품 고시 원료 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "3"
+ },
+ {
+  "id": "combo-04-0370",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L3103 (출처: 과목4 문제은행 Q370)",
+  "stem": "알레르기 유발 성분 25종의 표시 한도 기준에서 씻어내는 제품은 (A)% 초과 시 성분명을 기재해야 한다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_01385b",
+    "text": "1~30",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3103):\n| 향료 | • 향을 내기 위해 사용<br>• 알레르기 유발 25종 중 씻어내는 제품은 0.01%, 씻어내지 않는 제품은 0.001% 초과 시 해당 성분 명칭 기재 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_ef0b03",
+    "text": "0.002",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3103):\n| 향료 | • 향을 내기 위해 사용<br>• 알레르기 유발 25종 중 씻어내는 제품은 0.01%, 씻어내지 않는 제품은 0.001% 초과 시 해당 성분 명칭 기재 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_34ce00",
+    "text": "2",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3103):\n| 향료 | • 향을 내기 위해 사용<br>• 알레르기 유발 25종 중 씻어내는 제품은 0.01%, 씻어내지 않는 제품은 0.001% 초과 시 해당 성분 명칭 기재 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_ef7562",
+    "text": "0.3",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3103):\n| 향료 | • 향을 내기 위해 사용<br>• 알레르기 유발 25종 중 씻어내는 제품은 0.01%, 씻어내지 않는 제품은 0.001% 초과 시 해당 성분 명칭 기재 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_0a8282",
+    "text": "0.01",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L3103):\n| 향료 | • 향을 내기 위해 사용<br>• 알레르기 유발 25종 중 씻어내는 제품은 0.01%, 씻어내지 않는 제품은 0.001% 초과 시 해당 성분 명칭 기재 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㅁ",
+     "ㄹ",
+     "ㄷ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ",
+     "ㅁ",
+     "ㄴ",
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q370",
+  "explain": "📖 교재 근거 (교재: L3103):\n| 향료 | • 향을 내기 위해 사용<br>• 알레르기 유발 25종 중 씻어내는 제품은 0.01%, 씻어내지 않는 제품은 0.001% 초과 시 해당 성분 명칭 기재 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "2"
+ },
+ {
+  "id": "combo-04-0371",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L3103 (출처: 과목4 문제은행 Q371)",
+  "stem": "알레르기 유발 성분 25종의 표시 한도 기준에서 씻어내지 않는 제품은 (A)% 초과 시 성분명을 기재해야 한다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_09297f",
+    "text": "0.01",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3103):\n| 향료 | • 향을 내기 위해 사용<br>• 알레르기 유발 25종 중 씻어내는 제품은 0.01%, 씻어내지 않는 제품은 0.001% 초과 시 해당 성분 명칭 기재 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_cb4dcf",
+    "text": "28",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3103):\n| 향료 | • 향을 내기 위해 사용<br>• 알레르기 유발 25종 중 씻어내는 제품은 0.01%, 씻어내지 않는 제품은 0.001% 초과 시 해당 성분 명칭 기재 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_a5ab66",
+    "text": "70",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3103):\n| 향료 | • 향을 내기 위해 사용<br>• 알레르기 유발 25종 중 씻어내는 제품은 0.01%, 씻어내지 않는 제품은 0.001% 초과 시 해당 성분 명칭 기재 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_ca54ce",
+    "text": "0.3",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3103):\n| 향료 | • 향을 내기 위해 사용<br>• 알레르기 유발 25종 중 씻어내는 제품은 0.01%, 씻어내지 않는 제품은 0.001% 초과 시 해당 성분 명칭 기재 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_4ea159",
+    "text": "0.001",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L3103):\n| 향료 | • 향을 내기 위해 사용<br>• 알레르기 유발 25종 중 씻어내는 제품은 0.01%, 씻어내지 않는 제품은 0.001% 초과 시 해당 성분 명칭 기재 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ",
+     "ㄴ",
+     "ㄱ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q371",
+  "explain": "📖 교재 근거 (교재: L3103):\n| 향료 | • 향을 내기 위해 사용<br>• 알레르기 유발 25종 중 씻어내는 제품은 0.01%, 씻어내지 않는 제품은 0.001% 초과 시 해당 성분 명칭 기재 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "2"
+ },
+ {
+  "id": "combo-04-0372",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 출처: 과목4 문제은행 Q372",
+  "stem": "피부의 각화 주기(턴오버)는 약 (A)일이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_aab687",
+    "text": "28",
+    "truth": true,
+    "explain": "📖 교재 근거 (L53):\n| 각화(각질형성)주기 | 28±3일 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_3bde97",
+    "text": "1",
+    "truth": false,
+    "explain": "📖 교재 근거 (L53):\n| 각화(각질형성)주기 | 28±3일 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_a33d63",
+    "text": "70",
+    "truth": false,
+    "explain": "📖 교재 근거 (L53):\n| 각화(각질형성)주기 | 28±3일 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_5982bd",
+    "text": "0.1",
+    "truth": false,
+    "explain": "📖 교재 근거 (L53):\n| 각화(각질형성)주기 | 28±3일 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_e9bf9c",
+    "text": "0.001",
+    "truth": false,
+    "explain": "📖 교재 근거 (L53):\n| 각화(각질형성)주기 | 28±3일 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㅁ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ",
+     "ㅁ",
+     "ㄹ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q372",
+  "explain": "📖 교재 근거 (L53):\n| 각화(각질형성)주기 | 28±3일 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "2"
+ },
+ {
+  "id": "combo-04-0373",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L3389 (출처: 과목4 문제은행 Q373)",
+  "stem": "맞춤형화장품 조제 시 원료의 계량에 사용하는 기구 중 액체 원료의 부피를 정밀하게 측정하는 기구는 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_2a7179",
+    "text": "초임계",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3389):\n> 칭량(전자저울·메스실린더) + 혼합(호모게나이저·디스퍼·오버헤드스터러) + 소분(스패츌러·디스펜서·피펫) + 측정(pH미터·점도계·경도계) + 살균(자외선 살균기)."
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_4c5b23",
+    "text": "등전",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3389):\n> 칭량(전자저울·메스실린더) + 혼합(호모게나이저·디스퍼·오버헤드스터러) + 소분(스패츌러·디스펜서·피펫) + 측정(pH미터·점도계·경도계) + 살균(자외선 살균기)."
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_b28486",
+    "text": "메스실린더(또는 피펫)",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L3389):\n> 칭량(전자저울·메스실린더) + 혼합(호모게나이저·디스퍼·오버헤드스터러) + 소분(스패츌러·디스펜서·피펫) + 측정(pH미터·점도계·경도계) + 살균(자외선 살균기)."
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_9d3711",
+    "text": "cP",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3389):\n> 칭량(전자저울·메스실린더) + 혼합(호모게나이저·디스퍼·오버헤드스터러) + 소분(스패츌러·디스펜서·피펫) + 측정(pH미터·점도계·경도계) + 살균(자외선 살균기)."
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_10bbec",
+    "text": "UVB",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3389):\n> 칭량(전자저울·메스실린더) + 혼합(호모게나이저·디스퍼·오버헤드스터러) + 소분(스패츌러·디스펜서·피펫) + 측정(pH미터·점도계·경도계) + 살균(자외선 살균기)."
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ",
+     "ㄷ",
+     "ㄴ",
+     "ㅁ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q373",
+  "explain": "📖 교재 근거 (교재: L3389):\n> 칭량(전자저울·메스실린더) + 혼합(호모게나이저·디스퍼·오버헤드스터러) + 소분(스패츌러·디스펜서·피펫) + 측정(pH미터·점도계·경도계) + 살균(자외선 살균기).",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "3"
+ },
+ {
+  "id": "combo-04-0374",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L113 (출처: 과목4 문제은행 Q374)",
+  "stem": "피부의 표피층 중 멜라닌을 생성하는 세포가 있는 층은 (A)층이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_63611a",
+    "text": "기저",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L113):\n| 기저층 (멜라닌형성세포) | 멜라닌형성세포(멜라노사이트, Melanocyte) 🎯 기출 | • 멜라닌을 합성하여 각질형성세포에 멜라닌이 축적된 멜라노솜(Melanosome)을 공급하는 세포<br>• 피부색과 털색을 결정함<br>• 표피의 5~25%를 차지하며, 세포 내에 확산하면 검게 보임 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_473450",
+    "text": "퇴행(catagen)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L113):\n| 기저층 (멜라닌형성세포) | 멜라닌형성세포(멜라노사이트, Melanocyte) 🎯 기출 | • 멜라닌을 합성하여 각질형성세포에 멜라닌이 축적된 멜라노솜(Melanosome)을 공급하는 세포<br>• 피부색과 털색을 결정함<br>• 표피의 5~25%를 차지하며, 세포 내에 확산하면 검게 보임 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_ad9705",
+    "text": "초임계",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L113):\n| 기저층 (멜라닌형성세포) | 멜라닌형성세포(멜라노사이트, Melanocyte) 🎯 기출 | • 멜라닌을 합성하여 각질형성세포에 멜라닌이 축적된 멜라노솜(Melanosome)을 공급하는 세포<br>• 피부색과 털색을 결정함<br>• 표피의 5~25%를 차지하며, 세포 내에 확산하면 검게 보임 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_e2a8c5",
+    "text": "제조번호",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L113):\n| 기저층 (멜라닌형성세포) | 멜라닌형성세포(멜라노사이트, Melanocyte) 🎯 기출 | • 멜라닌을 합성하여 각질형성세포에 멜라닌이 축적된 멜라노솜(Melanosome)을 공급하는 세포<br>• 피부색과 털색을 결정함<br>• 표피의 5~25%를 차지하며, 세포 내에 확산하면 검게 보임 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_6f08f7",
+    "text": "폐기",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L113):\n| 기저층 (멜라닌형성세포) | 멜라닌형성세포(멜라노사이트, Melanocyte) 🎯 기출 | • 멜라닌을 합성하여 각질형성세포에 멜라닌이 축적된 멜라노솜(Melanosome)을 공급하는 세포<br>• 피부색과 털색을 결정함<br>• 표피의 5~25%를 차지하며, 세포 내에 확산하면 검게 보임 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㅁ",
+     "ㄱ",
+     "ㄷ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㅁ",
+     "ㄷ",
+     "ㄴ",
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q374",
+  "explain": "📖 교재 근거 (교재: L113):\n| 기저층 (멜라닌형성세포) | 멜라닌형성세포(멜라노사이트, Melanocyte) 🎯 기출 | • 멜라닌을 합성하여 각질형성세포에 멜라닌이 축적된 멜라노솜(Melanosome)을 공급하는 세포<br>• 피부색과 털색을 결정함<br>• 표피의 5~25%를 차지하며, 세포 내에 확산하면 검게 보임 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "4"
+ },
+ {
+  "id": "combo-04-0375",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1692 (출처: 과목4 문제은행 Q375)",
+  "stem": "티로시나아제는 (A) 합성을 촉매하는 효소이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_8e0114",
+    "text": "퇴행(catagen)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1692):\n| 멜라닌 형성 | 티로신→티로시나아제→도파→도파퀴논→멜라닌 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_73ba44",
+    "text": "자외선",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1692):\n| 멜라닌 형성 | 티로신→티로시나아제→도파→도파퀴논→멜라닌 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_5e01eb",
+    "text": "멜라닌",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1692):\n| 멜라닌 형성 | 티로신→티로시나아제→도파→도파퀴논→멜라닌 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_6cfc6d",
+    "text": "섬유아",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1692):\n| 멜라닌 형성 | 티로신→티로시나아제→도파→도파퀴논→멜라닌 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_da2097",
+    "text": "수소",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1692):\n| 멜라닌 형성 | 티로신→티로시나아제→도파→도파퀴논→멜라닌 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㅁ",
+     "ㄹ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q375",
+  "explain": "📖 교재 근거 (교재: L1692):\n| 멜라닌 형성 | 티로신→티로시나아제→도파→도파퀴논→멜라닌 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "5"
+ },
+ {
+  "id": "combo-04-0376",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1454 (출처: 과목4 문제은행 Q376)",
+  "stem": "피부의 장벽 기능을 평가하는 지표로 경피수분손실량의 영문 약자는 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_7657ce",
+    "text": "폐기",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1454):\n> 용어 - 경피수분손실량(TEWL) 🎯 기출: 피부 표면에서 증발되는 수분량(TEWL: Transepidermal Water Loss)으로 건성 피부와 손상 피부는 값이 높으며, 피부 장벽기능 이상과 관련 있음"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_f7ba78",
+    "text": "TEWL",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1454):\n> 용어 - 경피수분손실량(TEWL) 🎯 기출: 피부 표면에서 증발되는 수분량(TEWL: Transepidermal Water Loss)으로 건성 피부와 손상 피부는 값이 높으며, 피부 장벽기능 이상과 관련 있음"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_2283f1",
+    "text": "소분",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1454):\n> 용어 - 경피수분손실량(TEWL) 🎯 기출: 피부 표면에서 증발되는 수분량(TEWL: Transepidermal Water Loss)으로 건성 피부와 손상 피부는 값이 높으며, 피부 장벽기능 이상과 관련 있음"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_001077",
+    "text": "KCl",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1454):\n> 용어 - 경피수분손실량(TEWL) 🎯 기출: 피부 표면에서 증발되는 수분량(TEWL: Transepidermal Water Loss)으로 건성 피부와 손상 피부는 값이 높으며, 피부 장벽기능 이상과 관련 있음"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_81ed5f",
+    "text": "계면활성제",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1454):\n> 용어 - 경피수분손실량(TEWL) 🎯 기출: 피부 표면에서 증발되는 수분량(TEWL: Transepidermal Water Loss)으로 건성 피부와 손상 피부는 값이 높으며, 피부 장벽기능 이상과 관련 있음"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ",
+     "ㅁ",
+     "ㄷ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q376",
+  "explain": "📖 교재 근거 (교재: L1454):\n> 용어 - 경피수분손실량(TEWL) 🎯 기출: 피부 표면에서 증발되는 수분량(TEWL: Transepidermal Water Loss)으로 건성 피부와 손상 피부는 값이 높으며, 피부 장벽기능 이상과 관련 있음",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "4"
+ },
+ {
+  "id": "combo-04-0377",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L2746 (출처: 과목4 문제은행 Q377)",
+  "stem": "맞춤형화장품 조제 시 원료의 교차 오염을 방지하기 위해 기구를 (A)해야 한다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_1c1357",
+    "text": "PA",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2746):\n> 시설 점검 + 혼합·소분 위생 관리(손 소독·기구 세척·사용기한 확인) + 미생물 관리 + 판매내역서 작성·보관 + 부작용 보고(식약처장)."
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_60ce5a",
+    "text": "기저",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2746):\n> 시설 점검 + 혼합·소분 위생 관리(손 소독·기구 세척·사용기한 확인) + 미생물 관리 + 판매내역서 작성·보관 + 부작용 보고(식약처장)."
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_97379e",
+    "text": "발(스크류)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2746):\n> 시설 점검 + 혼합·소분 위생 관리(손 소독·기구 세척·사용기한 확인) + 미생물 관리 + 판매내역서 작성·보관 + 부작용 보고(식약처장)."
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_1037e5",
+    "text": "성장(anagen)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L2746):\n> 시설 점검 + 혼합·소분 위생 관리(손 소독·기구 세척·사용기한 확인) + 미생물 관리 + 판매내역서 작성·보관 + 부작용 보고(식약처장)."
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_fe272a",
+    "text": "소독(세척·소독)",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L2746):\n> 시설 점검 + 혼합·소분 위생 관리(손 소독·기구 세척·사용기한 확인) + 미생물 관리 + 판매내역서 작성·보관 + 부작용 보고(식약처장)."
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㄴ",
+     "ㄱ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ",
+     "ㄴ",
+     "ㄱ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ",
+     "ㄷ",
+     "ㄱ",
+     "ㄴ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q377",
+  "explain": "📖 교재 근거 (교재: L2746):\n> 시설 점검 + 혼합·소분 위생 관리(손 소독·기구 세척·사용기한 확인) + 미생물 관리 + 판매내역서 작성·보관 + 부작용 보고(식약처장).",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "1"
+ },
+ {
+  "id": "combo-04-0378",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L67 (출처: 과목4 문제은행 Q378)",
+  "stem": "피부의 세포간지질 중 가장 많은 비율을 차지하는 지질은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_303793",
+    "text": "약산",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L67):\n| 세라마이드 | 세포간지질 50% 이상 |\n| 가혹시험 온도 | -15~45℃ |\n| 인체적용시험 | 5년 이상 경력자 지도·감독 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_69e965",
+    "text": "세라마이드",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L67):\n| 세라마이드 | 세포간지질 50% 이상 |\n| 가혹시험 온도 | -15~45℃ |\n| 인체적용시험 | 5년 이상 경력자 지도·감독 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_f6078a",
+    "text": "NMF(천연보습인자)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L67):\n| 세라마이드 | 세포간지질 50% 이상 |\n| 가혹시험 온도 | -15~45℃ |\n| 인체적용시험 | 5년 이상 경력자 지도·감독 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_d26cc4",
+    "text": "성장(anagen)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L67):\n| 세라마이드 | 세포간지질 50% 이상 |\n| 가혹시험 온도 | -15~45℃ |\n| 인체적용시험 | 5년 이상 경력자 지도·감독 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_c14010",
+    "text": "멜라닌형성",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L67):\n| 세라마이드 | 세포간지질 50% 이상 |\n| 가혹시험 온도 | -15~45℃ |\n| 인체적용시험 | 5년 이상 경력자 지도·감독 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ",
+     "ㄷ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㅁ",
+     "ㄹ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q378",
+  "explain": "📖 교재 근거 (교재: L67):\n| 세라마이드 | 세포간지질 50% 이상 |\n| 가혹시험 온도 | -15~45℃ |\n| 인체적용시험 | 5년 이상 경력자 지도·감독 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "5"
+ },
+ {
+  "id": "combo-04-0379",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 출처: 과목4 문제은행 Q379",
+  "stem": "맞춤형화장품 조제 시 소비자의 피부 상태를 파악하기 위해 실시하는 평가를 (A) 평가라고 한다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_a13e18",
+    "text": "티로시나아제",
+    "truth": false,
+    "explain": "📖 법령 근거 (L449(제20901호)(20260402)/화장품법(법률)(제20901호)(20260402).md#L449>)):\n① 맞춤형화장품조제관리사가 되려는 사람은 화장품과 원료 등에 대하여 식품의약품안전처장이 실시하는 자격시험에 합격하여야 한다."
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_026957",
+    "text": "관능",
+    "truth": true,
+    "explain": "📖 법령 근거 (L449(제20901호)(20260402)/화장품법(법률)(제20901호)(20260402).md#L449>)):\n① 맞춤형화장품조제관리사가 되려는 사람은 화장품과 원료 등에 대하여 식품의약품안전처장이 실시하는 자격시험에 합격하여야 한다."
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_45ecc0",
+    "text": "유기",
+    "truth": false,
+    "explain": "📖 법령 근거 (L449(제20901호)(20260402)/화장품법(법률)(제20901호)(20260402).md#L449>)):\n① 맞춤형화장품조제관리사가 되려는 사람은 화장품과 원료 등에 대하여 식품의약품안전처장이 실시하는 자격시험에 합격하여야 한다."
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_0611de",
+    "text": "스쿠알렌",
+    "truth": false,
+    "explain": "📖 법령 근거 (L449(제20901호)(20260402)/화장품법(법률)(제20901호)(20260402).md#L449>)):\n① 맞춤형화장품조제관리사가 되려는 사람은 화장품과 원료 등에 대하여 식품의약품안전처장이 실시하는 자격시험에 합격하여야 한다."
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_866c40",
+    "text": "등전",
+    "truth": false,
+    "explain": "📖 법령 근거 (L449(제20901호)(20260402)/화장품법(법률)(제20901호)(20260402).md#L449>)):\n① 맞춤형화장품조제관리사가 되려는 사람은 화장품과 원료 등에 대하여 식품의약품안전처장이 실시하는 자격시험에 합격하여야 한다."
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㅁ",
+     "ㄹ",
+     "ㄷ",
+     "ㄴ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㅁ",
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q379",
+  "explain": "📖 법령 근거 (L449(제20901호)(20260402)/화장품법(법률)(제20901호)(20260402).md#L449>)):\n① 맞춤형화장품조제관리사가 되려는 사람은 화장품과 원료 등에 대하여 식품의약품안전처장이 실시하는 자격시험에 합격하여야 한다.",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "3"
+ },
+ {
+  "id": "combo-04-0380",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1469 (출처: 과목4 문제은행 Q380)",
+  "stem": "피부의 자외선 중 표피와 진피에 모두 도달하는 자외선은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_ae4254",
+    "text": "온도",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1469):\n| 색소침착 피부 | • 멜라닌이 비정상적으로 과잉 생성되면서 과색소침착이 일어난 피부<br>• 자외선, 스트레스, 여성호르몬, 내장장애 등의 원인으로 발생<br>• 자외선의 종류<br>&nbsp;&nbsp;- UVA: 320~400nm 장파장으로 광노화의 원인 🎯 기출<br>&nbsp;&nbsp;- UVB: 290~320nm 중파장으로 일광화상, 홍반의 원인<br>&nbsp;&nbsp;- UVC: 200~290nm 단파장으로 피부암의 원인, 살균·소독작용 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_bb0c91",
+    "text": "MSDS",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1469):\n| 색소침착 피부 | • 멜라닌이 비정상적으로 과잉 생성되면서 과색소침착이 일어난 피부<br>• 자외선, 스트레스, 여성호르몬, 내장장애 등의 원인으로 발생<br>• 자외선의 종류<br>&nbsp;&nbsp;- UVA: 320~400nm 장파장으로 광노화의 원인 🎯 기출<br>&nbsp;&nbsp;- UVB: 290~320nm 중파장으로 일광화상, 홍반의 원인<br>&nbsp;&nbsp;- UVC: 200~290nm 단파장으로 피부암의 원인, 살균·소독작용 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_504b82",
+    "text": "충진",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1469):\n| 색소침착 피부 | • 멜라닌이 비정상적으로 과잉 생성되면서 과색소침착이 일어난 피부<br>• 자외선, 스트레스, 여성호르몬, 내장장애 등의 원인으로 발생<br>• 자외선의 종류<br>&nbsp;&nbsp;- UVA: 320~400nm 장파장으로 광노화의 원인 🎯 기출<br>&nbsp;&nbsp;- UVB: 290~320nm 중파장으로 일광화상, 홍반의 원인<br>&nbsp;&nbsp;- UVC: 200~290nm 단파장으로 피부암의 원인, 살균·소독작용 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_5c48df",
+    "text": "UVA",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1469):\n| 색소침착 피부 | • 멜라닌이 비정상적으로 과잉 생성되면서 과색소침착이 일어난 피부<br>• 자외선, 스트레스, 여성호르몬, 내장장애 등의 원인으로 발생<br>• 자외선의 종류<br>&nbsp;&nbsp;- UVA: 320~400nm 장파장으로 광노화의 원인 🎯 기출<br>&nbsp;&nbsp;- UVB: 290~320nm 중파장으로 일광화상, 홍반의 원인<br>&nbsp;&nbsp;- UVC: 200~290nm 단파장으로 피부암의 원인, 살균·소독작용 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_008a84",
+    "text": "주기(턴오버)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1469):\n| 색소침착 피부 | • 멜라닌이 비정상적으로 과잉 생성되면서 과색소침착이 일어난 피부<br>• 자외선, 스트레스, 여성호르몬, 내장장애 등의 원인으로 발생<br>• 자외선의 종류<br>&nbsp;&nbsp;- UVA: 320~400nm 장파장으로 광노화의 원인 🎯 기출<br>&nbsp;&nbsp;- UVB: 290~320nm 중파장으로 일광화상, 홍반의 원인<br>&nbsp;&nbsp;- UVC: 200~290nm 단파장으로 피부암의 원인, 살균·소독작용 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ",
+     "ㄱ",
+     "ㅁ",
+     "ㄴ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q380",
+  "explain": "📖 교재 근거 (교재: L1469):\n| 색소침착 피부 | • 멜라닌이 비정상적으로 과잉 생성되면서 과색소침착이 일어난 피부<br>• 자외선, 스트레스, 여성호르몬, 내장장애 등의 원인으로 발생<br>• 자외선의 종류<br>&nbsp;&nbsp;- UVA: 320~400nm 장파장으로 광노화의 원인 🎯 기출<br>&nbsp;&nbsp;- UVB: 290~320nm 중파장으로 일광화상, 홍반의 원인<br>&nbsp;&nbsp;- UVC: 200~290nm 단파장으로 피부암의 원인, 살균·소독작용 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "2"
+ },
+ {
+  "id": "combo-04-0381",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L499 (출처: 과목4 문제은행 Q381)",
+  "stem": "자외선 차단 지수 SPF는 (A) 자외선의 차단 강도를 의미한다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_b18fce",
+    "text": "성장(anagen)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L499):\nUVB를 차단하는 자외선 차단지수(SPF: Sun Protection Factor)"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_2c8f63",
+    "text": "알레르기",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L499):\nUVB를 차단하는 자외선 차단지수(SPF: Sun Protection Factor)"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_366b29",
+    "text": "헤미데스모좀",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L499):\nUVB를 차단하는 자외선 차단지수(SPF: Sun Protection Factor)"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_3f4487",
+    "text": "UVB",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L499):\nUVB를 차단하는 자외선 차단지수(SPF: Sun Protection Factor)"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_62adb5",
+    "text": "수소",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L499):\nUVB를 차단하는 자외선 차단지수(SPF: Sun Protection Factor)"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㅁ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄹ",
+     "ㄱ",
+     "ㅁ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ",
+     "ㄷ",
+     "ㄱ",
+     "ㄴ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q381",
+  "explain": "📖 교재 근거 (교재: L499):\nUVB를 차단하는 자외선 차단지수(SPF: Sun Protection Factor)",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "1"
+ },
+ {
+  "id": "combo-04-0382",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L579 (출처: 과목4 문제은행 Q382)",
+  "stem": "맞춤형화장품 조제 시 원료의 안전성을 확인하기 위해 참고하는 원료의 안전성 정보 시트의 영문 약자는 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_ad5b7f",
+    "text": "멜라닌형성",
+    "truth": false,
+    "explain": "📖 법령 근거 (교재: L579):\n| 제5조<br>영업자의 의무 등 🎯 기출 | • 화장품제조업자는 화장품의 제조와 관련된 기록·시설·기구 등 관리 방법, 원료·자재·완제품 등에 대한 시험·검사·검정 실시 방법 및 의무 등에 관하여 총리령으로 정하는 사항을 준수해야 함<br>• 화장품책임판매업자는 화장품의 품질관리기준, 책임판매 후 안전관리기준, 품질 검사 방법 및 실시 의무, 안전성·유효성 관련 정보사항 등의 보고 및 안전대책 마련 의무 등에 관하여 총리령으로 정하는 사항을 준수해야 함<br>• 맞춤형화장품판매업자는 소비자에게 유통·판매되는 화장품을 임의로 혼합·소분하여서는 안 됨<br>• 맞춤형화장품판매업자는 맞춤형화장품 판매장 시설·기구의 관리 방법, 혼합·소분 안전관리기준의 준수 의무, 혼합·소분되는 내용물 및 원료에 대한 설..."
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_646e3e",
+    "text": "온도",
+    "truth": false,
+    "explain": "📖 법령 근거 (교재: L579):\n| 제5조<br>영업자의 의무 등 🎯 기출 | • 화장품제조업자는 화장품의 제조와 관련된 기록·시설·기구 등 관리 방법, 원료·자재·완제품 등에 대한 시험·검사·검정 실시 방법 및 의무 등에 관하여 총리령으로 정하는 사항을 준수해야 함<br>• 화장품책임판매업자는 화장품의 품질관리기준, 책임판매 후 안전관리기준, 품질 검사 방법 및 실시 의무, 안전성·유효성 관련 정보사항 등의 보고 및 안전대책 마련 의무 등에 관하여 총리령으로 정하는 사항을 준수해야 함<br>• 맞춤형화장품판매업자는 소비자에게 유통·판매되는 화장품을 임의로 혼합·소분하여서는 안 됨<br>• 맞춤형화장품판매업자는 맞춤형화장품 판매장 시설·기구의 관리 방법, 혼합·소분 안전관리기준의 준수 의무, 혼합·소분되는 내용물 및 원료에 대한 설..."
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_479380",
+    "text": "MSDS",
+    "truth": true,
+    "explain": "📖 법령 근거 (교재: L579):\n| 제5조<br>영업자의 의무 등 🎯 기출 | • 화장품제조업자는 화장품의 제조와 관련된 기록·시설·기구 등 관리 방법, 원료·자재·완제품 등에 대한 시험·검사·검정 실시 방법 및 의무 등에 관하여 총리령으로 정하는 사항을 준수해야 함<br>• 화장품책임판매업자는 화장품의 품질관리기준, 책임판매 후 안전관리기준, 품질 검사 방법 및 실시 의무, 안전성·유효성 관련 정보사항 등의 보고 및 안전대책 마련 의무 등에 관하여 총리령으로 정하는 사항을 준수해야 함<br>• 맞춤형화장품판매업자는 소비자에게 유통·판매되는 화장품을 임의로 혼합·소분하여서는 안 됨<br>• 맞춤형화장품판매업자는 맞춤형화장품 판매장 시설·기구의 관리 방법, 혼합·소분 안전관리기준의 준수 의무, 혼합·소분되는 내용물 및 원료에 대한 설..."
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_6b8439",
+    "text": "사용기한",
+    "truth": false,
+    "explain": "📖 법령 근거 (교재: L579):\n| 제5조<br>영업자의 의무 등 🎯 기출 | • 화장품제조업자는 화장품의 제조와 관련된 기록·시설·기구 등 관리 방법, 원료·자재·완제품 등에 대한 시험·검사·검정 실시 방법 및 의무 등에 관하여 총리령으로 정하는 사항을 준수해야 함<br>• 화장품책임판매업자는 화장품의 품질관리기준, 책임판매 후 안전관리기준, 품질 검사 방법 및 실시 의무, 안전성·유효성 관련 정보사항 등의 보고 및 안전대책 마련 의무 등에 관하여 총리령으로 정하는 사항을 준수해야 함<br>• 맞춤형화장품판매업자는 소비자에게 유통·판매되는 화장품을 임의로 혼합·소분하여서는 안 됨<br>• 맞춤형화장품판매업자는 맞춤형화장품 판매장 시설·기구의 관리 방법, 혼합·소분 안전관리기준의 준수 의무, 혼합·소분되는 내용물 및 원료에 대한 설..."
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_4f8523",
+    "text": "조제",
+    "truth": false,
+    "explain": "📖 법령 근거 (교재: L579):\n| 제5조<br>영업자의 의무 등 🎯 기출 | • 화장품제조업자는 화장품의 제조와 관련된 기록·시설·기구 등 관리 방법, 원료·자재·완제품 등에 대한 시험·검사·검정 실시 방법 및 의무 등에 관하여 총리령으로 정하는 사항을 준수해야 함<br>• 화장품책임판매업자는 화장품의 품질관리기준, 책임판매 후 안전관리기준, 품질 검사 방법 및 실시 의무, 안전성·유효성 관련 정보사항 등의 보고 및 안전대책 마련 의무 등에 관하여 총리령으로 정하는 사항을 준수해야 함<br>• 맞춤형화장품판매업자는 소비자에게 유통·판매되는 화장품을 임의로 혼합·소분하여서는 안 됨<br>• 맞춤형화장품판매업자는 맞춤형화장품 판매장 시설·기구의 관리 방법, 혼합·소분 안전관리기준의 준수 의무, 혼합·소분되는 내용물 및 원료에 대한 설..."
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ",
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ",
+     "ㄴ",
+     "ㄹ",
+     "ㄱ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q382",
+  "explain": "📖 법령 근거 (교재: L579):\n| 제5조<br>영업자의 의무 등 🎯 기출 | • 화장품제조업자는 화장품의 제조와 관련된 기록·시설·기구 등 관리 방법, 원료·자재·완제품 등에 대한 시험·검사·검정 실시 방법 및 의무 등에 관하여 총리령으로 정하는 사항을 준수해야 함<br>• 화장품책임판매업자는 화장품의 품질관리기준, 책임판매 후 안전관리기준, 품질 검사 방법 및 실시 의무, 안전성·유효성 관련 정보사항 등의 보고 및 안전대책 마련 의무 등에 관하여 총리령으로 정하는 사항을 준수해야 함<br>• 맞춤형화장품판매업자는 소비자에게 유통·판매되는 화장품을 임의로 혼합·소분하여서는 안 됨<br>• 맞춤형화장품판매업자는 맞춤형화장품 판매장 시설·기구의 관리 방법, 혼합·소분 안전관리기준의 준수 의무, 혼합·소분되는 내용물 및 원료에 대한 설...",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "3"
+ },
+ {
+  "id": "combo-04-0383",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1549 (출처: 과목4 문제은행 Q383)",
+  "stem": "피부의 표피층 중 면역 반응을 개시하는 세포는 (A)세포이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_95e989",
+    "text": "충진",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1549):\n| 랑게르한스세포 | 유극층 | 면역반응 조절, 항원 전달 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_53ae0c",
+    "text": "분동(추)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1549):\n| 랑게르한스세포 | 유극층 | 면역반응 조절, 항원 전달 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_b52b46",
+    "text": "랑게르한스",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1549):\n| 랑게르한스세포 | 유극층 | 면역반응 조절, 항원 전달 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_6b666b",
+    "text": "라멜라바디(층판소기관)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1549):\n| 랑게르한스세포 | 유극층 | 면역반응 조절, 항원 전달 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_25272a",
+    "text": "리모넨",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1549):\n| 랑게르한스세포 | 유극층 | 면역반응 조절, 항원 전달 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㅁ",
+     "ㄹ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㅁ",
+     "ㄴ",
+     "ㄷ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q383",
+  "explain": "📖 교재 근거 (교재: L1549):\n| 랑게르한스세포 | 유극층 | 면역반응 조절, 항원 전달 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "5"
+ },
+ {
+  "id": "combo-04-0384",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L830 (출처: 과목4 문제은행 Q384)",
+  "stem": "맞춤형화장품 조제 시 원료의 배합 비율을 기록한 문서를 (A) 처방전(배합표)이라고 한다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_618786",
+    "text": "조제",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L830):\n## 📊 맞춤형화장품판매업 결격사유 vs 조제관리사 결격사유 비교표"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_c31464",
+    "text": "격리",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L830):\n## 📊 맞춤형화장품판매업 결격사유 vs 조제관리사 결격사유 비교표"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_035d37",
+    "text": "코르네오데스모좀",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L830):\n## 📊 맞춤형화장품판매업 결격사유 vs 조제관리사 결격사유 비교표"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_3f9055",
+    "text": "각질",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L830):\n## 📊 맞춤형화장품판매업 결격사유 vs 조제관리사 결격사유 비교표"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_3e8d50",
+    "text": "콜레스테롤",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L830):\n## 📊 맞춤형화장품판매업 결격사유 vs 조제관리사 결격사유 비교표"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ",
+     "ㄴ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㅁ",
+     "ㄹ",
+     "ㄷ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㅁ",
+     "ㄹ",
+     "ㄷ",
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q384",
+  "explain": "📖 교재 근거 (교재: L830):\n## 📊 맞춤형화장품판매업 결격사유 vs 조제관리사 결격사유 비교표",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "5"
+ },
+ {
+  "id": "combo-04-0385",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1158 (출처: 과목4 문제은행 Q385)",
+  "stem": "피부의 각질층 세포가 탈락하는 현상을 (A)이라고 한다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_4cc18e",
+    "text": "티올(SH)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1158):\n| 각질층<br>(Horny Layer) 🎯 기출 | • 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5 정도의 약산성<br>• 피부의 가장 바깥에 위치하여 수분 손실을 막고, 피부장벽 역할을 하여 피부 보호 및 세균 침입 방어<br>• 각질과 세포간지질이 벽돌 구조인 라멜라 구조<br>• 케라틴 약 58%, 천연보습인자(NMF) 약 31%, 세포간지질 약 11%로 구성<br>• 각질층은 천연보습인자(NMF)를 통해 10~20%의 수분 함유<br>&nbsp;&nbsp;* 필라그린(Fillaggrin): 각질층 형성에 중요한 역할을 하는 단백질로, 각질층에서 단백질 분해 효소에 의해 분해되어 천연보습인자(NMF)를 구성하는 아미노산을 이룸<br>&nbsp;&nbsp;* 세라마이드*..."
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_ce2739",
+    "text": "지질",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1158):\n| 각질층<br>(Horny Layer) 🎯 기출 | • 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5 정도의 약산성<br>• 피부의 가장 바깥에 위치하여 수분 손실을 막고, 피부장벽 역할을 하여 피부 보호 및 세균 침입 방어<br>• 각질과 세포간지질이 벽돌 구조인 라멜라 구조<br>• 케라틴 약 58%, 천연보습인자(NMF) 약 31%, 세포간지질 약 11%로 구성<br>• 각질층은 천연보습인자(NMF)를 통해 10~20%의 수분 함유<br>&nbsp;&nbsp;* 필라그린(Fillaggrin): 각질층 형성에 중요한 역할을 하는 단백질로, 각질층에서 단백질 분해 효소에 의해 분해되어 천연보습인자(NMF)를 구성하는 아미노산을 이룸<br>&nbsp;&nbsp;* 세라마이드*..."
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_2a85e2",
+    "text": "탈각(박리)",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1158):\n| 각질층<br>(Horny Layer) 🎯 기출 | • 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5 정도의 약산성<br>• 피부의 가장 바깥에 위치하여 수분 손실을 막고, 피부장벽 역할을 하여 피부 보호 및 세균 침입 방어<br>• 각질과 세포간지질이 벽돌 구조인 라멜라 구조<br>• 케라틴 약 58%, 천연보습인자(NMF) 약 31%, 세포간지질 약 11%로 구성<br>• 각질층은 천연보습인자(NMF)를 통해 10~20%의 수분 함유<br>&nbsp;&nbsp;* 필라그린(Fillaggrin): 각질층 형성에 중요한 역할을 하는 단백질로, 각질층에서 단백질 분해 효소에 의해 분해되어 천연보습인자(NMF)를 구성하는 아미노산을 이룸<br>&nbsp;&nbsp;* 세라마이드*..."
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_e62c8f",
+    "text": "헤미데스모좀",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1158):\n| 각질층<br>(Horny Layer) 🎯 기출 | • 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5 정도의 약산성<br>• 피부의 가장 바깥에 위치하여 수분 손실을 막고, 피부장벽 역할을 하여 피부 보호 및 세균 침입 방어<br>• 각질과 세포간지질이 벽돌 구조인 라멜라 구조<br>• 케라틴 약 58%, 천연보습인자(NMF) 약 31%, 세포간지질 약 11%로 구성<br>• 각질층은 천연보습인자(NMF)를 통해 10~20%의 수분 함유<br>&nbsp;&nbsp;* 필라그린(Fillaggrin): 각질층 형성에 중요한 역할을 하는 단백질로, 각질층에서 단백질 분해 효소에 의해 분해되어 천연보습인자(NMF)를 구성하는 아미노산을 이룸<br>&nbsp;&nbsp;* 세라마이드*..."
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_bb6673",
+    "text": "랑게르한스",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1158):\n| 각질층<br>(Horny Layer) 🎯 기출 | • 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5 정도의 약산성<br>• 피부의 가장 바깥에 위치하여 수분 손실을 막고, 피부장벽 역할을 하여 피부 보호 및 세균 침입 방어<br>• 각질과 세포간지질이 벽돌 구조인 라멜라 구조<br>• 케라틴 약 58%, 천연보습인자(NMF) 약 31%, 세포간지질 약 11%로 구성<br>• 각질층은 천연보습인자(NMF)를 통해 10~20%의 수분 함유<br>&nbsp;&nbsp;* 필라그린(Fillaggrin): 각질층 형성에 중요한 역할을 하는 단백질로, 각질층에서 단백질 분해 효소에 의해 분해되어 천연보습인자(NMF)를 구성하는 아미노산을 이룸<br>&nbsp;&nbsp;* 세라마이드*..."
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄱ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ",
+     "ㄴ",
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q385",
+  "explain": "📖 교재 근거 (교재: L1158):\n| 각질층<br>(Horny Layer) 🎯 기출 | • 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5 정도의 약산성<br>• 피부의 가장 바깥에 위치하여 수분 손실을 막고, 피부장벽 역할을 하여 피부 보호 및 세균 침입 방어<br>• 각질과 세포간지질이 벽돌 구조인 라멜라 구조<br>• 케라틴 약 58%, 천연보습인자(NMF) 약 31%, 세포간지질 약 11%로 구성<br>• 각질층은 천연보습인자(NMF)를 통해 10~20%의 수분 함유<br>&nbsp;&nbsp;* 필라그린(Fillaggrin): 각질층 형성에 중요한 역할을 하는 단백질로, 각질층에서 단백질 분해 효소에 의해 분해되어 천연보습인자(NMF)를 구성하는 아미노산을 이룸<br>&nbsp;&nbsp;* 세라마이드*...",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "4"
+ },
+ {
+  "id": "combo-04-0386",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L897 (출처: 과목4 문제은행 Q386)",
+  "stem": "맞춤형화장품 조제 시 원료의 계량 오차 허용 범위는 일반적으로 ±(A)%이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_9523d1",
+    "text": "70",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L897):\n> 해설: 맞춤형화장품판매업자가 업자·상호·소재지·조제관리사를 변경하는 경우, 변경이 있는 날부터 30일 이내에 관할 지방식약청장에게 신고해야 한다. 행정기관 처리기한은 10일 이내(조제관리사 변경은 7일 이내)이다."
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_96b537",
+    "text": "28",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L897):\n> 해설: 맞춤형화장품판매업자가 업자·상호·소재지·조제관리사를 변경하는 경우, 변경이 있는 날부터 30일 이내에 관할 지방식약청장에게 신고해야 한다. 행정기관 처리기한은 10일 이내(조제관리사 변경은 7일 이내)이다."
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_0f832e",
+    "text": "1",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L897):\n> 해설: 맞춤형화장품판매업자가 업자·상호·소재지·조제관리사를 변경하는 경우, 변경이 있는 날부터 30일 이내에 관할 지방식약청장에게 신고해야 한다. 행정기관 처리기한은 10일 이내(조제관리사 변경은 7일 이내)이다."
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_0806cf",
+    "text": "0.3",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L897):\n> 해설: 맞춤형화장품판매업자가 업자·상호·소재지·조제관리사를 변경하는 경우, 변경이 있는 날부터 30일 이내에 관할 지방식약청장에게 신고해야 한다. 행정기관 처리기한은 10일 이내(조제관리사 변경은 7일 이내)이다."
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_55f9e0",
+    "text": "0.04",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L897):\n> 해설: 맞춤형화장품판매업자가 업자·상호·소재지·조제관리사를 변경하는 경우, 변경이 있는 날부터 30일 이내에 관할 지방식약청장에게 신고해야 한다. 행정기관 처리기한은 10일 이내(조제관리사 변경은 7일 이내)이다."
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㅁ",
+     "ㄴ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q386",
+  "explain": "📖 교재 근거 (교재: L897):\n> 해설: 맞춤형화장품판매업자가 업자·상호·소재지·조제관리사를 변경하는 경우, 변경이 있는 날부터 30일 이내에 관할 지방식약청장에게 신고해야 한다. 행정기관 처리기한은 10일 이내(조제관리사 변경은 7일 이내)이다.",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "2"
+ },
+ {
+  "id": "combo-04-0387",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 출처: 과목4 문제은행 Q387",
+  "stem": "피부의 모발의 주요 구성 성분은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_718e8c",
+    "text": "케라틴",
+    "truth": true,
+    "explain": "📖 교재 근거 (L1353):\n- 멜라닌이 없어 무색투명한 케라틴 단백질로 구성됨"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_35d1d1",
+    "text": "건조",
+    "truth": false,
+    "explain": "📖 교재 근거 (L1353):\n- 멜라닌이 없어 무색투명한 케라틴 단백질로 구성됨"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_d82e03",
+    "text": "NMF(천연보습인자)",
+    "truth": false,
+    "explain": "📖 교재 근거 (L1353):\n- 멜라닌이 없어 무색투명한 케라틴 단백질로 구성됨"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_e4eec8",
+    "text": "오크모스",
+    "truth": false,
+    "explain": "📖 교재 근거 (L1353):\n- 멜라닌이 없어 무색투명한 케라틴 단백질로 구성됨"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_0100c4",
+    "text": "히알루론산",
+    "truth": false,
+    "explain": "📖 교재 근거 (L1353):\n- 멜라닌이 없어 무색투명한 케라틴 단백질로 구성됨"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q387",
+  "explain": "📖 교재 근거 (L1353):\n- 멜라닌이 없어 무색투명한 케라틴 단백질로 구성됨",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "1"
+ },
+ {
+  "id": "combo-04-0388",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 출처: 과목4 문제은행 Q388",
+  "stem": "맞춤형화장품 조제 시 저울의 (A) 상태를 확인해야 정확한 계량이 가능하다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_448982",
+    "text": "약산",
+    "truth": false,
+    "explain": "📖 법령 근거 (L545(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L545>)):\n③ 지방식품의약품안전청장은 제2항에 따라 맞춤형화장품판매업 변경신고를 받은 경우에는 「전자정부법」 제36조제1항에 따른 행정정보의 공동이용을 통해 법인 등기사항증명서(법인인 경우만 해당한다)를 확인해야 한다."
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_71615d",
+    "text": "KCl",
+    "truth": false,
+    "explain": "📖 법령 근거 (L545(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L545>)):\n③ 지방식품의약품안전청장은 제2항에 따라 맞춤형화장품판매업 변경신고를 받은 경우에는 「전자정부법」 제36조제1항에 따른 행정정보의 공동이용을 통해 법인 등기사항증명서(법인인 경우만 해당한다)를 확인해야 한다."
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_cc3aef",
+    "text": "등전",
+    "truth": false,
+    "explain": "📖 법령 근거 (L545(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L545>)):\n③ 지방식품의약품안전청장은 제2항에 따라 맞춤형화장품판매업 변경신고를 받은 경우에는 「전자정부법」 제36조제1항에 따른 행정정보의 공동이용을 통해 법인 등기사항증명서(법인인 경우만 해당한다)를 확인해야 한다."
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_27d46e",
+    "text": "수평",
+    "truth": true,
+    "explain": "📖 법령 근거 (L545(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L545>)):\n③ 지방식품의약품안전청장은 제2항에 따라 맞춤형화장품판매업 변경신고를 받은 경우에는 「전자정부법」 제36조제1항에 따른 행정정보의 공동이용을 통해 법인 등기사항증명서(법인인 경우만 해당한다)를 확인해야 한다."
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_8594c1",
+    "text": "망상",
+    "truth": false,
+    "explain": "📖 법령 근거 (L545(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L545>)):\n③ 지방식품의약품안전청장은 제2항에 따라 맞춤형화장품판매업 변경신고를 받은 경우에는 「전자정부법」 제36조제1항에 따른 행정정보의 공동이용을 통해 법인 등기사항증명서(법인인 경우만 해당한다)를 확인해야 한다."
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄹ",
+     "ㄷ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㅁ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ",
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q388",
+  "explain": "📖 법령 근거 (L545(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L545>)):\n③ 지방식품의약품안전청장은 제2항에 따라 맞춤형화장품판매업 변경신고를 받은 경우에는 「전자정부법」 제36조제1항에 따른 행정정보의 공동이용을 통해 법인 등기사항증명서(법인인 경우만 해당한다)를 확인해야 한다.",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "3"
+ },
+ {
+  "id": "combo-04-0389",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1213 (출처: 과목4 문제은행 Q389)",
+  "stem": "피부의 진피층 중 콜라겐과 엘라스틴 섬유가 풍부하여 피부 강도를 담당하는 층은 (A)층이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_84831a",
+    "text": "cP",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1213):\n| 망상층(Reticular Layer) 🎯 기출 | • 진피의 대부분을 차지하는 그물 모양(망상구조)의 결합조직<br>• 교원섬유(콜라겐) 90%, 탄력섬유(엘라스틴) 1.5~4.7%, 기질로 구성됨<br>• 모세혈관은 거의 없으며, 림프관, 한선, 피지선, 신경 등이 존재함 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_1a3dde",
+    "text": "헤미데스모좀",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1213):\n| 망상층(Reticular Layer) 🎯 기출 | • 진피의 대부분을 차지하는 그물 모양(망상구조)의 결합조직<br>• 교원섬유(콜라겐) 90%, 탄력섬유(엘라스틴) 1.5~4.7%, 기질로 구성됨<br>• 모세혈관은 거의 없으며, 림프관, 한선, 피지선, 신경 등이 존재함 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_44463a",
+    "text": "스쿠알렌",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1213):\n| 망상층(Reticular Layer) 🎯 기출 | • 진피의 대부분을 차지하는 그물 모양(망상구조)의 결합조직<br>• 교원섬유(콜라겐) 90%, 탄력섬유(엘라스틴) 1.5~4.7%, 기질로 구성됨<br>• 모세혈관은 거의 없으며, 림프관, 한선, 피지선, 신경 등이 존재함 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_709fc9",
+    "text": "멜라닌",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1213):\n| 망상층(Reticular Layer) 🎯 기출 | • 진피의 대부분을 차지하는 그물 모양(망상구조)의 결합조직<br>• 교원섬유(콜라겐) 90%, 탄력섬유(엘라스틴) 1.5~4.7%, 기질로 구성됨<br>• 모세혈관은 거의 없으며, 림프관, 한선, 피지선, 신경 등이 존재함 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_cc6fb6",
+    "text": "망상",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1213):\n| 망상층(Reticular Layer) 🎯 기출 | • 진피의 대부분을 차지하는 그물 모양(망상구조)의 결합조직<br>• 교원섬유(콜라겐) 90%, 탄력섬유(엘라스틴) 1.5~4.7%, 기질로 구성됨<br>• 모세혈관은 거의 없으며, 림프관, 한선, 피지선, 신경 등이 존재함 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㅁ",
+     "ㄹ",
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q389",
+  "explain": "📖 교재 근거 (교재: L1213):\n| 망상층(Reticular Layer) 🎯 기출 | • 진피의 대부분을 차지하는 그물 모양(망상구조)의 결합조직<br>• 교원섬유(콜라겐) 90%, 탄력섬유(엘라스틴) 1.5~4.7%, 기질로 구성됨<br>• 모세혈관은 거의 없으며, 림프관, 한선, 피지선, 신경 등이 존재함 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "5"
+ },
+ {
+  "id": "combo-04-0390",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 출처: 과목4 문제은행 Q390",
+  "stem": "맞춤형화장품 조제 시 원료의 배합 후 pH가 피부 적정 범위인 (A)성 범위에 있는지 확인해야 한다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_c6b2ab",
+    "text": "교정(Calibration)",
+    "truth": false,
+    "explain": "📖 교재 근거 (L3649):\n| 약산성 | pH 3.0~5.0. |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_368865",
+    "text": "리모넨",
+    "truth": false,
+    "explain": "📖 교재 근거 (L3649):\n| 약산성 | pH 3.0~5.0. |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_d34b71",
+    "text": "메스실린더(또는 피펫)",
+    "truth": false,
+    "explain": "📖 교재 근거 (L3649):\n| 약산성 | pH 3.0~5.0. |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_9702dd",
+    "text": "충진",
+    "truth": false,
+    "explain": "📖 교재 근거 (L3649):\n| 약산성 | pH 3.0~5.0. |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_bd6c09",
+    "text": "약산",
+    "truth": true,
+    "explain": "📖 교재 근거 (L3649):\n| 약산성 | pH 3.0~5.0. |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ",
+     "ㄱ",
+     "ㄹ",
+     "ㅁ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q390",
+  "explain": "📖 교재 근거 (L3649):\n| 약산성 | pH 3.0~5.0. |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "5"
+ },
+ {
+  "id": "combo-04-0391",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1130 (출처: 과목4 문제은행 Q391)",
+  "stem": "피부의 각질층의 세포간지질은 (A) 이중층 구조를 이룬다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_d326ae",
+    "text": "섬유아",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1130):\n| 비타민 D 합성 🎯 기출 | 자외선을 일정하게 받으면 비타민 D를 합성하며, 이때 지질의 일종인 콜레스테롤은 합성에 중요한 역할을 함 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_367fae",
+    "text": "맞춤형화장품 조제관리사",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1130):\n| 비타민 D 합성 🎯 기출 | 자외선을 일정하게 받으면 비타민 D를 합성하며, 이때 지질의 일종인 콜레스테롤은 합성에 중요한 역할을 함 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_81bbb8",
+    "text": "지질",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1130):\n| 비타민 D 합성 🎯 기출 | 자외선을 일정하게 받으면 비타민 D를 합성하며, 이때 지질의 일종인 콜레스테롤은 합성에 중요한 역할을 함 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_398b82",
+    "text": "이황화(disulfide)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1130):\n| 비타민 D 합성 🎯 기출 | 자외선을 일정하게 받으면 비타민 D를 합성하며, 이때 지질의 일종인 콜레스테롤은 합성에 중요한 역할을 함 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_55b82e",
+    "text": "제라니",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1130):\n| 비타민 D 합성 🎯 기출 | 자외선을 일정하게 받으면 비타민 D를 합성하며, 이때 지질의 일종인 콜레스테롤은 합성에 중요한 역할을 함 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄱ",
+     "ㅁ",
+     "ㄹ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q391",
+  "explain": "📖 교재 근거 (교재: L1130):\n| 비타민 D 합성 🎯 기출 | 자외선을 일정하게 받으면 비타민 D를 합성하며, 이때 지질의 일종인 콜레스테롤은 합성에 중요한 역할을 함 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "3"
+ },
+ {
+  "id": "combo-04-0392",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 출처: 과목4 문제은행 Q392",
+  "stem": "맞춤형화장품 조제 시 원료의 유통기한이 경과한 경우 (A)하고 사용하지 않아야 한다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_c1f6eb",
+    "text": "약산",
+    "truth": false,
+    "explain": "📖 법령 근거 (L507(제20901호)(20260402)/화장품법(법률)(제20901호)(20260402).md#L507>)):\n맞춤형화장품조제관리사가 아닌 자는 맞춤형화장품조제관리사 또는 이와 유사한 명칭을 사용하지 못한다."
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_4aa3f0",
+    "text": "스핑고신",
+    "truth": false,
+    "explain": "📖 법령 근거 (L507(제20901호)(20260402)/화장품법(법률)(제20901호)(20260402).md#L507>)):\n맞춤형화장품조제관리사가 아닌 자는 맞춤형화장품조제관리사 또는 이와 유사한 명칭을 사용하지 못한다."
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_00b885",
+    "text": "제조번호",
+    "truth": false,
+    "explain": "📖 법령 근거 (L507(제20901호)(20260402)/화장품법(법률)(제20901호)(20260402).md#L507>)):\n맞춤형화장품조제관리사가 아닌 자는 맞춤형화장품조제관리사 또는 이와 유사한 명칭을 사용하지 못한다."
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_9090d3",
+    "text": "표준",
+    "truth": false,
+    "explain": "📖 법령 근거 (L507(제20901호)(20260402)/화장품법(법률)(제20901호)(20260402).md#L507>)):\n맞춤형화장품조제관리사가 아닌 자는 맞춤형화장품조제관리사 또는 이와 유사한 명칭을 사용하지 못한다."
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_b8d3de",
+    "text": "폐기",
+    "truth": true,
+    "explain": "📖 법령 근거 (L507(제20901호)(20260402)/화장품법(법률)(제20901호)(20260402).md#L507>)):\n맞춤형화장품조제관리사가 아닌 자는 맞춤형화장품조제관리사 또는 이와 유사한 명칭을 사용하지 못한다."
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ",
+     "ㄴ",
+     "ㄹ",
+     "ㄱ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ",
+     "ㄴ",
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q392",
+  "explain": "📖 법령 근거 (L507(제20901호)(20260402)/화장품법(법률)(제20901호)(20260402).md#L507>)):\n맞춤형화장품조제관리사가 아닌 자는 맞춤형화장품조제관리사 또는 이와 유사한 명칭을 사용하지 못한다.",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "2"
+ },
+ {
+  "id": "combo-04-0393",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1162 (출처: 과목4 문제은행 Q393)",
+  "stem": "피부의 표피와 진피의 경계에 있는 구조로 영양 공급과 결합을 담당하는 것은 (A)막이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_5e97a6",
+    "text": "KCl",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1162):\n| 기저층<br>(Basal Layer) | • 단층의 원추형 유핵세포층<br>• 진피의 모세혈관으로부터 영양분과 산소를 공급받아 세포분열 촉진<br>• 각질형성세포(케라티노사이트), 멜라닌형성세포(멜라노사이트), 머켈세포 존재<br>• 각질형성세포와 멜라닌형성세포는 4:1~10:1 비율로 존재함 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_db3445",
+    "text": "카보머",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1162):\n| 기저층<br>(Basal Layer) | • 단층의 원추형 유핵세포층<br>• 진피의 모세혈관으로부터 영양분과 산소를 공급받아 세포분열 촉진<br>• 각질형성세포(케라티노사이트), 멜라닌형성세포(멜라노사이트), 머켈세포 존재<br>• 각질형성세포와 멜라닌형성세포는 4:1~10:1 비율로 존재함 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_352dbc",
+    "text": "히알루론산",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1162):\n| 기저층<br>(Basal Layer) | • 단층의 원추형 유핵세포층<br>• 진피의 모세혈관으로부터 영양분과 산소를 공급받아 세포분열 촉진<br>• 각질형성세포(케라티노사이트), 멜라닌형성세포(멜라노사이트), 머켈세포 존재<br>• 각질형성세포와 멜라닌형성세포는 4:1~10:1 비율로 존재함 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_bc55bd",
+    "text": "기저",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1162):\n| 기저층<br>(Basal Layer) | • 단층의 원추형 유핵세포층<br>• 진피의 모세혈관으로부터 영양분과 산소를 공급받아 세포분열 촉진<br>• 각질형성세포(케라티노사이트), 멜라닌형성세포(멜라노사이트), 머켈세포 존재<br>• 각질형성세포와 멜라닌형성세포는 4:1~10:1 비율로 존재함 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_fea4a3",
+    "text": "멜라닌형성세포",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1162):\n| 기저층<br>(Basal Layer) | • 단층의 원추형 유핵세포층<br>• 진피의 모세혈관으로부터 영양분과 산소를 공급받아 세포분열 촉진<br>• 각질형성세포(케라티노사이트), 멜라닌형성세포(멜라노사이트), 머켈세포 존재<br>• 각질형성세포와 멜라닌형성세포는 4:1~10:1 비율로 존재함 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ",
+     "ㅁ",
+     "ㄹ",
+     "ㄴ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ",
+     "ㅁ",
+     "ㄷ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q393",
+  "explain": "📖 교재 근거 (교재: L1162):\n| 기저층<br>(Basal Layer) | • 단층의 원추형 유핵세포층<br>• 진피의 모세혈관으로부터 영양분과 산소를 공급받아 세포분열 촉진<br>• 각질형성세포(케라티노사이트), 멜라닌형성세포(멜라노사이트), 머켈세포 존재<br>• 각질형성세포와 멜라닌형성세포는 4:1~10:1 비율로 존재함 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "4"
+ },
+ {
+  "id": "combo-04-0394",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L634 (출처: 과목4 문제은행 Q394)",
+  "stem": "맞춤형화장품 조제 시 소비자의 피부 알레르기 이력을 확인하여 (A) 유발 성분을 배제해야 한다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_1cde21",
+    "text": "스쿠알렌",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L634):\n| 인체 첩포시험(인체 패치테스트) 🎯 기출 | • 등, 팔 안쪽에 폐쇄 첩포하여 피부 자극성이나 감작성(알레르기)을 평가함<br>• 국내외 대학 또는 전문 연구기관에서 실시하며, 관련 분야 전문의사, 연구소, 병원 등 관련 기관에서 5년 이상 경력을 가진 자의 지도 및 감독하에 수행·평가되어야 함 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_257b7f",
+    "text": "리모넨",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L634):\n| 인체 첩포시험(인체 패치테스트) 🎯 기출 | • 등, 팔 안쪽에 폐쇄 첩포하여 피부 자극성이나 감작성(알레르기)을 평가함<br>• 국내외 대학 또는 전문 연구기관에서 실시하며, 관련 분야 전문의사, 연구소, 병원 등 관련 기관에서 5년 이상 경력을 가진 자의 지도 및 감독하에 수행·평가되어야 함 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_18d93f",
+    "text": "TEWL",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L634):\n| 인체 첩포시험(인체 패치테스트) 🎯 기출 | • 등, 팔 안쪽에 폐쇄 첩포하여 피부 자극성이나 감작성(알레르기)을 평가함<br>• 국내외 대학 또는 전문 연구기관에서 실시하며, 관련 분야 전문의사, 연구소, 병원 등 관련 기관에서 5년 이상 경력을 가진 자의 지도 및 감독하에 수행·평가되어야 함 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_054f1d",
+    "text": "알레르기",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L634):\n| 인체 첩포시험(인체 패치테스트) 🎯 기출 | • 등, 팔 안쪽에 폐쇄 첩포하여 피부 자극성이나 감작성(알레르기)을 평가함<br>• 국내외 대학 또는 전문 연구기관에서 실시하며, 관련 분야 전문의사, 연구소, 병원 등 관련 기관에서 5년 이상 경력을 가진 자의 지도 및 감독하에 수행·평가되어야 함 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_95226c",
+    "text": "자외선",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L634):\n| 인체 첩포시험(인체 패치테스트) 🎯 기출 | • 등, 팔 안쪽에 폐쇄 첩포하여 피부 자극성이나 감작성(알레르기)을 평가함<br>• 국내외 대학 또는 전문 연구기관에서 실시하며, 관련 분야 전문의사, 연구소, 병원 등 관련 기관에서 5년 이상 경력을 가진 자의 지도 및 감독하에 수행·평가되어야 함 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q394",
+  "explain": "📖 교재 근거 (교재: L634):\n| 인체 첩포시험(인체 패치테스트) 🎯 기출 | • 등, 팔 안쪽에 폐쇄 첩포하여 피부 자극성이나 감작성(알레르기)을 평가함<br>• 국내외 대학 또는 전문 연구기관에서 실시하며, 관련 분야 전문의사, 연구소, 병원 등 관련 기관에서 5년 이상 경력을 가진 자의 지도 및 감독하에 수행·평가되어야 함 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "1"
+ },
+ {
+  "id": "combo-04-0395",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L483 (출처: 과목4 문제은행 Q395)",
+  "stem": "피부의 콜라겐 합성에 필요한 비타민은 비타민 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_c5b5f9",
+    "text": "라멜라",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L483):\n| 진피 | 피부 90% 이상, 표피의 10~40배, 콜라겐 90%·엘라스틴 1.5~4.7% |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_f971ea",
+    "text": "사용기한",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L483):\n| 진피 | 피부 90% 이상, 표피의 10~40배, 콜라겐 90%·엘라스틴 1.5~4.7% |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_289bee",
+    "text": "충진",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L483):\n| 진피 | 피부 90% 이상, 표피의 10~40배, 콜라겐 90%·엘라스틴 1.5~4.7% |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_9c5865",
+    "text": "섬유아",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L483):\n| 진피 | 피부 90% 이상, 표피의 10~40배, 콜라겐 90%·엘라스틴 1.5~4.7% |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_664c26",
+    "text": "C",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L483):\n| 진피 | 피부 90% 이상, 표피의 10~40배, 콜라겐 90%·엘라스틴 1.5~4.7% |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㅁ",
+     "ㄹ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㅁ",
+     "ㄷ",
+     "ㄱ",
+     "ㄹ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㅁ",
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q395",
+  "explain": "📖 교재 근거 (교재: L483):\n| 진피 | 피부 90% 이상, 표피의 10~40배, 콜라겐 90%·엘라스틴 1.5~4.7% |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "3"
+ },
+ {
+  "id": "combo-04-0396",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L3468 (출처: 과목4 문제은행 Q396)",
+  "stem": "맞춤형화장품 조제 시 기구의 세척 순서는 세척→소독→(A)이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_51e130",
+    "text": "격리",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3468):\n- 세척한 작업 장비 및 도구는 잘 건조하여 다음 사용 시까지 오염 방지"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_08ef14",
+    "text": "각질",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3468):\n- 세척한 작업 장비 및 도구는 잘 건조하여 다음 사용 시까지 오염 방지"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_8f64f1",
+    "text": "트랜스글루타미나아제",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3468):\n- 세척한 작업 장비 및 도구는 잘 건조하여 다음 사용 시까지 오염 방지"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_47bdbb",
+    "text": "폐기",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L3468):\n- 세척한 작업 장비 및 도구는 잘 건조하여 다음 사용 시까지 오염 방지"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_e14fe2",
+    "text": "건조",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L3468):\n- 세척한 작업 장비 및 도구는 잘 건조하여 다음 사용 시까지 오염 방지"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㅁ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㅁ",
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q396",
+  "explain": "📖 교재 근거 (교재: L3468):\n- 세척한 작업 장비 및 도구는 잘 건조하여 다음 사용 시까지 오염 방지",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "2"
+ },
+ {
+  "id": "combo-04-0397",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1212 (출처: 과목4 문제은행 Q397)",
+  "stem": "피부의 진피층 중 표피와 접하며 미세한 혈관이 분포하는 층은 (A)층이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_c8c041",
+    "text": "랑게르한스",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1212):\n| 유두층(Papillary Layer) | • 표피의 기저층과 접하고 있으며, 유두(물결) 모양을 형성<br>• 모세혈관과 신경말단이 존재하여 각질형성세포에 산소와 영양을 공급함<br>• 미세한 교원섬유(콜라겐)와 수분을 포함함 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_c4c1d8",
+    "text": "건조",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1212):\n| 유두층(Papillary Layer) | • 표피의 기저층과 접하고 있으며, 유두(물결) 모양을 형성<br>• 모세혈관과 신경말단이 존재하여 각질형성세포에 산소와 영양을 공급함<br>• 미세한 교원섬유(콜라겐)와 수분을 포함함 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_1ae215",
+    "text": "이온",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1212):\n| 유두층(Papillary Layer) | • 표피의 기저층과 접하고 있으며, 유두(물결) 모양을 형성<br>• 모세혈관과 신경말단이 존재하여 각질형성세포에 산소와 영양을 공급함<br>• 미세한 교원섬유(콜라겐)와 수분을 포함함 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_0a8fcb",
+    "text": "코르네오데스모좀",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1212):\n| 유두층(Papillary Layer) | • 표피의 기저층과 접하고 있으며, 유두(물결) 모양을 형성<br>• 모세혈관과 신경말단이 존재하여 각질형성세포에 산소와 영양을 공급함<br>• 미세한 교원섬유(콜라겐)와 수분을 포함함 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_761f25",
+    "text": "유두",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1212):\n| 유두층(Papillary Layer) | • 표피의 기저층과 접하고 있으며, 유두(물결) 모양을 형성<br>• 모세혈관과 신경말단이 존재하여 각질형성세포에 산소와 영양을 공급함<br>• 미세한 교원섬유(콜라겐)와 수분을 포함함 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ",
+     "ㅁ",
+     "ㄴ",
+     "ㄷ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ",
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ",
+     "ㄷ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q397",
+  "explain": "📖 교재 근거 (교재: L1212):\n| 유두층(Papillary Layer) | • 표피의 기저층과 접하고 있으며, 유두(물결) 모양을 형성<br>• 모세혈관과 신경말단이 존재하여 각질형성세포에 산소와 영양을 공급함<br>• 미세한 교원섬유(콜라겐)와 수분을 포함함 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "5"
+ },
+ {
+  "id": "combo-04-0398",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L578 (출처: 과목4 문제은행 Q398)",
+  "stem": "맞춤형화장품 조제 시 원료의 품질 이상이 발견된 경우 별도 구역에 (A)하고 폐기 또는 반품해야 한다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_db63e2",
+    "text": "부식(방식)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L578):\n| 제3조의8<br>맞춤형화장품 조제관리사 자격의 취소 | • 거짓이나 그 밖의 부정한 방법으로 맞춤형화장품조제관리사의 자격을 취득한 경우<br>• 맞춤형화장품조제관리사의 결격사유에 해당하는 경우(자격이 취소된 날부터 3년이 지나지 않은 자는 제외함)<br>• 자격증 대여 등의 금지행위를 위반하여 다른 사람에게 자기의 성명을 사용하여 맞춤형화장품조제관리사 업무를 하게 하거나 맞춤형화장품조제관리사자격증을 양도 또는 대여한 경우 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_b60c86",
+    "text": "분동(추)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L578):\n| 제3조의8<br>맞춤형화장품 조제관리사 자격의 취소 | • 거짓이나 그 밖의 부정한 방법으로 맞춤형화장품조제관리사의 자격을 취득한 경우<br>• 맞춤형화장품조제관리사의 결격사유에 해당하는 경우(자격이 취소된 날부터 3년이 지나지 않은 자는 제외함)<br>• 자격증 대여 등의 금지행위를 위반하여 다른 사람에게 자기의 성명을 사용하여 맞춤형화장품조제관리사 업무를 하게 하거나 맞춤형화장품조제관리사자격증을 양도 또는 대여한 경우 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_391a23",
+    "text": "격리",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L578):\n| 제3조의8<br>맞춤형화장품 조제관리사 자격의 취소 | • 거짓이나 그 밖의 부정한 방법으로 맞춤형화장품조제관리사의 자격을 취득한 경우<br>• 맞춤형화장품조제관리사의 결격사유에 해당하는 경우(자격이 취소된 날부터 3년이 지나지 않은 자는 제외함)<br>• 자격증 대여 등의 금지행위를 위반하여 다른 사람에게 자기의 성명을 사용하여 맞춤형화장품조제관리사 업무를 하게 하거나 맞춤형화장품조제관리사자격증을 양도 또는 대여한 경우 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_47a10e",
+    "text": "표준",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L578):\n| 제3조의8<br>맞춤형화장품 조제관리사 자격의 취소 | • 거짓이나 그 밖의 부정한 방법으로 맞춤형화장품조제관리사의 자격을 취득한 경우<br>• 맞춤형화장품조제관리사의 결격사유에 해당하는 경우(자격이 취소된 날부터 3년이 지나지 않은 자는 제외함)<br>• 자격증 대여 등의 금지행위를 위반하여 다른 사람에게 자기의 성명을 사용하여 맞춤형화장품조제관리사 업무를 하게 하거나 맞춤형화장품조제관리사자격증을 양도 또는 대여한 경우 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_dd64f6",
+    "text": "유기",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L578):\n| 제3조의8<br>맞춤형화장품 조제관리사 자격의 취소 | • 거짓이나 그 밖의 부정한 방법으로 맞춤형화장품조제관리사의 자격을 취득한 경우<br>• 맞춤형화장품조제관리사의 결격사유에 해당하는 경우(자격이 취소된 날부터 3년이 지나지 않은 자는 제외함)<br>• 자격증 대여 등의 금지행위를 위반하여 다른 사람에게 자기의 성명을 사용하여 맞춤형화장품조제관리사 업무를 하게 하거나 맞춤형화장품조제관리사자격증을 양도 또는 대여한 경우 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q398",
+  "explain": "📖 교재 근거 (교재: L578):\n| 제3조의8<br>맞춤형화장품 조제관리사 자격의 취소 | • 거짓이나 그 밖의 부정한 방법으로 맞춤형화장품조제관리사의 자격을 취득한 경우<br>• 맞춤형화장품조제관리사의 결격사유에 해당하는 경우(자격이 취소된 날부터 3년이 지나지 않은 자는 제외함)<br>• 자격증 대여 등의 금지행위를 위반하여 다른 사람에게 자기의 성명을 사용하여 맞춤형화장품조제관리사 업무를 하게 하거나 맞춤형화장품조제관리사자격증을 양도 또는 대여한 경우 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "5"
+ },
+ {
+  "id": "combo-04-0399",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1396 (출처: 과목4 문제은행 Q399)",
+  "stem": "피부의 모발의 성장 주기 중 성장기의 영문 명칭은 (A)기이다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_926a9a",
+    "text": "anagen(성장)",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1396):\n| 성장기(Anagen) | 3~6년 | • 전체 모발의 80~90%가 이 시기에 해당함<br>• 모모세포의 활발한 활동 시기<br>• 여자가 남자에 비해 성장주기가 긺 |\n| 퇴행기(Catagen) | 약 3주 | • 전체 모발의 1~2%가 이 시기에 해당함<br>• 모모세포의 분열이 감소하는 시기<br>• 모발의 성장이 멈춘 시기 |\n| 휴지기(Telogen) | 3~4개월 | • 전체 모발의 10~15%가 이 시기에 해당함<br>• 모낭과 모유두의 완전한 분리<br>• 모발의 탈락 시작 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_db7b4c",
+    "text": "이황화(disulfide)",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1396):\n| 성장기(Anagen) | 3~6년 | • 전체 모발의 80~90%가 이 시기에 해당함<br>• 모모세포의 활발한 활동 시기<br>• 여자가 남자에 비해 성장주기가 긺 |\n| 퇴행기(Catagen) | 약 3주 | • 전체 모발의 1~2%가 이 시기에 해당함<br>• 모모세포의 분열이 감소하는 시기<br>• 모발의 성장이 멈춘 시기 |\n| 휴지기(Telogen) | 3~4개월 | • 전체 모발의 10~15%가 이 시기에 해당함<br>• 모낭과 모유두의 완전한 분리<br>• 모발의 탈락 시작 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_58cfeb",
+    "text": "전성분",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1396):\n| 성장기(Anagen) | 3~6년 | • 전체 모발의 80~90%가 이 시기에 해당함<br>• 모모세포의 활발한 활동 시기<br>• 여자가 남자에 비해 성장주기가 긺 |\n| 퇴행기(Catagen) | 약 3주 | • 전체 모발의 1~2%가 이 시기에 해당함<br>• 모모세포의 분열이 감소하는 시기<br>• 모발의 성장이 멈춘 시기 |\n| 휴지기(Telogen) | 3~4개월 | • 전체 모발의 10~15%가 이 시기에 해당함<br>• 모낭과 모유두의 완전한 분리<br>• 모발의 탈락 시작 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_1f0d0b",
+    "text": "이온",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1396):\n| 성장기(Anagen) | 3~6년 | • 전체 모발의 80~90%가 이 시기에 해당함<br>• 모모세포의 활발한 활동 시기<br>• 여자가 남자에 비해 성장주기가 긺 |\n| 퇴행기(Catagen) | 약 3주 | • 전체 모발의 1~2%가 이 시기에 해당함<br>• 모모세포의 분열이 감소하는 시기<br>• 모발의 성장이 멈춘 시기 |\n| 휴지기(Telogen) | 3~4개월 | • 전체 모발의 10~15%가 이 시기에 해당함<br>• 모낭과 모유두의 완전한 분리<br>• 모발의 탈락 시작 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_08c814",
+    "text": "온도",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1396):\n| 성장기(Anagen) | 3~6년 | • 전체 모발의 80~90%가 이 시기에 해당함<br>• 모모세포의 활발한 활동 시기<br>• 여자가 남자에 비해 성장주기가 긺 |\n| 퇴행기(Catagen) | 약 3주 | • 전체 모발의 1~2%가 이 시기에 해당함<br>• 모모세포의 분열이 감소하는 시기<br>• 모발의 성장이 멈춘 시기 |\n| 휴지기(Telogen) | 3~4개월 | • 전체 모발의 10~15%가 이 시기에 해당함<br>• 모낭과 모유두의 완전한 분리<br>• 모발의 탈락 시작 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㅁ",
+     "ㄷ",
+     "ㄹ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject4_q399",
+  "explain": "📖 교재 근거 (교재: L1396):\n| 성장기(Anagen) | 3~6년 | • 전체 모발의 80~90%가 이 시기에 해당함<br>• 모모세포의 활발한 활동 시기<br>• 여자가 남자에 비해 성장주기가 긺 |\n| 퇴행기(Catagen) | 약 3주 | • 전체 모발의 1~2%가 이 시기에 해당함<br>• 모모세포의 분열이 감소하는 시기<br>• 모발의 성장이 멈춘 시기 |\n| 휴지기(Telogen) | 3~4개월 | • 전체 모발의 10~15%가 이 시기에 해당함<br>• 모낭과 모유두의 완전한 분리<br>• 모발의 탈락 시작 |",
+  "source": "맞춤형화장품의 이해 (400제)",
+  "answer": "5"
+ },
+ {
+  "id": "combo-04-0400",
   "subject": 4,
   "type": "combo",
   "points": 4,

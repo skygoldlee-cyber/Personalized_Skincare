@@ -1,5 +1,5 @@
 // 자동 생성된 합답형 드릴 데이터입니다. 수정하지 마십시오. (tools/build_combo_drills.js)
-// 원본: data/exams/subject3.dea9d206.js — mode: fact(명제 조합) 23문 / answer(정답 조합) 225문
+// 원본: data/exams/subject3.dea9d206.js — mode: fact(명제 조합) 23문 / answer(정답 조합) 226문
 var COMBO_DRILLS_subject3 = [
  {
   "id": "combo-03-0001",
@@ -5246,6 +5246,98 @@ var COMBO_DRILLS_subject3 = [
   "subject": 3,
   "type": "combo",
   "points": 4,
+  "citation": "📖 출처: 과목3 문제은행 Q57",
+  "stem": "다음 중 유통화장품 안전성 기준상 총호기성생균수 미생물 한도가 '500개/g(mL) 이하'로 차등 제한되어 엄격하게 관리되는 제품 유형의 조합으로 옳은 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "safety_st_086995",
+    "text": "영유아용 제품류 및 눈화장용 제품류",
+    "truth": true,
+    "explain": "📖 교재 근거 (4.material-safety: L531):\n| 미생물 한도(영유아·눈화장) | 총호기성생균수 500개/g(mL) 이하 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "safety_st_7706b1",
+    "text": "샴푸 및 트리트먼트 제품류",
+    "truth": false,
+    "explain": "📖 교재 근거 (4.material-safety: L531):\n| 미생물 한도(영유아·눈화장) | 총호기성생균수 500개/g(mL) 이하 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "safety_st_06bac6",
+    "text": "바디클렌저 및 고형 비누류",
+    "truth": false,
+    "explain": "📖 교재 근거 (4.material-safety: L531):\n| 미생물 한도(영유아·눈화장) | 총호기성생균수 500개/g(mL) 이하 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "safety_st_9ce2fd",
+    "text": "기초 토너 및 수분 크림류",
+    "truth": false,
+    "explain": "📖 교재 근거 (4.material-safety: L531):\n| 미생물 한도(영유아·눈화장) | 총호기성생균수 500개/g(mL) 이하 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "safety_st_a23757",
+    "text": "네일 폴리시 및 탑코트 제품류",
+    "truth": false,
+    "explain": "📖 교재 근거 (4.material-safety: L531):\n| 미생물 한도(영유아·눈화장) | 총호기성생균수 500개/g(mL) 이하 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄱ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject3_q57",
+  "explain": "📖 교재 근거 (4.material-safety: L531):\n| 미생물 한도(영유아·눈화장) | 총호기성생균수 500개/g(mL) 이하 |",
+  "source": "유통화장품 안전관리 (250제)",
+  "answer": "1"
+ },
+ {
+  "id": "combo-03-0058",
+  "subject": 3,
+  "type": "combo",
+  "points": 4,
   "citation": "📖 출처: 과목3 문제은행 Q58",
   "stem": "다음 중 위해화장품 위해성 평가 중 인체의 노출 빈도와 1회 사용량을 정량적으로 예측하여 안전역을 검출하는 평가는 위해평가의 4단계 중 어느 단계인가? — 해당하는 것을 모두 고르시오.",
   "statements": [
@@ -5335,7 +5427,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0058",
+  "id": "combo-03-0059",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -5426,7 +5518,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0059",
+  "id": "combo-03-0060",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -5518,7 +5610,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "5"
  },
  {
-  "id": "combo-03-0060",
+  "id": "combo-03-0061",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -5612,7 +5704,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "1"
  },
  {
-  "id": "combo-03-0061",
+  "id": "combo-03-0062",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -5702,7 +5794,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0062",
+  "id": "combo-03-0063",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -5792,7 +5884,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0063",
+  "id": "combo-03-0064",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -5887,7 +5979,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0064",
+  "id": "combo-03-0065",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -5981,7 +6073,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "5"
  },
  {
-  "id": "combo-03-0065",
+  "id": "combo-03-0066",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -6074,7 +6166,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0066",
+  "id": "combo-03-0067",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -6164,7 +6256,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0067",
+  "id": "combo-03-0068",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -6255,7 +6347,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "1"
  },
  {
-  "id": "combo-03-0068",
+  "id": "combo-03-0069",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -6350,7 +6442,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "5"
  },
  {
-  "id": "combo-03-0069",
+  "id": "combo-03-0070",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -6441,7 +6533,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0070",
+  "id": "combo-03-0071",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -6533,7 +6625,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0071",
+  "id": "combo-03-0072",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -6622,7 +6714,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0072",
+  "id": "combo-03-0073",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -6718,7 +6810,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0073",
+  "id": "combo-03-0074",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -6810,7 +6902,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0074",
+  "id": "combo-03-0075",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -6903,7 +6995,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0075",
+  "id": "combo-03-0076",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -6998,7 +7090,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0076",
+  "id": "combo-03-0077",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -7095,7 +7187,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "1"
  },
  {
-  "id": "combo-03-0077",
+  "id": "combo-03-0078",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -7188,7 +7280,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "5"
  },
  {
-  "id": "combo-03-0078",
+  "id": "combo-03-0079",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -7281,7 +7373,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0079",
+  "id": "combo-03-0080",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -7373,7 +7465,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0080",
+  "id": "combo-03-0081",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -7469,7 +7561,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "5"
  },
  {
-  "id": "combo-03-0081",
+  "id": "combo-03-0082",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -7559,7 +7651,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0082",
+  "id": "combo-03-0083",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -7649,7 +7741,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "5"
  },
  {
-  "id": "combo-03-0083",
+  "id": "combo-03-0084",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -7743,7 +7835,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "5"
  },
  {
-  "id": "combo-03-0084",
+  "id": "combo-03-0085",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -7836,7 +7928,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "5"
  },
  {
-  "id": "combo-03-0085",
+  "id": "combo-03-0086",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -7930,7 +8022,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0086",
+  "id": "combo-03-0087",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -8027,7 +8119,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "1"
  },
  {
-  "id": "combo-03-0087",
+  "id": "combo-03-0088",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -8116,7 +8208,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0088",
+  "id": "combo-03-0089",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -8210,7 +8302,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0089",
+  "id": "combo-03-0090",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -8305,7 +8397,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0090",
+  "id": "combo-03-0091",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -8399,7 +8491,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0091",
+  "id": "combo-03-0092",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -8489,7 +8581,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0092",
+  "id": "combo-03-0093",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -8579,7 +8671,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0093",
+  "id": "combo-03-0094",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -8668,7 +8760,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0094",
+  "id": "combo-03-0095",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -8752,7 +8844,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0095",
+  "id": "combo-03-0096",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -8847,7 +8939,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0096",
+  "id": "combo-03-0097",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -8942,7 +9034,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "5"
  },
  {
-  "id": "combo-03-0097",
+  "id": "combo-03-0098",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -9038,7 +9130,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0098",
+  "id": "combo-03-0099",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -9131,7 +9223,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0099",
+  "id": "combo-03-0100",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -9220,7 +9312,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0100",
+  "id": "combo-03-0101",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -9310,7 +9402,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0101",
+  "id": "combo-03-0102",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -9406,7 +9498,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "1"
  },
  {
-  "id": "combo-03-0102",
+  "id": "combo-03-0103",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -9498,7 +9590,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0103",
+  "id": "combo-03-0104",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -9590,7 +9682,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0104",
+  "id": "combo-03-0105",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -9683,7 +9775,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "1"
  },
  {
-  "id": "combo-03-0105",
+  "id": "combo-03-0106",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -9779,7 +9871,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0106",
+  "id": "combo-03-0107",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -9871,7 +9963,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0107",
+  "id": "combo-03-0108",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -9966,7 +10058,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0108",
+  "id": "combo-03-0109",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -10055,7 +10147,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0109",
+  "id": "combo-03-0110",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -10148,7 +10240,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0110",
+  "id": "combo-03-0111",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -10241,7 +10333,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "1"
  },
  {
-  "id": "combo-03-0111",
+  "id": "combo-03-0112",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -10336,7 +10428,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0112",
+  "id": "combo-03-0113",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -10429,7 +10521,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0113",
+  "id": "combo-03-0114",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -10522,7 +10614,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0114",
+  "id": "combo-03-0115",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -10614,7 +10706,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "1"
  },
  {
-  "id": "combo-03-0115",
+  "id": "combo-03-0116",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -10709,7 +10801,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "1"
  },
  {
-  "id": "combo-03-0116",
+  "id": "combo-03-0117",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -10802,7 +10894,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "5"
  },
  {
-  "id": "combo-03-0117",
+  "id": "combo-03-0118",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -10894,7 +10986,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0118",
+  "id": "combo-03-0119",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -10990,7 +11082,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0119",
+  "id": "combo-03-0120",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -11084,7 +11176,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0120",
+  "id": "combo-03-0121",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -11168,7 +11260,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0121",
+  "id": "combo-03-0122",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -11258,7 +11350,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0122",
+  "id": "combo-03-0123",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -11348,7 +11440,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0123",
+  "id": "combo-03-0124",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -11443,7 +11535,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "5"
  },
  {
-  "id": "combo-03-0124",
+  "id": "combo-03-0125",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -11540,7 +11632,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0125",
+  "id": "combo-03-0126",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -11633,7 +11725,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "1"
  },
  {
-  "id": "combo-03-0126",
+  "id": "combo-03-0127",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -11727,7 +11819,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "1"
  },
  {
-  "id": "combo-03-0127",
+  "id": "combo-03-0128",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -11820,7 +11912,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0128",
+  "id": "combo-03-0129",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -11912,7 +12004,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0129",
+  "id": "combo-03-0130",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -12003,7 +12095,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0130",
+  "id": "combo-03-0131",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -12096,7 +12188,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "5"
  },
  {
-  "id": "combo-03-0131",
+  "id": "combo-03-0132",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -12187,7 +12279,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "5"
  },
  {
-  "id": "combo-03-0132",
+  "id": "combo-03-0133",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -12280,7 +12372,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "5"
  },
  {
-  "id": "combo-03-0133",
+  "id": "combo-03-0134",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -12371,7 +12463,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "1"
  },
  {
-  "id": "combo-03-0134",
+  "id": "combo-03-0135",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -12457,7 +12549,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "1"
  },
  {
-  "id": "combo-03-0135",
+  "id": "combo-03-0136",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -12550,7 +12642,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0136",
+  "id": "combo-03-0137",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -12644,7 +12736,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0137",
+  "id": "combo-03-0138",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -12739,7 +12831,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "1"
  },
  {
-  "id": "combo-03-0138",
+  "id": "combo-03-0139",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -12834,7 +12926,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0139",
+  "id": "combo-03-0140",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -12927,7 +13019,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0140",
+  "id": "combo-03-0141",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -13014,7 +13106,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0141",
+  "id": "combo-03-0142",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -13108,7 +13200,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0142",
+  "id": "combo-03-0143",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -13199,7 +13291,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "5"
  },
  {
-  "id": "combo-03-0143",
+  "id": "combo-03-0144",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -13293,7 +13385,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "1"
  },
  {
-  "id": "combo-03-0144",
+  "id": "combo-03-0145",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -13389,7 +13481,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "1"
  },
  {
-  "id": "combo-03-0145",
+  "id": "combo-03-0146",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -13482,7 +13574,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "5"
  },
  {
-  "id": "combo-03-0146",
+  "id": "combo-03-0147",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -13576,7 +13668,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "5"
  },
  {
-  "id": "combo-03-0147",
+  "id": "combo-03-0148",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -13672,7 +13764,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0148",
+  "id": "combo-03-0149",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -13757,7 +13849,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "5"
  },
  {
-  "id": "combo-03-0149",
+  "id": "combo-03-0150",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -13850,7 +13942,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0150",
+  "id": "combo-03-0151",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -13945,7 +14037,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "5"
  },
  {
-  "id": "combo-03-0151",
+  "id": "combo-03-0152",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -14041,7 +14133,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0152",
+  "id": "combo-03-0153",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -14128,7 +14220,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0153",
+  "id": "combo-03-0154",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -14220,7 +14312,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "5"
  },
  {
-  "id": "combo-03-0154",
+  "id": "combo-03-0155",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -14313,7 +14405,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0155",
+  "id": "combo-03-0156",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -14405,7 +14497,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0156",
+  "id": "combo-03-0157",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -14502,7 +14594,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0157",
+  "id": "combo-03-0158",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -14594,7 +14686,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0158",
+  "id": "combo-03-0159",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -14687,7 +14779,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0159",
+  "id": "combo-03-0160",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -14776,7 +14868,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0160",
+  "id": "combo-03-0161",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -14870,7 +14962,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "1"
  },
  {
-  "id": "combo-03-0161",
+  "id": "combo-03-0162",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -14963,7 +15055,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0162",
+  "id": "combo-03-0163",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -15058,7 +15150,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0163",
+  "id": "combo-03-0164",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -15150,7 +15242,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0164",
+  "id": "combo-03-0165",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -15246,7 +15338,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0165",
+  "id": "combo-03-0166",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -15340,7 +15432,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0166",
+  "id": "combo-03-0167",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -15436,7 +15528,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0167",
+  "id": "combo-03-0168",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -15528,7 +15620,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0168",
+  "id": "combo-03-0169",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -15621,7 +15713,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "1"
  },
  {
-  "id": "combo-03-0169",
+  "id": "combo-03-0170",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -15716,7 +15808,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "1"
  },
  {
-  "id": "combo-03-0170",
+  "id": "combo-03-0171",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -15811,7 +15903,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "1"
  },
  {
-  "id": "combo-03-0171",
+  "id": "combo-03-0172",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -15906,7 +15998,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0172",
+  "id": "combo-03-0173",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -16001,7 +16093,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0173",
+  "id": "combo-03-0174",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -16094,7 +16186,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "5"
  },
  {
-  "id": "combo-03-0174",
+  "id": "combo-03-0175",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -16188,7 +16280,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0175",
+  "id": "combo-03-0176",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -16282,7 +16374,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0176",
+  "id": "combo-03-0177",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -16374,7 +16466,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "5"
  },
  {
-  "id": "combo-03-0177",
+  "id": "combo-03-0178",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -16468,7 +16560,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "5"
  },
  {
-  "id": "combo-03-0178",
+  "id": "combo-03-0179",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -16564,7 +16656,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0179",
+  "id": "combo-03-0180",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -16657,7 +16749,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "5"
  },
  {
-  "id": "combo-03-0180",
+  "id": "combo-03-0181",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -16752,7 +16844,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "5"
  },
  {
-  "id": "combo-03-0181",
+  "id": "combo-03-0182",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -16844,7 +16936,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "5"
  },
  {
-  "id": "combo-03-0182",
+  "id": "combo-03-0183",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -16937,7 +17029,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0183",
+  "id": "combo-03-0184",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -17029,7 +17121,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0184",
+  "id": "combo-03-0185",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -17125,7 +17217,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0185",
+  "id": "combo-03-0186",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -17220,7 +17312,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0186",
+  "id": "combo-03-0187",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -17315,7 +17407,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0187",
+  "id": "combo-03-0188",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -17408,7 +17500,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0188",
+  "id": "combo-03-0189",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -17502,7 +17594,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0189",
+  "id": "combo-03-0190",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -17595,7 +17687,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0190",
+  "id": "combo-03-0191",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -17690,7 +17782,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0191",
+  "id": "combo-03-0192",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -17783,7 +17875,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0192",
+  "id": "combo-03-0193",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -17878,7 +17970,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0193",
+  "id": "combo-03-0194",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -17974,7 +18066,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "5"
  },
  {
-  "id": "combo-03-0194",
+  "id": "combo-03-0195",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -18067,7 +18159,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0195",
+  "id": "combo-03-0196",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -18159,7 +18251,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0196",
+  "id": "combo-03-0197",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -18250,7 +18342,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0197",
+  "id": "combo-03-0198",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -18340,7 +18432,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "5"
  },
  {
-  "id": "combo-03-0198",
+  "id": "combo-03-0199",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -18431,7 +18523,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0199",
+  "id": "combo-03-0200",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -18524,7 +18616,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0200",
+  "id": "combo-03-0201",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -18616,7 +18708,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0201",
+  "id": "combo-03-0202",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -18709,7 +18801,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0202",
+  "id": "combo-03-0203",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -18802,7 +18894,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0203",
+  "id": "combo-03-0204",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -18893,7 +18985,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0204",
+  "id": "combo-03-0205",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -18988,7 +19080,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0205",
+  "id": "combo-03-0206",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -19083,7 +19175,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0206",
+  "id": "combo-03-0207",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -19175,7 +19267,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "1"
  },
  {
-  "id": "combo-03-0207",
+  "id": "combo-03-0208",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -19264,7 +19356,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0208",
+  "id": "combo-03-0209",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -19355,7 +19447,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0209",
+  "id": "combo-03-0210",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -19447,7 +19539,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "1"
  },
  {
-  "id": "combo-03-0210",
+  "id": "combo-03-0211",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -19543,7 +19635,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0211",
+  "id": "combo-03-0212",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -19638,7 +19730,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "5"
  },
  {
-  "id": "combo-03-0212",
+  "id": "combo-03-0213",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -19731,7 +19823,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0213",
+  "id": "combo-03-0214",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -19826,7 +19918,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0214",
+  "id": "combo-03-0215",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -19921,7 +20013,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0215",
+  "id": "combo-03-0216",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -20017,7 +20109,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0216",
+  "id": "combo-03-0217",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -20112,7 +20204,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0217",
+  "id": "combo-03-0218",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -20204,7 +20296,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0218",
+  "id": "combo-03-0219",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -20297,7 +20389,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0219",
+  "id": "combo-03-0220",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -20392,7 +20484,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0220",
+  "id": "combo-03-0221",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -20483,7 +20575,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "5"
  },
  {
-  "id": "combo-03-0221",
+  "id": "combo-03-0222",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -20575,7 +20667,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0222",
+  "id": "combo-03-0223",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -20667,7 +20759,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "1"
  },
  {
-  "id": "combo-03-0223",
+  "id": "combo-03-0224",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -20759,7 +20851,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "1"
  },
  {
-  "id": "combo-03-0224",
+  "id": "combo-03-0225",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -20854,7 +20946,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "1"
  },
  {
-  "id": "combo-03-0225",
+  "id": "combo-03-0226",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -20948,7 +21040,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0226",
+  "id": "combo-03-0227",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -21041,7 +21133,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0227",
+  "id": "combo-03-0228",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -21137,7 +21229,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "5"
  },
  {
-  "id": "combo-03-0228",
+  "id": "combo-03-0229",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -21230,7 +21322,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0229",
+  "id": "combo-03-0230",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -21321,7 +21413,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "5"
  },
  {
-  "id": "combo-03-0230",
+  "id": "combo-03-0231",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -21419,7 +21511,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "1"
  },
  {
-  "id": "combo-03-0231",
+  "id": "combo-03-0232",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -21508,7 +21600,102 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0232",
+  "id": "combo-03-0233",
+  "subject": 3,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1214 (출처: 과목3 문제은행 Q233)",
+  "stem": "작업장 내 직원의 손 소독에 사용되는 손 소독제는 법령상 (A)으로 분류된다. — (A)에 해당하는 것을 모두 고르시오.",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "safety_st_f025a9",
+    "text": "망상",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1214):\n| 손 소독제 🎯 기출 | 1차 에탄올이 함유되어 세정 효과가 있음 · 물 없이도 손 소독이 가능하며, 의약외품으로 분류됨 · 알코올, 클로르헥시딘, 헥사클로로펜, 아이오도퍼 등 | 손 소독제로 소독 |"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "safety_st_9eefc0",
+    "text": "수소",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1214):\n| 손 소독제 🎯 기출 | 1차 에탄올이 함유되어 세정 효과가 있음 · 물 없이도 손 소독이 가능하며, 의약외품으로 분류됨 · 알코올, 클로르헥시딘, 헥사클로로펜, 아이오도퍼 등 | 손 소독제로 소독 |"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "safety_st_d8c0c1",
+    "text": "의약외품",
+    "truth": true,
+    "explain": "📖 교재 근거 (교재: L1214):\n| 손 소독제 🎯 기출 | 1차 에탄올이 함유되어 세정 효과가 있음 · 물 없이도 손 소독이 가능하며, 의약외품으로 분류됨 · 알코올, 클로르헥시딘, 헥사클로로펜, 아이오도퍼 등 | 손 소독제로 소독 |"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "safety_st_7ab2d6",
+    "text": "히알루론산",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1214):\n| 손 소독제 🎯 기출 | 1차 에탄올이 함유되어 세정 효과가 있음 · 물 없이도 손 소독이 가능하며, 의약외품으로 분류됨 · 알코올, 클로르헥시딘, 헥사클로로펜, 아이오도퍼 등 | 손 소독제로 소독 |"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "safety_st_45a3cd",
+    "text": "OQ",
+    "truth": false,
+    "explain": "📖 교재 근거 (교재: L1214):\n| 손 소독제 🎯 기출 | 1차 에탄올이 함유되어 세정 효과가 있음 · 물 없이도 손 소독이 가능하며, 의약외품으로 분류됨 · 알코올, 클로르헥시딘, 헥사클로로펜, 아이오도퍼 등 | 손 소독제로 소독 |"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㅁ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㄴ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "정답판정"
+  ],
+  "derivedFrom": "subject3_q233",
+  "explain": "📖 교재 근거 (교재: L1214):\n| 손 소독제 🎯 기출 | 1차 에탄올이 함유되어 세정 효과가 있음 · 물 없이도 손 소독이 가능하며, 의약외품으로 분류됨 · 알코올, 클로르헥시딘, 헥사클로로펜, 아이오도퍼 등 | 손 소독제로 소독 |",
+  "source": "유통화장품 안전관리 (250제)",
+  "answer": "3"
+ },
+ {
+  "id": "combo-03-0234",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -21602,7 +21789,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0233",
+  "id": "combo-03-0235",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -21696,7 +21883,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "1"
  },
  {
-  "id": "combo-03-0234",
+  "id": "combo-03-0236",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -21786,7 +21973,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0235",
+  "id": "combo-03-0237",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -21883,7 +22070,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "1"
  },
  {
-  "id": "combo-03-0236",
+  "id": "combo-03-0238",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -21973,7 +22160,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "5"
  },
  {
-  "id": "combo-03-0237",
+  "id": "combo-03-0239",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -22066,7 +22253,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0238",
+  "id": "combo-03-0240",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -22161,7 +22348,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "2"
  },
  {
-  "id": "combo-03-0239",
+  "id": "combo-03-0241",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -22252,7 +22439,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0240",
+  "id": "combo-03-0242",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -22347,7 +22534,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0241",
+  "id": "combo-03-0243",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -22435,7 +22622,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "3"
  },
  {
-  "id": "combo-03-0242",
+  "id": "combo-03-0244",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -22526,7 +22713,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0243",
+  "id": "combo-03-0245",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -22619,7 +22806,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "1"
  },
  {
-  "id": "combo-03-0244",
+  "id": "combo-03-0246",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -22712,7 +22899,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0245",
+  "id": "combo-03-0247",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -22806,7 +22993,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0246",
+  "id": "combo-03-0248",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -22899,7 +23086,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "5"
  },
  {
-  "id": "combo-03-0247",
+  "id": "combo-03-0249",
   "subject": 3,
   "type": "combo",
   "points": 4,
@@ -22991,7 +23178,7 @@ var COMBO_DRILLS_subject3 = [
   "answer": "4"
  },
  {
-  "id": "combo-03-0248",
+  "id": "combo-03-0250",
   "subject": 3,
   "type": "combo",
   "points": 4,
