@@ -1,5 +1,5 @@
 // src/views/study-calendar.js — 학습 캘린더/목표 뷰
-import { getStudyCalendar, getStudyGoals, setStudyGoals, getTodayGoalProgress, getWeeklyGoalProgress, getMonthlyStudyDays, isStudiedOn, getTodayStr } from '../study-tracker.js';
+import { getStudyCalendar, getStudyGoals, setStudyGoals, getTodayGoalProgress, getWeeklyGoalProgress, getMonthlyStudyDays, getTodayStr } from '../study-tracker.js';
 import { showToast } from '../ui-utils.js';
 import { STORAGE_KEYS } from '../storage-keys.js';
 import { safeGetItem } from '../state.js';

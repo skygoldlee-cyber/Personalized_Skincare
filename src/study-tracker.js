@@ -42,15 +42,6 @@ export function recordStudyActivity(activity = {}) {
 }
 
 /**
- * 특정 날짜의 학습 여부 확인
- */
-export function isStudiedOn(dateStr) {
-    const cal = getStudyCalendar();
-    const entry = cal[dateStr];
-    return !!(entry && (entry.cards > 0 || entry.quizzes > 0));
-}
-
-/**
  * 이번 달 학습 일수
  */
 export function getMonthlyStudyDays(year, month) {
@@ -64,24 +55,6 @@ export function getMonthlyStudyDays(year, month) {
         }
     });
     return count;
-}
-
-/**
- * 최근 N일 학습 기록 (오늘 기준)
- * @returns {Array} [{ date: "2026-09-12", cards: 5, quizzes: 3, correct: 2 }, ...]
- */
-export function getRecentStudyDays(n = 30) {
-    const cal = getStudyCalendar();
-    const result = [];
-    const today = new Date();
-    for (let i = 0; i < n; i++) {
-        const d = new Date(today);
-        d.setDate(d.getDate() - i);
-        const dateStr = d.toISOString().split('T')[0];
-        const entry = cal[dateStr] || { cards: 0, quizzes: 0, correct: 0 };
-        result.push({ date: dateStr, ...entry });
-    }
-    return result.reverse();
 }
 
 /* =======================================================

@@ -14,7 +14,7 @@ import { updateCardSchedule } from './spaced-repetition.js';
 const STATS_KEY = STORAGE_KEYS.STATEMENT_STATS;
 
 // 연속 정답 N회면 취약 목록에서 졸업 (SM-2 스케줄은 계속 유지 — 복습 주기는 별개)
-export const WEAK_GRADUATE_STREAK = 3;
+const WEAK_GRADUATE_STREAK = 3;
 
 /**
  * gradeAnswer()의 perStatement 결과를 기록한다.

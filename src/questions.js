@@ -311,7 +311,6 @@ const SAMPLE_QUESTIONS = [
 ];
 
 export {
-  SUBJECT_MAX, PASS_TOTAL, PASS_SUBJECT, STANDARD_TAGS,
   normalizeText, deriveComboAnswer, generateComboOptions, validateQuestion,
   gradeAnswer, scoreExam, SAMPLE_QUESTIONS,
 };
