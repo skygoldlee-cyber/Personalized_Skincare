@@ -28,14 +28,6 @@ function apportion(total, weights) {
   return base;
 }
 
-/** 0..n-1 중 need개를 균등 간격으로 선택 (결정적) */
-function pickSpreadIndices(n, need) {
-  const out = new Set();
-  if (need <= 0 || n <= 0) return out;
-  for (let i = 0; i < need; i++) out.add(Math.floor((i * n) / need));
-  return out;
-}
-
 /** exclude를 피해 균등 간격 선택 — 부족하면 제외분에서 보충 */
 function pickSpreadExcluding(n, need, exclude) {
   const allowed = [];
@@ -51,15 +43,46 @@ function pickSpreadExcluding(n, need, exclude) {
   return picked;
 }
 
+// 부정형 발문("옳지 않은 것" 등)은 정답이 거짓 진술이라 단답형 변환 부적합
+const NEGATIVE_STEM = /옳지 않|해당하지 않|적절하지 않|아닌 것|틀린|잘못/;
+// 정답 진술 속 수치 토큰 — 빈칸 변환 대상 (교재 파서와 동일 단위 어휘)
+const NUM_TOKEN = /\b\d+(?:\.\d+)?(?:%|세 이하|세 이상|개월|일|년|배|종|가지|개|시간|g|ml|kg|℃|도|분|초|주|ppm|㎛|회|원|명|㎍|㎎|l|L)\b/;
+
+/** 객관식 → 단답형 변환 (불가 시 null): 긍정 발문 + 정답이 짧은 문구이면 그대로, 긴 정답이면 수치 빈칸화 */
+function choiceToBlank(q) {
+  if (q.type !== 'choice' || NEGATIVE_STEM.test(q.question)) return null;
+  const idx = OPTION_INDICATORS.indexOf(q.answer);
+  const opt = (idx >= 0 ? String(q.options[idx] || '') : '').trim();
+  if (!opt) return null;
+  if (opt.length <= 20) {
+    return { question: q.question, answer: opt };
+  }
+  const m = opt.match(NUM_TOKEN);
+  if (m) {
+    const blanked = opt.replace(m[0], '[ 빈칸 ]');
+    return {
+      question: `다음 설명의 [ 빈칸 ]에 들어갈 내용을 쓰시오.\n${blanked}\n(출제 의도: ${q.question})`,
+      answer: m[0].trim()
+    };
+  }
+  return null;
+}
+
+/** 퀴즈로 단답형화 가능한 문항인지 (blank 원문, ox, 또는 변환 가능 choice) */
+function isBlankConvertible(q) {
+  return q.type === 'blank' || q.type === 'ox' || choiceToBlank(q) !== null;
+}
+
 function toSupplementQuiz(subjectKey, q) {
+  const blank = choiceToBlank(q);
   return {
     id: `${subjectKey}_quiz_${sha6(`${subjectKey}|bank|q${q.num}|${q.answer}`)}`,
     category: '문제은행 보충',
     context: `문제은행 Q${q.num}`,
-    question: q.question,
-    answer: q.answer,
-    type: q.type === 'ox' ? 'ox' : (q.type === 'choice' ? 'choice' : 'blank'),
-    options: q.options && q.options.length ? q.options : null
+    question: blank ? blank.question : q.question,
+    answer: blank ? blank.answer : q.answer,
+    type: blank ? 'blank' : (q.type === 'ox' ? 'ox' : (q.type === 'choice' ? 'choice' : 'blank')),
+    options: blank ? null : (q.options && q.options.length ? q.options : null)
   };
 }
 
@@ -127,7 +150,16 @@ function buildSupplements(manifest, rawCounts, ctx) {
     if (cardNeed === 0 && quizNeed === 0) return;
 
     const questions = (bankQuestions[key] || []).slice().sort((a, b) => a.num - b.num);
-    const quizIdx = pickSpreadIndices(questions.length, quizNeed);
+    // 퀴즈는 단답형(변환) 가능 문항을 우선 균등 편성 — 부족하면 나머지에서 보충
+    const convIdx = [];
+    questions.forEach((q, i) => { if (isBlankConvertible(q)) convIdx.push(i); });
+    const quizIdx = new Set();
+    if (convIdx.length >= quizNeed) {
+      for (let i = 0; i < quizNeed; i++) quizIdx.add(convIdx[Math.floor((i * convIdx.length) / quizNeed)]);
+    } else {
+      convIdx.forEach(i => quizIdx.add(i));
+      pickSpreadExcluding(questions.length, quizNeed - quizIdx.size, quizIdx).forEach(i => quizIdx.add(i));
+    }
     const cardIdx = pickSpreadExcluding(questions.length, cardNeed, quizIdx);
     const quizzes = [...quizIdx].sort((a, b) => a - b).map(idx => toSupplementQuiz(key, questions[idx]));
     const cards = [...cardIdx].sort((a, b) => a - b).map(idx => toSupplementCard(key, questions[idx]));
