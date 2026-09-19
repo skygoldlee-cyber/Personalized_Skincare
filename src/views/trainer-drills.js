@@ -44,6 +44,14 @@ export function openOxDrillSetup() {
 export function startOxDrill(subjectNum) {
     const num = parseInt(subjectNum, 10);
     if (isNaN(num) || num < 1 || num > 4) return;
+    // 취약 리뷰 등 다른 서브뷰에서 호출돼도 자기 패널을 표시한다
+    ['trainer-menu-panel', 'trainer-weak-panel', 'trainer-combo-panel'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('is-hidden');
+    });
+    const ownPanel = document.getElementById('trainer-oxdrill-panel');
+    if (ownPanel) ownPanel.classList.remove('is-hidden');
+    state.trainer.activeSubView = 'oxdrill';
     DataLoader.loadOxDrills(num).then(items => {
         const st = state.trainer.oxdrill;
         st.subject = num;
@@ -244,6 +252,13 @@ export function openComboDrillSetup() {
 export function startComboDrill(subjectNum) {
     const num = parseInt(subjectNum, 10);
     if (isNaN(num) || num < 1 || num > 4) return;
+    ['trainer-menu-panel', 'trainer-weak-panel', 'trainer-oxdrill-panel'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('is-hidden');
+    });
+    const ownPanel = document.getElementById('trainer-combo-panel');
+    if (ownPanel) ownPanel.classList.remove('is-hidden');
+    state.trainer.activeSubView = 'combo';
     DataLoader.loadComboDrills(num).then(questions => {
         const st = state.trainer.combo;
         st.subject = num;
@@ -354,18 +369,32 @@ function findComboOption(q, idSet) {
         (o.members || []).length === idSet.size && o.members.every(m => idSet.has(m)));
 }
 
-/** 판정 진행 힌트 + 제출 버튼 활성화 갱신 */
+/** 판정 진행 힌트 + 제출 버튼 활성화 갱신 + 판정과 모순되는 선지 소거 표시 (전략 ⑦) */
 function updateComboJudgeHint(q) {
     const st = state.trainer.combo;
     const hint = document.getElementById('combo-judge-hint');
     const submitBtn = document.getElementById('combo-judge-submit');
     const total = q.statements.length;
     const judged = Object.keys(st.judgments).length;
+
+    // 확실한 진술로 소거: 판정과 모순되는 선지를 흐리게 — "ㄴ이 거짓이면 ㄴ 포함 선지 소거" 전술 훈련
+    const optsEl = document.getElementById('combo-options-container');
+    let eliminated = 0;
+    if (optsEl && judged > 0) {
+        optsEl.querySelectorAll('.limits-opt-btn').forEach((btn, idx) => {
+            const opt = q.options[idx];
+            const elim = opt && Object.entries(st.judgments).some(([sid, val]) =>
+                val ? !(opt.members || []).includes(sid) : (opt.members || []).includes(sid));
+            btn.classList.toggle('eliminated', !!elim);
+            if (elim) eliminated++;
+        });
+    }
+
     if (hint) {
         if (judged === 0) {
             hint.textContent = '각 진술을 O/X로 판정한 뒤 제출하거나, 아래에서 조합을 바로 고르세요.';
         } else if (judged < total) {
-            hint.textContent = `진술 판정 중… ${judged}/${total}`;
+            hint.textContent = `진술 판정 중… ${judged}/${total}${eliminated ? ` · 선지 ${eliminated}개 소거` : ''}`;
         } else {
             const trueSet = new Set(q.statements.filter(s => st.judgments[s.id]).map(s => s.id));
             const opt = findComboOption(q, trueSet);
@@ -411,6 +440,7 @@ function submitComboAnswer(selectedBtn, optId, optIdx) {
     if (optsEl) {
         optsEl.querySelectorAll('button').forEach((btn, idx) => {
             btn.disabled = true;
+            btn.classList.remove('eliminated');
             if (idx === correctIdx) btn.classList.add('correct');
         });
     }

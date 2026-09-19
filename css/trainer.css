@@ -1104,6 +1104,16 @@ mark.txt-highlight {
     cursor: default;
 }
 
+/* 진술 판정과 모순되는 선지 — 소거 표시 (시험장 소거 전술 훈련) */
+.limits-opt-btn.eliminated {
+    opacity: 0.4;
+    border-style: dashed;
+}
+.limits-opt-btn.eliminated .limits-opt-text {
+    text-decoration: line-through;
+    text-decoration-color: var(--color-danger);
+}
+
 /* 취약 진술 리뷰 */
 .weak-group {
     margin-bottom: 1rem;
