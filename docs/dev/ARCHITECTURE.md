@@ -1082,7 +1082,7 @@ data/exams/subjectN.*.js ──► build_ox_drills.js    ──► data/drills/o
 - **드릴 모드**: 과목별(1~4) 외에 전 과목 특수 모드 `weak`(취약·복습 진술 필터)·`num`(수치·한도·기한 태그 필터 — `inferTags` 부여분) 지원, 출제 수 10/20/전체 선택. 합답형은 진술별 O/X 토글 2단계 응시 + 판정과 모순되는 선지 실시간 소거 표시(시험장 소거 전술 훈련).
 - **취약 진술 리뷰 패널**: 누적 통계 열람 — conceptId 개념 그룹핑(참/거짓 혼동쌍 2단 대조), 복습 대상 필터, 최근 판정 배지, 졸업 수 표시, 바로 드릴 진입.
 - **런타임**: `DataLoader.loadOxDrills(N)`/`loadComboDrills(N)`가 `data/drills/` 번들을 클래식 `<script>` 주입으로 로드(`file://` 호환). 합답형은 수작업 파일럿(`combo_pilot.js`)과 자동 번들을 병합. UI는 `views/trainer-drills.js` + 트레이너 패널(`index.html`).
-- **모의고사 연동**: 과목 카드의 "합답형 풀기" → `startComboMockExam(N)`(`views/exam-simulator.js`)이 combo 번들을 `comboToSimQuestion`으로 시뮬 형식 평탄화(citation·진술 본문 편입, members 문자열화, 정답→지시자)해 시뮬레이터 세션 실행. 오답 복습(`weak_sim_*_combo_*` 카드)도 해당 번들 로드 후 지원.
+- **모의고사 연동**: 과목 카드의 "합답형 풀기"(40/60/전체 선택) → `startComboMockExam('N[:count]')`(`views/exam-simulator.js`)이 combo 번들을 `comboToSimQuestion`으로 시뮬 형식 평탄화(citation·진술 본문 편입, members 문자열화, 정답→지시자)해 시뮬레이터 세션 실행. 원본 members는 `comboOptions`에 보존돼 채점 시 `deriveComboJudgments`로 진술 판정을 역산해 `recordStatementJudgments`에 기록 — 시뮬 성적이 취약 추적·SM-2에 반영. 오답 리뷰는 진술 정오표 표시, 오답 복습(`weak_sim_*_combo_*` 카드)도 해당 번들 로드 후 지원. 통합 모의고사는 `#integrated-mix-combo` 체크 시 과목별 약 20%를 합답형으로 혼합.
 - **캐시**: `data/drills/`는 레지스트리 미등록 번들이라 `sw.js`의 `pruneStaleDataBundles`에서 `ALWAYS_KEEP`으로 명시 보존.
 - **재생성·검증**: `npm run build:drills` (O/X + 합답형 일괄), `npm run check:combo` (파일럿 + 생성 번들 5개 전체 스키마·citation·채점 스모크 검증).
 

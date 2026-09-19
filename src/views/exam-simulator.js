@@ -9,6 +9,7 @@ import { shuffle } from '../utils.js';
 import { STORAGE_KEYS } from '../storage-keys.js';
 import { TIMING } from '../config/timing.js';
 import { simState } from './exam-sim-state.js';
+import { recordStatementJudgments } from '../statement-tracker.js';
 
 // --- 5. 실전 모의고사 시뮬레이터 구현 ---
 export { simState };
@@ -72,21 +73,43 @@ function comboToSimQuestion(q, subjKey) {
         subject: subjKey,
         type: 'combo',
         question: [q.citation, q.stem, stmtLines.join('\n')].filter(Boolean).join('\n\n'),
+        comboOptions: q.options || [], // 원본 members 구조 보존 — 채점 시 진술 판정 도출·리뷰 정오표용
         options: (q.options || []).map(o => (o.members || []).join(', ')),
         answer: SIM_OPTION_INDICATORS[ansIdx] || q.answer,
         explanation: q.explain || ''
     };
 }
 
+/**
+ * 시뮬 합답형 응답 → 진술별 판정 도출 (선택 선지의 members = "참으로 판정한 집합")
+ * @returns {Array<{sid, judgedCorrect, text, truth, conceptId}>|null}
+ */
+function deriveComboJudgments(q, userAns) {
+    if (!userAns || !Array.isArray(q.statements) || !Array.isArray(q.comboOptions)) return null;
+    const idx = SIM_OPTION_INDICATORS.indexOf(userAns);
+    const opt = idx >= 0 ? q.comboOptions[idx] : null;
+    if (!opt) return null;
+    const chosen = new Set(opt.members || []);
+    return q.statements.map(s => ({
+        sid: s.sid,
+        judgedCorrect: chosen.has(s.id) === !!s.truth,
+        text: s.text,
+        truth: s.truth,
+        conceptId: s.conceptId
+    }));
+}
+
 const COMBO_PREFIX_SUBJ = { law: 1, manufacturing: 2, safety: 3, understanding: 4 };
 
 /**
  * 과목별 합답형 모의고사 시작 — data/drills/combo_subjectN.js 로드
- * @param {string|number} subjectNum 1~4
+ * @param {string} arg 'N' 또는 'N:count' (count = 출제 수, 생략 시 전체)
  */
-export function startComboMockExam(subjectNum) {
-    const num = parseInt(subjectNum, 10);
+export function startComboMockExam(arg) {
+    const [numStr, countStr] = String(arg).split(':');
+    const num = parseInt(numStr, 10);
     if (isNaN(num) || num < 1 || num > 4) return;
+    const want = countStr ? parseInt(countStr, 10) : NaN;
     showGlobalLoading('합답형 모의고사 데이터를 불러오는 중입니다...');
     DataLoader.loadComboDrills(num).then(questions => {
         hideGlobalLoading();
@@ -94,7 +117,10 @@ export function startComboMockExam(subjectNum) {
         const subjMeta = subjects[num - 1];
         const subjKey = subjMeta ? subjMeta.key : `subject${num}`;
         const subjName = subjMeta ? (subjMeta.shortName || subjMeta.name) : `${num}과목`;
-        const simQuestions = questions.map(q => comboToSimQuestion(q, subjKey));
+        const picked = (!isNaN(want) && want > 0 && want < questions.length)
+            ? shuffle(questions).slice(0, want)
+            : questions;
+        const simQuestions = picked.map(q => comboToSimQuestion(q, subjKey));
         if (simQuestions.length === 0) {
             showToast('이 과목의 합답형 문항이 없습니다.', 'warning');
             return;
@@ -112,11 +138,14 @@ export function startComboMockExam(subjectNum) {
 }
 
 export function startIntegratedMockExam() {
+    // 합답형 혼합 옵션 체크 시 combo 번들도 함께 로드
+    const mixCombo = !!(document.getElementById('integrated-mix-combo') && document.getElementById('integrated-mix-combo').checked);
     showGlobalLoading('통합 모의고사 데이터를 불러오는 중입니다...');
     const loaderPromises = DataLoader.registry.exams.map(e => DataLoader.loadExam(e.key));
+    if (mixCombo) [1, 2, 3, 4].forEach(n => loaderPromises.push(DataLoader.loadComboDrills(n)));
     Promise.all(loaderPromises).then(() => {
         hideGlobalLoading();
-        _startIntegratedMockExamImpl();
+        _startIntegratedMockExamImpl(mixCombo);
     }).catch(err => {
         hideGlobalLoading();
         console.error(err);
@@ -124,7 +153,7 @@ export function startIntegratedMockExam() {
     });
 }
 
-function _startIntegratedMockExamImpl() {
+function _startIntegratedMockExamImpl(mixCombo = false) {
     // 과목별 문제들 동적 수집 (registry 기반 — 과목 키별 자동 분류)
     const registry = (typeof window !== 'undefined' && window.DATA_REGISTRY) ? window.DATA_REGISTRY : null;
     const integratedConfig = registry && registry.integratedExam ? registry.integratedExam.questionsPerSubject : null;
@@ -181,12 +210,28 @@ function _startIntegratedMockExamImpl() {
         }));
     };
 
+    // 합답형 혼합: 과목별 배정의 약 20%를 combo 문항으로 교체 (선지 다양화, 실전 패턴 훈련)
+    const comboPoolBySubject = {};
+    if (mixCombo) {
+        subjects.forEach((subj, idx) => {
+            const bundle = (typeof window !== 'undefined') ? window[`COMBO_DRILLS_subject${idx + 1}`] : null;
+            if (Array.isArray(bundle)) comboPoolBySubject[subj.key] = bundle;
+        });
+    }
+
     // 과목별 샘플링 (registry에서 동적 조회)
     const selectedBySubject = {};
     for (const subj of subjects) {
         const count = subjectCounts[subj.key];
         if (count > 0) {
-            selectedBySubject[subj.key] = getRandomSample(subjectQuestions[subj.key], count, subj.key);
+            const pool = comboPoolBySubject[subj.key] || [];
+            const comboCount = Math.min(Math.round(count * 0.2), pool.length);
+            const picked = getRandomSample(subjectQuestions[subj.key], count - comboCount, subj.key);
+            if (comboCount > 0) {
+                shuffle(pool).slice(0, comboCount).forEach(q =>
+                    picked.push(comboToSimQuestion(q, subj.key)));
+            }
+            selectedBySubject[subj.key] = shuffle(picked);
         }
     }
     const allSelected = subjects.flatMap(s => selectedBySubject[s.key] || []);
@@ -600,6 +645,12 @@ export function submitExam() {
             ? (userAns === q.answer)
             : checkShortAnswer(userAns, q.answer);
         vibrate(isCorrect ? HAPTIC.correct : HAPTIC.wrong);
+
+        // 합답형: 선택 선지의 members로 진술별 판정을 도출해 취약 추적·SM-2에 기록
+        if (q.type === 'combo') {
+            const perStatement = deriveComboJudgments(q, userAns);
+            if (perStatement) recordStatementJudgments(perStatement);
+        }
         
         if (isCorrect) {
             score++;

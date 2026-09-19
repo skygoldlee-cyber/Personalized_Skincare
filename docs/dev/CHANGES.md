@@ -4,6 +4,32 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-20 합답형 학습 통합 강화 — 추적 연동·리뷰·편성 보완 11항목
+
+### 시뮬레이터 ↔ 진술 추적 통합
+
+- `comboToSimQuestion`이 원본 `options`(members 구조)를 `comboOptions`로 보존 — 시뮬 응답을 진술 판정으로 역산 가능
+- `deriveComboJudgments` + `submitExam` 연동: 합답형 모의고사 응답이 `recordStatementJudgments`로 기록돼 취약 목록·SM-2가 시뮬 성적에도 반응
+- `exam-sim-review`: 합답형 오답에 **진술 정오표** 표시 (실제 O/X vs 내 선택 선지의 포함 여부, 오판 진술 강조)
+
+### 모의고사 편성
+
+- 합답형 풀기 문항 수 선택 — `40문/60문/전체` 칩 (`startComboMockExam('N:count')` 파싱 + 무작위 샘플링)
+- 통합 모의고사 "합답형 혼합" 체크박스 — 과목별 배정의 약 20%를 combo 문항으로 교체 (`#integrated-mix-combo`)
+
+### 트레이너 UX
+
+- "오늘 복습 대상 N개" 배지 — 트레이너 카드 3곳 + 드릴 setup 카운트 (`updateDueBadges`, initTrainer/setup 진입 시 갱신)
+- 개념 집중 드릴 — 취약 리뷰 혼동쌍 그룹 헤더의 "이 개념만 드릴" (`startOxDrill('concept:<cid>')` — 동일 cid 취약 진술만 출제)
+- 오판 진술 O/X 단건 재시도 — 오판 리뷰·취약 행의 재시도 버튼 (`startOxDrill('sid:<sid>')`)
+- 드릴 완료 화면에 "취약 진술 리뷰" 바로가기 (오판 존재 시)
+- 키보드 단축키 — O/X 드릴 `O`·`X` 판정, 합답형 `1`~`5` 선지 선택, `Enter` 다음 문제
+- 과목별 진술 마스터 진행도 — 취약 리뷰 상단에 과목별 판정/취약/졸업 집계 (`getAllStatementStats`)
+
+### 검증
+
+- `check:combo`에 정답 위치 분포 검증 추가 — 번들 50문 이상 시 공백 위치·50% 초과 편향을 오류 처리, ①~⑤ 분포 리포트 출력
+
 ## 2026-09-20 합답형 총량 1,000문 조정 — 다중 빈칸 (B) 생성 중단
 
 - `build_combo_drills.js`: 다중 빈칸 문항의 `(B)` 변형 생성을 중단하고 `(A)`만 변환 — 과목1 −1, 과목2 −4 → 총 **1,000문**(100/250/250/400)

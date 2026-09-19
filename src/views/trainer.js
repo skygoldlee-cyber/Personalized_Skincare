@@ -20,6 +20,7 @@ import {
     showIngFeedback,
     nextIngQuestion
 } from './trainer-ingredients.js';
+import { updateDueBadges } from './trainer-drills.js';
 
 // 추출된 모듈의 함수 재수출 (app.js 호환성 유지)
 export {
@@ -381,6 +382,7 @@ export function initTrainer() {
     if (oxPanel) oxPanel.classList.add('is-hidden');
     if (comboPanel) comboPanel.classList.add('is-hidden');
     if (weakPanel) weakPanel.classList.add('is-hidden');
+    updateDueBadges(); // 트레이너 카드의 "오늘 복습 대상" 배지 갱신
 }
 
 export function exitTrainerSubView() {

@@ -1250,3 +1250,54 @@ mark.txt-highlight {
         grid-template-columns: 1fr;
     }
 }
+
+/* 복습 대상 배지 — 트레이너 카드·드릴 setup의 "오늘 할 일" 표시 */
+.trainer-due-badge {
+    display: inline-block;
+    margin-top: 0.5rem;
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-bold);
+    background: var(--warning-tint-15, rgba(210, 150, 30, 0.15));
+    color: var(--color-warning);
+}
+.trainer-due-count {
+    font-size: var(--text-sm);
+    color: var(--color-primary);
+    margin-bottom: 0.75rem;
+}
+
+/* 취약 진술 재시도·개념 드릴 버튼 */
+.weak-retry-btn {
+    padding: 0.15rem 0.6rem;
+    font-size: var(--text-xs);
+    margin-left: auto;
+    white-space: nowrap;
+}
+.weak-group-header .weak-retry-btn {
+    margin-left: 0.5rem;
+}
+
+/* 과목별 진술 마스터 진행도 */
+.weak-mastery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+.weak-mastery-cell {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    background: var(--bg-card);
+    font-size: var(--text-xs);
+}
+.weak-mastery-cell strong {
+    display: block;
+    margin-bottom: 0.15rem;
+    color: var(--color-text-main);
+}
+.weak-mastery-cell span {
+    color: var(--color-text-muted);
+}

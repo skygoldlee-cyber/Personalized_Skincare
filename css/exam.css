@@ -732,3 +732,81 @@
     align-items: center;
     gap: var(--space-1);
 }
+
+/* 합답형 모의고사 문항 수 선택 칩 */
+.combo-count-row {
+    display: flex;
+    gap: 0.35rem;
+}
+.combo-count-chip {
+    flex: 1;
+    font-size: var(--text-xs) !important;
+    padding: 0.4rem 0.25rem !important;
+    white-space: nowrap;
+}
+
+/* 통합 모의고사 합답형 혼합 옵션 */
+.integrated-mix-option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin-bottom: 0.75rem;
+    cursor: pointer;
+}
+.integrated-mix-option input {
+    accent-color: var(--color-primary);
+}
+
+/* 합답형 오답 리뷰 — 진술 판정 정오표 */
+.combo-truth-table {
+    margin: 0.75rem 0;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+}
+.combo-truth-head {
+    padding: 0.4rem 0.75rem;
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-bold);
+    background: var(--bg-card-alt, rgba(255,255,255,0.03));
+    border-bottom: 1px solid var(--border-color);
+}
+.combo-truth-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    padding: 0.4rem 0.75rem;
+    font-size: var(--text-xs);
+    border-bottom: 1px solid var(--border-color);
+}
+.combo-truth-row:last-child {
+    border-bottom: none;
+}
+.combo-truth-row.is-misjudged {
+    background: var(--danger-tint-10, rgba(220, 60, 60, 0.08));
+}
+.combo-truth-id {
+    font-weight: var(--font-weight-bold);
+    min-width: 1.2rem;
+}
+.combo-truth-actual.is-o {
+    color: var(--color-success);
+    font-weight: var(--font-weight-bold);
+}
+.combo-truth-actual.is-x {
+    color: var(--color-danger);
+    font-weight: var(--font-weight-bold);
+}
+.combo-truth-mine {
+    color: var(--color-text-muted);
+    white-space: nowrap;
+}
+.combo-truth-row.is-misjudged .combo-truth-mine {
+    color: var(--color-danger);
+    font-weight: var(--font-weight-bold);
+}
+.combo-truth-text {
+    color: var(--color-text-muted);
+}

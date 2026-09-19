@@ -88,11 +88,25 @@ for (const f of files) {
     continue;
   }
   let fErr = 0;
+  const dist = {}; // 정답 위치 분포 (seed 편향 감지)
   for (const q of qs) {
     const errs = checkQuestion(q);
     if (errs.length) {
       fErr += errs.length;
       if (fErr <= 8) console.error(`  [${q.id}] ${errs.join(' / ')}`);
+    }
+    const idx = (q.options || []).findIndex(o => o.id === q.answer);
+    if (idx >= 0) dist[idx] = (dist[idx] || 0) + 1;
+  }
+  // 정답 위치 분포 검증 — 특정 위치 과밀(>50%) 또는 공백 위치가 있으면 출제 편향으로 오류 처리
+  if (qs.length >= 50) {
+    const shares = [0, 1, 2, 3, 4].map(i => (dist[i] || 0) / qs.length);
+    const distStr = shares.map(s => `${Math.round(s * 100)}%`).join('/');
+    if (shares.some(s => s === 0) || shares.some(s => s > 0.5)) {
+      fErr++;
+      console.error(`  [${f}] 정답 위치 분포 편향: ${distStr} (공백 또는 50% 초과 위치 존재)`);
+    } else {
+      console.log(`  정답 분포 ①~⑤: ${distStr}`);
     }
   }
   errors += fErr;

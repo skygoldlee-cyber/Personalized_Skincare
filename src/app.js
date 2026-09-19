@@ -301,10 +301,14 @@ function populateExamCards() {
                                 </div>`;
         }).join('\n');
 
-        // ㄱㄴㄷ 합답형: 문제집 MD 열람 + 합답형 모의고사 버튼 쌍
+        // ㄱㄴㄷ 합답형: 문제집 MD 열람 + 합답형 모의고사 (문항 수 선택 칩)
         const comboPair = `                                <div class="exam-btn-pair">
                                     <button data-click="ExamViewer.openExam" data-arg="content/문제은행/과목${idx + 1}_합답형.md" class="exam-btn-link"><i class="fa-solid fa-file-lines"></i> 합답형 문제집</button>
-                                    <button class="exam-btn-sim" data-click="startComboMockExam" data-arg="${idx + 1}"><i class="fa-solid fa-list-check"></i> 합답형 풀기</button>
+                                    <div class="combo-count-row">
+                                        <button class="exam-btn-sim combo-count-chip" data-click="startComboMockExam" data-arg="${idx + 1}:40">합답형 40문</button>
+                                        <button class="exam-btn-sim combo-count-chip" data-click="startComboMockExam" data-arg="${idx + 1}:60">60문</button>
+                                        <button class="exam-btn-sim combo-count-chip" data-click="startComboMockExam" data-arg="${idx + 1}">전체</button>
+                                    </div>
                                 </div>`;
         const allBtnsHtml = `${btnsHtml}\n${comboPair}`;
 
