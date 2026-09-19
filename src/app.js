@@ -71,6 +71,13 @@ import {
     addCalcHistoryItem
 } from './views/trainer.js';
 import {
+    openOxDrillSetup,
+    startOxDrill,
+    nextOxDrill,
+    startComboDrill,
+    nextComboDrill
+} from './views/trainer-drills.js';
+import {
     togglePomodoro,
     tickPomodoro,
     resetPomodoro,
@@ -775,6 +782,11 @@ window.startDailyChallenge = startDailyChallenge;
 window.startIngredientsChallenge = startIngredientsChallenge;
 window.startIntegratedMockExam = startIntegratedMockExam;
 window.startLimitsTrainer = startLimitsTrainer;
+window.openOxDrillSetup = openOxDrillSetup;
+window.startOxDrill = startOxDrill;
+window.nextOxDrill = nextOxDrill;
+window.startComboDrill = startComboDrill;
+window.nextComboDrill = nextComboDrill;
 window.startMockExamSim = startMockExamSim;
 window.startWeakExam = startWeakExam;
 window.submitCalcAnswer = submitCalcAnswer;

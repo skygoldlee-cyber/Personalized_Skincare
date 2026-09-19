@@ -25,6 +25,7 @@ export const DataLoader = {
     registry: null,
     _loaded: {},
     _loadedExams: {},
+    _loadedDrills: {},
     _ingredients: null,
     _manifest: null,
     _fallbackManifestInjected: false,
@@ -203,6 +204,36 @@ export const DataLoader = {
         if (!data) throw new Error(`Exam data is empty or invalid: ${meta.global}`);
         this._loadedExams[key] = data;
         window.EXAM_DATA[key] = data;
+        return data;
+    },
+
+    /**
+     * 과목별 O/X 드릴 번들 로드 (data/drills/ox_subjectN.js → window.OX_DRILLS_subjectN)
+     * @param {number|string} subjectNum 1~4
+     * @returns {Promise<Array>} ox 문항 배열
+     */
+    async loadOxDrills(subjectNum) {
+        const key = `subject${subjectNum}`;
+        if (this._loadedDrills[key]) return this._loadedDrills[key];
+        await this._loadScript(`./data/drills/ox_${key}.js`);
+        await new Promise(r => setTimeout(r, 0));
+        const data = window[`OX_DRILLS_${key}`];
+        if (!Array.isArray(data)) throw new Error(`O/X 드릴 데이터를 찾을 수 없습니다: ${key}`);
+        this._loadedDrills[key] = data;
+        return data;
+    },
+
+    /**
+     * 합답형(combo) 드릴 번들 로드 (data/drills/combo_pilot.js → window.COMBO_PILOT)
+     * @returns {Promise<Object>} { source, questions[] }
+     */
+    async loadComboDrills() {
+        if (this._loadedDrills.combo) return this._loadedDrills.combo;
+        await this._loadScript('./data/drills/combo_pilot.js');
+        await new Promise(r => setTimeout(r, 0));
+        const data = window.COMBO_PILOT;
+        if (!data || !Array.isArray(data.questions)) throw new Error('합답형 드릴 데이터를 찾을 수 없습니다');
+        this._loadedDrills.combo = data;
         return data;
     },
 

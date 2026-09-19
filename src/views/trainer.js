@@ -370,11 +370,15 @@ export function initTrainer() {
     const limitsPanel = document.getElementById('trainer-limits-panel');
     const calcPanel = document.getElementById('trainer-calc-panel');
     const ingPanel = document.getElementById('trainer-ingredients-panel');
+    const oxPanel = document.getElementById('trainer-oxdrill-panel');
+    const comboPanel = document.getElementById('trainer-combo-panel');
 
     if (menuPanel) menuPanel.classList.remove('is-hidden');
     if (limitsPanel) limitsPanel.classList.add('is-hidden');
     if (calcPanel) calcPanel.classList.add('is-hidden');
     if (ingPanel) ingPanel.classList.add('is-hidden');
+    if (oxPanel) oxPanel.classList.add('is-hidden');
+    if (comboPanel) comboPanel.classList.add('is-hidden');
 }
 
 export function exitTrainerSubView() {

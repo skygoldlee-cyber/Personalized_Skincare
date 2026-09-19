@@ -63,6 +63,19 @@ export const state = {
             correctCount: 0,
             solvedList: []
         },
+        oxdrill: {
+            subject: null,      // 1~4
+            data: [],
+            currentIndex: 0,
+            correctCount: 0,
+            solvedList: []
+        },
+        combo: {
+            data: [],
+            currentIndex: 0,
+            correctCount: 0,
+            solvedList: []
+        },
         pomodoro: {
             timerId: null,
             timeLeft: 25 * 60,

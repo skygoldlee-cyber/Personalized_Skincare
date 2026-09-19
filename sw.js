@@ -73,8 +73,13 @@ const SHELL_ASSETS = [
   './src/views/flashcard.js',
   './src/views/quiz.js',
   './src/views/trainer.js',
+  './src/views/trainer-drills.js',
   './src/views/trainer-calc-practice.js',
   './src/views/trainer-ingredients.js',
+  './src/questions.js',
+  './src/statement-tracker.js',
+  './src/study-tracker.js',
+  './src/spaced-repetition.js',
   './src/views/dictionary.js',
   './content/교재/understanding/images/피부의 구조 단면도 보완_인포그래픽.png',
   './content/교재/understanding/images/모발의 구조 단면도 보완_인포그래픽.png',
@@ -242,6 +247,8 @@ async function pruneStaleDataBundles() {
     const referenced = new Set(text.match(/\.\/data\/[A-Za-z0-9_./-]+\.js/g) || []);
     referenced.add('./data/registry.js');
     referenced.add('./data/audio_manifest.js');
+    // data/drills/ 는 레지스트리 미등록 번들(별도 생성기) — 프루닝에서 항상 보존
+    const ALWAYS_KEEP = /\/data\/drills\//;
     const refSuffixes = [...referenced].map((r) => r.replace(/^\.\//, '/'));
 
     const requests = await cache.keys();
@@ -249,6 +256,7 @@ async function pruneStaleDataBundles() {
       requests.map(async (req) => {
         const pathname = new URL(req.url).pathname;
         if (!pathname.includes('/data/')) return; // 데이터 번들만 대상
+        if (ALWAYS_KEEP.test(pathname)) return;   // drills 번들은 보존
         const isReferenced = refSuffixes.some((suffix) => pathname.endsWith(suffix));
         if (!isReferenced) await cache.delete(req);
       })

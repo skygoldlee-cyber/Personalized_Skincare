@@ -1,7 +1,8 @@
 /**
  * 합답형(combo) 파일럿 — 단답형/객관식 문항의 교재 근거에서 저작한 진술 조합 문항
+ * ※ 수작업 저작 데이터 (자동 생성 아님) — 신규 문항 추가 시 npm run check:combo 로 검증
  * 스키마: content/문제은행/문항 스키마 설계.md (combo 유형)
- * 검증: node tools/check_combo_pilot.js — validateQuestion + 정답 유일성 확인
+ * 로드: DataLoader.loadComboDrills() → window.COMBO_PILOT
  *
  * 저작 원칙 (합답형 학습전략 §3):
  *  - 모든 진술은 원문항의 📖 교재 근거 표에 실재하는 사실로 작성

@@ -988,3 +988,81 @@ mark.txt-highlight {
     color: var(--color-on-brand);
     border-color: var(--color-primary);
 }
+
+/* ===== O/X 판정 드릴 & 합답형(combo) 드릴 ===== */
+.icon-purple {
+    background: var(--secondary-tint-12);
+    color: var(--color-secondary);
+    border: 1px solid var(--secondary-tint-25);
+}
+
+/* O/X 버튼은 2열 그리드 유지, 크게 */
+.oxdrill-ox-btn {
+    justify-content: center;
+    font-size: var(--text-lg-1);
+    padding: 1.5rem;
+}
+
+/* 합답형 진술 목록 */
+.combo-stmt {
+    display: flex;
+    gap: var(--space-3);
+    align-items: flex-start;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-size: var(--text-base);
+    line-height: 1.6;
+}
+.combo-stmt-id {
+    flex-shrink: 0;
+    display: inline-flex;
+    width: 26px;
+    height: 26px;
+    border-radius: var(--radius-full);
+    background: var(--bg-active);
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-muted);
+}
+.combo-stmt-text {
+    flex: 1;
+}
+
+/* 합답형 피드백 — 진술별 판정 결과 */
+.combo-fb-stmt {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    margin-top: 0.4rem;
+    border-radius: var(--radius-xs);
+    font-size: var(--text-sm);
+    background: var(--bg-subtle);
+}
+.combo-fb-stmt.misjudged {
+    background: var(--danger-tint-15);
+    border: 1px solid var(--color-danger);
+}
+.combo-fb-truth {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-main);
+}
+.combo-fb-judged {
+    color: var(--color-text-muted);
+}
+.combo-fb-stmt.misjudged .combo-fb-judged {
+    color: var(--color-danger);
+    font-weight: var(--font-weight-semibold);
+}
+.combo-fb-explain {
+    width: 100%;
+    margin: 0.25rem 0 0;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    line-height: 1.5;
+}

@@ -13,7 +13,7 @@ const { validateQuestion, deriveComboAnswer, gradeAnswer } = await import(
   pathToFileURL(path.join(src, 'src', 'questions.js')).href
 );
 
-const code = await readFile(path.join(src, 'content', '문제은행', 'combo_pilot.js'), 'utf8');
+const code = await readFile(path.join(src, 'data', 'drills', 'combo_pilot.js'), 'utf8');
 const sandbox = { window: {} };
 vm.createContext(sandbox);
 vm.runInContext(code, sandbox);

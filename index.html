@@ -561,6 +561,24 @@
                             <p>사용 가능(approved), 제한(restricted), 금지(banned) 성분을 구분하고 배합한도 및 조제 적합성 문항을 정복합니다.</p>
                             <span class="trainer-card-btn">도전 시작 <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
                         </div>
+
+                        <div class="trainer-menu-card" data-click="openOxDrillSetup">
+                            <div class="trainer-card-icon icon-purple">
+                                <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
+                            </div>
+                            <h4>O/X 판정 드릴</h4>
+                            <p>기출 선지를 참/거짓 진술로 분해한 3,700+ 문항으로 판정 속도와 정확도를 훈련합니다. 오판 진술은 자동으로 재출제됩니다.</p>
+                            <span class="trainer-card-btn">드릴 시작 <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
+                        </div>
+
+                        <div class="trainer-menu-card" data-click="startComboDrill">
+                            <div class="trainer-card-icon icon-blue">
+                                <i class="fa-solid fa-list-check" aria-hidden="true"></i>
+                            </div>
+                            <h4>합답형 훈련</h4>
+                            <p>ㄱㄴㄷㄹ 진술의 참/거짓을 판정하고 옳은 조합을 고르는 실전형 훈련입니다. 진술별 오판이 자동 추적됩니다.</p>
+                            <span class="trainer-card-btn">훈련 시작 <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
+                        </div>
                     </div>
                 </div>
 
@@ -612,7 +630,117 @@
                     </div>
                 </div>
 
-                <!-- 3. Blending Calculator Panel -->
+                <!-- 3. O/X 판정 드릴 Panel -->
+                <div id="trainer-oxdrill-panel" class="is-hidden">
+                    <div class="sim-arena-header mb-6">
+                        <button class="btn btn-secondary" data-click="exitTrainerSubView"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
+                        <div class="sim-title-group">
+                            <h4>O/X 판정 드릴</h4>
+                            <span class="badge badge-quiz-cat">진위 판정 훈련</span>
+                        </div>
+                    </div>
+
+                    <!-- 과목 선택 -->
+                    <div id="oxdrill-setup">
+                        <div class="trainer-arena">
+                            <div class="quiz-card">
+                                <div class="quiz-body" style="text-align:center;">
+                                    <h2 class="quiz-question-text reader-q-text-lg">과목을 선택하세요</h2>
+                                    <p style="color:var(--color-text-muted); margin-bottom:1.5rem;">오판 이력이 있는 진술이 우선 출제됩니다 (10문)</p>
+                                    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:0.75rem; max-width:480px; margin:0 auto;">
+                                        <button class="btn btn-secondary" data-click="startOxDrill" data-arg="1" style="padding:1rem;">1과목<br><small>화장품법</small></button>
+                                        <button class="btn btn-secondary" data-click="startOxDrill" data-arg="2" style="padding:1rem;">2과목<br><small>제조·품질</small></button>
+                                        <button class="btn btn-secondary" data-click="startOxDrill" data-arg="3" style="padding:1rem;">3과목<br><small>안전관리</small></button>
+                                        <button class="btn btn-secondary" data-click="startOxDrill" data-arg="4" style="padding:1rem;">4과목<br><small>맞춤형화장품</small></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 드릴 아레나 -->
+                    <div id="oxdrill-arena" class="is-hidden">
+                        <div class="quiz-progress-header mb-5">
+                            <div class="quiz-progress-bar-bg"><div class="quiz-progress-bar-fill progress-bar-fill" id="oxdrill-progress-bar"></div></div>
+                        </div>
+                        <div class="trainer-arena">
+                            <div class="quiz-card">
+                                <div class="quiz-card-header">
+                                    <span class="badge" id="oxdrill-progress-indicator">문제 1</span>
+                                    <span class="quiz-context" id="oxdrill-context"></span>
+                                </div>
+                                <div class="quiz-body">
+                                    <p style="font-size:0.85rem; color:var(--color-text-muted); margin-bottom:0.5rem;" id="oxdrill-stem"></p>
+                                    <h2 class="quiz-question-text reader-q-text-lg" id="oxdrill-statement"></h2>
+                                    <div class="limits-options-grid mb-6" id="oxdrill-ox-container"></div>
+                                    <div class="quiz-feedback is-hidden" id="oxdrill-feedback-panel" role="status" aria-live="polite">
+                                        <div class="feedback-icon" id="oxdrill-feedback-icon">
+                                            <i class="fa-solid fa-check" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="feedback-content">
+                                            <h4 id="oxdrill-feedback-title"></h4>
+                                            <p id="oxdrill-feedback-desc"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="quiz-card-footer justify-end">
+                                    <button id="next-oxdrill-btn" class="btn btn-success is-hidden" data-click="nextOxDrill">다음 문제 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 결과 -->
+                    <div id="oxdrill-result" class="is-hidden"></div>
+                </div>
+
+                <!-- 4. 합답형(combo) 드릴 Panel -->
+                <div id="trainer-combo-panel" class="is-hidden">
+                    <div class="sim-arena-header mb-6">
+                        <button class="btn btn-secondary" data-click="exitTrainerSubView"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
+                        <div class="sim-title-group">
+                            <h4>합답형 훈련</h4>
+                            <span class="badge badge-quiz-cat">진술 조합 판정</span>
+                        </div>
+                    </div>
+
+                    <div id="combo-arena">
+                        <div class="quiz-progress-header mb-5">
+                            <div class="quiz-progress-bar-bg"><div class="quiz-progress-bar-fill progress-bar-fill" id="combo-progress-bar"></div></div>
+                        </div>
+                        <div class="trainer-arena">
+                            <div class="quiz-card">
+                                <div class="quiz-card-header">
+                                    <span class="badge" id="combo-progress-indicator">문제 1</span>
+                                    <span class="quiz-context" id="combo-q-category"></span>
+                                </div>
+                                <div class="quiz-body">
+                                    <h2 class="quiz-question-text reader-q-text-lg" id="combo-stem" style="margin-bottom:1rem;"></h2>
+                                    <div id="combo-statements" style="margin-bottom:1.25rem;"></div>
+                                    <div class="limits-options-grid mb-6" id="combo-options-container"></div>
+                                    <div class="quiz-feedback is-hidden" id="combo-feedback-panel" role="status" aria-live="polite">
+                                        <div class="feedback-icon" id="combo-feedback-icon">
+                                            <i class="fa-solid fa-check" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="feedback-content">
+                                            <h4 id="combo-feedback-title"></h4>
+                                            <div id="combo-feedback-statements"></div>
+                                            <p id="combo-feedback-desc" style="margin-top:0.5rem;"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="quiz-card-footer justify-end">
+                                    <button id="next-combo-btn" class="btn btn-success is-hidden" data-click="nextComboDrill">다음 문제 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 결과 -->
+                    <div id="combo-result" class="is-hidden"></div>
+                </div>
+
+                <!-- 5. Blending Calculator Panel -->
                 <div id="trainer-calc-panel" class="is-hidden">
                     <div class="sim-arena-header mb-6">
                         <button class="btn btn-secondary" data-click="exitTrainerSubView"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
