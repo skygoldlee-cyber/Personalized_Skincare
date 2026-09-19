@@ -4,6 +4,45 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-19 합답형 학습 체계 구축 — 스키마·변환기·드릴 UI·약점 추적
+
+> **목표**: `문항 스키마 설계.md` + `합답형 학습전략.md`를 실제 앱 파이프라인에 구현 — 진술(sid) 원자 단위로 O/X·합답형·약점 추적을 통합
+
+### 문항 스키마 기반 (`src/questions.js`, e528f81)
+
+- 설계 문서의 standalone 유틸을 `src/`로 이전해 앱 모듈화: `single`/`combo`/`short`/`ox` 4유형 + `deriveComboAnswer`/`generateComboOptions`/`validateQuestion`/`gradeAnswer`/`scoreExam`
+- `perStatement`에 `userJudged`/`judgedCorrect` 자동 유도 — 선택 옵션 members = "참 판정 집합"으로 해석해 진술별 오판 검출, 2단계 응시(`{optionId, judgments}`) 지원
+- 진술 `sid`(전역 안정 ID)·`conceptId`(혼동쌍), single `options[].truth`(명제 참/거짓), `STANDARD_TAGS` 어휘 추가
+
+### O/X 드릴 생성 (d3f0c4b)
+
+- `tools/build_ox_drills.js`: `data/exams` choice 문항의 선지를 진위형 문항으로 펼침 — `fact` 모드(명제 진위) 65문 / `answer` 모드(정답 판정) 636문 근원, 3,701문 생성
+- `data/drills/`에 별도 출력 — 레지스트리 미등록 번들이라 sw.js `pruneStaleDataBundles`에 보존 규칙 추가
+
+### 약한 진술 추적 (`src/statement-tracker.js`, cc586a3)
+
+- `perStatement.judgedCorrect` 오판을 `sid` 키로 `statement_stats` + SM-2 스케줄에 누적, `getWeakStatements()`/`getDueStatementSids()` 제공
+- O/X·합답형이 동일 sid 규칙을 공유해 교차 추적
+
+### 합답형 전량 변환 (`tools/build_combo_drills.js`, 9f36efb → 7d7c672)
+
+- **객관식 741문**: 선지를 ㄱ~ㅁ 진술로 재조합 — `fact`/`answer` 모드 분류, 부정 발문 긍정 정규화, `'위 ①②③ 모두'` 메타 정답 복구(개수 검증), `(단,…)` 조건절 보존, 불가 꼬리는 지시문 부기 폴백
+- **단답형 254문**: 정답 풀링 — 유형별(num/term) 과목 정답 풀에서 오답 추첨, 정규화 부분문자열 모호성 필터, 전 과목 풀 보충, 다중빈칸은 (A) 문의 변환
+- 결정론적 빌드: mulberry32 seeded RNG(문항 id 시드)로 옵션 조합·정답 위치 재현
+- 결과: **과목1 100 / 과목2 250 / 과목3 250 / 과목4 400 = 1,000문**, 스키마 오류 0
+- 산출물: `data/drills/combo_subject*.js`(런타임) + `content/문제은행/과목N_합답형.md`(검토용, 문제은행 동일 형식)
+- `citation` 자동 생성 — 교재 라인·법령 조문 추출 + 원문 번호 (서두 명기 규칙 충족, aecf8f4에서 필수화)
+
+### UI 연동 (b67a970)
+
+- 스마트 훈련소에 O/X 판정 드릴·합답형 훈련 카드 추가 — 과목 선택 → 10문 출제 → 진술별 피드백 → 오판 리뷰
+- `DataLoader.loadOxDrills(N)`/`loadComboDrills(N)`: 클래식 script 주입(`file://` 호환), 합답형은 수작업 파일럿(cb-)과 자동 번들 병합
+- 취약 sid 포함 문항 최대 절반 우선 편성
+
+### 버그 수정 (선행, 061d70b)
+
+- 문제은행 정답 미파싱: MD 정답 형식 변경(`**Qn.**`+`> **정답: X**`) 미반영으로 전 과목 1,000문 `answer:""` — 파서 신형식 대응 + ox 오분류 82문 정정 + 객관식 채점 경로 불일치 2건(기호 비교) 수정
+
 ## 2026-09-18 중요숫자 암기정리 → 두음법 총정리 통합 + Part 2 설명·마인드맵 보강
 
 > **목표**: 암기 문서 2종(`중요숫자_암기정리.md` + `두음법_암기_총정리.md`)을 단일 문서로 통합하고 숫자 파트 가독성 강화

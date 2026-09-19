@@ -357,7 +357,12 @@ flowchart LR
 | `data/study_md/*.js` | `tools/build_study_md_bundle.js` | `content/교재/*.md` |
 | `data/exams_md/*.js` | `tools/build_exam_bundles.js` | `content/문제은행/*.md` |
 | `data/audio_manifest.js` | `tools/build/build-audio-manifest.js` | `content/audiobook/mp3/` |
+| `data/drills/ox_subject*.js` | `tools/build_ox_drills.js` | `data/exams/*.js` (객관식) |
+| `data/drills/combo_subject*.js` | `tools/build_combo_drills.js` | `data/exams/*.js` (객관식+단답형) |
+| `content/문제은행/과목N_합답형.md` | `tools/build_combo_drills.js` | `data/exams/*.js` (검토용 산출물) |
 | `sw.js` (DATA_ASSETS, MD_ASSETS) | `tools/build/index.js` | `content/manifest.json` |
+
+> ※ `data/drills/`는 `data/exams/`의 2차 파생물입니다 — 문제은행 변경 시 `build:data` 후 `npm run build:drills`로 재생성해야 최신 문항이 반영됩니다.
 
 ### 6.2 PowerShell 환경
 
@@ -376,7 +381,8 @@ flowchart LR
 
 ```
 교재 내용 수정        → content/교재/*.md
-문제은행 수정         → content/문제은행/*.md
+문제은행 수정         → content/문제은행/*.md (+ npm run build:drills 로 드릴 번들 재생성)
+합답형 파일럿 추가     → data/drills/combo_pilot.js 직접 편집 + npm run check:combo 검증
 과목 추가/삭제        → content/manifest.json + content/references.json + content/교재/ + content/문제은행/
 시험 추가/삭제         → content/manifest.json + content/문제은행/
 참조자료 추가/삭제     → content/references.json + content/참조자료/ref_md/

@@ -300,6 +300,10 @@ Personalized_Skincare/
 │   ├── exams_md/               #   문제은행 MD 폴백 번들 (file:// 전용)
 │   ├── study_md/               #   교재 MD 폴백 번들 (과목별 분할, file:// 전용)
 │   ├── docs_md/                #   학습안내서/매뉴얼 MD 폴백 번들
+│   ├── drills/                 #   문항 드릴 번들 (레지스트리 미등록, 별도 생성기)
+│   │   ├── ox_subject*.js      #     O/X 판정 드릴 (build_ox_drills.js)
+│   │   ├── combo_subject*.js   #     합답형 드릴 자동 변환 (build_combo_drills.js)
+│   │   └── combo_pilot.js      #     합답형 수작업 파일럿 (check:combo 검증)
 │
 ├── tools/                      # 빌드/검증 도구
 │   ├── build/
@@ -319,6 +323,9 @@ Personalized_Skincare/
 │   ├── build_doc_bundles.js    #   학습안내서/매뉴얼 폴백 번들
 │   ├── build_exam_bundles.js   #   문제은행 폴백 번들
 │   ├── build_study_md_bundle.js #  교재 폴백 번들 (과목별 분할)
+│   ├── build_ox_drills.js      #   O/X 드릴 생성기 (객관식 → 진위형 3,700+문)
+│   ├── build_combo_drills.js   #   합답형 변환기 (choice+blank → 1,000문 + 과목N_합답형.md)
+│   ├── check_combo_pilot.js    #   합답형 파일럿 검증 (check:combo)
 │   ├── check_parser_parity.js  #   빌드 파서 ↔ 런타임 파서 등가성 검증
 │   ├── check-imports.js        #   ES 모듈 import/export 교차 검증
 │   ├── verify-shell-assets.js  #   프리캐시 파일 존재 CI 검증
@@ -1045,6 +1052,10 @@ content/ingredients/*.md ──► (ingredients plugin)       ──► data/ing
 
 content/**/*.md ───(런타임 fetch)──► src/data-loader.js + src/textbook-parser.js ──► STUDY_DATA (카드/퀴즈/챕터)
 content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.js ──► data/study_md/ (과목별 분할)
+
+data/exams/*.js ──► tools/build_ox_drills.js    ──► data/drills/ox_subject*.js   (O/X 3,700+문)
+data/exams/*.js ──► tools/build_combo_drills.js ──► data/drills/combo_subject*.js (합답형 1,000문)
+                └──────────────────────────────► content/문제은행/과목N_합답형.md (검토용 MD)
 ```
 
 **특징**:
@@ -1053,6 +1064,22 @@ content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.j
 - **재빌드 불필요**: `content/*.md` 수정 시 http 배포는 즉시 반영. `file://` 지원이 필요할 때만 `npm run build:study-md` 실행 (과목별 분할 번들 생성)
 - **온디맨드 로딩**: `src/data-loader.js`가 필요한 과목/시험만 로드하고, 로드 후 registry stats를 실제 개수로 갱신
 - **해시 파일명(시험/성분)**: 번들 내용이 바뀌면 파일명도 바뀌어 캐시 무효화가 자연스럽게 이루어짐
+
+### 🧩 문항 드릴 파이프라인 (O/X·합답형)
+
+시험 문항 스키마·채점 유틸([`src/questions.js`](../../src/questions.js))을 중심으로, `data/exams` 번들에서 학습 드릴을 파생 생성합니다.
+
+```
+data/exams/subjectN.*.js ──► build_ox_drills.js    ──► data/drills/ox_subject*.js   (type:'ox')
+                         ──► build_combo_drills.js ──► data/drills/combo_subject*.js (type:'combo')
+```
+
+- **스키마**: `single`/`combo`/`short`/`ox` 4유형. combo는 진술 `truth`에서 정답 조합을 **도출**(`deriveComboAnswer`)하고 `validateQuestion`으로 유일성을 검증 — 정답 오타를 구조적으로 차단.
+- **합답형 변환**(상세: [`content/문제은행/문항 스키마 설계.md`](../../content/문제은행/문항%20스키마%20설계.md) §6): 객관식은 선지를 `fact`(명제 진위)/`answer`(정답 여부) 모드로 진술화, 단답형은 정답 풀링(유형 분류 + 모호성 필터)으로 오답 진술을 구성. 과목당 100/250/250/400 = 1,000문.
+- **진술 원자 추적**: 진술의 `sid`(`stableId`)를 O/X·합답형이 공유 → [`src/statement-tracker.js`](../../src/statement-tracker.js)가 `perStatement.judgedCorrect` 오판을 `sid` 단위로 `statement_stats` + SM-2 큐(`spaced-repetition.js`)에 누적. 약한 진술은 다음 드릴 세션에 우선 출제.
+- **런타임**: `DataLoader.loadOxDrills(N)`/`loadComboDrills(N)`가 `data/drills/` 번들을 클래식 `<script>` 주입으로 로드(`file://` 호환). 합답형은 수작업 파일럿(`combo_pilot.js`)과 자동 번들을 병합. UI는 `views/trainer-drills.js` + 트레이너 패널(`index.html`).
+- **캐시**: `data/drills/`는 레지스트리 미등록 번들이라 `sw.js`의 `pruneStaleDataBundles`에서 `ALWAYS_KEEP`으로 명시 보존.
+- **재생성**: `npm run build:drills` (O/X + 합답형 일괄), `npm run check:combo` (파일럿 검증).
 
 **오디오북 파이프라인** ([`content/audiobook/`](../../content/audiobook/README.md))은 Python 기반 별도 파이프라인으로, MD 청크 분할 → TTS → MP3 병합을 수행합니다.
 
