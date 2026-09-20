@@ -39,12 +39,6 @@ const _EXAM_TABLES = {
         ],
         "공통": [
             "색소종류및기준_전체.pdf",
-            "시행규칙_별표3_사용시주의사항.pdf",
-            "시행규칙_별표4_포장표시기준및방법.pdf",
-            "시행규칙_별표5_표시광고범위및준수사항.pdf",
-            "시행규칙_별표6_위해화장품공표문.pdf",
-            "시행규칙_별표7_행정처분기준.pdf",
-            "시행규칙_별표9_수수료.pdf",
             "안전기준_별표1_사용불가원료.pdf",
             "안전기준_별표2_사용제한원료.pdf",
             "안전기준_별표3_인체세포조직배양액안전기준.pdf",
@@ -56,10 +50,11 @@ const _EXAM_TABLES = {
             "CGMP_별표3_적합업소로고.pdf"
         ],
         "과목1": [
-            "시행규칙_별표1_품질관리기준.pdf",
-            "시행규칙_별표2_책임판매안전관리기준.pdf"
+            "시행규칙_별표7_행정처분기준.pdf",
+            "시행규칙_별표9_수수료.pdf"
         ],
         "과목2": [
+            "시행규칙_별표1_품질관리기준.pdf",
             "KFCC_별표1_통칙.pdf",
             "KFCC_별표2_미백_나이아신아마이드.pdf",
             "KFCC_별표3_주름개선_레티놀.pdf",
@@ -72,10 +67,13 @@ const _EXAM_TABLES = {
             "KFCC_별표10_일반시험법.pdf"
         ],
         "과목3": [
-
+            "시행규칙_별표2_책임판매안전관리기준.pdf",
+            "시행규칙_별표4_포장표시기준및방법.pdf",
+            "시행규칙_별표5_표시광고범위및준수사항.pdf",
+            "시행규칙_별표6_위해화장품공표문.pdf"
         ],
         "과목4": [
-
+            "시행규칙_별표3_사용시주의사항.pdf"
         ]
         },
         SOURCE_REF_MAP: [
@@ -124,8 +122,8 @@ const _EXAM_TABLES = {
         "law": [
             { name: "화장품법 통합 정리", file: "1.cosmetic-law.md", type: "md" },
             { name: "개인정보보호법", file: "2.privacy-law.md", type: "md" },
-            { name: "시행규칙 별표1 품질관리기준", file: "시행규칙_별표1_품질관리기준.pdf", type: "pdf" },
-            { name: "시행규칙 별표2 책임판매안전관리기준", file: "시행규칙_별표2_책임판매안전관리기준.pdf", type: "pdf" }
+            { name: "시행규칙 별표7 행정처분기준", file: "시행규칙_별표7_행정처분기준.pdf", type: "pdf" },
+            { name: "시행규칙 별표9 수수료", file: "시행규칙_별표9_수수료.pdf", type: "pdf" }
         ],
         "manufacturing": [
             { name: "원료 종류와 특성", file: "1.ingredients.md", type: "md" },
@@ -133,6 +131,7 @@ const _EXAM_TABLES = {
             { name: "사용 제한 원료", file: "3.restricted.md", type: "md" },
             { name: "제조 관리", file: "4.management.md", type: "md" },
             { name: "위해 관리", file: "5.hazard.md", type: "md" },
+            { name: "시행규칙 별표1 품질관리기준", file: "시행규칙_별표1_품질관리기준.pdf", type: "pdf" },
             { name: "KFCC 별표1 통칙", file: "KFCC_별표1_통칙.pdf", type: "pdf" },
             { name: "KFCC 별표2 미백", file: "KFCC_별표2_미백_나이아신아마이드.pdf", type: "pdf" },
             { name: "KFCC 별표3 주름개선", file: "KFCC_별표3_주름개선_레티놀.pdf", type: "pdf" },
@@ -149,7 +148,11 @@ const _EXAM_TABLES = {
             { name: "작업자 안전", file: "2.worker-safety.md", type: "md" },
             { name: "설비 안전", file: "3.equipment-safety.md", type: "md" },
             { name: "자재 안전", file: "4.material-safety.md", type: "md" },
-            { name: "포장 안전", file: "5.packaging-safety.md", type: "md" }
+            { name: "포장 안전", file: "5.packaging-safety.md", type: "md" },
+            { name: "시행규칙 별표2 책임판매안전관리기준", file: "시행규칙_별표2_책임판매안전관리기준.pdf", type: "pdf" },
+            { name: "시행규칙 별표4 포장표시기준", file: "시행규칙_별표4_포장표시기준및방법.pdf", type: "pdf" },
+            { name: "시행규칙 별표5 표시광고범위", file: "시행규칙_별표5_표시광고범위및준수사항.pdf", type: "pdf" },
+            { name: "시행규칙 별표6 위해화장품공표문", file: "시행규칙_별표6_위해화장품공표문.pdf", type: "pdf" }
         ],
         "understanding": [
             { name: "맞춤형화장품 개요", file: "1.overview.md", type: "md" },
@@ -158,7 +161,8 @@ const _EXAM_TABLES = {
             { name: "상담", file: "4.consulting.md", type: "md" },
             { name: "가이드라인", file: "5.guideline.md", type: "md" },
             { name: "혼합·소분", file: "6.mixing-subdivision.md", type: "md" },
-            { name: "충전·포장", file: "7.filling-packaging.md", type: "md" }
+            { name: "충전·포장", file: "7.filling-packaging.md", type: "md" },
+            { name: "시행규칙 별표3 사용시주의사항", file: "시행규칙_별표3_사용시주의사항.pdf", type: "pdf" }
         ]
         },
         REFERENCE_COMMON: [
@@ -169,12 +173,6 @@ const _EXAM_TABLES = {
         { name: "별표4 유통안전관리시험방법", file: "안전기준_별표4_유통안전관리시험방법.pdf", type: "pdf", dir: "공통" },
         { name: "별표1 유형별주의사항표시문구", file: "주의사항_별표1_유형별주의사항표시문구.pdf", type: "pdf", dir: "공통" },
         { name: "별표2 알레르기유발성분25종", file: "주의사항_별표2_알레르기유발성분25종.pdf", type: "pdf", dir: "공통" },
-        { name: "시행규칙 별표3 사용시주의사항", file: "시행규칙_별표3_사용시주의사항.pdf", type: "pdf", dir: "공통" },
-        { name: "시행규칙 별표4 포장표시기준", file: "시행규칙_별표4_포장표시기준및방법.pdf", type: "pdf", dir: "공통" },
-        { name: "시행규칙 별표5 표시광고범위", file: "시행규칙_별표5_표시광고범위및준수사항.pdf", type: "pdf", dir: "공통" },
-        { name: "시행규칙 별표6 위해화장품공표문", file: "시행규칙_별표6_위해화장품공표문.pdf", type: "pdf", dir: "공통" },
-        { name: "시행규칙 별표7 행정처분기준", file: "시행규칙_별표7_행정처분기준.pdf", type: "pdf", dir: "공통" },
-        { name: "시행규칙 별표9 수수료", file: "시행규칙_별표9_수수료.pdf", type: "pdf", dir: "공통" },
         { name: "CGMP 별표1 공정별분류", file: "CGMP_별표1_공정별분류.pdf", type: "pdf", dir: "공통" },
         { name: "CGMP 별표2 실시상황평가표", file: "CGMP_별표2_실시상황평가표.pdf", type: "pdf", dir: "공통" },
         { name: "CGMP 별표3 적합업소로고", file: "CGMP_별표3_적합업소로고.pdf", type: "pdf", dir: "공통" }
