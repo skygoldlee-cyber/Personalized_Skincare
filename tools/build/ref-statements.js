@@ -24,6 +24,7 @@ const path = require('path');
 const DOC_SUBJECT_RULES = [
   [/화장품법\(법률\)|화장품법 시행규칙|시행규칙_별표/, 1],
   [/개인정보/, 1],
+  [/유통안전관리/, 3],                  // 안전기준_별표4_유통안전관리시험방법 — 안전기준 규칙보다 선행 필요
   [/안전기준|우수화장품|CGMP|색소/, 2],
   [/KFCC|기능성화장품/, 2],
   [/주의사항|알레르기/, 4],
@@ -309,10 +310,10 @@ function extractTableLists(lines) {
 //   예: "### (2) 피부의 기능" + |기능|내용| 표 → "피부의 기능에 해당하는 것"
 // ref_md 원문과 달리 편집본이라 발문 주제 품질이 핵심 — 헤딩 없는 표는
 // 발문이 무의미해지므로 건너뛴다. 핵심요약·문항집 파일은 제외.
-const NOTE_FILE_RE = /^\d+\.[^/\\]*\.md$/;
+const NOTE_FILE_RE = /^\d+[a-z]?\.[^/\\]*\.md$/i;   // 1.~ / 1b.~ 챕터 노트
 // 용어집 성격의 주제는 멤버십이 무의미 — "핵심 용어에 해당하는 것"은
 // 모든 용어가 정답이라 문항이 성립하지 않는다
-const NOTE_BAD_TOPIC_RE = /^(핵심\s*용어|용어\s*정리|주요\s*용어|핵심\s*정리|핵심\s*용어\s*정리|정리|용어|핵심\s*키워드|키워드)$/;
+const NOTE_BAD_TOPIC_RE = /^(핵심\s*용어|용어\s*정리|주요\s*용어|핵심\s*정리|핵심\s*용어\s*정리|정리|용어|용어의?\s*정의|핵심\s*키워드|키워드)$/;
 
 /** 노트 헤딩 → 발문 주제 정제: 번호·①·이모지·(기출)·꼬리 장식어 제거 */
 function cleanNoteHeading(h) {
@@ -341,6 +342,7 @@ function cleanNoteCell(t) {
     .replace(/\[\d+\]/g, '')
     .replace(/[(（]\s*(기출|중요|암기)\s*[)）]/g, '')
     .replace(/\s*기출\s*$/, '')                 // 괄호 없는 말단 '기출' 마커
+    .replace(/^[㉠-㉻①-⑳]\s*/, '')              // 목록 원형문자 마커 (㉠ 치오글라이콜릭애씨드…)
     .replace(/\s+/g, ' ')
     .trim();
 }
@@ -681,6 +683,7 @@ function extractRefAtoms(refDir) {
   const dirs = fs.readdirSync(refDir, { withFileTypes: true })
     .filter(d => d.isDirectory()).map(d => d.name);
   for (const dirName of dirs) {
+    if (/_구$/.test(dirName)) continue;   // 구(舊)버전 고시 — 개정 전 규정 오출제 방지
     const subject = docSubject(dirName);
     if (!subject) continue;
     const md = fs.readdirSync(path.join(refDir, dirName)).find(f => f.endsWith('.md'));

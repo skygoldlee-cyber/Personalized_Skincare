@@ -426,7 +426,7 @@ function buildClusterCombos(conceptPool, examKey, subject, subjKey, genOpts, sta
  * - derivedFrom `ref:…`·태그 '참조자료'로 식별 가능 → 검수 큐 추출 용이.
  * - 과목별 cap(REF_COMBO_CAP)까지 채운다.
  */
-const REF_COMBO_CAP = { 1: 35, 2: 92, 3: 0, 4: 150 };
+const REF_COMBO_CAP = { 1: 35, 2: 92, 3: 40, 4: 150 };
 
 function buildRefCombos(refPool, examKey, subject, subjKey, genOpts, stats) {
   const out = [];

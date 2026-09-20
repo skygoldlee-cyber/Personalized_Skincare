@@ -23635,5 +23635,2888 @@ var COMBO_DRILLS_subject3 = [
   "explain": "ㄱ. 원본: 과목3 문제은행 Q22 · 교재 L1717\nㄴ. 원본: 과목3 문제은행 Q26 · 교재 L1717\nㄷ. 원본: 과목3 문제은행 Q22 · 교재 L1717\nㄹ. 원본: 과목3 문제은행 Q26 · 교재 L1717\nㅁ. 원본: 과목3 문제은행 Q22 · 교재 L1717",
   "source": "과목3 개념 재조합",
   "answer": "4"
+ },
+ {
+  "id": "safety_combo-ref_b6af93",
+  "subject": 3,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목3 노트 5.packaging-safety 주요 포장 시험 방법 (참조자료 원문)",
+  "stem": "다음 중 주요 포장 시험 방법에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "safety_refst_e9eec8",
+    "conceptId": "과목3 노트 5.packaging-safety:주요 포장 시험 방법",
+    "text": "내용물 감량시험",
+    "truth": true,
+    "explain": "출처: 과목3 노트 5.packaging-safety 주요 포장 시험 방법"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "safety_refst_9b495a",
+    "conceptId": "과목3 노트 5.packaging-safety:주요 포장 시험 방법",
+    "text": "윈도우 피리어드",
+    "truth": false,
+    "explain": "출처: 과목3 노트 5.packaging-safety 주요 포장 시험 방법"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "safety_refst_b976e9",
+    "conceptId": "과목3 노트 5.packaging-safety:주요 포장 시험 방법",
+    "text": "수은 (허용한도)",
+    "truth": false,
+    "explain": "출처: 과목3 노트 5.packaging-safety 주요 포장 시험 방법"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "safety_refst_710179",
+    "conceptId": "과목3 노트 5.packaging-safety:주요 포장 시험 방법",
+    "text": "감압 누설시험",
+    "truth": true,
+    "explain": "출처: 과목3 노트 5.packaging-safety 주요 포장 시험 방법"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "safety_refst_d5ec12",
+    "conceptId": "과목3 노트 5.packaging-safety:주요 포장 시험 방법",
+    "text": "내용물에 의한 용기 변형시험",
+    "truth": true,
+    "explain": "출처: 과목3 노트 5.packaging-safety 주요 포장 시험 방법"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "한도"
+  ],
+  "derivedFrom": "ref:enum|note|5.packaging-safety.md|27|0",
+  "explain": "ㄱ. 출처: 과목3 노트 5.packaging-safety 주요 포장 시험 방법\nㄴ. 출처: 과목3 노트 5.packaging-safety 주요 포장 시험 방법\nㄷ. 출처: 과목3 노트 5.packaging-safety 주요 포장 시험 방법\nㄹ. 출처: 과목3 노트 5.packaging-safety 주요 포장 시험 방법\nㅁ. 출처: 과목3 노트 5.packaging-safety 주요 포장 시험 방법",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "3"
+ },
+ {
+  "id": "safety_combo-ref_369f88",
+  "subject": 3,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목3 노트 5.packaging-safety 주요 포장 시험 방법 (참조자료 원문)",
+  "stem": "다음 중 주요 포장 시험 방법에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "safety_refst_8761ec",
+    "conceptId": "과목3 노트 5.packaging-safety:주요 포장 시험 방법",
+    "text": "낙하시험",
+    "truth": true,
+    "explain": "출처: 과목3 노트 5.packaging-safety 주요 포장 시험 방법"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "safety_refst_4b9fbf",
+    "conceptId": "과목3 노트 5.packaging-safety:주요 포장 시험 방법",
+    "text": "유리병 내부 압력시험",
+    "truth": true,
+    "explain": "출처: 과목3 노트 5.packaging-safety 주요 포장 시험 방법"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "safety_refst_e24df4",
+    "conceptId": "과목3 노트 5.packaging-safety:주요 포장 시험 방법",
+    "text": "밀봉용기",
+    "truth": false,
+    "explain": "출처: 과목3 노트 5.packaging-safety 주요 포장 시험 방법"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "safety_refst_28bd02",
+    "conceptId": "과목3 노트 5.packaging-safety:주요 포장 시험 방법",
+    "text": "크로스커트트시험",
+    "truth": true,
+    "explain": "출처: 과목3 노트 5.packaging-safety 주요 포장 시험 방법"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "safety_refst_0fee03",
+    "conceptId": "과목3 노트 5.packaging-safety:주요 포장 시험 방법",
+    "text": "차아염소산나트륨",
+    "truth": false,
+    "explain": "출처: 과목3 노트 5.packaging-safety 주요 포장 시험 방법"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|5.packaging-safety.md|27|1",
+  "explain": "ㄱ. 출처: 과목3 노트 5.packaging-safety 주요 포장 시험 방법\nㄴ. 출처: 과목3 노트 5.packaging-safety 주요 포장 시험 방법\nㄷ. 출처: 과목3 노트 5.packaging-safety 주요 포장 시험 방법\nㄹ. 출처: 과목3 노트 5.packaging-safety 주요 포장 시험 방법\nㅁ. 출처: 과목3 노트 5.packaging-safety 주요 포장 시험 방법",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "5"
+ },
+ {
+  "id": "safety_combo-ref_f80fea",
+  "subject": 3,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목3 노트 3.equipment-safety 설비·기구의 구성 재질 구분 (참조자료 원문)",
+  "stem": "다음 중 설비·기구의 구성 재질 구분에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "safety_refst_97fb0c",
+    "conceptId": "과목3 노트 3.equipment-safety:설비·기구의 구성 재질 구분",
+    "text": "칭량장치",
+    "truth": true,
+    "explain": "출처: 과목3 노트 3.equipment-safety 설비·기구의 구성 재질 구분"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "safety_refst_641752",
+    "conceptId": "과목3 노트 3.equipment-safety:설비·기구의 구성 재질 구분",
+    "text": "화장품 내용물이 노출되지 않는 곳",
+    "truth": false,
+    "explain": "출처: 과목3 노트 3.equipment-safety 설비·기구의 구성 재질 구분"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "safety_refst_336bc5",
+    "conceptId": "과목3 노트 3.equipment-safety:설비·기구의 구성 재질 구분",
+    "text": "차아염소산나트륨액",
+    "truth": false,
+    "explain": "출처: 과목3 노트 3.equipment-safety 설비·기구의 구성 재질 구분"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "safety_refst_e82105",
+    "conceptId": "과목3 노트 3.equipment-safety:설비·기구의 구성 재질 구분",
+    "text": "혼합과 교반 장치 (호모게나이저)",
+    "truth": true,
+    "explain": "출처: 과목3 노트 3.equipment-safety 설비·기구의 구성 재질 구분"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "safety_refst_b52333",
+    "conceptId": "과목3 노트 3.equipment-safety:설비·기구의 구성 재질 구분",
+    "text": "필터, 여과기, 체",
+    "truth": true,
+    "explain": "출처: 과목3 노트 3.equipment-safety 설비·기구의 구성 재질 구분"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|3.equipment-safety.md|15|0",
+  "explain": "ㄱ. 출처: 과목3 노트 3.equipment-safety 설비·기구의 구성 재질 구분\nㄴ. 출처: 과목3 노트 3.equipment-safety 설비·기구의 구성 재질 구분\nㄷ. 출처: 과목3 노트 3.equipment-safety 설비·기구의 구성 재질 구분\nㄹ. 출처: 과목3 노트 3.equipment-safety 설비·기구의 구성 재질 구분\nㅁ. 출처: 과목3 노트 3.equipment-safety 설비·기구의 구성 재질 구분",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "3"
+ },
+ {
+  "id": "safety_combo-ref_9f18f6",
+  "subject": 3,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목3 노트 5.packaging-safety 포장용기 종류 (참조자료 원문)",
+  "stem": "다음 중 포장용기 종류에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "safety_refst_f1a71f",
+    "conceptId": "과목3 노트 5.packaging-safety:포장용기 종류",
+    "text": "밀봉용기",
+    "truth": true,
+    "explain": "출처: 과목3 노트 5.packaging-safety 포장용기 종류"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "safety_refst_df0eaa",
+    "conceptId": "과목3 노트 5.packaging-safety:포장용기 종류",
+    "text": "차광용기",
+    "truth": true,
+    "explain": "출처: 과목3 노트 5.packaging-safety 포장용기 종류"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "safety_refst_3b3669",
+    "conceptId": "과목3 노트 5.packaging-safety:포장용기 종류",
+    "text": "페놀 화합물(파라벤, 페녹시에탄올)",
+    "truth": false,
+    "explain": "출처: 과목3 노트 5.packaging-safety 포장용기 종류"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "safety_refst_838790",
+    "conceptId": "과목3 노트 5.packaging-safety:포장용기 종류",
+    "text": "시스테인류 주성분, 냉2욕식 퍼머넌트웨이브용(불휘발성 무기알칼리 미함유)",
+    "truth": false,
+    "explain": "출처: 과목3 노트 5.packaging-safety 포장용기 종류"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "safety_refst_4611d9",
+    "conceptId": "과목3 노트 5.packaging-safety:포장용기 종류",
+    "text": "밀폐용기",
+    "truth": true,
+    "explain": "출처: 과목3 노트 5.packaging-safety 포장용기 종류"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|note|5.packaging-safety.md|10|0",
+  "explain": "ㄱ. 출처: 과목3 노트 5.packaging-safety 포장용기 종류\nㄴ. 출처: 과목3 노트 5.packaging-safety 포장용기 종류\nㄷ. 출처: 과목3 노트 5.packaging-safety 포장용기 종류\nㄹ. 출처: 과목3 노트 5.packaging-safety 포장용기 종류\nㅁ. 출처: 과목3 노트 5.packaging-safety 포장용기 종류",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "5"
+ },
+ {
+  "id": "safety_combo-ref_f68a96",
+  "subject": 3,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목3 노트 4.material-safety 입고 라벨 색상 (참조자료 원문)",
+  "stem": "다음 중 입고 라벨 색상에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "safety_refst_c9c331",
+    "conceptId": "과목3 노트 4.material-safety:입고 라벨 색상",
+    "text": "수은 (허용한도)",
+    "truth": false,
+    "explain": "출처: 과목3 노트 4.material-safety 입고 라벨 색상"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "safety_refst_be8859",
+    "conceptId": "과목3 노트 4.material-safety:입고 라벨 색상",
+    "text": "부적합 판정",
+    "truth": true,
+    "explain": "출처: 과목3 노트 4.material-safety 입고 라벨 색상"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "safety_refst_85cad3",
+    "conceptId": "과목3 노트 4.material-safety:입고 라벨 색상",
+    "text": "치오글라이콜릭애씨드 주성분, 냉2욕식 퍼머넌트웨이브용",
+    "truth": false,
+    "explain": "출처: 과목3 노트 4.material-safety 입고 라벨 색상"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "safety_refst_44a86d",
+    "conceptId": "과목3 노트 4.material-safety:입고 라벨 색상",
+    "text": "판정 대기",
+    "truth": true,
+    "explain": "출처: 과목3 노트 4.material-safety 입고 라벨 색상"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "safety_refst_3bb50a",
+    "conceptId": "과목3 노트 4.material-safety:입고 라벨 색상",
+    "text": "시험 중",
+    "truth": true,
+    "explain": "출처: 과목3 노트 4.material-safety 입고 라벨 색상"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "한도",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|note|4.material-safety.md|37|0",
+  "explain": "ㄱ. 출처: 과목3 노트 4.material-safety 입고 라벨 색상\nㄴ. 출처: 과목3 노트 4.material-safety 입고 라벨 색상\nㄷ. 출처: 과목3 노트 4.material-safety 입고 라벨 색상\nㄹ. 출처: 과목3 노트 4.material-safety 입고 라벨 색상\nㅁ. 출처: 과목3 노트 4.material-safety 입고 라벨 색상",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "5"
+ },
+ {
+  "id": "safety_combo-ref_667c26",
+  "subject": 3,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목3 노트 4.material-safety 인체 세포·조직 배양액 안전 기준 (참조자료 원문)",
+  "stem": "다음 중 인체 세포·조직 배양액 안전 기준에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "safety_refst_af9bc8",
+    "conceptId": "과목3 노트 4.material-safety:인체 세포·조직 배양액 안전 기준",
+    "text": "공여자 적격성검사",
+    "truth": true,
+    "explain": "출처: 과목3 노트 4.material-safety 인체 세포·조직 배양액 안전 기준"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "safety_refst_b618a8",
+    "conceptId": "과목3 노트 4.material-safety:인체 세포·조직 배양액 안전 기준",
+    "text": "인체 세포·조직 배양액",
+    "truth": true,
+    "explain": "출처: 과목3 노트 4.material-safety 인체 세포·조직 배양액 안전 기준"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "safety_refst_35c674",
+    "conceptId": "과목3 노트 4.material-safety:인체 세포·조직 배양액 안전 기준",
+    "text": "청정등급",
+    "truth": true,
+    "explain": "출처: 과목3 노트 4.material-safety 인체 세포·조직 배양액 안전 기준"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "safety_refst_9e495d",
+    "conceptId": "과목3 노트 4.material-safety:인체 세포·조직 배양액 안전 기준",
+    "text": "벤잘코늄클로라이드",
+    "truth": false,
+    "explain": "출처: 과목3 노트 4.material-safety 인체 세포·조직 배양액 안전 기준"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "safety_refst_9f90ba",
+    "conceptId": "과목3 노트 4.material-safety:인체 세포·조직 배양액 안전 기준",
+    "text": "비구아니드",
+    "truth": false,
+    "explain": "출처: 과목3 노트 4.material-safety 인체 세포·조직 배양액 안전 기준"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|4.material-safety.md|15|0",
+  "explain": "ㄱ. 출처: 과목3 노트 4.material-safety 인체 세포·조직 배양액 안전 기준\nㄴ. 출처: 과목3 노트 4.material-safety 인체 세포·조직 배양액 안전 기준\nㄷ. 출처: 과목3 노트 4.material-safety 인체 세포·조직 배양액 안전 기준\nㄹ. 출처: 과목3 노트 4.material-safety 인체 세포·조직 배양액 안전 기준\nㅁ. 출처: 과목3 노트 4.material-safety 인체 세포·조직 배양액 안전 기준",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "safety_combo-ref_571185",
+  "subject": 3,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목3 노트 1.workspace-safety 화학적 소독 (참조자료 원문)",
+  "stem": "다음 중 화학적 소독에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "safety_refst_29b727",
+    "conceptId": "과목3 노트 1.workspace-safety:화학적 소독",
+    "text": "pH 시험법",
+    "truth": false,
+    "explain": "출처: 과목3 노트 1.workspace-safety 화학적 소독"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "safety_refst_5e394c",
+    "conceptId": "과목3 노트 1.workspace-safety:화학적 소독",
+    "text": "차광용기",
+    "truth": false,
+    "explain": "출처: 과목3 노트 1.workspace-safety 화학적 소독"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "safety_refst_55ec1e",
+    "conceptId": "과목3 노트 1.workspace-safety:화학적 소독",
+    "text": "크레졸수(3% 수용액)",
+    "truth": true,
+    "explain": "출처: 과목3 노트 1.workspace-safety 화학적 소독"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "safety_refst_833ad8",
+    "conceptId": "과목3 노트 1.workspace-safety:화학적 소독",
+    "text": "벤잘코늄클로라이드",
+    "truth": true,
+    "explain": "출처: 과목3 노트 1.workspace-safety 화학적 소독"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "safety_refst_c4820e",
+    "conceptId": "과목3 노트 1.workspace-safety:화학적 소독",
+    "text": "페놀수(3% 수용액)",
+    "truth": true,
+    "explain": "출처: 과목3 노트 1.workspace-safety 화학적 소독"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "한도",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|note|1.workspace-safety.md|37|0",
+  "explain": "ㄱ. 출처: 과목3 노트 1.workspace-safety 화학적 소독\nㄴ. 출처: 과목3 노트 1.workspace-safety 화학적 소독\nㄷ. 출처: 과목3 노트 1.workspace-safety 화학적 소독\nㄹ. 출처: 과목3 노트 1.workspace-safety 화학적 소독\nㅁ. 출처: 과목3 노트 1.workspace-safety 화학적 소독",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "2"
+ },
+ {
+  "id": "safety_combo-ref_1ccf62",
+  "subject": 3,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목3 노트 1.workspace-safety 청정도 등급 (참조자료 원문)",
+  "stem": "다음 중 청정도 등급에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "safety_refst_b8e3d9",
+    "conceptId": "과목3 노트 1.workspace-safety:청정도 등급",
+    "text": "일반 작업실(내용물 완전 폐색)",
+    "truth": true,
+    "explain": "출처: 과목3 노트 1.workspace-safety 청정도 등급"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "safety_refst_d6699c",
+    "conceptId": "과목3 노트 1.workspace-safety:청정도 등급",
+    "text": "치오글라이콜릭애씨드 주성분, 냉2욕식 퍼머넌트웨이브용",
+    "truth": false,
+    "explain": "출처: 과목3 노트 1.workspace-safety 청정도 등급"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "safety_refst_c48b6c",
+    "conceptId": "과목3 노트 1.workspace-safety:청정도 등급",
+    "text": "화장품 내용물이 노출되지 않는 곳",
+    "truth": true,
+    "explain": "출처: 과목3 노트 1.workspace-safety 청정도 등급"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "safety_refst_1a8e1d",
+    "conceptId": "과목3 노트 1.workspace-safety:청정도 등급",
+    "text": "작업장별 소독 방법 - 칭량실",
+    "truth": false,
+    "explain": "출처: 과목3 노트 1.workspace-safety 청정도 등급"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "safety_refst_2d54e7",
+    "conceptId": "과목3 노트 1.workspace-safety:청정도 등급",
+    "text": "청정도 엄격 관리",
+    "truth": true,
+    "explain": "출처: 과목3 노트 1.workspace-safety 청정도 등급"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|note|1.workspace-safety.md|12|0",
+  "explain": "ㄱ. 출처: 과목3 노트 1.workspace-safety 청정도 등급\nㄴ. 출처: 과목3 노트 1.workspace-safety 청정도 등급\nㄷ. 출처: 과목3 노트 1.workspace-safety 청정도 등급\nㄹ. 출처: 과목3 노트 1.workspace-safety 청정도 등급\nㅁ. 출처: 과목3 노트 1.workspace-safety 청정도 등급",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "safety_combo-ref_bd21ea",
+  "subject": 3,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목3 노트 5.packaging-safety 안전용기 대상 품목 (참조자료 원문)",
+  "stem": "다음 중 안전용기 대상 품목에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "safety_refst_966138",
+    "conceptId": "과목3 노트 5.packaging-safety:안전용기 대상 품목",
+    "text": "아이오도퍼",
+    "truth": false,
+    "explain": "출처: 과목3 노트 5.packaging-safety 안전용기 대상 품목"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "safety_refst_f733ad",
+    "conceptId": "과목3 노트 5.packaging-safety:안전용기 대상 품목",
+    "text": "소독 주기",
+    "truth": false,
+    "explain": "출처: 과목3 노트 5.packaging-safety 안전용기 대상 품목"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "safety_refst_174052",
+    "conceptId": "과목3 노트 5.packaging-safety:안전용기 대상 품목",
+    "text": "탄화수소류 함유",
+    "truth": true,
+    "explain": "출처: 과목3 노트 5.packaging-safety 안전용기 대상 품목"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "safety_refst_b2e6da",
+    "conceptId": "과목3 노트 5.packaging-safety:안전용기 대상 품목",
+    "text": "아세톤 함유 리무버",
+    "truth": true,
+    "explain": "출처: 과목3 노트 5.packaging-safety 안전용기 대상 품목"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "safety_refst_92fe70",
+    "conceptId": "과목3 노트 5.packaging-safety:안전용기 대상 품목",
+    "text": "제외 품목",
+    "truth": true,
+    "explain": "출처: 과목3 노트 5.packaging-safety 안전용기 대상 품목"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "기한"
+  ],
+  "derivedFrom": "ref:enum|note|5.packaging-safety.md|26|0",
+  "explain": "ㄱ. 출처: 과목3 노트 5.packaging-safety 안전용기 대상 품목\nㄴ. 출처: 과목3 노트 5.packaging-safety 안전용기 대상 품목\nㄷ. 출처: 과목3 노트 5.packaging-safety 안전용기 대상 품목\nㄹ. 출처: 과목3 노트 5.packaging-safety 안전용기 대상 품목\nㅁ. 출처: 과목3 노트 5.packaging-safety 안전용기 대상 품목",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "5"
+ },
+ {
+  "id": "safety_combo-ref_6e87f3",
+  "subject": 3,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목3 노트 1.workspace-safety 항균활성에 대한 중화제 (참조자료 원문)",
+  "stem": "다음 중 항균활성에 대한 중화제에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "safety_refst_ce316a",
+    "conceptId": "과목3 노트 1.workspace-safety:항균활성에 대한 중화제",
+    "text": "산화(oxidizing) 화합물",
+    "truth": true,
+    "explain": "출처: 과목3 노트 1.workspace-safety 항균활성에 대한 중화제"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "safety_refst_ba0694",
+    "conceptId": "과목3 노트 1.workspace-safety:항균활성에 대한 중화제",
+    "text": "페놀 화합물: 파라벤, 페녹시에탄올, 페닐에탄올 등 아닐리드",
+    "truth": true,
+    "explain": "출처: 과목3 노트 1.workspace-safety 항균활성에 대한 중화제"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "safety_refst_1c1d38",
+    "conceptId": "과목3 노트 1.workspace-safety:항균활성에 대한 중화제",
+    "text": "작업장별 소독 방법 - 제조실",
+    "truth": false,
+    "explain": "출처: 과목3 노트 1.workspace-safety 항균활성에 대한 중화제"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "safety_refst_ef8300",
+    "conceptId": "과목3 노트 1.workspace-safety:항균활성에 대한 중화제",
+    "text": "아이오도퍼",
+    "truth": false,
+    "explain": "출처: 과목3 노트 1.workspace-safety 항균활성에 대한 중화제"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "safety_refst_24bd5c",
+    "conceptId": "과목3 노트 1.workspace-safety:항균활성에 대한 중화제",
+    "text": "알데하이드, 포름알데하이드-유리 제제",
+    "truth": true,
+    "explain": "출처: 과목3 노트 1.workspace-safety 항균활성에 대한 중화제"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|1.workspace-safety.md|43|0",
+  "explain": "ㄱ. 출처: 과목3 노트 1.workspace-safety 항균활성에 대한 중화제\nㄴ. 출처: 과목3 노트 1.workspace-safety 항균활성에 대한 중화제\nㄷ. 출처: 과목3 노트 1.workspace-safety 항균활성에 대한 중화제\nㄹ. 출처: 과목3 노트 1.workspace-safety 항균활성에 대한 중화제\nㅁ. 출처: 과목3 노트 1.workspace-safety 항균활성에 대한 중화제",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "safety_combo-ref_4f2df9",
+  "subject": 3,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목3 노트 3.equipment-safety 설비·기구의 폐기 기준 (참조자료 원문)",
+  "stem": "다음 중 설비·기구의 폐기 기준에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "safety_refst_5c3d85",
+    "conceptId": "과목3 노트 3.equipment-safety:설비·기구의 폐기 기준",
+    "text": "설비·기구의 이력 관리 및 폐기",
+    "truth": true,
+    "explain": "출처: 과목3 노트 3.equipment-safety 설비·기구의 폐기 기준"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "safety_refst_068ec2",
+    "conceptId": "과목3 노트 3.equipment-safety:설비·기구의 폐기 기준",
+    "text": "청정도 엄격 관리",
+    "truth": false,
+    "explain": "출처: 과목3 노트 3.equipment-safety 설비·기구의 폐기 기준"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "safety_refst_590636",
+    "conceptId": "과목3 노트 3.equipment-safety:설비·기구의 폐기 기준",
+    "text": "페놀수(3% 수용액)",
+    "truth": false,
+    "explain": "출처: 과목3 노트 3.equipment-safety 설비·기구의 폐기 기준"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "safety_refst_a5f4d8",
+    "conceptId": "과목3 노트 3.equipment-safety:설비·기구의 폐기 기준",
+    "text": "설비 결함",
+    "truth": true,
+    "explain": "출처: 과목3 노트 3.equipment-safety 설비·기구의 폐기 기준"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "safety_refst_4939f2",
+    "conceptId": "과목3 노트 3.equipment-safety:설비·기구의 폐기 기준",
+    "text": "부품 교체",
+    "truth": true,
+    "explain": "출처: 과목3 노트 3.equipment-safety 설비·기구의 폐기 기준"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "한도",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|note|3.equipment-safety.md|17|0",
+  "explain": "ㄱ. 출처: 과목3 노트 3.equipment-safety 설비·기구의 폐기 기준\nㄴ. 출처: 과목3 노트 3.equipment-safety 설비·기구의 폐기 기준\nㄷ. 출처: 과목3 노트 3.equipment-safety 설비·기구의 폐기 기준\nㄹ. 출처: 과목3 노트 3.equipment-safety 설비·기구의 폐기 기준\nㅁ. 출처: 과목3 노트 3.equipment-safety 설비·기구의 폐기 기준",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "3"
+ },
+ {
+  "id": "safety_combo-ref_458e0e",
+  "subject": 3,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목3 노트 1.workspace-safety 구역별 위생관리 기준 (참조자료 원문)",
+  "stem": "다음 중 구역별 위생관리 기준에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "safety_refst_d30452",
+    "conceptId": "과목3 노트 1.workspace-safety:구역별 위생관리 기준",
+    "text": "원료 취급 구역",
+    "truth": true,
+    "explain": "출처: 과목3 노트 1.workspace-safety 구역별 위생관리 기준"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "safety_refst_e5d599",
+    "conceptId": "과목3 노트 1.workspace-safety:구역별 위생관리 기준",
+    "text": "보관 구역",
+    "truth": true,
+    "explain": "출처: 과목3 노트 1.workspace-safety 구역별 위생관리 기준"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "safety_refst_6846af",
+    "conceptId": "과목3 노트 1.workspace-safety:구역별 위생관리 기준",
+    "text": "유리병 표면 알칼리 용출량시험",
+    "truth": false,
+    "explain": "출처: 과목3 노트 1.workspace-safety 구역별 위생관리 기준"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "safety_refst_1d76ed",
+    "conceptId": "과목3 노트 1.workspace-safety:구역별 위생관리 기준",
+    "text": "제조 구역",
+    "truth": true,
+    "explain": "출처: 과목3 노트 1.workspace-safety 구역별 위생관리 기준"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "safety_refst_6613f8",
+    "conceptId": "과목3 노트 1.workspace-safety:구역별 위생관리 기준",
+    "text": "비구아니드",
+    "truth": false,
+    "explain": "출처: 과목3 노트 1.workspace-safety 구역별 위생관리 기준"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|1.workspace-safety.md|8|0",
+  "explain": "ㄱ. 출처: 과목3 노트 1.workspace-safety 구역별 위생관리 기준\nㄴ. 출처: 과목3 노트 1.workspace-safety 구역별 위생관리 기준\nㄷ. 출처: 과목3 노트 1.workspace-safety 구역별 위생관리 기준\nㄹ. 출처: 과목3 노트 1.workspace-safety 구역별 위생관리 기준\nㅁ. 출처: 과목3 노트 1.workspace-safety 구역별 위생관리 기준",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "2"
+ },
+ {
+  "id": "safety_combo-ref_9e102f",
+  "subject": 3,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목3 노트 1.workspace-safety 화학적 소독제 (참조자료 원문)",
+  "stem": "다음 중 화학적 소독제에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "safety_refst_3b3f02",
+    "conceptId": "과목3 노트 1.workspace-safety:화학적 소독제",
+    "text": "벤잘코늄클로라이드",
+    "truth": true,
+    "explain": "출처: 과목3 노트 1.workspace-safety 화학적 소독제"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "safety_refst_ef16a0",
+    "conceptId": "과목3 노트 1.workspace-safety:화학적 소독제",
+    "text": "차아염소산나트륨",
+    "truth": true,
+    "explain": "출처: 과목3 노트 1.workspace-safety 화학적 소독제"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "safety_refst_733891",
+    "conceptId": "과목3 노트 1.workspace-safety:화학적 소독제",
+    "text": "펌프 분사 형태시험",
+    "truth": false,
+    "explain": "출처: 과목3 노트 1.workspace-safety 화학적 소독제"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "safety_refst_e395a4",
+    "conceptId": "과목3 노트 1.workspace-safety:화학적 소독제",
+    "text": "크레졸수",
+    "truth": true,
+    "explain": "출처: 과목3 노트 1.workspace-safety 화학적 소독제"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "safety_refst_d31690",
+    "conceptId": "과목3 노트 1.workspace-safety:화학적 소독제",
+    "text": "아이오도퍼",
+    "truth": false,
+    "explain": "출처: 과목3 노트 1.workspace-safety 화학적 소독제"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|1.workspace-safety.md|49|0",
+  "explain": "ㄱ. 출처: 과목3 노트 1.workspace-safety 화학적 소독제\nㄴ. 출처: 과목3 노트 1.workspace-safety 화학적 소독제\nㄷ. 출처: 과목3 노트 1.workspace-safety 화학적 소독제\nㄹ. 출처: 과목3 노트 1.workspace-safety 화학적 소독제\nㅁ. 출처: 과목3 노트 1.workspace-safety 화학적 소독제",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "2"
+ },
+ {
+  "id": "safety_combo-ref_1b7ef0",
+  "subject": 3,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목3 노트 3.equipment-safety 설비 세척제의 유형 (참조자료 원문)",
+  "stem": "다음 중 설비 세척제의 유형에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "safety_refst_5cda17",
+    "conceptId": "과목3 노트 3.equipment-safety:설비 세척제의 유형",
+    "text": "약알칼리, 알칼리 세척제",
+    "truth": true,
+    "explain": "출처: 과목3 노트 3.equipment-safety 설비 세척제의 유형"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "safety_refst_812c28",
+    "conceptId": "과목3 노트 3.equipment-safety:설비 세척제의 유형",
+    "text": "중성 세척제",
+    "truth": true,
+    "explain": "출처: 과목3 노트 3.equipment-safety 설비 세척제의 유형"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "safety_refst_462e6c",
+    "conceptId": "과목3 노트 3.equipment-safety:설비 세척제의 유형",
+    "text": "탄화수소류 함유",
+    "truth": false,
+    "explain": "출처: 과목3 노트 3.equipment-safety 설비 세척제의 유형"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "safety_refst_173466",
+    "conceptId": "과목3 노트 3.equipment-safety:설비 세척제의 유형",
+    "text": "부식성 알칼리 세척제",
+    "truth": true,
+    "explain": "출처: 과목3 노트 3.equipment-safety 설비 세척제의 유형"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "safety_refst_c70371",
+    "conceptId": "과목3 노트 3.equipment-safety:설비 세척제의 유형",
+    "text": "밀봉용기",
+    "truth": false,
+    "explain": "출처: 과목3 노트 3.equipment-safety 설비 세척제의 유형"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|3.equipment-safety.md|13|0",
+  "explain": "ㄱ. 출처: 과목3 노트 3.equipment-safety 설비 세척제의 유형\nㄴ. 출처: 과목3 노트 3.equipment-safety 설비 세척제의 유형\nㄷ. 출처: 과목3 노트 3.equipment-safety 설비 세척제의 유형\nㄹ. 출처: 과목3 노트 3.equipment-safety 설비 세척제의 유형\nㅁ. 출처: 과목3 노트 3.equipment-safety 설비 세척제의 유형",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "3"
+ },
+ {
+  "id": "safety_combo-ref_593fdc",
+  "subject": 3,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목3 노트 1.workspace-safety 세제 성분의 특성 (참조자료 원문)",
+  "stem": "다음 중 세제 성분의 특성에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "safety_refst_99a26b",
+    "conceptId": "과목3 노트 1.workspace-safety:세제 성분의 특성",
+    "text": "아세톤 함유 리무버",
+    "truth": false,
+    "explain": "출처: 과목3 노트 1.workspace-safety 세제 성분의 특성"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "safety_refst_dc76f7",
+    "conceptId": "과목3 노트 1.workspace-safety:세제 성분의 특성",
+    "text": "작업장별 소독 방법 - 칭량실",
+    "truth": false,
+    "explain": "출처: 과목3 노트 1.workspace-safety 세제 성분의 특성"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "safety_refst_9ea875",
+    "conceptId": "과목3 노트 1.workspace-safety:세제 성분의 특성",
+    "text": "표백 성분",
+    "truth": true,
+    "explain": "출처: 과목3 노트 1.workspace-safety 세제 성분의 특성"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "safety_refst_24cec4",
+    "conceptId": "과목3 노트 1.workspace-safety:세제 성분의 특성",
+    "text": "계면활성제",
+    "truth": true,
+    "explain": "출처: 과목3 노트 1.workspace-safety 세제 성분의 특성"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "safety_refst_f999b9",
+    "conceptId": "과목3 노트 1.workspace-safety:세제 성분의 특성",
+    "text": "유기폴리머",
+    "truth": true,
+    "explain": "출처: 과목3 노트 1.workspace-safety 세제 성분의 특성"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|1.workspace-safety.md|28|0",
+  "explain": "ㄱ. 출처: 과목3 노트 1.workspace-safety 세제 성분의 특성\nㄴ. 출처: 과목3 노트 1.workspace-safety 세제 성분의 특성\nㄷ. 출처: 과목3 노트 1.workspace-safety 세제 성분의 특성\nㄹ. 출처: 과목3 노트 1.workspace-safety 세제 성분의 특성\nㅁ. 출처: 과목3 노트 1.workspace-safety 세제 성분의 특성",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "5"
+ },
+ {
+  "id": "safety_combo-ref_46a12f",
+  "subject": 3,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목3 노트 4.material-safety 공통 안전관리 기준 (참조자료 원문)",
+  "stem": "다음 중 공통 안전관리 기준에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "safety_refst_66143f",
+    "conceptId": "과목3 노트 4.material-safety:공통 안전관리 기준",
+    "text": "프탈레이트류",
+    "truth": true,
+    "explain": "출처: 과목3 노트 4.material-safety 공통 안전관리 기준"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "safety_refst_82badc",
+    "conceptId": "과목3 노트 4.material-safety:공통 안전관리 기준",
+    "text": "디옥산 (허용한도)",
+    "truth": true,
+    "explain": "출처: 과목3 노트 4.material-safety 공통 안전관리 기준"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "safety_refst_af42b1",
+    "conceptId": "과목3 노트 4.material-safety:공통 안전관리 기준",
+    "text": "수은 (시험법)",
+    "truth": false,
+    "explain": "출처: 과목3 노트 4.material-safety 공통 안전관리 기준"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "safety_refst_4180bc",
+    "conceptId": "과목3 노트 4.material-safety:공통 안전관리 기준",
+    "text": "포름알데하이드 (허용한도)",
+    "truth": true,
+    "explain": "출처: 과목3 노트 4.material-safety 공통 안전관리 기준"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "safety_refst_fd925a",
+    "conceptId": "과목3 노트 4.material-safety:공통 안전관리 기준",
+    "text": "치오글라이콜릭애씨드 주성분, 가온2욕식 퍼머넌트웨이브용(약 60℃ 이하 가온)",
+    "truth": false,
+    "explain": "출처: 과목3 노트 4.material-safety 공통 안전관리 기준"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "한도",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|note|4.material-safety.md|7|0",
+  "explain": "ㄱ. 출처: 과목3 노트 4.material-safety 공통 안전관리 기준\nㄴ. 출처: 과목3 노트 4.material-safety 공통 안전관리 기준\nㄷ. 출처: 과목3 노트 4.material-safety 공통 안전관리 기준\nㄹ. 출처: 과목3 노트 4.material-safety 공통 안전관리 기준\nㅁ. 출처: 과목3 노트 4.material-safety 공통 안전관리 기준",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "5"
+ },
+ {
+  "id": "safety_combo-ref_a10025",
+  "subject": 3,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목3 노트 4.material-safety 공통 안전관리 기준 (참조자료 원문)",
+  "stem": "다음 중 공통 안전관리 기준에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "safety_refst_82badc",
+    "conceptId": "과목3 노트 4.material-safety:공통 안전관리 기준",
+    "text": "디옥산 (허용한도)",
+    "truth": true,
+    "explain": "출처: 과목3 노트 4.material-safety 공통 안전관리 기준"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "safety_refst_398caa",
+    "conceptId": "과목3 노트 4.material-safety:공통 안전관리 기준",
+    "text": "크레졸수",
+    "truth": false,
+    "explain": "출처: 과목3 노트 4.material-safety 공통 안전관리 기준"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "safety_refst_dbd3c3",
+    "conceptId": "과목3 노트 4.material-safety:공통 안전관리 기준",
+    "text": "수은 (허용한도)",
+    "truth": true,
+    "explain": "출처: 과목3 노트 4.material-safety 공통 안전관리 기준"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "safety_refst_9a75ff",
+    "conceptId": "과목3 노트 4.material-safety:공통 안전관리 기준",
+    "text": "포름알데하이드",
+    "truth": false,
+    "explain": "출처: 과목3 노트 4.material-safety 공통 안전관리 기준"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "safety_refst_975b48",
+    "conceptId": "과목3 노트 4.material-safety:공통 안전관리 기준",
+    "text": "안티몬 (허용한도)",
+    "truth": true,
+    "explain": "출처: 과목3 노트 4.material-safety 공통 안전관리 기준"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "한도"
+  ],
+  "derivedFrom": "ref:enum|note|4.material-safety.md|7|1",
+  "explain": "ㄱ. 출처: 과목3 노트 4.material-safety 공통 안전관리 기준\nㄴ. 출처: 과목3 노트 4.material-safety 공통 안전관리 기준\nㄷ. 출처: 과목3 노트 4.material-safety 공통 안전관리 기준\nㄹ. 출처: 과목3 노트 4.material-safety 공통 안전관리 기준\nㅁ. 출처: 과목3 노트 4.material-safety 공통 안전관리 기준",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "1"
+ },
+ {
+  "id": "safety_combo-ref_04105f",
+  "subject": 3,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목3 노트 4.material-safety 공통 안전관리 기준 (참조자료 원문)",
+  "stem": "다음 중 공통 안전관리 기준에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "safety_refst_dbd3c3",
+    "conceptId": "과목3 노트 4.material-safety:공통 안전관리 기준",
+    "text": "수은 (허용한도)",
+    "truth": true,
+    "explain": "출처: 과목3 노트 4.material-safety 공통 안전관리 기준"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "safety_refst_262a6f",
+    "conceptId": "과목3 노트 4.material-safety:공통 안전관리 기준",
+    "text": "기밀용기",
+    "truth": false,
+    "explain": "출처: 과목3 노트 4.material-safety 공통 안전관리 기준"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "safety_refst_a0f520",
+    "conceptId": "과목3 노트 4.material-safety:공통 안전관리 기준",
+    "text": "니켈 (허용한도)",
+    "truth": true,
+    "explain": "출처: 과목3 노트 4.material-safety 공통 안전관리 기준"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "safety_refst_7a99da",
+    "conceptId": "과목3 노트 4.material-safety:공통 안전관리 기준",
+    "text": "표백 성분",
+    "truth": false,
+    "explain": "출처: 과목3 노트 4.material-safety 공통 안전관리 기준"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "safety_refst_3a480b",
+    "conceptId": "과목3 노트 4.material-safety:공통 안전관리 기준",
+    "text": "비소 (허용한도)",
+    "truth": true,
+    "explain": "출처: 과목3 노트 4.material-safety 공통 안전관리 기준"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "한도"
+  ],
+  "derivedFrom": "ref:enum|note|4.material-safety.md|7|2",
+  "explain": "ㄱ. 출처: 과목3 노트 4.material-safety 공통 안전관리 기준\nㄴ. 출처: 과목3 노트 4.material-safety 공통 안전관리 기준\nㄷ. 출처: 과목3 노트 4.material-safety 공통 안전관리 기준\nㄹ. 출처: 과목3 노트 4.material-safety 공통 안전관리 기준\nㅁ. 출처: 과목3 노트 4.material-safety 공통 안전관리 기준",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "safety_combo-ref_ce7106",
+  "subject": 3,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법 (참조자료 원문)",
+  "stem": "다음 중 포장 및 용기에 관한 시험 방법에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "safety_refst_1330f7",
+    "conceptId": "과목3 노트 5.packaging-safety:포장 및 용기에 관한 시험 방법",
+    "text": "감압 누설시험",
+    "truth": true,
+    "explain": "출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "safety_refst_bbe223",
+    "conceptId": "과목3 노트 5.packaging-safety:포장 및 용기에 관한 시험 방법",
+    "text": "내용물에 의한 용기 변형시험",
+    "truth": true,
+    "explain": "출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "safety_refst_50ae3a",
+    "conceptId": "과목3 노트 5.packaging-safety:포장 및 용기에 관한 시험 방법",
+    "text": "유리병 표면 알칼리 용출량시험",
+    "truth": true,
+    "explain": "출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "safety_refst_c73709",
+    "conceptId": "과목3 노트 5.packaging-safety:포장 및 용기에 관한 시험 방법",
+    "text": "프탈레이트류",
+    "truth": false,
+    "explain": "출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "safety_refst_26482e",
+    "conceptId": "과목3 노트 5.packaging-safety:포장 및 용기에 관한 시험 방법",
+    "text": "시스테인류 주성분, 가온2욕식 퍼머넌트웨이브용(약 60℃ 이하 가온, 불휘발성 무기알칼리 미함유)",
+    "truth": false,
+    "explain": "출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|note|5.packaging-safety.md|11|0",
+  "explain": "ㄱ. 출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법\nㄴ. 출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법\nㄷ. 출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법\nㄹ. 출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법\nㅁ. 출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "safety_combo-ref_42d5af",
+  "subject": 3,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법 (참조자료 원문)",
+  "stem": "다음 중 포장 및 용기에 관한 시험 방법에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "safety_refst_b5f6f3",
+    "conceptId": "과목3 노트 5.packaging-safety:포장 및 용기에 관한 시험 방법",
+    "text": "차광용기",
+    "truth": false,
+    "explain": "출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "safety_refst_d2a61a",
+    "conceptId": "과목3 노트 5.packaging-safety:포장 및 용기에 관한 시험 방법",
+    "text": "치오글라이콜릭애씨드 주성분, 냉2욕식 헤어스트레이트너용",
+    "truth": false,
+    "explain": "출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "safety_refst_ef3b92",
+    "conceptId": "과목3 노트 5.packaging-safety:포장 및 용기에 관한 시험 방법",
+    "text": "용기의 내열성 및 내한성시험",
+    "truth": true,
+    "explain": "출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "safety_refst_e0f5b2",
+    "conceptId": "과목3 노트 5.packaging-safety:포장 및 용기에 관한 시험 방법",
+    "text": "펌프 누름 강도시험",
+    "truth": true,
+    "explain": "출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "safety_refst_bbe223",
+    "conceptId": "과목3 노트 5.packaging-safety:포장 및 용기에 관한 시험 방법",
+    "text": "내용물에 의한 용기 변형시험",
+    "truth": true,
+    "explain": "출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|note|5.packaging-safety.md|11|1",
+  "explain": "ㄱ. 출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법\nㄴ. 출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법\nㄷ. 출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법\nㄹ. 출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법\nㅁ. 출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "2"
+ },
+ {
+  "id": "safety_combo-ref_1a3a41",
+  "subject": 3,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법 (참조자료 원문)",
+  "stem": "다음 중 포장 및 용기에 관한 시험 방법에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "safety_refst_ee5373",
+    "conceptId": "과목3 노트 5.packaging-safety:포장 및 용기에 관한 시험 방법",
+    "text": "낙하시험",
+    "truth": true,
+    "explain": "출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "safety_refst_d2a61a",
+    "conceptId": "과목3 노트 5.packaging-safety:포장 및 용기에 관한 시험 방법",
+    "text": "치오글라이콜릭애씨드 주성분, 냉2욕식 헤어스트레이트너용",
+    "truth": false,
+    "explain": "출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "safety_refst_16344d",
+    "conceptId": "과목3 노트 5.packaging-safety:포장 및 용기에 관한 시험 방법",
+    "text": "유리병 열 충격시험",
+    "truth": true,
+    "explain": "출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "safety_refst_c8ed20",
+    "conceptId": "과목3 노트 5.packaging-safety:포장 및 용기에 관한 시험 방법",
+    "text": "공여자 적격성검사",
+    "truth": false,
+    "explain": "출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "safety_refst_bbe223",
+    "conceptId": "과목3 노트 5.packaging-safety:포장 및 용기에 관한 시험 방법",
+    "text": "내용물에 의한 용기 변형시험",
+    "truth": true,
+    "explain": "출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|note|5.packaging-safety.md|11|2",
+  "explain": "ㄱ. 출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법\nㄴ. 출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법\nㄷ. 출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법\nㄹ. 출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법\nㅁ. 출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "safety_combo-ref_c5c370",
+  "subject": 3,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법 (참조자료 원문)",
+  "stem": "다음 중 포장 및 용기에 관한 시험 방법에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "safety_refst_26482e",
+    "conceptId": "과목3 노트 5.packaging-safety:포장 및 용기에 관한 시험 방법",
+    "text": "시스테인류 주성분, 가온2욕식 퍼머넌트웨이브용(약 60℃ 이하 가온, 불휘발성 무기알칼리 미함유)",
+    "truth": false,
+    "explain": "출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "safety_refst_81548d",
+    "conceptId": "과목3 노트 5.packaging-safety:포장 및 용기에 관한 시험 방법",
+    "text": "산화(oxidizing) 화합물",
+    "truth": false,
+    "explain": "출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "safety_refst_19a432",
+    "conceptId": "과목3 노트 5.packaging-safety:포장 및 용기에 관한 시험 방법",
+    "text": "내용물 감량시험",
+    "truth": true,
+    "explain": "출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "safety_refst_16344d",
+    "conceptId": "과목3 노트 5.packaging-safety:포장 및 용기에 관한 시험 방법",
+    "text": "유리병 열 충격시험",
+    "truth": true,
+    "explain": "출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "safety_refst_b88671",
+    "conceptId": "과목3 노트 5.packaging-safety:포장 및 용기에 관한 시험 방법",
+    "text": "펌프 분사 형태시험",
+    "truth": true,
+    "explain": "출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|note|5.packaging-safety.md|11|3",
+  "explain": "ㄱ. 출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법\nㄴ. 출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법\nㄷ. 출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법\nㄹ. 출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법\nㅁ. 출처: 과목3 노트 5.packaging-safety 포장 및 용기에 관한 시험 방법",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "safety_combo-ref_47cd53",
+  "subject": 3,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목3 노트 2.worker-safety 구역별 복장 기준 (참조자료 원문)",
+  "stem": "다음 중 구역별 복장 기준에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "safety_refst_d83584",
+    "conceptId": "과목3 노트 2.worker-safety:구역별 복장 기준",
+    "text": "밀봉용기",
+    "truth": false,
+    "explain": "출처: 과목3 노트 2.worker-safety 구역별 복장 기준"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "safety_refst_32ee36",
+    "conceptId": "과목3 노트 2.worker-safety:구역별 복장 기준",
+    "text": "작업복 (착용 구역)",
+    "truth": true,
+    "explain": "출처: 과목3 노트 2.worker-safety 구역별 복장 기준"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "safety_refst_76e3b5",
+    "conceptId": "과목3 노트 2.worker-safety:구역별 복장 기준",
+    "text": "작업화(안전화)",
+    "truth": true,
+    "explain": "출처: 과목3 노트 2.worker-safety 구역별 복장 기준"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "safety_refst_3ce20f",
+    "conceptId": "과목3 노트 2.worker-safety:구역별 복장 기준",
+    "text": "내용물 감량시험",
+    "truth": false,
+    "explain": "출처: 과목3 노트 2.worker-safety 구역별 복장 기준"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "safety_refst_31e437",
+    "conceptId": "과목3 노트 2.worker-safety:구역별 복장 기준",
+    "text": "작업모(위생모)",
+    "truth": true,
+    "explain": "출처: 과목3 노트 2.worker-safety 구역별 복장 기준"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|2.worker-safety.md|15|0",
+  "explain": "ㄱ. 출처: 과목3 노트 2.worker-safety 구역별 복장 기준\nㄴ. 출처: 과목3 노트 2.worker-safety 구역별 복장 기준\nㄷ. 출처: 과목3 노트 2.worker-safety 구역별 복장 기준\nㄹ. 출처: 과목3 노트 2.worker-safety 구역별 복장 기준\nㅁ. 출처: 과목3 노트 2.worker-safety 구역별 복장 기준",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "safety_combo-ref_bf3248",
+  "subject": 3,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목3 노트 1.workspace-safety 중화제 매칭 (참조자료 원문)",
+  "stem": "다음 중 중화제 매칭에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "safety_refst_8a1231",
+    "conceptId": "과목3 노트 1.workspace-safety:중화제 매칭",
+    "text": "보호안경",
+    "truth": false,
+    "explain": "출처: 과목3 노트 1.workspace-safety 중화제 매칭"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "safety_refst_592f0d",
+    "conceptId": "과목3 노트 1.workspace-safety:중화제 매칭",
+    "text": "산화 화합물",
+    "truth": true,
+    "explain": "출처: 과목3 노트 1.workspace-safety 중화제 매칭"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "safety_refst_e555fd",
+    "conceptId": "과목3 노트 1.workspace-safety:중화제 매칭",
+    "text": "페놀 화합물(파라벤, 페녹시에탄올)",
+    "truth": true,
+    "explain": "출처: 과목3 노트 1.workspace-safety 중화제 매칭"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "safety_refst_5709e3",
+    "conceptId": "과목3 노트 1.workspace-safety:중화제 매칭",
+    "text": "크레졸수",
+    "truth": false,
+    "explain": "출처: 과목3 노트 1.workspace-safety 중화제 매칭"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "safety_refst_71c512",
+    "conceptId": "과목3 노트 1.workspace-safety:중화제 매칭",
+    "text": "알데하이드, 포름알데하이드",
+    "truth": true,
+    "explain": "출처: 과목3 노트 1.workspace-safety 중화제 매칭"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|1.workspace-safety.md|50|0",
+  "explain": "ㄱ. 출처: 과목3 노트 1.workspace-safety 중화제 매칭\nㄴ. 출처: 과목3 노트 1.workspace-safety 중화제 매칭\nㄷ. 출처: 과목3 노트 1.workspace-safety 중화제 매칭\nㄹ. 출처: 과목3 노트 1.workspace-safety 중화제 매칭\nㅁ. 출처: 과목3 노트 1.workspace-safety 중화제 매칭",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "2"
+ },
+ {
+  "id": "safety_combo-ref_746b1f",
+  "subject": 3,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목3 노트 4.material-safety 유통화장품 안전관리 시험 방법 (참조자료 원문)",
+  "stem": "다음 중 유통화장품 안전관리 시험 방법에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "safety_refst_dd4cba",
+    "conceptId": "과목3 노트 4.material-safety:유통화장품 안전관리 시험 방법",
+    "text": "수은 (시험법)",
+    "truth": true,
+    "explain": "출처: 과목3 노트 4.material-safety 유통화장품 안전관리 시험 방법"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "safety_refst_e39a92",
+    "conceptId": "과목3 노트 4.material-safety:유통화장품 안전관리 시험 방법",
+    "text": "크레졸수",
+    "truth": false,
+    "explain": "출처: 과목3 노트 4.material-safety 유통화장품 안전관리 시험 방법"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "safety_refst_bf71e6",
+    "conceptId": "과목3 노트 4.material-safety:유통화장품 안전관리 시험 방법",
+    "text": "메탄올 (시험법)",
+    "truth": true,
+    "explain": "출처: 과목3 노트 4.material-safety 유통화장품 안전관리 시험 방법"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "safety_refst_ca6885",
+    "conceptId": "과목3 노트 4.material-safety:유통화장품 안전관리 시험 방법",
+    "text": "포름알데하이드 (시험법)",
+    "truth": true,
+    "explain": "출처: 과목3 노트 4.material-safety 유통화장품 안전관리 시험 방법"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "safety_refst_5bfb67",
+    "conceptId": "과목3 노트 4.material-safety:유통화장품 안전관리 시험 방법",
+    "text": "프탈레이트류",
+    "truth": false,
+    "explain": "출처: 과목3 노트 4.material-safety 유통화장품 안전관리 시험 방법"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|4.material-safety.md|13|0",
+  "explain": "ㄱ. 출처: 과목3 노트 4.material-safety 유통화장품 안전관리 시험 방법\nㄴ. 출처: 과목3 노트 4.material-safety 유통화장품 안전관리 시험 방법\nㄷ. 출처: 과목3 노트 4.material-safety 유통화장품 안전관리 시험 방법\nㄹ. 출처: 과목3 노트 4.material-safety 유통화장품 안전관리 시험 방법\nㅁ. 출처: 과목3 노트 4.material-safety 유통화장품 안전관리 시험 방법",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "2"
+ },
+ {
+  "id": "safety_combo-ref_65f848",
+  "subject": 3,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목3 노트 4.material-safety 유통화장품 안전관리 시험 방법 (참조자료 원문)",
+  "stem": "다음 중 유통화장품 안전관리 시험 방법에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "safety_refst_b2c6b6",
+    "conceptId": "과목3 노트 4.material-safety:유통화장품 안전관리 시험 방법",
+    "text": "보호안경",
+    "truth": false,
+    "explain": "출처: 과목3 노트 4.material-safety 유통화장품 안전관리 시험 방법"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "safety_refst_c0191f",
+    "conceptId": "과목3 노트 4.material-safety:유통화장품 안전관리 시험 방법",
+    "text": "프탈레이트류 (시험법)",
+    "truth": true,
+    "explain": "출처: 과목3 노트 4.material-safety 유통화장품 안전관리 시험 방법"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "safety_refst_7f1007",
+    "conceptId": "과목3 노트 4.material-safety:유통화장품 안전관리 시험 방법",
+    "text": "디옥산 (시험법)",
+    "truth": true,
+    "explain": "출처: 과목3 노트 4.material-safety 유통화장품 안전관리 시험 방법"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "safety_refst_147350",
+    "conceptId": "과목3 노트 4.material-safety:유통화장품 안전관리 시험 방법",
+    "text": "메탄올 (허용한도)",
+    "truth": false,
+    "explain": "출처: 과목3 노트 4.material-safety 유통화장품 안전관리 시험 방법"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "safety_refst_8296d4",
+    "conceptId": "과목3 노트 4.material-safety:유통화장품 안전관리 시험 방법",
+    "text": "pH 시험법",
+    "truth": true,
+    "explain": "출처: 과목3 노트 4.material-safety 유통화장품 안전관리 시험 방법"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "한도"
+  ],
+  "derivedFrom": "ref:enum|note|4.material-safety.md|13|1",
+  "explain": "ㄱ. 출처: 과목3 노트 4.material-safety 유통화장품 안전관리 시험 방법\nㄴ. 출처: 과목3 노트 4.material-safety 유통화장품 안전관리 시험 방법\nㄷ. 출처: 과목3 노트 4.material-safety 유통화장품 안전관리 시험 방법\nㄹ. 출처: 과목3 노트 4.material-safety 유통화장품 안전관리 시험 방법\nㅁ. 출처: 과목3 노트 4.material-safety 유통화장품 안전관리 시험 방법",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "2"
+ },
+ {
+  "id": "safety_combo-ref_26550c",
+  "subject": 3,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목3 노트 4.material-safety 유통화장품 안전관리 시험 방법 (참조자료 원문)",
+  "stem": "다음 중 유통화장품 안전관리 시험 방법에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "safety_refst_ea7908",
+    "conceptId": "과목3 노트 4.material-safety:유통화장품 안전관리 시험 방법",
+    "text": "메틸살리실레이트 함유",
+    "truth": false,
+    "explain": "출처: 과목3 노트 4.material-safety 유통화장품 안전관리 시험 방법"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "safety_refst_ca6885",
+    "conceptId": "과목3 노트 4.material-safety:유통화장품 안전관리 시험 방법",
+    "text": "포름알데하이드 (시험법)",
+    "truth": true,
+    "explain": "출처: 과목3 노트 4.material-safety 유통화장품 안전관리 시험 방법"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "safety_refst_8296d4",
+    "conceptId": "과목3 노트 4.material-safety:유통화장품 안전관리 시험 방법",
+    "text": "pH 시험법",
+    "truth": true,
+    "explain": "출처: 과목3 노트 4.material-safety 유통화장품 안전관리 시험 방법"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "safety_refst_279122",
+    "conceptId": "과목3 노트 4.material-safety:유통화장품 안전관리 시험 방법",
+    "text": "차아염소산나트륨",
+    "truth": false,
+    "explain": "출처: 과목3 노트 4.material-safety 유통화장품 안전관리 시험 방법"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "safety_refst_087d1c",
+    "conceptId": "과목3 노트 4.material-safety:유통화장품 안전관리 시험 방법",
+    "text": "유리알칼리",
+    "truth": true,
+    "explain": "출처: 과목3 노트 4.material-safety 유통화장품 안전관리 시험 방법"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|4.material-safety.md|13|2",
+  "explain": "ㄱ. 출처: 과목3 노트 4.material-safety 유통화장품 안전관리 시험 방법\nㄴ. 출처: 과목3 노트 4.material-safety 유통화장품 안전관리 시험 방법\nㄷ. 출처: 과목3 노트 4.material-safety 유통화장품 안전관리 시험 방법\nㄹ. 출처: 과목3 노트 4.material-safety 유통화장품 안전관리 시험 방법\nㅁ. 출처: 과목3 노트 4.material-safety 유통화장품 안전관리 시험 방법",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "5"
+ },
+ {
+  "id": "safety_combo-ref_7b3181",
+  "subject": 3,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목3 노트 4.material-safety 퍼머넌트웨이브용 및 헤어스트레이트너 (참조자료 원문)",
+  "stem": "다음 중 퍼머넌트웨이브용 및 헤어스트레이트너에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "safety_refst_370ec6",
+    "conceptId": "과목3 노트 4.material-safety:퍼머넌트웨이브용 및 헤어스트레이트너",
+    "text": "클로르헥시딘",
+    "truth": false,
+    "explain": "출처: 과목3 노트 4.material-safety 퍼머넌트웨이브용 및 헤어스트레이트너"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "safety_refst_4ddb42",
+    "conceptId": "과목3 노트 4.material-safety:퍼머넌트웨이브용 및 헤어스트레이트너",
+    "text": "치오글라이콜릭애씨드 주성분, 냉2욕식 헤어스트레이트너용",
+    "truth": true,
+    "explain": "출처: 과목3 노트 4.material-safety 퍼머넌트웨이브용 및 헤어스트레이트너"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "safety_refst_880f40",
+    "conceptId": "과목3 노트 4.material-safety:퍼머넌트웨이브용 및 헤어스트레이트너",
+    "text": "표백 성분",
+    "truth": false,
+    "explain": "출처: 과목3 노트 4.material-safety 퍼머넌트웨이브용 및 헤어스트레이트너"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "safety_refst_cd297d",
+    "conceptId": "과목3 노트 4.material-safety:퍼머넌트웨이브용 및 헤어스트레이트너",
+    "text": "시스테인류 주성분, 냉2욕식 퍼머넌트웨이브용(불휘발성 무기알칼리 미함유)",
+    "truth": true,
+    "explain": "출처: 과목3 노트 4.material-safety 퍼머넌트웨이브용 및 헤어스트레이트너"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "safety_refst_fddaef",
+    "conceptId": "과목3 노트 4.material-safety:퍼머넌트웨이브용 및 헤어스트레이트너",
+    "text": "치오글라이콜릭애씨드 주성분, 가온2욕식 퍼머넌트웨이브용(약 60℃ 이하 가온)",
+    "truth": true,
+    "explain": "출처: 과목3 노트 4.material-safety 퍼머넌트웨이브용 및 헤어스트레이트너"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|note|4.material-safety.md|11|0",
+  "explain": "ㄱ. 출처: 과목3 노트 4.material-safety 퍼머넌트웨이브용 및 헤어스트레이트너\nㄴ. 출처: 과목3 노트 4.material-safety 퍼머넌트웨이브용 및 헤어스트레이트너\nㄷ. 출처: 과목3 노트 4.material-safety 퍼머넌트웨이브용 및 헤어스트레이트너\nㄹ. 출처: 과목3 노트 4.material-safety 퍼머넌트웨이브용 및 헤어스트레이트너\nㅁ. 출처: 과목3 노트 4.material-safety 퍼머넌트웨이브용 및 헤어스트레이트너",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "1"
+ },
+ {
+  "id": "safety_combo-ref_66b1c1",
+  "subject": 3,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목3 노트 4.material-safety 퍼머넌트웨이브용 및 헤어스트레이트너 (참조자료 원문)",
+  "stem": "다음 중 퍼머넌트웨이브용 및 헤어스트레이트너에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "safety_refst_6790b4",
+    "conceptId": "과목3 노트 4.material-safety:퍼머넌트웨이브용 및 헤어스트레이트너",
+    "text": "치오글라이콜릭애씨드 주성분, 냉2욕식 퍼머넌트웨이브용",
+    "truth": true,
+    "explain": "출처: 과목3 노트 4.material-safety 퍼머넌트웨이브용 및 헤어스트레이트너"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "safety_refst_e4b1bf",
+    "conceptId": "과목3 노트 4.material-safety:퍼머넌트웨이브용 및 헤어스트레이트너",
+    "text": "수은 (시험법)",
+    "truth": false,
+    "explain": "출처: 과목3 노트 4.material-safety 퍼머넌트웨이브용 및 헤어스트레이트너"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "safety_refst_fddaef",
+    "conceptId": "과목3 노트 4.material-safety:퍼머넌트웨이브용 및 헤어스트레이트너",
+    "text": "치오글라이콜릭애씨드 주성분, 가온2욕식 퍼머넌트웨이브용(약 60℃ 이하 가온)",
+    "truth": true,
+    "explain": "출처: 과목3 노트 4.material-safety 퍼머넌트웨이브용 및 헤어스트레이트너"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "safety_refst_db8203",
+    "conceptId": "과목3 노트 4.material-safety:퍼머넌트웨이브용 및 헤어스트레이트너",
+    "text": "작업장별 소독 방법 - 제조실",
+    "truth": false,
+    "explain": "출처: 과목3 노트 4.material-safety 퍼머넌트웨이브용 및 헤어스트레이트너"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "safety_refst_cd297d",
+    "conceptId": "과목3 노트 4.material-safety:퍼머넌트웨이브용 및 헤어스트레이트너",
+    "text": "시스테인류 주성분, 냉2욕식 퍼머넌트웨이브용(불휘발성 무기알칼리 미함유)",
+    "truth": true,
+    "explain": "출처: 과목3 노트 4.material-safety 퍼머넌트웨이브용 및 헤어스트레이트너"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|note|4.material-safety.md|11|1",
+  "explain": "ㄱ. 출처: 과목3 노트 4.material-safety 퍼머넌트웨이브용 및 헤어스트레이트너\nㄴ. 출처: 과목3 노트 4.material-safety 퍼머넌트웨이브용 및 헤어스트레이트너\nㄷ. 출처: 과목3 노트 4.material-safety 퍼머넌트웨이브용 및 헤어스트레이트너\nㄹ. 출처: 과목3 노트 4.material-safety 퍼머넌트웨이브용 및 헤어스트레이트너\nㅁ. 출처: 과목3 노트 4.material-safety 퍼머넌트웨이브용 및 헤어스트레이트너",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
  }
 ];
