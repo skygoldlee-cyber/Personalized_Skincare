@@ -47,7 +47,7 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
         /<a href="기출문제\/과목(\d+)[^"]*">([^<]+)<\/a>/g,
         (match, subjNum, linkText) => {
             const examKey = `subject${subjNum}`;
-            const fileName = _examFileMap[examKey] || `과목${subjNum}_문제.md`;
+            const fileName = _examFileMap[examKey] || `과목${subjNum}_단일정답형.md`;
             const mdPath = PATHS.EXAM_BANK(fileName);
             return `<a href="#" data-exam-md="${escapeHTML(mdPath)}" class="exam-link-btn" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.5rem 1rem;background:var(--color-primary,#1f6feb);color:#fff;border-radius:8px;text-decoration:none;font-weight:600;font-size:0.9rem;"><i class="fa-solid fa-pen-to-square"></i> ${escapeHTML(linkText)}</a>`;
         }

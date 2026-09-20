@@ -356,7 +356,7 @@ body.exam-open{overflow:hidden;}
        마크다운 로드 소스 (프로토콜별)
        ========================================================= */
 
-    // '{contentRoot}/문제은행/과목1_문제.md' → '{dataRoot}/exams_md/과목1_문제.js'
+    // '{contentRoot}/문제은행/과목1_단일정답형.md' → '{dataRoot}/exams_md/과목1_단일정답형.js'
     function _bundlePathFor(mdPath) {
         const stem = mdPath.split('/').pop().replace(/\.md$/i, '');
         return dataPath('exams_md/') + stem + '.js';

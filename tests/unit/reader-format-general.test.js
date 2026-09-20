@@ -39,11 +39,11 @@ test('페이지 참조: "참고: 본문 p.22" 라인 제거', () => {
 // ==================== 기출문제 링크 변환 ====================
 
 test('기출문제 링크: [text](기출문제/과목N_...) → exam-link-btn', () => {
-    const md = '[기출문제 풀기](기출문제/과목1_문제은행.md)';
+    const md = '[기출문제 풀기](기출문제/과목1_단일정답형은행.md)';
     const html = formatSectionContentForReader(md);
     assert.ok(html.includes('exam-link-btn'), 'exam-link-btn 클래스');
     assert.ok(html.includes('data-exam-md'), 'data-exam-md 속성');
-    assert.ok(html.includes('과목1_문제.md'), '실제 경로로 변환');
+    assert.ok(html.includes('과목1_단일정답형.md'), '실제 경로로 변환');
 });
 
 // ==================== 참조자료 PDF 링크 변환 ====================

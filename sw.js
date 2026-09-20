@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v369-20260920-3dbbce5';   // 전과목 숫자암기 통합정리 고유 수치를 Part 2에 이식
+const CACHE_VERSION = 'v369-20260920-4bd4ff7';   // 전과목 숫자암기 통합정리 고유 수치를 Part 2에 이식
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
@@ -162,10 +162,10 @@ const MD_ASSETS = [
   './content/교재/safety/3과목_유통화장품안전관리_이야기형.md',
   './content/교재/understanding/4과목_맞춤형화장품의이해_표준형.md',
   './content/교재/understanding/4과목_맞춤형화장품의이해_이야기형.md',
-  './content/문제은행/과목1_문제.md',
-  './content/문제은행/과목2_문제.md',
-  './content/문제은행/과목3_문제.md',
-  './content/문제은행/과목4_문제.md'
+  './content/문제은행/과목1_단일정답형.md',
+  './content/문제은행/과목2_단일정답형.md',
+  './content/문제은행/과목3_단일정답형.md',
+  './content/문제은행/과목4_단일정답형.md'
 ];
 
 /** 캐시하지 않을 요청 패턴 (오디오 등 대용량 미디어) */

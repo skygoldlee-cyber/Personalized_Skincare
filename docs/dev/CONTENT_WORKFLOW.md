@@ -93,7 +93,7 @@ flowchart LR
 | 변경 유형 | 수정할 파일 | 비고 |
 |----------|------------|------|
 | **교재 내용 수정** | `content/교재/{과목}/*.md` | 표준형/이야기형 모두 수정 |
-| **문제은행 수정** | `content/문제은행/과목N_문제.md` | 문제 추가/삭제/수정 |
+| **문제은행 수정** | `content/문제은행/과목N_단일정답형.md` | 문제 추가/삭제/수정 |
 | **과목 추가/삭제** | `content/manifest.json` | `subjects` 배열 수정 |
 | **시험 추가/삭제** | `content/manifest.json` | `exams` 배열 수정 |
 | **참조자료 추가/삭제** | `content/references.json` | 참조자료 매핑 수정 |
@@ -205,7 +205,7 @@ npm.cmd run build:audio-manifest     # 오디오 매니페스트만
    ```
 4. `content/references.json`의 `referenceFiles`에 과목별 참조자료 추가
 5. `content/references.json`의 `refDirs`에 `과목5` 배열 추가
-6. `content/문제은행/과목5_문제.md` 생성 후 `manifest.json`의 `exams`에 추가
+6. `content/문제은행/과목5_단일정답형.md` 생성 후 `manifest.json`의 `exams`에 추가
 7. `npm.cmd run build:data` 실행
 8. 검증 + 커밋 + 배포
 
