@@ -26,7 +26,10 @@ convert_ref_pdfs_v2.py의 변환 엔진(좌표 공백 복원 + 표 구조화 + �
 끊기는 것보다 wrap 경계 공백 유실이 피해가 적음 — 줄 내 공백은 좌표로 복원됨).
 """
 import pdfplumber
-import pymupdf
+try:
+    import pymupdf
+except ImportError:
+    pymupdf = None  # 이미지 추출 전용 — 없어도 텍스트/표 변환은 동작
 import os
 import sys
 import glob
@@ -598,17 +601,21 @@ def convert(pdf_path, images_dir=None, image_prefix=''):
     출력 모드에서 파일명 충돌 방지용 접두사."""
     segments = []
     state = {}  # 페이지 간 열 밴드/헤더 유지 (무선 표 연속 페이지용)
-    mudoc = pymupdf.open(pdf_path)
+    if images_dir and pymupdf is None:
+        print('경고: pymupdf 미설치 — 이미지 추출을 건너뜁니다 '
+              '(pip install pymupdf)', file=sys.stderr)
+    mudoc = pymupdf.open(pdf_path) if (images_dir and pymupdf) else None
     with pdfplumber.open(pdf_path) as pdf:
         margin_junk = collect_margin_junk(pdf)
         for pi, page in enumerate(pdf.pages):
             image_names = []
-            if pi < len(mudoc):
+            if mudoc is not None and pi < len(mudoc):
                 image_names = extract_page_images(
                     mudoc[pi], pi, images_dir, image_prefix)
             segments.extend(page_to_md(page, image_names, state,
                                        margin_junk))
-    mudoc.close()
+    if mudoc is not None:
+        mudoc.close()
     segments = promote_text_header(segments)
     segments = merge_continuation_tables(segments)
     segments = segment_sentences(segments)   # 문장 단위 병합 (표/이미지 경계에서 리셋)
