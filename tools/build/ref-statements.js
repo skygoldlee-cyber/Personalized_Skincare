@@ -302,6 +302,143 @@ function extractTableLists(lines) {
   return lists;
 }
 
+/* ---------- 과목 노트 (content/참조자료/과목N/*.md) ---------- */
+// 번호 있는 챕터 노트(N.title.md)의 표에서 enum 원자 추출.
+// 노트 표는 "| 분류 | 내용 |" 형태 — 첫 열(또는 가장 이름형인 열)이
+// 멤버십 목록이고, 표 직전 헤딩이 주제가 된다.
+//   예: "### (2) 피부의 기능" + |기능|내용| 표 → "피부의 기능에 해당하는 것"
+// ref_md 원문과 달리 편집본이라 발문 주제 품질이 핵심 — 헤딩 없는 표는
+// 발문이 무의미해지므로 건너뛴다. 핵심요약·문항집 파일은 제외.
+const NOTE_FILE_RE = /^\d+\.[^/\\]*\.md$/;
+// 용어집 성격의 주제는 멤버십이 무의미 — "핵심 용어에 해당하는 것"은
+// 모든 용어가 정답이라 문항이 성립하지 않는다
+const NOTE_BAD_TOPIC_RE = /^(핵심\s*용어|용어\s*정리|주요\s*용어|핵심\s*정리|핵심\s*용어\s*정리|정리|용어|핵심\s*키워드|키워드)$/;
+
+/** 노트 헤딩 → 발문 주제 정제: 번호·①·이모지·(기출)·꼬리 장식어 제거 */
+function cleanNoteHeading(h) {
+  return String(h || '')
+    .replace(/\*\*/g, '')
+    .replace(/<[^>]{1,30}>/g, '')                 // <sup>기출</sup> 등 태그
+    .replace(/`/g, '')
+    .replace(/^[^\p{L}\p{N}「(【]+/u, '')          // 📊 📖 등 선행 기호
+    .replace(/^(참고|Tip|참조)\s*[:：]\s*/i, '')
+    .replace(/^[(（]?\d+[.)）]\s*/, '')           // (1) / 1. / 1) 접두 — "1차"는 구분자 없어 안 잘림
+    .replace(/^[①-⑩]\s*/, '')                    // ① 표피 …
+    .replace(/^부록\s*[-–—:：]\s*/, '')
+    .replace(/\s*[(（](기출|중요|암기|Tip)[^)）]*[)）]\s*/gi, '')
+    .replace(/\s*기출\s*$/, '')                    // 태그 제거 후 남는 말단 기출
+    .replace(/\s*(비교\s*표|비교|정리|요약|목록|체크리스트)$/, '') // 장식 꼬리
+    .replace(/\s*[-–—:：]\s*$/, '')
+    .trim();
+}
+
+/** 노트 표 셀 정제: 볼드·<br>·각주·기출 마커 제거 (ref_md 셀보다 마크업이 많다) */
+function cleanNoteCell(t) {
+  return String(t || '')
+    .replace(/<br\s*\/?>/gi, ' ')
+    .replace(/<[^>]{1,30}>/g, '')
+    .replace(/\*\*/g, '')
+    .replace(/\[\d+\]/g, '')
+    .replace(/[(（]\s*(기출|중요|암기)\s*[)）]/g, '')
+    .replace(/\s*기출\s*$/, '')                 // 괄호 없는 말단 '기출' 마커
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+// 표1열이 범용 분류어이고 2열~이 이름형이면 전치(비교) 표 — 멤버는 헤더 2열~이다
+// (| 구분 | 각질층 | 투명층 | → 멤버 = 각질층/투명층). 단 |기능|내용|처럼
+// 2열도 범용어면 일반 표 → 멤버는 1열.
+const NOTE_GENERIC_HDR_RE = /^(구분|항목|비교|특징|특성|내용|구성|층|기능|종류|분류|단계|유형|대상|기준|포인트|설명|예|비고|증상|요소|원인|위치|방법|절차|순서|시기|한도|허용한도|비율|함량|수치|기간|횟수|주의사항|세포|재료|기구|도구|용기|재질|첨가제|물질|용어|목적|역할|효과|영향|요건|조건|형태|상태|결과|평가|검사|시험|측정|판정|구비|서류)$/;
+// 노트 표의 멤버 열 헤더 — MD_MEMBER_COL_RE에 노트 특유의 엔티티 명사 추가.
+// '위치'처럼 속성 열은 넣지 않는다 (| 위치 | 세포 | 에서 세포 열을 찾기 위함).
+const NOTE_MEMBER_COL_RE = new RegExp(
+  MD_MEMBER_COL_RE.source.replace(/\$$/, '') +
+  '|세포|품목|도구|기구|기기|재료|재질|첨가제|표현|부위|성분|원료|용어|증상|원인|방법|유형|사항|요소|기능|층|단계|제품|물질|시험|검사|평가' + '$');
+
+/**
+ * 노트 MD에서 {주제: 헤딩, 멤버: 표 첫 열} 목록 추출.
+ * 표 직전 헤딩이 없거나(주제 없음) 멤버 4개 미만이면 제외.
+ * 반환: enum 원자 배열 (topic=헤딩, article=헤딩 → 형제 판정 단위)
+ */
+function extractNoteAtoms(filePath, docShort) {
+  const lines = fs.readFileSync(filePath, 'utf8').split(/\r?\n/);
+  const atoms = [];
+  let heading = '';
+  let table = null; // {header, rows}
+  const flush = ti => {
+    if (!table) return;
+    const { header, rows } = table;
+    table = null;
+    const topic = heading;
+    if (!topic || topic.length < 3 || topic.length > 50
+        || NOTE_BAD_TOPIC_RE.test(topic)) return;
+
+    // 전치 표 판정: 헤더1열이 범용어 + 헤더2열~이 이름형 → 멤버는 헤더
+    const hdrCells = header.map(h => cleanNoteCell(h).replace(/\s+/g, ''));
+    const h0Generic = NOTE_GENERIC_HDR_RE.test(hdrCells[0] || '');
+    const hdrNames = hdrCells.slice(1)
+      .filter(h => h && !NOTE_GENERIC_HDR_RE.test(h) && isNameCell(h));
+    let members;
+    if (h0Generic && hdrNames.length >= 4 && hdrNames.length >= hdrCells.length - 1) {
+      members = [...new Set(hdrNames)];
+    } else {
+      // 노트 표는 1열이 분류/이름 열 — 엔티티 헤더 매칭 → 1열 → 점수 최고 열
+      let col = header.findIndex(h =>
+        NOTE_MEMBER_COL_RE.test(cleanNoteCell(h).replace(/\s+/g, '')));
+      if (col < 0) {
+        const width = Math.max(header.length, ...rows.map(r => r.length));
+        const scoreOf = c => rows.filter(r =>
+          isNameCell(cleanNoteCell(r[c] || ''))).length;
+        col = scoreOf(0) >= 3 ? 0 : -1;
+        if (col < 0) {
+          let best = -1, bestScore = 3;
+          for (let c = 0; c < width; c++) {
+            const s = scoreOf(c);
+            if (s > bestScore) { best = c; bestScore = s; }
+          }
+          col = best;
+        }
+      }
+      if (col < 0) return;
+      members = [];
+      for (const r of rows) {
+        const cell = cleanNoteCell(r[col] || '')
+          .replace(/^\([가-힣 ]{2,15}\)\s+(?=[가-힣])/, '');
+        if (!isNameCell(cell)) continue;
+        const open = (cell.match(/[(\["'“「]/g) || []).length;
+        const close = (cell.match(/[)\]"'”」]/g) || []).length;
+        if (open !== close) continue;
+        if (!members.includes(cell)) members.push(cell);
+      }
+    }
+    if (members.length >= 4) {
+      atoms.push({
+        kind: 'enum', topic, topicSrc: 'quote',
+        members, listId: `note|${path.basename(filePath)}|${ti}`,
+        text: '', docShort, article: topic,
+        note: true,
+      });
+    }
+  };
+  let ti = 0;
+  for (const raw of lines) {
+    const t = raw.trim();
+    const hm = t.match(/^#{2,4}\s+(.+)$/);
+    if (hm) { flush(ti++); heading = cleanNoteHeading(hm[1]); continue; }
+    if (/^\|.*\|$/.test(t)) {
+      const cells = t.slice(1, -1).split('|').map(c => c.trim());
+      if (cells.every(c => /^-{2,}$/.test(c) || !c)) continue;   // 구분선
+      if (!table) table = { header: cells, rows: [] };
+      else if (cells.join('|') === table.header.join('|')) continue;
+      else table.rows.push(cells);
+      continue;
+    }
+    if (table && t) { flush(ti++); continue; }  // 표 종료
+  }
+  flush(ti);
+  return atoms;
+}
+
 /* ---------- 원료 큐레이션 DB (content/참조자료/원료/*.md) ---------- */
 // PDF 변환본(ref_md)의 원료 표보다 품질이 높은 수작업 정제 데이터.
 // 파일별 섹션 표의 첫 열(원료명/성분명)을 멤버십 목록으로 추출한다.
@@ -565,6 +702,20 @@ function extractRefAtoms(refDir) {
     const bucket = bySubject[2] || (bySubject[2] = { defs: [], enums: [], docs: new Set() });
     bucket.enums.push(a);
     bucket.docs.add(a.listId.split('|')[0]);
+  }
+  // 과목 노트 (ref_md의 형제 과목N 디렉터리) — 편집본 표의 멤버십 목록.
+  // 법령 원문이 없는 과목(특히 과목4)의 참조자료 문항 소스.
+  for (let s = 1; s <= 8; s++) {
+    const noteDir = path.join(refDir, '..', `과목${s}`);
+    if (!fs.existsSync(noteDir)) continue;
+    for (const f of fs.readdirSync(noteDir).filter(f => NOTE_FILE_RE.test(f))) {
+      const atoms = extractNoteAtoms(
+        path.join(noteDir, f), `과목${s} 노트 ${f.replace(/\.md$/, '')}`);
+      if (!atoms.length) continue;
+      const bucket = bySubject[s] || (bySubject[s] = { defs: [], enums: [], docs: new Set() });
+      for (const a of atoms) bucket.enums.push(a);
+      bucket.docs.add(f);
+    }
   }
   return bySubject;
 }

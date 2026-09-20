@@ -14905,22 +14905,30 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_6f9126",
+    "sid": "manufacturing_refst_33b73f",
     "conceptId": "원료DB 별표1 사용불가원료:중금속 및 유해 화학물질",
-    "text": "니켈 및 그 화합물",
-    "truth": true,
-    "explain": "출처: 원료DB 별표1 사용불가원료 중금속 및 유해 화학물질"
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_8913f7",
-    "conceptId": "원료DB 별표1 사용불가원료:중금속 및 유해 화학물질",
-    "text": "티타늄디옥사이드",
+    "text": "참나무이끼추출물",
     "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 중금속 및 유해 화학물질"
    },
    {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_43daae",
+    "conceptId": "원료DB 별표1 사용불가원료:중금속 및 유해 화학물질",
+    "text": "카드뮴 및 그 화합물",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 중금속 및 유해 화학물질"
+   },
+   {
     "id": "ㄷ",
+    "sid": "manufacturing_refst_230b48",
+    "conceptId": "원료DB 별표1 사용불가원료:중금속 및 유해 화학물질",
+    "text": "디엠디엠하이단토인",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 중금속 및 유해 화학물질"
+   },
+   {
+    "id": "ㄹ",
     "sid": "manufacturing_refst_9694da",
     "conceptId": "원료DB 별표1 사용불가원료:중금속 및 유해 화학물질",
     "text": "베릴륨 및 그 화합물",
@@ -14928,18 +14936,10 @@ var COMBO_DRILLS_subject2 = [
     "explain": "출처: 원료DB 별표1 사용불가원료 중금속 및 유해 화학물질"
    },
    {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_a0cb32",
-    "conceptId": "원료DB 별표1 사용불가원료:중금속 및 유해 화학물질",
-    "text": "(메칠헵틴카보네이트)",
-    "truth": false,
-    "explain": "출처: 원료DB 별표1 사용불가원료 중금속 및 유해 화학물질"
-   },
-   {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_43daae",
+    "sid": "manufacturing_refst_6f9126",
     "conceptId": "원료DB 별표1 사용불가원료:중금속 및 유해 화학물질",
-    "text": "카드뮴 및 그 화합물",
+    "text": "니켈 및 그 화합물",
     "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 중금속 및 유해 화학물질"
    }
@@ -14973,8 +14973,8 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "4",
     "members": [
-     "ㄱ",
-     "ㄷ",
+     "ㄴ",
+     "ㄹ",
      "ㅁ"
     ]
    },
@@ -15007,41 +15007,41 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_9694da",
+    "sid": "manufacturing_refst_6fb132",
     "conceptId": "원료DB 별표1 사용불가원료:중금속 및 유해 화학물질",
-    "text": "베릴륨 및 그 화합물",
+    "text": "비소 및 그 화합물",
     "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 중금속 및 유해 화학물질"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_038c02",
+    "sid": "manufacturing_refst_8c1962",
     "conceptId": "원료DB 별표1 사용불가원료:중금속 및 유해 화학물질",
-    "text": "제1호의 기준치를 벗어날 경우 : 6개를 더 취하여 시험할 때 9개의 평균 내용량이 제1호의 기준치 이상",
+    "text": "디아미노피리미딘옥사이드(2,4-디아미노-피리딘-3-옥사이드)",
     "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 중금속 및 유해 화학물질"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_729f8b",
+    "sid": "manufacturing_refst_fb2841",
     "conceptId": "원료DB 별표1 사용불가원료:중금속 및 유해 화학물질",
-    "text": "수은 및 그 화합물",
-    "truth": true,
-    "explain": "출처: 원료DB 별표1 사용불가원료 중금속 및 유해 화학물질"
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_f7873d",
-    "conceptId": "원료DB 별표1 사용불가원료:중금속 및 유해 화학물질",
-    "text": "염산 2,4-디아미노페녹시에탄올",
+    "text": "알킬(C -C )트리12 22메칠암모늄 브로마이드 및 클로라이드(브롬화세트리모늄포함)",
     "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 중금속 및 유해 화학물질"
    },
    {
-    "id": "ㅁ",
+    "id": "ㄹ",
     "sid": "manufacturing_refst_18ecdb",
     "conceptId": "원료DB 별표1 사용불가원료:중금속 및 유해 화학물질",
     "text": "셀렌 및 그 화합물 (셀레늄아스파테이트 제외)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 중금속 및 유해 화학물질"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_9694da",
+    "conceptId": "원료DB 별표1 사용불가원료:중금속 및 유해 화학물질",
+    "text": "베릴륨 및 그 화합물",
     "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 중금속 및 유해 화학물질"
    }
@@ -15058,7 +15058,7 @@ var COMBO_DRILLS_subject2 = [
     "id": "2",
     "members": [
      "ㄱ",
-     "ㄷ",
+     "ㄹ",
      "ㅁ"
     ]
    },
@@ -15089,6 +15089,7 @@ var COMBO_DRILLS_subject2 = [
    "참조자료",
    "열거목록",
    "금지원료",
+   "구성비",
    "수치"
   ],
   "derivedFrom": "ref:enum|원료|banned_ingredients.md|sec0|1",
@@ -15106,26 +15107,26 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_c77218",
+    "sid": "manufacturing_refst_13f4c7",
     "conceptId": "원료DB 별표1 사용불가원료:유기 용매 및 화학물질",
-    "text": "디클로로에탄(에칠렌클로라이드)",
-    "truth": true,
+    "text": "p-니트로-o-페닐렌디아민",
+    "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 유기 용매 및 화학물질"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_909acd",
+    "sid": "manufacturing_refst_6195e5",
     "conceptId": "원료DB 별표1 사용불가원료:유기 용매 및 화학물질",
-    "text": "실버나이트레이트",
-    "truth": false,
+    "text": "디에칠설페이트",
+    "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 유기 용매 및 화학물질"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_629994",
+    "sid": "manufacturing_refst_c77218",
     "conceptId": "원료DB 별표1 사용불가원료:유기 용매 및 화학물질",
-    "text": "노녹시놀-9",
-    "truth": false,
+    "text": "디클로로에탄(에칠렌클로라이드)",
+    "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 유기 용매 및 화학물질"
    },
    {
@@ -15138,10 +15139,10 @@ var COMBO_DRILLS_subject2 = [
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_6195e5",
+    "sid": "manufacturing_refst_d41380",
     "conceptId": "원료DB 별표1 사용불가원료:유기 용매 및 화학물질",
-    "text": "디에칠설페이트",
-    "truth": true,
+    "text": "마이카 (Mica) CI 77019",
+    "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 유기 용매 및 화학물질"
    }
   ],
@@ -15149,9 +15150,9 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "1",
     "members": [
-     "ㄱ",
-     "ㄹ",
-     "ㅁ"
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -15206,30 +15207,14 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_617f1d",
+    "sid": "manufacturing_refst_eea4a8",
     "conceptId": "원료DB 별표1 사용불가원료:발암성 물질",
-    "text": "벤조[a]피렌",
-    "truth": true,
+    "text": "아데노신",
+    "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 발암성 물질"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_07dbf7",
-    "conceptId": "원료DB 별표1 사용불가원료:발암성 물질",
-    "text": "안정성시험(해당하는 경우에 한함)",
-    "truth": false,
-    "explain": "출처: 원료DB 별표1 사용불가원료 발암성 물질"
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_0ff6c3",
-    "conceptId": "원료DB 별표1 사용불가원료:발암성 물질",
-    "text": "테트라브로모-ο-크레졸",
-    "truth": false,
-    "explain": "출처: 원료DB 별표1 사용불가원료 발암성 물질"
-   },
-   {
-    "id": "ㄹ",
     "sid": "manufacturing_refst_723e15",
     "conceptId": "원료DB 별표1 사용불가원료:발암성 물질",
     "text": "벤즈[a]안트라센",
@@ -15237,11 +15222,27 @@ var COMBO_DRILLS_subject2 = [
     "explain": "출처: 원료DB 별표1 사용불가원료 발암성 물질"
    },
    {
-    "id": "ㅁ",
+    "id": "ㄷ",
     "sid": "manufacturing_refst_bac98e",
     "conceptId": "원료DB 별표1 사용불가원료:발암성 물질",
     "text": "디벤즈[a,h]안트라센",
     "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 발암성 물질"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_617f1d",
+    "conceptId": "원료DB 별표1 사용불가원료:발암성 물질",
+    "text": "벤조[a]피렌",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 발암성 물질"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_67991b",
+    "conceptId": "원료DB 별표1 사용불가원료:발암성 물질",
+    "text": "p-클로로-m-크레졸",
+    "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 발암성 물질"
    }
   ],
@@ -15274,9 +15275,9 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "4",
     "members": [
-     "ㄱ",
-     "ㄹ",
-     "ㅁ"
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -15308,22 +15309,6 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_f7146a",
-    "conceptId": "원료DB 별표1 사용불가원료:의약품 및 마약류",
-    "text": "마취제(천연 및 합성)",
-    "truth": true,
-    "explain": "출처: 원료DB 별표1 사용불가원료 의약품 및 마약류"
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_74e39f",
-    "conceptId": "원료DB 별표1 사용불가원료:의약품 및 마약류",
-    "text": "베지터블카본 (코크블랙, Vegetable Carbon, Coke Black) CI 77268:1",
-    "truth": false,
-    "explain": "출처: 원료DB 별표1 사용불가원료 의약품 및 마약류"
-   },
-   {
-    "id": "ㄷ",
     "sid": "manufacturing_refst_06c990",
     "conceptId": "원료DB 별표1 사용불가원료:의약품 및 마약류",
     "text": "노스카핀 및 그 염류",
@@ -15331,18 +15316,34 @@ var COMBO_DRILLS_subject2 = [
     "explain": "출처: 원료DB 별표1 사용불가원료 의약품 및 마약류"
    },
    {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_170d8c",
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_c3901c",
     "conceptId": "원료DB 별표1 사용불가원료:의약품 및 마약류",
-    "text": "트리클로카반(트리클로카바닐리드)",
+    "text": "니코틴 및 그 염류",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 의약품 및 마약류"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_95f79d",
+    "conceptId": "원료DB 별표1 사용불가원료:의약품 및 마약류",
+    "text": "보레이트류(소듐보레이트, 테트라보레이트)",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 의약품 및 마약류"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_7f8135",
+    "conceptId": "원료DB 별표1 사용불가원료:의약품 및 마약류",
+    "text": "징크옥사이드",
     "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 의약품 및 마약류"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_c3901c",
+    "sid": "manufacturing_refst_f7146a",
     "conceptId": "원료DB 별표1 사용불가원료:의약품 및 마약류",
-    "text": "니코틴 및 그 염류",
+    "text": "마취제(천연 및 합성)",
     "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 의약품 및 마약류"
    }
@@ -15373,7 +15374,7 @@ var COMBO_DRILLS_subject2 = [
     "id": "4",
     "members": [
      "ㄱ",
-     "ㄷ",
+     "ㄴ",
      "ㅁ"
     ]
    },
@@ -15406,18 +15407,18 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_06c990",
+    "sid": "manufacturing_refst_9352bd",
     "conceptId": "원료DB 별표1 사용불가원료:의약품 및 마약류",
-    "text": "노스카핀 및 그 염류",
-    "truth": true,
+    "text": "디에칠헥실부타미도트리아존",
+    "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 의약품 및 마약류"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_8c457d",
+    "sid": "manufacturing_refst_06c990",
     "conceptId": "원료DB 별표1 사용불가원료:의약품 및 마약류",
-    "text": "실버 (Silver) CI 77820",
-    "truth": false,
+    "text": "노스카핀 및 그 염류",
+    "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 의약품 및 마약류"
    },
    {
@@ -15430,17 +15431,17 @@ var COMBO_DRILLS_subject2 = [
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_3f7d7d",
+    "sid": "manufacturing_refst_bf4780",
     "conceptId": "원료DB 별표1 사용불가원료:의약품 및 마약류",
-    "text": "카민류 (Carmines) CI 75470",
+    "text": "라이코펜 (Lycopene) CI 75125",
     "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 의약품 및 마약류"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_7ead2a",
+    "sid": "manufacturing_refst_9f116e",
     "conceptId": "원료DB 별표1 사용불가원료:의약품 및 마약류",
-    "text": "날로르핀, 그 염류 및 에텔",
+    "text": "리도카인",
     "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 의약품 및 마약류"
    }
@@ -15449,7 +15450,7 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "1",
     "members": [
-     "ㄱ",
+     "ㄴ",
      "ㄷ",
      "ㅁ"
     ]
@@ -15507,6 +15508,14 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
+    "sid": "manufacturing_refst_c00881",
+    "conceptId": "원료DB 별표1 사용불가원료:염모제 관련",
+    "text": "2,6-디메톡시-3,5-피리딘디아민 하이드로클롤로라이드",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 염모제 관련"
+   },
+   {
+    "id": "ㄴ",
     "sid": "manufacturing_refst_173721",
     "conceptId": "원료DB 별표1 사용불가원료:염모제 관련",
     "text": "2,4-디아미노페녹시에탄올 하이드로클로라이드",
@@ -15514,19 +15523,11 @@ var COMBO_DRILLS_subject2 = [
     "explain": "출처: 원료DB 별표1 사용불가원료 염모제 관련"
    },
    {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_736298",
-    "conceptId": "원료DB 별표1 사용불가원료:염모제 관련",
-    "text": "표준품 및 시약의 관리",
-    "truth": false,
-    "explain": "출처: 원료DB 별표1 사용불가원료 염모제 관련"
-   },
-   {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_c00881",
+    "sid": "manufacturing_refst_bee4c8",
     "conceptId": "원료DB 별표1 사용불가원료:염모제 관련",
-    "text": "2,6-디메톡시-3,5-피리딘디아민 하이드로클롤로라이드",
-    "truth": true,
+    "text": "신나밀알코올",
+    "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 염모제 관련"
    },
    {
@@ -15539,9 +15540,9 @@ var COMBO_DRILLS_subject2 = [
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_971782",
+    "sid": "manufacturing_refst_e089ca",
     "conceptId": "원료DB 별표1 사용불가원료:염모제 관련",
-    "text": "제1호의 기준치를 벗어날 경우 : 6개를 더 취하여 시험할 때 9개의 평균 내용량이 제1호의 기준치 이상",
+    "text": "마이카 (Mica) CI 77019",
     "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 염모제 관련"
    }
@@ -15573,7 +15574,7 @@ var COMBO_DRILLS_subject2 = [
     "id": "4",
     "members": [
      "ㄱ",
-     "ㄷ",
+     "ㄴ",
      "ㄹ"
     ]
    },
@@ -15606,25 +15607,25 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_9573d8",
+    "sid": "manufacturing_refst_d1c4fc",
     "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
-    "text": "하수체(pituitary gland)",
+    "text": "삼차신경(trigeminal ganglia)",
     "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_ae0076",
+    "sid": "manufacturing_refst_f35ed0",
     "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
-    "text": "참나무이끼추출물",
+    "text": "트랜스-로즈 케톤-2",
     "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_d1c4fc",
+    "sid": "manufacturing_refst_9573d8",
     "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
-    "text": "삼차신경(trigeminal ganglia)",
+    "text": "하수체(pituitary gland)",
     "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
    },
@@ -15638,9 +15639,9 @@ var COMBO_DRILLS_subject2 = [
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_039130",
+    "sid": "manufacturing_refst_029458",
     "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
-    "text": "엠디엠하이단토인",
+    "text": "살리실릭애씨드 및 그 염류",
     "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
    }
@@ -15710,6 +15711,14 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
+    "sid": "manufacturing_refst_33ee37",
+    "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
+    "text": "카민 함유 제품",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
+   },
+   {
+    "id": "ㄴ",
     "sid": "manufacturing_refst_c54f71",
     "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
     "text": "편도(tonsil)",
@@ -15717,7 +15726,7 @@ var COMBO_DRILLS_subject2 = [
     "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
    },
    {
-    "id": "ㄴ",
+    "id": "ㄷ",
     "sid": "manufacturing_refst_ae79ea",
     "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
     "text": "림프절(lymph nodes)",
@@ -15725,27 +15734,19 @@ var COMBO_DRILLS_subject2 = [
     "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
    },
    {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_c755d6",
-    "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
-    "text": "치오글라이콜릭애씨드,그 염류 및 에스텔류",
-    "truth": false,
-    "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
-   },
-   {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_fe6f14",
+    "sid": "manufacturing_refst_916853",
     "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
-    "text": "아세틸헥사메칠테트라린",
-    "truth": false,
+    "text": "두개골(skull)",
+    "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_5e5f0d",
+    "sid": "manufacturing_refst_8b0d0e",
     "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
-    "text": "태반(placenta)",
-    "truth": true,
+    "text": "톨루엔-2,5-디아민",
+    "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
    }
   ],
@@ -15760,9 +15761,9 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "2",
     "members": [
-     "ㄱ",
      "ㄴ",
-     "ㅁ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -15808,41 +15809,41 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_0b42e7",
+    "sid": "manufacturing_refst_d1c4fc",
     "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
-    "text": "6-히드록시인돌",
-    "truth": false,
+    "text": "삼차신경(trigeminal ganglia)",
+    "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_7789f2",
+    "sid": "manufacturing_refst_66aa35",
     "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
-    "text": "염산 톨루엔-2,5-디아민",
+    "text": "아밀비닐카르비닐아세테이트",
     "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_ae79ea",
+    "sid": "manufacturing_refst_c54f71",
     "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
-    "text": "림프절(lymph nodes)",
+    "text": "편도(tonsil)",
     "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_d58348",
+    "sid": "manufacturing_refst_67fe7b",
     "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
-    "text": "배측근신경절(dorsal root ganglia)",
-    "truth": true,
+    "text": "(메텐아민 3-클로로 알릴클로라이드)",
+    "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_9573d8",
+    "sid": "manufacturing_refst_ae79ea",
     "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
-    "text": "하수체(pituitary gland)",
+    "text": "림프절(lymph nodes)",
     "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
    }
@@ -15851,8 +15852,8 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "1",
     "members": [
+     "ㄱ",
      "ㄷ",
-     "ㄹ",
      "ㅁ"
     ]
    },
@@ -15907,10 +15908,10 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_c839ee",
+    "sid": "manufacturing_refst_d94cf2",
     "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
-    "text": "뇌척수액(cerebrospinal fluid)",
-    "truth": true,
+    "text": "시스테인, 아세틸시스테인 및 그 염류",
+    "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
    },
    {
@@ -15923,25 +15924,25 @@ var COMBO_DRILLS_subject2 = [
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_6c77fe",
+    "sid": "manufacturing_refst_8a9d94",
     "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
-    "text": "알파-비사보롤",
+    "text": "폴딘메틸설페이드",
     "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_73e51c",
+    "sid": "manufacturing_refst_916853",
     "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
-    "text": "멘틸안트라닐레이트",
-    "truth": false,
+    "text": "두개골(skull)",
+    "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_3ad1c1",
+    "sid": "manufacturing_refst_c839ee",
     "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
-    "text": "경막(dura mater)",
+    "text": "뇌척수액(cerebrospinal fluid)",
     "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
    }
@@ -15950,8 +15951,8 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "1",
     "members": [
-     "ㄱ",
      "ㄴ",
+     "ㄹ",
      "ㅁ"
     ]
    },
@@ -16008,42 +16009,42 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_7d6677",
+    "sid": "manufacturing_refst_e0aa1a",
     "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
-    "text": "부신(adrenal gland)",
+    "text": "돼지폐 추출물",
     "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_8eb7d4",
+    "sid": "manufacturing_refst_9573d8",
     "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
-    "text": "십이지장에서 직장까지의 장관(intestines from the duodenum to the rectum)",
+    "text": "하수체(pituitary gland)",
     "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_d58348",
+    "sid": "manufacturing_refst_5d3899",
     "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
-    "text": "배측근신경절(dorsal root ganglia)",
-    "truth": true,
+    "text": "마그네슘아스코빌포스페이트",
+    "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_070c55",
+    "sid": "manufacturing_refst_4be93a",
     "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
-    "text": "클로헥시딘, 그 디글루코네이트, 디아세테이트 및 디하이드로클로라이드",
+    "text": "제조공정관리에 관한 사항",
     "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_2cba63",
+    "sid": "manufacturing_refst_d1c4fc",
     "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
-    "text": "Commiphora erythreaengler var.glabrescens검 추출물및 오일",
-    "truth": false,
+    "text": "삼차신경(trigeminal ganglia)",
+    "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
    }
   ],
@@ -16087,7 +16088,7 @@ var COMBO_DRILLS_subject2 = [
     "members": [
      "ㄱ",
      "ㄴ",
-     "ㄷ"
+     "ㅁ"
     ]
    }
   ],
@@ -16113,30 +16114,22 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_b3cb17",
+    "sid": "manufacturing_refst_a818a5",
     "conceptId": "원료DB 별표1 사용불가원료:기타 고빈도 성분",
-    "text": "피그먼트 자색 23호 (Pigment Violet 23) CI 51319",
-    "truth": false,
+    "text": "디메칠설폭사이드",
+    "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 기타 고빈도 성분"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_556699",
+    "sid": "manufacturing_refst_08532f",
     "conceptId": "원료DB 별표1 사용불가원료:기타 고빈도 성분",
-    "text": "황산 p-메칠아미노페놀",
+    "text": "분자식 및 분자량",
     "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 기타 고빈도 성분"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_0939df",
-    "conceptId": "원료DB 별표1 사용불가원료:기타 고빈도 성분",
-    "text": "디에칠렌글라이콜",
-    "truth": true,
-    "explain": "출처: 원료DB 별표1 사용불가원료 기타 고빈도 성분"
-   },
-   {
-    "id": "ㄹ",
     "sid": "manufacturing_refst_26b821",
     "conceptId": "원료DB 별표1 사용불가원료:기타 고빈도 성분",
     "text": "미세플라스틱",
@@ -16144,11 +16137,19 @@ var COMBO_DRILLS_subject2 = [
     "explain": "출처: 원료DB 별표1 사용불가원료 기타 고빈도 성분"
    },
    {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_a818a5",
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_0939df",
     "conceptId": "원료DB 별표1 사용불가원료:기타 고빈도 성분",
-    "text": "디메칠설폭사이드",
+    "text": "디에칠렌글라이콜",
     "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 기타 고빈도 성분"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_3ea07e",
+    "conceptId": "원료DB 별표1 사용불가원료:기타 고빈도 성분",
+    "text": "살리실릭애씨드 및 그염류",
+    "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 기타 고빈도 성분"
    }
   ],
@@ -16156,9 +16157,9 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "1",
     "members": [
+     "ㄱ",
      "ㄷ",
-     "ㄹ",
-     "ㅁ"
+     "ㄹ"
     ]
    },
    {
@@ -16212,26 +16213,26 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_1f2e27",
+    "sid": "manufacturing_refst_958a63",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "비스머스옥시클로라이드 (Bismuth Oxychloride) CI 77163",
+    "text": "드로메트리졸트리실록산",
     "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_3da18b",
+    "sid": "manufacturing_refst_facd3c",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "니코틴 및 그 염류",
+    "text": "쿠라레와 쿠라린",
     "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_facd3c",
+    "sid": "manufacturing_refst_166ba9",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "쿠라레와 쿠라린",
-    "truth": true,
+    "text": "벤토나이트 (Bentonite) CI 77004",
+    "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
@@ -16244,10 +16245,10 @@ var COMBO_DRILLS_subject2 = [
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_6a5429",
+    "sid": "manufacturing_refst_3da18b",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "소듐아이오데이트",
-    "truth": false,
+    "text": "니코틴 및 그 염류",
+    "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    }
   ],
@@ -16279,8 +16280,8 @@ var COMBO_DRILLS_subject2 = [
     "id": "4",
     "members": [
      "ㄴ",
-     "ㄷ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -16311,41 +16312,41 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_c31bd1",
+    "sid": "manufacturing_refst_026f5a",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "치오판네이트-메칠",
+    "text": "테트라브로모살리실아닐리드",
     "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_9c81bf",
+    "sid": "manufacturing_refst_24da0a",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "메칠페닐렌디아민류, 그 N-치환 유도체류 및 그 염류",
+    "text": "2,2'-((3-클로로-4-((2,6-디클로로-4-니트로페닐)아조)페닐)이미노)비스에탄올(디스퍼스브라운 1) 및 그 염류",
     "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_697d7d",
+    "sid": "manufacturing_refst_33f080",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "구조식 또는 시성식",
-    "truth": false,
-    "explain": "출처: 원료DB 별표1 사용불가원료 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_62c264",
-    "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "디벤즈[a,h]안트라센",
+    "text": "p-아미노-o-니트로페놀(4-아미노-2-니트로페놀)",
     "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_d0d408",
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_c17234",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "아이바놀카르비닐아세테이트",
+    "text": "크로뮴옥사이드그린 (크롬(III) 옥사이드, Chromium Oxide Greens)CI 77288",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_908375",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "글루코네이트, 디 아세테이트 및 디 하이드로클로라이 드",
     "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    }
@@ -16371,7 +16372,7 @@ var COMBO_DRILLS_subject2 = [
     "members": [
      "ㄱ",
      "ㄴ",
-     "ㄹ"
+     "ㄷ"
     ]
    },
    {
@@ -16410,14 +16411,30 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_9ea477",
+    "sid": "manufacturing_refst_73e386",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "콜키신, 그 염류 및 유도체",
-    "truth": true,
+    "text": "프로필렌글라이콜",
+    "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
     "id": "ㄴ",
+    "sid": "manufacturing_refst_c28d33",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "1,2-에폭시부탄",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_3e050a",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "(1R,2S)-헥사히드로-1,2-디메칠-3,6-에폭시프탈릭안하이드라이드(칸타리딘)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㄹ",
     "sid": "manufacturing_refst_0a3124",
     "conceptId": "원료DB 별표1 사용불가원료:",
     "text": "위탁시험 또는 위탁제조하는 경우 검체의 송부방법 및 시험결과의 판정방법",
@@ -16425,26 +16442,10 @@ var COMBO_DRILLS_subject2 = [
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_60ca6b",
-    "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "염기성청색 99 호 (Basic Blue 99) CI 56059",
-    "truth": false,
-    "explain": "출처: 원료DB 별표1 사용불가원료 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_f9a424",
-    "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "다이우론",
-    "truth": true,
-    "explain": "출처: 원료DB 별표1 사용불가원료 "
-   },
-   {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_07c9c5",
+    "sid": "manufacturing_refst_0cc37d",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "애씨드오렌지24(CI 20170)",
+    "text": "2-α-시클로헥실벤질(N,N,N',N'테트라에칠)트리메칠렌디아민(페네타민)",
     "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    }
@@ -16477,8 +16478,8 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "4",
     "members": [
-     "ㄱ",
-     "ㄹ",
+     "ㄴ",
+     "ㄷ",
      "ㅁ"
     ]
    },
@@ -16511,41 +16512,41 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_1a7418",
+    "sid": "manufacturing_refst_104d86",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "비타민E(토코페롤)",
+    "text": "벤제토늄클로라이드",
     "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_476571",
+    "sid": "manufacturing_refst_914cff",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "테트라클로로에칠렌",
-    "truth": true,
+    "text": "폴리에톡실레이티드레틴아마이드",
+    "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_ee209e",
+    "sid": "manufacturing_refst_024333",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "디메칠설폭사이드(DMSO)로 추출한 성분을 3% 초과하여 함유하고 있는 석유 유래 물질",
+    "text": "톨루이딘설페이트(1:1)",
     "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_f33bad",
+    "sid": "manufacturing_refst_16bb17",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "벤질신나메이트",
-    "truth": false,
+    "text": "프로피페나존",
+    "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_351714",
+    "sid": "manufacturing_refst_f56b7d",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "트리파라놀",
+    "text": "N,N,N',N'-테트라글리시딜-4,4'-디아미노-3,3'-디에칠디페닐메탄",
     "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    }
@@ -16569,8 +16570,8 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "3",
     "members": [
-     "ㄴ",
      "ㄷ",
+     "ㄹ",
      "ㅁ"
     ]
    },
@@ -16592,7 +16593,6 @@ var COMBO_DRILLS_subject2 = [
    "자동생성",
    "참조자료",
    "열거목록",
-   "한도",
    "수치"
   ],
   "derivedFrom": "ref:enum|원료|banned_ingredients.md|all|3",
@@ -16610,41 +16610,41 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_8fc3f9",
+    "sid": "manufacturing_refst_099dbf",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "디메칠포름아미드",
+    "text": "아코니툼(Aconitum)속 및 그 생약제제",
     "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_7284f7",
+    "sid": "manufacturing_refst_56488c",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "2-[[(4-메톡시페닐)메칠하이드라조노]메칠]-1,3,3-트리메칠-3H-인돌리움 및 그 염류",
+    "text": "4-tert-부틸피로카테콜",
     "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_4c47d7",
+    "sid": "manufacturing_refst_7a0f45",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "하이드로아비에틸 알코올",
-    "truth": true,
-    "explain": "출처: 원료DB 별표1 사용불가원료 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_485a82",
-    "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "리보플라빈 (락토플라빈, Riboflavin, Lactoflavin)",
+    "text": "시녹세이트",
     "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_9ee461",
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_9e7e93",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "p-메칠하이드로시나막알데하이드",
+    "text": "메트암페라몬 및 그 염류",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_4c50fe",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "트랜스-로즈 케톤-2",
     "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    }
@@ -16654,6 +16654,8 @@ var COMBO_DRILLS_subject2 = [
     "id": "1",
     "members": [
      "ㄱ",
+     "ㄴ",
+     "ㄷ",
      "ㄹ"
     ]
    },
@@ -16661,15 +16663,15 @@ var COMBO_DRILLS_subject2 = [
     "id": "2",
     "members": [
      "ㄱ",
-     "ㄴ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
     "id": "3",
     "members": [
      "ㄱ",
-     "ㄴ",
-     "ㄷ"
+     "ㄴ"
     ]
    },
    {
@@ -16684,7 +16686,6 @@ var COMBO_DRILLS_subject2 = [
     "id": "5",
     "members": [
      "ㄱ",
-     "ㄷ",
      "ㄹ"
     ]
    }
@@ -16698,7 +16699,7 @@ var COMBO_DRILLS_subject2 = [
   "derivedFrom": "ref:enum|원료|banned_ingredients.md|all|4",
   "explain": "ㄱ. 출처: 원료DB 별표1 사용불가원료 \nㄴ. 출처: 원료DB 별표1 사용불가원료 \nㄷ. 출처: 원료DB 별표1 사용불가원료 \nㄹ. 출처: 원료DB 별표1 사용불가원료 \nㅁ. 출처: 원료DB 별표1 사용불가원료 ",
   "source": "참조자료 원문 (열거 목록)",
-  "answer": "3"
+  "answer": "4"
  },
  {
   "id": "manufacturing_combo-ref_02e41a",
@@ -16710,41 +16711,41 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_853c65",
+    "sid": "manufacturing_refst_17def0",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "안티몬 및 그 화합물",
-    "truth": true,
+    "text": "위탁제조에 관한 사항",
+    "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_b7d7ed",
+    "sid": "manufacturing_refst_2c1282",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "N-[3-하이드록시-2-(2-메칠아크릴로일아미노메톡시)프록시메칠]-2-메칠아크릴아마이드, N-[2,3-비스-(2-메칠아크릴로일아미노메톡시)프록시메칠]-2-메칠아크릴아마이드, 메타크릴아마이드 및 2-메칠-N-(2-메칠아크릴로일아미노메칠)-아크릴아마이드",
+    "text": "히드로플루오릭애씨드, 그 노르말 염, 그 착화합물 및 히드로플루오라이드",
     "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_52ea6e",
+    "sid": "manufacturing_refst_f72c5a",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "알킬이소퀴놀리늄브로마이드",
-    "truth": false,
+    "text": "스테로이드 구조를 갖는 안티안드로겐",
+    "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_03bd5a",
+    "sid": "manufacturing_refst_1fbaa9",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "페나글리코돌",
+    "text": "클로로포름",
     "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_b20205",
+    "sid": "manufacturing_refst_945a39",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "옥토크릴렌",
+    "text": "품질관리시험실",
     "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    }
@@ -16768,8 +16769,8 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "3",
     "members": [
-     "ㄱ",
      "ㄴ",
+     "ㄷ",
      "ㄹ"
     ]
    },
@@ -16812,41 +16813,41 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_9bf0e7",
+    "sid": "manufacturing_refst_3ad765",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "염디엠하이단토인",
+    "text": "부틸메톡시디벤조일메탄",
     "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_945a39",
+    "sid": "manufacturing_refst_5afb53",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "품질관리시험실",
+    "text": "디아미노피리미딘옥사이드(2,4-디아미노-피리미딘-3-옥사이드)",
     "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_7b8022",
+    "sid": "manufacturing_refst_047d93",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "1,4-디아미노-2-메톡시-9,10-안트라센디온(디스퍼스레드 11) 및 그 염류",
+    "text": "디메칠설파모일클로라이드",
     "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_f0e0ca",
+    "sid": "manufacturing_refst_395df4",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "스파르테인 및 그 염류",
+    "text": "2-메칠-m-페닐렌 디이소시아네이트",
     "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_b2bbed",
+    "sid": "manufacturing_refst_f50502",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "헨나(Lawsonia Inermis)잎가루",
+    "text": "하이드록시에칠-2,6-디니트로-p-아니시딘 및 그 염류",
     "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    }
@@ -16910,42 +16911,42 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_041ba3",
+    "sid": "manufacturing_refst_408513",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "트리클로산",
-    "truth": false,
-    "explain": "출처: 원료DB 별표1 사용불가원료 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_a6dd55",
-    "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "스칼렛레드(솔벤트레드 24)",
+    "text": "1,4-디클로로부트-2-엔",
     "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_746896",
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_48c9f2",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "1-(4-클로로페닐)-4,4-디메칠-3-(1,2,4-트리아졸-1-일메칠)펜타-3-올",
+    "text": "디에칠헥실부타미도트리아존",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_632931",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "안드로겐효과를 가진 물질",
     "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_1a7418",
+    "sid": "manufacturing_refst_9920d6",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "비타민E(토코페롤)",
-    "truth": false,
+    "text": "디하이드로코우마린",
+    "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_506833",
+    "sid": "manufacturing_refst_3a9856",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "디클로로펜",
-    "truth": true,
+    "text": "폴리아크릴아마이드류",
+    "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    }
   ],
@@ -16960,9 +16961,9 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "2",
     "members": [
-     "ㄴ",
+     "ㄱ",
      "ㄷ",
-     "ㅁ"
+     "ㄹ"
     ]
    },
    {
@@ -17006,41 +17007,41 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_dcfe79",
+    "sid": "manufacturing_refst_29744c",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "무기설파이트 및하이드로젠설파이트류",
-    "truth": false,
+    "text": "비스(사이클로펜타디에닐)-비스(2,6-디플루오로-3-(피롤-1-일)-페닐)티타늄",
+    "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_2132ff",
+    "sid": "manufacturing_refst_580edc",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "1,3-디메칠펜틸아민 및 그 염류",
+    "text": "테트라카보닐니켈",
     "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_6b3dfe",
+    "sid": "manufacturing_refst_58f815",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "2-디에칠아미노에칠-3-히드록시-4-페닐벤조에이트 및 그 염류",
-    "truth": true,
+    "text": "호호바 오일",
+    "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_8fee5c",
+    "sid": "manufacturing_refst_9f5964",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "알킬켑틴카보네이트",
+    "text": "스쿠알렌",
     "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_58ecf4",
+    "sid": "manufacturing_refst_9f169d",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "Atropa belladonna L. 및 그 제제",
+    "text": "프로카인아마이드, 그 염류 및 유도체",
     "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    }
@@ -17072,8 +17073,8 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "4",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㄷ",
      "ㅁ"
     ]
    },
@@ -17107,41 +17108,41 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_d3f57a",
+    "sid": "manufacturing_refst_7b55a8",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "2급 아민 함량이 5%를 초과하는 패티애씨드디알킬아마이드류 및 디알칸올아마이드류",
-    "truth": true,
+    "text": "제품과 설비가 오염되지 않도록 배관 및 배수관을 설치하며, 배수관은 역류되지 않아야 하고, 청결을 유지할 것",
+    "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_1e8103",
+    "sid": "manufacturing_refst_c945d7",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "벤질 2,4-디브로모부타노에이트",
+    "text": "플루오레손",
     "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_1077e4",
+    "sid": "manufacturing_refst_e97d5b",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "5-하이드록시-1,4-벤조디옥산 및 그 염류",
+    "text": "4-아미노벤조익애씨드 및 아미노기(-NH₂)를 가진 그 에스텔",
     "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_908375",
+    "sid": "manufacturing_refst_a34581",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "글루코네이트, 디 아세테이트 및 디 하이드로클로라이 드",
-    "truth": false,
+    "text": "메테토헵타진 및 그 염류",
+    "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_4b5ff8",
+    "sid": "manufacturing_refst_b574c6",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "원자재 관리에 관한 사항",
+    "text": "총호기성생균수는 영ㆍ유아용 제품류 및 눈화장용 제품류의 경우 500개/g(mL)이하",
     "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    }
@@ -17151,11 +17152,18 @@ var COMBO_DRILLS_subject2 = [
     "id": "1",
     "members": [
      "ㄱ",
-     "ㄹ"
+     "ㅁ"
     ]
    },
    {
     "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
     "members": [
      "ㄴ",
      "ㄷ",
@@ -17163,18 +17171,12 @@ var COMBO_DRILLS_subject2 = [
     ]
    },
    {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㅁ"
-    ]
-   },
-   {
     "id": "4",
     "members": [
      "ㄱ",
      "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -17188,13 +17190,12 @@ var COMBO_DRILLS_subject2 = [
    "자동생성",
    "참조자료",
    "열거목록",
-   "한도",
    "수치"
   ],
   "derivedFrom": "ref:enum|원료|banned_ingredients.md|all|9",
   "explain": "ㄱ. 출처: 원료DB 별표1 사용불가원료 \nㄴ. 출처: 원료DB 별표1 사용불가원료 \nㄷ. 출처: 원료DB 별표1 사용불가원료 \nㄹ. 출처: 원료DB 별표1 사용불가원료 \nㅁ. 출처: 원료DB 별표1 사용불가원료 ",
   "source": "참조자료 원문 (열거 목록)",
-  "answer": "4"
+  "answer": "3"
  },
  {
   "id": "manufacturing_combo-ref_32c120",
@@ -17206,41 +17207,41 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_66d66f",
+    "sid": "manufacturing_refst_689802",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "티이에이-살리실레이트",
-    "truth": false,
+    "text": "글리사이클아미드",
+    "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_965fd9",
+    "sid": "manufacturing_refst_b9d734",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "카본디설파이드",
+    "text": "비치오놀",
     "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_043344",
+    "sid": "manufacturing_refst_1dbc25",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "완제품 관리에 관한 사항",
+    "text": "클림바졸[1-(4-클로로페녹시)-1-(1H-이미다졸릴)-3, 3-디메칠-2-부타논]",
     "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_8683f8",
+    "sid": "manufacturing_refst_34699e",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "옥타밀아민 및 그 염류",
-    "truth": true,
+    "text": "p-클로로-m-크레졸",
+    "truth": false,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_88070e",
+    "sid": "manufacturing_refst_3a7881",
     "conceptId": "원료DB 별표1 사용불가원료:",
-    "text": "뇌(brain)",
+    "text": "3,4,5-트리메톡시페네칠아민 및 그 염류",
     "truth": true,
     "explain": "출처: 원료DB 별표1 사용불가원료 "
    }
@@ -17255,8 +17256,8 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "2",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㄹ",
      "ㅁ"
     ]
    },
@@ -17305,30 +17306,6 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_637e79",
-    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "소듐하이드록시메칠아미노아세테이트(소듐하이드록시메칠글리시네이트)",
-    "truth": true,
-    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_4d23ce",
-    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "1-나프톨 및 그 염류",
-    "truth": false,
-    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_c55707",
-    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "크로톤알데히드(부테날)",
-    "truth": false,
-    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
-   },
-   {
-    "id": "ㄹ",
     "sid": "manufacturing_refst_95d55d",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
     "text": "디아졸리디닐우레아(N-(히드록시메칠)-N-(디히드록시메칠-1,3-디옥소-2,5-이미다졸리디닐-4)-N-(히드록시메칠)우레아)",
@@ -17336,11 +17313,35 @@ var COMBO_DRILLS_subject2 = [
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    },
    {
-    "id": "ㅁ",
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_637e79",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "소듐하이드록시메칠아미노아세테이트(소듐하이드록시메칠글리시네이트)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㄷ",
     "sid": "manufacturing_refst_cb3501",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
     "text": "메칠이소치아졸리논",
     "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_56f407",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "o-아미노페놀",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_a2649c",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "테트라하이드로-6-니트로퀴노살린 및그 염류",
+    "truth": false,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    }
   ],
@@ -17382,8 +17383,8 @@ var COMBO_DRILLS_subject2 = [
     "id": "5",
     "members": [
      "ㄱ",
-     "ㄹ",
-     "ㅁ"
+     "ㄴ",
+     "ㄷ"
     ]
    }
   ],
@@ -17409,42 +17410,42 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_a35a1b",
+    "sid": "manufacturing_refst_452f52",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "알킬(C₁₂-C₂₂)트리메칠암모늄 브로마이드 및 클로라이드(브롬화세트리모늄 포함)",
+    "text": "2-브로모-2-나이트로프로판-1,3-디올(브로노폴)",
     "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_27632d",
+    "sid": "manufacturing_refst_1a7490",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "디페닐아민",
-    "truth": false,
+    "text": "클로로자이레놀",
+    "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_0b5bad",
+    "sid": "manufacturing_refst_a9cdcc",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "알킬디아미노에칠글라이신하이드로클로라이드용액(30%)",
-    "truth": true,
-    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_e1aac5",
-    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "알루미늄 (Aluminum) CI 77000",
+    "text": "티아마졸",
     "truth": false,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    },
    {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_4456ab",
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_fad379",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "벤조익애씨드, 그 염류 및 에스텔류",
+    "text": "메칠클로로이소치아졸리논과 메칠이소치아졸리논 혼합물(염화마그네슘과 질산마그네슘 포함)",
     "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_d78e0f",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "Tartic Acid(타르타르산, 타타릭애씨드)",
+    "truth": false,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    }
   ],
@@ -17477,8 +17478,8 @@ var COMBO_DRILLS_subject2 = [
     "id": "4",
     "members": [
      "ㄱ",
-     "ㄷ",
-     "ㅁ"
+     "ㄴ",
+     "ㄹ"
     ]
    },
    {
@@ -17494,8 +17495,8 @@ var COMBO_DRILLS_subject2 = [
    "참조자료",
    "열거목록",
    "금지원료",
-   "한도",
-   "구성비"
+   "구성비",
+   "수치"
   ],
   "derivedFrom": "ref:enum|원료|restricted_ingredients.md|sec0|1",
   "explain": "ㄱ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㄴ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㄷ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㄹ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㅁ. 출처: 원료DB 별표2 사용제한원료 보존제 성분",
@@ -17512,6 +17513,22 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
+    "sid": "manufacturing_refst_0b5bad",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "알킬디아미노에칠글라이신하이드로클로라이드용액(30%)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_1ed560",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "피그먼트 자색 23호 (Pigment Violet 23) CI 51319",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㄷ",
     "sid": "manufacturing_refst_7748ef",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
     "text": "알킬이소퀴놀리늄브로마이드",
@@ -17519,35 +17536,19 @@ var COMBO_DRILLS_subject2 = [
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    },
    {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_7a028b",
-    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "브로모클로로펜(6,6-디브로모-4,4-디클로로-2,2'-메칠렌-디페놀)",
-    "truth": true,
-    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_c0646e",
-    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "사이클로헥시미드",
-    "truth": false,
-    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
-   },
-   {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_02ab23",
+    "sid": "manufacturing_refst_41e9b5",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "2,6-디브로모-4-시아노페닐 옥타노에이트",
-    "truth": false,
+    "text": "클렉시딘, 그 디글루코네이트, 디아세테이트 및 디하이드로클로라이드",
+    "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_f3e633",
+    "sid": "manufacturing_refst_ddd8f8",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "폴리(1-헥사메칠렌바이구아나이드)에이치씨엘",
-    "truth": true,
+    "text": "솔벤트레드1(CI 12150)",
+    "truth": false,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    }
   ],
@@ -17587,8 +17588,8 @@ var COMBO_DRILLS_subject2 = [
     "id": "5",
     "members": [
      "ㄱ",
-     "ㄴ",
-     "ㅁ"
+     "ㄷ",
+     "ㄹ"
     ]
    }
   ],
@@ -17597,6 +17598,7 @@ var COMBO_DRILLS_subject2 = [
    "참조자료",
    "열거목록",
    "금지원료",
+   "한도",
    "수치"
   ],
   "derivedFrom": "ref:enum|원료|restricted_ingredients.md|sec0|2",
@@ -17614,41 +17616,41 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_2b71df",
+    "sid": "manufacturing_refst_fe8a8e",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "피록톤올아민(1-하이드록시-4-메칠-6(2,4,4-트리메칠펜틸)2-피리돈 및 그 모노에탄올아민염)",
+    "text": "소듐아이오데이트",
     "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_16d513",
+    "sid": "manufacturing_refst_41e9b5",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "메텐아민(헥사메칠렌테트라아민)",
+    "text": "클렉시딘, 그 디글루코네이트, 디아세테이트 및 디하이드로클로라이드",
     "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_2fa046",
+    "sid": "manufacturing_refst_7748ef",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "염디엠하이단토인",
+    "text": "알킬이소퀴놀리늄브로마이드",
     "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_de8adc",
+    "sid": "manufacturing_refst_804267",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "Arecacatechu및 그 생약제제",
+    "text": "코발트디클로라이드(코발트클로라이드)",
     "truth": false,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_b5ccd7",
+    "sid": "manufacturing_refst_f6cc44",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "테트라베나진 및 그 염류",
+    "text": "포스파미돈",
     "truth": false,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    }
@@ -17717,42 +17719,42 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_d1fe07",
+    "sid": "manufacturing_refst_0b5bad",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "AnamirtacocculusL.(과실)",
-    "truth": false,
+    "text": "알킬디아미노에칠글라이신하이드로클로라이드용액(30%)",
+    "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_151767",
+    "sid": "manufacturing_refst_16d513",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "벤질알코올",
+    "text": "메텐아민(헥사메칠렌테트라아민)",
     "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_888871",
+    "sid": "manufacturing_refst_8234e9",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "N-메칠포름아마이드",
-    "truth": false,
+    "text": "아이오도프로피닐부틸카바메이트(IPBC)",
+    "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_e48f23",
+    "sid": "manufacturing_refst_ff91f1",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "4,4-디메칠-1,3-옥사졸리딘(디메칠옥사졸리딘)",
-    "truth": true,
+    "text": "2,4,5-트리메칠아닐린; 2,4,5-트리메칠아닐린 하이드로클로라이드",
+    "truth": false,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_4db890",
+    "sid": "manufacturing_refst_fa9bd0",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "피리단-2-올 1-옥사이드",
-    "truth": true,
+    "text": "벤드로클루메치아자이드 및 그 유도체",
+    "truth": false,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    }
   ],
@@ -17787,9 +17789,9 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "4",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㄹ",
-     "ㅁ"
+     "ㄷ"
     ]
    },
    {
@@ -17804,6 +17806,7 @@ var COMBO_DRILLS_subject2 = [
    "참조자료",
    "열거목록",
    "금지원료",
+   "한도",
    "수치"
   ],
   "derivedFrom": "ref:enum|원료|restricted_ingredients.md|sec0|4",
@@ -17821,42 +17824,42 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_16d513",
+    "sid": "manufacturing_refst_0b5bad",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "메텐아민(헥사메칠렌테트라아민)",
+    "text": "알킬디아미노에칠글라이신하이드로클로라이드용액(30%)",
     "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_39f93d",
+    "sid": "manufacturing_refst_2fa046",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "쿼터늄-15(메테나민 3-클로로알릴클로라이드)",
+    "text": "염디엠하이단토인",
     "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_1d4ec2",
+    "sid": "manufacturing_refst_cfdb31",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "부타디엔 0.1%를 초과하여 함유하는 석유정제물(가스류, 탄화수소류, 알칸류, 증류물, 라피네이트)",
+    "text": "아다팔렌",
     "truth": false,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_aaa8f0",
+    "sid": "manufacturing_refst_4db890",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "염산 m-페닐렌디아민",
-    "truth": false,
+    "text": "피리단-2-올 1-옥사이드",
+    "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_2fa046",
+    "sid": "manufacturing_refst_b06964",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "염디엠하이단토인",
-    "truth": true,
+    "text": "Thevetia neriifolia juss, 배당체 추출물",
+    "truth": false,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    }
   ],
@@ -17881,7 +17884,7 @@ var COMBO_DRILLS_subject2 = [
     "members": [
      "ㄱ",
      "ㄴ",
-     "ㅁ"
+     "ㄹ"
     ]
    },
    {
@@ -17922,41 +17925,41 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_1470ff",
+    "sid": "manufacturing_refst_a1bdfc",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "알로클아마이드 및 그 염류",
-    "truth": false,
+    "text": "디브로모헥사미딘 및 그 염류 (이세치오네이트 포함)",
+    "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_20d19e",
+    "sid": "manufacturing_refst_4f602e",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "렌디아민 및 그 염류",
+    "text": "카라멜 (Caramel)",
     "truth": false,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_1760fa",
+    "sid": "manufacturing_refst_64681a",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "비페닐-2-올(o-페닐페놀) 및 그 염류",
+    "text": "살리실릭애씨드 및 그 염류",
     "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_95d55d",
+    "sid": "manufacturing_refst_2c9323",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "디아졸리디닐우레아(N-(히드록시메칠)-N-(디히드록시메칠-1,3-디옥소-2,5-이미다졸리디닐-4)-N-(히드록시메칠)우레아)",
-    "truth": true,
+    "text": "애씨드레드73(CI 27290)",
+    "truth": false,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_151767",
+    "sid": "manufacturing_refst_e48f23",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "벤질알코올",
+    "text": "4,4-디메칠-1,3-옥사졸리딘(디메칠옥사졸리딘)",
     "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    }
@@ -17994,8 +17997,8 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "5",
     "members": [
+     "ㄱ",
      "ㄷ",
-     "ㄹ",
      "ㅁ"
     ]
    }
@@ -18005,6 +18008,7 @@ var COMBO_DRILLS_subject2 = [
    "참조자료",
    "열거목록",
    "금지원료",
+   "구성비",
    "수치"
   ],
   "derivedFrom": "ref:enum|원료|restricted_ingredients.md|sec0|6",
@@ -18022,42 +18026,42 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_2483d7",
+    "sid": "manufacturing_refst_a1bdfc",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "소르빅애씨드(헥사-2,4-디에노익 애씨드) 및 그 염류",
+    "text": "디브로모헥사미딘 및 그 염류 (이세치오네이트 포함)",
     "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_a92454",
+    "sid": "manufacturing_refst_f44d21",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "니트로퓨란계 화합물(예 : 니트로푸란토인, 푸라졸리돈)",
+    "text": "N'-(4-클로로-o-톨일)-N,N-디메칠포름아미딘 모노하이드로클로라이드",
     "truth": false,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_16d513",
+    "sid": "manufacturing_refst_f46db9",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "메텐아민(헥사메칠렌테트라아민)",
+    "text": "운데실레닉애씨드 및 그 염류 및 모노에탄올아마이드",
     "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_454d92",
+    "sid": "manufacturing_refst_249b55",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "적색산화철 (아이런옥사이드레드, Iron Oxide Red, Ferric Oxide) CI",
-    "truth": false,
+    "text": "클로로부탄올",
+    "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_ec48d9",
+    "sid": "manufacturing_refst_1d5470",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "무기설파이트 및 하이드록시젠설파이트류",
-    "truth": true,
+    "text": "푸르푸릴트리메칠암모늄염(예 : 푸르트레토늄아이오다이드)",
+    "truth": false,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    }
   ],
@@ -18081,7 +18085,7 @@ var COMBO_DRILLS_subject2 = [
     "members": [
      "ㄱ",
      "ㄷ",
-     "ㅁ"
+     "ㄹ"
     ]
    },
    {
@@ -18105,6 +18109,7 @@ var COMBO_DRILLS_subject2 = [
    "참조자료",
    "열거목록",
    "금지원료",
+   "구성비",
    "수치"
   ],
   "derivedFrom": "ref:enum|원료|restricted_ingredients.md|sec0|7",
@@ -18122,42 +18127,42 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_22361c",
+    "sid": "manufacturing_refst_11e465",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "디갈로일트리올리에이트",
-    "truth": false,
+    "text": "헥사미딘(1,6-디(4-아미디노페녹시)-n-헥산) 및 그 염류(이세치오네이트 및 p-하이드록시벤조에이트)",
+    "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_2b71df",
+    "sid": "manufacturing_refst_a35a1b",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "피록톤올아민(1-하이드록시-4-메칠-6(2,4,4-트리메칠펜틸)2-피리돈 및 그 모노에탄올아민염)",
+    "text": "알킬(C₁₂-C₂₂)트리메칠암모늄 브로마이드 및 클로라이드(브롬화세트리모늄 포함)",
     "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_8234e9",
+    "sid": "manufacturing_refst_a6f35b",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "아이오도프로피닐부틸카바메이트(IPBC)",
-    "truth": true,
-    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_644ae7",
-    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "바륨염(바륨설페이트 및 색소레이크희석제로 사용한 바륨염은 제외)",
+    "text": "베타카로틴 (Beta-Carotene) CI 40800, CI 75130",
     "truth": false,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    },
    {
-    "id": "ㅁ",
+    "id": "ㄹ",
     "sid": "manufacturing_refst_cb3501",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
     "text": "메칠이소치아졸리논",
     "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_dda496",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "메칠레소르신",
+    "truth": false,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    }
   ],
@@ -18190,9 +18195,9 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "4",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㄷ",
-     "ㅁ"
+     "ㄹ"
     ]
    },
    {
@@ -18207,6 +18212,7 @@ var COMBO_DRILLS_subject2 = [
    "참조자료",
    "열거목록",
    "금지원료",
+   "구성비",
    "수치"
   ],
   "derivedFrom": "ref:enum|원료|restricted_ingredients.md|sec0|8",
@@ -18224,41 +18230,41 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_4ee27c",
+    "sid": "manufacturing_refst_e48f23",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "p-하이드록시벤조익애씨드, 그 염류 및 에스텔류(다만, 에스텔류 중 페닐은 제외)",
+    "text": "4,4-디메칠-1,3-옥사졸리딘(디메칠옥사졸리딘)",
     "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_7794a4",
+    "sid": "manufacturing_refst_ea4a42",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "[(톨일옥시)메칠]옥시란(크레실 글리시딜 에텔)",
+    "text": "페트리클로랄",
     "truth": false,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_ba7c11",
+    "sid": "manufacturing_refst_b561f0",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "설핀피라존",
+    "text": "3,7-비스(디메칠아미노)-페노치아진-5-이움 및 그 염류",
     "truth": false,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_fe8a8e",
+    "sid": "manufacturing_refst_64681a",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "소듐아이오데이트",
+    "text": "살리실릭애씨드 및 그 염류",
     "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_5459a1",
+    "sid": "manufacturing_refst_11e465",
     "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
-    "text": "테트라브로모-o-크레졸",
+    "text": "헥사미딘(1,6-디(4-아미디노페녹시)-n-헥산) 및 그 염류(이세치오네이트 및 p-하이드록시벤조에이트)",
     "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
    }
@@ -18326,6 +18332,30 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
+    "sid": "manufacturing_refst_b08182",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "푸르푸릴트리메칠암모늄염",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_096d62",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "Urginea scilla Stern. 및 그 생약제제",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_3e5401",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "벤조페논-3(옥시벤존)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㄹ",
     "sid": "manufacturing_refst_464132",
     "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
     "text": "폴리실리콘-15(디메칠코디에칠벤잘말로네이트)",
@@ -18333,34 +18363,10 @@ var COMBO_DRILLS_subject2 = [
     "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
    },
    {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_9946f5",
-    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "칸타리스,Cantharisvesicatoria",
-    "truth": false,
-    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_dd5c64",
-    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "디브로모살리실아닐리드",
-    "truth": false,
-    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
-   },
-   {
-    "id": "ㄹ",
+    "id": "ㅁ",
     "sid": "manufacturing_refst_5f266a",
     "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
     "text": "4-메칠벤질리덴캠퍼",
-    "truth": true,
-    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_3e5401",
-    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "벤조페논-3(옥시벤존)",
     "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
    }
@@ -18376,7 +18382,7 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "2",
     "members": [
-     "ㄱ",
+     "ㄷ",
      "ㄹ",
      "ㅁ"
     ]
@@ -18427,42 +18433,42 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_fe108a",
+    "sid": "manufacturing_refst_b8ae9e",
     "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "멘틸안트라닐레이트",
+    "text": "페닐렌 비스-디페닐트리아진",
     "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_2ffb40",
+    "sid": "manufacturing_refst_5e1f55",
     "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "드로메트리졸",
-    "truth": true,
+    "text": "브로목시닐헵타노에이트",
+    "truth": false,
     "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_7d62e7",
+    "sid": "manufacturing_refst_4d833e",
     "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "2-[(4-아미노-2-메칠-5-니트로페닐)아미노]에탄올 및 그 염류",
+    "text": "베지터블카본 (코크블랙, Vegetable Carbon, Coke Black) CI 77268:1",
     "truth": false,
     "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_f28007",
+    "sid": "manufacturing_refst_cf3931",
     "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "부틸메톡시디벤조일메탄",
+    "text": "드로메트리졸트리실록산",
     "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_47514d",
+    "sid": "manufacturing_refst_d89d8e",
     "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "부틸글리시딜에텔",
-    "truth": false,
+    "text": "벤조페논-8(다옥시벤존)",
+    "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
    }
   ],
@@ -18492,8 +18498,8 @@ var COMBO_DRILLS_subject2 = [
     "id": "4",
     "members": [
      "ㄱ",
-     "ㄴ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -18526,42 +18532,42 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_22a410",
+    "sid": "manufacturing_refst_5f266a",
     "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "디소듐페닐디벤즈이미다졸테트라설포네이트",
+    "text": "4-메칠벤질리덴캠퍼",
     "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_33a999",
+    "sid": "manufacturing_refst_1a42b7",
     "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "m-톨리덴 디이소시아네이트",
+    "text": "소듐헥사시클로네이트",
     "truth": false,
     "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_cf3931",
+    "sid": "manufacturing_refst_610edd",
     "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "드로메트리졸트리실록산",
+    "text": "트리스-바이페닐 트라이아진",
     "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_2bc267",
+    "sid": "manufacturing_refst_d89d8e",
     "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "피그먼트 자색 23호 (Pigment Violet 23) CI 51319",
-    "truth": false,
+    "text": "벤조페논-8(다옥시벤존)",
+    "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_3e5401",
+    "sid": "manufacturing_refst_dd5c64",
     "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "벤조페논-3(옥시벤존)",
-    "truth": true,
+    "text": "디브로모살리실아닐리드",
+    "truth": false,
     "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
    }
   ],
@@ -18588,7 +18594,7 @@ var COMBO_DRILLS_subject2 = [
     "members": [
      "ㄱ",
      "ㄷ",
-     "ㅁ"
+     "ㄹ"
     ]
    },
    {
@@ -18629,42 +18635,42 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_656e8c",
+    "sid": "manufacturing_refst_748377",
     "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "3-(1-나프틸)-4-히드록시코우마린",
-    "truth": false,
+    "text": "비스에칠헥실옥시페놀메톡시페닐트리아진",
+    "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_f178aa",
+    "sid": "manufacturing_refst_5f266a",
     "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "호모살레이트",
+    "text": "4-메칠벤질리덴캠퍼",
     "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_9dbd4d",
+    "sid": "manufacturing_refst_49dcd7",
     "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "벤지딘아세테이트",
-    "truth": false,
+    "text": "메톡시프로필아미노사이클로헥세닐리덴에톡시에틸사이아노아세테이트",
+    "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_225df5",
+    "sid": "manufacturing_refst_884a7c",
     "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "시녹세이트",
-    "truth": true,
+    "text": "디아놀아세글루에이트",
+    "truth": false,
     "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_b5ee7f",
+    "sid": "manufacturing_refst_6e2ba8",
     "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "페닐벤즈이미다졸설포닉애씨드",
-    "truth": true,
+    "text": "프로게스토젠",
+    "truth": false,
     "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
    }
   ],
@@ -18672,9 +18678,9 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "1",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㄹ",
-     "ㅁ"
+     "ㄷ"
     ]
    },
    {
@@ -18730,41 +18736,41 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_2ee748",
+    "sid": "manufacturing_refst_0ebd73",
     "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "디갈로일트리올레이트",
-    "truth": true,
+    "text": "ο-페닐렌디아민 및 그 염류",
+    "truth": false,
     "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_c6f545",
+    "sid": "manufacturing_refst_bd0a82",
     "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "하이드록시에칠-2-니트로-p-톨루이딘",
+    "text": "건강틴크 ┐칸타리스틴크 ┃ 의 합계량고추틴크 ┘",
     "truth": false,
     "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_21f1ea",
+    "sid": "manufacturing_refst_06c2e5",
     "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "모스켄(1,1,3,3,5-펜타메칠-4,6-디니트로인단)",
-    "truth": false,
+    "text": "테레무탈말리덴캠파설포닉애씨드 및 그 염류",
+    "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_464132",
+    "sid": "manufacturing_refst_22a410",
     "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "폴리실리콘-15(디메칠코디에칠벤잘말로네이트)",
+    "text": "디소듐페닐디벤즈이미다졸테트라설포네이트",
     "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_225df5",
+    "sid": "manufacturing_refst_2ffb40",
     "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "시녹세이트",
+    "text": "드로메트리졸",
     "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
    }
@@ -18780,7 +18786,7 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "2",
     "members": [
-     "ㄱ",
+     "ㄷ",
      "ㄹ",
      "ㅁ"
     ]
@@ -18829,42 +18835,42 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_ecb6bc",
+    "sid": "manufacturing_refst_5c1355",
     "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "티타늄디옥사이드",
-    "truth": true,
-    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_95a0e5",
-    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "살리실릭애씨드(살리실산)",
+    "text": "비나프아크릴(2-sec-부틸-4,6-디니트로페닐-3-메칠크로토네이트)",
     "truth": false,
     "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
    },
    {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_d89d8e",
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_f28007",
     "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "벤조페논-8(다옥시벤존)",
+    "text": "부틸메톡시디벤조일메탄",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_225df5",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "시녹세이트",
     "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_f55184",
+    "sid": "manufacturing_refst_7dd9a7",
     "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "옥토크릴렌",
-    "truth": true,
+    "text": "히드록시프로필비스(N-히드록시에칠-p-페닐렌디아민) 및 그 염류",
+    "truth": false,
     "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_cebc76",
+    "sid": "manufacturing_refst_f178aa",
     "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "알릴이소치오시아네이트",
-    "truth": false,
+    "text": "호모살레이트",
+    "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
    }
   ],
@@ -18880,9 +18886,9 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "2",
     "members": [
-     "ㄱ",
+     "ㄴ",
      "ㄷ",
-     "ㄹ"
+     "ㅁ"
     ]
    },
    {
@@ -18929,41 +18935,41 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_06c2e5",
+    "sid": "manufacturing_refst_2e7431",
     "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "테레무탈말리덴캠파설포닉애씨드 및 그 염류",
-    "truth": true,
+    "text": "스파르테인 및 그 염류",
+    "truth": false,
     "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_f2afe2",
+    "sid": "manufacturing_refst_610edd",
     "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "니트로퓨란계 화합물(예 : 니트로푸란토인,푸라졸리돈)",
-    "truth": false,
-    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_924796",
-    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "다른 제조번호의 제품에도 영향이 없는지 점검",
-    "truth": false,
-    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_49dcd7",
-    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "메톡시프로필아미노사이클로헥세닐리덴에톡시에틸사이아노아세테이트",
+    "text": "트리스-바이페닐 트라이아진",
     "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
    },
    {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_f28007",
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_183390",
     "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "부틸메톡시디벤조일메탄",
+    "text": "메칠렌비스-벤조트리아졸릴테트라메칠부틸페놀",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_38c571",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "O,O'-디에칠-O-4-니트로페닐포스포치오에이트(파라치온-ISO)",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_f178aa",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "호모살레이트",
     "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
    }
@@ -18993,8 +18999,8 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "4",
     "members": [
-     "ㄱ",
-     "ㄹ",
+     "ㄴ",
+     "ㄷ",
      "ㅁ"
     ]
    },
@@ -19028,41 +19034,41 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_d13ff4",
+    "sid": "manufacturing_refst_f178aa",
     "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "다에칠헥실부타이도트리아존",
+    "text": "호모살레이트",
     "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_ea1466",
+    "sid": "manufacturing_refst_0b2ccc",
     "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "티우람모노설파이드",
+    "text": "락토바실러스발효여과물",
     "truth": false,
     "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_811a06",
+    "sid": "manufacturing_refst_b5ee7f",
     "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "디스퍼스레드 15",
-    "truth": false,
-    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_ecb6bc",
-    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "티타늄디옥사이드",
+    "text": "페닐벤즈이미다졸설포닉애씨드",
     "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
    },
    {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_f178aa",
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_00000f",
     "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
-    "text": "호모살레이트",
+    "text": "제품명, 원료명·분량, 공정별 작업내용, 수율, 시험방법, 보관조건, 사용기한",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_2ffb40",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "드로메트리졸",
     "truth": true,
     "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
    }
@@ -19088,7 +19094,7 @@ var COMBO_DRILLS_subject2 = [
     "id": "3",
     "members": [
      "ㄱ",
-     "ㄹ",
+     "ㄷ",
      "ㅁ"
     ]
    },
@@ -19113,6 +19119,7 @@ var COMBO_DRILLS_subject2 = [
    "참조자료",
    "열거목록",
    "금지원료",
+   "기한",
    "수치"
   ],
   "derivedFrom": "ref:enum|원료|restricted_ingredients.md|sec1|7",
@@ -19130,25 +19137,25 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_308dd0",
+    "sid": "manufacturing_refst_6c6c54",
     "conceptId": "원료DB 일반 원료:수성 원료",
-    "text": "경막(dura mater)",
+    "text": "클로르탈리돈",
     "truth": false,
     "explain": "출처: 원료DB 일반 원료 수성 원료"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_4ef386",
+    "sid": "manufacturing_refst_34268c",
     "conceptId": "원료DB 일반 원료:수성 원료",
-    "text": "부틸렌글라이콜",
+    "text": "글리세린",
     "truth": true,
     "explain": "출처: 원료DB 일반 원료 수성 원료"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_997389",
+    "sid": "manufacturing_refst_b37350",
     "conceptId": "원료DB 일반 원료:수성 원료",
-    "text": "2-메톡시에탄올(에칠렌글리콜 모노에칠에텔, EGMME)",
+    "text": "(메칠-ONN-아조시)메칠아세테이트",
     "truth": false,
     "explain": "출처: 원료DB 일반 원료 수성 원료"
    },
@@ -19162,9 +19169,9 @@ var COMBO_DRILLS_subject2 = [
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_34268c",
+    "sid": "manufacturing_refst_4ef386",
     "conceptId": "원료DB 일반 원료:수성 원료",
-    "text": "글리세린",
+    "text": "부틸렌글라이콜",
     "truth": true,
     "explain": "출처: 원료DB 일반 원료 수성 원료"
    }
@@ -19210,8 +19217,7 @@ var COMBO_DRILLS_subject2 = [
   "tags": [
    "자동생성",
    "참조자료",
-   "열거목록",
-   "수치"
+   "열거목록"
   ],
   "derivedFrom": "ref:enum|원료|approved_ingredients.md|sec0|0",
   "explain": "ㄱ. 출처: 원료DB 일반 원료 수성 원료\nㄴ. 출처: 원료DB 일반 원료 수성 원료\nㄷ. 출처: 원료DB 일반 원료 수성 원료\nㄹ. 출처: 원료DB 일반 원료 수성 원료\nㅁ. 출처: 원료DB 일반 원료 수성 원료",
@@ -19228,9 +19234,9 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_9751eb",
+    "sid": "manufacturing_refst_809f59",
     "conceptId": "원료DB 일반 원료:유성 원료",
-    "text": "스쿠알렌",
+    "text": "올리브 오일",
     "truth": true,
     "explain": "출처: 원료DB 일반 원료 유성 원료"
    },
@@ -19244,26 +19250,26 @@ var COMBO_DRILLS_subject2 = [
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_d9b273",
+    "sid": "manufacturing_refst_9751eb",
     "conceptId": "원료DB 일반 원료:유성 원료",
-    "text": "아리스토로킥 애씨드 및 그 염류",
-    "truth": false,
+    "text": "스쿠알렌",
+    "truth": true,
     "explain": "출처: 원료DB 일반 원료 유성 원료"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_a2df54",
+    "sid": "manufacturing_refst_6a6aa4",
     "conceptId": "원료DB 일반 원료:유성 원료",
-    "text": "비페닐-4-일아민 및 그 염류",
+    "text": "스테아린산아연",
     "truth": false,
     "explain": "출처: 원료DB 일반 원료 유성 원료"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_809f59",
+    "sid": "manufacturing_refst_c3d61b",
     "conceptId": "원료DB 일반 원료:유성 원료",
-    "text": "올리브 오일",
-    "truth": true,
+    "text": "황산 o-아미노페놀",
+    "truth": false,
     "explain": "출처: 원료DB 일반 원료 유성 원료"
    }
   ],
@@ -19273,7 +19279,7 @@ var COMBO_DRILLS_subject2 = [
     "members": [
      "ㄱ",
      "ㄴ",
-     "ㅁ"
+     "ㄷ"
     ]
    },
    {
@@ -19310,8 +19316,7 @@ var COMBO_DRILLS_subject2 = [
   "tags": [
    "자동생성",
    "참조자료",
-   "열거목록",
-   "수치"
+   "열거목록"
   ],
   "derivedFrom": "ref:enum|원료|approved_ingredients.md|sec1|0",
   "explain": "ㄱ. 출처: 원료DB 일반 원료 유성 원료\nㄴ. 출처: 원료DB 일반 원료 유성 원료\nㄷ. 출처: 원료DB 일반 원료 유성 원료\nㄹ. 출처: 원료DB 일반 원료 유성 원료\nㅁ. 출처: 원료DB 일반 원료 유성 원료",
@@ -19328,17 +19333,17 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_9419a8",
+    "sid": "manufacturing_refst_6142dc",
     "conceptId": "원료DB 일반 원료:유성 원료",
-    "text": "미네랄 오일",
-    "truth": true,
+    "text": "황산 5-아미노-4-플루오르-2-메칠페놀",
+    "truth": false,
     "explain": "출처: 원료DB 일반 원료 유성 원료"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_9751eb",
+    "sid": "manufacturing_refst_809f59",
     "conceptId": "원료DB 일반 원료:유성 원료",
-    "text": "스쿠알렌",
+    "text": "올리브 오일",
     "truth": true,
     "explain": "출처: 원료DB 일반 원료 유성 원료"
    },
@@ -19352,17 +19357,17 @@ var COMBO_DRILLS_subject2 = [
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_5148aa",
+    "sid": "manufacturing_refst_457df5",
     "conceptId": "원료DB 일반 원료:유성 원료",
-    "text": "페나리몰",
-    "truth": false,
+    "text": "다이메티콘",
+    "truth": true,
     "explain": "출처: 원료DB 일반 원료 유성 원료"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_66a5ee",
+    "sid": "manufacturing_refst_79b7c2",
     "conceptId": "원료DB 일반 원료:유성 원료",
-    "text": "N,N-비스(2-클로로에칠)메칠아민-N-옥사이드 및 그 염류",
+    "text": "Solanum nigrum L. 및 그 생약제제",
     "truth": false,
     "explain": "출처: 원료DB 일반 원료 유성 원료"
    }
@@ -19403,9 +19408,9 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "5",
     "members": [
-     "ㄱ",
      "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    }
   ],
@@ -19430,10 +19435,10 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_8dfcf1",
+    "sid": "manufacturing_refst_c3aa4a",
     "conceptId": "원료DB 일반 원료:계면활성제",
-    "text": "보레이트류(소듐보레이트, 테트라보레이트)",
-    "truth": false,
+    "text": "솔비탄라우레이트",
+    "truth": true,
     "explain": "출처: 원료DB 일반 원료 계면활성제"
    },
    {
@@ -19446,25 +19451,25 @@ var COMBO_DRILLS_subject2 = [
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_0569e8",
+    "sid": "manufacturing_refst_f24e72",
     "conceptId": "원료DB 일반 원료:계면활성제",
-    "text": "알킬(C -C )트리12 22메칠암모늄 브로마이드 및 클로라이드(브롬화세트리모늄포함)",
+    "text": "리튬하이드록사이드",
     "truth": false,
     "explain": "출처: 원료DB 일반 원료 계면활성제"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_53118e",
+    "sid": "manufacturing_refst_efe107",
     "conceptId": "원료DB 일반 원료:계면활성제",
-    "text": "세트리모늄클로라이드",
-    "truth": true,
+    "text": "콜린염 및 에스텔",
+    "truth": false,
     "explain": "출처: 원료DB 일반 원료 계면활성제"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_c3aa4a",
+    "sid": "manufacturing_refst_53118e",
     "conceptId": "원료DB 일반 원료:계면활성제",
-    "text": "솔비탄라우레이트",
+    "text": "세트리모늄클로라이드",
     "truth": true,
     "explain": "출처: 원료DB 일반 원료 계면활성제"
    }
@@ -19505,8 +19510,8 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "5",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㄹ",
      "ㅁ"
     ]
    }
@@ -19514,9 +19519,7 @@ var COMBO_DRILLS_subject2 = [
   "tags": [
    "자동생성",
    "참조자료",
-   "열거목록",
-   "구성비",
-   "수치"
+   "열거목록"
   ],
   "derivedFrom": "ref:enum|원료|approved_ingredients.md|sec3|0",
   "explain": "ㄱ. 출처: 원료DB 일반 원료 계면활성제\nㄴ. 출처: 원료DB 일반 원료 계면활성제\nㄷ. 출처: 원료DB 일반 원료 계면활성제\nㄹ. 출처: 원료DB 일반 원료 계면활성제\nㅁ. 출처: 원료DB 일반 원료 계면활성제",
@@ -19533,14 +19536,6 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_c2c456",
-    "conceptId": "원료DB 일반 원료:보존제",
-    "text": "파라벤류",
-    "truth": true,
-    "explain": "출처: 원료DB 일반 원료 보존제"
-   },
-   {
-    "id": "ㄴ",
     "sid": "manufacturing_refst_696961",
     "conceptId": "원료DB 일반 원료:보존제",
     "text": "벤조익애씨드",
@@ -19548,18 +19543,26 @@ var COMBO_DRILLS_subject2 = [
     "explain": "출처: 원료DB 일반 원료 보존제"
    },
    {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_ce0415",
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_037e57",
     "conceptId": "원료DB 일반 원료:보존제",
-    "text": "리도카인",
+    "text": "피크라민산 나트륨",
     "truth": false,
     "explain": "출처: 원료DB 일반 원료 보존제"
    },
    {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_b931db",
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_c2c456",
     "conceptId": "원료DB 일반 원료:보존제",
-    "text": "하이드록시아이소헥실 3-사이클로헥센 카보스알데히드(HICC)",
+    "text": "파라벤류",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 보존제"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_4069c0",
+    "conceptId": "원료DB 일반 원료:보존제",
+    "text": "베타카로틴 (Beta-Carotene) CI 40800, CI 75130",
     "truth": false,
     "explain": "출처: 원료DB 일반 원료 보존제"
    },
@@ -19593,7 +19596,7 @@ var COMBO_DRILLS_subject2 = [
     "id": "3",
     "members": [
      "ㄱ",
-     "ㄴ",
+     "ㄷ",
      "ㅁ"
     ]
    },
@@ -19633,22 +19636,6 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_ea2aed",
-    "conceptId": "원료DB 일반 원료:기능성 성분",
-    "text": "세라마이드",
-    "truth": true,
-    "explain": "출처: 원료DB 일반 원료 기능성 성분"
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_f8face",
-    "conceptId": "원료DB 일반 원료:기능성 성분",
-    "text": "살리실릭애씨드 및 그 염류",
-    "truth": false,
-    "explain": "출처: 원료DB 일반 원료 기능성 성분"
-   },
-   {
-    "id": "ㄷ",
     "sid": "manufacturing_refst_c6f608",
     "conceptId": "원료DB 일반 원료:기능성 성분",
     "text": "살리실산",
@@ -19656,19 +19643,35 @@ var COMBO_DRILLS_subject2 = [
     "explain": "출처: 원료DB 일반 원료 기능성 성분"
    },
    {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_46f4c0",
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_005b7e",
     "conceptId": "원료DB 일반 원료:기능성 성분",
-    "text": "황산 p-니트로-o-페닐렌디아민",
+    "text": "나이아신아마이드",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 기능성 성분"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_ea2aed",
+    "conceptId": "원료DB 일반 원료:기능성 성분",
+    "text": "세라마이드",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 기능성 성분"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_7a174b",
+    "conceptId": "원료DB 일반 원료:기능성 성분",
+    "text": "풍나무(Liquidambar styraciflua) 발삼 오일 및 추출물",
     "truth": false,
     "explain": "출처: 원료DB 일반 원료 기능성 성분"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_005b7e",
+    "sid": "manufacturing_refst_63b8c8",
     "conceptId": "원료DB 일반 원료:기능성 성분",
-    "text": "나이아신아마이드",
-    "truth": true,
+    "text": "마취제(천연 및 합성)",
+    "truth": false,
     "explain": "출처: 원료DB 일반 원료 기능성 성분"
    }
   ],
@@ -19689,8 +19692,8 @@ var COMBO_DRILLS_subject2 = [
     "id": "3",
     "members": [
      "ㄱ",
-     "ㄷ",
-     "ㅁ"
+     "ㄴ",
+     "ㄷ"
     ]
    },
    {
@@ -19727,30 +19730,14 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_06856c",
+    "sid": "manufacturing_refst_d868ef",
     "conceptId": "원료DB 일반 원료:기능성 성분",
-    "text": "시카(센텔라아시아티카)",
-    "truth": true,
-    "explain": "출처: 원료DB 일반 원료 기능성 성분"
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_ea2aed",
-    "conceptId": "원료DB 일반 원료:기능성 성분",
-    "text": "세라마이드",
-    "truth": true,
-    "explain": "출처: 원료DB 일반 원료 기능성 성분"
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_a6a4b3",
-    "conceptId": "원료DB 일반 원료:기능성 성분",
-    "text": "페릴알데하이드",
+    "text": "티우람디설파이드",
     "truth": false,
     "explain": "출처: 원료DB 일반 원료 기능성 성분"
    },
    {
-    "id": "ㄹ",
+    "id": "ㄴ",
     "sid": "manufacturing_refst_43db91",
     "conceptId": "원료DB 일반 원료:기능성 성분",
     "text": "비타민C(아스코르브산)",
@@ -19758,10 +19745,26 @@ var COMBO_DRILLS_subject2 = [
     "explain": "출처: 원료DB 일반 원료 기능성 성분"
    },
    {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_d78b77",
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_06856c",
     "conceptId": "원료DB 일반 원료:기능성 성분",
-    "text": "N,N-디메칠-p-페닐렌디아민 및 그 염류",
+    "text": "시카(센텔라아시아티카)",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 기능성 성분"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_d2f606",
+    "conceptId": "원료DB 일반 원료:기능성 성분",
+    "text": "아데노신",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 기능성 성분"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_dda011",
+    "conceptId": "원료DB 일반 원료:기능성 성분",
+    "text": "Thevetia neriifolia juss, 배당체 추출물",
     "truth": false,
     "explain": "출처: 원료DB 일반 원료 기능성 성분"
    }
@@ -19779,8 +19782,8 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "2",
     "members": [
-     "ㄱ",
      "ㄴ",
+     "ㄷ",
      "ㄹ"
     ]
    },
@@ -19824,30 +19827,14 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_715e5c",
+    "sid": "manufacturing_refst_b20376",
     "conceptId": "원료DB 일반 원료:마이크로바이옴 PCR 원료",
-    "text": "크로톤알데히드(부테날)",
-    "truth": false,
-    "explain": "출처: 원료DB 일반 원료 마이크로바이옴 PCR 원료"
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_1825fa",
-    "conceptId": "원료DB 일반 원료:마이크로바이옴 PCR 원료",
-    "text": "트랜스-로즈 케톤-3",
-    "truth": false,
-    "explain": "출처: 원료DB 일반 원료 마이크로바이옴 PCR 원료"
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_b5cc0a",
-    "conceptId": "원료DB 일반 원료:마이크로바이옴 PCR 원료",
-    "text": "락토바실러스발효여과물",
+    "text": "아연PCA",
     "truth": true,
     "explain": "출처: 원료DB 일반 원료 마이크로바이옴 PCR 원료"
    },
    {
-    "id": "ㄹ",
+    "id": "ㄴ",
     "sid": "manufacturing_refst_b832de",
     "conceptId": "원료DB 일반 원료:마이크로바이옴 PCR 원료",
     "text": "올리고사카라이드",
@@ -19855,10 +19842,26 @@ var COMBO_DRILLS_subject2 = [
     "explain": "출처: 원료DB 일반 원료 마이크로바이옴 PCR 원료"
    },
    {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_b20376",
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_5bd970",
     "conceptId": "원료DB 일반 원료:마이크로바이옴 PCR 원료",
-    "text": "아연PCA",
+    "text": "비닐클로라이드모노머",
+    "truth": false,
+    "explain": "출처: 원료DB 일반 원료 마이크로바이옴 PCR 원료"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_db1fcc",
+    "conceptId": "원료DB 일반 원료:마이크로바이옴 PCR 원료",
+    "text": "3-[[4-[(2-하이드록시에칠)아미노]-2-니트로페닐]아미노]-1,2-프로판디올 및 그 염류",
+    "truth": false,
+    "explain": "출처: 원료DB 일반 원료 마이크로바이옴 PCR 원료"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_b5cc0a",
+    "conceptId": "원료DB 일반 원료:마이크로바이옴 PCR 원료",
+    "text": "락토바실러스발효여과물",
     "truth": true,
     "explain": "출처: 원료DB 일반 원료 마이크로바이옴 PCR 원료"
    }
@@ -19867,8 +19870,8 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "1",
     "members": [
-     "ㄷ",
-     "ㄹ",
+     "ㄱ",
+     "ㄴ",
      "ㅁ"
     ]
    },
@@ -19923,26 +19926,26 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_b20376",
+    "sid": "manufacturing_refst_48cb0e",
     "conceptId": "원료DB 일반 원료:마이크로바이옴 PCR 원료",
-    "text": "아연PCA",
-    "truth": true,
-    "explain": "출처: 원료DB 일반 원료 마이크로바이옴 PCR 원료"
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_481bab",
-    "conceptId": "원료DB 일반 원료:마이크로바이옴 PCR 원료",
-    "text": "쿼터늄-15",
+    "text": "공급자가 부여한 제조번호 또는 관리번호",
     "truth": false,
     "explain": "출처: 원료DB 일반 원료 마이크로바이옴 PCR 원료"
    },
    {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_b832de",
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_c5464a",
     "conceptId": "원료DB 일반 원료:마이크로바이옴 PCR 원료",
-    "text": "올리고사카라이드",
+    "text": "비피다발효여과물",
     "truth": true,
+    "explain": "출처: 원료DB 일반 원료 마이크로바이옴 PCR 원료"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_4e79cc",
+    "conceptId": "원료DB 일반 원료:마이크로바이옴 PCR 원료",
+    "text": "Thevetia neriifolia juss, 배당체 추출물",
+    "truth": false,
     "explain": "출처: 원료DB 일반 원료 마이크로바이옴 PCR 원료"
    },
    {
@@ -19955,10 +19958,10 @@ var COMBO_DRILLS_subject2 = [
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_5e45df",
+    "sid": "manufacturing_refst_f5ecbc",
     "conceptId": "원료DB 일반 원료:마이크로바이옴 PCR 원료",
-    "text": "프로파진",
-    "truth": false,
+    "text": "프룩토올리고사카라이드",
+    "truth": true,
     "explain": "출처: 원료DB 일반 원료 마이크로바이옴 PCR 원료"
    }
   ],
@@ -19981,9 +19984,9 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "3",
     "members": [
-     "ㄱ",
-     "ㄷ",
-     "ㄹ"
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -20005,8 +20008,7 @@ var COMBO_DRILLS_subject2 = [
   "tags": [
    "자동생성",
    "참조자료",
-   "열거목록",
-   "수치"
+   "열거목록"
   ],
   "derivedFrom": "ref:enum|원료|approved_ingredients.md|sec7|1",
   "explain": "ㄱ. 출처: 원료DB 일반 원료 마이크로바이옴 PCR 원료\nㄴ. 출처: 원료DB 일반 원료 마이크로바이옴 PCR 원료\nㄷ. 출처: 원료DB 일반 원료 마이크로바이옴 PCR 원료\nㄹ. 출처: 원료DB 일반 원료 마이크로바이옴 PCR 원료\nㅁ. 출처: 원료DB 일반 원료 마이크로바이옴 PCR 원료",
@@ -20023,14 +20025,6 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_34075f",
-    "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
-    "text": "베이직바이올렛 3(크리스탈바이올렛)",
-    "truth": false,
-    "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
-   },
-   {
-    "id": "ㄴ",
     "sid": "manufacturing_refst_bbd67c",
     "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
     "text": "벤질신나메이트",
@@ -20038,7 +20032,23 @@ var COMBO_DRILLS_subject2 = [
     "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
    },
    {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_423a7c",
+    "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
+    "text": "시트로넬올",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
+   },
+   {
     "id": "ㄷ",
+    "sid": "manufacturing_refst_ae6ea4",
+    "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
+    "text": "다이우론",
+    "truth": false,
+    "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
+   },
+   {
+    "id": "ㄹ",
     "sid": "manufacturing_refst_8e9d65",
     "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
     "text": "메칠2-옥티노에이트",
@@ -20046,19 +20056,11 @@ var COMBO_DRILLS_subject2 = [
     "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
    },
    {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_e4b6b3",
-    "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
-    "text": "수은 및 그 화합물",
-    "truth": false,
-    "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
-   },
-   {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_423a7c",
+    "sid": "manufacturing_refst_a2e56b",
     "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
-    "text": "시트로넬올",
-    "truth": true,
+    "text": "N-[2-(3-아세틸-5-니트로치오펜-2-일아조)-5-디에칠아미노페닐]아세타마이드",
+    "truth": false,
     "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
    }
   ],
@@ -20098,9 +20100,9 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "5",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㄷ",
-     "ㅁ"
+     "ㄹ"
     ]
    }
   ],
@@ -20125,6 +20127,30 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
+    "sid": "manufacturing_refst_b286fa",
+    "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
+    "text": "벤질알코올",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_dc9e14",
+    "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
+    "text": "6-이소프로필-2-데카하이드로나프탈렌올(6-이소프로필-2-데카롤)",
+    "truth": false,
+    "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_1e9217",
+    "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
+    "text": "베헨트리모늄 클로라이드",
+    "truth": false,
+    "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
+   },
+   {
+    "id": "ㄹ",
     "sid": "manufacturing_refst_38e61b",
     "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
     "text": "신나밀알코올",
@@ -20132,35 +20158,11 @@ var COMBO_DRILLS_subject2 = [
     "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
    },
    {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_aa07c1",
-    "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
-    "text": "부틸페닐메칠프로피오날",
-    "truth": true,
-    "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_5e33d8",
-    "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
-    "text": "참나무이끼추출물",
-    "truth": true,
-    "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_6115b8",
-    "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
-    "text": "(3-클로로페닐)-(4-메톡시-3-니트로페닐)메타논",
-    "truth": false,
-    "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
-   },
-   {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_906e50",
+    "sid": "manufacturing_refst_b3c6b5",
     "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
-    "text": "안정성시험(해당하는 경우에 한함)",
-    "truth": false,
+    "text": "벤질벤조에이트",
+    "truth": true,
     "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
    }
   ],
@@ -20175,8 +20177,8 @@ var COMBO_DRILLS_subject2 = [
     "id": "2",
     "members": [
      "ㄱ",
-     "ㄴ",
-     "ㄷ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -20226,42 +20228,42 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_e2dca5",
+    "sid": "manufacturing_refst_9d5975",
     "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
-    "text": "N-메칠-3-니트로-p-페닐렌디아민 및 그 염류",
-    "truth": false,
+    "text": "아니스알코올",
+    "truth": true,
     "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_a737f0",
+    "sid": "manufacturing_refst_8e9d65",
     "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
-    "text": "아밀신나밀알코올",
+    "text": "메칠2-옥티노에이트",
     "truth": true,
     "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_bce2e9",
+    "sid": "manufacturing_refst_76d6ea",
     "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
-    "text": "몰식자산",
+    "text": "알킬디아미노에칠글라이신하이드로클로라이드용액(30%)",
     "truth": false,
     "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_139abd",
+    "sid": "manufacturing_refst_3c3d0e",
     "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
-    "text": "아이소유제놀",
+    "text": "벤질살리실레이트",
     "truth": true,
     "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_423a7c",
+    "sid": "manufacturing_refst_b4609e",
     "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
-    "text": "시트로넬올",
-    "truth": true,
+    "text": "피이지-3,2',2'-디-p-페닐렌디아민",
+    "truth": false,
     "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
    }
   ],
@@ -20297,9 +20299,9 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "5",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㄹ",
-     "ㅁ"
+     "ㄹ"
     ]
    }
   ],
@@ -20307,6 +20309,7 @@ var COMBO_DRILLS_subject2 = [
    "자동생성",
    "참조자료",
    "열거목록",
+   "한도",
    "수치"
   ],
   "derivedFrom": "ref:enum|원료|approved_ingredients.md|sec9|2",
@@ -20324,41 +20327,41 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_827586",
+    "sid": "manufacturing_refst_2d0ba1",
     "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
-    "text": "벤토나이트 (Bentonite) CI 77004",
-    "truth": false,
+    "text": "나무이끼추출물",
+    "truth": true,
     "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_982d23",
+    "sid": "manufacturing_refst_9a4315",
     "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
-    "text": "네오스티그민 및 그 염류(예 : 네오스티그민브로마이드)",
+    "text": "글루테티미드 및 그 염류",
     "truth": false,
     "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_fbc0ac",
+    "sid": "manufacturing_refst_38e61b",
     "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
-    "text": "아밀신남알",
+    "text": "신나밀알코올",
     "truth": true,
     "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_a737f0",
+    "sid": "manufacturing_refst_2795c0",
     "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
-    "text": "아밀신나밀알코올",
-    "truth": true,
+    "text": "디소듐페닐디벤즈이미다졸테트라설포네이트",
+    "truth": false,
     "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_5e33d8",
+    "sid": "manufacturing_refst_b286fa",
     "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
-    "text": "참나무이끼추출물",
+    "text": "벤질알코올",
     "truth": true,
     "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
    }
@@ -20397,8 +20400,8 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "5",
     "members": [
+     "ㄱ",
      "ㄷ",
-     "ㄹ",
      "ㅁ"
     ]
    }
@@ -20424,42 +20427,42 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_2d0ba1",
+    "sid": "manufacturing_refst_714254",
     "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
-    "text": "나무이끼추출물",
-    "truth": true,
+    "text": "피그먼트 자색 23호 (Pigment Violet 23) CI 51319",
+    "truth": false,
     "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_2b8275",
+    "sid": "manufacturing_refst_4a3674",
     "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
-    "text": "디에칠카르바모일 클로라이드",
+    "text": "비타민 B₁(티아민)",
     "truth": false,
     "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_318ce6",
+    "sid": "manufacturing_refst_b3c6b5",
     "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
-    "text": "제라니올",
+    "text": "벤질벤조에이트",
     "truth": true,
     "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_b286fa",
+    "sid": "manufacturing_refst_8e9d65",
     "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
-    "text": "벤질알코올",
+    "text": "메칠2-옥티노에이트",
     "truth": true,
     "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_4c2aee",
+    "sid": "manufacturing_refst_5e33d8",
     "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
-    "text": "비스-에칠헥실옥시페놀메톡시페닐트리아진",
-    "truth": false,
+    "text": "참나무이끼추출물",
+    "truth": true,
     "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
    }
   ],
@@ -20474,9 +20477,9 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "2",
     "members": [
-     "ㄱ",
      "ㄷ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -20525,10 +20528,10 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_a46a8a",
+    "sid": "manufacturing_refst_4409f0",
     "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "클로로아세트알데히드",
-    "truth": false,
+    "text": "시설 및 기구에 사용되는 소모품은 제품의 품질에 영향을 주지 않도록 할 것",
+    "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
    },
    {
@@ -20541,25 +20544,25 @@ var COMBO_DRILLS_subject2 = [
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_a2e2b5",
+    "sid": "manufacturing_refst_d4eb50",
     "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "사용목적에 적합하고, 청소가 가능하며, 필요한 경우 위생ㆍ유지관리가 가능하여야 한다. 자동화시스템을 도입한 경우도 또한 같다.",
-    "truth": true,
+    "text": "탈륨 및 그 화합물",
+    "truth": false,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_64a148",
+    "sid": "manufacturing_refst_cc7474",
     "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "1-브로모프로판; n-프로필 브로마이드",
+    "text": "Ammimajus및 그 생약제제",
     "truth": false,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_4409f0",
+    "sid": "manufacturing_refst_a2e2b5",
     "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "시설 및 기구에 사용되는 소모품은 제품의 품질에 영향을 주지 않도록 할 것",
+    "text": "사용목적에 적합하고, 청소가 가능하며, 필요한 경우 위생ㆍ유지관리가 가능하여야 한다. 자동화시스템을 도입한 경우도 또한 같다.",
     "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
    }
@@ -20568,8 +20571,8 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "1",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㄷ",
      "ㅁ"
     ]
    },
@@ -20625,9 +20628,9 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_1e7933",
+    "sid": "manufacturing_refst_887fbc",
     "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "바닥, 벽, 천장은 가능한 청소 또는 위생관리를 하기 쉽게 매끄러운 표면을 지니고 청결하게 유지되어야 하며 소독제 등의 부식성에 저항력이 있을 것",
+    "text": "외부와 연결된 창문은 가능한 열리지 않도록 할 것. 창문이 외부 환경으로 열리는 경우에는 제품의 오염을 방지하도록 적절한 방법으로 차단할 것",
     "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
    },
@@ -20641,26 +20644,26 @@ var COMBO_DRILLS_subject2 = [
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_00485d",
+    "sid": "manufacturing_refst_b929f2",
     "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "플루아니손",
-    "truth": false,
+    "text": "설비 등의 위치는 원자재나 직원의 이동으로 인하여 제품의 품질에 영향을 주지 않도록 할 것",
+    "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_931cf8",
+    "sid": "manufacturing_refst_9d847e",
     "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "폴리(1-헥사메칠렌바이구아니드)에이치씨엘",
+    "text": "4,4'-디아미노디페닐아민 및 그 염류",
     "truth": false,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_db0695",
+    "sid": "manufacturing_refst_f222f4",
     "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "제품의 품질에 영향을 주지 않는 소모품을 사용할 것",
-    "truth": true,
+    "text": "피로카르핀 및 그 염류",
+    "truth": false,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
    }
   ],
@@ -20670,16 +20673,14 @@ var COMBO_DRILLS_subject2 = [
     "members": [
      "ㄱ",
      "ㄴ",
-     "ㄷ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
+     "ㄱ"
     ]
    },
    {
@@ -20687,14 +20688,13 @@ var COMBO_DRILLS_subject2 = [
     "members": [
      "ㄱ",
      "ㄴ",
-     "ㄹ",
-     "ㅁ"
+     "ㄷ"
     ]
    },
    {
     "id": "4",
     "members": [
-     "ㄱ"
+     "ㄴ"
     ]
    },
    {
@@ -20702,7 +20702,8 @@ var COMBO_DRILLS_subject2 = [
     "members": [
      "ㄱ",
      "ㄴ",
-     "ㅁ"
+     "ㄷ",
+     "ㄹ"
     ]
    }
   ],
@@ -20715,7 +20716,7 @@ var COMBO_DRILLS_subject2 = [
   "derivedFrom": "ref:enum|우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822)|제8조|0|1",
   "explain": "ㄱ. 출처: 우수화장품 제조 및 품질관리기준 제8조\nㄴ. 출처: 우수화장품 제조 및 품질관리기준 제8조\nㄷ. 출처: 우수화장품 제조 및 품질관리기준 제8조\nㄹ. 출처: 우수화장품 제조 및 품질관리기준 제8조\nㅁ. 출처: 우수화장품 제조 및 품질관리기준 제8조",
   "source": "참조자료 원문 (열거 목록)",
-  "answer": "5"
+  "answer": "3"
  },
  {
   "id": "manufacturing_combo-ref_6f2218",
@@ -20727,41 +20728,41 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_5abea8",
+    "sid": "manufacturing_refst_4409f0",
     "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "제품과 설비가 오염되지 않도록 배관 및 배수관을 설치하며, 배수관은 역류되지 않아야 하고, 청결을 유지할 것",
+    "text": "시설 및 기구에 사용되는 소모품은 제품의 품질에 영향을 주지 않도록 할 것",
     "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_e8d67a",
+    "sid": "manufacturing_refst_554966",
     "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "네오스티그민 및 그 염류",
+    "text": "디아미노톨루엔, [4-메칠-m-페닐렌 디아민] 및 [2-메칠-m-페닐렌 디아민]의 혼합물",
     "truth": false,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_dfdc94",
+    "sid": "manufacturing_refst_5d07f2",
     "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "[5.2.1.02,6.03,9.05,8]데칸",
+    "text": "치오아세타마이드",
     "truth": false,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_1e7933",
+    "sid": "manufacturing_refst_887fbc",
     "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "바닥, 벽, 천장은 가능한 청소 또는 위생관리를 하기 쉽게 매끄러운 표면을 지니고 청결하게 유지되어야 하며 소독제 등의 부식성에 저항력이 있을 것",
+    "text": "외부와 연결된 창문은 가능한 열리지 않도록 할 것. 창문이 외부 환경으로 열리는 경우에는 제품의 오염을 방지하도록 적절한 방법으로 차단할 것",
     "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_db0695",
+    "sid": "manufacturing_refst_1e7933",
     "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "제품의 품질에 영향을 주지 않는 소모품을 사용할 것",
+    "text": "바닥, 벽, 천장은 가능한 청소 또는 위생관리를 하기 쉽게 매끄러운 표면을 지니고 청결하게 유지되어야 하며 소독제 등의 부식성에 저항력이 있을 것",
     "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
    }
@@ -20827,41 +20828,41 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_1b8158",
+    "sid": "manufacturing_refst_887fbc",
     "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "적절하고 깨끗한 수세실과 화장실을 마련하고 수세실과 화장실은 접근이 쉬어야 하나 생산구역과 분리되어있을 것",
+    "text": "외부와 연결된 창문은 가능한 열리지 않도록 할 것. 창문이 외부 환경으로 열리는 경우에는 제품의 오염을 방지하도록 적절한 방법으로 차단할 것",
     "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_4409f0",
+    "sid": "manufacturing_refst_5abea8",
     "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "시설 및 기구에 사용되는 소모품은 제품의 품질에 영향을 주지 않도록 할 것",
+    "text": "제품과 설비가 오염되지 않도록 배관 및 배수관을 설치하며, 배수관은 역류되지 않아야 하고, 청결을 유지할 것",
     "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_3ea8a1",
+    "sid": "manufacturing_refst_a4d59d",
     "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "천정 주위의 대들보, 파이프, 덕트 등은 가급적 노출되지 않도록 설계하고, 노출된 파이프는 받침대 등으로 고 정하고 벽에 닿지 않게 하여 청소가 용이하도록 설계할 것",
+    "text": "벌크 제품의 용기는 먼지나 수분으로부터 내용물을 보호할 수 있을 것",
     "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_8b0391",
+    "sid": "manufacturing_refst_da5fa7",
     "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "제4장 품질 보증제20조 시험 관리",
+    "text": "디클로로-m-크시레놀",
     "truth": false,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_a57f5b",
+    "sid": "manufacturing_refst_10181e",
     "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "나파졸린 및 그 염류",
+    "text": "O,O'-디에칠-O-4-니트로페닐포스포로치오에이트(파라치온-ISO)",
     "truth": false,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
    }
@@ -20924,18 +20925,18 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_db9963",
+    "sid": "manufacturing_refst_4409f0",
     "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "리도카인",
-    "truth": false,
+    "text": "시설 및 기구에 사용되는 소모품은 제품의 품질에 영향을 주지 않도록 할 것",
+    "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_7ffe34",
+    "sid": "manufacturing_refst_1583e5",
     "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "환기가 잘 되고 청결할 것",
-    "truth": true,
+    "text": "소듐헥사시클로네이트",
+    "truth": false,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
    },
    {
@@ -20948,17 +20949,17 @@ var COMBO_DRILLS_subject2 = [
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_887fbc",
+    "sid": "manufacturing_refst_b9cc05",
     "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "외부와 연결된 창문은 가능한 열리지 않도록 할 것. 창문이 외부 환경으로 열리는 경우에는 제품의 오염을 방지하도록 적절한 방법으로 차단할 것",
+    "text": "작업소 전체에 적절한 조명을 설치하고, 조명이 파손될 경우를 대비한 제품을 보호할 수 있는 처리절차를 마련할 것",
     "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_12fae5",
+    "sid": "manufacturing_refst_bbda5f",
     "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "톨루이딘, 그 이성체, 염류, 할로겐화유도체 및 설폰화 유도체",
+    "text": "시클로포스파미드 및 그 염류",
     "truth": false,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
    }
@@ -20975,7 +20976,7 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "2",
     "members": [
-     "ㄴ",
+     "ㄱ",
      "ㄷ",
      "ㄹ"
     ]
@@ -21004,6 +21005,7 @@ var COMBO_DRILLS_subject2 = [
    "자동생성",
    "참조자료",
    "열거목록",
+   "절차",
    "수치"
   ],
   "derivedFrom": "ref:enum|우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822)|제8조|0|4",
@@ -21021,22 +21023,6 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_b44692",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제4조",
-    "text": "정해진 책임과 활동을 위한 교육훈련을 이수할 의무",
-    "truth": true,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제4조"
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_6041ba",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제4조",
-    "text": "피크라민산 나트륨",
-    "truth": false,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제4조"
-   },
-   {
-    "id": "ㄷ",
     "sid": "manufacturing_refst_72b1fd",
     "conceptId": "우수화장품 제조 및 품질관리기준:제4조",
     "text": "문서접근 제한 및 개인위생 규정을 준수해야 할 의무",
@@ -21044,7 +21030,7 @@ var COMBO_DRILLS_subject2 = [
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제4조"
    },
    {
-    "id": "ㄹ",
+    "id": "ㄴ",
     "sid": "manufacturing_refst_4f236e",
     "conceptId": "우수화장품 제조 및 품질관리기준:제4조",
     "text": "품질 검사가 규정된 절차에 따라 진행되는지의 확인",
@@ -21052,11 +21038,27 @@ var COMBO_DRILLS_subject2 = [
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제4조"
    },
    {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_d14270",
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_b3cab7",
     "conceptId": "우수화장품 제조 및 품질관리기준:제4조",
-    "text": "브롬이소발",
+    "text": "페릭페로시아나이드 (Ferric Ferrocyanide) CI 77510",
     "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제4조"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_c6371c",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제4조",
+    "text": "o-아니시딘",
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제4조"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_b44692",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제4조",
+    "text": "정해진 책임과 활동을 위한 교육훈련을 이수할 의무",
+    "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제4조"
    }
   ],
@@ -21072,8 +21074,8 @@ var COMBO_DRILLS_subject2 = [
     "id": "2",
     "members": [
      "ㄱ",
-     "ㄷ",
-     "ㄹ"
+     "ㄴ",
+     "ㅁ"
     ]
    },
    {
@@ -21122,30 +21124,22 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_acf933",
+    "sid": "manufacturing_refst_82bdf1",
     "conceptId": "우수화장품 제조 및 품질관리기준:제4조",
-    "text": "불만처리와 제품회수에 관한 사항의 주관",
-    "truth": true,
+    "text": "하수체(pituitary gland)",
+    "truth": false,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제4조"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_0ec93f",
+    "sid": "manufacturing_refst_e0f47a",
     "conceptId": "우수화장품 제조 및 품질관리기준:제4조",
-    "text": "보레이트류(소듐보 레이트, 테트라보 레이트)",
-    "truth": false,
+    "text": "품질에 관련된 모든 문서와 절차의 검토 및 승인",
+    "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제4조"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_1beb0e",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제4조",
-    "text": "노닐페놀[1] ; 4-노닐페놀, 가지형[2]",
-    "truth": false,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제4조"
-   },
-   {
-    "id": "ㄹ",
     "sid": "manufacturing_refst_af7e44",
     "conceptId": "우수화장품 제조 및 품질관리기준:제4조",
     "text": "적합 판정한 원자재 및 제품의 출고 여부 결정",
@@ -21153,10 +21147,18 @@ var COMBO_DRILLS_subject2 = [
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제4조"
    },
    {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_4f236e",
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_60d255",
     "conceptId": "우수화장품 제조 및 품질관리기준:제4조",
-    "text": "품질 검사가 규정된 절차에 따라 진행되는지의 확인",
+    "text": "(메칠헵틴카보네이트)",
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제4조"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_8e626c",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제4조",
+    "text": "자신의 업무범위내에서 기준을 벗어난 행위나 부적합 발생 등에 대해 보고해야 할 의무",
     "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제4조"
    }
@@ -21165,8 +21167,8 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "1",
     "members": [
-     "ㄱ",
-     "ㄹ",
+     "ㄴ",
+     "ㄷ",
      "ㅁ"
     ]
    },
@@ -21223,30 +21225,14 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_4de9a3",
+    "sid": "manufacturing_refst_5b88dd",
     "conceptId": "우수화장품 제조 및 품질관리기준:제4조",
-    "text": "시험시설 및 시험기구의 점검(장비의 교정 및 성능점검 방법)",
+    "text": "베헨트리모늄 클로라이드",
     "truth": false,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제4조"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_b44692",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제4조",
-    "text": "정해진 책임과 활동을 위한 교육훈련을 이수할 의무",
-    "truth": true,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제4조"
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_ed643f",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제4조",
-    "text": "피이지-3,2',2'-디-p-페닐렌디아민",
-    "truth": false,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제4조"
-   },
-   {
-    "id": "ㄹ",
     "sid": "manufacturing_refst_af7e44",
     "conceptId": "우수화장품 제조 및 품질관리기준:제4조",
     "text": "적합 판정한 원자재 및 제품의 출고 여부 결정",
@@ -21254,10 +21240,26 @@ var COMBO_DRILLS_subject2 = [
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제4조"
    },
    {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_4f236e",
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_2f7fe9",
     "conceptId": "우수화장품 제조 및 품질관리기준:제4조",
-    "text": "품질 검사가 규정된 절차에 따라 진행되는지의 확인",
+    "text": "조직 내에서 맡은 지위 및 역할을 인지해야 할 의무",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제4조"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_a48a1a",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제4조",
+    "text": "메칠렌비스-벤조트리아졸릴테트라메칠부틸페놀",
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제4조"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_b44692",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제4조",
+    "text": "정해진 책임과 활동을 위한 교육훈련을 이수할 의무",
     "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제4조"
    }
@@ -21288,7 +21290,7 @@ var COMBO_DRILLS_subject2 = [
     "id": "4",
     "members": [
      "ㄴ",
-     "ㄹ",
+     "ㄷ",
      "ㅁ"
     ]
    },
@@ -21304,7 +21306,6 @@ var COMBO_DRILLS_subject2 = [
    "자동생성",
    "참조자료",
    "열거목록",
-   "절차",
    "수치"
   ],
   "derivedFrom": "ref:enum|우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822)|제4조|0|2",
@@ -21828,22 +21829,6 @@ var COMBO_DRILLS_subject2 = [
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_9e77da",
-    "conceptId": "색소종류및기준 전체:",
-    "text": "피이지-3,2',2'-디-p-페닐렌디아민",
-    "truth": false,
-    "explain": "출처: 색소종류및기준 전체 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_6aec7c",
-    "conceptId": "색소종류및기준 전체:",
-    "text": "크로뮴옥사이드그린 (크롬(III) 옥사이드, Chromium Oxide Greens)CI 77288",
-    "truth": true,
-    "explain": "출처: 색소종류및기준 전체 "
-   },
-   {
-    "id": "ㄹ",
     "sid": "manufacturing_refst_9836ef",
     "conceptId": "색소종류및기준 전체:",
     "text": "구리 (카퍼, Copper) CI 77400",
@@ -21851,10 +21836,26 @@ var COMBO_DRILLS_subject2 = [
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_8b55c8",
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_4a148a",
     "conceptId": "색소종류및기준 전체:",
-    "text": "사이클로헥시미드",
+    "text": "2-[(4-클로로-2-니트로페닐)아미노]에탄올(에이치시 황색 No. 12) 및 그 염류",
+    "truth": false,
+    "explain": "출처: 색소종류및기준 전체 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_6aec7c",
+    "conceptId": "색소종류및기준 전체:",
+    "text": "크로뮴옥사이드그린 (크롬(III) 옥사이드, Chromium Oxide Greens)CI 77288",
+    "truth": true,
+    "explain": "출처: 색소종류및기준 전체 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_22a24c",
+    "conceptId": "색소종류및기준 전체:",
+    "text": "세틸피리디늄클로라이드",
     "truth": false,
     "explain": "출처: 색소종류및기준 전체 "
    }
@@ -21873,7 +21874,7 @@ var COMBO_DRILLS_subject2 = [
     "id": "2",
     "members": [
      "ㄱ",
-     "ㄷ",
+     "ㄴ",
      "ㄹ"
     ]
    },
@@ -21920,6 +21921,14 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
+    "sid": "manufacturing_refst_226455",
+    "conceptId": "색소종류및기준 전체:",
+    "text": "베지터블카본 (코크블랙, Vegetable Carbon, Coke Black) CI 77268:1",
+    "truth": true,
+    "explain": "출처: 색소종류및기준 전체 "
+   },
+   {
+    "id": "ㄴ",
     "sid": "manufacturing_refst_e30618",
     "conceptId": "색소종류및기준 전체:",
     "text": "라이코펜 (Lycopene) CI 75125",
@@ -21927,34 +21936,26 @@ var COMBO_DRILLS_subject2 = [
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_2b71aa",
-    "conceptId": "색소종류및기준 전체:",
-    "text": "바륨설페이트 (Barium Sulfate) CI 77120",
-    "truth": true,
-    "explain": "출처: 색소종류및기준 전체 "
-   },
-   {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_062608",
+    "sid": "manufacturing_refst_44bd52",
     "conceptId": "색소종류및기준 전체:",
-    "text": "칼슘설페이트 (Calcium Sulfate) CI 77231",
-    "truth": true,
-    "explain": "출처: 색소종류및기준 전체 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_525e3e",
-    "conceptId": "색소종류및기준 전체:",
-    "text": "시스테인, 아세틸시스테인 및 그 염류",
+    "text": "클로로자이레놀",
     "truth": false,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_ec9d00",
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_7f64f9",
     "conceptId": "색소종류및기준 전체:",
-    "text": "2-[(4-아미노-2-메칠-5-니트로페닐)아미노]에탄올 및 그 염류",
+    "text": "칼슘카보네이트 (Calcium Carbonate) CI 77220",
+    "truth": true,
+    "explain": "출처: 색소종류및기준 전체 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_9f44b5",
+    "conceptId": "색소종류및기준 전체:",
+    "text": "참나무이끼추출물",
     "truth": false,
     "explain": "출처: 색소종류및기준 전체 "
    }
@@ -21997,7 +21998,7 @@ var COMBO_DRILLS_subject2 = [
     "members": [
      "ㄱ",
      "ㄴ",
-     "ㄷ"
+     "ㄹ"
     ]
    }
   ],
@@ -22022,41 +22023,41 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_3187f7",
+    "sid": "manufacturing_refst_7f64f9",
     "conceptId": "색소종류및기준 전체:",
-    "text": "1,2,3,4,5,6-헥사클로로사이클로헥산류",
-    "truth": false,
+    "text": "칼슘카보네이트 (Calcium Carbonate) CI 77220",
+    "truth": true,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_c812c3",
+    "sid": "manufacturing_refst_5bd552",
     "conceptId": "색소종류및기준 전체:",
-    "text": "벤토나이트 (Bentonite) CI 77004",
-    "truth": true,
-    "explain": "출처: 색소종류및기준 전체 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_101519",
-    "conceptId": "색소종류및기준 전체:",
-    "text": "베타카로틴 (Beta-Carotene) CI 40800, CI 75130",
-    "truth": true,
-    "explain": "출처: 색소종류및기준 전체 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_238d0c",
-    "conceptId": "색소종류및기준 전체:",
-    "text": "소듐아이오데이트",
+    "text": "콜린염 및 에스텔(예 : 콜린클로라이드)",
     "truth": false,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_062608",
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_c4cd63",
     "conceptId": "색소종류및기준 전체:",
-    "text": "칼슘설페이트 (Calcium Sulfate) CI 77231",
+    "text": "디바이스형",
+    "truth": false,
+    "explain": "출처: 색소종류및기준 전체 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_a9fdbc",
+    "conceptId": "색소종류및기준 전체:",
+    "text": "카본블랙 (Carbon black) CI 77266",
+    "truth": true,
+    "explain": "출처: 색소종류및기준 전체 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_f2f531",
+    "conceptId": "색소종류및기준 전체:",
+    "text": "인디고틴",
     "truth": true,
     "explain": "출처: 색소종류및기준 전체 "
    }
@@ -22065,8 +22066,8 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "1",
     "members": [
-     "ㄴ",
-     "ㄷ",
+     "ㄱ",
+     "ㄹ",
      "ㅁ"
     ]
    },
@@ -22122,42 +22123,42 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_731c96",
+    "sid": "manufacturing_refst_f2f531",
     "conceptId": "색소종류및기준 전체:",
-    "text": "멘틸안트라닐레이트",
-    "truth": false,
-    "explain": "출처: 색소종류및기준 전체 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_bab455",
-    "conceptId": "색소종류및기준 전체:",
-    "text": "커큐민 (Curcumin) CI 75300",
+    "text": "인디고틴",
     "truth": true,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_a16193",
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_064b5d",
     "conceptId": "색소종류및기준 전체:",
-    "text": "카민류 (Carmines) CI 75470",
+    "text": "알란토인클로로하이드록시알루미늄(알클록사)",
+    "truth": false,
+    "explain": "출처: 색소종류및기준 전체 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_03bdee",
+    "conceptId": "색소종류및기준 전체:",
+    "text": "페러스옥사이드 (Ferrous oxide, Iron Oxide) CI 77489",
     "truth": true,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_2c39e8",
+    "sid": "manufacturing_refst_c812c3",
     "conceptId": "색소종류및기준 전체:",
-    "text": "N-(3-카바모일-3,3-디페닐프로필)-N,N-디이소프로필메칠암모늄염",
-    "truth": false,
+    "text": "벤토나이트 (Bentonite) CI 77004",
+    "truth": true,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_ff0b5a",
+    "sid": "manufacturing_refst_d6af27",
     "conceptId": "색소종류및기준 전체:",
-    "text": "안나토 (Annatto) CI 75120",
-    "truth": true,
+    "text": "스테아릭애씨드",
+    "truth": false,
     "explain": "출처: 색소종류및기준 전체 "
    }
   ],
@@ -22187,9 +22188,9 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "4",
     "members": [
-     "ㄴ",
+     "ㄱ",
      "ㄷ",
-     "ㅁ"
+     "ㄹ"
     ]
    },
    {
@@ -22220,42 +22221,42 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_a9fdbc",
+    "sid": "manufacturing_refst_9c599a",
     "conceptId": "색소종류및기준 전체:",
-    "text": "카본블랙 (Carbon black) CI 77266",
-    "truth": true,
-    "explain": "출처: 색소종류및기준 전체 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_062608",
-    "conceptId": "색소종류및기준 전체:",
-    "text": "칼슘설페이트 (Calcium Sulfate) CI 77231",
-    "truth": true,
-    "explain": "출처: 색소종류및기준 전체 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_5e52dc",
-    "conceptId": "색소종류및기준 전체:",
-    "text": "카드뮴 : 5㎍/g이하",
+    "text": "4-에톡시페놀(히드로퀴논모노에칠에텔)",
     "truth": false,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_e30618",
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_acce01",
     "conceptId": "색소종류및기준 전체:",
-    "text": "라이코펜 (Lycopene) CI 75125",
+    "text": "헤마테인",
+    "truth": false,
+    "explain": "출처: 색소종류및기준 전체 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_41bd91",
+    "conceptId": "색소종류및기준 전체:",
+    "text": "등색 401 호(오렌지 401, Orange no. 401)* CI 11725",
+    "truth": true,
+    "explain": "출처: 색소종류및기준 전체 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_101519",
+    "conceptId": "색소종류및기준 전체:",
+    "text": "베타카로틴 (Beta-Carotene) CI 40800, CI 75130",
     "truth": true,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_ba246b",
+    "sid": "manufacturing_refst_03bdee",
     "conceptId": "색소종류및기준 전체:",
-    "text": "메칠옥시란",
-    "truth": false,
+    "text": "페러스옥사이드 (Ferrous oxide, Iron Oxide) CI 77489",
+    "truth": true,
     "explain": "출처: 색소종류및기준 전체 "
    }
   ],
@@ -22286,9 +22287,9 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "4",
     "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ"
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -22327,34 +22328,34 @@ var COMBO_DRILLS_subject2 = [
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_def332",
+    "sid": "manufacturing_refst_62c0e4",
     "conceptId": "색소종류및기준 전체:",
-    "text": "베라트룸(Veratrum)속 및 그 제제",
+    "text": "아미트리프틸린 및 그 염류",
     "truth": false,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_c812c3",
+    "sid": "manufacturing_refst_d2b2a2",
     "conceptId": "색소종류및기준 전체:",
-    "text": "벤토나이트 (Bentonite) CI 77004",
-    "truth": true,
+    "text": "니켈 설페이트",
+    "truth": false,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_f2f531",
+    "sid": "manufacturing_refst_101519",
     "conceptId": "색소종류및기준 전체:",
-    "text": "인디고틴",
+    "text": "베타카로틴 (Beta-Carotene) CI 40800, CI 75130",
     "truth": true,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_6a9128",
+    "sid": "manufacturing_refst_3f990a",
     "conceptId": "색소종류및기준 전체:",
-    "text": "빈클로졸린",
-    "truth": false,
+    "text": "알루미늄 (Aluminum) CI 77000",
+    "truth": true,
     "explain": "출처: 색소종류및기준 전체 "
    }
   ],
@@ -22363,8 +22364,8 @@ var COMBO_DRILLS_subject2 = [
     "id": "1",
     "members": [
      "ㄱ",
-     "ㄷ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -22418,42 +22419,42 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_9836ef",
+    "sid": "manufacturing_refst_101519",
     "conceptId": "색소종류및기준 전체:",
-    "text": "구리 (카퍼, Copper) CI 77400",
+    "text": "베타카로틴 (Beta-Carotene) CI 40800, CI 75130",
     "truth": true,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_4bc4f6",
+    "sid": "manufacturing_refst_4f90df",
     "conceptId": "색소종류및기준 전체:",
-    "text": "본블랙, 본챠콜 (본차콜, Bone black, Bone Charcoal) CI 77267",
-    "truth": true,
+    "text": "Lactic Acid(젖산, 락틱애씨드)",
+    "truth": false,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_a0bbc6",
+    "sid": "manufacturing_refst_203162",
     "conceptId": "색소종류및기준 전체:",
-    "text": "비스머스옥시클로라이드 (Bismuth Oxychloride) CI 77163",
-    "truth": true,
+    "text": "비에타미베린",
+    "truth": false,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_d2bc27",
+    "sid": "manufacturing_refst_03bdee",
     "conceptId": "색소종류및기준 전체:",
-    "text": "할로카르반",
-    "truth": false,
+    "text": "페러스옥사이드 (Ferrous oxide, Iron Oxide) CI 77489",
+    "truth": true,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_433991",
+    "sid": "manufacturing_refst_a16193",
     "conceptId": "색소종류및기준 전체:",
-    "text": "소듐헥사시클로네이트",
-    "truth": false,
+    "text": "카민류 (Carmines) CI 75470",
+    "truth": true,
     "explain": "출처: 색소종류및기준 전체 "
    }
   ],
@@ -22461,7 +22462,9 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "1",
     "members": [
-     "ㄹ",
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
      "ㅁ"
     ]
    },
@@ -22479,16 +22482,15 @@ var COMBO_DRILLS_subject2 = [
     "members": [
      "ㄱ",
      "ㄴ",
-     "ㄷ",
-     "ㅁ"
+     "ㄷ"
     ]
    },
    {
     "id": "4",
     "members": [
      "ㄱ",
-     "ㄴ",
-     "ㄷ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -22623,18 +22625,18 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_7fd9ee",
+    "sid": "manufacturing_refst_ee544b",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "4-메칠벤질리덴캠퍼",
+    "text": "아조벤젠",
     "truth": false,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_424c0f",
+    "sid": "manufacturing_refst_fa63ca",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "톨루이디늄클로라이드",
-    "truth": false,
+    "text": "청소상태의 평가방법",
+    "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
@@ -22647,17 +22649,17 @@ var COMBO_DRILLS_subject2 = [
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_63d0ac",
+    "sid": "manufacturing_refst_70b76e",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "곤충, 해충이나 쥐를 막는 방법 및 점검주기",
-    "truth": true,
+    "text": "옥살릭애씨드, 그 에스텔류 및 알칼리 염류",
+    "truth": false,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_fa63ca",
+    "sid": "manufacturing_refst_63d0ac",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "청소상태의 평가방법",
+    "text": "곤충, 해충이나 쥐를 막는 방법 및 점검주기",
     "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    }
@@ -22673,8 +22675,8 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "2",
     "members": [
+     "ㄴ",
      "ㄷ",
-     "ㄹ",
      "ㅁ"
     ]
    },
@@ -22728,14 +22730,30 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_aaf9f3",
+    "sid": "manufacturing_refst_66581e",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "5-브로모-5-나이트로-1,3-디옥산",
+    "text": "폴리실리콘-15(디메치코디에칠벤잘말로네이트)",
     "truth": false,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㄴ",
+    "sid": "manufacturing_refst_fa63ca",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "청소상태의 평가방법",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_7e776d",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "N,N'-디메칠-N-하이드록시에칠-3-니트로-p-페닐렌디아민 및 그 염류",
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   },
+   {
+    "id": "ㄹ",
     "sid": "manufacturing_refst_23fe8f",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
     "text": "작업실 등의 청소(필요한 경우 소독을 포함한다. 이하 같다) 방법 및 청소주기",
@@ -22743,27 +22761,11 @@ var COMBO_DRILLS_subject2 = [
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_3bfe35",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "작업복장의 규격, 세탁방법 및 착용규정",
-    "truth": true,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_8644ff",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "작업원의 수세, 소독방법 등 위생에 관한 사항",
-    "truth": true,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
-   },
-   {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_63ab85",
+    "sid": "manufacturing_refst_35dc8e",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "메칠옥틴카보네이트(메칠논-2-이노에이트)",
-    "truth": false,
+    "text": "작업원의 건강관리 및 건강상태의 파악ㆍ조치방법",
+    "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    }
   ],
@@ -22773,20 +22775,20 @@ var COMBO_DRILLS_subject2 = [
     "members": [
      "ㄴ",
      "ㄷ",
-     "ㅁ"
+     "ㄹ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄱ"
+     "ㄱ",
+     "ㄴ"
     ]
    },
    {
     "id": "3",
     "members": [
      "ㄴ",
-     "ㄷ",
      "ㄹ",
      "ㅁ"
     ]
@@ -22794,8 +22796,7 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "4",
     "members": [
-     "ㄱ",
-     "ㄴ"
+     "ㄱ"
     ]
    },
    {
@@ -22803,7 +22804,8 @@ var COMBO_DRILLS_subject2 = [
     "members": [
      "ㄴ",
      "ㄷ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    }
   ],
@@ -22818,7 +22820,7 @@ var COMBO_DRILLS_subject2 = [
   "derivedFrom": "ref:enum|우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822)|제15조|46|1",
   "explain": "ㄱ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄴ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄷ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄹ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㅁ. 출처: 우수화장품 제조 및 품질관리기준 제15조",
   "source": "참조자료 원문 (열거 목록)",
-  "answer": "5"
+  "answer": "3"
  },
  {
   "id": "manufacturing_combo-ref_d4f3be",
@@ -22830,30 +22832,6 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_162364",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제30조",
-    "text": "히요시아민, 그 염류 및 유도체",
-    "truth": false,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제30조"
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_29d3b0",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제30조",
-    "text": "품질관리현황",
-    "truth": true,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제30조"
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_b5c854",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제30조",
-    "text": "우수화장품 제조 및 품질관리기준에 따라 3회 이상 적용ㆍ운영한 자체평가표",
-    "truth": true,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제30조"
-   },
-   {
-    "id": "ㄹ",
     "sid": "manufacturing_refst_ae57ab",
     "conceptId": "우수화장품 제조 및 품질관리기준:제30조",
     "text": "제조소의 시설내역",
@@ -22861,11 +22839,35 @@ var COMBO_DRILLS_subject2 = [
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제30조"
    },
    {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_2de9f9",
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_dfc599",
     "conceptId": "우수화장품 제조 및 품질관리기준:제30조",
-    "text": "황산 1-히드록시에칠-4,5-디아미노피라졸",
+    "text": "드로메트리졸",
     "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제30조"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_fb7a3c",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제30조",
+    "text": "니켈 설페이트",
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제30조"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_b5c854",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제30조",
+    "text": "우수화장품 제조 및 품질관리기준에 따라 3회 이상 적용ㆍ운영한 자체평가표",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제30조"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_29d3b0",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제30조",
+    "text": "품질관리현황",
+    "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제30조"
    }
   ],
@@ -22893,9 +22895,9 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "4",
     "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -22929,25 +22931,25 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_f95b2b",
+    "sid": "manufacturing_refst_8e7f75",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "옥시염화비스머스 이외의 비스머스화합물",
+    "text": "프레그난디올",
     "truth": false,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_9bfa60",
+    "sid": "manufacturing_refst_127c1a",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "비페닐-4-일아민 및 그 염류",
+    "text": "디에칠아미노하이드록시벤조일헥실벤조에이트",
     "truth": false,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_18f062",
+    "sid": "manufacturing_refst_aa713d",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "위탁시험 또는 위탁제조하는 경우 검체의 송부방법 및 시험결과의 판정방법",
+    "text": "청소상태의 평가방법",
     "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
@@ -22961,9 +22963,9 @@ var COMBO_DRILLS_subject2 = [
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_aa713d",
+    "sid": "manufacturing_refst_18f062",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "청소상태의 평가방법",
+    "text": "위탁시험 또는 위탁제조하는 경우 검체의 송부방법 및 시험결과의 판정방법",
     "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    }
@@ -23038,33 +23040,33 @@ var COMBO_DRILLS_subject2 = [
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_480606",
+    "sid": "manufacturing_refst_18f062",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "디메칠아민",
-    "truth": false,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_a4a6f6",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "시험검체 채취방법 및 채취 시의 주의사항과 채취 시의 오염방지대책",
+    "text": "위탁시험 또는 위탁제조하는 경우 검체의 송부방법 및 시험결과의 판정방법",
     "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_be07df",
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_cbe37a",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "시클라바메이트",
+    "text": "디하이드로코우마린",
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_0626b1",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "클로르디메폼",
     "truth": false,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_094c58",
+    "sid": "manufacturing_refst_caa676",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "작업원의 건강관리 및 건강상태의 파악ㆍ조치방법",
+    "text": "안정성시험(해당하는 경우에 한함)",
     "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    }
@@ -23074,7 +23076,7 @@ var COMBO_DRILLS_subject2 = [
     "id": "1",
     "members": [
      "ㄱ",
-     "ㄷ",
+     "ㄴ",
      "ㅁ"
     ]
    },
@@ -23129,22 +23131,6 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_1646a7",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "작업복장의 규격, 세탁방법 및 착용규정",
-    "truth": true,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_55277b",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "징크옥사이드 (Zinc Oxide) CI 77947",
-    "truth": false,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
-   },
-   {
-    "id": "ㄷ",
     "sid": "manufacturing_refst_3e6dee",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
     "text": "곤충, 해충이나 쥐를 막는 방법 및 점검주기",
@@ -23152,19 +23138,35 @@ var COMBO_DRILLS_subject2 = [
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_acde03",
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_312770",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "할로카르반",
+    "text": "폴리실리콘-15(디메치코디에칠벤잘말로네이트)",
     "truth": false,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
-    "id": "ㅁ",
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_caa676",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "안정성시험(해당하는 경우에 한함)",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   },
+   {
+    "id": "ㄹ",
     "sid": "manufacturing_refst_18f062",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
     "text": "위탁시험 또는 위탁제조하는 경우 검체의 송부방법 및 시험결과의 판정방법",
     "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_29c6bd",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "프로피페나존",
+    "truth": false,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    }
   ],
@@ -23194,7 +23196,7 @@ var COMBO_DRILLS_subject2 = [
     "members": [
      "ㄱ",
      "ㄷ",
-     "ㅁ"
+     "ㄹ"
     ]
    },
    {
@@ -23229,30 +23231,22 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_aa713d",
+    "sid": "manufacturing_refst_3e6dee",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "청소상태의 평가방법",
+    "text": "곤충, 해충이나 쥐를 막는 방법 및 점검주기",
     "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_935ed7",
+    "sid": "manufacturing_refst_d0adca",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "염산 톨루엔-2,5-디아민",
-    "truth": false,
+    "text": "표준품 및 시약의 관리",
+    "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_ed2f80",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "족사졸아민",
-    "truth": false,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
-   },
-   {
-    "id": "ㄹ",
     "sid": "manufacturing_refst_094c58",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
     "text": "작업원의 건강관리 및 건강상태의 파악ㆍ조치방법",
@@ -23260,11 +23254,19 @@ var COMBO_DRILLS_subject2 = [
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_caa676",
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_d8fb6a",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "안정성시험(해당하는 경우에 한함)",
-    "truth": true,
+    "text": "미네랄 오일",
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_a80b18",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "피그먼트레드 53:1(레이크레드 CBa)",
+    "truth": false,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    }
   ],
@@ -23273,8 +23275,8 @@ var COMBO_DRILLS_subject2 = [
     "id": "1",
     "members": [
      "ㄱ",
-     "ㄹ",
-     "ㅁ"
+     "ㄴ",
+     "ㄷ"
     ]
    },
    {
@@ -23312,6 +23314,7 @@ var COMBO_DRILLS_subject2 = [
    "자동생성",
    "참조자료",
    "열거목록",
+   "기한",
    "수치"
   ],
   "derivedFrom": "ref:enum|우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822)|제15조|38|3",
@@ -23329,22 +23332,14 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_374b77",
+    "sid": "manufacturing_refst_1e875a",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "작업복장의 규격, 세탁방법 및 착용규정",
-    "truth": true,
+    "text": "피나스테리드, 그 염류 및 유도체",
+    "truth": false,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_282492",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "효능ㆍ효과(기능성 화장품의 경우) 및 사용할 때의 주의사항",
-    "truth": true,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
-   },
-   {
-    "id": "ㄷ",
     "sid": "manufacturing_refst_290731",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
     "text": "표준품 및 시약의 관리",
@@ -23352,18 +23347,26 @@ var COMBO_DRILLS_subject2 = [
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_d55175",
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_282492",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "페노티아진 및 그 화합물",
-    "truth": false,
+    "text": "효능ㆍ효과(기능성 화장품의 경우) 및 사용할 때의 주의사항",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_374b77",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "작업복장의 규격, 세탁방법 및 착용규정",
+    "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_e6327f",
+    "sid": "manufacturing_refst_27ef8e",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "클로르탈리돈",
+    "text": "1,3-비스(비닐설포닐아세타아미도)-프로판",
     "truth": false,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    }
@@ -23401,9 +23404,9 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "5",
     "members": [
-     "ㄱ",
      "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    }
   ],
@@ -23428,42 +23431,42 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_25bc4d",
+    "sid": "manufacturing_refst_6823ad",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "시클로메놀 및 그 염류",
+    "text": "벤조페논-8",
     "truth": false,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_adb626",
+    "sid": "manufacturing_refst_c009df",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "작업 중 주의사항",
-    "truth": true,
+    "text": "o-디아니시딘의 염(3,3'-디메톡시벤지딘의 염)",
+    "truth": false,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_d752cb",
+    "sid": "manufacturing_refst_e821c9",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "원자재 관리에 관한 사항",
+    "text": "곤충, 해충이나 쥐를 막는 방법 및 점검주기",
     "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_1897a5",
+    "sid": "manufacturing_refst_d343ff",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "원료명, 분량 및 제조단위당 기준량",
+    "text": "시험시설 및 시험기구의 점검(장비의 교정 및 성능점검 방법)",
     "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_04a11d",
+    "sid": "manufacturing_refst_bd365c",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "페트리클로랄",
-    "truth": false,
+    "text": "완제품 등 보관용 검체의 관리",
+    "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    }
   ],
@@ -23505,9 +23508,9 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "5",
     "members": [
-     "ㄴ",
      "ㄷ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    }
   ],
@@ -23515,6 +23518,7 @@ var COMBO_DRILLS_subject2 = [
    "자동생성",
    "참조자료",
    "열거목록",
+   "기한",
    "수치"
   ],
   "derivedFrom": "ref:enum|우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822)|제15조|1|1",
@@ -23532,42 +23536,42 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_e0d4a7",
+    "sid": "manufacturing_refst_016848",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "히드라스틴, 히드라스티닌 및 그 염류",
+    "text": "비치오놀",
     "truth": false,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_374b77",
+    "sid": "manufacturing_refst_bd0672",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "작업복장의 규격, 세탁방법 및 착용규정",
-    "truth": true,
+    "text": "메칠옥시란",
+    "truth": false,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_913005",
+    "sid": "manufacturing_refst_282492",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "완제품 관리에 관한 사항",
+    "text": "효능ㆍ효과(기능성 화장품의 경우) 및 사용할 때의 주의사항",
     "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_d343ff",
+    "sid": "manufacturing_refst_16a7e3",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "시험시설 및 시험기구의 점검(장비의 교정 및 성능점검 방법)",
+    "text": "작업원의 수세, 소독방법 등 위생에 관한 사항",
     "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_9b1a01",
+    "sid": "manufacturing_refst_a2e739",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "황산 2-아미노-5-니트로페놀",
-    "truth": false,
+    "text": "공정별 상세 작업내용 및 제조공정흐름도",
+    "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    }
   ],
@@ -23590,9 +23594,9 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "3",
     "members": [
-     "ㄴ",
      "ㄷ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -23632,41 +23636,41 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_16a7e3",
+    "sid": "manufacturing_refst_a29b9a",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "작업원의 수세, 소독방법 등 위생에 관한 사항",
+    "text": "위탁시험 또는 위탁제조하는 경우 검체의 송부방법 및 시험결과의 판정방법",
     "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_0b85c2",
+    "sid": "manufacturing_refst_a9eb59",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "시험검체 채취방법 및 채취 시의 주의사항과 채취 시의 오염방지대책",
-    "truth": true,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_368d43",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "품질 검사가 규정된 절차에 따라 진행되는지의 확인",
+    "text": "Pyrethrum album L. 및 그 생약제제",
     "truth": false,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_a2238b",
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_d343ff",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "클로르메틴 및 그 염류",
+    "text": "시험시설 및 시험기구의 점검(장비의 교정 및 성능점검 방법)",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_ed003f",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "두발용, 두발염색용 및 눈화장용 제품류",
     "truth": false,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_168418",
+    "sid": "manufacturing_refst_cd789b",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "제조공정관리에 관한 사항",
+    "text": "원자재ㆍ반제품ㆍ벌크 제품ㆍ완제품의 기준 및 시험방법",
     "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    }
@@ -23676,8 +23680,7 @@ var COMBO_DRILLS_subject2 = [
     "id": "1",
     "members": [
      "ㄱ",
-     "ㄴ",
-     "ㄹ",
+     "ㄷ",
      "ㅁ"
     ]
    },
@@ -23686,8 +23689,8 @@ var COMBO_DRILLS_subject2 = [
     "members": [
      "ㄱ",
      "ㄴ",
-     "ㄷ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -23695,6 +23698,7 @@ var COMBO_DRILLS_subject2 = [
     "members": [
      "ㄱ",
      "ㄴ",
+     "ㄷ",
      "ㄹ"
     ]
    },
@@ -23709,7 +23713,9 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "5",
     "members": [
-     "ㄴ"
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
     ]
    }
   ],
@@ -23717,13 +23723,12 @@ var COMBO_DRILLS_subject2 = [
    "자동생성",
    "참조자료",
    "열거목록",
-   "절차",
    "수치"
   ],
   "derivedFrom": "ref:enum|우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822)|제15조|1|3",
   "explain": "ㄱ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄴ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄷ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄹ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㅁ. 출처: 우수화장품 제조 및 품질관리기준 제15조",
   "source": "참조자료 원문 (열거 목록)",
-  "answer": "4"
+  "answer": "1"
  },
  {
   "id": "manufacturing_combo-ref_ad4fbe",
@@ -23735,41 +23740,41 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_1100a3",
+    "sid": "manufacturing_refst_2333f6",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "펜타클로로페놀 및 그 알칼리 염류",
-    "truth": false,
+    "text": "작업실 등의 청소(필요한 경우 소독을 포함한다. 이하 같다) 방법 및 청소주기",
+    "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_87e7fe",
+    "sid": "manufacturing_refst_9034a0",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "N-5-클로로벤족사졸-2-일아세트아마이드",
+    "text": "티타늄디옥사이드",
     "truth": false,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_a29b9a",
+    "sid": "manufacturing_refst_282492",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "위탁시험 또는 위탁제조하는 경우 검체의 송부방법 및 시험결과의 판정방법",
+    "text": "효능ㆍ효과(기능성 화장품의 경우) 및 사용할 때의 주의사항",
     "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_374b77",
+    "sid": "manufacturing_refst_9cde2d",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "작업복장의 규격, 세탁방법 및 착용규정",
-    "truth": true,
+    "text": "클로라민T",
+    "truth": false,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_cb91e4",
+    "sid": "manufacturing_refst_374b77",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "위탁제조에 관한 사항",
+    "text": "작업복장의 규격, 세탁방법 및 착용규정",
     "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    }
@@ -23778,7 +23783,8 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "1",
     "members": [
-     "ㄷ",
+     "ㄱ",
+     "ㄴ",
      "ㄹ",
      "ㅁ"
     ]
@@ -23786,29 +23792,29 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "2",
     "members": [
-     "ㄷ"
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
     "members": [
      "ㄹ",
      "ㅁ"
     ]
    },
    {
+    "id": "4",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
     "id": "5",
     "members": [
      "ㄱ",
-     "ㄴ",
-     "ㄹ",
+     "ㄷ",
      "ㅁ"
     ]
    }
@@ -23817,12 +23823,14 @@ var COMBO_DRILLS_subject2 = [
    "자동생성",
    "참조자료",
    "열거목록",
+   "기한",
+   "구성비",
    "수치"
   ],
   "derivedFrom": "ref:enum|우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822)|제15조|1|4",
   "explain": "ㄱ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄴ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄷ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄹ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㅁ. 출처: 우수화장품 제조 및 품질관리기준 제15조",
   "source": "참조자료 원문 (열거 목록)",
-  "answer": "1"
+  "answer": "5"
  },
  {
   "id": "manufacturing_combo-ref_7c0e13",
@@ -23834,41 +23842,41 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_16a7e3",
+    "sid": "manufacturing_refst_168418",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "작업원의 수세, 소독방법 등 위생에 관한 사항",
+    "text": "제조공정관리에 관한 사항",
     "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_0841f8",
+    "sid": "manufacturing_refst_1897a5",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "안정성시험(해당하는 경우에 한함)",
+    "text": "원료명, 분량 및 제조단위당 기준량",
     "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_3c1605",
+    "sid": "manufacturing_refst_618fc6",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "N,N'-펜타메칠렌비스(트리메칠암모늄)염류 (예 : 펜타메토늄브로마이드)",
+    "text": "[(p-톨일옥시)메칠]옥시란",
     "truth": false,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_290731",
+    "sid": "manufacturing_refst_d343ff",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "표준품 및 시약의 관리",
+    "text": "시험시설 및 시험기구의 점검(장비의 교정 및 성능점검 방법)",
     "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_5dc326",
+    "sid": "manufacturing_refst_970676",
     "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "2-아미노-3-히드록시피리딘",
+    "text": "p-클로로-m-크레졸",
     "truth": false,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    }

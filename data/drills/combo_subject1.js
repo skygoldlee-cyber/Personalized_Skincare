@@ -6165,6 +6165,30 @@ var COMBO_DRILLS_subject1 = [
   "statements": [
    {
     "id": "ㄱ",
+    "sid": "law_refst_2b55f6",
+    "conceptId": "화장품법 시행규칙:제11조",
+    "text": "판매업무정지 15일",
+    "truth": false,
+    "explain": "출처: 화장품법 시행규칙 제11조"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "law_refst_1db9a4",
+    "conceptId": "화장품법 시행규칙:제11조",
+    "text": "화장품의 명칭",
+    "truth": false,
+    "explain": "출처: 화장품법 시행규칙 제11조"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "law_refst_c64247",
+    "conceptId": "화장품법 시행규칙:제11조",
+    "text": "화장품의 제조에 필요한 시설 및 기구에 대하여 정기적으로 점검하여 작업에 지장이 없도록 관리ㆍ유지할 것",
+    "truth": true,
+    "explain": "출처: 화장품법 시행규칙 제11조"
+   },
+   {
+    "id": "ㄹ",
     "sid": "law_refst_08fa81",
     "conceptId": "화장품법 시행규칙:제11조",
     "text": "우수화장품 제조관리기준 적용을 위한 시설ㆍ설비 등 개수ㆍ보수화장품법 시행규칙[제목개정 2019. 3. 14.][제12조에서 이동, 종전 제11조는 제12조로 이동 <2020. 3. 13.>]",
@@ -6172,34 +6196,10 @@ var COMBO_DRILLS_subject1 = [
     "explain": "출처: 화장품법 시행규칙 제11조"
    },
    {
-    "id": "ㄴ",
-    "sid": "law_refst_bc3ed1",
-    "conceptId": "화장품법 시행규칙:제11조",
-    "text": "내용물의 용량 또는 중량",
-    "truth": false,
-    "explain": "출처: 화장품법 시행규칙 제11조"
-   },
-   {
-    "id": "ㄷ",
+    "id": "ㅁ",
     "sid": "law_refst_682f2f",
     "conceptId": "화장품법 시행규칙:제11조",
     "text": "제조 또는 품질검사를 위탁하는 경우 제조 또는 품질검사가 적절하게 이루어지고 있는지 수탁자에 대한 관리ㆍ감독을 철저히 하고, 제조 및 품질관리에 관한 기록을 받아 유지ㆍ관리할 것",
-    "truth": true,
-    "explain": "출처: 화장품법 시행규칙 제11조"
-   },
-   {
-    "id": "ㄹ",
-    "sid": "law_refst_1df3d4",
-    "conceptId": "화장품법 시행규칙:제11조",
-    "text": "판매의 목적이 아닌 제품의 홍보ㆍ판매촉진 등을 위하여 미리 소비자가 시험ㆍ사용하도록 제조 또는 수입된 화장품",
-    "truth": false,
-    "explain": "출처: 화장품법 시행규칙 제11조"
-   },
-   {
-    "id": "ㅁ",
-    "sid": "law_refst_c64247",
-    "conceptId": "화장품법 시행규칙:제11조",
-    "text": "화장품의 제조에 필요한 시설 및 기구에 대하여 정기적으로 점검하여 작업에 지장이 없도록 관리ㆍ유지할 것",
     "truth": true,
     "explain": "출처: 화장품법 시행규칙 제11조"
    }
@@ -6208,8 +6208,8 @@ var COMBO_DRILLS_subject1 = [
    {
     "id": "1",
     "members": [
-     "ㄱ",
      "ㄷ",
+     "ㄹ",
      "ㅁ"
     ]
    },
@@ -6269,41 +6269,41 @@ var COMBO_DRILLS_subject1 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "law_refst_d95f43",
+    "sid": "law_refst_28b845",
     "conceptId": "화장품법 시행규칙:제11조",
-    "text": "해당 화장품 제조에 사용된 모든 성분(인체에 무해한 소량 함유 성분 등 총리령으로 정하는 성분은 제외한다)",
+    "text": "개수명령",
     "truth": false,
     "explain": "출처: 화장품법 시행규칙 제11조"
    },
    {
     "id": "ㄴ",
-    "sid": "law_refst_6efad8",
+    "sid": "law_refst_08fa81",
     "conceptId": "화장품법 시행규칙:제11조",
-    "text": "「공간정보의 구축 및 관리 등에 관한 법률」 제71조에 따른 토지대장 등본: 국토교통부장관",
-    "truth": false,
+    "text": "우수화장품 제조관리기준 적용을 위한 시설ㆍ설비 등 개수ㆍ보수화장품법 시행규칙[제목개정 2019. 3. 14.][제12조에서 이동, 종전 제11조는 제12조로 이동 <2020. 3. 13.>]",
+    "truth": true,
     "explain": "출처: 화장품법 시행규칙 제11조"
    },
    {
     "id": "ㄷ",
-    "sid": "law_refst_6cbb49",
+    "sid": "law_refst_682f2f",
     "conceptId": "화장품법 시행규칙:제11조",
-    "text": "작업소에는 위해가 발생할 염려가 있는 물건을 두어서는 아니 되며, 작업소에서 국민보건 및 환경에 유해한 물질이 유출되거나 방출되지 아니하도록 할 것",
+    "text": "제조 또는 품질검사를 위탁하는 경우 제조 또는 품질검사가 적절하게 이루어지고 있는지 수탁자에 대한 관리ㆍ감독을 철저히 하고, 제조 및 품질관리에 관한 기록을 받아 유지ㆍ관리할 것",
     "truth": true,
     "explain": "출처: 화장품법 시행규칙 제11조"
    },
    {
     "id": "ㄹ",
-    "sid": "law_refst_c92fa6",
+    "sid": "law_refst_c95b74",
     "conceptId": "화장품법 시행규칙:제11조",
-    "text": "우수화장품 제조관리기준 적용을 위한 자문",
-    "truth": true,
+    "text": "제2항 각 호의 직무와 관련하여 부정한 행위를 하거나 권한을 남용한 경우",
+    "truth": false,
     "explain": "출처: 화장품법 시행규칙 제11조"
    },
    {
     "id": "ㅁ",
-    "sid": "law_refst_682f2f",
+    "sid": "law_refst_6cbb49",
     "conceptId": "화장품법 시행규칙:제11조",
-    "text": "제조 또는 품질검사를 위탁하는 경우 제조 또는 품질검사가 적절하게 이루어지고 있는지 수탁자에 대한 관리ㆍ감독을 철저히 하고, 제조 및 품질관리에 관한 기록을 받아 유지ㆍ관리할 것",
+    "text": "작업소에는 위해가 발생할 염려가 있는 물건을 두어서는 아니 되며, 작업소에서 국민보건 및 환경에 유해한 물질이 유출되거나 방출되지 아니하도록 할 것",
     "truth": true,
     "explain": "출처: 화장품법 시행규칙 제11조"
    }
@@ -6318,8 +6318,8 @@ var COMBO_DRILLS_subject1 = [
    {
     "id": "2",
     "members": [
+     "ㄴ",
      "ㄷ",
-     "ㄹ",
      "ㅁ"
     ]
    },
@@ -6367,41 +6367,41 @@ var COMBO_DRILLS_subject1 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "law_refst_b6bd72",
+    "sid": "law_refst_682f2f",
     "conceptId": "화장품법 시행규칙:제11조",
-    "text": "직접구매 해외화장품 구매자의 성별, 연령대 등 인구통계학적 특성에 관한 사항",
-    "truth": false,
-    "explain": "출처: 화장품법 시행규칙 제11조"
-   },
-   {
-    "id": "ㄴ",
-    "sid": "law_refst_72b5a8",
-    "conceptId": "화장품법 시행규칙:제11조",
-    "text": "우수화장품 제조관리기준 적용에 관한 전문적 기술과 교육",
+    "text": "제조 또는 품질검사를 위탁하는 경우 제조 또는 품질검사가 적절하게 이루어지고 있는지 수탁자에 대한 관리ㆍ감독을 철저히 하고, 제조 및 품질관리에 관한 기록을 받아 유지ㆍ관리할 것",
     "truth": true,
     "explain": "출처: 화장품법 시행규칙 제11조"
    },
    {
-    "id": "ㄷ",
-    "sid": "law_refst_6cbb49",
+    "id": "ㄴ",
+    "sid": "law_refst_85aebb",
     "conceptId": "화장품법 시행규칙:제11조",
-    "text": "작업소에는 위해가 발생할 염려가 있는 물건을 두어서는 아니 되며, 작업소에서 국민보건 및 환경에 유해한 물질이 유출되거나 방출되지 아니하도록 할 것",
+    "text": "안전성 정보",
+    "truth": false,
+    "explain": "출처: 화장품법 시행규칙 제11조"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "law_refst_c64247",
+    "conceptId": "화장품법 시행규칙:제11조",
+    "text": "화장품의 제조에 필요한 시설 및 기구에 대하여 정기적으로 점검하여 작업에 지장이 없도록 관리ㆍ유지할 것",
     "truth": true,
     "explain": "출처: 화장품법 시행규칙 제11조"
    },
    {
     "id": "ㄹ",
-    "sid": "law_refst_beadf1",
+    "sid": "law_refst_d501d9",
     "conceptId": "화장품법 시행규칙:제11조",
-    "text": "위해요소 저감화를 위한 단기별 및 중장기별 추진 정책",
+    "text": "제조번호별 수입연월일 및 수입량",
     "truth": false,
     "explain": "출처: 화장품법 시행규칙 제11조"
    },
    {
     "id": "ㅁ",
-    "sid": "law_refst_08fa81",
+    "sid": "law_refst_e00db0",
     "conceptId": "화장품법 시행규칙:제11조",
-    "text": "우수화장품 제조관리기준 적용을 위한 시설ㆍ설비 등 개수ㆍ보수화장품법 시행규칙[제목개정 2019. 3. 14.][제12조에서 이동, 종전 제11조는 제12조로 이동 <2020. 3. 13.>]",
+    "text": "제조관리기준서ㆍ제품표준서ㆍ제조관리기록서 및 품질관리기록서(전자문서 형식을 포함한다)를 작성ㆍ보관할 것",
     "truth": true,
     "explain": "출처: 화장품법 시행규칙 제11조"
    }
@@ -6439,7 +6439,7 @@ var COMBO_DRILLS_subject1 = [
    {
     "id": "5",
     "members": [
-     "ㄴ",
+     "ㄱ",
      "ㄷ",
      "ㅁ"
     ]
@@ -6449,6 +6449,7 @@ var COMBO_DRILLS_subject1 = [
    "자동생성",
    "참조자료",
    "열거목록",
+   "구성비",
    "수치"
   ],
   "derivedFrom": "ref:enum|화장품법 시행규칙(총리령)(제02109호)(20260402)|제11조|0|2",
@@ -6569,10 +6570,10 @@ var COMBO_DRILLS_subject1 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "law_refst_8f4d37",
+    "sid": "law_refst_0214dd",
     "conceptId": "화장품법 시행규칙:제5조",
-    "text": "화장품제조업자의 변경(법인인 경우에는 대표자의 변경)",
-    "truth": true,
+    "text": "기능성화장품의 경우 심사받거나 보고한 효능ㆍ효과, 용법ㆍ용량",
+    "truth": false,
     "explain": "출처: 화장품법 시행규칙 제5조"
    },
    {
@@ -6585,6 +6586,14 @@ var COMBO_DRILLS_subject1 = [
    },
    {
     "id": "ㄷ",
+    "sid": "law_refst_9d1030",
+    "conceptId": "화장품법 시행규칙:제5조",
+    "text": "질병이나 부상 등의 사유로 직무 수행이 어렵게 된 경우",
+    "truth": false,
+    "explain": "출처: 화장품법 시행규칙 제5조"
+   },
+   {
+    "id": "ㄹ",
     "sid": "law_refst_986c62",
     "conceptId": "화장품법 시행규칙:제5조",
     "text": "화장품제조업자의 상호 변경(법인인 경우에는 법인의 명칭 변경)",
@@ -6592,19 +6601,11 @@ var COMBO_DRILLS_subject1 = [
     "explain": "출처: 화장품법 시행규칙 제5조"
    },
    {
-    "id": "ㄹ",
-    "sid": "law_refst_16b1b5",
-    "conceptId": "화장품법 시행규칙:제5조",
-    "text": "시정명령",
-    "truth": false,
-    "explain": "출처: 화장품법 시행규칙 제5조"
-   },
-   {
     "id": "ㅁ",
-    "sid": "law_refst_03cab7",
+    "sid": "law_refst_8f4d37",
     "conceptId": "화장품법 시행규칙:제5조",
-    "text": "등록번호 및 등록연월일",
-    "truth": false,
+    "text": "화장품제조업자의 변경(법인인 경우에는 대표자의 변경)",
+    "truth": true,
     "explain": "출처: 화장품법 시행규칙 제5조"
    }
   ],
@@ -6632,9 +6633,9 @@ var COMBO_DRILLS_subject1 = [
    {
     "id": "4",
     "members": [
-     "ㄱ",
      "ㄴ",
-     "ㄷ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -6769,17 +6770,17 @@ var COMBO_DRILLS_subject1 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "law_refst_378b33",
+    "sid": "law_refst_4a0069",
     "conceptId": "화장품법 시행규칙:제8조의2",
-    "text": "맞춤형화장품판매업자의 상호 및 소재지",
-    "truth": true,
+    "text": "화장품책임판매업",
+    "truth": false,
     "explain": "출처: 화장품법 시행규칙 제8조의2"
    },
    {
     "id": "ㄴ",
-    "sid": "law_refst_bd7e0a",
+    "sid": "law_refst_b81ebf",
     "conceptId": "화장품법 시행규칙:제8조의2",
-    "text": "우수화장품 제조관리기준 적용에 관한 전문적 기술과 교육",
+    "text": "마약류의 중독자",
     "truth": false,
     "explain": "출처: 화장품법 시행규칙 제8조의2"
    },
@@ -6793,10 +6794,10 @@ var COMBO_DRILLS_subject1 = [
    },
    {
     "id": "ㄹ",
-    "sid": "law_refst_691ed4",
+    "sid": "law_refst_378b33",
     "conceptId": "화장품법 시행규칙:제8조의2",
-    "text": "유효성 또는 기능에 관한 자료",
-    "truth": false,
+    "text": "맞춤형화장품판매업자의 상호 및 소재지",
+    "truth": true,
     "explain": "출처: 화장품법 시행규칙 제8조의2"
    },
    {
@@ -6812,19 +6813,13 @@ var COMBO_DRILLS_subject1 = [
    {
     "id": "1",
     "members": [
-     "ㄱ",
      "ㄷ",
+     "ㄹ",
      "ㅁ"
     ]
    },
    {
     "id": "2",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
     "members": [
      "ㄱ",
      "ㄴ",
@@ -6832,16 +6827,21 @@ var COMBO_DRILLS_subject1 = [
     ]
    },
    {
+    "id": "3",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
     "id": "4",
     "members": [
-     "ㄹ",
+     "ㄴ",
      "ㅁ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㄷ",
      "ㄹ",
      "ㅁ"
     ]
@@ -6868,41 +6868,41 @@ var COMBO_DRILLS_subject1 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "law_refst_8567f1",
+    "sid": "law_refst_3125a3",
     "conceptId": "화장품법 시행규칙:제8조의2",
-    "text": "맞춤형화장품조제관리사의 성명, 주민등록번호등 및 자격증 번호",
-    "truth": true,
-    "explain": "출처: 화장품법 시행규칙 제8조의2"
-   },
-   {
-    "id": "ㄴ",
-    "sid": "law_refst_85cbec",
-    "conceptId": "화장품법 시행규칙:제8조의2",
-    "text": "판매업무정지 3개월",
+    "text": "동물실험",
     "truth": false,
     "explain": "출처: 화장품법 시행규칙 제8조의2"
    },
    {
-    "id": "ㄷ",
-    "sid": "law_refst_378b33",
+    "id": "ㄴ",
+    "sid": "law_refst_1f4ba0",
     "conceptId": "화장품법 시행규칙:제8조의2",
-    "text": "맞춤형화장품판매업자의 상호 및 소재지",
+    "text": "신고 번호 및 신고 연월일",
+    "truth": true,
+    "explain": "출처: 화장품법 시행규칙 제8조의2"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "law_refst_f15be3",
+    "conceptId": "화장품법 시행규칙:제8조의2",
+    "text": "영업의 기간(제1항 단서에 따라 한시적으로 맞춤형화장품판매업을 하려는 경우만 해당한다)",
     "truth": true,
     "explain": "출처: 화장품법 시행규칙 제8조의2"
    },
    {
     "id": "ㄹ",
-    "sid": "law_refst_386e7c",
+    "sid": "law_refst_37398a",
     "conceptId": "화장품법 시행규칙:제8조의2",
-    "text": "판매 또는해당 품목판매업무정지 1개월",
+    "text": "정보주체",
     "truth": false,
     "explain": "출처: 화장품법 시행규칙 제8조의2"
    },
    {
     "id": "ㅁ",
-    "sid": "law_refst_1f4ba0",
+    "sid": "law_refst_8567f1",
     "conceptId": "화장품법 시행규칙:제8조의2",
-    "text": "신고 번호 및 신고 연월일",
+    "text": "맞춤형화장품조제관리사의 성명, 주민등록번호등 및 자격증 번호",
     "truth": true,
     "explain": "출처: 화장품법 시행규칙 제8조의2"
    }
@@ -6940,7 +6940,7 @@ var COMBO_DRILLS_subject1 = [
    {
     "id": "5",
     "members": [
-     "ㄱ",
+     "ㄴ",
      "ㄷ",
      "ㅁ"
     ]
@@ -7070,22 +7070,6 @@ var COMBO_DRILLS_subject1 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "law_refst_396d90",
-    "conceptId": "화장품법 시행규칙:제23조",
-    "text": "해당 품목제조 또는판매업무정지 1개월",
-    "truth": false,
-    "explain": "출처: 화장품법 시행규칙 제23조"
-   },
-   {
-    "id": "ㄴ",
-    "sid": "law_refst_7f1571",
-    "conceptId": "화장품법 시행규칙:제23조",
-    "text": "기능성화장품의 경우 심사받거나 보고한 효능ㆍ효과, 용법ㆍ용량",
-    "truth": false,
-    "explain": "출처: 화장품법 시행규칙 제23조"
-   },
-   {
-    "id": "ㄷ",
     "sid": "law_refst_b9b264",
     "conceptId": "화장품법 시행규칙:제23조",
     "text": "시험ㆍ조사기관의 명칭 및 대표자의 성명ㆍ주소ㆍ전화번호",
@@ -7093,7 +7077,7 @@ var COMBO_DRILLS_subject1 = [
     "explain": "출처: 화장품법 시행규칙 제23조"
    },
    {
-    "id": "ㄹ",
+    "id": "ㄴ",
     "sid": "law_refst_e3f6a8",
     "conceptId": "화장품법 시행규칙:제23조",
     "text": "조사결과: 표본설정, 질문사항, 질문방법이 그 조사의 목적이나 통계상의 방법과 일치할 것",
@@ -7101,11 +7085,27 @@ var COMBO_DRILLS_subject1 = [
     "explain": "출처: 화장품법 시행규칙 제23조"
    },
    {
-    "id": "ㅁ",
+    "id": "ㄷ",
+    "sid": "law_refst_ff0a23",
+    "conceptId": "화장품법 시행규칙:제23조",
+    "text": "해당 품목판매업무정지 2개월 (표시위반)또는 해당품목 광고업무정지 2개월(광고위반)",
+    "truth": false,
+    "explain": "출처: 화장품법 시행규칙 제23조"
+   },
+   {
+    "id": "ㄹ",
     "sid": "law_refst_a3f7c0",
     "conceptId": "화장품법 시행규칙:제23조",
     "text": "실증자료 중 영업상 비밀에 해당되어 공개를 원하지 않는 경우에는 그 내용 및 사유",
     "truth": true,
+    "explain": "출처: 화장품법 시행규칙 제23조"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "law_refst_ab7785",
+    "conceptId": "화장품법 시행규칙:제23조",
+    "text": "책임판매관리자 - 업무",
+    "truth": false,
     "explain": "출처: 화장품법 시행규칙 제23조"
    }
   ],
@@ -7143,9 +7143,9 @@ var COMBO_DRILLS_subject1 = [
    {
     "id": "5",
     "members": [
-     "ㄷ",
-     "ㄹ",
-     "ㅁ"
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
     ]
    }
   ],
@@ -7153,7 +7153,6 @@ var COMBO_DRILLS_subject1 = [
    "자동생성",
    "참조자료",
    "열거목록",
-   "절차",
    "수치"
   ],
   "derivedFrom": "ref:enum|화장품법 시행규칙(총리령)(제02109호)(20260402)|제23조|1|0",
@@ -7171,22 +7170,14 @@ var COMBO_DRILLS_subject1 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "law_refst_0aef3b",
+    "sid": "law_refst_a4c714",
     "conceptId": "화장품법 시행규칙:제14조",
-    "text": "별표 1의 품질관리기준에 따라 품질관리 업무에 종사하는 종업원",
-    "truth": true,
+    "text": "안전성에 관한 자료",
+    "truth": false,
     "explain": "출처: 화장품법 시행규칙 제14조"
    },
    {
     "id": "ㄴ",
-    "sid": "law_refst_272238",
-    "conceptId": "화장품법 시행규칙:제14조",
-    "text": "책임판매관리자",
-    "truth": true,
-    "explain": "출처: 화장품법 시행규칙 제14조"
-   },
-   {
-    "id": "ㄷ",
     "sid": "law_refst_c631fe",
     "conceptId": "화장품법 시행규칙:제14조",
     "text": "맞춤형화장품조제관리사",
@@ -7194,19 +7185,27 @@ var COMBO_DRILLS_subject1 = [
     "explain": "출처: 화장품법 시행규칙 제14조"
    },
    {
-    "id": "ㄹ",
-    "sid": "law_refst_d1674d",
+    "id": "ㄷ",
+    "sid": "law_refst_7e721d",
     "conceptId": "화장품법 시행규칙:제14조",
-    "text": "직접구매 해외화장품의 위해정보에 관한 사항",
+    "text": "안전성 정보",
     "truth": false,
     "explain": "출처: 화장품법 시행규칙 제14조"
    },
    {
-    "id": "ㅁ",
-    "sid": "law_refst_4f2dfd",
+    "id": "ㄹ",
+    "sid": "law_refst_272238",
     "conceptId": "화장품법 시행규칙:제14조",
-    "text": "기준[산성도(pH)에 관한 기준은 제외한다] 및 시험방법",
-    "truth": false,
+    "text": "책임판매관리자",
+    "truth": true,
+    "explain": "출처: 화장품법 시행규칙 제14조"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "law_refst_0aef3b",
+    "conceptId": "화장품법 시행규칙:제14조",
+    "text": "별표 1의 품질관리기준에 따라 품질관리 업무에 종사하는 종업원",
+    "truth": true,
     "explain": "출처: 화장품법 시행규칙 제14조"
    }
   ],
@@ -7220,9 +7219,9 @@ var COMBO_DRILLS_subject1 = [
    {
     "id": "2",
     "members": [
-     "ㄱ",
      "ㄴ",
-     "ㄷ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -7270,6 +7269,14 @@ var COMBO_DRILLS_subject1 = [
   "statements": [
    {
     "id": "ㄱ",
+    "sid": "law_refst_e7942f",
+    "conceptId": "화장품법 시행규칙:제19조",
+    "text": "제4과목: 맞춤형화장품의 특성ㆍ내용 및 관리 등에 관한 사항",
+    "truth": false,
+    "explain": "출처: 화장품법 시행규칙 제19조"
+   },
+   {
+    "id": "ㄴ",
     "sid": "law_refst_11d586",
     "conceptId": "화장품법 시행규칙:제19조",
     "text": "성분명을 제품 명칭의 일부로 사용한 경우 그 성분명과 함량(방향용 제품은 제외한다)",
@@ -7277,27 +7284,19 @@ var COMBO_DRILLS_subject1 = [
     "explain": "출처: 화장품법 시행규칙 제19조"
    },
    {
-    "id": "ㄴ",
-    "sid": "law_refst_f85188",
-    "conceptId": "화장품법 시행규칙:제19조",
-    "text": "위해요소의 인체 내 독성을 확인하는 위험성 확인과정",
-    "truth": false,
-    "explain": "출처: 화장품법 시행규칙 제19조"
-   },
-   {
     "id": "ㄷ",
-    "sid": "law_refst_1a9f06",
-    "conceptId": "화장품법 시행규칙:제19조",
-    "text": "정당한 사유 없이 제18조의3제2항 각 호에 따른 사업을 1년 이상 계속하여 실시하지 아니한 경우",
-    "truth": false,
-    "explain": "출처: 화장품법 시행규칙 제19조"
-   },
-   {
-    "id": "ㄹ",
     "sid": "law_refst_1aae17",
     "conceptId": "화장품법 시행규칙:제19조",
     "text": "영유아 또는 어린이가 사용할 수 있는 제품임을 특정하여 표시ㆍ광고하려는 경우 법 제8조제2항에 따라 사용기준이 지정ㆍ고시된 원료 중 보존제의 함량",
     "truth": true,
+    "explain": "출처: 화장품법 시행규칙 제19조"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "law_refst_dbaffb",
+    "conceptId": "화장품법 시행규칙:제19조",
+    "text": "「마약류 관리에 관한 법률」 제2조제1호에 따른 마약류의 중독자",
+    "truth": false,
     "explain": "출처: 화장품법 시행규칙 제19조"
    },
    {
@@ -7334,8 +7333,8 @@ var COMBO_DRILLS_subject1 = [
    {
     "id": "4",
     "members": [
-     "ㄱ",
-     "ㄹ",
+     "ㄴ",
+     "ㄷ",
      "ㅁ"
     ]
    },
@@ -7368,41 +7367,41 @@ var COMBO_DRILLS_subject1 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "law_refst_8dfdbe",
+    "sid": "law_refst_d17837",
     "conceptId": "화장품법 시행규칙:제19조",
-    "text": "인체 세포ㆍ조직 배양액이 들어있는 경우 그 함량",
-    "truth": true,
+    "text": "제조 또는판 매 업 무정지 1개월",
+    "truth": false,
     "explain": "출처: 화장품법 시행규칙 제19조"
    },
    {
     "id": "ㄴ",
-    "sid": "law_refst_3f3cf9",
+    "sid": "law_refst_55f8f2",
     "conceptId": "화장품법 시행규칙:제19조",
-    "text": "기능성화장품의 경우 심사받거나 보고한 효능ㆍ효과, 용법ㆍ용량",
-    "truth": true,
+    "text": "해당 품목제조 또는판 매 업 무정지 15일",
+    "truth": false,
     "explain": "출처: 화장품법 시행규칙 제19조"
    },
    {
     "id": "ㄷ",
-    "sid": "law_refst_145c61",
+    "sid": "law_refst_11d586",
     "conceptId": "화장품법 시행규칙:제19조",
-    "text": "보고번호 및 보고연월일",
-    "truth": false,
+    "text": "성분명을 제품 명칭의 일부로 사용한 경우 그 성분명과 함량(방향용 제품은 제외한다)",
+    "truth": true,
     "explain": "출처: 화장품법 시행규칙 제19조"
    },
    {
     "id": "ㄹ",
-    "sid": "law_refst_b57915",
+    "sid": "law_refst_1aae17",
     "conceptId": "화장품법 시행규칙:제19조",
-    "text": "위해요소 저감화 추진을 위한 조직 및 재원 등에 관한 사항",
-    "truth": false,
+    "text": "영유아 또는 어린이가 사용할 수 있는 제품임을 특정하여 표시ㆍ광고하려는 경우 법 제8조제2항에 따라 사용기준이 지정ㆍ고시된 원료 중 보존제의 함량",
+    "truth": true,
     "explain": "출처: 화장품법 시행규칙 제19조"
    },
    {
     "id": "ㅁ",
-    "sid": "law_refst_1aae17",
+    "sid": "law_refst_f8b738",
     "conceptId": "화장품법 시행규칙:제19조",
-    "text": "영유아 또는 어린이가 사용할 수 있는 제품임을 특정하여 표시ㆍ광고하려는 경우 법 제8조제2항에 따라 사용기준이 지정ㆍ고시된 원료 중 보존제의 함량",
+    "text": "소비자가 법 제10조제1항제3호에 따른 모든 성분을 즉시 확인할 수 있도록 포장에 전화번호나 홈페이지 주소를 적을 것",
     "truth": true,
     "explain": "출처: 화장품법 시행규칙 제19조"
    }
@@ -7411,37 +7410,35 @@ var COMBO_DRILLS_subject1 = [
    {
     "id": "1",
     "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
      "ㄷ",
      "ㄹ",
      "ㅁ"
     ]
    },
    {
-    "id": "5",
+    "id": "2",
     "members": [
      "ㄱ",
      "ㄴ",
-     "ㅁ"
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ"
     ]
    }
   ],
@@ -7449,14 +7446,13 @@ var COMBO_DRILLS_subject1 = [
    "자동생성",
    "참조자료",
    "열거목록",
-   "절차",
    "한도",
    "수치"
   ],
   "derivedFrom": "ref:enum|화장품법 시행규칙(총리령)(제02109호)(20260402)|제19조|12|1",
   "explain": "ㄱ. 출처: 화장품법 시행규칙 제19조\nㄴ. 출처: 화장품법 시행규칙 제19조\nㄷ. 출처: 화장품법 시행규칙 제19조\nㄹ. 출처: 화장품법 시행규칙 제19조\nㅁ. 출처: 화장품법 시행규칙 제19조",
   "source": "참조자료 원문 (열거 목록)",
-  "answer": "5"
+  "answer": "1"
  },
  {
   "id": "law_combo-ref_3fc105",
@@ -7468,17 +7464,17 @@ var COMBO_DRILLS_subject1 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "law_refst_827e1f",
+    "sid": "law_refst_a27468",
     "conceptId": "화장품법 시행규칙:제4조",
-    "text": "책임판매관리자의 성명 및 주민등록번호등",
-    "truth": true,
+    "text": "관리책임자",
+    "truth": false,
     "explain": "출처: 화장품법 시행규칙 제4조"
    },
    {
     "id": "ㄴ",
-    "sid": "law_refst_6f4229",
+    "sid": "law_refst_827e1f",
     "conceptId": "화장품법 시행규칙:제4조",
-    "text": "화장품책임판매업자(화장품책임판매업을 등록한 자를 말한다. 이하 같다)의 성명 및 주민등록번호등(법인인 경우에는 대표자의 성명 및 주민등록번호등을 말한다)",
+    "text": "책임판매관리자의 성명 및 주민등록번호등",
     "truth": true,
     "explain": "출처: 화장품법 시행규칙 제4조"
    },
@@ -7492,17 +7488,17 @@ var COMBO_DRILLS_subject1 = [
    },
    {
     "id": "ㄹ",
-    "sid": "law_refst_f31f1a",
+    "sid": "law_refst_6f4229",
     "conceptId": "화장품법 시행규칙:제4조",
-    "text": "맞춤형화장품판매업자를 변경하는 경우",
-    "truth": false,
+    "text": "화장품책임판매업자(화장품책임판매업을 등록한 자를 말한다. 이하 같다)의 성명 및 주민등록번호등(법인인 경우에는 대표자의 성명 및 주민등록번호등을 말한다)",
+    "truth": true,
     "explain": "출처: 화장품법 시행규칙 제4조"
    },
    {
     "id": "ㅁ",
-    "sid": "law_refst_18c299",
+    "sid": "law_refst_8f9862",
     "conceptId": "화장품법 시행규칙:제4조",
-    "text": "「건축법」 제38조에 따른 건축물대장 등본: 국토교통부장관",
+    "text": "화장품의 안전성 평가 자료",
     "truth": false,
     "explain": "출처: 화장품법 시행규칙 제4조"
    }
@@ -7513,27 +7509,28 @@ var COMBO_DRILLS_subject1 = [
     "members": [
      "ㄱ",
      "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄷ",
-     "ㄹ"
+     "ㄴ",
+     "ㄷ"
     ]
    },
    {
     "id": "3",
     "members": [
      "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
     "id": "4",
     "members": [
-     "ㄴ",
      "ㄷ",
      "ㄹ"
     ]
@@ -7541,9 +7538,6 @@ var COMBO_DRILLS_subject1 = [
    {
     "id": "5",
     "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
      "ㄹ"
     ]
    }
@@ -7558,7 +7552,7 @@ var COMBO_DRILLS_subject1 = [
   "derivedFrom": "ref:enum|화장품법 시행규칙(총리령)(제02109호)(20260402)|제4조|0|0",
   "explain": "ㄱ. 출처: 화장품법 시행규칙 제4조\nㄴ. 출처: 화장품법 시행규칙 제4조\nㄷ. 출처: 화장품법 시행규칙 제4조\nㄹ. 출처: 화장품법 시행규칙 제4조\nㅁ. 출처: 화장품법 시행규칙 제4조",
   "source": "참조자료 원문 (열거 목록)",
-  "answer": "1"
+  "answer": "3"
  },
  {
   "id": "law_combo-ref_caddb1",
@@ -7570,30 +7564,22 @@ var COMBO_DRILLS_subject1 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "law_refst_8834bd",
+    "sid": "law_refst_201b10",
     "conceptId": "화장품법 시행규칙:제9조",
-    "text": "병원미생물에 오염된 화장품",
+    "text": "제품 및 제조방법에 대한 설명 자료",
     "truth": false,
     "explain": "출처: 화장품법 시행규칙 제9조"
    },
    {
     "id": "ㄴ",
-    "sid": "law_refst_9a28c3",
+    "sid": "law_refst_675757",
     "conceptId": "화장품법 시행규칙:제9조",
-    "text": "「마약류 관리에 관한 법률」 제2조제1호에 따른 마약류의 중독자",
-    "truth": false,
-    "explain": "출처: 화장품법 시행규칙 제9조"
-   },
-   {
-    "id": "ㄷ",
-    "sid": "law_refst_e2cb22",
-    "conceptId": "화장품법 시행규칙:제9조",
-    "text": "안전성에 관한 자료",
+    "text": "심사번호 및 심사연월일 또는 변경심사 연월일화장품법 시행규칙",
     "truth": true,
     "explain": "출처: 화장품법 시행규칙 제9조"
    },
    {
-    "id": "ㄹ",
+    "id": "ㄷ",
     "sid": "law_refst_58d766",
     "conceptId": "화장품법 시행규칙:제9조",
     "text": "유효성 또는 기능에 관한 자료",
@@ -7601,10 +7587,18 @@ var COMBO_DRILLS_subject1 = [
     "explain": "출처: 화장품법 시행규칙 제9조"
    },
    {
-    "id": "ㅁ",
-    "sid": "law_refst_675757",
+    "id": "ㄹ",
+    "sid": "law_refst_6ba838",
     "conceptId": "화장품법 시행규칙:제9조",
-    "text": "심사번호 및 심사연월일 또는 변경심사 연월일화장품법 시행규칙",
+    "text": "제조과정 중에 제거되어 최종 제품에는 남아 있지 않은 성분",
+    "truth": false,
+    "explain": "출처: 화장품법 시행규칙 제9조"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "law_refst_e2cb22",
+    "conceptId": "화장품법 시행규칙:제9조",
+    "text": "안전성에 관한 자료",
     "truth": true,
     "explain": "출처: 화장품법 시행규칙 제9조"
    }
@@ -7621,8 +7615,8 @@ var COMBO_DRILLS_subject1 = [
    {
     "id": "2",
     "members": [
+     "ㄴ",
      "ㄷ",
-     "ㄹ",
      "ㅁ"
     ]
    },
@@ -7650,8 +7644,7 @@ var COMBO_DRILLS_subject1 = [
    "자동생성",
    "참조자료",
    "열거목록",
-   "절차",
-   "수치"
+   "절차"
   ],
   "derivedFrom": "ref:enum|화장품법 시행규칙(총리령)(제02109호)(20260402)|제9조|0|0",
   "explain": "ㄱ. 출처: 화장품법 시행규칙 제9조\nㄴ. 출처: 화장품법 시행규칙 제9조\nㄷ. 출처: 화장품법 시행규칙 제9조\nㄹ. 출처: 화장품법 시행규칙 제9조\nㅁ. 출처: 화장품법 시행규칙 제9조",
@@ -7668,30 +7661,6 @@ var COMBO_DRILLS_subject1 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "law_refst_2b7d2e",
-    "conceptId": "화장품법 시행규칙:제9조",
-    "text": "제조업무정지 3개월",
-    "truth": false,
-    "explain": "출처: 화장품법 시행규칙 제9조"
-   },
-   {
-    "id": "ㄴ",
-    "sid": "law_refst_114386",
-    "conceptId": "화장품법 시행규칙:제9조",
-    "text": "기원(起源) 및 개발 경위에 관한 자료",
-    "truth": true,
-    "explain": "출처: 화장품법 시행규칙 제9조"
-   },
-   {
-    "id": "ㄷ",
-    "sid": "law_refst_f22616",
-    "conceptId": "화장품법 시행규칙:제9조",
-    "text": "기능성화장품 심사를 받은 화장품제조업자, 화장품책임판매업자 또는 연구기관등의 상호(법인인 경우에는 법인 의 명칭) 및 소재지",
-    "truth": true,
-    "explain": "출처: 화장품법 시행규칙 제9조"
-   },
-   {
-    "id": "ㄹ",
     "sid": "law_refst_515761",
     "conceptId": "화장품법 시행규칙:제9조",
     "text": "기능성화장품의 효능ㆍ효과는 법 제2조제2호 각 목에 적합할 것",
@@ -7699,10 +7668,34 @@ var COMBO_DRILLS_subject1 = [
     "explain": "출처: 화장품법 시행규칙 제9조"
    },
    {
-    "id": "ㅁ",
-    "sid": "law_refst_bacfaf",
+    "id": "ㄴ",
+    "sid": "law_refst_675757",
     "conceptId": "화장품법 시행규칙:제9조",
-    "text": "판매처, 판매연월일 및 판매량",
+    "text": "심사번호 및 심사연월일 또는 변경심사 연월일화장품법 시행규칙",
+    "truth": true,
+    "explain": "출처: 화장품법 시행규칙 제9조"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "law_refst_06812d",
+    "conceptId": "화장품법 시행규칙:제9조",
+    "text": "기능성화장품의 원료와 그 분량은 효능ㆍ효과 등에 관한 자료에 따라 합리적이고 타당하여야 하며, 각 성분의 배합의의(配合意義)가 인정되어야 할 것",
+    "truth": true,
+    "explain": "출처: 화장품법 시행규칙 제9조"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "law_refst_eca46f",
+    "conceptId": "화장품법 시행규칙:제9조",
+    "text": "전부 또는 일부가 변패(變敗)된 화장품",
+    "truth": false,
+    "explain": "출처: 화장품법 시행규칙 제9조"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "law_refst_24a075",
+    "conceptId": "화장품법 시행규칙:제9조",
+    "text": "맞춤형화장품판매업자가 제3조의2제2항에 따른 시설기준을 갖추지 아니하게 된 경우",
     "truth": false,
     "explain": "출처: 화장품법 시행규칙 제9조"
    }
@@ -7718,9 +7711,9 @@ var COMBO_DRILLS_subject1 = [
    {
     "id": "2",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㄷ",
-     "ㄹ"
+     "ㄷ"
     ]
    },
    {
@@ -7752,6 +7745,7 @@ var COMBO_DRILLS_subject1 = [
    "참조자료",
    "열거목록",
    "절차",
+   "한도",
    "수치"
   ],
   "derivedFrom": "ref:enum|화장품법 시행규칙(총리령)(제02109호)(20260402)|제9조|0|1",
@@ -7769,9 +7763,9 @@ var COMBO_DRILLS_subject1 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "law_refst_6d3096",
+    "sid": "law_refst_1761fe",
     "conceptId": "화장품법 시행규칙:제9조",
-    "text": "사용기한 또는 개봉 후 사용기간",
+    "text": "판매 또는해당 품목판매업무정지 15일",
     "truth": false,
     "explain": "출처: 화장품법 시행규칙 제9조"
    },
@@ -7785,25 +7779,25 @@ var COMBO_DRILLS_subject1 = [
    },
    {
     "id": "ㄷ",
-    "sid": "law_refst_114386",
+    "sid": "law_refst_c84042",
     "conceptId": "화장품법 시행규칙:제9조",
-    "text": "기원(起源) 및 개발 경위에 관한 자료",
-    "truth": true,
-    "explain": "출처: 화장품법 시행규칙 제9조"
-   },
-   {
-    "id": "ㄹ",
-    "sid": "law_refst_79dfba",
-    "conceptId": "화장품법 시행규칙:제9조",
-    "text": "판매의 목적이 아닌 제품의 홍보ㆍ판매촉진 등을 위하여 미리 소비자가 시험ㆍ사용하도록 제조 또는 수입된 화장품",
+    "text": "안전성 및 유효성에 관한 자료(유효성에 관한 자료는 해당하는 경우에만 제출한다)",
     "truth": false,
     "explain": "출처: 화장품법 시행규칙 제9조"
    },
    {
-    "id": "ㅁ",
-    "sid": "law_refst_515761",
+    "id": "ㄹ",
+    "sid": "law_refst_4aaff9",
     "conceptId": "화장품법 시행규칙:제9조",
-    "text": "기능성화장품의 효능ㆍ효과는 법 제2조제2호 각 목에 적합할 것",
+    "text": "기준 및 시험방법에 관한 자료[검체(檢體)를 포함한다]",
+    "truth": true,
+    "explain": "출처: 화장품법 시행규칙 제9조"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "law_refst_114386",
+    "conceptId": "화장품법 시행규칙:제9조",
+    "text": "기원(起源) 및 개발 경위에 관한 자료",
     "truth": true,
     "explain": "출처: 화장품법 시행규칙 제9조"
    }
@@ -7813,7 +7807,7 @@ var COMBO_DRILLS_subject1 = [
     "id": "1",
     "members": [
      "ㄴ",
-     "ㄷ",
+     "ㄹ",
      "ㅁ"
     ]
    },
@@ -7849,9 +7843,9 @@ var COMBO_DRILLS_subject1 = [
    "자동생성",
    "참조자료",
    "열거목록",
-   "기한",
+   "절차",
    "한도",
-   "수치"
+   "구성비"
   ],
   "derivedFrom": "ref:enum|화장품법 시행규칙(총리령)(제02109호)(20260402)|제9조|0|2",
   "explain": "ㄱ. 출처: 화장품법 시행규칙 제9조\nㄴ. 출처: 화장품법 시행규칙 제9조\nㄷ. 출처: 화장품법 시행규칙 제9조\nㄹ. 출처: 화장품법 시행규칙 제9조\nㅁ. 출처: 화장품법 시행규칙 제9조",
@@ -7868,42 +7862,42 @@ var COMBO_DRILLS_subject1 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "law_refst_675757",
+    "sid": "law_refst_2fe8b3",
     "conceptId": "화장품법 시행규칙:제9조",
-    "text": "심사번호 및 심사연월일 또는 변경심사 연월일화장품법 시행규칙",
+    "text": "먼저 발급받은 기능성화장품심사결과통지서(전자문서로 발급받은 경우는 제외한다)",
     "truth": true,
     "explain": "출처: 화장품법 시행규칙 제9조"
    },
    {
     "id": "ㄴ",
-    "sid": "law_refst_57f5dd",
+    "sid": "law_refst_f260f3",
     "conceptId": "화장품법 시행규칙:제9조",
-    "text": "별지 제10호의5서식의 폐기확인서 사본(폐기한 경우에만 해당한다)",
+    "text": "화장품제조업자, 화장품책임판매업자 또는 연구기관등의 상호(법인인 경우에는 법인의 명칭) 및 소재지",
     "truth": false,
     "explain": "출처: 화장품법 시행규칙 제9조"
    },
    {
     "id": "ㄷ",
-    "sid": "law_refst_7b5fae",
+    "sid": "law_refst_58d766",
     "conceptId": "화장품법 시행규칙:제9조",
-    "text": "기능성화장품의 용법ㆍ용량은 오용될 여지가 없는 명확한 표현으로 적을 것",
+    "text": "유효성 또는 기능에 관한 자료",
     "truth": true,
     "explain": "출처: 화장품법 시행규칙 제9조"
    },
    {
     "id": "ㄹ",
-    "sid": "law_refst_515761",
+    "sid": "law_refst_f0cb42",
     "conceptId": "화장품법 시행규칙:제9조",
-    "text": "기능성화장품의 효능ㆍ효과는 법 제2조제2호 각 목에 적합할 것",
-    "truth": true,
+    "text": "모발의 색상 변화ㆍ제거 또는 영양공급에 도움을 주는 제품",
+    "truth": false,
     "explain": "출처: 화장품법 시행규칙 제9조"
    },
    {
     "id": "ㅁ",
-    "sid": "law_refst_36e2d9",
+    "sid": "law_refst_675757",
     "conceptId": "화장품법 시행규칙:제9조",
-    "text": "별표 1의 품질관리기준을 준수할 것",
-    "truth": false,
+    "text": "심사번호 및 심사연월일 또는 변경심사 연월일화장품법 시행규칙",
+    "truth": true,
     "explain": "출처: 화장품법 시행규칙 제9조"
    }
   ],
@@ -7913,7 +7907,7 @@ var COMBO_DRILLS_subject1 = [
     "members": [
      "ㄱ",
      "ㄷ",
-     "ㄹ"
+     "ㅁ"
     ]
    },
    {
@@ -7950,9 +7944,7 @@ var COMBO_DRILLS_subject1 = [
    "자동생성",
    "참조자료",
    "열거목록",
-   "기한",
-   "절차",
-   "수치"
+   "절차"
   ],
   "derivedFrom": "ref:enum|화장품법 시행규칙(총리령)(제02109호)(20260402)|제9조|0|3",
   "explain": "ㄱ. 출처: 화장품법 시행규칙 제9조\nㄴ. 출처: 화장품법 시행규칙 제9조\nㄷ. 출처: 화장품법 시행규칙 제9조\nㄹ. 출처: 화장품법 시행규칙 제9조\nㅁ. 출처: 화장품법 시행규칙 제9조",
@@ -7969,25 +7961,25 @@ var COMBO_DRILLS_subject1 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "law_refst_db7656",
+    "sid": "law_refst_1b1db3",
     "conceptId": "화장품법 시행규칙:제14조의3",
-    "text": "전부 또는 일부가 변패(變敗)된 화장품",
+    "text": "맞춤형화장품판매업자의 상호 및 소재지",
     "truth": false,
     "explain": "출처: 화장품법 시행규칙 제14조의3"
    },
    {
     "id": "ㄴ",
-    "sid": "law_refst_830e72",
+    "sid": "law_refst_46095f",
     "conceptId": "화장품법 시행규칙:제14조의3",
-    "text": "별지 제10호의3서식의 회수확인서 사본",
-    "truth": true,
+    "text": "별표 2의 책임판매 후 안전관리기준에 따른 안전확보 업무",
+    "truth": false,
     "explain": "출처: 화장품법 시행규칙 제14조의3"
    },
    {
     "id": "ㄷ",
-    "sid": "law_refst_e7bdab",
+    "sid": "law_refst_830e72",
     "conceptId": "화장품법 시행규칙:제14조의3",
-    "text": "별지 제10호의2서식의 회수계획서 사본",
+    "text": "별지 제10호의3서식의 회수확인서 사본",
     "truth": true,
     "explain": "출처: 화장품법 시행규칙 제14조의3"
    },
@@ -8001,10 +7993,10 @@ var COMBO_DRILLS_subject1 = [
    },
    {
     "id": "ㅁ",
-    "sid": "law_refst_f113ed",
+    "sid": "law_refst_e7bdab",
     "conceptId": "화장품법 시행규칙:제14조의3",
-    "text": "제품명화장품법 시행규칙",
-    "truth": false,
+    "text": "별지 제10호의2서식의 회수계획서 사본",
+    "truth": true,
     "explain": "출처: 화장품법 시행규칙 제14조의3"
    }
   ],
@@ -8037,9 +8029,9 @@ var COMBO_DRILLS_subject1 = [
    {
     "id": "4",
     "members": [
-     "ㄴ",
      "ㄷ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -8071,42 +8063,42 @@ var COMBO_DRILLS_subject1 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "law_refst_db40fc",
+    "sid": "law_refst_830e72",
     "conceptId": "화장품법 시행규칙:제14조의3",
-    "text": "화장품책임판매업자의 상호 변경(법인인 경우에는 법인의 명칭 변경)",
-    "truth": false,
+    "text": "별지 제10호의3서식의 회수확인서 사본",
+    "truth": true,
     "explain": "출처: 화장품법 시행규칙 제14조의3"
    },
    {
     "id": "ㄴ",
-    "sid": "law_refst_e7bdab",
+    "sid": "law_refst_2a2f07",
     "conceptId": "화장품법 시행규칙:제14조의3",
-    "text": "별지 제10호의2서식의 회수계획서 사본",
+    "text": "회수계획서에 따라 회수대상화장품의 회수를 적절하게 이행하였다고 판단되는 경우에는 회수가 종료되었음을 확인하고 회수의무자에게 이를 서면으로 통보할 것",
     "truth": true,
     "explain": "출처: 화장품법 시행규칙 제14조의3"
    },
    {
     "id": "ㄷ",
-    "sid": "law_refst_f90346",
+    "sid": "law_refst_41736b",
     "conceptId": "화장품법 시행규칙:제14조의3",
-    "text": "별지 제10호의5서식의 폐기확인서 사본(폐기한 경우에만 해당한다)",
-    "truth": true,
+    "text": "화장품제조업자의 변경(법인인 경우에는 대표자의 변경)",
+    "truth": false,
     "explain": "출처: 화장품법 시행규칙 제14조의3"
    },
    {
     "id": "ㄹ",
-    "sid": "law_refst_87b76d",
+    "sid": "law_refst_f915f1",
     "conceptId": "화장품법 시행규칙:제14조의3",
-    "text": "위해성 등급이 나등급 또는 다등급인 화장품: 회수를 시작한 날부터 30일 이내화장품법 시행규칙",
-    "truth": true,
+    "text": "안전성 및 유효성에 관한 자료(유효성에 관한 자료는 해당하는 경우에만 제출한다)",
+    "truth": false,
     "explain": "출처: 화장품법 시행규칙 제14조의3"
    },
    {
     "id": "ㅁ",
-    "sid": "law_refst_3e0a9f",
+    "sid": "law_refst_aa63d9",
     "conceptId": "화장품법 시행규칙:제14조의3",
-    "text": "맞춤형화장품판매업자가 제3조의2제2항 본문에 따른 시설기준을 갖추지 아니하게 된 경우",
-    "truth": false,
+    "text": "위해성 등급이 가등급인 화장품: 회수를 시작한 날부터 15일 이내",
+    "truth": true,
     "explain": "출처: 화장품법 시행규칙 제14조의3"
    }
   ],
@@ -8114,9 +8106,9 @@ var COMBO_DRILLS_subject1 = [
    {
     "id": "1",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㄷ",
-     "ㄹ"
+     "ㅁ"
     ]
    },
    {
@@ -8155,6 +8147,7 @@ var COMBO_DRILLS_subject1 = [
    "참조자료",
    "열거목록",
    "기한",
+   "절차",
    "수치"
   ],
   "derivedFrom": "ref:enum|화장품법 시행규칙(총리령)(제02109호)(20260402)|제14조의3|3|1",
@@ -8172,30 +8165,6 @@ var COMBO_DRILLS_subject1 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "law_refst_15b9e9",
-    "conceptId": "화장품법:제10조",
-    "text": "별표 1의 품질관리기준에 따른 화장품책임판매업자의 지도ㆍ감독 및 요청에 따를 것",
-    "truth": false,
-    "explain": "출처: 화장품법 제10조"
-   },
-   {
-    "id": "ㄴ",
-    "sid": "law_refst_f9bd06",
-    "conceptId": "화장품법:제10조",
-    "text": "거짓이나 그 밖의 부정한 방법으로 맞춤형화장품조제관리사의 자격을 취득한 경우",
-    "truth": false,
-    "explain": "출처: 화장품법 제10조"
-   },
-   {
-    "id": "ㄷ",
-    "sid": "law_refst_f62ef9",
-    "conceptId": "화장품법:제10조",
-    "text": "해당 화장품 제조에 사용된 모든 성분(인체에 무해한 소량 함유 성분 등 총리령으로 정하는 성분은 제외한다)",
-    "truth": true,
-    "explain": "출처: 화장품법 제10조"
-   },
-   {
-    "id": "ㄹ",
     "sid": "law_refst_d4f72b",
     "conceptId": "화장품법:제10조",
     "text": "영업자의 상호 및 주소",
@@ -8203,10 +8172,34 @@ var COMBO_DRILLS_subject1 = [
     "explain": "출처: 화장품법 제10조"
    },
    {
-    "id": "ㅁ",
+    "id": "ㄴ",
+    "sid": "law_refst_97d480",
+    "conceptId": "화장품법:제10조",
+    "text": "별지 제10호의2서식의 회수계획서 사본",
+    "truth": false,
+    "explain": "출처: 화장품법 제10조"
+   },
+   {
+    "id": "ㄷ",
     "sid": "law_refst_040c94",
     "conceptId": "화장품법:제10조",
     "text": "내용물의 용량 또는 중량",
+    "truth": true,
+    "explain": "출처: 화장품법 제10조"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "law_refst_6a168a",
+    "conceptId": "화장품법:제10조",
+    "text": "품질관리",
+    "truth": false,
+    "explain": "출처: 화장품법 제10조"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "law_refst_f62ef9",
+    "conceptId": "화장품법:제10조",
+    "text": "해당 화장품 제조에 사용된 모든 성분(인체에 무해한 소량 함유 성분 등 총리령으로 정하는 성분은 제외한다)",
     "truth": true,
     "explain": "출처: 화장품법 제10조"
    }
@@ -8215,8 +8208,8 @@ var COMBO_DRILLS_subject1 = [
    {
     "id": "1",
     "members": [
+     "ㄱ",
      "ㄷ",
-     "ㄹ",
      "ㅁ"
     ]
    },
@@ -8273,30 +8266,22 @@ var COMBO_DRILLS_subject1 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "law_refst_f62ef9",
+    "sid": "law_refst_3356f5",
     "conceptId": "화장품법:제10조",
-    "text": "해당 화장품 제조에 사용된 모든 성분(인체에 무해한 소량 함유 성분 등 총리령으로 정하는 성분은 제외한다)",
-    "truth": true,
+    "text": "위해요소의 인체 내 독성을 확인하는 위험성 확인과정",
+    "truth": false,
     "explain": "출처: 화장품법 제10조"
    },
    {
     "id": "ㄴ",
-    "sid": "law_refst_3d56b3",
+    "sid": "law_refst_dcee12",
     "conceptId": "화장품법:제10조",
-    "text": "화장품제조업",
-    "truth": false,
+    "text": "영업자의 상호",
+    "truth": true,
     "explain": "출처: 화장품법 제10조"
    },
    {
     "id": "ㄷ",
-    "sid": "law_refst_87a7cf",
-    "conceptId": "화장품법:제10조",
-    "text": "국민보건에 위해를 끼쳤거나 끼칠 우려가 있는 화장품을 제조ㆍ수입한 경우",
-    "truth": false,
-    "explain": "출처: 화장품법 제10조"
-   },
-   {
-    "id": "ㄹ",
     "sid": "law_refst_f4c37d",
     "conceptId": "화장품법:제10조",
     "text": "기능성화장품의 경우 “기능성화장품”이라는 글자 또는 기능성화장품을 나타내는 도안으로서 식품의약품안전처장이 정하는 도안",
@@ -8304,11 +8289,19 @@ var COMBO_DRILLS_subject1 = [
     "explain": "출처: 화장품법 제10조"
    },
    {
-    "id": "ㅁ",
-    "sid": "law_refst_dcee12",
+    "id": "ㄹ",
+    "sid": "law_refst_d351eb",
     "conceptId": "화장품법:제10조",
-    "text": "영업자의 상호",
+    "text": "화장품의 명칭",
     "truth": true,
+    "explain": "출처: 화장품법 제10조"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "law_refst_6da80a",
+    "conceptId": "화장품법:제10조",
+    "text": "영유아 또는 어린이 사용 화장품의 유통 현황 및 추세",
+    "truth": false,
     "explain": "출처: 화장품법 제10조"
    }
   ],
@@ -8339,9 +8332,9 @@ var COMBO_DRILLS_subject1 = [
    {
     "id": "4",
     "members": [
-     "ㄱ",
-     "ㄹ",
-     "ㅁ"
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -8375,14 +8368,6 @@ var COMBO_DRILLS_subject1 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "law_refst_d5c540",
-    "conceptId": "화장품법 시행규칙:제6조",
-    "text": "시험ㆍ조사기관의 명칭 및 대표자의 성명ㆍ주소ㆍ전화번호",
-    "truth": false,
-    "explain": "출처: 화장품법 시행규칙 제6조"
-   },
-   {
-    "id": "ㄴ",
     "sid": "law_refst_78a0b7",
     "conceptId": "화장품법 시행규칙:제6조",
     "text": "원료ㆍ자재 및 제품을 보관하는 보관소",
@@ -8390,15 +8375,15 @@ var COMBO_DRILLS_subject1 = [
     "explain": "출처: 화장품법 시행규칙 제6조"
    },
    {
-    "id": "ㄷ",
-    "sid": "law_refst_7341fb",
+    "id": "ㄴ",
+    "sid": "law_refst_ad6215",
     "conceptId": "화장품법 시행규칙:제6조",
-    "text": "성분명을 제품 명칭의 일부로 사용한 경우 그 성분명과 함량(방향용 제품은 제외한다)",
-    "truth": false,
+    "text": "품질검사에 필요한 시설 및 기구",
+    "truth": true,
     "explain": "출처: 화장품법 시행규칙 제6조"
    },
    {
-    "id": "ㄹ",
+    "id": "ㄷ",
     "sid": "law_refst_5586d3",
     "conceptId": "화장품법 시행규칙:제6조",
     "text": "화장품제조업자가 화장품의 일부 공정만을 제조하는 경우에는 해당 공정에 필요한 시설 및 기구 외의 시설 및 기구",
@@ -8406,11 +8391,19 @@ var COMBO_DRILLS_subject1 = [
     "explain": "출처: 화장품법 시행규칙 제6조"
    },
    {
-    "id": "ㅁ",
-    "sid": "law_refst_ad6215",
+    "id": "ㄹ",
+    "sid": "law_refst_cf4c1b",
     "conceptId": "화장품법 시행규칙:제6조",
-    "text": "품질검사에 필요한 시설 및 기구",
-    "truth": true,
+    "text": "촬영범위",
+    "truth": false,
+    "explain": "출처: 화장품법 시행규칙 제6조"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "law_refst_500643",
+    "conceptId": "화장품법 시행규칙:제6조",
+    "text": "화장품책임판매업소의 소재지",
+    "truth": false,
     "explain": "출처: 화장품법 시행규칙 제6조"
    }
   ],
@@ -8426,9 +8419,9 @@ var COMBO_DRILLS_subject1 = [
    {
     "id": "2",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㄹ",
-     "ㅁ"
+     "ㄷ"
     ]
    },
    {
@@ -8460,7 +8453,6 @@ var COMBO_DRILLS_subject1 = [
    "자동생성",
    "참조자료",
    "열거목록",
-   "한도",
    "수치"
   ],
   "derivedFrom": "ref:enum|화장품법 시행규칙(총리령)(제02109호)(20260402)|제6조|0|0",
@@ -8478,18 +8470,18 @@ var COMBO_DRILLS_subject1 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "law_refst_7a8456",
-    "conceptId": "화장품법 시행규칙:제30조의3",
-    "text": "기준[산성도(pH)에 관한 기준은 제외한다] 및 시험방법",
-    "truth": false,
-    "explain": "출처: 화장품법 시행규칙 제30조의3"
-   },
-   {
-    "id": "ㄴ",
     "sid": "law_refst_660dc5",
     "conceptId": "화장품법 시행규칙:제30조의3",
     "text": "직접구매 해외화장품의 소비자 피해 유형, 피해 경험 등 피해 사례에 관한 사항",
     "truth": true,
+    "explain": "출처: 화장품법 시행규칙 제30조의3"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "law_refst_b444ce",
+    "conceptId": "화장품법 시행규칙:제30조의3",
+    "text": "판매업무정지 1개월",
+    "truth": false,
     "explain": "출처: 화장품법 시행규칙 제30조의3"
    },
    {
@@ -8502,18 +8494,18 @@ var COMBO_DRILLS_subject1 = [
    },
    {
     "id": "ㄹ",
-    "sid": "law_refst_88f040",
+    "sid": "law_refst_21aeef",
     "conceptId": "화장품법 시행규칙:제30조의3",
-    "text": "직접구매 해외화장품의 종류, 구매빈도, 구매동기, 사용량, 사용기간 등 구매ㆍ사용실태에 관한 사항",
-    "truth": true,
+    "text": "제조 또는해당 품목제조업무정지 15일",
+    "truth": false,
     "explain": "출처: 화장품법 시행규칙 제30조의3"
    },
    {
     "id": "ㅁ",
-    "sid": "law_refst_0455d6",
+    "sid": "law_refst_88f040",
     "conceptId": "화장품법 시행규칙:제30조의3",
-    "text": "화장품의 안전사용과 관련된 홍보 등의 업무",
-    "truth": false,
+    "text": "직접구매 해외화장품의 종류, 구매빈도, 구매동기, 사용량, 사용기간 등 구매ㆍ사용실태에 관한 사항",
+    "truth": true,
     "explain": "출처: 화장품법 시행규칙 제30조의3"
    }
   ],
@@ -8521,9 +8513,9 @@ var COMBO_DRILLS_subject1 = [
    {
     "id": "1",
     "members": [
-     "ㄴ",
+     "ㄱ",
      "ㄷ",
-     "ㄹ"
+     "ㅁ"
     ]
    },
    {
@@ -8577,18 +8569,18 @@ var COMBO_DRILLS_subject1 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "law_refst_26f299",
+    "sid": "law_refst_7e83a1",
     "conceptId": "화장품법 시행규칙:제2조",
-    "text": "「화장품법」 제3조의2제2항에 따른 맞춤형화장품조제관리사 자격시험에 합격한 사람",
-    "truth": true,
+    "text": "거짓이나 그 밖의 부당한 방법으로 지정을 받은 경우",
+    "truth": false,
     "explain": "출처: 화장품법 시행규칙 제2조"
    },
    {
     "id": "ㄴ",
-    "sid": "law_refst_1d4aca",
+    "sid": "law_refst_26f299",
     "conceptId": "화장품법 시행규칙:제2조",
-    "text": "맞춤형화장품조제관리사 또는 제3조의2제2항 단서에 따른 종업원을 두지 아니하고 판매한 맞춤형화장품",
-    "truth": false,
+    "text": "「화장품법」 제3조의2제2항에 따른 맞춤형화장품조제관리사 자격시험에 합격한 사람",
+    "truth": true,
     "explain": "출처: 화장품법 시행규칙 제2조"
    },
    {
@@ -8609,9 +8601,9 @@ var COMBO_DRILLS_subject1 = [
    },
    {
     "id": "ㅁ",
-    "sid": "law_refst_197550",
+    "sid": "law_refst_6879fb",
     "conceptId": "화장품법 시행규칙:제2조",
-    "text": "해당 품목판매업무정지 3개월",
+    "text": "판매업무정지 3개월",
     "truth": false,
     "explain": "출처: 화장품법 시행규칙 제2조"
    }
@@ -8621,13 +8613,14 @@ var COMBO_DRILLS_subject1 = [
     "id": "1",
     "members": [
      "ㄱ",
-     "ㅁ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄱ",
+     "ㄴ",
      "ㄷ",
      "ㄹ"
     ]
@@ -8636,16 +8629,14 @@ var COMBO_DRILLS_subject1 = [
     "id": "3",
     "members": [
      "ㄱ",
-     "ㄹ"
+     "ㅁ"
     ]
    },
    {
     "id": "4",
     "members": [
      "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㅁ"
+     "ㄹ"
     ]
    },
    {
@@ -8678,42 +8669,42 @@ var COMBO_DRILLS_subject1 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "law_refst_266ee2",
+    "sid": "law_refst_e84a6b",
     "conceptId": "화장품법 시행규칙:제2조",
-    "text": "해당 품목의 제조ㆍ수입 기록서 사본수수료첨부서류 2. 판매처별 판매량ㆍ판매일 등의 기록없음",
+    "text": "별지 제10호의2서식의 회수계획서 사본 수수료첨부서류",
     "truth": true,
     "explain": "출처: 화장품법 시행규칙 제2조"
    },
    {
     "id": "ㄴ",
-    "sid": "law_refst_023db9",
+    "sid": "law_refst_7e4953",
     "conceptId": "화장품법 시행규칙:제2조",
-    "text": "원료의 기준 및 시험방법에 관한 자료 및 시험성적서 | 처리 절차 | | | ||",
+    "text": "별지 제10호의3서식의 회수확인서 사본수수료첨부서류 2. 별지 제10호의5서식의 폐기확인서 사본(폐기한 경우에만 해당합니다) 없음",
     "truth": true,
     "explain": "출처: 화장품법 시행규칙 제2조"
    },
    {
     "id": "ㄷ",
-    "sid": "law_refst_3db3d7",
+    "sid": "law_refst_5433c0",
     "conceptId": "화장품법 시행규칙:제2조",
-    "text": "화장품제조업",
-    "truth": false,
+    "text": "안전성 및 유효성에 관한 자료(유효성에 관한 자료는 해당하는 경우에만 제출합니다) 별표 9에서 정한 금액",
+    "truth": true,
     "explain": "출처: 화장품법 시행규칙 제2조"
    },
    {
     "id": "ㄹ",
-    "sid": "law_refst_dc7f18",
+    "sid": "law_refst_9e648b",
     "conceptId": "화장품법 시행규칙:제2조",
-    "text": "위해요소의 인체 내 독성을 확인하는 위험성 확인과정",
+    "text": "「건축법」 제38조에 따른 건축물대장 등본: 국토교통부장관",
     "truth": false,
     "explain": "출처: 화장품법 시행규칙 제2조"
    },
    {
     "id": "ㅁ",
-    "sid": "law_refst_a0e361",
+    "sid": "law_refst_80020e",
     "conceptId": "화장품법 시행규칙:제2조",
-    "text": "기준 및 시험방법에 관한 자료(검체(檢體)를 포함합니다) | 처리 절차 | | | | | | ||",
-    "truth": true,
+    "text": "시험ㆍ조사기관의 명칭 및 대표자의 성명ㆍ주소ㆍ전화번호",
+    "truth": false,
     "explain": "출처: 화장품법 시행규칙 제2조"
    }
   ],
@@ -8723,7 +8714,7 @@ var COMBO_DRILLS_subject1 = [
     "members": [
      "ㄱ",
      "ㄴ",
-     "ㄷ"
+     "ㅁ"
     ]
    },
    {
@@ -8747,7 +8738,7 @@ var COMBO_DRILLS_subject1 = [
     "members": [
      "ㄱ",
      "ㄴ",
-     "ㅁ"
+     "ㄷ"
     ]
    },
    {
@@ -8764,8 +8755,8 @@ var COMBO_DRILLS_subject1 = [
    "자동생성",
    "참조자료",
    "열거목록",
+   "기한",
    "절차",
-   "구성비",
    "수치"
   ],
   "derivedFrom": "ref:enum|화장품법 시행규칙(총리령)(제02109호)(20260402)|제2조|121|1",
@@ -8783,26 +8774,26 @@ var COMBO_DRILLS_subject1 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "law_refst_346718",
+    "sid": "law_refst_6a6a70",
     "conceptId": "화장품법 시행규칙:제2조",
-    "text": "「소비자기본법」 제29조제1항에 따라 등록한 소비자단체의 임직원 중 해당 단체의 장이 추천한 사람",
+    "text": "「화장품법 시행령」(대통령령)",
     "truth": false,
     "explain": "출처: 화장품법 시행규칙 제2조"
    },
    {
     "id": "ㄴ",
-    "sid": "law_refst_bd1c8b",
+    "sid": "law_refst_d96388",
     "conceptId": "화장품법 시행규칙:제2조",
-    "text": "「의료법」에 따른 의사 또는 「약사법」에 따른 약사",
+    "text": "안전성에 관한 자료",
     "truth": true,
     "explain": "출처: 화장품법 시행규칙 제2조"
    },
    {
     "id": "ㄷ",
-    "sid": "law_refst_0c48ff",
+    "sid": "law_refst_9f737a",
     "conceptId": "화장품법 시행규칙:제2조",
-    "text": "식품의약품안전처장이 정하여 고시하는 전문 교육과정을 이수한 사람(식품의약품안전처장이 정하여 고시하는 품목만 해당합니다)",
-    "truth": true,
+    "text": "천연화장품",
+    "truth": false,
     "explain": "출처: 화장품법 시행규칙 제2조"
    },
    {
@@ -8815,10 +8806,10 @@ var COMBO_DRILLS_subject1 = [
    },
    {
     "id": "ㅁ",
-    "sid": "law_refst_80020e",
+    "sid": "law_refst_feac80",
     "conceptId": "화장품법 시행규칙:제2조",
-    "text": "시험ㆍ조사기관의 명칭 및 대표자의 성명ㆍ주소ㆍ전화번호",
-    "truth": false,
+    "text": "기원(起源) 및 개발 경위에 관한 자료",
+    "truth": true,
     "explain": "출처: 화장품법 시행규칙 제2조"
    }
   ],
@@ -8826,27 +8817,11 @@ var COMBO_DRILLS_subject1 = [
    {
     "id": "1",
     "members": [
-     "ㄴ",
-     "ㄹ",
-     "ㅁ"
+     "ㄴ"
     ]
    },
    {
     "id": "2",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "4",
     "members": [
      "ㄱ",
      "ㄴ",
@@ -8855,10 +8830,24 @@ var COMBO_DRILLS_subject1 = [
     ]
    },
    {
-    "id": "5",
+    "id": "3",
     "members": [
      "ㄹ",
      "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
     ]
    }
   ],
@@ -8866,14 +8855,13 @@ var COMBO_DRILLS_subject1 = [
    "자동생성",
    "참조자료",
    "열거목록",
-   "절차",
    "수치",
    "정의"
   ],
   "derivedFrom": "ref:enum|화장품법 시행규칙(총리령)(제02109호)(20260402)|제2조|121|2",
   "explain": "ㄱ. 출처: 화장품법 시행규칙 제2조\nㄴ. 출처: 화장품법 시행규칙 제2조\nㄷ. 출처: 화장품법 시행규칙 제2조\nㄹ. 출처: 화장품법 시행규칙 제2조\nㅁ. 출처: 화장품법 시행규칙 제2조",
   "source": "참조자료 원문 (열거 목록)",
-  "answer": "2"
+  "answer": "4"
  },
  {
   "id": "law_combo-ref_d04da0",
@@ -8885,41 +8873,41 @@ var COMBO_DRILLS_subject1 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "law_refst_266ee2",
+    "sid": "law_refst_a0e361",
     "conceptId": "화장품법 시행규칙:제2조",
-    "text": "해당 품목의 제조ㆍ수입 기록서 사본수수료첨부서류 2. 판매처별 판매량ㆍ판매일 등의 기록없음",
+    "text": "기준 및 시험방법에 관한 자료(검체(檢體)를 포함합니다) | 처리 절차 | | | | | | ||",
     "truth": true,
     "explain": "출처: 화장품법 시행규칙 제2조"
    },
    {
     "id": "ㄴ",
-    "sid": "law_refst_11bf42",
+    "sid": "law_refst_aae321",
     "conceptId": "화장품법 시행규칙:제2조",
-    "text": "질병이나 부상 등의 사유로 직무 수행이 어렵게 된 경우",
-    "truth": false,
+    "text": "원료의 기원, 개발경위, 국내ㆍ외 사용기준 및 사용현황 등에 관한 자료첨부서류 3. 원료의 특성에 관한 자료「화장품법 시행규칙」",
+    "truth": true,
     "explain": "출처: 화장품법 시행규칙 제2조"
    },
    {
     "id": "ㄷ",
-    "sid": "law_refst_d96388",
+    "sid": "law_refst_feac80",
     "conceptId": "화장품법 시행규칙:제2조",
-    "text": "안전성에 관한 자료",
+    "text": "기원(起源) 및 개발 경위에 관한 자료",
     "truth": true,
     "explain": "출처: 화장품법 시행규칙 제2조"
    },
    {
     "id": "ㄹ",
-    "sid": "law_refst_26f299",
+    "sid": "law_refst_52ab97",
     "conceptId": "화장품법 시행규칙:제2조",
-    "text": "「화장품법」 제3조의2제2항에 따른 맞춤형화장품조제관리사 자격시험에 합격한 사람",
-    "truth": true,
+    "text": "해당 품목제조 또는판 매 업 무정지 1개월",
+    "truth": false,
     "explain": "출처: 화장품법 시행규칙 제2조"
    },
    {
     "id": "ㅁ",
-    "sid": "law_refst_be83c7",
+    "sid": "law_refst_174045",
     "conceptId": "화장품법 시행규칙:제2조",
-    "text": "거짓이나 그 밖의 부정한 방법으로 제4조에 따른 심사ㆍ변경심사를 받거나 보고서를 제출한 자",
+    "text": "제품의 효능ㆍ효과에 대한 증명 자료",
     "truth": false,
     "explain": "출처: 화장품법 시행규칙 제2조"
    }
@@ -8929,8 +8917,8 @@ var COMBO_DRILLS_subject1 = [
     "id": "1",
     "members": [
      "ㄱ",
-     "ㄷ",
-     "ㄹ"
+     "ㄴ",
+     "ㄷ"
     ]
    },
    {
@@ -8971,6 +8959,7 @@ var COMBO_DRILLS_subject1 = [
    "참조자료",
    "열거목록",
    "절차",
+   "구성비",
    "수치"
   ],
   "derivedFrom": "ref:enum|화장품법 시행규칙(총리령)(제02109호)(20260402)|제2조|121|3",
@@ -8988,42 +8977,42 @@ var COMBO_DRILLS_subject1 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "law_refst_9d6fea",
+    "sid": "law_refst_7e4953",
     "conceptId": "화장품법 시행규칙:제2조",
-    "text": "우수화장품 제조관리기준 적용에 관한 전문적 기술과 교육",
-    "truth": false,
-    "explain": "출처: 화장품법 시행규칙 제2조"
-   },
-   {
-    "id": "ㄴ",
-    "sid": "law_refst_266ee2",
-    "conceptId": "화장품법 시행규칙:제2조",
-    "text": "해당 품목의 제조ㆍ수입 기록서 사본수수료첨부서류 2. 판매처별 판매량ㆍ판매일 등의 기록없음",
+    "text": "별지 제10호의3서식의 회수확인서 사본수수료첨부서류 2. 별지 제10호의5서식의 폐기확인서 사본(폐기한 경우에만 해당합니다) 없음",
     "truth": true,
     "explain": "출처: 화장품법 시행규칙 제2조"
    },
    {
-    "id": "ㄷ",
-    "sid": "law_refst_f0ddb3",
+    "id": "ㄴ",
+    "sid": "law_refst_c4c9be",
     "conceptId": "화장품법 시행규칙:제2조",
-    "text": "기능성화장품의 경우 그 효능ㆍ효과가 나타나게 하는 원료",
+    "text": "제출자료 전체의 요약본화장품법 시행규칙",
     "truth": false,
     "explain": "출처: 화장품법 시행규칙 제2조"
    },
    {
-    "id": "ㄹ",
-    "sid": "law_refst_c0344d",
+    "id": "ㄷ",
+    "sid": "law_refst_5433c0",
     "conceptId": "화장품법 시행규칙:제2조",
-    "text": "회수 사유를 적은 서류| ||",
+    "text": "안전성 및 유효성에 관한 자료(유효성에 관한 자료는 해당하는 경우에만 제출합니다) 별표 9에서 정한 금액",
+    "truth": true,
+    "explain": "출처: 화장품법 시행규칙 제2조"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "law_refst_d96388",
+    "conceptId": "화장품법 시행규칙:제2조",
+    "text": "안전성에 관한 자료",
     "truth": true,
     "explain": "출처: 화장품법 시행규칙 제2조"
    },
    {
     "id": "ㅁ",
-    "sid": "law_refst_0c48ff",
+    "sid": "law_refst_4cc747",
     "conceptId": "화장품법 시행규칙:제2조",
-    "text": "식품의약품안전처장이 정하여 고시하는 전문 교육과정을 이수한 사람(식품의약품안전처장이 정하여 고시하는 품목만 해당합니다)",
-    "truth": true,
+    "text": "해당 품목제조 또는판 매 업 무정지 15일",
+    "truth": false,
     "explain": "출처: 화장품법 시행규칙 제2조"
    }
   ],
@@ -9044,9 +9033,9 @@ var COMBO_DRILLS_subject1 = [
    {
     "id": "3",
     "members": [
-     "ㄴ",
-     "ㄹ",
-     "ㅁ"
+     "ㄱ",
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -9070,6 +9059,8 @@ var COMBO_DRILLS_subject1 = [
    "자동생성",
    "참조자료",
    "열거목록",
+   "기한",
+   "절차",
    "수치"
   ],
   "derivedFrom": "ref:enum|화장품법 시행규칙(총리령)(제02109호)(20260402)|제2조|121|4",
@@ -9087,22 +9078,6 @@ var COMBO_DRILLS_subject1 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "law_refst_4d04c2",
-    "conceptId": "화장품법 시행규칙:제12조",
-    "text": "판매처, 판매연월일 및 판매량",
-    "truth": true,
-    "explain": "출처: 화장품법 시행규칙 제12조"
-   },
-   {
-    "id": "ㄴ",
-    "sid": "law_refst_ea84fd",
-    "conceptId": "화장품법 시행규칙:제12조",
-    "text": "해당 품목판 매 업 무정지 3개월(표시위반)또는 해당품목 광고업무정지 3개월(광고위반)",
-    "truth": false,
-    "explain": "출처: 화장품법 시행규칙 제12조"
-   },
-   {
-    "id": "ㄷ",
     "sid": "law_refst_0a9739",
     "conceptId": "화장품법 시행규칙:제12조",
     "text": "원료성분의 규격 및 함량",
@@ -9110,7 +9085,15 @@ var COMBO_DRILLS_subject1 = [
     "explain": "출처: 화장품법 시행규칙 제12조"
    },
    {
-    "id": "ㄹ",
+    "id": "ㄴ",
+    "sid": "law_refst_f03553",
+    "conceptId": "화장품법 시행규칙:제12조",
+    "text": "피부의 주름개선에 도움을 주는 제품",
+    "truth": false,
+    "explain": "출처: 화장품법 시행규칙 제12조"
+   },
+   {
+    "id": "ㄷ",
     "sid": "law_refst_832bea",
     "conceptId": "화장품법 시행규칙:제12조",
     "text": "제품명 또는 국내에서 판매하려는 명칭",
@@ -9118,10 +9101,18 @@ var COMBO_DRILLS_subject1 = [
     "explain": "출처: 화장품법 시행규칙 제12조"
    },
    {
-    "id": "ㅁ",
-    "sid": "law_refst_179d1b",
+    "id": "ㄹ",
+    "sid": "law_refst_4d04c2",
     "conceptId": "화장품법 시행규칙:제12조",
-    "text": "제조 또는판 매 업 무정지 3개월",
+    "text": "판매처, 판매연월일 및 판매량",
+    "truth": true,
+    "explain": "출처: 화장품법 시행규칙 제12조"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "law_refst_3b5c69",
+    "conceptId": "화장품법 시행규칙:제12조",
+    "text": "화장품 수출을 위하여 수출 상대국의 법령에 따라 동물실험이 필요한 경우",
     "truth": false,
     "explain": "출처: 화장품법 시행규칙 제12조"
    }
@@ -9189,30 +9180,14 @@ var COMBO_DRILLS_subject1 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "law_refst_ea84fd",
+    "sid": "law_refst_efed30",
     "conceptId": "화장품법 시행규칙:제12조",
-    "text": "해당 품목판 매 업 무정지 3개월(표시위반)또는 해당품목 광고업무정지 3개월(광고위반)",
+    "text": "제품별 안전성 자료의 작성 및 보관 현황",
     "truth": false,
     "explain": "출처: 화장품법 시행규칙 제12조"
    },
    {
     "id": "ㄴ",
-    "sid": "law_refst_5184fa",
-    "conceptId": "화장품법 시행규칙:제12조",
-    "text": "제조국, 제조회사명 및 제조회사의 소재지",
-    "truth": true,
-    "explain": "출처: 화장품법 시행규칙 제12조"
-   },
-   {
-    "id": "ㄷ",
-    "sid": "law_refst_e53914",
-    "conceptId": "화장품법 시행규칙:제12조",
-    "text": "판매업무정지 15일",
-    "truth": false,
-    "explain": "출처: 화장품법 시행규칙 제12조"
-   },
-   {
-    "id": "ㄹ",
     "sid": "law_refst_832bea",
     "conceptId": "화장품법 시행규칙:제12조",
     "text": "제품명 또는 국내에서 판매하려는 명칭",
@@ -9220,11 +9195,27 @@ var COMBO_DRILLS_subject1 = [
     "explain": "출처: 화장품법 시행규칙 제12조"
    },
    {
-    "id": "ㅁ",
+    "id": "ㄷ",
     "sid": "law_refst_c8ab3f",
     "conceptId": "화장품법 시행규칙:제12조",
     "text": "한글로 작성된 제품설명서 견본",
     "truth": true,
+    "explain": "출처: 화장품법 시행규칙 제12조"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "law_refst_6bde26",
+    "conceptId": "화장품법 시행규칙:제12조",
+    "text": "제조번호별 수입연월일 및 수입량",
+    "truth": true,
+    "explain": "출처: 화장품법 시행규칙 제12조"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "law_refst_6840d7",
+    "conceptId": "화장품법 시행규칙:제12조",
+    "text": "직접구매 해외화장품의 종류, 구매빈도, 구매동기, 사용량, 사용기간 등 구매ㆍ사용실태에 관한 사항",
+    "truth": false,
     "explain": "출처: 화장품법 시행규칙 제12조"
    }
   ],
@@ -9255,8 +9246,8 @@ var COMBO_DRILLS_subject1 = [
     "id": "4",
     "members": [
      "ㄴ",
-     "ㄹ",
-     "ㅁ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -9288,6 +9279,14 @@ var COMBO_DRILLS_subject1 = [
   "statements": [
    {
     "id": "ㄱ",
+    "sid": "law_refst_08a35c",
+    "conceptId": "화장품법:제24조",
+    "text": "국민보건에 위해를 끼쳤거나 끼칠 우려가 있는 화장품을 제조ㆍ수입한 경우",
+    "truth": true,
+    "explain": "출처: 화장품법 제24조"
+   },
+   {
+    "id": "ㄴ",
     "sid": "law_refst_4eeeca",
     "conceptId": "화장품법:제24조",
     "text": "거짓이나 그 밖의 부정한 방법으로 제3조제1항 또는 제3조의2제1항에 따른 등록ㆍ변경등록 또는 신고ㆍ변경신고를 한 경우",
@@ -9295,27 +9294,19 @@ var COMBO_DRILLS_subject1 = [
     "explain": "출처: 화장품법 제24조"
    },
    {
-    "id": "ㄴ",
-    "sid": "law_refst_2b9e48",
-    "conceptId": "화장품법:제24조",
-    "text": "제품 및 제조방법에 대한 설명 자료",
-    "truth": false,
-    "explain": "출처: 화장품법 제24조"
-   },
-   {
     "id": "ㄷ",
-    "sid": "law_refst_8daf4d",
+    "sid": "law_refst_a4f6fd",
     "conceptId": "화장품법:제24조",
-    "text": "맞춤형화장품조제관리사",
+    "text": "시정명령",
     "truth": false,
     "explain": "출처: 화장품법 제24조"
    },
    {
     "id": "ㄹ",
-    "sid": "law_refst_08a35c",
+    "sid": "law_refst_fa43d9",
     "conceptId": "화장품법:제24조",
-    "text": "국민보건에 위해를 끼쳤거나 끼칠 우려가 있는 화장품을 제조ㆍ수입한 경우",
-    "truth": true,
+    "text": "기획감시",
+    "truth": false,
     "explain": "출처: 화장품법 제24조"
    },
    {
@@ -9339,7 +9330,7 @@ var COMBO_DRILLS_subject1 = [
     "id": "2",
     "members": [
      "ㄱ",
-     "ㄹ",
+     "ㄴ",
      "ㅁ"
     ]
    },
@@ -9388,14 +9379,22 @@ var COMBO_DRILLS_subject1 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "law_refst_bb7ba8",
+    "sid": "law_refst_0aed33",
     "conceptId": "화장품법 시행규칙:제17조",
-    "text": "위해요소가 인체에 노출된 양을 산출하는 노출평가과정",
+    "text": "위해요소의 인체 내 독성을 확인하는 위험성 확인과정",
     "truth": true,
     "explain": "출처: 화장품법 시행규칙 제17조"
    },
    {
     "id": "ㄴ",
+    "sid": "law_refst_bfc0d6",
+    "conceptId": "화장품법 시행규칙:제17조",
+    "text": "품질관리 업무가 적정하고 원활하게 수행되는 것을 확인할 것",
+    "truth": false,
+    "explain": "출처: 화장품법 시행규칙 제17조"
+   },
+   {
+    "id": "ㄷ",
     "sid": "law_refst_c62f19",
     "conceptId": "화장품법 시행규칙:제17조",
     "text": "위해요소의 인체노출 허용량을 산출하는 위험성 결정과정",
@@ -9403,27 +9402,19 @@ var COMBO_DRILLS_subject1 = [
     "explain": "출처: 화장품법 시행규칙 제17조"
    },
    {
-    "id": "ㄷ",
-    "sid": "law_refst_3e614b",
-    "conceptId": "화장품법 시행규칙:제17조",
-    "text": "다른 법령에 따라 동물실험을 실시하여 개발된 원료를 화장품의 제조 등에 사용하는 경우",
-    "truth": false,
-    "explain": "출처: 화장품법 시행규칙 제17조"
-   },
-   {
     "id": "ㄹ",
-    "sid": "law_refst_4e75bf",
+    "sid": "law_refst_bb7ba8",
     "conceptId": "화장품법 시행규칙:제17조",
-    "text": "화장품제조업자, 화장품책임판매업자 또는 연구기관등의 상호(법인인 경우에는 법인의 명칭) 및 소재지",
-    "truth": false,
+    "text": "위해요소가 인체에 노출된 양을 산출하는 노출평가과정",
+    "truth": true,
     "explain": "출처: 화장품법 시행규칙 제17조"
    },
    {
     "id": "ㅁ",
-    "sid": "law_refst_0aed33",
+    "sid": "law_refst_c128ce",
     "conceptId": "화장품법 시행규칙:제17조",
-    "text": "위해요소의 인체 내 독성을 확인하는 위험성 확인과정",
-    "truth": true,
+    "text": "해당 품목제조 또는판 매 업 무정지 2개월",
+    "truth": false,
     "explain": "출처: 화장품법 시행규칙 제17조"
    }
   ],
@@ -9445,8 +9436,8 @@ var COMBO_DRILLS_subject1 = [
     "id": "3",
     "members": [
      "ㄱ",
-     "ㄴ",
-     "ㅁ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -9488,30 +9479,6 @@ var COMBO_DRILLS_subject1 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "law_refst_7b2d42",
-    "conceptId": "화장품법 시행규칙:제17조의3",
-    "text": "원료의 기원, 개발 경위, 국내ㆍ외 사용기준 및 사용현황 등에 관한 자료",
-    "truth": true,
-    "explain": "출처: 화장품법 시행규칙 제17조의3"
-   },
-   {
-    "id": "ㄴ",
-    "sid": "law_refst_415e29",
-    "conceptId": "화장품법 시행규칙:제17조의3",
-    "text": "화장품제조업자의 상호(법인인 경우에는 법인의 명칭)",
-    "truth": false,
-    "explain": "출처: 화장품법 시행규칙 제17조의3"
-   },
-   {
-    "id": "ㄷ",
-    "sid": "law_refst_9c16fb",
-    "conceptId": "화장품법 시행규칙:제17조의3",
-    "text": "「소비자기본법」 제29조제1항에 따라 등록한 소비자단체의 임직원 중 해당 단체의 장이 추천한 사람",
-    "truth": false,
-    "explain": "출처: 화장품법 시행규칙 제17조의3"
-   },
-   {
-    "id": "ㄹ",
     "sid": "law_refst_7464e0",
     "conceptId": "화장품법 시행규칙:제17조의3",
     "text": "안전성 및 유효성에 관한 자료(유효성에 관한 자료는 해당하는 경우에만 제출한다)",
@@ -9519,11 +9486,35 @@ var COMBO_DRILLS_subject1 = [
     "explain": "출처: 화장품법 시행규칙 제17조의3"
    },
    {
-    "id": "ㅁ",
+    "id": "ㄴ",
+    "sid": "law_refst_9b09d5",
+    "conceptId": "화장품법 시행규칙:제17조의3",
+    "text": "위해요소 저감화를 위한 단기별 및 중장기별 추진 정책",
+    "truth": false,
+    "explain": "출처: 화장품법 시행규칙 제17조의3"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "law_refst_7b2d42",
+    "conceptId": "화장품법 시행규칙:제17조의3",
+    "text": "원료의 기원, 개발 경위, 국내ㆍ외 사용기준 및 사용현황 등에 관한 자료",
+    "truth": true,
+    "explain": "출처: 화장품법 시행규칙 제17조의3"
+   },
+   {
+    "id": "ㄹ",
     "sid": "law_refst_099c6e",
     "conceptId": "화장품법 시행규칙:제17조의3",
     "text": "원료의 특성에 관한 자료",
     "truth": true,
+    "explain": "출처: 화장품법 시행규칙 제17조의3"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "law_refst_781b8a",
+    "conceptId": "화장품법 시행규칙:제17조의3",
+    "text": "유해사례 (AE: Adverse Event, Adverse Experience)",
+    "truth": false,
     "explain": "출처: 화장품법 시행규칙 제17조의3"
    }
   ],
@@ -9544,8 +9535,8 @@ var COMBO_DRILLS_subject1 = [
     "id": "3",
     "members": [
      "ㄱ",
-     "ㄹ",
-     "ㅁ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {

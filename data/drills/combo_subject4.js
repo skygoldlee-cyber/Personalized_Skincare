@@ -25517,18 +25517,18 @@ var COMBO_DRILLS_subject4 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "understanding_refst_d04eba",
+    "sid": "understanding_refst_c7576e",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "베이스코트(basecoats), 언더코트(under coats)",
+    "text": "네일 크림·로션·에센스·오일",
     "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㄴ",
-    "sid": "understanding_refst_c7576e",
+    "sid": "understanding_refst_f73bcd",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "네일 크림·로션·에센스·오일",
-    "truth": true,
+    "text": "샴푸·린스류",
+    "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
@@ -25541,17 +25541,17 @@ var COMBO_DRILLS_subject4 = [
    },
    {
     "id": "ㄹ",
-    "sid": "understanding_refst_6858ab",
+    "sid": "understanding_refst_d04eba",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "신나밀알코올",
-    "truth": false,
+    "text": "베이스코트(basecoats), 언더코트(under coats)",
+    "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㅁ",
-    "sid": "understanding_refst_e8dd17",
+    "sid": "understanding_refst_0e2500",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "나무이끼추출물",
+    "text": "순도시험",
     "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    }
@@ -25561,8 +25561,8 @@ var COMBO_DRILLS_subject4 = [
     "id": "1",
     "members": [
      "ㄱ",
-     "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -25616,22 +25616,14 @@ var COMBO_DRILLS_subject4 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "understanding_refst_a15d53",
+    "sid": "understanding_refst_531ab0",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "제라니올",
+    "text": "연속 피부 자극시험",
     "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㄴ",
-    "sid": "understanding_refst_16610c",
-    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "아이브로(eyebrow) 제품",
-    "truth": true,
-    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
-   },
-   {
-    "id": "ㄷ",
     "sid": "understanding_refst_e72647",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
     "text": "마스카라(mascara)",
@@ -25639,7 +25631,7 @@ var COMBO_DRILLS_subject4 = [
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
-    "id": "ㄹ",
+    "id": "ㄷ",
     "sid": "understanding_refst_79d3b9",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
     "text": "아이 라이너(eye liner)",
@@ -25647,10 +25639,18 @@ var COMBO_DRILLS_subject4 = [
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
-    "id": "ㅁ",
-    "sid": "understanding_refst_1dc8e5",
+    "id": "ㄹ",
+    "sid": "understanding_refst_16610c",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "신나밀알코올",
+    "text": "아이브로(eyebrow) 제품",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_4f8f4b",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "벤질알코올",
     "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    }
@@ -25713,41 +25713,41 @@ var COMBO_DRILLS_subject4 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "understanding_refst_0e08ba",
+    "sid": "understanding_refst_c24c24",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "아이 메이크업 리무버(eye make-up remover)",
-    "truth": true,
+    "text": "질량/용량 백분율",
+    "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㄴ",
-    "sid": "understanding_refst_33bf27",
+    "sid": "understanding_refst_2f6813",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "아이 섀도(eye shadow)",
+    "text": "속눈썹용 퍼머넌트 웨이브(eye-lash permanent wave)",
     "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㄷ",
-    "sid": "understanding_refst_6273f9",
+    "sid": "understanding_refst_a2c98f",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "나무이끼추출물",
+    "text": "광학현미경",
     "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㄹ",
-    "sid": "understanding_refst_8531c9",
+    "sid": "understanding_refst_79d3b9",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "아밀신나밀알코올",
-    "truth": false,
+    "text": "아이 라이너(eye liner)",
+    "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㅁ",
-    "sid": "understanding_refst_16610c",
+    "sid": "understanding_refst_0e08ba",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "아이브로(eyebrow) 제품",
+    "text": "아이 메이크업 리무버(eye make-up remover)",
     "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    }
@@ -25772,7 +25772,6 @@ var COMBO_DRILLS_subject4 = [
     "id": "3",
     "members": [
      "ㄴ",
-     "ㄷ",
      "ㄹ",
      "ㅁ"
     ]
@@ -25788,6 +25787,7 @@ var COMBO_DRILLS_subject4 = [
     "members": [
      "ㄴ",
      "ㄷ",
+     "ㄹ",
      "ㅁ"
     ]
    }
@@ -25800,7 +25800,7 @@ var COMBO_DRILLS_subject4 = [
   "derivedFrom": "ref:enum|주의사항_별표1_유형별주의사항표시문구|cat|3|1",
   "explain": "ㄱ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄴ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄷ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄹ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㅁ. 출처: 주의사항 별표1 유형별주의사항표시문구 ",
   "source": "참조자료 원문 (열거 목록)",
-  "answer": "2"
+  "answer": "3"
  },
  {
   "id": "understanding_combo-ref_a43840",
@@ -25820,22 +25820,6 @@ var COMBO_DRILLS_subject4 = [
    },
    {
     "id": "ㄴ",
-    "sid": "understanding_refst_c39e73",
-    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "립글로스(lip gloss), 립밤(lip balm)",
-    "truth": true,
-    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_refst_4ab5ff",
-    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "참나무이끼추출물",
-    "truth": false,
-    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
-   },
-   {
-    "id": "ㄹ",
     "sid": "understanding_refst_321d8e",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
     "text": "탈염·탈색용 제품",
@@ -25843,11 +25827,27 @@ var COMBO_DRILLS_subject4 = [
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
-    "id": "ㅁ",
-    "sid": "understanding_refst_b0eeb9",
+    "id": "ㄷ",
+    "sid": "understanding_refst_73aaff",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "알파-아이소메틸아이오논",
+    "text": "맞춤형화장품조제관리사의 변경신고를 하지 않은 경우",
     "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_98fe12",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "정량법(제제는 함량시험)",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_c39e73",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "립글로스(lip gloss), 립밤(lip balm)",
+    "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    }
   ],
@@ -25871,7 +25871,7 @@ var COMBO_DRILLS_subject4 = [
     "members": [
      "ㄱ",
      "ㄴ",
-     "ㄹ"
+     "ㅁ"
     ]
    },
    {
@@ -25891,7 +25891,9 @@ var COMBO_DRILLS_subject4 = [
   "tags": [
    "자동생성",
    "참조자료",
-   "열거목록"
+   "열거목록",
+   "절차",
+   "한도"
   ],
   "derivedFrom": "ref:enum|주의사항_별표1_유형별주의사항표시문구|cat|5|0",
   "explain": "ㄱ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄴ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄷ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄹ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㅁ. 출처: 주의사항 별표1 유형별주의사항표시문구 ",
@@ -25908,14 +25910,6 @@ var COMBO_DRILLS_subject4 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "understanding_refst_c2f716",
-    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "벤질살리실레이트",
-    "truth": false,
-    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
-   },
-   {
-    "id": "ㄴ",
     "sid": "understanding_refst_c39e73",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
     "text": "립글로스(lip gloss), 립밤(lip balm)",
@@ -25923,27 +25917,35 @@ var COMBO_DRILLS_subject4 = [
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
-    "id": "ㄷ",
-    "sid": "understanding_refst_321d8e",
+    "id": "ㄴ",
+    "sid": "understanding_refst_7b3c45",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "탈염·탈색용 제품",
+    "text": "메이크업 베이스(make-up bases)",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_7dbdd2",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "페이스 파우더(face powder)",
     "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㄹ",
-    "sid": "understanding_refst_4ab5ff",
+    "sid": "understanding_refst_046f48",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "참나무이끼추출물",
+    "text": "민감성 피부",
     "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㅁ",
-    "sid": "understanding_refst_21d182",
+    "sid": "understanding_refst_9f6046",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "바디페인팅(body painting), 페이스페인팅(face painting), 분장용 제품",
-    "truth": true,
+    "text": "자통 (Stinging)",
+    "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    }
   ],
@@ -25984,9 +25986,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㄷ",
-     "ㅁ"
+     "ㄷ"
     ]
    }
   ],
@@ -26010,41 +26012,41 @@ var COMBO_DRILLS_subject4 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "understanding_refst_5fd1af",
+    "sid": "understanding_refst_9a54b6",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "헥실신남알",
+    "text": "금속 (알루미늄)",
     "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㄴ",
-    "sid": "understanding_refst_4ab5ff",
+    "sid": "understanding_refst_c9a45b",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "참나무이끼추출물",
+    "text": "정보 전달 및 사용자 배려",
     "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㄷ",
-    "sid": "understanding_refst_2fdcee",
+    "sid": "understanding_refst_7b3c45",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "헤어 틴트(hair tints)",
+    "text": "메이크업 베이스(make-up bases)",
     "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㄹ",
-    "sid": "understanding_refst_21d182",
+    "sid": "understanding_refst_1a77a8",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "바디페인팅(body painting), 페이스페인팅(face painting), 분장용 제품",
+    "text": "메이크업 픽서티브(make-up fixatives)",
     "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㅁ",
-    "sid": "understanding_refst_0942bb",
+    "sid": "understanding_refst_7dbdd2",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "헤어 컬러스프레이(hair color sprays)",
+    "text": "페이스 파우더(face powder)",
     "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    }
@@ -26109,30 +26111,14 @@ var COMBO_DRILLS_subject4 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "understanding_refst_c0162d",
+    "sid": "understanding_refst_fa5e5f",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "손·발의 피부연화 제품(우레아를 포함하는 핸드크림 및 풋크림)",
-    "truth": true,
-    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_refst_1b893b",
-    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "염모제(산화염모제와 비산화염모제)",
-    "truth": true,
-    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_refst_b0e1f8",
-    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "아밀신나밀알코올",
+    "text": "프탈레이트류",
     "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
-    "id": "ㄹ",
+    "id": "ㄴ",
     "sid": "understanding_refst_1f0a84",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
     "text": "체취 방지용 제품",
@@ -26140,11 +26126,27 @@ var COMBO_DRILLS_subject4 = [
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
-    "id": "ㅁ",
-    "sid": "understanding_refst_1e3e5b",
+    "id": "ㄷ",
+    "sid": "understanding_refst_09ee86",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "아니스알코올",
+    "text": "영유아용 제품류, 눈화장용 제품류",
     "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_c0162d",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "손·발의 피부연화 제품(우레아를 포함하는 핸드크림 및 풋크림)",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_1b893b",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "염모제(산화염모제와 비산화염모제)",
+    "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    }
   ],
@@ -26152,9 +26154,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄱ",
      "ㄴ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -26209,22 +26211,6 @@ var COMBO_DRILLS_subject4 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "understanding_refst_09d987",
-    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "벤질알코올",
-    "truth": false,
-    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_refst_74f743",
-    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "제모제(치오글라이콜릭애씨드 함유 제품에만 표시함)",
-    "truth": true,
-    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
-   },
-   {
-    "id": "ㄷ",
     "sid": "understanding_refst_1f0a84",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
     "text": "체취 방지용 제품",
@@ -26232,19 +26218,35 @@ var COMBO_DRILLS_subject4 = [
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
-    "id": "ㄹ",
-    "sid": "understanding_refst_431895",
+    "id": "ㄴ",
+    "sid": "understanding_refst_a0cfad",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "제라니올",
+    "text": "고압가스를 사용하는 에어로졸 제품",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_1b893b",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "염모제(산화염모제와 비산화염모제)",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_07c5e9",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "피부 관련",
     "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㅁ",
-    "sid": "understanding_refst_4588ea",
+    "sid": "understanding_refst_fa5e5f",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "두발용, 두발염색용 및 눈 화장용 제품류",
-    "truth": true,
+    "text": "프탈레이트류",
+    "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    }
   ],
@@ -26278,9 +26280,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㄷ",
-     "ㅁ"
+     "ㄷ"
     ]
    },
    {
@@ -26310,22 +26312,14 @@ var COMBO_DRILLS_subject4 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "understanding_refst_1b893b",
+    "sid": "understanding_refst_09c2e4",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "염모제(산화염모제와 비산화염모제)",
-    "truth": true,
+    "text": "호흡 기능",
+    "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㄴ",
-    "sid": "understanding_refst_4588ea",
-    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "두발용, 두발염색용 및 눈 화장용 제품류",
-    "truth": true,
-    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
-   },
-   {
-    "id": "ㄷ",
     "sid": "understanding_refst_74a9de",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
     "text": "탈염·탈색제",
@@ -26333,19 +26327,27 @@ var COMBO_DRILLS_subject4 = [
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
-    "id": "ㄹ",
-    "sid": "understanding_refst_c91ee2",
+    "id": "ㄷ",
+    "sid": "understanding_refst_be746b",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "신나밀알코올",
+    "text": "휘발성 유상을 너무 일찍 투입, W/O에서 수상 급투입",
     "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
-    "id": "ㅁ",
-    "sid": "understanding_refst_17aca4",
+    "id": "ㄹ",
+    "sid": "understanding_refst_4588ea",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "나무이끼추출물",
-    "truth": false,
+    "text": "두발용, 두발염색용 및 눈 화장용 제품류",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_94cfc0",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "속눈썹용 퍼머넌트 웨이브 제품",
+    "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    }
   ],
@@ -26359,9 +26361,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㄱ",
      "ㄴ",
-     "ㄷ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -26410,41 +26412,41 @@ var COMBO_DRILLS_subject4 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "understanding_refst_09d987",
+    "sid": "understanding_refst_94cfc0",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "벤질알코올",
-    "truth": false,
-    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_refst_a0cfad",
-    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "고압가스를 사용하는 에어로졸 제품",
+    "text": "속눈썹용 퍼머넌트 웨이브 제품",
     "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
-    "id": "ㄷ",
-    "sid": "understanding_refst_642baa",
+    "id": "ㄴ",
+    "sid": "understanding_refst_e4ccba",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "고압가스를 사용하지 않는 분무형 자외선 차단제",
+    "text": "기저층 (Basal Layer)",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_09df82",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "외음부 세정제",
     "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㄹ",
-    "sid": "understanding_refst_f9a354",
+    "sid": "understanding_refst_280eb2",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "헥실신남알",
+    "text": "왁스에스터",
     "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㅁ",
-    "sid": "understanding_refst_d7bcbf",
+    "sid": "understanding_refst_4588ea",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "헤어 퍼머넌트 웨이브 제품 및 헤어스트레이트너 제품",
+    "text": "두발용, 두발염색용 및 눈 화장용 제품류",
     "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    }
@@ -26453,7 +26455,7 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄴ",
+     "ㄱ",
      "ㄷ",
      "ㅁ"
     ]
@@ -26509,6 +26511,14 @@ var COMBO_DRILLS_subject4 = [
   "statements": [
    {
     "id": "ㄱ",
+    "sid": "understanding_refst_768b53",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "유리 (유백유리)",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄴ",
     "sid": "understanding_refst_232af7",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
     "text": "아이오도프로피닐부틸카바메이트(IPBC) 함유 제품 (목욕용제품, 샴푸류 및 바디클렌저 제외)",
@@ -26516,7 +26526,15 @@ var COMBO_DRILLS_subject4 = [
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
-    "id": "ㄴ",
+    "id": "ㄷ",
+    "sid": "understanding_refst_c6b351",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "기재사항 일부 누락",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄹ",
     "sid": "understanding_refst_2fff9a",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
     "text": "카민 함유 제품",
@@ -26524,27 +26542,11 @@ var COMBO_DRILLS_subject4 = [
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
-    "id": "ㄷ",
-    "sid": "understanding_refst_6d99fa",
-    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "하이드록시시트로넬알",
-    "truth": false,
-    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
-   },
-   {
-    "id": "ㄹ",
+    "id": "ㅁ",
     "sid": "understanding_refst_ae2204",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
     "text": "살리실릭애씨드 및 그 염류 함유 제품(샴푸 등 사용 후 바로 씻어내는 제품 제외)",
     "truth": true,
-    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_refst_46602c",
-    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "아밀신남알",
-    "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    }
   ],
@@ -26552,9 +26554,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄱ",
      "ㄴ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -26606,9 +26608,9 @@ var COMBO_DRILLS_subject4 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "understanding_refst_84cd5f",
+    "sid": "understanding_refst_9bbcab",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "폴리에톡실레이티드레틴아마이드 0.2% 이상 함유 제품",
+    "text": "부틸파라벤, 프로필파라벤, 이소부틸파라벤 또는 이소프로필파라벤 함유 제품",
     "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
@@ -26622,25 +26624,25 @@ var COMBO_DRILLS_subject4 = [
    },
    {
     "id": "ㄷ",
-    "sid": "understanding_refst_5a3c5c",
+    "sid": "understanding_refst_b0e601",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "벤질알코올",
+    "text": "사용기한",
     "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㄹ",
-    "sid": "understanding_refst_556cb5",
+    "sid": "understanding_refst_f640e4",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "아니스알코올",
+    "text": "맞춤형화장품조제관리사의 변경신고를 하지 않은 경우",
     "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㅁ",
-    "sid": "understanding_refst_2fff9a",
+    "sid": "understanding_refst_02f014",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "카민 함유 제품",
+    "text": "알루미늄 및 그 염류 함유 제품 (체취방지용 제품류에 한함)",
     "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    }
@@ -26688,8 +26690,8 @@ var COMBO_DRILLS_subject4 = [
    "자동생성",
    "참조자료",
    "열거목록",
-   "한도",
-   "수치"
+   "기한",
+   "절차"
   ],
   "derivedFrom": "ref:enum|주의사항_별표1_유형별주의사항표시문구|cat|12|1",
   "explain": "ㄱ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄴ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄷ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄹ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㅁ. 출처: 주의사항 별표1 유형별주의사항표시문구 ",
@@ -26706,41 +26708,41 @@ var COMBO_DRILLS_subject4 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "understanding_refst_c9a1e0",
+    "sid": "understanding_refst_34261e",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "알파-아이소메틸아이오논",
-    "truth": false,
-    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_refst_d6eef2",
-    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "알부틴 2% 이상 함유 제품",
+    "text": "벤잘코늄클로라이드, 벤잘코늄브로마이드 및 벤잘코늄사카리네이트 함유 제품",
     "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
-    "id": "ㄷ",
-    "sid": "understanding_refst_02f014",
+    "id": "ㄴ",
+    "sid": "understanding_refst_62f913",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "알루미늄 및 그 염류 함유 제품 (체취방지용 제품류에 한함)",
+    "text": "맞춤형화장품판매업소 상호의 변경신고를 하지 않은 경우",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_9bbcab",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "부틸파라벤, 프로필파라벤, 이소부틸파라벤 또는 이소프로필파라벤 함유 제품",
     "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㄹ",
-    "sid": "understanding_refst_010377",
+    "sid": "understanding_refst_1c6a61",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "헥실신남알",
+    "text": "구조식 또는 시성식",
     "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㅁ",
-    "sid": "understanding_refst_34261e",
+    "sid": "understanding_refst_8297ba",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "벤잘코늄클로라이드, 벤잘코늄브로마이드 및 벤잘코늄사카리네이트 함유 제품",
+    "text": "스테아린산아연 함유 제품(기초화장용 제품류 중 파우더 제품에 한함)",
     "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    }
@@ -26758,7 +26760,7 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㄴ",
+     "ㄱ",
      "ㄷ",
      "ㅁ"
     ]
@@ -26792,8 +26794,7 @@ var COMBO_DRILLS_subject4 = [
    "자동생성",
    "참조자료",
    "열거목록",
-   "한도",
-   "수치"
+   "절차"
   ],
   "derivedFrom": "ref:enum|주의사항_별표1_유형별주의사항표시문구|cat|12|2",
   "explain": "ㄱ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄴ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄷ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄹ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㅁ. 출처: 주의사항 별표1 유형별주의사항표시문구 ",
@@ -26810,41 +26811,41 @@ var COMBO_DRILLS_subject4 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "understanding_refst_2fff9a",
+    "sid": "understanding_refst_8297ba",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "카민 함유 제품",
+    "text": "스테아린산아연 함유 제품(기초화장용 제품류 중 파우더 제품에 한함)",
     "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㄴ",
-    "sid": "understanding_refst_010377",
+    "sid": "understanding_refst_c9a1e0",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "헥실신남알",
+    "text": "알파-아이소메틸아이오논",
     "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㄷ",
-    "sid": "understanding_refst_6d99fa",
+    "sid": "understanding_refst_078b9c",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "하이드록시시트로넬알",
+    "text": "사회적 기능",
     "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㄹ",
-    "sid": "understanding_refst_ada4d9",
+    "sid": "understanding_refst_d6eef2",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "코치닐추출물 함유 제품",
+    "text": "알부틴 2% 이상 함유 제품",
     "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㅁ",
-    "sid": "understanding_refst_8297ba",
+    "sid": "understanding_refst_232af7",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "스테아린산아연 함유 제품(기초화장용 제품류 중 파우더 제품에 한함)",
+    "text": "아이오도프로피닐부틸카바메이트(IPBC) 함유 제품 (목욕용제품, 샴푸류 및 바디클렌저 제외)",
     "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    }
@@ -26893,7 +26894,9 @@ var COMBO_DRILLS_subject4 = [
   "tags": [
    "자동생성",
    "참조자료",
-   "열거목록"
+   "열거목록",
+   "한도",
+   "수치"
   ],
   "derivedFrom": "ref:enum|주의사항_별표1_유형별주의사항표시문구|cat|12|3",
   "explain": "ㄱ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄴ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄷ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄹ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㅁ. 출처: 주의사항 별표1 유형별주의사항표시문구 ",
@@ -26910,6 +26913,14 @@ var COMBO_DRILLS_subject4 = [
   "statements": [
    {
     "id": "ㄱ",
+    "sid": "understanding_refst_69e71c",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "셰이빙 폼(shaving foam)",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄴ",
     "sid": "understanding_refst_be40e3",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
     "text": "셰이빙 크림(shaving cream)",
@@ -26917,34 +26928,26 @@ var COMBO_DRILLS_subject4 = [
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
-    "id": "ㄴ",
-    "sid": "understanding_refst_06117c",
-    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "애프터셰이브 로션(aftershave lotions)",
-    "truth": true,
-    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
-   },
-   {
     "id": "ㄷ",
-    "sid": "understanding_refst_301f73",
+    "sid": "understanding_refst_563d4d",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "아밀신나밀알코올",
+    "text": "오버헤드스터러(아지믹서, 프로펠러믹서, 분산기)",
     "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㄹ",
-    "sid": "understanding_refst_26624b",
+    "sid": "understanding_refst_916436",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "알파-아이소메틸아이오논",
+    "text": "금속이온봉쇄제",
     "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㅁ",
-    "sid": "understanding_refst_69e71c",
+    "sid": "understanding_refst_06117c",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "셰이빙 폼(shaving foam)",
+    "text": "애프터셰이브 로션(aftershave lotions)",
     "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    }
@@ -27009,6 +27012,22 @@ var COMBO_DRILLS_subject4 = [
   "statements": [
    {
     "id": "ㄱ",
+    "sid": "understanding_refst_3539ca",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "수성 원료",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_9bdcba",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "디스퍼 `기출`",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄷ",
     "sid": "understanding_refst_1cea56",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
     "text": "헤어 스트레이트너(hair straightner)",
@@ -27016,7 +27035,7 @@ var COMBO_DRILLS_subject4 = [
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
-    "id": "ㄴ",
+    "id": "ㄹ",
     "sid": "understanding_refst_5b624b",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
     "text": "헤어 토닉(hair tonics), 헤어 에센스(hair essence)",
@@ -27024,27 +27043,11 @@ var COMBO_DRILLS_subject4 = [
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
-    "id": "ㄷ",
+    "id": "ㅁ",
     "sid": "understanding_refst_abfe28",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
     "text": "헤어 크림·로션",
     "truth": true,
-    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_refst_4e62f8",
-    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "아니스알코올",
-    "truth": false,
-    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_refst_97ca9a",
-    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "제라니올",
-    "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    }
   ],
@@ -27052,25 +27055,21 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
+     "ㄱ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "3",
     "members": [
      "ㄱ",
-     "ㄴ",
-     "ㄷ",
      "ㅁ"
     ]
    },
@@ -27078,13 +27077,17 @@ var COMBO_DRILLS_subject4 = [
     "id": "4",
     "members": [
      "ㄱ",
+     "ㄴ",
+     "ㄷ",
      "ㅁ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㄱ"
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
     ]
    }
   ],
@@ -27108,42 +27111,42 @@ var COMBO_DRILLS_subject4 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "understanding_refst_e69ae9",
+    "sid": "understanding_refst_822355",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "헤어 컨디셔너(hair conditioners), 헤어 트리트먼트(hair treatment), 헤어 팩",
-    "truth": true,
+    "text": "작열감 (Burning)",
+    "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㄴ",
-    "sid": "understanding_refst_abfe28",
+    "sid": "understanding_refst_026a00",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "헤어 크림·로션",
+    "text": "포마드(pomade), 헤어 스프레이·무스·왁스·젤, 헤어 그루밍 에이드(hair grooming aids)",
     "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㄷ",
-    "sid": "understanding_refst_28b2dd",
+    "sid": "understanding_refst_35ed8e",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "참나무이끼추출물",
+    "text": "플라스틱 (PP)",
     "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㄹ",
-    "sid": "understanding_refst_5b624b",
+    "sid": "understanding_refst_1cea56",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "헤어 토닉(hair tonics), 헤어 에센스(hair essence)",
+    "text": "헤어 스트레이트너(hair straightner)",
     "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㅁ",
-    "sid": "understanding_refst_4aedc5",
+    "sid": "understanding_refst_e69ae9",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "벤질살리실레이트",
-    "truth": false,
+    "text": "헤어 컨디셔너(hair conditioners), 헤어 트리트먼트(hair treatment), 헤어 팩",
+    "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    }
   ],
@@ -27151,9 +27154,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄱ",
      "ㄴ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -27206,6 +27209,14 @@ var COMBO_DRILLS_subject4 = [
   "statements": [
    {
     "id": "ㄱ",
+    "sid": "understanding_refst_8d6749",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "파우더용기",
+    "truth": false,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㄴ",
     "sid": "understanding_refst_0788dc",
     "conceptId": "주의사항 별표2 알레르기유발성분25종:",
     "text": "아이소유제놀",
@@ -27213,18 +27224,10 @@ var COMBO_DRILLS_subject4 = [
     "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
    },
    {
-    "id": "ㄴ",
-    "sid": "understanding_refst_4fb232",
-    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "두발용, 두발염색용 및 눈 화장용 제품류",
-    "truth": false,
-    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
-   },
-   {
     "id": "ㄷ",
-    "sid": "understanding_refst_431416",
+    "sid": "understanding_refst_0df875",
     "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "영유아용 로션, 크림",
+    "text": "피부 관련",
     "truth": false,
     "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
    },
@@ -27277,7 +27280,7 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㄱ",
+     "ㄴ",
      "ㄹ",
      "ㅁ"
     ]
@@ -27303,9 +27306,9 @@ var COMBO_DRILLS_subject4 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "understanding_refst_f5aea7",
+    "sid": "understanding_refst_fa717a",
     "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "참나무이끼추출물",
+    "text": "벤질벤조에이트",
     "truth": true,
     "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
    },
@@ -27319,25 +27322,25 @@ var COMBO_DRILLS_subject4 = [
    },
    {
     "id": "ㄷ",
-    "sid": "understanding_refst_89399f",
+    "sid": "understanding_refst_c4fd92",
     "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "페이스 파우더(face powder)",
+    "text": "표시 대상",
     "truth": false,
     "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
    },
    {
     "id": "ㄹ",
-    "sid": "understanding_refst_de0680",
+    "sid": "understanding_refst_ed3ebe",
     "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "속눈썹용 퍼머넌트 웨이브(eye-lash permanent wave)",
+    "text": "플라스틱 (AS)",
     "truth": false,
     "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
    },
    {
     "id": "ㅁ",
-    "sid": "understanding_refst_0788dc",
+    "sid": "understanding_refst_6ed5bc",
     "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "아이소유제놀",
+    "text": "제라니올",
     "truth": true,
     "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
    }
@@ -27408,33 +27411,33 @@ var COMBO_DRILLS_subject4 = [
    },
    {
     "id": "ㄴ",
-    "sid": "understanding_refst_5aabf6",
+    "sid": "understanding_refst_7f8a8c",
     "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "헥실신남알",
-    "truth": true,
-    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_refst_979ef2",
-    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "스테아린산아연 함유 제품(기초화장용 제품류 중 파우더 제품에 한함)",
+    "text": "금속이온봉쇄제",
     "truth": false,
     "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
    },
    {
-    "id": "ㄹ",
-    "sid": "understanding_refst_da5483",
+    "id": "ㄷ",
+    "sid": "understanding_refst_fa717a",
     "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "벤질알코올",
+    "text": "벤질벤조에이트",
+    "truth": true,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_f5aea7",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "참나무이끼추출물",
     "truth": true,
     "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
    },
    {
     "id": "ㅁ",
-    "sid": "understanding_refst_f7d1a7",
+    "sid": "understanding_refst_704691",
     "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "네일폴리시·네일에나멜 리무버",
+    "text": "아미노산",
     "truth": false,
     "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
    }
@@ -27478,7 +27481,7 @@ var COMBO_DRILLS_subject4 = [
     "id": "5",
     "members": [
      "ㄱ",
-     "ㄴ",
+     "ㄷ",
      "ㄹ"
     ]
    }
@@ -27504,41 +27507,41 @@ var COMBO_DRILLS_subject4 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "understanding_refst_d1485d",
+    "sid": "understanding_refst_17db6b",
     "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "콜롱(cologne)",
+    "text": "피부 감작성",
     "truth": false,
     "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
    },
    {
     "id": "ㄴ",
-    "sid": "understanding_refst_e486ef",
+    "sid": "understanding_refst_4e387e",
     "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "하이드록시시트로넬알",
+    "text": "벤질살리실레이트",
     "truth": true,
     "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
    },
    {
     "id": "ㄷ",
-    "sid": "understanding_refst_89838f",
+    "sid": "understanding_refst_28f49d",
     "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "폴리에톡실레이티드레틴아마이드 0.2% 이상 함유 제품",
+    "text": "모든 화장품류",
     "truth": false,
     "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
    },
    {
     "id": "ㄹ",
-    "sid": "understanding_refst_edcf08",
+    "sid": "understanding_refst_e2f7c3",
     "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "알파-아이소메틸아이오논",
+    "text": "부틸페닐메틸프로피오날",
     "truth": true,
     "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
    },
    {
     "id": "ㅁ",
-    "sid": "understanding_refst_d1ee59",
+    "sid": "understanding_refst_469c50",
     "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "신나밀알코올",
+    "text": "아밀신나밀알코올",
     "truth": true,
     "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
    }
@@ -27589,9 +27592,7 @@ var COMBO_DRILLS_subject4 = [
   "tags": [
    "자동생성",
    "참조자료",
-   "열거목록",
-   "한도",
-   "수치"
+   "열거목록"
   ],
   "derivedFrom": "ref:enum|주의사항_별표2_알레르기유발성분25종|mdtable|0|3",
   "explain": "ㄱ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄴ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄷ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄹ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㅁ. 출처: 주의사항 별표2 알레르기유발성분25종 ",
@@ -27608,42 +27609,42 @@ var COMBO_DRILLS_subject4 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "understanding_refst_68c688",
+    "sid": "understanding_refst_12e31e",
     "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "나무이끼추출물",
-    "truth": true,
+    "text": "면역 기능",
+    "truth": false,
     "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
    },
    {
     "id": "ㄴ",
-    "sid": "understanding_refst_4e387e",
+    "sid": "understanding_refst_5bc07c",
     "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "벤질살리실레이트",
-    "truth": true,
+    "text": "영유아용 오일",
+    "truth": false,
     "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
    },
    {
     "id": "ㄷ",
-    "sid": "understanding_refst_6ed5bc",
+    "sid": "understanding_refst_e486ef",
     "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "제라니올",
+    "text": "하이드록시시트로넬알",
     "truth": true,
     "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
    },
    {
     "id": "ㄹ",
-    "sid": "understanding_refst_487a3f",
+    "sid": "understanding_refst_008106",
     "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "목욕용 소금류",
-    "truth": false,
+    "text": "아밀신남알",
+    "truth": true,
     "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
    },
    {
     "id": "ㅁ",
-    "sid": "understanding_refst_72cfae",
+    "sid": "understanding_refst_edcf08",
     "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "체취 방지용 제품",
-    "truth": false,
+    "text": "알파-아이소메틸아이오논",
+    "truth": true,
     "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
    }
   ],
@@ -27651,9 +27652,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -27707,42 +27708,42 @@ var COMBO_DRILLS_subject4 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "understanding_refst_edcf08",
+    "sid": "understanding_refst_dccb3f",
     "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "알파-아이소메틸아이오논",
-    "truth": true,
+    "text": "용량/용량 백분율",
+    "truth": false,
     "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
    },
    {
     "id": "ㄴ",
-    "sid": "understanding_refst_da5483",
+    "sid": "understanding_refst_1bfae9",
     "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "벤질알코올",
+    "text": "벤질신나메이트",
     "truth": true,
     "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
    },
    {
     "id": "ㄷ",
-    "sid": "understanding_refst_5aabf6",
+    "sid": "understanding_refst_7dc163",
     "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "헥실신남알",
-    "truth": true,
+    "text": "헤어 토닉(hair tonics), 헤어 에센스(hair essence)",
+    "truth": false,
     "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
    },
    {
     "id": "ㄹ",
-    "sid": "understanding_refst_df9caf",
+    "sid": "understanding_refst_e486ef",
     "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "아이 섀도(eye shadow)",
-    "truth": false,
+    "text": "하이드록시시트로넬알",
+    "truth": true,
     "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
    },
    {
     "id": "ㅁ",
-    "sid": "understanding_refst_a09ecb",
+    "sid": "understanding_refst_f5aea7",
     "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "클렌징 워터, 클렌징 오일, 클렌징 로션, 클렌징 크림 등 메이크업 리무버",
-    "truth": false,
+    "text": "참나무이끼추출물",
+    "truth": true,
     "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
    }
   ],
@@ -27750,9 +27751,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄱ",
      "ㄴ",
-     "ㄷ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -27806,17 +27807,17 @@ var COMBO_DRILLS_subject4 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "understanding_refst_583da1",
+    "sid": "understanding_refst_82017f",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "벤질살리실레이트",
-    "truth": false,
+    "text": "클렌징 워터, 클렌징 오일, 클렌징 로션, 클렌징 크림 등 메이크업 리무버",
+    "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㄴ",
-    "sid": "understanding_refst_62176d",
+    "sid": "understanding_refst_131e1d",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "헥실신남알",
+    "text": "시트로넬올",
     "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
@@ -27830,10 +27831,10 @@ var COMBO_DRILLS_subject4 = [
    },
    {
     "id": "ㄹ",
-    "sid": "understanding_refst_82017f",
+    "sid": "understanding_refst_85bcc2",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "클렌징 워터, 클렌징 오일, 클렌징 로션, 클렌징 크림 등 메이크업 리무버",
-    "truth": true,
+    "text": "플라스틱 (AS)",
+    "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
@@ -27880,8 +27881,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
+     "ㄱ",
      "ㄷ",
-     "ㄹ",
      "ㅁ"
     ]
    }
@@ -27906,6 +27907,30 @@ var COMBO_DRILLS_subject4 = [
   "statements": [
    {
     "id": "ㄱ",
+    "sid": "understanding_refst_90387d",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "표시의무자",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_358d13",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "마사지 크림",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_82017f",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "클렌징 워터, 클렌징 오일, 클렌징 로션, 클렌징 크림 등 메이크업 리무버",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄹ",
     "sid": "understanding_refst_6b3c3c",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
     "text": "바디 제품",
@@ -27913,35 +27938,11 @@ var COMBO_DRILLS_subject4 = [
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
-    "id": "ㄴ",
-    "sid": "understanding_refst_68dff3",
-    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "손·발의 피부연화 제품",
-    "truth": true,
-    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_refst_18b7ca",
-    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "아니스알코올",
-    "truth": false,
-    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_refst_583da1",
-    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "벤질살리실레이트",
-    "truth": false,
-    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
-   },
-   {
     "id": "ㅁ",
-    "sid": "understanding_refst_82017f",
+    "sid": "understanding_refst_096909",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "클렌징 워터, 클렌징 오일, 클렌징 로션, 클렌징 크림 등 메이크업 리무버",
-    "truth": true,
+    "text": "금속 (철)",
+    "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    }
   ],
@@ -27949,8 +27950,6 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄱ",
-     "ㄴ",
      "ㄷ",
      "ㄹ"
     ]
@@ -27958,22 +27957,21 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㄷ",
-     "ㄹ",
-     "ㅁ"
+     "ㄹ"
     ]
    },
    {
     "id": "3",
     "members": [
-     "ㄱ",
      "ㄴ",
-     "ㅁ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
     "id": "4",
     "members": [
+     "ㄱ",
      "ㄴ",
      "ㄷ",
      "ㄹ"
@@ -27982,7 +27980,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㄹ"
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
     ]
    }
   ],
@@ -28006,17 +28006,17 @@ var COMBO_DRILLS_subject4 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "understanding_refst_1c67ef",
+    "sid": "understanding_refst_9ec6d7",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "바디 클렌저(body cleanser)",
+    "text": "외음부 세정제",
     "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㄴ",
-    "sid": "understanding_refst_8334d8",
+    "sid": "understanding_refst_715b5b",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "아이소유제놀",
+    "text": "제라니올",
     "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
@@ -28030,18 +28030,18 @@ var COMBO_DRILLS_subject4 = [
    },
    {
     "id": "ㄹ",
-    "sid": "understanding_refst_9ec6d7",
+    "sid": "understanding_refst_05a893",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "외음부 세정제",
-    "truth": true,
+    "text": "벤질신나메이트",
+    "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㅁ",
-    "sid": "understanding_refst_c129c9",
+    "sid": "understanding_refst_1c67ef",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "벤질알코올",
-    "truth": false,
+    "text": "바디 클렌저(body cleanser)",
+    "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    }
   ],
@@ -28057,7 +28057,7 @@ var COMBO_DRILLS_subject4 = [
     "members": [
      "ㄱ",
      "ㄷ",
-     "ㄹ"
+     "ㅁ"
     ]
    },
    {
@@ -28091,6 +28091,4879 @@ var COMBO_DRILLS_subject4 = [
   ],
   "derivedFrom": "ref:enum|주의사항_별표1_유형별주의사항표시문구|cat|2|0",
   "explain": "ㄱ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄴ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄷ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄹ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㅁ. 출처: 주의사항 별표1 유형별주의사항표시문구 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "2"
+ },
+ {
+  "id": "understanding_combo-ref_a29eeb",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 6.mixing-subdivision 원료의 특성 (참조자료 원문)",
+  "stem": "다음 중 원료의 특성에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_95f551",
+    "conceptId": "과목4 노트 6.mixing-subdivision:원료의 특성",
+    "text": "광독성시험",
+    "truth": false,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 원료의 특성"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_4fdf14",
+    "conceptId": "과목4 노트 6.mixing-subdivision:원료의 특성",
+    "text": "금속이온봉쇄제",
+    "truth": true,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 원료의 특성"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_cb3736",
+    "conceptId": "과목4 노트 6.mixing-subdivision:원료의 특성",
+    "text": "유성 원료",
+    "truth": true,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 원료의 특성"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_aaa7f6",
+    "conceptId": "과목4 노트 6.mixing-subdivision:원료의 특성",
+    "text": "수성 원료",
+    "truth": true,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 원료의 특성"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_1f56de",
+    "conceptId": "과목4 노트 6.mixing-subdivision:원료의 특성",
+    "text": "원료 관련 (의약품 오인)",
+    "truth": false,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 원료의 특성"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|6.mixing-subdivision.md|2|0",
+  "explain": "ㄱ. 출처: 과목4 노트 6.mixing-subdivision 원료의 특성\nㄴ. 출처: 과목4 노트 6.mixing-subdivision 원료의 특성\nㄷ. 출처: 과목4 노트 6.mixing-subdivision 원료의 특성\nㄹ. 출처: 과목4 노트 6.mixing-subdivision 원료의 특성\nㅁ. 출처: 과목4 노트 6.mixing-subdivision 원료의 특성",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "understanding_combo-ref_f3096c",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 6.mixing-subdivision 원료의 특성 (참조자료 원문)",
+  "stem": "다음 중 원료의 특성에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_0f4008",
+    "conceptId": "과목4 노트 6.mixing-subdivision:원료의 특성",
+    "text": "고분자화합물(폴리머) – 점증제",
+    "truth": true,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 원료의 특성"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_cb3736",
+    "conceptId": "과목4 노트 6.mixing-subdivision:원료의 특성",
+    "text": "유성 원료",
+    "truth": true,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 원료의 특성"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_979847",
+    "conceptId": "과목4 노트 6.mixing-subdivision:원료의 특성",
+    "text": "흡수 기능",
+    "truth": false,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 원료의 특성"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_4fdf14",
+    "conceptId": "과목4 노트 6.mixing-subdivision:원료의 특성",
+    "text": "금속이온봉쇄제",
+    "truth": true,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 원료의 특성"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_5010f7",
+    "conceptId": "과목4 노트 6.mixing-subdivision:원료의 특성",
+    "text": "모간검사",
+    "truth": false,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 원료의 특성"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|6.mixing-subdivision.md|2|1",
+  "explain": "ㄱ. 출처: 과목4 노트 6.mixing-subdivision 원료의 특성\nㄴ. 출처: 과목4 노트 6.mixing-subdivision 원료의 특성\nㄷ. 출처: 과목4 노트 6.mixing-subdivision 원료의 특성\nㄹ. 출처: 과목4 노트 6.mixing-subdivision 원료의 특성\nㅁ. 출처: 과목4 노트 6.mixing-subdivision 원료의 특성",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "3"
+ },
+ {
+  "id": "understanding_combo-ref_cdf7ee",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 5.guideline 1차 vs 2차 vs 소용량 포장 표시사항 (참조자료 원문)",
+  "stem": "다음 중 1차 vs 2차 vs 소용량 포장 표시사항에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_fae13f",
+    "conceptId": "과목4 노트 5.guideline:1차 vs 2차 vs 소용량 포장 표시사항",
+    "text": "물티슈(물휴지)류",
+    "truth": false,
+    "explain": "출처: 과목4 노트 5.guideline 1차 vs 2차 vs 소용량 포장 표시사항"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_1c85e0",
+    "conceptId": "과목4 노트 5.guideline:1차 vs 2차 vs 소용량 포장 표시사항",
+    "text": "주의사항",
+    "truth": true,
+    "explain": "출처: 과목4 노트 5.guideline 1차 vs 2차 vs 소용량 포장 표시사항"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_930f52",
+    "conceptId": "과목4 노트 5.guideline:1차 vs 2차 vs 소용량 포장 표시사항",
+    "text": "메이크업 베이스(make-up bases)",
+    "truth": false,
+    "explain": "출처: 과목4 노트 5.guideline 1차 vs 2차 vs 소용량 포장 표시사항"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_f27e05",
+    "conceptId": "과목4 노트 5.guideline:1차 vs 2차 vs 소용량 포장 표시사항",
+    "text": "사용기한",
+    "truth": true,
+    "explain": "출처: 과목4 노트 5.guideline 1차 vs 2차 vs 소용량 포장 표시사항"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_ae68b4",
+    "conceptId": "과목4 노트 5.guideline:1차 vs 2차 vs 소용량 포장 표시사항",
+    "text": "용량/중량",
+    "truth": true,
+    "explain": "출처: 과목4 노트 5.guideline 1차 vs 2차 vs 소용량 포장 표시사항"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "기한",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|note|5.guideline.md|26|0",
+  "explain": "ㄱ. 출처: 과목4 노트 5.guideline 1차 vs 2차 vs 소용량 포장 표시사항\nㄴ. 출처: 과목4 노트 5.guideline 1차 vs 2차 vs 소용량 포장 표시사항\nㄷ. 출처: 과목4 노트 5.guideline 1차 vs 2차 vs 소용량 포장 표시사항\nㄹ. 출처: 과목4 노트 5.guideline 1차 vs 2차 vs 소용량 포장 표시사항\nㅁ. 출처: 과목4 노트 5.guideline 1차 vs 2차 vs 소용량 포장 표시사항",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "understanding_combo-ref_bad281",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 1.overview 안전성시험 (참조자료 원문)",
+  "stem": "다음 중 안전성시험에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_28bc98",
+    "conceptId": "과목4 노트 1.overview:안전성시험",
+    "text": "안(眼)점막 자극시험",
+    "truth": true,
+    "explain": "출처: 과목4 노트 1.overview 안전성시험"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_f10653",
+    "conceptId": "과목4 노트 1.overview:안전성시험",
+    "text": "모발 손상·피부노화·안티에이징·효능·효과·비교·시험 표현",
+    "truth": false,
+    "explain": "출처: 과목4 노트 1.overview 안전성시험"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_6e7d7c",
+    "conceptId": "과목4 노트 1.overview:안전성시험",
+    "text": "버블 배스(bubble baths)",
+    "truth": false,
+    "explain": "출처: 과목4 노트 1.overview 안전성시험"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_780e46",
+    "conceptId": "과목4 노트 1.overview:안전성시험",
+    "text": "유전 독성시험",
+    "truth": true,
+    "explain": "출처: 과목4 노트 1.overview 안전성시험"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_c06997",
+    "conceptId": "과목4 노트 1.overview:안전성시험",
+    "text": "피부 감작성시험",
+    "truth": true,
+    "explain": "출처: 과목4 노트 1.overview 안전성시험"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|1.overview.md|9|0",
+  "explain": "ㄱ. 출처: 과목4 노트 1.overview 안전성시험\nㄴ. 출처: 과목4 노트 1.overview 안전성시험\nㄷ. 출처: 과목4 노트 1.overview 안전성시험\nㄹ. 출처: 과목4 노트 1.overview 안전성시험\nㅁ. 출처: 과목4 노트 1.overview 안전성시험",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "1"
+ },
+ {
+  "id": "understanding_combo-ref_27b1fb",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 1.overview 안전성시험 (참조자료 원문)",
+  "stem": "다음 중 안전성시험에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_aebb8a",
+    "conceptId": "과목4 노트 1.overview:안전성시험",
+    "text": "표준품 및 시약·시액",
+    "truth": false,
+    "explain": "출처: 과목4 노트 1.overview 안전성시험"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_3d5de8",
+    "conceptId": "과목4 노트 1.overview:안전성시험",
+    "text": "베이스코트(basecoats), 언더코트(under coats)",
+    "truth": false,
+    "explain": "출처: 과목4 노트 1.overview 안전성시험"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_61c7b1",
+    "conceptId": "과목4 노트 1.overview:안전성시험",
+    "text": "단회 투여 독성시험",
+    "truth": true,
+    "explain": "출처: 과목4 노트 1.overview 안전성시험"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_eb155d",
+    "conceptId": "과목4 노트 1.overview:안전성시험",
+    "text": "광감작성시험",
+    "truth": true,
+    "explain": "출처: 과목4 노트 1.overview 안전성시험"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_337f59",
+    "conceptId": "과목4 노트 1.overview:안전성시험",
+    "text": "광독성시험",
+    "truth": true,
+    "explain": "출처: 과목4 노트 1.overview 안전성시험"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|1.overview.md|9|1",
+  "explain": "ㄱ. 출처: 과목4 노트 1.overview 안전성시험\nㄴ. 출처: 과목4 노트 1.overview 안전성시험\nㄷ. 출처: 과목4 노트 1.overview 안전성시험\nㄹ. 출처: 과목4 노트 1.overview 안전성시험\nㅁ. 출처: 과목4 노트 1.overview 안전성시험",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "2"
+ },
+ {
+  "id": "understanding_combo-ref_00d9f1",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 6.mixing-subdivision 제형 안정성 감소 요인 (참조자료 원문)",
+  "stem": "다음 중 제형 안정성 감소 요인에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_84b17e",
+    "conceptId": "과목4 노트 6.mixing-subdivision:제형 안정성 감소 요인",
+    "text": "휘발성 유상을 너무 일찍 투입, W/O에서 수상 급투입",
+    "truth": true,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 제형 안정성 감소 요인"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_57464b",
+    "conceptId": "과목4 노트 6.mixing-subdivision:제형 안정성 감소 요인",
+    "text": "설정 온도보다 과도하게 높음",
+    "truth": true,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 제형 안정성 감소 요인"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_d95e7f",
+    "conceptId": "과목4 노트 6.mixing-subdivision:제형 안정성 감소 요인",
+    "text": "미세 기포 미제거",
+    "truth": true,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 제형 안정성 감소 요인"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_92a5da",
+    "conceptId": "과목4 노트 6.mixing-subdivision:제형 안정성 감소 요인",
+    "text": "바디 클렌저(body cleanser)",
+    "truth": false,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 제형 안정성 감소 요인"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_680317",
+    "conceptId": "과목4 노트 6.mixing-subdivision:제형 안정성 감소 요인",
+    "text": "플라스틱 (PVC)",
+    "truth": false,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 제형 안정성 감소 요인"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|6.mixing-subdivision.md|37|0",
+  "explain": "ㄱ. 출처: 과목4 노트 6.mixing-subdivision 제형 안정성 감소 요인\nㄴ. 출처: 과목4 노트 6.mixing-subdivision 제형 안정성 감소 요인\nㄷ. 출처: 과목4 노트 6.mixing-subdivision 제형 안정성 감소 요인\nㄹ. 출처: 과목4 노트 6.mixing-subdivision 제형 안정성 감소 요인\nㅁ. 출처: 과목4 노트 6.mixing-subdivision 제형 안정성 감소 요인",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "3"
+ },
+ {
+  "id": "understanding_combo-ref_5fe0d3",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 7.filling-packaging 충진기 종류 (참조자료 원문)",
+  "stem": "다음 중 충진기 종류에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_61c86a",
+    "conceptId": "과목4 노트 7.filling-packaging:충진기 종류",
+    "text": "피스톤 방식 충진기",
+    "truth": true,
+    "explain": "출처: 과목4 노트 7.filling-packaging 충진기 종류"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_476e6c",
+    "conceptId": "과목4 노트 7.filling-packaging:충진기 종류",
+    "text": "액체 충진기",
+    "truth": true,
+    "explain": "출처: 과목4 노트 7.filling-packaging 충진기 종류"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_a5b310",
+    "conceptId": "과목4 노트 7.filling-packaging:충진기 종류",
+    "text": "질량백분율",
+    "truth": false,
+    "explain": "출처: 과목4 노트 7.filling-packaging 충진기 종류"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_cce03b",
+    "conceptId": "과목4 노트 7.filling-packaging:충진기 종류",
+    "text": "저장 기능",
+    "truth": false,
+    "explain": "출처: 과목4 노트 7.filling-packaging 충진기 종류"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_532712",
+    "conceptId": "과목4 노트 7.filling-packaging:충진기 종류",
+    "text": "카톤 충진기",
+    "truth": true,
+    "explain": "출처: 과목4 노트 7.filling-packaging 충진기 종류"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|7.filling-packaging.md|3|0",
+  "explain": "ㄱ. 출처: 과목4 노트 7.filling-packaging 충진기 종류\nㄴ. 출처: 과목4 노트 7.filling-packaging 충진기 종류\nㄷ. 출처: 과목4 노트 7.filling-packaging 충진기 종류\nㄹ. 출처: 과목4 노트 7.filling-packaging 충진기 종류\nㅁ. 출처: 과목4 노트 7.filling-packaging 충진기 종류",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "2"
+ },
+ {
+  "id": "understanding_combo-ref_d4e9c4",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 7.filling-packaging 충진기 종류 (참조자료 원문)",
+  "stem": "다음 중 충진기 종류에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_0c2e71",
+    "conceptId": "과목4 노트 7.filling-packaging:충진기 종류",
+    "text": "파우치 방식 충진기",
+    "truth": true,
+    "explain": "출처: 과목4 노트 7.filling-packaging 충진기 종류"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_61c86a",
+    "conceptId": "과목4 노트 7.filling-packaging:충진기 종류",
+    "text": "피스톤 방식 충진기",
+    "truth": true,
+    "explain": "출처: 과목4 노트 7.filling-packaging 충진기 종류"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_402448",
+    "conceptId": "과목4 노트 7.filling-packaging:충진기 종류",
+    "text": "튜브 충진기",
+    "truth": true,
+    "explain": "출처: 과목4 노트 7.filling-packaging 충진기 종류"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_caf9a6",
+    "conceptId": "과목4 노트 7.filling-packaging:충진기 종류",
+    "text": "따끔거림 (Pricking)",
+    "truth": false,
+    "explain": "출처: 과목4 노트 7.filling-packaging 충진기 종류"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_b23731",
+    "conceptId": "과목4 노트 7.filling-packaging:충진기 종류",
+    "text": "강열 잔분, 회분 또는 산불용성 회분",
+    "truth": false,
+    "explain": "출처: 과목4 노트 7.filling-packaging 충진기 종류"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|7.filling-packaging.md|3|1",
+  "explain": "ㄱ. 출처: 과목4 노트 7.filling-packaging 충진기 종류\nㄴ. 출처: 과목4 노트 7.filling-packaging 충진기 종류\nㄷ. 출처: 과목4 노트 7.filling-packaging 충진기 종류\nㄹ. 출처: 과목4 노트 7.filling-packaging 충진기 종류\nㅁ. 출처: 과목4 노트 7.filling-packaging 충진기 종류",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "3"
+ },
+ {
+  "id": "understanding_combo-ref_351328",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 5.guideline 실증 자료 종류 (참조자료 원문)",
+  "stem": "다음 중 실증 자료 종류에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_1c7f9b",
+    "conceptId": "과목4 노트 5.guideline:실증 자료 종류",
+    "text": "콜라겐·효소·탈모 감소",
+    "truth": true,
+    "explain": "출처: 과목4 노트 5.guideline 실증 자료 종류"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_f35cc8",
+    "conceptId": "과목4 노트 5.guideline:실증 자료 종류",
+    "text": "여드름성·항균·셀룰라이트·다크서클·피지조절·미세먼지",
+    "truth": true,
+    "explain": "출처: 과목4 노트 5.guideline 실증 자료 종류"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_9d52d4",
+    "conceptId": "과목4 노트 5.guideline:실증 자료 종류",
+    "text": "금속이온봉쇄제",
+    "truth": false,
+    "explain": "출처: 과목4 노트 5.guideline 실증 자료 종류"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_6c46b9",
+    "conceptId": "과목4 노트 5.guideline:실증 자료 종류",
+    "text": "모발 손상·피부노화·안티에이징·효능·효과·비교·시험 표현",
+    "truth": true,
+    "explain": "출처: 과목4 노트 5.guideline 실증 자료 종류"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_78b861",
+    "conceptId": "과목4 노트 5.guideline:실증 자료 종류",
+    "text": "용량/중량",
+    "truth": false,
+    "explain": "출처: 과목4 노트 5.guideline 실증 자료 종류"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|5.guideline.md|27|0",
+  "explain": "ㄱ. 출처: 과목4 노트 5.guideline 실증 자료 종류\nㄴ. 출처: 과목4 노트 5.guideline 실증 자료 종류\nㄷ. 출처: 과목4 노트 5.guideline 실증 자료 종류\nㄹ. 출처: 과목4 노트 5.guideline 실증 자료 종류\nㅁ. 출처: 과목4 노트 5.guideline 실증 자료 종류",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "1"
+ },
+ {
+  "id": "understanding_combo-ref_df2f9e",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 5.guideline 표시·광고 관련 행정처분 (참조자료 원문)",
+  "stem": "다음 중 표시·광고 관련 행정처분에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_c87a8d",
+    "conceptId": "과목4 노트 5.guideline:표시·광고 관련 행정처분",
+    "text": "보호 기능",
+    "truth": false,
+    "explain": "출처: 과목4 노트 5.guideline 표시·광고 관련 행정처분"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_b2f8de",
+    "conceptId": "과목4 노트 5.guideline:표시·광고 관련 행정처분",
+    "text": "화장품의 명칭, 영업자의 상호 및 주소 기재사항(가격은 제외함)의 전부를 기재하지 않은 경우",
+    "truth": true,
+    "explain": "출처: 과목4 노트 5.guideline 표시·광고 관련 행정처분"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_07e658",
+    "conceptId": "과목4 노트 5.guideline:표시·광고 관련 행정처분",
+    "text": "정상 피부(중성 피부)",
+    "truth": false,
+    "explain": "출처: 과목4 노트 5.guideline 표시·광고 관련 행정처분"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_0187d9",
+    "conceptId": "과목4 노트 5.guideline:표시·광고 관련 행정처분",
+    "text": "실증 자료 제출 명령을 어겨 표시·광고 행위 중지명령을 받았으나 이를 위반하여 표시·광고한 경우",
+    "truth": true,
+    "explain": "출처: 과목4 노트 5.guideline 표시·광고 관련 행정처분"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "처분기준",
+   "절차"
+  ],
+  "derivedFrom": "ref:enum|note|5.guideline.md|15|0",
+  "explain": "ㄱ. 출처: 과목4 노트 5.guideline 표시·광고 관련 행정처분\nㄴ. 출처: 과목4 노트 5.guideline 표시·광고 관련 행정처분\nㄷ. 출처: 과목4 노트 5.guideline 표시·광고 관련 행정처분\nㄹ. 출처: 과목4 노트 5.guideline 표시·광고 관련 행정처분",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "understanding_combo-ref_aac6b4",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 2.physiology 표피 4대 세포 (참조자료 원문)",
+  "stem": "다음 중 표피 4대 세포에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_55bf13",
+    "conceptId": "과목4 노트 2.physiology:표피 4대 세포",
+    "text": "멜라닌형성세포",
+    "truth": true,
+    "explain": "출처: 과목4 노트 2.physiology 표피 4대 세포"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_071944",
+    "conceptId": "과목4 노트 2.physiology:표피 4대 세포",
+    "text": "각질형성세포",
+    "truth": true,
+    "explain": "출처: 과목4 노트 2.physiology 표피 4대 세포"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_9865d3",
+    "conceptId": "과목4 노트 2.physiology:표피 4대 세포",
+    "text": "랑게르한스세포",
+    "truth": true,
+    "explain": "출처: 과목4 노트 2.physiology 표피 4대 세포"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_80396a",
+    "conceptId": "과목4 노트 2.physiology:표피 4대 세포",
+    "text": "하이드록시시트로넬알",
+    "truth": false,
+    "explain": "출처: 과목4 노트 2.physiology 표피 4대 세포"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_e7e828",
+    "conceptId": "과목4 노트 2.physiology:표피 4대 세포",
+    "text": "알부틴 2% 이상 함유 제품",
+    "truth": false,
+    "explain": "출처: 과목4 노트 2.physiology 표피 4대 세포"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "한도",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|note|2.physiology.md|45|0",
+  "explain": "ㄱ. 출처: 과목4 노트 2.physiology 표피 4대 세포\nㄴ. 출처: 과목4 노트 2.physiology 표피 4대 세포\nㄷ. 출처: 과목4 노트 2.physiology 표피 4대 세포\nㄹ. 출처: 과목4 노트 2.physiology 표피 4대 세포\nㅁ. 출처: 과목4 노트 2.physiology 표피 4대 세포",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "3"
+ },
+ {
+  "id": "understanding_combo-ref_c22b5d",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 7.filling-packaging 포장재의 조건 (참조자료 원문)",
+  "stem": "다음 중 포장재의 조건에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_716633",
+    "conceptId": "과목4 노트 7.filling-packaging:포장재의 조건",
+    "text": "적정 포장",
+    "truth": true,
+    "explain": "출처: 과목4 노트 7.filling-packaging 포장재의 조건"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_a4ac5a",
+    "conceptId": "과목4 노트 7.filling-packaging:포장재의 조건",
+    "text": "벤질신나메이트",
+    "truth": false,
+    "explain": "출처: 과목4 노트 7.filling-packaging 포장재의 조건"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_db9050",
+    "conceptId": "과목4 노트 7.filling-packaging:포장재의 조건",
+    "text": "물티슈(물휴지)류",
+    "truth": false,
+    "explain": "출처: 과목4 노트 7.filling-packaging 포장재의 조건"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_a80438",
+    "conceptId": "과목4 노트 7.filling-packaging:포장재의 조건",
+    "text": "내용물 보호",
+    "truth": true,
+    "explain": "출처: 과목4 노트 7.filling-packaging 포장재의 조건"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_736283",
+    "conceptId": "과목4 노트 7.filling-packaging:포장재의 조건",
+    "text": "판매촉진성",
+    "truth": true,
+    "explain": "출처: 과목4 노트 7.filling-packaging 포장재의 조건"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|7.filling-packaging.md|7|0",
+  "explain": "ㄱ. 출처: 과목4 노트 7.filling-packaging 포장재의 조건\nㄴ. 출처: 과목4 노트 7.filling-packaging 포장재의 조건\nㄷ. 출처: 과목4 노트 7.filling-packaging 포장재의 조건\nㄹ. 출처: 과목4 노트 7.filling-packaging 포장재의 조건\nㅁ. 출처: 과목4 노트 7.filling-packaging 포장재의 조건",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "5"
+ },
+ {
+  "id": "understanding_combo-ref_a70ff4",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 7.filling-packaging 포장용기 재사용 비율 (참조자료 원문)",
+  "stem": "다음 중 포장용기 재사용 비율에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_8fb246",
+    "conceptId": "과목4 노트 7.filling-packaging:포장용기 재사용 비율",
+    "text": "물티슈(물휴지)류",
+    "truth": true,
+    "explain": "출처: 과목4 노트 7.filling-packaging 포장용기 재사용 비율"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_9a248c",
+    "conceptId": "과목4 노트 7.filling-packaging:포장용기 재사용 비율",
+    "text": "샴푸·린스류",
+    "truth": true,
+    "explain": "출처: 과목4 노트 7.filling-packaging 포장용기 재사용 비율"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_6a3a44",
+    "conceptId": "과목4 노트 7.filling-packaging:포장용기 재사용 비율",
+    "text": "유리 (칼리납유리)",
+    "truth": false,
+    "explain": "출처: 과목4 노트 7.filling-packaging 포장용기 재사용 비율"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_4beb6b",
+    "conceptId": "과목4 노트 7.filling-packaging:포장용기 재사용 비율",
+    "text": "머켈세포",
+    "truth": false,
+    "explain": "출처: 과목4 노트 7.filling-packaging 포장용기 재사용 비율"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_01451a",
+    "conceptId": "과목4 노트 7.filling-packaging:포장용기 재사용 비율",
+    "text": "합성수지 용기 액체·분말 세제류",
+    "truth": true,
+    "explain": "출처: 과목4 노트 7.filling-packaging 포장용기 재사용 비율"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "구성비"
+  ],
+  "derivedFrom": "ref:enum|note|7.filling-packaging.md|21|0",
+  "explain": "ㄱ. 출처: 과목4 노트 7.filling-packaging 포장용기 재사용 비율\nㄴ. 출처: 과목4 노트 7.filling-packaging 포장용기 재사용 비율\nㄷ. 출처: 과목4 노트 7.filling-packaging 포장용기 재사용 비율\nㄹ. 출처: 과목4 노트 7.filling-packaging 포장용기 재사용 비율\nㅁ. 출처: 과목4 노트 7.filling-packaging 포장용기 재사용 비율",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "3"
+ },
+ {
+  "id": "understanding_combo-ref_8e1216",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 4.consulting 피부 부작용 증상 (참조자료 원문)",
+  "stem": "다음 중 피부 부작용 증상에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_926cb5",
+    "conceptId": "과목4 노트 4.consulting:피부 부작용 증상",
+    "text": "수렴·유연·영양 화장수(face lotions)",
+    "truth": false,
+    "explain": "출처: 과목4 노트 4.consulting 피부 부작용 증상"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_4c8d73",
+    "conceptId": "과목4 노트 4.consulting:피부 부작용 증상",
+    "text": "홍반 (Erythema)",
+    "truth": true,
+    "explain": "출처: 과목4 노트 4.consulting 피부 부작용 증상"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_4ca766",
+    "conceptId": "과목4 노트 4.consulting:피부 부작용 증상",
+    "text": "자통 (Stinging)",
+    "truth": true,
+    "explain": "출처: 과목4 노트 4.consulting 피부 부작용 증상"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_aafa0a",
+    "conceptId": "과목4 노트 4.consulting:피부 부작용 증상",
+    "text": "염증 (Inflammation)",
+    "truth": true,
+    "explain": "출처: 과목4 노트 4.consulting 피부 부작용 증상"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_ffe61a",
+    "conceptId": "과목4 노트 4.consulting:피부 부작용 증상",
+    "text": "셰이빙 폼(shaving foam)",
+    "truth": false,
+    "explain": "출처: 과목4 노트 4.consulting 피부 부작용 증상"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|4.consulting.md|3|0",
+  "explain": "ㄱ. 출처: 과목4 노트 4.consulting 피부 부작용 증상\nㄴ. 출처: 과목4 노트 4.consulting 피부 부작용 증상\nㄷ. 출처: 과목4 노트 4.consulting 피부 부작용 증상\nㄹ. 출처: 과목4 노트 4.consulting 피부 부작용 증상\nㅁ. 출처: 과목4 노트 4.consulting 피부 부작용 증상",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "understanding_combo-ref_538dab",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 4.consulting 피부 부작용 증상 (참조자료 원문)",
+  "stem": "다음 중 피부 부작용 증상에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_4c8d73",
+    "conceptId": "과목4 노트 4.consulting:피부 부작용 증상",
+    "text": "홍반 (Erythema)",
+    "truth": true,
+    "explain": "출처: 과목4 노트 4.consulting 피부 부작용 증상"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_7a999a",
+    "conceptId": "과목4 노트 4.consulting:피부 부작용 증상",
+    "text": "영유아용 오일",
+    "truth": false,
+    "explain": "출처: 과목4 노트 4.consulting 피부 부작용 증상"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_aafa0a",
+    "conceptId": "과목4 노트 4.consulting:피부 부작용 증상",
+    "text": "염증 (Inflammation)",
+    "truth": true,
+    "explain": "출처: 과목4 노트 4.consulting 피부 부작용 증상"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_8e95f9",
+    "conceptId": "과목4 노트 4.consulting:피부 부작용 증상",
+    "text": "속눈썹용 퍼머넌트 웨이브 제품",
+    "truth": false,
+    "explain": "출처: 과목4 노트 4.consulting 피부 부작용 증상"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_329fb6",
+    "conceptId": "과목4 노트 4.consulting:피부 부작용 증상",
+    "text": "따끔거림 (Pricking)",
+    "truth": true,
+    "explain": "출처: 과목4 노트 4.consulting 피부 부작용 증상"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|4.consulting.md|3|1",
+  "explain": "ㄱ. 출처: 과목4 노트 4.consulting 피부 부작용 증상\nㄴ. 출처: 과목4 노트 4.consulting 피부 부작용 증상\nㄷ. 출처: 과목4 노트 4.consulting 피부 부작용 증상\nㄹ. 출처: 과목4 노트 4.consulting 피부 부작용 증상\nㅁ. 출처: 과목4 노트 4.consulting 피부 부작용 증상",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "3"
+ },
+ {
+  "id": "understanding_combo-ref_3d579f",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 2.physiology 피부 유형별 특징 (참조자료 원문)",
+  "stem": "다음 중 피부 유형별 특징에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_cb00a6",
+    "conceptId": "과목4 노트 2.physiology:피부 유형별 특징",
+    "text": "립스틱, 립라이너(lip liner)",
+    "truth": false,
+    "explain": "출처: 과목4 노트 2.physiology 피부 유형별 특징"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_ca234f",
+    "conceptId": "과목4 노트 2.physiology:피부 유형별 특징",
+    "text": "여드름 피부",
+    "truth": true,
+    "explain": "출처: 과목4 노트 2.physiology 피부 유형별 특징"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_006d34",
+    "conceptId": "과목4 노트 2.physiology:피부 유형별 특징",
+    "text": "노화 피부",
+    "truth": true,
+    "explain": "출처: 과목4 노트 2.physiology 피부 유형별 특징"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_2e3a87",
+    "conceptId": "과목4 노트 2.physiology:피부 유형별 특징",
+    "text": "너무 느림",
+    "truth": false,
+    "explain": "출처: 과목4 노트 2.physiology 피부 유형별 특징"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_70cf23",
+    "conceptId": "과목4 노트 2.physiology:피부 유형별 특징",
+    "text": "건성 피부",
+    "truth": true,
+    "explain": "출처: 과목4 노트 2.physiology 피부 유형별 특징"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|2.physiology.md|37|0",
+  "explain": "ㄱ. 출처: 과목4 노트 2.physiology 피부 유형별 특징\nㄴ. 출처: 과목4 노트 2.physiology 피부 유형별 특징\nㄷ. 출처: 과목4 노트 2.physiology 피부 유형별 특징\nㄹ. 출처: 과목4 노트 2.physiology 피부 유형별 특징\nㅁ. 출처: 과목4 노트 2.physiology 피부 유형별 특징",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "understanding_combo-ref_4d3545",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 2.physiology 피부 유형별 특징 (참조자료 원문)",
+  "stem": "다음 중 피부 유형별 특징에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_ca234f",
+    "conceptId": "과목4 노트 2.physiology:피부 유형별 특징",
+    "text": "여드름 피부",
+    "truth": true,
+    "explain": "출처: 과목4 노트 2.physiology 피부 유형별 특징"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_699aad",
+    "conceptId": "과목4 노트 2.physiology:피부 유형별 특징",
+    "text": "자유지방산 (Free Fatty Acid)",
+    "truth": false,
+    "explain": "출처: 과목4 노트 2.physiology 피부 유형별 특징"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_568d1f",
+    "conceptId": "과목4 노트 2.physiology:피부 유형별 특징",
+    "text": "정상 피부(중성 피부)",
+    "truth": true,
+    "explain": "출처: 과목4 노트 2.physiology 피부 유형별 특징"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_ac27c1",
+    "conceptId": "과목4 노트 2.physiology:피부 유형별 특징",
+    "text": "색소침착 피부",
+    "truth": true,
+    "explain": "출처: 과목4 노트 2.physiology 피부 유형별 특징"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_f610f2",
+    "conceptId": "과목4 노트 2.physiology:피부 유형별 특징",
+    "text": "용량/질량 백분율",
+    "truth": false,
+    "explain": "출처: 과목4 노트 2.physiology 피부 유형별 특징"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|2.physiology.md|37|1",
+  "explain": "ㄱ. 출처: 과목4 노트 2.physiology 피부 유형별 특징\nㄴ. 출처: 과목4 노트 2.physiology 피부 유형별 특징\nㄷ. 출처: 과목4 노트 2.physiology 피부 유형별 특징\nㄹ. 출처: 과목4 노트 2.physiology 피부 유형별 특징\nㅁ. 출처: 과목4 노트 2.physiology 피부 유형별 특징",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "understanding_combo-ref_f76610",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 5.guideline 행정처분 기준 비교표 (주요 위반) (참조자료 원문)",
+  "stem": "다음 중 행정처분 기준 비교표 (주요 위반)에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_84b1db",
+    "conceptId": "과목4 노트 5.guideline:행정처분 기준 비교표 (주요 위반)",
+    "text": "알파-아이소메틸아이오논",
+    "truth": false,
+    "explain": "출처: 과목4 노트 5.guideline 행정처분 기준 비교표 (주요 위반)"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_48311c",
+    "conceptId": "과목4 노트 5.guideline:행정처분 기준 비교표 (주요 위반)",
+    "text": "지정·공인·비교·절대표현·범위 벗어남",
+    "truth": true,
+    "explain": "출처: 과목4 노트 5.guideline 행정처분 기준 비교표 (주요 위반)"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_4d716c",
+    "conceptId": "과목4 노트 5.guideline:행정처분 기준 비교표 (주요 위반)",
+    "text": "실증 자료 미제출·위반",
+    "truth": true,
+    "explain": "출처: 과목4 노트 5.guideline 행정처분 기준 비교표 (주요 위반)"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_6c7315",
+    "conceptId": "과목4 노트 5.guideline:행정처분 기준 비교표 (주요 위반)",
+    "text": "파우더용기",
+    "truth": false,
+    "explain": "출처: 과목4 노트 5.guideline 행정처분 기준 비교표 (주요 위반)"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_5ff470",
+    "conceptId": "과목4 노트 5.guideline:행정처분 기준 비교표 (주요 위반)",
+    "text": "기재사항 거짓 기재",
+    "truth": true,
+    "explain": "출처: 과목4 노트 5.guideline 행정처분 기준 비교표 (주요 위반)"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "처분기준",
+   "절차"
+  ],
+  "derivedFrom": "ref:enum|note|5.guideline.md|28|0",
+  "explain": "ㄱ. 출처: 과목4 노트 5.guideline 행정처분 기준 비교표 (주요 위반)\nㄴ. 출처: 과목4 노트 5.guideline 행정처분 기준 비교표 (주요 위반)\nㄷ. 출처: 과목4 노트 5.guideline 행정처분 기준 비교표 (주요 위반)\nㄹ. 출처: 과목4 노트 5.guideline 행정처분 기준 비교표 (주요 위반)\nㅁ. 출처: 과목4 노트 5.guideline 행정처분 기준 비교표 (주요 위반)",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "understanding_combo-ref_512da0",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 2.physiology 표피(Epidermis) (참조자료 원문)",
+  "stem": "다음 중 표피(Epidermis)에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_ed3ef3",
+    "conceptId": "과목4 노트 2.physiology:표피(Epidermis)",
+    "text": "유극층 (Spinous Layer)",
+    "truth": true,
+    "explain": "출처: 과목4 노트 2.physiology 표피(Epidermis)"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_c62363",
+    "conceptId": "과목4 노트 2.physiology:표피(Epidermis)",
+    "text": "헤어 퍼머넌트 웨이브(hair permanent wave)",
+    "truth": false,
+    "explain": "출처: 과목4 노트 2.physiology 표피(Epidermis)"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_7f4f5d",
+    "conceptId": "과목4 노트 2.physiology:표피(Epidermis)",
+    "text": "모발 공해",
+    "truth": false,
+    "explain": "출처: 과목4 노트 2.physiology 표피(Epidermis)"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_2a38c9",
+    "conceptId": "과목4 노트 2.physiology:표피(Epidermis)",
+    "text": "투명층 (Clear Layer)",
+    "truth": true,
+    "explain": "출처: 과목4 노트 2.physiology 표피(Epidermis)"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_532c96",
+    "conceptId": "과목4 노트 2.physiology:표피(Epidermis)",
+    "text": "기저층 (Basal Layer)",
+    "truth": true,
+    "explain": "출처: 과목4 노트 2.physiology 표피(Epidermis)"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|2.physiology.md|6|0",
+  "explain": "ㄱ. 출처: 과목4 노트 2.physiology 표피(Epidermis)\nㄴ. 출처: 과목4 노트 2.physiology 표피(Epidermis)\nㄷ. 출처: 과목4 노트 2.physiology 표피(Epidermis)\nㄹ. 출처: 과목4 노트 2.physiology 표피(Epidermis)\nㅁ. 출처: 과목4 노트 2.physiology 표피(Epidermis)",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "5"
+ },
+ {
+  "id": "understanding_combo-ref_21dfe3",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 3.sensory-evaluation 관능평가 요소 (참조자료 원문)",
+  "stem": "다음 중 관능평가 요소에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_8a8a86",
+    "conceptId": "과목4 노트 3.sensory-evaluation:관능평가 요소",
+    "text": "점도, 경도",
+    "truth": true,
+    "explain": "출처: 과목4 노트 3.sensory-evaluation 관능평가 요소"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_f84b30",
+    "conceptId": "과목4 노트 3.sensory-evaluation:관능평가 요소",
+    "text": "홍반 (Erythema)",
+    "truth": false,
+    "explain": "출처: 과목4 노트 3.sensory-evaluation 관능평가 요소"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_ab2881",
+    "conceptId": "과목4 노트 3.sensory-evaluation:관능평가 요소",
+    "text": "증발, 표면 굳음",
+    "truth": true,
+    "explain": "출처: 과목4 노트 3.sensory-evaluation 관능평가 요소"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_b3fe82",
+    "conceptId": "과목4 노트 3.sensory-evaluation:관능평가 요소",
+    "text": "기재사항 일부 누락",
+    "truth": false,
+    "explain": "출처: 과목4 노트 3.sensory-evaluation 관능평가 요소"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_c5e1c2",
+    "conceptId": "과목4 노트 3.sensory-evaluation:관능평가 요소",
+    "text": "분리(성상)",
+    "truth": true,
+    "explain": "출처: 과목4 노트 3.sensory-evaluation 관능평가 요소"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|3.sensory-evaluation.md|5|0",
+  "explain": "ㄱ. 출처: 과목4 노트 3.sensory-evaluation 관능평가 요소\nㄴ. 출처: 과목4 노트 3.sensory-evaluation 관능평가 요소\nㄷ. 출처: 과목4 노트 3.sensory-evaluation 관능평가 요소\nㄹ. 출처: 과목4 노트 3.sensory-evaluation 관능평가 요소\nㅁ. 출처: 과목4 노트 3.sensory-evaluation 관능평가 요소",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "1"
+ },
+ {
+  "id": "understanding_combo-ref_e292ce",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 6.mixing-subdivision 원료 기준 및 시험 방법에 기재할 항목 (참조자료 원문)",
+  "stem": "다음 중 원료 기준 및 시험 방법에 기재할 항목에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_0ae225",
+    "conceptId": "과목4 노트 6.mixing-subdivision:원료 기준 및 시험 방법에 기재할 항목",
+    "text": "금속 (알루미늄)",
+    "truth": false,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 원료 기준 및 시험 방법에 기재할 항목"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_11067b",
+    "conceptId": "과목4 노트 6.mixing-subdivision:원료 기준 및 시험 방법에 기재할 항목",
+    "text": "실증 자료 미제출·위반",
+    "truth": false,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 원료 기준 및 시험 방법에 기재할 항목"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_3ef4b1",
+    "conceptId": "과목4 노트 6.mixing-subdivision:원료 기준 및 시험 방법에 기재할 항목",
+    "text": "강열 잔분, 회분 또는 산불용성 회분",
+    "truth": true,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 원료 기준 및 시험 방법에 기재할 항목"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_163603",
+    "conceptId": "과목4 노트 6.mixing-subdivision:원료 기준 및 시험 방법에 기재할 항목",
+    "text": "건조 감량, 강열 감량 또는 수분",
+    "truth": true,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 원료 기준 및 시험 방법에 기재할 항목"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_2e8110",
+    "conceptId": "과목4 노트 6.mixing-subdivision:원료 기준 및 시험 방법에 기재할 항목",
+    "text": "표준품 및 시약·시액",
+    "truth": true,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 원료 기준 및 시험 방법에 기재할 항목"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "절차"
+  ],
+  "derivedFrom": "ref:enum|note|6.mixing-subdivision.md|14|0",
+  "explain": "ㄱ. 출처: 과목4 노트 6.mixing-subdivision 원료 기준 및 시험 방법에 기재할 항목\nㄴ. 출처: 과목4 노트 6.mixing-subdivision 원료 기준 및 시험 방법에 기재할 항목\nㄷ. 출처: 과목4 노트 6.mixing-subdivision 원료 기준 및 시험 방법에 기재할 항목\nㄹ. 출처: 과목4 노트 6.mixing-subdivision 원료 기준 및 시험 방법에 기재할 항목\nㅁ. 출처: 과목4 노트 6.mixing-subdivision 원료 기준 및 시험 방법에 기재할 항목",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "2"
+ },
+ {
+  "id": "understanding_combo-ref_91eb73",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 6.mixing-subdivision 원료 기준 및 시험 방법에 기재할 항목 (참조자료 원문)",
+  "stem": "다음 중 원료 기준 및 시험 방법에 기재할 항목에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_3ef4b1",
+    "conceptId": "과목4 노트 6.mixing-subdivision:원료 기준 및 시험 방법에 기재할 항목",
+    "text": "강열 잔분, 회분 또는 산불용성 회분",
+    "truth": true,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 원료 기준 및 시험 방법에 기재할 항목"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_82058a",
+    "conceptId": "과목4 노트 6.mixing-subdivision:원료 기준 및 시험 방법에 기재할 항목",
+    "text": "순도시험",
+    "truth": true,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 원료 기준 및 시험 방법에 기재할 항목"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_3b6610",
+    "conceptId": "과목4 노트 6.mixing-subdivision:원료 기준 및 시험 방법에 기재할 항목",
+    "text": "마사지 크림",
+    "truth": false,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 원료 기준 및 시험 방법에 기재할 항목"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_aa6ff8",
+    "conceptId": "과목4 노트 6.mixing-subdivision:원료 기준 및 시험 방법에 기재할 항목",
+    "text": "영유아용 오일",
+    "truth": false,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 원료 기준 및 시험 방법에 기재할 항목"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_f31235",
+    "conceptId": "과목4 노트 6.mixing-subdivision:원료 기준 및 시험 방법에 기재할 항목",
+    "text": "구조식 또는 시성식",
+    "truth": true,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 원료 기준 및 시험 방법에 기재할 항목"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|6.mixing-subdivision.md|14|1",
+  "explain": "ㄱ. 출처: 과목4 노트 6.mixing-subdivision 원료 기준 및 시험 방법에 기재할 항목\nㄴ. 출처: 과목4 노트 6.mixing-subdivision 원료 기준 및 시험 방법에 기재할 항목\nㄷ. 출처: 과목4 노트 6.mixing-subdivision 원료 기준 및 시험 방법에 기재할 항목\nㄹ. 출처: 과목4 노트 6.mixing-subdivision 원료 기준 및 시험 방법에 기재할 항목\nㅁ. 출처: 과목4 노트 6.mixing-subdivision 원료 기준 및 시험 방법에 기재할 항목",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "3"
+ },
+ {
+  "id": "understanding_combo-ref_227338",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 7.filling-packaging 충진기 종류 (참조자료 원문)",
+  "stem": "다음 중 충진기 종류에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_8ee77f",
+    "conceptId": "과목4 노트 7.filling-packaging:충진기 종류",
+    "text": "폼클렌징·자외선 차단제",
+    "truth": true,
+    "explain": "출처: 과목4 노트 7.filling-packaging 충진기 종류"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_c7c96a",
+    "conceptId": "과목4 노트 7.filling-packaging:충진기 종류",
+    "text": "모범업소 우대조치",
+    "truth": false,
+    "explain": "출처: 과목4 노트 7.filling-packaging 충진기 종류"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_315e5a",
+    "conceptId": "과목4 노트 7.filling-packaging:충진기 종류",
+    "text": "샘플 파우치",
+    "truth": true,
+    "explain": "출처: 과목4 노트 7.filling-packaging 충진기 종류"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_1aac2b",
+    "conceptId": "과목4 노트 7.filling-packaging:충진기 종류",
+    "text": "벤질알코올",
+    "truth": false,
+    "explain": "출처: 과목4 노트 7.filling-packaging 충진기 종류"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_819853",
+    "conceptId": "과목4 노트 7.filling-packaging:충진기 종류",
+    "text": "대용량 로션·크림",
+    "truth": true,
+    "explain": "출처: 과목4 노트 7.filling-packaging 충진기 종류"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|7.filling-packaging.md|18|0",
+  "explain": "ㄱ. 출처: 과목4 노트 7.filling-packaging 충진기 종류\nㄴ. 출처: 과목4 노트 7.filling-packaging 충진기 종류\nㄷ. 출처: 과목4 노트 7.filling-packaging 충진기 종류\nㄹ. 출처: 과목4 노트 7.filling-packaging 충진기 종류\nㅁ. 출처: 과목4 노트 7.filling-packaging 충진기 종류",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "3"
+ },
+ {
+  "id": "understanding_combo-ref_f748f6",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 5.guideline 화장품 가격표시제 실시요령 (참조자료 원문)",
+  "stem": "다음 중 화장품 가격표시제 실시요령에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_4d43ee",
+    "conceptId": "과목4 노트 5.guideline:화장품 가격표시제 실시요령",
+    "text": "금속 (철)",
+    "truth": false,
+    "explain": "출처: 과목4 노트 5.guideline 화장품 가격표시제 실시요령"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_8f9e2c",
+    "conceptId": "과목4 노트 5.guideline:화장품 가격표시제 실시요령",
+    "text": "재검토기한",
+    "truth": true,
+    "explain": "출처: 과목4 노트 5.guideline 화장품 가격표시제 실시요령"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_65612b",
+    "conceptId": "과목4 노트 5.guideline:화장품 가격표시제 실시요령",
+    "text": "포름알데하이드",
+    "truth": false,
+    "explain": "출처: 과목4 노트 5.guideline 화장품 가격표시제 실시요령"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_795c83",
+    "conceptId": "과목4 노트 5.guideline:화장품 가격표시제 실시요령",
+    "text": "표시 대상",
+    "truth": true,
+    "explain": "출처: 과목4 노트 5.guideline 화장품 가격표시제 실시요령"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_12cbda",
+    "conceptId": "과목4 노트 5.guideline:화장품 가격표시제 실시요령",
+    "text": "홍보·계몽",
+    "truth": true,
+    "explain": "출처: 과목4 노트 5.guideline 화장품 가격표시제 실시요령"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "기한"
+  ],
+  "derivedFrom": "ref:enum|note|5.guideline.md|4|0",
+  "explain": "ㄱ. 출처: 과목4 노트 5.guideline 화장품 가격표시제 실시요령\nㄴ. 출처: 과목4 노트 5.guideline 화장품 가격표시제 실시요령\nㄷ. 출처: 과목4 노트 5.guideline 화장품 가격표시제 실시요령\nㄹ. 출처: 과목4 노트 5.guideline 화장품 가격표시제 실시요령\nㅁ. 출처: 과목4 노트 5.guideline 화장품 가격표시제 실시요령",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "5"
+ },
+ {
+  "id": "understanding_combo-ref_58421a",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 5.guideline 화장품 가격표시제 실시요령 (참조자료 원문)",
+  "stem": "다음 중 화장품 가격표시제 실시요령에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_386d05",
+    "conceptId": "과목4 노트 5.guideline:화장품 가격표시제 실시요령",
+    "text": "아이 메이크업 리무버(eye make-up remover)",
+    "truth": false,
+    "explain": "출처: 과목4 노트 5.guideline 화장품 가격표시제 실시요령"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_4ca8ee",
+    "conceptId": "과목4 노트 5.guideline:화장품 가격표시제 실시요령",
+    "text": "표시의무자",
+    "truth": true,
+    "explain": "출처: 과목4 노트 5.guideline 화장품 가격표시제 실시요령"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_e07c1b",
+    "conceptId": "과목4 노트 5.guideline:화장품 가격표시제 실시요령",
+    "text": "표시 방법",
+    "truth": true,
+    "explain": "출처: 과목4 노트 5.guideline 화장품 가격표시제 실시요령"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_795c83",
+    "conceptId": "과목4 노트 5.guideline:화장품 가격표시제 실시요령",
+    "text": "표시 대상",
+    "truth": true,
+    "explain": "출처: 과목4 노트 5.guideline 화장품 가격표시제 실시요령"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_503db5",
+    "conceptId": "과목4 노트 5.guideline:화장품 가격표시제 실시요령",
+    "text": "랑게르한스세포",
+    "truth": false,
+    "explain": "출처: 과목4 노트 5.guideline 화장품 가격표시제 실시요령"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|5.guideline.md|4|1",
+  "explain": "ㄱ. 출처: 과목4 노트 5.guideline 화장품 가격표시제 실시요령\nㄴ. 출처: 과목4 노트 5.guideline 화장품 가격표시제 실시요령\nㄷ. 출처: 과목4 노트 5.guideline 화장품 가격표시제 실시요령\nㄹ. 출처: 과목4 노트 5.guideline 화장품 가격표시제 실시요령\nㅁ. 출처: 과목4 노트 5.guideline 화장품 가격표시제 실시요령",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "1"
+ },
+ {
+  "id": "understanding_combo-ref_9650e5",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 1.overview 맞춤형화장품 판매업과 관련한 주요 행정처분 (참조자료 원문)",
+  "stem": "다음 중 맞춤형화장품 판매업과 관련한 주요 행정처분에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_6ae770",
+    "conceptId": "과목4 노트 1.overview:맞춤형화장품 판매업과 관련한 주요 행정처분",
+    "text": "맞춤형화장품판매업소 상호의 변경신고를 하지 않은 경우",
+    "truth": true,
+    "explain": "출처: 과목4 노트 1.overview 맞춤형화장품 판매업과 관련한 주요 행정처분"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_3b4f9b",
+    "conceptId": "과목4 노트 1.overview:맞춤형화장품 판매업과 관련한 주요 행정처분",
+    "text": "맞춤형화장품판매업자의 변경신고를 하지 않은 경우",
+    "truth": true,
+    "explain": "출처: 과목4 노트 1.overview 맞춤형화장품 판매업과 관련한 주요 행정처분"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_ca4401",
+    "conceptId": "과목4 노트 1.overview:맞춤형화장품 판매업과 관련한 주요 행정처분",
+    "text": "포름알데하이드 0.05% 이상 검출된 제품",
+    "truth": false,
+    "explain": "출처: 과목4 노트 1.overview 맞춤형화장품 판매업과 관련한 주요 행정처분"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_b1b2c5",
+    "conceptId": "과목4 노트 1.overview:맞춤형화장품 판매업과 관련한 주요 행정처분",
+    "text": "마스카라(mascara)",
+    "truth": false,
+    "explain": "출처: 과목4 노트 1.overview 맞춤형화장품 판매업과 관련한 주요 행정처분"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_3f23e0",
+    "conceptId": "과목4 노트 1.overview:맞춤형화장품 판매업과 관련한 주요 행정처분",
+    "text": "맞춤형화장품조제관리사의 변경신고를 하지 않은 경우",
+    "truth": true,
+    "explain": "출처: 과목4 노트 1.overview 맞춤형화장품 판매업과 관련한 주요 행정처분"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "처분기준",
+   "절차",
+   "한도"
+  ],
+  "derivedFrom": "ref:enum|note|1.overview.md|5|0",
+  "explain": "ㄱ. 출처: 과목4 노트 1.overview 맞춤형화장품 판매업과 관련한 주요 행정처분\nㄴ. 출처: 과목4 노트 1.overview 맞춤형화장품 판매업과 관련한 주요 행정처분\nㄷ. 출처: 과목4 노트 1.overview 맞춤형화장품 판매업과 관련한 주요 행정처분\nㄹ. 출처: 과목4 노트 1.overview 맞춤형화장품 판매업과 관련한 주요 행정처분\nㅁ. 출처: 과목4 노트 1.overview 맞춤형화장품 판매업과 관련한 주요 행정처분",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "3"
+ },
+ {
+  "id": "understanding_combo-ref_9da398",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 2.physiology 피부 장벽 관련 출제 용어 보충 (참조자료 원문)",
+  "stem": "다음 중 피부 장벽 관련 출제 용어 보충에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_b122a9",
+    "conceptId": "과목4 노트 2.physiology:피부 장벽 관련 출제 용어 보충",
+    "text": "자유지방산 (Free Fatty Acid)",
+    "truth": true,
+    "explain": "출처: 과목4 노트 2.physiology 피부 장벽 관련 출제 용어 보충"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_d7043d",
+    "conceptId": "과목4 노트 2.physiology:피부 장벽 관련 출제 용어 보충",
+    "text": "스핑고신 (Sphingosine)",
+    "truth": true,
+    "explain": "출처: 과목4 노트 2.physiology 피부 장벽 관련 출제 용어 보충"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_42487e",
+    "conceptId": "과목4 노트 2.physiology:피부 장벽 관련 출제 용어 보충",
+    "text": "벤질살리실레이트",
+    "truth": false,
+    "explain": "출처: 과목4 노트 2.physiology 피부 장벽 관련 출제 용어 보충"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_8e061b",
+    "conceptId": "과목4 노트 2.physiology:피부 장벽 관련 출제 용어 보충",
+    "text": "헤미데스모좀 (Hemidesmosome)",
+    "truth": true,
+    "explain": "출처: 과목4 노트 2.physiology 피부 장벽 관련 출제 용어 보충"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_bda021",
+    "conceptId": "과목4 노트 2.physiology:피부 장벽 관련 출제 용어 보충",
+    "text": "광학현미경",
+    "truth": false,
+    "explain": "출처: 과목4 노트 2.physiology 피부 장벽 관련 출제 용어 보충"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|2.physiology.md|55|0",
+  "explain": "ㄱ. 출처: 과목4 노트 2.physiology 피부 장벽 관련 출제 용어 보충\nㄴ. 출처: 과목4 노트 2.physiology 피부 장벽 관련 출제 용어 보충\nㄷ. 출처: 과목4 노트 2.physiology 피부 장벽 관련 출제 용어 보충\nㄹ. 출처: 과목4 노트 2.physiology 피부 장벽 관련 출제 용어 보충\nㅁ. 출처: 과목4 노트 2.physiology 피부 장벽 관련 출제 용어 보충",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "3"
+ },
+ {
+  "id": "understanding_combo-ref_674d0b",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 5.guideline 표시·광고의 금지 표현 (참조자료 원문)",
+  "stem": "다음 중 표시·광고의 금지 표현에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_770ecb",
+    "conceptId": "과목4 노트 5.guideline:표시·광고의 금지 표현",
+    "text": "아니스알코올",
+    "truth": false,
+    "explain": "출처: 과목4 노트 5.guideline 표시·광고의 금지 표현"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_e2fd2f",
+    "conceptId": "과목4 노트 5.guideline:표시·광고의 금지 표현",
+    "text": "피부 관련",
+    "truth": true,
+    "explain": "출처: 과목4 노트 5.guideline 표시·광고의 금지 표현"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_f5afbc",
+    "conceptId": "과목4 노트 5.guideline:표시·광고의 금지 표현",
+    "text": "저속하거나 혐오감을 줄 수 있는 표현",
+    "truth": true,
+    "explain": "출처: 과목4 노트 5.guideline 표시·광고의 금지 표현"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_286e6b",
+    "conceptId": "과목4 노트 5.guideline:표시·광고의 금지 표현",
+    "text": "흡수 기능",
+    "truth": false,
+    "explain": "출처: 과목4 노트 5.guideline 표시·광고의 금지 표현"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_45cd1a",
+    "conceptId": "과목4 노트 5.guideline:표시·광고의 금지 표현",
+    "text": "모발 관련",
+    "truth": true,
+    "explain": "출처: 과목4 노트 5.guideline 표시·광고의 금지 표현"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "금지원료"
+  ],
+  "derivedFrom": "ref:enum|note|5.guideline.md|13|0",
+  "explain": "ㄱ. 출처: 과목4 노트 5.guideline 표시·광고의 금지 표현\nㄴ. 출처: 과목4 노트 5.guideline 표시·광고의 금지 표현\nㄷ. 출처: 과목4 노트 5.guideline 표시·광고의 금지 표현\nㄹ. 출처: 과목4 노트 5.guideline 표시·광고의 금지 표현\nㅁ. 출처: 과목4 노트 5.guideline 표시·광고의 금지 표현",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "2"
+ },
+ {
+  "id": "understanding_combo-ref_ac47e4",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 5.guideline 표시·광고의 금지 표현 (참조자료 원문)",
+  "stem": "다음 중 표시·광고의 금지 표현에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_44afbd",
+    "conceptId": "과목4 노트 5.guideline:표시·광고의 금지 표현",
+    "text": "줄기세포 관련",
+    "truth": true,
+    "explain": "출처: 과목4 노트 5.guideline 표시·광고의 금지 표현"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_61ab99",
+    "conceptId": "과목4 노트 5.guideline:표시·광고의 금지 표현",
+    "text": "원료 관련 (의약품 오인)",
+    "truth": true,
+    "explain": "출처: 과목4 노트 5.guideline 표시·광고의 금지 표현"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_43bc04",
+    "conceptId": "과목4 노트 5.guideline:표시·광고의 금지 표현",
+    "text": "생리활성 관련",
+    "truth": true,
+    "explain": "출처: 과목4 노트 5.guideline 표시·광고의 금지 표현"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_d22082",
+    "conceptId": "과목4 노트 5.guideline:표시·광고의 금지 표현",
+    "text": "셰이빙 크림(shaving cream)",
+    "truth": false,
+    "explain": "출처: 과목4 노트 5.guideline 표시·광고의 금지 표현"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_72c164",
+    "conceptId": "과목4 노트 5.guideline:표시·광고의 금지 표현",
+    "text": "유전 독성시험",
+    "truth": false,
+    "explain": "출처: 과목4 노트 5.guideline 표시·광고의 금지 표현"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "금지원료"
+  ],
+  "derivedFrom": "ref:enum|note|5.guideline.md|13|1",
+  "explain": "ㄱ. 출처: 과목4 노트 5.guideline 표시·광고의 금지 표현\nㄴ. 출처: 과목4 노트 5.guideline 표시·광고의 금지 표현\nㄷ. 출처: 과목4 노트 5.guideline 표시·광고의 금지 표현\nㄹ. 출처: 과목4 노트 5.guideline 표시·광고의 금지 표현\nㅁ. 출처: 과목4 노트 5.guideline 표시·광고의 금지 표현",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "understanding_combo-ref_b30fcd",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 5.guideline 표시·광고의 금지 표현 (참조자료 원문)",
+  "stem": "다음 중 표시·광고의 금지 표현에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_04951c",
+    "conceptId": "과목4 노트 5.guideline:표시·광고의 금지 표현",
+    "text": "체취 방지용 제품",
+    "truth": false,
+    "explain": "출처: 과목4 노트 5.guideline 표시·광고의 금지 표현"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_972e7a",
+    "conceptId": "과목4 노트 5.guideline:표시·광고의 금지 표현",
+    "text": "신체개선",
+    "truth": true,
+    "explain": "출처: 과목4 노트 5.guideline 표시·광고의 금지 표현"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_85feb9",
+    "conceptId": "과목4 노트 5.guideline:표시·광고의 금지 표현",
+    "text": "네일폴리시·네일에나멜 리무버",
+    "truth": false,
+    "explain": "출처: 과목4 노트 5.guideline 표시·광고의 금지 표현"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_43bc04",
+    "conceptId": "과목4 노트 5.guideline:표시·광고의 금지 표현",
+    "text": "생리활성 관련",
+    "truth": true,
+    "explain": "출처: 과목4 노트 5.guideline 표시·광고의 금지 표현"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_a9a2cf",
+    "conceptId": "과목4 노트 5.guideline:표시·광고의 금지 표현",
+    "text": "원료 관련 (기능성 오인)",
+    "truth": true,
+    "explain": "출처: 과목4 노트 5.guideline 표시·광고의 금지 표현"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "금지원료"
+  ],
+  "derivedFrom": "ref:enum|note|5.guideline.md|13|2",
+  "explain": "ㄱ. 출처: 과목4 노트 5.guideline 표시·광고의 금지 표현\nㄴ. 출처: 과목4 노트 5.guideline 표시·광고의 금지 표현\nㄷ. 출처: 과목4 노트 5.guideline 표시·광고의 금지 표현\nㄹ. 출처: 과목4 노트 5.guideline 표시·광고의 금지 표현\nㅁ. 출처: 과목4 노트 5.guideline 표시·광고의 금지 표현",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "1"
+ },
+ {
+  "id": "understanding_combo-ref_0c9af8",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 7.filling-packaging 용기의 종류 (참조자료 원문)",
+  "stem": "다음 중 용기의 종류에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_b05bf9",
+    "conceptId": "과목4 노트 7.filling-packaging:용기의 종류",
+    "text": "튜브용기",
+    "truth": true,
+    "explain": "출처: 과목4 노트 7.filling-packaging 용기의 종류"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_e20d7a",
+    "conceptId": "과목4 노트 7.filling-packaging:용기의 종류",
+    "text": "원통형용기",
+    "truth": true,
+    "explain": "출처: 과목4 노트 7.filling-packaging 용기의 종류"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_090bab",
+    "conceptId": "과목4 노트 7.filling-packaging:용기의 종류",
+    "text": "헤어 퍼머넌트 웨이브(hair permanent wave)",
+    "truth": false,
+    "explain": "출처: 과목4 노트 7.filling-packaging 용기의 종류"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_d591ed",
+    "conceptId": "과목4 노트 7.filling-packaging:용기의 종류",
+    "text": "영유아 목욕용 제품",
+    "truth": false,
+    "explain": "출처: 과목4 노트 7.filling-packaging 용기의 종류"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_f4f746",
+    "conceptId": "과목4 노트 7.filling-packaging:용기의 종류",
+    "text": "세구용기",
+    "truth": true,
+    "explain": "출처: 과목4 노트 7.filling-packaging 용기의 종류"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|7.filling-packaging.md|10|0",
+  "explain": "ㄱ. 출처: 과목4 노트 7.filling-packaging 용기의 종류\nㄴ. 출처: 과목4 노트 7.filling-packaging 용기의 종류\nㄷ. 출처: 과목4 노트 7.filling-packaging 용기의 종류\nㄹ. 출처: 과목4 노트 7.filling-packaging 용기의 종류\nㅁ. 출처: 과목4 노트 7.filling-packaging 용기의 종류",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "5"
+ },
+ {
+  "id": "understanding_combo-ref_3ee949",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 2.physiology 피부의 기능 (참조자료 원문)",
+  "stem": "다음 중 피부의 기능에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_3126f7",
+    "conceptId": "과목4 노트 2.physiology:피부의 기능",
+    "text": "벤질신나메이트",
+    "truth": false,
+    "explain": "출처: 과목4 노트 2.physiology 피부의 기능"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_4d66b7",
+    "conceptId": "과목4 노트 2.physiology:피부의 기능",
+    "text": "사회적 기능",
+    "truth": true,
+    "explain": "출처: 과목4 노트 2.physiology 피부의 기능"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_8e6f1f",
+    "conceptId": "과목4 노트 2.physiology:피부의 기능",
+    "text": "멜라닌형성세포(멜라노사이트, Melanocyte)",
+    "truth": false,
+    "explain": "출처: 과목4 노트 2.physiology 피부의 기능"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_39629e",
+    "conceptId": "과목4 노트 2.physiology:피부의 기능",
+    "text": "비타민 D 합성",
+    "truth": true,
+    "explain": "출처: 과목4 노트 2.physiology 피부의 기능"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_85ca04",
+    "conceptId": "과목4 노트 2.physiology:피부의 기능",
+    "text": "면역 기능",
+    "truth": true,
+    "explain": "출처: 과목4 노트 2.physiology 피부의 기능"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|2.physiology.md|3|0",
+  "explain": "ㄱ. 출처: 과목4 노트 2.physiology 피부의 기능\nㄴ. 출처: 과목4 노트 2.physiology 피부의 기능\nㄷ. 출처: 과목4 노트 2.physiology 피부의 기능\nㄹ. 출처: 과목4 노트 2.physiology 피부의 기능\nㅁ. 출처: 과목4 노트 2.physiology 피부의 기능",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "2"
+ },
+ {
+  "id": "understanding_combo-ref_e603f9",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 2.physiology 피부의 기능 (참조자료 원문)",
+  "stem": "다음 중 피부의 기능에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_68c1b1",
+    "conceptId": "과목4 노트 2.physiology:피부의 기능",
+    "text": "호흡 기능",
+    "truth": true,
+    "explain": "출처: 과목4 노트 2.physiology 피부의 기능"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_ab5331",
+    "conceptId": "과목4 노트 2.physiology:피부의 기능",
+    "text": "보호 기능",
+    "truth": true,
+    "explain": "출처: 과목4 노트 2.physiology 피부의 기능"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_6eb253",
+    "conceptId": "과목4 노트 2.physiology:피부의 기능",
+    "text": "제조번호/식별번호",
+    "truth": false,
+    "explain": "출처: 과목4 노트 2.physiology 피부의 기능"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_0240ee",
+    "conceptId": "과목4 노트 2.physiology:피부의 기능",
+    "text": "감각 기능",
+    "truth": true,
+    "explain": "출처: 과목4 노트 2.physiology 피부의 기능"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_1796fc",
+    "conceptId": "과목4 노트 2.physiology:피부의 기능",
+    "text": "탈염·탈색제",
+    "truth": false,
+    "explain": "출처: 과목4 노트 2.physiology 피부의 기능"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|2.physiology.md|3|1",
+  "explain": "ㄱ. 출처: 과목4 노트 2.physiology 피부의 기능\nㄴ. 출처: 과목4 노트 2.physiology 피부의 기능\nㄷ. 출처: 과목4 노트 2.physiology 피부의 기능\nㄹ. 출처: 과목4 노트 2.physiology 피부의 기능\nㅁ. 출처: 과목4 노트 2.physiology 피부의 기능",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "3"
+ },
+ {
+  "id": "understanding_combo-ref_e42c6f",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 2.physiology 피부의 기능 (참조자료 원문)",
+  "stem": "다음 중 피부의 기능에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_970279",
+    "conceptId": "과목4 노트 2.physiology:피부의 기능",
+    "text": "나무이끼추출물",
+    "truth": false,
+    "explain": "출처: 과목4 노트 2.physiology 피부의 기능"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_39313b",
+    "conceptId": "과목4 노트 2.physiology:피부의 기능",
+    "text": "분리(성상)",
+    "truth": false,
+    "explain": "출처: 과목4 노트 2.physiology 피부의 기능"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_ab5331",
+    "conceptId": "과목4 노트 2.physiology:피부의 기능",
+    "text": "보호 기능",
+    "truth": true,
+    "explain": "출처: 과목4 노트 2.physiology 피부의 기능"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_5bf770",
+    "conceptId": "과목4 노트 2.physiology:피부의 기능",
+    "text": "분비·배설 기능",
+    "truth": true,
+    "explain": "출처: 과목4 노트 2.physiology 피부의 기능"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_85ca04",
+    "conceptId": "과목4 노트 2.physiology:피부의 기능",
+    "text": "면역 기능",
+    "truth": true,
+    "explain": "출처: 과목4 노트 2.physiology 피부의 기능"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|2.physiology.md|3|2",
+  "explain": "ㄱ. 출처: 과목4 노트 2.physiology 피부의 기능\nㄴ. 출처: 과목4 노트 2.physiology 피부의 기능\nㄷ. 출처: 과목4 노트 2.physiology 피부의 기능\nㄹ. 출처: 과목4 노트 2.physiology 피부의 기능\nㅁ. 출처: 과목4 노트 2.physiology 피부의 기능",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "1"
+ },
+ {
+  "id": "understanding_combo-ref_445889",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 2.physiology 피부의 기능 (참조자료 원문)",
+  "stem": "다음 중 피부의 기능에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_c6e58d",
+    "conceptId": "과목4 노트 2.physiology:피부의 기능",
+    "text": "융점 측정기",
+    "truth": false,
+    "explain": "출처: 과목4 노트 2.physiology 피부의 기능"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_68c1b1",
+    "conceptId": "과목4 노트 2.physiology:피부의 기능",
+    "text": "호흡 기능",
+    "truth": true,
+    "explain": "출처: 과목4 노트 2.physiology 피부의 기능"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_351467",
+    "conceptId": "과목4 노트 2.physiology:피부의 기능",
+    "text": "체온조절 기능",
+    "truth": true,
+    "explain": "출처: 과목4 노트 2.physiology 피부의 기능"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_ab5331",
+    "conceptId": "과목4 노트 2.physiology:피부의 기능",
+    "text": "보호 기능",
+    "truth": true,
+    "explain": "출처: 과목4 노트 2.physiology 피부의 기능"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_8e6f1f",
+    "conceptId": "과목4 노트 2.physiology:피부의 기능",
+    "text": "멜라닌형성세포(멜라노사이트, Melanocyte)",
+    "truth": false,
+    "explain": "출처: 과목4 노트 2.physiology 피부의 기능"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|2.physiology.md|3|3",
+  "explain": "ㄱ. 출처: 과목4 노트 2.physiology 피부의 기능\nㄴ. 출처: 과목4 노트 2.physiology 피부의 기능\nㄷ. 출처: 과목4 노트 2.physiology 피부의 기능\nㄹ. 출처: 과목4 노트 2.physiology 피부의 기능\nㅁ. 출처: 과목4 노트 2.physiology 피부의 기능",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "5"
+ },
+ {
+  "id": "understanding_combo-ref_ea4a07",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 7.filling-packaging 포장재의 종류와 특성 (참조자료 원문)",
+  "stem": "다음 중 포장재의 종류와 특성에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_f21f82",
+    "conceptId": "과목4 노트 7.filling-packaging:포장재의 종류와 특성",
+    "text": "유리 (소다석회유리)",
+    "truth": true,
+    "explain": "출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_c1838e",
+    "conceptId": "과목4 노트 7.filling-packaging:포장재의 종류와 특성",
+    "text": "스패츌러",
+    "truth": false,
+    "explain": "출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_0b3217",
+    "conceptId": "과목4 노트 7.filling-packaging:포장재의 종류와 특성",
+    "text": "모발 손상·피부노화·안티에이징·효능·효과·비교·시험 표현",
+    "truth": false,
+    "explain": "출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_ee6231",
+    "conceptId": "과목4 노트 7.filling-packaging:포장재의 종류와 특성",
+    "text": "금속 (놋쇠, 황동)",
+    "truth": true,
+    "explain": "출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_73f7ad",
+    "conceptId": "과목4 노트 7.filling-packaging:포장재의 종류와 특성",
+    "text": "플라스틱 (AS)",
+    "truth": true,
+    "explain": "출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|7.filling-packaging.md|8|0",
+  "explain": "ㄱ. 출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성\nㄴ. 출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성\nㄷ. 출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성\nㄹ. 출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성\nㅁ. 출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "5"
+ },
+ {
+  "id": "understanding_combo-ref_75a974",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 7.filling-packaging 포장재의 종류와 특성 (참조자료 원문)",
+  "stem": "다음 중 포장재의 종류와 특성에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_e037b9",
+    "conceptId": "과목4 노트 7.filling-packaging:포장재의 종류와 특성",
+    "text": "금속 (철)",
+    "truth": true,
+    "explain": "출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_45be8e",
+    "conceptId": "과목4 노트 7.filling-packaging:포장재의 종류와 특성",
+    "text": "플라스틱 (PP)",
+    "truth": true,
+    "explain": "출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_1c0b7c",
+    "conceptId": "과목4 노트 7.filling-packaging:포장재의 종류와 특성",
+    "text": "플라스틱 (LDPE)",
+    "truth": true,
+    "explain": "출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_bd8715",
+    "conceptId": "과목4 노트 7.filling-packaging:포장재의 종류와 특성",
+    "text": "모발 당김검사",
+    "truth": false,
+    "explain": "출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_0c390f",
+    "conceptId": "과목4 노트 7.filling-packaging:포장재의 종류와 특성",
+    "text": "파우더용기",
+    "truth": false,
+    "explain": "출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|7.filling-packaging.md|8|1",
+  "explain": "ㄱ. 출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성\nㄴ. 출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성\nㄷ. 출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성\nㄹ. 출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성\nㅁ. 출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "understanding_combo-ref_f94e10",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 7.filling-packaging 포장재의 종류와 특성 (참조자료 원문)",
+  "stem": "다음 중 포장재의 종류와 특성에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_7dd019",
+    "conceptId": "과목4 노트 7.filling-packaging:포장재의 종류와 특성",
+    "text": "플라스틱 (PS)",
+    "truth": true,
+    "explain": "출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_ee6231",
+    "conceptId": "과목4 노트 7.filling-packaging:포장재의 종류와 특성",
+    "text": "금속 (놋쇠, 황동)",
+    "truth": true,
+    "explain": "출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_34f35f",
+    "conceptId": "과목4 노트 7.filling-packaging:포장재의 종류와 특성",
+    "text": "벤질벤조에이트",
+    "truth": false,
+    "explain": "출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_b81e01",
+    "conceptId": "과목4 노트 7.filling-packaging:포장재의 종류와 특성",
+    "text": "플라스틱 (PET)",
+    "truth": true,
+    "explain": "출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_017561",
+    "conceptId": "과목4 노트 7.filling-packaging:포장재의 종류와 특성",
+    "text": "용량/중량",
+    "truth": false,
+    "explain": "출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|7.filling-packaging.md|8|2",
+  "explain": "ㄱ. 출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성\nㄴ. 출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성\nㄷ. 출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성\nㄹ. 출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성\nㅁ. 출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "1"
+ },
+ {
+  "id": "understanding_combo-ref_74fb9c",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 7.filling-packaging 포장재의 종류와 특성 (참조자료 원문)",
+  "stem": "다음 중 포장재의 종류와 특성에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_bd8715",
+    "conceptId": "과목4 노트 7.filling-packaging:포장재의 종류와 특성",
+    "text": "모발 당김검사",
+    "truth": false,
+    "explain": "출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_8e8740",
+    "conceptId": "과목4 노트 7.filling-packaging:포장재의 종류와 특성",
+    "text": "제라니올",
+    "truth": false,
+    "explain": "출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_8a08af",
+    "conceptId": "과목4 노트 7.filling-packaging:포장재의 종류와 특성",
+    "text": "금속 (스테인리스 스틸)",
+    "truth": true,
+    "explain": "출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_1c0b7c",
+    "conceptId": "과목4 노트 7.filling-packaging:포장재의 종류와 특성",
+    "text": "플라스틱 (LDPE)",
+    "truth": true,
+    "explain": "출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_73f7ad",
+    "conceptId": "과목4 노트 7.filling-packaging:포장재의 종류와 특성",
+    "text": "플라스틱 (AS)",
+    "truth": true,
+    "explain": "출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|7.filling-packaging.md|8|3",
+  "explain": "ㄱ. 출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성\nㄴ. 출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성\nㄷ. 출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성\nㄹ. 출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성\nㅁ. 출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "2"
+ },
+ {
+  "id": "understanding_combo-ref_7ef7c8",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 7.filling-packaging 포장재의 종류와 특성 (참조자료 원문)",
+  "stem": "다음 중 포장재의 종류와 특성에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_fffc28",
+    "conceptId": "과목4 노트 7.filling-packaging:포장재의 종류와 특성",
+    "text": "모발 관련",
+    "truth": false,
+    "explain": "출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_c9e588",
+    "conceptId": "과목4 노트 7.filling-packaging:포장재의 종류와 특성",
+    "text": "플라스틱 (PVC)",
+    "truth": true,
+    "explain": "출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_51a585",
+    "conceptId": "과목4 노트 7.filling-packaging:포장재의 종류와 특성",
+    "text": "보호 기능",
+    "truth": false,
+    "explain": "출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_93786c",
+    "conceptId": "과목4 노트 7.filling-packaging:포장재의 종류와 특성",
+    "text": "플라스틱 (HDPE)",
+    "truth": true,
+    "explain": "출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_45be8e",
+    "conceptId": "과목4 노트 7.filling-packaging:포장재의 종류와 특성",
+    "text": "플라스틱 (PP)",
+    "truth": true,
+    "explain": "출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|7.filling-packaging.md|8|4",
+  "explain": "ㄱ. 출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성\nㄴ. 출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성\nㄷ. 출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성\nㄹ. 출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성\nㅁ. 출처: 과목4 노트 7.filling-packaging 포장재의 종류와 특성",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "1"
+ },
+ {
+  "id": "understanding_combo-ref_0df49a",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구 (참조자료 원문)",
+  "stem": "다음 중 혼합·소분에 필요한 도구·기기·기구에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_4562c8",
+    "conceptId": "과목4 노트 6.mixing-subdivision:혼합·소분에 필요한 도구·기기·기구",
+    "text": "금속 (알루미늄)",
+    "truth": false,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_3a9218",
+    "conceptId": "과목4 노트 6.mixing-subdivision:혼합·소분에 필요한 도구·기기·기구",
+    "text": "시약스푼, 비커",
+    "truth": true,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_20cd25",
+    "conceptId": "과목4 노트 6.mixing-subdivision:혼합·소분에 필요한 도구·기기·기구",
+    "text": "마그네틱바, 핸드블렌더, 스틱형성기",
+    "truth": true,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_a0f70b",
+    "conceptId": "과목4 노트 6.mixing-subdivision:혼합·소분에 필요한 도구·기기·기구",
+    "text": "스패츌러",
+    "truth": true,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_e4e023",
+    "conceptId": "과목4 노트 6.mixing-subdivision:혼합·소분에 필요한 도구·기기·기구",
+    "text": "알부틴 2% 이상 함유 제품",
+    "truth": false,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "한도",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|note|6.mixing-subdivision.md|24|0",
+  "explain": "ㄱ. 출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구\nㄴ. 출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구\nㄷ. 출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구\nㄹ. 출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구\nㅁ. 출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "1"
+ },
+ {
+  "id": "understanding_combo-ref_46dc97",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구 (참조자료 원문)",
+  "stem": "다음 중 혼합·소분에 필요한 도구·기기·기구에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_dc5383",
+    "conceptId": "과목4 노트 6.mixing-subdivision:혼합·소분에 필요한 도구·기기·기구",
+    "text": "디스퍼 `기출`",
+    "truth": true,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_9dc6d1",
+    "conceptId": "과목4 노트 6.mixing-subdivision:혼합·소분에 필요한 도구·기기·기구",
+    "text": "스테아린산아연 함유 제품(기초화장용 제품류 중 파우더 제품에 한함)",
+    "truth": false,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_b033a1",
+    "conceptId": "과목4 노트 6.mixing-subdivision:혼합·소분에 필요한 도구·기기·기구",
+    "text": "헤어 크림·로션",
+    "truth": false,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_143aaa",
+    "conceptId": "과목4 노트 6.mixing-subdivision:혼합·소분에 필요한 도구·기기·기구",
+    "text": "융점 측정기",
+    "truth": true,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_6cc554",
+    "conceptId": "과목4 노트 6.mixing-subdivision:혼합·소분에 필요한 도구·기기·기구",
+    "text": "헤라 (덜어내기)",
+    "truth": true,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|6.mixing-subdivision.md|24|1",
+  "explain": "ㄱ. 출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구\nㄴ. 출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구\nㄷ. 출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구\nㄹ. 출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구\nㅁ. 출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "3"
+ },
+ {
+  "id": "understanding_combo-ref_f140d8",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구 (참조자료 원문)",
+  "stem": "다음 중 혼합·소분에 필요한 도구·기기·기구에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_a0f70b",
+    "conceptId": "과목4 노트 6.mixing-subdivision:혼합·소분에 필요한 도구·기기·기구",
+    "text": "스패츌러",
+    "truth": true,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_f03402",
+    "conceptId": "과목4 노트 6.mixing-subdivision:혼합·소분에 필요한 도구·기기·기구",
+    "text": "자외선 살균기",
+    "truth": true,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_b7e8d2",
+    "conceptId": "과목4 노트 6.mixing-subdivision:혼합·소분에 필요한 도구·기기·기구",
+    "text": "플라스틱 (ABS)",
+    "truth": false,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_27fc2e",
+    "conceptId": "과목4 노트 6.mixing-subdivision:혼합·소분에 필요한 도구·기기·기구",
+    "text": "용량/중량",
+    "truth": false,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_20cd25",
+    "conceptId": "과목4 노트 6.mixing-subdivision:혼합·소분에 필요한 도구·기기·기구",
+    "text": "마그네틱바, 핸드블렌더, 스틱형성기",
+    "truth": true,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|6.mixing-subdivision.md|24|2",
+  "explain": "ㄱ. 출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구\nㄴ. 출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구\nㄷ. 출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구\nㄹ. 출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구\nㅁ. 출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "3"
+ },
+ {
+  "id": "understanding_combo-ref_ce92ac",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구 (참조자료 원문)",
+  "stem": "다음 중 혼합·소분에 필요한 도구·기기·기구에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_dc5383",
+    "conceptId": "과목4 노트 6.mixing-subdivision:혼합·소분에 필요한 도구·기기·기구",
+    "text": "디스퍼 `기출`",
+    "truth": true,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_65c9ba",
+    "conceptId": "과목4 노트 6.mixing-subdivision:혼합·소분에 필요한 도구·기기·기구",
+    "text": "남성형 탈모증",
+    "truth": false,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_51423e",
+    "conceptId": "과목4 노트 6.mixing-subdivision:혼합·소분에 필요한 도구·기기·기구",
+    "text": "드라이오븐(Dry Oven)",
+    "truth": true,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_8ace86",
+    "conceptId": "과목4 노트 6.mixing-subdivision:혼합·소분에 필요한 도구·기기·기구",
+    "text": "사용기한",
+    "truth": false,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_174d03",
+    "conceptId": "과목4 노트 6.mixing-subdivision:혼합·소분에 필요한 도구·기기·기구",
+    "text": "데시케이터",
+    "truth": true,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "기한"
+  ],
+  "derivedFrom": "ref:enum|note|6.mixing-subdivision.md|24|3",
+  "explain": "ㄱ. 출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구\nㄴ. 출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구\nㄷ. 출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구\nㄹ. 출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구\nㅁ. 출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "1"
+ },
+ {
+  "id": "understanding_combo-ref_5f204b",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구 (참조자료 원문)",
+  "stem": "다음 중 혼합·소분에 필요한 도구·기기·기구에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_174d03",
+    "conceptId": "과목4 노트 6.mixing-subdivision:혼합·소분에 필요한 도구·기기·기구",
+    "text": "데시케이터",
+    "truth": true,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_a80432",
+    "conceptId": "과목4 노트 6.mixing-subdivision:혼합·소분에 필요한 도구·기기·기구",
+    "text": "모범업소 우대조치",
+    "truth": false,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_bb3bab",
+    "conceptId": "과목4 노트 6.mixing-subdivision:혼합·소분에 필요한 도구·기기·기구",
+    "text": "안(眼)점막 자극시험",
+    "truth": false,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_cdd4fc",
+    "conceptId": "과목4 노트 6.mixing-subdivision:혼합·소분에 필요한 도구·기기·기구",
+    "text": "호모게나이저(호모믹서) `기출`",
+    "truth": true,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_f03402",
+    "conceptId": "과목4 노트 6.mixing-subdivision:혼합·소분에 필요한 도구·기기·기구",
+    "text": "자외선 살균기",
+    "truth": true,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|note|6.mixing-subdivision.md|24|4",
+  "explain": "ㄱ. 출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구\nㄴ. 출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구\nㄷ. 출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구\nㄹ. 출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구\nㅁ. 출처: 과목4 노트 6.mixing-subdivision 혼합·소분에 필요한 도구·기기·기구",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "3"
+ },
+ {
+  "id": "understanding_combo-ref_c96194",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 7.filling-packaging 제품별 포장용기 재사용 가능 비율 (참조자료 원문)",
+  "stem": "다음 중 제품별 포장용기 재사용 가능 비율에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_e0a661",
+    "conceptId": "과목4 노트 7.filling-packaging:제품별 포장용기 재사용 가능 비율",
+    "text": "질량/용량 백분율",
+    "truth": false,
+    "explain": "출처: 과목4 노트 7.filling-packaging 제품별 포장용기 재사용 가능 비율"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_76c240",
+    "conceptId": "과목4 노트 7.filling-packaging:제품별 포장용기 재사용 가능 비율",
+    "text": "합성수지 용기를 사용한 액체 세제류·분말 세제류",
+    "truth": true,
+    "explain": "출처: 과목4 노트 7.filling-packaging 제품별 포장용기 재사용 가능 비율"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_caca75",
+    "conceptId": "과목4 노트 7.filling-packaging:제품별 포장용기 재사용 가능 비율",
+    "text": "시약스푼, 비커",
+    "truth": false,
+    "explain": "출처: 과목4 노트 7.filling-packaging 제품별 포장용기 재사용 가능 비율"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_bf0b29",
+    "conceptId": "과목4 노트 7.filling-packaging:제품별 포장용기 재사용 가능 비율",
+    "text": "화장품 중 색조화장품(메이크업)류",
+    "truth": true,
+    "explain": "출처: 과목4 노트 7.filling-packaging 제품별 포장용기 재사용 가능 비율"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_5629f0",
+    "conceptId": "과목4 노트 7.filling-packaging:제품별 포장용기 재사용 가능 비율",
+    "text": "위생용 종이 제품 중 물티슈(물휴지)류",
+    "truth": true,
+    "explain": "출처: 과목4 노트 7.filling-packaging 제품별 포장용기 재사용 가능 비율"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "구성비"
+  ],
+  "derivedFrom": "ref:enum|note|7.filling-packaging.md|15|0",
+  "explain": "ㄱ. 출처: 과목4 노트 7.filling-packaging 제품별 포장용기 재사용 가능 비율\nㄴ. 출처: 과목4 노트 7.filling-packaging 제품별 포장용기 재사용 가능 비율\nㄷ. 출처: 과목4 노트 7.filling-packaging 제품별 포장용기 재사용 가능 비율\nㄹ. 출처: 과목4 노트 7.filling-packaging 제품별 포장용기 재사용 가능 비율\nㅁ. 출처: 과목4 노트 7.filling-packaging 제품별 포장용기 재사용 가능 비율",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "2"
+ },
+ {
+  "id": "understanding_combo-ref_bf021d",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 2.physiology 표피에 존재하는 4대 세포 (참조자료 원문)",
+  "stem": "다음 중 표피에 존재하는 4대 세포에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_c6f6ce",
+    "conceptId": "과목4 노트 2.physiology:표피에 존재하는 4대 세포",
+    "text": "머켈세포(Merkel cell)",
+    "truth": true,
+    "explain": "출처: 과목4 노트 2.physiology 표피에 존재하는 4대 세포"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_7f05e1",
+    "conceptId": "과목4 노트 2.physiology:표피에 존재하는 4대 세포",
+    "text": "랑게르한스세포(Langerhans cell)",
+    "truth": true,
+    "explain": "출처: 과목4 노트 2.physiology 표피에 존재하는 4대 세포"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_8013b5",
+    "conceptId": "과목4 노트 2.physiology:표피에 존재하는 4대 세포",
+    "text": "판매가격",
+    "truth": false,
+    "explain": "출처: 과목4 노트 2.physiology 표피에 존재하는 4대 세포"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_990161",
+    "conceptId": "과목4 노트 2.physiology:표피에 존재하는 4대 세포",
+    "text": "각질형성세포(케라티노사이트, Keratinocyte)",
+    "truth": true,
+    "explain": "출처: 과목4 노트 2.physiology 표피에 존재하는 4대 세포"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_61abf1",
+    "conceptId": "과목4 노트 2.physiology:표피에 존재하는 4대 세포",
+    "text": "부틸페닐메틸프로피오날",
+    "truth": false,
+    "explain": "출처: 과목4 노트 2.physiology 표피에 존재하는 4대 세포"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|note|2.physiology.md|9|0",
+  "explain": "ㄱ. 출처: 과목4 노트 2.physiology 표피에 존재하는 4대 세포\nㄴ. 출처: 과목4 노트 2.physiology 표피에 존재하는 4대 세포\nㄷ. 출처: 과목4 노트 2.physiology 표피에 존재하는 4대 세포\nㄹ. 출처: 과목4 노트 2.physiology 표피에 존재하는 4대 세포\nㅁ. 출처: 과목4 노트 2.physiology 표피에 존재하는 4대 세포",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "2"
+ },
+ {
+  "id": "understanding_combo-ref_f726d4",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 6.mixing-subdivision 농도 단위 (참조자료 원문)",
+  "stem": "다음 중 농도 단위에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_57323a",
+    "conceptId": "과목4 노트 6.mixing-subdivision:농도 단위",
+    "text": "플라스틱 (PET)",
+    "truth": false,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 농도 단위"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_c48189",
+    "conceptId": "과목4 노트 6.mixing-subdivision:농도 단위",
+    "text": "질량백만분율",
+    "truth": true,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 농도 단위"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_5f7d14",
+    "conceptId": "과목4 노트 6.mixing-subdivision:농도 단위",
+    "text": "질량/용량 백분율",
+    "truth": true,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 농도 단위"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_25a9c7",
+    "conceptId": "과목4 노트 6.mixing-subdivision:농도 단위",
+    "text": "주의사항",
+    "truth": false,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 농도 단위"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_cde3d2",
+    "conceptId": "과목4 노트 6.mixing-subdivision:농도 단위",
+    "text": "용량/용량 백분율",
+    "truth": true,
+    "explain": "출처: 과목4 노트 6.mixing-subdivision 농도 단위"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "한도"
+  ],
+  "derivedFrom": "ref:enum|note|6.mixing-subdivision.md|41|0",
+  "explain": "ㄱ. 출처: 과목4 노트 6.mixing-subdivision 농도 단위\nㄴ. 출처: 과목4 노트 6.mixing-subdivision 농도 단위\nㄷ. 출처: 과목4 노트 6.mixing-subdivision 농도 단위\nㄹ. 출처: 과목4 노트 6.mixing-subdivision 농도 단위\nㅁ. 출처: 과목4 노트 6.mixing-subdivision 농도 단위",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "2"
+ },
+ {
+  "id": "understanding_combo-ref_2c6fa0",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 과목4 노트 2.physiology 모발진단 방법 (참조자료 원문)",
+  "stem": "다음 중 모발진단 방법에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_cea18a",
+    "conceptId": "과목4 노트 2.physiology:모발진단 방법",
+    "text": "조직검사",
+    "truth": true,
+    "explain": "출처: 과목4 노트 2.physiology 모발진단 방법"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_031d25",
+    "conceptId": "과목4 노트 2.physiology:모발진단 방법",
+    "text": "원료 관련 (의약품 오인)",
+    "truth": false,
+    "explain": "출처: 과목4 노트 2.physiology 모발진단 방법"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_3f77ef",
+    "conceptId": "과목4 노트 2.physiology:모발진단 방법",
+    "text": "모발 분석",
+    "truth": true,
+    "explain": "출처: 과목4 노트 2.physiology 모발진단 방법"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_4baa82",
+    "conceptId": "과목4 노트 2.physiology:모발진단 방법",
+    "text": "광감작성",
+    "truth": false,
+    "explain": "출처: 과목4 노트 2.physiology 모발진단 방법"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_daa3d4",
+    "conceptId": "과목4 노트 2.physiology:모발진단 방법",
+    "text": "모주기검사",
+    "truth": true,
+    "explain": "출처: 과목4 노트 2.physiology 모발진단 방법"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "기한"
+  ],
+  "derivedFrom": "ref:enum|note|2.physiology.md|40|0",
+  "explain": "ㄱ. 출처: 과목4 노트 2.physiology 모발진단 방법\nㄴ. 출처: 과목4 노트 2.physiology 모발진단 방법\nㄷ. 출처: 과목4 노트 2.physiology 모발진단 방법\nㄹ. 출처: 과목4 노트 2.physiology 모발진단 방법\nㅁ. 출처: 과목4 노트 2.physiology 모발진단 방법",
   "source": "참조자료 원문 (열거 목록)",
   "answer": "2"
  }

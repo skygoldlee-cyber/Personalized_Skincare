@@ -506,9 +506,12 @@ function buildRefCombos(refPool, examKey, subject, subjKey, genOpts, stats) {
   // ── 열거 멤버십 콤보: '다음 각 호/목' 유한집합 ──
   // 큐레이션 원료 DB(원료/*.md)를 먼저 처리 — ref_md의 같은 표 중복본이
   // 60% 겹침 규칙으로 자동 탈락해 큐레이션본의 발문·멤버가 채택된다.
+  // 처리 순서: 큐레이션(권위) → ref_md 원문 → 노트(보조). cap이 있는 과목에서
+  // 노트가 원문 문항 슬롯을 잡아먹지 않게 노트는 항상 마지막에 둔다.
   const lists = [
     ...bucket.enums.filter(e => e.curated),
-    ...shuffle(bucket.enums.filter(e => !e.curated), rng),
+    ...shuffle(bucket.enums.filter(e => !e.curated && !e.note), rng),
+    ...shuffle(bucket.enums.filter(e => e.note), rng),
   ];
   // 오답 풀은 "다른 조"의 목록에서만 추첨 — 같은 조의 다른 목록 멤버는
   // 발문이 조문 단위 멤버십을 물을 때 실제로 해당할 수 있어 모호하다.
@@ -567,7 +570,7 @@ function buildRefCombos(refPool, examKey, subject, subjKey, genOpts, stats) {
   // 해당할 수 있어 정답 모호성을 만든다.
   const VAGUE_MEMBER_RE = /^(그\s*밖에|그\s*밖의|기타|그\s*외|이\s*외)/;
   // 셀 절단 잔재(불균형 괄호, 연속 공백, 특수 기호, 조각 종료)는 멤버에서 제외
-  const memberOk = m => !/[◎◦▪※★→←↑↓]/.test(m) && !/\s{2,}/.test(m)
+  const memberOk = m => !/[◎◦▪※★→←↑↓⇔↔]/.test(m) && !/\s{2,}/.test(m)
     && (m.match(/[(「"'“]/g) || []).length === (m.match(/[)」"'”]/g) || []).length
     && (m.match(/\[/g) || []).length === (m.match(/\]/g) || []).length
     && !/[,·\-\/'´]$/.test(m) && !VAGUE_MEMBER_RE.test(m)
