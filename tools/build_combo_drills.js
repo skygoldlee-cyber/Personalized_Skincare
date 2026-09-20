@@ -205,7 +205,7 @@ function buildCitation(q, examKey, explanation) {
     : `📖 출처: ${srcLabel}`;
 }
 
-function buildComboItems(examKey, exam, genOpts, qchap) {
+function buildComboItems(examKey, exam, genOpts) {
   const items = [];
   const stats = {
     choice: 0, fact: 0, answer: 0, cluster: 0,
@@ -278,7 +278,7 @@ function buildComboItems(examKey, exam, genOpts, qchap) {
     // (문항 자체가 스킵돼도 진술의 참/거짓은 유효하므로 스킵 판정 전에 적립)
     // 'q:' 폴백 conceptId는 단일 문항끼리만 묶이므로 재조합 재료로 쓰지 않는다.
     if (mode === 'fact' && !conceptId.startsWith('q:')) {
-      const bucket = conceptPool[conceptId] || (conceptPool[conceptId] = { true: new Map(), false: new Map(), chapter: qchap[q.id] || '' });
+      const bucket = conceptPool[conceptId] || (conceptPool[conceptId] = { true: new Map(), false: new Map() });
       for (const s of statements) {
         const map = s.truth ? bucket.true : bucket.false;
         const k = normKey(s.text);
@@ -381,10 +381,9 @@ function buildClusterCombos(conceptPool, examKey, subject, subjKey, genOpts, sta
     const allIds = statements.map(s => s.id);
     const truthIds = statements.filter(s => s.truth).map(s => s.id);
 
-    const chapterLabel = (pool.chapter || '').replace(/^(?:Chapter\s*)?\d+\.\s*/, '');
-    const stem = chapterLabel
-      ? `다음 중 ${chapterLabel}에 관한 설명으로 옳은 것을 모두 고른 것은?`
-      : '다음 설명 중 옳은 것을 모두 고른 것은?';
+    // 발문은 제네릭 고정 — 챕터 라벨은 L#### 클러스터보다 입자가 커서
+    // "정의 및 규정" 발문에 저울 사용법 진술이 붙는 식의 부조화를 낳는다.
+    const stem = '다음 설명 중 옳은 것을 모두 고른 것은?';
     out.push({
       id: stableId(subjKey, 'bank', 'combo-cluster', `${subject}|${cid}`),
       subject,
@@ -507,21 +506,12 @@ async function buildForExam(target) {
     const { key, data } = loadExamFile(path.join(EXAMS_DIR, file));
     examDataMap[key] = { data, file };
   }
-  // 문항→챕터 매핑 (build_question_chapters.js 산출물) — fact 진술의 챕터 재조합용.
-  // 없으면 빈 맵: 재조합 문항은 생성되지 않고 원본 변환분만 나온다.
-  const qcPath = path.join(ROOT, target.dataRoot, 'question_chapters.js');
-  let qchap = {};
-  if (fs.existsSync(qcPath)) {
-    const m = fs.readFileSync(qcPath, 'utf8').match(/var\s+QUESTION_CHAPTERS\s*=\s*(\{[\s\S]*?\});/);
-    if (m) qchap = JSON.parse(m[1]);
-  }
-
   let totalItems = 0;
   let totalErrors = 0;
   const comboCounts = {};
 
   for (const [key, { data, file }] of Object.entries(examDataMap)) {
-    const { items, stats } = buildComboItems(key, data, generateComboOptions, qchap);
+    const { items, stats } = buildComboItems(key, data, generateComboOptions);
 
     // 검증: 스키마 무결성 + 도출 정답을 answer로 고정
     const errs = [];

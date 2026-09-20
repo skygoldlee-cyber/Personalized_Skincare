@@ -23144,7 +23144,7 @@ var COMBO_DRILLS_subject3 = [
   "type": "combo",
   "points": 4,
   "citation": "📖 교재: L461 (출처: 과목3 문제은행 진술 재조합)",
-  "stem": "다음 중 위생 기준 및 상태에 관한 설명으로 옳은 것을 모두 고른 것은?",
+  "stem": "다음 설명 중 옳은 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
@@ -23241,7 +23241,7 @@ var COMBO_DRILLS_subject3 = [
   "type": "combo",
   "points": 4,
   "citation": "📖 교재: L482 (출처: 과목3 문제은행 진술 재조합)",
-  "stem": "다음 중 위생 기준 및 상태에 관한 설명으로 옳은 것을 모두 고른 것은?",
+  "stem": "다음 설명 중 옳은 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
@@ -23342,7 +23342,7 @@ var COMBO_DRILLS_subject3 = [
   "type": "combo",
   "points": 4,
   "citation": "📖 교재: L1214 (출처: 과목3 문제은행 진술 재조합)",
-  "stem": "다음 중 소독·세정·복장에 관한 설명으로 옳은 것을 모두 고른 것은?",
+  "stem": "다음 설명 중 옳은 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
@@ -23541,7 +23541,7 @@ var COMBO_DRILLS_subject3 = [
   "type": "combo",
   "points": 4,
   "citation": "📖 교재: L1717 (출처: 과목3 문제은행 진술 재조합)",
-  "stem": "다음 중 관리 및 폐기에 관한 설명으로 옳은 것을 모두 고른 것은?",
+  "stem": "다음 설명 중 옳은 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
