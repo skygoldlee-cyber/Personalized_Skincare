@@ -1,5 +1,5 @@
 // 자동 생성된 복수정답형 드릴 데이터입니다. 수정하지 마십시오. (tools/build_combo_drills.js)
-// 원본: data/exams/subject1.4411d0ff.js — mode: fact(명제 조합) 8문 / answer(정답 조합) 57문
+// 원본: data/exams/subject1.23de1552.js — mode: fact(명제 조합) 8문 / answer(정답 조합) 57문
 var COMBO_DRILLS_subject1 = [
  {
   "id": "law_combo_f9a972",
@@ -286,35 +286,35 @@ var COMBO_DRILLS_subject1 = [
    {
     "id": "ㄱ",
     "sid": "law_st_67fbc3",
-    "conceptId": "L507",
+    "conceptId": "L495",
     "text": "화장품의 품질관리기준을 수립하고 준수해야 한다.",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "law_st_9a56b9",
-    "conceptId": "L507",
+    "conceptId": "L495",
     "text": "화장품의 책임판매후 안전관리기준을 수립하고 준수해야 한다.",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "law_st_01b5c3",
-    "conceptId": "L507",
+    "conceptId": "L495",
     "text": "수입한 화장품을 국내에 유통하기 전 제조업자의 공장을 직접 실사해야 한다.",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_c9b0d8",
-    "conceptId": "L507",
+    "conceptId": "L495",
     "text": "화장품의 제조번호별 품질검사 기록을 작성·보존해야 한다.",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "law_st_5edeb6",
-    "conceptId": "L507",
+    "conceptId": "L495",
     "text": "안전성 정보를 수집·분석하고 조치 결과를 기록·보존해야 한다.",
     "truth": true
    }
@@ -361,7 +361,7 @@ var COMBO_DRILLS_subject1 = [
    "명제판정"
   ],
   "derivedFrom": "subject1_q4",
-  "explain": "📖 법령 근거 (L507(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L507>)):\n법 제5조제2항에 따라 화장품책임판매업자가 준수해야 할 사항은 다음 각",
+  "explain": "📖 법령 근거 (L495(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L495>)):\n법 제5조제2항에 따라 화장품책임판매업자가 준수해야 할 사항은 다음 각",
   "source": "화장품법의 이해 (100제)",
   "answer": "2"
  },
@@ -468,35 +468,35 @@ var COMBO_DRILLS_subject1 = [
    {
     "id": "ㄱ",
     "sid": "law_st_dbbd5d",
-    "conceptId": "L419",
+    "conceptId": "L409",
     "text": "만 1세 이하",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_64a3c5",
-    "conceptId": "L419",
+    "conceptId": "L409",
     "text": "만 2세 이하",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_f0285b",
-    "conceptId": "L419",
+    "conceptId": "L409",
     "text": "만 7세 이하",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_dd490a",
-    "conceptId": "L419",
+    "conceptId": "L409",
     "text": "만 6세 이하",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_7bb30e",
-    "conceptId": "L419",
+    "conceptId": "L409",
     "text": "만 3세 이하",
     "truth": true
    }
@@ -546,7 +546,7 @@ var COMBO_DRILLS_subject1 = [
    "수치"
   ],
   "derivedFrom": "subject1_q6",
-  "explain": "📖 법령 근거 (L419(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L419>)):\n① 법 제4조의2제1항에 따른 영유아 또는 어린이의 연령 기준은 다음 각 호의",
+  "explain": "📖 법령 근거 (L409(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L409>)):\n① 법 제4조의2제1항에 따른 영유아 또는 어린이의 연령 기준은 다음 각 호의",
   "source": "화장품법의 이해 (100제)",
   "answer": "2"
  },
@@ -1866,35 +1866,35 @@ var COMBO_DRILLS_subject1 = [
    {
     "id": "ㄱ",
     "sid": "law_st_e92659",
-    "conceptId": "L1002",
+    "conceptId": "L953",
     "text": "1년 이하의 징역 또는 1천만 원 이하의 벌금",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "law_st_69e377",
-    "conceptId": "L1002",
+    "conceptId": "L953",
     "text": "300만 원 이하의 벌금",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_ff872d",
-    "conceptId": "L1002",
+    "conceptId": "L953",
     "text": "100만 원 이하의 과태료",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_e23f58",
-    "conceptId": "L1002",
+    "conceptId": "L953",
     "text": "3년 이하의 징역 또는 3천만 원 이하의 벌금",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_e1f692",
-    "conceptId": "L1002",
+    "conceptId": "L953",
     "text": "5년 이하의 징역 또는 5천만 원 이하의 벌금",
     "truth": false
    }
@@ -1946,7 +1946,7 @@ var COMBO_DRILLS_subject1 = [
    "수치"
   ],
   "derivedFrom": "subject1_q21",
-  "explain": "📖 법령 근거 (L1002(제20901호)(20260402)/화장품법(법률)(제20901호)(20260402).md#L1002>)):\n제37조(벌칙) ① 제14조제4항에 따른 중지명령에 따르지 아니한 자는 1년 이하의 징역 또는 1천만원 이하의 벌금에 처한다. ② 제1항의 징역형과 벌금형은 이를 함께 부과할 수 있다.",
+  "explain": "📖 법령 근거 (L953(제20901호)(20260402)/화장품법(법률)(제20901호)(20260402).md#L953>)):\n제37조(벌칙) ① 제14조제4항에 따른 중지명령에 따르지 아니한 자는 1년 이하의 징역 또는 1천만원 이하의 벌금에 처한다. ② 제1항의 징역형과 벌금형은 이를 함께 부과할 수 있다.",
   "source": "화장품법의 이해 (100제)",
   "answer": "4"
  },
@@ -2333,35 +2333,35 @@ var COMBO_DRILLS_subject1 = [
    {
     "id": "ㄱ",
     "sid": "law_st_33a70c",
-    "conceptId": "L800",
+    "conceptId": "L782",
     "text": "10g(mL) 이하",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "law_st_a2ab22",
-    "conceptId": "L800",
+    "conceptId": "L782",
     "text": "15g(mL) 이하",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_7e9d23",
-    "conceptId": "L800",
+    "conceptId": "L782",
     "text": "30g(mL) 이하",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_81b702",
-    "conceptId": "L800",
+    "conceptId": "L782",
     "text": "50g(mL) 이하",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_3bf4c2",
-    "conceptId": "L800",
+    "conceptId": "L782",
     "text": "100g(mL) 이하",
     "truth": false
    }
@@ -2411,7 +2411,7 @@ var COMBO_DRILLS_subject1 = [
    "수치"
   ],
   "derivedFrom": "subject1_q26",
-  "explain": "📖 법령 근거 (L800(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L800>)):\n② 법 제10조제1항제3호에 따라 기재ㆍ표시를 생략할 수 있는 성분이란 다음 각 호의 성분을 말한다. (내용량 10mL 초과 50mL 이하 또는 중량 10g 초과 50g 이하 화장품의 전성분 표시 생략 규정)",
+  "explain": "📖 법령 근거 (L782(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L782>)):\n② 법 제10조제1항제3호에 따라 기재ㆍ표시를 생략할 수 있는 성분이란 다음 각 호의 성분을 말한다. (내용량 10mL 초과 50mL 이하 또는 중량 10g 초과 50g 이하 화장품의 전성분 표시 생략 규정)",
   "source": "화장품법의 이해 (100제)",
   "answer": "3"
  },
@@ -2612,35 +2612,35 @@ var COMBO_DRILLS_subject1 = [
    {
     "id": "ㄱ",
     "sid": "law_st_518c0b",
-    "conceptId": "L826",
+    "conceptId": "L787",
     "text": "5년 이하의 징역 또는 5천만 원 이하의 벌금",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_d0f763",
-    "conceptId": "L826",
+    "conceptId": "L787",
     "text": "2년 이하의 징역 또는 2천만 원 이하의 벌금",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_4bef36",
-    "conceptId": "L826",
+    "conceptId": "L787",
     "text": "3년 이하의 징역 또는 3천만 원 이하의 벌금",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_59c62a",
-    "conceptId": "L826",
+    "conceptId": "L787",
     "text": "1년 이하의 징역 또는 1천만 원 이하의 벌금",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "law_st_dc9b27",
-    "conceptId": "L826",
+    "conceptId": "L787",
     "text": "300만 원 이하의 벌금",
     "truth": false
    }
@@ -2694,7 +2694,7 @@ var COMBO_DRILLS_subject1 = [
    "수치"
   ],
   "derivedFrom": "subject1_q29",
-  "explain": "📖 법령 근거 (L826(제20901호)(20260402)/화장품법(법률)(제20901호)(20260402).md#L826>)):\n중지명령을 위반하여 화장품을 표시ㆍ광고 행위를 한 경우",
+  "explain": "📖 법령 근거 (L787(제20901호)(20260402)/화장품법(법률)(제20901호)(20260402).md#L787>)):\n중지명령을 위반하여 화장품을 표시ㆍ광고 행위를 한 경우",
   "source": "화장품법의 이해 (100제)",
   "answer": "3"
  },
@@ -3176,35 +3176,35 @@ var COMBO_DRILLS_subject1 = [
    {
     "id": "ㄱ",
     "sid": "law_st_0256c5",
-    "conceptId": "L1000",
+    "conceptId": "L951",
     "text": "100만 원 이하의 벌금",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_505f96",
-    "conceptId": "L1000",
+    "conceptId": "L951",
     "text": "300만 원 이하의 벌금",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_1ead7c",
-    "conceptId": "L1000",
+    "conceptId": "L951",
     "text": "3년 이하의 징역 또는 3천만 원 이하의 벌금",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_d50a55",
-    "conceptId": "L1000",
+    "conceptId": "L951",
     "text": "1년 이하의 징역 또는 1천만 원 이하의 벌금",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "law_st_9d0dec",
-    "conceptId": "L1000",
+    "conceptId": "L951",
     "text": "자격 정지 6개월",
     "truth": false
    }
@@ -3254,7 +3254,7 @@ var COMBO_DRILLS_subject1 = [
    "수치"
   ],
   "derivedFrom": "subject1_q35",
-  "explain": "📖 법령 근거 (L1000(제20901호)(20260402)/화장품법(법률)(제20901호)(20260402).md#L1000>)):\n제37조(벌칙) ① 제3조의6, 제4조의2제1항, 제9조, 제13조, 제16조제1항제2호ㆍ제3호, 같은 조 제2항 또는 제28조의4제3항을 위반하거나, 제14조제4항에 따른 중지명령에 따르지 아니한 자는 1년 이하의 징역 또는 1천만원 이하의 벌금에 처한다. (제3조의6 = 자격증 대여 등의 금지)",
+  "explain": "📖 법령 근거 (L951(제20901호)(20260402)/화장품법(법률)(제20901호)(20260402).md#L951>)):\n제37조(벌칙) ① 제3조의6, 제4조의2제1항, 제9조, 제13조, 제16조제1항제2호ㆍ제3호, 같은 조 제2항 또는 제28조의4제3항을 위반하거나, 제14조제4항에 따른 중지명령에 따르지 아니한 자는 1년 이하의 징역 또는 1천만원 이하의 벌금에 처한다. (제3조의6 = 자격증 대여 등의 금지)",
   "source": "화장품법의 이해 (100제)",
   "answer": "2"
  },
@@ -4656,35 +4656,35 @@ var COMBO_DRILLS_subject1 = [
    {
     "id": "ㄱ",
     "sid": "law_st_cfae5e",
-    "conceptId": "L891",
+    "conceptId": "L871",
     "text": "중대한 유해사례를 보고받은 경우 7일 이내 보고",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_c14ebd",
-    "conceptId": "L891",
+    "conceptId": "L871",
     "text": "중대한 유해사례를 보고받은 경우 3일 이내 보고",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_471b35",
-    "conceptId": "L891",
+    "conceptId": "L871",
     "text": "중대한 유해사례를 보고받은 경우 지체 없이 보고",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_ca1c67",
-    "conceptId": "L891",
+    "conceptId": "L871",
     "text": "중대한 유해사례를 보고받은 경우 15일 이내 보고",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "law_st_6b04ad",
-    "conceptId": "L891",
+    "conceptId": "L871",
     "text": "중대한 유해사례를 보고받은 경우 30일 이내 보고",
     "truth": false
    }
@@ -4739,7 +4739,7 @@ var COMBO_DRILLS_subject1 = [
    "수치"
   ],
   "derivedFrom": "subject1_q51",
-  "explain": "📖 법령 근거 (L891(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L891>)):\n10. 제품과 관련하여 국민보건에 직접 영향을 미칠 수 있는 안전성ㆍ유효성에 관한 새로운 자료, 정보사항(화장품 사용에 의한 부작용 발생사례를 포함한다) 등을 알게 되었을 때에는 식품의약품안전처장이 정하여 고시하는 바에 따라 보고하고, 필요한 안전대책을 마련할 것",
+  "explain": "📖 법령 근거 (L871(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L871>)):\n10. 제품과 관련하여 국민보건에 직접 영향을 미칠 수 있는 안전성ㆍ유효성에 관한 새로운 자료, 정보사항(화장품 사용에 의한 부작용 발생사례를 포함한다) 등을 알게 되었을 때에는 식품의약품안전처장이 정하여 고시하는 바에 따라 보고하고, 필요한 안전대책을 마련할 것",
   "source": "화장품법의 이해 (100제)",
   "answer": "2"
  },
@@ -4848,35 +4848,35 @@ var COMBO_DRILLS_subject1 = [
    {
     "id": "ㄱ",
     "sid": "law_st_4d6d00",
-    "conceptId": "L1011",
+    "conceptId": "L962",
     "text": "1년 이하의 징역 또는 1천만 원 이하의 벌금",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_d3e60a",
-    "conceptId": "L1011",
+    "conceptId": "L962",
     "text": "7년 이하의 징역 또는 1억 원 이하의 벌금",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_a9f0a0",
-    "conceptId": "L1011",
+    "conceptId": "L962",
     "text": "5년 이하의 징역 또는 5천만 원 이하의 벌금",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_cea88c",
-    "conceptId": "L1011",
+    "conceptId": "L962",
     "text": "3년 이하의 징역 또는 3천만 원 이하의 벌금",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "law_st_ec000f",
-    "conceptId": "L1011",
+    "conceptId": "L962",
     "text": "과태료 500만 원",
     "truth": false
    }
@@ -4925,7 +4925,7 @@ var COMBO_DRILLS_subject1 = [
    "수치"
   ],
   "derivedFrom": "subject1_q53",
-  "explain": "📖 법령 근거 (L1011(제20901호)(20260402)/화장품법(법률)(제20901호)(20260402).md#L1011>)):\n제36조(벌칙) ① 다음 각 호의 어느 하나에 해당하는 자는 3년 이하의 징역 또는 3천만원 이하의 벌금에 처한다. (기능성화장품 심사를 받지 아니하고 제조·수입한 자 포함)",
+  "explain": "📖 법령 근거 (L962(제20901호)(20260402)/화장품법(법률)(제20901호)(20260402).md#L962>)):\n제36조(벌칙) ① 다음 각 호의 어느 하나에 해당하는 자는 3년 이하의 징역 또는 3천만원 이하의 벌금에 처한다. (기능성화장품 심사를 받지 아니하고 제조·수입한 자 포함)",
   "source": "화장품법의 이해 (100제)",
   "answer": "1"
  },
@@ -5221,35 +5221,35 @@ var COMBO_DRILLS_subject1 = [
    {
     "id": "ㄱ",
     "sid": "law_st_ada89b",
-    "conceptId": "L860",
+    "conceptId": "L819",
     "text": "1천만 원",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_d701b2",
-    "conceptId": "L860",
+    "conceptId": "L819",
     "text": "1억 원",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_477255",
-    "conceptId": "L860",
+    "conceptId": "L819",
     "text": "5천만 원",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_344504",
-    "conceptId": "L860",
+    "conceptId": "L819",
     "text": "3천만 원",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_3855cc",
-    "conceptId": "L860",
+    "conceptId": "L819",
     "text": "10억 원",
     "truth": true
    }
@@ -5299,7 +5299,7 @@ var COMBO_DRILLS_subject1 = [
    "수치"
   ],
   "derivedFrom": "subject1_q57",
-  "explain": "📖 법령 근거 (L860(제20901호)(20260402)/화장품법(법률)(제20901호)(20260402).md#L860>)):\n제28조(과징금처분) ① 식품의약품안전처장은 제24조에 따라 영업자에게 업무정지처분을 하여야 할 경우에는 그 업무정지처분을 갈음하여 10억원 이하의 과징금을 부과할 수 있다.",
+  "explain": "📖 법령 근거 (L819(제20901호)(20260402)/화장품법(법률)(제20901호)(20260402).md#L819>)):\n제28조(과징금처분) ① 식품의약품안전처장은 제24조에 따라 영업자에게 업무정지처분을 하여야 할 경우에는 그 업무정지처분을 갈음하여 10억원 이하의 과징금을 부과할 수 있다.",
   "source": "화장품법의 이해 (100제)",
   "answer": "1"
  },
@@ -5595,35 +5595,35 @@ var COMBO_DRILLS_subject1 = [
    {
     "id": "ㄱ",
     "sid": "law_st_13b700",
-    "conceptId": "L1438",
+    "conceptId": "L1405",
     "text": "수입국의 기준에 따라 표시할 수 있다",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "law_st_7888cf",
-    "conceptId": "L1438",
+    "conceptId": "L1405",
     "text": "국내 표시기준과 동일하게 적용된다",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_2e8f2d",
-    "conceptId": "L1438",
+    "conceptId": "L1405",
     "text": "전성분 표시 의무가 면제된다",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_99204d",
-    "conceptId": "L1438",
+    "conceptId": "L1405",
     "text": "사용기한 표시 의무가 면제된다",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_320a58",
-    "conceptId": "L1438",
+    "conceptId": "L1405",
     "text": "모든 표시사항이 면제된다",
     "truth": false
    }
@@ -5672,7 +5672,7 @@ var COMBO_DRILLS_subject1 = [
    "기한"
   ],
   "derivedFrom": "subject1_q61",
-  "explain": "📖 법령 근거 (L1438(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L1438>)):\n⑦ 법 제10조제5항에 따른 화장품 포장의 표시기준 및 표시방법은 별표 4와 같다. (별표 4: 화장품 포장의 표시기준 및 표시방법)",
+  "explain": "📖 법령 근거 (L1405(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L1405>)):\n⑦ 법 제10조제5항에 따른 화장품 포장의 표시기준 및 표시방법은 별표 4와 같다. (별표 4: 화장품 포장의 표시기준 및 표시방법)",
   "source": "화장품법의 이해 (100제)",
   "answer": "3"
  },

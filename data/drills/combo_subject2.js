@@ -1,5 +1,5 @@
 // 자동 생성된 복수정답형 드릴 데이터입니다. 수정하지 마십시오. (tools/build_combo_drills.js)
-// 원본: data/exams/subject2.81a4eafb.js — mode: fact(명제 조합) 18문 / answer(정답 조합) 139문
+// 원본: data/exams/subject2.cfa75adc.js — mode: fact(명제 조합) 19문 / answer(정답 조합) 138문
 var COMBO_DRILLS_subject2 = [
  {
   "id": "manufacturing_combo_f62cd4",
@@ -2886,35 +2886,35 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "ㄱ",
     "sid": "manufacturing_st_51858a",
-    "conceptId": "L195",
+    "conceptId": "L184",
     "text": "굴절계",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "manufacturing_st_2f4c39",
-    "conceptId": "L195",
+    "conceptId": "L184",
     "text": "점도계 (Viscometer)",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "manufacturing_st_159ca2",
-    "conceptId": "L195",
+    "conceptId": "L184",
     "text": "수분측정기",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "manufacturing_st_2a8f7a",
-    "conceptId": "L195",
+    "conceptId": "L184",
     "text": "pH 미터",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "manufacturing_st_6b2afd",
-    "conceptId": "L195",
+    "conceptId": "L184",
     "text": "고성능 액체 크로마토그래피 (HPLC)",
     "truth": true
    }
@@ -2964,7 +2964,7 @@ var COMBO_DRILLS_subject2 = [
    "정답판정"
   ],
   "derivedFrom": "subject2_q32",
-  "explain": "📖 법령 근거 (L195(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L195>)):\n③ 제조시설이나 설비의 세척에 사용되는 세제 또는 소독제는 효능이 입증된 것을 사용하고 잔류하거나 적용하는 표면에 이상을 초래하지 아니하여야 한다.",
+  "explain": "📖 법령 근거 (L184(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L184>)):\n③ 제조시설이나 설비의 세척에 사용되는 세제 또는 소독제는 효능이 입증된 것을 사용하고 잔류하거나 적용하는 표면에 이상을 초래하지 아니하여야 한다.",
   "source": "화장품 제조 및 품질관리 (250제)",
   "answer": "4"
  },
@@ -3534,35 +3534,35 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "ㄱ",
     "sid": "manufacturing_st_9d117a",
-    "conceptId": "L174",
+    "conceptId": "L165",
     "text": "1년",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "manufacturing_st_a8ba08",
-    "conceptId": "L174",
+    "conceptId": "L165",
     "text": "2년",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "manufacturing_st_bcc966",
-    "conceptId": "L174",
+    "conceptId": "L165",
     "text": "3년",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "manufacturing_st_35ecac",
-    "conceptId": "L174",
+    "conceptId": "L165",
     "text": "5년",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "manufacturing_st_526507",
-    "conceptId": "L174",
+    "conceptId": "L165",
     "text": "10년",
     "truth": false
    }
@@ -3611,7 +3611,7 @@ var COMBO_DRILLS_subject2 = [
    "수치"
   ],
   "derivedFrom": "subject2_q39",
-  "explain": "📖 법령 근거 (L174(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L174>)):\n9. 각 제조구역별 청소 및 위생관리 절차에 따라 효능이 입증된 세척제 및 소독제를 사용할 것",
+  "explain": "📖 법령 근거 (L165(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L165>)):\n9. 각 제조구역별 청소 및 위생관리 절차에 따라 효능이 입증된 세척제 및 소독제를 사용할 것",
   "source": "화장품 제조 및 품질관리 (250제)",
   "answer": "2"
  },
@@ -5556,35 +5556,35 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "ㄱ",
     "sid": "manufacturing_st_bb7e99",
-    "conceptId": "L154",
+    "conceptId": "L150",
     "text": "회수계획서",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "manufacturing_st_af9088",
-    "conceptId": "L154",
+    "conceptId": "L150",
     "text": "회수종합보고서",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "manufacturing_st_b18cd2",
-    "conceptId": "L154",
+    "conceptId": "L150",
     "text": "생산원가 손실 보고서",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "manufacturing_st_18d465",
-    "conceptId": "L154",
+    "conceptId": "L150",
     "text": "회수이행성적서",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "manufacturing_st_1ab980",
-    "conceptId": "L154",
+    "conceptId": "L150",
     "text": "회수사실 공표문",
     "truth": false
    }
@@ -5631,7 +5631,7 @@ var COMBO_DRILLS_subject2 = [
    "절차"
   ],
   "derivedFrom": "subject2_q61",
-  "explain": "📖 법령 근거 (L154(제2025-88호)(20251216)/기능성화장품 심사에 관한 규정(식품의약품안전처고시)(제2025-88호)(20251216).md#L154>)):\n⑥ 자외선을 차단 또는 산란시켜 자외선으로부터 피부를 보호하는 기능을 가진 제품의 경우 이미 심사를 받은 기능성화장품[화장품책임판매업자가 같거나 화장품제조업자(화장품제조업자가 제품을 설계ㆍ개발ㆍ생산하는 방식으로 제조한 경우만 해당한다)가 같은 기능성화장품만 해당한다]과 그 효능ㆍ효과를 나타내게 하는 원료의 종류, 규격 및 분량(액상의 경우 농도), 용법ㆍ용량 및 제형이 동일한 경우에는 제4조제1호의 자료 제출을 면제한다.",
+  "explain": "📖 법령 근거 (L150(제2025-88호)(20251216)/기능성화장품 심사에 관한 규정(식품의약품안전처고시)(제2025-88호)(20251216).md#L150>)):\n⑥ 자외선을 차단 또는 산란시켜 자외선으로부터 피부를 보호하는 기능을 가진 제품의 경우 이미 심사를 받은 기능성화장품[화장품책임판매업자가 같거나 화장품제조업자(화장품제조업자가 제품을 설계ㆍ개발ㆍ생산하는 방식으로 제조한 경우만 해당한다)가 같은 기능성화장품만 해당한다]과 그 효능ㆍ효과를 나타내게 하는 원료의 종류, 규격 및 분량(액상의 경우 농도), 용법ㆍ용량 및 제형이 동일한 경우에는 제4조제1호의 자료 제출을 면제한다.",
   "source": "화장품 제조 및 품질관리 (250제)",
   "answer": "5"
  },
@@ -5825,35 +5825,35 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "ㄱ",
     "sid": "manufacturing_st_7af333",
-    "conceptId": "L303",
+    "conceptId": "L286",
     "text": "계량 구역은 다른 구역과 분리되어 있어야 한다.",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "manufacturing_st_efdd54",
-    "conceptId": "L303",
+    "conceptId": "L286",
     "text": "원료별로 독립된 스푼이나 전용 용기를 사용한다.",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "manufacturing_st_52c459",
-    "conceptId": "L303",
+    "conceptId": "L286",
     "text": "분진이 많이 발생하는 분말 계량 시 국소배기장치를 가동한다.",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "manufacturing_st_0a5c1d",
-    "conceptId": "L303",
+    "conceptId": "L286",
     "text": "계량이 완료된 원료 용기는 라벨을 부착하고 즉시 밀폐한다.",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "manufacturing_st_a26b3c",
-    "conceptId": "L303",
+    "conceptId": "L286",
     "text": "계량이 완료된 서로 다른 원료들을 하나의 용기에 미리 다 쏟아서 섞어둔다.",
     "truth": false
    }
@@ -5904,7 +5904,7 @@ var COMBO_DRILLS_subject2 = [
    "명제판정"
   ],
   "derivedFrom": "subject2_q64",
-  "explain": "📖 법령 근거 (L303(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L303>)):\n② 원료가 칭량되는 도중 교차오염을 피하기 위한 조치가 있어야 한다.",
+  "explain": "📖 법령 근거 (L286(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L286>)):\n② 원료가 칭량되는 도중 교차오염을 피하기 위한 조치가 있어야 한다.",
   "source": "화장품 제조 및 품질관리 (250제)",
   "answer": "4"
  },
@@ -6198,35 +6198,35 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "ㄱ",
     "sid": "manufacturing_st_e945c7",
-    "conceptId": "L195",
+    "conceptId": "L183",
     "text": "초음파 세척법",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "manufacturing_st_35cd87",
-    "conceptId": "L195",
+    "conceptId": "L183",
     "text": "린스법 (Rinsing Method, 헹굼액 분석법)",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "manufacturing_st_41c831",
-    "conceptId": "L195",
+    "conceptId": "L183",
     "text": "침적법",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "manufacturing_st_1a73d2",
-    "conceptId": "L195",
+    "conceptId": "L183",
     "text": "여과법",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "manufacturing_st_abeea8",
-    "conceptId": "L195",
+    "conceptId": "L183",
     "text": "스왑법 (Swabbing Method, 표면 닦기법)",
     "truth": true
    }
@@ -6274,7 +6274,7 @@ var COMBO_DRILLS_subject2 = [
    "정답판정"
   ],
   "derivedFrom": "subject2_q69",
-  "explain": "📖 법령 근거 (L195(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L195>)):\n③ 제조시설이나 설비의 세척에 사용되는 세제 또는 소독제는 효능이 입증된 것을 사용하고 잔류하거나 적용하는 표면에 이상을 초래하지 아니하여야 한다.",
+  "explain": "📖 법령 근거 (L183(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L183>)):\n③ 제조시설이나 설비의 세척에 사용되는 세제 또는 소독제는 효능이 입증된 것을 사용하고 잔류하거나 적용하는 표면에 이상을 초래하지 아니하여야 한다.",
   "source": "화장품 제조 및 품질관리 (250제)",
   "answer": "2"
  },
@@ -6475,35 +6475,35 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "ㄱ",
     "sid": "manufacturing_st_42423a",
-    "conceptId": "L146",
+    "conceptId": "L139",
     "text": "보관 공간의 심미적 아름다움을 높이기 위해",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "manufacturing_st_18f9bc",
-    "conceptId": "L146",
+    "conceptId": "L139",
     "text": "적재 차량의 진입을 막기 위해",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "manufacturing_st_108a95",
-    "conceptId": "L146",
+    "conceptId": "L139",
     "text": "제품 상자의 무게를 줄이기 위해",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "manufacturing_st_de7815",
-    "conceptId": "L146",
+    "conceptId": "L139",
     "text": "박스의 선입선출을 전면 차단하기 위해",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "manufacturing_st_d90408",
-    "conceptId": "L146",
+    "conceptId": "L139",
     "text": "창고 청소의 용이성 확보 및 바닥/벽면의 습기 전이로 인한 곰팡이 오염을 방지하기 위해",
     "truth": true
    }
@@ -6554,7 +6554,7 @@ var COMBO_DRILLS_subject2 = [
    "정답판정"
   ],
   "derivedFrom": "subject2_q72",
-  "explain": "📖 법령 근거 (L146(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L146>)):\n② 작업소 및 보관소 내의 모든 직원은 화장품의 오염을 방지하기 위해 규정된 작업복을 착용해야 하고 음식물 등을 반입해서는 아니 된다.",
+  "explain": "📖 법령 근거 (L139(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L139>)):\n② 작업소 및 보관소 내의 모든 직원은 화장품의 오염을 방지하기 위해 규정된 작업복을 착용해야 하고 음식물 등을 반입해서는 아니 된다.",
   "source": "화장품 제조 및 품질관리 (250제)",
   "answer": "1"
  },
@@ -7299,7 +7299,7 @@ var COMBO_DRILLS_subject2 = [
    "정답판정"
   ],
   "derivedFrom": "subject2_q80",
-  "explain": "📖 법령 근거 (L60(제2025-88호)(20251216)/기능성화장품 심사에 관한 규정(식품의약품안전처고시)(제2025-88호)(20251216).md#L60>)):\n(5) 광독성 및 광감작성 시험자료(자외선에서 흡수가 없음을 입증하는 흡광도 시험자료를 제출하는 경우에는 면제함)",
+  "explain": "📖 법령 근거 (L59(제2025-88호)(20251216)/기능성화장품 심사에 관한 규정(식품의약품안전처고시)(제2025-88호)(20251216).md#L59>)):\n(5) 광독성 및 광감작성 시험자료(자외선에서 흡수가 없음을 입증하는 흡광도 시험자료를 제출하는 경우에는 면제함)",
   "source": "화장품 제조 및 품질관리 (250제)",
   "answer": "3"
  },
@@ -7684,35 +7684,35 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "ㄱ",
     "sid": "manufacturing_st_009bc1",
-    "conceptId": "L769",
+    "conceptId": "L739",
     "text": "일탈이란 승인된 제조 지시서나 기준서 규정에서 벗어난 모든 예기치 못한 상황을 의미한다.",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "manufacturing_st_e631d9",
-    "conceptId": "L769",
+    "conceptId": "L739",
     "text": "중대한 일탈의 경우 완제품의 출하가 보류될 수 있다.",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "manufacturing_st_15653e",
-    "conceptId": "L769",
+    "conceptId": "L739",
     "text": "발생한 일탈은 모두 기록하고 품질 부서의 조사를 받아야 한다.",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "manufacturing_st_c20894",
-    "conceptId": "L769",
+    "conceptId": "L739",
     "text": "일탈 조사를 통해 제품 품질에 미치는 영향을 평가하고 재발 방지 대책(CAPA)을 수립한다.",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "manufacturing_st_db10e6",
-    "conceptId": "L769",
+    "conceptId": "L739",
     "text": "일탈이 발생하면 현장 작업자는 임의로 조치하고 기록을 생략한 채 작업을 속행한다.",
     "truth": false
    }
@@ -7765,7 +7765,7 @@ var COMBO_DRILLS_subject2 = [
    "정의"
   ],
   "derivedFrom": "subject2_q85",
-  "explain": "📖 법령 근거 (L769(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L769>)):\n④ 식품의약품안전처장은 제출된 자료를 평가하고 별표 2에 따른 실태조사를 실시하여 우수화장품 제조 및 품질관리기준 적합판정한 경우에는 별지 제3호 서식에 따른 우수화장품 제조 및 품질관리기준 적합업소 증명서를 발급하여야 한다.",
+  "explain": "📖 법령 근거 (L739(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L739>)):\n④ 식품의약품안전처장은 제출된 자료를 평가하고 별표 2에 따른 실태조사를 실시하여 우수화장품 제조 및 품질관리기준 적합판정한 경우에는 별지 제3호 서식에 따른 우수화장품 제조 및 품질관리기준 적합업소 증명서를 발급하여야 한다.",
   "source": "화장품 제조 및 품질관리 (250제)",
   "answer": "2"
  },
@@ -8241,35 +8241,35 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "ㄱ",
     "sid": "manufacturing_st_8bc488",
-    "conceptId": "L639",
+    "conceptId": "L609",
     "text": "적합품 적재대 구석에 섞어서 표시 없이 보관한다.",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "manufacturing_st_d27673",
-    "conceptId": "L639",
+    "conceptId": "L609",
     "text": "출하 승인 라벨을 덮어씌워 출하한다.",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "manufacturing_st_f8b660",
-    "conceptId": "L639",
+    "conceptId": "L609",
     "text": "임의로 다른 박스에 옮겨 담아 정상 제품인 것처럼 위장한다.",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "manufacturing_st_b5a9a4",
-    "conceptId": "L639",
+    "conceptId": "L609",
     "text": "부적합 라벨(적색)을 눈에 띄게 부착하고 다른 적합 제품과 명확히 격리된 별도 구획 구역에 보관한다.",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "manufacturing_st_2b2741",
-    "conceptId": "L639",
+    "conceptId": "L609",
     "text": "폐기 대기 상태라도 품질 책임자 승인 없이 생산라인에 재투입한다.",
     "truth": false
    }
@@ -8317,7 +8317,7 @@ var COMBO_DRILLS_subject2 = [
    "절차"
   ],
   "derivedFrom": "subject2_q91",
-  "explain": "📖 법령 근거 (L639(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L639>)):\n④ 출고할 제품은 원자재, 부적합품 및 반품된 제품과 구획된 장소에서 보관하여야 한다. 다만 서로 혼동을 일으킬 우려가 없는 시스템에 의하여 보관되는 경우에는 그러하지 아니할 수 있다.",
+  "explain": "📖 법령 근거 (L609(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L609>)):\n④ 출고할 제품은 원자재, 부적합품 및 반품된 제품과 구획된 장소에서 보관하여야 한다. 다만 서로 혼동을 일으킬 우려가 없는 시스템에 의하여 보관되는 경우에는 그러하지 아니할 수 있다.",
   "source": "화장품 제조 및 품질관리 (250제)",
   "answer": "1"
  },
@@ -8604,49 +8604,52 @@ var COMBO_DRILLS_subject2 = [
   "type": "combo",
   "points": 4,
   "citation": "📖 교재: L415 (출처: 과목2 문제은행 Q95)",
-  "stem": "다음 중 각질 세포간지질막인 '라멜라 구조'의 안정성을 높이기 위한 최적의 배합 설계 요소가 아닌 것을 모두 고른 것은?",
+  "stem": "다음 중 각질 세포간지질막인 '라멜라 구조'의 안정성을 높이기 위한 최적의 배합 설계 요소으로 옳은 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "manufacturing_st_38956f",
     "conceptId": "L415",
     "text": "세라마이드, 콜레스테롤, 유리지방산이 3:1:1 부근의 비율로 배합되어야 한다.",
-    "truth": false
+    "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "manufacturing_st_f37481",
     "conceptId": "L415",
     "text": "물과 기름 성분을 계면활성제를 통해 조밀한 층상 구조로 유화시켜야 한다.",
-    "truth": false
+    "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "manufacturing_st_c3c780",
     "conceptId": "L415",
     "text": "점증제를 사용하여 유화 상분리를 물리적으로 억제한다.",
-    "truth": false
+    "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "manufacturing_st_4c0454",
     "conceptId": "L415",
     "text": "완제품의 pH를 건강한 피부의 약산성(pH 5.0 ~ 6.5) 영역으로 유도한다.",
-    "truth": false
+    "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "manufacturing_st_905ea4",
     "conceptId": "L415",
     "text": "극성이 전혀 없는 광물성 오일만을 100% 사용하여 유화한다.",
-    "truth": true
+    "truth": false
    }
   ],
   "options": [
    {
     "id": "1",
     "members": [
-     "ㅁ"
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -8680,7 +8683,7 @@ var COMBO_DRILLS_subject2 = [
   ],
   "tags": [
    "자동변환",
-   "정답판정",
+   "명제판정",
    "한도",
    "구성비",
    "수치"
@@ -8886,35 +8889,35 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "ㄱ",
     "sid": "manufacturing_st_23ddfb",
-    "conceptId": "L209",
+    "conceptId": "L198",
     "text": "재작업 처리",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "manufacturing_st_8f40fc",
-    "conceptId": "L209",
+    "conceptId": "L198",
     "text": "소비자 불만 처리",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "manufacturing_st_7a1aee",
-    "conceptId": "L209",
+    "conceptId": "L198",
     "text": "공급업체 평가 및 관리 (Supplier Qualification)",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "manufacturing_st_609e9c",
-    "conceptId": "L209",
+    "conceptId": "L198",
     "text": "모니터링",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "manufacturing_st_7debb9",
-    "conceptId": "L209",
+    "conceptId": "L198",
     "text": "밸리데이션",
     "truth": false
    }
@@ -8966,7 +8969,7 @@ var COMBO_DRILLS_subject2 = [
    "기한"
   ],
   "derivedFrom": "subject2_q98",
-  "explain": "📖 법령 근거 (L209(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L209>)):\n② 원자재의 입고 시 구매 요구서, 원자재 공급업체 성적서 및 현품이 서로 일치하여야 한다. 필요한 경우 운송 관련 자료를 추가적으로 확인할 수 있다.",
+  "explain": "📖 법령 근거 (L198(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L198>)):\n② 원자재의 입고 시 구매 요구서, 원자재 공급업체 성적서 및 현품이 서로 일치하여야 한다. 필요한 경우 운송 관련 자료를 추가적으로 확인할 수 있다.",
   "source": "화장품 제조 및 품질관리 (250제)",
   "answer": "5"
  },
@@ -9631,35 +9634,35 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "ㄱ",
     "sid": "manufacturing_st_1ab816",
-    "conceptId": "L195",
+    "conceptId": "L184",
     "text": "기계 모터의 교류 전기 주파수",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "manufacturing_st_05ddd6",
-    "conceptId": "L195",
+    "conceptId": "L184",
     "text": "세척에 사용한 계면활성제 세척제 성분",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "manufacturing_st_8ccd62",
-    "conceptId": "L195",
+    "conceptId": "L184",
     "text": "잔류 소독제 성분",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "manufacturing_st_c60391",
-    "conceptId": "L195",
+    "conceptId": "L184",
     "text": "잔류 정제수 내 미생물 개수",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "manufacturing_st_d12c9b",
-    "conceptId": "L195",
+    "conceptId": "L184",
     "text": "이전 배치 제조 원료 유효 성분",
     "truth": false
    }
@@ -9706,7 +9709,7 @@ var COMBO_DRILLS_subject2 = [
    "정답판정"
   ],
   "derivedFrom": "subject2_q106",
-  "explain": "📖 법령 근거 (L195(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L195>)):\n③ 제조시설이나 설비의 세척에 사용되는 세제 또는 소독제는 효능이 입증된 것을 사용하고 잔류하거나 적용하는 표면에 이상을 초래하지 아니하여야 한다.",
+  "explain": "📖 법령 근거 (L184(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L184>)):\n③ 제조시설이나 설비의 세척에 사용되는 세제 또는 소독제는 효능이 입증된 것을 사용하고 잔류하거나 적용하는 표면에 이상을 초래하지 아니하여야 한다.",
   "source": "화장품 제조 및 품질관리 (250제)",
   "answer": "5"
  },
@@ -10741,35 +10744,35 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "ㄱ",
     "sid": "manufacturing_st_f29486",
-    "conceptId": "L436",
+    "conceptId": "L411",
     "text": "제품이 제조되면 시험 검사 없이 바로 트럭에 상차하여 출하한다.",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "manufacturing_st_2c2dd8",
-    "conceptId": "L436",
+    "conceptId": "L411",
     "text": "품질보증(QA) 부서의 최종 시험 결과 적합 승인 및 출하 판정 라벨(녹색)이 부착된 제품에 한하여 생산부서와 상의 후 출고한다.",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "manufacturing_st_a73a20",
-    "conceptId": "L436",
+    "conceptId": "L411",
     "text": "영업사원의 구두 요청만 있으면 시험 검사 중인 제품도 선출고할 수 있다.",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "manufacturing_st_60367c",
-    "conceptId": "L436",
+    "conceptId": "L411",
     "text": "부적합 판정이 난 제품도 재작업 예정이면 창고 밖으로 사전 출고할 수 있다.",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "manufacturing_st_989222",
-    "conceptId": "L436",
+    "conceptId": "L411",
     "text": "대표이사의 지시서만 있으면 시험검사 성적서를 무시하고 출하할 수 있다.",
     "truth": false
    }
@@ -10816,7 +10819,7 @@ var COMBO_DRILLS_subject2 = [
    "절차"
   ],
   "derivedFrom": "subject2_q118",
-  "explain": "📖 법령 근거 (L436(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L436>)):\n② 국제규격인증업체(CGMP, ISO9000) 또는 품질보증 능력이 있다고 인정되는 업체에서 제공된 원료ㆍ자재는 제공된 적합성에 대한 기록의 증거를 고려하여 검사의 방법과 시험항목을 조정할 수 있다.",
+  "explain": "📖 법령 근거 (L411(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L411>)):\n② 국제규격인증업체(CGMP, ISO9000) 또는 품질보증 능력이 있다고 인정되는 업체에서 제공된 원료ㆍ자재는 제공된 적합성에 대한 기록의 증거를 고려하여 검사의 방법과 시험항목을 조정할 수 있다.",
   "source": "화장품 제조 및 품질관리 (250제)",
   "answer": "1"
  },
@@ -11103,42 +11106,42 @@ var COMBO_DRILLS_subject2 = [
   "type": "combo",
   "points": 4,
   "citation": "📖 교재: L1706 (출처: 과목2 문제은행 Q122)",
-  "stem": "다음 중 화장품의 유화형 중 W/O형(유중수형) 유화물의 특징이으로 옳은 것을 모두 고른 것은?",
+  "stem": "다음 중 화장품의 유화형 중 W/O형(유중수형) 유화물의 특징으로 옳은 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "manufacturing_st_301a61",
     "conceptId": "L1706",
     "text": "유성 성분이 외상(연속상)을 형성한다",
-    "truth": false
+    "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "manufacturing_st_a9092a",
     "conceptId": "L1706",
     "text": "수성 성분이 내상(분산상)을 형성한다",
-    "truth": false
+    "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "manufacturing_st_8282e9",
     "conceptId": "L1706",
     "text": "일반적으로 유성 느낌이 강하다",
-    "truth": false
+    "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "manufacturing_st_da9e1c",
     "conceptId": "L1706",
     "text": "물에 잘 씻겨 내려가는 가벼운 사용감이 특징이다",
-    "truth": true
+    "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "manufacturing_st_9e000d",
     "conceptId": "L1706",
     "text": "세수 크림, 마사지 크림 등에 사용된다",
-    "truth": false
+    "truth": true
    }
   ],
   "options": [
@@ -11169,7 +11172,10 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "4",
     "members": [
-     "ㄹ"
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
@@ -14585,6 +14591,105 @@ var COMBO_DRILLS_subject2 = [
   ],
   "derivedFrom": "cluster:2|L3016",
   "explain": "ㄱ. 원본: 과목2 문제은행 Q35 · 교재 L3016\nㄴ. 원본: 과목2 문제은행 Q35 · 교재 L3016\nㄷ. 원본: 과목2 문제은행 Q48 · 교재 L3016\nㄹ. 원본: 과목2 문제은행 Q48 · 교재 L3016",
+  "source": "과목2 개념 재조합",
+  "answer": "2"
+ },
+ {
+  "id": "manufacturing_combo-cluster_698fcc",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L415 (출처: 과목2 문제은행 진술 재조합)",
+  "stem": "다음 설명 중 옳은 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_st_024bdc",
+    "conceptId": "L415",
+    "text": "염기성 영역에서만 활성을 띤다.",
+    "truth": false,
+    "explain": "원본: 과목2 문제은행 Q67 · 교재 L415"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_st_17b976",
+    "conceptId": "L415",
+    "text": "화장품에 배합할 수 없는 원료이다.",
+    "truth": false,
+    "explain": "원본: 과목2 문제은행 Q67 · 교재 L415"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_st_9dd994",
+    "conceptId": "L415",
+    "text": "탄소 체인이 짧을수록 피부 장벽 기능이 더 강화된다.",
+    "truth": false,
+    "explain": "원본: 과목2 문제은행 Q67 · 교재 L415"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_st_7ca816",
+    "conceptId": "L415",
+    "text": "피부의 약산성(pH 5.5 내외) 장벽을 유지하는 데 기여한다.",
+    "truth": true,
+    "explain": "원본: 과목2 문제은행 Q67 · 교재 L415"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_st_c3c780",
+    "conceptId": "L415",
+    "text": "점증제를 사용하여 유화 상분리를 물리적으로 억제한다.",
+    "truth": true,
+    "explain": "원본: 과목2 문제은행 Q95 · 교재 L415"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "명제판정",
+   "개념재조합",
+   "한도",
+   "수치"
+  ],
+  "derivedFrom": "cluster:2|L415",
+  "explain": "ㄱ. 원본: 과목2 문제은행 Q67 · 교재 L415\nㄴ. 원본: 과목2 문제은행 Q67 · 교재 L415\nㄷ. 원본: 과목2 문제은행 Q67 · 교재 L415\nㄹ. 원본: 과목2 문제은행 Q67 · 교재 L415\nㅁ. 원본: 과목2 문제은행 Q95 · 교재 L415",
   "source": "과목2 개념 재조합",
   "answer": "2"
  },

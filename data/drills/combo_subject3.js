@@ -1,5 +1,5 @@
 // 자동 생성된 복수정답형 드릴 데이터입니다. 수정하지 마십시오. (tools/build_combo_drills.js)
-// 원본: data/exams/subject3.8c9dd130.js — mode: fact(명제 조합) 23문 / answer(정답 조합) 226문
+// 원본: data/exams/subject3.c1175502.js — mode: fact(명제 조합) 23문 / answer(정답 조합) 226문
 var COMBO_DRILLS_subject3 = [
  {
   "id": "safety_combo_86b500",
@@ -2922,35 +2922,35 @@ var COMBO_DRILLS_subject3 = [
    {
     "id": "ㄱ",
     "sid": "safety_st_12c3cd",
-    "conceptId": "L432",
+    "conceptId": "L422",
     "text": "부작용 정보 수집 및 보고 절차",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_6b8ebf",
-    "conceptId": "L432",
+    "conceptId": "L422",
     "text": "안전성 정보 분석 및 평가 방법",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_1c4ee5",
-    "conceptId": "L432",
+    "conceptId": "L422",
     "text": "제품의 신속한 회수 및 폐기 절차",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_52fe58",
-    "conceptId": "L432",
+    "conceptId": "L422",
     "text": "대리점별 판매 수수료율 결정",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_335e07",
-    "conceptId": "L432",
+    "conceptId": "L422",
     "text": "안전성 정보 관련 기록의 보존 기간",
     "truth": false
    }
@@ -3003,7 +3003,7 @@ var COMBO_DRILLS_subject3 = [
    "구성비"
   ],
   "derivedFrom": "subject3_q32",
-  "explain": "📖 법령 근거 (L432(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L432>)):\n① 법 제4조의2제1항 및 이 규칙 제10조의2제2항에 따라 화장품의 표시ㆍ광고를 하려는 화장품책임판매업자는 법 제4조의2제1항제1호부터 제3호까지의 규정에 따른 제품별 안전성 자료 모두를 미리 작성해야 한다.",
+  "explain": "📖 법령 근거 (L422(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L422>)):\n① 법 제4조의2제1항 및 이 규칙 제10조의2제2항에 따라 화장품의 표시ㆍ광고를 하려는 화장품책임판매업자는 법 제4조의2제1항제1호부터 제3호까지의 규정에 따른 제품별 안전성 자료 모두를 미리 작성해야 한다.",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "1"
  },
@@ -3304,35 +3304,35 @@ var COMBO_DRILLS_subject3 = [
    {
     "id": "ㄱ",
     "sid": "safety_st_1f7eaa",
-    "conceptId": "L291",
+    "conceptId": "L276",
     "text": "작업원의 건강검진 및 위생 수칙",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_fd6588",
-    "conceptId": "L291",
+    "conceptId": "L276",
     "text": "작업장 청소 및 소독 방법",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_f8eca8",
-    "conceptId": "L291",
+    "conceptId": "L276",
     "text": "설비 및 기구의 세척 및 보존 방법",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_5dd605",
-    "conceptId": "L291",
+    "conceptId": "L276",
     "text": "제조 공정 중 반제품의 물리적 이송 파이프 라인 설계 도면 (설비 사양서 항목)",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_39fcac",
-    "conceptId": "L291",
+    "conceptId": "L276",
     "text": "방충 및 방서 대책",
     "truth": false
    }
@@ -3385,7 +3385,7 @@ var COMBO_DRILLS_subject3 = [
    "구성비"
   ],
   "derivedFrom": "subject3_q36",
-  "explain": "📖 법령 근거 (L291(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L291>)):\n⑤ 제조위생관리기준서는 다음 각 호의 사항이 포함되어야 한다.",
+  "explain": "📖 법령 근거 (L276(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L276>)):\n⑤ 제조위생관리기준서는 다음 각 호의 사항이 포함되어야 한다.",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "1"
  },
@@ -3487,35 +3487,35 @@ var COMBO_DRILLS_subject3 = [
    {
     "id": "ㄱ",
     "sid": "safety_st_f58c42",
-    "conceptId": "L775",
+    "conceptId": "L757",
     "text": "사용하는 세척제의 종류 및 농도",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_8e2e57",
-    "conceptId": "L775",
+    "conceptId": "L757",
     "text": "세척 시 물의 온도 및 세척 시간",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_bda46e",
-    "conceptId": "L775",
+    "conceptId": "L757",
     "text": "세척 기구(솔, 고압분사기 등)의 사용법",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_b1b0b1",
-    "conceptId": "L775",
+    "conceptId": "L757",
     "text": "기계를 세척하는 작업자의 월급 기준",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_71a5da",
-    "conceptId": "L775",
+    "conceptId": "L757",
     "text": "세척 후 헹굼 수질 기준",
     "truth": false
    }
@@ -3565,7 +3565,7 @@ var COMBO_DRILLS_subject3 = [
    "한도"
   ],
   "derivedFrom": "subject3_q38",
-  "explain": "📖 법령 근거 (L775(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L775>)):\n② 식품의약품안전처장은 제1항에 따라 제출된 자료가 적합하지 않은 경우 그 내용을 구체적으로 명시하여 신청인에게 보완을 요청할 수 있다. 이 경우 신청인은 보완일부터 60일 이내에 추가 자료를 제출하거나 보완 제출기한의 연장을 요청할 수 있다.",
+  "explain": "📖 법령 근거 (L757(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L757>)):\n② 식품의약품안전처장은 제1항에 따라 제출된 자료가 적합하지 않은 경우 그 내용을 구체적으로 명시하여 신청인에게 보완을 요청할 수 있다. 이 경우 신청인은 보완일부터 60일 이내에 추가 자료를 제출하거나 보완 제출기한의 연장을 요청할 수 있다.",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "5"
  },
@@ -3956,35 +3956,35 @@ var COMBO_DRILLS_subject3 = [
    {
     "id": "ㄱ",
     "sid": "safety_st_db770f",
-    "conceptId": "L148",
+    "conceptId": "L141",
     "text": "결핵 (전염성이 있는 경우)",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_1d5e4f",
-    "conceptId": "L148",
+    "conceptId": "L141",
     "text": "전염성 피부 질환 (습진, 짓무름 등)",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_9f8280",
-    "conceptId": "L148",
+    "conceptId": "L141",
     "text": "콜레라 등 제1급 법정 감염병",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_da6dc8",
-    "conceptId": "L148",
+    "conceptId": "L141",
     "text": "화농성 상처가 손에 있는 경우",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_bc9fb7",
-    "conceptId": "L148",
+    "conceptId": "L141",
     "text": "가벼운 근시 또는 노안",
     "truth": true
    }
@@ -4034,7 +4034,7 @@ var COMBO_DRILLS_subject3 = [
    "수치"
   ],
   "derivedFrom": "subject3_q43",
-  "explain": "📖 교재 근거 (L148(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L148>)):\n③ 피부에 외상이 있거나 질병에 걸린 직원은 건강이 양호해지거나 화장품의 품질에 영향을 주지 않는다는 의사",
+  "explain": "📖 교재 근거 (L141(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L141>)):\n③ 피부에 외상이 있거나 질병에 걸린 직원은 건강이 양호해지거나 화장품의 품질에 영향을 주지 않는다는 의사",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "2"
  },
@@ -5156,35 +5156,35 @@ var COMBO_DRILLS_subject3 = [
    {
     "id": "ㄱ",
     "sid": "safety_st_916ca9",
-    "conceptId": "L705",
+    "conceptId": "L689",
     "text": "자진 회수를 하더라도 감경 처분은 법적으로 불가능하다.",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_d3db70",
-    "conceptId": "L705",
+    "conceptId": "L689",
     "text": "벌금만 감면될 뿐 행정 업무정지 기간은 그대로 적용된다.",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_78adb1",
-    "conceptId": "L705",
+    "conceptId": "L689",
     "text": "영업소 폐쇄 처분은 절대 감경되지 않는다.",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_0720c8",
-    "conceptId": "L705",
+    "conceptId": "L689",
     "text": "위해를 적극 종결한 경우 행정처분을 감경하거나 면제할 수 있다.",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_6cf919",
-    "conceptId": "L705",
+    "conceptId": "L689",
     "text": "자진 회수 비용을 국가가 전액 환급해 준다.",
     "truth": false
    }
@@ -5232,7 +5232,7 @@ var COMBO_DRILLS_subject3 = [
    "처분기준"
   ],
   "derivedFrom": "subject3_q56",
-  "explain": "📖 법령 근거 (L705(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L705>)):\n1. 회수계획서에 따라 회수대상화장품의 회수를 적절하게 이행하였다고 판단되는 경우에는 회수가 종료되었음을 확인하고 회수의무자에게 이를 서면으로 통보할 것",
+  "explain": "📖 법령 근거 (L689(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L689>)):\n1. 회수계획서에 따라 회수대상화장품의 회수를 적절하게 이행하였다고 판단되는 경우에는 회수가 종료되었음을 확인하고 회수의무자에게 이를 서면으로 통보할 것",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "4"
  },
@@ -5900,35 +5900,35 @@ var COMBO_DRILLS_subject3 = [
    {
     "id": "ㄱ",
     "sid": "safety_st_0b1ceb",
-    "conceptId": "L679",
+    "conceptId": "L664",
     "text": "3일 이내",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_e69274",
-    "conceptId": "L679",
+    "conceptId": "L664",
     "text": "15일 이내",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_ddfe40",
-    "conceptId": "L679",
+    "conceptId": "L664",
     "text": "7일 이내",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_c5d4be",
-    "conceptId": "L679",
+    "conceptId": "L664",
     "text": "30일 이내",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_1949f0",
-    "conceptId": "L679",
+    "conceptId": "L664",
     "text": "60일 이내",
     "truth": false
    }
@@ -5982,7 +5982,7 @@ var COMBO_DRILLS_subject3 = [
    "수치"
   ],
   "derivedFrom": "subject3_q64",
-  "explain": "📖 법령 근거 (L679(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L679>)):\n1. 위해성 등급이 가등급인 화장품: 회수를 시작한 날부터 15일 이내",
+  "explain": "📖 법령 근거 (L664(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L664>)):\n1. 위해성 등급이 가등급인 화장품: 회수를 시작한 날부터 15일 이내",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "4"
  },
@@ -6642,35 +6642,35 @@ var COMBO_DRILLS_subject3 = [
    {
     "id": "ㄱ",
     "sid": "safety_st_d329a9",
-    "conceptId": "L974",
+    "conceptId": "L952",
     "text": "3일 이내",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_0a7088",
-    "conceptId": "L974",
+    "conceptId": "L952",
     "text": "24시간 이내",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_071337",
-    "conceptId": "L974",
+    "conceptId": "L952",
     "text": "5일 이내",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_32ad4c",
-    "conceptId": "L974",
+    "conceptId": "L952",
     "text": "7일 이내",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_2406db",
-    "conceptId": "L974",
+    "conceptId": "L952",
     "text": "14일 이내",
     "truth": false
    }
@@ -6719,7 +6719,7 @@ var COMBO_DRILLS_subject3 = [
    "수치"
   ],
   "derivedFrom": "subject3_q72",
-  "explain": "📖 법령 근거 (L974(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L974>)):\n① 법 제5조의2제1항에 따라 화장품을 회수하거나 회수하는 데에 필요한 조치를 하려는 영업자(이하 “회수의무자”라 한다)는 해당 화장품에 대하여 즉시 판매중지 등의 필요한 조치를 하여야 하고, 회수대상화장품이라는 사실을 안 날부터 5일 이내에 별지 제10호의2서식의 회수계획서에 다음 각 호의 서류를 첨부하여 지방식품의약품안전청장에게 제출하여야 한다.",
+  "explain": "📖 법령 근거 (L952(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L952>)):\n① 법 제5조의2제1항에 따라 화장품을 회수하거나 회수하는 데에 필요한 조치를 하려는 영업자(이하 “회수의무자”라 한다)는 해당 화장품에 대하여 즉시 판매중지 등의 필요한 조치를 하여야 하고, 회수대상화장품이라는 사실을 안 날부터 5일 이내에 별지 제10호의2서식의 회수계획서에 다음 각 호의 서류를 첨부하여 지방식품의약품안전청장에게 제출하여야 한다.",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "4"
  },
@@ -6828,35 +6828,35 @@ var COMBO_DRILLS_subject3 = [
    {
     "id": "ㄱ",
     "sid": "safety_st_0f59d4",
-    "conceptId": "L911",
+    "conceptId": "L890",
     "text": "공표가 면제된다.",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_9f32d3",
-    "conceptId": "L911",
+    "conceptId": "L890",
     "text": "자진 회수율이 90% 이상이면 생략할 수 있다.",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_230fda",
-    "conceptId": "L911",
+    "conceptId": "L890",
     "text": "영업자 누리집만 공표하면 신문은 하지 않아도 된다.",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_cc9518",
-    "conceptId": "L911",
+    "conceptId": "L890",
     "text": "임의 선택 사항이다.",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_c5719b",
-    "conceptId": "L911",
+    "conceptId": "L890",
     "text": "일간신문 및 방송을 통한 공표가 필수적이다.",
     "truth": true
    }
@@ -6905,7 +6905,7 @@ var COMBO_DRILLS_subject3 = [
    "수치"
   ],
   "derivedFrom": "subject3_q74",
-  "explain": "📖 교재 근거 (L911(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L911>)):\n제28조(위해화장품의 공표) ① 법 제23조의2제1항에 따라 공표명령을 받은 영업자는 지체 없이 위해 발생사실 또는 다",
+  "explain": "📖 교재 근거 (L890(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L890>)):\n제28조(위해화장품의 공표) ① 법 제23조의2제1항에 따라 공표명령을 받은 영업자는 지체 없이 위해 발생사실 또는 다",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "1"
  },
@@ -7012,35 +7012,35 @@ var COMBO_DRILLS_subject3 = [
    {
     "id": "ㄱ",
     "sid": "safety_st_dc5a60",
-    "conceptId": "L874",
+    "conceptId": "L854",
     "text": "화장품법",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_c302fa",
-    "conceptId": "L874",
+    "conceptId": "L854",
     "text": "식품위생법",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_e44dfa",
-    "conceptId": "L874",
+    "conceptId": "L854",
     "text": "근로기준법",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_fbaf40",
-    "conceptId": "L874",
+    "conceptId": "L854",
     "text": "민법",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_92e1b6",
-    "conceptId": "L874",
+    "conceptId": "L854",
     "text": "감염병의 예방 및 관리에 관한 법률 (및 CGMP 위생 관리 기준)",
     "truth": true
    }
@@ -7090,7 +7090,7 @@ var COMBO_DRILLS_subject3 = [
    "정답판정"
   ],
   "derivedFrom": "subject3_q76",
-  "explain": "📖 법령 근거 (L874(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L874>)):\n① 법 제18조제1항에 따른 화장품 검사 등에 관한 업무를 수행하는 공무원(이하 “화장품감시공무원”이라 한다)은 다음 각 호의 어느 하나에 해당하는 사람 중에서 지방식품의약품안전청장이 임명하는 사람으로 한다. <개정 2020. 3. 13.>",
+  "explain": "📖 법령 근거 (L854(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L854>)):\n① 법 제18조제1항에 따른 화장품 검사 등에 관한 업무를 수행하는 공무원(이하 “화장품감시공무원”이라 한다)은 다음 각 호의 어느 하나에 해당하는 사람 중에서 지방식품의약품안전청장이 임명하는 사람으로 한다. <개정 2020. 3. 13.>",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "2"
  },
@@ -7658,35 +7658,35 @@ var COMBO_DRILLS_subject3 = [
    {
     "id": "ㄱ",
     "sid": "safety_st_0c49f5",
-    "conceptId": "L446",
+    "conceptId": "L436",
     "text": "작업자 위생 관리 기준",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_970ef7",
-    "conceptId": "L446",
+    "conceptId": "L436",
     "text": "작업장 청소 및 소독 기준",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_bc313f",
-    "conceptId": "L446",
+    "conceptId": "L436",
     "text": "설비 및 기구의 세정·소독 기준",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_b5dcea",
-    "conceptId": "L446",
+    "conceptId": "L436",
     "text": "제품의 판매 가격 설정 기준",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_f20da9",
-    "conceptId": "L446",
+    "conceptId": "L436",
     "text": "폐기물 처리 기준",
     "truth": false
    }
@@ -7733,7 +7733,7 @@ var COMBO_DRILLS_subject3 = [
    "구성비"
   ],
   "derivedFrom": "subject3_q83",
-  "explain": "📖 법령 근거 (L446(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L446>)):\n② 실태조사에는 다음 각 호의 사항이 포함되어야 한다.",
+  "explain": "📖 법령 근거 (L436(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L436>)):\n② 실태조사에는 다음 각 호의 사항이 포함되어야 한다.",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "2"
  },
@@ -7920,7 +7920,7 @@ var COMBO_DRILLS_subject3 = [
    "수치"
   ],
   "derivedFrom": "subject3_q85",
-  "explain": "📖 법령 근거 (L45(제2026-19호)(20260318)/화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318).md#L45>)):\n① 유통화장품은 제2항부터 제5항까지의 안전관리 기준에 적합하여야 하며, 유통화장품 유형별로 제6항부터 제9항까지의 안전관리 기준에 추가적으로 적합하여야 한다. 또한 시험방법은 별표 4에 따라 시험하되, 기타 과학적ㆍ합리적으로 타당성이 인정되는 경우 자사 기준으로 시험할 수 있다.",
+  "explain": "📖 법령 근거 (L44(제2026-19호)(20260318)/화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318).md#L44>)):\n① 유통화장품은 제2항부터 제5항까지의 안전관리 기준에 적합하여야 하며, 유통화장품 유형별로 제6항부터 제9항까지의 안전관리 기준에 추가적으로 적합하여야 한다. 또한 시험방법은 별표 4에 따라 시험하되, 기타 과학적ㆍ합리적으로 타당성이 인정되는 경우 자사 기준으로 시험할 수 있다.",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "2"
  },
@@ -8013,7 +8013,7 @@ var COMBO_DRILLS_subject3 = [
    "수치"
   ],
   "derivedFrom": "subject3_q86",
-  "explain": "📖 법령 근거 (L45(제2026-19호)(20260318)/화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318).md#L45>)):\n① 유통화장품은 제2항부터 제5항까지의 안전관리 기준에 적합하여야 하며, 유통화장품 유형별로 제6항부터 제9항까지의 안전관리 기준에 추가적으로 적합하여야 한다. 또한 시험방법은 별표 4에 따라 시험하되, 기타 과학적ㆍ합리적으로 타당성이 인정되는 경우 자사 기준으로 시험할 수 있다.",
+  "explain": "📖 법령 근거 (L42(제2026-19호)(20260318)/화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318).md#L42>)):\n① 유통화장품은 제2항부터 제5항까지의 안전관리 기준에 적합하여야 하며, 유통화장품 유형별로 제6항부터 제9항까지의 안전관리 기준에 추가적으로 적합하여야 한다. 또한 시험방법은 별표 4에 따라 시험하되, 기타 과학적ㆍ합리적으로 타당성이 인정되는 경우 자사 기준으로 시험할 수 있다.",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "3"
  },
@@ -8404,35 +8404,35 @@ var COMBO_DRILLS_subject3 = [
    {
     "id": "ㄱ",
     "sid": "safety_st_54aca7",
-    "conceptId": "L663",
+    "conceptId": "L648",
     "text": "사용 후 약간의 당김",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_a7bfd2",
-    "conceptId": "L663",
+    "conceptId": "L648",
     "text": "사용 후 경미한 홍반",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_1c93e2",
-    "conceptId": "L663",
+    "conceptId": "L648",
     "text": "사용 후 중증 알레르기 반응으로 입원",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_75a9c3",
-    "conceptId": "L663",
+    "conceptId": "L648",
     "text": "사용 후 향기 변화",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_c8ba3c",
-    "conceptId": "L663",
+    "conceptId": "L648",
     "text": "사용 후 발림성 저하",
     "truth": false
    }
@@ -8479,7 +8479,7 @@ var COMBO_DRILLS_subject3 = [
    "정답판정"
   ],
   "derivedFrom": "subject3_q91",
-  "explain": "📖 법령 근거 (L663(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L663>)):\n2. 위해성 등급이 나등급인 화장품: 제1항제1호 또는 같은 항 제2호다목2)(기능성화장품의 기능성을 나타나게 하는 주원료 함량이 기준치에 부적합한 경우는 제외한다)ㆍ마목에 해당하는 화장품",
+  "explain": "📖 법령 근거 (L648(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L648>)):\n2. 위해성 등급이 나등급인 화장품: 제1항제1호 또는 같은 항 제2호다목2)(기능성화장품의 기능성을 나타나게 하는 주원료 함량이 기준치에 부적합한 경우는 제외한다)ㆍ마목에 해당하는 화장품",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "1"
  },
@@ -8569,7 +8569,7 @@ var COMBO_DRILLS_subject3 = [
    "정답판정"
   ],
   "derivedFrom": "subject3_q92",
-  "explain": "📖 법령 근거 (L31(제2026-19호)(20260318)/화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318).md#L31>)):\n이 고시는 「화장품법」 제2조제3호의2에 따라 맞춤형화장품에 사용할 수 있는 원료를 지정하는 한편, 같은 법 제8조에 따라 화장품에 사용할 수 없는 원료 및 사용상의 제한이 필요한 원료에 대하여 그 사용기준을 지정하고, 유통화장품 안전관리 기준에 관한 사항을 정함으로써 화장품의 제조 또는 수입 및 안전관리에 적정을 기함을 목적으로 한다.",
+  "explain": "📖 법령 근거 (L30(제2026-19호)(20260318)/화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318).md#L30>)):\n이 고시는 「화장품법」 제2조제3호의2에 따라 맞춤형화장품에 사용할 수 있는 원료를 지정하는 한편, 같은 법 제8조에 따라 화장품에 사용할 수 없는 원료 및 사용상의 제한이 필요한 원료에 대하여 그 사용기준을 지정하고, 유통화장품 안전관리 기준에 관한 사항을 정함으로써 화장품의 제조 또는 수입 및 안전관리에 적정을 기함을 목적으로 한다.",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "2"
  },
@@ -9493,35 +9493,35 @@ var COMBO_DRILLS_subject3 = [
    {
     "id": "ㄱ",
     "sid": "safety_st_63b18e",
-    "conceptId": "L911",
+    "conceptId": "L890",
     "text": "영업자의 명예를 높이기 위해",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_ad3fa2",
-    "conceptId": "L911",
+    "conceptId": "L890",
     "text": "수출을 촉진하기 위해",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_1ddd72",
-    "conceptId": "L911",
+    "conceptId": "L890",
     "text": "화장품 산업의 발전을 도모하기 위해",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_37a8d0",
-    "conceptId": "L911",
+    "conceptId": "L890",
     "text": "소비자에게 위해 정보를 신속히 알려 추가 위해를 방지",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_54a9fc",
-    "conceptId": "L911",
+    "conceptId": "L890",
     "text": "가격을 안정화하기 위해",
     "truth": false
    }
@@ -9567,7 +9567,7 @@ var COMBO_DRILLS_subject3 = [
    "정답판정"
   ],
   "derivedFrom": "subject3_q103",
-  "explain": "📖 교재 근거 (L911(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L911>)):\n제28조(위해화장품의 공표) ① 법 제23조의2제1항에 따라 공표명령을 받은 영업자는 지체 없이 위해 발생사실 또는 다",
+  "explain": "📖 교재 근거 (L890(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L890>)):\n제28조(위해화장품의 공표) ① 법 제23조의2제1항에 따라 공표명령을 받은 영업자는 지체 없이 위해 발생사실 또는 다",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "4"
  },
@@ -9582,35 +9582,35 @@ var COMBO_DRILLS_subject3 = [
    {
     "id": "ㄱ",
     "sid": "safety_st_df9aef",
-    "conceptId": "L589",
+    "conceptId": "L576",
     "text": "원료의 품명 및 규격 확인",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_96d894",
-    "conceptId": "L589",
+    "conceptId": "L576",
     "text": "원료의 수량 확인",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_91caf2",
-    "conceptId": "L589",
+    "conceptId": "L576",
     "text": "원료의 외관 및 포장 상태 확인",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_fef1dd",
-    "conceptId": "L589",
+    "conceptId": "L576",
     "text": "원료의 시장 가격 조사",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_d2882e",
-    "conceptId": "L589",
+    "conceptId": "L576",
     "text": "원료의 시험(필요 시) 실시",
     "truth": false
    }
@@ -9659,7 +9659,7 @@ var COMBO_DRILLS_subject3 = [
    "정답판정"
   ],
   "derivedFrom": "subject3_q104",
-  "explain": "📖 법령 근거 (L589(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L589>)):\n② 법 제5조제5항 후단에 따라 화장품책임판매업자는 화장품의 제조과정에 사용된 원료의 목록을 화장품의 유통ㆍ판매 전까지 보고해야 한다. 보고한 목록이 변경된 경우에도 또한 같다.<신설 2019. 3. 14., 2022. 2. 18.>",
+  "explain": "📖 법령 근거 (L576(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L576>)):\n② 법 제5조제5항 후단에 따라 화장품책임판매업자는 화장품의 제조과정에 사용된 원료의 목록을 화장품의 유통ㆍ판매 전까지 보고해야 한다. 보고한 목록이 변경된 경우에도 또한 같다.<신설 2019. 3. 14., 2022. 2. 18.>",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "3"
  },
@@ -9766,35 +9766,35 @@ var COMBO_DRILLS_subject3 = [
    {
     "id": "ㄱ",
     "sid": "safety_st_66d679",
-    "conceptId": "L432",
+    "conceptId": "L421",
     "text": "소비자 기호도 조사",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_f73d7b",
-    "conceptId": "L432",
+    "conceptId": "L421",
     "text": "피부 감작(알레르기) 시험",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_43bc00",
-    "conceptId": "L432",
+    "conceptId": "L421",
     "text": "안점막 자극 시험",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_edbe5b",
-    "conceptId": "L432",
+    "conceptId": "L421",
     "text": "경구 독성 시험",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_acfab6",
-    "conceptId": "L432",
+    "conceptId": "L421",
     "text": "피부 1차 자극 시험",
     "truth": false
    }
@@ -9845,7 +9845,7 @@ var COMBO_DRILLS_subject3 = [
    "수치"
   ],
   "derivedFrom": "subject3_q106",
-  "explain": "📖 법령 근거 (L432(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L432>)):\n① 법 제4조의2제1항 및 이 규칙 제10조의2제2항에 따라 화장품의 표시ㆍ광고를 하려는 화장품책임판매업자는 법 제4조의2제1항제1호부터 제3호까지의 규정에 따른 제품별 안전성 자료 모두를 미리 작성해야 한다.",
+  "explain": "📖 법령 근거 (L421(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L421>)):\n① 법 제4조의2제1항 및 이 규칙 제10조의2제2항에 따라 화장품의 표시ㆍ광고를 하려는 화장품책임판매업자는 법 제4조의2제1항제1호부터 제3호까지의 규정에 따른 제품별 안전성 자료 모두를 미리 작성해야 한다.",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "3"
  },
@@ -10227,35 +10227,35 @@ var COMBO_DRILLS_subject3 = [
    {
     "id": "ㄱ",
     "sid": "safety_st_c36e63",
-    "conceptId": "L456",
+    "conceptId": "L446",
     "text": "위해사례가 접수된 경우",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_e81d07",
-    "conceptId": "L456",
+    "conceptId": "L446",
     "text": "정기 점검의 경우",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_5ac358",
-    "conceptId": "L456",
+    "conceptId": "L446",
     "text": "소비자 불만이 접수된 경우",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_7b8452",
-    "conceptId": "L456",
+    "conceptId": "L446",
     "text": "위 모든 경우",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_3188f6",
-    "conceptId": "L456",
+    "conceptId": "L446",
     "text": "품질 불량이 발견된 경우",
     "truth": false
    }
@@ -10305,7 +10305,7 @@ var COMBO_DRILLS_subject3 = [
    "정답판정"
   ],
   "derivedFrom": "subject3_q111",
-  "explain": "📖 법령 근거 (L456(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L456>)):\n④ 식품의약품안전처장은 실태조사의 효율적 실시를 위해 필요하다고 인정하는 경우에는 화장품 관련 연구기관 또는 법인ㆍ단체 등에 실태조사를 의뢰하여 실시할 수 있다.",
+  "explain": "📖 법령 근거 (L446(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L446>)):\n④ 식품의약품안전처장은 실태조사의 효율적 실시를 위해 필요하다고 인정하는 경우에는 화장품 관련 연구기관 또는 법인ㆍ단체 등에 실태조사를 의뢰하여 실시할 수 있다.",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "3"
  },
@@ -10320,35 +10320,35 @@ var COMBO_DRILLS_subject3 = [
    {
     "id": "ㄱ",
     "sid": "safety_st_0b9810",
-    "conceptId": "L1747",
+    "conceptId": "L1714",
     "text": "폐기는 품질책임자의 승인을 받아 실시",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_682cc8",
-    "conceptId": "L1747",
+    "conceptId": "L1714",
     "text": "폐기 사유를 기록으로 보존",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_ab6adf",
-    "conceptId": "L1747",
+    "conceptId": "L1714",
     "text": "부적합 제품은 무조건 폐기해야 한다",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_75d905",
-    "conceptId": "L1747",
+    "conceptId": "L1714",
     "text": "폐기 방법은 문서화되어야 한다",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_bbe5c7",
-    "conceptId": "L1747",
+    "conceptId": "L1714",
     "text": "폐기 현황을 기록으로 보존",
     "truth": false
    }
@@ -10399,7 +10399,7 @@ var COMBO_DRILLS_subject3 = [
    "절차"
   ],
   "derivedFrom": "subject3_q112",
-  "explain": "📖 법령 근거 (L1747(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L1747>)):\n① 법 제8조제6항에 따라 화장품제조업자, 화장품책임판매업자 또는 연구기관등은 법 제8조제1항에 따라 지정ㆍ고시된 원료를 해제 또는 변경하거나, 같은 조 제2항에 따라 지정ㆍ고시되지 않은 원료의 사용기준을 지정ㆍ고시하거나 지정ㆍ고시된 원료의 사용기준을 변경해 줄 것을 신청하려는 경우에는 별지 제13호의2서식의 원료 사용금지 해제 또는 변경(사용기준 지정 또는 변경) 신청서(전자문서로 된 신청서를 포함한다)에 다음 각 호의 서류(전자문서를 포함한다)를 첨부하여 식품의약품안전처장에게 제출해야 한다. <개정 2025. 2. 7.>",
+  "explain": "📖 법령 근거 (L1714(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L1714>)):\n① 법 제8조제6항에 따라 화장품제조업자, 화장품책임판매업자 또는 연구기관등은 법 제8조제1항에 따라 지정ㆍ고시된 원료를 해제 또는 변경하거나, 같은 조 제2항에 따라 지정ㆍ고시되지 않은 원료의 사용기준을 지정ㆍ고시하거나 지정ㆍ고시된 원료의 사용기준을 변경해 줄 것을 신청하려는 경우에는 별지 제13호의2서식의 원료 사용금지 해제 또는 변경(사용기준 지정 또는 변경) 신청서(전자문서로 된 신청서를 포함한다)에 다음 각 호의 서류(전자문서를 포함한다)를 첨부하여 식품의약품안전처장에게 제출해야 한다. <개정 2025. 2. 7.>",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "4"
  },
@@ -10877,35 +10877,35 @@ var COMBO_DRILLS_subject3 = [
    {
     "id": "ㄱ",
     "sid": "safety_st_de669d",
-    "conceptId": "L411",
+    "conceptId": "L402",
     "text": "제품의 명칭 및 제조번호",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_33f3d8",
-    "conceptId": "L411",
+    "conceptId": "L402",
     "text": "위해 증상",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_76e96d",
-    "conceptId": "L411",
+    "conceptId": "L402",
     "text": "위해 발생 일자",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_0f1ee1",
-    "conceptId": "L411",
+    "conceptId": "L402",
     "text": "소비자의 신상 정보",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_52d294",
-    "conceptId": "L411",
+    "conceptId": "L402",
     "text": "위해 발생 경위",
     "truth": false
    }
@@ -10956,7 +10956,7 @@ var COMBO_DRILLS_subject3 = [
    "구성비"
   ],
   "derivedFrom": "subject3_q118",
-  "explain": "📖 법령 근거 (L411(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L411>)):\n③ 제2항에 따라 보고서를 받은 식품의약품안전평가원장은 제1항에 따른 요건을 확인한 후 다음 각 호의 사항을 기능성화장품의 보고대장에 적어야 한다.<개정 2013. 3. 23., 2019. 3. 14.>",
+  "explain": "📖 법령 근거 (L402(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L402>)):\n③ 제2항에 따라 보고서를 받은 식품의약품안전평가원장은 제1항에 따른 요건을 확인한 후 다음 각 호의 사항을 기능성화장품의 보고대장에 적어야 한다.<개정 2013. 3. 23., 2019. 3. 14.>",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "2"
  },
@@ -11609,35 +11609,35 @@ var COMBO_DRILLS_subject3 = [
    {
     "id": "ㄱ",
     "sid": "safety_st_bc9125",
-    "conceptId": "L594",
+    "conceptId": "L564",
     "text": "공급자의 평가 및 선정",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_16c16e",
-    "conceptId": "L594",
+    "conceptId": "L564",
     "text": "공급자의 마케팅 전략 검토",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_52bef0",
-    "conceptId": "L594",
+    "conceptId": "L564",
     "text": "원료의 품질 기준 합의",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_fa218a",
-    "conceptId": "L594",
+    "conceptId": "L564",
     "text": "공급자의 품질 보증 능력 확인",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_ed92ed",
-    "conceptId": "L594",
+    "conceptId": "L564",
     "text": "공급자의 정기 평가",
     "truth": false
    }
@@ -11688,7 +11688,7 @@ var COMBO_DRILLS_subject3 = [
    "정답판정"
   ],
   "derivedFrom": "subject3_q126",
-  "explain": "📖 법령 근거 (L594(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L594>)):\n① 화장품제조업자는 원자재 공급자를 평가하여 선정하고, 관리감독을 적절히 수행하여 입고관리가 철저히 이루어지도록 하여야 한다.",
+  "explain": "📖 법령 근거 (L564(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L564>)):\n① 화장품제조업자는 원자재 공급자를 평가하여 선정하고, 관리감독을 적절히 수행하여 입고관리가 철저히 이루어지도록 하여야 한다.",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "2"
  },
@@ -11798,35 +11798,35 @@ var COMBO_DRILLS_subject3 = [
    {
     "id": "ㄱ",
     "sid": "safety_st_54229a",
-    "conceptId": "L103",
+    "conceptId": "q:subject3_q128",
     "text": "설비의 매각 시기 결정",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_88d615",
-    "conceptId": "L103",
+    "conceptId": "q:subject3_q128",
     "text": "설비의 운전 기준",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_4e1a2b",
-    "conceptId": "L103",
+    "conceptId": "q:subject3_q128",
     "text": "설비의 세정·소독 기준",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_f83ebf",
-    "conceptId": "L103",
+    "conceptId": "q:subject3_q128",
     "text": "설비의 예방보전 기준",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_5e5374",
-    "conceptId": "L103",
+    "conceptId": "q:subject3_q128",
     "text": "설비의 설치 기준",
     "truth": false
    }
@@ -11875,7 +11875,7 @@ var COMBO_DRILLS_subject3 = [
    "정답판정"
   ],
   "derivedFrom": "subject3_q128",
-  "explain": "📖 법령 근거 (L103(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L103>)):\n25. \"변경관리\"란 모든 제조, 관리 및 보관된 제품이 규정된 적합판정기준에 일치하도록 보장하기 위하여 우수화장품 제조 및 품질관리기준이 적용되는 모든 활동을 내부 조직의 책임하에 계획하여 변경하는 것을 말한다.",
+  "explain": "📖 법령 근거 (L98(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L98>)):\n25. \"변경관리\"란 모든 제조, 관리 및 보관된 제품이 규정된 적합판정기준에 일치하도록 보장하기 위하여 우수화장품 제조 및 품질관리기준이 적용되는 모든 활동을 내부 조직의 책임하에 계획하여 변경하는 것을 말한다.",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "4"
  },
@@ -13252,35 +13252,35 @@ var COMBO_DRILLS_subject3 = [
    {
     "id": "ㄱ",
     "sid": "safety_st_491208",
-    "conceptId": "L685",
+    "conceptId": "L655",
     "text": "적정 온도 유지",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_b8d4f7",
-    "conceptId": "L685",
+    "conceptId": "L655",
     "text": "적정 습도 유지",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_0286cf",
-    "conceptId": "L685",
+    "conceptId": "L655",
     "text": "작업 환경의 관리 기준은 불필요",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_0655f7",
-    "conceptId": "L685",
+    "conceptId": "L655",
     "text": "조명의 적정성 유지",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_08e34c",
-    "conceptId": "L685",
+    "conceptId": "L655",
     "text": "환기 시설 가동",
     "truth": false
    }
@@ -13330,7 +13330,7 @@ var COMBO_DRILLS_subject3 = [
    "정답판정"
   ],
   "derivedFrom": "subject3_q144",
-  "explain": "📖 법령 근거 (L685(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L685>)):\n① 화장품제조업자는 우수화장품 제조 및 품질보증에 대한 목표와 의지를 포함한 관리방침을 문서화하며 전 작업원들이 실행하여야 한다.",
+  "explain": "📖 법령 근거 (L655(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L655>)):\n① 화장품제조업자는 우수화장품 제조 및 품질보증에 대한 목표와 의지를 포함한 관리방침을 문서화하며 전 작업원들이 실행하여야 한다.",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "5"
  },
@@ -13625,35 +13625,35 @@ var COMBO_DRILLS_subject3 = [
    {
     "id": "ㄱ",
     "sid": "safety_st_28b900",
-    "conceptId": "L1747",
+    "conceptId": "L744",
     "text": "계량 설비의 정밀도",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_3786f9",
-    "conceptId": "L1747",
+    "conceptId": "L744",
     "text": "계량의 정확성",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_b709f7",
-    "conceptId": "L1747",
+    "conceptId": "L744",
     "text": "계량 담당자의 확인",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_f6364e",
-    "conceptId": "L1747",
+    "conceptId": "L744",
     "text": "계량 후 기록의 작성",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_abf74d",
-    "conceptId": "L1747",
+    "conceptId": "L744",
     "text": "원료의 브랜드 인지도",
     "truth": true
    }
@@ -13705,7 +13705,7 @@ var COMBO_DRILLS_subject3 = [
    "정답판정"
   ],
   "derivedFrom": "subject3_q148",
-  "explain": "📖 법령 근거 (L1747(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L1747>)):\n① 법 제8조제6항에 따라 화장품제조업자, 화장품책임판매업자 또는 연구기관등은 법 제8조제1항에 따라 지정ㆍ고시된 원료를 해제 또는 변경하거나, 같은 조 제2항에 따라 지정ㆍ고시되지 않은 원료의 사용기준을 지정ㆍ고시하거나 지정ㆍ고시된 원료의 사용기준을 변경해 줄 것을 신청하려는 경우에는 별지 제13호의2서식의 원료 사용금지 해제 또는 변경(사용기준 지정 또는 변경) 신청서(전자문서로 된 신청서를 포함한다)에 다음 각 호의 서류(전자문서를 포함한다)를 첨부하여 식품의약품안전처장에게 제출해야 한다. <개정 2025. 2. 7.>",
+  "explain": "📖 법령 근거 (L744(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L744>)):\n① 법 제8조제6항에 따라 화장품제조업자, 화장품책임판매업자 또는 연구기관등은 법 제8조제1항에 따라 지정ㆍ고시된 원료를 해제 또는 변경하거나, 같은 조 제2항에 따라 지정ㆍ고시되지 않은 원료의 사용기준을 지정ㆍ고시하거나 지정ㆍ고시된 원료의 사용기준을 변경해 줄 것을 신청하려는 경우에는 별지 제13호의2서식의 원료 사용금지 해제 또는 변경(사용기준 지정 또는 변경) 신청서(전자문서로 된 신청서를 포함한다)에 다음 각 호의 서류(전자문서를 포함한다)를 첨부하여 식품의약품안전처장에게 제출해야 한다. <개정 2025. 2. 7.>",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "1"
  },
@@ -15381,7 +15381,7 @@ var COMBO_DRILLS_subject3 = [
    "정의"
   ],
   "derivedFrom": "subject3_q166",
-  "explain": "📖 법령 근거 (L97(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L97>)):\n| 수탁자 | 직원, 회사 또는 조직을 대신하여 작업을 수행하는 사람, 회사 또는 외부 조직 |",
+  "explain": "📖 법령 근거 (L92(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L92>)):\n| 수탁자 | 직원, 회사 또는 조직을 대신하여 작업을 수행하는 사람, 회사 또는 외부 조직 |",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "4"
  },
@@ -17251,35 +17251,35 @@ var COMBO_DRILLS_subject3 = [
    {
     "id": "ㄱ",
     "sid": "safety_st_ebcdfa",
-    "conceptId": "L974",
+    "conceptId": "L652",
     "text": "7",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_6e23ee",
-    "conceptId": "L974",
+    "conceptId": "L652",
     "text": "15",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_71e853",
-    "conceptId": "L974",
+    "conceptId": "L652",
     "text": "30",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_2b373b",
-    "conceptId": "L974",
+    "conceptId": "L652",
     "text": "60",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_ad6cb6",
-    "conceptId": "L974",
+    "conceptId": "L652",
     "text": "90",
     "truth": false
    }
@@ -17328,7 +17328,7 @@ var COMBO_DRILLS_subject3 = [
    "수치"
   ],
   "derivedFrom": "subject3_q187",
-  "explain": "📖 법령 근거 (L974(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L974>)):\n① 법 제5조의2제1항에 따라 화장품을 회수하거나 회수하는 데에 필요한 조치를 하려는 영업자(이하 “회수의무자”라 한다)는 해당 화장품에 대하여 즉시 판매중지 등의 필요한 조치를 하여야 하고, 회수대상화장품이라는 사실을 안 날부터 5일 이내에 별지 제10호의2서식의 회수계획서에 다음 각 호의 서류를 첨부하여 지방식품의약품안전청장에게 제출하여야 한다.",
+  "explain": "📖 법령 근거 (L652(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L652>)):\n① 법 제5조의2제1항에 따라 화장품을 회수하거나 회수하는 데에 필요한 조치를 하려는 영업자(이하 “회수의무자”라 한다)는 해당 화장품에 대하여 즉시 판매중지 등의 필요한 조치를 하여야 하고, 회수대상화장품이라는 사실을 안 날부터 5일 이내에 별지 제10호의2서식의 회수계획서에 다음 각 호의 서류를 첨부하여 지방식품의약품안전청장에게 제출하여야 한다.",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "4"
  },
@@ -17813,35 +17813,35 @@ var COMBO_DRILLS_subject3 = [
    {
     "id": "ㄱ",
     "sid": "safety_st_5a037d",
-    "conceptId": "L915",
+    "conceptId": "L894",
     "text": "필수",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_aa1582",
-    "conceptId": "L915",
+    "conceptId": "L894",
     "text": "강화",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_62ccfa",
-    "conceptId": "L915",
+    "conceptId": "L894",
     "text": "연기",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_68b16e",
-    "conceptId": "L915",
+    "conceptId": "L894",
     "text": "면제(생략)",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_9b6498",
-    "conceptId": "L915",
+    "conceptId": "L894",
     "text": "축소",
     "truth": false
    }
@@ -17890,7 +17890,7 @@ var COMBO_DRILLS_subject3 = [
    "정답판정"
   ],
   "derivedFrom": "subject3_q193",
-  "explain": "📖 법령 근거 (L915(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L915>)):\n다만, 제14조의2제2항제3호에 따른 위해성 등급이 다등급인 화장품의 경우에는 해당 일반일간신문에의 게재를 생략할 수 있다. <개정 2019. 12. 12.>",
+  "explain": "📖 법령 근거 (L894(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L894>)):\n다만, 제14조의2제2항제3호에 따른 위해성 등급이 다등급인 화장품의 경우에는 해당 일반일간신문에의 게재를 생략할 수 있다. <개정 2019. 12. 12.>",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "2"
  },
@@ -19098,35 +19098,35 @@ var COMBO_DRILLS_subject3 = [
    {
     "id": "ㄱ",
     "sid": "safety_st_ab1d64",
-    "conceptId": "L659",
+    "conceptId": "L644",
     "text": "나",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_ea6525",
-    "conceptId": "L659",
+    "conceptId": "L644",
     "text": "다",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_9e7cc8",
-    "conceptId": "L659",
+    "conceptId": "L644",
     "text": "가",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_7d1721",
-    "conceptId": "L659",
+    "conceptId": "L644",
     "text": "라",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_e12ca6",
-    "conceptId": "L659",
+    "conceptId": "L644",
     "text": "마",
     "truth": false
    }
@@ -19175,7 +19175,7 @@ var COMBO_DRILLS_subject3 = [
    "정답판정"
   ],
   "derivedFrom": "subject3_q207",
-  "explain": "📖 법령 근거 (L659(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L659>)):\n② 법 제5조의2제4항에 따른 회수대상화장품의 위해성 등급은 그 위해성이 높은 순서에 따라 가등급, 나등급 및 다등급으로 구분하며, 해당 위해성 등급의 분류기준은 다음 각 호의 구분에 따른다.<신설 2019. 12. 12., 2022. 2. 18.>",
+  "explain": "📖 법령 근거 (L644(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L644>)):\n② 법 제5조의2제4항에 따른 회수대상화장품의 위해성 등급은 그 위해성이 높은 순서에 따라 가등급, 나등급 및 다등급으로 구분하며, 해당 위해성 등급의 분류기준은 다음 각 호의 구분에 따른다.<신설 2019. 12. 12., 2022. 2. 18.>",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "1"
  },
@@ -19739,35 +19739,35 @@ var COMBO_DRILLS_subject3 = [
    {
     "id": "ㄱ",
     "sid": "safety_st_c1c500",
-    "conceptId": "L403",
+    "conceptId": "L384",
     "text": "강화",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_d4a9ad",
-    "conceptId": "L403",
+    "conceptId": "L384",
     "text": "연기",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_8e0da4",
-    "conceptId": "L403",
+    "conceptId": "L384",
     "text": "축소",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_256a02",
-    "conceptId": "L403",
+    "conceptId": "L384",
     "text": "취소",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_598a17",
-    "conceptId": "L403",
+    "conceptId": "L384",
     "text": "면제",
     "truth": true
    }
@@ -19820,7 +19820,7 @@ var COMBO_DRILLS_subject3 = [
    "처분기준"
   ],
   "derivedFrom": "subject3_q214",
-  "explain": "📖 법령 근거 (L403(제20901호)(20260402)/화장품법(법률)(제20901호)(20260402).md#L403>)):\n③ 식품의약품안전처장은 제1항에 따른 회수 또는 회수에 필요한 조치를 성실하게 이행한 영업자가 해당 화장품으로 인하여 받게 되는 제24조에 따른 행정처분을 총리령으로 정하는 바에 따라 감경 또는 면제할 수 있다.",
+  "explain": "📖 법령 근거 (L384(제20901호)(20260402)/화장품법(법률)(제20901호)(20260402).md#L384>)):\n③ 식품의약품안전처장은 제1항에 따른 회수 또는 회수에 필요한 조치를 성실하게 이행한 영업자가 해당 화장품으로 인하여 받게 되는 제24조에 따른 행정처분을 총리령으로 정하는 바에 따라 감경 또는 면제할 수 있다.",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "5"
  },
@@ -20389,35 +20389,35 @@ var COMBO_DRILLS_subject3 = [
    {
     "id": "ㄱ",
     "sid": "safety_st_0be941",
-    "conceptId": "L679",
+    "conceptId": "L664",
     "text": "7",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_b58fc5",
-    "conceptId": "L679",
+    "conceptId": "L664",
     "text": "15",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_0fdbb2",
-    "conceptId": "L679",
+    "conceptId": "L664",
     "text": "30",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_07f115",
-    "conceptId": "L679",
+    "conceptId": "L664",
     "text": "60",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_99ad18",
-    "conceptId": "L679",
+    "conceptId": "L664",
     "text": "90",
     "truth": false
    }
@@ -20467,7 +20467,7 @@ var COMBO_DRILLS_subject3 = [
    "수치"
   ],
   "derivedFrom": "subject3_q221",
-  "explain": "📖 법령 근거 (L679(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L679>)):\n1. 위해성 등급이 가등급인 화장품: 회수를 시작한 날부터 15일 이내",
+  "explain": "📖 법령 근거 (L664(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L664>)):\n1. 위해성 등급이 가등급인 화장품: 회수를 시작한 날부터 15일 이내",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "5"
  },
@@ -20667,35 +20667,35 @@ var COMBO_DRILLS_subject3 = [
    {
     "id": "ㄱ",
     "sid": "safety_st_d9be48",
-    "conceptId": "L680",
+    "conceptId": "L665",
     "text": "7",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_38c1d8",
-    "conceptId": "L680",
+    "conceptId": "L665",
     "text": "15",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_3bb85c",
-    "conceptId": "L680",
+    "conceptId": "L665",
     "text": "60",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_9d06c7",
-    "conceptId": "L680",
+    "conceptId": "L665",
     "text": "90",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_da8618",
-    "conceptId": "L680",
+    "conceptId": "L665",
     "text": "30",
     "truth": true
    }
@@ -20746,7 +20746,7 @@ var COMBO_DRILLS_subject3 = [
    "수치"
   ],
   "derivedFrom": "subject3_q224",
-  "explain": "📖 법령 근거 (L680(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L680>)):\n2. 위해성 등급이 나등급 또는 다등급인 화장품: 회수를 시작한 날부터 30일 이내",
+  "explain": "📖 법령 근거 (L665(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L665>)):\n2. 위해성 등급이 나등급 또는 다등급인 화장품: 회수를 시작한 날부터 30일 이내",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "1"
  },
@@ -21767,35 +21767,35 @@ var COMBO_DRILLS_subject3 = [
    {
     "id": "ㄱ",
     "sid": "safety_st_3bb13a",
-    "conceptId": "L687",
+    "conceptId": "L657",
     "text": "제조책임자",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_5eef78",
-    "conceptId": "L687",
+    "conceptId": "L657",
     "text": "위생관리책임자",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_976488",
-    "conceptId": "L687",
+    "conceptId": "L657",
     "text": "품질관리책임자",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_77de58",
-    "conceptId": "L687",
+    "conceptId": "L657",
     "text": "출하관리자",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_d9bba4",
-    "conceptId": "L687",
+    "conceptId": "L657",
     "text": "연구개발책임자",
     "truth": false
    }
@@ -21848,7 +21848,7 @@ var COMBO_DRILLS_subject3 = [
    "절차"
   ],
   "derivedFrom": "subject3_q237",
-  "explain": "📖 법령 근거 (L687(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L687>)):\n③ 문서는 작업자가 알아보기 쉽도록 작성하여야 하며 작성된 문서에는 권한을 가진 사람의 서명과 승인연월일이 있어야 한다.",
+  "explain": "📖 법령 근거 (L657(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L657>)):\n③ 문서는 작업자가 알아보기 쉽도록 작성하여야 하며 작성된 문서에는 권한을 가진 사람의 서명과 승인연월일이 있어야 한다.",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "3"
  },
@@ -22671,7 +22671,7 @@ var COMBO_DRILLS_subject3 = [
    "정답판정"
   ],
   "derivedFrom": "subject3_q246",
-  "explain": "📖 법령 근거 (L93(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L93>)):\n20. \"완제품\"이란 출하를 위해 제품의 포장 및 첨부문서에 표시공정 등을 포함한 모든 제조공정이 완료된 화장품을 말한다.",
+  "explain": "📖 법령 근거 (L88(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L88>)):\n20. \"완제품\"이란 출하를 위해 제품의 포장 및 첨부문서에 표시공정 등을 포함한 모든 제조공정이 완료된 화장품을 말한다.",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "4"
  },
@@ -22949,7 +22949,7 @@ var COMBO_DRILLS_subject3 = [
    "정답판정"
   ],
   "derivedFrom": "subject3_q249",
-  "explain": "📖 법령 근거 (L31(제2026-19호)(20260318)/화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318).md#L31>)):\n이 고시는 「화장품법」 제2조제3호의2에 따라 맞춤형화장품에 사용할 수 있는 원료를 지정하는 한편, 같은 법 제8조에 따라 화장품에 사용할 수 없는 원료 및 사용상의 제한이 필요한 원료에 대하여 그 사용기준을 지정하고, 유통화장품 안전관리 기준에 관한 사항을 정함으로써 화장품의 제조 또는 수입 및 안전관리에 적정을 기함을 목적으로 한다.",
+  "explain": "📖 법령 근거 (L25(제2026-19호)(20260318)/화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318).md#L25>)):\n이 고시는 「화장품법」 제2조제3호의2에 따라 맞춤형화장품에 사용할 수 있는 원료를 지정하는 한편, 같은 법 제8조에 따라 화장품에 사용할 수 없는 원료 및 사용상의 제한이 필요한 원료에 대하여 그 사용기준을 지정하고, 유통화장품 안전관리 기준에 관한 사항을 정함으로써 화장품의 제조 또는 수입 및 안전관리에 적정을 기함을 목적으로 한다.",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "4"
  },

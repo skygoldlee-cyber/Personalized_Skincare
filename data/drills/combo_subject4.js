@@ -1,5 +1,5 @@
 // 자동 생성된 복수정답형 드릴 데이터입니다. 수정하지 마십시오. (tools/build_combo_drills.js)
-// 원본: data/exams/subject4.62f34eb4.js — mode: fact(명제 조합) 18문 / answer(정답 조합) 257문
+// 원본: data/exams/subject4.dce4fb33.js — mode: fact(명제 조합) 18문 / answer(정답 조합) 257문
 var COMBO_DRILLS_subject4 = [
  {
   "id": "understanding_combo_8317ff",
@@ -4252,7 +4252,7 @@ var COMBO_DRILLS_subject4 = [
    "수치"
   ],
   "derivedFrom": "subject4_q46",
-  "explain": "📖 법령 근거 (L31(제2026-19호)(20260318)/화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318).md#L31>)):\n이 고시는 「화장품법」 제2조제3호의2에 따라 맞춤형화장품에 사용할 수 있는 원료를 지정하는 한편, 같은 법 제8조에 따라 화장품에 사용할 수 없는 원료 및 사용상의 제한이 필요한 원료에 대하여 그 사용기준을 지정하고, 유통화장품 안전관리 기준에 관한 사항을 정함으로써 화장품의 제조 또는 수입 및 안전관리에 적정을 기함을 목적으로 한다.",
+  "explain": "📖 법령 근거 (L30(제2026-19호)(20260318)/화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318).md#L30>)):\n이 고시는 「화장품법」 제2조제3호의2에 따라 맞춤형화장품에 사용할 수 있는 원료를 지정하는 한편, 같은 법 제8조에 따라 화장품에 사용할 수 없는 원료 및 사용상의 제한이 필요한 원료에 대하여 그 사용기준을 지정하고, 유통화장품 안전관리 기준에 관한 사항을 정함으로써 화장품의 제조 또는 수입 및 안전관리에 적정을 기함을 목적으로 한다.",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "4"
  },
@@ -4544,35 +4544,35 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "ㄱ",
     "sid": "understanding_st_109a24",
-    "conceptId": "L229",
+    "conceptId": "L218",
     "text": "4.95g ~ 5.05g",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_a39203",
-    "conceptId": "L229",
+    "conceptId": "L218",
     "text": "4.9g ~ 5.1g",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_2415dd",
-    "conceptId": "L229",
+    "conceptId": "L218",
     "text": "4.5g ~ 5.5g",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_1673d3",
-    "conceptId": "L229",
+    "conceptId": "L218",
     "text": "4.0g ~ 6.0g",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_15cc59",
-    "conceptId": "L229",
+    "conceptId": "L218",
     "text": "4.99g ~ 5.01g",
     "truth": false
    }
@@ -4621,7 +4621,7 @@ var COMBO_DRILLS_subject4 = [
    "수치"
   ],
   "derivedFrom": "subject4_q50",
-  "explain": "📖 법령 근거 (L229(제20901호)(20260402)/화장품법(법률)(제20901호)(20260402).md#L229>)):\n① 맞춤형화장품조제관리사가 되려는 사람은 화장품과 원료 등에 대하여 식품의약품안전처장이 실시하는 자격시험에 합격하여야 한다.",
+  "explain": "📖 법령 근거 (L218(제20901호)(20260402)/화장품법(법률)(제20901호)(20260402).md#L218>)):\n① 맞춤형화장품조제관리사가 되려는 사람은 화장품과 원료 등에 대하여 식품의약품안전처장이 실시하는 자격시험에 합격하여야 한다.",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "5"
  },
@@ -6838,7 +6838,7 @@ var COMBO_DRILLS_subject4 = [
    "정답판정"
   ],
   "derivedFrom": "subject4_q74",
-  "explain": "📖 법령 근거 (L31(제2026-19호)(20260318)/화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318).md#L31>)):\n이 고시는 「화장품법」 제2조제3호의2에 따라 맞춤형화장품에 사용할 수 있는 원료를 지정하는 한편, 같은 법 제8조에 따라 화장품에 사용할 수 없는 원료 및 사용상의 제한이 필요한 원료에 대하여 그 사용기준을 지정하고, 유통화장품 안전관리 기준에 관한 사항을 정함으로써 화장품의 제조 또는 수입 및 안전관리에 적정을 기함을 목적으로 한다.",
+  "explain": "📖 법령 근거 (L25(제2026-19호)(20260318)/화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318).md#L25>)):\n이 고시는 「화장품법」 제2조제3호의2에 따라 맞춤형화장품에 사용할 수 있는 원료를 지정하는 한편, 같은 법 제8조에 따라 화장품에 사용할 수 없는 원료 및 사용상의 제한이 필요한 원료에 대하여 그 사용기준을 지정하고, 유통화장품 안전관리 기준에 관한 사항을 정함으로써 화장품의 제조 또는 수입 및 안전관리에 적정을 기함을 목적으로 한다.",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "5"
  },
@@ -10820,35 +10820,35 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "ㄱ",
     "sid": "understanding_st_782911",
-    "conceptId": "L270",
+    "conceptId": "L264",
     "text": "10% 락스 희석액",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_d8c8b8",
-    "conceptId": "L270",
+    "conceptId": "L264",
     "text": "100% 무수 에탄올",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_f43ce3",
-    "conceptId": "L270",
+    "conceptId": "L264",
     "text": "70% 에탄올 스프레이",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_773993",
-    "conceptId": "L270",
+    "conceptId": "L264",
     "text": "0.5% 포름알데히드 수용액",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_a18bb5",
-    "conceptId": "L270",
+    "conceptId": "L264",
     "text": "정제수 스프레이",
     "truth": false
    }
@@ -10897,7 +10897,7 @@ var COMBO_DRILLS_subject4 = [
    "수치"
   ],
   "derivedFrom": "subject4_q118",
-  "explain": "📖 법령 근거 (L270(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L270>)):\n④ 맞춤형화장품판매업자가 법 제3조의4제1항에 따른 맞춤형화장품조제관리사 자격시험(이하 “자격시험”이라 한다)에 합격한 경우에는 해당 맞춤형화장품판매업자의 판매업소 중 하나의 판매업소에서 맞춤형화장품조제관리사 업무를 수행할 수 있다. 이 경우 해당 판매업소에는 맞춤형화장품조제관리사를 둔 것으로 본다.<신설 2021. 5. 14.>",
+  "explain": "📖 법령 근거 (L264(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L264>)):\n④ 맞춤형화장품판매업자가 법 제3조의4제1항에 따른 맞춤형화장품조제관리사 자격시험(이하 “자격시험”이라 한다)에 합격한 경우에는 해당 맞춤형화장품판매업자의 판매업소 중 하나의 판매업소에서 맞춤형화장품조제관리사 업무를 수행할 수 있다. 이 경우 해당 판매업소에는 맞춤형화장품조제관리사를 둔 것으로 본다.<신설 2021. 5. 14.>",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "2"
  },
@@ -11007,35 +11007,35 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "ㄱ",
     "sid": "understanding_st_8aea5b",
-    "conceptId": "L561",
+    "conceptId": "L548",
     "text": "조제관리사를 판매업소마다 배치",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_f55b76",
-    "conceptId": "L561",
+    "conceptId": "L548",
     "text": "조제에 사용하는 원료의 품질관리",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_1496a1",
-    "conceptId": "L561",
+    "conceptId": "L548",
     "text": "조제 없이 일반 화장품을 임의로 혼합하여 판매",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_9cb444",
-    "conceptId": "L561",
+    "conceptId": "L548",
     "text": "조제 기록의 작성 및 보존",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_d5c02d",
-    "conceptId": "L561",
+    "conceptId": "L548",
     "text": "조제에 사용하는 기구의 위생관리",
     "truth": false
    }
@@ -11086,7 +11086,7 @@ var COMBO_DRILLS_subject4 = [
    "정답판정"
   ],
   "derivedFrom": "subject4_q120",
-  "explain": "📖 법령 근거 (L561(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L561>)):\n법 제5조제4항에 따라 맞춤형화장품판매업자가 준수해야 할 사항은 다음 각 호와 같다. <개정 2022. 2. 18.>",
+  "explain": "📖 법령 근거 (L548(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L548>)):\n법 제5조제4항에 따라 맞춤형화장품판매업자가 준수해야 할 사항은 다음 각 호와 같다. <개정 2022. 2. 18.>",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "1"
  },
@@ -14309,35 +14309,35 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "ㄱ",
     "sid": "understanding_st_d49cff",
-    "conceptId": "L1073",
+    "conceptId": "L1063",
     "text": "0.1%",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_205e0f",
-    "conceptId": "L1073",
+    "conceptId": "L1063",
     "text": "0.5%",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_a568f5",
-    "conceptId": "L1073",
+    "conceptId": "L1063",
     "text": "1.0%",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_6831b6",
-    "conceptId": "L1073",
+    "conceptId": "L1063",
     "text": "2.0%",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_0abb6e",
-    "conceptId": "L1073",
+    "conceptId": "L1063",
     "text": "5.0%",
     "truth": false
    }
@@ -14390,7 +14390,7 @@ var COMBO_DRILLS_subject4 = [
    "수치"
   ],
   "derivedFrom": "subject4_q156",
-  "explain": "📖 법령 근거 (L1073(제2025-88호)(20251216)/기능성화장품 심사에 관한 규정(식품의약품안전처고시)(제2025-88호)(20251216).md#L1073>)):\n| 페녹시에탄올 (Phenoxyethanol) | 보존제 | 최종 제품 중 1.0% 이하 |",
+  "explain": "📖 법령 근거 (L1063(제2025-88호)(20251216)/기능성화장품 심사에 관한 규정(식품의약품안전처고시)(제2025-88호)(20251216).md#L1063>)):\n| 페녹시에탄올 (Phenoxyethanol) | 보존제 | 최종 제품 중 1.0% 이하 |",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "1"
  },
@@ -17248,35 +17248,35 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "ㄱ",
     "sid": "understanding_st_0d5a5f",
-    "conceptId": "L578",
+    "conceptId": "L565",
     "text": "원료의 도매 가격",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_3d16a0",
-    "conceptId": "L578",
+    "conceptId": "L565",
     "text": "사용 빈도",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_aeea31",
-    "conceptId": "L578",
+    "conceptId": "L565",
     "text": "보관 방법",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_0e44bc",
-    "conceptId": "L578",
+    "conceptId": "L565",
     "text": "주의사항",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_ff38e9",
-    "conceptId": "L578",
+    "conceptId": "L565",
     "text": "사용 방법",
     "truth": false
    }
@@ -17324,7 +17324,7 @@ var COMBO_DRILLS_subject4 = [
    "정답판정"
   ],
   "derivedFrom": "subject4_q188",
-  "explain": "📖 법령 근거 (L578(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L578>)):\n4. 맞춤형화장품 판매 시 다음 각 목의 사항을 소비자에게 설명할 것",
+  "explain": "📖 법령 근거 (L565(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L565>)):\n4. 맞춤형화장품 판매 시 다음 각 목의 사항을 소비자에게 설명할 것",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "5"
  },
@@ -18807,35 +18807,35 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "ㄱ",
     "sid": "understanding_st_572e58",
-    "conceptId": "L277",
+    "conceptId": "L271",
     "text": "원료의 가격을 결정하기 위해",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_0598d8",
-    "conceptId": "L277",
+    "conceptId": "L271",
     "text": "제품의 색상을 결정하기 위해",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_1d914e",
-    "conceptId": "L277",
+    "conceptId": "L271",
     "text": "소비자의 직업을 파악하기 위해",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_40bd4d",
-    "conceptId": "L277",
+    "conceptId": "L271",
     "text": "조제 시간을 단축하기 위해",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_ae4d59",
-    "conceptId": "L277",
+    "conceptId": "L271",
     "text": "알레르기 유발 성분 배제를 위해",
     "truth": true
    }
@@ -18884,7 +18884,7 @@ var COMBO_DRILLS_subject4 = [
    "정답판정"
   ],
   "derivedFrom": "subject4_q205",
-  "explain": "📖 법령 근거 (L277(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L277>)):\n③ 지방식품의약품안전청장은 제2항에 따라 맞춤형화장품판매업 변경신고를 받은 경우에는 「전자정부법」 제36조제1항에 따른 행정정보의 공동이용을 통해 법인 등기사항증명서(법인인 경우만 해당한다)를 확인해야 한다.",
+  "explain": "📖 법령 근거 (L271(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L271>)):\n③ 지방식품의약품안전청장은 제2항에 따라 맞춤형화장품판매업 변경신고를 받은 경우에는 「전자정부법」 제36조제1항에 따른 행정정보의 공동이용을 통해 법인 등기사항증명서(법인인 경우만 해당한다)를 확인해야 한다.",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "1"
  },
@@ -19998,35 +19998,35 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "ㄱ",
     "sid": "understanding_st_1b4a4f",
-    "conceptId": "L1104",
+    "conceptId": "L1051",
     "text": "건성: 보습제 강화",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_edde5d",
-    "conceptId": "L1104",
+    "conceptId": "L1051",
     "text": "지성: 유분 조절",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_d2c5ff",
-    "conceptId": "L1104",
+    "conceptId": "L1051",
     "text": "민감성: 저자극 원료",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_2dd441",
-    "conceptId": "L1104",
+    "conceptId": "L1051",
     "text": "아토피: 의약품 첨가",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_2bc74a",
-    "conceptId": "L1104",
+    "conceptId": "L1051",
     "text": "노화: 항산화제 강화",
     "truth": false
    }
@@ -20073,7 +20073,7 @@ var COMBO_DRILLS_subject4 = [
    "정답판정"
   ],
   "derivedFrom": "subject4_q218",
-  "explain": "📖 법령 근거 (L1104(제20901호)(20260402)/화장품법(법률)(제20901호)(20260402).md#L1104>)):\n① 화장품책임판매업자 및 맞춤형화장품판매업자는 「실험동물에 관한 법률」 제2조제1호에 따른 동물실험(이하 이 조에서 “동물실험”이라 한다)을 실시한 화장품 또는 동물실험을 실시한 화장품 원료를 사용하여 제조(위탁제조를 포함한다) 또는 수입한 화장품을 유통ㆍ판매하여서는 아니 된다.",
+  "explain": "📖 법령 근거 (L1051(제20901호)(20260402)/화장품법(법률)(제20901호)(20260402).md#L1051>)):\n① 화장품책임판매업자 및 맞춤형화장품판매업자는 「실험동물에 관한 법률」 제2조제1호에 따른 동물실험(이하 이 조에서 “동물실험”이라 한다)을 실시한 화장품 또는 동물실험을 실시한 화장품 원료를 사용하여 제조(위탁제조를 포함한다) 또는 수입한 화장품을 유통ㆍ판매하여서는 아니 된다.",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "5"
  },
@@ -20634,35 +20634,35 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "ㄱ",
     "sid": "understanding_st_7a1748",
-    "conceptId": "L262",
+    "conceptId": "L249",
     "text": "강하게 한 번에 혼합",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_5c2c9c",
-    "conceptId": "L262",
+    "conceptId": "L249",
     "text": "혼합하지 않고 순서대로 층층이 쌓기",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_a3d00d",
-    "conceptId": "L262",
+    "conceptId": "L249",
     "text": "천천히 균일하게 교반하며 혼합",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_6532e8",
-    "conceptId": "L262",
+    "conceptId": "L249",
     "text": "뜨거운 물에 모두 붓기",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_abe3e7",
-    "conceptId": "L262",
+    "conceptId": "L249",
     "text": "냉동 상태에서 혼합",
     "truth": false
    }
@@ -20712,7 +20712,7 @@ var COMBO_DRILLS_subject4 = [
    "절차"
   ],
   "derivedFrom": "subject4_q225",
-  "explain": "📖 법령 근거 (L262(제20901호)(20260402)/화장품법(법률)(제20901호)(20260402).md#L262>)):\n1. 거짓이나 그 밖의 부정한 방법으로 맞춤형화장품조제관리사의 자격을 취득한 경우",
+  "explain": "📖 법령 근거 (L249(제20901호)(20260402)/화장품법(법률)(제20901호)(20260402).md#L249>)):\n1. 거짓이나 그 밖의 부정한 방법으로 맞춤형화장품조제관리사의 자격을 취득한 경우",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "2"
  },
