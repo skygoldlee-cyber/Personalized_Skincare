@@ -545,17 +545,20 @@ function buildRefCombos(refPool, examKey, subject, subjKey, genOpts, stats) {
     const kindMatch = m => isSentence(m) === (sameKind === 'sentence');
     // memberOk는 아래에 선언되지만 호출 시점에는 이미 초기화돼 있다 —
     // 오답 풀에도 동일한 조각 필터를 적용해 헤더 잔재·절단 셀이 새지 않게 한다.
+    // 같은 문서+조문의 형제 목록은 모든 풀에서 배제 — 문서/조문 수준 발문
+    // ("「별표1」에 해당하는 것")에서 형제 목록 멤버는 실제로 정답일 수 있다.
+    const isSib = o => o.docShort === e.docShort && o.article === e.article;
     const same = bucket.enums
-      .filter(o => !(o.docShort === e.docShort && o.article === e.article))
+      .filter(o => !isSib(o))
       .flatMap(o => o.members)
       .filter(m => !banned.has(normKey(m)) && kindMatch(m) && memberOk(m));
     if (same.length >= 8) return same;
     const wide = allEnums
-      .filter(o => o.listId !== e.listId)
+      .filter(o => o.listId !== e.listId && !isSib(o))
       .flatMap(o => o.members)
       .filter(m => !banned.has(normKey(m)) && kindMatch(m) && memberOk(m));
     if (wide.length >= 8) return [...same, ...wide];
-    const anyPool = allEnums.filter(o => o.listId !== e.listId)
+    const anyPool = allEnums.filter(o => o.listId !== e.listId && !isSib(o))
       .flatMap(o => o.members)
       .filter(m => !banned.has(normKey(m)) && kindMatch(m) && memberOk(m));
     return [...same, ...wide, ...anyPool];
