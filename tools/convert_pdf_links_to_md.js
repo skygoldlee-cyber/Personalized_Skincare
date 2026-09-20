@@ -1,6 +1,6 @@
 // 교재 내 PDF 직접 링크 → MD 변환본(ref_md/) 링크로 일괄 변환
-// 변환 규칙: ../참조자료/{dir}/{basename}.pdf → ../참조자료/ref_md/{basename}/{basename}.md
-// 단, MD 변환본이 존재하는 36개 파일만 변환 (5개 "_구" 파일 + 4개 "_삭제" 파일은 제외)
+// 변환 규칙: ../참조자료/{dir}/{basename}.pdf → ../참조자료/ref_md/과목N/{basename}/{basename}.md
+// 단, MD 변환본이 존재하는 파일만 변환 ("_구"/"_삭제" 파일은 ref_md에 없음)
 //
 // 사용법: node tools/convert_pdf_links_to_md.js [--dry-run]
 
@@ -14,22 +14,21 @@ const REF_MD_DIR = path.join(REF_BASE, 'ref_md');
 
 const DRY_RUN = process.argv.includes('--dry-run');
 
-// ref_md/ 하위에 MD 변환본이 존재하는 basename 목록 (36개)
-const refMdDirs = fs.readdirSync(REF_MD_DIR, { withFileTypes: true })
-  .filter(e => e.isDirectory())
-  .map(e => e.name);
-
-const convertibleBasenames = new Set();
-for (const dir of refMdDirs) {
-  const fullDir = path.join(REF_MD_DIR, dir);
-  const mdFile = `${dir}.md`;
-  if (fs.existsSync(path.join(fullDir, mdFile))) {
-    convertibleBasenames.add(dir);
+// ref_md/과목N/{doc}/ 구조 — basename → 과목N 서브경로
+const convertibleBasenames = new Map(); // basename → '과목N'
+for (const top of fs.readdirSync(REF_MD_DIR, { withFileTypes: true })) {
+  if (!top.isDirectory() || !/^과목\d+$/.test(top.name)) continue;
+  for (const d of fs.readdirSync(path.join(REF_MD_DIR, top.name), { withFileTypes: true })) {
+    if (d.isDirectory() && fs.existsSync(path.join(REF_MD_DIR, top.name, d.name, `${d.name}.md`))) {
+      convertibleBasenames.set(d.name, top.name);
+    }
   }
 }
 
-// 변환 대상 디렉토리 (법령원문, 공통, 과목1, 과목2)
-const targetDirs = ['법령원문', '공통', '과목1', '과목2'];
+// 변환 대상 디렉터리 (참조자료의 모든 PDF 보관 폴더)
+const targetDirs = fs.readdirSync(REF_BASE, { withFileTypes: true })
+  .filter(e => e.isDirectory() && !/^ref_md/.test(e.name))
+  .map(e => e.name);
 
 // 교재 파일 목록
 const textbookFiles = [];
@@ -66,9 +65,10 @@ function convertPdfLink(linkUrl) {
       }
 
       // MD 변환본이 존재하는지 확인
-      if (convertibleBasenames.has(actualBasename)) {
-        // 변환: ../참조자료/ref_md/{encoded_basename}/{encoded_basename}.md
-        const newUrl = `../참조자료/ref_md/${encodedBasename}/${encodedBasename}.md`;
+      const subjDir = convertibleBasenames.get(actualBasename);
+      if (subjDir) {
+        // 변환: ../참조자료/ref_md/{과목N}/{encoded_basename}/{encoded_basename}.md
+        const newUrl = `../참조자료/ref_md/${subjDir}/${encodedBasename}/${encodedBasename}.md`;
         return newUrl;
       }
       return null; // MD 변환본 없음

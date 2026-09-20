@@ -22,7 +22,7 @@ export const PATHS = {
   // 참조자료
   get REFERENCE_BASE() { return contentPath('참조자료'); },
   REFERENCE_FILE: (dirName, file) => contentPath(`참조자료/${dirName}/${file}`),
-  REFERENCE_MD: (base, ext) => contentPath(`참조자료/ref_md/${base}/${base}${ext}`),
+  REFERENCE_MD: (base, ext, subj) => contentPath(`참조자료/ref_md/${subj ? `과목${subj}/` : ''}${base}/${base}${ext}`),
 
   // 오디오북
   AUDIOBOOK_MP3: (subjId, chNo, num, title) =>

@@ -814,7 +814,12 @@ def verify(out_dir, gold_dir, only=None):
         if only and only not in d:
             continue
         compared += 1
+        # gold는 ref_md/과목N/{d}/{d}.md (과목 서브디렉터리) 또는 평탄 {d}/{d}.md
         old_p = os.path.join(gold_dir, d, d + '.md')
+        if not os.path.exists(old_p):
+            hits = glob.glob(os.path.join(gold_dir, '*', d, d + '.md'))
+            if hits:
+                old_p = hits[0]
         new_text = open(new_p, encoding='utf-8').read()
         new_lines = new_text.split('\n')
         new_count = {}

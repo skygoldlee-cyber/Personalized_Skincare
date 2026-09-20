@@ -685,15 +685,28 @@ function extractDocAtoms(dirName, lines) {
 function extractRefAtoms(refDir) {
   const bySubject = {};
   if (!fs.existsSync(refDir)) return bySubject;
-  const dirs = fs.readdirSync(refDir, { withFileTypes: true })
-    .filter(d => d.isDirectory()).map(d => d.name);
-  for (const dirName of dirs) {
+  // ref_md/과목N/{doc}/{doc}.md — 과목 폴더가 귀속의 진실, 평탄 잔존 디렉터리는
+  // DOC_SUBJECT_RULES로 후진 처리한다.
+  const docDirs = [];   // {dirName, dirPath, subject}
+  for (const e of fs.readdirSync(refDir, { withFileTypes: true })) {
+    if (!e.isDirectory()) continue;
+    const subjM = e.name.match(/^과목(\d+)$/);
+    if (subjM) {
+      for (const d of fs.readdirSync(path.join(refDir, e.name), { withFileTypes: true })) {
+        if (d.isDirectory()) {
+          docDirs.push({ dirName: d.name, dirPath: path.join(refDir, e.name, d.name), subject: +subjM[1] });
+        }
+      }
+    } else {
+      docDirs.push({ dirName: e.name, dirPath: path.join(refDir, e.name), subject: docSubject(e.name) });
+    }
+  }
+  for (const { dirName, dirPath, subject } of docDirs) {
     if (/_구$/.test(dirName)) continue;   // 구(舊)버전 고시 — 개정 전 규정 오출제 방지
-    const subject = docSubject(dirName);
     if (!subject) continue;
-    const md = fs.readdirSync(path.join(refDir, dirName)).find(f => f.endsWith('.md'));
+    const md = fs.readdirSync(dirPath).find(f => f.endsWith('.md'));
     if (!md) continue;
-    const text = fs.readFileSync(path.join(refDir, dirName, md), 'utf8');
+    const text = fs.readFileSync(path.join(dirPath, md), 'utf8');
     if (isSpaceless(text)) continue;   // 공백 소실 PDF 변환본 제외
     const atoms = extractDocAtoms(dirName, text.split(/\r?\n/));
     if (!atoms.length) continue;

@@ -37,7 +37,8 @@ function mdFiles(dir) {
 /** 텍스트에서 ref_md/{doc}/ 링크 추출 → {doc: 횟수} (URL 인코딩 디코딩) */
 function countCitations(text) {
   const counts = {};
-  const re = /ref_md\/([^/)#\s]+)\//g;
+  // ref_md/과목N/{doc}/ 구조 — 과목 세그먼트는 건너뛰고 문서 디렉터리만 집계
+  const re = /ref_md\/(?:과목\d\/)?([^/)#\s]+)\//g;
   let m;
   while ((m = re.exec(text))) {
     let doc = m[1];
@@ -49,8 +50,19 @@ function countCitations(text) {
 
 function main() {
   const strict = process.argv.includes('--strict');
-  const refDocs = fs.readdirSync(REF_MD, { withFileTypes: true })
-    .filter(d => d.isDirectory()).map(d => d.name).sort();
+  // ref_md/과목N/{doc}/ 구조 — 과목 폴더 1단계 아래가 문서 디렉터리
+  const refDocs = [];
+  for (const e of fs.readdirSync(REF_MD, { withFileTypes: true })) {
+    if (!e.isDirectory()) continue;
+    if (/^과목\d+$/.test(e.name)) {
+      for (const d of fs.readdirSync(path.join(REF_MD, e.name), { withFileTypes: true })) {
+        if (d.isDirectory()) refDocs.push(d.name);
+      }
+    } else {
+      refDocs.push(e.name);   // 평탄 잔존
+    }
+  }
+  refDocs.sort();
 
   // 과목별 인용 득표 수집
   const votes = {}; // doc → {subject: n}

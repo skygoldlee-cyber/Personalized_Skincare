@@ -8,6 +8,7 @@
 const fs = require('fs');
 const path = require('path');
 const { getExamTargets } = require('./exam-targets.js');
+const { docSubject } = require('./ref-statements.js');
 
 const WORKSPACE_DIR = path.resolve(__dirname, '..', '..');
 const outPath = path.join(WORKSPACE_DIR, 'src', 'pdf-registry.js');
@@ -63,9 +64,24 @@ function examTablesJs(refs, contentRoot) {
     `        ${JSON.stringify(k)}: ${JSON.stringify(v)}`
   ).join(',\n');
 
+  // REF_MD_SUBJECTS: 파일명 → ref_md 과목 서브디렉터리 (ref_md/과목N/{doc}/ 구조)
+  const refMdSubjects = {};
+  for (const files of Object.values(refs.refDirs)) {
+    for (const f of files) {
+      const s = docSubject(f.replace(/\.pdf$/i, ''));
+      if (s) refMdSubjects[f] = `과목${s}`;
+    }
+  }
+  const refMdSubjJs = Object.entries(refMdSubjects).map(([k, v]) =>
+    `            ${JSON.stringify(k)}: ${JSON.stringify(v)}`
+  ).join(',\n');
+
   return `        contentRoot: ${JSON.stringify(contentRoot)},
         SUBJECT_DIR_MAP: {
 ${subjMapJs}
+        },
+        REF_MD_SUBJECTS: {
+${refMdSubjJs}
         },
         REF_DIRS: {
 ${refDirsJs}
@@ -150,7 +166,8 @@ for (const [eid, t] of Object.entries(_EXAM_TABLES)) {
         for (const f of refDirs[dir] || []) {
             if (!fileToPath[f]) {
                 const base = f.replace(/\\.pdf$/, '');
-                fileToPath[f] = \`\${root}/참조자료/ref_md/\${base}/\${base}.md\`;
+                const sub = (t.REF_MD_SUBJECTS || {})[f];
+                fileToPath[f] = \`\${root}/참조자료/ref_md/\${sub ? sub + '/' : ''}\${base}/\${base}.md\`;
                 registry[f] = dir;
             }
         }
@@ -198,7 +215,8 @@ export function mapSourceToRef(sourceText) {
     if (!refFile) return '';
 
     const base = refFile.replace(/\\.pdf$/, '');
-    return \`\${t.contentRoot || 'content'}/참조자료/ref_md/\${base}/\${base}.md\`;
+    const sub = (t.REF_MD_SUBJECTS || {})[refFile];
+    return \`\${t.contentRoot || 'content'}/참조자료/ref_md/\${sub ? sub + '/' : ''}\${base}/\${base}.md\`;
 }
 
 // --- 본문 키워드 자동 링크 헬퍼 ---

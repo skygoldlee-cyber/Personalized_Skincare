@@ -7,20 +7,31 @@ const ROOT = path.resolve(__dirname, '..');
 const REF_BASE = path.join(ROOT, 'content', '참조자료');
 const REF_MD_DIR = path.join(REF_BASE, 'ref_md');
 
-// ref_md/ 하위의 실제 MD 변환본 목록
-const refMdDirs = fs.readdirSync(REF_MD_DIR, { withFileTypes: true })
-  .filter(e => e.isDirectory())
-  .map(e => e.name);
+// ref_md/과목N/{doc}/ 구조 — 문서 디렉터리는 과목 폴더 1단계 아래에 있다
+const refMdDirs = [];
+const refMdParent = {};
+for (const top of fs.readdirSync(REF_MD_DIR, { withFileTypes: true })) {
+  if (!top.isDirectory()) continue;
+  if (/^과목\d+$/.test(top.name)) {
+    for (const d of fs.readdirSync(path.join(REF_MD_DIR, top.name), { withFileTypes: true })) {
+      if (d.isDirectory()) { refMdDirs.push(d.name); refMdParent[d.name] = `${top.name}/${d.name}`; }
+    }
+  } else {
+    refMdDirs.push(top.name); refMdParent[top.name] = top.name;   // 평탄 잔존
+  }
+}
 
 const refMdFiles = {};
 for (const dir of refMdDirs) {
-  const fullDir = path.join(REF_MD_DIR, dir);
+  const fullDir = path.join(REF_MD_DIR, refMdParent[dir]);
   const files = fs.readdirSync(fullDir).filter(f => f.endsWith('.md'));
   refMdFiles[dir] = files;
 }
 
-// 교재에서 사용되는 모든 PDF 파일 목록 (법령원문, 공통, 과목1, 과목2)
-const pdfDirs = ['법령원문', '공통', '과목1', '과목2'];
+// 참조자료의 모든 PDF 디렉터리 (법령원문, 공통, 과목1~4)
+const pdfDirs = fs.readdirSync(REF_BASE, { withFileTypes: true })
+  .filter(e => e.isDirectory() && e.name !== 'ref_md' && e.name !== 'ref_md_v2')
+  .map(e => e.name);
 const pdfFiles = {};
 for (const dir of pdfDirs) {
   const fullDir = path.join(REF_BASE, dir);
@@ -53,13 +64,13 @@ for (const [dir, files] of Object.entries(pdfFiles)) {
     if (mdFileExists) {
       mapped++;
       console.log(`  ✓ ${pdf}`);
-      console.log(`    → ref_md/${basename}/${mdFile}`);
+      console.log(`    → ref_md/${refMdParent[basename]}/${mdFile}`);
     } else {
       missing++;
       missingList.push({ dir, pdf, basename });
       console.log(`  ✗ ${pdf}`);
       if (mdDirExists) {
-        console.log(`    → 디렉토리는 있으나 MD 파일 없음: ref_md/${basename}/`);
+        console.log(`    → 디렉토리는 있으나 MD 파일 없음: ref_md/${refMdParent[basename]}/`);
         console.log(`      (실제 파일: ${refMdFiles[basename].join(', ') || '없음'})`);
       } else {
         console.log(`    → ref_md/${basename}/ 디렉토리 자체 없음`);

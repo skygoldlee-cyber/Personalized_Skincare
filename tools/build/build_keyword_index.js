@@ -17,6 +17,7 @@ const ROOT = path.resolve(import.meta.dirname, '../..');
 const OUTPUT = path.join(ROOT, 'src/keyword-index.js');
 const require = createRequire(import.meta.url);
 const { getExamTargets } = require('./exam-targets.js');
+const { docSubject } = require('./ref-statements.js');
 
 // --- 참조문서 텍스트 캐시 (키는 contentRoot를 포함한 전체 상대경로 — 시험 간 공유 안전) ---
 const refTextCache = {};
@@ -142,7 +143,8 @@ function buildForExam(target) {
         for (const f of REF_DIRS[dir] || []) {
             const base = f.replace(/\.pdf$/, '');
             if (!REF_FILE_TO_PATH[f]) {
-                REF_FILE_TO_PATH[f] = `${contentRoot}/참조자료/ref_md/${base}/${base}.md`;
+                const sub = docSubject(base);
+                REF_FILE_TO_PATH[f] = `${contentRoot}/참조자료/ref_md/${sub ? `과목${sub}/` : ''}${base}/${base}.md`;
             }
         }
     }

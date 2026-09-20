@@ -39,8 +39,8 @@ for subdir, filename in old_pdfs:
     
     pdf.close()
     
-    # MD 파일 생성 (기존 ref_md 형식과 동일)
-    md_dir = os.path.join(REF_MD, basename)
+    # MD 파일 생성 (ref_md/과목N/{basename}/ 형식 — _구 문서는 전부 과목2 귀속)
+    md_dir = os.path.join(REF_MD, "과목2", basename)
     os.makedirs(md_dir, exist_ok=True)
     md_path = os.path.join(md_dir, basename + ".md")
     
@@ -49,6 +49,6 @@ for subdir, filename in old_pdfs:
     with open(md_path, "w", encoding="utf-8") as f:
         f.write(md_content)
     
-    print(f"OK: {subdir}/{filename} → ref_md/{basename}/{basename}.md ({page_count}페이지, {len(md_content):,}자)")
+    print(f"OK: {subdir}/{filename} → ref_md/과목2/{basename}/{basename}.md ({page_count}페이지, {len(md_content):,}자)")
 
 print("\n변환 완료")
