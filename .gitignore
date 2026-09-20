@@ -66,3 +66,5 @@ content/**/*.html
 .vercel
 !.vercel/project.json
 .env*
+# 스테이징: PDF→MD 재변환 검수 산출물 (로컬 전용)
+content/참조자료/ref_md_v2/
