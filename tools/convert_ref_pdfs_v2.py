@@ -7,6 +7,12 @@ find_tables()로 표를 행 구조로 추출한다.
 
 출력: content/참조자료/ref_md_v2/{basename}/{basename}.md (스테이징, 검수 후 교체)
 
+사용:
+  python tools/convert_ref_pdfs_v2.py            # 전체 PDF → ref_md_v2
+  python tools/convert_ref_pdfs_v2.py 화장품법     # 파일명에 해당 문자열이 포함된 것만
+  python tools/convert_ref_pdfs_v2.py --verify    # ref_md_v2 vs ref_md 골든 비교
+                                                 # (변환 없이 비교만, 내용 손실 시 종료코드 1)
+
 셀 내 줄바꿈은 렌더링 wrap이므로 ''로 병합한다(공백 병합 시 화학명이 중간에
 끊기는 것보다 wrap 경계 공백 유실이 피해가 적음 — 줄 내 공백은 좌표로 복원됨).
 """
@@ -23,6 +29,7 @@ sys.stdout.reconfigure(encoding='utf-8')
 BASE = os.path.join(os.path.dirname(__file__), '..')
 REF_BASE = os.path.join(BASE, 'content', '참조자료')
 OUT_DIR = os.path.join(REF_BASE, 'ref_md_v2')
+PROD_DIR = os.path.join(REF_BASE, 'ref_md')
 
 # PDF가 있는 하위 디렉토리 전체 탐색
 PDF_DIRS = [d for d in os.listdir(REF_BASE)
@@ -562,8 +569,89 @@ def whitespace_ratio(text):
     return sum(1 for c in text if c in ' \t') / len(text) * 100
 
 
+def _norm_cmp(t):
+    """비교용 정규화 — 표 파이프·공백·마크업을 제거해 병합/분할된 줄도 매칭"""
+    return re.sub(r'[\s*_`#>|「」()\[\]-]+', '', t)
+
+
+def _is_junk_cmp(t):
+    """골든 비교에서 제외할 잡행 — 워터마크/쪽번호/재구성 잡행"""
+    t = t.strip()
+    return (not t or WATERMARK_RE.search(t) or PAGE_NUM_RE.match(t)
+            or bool(JUNK_LINE_RE.match(t)))
+
+
+def verify(only=None):
+    """ref_md_v2(스테이징)를 ref_md(현행)와 골든 비교한다.
+
+    현행 문서의 비잡행 라인이 스테이징에서 사라졌으면 내용 손실로 집계한다.
+    줄 병합·분할을 흡수하기 위해 ① 정확 라인 매칭 ② 정규화 후 문서 전체
+    부분문자열 매칭(8자 이상) 두 단계로 판정한다.
+    """
+    if not os.path.isdir(OUT_DIR):
+        print(f'스테이징 없음: {OUT_DIR} — 먼저 변환을 실행하세요.')
+        return 1
+    docs = sorted(d for d in os.listdir(OUT_DIR)
+                  if os.path.isdir(os.path.join(OUT_DIR, d)))
+    bad_docs = []
+    print(f'{"문서":<44} {"기존":>6} {"신규":>6} {"누락":>4}')
+    print('-' * 70)
+    for d in docs:
+        if only and only not in d:
+            continue
+        new_p = os.path.join(OUT_DIR, d, d + '.md')
+        old_p = os.path.join(PROD_DIR, d, d + '.md')
+        if not os.path.exists(new_p):
+            continue
+        new_text = open(new_p, encoding='utf-8').read()
+        new_lines = new_text.split('\n')
+        # 멀티셋 비교 — 목차·머리말 등 중복 라인의 부분 삭제도 감지
+        new_count = {}
+        for l in new_lines:
+            s = l.strip()
+            if s:
+                new_count[s] = new_count.get(s, 0) + 1
+        new_all = _norm_cmp(new_text)
+        new_n = sum(1 for l in new_lines if not _is_junk_cmp(l))
+        if not os.path.exists(old_p):
+            print(f'{d[:44]:<44} {"(신규)":>6} {new_n:>6} {"-":>4}')
+            continue
+        old_text = open(old_p, encoding='utf-8').read()
+        missing = []
+        old_n = 0
+        for l in old_text.split('\n'):
+            if _is_junk_cmp(l):
+                continue
+            old_n += 1
+            s = l.strip()
+            if new_count.get(s, 0) > 0:
+                new_count[s] -= 1
+                continue
+            n = _norm_cmp(s)
+            if len(n) >= 8 and n in new_all:
+                continue
+            missing.append(s)
+        mark = ' ⚠' if missing else ''
+        print(f'{d[:44]:<44} {old_n:>6} {new_n:>6} {len(missing):>4}{mark}')
+        if missing:
+            bad_docs.append((d, missing))
+    print('-' * 70)
+    for d, missing in bad_docs:
+        print(f'\n[누락] {d} — {len(missing)}줄')
+        for l in missing[:10]:
+            print('   -', l[:80])
+        if len(missing) > 10:
+            print(f'   … 외 {len(missing) - 10}줄')
+    print(f'\n검증: {len(docs)}개 문서, 내용 누락 문서 {len(bad_docs)}개')
+    return len(bad_docs)
+
+
 def main():
-    only = sys.argv[1] if len(sys.argv) > 1 else None
+    args = [a for a in sys.argv[1:] if a != '--verify']
+    if '--verify' in sys.argv:
+        only = args[0] if args else None
+        sys.exit(1 if verify(only) else 0)
+    only = args[0] if args else None
     pdfs = collect_pdfs()
     report = []
     for subdir, pdf_path in pdfs:

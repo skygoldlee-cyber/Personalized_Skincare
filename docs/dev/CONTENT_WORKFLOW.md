@@ -220,6 +220,29 @@ npm.cmd run build:audio-manifest     # 오디오 매니페스트만
 3. `npm.cmd run build:data` 실행
 4. 검증 + 커밋 + 배포
 
+### 3.3-1 PDF → MD 재변환 절차 (ref_md 갱신)
+
+참조자료 PDF를 추가·교체하거나 변환 규칙을 수정했을 때의 표준 절차:
+
+```powershell
+# 1) 스테이징 변환 (ref_md_v2에 출력, ref_md는 건드리지 않음)
+python tools/convert_ref_pdfs_v2.py            # 전체
+python tools/convert_ref_pdfs_v2.py 화장품법     # 파일명 부분 일치만
+
+# 2) 골든 비교 — 현행 ref_md 대비 내용 누락 감사 (누락 있으면 종료코드 1)
+python tools/convert_ref_pdfs_v2.py --verify
+```
+
+- `--verify`는 현행 문서의 비잡행 라인(워터마크·쪽번호 제외)이 신규 문서에
+  존재하는지 **멀티셋(등장 횟수) 기준**으로 검사한다. 줄 병합·분할은
+  정규화 부분문자열 매칭으로 흡수한다.
+- 누락 0이면 `ref_md_v2/{doc}/{doc}.md`와 `images/`를 `ref_md/`의
+  동명 디렉터리에 복사해 승격한다(`index.html` 보존).
+- 승격 후 라인 번호가 밀리므로 반드시 `npm.cmd run sync:citations` →
+  `node tools/sync_citation_lines.js --check`(미발견 0 확인) →
+  `npm.cmd run build:data` → `node tools/build_combo_drills.js` 순서로
+  후속 재생성을 실행한다.
+
 ### 3.4 오디오북 추가
 
 1. `content/audiobook/mp3/{과목키}/` 디렉토리에 MP3 파일 배치
