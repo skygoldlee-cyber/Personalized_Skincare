@@ -40,6 +40,7 @@ const path = require('path');
 const { stableId } = require('./build/id-factory.js');
 const { inferTags } = require('./drill-utils.js');
 const { getExamTargets, getSubjectMaps } = require('./build/exam-targets.js');
+const { extractRefAtoms } = require('./build/ref-statements.js');
 
 const ROOT = path.resolve(__dirname, '..');
 const DRY_RUN = process.argv.includes('--dry-run');
@@ -205,10 +206,20 @@ function buildCitation(q, examKey, explanation) {
     : `📖 출처: ${srcLabel}`;
 }
 
-function buildComboItems(examKey, exam, genOpts) {
+/** 근접 중복 — 정규화 키의 부분문자열·공통 접두사(≥60%) 검출 */
+function nearDup(a, b) {
+  const x = normKey(a), y = normKey(b);
+  if (x.includes(y) || y.includes(x)) return true;
+  const min = Math.min(x.length, y.length);
+  let i = 0;
+  while (i < min && x[i] === y[i]) i++;
+  return i >= Math.max(8, Math.floor(min * 0.6));
+}
+
+function buildComboItems(examKey, exam, genOpts, refAtoms) {
   const items = [];
   const stats = {
-    choice: 0, fact: 0, answer: 0, cluster: 0,
+    choice: 0, fact: 0, answer: 0, cluster: 0, ref: 0,
     skipComboStem: 0, skipStem: 0, skipNoTruth: 0, skipFew: 0, skipBlank: 0,
     allOfAbove: 0, errors: [],
   };
@@ -322,6 +333,9 @@ function buildComboItems(examKey, exam, genOpts) {
   // 진짜 복수정답 합답형. 챕터 단위보다 입자가 가늘어 이질 진술 혼입 위험이 낮다.
   items.push(...buildClusterCombos(conceptPool, examKey, subject, subjKey, genOpts, stats));
 
+  // 참조자료 원문(ref_md) 콤보 — 법령 정의조항·열거 목록에서 추출한 검증 원자.
+  items.push(...buildRefCombos(refAtoms, examKey, subject, subjKey, genOpts, stats));
+
   return { items, stats };
 }
 
@@ -339,15 +353,6 @@ function buildComboItems(examKey, exam, genOpts) {
  */
 function buildClusterCombos(conceptPool, examKey, subject, subjKey, genOpts, stats) {
   const out = [];
-  const nearDup = (a, b) => {
-    const x = normKey(a), y = normKey(b);
-    if (x.includes(y) || y.includes(x)) return true;
-    // 공통 접두사가 길면 사실상 같은 진술 — '…효과가 있다' vs '…효과가 있으며, …' 류
-    const min = Math.min(x.length, y.length);
-    let i = 0;
-    while (i < min && x[i] === y[i]) i++;
-    return i >= Math.max(8, Math.floor(min * 0.6));
-  };
   for (const [cid, pool] of Object.entries(conceptPool)) {
     const trues = [...pool.true.values()];
     const falses = [...pool.false.values()];
@@ -403,6 +408,193 @@ function buildClusterCombos(conceptPool, examKey, subject, subjKey, genOpts, sta
       source: `과목${subject} 개념 재조합`,
     });
     stats.cluster++;
+  }
+  return out;
+}
+
+/**
+ * ref_md(법령·고시 원문) 추출 원자로 합답형 생성 — 검증된 신규 진술 재료.
+ *
+ * - def: 같은 조의 용어 정의 교차 결합. 참 = 원문 그대로, 거짓 = 타 용어의
+ *   정의 본문을 결합 (정의는 용어별 유일 → 교차 결합은 확실히 거짓).
+ * - enum: '다음 각 호/목' 유한집합 멤버십. 참 = 목록 멤버, 거짓 = 다른 목록 멤버.
+ *   주제가 인용 용어("X")에서 온 경우만 주제형 발문, 나머지는 제네릭 발문.
+ *
+ * - citation은 '문서약칭 제N조'의 실 법령 근거 — L####보다 정확하다.
+ * - derivedFrom `ref:…`·태그 '참조자료'로 식별 가능 → 검수 큐 추출 용이.
+ * - 과목별 cap(REF_COMBO_CAP)까지 채운다.
+ */
+const REF_COMBO_CAP = { 1: 35, 2: 92, 3: 0, 4: 150 };
+
+function buildRefCombos(refPool, examKey, subject, subjKey, genOpts, stats) {
+  const out = [];
+  const cap = REF_COMBO_CAP[subject] || 0;
+  const bucket = refPool && refPool.bucket;
+  if (!bucket || !cap) return out;
+  const rng = seededRng(`${examKey}|ref`);
+  const concept = a => `${a.docShort}:${a.article}`;
+
+  const pushCombo = (stem, picked, citeKey, derived, kindTag) => {
+    const statements = picked.map((s, i) => ({
+      id: STMT_LABELS[i], sid: s.sid, conceptId: s.conceptId,
+      text: s.text, truth: s.truth, explain: s.explain,
+    }));
+    if (statements.filter(s => s.truth).length < 2 || statements.length < 4) return false;
+    const allIds = statements.map(s => s.id);
+    const truthIds = statements.filter(s => s.truth).map(s => s.id);
+    out.push({
+      id: stableId(subjKey, 'bank', 'combo-ref', derived),
+      subject, type: 'combo', points: 4,
+      citation: `📖 ${citeKey} (참조자료 원문)`,
+      stem, statements,
+      options: genOpts(allIds, truthIds, {
+        count: 5, rng: seededRng(`${examKey}|refOpt|${derived}`),
+        banFull: truthIds.length !== allIds.length,
+      }),
+      tags: ['자동생성', '참조자료', kindTag,
+        ...inferTags(stem, ...statements.map(s => s.text))],
+      derivedFrom: `ref:${derived}`,
+      explain: statements.map(s => `${s.id}. ${s.explain}`).join('\n'),
+      source: `참조자료 원문 (${kindTag === '용어정의' ? '정의조항' : '열거 목록'})`,
+    });
+    stats.ref++;
+    return true;
+  };
+  const stmtOf = (text, truth, atom, key) => ({
+    text, truth, conceptId: concept(atom),
+    sid: stableId(subjKey, 'bank', 'refst', key),
+    explain: `출처: ${atom.docShort} ${atom.article}${atom.ho ? atom.ho : ''}`,
+  });
+
+  // ── 정의조항 콤보: 조별 그룹의 용어 정의를 교차 결합 ──
+  const defGroups = {};
+  for (const d of bucket.defs) {
+    if (d.text.length > 170) continue;
+    const k = `${d.docShort}|${d.article}`;
+    (defGroups[k] = defGroups[k] || []).push(d);
+  }
+  for (const [k, defs] of Object.entries(defGroups)) {
+    if (out.length >= cap) break;
+    const usable = defs.filter(d => d.text.length <= 170);
+    if (usable.length < 4) continue;
+    const gRng = seededRng(`${examKey}|refDef|${k}`);
+    const nCombos = Math.min(3, Math.floor(usable.length / 4));
+    const shuffled = shuffle([...usable], gRng);
+    for (let c = 0; c < nCombos && out.length < cap; c++) {
+      const trues = shuffled.slice(c * 5, c * 5 + 3)
+        .map(d => stmtOf(d.text, true, d, `def|${k}|${d.term}`));
+      const falses = [];
+      for (const d of shuffled.slice(c * 5 + 3)) {
+        if (falses.length >= 2) break;
+        // 다른 용어의 정의 본문 결합 → 거짓 보장
+        const mis = shuffled.find(o => o.term !== d.term && o !== shuffled[c * 5 + falses.length]);
+        if (!mis) continue;
+        // 조사(을/를/은/는…)로 시작하는 종결구는 무공백 결합
+        const joiner = /^[을를은는이가의에로와과도만및]/.test(mis.endPhrase) ? '' : ' ';
+        const text = `"${d.term}"이란 ${mis.defBody}${joiner}${mis.endPhrase}.`;
+        if (text.length <= 170) falses.push(stmtOf(text, false, d, `defx|${k}|${d.term}|${mis.term}`));
+      }
+      if (trues.length < 2 || falses.length < 2) continue;
+      const picked = shuffle([...trues, ...falses], gRng);
+      pushCombo('다음 중 용어와 그 정의가 바르게 짝지어진 것을 모두 고른 것은?',
+        picked, k.replace('|', ' '), `def|${k}|${c}`, '용어정의');
+    }
+  }
+
+  // ── 열거 멤버십 콤보: '다음 각 호/목' 유한집합 ──
+  const lists = shuffle([...bucket.enums], rng);
+  // 오답 풀은 "다른 조"의 목록에서만 추첨 — 같은 조의 다른 목록 멤버는
+  // 발문이 조문 단위 멤버십을 물을 때 실제로 해당할 수 있어 모호하다.
+  // 과목 내 후보가 부족하면 전 과목 풀까지 확장 (알레르기 성분 ↔ 색소 등
+  // 화학명 간의 교차 사용은 오히려 그럴듯한 오답이 된다).
+  const allEnums = (refPool && refPool.allEnums) || bucket.enums;
+  const otherMembers = (e, memberKeys) => {
+    // 이 목록과 멤버가 실질적으로 겹치는 목록(같은 표의 다른 문서본 등)은
+    // 오답 풀에서 배제 — 그 멤버는 실제로도 해당 목록의 멤버일 수 있다.
+    const banned = new Set();
+    for (const o of allEnums) {
+      if (o.listId === e.listId) continue;
+      const overlap = o.members.filter(m => memberKeys.has(normKey(m))).length;
+      if (overlap >= 3) o.members.forEach(m => banned.add(normKey(m)));
+    }
+    // 표 목록(화학명)의 오답은 같은 종류의 표 멤버 우선 — 도메인이 맞아야
+    // 그럴듯한 오답이 되고, 절차·문구 조각이 오답으로 섞이는 것을 막는다.
+    const sameKind = e.topicSrc === 'table' ? 'table' : null;
+    const same = bucket.enums
+      .filter(o => !(o.docShort === e.docShort && o.article === e.article))
+      .filter(o => !sameKind || o.topicSrc === sameKind)
+      .flatMap(o => o.members).filter(m => !banned.has(normKey(m)));
+    if (same.length >= 8) return same;
+    const wide = allEnums
+      .filter(o => o.listId !== e.listId)
+      .filter(o => !sameKind || o.topicSrc === sameKind)
+      .flatMap(o => o.members).filter(m => !banned.has(normKey(m)));
+    if (sameKind && wide.length >= 8) return [...same, ...wide];
+    const anyPool = allEnums.filter(o => o.listId !== e.listId)
+      .flatMap(o => o.members).filter(m => !banned.has(normKey(m)));
+    return [...same, ...wide, ...anyPool];
+  };
+  // 포괄 조항·지나치게 짧은 멤버는 진술로 부적합 — 어느 목록에도 우연히
+  // 해당할 수 있어 정답 모호성을 만든다.
+  const VAGUE_MEMBER_RE = /^(그\s*밖에|그\s*밖의|기타|그\s*외|이\s*외)/;
+  // 셀 절단 잔재(불균형 괄호, 연속 공백, 특수 기호, 조각 종료)는 멤버에서 제외
+  const memberOk = m => !/[◎◦▪※★→←↑↓]/.test(m) && !/\s{2,}/.test(m)
+    && (m.match(/[(「"'“]/g) || []).length === (m.match(/[)」"'”]/g) || []).length
+    && (m.match(/\[/g) || []).length === (m.match(/\]/g) || []).length
+    && !/[,·\-\/'´]$/.test(m) && !VAGUE_MEMBER_RE.test(m);
+  const processedKeySets = [];   // 동일 목록의 중복 문서본 방지
+  for (const e of lists) {
+    if (out.length >= cap) break;
+    const seen = new Set();
+    const members = e.members.filter(m => {
+      const k = normKey(m);
+      return m.length >= 4 && m.length <= 140 && memberOk(m)
+        && !seen.has(k) && seen.add(k);
+    });
+    if (members.length < 4) continue;
+    const memberKeys = new Set(members.map(normKey));
+    // 이미 처리한 목록과 60% 이상 겹치면 같은 표의 다른 문서본 — 스킵
+    if (processedKeySets.some(prev =>
+      [...memberKeys].filter(k => prev.has(k)).length / memberKeys.size >= 0.6)) continue;
+    processedKeySets.push(memberKeys);
+    const lRng = seededRng(`${examKey}|refEnum|${e.listId}`);
+    // 멤버가 넉넉하면 다른 부분집합으로 복수 문항 (멤버 3개당 1문;
+    // 목록 규모별 상한: ≥12 → 7문, ≥24 → 10문, ≥60 → 18문)
+    const nQ = Math.min(
+      members.length >= 60 ? 20 : members.length >= 24 ? 10 : members.length >= 12 ? 7 : 5,
+      Math.floor(members.length / 3));
+    const usedSubsets = new Set();
+    for (let q = 0; q < nQ && out.length < cap; q++) {
+      const trues = [];
+      for (const m of shuffle([...members], lRng)) {
+        if (trues.length >= 3) break;
+        if (!trues.some(t => nearDup(t, m))) trues.push(m);
+      }
+      if (trues.length < 2) break;
+      const subsetKey = trues.map(normKey).sort().join('|');
+      if (usedSubsets.has(subsetKey)) continue;
+      usedSubsets.add(subsetKey);
+      const falses = [];
+      for (const m of shuffle([...otherMembers(e, memberKeys)], lRng)) {
+        if (falses.length >= 2) break;
+        if (memberKeys.has(normKey(m)) || m.length > 140 || m.length < 4
+          || !memberOk(m)) continue;
+        if (falses.some(f => nearDup(f, m)) || trues.some(t => nearDup(t, m))) continue;
+        falses.push(m);
+      }
+      if (falses.length < 2) continue;
+      const picked = shuffle([
+        ...trues.map(m => stmtOf(m, true, e, `enum|${e.listId}|${normKey(m)}`)),
+        ...falses.map(m => stmtOf(m, false, e, `enumx|${e.listId}|${normKey(m)}`)),
+      ], lRng);
+      // 멤버십 발문 필수 — '옳은 것' 발문이면 다른 목록의 참인 사실을
+      // 거짓으로 표기하는 모순이 된다. 인용 주제가 없으면 조문을 직접 인용.
+      const stem = e.topicSrc === 'quote'
+        ? `다음 중 ${e.topic}에 해당하는 것을 모두 고른 것은?`
+        : `다음 중 「${e.docShort}」${e.article ? `${e.article}의 규정` : ''}에 해당하는 것을 모두 고른 것은?`;
+      pushCombo(stem, picked,
+        `${e.docShort}${e.article ? ' ' + e.article : ''}`, `enum|${e.listId}|${q}`, '열거목록');
+    }
   }
   return out;
 }
@@ -510,8 +702,14 @@ async function buildForExam(target) {
   let totalErrors = 0;
   const comboCounts = {};
 
+  // 참조자료 원문 추출 (참조자료/ref_md — 법령·고시 마크다운)
+  const refAtomsBySubject = extractRefAtoms(
+    path.join(ROOT, target.contentRoot, '참조자료', 'ref_md'));
+  const refAllEnums = Object.values(refAtomsBySubject).flatMap(b => b.enums);
+
   for (const [key, { data, file }] of Object.entries(examDataMap)) {
-    const { items, stats } = buildComboItems(key, data, generateComboOptions);
+    const { items, stats } = buildComboItems(key, data, generateComboOptions,
+      { bucket: refAtomsBySubject[SUBJECT_NUM[key]], allEnums: refAllEnums });
 
     // 검증: 스키마 무결성 + 도출 정답을 answer로 고정
     const errs = [];
@@ -540,7 +738,7 @@ async function buildForExam(target) {
 
     comboCounts[key] = valid.length;
     totalItems += valid.length;
-    console.log(`[combo-drills] ${key}: choice ${stats.choice} → combo ${valid.length} (fact ${stats.fact}/answer ${stats.answer}/재조합 ${stats.cluster}, blank 제외 ${stats.skipBlank}, 조합발문 스킵 ${stats.skipComboStem}, '모두'복구 ${stats.allOfAbove})`);
+    console.log(`[combo-drills] ${key}: choice ${stats.choice} → combo ${valid.length} (fact ${stats.fact}/answer ${stats.answer}/재조합 ${stats.cluster}/참조자료 ${stats.ref}, blank 제외 ${stats.skipBlank}, 조합발문 스킵 ${stats.skipComboStem}, '모두'복구 ${stats.allOfAbove})`);
     const allErrs = [...stats.errors, ...errs];
     if (allErrs.length) {
       console.log(`  ⚠ 오류 ${allErrs.length}건:`);

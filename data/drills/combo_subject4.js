@@ -25506,5 +25506,2776 @@ var COMBO_DRILLS_subject4 = [
   "explain": "ㄱ. 원본: 과목4 문제은행 Q30 · 교재 L581\nㄴ. 원본: 과목4 문제은행 Q30 · 교재 L581\nㄷ. 원본: 과목4 문제은행 Q12 · 교재 L581\nㄹ. 원본: 과목4 문제은행 Q12 · 교재 L581",
   "source": "과목4 개념 재조합",
   "answer": "2"
+ },
+ {
+  "id": "understanding_combo-ref_d2266b",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 주의사항 별표1 유형별주의사항표시문구 (참조자료 원문)",
+  "stem": "다음 중 3세 이하의 영유아용 제품류에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_71c11e",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "영유아용 샴푸, 린스",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_cfa2d2",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "헥실신남알",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_a4d2cc",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "영유아용 로션, 크림",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_aeb73d",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "영유아 인체 세정용 제품",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_86dd8c",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "벤질신나메이트",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|주의사항_별표1_유형별주의사항표시문구|cat|0|0",
+  "explain": "ㄱ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄴ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄷ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄹ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㅁ. 출처: 주의사항 별표1 유형별주의사항표시문구 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "understanding_combo-ref_afd5e7",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 주의사항 별표1 유형별주의사항표시문구 (참조자료 원문)",
+  "stem": "다음 중 손발톱용 제품류에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_d04eba",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "베이스코트(basecoats), 언더코트(under coats)",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_c7576e",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "네일 크림·로션·에센스·오일",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_ab39a0",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "탑코트(topcoats)",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_6858ab",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "신나밀알코올",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_e8dd17",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "나무이끼추출물",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|주의사항_별표1_유형별주의사항표시문구|cat|7|0",
+  "explain": "ㄱ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄴ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄷ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄹ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㅁ. 출처: 주의사항 별표1 유형별주의사항표시문구 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "1"
+ },
+ {
+  "id": "understanding_combo-ref_e79366",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 주의사항 별표1 유형별주의사항표시문구 (참조자료 원문)",
+  "stem": "다음 중 눈 화장용 제품류에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_a15d53",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "제라니올",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_16610c",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "아이브로(eyebrow) 제품",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_e72647",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "마스카라(mascara)",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_79d3b9",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "아이 라이너(eye liner)",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_1dc8e5",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "신나밀알코올",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|주의사항_별표1_유형별주의사항표시문구|cat|3|0",
+  "explain": "ㄱ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄴ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄷ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄹ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㅁ. 출처: 주의사항 별표1 유형별주의사항표시문구 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "5"
+ },
+ {
+  "id": "understanding_combo-ref_e4d0c1",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 주의사항 별표1 유형별주의사항표시문구 (참조자료 원문)",
+  "stem": "다음 중 눈 화장용 제품류에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_0e08ba",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "아이 메이크업 리무버(eye make-up remover)",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_33bf27",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "아이 섀도(eye shadow)",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_6273f9",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "나무이끼추출물",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_8531c9",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "아밀신나밀알코올",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_16610c",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "아이브로(eyebrow) 제품",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|주의사항_별표1_유형별주의사항표시문구|cat|3|1",
+  "explain": "ㄱ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄴ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄷ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄹ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㅁ. 출처: 주의사항 별표1 유형별주의사항표시문구 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "2"
+ },
+ {
+  "id": "understanding_combo-ref_a43840",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 주의사항 별표1 유형별주의사항표시문구 (참조자료 원문)",
+  "stem": "다음 중 두발 염색용 제품류에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_2fdcee",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "헤어 틴트(hair tints)",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_c39e73",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "립글로스(lip gloss), 립밤(lip balm)",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_4ab5ff",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "참나무이끼추출물",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_321d8e",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "탈염·탈색용 제품",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_b0eeb9",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "알파-아이소메틸아이오논",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|주의사항_별표1_유형별주의사항표시문구|cat|5|0",
+  "explain": "ㄱ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄴ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄷ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄹ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㅁ. 출처: 주의사항 별표1 유형별주의사항표시문구 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "3"
+ },
+ {
+  "id": "understanding_combo-ref_542f57",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 주의사항 별표1 유형별주의사항표시문구 (참조자료 원문)",
+  "stem": "다음 중 두발 염색용 제품류에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_c2f716",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "벤질살리실레이트",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_c39e73",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "립글로스(lip gloss), 립밤(lip balm)",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_321d8e",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "탈염·탈색용 제품",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_4ab5ff",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "참나무이끼추출물",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_21d182",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "바디페인팅(body painting), 페이스페인팅(face painting), 분장용 제품",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|주의사항_별표1_유형별주의사항표시문구|cat|5|1",
+  "explain": "ㄱ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄴ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄷ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄹ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㅁ. 출처: 주의사항 별표1 유형별주의사항표시문구 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "5"
+ },
+ {
+  "id": "understanding_combo-ref_fc4b81",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 주의사항 별표1 유형별주의사항표시문구 (참조자료 원문)",
+  "stem": "다음 중 두발 염색용 제품류에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_5fd1af",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "헥실신남알",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_4ab5ff",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "참나무이끼추출물",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_2fdcee",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "헤어 틴트(hair tints)",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_21d182",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "바디페인팅(body painting), 페이스페인팅(face painting), 분장용 제품",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_0942bb",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "헤어 컬러스프레이(hair color sprays)",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|주의사항_별표1_유형별주의사항표시문구|cat|5|2",
+  "explain": "ㄱ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄴ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄷ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄹ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㅁ. 출처: 주의사항 별표1 유형별주의사항표시문구 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "2"
+ },
+ {
+  "id": "understanding_combo-ref_0c7437",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 주의사항 별표1 유형별주의사항표시문구 (참조자료 원문)",
+  "stem": "다음 중 화장품 유형별 주의사항에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_c0162d",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "손·발의 피부연화 제품(우레아를 포함하는 핸드크림 및 풋크림)",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_1b893b",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "염모제(산화염모제와 비산화염모제)",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_b0e1f8",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "아밀신나밀알코올",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_1f0a84",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "체취 방지용 제품",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_1e3e5b",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "아니스알코올",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "구성비"
+  ],
+  "derivedFrom": "ref:enum|주의사항_별표1_유형별주의사항표시문구|cat|11|0",
+  "explain": "ㄱ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄴ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄷ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄹ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㅁ. 출처: 주의사항 별표1 유형별주의사항표시문구 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "1"
+ },
+ {
+  "id": "understanding_combo-ref_716854",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 주의사항 별표1 유형별주의사항표시문구 (참조자료 원문)",
+  "stem": "다음 중 화장품 유형별 주의사항에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_09d987",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "벤질알코올",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_74f743",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "제모제(치오글라이콜릭애씨드 함유 제품에만 표시함)",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_1f0a84",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "체취 방지용 제품",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_431895",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "제라니올",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_4588ea",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "두발용, 두발염색용 및 눈 화장용 제품류",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|주의사항_별표1_유형별주의사항표시문구|cat|11|1",
+  "explain": "ㄱ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄴ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄷ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄹ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㅁ. 출처: 주의사항 별표1 유형별주의사항표시문구 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "understanding_combo-ref_5af757",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 주의사항 별표1 유형별주의사항표시문구 (참조자료 원문)",
+  "stem": "다음 중 화장품 유형별 주의사항에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_1b893b",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "염모제(산화염모제와 비산화염모제)",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_4588ea",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "두발용, 두발염색용 및 눈 화장용 제품류",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_74a9de",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "탈염·탈색제",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_c91ee2",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "신나밀알코올",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_17aca4",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "나무이끼추출물",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|주의사항_별표1_유형별주의사항표시문구|cat|11|2",
+  "explain": "ㄱ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄴ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄷ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄹ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㅁ. 출처: 주의사항 별표1 유형별주의사항표시문구 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "2"
+ },
+ {
+  "id": "understanding_combo-ref_618d5b",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 주의사항 별표1 유형별주의사항표시문구 (참조자료 원문)",
+  "stem": "다음 중 화장품 유형별 주의사항에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_09d987",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "벤질알코올",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_a0cfad",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "고압가스를 사용하는 에어로졸 제품",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_642baa",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "고압가스를 사용하지 않는 분무형 자외선 차단제",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_f9a354",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "헥실신남알",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_d7bcbf",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "헤어 퍼머넌트 웨이브 제품 및 헤어스트레이트너 제품",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|주의사항_별표1_유형별주의사항표시문구|cat|11|3",
+  "explain": "ㄱ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄴ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄷ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄹ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㅁ. 출처: 주의사항 별표1 유형별주의사항표시문구 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "1"
+ },
+ {
+  "id": "understanding_combo-ref_7d714f",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 주의사항 별표1 유형별주의사항표시문구 (참조자료 원문)",
+  "stem": "다음 중 화장품 함유 성분별 주의사항에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_753987",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "벤질살리실레이트",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_232af7",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "아이오도프로피닐부틸카바메이트(IPBC) 함유 제품 (목욕용제품, 샴푸류 및 바디클렌저 제외)",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_4116cc",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "제라니올",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_ae2204",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "살리실릭애씨드 및 그 염류 함유 제품(샴푸 등 사용 후 바로 씻어내는 제품 제외)",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_1054af",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "포름알데하이드 0.05% 이상 검출된 제품",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "한도",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|주의사항_별표1_유형별주의사항표시문구|cat|12|0",
+  "explain": "ㄱ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄴ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄷ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄹ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㅁ. 출처: 주의사항 별표1 유형별주의사항표시문구 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "1"
+ },
+ {
+  "id": "understanding_combo-ref_00840a",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 주의사항 별표1 유형별주의사항표시문구 (참조자료 원문)",
+  "stem": "다음 중 화장품 함유 성분별 주의사항에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_8e6015",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "부틸페닐메틸프로피오날",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_9bbcab",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "부틸파라벤, 프로필파라벤, 이소부틸파라벤 또는 이소프로필파라벤 함유 제품",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_02f014",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "알루미늄 및 그 염류 함유 제품 (체취방지용 제품류에 한함)",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_5a3c5c",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "벤질알코올",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_ae2204",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "살리실릭애씨드 및 그 염류 함유 제품(샴푸 등 사용 후 바로 씻어내는 제품 제외)",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|주의사항_별표1_유형별주의사항표시문구|cat|12|1",
+  "explain": "ㄱ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄴ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄷ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄹ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㅁ. 출처: 주의사항 별표1 유형별주의사항표시문구 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "understanding_combo-ref_1ab01c",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 주의사항 별표1 유형별주의사항표시문구 (참조자료 원문)",
+  "stem": "다음 중 화장품 함유 성분별 주의사항에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_46602c",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "아밀신남알",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_2b4c90",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "신나밀알코올",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_2fff9a",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "카민 함유 제품",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_ada4d9",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "코치닐추출물 함유 제품",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_34261e",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "벤잘코늄클로라이드, 벤잘코늄브로마이드 및 벤잘코늄사카리네이트 함유 제품",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|주의사항_별표1_유형별주의사항표시문구|cat|12|2",
+  "explain": "ㄱ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄴ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄷ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄹ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㅁ. 출처: 주의사항 별표1 유형별주의사항표시문구 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "2"
+ },
+ {
+  "id": "understanding_combo-ref_344604",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 주의사항 별표1 유형별주의사항표시문구 (참조자료 원문)",
+  "stem": "다음 중 화장품 함유 성분별 주의사항에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_efad1d",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "메틸2-옥티노에이트",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_d6eef2",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "알부틴 2% 이상 함유 제품",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_97ed59",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "아밀신나밀알코올",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_8297ba",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "스테아린산아연 함유 제품(기초화장용 제품류 중 파우더 제품에 한함)",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_84cd5f",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "폴리에톡실레이티드레틴아마이드 0.2% 이상 함유 제품",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "한도",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|주의사항_별표1_유형별주의사항표시문구|cat|12|3",
+  "explain": "ㄱ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄴ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄷ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄹ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㅁ. 출처: 주의사항 별표1 유형별주의사항표시문구 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "1"
+ },
+ {
+  "id": "understanding_combo-ref_dac816",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 주의사항 별표1 유형별주의사항표시문구 (참조자료 원문)",
+  "stem": "다음 중 면도용 제품류에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_be40e3",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "셰이빙 크림(shaving cream)",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_06117c",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "애프터셰이브 로션(aftershave lotions)",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_301f73",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "아밀신나밀알코올",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_26624b",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "알파-아이소메틸아이오논",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_69e71c",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "셰이빙 폼(shaving foam)",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|주의사항_별표1_유형별주의사항표시문구|cat|8|0",
+  "explain": "ㄱ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄴ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄷ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄹ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㅁ. 출처: 주의사항 별표1 유형별주의사항표시문구 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "3"
+ },
+ {
+  "id": "understanding_combo-ref_b89041",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 주의사항 별표1 유형별주의사항표시문구 (참조자료 원문)",
+  "stem": "다음 중 두발용 제품류에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_1cea56",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "헤어 스트레이트너(hair straightner)",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_5b624b",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "헤어 토닉(hair tonics), 헤어 에센스(hair essence)",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_abfe28",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "헤어 크림·로션",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_4e62f8",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "아니스알코올",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_97ca9a",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "제라니올",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|주의사항_별표1_유형별주의사항표시문구|cat|6|0",
+  "explain": "ㄱ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄴ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄷ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄹ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㅁ. 출처: 주의사항 별표1 유형별주의사항표시문구 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "2"
+ },
+ {
+  "id": "understanding_combo-ref_886fd3",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 주의사항 별표1 유형별주의사항표시문구 (참조자료 원문)",
+  "stem": "다음 중 두발용 제품류에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_e69ae9",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "헤어 컨디셔너(hair conditioners), 헤어 트리트먼트(hair treatment), 헤어 팩",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_abfe28",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "헤어 크림·로션",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_28b2dd",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "참나무이끼추출물",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_5b624b",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "헤어 토닉(hair tonics), 헤어 에센스(hair essence)",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_4aedc5",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "벤질살리실레이트",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|주의사항_별표1_유형별주의사항표시문구|cat|6|1",
+  "explain": "ㄱ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄴ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄷ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄹ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㅁ. 출처: 주의사항 별표1 유형별주의사항표시문구 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "1"
+ },
+ {
+  "id": "understanding_combo-ref_108cc3",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 주의사항 별표2 알레르기유발성분25종 (참조자료 원문)",
+  "stem": "다음 중 착향제 구성 성분 중 알레르기 유발 성분에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_bd7854",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "아밀신남알",
+    "truth": true,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_698347",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "살리실릭애씨드 및 그 염류 함유 제품(샴푸 등 사용 후 바로 씻어내는 제품 제외)",
+    "truth": false,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_5c40df",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "벤질살리실레이트",
+    "truth": true,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_56b839",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "하이드록시시트로넬알",
+    "truth": true,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_e77754",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "손·발의 피부연화 제품",
+    "truth": false,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|주의사항_별표2_알레르기유발성분25종|table|0|0",
+  "explain": "ㄱ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄴ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄷ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄹ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㅁ. 출처: 주의사항 별표2 알레르기유발성분25종 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "3"
+ },
+ {
+  "id": "understanding_combo-ref_821b10",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 주의사항 별표2 알레르기유발성분25종 (참조자료 원문)",
+  "stem": "다음 중 착향제 구성 성분 중 알레르기 유발 성분에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_f4380a",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "신나밀알코올",
+    "truth": true,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_5c40df",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "벤질살리실레이트",
+    "truth": true,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_dc09cf",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "벤질알코올",
+    "truth": true,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_64c727",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "외음부 세정제",
+    "truth": false,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_df05eb",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "아이 라이너(eye liner)",
+    "truth": false,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|주의사항_별표2_알레르기유발성분25종|table|0|1",
+  "explain": "ㄱ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄴ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄷ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄹ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㅁ. 출처: 주의사항 별표2 알레르기유발성분25종 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "1"
+ },
+ {
+  "id": "understanding_combo-ref_16e567",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 주의사항 별표2 알레르기유발성분25종 (참조자료 원문)",
+  "stem": "다음 중 착향제 구성 성분 중 알레르기 유발 성분에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_b4a2a9",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "부틸페닐메틸프로피오날",
+    "truth": true,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_5e38cc",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "고압가스를 사용하는 에어로졸 제품",
+    "truth": false,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_3f2393",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "벤질신나메이트",
+    "truth": true,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_6af631",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "벤질벤조에이트",
+    "truth": true,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_e43e68",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "스테아린산아연 함유 제품(기초화장용 제품류 중 파우더 제품에 한함)",
+    "truth": false,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|주의사항_별표2_알레르기유발성분25종|table|0|2",
+  "explain": "ㄱ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄴ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄷ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄹ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㅁ. 출처: 주의사항 별표2 알레르기유발성분25종 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "5"
+ },
+ {
+  "id": "understanding_combo-ref_4fe68e",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 주의사항 별표2 알레르기유발성분25종 (참조자료 원문)",
+  "stem": "다음 중 착향제 구성 성분 중 알레르기 유발 성분에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_df05eb",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "아이 라이너(eye liner)",
+    "truth": false,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_bd7854",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "아밀신남알",
+    "truth": true,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_3f2393",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "벤질신나메이트",
+    "truth": true,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_a37169",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "물휴지. 다만, 「위생용품 관리법」 제2조제1호라목2)에서 말하는 「식품위생",
+    "truth": false,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_1ad775",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "참나무이끼추출물",
+    "truth": true,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|주의사항_별표2_알레르기유발성분25종|table|0|3",
+  "explain": "ㄱ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄴ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄷ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄹ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㅁ. 출처: 주의사항 별표2 알레르기유발성분25종 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "1"
+ },
+ {
+  "id": "understanding_combo-ref_f79ba0",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 주의사항 별표2 알레르기유발성분25종 (참조자료 원문)",
+  "stem": "다음 중 착향제 구성 성분 중 알레르기 유발 성분에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_a37169",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "물휴지. 다만, 「위생용품 관리법」 제2조제1호라목2)에서 말하는 「식품위생",
+    "truth": false,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_bd7854",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "아밀신남알",
+    "truth": true,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_008b67",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "시트로넬올",
+    "truth": true,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_758209",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "아니스알코올",
+    "truth": true,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_602ea6",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "헤어 틴트(hair tints)",
+    "truth": false,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|주의사항_별표2_알레르기유발성분25종|table|0|4",
+  "explain": "ㄱ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄴ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄷ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄹ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㅁ. 출처: 주의사항 별표2 알레르기유발성분25종 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "3"
+ },
+ {
+  "id": "understanding_combo-ref_877a41",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 주의사항 별표2 알레르기유발성분25종 (참조자료 원문)",
+  "stem": "다음 중 착향제 구성 성분 중 알레르기 유발 성분에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_5c40df",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "벤질살리실레이트",
+    "truth": true,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_b4a2a9",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "부틸페닐메틸프로피오날",
+    "truth": true,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_ce736f",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "메틸2-옥티노에이트",
+    "truth": true,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_97baa4",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "카민 함유 제품",
+    "truth": false,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_ae6028",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "부틸파라벤, 프로필파라벤, 이소부틸파라벤 또는 이소프로필파라벤 함유 제품",
+    "truth": false,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|주의사항_별표2_알레르기유발성분25종|table|0|5",
+  "explain": "ㄱ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄴ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄷ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄹ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㅁ. 출처: 주의사항 별표2 알레르기유발성분25종 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "3"
+ },
+ {
+  "id": "understanding_combo-ref_132021",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 주의사항 별표1 유형별주의사항표시문구 (참조자료 원문)",
+  "stem": "다음 중 기초화장용 제품류에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_008a3c",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "팩, 마스크",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_f0c896",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "하이드록시시트로넬알",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_f79012",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "아밀신나밀알코올",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_358d13",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "마사지 크림",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_a9950e",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "수렴·유연·영양 화장수(face lotions)",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|주의사항_별표1_유형별주의사항표시문구|cat|9|0",
+  "explain": "ㄱ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄴ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄷ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄹ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㅁ. 출처: 주의사항 별표1 유형별주의사항표시문구 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "5"
+ },
+ {
+  "id": "understanding_combo-ref_16df4a",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 주의사항 별표1 유형별주의사항표시문구 (참조자료 원문)",
+  "stem": "다음 중 기초화장용 제품류에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_adf8f2",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "벤질알코올",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_389f42",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "에센스, 오일",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_358d13",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "마사지 크림",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_f79012",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "아밀신나밀알코올",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_a9950e",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "수렴·유연·영양 화장수(face lotions)",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|주의사항_별표1_유형별주의사항표시문구|cat|9|1",
+  "explain": "ㄱ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄴ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄷ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄹ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㅁ. 출처: 주의사항 별표1 유형별주의사항표시문구 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "3"
+ },
+ {
+  "id": "understanding_combo-ref_89afe7",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 주의사항 별표1 유형별주의사항표시문구 (참조자료 원문)",
+  "stem": "다음 중 인체 세정용 제품류에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_b8cdd1",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "폼 클렌저(foam cleanser)",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_75be27",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "아니스알코올",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_36797b",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "화장 비누(고체 형태의 세안용 비누)",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_9ec6d7",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "외음부 세정제",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_8334d8",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "아이소유제놀",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|주의사항_별표1_유형별주의사항표시문구|cat|2|0",
+  "explain": "ㄱ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄴ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄷ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄹ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㅁ. 출처: 주의사항 별표1 유형별주의사항표시문구 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "2"
+ },
+ {
+  "id": "understanding_combo-ref_2ea0c2",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 주의사항 별표1 유형별주의사항표시문구 (참조자료 원문)",
+  "stem": "다음 중 인체 세정용 제품류에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_9ec6d7",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "외음부 세정제",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_33cb42",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "신나밀알코올",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_36797b",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "화장 비누(고체 형태의 세안용 비누)",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_1c67ef",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "바디 클렌저(body cleanser)",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_36d190",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "참나무이끼추출물",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|주의사항_별표1_유형별주의사항표시문구|cat|2|1",
+  "explain": "ㄱ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄴ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄷ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄹ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㅁ. 출처: 주의사항 별표1 유형별주의사항표시문구 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "1"
  }
 ];
