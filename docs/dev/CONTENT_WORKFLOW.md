@@ -211,7 +211,7 @@ npm.cmd run build:audio-manifest     # 오디오 매니페스트만
 
 ### 3.3 참조자료 추가
 
-1. `content/참조자료/ref_md/{파일명}/{파일명}.md` 배치 (PDF→MD 변환본)
+1. `content/참조자료/ref_md/과목N/{파일명}/{파일명}.md` 배치 (PDF→MD 변환본 — 과목 폴더가 문항 생성 귀속의 진실)
 2. `content/references.json` 수정:
    - `refDirs.{해당폴더}` 배열에 파일명 추가
    - `referenceFiles.{과목}` 또는 `referenceCommon`에 항목 추가
@@ -236,8 +236,9 @@ python tools/convert_ref_pdfs_v2.py --verify
 - `--verify`는 현행 문서의 비잡행 라인(워터마크·쪽번호 제외)이 신규 문서에
   존재하는지 **멀티셋(등장 횟수) 기준**으로 검사한다. 줄 병합·분할은
   정규화 부분문자열 매칭으로 흡수한다.
-- 누락 0이면 `ref_md_v2/{doc}/{doc}.md`와 `images/`를 `ref_md/`의
-  동명 디렉터리에 복사해 승격한다(`index.html` 보존).
+- 누락 0이면 `ref_md_v2/{doc}/{doc}.md`와 `images/`를 `ref_md/과목N/`의
+  동명 디렉터리에 복사해 승격한다(`index.html` 보존). 문서 과목은
+  `tools/build/ref-statements.js`의 `DOC_SUBJECT_RULES`로 확인.
 - 승격 후 라인 번호가 밀리므로 반드시 `npm.cmd run sync:citations` →
   `node tools/sync_citation_lines.js --check`(미발견 0 확인) →
   `npm.cmd run build:data` → `node tools/build_combo_drills.js` 순서로
@@ -410,7 +411,7 @@ flowchart LR
 복수정답형 파일럿 추가     → data/drills/combo_pilot.js 직접 편집 + npm run check:combo 검증
 과목 추가/삭제        → content/manifest.json + content/references.json + content/교재/ + content/문제은행/
 시험 추가/삭제         → content/manifest.json + content/문제은행/
-참조자료 추가/삭제     → content/references.json + content/참조자료/ref_md/
+참조자료 추가/삭제     → content/references.json + content/참조자료/ref_md/과목N/ (+ 해당 과목 폴더의 PDF)
 오디오북 추가         → content/audiobook/mp3/
 통합 모의고사 설정     → content/manifest.json (integratedExam)
 UI 텍스트             → content/manifest.json (uiText)

@@ -151,7 +151,7 @@ Personalized Skincare/
 │   ├── manifest.json                ← 단일 진실 원천(SSOT): 과목/단원/파일 정의
 │   ├── 교재/                        ← 4과목 교재 MD (law, manufacturing, safety, understanding)
 │   ├── 문제은행/                    ← 문제은행 MD (4개 파일)
-│   ├── 참조자료/                    ← 참조자료 (원본 PDF + ref_md/ MD 변환본 36종 3.7MB)
+│   ├── 참조자료/                    ← 참조자료 (원본 PDF는 공통·과목1~4/, MD 변환본은 ref_md/과목N/{문서}/)
 │   ├── 학습안내서.md                ← 학습 안내서 (앱 내 뷰어 연동)
 │   ├── number-drills/               ← 중요 숫자 암기표 JSON (과목별 4개 파일)
 │   ├── 두음법_암기_총정리.md        ← 두음법+중요숫자 통합 암기 문서 (앱 내 뷰어 연동)

@@ -271,9 +271,9 @@ Personalized_Skincare/
 │   │   └── understanding/      #   4과목
 │   ├── 문제은행/                #   과목N_단일정답형.md (4개, manifest 등록) + 과목N_복수정답형.md (생성 산출물)
 │   ├── 참조자료/
-│   │   ├── ref_md/             #   HTML/MD 변환본 (42개, ~26MB)
-│   │   ├── 공통/               #   공통 참조자료
-│   │   ├── 과목1~4/            #   과목별 참조자료
+│   │   ├── ref_md/과목N/{문서}/ #   PDF→MD 변환본 (41개, ~26MB) — 과목 폴더가 귀속의 진실
+│   │   ├── 공통/               #   공통 참조자료 PDF
+│   │   ├── 과목1~4/            #   과목별 참조자료 PDF (+ 과목 노트 N.*.md)
 │   │   ├── 법령원문/           #   법령 원문
 │   │   └── 원료/               #   성분 원본 MD
 │   ├── html/                   #   HTML 콘텐츠 (학습안내서 등)
@@ -447,7 +447,7 @@ Personalized_Skincare/
 | [`src/study-tracker.js`](../../src/study-tracker.js) | 학습 캘린더/목표 추적 헬퍼. 날짜별 학습 활동 기록(`recordStudyActivity`), 학습 목표 조회/저장(`getStudyGoals`/`setStudyGoals`), 오늘/이번주/이번달 달성률 계산 |
 | [`src/utils.js`](../../src/utils.js) | 의존성 없는 범용 헬퍼 (한글 초성 추출 `getChosung()` 등) |
 | [`src/sanitize.js`](../../src/sanitize.js) | HTML/XSS 방어 및 텍스트 정제 유틸리티 |
-| [`src/pdf-registry.js`](../../src/pdf-registry.js) | 참조자료 중앙 설정 모듈. 과목별 참조자료 매핑, 출처→PDF 파일명 매핑, MD 변환본 경로 자동 생성 (`REF_DIRS`, `resolveRefPath`, `mapSourceToRef`). 원본 PDF는 `.vercelignore`로 배포 제외, `ref_md/*.md` 변환본(3.7MB)으로 인앱 뷰어+PDF 저장 지원 |
+| [`src/pdf-registry.js`](../../src/pdf-registry.js) | 참조자료 중앙 설정 모듈. 과목별 참조자료 매핑, 출처→PDF 파일명 매핑, MD 변환본 경로 자동 생성 (`REF_DIRS`, `resolveRefPath`, `mapSourceToRef`). 원본 PDF는 `.vercelignore`로 배포 제외, `ref_md/과목N/*/*.md` 변환본(3.7MB)으로 인앱 뷰어+PDF 저장 지원 |
 | [`src/html-viewer.js`](../../src/html-viewer.js) | 앱 내 HTML/MD 참조자료 뷰어. `fetch()`+`DOMParser`(HTML) 또는 `parseMarkdown()`(MD)로 로드 후 DOM 직접 주입 (iframe 없음). **키워드 기반 스크롤**: `KEYWORD_INDEX`에서 추출한 셀 텍스트 키워드로 검색→첫 번째 하이라이트로 스크롤 (L###은 스크롤에 사용하지 않음). **성능 최적화**: sessionStorage 캐싱(24h TTL)으로 재방문 시 즉시 렌더링, span 일괄 제거(normalize 호출 최소화), 검색 조기 종료(첫 매치 즉시 스크롤 + 나머지 `requestIdleCallback` 지연 하이라이트). 텍스트 노드 순회 검색 + `<mark>` 하이라이트, 검색 결과 내비게이션(이전/다음), 인쇄 지원. **PDF 저장** (v210 도입): 인쇄 전용 CSS로 오버레이 제약 없이 전체 문서를 브라우저 인쇄 다이얼로그로 출력 → "PDF로 저장" 선택 가능 |
 | [`src/reader-format.js`](../../src/reader-format.js) | 교재 리더 본문 포맷터. `parseMarkdown()` + HTML 참조 링크 변환 (`data-ref-html`, `data-ref-search`) + 참조자료 인라인 렌더링. **참조자료 인라인 프리뷰 툴팁** (데스크톱 hover 400ms / 모바일 롱프레스 600ms, 200자 스니펫) |
 | [`src/exam-viewer.js`](../../src/exam-viewer.js) | 문제집(MD) 런타임 뷰어. `content/문제은행/*.md` fetch → 자체 MD→HTML 변환 → 인앱 전체화면 오버레이 렌더링. TOC 생성·인쇄·sessionStorage 캐시(24h)·`file://` 번들 폴리백(`data/exams_md/*.js`) 지원. **시험 제목은 registry에서 동적 조회** (하드코딩 없음) |
@@ -1154,7 +1154,7 @@ data/exams/subjectN.*.js ──► build_ox_drills.js    ──► data/drills/o
 
 ```
 [원본 PDF]                    [빌드 타임 변환]                    [런타임 서비스]
-content/참조자료/*.pdf  →  tools/build  →  content/참조자료/ref_md/{base}/{base}.md
+content/참조자료/*.pdf  →  tools/build  →  content/참조자료/ref_md/과목N/{base}/{base}.md
                          (PDF→MD 추출)        ↓
                                               DataLoader fetch + parseMarkdown
                                                    ↓
@@ -1184,7 +1184,7 @@ PDF 파일명은 매핑 키로만 사용되며, 실제 서비스되는 것은 �
 | 루틴 | 위치 | 동작 |
 |------|------|------|
 | `resolveRefPath()` | `src/pdf-registry.js:242` | PDF 파일명 → MD 경로 조회 (`REF_FILE_TO_PATH` 테이블) |
-| `_toMdPath()` | `src/pdf-registry.js:217` | `xxx.pdf` → `content/참조자료/ref_md/xxx/xxx.md` 변환 |
+| `_toMdPath()` | `src/pdf-registry.js:217` | `xxx.pdf` → `content/참조자료/ref_md/과목N/xxx/xxx.md` 변환 (`REF_MD_SUBJECTS` 맵) |
 | `mapSourceToRef()` | `src/pdf-registry.js:248` | 출처 텍스트 → PDF 파일명 → MD 경로 |
 | PDF 링크 인터셉트 | `src/reader-format.js:61,111,126` | 교재 본문 PDF 링크 → `data-ref-html` MD 링크 변환 |
 | PDF 링크 인터셉트 | `src/exam-viewer.js:251-263` | 시험 문제 HTML PDF 링크 → MD 경로 치환 |
@@ -1196,7 +1196,7 @@ PDF 파일명은 매핑 키로만 사용되며, 실제 서비스되는 것은 �
 | 항목 | 개수 | 비고 |
 |------|-----:|------|
 | `content/참조자료/` 내 PDF 원본 | 41개 | 레지스트리 매핑 키로만 사용 (직접 서비스 안 함) |
-| `content/참조자료/ref_md/` 내 MD 파일 | 41개 | 실제 서비스되는 참조자료 |
+| `content/참조자료/ref_md/과목N/` 내 MD 파일 | 41개 | 실제 서비스되는 참조자료 — 과목 폴더가 귀속의 진실 |
 | `sw.js` PDF 캐시 | 0개 | PDF는 캐시하지 않음 |
 
 #### 제약

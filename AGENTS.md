@@ -117,7 +117,7 @@ content/                # 교재/문제은행/참조자료 Markdown 원본 (기�
   exams/<id>/           # 추가 시험의 독립 콘텐츠 루트 (동일 내부 구조)
   교재/                  # 4과목 MD 파일 (표준형 8 + 이야기형 8 = 16파일, 총 20챕터)
   문제은행/              # 과목별 문제은행 MD
-  참조자료/              # 법령원문/별표/참조자료 (HTML/MD)
+  참조자료/              # 법령원문/별표/참조자료 — PDF는 공통·과목1~4 폴더, MD 변환본은 ref_md/과목N/{문서}/{문서}.md (과목 폴더가 귀속의 진실)
   audiobook/            # 오디오북 MP3 + 매니페스트
   ingredients/          # 원료 데이터
 data/                   # 빌드 생성 번들 (registry.js, subjects/, exams/, ingredients_data.js)
