@@ -26606,14 +26606,6 @@ var COMBO_DRILLS_subject4 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "understanding_refst_753987",
-    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "벤질살리실레이트",
-    "truth": false,
-    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
-   },
-   {
-    "id": "ㄴ",
     "sid": "understanding_refst_232af7",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
     "text": "아이오도프로피닐부틸카바메이트(IPBC) 함유 제품 (목욕용제품, 샴푸류 및 바디클렌저 제외)",
@@ -26621,10 +26613,18 @@ var COMBO_DRILLS_subject4 = [
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
-    "id": "ㄷ",
-    "sid": "understanding_refst_4116cc",
+    "id": "ㄴ",
+    "sid": "understanding_refst_2fff9a",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "제라니올",
+    "text": "카민 함유 제품",
+    "truth": true,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_6d99fa",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "하이드록시시트로넬알",
     "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
@@ -26638,10 +26638,10 @@ var COMBO_DRILLS_subject4 = [
    },
    {
     "id": "ㅁ",
-    "sid": "understanding_refst_1054af",
+    "sid": "understanding_refst_46602c",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "포름알데하이드 0.05% 이상 검출된 제품",
-    "truth": true,
+    "text": "아밀신남알",
+    "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    }
   ],
@@ -26649,9 +26649,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㄹ",
-     "ㅁ"
+     "ㄹ"
     ]
    },
    {
@@ -26686,9 +26686,7 @@ var COMBO_DRILLS_subject4 = [
   "tags": [
    "자동생성",
    "참조자료",
-   "열거목록",
-   "한도",
-   "수치"
+   "열거목록"
   ],
   "derivedFrom": "ref:enum|주의사항_별표1_유형별주의사항표시문구|cat|12|0",
   "explain": "ㄱ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄴ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄷ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄹ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㅁ. 출처: 주의사항 별표1 유형별주의사항표시문구 ",
@@ -26705,30 +26703,22 @@ var COMBO_DRILLS_subject4 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "understanding_refst_8e6015",
+    "sid": "understanding_refst_84cd5f",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "부틸페닐메틸프로피오날",
-    "truth": false,
+    "text": "폴리에톡실레이티드레틴아마이드 0.2% 이상 함유 제품",
+    "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㄴ",
-    "sid": "understanding_refst_9bbcab",
+    "sid": "understanding_refst_f03299",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "부틸파라벤, 프로필파라벤, 이소부틸파라벤 또는 이소프로필파라벤 함유 제품",
+    "text": "실버나이트레이트 함유 제품",
     "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㄷ",
-    "sid": "understanding_refst_02f014",
-    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "알루미늄 및 그 염류 함유 제품 (체취방지용 제품류에 한함)",
-    "truth": true,
-    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
-   },
-   {
-    "id": "ㄹ",
     "sid": "understanding_refst_5a3c5c",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
     "text": "벤질알코올",
@@ -26736,10 +26726,18 @@ var COMBO_DRILLS_subject4 = [
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
-    "id": "ㅁ",
-    "sid": "understanding_refst_ae2204",
+    "id": "ㄹ",
+    "sid": "understanding_refst_556cb5",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "살리실릭애씨드 및 그 염류 함유 제품(샴푸 등 사용 후 바로 씻어내는 제품 제외)",
+    "text": "아니스알코올",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_2fff9a",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "카민 함유 제품",
     "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    }
@@ -26768,8 +26766,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㄷ",
      "ㅁ"
     ]
    },
@@ -26786,7 +26784,9 @@ var COMBO_DRILLS_subject4 = [
   "tags": [
    "자동생성",
    "참조자료",
-   "열거목록"
+   "열거목록",
+   "한도",
+   "수치"
   ],
   "derivedFrom": "ref:enum|주의사항_별표1_유형별주의사항표시문구|cat|12|1",
   "explain": "ㄱ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄴ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄷ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄹ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㅁ. 출처: 주의사항 별표1 유형별주의사항표시문구 ",
@@ -26803,34 +26803,34 @@ var COMBO_DRILLS_subject4 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "understanding_refst_46602c",
+    "sid": "understanding_refst_c9a1e0",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "아밀신남알",
+    "text": "알파-아이소메틸아이오논",
     "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㄴ",
-    "sid": "understanding_refst_2b4c90",
+    "sid": "understanding_refst_d6eef2",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "신나밀알코올",
-    "truth": false,
+    "text": "알부틴 2% 이상 함유 제품",
+    "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㄷ",
-    "sid": "understanding_refst_2fff9a",
+    "sid": "understanding_refst_02f014",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "카민 함유 제품",
+    "text": "알루미늄 및 그 염류 함유 제품 (체취방지용 제품류에 한함)",
     "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㄹ",
-    "sid": "understanding_refst_ada4d9",
+    "sid": "understanding_refst_010377",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "코치닐추출물 함유 제품",
-    "truth": true,
+    "text": "헥실신남알",
+    "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
@@ -26855,8 +26855,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
+     "ㄴ",
      "ㄷ",
-     "ㄹ",
      "ㅁ"
     ]
    },
@@ -26888,7 +26888,9 @@ var COMBO_DRILLS_subject4 = [
   "tags": [
    "자동생성",
    "참조자료",
-   "열거목록"
+   "열거목록",
+   "한도",
+   "수치"
   ],
   "derivedFrom": "ref:enum|주의사항_별표1_유형별주의사항표시문구|cat|12|2",
   "explain": "ㄱ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄴ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄷ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄹ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㅁ. 출처: 주의사항 별표1 유형별주의사항표시문구 ",
@@ -26905,41 +26907,41 @@ var COMBO_DRILLS_subject4 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "understanding_refst_efad1d",
+    "sid": "understanding_refst_2fff9a",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "메틸2-옥티노에이트",
-    "truth": false,
-    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_refst_d6eef2",
-    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "알부틴 2% 이상 함유 제품",
+    "text": "카민 함유 제품",
     "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
-    "id": "ㄷ",
-    "sid": "understanding_refst_97ed59",
+    "id": "ㄴ",
+    "sid": "understanding_refst_010377",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "아밀신나밀알코올",
+    "text": "헥실신남알",
+    "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_6d99fa",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "하이드록시시트로넬알",
     "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㄹ",
-    "sid": "understanding_refst_8297ba",
+    "sid": "understanding_refst_ada4d9",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "스테아린산아연 함유 제품(기초화장용 제품류 중 파우더 제품에 한함)",
+    "text": "코치닐추출물 함유 제품",
     "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㅁ",
-    "sid": "understanding_refst_84cd5f",
+    "sid": "understanding_refst_8297ba",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "폴리에톡실레이티드레틴아마이드 0.2% 이상 함유 제품",
+    "text": "스테아린산아연 함유 제품(기초화장용 제품류 중 파우더 제품에 한함)",
     "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    }
@@ -26948,7 +26950,7 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄴ",
+     "ㄱ",
      "ㄹ",
      "ㅁ"
     ]
@@ -26988,9 +26990,7 @@ var COMBO_DRILLS_subject4 = [
   "tags": [
    "자동생성",
    "참조자료",
-   "열거목록",
-   "한도",
-   "수치"
+   "열거목록"
   ],
   "derivedFrom": "ref:enum|주의사항_별표1_유형별주의사항표시문구|cat|12|3",
   "explain": "ㄱ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄴ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄷ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄹ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㅁ. 출처: 주의사항 별표1 유형별주의사항표시문구 ",
@@ -27294,7 +27294,7 @@ var COMBO_DRILLS_subject4 = [
   "answer": "1"
  },
  {
-  "id": "understanding_combo-ref_108cc3",
+  "id": "understanding_combo-ref_f97788",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -27303,42 +27303,42 @@ var COMBO_DRILLS_subject4 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "understanding_refst_bd7854",
+    "sid": "understanding_refst_f7d1a7",
     "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "아밀신남알",
-    "truth": true,
-    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_refst_698347",
-    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "살리실릭애씨드 및 그 염류 함유 제품(샴푸 등 사용 후 바로 씻어내는 제품 제외)",
+    "text": "네일폴리시·네일에나멜 리무버",
     "truth": false,
     "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
    },
    {
-    "id": "ㄷ",
-    "sid": "understanding_refst_5c40df",
+    "id": "ㄴ",
+    "sid": "understanding_refst_6ed5bc",
     "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "벤질살리실레이트",
+    "text": "제라니올",
     "truth": true,
     "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
    },
    {
-    "id": "ㄹ",
-    "sid": "understanding_refst_56b839",
+    "id": "ㄷ",
+    "sid": "understanding_refst_5bc07c",
     "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "하이드록시시트로넬알",
+    "text": "영유아용 오일",
+    "truth": false,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_1bfae9",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "벤질신나메이트",
     "truth": true,
     "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
    },
    {
     "id": "ㅁ",
-    "sid": "understanding_refst_e77754",
+    "sid": "understanding_refst_0788dc",
     "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "손·발의 피부연화 제품",
-    "truth": false,
+    "text": "아이소유제놀",
+    "truth": true,
     "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
    }
   ],
@@ -27346,36 +27346,35 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
+     "ㄴ",
+     "ㄷ",
      "ㄹ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ",
-     "ㅁ"
+     "ㄹ"
     ]
    },
    {
     "id": "3",
     "members": [
      "ㄱ",
-     "ㄷ",
      "ㄹ"
     ]
    },
    {
     "id": "4",
     "members": [
-     "ㄱ"
+     "ㄱ",
+     "ㄷ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㄱ",
+     "ㄴ",
      "ㄹ",
      "ㅁ"
     ]
@@ -27386,13 +27385,13 @@ var COMBO_DRILLS_subject4 = [
    "참조자료",
    "열거목록"
   ],
-  "derivedFrom": "ref:enum|주의사항_별표2_알레르기유발성분25종|table|0|0",
+  "derivedFrom": "ref:enum|주의사항_별표2_알레르기유발성분25종|mdtable|0|0",
   "explain": "ㄱ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄴ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄷ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄹ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㅁ. 출처: 주의사항 별표2 알레르기유발성분25종 ",
   "source": "참조자료 원문 (열거 목록)",
-  "answer": "3"
+  "answer": "5"
  },
  {
-  "id": "understanding_combo-ref_821b10",
+  "id": "understanding_combo-ref_8184b1",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -27401,42 +27400,344 @@ var COMBO_DRILLS_subject4 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "understanding_refst_f4380a",
-    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "신나밀알코올",
-    "truth": true,
-    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_refst_5c40df",
-    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "벤질살리실레이트",
-    "truth": true,
-    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_refst_dc09cf",
+    "sid": "understanding_refst_da5483",
     "conceptId": "주의사항 별표2 알레르기유발성분25종:",
     "text": "벤질알코올",
     "truth": true,
     "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
    },
    {
-    "id": "ㄹ",
-    "sid": "understanding_refst_64c727",
+    "id": "ㄴ",
+    "sid": "understanding_refst_7819eb",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "팩, 마스크",
+    "truth": false,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_23a9f4",
     "conceptId": "주의사항 별표2 알레르기유발성분25종:",
     "text": "외음부 세정제",
     "truth": false,
     "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
    },
    {
-    "id": "ㅁ",
-    "sid": "understanding_refst_df05eb",
+    "id": "ㄹ",
+    "sid": "understanding_refst_f5aea7",
     "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "아이 라이너(eye liner)",
+    "text": "참나무이끼추출물",
+    "truth": true,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_5aabf6",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "헥실신남알",
+    "truth": true,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|주의사항_별표2_알레르기유발성분25종|mdtable|0|1",
+  "explain": "ㄱ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄴ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄷ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄹ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㅁ. 출처: 주의사항 별표2 알레르기유발성분25종 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "understanding_combo-ref_9474b6",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 주의사항 별표2 알레르기유발성분25종 (참조자료 원문)",
+  "stem": "다음 중 착향제 구성 성분 중 알레르기 유발 성분에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_b0e5f1",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "아이오도프로피닐부틸카바메이트(IPBC) 함유 제품 (목욕용제품, 샴푸류 및 바디클렌저 제외)",
     "truth": false,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_008106",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "아밀신남알",
+    "truth": true,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_0b17d7",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "아이브로(eyebrow) 제품",
+    "truth": false,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_469c50",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "아밀신나밀알코올",
+    "truth": true,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_fa717a",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "벤질벤조에이트",
+    "truth": true,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|주의사항_별표2_알레르기유발성분25종|mdtable|0|2",
+  "explain": "ㄱ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄴ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄷ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄹ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㅁ. 출처: 주의사항 별표2 알레르기유발성분25종 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "5"
+ },
+ {
+  "id": "understanding_combo-ref_c25695",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 주의사항 별표2 알레르기유발성분25종 (참조자료 원문)",
+  "stem": "다음 중 착향제 구성 성분 중 알레르기 유발 성분에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_b8751e",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "베이스코트(basecoats), 언더코트(under coats)",
+    "truth": false,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_0788dc",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "아이소유제놀",
+    "truth": true,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_e486ef",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "하이드록시시트로넬알",
+    "truth": true,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_0b27be",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "탈염·탈색용 제품",
+    "truth": false,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_d1ee59",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "신나밀알코올",
+    "truth": true,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|주의사항_별표2_알레르기유발성분25종|mdtable|0|3",
+  "explain": "ㄱ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄴ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄷ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄹ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㅁ. 출처: 주의사항 별표2 알레르기유발성분25종 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "1"
+ },
+ {
+  "id": "understanding_combo-ref_42cf56",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 주의사항 별표2 알레르기유발성분25종 (참조자료 원문)",
+  "stem": "다음 중 착향제 구성 성분 중 알레르기 유발 성분에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_refst_da5483",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "벤질알코올",
+    "truth": true,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_08707a",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "메틸 2-옥티노에이트",
+    "truth": true,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_refst_7c1bb6",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "바디 클렌저(body cleanser)",
+    "truth": false,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_da8b11",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "포마드(pomade), 헤어 스프레이·무스·왁스·젤, 헤어 그루밍 에이드(hair grooming aids)",
+    "truth": false,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_d1ee59",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "신나밀알코올",
+    "truth": true,
     "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
    }
   ],
@@ -27446,20 +27747,23 @@ var COMBO_DRILLS_subject4 = [
     "members": [
      "ㄱ",
      "ㄴ",
-     "ㄷ"
+     "ㅁ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄱ",
-     "ㄴ"
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "3",
     "members": [
-     "ㄷ"
+     "ㄱ",
+     "ㄴ"
     ]
    },
    {
@@ -27471,301 +27775,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㄷ",
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록"
-  ],
-  "derivedFrom": "ref:enum|주의사항_별표2_알레르기유발성분25종|table|0|1",
-  "explain": "ㄱ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄴ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄷ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄹ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㅁ. 출처: 주의사항 별표2 알레르기유발성분25종 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "1"
- },
- {
-  "id": "understanding_combo-ref_16e567",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 주의사항 별표2 알레르기유발성분25종 (참조자료 원문)",
-  "stem": "다음 중 착향제 구성 성분 중 알레르기 유발 성분에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_refst_b4a2a9",
-    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "부틸페닐메틸프로피오날",
-    "truth": true,
-    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_refst_5e38cc",
-    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "고압가스를 사용하는 에어로졸 제품",
-    "truth": false,
-    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_refst_3f2393",
-    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "벤질신나메이트",
-    "truth": true,
-    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_refst_6af631",
-    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "벤질벤조에이트",
-    "truth": true,
-    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_refst_e43e68",
-    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "스테아린산아연 함유 제품(기초화장용 제품류 중 파우더 제품에 한함)",
-    "truth": false,
-    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
      "ㄱ",
      "ㄴ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록"
-  ],
-  "derivedFrom": "ref:enum|주의사항_별표2_알레르기유발성분25종|table|0|2",
-  "explain": "ㄱ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄴ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄷ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄹ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㅁ. 출처: 주의사항 별표2 알레르기유발성분25종 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "5"
- },
- {
-  "id": "understanding_combo-ref_4fe68e",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 주의사항 별표2 알레르기유발성분25종 (참조자료 원문)",
-  "stem": "다음 중 착향제 구성 성분 중 알레르기 유발 성분에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_refst_df05eb",
-    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "아이 라이너(eye liner)",
-    "truth": false,
-    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_refst_bd7854",
-    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "아밀신남알",
-    "truth": true,
-    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_refst_3f2393",
-    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "벤질신나메이트",
-    "truth": true,
-    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_refst_a37169",
-    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "물휴지. 다만, 「위생용품 관리법」 제2조제1호라목2)에서 말하는 「식품위생",
-    "truth": false,
-    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_refst_1ad775",
-    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "참나무이끼추출물",
-    "truth": true,
-    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄴ",
-     "ㄷ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|주의사항_별표2_알레르기유발성분25종|table|0|3",
-  "explain": "ㄱ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄴ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄷ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄹ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㅁ. 출처: 주의사항 별표2 알레르기유발성분25종 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "1"
- },
- {
-  "id": "understanding_combo-ref_f79ba0",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 주의사항 별표2 알레르기유발성분25종 (참조자료 원문)",
-  "stem": "다음 중 착향제 구성 성분 중 알레르기 유발 성분에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_refst_a37169",
-    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "물휴지. 다만, 「위생용품 관리법」 제2조제1호라목2)에서 말하는 「식품위생",
-    "truth": false,
-    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_refst_bd7854",
-    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "아밀신남알",
-    "truth": true,
-    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_refst_008b67",
-    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "시트로넬올",
-    "truth": true,
-    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_refst_758209",
-    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "아니스알코올",
-    "truth": true,
-    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_refst_602ea6",
-    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "헤어 틴트(hair tints)",
-    "truth": false,
-    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
      "ㄹ"
     ]
    }
@@ -27776,13 +27787,13 @@ var COMBO_DRILLS_subject4 = [
    "열거목록",
    "수치"
   ],
-  "derivedFrom": "ref:enum|주의사항_별표2_알레르기유발성분25종|table|0|4",
+  "derivedFrom": "ref:enum|주의사항_별표2_알레르기유발성분25종|mdtable|0|4",
   "explain": "ㄱ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄴ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄷ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄹ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㅁ. 출처: 주의사항 별표2 알레르기유발성분25종 ",
   "source": "참조자료 원문 (열거 목록)",
-  "answer": "3"
+  "answer": "1"
  },
  {
-  "id": "understanding_combo-ref_877a41",
+  "id": "understanding_combo-ref_f77e27",
   "subject": 4,
   "type": "combo",
   "points": 4,
@@ -27791,41 +27802,41 @@ var COMBO_DRILLS_subject4 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "understanding_refst_5c40df",
+    "sid": "understanding_refst_08707a",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "메틸 2-옥티노에이트",
+    "truth": true,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_refst_4e387e",
     "conceptId": "주의사항 별표2 알레르기유발성분25종:",
     "text": "벤질살리실레이트",
     "truth": true,
     "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
    },
    {
-    "id": "ㄴ",
-    "sid": "understanding_refst_b4a2a9",
-    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "부틸페닐메틸프로피오날",
-    "truth": true,
-    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
-   },
-   {
     "id": "ㄷ",
-    "sid": "understanding_refst_ce736f",
+    "sid": "understanding_refst_0a9a45",
     "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "메틸2-옥티노에이트",
-    "truth": true,
-    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_refst_97baa4",
-    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "카민 함유 제품",
+    "text": "버블 배스(bubble baths)",
     "truth": false,
     "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
    },
    {
-    "id": "ㅁ",
-    "sid": "understanding_refst_ae6028",
+    "id": "ㄹ",
+    "sid": "understanding_refst_edcf08",
     "conceptId": "주의사항 별표2 알레르기유발성분25종:",
-    "text": "부틸파라벤, 프로필파라벤, 이소부틸파라벤 또는 이소프로필파라벤 함유 제품",
+    "text": "알파-아이소메틸아이오논",
+    "truth": true,
+    "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_refst_568917",
+    "conceptId": "주의사항 별표2 알레르기유발성분25종:",
+    "text": "마스카라(mascara)",
     "truth": false,
     "explain": "출처: 주의사항 별표2 알레르기유발성분25종 "
    }
@@ -27834,30 +27845,29 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
+     "ㄱ",
      "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
      "ㄷ",
      "ㄹ",
      "ㅁ"
     ]
    },
    {
-    "id": "2",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
     "id": "4",
     "members": [
-     "ㄱ",
      "ㄴ",
      "ㄷ",
      "ㄹ"
@@ -27866,7 +27876,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㄴ"
+     "ㄴ",
+     "ㅁ"
     ]
    }
   ],
@@ -27876,10 +27887,10 @@ var COMBO_DRILLS_subject4 = [
    "열거목록",
    "수치"
   ],
-  "derivedFrom": "ref:enum|주의사항_별표2_알레르기유발성분25종|table|0|5",
+  "derivedFrom": "ref:enum|주의사항_별표2_알레르기유발성분25종|mdtable|0|5",
   "explain": "ㄱ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄴ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄷ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㄹ. 출처: 주의사항 별표2 알레르기유발성분25종 \nㅁ. 출처: 주의사항 별표2 알레르기유발성분25종 ",
   "source": "참조자료 원문 (열거 목록)",
-  "answer": "3"
+  "answer": "1"
  },
  {
   "id": "understanding_combo-ref_132021",
@@ -27891,10 +27902,10 @@ var COMBO_DRILLS_subject4 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "understanding_refst_008a3c",
+    "sid": "understanding_refst_bea235",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "팩, 마스크",
-    "truth": true,
+    "text": "나무이끼추출물",
+    "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
@@ -27907,25 +27918,25 @@ var COMBO_DRILLS_subject4 = [
    },
    {
     "id": "ㄷ",
-    "sid": "understanding_refst_f79012",
+    "sid": "understanding_refst_a9950e",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "아밀신나밀알코올",
-    "truth": false,
+    "text": "수렴·유연·영양 화장수(face lotions)",
+    "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㄹ",
-    "sid": "understanding_refst_358d13",
+    "sid": "understanding_refst_008a3c",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "마사지 크림",
+    "text": "팩, 마스크",
     "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㅁ",
-    "sid": "understanding_refst_a9950e",
+    "sid": "understanding_refst_358d13",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "수렴·유연·영양 화장수(face lotions)",
+    "text": "마사지 크림",
     "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    }
@@ -27965,7 +27976,7 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㄱ",
+     "ㄷ",
      "ㄹ",
      "ㅁ"
     ]
@@ -27991,22 +28002,14 @@ var COMBO_DRILLS_subject4 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "understanding_refst_adf8f2",
+    "sid": "understanding_refst_a64f1c",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "벤질알코올",
+    "text": "메틸 2-옥티노에이트",
     "truth": false,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
     "id": "ㄴ",
-    "sid": "understanding_refst_389f42",
-    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "에센스, 오일",
-    "truth": true,
-    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
-   },
-   {
-    "id": "ㄷ",
     "sid": "understanding_refst_358d13",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
     "text": "마사지 크림",
@@ -28014,11 +28017,19 @@ var COMBO_DRILLS_subject4 = [
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
-    "id": "ㄹ",
-    "sid": "understanding_refst_f79012",
+    "id": "ㄷ",
+    "sid": "understanding_refst_131e1d",
     "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
-    "text": "아밀신나밀알코올",
+    "text": "시트로넬올",
     "truth": false,
+    "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_refst_c6612b",
+    "conceptId": "주의사항 별표1 유형별주의사항표시문구:",
+    "text": "눈 주위 제품",
+    "truth": true,
     "explain": "출처: 주의사항 별표1 유형별주의사항표시문구 "
    },
    {
@@ -28052,7 +28063,7 @@ var COMBO_DRILLS_subject4 = [
     "id": "3",
     "members": [
      "ㄴ",
-     "ㄷ",
+     "ㄹ",
      "ㅁ"
     ]
    },
@@ -28074,7 +28085,8 @@ var COMBO_DRILLS_subject4 = [
   "tags": [
    "자동생성",
    "참조자료",
-   "열거목록"
+   "열거목록",
+   "수치"
   ],
   "derivedFrom": "ref:enum|주의사항_별표1_유형별주의사항표시문구|cat|9|1",
   "explain": "ㄱ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄴ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄷ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㄹ. 출처: 주의사항 별표1 유형별주의사항표시문구 \nㅁ. 출처: 주의사항 별표1 유형별주의사항표시문구 ",

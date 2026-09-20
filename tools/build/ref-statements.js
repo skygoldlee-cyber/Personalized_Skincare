@@ -137,7 +137,11 @@ function extractCategoryLists(lines) {
   for (const raw of lines) {
     const t = raw.trim();
     const cm = t.match(catRe);
-    if (cm && cm[2].length <= 40 && !/조|항|호|기준|고시/.test(cm[2].slice(0, 4))) {
+    // 카테고리명은 명사구여야 함 — 문장형(동사 종결·마침표)은 산문 오인
+    const catName = cm && cm[2].trim();
+    if (cm && catName.length <= 40 && !/조|항|호|기준|고시/.test(catName.slice(0, 4))
+      && !/[.。…]/.test(catName) && !/(다|음|함|임|까|요|고|며|서|라|니)$/.test(catName)
+      && !/^(또한|다만|그러나|그리고|또는|즉|이)/.test(catName)) {
       cur = { topic: cm[2].trim(), members: [] };
       lists.push(cur);
       continue;
@@ -168,7 +172,91 @@ function extractCategoryLists(lines) {
 /**
  * 번호 없는 원료 표는 셀 절단·행 뒤섞임이 심해 이름 조각이 다수 포함된다
  * (트하이드록, 하이드로클로라 류). 신뢰 불가 — 추출하지 않는다.
+ *
+ * ※ pdfplumber 재변환(ref_md v2) 이후 원료 표는 정상 MD 표로 복원됐으므로
+ *   extractMdTableLists()가 `| 원료명 | CAS | … |` 행에서 멤버를 추출한다.
  */
+
+/** MD 표 멤버 열 후보 헤더 (이 순서로 우선 매칭) */
+const MD_MEMBER_COL_RE = /^(원 ?료 ?명|성분명?|품목명?|항목|명칭|종류|제품명|색소명|화학물질명|구분|대상)$/;
+/** 헤더 매칭 실패 시 대체: 1열 값이 이름형(한글 비율·길이)인 표 */
+const NAME_LIKE_RE = /[가-힣]/;
+
+function isNameCell(t) {
+  return !!t && /[가-힣]/.test(t) && t.length >= 3 && t.length <= 60
+    && !/[<>※]/.test(t) && !/^\d/.test(t)
+    && !/^[을를은는이가의에로와과도만및]/.test(t)
+    && !/CAS|등록번호|연번|비고|기준|별표|번$/.test(t);
+}
+
+/**
+ * 정상 MD 표(`| a | b |`)에서 멤버 이름 열 추출.
+ * - 헤더 행(구분선 `| --- |` 앞)에서 이름형 열을 찾고, 없으면 1열 사용
+ * - 페이지 경계 반복 헤더로 끊긴 연속 표는 같은 열 구조면 병합
+ * - rowspan 계승 빈 셀·품질 미달 값은 제외
+ * 반환: [{header, members[]}]
+ */
+function extractMdTableLists(lines) {
+  const tables = [];
+  let cur = null; // {header: string[], rows: string[][]}
+  for (const raw of lines) {
+    const t = raw.trim();
+    if (/^\|.*\|$/.test(t)) {
+      const cells = t.slice(1, -1).split('|').map(c => c.trim());
+      if (cells.every(c => /^-{2,}$/.test(c) || !c)) continue; // 구분선
+      if (!cur) cur = { header: cells, rows: [] };
+      else if (cells.join('|') === cur.header.join('|')) continue; // 반복 헤더
+      else cur.rows.push(cells);
+      continue;
+    }
+    if (cur) { tables.push(cur); cur = null; }
+  }
+  if (cur) tables.push(cur);
+
+  // 연속된 동형 표(페이지 경계 분할) 병합
+  const merged = [];
+  for (const tb of tables) {
+    const prev = merged[merged.length - 1];
+    if (prev && prev.header.join('|') === tb.header.join('|')) {
+      prev.rows.push(...tb.rows);
+    } else merged.push(tb);
+  }
+
+  const lists = [];
+  for (const tb of merged) {
+    // 헤더 매칭 우선, 실패 시 이름형 값이 가장 많은 열 선택 (연번 열 회피)
+    let col = tb.header.findIndex(h => MD_MEMBER_COL_RE.test(h.replace(/\s+/g, '')));
+    let bodyRows = tb.rows;
+    if (col < 0) {
+      const width = Math.max(...tb.rows.map(r => r.length), tb.header.length, 0);
+      let best = -1, bestScore = 7;
+      for (let c = 0; c < width; c++) {
+        const score = tb.rows.filter(r => isNameCell((r[c] || '').trim())).length;
+        if (score > bestScore) { best = c; bestScore = score; }
+      }
+      col = best;
+      // 헤더로 잡힌 첫 행이 실제 데이터면 행에 포함 (헤더 없는 표)
+      if (col >= 0 && isNameCell((tb.header[col] || '').trim())) {
+        bodyRows = [tb.header, ...tb.rows];
+      }
+    }
+    if (col < 0) continue;
+    const members = [];
+    for (const r of bodyRows) {
+      const cell = (r[col] || '').trim();
+      if (!isNameCell(cell)) continue;
+      // 괄호·따옴표 불균형 = 셀 절단 잔재
+      const open = (cell.match(/[(\["'“「]/g) || []).length;
+      const close = (cell.match(/[)\]"'”」]/g) || []).length;
+      if (open !== close) continue;
+      if (!members.includes(cell)) members.push(cell);
+    }
+    if (members.length >= 8) {
+      lists.push({ header: (tb.header[col] || '').replace(/\s+/g, ''), members });
+    }
+  }
+  return lists;
+}
 
 /** 표 원자의 주제 라벨 (dirName → 발문용 주제). 없으면 문서명 인용 발문 사용 */
 const TABLE_TOPICS = {
@@ -235,6 +323,21 @@ function extractDocAtoms(dirName, lines) {
     });
   });
 
+  // 정상 MD 표 → 멤버십 목록 (ref_md v2: 원료·성분 표가 행 구조로 복원됨)
+  extractMdTableLists(lines).forEach((l, ti) => {
+    // 헤더가 데이터형 값(성분명 등)이면 주제로 쓸 수 없음 — 문서명 발문으로
+    const headerOk = l.header && !isNameCell(l.header)
+      && MD_MEMBER_COL_RE.test(l.header.replace(/\s+/g, ''));
+    atoms.push({
+      kind: 'enum',
+      topic: TABLE_TOPICS[dirName] || (headerOk ? l.header : ''),
+      topicSrc: TABLE_TOPICS[dirName] || headerOk ? 'quote' : 'table',
+      members: l.members,
+      listId: `${dirName}|mdtable|${ti}`,
+      text: '', docShort, article: '',
+    });
+  });
+
   // 별표 계층 목록 (가. 카테고리 + N) 멤버) — 조문 없는 표 문서 전용
   if (!articles.length) {
     extractCategoryLists(lines).forEach((l, ci) => {
@@ -292,6 +395,12 @@ function extractDocAtoms(dirName, lines) {
         }
         if (members.length >= 3) {
           const et = enumTopic(b.text, a.title);
+          // 절차문·단위 잔재·괄호 불균형·문장형 토픽은 발문에 쓸 수 없음 → 문서명 발문
+          if (et.src === 'tail'
+            && (/[(\["'“「]/.test(et.topic) !== /[)\]"'”」]/.test(et.topic)
+              || /(다|음|함|임|까|요)\.?$|[.。…]|㎍|㎖|mL|ppm|[×÷=<>±~]/.test(et.topic))) {
+            et.topic = ''; et.src = 'table';
+          }
           atoms.push({
             kind: 'enum', topic: et.topic, topicSrc: et.src, members,
             listId: `${dirName}|${a.art}|${i}`,

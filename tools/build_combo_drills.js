@@ -517,21 +517,28 @@ function buildRefCombos(refPool, examKey, subject, subjKey, genOpts, stats) {
       const overlap = o.members.filter(m => memberKeys.has(normKey(m))).length;
       if (overlap >= 3) o.members.forEach(m => banned.add(normKey(m)));
     }
-    // 표 목록(화학명)의 오답은 같은 종류의 표 멤버 우선 — 도메인이 맞아야
-    // 그럴듯한 오답이 되고, 절차·문구 조각이 오답으로 섞이는 것을 막는다.
-    const sameKind = e.topicSrc === 'table' ? 'table' : null;
+    // 이름형 멤버(화학명 등)와 문장형 멤버(절차·규정 문장)는 오답 풀을
+    // 분리한다 — 이름↔문장을 섞으면 길이만으로 정답이 들통난다.
+    // 목록 안에 혼합돼 있을 수 있으므로 멤버 단위로 판정한다.
+    const isSentence = m =>
+      m.length > 60 || /(다|음|함|임|까|요|고|며|서)\.?$/.test(m.trim());
+    const sameKind = isSentence(e.members[0] || '')
+      || e.members.filter(isSentence).length >= e.members.length / 2
+      ? 'sentence' : 'name';
+    const kindMatch = m => isSentence(m) === (sameKind === 'sentence');
     const same = bucket.enums
       .filter(o => !(o.docShort === e.docShort && o.article === e.article))
-      .filter(o => !sameKind || o.topicSrc === sameKind)
-      .flatMap(o => o.members).filter(m => !banned.has(normKey(m)));
+      .flatMap(o => o.members)
+      .filter(m => !banned.has(normKey(m)) && kindMatch(m));
     if (same.length >= 8) return same;
     const wide = allEnums
       .filter(o => o.listId !== e.listId)
-      .filter(o => !sameKind || o.topicSrc === sameKind)
-      .flatMap(o => o.members).filter(m => !banned.has(normKey(m)));
-    if (sameKind && wide.length >= 8) return [...same, ...wide];
+      .flatMap(o => o.members)
+      .filter(m => !banned.has(normKey(m)) && kindMatch(m));
+    if (wide.length >= 8) return [...same, ...wide];
     const anyPool = allEnums.filter(o => o.listId !== e.listId)
-      .flatMap(o => o.members).filter(m => !banned.has(normKey(m)));
+      .flatMap(o => o.members)
+      .filter(m => !banned.has(normKey(m)) && kindMatch(m));
     return [...same, ...wide, ...anyPool];
   };
   // 포괄 조항·지나치게 짧은 멤버는 진술로 부적합 — 어느 목록에도 우연히
@@ -541,7 +548,9 @@ function buildRefCombos(refPool, examKey, subject, subjKey, genOpts, stats) {
   const memberOk = m => !/[◎◦▪※★→←↑↓]/.test(m) && !/\s{2,}/.test(m)
     && (m.match(/[(「"'“]/g) || []).length === (m.match(/[)」"'”]/g) || []).length
     && (m.match(/\[/g) || []).length === (m.match(/\]/g) || []).length
-    && !/[,·\-\/'´]$/.test(m) && !VAGUE_MEMBER_RE.test(m);
+    && !/[,·\-\/'´]$/.test(m) && !VAGUE_MEMBER_RE.test(m)
+    && !/^[을를은는이가의에로와과도만및]/.test(m)
+    && !/^[가-하]\.\s|^제\d+조|^[\d①-⑩]+\s*호?\.?\s/.test(m);
   const processedKeySets = [];   // 동일 목록의 중복 문서본 방지
   for (const e of lists) {
     if (out.length >= cap) break;
