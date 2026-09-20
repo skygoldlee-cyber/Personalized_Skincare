@@ -186,7 +186,7 @@ def fill_empty_cells(page, table, rows):
             xb.append((xs0[len(xs0) // 2], xs1[len(xs1) // 2]))
         else:
             xb.append(None)
-    words = page.extract_words()
+    words = _words(page)
     for ri, row in enumerate(table.rows):
         if ri >= len(rows):
             break
@@ -222,7 +222,7 @@ def collect_margin_junk(pdf):
     for page in pdf.pages:
         h = float(page.height)
         seen = set()
-        for ln in page.extract_text_lines():
+        for ln in _text_lines(page):
             t = ln['text'].strip()
             if t and len(t) <= 60 \
                     and (ln['top'] < MARGIN_PT or ln['bottom'] > h - MARGIN_PT):
@@ -261,8 +261,7 @@ def reconstruct_borderless(page, edges, y_min, exclude_bboxes,
     반환: (md_table, consumed_y_intervals, header_cells) — 재구성할
     칼럼형 줄이 부족하면 (None, [], None).
     """
-    words = page.extract_words()
-    words = [w for w in words if w['top'] > y_min
+    words = [w for w in _words(page) if w['top'] > y_min
              and not any(point_in_bbox(w['x0'], w['top'], bb)
                          for bb in exclude_bboxes)]
     if len(words) < 15:
@@ -440,6 +439,27 @@ TEXT_TABLE_SETTINGS = {
 
 # 표 영역 밖에 남은 데이터형 텍스트 줄 (숫자/CAS/단위 등 짧은 토큰 반복)
 DATA_LINE_RE = re.compile(r'^\s*\d+\s+\S+')
+CAS_RE = re.compile(r'\d{2,}-\d+-\d')
+UNIT_RE = re.compile(r'\d+(?:\.\d+)?\s*(?:%|ppm|ppb|mg|mL|㎍|µg|g)\b', re.I)
+
+
+def _words(page):
+    """페이지 단위 extract_words 캐시 — fill_empty_cells(표마다 호출),
+    재구성, 고아 탐지가 같은 단어 목록을 공유한다."""
+    w = getattr(page, '_pdf2md_words', None)
+    if w is None:
+        w = page.extract_words()
+        page._pdf2md_words = w
+    return w
+
+
+def _text_lines(page):
+    """페이지 단위 extract_text_lines 캐시"""
+    lines = getattr(page, '_pdf2md_lines', None)
+    if lines is None:
+        lines = page.extract_text_lines()
+        page._pdf2md_lines = lines
+    return lines
 
 
 def count_orphan_data(page, tables):
@@ -450,15 +470,18 @@ def count_orphan_data(page, tables):
     ymax = max(t.bbox[3] for t in tables) + 5
     bboxes = [t.bbox for t in tables]
     orphan = 0
-    for line in page.extract_text_lines():
+    for line in _text_lines(page):
         if ymin <= line['top'] <= ymax:
             outside = not any(
                 point_in_bbox(line['x0'], line['top'], bb) or
                 point_in_bbox(line['x1'], line['top'], bb)
                 for bb in bboxes
             )
-            if outside and (DATA_LINE_RE.match(line['text'])
-                            or re.search(r'\d{2,}-\d+-\d', line['text'])):
+            # 숫자 시작 행, CAS 번호, 단위 토큰 2개+ (이름이 선행하는
+            # 데이터 행 — 예: '카라멜 (Caramel) 5% 10ppm' — 도 탐지)
+            txt = line['text']
+            if outside and (DATA_LINE_RE.match(txt) or CAS_RE.search(txt)
+                            or len(UNIT_RE.findall(txt)) >= 2):
                 orphan += 1
     return orphan
 

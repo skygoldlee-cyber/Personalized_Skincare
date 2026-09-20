@@ -284,16 +284,20 @@ function extractCitations(examFile, content) {
         });
     };
 
-    CITATION_RE.lastIndex = 0;
+    // 근거 헤더([📖 근거]...범위)를 먼저 수집 — 안쪽 링크가 CITATION_RE에도
+    // 매칭돼 중첩 span이 두 번 갱신 대상에 오르는 것을 막는다
+    const evidenceSpans = [];
+    EVIDENCE_RE.lastIndex = 0;
     let match;
-    while ((match = CITATION_RE.exec(content)) !== null) {
-        // 근거 헤더 안쪽 링크는 evidence pass에서 처리
-        pushCitation(match, 'main');
+    while ((match = EVIDENCE_RE.exec(content)) !== null) {
+        evidenceSpans.push([match.index, match.index + match[0].length]);
+        pushCitation(match, 'evidence');
     }
 
-    EVIDENCE_RE.lastIndex = 0;
-    while ((match = EVIDENCE_RE.exec(content)) !== null) {
-        pushCitation(match, 'evidence');
+    CITATION_RE.lastIndex = 0;
+    while ((match = CITATION_RE.exec(content)) !== null) {
+        if (evidenceSpans.some(([s, e]) => match.index >= s && match.index < e)) continue;
+        pushCitation(match, 'main');
     }
 
     return citations;
