@@ -243,7 +243,9 @@ function extractMdTableLists(lines) {
     if (col < 0) continue;
     const members = [];
     for (const r of bodyRows) {
-      const cell = (r[col] || '').trim();
+      // 괄호 헤딩 접두 제거 — "(피험자 선정) 피험자는 …" → "피험자는 …"
+      const cell = (r[col] || '').trim()
+        .replace(/^\([가-힣 ]{2,15}\)\s+(?=[가-힣])/, '');
       if (!isNameCell(cell)) continue;
       // 괄호·따옴표 불균형 = 셀 절단 잔재
       const open = (cell.match(/[(\["'“「]/g) || []).length;
@@ -300,6 +302,114 @@ function extractTableLists(lines) {
   return lists;
 }
 
+/* ---------- 원료 큐레이션 DB (content/참조자료/원료/*.md) ---------- */
+// PDF 변환본(ref_md)의 원료 표보다 품질이 높은 수작업 정제 데이터.
+// 파일별 섹션 표의 첫 열(원료명/성분명)을 멤버십 목록으로 추출한다.
+//   - 섹션 목록: 카테고리 문항 ("별표2의 보존제 성분에 해당하는 것")
+//   - 전체 목록: 별표1·별표2 문항 ("사용할 수 없는 원료에 해당하는 것")
+// 섹션을 전체 목록보다 먼저 배출해 60% 중복 스킵에서 부분집합이 먼저 채택되게 한다.
+const INGREDIENT_FILES = [
+  {
+    file: 'banned_ingredients.md',
+    docShort: '원료DB 별표1 사용불가원료',
+    wholeTopic: '화장품에 사용할 수 없는 원료(별표1)',
+    wholeRe: /^##\s*Chapter\s*01/,              // 전체 목록 표
+    sectionRe: /^###\s*\d+\.\s*(.+)$/,          // 카테고리별 주요 성분
+    secPrefix: '사용불가 원료(별표1)의 ',
+    cap: 24,
+  },
+  {
+    file: 'restricted_ingredients.md',
+    docShort: '원료DB 별표2 사용제한원료',
+    wholeTopic: '사용상의 제한이 필요한 원료(별표2)',
+    sectionRe: /^##\s*\(\d+\)\s*(.+)$/,         // (1) 보존제 성분 …
+    secPrefix: '사용제한 원료(별표2)의 ',
+    cap: 18,
+  },
+  {
+    file: 'approved_ingredients.md',
+    docShort: '원료DB 일반 원료',
+    sectionRe: /^#{3,4}\s*(.+)$/,
+    // 별표1·2 요약 표는 전용 파일과 중복 — 도메인 섹션만 채택
+    sectionAllow: /^(수성 원료|유성 원료|점증제|계면활성제|보존제|자외선 차단제|기능성 성분|마이크로바이옴|산화방지제|알레르기 유발 성분|고시 기능성)/,
+    cap: 14,
+  },
+];
+
+/** 섹션 제목 정제: 번호·꼬리 괄호 주석 제거 ("1. 중금속 …(반드시 암기)" → "중금속 …") */
+function cleanSectionTitle(t) {
+  return String(t || '')
+    .replace(/^\(?\d+\)?[.)]?\s*/, '')
+    .replace(/\s*[(（][^)）]*[)）]\s*$/, '')
+    .trim();
+}
+
+/** 표 첫 열의 원료명 정제: 볼드·각주 마커 제거 */
+function cleanIngName(cell) {
+  return String(cell || '')
+    .replace(/\*\*/g, '')
+    .replace(/\[\d+\]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/**
+ * 원료 큐레이션 파일에서 enum 원자 추출.
+ * 섹션 표 → 카테고리 목록, wholeRe 표(or 섹션 합집합) → 전체 목록.
+ * 반환 원자에 curated:true — 빌더가 우선 처리해 ref_md 중복본을 자동 탈락시킨다.
+ */
+function extractIngredientAtoms(ingDir) {
+  const atoms = [];
+  for (const spec of INGREDIENT_FILES) {
+    const fp = path.join(ingDir, spec.file);
+    if (!fs.existsSync(fp)) continue;
+    const lines = fs.readFileSync(fp, 'utf8').split(/\r?\n/);
+    const sections = [];   // {title, members[]}
+    const whole = [];      // 전체 목록 표 멤버
+    let cur = null;        // 현재 섹션 또는 'whole'
+    for (const raw of lines) {
+      const t = raw.trim();
+      if (spec.wholeRe && spec.wholeRe.test(t)) { cur = 'whole'; continue; }
+      const sm = spec.sectionRe && t.match(spec.sectionRe);
+      if (sm) {
+        const title = cleanSectionTitle(sm[1]);
+        cur = (!spec.sectionAllow || spec.sectionAllow.test(title)) && title
+          ? { title, members: [] } : null;
+        if (cur) sections.push(cur);
+        continue;
+      }
+      if (/^#{1,4}\s/.test(t)) { cur = null; continue; }   // 다른 헤딩 → 섹션 종료
+      if (!/^\|.*\|$/.test(t)) continue;
+      const cells = t.slice(1, -1).split('|').map(c => c.trim());
+      if (cells.every(c => /^-{2,}$/.test(c) || !c)) continue;   // 구분선
+      const name = cleanIngName(cells[0]);
+      if (!name || /^(원료명|성분명|원료|필드|구분|이름)$/.test(name)) continue;
+      if (cur === 'whole') whole.push(name);
+      else if (cur) cur.members.push(name);
+    }
+    for (const [i, s] of sections.entries()) {
+      const members = [...new Set(s.members)];
+      if (members.length < 4) continue;
+      atoms.push({
+        kind: 'enum', topic: `${spec.secPrefix || ''}${s.title}`, topicSrc: 'quote',
+        members, listId: `원료|${spec.file}|sec${i}`,
+        text: '', docShort: spec.docShort, article: s.title,
+        curated: true, curCap: spec.cap,
+      });
+    }
+    const wholeSet = [...new Set(whole.length ? whole : sections.flatMap(s => s.members))];
+    if (spec.wholeTopic && wholeSet.length >= 8) {
+      atoms.push({
+        kind: 'enum', topic: spec.wholeTopic, topicSrc: 'quote',
+        members: wholeSet, listId: `원료|${spec.file}|all`,
+        text: '', docShort: spec.docShort, article: '',
+        curated: true, curCap: spec.cap,
+      });
+    }
+  }
+  return atoms;
+}
+
 /**
  * 한 문서에서 def/enum 원자 추출.
  * enum: ENUM_MARK_RE를 포함하는 블록의 "직후 동일 레벨 항목들"을 멤버로 수집.
@@ -325,9 +435,12 @@ function extractDocAtoms(dirName, lines) {
 
   // 정상 MD 표 → 멤버십 목록 (ref_md v2: 원료·성분 표가 행 구조로 복원됨)
   extractMdTableLists(lines).forEach((l, ti) => {
-    // 헤더가 데이터형 값(성분명 등)이면 주제로 쓸 수 없음 — 문서명 발문으로
+    // 헤더가 데이터형 값(성분명 등)이면 주제로 쓸 수 없음 — 문서명 발문으로.
+    // '명칭'·'구분' 같은 범용 헤더 단어도 주제로서 무의미 — 마찬가지로 강등
+    const GENERIC_TOPIC_RE = /^(명칭|구분|항목|성분명?|원료명?|대상|종류|내용|제품명)$/;
     const headerOk = l.header && !isNameCell(l.header)
-      && MD_MEMBER_COL_RE.test(l.header.replace(/\s+/g, ''));
+      && MD_MEMBER_COL_RE.test(l.header.replace(/\s+/g, ''))
+      && !GENERIC_TOPIC_RE.test(l.header.replace(/\s+/g, ''));
     atoms.push({
       kind: 'enum',
       topic: TABLE_TOPICS[dirName] || (headerOk ? l.header : ''),
@@ -338,11 +451,16 @@ function extractDocAtoms(dirName, lines) {
     });
   });
 
-  // 별표 계층 목록 (가. 카테고리 + N) 멤버) — 조문 없는 표 문서 전용
-  if (!articles.length) {
+  // 별표 계층 목록 (가. 카테고리 + N) 멤버) — 조문 없는 표 문서 전용.
+  // KFCC 시험법 등의 cat 목록은 절차 조각이 멤버로 섞여 문항 소재로 부적합 —
+  // 제품유형 분류가 실제 의미를 갖는 주의사항 계열 문서로 한정한다.
+  if (!articles.length && /주의사항|알레르기/.test(dirName)) {
+    // 주제가 쓸 수 없는 형태(괄호·수식 조각, 한글 없음)면 제네릭 발문으로 강등
+    const topicOk = t => /[가-힣]/.test(t) && !/^[(\d]/.test(t) && !/[×÷=±]/.test(t);
     extractCategoryLists(lines).forEach((l, ci) => {
       atoms.push({
-        kind: 'enum', topic: l.topic, topicSrc: 'quote',
+        kind: 'enum', topic: topicOk(l.topic) ? l.topic : '',
+        topicSrc: topicOk(l.topic) ? 'quote' : 'table',
         members: l.members, listId: `${dirName}|cat|${ci}`,
         text: '', docShort, article: '',
       });
@@ -387,6 +505,9 @@ function extractDocAtoms(dirName, lines) {
           if (nb.level !== wantLevel) continue;
           // ② 절 시작·페이지 구분선이 병합된 경우 그 앞까지만 멤버로 사용
           nt = nt.split(/[②-⑩]|-{3,}|\*{3,}/)[0].trim();
+          // "(피험자 선정) …" 같은 괄호 헤딩 접두 제거 — (1R,2S)- 같은
+          // 입체화학명은 접두가 한글만이 아니므로 대상에서 제외된다
+          nt = nt.replace(/^\([가-힣 ]{2,15}\)\s+(?=[가-힣])/, '');
           if (!/^삭제/.test(nt) && !ENUM_MARK_RE.test(nt)
             && nt.length >= 6 && nt.length <= 160
             && (nt.match(/[가-힣]/g) || []).length / nt.length >= 0.4) {
@@ -436,6 +557,14 @@ function extractRefAtoms(refDir) {
       if (a.kind === 'def') bucket.defs.push(a); else bucket.enums.push(a);
       bucket.docs.add(dirName);
     }
+  }
+  // 원료 큐레이션 DB (ref_md의 형제 디렉터리) — 과목2에 귀속.
+  // curated 원자는 빌더에서 ref_md 목록보다 먼저 처리된다.
+  const ingDir = path.join(refDir, '..', '원료');
+  for (const a of extractIngredientAtoms(ingDir)) {
+    const bucket = bySubject[2] || (bySubject[2] = { defs: [], enums: [], docs: new Set() });
+    bucket.enums.push(a);
+    bucket.docs.add(a.listId.split('|')[0]);
   }
   return bySubject;
 }

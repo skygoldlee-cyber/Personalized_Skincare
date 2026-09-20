@@ -1,5 +1,5 @@
 // 자동 생성된 합답형 드릴 데이터입니다. 수정하지 마십시오. (tools/build_combo_drills.js)
-// 원본: data/exams/subject2.304bb62f.js — mode: fact(명제 조합) 18문 / answer(정답 조합) 139문
+// 원본: data/exams/subject2.81a4eafb.js — mode: fact(명제 조합) 18문 / answer(정답 조합) 139문
 var COMBO_DRILLS_subject2 = [
  {
   "id": "manufacturing_combo_f62cd4",
@@ -1488,35 +1488,35 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "ㄱ",
     "sid": "manufacturing_st_39db44",
-    "conceptId": "L701",
+    "conceptId": "L344",
     "text": "단일성분으로서 0.1% 이하",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "manufacturing_st_77612b",
-    "conceptId": "L701",
+    "conceptId": "L344",
     "text": "배합 금지 (사용 불가)",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "manufacturing_st_e273a9",
-    "conceptId": "L701",
+    "conceptId": "L344",
     "text": "단일성분으로서 0.4% 이하",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "manufacturing_st_29375b",
-    "conceptId": "L701",
+    "conceptId": "L344",
     "text": "혼합사용 시 0.8% 이하",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "manufacturing_st_ecb3e0",
-    "conceptId": "L701",
+    "conceptId": "L344",
     "text": "단일성분으로서 0.14% 이하",
     "truth": false
    }
@@ -1568,7 +1568,7 @@ var COMBO_DRILLS_subject2 = [
    "수치"
   ],
   "derivedFrom": "subject2_q17",
-  "explain": "📖 법령 근거 (L701):\n| 부틸파라벤 영유아용 배합 금지 | 영유아용 제품류 및 기초화장용 제품류(3세 이하 영유아가 사용하는 제품) 중 사용 후 씻어내지 않는 제품에는 부틸파라벤, 프로필파라벤, 이소부틸파라벤 또는 이소프로필파라벤을 배합 금지(사용 불가) |",
+  "explain": "📖 법령 근거 (L344):\n| 부틸파라벤 영유아용 배합 금지 | 영유아용 제품류 및 기초화장용 제품류(3세 이하 영유아가 사용하는 제품) 중 사용 후 씻어내지 않는 제품에는 부틸파라벤, 프로필파라벤, 이소부틸파라벤 또는 이소프로필파라벤을 배합 금지(사용 불가) |",
   "source": "화장품 제조 및 품질관리 (250제)",
   "answer": "1"
  },
@@ -2886,35 +2886,35 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "ㄱ",
     "sid": "manufacturing_st_51858a",
-    "conceptId": "L381",
+    "conceptId": "L195",
     "text": "굴절계",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "manufacturing_st_2f4c39",
-    "conceptId": "L381",
+    "conceptId": "L195",
     "text": "점도계 (Viscometer)",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "manufacturing_st_159ca2",
-    "conceptId": "L381",
+    "conceptId": "L195",
     "text": "수분측정기",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "manufacturing_st_2a8f7a",
-    "conceptId": "L381",
+    "conceptId": "L195",
     "text": "pH 미터",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "manufacturing_st_6b2afd",
-    "conceptId": "L381",
+    "conceptId": "L195",
     "text": "고성능 액체 크로마토그래피 (HPLC)",
     "truth": true
    }
@@ -2964,7 +2964,7 @@ var COMBO_DRILLS_subject2 = [
    "정답판정"
   ],
   "derivedFrom": "subject2_q32",
-  "explain": "📖 법령 근거 (L381(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L381>)):\n③ 제조시설이나 설비의 세척에 사용되는 세제 또는 소독제는 효능이 입증된 것을 사용하고 잔류하거나 적용하는 표면에 이상을 초래하지 아니하여야 한다.",
+  "explain": "📖 법령 근거 (L195(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L195>)):\n③ 제조시설이나 설비의 세척에 사용되는 세제 또는 소독제는 효능이 입증된 것을 사용하고 잔류하거나 적용하는 표면에 이상을 초래하지 아니하여야 한다.",
   "source": "화장품 제조 및 품질관리 (250제)",
   "answer": "4"
  },
@@ -3534,35 +3534,35 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "ㄱ",
     "sid": "manufacturing_st_9d117a",
-    "conceptId": "L341",
+    "conceptId": "L174",
     "text": "1년",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "manufacturing_st_a8ba08",
-    "conceptId": "L341",
+    "conceptId": "L174",
     "text": "2년",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "manufacturing_st_bcc966",
-    "conceptId": "L341",
+    "conceptId": "L174",
     "text": "3년",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "manufacturing_st_35ecac",
-    "conceptId": "L341",
+    "conceptId": "L174",
     "text": "5년",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "manufacturing_st_526507",
-    "conceptId": "L341",
+    "conceptId": "L174",
     "text": "10년",
     "truth": false
    }
@@ -3611,7 +3611,7 @@ var COMBO_DRILLS_subject2 = [
    "수치"
   ],
   "derivedFrom": "subject2_q39",
-  "explain": "📖 법령 근거 (L341(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L341>)):\n9. 각 제조구역별 청소 및 위생관리 절차에 따라 효능이 입증된 세척제 및 소독제를 사용할 것",
+  "explain": "📖 법령 근거 (L174(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L174>)):\n9. 각 제조구역별 청소 및 위생관리 절차에 따라 효능이 입증된 세척제 및 소독제를 사용할 것",
   "source": "화장품 제조 및 품질관리 (250제)",
   "answer": "2"
  },
@@ -5556,35 +5556,35 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "ㄱ",
     "sid": "manufacturing_st_bb7e99",
-    "conceptId": "L281",
+    "conceptId": "L154",
     "text": "회수계획서",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "manufacturing_st_af9088",
-    "conceptId": "L281",
+    "conceptId": "L154",
     "text": "회수종합보고서",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "manufacturing_st_b18cd2",
-    "conceptId": "L281",
+    "conceptId": "L154",
     "text": "생산원가 손실 보고서",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "manufacturing_st_18d465",
-    "conceptId": "L281",
+    "conceptId": "L154",
     "text": "회수이행성적서",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "manufacturing_st_1ab980",
-    "conceptId": "L281",
+    "conceptId": "L154",
     "text": "회수사실 공표문",
     "truth": false
    }
@@ -5631,7 +5631,7 @@ var COMBO_DRILLS_subject2 = [
    "절차"
   ],
   "derivedFrom": "subject2_q61",
-  "explain": "📖 법령 근거 (L281(제2025-88호)(20251216)/기능성화장품 심사에 관한 규정(식품의약품안전처고시)(제2025-88호)(20251216).md#L281>)):\n⑥ 자외선을 차단 또는 산란시켜 자외선으로부터 피부를 보호하는 기능을 가진 제품의 경우 이미 심사를 받은 기능성화장품[화장품책임판매업자가 같거나 화장품제조업자(화장품제조업자가 제품을 설계ㆍ개발ㆍ생산하는 방식으로 제조한 경우만 해당한다)가 같은 기능성화장품만 해당한다]과 그 효능ㆍ효과를 나타내게 하는 원료의 종류, 규격 및 분량(액상의 경우 농도), 용법ㆍ용량 및 제형이 동일한 경우에는 제4조제1호의 자료 제출을 면제한다.",
+  "explain": "📖 법령 근거 (L154(제2025-88호)(20251216)/기능성화장품 심사에 관한 규정(식품의약품안전처고시)(제2025-88호)(20251216).md#L154>)):\n⑥ 자외선을 차단 또는 산란시켜 자외선으로부터 피부를 보호하는 기능을 가진 제품의 경우 이미 심사를 받은 기능성화장품[화장품책임판매업자가 같거나 화장품제조업자(화장품제조업자가 제품을 설계ㆍ개발ㆍ생산하는 방식으로 제조한 경우만 해당한다)가 같은 기능성화장품만 해당한다]과 그 효능ㆍ효과를 나타내게 하는 원료의 종류, 규격 및 분량(액상의 경우 농도), 용법ㆍ용량 및 제형이 동일한 경우에는 제4조제1호의 자료 제출을 면제한다.",
   "source": "화장품 제조 및 품질관리 (250제)",
   "answer": "5"
  },
@@ -5825,35 +5825,35 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "ㄱ",
     "sid": "manufacturing_st_7af333",
-    "conceptId": "L599",
+    "conceptId": "L303",
     "text": "계량 구역은 다른 구역과 분리되어 있어야 한다.",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "manufacturing_st_efdd54",
-    "conceptId": "L599",
+    "conceptId": "L303",
     "text": "원료별로 독립된 스푼이나 전용 용기를 사용한다.",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "manufacturing_st_52c459",
-    "conceptId": "L599",
+    "conceptId": "L303",
     "text": "분진이 많이 발생하는 분말 계량 시 국소배기장치를 가동한다.",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "manufacturing_st_0a5c1d",
-    "conceptId": "L599",
+    "conceptId": "L303",
     "text": "계량이 완료된 원료 용기는 라벨을 부착하고 즉시 밀폐한다.",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "manufacturing_st_a26b3c",
-    "conceptId": "L599",
+    "conceptId": "L303",
     "text": "계량이 완료된 서로 다른 원료들을 하나의 용기에 미리 다 쏟아서 섞어둔다.",
     "truth": false
    }
@@ -5904,7 +5904,7 @@ var COMBO_DRILLS_subject2 = [
    "명제판정"
   ],
   "derivedFrom": "subject2_q64",
-  "explain": "📖 법령 근거 (L599(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L599>)):\n② 원료가 칭량되는 도중 교차오염을 피하기 위한 조치가 있어야 한다.",
+  "explain": "📖 법령 근거 (L303(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L303>)):\n② 원료가 칭량되는 도중 교차오염을 피하기 위한 조치가 있어야 한다.",
   "source": "화장품 제조 및 품질관리 (250제)",
   "answer": "4"
  },
@@ -6198,35 +6198,35 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "ㄱ",
     "sid": "manufacturing_st_e945c7",
-    "conceptId": "L381",
+    "conceptId": "L195",
     "text": "초음파 세척법",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "manufacturing_st_35cd87",
-    "conceptId": "L381",
+    "conceptId": "L195",
     "text": "린스법 (Rinsing Method, 헹굼액 분석법)",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "manufacturing_st_41c831",
-    "conceptId": "L381",
+    "conceptId": "L195",
     "text": "침적법",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "manufacturing_st_1a73d2",
-    "conceptId": "L381",
+    "conceptId": "L195",
     "text": "여과법",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "manufacturing_st_abeea8",
-    "conceptId": "L381",
+    "conceptId": "L195",
     "text": "스왑법 (Swabbing Method, 표면 닦기법)",
     "truth": true
    }
@@ -6274,7 +6274,7 @@ var COMBO_DRILLS_subject2 = [
    "정답판정"
   ],
   "derivedFrom": "subject2_q69",
-  "explain": "📖 법령 근거 (L381(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L381>)):\n③ 제조시설이나 설비의 세척에 사용되는 세제 또는 소독제는 효능이 입증된 것을 사용하고 잔류하거나 적용하는 표면에 이상을 초래하지 아니하여야 한다.",
+  "explain": "📖 법령 근거 (L195(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L195>)):\n③ 제조시설이나 설비의 세척에 사용되는 세제 또는 소독제는 효능이 입증된 것을 사용하고 잔류하거나 적용하는 표면에 이상을 초래하지 아니하여야 한다.",
   "source": "화장품 제조 및 품질관리 (250제)",
   "answer": "2"
  },
@@ -6475,35 +6475,35 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "ㄱ",
     "sid": "manufacturing_st_42423a",
-    "conceptId": "L285",
+    "conceptId": "L146",
     "text": "보관 공간의 심미적 아름다움을 높이기 위해",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "manufacturing_st_18f9bc",
-    "conceptId": "L285",
+    "conceptId": "L146",
     "text": "적재 차량의 진입을 막기 위해",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "manufacturing_st_108a95",
-    "conceptId": "L285",
+    "conceptId": "L146",
     "text": "제품 상자의 무게를 줄이기 위해",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "manufacturing_st_de7815",
-    "conceptId": "L285",
+    "conceptId": "L146",
     "text": "박스의 선입선출을 전면 차단하기 위해",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "manufacturing_st_d90408",
-    "conceptId": "L285",
+    "conceptId": "L146",
     "text": "창고 청소의 용이성 확보 및 바닥/벽면의 습기 전이로 인한 곰팡이 오염을 방지하기 위해",
     "truth": true
    }
@@ -6554,7 +6554,7 @@ var COMBO_DRILLS_subject2 = [
    "정답판정"
   ],
   "derivedFrom": "subject2_q72",
-  "explain": "📖 법령 근거 (L285(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L285>)):\n② 작업소 및 보관소 내의 모든 직원은 화장품의 오염을 방지하기 위해 규정된 작업복을 착용해야 하고 음식물 등을 반입해서는 아니 된다.",
+  "explain": "📖 법령 근거 (L146(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L146>)):\n② 작업소 및 보관소 내의 모든 직원은 화장품의 오염을 방지하기 위해 규정된 작업복을 착용해야 하고 음식물 등을 반입해서는 아니 된다.",
   "source": "화장품 제조 및 품질관리 (250제)",
   "answer": "1"
  },
@@ -7225,35 +7225,35 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "ㄱ",
     "sid": "manufacturing_st_10036a",
-    "conceptId": "L111",
+    "conceptId": "q:subject2_q80",
     "text": "안점막자극 시험",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "manufacturing_st_6c67c3",
-    "conceptId": "L111",
+    "conceptId": "q:subject2_q80",
     "text": "흡입독성 시험",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "manufacturing_st_0a56a5",
-    "conceptId": "L111",
+    "conceptId": "q:subject2_q80",
     "text": "유전독성 시험",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "manufacturing_st_4ea18c",
-    "conceptId": "L111",
+    "conceptId": "q:subject2_q80",
     "text": "광독성(Phototoxicity) 및 광감작성 시험",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "manufacturing_st_1edcfd",
-    "conceptId": "L111",
+    "conceptId": "q:subject2_q80",
     "text": "생식독성 시험",
     "truth": false
    }
@@ -7299,7 +7299,7 @@ var COMBO_DRILLS_subject2 = [
    "정답판정"
   ],
   "derivedFrom": "subject2_q80",
-  "explain": "📖 법령 근거 (L111(제2025-88호)(20251216)/기능성화장품 심사에 관한 규정(식품의약품안전처고시)(제2025-88호)(20251216).md#L111>)):\n(5) 광독성 및 광감작성 시험자료(자외선에서 흡수가 없음을 입증하는 흡광도 시험자료를 제출하는 경우에는 면제함)",
+  "explain": "📖 법령 근거 (L60(제2025-88호)(20251216)/기능성화장품 심사에 관한 규정(식품의약품안전처고시)(제2025-88호)(20251216).md#L60>)):\n(5) 광독성 및 광감작성 시험자료(자외선에서 흡수가 없음을 입증하는 흡광도 시험자료를 제출하는 경우에는 면제함)",
   "source": "화장품 제조 및 품질관리 (250제)",
   "answer": "3"
  },
@@ -7684,35 +7684,35 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "ㄱ",
     "sid": "manufacturing_st_009bc1",
-    "conceptId": "L851",
+    "conceptId": "L769",
     "text": "일탈이란 승인된 제조 지시서나 기준서 규정에서 벗어난 모든 예기치 못한 상황을 의미한다.",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "manufacturing_st_e631d9",
-    "conceptId": "L851",
+    "conceptId": "L769",
     "text": "중대한 일탈의 경우 완제품의 출하가 보류될 수 있다.",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "manufacturing_st_15653e",
-    "conceptId": "L851",
+    "conceptId": "L769",
     "text": "발생한 일탈은 모두 기록하고 품질 부서의 조사를 받아야 한다.",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "manufacturing_st_c20894",
-    "conceptId": "L851",
+    "conceptId": "L769",
     "text": "일탈 조사를 통해 제품 품질에 미치는 영향을 평가하고 재발 방지 대책(CAPA)을 수립한다.",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "manufacturing_st_db10e6",
-    "conceptId": "L851",
+    "conceptId": "L769",
     "text": "일탈이 발생하면 현장 작업자는 임의로 조치하고 기록을 생략한 채 작업을 속행한다.",
     "truth": false
    }
@@ -7765,7 +7765,7 @@ var COMBO_DRILLS_subject2 = [
    "정의"
   ],
   "derivedFrom": "subject2_q85",
-  "explain": "📖 법령 근거 (L851(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L851>)):\n④ 식품의약품안전처장은 제출된 자료를 평가하고 별표 2에 따른 실태조사를 실시하여 우수화장품 제조 및 품질관리기준 적합판정한 경우에는 별지 제3호 서식에 따른 우수화장품 제조 및 품질관리기준 적합업소 증명서를 발급하여야 한다.",
+  "explain": "📖 법령 근거 (L769(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L769>)):\n④ 식품의약품안전처장은 제출된 자료를 평가하고 별표 2에 따른 실태조사를 실시하여 우수화장품 제조 및 품질관리기준 적합판정한 경우에는 별지 제3호 서식에 따른 우수화장품 제조 및 품질관리기준 적합업소 증명서를 발급하여야 한다.",
   "source": "화장품 제조 및 품질관리 (250제)",
   "answer": "2"
  },
@@ -8241,35 +8241,35 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "ㄱ",
     "sid": "manufacturing_st_8bc488",
-    "conceptId": "L647",
+    "conceptId": "L639",
     "text": "적합품 적재대 구석에 섞어서 표시 없이 보관한다.",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "manufacturing_st_d27673",
-    "conceptId": "L647",
+    "conceptId": "L639",
     "text": "출하 승인 라벨을 덮어씌워 출하한다.",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "manufacturing_st_f8b660",
-    "conceptId": "L647",
+    "conceptId": "L639",
     "text": "임의로 다른 박스에 옮겨 담아 정상 제품인 것처럼 위장한다.",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "manufacturing_st_b5a9a4",
-    "conceptId": "L647",
+    "conceptId": "L639",
     "text": "부적합 라벨(적색)을 눈에 띄게 부착하고 다른 적합 제품과 명확히 격리된 별도 구획 구역에 보관한다.",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "manufacturing_st_2b2741",
-    "conceptId": "L647",
+    "conceptId": "L639",
     "text": "폐기 대기 상태라도 품질 책임자 승인 없이 생산라인에 재투입한다.",
     "truth": false
    }
@@ -8317,7 +8317,7 @@ var COMBO_DRILLS_subject2 = [
    "절차"
   ],
   "derivedFrom": "subject2_q91",
-  "explain": "📖 법령 근거 (L647(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L647>)):\n④ 출고할 제품은 원자재, 부적합품 및 반품된 제품과 구획된 장소에서 보관하여야 한다. 다만 서로 혼동을 일으킬 우려가 없는 시스템에 의하여 보관되는 경우에는 그러하지 아니할 수 있다.",
+  "explain": "📖 법령 근거 (L639(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L639>)):\n④ 출고할 제품은 원자재, 부적합품 및 반품된 제품과 구획된 장소에서 보관하여야 한다. 다만 서로 혼동을 일으킬 우려가 없는 시스템에 의하여 보관되는 경우에는 그러하지 아니할 수 있다.",
   "source": "화장품 제조 및 품질관리 (250제)",
   "answer": "1"
  },
@@ -8886,35 +8886,35 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "ㄱ",
     "sid": "manufacturing_st_23ddfb",
-    "conceptId": "L409",
+    "conceptId": "L209",
     "text": "재작업 처리",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "manufacturing_st_8f40fc",
-    "conceptId": "L409",
+    "conceptId": "L209",
     "text": "소비자 불만 처리",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "manufacturing_st_7a1aee",
-    "conceptId": "L409",
+    "conceptId": "L209",
     "text": "공급업체 평가 및 관리 (Supplier Qualification)",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "manufacturing_st_609e9c",
-    "conceptId": "L409",
+    "conceptId": "L209",
     "text": "모니터링",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "manufacturing_st_7debb9",
-    "conceptId": "L409",
+    "conceptId": "L209",
     "text": "밸리데이션",
     "truth": false
    }
@@ -8966,7 +8966,7 @@ var COMBO_DRILLS_subject2 = [
    "기한"
   ],
   "derivedFrom": "subject2_q98",
-  "explain": "📖 법령 근거 (L409(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L409>)):\n② 원자재의 입고 시 구매 요구서, 원자재 공급업체 성적서 및 현품이 서로 일치하여야 한다. 필요한 경우 운송 관련 자료를 추가적으로 확인할 수 있다.",
+  "explain": "📖 법령 근거 (L209(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L209>)):\n② 원자재의 입고 시 구매 요구서, 원자재 공급업체 성적서 및 현품이 서로 일치하여야 한다. 필요한 경우 운송 관련 자료를 추가적으로 확인할 수 있다.",
   "source": "화장품 제조 및 품질관리 (250제)",
   "answer": "5"
  },
@@ -9631,35 +9631,35 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "ㄱ",
     "sid": "manufacturing_st_1ab816",
-    "conceptId": "L381",
+    "conceptId": "L195",
     "text": "기계 모터의 교류 전기 주파수",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "manufacturing_st_05ddd6",
-    "conceptId": "L381",
+    "conceptId": "L195",
     "text": "세척에 사용한 계면활성제 세척제 성분",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "manufacturing_st_8ccd62",
-    "conceptId": "L381",
+    "conceptId": "L195",
     "text": "잔류 소독제 성분",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "manufacturing_st_c60391",
-    "conceptId": "L381",
+    "conceptId": "L195",
     "text": "잔류 정제수 내 미생물 개수",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "manufacturing_st_d12c9b",
-    "conceptId": "L381",
+    "conceptId": "L195",
     "text": "이전 배치 제조 원료 유효 성분",
     "truth": false
    }
@@ -9706,7 +9706,7 @@ var COMBO_DRILLS_subject2 = [
    "정답판정"
   ],
   "derivedFrom": "subject2_q106",
-  "explain": "📖 법령 근거 (L381(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L381>)):\n③ 제조시설이나 설비의 세척에 사용되는 세제 또는 소독제는 효능이 입증된 것을 사용하고 잔류하거나 적용하는 표면에 이상을 초래하지 아니하여야 한다.",
+  "explain": "📖 법령 근거 (L195(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L195>)):\n③ 제조시설이나 설비의 세척에 사용되는 세제 또는 소독제는 효능이 입증된 것을 사용하고 잔류하거나 적용하는 표면에 이상을 초래하지 아니하여야 한다.",
   "source": "화장품 제조 및 품질관리 (250제)",
   "answer": "5"
  },
@@ -10741,35 +10741,35 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "ㄱ",
     "sid": "manufacturing_st_f29486",
-    "conceptId": "L863",
+    "conceptId": "L436",
     "text": "제품이 제조되면 시험 검사 없이 바로 트럭에 상차하여 출하한다.",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "manufacturing_st_2c2dd8",
-    "conceptId": "L863",
+    "conceptId": "L436",
     "text": "품질보증(QA) 부서의 최종 시험 결과 적합 승인 및 출하 판정 라벨(녹색)이 부착된 제품에 한하여 생산부서와 상의 후 출고한다.",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "manufacturing_st_a73a20",
-    "conceptId": "L863",
+    "conceptId": "L436",
     "text": "영업사원의 구두 요청만 있으면 시험 검사 중인 제품도 선출고할 수 있다.",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "manufacturing_st_60367c",
-    "conceptId": "L863",
+    "conceptId": "L436",
     "text": "부적합 판정이 난 제품도 재작업 예정이면 창고 밖으로 사전 출고할 수 있다.",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "manufacturing_st_989222",
-    "conceptId": "L863",
+    "conceptId": "L436",
     "text": "대표이사의 지시서만 있으면 시험검사 성적서를 무시하고 출하할 수 있다.",
     "truth": false
    }
@@ -10816,7 +10816,7 @@ var COMBO_DRILLS_subject2 = [
    "절차"
   ],
   "derivedFrom": "subject2_q118",
-  "explain": "📖 법령 근거 (L863(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L863>)):\n② 국제규격인증업체(CGMP, ISO9000) 또는 품질보증 능력이 있다고 인정되는 업체에서 제공된 원료ㆍ자재는 제공된 적합성에 대한 기록의 증거를 고려하여 검사의 방법과 시험항목을 조정할 수 있다.",
+  "explain": "📖 법령 근거 (L436(제2024-46호)(20240822)/우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822).md#L436>)):\n② 국제규격인증업체(CGMP, ISO9000) 또는 품질보증 능력이 있다고 인정되는 업체에서 제공된 원료ㆍ자재는 제공된 적합성에 대한 기록의 증거를 고려하여 검사의 방법과 시험항목을 조정할 수 있다.",
   "source": "화장품 제조 및 품질관리 (250제)",
   "answer": "1"
  },
@@ -12203,35 +12203,35 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "ㄱ",
     "sid": "manufacturing_st_2485d2",
-    "conceptId": "L4004",
+    "conceptId": "L438",
     "text": "살리실산",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "manufacturing_st_9ddf20",
-    "conceptId": "L4004",
+    "conceptId": "L438",
     "text": "벤젠",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "manufacturing_st_79f55e",
-    "conceptId": "L4004",
+    "conceptId": "L438",
     "text": "에탄올",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "manufacturing_st_6cb087",
-    "conceptId": "L4004",
+    "conceptId": "L438",
     "text": "글리세린",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "manufacturing_st_9d8973",
-    "conceptId": "L4004",
+    "conceptId": "L438",
     "text": "세틸알코올",
     "truth": false
    }
@@ -12279,7 +12279,7 @@ var COMBO_DRILLS_subject2 = [
    "수치"
   ],
   "derivedFrom": "subject2_q135",
-  "explain": "📖 법령 근거 (L4004):\n| 벤젠 | 71-43-2 |  |",
+  "explain": "📖 법령 근거 (L438):\n| 벤젠 | 71-43-2 |  |",
   "source": "화장품 제조 및 품질관리 (250제)",
   "answer": "4"
  },
@@ -14791,52 +14791,52 @@ var COMBO_DRILLS_subject2 = [
   "answer": "4"
  },
  {
-  "id": "manufacturing_combo-ref_2f0f21",
+  "id": "manufacturing_combo-ref_7333d8",
   "subject": 2,
   "type": "combo",
   "points": 4,
-  "citation": "📖 우수화장품 제조 및 품질관리기준 제8조 (참조자료 원문)",
-  "stem": "다음 중 「우수화장품 제조 및 품질관리기준」제8조의 규정에 해당하는 것을 모두 고른 것은?",
+  "citation": "📖 원료DB 별표1 사용불가원료 중금속 및 유해 화학물질 (참조자료 원문)",
+  "stem": "다음 중 사용불가 원료(별표1)의 중금속 및 유해 화학물질에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_895384",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "천정 주위의 대들보, 파이프, 덕트 등은 가급적 노출되지 않도록 설계하고, 노출된 파이프는 받침대 등으로 고 정하고 벽에 닿지 않게 하여 청소가 용이하도록 설계할 것법제처 5 국가법령정보센터우수화장품 제조 및 품질관리기준",
+    "sid": "manufacturing_refst_43daae",
+    "conceptId": "원료DB 별표1 사용불가원료:중금속 및 유해 화학물질",
+    "text": "카드뮴 및 그 화합물",
     "truth": true,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
+    "explain": "출처: 원료DB 별표1 사용불가원료 중금속 및 유해 화학물질"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_b929f2",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "설비 등의 위치는 원자재나 직원의 이동으로 인하여 제품의 품질에 영향을 주지 않도록 할 것",
+    "sid": "manufacturing_refst_9694da",
+    "conceptId": "원료DB 별표1 사용불가원료:중금속 및 유해 화학물질",
+    "text": "베릴륨 및 그 화합물",
     "truth": true,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
+    "explain": "출처: 원료DB 별표1 사용불가원료 중금속 및 유해 화학물질"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_84e0cc",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "작업실 등의 청소(필요한 경우 소독을 포함한다. 이하 같다) 방법 및 청소주기",
-    "truth": false,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
+    "sid": "manufacturing_refst_6f9126",
+    "conceptId": "원료DB 별표1 사용불가원료:중금속 및 유해 화학물질",
+    "text": "니켈 및 그 화합물",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 중금속 및 유해 화학물질"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_7da6b5",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "피그먼트레드 53(레이크레드 C)",
+    "sid": "manufacturing_refst_1a3b28",
+    "conceptId": "원료DB 별표1 사용불가원료:중금속 및 유해 화학물질",
+    "text": "피리단-2-올 1-옥사이드",
     "truth": false,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
+    "explain": "출처: 원료DB 별표1 사용불가원료 중금속 및 유해 화학물질"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_b9cc05",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "작업소 전체에 적절한 조명을 설치하고, 조명이 파손될 경우를 대비한 제품을 보호할 수 있는 처리절차를 마련할 것",
-    "truth": true,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
+    "sid": "manufacturing_refst_592fd1",
+    "conceptId": "원료DB 별표1 사용불가원료:중금속 및 유해 화학물질",
+    "text": "피그먼트 녹색 7호 (Pigment Green 7) CI 74260",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 중금속 및 유해 화학물질"
    }
   ],
   "options": [
@@ -14845,7 +14845,510 @@ var COMBO_DRILLS_subject2 = [
     "members": [
      "ㄱ",
      "ㄴ",
+     "ㄹ",
      "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "금지원료",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|banned_ingredients.md|sec0|0",
+  "explain": "ㄱ. 출처: 원료DB 별표1 사용불가원료 중금속 및 유해 화학물질\nㄴ. 출처: 원료DB 별표1 사용불가원료 중금속 및 유해 화학물질\nㄷ. 출처: 원료DB 별표1 사용불가원료 중금속 및 유해 화학물질\nㄹ. 출처: 원료DB 별표1 사용불가원료 중금속 및 유해 화학물질\nㅁ. 출처: 원료DB 별표1 사용불가원료 중금속 및 유해 화학물질",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "manufacturing_combo-ref_ea29c3",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표1 사용불가원료 중금속 및 유해 화학물질 (참조자료 원문)",
+  "stem": "다음 중 사용불가 원료(별표1)의 중금속 및 유해 화학물질에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_6f9126",
+    "conceptId": "원료DB 별표1 사용불가원료:중금속 및 유해 화학물질",
+    "text": "니켈 및 그 화합물",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 중금속 및 유해 화학물질"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_5837de",
+    "conceptId": "원료DB 별표1 사용불가원료:중금속 및 유해 화학물질",
+    "text": "알킬(C₁₂-C₂₂)트리메칠암모늄 브로마이드 및 클로라이드(브롬화세트리모늄 포함)",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 중금속 및 유해 화학물질"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_6fb132",
+    "conceptId": "원료DB 별표1 사용불가원료:중금속 및 유해 화학물질",
+    "text": "비소 및 그 화합물",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 중금속 및 유해 화학물질"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_9a8f6c",
+    "conceptId": "원료DB 별표1 사용불가원료:중금속 및 유해 화학물질",
+    "text": "피로필라이트 (Pyrophyllite)",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 중금속 및 유해 화학물질"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_43daae",
+    "conceptId": "원료DB 별표1 사용불가원료:중금속 및 유해 화학물질",
+    "text": "카드뮴 및 그 화합물",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 중금속 및 유해 화학물질"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "금지원료",
+   "구성비",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|banned_ingredients.md|sec0|1",
+  "explain": "ㄱ. 출처: 원료DB 별표1 사용불가원료 중금속 및 유해 화학물질\nㄴ. 출처: 원료DB 별표1 사용불가원료 중금속 및 유해 화학물질\nㄷ. 출처: 원료DB 별표1 사용불가원료 중금속 및 유해 화학물질\nㄹ. 출처: 원료DB 별표1 사용불가원료 중금속 및 유해 화학물질\nㅁ. 출처: 원료DB 별표1 사용불가원료 중금속 및 유해 화학물질",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "2"
+ },
+ {
+  "id": "manufacturing_combo-ref_2ff108",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표1 사용불가원료 유기 용매 및 화학물질 (참조자료 원문)",
+  "stem": "다음 중 사용불가 원료(별표1)의 유기 용매 및 화학물질에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_6195e5",
+    "conceptId": "원료DB 별표1 사용불가원료:유기 용매 및 화학물질",
+    "text": "디에칠설페이트",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 유기 용매 및 화학물질"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_26a6f2",
+    "conceptId": "원료DB 별표1 사용불가원료:유기 용매 및 화학물질",
+    "text": "알킬(C₁₂-C₂₂)트리메칠암모늄 브로마이드 및 클로라이드(브롬화세트리모늄 포함)",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 유기 용매 및 화학물질"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_2bd57c",
+    "conceptId": "원료DB 별표1 사용불가원료:유기 용매 및 화학물질",
+    "text": "폴리아크릴아마이드류",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 유기 용매 및 화학물질"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_62055e",
+    "conceptId": "원료DB 별표1 사용불가원료:유기 용매 및 화학물질",
+    "text": "디에칠렌글라이콜",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 유기 용매 및 화학물질"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_c77218",
+    "conceptId": "원료DB 별표1 사용불가원료:유기 용매 및 화학물질",
+    "text": "디클로로에탄(에칠렌클로라이드)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 유기 용매 및 화학물질"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "금지원료",
+   "구성비",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|banned_ingredients.md|sec1|0",
+  "explain": "ㄱ. 출처: 원료DB 별표1 사용불가원료 유기 용매 및 화학물질\nㄴ. 출처: 원료DB 별표1 사용불가원료 유기 용매 및 화학물질\nㄷ. 출처: 원료DB 별표1 사용불가원료 유기 용매 및 화학물질\nㄹ. 출처: 원료DB 별표1 사용불가원료 유기 용매 및 화학물질\nㅁ. 출처: 원료DB 별표1 사용불가원료 유기 용매 및 화학물질",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "1"
+ },
+ {
+  "id": "manufacturing_combo-ref_6e06fb",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표1 사용불가원료 발암성 물질 (참조자료 원문)",
+  "stem": "다음 중 사용불가 원료(별표1)의 발암성 물질에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_bac98e",
+    "conceptId": "원료DB 별표1 사용불가원료:발암성 물질",
+    "text": "디벤즈[a,h]안트라센",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 발암성 물질"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_723e15",
+    "conceptId": "원료DB 별표1 사용불가원료:발암성 물질",
+    "text": "벤즈[a]안트라센",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 발암성 물질"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_eea4a8",
+    "conceptId": "원료DB 별표1 사용불가원료:발암성 물질",
+    "text": "아데노신",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 발암성 물질"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_5570f1",
+    "conceptId": "원료DB 별표1 사용불가원료:발암성 물질",
+    "text": "5-아미노-o-크레솔",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 발암성 물질"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_617f1d",
+    "conceptId": "원료DB 별표1 사용불가원료:발암성 물질",
+    "text": "벤조[a]피렌",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 발암성 물질"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "금지원료",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|banned_ingredients.md|sec2|0",
+  "explain": "ㄱ. 출처: 원료DB 별표1 사용불가원료 발암성 물질\nㄴ. 출처: 원료DB 별표1 사용불가원료 발암성 물질\nㄷ. 출처: 원료DB 별표1 사용불가원료 발암성 물질\nㄹ. 출처: 원료DB 별표1 사용불가원료 발암성 물질\nㅁ. 출처: 원료DB 별표1 사용불가원료 발암성 물질",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "manufacturing_combo-ref_8549f9",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표1 사용불가원료 의약품 및 마약류 (참조자료 원문)",
+  "stem": "다음 중 사용불가 원료(별표1)의 의약품 및 마약류에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_c5fecb",
+    "conceptId": "원료DB 별표1 사용불가원료:의약품 및 마약류",
+    "text": "클로헥시딘, 그 디글루코네이트, 디아세테이트 및 디하이드로클로라이드",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 의약품 및 마약류"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_21a180",
+    "conceptId": "원료DB 별표1 사용불가원료:의약품 및 마약류",
+    "text": "트리스-바이페닐 트라이아진",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 의약품 및 마약류"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_c3901c",
+    "conceptId": "원료DB 별표1 사용불가원료:의약품 및 마약류",
+    "text": "니코틴 및 그 염류",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 의약품 및 마약류"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_06c990",
+    "conceptId": "원료DB 별표1 사용불가원료:의약품 및 마약류",
+    "text": "노스카핀 및 그 염류",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 의약품 및 마약류"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_f7146a",
+    "conceptId": "원료DB 별표1 사용불가원료:의약품 및 마약류",
+    "text": "마취제(천연 및 합성)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 의약품 및 마약류"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "금지원료",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|banned_ingredients.md|sec3|0",
+  "explain": "ㄱ. 출처: 원료DB 별표1 사용불가원료 의약품 및 마약류\nㄴ. 출처: 원료DB 별표1 사용불가원료 의약품 및 마약류\nㄷ. 출처: 원료DB 별표1 사용불가원료 의약품 및 마약류\nㄹ. 출처: 원료DB 별표1 사용불가원료 의약품 및 마약류\nㅁ. 출처: 원료DB 별표1 사용불가원료 의약품 및 마약류",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "manufacturing_combo-ref_0f985b",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표1 사용불가원료 의약품 및 마약류 (참조자료 원문)",
+  "stem": "다음 중 사용불가 원료(별표1)의 의약품 및 마약류에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_06c990",
+    "conceptId": "원료DB 별표1 사용불가원료:의약품 및 마약류",
+    "text": "노스카핀 및 그 염류",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 의약품 및 마약류"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_7b5e04",
+    "conceptId": "원료DB 별표1 사용불가원료:의약품 및 마약류",
+    "text": "글루코코르티코이드",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 의약품 및 마약류"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_ea8458",
+    "conceptId": "원료DB 별표1 사용불가원료:의약품 및 마약류",
+    "text": "아밀시클로펜테논",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 의약품 및 마약류"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_f7146a",
+    "conceptId": "원료DB 별표1 사용불가원료:의약품 및 마약류",
+    "text": "마취제(천연 및 합성)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 의약품 및 마약류"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_8d9ebe",
+    "conceptId": "원료DB 별표1 사용불가원료:의약품 및 마약류",
+    "text": "황산철수화물(FeSO47H O)ㆍ 2",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 의약품 및 마약류"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
     ]
    },
    {
@@ -14857,8 +15360,9 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "3",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㄹ",
+     "ㄷ",
      "ㅁ"
     ]
    },
@@ -14867,15 +15371,14 @@ var COMBO_DRILLS_subject2 = [
     "members": [
      "ㄱ",
      "ㄴ",
-     "ㄹ",
-     "ㅁ"
+     "ㄷ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㄴ",
-     "ㄷ"
+     "ㄱ",
+     "ㄹ"
     ]
    }
   ],
@@ -14883,62 +15386,562 @@ var COMBO_DRILLS_subject2 = [
    "자동생성",
    "참조자료",
    "열거목록",
-   "기한",
-   "절차",
-   "구성비"
+   "금지원료",
+   "수치"
   ],
-  "derivedFrom": "ref:enum|우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822)|제8조|0|0",
-  "explain": "ㄱ. 출처: 우수화장품 제조 및 품질관리기준 제8조\nㄴ. 출처: 우수화장품 제조 및 품질관리기준 제8조\nㄷ. 출처: 우수화장품 제조 및 품질관리기준 제8조\nㄹ. 출처: 우수화장품 제조 및 품질관리기준 제8조\nㅁ. 출처: 우수화장품 제조 및 품질관리기준 제8조",
+  "derivedFrom": "ref:enum|원료|banned_ingredients.md|sec3|1",
+  "explain": "ㄱ. 출처: 원료DB 별표1 사용불가원료 의약품 및 마약류\nㄴ. 출처: 원료DB 별표1 사용불가원료 의약품 및 마약류\nㄷ. 출처: 원료DB 별표1 사용불가원료 의약품 및 마약류\nㄹ. 출처: 원료DB 별표1 사용불가원료 의약품 및 마약류\nㅁ. 출처: 원료DB 별표1 사용불가원료 의약품 및 마약류",
   "source": "참조자료 원문 (열거 목록)",
   "answer": "1"
  },
  {
-  "id": "manufacturing_combo-ref_2fb0d8",
+  "id": "manufacturing_combo-ref_ffd115",
   "subject": 2,
   "type": "combo",
   "points": 4,
-  "citation": "📖 우수화장품 제조 및 품질관리기준 제8조 (참조자료 원문)",
-  "stem": "다음 중 「우수화장품 제조 및 품질관리기준」제8조의 규정에 해당하는 것을 모두 고른 것은?",
+  "citation": "📖 원료DB 별표1 사용불가원료 염모제 관련 (참조자료 원문)",
+  "stem": "다음 중 사용불가 원료(별표1)의 염모제 관련에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_a4d59d",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "벌크 제품의 용기는 먼지나 수분으로부터 내용물을 보호할 수 있을 것",
-    "truth": true,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
+    "sid": "manufacturing_refst_f2e3ed",
+    "conceptId": "원료DB 별표1 사용불가원료:염모제 관련",
+    "text": "벤제토늄클로라이드",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 염모제 관련"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_7ffe34",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "환기가 잘 되고 청결할 것",
+    "sid": "manufacturing_refst_173721",
+    "conceptId": "원료DB 별표1 사용불가원료:염모제 관련",
+    "text": "2,4-디아미노페녹시에탄올 하이드로클로라이드",
     "truth": true,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
+    "explain": "출처: 원료DB 별표1 사용불가원료 염모제 관련"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_1e7933",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "바닥, 벽, 천장은 가능한 청소 또는 위생관리를 하기 쉽게 매끄러운 표면을 지니고 청결하게 유지되어야 하며 소독제 등의 부식성에 저항력이 있을 것",
+    "sid": "manufacturing_refst_391caf",
+    "conceptId": "원료DB 별표1 사용불가원료:염모제 관련",
+    "text": "1,5-디-(베타-하이드록시에칠)아미노-2-니트로-4-클로로벤젠 및 그 염류",
     "truth": true,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
+    "explain": "출처: 원료DB 별표1 사용불가원료 염모제 관련"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_e65bc9",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "AnamirtacocculusL.(과실)",
-    "truth": false,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
+    "sid": "manufacturing_refst_c00881",
+    "conceptId": "원료DB 별표1 사용불가원료:염모제 관련",
+    "text": "2,6-디메톡시-3,5-피리딘디아민 하이드로클롤로라이드",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 염모제 관련"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_65822f",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "제품명, 제조번호 등을 포함한 불만내용",
+    "sid": "manufacturing_refst_cd3759",
+    "conceptId": "원료DB 별표1 사용불가원료:염모제 관련",
+    "text": "메톡시디시클로펜타디엔카복스알데하이드",
     "truth": false,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
+    "explain": "출처: 원료DB 별표1 사용불가원료 염모제 관련"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "금지원료",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|banned_ingredients.md|sec4|0",
+  "explain": "ㄱ. 출처: 원료DB 별표1 사용불가원료 염모제 관련\nㄴ. 출처: 원료DB 별표1 사용불가원료 염모제 관련\nㄷ. 출처: 원료DB 별표1 사용불가원료 염모제 관련\nㄹ. 출처: 원료DB 별표1 사용불가원료 염모제 관련\nㅁ. 출처: 원료DB 별표1 사용불가원료 염모제 관련",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "manufacturing_combo-ref_cf6218",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표1 사용불가원료 동물성 원료 (참조자료 원문)",
+  "stem": "다음 중 사용불가 원료(별표1)의 동물성 원료에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_916853",
+    "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
+    "text": "두개골(skull)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_8325bd",
+    "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
+    "text": "제조하는 화장품의 종류ㆍ제형에 따라 적절히 구획ㆍ구분되어 있어 교차오염 우려가 없을 것",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_d1c4fc",
+    "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
+    "text": "삼차신경(trigeminal ganglia)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_9573d8",
+    "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
+    "text": "하수체(pituitary gland)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_0b79c4",
+    "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
+    "text": "바비츄레이트",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "금지원료",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|banned_ingredients.md|sec5|0",
+  "explain": "ㄱ. 출처: 원료DB 별표1 사용불가원료 동물성 원료\nㄴ. 출처: 원료DB 별표1 사용불가원료 동물성 원료\nㄷ. 출처: 원료DB 별표1 사용불가원료 동물성 원료\nㄹ. 출처: 원료DB 별표1 사용불가원료 동물성 원료\nㅁ. 출처: 원료DB 별표1 사용불가원료 동물성 원료",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "5"
+ },
+ {
+  "id": "manufacturing_combo-ref_96400c",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표1 사용불가원료 동물성 원료 (참조자료 원문)",
+  "stem": "다음 중 사용불가 원료(별표1)의 동물성 원료에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_e88e5a",
+    "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
+    "text": "브로모클로로펜(6,6-디브로모-4,4-디클로로-2,2'-메칠렌-디페놀)",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_caa92c",
+    "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
+    "text": "비스머스옥시클로라이드 (Bismuth Oxychloride) CI 77163",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_9573d8",
+    "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
+    "text": "하수체(pituitary gland)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_8eb7d4",
+    "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
+    "text": "십이지장에서 직장까지의 장관(intestines from the duodenum to the rectum)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_aab9be",
+    "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
+    "text": "눈(eye)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "금지원료",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|banned_ingredients.md|sec5|1",
+  "explain": "ㄱ. 출처: 원료DB 별표1 사용불가원료 동물성 원료\nㄴ. 출처: 원료DB 별표1 사용불가원료 동물성 원료\nㄷ. 출처: 원료DB 별표1 사용불가원료 동물성 원료\nㄹ. 출처: 원료DB 별표1 사용불가원료 동물성 원료\nㅁ. 출처: 원료DB 별표1 사용불가원료 동물성 원료",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "2"
+ },
+ {
+  "id": "manufacturing_combo-ref_98e248",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표1 사용불가원료 동물성 원료 (참조자료 원문)",
+  "stem": "다음 중 사용불가 원료(별표1)의 동물성 원료에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_d1c4fc",
+    "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
+    "text": "삼차신경(trigeminal ganglia)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_8864cc",
+    "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
+    "text": "카본블랙 (Carbon black) CI 77266",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_d58348",
+    "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
+    "text": "배측근신경절(dorsal root ganglia)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_9573d8",
+    "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
+    "text": "하수체(pituitary gland)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_468c64",
+    "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
+    "text": "벤지딘설페이트",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "금지원료",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|banned_ingredients.md|sec5|2",
+  "explain": "ㄱ. 출처: 원료DB 별표1 사용불가원료 동물성 원료\nㄴ. 출처: 원료DB 별표1 사용불가원료 동물성 원료\nㄷ. 출처: 원료DB 별표1 사용불가원료 동물성 원료\nㄹ. 출처: 원료DB 별표1 사용불가원료 동물성 원료\nㅁ. 출처: 원료DB 별표1 사용불가원료 동물성 원료",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "1"
+ },
+ {
+  "id": "manufacturing_combo-ref_fe2414",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표1 사용불가원료 동물성 원료 (참조자료 원문)",
+  "stem": "다음 중 사용불가 원료(별표1)의 동물성 원료에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_94a3e3",
+    "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
+    "text": "징크옥사이드",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_d95fad",
+    "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
+    "text": "제품의 오염을 방지하고 적절한 온도 및 습도를 유지할 수 있는 적절한 환기시설을 갖출 것",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_5e5f0d",
+    "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
+    "text": "태반(placenta)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_c839ee",
+    "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
+    "text": "뇌척수액(cerebrospinal fluid)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_3ad1c1",
+    "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
+    "text": "경막(dura mater)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "금지원료",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|banned_ingredients.md|sec5|3",
+  "explain": "ㄱ. 출처: 원료DB 별표1 사용불가원료 동물성 원료\nㄴ. 출처: 원료DB 별표1 사용불가원료 동물성 원료\nㄷ. 출처: 원료DB 별표1 사용불가원료 동물성 원료\nㄹ. 출처: 원료DB 별표1 사용불가원료 동물성 원료\nㅁ. 출처: 원료DB 별표1 사용불가원료 동물성 원료",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "1"
+ },
+ {
+  "id": "manufacturing_combo-ref_e9a59c",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표1 사용불가원료 동물성 원료 (참조자료 원문)",
+  "stem": "다음 중 사용불가 원료(별표1)의 동물성 원료에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_765d08",
+    "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
+    "text": "비장(spleen)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_3e7111",
+    "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
+    "text": "염기성등색3 1 호(Basic Orange 31)",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_e7fbd7",
+    "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
+    "text": "척주(vertebral column)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_2cb027",
+    "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
+    "text": "징크피리치온",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_ae79ea",
+    "conceptId": "원료DB 별표1 사용불가원료:동물성 원료",
+    "text": "림프절(lymph nodes)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 동물성 원료"
    }
   ],
   "options": [
@@ -14947,6 +15950,309 @@ var COMBO_DRILLS_subject2 = [
     "members": [
      "ㄱ",
      "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "금지원료",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|banned_ingredients.md|sec5|4",
+  "explain": "ㄱ. 출처: 원료DB 별표1 사용불가원료 동물성 원료\nㄴ. 출처: 원료DB 별표1 사용불가원료 동물성 원료\nㄷ. 출처: 원료DB 별표1 사용불가원료 동물성 원료\nㄹ. 출처: 원료DB 별표1 사용불가원료 동물성 원료\nㅁ. 출처: 원료DB 별표1 사용불가원료 동물성 원료",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "5"
+ },
+ {
+  "id": "manufacturing_combo-ref_ae79bc",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표1 사용불가원료 기타 고빈도 성분 (참조자료 원문)",
+  "stem": "다음 중 사용불가 원료(별표1)의 기타 고빈도 성분에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_26b821",
+    "conceptId": "원료DB 별표1 사용불가원료:기타 고빈도 성분",
+    "text": "미세플라스틱",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 기타 고빈도 성분"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_d01898",
+    "conceptId": "원료DB 별표1 사용불가원료:기타 고빈도 성분",
+    "text": "부틸메톡시디벤조일메탄",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 기타 고빈도 성분"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_0939df",
+    "conceptId": "원료DB 별표1 사용불가원료:기타 고빈도 성분",
+    "text": "디에칠렌글라이콜",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 기타 고빈도 성분"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_a818a5",
+    "conceptId": "원료DB 별표1 사용불가원료:기타 고빈도 성분",
+    "text": "디메칠설폭사이드",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 기타 고빈도 성분"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_29c506",
+    "conceptId": "원료DB 별표1 사용불가원료:기타 고빈도 성분",
+    "text": "코카미도프로필베타인",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 기타 고빈도 성분"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "금지원료",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|banned_ingredients.md|sec6|0",
+  "explain": "ㄱ. 출처: 원료DB 별표1 사용불가원료 기타 고빈도 성분\nㄴ. 출처: 원료DB 별표1 사용불가원료 기타 고빈도 성분\nㄷ. 출처: 원료DB 별표1 사용불가원료 기타 고빈도 성분\nㄹ. 출처: 원료DB 별표1 사용불가원료 기타 고빈도 성분\nㅁ. 출처: 원료DB 별표1 사용불가원료 기타 고빈도 성분",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "1"
+ },
+ {
+  "id": "manufacturing_combo-ref_f4e52e",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표1 사용불가원료 (참조자료 원문)",
+  "stem": "다음 중 화장품에 사용할 수 없는 원료(별표1)에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_a9c391",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "트리암테렌 및 그 염류",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_3da18b",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "니코틴 및 그 염류",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_a45405",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "벤잘코늄클로라이드, 브로마이드 및 사카리네이트",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_99b503",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "신나밀알코올",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_facd3c",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "쿠라레와 쿠라린",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|banned_ingredients.md|all|0",
+  "explain": "ㄱ. 출처: 원료DB 별표1 사용불가원료 \nㄴ. 출처: 원료DB 별표1 사용불가원료 \nㄷ. 출처: 원료DB 별표1 사용불가원료 \nㄹ. 출처: 원료DB 별표1 사용불가원료 \nㅁ. 출처: 원료DB 별표1 사용불가원료 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "manufacturing_combo-ref_a0b901",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표1 사용불가원료 (참조자료 원문)",
+  "stem": "다음 중 화장품에 사용할 수 없는 원료(별표1)에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_e6619b",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "다에칠아미노하이드록시벤조일헥실벤조에이트",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_ca9b27",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "헥사하이드로쿠마린",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_313509",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "곤충, 해충이나 쥐를 막는 방법 및 점검주기",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_81330b",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "o-아미노페놀",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_4ca4c6",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "아레콜린",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄷ",
      "ㄹ",
      "ㅁ"
     ]
@@ -14960,15 +16266,415 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "3",
     "members": [
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "기한",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|banned_ingredients.md|all|1",
+  "explain": "ㄱ. 출처: 원료DB 별표1 사용불가원료 \nㄴ. 출처: 원료DB 별표1 사용불가원료 \nㄷ. 출처: 원료DB 별표1 사용불가원료 \nㄹ. 출처: 원료DB 별표1 사용불가원료 \nㅁ. 출처: 원료DB 별표1 사용불가원료 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "3"
+ },
+ {
+  "id": "manufacturing_combo-ref_a7296a",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표1 사용불가원료 (참조자료 원문)",
+  "stem": "다음 중 화장품에 사용할 수 없는 원료(별표1)에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_38e1bb",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "칼슘설페이트 (Calcium Sulfate) CI 77231",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_183aa4",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "쿼터늄-15(메텐아민 3-클로로알릴클로라이드)",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_9f169d",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "프로카인아마이드, 그 염류 및 유도체",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_0422ba",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "2-메톡시프로판올",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_7ac1ad",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "1-에칠-1-메칠피리디늄 브로마이드",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
      "ㄱ",
      "ㄴ",
      "ㄷ"
     ]
    },
    {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
     "id": "4",
     "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|banned_ingredients.md|all|2",
+  "explain": "ㄱ. 출처: 원료DB 별표1 사용불가원료 \nㄴ. 출처: 원료DB 별표1 사용불가원료 \nㄷ. 출처: 원료DB 별표1 사용불가원료 \nㄹ. 출처: 원료DB 별표1 사용불가원료 \nㅁ. 출처: 원료DB 별표1 사용불가원료 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "manufacturing_combo-ref_bd4795",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표1 사용불가원료 (참조자료 원문)",
+  "stem": "다음 중 화장품에 사용할 수 없는 원료(별표1)에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_fb73fe",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "2,2,2-트리클로로에탄-1,1-디올",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_359214",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "Adonis vernalis L. 및 그 제제",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_1e56a2",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "p-하이드록시벤조익애씨드, 그 염류 및에스텔류 (다만, 에스텔류 중 페닐은제외)",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_c931a6",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "머스크케톤",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_38947f",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "사프롤(천연에센스에 자연적으로 함유되어 그 양이 최종 제품에서 100ppm을 넘지 않는 경우는 제외)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|banned_ingredients.md|all|3",
+  "explain": "ㄱ. 출처: 원료DB 별표1 사용불가원료 \nㄴ. 출처: 원료DB 별표1 사용불가원료 \nㄷ. 출처: 원료DB 별표1 사용불가원료 \nㄹ. 출처: 원료DB 별표1 사용불가원료 \nㅁ. 출처: 원료DB 별표1 사용불가원료 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "3"
+ },
+ {
+  "id": "manufacturing_combo-ref_b4f834",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표1 사용불가원료 (참조자료 원문)",
+  "stem": "다음 중 화장품에 사용할 수 없는 원료(별표1)에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_24a182",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "치오우레아 및 그 유도체",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_8c8403",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "1-메톡시-2,4-디아미노벤젠(2,4-디아미노아니솔 또는 4-메톡시-m-페닐렌디아민 또는 CI76050) 및 그 염류",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_158a44",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "마이카 (Mica) CI 77019",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_d98d30",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "프라모카인 및 그 염류",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_460101",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "분자식 및 분자량",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
      "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|banned_ingredients.md|all|4",
+  "explain": "ㄱ. 출처: 원료DB 별표1 사용불가원료 \nㄴ. 출처: 원료DB 별표1 사용불가원료 \nㄷ. 출처: 원료DB 별표1 사용불가원료 \nㄹ. 출처: 원료DB 별표1 사용불가원료 \nㅁ. 출처: 원료DB 별표1 사용불가원료 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "manufacturing_combo-ref_02e41a",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표1 사용불가원료 (참조자료 원문)",
+  "stem": "다음 중 화장품에 사용할 수 없는 원료(별표1)에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_b20205",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "옥토크릴렌",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_051a16",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "3,7-디메칠-2-옥텐-1-올(6,7-디하이드로제라니올)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_688c0c",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "피프라드롤 및 그 염류",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_218694",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "Commiphora erythrea engler var. glabrescens 검 추출물 및 오일",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_08be34",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "할로페리돌",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
@@ -14985,13 +16691,3925 @@ var COMBO_DRILLS_subject2 = [
    "자동생성",
    "참조자료",
    "열거목록",
-   "구성비",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|banned_ingredients.md|all|5",
+  "explain": "ㄱ. 출처: 원료DB 별표1 사용불가원료 \nㄴ. 출처: 원료DB 별표1 사용불가원료 \nㄷ. 출처: 원료DB 별표1 사용불가원료 \nㄹ. 출처: 원료DB 별표1 사용불가원료 \nㅁ. 출처: 원료DB 별표1 사용불가원료 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "3"
+ },
+ {
+  "id": "manufacturing_combo-ref_aed0e1",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표1 사용불가원료 (참조자료 원문)",
+  "stem": "다음 중 화장품에 사용할 수 없는 원료(별표1)에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_2cd1ed",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "2,6-디브로모-4-시아노페닐 옥타노에이트",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_849789",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "메톡시아세틱애씨드",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_636998",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "카본블랙 (Carbon black) CI 77266",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_958a63",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "드로메트리졸트리실록산",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_099dbf",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "아코니툼(Aconitum)속 및 그 생약제제",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|banned_ingredients.md|all|6",
+  "explain": "ㄱ. 출처: 원료DB 별표1 사용불가원료 \nㄴ. 출처: 원료DB 별표1 사용불가원료 \nㄷ. 출처: 원료DB 별표1 사용불가원료 \nㄹ. 출처: 원료DB 별표1 사용불가원료 \nㅁ. 출처: 원료DB 별표1 사용불가원료 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "1"
+ },
+ {
+  "id": "manufacturing_combo-ref_45f457",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표1 사용불가원료 (참조자료 원문)",
+  "stem": "다음 중 화장품에 사용할 수 없는 원료(별표1)에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_b553c1",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "라이코펜 (Lycopene) CI 75125",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_7ecf0f",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "1,7-나프탈렌디올",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_389f54",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "몰포린-4-카르보닐클로라이드",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_4b724d",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "아코니틴 및 그 염류",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_1d91e9",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "호모살레이트",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|banned_ingredients.md|all|7",
+  "explain": "ㄱ. 출처: 원료DB 별표1 사용불가원료 \nㄴ. 출처: 원료DB 별표1 사용불가원료 \nㄷ. 출처: 원료DB 별표1 사용불가원료 \nㄹ. 출처: 원료DB 별표1 사용불가원료 \nㅁ. 출처: 원료DB 별표1 사용불가원료 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "2"
+ },
+ {
+  "id": "manufacturing_combo-ref_2585cd",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표1 사용불가원료 (참조자료 원문)",
+  "stem": "다음 중 화장품에 사용할 수 없는 원료(별표1)에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_c112e9",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "3-(1-나프틸)-4-히드록시코우마린",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_0d100b",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "헥사클로로에탄",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_f9621f",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "불만 접수연월일",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_2bf095",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "베라트린, 그 염류 및 생약제제",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_b4c35e",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "옥살락애씨드, 그 에스텔류 및 알칼리 염류",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|banned_ingredients.md|all|8",
+  "explain": "ㄱ. 출처: 원료DB 별표1 사용불가원료 \nㄴ. 출처: 원료DB 별표1 사용불가원료 \nㄷ. 출처: 원료DB 별표1 사용불가원료 \nㄹ. 출처: 원료DB 별표1 사용불가원료 \nㅁ. 출처: 원료DB 별표1 사용불가원료 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "manufacturing_combo-ref_0e3608",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표1 사용불가원료 (참조자료 원문)",
+  "stem": "다음 중 화장품에 사용할 수 없는 원료(별표1)에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_1dbce7",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "폴리(1-헥사메칠렌바이구아니드)에이치씨엘",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_59ed51",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "메칠이소치아졸리논",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_001314",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "(에폭시에칠)벤젠",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_a595b7",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "테트라베나진 및 그 염류",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_bb0873",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "다이노캡(ISO)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|banned_ingredients.md|all|9",
+  "explain": "ㄱ. 출처: 원료DB 별표1 사용불가원료 \nㄴ. 출처: 원료DB 별표1 사용불가원료 \nㄷ. 출처: 원료DB 별표1 사용불가원료 \nㄹ. 출처: 원료DB 별표1 사용불가원료 \nㅁ. 출처: 원료DB 별표1 사용불가원료 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "manufacturing_combo-ref_32c120",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표1 사용불가원료 (참조자료 원문)",
+  "stem": "다음 중 화장품에 사용할 수 없는 원료(별표1)에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_ec0231",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "2,6-디아미노피리딘",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_5051f1",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "아자페니딘",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_444494",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "풀단메릴설페이드",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_35bfc9",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "디소듐이디티에이-카퍼 (Disodium EDTA-copper)",
+    "truth": false,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_7ee3e3",
+    "conceptId": "원료DB 별표1 사용불가원료:",
+    "text": "히요시아민, 그 염류 및 유도체",
+    "truth": true,
+    "explain": "출처: 원료DB 별표1 사용불가원료 "
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|banned_ingredients.md|all|10",
+  "explain": "ㄱ. 출처: 원료DB 별표1 사용불가원료 \nㄴ. 출처: 원료DB 별표1 사용불가원료 \nㄷ. 출처: 원료DB 별표1 사용불가원료 \nㄹ. 출처: 원료DB 별표1 사용불가원료 \nㅁ. 출처: 원료DB 별표1 사용불가원료 ",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "2"
+ },
+ {
+  "id": "manufacturing_combo-ref_12965f",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표2 사용제한원료 보존제 성분 (참조자료 원문)",
+  "stem": "다음 중 사용제한 원료(별표2)의 보존제 성분에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_95d55d",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "디아졸리디닐우레아(N-(히드록시메칠)-N-(디히드록시메칠-1,3-디옥소-2,5-이미다졸리디닐-4)-N-(히드록시메칠)우레아)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_637e79",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "소듐하이드록시메칠아미노아세테이트(소듐하이드록시메칠글리시네이트)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_cb3501",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "메칠이소치아졸리논",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_0a1bd7",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "카민류 (Carmines) CI 75470",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_a779bd",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "풀루아지포프-부틸",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "금지원료",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|restricted_ingredients.md|sec0|0",
+  "explain": "ㄱ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㄴ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㄷ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㄹ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㅁ. 출처: 원료DB 별표2 사용제한원료 보존제 성분",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "5"
+ },
+ {
+  "id": "manufacturing_combo-ref_f77703",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표2 사용제한원료 보존제 성분 (참조자료 원문)",
+  "stem": "다음 중 사용제한 원료(별표2)의 보존제 성분에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_0b5bad",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "알킬디아미노에칠글라이신하이드로클로라이드용액(30%)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_d9cc91",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "네오스티그민 및 그 염류(예 : 네오스티그민브로마이드)",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_249b55",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "클로로부탄올",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_801b70",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "천수국꽃 추출물 또는 오일",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_81a8b0",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "벤질헤미포름일",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "금지원료",
+   "한도",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|restricted_ingredients.md|sec0|1",
+  "explain": "ㄱ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㄴ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㄷ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㄹ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㅁ. 출처: 원료DB 별표2 사용제한원료 보존제 성분",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "manufacturing_combo-ref_c21e98",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표2 사용제한원료 보존제 성분 (참조자료 원문)",
+  "stem": "다음 중 사용제한 원료(별표2)의 보존제 성분에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_10186a",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "클로페네신(3-(p-클로로페녹시)-프로판-1,2-디올)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_68430b",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "헥세티딘",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_7fce2b",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "페녹시에탄올",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_9355f9",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "메칠이소시아네이트",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_22df78",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "헥사에칠테트라포스페이트",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "금지원료",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|restricted_ingredients.md|sec0|2",
+  "explain": "ㄱ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㄴ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㄷ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㄹ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㅁ. 출처: 원료DB 별표2 사용제한원료 보존제 성분",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "5"
+ },
+ {
+  "id": "manufacturing_combo-ref_a06295",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표2 사용제한원료 보존제 성분 (참조자료 원문)",
+  "stem": "다음 중 사용제한 원료(별표2)의 보존제 성분에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_653623",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "메카밀아민",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_7a028b",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "브로모클로로펜(6,6-디브로모-4,4-디클로로-2,2'-메칠렌-디페놀)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_8234e9",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "아이오도프로피닐부틸카바메이트(IPBC)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_ba4ea5",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "옥시염화비스머스 이외의 비스머스화합물",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_4db890",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "피리단-2-올 1-옥사이드",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "금지원료",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|restricted_ingredients.md|sec0|3",
+  "explain": "ㄱ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㄴ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㄷ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㄹ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㅁ. 출처: 원료DB 별표2 사용제한원료 보존제 성분",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "manufacturing_combo-ref_c51302",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표2 사용제한원료 보존제 성분 (참조자료 원문)",
+  "stem": "다음 중 사용제한 원료(별표2)의 보존제 성분에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_31034f",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "4,6-디메칠-8-tert-부틸코우마린",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_398e36",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "니켈(Ⅱ)트리플루오로아세테이트",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_637e79",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "소듐하이드록시메칠아미노아세테이트(소듐하이드록시메칠글리시네이트)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_ec48d9",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "무기설파이트 및 하이드록시젠설파이트류",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_42307f",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "p-클로로-m-크레졸",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "금지원료",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|restricted_ingredients.md|sec0|4",
+  "explain": "ㄱ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㄴ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㄷ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㄹ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㅁ. 출처: 원료DB 별표2 사용제한원료 보존제 성분",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "manufacturing_combo-ref_77d429",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표2 사용제한원료 보존제 성분 (참조자료 원문)",
+  "stem": "다음 중 사용제한 원료(별표2)의 보존제 성분에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_f46db9",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "운데실레닉애씨드 및 그 염류 및 모노에탄올아마이드",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_0995e8",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "설비 등의 위치는 원자재나 직원의 이동으로 인하여 제품의 품질에 영향을 주지 않도록 할 것",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_e4ce2f",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "작업원의 수세, 소독방법 등 위생에 관한 사항",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_7fce2b",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "페녹시에탄올",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_f3e633",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "폴리(1-헥사메칠렌바이구아나이드)에이치씨엘",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "금지원료",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|restricted_ingredients.md|sec0|5",
+  "explain": "ㄱ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㄴ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㄷ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㄹ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㅁ. 출처: 원료DB 별표2 사용제한원료 보존제 성분",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "manufacturing_combo-ref_6a7415",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표2 사용제한원료 보존제 성분 (참조자료 원문)",
+  "stem": "다음 중 사용제한 원료(별표2)의 보존제 성분에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_151767",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "벤질알코올",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_51cfb0",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "o-디아니시딘의 염(3,3'-디메톡시벤지딘의염)",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_2a1e5d",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "세파엘린 및 그 염류",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_7a028b",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "브로모클로로펜(6,6-디브로모-4,4-디클로로-2,2'-메칠렌-디페놀)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_95d55d",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "디아졸리디닐우레아(N-(히드록시메칠)-N-(디히드록시메칠-1,3-디옥소-2,5-이미다졸리디닐-4)-N-(히드록시메칠)우레아)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "금지원료",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|restricted_ingredients.md|sec0|6",
+  "explain": "ㄱ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㄴ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㄷ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㄹ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㅁ. 출처: 원료DB 별표2 사용제한원료 보존제 성분",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "5"
+ },
+ {
+  "id": "manufacturing_combo-ref_3b6b53",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표2 사용제한원료 보존제 성분 (참조자료 원문)",
+  "stem": "다음 중 사용제한 원료(별표2)의 보존제 성분에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_e02c94",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "칸타리스, Cantharis vesicatoria",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_39f93d",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "쿼터늄-15(메테나민 3-클로로알릴클로라이드)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_42307f",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "p-클로로-m-크레졸",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_6fe21b",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "글리세린",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_eb7d42",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "2,4-디클로로벤질알코올",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "금지원료",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|restricted_ingredients.md|sec0|7",
+  "explain": "ㄱ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㄴ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㄷ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㄹ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㅁ. 출처: 원료DB 별표2 사용제한원료 보존제 성분",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "3"
+ },
+ {
+  "id": "manufacturing_combo-ref_c769bd",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표2 사용제한원료 보존제 성분 (참조자료 원문)",
+  "stem": "다음 중 사용제한 원료(별표2)의 보존제 성분에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_cb3501",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "메칠이소치아졸리논",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_4db890",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "피리단-2-올 1-옥사이드",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_b7ccdb",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "메톡시프로필아미노사이클로헥세닐리덴에톡시에틸사이아노아세테이트(신설)",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_f5f4ac",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "아마이드",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_6bb96d",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "트리클로카반(트리클로카바닐리드)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "금지원료",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|restricted_ingredients.md|sec0|8",
+  "explain": "ㄱ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㄴ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㄷ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㄹ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㅁ. 출처: 원료DB 별표2 사용제한원료 보존제 성분",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "manufacturing_combo-ref_50821e",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표2 사용제한원료 보존제 성분 (참조자료 원문)",
+  "stem": "다음 중 사용제한 원료(별표2)의 보존제 성분에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_ed8c0f",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "부톡시디글리세롤",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_44bed0",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "페노티아진 및 그 화합물",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_11e465",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "헥사미딘(1,6-디(4-아미디노페녹시)-n-헥산) 및 그 염류(이세치오네이트 및 p-하이드록시벤조에이트)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_8234e9",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "아이오도프로피닐부틸카바메이트(IPBC)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_5459a1",
+    "conceptId": "원료DB 별표2 사용제한원료:보존제 성분",
+    "text": "테트라브로모-o-크레졸",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 보존제 성분"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "금지원료",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|restricted_ingredients.md|sec0|9",
+  "explain": "ㄱ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㄴ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㄷ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㄹ. 출처: 원료DB 별표2 사용제한원료 보존제 성분\nㅁ. 출처: 원료DB 별표2 사용제한원료 보존제 성분",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "2"
+ },
+ {
+  "id": "manufacturing_combo-ref_2b2778",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표2 사용제한원료 자외선 차단 성분 (참조자료 원문)",
+  "stem": "다음 중 사용제한 원료(별표2)의 자외선 차단 성분에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_5f266a",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "4-메칠벤질리덴캠퍼",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_ef42b0",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "아리스톨로키아(Aristolochia)속 및 그 생약제제",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_5c1229",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "청색 201 호 (인디고, Indigo)* CI 73000인디고틴",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_464132",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "폴리실리콘-15(디메칠코디에칠벤잘말로네이트)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_3e5401",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "벤조페논-3(옥시벤존)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "금지원료",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|restricted_ingredients.md|sec1|0",
+  "explain": "ㄱ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분\nㄴ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분\nㄷ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분\nㄹ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분\nㅁ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "2"
+ },
+ {
+  "id": "manufacturing_combo-ref_e9cd87",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표2 사용제한원료 자외선 차단 성분 (참조자료 원문)",
+  "stem": "다음 중 사용제한 원료(별표2)의 자외선 차단 성분에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_2df422",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "곤충, 해충이나 쥐를 막는 방법 및 점검주기",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_816dd8",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "트리니켈디설파이드",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_464132",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "폴리실리콘-15(디메칠코디에칠벤잘말로네이트)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_b8ae9e",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "페닐렌 비스-디페닐트리아진",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_85a3a7",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "다에칠아미노하이드록시벤조일헥실벤조에이트",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "금지원료",
+   "기한",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|restricted_ingredients.md|sec1|1",
+  "explain": "ㄱ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분\nㄴ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분\nㄷ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분\nㄹ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분\nㅁ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "manufacturing_combo-ref_ea2235",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표2 사용제한원료 자외선 차단 성분 (참조자료 원문)",
+  "stem": "다음 중 사용제한 원료(별표2)의 자외선 차단 성분에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_d60124",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "Rauwolfia serpentina 알칼로이드 및그 염류",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_f178aa",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "호모살레이트",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_f28007",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "부틸메톡시디벤조일메탄",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_589354",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "트리플루페리돌",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_464132",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "폴리실리콘-15(디메칠코디에칠벤잘말로네이트)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "금지원료",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|restricted_ingredients.md|sec1|2",
+  "explain": "ㄱ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분\nㄴ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분\nㄷ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분\nㄹ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분\nㅁ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "3"
+ },
+ {
+  "id": "manufacturing_combo-ref_46133a",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표2 사용제한원료 자외선 차단 성분 (참조자료 원문)",
+  "stem": "다음 중 사용제한 원료(별표2)의 자외선 차단 성분에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_a6485b",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "Ammi majus 및 그 생약제제",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_cf3931",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "드로메트리졸트리실록산",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_351229",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "티이에이-살리실레이트",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_76df72",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "N,N-디메칠아세타마이드",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_3e5401",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "벤조페논-3(옥시벤존)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "금지원료",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|restricted_ingredients.md|sec1|3",
+  "explain": "ㄱ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분\nㄴ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분\nㄷ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분\nㄹ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분\nㅁ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "1"
+ },
+ {
+  "id": "manufacturing_combo-ref_ccdcb5",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표2 사용제한원료 자외선 차단 성분 (참조자료 원문)",
+  "stem": "다음 중 사용제한 원료(별표2)의 자외선 차단 성분에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_2ffb40",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "드로메트리졸",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_748377",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "비스에칠헥실옥시페놀메톡시페닐트리아진",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_fbe664",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "2,4,5-트리메칠아닐린; 2,4,5-트리메칠아닐린 하이드로클로라이드",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_06c2e5",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "테레무탈말리덴캠파설포닉애씨드 및 그 염류",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_e83028",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "4-시아노-2,6-디요도페닐 옥타노에이트",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "금지원료",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|restricted_ingredients.md|sec1|4",
+  "explain": "ㄱ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분\nㄴ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분\nㄷ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분\nㄹ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분\nㅁ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "5"
+ },
+ {
+  "id": "manufacturing_combo-ref_e4f7bf",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표2 사용제한원료 자외선 차단 성분 (참조자료 원문)",
+  "stem": "다음 중 사용제한 원료(별표2)의 자외선 차단 성분에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_38a4d9",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "징크옥사이드",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_06c2e5",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "테레무탈말리덴캠파설포닉애씨드 및 그 염류",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_61adc0",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "청소상태의 평가방법",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_d89d8e",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "벤조페논-8(다옥시벤존)",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_ef7f28",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "치오아세타마이드",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "금지원료",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|restricted_ingredients.md|sec1|5",
+  "explain": "ㄱ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분\nㄴ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분\nㄷ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분\nㄹ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분\nㅁ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "2"
+ },
+ {
+  "id": "manufacturing_combo-ref_91c49d",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표2 사용제한원료 자외선 차단 성분 (참조자료 원문)",
+  "stem": "다음 중 사용제한 원료(별표2)의 자외선 차단 성분에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_6be560",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "N-메칠포름아마이드",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_748377",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "비스에칠헥실옥시페놀메톡시페닐트리아진",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_b5ee7f",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "페닐벤즈이미다졸설포닉애씨드",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_e57f38",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "니켈 카보네이트",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_ecb6bc",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "티타늄디옥사이드",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "금지원료",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|restricted_ingredients.md|sec1|6",
+  "explain": "ㄱ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분\nㄴ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분\nㄷ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분\nㄹ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분\nㅁ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "manufacturing_combo-ref_56ae09",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 별표2 사용제한원료 자외선 차단 성분 (참조자료 원문)",
+  "stem": "다음 중 사용제한 원료(별표2)의 자외선 차단 성분에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_b5ee7f",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "페닐벤즈이미다졸설포닉애씨드",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_610edd",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "트리스-바이페닐 트라이아진",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_ecb6bc",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "티타늄디옥사이드",
+    "truth": true,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_9d80d2",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "참나무이끼추출물",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_e45f19",
+    "conceptId": "원료DB 별표2 사용제한원료:자외선 차단 성분",
+    "text": "N-5-클로로벤족사졸-2-일아세트아마이드",
+    "truth": false,
+    "explain": "출처: 원료DB 별표2 사용제한원료 자외선 차단 성분"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "금지원료",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|restricted_ingredients.md|sec1|7",
+  "explain": "ㄱ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분\nㄴ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분\nㄷ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분\nㄹ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분\nㅁ. 출처: 원료DB 별표2 사용제한원료 자외선 차단 성분",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "3"
+ },
+ {
+  "id": "manufacturing_combo-ref_135b08",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 일반 원료 수성 원료 (참조자료 원문)",
+  "stem": "다음 중 수성 원료에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_4f6e3c",
+    "conceptId": "원료DB 일반 원료:수성 원료",
+    "text": "아이소프로필알코올",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 수성 원료"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_34268c",
+    "conceptId": "원료DB 일반 원료:수성 원료",
+    "text": "글리세린",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 수성 원료"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_4ef386",
+    "conceptId": "원료DB 일반 원료:수성 원료",
+    "text": "부틸렌글라이콜",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 수성 원료"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_8fb3c8",
+    "conceptId": "원료DB 일반 원료:수성 원료",
+    "text": "o-아미노페놀",
+    "truth": false,
+    "explain": "출처: 원료DB 일반 원료 수성 원료"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_07246c",
+    "conceptId": "원료DB 일반 원료:수성 원료",
+    "text": "피로카르핀 및 그 염류",
+    "truth": false,
+    "explain": "출처: 원료DB 일반 원료 수성 원료"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|원료|approved_ingredients.md|sec0|0",
+  "explain": "ㄱ. 출처: 원료DB 일반 원료 수성 원료\nㄴ. 출처: 원료DB 일반 원료 수성 원료\nㄷ. 출처: 원료DB 일반 원료 수성 원료\nㄹ. 출처: 원료DB 일반 원료 수성 원료\nㅁ. 출처: 원료DB 일반 원료 수성 원료",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "manufacturing_combo-ref_515f60",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 일반 원료 유성 원료 (참조자료 원문)",
+  "stem": "다음 중 유성 원료에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_9751eb",
+    "conceptId": "원료DB 일반 원료:유성 원료",
+    "text": "스쿠알렌",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 유성 원료"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_9419a8",
+    "conceptId": "원료DB 일반 원료:유성 원료",
+    "text": "미네랄 오일",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 유성 원료"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_e24d92",
+    "conceptId": "원료DB 일반 원료:유성 원료",
+    "text": "트리클로르메틴 및 그 염류",
+    "truth": false,
+    "explain": "출처: 원료DB 일반 원료 유성 원료"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_809f59",
+    "conceptId": "원료DB 일반 원료:유성 원료",
+    "text": "올리브 오일",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 유성 원료"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_acd46c",
+    "conceptId": "원료DB 일반 원료:유성 원료",
+    "text": "트리플루페리돌",
+    "truth": false,
+    "explain": "출처: 원료DB 일반 원료 유성 원료"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|원료|approved_ingredients.md|sec1|0",
+  "explain": "ㄱ. 출처: 원료DB 일반 원료 유성 원료\nㄴ. 출처: 원료DB 일반 원료 유성 원료\nㄷ. 출처: 원료DB 일반 원료 유성 원료\nㄹ. 출처: 원료DB 일반 원료 유성 원료\nㅁ. 출처: 원료DB 일반 원료 유성 원료",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "1"
+ },
+ {
+  "id": "manufacturing_combo-ref_0ee96f",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 일반 원료 유성 원료 (참조자료 원문)",
+  "stem": "다음 중 유성 원료에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_457df5",
+    "conceptId": "원료DB 일반 원료:유성 원료",
+    "text": "다이메티콘",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 유성 원료"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_9419a8",
+    "conceptId": "원료DB 일반 원료:유성 원료",
+    "text": "미네랄 오일",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 유성 원료"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_61549c",
+    "conceptId": "원료DB 일반 원료:유성 원료",
+    "text": "α-클로로톨루엔",
+    "truth": false,
+    "explain": "출처: 원료DB 일반 원료 유성 원료"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_137bfd",
+    "conceptId": "원료DB 일반 원료:유성 원료",
+    "text": "펜타클로로에탄",
+    "truth": false,
+    "explain": "출처: 원료DB 일반 원료 유성 원료"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_363efb",
+    "conceptId": "원료DB 일반 원료:유성 원료",
+    "text": "코코넛 오일",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 유성 원료"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|원료|approved_ingredients.md|sec1|1",
+  "explain": "ㄱ. 출처: 원료DB 일반 원료 유성 원료\nㄴ. 출처: 원료DB 일반 원료 유성 원료\nㄷ. 출처: 원료DB 일반 원료 유성 원료\nㄹ. 출처: 원료DB 일반 원료 유성 원료\nㅁ. 출처: 원료DB 일반 원료 유성 원료",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "5"
+ },
+ {
+  "id": "manufacturing_combo-ref_664b4b",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 일반 원료 계면활성제 (참조자료 원문)",
+  "stem": "다음 중 계면활성제에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_a6d174",
+    "conceptId": "원료DB 일반 원료:계면활성제",
+    "text": "소듐라우릴설페이트(SLS)",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 계면활성제"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_19c2ce",
+    "conceptId": "원료DB 일반 원료:계면활성제",
+    "text": "레조시놀",
+    "truth": false,
+    "explain": "출처: 원료DB 일반 원료 계면활성제"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_17c133",
+    "conceptId": "원료DB 일반 원료:계면활성제",
+    "text": "임페라토린(9-(3-메칠부트-2-에니록시)푸로(3,2-g)크로멘-7온)",
+    "truth": false,
+    "explain": "출처: 원료DB 일반 원료 계면활성제"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_53118e",
+    "conceptId": "원료DB 일반 원료:계면활성제",
+    "text": "세트리모늄클로라이드",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 계면활성제"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_c3aa4a",
+    "conceptId": "원료DB 일반 원료:계면활성제",
+    "text": "솔비탄라우레이트",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 계면활성제"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|approved_ingredients.md|sec3|0",
+  "explain": "ㄱ. 출처: 원료DB 일반 원료 계면활성제\nㄴ. 출처: 원료DB 일반 원료 계면활성제\nㄷ. 출처: 원료DB 일반 원료 계면활성제\nㄹ. 출처: 원료DB 일반 원료 계면활성제\nㅁ. 출처: 원료DB 일반 원료 계면활성제",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "5"
+ },
+ {
+  "id": "manufacturing_combo-ref_46a6ef",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 일반 원료 보존제 (참조자료 원문)",
+  "stem": "다음 중 보존제에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_c2c456",
+    "conceptId": "원료DB 일반 원료:보존제",
+    "text": "파라벤류",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 보존제"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_696961",
+    "conceptId": "원료DB 일반 원료:보존제",
+    "text": "벤조익애씨드",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 보존제"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_cd6d88",
+    "conceptId": "원료DB 일반 원료:보존제",
+    "text": "벤조[e]피렌",
+    "truth": false,
+    "explain": "출처: 원료DB 일반 원료 보존제"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_b3064b",
+    "conceptId": "원료DB 일반 원료:보존제",
+    "text": "페녹시에탄올",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 보존제"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_7cfe98",
+    "conceptId": "원료DB 일반 원료:보존제",
+    "text": "테트라브로모살리실아닐리드",
+    "truth": false,
+    "explain": "출처: 원료DB 일반 원료 보존제"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|원료|approved_ingredients.md|sec4|0",
+  "explain": "ㄱ. 출처: 원료DB 일반 원료 보존제\nㄴ. 출처: 원료DB 일반 원료 보존제\nㄷ. 출처: 원료DB 일반 원료 보존제\nㄹ. 출처: 원료DB 일반 원료 보존제\nㅁ. 출처: 원료DB 일반 원료 보존제",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "3"
+ },
+ {
+  "id": "manufacturing_combo-ref_6a493e",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 일반 원료 기능성 성분 (참조자료 원문)",
+  "stem": "다음 중 기능성 성분에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_c6f608",
+    "conceptId": "원료DB 일반 원료:기능성 성분",
+    "text": "살리실산",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 기능성 성분"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_584b98",
+    "conceptId": "원료DB 일반 원료:기능성 성분",
+    "text": "피그먼트 자색 23호 (Pigment Violet 23) CI 51319",
+    "truth": false,
+    "explain": "출처: 원료DB 일반 원료 기능성 성분"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_ea2aed",
+    "conceptId": "원료DB 일반 원료:기능성 성분",
+    "text": "세라마이드",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 기능성 성분"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_26c86c",
+    "conceptId": "원료DB 일반 원료:기능성 성분",
+    "text": "헵타클로르",
+    "truth": false,
+    "explain": "출처: 원료DB 일반 원료 기능성 성분"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_005b7e",
+    "conceptId": "원료DB 일반 원료:기능성 성분",
+    "text": "나이아신아마이드",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 기능성 성분"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|approved_ingredients.md|sec6|0",
+  "explain": "ㄱ. 출처: 원료DB 일반 원료 기능성 성분\nㄴ. 출처: 원료DB 일반 원료 기능성 성분\nㄷ. 출처: 원료DB 일반 원료 기능성 성분\nㄹ. 출처: 원료DB 일반 원료 기능성 성분\nㅁ. 출처: 원료DB 일반 원료 기능성 성분",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "3"
+ },
+ {
+  "id": "manufacturing_combo-ref_d15281",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 일반 원료 기능성 성분 (참조자료 원문)",
+  "stem": "다음 중 기능성 성분에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_3952b8",
+    "conceptId": "원료DB 일반 원료:기능성 성분",
+    "text": "아트로핀, 그 염류 및 유도체",
+    "truth": false,
+    "explain": "출처: 원료DB 일반 원료 기능성 성분"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_43db91",
+    "conceptId": "원료DB 일반 원료:기능성 성분",
+    "text": "비타민C(아스코르브산)",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 기능성 성분"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_d38d52",
+    "conceptId": "원료DB 일반 원료:기능성 성분",
+    "text": "칠아닐린 하이드로클로라이드[2]",
+    "truth": false,
+    "explain": "출처: 원료DB 일반 원료 기능성 성분"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_d2f606",
+    "conceptId": "원료DB 일반 원료:기능성 성분",
+    "text": "아데노신",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 기능성 성분"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_ea2aed",
+    "conceptId": "원료DB 일반 원료:기능성 성분",
+    "text": "세라마이드",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 기능성 성분"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|approved_ingredients.md|sec6|1",
+  "explain": "ㄱ. 출처: 원료DB 일반 원료 기능성 성분\nㄴ. 출처: 원료DB 일반 원료 기능성 성분\nㄷ. 출처: 원료DB 일반 원료 기능성 성분\nㄹ. 출처: 원료DB 일반 원료 기능성 성분\nㅁ. 출처: 원료DB 일반 원료 기능성 성분",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "2"
+ },
+ {
+  "id": "manufacturing_combo-ref_a052dd",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 일반 원료 마이크로바이옴 PCR 원료 (참조자료 원문)",
+  "stem": "다음 중 마이크로바이옴 PCR 원료에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_b832de",
+    "conceptId": "원료DB 일반 원료:마이크로바이옴 PCR 원료",
+    "text": "올리고사카라이드",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 마이크로바이옴 PCR 원료"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_a53839",
+    "conceptId": "원료DB 일반 원료:마이크로바이옴 PCR 원료",
+    "text": "브로모에탄",
+    "truth": false,
+    "explain": "출처: 원료DB 일반 원료 마이크로바이옴 PCR 원료"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_b20376",
+    "conceptId": "원료DB 일반 원료:마이크로바이옴 PCR 원료",
+    "text": "아연PCA",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 마이크로바이옴 PCR 원료"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_b5cc0a",
+    "conceptId": "원료DB 일반 원료:마이크로바이옴 PCR 원료",
+    "text": "락토바실러스발효여과물",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 마이크로바이옴 PCR 원료"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_4565db",
+    "conceptId": "원료DB 일반 원료:마이크로바이옴 PCR 원료",
+    "text": "1-나프톨(α-나프톨)",
+    "truth": false,
+    "explain": "출처: 원료DB 일반 원료 마이크로바이옴 PCR 원료"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|approved_ingredients.md|sec7|0",
+  "explain": "ㄱ. 출처: 원료DB 일반 원료 마이크로바이옴 PCR 원료\nㄴ. 출처: 원료DB 일반 원료 마이크로바이옴 PCR 원료\nㄷ. 출처: 원료DB 일반 원료 마이크로바이옴 PCR 원료\nㄹ. 출처: 원료DB 일반 원료 마이크로바이옴 PCR 원료\nㅁ. 출처: 원료DB 일반 원료 마이크로바이옴 PCR 원료",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "1"
+ },
+ {
+  "id": "manufacturing_combo-ref_2b8958",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 일반 원료 마이크로바이옴 PCR 원료 (참조자료 원문)",
+  "stem": "다음 중 마이크로바이옴 PCR 원료에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_0d0ad3",
+    "conceptId": "원료DB 일반 원료:마이크로바이옴 PCR 원료",
+    "text": "프로베네시드",
+    "truth": false,
+    "explain": "출처: 원료DB 일반 원료 마이크로바이옴 PCR 원료"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_bf69b2",
+    "conceptId": "원료DB 일반 원료:마이크로바이옴 PCR 원료",
+    "text": "니트로벤젠",
+    "truth": false,
+    "explain": "출처: 원료DB 일반 원료 마이크로바이옴 PCR 원료"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_b5cc0a",
+    "conceptId": "원료DB 일반 원료:마이크로바이옴 PCR 원료",
+    "text": "락토바실러스발효여과물",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 마이크로바이옴 PCR 원료"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_b20376",
+    "conceptId": "원료DB 일반 원료:마이크로바이옴 PCR 원료",
+    "text": "아연PCA",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 마이크로바이옴 PCR 원료"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_f5ecbc",
+    "conceptId": "원료DB 일반 원료:마이크로바이옴 PCR 원료",
+    "text": "프룩토올리고사카라이드",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 마이크로바이옴 PCR 원료"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록"
+  ],
+  "derivedFrom": "ref:enum|원료|approved_ingredients.md|sec7|1",
+  "explain": "ㄱ. 출처: 원료DB 일반 원료 마이크로바이옴 PCR 원료\nㄴ. 출처: 원료DB 일반 원료 마이크로바이옴 PCR 원료\nㄷ. 출처: 원료DB 일반 원료 마이크로바이옴 PCR 원료\nㄹ. 출처: 원료DB 일반 원료 마이크로바이옴 PCR 원료\nㅁ. 출처: 원료DB 일반 원료 마이크로바이옴 PCR 원료",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "3"
+ },
+ {
+  "id": "manufacturing_combo-ref_175c96",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 일반 원료 알레르기 유발 성분 25종 (참조자료 원문)",
+  "stem": "다음 중 알레르기 유발 성분 25종에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_8e9d65",
+    "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
+    "text": "메칠2-옥티노에이트",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_69083d",
+    "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
+    "text": "항생 물질",
+    "truth": false,
+    "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_bbd67c",
+    "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
+    "text": "벤질신나메이트",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_74ea0e",
+    "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
+    "text": "비닐클로라이드모노머",
+    "truth": false,
+    "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_423a7c",
+    "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
+    "text": "시트로넬올",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|approved_ingredients.md|sec9|0",
+  "explain": "ㄱ. 출처: 원료DB 일반 원료 알레르기 유발 성분 25종\nㄴ. 출처: 원료DB 일반 원료 알레르기 유발 성분 25종\nㄷ. 출처: 원료DB 일반 원료 알레르기 유발 성분 25종\nㄹ. 출처: 원료DB 일반 원료 알레르기 유발 성분 25종\nㅁ. 출처: 원료DB 일반 원료 알레르기 유발 성분 25종",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "5"
+ },
+ {
+  "id": "manufacturing_combo-ref_6c9965",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 일반 원료 알레르기 유발 성분 25종 (참조자료 원문)",
+  "stem": "다음 중 알레르기 유발 성분 25종에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_bbd67c",
+    "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
+    "text": "벤질신나메이트",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_30d96f",
+    "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
+    "text": "N,N-디메칠아세타마이드",
+    "truth": false,
+    "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_3c3d0e",
+    "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
+    "text": "벤질살리실레이트",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_6b52ff",
+    "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
+    "text": "하이드록시시트로넬알",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_a8c0c5",
+    "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
+    "text": "머스크자일렌",
+    "truth": false,
+    "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|approved_ingredients.md|sec9|1",
+  "explain": "ㄱ. 출처: 원료DB 일반 원료 알레르기 유발 성분 25종\nㄴ. 출처: 원료DB 일반 원료 알레르기 유발 성분 25종\nㄷ. 출처: 원료DB 일반 원료 알레르기 유발 성분 25종\nㄹ. 출처: 원료DB 일반 원료 알레르기 유발 성분 25종\nㅁ. 출처: 원료DB 일반 원료 알레르기 유발 성분 25종",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "2"
+ },
+ {
+  "id": "manufacturing_combo-ref_08ef9a",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 일반 원료 알레르기 유발 성분 25종 (참조자료 원문)",
+  "stem": "다음 중 알레르기 유발 성분 25종에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_423a7c",
+    "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
+    "text": "시트로넬올",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_6b52ff",
+    "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
+    "text": "하이드록시시트로넬알",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_b286fa",
+    "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
+    "text": "벤질알코올",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_5e3073",
+    "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
+    "text": "메톡시디시클로펜타디엔카복스알데하이드",
+    "truth": false,
+    "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_3d5429",
+    "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
+    "text": "Apocynum cannabinum L. 및 그 제제",
+    "truth": false,
+    "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|approved_ingredients.md|sec9|2",
+  "explain": "ㄱ. 출처: 원료DB 일반 원료 알레르기 유발 성분 25종\nㄴ. 출처: 원료DB 일반 원료 알레르기 유발 성분 25종\nㄷ. 출처: 원료DB 일반 원료 알레르기 유발 성분 25종\nㄹ. 출처: 원료DB 일반 원료 알레르기 유발 성분 25종\nㅁ. 출처: 원료DB 일반 원료 알레르기 유발 성분 25종",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "5"
+ },
+ {
+  "id": "manufacturing_combo-ref_13612f",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 일반 원료 알레르기 유발 성분 25종 (참조자료 원문)",
+  "stem": "다음 중 알레르기 유발 성분 25종에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_6b52ff",
+    "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
+    "text": "하이드록시시트로넬알",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_423a7c",
+    "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
+    "text": "시트로넬올",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_7567b8",
+    "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
+    "text": "곤충, 해충이나 쥐를 막는 방법 및 점검주기",
+    "truth": false,
+    "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_ee1bac",
+    "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
+    "text": "카브로말",
+    "truth": false,
+    "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_139abd",
+    "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
+    "text": "아이소유제놀",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "기한",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|approved_ingredients.md|sec9|3",
+  "explain": "ㄱ. 출처: 원료DB 일반 원료 알레르기 유발 성분 25종\nㄴ. 출처: 원료DB 일반 원료 알레르기 유발 성분 25종\nㄷ. 출처: 원료DB 일반 원료 알레르기 유발 성분 25종\nㄹ. 출처: 원료DB 일반 원료 알레르기 유발 성분 25종\nㅁ. 출처: 원료DB 일반 원료 알레르기 유발 성분 25종",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "5"
+ },
+ {
+  "id": "manufacturing_combo-ref_db1ffb",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 원료DB 일반 원료 알레르기 유발 성분 25종 (참조자료 원문)",
+  "stem": "다음 중 알레르기 유발 성분 25종에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_9d5975",
+    "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
+    "text": "아니스알코올",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_38e61b",
+    "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
+    "text": "신나밀알코올",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_f465dc",
+    "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
+    "text": "니켈 설파이드",
+    "truth": false,
+    "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_4c362b",
+    "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
+    "text": "시녹세이트",
+    "truth": false,
+    "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_6b52ff",
+    "conceptId": "원료DB 일반 원료:알레르기 유발 성분 25종",
+    "text": "하이드록시시트로넬알",
+    "truth": true,
+    "explain": "출처: 원료DB 일반 원료 알레르기 유발 성분 25종"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|원료|approved_ingredients.md|sec9|4",
+  "explain": "ㄱ. 출처: 원료DB 일반 원료 알레르기 유발 성분 25종\nㄴ. 출처: 원료DB 일반 원료 알레르기 유발 성분 25종\nㄷ. 출처: 원료DB 일반 원료 알레르기 유발 성분 25종\nㄹ. 출처: 원료DB 일반 원료 알레르기 유발 성분 25종\nㅁ. 출처: 원료DB 일반 원료 알레르기 유발 성분 25종",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "2"
+ },
+ {
+  "id": "manufacturing_combo-ref_2f0f21",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 우수화장품 제조 및 품질관리기준 제8조 (참조자료 원문)",
+  "stem": "다음 중 「우수화장품 제조 및 품질관리기준」제8조의 규정에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_5abea8",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
+    "text": "제품과 설비가 오염되지 않도록 배관 및 배수관을 설치하며, 배수관은 역류되지 않아야 하고, 청결을 유지할 것",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_5248fe",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
+    "text": "디코우마롤",
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_1b8158",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
+    "text": "적절하고 깨끗한 수세실과 화장실을 마련하고 수세실과 화장실은 접근이 쉬어야 하나 생산구역과 분리되어있을 것",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_a4d59d",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
+    "text": "벌크 제품의 용기는 먼지나 수분으로부터 내용물을 보호할 수 있을 것",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_015baf",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
+    "text": "할로페리돌",
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822)|제8조|0|0",
+  "explain": "ㄱ. 출처: 우수화장품 제조 및 품질관리기준 제8조\nㄴ. 출처: 우수화장품 제조 및 품질관리기준 제8조\nㄷ. 출처: 우수화장품 제조 및 품질관리기준 제8조\nㄹ. 출처: 우수화장품 제조 및 품질관리기준 제8조\nㅁ. 출처: 우수화장품 제조 및 품질관리기준 제8조",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "1"
+ },
+ {
+  "id": "manufacturing_combo-ref_2fb0d8",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 우수화장품 제조 및 품질관리기준 제8조 (참조자료 원문)",
+  "stem": "다음 중 「우수화장품 제조 및 품질관리기준」제8조의 규정에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_b9cc05",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
+    "text": "작업소 전체에 적절한 조명을 설치하고, 조명이 파손될 경우를 대비한 제품을 보호할 수 있는 처리절차를 마련할 것",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_bc7e88",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
+    "text": "쿼터늄-15(메테나민 3-클로로알릴클로라이드)",
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_bb4b5c",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
+    "text": "제품의 오염을 방지하고 적절한 온도 및 습도를 유지할 수 있는 적절한 환기시설을 갖출 것",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_e01812",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
+    "text": "프로피오락톤",
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_eb62bd",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
+    "text": "사용하지 않는 연결 호스와 부속품은 청소 등 위생관리를 하며, 건조한 상태로 유지하고 먼지, 얼룩 또는 다른오염으로부터 보호할 것",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "절차",
    "수치"
   ],
   "derivedFrom": "ref:enum|우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822)|제8조|0|1",
   "explain": "ㄱ. 출처: 우수화장품 제조 및 품질관리기준 제8조\nㄴ. 출처: 우수화장품 제조 및 품질관리기준 제8조\nㄷ. 출처: 우수화장품 제조 및 품질관리기준 제8조\nㄹ. 출처: 우수화장품 제조 및 품질관리기준 제8조\nㅁ. 출처: 우수화장품 제조 및 품질관리기준 제8조",
   "source": "참조자료 원문 (열거 목록)",
-  "answer": "3"
+  "answer": "5"
  },
  {
   "id": "manufacturing_combo-ref_6f2218",
@@ -15003,30 +20621,6 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_a6a29f",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "아데노신",
-    "truth": false,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_a87589",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "α-다마스콘(시스-로즈케톤-1)",
-    "truth": false,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_895384",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "천정 주위의 대들보, 파이프, 덕트 등은 가급적 노출되지 않도록 설계하고, 노출된 파이프는 받침대 등으로 고 정하고 벽에 닿지 않게 하여 청소가 용이하도록 설계할 것법제처 5 국가법령정보센터우수화장품 제조 및 품질관리기준",
-    "truth": true,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
-   },
-   {
-    "id": "ㄹ",
     "sid": "manufacturing_refst_b929f2",
     "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
     "text": "설비 등의 위치는 원자재나 직원의 이동으로 인하여 제품의 품질에 영향을 주지 않도록 할 것",
@@ -15034,10 +20628,34 @@ var COMBO_DRILLS_subject2 = [
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
    },
    {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_db0695",
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_ea229a",
     "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "제품의 품질에 영향을 주지 않는 소모품을 사용할 것",
+    "text": "(4-하이드라지노페닐)-N-메칠메탄설폰아마이드 하이드로클로라이드",
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_a2e2b5",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
+    "text": "사용목적에 적합하고, 청소가 가능하며, 필요한 경우 위생ㆍ유지관리가 가능하여야 한다. 자동화시스템을 도입한 경우도 또한 같다.",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_def0d8",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
+    "text": "알릴글리시딜에텔",
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_4409f0",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
+    "text": "시설 및 기구에 사용되는 소모품은 제품의 품질에 영향을 주지 않도록 할 것",
     "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
    }
@@ -15046,8 +20664,8 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "1",
     "members": [
+     "ㄱ",
      "ㄷ",
-     "ㄹ",
      "ㅁ"
     ]
    },
@@ -15103,6 +20721,30 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
+    "sid": "manufacturing_refst_eb62bd",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
+    "text": "사용하지 않는 연결 호스와 부속품은 청소 등 위생관리를 하며, 건조한 상태로 유지하고 먼지, 얼룩 또는 다른오염으로부터 보호할 것",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_39c8ef",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
+    "text": "글루코코르티코이드",
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_5abea8",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
+    "text": "제품과 설비가 오염되지 않도록 배관 및 배수관을 설치하며, 배수관은 역류되지 않아야 하고, 청결을 유지할 것",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
+   },
+   {
+    "id": "ㄹ",
     "sid": "manufacturing_refst_806603",
     "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
     "text": "제조하는 화장품의 종류ㆍ제형에 따라 적절히 구획ㆍ구분되어 있어 교차오염 우려가 없을 것",
@@ -15110,34 +20752,10 @@ var COMBO_DRILLS_subject2 = [
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
    },
    {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_6ef8c4",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "미네랄 울",
-    "truth": false,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_a1a371",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "작업소 내의 외관 표면은 가능한 매끄럽게 설계하고, 청소, 소독제의 부식성에 저항력이 있을 것",
-    "truth": true,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_a4d59d",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "벌크 제품의 용기는 먼지나 수분으로부터 내용물을 보호할 수 있을 것",
-    "truth": true,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
-   },
-   {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_9167c5",
+    "sid": "manufacturing_refst_177283",
     "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "벤조[j]플루오란텐",
+    "text": "ω-알킬디치오카르보닉애씨드의 염",
     "truth": false,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
    }
@@ -15200,41 +20818,41 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_b4855a",
+    "sid": "manufacturing_refst_1414d8",
     "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "글루테티미드 및 그 염류",
+    "text": "디소듐페닐디벤즈이미다졸테트라설포네이트",
     "truth": false,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_a2e2b5",
+    "sid": "manufacturing_refst_1e7933",
     "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "사용목적에 적합하고, 청소가 가능하며, 필요한 경우 위생ㆍ유지관리가 가능하여야 한다. 자동화시스템을 도입한 경우도 또한 같다.",
+    "text": "바닥, 벽, 천장은 가능한 청소 또는 위생관리를 하기 쉽게 매끄러운 표면을 지니고 청결하게 유지되어야 하며 소독제 등의 부식성에 저항력이 있을 것",
     "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_5abea8",
+    "sid": "manufacturing_refst_b2ea3e",
     "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "제품과 설비가 오염되지 않도록 배관 및 배수관을 설치하며, 배수관은 역류되지 않아야 하고, 청결을 유지할 것",
-    "truth": true,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_875a29",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "원자재 관리에 관한 사항",
+    "text": "피록톤올아민(1-하이드록시-4-메칠-6(2,4,4-트리메칠펜틸)2-피리돈 및그 모노에탄올아민염)",
     "truth": false,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
    },
    {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_887fbc",
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_db0695",
     "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "외부와 연결된 창문은 가능한 열리지 않도록 할 것. 창문이 외부 환경으로 열리는 경우에는 제품의 오염을 방지하도록 적절한 방법으로 차단할 것",
+    "text": "제품의 품질에 영향을 주지 않는 소모품을 사용할 것",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_5abea8",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
+    "text": "제품과 설비가 오염되지 않도록 배관 및 배수관을 설치하며, 배수관은 역류되지 않아야 하고, 청결을 유지할 것",
     "truth": true,
     "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
    }
@@ -15252,7 +20870,7 @@ var COMBO_DRILLS_subject2 = [
     "id": "2",
     "members": [
      "ㄴ",
-     "ㄷ",
+     "ㄹ",
      "ㅁ"
     ]
    },
@@ -15288,1687 +20906,83 @@ var COMBO_DRILLS_subject2 = [
   "answer": "2"
  },
  {
-  "id": "manufacturing_combo-ref_fc4603",
+  "id": "manufacturing_combo-ref_e0e4b4",
   "subject": 2,
   "type": "combo",
   "points": 4,
-  "citation": "📖 우수화장품 제조 및 품질관리기준 제8조 (참조자료 원문)",
-  "stem": "다음 중 「우수화장품 제조 및 품질관리기준」제8조의 규정에 해당하는 것을 모두 고른 것은?",
+  "citation": "📖 우수화장품 제조 및 품질관리기준 제4조 (참조자료 원문)",
+  "stem": "다음 중 「우수화장품 제조 및 품질관리기준」제4조의 규정에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_a4d59d",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "벌크 제품의 용기는 먼지나 수분으로부터 내용물을 보호할 수 있을 것",
+    "sid": "manufacturing_refst_72b1fd",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제4조",
+    "text": "문서접근 제한 및 개인위생 규정을 준수해야 할 의무",
     "truth": true,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제4조"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_7fbf12",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "무화과나무(Ficus carica)잎엡솔루트(피그잎엡솔루트)",
-    "truth": false,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
+    "sid": "manufacturing_refst_b44692",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제4조",
+    "text": "정해진 책임과 활동을 위한 교육훈련을 이수할 의무",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제4조"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_d8a7a1",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "노스카핀 및 그 염류",
+    "sid": "manufacturing_refst_98f88b",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제4조",
+    "text": "드로메트리졸트리실록산",
     "truth": false,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제4조"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_a1a371",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "작업소 내의 외관 표면은 가능한 매끄럽게 설계하고, 청소, 소독제의 부식성에 저항력이 있을 것",
-    "truth": true,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
+    "sid": "manufacturing_refst_66a2ab",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제4조",
+    "text": "[(p-톨일옥시)메칠]옥시란",
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제4조"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_db0695",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제8조",
-    "text": "제품의 품질에 영향을 주지 않는 소모품을 사용할 것",
-    "truth": true,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제8조"
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822)|제8조|0|5",
-  "explain": "ㄱ. 출처: 우수화장품 제조 및 품질관리기준 제8조\nㄴ. 출처: 우수화장품 제조 및 품질관리기준 제8조\nㄷ. 출처: 우수화장품 제조 및 품질관리기준 제8조\nㄹ. 출처: 우수화장품 제조 및 품질관리기준 제8조\nㅁ. 출처: 우수화장품 제조 및 품질관리기준 제8조",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "5"
- },
- {
-  "id": "manufacturing_combo-ref_7e4ccd",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 KFCC 별표10 일반시험법 (참조자료 원문)",
-  "stem": "다음 중 측정방법에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_6d7516",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "크로마토그래프용여과지 정량분석용여과지의 규격 및 다음에 표시한 규격에 적합한 것을 쓴다.",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_b69e1a",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "사용하지 않는 연결 호스와 부속품은 청소 등 위생관리를 하며, 건조한 상태로 유지하고 먼지, 얼룩 또는 다른오염으로부터 보호할 것",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_069b07",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "미량천칭 0.001㎎까지 칭량할 수 있는 것을 쓴다.",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_97e589",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "정량분석용여과지 한국산업규격 M7602에 규정한 것을 쓴다.",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_ee94e2",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "(시험부위) 시험은 피험자의 등에 한다. 시험부위는 피부손상, 과도한 털, 또는 색조에 특별히 차이가 있는 부분을 피하여 선택하여야 하고, 깨끗하고 마른상태이어야 한다.",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|KFCC_별표10_일반시험법|cat|1|0",
-  "explain": "ㄱ. 출처: KFCC 별표10 일반시험법 \nㄴ. 출처: KFCC 별표10 일반시험법 \nㄷ. 출처: KFCC 별표10 일반시험법 \nㄹ. 출처: KFCC 별표10 일반시험법 \nㅁ. 출처: KFCC 별표10 일반시험법 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "4"
- },
- {
-  "id": "manufacturing_combo-ref_e277ef",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 KFCC 별표10 일반시험법 (참조자료 원문)",
-  "stem": "다음 중 측정방법에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_f20f82",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "물질 약 1g당량(또는 이 양의 분수에 해당되는 양)을 달아 용매를 넣어 녹여 약 1ℓ로 하고 약 1N",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_7bfe7e",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "분 동 검정한 것을 쓴다.",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_2d989b",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "브흐너깔때기형유리여과기(KS L 2302)",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_ad6d06",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "비 소 이 원료 0.4 g을 달아 제1법에 따라 검액을 만들어 장치 A를 쓰는 방법에 따라 시험한다.(5 ppm 이하)",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_36ac71",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "니켈: 눈 화장용 제품은 35㎍/g 이하, 색조 화장용 제품은 30㎍/g이하, 그 밖의 제품은 10㎍/g 이하",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄷ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|KFCC_별표10_일반시험법|cat|1|1",
-  "explain": "ㄱ. 출처: KFCC 별표10 일반시험법 \nㄴ. 출처: KFCC 별표10 일반시험법 \nㄷ. 출처: KFCC 별표10 일반시험법 \nㄹ. 출처: KFCC 별표10 일반시험법 \nㅁ. 출처: KFCC 별표10 일반시험법 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "3"
- },
- {
-  "id": "manufacturing_combo-ref_375fa0",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 KFCC 별표10 일반시험법 (참조자료 원문)",
-  "stem": "다음 중 측정방법에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_359e88",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "자외선A차단등급(PA)은 측정결과에 근거하여 [별표 3] 자외선 차단효과 측정방법 및 기준에 따라 표시한다. 법제처 6 국가법령정보센터기능성화장품 심사에 관한 규정",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_f20f82",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "물질 약 1g당량(또는 이 양의 분수에 해당되는 양)을 달아 용매를 넣어 녹여 약 1ℓ로 하고 약 1N",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_f6ffce",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "시험방법 : 시험 예시 - [부표 4]내수성 시험방법에 따른 자외선차단지수 및 내수성 자외선차단지수는 동일 실험실에서 동일 피험자를 대상으로 동일 기기를 사용하여 동일한 시험조건에서 측정되어야 한다.",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_069b07",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "미량천칭 0.001㎎까지 칭량할 수 있는 것을 쓴다.",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_97e589",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "정량분석용여과지 한국산업규격 M7602에 규정한 것을 쓴다.",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄴ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄷ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "절차",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|KFCC_별표10_일반시험법|cat|1|2",
-  "explain": "ㄱ. 출처: KFCC 별표10 일반시험법 \nㄴ. 출처: KFCC 별표10 일반시험법 \nㄷ. 출처: KFCC 별표10 일반시험법 \nㄹ. 출처: KFCC 별표10 일반시험법 \nㅁ. 출처: KFCC 별표10 일반시험법 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "2"
- },
- {
-  "id": "manufacturing_combo-ref_fa98e0",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 KFCC 별표3 주름개선 레티놀 (참조자료 원문)",
-  "stem": "다음 중 레티닐팔미테이트 표준품의 양(IU)× T ×에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_e33e32",
-    "conceptId": "KFCC 별표3 주름개선 레티놀:",
-    "text": "표준품 및 시약․시액",
-    "truth": false,
-    "explain": "출처: KFCC 별표3 주름개선 레티놀 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_92bf07",
-    "conceptId": "KFCC 별표3 주름개선 레티놀:",
-    "text": "95.0% 이상을 함유한다.",
-    "truth": true,
-    "explain": "출처: KFCC 별표3 주름개선 레티놀 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_b18fc8",
-    "conceptId": "KFCC 별표3 주름개선 레티놀:",
-    "text": "아데닌 이 원료 0.1g을 물 5mL로 녹인 액을 검액으로 한다. 따로 아데닌 표준품 0.1g을 물 5mL",
-    "truth": true,
-    "explain": "출처: KFCC 별표3 주름개선 레티놀 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_6814cc",
-    "conceptId": "KFCC 별표3 주름개선 레티놀:",
-    "text": "비소 이 원료 1.0 g을 달아 제3법에 따라 검액을 만들고 장치 A를 쓰는 방법에 따라 조작하여 시",
-    "truth": true,
-    "explain": "출처: KFCC 별표3 주름개선 레티놀 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_969aff",
-    "conceptId": "KFCC 별표3 주름개선 레티놀:",
-    "text": "위탁제조에 관한 사항",
-    "truth": false,
-    "explain": "출처: KFCC 별표3 주름개선 레티놀 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "한도",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|KFCC_별표3_주름개선_레티놀|cat|0|0",
-  "explain": "ㄱ. 출처: KFCC 별표3 주름개선 레티놀 \nㄴ. 출처: KFCC 별표3 주름개선 레티놀 \nㄷ. 출처: KFCC 별표3 주름개선 레티놀 \nㄹ. 출처: KFCC 별표3 주름개선 레티놀 \nㅁ. 출처: KFCC 별표3 주름개선 레티놀 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "1"
- },
- {
-  "id": "manufacturing_combo-ref_58c235",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 KFCC 별표3 주름개선 레티놀 (참조자료 원문)",
-  "stem": "다음 중 레티닐팔미테이트 표준품의 양(IU)× T ×에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_cfc90b",
-    "conceptId": "KFCC 별표3 주름개선 레티놀:",
-    "text": "티로프로픽애씨드 및 그 염류",
-    "truth": false,
-    "explain": "출처: KFCC 별표3 주름개선 레티놀 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_607b6f",
-    "conceptId": "KFCC 별표3 주름개선 레티놀:",
-    "text": "프탈레이트류(디부틸프탈레이트, 디에틸헥실프탈레이트, 부틸벤질프탈레이트에 한함)",
-    "truth": false,
-    "explain": "출처: KFCC 별표3 주름개선 레티놀 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_6814cc",
-    "conceptId": "KFCC 별표3 주름개선 레티놀:",
-    "text": "비소 이 원료 1.0 g을 달아 제3법에 따라 검액을 만들고 장치 A를 쓰는 방법에 따라 조작하여 시",
-    "truth": true,
-    "explain": "출처: KFCC 별표3 주름개선 레티놀 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_b18fc8",
-    "conceptId": "KFCC 별표3 주름개선 레티놀:",
-    "text": "아데닌 이 원료 0.1g을 물 5mL로 녹인 액을 검액으로 한다. 따로 아데닌 표준품 0.1g을 물 5mL",
-    "truth": true,
-    "explain": "출처: KFCC 별표3 주름개선 레티놀 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_6bb1d8",
-    "conceptId": "KFCC 별표3 주름개선 레티놀:",
-    "text": "여지크로마토그래프법에 따라 이소부틸산ㆍ암모니아수ㆍ물(66:1:33)을 전개용매로 하여 20℃에서 24",
-    "truth": true,
-    "explain": "출처: KFCC 별표3 주름개선 레티놀 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄷ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|KFCC_별표3_주름개선_레티놀|cat|0|1",
-  "explain": "ㄱ. 출처: KFCC 별표3 주름개선 레티놀 \nㄴ. 출처: KFCC 별표3 주름개선 레티놀 \nㄷ. 출처: KFCC 별표3 주름개선 레티놀 \nㄹ. 출처: KFCC 별표3 주름개선 레티놀 \nㅁ. 출처: KFCC 별표3 주름개선 레티놀 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "1"
- },
- {
-  "id": "manufacturing_combo-ref_ea1f71",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 KFCC 별표2 미백 나이아신아마이드 (참조자료 원문)",
-  "stem": "다음 중 Alpha-Bisabolol Soaked Mask에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_ac99d1",
-    "conceptId": "KFCC 별표2 미백 나이아신아마이드:",
-    "text": "유연물질 이 원료 50mg을 달아 메탄올 20mL에 녹여 검액으로 한다. 검액 1.0mL를 정확하",
-    "truth": true,
-    "explain": "출처: KFCC 별표2 미백 나이아신아마이드 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_83b542",
-    "conceptId": "KFCC 별표2 미백 나이아신아마이드:",
-    "text": "제품 3개를 가지고 시험할 때 그 평균 내용량이 표기량에 대하여 97% 이상(다만, 화장 비누의 경우 건조중량을 내용량으로 한다)",
-    "truth": false,
-    "explain": "출처: KFCC 별표2 미백 나이아신아마이드 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_e0963a",
-    "conceptId": "KFCC 별표2 미백 나이아신아마이드:",
-    "text": "비 소 이 원료 1.0g을 달아 제３법에 따라 검액을 만들어 장치 B를 쓰는 방법",
-    "truth": true,
-    "explain": "출처: KFCC 별표2 미백 나이아신아마이드 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_7521d5",
-    "conceptId": "KFCC 별표2 미백 나이아신아마이드:",
-    "text": "비 소 이 원료 1.0g을 달아 제1법에 따라 검액을 만들고 장치 B를 쓰는 방법에 따라 조작하여",
-    "truth": true,
-    "explain": "출처: KFCC 별표2 미백 나이아신아마이드 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_ad8ff8",
-    "conceptId": "KFCC 별표2 미백 나이아신아마이드:",
-    "text": "비스머스염의 염산산성용액에 치오뇨소시액을 넣을 때 액은 황색을 나타낸다.",
-    "truth": false,
-    "explain": "출처: KFCC 별표2 미백 나이아신아마이드 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "한도",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|KFCC_별표2_미백_나이아신아마이드|cat|3|0",
-  "explain": "ㄱ. 출처: KFCC 별표2 미백 나이아신아마이드 \nㄴ. 출처: KFCC 별표2 미백 나이아신아마이드 \nㄷ. 출처: KFCC 별표2 미백 나이아신아마이드 \nㄹ. 출처: KFCC 별표2 미백 나이아신아마이드 \nㅁ. 출처: KFCC 별표2 미백 나이아신아마이드 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "2"
- },
- {
-  "id": "manufacturing_combo-ref_6e50bb",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 안전기준 별표2 사용제한원료 (참조자료 원문)",
-  "stem": "다음 중 화장품에 사용이 제한되는 원료에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_87dd78",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "공급자가 부여한 제조번호 또는 관리번호",
-    "truth": false,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_c2a64d",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "티타늄디옥사이드",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_536ed7",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "순도시험",
-    "truth": false,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_d559c4",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "비스에칠헥실옥시페놀메톡시페닐트리아진",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_726136",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "디소듐페닐디벤즈이미다졸테트라설포네이트",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록"
-  ],
-  "derivedFrom": "ref:enum|안전기준_별표2_사용제한원료|mdtable|1|0",
-  "explain": "ㄱ. 출처: 안전기준 별표2 사용제한원료 \nㄴ. 출처: 안전기준 별표2 사용제한원료 \nㄷ. 출처: 안전기준 별표2 사용제한원료 \nㄹ. 출처: 안전기준 별표2 사용제한원료 \nㅁ. 출처: 안전기준 별표2 사용제한원료 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "4"
- },
- {
-  "id": "manufacturing_combo-ref_b5b807",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 안전기준 별표2 사용제한원료 (참조자료 원문)",
-  "stem": "다음 중 화장품에 사용이 제한되는 원료에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_e8d037",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "디갈로일트리올리에이트",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_9e4498",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "헥산-2-온",
-    "truth": false,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_d559c4",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "비스에칠헥실옥시페놀메톡시페닐트리아진",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_50834d",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "레조시놀",
-    "truth": false,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_4a714e",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "벤조페논-4",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|안전기준_별표2_사용제한원료|mdtable|1|1",
-  "explain": "ㄱ. 출처: 안전기준 별표2 사용제한원료 \nㄴ. 출처: 안전기준 별표2 사용제한원료 \nㄷ. 출처: 안전기준 별표2 사용제한원료 \nㄹ. 출처: 안전기준 별표2 사용제한원료 \nㅁ. 출처: 안전기준 별표2 사용제한원료 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "1"
- },
- {
-  "id": "manufacturing_combo-ref_eac3fe",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 안전기준 별표2 사용제한원료 (참조자료 원문)",
-  "stem": "다음 중 화장품에 사용이 제한되는 원료에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_726136",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "디소듐페닐디벤즈이미다졸테트라설포네이트",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_ee37a0",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "히드록시벤조모르포린",
-    "truth": false,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_02a647",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "적합 판정한 원자재 및 제품의 출고 여부 결정",
-    "truth": false,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_a29d7c",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "드로메트리졸",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_7ac9a7",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "호모살레이트",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록"
-  ],
-  "derivedFrom": "ref:enum|안전기준_별표2_사용제한원료|mdtable|1|2",
-  "explain": "ㄱ. 출처: 안전기준 별표2 사용제한원료 \nㄴ. 출처: 안전기준 별표2 사용제한원료 \nㄷ. 출처: 안전기준 별표2 사용제한원료 \nㄹ. 출처: 안전기준 별표2 사용제한원료 \nㅁ. 출처: 안전기준 별표2 사용제한원료 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "5"
- },
- {
-  "id": "manufacturing_combo-ref_d1a78a",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 안전기준 별표2 사용제한원료 (참조자료 원문)",
-  "stem": "다음 중 화장품에 사용이 제한되는 원료에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_f410ae",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "탄산염의 냉용액에 페놀프탈레인시액 1방울을 넣을 때 액은 홍색을 나타낸다(탄산수소염과 구별).",
-    "truth": false,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_9ede0e",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "옥토크릴렌",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_983027",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "페닐벤즈이미다졸설포닉애씨드",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_05ddd1",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "벤조페논-3(옥시벤존)",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_e7d3f6",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "피그먼트레드 53:1(레이크레드 CBa)",
-    "truth": false,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄷ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|안전기준_별표2_사용제한원료|mdtable|1|3",
-  "explain": "ㄱ. 출처: 안전기준 별표2 사용제한원료 \nㄴ. 출처: 안전기준 별표2 사용제한원료 \nㄷ. 출처: 안전기준 별표2 사용제한원료 \nㄹ. 출처: 안전기준 별표2 사용제한원료 \nㅁ. 출처: 안전기준 별표2 사용제한원료 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "1"
- },
- {
-  "id": "manufacturing_combo-ref_aeac1b",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 안전기준 별표2 사용제한원료 (참조자료 원문)",
-  "stem": "다음 중 화장품에 사용이 제한되는 원료에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_7ac9a7",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "호모살레이트",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_0e8f4d",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "베이직바이올렛 1(메칠바이올렛)",
-    "truth": false,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_5229da",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "메칠렌비스-벤조트리아졸릴테트라메칠부틸페놀",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_9ede0e",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "옥토크릴렌",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_5b8e6b",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "돼지폐추출물",
-    "truth": false,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|안전기준_별표2_사용제한원료|mdtable|1|4",
-  "explain": "ㄱ. 출처: 안전기준 별표2 사용제한원료 \nㄴ. 출처: 안전기준 별표2 사용제한원료 \nㄷ. 출처: 안전기준 별표2 사용제한원료 \nㄹ. 출처: 안전기준 별표2 사용제한원료 \nㅁ. 출처: 안전기준 별표2 사용제한원료 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "2"
- },
- {
-  "id": "manufacturing_combo-ref_68a001",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 안전기준 별표2 사용제한원료 (참조자료 원문)",
-  "stem": "다음 중 화장품에 사용이 제한되는 원료에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_f85cbe",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "포스파미돈",
-    "truth": false,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_322874",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "테레프탈릴리덴디캠퍼설포닉애씨드 및 그 염류",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_c2a64d",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "티타늄디옥사이드",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_9f3e22",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "설폰아미드 및 그 유도체(톨루엔설폰아미드/포름알데하이드수지, 톨루엔설폰아미드/에폭시수지는 제외)",
-    "truth": false,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_b15e68",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "시녹세이트",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록"
-  ],
-  "derivedFrom": "ref:enum|안전기준_별표2_사용제한원료|mdtable|1|5",
-  "explain": "ㄱ. 출처: 안전기준 별표2 사용제한원료 \nㄴ. 출처: 안전기준 별표2 사용제한원료 \nㄷ. 출처: 안전기준 별표2 사용제한원료 \nㄹ. 출처: 안전기준 별표2 사용제한원료 \nㅁ. 출처: 안전기준 별표2 사용제한원료 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "4"
- },
- {
-  "id": "manufacturing_combo-ref_14eb43",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 안전기준 별표2 사용제한원료 (참조자료 원문)",
-  "stem": "다음 중 화장품에 사용이 제한되는 원료에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_322874",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "테레프탈릴리덴디캠퍼설포닉애씨드 및 그 염류",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_05ddd1",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "벤조페논-3(옥시벤존)",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_7e31a2",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "톨루이딘설페이트(1:1)",
-    "truth": false,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_151ccd",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "벤조페논-8(디옥시벤존)",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_beaf6d",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "베지터블카본 (코크블랙, Vegetable Carbon, Coke Black) CI 77268:1",
-    "truth": false,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄷ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|안전기준_별표2_사용제한원료|mdtable|1|6",
-  "explain": "ㄱ. 출처: 안전기준 별표2 사용제한원료 \nㄴ. 출처: 안전기준 별표2 사용제한원료 \nㄷ. 출처: 안전기준 별표2 사용제한원료 \nㄹ. 출처: 안전기준 별표2 사용제한원료 \nㅁ. 출처: 안전기준 별표2 사용제한원료 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "2"
- },
- {
-  "id": "manufacturing_combo-ref_948009",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 우수화장품 제조 및 품질관리기준 제15조 (참조자료 원문)",
-  "stem": "다음 중 「우수화장품 제조 및 품질관리기준」제15조의 규정에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_4351fd",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "작업원의 수세, 소독방법 등 위생에 관한 사항",
-    "truth": true,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_53ef1a",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "카브로말",
-    "truth": false,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_0d7f8b",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "플루실라졸",
-    "truth": false,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_b70b08",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "작업복장의 규격, 세탁방법 및 착용규정법제처 8 국가법령정보센터우수화장품 제조 및 품질관리기준",
-    "truth": true,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_094c58",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "작업원의 건강관리 및 건강상태의 파악ㆍ조치방법",
-    "truth": true,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄴ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄷ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822)|제15조|38|0",
-  "explain": "ㄱ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄴ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄷ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄹ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㅁ. 출처: 우수화장품 제조 및 품질관리기준 제15조",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "3"
- },
- {
-  "id": "manufacturing_combo-ref_b8d806",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 우수화장품 제조 및 품질관리기준 제15조 (참조자료 원문)",
-  "stem": "다음 중 「우수화장품 제조 및 품질관리기준」제15조의 규정에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_ae6943",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "제조 작업소",
-    "truth": false,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_fad2cc",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "바륨설페이트 (Barium Sulfate) CI 77120",
-    "truth": false,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_8de7df",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "제조시설의 세척 및 평가",
-    "truth": true,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_3e6dee",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "곤충, 해충이나 쥐를 막는 방법 및 점검주기",
-    "truth": true,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_f9079b",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "작업실 등의 청소(필요한 경우 소독을 포함한다. 이하 같다) 방법 및 청소주기",
-    "truth": true,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄷ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄷ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "기한",
-   "구성비",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822)|제15조|38|1",
-  "explain": "ㄱ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄴ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄷ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄹ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㅁ. 출처: 우수화장품 제조 및 품질관리기준 제15조",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "1"
- },
- {
-  "id": "manufacturing_combo-ref_7ce677",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 우수화장품 제조 및 품질관리기준 제15조 (참조자료 원문)",
-  "stem": "다음 중 「우수화장품 제조 및 품질관리기준」제15조의 규정에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_4351fd",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "작업원의 수세, 소독방법 등 위생에 관한 사항",
-    "truth": true,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_aa713d",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "청소상태의 평가방법",
-    "truth": true,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_094c58",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "작업원의 건강관리 및 건강상태의 파악ㆍ조치방법",
-    "truth": true,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_402987",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "sid": "manufacturing_refst_4f236e",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제4조",
     "text": "품질 검사가 규정된 절차에 따라 진행되는지의 확인",
-    "truth": false,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_d07cd4",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "바륨염(바륨설페이트 및 색소레이크희석제로 사용한 바륨염은 제외)",
-    "truth": false,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제4조"
    }
   ],
   "options": [
    {
     "id": "1",
     "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
      "ㄴ",
      "ㄹ"
     ]
    },
    {
-    "id": "4",
+    "id": "2",
     "members": [
      "ㄱ",
      "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ",
      "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -16976,6 +20990,106 @@ var COMBO_DRILLS_subject2 = [
     "members": [
      "ㄱ",
      "ㄴ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "절차",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822)|제4조|0|0",
+  "explain": "ㄱ. 출처: 우수화장품 제조 및 품질관리기준 제4조\nㄴ. 출처: 우수화장품 제조 및 품질관리기준 제4조\nㄷ. 출처: 우수화장품 제조 및 품질관리기준 제4조\nㄹ. 출처: 우수화장품 제조 및 품질관리기준 제4조\nㅁ. 출처: 우수화장품 제조 및 품질관리기준 제4조",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "2"
+ },
+ {
+  "id": "manufacturing_combo-ref_0324b1",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 우수화장품 제조 및 품질관리기준 제4조 (참조자료 원문)",
+  "stem": "다음 중 「우수화장품 제조 및 품질관리기준」제4조의 규정에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_0266db",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제4조",
+    "text": "메칠페닐렌디아민류, 그 N-치환 유도체류 및 그 염류",
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제4조"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_d01a84",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제4조",
+    "text": "히드로플루오릭애씨드, 그 노르말 염, 그착화합물 및 히드로플루오라이드",
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제4조"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_8e626c",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제4조",
+    "text": "자신의 업무범위내에서 기준을 벗어난 행위나 부적합 발생 등에 대해 보고해야 할 의무",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제4조"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_4f236e",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제4조",
+    "text": "품질 검사가 규정된 절차에 따라 진행되는지의 확인",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제4조"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_af7e44",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제4조",
+    "text": "적합 판정한 원자재 및 제품의 출고 여부 결정",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제4조"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
      "ㄷ",
      "ㄹ"
     ]
@@ -16988,358 +21102,58 @@ var COMBO_DRILLS_subject2 = [
    "절차",
    "수치"
   ],
-  "derivedFrom": "ref:enum|우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822)|제15조|38|2",
-  "explain": "ㄱ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄴ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄷ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄹ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㅁ. 출처: 우수화장품 제조 및 품질관리기준 제15조",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "4"
- },
- {
-  "id": "manufacturing_combo-ref_5c403d",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 우수화장품 제조 및 품질관리기준 제15조 (참조자료 원문)",
-  "stem": "다음 중 「우수화장품 제조 및 품질관리기준」제15조의 규정에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_215221",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "별표 1의 화장품에 사용할 수 없는 원료",
-    "truth": false,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_18f062",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "위탁시험 또는 위탁제조하는 경우 검체의 송부방법 및 시험결과의 판정방법",
-    "truth": true,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_4351fd",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "작업원의 수세, 소독방법 등 위생에 관한 사항",
-    "truth": true,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_f9079b",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "작업실 등의 청소(필요한 경우 소독을 포함한다. 이하 같다) 방법 및 청소주기",
-    "truth": true,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_ef8079",
-    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
-    "text": "글루코코르티코이드",
-    "truth": false,
-    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄷ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "기한",
-   "구성비",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822)|제15조|38|3",
-  "explain": "ㄱ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄴ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄷ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄹ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㅁ. 출처: 우수화장품 제조 및 품질관리기준 제15조",
+  "derivedFrom": "ref:enum|우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822)|제4조|0|1",
+  "explain": "ㄱ. 출처: 우수화장품 제조 및 품질관리기준 제4조\nㄴ. 출처: 우수화장품 제조 및 품질관리기준 제4조\nㄷ. 출처: 우수화장품 제조 및 품질관리기준 제4조\nㄹ. 출처: 우수화장품 제조 및 품질관리기준 제4조\nㅁ. 출처: 우수화장품 제조 및 품질관리기준 제4조",
   "source": "참조자료 원문 (열거 목록)",
   "answer": "1"
  },
  {
-  "id": "manufacturing_combo-ref_b18194",
+  "id": "manufacturing_combo-ref_2969e4",
   "subject": 2,
   "type": "combo",
   "points": 4,
-  "citation": "📖 KFCC 별표10 일반시험법 (참조자료 원문)",
-  "stem": "다음 중 정 량 법에 해당하는 것을 모두 고른 것은?",
+  "citation": "📖 우수화장품 제조 및 품질관리기준 제4조 (참조자료 원문)",
+  "stem": "다음 중 「우수화장품 제조 및 품질관리기준」제4조의 규정에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_47b24e",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "프탈산염완충액 프탈산수소칼륨(pH측정용)를 고운가루로 하여 110℃에서 2시간 이상 건조한 다",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
+    "sid": "manufacturing_refst_f35247",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제4조",
+    "text": "하이드록시피리디논 및 그 염류",
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제4조"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_0b77ac",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "탄산염완충액 탄산수소나트륨(pH 측정용)를 데시케이터(실리카 겔)속에서, 탄산나트륨를 300℃에",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
+    "sid": "manufacturing_refst_ce76f7",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제4조",
+    "text": "페녹시이소프로판올(1-페녹시프로판-2-올)",
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제4조"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_a19425",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "칼슘염의 중성용액에 크롬산칼륨시액 10방울을 넣어 가열하여도 침전이 생기지 않는다(스트론튬염 과의 구별).",
+    "sid": "manufacturing_refst_acf933",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제4조",
+    "text": "불만처리와 제품회수에 관한 사항의 주관",
     "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제4조"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_cf02e9",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "황산 p-페닐렌디아민",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_640a51",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "황산 o-클로로-p-페닐렌디아민",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄴ",
-     "ㄷ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|KFCC_별표10_일반시험법|cat|0|0",
-  "explain": "ㄱ. 출처: KFCC 별표10 일반시험법 \nㄴ. 출처: KFCC 별표10 일반시험법 \nㄷ. 출처: KFCC 별표10 일반시험법 \nㄹ. 출처: KFCC 별표10 일반시험법 \nㅁ. 출처: KFCC 별표10 일반시험법 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "2"
- },
- {
-  "id": "manufacturing_combo-ref_1dc341",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 KFCC 별표10 일반시험법 (참조자료 원문)",
-  "stem": "다음 중 정 량 법에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_d3739d",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "망간염의 묽은질산산성용액에 비스머스산나트륨의 가루 소량을 넣을 때 액은 적자색을 나타낸다.",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_7a9eb1",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "N,N,N',N'-테트라글리시딜-4,4'-디아미노-3,3'-디에칠디페닐메탄",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_3b5cbf",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "철(Ⅲ)염의 약산성용액에 설포살리실산시액을 넣을 때 액은 자색을 나타낸다.",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_8271fb",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "치오황산염의 용액에 같은 용량의 묽은염산을 넣을 때 이산화황의 냄새가 나며 액은 백탁하고 이",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_d52d5f",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "피로필라이트 (Pyrophyllite)",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|KFCC_별표10_일반시험법|cat|0|1",
-  "explain": "ㄱ. 출처: KFCC 별표10 일반시험법 \nㄴ. 출처: KFCC 별표10 일반시험법 \nㄷ. 출처: KFCC 별표10 일반시험법 \nㄹ. 출처: KFCC 별표10 일반시험법 \nㅁ. 출처: KFCC 별표10 일반시험법 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "3"
- },
- {
-  "id": "manufacturing_combo-ref_637b86",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 KFCC 별표10 일반시험법 (참조자료 원문)",
-  "stem": "다음 중 정 량 법에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_07fc9c",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "안식향산염의 중성용액에 염화제이철시액을 넣을 때 적갈색의 침전이 생기며 묽은염산을 추가할",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_9b4e75",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "피그먼트오렌지 5(파마넨트오렌지)",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_6985f8",
-    "conceptId": "KFCC 별표10 일반시험법:",
+    "sid": "manufacturing_refst_03199c",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제4조",
     "text": "부적합품이 규정된 절차대로 처리되고 있는지의 확인",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_47b24e",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "프탈산염완충액 프탈산수소칼륨(pH측정용)를 고운가루로 하여 110℃에서 2시간 이상 건조한 다",
     "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제4조"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_3b8438",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "구연산염의 황산산성용액에 그 ⅓용량의 과망간산칼륨시액을 넣어 시액의 색이 없어질 때까지 가",
+    "sid": "manufacturing_refst_8e626c",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제4조",
+    "text": "자신의 업무범위내에서 기준을 벗어난 행위나 부적합 발생 등에 대해 보고해야 할 의무",
     "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제4조"
    }
   ],
   "options": [
@@ -17347,17 +21161,15 @@ var COMBO_DRILLS_subject2 = [
     "id": "1",
     "members": [
      "ㄱ",
-     "ㄹ",
-     "ㅁ"
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
+     "ㄴ"
     ]
    },
    {
@@ -17369,13 +21181,16 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "4",
     "members": [
-     "ㄹ"
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㄱ"
+     "ㄱ",
+     "ㄹ"
     ]
    }
   ],
@@ -17386,258 +21201,58 @@ var COMBO_DRILLS_subject2 = [
    "절차",
    "수치"
   ],
-  "derivedFrom": "ref:enum|KFCC_별표10_일반시험법|cat|0|2",
-  "explain": "ㄱ. 출처: KFCC 별표10 일반시험법 \nㄴ. 출처: KFCC 별표10 일반시험법 \nㄷ. 출처: KFCC 별표10 일반시험법 \nㄹ. 출처: KFCC 별표10 일반시험법 \nㅁ. 출처: KFCC 별표10 일반시험법 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "1"
- },
- {
-  "id": "manufacturing_combo-ref_5a3bba",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 KFCC 별표10 일반시험법 (참조자료 원문)",
-  "stem": "다음 중 정 량 법에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_29e7b5",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "황산염의 용액에 같은 용량의 묽은염산을 넣어도 백탁이 생기지 않는다(치오황산염과의 구별). 또",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_e45201",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "염산 2,4-디아미노페놀",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_3e7aa2",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "비스머스염의 염산산성용액에 치오뇨소시액을 넣을 때 액은 황색을 나타낸다.",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_ed2877",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "N1-(트리스(하이드록시메칠))-메칠-4-니트로-1,2-페닐렌디아민(에이치시 황색 No. 3) 및 그 염류",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_2bdab4",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "붕산염완충액 붕산나트륨(pH 측정용)를 데시케이터(물에 적신 브롬화나트륨)속에서 방치하여 항",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|KFCC_별표10_일반시험법|cat|0|3",
-  "explain": "ㄱ. 출처: KFCC 별표10 일반시험법 \nㄴ. 출처: KFCC 별표10 일반시험법 \nㄷ. 출처: KFCC 별표10 일반시험법 \nㄹ. 출처: KFCC 별표10 일반시험법 \nㅁ. 출처: KFCC 별표10 일반시험법 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "1"
- },
- {
-  "id": "manufacturing_combo-ref_9a1573",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 KFCC 별표10 일반시험법 (참조자료 원문)",
-  "stem": "다음 중 정 량 법에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_652ff3",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "기체검체측정법 검체를 배기시킨 5 또는 10㎝ 길이의 광로를 갖는 기체셀에 원료 각조에서 규정",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_2bdab4",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "붕산염완충액 붕산나트륨(pH 측정용)를 데시케이터(물에 적신 브롬화나트륨)속에서 방치하여 항",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_8271fb",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "치오황산염의 용액에 같은 용량의 묽은염산을 넣을 때 이산화황의 냄새가 나며 액은 백탁하고 이",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_02dac6",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "리튬하이드록사이드",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_b78961",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "미네랄 울",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄴ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄴ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|KFCC_별표10_일반시험법|cat|0|4",
-  "explain": "ㄱ. 출처: KFCC 별표10 일반시험법 \nㄴ. 출처: KFCC 별표10 일반시험법 \nㄷ. 출처: KFCC 별표10 일반시험법 \nㄹ. 출처: KFCC 별표10 일반시험법 \nㅁ. 출처: KFCC 별표10 일반시험법 ",
+  "derivedFrom": "ref:enum|우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822)|제4조|0|2",
+  "explain": "ㄱ. 출처: 우수화장품 제조 및 품질관리기준 제4조\nㄴ. 출처: 우수화장품 제조 및 품질관리기준 제4조\nㄷ. 출처: 우수화장품 제조 및 품질관리기준 제4조\nㄹ. 출처: 우수화장품 제조 및 품질관리기준 제4조\nㅁ. 출처: 우수화장품 제조 및 품질관리기준 제4조",
   "source": "참조자료 원문 (열거 목록)",
   "answer": "4"
  },
  {
-  "id": "manufacturing_combo-ref_c0bc97",
+  "id": "manufacturing_combo-ref_94d2f9",
   "subject": 2,
   "type": "combo",
   "points": 4,
-  "citation": "📖 KFCC 별표10 일반시험법 (참조자료 원문)",
-  "stem": "다음 중 정 량 법에 해당하는 것을 모두 고른 것은?",
+  "citation": "📖 기능성화장품 기준 및 시험방법 제2조 (참조자료 원문)",
+  "stem": "다음 중 「기능성화장품 기준 및 시험방법」제2조의 규정에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_343041",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "테트라카보닐니켈",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
+    "sid": "manufacturing_refst_91a0ad",
+    "conceptId": "기능성화장품 기준 및 시험방법:제2조",
+    "text": "피부의 주름개선에 도움을 주는 기능성화장품 각조는 별표 3과 같다.",
+    "truth": true,
+    "explain": "출처: 기능성화장품 기준 및 시험방법 제2조"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_a6d4ea",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "탄산수소염의 냉용액에 페놀프탈레인시액 1방울을 넣을 때 액은 적색을 나타내지 않으며 나타내더",
+    "sid": "manufacturing_refst_899e9b",
+    "conceptId": "기능성화장품 기준 및 시험방법:제2조",
+    "text": "일반시험법은 별표 10과 같다.",
     "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
+    "explain": "출처: 기능성화장품 기준 및 시험방법 제2조"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_4a90b9",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "무기설파이트 및하이드로젠설파이트류",
+    "sid": "manufacturing_refst_847bc3",
+    "conceptId": "기능성화장품 기준 및 시험방법:제2조",
+    "text": "디치오-2,2'-비스피리딘-디옥사이드 1,1'(트리하이드레이티드마그네슘설페이트 부가)(피리치온디설파이드+마그네슘설페이트)",
     "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
+    "explain": "출처: 기능성화장품 기준 및 시험방법 제2조"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_8271fb",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "치오황산염의 용액에 같은 용량의 묽은염산을 넣을 때 이산화황의 냄새가 나며 액은 백탁하고 이",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
+    "sid": "manufacturing_refst_41cc51",
+    "conceptId": "기능성화장품 기준 및 시험방법:제2조",
+    "text": "2-[(4-클로로-2-니트로페닐)아조]-N-(2-메톡시페닐)-3-옥소부탄올아마이드(피그먼트엘로우 73) 및 그 염류",
+    "truth": false,
+    "explain": "출처: 기능성화장품 기준 및 시험방법 제2조"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_f7ee2e",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "초산염에 황산 및 소량의 에탄올을 넣어 가열할 때 초산에칠의 냄새가 난다.",
+    "sid": "manufacturing_refst_a8f53d",
+    "conceptId": "기능성화장품 기준 및 시험방법:제2조",
+    "text": "통칙은 별표 1과 같다.",
     "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
+    "explain": "출처: 기능성화장품 기준 및 시험방법 제2조"
    }
   ],
   "options": [
@@ -17645,14 +21260,15 @@ var COMBO_DRILLS_subject2 = [
     "id": "1",
     "members": [
      "ㄴ",
-     "ㅁ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
     "id": "2",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㄹ",
      "ㅁ"
     ]
    },
@@ -17660,22 +21276,24 @@ var COMBO_DRILLS_subject2 = [
     "id": "3",
     "members": [
      "ㄱ",
-     "ㄹ"
+     "ㄴ",
+     "ㄷ"
     ]
    },
    {
     "id": "4",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㄷ",
      "ㄹ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
     ]
    }
   ],
@@ -17685,1586 +21303,85 @@ var COMBO_DRILLS_subject2 = [
    "열거목록",
    "수치"
   ],
-  "derivedFrom": "ref:enum|KFCC_별표10_일반시험법|cat|0|5",
-  "explain": "ㄱ. 출처: KFCC 별표10 일반시험법 \nㄴ. 출처: KFCC 별표10 일반시험법 \nㄷ. 출처: KFCC 별표10 일반시험법 \nㄹ. 출처: KFCC 별표10 일반시험법 \nㅁ. 출처: KFCC 별표10 일반시험법 ",
+  "derivedFrom": "ref:enum|기능성화장품 기준 및 시험방법(식품의약품안전처고시)(제2025-89호)(20251216)|제2조|0|0",
+  "explain": "ㄱ. 출처: 기능성화장품 기준 및 시험방법 제2조\nㄴ. 출처: 기능성화장품 기준 및 시험방법 제2조\nㄷ. 출처: 기능성화장품 기준 및 시험방법 제2조\nㄹ. 출처: 기능성화장품 기준 및 시험방법 제2조\nㅁ. 출처: 기능성화장품 기준 및 시험방법 제2조",
   "source": "참조자료 원문 (열거 목록)",
   "answer": "2"
  },
  {
-  "id": "manufacturing_combo-ref_e53845",
+  "id": "manufacturing_combo-ref_0505f0",
   "subject": 2,
   "type": "combo",
   "points": 4,
-  "citation": "📖 KFCC 별표10 일반시험법 (참조자료 원문)",
-  "stem": "다음 중 정 량 법에 해당하는 것을 모두 고른 것은?",
+  "citation": "📖 기능성화장품 기준 및 시험방법 제2조 (참조자료 원문)",
+  "stem": "다음 중 「기능성화장품 기준 및 시험방법」제2조의 규정에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_f783b0",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "알루미늄염의 용액에 수산화나트륨시액을 넣을 때 백색의 겔상 침전이 생기며 과량의 수산화나트",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_c8b15d",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "나트륨염의 중성 또는 약알칼리성의 진한용액에 피로안티몬산칼륨시액을 넣을 때 백색의 결정성",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_1adb09",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "트리클로산",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_640a51",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "황산 o-클로로-p-페닐렌디아민",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_652ff3",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "기체검체측정법 검체를 배기시킨 5 또는 10㎝ 길이의 광로를 갖는 기체셀에 원료 각조에서 규정",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|KFCC_별표10_일반시험법|cat|0|6",
-  "explain": "ㄱ. 출처: KFCC 별표10 일반시험법 \nㄴ. 출처: KFCC 별표10 일반시험법 \nㄷ. 출처: KFCC 별표10 일반시험법 \nㄹ. 출처: KFCC 별표10 일반시험법 \nㅁ. 출처: KFCC 별표10 일반시험법 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "2"
- },
- {
-  "id": "manufacturing_combo-ref_665360",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 KFCC 별표10 일반시험법 (참조자료 원문)",
-  "stem": "다음 중 정 량 법에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_cdad4b",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "페이스트법 고체검체를 마뇌 약절구에 넣어 잘 갈아 가루로 하고 유통파라핀등을 넣어 잘 갈아",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_ce2fc4",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "살리실산염의 중성용액에 묽은염화제이철시액 5∼6방울을 넣을 때 액은 적색을 나타내며 묽은염산",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_47b24e",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "프탈산염완충액 프탈산수소칼륨(pH측정용)를 고운가루로 하여 110℃에서 2시간 이상 건조한 다",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_b92f88",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "디엠디엠하이단토인(1,3-비스(히드록시메칠)-5,5-디메칠이 미 다 졸 리 딘-2,4-디온)",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_0c8007",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "비마토프로스트, 그 염류 및 유도체",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄴ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|KFCC_별표10_일반시험법|cat|0|7",
-  "explain": "ㄱ. 출처: KFCC 별표10 일반시험법 \nㄴ. 출처: KFCC 별표10 일반시험법 \nㄷ. 출처: KFCC 별표10 일반시험법 \nㄹ. 출처: KFCC 별표10 일반시험법 \nㅁ. 출처: KFCC 별표10 일반시험법 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "1"
- },
- {
-  "id": "manufacturing_combo-ref_f61f0b",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 KFCC 별표10 일반시험법 (참조자료 원문)",
-  "stem": "다음 중 정 량 법에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_8271fb",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "치오황산염의 용액에 같은 용량의 묽은염산을 넣을 때 이산화황의 냄새가 나며 액은 백탁하고 이",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_2785c2",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "펜메트라진 및 그 유도체 및 그 염류",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_5f9c8f",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "실버나이트레이트",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_652ff3",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "기체검체측정법 검체를 배기시킨 5 또는 10㎝ 길이의 광로를 갖는 기체셀에 원료 각조에서 규정",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_ec4f60",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "브롬화칼륨정제법 고체검체 1～2㎎을 마뇌 약절구에 넣고 잘 갈아 가루로 하고 여기에 적외부용",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄷ",
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|KFCC_별표10_일반시험법|cat|0|8",
-  "explain": "ㄱ. 출처: KFCC 별표10 일반시험법 \nㄴ. 출처: KFCC 별표10 일반시험법 \nㄷ. 출처: KFCC 별표10 일반시험법 \nㄹ. 출처: KFCC 별표10 일반시험법 \nㅁ. 출처: KFCC 별표10 일반시험법 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "3"
- },
- {
-  "id": "manufacturing_combo-ref_bff8aa",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 KFCC 별표10 일반시험법 (참조자료 원문)",
-  "stem": "다음 중 정 량 법에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_a841df",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "조작법 원료 각조에 규정하는 검체를 비커에 달아 규정하는 용량의 용매를 넣어 녹이고 전극은",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_77a942",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "벤조페논-3",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_0f322e",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "영국 및 북아일랜드산 소 유래 성분",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_f0bf36",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "초산염에 산화칼슘을 섞어서 가열할 때 아세톤 냄새를 내며 발생하는 가스는 o-니트로벤즈알데히",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_07fc9c",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "안식향산염의 중성용액에 염화제이철시액을 넣을 때 적갈색의 침전이 생기며 묽은염산을 추가할",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|KFCC_별표10_일반시험법|cat|0|9",
-  "explain": "ㄱ. 출처: KFCC 별표10 일반시험법 \nㄴ. 출처: KFCC 별표10 일반시험법 \nㄷ. 출처: KFCC 별표10 일반시험법 \nㄹ. 출처: KFCC 별표10 일반시험법 \nㅁ. 출처: KFCC 별표10 일반시험법 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "5"
- },
- {
-  "id": "manufacturing_combo-ref_da02e4",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 KFCC 별표10 일반시험법 (참조자료 원문)",
-  "stem": "다음 중 정 량 법에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_a841df",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "조작법 원료 각조에 규정하는 검체를 비커에 달아 규정하는 용량의 용매를 넣어 녹이고 전극은",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_ce2fc4",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "살리실산염의 중성용액에 묽은염화제이철시액 5∼6방울을 넣을 때 액은 적색을 나타내며 묽은염산",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_61a95d",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "수산염의 용액에 염화칼슘시액을 넣을 때 백색의 침전이 생긴다. 침전을 분리하여 여기에 묽은초",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_7299ee",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "정량법(제제는 함량시험)",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_dc3efc",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "신코카인 및 그 염류",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄷ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "한도",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|KFCC_별표10_일반시험법|cat|0|10",
-  "explain": "ㄱ. 출처: KFCC 별표10 일반시험법 \nㄴ. 출처: KFCC 별표10 일반시험법 \nㄷ. 출처: KFCC 별표10 일반시험법 \nㄹ. 출처: KFCC 별표10 일반시험법 \nㅁ. 출처: KFCC 별표10 일반시험법 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "5"
- },
- {
-  "id": "manufacturing_combo-ref_a038fc",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 KFCC 별표10 일반시험법 (참조자료 원문)",
-  "stem": "다음 중 정 량 법에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_c7da56",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "철(Ⅱ)염의 용액에 수산화나트륨시액을 넣을 때 회록색의 겔상 침전이 생기며 아황산나트륨시액을 추가할 때 흑색의 침전이 생기고 여기에 묽은염산을 넣을 때 녹는다.",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_c1e07e",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "날로르핀, 그 염류 및 에텔",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_744a2e",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "자일리딘, 그 이성체, 염류, 할로겐화 유도체 및 설폰화 유도체",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_61a95d",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "수산염의 용액에 염화칼슘시액을 넣을 때 백색의 침전이 생긴다. 침전을 분리하여 여기에 묽은초",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_f05d62",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "아황산나트륨법 따로 규정이 없는 한 검체 10㎖를 150㎖의 용량플라스크에 정확하게 취하여",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄴ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄷ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|KFCC_별표10_일반시험법|cat|0|11",
-  "explain": "ㄱ. 출처: KFCC 별표10 일반시험법 \nㄴ. 출처: KFCC 별표10 일반시험법 \nㄷ. 출처: KFCC 별표10 일반시험법 \nㄹ. 출처: KFCC 별표10 일반시험법 \nㅁ. 출처: KFCC 별표10 일반시험법 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "2"
- },
- {
-  "id": "manufacturing_combo-ref_ed8cf5",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 KFCC 별표10 일반시험법 (참조자료 원문)",
-  "stem": "다음 중 정 량 법에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_03309c",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "디스퍼스옐로우 3",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_61a95d",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "수산염의 용액에 염화칼슘시액을 넣을 때 백색의 침전이 생긴다. 침전을 분리하여 여기에 묽은초",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_f0bf36",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "초산염에 산화칼슘을 섞어서 가열할 때 아세톤 냄새를 내며 발생하는 가스는 o-니트로벤즈알데히",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_c7da56",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "철(Ⅱ)염의 용액에 수산화나트륨시액을 넣을 때 회록색의 겔상 침전이 생기며 아황산나트륨시액을 추가할 때 흑색의 침전이 생기고 여기에 묽은염산을 넣을 때 녹는다.",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_825e9d",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "페몰린 및 그 염류",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄷ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|KFCC_별표10_일반시험법|cat|0|12",
-  "explain": "ㄱ. 출처: KFCC 별표10 일반시험법 \nㄴ. 출처: KFCC 별표10 일반시험법 \nㄷ. 출처: KFCC 별표10 일반시험법 \nㄹ. 출처: KFCC 별표10 일반시험법 \nㅁ. 출처: KFCC 별표10 일반시험법 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "2"
- },
- {
-  "id": "manufacturing_combo-ref_cd1ae3",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 KFCC 별표10 일반시험법 (참조자료 원문)",
-  "stem": "다음 중 정 량 법에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_5250e4",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "비 소 이 원료 1.0 g을 달아 제３법에 따라 검액을 만들고 장치 B를 쓰는 방법",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_b27958",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "질산염의 진한 용액에 같은 용량의 황산을 넣고 구리조각을 넣어 가열할 때 황갈색의 가스가 난다.",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_482ebb",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "철(Ⅲ)염의 용액에 수산화나트륨시액을 넣을 때 적갈색겔상 침전이 생기며 황화나트륨시액을 추가",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_f05d62",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "아황산나트륨법 따로 규정이 없는 한 검체 10㎖를 150㎖의 용량플라스크에 정확하게 취하여",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_7c41bd",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "염산 히드록시프로필비스(N-히드록시에칠-p-페닐렌디아민)",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|KFCC_별표10_일반시험법|cat|0|13",
-  "explain": "ㄱ. 출처: KFCC 별표10 일반시험법 \nㄴ. 출처: KFCC 별표10 일반시험법 \nㄷ. 출처: KFCC 별표10 일반시험법 \nㄹ. 출처: KFCC 별표10 일반시험법 \nㅁ. 출처: KFCC 별표10 일반시험법 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "1"
- },
- {
-  "id": "manufacturing_combo-ref_2bc617",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 KFCC 별표10 일반시험법 (참조자료 원문)",
-  "stem": "다음 중 정 량 법에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_f0bf36",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "초산염에 산화칼슘을 섞어서 가열할 때 아세톤 냄새를 내며 발생하는 가스는 o-니트로벤즈알데히",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_e878fb",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "브로모에칠렌",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_a841df",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "조작법 원료 각조에 규정하는 검체를 비커에 달아 규정하는 용량의 용매를 넣어 녹이고 전극은",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_6981ad",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "N'N'-비스(2-히드록시에칠)-N-메칠-2-니트로-p-페닐렌디아민(HC 블루No.1) 및 그 염류",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_a94be3",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "인산염완충액 인산이수소칼륨(pH 측정용) 및 무수인산일수소나트륨(pH 측정용)을 고운가루로 하",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|KFCC_별표10_일반시험법|cat|0|14",
-  "explain": "ㄱ. 출처: KFCC 별표10 일반시험법 \nㄴ. 출처: KFCC 별표10 일반시험법 \nㄷ. 출처: KFCC 별표10 일반시험법 \nㄹ. 출처: KFCC 별표10 일반시험법 \nㅁ. 출처: KFCC 별표10 일반시험법 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "5"
- },
- {
-  "id": "manufacturing_combo-ref_9f22be",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 KFCC 별표10 일반시험법 (참조자료 원문)",
-  "stem": "다음 중 정 량 법에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_fc0d22",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "칼슘염의 용액에 수산암모늄시액을 넣을 때 백색의 침전이 생긴다. 침전을 분리하여 그 일부에 묽",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_6fc22b",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "브롬산염의 질산산성용액에 아질산나트륨시액 5∼6방울을 넣을 때 액은 황색∼적갈색을 나타내며",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_f0bf36",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "초산염에 산화칼슘을 섞어서 가열할 때 아세톤 냄새를 내며 발생하는 가스는 o-니트로벤즈알데히",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_905394",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "아미트리프틸린 및 그 염류",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_3de4ef",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "옥산아미드 및 그 유도체",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|KFCC_별표10_일반시험법|cat|0|15",
-  "explain": "ㄱ. 출처: KFCC 별표10 일반시험법 \nㄴ. 출처: KFCC 별표10 일반시험법 \nㄷ. 출처: KFCC 별표10 일반시험법 \nㄹ. 출처: KFCC 별표10 일반시험법 \nㅁ. 출처: KFCC 별표10 일반시험법 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "4"
- },
- {
-  "id": "manufacturing_combo-ref_bda9db",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 KFCC 별표10 일반시험법 (참조자료 원문)",
-  "stem": "다음 중 정 량 법에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_a19425",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "칼슘염의 중성용액에 크롬산칼륨시액 10방울을 넣어 가열하여도 침전이 생기지 않는다(스트론튬염 과의 구별).",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_47b24e",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "프탈산염완충액 프탈산수소칼륨(pH측정용)를 고운가루로 하여 110℃에서 2시간 이상 건조한 다",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_4c964b",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "탈륨 및 그 화합물",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_5ce3eb",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "질산염의 황산산성용액에 과망간산칼륨시액을 넣어도 시액의 홍색은 없어지지 않는다(아질산염과의 구별).",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_ae9c17",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "위탁시험 또는 위탁제조하는 경우 검체의 송부방법 및 시험결과의 판정방법",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|KFCC_별표10_일반시험법|cat|0|16",
-  "explain": "ㄱ. 출처: KFCC 별표10 일반시험법 \nㄴ. 출처: KFCC 별표10 일반시험법 \nㄷ. 출처: KFCC 별표10 일반시험법 \nㄹ. 출처: KFCC 별표10 일반시험법 \nㅁ. 출처: KFCC 별표10 일반시험법 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "4"
- },
- {
-  "id": "manufacturing_combo-ref_5dfb56",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 KFCC 별표10 일반시험법 (참조자료 원문)",
-  "stem": "다음 중 정 량 법에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_c135cc",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "아리스톨로키아(Aristolochia)속 및 그 생약제제",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_5ce3eb",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "질산염의 황산산성용액에 과망간산칼륨시액을 넣어도 시액의 홍색은 없어지지 않는다(아질산염과의 구별).",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_9d5415",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "포믹애씨드 및 소듐포메이트",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_1c493f",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "주석산염의 용액에 초산 2방울, 황산제일철시액 1방울 및 과산화수소시액 2∼3방울을 넣고 여기에 과량의 수산화나트륨시액을 넣을 때 액은 적자색∼자색을 나타낸다.",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_f0ff3c",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "탄산염용액에 황산마그네슘시액을 넣을 때 백색의 침전이 생기고 묽은초산을 추가할 때 침전은 녹",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄴ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄷ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|KFCC_별표10_일반시험법|cat|0|17",
-  "explain": "ㄱ. 출처: KFCC 별표10 일반시험법 \nㄴ. 출처: KFCC 별표10 일반시험법 \nㄷ. 출처: KFCC 별표10 일반시험법 \nㄹ. 출처: KFCC 별표10 일반시험법 \nㅁ. 출처: KFCC 별표10 일반시험법 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "3"
- },
- {
-  "id": "manufacturing_combo-ref_d20355",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 KFCC 별표10 일반시험법 (참조자료 원문)",
-  "stem": "다음 중 정 량 법에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_121bce",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "콘발라톡신",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_115f01",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "[5.2.1.02,6.03,9.05,8]데칸",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_bcebe3",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "인산염의 중성 또는 묽은질산산성용액에 몰리브덴산암모늄시액을 넣어 가온할 때 황색의 침전이",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_47b24e",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "프탈산염완충액 프탈산수소칼륨(pH측정용)를 고운가루로 하여 110℃에서 2시간 이상 건조한 다",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_31b89e",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "바륨염의 용액에 묽은황산을 넣을 때 백색겔상침전이 생기고 묽은질산을 추가하여도 침전은 녹지",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄷ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄷ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|KFCC_별표10_일반시험법|cat|0|18",
-  "explain": "ㄱ. 출처: KFCC 별표10 일반시험법 \nㄴ. 출처: KFCC 별표10 일반시험법 \nㄷ. 출처: KFCC 별표10 일반시험법 \nㄹ. 출처: KFCC 별표10 일반시험법 \nㅁ. 출처: KFCC 별표10 일반시험법 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "1"
- },
- {
-  "id": "manufacturing_combo-ref_828728",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 KFCC 별표10 일반시험법 (참조자료 원문)",
-  "stem": "다음 중 정 량 법에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_e715de",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "벤조[j]플루오란텐",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_e23e86",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "클로르프로티센 및 그 염류",
-    "truth": false,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_4c2880",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "히드록실아민법 제１법 원료각조에서 규정하는 검체의 양을 정밀하게 달아 염산히드록실아",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_b27958",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "질산염의 진한 용액에 같은 용량의 황산을 넣고 구리조각을 넣어 가열할 때 황갈색의 가스가 난다.",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_b79fef",
-    "conceptId": "KFCC 별표10 일반시험법:",
-    "text": "조 작 법 원료 각조에서 규정하는 양의 검체를 비커에 취하여 규정하는 양의 용매를 넣어 녹이고",
-    "truth": true,
-    "explain": "출처: KFCC 별표10 일반시험법 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄷ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄹ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록"
-  ],
-  "derivedFrom": "ref:enum|KFCC_별표10_일반시험법|cat|0|19",
-  "explain": "ㄱ. 출처: KFCC 별표10 일반시험법 \nㄴ. 출처: KFCC 별표10 일반시험법 \nㄷ. 출처: KFCC 별표10 일반시험법 \nㄹ. 출처: KFCC 별표10 일반시험법 \nㅁ. 출처: KFCC 별표10 일반시험법 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "2"
- },
- {
-  "id": "manufacturing_combo-ref_dafbb4",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 화장품 안전기준 등에 관한 규정 제6조 (참조자료 원문)",
-  "stem": "다음 중 「화장품 안전기준 등에 관한 규정」제6조의 규정에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_857ff6",
-    "conceptId": "화장품 안전기준 등에 관한 규정:제6조",
-    "text": "납 : 점토를 원료로 사용한 분말제품은 50㎍/g이하, 그 밖의 제품은 20㎍/g이하",
-    "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 제6조"
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_afeb30",
-    "conceptId": "화장품 안전기준 등에 관한 규정:제6조",
-    "text": "미량천칭 0.001㎎까지 칭량할 수 있는 것을 쓴다.",
-    "truth": false,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 제6조"
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_6240a9",
-    "conceptId": "화장품 안전기준 등에 관한 규정:제6조",
-    "text": "총호기성생균수는 영ㆍ유아용 제품류 및 눈화장용 제품류의 경우 500개/g(mL)이하",
-    "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 제6조"
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_8e7a72",
-    "conceptId": "화장품 안전기준 등에 관한 규정:제6조",
-    "text": "프탈레이트류(디부틸프탈레이트, 부틸벤질프탈레이트 및 디에칠헥실프탈레이트에 한함) : 총 합으로서 100㎍/g이하",
-    "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 제6조"
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_76a78f",
-    "conceptId": "화장품 안전기준 등에 관한 규정:제6조",
-    "text": "바닥, 벽, 천장은 가능한 청소 또는 위생관리를 하기 쉽게 매끄러운 표면을 지니고 청결하게 유지되어야 하며 소독제 등의 부식성에 저항력이 있을 것",
-    "truth": false,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 제6조"
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄴ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318)|제6조|0|0",
-  "explain": "ㄱ. 출처: 화장품 안전기준 등에 관한 규정 제6조\nㄴ. 출처: 화장품 안전기준 등에 관한 규정 제6조\nㄷ. 출처: 화장품 안전기준 등에 관한 규정 제6조\nㄹ. 출처: 화장품 안전기준 등에 관한 규정 제6조\nㅁ. 출처: 화장품 안전기준 등에 관한 규정 제6조",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "5"
- },
- {
-  "id": "manufacturing_combo-ref_905817",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 화장품 안전기준 등에 관한 규정 제6조 (참조자료 원문)",
-  "stem": "다음 중 「화장품 안전기준 등에 관한 규정」제6조의 규정에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_ed9e12",
-    "conceptId": "화장품 안전기준 등에 관한 규정:제6조",
+    "sid": "manufacturing_refst_143806",
+    "conceptId": "기능성화장품 기준 및 시험방법:제2조",
     "text": "피부의 미백에 도움을 주는 기능성화장품 각조는 별표 2와 같다.",
-    "truth": false,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 제6조"
+    "truth": true,
+    "explain": "출처: 기능성화장품 기준 및 시험방법 제2조"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_cef8ed",
-    "conceptId": "화장품 안전기준 등에 관한 규정:제6조",
-    "text": "포름알데하이드 : 2000㎍/g이하, 물휴지는 20㎍/g이하",
-    "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 제6조"
+    "sid": "manufacturing_refst_62f457",
+    "conceptId": "기능성화장품 기준 및 시험방법:제2조",
+    "text": "5,6,12,13-테트라클로로안트라(2,1,9-def:6,5,10-d'e'f')디이소퀴놀린-1,3,8,10(2H,9H)-테트론",
+    "truth": false,
+    "explain": "출처: 기능성화장품 기준 및 시험방법 제2조"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_8e7a72",
-    "conceptId": "화장품 안전기준 등에 관한 규정:제6조",
-    "text": "프탈레이트류(디부틸프탈레이트, 부틸벤질프탈레이트 및 디에칠헥실프탈레이트에 한함) : 총 합으로서 100㎍/g이하",
+    "sid": "manufacturing_refst_a8f53d",
+    "conceptId": "기능성화장품 기준 및 시험방법:제2조",
+    "text": "통칙은 별표 1과 같다.",
     "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 제6조"
+    "explain": "출처: 기능성화장품 기준 및 시험방법 제2조"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_441302",
-    "conceptId": "화장품 안전기준 등에 관한 규정:제6조",
-    "text": "카드뮴 : 5㎍/g이하",
-    "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 제6조"
+    "sid": "manufacturing_refst_e2ca4f",
+    "conceptId": "기능성화장품 기준 및 시험방법:제2조",
+    "text": "제품판정한다.",
+    "truth": false,
+    "explain": "출처: 기능성화장품 기준 및 시험방법 제2조"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_00213b",
-    "conceptId": "화장품 안전기준 등에 관한 규정:제6조",
-    "text": "자외선차단지수(SPF)는 측정결과에 근거하여 평균값(소수점이하 절사)으로부터 -20%이하 범위내 정수(예 : SPF평균값이 ‘23’일 경우 19～23 범위정수)로 표시하되, SPF 50이상은 \"SPF50+\"로 표시한다.",
-    "truth": false,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 제6조"
+    "sid": "manufacturing_refst_34db3f",
+    "conceptId": "기능성화장품 기준 및 시험방법:제2조",
+    "text": "자외선으로부터 피부를 보호하는데 도움을 주는 기능성화장품 각조는 별표4와 같다.",
+    "truth": true,
+    "explain": "출처: 기능성화장품 기준 및 시험방법 제2조"
    }
   ],
   "options": [
    {
     "id": "1",
     "members": [
-     "ㄷ",
-     "ㅁ"
+     "ㄹ"
     ]
    },
    {
     "id": "2",
     "members": [
      "ㄱ",
-     "ㄴ",
      "ㄷ",
-     "ㄹ"
+     "ㅁ"
     ]
    },
    {
     "id": "3",
     "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
+     "ㄱ"
     ]
    },
    {
     "id": "4",
     "members": [
-     "ㄷ",
-     "ㄹ"
+     "ㅁ"
     ]
    },
    {
@@ -19279,61 +21396,60 @@ var COMBO_DRILLS_subject2 = [
    "자동생성",
    "참조자료",
    "열거목록",
-   "한도",
    "수치"
   ],
-  "derivedFrom": "ref:enum|화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318)|제6조|0|1",
-  "explain": "ㄱ. 출처: 화장품 안전기준 등에 관한 규정 제6조\nㄴ. 출처: 화장품 안전기준 등에 관한 규정 제6조\nㄷ. 출처: 화장품 안전기준 등에 관한 규정 제6조\nㄹ. 출처: 화장품 안전기준 등에 관한 규정 제6조\nㅁ. 출처: 화장품 안전기준 등에 관한 규정 제6조",
+  "derivedFrom": "ref:enum|기능성화장품 기준 및 시험방법(식품의약품안전처고시)(제2025-89호)(20251216)|제2조|0|1",
+  "explain": "ㄱ. 출처: 기능성화장품 기준 및 시험방법 제2조\nㄴ. 출처: 기능성화장품 기준 및 시험방법 제2조\nㄷ. 출처: 기능성화장품 기준 및 시험방법 제2조\nㄹ. 출처: 기능성화장품 기준 및 시험방법 제2조\nㅁ. 출처: 기능성화장품 기준 및 시험방법 제2조",
   "source": "참조자료 원문 (열거 목록)",
-  "answer": "3"
+  "answer": "2"
  },
  {
-  "id": "manufacturing_combo-ref_66dc6d",
+  "id": "manufacturing_combo-ref_c840f0",
   "subject": 2,
   "type": "combo",
   "points": 4,
-  "citation": "📖 화장품 안전기준 등에 관한 규정 제6조 (참조자료 원문)",
-  "stem": "다음 중 「화장품 안전기준 등에 관한 규정」제6조의 규정에 해당하는 것을 모두 고른 것은?",
+  "citation": "📖 기능성화장품 기준 및 시험방법 제2조 (참조자료 원문)",
+  "stem": "다음 중 「기능성화장품 기준 및 시험방법」제2조의 규정에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_cef8ed",
-    "conceptId": "화장품 안전기준 등에 관한 규정:제6조",
-    "text": "포름알데하이드 : 2000㎍/g이하, 물휴지는 20㎍/g이하",
+    "sid": "manufacturing_refst_098443",
+    "conceptId": "기능성화장품 기준 및 시험방법:제2조",
+    "text": "탈모 증상의 완화에 도움을 주는 기능성화장품 각조는 별표 9와 같다.",
     "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 제6조"
+    "explain": "출처: 기능성화장품 기준 및 시험방법 제2조"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_3e8739",
-    "conceptId": "화장품 안전기준 등에 관한 규정:제6조",
-    "text": "비 소 이 원료 1.0 g에 묽은황산 10 mL를 넣어 녹여 검액으로 하여 장치 C를 쓰는 방법에 따라 조작하여 시험한다(2 ppm 이하).",
-    "truth": false,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 제6조"
+    "sid": "manufacturing_refst_a8f53d",
+    "conceptId": "기능성화장품 기준 및 시험방법:제2조",
+    "text": "통칙은 별표 1과 같다.",
+    "truth": true,
+    "explain": "출처: 기능성화장품 기준 및 시험방법 제2조"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_050d7c",
-    "conceptId": "화장품 안전기준 등에 관한 규정:제6조",
-    "text": "제1호의 기준치를 벗어날 경우 : 6개를 더 취하여 시험할 때 9개의 평균 내용량이 제1호의 기준치 이상",
+    "sid": "manufacturing_refst_6b8a80",
+    "conceptId": "기능성화장품 기준 및 시험방법:제2조",
+    "text": "피부의 미백 및 주름개선에 도움을 주는 기능성화장품 각조는 별표 5와 같다.",
     "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 제6조"
+    "explain": "출처: 기능성화장품 기준 및 시험방법 제2조"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_62827d",
-    "conceptId": "화장품 안전기준 등에 관한 규정:제6조",
-    "text": "(시험부위) 시험은 피험자의 등에 한다. 시험부위는 피부손상, 과도한 털, 또는 색조에 특별히 차이가 있는 부분을 피하여 선택하여야 하고, 깨끗하고 마른상태이어야 한다.",
+    "sid": "manufacturing_refst_18cae6",
+    "conceptId": "기능성화장품 기준 및 시험방법:제2조",
+    "text": "N-(4-[비스[4-(디에칠아미노)페닐]메칠렌]-2,5-사이클로헥사디엔-1-일리덴)-N-에칠-에탄아미니움 및 그 염류",
     "truth": false,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 제6조"
+    "explain": "출처: 기능성화장품 기준 및 시험방법 제2조"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_3bcf0c",
-    "conceptId": "화장품 안전기준 등에 관한 규정:제6조",
-    "text": "치오글라이콜릭애씨드 또는 그 염류를 주성분으로 하는 냉2욕식 헤어스트레이트너용 제품 : 이 제품은 실온에 서 사용하는 것으로서 치오글라이콜릭애씨드 또는 그 염류를 주성분으로 하는 제1제 및 산화제를 함유하는 제2제로 구성된다.",
-    "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 제6조"
+    "sid": "manufacturing_refst_dc8f4b",
+    "conceptId": "기능성화장품 기준 및 시험방법:제2조",
+    "text": "(1R,4S,5R,8S)-1,2,3,4,10,10-헥사클로로-1,4,4a,5,8,8a-헥사히드로-1,4:5,8-디메타노나프탈렌(이소드린-ISO)",
+    "truth": false,
+    "explain": "출처: 기능성화장품 기준 및 시험방법 제2조"
    }
   ],
   "options": [
@@ -19341,26 +21457,30 @@ var COMBO_DRILLS_subject2 = [
     "id": "1",
     "members": [
      "ㄱ",
-     "ㄷ",
-     "ㅁ"
+     "ㄴ",
+     "ㄷ"
     ]
    },
    {
     "id": "2",
-    "members": [
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
     "members": [
      "ㄷ"
     ]
    },
    {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
     "id": "4",
     "members": [
+     "ㄱ",
+     "ㄴ",
      "ㄷ",
      "ㄹ"
     ]
@@ -19368,6 +21488,8 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "5",
     "members": [
+     "ㄴ",
+     "ㄷ",
      "ㅁ"
     ]
    }
@@ -19378,590 +21500,195 @@ var COMBO_DRILLS_subject2 = [
    "열거목록",
    "수치"
   ],
-  "derivedFrom": "ref:enum|화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318)|제6조|0|2",
-  "explain": "ㄱ. 출처: 화장품 안전기준 등에 관한 규정 제6조\nㄴ. 출처: 화장품 안전기준 등에 관한 규정 제6조\nㄷ. 출처: 화장품 안전기준 등에 관한 규정 제6조\nㄹ. 출처: 화장품 안전기준 등에 관한 규정 제6조\nㅁ. 출처: 화장품 안전기준 등에 관한 규정 제6조",
+  "derivedFrom": "ref:enum|기능성화장품 기준 및 시험방법(식품의약품안전처고시)(제2025-89호)(20251216)|제2조|0|2",
+  "explain": "ㄱ. 출처: 기능성화장품 기준 및 시험방법 제2조\nㄴ. 출처: 기능성화장품 기준 및 시험방법 제2조\nㄷ. 출처: 기능성화장품 기준 및 시험방법 제2조\nㄹ. 출처: 기능성화장품 기준 및 시험방법 제2조\nㅁ. 출처: 기능성화장품 기준 및 시험방법 제2조",
   "source": "참조자료 원문 (열거 목록)",
   "answer": "1"
  },
  {
-  "id": "manufacturing_combo-ref_ed47be",
+  "id": "manufacturing_combo-ref_7377a4",
   "subject": 2,
   "type": "combo",
   "points": 4,
-  "citation": "📖 화장품 안전기준 등에 관한 규정 제6조 (참조자료 원문)",
-  "stem": "다음 중 「화장품 안전기준 등에 관한 규정」제6조의 규정에 해당하는 것을 모두 고른 것은?",
+  "citation": "📖 기능성화장품 심사에 관한 규정 제3조 (참조자료 원문)",
+  "stem": "다음 중 표준품에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_441302",
-    "conceptId": "화장품 안전기준 등에 관한 규정:제6조",
-    "text": "카드뮴 : 5㎍/g이하",
+    "sid": "manufacturing_refst_d067f6",
+    "conceptId": "기능성화장품 심사에 관한 규정:제3조",
+    "text": "30제조방법 A의 각 성분의 무게를 달아 정제수에 넣고 75∼80℃까지 가열한",
     "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 제6조"
+    "explain": "출처: 기능성화장품 심사에 관한 규정 제3조"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_c3c6e0",
-    "conceptId": "화장품 안전기준 등에 관한 규정:제6조",
-    "text": "제품 3개를 가지고 시험할 때 그 평균 내용량이 표기량에 대하여 97% 이상(다만, 화장 비누의 경우 건조중량을 내용량으로 한다)",
-    "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 제6조"
+    "sid": "manufacturing_refst_b680cb",
+    "conceptId": "기능성화장품 심사에 관한 규정:제3조",
+    "text": "디치오-2,2'-비스피리딘-디옥사이드 1,1'(트리하이드레이티드마그네슘설페이트 부가)(피리치온디설파이드+마그네슘설페이트)",
+    "truth": false,
+    "explain": "출처: 기능성화장품 심사에 관한 규정 제3조"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_b6ad71",
-    "conceptId": "화장품 안전기준 등에 관한 규정:제6조",
+    "sid": "manufacturing_refst_34b0ae",
+    "conceptId": "기능성화장품 심사에 관한 규정:제3조",
+    "text": "제제의 기재항목 작성요령다음의 기재형식에 따라 각 목의 기준 및 시험방법을 설정한다.",
+    "truth": true,
+    "explain": "출처: 기능성화장품 심사에 관한 규정 제3조"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_a90a10",
+    "conceptId": "기능성화장품 심사에 관한 규정:제3조",
+    "text": "원료성분의 기재항목 작성요령다음의 기재형식에 따라 각목의 기준 및 시험방법을 설정한다.",
+    "truth": true,
+    "explain": "출처: 기능성화장품 심사에 관한 규정 제3조"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_efa7e5",
+    "conceptId": "기능성화장품 심사에 관한 규정:제3조",
+    "text": "디아졸리디닐우레아(N-(히드록시메칠)-N-(디히드록시메칠-1,3-디옥소-2,5-이미다졸리디닐-4)-N-(히드록시메칠)우레아)",
+    "truth": false,
+    "explain": "출처: 기능성화장품 심사에 관한 규정 제3조"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|기능성화장품 심사에 관한 규정(식품의약품안전처고시)(제2025-88호)(20251216)|제3조|63|0",
+  "explain": "ㄱ. 출처: 기능성화장품 심사에 관한 규정 제3조\nㄴ. 출처: 기능성화장품 심사에 관한 규정 제3조\nㄷ. 출처: 기능성화장품 심사에 관한 규정 제3조\nㄹ. 출처: 기능성화장품 심사에 관한 규정 제3조\nㅁ. 출처: 기능성화장품 심사에 관한 규정 제3조",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "3"
+ },
+ {
+  "id": "manufacturing_combo-ref_a01437",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 기능성화장품 심사에 관한 규정 제3조 (참조자료 원문)",
+  "stem": "다음 중 표준품에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_34b0ae",
+    "conceptId": "기능성화장품 심사에 관한 규정:제3조",
+    "text": "제제의 기재항목 작성요령다음의 기재형식에 따라 각 목의 기준 및 시험방법을 설정한다.",
+    "truth": true,
+    "explain": "출처: 기능성화장품 심사에 관한 규정 제3조"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_b03c1f",
+    "conceptId": "기능성화장품 심사에 관한 규정:제3조",
+    "text": "피험자는 [부표 1]의 피험자 선정기준에 따라 제품 당 10명 이상을 선정한다.",
+    "truth": true,
+    "explain": "출처: 기능성화장품 심사에 관한 규정 제3조"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_a23d90",
+    "conceptId": "기능성화장품 심사에 관한 규정:제3조",
+    "text": "치오글라이콜릭애씨드 또는 그 염류를 주성분으로 하는 냉2욕식 퍼머넌트웨이브용 제품 : 이 제품은 실온에서 사용하는 것으로서 치오글라이콜릭애씨드 또는 그 염류를 주성분으로 하는 제1제 및 산화제를 함유하는 제2제로 구성된다.",
+    "truth": false,
+    "explain": "출처: 기능성화장품 심사에 관한 규정 제3조"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_615ee7",
+    "conceptId": "기능성화장품 심사에 관한 규정:제3조",
+    "text": "자외선은 200～290nm의 파장을 가진 자외선C(이하 UVC라 한 다)와 290～320nm의 파장을 가진 자외선B(이하 UVB라 한다) 및 320～400㎚의 파장을 가진 자외선A(이하 UVA라 한다)로 나눈다.",
+    "truth": true,
+    "explain": "출처: 기능성화장품 심사에 관한 규정 제3조"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_cfa30b",
+    "conceptId": "기능성화장품 심사에 관한 규정:제3조",
     "text": "사용목적에 적합하고, 청소가 가능하며, 필요한 경우 위생ㆍ유지관리가 가능하여야 한다. 자동화시스템을 도입한 경우도 또한 같다.",
     "truth": false,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 제6조"
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_6240a9",
-    "conceptId": "화장품 안전기준 등에 관한 규정:제6조",
-    "text": "총호기성생균수는 영ㆍ유아용 제품류 및 눈화장용 제품류의 경우 500개/g(mL)이하",
-    "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 제6조"
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_739f81",
-    "conceptId": "화장품 안전기준 등에 관한 규정:제6조",
-    "text": "사용하지 않는 연결 호스와 부속품은 청소 등 위생관리를 하며, 건조한 상태로 유지하고 먼지, 얼룩 또는 다른오염으로부터 보호할 것",
-    "truth": false,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 제6조"
+    "explain": "출처: 기능성화장품 심사에 관한 규정 제3조"
    }
   ],
   "options": [
    {
     "id": "1",
     "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㅁ"
+     "ㄹ"
     ]
    },
    {
     "id": "2",
     "members": [
+     "ㄱ",
+     "ㄴ",
      "ㄹ"
     ]
    },
    {
     "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄷ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "한도",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318)|제6조|0|3",
-  "explain": "ㄱ. 출처: 화장품 안전기준 등에 관한 규정 제6조\nㄴ. 출처: 화장품 안전기준 등에 관한 규정 제6조\nㄷ. 출처: 화장품 안전기준 등에 관한 규정 제6조\nㄹ. 출처: 화장품 안전기준 등에 관한 규정 제6조\nㅁ. 출처: 화장품 안전기준 등에 관한 규정 제6조",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "4"
- },
- {
-  "id": "manufacturing_combo-ref_a0c956",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 안전기준 별표2 사용제한원료 (참조자료 원문)",
-  "stem": "다음 중 화장품에 사용이 제한되는 원료에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_42136f",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "염산 히드록시프로필비스(N-히드록시에칠-p-페닐렌디아민)",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_9e4072",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "염산 2,4-디아미노페놀",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_335add",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "메칠옥시란",
-    "truth": false,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_67ce4b",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "칼슘설페이트 (Calcium Sulfate) CI 77231",
-    "truth": false,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_31ffc7",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "인 디 고 페 라( Indigoferatinctoria)엽가루",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|안전기준_별표2_사용제한원료|mdtable|2|0",
-  "explain": "ㄱ. 출처: 안전기준 별표2 사용제한원료 \nㄴ. 출처: 안전기준 별표2 사용제한원료 \nㄷ. 출처: 안전기준 별표2 사용제한원료 \nㄹ. 출처: 안전기준 별표2 사용제한원료 \nㅁ. 출처: 안전기준 별표2 사용제한원료 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "1"
- },
- {
-  "id": "manufacturing_combo-ref_5fc25b",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 안전기준 별표2 사용제한원료 (참조자료 원문)",
-  "stem": "다음 중 화장품에 사용이 제한되는 원료에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_42136f",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "염산 히드록시프로필비스(N-히드록시에칠-p-페닐렌디아민)",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_8d2388",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "Schoenocaulon officinale Lind.(씨 및 그생약제제)",
-    "truth": false,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_4e9ce1",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "피크라민산",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_471051",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "디클로로에칠렌(아세틸렌클로라이드)(예 :비닐리덴클로라이드)",
-    "truth": false,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_7a932c",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "황산 1-히드록시에칠-4,5-디아미노피라졸",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄴ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|안전기준_별표2_사용제한원료|mdtable|2|1",
-  "explain": "ㄱ. 출처: 안전기준 별표2 사용제한원료 \nㄴ. 출처: 안전기준 별표2 사용제한원료 \nㄷ. 출처: 안전기준 별표2 사용제한원료 \nㄹ. 출처: 안전기준 별표2 사용제한원료 \nㅁ. 출처: 안전기준 별표2 사용제한원료 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "2"
- },
- {
-  "id": "manufacturing_combo-ref_3ced02",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 안전기준 별표2 사용제한원료 (참조자료 원문)",
-  "stem": "다음 중 화장품에 사용이 제한되는 원료에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_e0b4c9",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "황산 p-메칠아미노페놀",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_ea7f5c",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "N-페닐-p-페닐렌디아민 및 그 염류",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_a4da56",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "부톡시에탄올",
-    "truth": false,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_264674",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "메페네신 및 그 에스텔",
-    "truth": false,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_42136f",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "염산 히드록시프로필비스(N-히드록시에칠-p-페닐렌디아민)",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록"
-  ],
-  "derivedFrom": "ref:enum|안전기준_별표2_사용제한원료|mdtable|2|2",
-  "explain": "ㄱ. 출처: 안전기준 별표2 사용제한원료 \nㄴ. 출처: 안전기준 별표2 사용제한원료 \nㄷ. 출처: 안전기준 별표2 사용제한원료 \nㄹ. 출처: 안전기준 별표2 사용제한원료 \nㅁ. 출처: 안전기준 별표2 사용제한원료 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "5"
- },
- {
-  "id": "manufacturing_combo-ref_595f2c",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 안전기준 별표2 사용제한원료 (참조자료 원문)",
-  "stem": "다음 중 화장품에 사용이 제한되는 원료에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_b36348",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "염산 2,4-디아미노페녹시에탄올",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_b05171",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "시클라바메이트",
-    "truth": false,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_756aff",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "알릴헵틴카보네이트",
-    "truth": false,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_67b198",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "황산 5-아미노-o-크레솔",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_a4159f",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "황산철수화물(FeSO47H O)ㆍ 2",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄷ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
     "members": [
      "ㄱ"
     ]
    },
    {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
     "id": "4",
     "members": [
      "ㄱ",
-     "ㄹ",
+     "ㄴ",
+     "ㄷ",
      "ㅁ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|안전기준_별표2_사용제한원료|mdtable|2|3",
-  "explain": "ㄱ. 출처: 안전기준 별표2 사용제한원료 \nㄴ. 출처: 안전기준 별표2 사용제한원료 \nㄷ. 출처: 안전기준 별표2 사용제한원료 \nㄹ. 출처: 안전기준 별표2 사용제한원료 \nㅁ. 출처: 안전기준 별표2 사용제한원료 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "4"
- },
- {
-  "id": "manufacturing_combo-ref_9af3b7",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 안전기준 별표2 사용제한원료 (참조자료 원문)",
-  "stem": "다음 중 화장품에 사용이 제한되는 원료에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_b36348",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "염산 2,4-디아미노페녹시에탄올",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_458ce3",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "황산 p-페닐렌디아민",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_c46b47",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "황산 m-아미노페놀",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_252319",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "프로피자미드",
-    "truth": false,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_a18105",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "카드뮴 : 5㎍/g이하",
-    "truth": false,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄴ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄴ",
      "ㄷ"
     ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ"
-    ]
    }
   ],
   "tags": [
@@ -19970,713 +21697,10 @@ var COMBO_DRILLS_subject2 = [
    "열거목록",
    "수치"
   ],
-  "derivedFrom": "ref:enum|안전기준_별표2_사용제한원료|mdtable|2|4",
-  "explain": "ㄱ. 출처: 안전기준 별표2 사용제한원료 \nㄴ. 출처: 안전기준 별표2 사용제한원료 \nㄷ. 출처: 안전기준 별표2 사용제한원료 \nㄹ. 출처: 안전기준 별표2 사용제한원료 \nㅁ. 출처: 안전기준 별표2 사용제한원료 ",
+  "derivedFrom": "ref:enum|기능성화장품 심사에 관한 규정(식품의약품안전처고시)(제2025-88호)(20251216)|제3조|63|1",
+  "explain": "ㄱ. 출처: 기능성화장품 심사에 관한 규정 제3조\nㄴ. 출처: 기능성화장품 심사에 관한 규정 제3조\nㄷ. 출처: 기능성화장품 심사에 관한 규정 제3조\nㄹ. 출처: 기능성화장품 심사에 관한 규정 제3조\nㅁ. 출처: 기능성화장품 심사에 관한 규정 제3조",
   "source": "참조자료 원문 (열거 목록)",
   "answer": "2"
- },
- {
-  "id": "manufacturing_combo-ref_217a96",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 안전기준 별표2 사용제한원료 (참조자료 원문)",
-  "stem": "다음 중 화장품에 사용이 제한되는 원료에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_3cecb1",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "AdonisvernalisL.및 그 제제",
-    "truth": false,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_fdcf20",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "(2-이소프로필펜트-4-에노일)우레아(아프로날리드)",
-    "truth": false,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_a4159f",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "황산철수화물(FeSO47H O)ㆍ 2",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_b36348",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "염산 2,4-디아미노페녹시에탄올",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_7a932c",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "황산 1-히드록시에칠-4,5-디아미노피라졸",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄷ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|안전기준_별표2_사용제한원료|mdtable|2|5",
-  "explain": "ㄱ. 출처: 안전기준 별표2 사용제한원료 \nㄴ. 출처: 안전기준 별표2 사용제한원료 \nㄷ. 출처: 안전기준 별표2 사용제한원료 \nㄹ. 출처: 안전기준 별표2 사용제한원료 \nㅁ. 출처: 안전기준 별표2 사용제한원료 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "5"
- },
- {
-  "id": "manufacturing_combo-ref_e8879e",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 안전기준 별표2 사용제한원료 (참조자료 원문)",
-  "stem": "다음 중 화장품에 사용이 제한되는 원료에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_540202",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "염산 p-페닐렌디아민",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_a8ad64",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "디스퍼스옐로우 3",
-    "truth": false,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_2d5691",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "헤마테인",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_569d2f",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "톨루엔-2,5-디아민",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_748bcb",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "스테로이드 구조를 갖는 안티안드로겐",
-    "truth": false,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|안전기준_별표2_사용제한원료|mdtable|2|6",
-  "explain": "ㄱ. 출처: 안전기준 별표2 사용제한원료 \nㄴ. 출처: 안전기준 별표2 사용제한원료 \nㄷ. 출처: 안전기준 별표2 사용제한원료 \nㄹ. 출처: 안전기준 별표2 사용제한원료 \nㅁ. 출처: 안전기준 별표2 사용제한원료 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "5"
- },
- {
-  "id": "manufacturing_combo-ref_6c5f10",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 안전기준 별표2 사용제한원료 (참조자료 원문)",
-  "stem": "다음 중 화장품에 사용이 제한되는 원료에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_3cecb1",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "AdonisvernalisL.및 그 제제",
-    "truth": false,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_7071f6",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "트라닐시프로민 및 그 염류",
-    "truth": false,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_816581",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "황산 p-니트로-o-페닐렌디아민",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_558b6d",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "염기성황색8 7 호(Basic Yellow 87)",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_b36348",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "염산 2,4-디아미노페녹시에탄올",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄷ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|안전기준_별표2_사용제한원료|mdtable|2|7",
-  "explain": "ㄱ. 출처: 안전기준 별표2 사용제한원료 \nㄴ. 출처: 안전기준 별표2 사용제한원료 \nㄷ. 출처: 안전기준 별표2 사용제한원료 \nㄹ. 출처: 안전기준 별표2 사용제한원료 \nㅁ. 출처: 안전기준 별표2 사용제한원료 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "3"
- },
- {
-  "id": "manufacturing_combo-ref_4bfd61",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 안전기준 별표2 사용제한원료 (참조자료 원문)",
-  "stem": "다음 중 화장품에 사용이 제한되는 원료에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_526430",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "황산 N,N-비스(2-히드록시에칠)-p-페닐렌디아민",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_7e43ef",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "베헨트리모늄 클로라이드",
-    "truth": false,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_cf8724",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "염기성적색5 1 호(Basic Red 51)",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_e5cc89",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "o-디아니시딘의 염(3,3'-디메톡시벤지딘의염)",
-    "truth": false,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_2d5691",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "헤마테인",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|안전기준_별표2_사용제한원료|mdtable|2|8",
-  "explain": "ㄱ. 출처: 안전기준 별표2 사용제한원료 \nㄴ. 출처: 안전기준 별표2 사용제한원료 \nㄷ. 출처: 안전기준 별표2 사용제한원료 \nㄹ. 출처: 안전기준 별표2 사용제한원료 \nㅁ. 출처: 안전기준 별표2 사용제한원료 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "3"
- },
- {
-  "id": "manufacturing_combo-ref_5526d1",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 안전기준 별표2 사용제한원료 (참조자료 원문)",
-  "stem": "다음 중 화장품에 사용이 제한되는 원료에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_aa8417",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "몰식자산",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_69ccf6",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "알루미늄염의 용액에 수산화나트륨시액을 넣을 때 백색의 겔상 침전이 생기며 과량의 수산화나트",
-    "truth": false,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_70d7ca",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "히드록시벤조모르포린",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_2df0e4",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "라이서자이드(Lysergide) 및 그 염류",
-    "truth": false,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_a69a9b",
-    "conceptId": "안전기준 별표2 사용제한원료:",
-    "text": "황산 톨루엔-2,5-디아민",
-    "truth": true,
-    "explain": "출처: 안전기준 별표2 사용제한원료 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄴ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|안전기준_별표2_사용제한원료|mdtable|2|9",
-  "explain": "ㄱ. 출처: 안전기준 별표2 사용제한원료 \nㄴ. 출처: 안전기준 별표2 사용제한원료 \nㄷ. 출처: 안전기준 별표2 사용제한원료 \nㄹ. 출처: 안전기준 별표2 사용제한원료 \nㅁ. 출처: 안전기준 별표2 사용제한원료 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "3"
- },
- {
-  "id": "manufacturing_combo-ref_3b09db",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 CGMP 별표2 실시상황평가표 (참조자료 원문)",
-  "stem": "다음 중 「CGMP 별표2 실시상황평가표」에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_30c455",
-    "conceptId": "CGMP 별표2 실시상황평가표:",
-    "text": "트랜스-2-헥세날디메칠아세탈",
-    "truth": false,
-    "explain": "출처: CGMP 별표2 실시상황평가표 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_d16618",
-    "conceptId": "CGMP 별표2 실시상황평가표:",
-    "text": "제조 작업소",
-    "truth": true,
-    "explain": "출처: CGMP 별표2 실시상황평가표 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_a00f3f",
-    "conceptId": "CGMP 별표2 실시상황평가표:",
-    "text": "품질책임자",
-    "truth": true,
-    "explain": "출처: CGMP 별표2 실시상황평가표 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_b94181",
-    "conceptId": "CGMP 별표2 실시상황평가표:",
-    "text": "소 재 지",
-    "truth": true,
-    "explain": "출처: CGMP 별표2 실시상황평가표 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_3642cd",
-    "conceptId": "CGMP 별표2 실시상황평가표:",
-    "text": "알파-비사보롤",
-    "truth": false,
-    "explain": "출처: CGMP 별표2 실시상황평가표 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄴ",
-     "ㄷ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|CGMP_별표2_실시상황평가표|mdtable|0|0",
-  "explain": "ㄱ. 출처: CGMP 별표2 실시상황평가표 \nㄴ. 출처: CGMP 별표2 실시상황평가표 \nㄷ. 출처: CGMP 별표2 실시상황평가표 \nㄹ. 출처: CGMP 별표2 실시상황평가표 \nㅁ. 출처: CGMP 별표2 실시상황평가표 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "2"
- },
- {
-  "id": "manufacturing_combo-ref_a74504",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 CGMP 별표2 실시상황평가표 (참조자료 원문)",
-  "stem": "다음 중 「CGMP 별표2 실시상황평가표」에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_d16618",
-    "conceptId": "CGMP 별표2 실시상황평가표:",
-    "text": "제조 작업소",
-    "truth": true,
-    "explain": "출처: CGMP 별표2 실시상황평가표 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_dd7faa",
-    "conceptId": "CGMP 별표2 실시상황평가표:",
-    "text": "디에칠아미노하이드록시벤조일헥실벤조에이트",
-    "truth": false,
-    "explain": "출처: CGMP 별표2 실시상황평가표 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_6debb3",
-    "conceptId": "CGMP 별표2 실시상황평가표:",
-    "text": "적색산화철 (아이런옥사이드레드, Iron Oxide Red, Ferric Oxide) CI77491",
-    "truth": false,
-    "explain": "출처: CGMP 별표2 실시상황평가표 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_772701",
-    "conceptId": "CGMP 별표2 실시상황평가표:",
-    "text": "품질관리시험실",
-    "truth": true,
-    "explain": "출처: CGMP 별표2 실시상황평가표 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_7a7e4d",
-    "conceptId": "CGMP 별표2 실시상황평가표:",
-    "text": "전 공정",
-    "truth": true,
-    "explain": "출처: CGMP 별표2 실시상황평가표 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄷ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|CGMP_별표2_실시상황평가표|mdtable|0|1",
-  "explain": "ㄱ. 출처: CGMP 별표2 실시상황평가표 \nㄴ. 출처: CGMP 별표2 실시상황평가표 \nㄷ. 출처: CGMP 별표2 실시상황평가표 \nㄹ. 출처: CGMP 별표2 실시상황평가표 \nㅁ. 출처: CGMP 별표2 실시상황평가표 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "4"
  },
  {
   "id": "manufacturing_combo-ref_b01d9c",
@@ -20688,42 +21712,42 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_da85e1",
+    "sid": "manufacturing_refst_6aec7c",
     "conceptId": "색소종류및기준 전체:",
-    "text": "(메칠-ONN-아조시)메칠아세테이트",
-    "truth": false,
+    "text": "크로뮴옥사이드그린 (크롬(III) 옥사이드, Chromium Oxide Greens)CI 77288",
+    "truth": true,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_d766b7",
+    "sid": "manufacturing_refst_a16193",
     "conceptId": "색소종류및기준 전체:",
-    "text": "코발트알루미늄옥사이드 (Cobalt Aluminum Oxide) CI 77346",
+    "text": "카민류 (Carmines) CI 75470",
     "truth": true,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_8aed7c",
+    "sid": "manufacturing_refst_9836ef",
     "conceptId": "색소종류및기준 전체:",
-    "text": "금 (Gold) CI 77480",
+    "text": "구리 (카퍼, Copper) CI 77400",
     "truth": true,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_bdb7f7",
+    "sid": "manufacturing_refst_a52a02",
     "conceptId": "색소종류및기준 전체:",
-    "text": "질산염의 황산산성용액에 과망간산칼륨시액을 넣어도 시액의 홍색은 없어지지 않는다(아질산염과의 구별).",
+    "text": "척주(vertebral column)",
     "truth": false,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_37e086",
+    "sid": "manufacturing_refst_73b792",
     "conceptId": "색소종류및기준 전체:",
-    "text": "클로로필류 (Chlorophylls) CI 75810",
-    "truth": true,
+    "text": "(1R,2S)-헥사히드로-1,2-디메칠-3,6-에폭시프탈릭안하이드라이드(칸타리딘)",
+    "truth": false,
     "explain": "출처: 색소종류및기준 전체 "
    }
   ],
@@ -20740,9 +21764,9 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "2",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㄷ",
-     "ㅁ"
+     "ㄷ"
     ]
    },
    {
@@ -20788,42 +21812,42 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_41bd91",
+    "sid": "manufacturing_refst_7e6166",
     "conceptId": "색소종류및기준 전체:",
-    "text": "등색 401 호(오렌지 401, Orange no. 401)* CI 11725",
-    "truth": true,
-    "explain": "출처: 색소종류및기준 전체 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_a3f2c6",
-    "conceptId": "색소종류및기준 전체:",
-    "text": "적색산화철 (아이런옥사이드레드, Iron Oxide Red, Ferric Oxide) CI",
-    "truth": true,
-    "explain": "출처: 색소종류및기준 전체 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_58644e",
-    "conceptId": "색소종류및기준 전체:",
-    "text": "케토코나졸",
+    "text": "배측근신경절(dorsal root ganglia)",
     "truth": false,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_ff0b5a",
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_222eb4",
     "conceptId": "색소종류및기준 전체:",
-    "text": "안나토 (Annatto) CI 75120",
+    "text": "신청 담당자",
+    "truth": false,
+    "explain": "출처: 색소종류및기준 전체 "
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_4bc4f6",
+    "conceptId": "색소종류및기준 전체:",
+    "text": "본블랙, 본챠콜 (본차콜, Bone black, Bone Charcoal) CI 77267",
+    "truth": true,
+    "explain": "출처: 색소종류및기준 전체 "
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_9836ef",
+    "conceptId": "색소종류및기준 전체:",
+    "text": "구리 (카퍼, Copper) CI 77400",
     "truth": true,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_440f28",
+    "sid": "manufacturing_refst_e30618",
     "conceptId": "색소종류및기준 전체:",
-    "text": "염산 p-페닐렌디아민",
-    "truth": false,
+    "text": "라이코펜 (Lycopene) CI 75125",
+    "truth": true,
     "explain": "출처: 색소종류및기준 전체 "
    }
   ],
@@ -20863,9 +21887,9 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "5",
     "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ"
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
     ]
    }
   ],
@@ -20890,42 +21914,42 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_a0bbc6",
+    "sid": "manufacturing_refst_e30618",
     "conceptId": "색소종류및기준 전체:",
-    "text": "비스머스옥시클로라이드 (Bismuth Oxychloride) CI 77163",
+    "text": "라이코펜 (Lycopene) CI 75125",
     "truth": true,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_37e086",
+    "sid": "manufacturing_refst_561f27",
     "conceptId": "색소종류및기준 전체:",
-    "text": "클로로필류 (Chlorophylls) CI 75810",
-    "truth": true,
+    "text": "4,4'-(4-이미노사이클로헥사-2,5-디에닐리덴메칠렌)디아닐린 하이드로클로라이드",
+    "truth": false,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_41bd91",
+    "sid": "manufacturing_refst_d62458",
     "conceptId": "색소종류및기준 전체:",
-    "text": "등색 401 호(오렌지 401, Orange no. 401)* CI 11725",
-    "truth": true,
+    "text": "알칼리금속의 염소산염",
+    "truth": false,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_30ac7b",
+    "sid": "manufacturing_refst_03bdee",
     "conceptId": "색소종류및기준 전체:",
-    "text": "치오황산염의 용액에 과량의 질산은시액을 넣을 때 백색의 침전이 생기며 방치할 때 침전은 흑색",
-    "truth": false,
+    "text": "페러스옥사이드 (Ferrous oxide, Iron Oxide) CI 77489",
+    "truth": true,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_dba3c3",
+    "sid": "manufacturing_refst_4bc4f6",
     "conceptId": "색소종류및기준 전체:",
-    "text": "산 이 원료 5.0g을 중화에탄올 20mL에 녹이고 페놀프탈레인시액 1mL 및 0.1N",
-    "truth": false,
+    "text": "본블랙, 본챠콜 (본차콜, Bone black, Bone Charcoal) CI 77267",
+    "truth": true,
     "explain": "출처: 색소종류및기준 전체 "
    }
   ],
@@ -20934,8 +21958,8 @@ var COMBO_DRILLS_subject2 = [
     "id": "1",
     "members": [
      "ㄱ",
-     "ㄴ",
-     "ㄷ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -20990,41 +22014,41 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_226455",
+    "sid": "manufacturing_refst_13929b",
     "conceptId": "색소종류및기준 전체:",
-    "text": "베지터블카본 (코크블랙, Vegetable Carbon, Coke Black) CI 77268:1",
+    "text": "울트라마린 (Ultramarines) CI 77007",
     "truth": true,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_686c01",
+    "sid": "manufacturing_refst_4a30d0",
     "conceptId": "색소종류및기준 전체:",
-    "text": "옥토크릴렌",
+    "text": "옥산아미드 및 그 유도체",
     "truth": false,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_4bc4f6",
+    "sid": "manufacturing_refst_ff0b5a",
     "conceptId": "색소종류및기준 전체:",
-    "text": "본블랙, 본챠콜 (본차콜, Bone black, Bone Charcoal) CI 77267",
+    "text": "안나토 (Annatto) CI 75120",
     "truth": true,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_a9fdbc",
+    "sid": "manufacturing_refst_2b71aa",
     "conceptId": "색소종류및기준 전체:",
-    "text": "카본블랙 (Carbon black) CI 77266",
+    "text": "바륨설페이트 (Barium Sulfate) CI 77120",
     "truth": true,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_4bae4c",
+    "sid": "manufacturing_refst_188886",
     "conceptId": "색소종류및기준 전체:",
-    "text": "톨부트아미드",
+    "text": "1,3-비스(비닐설포닐아세타아미도)-프로판",
     "truth": false,
     "explain": "출처: 색소종류및기준 전체 "
    }
@@ -21088,41 +22112,41 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_dd1329",
+    "sid": "manufacturing_refst_13929b",
     "conceptId": "색소종류및기준 전체:",
-    "text": "디소듐페닐디벤즈이미다졸테트라설포네이트",
-    "truth": false,
+    "text": "울트라마린 (Ultramarines) CI 77007",
+    "truth": true,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_909626",
+    "sid": "manufacturing_refst_101519",
     "conceptId": "색소종류및기준 전체:",
-    "text": "피나스테리드, 그 염류 및 유도체",
-    "truth": false,
+    "text": "베타카로틴 (Beta-Carotene) CI 40800, CI 75130",
+    "truth": true,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_062608",
+    "sid": "manufacturing_refst_baafcb",
     "conceptId": "색소종류및기준 전체:",
-    "text": "칼슘설페이트 (Calcium Sulfate) CI 77231",
-    "truth": true,
+    "text": "니켈 디하이드록사이드",
+    "truth": false,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_bab455",
+    "sid": "manufacturing_refst_b22e29",
     "conceptId": "색소종류및기준 전체:",
-    "text": "커큐민 (Curcumin) CI 75300",
-    "truth": true,
+    "text": "아이오도프로피닐부틸카바메이트(IPBC)",
+    "truth": false,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_a3f2c6",
+    "sid": "manufacturing_refst_9836ef",
     "conceptId": "색소종류및기준 전체:",
-    "text": "적색산화철 (아이런옥사이드레드, Iron Oxide Red, Ferric Oxide) CI",
+    "text": "구리 (카퍼, Copper) CI 77400",
     "truth": true,
     "explain": "출처: 색소종류및기준 전체 "
    }
@@ -21154,8 +22178,8 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "4",
     "members": [
-     "ㄷ",
-     "ㄹ",
+     "ㄱ",
+     "ㄴ",
      "ㅁ"
     ]
    },
@@ -21187,42 +22211,42 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_e17593",
+    "sid": "manufacturing_refst_e4c072",
     "conceptId": "색소종류및기준 전체:",
-    "text": "프로파진",
+    "text": "설팔레이트",
     "truth": false,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_41bd91",
+    "sid": "manufacturing_refst_13929b",
     "conceptId": "색소종류및기준 전체:",
-    "text": "등색 401 호(오렌지 401, Orange no. 401)* CI 11725",
+    "text": "울트라마린 (Ultramarines) CI 77007",
     "truth": true,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_8b55c8",
+    "sid": "manufacturing_refst_101519",
     "conceptId": "색소종류및기준 전체:",
-    "text": "사이클로헥시미드",
-    "truth": false,
+    "text": "베타카로틴 (Beta-Carotene) CI 40800, CI 75130",
+    "truth": true,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_d766b7",
+    "sid": "manufacturing_refst_37e086",
     "conceptId": "색소종류및기준 전체:",
-    "text": "코발트알루미늄옥사이드 (Cobalt Aluminum Oxide) CI 77346",
+    "text": "클로로필류 (Chlorophylls) CI 75810",
     "truth": true,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_4bc4f6",
+    "sid": "manufacturing_refst_9d3776",
     "conceptId": "색소종류및기준 전체:",
-    "text": "본블랙, 본챠콜 (본차콜, Bone black, Bone Charcoal) CI 77267",
-    "truth": true,
+    "text": "N,N-디메칠아세타마이드",
+    "truth": false,
     "explain": "출처: 색소종류및기준 전체 "
    }
   ],
@@ -21231,8 +22255,8 @@ var COMBO_DRILLS_subject2 = [
     "id": "1",
     "members": [
      "ㄴ",
-     "ㄹ",
-     "ㅁ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -21286,42 +22310,42 @@ var COMBO_DRILLS_subject2 = [
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_8aed7c",
+    "sid": "manufacturing_refst_92c2f0",
     "conceptId": "색소종류및기준 전체:",
-    "text": "금 (Gold) CI 77480",
-    "truth": true,
+    "text": "카라미펜 및 그 염류",
+    "truth": false,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_a3f2c6",
+    "sid": "manufacturing_refst_9836ef",
     "conceptId": "색소종류및기준 전체:",
-    "text": "적색산화철 (아이런옥사이드레드, Iron Oxide Red, Ferric Oxide) CI",
+    "text": "구리 (카퍼, Copper) CI 77400",
     "truth": true,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_21bf59",
+    "sid": "manufacturing_refst_37e086",
     "conceptId": "색소종류및기준 전체:",
-    "text": "타크로리무스(tacrolimus), 그 염류 및유도체",
-    "truth": false,
+    "text": "클로로필류 (Chlorophylls) CI 75810",
+    "truth": true,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_6d1b04",
+    "sid": "manufacturing_refst_e30618",
     "conceptId": "색소종류및기준 전체:",
-    "text": "알킬(C -C )트리12 22메칠암모늄 브로마이드 및 클로라이드(브롬화세트리모늄포함)",
-    "truth": false,
+    "text": "라이코펜 (Lycopene) CI 75125",
+    "truth": true,
     "explain": "출처: 색소종류및기준 전체 "
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_6aec7c",
+    "sid": "manufacturing_refst_a48bba",
     "conceptId": "색소종류및기준 전체:",
-    "text": "크로뮴옥사이드그린 (크롬(III) 옥사이드, Chromium Oxide Greens)CI 77288",
-    "truth": true,
+    "text": "2-(2-메톡시에톡시)에탄올(메톡시디글리콜)",
+    "truth": false,
     "explain": "출처: 색소종류및기준 전체 "
    }
   ],
@@ -21355,9 +22379,9 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "4",
     "members": [
-     "ㄱ",
      "ㄴ",
-     "ㅁ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -21372,7 +22396,6 @@ var COMBO_DRILLS_subject2 = [
    "자동생성",
    "참조자료",
    "열거목록",
-   "구성비",
    "수치"
   ],
   "derivedFrom": "ref:enum|색소종류및기준_전체|mdtable|0|6",
@@ -21381,72 +22404,57 @@ var COMBO_DRILLS_subject2 = [
   "answer": "4"
  },
  {
-  "id": "manufacturing_combo-ref_ab581b",
+  "id": "manufacturing_combo-ref_95a5d7",
   "subject": 2,
   "type": "combo",
   "points": 4,
-  "citation": "📖 KFCC 별표4 자외선보호 (참조자료 원문)",
-  "stem": "다음 중 (50㎍/mL)에 해당하는 것을 모두 고른 것은?",
+  "citation": "📖 화장품 안전기준 등에 관한 규정 제6조 (참조자료 원문)",
+  "stem": "다음 중 「화장품 안전기준 등에 관한 규정」제6조의 규정에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_39f649",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "클로르디메폼",
+    "sid": "manufacturing_refst_5168a0",
+    "conceptId": "화장품 안전기준 등에 관한 규정:제6조",
+    "text": "디소듐 4-아미노-3-[[4'-[(2,4-디아미노페닐)아조][1,1'-비페닐]-4-일]아조]-5-하이드록시-6-(페닐아조)나프탈렌-2,7-디설포네이트(다이렉트블랙 38)",
     "truth": false,
-    "explain": "출처: KFCC 별표4 자외선보호 "
+    "explain": "출처: 화장품 안전기준 등에 관한 규정 제6조"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_9d34bb",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "비소 이 원료 0.4 g을 달아 제3법에 따라 검액을 만들고 장치 A를 쓰는 방법에 따라 조작하여 시험한다(5 ppm이하).",
-    "truth": true,
-    "explain": "출처: KFCC 별표4 자외선보호 "
+    "sid": "manufacturing_refst_0d5b66",
+    "conceptId": "화장품 안전기준 등에 관한 규정:제6조",
+    "text": "1,3,5-트리스-[(2S 및 2R)-2,3-에폭시프로필]-1,3,5-트리아진-2,4,6-(1H,3H,5H)-트리온",
+    "truth": false,
+    "explain": "출처: 화장품 안전기준 등에 관한 규정 제6조"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_d4a9aa",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "살리실산 이 원료 4g에 물 40mL를 넣어 1분간 잘 흔들어 섞은 다음 여과하여 얻",
+    "sid": "manufacturing_refst_91f2db",
+    "conceptId": "화장품 안전기준 등에 관한 규정:제6조",
+    "text": "치오글라이콜릭애씨드 또는 그 염류를 주성분으로 하는 냉2욕식 헤어스트레이트너용 제품 : 이 제품은 실온에 서 사용하는 것으로서 치오글라이콜릭애씨드 또는 그 염류를 주성분으로 하는 제1제 및 산화제를 함유하는 제2제로 구성된다.",
     "truth": true,
-    "explain": "출처: KFCC 별표4 자외선보호 "
+    "explain": "출처: 화장품 안전기준 등에 관한 규정 제6조"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_1329da",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "마이카 (Mica) CI 77019",
-    "truth": false,
-    "explain": "출처: KFCC 별표4 자외선보호 "
+    "sid": "manufacturing_refst_c3f3b7",
+    "conceptId": "화장품 안전기준 등에 관한 규정:제6조",
+    "text": "치오글라이콜릭애씨드 또는 그 염류를 주성분으로 하는 냉2욕식 퍼머넌트웨이브용 제품 : 이 제품은 실온에서 사용하는 것으로서 치오글라이콜릭애씨드 또는 그 염류를 주성분으로 하는 제1제 및 산화제를 함유하는 제2제로 구성된다.",
+    "truth": true,
+    "explain": "출처: 화장품 안전기준 등에 관한 규정 제6조"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_5e43ce",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "비 소 이 원료 1.0g을 취하여 제3법에 따라 검액을 만들고 장치 B를 쓰는 방법에 따라 조작하여 시험한다. (2ppm 이하)",
+    "sid": "manufacturing_refst_ab9852",
+    "conceptId": "화장품 안전기준 등에 관한 규정:제6조",
+    "text": "시스테인, 시스테인염류 또는 아세틸시스테인을 주성분으로 하는 냉2욕식 퍼머넌트웨이브용 제품 : 이 제품은 실온에서 사용하는 것으로서 시스테인, 시스테인염류 또는 아세틸시스테인을 주성분으로 하는 제1제 및 산화제를 함유하는 제2제로 구성된다.",
     "truth": true,
-    "explain": "출처: KFCC 별표4 자외선보호 "
+    "explain": "출처: 화장품 안전기준 등에 관한 규정 제6조"
    }
   ],
   "options": [
    {
     "id": "1",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
     "members": [
      "ㄱ",
      "ㄴ",
@@ -21454,102 +22462,15 @@ var COMBO_DRILLS_subject2 = [
     ]
    },
    {
-    "id": "4",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|KFCC_별표4_자외선보호|cat|0|0",
-  "explain": "ㄱ. 출처: KFCC 별표4 자외선보호 \nㄴ. 출처: KFCC 별표4 자외선보호 \nㄷ. 출처: KFCC 별표4 자외선보호 \nㄹ. 출처: KFCC 별표4 자외선보호 \nㅁ. 출처: KFCC 별표4 자외선보호 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "1"
- },
- {
-  "id": "manufacturing_combo-ref_2d7948",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 KFCC 별표4 자외선보호 (참조자료 원문)",
-  "stem": "다음 중 (50㎍/mL)에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_021060",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "m-페닐렌디아민",
-    "truth": false,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_3c06a7",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "정량법의 검액에서 얻은 주피크의 유지시간은 표준액에서 얻은 주피크의 유지시",
-    "truth": true,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_aacbe3",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "비 소 이 원료 1.0 g을 달아 제３법에 따라 검액을 만들고 장치 B를 쓰는 방법",
-    "truth": true,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_51b053",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "문서접근 제한 및 개인위생 규정을 준수해야 할 의무",
-    "truth": false,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_95180b",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "비소 이 원료 1.0g을 달아 제1법에 따라 검액을 만들고 장치 A를 쓰는 방법에 따라 조작하여 시험한다.(2ppm 이하)",
-    "truth": true,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
     "id": "2",
     "members": [
-     "ㄴ",
      "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
      "ㄹ",
      "ㅁ"
     ]
    },
    {
-    "id": "4",
+    "id": "3",
     "members": [
      "ㄱ",
      "ㄴ",
@@ -21558,9 +22479,19 @@ var COMBO_DRILLS_subject2 = [
     ]
    },
    {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
     "id": "5",
     "members": [
-     "ㄴ"
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
     ]
    }
   ],
@@ -21570,157 +22501,58 @@ var COMBO_DRILLS_subject2 = [
    "열거목록",
    "수치"
   ],
-  "derivedFrom": "ref:enum|KFCC_별표4_자외선보호|cat|0|1",
-  "explain": "ㄱ. 출처: KFCC 별표4 자외선보호 \nㄴ. 출처: KFCC 별표4 자외선보호 \nㄷ. 출처: KFCC 별표4 자외선보호 \nㄹ. 출처: KFCC 별표4 자외선보호 \nㅁ. 출처: KFCC 별표4 자외선보호 ",
+  "derivedFrom": "ref:enum|화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318)|제6조|14|0",
+  "explain": "ㄱ. 출처: 화장품 안전기준 등에 관한 규정 제6조\nㄴ. 출처: 화장품 안전기준 등에 관한 규정 제6조\nㄷ. 출처: 화장품 안전기준 등에 관한 규정 제6조\nㄹ. 출처: 화장품 안전기준 등에 관한 규정 제6조\nㅁ. 출처: 화장품 안전기준 등에 관한 규정 제6조",
   "source": "참조자료 원문 (열거 목록)",
   "answer": "2"
  },
  {
-  "id": "manufacturing_combo-ref_7909d2",
+  "id": "manufacturing_combo-ref_cde305",
   "subject": 2,
   "type": "combo",
   "points": 4,
-  "citation": "📖 KFCC 별표4 자외선보호 (참조자료 원문)",
-  "stem": "다음 중 (50㎍/mL)에 해당하는 것을 모두 고른 것은?",
+  "citation": "📖 우수화장품 제조 및 품질관리기준 제15조 (참조자료 원문)",
+  "stem": "다음 중 「우수화장품 제조 및 품질관리기준」제15조의 규정에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_dfbd97",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "황산염 이 원료 0.5 g에 물 40 mL를 넣어 흔들어 섞은 다음 여과한다. 여액 20",
-    "truth": true,
-    "explain": "출처: KFCC 별표4 자외선보호 "
+    "sid": "manufacturing_refst_92c267",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "비마토프로스트, 그 염류 및 유도체",
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_898397",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "벤즈[a]안트라센",
-    "truth": false,
-    "explain": "출처: KFCC 별표4 자외선보호 "
+    "sid": "manufacturing_refst_35dc8e",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "작업원의 건강관리 및 건강상태의 파악ㆍ조치방법",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_5e43ce",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "비 소 이 원료 1.0g을 취하여 제3법에 따라 검액을 만들고 장치 B를 쓰는 방법에 따라 조작하여 시험한다. (2ppm 이하)",
+    "sid": "manufacturing_refst_63d0ac",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "곤충, 해충이나 쥐를 막는 방법 및 점검주기",
     "truth": true,
-    "explain": "출처: KFCC 별표4 자외선보호 "
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_19ba64",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "납 이 원료 1.0 g에 물 30 mL를 넣어 저어 섞으면서 질산 10 mL를 넣고 수욕상",
+    "sid": "manufacturing_refst_8644ff",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "작업원의 수세, 소독방법 등 위생에 관한 사항",
     "truth": true,
-    "explain": "출처: KFCC 별표4 자외선보호 "
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_457549",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "니트로벤젠",
+    "sid": "manufacturing_refst_da44e2",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "프로파틸나이트레이트",
     "truth": false,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|KFCC_별표4_자외선보호|cat|0|2",
-  "explain": "ㄱ. 출처: KFCC 별표4 자외선보호 \nㄴ. 출처: KFCC 별표4 자외선보호 \nㄷ. 출처: KFCC 별표4 자외선보호 \nㄹ. 출처: KFCC 별표4 자외선보호 \nㅁ. 출처: KFCC 별표4 자외선보호 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "5"
- },
- {
-  "id": "manufacturing_combo-ref_22e229",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 KFCC 별표4 자외선보호 (참조자료 원문)",
-  "stem": "다음 중 (50㎍/mL)에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_8d3c1b",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "산 이 원료 5.0g을 중화에탄올 20mL에 녹이고 페놀프탈레인시액 1mL 및 0.1N",
-    "truth": true,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_6423a3",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "피부질환 치료를 위한 내복약을 사용한 적이 있습니까?",
-    "truth": false,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_109feb",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "헥산-2-온",
-    "truth": false,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_23dce7",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "유연물질 이 원료 0.1 g을 정확하게 취하여 물을 넣어 50 mL로 하여 검액으로 한",
-    "truth": true,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_36527d",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "비 소 이 원료 1.0g을 달아 제3법에 따라 검액을 만들고 장치 B를 쓰는 방법에 따라 조작하여 시험한다. (2ppm이하)",
-    "truth": true,
-    "explain": "출처: KFCC 별표4 자외선보호 "
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    }
   ],
   "options": [
@@ -21728,15 +22560,14 @@ var COMBO_DRILLS_subject2 = [
     "id": "1",
     "members": [
      "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㅁ"
+     "ㄹ"
     ]
    },
    {
     "id": "2",
     "members": [
      "ㄴ",
+     "ㄷ",
      "ㄹ"
     ]
    },
@@ -21744,891 +22575,9 @@ var COMBO_DRILLS_subject2 = [
     "id": "3",
     "members": [
      "ㄱ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
      "ㄴ",
      "ㄷ",
      "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄷ",
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|KFCC_별표4_자외선보호|cat|0|3",
-  "explain": "ㄱ. 출처: KFCC 별표4 자외선보호 \nㄴ. 출처: KFCC 별표4 자외선보호 \nㄷ. 출처: KFCC 별표4 자외선보호 \nㄹ. 출처: KFCC 별표4 자외선보호 \nㅁ. 출처: KFCC 별표4 자외선보호 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "3"
- },
- {
-  "id": "manufacturing_combo-ref_df98ad",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 KFCC 별표4 자외선보호 (참조자료 원문)",
-  "stem": "다음 중 (50㎍/mL)에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_19ba64",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "납 이 원료 1.0 g에 물 30 mL를 넣어 저어 섞으면서 질산 10 mL를 넣고 수욕상",
-    "truth": true,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_0a369d",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "구아이아줄렌 (Guaiazulene)",
-    "truth": false,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_95180b",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "비소 이 원료 1.0g을 달아 제1법에 따라 검액을 만들고 장치 A를 쓰는 방법에 따라 조작하여 시험한다.(2ppm 이하)",
-    "truth": true,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_f6bcba",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "α-피페리딘-2-일벤질아세테이트 좌회전성의 트레오포름(레보파세토페란) 및 그 염류",
-    "truth": false,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_3c06a7",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "정량법의 검액에서 얻은 주피크의 유지시간은 표준액에서 얻은 주피크의 유지시",
-    "truth": true,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|KFCC_별표4_자외선보호|cat|0|4",
-  "explain": "ㄱ. 출처: KFCC 별표4 자외선보호 \nㄴ. 출처: KFCC 별표4 자외선보호 \nㄷ. 출처: KFCC 별표4 자외선보호 \nㄹ. 출처: KFCC 별표4 자외선보호 \nㅁ. 출처: KFCC 별표4 자외선보호 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "3"
- },
- {
-  "id": "manufacturing_combo-ref_953831",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 KFCC 별표4 자외선보호 (참조자료 원문)",
-  "stem": "다음 중 (50㎍/mL)에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_e8549d",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "중금속 이 원료 1.0g을 달아 제２법에 따라 조작하여 시험한다. 비교액에는 납표",
-    "truth": true,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_e3195f",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "비 소 이 원료 3.0 g을 달아 제 3법에 따라 검액을 만들고 장치 B를 쓰는 방법에 따라 조작하여 시험한다.(2 ppm 이하)",
-    "truth": true,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_532bfd",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "마이클로부타닐(2-(4-클로로페닐)-2-(1H-1,2,4-트리아졸-1-일메칠)헥사네니트릴)",
-    "truth": false,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_3fb6e7",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "펜타에리트리틸테트라나이트레이트",
-    "truth": false,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_8e7e3b",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "정량법의 검액에서 얻은 주피크의 유지시간은 표준액에서 얻은 주피크의 유지시간",
-    "truth": true,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄷ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|KFCC_별표4_자외선보호|cat|0|5",
-  "explain": "ㄱ. 출처: KFCC 별표4 자외선보호 \nㄴ. 출처: KFCC 별표4 자외선보호 \nㄷ. 출처: KFCC 별표4 자외선보호 \nㄹ. 출처: KFCC 별표4 자외선보호 \nㅁ. 출처: KFCC 별표4 자외선보호 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "4"
- },
- {
-  "id": "manufacturing_combo-ref_7f359c",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 KFCC 별표4 자외선보호 (참조자료 원문)",
-  "stem": "다음 중 (50㎍/mL)에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_89e637",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "Hyoscyamusniger L.(잎, 씨, 가루 및생약제제)",
-    "truth": false,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_6129cf",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "염화물 이 원료 1 g을 물에 녹여 100 mL로 한 다음 이 액 25 mL를 취하여 네",
-    "truth": true,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_03486b",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "유리페놀 이 원료 1.0mL에 물 20mL를 넣어 1분간 흔들어 섞고 가만히 둔 다음",
-    "truth": true,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_4a2598",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "(메칠-ONN-아조시)메칠아세테이트",
-    "truth": false,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_c5e070",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "중금속 이 원료 1.0 g을 달아 제２법에 따라 조작하여 시험한다. 비교액에는 납",
-    "truth": true,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄷ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄴ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|KFCC_별표4_자외선보호|cat|0|6",
-  "explain": "ㄱ. 출처: KFCC 별표4 자외선보호 \nㄴ. 출처: KFCC 별표4 자외선보호 \nㄷ. 출처: KFCC 별표4 자외선보호 \nㄹ. 출처: KFCC 별표4 자외선보호 \nㅁ. 출처: KFCC 별표4 자외선보호 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "3"
- },
- {
-  "id": "manufacturing_combo-ref_5c7b9a",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 KFCC 별표4 자외선보호 (참조자료 원문)",
-  "stem": "다음 중 (50㎍/mL)에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_7ae1a2",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "알칼리 이 원료 1.0 g에 온탕 10 mL를 넣어 흔들어 섞고 식힌 다음 여과하고 여",
-    "truth": true,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_03486b",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "유리페놀 이 원료 1.0mL에 물 20mL를 넣어 1분간 흔들어 섞고 가만히 둔 다음",
-    "truth": true,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_6899d9",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "(에폭시에칠)벤젠",
-    "truth": false,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_a9b095",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "옥시퀴놀린(히드록시-8-퀴놀린 또는 퀴놀린-8-올) 및 그 황산염",
-    "truth": false,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_ea70c2",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "비 소 이 원료 0.20 g에 황산 1 mL 및 질산 1 mL를 넣고 흰 연기가 날 때까지",
-    "truth": true,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄴ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|KFCC_별표4_자외선보호|cat|0|7",
-  "explain": "ㄱ. 출처: KFCC 별표4 자외선보호 \nㄴ. 출처: KFCC 별표4 자외선보호 \nㄷ. 출처: KFCC 별표4 자외선보호 \nㄹ. 출처: KFCC 별표4 자외선보호 \nㅁ. 출처: KFCC 별표4 자외선보호 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "3"
- },
- {
-  "id": "manufacturing_combo-ref_3cfbdf",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 KFCC 별표4 자외선보호 (참조자료 원문)",
-  "stem": "다음 중 (50㎍/mL)에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_f6bcba",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "α-피페리딘-2-일벤질아세테이트 좌회전성의 트레오포름(레보파세토페란)및 그 염류",
-    "truth": false,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_8e7e3b",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "정량법의 검액에서 얻은 주피크의 유지시간은 표준액에서 얻은 주피크의 유지시간",
-    "truth": true,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_53ebb1",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "4,4’-디메톡시디벤조일메탄 이 원료 0.10 g에 에탄올을 넣어 녹여 100mL로 하고",
-    "truth": true,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_89bd24",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "염기성갈색 16 호 (Basic Brown 16) CI 12250",
-    "truth": false,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_2bb8c6",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "비 소 이 원료 1.0 g에 묽은황산 10 mL를 넣어 녹여 검액으로 하여 장치 C를 쓰는 방법에 따라 조작하여 시험한다(2 ppm 이하).",
-    "truth": true,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄴ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|KFCC_별표4_자외선보호|cat|0|8",
-  "explain": "ㄱ. 출처: KFCC 별표4 자외선보호 \nㄴ. 출처: KFCC 별표4 자외선보호 \nㄷ. 출처: KFCC 별표4 자외선보호 \nㄹ. 출처: KFCC 별표4 자외선보호 \nㅁ. 출처: KFCC 별표4 자외선보호 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "5"
- },
- {
-  "id": "manufacturing_combo-ref_a5ac20",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 KFCC 별표4 자외선보호 (참조자료 원문)",
-  "stem": "다음 중 (50㎍/mL)에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_dce00f",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "우레탄(에칠카바메이트)",
-    "truth": false,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_f0eb7e",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "중금속 이 원료 1.0g을 취하여 제2법에 따라 조작하여 시험한다. 비교액에는 납",
-    "truth": true,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_5e43ce",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "비 소 이 원료 1.0g을 취하여 제3법에 따라 검액을 만들고 장치 B를 쓰는 방법에 따라 조작하여 시험한다. (2ppm 이하)",
-    "truth": true,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_c59be5",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "브루신(에탄올의 변성제는 제외)",
-    "truth": false,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_5a6f12",
-    "conceptId": "KFCC 별표4 자외선보호:",
-    "text": "물가용물 이 원료 4.0 g에 물 50 mL를 넣고 잘 흔들어 섞어 12 시간 방치한다.",
-    "truth": true,
-    "explain": "출처: KFCC 별표4 자외선보호 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|KFCC_별표4_자외선보호|cat|0|9",
-  "explain": "ㄱ. 출처: KFCC 별표4 자외선보호 \nㄴ. 출처: KFCC 별표4 자외선보호 \nㄷ. 출처: KFCC 별표4 자외선보호 \nㄹ. 출처: KFCC 별표4 자외선보호 \nㅁ. 출처: KFCC 별표4 자외선보호 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "5"
- },
- {
-  "id": "manufacturing_combo-ref_30adec",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 화장품 안전기준 등에 관한 규정 (참조자료 원문)",
-  "stem": "다음 중 「화장품 안전기준 등에 관한 규정」에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_47c802",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "벤제토늄클로라이드",
-    "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_0d897e",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "디에칠카르바모일 클로라이드",
-    "truth": false,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_06bab1",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "벤조익애씨드, 그염류 및 에스텔류",
-    "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_3db66e",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "트리클로르메틴 및 그 염류",
-    "truth": false,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_7a7017",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "세틸피리디늄클로라이드",
-    "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄴ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록"
-  ],
-  "derivedFrom": "ref:enum|화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318)|mdtable|1|0",
-  "explain": "ㄱ. 출처: 화장품 안전기준 등에 관한 규정 \nㄴ. 출처: 화장품 안전기준 등에 관한 규정 \nㄷ. 출처: 화장품 안전기준 등에 관한 규정 \nㄹ. 출처: 화장품 안전기준 등에 관한 규정 \nㅁ. 출처: 화장품 안전기준 등에 관한 규정 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "5"
- },
- {
-  "id": "manufacturing_combo-ref_244bc7",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 화장품 안전기준 등에 관한 규정 (참조자료 원문)",
-  "stem": "다음 중 「화장품 안전기준 등에 관한 규정」에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_af2dcb",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "쿼터늄-15",
-    "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_f27cf9",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "수산염완충액 테트라수산칼륨(pH측정용) 를 고운가루로 하여 데시케이터(실리카 겔)속에서 건조",
-    "truth": false,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_fda85e",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "엠디엠하이단토인",
-    "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_52bbec",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "프로게스토젠",
-    "truth": false,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_2ec4b8",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "클로헥시딘, 그 디글루코네이트, 디아세테이트 및 디하이드로클로라이드",
-    "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318)|mdtable|1|1",
-  "explain": "ㄱ. 출처: 화장품 안전기준 등에 관한 규정 \nㄴ. 출처: 화장품 안전기준 등에 관한 규정 \nㄷ. 출처: 화장품 안전기준 등에 관한 규정 \nㄹ. 출처: 화장품 안전기준 등에 관한 규정 \nㅁ. 출처: 화장품 안전기준 등에 관한 규정 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "4"
- },
- {
-  "id": "manufacturing_combo-ref_8aeffc",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 화장품 안전기준 등에 관한 규정 (참조자료 원문)",
-  "stem": "다음 중 「화장품 안전기준 등에 관한 규정」에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_bc4fc2",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "소르빅애씨드(헥사-2,4-디에노익 애씨드) 및 그 염류",
-    "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_f31e2a",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "소듐하이드록시메칠아미노아세테이트(소듐하이드록시메칠글리시네이트)",
-    "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_0ba05f",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "적합 판정한 원자재 및 제품의 출고 여부 결정",
-    "truth": false,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_a1471a",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "케토코나졸",
-    "truth": false,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_e56c85",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "알킬디아미노에칠글라이신하이드로클로라이드용액(30%)",
-    "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㅁ"
     ]
    },
    {
@@ -22654,603 +22603,99 @@ var COMBO_DRILLS_subject2 = [
    "자동생성",
    "참조자료",
    "열거목록",
-   "한도",
+   "기한",
    "수치"
   ],
-  "derivedFrom": "ref:enum|화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318)|mdtable|1|2",
-  "explain": "ㄱ. 출처: 화장품 안전기준 등에 관한 규정 \nㄴ. 출처: 화장품 안전기준 등에 관한 규정 \nㄷ. 출처: 화장품 안전기준 등에 관한 규정 \nㄹ. 출처: 화장품 안전기준 등에 관한 규정 \nㅁ. 출처: 화장품 안전기준 등에 관한 규정 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "3"
- },
- {
-  "id": "manufacturing_combo-ref_3d2ace",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 화장품 안전기준 등에 관한 규정 (참조자료 원문)",
-  "stem": "다음 중 「화장품 안전기준 등에 관한 규정」에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_5ea2b0",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "보레이트류(소듐보레이트, 테트라보레이트)",
-    "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_2ec4b8",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "클로헥시딘, 그 디글루코네이트, 디아세테이트 및 디하이드로클로라이드",
-    "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_849f46",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "(R)-α-페닐에칠암모늄(-)-(1R,2S)-(1,2-에폭시프로필)포스포네이트 모노하이드레이트",
-    "truth": false,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_078389",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "페이스트법 고체검체를 마뇌 약절구에 넣어 잘 갈아 가루로 하고 유통파라핀등을 넣어 잘 갈아",
-    "truth": false,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_ee18aa",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "글 루 타 랄 ( 펜 탄-1,5-디알)",
-    "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318)|mdtable|1|3",
-  "explain": "ㄱ. 출처: 화장품 안전기준 등에 관한 규정 \nㄴ. 출처: 화장품 안전기준 등에 관한 규정 \nㄷ. 출처: 화장품 안전기준 등에 관한 규정 \nㄹ. 출처: 화장품 안전기준 등에 관한 규정 \nㅁ. 출처: 화장품 안전기준 등에 관한 규정 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "1"
- },
- {
-  "id": "manufacturing_combo-ref_fe7da5",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 화장품 안전기준 등에 관한 규정 (참조자료 원문)",
-  "stem": "다음 중 「화장품 안전기준 등에 관한 규정」에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_f7938e",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "디메칠시트라코네이트",
-    "truth": false,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_3ecc8c",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "알킬(C -C )트리12 22메칠암모늄 브로마이드 및 클로라이드(브롬화세트리모늄포함)",
-    "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_0fafd1",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "페녹시이소프로판올(1-페녹시프로판-2-올)",
-    "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_e4212a",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "클로로자이레놀",
-    "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_b88021",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "징크옥사이드",
-    "truth": false,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄴ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "구성비",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318)|mdtable|1|4",
-  "explain": "ㄱ. 출처: 화장품 안전기준 등에 관한 규정 \nㄴ. 출처: 화장품 안전기준 등에 관한 규정 \nㄷ. 출처: 화장품 안전기준 등에 관한 규정 \nㄹ. 출처: 화장품 안전기준 등에 관한 규정 \nㅁ. 출처: 화장품 안전기준 등에 관한 규정 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "4"
- },
- {
-  "id": "manufacturing_combo-ref_23fa9c",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 화장품 안전기준 등에 관한 규정 (참조자료 원문)",
-  "stem": "다음 중 「화장품 안전기준 등에 관한 규정」에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_775f3f",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "피리치온알루미늄캄실레이트",
-    "truth": false,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_82a380",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "헥사미딘(1,6-디(4-아미디노페녹시)-n-헥산) 및 그 염류(이세치오네이트 및 p-하이드록시벤조에이트)",
-    "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_46b462",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "벤지딘설페이트",
-    "truth": false,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_ee18aa",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "글 루 타 랄 ( 펜 탄-1,5-디알)",
-    "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_b9c13c",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "피록톤올아민(1-하이드록시-4-메칠-6(2,4,4-트리메칠펜틸)2-피리돈 및그 모노에탄올아민염)",
-    "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318)|mdtable|1|5",
-  "explain": "ㄱ. 출처: 화장품 안전기준 등에 관한 규정 \nㄴ. 출처: 화장품 안전기준 등에 관한 규정 \nㄷ. 출처: 화장품 안전기준 등에 관한 규정 \nㄹ. 출처: 화장품 안전기준 등에 관한 규정 \nㅁ. 출처: 화장품 안전기준 등에 관한 규정 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "4"
- },
- {
-  "id": "manufacturing_combo-ref_c1e9c2",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 화장품 안전기준 등에 관한 규정 (참조자료 원문)",
-  "stem": "다음 중 「화장품 안전기준 등에 관한 규정」에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_9bb9f0",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "벤질헤미포름알",
-    "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_f49e07",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "p-하이드록시벤조익애씨드, 그 염류 및에스텔류 (다만, 에스텔류 중 페닐은제외)",
-    "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_749361",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "파르에톡시카인 및 그 염류",
-    "truth": false,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_71c6d9",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "운데실레닉애씨드및 그 염류 및 모노에탄올아마이드",
-    "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_9d6018",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "알로클아미드 및 그 염류",
-    "truth": false,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록"
-  ],
-  "derivedFrom": "ref:enum|화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318)|mdtable|1|6",
-  "explain": "ㄱ. 출처: 화장품 안전기준 등에 관한 규정 \nㄴ. 출처: 화장품 안전기준 등에 관한 규정 \nㄷ. 출처: 화장품 안전기준 등에 관한 규정 \nㄹ. 출처: 화장품 안전기준 등에 관한 규정 \nㅁ. 출처: 화장품 안전기준 등에 관한 규정 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "3"
- },
- {
-  "id": "manufacturing_combo-ref_5e6b22",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 화장품 안전기준 등에 관한 규정 (참조자료 원문)",
-  "stem": "다음 중 「화장품 안전기준 등에 관한 규정」에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_352d59",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "p-클로로벤조트리클로라이드",
-    "truth": false,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_02c05a",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "닥나무추출물",
-    "truth": false,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_3ecc8c",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "알킬(C -C )트리12 22메칠암모늄 브로마이드 및 클로라이드(브롬화세트리모늄포함)",
-    "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_42b32d",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "벤질알코올",
-    "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_8d9cee",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "소듐아이오데이트",
-    "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄷ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "구성비",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318)|mdtable|1|7",
-  "explain": "ㄱ. 출처: 화장품 안전기준 등에 관한 규정 \nㄴ. 출처: 화장품 안전기준 등에 관한 규정 \nㄷ. 출처: 화장품 안전기준 등에 관한 규정 \nㄹ. 출처: 화장품 안전기준 등에 관한 규정 \nㅁ. 출처: 화장품 안전기준 등에 관한 규정 ",
+  "derivedFrom": "ref:enum|우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822)|제15조|46|0",
+  "explain": "ㄱ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄴ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄷ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄹ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㅁ. 출처: 우수화장품 제조 및 품질관리기준 제15조",
   "source": "참조자료 원문 (열거 목록)",
   "answer": "2"
  },
  {
-  "id": "manufacturing_combo-ref_e9a264",
+  "id": "manufacturing_combo-ref_d4f3be",
   "subject": 2,
   "type": "combo",
   "points": 4,
-  "citation": "📖 화장품 안전기준 등에 관한 규정 (참조자료 원문)",
-  "stem": "다음 중 「화장품 안전기준 등에 관한 규정」에 해당하는 것을 모두 고른 것은?",
+  "citation": "📖 우수화장품 제조 및 품질관리기준 제30조 (참조자료 원문)",
+  "stem": "다음 중 「우수화장품 제조 및 품질관리기준」제30조의 규정에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_b8f6bd",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "제품명, 제조번호 등을 포함한 불만내용",
-    "truth": false,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
+    "sid": "manufacturing_refst_29d3b0",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제30조",
+    "text": "품질관리현황",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제30조"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_28b7f7",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "p-클로로-m-크레졸",
+    "sid": "manufacturing_refst_b5c854",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제30조",
+    "text": "우수화장품 제조 및 품질관리기준에 따라 3회 이상 적용ㆍ운영한 자체평가표",
     "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제30조"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_6e8a84",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "비 소 이 원료 1.0 g을 달아 제３법에 따라 검액을 만들고 장치 B를 쓰는 방법",
-    "truth": false,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
+    "sid": "manufacturing_refst_ae57ab",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제30조",
+    "text": "제조소의 시설내역",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제30조"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_b931ec",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "메텐아민(헥사메칠렌테트라아민)",
-    "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
+    "sid": "manufacturing_refst_2d90b7",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제30조",
+    "text": "염디엠하이단토인",
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제30조"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_3ecc8c",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "알킬(C -C )트리12 22메칠암모늄 브로마이드 및 클로라이드(브롬화세트리모늄포함)",
-    "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
+    "sid": "manufacturing_refst_0b8104",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제30조",
+    "text": "옥토크릴렌",
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제30조"
    }
   ],
   "options": [
    {
     "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
     "members": [
      "ㄱ"
     ]
    },
    {
-    "id": "2",
-    "members": [
-     "ㄷ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
     "id": "3",
     "members": [
      "ㄴ",
-     "ㄷ",
-     "ㄹ"
+     "ㄷ"
     ]
    },
    {
     "id": "4",
     "members": [
-     "ㄹ",
-     "ㅁ"
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
     ]
    },
    {
     "id": "5",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㄹ",
-     "ㅁ"
+     "ㄷ",
+     "ㄹ"
     ]
    }
   ],
@@ -23258,61 +22703,161 @@ var COMBO_DRILLS_subject2 = [
    "자동생성",
    "참조자료",
    "열거목록",
-   "구성비",
    "수치"
   ],
-  "derivedFrom": "ref:enum|화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318)|mdtable|1|8",
-  "explain": "ㄱ. 출처: 화장품 안전기준 등에 관한 규정 \nㄴ. 출처: 화장품 안전기준 등에 관한 규정 \nㄷ. 출처: 화장품 안전기준 등에 관한 규정 \nㄹ. 출처: 화장품 안전기준 등에 관한 규정 \nㅁ. 출처: 화장품 안전기준 등에 관한 규정 ",
+  "derivedFrom": "ref:enum|우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822)|제30조|0|0",
+  "explain": "ㄱ. 출처: 우수화장품 제조 및 품질관리기준 제30조\nㄴ. 출처: 우수화장품 제조 및 품질관리기준 제30조\nㄷ. 출처: 우수화장품 제조 및 품질관리기준 제30조\nㄹ. 출처: 우수화장품 제조 및 품질관리기준 제30조\nㅁ. 출처: 우수화장품 제조 및 품질관리기준 제30조",
   "source": "참조자료 원문 (열거 목록)",
-  "answer": "5"
+  "answer": "4"
  },
  {
-  "id": "manufacturing_combo-ref_b4d706",
+  "id": "manufacturing_combo-ref_948009",
   "subject": 2,
   "type": "combo",
   "points": 4,
-  "citation": "📖 화장품 안전기준 등에 관한 규정 (참조자료 원문)",
-  "stem": "다음 중 「화장품 안전기준 등에 관한 규정」에 해당하는 것을 모두 고른 것은?",
+  "citation": "📖 우수화장품 제조 및 품질관리기준 제15조 (참조자료 원문)",
+  "stem": "다음 중 「우수화장품 제조 및 품질관리기준」제15조의 규정에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_3f9fd7",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "디메칠아민",
+    "sid": "manufacturing_refst_8332ac",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "염기성황색87호(Basic Yellow 87)",
     "truth": false,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_df7519",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "담 금 (㎜)",
+    "sid": "manufacturing_refst_406aed",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "벤지딘디하이드로클로라이드",
     "truth": false,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_9092c5",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "브로모클로로펜(6,6-디브로모-4,4-디클로로-2,2'-메칠렌-디페놀)",
+    "sid": "manufacturing_refst_18f062",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "위탁시험 또는 위탁제조하는 경우 검체의 송부방법 및 시험결과의 판정방법",
     "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_abb90c",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "소듐라우로일사코시네이트",
+    "sid": "manufacturing_refst_d0adca",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "표준품 및 시약의 관리",
     "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_5b791f",
-    "conceptId": "화장품 안전기준 등에 관한 규정:",
-    "text": "페녹시에탄올",
+    "sid": "manufacturing_refst_4351fd",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "작업원의 수세, 소독방법 등 위생에 관한 사항",
     "truth": true,
-    "explain": "출처: 화장품 안전기준 등에 관한 규정 "
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822)|제15조|38|0",
+  "explain": "ㄱ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄴ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄷ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄹ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㅁ. 출처: 우수화장품 제조 및 품질관리기준 제15조",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "3"
+ },
+ {
+  "id": "manufacturing_combo-ref_b8d806",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 우수화장품 제조 및 품질관리기준 제15조 (참조자료 원문)",
+  "stem": "다음 중 「우수화장품 제조 및 품질관리기준」제15조의 규정에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_18f062",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "위탁시험 또는 위탁제조하는 경우 검체의 송부방법 및 시험결과의 판정방법",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_91584d",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "30제조방법 A의 각 성분의 무게를 달아 정제수에 넣고 75∼80℃까지 가열한",
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_81abf1",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "시험시설 및 시험기구의 점검(장비의 교정 및 성능점검 방법)",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_a4a6f6",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "시험검체 채취방법 및 채취 시의 주의사항과 채취 시의 오염방지대책",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_6fecdd",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "염기성등색3 1 호(Basic Orange 31)",
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    }
   ],
   "options": [
@@ -23320,7 +22865,6 @@ var COMBO_DRILLS_subject2 = [
     "id": "1",
     "members": [
      "ㄱ",
-     "ㄴ",
      "ㄷ",
      "ㄹ"
     ]
@@ -23328,32 +22872,28 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "2",
     "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
     "id": "3",
     "members": [
      "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
     "id": "4",
     "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ"
+     "ㅁ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㄷ",
-     "ㄹ",
-     "ㅁ"
+     "ㄷ"
     ]
    }
   ],
@@ -23363,180 +22903,78 @@ var COMBO_DRILLS_subject2 = [
    "열거목록",
    "수치"
   ],
-  "derivedFrom": "ref:enum|화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318)|mdtable|1|9",
-  "explain": "ㄱ. 출처: 화장품 안전기준 등에 관한 규정 \nㄴ. 출처: 화장품 안전기준 등에 관한 규정 \nㄷ. 출처: 화장품 안전기준 등에 관한 규정 \nㄹ. 출처: 화장품 안전기준 등에 관한 규정 \nㅁ. 출처: 화장품 안전기준 등에 관한 규정 ",
+  "derivedFrom": "ref:enum|우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822)|제15조|38|1",
+  "explain": "ㄱ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄴ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄷ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄹ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㅁ. 출처: 우수화장품 제조 및 품질관리기준 제15조",
   "source": "참조자료 원문 (열거 목록)",
-  "answer": "5"
+  "answer": "1"
  },
  {
-  "id": "manufacturing_combo-ref_992f6a",
+  "id": "manufacturing_combo-ref_7ce677",
   "subject": 2,
   "type": "combo",
   "points": 4,
-  "citation": "📖 색소종류및기준 전체 (참조자료 원문)",
-  "stem": "다음 중 식품의약품안전처장이 고시한 색소에 해당하는 것을 모두 고른 것은?",
+  "citation": "📖 우수화장품 제조 및 품질관리기준 제15조 (참조자료 원문)",
+  "stem": "다음 중 「우수화장품 제조 및 품질관리기준」제15조의 규정에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_b3ff01",
-    "conceptId": "색소종류및기준 전체:",
-    "text": "티타늄디옥사이드 (Titanium Dioxide) CI 77891",
+    "sid": "manufacturing_refst_a4a6f6",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "시험검체 채취방법 및 채취 시의 주의사항과 채취 시의 오염방지대책",
     "truth": true,
-    "explain": "출처: 색소종류및기준 전체 "
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_b9fa18",
-    "conceptId": "색소종류및기준 전체:",
-    "text": "피로필라이트 (Pyrophyllite)",
+    "sid": "manufacturing_refst_18f062",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "위탁시험 또는 위탁제조하는 경우 검체의 송부방법 및 시험결과의 판정방법",
     "truth": true,
-    "explain": "출처: 색소종류및기준 전체 "
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_556645",
-    "conceptId": "색소종류및기준 전체:",
-    "text": "안토시아닌류 (시아니딘, 페오니딘, 말비딘, 델피니딘, 페투니딘, 페라고니딘, Anthocyanins)",
-    "truth": true,
-    "explain": "출처: 색소종류및기준 전체 "
-   },
-   {
-    "id": "ㄹ",
-    "sid": "manufacturing_refst_7d42f5",
-    "conceptId": "색소종류및기준 전체:",
-    "text": "p-아미노-o-니트로페놀(4-아미노-2-니트로페놀)",
-    "truth": false,
-    "explain": "출처: 색소종류및기준 전체 "
-   },
-   {
-    "id": "ㅁ",
-    "sid": "manufacturing_refst_0dcada",
-    "conceptId": "색소종류및기준 전체:",
-    "text": "소 합 향 나 무(Liquidambarorientalis) 발삼오일 및추출물",
-    "truth": false,
-    "explain": "출처: 색소종류및기준 전체 "
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동생성",
-   "참조자료",
-   "열거목록",
-   "수치"
-  ],
-  "derivedFrom": "ref:enum|색소종류및기준_전체|mdtable|1|0",
-  "explain": "ㄱ. 출처: 색소종류및기준 전체 \nㄴ. 출처: 색소종류및기준 전체 \nㄷ. 출처: 색소종류및기준 전체 \nㄹ. 출처: 색소종류및기준 전체 \nㅁ. 출처: 색소종류및기준 전체 ",
-  "source": "참조자료 원문 (열거 목록)",
-  "answer": "5"
- },
- {
-  "id": "manufacturing_combo-ref_089d33",
-  "subject": 2,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 색소종류및기준 전체 (참조자료 원문)",
-  "stem": "다음 중 식품의약품안전처장이 고시한 색소에 해당하는 것을 모두 고른 것은?",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "manufacturing_refst_b694cf",
-    "conceptId": "색소종류및기준 전체:",
-    "text": "m-아미노페놀",
-    "truth": false,
-    "explain": "출처: 색소종류및기준 전체 "
-   },
-   {
-    "id": "ㄴ",
-    "sid": "manufacturing_refst_47782f",
-    "conceptId": "색소종류및기준 전체:",
+    "sid": "manufacturing_refst_cf233d",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
     "text": "리보플라빈 (락토플라빈, Riboflavin, Lactoflavin)",
-    "truth": true,
-    "explain": "출처: 색소종류및기준 전체 "
-   },
-   {
-    "id": "ㄷ",
-    "sid": "manufacturing_refst_75335f",
-    "conceptId": "색소종류및기준 전체:",
-    "text": "마그네슘카보네이트 (Magnesium Carbonate) CI 77713",
-    "truth": true,
-    "explain": "출처: 색소종류및기준 전체 "
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_9453db",
-    "conceptId": "색소종류및기준 전체:",
-    "text": "자일로메타졸린 및 그 염류",
+    "sid": "manufacturing_refst_7205bc",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "글라이옥살",
     "truth": false,
-    "explain": "출처: 색소종류및기준 전체 "
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_dd08b4",
-    "conceptId": "색소종류및기준 전체:",
-    "text": "염기성갈색 16 호 (Basic Brown 16) CI 12250",
+    "sid": "manufacturing_refst_f9079b",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "작업실 등의 청소(필요한 경우 소독을 포함한다. 이하 같다) 방법 및 청소주기",
     "truth": true,
-    "explain": "출처: 색소종류및기준 전체 "
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    }
   ],
   "options": [
    {
     "id": "1",
     "members": [
-     "ㄱ",
-     "ㄹ"
+     "ㄴ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄷ"
+     "ㄱ"
     ]
    },
    {
     "id": "3",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㄷ",
      "ㄹ"
     ]
    },
@@ -23545,14 +22983,115 @@ var COMBO_DRILLS_subject2 = [
     "members": [
      "ㄱ",
      "ㄴ",
-     "ㄷ",
      "ㅁ"
     ]
    },
    {
     "id": "5",
     "members": [
+     "ㄱ",
      "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "기한",
+   "구성비",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822)|제15조|38|2",
+  "explain": "ㄱ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄴ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄷ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄹ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㅁ. 출처: 우수화장품 제조 및 품질관리기준 제15조",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "4"
+ },
+ {
+  "id": "manufacturing_combo-ref_ba7911",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 우수화장품 제조 및 품질관리기준 제15조 (참조자료 원문)",
+  "stem": "다음 중 「우수화장품 제조 및 품질관리기준」제15조의 규정에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_e047a9",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "청소상태의 평가방법",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_ba90ba",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "디노터브, 그 염류 및 에스텔류",
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_0841f8",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "안정성시험(해당하는 경우에 한함)",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_8b5765",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "드로젠설파이트류",
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_282492",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "효능ㆍ효과(기능성 화장품의 경우) 및 사용할 때의 주의사항",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
      "ㄷ",
      "ㅁ"
     ]
@@ -23564,58 +23103,58 @@ var COMBO_DRILLS_subject2 = [
    "열거목록",
    "수치"
   ],
-  "derivedFrom": "ref:enum|색소종류및기준_전체|mdtable|1|1",
-  "explain": "ㄱ. 출처: 색소종류및기준 전체 \nㄴ. 출처: 색소종류및기준 전체 \nㄷ. 출처: 색소종류및기준 전체 \nㄹ. 출처: 색소종류및기준 전체 \nㅁ. 출처: 색소종류및기준 전체 ",
+  "derivedFrom": "ref:enum|우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822)|제15조|1|0",
+  "explain": "ㄱ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄴ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄷ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄹ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㅁ. 출처: 우수화장품 제조 및 품질관리기준 제15조",
   "source": "참조자료 원문 (열거 목록)",
   "answer": "5"
  },
  {
-  "id": "manufacturing_combo-ref_aa10e3",
+  "id": "manufacturing_combo-ref_aa2a0e",
   "subject": 2,
   "type": "combo",
   "points": 4,
-  "citation": "📖 색소종류및기준 전체 (참조자료 원문)",
-  "stem": "다음 중 식품의약품안전처장이 고시한 색소에 해당하는 것을 모두 고른 것은?",
+  "citation": "📖 우수화장품 제조 및 품질관리기준 제15조 (참조자료 원문)",
+  "stem": "다음 중 「우수화장품 제조 및 품질관리기준」제15조의 규정에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_586730",
-    "conceptId": "색소종류및기준 전체:",
-    "text": "디설피람",
+    "sid": "manufacturing_refst_b4a933",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "불만처리와 제품회수에 관한 사항의 주관",
     "truth": false,
-    "explain": "출처: 색소종류및기준 전체 "
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_2c0807",
-    "conceptId": "색소종류및기준 전체:",
-    "text": "마이카 (Mica) CI 77019",
+    "sid": "manufacturing_refst_a29b9a",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "위탁시험 또는 위탁제조하는 경우 검체의 송부방법 및 시험결과의 판정방법",
     "truth": true,
-    "explain": "출처: 색소종류및기준 전체 "
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_a10214",
-    "conceptId": "색소종류및기준 전체:",
-    "text": "페노티아진 및 그 화합물",
+    "sid": "manufacturing_refst_988949",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "디브로모헥사미딘 및 그 염류 (이세치오네이트 포함)",
     "truth": false,
-    "explain": "출처: 색소종류및기준 전체 "
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_b992e0",
-    "conceptId": "색소종류및기준 전체:",
-    "text": "비트루트레드 (Beetroot Red)",
+    "sid": "manufacturing_refst_1897a5",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "원료명, 분량 및 제조단위당 기준량",
     "truth": true,
-    "explain": "출처: 색소종류및기준 전체 "
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_2a4fc5",
-    "conceptId": "색소종류및기준 전체:",
-    "text": "파프리카추출물, 캡산틴/캡소루빈 (Paprika Extract Capsanthin/Capsorubin)",
+    "sid": "manufacturing_refst_e047a9",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "청소상태의 평가방법",
     "truth": true,
-    "explain": "출처: 색소종류및기준 전체 "
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    }
   ],
   "options": [
@@ -23623,8 +23162,114 @@ var COMBO_DRILLS_subject2 = [
     "id": "1",
     "members": [
      "ㄱ",
+     "ㄴ",
      "ㄷ",
-     "ㄹ"
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "구성비",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822)|제15조|1|1",
+  "explain": "ㄱ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄴ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄷ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄹ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㅁ. 출처: 우수화장품 제조 및 품질관리기준 제15조",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "5"
+ },
+ {
+  "id": "manufacturing_combo-ref_380359",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 우수화장품 제조 및 품질관리기준 제15조 (참조자료 원문)",
+  "stem": "다음 중 「우수화장품 제조 및 품질관리기준」제15조의 규정에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_e7a1c2",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "비나프아크릴(2-sec-부틸-4,6-디니트로페닐-3-메칠크로토네이트)",
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_e047a9",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "청소상태의 평가방법",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_282492",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "효능ㆍ효과(기능성 화장품의 경우) 및 사용할 때의 주의사항",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_093972",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "트레타민",
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_adb626",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "작업 중 주의사항",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -23638,22 +23283,20 @@ var COMBO_DRILLS_subject2 = [
     "members": [
      "ㄴ",
      "ㄷ",
-     "ㄹ",
      "ㅁ"
     ]
    },
    {
     "id": "4",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㄹ",
-     "ㅁ"
+     "ㄹ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㄷ",
      "ㄹ",
      "ㅁ"
     ]
@@ -23665,67 +23308,67 @@ var COMBO_DRILLS_subject2 = [
    "열거목록",
    "수치"
   ],
-  "derivedFrom": "ref:enum|색소종류및기준_전체|mdtable|1|2",
-  "explain": "ㄱ. 출처: 색소종류및기준 전체 \nㄴ. 출처: 색소종류및기준 전체 \nㄷ. 출처: 색소종류및기준 전체 \nㄹ. 출처: 색소종류및기준 전체 \nㅁ. 출처: 색소종류및기준 전체 ",
+  "derivedFrom": "ref:enum|우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822)|제15조|1|2",
+  "explain": "ㄱ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄴ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄷ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄹ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㅁ. 출처: 우수화장품 제조 및 품질관리기준 제15조",
   "source": "참조자료 원문 (열거 목록)",
-  "answer": "4"
+  "answer": "3"
  },
  {
-  "id": "manufacturing_combo-ref_c2817e",
+  "id": "manufacturing_combo-ref_a14cd9",
   "subject": 2,
   "type": "combo",
   "points": 4,
-  "citation": "📖 색소종류및기준 전체 (참조자료 원문)",
-  "stem": "다음 중 식품의약품안전처장이 고시한 색소에 해당하는 것을 모두 고른 것은?",
+  "citation": "📖 우수화장품 제조 및 품질관리기준 제15조 (참조자료 원문)",
+  "stem": "다음 중 「우수화장품 제조 및 품질관리기준」제15조의 규정에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_refst_075bba",
-    "conceptId": "색소종류및기준 전체:",
-    "text": "카라멜 (Caramel)",
-    "truth": true,
-    "explain": "출처: 색소종류및기준 전체 "
+    "sid": "manufacturing_refst_a9eb59",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "PyrethrumalbumL.및 그 생약제제",
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㄴ",
-    "sid": "manufacturing_refst_954c6e",
-    "conceptId": "색소종류및기준 전체:",
-    "text": "시녹세이트",
+    "sid": "manufacturing_refst_cac46d",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "알란토인클로로하이드록시알루미늄(알클록사)",
     "truth": false,
-    "explain": "출처: 색소종류및기준 전체 "
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_refst_5c765c",
-    "conceptId": "색소종류및기준 전체:",
-    "text": "구아이아줄렌 (Guaiazulene)",
+    "sid": "manufacturing_refst_744591",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "제조 및 품질관리에 필요한 시설 및 기기",
     "truth": true,
-    "explain": "출처: 색소종류및기준 전체 "
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㄹ",
-    "sid": "manufacturing_refst_2947c0",
-    "conceptId": "색소종류및기준 전체:",
-    "text": "페릭암모늄페로시아나이드 (Ferric Ammonium Ferrocyanide) CI77510",
+    "sid": "manufacturing_refst_a2e739",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "공정별 상세 작업내용 및 제조공정흐름도",
     "truth": true,
-    "explain": "출처: 색소종류및기준 전체 "
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    },
    {
     "id": "ㅁ",
-    "sid": "manufacturing_refst_a6fd1c",
-    "conceptId": "색소종류및기준 전체:",
-    "text": "인 디 고 페 라( Indigoferatinctoria)엽가루",
-    "truth": false,
-    "explain": "출처: 색소종류및기준 전체 "
+    "sid": "manufacturing_refst_2333f6",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "작업실 등의 청소(필요한 경우 소독을 포함한다. 이하 같다) 방법 및 청소주기",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
    }
   ],
   "options": [
    {
     "id": "1",
     "members": [
-     "ㄱ",
      "ㄷ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -23733,23 +23376,25 @@ var COMBO_DRILLS_subject2 = [
     "members": [
      "ㄱ",
      "ㄴ",
-     "ㄷ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "3",
     "members": [
      "ㄱ",
-     "ㄴ"
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
     "id": "4",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㄷ",
-     "ㄹ"
+     "ㅁ"
     ]
    },
    {
@@ -23765,11 +23410,416 @@ var COMBO_DRILLS_subject2 = [
    "자동생성",
    "참조자료",
    "열거목록",
+   "기한",
+   "구성비",
    "수치"
   ],
-  "derivedFrom": "ref:enum|색소종류및기준_전체|mdtable|1|3",
-  "explain": "ㄱ. 출처: 색소종류및기준 전체 \nㄴ. 출처: 색소종류및기준 전체 \nㄷ. 출처: 색소종류및기준 전체 \nㄹ. 출처: 색소종류및기준 전체 \nㅁ. 출처: 색소종류및기준 전체 ",
+  "derivedFrom": "ref:enum|우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822)|제15조|1|3",
+  "explain": "ㄱ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄴ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄷ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄹ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㅁ. 출처: 우수화장품 제조 및 품질관리기준 제15조",
   "source": "참조자료 원문 (열거 목록)",
   "answer": "1"
+ },
+ {
+  "id": "manufacturing_combo-ref_ad4fbe",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 우수화장품 제조 및 품질관리기준 제15조 (참조자료 원문)",
+  "stem": "다음 중 「우수화장품 제조 및 품질관리기준」제15조의 규정에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_cb91e4",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "위탁제조에 관한 사항",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_16a7e3",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "작업원의 수세, 소독방법 등 위생에 관한 사항",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_89b081",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "브레티륨토실레이트",
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_0f228e",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "2,4-디아미노페닐에탄올 및 그 염류",
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_2333f6",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "작업실 등의 청소(필요한 경우 소독을 포함한다. 이하 같다) 방법 및 청소주기",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "기한",
+   "구성비",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822)|제15조|1|4",
+  "explain": "ㄱ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄴ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄷ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄹ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㅁ. 출처: 우수화장품 제조 및 품질관리기준 제15조",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "5"
+ },
+ {
+  "id": "manufacturing_combo-ref_7c0e13",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 우수화장품 제조 및 품질관리기준 제15조 (참조자료 원문)",
+  "stem": "다음 중 「우수화장품 제조 및 품질관리기준」제15조의 규정에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_e821c9",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "곤충, 해충이나 쥐를 막는 방법 및 점검주기",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_bcc40e",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "작업원의 건강관리 및 건강상태의 파악ㆍ조치방법",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_d3db19",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "알릴글리시딜에텔",
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_e047a9",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "청소상태의 평가방법",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_040603",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "메칠메타크릴레이트모노머",
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "기한",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822)|제15조|1|5",
+  "explain": "ㄱ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄴ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄷ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄹ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㅁ. 출처: 우수화장품 제조 및 품질관리기준 제15조",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "2"
+ },
+ {
+  "id": "manufacturing_combo-ref_d412cb",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 우수화장품 제조 및 품질관리기준 제15조 (참조자료 원문)",
+  "stem": "다음 중 「우수화장품 제조 및 품질관리기준」제15조의 규정에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_a2e739",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "공정별 상세 작업내용 및 제조공정흐름도",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_282492",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "효능ㆍ효과(기능성 화장품의 경우) 및 사용할 때의 주의사항",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_0841f8",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "안정성시험(해당하는 경우에 한함)",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_bdb3cf",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "Conium maculatum L.(과실, 가루, 생약제제)",
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_365d2e",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제15조",
+    "text": "비피다발효여과물",
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제15조"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822)|제15조|1|6",
+  "explain": "ㄱ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄴ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄷ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㄹ. 출처: 우수화장품 제조 및 품질관리기준 제15조\nㅁ. 출처: 우수화장품 제조 및 품질관리기준 제15조",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "1"
+ },
+ {
+  "id": "manufacturing_combo-ref_d59b2a",
+  "subject": 2,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 우수화장품 제조 및 품질관리기준 제25조 (참조자료 원문)",
+  "stem": "다음 중 「우수화장품 제조 및 품질관리기준」제25조의 규정에 해당하는 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "manufacturing_refst_1ace54",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제25조",
+    "text": "불만조사 및 추적조사 내용, 처리결과 및 향후 대책",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제25조"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "manufacturing_refst_246ecb",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제25조",
+    "text": "불만 접수연월일",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제25조"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "manufacturing_refst_56b43f",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제25조",
+    "text": "제품명, 제조번호 등을 포함한 불만내용",
+    "truth": true,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제25조"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "manufacturing_refst_1741b7",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제25조",
+    "text": "Rauwolfia serpentina 알칼로이드 및 그염류",
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제25조"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "manufacturing_refst_b7feee",
+    "conceptId": "우수화장품 제조 및 품질관리기준:제25조",
+    "text": "제1호의 기준치를 벗어날 경우 : 6개를 더 취하여 시험할 때 9개의 평균 내용량이 제1호의 기준치 이상",
+    "truth": false,
+    "explain": "출처: 우수화장품 제조 및 품질관리기준 제25조"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ",
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동생성",
+   "참조자료",
+   "열거목록",
+   "구성비",
+   "수치"
+  ],
+  "derivedFrom": "ref:enum|우수화장품 제조 및 품질관리기준(식품의약품안전처고시)(제2024-46호)(20240822)|제25조|0|0",
+  "explain": "ㄱ. 출처: 우수화장품 제조 및 품질관리기준 제25조\nㄴ. 출처: 우수화장품 제조 및 품질관리기준 제25조\nㄷ. 출처: 우수화장품 제조 및 품질관리기준 제25조\nㄹ. 출처: 우수화장품 제조 및 품질관리기준 제25조\nㅁ. 출처: 우수화장품 제조 및 품질관리기준 제25조",
+  "source": "참조자료 원문 (열거 목록)",
+  "answer": "3"
  }
 ];

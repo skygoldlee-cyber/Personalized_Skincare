@@ -502,7 +502,12 @@ function buildRefCombos(refPool, examKey, subject, subjKey, genOpts, stats) {
   }
 
   // ── 열거 멤버십 콤보: '다음 각 호/목' 유한집합 ──
-  const lists = shuffle([...bucket.enums], rng);
+  // 큐레이션 원료 DB(원료/*.md)를 먼저 처리 — ref_md의 같은 표 중복본이
+  // 60% 겹침 규칙으로 자동 탈락해 큐레이션본의 발문·멤버가 채택된다.
+  const lists = [
+    ...bucket.enums.filter(e => e.curated),
+    ...shuffle(bucket.enums.filter(e => !e.curated), rng),
+  ];
   // 오답 풀은 "다른 조"의 목록에서만 추첨 — 같은 조의 다른 목록 멤버는
   // 발문이 조문 단위 멤버십을 물을 때 실제로 해당할 수 있어 모호하다.
   // 과목 내 후보가 부족하면 전 과목 풀까지 확장 (알레르기 성분 ↔ 색소 등
@@ -511,34 +516,46 @@ function buildRefCombos(refPool, examKey, subject, subjKey, genOpts, stats) {
   const otherMembers = (e, memberKeys) => {
     // 이 목록과 멤버가 실질적으로 겹치는 목록(같은 표의 다른 문서본 등)은
     // 오답 풀에서 배제 — 그 멤버는 실제로도 해당 목록의 멤버일 수 있다.
+    // 큐레이션 원료 목록은 같은 파일의 형제 섹션도 배제 — 별표1의 다른
+    // 카테고리 원료를 별표1 문항의 오답으로 쓰면 "사용불가 원료를 아닌 것으로
+    // 표기"하는 학습상 모순이 된다.
+    const curPrefix = e.curated ? e.listId.split('|').slice(0, 2).join('|') : null;
     const banned = new Set();
     for (const o of allEnums) {
       if (o.listId === e.listId) continue;
+      if (curPrefix && o.listId.startsWith(curPrefix)) {
+        o.members.forEach(m => banned.add(normKey(m)));
+        continue;
+      }
       const overlap = o.members.filter(m => memberKeys.has(normKey(m))).length;
       if (overlap >= 3) o.members.forEach(m => banned.add(normKey(m)));
     }
     // 이름형 멤버(화학명 등)와 문장형 멤버(절차·규정 문장)는 오답 풀을
     // 분리한다 — 이름↔문장을 섞으면 길이만으로 정답이 들통난다.
     // 목록 안에 혼합돼 있을 수 있으므로 멤버 단위로 판정한다.
+    // 연결어미(하여·하고·때·거나 등)나 의문·의존 종료(는가?·는지 등)로
+    // 끝나는 절단 절도 문장형으로 본다.
     const isSentence = m =>
-      m.length > 60 || /(다|음|함|임|까|요|고|며|서)\.?$/.test(m.trim());
+      m.length > 60 || /(다|음|함|임|까|요|고|며|서|여|때|거나|는가|는지|한가|한지)\.?[?]?$/.test(m.trim());
     const sameKind = isSentence(e.members[0] || '')
       || e.members.filter(isSentence).length >= e.members.length / 2
       ? 'sentence' : 'name';
     const kindMatch = m => isSentence(m) === (sameKind === 'sentence');
+    // memberOk는 아래에 선언되지만 호출 시점에는 이미 초기화돼 있다 —
+    // 오답 풀에도 동일한 조각 필터를 적용해 헤더 잔재·절단 셀이 새지 않게 한다.
     const same = bucket.enums
       .filter(o => !(o.docShort === e.docShort && o.article === e.article))
       .flatMap(o => o.members)
-      .filter(m => !banned.has(normKey(m)) && kindMatch(m));
+      .filter(m => !banned.has(normKey(m)) && kindMatch(m) && memberOk(m));
     if (same.length >= 8) return same;
     const wide = allEnums
       .filter(o => o.listId !== e.listId)
       .flatMap(o => o.members)
-      .filter(m => !banned.has(normKey(m)) && kindMatch(m));
+      .filter(m => !banned.has(normKey(m)) && kindMatch(m) && memberOk(m));
     if (wide.length >= 8) return [...same, ...wide];
     const anyPool = allEnums.filter(o => o.listId !== e.listId)
       .flatMap(o => o.members)
-      .filter(m => !banned.has(normKey(m)) && kindMatch(m));
+      .filter(m => !banned.has(normKey(m)) && kindMatch(m) && memberOk(m));
     return [...same, ...wide, ...anyPool];
   };
   // 포괄 조항·지나치게 짧은 멤버는 진술로 부적합 — 어느 목록에도 우연히
@@ -550,8 +567,19 @@ function buildRefCombos(refPool, examKey, subject, subjKey, genOpts, stats) {
     && (m.match(/\[/g) || []).length === (m.match(/\]/g) || []).length
     && !/[,·\-\/'´]$/.test(m) && !VAGUE_MEMBER_RE.test(m)
     && !/^[을를은는이가의에로와과도만및]/.test(m)
-    && !/^[가-하]\.\s|^제\d+조|^[\d①-⑩]+\s*호?\.?\s/.test(m);
+    && !/^[가-하]\.\s|^제\d+조|^[\d①-⑩]+\s*호?\.?\s/.test(m)
+    && !/^[-–—·•]/.test(m) && !/(및|와|과|또는|에서|으로|으로서)$/.test(m)
+    && !/(?:^|\s)[가-힣]\s[가-힣]\s[가-힣](?:\s|$)/.test(m)
+    && !/^[가-힣]\s/.test(m)              // "어 지정된 …" 같은 단자 접두 조각
+    && !/[?？]/.test(m)                  // 의문문 조각은 이름형 멤버가 아님
+    && !/법제처|국가법령정보센터/.test(m)   // PDF 푸터 워터마크 잔재
+    && !/^(구분|현황|항목|비고|내용|제조관리현황|관리현황|점검항목|평가항목|분류|번호|연번|성분명|원료명|품목명|품목|구비서류|기준|요건)$/.test(m)
+    && !/[을를은는이가의에로고며서여]$/.test(m);   // 절단 종료(조사·연결어미) 조각
   const processedKeySets = [];   // 동일 목록의 중복 문서본 방지
+  // 큐레이션 원료 문항은 cap의 60% + 파일별 상한 — 전부 원료 멤버십으로
+  // 채워지는 단조로움을 막고 법령 조문·기능성 문항에 슬롯을 남긴다.
+  const curatedCap = Math.ceil(cap * 0.6);
+  const curatedCount = {};   // 파일별 생성 수
   for (const e of lists) {
     if (out.length >= cap) break;
     const seen = new Set();
@@ -562,10 +590,19 @@ function buildRefCombos(refPool, examKey, subject, subjKey, genOpts, stats) {
     });
     if (members.length < 4) continue;
     const memberKeys = new Set(members.map(normKey));
-    // 이미 처리한 목록과 60% 이상 겹치면 같은 표의 다른 문서본 — 스킵
+    // 이미 처리한 목록과 60% 이상 겹치면 같은 표의 다른 문서본 — 스킵.
+    // (중복 등록은 문항 생성 여부와 무관하게 수행 — 캡으로 건너뛴 큐레이션
+    //  목록도 등록해야 ref_md 중복본이 대신 생성되는 것을 막을 수 있다)
     if (processedKeySets.some(prev =>
       [...memberKeys].filter(k => prev.has(k)).length / memberKeys.size >= 0.6)) continue;
     processedKeySets.push(memberKeys);
+    // 주제도 조문도 없는 표 덤프 목록은 발문이 "「문서」의 규정에 해당"으로
+    // 의미가 없어 제외 — 멤버십이 무엇에 대한 것인지 묻지 못한다.
+    if (!e.topic && !e.article) continue;
+    const curFile = e.curated && e.listId.split('|')[1];
+    if (e.curated
+      && ((curatedCount._total || 0) >= curatedCap
+        || (curatedCount[curFile] || 0) >= (e.curCap || curatedCap))) continue;
     const lRng = seededRng(`${examKey}|refEnum|${e.listId}`);
     // 멤버가 넉넉하면 다른 부분집합으로 복수 문항 (멤버 3개당 1문;
     // 목록 규모별 상한: ≥12 → 7문, ≥24 → 10문, ≥60 → 18문)
@@ -574,6 +611,9 @@ function buildRefCombos(refPool, examKey, subject, subjKey, genOpts, stats) {
       Math.floor(members.length / 3));
     const usedSubsets = new Set();
     for (let q = 0; q < nQ && out.length < cap; q++) {
+      if (e.curated
+        && ((curatedCount._total || 0) >= curatedCap
+          || (curatedCount[curFile] || 0) >= (e.curCap || curatedCap))) break;
       const trues = [];
       for (const m of shuffle([...members], lRng)) {
         if (trues.length >= 3) break;
@@ -601,8 +641,12 @@ function buildRefCombos(refPool, examKey, subject, subjKey, genOpts, stats) {
       const stem = e.topicSrc === 'quote'
         ? `다음 중 ${e.topic}에 해당하는 것을 모두 고른 것은?`
         : `다음 중 「${e.docShort}」${e.article ? `${e.article}의 규정` : ''}에 해당하는 것을 모두 고른 것은?`;
-      pushCombo(stem, picked,
-        `${e.docShort}${e.article ? ' ' + e.article : ''}`, `enum|${e.listId}|${q}`, '열거목록');
+      if (pushCombo(stem, picked,
+        `${e.docShort}${e.article ? ' ' + e.article : ''}`, `enum|${e.listId}|${q}`, '열거목록')
+        && e.curated) {
+        curatedCount._total = (curatedCount._total || 0) + 1;
+        curatedCount[curFile] = (curatedCount[curFile] || 0) + 1;
+      }
     }
   }
   return out;
