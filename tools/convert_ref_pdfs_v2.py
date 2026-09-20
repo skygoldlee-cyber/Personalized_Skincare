@@ -93,12 +93,253 @@ def table_to_md(table_rows):
     rows = merge_split_columns(rows)
     if not rows:
         return ''
+    # 병합 후 열 수 재계산 (구분선이 데이터 행보다 길어지는 것 방지)
+    width = max(len(r) for r in rows)
+    rows = [r + [''] * (width - len(r)) for r in rows]
     out = []
     out.append('| ' + ' | '.join(rows[0]) + ' |')
     out.append('| ' + ' | '.join(['---'] * width) + ' |')
     for r in rows[1:]:
         out.append('| ' + ' | '.join(r) + ' |')
     return '\n'.join(out)
+
+
+def fill_empty_cells(page, table, rows):
+    """격자선 누락으로 None이 된 셀을 셀 bbox 기준 단어로 채운다.
+
+    색소 #92 '카라멜'처럼 셀 경계선이 끊긴 경우 extract()가 None을 반환하지만
+    단어는 행 밴드 안에 존재한다. 다른 행의 정상 셀 x 범위를 열 밴드로 삼아
+    해당 행 y 범위 내의 고아 단어를 빈 셀에 배정한다.
+    """
+    if not rows:
+        return rows
+    ncols = max(len(r) for r in rows)
+    # 열 x 밴드: 정상 셀 bbox의 (x0, x2) 중앙값
+    bands = [[] for _ in range(ncols)]
+    for ri, row in enumerate(table.rows):
+        if ri >= len(rows):
+            break
+        for ci, cb in enumerate(row.cells):
+            if ci < ncols and cb is not None and ri < len(rows) \
+                    and ci < len(rows[ri]) and rows[ri][ci]:
+                bands[ci].append((cb[0], cb[2]))
+    xb = []
+    for ci in range(ncols):
+        if bands[ci]:
+            xs0 = sorted(b[0] for b in bands[ci])
+            xs1 = sorted(b[1] for b in bands[ci])
+            xb.append((xs0[len(xs0) // 2], xs1[len(xs1) // 2]))
+        else:
+            xb.append(None)
+    words = page.extract_words()
+    for ri, row in enumerate(table.rows):
+        if ri >= len(rows):
+            break
+        yb = row.bbox  # (x0, top, x1, bottom)
+        if not yb:
+            continue
+        # 같은 행의 형제 셀 bbox — 가로 병합 셀은 빈 칸이 아니라 병합 영역이므로
+        # 병합 셀 범위 안에 드는 열 밴드는 채우지 않는다
+        siblings = [cb for cb in row.cells if cb]
+        for ci in range(min(ncols, len(rows[ri]))):
+            if rows[ri][ci] or not xb[ci]:
+                continue
+            bx0, bx2 = xb[ci]
+            cx = (bx0 + bx2) / 2
+            if any(sb[0] + 3 < cx < sb[2] - 3
+                   and sb[1] - 3 < (yb[1] + yb[3]) / 2 < sb[3] + 3
+                   for sb in siblings):
+                continue
+            hit = [w['text'] for w in words
+                   if w['top'] >= yb[1] - 2 and w['bottom'] <= yb[3] + 2
+                   and bx0 - 3 <= (w['x0'] + w['x1']) / 2 <= bx2 + 3]
+            if hit:
+                rows[ri][ci] = ' '.join(hit)
+    return rows
+
+
+# 무선 표 본문 재구성용 — 행 시작 마커 (가. / 가) / (가) / 1) / 1. / (1))
+ROW_MARKER_RE = re.compile(r'^\s*\(?[가-힣\d]+[.)]')
+# 재구성 구간에서 제외할 잡행 (페이지 번호, 문서 머리말)
+JUNK_LINE_RE = re.compile(r'^\s*(?:-\s*\d+\s*-|■.*별표|\d+\s*페이지)\s*$')
+
+
+def table_x_edges(table):
+    """표 셀 bbox의 x 경계 목록 → 열 밴드 경계"""
+    edges = sorted({e for row in table.rows for c in row.cells if c
+                    for e in (c[0], c[2])})
+    return edges
+
+
+def reconstruct_borderless(page, edges, y_min, exclude_bboxes):
+    """무선(격자선 없는) 표 본문을 열 밴드로 재구성.
+
+    헤더 표에서 학습한 x 경계로 단어를 열에 배정하고, 행 마커
+    (가. / 1) / 1.)로 논리 행을 나눈다. wrap 조각(이전 조각이 열 오른쪽
+    끝까지 찬 경우)은 ''로, 그 외는 ' '로 병합한다.
+
+    반환: (md_table, consumed_y_intervals, header_cells) — 재구성할
+    칼럼형 줄이 부족하면 (None, [], None).
+    """
+    words = page.extract_words()
+    words = [w for w in words if w['top'] > y_min
+             and not any(point_in_bbox(w['x0'], w['top'], bb)
+                         for bb in exclude_bboxes)]
+    if len(words) < 15:
+        return None, [], None
+
+    # 줄 클러스터 (top ±3)
+    lines = []
+    for w in sorted(words, key=lambda w: (w['top'], w['x0'])):
+        if lines and abs(w['top'] - lines[-1][-1]['top']) <= 3:
+            lines[-1].append(w)
+        else:
+            lines.append([w])
+    line_objs = []
+    for ws in lines:
+        ws.sort(key=lambda w: w['x0'])
+        txt = ' '.join(w['text'] for w in ws)
+        if JUNK_LINE_RE.match(txt):
+            continue
+        line_objs.append((min(w['top'] for w in ws),
+                          max(w['bottom'] for w in ws), ws))
+
+    ncols = len(edges) - 1
+
+    def band_of(w):
+        cx = (w['x0'] + w['x1']) / 2
+        for i in range(ncols):
+            if edges[i] - 2 <= cx < edges[i + 1]:
+                return i
+        return 0 if cx < edges[0] else ncols - 1
+
+    aligned = sum(1 for _, _, ws in line_objs
+                  if len({band_of(w) for w in ws}) >= 2)
+    if aligned < 5:
+        return None, [], None
+
+    # 논리 행 그룹핑: 첫 단어가 col0이고 행 마커로 시작하면 새 행
+    groups = []
+    for top, bottom, ws in line_objs:
+        txt = ' '.join(w['text'] for w in ws)
+        if not groups or (band_of(ws[0]) == 0 and ROW_MARKER_RE.match(txt)):
+            groups.append([])
+        groups[-1].append(ws)
+
+    rows_out = []
+    for g in groups:
+        cells = [''] * ncols
+        prev_x1 = [None] * ncols
+        for ws in g:
+            frags = {}
+            for w in ws:
+                frags.setdefault(band_of(w), []).append(w)
+            for b, wl in frags.items():
+                frag = ' '.join(x['text'] for x in wl)
+                fx1 = max(x['x1'] for x in wl)
+                if cells[b]:
+                    wrap = prev_x1[b] is not None and prev_x1[b] >= edges[b + 1] - 15
+                    cells[b] += ('' if wrap else ' ') + frag
+                else:
+                    cells[b] = frag
+                prev_x1[b] = fx1
+        if any(cells):
+            rows_out.append(cells)
+
+    if len(rows_out) < 3:
+        return None, [], None
+    md = table_to_md(rows_out)
+    ivs = [(top, bottom) for top, bottom, _ in line_objs]
+    return md, ivs, rows_out
+
+
+def promote_text_header(segments):
+    """표 직전의 텍스트 줄이 표 헤더이면 표 안으로 승격한다.
+
+    pdfplumber가 헤더 행의 밑줄선을 못 잡아 헤더가 표 밖 텍스트로
+    남는 경우(예: '연번 성분명 CAS 등록번호')에 대응. 토큰 수가 표 열
+    수와 같고 표 첫 행이 데이터형(숫자 시작)일 때만 적용한다.
+    """
+    for i in range(1, len(segments)):
+        tk, tc = segments[i][1], segments[i][2]
+        pk, pc = segments[i - 1][1], segments[i - 1][2]
+        if tk != 'table' or pk != 'text':
+            continue
+        if segments[i][0] - segments[i - 1][0] > 60:
+            continue
+        lines = tc.split('\n')
+        if len(lines) < 2 or not lines[1].lstrip().startswith('| ---'):
+            continue
+        ncols = lines[0].count('|') - 1
+        toks = pc.split()
+        if len(toks) != ncols or not re.match(r'^\|\s*\d+\s*\|', lines[0]):
+            continue
+        data0 = lines[0]
+        lines[0] = '| ' + ' | '.join(toks) + ' |'
+        lines.insert(2, data0)
+        segments[i] = (segments[i][0], 'table', '\n'.join(lines))
+        segments[i - 1] = (segments[i - 1][0], 'text', None)
+    return [s for s in segments if s[2] is not None]
+
+
+# 페이지 경계 등으로 끊긴 표의 이어지는 데이터 행 첫 셀 패턴
+# (마커 단독 셀 '| 92 |' 또는 마커+본문 셀 '| 가. 법 제3조…' 모두 허용)
+DATA_ROW_START_RE = re.compile(
+    r'^\|\s*(?:\d+|[가-힣]\.|\d+\)|[IVX]+\.)(?:\s*\||\s)')
+
+
+def _norm_row(line, w):
+    cells = [c.strip() for c in line.strip().strip('|').split('|')]
+    cells += [''] * (w - len(cells))
+    return '| ' + ' | '.join(cells[:w]) + ' |'
+
+
+def _cells_subset(a, b):
+    """a의 각 셀이 ''이거나 b의 같은 위치 셀에 포함되면 True (반복 헤더 판별)"""
+    ca = [c.strip() for c in a.strip().strip('|').split('|')]
+    cb = [c.strip() for c in b.strip().strip('|').split('|')]
+    if len(ca) != len(cb):
+        return False
+    return all(not x or x in y for x, y in zip(ca, cb))
+
+
+def merge_continuation_tables(segments):
+    """페이지 경계로 끊긴 인접 표 세그먼트를 병합한다.
+
+    다음 페이지에서 별도 표로 감지된 이어지는 표는 첫 데이터 행이
+    헤더로 오인된다. 사이에 텍스트가 없고(잡행 텍스트는 건너뜀),
+    두 번째 표의 첫 행이 데이터 행이거나 앞 표 헤더의 반복이며
+    열 수가 ±1 이내로 같으면 하나로 합친다.
+    """
+    out = []
+    for seg in segments:
+        if seg[1] == 'table':
+            j = len(out) - 1
+            while (j >= 0 and out[j][1] == 'text'
+                   and JUNK_LINE_RE.match(out[j][2] or '')):
+                j -= 1
+            if j >= 0 and out[j][1] == 'table':
+                prev = out[j][2].split('\n')
+                cur = seg[2].split('\n')
+                is_rep_header = (len(prev) >= 1
+                                 and _cells_subset(cur[0], prev[0]))
+                cont = (len(cur) >= 2
+                        and cur[1].lstrip().startswith('| ---')
+                        and (DATA_ROW_START_RE.match(cur[0])
+                             or is_rep_header))
+                if cont:
+                    pw = prev[0].count('|') - 1
+                    cw = cur[0].count('|') - 1
+                    if abs(pw - cw) <= 1:
+                        w = max(pw, cw)
+                        # 반복 헤더면 cur[0]도 버리고, 데이터 행이면 cur[0] 유지
+                        tail = cur[2:] if is_rep_header else [cur[0]] + cur[2:]
+                        merged = ([_norm_row(l, w) for l in prev]
+                                  + [_norm_row(l, w) for l in tail])
+                        out[j] = (out[j][0], 'table', '\n'.join(merged))
+                        continue
+        out.append(seg)
+    return out
 
 
 def point_in_bbox(x, y, bbox):
@@ -139,8 +380,10 @@ def count_orphan_data(page, tables):
     return orphan
 
 
-def page_to_md(page, image_names=None):
+def page_to_md(page, image_names=None, state=None):
     """페이지 → (텍스트 줄, 표, 이미지) 세그먼트를 y순 병합"""
+    if state is None:
+        state = {}
     tables = list(page.find_tables())
     # 선 기반 표가 인접 데이터 열을 누락했으면 텍스트 정렬 전략으로 재시도
     if count_orphan_data(page, tables) >= 3:
@@ -150,21 +393,56 @@ def page_to_md(page, image_names=None):
     bboxes = [t.bbox for t in tables]
 
     segments = []
+    consumed = []  # 재구성으로 소비된 y 구간 (텍스트 추출에서 제외)
     for t in tables:
-        md = table_to_md(t.extract())
+        rows = fill_empty_cells(page, t, t.extract())
+        md = table_to_md(rows)
         if md:
             segments.append((t.bbox[1], 'table', md))
+        # 헤더만 잡힌 표(≤3행, ≥5열, 셀 내 줄바꿈 적음) → 열 경계를
+        # 학습하고 하단 무선 본문 재구성. 셀에 줄바꿈이 많은 표는
+        # 실제로는 행이 셀 안으로 합쳐진 완성형 표이므로 제외한다.
+        nl = sum((c or '').count('\n') for r in rows for c in r)
+        if rows and len(rows) <= 3 and len(rows[0]) >= 5 and nl <= 6:
+            edges = table_x_edges(t)
+            if len(edges) >= 6:
+                state['bands'] = edges
+                state['header'] = [cell_text(c) for c in rows[0]]
+                rec, ivs, _ = reconstruct_borderless(
+                    page, edges, t.bbox[3], bboxes)
+                if rec:
+                    segments.append((t.bbox[3], 'table', rec))
+                    consumed.extend(ivs)
 
-    # 표 영역 밖 문자만 남겨 텍스트 추출
-    if bboxes:
-        filtered = page.filter(
-            lambda obj: not (
-                obj['object_type'] == 'char'
-                and any(point_in_bbox(obj['x0'], (obj['top'] + obj['bottom']) / 2, bb) for bb in bboxes)
-            )
-        )
-    else:
-        filtered = page
+    # 무표 페이지 — 이전 페이지에서 학습한 열 밴드로 이어지는 표 재구성.
+    # 재구성이 실패하면 표가 끝난 것으로 보고 밴드를 만료한다
+    # (일반 텍스트 페이지를 가짜 표로 삼키는 것 방지).
+    if not tables and state.get('bands'):
+        rec, ivs, _ = reconstruct_borderless(page, state['bands'], 0, [])
+        if rec:
+            hdr = state.get('header')
+            if hdr:
+                rl = rec.split('\n')
+                rec = '| ' + ' | '.join(hdr) + ' |\n' + \
+                    '| ' + ' | '.join(['---'] * len(hdr)) + ' |\n' + \
+                    '\n'.join(rl[:1] + rl[2:])
+            segments.append((0, 'table', rec))
+            consumed.extend(ivs)
+        else:
+            state['bands'] = None
+
+    # 표 영역·재구성 소비 구간 밖 문자만 남겨 텍스트 추출
+    def keep_char(obj):
+        if obj['object_type'] != 'char':
+            return True
+        cy = (obj['top'] + obj['bottom']) / 2
+        if any(point_in_bbox(obj['x0'], cy, bb) for bb in bboxes):
+            return False
+        if any(y0 - 2 <= cy <= y1 + 2 for y0, y1 in consumed):
+            return False
+        return True
+
+    filtered = page.filter(keep_char) if (bboxes or consumed) else page
 
     for line in filtered.extract_text_lines():
         segments.append((line['top'], 'text', line['text']))
@@ -202,14 +480,17 @@ def extract_page_images(mupdf_page, page_index, images_dir):
 def convert(pdf_path, images_dir=None):
     """PDF → MD 본문"""
     segments = []
+    state = {}  # 페이지 간 열 밴드/헤더 유지 (무선 표 연속 페이지용)
     mudoc = pymupdf.open(pdf_path)
     with pdfplumber.open(pdf_path) as pdf:
         for pi, page in enumerate(pdf.pages):
             image_names = []
             if pi < len(mudoc):
                 image_names = extract_page_images(mudoc[pi], pi, images_dir)
-            segments.extend(page_to_md(page, image_names))
+            segments.extend(page_to_md(page, image_names, state))
     mudoc.close()
+    segments = promote_text_header(segments)
+    segments = merge_continuation_tables(segments)
     # 표 앞뒤는 빈 줄로 분리 (페이지 경계에서 표가 붙어 깨지는 것 방지)
     out = []
     prev_kind = None
