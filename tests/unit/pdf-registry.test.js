@@ -129,10 +129,10 @@ test('REFERENCE_COMMON: 최소 1개 항목', () => {
     }
 });
 
-test('REFERENCE_LAW: 법령원문 항목 존재', () => {
-    assert.ok(REFERENCE_LAW.length > 0, '법령원문 존재');
+test('REFERENCE_LAW: 법령고시 항목 존재', () => {
+    assert.ok(REFERENCE_LAW.length > 0, '법령고시 존재');
     for (const ref of REFERENCE_LAW) {
-        assert.equal(ref.dir, '법령원문', 'dir=법령원문');
+        assert.equal(ref.dir, '법령고시', 'dir=법령고시');
     }
 });
 
@@ -151,17 +151,17 @@ test('KEYWORD_REF_MAP: 모든 엔트리에 pattern과 file 존재', () => {
 });
 
 test('REF_FILE_TO_PATH: REF_DIRS의 모든 파일이 경로 매핑됨', () => {
-    // 법령원문의 첫 파일이 매핑되어 있는지 확인
+    // 법령고시의 첫 파일이 매핑되어 있는지 확인
     const lawFile = '화장품법(법률)(제20901호)(20260402).pdf';
     assert.ok(REF_FILE_TO_PATH[lawFile], '법률 파일 경로 매핑됨');
     assert.ok(REF_FILE_TO_PATH[lawFile].endsWith('.md'), '.md 확장자');
 });
 
-test('REF_REGISTRY: 우선순위 적용 (과목N > 공통 > 법령원문)', () => {
-    // 화장품법은 법령원문, 공통, 과목1 모두에 있음
-    // 우선순위: 과목4 > 과목3 > 과목2 > 과목1 > 공통 > 법령원문
+test('REF_REGISTRY: 우선순위 적용 (과목N > 공통 > 법령고시)', () => {
+    // 화장품법은 법령고시, 공통, 과목1 모두에 있음
+    // 우선순위: 과목4 > 과목3 > 과목2 > 과목1 > 공통 > 법령고시
     const lawFile = '화장품법(법률)(제20901호)(20260402).pdf';
     assert.ok(REF_REGISTRY[lawFile], '법률 파일 레지스트리 등록됨');
-    // 공통 또는 법령원문 중 하나여야 함 (과목1~4에 같은 파일명이 없으면 공통이 우선)
-    assert.ok(['공통', '법령원문'].includes(REF_REGISTRY[lawFile]), '우선순위에 따른 폴더 할당');
+    // 공통 또는 법령고시 중 하나여야 함 (과목1~4에 같은 파일명이 없으면 공통이 우선)
+    assert.ok(['공통', '법령고시'].includes(REF_REGISTRY[lawFile]), '우선순위에 따른 폴더 할당');
 });

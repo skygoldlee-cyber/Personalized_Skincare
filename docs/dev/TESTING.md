@@ -202,7 +202,7 @@ npm run test:watch
 - `mapSourceToRef()`: `SOURCE_REF_MAP` 순차 매칭, `exclude` 정규식 동작, 매칭 없음
 - `resolveKeywordRef()`: `KEYWORD_REF_MAP` 패턴 매칭, `match`/`path`/`search` 반환
 - 데이터 구조 검증: `SUBJECT_DIR_MAP`, `REFERENCE_FILES`, `REFERENCE_COMMON`, `REFERENCE_LAW`, `SOURCE_REF_MAP`, `KEYWORD_REF_MAP`
-- `REF_FILE_TO_PATH` / `REF_REGISTRY`: 우선순위(과목N > 공통 > 법령원문) 검증
+- `REF_FILE_TO_PATH` / `REF_REGISTRY`: 우선순위(과목N > 공통 > 법령고시) 검증
 
 ### 4.7 용어집 쿼리 (Glossary Query) — 교재 무관, 합성 데이터
 

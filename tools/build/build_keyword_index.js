@@ -137,7 +137,7 @@ function buildForExam(target) {
     const SUBJECT_DIR_TO_ID = refsJson.subjectDirMap;
     const REF_DIRS = refsJson.refDirs;
 
-    const _DIR_PRIORITY = ['과목4', '과목3', '과목2', '과목1', '공통', '법령원문'];
+    const _DIR_PRIORITY = ['과목4', '과목3', '과목2', '과목1', '공통', '법령고시'];
     const REF_FILE_TO_PATH = {};
     for (const dir of _DIR_PRIORITY) {
         for (const f of REF_DIRS[dir] || []) {

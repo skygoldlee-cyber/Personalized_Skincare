@@ -28,7 +28,7 @@ for (const dir of refMdDirs) {
   refMdFiles[dir] = files;
 }
 
-// 참조자료의 모든 PDF 디렉터리 (법령원문, 공통, 과목1~4)
+// 참조자료의 모든 PDF 디렉터리 (법령고시, 공통, 과목1~4, _archive)
 const pdfDirs = fs.readdirSync(REF_BASE, { withFileTypes: true })
   .filter(e => e.isDirectory() && e.name !== 'ref_md' && e.name !== 'ref_md_v2')
   .map(e => e.name);

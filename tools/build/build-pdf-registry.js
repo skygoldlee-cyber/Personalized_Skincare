@@ -151,7 +151,7 @@ ${entries.join(',\n')}
 };
 
 // --- 파생 맵 (시험별 자동 계산 — REF_DIRS에서 생성) ---
-// 파일명 → MD 경로 / 폴더명 (우선순위: 과목N 내림차순 > 공통 > 법령원문 > 기타)
+// 파일명 → MD 경로 / 폴더명 (우선순위: 과목N 내림차순 > 공통 > 법령고시 > 기타)
 const _EXAM_DERIVED = {};
 for (const [eid, t] of Object.entries(_EXAM_TABLES)) {
     const root = t.contentRoot || 'content';

@@ -1449,8 +1449,8 @@ function buildReferenceLinks(subjId, contextRefPath) {
         }
     });
     
-    // 법령원문
-    links += `<div class="ref-group-label">법령원문</div>`;
+    // 법령·고시 원문
+    links += `<div class="ref-group-label">법령·고시 원문</div>`;
     REFERENCE_LAW.forEach(f => {
         const path = resolveRefPath(f.file);
         links += `<a href="#" data-ref-html="${esc(path)}" class="ref-link-item"><i class="fa-solid fa-file-lines"></i> ${esc(f.name)}</a>`;
