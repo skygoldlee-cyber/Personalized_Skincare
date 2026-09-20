@@ -57,9 +57,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
+     "ㄴ",
      "ㄷ",
      "ㄹ",
-     "ㄴ",
      "ㅁ"
     ]
    },
@@ -67,9 +67,9 @@ var COMBO_DRILLS_subject4 = [
     "id": "3",
     "members": [
      "ㄱ",
+     "ㄴ",
      "ㄹ",
-     "ㅁ",
-     "ㄴ"
+     "ㅁ"
     ]
    },
    {
@@ -246,32 +246,32 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㄷ",
-     "ㅁ",
+     "ㄱ",
      "ㄴ",
-     "ㄱ"
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
     "id": "3",
     "members": [
+     "ㄱ",
      "ㄷ",
-     "ㄹ",
-     "ㄱ"
+     "ㄹ"
     ]
    },
    {
     "id": "4",
     "members": [
-     "ㅁ",
-     "ㄷ"
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㄹ",
      "ㄴ",
+     "ㄹ",
      "ㅁ"
     ]
    }
@@ -335,8 +335,8 @@ var COMBO_DRILLS_subject4 = [
     "members": [
      "ㄱ",
      "ㄴ",
-     "ㅁ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -423,23 +423,23 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄷ",
-     "ㄱ"
+     "ㄱ",
+     "ㄷ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄹ",
-     "ㄱ"
+     "ㄱ",
+     "ㄹ"
     ]
    },
    {
     "id": "3",
     "members": [
-     "ㄷ",
+     "ㄱ",
      "ㄴ",
-     "ㄱ"
+     "ㄷ"
     ]
    },
    {
@@ -451,8 +451,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㄹ",
      "ㄷ",
+     "ㄹ",
      "ㅁ"
     ]
    }
@@ -521,8 +521,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㄷ",
-     "ㄴ"
+     "ㄴ",
+     "ㄷ"
     ]
    },
    {
@@ -535,8 +535,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㄹ",
      "ㄷ",
+     "ㄹ",
      "ㅁ"
     ]
    },
@@ -604,10 +604,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄹ",
-     "ㄷ",
+     "ㄱ",
      "ㄴ",
-     "ㄱ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -626,8 +626,8 @@ var COMBO_DRILLS_subject4 = [
     "id": "4",
     "members": [
      "ㄴ",
-     "ㄹ",
      "ㄷ",
+     "ㄹ",
      "ㅁ"
     ]
    },
@@ -724,10 +724,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㄴ",
      "ㄱ",
-     "ㅁ",
-     "ㄹ"
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
     ]
    }
   ],
@@ -788,32 +788,32 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㅁ",
-     "ㄹ",
      "ㄱ",
-     "ㄴ"
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
     "id": "3",
     "members": [
-     "ㄴ",
      "ㄱ",
+     "ㄴ",
      "ㄹ"
     ]
    },
    {
     "id": "4",
     "members": [
-     "ㄹ",
-     "ㄴ"
+     "ㄴ",
+     "ㄹ"
     ]
    },
    {
@@ -880,26 +880,26 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄴ",
      "ㄱ",
+     "ㄴ",
      "ㄷ"
     ]
    },
    {
     "id": "2",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㅁ",
-     "ㄱ"
+     "ㅁ"
     ]
    },
    {
     "id": "3",
     "members": [
-     "ㅁ",
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -911,10 +911,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
+     "ㄱ",
      "ㄴ",
      "ㄹ",
-     "ㅁ",
-     "ㄱ"
+     "ㅁ"
     ]
    }
   ],
@@ -984,18 +984,18 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㄷ",
      "ㄱ",
-     "ㄹ",
-     "ㄴ"
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
     "id": "3",
     "members": [
-     "ㅁ",
+     "ㄷ",
      "ㄹ",
-     "ㄷ"
+     "ㅁ"
     ]
    },
    {
@@ -1100,10 +1100,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㅁ",
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ",
+     "ㅁ"
     ]
    }
   ],
@@ -1187,18 +1187,18 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
+     "ㄴ",
      "ㄷ",
      "ㄹ",
-     "ㅁ",
-     "ㄴ"
+     "ㅁ"
     ]
    },
    {
     "id": "5",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㄹ",
-     "ㄱ"
+     "ㄹ"
     ]
    }
   ],
@@ -1260,8 +1260,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄹ",
      "ㄴ",
+     "ㄹ",
      "ㅁ"
     ]
    },
@@ -1358,8 +1358,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㄷ",
-     "ㄴ"
+     "ㄴ",
+     "ㄷ"
     ]
    },
    {
@@ -1381,9 +1381,9 @@ var COMBO_DRILLS_subject4 = [
     "id": "5",
     "members": [
      "ㄱ",
-     "ㅁ",
      "ㄴ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    }
   ],
@@ -1464,8 +1464,8 @@ var COMBO_DRILLS_subject4 = [
     "id": "4",
     "members": [
      "ㄱ",
-     "ㄹ",
-     "ㄴ"
+     "ㄴ",
+     "ㄹ"
     ]
    },
    {
@@ -1533,15 +1533,15 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄴ",
-     "ㄱ"
+     "ㄱ",
+     "ㄴ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄷ",
-     "ㄴ"
+     "ㄴ",
+     "ㄷ"
     ]
    },
    {
@@ -1623,9 +1623,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㅁ",
-     "ㄱ"
+     "ㅁ"
     ]
    },
    {
@@ -1649,9 +1649,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
+     "ㄴ",
      "ㄷ",
-     "ㅁ",
-     "ㄴ"
+     "ㅁ"
     ]
    },
    {
@@ -1727,8 +1727,8 @@ var COMBO_DRILLS_subject4 = [
     "id": "2",
     "members": [
      "ㄱ",
-     "ㄹ",
-     "ㄴ"
+     "ㄴ",
+     "ㄹ"
     ]
    },
    {
@@ -1833,9 +1833,9 @@ var COMBO_DRILLS_subject4 = [
     "id": "4",
     "members": [
      "ㄱ",
+     "ㄴ",
      "ㄹ",
-     "ㅁ",
-     "ㄴ"
+     "ㅁ"
     ]
    },
    {
@@ -1903,9 +1903,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
+     "ㄷ",
      "ㄹ",
-     "ㅁ",
-     "ㄷ"
+     "ㅁ"
     ]
    },
    {
@@ -1920,10 +1920,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㄹ",
      "ㄷ",
-     "ㄱ"
+     "ㄹ"
     ]
    },
    {
@@ -2022,8 +2022,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㄹ",
      "ㄷ",
+     "ㄹ",
      "ㅁ"
     ]
    }
@@ -2085,8 +2085,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄷ",
      "ㄴ",
+     "ㄷ",
      "ㄹ",
      "ㅁ"
     ]
@@ -2094,8 +2094,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㄹ",
      "ㄷ",
+     "ㄹ",
      "ㅁ"
     ]
    },
@@ -2108,15 +2108,15 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㅁ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㄹ",
-     "ㄱ"
+     "ㄱ",
+     "ㄹ"
     ]
    }
   ],
@@ -2183,9 +2183,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
+     "ㄱ",
      "ㄴ",
      "ㄹ",
-     "ㄱ",
      "ㅁ"
     ]
    },
@@ -2206,10 +2206,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㅁ",
-     "ㄷ",
+     "ㄱ",
      "ㄴ",
-     "ㄱ"
+     "ㄷ",
+     "ㅁ"
     ]
    }
   ],
@@ -2278,9 +2278,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ"
     ]
    },
    {
@@ -2370,18 +2370,18 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
+     "ㄱ",
      "ㄴ",
      "ㄷ",
-     "ㄹ",
-     "ㄱ"
+     "ㄹ"
     ]
    },
    {
     "id": "3",
     "members": [
+     "ㄴ",
      "ㄷ",
      "ㄹ",
-     "ㄴ",
      "ㅁ"
     ]
    },
@@ -2458,8 +2458,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄷ",
-     "ㄴ"
+     "ㄴ",
+     "ㄷ"
     ]
    },
    {
@@ -2486,8 +2486,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㄹ",
-     "ㄱ"
+     "ㄱ",
+     "ㄹ"
     ]
    }
   ],
@@ -2549,8 +2549,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㅁ",
-     "ㄷ"
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
@@ -2562,10 +2562,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㄴ",
-     "ㄹ",
      "ㄱ",
-     "ㄷ"
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -2643,9 +2643,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ"
     ]
    },
    {
@@ -2653,15 +2653,15 @@ var COMBO_DRILLS_subject4 = [
     "members": [
      "ㄱ",
      "ㄴ",
-     "ㅁ",
-     "ㄷ"
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
     "id": "3",
     "members": [
-     "ㄹ",
      "ㄴ",
+     "ㄹ",
      "ㅁ"
     ]
    },
@@ -2827,8 +2827,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -2840,8 +2840,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㅁ",
-     "ㄱ"
+     "ㄱ",
+     "ㅁ"
     ]
    },
    {
@@ -2854,9 +2854,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㄹ",
+     "ㄱ",
      "ㄴ",
-     "ㄱ"
+     "ㄹ"
     ]
    }
   ],
@@ -2918,8 +2918,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㅁ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -2933,15 +2933,15 @@ var COMBO_DRILLS_subject4 = [
     "id": "3",
     "members": [
      "ㄱ",
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
     "id": "4",
     "members": [
-     "ㅁ",
-     "ㄷ"
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
@@ -3008,18 +3008,18 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㅁ",
      "ㄱ",
-     "ㄴ"
+     "ㄴ",
+     "ㅁ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄴ",
      "ㄱ",
-     "ㅁ",
-     "ㄷ"
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
@@ -3031,9 +3031,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㄷ",
+     "ㄱ",
      "ㄴ",
-     "ㄱ"
+     "ㄷ"
     ]
    },
    {
@@ -3107,8 +3107,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㄷ",
-     "ㄴ"
+     "ㄴ",
+     "ㄷ"
     ]
    },
    {
@@ -3126,8 +3126,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㄹ",
      "ㄴ",
+     "ㄹ",
      "ㅁ"
     ]
    }
@@ -3204,9 +3204,9 @@ var COMBO_DRILLS_subject4 = [
     "id": "3",
     "members": [
      "ㄱ",
-     "ㄹ",
      "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -3307,8 +3307,8 @@ var COMBO_DRILLS_subject4 = [
     "id": "5",
     "members": [
      "ㄱ",
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    }
   ],
@@ -3385,8 +3385,8 @@ var COMBO_DRILLS_subject4 = [
     "id": "3",
     "members": [
      "ㄴ",
-     "ㄹ",
      "ㄷ",
+     "ㄹ",
      "ㅁ"
     ]
    },
@@ -3399,10 +3399,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㄹ",
-     "ㄷ",
      "ㄱ",
-     "ㄴ"
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
     ]
    }
   ],
@@ -3478,9 +3478,9 @@ var COMBO_DRILLS_subject4 = [
     "id": "3",
     "members": [
      "ㄱ",
-     "ㅁ",
      "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
@@ -3492,9 +3492,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㄹ",
-     "ㄴ",
      "ㄱ",
+     "ㄴ",
+     "ㄹ",
      "ㅁ"
     ]
    }
@@ -3560,8 +3560,8 @@ var COMBO_DRILLS_subject4 = [
     "members": [
      "ㄱ",
      "ㄴ",
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -3658,10 +3658,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㄷ",
-     "ㄹ",
+     "ㄱ",
      "ㄴ",
-     "ㄱ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -3751,9 +3751,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㄹ",
-     "ㄷ",
      "ㄴ",
+     "ㄷ",
+     "ㄹ",
      "ㅁ"
     ]
    },
@@ -3767,9 +3767,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㅁ",
-     "ㄱ"
+     "ㅁ"
     ]
    },
    {
@@ -3840,26 +3840,26 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㅁ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄹ",
+     "ㄱ",
      "ㄴ",
      "ㄷ",
-     "ㄱ"
+     "ㄹ"
     ]
    },
    {
     "id": "3",
     "members": [
      "ㄱ",
-     "ㅁ",
+     "ㄴ",
      "ㄹ",
-     "ㄴ"
+     "ㅁ"
     ]
    },
    {
@@ -3871,9 +3871,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㅁ",
+     "ㄷ",
      "ㄹ",
-     "ㄷ"
+     "ㅁ"
     ]
    }
   ],
@@ -3935,16 +3935,16 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㅁ",
      "ㄷ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㅁ",
-     "ㄷ"
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
@@ -3956,18 +3956,18 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㄹ",
      "ㄱ",
      "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
     "id": "5",
     "members": [
      "ㄱ",
-     "ㅁ",
-     "ㄴ"
+     "ㄴ",
+     "ㅁ"
     ]
    }
   ],
@@ -4050,8 +4050,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㅁ",
-     "ㄴ"
+     "ㄴ",
+     "ㅁ"
     ]
    },
    {
@@ -4131,8 +4131,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -4207,10 +4207,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄹ",
      "ㄱ",
      "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -4223,10 +4223,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㅁ",
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -4238,10 +4238,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㅁ",
-     "ㄹ",
      "ㄱ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
     ]
    }
   ],
@@ -4304,9 +4304,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㄹ",
-     "ㄱ"
+     "ㄹ"
     ]
    },
    {
@@ -4325,9 +4325,9 @@ var COMBO_DRILLS_subject4 = [
     "id": "4",
     "members": [
      "ㄱ",
-     "ㅁ",
      "ㄴ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -4423,8 +4423,8 @@ var COMBO_DRILLS_subject4 = [
     "id": "5",
     "members": [
      "ㄱ",
-     "ㅁ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    }
   ],
@@ -4486,27 +4486,27 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㅁ",
      "ㄱ",
      "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㅁ",
-     "ㄴ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "3",
     "members": [
-     "ㅁ",
+     "ㄱ",
      "ㄷ",
-     "ㄱ"
+     "ㅁ"
     ]
    },
    {
@@ -4582,17 +4582,17 @@ var COMBO_DRILLS_subject4 = [
     "id": "1",
     "members": [
      "ㄱ",
-     "ㄹ",
      "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㅁ",
+     "ㄷ",
      "ㄹ",
-     "ㄷ"
+     "ㅁ"
     ]
    },
    {
@@ -4674,16 +4674,16 @@ var COMBO_DRILLS_subject4 = [
     "id": "1",
     "members": [
      "ㄱ",
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
     "id": "2",
     "members": [
      "ㄱ",
-     "ㅁ",
-     "ㄴ"
+     "ㄴ",
+     "ㅁ"
     ]
    },
    {
@@ -4701,10 +4701,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㅁ",
-     "ㄴ",
      "ㄱ",
-     "ㄷ"
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
     ]
    }
   ],
@@ -4765,8 +4765,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄴ",
      "ㄱ",
+     "ㄴ",
      "ㄷ"
     ]
    },
@@ -4785,16 +4785,16 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㅁ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    }
   ],
@@ -4857,8 +4857,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㅁ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -4876,18 +4876,18 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㄷ",
-     "ㄹ",
      "ㄱ",
-     "ㄴ"
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
     "id": "5",
     "members": [
+     "ㄷ",
      "ㄹ",
-     "ㅁ",
-     "ㄷ"
+     "ㅁ"
     ]
    }
   ],
@@ -4956,8 +4956,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㅁ",
-     "ㄱ"
+     "ㄱ",
+     "ㅁ"
     ]
    },
    {
@@ -4971,17 +4971,17 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㄹ",
-     "ㄱ"
+     "ㄱ",
+     "ㄹ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㅁ",
+     "ㄱ",
      "ㄴ",
      "ㄹ",
-     "ㄱ"
+     "ㅁ"
     ]
    }
   ],
@@ -5050,16 +5050,16 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㄹ",
-     "ㄱ"
+     "ㄱ",
+     "ㄹ"
     ]
    },
    {
     "id": "3",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㄹ",
-     "ㄱ"
+     "ㄹ"
     ]
    },
    {
@@ -5134,17 +5134,17 @@ var COMBO_DRILLS_subject4 = [
     "id": "1",
     "members": [
      "ㄴ",
+     "ㄷ",
      "ㄹ",
-     "ㅁ",
-     "ㄷ"
+     "ㅁ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ"
     ]
    },
    {
@@ -5227,8 +5227,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄴ",
      "ㄱ",
+     "ㄴ",
      "ㄷ",
      "ㅁ"
     ]
@@ -5236,10 +5236,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㅁ",
      "ㄴ",
+     "ㄷ",
      "ㄹ",
-     "ㄷ"
+     "ㅁ"
     ]
    },
    {
@@ -5329,17 +5329,17 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㄴ",
      "ㄱ",
+     "ㄴ",
      "ㄹ"
     ]
    },
    {
     "id": "3",
     "members": [
-     "ㄷ",
-     "ㄴ",
      "ㄱ",
+     "ㄴ",
+     "ㄷ",
      "ㅁ"
     ]
    },
@@ -5414,10 +5414,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄹ",
-     "ㄴ",
      "ㄱ",
-     "ㄷ"
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -5429,8 +5429,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㄴ",
      "ㄱ",
+     "ㄴ",
      "ㄷ"
     ]
    },
@@ -5597,8 +5597,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄷ",
-     "ㄴ"
+     "ㄴ",
+     "ㄷ"
     ]
    },
    {
@@ -5708,17 +5708,17 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㅁ",
      "ㄱ",
-     "ㄴ"
+     "ㄴ",
+     "ㅁ"
     ]
    },
    {
     "id": "5",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㄹ",
-     "ㄱ"
+     "ㄹ"
     ]
    }
   ],
@@ -5781,8 +5781,8 @@ var COMBO_DRILLS_subject4 = [
     "id": "1",
     "members": [
      "ㄱ",
-     "ㄹ",
-     "ㄴ"
+     "ㄴ",
+     "ㄹ"
     ]
    },
    {
@@ -5790,8 +5790,8 @@ var COMBO_DRILLS_subject4 = [
     "members": [
      "ㄱ",
      "ㄴ",
-     "ㅁ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -5809,10 +5809,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㅁ",
-     "ㄴ"
+     "ㄹ",
+     "ㅁ"
     ]
    }
   ],
@@ -5874,8 +5874,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄷ",
-     "ㄴ"
+     "ㄴ",
+     "ㄷ"
     ]
    },
    {
@@ -5887,8 +5887,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㄴ",
      "ㄱ",
+     "ㄴ",
      "ㄹ"
     ]
    },
@@ -5901,10 +5901,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㄹ",
      "ㄱ",
-     "ㅁ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
     ]
    }
   ],
@@ -5974,17 +5974,17 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㅁ",
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "3",
     "members": [
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -6075,8 +6075,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -6169,17 +6169,17 @@ var COMBO_DRILLS_subject4 = [
     "id": "4",
     "members": [
      "ㄱ",
-     "ㄹ",
-     "ㄴ"
+     "ㄴ",
+     "ㄹ"
     ]
    },
    {
     "id": "5",
     "members": [
+     "ㄱ",
      "ㄷ",
      "ㄹ",
-     "ㅁ",
-     "ㄱ"
+     "ㅁ"
     ]
    }
   ],
@@ -6255,8 +6255,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -6269,10 +6269,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㅁ",
-     "ㄹ",
      "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
     ]
    }
   ],
@@ -6362,8 +6362,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㄷ",
-     "ㄴ"
+     "ㄴ",
+     "ㄷ"
     ]
    }
   ],
@@ -6426,24 +6426,24 @@ var COMBO_DRILLS_subject4 = [
     "id": "1",
     "members": [
      "ㄱ",
-     "ㅁ",
-     "ㄴ"
+     "ㄴ",
+     "ㅁ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㅁ",
+     "ㄷ",
      "ㄹ",
-     "ㄷ"
+     "ㅁ"
     ]
    },
    {
     "id": "3",
     "members": [
-     "ㅁ",
      "ㄱ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -6524,8 +6524,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㅁ",
-     "ㄴ"
+     "ㄴ",
+     "ㅁ"
     ]
    },
    {
@@ -6539,10 +6539,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㅁ",
+     "ㄴ",
      "ㄷ",
      "ㄹ",
-     "ㄴ"
+     "ㅁ"
     ]
    },
    {
@@ -6609,18 +6609,18 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
+     "ㄴ",
      "ㄷ",
-     "ㄹ",
-     "ㄴ"
+     "ㄹ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄹ",
-     "ㄴ",
      "ㄱ",
-     "ㄷ"
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -6642,8 +6642,8 @@ var COMBO_DRILLS_subject4 = [
     "members": [
      "ㄱ",
      "ㄴ",
-     "ㅁ",
-     "ㄷ"
+     "ㄷ",
+     "ㅁ"
     ]
    }
   ],
@@ -6720,8 +6720,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㅁ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -6733,9 +6733,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㅁ",
+     "ㄷ",
      "ㄹ",
-     "ㄷ"
+     "ㅁ"
     ]
    }
   ],
@@ -6796,18 +6796,18 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄷ",
-     "ㄴ",
      "ㄱ",
+     "ㄴ",
+     "ㄷ",
      "ㄹ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㅁ",
+     "ㄷ",
      "ㄹ",
-     "ㄷ"
+     "ㅁ"
     ]
    },
    {
@@ -6821,9 +6821,9 @@ var COMBO_DRILLS_subject4 = [
     "id": "4",
     "members": [
      "ㄱ",
-     "ㅁ",
      "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
@@ -6890,9 +6890,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
+     "ㄴ",
      "ㄷ",
-     "ㅁ",
-     "ㄴ"
+     "ㅁ"
     ]
    },
    {
@@ -6905,10 +6905,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㅁ",
-     "ㄴ",
      "ㄱ",
-     "ㄷ"
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
@@ -6981,9 +6981,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㅁ",
      "ㄱ",
-     "ㄴ"
+     "ㄴ",
+     "ㅁ"
     ]
    },
    {
@@ -7002,18 +7002,18 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
+     "ㄱ",
      "ㄷ",
      "ㄹ",
-     "ㅁ",
-     "ㄱ"
+     "ㅁ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㄹ",
      "ㄱ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    }
   ],
@@ -7084,18 +7084,18 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㅁ",
-     "ㄷ",
      "ㄴ",
-     "ㄹ"
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "3",
     "members": [
-     "ㄹ",
      "ㄱ",
-     "ㄴ"
+     "ㄴ",
+     "ㄹ"
     ]
    },
    {
@@ -7169,8 +7169,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -7188,15 +7188,15 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㄹ",
-     "ㄴ"
+     "ㄴ",
+     "ㄹ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㅁ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    }
   ],
@@ -7259,19 +7259,19 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㅁ",
+     "ㄴ",
      "ㄷ",
      "ㄹ",
-     "ㄴ"
+     "ㅁ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄹ",
+     "ㄱ",
      "ㄴ",
-     "ㅁ",
-     "ㄱ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -7291,9 +7291,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
+     "ㄴ",
      "ㄷ",
-     "ㅁ",
-     "ㄴ"
+     "ㅁ"
     ]
    }
   ],
@@ -7354,9 +7354,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ"
     ]
    },
    {
@@ -7376,17 +7376,17 @@ var COMBO_DRILLS_subject4 = [
     "members": [
      "ㄱ",
      "ㄴ",
-     "ㅁ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㅁ",
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ",
+     "ㅁ"
     ]
    }
   ],
@@ -7473,9 +7473,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㅁ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㅁ"
     ]
    }
   ],
@@ -7542,18 +7542,18 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
+     "ㄱ",
      "ㄴ",
      "ㄷ",
-     "ㅁ",
-     "ㄱ"
+     "ㅁ"
     ]
    },
    {
     "id": "3",
     "members": [
+     "ㄴ",
      "ㄷ",
-     "ㄹ",
-     "ㄴ"
+     "ㄹ"
     ]
    },
    {
@@ -7628,8 +7628,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄷ",
-     "ㄴ"
+     "ㄴ",
+     "ㄷ"
     ]
    },
    {
@@ -7641,28 +7641,28 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㅁ",
      "ㄱ",
      "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
     "id": "4",
     "members": [
-     "ㄹ",
-     "ㄷ",
+     "ㄱ",
      "ㄴ",
-     "ㄱ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
     "id": "5",
     "members": [
+     "ㄱ",
      "ㄴ",
      "ㄹ",
-     "ㅁ",
-     "ㄱ"
+     "ㅁ"
     ]
    }
   ],
@@ -7730,24 +7730,24 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
     "id": "3",
     "members": [
-     "ㄹ",
-     "ㄴ"
+     "ㄴ",
+     "ㄹ"
     ]
    },
    {
     "id": "4",
     "members": [
+     "ㄴ",
      "ㄷ",
-     "ㅁ",
      "ㄹ",
-     "ㄴ"
+     "ㅁ"
     ]
    },
    {
@@ -7821,27 +7821,27 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㅁ",
+     "ㄱ",
      "ㄴ",
-     "ㄱ"
+     "ㅁ"
     ]
    },
    {
     "id": "3",
     "members": [
+     "ㄴ",
      "ㄷ",
-     "ㅁ",
      "ㄹ",
-     "ㄴ"
+     "ㅁ"
     ]
    },
    {
     "id": "4",
     "members": [
-     "ㄹ",
-     "ㄷ",
+     "ㄱ",
      "ㄴ",
-     "ㄱ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -7909,10 +7909,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㅁ",
      "ㄱ",
      "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
@@ -7938,8 +7938,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㅁ",
-     "ㄱ"
+     "ㄱ",
+     "ㅁ"
     ]
    }
   ],
@@ -8000,18 +8000,18 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄴ",
      "ㄱ",
-     "ㅁ",
-     "ㄹ"
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㅁ",
+     "ㄷ",
      "ㄹ",
-     "ㄷ"
+     "ㅁ"
     ]
    },
    {
@@ -8094,17 +8094,17 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㅁ",
+     "ㄱ",
      "ㄷ",
-     "ㄱ"
+     "ㅁ"
     ]
    },
    {
     "id": "2",
     "members": [
+     "ㄴ",
      "ㄷ",
-     "ㄹ",
-     "ㄴ"
+     "ㄹ"
     ]
    },
    {
@@ -8116,9 +8116,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㅁ",
+     "ㄷ",
      "ㄹ",
-     "ㄷ"
+     "ㅁ"
     ]
    },
    {
@@ -8188,8 +8188,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄴ",
      "ㄱ",
+     "ㄴ",
      "ㄹ"
     ]
    },
@@ -8216,8 +8216,8 @@ var COMBO_DRILLS_subject4 = [
     "id": "5",
     "members": [
      "ㄱ",
-     "ㄷ",
-     "ㄴ"
+     "ㄴ",
+     "ㄷ"
     ]
    }
   ],
@@ -8279,8 +8279,8 @@ var COMBO_DRILLS_subject4 = [
     "id": "1",
     "members": [
      "ㄱ",
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -8377,15 +8377,15 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
     "id": "3",
     "members": [
-     "ㄴ",
      "ㄱ",
+     "ㄴ",
      "ㄷ",
      "ㅁ"
     ]
@@ -8394,16 +8394,16 @@ var COMBO_DRILLS_subject4 = [
     "id": "4",
     "members": [
      "ㄱ",
-     "ㄹ",
-     "ㄴ"
+     "ㄴ",
+     "ㄹ"
     ]
    },
    {
     "id": "5",
     "members": [
      "ㄷ",
-     "ㅁ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    }
   ],
@@ -8470,10 +8470,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㅁ",
-     "ㄷ",
      "ㄴ",
-     "ㄹ"
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -8494,10 +8494,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㅁ",
      "ㄱ",
+     "ㄴ",
      "ㄹ",
-     "ㄴ"
+     "ㅁ"
     ]
    }
   ],
@@ -8558,8 +8558,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄹ",
-     "ㄴ"
+     "ㄴ",
+     "ㄹ"
     ]
    },
    {
@@ -8663,8 +8663,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㅁ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -8744,17 +8744,17 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㄷ",
+     "ㄱ",
      "ㄴ",
-     "ㄱ"
+     "ㄷ"
     ]
    },
    {
     "id": "3",
     "members": [
-     "ㄹ",
      "ㄱ",
      "ㄷ",
+     "ㄹ",
      "ㅁ"
     ]
    },
@@ -8767,10 +8767,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
+     "ㄱ",
      "ㄴ",
      "ㄷ",
-     "ㅁ",
-     "ㄱ"
+     "ㅁ"
     ]
    }
   ],
@@ -8839,10 +8839,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㅁ",
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -8856,16 +8856,16 @@ var COMBO_DRILLS_subject4 = [
     "members": [
      "ㄱ",
      "ㄴ",
-     "ㅁ",
-     "ㄷ"
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㄹ",
-     "ㄷ",
      "ㄱ",
+     "ㄷ",
+     "ㄹ",
      "ㅁ"
     ]
    }
@@ -8929,10 +8929,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄴ",
-     "ㅁ",
      "ㄱ",
-     "ㄹ"
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -8944,9 +8944,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
+     "ㄱ",
      "ㄷ",
      "ㄹ",
-     "ㄱ",
      "ㅁ"
     ]
    },
@@ -9022,8 +9022,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㅁ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -9049,9 +9049,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㄹ",
-     "ㄷ",
      "ㄴ",
+     "ㄷ",
+     "ㄹ",
      "ㅁ"
     ]
    }
@@ -9125,9 +9125,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㄹ",
      "ㄱ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -9139,9 +9139,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㅁ",
+     "ㄷ",
      "ㄹ",
-     "ㄷ"
+     "ㅁ"
     ]
    }
   ],
@@ -9229,9 +9229,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ"
     ]
    }
   ],
@@ -9293,16 +9293,16 @@ var COMBO_DRILLS_subject4 = [
     "id": "1",
     "members": [
      "ㄱ",
-     "ㄹ",
-     "ㄴ"
+     "ㄴ",
+     "ㄹ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㅁ",
+     "ㄷ",
      "ㄹ",
-     "ㄷ"
+     "ㅁ"
     ]
    },
    {
@@ -9322,10 +9322,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㄹ",
-     "ㄷ",
      "ㄱ",
-     "ㄴ"
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
     ]
    }
   ],
@@ -9386,10 +9386,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㅁ",
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -9401,16 +9401,16 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㄴ",
      "ㄱ",
+     "ㄴ",
      "ㄹ"
     ]
    },
    {
     "id": "4",
     "members": [
-     "ㅁ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -9479,18 +9479,18 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄷ",
      "ㄱ",
-     "ㅁ",
-     "ㄴ"
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
     "id": "2",
     "members": [
      "ㄱ",
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -9571,10 +9571,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄹ",
-     "ㄴ",
      "ㄱ",
-     "ㄷ"
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -9600,10 +9600,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㅁ",
      "ㄱ",
      "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㅁ"
     ]
    }
   ],
@@ -9665,25 +9665,25 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄹ",
-     "ㄴ"
+     "ㄴ",
+     "ㄹ"
     ]
    },
    {
     "id": "2",
     "members": [
      "ㄱ",
-     "ㅁ",
-     "ㄴ"
+     "ㄴ",
+     "ㅁ"
     ]
    },
    {
     "id": "3",
     "members": [
-     "ㅁ",
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -9695,10 +9695,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㅁ",
      "ㄱ",
      "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㅁ"
     ]
    }
   ],
@@ -9772,18 +9772,18 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㄹ",
      "ㄱ",
-     "ㅁ",
-     "ㄴ"
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "4",
     "members": [
      "ㄱ",
-     "ㅁ",
-     "ㄴ"
+     "ㄴ",
+     "ㅁ"
     ]
    },
    {
@@ -9851,8 +9851,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㅁ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -9871,9 +9871,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㅁ",
+     "ㄷ",
      "ㄹ",
-     "ㄷ"
+     "ㅁ"
     ]
    },
    {
@@ -9952,16 +9952,16 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
     "id": "3",
     "members": [
      "ㄱ",
-     "ㄹ",
-     "ㄴ"
+     "ㄴ",
+     "ㄹ"
     ]
    },
    {
@@ -10034,9 +10034,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄹ",
      "ㄱ",
-     "ㄴ"
+     "ㄴ",
+     "ㄹ"
     ]
    },
    {
@@ -10054,17 +10054,17 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㄴ",
-     "ㄱ"
+     "ㄱ",
+     "ㄴ"
     ]
    },
    {
     "id": "5",
     "members": [
+     "ㄱ",
      "ㄷ",
-     "ㅁ",
      "ㄹ",
-     "ㄱ"
+     "ㅁ"
     ]
    }
   ],
@@ -10127,8 +10127,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄴ",
-     "ㄱ"
+     "ㄱ",
+     "ㄴ"
     ]
    },
    {
@@ -10147,10 +10147,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㄹ",
-     "ㅁ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -10240,17 +10240,17 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㄹ",
+     "ㄱ",
      "ㄴ",
-     "ㅁ",
-     "ㄱ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    }
   ],
@@ -10329,17 +10329,17 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
+     "ㄱ",
      "ㄴ",
      "ㄷ",
-     "ㄱ",
      "ㅁ"
     ]
    },
    {
     "id": "4",
     "members": [
-     "ㄷ",
-     "ㄴ"
+     "ㄴ",
+     "ㄷ"
     ]
    },
    {
@@ -10421,8 +10421,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㄷ",
-     "ㄴ"
+     "ㄴ",
+     "ㄷ"
     ]
    },
    {
@@ -10434,9 +10434,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ"
     ]
    }
   ],
@@ -10510,10 +10510,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㄴ",
      "ㄱ",
-     "ㅁ",
-     "ㄷ"
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
@@ -10525,9 +10525,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㅁ",
+     "ㄷ",
      "ㄹ",
-     "ㄷ"
+     "ㅁ"
     ]
    }
   ],
@@ -10588,8 +10588,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄷ",
-     "ㄱ"
+     "ㄱ",
+     "ㄷ"
     ]
    },
    {
@@ -10689,9 +10689,9 @@ var COMBO_DRILLS_subject4 = [
     "id": "3",
     "members": [
      "ㄱ",
+     "ㄴ",
      "ㄷ",
-     "ㅁ",
-     "ㄴ"
+     "ㅁ"
     ]
    },
    {
@@ -10703,8 +10703,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㄹ",
-     "ㄱ"
+     "ㄱ",
+     "ㄹ"
     ]
    }
   ],
@@ -10775,8 +10775,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㄴ",
-     "ㄱ"
+     "ㄱ",
+     "ㄴ"
     ]
    },
    {
@@ -10788,8 +10788,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㄷ",
      "ㄴ",
+     "ㄷ",
      "ㅁ"
     ]
    },
@@ -10857,8 +10857,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄷ",
-     "ㄴ"
+     "ㄴ",
+     "ㄷ"
     ]
    },
    {
@@ -10949,9 +10949,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㅁ",
      "ㄱ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -10959,8 +10959,8 @@ var COMBO_DRILLS_subject4 = [
     "members": [
      "ㄱ",
      "ㄴ",
-     "ㅁ",
-     "ㄷ"
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
@@ -10973,8 +10973,8 @@ var COMBO_DRILLS_subject4 = [
     "id": "4",
     "members": [
      "ㄱ",
-     "ㄹ",
      "ㄷ",
+     "ㄹ",
      "ㅁ"
     ]
    },
@@ -11059,17 +11059,17 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
+     "ㄱ",
      "ㄷ",
-     "ㄹ",
-     "ㄱ"
+     "ㄹ"
     ]
    },
    {
     "id": "4",
     "members": [
      "ㄴ",
-     "ㅁ",
-     "ㄷ"
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
@@ -11151,9 +11151,9 @@ var COMBO_DRILLS_subject4 = [
     "id": "3",
     "members": [
      "ㄱ",
+     "ㄴ",
      "ㄹ",
-     "ㅁ",
-     "ㄴ"
+     "ㅁ"
     ]
    },
    {
@@ -11167,9 +11167,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
+     "ㄱ",
      "ㄷ",
-     "ㄹ",
-     "ㄱ"
+     "ㄹ"
     ]
    }
   ],
@@ -11230,10 +11230,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄷ",
+     "ㄱ",
      "ㄴ",
-     "ㅁ",
-     "ㄱ"
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
@@ -11251,17 +11251,17 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㄷ",
+     "ㄱ",
      "ㄴ",
-     "ㄱ"
+     "ㄷ"
     ]
    }
   ],
@@ -11322,24 +11322,24 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄴ",
      "ㄱ",
+     "ㄴ",
      "ㅁ"
     ]
    },
    {
     "id": "2",
     "members": [
+     "ㄴ",
      "ㄷ",
-     "ㅁ",
-     "ㄴ"
+     "ㅁ"
     ]
    },
    {
     "id": "3",
     "members": [
-     "ㅁ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -11414,16 +11414,16 @@ var COMBO_DRILLS_subject4 = [
     "id": "1",
     "members": [
      "ㄷ",
-     "ㅁ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "2",
     "members": [
+     "ㄴ",
      "ㄷ",
-     "ㄹ",
-     "ㄴ"
+     "ㄹ"
     ]
    },
    {
@@ -11442,10 +11442,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㅁ",
-     "ㄹ",
      "ㄱ",
-     "ㄴ"
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
     ]
    }
   ],
@@ -11518,8 +11518,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㄹ",
-     "ㄱ"
+     "ㄱ",
+     "ㄹ"
     ]
    },
    {
@@ -11628,8 +11628,8 @@ var COMBO_DRILLS_subject4 = [
     "id": "5",
     "members": [
      "ㄱ",
-     "ㄹ",
      "ㄴ",
+     "ㄹ",
      "ㅁ"
     ]
    }
@@ -11698,17 +11698,17 @@ var COMBO_DRILLS_subject4 = [
     "id": "2",
     "members": [
      "ㄱ",
+     "ㄷ",
      "ㄹ",
-     "ㅁ",
-     "ㄷ"
+     "ㅁ"
     ]
    },
    {
     "id": "3",
     "members": [
      "ㄱ",
-     "ㄹ",
      "ㄴ",
+     "ㄹ",
      "ㅁ"
     ]
    },
@@ -11783,33 +11783,33 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄷ",
      "ㄱ",
-     "ㅁ",
-     "ㄴ"
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄷ",
-     "ㄴ"
+     "ㄴ",
+     "ㄷ"
     ]
    },
    {
     "id": "3",
     "members": [
-     "ㅁ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "4",
     "members": [
-     "ㄴ",
      "ㄱ",
-     "ㅁ",
-     "ㄹ"
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -11902,10 +11902,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㅁ",
      "ㄱ",
      "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㅁ"
     ]
    }
   ],
@@ -11975,24 +11975,24 @@ var COMBO_DRILLS_subject4 = [
     "members": [
      "ㄱ",
      "ㄴ",
-     "ㅁ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "3",
     "members": [
      "ㄱ",
-     "ㄹ",
      "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
     "id": "4",
     "members": [
-     "ㄹ",
-     "ㄴ"
+     "ㄴ",
+     "ㄹ"
     ]
    },
    {
@@ -12067,16 +12067,16 @@ var COMBO_DRILLS_subject4 = [
     "members": [
      "ㄱ",
      "ㄴ",
-     "ㅁ",
-     "ㄷ"
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
     "id": "3",
     "members": [
-     "ㄷ",
+     "ㄱ",
      "ㄴ",
-     "ㄱ"
+     "ㄷ"
     ]
    },
    {
@@ -12088,8 +12088,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    }
   ],
@@ -12151,8 +12151,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄷ",
      "ㄴ",
+     "ㄷ",
      "ㄹ",
      "ㅁ"
     ]
@@ -12166,24 +12166,24 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㅁ",
-     "ㄷ"
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
     "id": "4",
     "members": [
      "ㄱ",
-     "ㄷ",
      "ㄴ",
+     "ㄷ",
      "ㄹ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㄴ",
-     "ㄱ"
+     "ㄱ",
+     "ㄴ"
     ]
    }
   ],
@@ -12264,10 +12264,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㄹ",
-     "ㅁ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -12425,19 +12425,19 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄹ",
+     "ㄱ",
      "ㄴ",
-     "ㅁ",
-     "ㄱ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㅁ",
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -12455,8 +12455,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㄷ",
-     "ㄴ"
+     "ㄴ",
+     "ㄷ"
     ]
    }
   ],
@@ -12523,9 +12523,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㅁ",
+     "ㄷ",
      "ㄹ",
-     "ㄷ"
+     "ㅁ"
     ]
    },
    {
@@ -12538,8 +12538,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㄷ",
      "ㄴ",
+     "ㄷ",
      "ㄹ"
     ]
    },
@@ -12620,10 +12620,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㄹ",
      "ㄱ",
-     "ㅁ",
-     "ㄴ"
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -12635,10 +12635,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㄴ",
      "ㄱ",
-     "ㅁ",
-     "ㄷ"
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
     ]
    }
   ],
@@ -12711,15 +12711,15 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㅁ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "3",
     "members": [
-     "ㄴ",
-     "ㄱ"
+     "ㄱ",
+     "ㄴ"
     ]
    },
    {
@@ -12800,9 +12800,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
+     "ㄴ",
      "ㄷ",
-     "ㄹ",
-     "ㄴ"
+     "ㄹ"
     ]
    },
    {
@@ -12883,16 +12883,16 @@ var COMBO_DRILLS_subject4 = [
     "id": "1",
     "members": [
      "ㄱ",
-     "ㄹ",
      "ㄴ",
+     "ㄹ",
      "ㅁ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄹ",
-     "ㄱ"
+     "ㄱ",
+     "ㄹ"
     ]
    },
    {
@@ -12976,9 +12976,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㅁ",
+     "ㄷ",
      "ㄹ",
-     "ㄷ"
+     "ㅁ"
     ]
    },
    {
@@ -12991,8 +12991,8 @@ var COMBO_DRILLS_subject4 = [
     "id": "3",
     "members": [
      "ㄱ",
-     "ㅁ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -13074,10 +13074,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㄴ",
-     "ㅁ",
      "ㄱ",
-     "ㄹ"
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -13170,10 +13170,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㄷ",
      "ㄱ",
-     "ㅁ",
-     "ㄹ"
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -13256,8 +13256,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㄹ",
-     "ㄴ"
+     "ㄴ",
+     "ㄹ"
     ]
    },
    {
@@ -13269,8 +13269,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -13338,25 +13338,25 @@ var COMBO_DRILLS_subject4 = [
     "id": "1",
     "members": [
      "ㄴ",
-     "ㅁ",
-     "ㄷ"
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㅁ",
-     "ㄴ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "3",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㅁ",
-     "ㄱ"
+     "ㅁ"
     ]
    },
    {
@@ -13429,9 +13429,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
+     "ㄴ",
      "ㄷ",
-     "ㅁ",
-     "ㄴ"
+     "ㅁ"
     ]
    },
    {
@@ -13443,16 +13443,16 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㄷ",
      "ㄱ",
+     "ㄷ",
      "ㅁ"
     ]
    },
    {
     "id": "4",
     "members": [
-     "ㄴ",
      "ㄱ",
+     "ㄴ",
      "ㅁ"
     ]
    },
@@ -13543,8 +13543,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㅁ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -13628,10 +13628,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㅁ",
      "ㄱ",
+     "ㄴ",
      "ㄹ",
-     "ㄴ"
+     "ㅁ"
     ]
    },
    {
@@ -13718,8 +13718,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㄹ",
-     "ㄱ"
+     "ㄱ",
+     "ㄹ"
     ]
    },
    {
@@ -13732,8 +13732,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㄴ",
      "ㄱ",
+     "ㄴ",
      "ㄹ"
     ]
    }
@@ -13807,25 +13807,25 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㄷ",
-     "ㅁ",
+     "ㄱ",
      "ㄴ",
-     "ㄱ"
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
     "id": "4",
     "members": [
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㅁ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㅁ"
     ]
    }
   ],
@@ -13887,9 +13887,9 @@ var COMBO_DRILLS_subject4 = [
     "id": "1",
     "members": [
      "ㄱ",
+     "ㄴ",
      "ㄹ",
-     "ㅁ",
-     "ㄴ"
+     "ㅁ"
     ]
    },
    {
@@ -13901,8 +13901,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㄴ",
      "ㄱ",
+     "ㄴ",
      "ㄷ",
      "ㄹ"
     ]
@@ -13910,9 +13910,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
+     "ㄴ",
      "ㄷ",
-     "ㄹ",
-     "ㄴ"
+     "ㄹ"
     ]
    },
    {
@@ -13998,16 +13998,16 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㄹ",
      "ㄱ",
      "ㄴ",
+     "ㄹ",
      "ㅁ"
     ]
    }
@@ -14075,10 +14075,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㅁ",
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -14090,9 +14090,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㄹ",
      "ㄱ",
      "ㄴ",
+     "ㄹ",
      "ㅁ"
     ]
    },
@@ -14163,15 +14163,15 @@ var COMBO_DRILLS_subject4 = [
     "id": "1",
     "members": [
      "ㄱ",
-     "ㄹ",
-     "ㄴ"
+     "ㄴ",
+     "ㄹ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄹ",
      "ㄴ",
+     "ㄹ",
      "ㅁ"
     ]
    },
@@ -14193,8 +14193,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㄴ",
-     "ㄱ"
+     "ㄱ",
+     "ㄴ"
     ]
    }
   ],
@@ -14256,8 +14256,8 @@ var COMBO_DRILLS_subject4 = [
     "id": "1",
     "members": [
      "ㄱ",
-     "ㅁ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -14276,9 +14276,9 @@ var COMBO_DRILLS_subject4 = [
     "id": "4",
     "members": [
      "ㄱ",
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ"
     ]
    },
    {
@@ -14352,17 +14352,17 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㅁ",
      "ㄱ",
-     "ㄴ"
+     "ㄴ",
+     "ㅁ"
     ]
    },
    {
     "id": "3",
     "members": [
-     "ㅁ",
      "ㄱ",
-     "ㄷ"
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
@@ -14370,16 +14370,16 @@ var COMBO_DRILLS_subject4 = [
     "members": [
      "ㄱ",
      "ㄴ",
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㅁ",
+     "ㄷ",
      "ㄹ",
-     "ㄷ"
+     "ㅁ"
     ]
    }
   ],
@@ -14454,26 +14454,26 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㅁ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "4",
     "members": [
-     "ㅁ",
-     "ㄹ",
      "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㄷ",
-     "ㅁ",
+     "ㄱ",
      "ㄴ",
-     "ㄱ"
+     "ㄷ",
+     "ㅁ"
     ]
    }
   ],
@@ -14622,16 +14622,16 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄷ",
-     "ㄴ"
+     "ㄴ",
+     "ㄷ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄹ",
-     "ㄴ",
      "ㄱ",
+     "ㄴ",
+     "ㄹ",
      "ㅁ"
     ]
    },
@@ -14650,9 +14650,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㄷ",
-     "ㄴ",
      "ㄱ",
+     "ㄴ",
+     "ㄷ",
      "ㅁ"
     ]
    }
@@ -14714,8 +14714,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄷ",
-     "ㄱ"
+     "ㄱ",
+     "ㄷ"
     ]
    },
    {
@@ -14733,17 +14733,17 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㄹ",
-     "ㄴ",
      "ㄱ",
-     "ㄷ"
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㅁ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    }
   ],
@@ -14805,10 +14805,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄹ",
-     "ㄷ",
+     "ㄱ",
      "ㄴ",
-     "ㄱ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -14821,18 +14821,18 @@ var COMBO_DRILLS_subject4 = [
     "id": "3",
     "members": [
      "ㄱ",
-     "ㄹ",
      "ㄷ",
+     "ㄹ",
      "ㅁ"
     ]
    },
    {
     "id": "4",
     "members": [
-     "ㅁ",
-     "ㄴ",
      "ㄱ",
-     "ㄷ"
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
@@ -14907,10 +14907,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
+     "ㄴ",
      "ㄷ",
-     "ㅁ",
      "ㄹ",
-     "ㄴ"
+     "ㅁ"
     ]
    },
    {
@@ -14924,8 +14924,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㄴ",
      "ㄱ",
+     "ㄴ",
      "ㄹ"
     ]
    },
@@ -14994,9 +14994,9 @@ var COMBO_DRILLS_subject4 = [
     "id": "1",
     "members": [
      "ㄱ",
-     "ㅁ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㅁ"
     ]
    },
    {
@@ -15084,9 +15084,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄷ",
      "ㄱ",
-     "ㄴ"
+     "ㄴ",
+     "ㄷ"
     ]
    },
    {
@@ -15098,8 +15098,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㅁ",
-     "ㄷ"
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
@@ -15192,8 +15192,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㄷ",
      "ㄱ",
+     "ㄷ",
      "ㄹ",
      "ㅁ"
     ]
@@ -15264,8 +15264,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄷ",
      "ㄴ",
+     "ㄷ",
      "ㅁ"
     ]
    },
@@ -15356,26 +15356,26 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄴ",
-     "ㅁ",
      "ㄱ",
-     "ㄷ"
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄷ",
-     "ㄴ"
+     "ㄴ",
+     "ㄷ"
     ]
    },
    {
     "id": "3",
     "members": [
      "ㄱ",
-     "ㅁ",
+     "ㄷ",
      "ㄹ",
-     "ㄷ"
+     "ㅁ"
     ]
    },
    {
@@ -15451,8 +15451,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄹ",
-     "ㄱ"
+     "ㄱ",
+     "ㄹ"
     ]
    },
    {
@@ -15476,10 +15476,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㅁ",
-     "ㄴ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -15576,8 +15576,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㄷ",
      "ㄱ",
+     "ㄷ",
      "ㅁ"
     ]
    }
@@ -15639,10 +15639,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄹ",
-     "ㅁ",
+     "ㄱ",
      "ㄴ",
-     "ㄱ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -15661,9 +15661,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㄹ",
-     "ㄱ"
+     "ㄹ"
     ]
    },
    {
@@ -15740,9 +15740,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ"
     ]
    },
    {
@@ -15754,17 +15754,17 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㅁ",
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㅁ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    }
   ],
@@ -15854,10 +15854,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㄹ",
-     "ㄷ",
      "ㄱ",
-     "ㄴ"
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
     ]
    }
   ],
@@ -15918,9 +15918,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄷ",
      "ㄱ",
      "ㄴ",
+     "ㄷ",
      "ㅁ"
     ]
    },
@@ -16007,15 +16007,15 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㅁ",
-     "ㄷ"
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㅁ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -16107,10 +16107,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㅁ",
      "ㄱ",
      "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
@@ -16123,9 +16123,9 @@ var COMBO_DRILLS_subject4 = [
     "id": "5",
     "members": [
      "ㄱ",
+     "ㄴ",
      "ㄹ",
-     "ㅁ",
-     "ㄴ"
+     "ㅁ"
     ]
    }
   ],
@@ -16187,9 +16187,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
+     "ㄷ",
      "ㄹ",
-     "ㅁ",
-     "ㄷ"
+     "ㅁ"
     ]
    },
    {
@@ -16201,16 +16201,16 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㄷ",
      "ㄴ",
+     "ㄷ",
      "ㅁ"
     ]
    },
    {
     "id": "4",
     "members": [
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -16277,9 +16277,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄹ",
-     "ㄷ",
      "ㄴ",
+     "ㄷ",
+     "ㄹ",
      "ㅁ"
     ]
    },
@@ -16292,15 +16292,15 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㅁ",
-     "ㄴ"
+     "ㄴ",
+     "ㅁ"
     ]
    },
    {
     "id": "4",
     "members": [
-     "ㅁ",
-     "ㄱ"
+     "ㄱ",
+     "ㅁ"
     ]
    },
    {
@@ -16369,9 +16369,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ"
     ]
    },
    {
@@ -16396,8 +16396,8 @@ var COMBO_DRILLS_subject4 = [
     "id": "5",
     "members": [
      "ㄱ",
-     "ㄹ",
-     "ㄴ"
+     "ㄴ",
+     "ㄹ"
     ]
    }
   ],
@@ -16465,15 +16465,15 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
     "id": "3",
     "members": [
-     "ㅁ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -16489,8 +16489,8 @@ var COMBO_DRILLS_subject4 = [
     "id": "5",
     "members": [
      "ㄱ",
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    }
   ],
@@ -16551,9 +16551,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㄹ",
-     "ㄱ"
+     "ㄹ"
     ]
    },
    {
@@ -16572,10 +16572,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㅁ",
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -16646,10 +16646,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄹ",
-     "ㄴ",
      "ㄱ",
-     "ㄷ"
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -16661,10 +16661,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㅁ",
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -16677,8 +16677,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㄹ",
      "ㄱ",
+     "ㄹ",
      "ㅁ"
     ]
    }
@@ -16754,9 +16754,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
+     "ㄴ",
      "ㄷ",
-     "ㅁ",
-     "ㄴ"
+     "ㅁ"
     ]
    },
    {
@@ -16832,10 +16832,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄹ",
-     "ㅁ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -16935,8 +16935,8 @@ var COMBO_DRILLS_subject4 = [
     "id": "3",
     "members": [
      "ㄱ",
-     "ㅁ",
-     "ㄴ"
+     "ㄴ",
+     "ㅁ"
     ]
    },
    {
@@ -16948,10 +16948,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㄷ",
-     "ㅁ",
+     "ㄱ",
      "ㄴ",
-     "ㄱ"
+     "ㄷ",
+     "ㅁ"
     ]
    }
   ],
@@ -17025,10 +17025,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㄹ",
-     "ㄷ",
+     "ㄱ",
      "ㄴ",
-     "ㄱ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -17102,10 +17102,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄹ",
      "ㄱ",
      "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -17125,8 +17125,8 @@ var COMBO_DRILLS_subject4 = [
     "id": "4",
     "members": [
      "ㄱ",
-     "ㄹ",
-     "ㄴ"
+     "ㄴ",
+     "ㄹ"
     ]
    },
    {
@@ -17195,9 +17195,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㅁ",
      "ㄱ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -17216,8 +17216,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㄹ",
-     "ㄴ"
+     "ㄴ",
+     "ㄹ"
     ]
    },
    {
@@ -17285,8 +17285,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -17377,26 +17377,26 @@ var COMBO_DRILLS_subject4 = [
     "id": "1",
     "members": [
      "ㄱ",
-     "ㅁ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㅁ"
     ]
    },
    {
     "id": "2",
     "members": [
+     "ㄴ",
      "ㄷ",
      "ㄹ",
-     "ㅁ",
-     "ㄴ"
+     "ㅁ"
     ]
    },
    {
     "id": "3",
     "members": [
      "ㄱ",
-     "ㅁ",
-     "ㄴ"
+     "ㄴ",
+     "ㅁ"
     ]
    },
    {
@@ -17408,8 +17408,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㄴ",
      "ㄱ",
+     "ㄴ",
      "ㄹ"
     ]
    }
@@ -17477,17 +17477,17 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㄹ",
-     "ㄷ",
      "ㄱ",
+     "ㄷ",
+     "ㄹ",
      "ㅁ"
     ]
    },
    {
     "id": "3",
     "members": [
-     "ㄷ",
      "ㄴ",
+     "ㄷ",
      "ㅁ"
     ]
    },
@@ -17578,8 +17578,8 @@ var COMBO_DRILLS_subject4 = [
     "members": [
      "ㄱ",
      "ㄴ",
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -17592,9 +17592,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㅁ",
+     "ㄷ",
      "ㄹ",
-     "ㄷ"
+     "ㅁ"
     ]
    }
   ],
@@ -17662,8 +17662,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㄷ",
-     "ㄱ"
+     "ㄱ",
+     "ㄷ"
     ]
    },
    {
@@ -17679,8 +17679,8 @@ var COMBO_DRILLS_subject4 = [
     "id": "4",
     "members": [
      "ㄱ",
-     "ㄹ",
      "ㄴ",
+     "ㄹ",
      "ㅁ"
     ]
    },
@@ -17763,9 +17763,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
+     "ㄴ",
      "ㄷ",
      "ㄹ",
-     "ㄴ",
      "ㅁ"
     ]
    },
@@ -17857,8 +17857,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㅁ",
-     "ㄱ"
+     "ㄱ",
+     "ㅁ"
     ]
    },
    {
@@ -17944,8 +17944,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㄹ",
      "ㄷ",
+     "ㄹ",
      "ㅁ"
     ]
    },
@@ -18029,24 +18029,24 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㅁ",
+     "ㄷ",
      "ㄹ",
-     "ㄷ"
+     "ㅁ"
     ]
    },
    {
     "id": "4",
     "members": [
-     "ㅁ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㄹ",
      "ㄴ",
      "ㄷ",
+     "ㄹ",
      "ㅁ"
     ]
    }
@@ -18108,15 +18108,15 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄷ",
-     "ㄴ"
+     "ㄴ",
+     "ㄷ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄹ",
-     "ㄴ"
+     "ㄴ",
+     "ㄹ"
     ]
    },
    {
@@ -18128,8 +18128,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㄹ",
      "ㄷ",
+     "ㄹ",
      "ㅁ"
     ]
    },
@@ -18210,17 +18210,17 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㄹ",
-     "ㄱ"
+     "ㄹ"
     ]
    },
    {
     "id": "4",
     "members": [
-     "ㅁ",
+     "ㄴ",
      "ㄹ",
-     "ㄴ"
+     "ㅁ"
     ]
    },
    {
@@ -18287,17 +18287,17 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄹ",
-     "ㄱ"
+     "ㄱ",
+     "ㄹ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄹ",
-     "ㄴ",
      "ㄱ",
-     "ㄷ"
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -18309,10 +18309,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
+     "ㄱ",
      "ㄴ",
      "ㄹ",
-     "ㅁ",
-     "ㄱ"
+     "ㅁ"
     ]
    },
    {
@@ -18392,25 +18392,25 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㄹ",
      "ㄷ",
+     "ㄹ",
      "ㅁ"
     ]
    },
    {
     "id": "4",
     "members": [
+     "ㄴ",
      "ㄷ",
-     "ㄹ",
-     "ㄴ"
+     "ㄹ"
     ]
    },
    {
     "id": "5",
     "members": [
      "ㄱ",
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    }
   ],
@@ -18471,18 +18471,18 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㅁ",
      "ㄱ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄷ",
-     "ㄹ",
+     "ㄱ",
      "ㄴ",
-     "ㄱ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -18588,8 +18588,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㄷ",
-     "ㄱ"
+     "ㄱ",
+     "ㄷ"
     ]
    },
    {
@@ -18664,18 +18664,18 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㄹ",
-     "ㅁ",
      "ㄱ",
-     "ㄴ"
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "3",
     "members": [
      "ㄱ",
-     "ㅁ",
-     "ㄴ"
+     "ㄴ",
+     "ㅁ"
     ]
    },
    {
@@ -18767,8 +18767,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㅁ",
-     "ㄱ"
+     "ㄱ",
+     "ㅁ"
     ]
    },
    {
@@ -18780,10 +18780,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㄷ",
      "ㄴ",
-     "ㅁ",
-     "ㄹ"
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
     ]
    }
   ],
@@ -18850,17 +18850,17 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㄷ",
-     "ㄴ",
      "ㄱ",
+     "ㄴ",
+     "ㄷ",
      "ㅁ"
     ]
    },
    {
     "id": "3",
     "members": [
-     "ㅁ",
-     "ㄱ"
+     "ㄱ",
+     "ㅁ"
     ]
    },
    {
@@ -18873,9 +18873,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㄷ",
+     "ㄱ",
      "ㄴ",
-     "ㄱ"
+     "ㄷ"
     ]
    }
   ],
@@ -18948,25 +18948,25 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㄹ",
-     "ㅁ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "4",
     "members": [
-     "ㄹ",
      "ㄱ",
+     "ㄹ",
      "ㅁ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    }
   ],
@@ -19035,16 +19035,16 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㄹ",
      "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
     "id": "3",
     "members": [
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -19149,9 +19149,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㅁ",
+     "ㄷ",
      "ㄹ",
-     "ㄷ"
+     "ㅁ"
     ]
    }
   ],
@@ -19215,9 +19215,9 @@ var COMBO_DRILLS_subject4 = [
     "id": "1",
     "members": [
      "ㄱ",
-     "ㅁ",
      "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
@@ -19400,9 +19400,9 @@ var COMBO_DRILLS_subject4 = [
     "id": "1",
     "members": [
      "ㄱ",
-     "ㅁ",
      "ㄴ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -19601,15 +19601,15 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㄹ",
      "ㄷ",
+     "ㄹ",
      "ㅁ"
     ]
    }
@@ -19671,8 +19671,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㅁ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -19684,8 +19684,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㄷ",
-     "ㄴ"
+     "ㄴ",
+     "ㄷ"
     ]
    },
    {
@@ -19761,16 +19761,16 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㅁ",
-     "ㄷ"
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
     "id": "2",
     "members": [
      "ㄱ",
-     "ㄹ",
      "ㄴ",
+     "ㄹ",
      "ㅁ"
     ]
    },
@@ -19850,8 +19850,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -19863,9 +19863,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㅁ",
+     "ㄷ",
      "ㄹ",
-     "ㄷ"
+     "ㅁ"
     ]
    },
    {
@@ -19878,10 +19878,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㄹ",
-     "ㄴ",
      "ㄱ",
-     "ㄷ"
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
     ]
    }
   ],
@@ -19944,8 +19944,8 @@ var COMBO_DRILLS_subject4 = [
     "id": "1",
     "members": [
      "ㄱ",
-     "ㄷ",
-     "ㄴ"
+     "ㄴ",
+     "ㄷ"
     ]
    },
    {
@@ -19963,17 +19963,17 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㅁ",
-     "ㄱ"
+     "ㄱ",
+     "ㅁ"
     ]
    },
    {
     "id": "5",
     "members": [
      "ㄱ",
-     "ㅁ",
      "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㅁ"
     ]
    }
   ],
@@ -20050,8 +20050,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㄹ",
      "ㄱ",
+     "ㄹ",
      "ㅁ"
     ]
    },
@@ -20125,8 +20125,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄷ",
-     "ㄱ"
+     "ㄱ",
+     "ㄷ"
     ]
    },
    {
@@ -20138,17 +20138,17 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㅁ",
-     "ㄱ"
+     "ㄱ",
+     "ㅁ"
     ]
    },
    {
     "id": "4",
     "members": [
-     "ㅁ",
+     "ㄴ",
      "ㄷ",
      "ㄹ",
-     "ㄴ"
+     "ㅁ"
     ]
    },
    {
@@ -20215,8 +20215,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄴ",
      "ㄱ",
+     "ㄴ",
      "ㄷ",
      "ㅁ"
     ]
@@ -20324,9 +20324,9 @@ var COMBO_DRILLS_subject4 = [
     "id": "4",
     "members": [
      "ㄱ",
+     "ㄴ",
      "ㄹ",
-     "ㅁ",
-     "ㄴ"
+     "ㅁ"
     ]
    },
    {
@@ -20399,34 +20399,34 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㄹ",
      "ㄱ",
      "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
     "id": "3",
     "members": [
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ"
     ]
    },
    {
     "id": "4",
     "members": [
-     "ㅁ",
+     "ㄷ",
      "ㄹ",
-     "ㄷ"
+     "ㅁ"
     ]
    },
    {
     "id": "5",
     "members": [
      "ㄱ",
-     "ㄹ",
      "ㄴ",
+     "ㄹ",
      "ㅁ"
     ]
    }
@@ -20495,8 +20495,8 @@ var COMBO_DRILLS_subject4 = [
     "id": "2",
     "members": [
      "ㄱ",
-     "ㄹ",
      "ㄴ",
+     "ㄹ",
      "ㅁ"
     ]
    },
@@ -20586,31 +20586,31 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㄷ",
-     "ㄴ"
+     "ㄴ",
+     "ㄷ"
     ]
    },
    {
     "id": "3",
     "members": [
-     "ㄹ",
+     "ㄱ",
      "ㄴ",
-     "ㄱ"
+     "ㄹ"
     ]
    },
    {
     "id": "4",
     "members": [
+     "ㄴ",
      "ㄷ",
-     "ㄹ",
-     "ㄴ"
+     "ㄹ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㅁ",
-     "ㄴ"
+     "ㄴ",
+     "ㅁ"
     ]
    }
   ],
@@ -20686,10 +20686,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㄹ",
-     "ㅁ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -20701,8 +20701,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㅁ",
-     "ㄱ"
+     "ㄱ",
+     "ㅁ"
     ]
    }
   ],
@@ -20764,19 +20764,19 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㅁ",
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄹ",
-     "ㄷ",
+     "ㄱ",
      "ㄴ",
-     "ㄱ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -20855,8 +20855,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄹ",
-     "ㄱ"
+     "ㄱ",
+     "ㄹ"
     ]
    },
    {
@@ -20874,17 +20874,17 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㅁ",
      "ㄱ",
-     "ㄴ"
+     "ㄴ",
+     "ㅁ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㄹ",
      "ㄱ",
      "ㄴ",
+     "ㄹ",
      "ㅁ"
     ]
    }
@@ -20946,27 +20946,27 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㅁ",
-     "ㄹ",
      "ㄱ",
-     "ㄴ"
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄹ",
      "ㄱ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ"
     ]
    },
    {
     "id": "3",
     "members": [
-     "ㅁ",
+     "ㄱ",
      "ㄹ",
-     "ㄱ"
+     "ㅁ"
     ]
    },
    {
@@ -21039,16 +21039,16 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
+     "ㄱ",
      "ㄹ",
-     "ㅁ",
-     "ㄱ"
+     "ㅁ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄹ",
-     "ㄱ"
+     "ㄱ",
+     "ㄹ"
     ]
    },
    {
@@ -21130,8 +21130,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄴ",
      "ㄱ",
+     "ㄴ",
      "ㄹ"
     ]
    },
@@ -21139,9 +21139,9 @@ var COMBO_DRILLS_subject4 = [
     "id": "2",
     "members": [
      "ㄱ",
-     "ㅁ",
      "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
@@ -21312,8 +21312,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -21325,9 +21325,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㅁ",
+     "ㄷ",
      "ㄹ",
-     "ㄷ"
+     "ㅁ"
     ]
    },
    {
@@ -21339,9 +21339,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㅁ",
+     "ㄱ",
      "ㄴ",
-     "ㄱ"
+     "ㅁ"
     ]
    }
   ],
@@ -21402,8 +21402,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㅁ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -21425,15 +21425,15 @@ var COMBO_DRILLS_subject4 = [
     "members": [
      "ㄱ",
      "ㄴ",
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㅁ",
-     "ㄱ"
+     "ㄱ",
+     "ㅁ"
     ]
    }
   ],
@@ -21494,18 +21494,18 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄹ",
      "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄹ",
-     "ㅁ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -21517,16 +21517,16 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㄴ",
      "ㄱ",
+     "ㄴ",
      "ㄹ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㄹ",
-     "ㄴ"
+     "ㄴ",
+     "ㄹ"
     ]
    }
   ],
@@ -21608,16 +21608,16 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㄷ",
      "ㄱ",
+     "ㄷ",
      "ㄹ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㅁ",
-     "ㄱ"
+     "ㄱ",
+     "ㅁ"
     ]
    }
   ],
@@ -21685,8 +21685,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㄷ",
      "ㄱ",
+     "ㄷ",
      "ㄹ",
      "ㅁ"
     ]
@@ -21695,24 +21695,24 @@ var COMBO_DRILLS_subject4 = [
     "id": "3",
     "members": [
      "ㄱ",
-     "ㅁ",
-     "ㄷ"
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
     "id": "4",
     "members": [
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㅁ",
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ",
+     "ㅁ"
     ]
    }
   ],
@@ -21779,9 +21779,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㄷ",
+     "ㄱ",
      "ㄴ",
-     "ㄱ"
+     "ㄷ"
     ]
    },
    {
@@ -21801,9 +21801,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㄹ",
+     "ㄱ",
      "ㄴ",
-     "ㄱ"
+     "ㄹ"
     ]
    }
   ],
@@ -21871,9 +21871,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㄹ",
      "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -21959,34 +21959,34 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㄷ",
      "ㄴ",
+     "ㄷ",
      "ㅁ"
     ]
    },
    {
     "id": "3",
     "members": [
-     "ㅁ",
+     "ㄷ",
      "ㄹ",
-     "ㄷ"
+     "ㅁ"
     ]
    },
    {
     "id": "4",
     "members": [
+     "ㄴ",
      "ㄷ",
-     "ㄹ",
-     "ㄴ"
+     "ㄹ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㅁ",
-     "ㄹ",
      "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
     ]
    }
   ],
@@ -22047,9 +22047,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ"
     ]
    },
    {
@@ -22062,9 +22062,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㅁ",
+     "ㄷ",
      "ㄹ",
-     "ㄷ"
+     "ㅁ"
     ]
    },
    {
@@ -22150,17 +22150,17 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㅁ",
-     "ㄴ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "4",
     "members": [
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -22229,9 +22229,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㅁ",
+     "ㄷ",
      "ㄹ",
-     "ㄷ"
+     "ㅁ"
     ]
    },
    {
@@ -22320,27 +22320,27 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄹ",
-     "ㄷ",
      "ㄱ",
-     "ㄴ"
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄴ",
      "ㄱ",
+     "ㄴ",
      "ㄷ"
     ]
    },
    {
     "id": "3",
     "members": [
+     "ㄴ",
      "ㄷ",
      "ㄹ",
-     "ㅁ",
-     "ㄴ"
+     "ㅁ"
     ]
    },
    {
@@ -22422,9 +22422,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㄹ",
+     "ㄱ",
      "ㄷ",
-     "ㄱ"
+     "ㄹ"
     ]
    },
    {
@@ -22442,8 +22442,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㄴ",
-     "ㄱ"
+     "ㄱ",
+     "ㄴ"
     ]
    }
   ],
@@ -22518,27 +22518,27 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㄹ",
      "ㄴ",
-     "ㅁ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "4",
     "members": [
-     "ㅁ",
-     "ㄷ",
+     "ㄱ",
      "ㄴ",
-     "ㄱ"
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
     "id": "5",
     "members": [
+     "ㄷ",
      "ㄹ",
-     "ㅁ",
-     "ㄷ"
+     "ㅁ"
     ]
    }
   ],
@@ -22624,8 +22624,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㄷ",
-     "ㄴ"
+     "ㄴ",
+     "ㄷ"
     ]
    },
    {
@@ -22699,8 +22699,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㅁ",
-     "ㄷ"
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
@@ -22714,16 +22714,16 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㅁ",
-     "ㄱ"
+     "ㄱ",
+     "ㅁ"
     ]
    },
    {
     "id": "5",
     "members": [
      "ㄱ",
-     "ㄹ",
-     "ㄴ"
+     "ㄴ",
+     "ㄹ"
     ]
    }
   ],
@@ -22793,10 +22793,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
+     "ㄱ",
      "ㄴ",
      "ㄷ",
-     "ㅁ",
-     "ㄱ"
+     "ㅁ"
     ]
    },
    {
@@ -22809,8 +22809,8 @@ var COMBO_DRILLS_subject4 = [
     "id": "4",
     "members": [
      "ㄴ",
-     "ㅁ",
-     "ㄷ"
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
@@ -22877,17 +22877,17 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄷ",
      "ㄴ",
+     "ㄷ",
      "ㄹ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄹ",
+     "ㄱ",
      "ㄷ",
-     "ㄱ"
+     "ㄹ"
     ]
    },
    {
@@ -22895,8 +22895,8 @@ var COMBO_DRILLS_subject4 = [
     "members": [
      "ㄱ",
      "ㄴ",
-     "ㅁ",
-     "ㄷ"
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
@@ -22975,8 +22975,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㅁ",
-     "ㄱ"
+     "ㄱ",
+     "ㅁ"
     ]
    },
    {
@@ -22988,18 +22988,18 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㄷ",
      "ㄱ",
+     "ㄷ",
      "ㄹ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㅁ",
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ",
+     "ㅁ"
     ]
    }
   ],
@@ -23061,8 +23061,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄷ",
-     "ㄱ"
+     "ㄱ",
+     "ㄷ"
     ]
    },
    {
@@ -23081,17 +23081,17 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㅁ",
-     "ㄹ",
      "ㄱ",
-     "ㄴ"
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㅁ",
-     "ㄷ"
+     "ㄷ",
+     "ㅁ"
     ]
    }
   ],
@@ -23154,17 +23154,17 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄴ",
      "ㄱ",
+     "ㄴ",
      "ㅁ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄹ",
-     "ㄴ",
      "ㄱ",
+     "ㄴ",
+     "ㄹ",
      "ㅁ"
     ]
    },
@@ -23183,8 +23183,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㅁ",
-     "ㄱ"
+     "ㄱ",
+     "ㅁ"
     ]
    }
   ],
@@ -23246,9 +23246,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄷ",
-     "ㄴ",
      "ㄱ",
+     "ㄴ",
+     "ㄷ",
      "ㅁ"
     ]
    },
@@ -23268,17 +23268,17 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㄹ",
-     "ㅁ",
+     "ㄱ",
      "ㄴ",
-     "ㄱ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㄷ",
-     "ㄴ"
+     "ㄴ",
+     "ㄷ"
     ]
    }
   ],
@@ -23351,18 +23351,18 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㄴ",
      "ㄱ",
-     "ㅁ",
-     "ㄷ"
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
     "id": "4",
     "members": [
+     "ㄱ",
      "ㄴ",
      "ㄷ",
-     "ㄱ",
      "ㄹ"
     ]
    },
@@ -23450,8 +23450,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㄴ",
      "ㄱ",
+     "ㄴ",
      "ㄷ",
      "ㅁ"
     ]
@@ -23522,9 +23522,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ"
     ]
    },
    {
@@ -23536,8 +23536,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㄴ",
-     "ㄱ"
+     "ㄱ",
+     "ㄴ"
     ]
    },
    {
@@ -23613,24 +23613,24 @@ var COMBO_DRILLS_subject4 = [
     "id": "1",
     "members": [
      "ㄱ",
-     "ㅁ",
      "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
     "id": "2",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㄷ",
-     "ㄱ"
+     "ㄷ"
     ]
    },
    {
     "id": "3",
     "members": [
-     "ㄷ",
      "ㄱ",
+     "ㄷ",
      "ㄹ"
     ]
    },
@@ -23643,8 +23643,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㅁ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    }
   ],
@@ -23724,8 +23724,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -23737,10 +23737,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㅁ",
-     "ㄷ",
      "ㄴ",
-     "ㄹ"
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
     ]
    }
   ],
@@ -23801,9 +23801,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄹ",
      "ㄱ",
      "ㄴ",
+     "ㄹ",
      "ㅁ"
     ]
    },
@@ -23822,8 +23822,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㄹ",
      "ㄷ",
+     "ㄹ",
      "ㅁ"
     ]
    },
@@ -23892,16 +23892,16 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㅁ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄷ",
+     "ㄱ",
      "ㄴ",
-     "ㄱ"
+     "ㄷ"
     ]
    },
    {
@@ -23913,18 +23913,18 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㄹ",
-     "ㄷ",
      "ㄴ",
+     "ㄷ",
+     "ㄹ",
      "ㅁ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㅁ",
+     "ㄷ",
      "ㄹ",
-     "ㄷ"
+     "ㅁ"
     ]
    }
   ],
@@ -23986,35 +23986,35 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄹ",
      "ㄷ",
+     "ㄹ",
      "ㅁ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㅁ",
-     "ㄴ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "3",
     "members": [
-     "ㄹ",
      "ㄱ",
-     "ㅁ",
-     "ㄴ"
+     "ㄴ",
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "4",
     "members": [
      "ㄴ",
-     "ㅁ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -24091,17 +24091,17 @@ var COMBO_DRILLS_subject4 = [
     "id": "2",
     "members": [
      "ㄱ",
-     "ㅁ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "3",
     "members": [
-     "ㄹ",
-     "ㅁ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -24180,9 +24180,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
+     "ㄱ",
      "ㄹ",
-     "ㅁ",
-     "ㄱ"
+     "ㅁ"
     ]
    },
    {
@@ -24280,17 +24280,17 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ"
     ]
    },
    {
     "id": "3",
     "members": [
+     "ㄴ",
      "ㄹ",
-     "ㅁ",
-     "ㄴ"
+     "ㅁ"
     ]
    },
    {
@@ -24364,25 +24364,25 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄴ",
      "ㄱ",
+     "ㄴ",
      "ㅁ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄴ",
-     "ㄱ"
+     "ㄱ",
+     "ㄴ"
     ]
    },
    {
     "id": "3",
     "members": [
-     "ㅁ",
      "ㄱ",
      "ㄴ",
-     "ㄷ"
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
@@ -24462,9 +24462,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㅁ",
      "ㄱ",
-     "ㄴ"
+     "ㄴ",
+     "ㅁ"
     ]
    },
    {
@@ -24543,26 +24543,26 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㅁ",
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㅁ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "3",
     "members": [
+     "ㄱ",
      "ㄴ",
-     "ㄹ",
      "ㄷ",
-     "ㄱ"
+     "ㄹ"
     ]
    },
    {
@@ -24636,10 +24636,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㅁ",
-     "ㄷ",
      "ㄴ",
-     "ㄹ"
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -24737,10 +24737,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㅁ",
-     "ㄹ",
+     "ㄴ",
      "ㄷ",
-     "ㄴ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
@@ -24830,9 +24830,9 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
+     "ㄴ",
      "ㄷ",
-     "ㄹ",
-     "ㄴ"
+     "ㄹ"
     ]
    },
    {
@@ -24845,8 +24845,8 @@ var COMBO_DRILLS_subject4 = [
     "id": "5",
     "members": [
      "ㄱ",
-     "ㅁ",
-     "ㄴ"
+     "ㄴ",
+     "ㅁ"
     ]
    }
   ],
@@ -24922,8 +24922,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㄷ",
-     "ㄱ"
+     "ㄱ",
+     "ㄷ"
     ]
    },
    {
@@ -24935,8 +24935,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "5",
     "members": [
-     "ㅁ",
-     "ㄷ"
+     "ㄷ",
+     "ㅁ"
     ]
    }
   ],
@@ -25019,8 +25019,8 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "4",
     "members": [
-     "ㄹ",
-     "ㄷ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -25037,565 +25037,9 @@ var COMBO_DRILLS_subject4 = [
    "정답판정"
   ],
   "derivedFrom": "subject4_q272",
-  "explain": "📖 교재 근거 (L1418):\n| 체온 유지 | 입모근에서는 수축과 이완을 통해 모공을 개폐하여 체온을 유지하고, 모세혈관의 혈류량을 조절하여 체온을 조절함 |\n",
+  "explain": "📖 교재 근거 (L1418):\n| 체온 유지 | 입모근에서는 수축과 이완을 통해 모공을 개폐하여 체온을 유지하고, 모세혈관의 혈류량을 조절하여 체온을 조절함 |",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "2"
- },
- {
-  "id": "understanding_combo_ee9246",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L574 (출처: 과목4 문제은행 Q273)",
-  "stem": "맞춤형화장품의 혼합 및 소분 업무를 전문적으로 수행하기 위해 국가 자격시험을 거쳐 선발된 전문 자격 소지자의 공식 명칭은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_362c9a",
-    "conceptId": "L574",
-    "text": "사용기한",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_31a051",
-    "conceptId": "L574",
-    "text": "건조",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_1c9177",
-    "conceptId": "L574",
-    "text": "맞춤형화장품 조제관리사",
-    "truth": true
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_0e8099",
-    "conceptId": "L574",
-    "text": "성장(anagen)",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_e23fa5",
-    "conceptId": "L574",
-    "text": "멜라닌형성",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄹ",
-     "ㄴ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "기한"
-  ],
-  "derivedFrom": "subject4_q273",
-  "explain": "📖 교재 근거 (교재: L574):\n| 제3조의4<br>맞춤형화장품 조제관리사 자격시험 | • 화장품과 원료 등에 대해 식품의약품안전처장이 실시하는 자격시험에 합격해야 함<br>• 거짓이나 그 밖의 부정한 방법으로 자격시험에 응시한 사람 또는 자격시험에서 부정행위를 한 사람에 대하여는 그 자격시험을 정지시키거나 합격을 무효로 함. 이 경우 자격시험이 정지되거나 합격이 무효가 된 사람은 그 처분이 있은 날부터 3년간 자격시험에 응시 불가<br>• 자격시험의 관리 및 자격증 발급 등에 관한 업무를 효과적으로 수행하기 위해 필요한 전문인력과 시설을 갖춘 기관 또는 단체를 시험운영기관으로 지정하여 시험업무를 위탁할 수 있음<br>• 자격시험의 시기, 절차, 방법, 시험과목, 자격증의 발급, 시험운영기관의 지정 등 자격시험에 필요한 사항은 총리...",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "1"
- },
- {
-  "id": "understanding_combo_356b7a",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1195 (출처: 과목4 문제은행 Q274)",
-  "stem": "피부 표피의 가시층(유극층)에 분포하며 면역 담당 세포로 외부 침입 항원을 인식하여 티세포(T-cell)에 정보를 전달하는 면역 세포의 이름은 (A) 세포이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_187d09",
-    "conceptId": "L1195",
-    "text": "오크모스",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_1e9bac",
-    "conceptId": "L1195",
-    "text": "랑게르한스",
-    "truth": true
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_f91bf2",
-    "conceptId": "L1195",
-    "text": "수평",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_b65d63",
-    "conceptId": "L1195",
-    "text": "사용 가능",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_84137e",
-    "conceptId": "L1195",
-    "text": "코르네오데스모좀",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㅁ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄹ",
-     "ㄴ",
-     "ㄱ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ",
-     "ㄱ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄷ",
-     "ㄴ",
-     "ㅁ",
-     "ㄱ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "구성비"
-  ],
-  "derivedFrom": "subject4_q274",
-  "explain": "📖 교재 근거 (교재: L1195):\n| 유극층 | 랑게르한스세포(Langerhans cell) | • 면역반응 조절에 관여하는 세포<br>• 외부 이물질인 항원을 면역담당세포 T-림프구에 전달하는 역할 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "2"
- },
- {
-  "id": "understanding_combo_53a024",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1213 (출처: 과목4 문제은행 Q275)",
-  "stem": "피부의 진피층을 구성하는 주요 결합 섬유 중 콜라겐(교원섬유) 사이를 그물망처럼 연결하여 피부에 복원력과 신축성을 주는 탄력 섬유의 한글 명칭은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_4f4828",
-    "conceptId": "L1213",
-    "text": "필라그린",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_9764de",
-    "conceptId": "L1213",
-    "text": "케라틴",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_fae6fc",
-    "conceptId": "L1213",
-    "text": "지질",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_099585",
-    "conceptId": "L1213",
-    "text": "제조번호",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_ea2e57",
-    "conceptId": "L1213",
-    "text": "엘라스틴",
-    "truth": true
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㅁ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄹ",
-     "ㄱ",
-     "ㄴ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q275",
-  "explain": "📖 교재 근거 (교재: L1213):\n| 망상층(Reticular Layer) 🎯 기출 | • 진피의 대부분을 차지하는 그물 모양(망상구조)의 결합조직<br>• 교원섬유(콜라겐) 90%, 탄력섬유(엘라스틴) 1.5~4.7%, 기질로 구성됨<br>• 모세혈관은 거의 없으며, 림프관, 한선, 피지선, 신경 등이 존재함 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "4"
- },
- {
-  "id": "understanding_combo_76c233",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1158 (출처: 과목4 문제은행 Q276)",
-  "stem": "각질층의 세포간지질은 물을 좋아하는 친수기 층과 기름을 좋아하는 친유기 층이 교대로 번갈아 층상 구조를 이루고 있는데, 이러한 다층 구조의 명칭을 (A) 구조라고 부른다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_b4a66d",
-    "conceptId": "L1158",
-    "text": "라멜라",
-    "truth": true
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_d54dbc",
-    "conceptId": "L1158",
-    "text": "교체(턴오버)",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_61d135",
-    "conceptId": "L1158",
-    "text": "유기",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_68d492",
-    "conceptId": "L1158",
-    "text": "수평",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_cae066",
-    "conceptId": "L1158",
-    "text": "PA",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄴ",
-     "ㅁ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄴ",
-     "ㅁ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q276",
-  "explain": "📖 교재 근거 (교재: L1158):\n| 각질층<br>(Horny Layer) 🎯 기출 | • 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5 정도의 약산성<br>• 피부의 가장 바깥에 위치하여 수분 손실을 막고, 피부장벽 역할을 하여 피부 보호 및 세균 침입 방어<br>• 각질과 세포간지질이 벽돌 구조인 라멜라 구조<br>• 케라틴 약 58%, 천연보습인자(NMF) 약 31%, 세포간지질 약 11%로 구성<br>• 각질층은 천연보습인자(NMF)를 통해 10~20%의 수분 함유<br>&nbsp;&nbsp;* 필라그린(Fillaggrin): 각질층 형성에 중요한 역할을 하는 단백질로, 각질층에서 단백질 분해 효소에 의해 분해되어 천연보습인자(NMF)를 구성하는 아미노산을 이룸<br>&nbsp;&nbsp;* 세라마이드: 지질막의 주성분으로 피부 표면의 손실되는 수분을 방어하고 외부로부터 유해 물질의 침투를 막음<br>&nbsp;&nbsp;* 각화주기(각질형성주기): 기저층에서 만들어진 세포가 모양이 변하며 각질층까지 올라와 일정 기간 머무르다 탈락되는 주기로, 보통 28±3일로 봄 |\n| 투명층<br>(Clear Layer) | • 2~3층의 무핵세포층으로 손바닥과 발바닥에 존재함<br>• 엘라이딘(Elaidin)이라는 반유동성 물질이 수분 침투를 방지함 |\n| 과립층<br>(Granular Layer) | • 2~5층의 편평형 또는 방추형세포층<br>• 각화 과정이 시작되는 곳으로 빛을 산란시켜 자외선을 흡수함<br>• 케라토하이알린(Keratohyalin) 과립 존재<br>• 수분저지막이 존재하여 외부 이물질 방어 및 수분 증발 방지 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "4"
- },
- {
-  "id": "understanding_combo_d10b48",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 출처: 과목4 문제은행 Q277",
-  "stem": "피지선에서 분비되는 유성 물질 중 화학 구조상 탄소 간 이중결합을 가져 산화되기 쉬운 불포화 탄화수소로 피지의 약 12%를 차지하는 특유의 유성 성분 명칭은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_96a571",
-    "conceptId": "L1256",
-    "text": "아데노신",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_ad37dd",
-    "conceptId": "L1256",
-    "text": "휴지(telogen)",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_4afbee",
-    "conceptId": "L1256",
-    "text": "anagen(성장)",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_e7e238",
-    "conceptId": "L1256",
-    "text": "지질",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_a12d4f",
-    "conceptId": "L1256",
-    "text": "스쿠알렌",
-    "truth": true
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄷ",
-     "ㄴ",
-     "ㄱ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "한도",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q277",
-  "explain": "📖 교재 근거 (L1256):\n| 스쿠알렌 | 12% |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "4"
- },
- {
-  "id": "understanding_combo_f64382",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1400 (출처: 과목4 문제은행 Q278)",
-  "stem": "모발의 일생 중 성장과 세포 분열이 멈추고 급격히 위축되어 모낭의 길이가 축소되는 시기로 모발의 약 1%를 차지하는 시기를 (A)기라고 한다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_6570fb",
-    "conceptId": "L1400",
-    "text": "퇴행(catagen)",
-    "truth": true
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_044cf4",
-    "conceptId": "L1400",
-    "text": "수분",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_c320f5",
-    "conceptId": "L1400",
-    "text": "조제",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_a333eb",
-    "conceptId": "L1400",
-    "text": "아데노신",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_0bb9ae",
-    "conceptId": "L1400",
-    "text": "UVA",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㅁ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄹ",
-     "ㄴ",
-     "ㄷ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "한도",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q278",
-  "explain": "📖 교재 근거 (교재: L1400):\n모발의 성장주기 순환: 성장기(3~6년, 모유두의 활발한 세포분열) → 퇴행기(약 3주, 모모세포 분열 감소·모유두 분리 시작) → 휴지기(3~4개월, 모낭과 모유두 완전 분리·성장기 반복)",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "5"
  },
  {
   "id": "understanding_combo_31854e",
@@ -25652,18 +25096,18 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "2",
     "members": [
-     "ㄹ",
+     "ㄱ",
      "ㄴ",
-     "ㄱ"
+     "ㄹ"
     ]
    },
    {
     "id": "3",
     "members": [
-     "ㄷ",
      "ㄱ",
-     "ㅁ",
-     "ㄴ"
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
     ]
    },
    {
@@ -25690,7539 +25134,6 @@ var COMBO_DRILLS_subject4 = [
   "explain": "📖 교재 근거 (L1392):\n| (4) 모발의 성장주기 🎯 기출 | 성장기(Anagen): 3~6년, 전체 모발의 80~90%, 모모세포의 활발한 활동 / 퇴행기(Catagen): 약 3주, 전체의 1~2%, 모모세포 분열 감소 / 휴지기(Telogen): 3~4개월, 전체의 10~15%, 모낭과 모유두 완전 분리, 탈락 시작 |",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "5"
- },
- {
-  "id": "understanding_combo_427a83",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 출처: 과목4 문제은행 Q280",
-  "stem": "맞춤형화장품 조제에 사용되는 원료의 질량이 최종 제품 200g 중 1.0%를 배합해야 할 때, 계량해야 하는 원료의 실제 질량은 (A)g이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_a1ac9b",
-    "conceptId": "L579",
-    "text": "0.01",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_e30179",
-    "conceptId": "L579",
-    "text": "0.3",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_2b7b11",
-    "conceptId": "L579",
-    "text": "70",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_15b995",
-    "conceptId": "L579",
-    "text": "0.001",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_0656e0",
-    "conceptId": "L579",
-    "text": "2",
-    "truth": true
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄹ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㅁ",
-     "ㄴ",
-     "ㄹ",
-     "ㄱ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "한도",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q280",
-  "explain": "📖 법령 근거 (L579):\n> 해설: 200g × 1.0% = 2g. 배합 비율 1.0%의 원료 질량은 200 × 0.01 = 2g이다.",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "3"
- },
- {
-  "id": "understanding_combo_6bc0f5",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1359 (출처: 과목4 문제은행 Q281)",
-  "stem": "화장품의 점성(Viscosity) 정도를 측정하기 위해 점도계를 활용하여 얻어지는 품질 지표 수치의 단위를 기호로 (A)(이)라고 한다. (센티포아즈로 읽음) — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_145e30",
-    "conceptId": "L1359",
-    "text": "관능",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_0fc959",
-    "conceptId": "L1359",
-    "text": "카보머",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_f2016a",
-    "conceptId": "L1359",
-    "text": "탈각(박리)",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_e3ded7",
-    "conceptId": "L1359",
-    "text": "헤미데스모좀",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_51b03a",
-    "conceptId": "L1359",
-    "text": "cP",
-    "truth": true
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄹ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄴ",
-     "ㄱ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄴ",
-     "ㄹ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄹ",
-     "ㄷ",
-     "ㄴ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q281",
-  "explain": "📖 교재 근거 (교재: L1359):\n한 줄 요약: 지용성(A·D·E·F·K) + 수용성(B군·C·P) — 피부 재생·항산화·보습·염증 완화 등.\n🧠 두음법: 지용성 = A·D·E·F·K, 수용성 = B·C·P",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "5"
- },
- {
-  "id": "understanding_combo_326db4",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1454 (출처: 과목4 문제은행 Q282)",
-  "stem": "피부 장벽이 손상되었을 때 피부 표피를 통해 수분이 외부로 증발하는 물리적 양을 나타내는 수치를 영문 약어 (A)(이)라고 한다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_6ca79d",
-    "conceptId": "L1454",
-    "text": "TEWL",
-    "truth": true
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_89b9c7",
-    "conceptId": "L1454",
-    "text": "약산",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_d89409",
-    "conceptId": "L1454",
-    "text": "관능",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_575bec",
-    "conceptId": "L1454",
-    "text": "필라그린",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_a27cc2",
-    "conceptId": "L1454",
-    "text": "MSDS",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㅁ",
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄹ",
-     "ㄴ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㅁ",
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q282",
-  "explain": "📖 교재 근거 (교재: L1454):\n> 용어 - 경피수분손실량(TEWL) 🎯 기출: 피부 표면에서 증발되는 수분량(TEWL: Transepidermal Water Loss)으로 건성 피부와 손상 피부는 값이 높으며, 피부 장벽기능 이상과 관련 있음",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "1"
- },
- {
-  "id": "understanding_combo_e3d9b5",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L113 (출처: 과목4 문제은행 Q283)",
-  "stem": "표피의 기저층에 위치하며 자외선 자극을 받아 멜라닌 색소(Melanin)를 형성해 피부 세포 핵을 보호하는 나뭇가지 모양의 세포 명칭은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_e0d405",
-    "conceptId": "L113",
-    "text": "수소",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_65d159",
-    "conceptId": "L113",
-    "text": "멜라닌형성세포",
-    "truth": true
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_0ebcc8",
-    "conceptId": "L113",
-    "text": "퇴행(catagen)",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_b857d7",
-    "conceptId": "L113",
-    "text": "알레르기",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_111228",
-    "conceptId": "L113",
-    "text": "카보머",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄴ",
-     "ㅁ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄷ",
-     "ㄴ",
-     "ㄱ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄴ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q283",
-  "explain": "📖 교재 근거 (교재: L113):\n| 기저층 (멜라닌형성세포) | 멜라닌형성세포(멜라노사이트, Melanocyte) 🎯 기출 | • 멜라닌을 합성하여 각질형성세포에 멜라닌이 축적된 멜라노솜(Melanosome)을 공급하는 세포<br>• 피부색과 털색을 결정함<br>• 표피의 5~25%를 차지하며, 세포 내에 확산하면 검게 보임 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "5"
- },
- {
-  "id": "understanding_combo_9727cd",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1233 (출처: 과목4 문제은행 Q284)",
-  "stem": "진피의 기질 성분 중 자기 무게의 1,000배 이상의 수분을 끌어당기는 천연 다당류 계열의 강력 보습 인자 성분 명칭은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_52f9af",
-    "conceptId": "L1233",
-    "text": "히알루론산",
-    "truth": true
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_3e9027",
-    "conceptId": "L1233",
-    "text": "계면활성제",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_2df5ba",
-    "conceptId": "L1233",
-    "text": "전성분",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_63179e",
-    "conceptId": "L1233",
-    "text": "약산",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_39e2de",
-    "conceptId": "L1233",
-    "text": "세라마이드",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㅁ",
-     "ㄹ",
-     "ㄷ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㅁ",
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄹ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄹ",
-     "ㄷ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q284",
-  "explain": "📖 교재 근거 (교재: L1233):\n> 용어 - 기질: 교원섬유와 탄력섬유를 채워주는 물질로 히알루론산, 콘드로이친 황산, 헤파린 황산염 등으로 구성된 뮤코다당체임",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "3"
- },
- {
-  "id": "understanding_combo_d4379d",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1247 (출처: 과목4 문제은행 Q285)",
-  "stem": "땀샘 중 전신에 분포하며 냄새가 없고 99%가 수분으로 이루어진 맑은 땀을 배출하는 일반적인 한선의 명칭은 (A) 한선(소한선)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_aad68c",
-    "conceptId": "L1247",
-    "text": "히알루론산",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_f91653",
-    "conceptId": "L1247",
-    "text": "메니스커스",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_5c108e",
-    "conceptId": "L1247",
-    "text": "C",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_1d1633",
-    "conceptId": "L1247",
-    "text": "에크린",
-    "truth": true
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_9fada3",
-    "conceptId": "L1247",
-    "text": "수소",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄴ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄴ",
-     "ㄹ",
-     "ㅁ",
-     "ㄱ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "한도",
-   "구성비",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q285",
-  "explain": "📖 교재 근거 (교재: L1247):\n| 한선(땀샘) - 에크린선(소한선) | • 입술, 음부, 손톱을 제외한 전신에 분포하며, 특히 손바닥, 발바닥, 이마에 많이 분포되어 있음<br>• 표피로 직접 분비하며 무색, 무취<br>• pH 3.8~5.6<br>• 체온조절 기능 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "4"
- },
- {
-  "id": "understanding_combo_8b2753",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1396 (출처: 과목4 문제은행 Q286)",
-  "stem": "모발의 성장 주기 중 세포 분열이 가장 활발하여 모발이 계속 성장하는 단계로 전체 모발의 80 ~ 90%를 차지하는 시기는 (A)기이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_e9231b",
-    "conceptId": "L1396",
-    "text": "카보머",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_2c3161",
-    "conceptId": "L1396",
-    "text": "성장(anagen)",
-    "truth": true
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_9dec73",
-    "conceptId": "L1396",
-    "text": "발(스크류)",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_8e38e2",
-    "conceptId": "L1396",
-    "text": "맞춤형화장품 조제관리사",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_321c46",
-    "conceptId": "L1396",
-    "text": "스쿠알렌",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㅁ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄴ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "기한",
-   "한도",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q286",
-  "explain": "📖 교재 근거 (교재: L1396):\n| 성장기(Anagen) | 3~6년 | • 전체 모발의 80~90%가 이 시기에 해당함<br>• 모모세포의 활발한 활동 시기<br>• 여자가 남자에 비해 성장주기가 긺 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "4"
- },
- {
-  "id": "understanding_combo_942e92",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L431 (출처: 과목4 문제은행 Q287)",
-  "stem": "조제관리사가 제품 조제 완료 후 용기에 덜어 담아 밀폐 포장하는 기계적/실무적 작업을 (A)(이)라고 한다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_707ea2",
-    "conceptId": "L431",
-    "text": "소독(세척·소독)",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_ba17a8",
-    "conceptId": "L431",
-    "text": "UVA",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_0bf6c3",
-    "conceptId": "L431",
-    "text": "소분",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_4acd56",
-    "conceptId": "L431",
-    "text": "격리",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_b0a0d7",
-    "conceptId": "L431",
-    "text": "충진",
-    "truth": true
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄹ",
-     "ㄴ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄹ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㅁ",
-     "ㄷ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q287",
-  "explain": "📖 교재 근거 (교재: L431):\nB --> C[\"충진<br/>내용물을 용기에 주입\"]",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "1"
- },
- {
-  "id": "understanding_combo_7805dd",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 출처: 과목4 문제은행 Q288",
-  "stem": "맞춤형화장품 조제 시 보존제 및 (A) 차단 성분은 농도 계산의 오류로 부작용을 일으킬 위험이 매우 커 단독 분말 형태로 임의 배합하는 것이 엄격히 차단된다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_33d0dc",
-    "conceptId": "L2178",
-    "text": "PA",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_af66df",
-    "conceptId": "L2178",
-    "text": "NMF",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_60c405",
-    "conceptId": "L2178",
-    "text": "퇴행(catagen)",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_101e0f",
-    "conceptId": "L2178",
-    "text": "지질",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_982c5b",
-    "conceptId": "L2178",
-    "text": "자외선",
-    "truth": true
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㅁ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㅁ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄹ",
-     "ㅁ",
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "한도"
-  ],
-  "derivedFrom": "subject4_q288",
-  "explain": "📖 교재 근거 (L2178):\n| 사용제한 원료 | 보존제·자외선차단제·염모제 | 별표 2 — 사용 제한 원료 (제한 필요 원료) |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "3"
- },
- {
-  "id": "understanding_combo_8695e2",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 출처: 과목4 문제은행 Q289",
-  "stem": "고객의 피부 민감성 및 건조도를 수치적으로 측정하기 위해 매장에서 표피 최외곽 각질층의 전기 전도도나 저항을 이용해 측정하는 품질 기기는 (A)측정기이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_ef033d",
-    "conceptId": "L1447",
-    "text": "C",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_4d571f",
-    "conceptId": "L1447",
-    "text": "콜레스테롤",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_719522",
-    "conceptId": "L1447",
-    "text": "메니스커스",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_8aca44",
-    "conceptId": "L1447",
-    "text": "트랜스글루타미나아제",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_c45d12",
-    "conceptId": "L1447",
-    "text": "수분",
-    "truth": true
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㅁ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄹ",
-     "ㄷ",
-     "ㄱ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄷ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q289",
-  "explain": "📖 교재 근거 (L1447):\n| 수분 🎯 기출 | • 전기전도도를 통해 피부 각질층의 수분량 측정<br>• 피부 수분 증발량인 경피수분손실량(TEWL) 측정 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "2"
- },
- {
-  "id": "understanding_combo_e700c0",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 출처: 과목4 문제은행 Q290",
-  "stem": "화장품 내용물을 덜어서 소량 분할 판매하는 행위를 화장품법상 (A)(이)라고 정의한다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_e60e59",
-    "conceptId": "q:subject4_q290",
-    "text": "섬유아",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_be3e81",
-    "conceptId": "q:subject4_q290",
-    "text": "건조",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_277cfd",
-    "conceptId": "q:subject4_q290",
-    "text": "멜라닌형성세포",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_fdd219",
-    "conceptId": "q:subject4_q290",
-    "text": "제조번호",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_1c9c83",
-    "conceptId": "q:subject4_q290",
-    "text": "소분",
-    "truth": true
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄹ",
-     "ㄱ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "정의"
-  ],
-  "derivedFrom": "subject4_q290",
-  "explain": "📖 교재 근거 (1.cosmetic-law: L30):\n② 제조 또는 수입된 화장품의 내용물을 소분(小分)한 화장품 (다만, 고형비누 등 화장품의 내용물을 단순 소분한 화장품은 제외함)",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "1"
- },
- {
-  "id": "understanding_combo_d27407",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1835 (출처: 과목4 문제은행 Q291)",
-  "stem": "조제관리사가 제품의 향취, 색상, 성상 등을 오직 자신의 감각(눈, 코, 피부 촉감 등)을 이용해 판정하는 품질 평가법을 (A) 평가라고 한다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_75a2f2",
-    "conceptId": "L1835",
-    "text": "제라니올",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_5f3583",
-    "conceptId": "L1835",
-    "text": "이황화(disulfide)",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_8bc1af",
-    "conceptId": "L1835",
-    "text": "콜레스테롤",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_d66f1e",
-    "conceptId": "L1835",
-    "text": "NMF",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_a91151",
-    "conceptId": "L1835",
-    "text": "관능",
-    "truth": true
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄹ",
-     "ㅁ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄹ",
-     "ㅁ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㅁ",
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q291",
-  "explain": "📖 교재 근거 (교재: L1835):\n> 관능평가 = 인간의 오감으로 화장품 품질(외관·색상·향·사용감)을 측정·분석·평가 후 통계 처리.",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "1"
- },
- {
-  "id": "understanding_combo_867d04",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L2660 (출처: 과목4 문제은행 Q292)",
-  "stem": "식약처 고시 주름개선 기능성 고시 성분 중 아데노신의 의무 배합 수치는 최종 완성 제품 중 (A)%이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_3a6ff2",
-    "conceptId": "L2660",
-    "text": "0.04",
-    "truth": true
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_91afb0",
-    "conceptId": "L2660",
-    "text": "0.01",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_13664d",
-    "conceptId": "L2660",
-    "text": "1~30",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_a3cce5",
-    "conceptId": "L2660",
-    "text": "0.002",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_444626",
-    "conceptId": "L2660",
-    "text": "70",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄹ",
-     "ㄴ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㅁ",
-     "ㄱ",
-     "ㄷ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄷ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "한도",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q292",
-  "explain": "📖 교재 근거 (교재: L2660):\n| 원료 관련 (기능성 오인) | 기능성화장품으로 심사(보고)하지 아니한 제품에 '식약처 미백 고시 성분 ○○ 함유' 등의 표현 | - |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "4"
- },
- {
-  "id": "understanding_combo_ae9c3b",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1684 (출처: 과목4 문제은행 Q293)",
-  "stem": "각질 세포 사이의 틈을 메워 주며 피부 장벽 세포간 지질의 핵심 역할을 수행하는 세라마이드, 콜레스테롤, 그리고 (A)은 3대 핵심 세포간지질이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_0b5537",
-    "conceptId": "L1684",
-    "text": "스핑고신",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_64303e",
-    "conceptId": "L1684",
-    "text": "NMF",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_e9a1a3",
-    "conceptId": "L1684",
-    "text": "자유지방산",
-    "truth": true
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_de55a9",
-    "conceptId": "L1684",
-    "text": "세라마이드",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_0fcd30",
-    "conceptId": "L1684",
-    "text": "케라틴",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㅁ",
-     "ㄹ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄷ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q293",
-  "explain": "📖 교재 근거 (교재: L1684):\n| 세포간지질 | 세라마이드 50% 이상, 콜레스테롤, 지방산 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "3"
- },
- {
-  "id": "understanding_combo_4cb994",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L3903 (출처: 과목4 문제은행 Q294)",
-  "stem": "자외선 차단 성분 중 백탁이 없고 자외선을 흡수하여 열에너지로 소실시키는 유기 자외선 차단 필터 성분을 (A) 자외선 차단제라고 부른다. (물리적 차단제와 구분) — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_8d0f32",
-    "conceptId": "L3903",
-    "text": "에크린",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_507318",
-    "conceptId": "L3903",
-    "text": "주기(턴오버)",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_31c210",
-    "conceptId": "L3903",
-    "text": "유기",
-    "truth": true
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_0006db",
-    "conceptId": "L3903",
-    "text": "오크모스",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_2d5f4a",
-    "conceptId": "L3903",
-    "text": "폐기",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄷ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄷ",
-     "ㄴ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㅁ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄷ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "기한"
-  ],
-  "derivedFrom": "subject4_q294",
-  "explain": "📖 교재 근거 (교재: L3903):\n| 튜브 | 튜브 제품 | 폼클렌징·자외선 차단제 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "5"
- },
- {
-  "id": "understanding_combo_d23930",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L3389 (출처: 과목4 문제은행 Q295)",
-  "stem": "조제관리사가 정밀 계량 시 약 스푼이나 약 주걱으로 미량의 고체 가루 원료를 저울 위 시약지에 덜어내는 행위를 (A)(이)라고 한다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_914166",
-    "conceptId": "L3389",
-    "text": "약산",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_e16bf9",
-    "conceptId": "L3389",
-    "text": "칭량",
-    "truth": true
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_cfcbcc",
-    "conceptId": "L3389",
-    "text": "퇴행(catagen)",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_f0443b",
-    "conceptId": "L3389",
-    "text": "관능",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_85b2ce",
-    "conceptId": "L3389",
-    "text": "유기",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄹ",
-     "ㄷ",
-     "ㅁ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㅁ",
-     "ㄹ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄴ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q295",
-  "explain": "📖 교재 근거 (교재: L3389):\n> 칭량(전자저울·메스실린더) + 혼합(호모게나이저·디스퍼·오버헤드스터러) + 소분(스패츌러·디스펜서·피펫) + 측정(pH미터·점도계·경도계) + 살균(자외선 살균기).",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "5"
- },
- {
-  "id": "understanding_combo_74432b",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L2858 (출처: 과목4 문제은행 Q296)",
-  "stem": "맞춤형화장품의 1차 용기 포장 시 화장품 명칭, 상호, 제조번호와 함께 의무 기재해야 하는 사용 유효 기간 표시 사항은 (A) 또는 개봉 후 사용 기간이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_9e358c",
-    "conceptId": "L2858",
-    "text": "케라틴",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_f09c7d",
-    "conceptId": "L2858",
-    "text": "라멜라",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_024f3e",
-    "conceptId": "L2858",
-    "text": "격리",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_6e6116",
-    "conceptId": "L2858",
-    "text": "PA",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_a0afc0",
-    "conceptId": "L2858",
-    "text": "사용기한",
-    "truth": true
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄹ",
-     "ㄷ",
-     "ㄴ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "기한",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q296",
-  "explain": "📖 교재 근거 (교재: L2858):\n> 해설: 1차 포장 필수 기재사항은 화장품의 명칭, 영업자의 상호, 제조번호(식별번호), 사용기한 또는 개봉 후 사용기간이다. 전성분 표시는 2차 포장(외부포장)에 기재해야 한다.",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "3"
- },
- {
-  "id": "understanding_combo_86b3f7",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L102 (출처: 과목4 문제은행 Q297)",
-  "stem": "식약처 미백 기능성 고시 성분 중 함량 한도가 2.0% ~ 5.0%인 대표적인 비타민 B3 유도체 성분명은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_435223",
-    "conceptId": "L102",
-    "text": "교체(턴오버)",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_b7b513",
-    "conceptId": "L102",
-    "text": "이온",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_2859a3",
-    "conceptId": "L102",
-    "text": "나이아신아마이드",
-    "truth": true
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_9b2eb5",
-    "conceptId": "L102",
-    "text": "각질",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_7a8181",
-    "conceptId": "L102",
-    "text": "등전",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄹ",
-     "ㄴ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㅁ",
-     "ㄱ",
-     "ㄹ",
-     "ㄷ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "한도",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q297",
-  "explain": "📖 교재 근거 (교재: L102):\n| 미백 – 나이아신아마이드 | 2.0~5.0% |\n| 미백 – 알부틴 | 2.0~5.0% |\n| 미백 – 유용성 감초 추출물 | 0.05% |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "2"
- },
- {
-  "id": "understanding_combo_ded1a5",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L588 (출처: 과목4 문제은행 Q298)",
-  "stem": "맞춤형화장품판매업소의 조제실 내 세균 번식을 억제하고 청결을 유지하기 위해 사용하는 가장 보편적인 알코올 소독제 농도는 (A)%이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_74fbea",
-    "conceptId": "L588",
-    "text": "0.01",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_c1afc9",
-    "conceptId": "L588",
-    "text": "1~30",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_366972",
-    "conceptId": "L588",
-    "text": "0.002",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_4ff1f3",
-    "conceptId": "L588",
-    "text": "0.001",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_f50ea0",
-    "conceptId": "L588",
-    "text": "70",
-    "truth": true
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄷ",
-     "ㄴ",
-     "ㄱ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "한도",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q298",
-  "explain": "📖 교재 근거 (교재: L588):\n| 제8조의3<br>맞춤형화장품 판매업의 변경신고 | • 맞춤형화장품판매업자가 다음의 사항을 변경하는 경우에는 변경신고를 해야 함<br>&nbsp;&nbsp;- 맞춤형화장품판매업자를 변경하는 경우<br>&nbsp;&nbsp;- 맞춤형화장품판매업소의 상호 또는 소재지를 변경하는 경우<br>&nbsp;&nbsp;- 맞춤형화장품조제관리사를 변경하는 경우<br>• 신고기한: 변경이 있는 날부터 30일 이내에 관할 지방식품의약품안전청장에게 신고<br>• 행정기관 처리기한: 변경신고서(전자문서 포함) 접수 후 10일 이내 처리 (단, 조제관리사 변경신고는 7일 이내 처리) |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "3"
- },
- {
-  "id": "understanding_combo_b2ab9a",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1196 (출처: 과목4 문제은행 Q299)",
-  "stem": "각질 형성 세포가 기저층에서 탄생하여 최종 각질로 탈락하기까지의 각질화 과정을 세포 (A) 주기라고 칭한다. (약 28일 소요) — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_df1b61",
-    "conceptId": "L1196",
-    "text": "TEWL",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_95bf2d",
-    "conceptId": "L1196",
-    "text": "교체(턴오버)",
-    "truth": true
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_21d77a",
-    "conceptId": "L1196",
-    "text": "기저",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_c5d4d9",
-    "conceptId": "L1196",
-    "text": "전성분",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_4dfb38",
-    "conceptId": "L1196",
-    "text": "케라틴",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄹ",
-     "ㅁ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㅁ",
-     "ㄴ",
-     "ㄹ",
-     "ㄱ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "기한",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q299",
-  "explain": "📖 교재 근거 (교재: L1196):\n| 기저층 (각질형성세포) | 각질형성세포(케라티노사이트, Keratinocyte) | • 각질층을 구성하는 각질세포를 만드는 세포<br>• 각화주기: 기저층에서 세포가 만들어지고 각질층까지 이동하여 서서히 떨어지는 과정으로 28일 정도 주기로 교체됨 |\n| 기저층 (멜라닌형성세포) | 멜라닌형성세포(멜라노사이트, Melanocyte) 🎯 기출 | • 멜라닌을 합성하여 각질형성세포에 멜라닌이 축적된 멜라노솜(Melanosome)을 공급하는 세포<br>• 피부색과 털색을 결정함<br>• 표피의 10~20%를 차지하며, 세포 내에 확산하면 검게 보임 |\n| 기저층 (머켈세포) | 머켈세포(Merkel cell) 🎯 기출 | • 신경말단과 연결되어 촉각을 감지하는 세포<br>• 손가락 끝, 입술처럼 민감한 피부에 다량 존재함 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "3"
- },
- {
-  "id": "understanding_combo_ec6a29",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L137 (출처: 과목4 문제은행 Q300)",
-  "stem": "피부 진피 속에서 콜라겐과 엘라스틴, 히알루론산을 직접 합성해 내는 능력을 가진 진피 핵심 세포의 한글 명칭은 (A)세포이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_15359f",
-    "conceptId": "L137",
-    "text": "섬유아",
-    "truth": true
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_c72056",
-    "conceptId": "L137",
-    "text": "퇴행(catagen)",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_cda927",
-    "conceptId": "L137",
-    "text": "콜레스테롤",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_a69ca8",
-    "conceptId": "L137",
-    "text": "TEWL",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_844858",
-    "conceptId": "L137",
-    "text": "분동(추)",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄴ",
-     "ㄹ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q300",
-  "explain": "📖 교재 근거 (교재: L137):\n| 섬유아세포 | 결합조직세포로 세포외기질인 콜라겐과 엘라스틴 생성 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "3"
- },
- {
-  "id": "understanding_combo_656370",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1158 (출처: 과목4 문제은행 Q301)",
-  "stem": "모발의 구성 성분 중 대부분(80 ~ 90%)을 차지하는 질기고 단단한 불용성 단백질의 이름은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_d56842",
-    "conceptId": "L1158",
-    "text": "케라틴",
-    "truth": true
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_2ab396",
-    "conceptId": "L1158",
-    "text": "메니스커스",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_82f31a",
-    "conceptId": "L1158",
-    "text": "방풍실(드래프트실드)",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_05e86a",
-    "conceptId": "L1158",
-    "text": "아데노신",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_9c2e6c",
-    "conceptId": "L1158",
-    "text": "NMF",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㅁ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "한도",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q301",
-  "explain": "📖 교재 근거 (교재: L1158):\n| 망상층(Reticular Layer) 🎯 기출 | • 진피의 대부분을 차지하는 그물 모양(망상구조)의 결합조직<br>• 교원섬유(콜라겐) 90%, 탄력섬유(엘라스틴) 1.5~4.7%, 기질로 구성됨<br>• 모세혈관은 거의 없으며, 림프관, 한선, 피지선, 신경 등이 존재함 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "5"
- },
- {
-  "id": "understanding_combo_06baa9",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1636 (출처: 과목4 문제은행 Q302)",
-  "stem": "모발의 일생 중 세포 분열이 완전히 멈추고 서서히 빠지기를 대기하는 휴식 단계로 모발의 약 10 ~ 15%를 차지하는 성장 주기의 이름은 (A)기이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_e85287",
-    "conceptId": "L1636",
-    "text": "기저",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_67d7e1",
-    "conceptId": "L1636",
-    "text": "사용기한",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_158a90",
-    "conceptId": "L1636",
-    "text": "사용 가능",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_1390b7",
-    "conceptId": "L1636",
-    "text": "전성분",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_16429b",
-    "conceptId": "L1636",
-    "text": "휴지(telogen)",
-    "truth": true
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㅁ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㅁ",
-     "ㄱ",
-     "ㄴ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "기한",
-   "한도",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q302",
-  "explain": "📖 교재 근거 (교재: L1636):\n> 해설: 성장기는 3~6년 지속되며 전체 모발의 80~90%가 해당한다. 퇴행기는 약 3주(1~2%), 휴지기는 3~4개월(10~15%)이다. 여성이 남성보다 성장주기가 길다.",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "4"
- },
- {
-  "id": "understanding_combo_60ad60",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L3103 (출처: 과목4 문제은행 Q303)",
-  "stem": "알레르기 유발 성분 25종은 사용 후 씻어내는 제품에 (A)% 초과 함유 시 전성분에 명칭을 표시해야 한다. (수치 기준) — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_e72a36",
-    "conceptId": "L3103",
-    "text": "0.01",
-    "truth": true
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_0343b0",
-    "conceptId": "L3103",
-    "text": "0.3",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_55bed0",
-    "conceptId": "L3103",
-    "text": "0.001",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_f0c047",
-    "conceptId": "L3103",
-    "text": "0.04",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_ce9856",
-    "conceptId": "L3103",
-    "text": "0.1",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㅁ",
-     "ㄱ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄹ",
-     "ㄷ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄷ",
-     "ㄴ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "한도",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q303",
-  "explain": "📖 교재 근거 (교재: L3103):\n| 향료 | • 향을 내기 위해 사용<br>• 알레르기 유발 25종 중 씻어내는 제품은 0.01%, 씻어내지 않는 제품은 0.001% 초과 시 해당 성분 명칭 기재 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "1"
- },
- {
-  "id": "understanding_combo_25b6b2",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 출처: 과목4 문제은행 Q304",
-  "stem": "파마약 1제(환원제)에 의해 단절되는 모발 내 두 황(S) 원자 간의 화학 결합 명칭은 (A) 결합이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_0e4994",
-    "conceptId": "L11650",
-    "text": "에크린",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_47c54a",
-    "conceptId": "L11650",
-    "text": "이황화(disulfide)",
-    "truth": true
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_b05153",
-    "conceptId": "L11650",
-    "text": "멜라닌형성",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_981b13",
-    "conceptId": "L11650",
-    "text": "UVB",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_cef265",
-    "conceptId": "L11650",
-    "text": "멜라닌형성세포",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q304",
-  "explain": "📖 교재 근거 (KFCC_별표10_일반시험법: L11650):\n이황화탄소(Carbon Disulfide)",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "4"
- },
- {
-  "id": "understanding_combo_19e1ae",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1195 (출처: 과목4 문제은행 Q305)",
-  "stem": "표피의 유극층에 상주하며 외부 유입 항원을 림프구에 보고하여 면역 반응을 촉발하는 성상 세포는 (A) 세포이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_ba009c",
-    "conceptId": "L1195",
-    "text": "라멜라바디(층판소기관)",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_3e647c",
-    "conceptId": "L1195",
-    "text": "랑게르한스",
-    "truth": true
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_e973a7",
-    "conceptId": "L1195",
-    "text": "엘라스틴",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_262ec0",
-    "conceptId": "L1195",
-    "text": "초임계",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_072ebb",
-    "conceptId": "L1195",
-    "text": "자유지방산",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄷ",
-     "ㅁ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄹ",
-     "ㄴ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "절차"
-  ],
-  "derivedFrom": "subject4_q305",
-  "explain": "📖 교재 근거 (교재: L1195):\n| 유극층 | 랑게르한스세포(Langerhans cell) | • 면역반응 조절에 관여하는 세포<br>• 외부 이물질인 항원을 면역담당세포 T-림프구에 전달하는 역할 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "2"
- },
- {
-  "id": "understanding_combo_f708a7",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L2094 (출처: 과목4 문제은행 Q306)",
-  "stem": "전자저울의 영점을 초기화하고 눈금 오차를 정기 점검하는 기기 관리 행위를 (A)(이)라고 한다. (영문 Calibration) — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_6937fa",
-    "conceptId": "L2094",
-    "text": "케라틴",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_bd8a08",
-    "conceptId": "L2094",
-    "text": "교정(Calibration)",
-    "truth": true
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_8ee031",
-    "conceptId": "L2094",
-    "text": "메스실린더(또는 피펫)",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_a97d0c",
-    "conceptId": "L2094",
-    "text": "수평",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_54a799",
-    "conceptId": "L2094",
-    "text": "관능",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㅁ",
-     "ㄱ",
-     "ㄹ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q306",
-  "explain": "📖 교재 근거 (교재: L2094):\n| ③ 품질관리기준서 | 시험·검사 품질 관리 | 검체 채취 방법·주의사항·오염방지, 시험시설·기구 점검(교정·성능), 안정성시험, 검체 관리, 표준품·시약 관리, 위탁시험 검체 송부·판정, 기타 필요 사항 |\n| ④ 제조위생관리기준서 🎯 기출 | 작업 환경 위생 관리 | 작업원 건강관리·상태 파악·조치, 수세·소독 방법, 작업복장 규격·세탁·착용, 작업실 청소·소독·주기, 청소 상태 평가, 제조시설 세척·평가, 기타 필요 사항 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "4"
- },
- {
-  "id": "understanding_combo_b47506",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L2060 (출처: 과목4 문제은행 Q307)",
-  "stem": "pH 측정기의 교정을 위해 표준 고정 수치로 제작된 수용액을 pH (A) 용액이라고 부른다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_ee690f",
-    "conceptId": "L2060",
-    "text": "코르네오데스모좀",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_22b9a7",
-    "conceptId": "L2060",
-    "text": "표준",
-    "truth": true
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_8f18aa",
-    "conceptId": "L2060",
-    "text": "격리",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_8b1e11",
-    "conceptId": "L2060",
-    "text": "멜라닌형성세포",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_7230ba",
-    "conceptId": "L2060",
-    "text": "헤미데스모좀",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄹ",
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q307",
-  "explain": "📖 교재 근거 (교재: L2060):\n| 관능평가 순서 | 표준품 선정 → 검체 채취·기준 마련 → 시험 → 적합 판정·기록 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "1"
- },
- {
-  "id": "understanding_combo_fc7b34",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L610 (출처: 과목4 문제은행 Q308)",
-  "stem": "배합 한도가 0.05%인 기능성 원료 B를 벌크 200g에 첨가하려 할 때, 최대로 처방 가능한 원료 B의 양은 (A)g이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_d6cc00",
-    "conceptId": "L610",
-    "text": "0.002",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_4d4055",
-    "conceptId": "L610",
-    "text": "0.04",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_bc8bf4",
-    "conceptId": "L610",
-    "text": "0.1",
-    "truth": true
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_50ef2c",
-    "conceptId": "L610",
-    "text": "70",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_ef98cf",
-    "conceptId": "L610",
-    "text": "1~30",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㄱ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄴ",
-     "ㅁ",
-     "ㄷ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "한도",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q308",
-  "explain": "📖 교재 근거 (교재: L610):\n| 제5조<br>맞춤형화장품에 사용 가능한 원료 | 아래의 원료를 제외한 원료는 맞춤형화장품에 사용 가능<br>• 화장품에 사용할 수 없는 원료<br>• 화장품에 사용상의 제한이 필요한 원료<br>• 사전심사를 받지 않았거나 보고서를 제출하지 않은 기능성화장품 고시 원료 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "1"
- },
- {
-  "id": "understanding_combo_e01828",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 출처: 과목4 문제은행 Q309",
-  "stem": "천연보습인자(NMF)의 모체가 되는 표피 과립층 단백질은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_48cdfb",
-    "conceptId": "L478",
-    "text": "퇴행(catagen)",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_e298d0",
-    "conceptId": "L478",
-    "text": "큐티클",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_ede484",
-    "conceptId": "L478",
-    "text": "각질",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_1967c7",
-    "conceptId": "L478",
-    "text": "필라그린",
-    "truth": true
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_f38e52",
-    "conceptId": "L478",
-    "text": "스쿠알렌",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄷ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㅁ",
-     "ㄷ",
-     "ㄹ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄹ",
-     "ㅁ",
-     "ㄴ",
-     "ㄱ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q309",
-  "explain": "📖 교재 근거 (2.physiology: L478):\n| 필라그린 | 각질층 형성 단백질, 분해되어 NMF 아미노산 생성 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "1"
- },
- {
-  "id": "understanding_combo_3064f1",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1720 (출처: 과목4 문제은행 Q310)",
-  "stem": "모발의 단백질 중 약 80~90%를 차지하는 질긴 섬유상 단백질은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_48d2e7",
-    "conceptId": "L1720",
-    "text": "멜라닌형성",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_28e553",
-    "conceptId": "L1720",
-    "text": "기저",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_3c2058",
-    "conceptId": "L1720",
-    "text": "케라틴",
-    "truth": true
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_896383",
-    "conceptId": "L1720",
-    "text": "탈각(박리)",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_fe84d4",
-    "conceptId": "L1720",
-    "text": "스핑고신",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄷ",
-     "ㄴ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄷ",
-     "ㄴ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㅁ",
-     "ㄷ",
-     "ㄴ",
-     "ㄱ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "한도",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q310",
-  "explain": "📖 교재 근거 (교재: L1720):\n| 모피질 | 80~90%, 멜라닌 함유, 친수성, 케라틴 단백질 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "4"
- },
- {
-  "id": "understanding_combo_547207",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L2557 (출처: 과목4 문제은행 Q311)",
-  "stem": "알레르기 유발 성분 리스트 중 장미 등 꽃향기를 구성하며 전성분 표시 의무가 있는 성분명은 (A)이다. (Linalool 등 다수 중 표준 고시명 중 하나) — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_83ddd3",
-    "conceptId": "L2557",
-    "text": "제라니올",
-    "truth": true
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_0b9de5",
-    "conceptId": "L2557",
-    "text": "리날",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_32fce9",
-    "conceptId": "L2557",
-    "text": "히알루론산",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_bdbb82",
-    "conceptId": "L2557",
-    "text": "충진",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_77fa0f",
-    "conceptId": "L2557",
-    "text": "알레르기",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄷ",
-     "ㅁ",
-     "ㄴ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q311",
-  "explain": "📖 교재 근거 (교재: L2557):\n| 제라니올 | 쿠마린 |\n| 아니스알코올 | 파네솔 |\n| 신나밀알코올 |  |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "2"
- },
- {
-  "id": "understanding_combo_f1c9a2",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 출처: 과목4 문제은행 Q312",
-  "stem": "피펫으로 액체를 취할 때 액체의 양을 읽는 굴곡진 계면 부위를 (A)(이)라고 부른다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_5fa3f9",
-    "conceptId": "L1903",
-    "text": "멜라닌형성세포",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_ba6077",
-    "conceptId": "L1903",
-    "text": "트랜스글루타미나아제",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_c30a6a",
-    "conceptId": "L1903",
-    "text": "메니스커스",
-    "truth": true
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_07f576",
-    "conceptId": "L1903",
-    "text": "분동(추)",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_4c7e2c",
-    "conceptId": "L1903",
-    "text": "자유지방산",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㅁ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄹ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄹ",
-     "ㄴ",
-     "ㅁ",
-     "ㄱ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q312",
-  "explain": "📖 교재 근거 (KFCC_별표10_일반시험법: L1903):\n규정온도에서비중부액계가정지했을때메니스커스의상연에서비중의눈금",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "4"
- },
- {
-  "id": "understanding_combo_3cbd3d",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L113 (출처: 과목4 문제은행 Q313)",
-  "stem": "표피의 기저층에 위치하며 자외선 B에 반응하여 어두운 흑갈색 색소를 분비하는 세포는 (A) 세포이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_1ea119",
-    "conceptId": "L113",
-    "text": "엘라스틴",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_7b88bd",
-    "conceptId": "L113",
-    "text": "지질",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_9e716f",
-    "conceptId": "L113",
-    "text": "제라니",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_ce9b11",
-    "conceptId": "L113",
-    "text": "폐기",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_b7c347",
-    "conceptId": "L113",
-    "text": "멜라닌형성",
-    "truth": true
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄷ",
-     "ㅁ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㅁ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄴ",
-     "ㅁ",
-     "ㄱ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q313",
-  "explain": "📖 교재 근거 (교재: L113):\n| 기저층 (멜라닌형성세포) | 멜라닌형성세포(멜라노사이트, Melanocyte) 🎯 기출 | • 멜라닌을 합성하여 각질형성세포에 멜라닌이 축적된 멜라노솜(Melanosome)을 공급하는 세포<br>• 피부색과 털색을 결정함<br>• 표피의 5~25%를 차지하며, 세포 내에 확산하면 검게 보임 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "2"
- },
- {
-  "id": "understanding_combo_0c785b",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 출처: 과목4 문제은행 Q314",
-  "stem": "모발 단백질 중 아미노산 시스테인이 보유한 시스틴 결합의 모태가 되는 황화수소 작용기는 (A)기이다. (영문 Thiol) — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_9560b9",
-    "conceptId": "L1346",
-    "text": "티올(SH)",
-    "truth": true
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_80ca84",
-    "conceptId": "L1346",
-    "text": "부식(방식)",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_753b30",
-    "conceptId": "L1346",
-    "text": "오크모스",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_234ae0",
-    "conceptId": "L1346",
-    "text": "교체(턴오버)",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_f542dc",
-    "conceptId": "L1346",
-    "text": "티로시나아제",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ",
-     "ㄱ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q314",
-  "explain": "📖 교재 근거 (L1346):\n| 에피큐티클(Epicuticle) | • 가장 바깥쪽의 두께 100Å 정도의 얇은 막<br>• 아미노산 중 시스틴의 함유량이 많음<br>• 각질 용해성 또는 단백질 용해성의 약품(친유성, 알칼리 용액)에 대한 저항성이 가장 강한 층<br>• 수증기는 통하지만 물은 통과하지 못하는 구조로 딱딱하고 부서지기 쉽기 때문에 물리적인 자극에 약함 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "1"
- },
- {
-  "id": "understanding_combo_141052",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L2946 (출처: 과목4 문제은행 Q315)",
-  "stem": "시트러스 향 성분 중 알레르기 유발 유효 물질로 고시된 대표적인 휘발성 화합물은 (A)이다. (Limonene) — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_c57470",
-    "conceptId": "L2946",
-    "text": "제라니올",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_02f7ac",
-    "conceptId": "L2946",
-    "text": "리모넨",
-    "truth": true
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_4644c8",
-    "conceptId": "L2946",
-    "text": "에크린",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_3a757e",
-    "conceptId": "L2946",
-    "text": "메니스커스",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_cb5e94",
-    "conceptId": "L2946",
-    "text": "KCl",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄹ",
-     "ㄱ",
-     "ㅁ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄹ",
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㄱ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q315",
-  "explain": "📖 교재 근거 (교재: L2946):\n| 알레르기 유발 성분 | 착향제 중 25종 의무 표시 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "4"
- },
- {
-  "id": "understanding_combo_e7194c",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L863 (출처: 과목4 문제은행 Q316)",
-  "stem": "pH 측정 시 용액의 온도 편차에 의해 발생하는 오차를 전극이 스스로 연산 보정하는 시스템 명칭은 자동 (A) 보상이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_c3becb",
-    "conceptId": "L863",
-    "text": "NMF",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_021088",
-    "conceptId": "L863",
-    "text": "라멜라",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_c7fa34",
-    "conceptId": "L863",
-    "text": "기저",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_494f76",
-    "conceptId": "L863",
-    "text": "초임계",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_11f4df",
-    "conceptId": "L863",
-    "text": "온도",
-    "truth": true
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄷ",
-     "ㄴ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㅁ",
-     "ㄹ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㅁ",
-     "ㄹ",
-     "ㄷ",
-     "ㄴ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q316",
-  "explain": "📖 교재 근거 (교재: L863):\n| 가속시험 | 단기 안정성 예측 | 장기보존 온도+15℃ 이상, 3로트 이상 | 6개월 이상(조정 가능) | 최소 3번 측정 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "1"
- },
- {
-  "id": "understanding_combo_bda920",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L3389 (출처: 과목4 문제은행 Q317)",
-  "stem": "저울 칭량 전 수평 확인을 위해 기포 수평계의 공기 방울이 중앙 원에 오도록 조절하는 발 부품은 수평 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_04d000",
-    "conceptId": "L3389",
-    "text": "PA",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_f50749",
-    "conceptId": "L3389",
-    "text": "발(스크류)",
-    "truth": true
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_70a196",
-    "conceptId": "L3389",
-    "text": "지질",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_ae37f3",
-    "conceptId": "L3389",
-    "text": "히알루론산",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_32ac2c",
-    "conceptId": "L3389",
-    "text": "분동(추)",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㅁ",
-     "ㄹ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q317",
-  "explain": "📖 교재 근거 (교재: L3389):\n> 칭량(전자저울·메스실린더) + 혼합(호모게나이저·디스퍼·오버헤드스터러) + 소분(스패츌러·디스펜서·피펫) + 측정(pH미터·점도계·경도계) + 살균(자외선 살균기).",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "1"
- },
- {
-  "id": "understanding_combo_560c39",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L610 (출처: 과목4 문제은행 Q318)",
-  "stem": "배합 제한 농도가 0.1%인 원료 C를 최종 완제품 300g 내에 혼합하고자 할 때 넣어야 하는 원료 C의 한계 함량은 (A)g이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_0781b5",
-    "conceptId": "L610",
-    "text": "2",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_7768ec",
-    "conceptId": "L610",
-    "text": "0.01",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_db19c5",
-    "conceptId": "L610",
-    "text": "0.001",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_b7b672",
-    "conceptId": "L610",
-    "text": "0.3",
-    "truth": true
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_8fc288",
-    "conceptId": "L610",
-    "text": "0.002",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄷ",
-     "ㅁ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄹ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "한도",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q318",
-  "explain": "📖 교재 근거 (교재: L610):\n| 제5조<br>맞춤형화장품에 사용 가능한 원료 | 아래의 원료를 제외한 원료는 맞춤형화장품에 사용 가능<br>• 화장품에 사용할 수 없는 원료<br>• 화장품에 사용상의 제한이 필요한 원료<br>• 사전심사를 받지 않았거나 보고서를 제출하지 않은 기능성화장품 고시 원료 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "5"
- },
- {
-  "id": "understanding_combo_a90a51",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L31 (출처: 과목4 문제은행 Q319)",
-  "stem": "표피의 각질형성세포가 분열하여 기저층에서 각질층까지 올라와 탈락하기까지 소요되는 약 28일의 주기명을 각화 (A)(이)라고 한다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_af473d",
-    "conceptId": "q:subject4_q319",
-    "text": "주기(턴오버)",
-    "truth": true
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_db9993",
-    "conceptId": "q:subject4_q319",
-    "text": "케라틴",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_4d0498",
-    "conceptId": "q:subject4_q319",
-    "text": "기저",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_141185",
-    "conceptId": "q:subject4_q319",
-    "text": "멜라닌형성세포",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_c6f521",
-    "conceptId": "q:subject4_q319",
-    "text": "등전",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄹ",
-     "ㄱ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄹ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "기한",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q319",
-  "explain": "📖 교재 근거 (교재: L31):\n| 피부·모발 생리 | 피부 5층 / 표피 4대 세포 / 모발 3층·성장주기 |\n| → 실무 | 관능평가 · 제품상담 · 제품안내 → 혼합·소분 → 충진·포장 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "3"
- },
- {
-  "id": "understanding_combo_701b19",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1357 (출처: 과목4 문제은행 Q320)",
-  "stem": "아미노산의 전기 음성 작용기와 양성 작용기 간의 정전기적 이온 결합이 극대화되는 모발 고유의 pH 지점을 모발 (A)점이라고 부른다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_37c2f8",
-    "conceptId": "L1357",
-    "text": "각질",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_a835ed",
-    "conceptId": "L1357",
-    "text": "등전",
-    "truth": true
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_b64d51",
-    "conceptId": "L1357",
-    "text": "방풍실(드래프트실드)",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_55c4af",
-    "conceptId": "L1357",
-    "text": "성장(anagen)",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_957a62",
-    "conceptId": "L1357",
-    "text": "망상",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄹ",
-     "ㅁ",
-     "ㄴ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q320",
-  "explain": "📖 교재 근거 (교재: L1357):\n- 퍼머넌트·염색 시술 시 모피질의 결합이 약해지면 모발 손상이 발생함",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "4"
- },
- {
-  "id": "understanding_combo_8a2a36",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L2946 (출처: 과목4 문제은행 Q321)",
-  "stem": "우디 향 조합 오일에 포함되며 25종 알레르기 유발 물질로 등재된 이끼 유래 추출물 성분명은 (A)추출물이다. (Oakmoss) — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_7b0282",
-    "conceptId": "L2946",
-    "text": "라멜라바디(층판소기관)",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_5cba9a",
-    "conceptId": "L2946",
-    "text": "코르네오데스모좀",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_e92273",
-    "conceptId": "L2946",
-    "text": "페녹시에탄올",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_12a320",
-    "conceptId": "L2946",
-    "text": "교체(턴오버)",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_396da2",
-    "conceptId": "L2946",
-    "text": "오크모스",
-    "truth": true
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㅁ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "구성비",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q321",
-  "explain": "📖 교재 근거 (교재: L2946):\n| 알레르기 유발 성분 | 착향제 중 25종 의무 표시 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "3"
- },
- {
-  "id": "understanding_combo_38b41c",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L2641 (출처: 과목4 문제은행 Q322)",
-  "stem": "에탄올 소독액 희석 제조 시, 소독 효능이 가장 뛰어난 농도는 부피 대비 약 (A)% 수용액이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_5bc81f",
-    "conceptId": "L2641",
-    "text": "0.3",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_4fa186",
-    "conceptId": "L2641",
-    "text": "70",
-    "truth": true
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_b47edd",
-    "conceptId": "L2641",
-    "text": "1~30",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_bcffcb",
-    "conceptId": "L2641",
-    "text": "0.04",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_7ce20a",
-    "conceptId": "L2641",
-    "text": "28",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄹ",
-     "ㄷ",
-     "ㄴ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㅁ",
-     "ㄱ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "한도",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q322",
-  "explain": "📖 교재 근거 (교재: L2641):\n| 질병을 진단·치료·경감·처치 또는 예방, 의학적 효능·효과 관련 | 아토피, 심신피로 회복, 노인소양증, 항염·진통, 이뇨, 항진균·항바이러스, 통증 경감, 찰과상·화상 치료·회복, 관절·림프선 등 피부 이외 신체 특정 부위에 사용하여 의학적 효능·효과 표방, 모낭충, 건선, 살균·소독, 해독, 항암, 근육 이완, 면역 강화, 항알레르기, 기저귀 발진 | - |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "3"
- },
- {
-  "id": "understanding_combo_69b5d2",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1703 (출처: 과목4 문제은행 Q323)",
-  "stem": "진피 속에서 수분을 수천 배 결합하여 볼륨감을 유지하는 다당류 수성 물질은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_a331c7",
-    "conceptId": "L1703",
-    "text": "제조번호",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_a1b3cb",
-    "conceptId": "L1703",
-    "text": "히알루론산",
-    "truth": true
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_322fbf",
-    "conceptId": "L1703",
-    "text": "메스실린더(또는 피펫)",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_9fc81d",
-    "conceptId": "L1703",
-    "text": "랑게르한스",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_f8e04c",
-    "conceptId": "L1703",
-    "text": "소독(세척·소독)",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄴ",
-     "ㅁ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄹ",
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q323",
-  "explain": "📖 교재 근거 (교재: L1703):\n| 기질 | 히알루론산, 콘드로이친 황산, 헤파린 황산염 (뮤코다당체) |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "1"
- },
- {
-  "id": "understanding_combo_377123",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 출처: 과목4 문제은행 Q324",
-  "stem": "모발 구조 중 외부 물리 자극을 방지하기 위해 기와 모양으로 중첩 정렬된 외곽 껍질층은 모(A)이다. (Cuticle) — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_e7087b",
-    "conceptId": "L1346",
-    "text": "전성분",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_b3fdd0",
-    "conceptId": "L1346",
-    "text": "휴지(telogen)",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_b671f5",
-    "conceptId": "L1346",
-    "text": "큐티클",
-    "truth": true
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_d06e77",
-    "conceptId": "L1346",
-    "text": "카보머",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_184692",
-    "conceptId": "L1346",
-    "text": "라멜라",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄷ",
-     "ㅁ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q324",
-  "explain": "📖 교재 근거 (L1346):\n| 에피큐티클(Epicuticle) | • 가장 바깥쪽의 두께 100Å 정도의 얇은 막<br>• 아미노산 중 시스틴의 함유량이 많음<br>• 각질 용해성 또는 단백질 용해성의 약품(친유성, 알칼리 용액)에 대한 저항성이 가장 강한 층<br>• 수증기는 통하지만 물은 통과하지 못하는 구조로 딱딱하고 부서지기 쉽기 때문에 물리적인 자극에 약함 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "2"
- },
- {
-  "id": "understanding_combo_a1a39e",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L2946 (출처: 과목4 문제은행 Q325)",
-  "stem": "장미향 오일 등에 포함되며 알레르기 유발 성분으로 등재된 모노테르펜 알코올 화합물명은 (A)올이다. (Geraniol) — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_b0ab0e",
-    "conceptId": "L2946",
-    "text": "cP",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_c040e7",
-    "conceptId": "L2946",
-    "text": "온도",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_303c18",
-    "conceptId": "L2946",
-    "text": "표준",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_b1f084",
-    "conceptId": "L2946",
-    "text": "제라니",
-    "truth": true
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_742d4c",
-    "conceptId": "L2946",
-    "text": "스쿠알렌",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㅁ",
-     "ㄷ",
-     "ㄴ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄹ",
-     "ㅁ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄷ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "구성비"
-  ],
-  "derivedFrom": "subject4_q325",
-  "explain": "📖 교재 근거 (교재: L2946):\n| 알레르기 유발 성분 | 착향제 중 25종 의무 표시 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "4"
- },
- {
-  "id": "understanding_combo_cd13de",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L2858 (출처: 과목4 문제은행 Q326)",
-  "stem": "화장품 1차 용기에 기재할 면적이 부족할 시 필수 기재 중 생략하여 2차 상자에만 적을 수 있는 대표 항목은 (A) 성분이다. (표시 성분 범위) — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_0d4fa0",
-    "conceptId": "L2858",
-    "text": "티로시나아제",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_7af0c5",
-    "conceptId": "L2858",
-    "text": "전성분",
-    "truth": true
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_9ce83b",
-    "conceptId": "L2858",
-    "text": "기저",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_9a889c",
-    "conceptId": "L2858",
-    "text": "온도",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_1f9d29",
-    "conceptId": "L2858",
-    "text": "이온",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㅁ",
-     "ㄹ",
-     "ㄷ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄷ",
-     "ㄴ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q326",
-  "explain": "📖 교재 근거 (교재: L2858):\n> 해설: 1차 포장 필수 기재사항은 화장품의 명칭, 영업자의 상호, 제조번호(식별번호), 사용기한 또는 개봉 후 사용기간이다. 전성분 표시는 2차 포장(외부포장)에 기재해야 한다.",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "1"
- },
- {
-  "id": "understanding_combo_aef179",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L3104 (출처: 과목4 문제은행 Q327)",
-  "stem": "저울 칭량 시 바람에 의한 지시값 흔들림을 막기 위해 저울 주위에 설치하는 투명 창 설비는 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_967d3c",
-    "conceptId": "L3104",
-    "text": "이황화(disulfide)",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_a48ed5",
-    "conceptId": "L3104",
-    "text": "방풍실(드래프트실드)",
-    "truth": true
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_606967",
-    "conceptId": "L3104",
-    "text": "제조번호",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_8b27ed",
-    "conceptId": "L3104",
-    "text": "망상",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_b1219d",
-    "conceptId": "L3104",
-    "text": "각질",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄴ",
-     "ㄱ",
-     "ㅁ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄷ",
-     "ㄴ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q327",
-  "explain": "📖 교재 근거 (교재: L3104):\n| 보존제 | 미생물로부터의 변질을 막기 위해 사용 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "4"
- },
- {
-  "id": "understanding_combo_df97c8",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 출처: 과목4 문제은행 Q328",
-  "stem": "완제품 500g 제조 시 특정 원료 D를 배합 한도인 0.2%로 채워 조제하려 한다. 처방 중량은 (A)g이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_b630bf",
-    "conceptId": "L197",
-    "text": "0.3",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_55205d",
-    "conceptId": "L197",
-    "text": "70",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_5d5124",
-    "conceptId": "L197",
-    "text": "0.04",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_aba993",
-    "conceptId": "L197",
-    "text": "1",
-    "truth": true
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_c0b7ad",
-    "conceptId": "L197",
-    "text": "0.002",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄷ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㅁ",
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "한도",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q328",
-  "explain": "📖 교재 근거 (4.consulting: L197):\n| 메탄올 허용 한도 | 0.2%(v/v), 물휴지 0.002% 이하 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "2"
- },
- {
-  "id": "understanding_combo_aeda1f",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1150 (출처: 과목4 문제은행 Q329)",
-  "stem": "세라마이드의 화학 구조 형성 시 기저 뼈대를 구성하는 긴 사슬형 아미노알코올은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_e66885",
-    "conceptId": "L1150",
-    "text": "스핑고신",
-    "truth": true
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_1e5ccd",
-    "conceptId": "L1150",
-    "text": "PA",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_f64ac2",
-    "conceptId": "L1150",
-    "text": "교차",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_7bec0e",
-    "conceptId": "L1150",
-    "text": "멜라닌형성세포",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_f96a42",
-    "conceptId": "L1150",
-    "text": "표준",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄷ",
-     "ㄱ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄹ",
-     "ㄷ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㅁ",
-     "ㄹ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q329",
-  "explain": "📖 교재 근거 (교재: L1150):\n피부는 가장 바깥 부분부터 표피, 진피, 피하조직의 3가지 구조로 이루어져 있다.",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "5"
- },
- {
-  "id": "understanding_combo_614ccc",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1722 (출처: 과목4 문제은행 Q330)",
-  "stem": "모발 단백질 결합 중 수분 흡수 시 끊어졌다가 건조 시 재결합하는 일시적 셋팅 결합은 (A) 결합이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_01459d",
-    "conceptId": "L1722",
-    "text": "수소",
-    "truth": true
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_2ee54b",
-    "conceptId": "L1722",
-    "text": "표준",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_c984cb",
-    "conceptId": "L1722",
-    "text": "아데노신",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_91af8c",
-    "conceptId": "L1722",
-    "text": "충진",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_38051e",
-    "conceptId": "L1722",
-    "text": "제라니",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄹ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄹ",
-     "ㄱ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㅁ",
-     "ㄹ",
-     "ㄷ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q330",
-  "explain": "📖 교재 근거 (교재: L1722):\n| 모발 4대 결합 | 시스틴·이온·수소·펩타이드 결합 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "3"
- },
- {
-  "id": "understanding_combo_29b44c",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L3103 (출처: 과목4 문제은행 Q331)",
-  "stem": "알레르기 향료 물질 중 시트러스 껍질 오일에 풍부한 리모넨과 쌍을 이루는 꽃향 향료 유효 성분명은 (A)올이다. (Linalool) — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_f5044f",
-    "conceptId": "L3103",
-    "text": "나이아신아마이드",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_75910e",
-    "conceptId": "L3103",
-    "text": "리날",
-    "truth": true
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_2963ec",
-    "conceptId": "L3103",
-    "text": "C",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_dd52e8",
-    "conceptId": "L3103",
-    "text": "계면활성제",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_50e3a4",
-    "conceptId": "L3103",
-    "text": "콜레스테롤",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㅁ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄷ",
-     "ㄴ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q331",
-  "explain": "📖 교재 근거 (교재: L3103):\n| 향료 | • 향을 내기 위해 사용<br>• 알레르기 유발 25종 중 씻어내는 제품은 0.01%, 씻어내지 않는 제품은 0.001% 초과 시 해당 성분 명칭 기재 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "1"
- },
- {
-  "id": "understanding_combo_f5e0d9",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1439 (출처: 과목4 문제은행 Q332)",
-  "stem": "pH 측정 시 유리전극 표면의 유리막 손상 방지 및 이온 평형 상태 보존을 위해 담가 보관하는 용액은 (A) 용액이다. (화학식 KCl) — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_03993a",
-    "conceptId": "L1439",
-    "text": "메니스커스",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_f10e4a",
-    "conceptId": "L1439",
-    "text": "교정(Calibration)",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_d3e7d7",
-    "conceptId": "L1439",
-    "text": "KCl",
-    "truth": true
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_977cf8",
-    "conceptId": "L1439",
-    "text": "건조",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_66068a",
-    "conceptId": "L1439",
-    "text": "스핑고신",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄹ",
-     "ㄴ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄴ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄷ",
-     "ㄹ",
-     "ㄴ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q332",
-  "explain": "📖 교재 근거 (교재: L1439):\n| 기기를 이용한 판독법 | • 유수분 측정기, 우드램프, pH 측정기, 확대경, 피부 분석기를 통해 피부 상태 분석<br>• 세안 후 일정 시간이 지난 후에 측정하여 피부 상태 판독 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "2"
- },
- {
-  "id": "understanding_combo_2f39d2",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1161 (출처: 과목4 문제은행 Q333)",
-  "stem": "표피 세포 간 결합 장치 중 기저세포를 기저막에 고정시키는 장치는 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_8a856a",
-    "conceptId": "L1161",
-    "text": "발(스크류)",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_094a3c",
-    "conceptId": "L1161",
-    "text": "이온",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_36f0a7",
-    "conceptId": "L1161",
-    "text": "헤미데스모좀",
-    "truth": true
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_7f648f",
-    "conceptId": "L1161",
-    "text": "칭량",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_f23f05",
-    "conceptId": "L1161",
-    "text": "UVB",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄹ",
-     "ㄷ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄷ",
-     "ㄴ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄷ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q333",
-  "explain": "📖 교재 근거 (교재: L1161):\n| 유극층<br>(Spinous Layer) | • 5~10층의 다각형 유핵세포층으로 표피에서 가장 두꺼운 층<br>• 림프액이 흘러 림프순환을 통해 영양 공급 및 노폐물 배출<br>• 면역기능을 담당하는 랑게르한스세포 존재 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "5"
- },
- {
-  "id": "understanding_combo_d37602",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L883 (출처: 과목4 문제은행 Q334)",
-  "stem": "작업대 및 조제 기구 소독에 잔류물 없이 안전하게 사용되는 에탄올 수용액의 최적 살균 농도는 (A)%이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_c74279",
-    "conceptId": "L883",
-    "text": "0.001",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_d3550b",
-    "conceptId": "L883",
-    "text": "0.1",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_201c1c",
-    "conceptId": "L883",
-    "text": "70",
-    "truth": true
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_dd08ed",
-    "conceptId": "L883",
-    "text": "1",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_75d655",
-    "conceptId": "L883",
-    "text": "0.002",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄷ",
-     "ㄹ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄹ",
-     "ㄱ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "한도",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q334",
-  "explain": "📖 교재 근거 (교재: L883):\n> ③ 전 과목 총점의 70% 이상, 매 과목 만점의 50% 이상",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "4"
- },
- {
-  "id": "understanding_combo_9bd479",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L113 (출처: 과목4 문제은행 Q335)",
-  "stem": "표피의 최외각 각질 세포 결합 장치로 각화 주기에 맞춰 각질분해효소에 의해 자연 해제되는 단백질 결합체는 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_02537e",
-    "conceptId": "L113",
-    "text": "계면활성제",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_7f461a",
-    "conceptId": "L113",
-    "text": "코르네오데스모좀",
-    "truth": true
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_2fdc2b",
-    "conceptId": "L113",
-    "text": "헤미데스모좀",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_6eabb0",
-    "conceptId": "L113",
-    "text": "격리",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_8e2510",
-    "conceptId": "L113",
-    "text": "anagen(성장)",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㅁ",
-     "ㄴ",
-     "ㄹ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄹ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄷ",
-     "ㄱ",
-     "ㄹ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "기한"
-  ],
-  "derivedFrom": "subject4_q335",
-  "explain": "📖 교재 근거 (교재: L113):\n| 기저층 (멜라닌형성세포) | 멜라닌형성세포(멜라노사이트, Melanocyte) 🎯 기출 | • 멜라닌을 합성하여 각질형성세포에 멜라닌이 축적된 멜라노솜(Melanosome)을 공급하는 세포<br>• 피부색과 털색을 결정함<br>• 표피의 5~25%를 차지하며, 세포 내에 확산하면 검게 보임 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "3"
- },
- {
-  "id": "understanding_combo_78accc",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L752 (출처: 과목4 문제은행 Q336)",
-  "stem": "질량 측정 시 지시 오차를 보정하기 위해 표준 중량을 가진 원통형 금속체 도구를 (A)이라 한다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_716e02",
-    "conceptId": "L752",
-    "text": "티올(SH)",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_40ca97",
-    "conceptId": "L752",
-    "text": "분동(추)",
-    "truth": true
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_0052b3",
-    "conceptId": "L752",
-    "text": "PA",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_611877",
-    "conceptId": "L752",
-    "text": "성장(anagen)",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_1148d2",
-    "conceptId": "L752",
-    "text": "온도",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄹ",
-     "ㄴ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄴ",
-     "ㄹ",
-     "ㄷ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄹ",
-     "ㄴ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q336",
-  "explain": "📖 법령 근거 (교재: L752):\n| 자외선 차단지수(SPF) 설정 근거자료 | 자외선 차단 효과 측정 방법 및 기준·일본(JCIA)·호주/뉴질랜드(AS/NZS)·미국(FDA)·유럽(Cosmetics Europe) 또는 국제표준화기구(ISO 24444) 등의 자외선 차단지수 측정 방법에 의한 자료 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "3"
- },
- {
-  "id": "understanding_combo_9dd219",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L3005 (출처: 과목4 문제은행 Q337)",
-  "stem": "식약처 고시상 온도의 정의 중 실온의 기준 범위 온도는 (A)℃이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_531b74",
-    "conceptId": "L3005",
-    "text": "1~30",
-    "truth": true
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_be42c7",
-    "conceptId": "L3005",
-    "text": "28",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_2b263f",
-    "conceptId": "L3005",
-    "text": "0.001",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_40ea1a",
-    "conceptId": "L3005",
-    "text": "70",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_700c53",
-    "conceptId": "L3005",
-    "text": "0.04",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄹ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㅁ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄷ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "수치",
-   "정의"
-  ],
-  "derivedFrom": "subject4_q337",
-  "explain": "📖 교재 근거 (교재: L3005):\n> - 핵심 키워드: 수성/유성/계면활성제, 제형 안정성(투입 순서·온도 편차·회전속도·진공세기), pH 범위(미산성 5.0~6.5·약산성 3.0~5.0), 온도(표준 20℃·상온 15~25℃·실온 1~30℃), 호모게나이저(유화·터빈형) vs 디스퍼(가용화·고속교반), 혼합·소분 안전관리(품질성적서 확인·손 소독·포장용기 오염 확인)",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "2"
- },
- {
-  "id": "understanding_combo_036b45",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 출처: 과목4 문제은행 Q338",
-  "stem": "진피 속에서 탄력 기능을 담당하는 주요 스프링 형태의 탄성 섬유 단백질은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_f693c3",
-    "conceptId": "L147",
-    "text": "헤미데스모좀",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_e68a41",
-    "conceptId": "L147",
-    "text": "사용 가능",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_4495b4",
-    "conceptId": "L147",
-    "text": "소분",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_0f0425",
-    "conceptId": "L147",
-    "text": "엘라스틴",
-    "truth": true
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_97b0a5",
-    "conceptId": "L147",
-    "text": "페녹시에탄올",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㅁ",
-     "ㄴ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q338",
-  "explain": "📖 교재 근거 (2.physiology: L147):\n> 용어 - 탄력섬유(엘라스틴): 본래의 모습으로 되돌아가려는 회복 기능과 탄력성이 있는 단백질로, 피부에 1.5~4.8% 정도의 함량으로 존재함",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "2"
- },
- {
-  "id": "understanding_combo_731aca",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1684 (출처: 과목4 문제은행 Q339)",
-  "stem": "장벽 복원에 유효한 세포간지질 3대 성분은 세라마이드, 자유지방산 및 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_bfdd38",
-    "conceptId": "L1684",
-    "text": "콜레스테롤",
-    "truth": true
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_698530",
-    "conceptId": "L1684",
-    "text": "리날",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_abe85d",
-    "conceptId": "L1684",
-    "text": "휴지(telogen)",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_045eb4",
-    "conceptId": "L1684",
-    "text": "아데노신",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_ecd1e0",
-    "conceptId": "L1684",
-    "text": "계면활성제",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㅁ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄴ",
-     "ㄱ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄹ",
-     "ㅁ",
-     "ㄷ",
-     "ㄴ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q339",
-  "explain": "📖 교재 근거 (교재: L1684):\n| 세포간지질 | 세라마이드 50% 이상, 콜레스테롤, 지방산 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "3"
- },
- {
-  "id": "understanding_combo_e14667",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 출처: 과목4 문제은행 Q340",
-  "stem": "맞춤형화장품 조제 시 향료 오일 리모넨(Limonene)이 2% 함유된 에센셜 오일 원료를 씻어내지 않는 화장품 벌크에 0.1% 농도로 첨가하여 조제하였다. 이때 최종 화장품 내 리모넨의 농도는 (A)%이며, 고시 기준인 0.001%를 초과하므로 전성분에 명칭을 표시해야 한다. (수치 입력) — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_b3c09c",
-    "conceptId": "L109",
-    "text": "1",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_356270",
-    "conceptId": "L109",
-    "text": "0.04",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_4a4fb6",
-    "conceptId": "L109",
-    "text": "70",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_41c5c6",
-    "conceptId": "L109",
-    "text": "0.002",
-    "truth": true
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_37e19b",
-    "conceptId": "L109",
-    "text": "0.1",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄹ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "한도",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q340",
-  "explain": "📖 법령 근거 (화장품 안전기준 등에 관한 규정(식품의약품안: L109(제2026-19호)(20260318)/화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318).md#L109>)):\n8. 메탄올 : 0.2(v/v)%이하, 물휴지는 0.002%(v/v)이하",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "5"
- },
- {
-  "id": "understanding_combo_a4e80b",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L698 (출처: 과목4 문제은행 Q341)",
-  "stem": "자외선 A(UVA)를 차단하여 피부 흑화 및 색소 침착을 방지하는 차단 정도를 나타내는 지수는 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_b933b0",
-    "conceptId": "L698",
-    "text": "유두",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_95cdbf",
-    "conceptId": "L698",
-    "text": "나이아신아마이드",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_447bf4",
-    "conceptId": "L698",
-    "text": "소분",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_55b220",
-    "conceptId": "L698",
-    "text": "카보머",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_ea5059",
-    "conceptId": "L698",
-    "text": "PA",
-    "truth": true
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄷ",
-     "ㅁ",
-     "ㄴ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㅁ",
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q341",
-  "explain": "📖 교재 근거 (교재: L698):\n| 자외선 차단 기능 제품 | • 자외선 차단지수(SPF) 설정 근거 자료<br>• 내수성 자외선 차단지수(SPF) 설정 근거 자료<br>• 자외선A 차단등급(PA) 설정 근거 자료 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "3"
- },
- {
-  "id": "understanding_combo_2e6271",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1549 (출처: 과목4 문제은행 Q342)",
-  "stem": "유극층에 상주하며 외부 항원 물질을 포획하여 면역 세포에 경보를 알리는 성상 돌기 세포는 (A) 세포이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_3351aa",
-    "conceptId": "L1549",
-    "text": "교체(턴오버)",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_8d51cf",
-    "conceptId": "L1549",
-    "text": "전성분",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_117998",
-    "conceptId": "L1549",
-    "text": "리모넨",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_ca203f",
-    "conceptId": "L1549",
-    "text": "랑게르한스",
-    "truth": true
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_2a37d7",
-    "conceptId": "L1549",
-    "text": "표준",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄷ",
-     "ㄴ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄴ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄹ",
-     "ㄷ",
-     "ㄴ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄹ",
-     "ㄷ",
-     "ㅁ",
-     "ㄴ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q342",
-  "explain": "📖 교재 근거 (교재: L1549):\n| 랑게르한스세포 | 유극층 | 면역반응 조절, 항원 전달 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "3"
- },
- {
-  "id": "understanding_combo_d48d87",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L2517 (출처: 과목4 문제은행 Q343)",
-  "stem": "식약처 고시상 미백 기능성 원료로 등록된 알부틴의 안전 사용 함량 기준 최저치는 (A)%이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_b159b5",
-    "conceptId": "L2517",
-    "text": "70",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_a7e5d3",
-    "conceptId": "L2517",
-    "text": "0.3",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_bb66a4",
-    "conceptId": "L2517",
-    "text": "1~30",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_4655e7",
-    "conceptId": "L2517",
-    "text": "0.04",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_3ca105",
-    "conceptId": "L2517",
-    "text": "2",
-    "truth": true
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄷ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄹ",
-     "ㄱ",
-     "ㄴ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄴ",
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "절차",
-   "한도",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q343",
-  "explain": "📖 교재 근거 (교재: L2517):\n| 1차 포장만으로 구성되는 화장품의 외부포장 / 화장품의 외부 포장<br>(1차 포장에 2차 포장을 추가한 경우) | • 화장품의 명칭<br>• 영업자의 상호 및 주소<br>• 해당 화장품 제조에 사용된 모든 성분(인체에 무해한 소량 함유 성분 등 총리령으로 정하는 성분은 제외)<br>• 내용물의 용량 또는 중량<br>• 제조번호(식별번호)<br>• 사용기한 또는 개봉 후 사용기간(개봉 후 사용기간의 경우 제조연월일 병기)<br>• 가격<br>• 기능성화장품의 경우 '기능성화장품'이라는 글자 또는 기능성화장품을 나타내는 도안으로서 식품의약품안전처장이 정하는 도안<br>• 사용할 때의 주의사항<br>• 그 밖에 총리령으로 정하는 사항<br>&nbsp;&nbsp;- 기능성화장품의 경우 심사받거나 보고한...",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "2"
- },
- {
-  "id": "understanding_combo_93e9f1",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L840 (출처: 과목4 문제은행 Q344)",
-  "stem": "아크릴산 중합체로 화장품의 제형 안정을 돕는 대표적인 합성 점증 유화 보조제는 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_da4dbb",
-    "conceptId": "L840",
-    "text": "이온",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_9ea1a7",
-    "conceptId": "L840",
-    "text": "알레르기",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_3d3ece",
-    "conceptId": "L840",
-    "text": "카보머",
-    "truth": true
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_7b80ae",
-    "conceptId": "L840",
-    "text": "기저",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_19fe31",
-    "conceptId": "L840",
-    "text": "섬유아",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄴ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㅁ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄷ",
-     "ㄱ",
-     "ㄴ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q344",
-  "explain": "📖 교재 근거 (교재: L840):\n• 합성: 카복시비닐폴리머(카보머)\n• 피막형성제: 폴리비닐알코올, 폴리비닐피롤리돈, 나이트로셀룰로스",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "4"
- },
- {
-  "id": "understanding_combo_734b69",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L4044 (출처: 과목4 문제은행 Q345)",
-  "stem": "계량 시 미세한 호흡 공기 흐름이나 바람에 의한 질량 오차를 차단하는 유리 케이스는 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_1eea0d",
-    "conceptId": "L4044",
-    "text": "오크모스",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_7694f5",
-    "conceptId": "L4044",
-    "text": "성장(anagen)",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_faf380",
-    "conceptId": "L4044",
-    "text": "방풍실(드래프트실드)",
-    "truth": true
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_0f54d3",
-    "conceptId": "L4044",
-    "text": "페녹시에탄올",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_37fa56",
-    "conceptId": "L4044",
-    "text": "필라그린",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄹ",
-     "ㄴ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㅁ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄹ",
-     "ㄷ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q345",
-  "explain": "📖 교재 근거 (교재: L4044):\n| 포장횟수 제외 | 필름·종이·재사용 파우치·에코백·틴케이스 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "1"
- },
- {
-  "id": "understanding_combo_c768f6",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1722 (출처: 과목4 문제은행 Q346)",
-  "stem": "모발 내부의 결합 중 pH 조건에 따라 결합 세기가 결정되며 수렴 지점에서 가장 단단한 정전기 인력을 이루는 것은 (A) 결합이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_8eae63",
-    "conceptId": "L1722",
-    "text": "스쿠알렌",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_99a6a2",
-    "conceptId": "L1722",
-    "text": "사용 가능",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_e49b3c",
-    "conceptId": "L1722",
-    "text": "이온",
-    "truth": true
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_0d4fa6",
-    "conceptId": "L1722",
-    "text": "기저",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_588af3",
-    "conceptId": "L1722",
-    "text": "라멜라",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄹ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㅁ",
-     "ㄹ",
-     "ㄴ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄹ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q346",
-  "explain": "📖 교재 근거 (교재: L1722):\n| 모발 4대 결합 | 시스틴·이온·수소·펩타이드 결합 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "4"
- },
- {
-  "id": "understanding_combo_9eb889",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L163 (출처: 과목4 문제은행 Q347)",
-  "stem": "유기 유해 잔류물 없이 저온에서 향 성분 등 열변성 유효 물질을 완벽 추출하는 친환경 공정은 (A) 추출법이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_529b68",
-    "conceptId": "L163",
-    "text": "유기",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_63b87b",
-    "conceptId": "L163",
-    "text": "NMF(천연보습인자)",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_eac5f2",
-    "conceptId": "L163",
-    "text": "초임계",
-    "truth": true
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_e8b8d1",
-    "conceptId": "L163",
-    "text": "조제",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_5363d6",
-    "conceptId": "L163",
-    "text": "페녹시에탄올",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄷ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄷ",
-     "ㅁ",
-     "ㄴ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄹ",
-     "ㄱ",
-     "ㅁ",
-     "ㄴ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q347",
-  "explain": "📖 교재 근거 (교재: L163):\n### (1) 유효성 또는 기능에 관한 자료 🎯 기출",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "3"
- },
- {
-  "id": "understanding_combo_df848f",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 출처: 과목4 문제은행 Q348",
-  "stem": "표피층의 기저 분열 세포가 각 각화 층을 거쳐 각질 외벽으로 이탈 탈락하는 턴오버 기간은 평균 (A)일이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_0f0b21",
-    "conceptId": "L1551",
-    "text": "1",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_18a2f5",
-    "conceptId": "L1551",
-    "text": "0.3",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_958ae9",
-    "conceptId": "L1551",
-    "text": "0.002",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_49148d",
-    "conceptId": "L1551",
-    "text": "28",
-    "truth": true
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_08c5cb",
-    "conceptId": "L1551",
-    "text": "1~30",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄹ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㅁ",
-     "ㄹ",
-     "ㄷ",
-     "ㄴ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q348",
-  "explain": "📖 교재 근거 (L1551):\n| 각질형성세포 | 기저층 | 각질세포 생성, 각화주기 28일 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "2"
- },
- {
-  "id": "understanding_combo_9cde60",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1233 (출처: 과목4 문제은행 Q349)",
-  "stem": "피부 장벽 이중층을 구성하는 지질 골격 핵심 물질로 친유성 18탄소 아미노알코올은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_6ed3d3",
-    "conceptId": "L1233",
-    "text": "스핑고신",
-    "truth": true
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_f57a42",
-    "conceptId": "L1233",
-    "text": "충진",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_cd57c0",
-    "conceptId": "L1233",
-    "text": "각질",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_29050f",
-    "conceptId": "L1233",
-    "text": "사용 가능",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_759ce1",
-    "conceptId": "L1233",
-    "text": "교정(Calibration)",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄷ",
-     "ㄴ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄷ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㅁ",
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q349",
-  "explain": "📖 교재 근거 (교재: L1233):\n> 용어 - 기질: 교원섬유와 탄력섬유를 채워주는 물질로 히알루론산, 콘드로이친 황산, 헤파린 황산염 등으로 구성된 뮤코다당체임",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "3"
- },
- {
-  "id": "understanding_combo_cb9ab7",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 출처: 과목4 문제은행 Q350",
-  "stem": "액체 표면 장력으로 U자 곡선을 이루는 칭량 용기 내부 용액의 메인 계면 명칭은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_be23e3",
-    "conceptId": "L1903",
-    "text": "티올(SH)",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_b3361e",
-    "conceptId": "L1903",
-    "text": "메니스커스",
-    "truth": true
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_5db69d",
-    "conceptId": "L1903",
-    "text": "C",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_e9a1bc",
-    "conceptId": "L1903",
-    "text": "라멜라",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_b79378",
-    "conceptId": "L1903",
-    "text": "발(스크류)",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄹ",
-     "ㄷ",
-     "ㄱ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㅁ",
-     "ㄱ",
-     "ㄴ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄴ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q350",
-  "explain": "📖 교재 근거 (KFCC_별표10_일반시험법: L1903):\n규정온도에서비중부액계가정지했을때메니스커스의상연에서비중의눈금",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "5"
- },
- {
-  "id": "understanding_combo_6af510",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1703 (출처: 과목4 문제은행 Q351)",
-  "stem": "진피 속에서 자석처럼 물 분자를 약 1000배 끌어당겨 부피와 보습을 제공하는 천연 점질성 뮤코다당류는 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_ce2916",
-    "conceptId": "L1703",
-    "text": "히알루론산",
-    "truth": true
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_325f71",
-    "conceptId": "L1703",
-    "text": "이황화(disulfide)",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_4f5933",
-    "conceptId": "L1703",
-    "text": "격리",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_433f67",
-    "conceptId": "L1703",
-    "text": "KCl",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_ff3370",
-    "conceptId": "L1703",
-    "text": "기저",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄹ",
-     "ㄷ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q351",
-  "explain": "📖 교재 근거 (교재: L1703):\n| 기질 | 히알루론산, 콘드로이친 황산, 헤파린 황산염 (뮤코다당체) |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "3"
- },
- {
-  "id": "understanding_combo_0a3bed",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1692 (출처: 과목4 문제은행 Q352)",
-  "stem": "멜라닌 형성 세포에서 티로신 아미노산을 산화 촉진하여 갈색 색소로 합성 유도하는 핵심 단백질 효소는 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_45ffa0",
-    "conceptId": "L1692",
-    "text": "표준",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_ad4d1c",
-    "conceptId": "L1692",
-    "text": "자외선",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_c920c0",
-    "conceptId": "L1692",
-    "text": "PA",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_b4fe0b",
-    "conceptId": "L1692",
-    "text": "티로시나아제",
-    "truth": true
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_6b4127",
-    "conceptId": "L1692",
-    "text": "anagen(성장)",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄹ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄴ",
-     "ㄷ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q352",
-  "explain": "📖 교재 근거 (교재: L1692):\n| 멜라닌 형성 | 티로신→티로시나아제→도파→도파퀴논→멜라닌 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "2"
- },
- {
-  "id": "understanding_combo_2bbc80",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L804 (출처: 과목4 문제은행 Q353)",
-  "stem": "차아염소산나트륨 용액 사용 시 금속 기구의 표면 손상을 예방하는 화학 작용은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_8e8881",
-    "conceptId": "L804",
-    "text": "필라그린",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_f0b15e",
-    "conceptId": "L804",
-    "text": "부식(방식)",
-    "truth": true
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_4a40c0",
-    "conceptId": "L804",
-    "text": "교정(Calibration)",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_af1168",
-    "conceptId": "L804",
-    "text": "PA",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_1594d1",
-    "conceptId": "L804",
-    "text": "카보머",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄴ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄹ",
-     "ㄷ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q353",
-  "explain": "📖 교재 근거 (교재: L804):\n| 장기보존시험 (조건·항목) | • 3로트 이상 선정<br>• 시중 유통 제품과 동일 처방, 제형, 포장용기를 사용함<br>• 유통 조건과 유사하게 보존 | • 일반시험: 균등성, 향취, 색상, 사용감, 액상, 유화형, 내온성 시험<br>• 물리적시험: 비중, 융점, 경도, pH, 유화상태, 점도 등<br>• 화학적시험: 시험물 가용성 성분, 에테르불용 및 에탄올 가용성 성분, 에테르 가용성 불검화물 등<br>• 미생물학적시험: 정상적 사용 시 미생물 증식 억제 능력 여부<br>• 용기적합성시험: 제품과 용기의 상호작용(용기의 제품 흡수, 부식, 화학적 반응)에 대한 적합성 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "2"
- },
- {
-  "id": "understanding_combo_463139",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1166 (출처: 과목4 문제은행 Q354)",
-  "stem": "각질 세포 내에 과립 단백질인 필라그린이 분해되면서 축적되어 세포 보습을 유지하는 보습 성분군은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_867291",
-    "conceptId": "L1166",
-    "text": "수분",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_86ec01",
-    "conceptId": "L1166",
-    "text": "큐티클",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_910401",
-    "conceptId": "L1166",
-    "text": "NMF(천연보습인자)",
-    "truth": true
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_e3d749",
-    "conceptId": "L1166",
-    "text": "부식(방식)",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_59d3af",
-    "conceptId": "L1166",
-    "text": "충진",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㅁ",
-     "ㄴ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄹ",
-     "ㄷ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄷ",
-     "ㅁ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㄱ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q354",
-  "explain": "📖 교재 근거 (교재: L1166):\n> 참고 - 천연보습인자(NMF) 구성 성분",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "3"
- },
- {
-  "id": "understanding_combo_71e06f",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 출처: 과목4 문제은행 Q355",
-  "stem": "유기 용매 중 보존제 배합 한도로 최종 제품 내 '1.0% 이하' 함량으로 처방 한계가 그어진 화학 알코올은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_490f3a",
-    "conceptId": "L2272",
-    "text": "오크모스",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_776c83",
-    "conceptId": "L2272",
-    "text": "라멜라바디(층판소기관)",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_3515f7",
-    "conceptId": "L2272",
-    "text": "페녹시에탄올",
-    "truth": true
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_93841c",
-    "conceptId": "L2272",
-    "text": "cP",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_c200bc",
-    "conceptId": "L2272",
-    "text": "스쿠알렌",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄷ",
-     "ㄴ",
-     "ㅁ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄷ",
-     "ㄴ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㅁ",
-     "ㄱ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄹ",
-     "ㄷ",
-     "ㄴ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄷ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "한도",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q355",
-  "explain": "📖 교재 근거 (L2272):\n| 페녹시에탄올 `🎯 기출` | 1.0% |  |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "5"
- },
- {
-  "id": "understanding_combo_c32ed6",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L105 (출처: 과목4 문제은행 Q356)",
-  "stem": "식약처 고시상 주름개선 고시 기능성 유효 함량이 0.04%인 수용성 활성 성분은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_27a54d",
-    "conceptId": "L105",
-    "text": "조제",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_e5c9e9",
-    "conceptId": "L105",
-    "text": "아데노신",
-    "truth": true
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_681ac9",
-    "conceptId": "L105",
-    "text": "라멜라바디(층판소기관)",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_463bc8",
-    "conceptId": "L105",
-    "text": "방풍실(드래프트실드)",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_22ac6a",
-    "conceptId": "L105",
-    "text": "세라마이드",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "한도",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q356",
-  "explain": "📖 교재 근거 (교재: L105):\n| 주름 – 아데노신 | 0.04% |\n| 주름 – 레티놀 | 2,500IU/g |\n| 제모 – 치오글리콜산 | 산으로서 3.0~4.5% (pH 7.0~12.7) |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "4"
- },
- {
-  "id": "understanding_combo_93822c",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 출처: 과목4 문제은행 Q357",
-  "stem": "소분이나 혼합 등 조제 완료 후 직접 용기에 붙이는 라벨에 의무 기재하는 고유 번호는 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_47d44d",
-    "conceptId": "q:subject4_q357",
-    "text": "교차",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_8bd00e",
-    "conceptId": "q:subject4_q357",
-    "text": "제조번호",
-    "truth": true
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_f3854e",
-    "conceptId": "q:subject4_q357",
-    "text": "메니스커스",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_826f9d",
-    "conceptId": "q:subject4_q357",
-    "text": "라멜라",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_6392cd",
-    "conceptId": "q:subject4_q357",
-    "text": "이온",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㅁ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㅁ",
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q357",
-  "explain": "📖 법령 근거 (5.guideline: L80):\n⑦ 제조번호는 사용기한(또는 개봉 후 사용기간)과 쉽게 구별되도록 기재·표시해야 하며, 개봉 후 사용기간을 표시하는 경우에는 병행 표기해야 하는 제조연월일(맞춤형화장품의 경우에는 혼합·소분일)도 각각 구별이 가능하도록 기재·표시해야 한다.",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "2"
- },
- {
-  "id": "understanding_combo_e51ca8",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1355 (출처: 과목4 문제은행 Q358)",
-  "stem": "표피 각화 세포 외벽 형성에 관여하며 칼슘 이온 농도에 의존하여 단백질 교차 결합을 돕는 효소는 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_8fe2e3",
-    "conceptId": "L1355",
-    "text": "메니스커스",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_04bdd9",
-    "conceptId": "L1355",
-    "text": "트랜스글루타미나아제",
-    "truth": true
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_71cd22",
-    "conceptId": "L1355",
-    "text": "약산",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_7514d0",
-    "conceptId": "L1355",
-    "text": "소독(세척·소독)",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_6f58f1",
-    "conceptId": "L1355",
-    "text": "제라니",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㅁ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄷ",
-     "ㅁ",
-     "ㄴ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "한도"
-  ],
-  "derivedFrom": "subject4_q358",
-  "explain": "📖 교재 근거 (교재: L1355):\n- 피질세포(케라틴 단백질)와 세포 간 결합물질(밀단결합·펩티드)로 구성됨",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "1"
- },
- {
-  "id": "understanding_combo_b3a5c9",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L2757 (출처: 과목4 문제은행 Q359)",
-  "stem": "조제실 내에서 여러 원료를 한 스패튤라로 번갈아 칭량할 때 원료끼리 오염이 침적되는 상태를 (A) 오염이라 한다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_9bd0ea",
-    "conceptId": "L2757",
-    "text": "리모넨",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_348e63",
-    "conceptId": "L2757",
-    "text": "자외선",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_785bf5",
-    "conceptId": "L2757",
-    "text": "교차",
-    "truth": true
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_9e9eeb",
-    "conceptId": "L2757",
-    "text": "유기",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_23c03c",
-    "conceptId": "L2757",
-    "text": "주기(턴오버)",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㅁ",
-     "ㄷ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "기한"
-  ],
-  "derivedFrom": "subject4_q359",
-  "explain": "📖 교재 근거 (교재: L2757):\n| 장비·기구 위생 | 사용 전 위생 상태 점검, 사용 후 오염 없도록 세척 | |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "2"
- },
- {
-  "id": "understanding_combo_54e742",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L3099 (출처: 과목4 문제은행 Q360)",
-  "stem": "친수성과 친유성 구조를 한 분자에 지녀 기름과 물의 계면 장력을 내려 우유빛 분산을 돕는 원료는 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_e07624",
-    "conceptId": "L3099",
-    "text": "계면활성제",
-    "truth": true
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_f25411",
-    "conceptId": "L3099",
-    "text": "휴지(telogen)",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_a5d610",
-    "conceptId": "L3099",
-    "text": "방풍실(드래프트실드)",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_917f58",
-    "conceptId": "L3099",
-    "text": "세라마이드",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_8151b2",
-    "conceptId": "L3099",
-    "text": "멜라닌",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄷ",
-     "ㄹ",
-     "ㅁ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㅁ",
-     "ㄱ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄷ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q360",
-  "explain": "📖 교재 근거 (교재: L3099):\n| 계면활성제 | • 유성과 수성의 경계면에 흡착하여 성질을 변화시킴<br>• 습윤, 세정 효과, 대전 방지 등의 기능, 표면장력을 낮춤<br>• 음이온성, 양이온성, 양쪽성, 비이온성 계면활성제 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "1"
- },
- {
-  "id": "understanding_combo_000c83",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1162 (출처: 과목4 문제은행 Q361)",
-  "stem": "과립층의 각질형성세포 내에서 합성되어 세포 밖으로 지질 성분을 밀어내어 분비하는 층판 모양의 미세소기관은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_587c1c",
-    "conceptId": "L1162",
-    "text": "수소",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_a0dde0",
-    "conceptId": "L1162",
-    "text": "메니스커스",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_cba1ad",
-    "conceptId": "L1162",
-    "text": "섬유아",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_b9fedc",
-    "conceptId": "L1162",
-    "text": "에크린",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_9e7ec9",
-    "conceptId": "L1162",
-    "text": "라멜라바디(층판소기관)",
-    "truth": true
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄴ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄹ",
-     "ㄴ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q361",
-  "explain": "📖 교재 근거 (교재: L1162):\n| 기저층<br>(Basal Layer) | • 단층의 원추형 유핵세포층<br>• 진피의 모세혈관으로부터 영양분과 산소를 공급받아 세포분열 촉진<br>• 각질형성세포(케라티노사이트), 멜라닌형성세포(멜라노사이트), 머켈세포 존재<br>• 각질형성세포와 멜라닌형성세포는 4:1~10:1 비율로 존재함 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "4"
  },
  {
   "id": "understanding_combo_1d2938",
@@ -33284,15 +25195,15 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "3",
     "members": [
-     "ㄹ",
-     "ㄱ"
+     "ㄱ",
+     "ㄹ"
     ]
    },
    {
     "id": "4",
     "members": [
-     "ㄴ",
      "ㄱ",
+     "ㄴ",
      "ㅁ"
     ]
    },
@@ -33314,3421 +25225,6 @@ var COMBO_DRILLS_subject4 = [
   "explain": "📖 교재 근거 (교재: L1454):\n| 경피수분손실량(TEWL) 🎯 기출 | 피부 표면에서 증발되는 수분량(TEWL: Transepidermal Water Loss)으로 건성 피부와 손상 피부는 값이 높으며, 피부 장벽기능 이상과 관련 있음 |",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "1"
- },
- {
-  "id": "understanding_combo_93279f",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L510 (출처: 과목4 문제은행 Q363)",
-  "stem": "맞춤형화장품의 혼합·소분 업무를 전담하는 전문 인력의 명칭은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_0d6772",
-    "conceptId": "L510",
-    "text": "제라니",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_abfaaf",
-    "conceptId": "L510",
-    "text": "anagen(성장)",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_1cbf27",
-    "conceptId": "L510",
-    "text": "멜라닌형성세포",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_054120",
-    "conceptId": "L510",
-    "text": "큐티클",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_c16d99",
-    "conceptId": "L510",
-    "text": "맞춤형화장품 조제관리사",
-    "truth": true
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄹ",
-     "ㄴ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㅁ",
-     "ㄹ",
-     "ㄷ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄴ",
-     "ㄱ",
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q363",
-  "explain": "📖 법령 근거 (교재: L510):\n② 제1항에 따라 맞춤형화장품판매업을 신고하려는 자는 총리령으로 정하는 시설기준을 갖추어야 하며, 맞춤형화장품의 혼합ㆍ소분 등 품질ㆍ안전 관리 업무에 종사하는 자(이하 “맞춤형화장품조제관리사”라 한다)를 두어야 한다.",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "2"
- },
- {
-  "id": "understanding_combo_10a4c4",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L2527 (출처: 과목4 문제은행 Q364)",
-  "stem": "피부의 표피층 중 가장 바깥쪽에 위치하며 피부 장벽 역할을 하는 층은 (A)층이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_1a195f",
-    "conceptId": "L2527",
-    "text": "지질",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_cddc14",
-    "conceptId": "L2527",
-    "text": "각질",
-    "truth": true
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_608e99",
-    "conceptId": "L2527",
-    "text": "엘라스틴",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_d99576",
-    "conceptId": "L2527",
-    "text": "라멜라",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_83176b",
-    "conceptId": "L2527",
-    "text": "퇴행(catagen)",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄴ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q364",
-  "explain": "📖 교재 근거 (교재: L2527):\n- 피부장벽(피부의 가장 바깥쪽에 존재하는 각질층의 표피)의 기능을 회복하여 가려움 등의 개선에 도움을 주는 화장품",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "5"
- },
- {
-  "id": "understanding_combo_664c5d",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L54 (출처: 과목4 문제은행 Q365)",
-  "stem": "천연보습인자의 영문 약자는 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_df7644",
-    "conceptId": "q:subject4_q365",
-    "text": "NMF",
-    "truth": true
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_c404c1",
-    "conceptId": "q:subject4_q365",
-    "text": "티올(SH)",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_129627",
-    "conceptId": "q:subject4_q365",
-    "text": "메니스커스",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_f7a363",
-    "conceptId": "q:subject4_q365",
-    "text": "카보머",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_b7486c",
-    "conceptId": "q:subject4_q365",
-    "text": "발(스크류)",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㅁ",
-     "ㄱ",
-     "ㄹ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄹ",
-     "ㄷ",
-     "ㄱ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q365",
-  "explain": "📖 교재 근거 (교재: L54):\n| 각질층 구성 | 케라틴 58% · NMF 31% · 지질 11% |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "1"
- },
- {
-  "id": "understanding_combo_a57798",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1221 (출처: 과목4 문제은행 Q366)",
-  "stem": "피부의 진피층을 구성하는 두 가지 주요 섬유는 콜라겐과 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_91459f",
-    "conceptId": "L1221",
-    "text": "수평",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_a9fd5a",
-    "conceptId": "L1221",
-    "text": "등전",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_b3122b",
-    "conceptId": "L1221",
-    "text": "엘라스틴",
-    "truth": true
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_0763d4",
-    "conceptId": "L1221",
-    "text": "에크린",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_3e9807",
-    "conceptId": "L1221",
-    "text": "수소",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㅁ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ",
-     "ㄱ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄹ",
-     "ㄴ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q366",
-  "explain": "📖 교재 근거 (교재: L1221):\n| 섬유아세포 | 결합조직세포로 세포외기질인 콜라겐과 엘라스틴 생성 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "3"
- },
- {
-  "id": "understanding_combo_7f2ff6",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 출처: 과목4 문제은행 Q367",
-  "stem": "모발의 탄력을 유지하는 결합 중 펌제 1제(환원제)에 의해 끊어지는 결합은 (A) 결합이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_7cb233",
-    "conceptId": "L11650",
-    "text": "교체(턴오버)",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_18cc5c",
-    "conceptId": "L11650",
-    "text": "카보머",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_26d835",
-    "conceptId": "L11650",
-    "text": "자유지방산",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_fc401c",
-    "conceptId": "L11650",
-    "text": "메니스커스",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_067834",
-    "conceptId": "L11650",
-    "text": "이황화(disulfide)",
-    "truth": true
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㅁ",
-     "ㄹ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄷ",
-     "ㄴ",
-     "ㄹ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄷ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q367",
-  "explain": "📖 교재 근거 (KFCC_별표10_일반시험법: L11650):\n이황화탄소(Carbon Disulfide)",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "2"
- },
- {
-  "id": "understanding_combo_48e7a9",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L3005 (출처: 과목4 문제은행 Q368)",
-  "stem": "피부의 pH는 일반적으로 (A)성 범위(4.5~6.0)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_88fe7f",
-    "conceptId": "L3005",
-    "text": "필라그린",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_37d7d1",
-    "conceptId": "L3005",
-    "text": "NMF",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_04feeb",
-    "conceptId": "L3005",
-    "text": "알레르기",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_615c3e",
-    "conceptId": "L3005",
-    "text": "메니스커스",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_ba0fa9",
-    "conceptId": "L3005",
-    "text": "약산",
-    "truth": true
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄹ",
-     "ㄷ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄴ",
-     "ㅁ",
-     "ㄹ",
-     "ㄱ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q368",
-  "explain": "📖 교재 근거 (교재: L3005):\n> - 핵심 키워드: 수성/유성/계면활성제, 제형 안정성(투입 순서·온도 편차·회전속도·진공세기), pH 범위(미산성 5.0~6.5·약산성 3.0~5.0), 온도(표준 20℃·상온 15~25℃·실온 1~30℃), 호모게나이저(유화·터빈형) vs 디스퍼(가용화·고속교반), 혼합·소분 안전관리(품질성적서 확인·손 소독·포장용기 오염 확인)",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "1"
- },
- {
-  "id": "understanding_combo_bdf8ed",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L610 (출처: 과목4 문제은행 Q369)",
-  "stem": "맞춤형화장품 조제에 사용할 수 있는 원료는 식약처장이 고시하는 (A) 원료에 한정된다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_1236d2",
-    "conceptId": "L610",
-    "text": "페녹시에탄올",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_3e7712",
-    "conceptId": "L610",
-    "text": "멜라닌형성",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_115f85",
-    "conceptId": "L610",
-    "text": "카보머",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_a875f6",
-    "conceptId": "L610",
-    "text": "MSDS",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_5c4c01",
-    "conceptId": "L610",
-    "text": "사용 가능",
-    "truth": true
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄷ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㅁ",
-     "ㄹ",
-     "ㄷ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄹ",
-     "ㄷ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄴ",
-     "ㅁ",
-     "ㄱ",
-     "ㄷ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q369",
-  "explain": "📖 교재 근거 (교재: L610):\n| 제5조<br>맞춤형화장품에 사용 가능한 원료 | 아래의 원료를 제외한 원료는 맞춤형화장품에 사용 가능<br>• 화장품에 사용할 수 없는 원료<br>• 화장품에 사용상의 제한이 필요한 원료<br>• 사전심사를 받지 않았거나 보고서를 제출하지 않은 기능성화장품 고시 원료 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "3"
- },
- {
-  "id": "understanding_combo_866c07",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L3103 (출처: 과목4 문제은행 Q370)",
-  "stem": "알레르기 유발 성분 25종의 표시 한도 기준에서 씻어내는 제품은 (A)% 초과 시 성분명을 기재해야 한다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_80dc9c",
-    "conceptId": "L3103",
-    "text": "0.3",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_387054",
-    "conceptId": "L3103",
-    "text": "0.001",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_b0a1ab",
-    "conceptId": "L3103",
-    "text": "2",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_123591",
-    "conceptId": "L3103",
-    "text": "1~30",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_663f11",
-    "conceptId": "L3103",
-    "text": "0.01",
-    "truth": true
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄹ",
-     "ㄷ",
-     "ㄴ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄹ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄹ",
-     "ㄷ",
-     "ㄴ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "한도",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q370",
-  "explain": "📖 교재 근거 (교재: L3103):\n| 향료 | • 향을 내기 위해 사용<br>• 알레르기 유발 25종 중 씻어내는 제품은 0.01%, 씻어내지 않는 제품은 0.001% 초과 시 해당 성분 명칭 기재 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "1"
- },
- {
-  "id": "understanding_combo_1a1b3f",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L3103 (출처: 과목4 문제은행 Q371)",
-  "stem": "알레르기 유발 성분 25종의 표시 한도 기준에서 씻어내지 않는 제품은 (A)% 초과 시 성분명을 기재해야 한다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_4bedae",
-    "conceptId": "L3103",
-    "text": "2",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_58ed04",
-    "conceptId": "L3103",
-    "text": "0.001",
-    "truth": true
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_199e03",
-    "conceptId": "L3103",
-    "text": "0.04",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_15536a",
-    "conceptId": "L3103",
-    "text": "70",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_fbc499",
-    "conceptId": "L3103",
-    "text": "0.1",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄷ",
-     "ㄴ",
-     "ㄱ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄹ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄴ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "한도",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q371",
-  "explain": "📖 교재 근거 (교재: L3103):\n| 향료 | • 향을 내기 위해 사용<br>• 알레르기 유발 25종 중 씻어내는 제품은 0.01%, 씻어내지 않는 제품은 0.001% 초과 시 해당 성분 명칭 기재 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "5"
- },
- {
-  "id": "understanding_combo_482a75",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 출처: 과목4 문제은행 Q372",
-  "stem": "피부의 각화 주기(턴오버)는 약 (A)일이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_7dfdcf",
-    "conceptId": "q:subject4_q372",
-    "text": "0.01",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_38f845",
-    "conceptId": "q:subject4_q372",
-    "text": "28",
-    "truth": true
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_d4dcb1",
-    "conceptId": "q:subject4_q372",
-    "text": "1~30",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_440c43",
-    "conceptId": "q:subject4_q372",
-    "text": "0.1",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_acc2c8",
-    "conceptId": "q:subject4_q372",
-    "text": "1",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄴ",
-     "ㄹ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄹ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄷ",
-     "ㅁ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㄱ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "기한",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q372",
-  "explain": "📖 교재 근거 (L53):\n| 각화(각질형성)주기 | 28±3일 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "1"
- },
- {
-  "id": "understanding_combo_08bff1",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L3389 (출처: 과목4 문제은행 Q373)",
-  "stem": "맞춤형화장품 조제 시 원료의 계량에 사용하는 기구 중 액체 원료의 부피를 정밀하게 측정하는 기구는 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_b5e02d",
-    "conceptId": "L3389",
-    "text": "메스실린더(또는 피펫)",
-    "truth": true
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_68386b",
-    "conceptId": "L3389",
-    "text": "부식(방식)",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_612083",
-    "conceptId": "L3389",
-    "text": "이온",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_1f3f8b",
-    "conceptId": "L3389",
-    "text": "탈각(박리)",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_74b466",
-    "conceptId": "L3389",
-    "text": "수평",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㅁ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄷ",
-     "ㄴ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄹ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄴ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q373",
-  "explain": "📖 교재 근거 (교재: L3389):\n> 칭량(전자저울·메스실린더) + 혼합(호모게나이저·디스퍼·오버헤드스터러) + 소분(스패츌러·디스펜서·피펫) + 측정(pH미터·점도계·경도계) + 살균(자외선 살균기).",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "1"
- },
- {
-  "id": "understanding_combo_508372",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L113 (출처: 과목4 문제은행 Q374)",
-  "stem": "피부의 표피층 중 멜라닌을 생성하는 세포가 있는 층은 (A)층이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_180ee1",
-    "conceptId": "L113",
-    "text": "사용기한",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_cea414",
-    "conceptId": "L113",
-    "text": "전성분",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_531492",
-    "conceptId": "L113",
-    "text": "표준",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_7217ba",
-    "conceptId": "L113",
-    "text": "티로시나아제",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_245d3c",
-    "conceptId": "L113",
-    "text": "기저",
-    "truth": true
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄷ",
-     "ㄹ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄴ",
-     "ㅁ",
-     "ㄱ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㅁ",
-     "ㄹ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄹ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "기한"
-  ],
-  "derivedFrom": "subject4_q374",
-  "explain": "📖 교재 근거 (교재: L113):\n| 기저층 (멜라닌형성세포) | 멜라닌형성세포(멜라노사이트, Melanocyte) 🎯 기출 | • 멜라닌을 합성하여 각질형성세포에 멜라닌이 축적된 멜라노솜(Melanosome)을 공급하는 세포<br>• 피부색과 털색을 결정함<br>• 표피의 5~25%를 차지하며, 세포 내에 확산하면 검게 보임 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "5"
- },
- {
-  "id": "understanding_combo_c1c952",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1692 (출처: 과목4 문제은행 Q375)",
-  "stem": "티로시나아제는 (A) 합성을 촉매하는 효소이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_393ac8",
-    "conceptId": "L1692",
-    "text": "라멜라",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_8b66b7",
-    "conceptId": "L1692",
-    "text": "조제",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_93b0b0",
-    "conceptId": "L1692",
-    "text": "멜라닌",
-    "truth": true
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_fa8ae7",
-    "conceptId": "L1692",
-    "text": "자외선",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_a94f22",
-    "conceptId": "L1692",
-    "text": "아데노신",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㅁ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q375",
-  "explain": "📖 교재 근거 (교재: L1692):\n| 멜라닌 형성 | 티로신→티로시나아제→도파→도파퀴논→멜라닌 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "1"
- },
- {
-  "id": "understanding_combo_7b9af0",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1454 (출처: 과목4 문제은행 Q376)",
-  "stem": "피부의 장벽 기능을 평가하는 지표로 경피수분손실량의 영문 약자는 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_662aa2",
-    "conceptId": "L1454",
-    "text": "TEWL",
-    "truth": true
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_437044",
-    "conceptId": "L1454",
-    "text": "휴지(telogen)",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_43a4d2",
-    "conceptId": "L1454",
-    "text": "트랜스글루타미나아제",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_163ccb",
-    "conceptId": "L1454",
-    "text": "탈각(박리)",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_a6a7eb",
-    "conceptId": "L1454",
-    "text": "제라니올",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㅁ",
-     "ㄹ",
-     "ㄷ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㅁ",
-     "ㄴ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㅁ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄷ",
-     "ㄱ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q376",
-  "explain": "📖 교재 근거 (교재: L1454):\n> 용어 - 경피수분손실량(TEWL) 🎯 기출: 피부 표면에서 증발되는 수분량(TEWL: Transepidermal Water Loss)으로 건성 피부와 손상 피부는 값이 높으며, 피부 장벽기능 이상과 관련 있음",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "2"
- },
- {
-  "id": "understanding_combo_90b7f6",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L2746 (출처: 과목4 문제은행 Q377)",
-  "stem": "맞춤형화장품 조제 시 원료의 교차 오염을 방지하기 위해 기구를 (A)해야 한다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_7d5369",
-    "conceptId": "L2746",
-    "text": "메스실린더(또는 피펫)",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_bb6420",
-    "conceptId": "L2746",
-    "text": "소독(세척·소독)",
-    "truth": true
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_a26c30",
-    "conceptId": "L2746",
-    "text": "이황화(disulfide)",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_0369b9",
-    "conceptId": "L2746",
-    "text": "C",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_9b6676",
-    "conceptId": "L2746",
-    "text": "MSDS",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㅁ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄷ",
-     "ㄹ",
-     "ㅁ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄹ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q377",
-  "explain": "📖 교재 근거 (교재: L2746):\n> 시설 점검 + 혼합·소분 위생 관리(손 소독·기구 세척·사용기한 확인) + 미생물 관리 + 판매내역서 작성·보관 + 부작용 보고(식약처장).",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "4"
- },
- {
-  "id": "understanding_combo_88421a",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L67 (출처: 과목4 문제은행 Q378)",
-  "stem": "피부의 세포간지질 중 가장 많은 비율을 차지하는 지질은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_8f401b",
-    "conceptId": "q:subject4_q378",
-    "text": "세라마이드",
-    "truth": true
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_cca14e",
-    "conceptId": "q:subject4_q378",
-    "text": "제조번호",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_228e83",
-    "conceptId": "q:subject4_q378",
-    "text": "전성분",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_d39a48",
-    "conceptId": "q:subject4_q378",
-    "text": "티올(SH)",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_7fc79e",
-    "conceptId": "q:subject4_q378",
-    "text": "나이아신아마이드",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㅁ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄹ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "구성비"
-  ],
-  "derivedFrom": "subject4_q378",
-  "explain": "📖 교재 근거 (교재: L67):\n| 세라마이드 | 세포간지질 50% 이상 |\n| 가혹시험 온도 | -15~45℃ |\n| 인체적용시험 | 5년 이상 경력자 지도·감독 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "1"
- },
- {
-  "id": "understanding_combo_b977db",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 출처: 과목4 문제은행 Q379",
-  "stem": "맞춤형화장품 조제 시 소비자의 피부 상태를 파악하기 위해 실시하는 평가를 (A) 평가라고 한다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_5086f3",
-    "conceptId": "L449",
-    "text": "제조번호",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_665546",
-    "conceptId": "L449",
-    "text": "자유지방산",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_4566d2",
-    "conceptId": "L449",
-    "text": "망상",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_7e405f",
-    "conceptId": "L449",
-    "text": "관능",
-    "truth": true
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_7b098d",
-    "conceptId": "L449",
-    "text": "수평",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄹ",
-     "ㅁ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄷ",
-     "ㅁ",
-     "ㄹ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ",
-     "ㄱ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q379",
-  "explain": "📖 법령 근거 (L449(제20901호)(20260402)/화장품법(법률)(제20901호)(20260402).md#L449>)):\n① 맞춤형화장품조제관리사가 되려는 사람은 화장품과 원료 등에 대하여 식품의약품안전처장이 실시하는 자격시험에 합격하여야 한다.",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "5"
- },
- {
-  "id": "understanding_combo_822ea9",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1469 (출처: 과목4 문제은행 Q380)",
-  "stem": "피부의 자외선 중 표피와 진피에 모두 도달하는 자외선은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_fcdb94",
-    "conceptId": "L1469",
-    "text": "수평",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_fa9472",
-    "conceptId": "L1469",
-    "text": "지질",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_16b72e",
-    "conceptId": "L1469",
-    "text": "cP",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_b727dc",
-    "conceptId": "L1469",
-    "text": "이황화(disulfide)",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_f7ecbf",
-    "conceptId": "L1469",
-    "text": "UVA",
-    "truth": true
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄹ",
-     "ㅁ",
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㅁ",
-     "ㄹ",
-     "ㄷ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄹ",
-     "ㄷ",
-     "ㄴ",
-     "ㄱ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q380",
-  "explain": "📖 교재 근거 (교재: L1469):\n| 색소침착 피부 | • 멜라닌이 비정상적으로 과잉 생성되면서 과색소침착이 일어난 피부<br>• 자외선, 스트레스, 여성호르몬, 내장장애 등의 원인으로 발생<br>• 자외선의 종류<br>&nbsp;&nbsp;- UVA: 320~400nm 장파장으로 광노화의 원인 🎯 기출<br>&nbsp;&nbsp;- UVB: 290~320nm 중파장으로 일광화상, 홍반의 원인<br>&nbsp;&nbsp;- UVC: 200~290nm 단파장으로 피부암의 원인, 살균·소독작용 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "3"
- },
- {
-  "id": "understanding_combo_a50767",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L499 (출처: 과목4 문제은행 Q381)",
-  "stem": "자외선 차단 지수 SPF는 (A) 자외선의 차단 강도를 의미한다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_da27b0",
-    "conceptId": "L499",
-    "text": "약산",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_fd4fcd",
-    "conceptId": "L499",
-    "text": "성장(anagen)",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_c0522d",
-    "conceptId": "L499",
-    "text": "UVB",
-    "truth": true
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_f09b37",
-    "conceptId": "L499",
-    "text": "교차",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_4de140",
-    "conceptId": "L499",
-    "text": "계면활성제",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄹ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄷ",
-     "ㄱ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄹ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "정의"
-  ],
-  "derivedFrom": "subject4_q381",
-  "explain": "📖 교재 근거 (교재: L499):\nUVB를 차단하는 자외선 차단지수(SPF: Sun Protection Factor)",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "2"
- },
- {
-  "id": "understanding_combo_396ecd",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L579 (출처: 과목4 문제은행 Q382)",
-  "stem": "맞춤형화장품 조제 시 원료의 안전성을 확인하기 위해 참고하는 원료의 안전성 정보 시트의 영문 약자는 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_08de1b",
-    "conceptId": "L579",
-    "text": "MSDS",
-    "truth": true
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_8b60d0",
-    "conceptId": "L579",
-    "text": "자유지방산",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_292169",
-    "conceptId": "L579",
-    "text": "멜라닌형성세포",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_7366ba",
-    "conceptId": "L579",
-    "text": "소독(세척·소독)",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_4a44d1",
-    "conceptId": "L579",
-    "text": "사용기한",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄷ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㅁ",
-     "ㄹ",
-     "ㄷ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "기한"
-  ],
-  "derivedFrom": "subject4_q382",
-  "explain": "📖 법령 근거 (교재: L579):\n| 제5조<br>영업자의 의무 등 🎯 기출 | • 화장품제조업자는 화장품의 제조와 관련된 기록·시설·기구 등 관리 방법, 원료·자재·완제품 등에 대한 시험·검사·검정 실시 방법 및 의무 등에 관하여 총리령으로 정하는 사항을 준수해야 함<br>• 화장품책임판매업자는 화장품의 품질관리기준, 책임판매 후 안전관리기준, 품질 검사 방법 및 실시 의무, 안전성·유효성 관련 정보사항 등의 보고 및 안전대책 마련 의무 등에 관하여 총리령으로 정하는 사항을 준수해야 함<br>• 맞춤형화장품판매업자는 소비자에게 유통·판매되는 화장품을 임의로 혼합·소분하여서는 안 됨<br>• 맞춤형화장품판매업자는 맞춤형화장품 판매장 시설·기구의 관리 방법, 혼합·소분 안전관리기준의 준수 의무, 혼합·소분되는 내용물 및 원료에 대한 설...",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "4"
- },
- {
-  "id": "understanding_combo_4ee5fa",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1549 (출처: 과목4 문제은행 Q383)",
-  "stem": "피부의 표피층 중 면역 반응을 개시하는 세포는 (A)세포이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_45faee",
-    "conceptId": "L1549",
-    "text": "랑게르한스",
-    "truth": true
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_e8e177",
-    "conceptId": "L1549",
-    "text": "각질",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_082304",
-    "conceptId": "L1549",
-    "text": "에크린",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_2ade29",
-    "conceptId": "L1549",
-    "text": "주기(턴오버)",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_5a47f1",
-    "conceptId": "L1549",
-    "text": "엘라스틴",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄹ",
-     "ㄷ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄹ",
-     "ㄴ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄹ",
-     "ㅁ",
-     "ㄷ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄹ",
-     "ㅁ",
-     "ㄱ",
-     "ㄴ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "기한"
-  ],
-  "derivedFrom": "subject4_q383",
-  "explain": "📖 교재 근거 (교재: L1549):\n| 랑게르한스세포 | 유극층 | 면역반응 조절, 항원 전달 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "4"
- },
- {
-  "id": "understanding_combo_87fa5b",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L830 (출처: 과목4 문제은행 Q384)",
-  "stem": "맞춤형화장품 조제 시 원료의 배합 비율을 기록한 문서를 (A) 처방전(배합표)이라고 한다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_f00754",
-    "conceptId": "L830",
-    "text": "조제",
-    "truth": true
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_ef4521",
-    "conceptId": "L830",
-    "text": "C",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_da2b1a",
-    "conceptId": "L830",
-    "text": "페녹시에탄올",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_6d59a7",
-    "conceptId": "L830",
-    "text": "유두",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_8e7516",
-    "conceptId": "L830",
-    "text": "휴지(telogen)",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄹ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄹ",
-     "ㅁ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄹ",
-     "ㄴ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "한도",
-   "구성비"
-  ],
-  "derivedFrom": "subject4_q384",
-  "explain": "📖 교재 근거 (교재: L830):\n## 📊 맞춤형화장품판매업 결격사유 vs 조제관리사 결격사유 비교표",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "3"
- },
- {
-  "id": "understanding_combo_d72c54",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1158 (출처: 과목4 문제은행 Q385)",
-  "stem": "피부의 각질층 세포가 탈락하는 현상을 (A)이라고 한다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_d75fd5",
-    "conceptId": "L1158",
-    "text": "트랜스글루타미나아제",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_7ff57a",
-    "conceptId": "L1158",
-    "text": "이황화(disulfide)",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_5d6866",
-    "conceptId": "L1158",
-    "text": "메스실린더(또는 피펫)",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_3ad91b",
-    "conceptId": "L1158",
-    "text": "탈각(박리)",
-    "truth": true
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_6dd48f",
-    "conceptId": "L1158",
-    "text": "카보머",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㅁ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㅁ",
-     "ㄹ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㅁ",
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄹ",
-     "ㄷ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q385",
-  "explain": "📖 교재 근거 (교재: L1158):\n| 각질층<br>(Horny Layer) 🎯 기출 | • 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5 정도의 약산성<br>• 피부의 가장 바깥에 위치하여 수분 손실을 막고, 피부장벽 역할을 하여 피부 보호 및 세균 침입 방어<br>• 각질과 세포간지질이 벽돌 구조인 라멜라 구조<br>• 케라틴 약 58%, 천연보습인자(NMF) 약 31%, 세포간지질 약 11%로 구성<br>• 각질층은 천연보습인자(NMF)를 통해 10~20%의 수분 함유<br>&nbsp;&nbsp;* 필라그린(Fillaggrin): 각질층 형성에 중요한 역할을 하는 단백질로, 각질층에서 단백질 분해 효소에 의해 분해되어 천연보습인자(NMF)를 구성하는 아미노산을 이룸<br>&nbsp;&nbsp;* 세라마이드*...",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "4"
- },
- {
-  "id": "understanding_combo_9514f6",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L897 (출처: 과목4 문제은행 Q386)",
-  "stem": "맞춤형화장품 조제 시 원료의 계량 오차 허용 범위는 일반적으로 ±(A)%이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_66513c",
-    "conceptId": "L897",
-    "text": "0.3",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_d7a42b",
-    "conceptId": "L897",
-    "text": "0.04",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_f4f24e",
-    "conceptId": "L897",
-    "text": "28",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_e7b620",
-    "conceptId": "L897",
-    "text": "1",
-    "truth": true
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_7eb8b4",
-    "conceptId": "L897",
-    "text": "2",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄷ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "한도",
-   "수치"
-  ],
-  "derivedFrom": "subject4_q386",
-  "explain": "📖 교재 근거 (교재: L897):\n> 해설: 맞춤형화장품판매업자가 업자·상호·소재지·조제관리사를 변경하는 경우, 변경이 있는 날부터 30일 이내에 관할 지방식약청장에게 신고해야 한다. 행정기관 처리기한은 10일 이내(조제관리사 변경은 7일 이내)이다.",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "1"
- },
- {
-  "id": "understanding_combo_8cbb9d",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 출처: 과목4 문제은행 Q387",
-  "stem": "피부의 모발의 주요 구성 성분은 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_babfa2",
-    "conceptId": "L1353",
-    "text": "라멜라",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_3a3eaa",
-    "conceptId": "L1353",
-    "text": "온도",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_c84ded",
-    "conceptId": "L1353",
-    "text": "자유지방산",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_5c128e",
-    "conceptId": "L1353",
-    "text": "케라틴",
-    "truth": true
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_d19112",
-    "conceptId": "L1353",
-    "text": "이황화(disulfide)",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄹ",
-     "ㄷ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q387",
-  "explain": "📖 교재 근거 (L1353):\n- 멜라닌이 없어 무색투명한 케라틴 단백질로 구성됨",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "2"
- },
- {
-  "id": "understanding_combo_ca8bcc",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 출처: 과목4 문제은행 Q388",
-  "stem": "맞춤형화장품 조제 시 저울의 (A) 상태를 확인해야 정확한 계량이 가능하다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_883ca4",
-    "conceptId": "L545",
-    "text": "소독(세척·소독)",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_b64762",
-    "conceptId": "L545",
-    "text": "수평",
-    "truth": true
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_9b9b68",
-    "conceptId": "L545",
-    "text": "세라마이드",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_d191b3",
-    "conceptId": "L545",
-    "text": "페녹시에탄올",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_1f22a4",
-    "conceptId": "L545",
-    "text": "교차",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄷ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄹ",
-     "ㅁ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q388",
-  "explain": "📖 법령 근거 (L545(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L545>)):\n③ 지방식품의약품안전청장은 제2항에 따라 맞춤형화장품판매업 변경신고를 받은 경우에는 「전자정부법」 제36조제1항에 따른 행정정보의 공동이용을 통해 법인 등기사항증명서(법인인 경우만 해당한다)를 확인해야 한다.",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "3"
- },
- {
-  "id": "understanding_combo_a0b8b1",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1213 (출처: 과목4 문제은행 Q389)",
-  "stem": "피부의 진피층 중 콜라겐과 엘라스틴 섬유가 풍부하여 피부 강도를 담당하는 층은 (A)층이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_58e7bc",
-    "conceptId": "L1213",
-    "text": "탈각(박리)",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_f43cae",
-    "conceptId": "L1213",
-    "text": "망상",
-    "truth": true
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_ce2efe",
-    "conceptId": "L1213",
-    "text": "교체(턴오버)",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_82d910",
-    "conceptId": "L1213",
-    "text": "트랜스글루타미나아제",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_f134cf",
-    "conceptId": "L1213",
-    "text": "부식(방식)",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㅁ",
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄹ",
-     "ㄱ",
-     "ㄴ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄹ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄴ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q389",
-  "explain": "📖 교재 근거 (교재: L1213):\n| 망상층(Reticular Layer) 🎯 기출 | • 진피의 대부분을 차지하는 그물 모양(망상구조)의 결합조직<br>• 교원섬유(콜라겐) 90%, 탄력섬유(엘라스틴) 1.5~4.7%, 기질로 구성됨<br>• 모세혈관은 거의 없으며, 림프관, 한선, 피지선, 신경 등이 존재함 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "5"
- },
- {
-  "id": "understanding_combo_946328",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 출처: 과목4 문제은행 Q390",
-  "stem": "맞춤형화장품 조제 시 원료의 배합 후 pH가 피부 적정 범위인 (A)성 범위에 있는지 확인해야 한다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_4042a4",
-    "conceptId": "L3649",
-    "text": "수분",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_84c1ca",
-    "conceptId": "L3649",
-    "text": "약산",
-    "truth": true
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_079bf4",
-    "conceptId": "L3649",
-    "text": "스핑고신",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_9a8b89",
-    "conceptId": "L3649",
-    "text": "NMF(천연보습인자)",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_c351f9",
-    "conceptId": "L3649",
-    "text": "오크모스",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㅁ",
-     "ㄹ",
-     "ㄷ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㅁ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄹ",
-     "ㄴ",
-     "ㄱ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "한도"
-  ],
-  "derivedFrom": "subject4_q390",
-  "explain": "📖 교재 근거 (L3649):\n| 약산성 | pH 3.0~5.0. |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "2"
- },
- {
-  "id": "understanding_combo_492788",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1130 (출처: 과목4 문제은행 Q391)",
-  "stem": "피부의 각질층의 세포간지질은 (A) 이중층 구조를 이룬다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_f8a17f",
-    "conceptId": "L1130",
-    "text": "세라마이드",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_9c3984",
-    "conceptId": "L1130",
-    "text": "스쿠알렌",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_2db135",
-    "conceptId": "L1130",
-    "text": "유두",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_0dd825",
-    "conceptId": "L1130",
-    "text": "지질",
-    "truth": true
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_67e9fb",
-    "conceptId": "L1130",
-    "text": "페녹시에탄올",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㅁ",
-     "ㄹ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄷ",
-     "ㄹ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ",
-     "ㄷ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q391",
-  "explain": "📖 교재 근거 (교재: L1130):\n| 비타민 D 합성 🎯 기출 | 자외선을 일정하게 받으면 비타민 D를 합성하며, 이때 지질의 일종인 콜레스테롤은 합성에 중요한 역할을 함 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "5"
- },
- {
-  "id": "understanding_combo_7dc19f",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 출처: 과목4 문제은행 Q392",
-  "stem": "맞춤형화장품 조제 시 원료의 유통기한이 경과한 경우 (A)하고 사용하지 않아야 한다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_8a9143",
-    "conceptId": "L507",
-    "text": "케라틴",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_c48d81",
-    "conceptId": "L507",
-    "text": "폐기",
-    "truth": true
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_b4b892",
-    "conceptId": "L507",
-    "text": "티올(SH)",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_549483",
-    "conceptId": "L507",
-    "text": "알레르기",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_94441d",
-    "conceptId": "L507",
-    "text": "오크모스",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄹ",
-     "ㅁ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㅁ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄴ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "기한"
-  ],
-  "derivedFrom": "subject4_q392",
-  "explain": "📖 법령 근거 (L507(제20901호)(20260402)/화장품법(법률)(제20901호)(20260402).md#L507>)):\n맞춤형화장품조제관리사가 아닌 자는 맞춤형화장품조제관리사 또는 이와 유사한 명칭을 사용하지 못한다.",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "5"
- },
- {
-  "id": "understanding_combo_1797b8",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1162 (출처: 과목4 문제은행 Q393)",
-  "stem": "피부의 표피와 진피의 경계에 있는 구조로 영양 공급과 결합을 담당하는 것은 (A)막이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_b68aba",
-    "conceptId": "L1162",
-    "text": "멜라닌형성",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_46deda",
-    "conceptId": "L1162",
-    "text": "기저",
-    "truth": true
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_578af0",
-    "conceptId": "L1162",
-    "text": "맞춤형화장품 조제관리사",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_0a7f24",
-    "conceptId": "L1162",
-    "text": "표준",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_227d31",
-    "conceptId": "L1162",
-    "text": "부식(방식)",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄹ",
-     "ㄷ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㅁ",
-     "ㄷ",
-     "ㄱ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄹ",
-     "ㄷ",
-     "ㄴ",
-     "ㅁ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q393",
-  "explain": "📖 교재 근거 (교재: L1162):\n| 기저층<br>(Basal Layer) | • 단층의 원추형 유핵세포층<br>• 진피의 모세혈관으로부터 영양분과 산소를 공급받아 세포분열 촉진<br>• 각질형성세포(케라티노사이트), 멜라닌형성세포(멜라노사이트), 머켈세포 존재<br>• 각질형성세포와 멜라닌형성세포는 4:1~10:1 비율로 존재함 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "3"
- },
- {
-  "id": "understanding_combo_0e0f53",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L634 (출처: 과목4 문제은행 Q394)",
-  "stem": "맞춤형화장품 조제 시 소비자의 피부 알레르기 이력을 확인하여 (A) 유발 성분을 배제해야 한다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_79d048",
-    "conceptId": "L634",
-    "text": "알레르기",
-    "truth": true
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_5c8d4a",
-    "conceptId": "L634",
-    "text": "MSDS",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_5c7635",
-    "conceptId": "L634",
-    "text": "페녹시에탄올",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_d607b5",
-    "conceptId": "L634",
-    "text": "표준",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_296c1b",
-    "conceptId": "L634",
-    "text": "NMF(천연보습인자)",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄹ",
-     "ㄴ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄹ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄷ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄹ",
-     "ㄷ",
-     "ㄴ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q394",
-  "explain": "📖 교재 근거 (교재: L634):\n| 인체 첩포시험(인체 패치테스트) 🎯 기출 | • 등, 팔 안쪽에 폐쇄 첩포하여 피부 자극성이나 감작성(알레르기)을 평가함<br>• 국내외 대학 또는 전문 연구기관에서 실시하며, 관련 분야 전문의사, 연구소, 병원 등 관련 기관에서 5년 이상 경력을 가진 자의 지도 및 감독하에 수행·평가되어야 함 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "3"
- },
- {
-  "id": "understanding_combo_7c1ceb",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L483 (출처: 과목4 문제은행 Q395)",
-  "stem": "피부의 콜라겐 합성에 필요한 비타민은 비타민 (A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_d51a70",
-    "conceptId": "L483",
-    "text": "지질",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_1e664a",
-    "conceptId": "L483",
-    "text": "발(스크류)",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_7ab030",
-    "conceptId": "L483",
-    "text": "제조번호",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_23a8f0",
-    "conceptId": "L483",
-    "text": "헤미데스모좀",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_093dc4",
-    "conceptId": "L483",
-    "text": "C",
-    "truth": true
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄴ",
-     "ㄹ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q395",
-  "explain": "📖 교재 근거 (교재: L483):\n| 진피 | 피부 90% 이상, 표피의 10~40배, 콜라겐 90%·엘라스틴 1.5~4.7% |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "4"
- },
- {
-  "id": "understanding_combo_6a9846",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L3468 (출처: 과목4 문제은행 Q396)",
-  "stem": "맞춤형화장품 조제 시 기구의 세척 순서는 세척→소독→(A)이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_26ead6",
-    "conceptId": "L3468",
-    "text": "맞춤형화장품 조제관리사",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_fe6ae0",
-    "conceptId": "L3468",
-    "text": "큐티클",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_551016",
-    "conceptId": "L3468",
-    "text": "KCl",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_f4e68b",
-    "conceptId": "L3468",
-    "text": "건조",
-    "truth": true
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_731bb5",
-    "conceptId": "L3468",
-    "text": "전성분",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄷ",
-     "ㄹ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄷ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㄹ",
-     "ㄴ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "절차"
-  ],
-  "derivedFrom": "subject4_q396",
-  "explain": "📖 교재 근거 (교재: L3468):\n- 세척한 작업 장비 및 도구는 잘 건조하여 다음 사용 시까지 오염 방지",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "4"
- },
- {
-  "id": "understanding_combo_b39929",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1212 (출처: 과목4 문제은행 Q397)",
-  "stem": "피부의 진피층 중 표피와 접하며 미세한 혈관이 분포하는 층은 (A)층이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_5df60c",
-    "conceptId": "L1212",
-    "text": "스핑고신",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_2dedfb",
-    "conceptId": "L1212",
-    "text": "오크모스",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_79aff7",
-    "conceptId": "L1212",
-    "text": "유두",
-    "truth": true
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_1f0043",
-    "conceptId": "L1212",
-    "text": "관능",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_69271e",
-    "conceptId": "L1212",
-    "text": "부식(방식)",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄷ",
-     "ㄹ",
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄴ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄷ",
-     "ㅁ",
-     "ㄴ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ",
-     "ㅁ",
-     "ㄴ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "구성비"
-  ],
-  "derivedFrom": "subject4_q397",
-  "explain": "📖 교재 근거 (교재: L1212):\n| 유두층(Papillary Layer) | • 표피의 기저층과 접하고 있으며, 유두(물결) 모양을 형성<br>• 모세혈관과 신경말단이 존재하여 각질형성세포에 산소와 영양을 공급함<br>• 미세한 교원섬유(콜라겐)와 수분을 포함함 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "2"
- },
- {
-  "id": "understanding_combo_769b2f",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L578 (출처: 과목4 문제은행 Q398)",
-  "stem": "맞춤형화장품 조제 시 원료의 품질 이상이 발견된 경우 별도 구역에 (A)하고 폐기 또는 반품해야 한다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_3c12f4",
-    "conceptId": "L578",
-    "text": "격리",
-    "truth": true
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_eef093",
-    "conceptId": "L578",
-    "text": "PA",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_80a0b3",
-    "conceptId": "L578",
-    "text": "소분",
-    "truth": false
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_e2ee6c",
-    "conceptId": "L578",
-    "text": "메스실린더(또는 피펫)",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_f7eed7",
-    "conceptId": "L578",
-    "text": "조제",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㄴ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄷ",
-     "ㄹ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄴ",
-     "ㄱ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㄱ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정"
-  ],
-  "derivedFrom": "subject4_q398",
-  "explain": "📖 교재 근거 (교재: L578):\n| 제3조의8<br>맞춤형화장품 조제관리사 자격의 취소 | • 거짓이나 그 밖의 부정한 방법으로 맞춤형화장품조제관리사의 자격을 취득한 경우<br>• 맞춤형화장품조제관리사의 결격사유에 해당하는 경우(자격이 취소된 날부터 3년이 지나지 않은 자는 제외함)<br>• 자격증 대여 등의 금지행위를 위반하여 다른 사람에게 자기의 성명을 사용하여 맞춤형화장품조제관리사 업무를 하게 하거나 맞춤형화장품조제관리사자격증을 양도 또는 대여한 경우 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "5"
- },
- {
-  "id": "understanding_combo_4c7b4a",
-  "subject": 4,
-  "type": "combo",
-  "points": 4,
-  "citation": "📖 교재: L1396 (출처: 과목4 문제은행 Q399)",
-  "stem": "피부의 모발의 성장 주기 중 성장기의 영문 명칭은 (A)기이다. — (A)에 해당하는 것을 모두 고르시오.",
-  "statements": [
-   {
-    "id": "ㄱ",
-    "sid": "understanding_st_554e27",
-    "conceptId": "L1396",
-    "text": "이온",
-    "truth": false
-   },
-   {
-    "id": "ㄴ",
-    "sid": "understanding_st_7f8e41",
-    "conceptId": "L1396",
-    "text": "제조번호",
-    "truth": false
-   },
-   {
-    "id": "ㄷ",
-    "sid": "understanding_st_c107bf",
-    "conceptId": "L1396",
-    "text": "anagen(성장)",
-    "truth": true
-   },
-   {
-    "id": "ㄹ",
-    "sid": "understanding_st_541326",
-    "conceptId": "L1396",
-    "text": "페녹시에탄올",
-    "truth": false
-   },
-   {
-    "id": "ㅁ",
-    "sid": "understanding_st_baef2a",
-    "conceptId": "L1396",
-    "text": "PA",
-    "truth": false
-   }
-  ],
-  "options": [
-   {
-    "id": "1",
-    "members": [
-     "ㄹ",
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "2",
-    "members": [
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "3",
-    "members": [
-     "ㄷ",
-     "ㄴ",
-     "ㄱ",
-     "ㅁ"
-    ]
-   },
-   {
-    "id": "4",
-    "members": [
-     "ㄷ"
-    ]
-   },
-   {
-    "id": "5",
-    "members": [
-     "ㅁ",
-     "ㄱ",
-     "ㄷ",
-     "ㄹ"
-    ]
-   }
-  ],
-  "tags": [
-   "자동변환",
-   "정답판정",
-   "기한"
-  ],
-  "derivedFrom": "subject4_q399",
-  "explain": "📖 교재 근거 (교재: L1396):\n| 성장기(Anagen) | 3~6년 | • 전체 모발의 80~90%가 이 시기에 해당함<br>• 모모세포의 활발한 활동 시기<br>• 여자가 남자에 비해 성장주기가 긺 |\n| 퇴행기(Catagen) | 약 3주 | • 전체 모발의 1~2%가 이 시기에 해당함<br>• 모모세포의 분열이 감소하는 시기<br>• 모발의 성장이 멈춘 시기 |\n| 휴지기(Telogen) | 3~4개월 | • 전체 모발의 10~15%가 이 시기에 해당함<br>• 모낭과 모유두의 완전한 분리<br>• 모발의 탈락 시작 |",
-  "source": "맞춤형화장품의 이해 (400제)",
-  "answer": "4"
  },
  {
   "id": "understanding_combo_41751c",
@@ -36778,10 +25274,10 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "1",
     "members": [
-     "ㄷ",
+     "ㄱ",
      "ㄴ",
-     "ㄹ",
-     "ㄱ"
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
@@ -36821,5 +25317,196 @@ var COMBO_DRILLS_subject4 = [
   "explain": "📖 교재 근거 (L3964):\n| (4) 제품별 포장 방법에 관한 기준 🎯 기출 | 단위제품 - 인체 및 두발 세정용 제품류: 포장공간 비율 15% 이하, 포장횟수 2차 이내 / 그 밖의 화장품류: 10% 이하(향수 제외), 2차 이내 |",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "4"
+ },
+ {
+  "id": "understanding_combo-cluster_ed233d",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L573 (출처: 과목4 문제은행 진술 재조합)",
+  "stem": "다음 중 맞춤형화장품 정의 및 주요 규정에 관한 설명으로 옳은 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_bb5e6d",
+    "conceptId": "L573",
+    "text": "이미 제조된 화장품 내용물에 다른 화장품 내용물을 추가하여 혼합하는 것을 포함한다.",
+    "truth": true,
+    "explain": "원본: 과목4 문제은행 Q1 · 교재 L573"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_b7aacc",
+    "conceptId": "L573",
+    "text": "계량의 정확성을 위해 저울 유리를 열고 강한 선풍기 바람 아래에서 작업한다.",
+    "truth": false,
+    "explain": "원본: 과목4 문제은행 Q93 · 교재 L573"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_eb6c51",
+    "conceptId": "L573",
+    "text": "고형 비누 등 내용물을 단순 소분하여 판매하는 경우도 반드시 맞춤형화장품판매업 신고가 필요하다.",
+    "truth": false,
+    "explain": "원본: 과목4 문제은행 Q1 · 교재 L573"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_bdbcf3",
+    "conceptId": "L573",
+    "text": "진동이 없는 평평한 전용 작업대 위에 올려둔다.",
+    "truth": true,
+    "explain": "원본: 과목4 문제은행 Q93 · 교재 L573"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_a5fcc8",
+    "conceptId": "L573",
+    "text": "이미 제조된 화장품 내용물에 식약처장이 정하여 고시한 원료를 추가하여 혼합하는 것을 포함한다.",
+    "truth": true,
+    "explain": "원본: 과목4 문제은행 Q1 · 교재 L573"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄹ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄱ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "명제판정",
+   "개념재조합",
+   "절차",
+   "구성비",
+   "정의"
+  ],
+  "derivedFrom": "cluster:4|L573",
+  "explain": "ㄱ. 원본: 과목4 문제은행 Q1 · 교재 L573\nㄴ. 원본: 과목4 문제은행 Q93 · 교재 L573\nㄷ. 원본: 과목4 문제은행 Q1 · 교재 L573\nㄹ. 원본: 과목4 문제은행 Q93 · 교재 L573\nㅁ. 원본: 과목4 문제은행 Q1 · 교재 L573",
+  "source": "과목4 개념 재조합",
+  "answer": "1"
+ },
+ {
+  "id": "understanding_combo-cluster_a1996c",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L581 (출처: 과목4 문제은행 진술 재조합)",
+  "stem": "다음 중 맞춤형화장품 정의 및 주요 규정에 관한 설명으로 옳은 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_f19502",
+    "conceptId": "L581",
+    "text": "제품 제조 시 작성된 혼합 및 소분 기록서를 검토하여 원료의 배합 오류 여부를 확인한다.",
+    "truth": true,
+    "explain": "원본: 과목4 문제은행 Q30 · 교재 L581"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_1c1cfb",
+    "conceptId": "L581",
+    "text": "본 업소의 잘못이 아니라고 강력히 우기며 고객을 돌려보낸다.",
+    "truth": false,
+    "explain": "원본: 과목4 문제은행 Q30 · 교재 L581"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_b751af",
+    "conceptId": "L581",
+    "text": "비말(침방울) 오염을 방지하기 위해 마스크를 착용한다.",
+    "truth": true,
+    "explain": "원본: 과목4 문제은행 Q12 · 교재 L581"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_390b61",
+    "conceptId": "L581",
+    "text": "조제실 바닥 소독을 위해 락스 희석액을 화장품 내용물에 직접 첨가한다.",
+    "truth": false,
+    "explain": "원본: 과목4 문제은행 Q12 · 교재 L581"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄷ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄹ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "명제판정",
+   "개념재조합",
+   "한도",
+   "정의"
+  ],
+  "derivedFrom": "cluster:4|L581",
+  "explain": "ㄱ. 원본: 과목4 문제은행 Q30 · 교재 L581\nㄴ. 원본: 과목4 문제은행 Q30 · 교재 L581\nㄷ. 원본: 과목4 문제은행 Q12 · 교재 L581\nㄹ. 원본: 과목4 문제은행 Q12 · 교재 L581",
+  "source": "과목4 개념 재조합",
+  "answer": "2"
  }
 ];

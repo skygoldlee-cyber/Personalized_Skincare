@@ -87,15 +87,18 @@ function generateComboOptions(allIds, truthIds, { count = 5, rng = Math.random, 
   const truthSet = new Set(truthIds);
   const eq = (arr) => arr.length === truthSet.size && arr.every(id => truthSet.has(id));
   const seen = new Set([[...truthIds].sort().join(',')]);
-  const options = [{ id: '1', members: [...truthIds] }];
+  // 진술 라벨(ㄱㄴㄷㄹ…)은 유니코드 연속 코드포인트 — 오름차순 정렬이 곧 가나다순.
+  // 실제 시험 관례상 옵션 멤버는 항상 라벨 순서로 표기한다.
+  const byLabel = (a, b) => allIds.indexOf(a) - allIds.indexOf(b);
+  const options = [{ id: '1', members: [...truthIds].sort(byLabel) }];
 
   let guard = 0;
   while (options.length < count && guard++ < 500) {
     const size = 1 + Math.floor(rng() * allIds.length);
     // banFull: 정답이 전체 집합이 아닐 때 "모두 고르기" 오지를 제한 (패턴 단조로움 방지)
     if (banFull && size === allIds.length) continue;
-    const members = [...allIds].sort(() => rng() - 0.5).slice(0, size);
-    const key = members.slice().sort().join(',');
+    const members = [...allIds].sort(() => rng() - 0.5).slice(0, size).sort(byLabel);
+    const key = members.join(',');
     if (seen.has(key) || eq(members)) continue;
     seen.add(key);
     options.push({ id: String(options.length + 1), members });

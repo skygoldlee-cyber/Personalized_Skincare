@@ -12,15 +12,21 @@
  *                   → 발문은 "…으로 옳은 것을 모두 고른 것은?"으로 긍정 정규화
  *   mode 'answer' — 회상형·분류형 선지(고유명사·수치): truth = 정답 여부
  *                   → 발문 꼬리를 "…모두 고른 것은?"으로 변환 (극성 보존)
- *   mode 'blank'  — 단답형: 정답 + 과목 정답 풀 오답 추첨으로 진술 구성
- *                   다중 빈칸은 (A)만 1문항 생성 — 총량 1,000문(100/250/250/400) 유지
  *   '위 ①②③ 모두'류 메타 선지가 정답이면 원형 숫자 개수만큼 실질 선지를 참으로 처리
+ *
+ *   개념 재조합 — fact 모드 진술을 같은 교재 구간(conceptId = 첫 L####)끼리 모아
+ *                 참 2~3개 + 거짓 진술로 진짜 복수정답 합답형을 추가 생성한다.
+ *                 (단일정답 문항이 대부분인 구조적 한계 보완.
+ *                  챕터 단위는 입자가 커서 이질 진술이 섞이므로 L#### 단위로 한정)
  *
  *   진술 explain은 중복 저장하지 않음(문항 explain으로 폴백) — 번들 크기 절감
  *   conceptId = explanation의 첫 교재 L#### (같은 구간 진술 = 개념 클러스터)
  *   id = stableId(문항 id) — 재생성 순서와 무관하게 안정
  *
- * 제외: ㄱㄴㄷ 조합형 발문, 참 진술 0개 그룹, 진술 2개 미만
+ * 제외: ㄱㄴㄷ 조합형 발문, 참 진술 0개 그룹, 진술 2개 미만, 단답형(blank)
+ *       — 빈칸은 정답이 하나뿐이라 합답형이 되어도 100% 단일정답이 되어
+ *         "참 진술 하나 찾기"로 공략 가능 → 합답형 풀에서 제외하고
+ *         원본 문제은행의 단답형으로만 출제한다.
  *
  * 입력 : data/exams/*.js (EXAM_DATA_subjectN)
  * 출력 : data/drills/combo_subjectN.js  →  var COMBO_DRILLS_subjectN = [...]
@@ -148,134 +154,32 @@ function loadExamFile(filePath) {
 const CIRCLED = ['①', '②', '③', '④', '⑤', '⑥', '⑦', '⑧', '⑨', '⑩'];
 const STMT_LABELS = ['ㄱ', 'ㄴ', 'ㄷ', 'ㄹ', 'ㅁ', 'ㅂ'];
 
-/* ---------- 단답형 → 합답형 변환 (정답 풀링) ---------- */
+/* ---------- 진술 유틸 ---------- */
 
-const BLANK_MARKER_RE = /\*+\[\s*\((A|B)\)\s*\]\s*\*+/g;
-
-/** 빈칸 마커 `**[ (A) ]**` → `(A)` 평문화 */
-function cleanBlankStem(stem) {
-  return String(stem || '').replace(/\s+/g, ' ').replace(BLANK_MARKER_RE, '($1)').trim();
-}
-
-/** 정답 유형 분류: 숫자 포함 → 'num' (수치끼리 풀링), 아니면 'term' */
-function answerType(text) {
-  return /\d/.test(text) ? 'num' : 'term';
-}
-
-/** 정규화 비교키 — 모호성 검사용 (공백·대소문자·괄호 무시) */
+/** 정규화 비교키 — 진술 중복 제거·모호성 검사용 (공백·대소문자·괄호 무시) */
 function normKey(s) {
   return String(s).toLowerCase().replace(/[\s()[\]{}]/g, '');
 }
 
-/**
- * 단답형 정답 풀 구축: 과목별 + 전체 백업 풀.
- * 각 문항의 허용 정답 첫 번째를 대표 정답으로 등록.
- */
-function buildAnswerPools(examDataMap) {
-  const bySubject = {};
-  const global = { num: new Map(), term: new Map() };
-  for (const [key, { data: exam }] of Object.entries(examDataMap)) {
-    const pool = { num: new Map(), term: new Map() };
-    for (const q of exam.questions) {
-      if (q.type !== 'blank') continue;
-      const parts = String(q.answer || '').split(',').map(s => s.trim()).filter(Boolean);
-      // 다중 빈칸은 (A)=parts[0], (B)=parts[1]을 각각 풀에 등록 — 나머지는 허용 답안 변형
-      const blanks = /\(\s*B\s*\)|\*\*\[\s*\(B\)/.test(q.question) ? parts.slice(0, 2) : parts.slice(0, 1);
-      for (const canonical of blanks) {
-        const entry = { text: canonical, qid: q.id };
-        pool[answerType(canonical)].set(normKey(canonical), entry);
-        global[answerType(canonical)].set(normKey(canonical), entry);
-      }
-    }
-    bySubject[key] = pool;
+/** seeded 셔플 (Fisher-Yates) */
+function shuffle(arr, rng) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
   }
-  return { bySubject, global };
+  return arr;
 }
 
 /**
- * 오답 선지 선정: 같은 유형(수치/용어) 풀에서 추첨하되,
- * 정답(허용 답안 전부)과 정규화 후 부분문자열 관계면 모호하므로 제외.
+ * 해설 정제 — 원본 해설에 박힌 '정답: ② …' 라인을 제거한다.
+ * 합답형은 도출 정답이 원본 선지 번호와 다르므로 그대로 두면 혼동을 유발한다.
+ * (번들 explain에 저장되기 때문에 생성 단계에서 정제 — MD 출력 필터는 이중 안전장치)
  */
-function pickDistractors(q, pool, count, rng, acceptsRaw) {
-  const accepts = (acceptsRaw || String(q.answer || '').split(','))
-    .map(s => normKey(s)).filter(Boolean);
-  const canonical = accepts[0];
-  const ambiguous = (cand) =>
-    accepts.some(a => a.includes(cand) || cand.includes(a));
-
-  const sameType = pool[answerType(canonical)] || new Map();
-  const others = [...sameType.values()]
-    .filter(e => e.qid !== q.id && !ambiguous(normKey(e.text)));
-
-  // 섞어서 count개 추첨
-  for (let i = others.length - 1; i > 0; i--) {
-    const j = Math.floor(rng() * (i + 1));
-    [others[i], others[j]] = [others[j], others[i]];
-  }
-  return others.slice(0, count).map(e => e.text);
-}
-
-/**
- * 단답형 → combo 문항 변환
- * @param {string} blankLabel 항상 'A' — seed/sid/id 안정성을 위해 라벨 형식 유지 (1,000문 총량 정책으로 (B) 생성 중단)
- */
-function buildBlankCombo(q, blankLabel, examKey, exam, pools, globalPool, genOpts) {
-  const subject = SUBJECT_NUM[examKey];
-  const subjKey = SUBJECT_KEY[examKey] || examKey;
-  const parts = String(q.answer || '').split(',').map(s => s.trim()).filter(Boolean);
-  const canonical = blankLabel === 'B' ? parts[1] : parts[0];
-  if (!canonical) return null;
-  const accepts = blankLabel === 'B' ? [canonical] : parts;
-
-  const rng = seededRng(q.id + '|blank' + blankLabel);
-  let distractors = pickDistractors(q, pools[examKey], 4, rng, accepts);
-  // 과목 내 풀이 부족하면 전체 풀로 보충 (과목3 blank 1문 등)
-  if (distractors.length < 4) {
-    const extra = pickDistractors(q, globalPool, 4 - distractors.length, rng, accepts)
-      .filter(t => !distractors.includes(t) && normKey(t) !== normKey(canonical));
-    distractors = [...distractors, ...extra];
-  }
-  if (distractors.length < 2) return null; // 진술 3개 미만이면 합답형 성립 불가
-
-  // 정답 + 오답을 seeded 셔플 → ㄱㄴㄷㄹㅁ 라벨
-  const stmts = [
-    { text: canonical, truth: true },
-    ...distractors.map(t => ({ text: t, truth: false })),
-  ];
-  for (let i = stmts.length - 1; i > 0; i--) {
-    const j = Math.floor(rng() * (i + 1));
-    [stmts[i], stmts[j]] = [stmts[j], stmts[i]];
-  }
-  const conceptId = extractConceptId(q.explanation, q.id);
-  const statements = stmts.map((s, i) => ({
-    id: STMT_LABELS[i],
-    sid: stableId(subjKey, 'bank', 'st', `${q.id}|blank${blankLabel}${i}|${s.text}`),
-    conceptId,
-    text: s.text,
-    truth: s.truth,
-  }));
-
-  const stem = `${cleanBlankStem(q.question)} — (${blankLabel})에 해당하는 것을 모두 고르시오.`;
-  const allIds = statements.map(s => s.id);
-  const truthIds = statements.filter(s => s.truth).map(s => s.id);
-
-  return {
-    id: stableId(subjKey, 'bank', 'combo', `${q.id}|${blankLabel}`),
-    subject,
-    type: 'combo',
-    points: 4,
-    citation: buildCitation(q, examKey, q.explanation),
-    stem,
-    statements,
-    options: genOpts(allIds, truthIds, {
-      count: 5, rng: seededRng(q.id + '|' + blankLabel),
-      banFull: truthIds.length !== allIds.length,
-    }),
-    tags: ['자동변환', '정답판정', ...inferTags(stem, ...statements.map(s => s.text))],
-    derivedFrom: q.id,
-    explain: q.explanation || '',
-    source: exam.title || examKey,
-  };
+function sanitizeExplain(explanation) {
+  return String(explanation || '').split('\n')
+    .filter(l => !/^\s*정답\s*[:：]/.test(l.trim()))
+    .join('\n')
+    .trim();
 }
 
 /**
@@ -301,23 +205,23 @@ function buildCitation(q, examKey, explanation) {
     : `📖 출처: ${srcLabel}`;
 }
 
-function buildComboItems(examKey, exam, genOpts, pools, globalPool) {
+function buildComboItems(examKey, exam, genOpts, qchap) {
   const items = [];
   const stats = {
-    choice: 0, fact: 0, answer: 0, blank: 0,
+    choice: 0, fact: 0, answer: 0, cluster: 0,
     skipComboStem: 0, skipStem: 0, skipNoTruth: 0, skipFew: 0, skipBlank: 0,
     allOfAbove: 0, errors: [],
   };
   const subject = SUBJECT_NUM[examKey];
   const subjKey = SUBJECT_KEY[examKey] || examKey;
+  // conceptId(교재 L####)별 fact 진술 풀 — 같은 교재 구간의 참/거짓 명제를 재조합.
+  // 챕터 단위는 입자가 너무 커서 이질 진술이 섞여 발문과 내용이 어긋나므로 L#### 단위로 한정한다.
+  const conceptPool = {};
 
   for (const q of exam.questions) {
-    if (q.type === 'blank') {
-      const it = buildBlankCombo(q, 'A', examKey, exam, pools, globalPool, genOpts);
-      if (it) { items.push(it); stats.blank++; }
-      else { stats.skipBlank++; stats.errors.push(`${q.id}: 단답형 변환 실패 (오답 풀 부족)`); }
-      continue;
-    }
+    // 단답형은 합답형 풀에서 제외 — 빈칸 정답은 하나뿐이라 합답형이 돼도 100% 단일정답.
+    // 원본 문제은행의 단답형으로 출제된다.
+    if (q.type === 'blank') { stats.skipBlank++; continue; }
     if (q.type !== 'choice') continue;
     stats.choice++;
 
@@ -370,6 +274,18 @@ function buildComboItems(examKey, exam, genOpts, pools, globalPool) {
       }
     }
 
+    // fact 모드 진술은 명제이므로 conceptId 풀에 적립 — 재조합 문항의 재료.
+    // (문항 자체가 스킵돼도 진술의 참/거짓은 유효하므로 스킵 판정 전에 적립)
+    // 'q:' 폴백 conceptId는 단일 문항끼리만 묶이므로 재조합 재료로 쓰지 않는다.
+    if (mode === 'fact' && !conceptId.startsWith('q:')) {
+      const bucket = conceptPool[conceptId] || (conceptPool[conceptId] = { true: new Map(), false: new Map(), chapter: qchap[q.id] || '' });
+      for (const s of statements) {
+        const map = s.truth ? bucket.true : bucket.false;
+        const k = normKey(s.text);
+        if (!map.has(k)) map.set(k, { ...s, srcQid: q.id });
+      }
+    }
+
     if (statements.length < 2) { stats.skipFew++; continue; }
     if (!statements.some(s => s.truth)) { stats.skipNoTruth++; continue; }
 
@@ -396,12 +312,100 @@ function buildComboItems(examKey, exam, genOpts, pools, globalPool) {
       tags: ['자동변환', mode === 'fact' ? '명제판정' : '정답판정',
         ...inferTags(stem, ...statements.map(s => s.text))],
       derivedFrom: q.id,
-      explain: q.explanation || '',
+      explain: sanitizeExplain(q.explanation),
       source: exam.title || examKey,
     });
     if (mode === 'fact') stats.fact++; else stats.answer++;
   }
+
+  // 개념 재조합 문항 추가 — 같은 교재 구간(L####)의 참 2~3 + 거짓 진술로 구성한
+  // 진짜 복수정답 합답형. 챕터 단위보다 입자가 가늘어 이질 진술 혼입 위험이 낮다.
+  items.push(...buildClusterCombos(conceptPool, examKey, subject, subjKey, genOpts, stats));
+
   return { items, stats };
+}
+
+/**
+ * 같은 교재 구간(conceptId = 첫 L####)의 fact 진술을 재조합한 복수정답 합답형 생성.
+ * 단일 MCQ 변환은 구조상 정답이 1개 — 같은 구간의 참 명제 여러 개를 모아야
+ * "옳은 것을 모두 고르시오"가 실제로 복수정답이 된다.
+ *
+ * - 진술의 sid는 원본 것을 재사용 — 진술 단위 오답 통계·SM-2 이력이 이어진다.
+ * - 진술별 explain에 원본 문항 출처를 실어 오답 리뷰가 dead-end가 되지 않게 한다.
+ * - 근접 중복 방어: 정규화 키가 부분문자열 관계인 진술 쌍은 같은 문항에 넣지 않는다
+ *   (진위가 같으면 중복, 다르면 모순 위험).
+ * - 한계: 다른 문항에서 온 진술끼리 의미 모순은 기계 검출 불가 — 소수 문항이므로
+ *   출제 검수 시 확인 권장 (derivedFrom `cluster:…`으로 식별 가능).
+ */
+function buildClusterCombos(conceptPool, examKey, subject, subjKey, genOpts, stats) {
+  const out = [];
+  const nearDup = (a, b) => {
+    const x = normKey(a), y = normKey(b);
+    if (x.includes(y) || y.includes(x)) return true;
+    // 공통 접두사가 길면 사실상 같은 진술 — '…효과가 있다' vs '…효과가 있으며, …' 류
+    const min = Math.min(x.length, y.length);
+    let i = 0;
+    while (i < min && x[i] === y[i]) i++;
+    return i >= Math.max(8, Math.floor(min * 0.6));
+  };
+  for (const [cid, pool] of Object.entries(conceptPool)) {
+    const trues = [...pool.true.values()];
+    const falses = [...pool.false.values()];
+    if (trues.length < 2 || falses.length < 2) continue;
+
+    const rng = seededRng(`${examKey}|cluster|${cid}`);
+    const nTrue = Math.min(trues.length, 2 + Math.floor(rng() * 2)); // 2~3개
+    const nFalse = Math.min(falses.length, 5 - nTrue);
+
+    // 근접 중복 쌍이 섞이지 않게 하나씩 선별
+    const picked = [];
+    for (const s of shuffle([...trues], rng).slice(0, nTrue * 2)) {
+      if (picked.length >= nTrue) break;
+      if (!picked.some(p => nearDup(p.text, s.text))) picked.push(s);
+    }
+    for (const s of shuffle([...falses], rng).slice(0, nFalse * 2)) {
+      if (picked.length >= nTrue + nFalse) break;
+      if (!picked.some(p => nearDup(p.text, s.text))) picked.push(s);
+    }
+    if (picked.filter(s => s.truth).length < 2 || picked.length < 4) continue;
+    shuffle(picked, rng);
+
+    const statements = picked.map((s, i) => ({
+      id: STMT_LABELS[i],
+      sid: s.sid,
+      conceptId: s.conceptId,
+      text: s.text,
+      truth: s.truth,
+      explain: `원본: 과목${subject} 문제은행 ${s.srcQid.replace(/.*_q/, 'Q')} · 교재 ${s.conceptId}`,
+    }));
+    const allIds = statements.map(s => s.id);
+    const truthIds = statements.filter(s => s.truth).map(s => s.id);
+
+    const chapterLabel = (pool.chapter || '').replace(/^(?:Chapter\s*)?\d+\.\s*/, '');
+    const stem = chapterLabel
+      ? `다음 중 ${chapterLabel}에 관한 설명으로 옳은 것을 모두 고른 것은?`
+      : '다음 설명 중 옳은 것을 모두 고른 것은?';
+    out.push({
+      id: stableId(subjKey, 'bank', 'combo-cluster', `${subject}|${cid}`),
+      subject,
+      type: 'combo',
+      points: 4,
+      citation: `📖 교재: ${cid} (출처: 과목${subject} 문제은행 진술 재조합)`,
+      stem,
+      statements,
+      options: genOpts(allIds, truthIds, {
+        count: 5, rng: seededRng(`${examKey}|clusterOpt|${cid}`),
+        banFull: truthIds.length !== allIds.length,
+      }),
+      tags: ['자동변환', '명제판정', '개념재조합',
+        ...inferTags(stem, ...statements.map(s => s.text))],
+      derivedFrom: `cluster:${subject}|${cid}`,
+      explain: statements.map(s => `${s.id}. ${s.explain}`).join('\n'),
+      source: `과목${subject} 개념 재조합`,
+    });
+    stats.cluster++;
+  }
+  return out;
 }
 
 /* ---------- Markdown 내보내기 (content/문제은행/ 형식과 동일) ---------- */
@@ -438,7 +442,11 @@ function toSubjectMd(subject, questions) {
     lines.push('');
     q.statements.forEach(s => lines.push(`${s.id}. ${s.text}`));
     lines.push('');
-    q.options.forEach((o, idx) => lines.push(`${OPT_INDICATORS[idx]} ${o.members.join(', ')}`));
+    // 멤버는 라벨(ㄱㄴㄷ…) 순으로 표기 — generateComboOptions가 이미 정렬하지만
+    // 파일럿(cb-*)처럼 수작업 members도 동일한 관례로 보여주기 위해 출력 단계에서 재정렬
+    const labelOrder = m => STMT_LABELS.indexOf(m);
+    q.options.forEach((o, idx) => lines.push(
+      `${OPT_INDICATORS[idx]} ${[...o.members].sort((a, b) => labelOrder(a) - labelOrder(b)).join(', ')}`));
     lines.push('', '---', '');
     answers.push({ num, q });
   });
@@ -456,7 +464,10 @@ function toSubjectMd(subject, questions) {
     lines.push(`> 진술 판정: ${q.statements.map(s => `${s.id} ${s.truth ? 'O' : 'X'}`).join(' · ')}`);
     lines.push(`> ${q.citation.replace(/^📖\s*/, '📖 ')}`);
     const exp = String(q.explain || '').trim();
-    if (exp) exp.split('\n').forEach(l => lines.push(`> ${l.trim()}`));
+    // 원본 해설에 박힌 '정답: ② …' 라인이 그대로 새어나가면 합답형 정답과 혼동 → 필터
+    if (exp) exp.split('\n')
+      .filter(l => !/^\s*정답\s*[:：]/.test(l.trim()))
+      .forEach(l => lines.push(`> ${l.trim()}`));
     lines.push('');
   }
   return lines.join('\n');
@@ -496,14 +507,21 @@ async function buildForExam(target) {
     const { key, data } = loadExamFile(path.join(EXAMS_DIR, file));
     examDataMap[key] = { data, file };
   }
-  const { bySubject: pools, global: globalPool } = buildAnswerPools(examDataMap);
+  // 문항→챕터 매핑 (build_question_chapters.js 산출물) — fact 진술의 챕터 재조합용.
+  // 없으면 빈 맵: 재조합 문항은 생성되지 않고 원본 변환분만 나온다.
+  const qcPath = path.join(ROOT, target.dataRoot, 'question_chapters.js');
+  let qchap = {};
+  if (fs.existsSync(qcPath)) {
+    const m = fs.readFileSync(qcPath, 'utf8').match(/var\s+QUESTION_CHAPTERS\s*=\s*(\{[\s\S]*?\});/);
+    if (m) qchap = JSON.parse(m[1]);
+  }
 
   let totalItems = 0;
   let totalErrors = 0;
   const comboCounts = {};
 
   for (const [key, { data, file }] of Object.entries(examDataMap)) {
-    const { items, stats } = buildComboItems(key, data, generateComboOptions, pools, globalPool);
+    const { items, stats } = buildComboItems(key, data, generateComboOptions, qchap);
 
     // 검증: 스키마 무결성 + 도출 정답을 answer로 고정
     const errs = [];
@@ -532,7 +550,7 @@ async function buildForExam(target) {
 
     comboCounts[key] = valid.length;
     totalItems += valid.length;
-    console.log(`[combo-drills] ${key}: choice ${stats.choice} + blank → combo ${valid.length} (fact ${stats.fact}/answer ${stats.answer}/blank ${stats.blank}, 조합발문 스킵 ${stats.skipComboStem}, '모두'복구 ${stats.allOfAbove})`);
+    console.log(`[combo-drills] ${key}: choice ${stats.choice} → combo ${valid.length} (fact ${stats.fact}/answer ${stats.answer}/재조합 ${stats.cluster}, blank 제외 ${stats.skipBlank}, 조합발문 스킵 ${stats.skipComboStem}, '모두'복구 ${stats.allOfAbove})`);
     const allErrs = [...stats.errors, ...errs];
     if (allErrs.length) {
       console.log(`  ⚠ 오류 ${allErrs.length}건:`);
