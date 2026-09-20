@@ -160,8 +160,49 @@ def fill_empty_cells(page, table, rows):
 
 # 무선 표 본문 재구성용 — 행 시작 마커 (가. / 가) / (가) / 1) / 1. / (1))
 ROW_MARKER_RE = re.compile(r'^\s*\(?[가-힣\d]+[.)]')
-# 재구성 구간에서 제외할 잡행 (페이지 번호, 문서 머리말)
-JUNK_LINE_RE = re.compile(r'^\s*(?:-\s*\d+\s*-|■.*별표|\d+\s*페이지)\s*$')
+# 재구성 구간에서 제외할 잡행 (페이지 번호, 문서 머리말, 법제처 워터마크)
+JUNK_LINE_RE = re.compile(
+    r'^\s*(?:-\s*\d+\s*-|■.*별표|\d+\s*페이지|.*국가법령정보센터.*)\s*$')
+
+# 페이지 상·하단 러닝 머리말/꼬리말 필터 — 마진 대역(pt) 안에서만 적용.
+# 본문이 하단 마진까지 내려오는 문서(KFCC 시험법)가 있으므로 위치만으로는
+# 지우지 않고, 문서 전체에서 반복되거나 워터마크/쪽번호 패턴인 줄만 제거한다.
+MARGIN_PT = 45
+MARGIN_FREQ_MIN = 3       # 최소 반복 페이지 수
+MARGIN_FREQ_RATIO = 0.4   # 문서 페이지의 40%+에서 반복
+WATERMARK_RE = re.compile(r'국가법령정보센터|법제처\s+\d+')
+PAGE_NUM_RE = re.compile(r'^-?\s*\d{1,4}\s*-?$')
+
+
+def collect_margin_junk(pdf):
+    """페이지 상·하단 대역에서 문서 전체에 반복되는 텍스트 줄을 수집한다.
+    (문서 제목 러닝 헤더 등. 법제처 푸터처럼 번호가 바뀌는 줄은
+    WATERMARK_RE가 별도로 처리하므로 여기서는 잡히지 않아도 된다)
+    """
+    npages = len(pdf.pages)
+    counter = {}
+    for page in pdf.pages:
+        h = float(page.height)
+        seen = set()
+        for ln in page.extract_text_lines():
+            t = ln['text'].strip()
+            if t and len(t) <= 60 \
+                    and (ln['top'] < MARGIN_PT or ln['bottom'] > h - MARGIN_PT):
+                seen.add(t)
+        for t in seen:
+            counter[t] = counter.get(t, 0) + 1
+    return {t for t, c in counter.items()
+            if c >= MARGIN_FREQ_MIN and c >= npages * MARGIN_FREQ_RATIO}
+
+
+def _is_margin_junk(txt, top, bottom, page_h, margin_junk):
+    """마진 대역 안의 잡행(러닝 헤더/워터마크/쪽번호)인지 판정"""
+    if top >= MARGIN_PT and bottom <= page_h - MARGIN_PT:
+        return False
+    t = txt.strip()
+    return (t in margin_junk
+            or bool(WATERMARK_RE.search(t))
+            or bool(PAGE_NUM_RE.match(t)))
 
 
 def table_x_edges(table):
@@ -171,7 +212,8 @@ def table_x_edges(table):
     return edges
 
 
-def reconstruct_borderless(page, edges, y_min, exclude_bboxes):
+def reconstruct_borderless(page, edges, y_min, exclude_bboxes,
+                           margin_junk=frozenset()):
     """무선(격자선 없는) 표 본문을 열 밴드로 재구성.
 
     헤더 표에서 학습한 x 경계로 단어를 열에 배정하고, 행 마커
@@ -195,14 +237,17 @@ def reconstruct_borderless(page, edges, y_min, exclude_bboxes):
             lines[-1].append(w)
         else:
             lines.append([w])
+    page_h = float(page.height)
     line_objs = []
     for ws in lines:
         ws.sort(key=lambda w: w['x0'])
         txt = ' '.join(w['text'] for w in ws)
         if JUNK_LINE_RE.match(txt):
             continue
-        line_objs.append((min(w['top'] for w in ws),
-                          max(w['bottom'] for w in ws), ws))
+        lt, lb = min(w['top'] for w in ws), max(w['bottom'] for w in ws)
+        if _is_margin_junk(txt, lt, lb, page_h, margin_junk):
+            continue
+        line_objs.append((lt, lb, ws))
 
     ncols = len(edges) - 1
 
@@ -380,7 +425,7 @@ def count_orphan_data(page, tables):
     return orphan
 
 
-def page_to_md(page, image_names=None, state=None):
+def page_to_md(page, image_names=None, state=None, margin_junk=frozenset()):
     """페이지 → (텍스트 줄, 표, 이미지) 세그먼트를 y순 병합"""
     if state is None:
         state = {}
@@ -409,7 +454,7 @@ def page_to_md(page, image_names=None, state=None):
                 state['bands'] = edges
                 state['header'] = [cell_text(c) for c in rows[0]]
                 rec, ivs, _ = reconstruct_borderless(
-                    page, edges, t.bbox[3], bboxes)
+                    page, edges, t.bbox[3], bboxes, margin_junk)
                 if rec:
                     segments.append((t.bbox[3], 'table', rec))
                     consumed.extend(ivs)
@@ -418,7 +463,8 @@ def page_to_md(page, image_names=None, state=None):
     # 재구성이 실패하면 표가 끝난 것으로 보고 밴드를 만료한다
     # (일반 텍스트 페이지를 가짜 표로 삼키는 것 방지).
     if not tables and state.get('bands'):
-        rec, ivs, _ = reconstruct_borderless(page, state['bands'], 0, [])
+        rec, ivs, _ = reconstruct_borderless(
+            page, state['bands'], 0, [], margin_junk)
         if rec:
             hdr = state.get('header')
             if hdr:
@@ -444,7 +490,11 @@ def page_to_md(page, image_names=None, state=None):
 
     filtered = page.filter(keep_char) if (bboxes or consumed) else page
 
+    page_h = float(page.height)
     for line in filtered.extract_text_lines():
+        if _is_margin_junk(line['text'], line['top'], line['bottom'],
+                           page_h, margin_junk):
+            continue
         segments.append((line['top'], 'text', line['text']))
 
     # 이미지 위치에 참조 삽입
@@ -483,11 +533,13 @@ def convert(pdf_path, images_dir=None):
     state = {}  # 페이지 간 열 밴드/헤더 유지 (무선 표 연속 페이지용)
     mudoc = pymupdf.open(pdf_path)
     with pdfplumber.open(pdf_path) as pdf:
+        margin_junk = collect_margin_junk(pdf)
         for pi, page in enumerate(pdf.pages):
             image_names = []
             if pi < len(mudoc):
                 image_names = extract_page_images(mudoc[pi], pi, images_dir)
-            segments.extend(page_to_md(page, image_names, state))
+            segments.extend(page_to_md(page, image_names, state,
+                                       margin_junk))
     mudoc.close()
     segments = promote_text_header(segments)
     segments = merge_continuation_tables(segments)
