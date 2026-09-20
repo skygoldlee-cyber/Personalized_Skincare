@@ -440,7 +440,8 @@ TEXT_TABLE_SETTINGS = {
 # 표 영역 밖에 남은 데이터형 텍스트 줄 (숫자/CAS/단위 등 짧은 토큰 반복)
 DATA_LINE_RE = re.compile(r'^\s*\d+\s+\S+')
 CAS_RE = re.compile(r'\d{2,}-\d+-\d')
-UNIT_RE = re.compile(r'\d+(?:\.\d+)?\s*(?:%|ppm|ppb|mg|mL|㎍|µg|g)\b', re.I)
+# \b 금지: %·㎍ 같은 비단어문자 단위 뒤에는 단어 경계가 성립하지 않는다
+UNIT_RE = re.compile(r'\d+(?:\.\d+)?\s*(?:%|ppm|ppb|mg|mL|㎍|µg|g)', re.I)
 
 
 def _words(page):
