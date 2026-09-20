@@ -32,9 +32,9 @@ declare global {
     __STUDY_MD_FILES__?: Record<string, Record<string, string>>;
     /** 시험 목록 번들 (data/exams.js) */
     EXAMS_LIST?: { exams?: import('./types.js').ExamDef[] };
-    /** 합답형 파일럿 번들 (data/drills/combo_pilot.js) */
+    /** 복수정답형 파일럿 번들 (data/drills/combo_pilot.js) */
     COMBO_PILOT?: { questions?: Array<{ subject?: number; [k: string]: any }> };
-    /** 합답형 문항 수 인덱스 (data/drills/combo_index.js) */
+    /** 복수정답형 문항 수 인덱스 (data/drills/combo_index.js) */
     COMBO_INDEX?: Record<string, number>;
     /** 문항→단원 매핑 인덱스 (data/question_chapters.js) */
     QUESTION_CHAPTERS?: Record<string, string>;

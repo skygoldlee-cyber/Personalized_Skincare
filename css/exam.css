@@ -741,7 +741,7 @@
     gap: var(--space-1);
 }
 
-/* 합답형 모의고사 문항 수 선택 칩 */
+/* 복수정답형 모의고사 문항 수 선택 칩 */
 .combo-count-row {
     display: flex;
     gap: 0.35rem;
@@ -753,7 +753,7 @@
     white-space: nowrap;
 }
 
-/* 통합 모의고사 합답형 혼합 옵션 */
+/* 통합 모의고사 복수정답형 혼합 옵션 */
 .integrated-mix-option {
     display: flex;
     align-items: center;
@@ -767,7 +767,7 @@
     accent-color: var(--color-primary);
 }
 
-/* 합답형 오답 리뷰 — 진술 판정 정오표 */
+/* 복수정답형 오답 리뷰 — 진술 판정 정오표 */
 .combo-truth-table {
     margin: 0.75rem 0;
     border: 1px solid var(--border-color);

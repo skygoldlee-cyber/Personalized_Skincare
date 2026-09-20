@@ -331,7 +331,7 @@ export const DataLoader = {
     },
 
     /**
-     * 과목별 합답형(combo) 드릴 번들 로드 — 자동 변환 번들 + 수작업 파일럿 병합
+     * 과목별 복수정답형(combo) 드릴 번들 로드 — 자동 변환 번들 + 수작업 파일럿 병합
      * ({dataRoot}/drills/combo_subjectN.js → window.COMBO_DRILLS_subjectN,
      *  {dataRoot}/drills/combo_pilot.js → window.COMBO_PILOT 중 해당 과목분)
      * @param {number|string} subjectNum 과목 order (1~N)
@@ -358,13 +358,13 @@ export const DataLoader = {
         const pilot = this._loadedDrills.comboPilot.filter(q => q.subject === num);
 
         const questions = [...pilot, ...auto];
-        if (!questions.length) throw new Error(`합답형 드릴 데이터를 찾을 수 없습니다: ${key}`);
+        if (!questions.length) throw new Error(`복수정답형 드릴 데이터를 찾을 수 없습니다: ${key}`);
         this._loadedDrills[key] = questions;
         return questions;
     },
 
     /**
-     * 과목별 합답형 문항 수 인덱스 로드 — {dataRoot}/drills/combo_index.js → window.COMBO_INDEX
+     * 과목별 복수정답형 문항 수 인덱스 로드 — {dataRoot}/drills/combo_index.js → window.COMBO_INDEX
      * 모의고사 카드의 "전체 N문" 라벨에 사용. 없어도 앱 동작에는 영향 없음.
      * @returns {Promise<Object>} { <examKey>: count }
      */
@@ -373,14 +373,14 @@ export const DataLoader = {
         try {
             await this._loadScript(`./${dataPath('drills/combo_index.js')}`);
         } catch (e) {
-            console.warn('[DataLoader] combo_index.js 로드 실패 — 합답형 문항 수 표시 생략', e);
+            console.warn('[DataLoader] combo_index.js 로드 실패 — 복수정답형 문항 수 표시 생략', e);
         }
         this._comboIndex = window.COMBO_INDEX || {};
         return this._comboIndex;
     },
 
     /**
-     * 과목의 합답형 총 문항 수 조회 (인덱스 미로드/없으면 0)
+     * 과목의 복수정답형 총 문항 수 조회 (인덱스 미로드/없으면 0)
      * @param {number|string} subjectNum 과목 order
      * @returns {number}
      */

@@ -1,4 +1,4 @@
-// src/views/trainer-drills.js — O/X 판정 드릴 + 합답형(combo) 드릴
+// src/views/trainer-drills.js — O/X 판정 드릴 + 복수정답형(combo) 드릴
 //
 // 데이터: DataLoader.loadOxDrills(N) → OX_DRILLS_subjectN (build_ox_drills.js 생성)
 //         DataLoader.loadComboDrills() → COMBO_PILOT (수작업 저작)
@@ -73,7 +73,7 @@ function renderDrillSubjectButtons(gridId, clickAction) {
 const NUM_FOCUS_TAGS = new Set(['수치', '한도', '기한', '구성비', '처분기준']);
 
 /* =======================================================
-   드릴 타입 공통 설정 — O/X · 합답형은 setup→arena→result 골격이 동일하고
+   드릴 타입 공통 설정 — O/X · 복수정답형은 setup→arena→result 골격이 동일하고
    문항 렌더/제출만 다르므로 타입별 설정으로 파이프라인을 공유한다.
    ======================================================= */
 const DRILL_TYPES = {
@@ -119,8 +119,8 @@ const DRILL_TYPES = {
     },
     combo: {
         subView: 'combo',
-        label: '합답형',
-        title: '합답형 드릴',
+        label: '복수정답형',
+        title: '복수정답형 드릴',
         ids: { panel: 'trainer-combo-panel', grid: 'combo-subject-grid', setup: 'combo-setup', arena: 'combo-arena', result: 'combo-result' },
         otherPanels: ['trainer-menu-panel', 'trainer-weak-panel', 'trainer-oxdrill-panel'],
         startAction: 'startComboDrill',
@@ -391,14 +391,14 @@ function renderOxDrillResult() {
 }
 
 /* =======================================================
-   ㄱㄴㄷㄹ 합답형(combo) 드릴
+   ㄱㄴㄷㄹ 복수정답형(combo) 드릴
    ======================================================= */
 
 /** 패널 열기 (과목 선택 화면) */
 export function openComboDrillSetup() { openDrillSetup('combo'); }
 
 /**
- * 과목별 합답형 드릴 시작 — 취약 진술(sid) 포함 문항 우선 편성
+ * 과목별 복수정답형 드릴 시작 — 취약 진술(sid) 포함 문항 우선 편성
  * @param {string|number} subjectNum 과목 order 번호
  */
 export function startComboDrill(subjectNum) { startDrill('combo', subjectNum); }
@@ -421,8 +421,8 @@ function renderComboQuestion() {
 
     if (bar) bar.style.width = `${Math.round((st.currentIndex / st.data.length) * 100)}%`;
     if (ind) ind.textContent = `문제 ${st.currentIndex + 1} / ${st.data.length}`;
-    if (catEl) catEl.textContent = `과목${q.subject} · 합답형`;
-    // 합답형 규칙: 출처·인용은 문제 서두에 명기 (stem 앞 표시)
+    if (catEl) catEl.textContent = `과목${q.subject} · 복수정답형`;
+    // 복수정답형 규칙: 출처·인용은 문제 서두에 명기 (stem 앞 표시)
     if (citEl) citEl.textContent = q.citation || '';
     if (stemEl) stemEl.innerHTML = safeTextWithBreaks(q.stem || '');
     if (feedback) feedback.classList.add('is-hidden');
@@ -735,7 +735,7 @@ function renderWeakReview() {
 
     if (summaryEl) {
         summaryEl.innerHTML = weak.length === 0
-            ? (graduated > 0 ? '모든 취약 진술을 졸업했습니다.' : '아직 오판 이력이 없습니다. O/X·합답형 드릴을 풀면 진술 단위로 추적됩니다.')
+            ? (graduated > 0 ? '모든 취약 진술을 졸업했습니다.' : '아직 오판 이력이 없습니다. O/X·복수정답형 드릴을 풀면 진술 단위로 추적됩니다.')
             : `취약 진술 ${weak.length}개 · 오늘 복습 대상 ${dueCount}개${graduated ? ` · 졸업 ${graduated}개` : ''}
                <span class="weak-toolbar">
                    <button class="btn btn-primary weak-drill-btn" data-click="startOxDrill" data-arg="weak"><i class="fa-solid fa-crosshairs"></i> 취약·복습 드릴</button>
@@ -780,7 +780,7 @@ function renderWeakReview() {
 
 /* =======================================================
    ⌨️ 드릴 키보드 단축키
-   O/X 드릴: O·X 키로 판정 / 합답형: 1~5 키로 선지 선택 / Enter: 다음 문제
+   O/X 드릴: O·X 키로 판정 / 복수정답형: 1~5 키로 선지 선택 / Enter: 다음 문제
    ======================================================= */
 if (typeof document !== 'undefined') {
     document.addEventListener('keydown', (e) => {

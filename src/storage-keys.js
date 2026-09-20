@@ -34,7 +34,7 @@ export const STORAGE_KEYS = {
   // 트레이너
   CALC_HISTORY: 'calc_history',
 
-  // 합답형/OX 진술 단위 오판 통계 (statement-tracker.js)
+  // 복수정답형/OX 진술 단위 오판 통계 (statement-tracker.js)
   STATEMENT_STATS: 'statement_stats',
 
   // 교재 리더

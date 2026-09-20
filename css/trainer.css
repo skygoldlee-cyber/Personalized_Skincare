@@ -990,7 +990,7 @@ mark.txt-highlight {
     border-color: var(--color-primary);
 }
 
-/* ===== O/X 판정 드릴 & 합답형(combo) 드릴 ===== */
+/* ===== O/X 판정 드릴 & 복수정답형(combo) 드릴 ===== */
 .icon-purple {
     background: var(--secondary-tint-12);
     color: var(--color-secondary);
@@ -1004,7 +1004,7 @@ mark.txt-highlight {
     padding: 1.5rem;
 }
 
-/* 합답형 진술 목록 */
+/* 복수정답형 진술 목록 */
 .combo-stmt {
     display: flex;
     gap: var(--space-3);
@@ -1033,7 +1033,7 @@ mark.txt-highlight {
     flex: 1;
 }
 
-/* 합답형 피드백 — 진술별 판정 결과 */
+/* 복수정답형 피드백 — 진술별 판정 결과 */
 .combo-fb-stmt {
     display: flex;
     flex-wrap: wrap;
@@ -1068,7 +1068,7 @@ mark.txt-highlight {
     line-height: 1.5;
 }
 
-/* 합답형 진술 판정 버튼 (2단계 응시) */
+/* 복수정답형 진술 판정 버튼 (2단계 응시) */
 .combo-judge-btns {
     flex-shrink: 0;
     display: inline-flex;

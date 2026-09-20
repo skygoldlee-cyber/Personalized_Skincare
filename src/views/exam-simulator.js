@@ -58,7 +58,7 @@ export function startMockExamSim(examId) {
 }
 
 /* =======================================================
-   ㄱㄴㄷ 합답형 모의고사 — combo 드릴 번들을 시뮬레이터 형식으로 변환
+   ㄱㄴㄷ 복수정답형 모의고사 — combo 드릴 번들을 시뮬레이터 형식으로 변환
    ======================================================= */
 const SIM_OPTION_INDICATORS = ['①', '②', '③', '④', '⑤'];
 
@@ -83,7 +83,7 @@ function comboToSimQuestion(q, subjKey) {
 }
 
 /**
- * 시뮬 합답형 응답 → 진술별 판정 도출 (선택 선지의 members = "참으로 판정한 집합")
+ * 시뮬 복수정답형 응답 → 진술별 판정 도출 (선택 선지의 members = "참으로 판정한 집합")
  * @returns {Array<{sid, judgedCorrect, text, truth, conceptId}>|null}
  */
 function deriveComboJudgments(q, userAns) {
@@ -101,7 +101,7 @@ function deriveComboJudgments(q, userAns) {
     }));
 }
 
-// 합답형 번들 과목 번호 조회 (combo 오답 복습 시 과목 번들 로드용) — registry.subjects의 order 기반
+// 복수정답형 번들 과목 번호 조회 (combo 오답 복습 시 과목 번들 로드용) — registry.subjects의 order 기반
 function comboSubjOrder(subjKey) {
     const subjects = (window.DATA_REGISTRY && window.DATA_REGISTRY.subjects) || [];
     const s = subjects.find(x => x.key === subjKey);
@@ -109,7 +109,7 @@ function comboSubjOrder(subjKey) {
 }
 
 /**
- * 과목별 합답형 모의고사 시작 — data/drills/combo_subjectN.js 로드
+ * 과목별 복수정답형 모의고사 시작 — data/drills/combo_subjectN.js 로드
  * @param {string} arg 'N' 또는 'N:count' (count = 출제 수, 생략 시 전체)
  */
 export function startComboMockExam(arg) {
@@ -118,7 +118,7 @@ export function startComboMockExam(arg) {
     const orders = DataLoader.getSubjectOrders();
     if (isNaN(num) || !orders.includes(num)) return;
     const want = countStr ? parseInt(countStr, 10) : NaN;
-    showGlobalLoading('합답형 모의고사 데이터를 불러오는 중입니다...');
+    showGlobalLoading('복수정답형 모의고사 데이터를 불러오는 중입니다...');
     DataLoader.loadComboDrills(num).then(questions => {
         hideGlobalLoading();
         const subjects = (window.DATA_REGISTRY && window.DATA_REGISTRY.subjects) || [];
@@ -130,23 +130,23 @@ export function startComboMockExam(arg) {
             : questions;
         const simQuestions = picked.map(q => comboToSimQuestion(q, subjKey));
         if (simQuestions.length === 0) {
-            showToast('이 과목의 합답형 문항이 없습니다.', 'warning');
+            showToast('이 과목의 복수정답형 문항이 없습니다.', 'warning');
             return;
         }
         startSimSession({
             id: `combo_subject${num}`,
-            title: `${subjName} 합답형 모의고사 (${simQuestions.length}제)`,
+            title: `${subjName} 복수정답형 모의고사 (${simQuestions.length}제)`,
             questions: simQuestions
         });
     }).catch(err => {
         hideGlobalLoading();
         console.error(err);
-        showToast('합답형 데이터를 불러오지 못했습니다.', 'error');
+        showToast('복수정답형 데이터를 불러오지 못했습니다.', 'error');
     });
 }
 
 export function startIntegratedMockExam() {
-    // 합답형 혼합 옵션 체크 시 combo 번들도 함께 로드
+    // 복수정답형 혼합 옵션 체크 시 combo 번들도 함께 로드
     const mixCombo = !!(document.getElementById('integrated-mix-combo') && document.getElementById('integrated-mix-combo').checked);
     showGlobalLoading('통합 모의고사 데이터를 불러오는 중입니다...');
     const loaderPromises = DataLoader.registry.exams.map(e => DataLoader.loadExam(e.key));
@@ -218,7 +218,7 @@ function _startIntegratedMockExamImpl(mixCombo = false) {
         }));
     };
 
-    // 합답형 혼합: 과목별 배정의 약 20%를 combo 문항으로 교체 (선지 다양화, 실전 패턴 훈련)
+    // 복수정답형 혼합: 과목별 배정의 약 20%를 combo 문항으로 교체 (선지 다양화, 실전 패턴 훈련)
     const comboPoolBySubject = {};
     if (mixCombo) {
         subjects.forEach((subj, idx) => {
@@ -515,7 +515,7 @@ export function renderSimQuestion() {
     let typeName = '단답형';
     if (q.type === 'choice') typeName = '객관식 5지선다';
     else if (q.type === 'ox') typeName = '진위형 OX';
-    else if (q.type === 'combo') typeName = '합답형 ㄱㄴㄷ';
+    else if (q.type === 'combo') typeName = '복수정답형 ㄱㄴㄷ';
     const qTypeEl = document.getElementById('sim-q-type');
     if (qTypeEl) qTypeEl.textContent = typeName;
     
@@ -665,7 +665,7 @@ export function submitExam() {
             : checkShortAnswer(userAns, q.answer);
         vibrate(isCorrect ? HAPTIC.correct : HAPTIC.wrong);
 
-        // 합답형: 선택 선지의 members로 진술별 판정을 도출해 취약 추적·SM-2에 기록
+        // 복수정답형: 선택 선지의 members로 진술별 판정을 도출해 취약 추적·SM-2에 기록
         if (q.type === 'combo') {
             const perStatement = deriveComboJudgments(q, userAns);
             if (perStatement) recordStatementJudgments(perStatement);
@@ -751,7 +751,7 @@ export function examIdToSubjectId(examId) {
    ======================================================= */
 export function startWeakExam() {
     const loaderPromises = DataLoader.getSubjectList().map(s => DataLoader.loadSubject(s.key));
-    // 합답형 모의고사 오답이 있으면 해당 과목의 combo 번들도 함께 로드
+    // 복수정답형 모의고사 오답이 있으면 해당 과목의 combo 번들도 함께 로드
     const comboSubsNeeded = new Set();
     (state.weakCards || new Set()).forEach(cardId => {
         const m = cardId.match(/^weak_sim_([a-z]+)_combo_/);
@@ -861,7 +861,7 @@ function _startWeakExamImpl() {
                     break;
                 }
             }
-            // 합답형 오답: COMBO_DRILLS_subjectN 번들에서 검색 (id 형식: <subjKey>_combo_<hash>)
+            // 복수정답형 오답: COMBO_DRILLS_subjectN 번들에서 검색 (id 형식: <subjKey>_combo_<hash>)
             if (!foundQ) {
                 const subjects = (window.DATA_REGISTRY && window.DATA_REGISTRY.subjects) || [];
                 for (const s of subjects) {

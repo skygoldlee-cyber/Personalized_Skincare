@@ -269,7 +269,7 @@ Personalized_Skincare/
 │   │   ├── manufacturing/      #   2과목
 │   │   ├── safety/             #   3과목
 │   │   └── understanding/      #   4과목
-│   ├── 문제은행/                #   과목N_문제.md (4개, manifest 등록) + 과목N_합답형.md (생성 산출물)
+│   ├── 문제은행/                #   과목N_문제.md (4개, manifest 등록) + 과목N_복수정답형.md (생성 산출물)
 │   ├── 참조자료/
 │   │   ├── ref_md/             #   HTML/MD 변환본 (42개, ~26MB)
 │   │   ├── 공통/               #   공통 참조자료
@@ -305,8 +305,8 @@ Personalized_Skincare/
 │   ├── docs_md/                #   학습안내서/매뉴얼 MD 폴백 번들
 │   ├── drills/                 #   문항 드릴 번들 (레지스트리 미등록, 별도 생성기)
 │   │   ├── ox_subject*.js      #     O/X 판정 드릴 (build_ox_drills.js)
-│   │   ├── combo_subject*.js   #     합답형 드릴 자동 변환 (build_combo_drills.js)
-│   │   └── combo_pilot.js      #     합답형 수작업 파일럿 (check:combo 검증)
+│   │   ├── combo_subject*.js   #     복수정답형 드릴 자동 변환 (build_combo_drills.js)
+│   │   └── combo_pilot.js      #     복수정답형 수작업 파일럿 (check:combo 검증)
 │   ├── supplements/            #   문제은행 보충 카드/퀴즈 (tools/build/supplements.js)
 │   │                           #     부족 과목을 출제 비중 목표치까지 보충, 런타임 loadSubject 병합
 │
@@ -330,8 +330,8 @@ Personalized_Skincare/
 │   ├── build_exam_bundles.js   #   문제은행 폴백 번들
 │   ├── build_study_md_bundle.js #  교재 폴백 번들 (과목별 분할)
 │   ├── build_ox_drills.js      #   O/X 드릴 생성기 (객관식 → 진위형 3,700+문)
-│   ├── build_combo_drills.js   #   합답형 변환기 (choice → 755문 + 과목N_합답형.md)
-│   ├── check_combo_pilot.js    #   합답형 파일럿 검증 (check:combo)
+│   ├── build_combo_drills.js   #   복수정답형 변환기 (choice → 755문 + 과목N_복수정답형.md)
+│   ├── check_combo_pilot.js    #   복수정답형 파일럿 검증 (check:combo)
 │   ├── check_parser_parity.js  #   빌드 파서 ↔ 런타임 파서 등가성 검증
 │   ├── check-imports.js        #   ES 모듈 import/export 교차 검증
 │   ├── verify-shell-assets.js  #   프리캐시 파일 존재 CI 검증
@@ -395,8 +395,8 @@ Personalized_Skincare/
     │   ├── CONTENT_WORKFLOW.md #     콘텐츠 변경 시 작업 절차
     │   ├── MULTI_MACHINE_SETUP.md
     │   ├── FLASHCARD_LOGIC.md
-    │   ├── QUESTION_SCHEMA_DESIGN.md #  문항 스키마 + 합답형 변환 설계 (구 문제은행/문항 스키마 설계.md)
-    │   ├── COMBO_STUDY_STRATEGY.md  #     합답형 학습전략 — 진술 원자 단위 학습법 (구 문제은행/합답형 학습전략.md)
+    │   ├── QUESTION_SCHEMA_DESIGN.md #  문항 스키마 + 복수정답형 변환 설계 (구 문제은행/문항 스키마 설계.md)
+    │   ├── COMBO_STUDY_STRATEGY.md  #     복수정답형 학습전략 — 진술 원자 단위 학습법 (구 문제은행/복수정답형 학습전략.md)
     │   ├── MD_TO_HTML_LOGIC.md
     │   ├── TEXTBOOK_AUTHORING_GUIDE.md
     │   ├── AUDIO_HOSTING_GUIDE.md
@@ -643,7 +643,7 @@ const state = {
 ### 빌드 순회
 - `tools/build/exam-targets.js` — `getExamTargets()`가 exams.json을 순회해 시험별 contentRoot/dataRoot/manifest 해석, `getSubjectMaps()`가 manifest에서 과목 매핑 파생(기존 `subject1~4` 하드코딩 테이블 대체)
 - `tools/build_all_data.js` — `build:data`가 모든 시험을 `EXAM_ID`로 순회 빌드. ox/combo 드릴, exam/study_md/doc 번들, audio_manifest, citations, parser parity, question_chapters(문항→단원 매핑) 모두 시험 순회형
-- 인덱스 번들: `{dataRoot}/drills/combo_index.js`(과목별 합답형 문항 수), `{dataRoot}/question_chapters.js`(문항id→단원 + 과목별 라인 경계) — 결과 화면 라벨/단원별 취약 분석용, `DataLoader.loadComboIndex`/`loadQuestionChapters`로 로드
+- 인덱스 번들: `{dataRoot}/drills/combo_index.js`(과목별 복수정답형 문항 수), `{dataRoot}/question_chapters.js`(문항id→단원 + 과목별 라인 경계) — 결과 화면 라벨/단원별 취약 분석용, `DataLoader.loadComboIndex`/`loadQuestionChapters`로 로드
 - **공유 모듈 예외**: `src/pdf-registry.js`, `keyword-index.js`는 단일 공유 출력이라 기본 시험 바인딩 유지 — 비기본 시험에 참조자료 기능이 필요하면 시험별 파일 분리가 후속 과제
 
 ### 새 시험 추가 절차
@@ -1099,8 +1099,8 @@ content/**/*.md ───(런타임 fetch)──► src/data-loader.js + src/tex
 content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.js ──► data/study_md/ (과목별 분할)
 
 data/exams/*.js ──► tools/build_ox_drills.js    ──► data/drills/ox_subject*.js   (O/X 3,700+문)
-data/exams/*.js ──► tools/build_combo_drills.js ──► data/drills/combo_subject*.js (합답형 755문)
-                └──────────────────────────────► content/문제은행/과목N_합답형.md (검토용 MD)
+data/exams/*.js ──► tools/build_combo_drills.js ──► data/drills/combo_subject*.js (복수정답형 755문)
+                └──────────────────────────────► content/문제은행/과목N_복수정답형.md (검토용 MD)
 ```
 
 **특징**:
@@ -1110,7 +1110,7 @@ data/exams/*.js ──► tools/build_combo_drills.js ──► data/drills/comb
 - **온디맨드 로딩**: `src/data-loader.js`가 필요한 과목/시험만 로드하고, 로드 후 registry stats를 실제 개수로 갱신
 - **해시 파일명(시험/성분)**: 번들 내용이 바뀌면 파일명도 바뀌어 캐시 무효화가 자연스럽게 이루어짐
 
-### 🧩 문항 드릴 파이프라인 (O/X·합답형)
+### 🧩 문항 드릴 파이프라인 (O/X·복수정답형)
 
 시험 문항 스키마·채점 유틸([`src/questions.js`](../../src/questions.js))을 중심으로, `data/exams` 번들에서 학습 드릴을 파생 생성합니다.
 
@@ -1120,14 +1120,14 @@ data/exams/subjectN.*.js ──► build_ox_drills.js    ──► data/drills/o
 ```
 
 - **스키마**: `single`/`combo`/`short`/`ox` 4유형. combo는 진술 `truth`에서 정답 조합을 **도출**(`deriveComboAnswer`)하고 `validateQuestion`으로 유일성을 검증 — 정답 오타를 구조적으로 차단.
-- **합답형 변환**(상세: [`QUESTION_SCHEMA_DESIGN.md`](./QUESTION_SCHEMA_DESIGN.md) §6): 객관식은 선지를 `fact`(명제 진위)/`answer`(정답 여부) 모드로 진술화, 같은 교재 구간(conceptId)의 fact 진술은 재조합해 복수정답 문항을 추가 생성. 단답형은 빈칸 정답이 하나뿐이라 100% 단일정답이 되므로 제외 — 원본 문제은행의 단답형으로 출제. 과목당 65/158/255/277 = 755문.
-- **진술 원자 추적**: 진술의 `sid`(`stableId`)를 O/X·합답형이 공유 → [`src/statement-tracker.js`](../../src/statement-tracker.js)가 `perStatement.judgedCorrect` 판정을 `sid` 단위로 `statement_stats` `{j, w, lw, t, truth, cid, last, streak}` + SM-2 큐(`spaced-repetition.js`)에 누적. **연속 정답 3회(`WEAK_GRADUATE_STREAK`) 시 취약 목록 졸업**, 재오판 시 복귀. 드릴 편성은 **SM-2 기한 도래(`getDueStatementSids`) → 오판 진술 → 임의** 순.
-- **드릴 모드**: 과목별(1~4) 외에 전 과목 특수 모드 `weak`(취약·복습 진술 필터)·`num`(수치·한도·기한 태그 필터 — `inferTags` 부여분) 지원, 출제 수 10/20/전체 선택. 합답형은 진술별 O/X 토글 2단계 응시 + 판정과 모순되는 선지 실시간 소거 표시(시험장 소거 전술 훈련).
+- **복수정답형 변환**(상세: [`QUESTION_SCHEMA_DESIGN.md`](./QUESTION_SCHEMA_DESIGN.md) §6): 객관식은 선지를 `fact`(명제 진위)/`answer`(정답 여부) 모드로 진술화, 같은 교재 구간(conceptId)의 fact 진술은 재조합해 복수정답 문항을 추가 생성. 단답형은 빈칸 정답이 하나뿐이라 100% 단일정답이 되므로 제외 — 원본 문제은행의 단답형으로 출제. 과목당 65/158/255/277 = 755문.
+- **진술 원자 추적**: 진술의 `sid`(`stableId`)를 O/X·복수정답형이 공유 → [`src/statement-tracker.js`](../../src/statement-tracker.js)가 `perStatement.judgedCorrect` 판정을 `sid` 단위로 `statement_stats` `{j, w, lw, t, truth, cid, last, streak}` + SM-2 큐(`spaced-repetition.js`)에 누적. **연속 정답 3회(`WEAK_GRADUATE_STREAK`) 시 취약 목록 졸업**, 재오판 시 복귀. 드릴 편성은 **SM-2 기한 도래(`getDueStatementSids`) → 오판 진술 → 임의** 순.
+- **드릴 모드**: 과목별(1~4) 외에 전 과목 특수 모드 `weak`(취약·복습 진술 필터)·`num`(수치·한도·기한 태그 필터 — `inferTags` 부여분) 지원, 출제 수 10/20/전체 선택. 복수정답형은 진술별 O/X 토글 2단계 응시 + 판정과 모순되는 선지 실시간 소거 표시(시험장 소거 전술 훈련).
 - **취약 진술 리뷰 패널**: 누적 통계 열람 — conceptId 개념 그룹핑(참/거짓 혼동쌍 2단 대조), 복습 대상 필터, 최근 판정 배지, 졸업 수 표시, 바로 드릴 진입.
-- **런타임**: `DataLoader.loadOxDrills(N)`/`loadComboDrills(N)`가 `data/drills/` 번들을 클래식 `<script>` 주입으로 로드(`file://` 호환). 합답형은 수작업 파일럿(`combo_pilot.js`)과 자동 번들을 병합. UI는 `views/trainer-drills.js` + 트레이너 패널(`index.html`).
-- **모의고사 연동**: 과목 카드의 "합답형 풀기"(40/60/전체 선택) → `startComboMockExam('N[:count]')`(`views/exam-simulator.js`)이 combo 번들을 `comboToSimQuestion`으로 시뮬 형식 평탄화(citation·진술 본문 편입, members 문자열화, 정답→지시자)해 시뮬레이터 세션 실행. 원본 members는 `comboOptions`에 보존돼 채점 시 `deriveComboJudgments`로 진술 판정을 역산해 `recordStatementJudgments`에 기록 — 시뮬 성적이 취약 추적·SM-2에 반영. 오답 리뷰는 진술 정오표 표시, 오답 복습(`weak_sim_*_combo_*` 카드)도 해당 번들 로드 후 지원. 통합 모의고사는 `#integrated-mix-combo` 체크 시 과목별 약 20%를 합답형으로 혼합.
+- **런타임**: `DataLoader.loadOxDrills(N)`/`loadComboDrills(N)`가 `data/drills/` 번들을 클래식 `<script>` 주입으로 로드(`file://` 호환). 복수정답형은 수작업 파일럿(`combo_pilot.js`)과 자동 번들을 병합. UI는 `views/trainer-drills.js` + 트레이너 패널(`index.html`).
+- **모의고사 연동**: 과목 카드의 "복수정답형 풀기"(40/60/전체 선택) → `startComboMockExam('N[:count]')`(`views/exam-simulator.js`)이 combo 번들을 `comboToSimQuestion`으로 시뮬 형식 평탄화(citation·진술 본문 편입, members 문자열화, 정답→지시자)해 시뮬레이터 세션 실행. 원본 members는 `comboOptions`에 보존돼 채점 시 `deriveComboJudgments`로 진술 판정을 역산해 `recordStatementJudgments`에 기록 — 시뮬 성적이 취약 추적·SM-2에 반영. 오답 리뷰는 진술 정오표 표시, 오답 복습(`weak_sim_*_combo_*` 카드)도 해당 번들 로드 후 지원. 통합 모의고사는 `#integrated-mix-combo` 체크 시 과목별 약 20%를 복수정답형으로 혼합.
 - **캐시**: `data/drills/`는 레지스트리 미등록 번들이라 `sw.js`의 `pruneStaleDataBundles`에서 `ALWAYS_KEEP`으로 명시 보존.
-- **재생성·검증**: `npm run build:drills` (O/X + 합답형 일괄), `npm run check:combo` (파일럿 + 생성 번들 5개 전체 스키마·citation·채점 스모크 검증).
+- **재생성·검증**: `npm run build:drills` (O/X + 복수정답형 일괄), `npm run check:combo` (파일럿 + 생성 번들 5개 전체 스키마·citation·채점 스모크 검증).
 
 **오디오북 파이프라인** ([`content/audiobook/`](../../content/audiobook/README.md))은 Python 기반 별도 파이프라인으로, MD 청크 분할 → TTS → MP3 병합을 수행합니다.
 

@@ -304,9 +304,9 @@ function populateExamCards() {
                                 </div>`;
         }).join('\n');
 
-        // ㄱㄴㄷ 합답형: 문제집 MD 열람 + 합답형 모의고사 (버튼 클릭 시 문항 수 선택 행 펼침)
-        // comboFile이 manifest에 선언되면 우선 사용, 없으면 과목{order}_합답형.md 규약
-        const comboFile = (subjExams.find(e => e.comboFile) || {}).comboFile || `과목${subj.order}_합답형.md`;
+        // ㄱㄴㄷ 복수정답형: 문제집 MD 열람 + 복수정답형 모의고사 (버튼 클릭 시 문항 수 선택 행 펼침)
+        // comboFile이 manifest에 선언되면 우선 사용, 없으면 과목{order}_복수정답형.md 규약
+        const comboFile = (subjExams.find(e => e.comboFile) || {}).comboFile || `과목${subj.order}_복수정답형.md`;
         // 프리셋은 실제 풀보다 작을 때만 표시, "전체"는 실제 문항 수 표기
         const comboTotal = DataLoader.getComboCount(subj.order);
         const comboChips = [20, 40, 60]
@@ -315,8 +315,8 @@ function populateExamCards() {
             .concat(`<button class="exam-btn-sim combo-count-chip" data-click="startComboMockExam" data-arg="${idx + 1}">${comboTotal ? `전체 ${comboTotal}문` : '전체'}</button>`)
             .join('\n                                            ');
         const comboPair = `                                <div class="exam-btn-pair">
-                                    <button data-click="ExamViewer.openExam" data-arg="${contentPath(`문제은행/${comboFile}`)}" class="exam-btn-link"><i class="fa-solid fa-file-lines"></i> 합답형 문제집</button>
-                                    <button class="exam-btn-sim" data-click="toggleComboPicker" data-arg="combo-picker-${idx + 1}"><i class="fa-solid fa-circle-play"></i> 합답형 모의고사</button>
+                                    <button data-click="ExamViewer.openExam" data-arg="${contentPath(`문제은행/${comboFile}`)}" class="exam-btn-link"><i class="fa-solid fa-file-lines"></i> 복수정답형 문제집</button>
+                                    <button class="exam-btn-sim" data-click="toggleComboPicker" data-arg="combo-picker-${idx + 1}"><i class="fa-solid fa-circle-play"></i> 복수정답형 모의고사</button>
                                     <small class="exam-btn-caption">ㄱㄴㄷㄹ 조합형 · 원본 문항 자동 변환</small>
                                     <div class="combo-count-row is-hidden" id="combo-picker-${idx + 1}">
                                             ${comboChips}
@@ -787,7 +787,7 @@ const DELEGATED_HANDLERS = {
     exitSimArena, clearSimDraft, resumeSimDraft, showSimAnswerReview,
     showSimResultsSummary, startMockExamSim, startComboMockExam,
     startIntegratedMockExam, startWeakExam, startFocusSubjectStudy,
-    // 훈련소 드릴 (O/X·합답형·약점)
+    // 훈련소 드릴 (O/X·복수정답형·약점)
     openOxDrillSetup, startOxDrill, nextOxDrill,
     openComboDrillSetup, startComboDrill, nextComboDrill, submitComboJudgments,
     openWeakReview, setWeakFilter, setDrillCount,
@@ -805,7 +805,7 @@ const DELEGATED_HANDLERS = {
     submitDailyCardAnswer, submitDailyShortAnswer,
     // 사전/시험 전환
     clearDictSearch, setDictFilter, showExamSelect, selectExamAction,
-    /** 합답형 모의고사 문항 수 선택 행 토글 — 다른 과목의 열린 행은 닫는다 */
+    /** 복수정답형 모의고사 문항 수 선택 행 토글 — 다른 과목의 열린 행은 닫는다 */
     toggleComboPicker(rowId) {
         const row = document.getElementById(rowId);
         if (!row) return;

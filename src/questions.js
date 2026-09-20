@@ -1,6 +1,6 @@
 // src/questions.js
 // 맞춤형화장품 조제관리사 문항 스키마 + 채점 유틸 (순수 로직, 렌더링 없음)
-// 유형: 'single' 단일정답 5지선다 | 'combo' 합답형(ㄱㄴㄷ 조합) | 'short' 단답형(81~100번) | 'ox' 진위형
+// 유형: 'single' 단일정답 5지선다 | 'combo' 복수정답형(ㄱㄴㄷ 조합) | 'short' 단답형(81~100번) | 'ox' 진위형
 //
 // 설계 원칙
 //  - combo는 "정답 옵션"을 직접 신뢰하지 않고 진술(statement)의 truth로 도출/검증한다.
@@ -127,7 +127,7 @@ function validateQuestion(q) {
       errs.push('single answer와 correct 옵션 불일치');
   } else if (q.type === 'combo') {
     if (!q.statements || q.statements.length < 2) errs.push('combo 진술 부족');
-    // 저작 규칙: 합답형은 출처·인용을 문제 서두에 명기해야 한다
+    // 저작 규칙: 복수정답형은 출처·인용을 문제 서두에 명기해야 한다
     if (!q.citation || !String(q.citation).trim()) errs.push('combo citation 없음 — 문제 서두 출처·인용 명기 필수');
     const ids = new Set();
     (q.statements || []).forEach(s => {

@@ -1,4 +1,4 @@
-// statement-tracker.js — 합답형/OX 진술 단위 오판 추적 (docs/dev/COMBO_STUDY_STRATEGY.md §4-②)
+// statement-tracker.js — 복수정답형/OX 진술 단위 오판 추적 (docs/dev/COMBO_STUDY_STRATEGY.md §4-②)
 //
 // gradeAnswer()의 perStatement 결과를 두 저장소로 연결한다:
 // - fc_spaced_repetition: sid를 카드 ID로 사용해 SM-2 스케줄 갱신 (복습 시점 관리)

@@ -6,7 +6,7 @@ import { DataLoader } from '../data-loader.js';
 const OPTION_INDICATORS = ['①', '②', '③', '④', '⑤'];
 
 /**
- * 합답형 진술 정오표 — 실제 O/X vs 내 선택 선지의 포함 여부로 오판 진술을 표시
+ * 복수정답형 진술 정오표 — 실제 O/X vs 내 선택 선지의 포함 여부로 오판 진술을 표시
  * (선택 선지의 members = 사용자가 "참"이라 판정한 집합으로 해석)
  */
 function comboTruthTableHTML(q) {
@@ -51,7 +51,7 @@ export function showSimAnswerReview() {
             <div class="sim-review-item">
                 <div class="review-item-header">
                     <span class="badge badge-quiz-cat">Q ${q.num}</span>
-                    <span class="badge badge-quiz-type">${q.type === 'choice' ? '객관식' : q.type === 'ox' ? '진위형' : q.type === 'combo' ? '합답형' : '단답형'}</span>
+                    <span class="badge badge-quiz-type">${q.type === 'choice' ? '객관식' : q.type === 'ox' ? '진위형' : q.type === 'combo' ? '복수정답형' : '단답형'}</span>
                 </div>
                 <p class="review-item-q-text">${safeTextWithBreaks(q.question)}</p>
                 ${optionsHTML}
@@ -75,7 +75,7 @@ export function showSimResultsSummary() {
 }
 
 /**
- * 문항 → 단원(챕터) 제목 매핑. 합답형은 원문항 출처 또는 인용 라인으로 역추적.
+ * 문항 → 단원(챕터) 제목 매핑. 복수정답형은 원문항 출처 또는 인용 라인으로 역추적.
  * @param {Object} q
  * @param {string} subjKey
  * @param {{questions: Object, ranges: Object}} qc question_chapters 인덱스

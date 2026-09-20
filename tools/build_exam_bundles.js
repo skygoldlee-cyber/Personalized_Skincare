@@ -1,7 +1,7 @@
 // tools/build_exam_bundles.js — 문제은행 MD → {dataRoot}/exams_md/<stem>.js 번들 생성
 // ============================================================
 // 입력 : {contentRoot}/문제은행/<manifest.json의 exams[].file>
-//        (manifest 미등록 MD — 설계 문서, 생성 산출물(*_합답형.md) 등 — 은 번들하지 않음)
+//        (manifest 미등록 MD — 설계 문서, 생성 산출물(*_복수정답형.md) 등 — 은 번들하지 않음)
 // 출력 : {dataRoot}/exams_md/<stem>.js  (window.__EXAM_MD__["<contentRoot>/문제은행/<file>"] = "...")
 //
 // [멀티시험] content/exams.json의 모든 시험을 순회한다.
@@ -32,12 +32,12 @@ function buildForExam(target) {
     }
 
     // manifest.json에 등록된 시험 파일만 번들한다.
-    // 문제은행 폴더의 다른 MD(설계 문서, *_합답형.md 등 생성 산출물)는 뷰어 대상이 아니다.
+    // 문제은행 폴더의 다른 MD(설계 문서, *_복수정답형.md 등 생성 산출물)는 뷰어 대상이 아니다.
     const examFiles = new Set((target.manifest.exams || []).map((e) => e.file));
-    // 합답형 문제집(과목N_합답형.md 또는 exams[].comboFile)도 뷰어 대상
+    // 복수정답형 문제집(과목N_복수정답형.md 또는 exams[].comboFile)도 뷰어 대상
     (target.manifest.exams || []).forEach((e) => { if (e.comboFile) examFiles.add(e.comboFile); });
     for (const f of fs.readdirSync(SRC_DIR)) {
-        if (/_합답형\.md$/i.test(f)) examFiles.add(f);
+        if (/_복수정답형\.md$/i.test(f)) examFiles.add(f);
     }
 
     const mdFiles = fs.readdirSync(SRC_DIR)

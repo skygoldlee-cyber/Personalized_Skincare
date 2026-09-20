@@ -74,7 +74,7 @@
  */
 
 /**
- * 드릴(O/X·합답형) 세션 상태.
+ * 드릴(O/X·복수정답형) 세션 상태.
  * @typedef {Object} DrillSessionState
  * @property {?number}  subject       과목 order (특수 모드는 0)
  * @property {string}   mode          '' | 'weak' | 'num'
@@ -82,7 +82,7 @@
  * @property {number}   currentIndex  현재 문항 인덱스
  * @property {number}   correctCount  정답 수
  * @property {Array<*>} solvedList    제출 기록
- * @property {Object.<string, *>} [judgments] 진술별 O/X 판정 (합답형 전용)
+ * @property {Object.<string, *>} [judgments] 진술별 O/X 판정 (복수정답형 전용)
  */
 
 /**

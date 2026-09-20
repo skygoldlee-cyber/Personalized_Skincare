@@ -1,5 +1,5 @@
 /**
- * 합답형(combo) 번들 검증 — 스키마 검증 + 정답 유일성 + perStatement 채점 경로 확인
+ * 복수정답형(combo) 번들 검증 — 스키마 검증 + 정답 유일성 + perStatement 채점 경로 확인
  * 대상: data/drills/combo_pilot.js (수작업) + data/drills/combo_subject*.js (자동 생성)
  * 실행: node tools/check_combo_pilot.js
  */
@@ -28,9 +28,9 @@ function loadBundle(file, globalName) {
 /** 문항 1개 검증 — 오류 문자열 배열 반환 */
 function checkQuestion(q) {
   const errs = validateQuestion(q);
-  // 합답형 저작 규칙: 문제 서두에 출처·인용 명기 필수
+  // 복수정답형 저작 규칙: 문제 서두에 출처·인용 명기 필수
   if (!q.citation || typeof q.citation !== 'string' || !q.citation.trim()) {
-    errs.push('citation 필드 없음 — 합답형은 문제 서두에 출처·인용 명기 필수');
+    errs.push('citation 필드 없음 — 복수정답형은 문제 서두에 출처·인용 명기 필수');
   }
   const answer = deriveComboAnswer(q);
   const optIds = new Set(q.options.map(o => o.id));

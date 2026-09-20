@@ -1,12 +1,12 @@
-# 합답형(ㄱㄴㄷ 조합) 문항 생성 가이드
+# 복수정답형(ㄱㄴㄷ 조합) 문항 생성 가이드
 
 > `tools/build_combo_drills.js` + `tools/build/ref-statements.js`가
-> 문제은행 객관식과 참조자료 원문을 **합답형 드릴 문항**으로 변환·생성하는
+> 문제은행 객관식과 참조자료 원문을 **복수정답형 드릴 문항**으로 변환·생성하는
 > 전체 과정을 설명합니다. 스키마 자체는 `QUESTION_SCHEMA_DESIGN.md` §6 참조.
 
 ## 1. 개요
 
-합답형은 "다음 중 옳은 것을 모두 고른 것은?" 형식으로, 진술 4~6개(ㄱ~ㅂ)와
+복수정답형은 "다음 중 옳은 것을 모두 고른 것은?" 형식으로, 진술 4~6개(ㄱ~ㅂ)와
 5지선다 조합(①~⑤)으로 구성됩니다. 단일 객관식보다 진술 단위 판단을 요구해
 혼동쌍 대조 학습에 적합합니다 (`COMBO_STUDY_STRATEGY.md` §2-①).
 
@@ -22,7 +22,7 @@
 
 출력  →  data/drills/combo_subjectN.js   (var COMBO_DRILLS_subjectN)
         data/drills/combo_index.js       (var COMBO_INDEX — 과목별 문항 수)
-        content/문제은행/과목N_합답형.md   (사람이 읽는 문제집 형식)
+        content/문제은행/과목N_복수정답형.md   (사람이 읽는 문제집 형식)
 ```
 
 실행:
@@ -33,7 +33,7 @@ node tools/build_combo_drills.js --dry-run  # 검증만 (파일 미생성)
 node tools/check_combo_pilot.js             # 생성 번들 무결성 감사
 ```
 
-> **주의**: 생성물(`combo_*.js`, `과목N_합답형.md`)은 자동 생성 파일 — 직접 수정
+> **주의**: 생성물(`combo_*.js`, `과목N_복수정답형.md`)은 자동 생성 파일 — 직접 수정
 > 금지. 소스(문제은행 MD, ref_md, 원료 DB)를 수정하고 재생성합니다.
 
 ## 2. 소스 ① — 문제은행 객관식 변환
@@ -162,7 +162,7 @@ fact 진술을 모아 **참 2~3 + 거짓 2~3**의 진짜 복수정답 문항을 
 
 - `data/drills/combo_subjectN.js` — `var COMBO_DRILLS_subjectN = [...]`
 - `data/drills/combo_index.js` — 과목별 문항 수(`combo_pilot.js` 수작업 문항 합산)
-- `content/문제은행/과목N_합답형.md` — 문제부(### Qn. 발문/인용/진술/조합 선지) +
+- `content/문제은행/과목N_복수정답형.md` — 문제부(### Qn. 발문/인용/진술/조합 선지) +
   정답부(정답 조합·진술별 O/X 판정표·해설)
 
 ### 5-3. 빌드 로그 읽기

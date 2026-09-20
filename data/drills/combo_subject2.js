@@ -1,4 +1,4 @@
-// 자동 생성된 합답형 드릴 데이터입니다. 수정하지 마십시오. (tools/build_combo_drills.js)
+// 자동 생성된 복수정답형 드릴 데이터입니다. 수정하지 마십시오. (tools/build_combo_drills.js)
 // 원본: data/exams/subject2.81a4eafb.js — mode: fact(명제 조합) 18문 / answer(정답 조합) 139문
 var COMBO_DRILLS_subject2 = [
  {

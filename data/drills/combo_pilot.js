@@ -1,5 +1,5 @@
 /**
- * 합답형(combo) 파일럿 — 단답형/객관식 문항의 교재 근거에서 저작한 진술 조합 문항
+ * 복수정답형(combo) 파일럿 — 단답형/객관식 문항의 교재 근거에서 저작한 진술 조합 문항
  * ※ 수작업 저작 데이터 (자동 생성 아님) — 신규 문항 추가 시 npm run check:combo 로 검증
  * 스키마: docs/dev/QUESTION_SCHEMA_DESIGN.md (combo 유형)
  * 로드: DataLoader.loadComboDrills() → window.COMBO_PILOT

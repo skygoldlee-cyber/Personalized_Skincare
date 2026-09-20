@@ -2,7 +2,7 @@
 /* ============================================================
  * tools/build_combo_drills.js
  * ------------------------------------------------------------
- * data/exams/subjectN.*.js (choice 문항)를 합답형(combo) 드릴 문항으로 변환한다.
+ * data/exams/subjectN.*.js (choice 문항)를 복수정답형(combo) 드릴 문항으로 변환한다.
  * docs/dev/COMBO_STUDY_STRATEGY.md §2-①: single 문항의 각 보기를 진술 원자로 펼치고
  * truth(명제 참/거짓 또는 정답 여부)로 정답 조합을 도출한다.
  *
@@ -15,7 +15,7 @@
  *   '위 ①②③ 모두'류 메타 선지가 정답이면 원형 숫자 개수만큼 실질 선지를 참으로 처리
  *
  *   개념 재조합 — fact 모드 진술을 같은 교재 구간(conceptId = 첫 L####)끼리 모아
- *                 참 2~3개 + 거짓 진술로 진짜 복수정답 합답형을 추가 생성한다.
+ *                 참 2~3개 + 거짓 진술로 진짜 복수정답 복수정답형을 추가 생성한다.
  *                 (단일정답 문항이 대부분인 구조적 한계 보완.
  *                  챕터 단위는 입자가 커서 이질 진술이 섞이므로 L#### 단위로 한정)
  *
@@ -24,8 +24,8 @@
  *   id = stableId(문항 id) — 재생성 순서와 무관하게 안정
  *
  * 제외: ㄱㄴㄷ 조합형 발문, 참 진술 0개 그룹, 진술 2개 미만, 단답형(blank)
- *       — 빈칸은 정답이 하나뿐이라 합답형이 되어도 100% 단일정답이 되어
- *         "참 진술 하나 찾기"로 공략 가능 → 합답형 풀에서 제외하고
+ *       — 빈칸은 정답이 하나뿐이라 복수정답형이 되어도 100% 단일정답이 되어
+ *         "참 진술 하나 찾기"로 공략 가능 → 복수정답형 풀에서 제외하고
  *         원본 문제은행의 단답형으로만 출제한다.
  *
  * 입력 : data/exams/*.js (EXAM_DATA_subjectN)
@@ -53,7 +53,7 @@ let SUBJECT_TITLE = {};
 let OUT_DIR = path.join(ROOT, 'data', 'drills');
 let MD_DIR = path.join(ROOT, 'content', '문제은행');
 
-const AUTOGEN_HEADER = '// 자동 생성된 합답형 드릴 데이터입니다. 수정하지 마십시오. (tools/build_combo_drills.js)';
+const AUTOGEN_HEADER = '// 자동 생성된 복수정답형 드릴 데이터입니다. 수정하지 마십시오. (tools/build_combo_drills.js)';
 
 /* ---------- 발문 분류 (build_ox_drills.js와 동일 기준) ---------- */
 
@@ -173,7 +173,7 @@ function shuffle(arr, rng) {
 
 /**
  * 해설 정제 — 원본 해설에 박힌 '정답: ② …' 라인을 제거한다.
- * 합답형은 도출 정답이 원본 선지 번호와 다르므로 그대로 두면 혼동을 유발한다.
+ * 복수정답형은 도출 정답이 원본 선지 번호와 다르므로 그대로 두면 혼동을 유발한다.
  * (번들 explain에 저장되기 때문에 생성 단계에서 정제 — MD 출력 필터는 이중 안전장치)
  */
 function sanitizeExplain(explanation) {
@@ -230,7 +230,7 @@ function buildComboItems(examKey, exam, genOpts, refAtoms) {
   const conceptPool = {};
 
   for (const q of exam.questions) {
-    // 단답형은 합답형 풀에서 제외 — 빈칸 정답은 하나뿐이라 합답형이 돼도 100% 단일정답.
+    // 단답형은 복수정답형 풀에서 제외 — 빈칸 정답은 하나뿐이라 복수정답형이 돼도 100% 단일정답.
     // 원본 문제은행의 단답형으로 출제된다.
     if (q.type === 'blank') { stats.skipBlank++; continue; }
     if (q.type !== 'choice') continue;
@@ -330,7 +330,7 @@ function buildComboItems(examKey, exam, genOpts, refAtoms) {
   }
 
   // 개념 재조합 문항 추가 — 같은 교재 구간(L####)의 참 2~3 + 거짓 진술로 구성한
-  // 진짜 복수정답 합답형. 챕터 단위보다 입자가 가늘어 이질 진술 혼입 위험이 낮다.
+  // 진짜 복수정답 복수정답형. 챕터 단위보다 입자가 가늘어 이질 진술 혼입 위험이 낮다.
   items.push(...buildClusterCombos(conceptPool, examKey, subject, subjKey, genOpts, stats));
 
   // 참조자료 원문(ref_md) 콤보 — 법령 정의조항·열거 목록에서 추출한 검증 원자.
@@ -340,7 +340,7 @@ function buildComboItems(examKey, exam, genOpts, refAtoms) {
 }
 
 /**
- * 같은 교재 구간(conceptId = 첫 L####)의 fact 진술을 재조합한 복수정답 합답형 생성.
+ * 같은 교재 구간(conceptId = 첫 L####)의 fact 진술을 재조합한 복수정답 복수정답형 생성.
  * 단일 MCQ 변환은 구조상 정답이 1개 — 같은 구간의 참 명제 여러 개를 모아야
  * "옳은 것을 모두 고르시오"가 실제로 복수정답이 된다.
  *
@@ -413,7 +413,7 @@ function buildClusterCombos(conceptPool, examKey, subject, subjKey, genOpts, sta
 }
 
 /**
- * ref_md(법령·고시 원문) 추출 원자로 합답형 생성 — 검증된 신규 진술 재료.
+ * ref_md(법령·고시 원문) 추출 원자로 복수정답형 생성 — 검증된 신규 진술 재료.
  *
  * - def: 같은 조의 용어 정의 교차 결합. 참 = 원문 그대로, 거짓 = 타 용어의
  *   정의 본문을 결합 (정의는 용어별 유일 → 교차 결합은 확실히 거짓).
@@ -663,9 +663,9 @@ const OPT_INDICATORS = ['①', '②', '③', '④', '⑤', '⑥'];
  */
 function toSubjectMd(subject, questions) {
   const lines = [
-    `# ${subject ? `제${subject}과목: ` : ''}${SUBJECT_TITLE[subject] || '합답형'} 합답형 (ㄱㄴㄷㄹ 조합)`,
+    `# ${subject ? `제${subject}과목: ` : ''}${SUBJECT_TITLE[subject] || '복수정답형'} 복수정답형 (ㄱㄴㄷㄹ 조합)`,
     '',
-    '> **화장품조제관리사 필기시험 대비** (합답형)',
+    '> **화장품조제관리사 필기시험 대비** (복수정답형)',
     '> 문제에 집중할 수 있도록 정답과 교재 근거는 파일 끝에 모아 제공합니다.',
     `> ⚠ 자동 생성 파일 (tools/build_combo_drills.js) — 직접 수정하지 마십시오.`,
     '',
@@ -673,7 +673,7 @@ function toSubjectMd(subject, questions) {
     '',
     '---',
     '',
-    `## 📝 [합답형: 옳은 것을 모두 고르시오]`,
+    `## 📝 [복수정답형: 옳은 것을 모두 고르시오]`,
     '',
   ];
 
@@ -708,7 +708,7 @@ function toSubjectMd(subject, questions) {
     lines.push(`> 진술 판정: ${q.statements.map(s => `${s.id} ${s.truth ? 'O' : 'X'}`).join(' · ')}`);
     lines.push(`> ${q.citation.replace(/^📖\s*/, '📖 ')}`);
     const exp = String(q.explain || '').trim();
-    // 원본 해설에 박힌 '정답: ② …' 라인이 그대로 새어나가면 합답형 정답과 혼동 → 필터
+    // 원본 해설에 박힌 '정답: ② …' 라인이 그대로 새어나가면 복수정답형 정답과 혼동 → 필터
     if (exp) exp.split('\n')
       .filter(l => !/^\s*정답\s*[:：]/.test(l.trim()))
       .forEach(l => lines.push(`> ${l.trim()}`));
@@ -784,7 +784,7 @@ async function buildForExam(target) {
       // 문제은행 MD 형식 산출물 — 자동 변환분만 (과목당 100/250/250/400 구성)
       const subjectNum = SUBJECT_NUM[key];
       if (subjectNum && fs.existsSync(MD_DIR)) {
-        const mdPath = path.join(MD_DIR, `과목${subjectNum}_합답형.md`);
+        const mdPath = path.join(MD_DIR, `과목${subjectNum}_복수정답형.md`);
         fs.writeFileSync(mdPath, toSubjectMd(subjectNum, valid), 'utf8');
       }
     }
@@ -800,7 +800,7 @@ async function buildForExam(target) {
     }
   }
 
-  // 과목별 합답형 문항 수 인덱스 — 모의고사 카드의 "전체 N문" 라벨용.
+  // 과목별 복수정답형 문항 수 인덱스 — 모의고사 카드의 "전체 N문" 라벨용.
   // 수작업 파일럿(combo_pilot.js) 문항도 과목별로 합산해 실제 응시 풀과 일치시킨다.
   if (!DRY_RUN) {
     const pilotPath = path.join(OUT_DIR, 'combo_pilot.js');
@@ -817,13 +817,13 @@ async function buildForExam(target) {
         console.warn(`[combo-drills] ${target.id}: combo_pilot.js 집계 실패 — 자동 변환분만 인덱싱`, e.message);
       }
     }
-    const idxBody = '// 자동 생성된 합답형 문항 수 인덱스입니다. 수정하지 마십시오. (tools/build_combo_drills.js)\n' +
+    const idxBody = '// 자동 생성된 복수정답형 문항 수 인덱스입니다. 수정하지 마십시오. (tools/build_combo_drills.js)\n' +
       `var COMBO_INDEX = ${JSON.stringify(comboCounts)};\n` +
       'window.COMBO_INDEX = COMBO_INDEX;\n';
     fs.writeFileSync(path.join(OUT_DIR, 'combo_index.js'), idxBody, 'utf8');
   }
 
-  console.log(`[combo-drills] ${target.id}: 총 ${totalItems}개 합답형 문항 생성${DRY_RUN ? ' (dry-run)' : ''}, 오류 ${totalErrors}건 → ${path.relative(ROOT, OUT_DIR)}/`);
+  console.log(`[combo-drills] ${target.id}: 총 ${totalItems}개 복수정답형 문항 생성${DRY_RUN ? ' (dry-run)' : ''}, 오류 ${totalErrors}건 → ${path.relative(ROOT, OUT_DIR)}/`);
 }
 
 async function main() {

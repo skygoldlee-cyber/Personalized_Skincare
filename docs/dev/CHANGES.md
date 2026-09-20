@@ -28,10 +28,10 @@
 검증: 생성 오류 0 · 유닛 294 · 파서 등가성 · imports · assets ·
 check_combo_pilot 전 과목 무결성.
 
-## 2026-09-20 참조자료 원문(ref_md) 합답형 생성 파일럿
+## 2026-09-20 참조자료 원문(ref_md) 복수정답형 생성 파일럿
 
 `content/참조자료/ref_md` 법령·고시·별표 원문에서 검증된 진술 원자를 추출해
-합답형 풀을 확충 — `tools/build/ref-statements.js` 신규 + `build_combo_drills.js` 연동:
+복수정답형 풀을 확충 — `tools/build/ref-statements.js` 신규 + `build_combo_drills.js` 연동:
 
 - **추출 원자 3종**: 정의조항(용어↔정의 교차 결합으로 거짓 생성), 조문 열거
   목록(각 호/목 멤버십), 연번 표(알레르기 25종·색소) + 별표 계층 목록(유형별 주의사항)
@@ -46,14 +46,14 @@ check_combo_pilot 전 과목 무결성.
   (피부생리·관능평가·상담)이라 ref_md로 추가 확충 불가 — 한계로 기록
 - 설계 문서 §6-3c 신설 — 추출 규칙·품질 게이트·과목 귀속·한계 문서화
 
-## 2026-09-20 합답형 문항 품질 감사 반영
+## 2026-09-20 복수정답형 문항 품질 감사 반영
 
 외부 감사(1,000문 정합성 점검) 지적사항 반영 — `tools/build_combo_drills.js` + `src/questions.js`:
 
 - **옵션 letter 정렬**: `generateComboOptions`가 members를 라벨(ㄱ→ㅁ) 순으로 정렬 — 약 70% 옵션이 뒤섞여 있던 문제 해소. MD 출력도 동일 관례로 재정렬(파일럿 대비)
 - **원본 정답 누출 차단**: `sanitizeExplain` — 소스 해설의 `정답: ②…` 라인을 번들 explain 저장 단계에서 제거 (과목2 Q217 사례), MD 출력 필터는 이중 안전장치
-- **빈칸형 합답형 제외**: blank 254문은 정답이 하나뿐이라 100% 단일정답 → "참 진술 하나 찾기"로 공략 가능. 합답형 풀에서 제외하고 원본 단답형으로만 출제 (1,000→746문 + 재조합 9 = **755문**)
-- **개념 재조합 복수정답**: 같은 교재 구간(conceptId = 첫 L####)의 fact 진술을 모아 참 2~3 + 거짓 2~3 구성 — 진짜 복수정답 합답형 9문(0/1/6/2). 챕터 단위는 입자가 커서 이질 진술이 섞이는 문제가 있어 L#### 단위로 한정. 근접 중복(부분문자열·공통 접두사≥60%) 방어, citation에 L####·진술별 explain에 원본 문항 포인터 부여. 진술 `sid` 재사용으로 취약 추적 연속
+- **빈칸형 복수정답형 제외**: blank 254문은 정답이 하나뿐이라 100% 단일정답 → "참 진술 하나 찾기"로 공략 가능. 복수정답형 풀에서 제외하고 원본 단답형으로만 출제 (1,000→746문 + 재조합 9 = **755문**)
+- **개념 재조합 복수정답**: 같은 교재 구간(conceptId = 첫 L####)의 fact 진술을 모아 참 2~3 + 거짓 2~3 구성 — 진짜 복수정답 복수정답형 9문(0/1/6/2). 챕터 단위는 입자가 커서 이질 진술이 섞이는 문제가 있어 L#### 단위로 한정. 근접 중복(부분문자열·공통 접두사≥60%) 방어, citation에 L####·진술별 explain에 원본 문항 포인터 부여. 진술 `sid` 재사용으로 취약 추적 연속
 - **오답 선지 개선**(적용 후 폐기된 blank 경로에 구현됐던 것): 정답 유형 분류 `/^\d/` 정정(ISO 16128 류 오분류 방지) — blank 파이프라인 제거로 미적용이나 이력 보존
 
 검증: 생성 오류 0건 · 유닛 294 · check_combo_pilot 정답분포 ①~⑤ 15~25% 균형
@@ -73,7 +73,7 @@ check_combo_pilot 전 과목 무결성.
 4. **app.js 핸들러 브리지 통합**: 개별 `window.X=` 나열 → `DELEGATED_HANDLERS` 단일 맵 + `Object.assign(window, ...)`, delegation-guard 테스트가 맵 구조 인식
 5. **Mermaid 공용화**: `src/mermaid-render.js` 신규 — reader/search/manual-viewer의 동일 코드 3벌(~185행) 통합
 6. **시뮬레이터 결과 분리**: `submitExam`의 결과 렌더링(과목/단원 분석, 과락·합격 피드백) + `_chapterForQuestion` → `exam-sim-review.js` 이관 (simulator 1,104→938행)
-7. **드릴 파이프라인 공용화**: `trainer-drills.js` O/X·합답형 setup/start/next/result 골격 → `DRILL_TYPES` 설정 맵 + 공용 함수, 공개 API 래퍼 유지
+7. **드릴 파이프라인 공용화**: `trainer-drills.js` O/X·복수정답형 setup/start/next/result 골격 → `DRILL_TYPES` 설정 맵 + 공용 함수, 공개 API 래퍼 유지
 8. **참조자료 멀티시험화**: `pdf-registry.js`/`keyword-index.js` 생성 모듈을 시험별 테이블 맵(`_EXAM_TABLES`/`_EXAM_GLOSSARY_INDEX`)으로 전환, `getRefTables()`/`getGlossaryIndex()`가 활성 시험 해석. 빌드 도구는 exams.json 전체 순회, 파생 경로는 시험별 contentRoot로 계산
 9. **sw 자산 집계**: `MD_ASSETS`/`DATA_ASSETS` 생성이 모든 시험 순회 + 디스크 존재 확인으로 변경 (기존: 기본 시험만)
 10. **data/exams/ 경로 중복**: exams.json note에 겸용 주의 명시 (cf1e721에서 처리)
@@ -81,10 +81,10 @@ check_combo_pilot 전 과목 무결성.
 12. **테스트 보강**: `exam-context.test.js`(활성 시험 해석/네임스페이스/레거시 정리 12건) + `data-loader.test.js`(레지스트리 조회 7건) 신규, `pdf-registry.test.js`를 getRefTables 기반으로 갱신
 - **+α**: `SHELL_ASSETS` 프리캐시 누락 모듈 12개 보충 (router/pomodoro/study-calendar 등)
 
-## 2026-09-20 모의고사 결과 분석 강화 + 합답형 버튼 단일화
+## 2026-09-20 모의고사 결과 분석 강화 + 복수정답형 버튼 단일화
 
-- **합답형 모의고사 버튼 단일화** (39eec88): 과목 카드의 40문/60문/전체 3칩 → "합답형 모의고사" 버튼 1개. 클릭 시 카드 내 문항 수 선택 행 펼침(20/40/60/전체 N문, 풀 크기에 맞춰 필터링). `data/drills/combo_index.js` 신규(과목별 실제 문항 수, 파일럿 포함 — 102/250/250/408)로 "전체 N문" 표기. `DataLoader.loadComboIndex`/`getComboCount` 추가
-- **단원별 취약 분석** (1e10c99): `tools/build_question_chapters.js` 신규 — 문제은행 문항의 교재 인용(path#L번호)을 `## N.` 절/Chapter 단원으로 매핑해 `{dataRoot}/question_chapters.js` 생성(724/1000건 매핑, 나머지는 참조자료 인용 → '기타' 묶음). 결과 화면에 오답 포함 단원을 정답률 낮은 순으로 표시. 합답형은 `출처: 과목N 문제은행 Qn`으로 원문항 거슬러 매핑, 실패 시 L번호→라인 경계 폴백
+- **복수정답형 모의고사 버튼 단일화** (39eec88): 과목 카드의 40문/60문/전체 3칩 → "복수정답형 모의고사" 버튼 1개. 클릭 시 카드 내 문항 수 선택 행 펼침(20/40/60/전체 N문, 풀 크기에 맞춰 필터링). `data/drills/combo_index.js` 신규(과목별 실제 문항 수, 파일럿 포함 — 102/250/250/408)로 "전체 N문" 표기. `DataLoader.loadComboIndex`/`getComboCount` 추가
+- **단원별 취약 분석** (1e10c99): `tools/build_question_chapters.js` 신규 — 문제은행 문항의 교재 인용(path#L번호)을 `## N.` 절/Chapter 단원으로 매핑해 `{dataRoot}/question_chapters.js` 생성(724/1000건 매핑, 나머지는 참조자료 인용 → '기타' 묶음). 결과 화면에 오답 포함 단원을 정답률 낮은 순으로 표시. 복수정답형은 `출처: 과목N 문제은행 Qn`으로 원문항 거슬러 매핑, 실패 시 L번호→라인 경계 폴백
 - **과목별 복습 버튼 상시화** (1e10c99): 기존 과락(<40%) 과목만 추천 버튼 → 오답 있는 모든 과목 행에 `⚡ 복습` 버튼(해당 과목 집중 퀴즈)
 - **문제집 유형 캡션** (2789a6e): 버튼 쌍 하단에 "선다형 + 단답형 혼합 · 수작업 원본" / "ㄱㄴㄷㄹ 조합형 · 원본 문항 자동 변환" 안내 추가
 
@@ -101,7 +101,7 @@ check_combo_pilot 전 과목 무결성.
 
 ## 2026-09-20 학습안내서 갱신 + 진입점 정리
 
-- **학습안내서 갱신** (48816d7): 문제은행 유형 분포를 실제 파싱 기준으로 정정(객관식 746/단답형 254), O/X 드릴·합답형 드릴·취약 진술 리뷰·합답형 모의고사·통합 모의고사(100문/120분) 등 신규 기능을 §1 표에 반영, D-5~당일 플랜 자료 맵에 드릴·취약 리뷰 추가, §10 파일 구조에 `과목N_합답형.md` 추가, `data/docs_md/학습안내서.js` 폴백 번들 재생성
+- **학습안내서 갱신** (48816d7): 문제은행 유형 분포를 실제 파싱 기준으로 정정(객관식 746/단답형 254), O/X 드릴·복수정답형 드릴·취약 진술 리뷰·복수정답형 모의고사·통합 모의고사(100문/120분) 등 신규 기능을 §1 표에 반영, D-5~당일 플랜 자료 맵에 드릴·취약 리뷰 추가, §10 파일 구조에 `과목N_복수정답형.md` 추가, `data/docs_md/학습안내서.js` 폴백 번들 재생성
 - **중복 진입점 정리** (d2f4e93): 학습 부록 카드에서 학습안내서 링크 제거 → 대시보드 독립 카드로만 진입. 부록 카드는 배지 + 두음법·숫자 총정리 링크만 표시
 
 ## 2026-09-20 멀티시험 플랫폼 아키텍처 (구조 개편)
@@ -163,18 +163,18 @@ check_combo_pilot 전 과목 무결성.
 - 결과: 표시 수치 108/36, 270/90, 270/90, 433/143 (카드·퀴즈 각각 문제은행 비율과 정확히 일치); safety +84카드/+37퀴즈, understanding +86카드/+43퀴즈 보충 번들 생성
 - 후속: 보충 퀴즈를 **전량 단답형**으로 전환 — 객관식은 `choiceToBlank`가 긍정 발문 + 정답 ≤20자 → 단답형(정답 문구 입력), 긴 정답은 수치 `[ 빈칸 ]`화. 부정형 발문은 변환 제외(거짓 진술 학습 방지). 퀴즈 선별도 단답형 변환 가능 문항 우선 균등 편성
 
-## 2026-09-20 합답형 학습 통합 강화 — 추적 연동·리뷰·편성 보완 11항목
+## 2026-09-20 복수정답형 학습 통합 강화 — 추적 연동·리뷰·편성 보완 11항목
 
 ### 시뮬레이터 ↔ 진술 추적 통합
 
 - `comboToSimQuestion`이 원본 `options`(members 구조)를 `comboOptions`로 보존 — 시뮬 응답을 진술 판정으로 역산 가능
-- `deriveComboJudgments` + `submitExam` 연동: 합답형 모의고사 응답이 `recordStatementJudgments`로 기록돼 취약 목록·SM-2가 시뮬 성적에도 반응
-- `exam-sim-review`: 합답형 오답에 **진술 정오표** 표시 (실제 O/X vs 내 선택 선지의 포함 여부, 오판 진술 강조)
+- `deriveComboJudgments` + `submitExam` 연동: 복수정답형 모의고사 응답이 `recordStatementJudgments`로 기록돼 취약 목록·SM-2가 시뮬 성적에도 반응
+- `exam-sim-review`: 복수정답형 오답에 **진술 정오표** 표시 (실제 O/X vs 내 선택 선지의 포함 여부, 오판 진술 강조)
 
 ### 모의고사 편성
 
-- 합답형 풀기 문항 수 선택 — `40문/60문/전체` 칩 (`startComboMockExam('N:count')` 파싱 + 무작위 샘플링)
-- 통합 모의고사 "합답형 혼합" 체크박스 — 과목별 배정의 약 20%를 combo 문항으로 교체 (`#integrated-mix-combo`)
+- 복수정답형 풀기 문항 수 선택 — `40문/60문/전체` 칩 (`startComboMockExam('N:count')` 파싱 + 무작위 샘플링)
+- 통합 모의고사 "복수정답형 혼합" 체크박스 — 과목별 배정의 약 20%를 combo 문항으로 교체 (`#integrated-mix-combo`)
 
 ### 트레이너 UX
 
@@ -182,31 +182,31 @@ check_combo_pilot 전 과목 무결성.
 - 개념 집중 드릴 — 취약 리뷰 혼동쌍 그룹 헤더의 "이 개념만 드릴" (`startOxDrill('concept:<cid>')` — 동일 cid 취약 진술만 출제)
 - 오판 진술 O/X 단건 재시도 — 오판 리뷰·취약 행의 재시도 버튼 (`startOxDrill('sid:<sid>')`)
 - 드릴 완료 화면에 "취약 진술 리뷰" 바로가기 (오판 존재 시)
-- 키보드 단축키 — O/X 드릴 `O`·`X` 판정, 합답형 `1`~`5` 선지 선택, `Enter` 다음 문제
+- 키보드 단축키 — O/X 드릴 `O`·`X` 판정, 복수정답형 `1`~`5` 선지 선택, `Enter` 다음 문제
 - 과목별 진술 마스터 진행도 — 취약 리뷰 상단에 과목별 판정/취약/졸업 집계 (`getAllStatementStats`)
 
 ### 검증
 
 - `check:combo`에 정답 위치 분포 검증 추가 — 번들 50문 이상 시 공백 위치·50% 초과 편향을 오류 처리, ①~⑤ 분포 리포트 출력
 
-## 2026-09-20 합답형 총량 1,000문 조정 — 다중 빈칸 (B) 생성 중단
+## 2026-09-20 복수정답형 총량 1,000문 조정 — 다중 빈칸 (B) 생성 중단
 
 - `build_combo_drills.js`: 다중 빈칸 문항의 `(B)` 변형 생성을 중단하고 `(A)`만 변환 — 과목1 −1, 과목2 −4 → 총 **1,000문**(100/250/250/400)
 - `buildBlankCombo`의 `blankLabel` 파라미터는 seed/sid/id 안정성을 위해 유지 — 기존 (A) 문항의 id·sid·문구 변경 없음 (추적 데이터 보존)
 - 문서: `ARCHITECTURE.md`·`QUESTION_SCHEMA_DESIGN.md` §6-3/6-5의 산출 정합 갱신
 
-## 2026-09-20 합답형 모의고사 — 실전 시뮬레이터 연동
+## 2026-09-20 복수정답형 모의고사 — 실전 시뮬레이터 연동
 
-- `populateExamCards`(app.js): 과목 카드에 "합답형 문제집"(`과목N_합답형.md` 열람) + "합답형 풀기"(`startComboMockExam`) 버튼 쌍 추가
+- `populateExamCards`(app.js): 과목 카드에 "복수정답형 문제집"(`과목N_복수정답형.md` 열람) + "복수정답형 풀기"(`startComboMockExam`) 버튼 쌍 추가
 - `startComboMockExam(N)` + `comboToSimQuestion`(exam-simulator.js): `loadComboDrills(N)` 로드 후 시뮬 형식 평탄화 — citation·진술 목록을 question 본문에 편입, `options[].members` 문자열화, 정답 id → 지시자 기호 변환
-- `renderSimQuestion`: `combo` 유형을 객관식과 동일 옵션 UI로 렌더, 유형 라벨 "합답형 ㄱㄴㄷ"
+- `renderSimQuestion`: `combo` 유형을 객관식과 동일 옵션 UI로 렌더, 유형 라벨 "복수정답형 ㄱㄴㄷ"
 - `submitExam`: combo를 choice/ox와 동일하게 지시자 비교 채점
-- `startWeakExam`: `weak_sim_<subj>_combo_*` 카드 감지 시 해당 과목 combo 번들을 함께 로드, `COMBO_DRILLS_subjectN` 검색 폴백으로 합답형 오답 복습 지원
-- `exam-sim-review.js`: `combo` 유형 배지 "합답형" 추가
+- `startWeakExam`: `weak_sim_<subj>_combo_*` 카드 감지 시 해당 과목 combo 번들을 함께 로드, `COMBO_DRILLS_subjectN` 검색 폴백으로 복수정답형 오답 복습 지원
+- `exam-sim-review.js`: `combo` 유형 배지 "복수정답형" 추가
 
-## 2026-09-19 합답형 학습 체계 구축 — 스키마·변환기·드릴 UI·약점 추적
+## 2026-09-19 복수정답형 학습 체계 구축 — 스키마·변환기·드릴 UI·약점 추적
 
-> **목표**: `docs/dev/QUESTION_SCHEMA_DESIGN.md` + `docs/dev/COMBO_STUDY_STRATEGY.md`를 실제 앱 파이프라인에 구현 — 진술(sid) 원자 단위로 O/X·합답형·약점 추적을 통합
+> **목표**: `docs/dev/QUESTION_SCHEMA_DESIGN.md` + `docs/dev/COMBO_STUDY_STRATEGY.md`를 실제 앱 파이프라인에 구현 — 진술(sid) 원자 단위로 O/X·복수정답형·약점 추적을 통합
 
 ### 문항 스키마 기반 (`src/questions.js`, e528f81)
 
@@ -222,35 +222,35 @@ check_combo_pilot 전 과목 무결성.
 ### 약한 진술 추적 (`src/statement-tracker.js`, cc586a3)
 
 - `perStatement.judgedCorrect` 오판을 `sid` 키로 `statement_stats` + SM-2 스케줄에 누적, `getWeakStatements()`/`getDueStatementSids()` 제공
-- O/X·합답형이 동일 sid 규칙을 공유해 교차 추적
+- O/X·복수정답형이 동일 sid 규칙을 공유해 교차 추적
 
-### 합답형 전량 변환 (`tools/build_combo_drills.js`, 9f36efb → 7d7c672)
+### 복수정답형 전량 변환 (`tools/build_combo_drills.js`, 9f36efb → 7d7c672)
 
 - **객관식 741문**: 선지를 ㄱ~ㅁ 진술로 재조합 — `fact`/`answer` 모드 분류, 부정 발문 긍정 정규화, `'위 ①②③ 모두'` 메타 정답 복구(개수 검증), `(단,…)` 조건절 보존, 불가 꼬리는 지시문 부기 폴백
 - **단답형 254문**: 정답 풀링 — 유형별(num/term) 과목 정답 풀에서 오답 추첨, 정규화 부분문자열 모호성 필터, 전 과목 풀 보충, 다중빈칸은 (A) 문의 변환
 - 결정론적 빌드: mulberry32 seeded RNG(문항 id 시드)로 옵션 조합·정답 위치 재현
 - 결과: **과목1 100 / 과목2 250 / 과목3 250 / 과목4 400 = 1,000문**, 스키마 오류 0
-- 산출물: `data/drills/combo_subject*.js`(런타임) + `content/문제은행/과목N_합답형.md`(검토용, 문제은행 동일 형식)
+- 산출물: `data/drills/combo_subject*.js`(런타임) + `content/문제은행/과목N_복수정답형.md`(검토용, 문제은행 동일 형식)
 - `citation` 자동 생성 — 교재 라인·법령 조문 추출 + 원문 번호 (서두 명기 규칙 충족, aecf8f4에서 필수화)
 
 ### UI 연동 (b67a970)
 
-- 스마트 훈련소에 O/X 판정 드릴·합답형 훈련 카드 추가 — 과목 선택 → 10문 출제 → 진술별 피드백 → 오판 리뷰
-- `DataLoader.loadOxDrills(N)`/`loadComboDrills(N)`: 클래식 script 주입(`file://` 호환), 합답형은 수작업 파일럿(cb-)과 자동 번들 병합
+- 스마트 훈련소에 O/X 판정 드릴·복수정답형 훈련 카드 추가 — 과목 선택 → 10문 출제 → 진술별 피드백 → 오판 리뷰
+- `DataLoader.loadOxDrills(N)`/`loadComboDrills(N)`: 클래식 script 주입(`file://` 호환), 복수정답형은 수작업 파일럿(cb-)과 자동 번들 병합
 - 취약 sid 포함 문항 최대 절반 우선 편성
 
 ### 버그 수정 (선행, 061d70b)
 
 - 문제은행 정답 미파싱: MD 정답 형식 변경(`**Qn.**`+`> **정답: X**`) 미반영으로 전 과목 1,000문 `answer:""` — 파서 신형식 대응 + ox 오분류 82문 정정 + 객관식 채점 경로 불일치 2건(기호 비교) 수정
 
-### 합답형 로직 전체 점검 보완 (11개 항목)
+### 복수정답형 로직 전체 점검 보완 (11개 항목)
 
 - **오판 리뷰 가독성**: `perStatement`에 진술 `text` 포함 → 결과 화면이 `ㄱ — 정답 O, 내 판정 X`만이 아니라 진술 내용까지 표시
 - **번들 경량화**: 생성 문항의 `statement.explain` 중복(문항 explain 복제) 제거 → `q.explain` 폴백, 과목4 번들 1.49MB→813KB (~45%)
-- **SM-2 편성 완성**: 사장됐던 `getDueStatementSids()`를 출제 편성에 연동 — 기한 도래 → 오판 → 임의 순 (O/X·합답형 공통)
+- **SM-2 편성 완성**: 사장됐던 `getDueStatementSids()`를 출제 편성에 연동 — 기한 도래 → 오판 → 임의 순 (O/X·복수정답형 공통)
 - **취약 진술 리뷰 패널**: `statement_stats`에 text/truth/conceptId/subject 저장, 트레이너에 목록 UI + 과목 드릴 바로가기
 - **2단계 응시 UI**: 진술별 O/X 토글 → 조합 자동 도출·직접 채점 (`{optionId, judgments}` 경로 활성화)
-- **표준 태그**: `tools/drill-utils.js` `inferTags`로 STANDARD_TAGS(수치·기한·금지원료 등) 자동 부여 — O/X·합답형 공통
+- **표준 태그**: `tools/drill-utils.js` `inferTags`로 STANDARD_TAGS(수치·기한·금지원료 등) 자동 부여 — O/X·복수정답형 공통
 - **전체집합 오지 상한**: `generateComboOptions` `banFull` — "모두 고르기" 선지 과다(63%) 해소
 - **conceptId 클러스터**: 교재 `L####` 기반 부여 — 취약 리뷰 혼동쌍 그룹핑 기반
 - **다중 빈칸 (B) 출제**: `(A)`만 변환하던 것을 `(B)`까지 확장 — 과목1 +1, 과목2 +4 → 총 **1,005문**
@@ -259,7 +259,7 @@ check_combo_pilot 전 과목 무결성.
 
 ### 전략 문서 대조 후속 보완 (COMBO_STUDY_STRATEGY.md 리뷰)
 
-- **전략 ④ 태그 집중 드릴**: O/X·합답형 setup에 '취약·복습 진술만'·'수치·한도·기한 집중' 특수 모드 (전 과목, `weak`/`num` 인자) — `inferTags` 데이터를 실제 필터로 연결
+- **전략 ④ 태그 집중 드릴**: O/X·복수정답형 setup에 '취약·복습 진술만'·'수치·한도·기한 집중' 특수 모드 (전 과목, `weak`/`num` 인자) — `inferTags` 데이터를 실제 필터로 연결
 - **전략 ⑤ 혼동쌍 대조**: 같은 conceptId 그룹의 참/거짓 진술을 취약 리뷰에서 2단 대조 배치
 - **전략 ⑦ 소거 전술**: 진술 판정과 모순되는 선지 실시간 흐림 처리 + "선지 N개 소거" 힌트
 - **취약 목록 졸업 규칙**: 연속 정답 3회(`WEAK_GRADUATE_STREAK`) 시 취약 목록·우선 편성에서 제외, 재오판 시 복귀 — 무한 누적 해소
