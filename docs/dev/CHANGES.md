@@ -4,6 +4,29 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-21 배합 계산기 UI/UX 재구성 (sticky 요약·액션바, 카드형 행, 접이식 섹션)
+
+계산기의 단일 세로 폼 구조를 "상단 요약 / 중앙 작업 / 하단 액션" 3층으로 재편.
+
+- **상단 고정 요약바** (`.fcb-top`, sticky): 총 제조량·단위 이동 + 배합률 합계
+  (100% 판정 배지) + 규정 검증 건수(`금지/초과/확인/정상 n`) 상시 표시
+- **하단 고정 액션바** (`.fcb-bottom`, sticky): 포뮬러 이름·저장·인쇄·JSON —
+  모바일에서 탭 바 높이만큼 오프셋(`calc(76px + safe-area)`)
+- **원료 행 카드형**: 6열 그리드 → `f-row-top`(이름·검증 배지·삭제) /
+  `f-row-bottom`(배합률·투입량·단계) 2줄 카드
+- **접이식 섹션**: 고객 정보(`formula-fold-customer`)·제조 정보
+  (`formula-fold-process` — pH·절차·메모 통합)를 `<details>`로 축소.
+  `updateFoldSummaries()`가 제목 옆에 내용 요약 표시, 기존 포뮬러 열기 시
+  내용 있는 섹션만 자동 펼침
+- **빈 상태**: 이름 있는 행이 없으면 `formula-empty-state` 안내 카드 —
+  '추천 베이스 불러오기'(제형 미선택 시 세럼·에센스 기본) +
+  `formulaOpenCustomer`(접이식 섹션 열고 고객명 포커스)
+- **버그 수정**: `formulaDelete`·`formulaRuleReset`이 `showConfirm`을
+  콜백 방식으로 호출해 동작하지 않던 문제 — Promise `await` 방식으로 교정
+- **정리**: `formula-rows-head`·`formula-sum`·`formula-customer`(fieldset)·
+  `formula-save-row`·`formula-actions-row` 마크업·CSS 제거,
+  `formula-phase-sums`는 행 목록 푸터로 이동
+
 ## 2026-09-21 완전 대칭 멀티시험 마이그레이션 (content/exams/cosmetic/ + data/exams/cosmetic/)
 
 기본 시험(cosmetic)만 `content/`·`data/` 루트를 특권적으로 쓰던 비대칭 구조를
