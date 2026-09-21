@@ -364,6 +364,72 @@
 }
 .formula-rec-cautions i { margin-right: 0.3rem; }
 
+/* 맞춤 추천 규칙 */
+.formula-rules-edit {
+    margin: 0.9rem 0 0;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 0.6rem 0.9rem;
+}
+.formula-rules-edit summary {
+    cursor: pointer;
+    font-size: 0.88rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-main);
+}
+.formula-rules-edit summary .formula-rec-note { margin-left: 0.4rem; }
+.formula-rules-form {
+    display: flex;
+    gap: 0.6rem;
+    margin-top: 0.7rem;
+    flex-wrap: wrap;
+}
+.formula-rules-form .form-select { flex: 0 0 190px; min-width: 160px; }
+.formula-rules-form .form-input { flex: 1; min-width: 160px; }
+.formula-rules-form .btn { align-self: center; }
+.formula-rule-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-top: 0.7rem;
+}
+.formula-rule-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.28rem 0.5rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    background: var(--bg-muted);
+    border: 1px solid var(--border-color);
+    color: var(--color-text-main);
+}
+.formula-rule-chip-key {
+    font-size: 0.72rem;
+    color: var(--color-text-muted);
+}
+.formula-rule-chip-x {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    font-size: 0.7rem;
+    padding: 0;
+}
+.formula-rule-chip-x:hover { color: var(--color-danger); background: var(--bg-input); }
+.formula-rules-actions {
+    margin-top: 0.7rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
 /* 목록 카드 고객 요약 */
 .formula-card-customer {
     font-size: 0.82rem;

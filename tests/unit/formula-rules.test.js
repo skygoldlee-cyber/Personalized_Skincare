@@ -3,7 +3,7 @@
 // 핵심 불변식: ①매핑의 모든 이름이 실제 DB에 존재 ②banned 이름 0개
 // ③출력에 type/limit 스냅샷 부착 ④빈 입력 → 빈 추천 ⑤주의문 발화.
 
-import { test } from 'node:test';
+import { test, beforeEach, afterEach } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -14,6 +14,13 @@ import {
   allRuleIngredientNames,
   BASE_TEMPLATES,
   CONCERN_INGREDIENTS,
+  loadCustomRules,
+  addCustomCandidate,
+  removeCustomCandidate,
+  resetCustomRules,
+  customRuleTargets,
+  serializeCustomRules,
+  importCustomRules,
   _RULE_KEYS,
 } from '../../src/formula-rules.js';
 import { buildIngredientIndex } from '../../src/formula-check.js';
@@ -31,6 +38,39 @@ function loadIngredients() {
 
 const DB = loadIngredients();
 const INDEX = buildIngredientIndex(DB);
+
+// --- localStorage 모킹 (formula-store.test.js와 동일 패턴) ---
+function createMockStorage() {
+  const store = {};
+  return {
+    getItem(key) { return key in store ? store[key] : null; },
+    setItem(key, value) { store[key] = String(value); },
+    removeItem(key) { delete store[key]; },
+    clear() { for (const k of Object.keys(store)) delete store[k]; },
+    _store: store,
+  };
+}
+
+let mockStorage;
+let originalLocalStorage;
+
+beforeEach(() => {
+  mockStorage = createMockStorage();
+  originalLocalStorage = global.localStorage;
+  Object.defineProperty(global, 'localStorage', {
+    value: mockStorage, writable: true, configurable: true,
+  });
+});
+
+afterEach(() => {
+  if (originalLocalStorage !== undefined) {
+    Object.defineProperty(global, 'localStorage', {
+      value: originalLocalStorage, writable: true, configurable: true,
+    });
+  } else {
+    delete global.localStorage;
+  }
+});
 
 // ── 매핑 무결성 ──────────────────────────────────────
 
@@ -129,4 +169,104 @@ test('베이스 불러오기: required 역할의 첫 후보만 반환', () => {
   assert.ok(names.includes('페녹시에탄올'));   // 보존제(required) 첫 후보
   assert.ok(!names.includes('글리세린'));      // 보습제는 required 아님
   assert.deepEqual(baseDefaultCandidates('없는제형'), []);
+});
+
+// ── 맞춤 추천 규칙 ──────────────────────────────────
+
+test('맞춤 규칙 저장소: 추가·로드·삭제·초기화 라운드트립', () => {
+  assert.equal(addCustomCandidate('base', '유화제', '글리세린').ok, true);
+  assert.equal(addCustomCandidate('concern', '건조', '우레아').ok, true);
+  assert.equal(addCustomCandidate('bad-scope', 'x', 'y').ok, false);
+  assert.equal(addCustomCandidate('base', '유화제', '글리세린').ok, false); // 중복
+
+  const rules = loadCustomRules();
+  assert.deepEqual(rules.base['유화제'], ['글리세린']);
+  assert.deepEqual(rules.concern['건조'], ['우레아']);
+
+  assert.equal(removeCustomCandidate('base', '유화제', '글리세린').ok, true);
+  assert.equal(loadCustomRules().base['유화제'], undefined);
+
+  assert.equal(resetCustomRules(), true);
+  assert.deepEqual(loadCustomRules(), { base: {}, concern: {}, skin: {} });
+});
+
+test('맞춤 후보 병합: 베이스 역할·고민·피부유형에 추가 반영', () => {
+  const custom = {
+    base: { '유화제': ['레시틴'] },
+    concern: { '건조': ['우레아'] },
+    skin: { '건성': ['호호바오일'] },
+  };
+  const r = recommendFor({ formulation: '크림·밤', concerns: ['건조'], skinType: '건성' }, INDEX, custom);
+  const emul = r.bases.find(b => b.role === '유화제');
+  assert.ok(emul.candidates.includes('레시틴'));
+  const names = r.ingredients.map(i => i.name);
+  assert.ok(names.includes('우레아'));
+  assert.ok(names.includes('호호바오일'));
+});
+
+test('맞춤 후보 안전 필터: banned·미등록 이름은 추천에서 제외', () => {
+  const bannedName = DB.find(i => i.type === 'banned').name;
+  const custom = {
+    base: { '보습제': [bannedName, '없는원료XYZ', '히알루론산'] },
+    concern: { '건조': [bannedName] },
+    skin: {},
+  };
+  const r = recommendFor({ formulation: '세럼·에센스', concerns: ['건조'] }, INDEX, custom);
+  const hum = r.bases.find(b => b.role === '보습제');
+  assert.ok(!hum.candidates.includes(bannedName));
+  assert.ok(!hum.candidates.includes('없는원료XYZ'));
+  assert.ok(hum.candidates.includes('히알루론산'));
+  assert.ok(!r.ingredients.some(i => i.name === bannedName));
+});
+
+test('맞춤 규칙 대상 목록: 3개 스코프 제공', () => {
+  const t = customRuleTargets();
+  assert.ok(t.base.includes('유화제'));
+  assert.ok(t.concern.length >= 5);
+  assert.ok(t.skin.includes('민감성'));
+});
+
+test('외부 JSON 가져오기: 병합·중복 집계·잘못된 입력 거부', () => {
+  addCustomCandidate('base', '유화제', '레시틴');
+  const incoming = JSON.stringify({
+    version: 1,
+    base: { '유화제': ['레시틴', '글리세릴스테아레이트'], '점증제': ['카보머'] },
+    concern: { '건조': ['우레아'] },
+  });
+  const r = importCustomRules(incoming);
+  assert.equal(r.ok, true);
+  assert.equal(r.added, 3);      // 레시틴은 중복 → skipped
+  assert.equal(r.skipped, 1);
+  const rules = loadCustomRules();
+  assert.deepEqual(rules.base['유화제'], ['레시틴', '글리세릴스테아레이트']);
+  assert.deepEqual(rules.base['점증제'], ['카보머']);
+
+  assert.equal(importCustomRules('not-json{').ok, false);
+  assert.equal(importCustomRules(JSON.stringify([1, 2])).ok, false);
+  assert.equal(importCustomRules(JSON.stringify({ other: {} })).ok, false);
+  assert.equal(importCustomRules(incoming).ok, false); // 전부 중복 → 실패
+});
+
+test('외부 JSON 가져오기: merge=false면 기존 규칙 대체', () => {
+  addCustomCandidate('skin', '건성', '호호바오일');
+  const r = importCustomRules(JSON.stringify({ concern: { '건조': ['우레아'] } }), { merge: false });
+  assert.equal(r.ok, true);
+  const rules = loadCustomRules();
+  assert.deepEqual(rules.skin, {});
+  assert.deepEqual(rules.concern['건조'], ['우레아']);
+});
+
+test('내보내기→가져오기 라운드트립: 직렬화 포맷 왕복 보존', () => {
+  addCustomCandidate('base', '보습제', '판테놀');
+  addCustomCandidate('skin', '민감성', '이눌린');
+  const json = serializeCustomRules();
+  const parsed = JSON.parse(json);
+  assert.equal(parsed.version, 1);
+
+  resetCustomRules();
+  const r = importCustomRules(json);
+  assert.equal(r.ok, true);
+  const rules = loadCustomRules();
+  assert.deepEqual(rules.base['보습제'], ['판테놀']);
+  assert.deepEqual(rules.skin['민감성'], ['이눌린']);
 });

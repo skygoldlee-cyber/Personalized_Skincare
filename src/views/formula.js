@@ -17,7 +17,12 @@ import {
   deleteFormula, duplicateFormula, getFormulaUsage,
   CUSTOMER_OPTIONS,
 } from '../formula-store.js';
-import { recommendFor, baseDefaultCandidates } from '../formula-rules.js';
+import {
+  recommendFor, baseDefaultCandidates,
+  loadCustomRules, addCustomCandidate, removeCustomCandidate,
+  resetCustomRules, customRuleTargets,
+  serializeCustomRules, importCustomRules,
+} from '../formula-rules.js';
 
 const PANELS = ['formula-menu-panel', 'formula-list-panel', 'formula-calc-panel'];
 
@@ -385,7 +390,7 @@ function renderRecommend() {
     return;
   }
 
-  const rec = recommendFor(customer, getIndex());
+  const rec = recommendFor(customer, getIndex(), loadCustomRules());
   const hasBase = rec.bases.length > 0;
   const hasIngs = rec.ingredients.length > 0;
   const hasCautions = rec.cautions.length > 0;
@@ -463,6 +468,148 @@ export function formulaLoadBase() {
   showToast(added ? `베이스 원료 ${added}종을 추가했습니다 — 배합률을 입력하세요.` : '이미 모두 추가되어 있습니다.', 'success');
 }
 
+/* =======================================================
+   맞춤 추천 규칙 (사용자 후보 — 기본 매핑에 병합)
+   ======================================================= */
+
+const RULE_SCOPE_LABEL = { base: '베이스 역할', concern: '피부 고민', skin: '피부 유형' };
+
+function renderCustomRules() {
+  const targetEl = document.getElementById('formula-rule-target');
+  const listEl = document.getElementById('formula-rule-list');
+  if (!listEl) return;
+
+  // 대상 셀렉트 1회 채우기 (optgroup: 베이스 역할 / 피부 고민 / 피부 유형)
+  if (targetEl && !targetEl.dataset.bound) {
+    targetEl.dataset.bound = '1';
+    const targets = customRuleTargets();
+    Object.keys(RULE_SCOPE_LABEL).forEach(scope => {
+      const group = document.createElement('optgroup');
+      group.label = RULE_SCOPE_LABEL[scope];
+      (targets[scope] || []).forEach(key => {
+        const o = document.createElement('option');
+        o.value = `${scope}|${key}`;
+        o.textContent = key;
+        group.appendChild(o);
+      });
+      targetEl.appendChild(group);
+    });
+  }
+
+  // 현재 맞춤 후보 목록
+  const rules = loadCustomRules();
+  let html = '';
+  Object.keys(RULE_SCOPE_LABEL).forEach(scope => {
+    Object.entries(rules[scope] || {}).forEach(([key, names]) => {
+      names.forEach(name => {
+        html += `<span class="formula-rule-chip"><span class="formula-rule-chip-key">${esc(RULE_SCOPE_LABEL[scope])} · ${esc(key)}</span> ${esc(name)}`
+          + `<button type="button" class="formula-rule-chip-x" data-click="formulaRuleRemove" data-arg="${esc(`${scope}|${key}|${name}`)}" aria-label="${esc(name)} 맞춤 후보 삭제"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></span>`;
+      });
+    });
+  });
+  listEl.innerHTML = html || '<span class="formula-rec-note">등록된 맞춤 후보가 없습니다. 대상을 고르고 원료명을 추가하세요.</span>';
+}
+
+/** 맞춤 후보 추가 — 셀렉트 대상 + 원료명 입력 */
+export function formulaRuleAdd() {
+  const targetEl = document.getElementById('formula-rule-target');
+  const nameEl = document.getElementById('formula-rule-name');
+  const target = targetEl ? targetEl.value : '';
+  const sep = target.indexOf('|');
+  const scope = sep > 0 ? target.slice(0, sep) : '';
+  const key = sep > 0 ? target.slice(sep + 1) : '';
+  const name = nameEl ? nameEl.value : '';
+
+  const r = addCustomCandidate(scope, key, name);
+  if (!r.ok) { showToast(r.error || '추가에 실패했습니다.', 'error'); return; }
+
+  // banned·미등록 원료는 추천에서 자동 제외됨 — 추가 시점에 안내
+  const ing = getIndex().get(name.trim());
+  if (!ing) {
+    showToast(`"${name.trim()}"은(는) 원료 DB에 없어 추천에 표시되지 않습니다.`, 'info');
+  } else if (ing.type === 'banned') {
+    showToast(`"${name.trim()}"은(는) 사용 불가 원료라 추천에서 제외됩니다.`, 'info');
+  } else {
+    showToast(`"${name.trim()}"을(를) "${key}" 추천 후보에 추가했습니다.`, 'success');
+  }
+  if (nameEl) nameEl.value = '';
+  renderCustomRules();
+  renderRecommend();
+}
+
+/** 맞춤 후보 삭제 — data-arg: "scope|key|name" */
+export function formulaRuleRemove(arg) {
+  if (typeof arg !== 'string') return;
+  const parts = arg.split('|');
+  const scope = parts[0];
+  const key = parts[1] || '';
+  const name = parts.slice(2).join('|');
+  const r = removeCustomCandidate(scope, key, name);
+  if (!r.ok) { showToast(r.error || '삭제에 실패했습니다.', 'error'); return; }
+  showToast(`"${name}" 맞춤 후보를 삭제했습니다.`, 'success');
+  renderCustomRules();
+  renderRecommend();
+}
+
+/** 맞춤 규칙 전체 초기화 */
+export function formulaRuleReset() {
+  showConfirm('등록한 맞춤 추천 규칙을 모두 초기화할까요?', () => {
+    if (resetCustomRules()) {
+      showToast('맞춤 추천 규칙을 초기화했습니다.', 'success');
+      renderCustomRules();
+      renderRecommend();
+    } else {
+      showToast('초기화에 실패했습니다.', 'error');
+    }
+  });
+}
+
+/** 맞춤 규칙 JSON 내보내기 — 외부 공유·편집용 파일 다운로드 */
+export function formulaRuleExport() {
+  const json = serializeCustomRules();
+  const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(json);
+  const a = document.createElement('a');
+  a.setAttribute('href', dataStr);
+  a.setAttribute('download', `formula_rules_${new Date().toISOString().split('T')[0]}.json`);
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  showToast('맞춤 추천 규칙 파일을 다운로드했습니다.', 'success');
+}
+
+/** JSON 가져오기 트리거 — 숨겨진 파일 입력 클릭 */
+export function formulaRuleImport() {
+  const input = document.getElementById('formula-rule-file-input');
+  if (!input) return;
+  if (!input.dataset.bound) {
+    input.dataset.bound = '1';
+    input.addEventListener('change', formulaRuleImportFile);
+  }
+  input.click();
+}
+
+/** 규칙 JSON 파일 읽기 → importCustomRules 병합 */
+function formulaRuleImportFile(event) {
+  const input = event.target;
+  const file = input && input.files && input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const r = importCustomRules(e.target && e.target.result);
+    if (!r.ok) {
+      showToast(r.error || '가져오기에 실패했습니다.', 'error');
+    } else {
+      const skip = r.skipped ? `, 중복·한도 초과 ${r.skipped}건 제외` : '';
+      showToast(`맞춤 규칙 ${r.added}건을 가져왔습니다${skip}.`, 'success');
+      renderCustomRules();
+      renderRecommend();
+    }
+    input.value = ''; // 같은 파일 재선택 허용
+  };
+  reader.onerror = () => { showToast('파일을 읽지 못했습니다.', 'error'); input.value = ''; };
+  reader.readAsText(file);
+}
+
 function populateDatalist() {
   const dl = document.getElementById('formula-ing-datalist');
   if (!dl || dl.childElementCount) return;
@@ -503,6 +650,7 @@ export function openFormulaCalc(sourceFormula) {
   }
   writeCustomerInputs(sourceFormula ? sourceFormula.customer : null);
   renderRecommend();
+  renderCustomRules();
 
   // 총량/단위 변경 시 재계산
   if (volEl && !volEl.dataset.bound) {

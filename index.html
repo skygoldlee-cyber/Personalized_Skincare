@@ -1412,6 +1412,30 @@
                         <!-- 추천 베이스·원료 (고객 조건 선택 시 표시) -->
                         <div id="formula-recommend" class="formula-recommend is-hidden"></div>
 
+                        <!-- 맞춤 추천 규칙 관리 (사용자 후보 추가 — 기본 매핑에 병합) -->
+                        <details class="formula-rules-edit">
+                            <summary>맞춤 추천 규칙 <span class="formula-rec-note">내가 자주 쓰는 원료를 추천 후보에 추가</span></summary>
+                            <div class="formula-rules-form">
+                                <select id="formula-rule-target" class="form-select" aria-label="추가할 추천 대상"></select>
+                                <input type="text" id="formula-rule-name" class="form-input" list="formula-ing-datalist"
+                                       placeholder="원료명 입력" maxlength="60" aria-label="추가할 원료명">
+                                <button type="button" class="btn btn-secondary btn-sm" data-click="formulaRuleAdd">
+                                    <i class="fa-solid fa-plus" aria-hidden="true"></i> 추가
+                                </button>
+                            </div>
+                            <div id="formula-rule-list" class="formula-rule-list"></div>
+                            <div class="formula-rules-actions">
+                                <button type="button" class="btn btn-secondary btn-sm" data-click="formulaRuleExport">
+                                    <i class="fa-solid fa-download" aria-hidden="true"></i> JSON 내보내기
+                                </button>
+                                <button type="button" class="btn btn-secondary btn-sm" data-click="formulaRuleImport">
+                                    <i class="fa-solid fa-upload" aria-hidden="true"></i> JSON 가져오기
+                                </button>
+                                <input type="file" id="formula-rule-file-input" class="is-hidden" accept=".json,application/json">
+                                <button type="button" class="btn btn-secondary btn-sm" data-click="formulaRuleReset">맞춤 규칙 초기화</button>
+                            </div>
+                        </details>
+
                         <label class="formula-field">
                             <span class="formula-field-label">메모 (선택)</span>
                             <textarea id="formula-notes-input" class="form-input" rows="2" maxlength="500"

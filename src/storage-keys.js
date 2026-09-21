@@ -40,6 +40,9 @@ export const STORAGE_KEYS = {
   // Formula OS — My Formula 저장소 (formula-store.js)
   FORMULA_ITEMS: 'formula_items',
 
+  // Formula OS — 사용자 맞춤 추천 규칙 (formula-rules.js)
+  FORMULA_RULES: 'formula_rules',
+
   // 교재 리더
   READER_LAST_POSITION: 'readerLastPosition',
   READER_FONT_SCALE: 'readerFontScale',
@@ -71,6 +74,7 @@ export const BACKUP_KEYS = [
   STORAGE_KEYS.FC_MIGRATED_V2,
   STORAGE_KEYS.STATEMENT_STATS,
   STORAGE_KEYS.FORMULA_ITEMS,
+  STORAGE_KEYS.FORMULA_RULES,
 ];
 
 // 전체 초기화(Reset Progress) 시 제거할 키 목록

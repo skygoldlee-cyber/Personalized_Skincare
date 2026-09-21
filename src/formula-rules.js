@@ -6,7 +6,11 @@
 // 안전 원칙 (FORMULA_OS_DESIGN.md §9.3):
 //   - 이름만 추천, 농도 값은 제안하지 않는다
 //   - 매핑에는 approved/restricted만 허용 — banned 이름은 무결성 테스트로 차단
+//   - 사용자 커스텀 후보도 런타임에 banned/미등록 이름을 필터링한다
 //   - DB에 없는 베이스 원료(정제수·유화제 등)는 후보 없이 역할명만 표시
+
+import { safeGetItem, safeSetItem } from './state.js';
+import { STORAGE_KEYS } from './storage-keys.js';
 
 /* =======================================================
    ① 제형 → 베이스 템플릿
@@ -71,23 +75,190 @@ const SKIN_INGREDIENTS = Object.freeze({
 // 나이 조건 시 자극 주의 대상 원료
 const IRRITANT_INGREDIENTS = ['레티놀', '살리실산', '살리실릭애씨드', '알파-하이드록시애씨드(AHA)'];
 
+/* =======================================================
+   ④ 사용자 맞춤 추천 규칙 (localStorage 병합)
+   스키마: { base:{역할:[이름]}, concern:{고민:[이름]}, skin:{피부유형:[이름]} }
+   기본 매핑에 "추가"만 병합 — 기본값 삭제는 불가 (초기화로 전체 리셋).
+   ======================================================= */
+
+const CUSTOM_SCOPES = ['base', 'concern', 'skin'];
+const MAX_CUSTOM_PER_KEY = 30;
+
+function emptyCustomRules() {
+  return { base: {}, concern: {}, skin: {} };
+}
+
+/** 파싱된 객체 → 정제된 규칙 구조 (스키마 외 값·중복·초과분 제거) */
+function sanitizeRulesObject(parsed) {
+  const rules = emptyCustomRules();
+  CUSTOM_SCOPES.forEach(scope => {
+    const bucket = parsed && parsed[scope];
+    if (!bucket || typeof bucket !== 'object' || Array.isArray(bucket)) return;
+    Object.entries(bucket).forEach(([key, list]) => {
+      if (!Array.isArray(list)) return;
+      const names = [...new Set(list
+        .filter(n => typeof n === 'string' && n.trim())
+        .map(n => n.trim()))].slice(0, MAX_CUSTOM_PER_KEY);
+      if (names.length) rules[scope][key] = names;
+    });
+  });
+  return rules;
+}
+
+/** 저장된 맞춤 규칙 로드 (손상·누락 시 빈 규칙) */
+export function loadCustomRules() {
+  const raw = safeGetItem(STORAGE_KEYS.FORMULA_RULES);
+  if (!raw) return emptyCustomRules();
+  try {
+    return sanitizeRulesObject(JSON.parse(raw));
+  } catch (e) {
+    return emptyCustomRules();
+  }
+}
+
+function saveCustomRules(rules) {
+  return safeSetItem(STORAGE_KEYS.FORMULA_RULES, JSON.stringify(rules));
+}
+
+/** 맞춤 후보 추가. @returns {{ok:boolean, error?:string}} */
+export function addCustomCandidate(scope, key, name) {
+  if (!CUSTOM_SCOPES.includes(scope)) return { ok: false, error: '대상 구분이 올바르지 않습니다.' };
+  if (typeof key !== 'string' || !key.trim()) return { ok: false, error: '대상을 선택하세요.' };
+  const n = typeof name === 'string' ? name.trim() : '';
+  if (!n) return { ok: false, error: '원료명을 입력하세요.' };
+  const rules = loadCustomRules();
+  const list = rules[scope][key] || (rules[scope][key] = []);
+  if (list.includes(n)) return { ok: false, error: '이미 등록된 후보입니다.' };
+  if (list.length >= MAX_CUSTOM_PER_KEY) return { ok: false, error: `후보는 대상당 최대 ${MAX_CUSTOM_PER_KEY}개입니다.` };
+  list.push(n);
+  if (!saveCustomRules(rules)) return { ok: false, error: '저장에 실패했습니다.' };
+  return { ok: true };
+}
+
+/** 맞춤 후보 제거. @returns {{ok:boolean, error?:string}} */
+export function removeCustomCandidate(scope, key, name) {
+  if (!CUSTOM_SCOPES.includes(scope)) return { ok: false, error: '대상 구분이 올바르지 않습니다.' };
+  const rules = loadCustomRules();
+  const list = rules[scope] && rules[scope][key];
+  if (!list) return { ok: false, error: '등록된 후보가 없습니다.' };
+  const next = list.filter(n => n !== name);
+  if (next.length) rules[scope][key] = next;
+  else delete rules[scope][key];
+  if (!saveCustomRules(rules)) return { ok: false, error: '저장에 실패했습니다.' };
+  return { ok: true };
+}
+
+/** 맞춤 규칙 전체 초기화 */
+export function resetCustomRules() {
+  return saveCustomRules(emptyCustomRules());
+}
+
+/* ---------- 외부 JSON 규칙 파일 가져오기/내보내기 ----------
+   포맷:
+   {
+     "version": 1,
+     "base":    { "<베이스 역할명>": ["원료명", ...] },
+     "concern": { "<피부 고민 키>": ["원료명", ...] },
+     "skin":    { "<피부 유형 키>": ["원료명", ...] }
+   }
+   version 등 메타 필드는 무시. 이름은 런타임에 banned·미등록 필터 적용.
+   --------------------------------------------------------- */
+
+const CUSTOM_RULES_FORMAT_VERSION = 1;
+
+/** 현재 맞춤 규칙을 외부 공유용 JSON 문자열로 직렬화 */
+export function serializeCustomRules() {
+  const rules = loadCustomRules();
+  return JSON.stringify({ version: CUSTOM_RULES_FORMAT_VERSION, ...rules }, null, 2);
+}
+
+/**
+ * 외부 JSON 규칙 가져오기.
+ * @param {string|object} input - JSON 문자열 또는 파싱된 객체
+ * @param {{merge?:boolean}} [opts] - merge=false면 기존 맞춤 규칙 대체 (기본: 병합)
+ * @returns {{ok:boolean, error?:string, added?:number, skipped?:number}}
+ */
+export function importCustomRules(input, opts) {
+  let parsed;
+  try {
+    parsed = typeof input === 'string' ? JSON.parse(input) : input;
+  } catch (e) {
+    return { ok: false, error: '유효한 JSON 파일이 아닙니다.' };
+  }
+  if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+    return { ok: false, error: '규칙 JSON 형식이 아닙니다.' };
+  }
+
+  const incoming = sanitizeRulesObject(parsed);
+  const hasAny = CUSTOM_SCOPES.some(s => Object.keys(incoming[s]).length > 0);
+  if (!hasAny) {
+    return { ok: false, error: '가져올 규칙이 없습니다. base/concern/skin 키를 확인하세요.' };
+  }
+
+  const replace = !!(opts && opts.merge === false);
+  const rules = replace ? emptyCustomRules() : loadCustomRules();
+  let added = 0;
+  let skipped = 0;
+  CUSTOM_SCOPES.forEach(scope => {
+    Object.entries(incoming[scope]).forEach(([key, names]) => {
+      const list = rules[scope][key] || (rules[scope][key] = []);
+      names.forEach(n => {
+        if (list.includes(n) || list.length >= MAX_CUSTOM_PER_KEY) { skipped++; return; }
+        list.push(n);
+        added++;
+      });
+    });
+  });
+  if (!added && !replace) {
+    return { ok: false, error: '모두 이미 등록된 후보입니다.' };
+  }
+  if (!saveCustomRules(rules)) return { ok: false, error: '저장에 실패했습니다.' };
+  return { ok: true, added, skipped };
+}
+
+/** 커스텀 규칙 대상 목록 — UI 셀렉트용 */
+export function customRuleTargets() {
+  return {
+    base: [...new Set(Object.values(BASE_TEMPLATES).flat().map(r => r.role))],
+    concern: Object.keys(CONCERN_INGREDIENTS),
+    skin: Object.keys(SKIN_INGREDIENTS),
+  };
+}
+
+/** 후보 이름을 DB 기준으로 정제 — 미등록·banned 제거 + dedupe (index 없으면 dedupe만) */
+function filterCandidateNames(names, index) {
+  const seen = new Set();
+  return (Array.isArray(names) ? names : []).filter(n => {
+    if (typeof n !== 'string' || seen.has(n)) return false;
+    if (index) {
+      const ing = index.get(n);
+      if (!ing || ing.type === 'banned') return false;
+    }
+    seen.add(n);
+    return true;
+  });
+}
+
 /**
  * 고객 조건으로 추천을 생성한다.
  * @param {object} customer - {gender, age, skinType, concerns[], formulation}
  * @param {Map<string,object>} index - buildIngredientIndex() 결과
+ * @param {object} [custom] - loadCustomRules() 결과 (사용자 맞춤 후보)
  * @returns {{bases:Array, ingredients:Array<{name,reasons,type,limit,irritant}>, cautions:string[]}}
  */
-export function recommendFor(customer, index) {
+export function recommendFor(customer, index, custom) {
   const result = { bases: [], ingredients: [], cautions: [] };
   if (!customer || typeof customer !== 'object') return result;
+  const cu = custom && typeof custom === 'object' ? custom : emptyCustomRules();
 
-  // ① 제형 → 베이스 템플릿
+  // ① 제형 → 베이스 템플릿 (+ 맞춤 후보 병합)
   const template = BASE_TEMPLATES[customer.formulation];
   if (template) {
     result.bases = template.map(r => ({
       role: r.role,
       required: !!r.required,
-      candidates: r.candidates.slice(),
+      candidates: filterCandidateNames(
+        r.candidates.concat((cu.base && cu.base[r.role]) || []), index),
     }));
   }
 
@@ -99,15 +270,17 @@ export function recommendFor(customer, index) {
   };
   (Array.isArray(customer.concerns) ? customer.concerns : []).forEach(c => {
     (CONCERN_INGREDIENTS[c] || []).forEach(name => add(name, c));
+    ((cu.concern && cu.concern[c]) || []).forEach(name => add(name, c));
   });
   (SKIN_INGREDIENTS[customer.skinType] || []).forEach(name => add(name, '피부유형'));
+  ((cu.skin && cu.skin[customer.skinType]) || []).forEach(name => add(name, '피부유형'));
 
   const age = typeof customer.age === 'number' ? customer.age : null;
   const youngOrOld = age != null && (age < 20 || age > 65);
 
   for (const [name, meta] of seen) {
     const ing = index && index.get(name);
-    if (!ing) continue; // DB 없는 이름은 추천하지 않음 (매핑 무결성은 테스트가 강제)
+    if (!ing || ing.type === 'banned') continue; // 미등록·금지 원료는 추천하지 않음
     result.ingredients.push({
       name,
       reasons: [...meta.reasons],
