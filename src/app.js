@@ -1,4 +1,4 @@
-// app.js - 맞춤형화장품 조제관리사 학습 플랫폼 애플리케이션 로직
+// app.js - 맞춤형화장품 조제관리사 스마트 통합 플랫폼 애플리케이션 로직
 import { state, loadProgress, saveProgress } from './state.js';
 import { esc } from './sanitize.js';
 import { shuffle } from './utils.js';

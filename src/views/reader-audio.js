@@ -132,7 +132,7 @@ function setupMediaSession(audio, subjId, chapterIdx, chapterTitle) {
 
     navigator.mediaSession.metadata = new MediaMetadata({
         title: chapterTitle,
-        artist: '맞춤형화장품 조제관리사 스마트 학습',
+        artist: '맞춤형화장품 조제관리사 스마트 통합',
         album: subjTitle,
         artwork: [
             { src: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },

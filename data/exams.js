@@ -8,7 +8,7 @@ var EXAMS_LIST = {
       "id": "cosmetic",
       "name": "맞춤형화장품 조제관리사",
       "shortName": "조제관리사",
-      "title": "맞춤형화장품 조제관리사 스마트 학습 플랫폼",
+      "title": "맞춤형화장품 조제관리사 스마트 통합 플랫폼",
       "desc": "화장품법·제조·품질관리·안전관리·맞춤형화장품 4과목 · 문제은행 1,000문",
       "icon": "fa-solid fa-wand-magic-sparkles",
       "year": "2026",

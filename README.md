@@ -1,8 +1,8 @@
 # 💄 Cosmetic Pass Master
 
-> **맞춤형화장품 조제관리사 자격시험 스마트 학습 플랫폼**
+> **맞춤형화장품 조제관리사 자격시험 스마트 통합 플랫폼**
 >
-> 교재 읽기 · 플래시카드 · 기출 퀴즈 · 오답 복습 · 성적 분석 · 오디오북까지 하나로.
+> 교재 읽기 · 플래시카드 · 기출 퀴즈 · 오답 복습 · 성적 분석 · 오디오북 · Formula OS 실무 배합까지 하나로.
 
 [![Deploy](https://img.shields.io/badge/deploy-Vercel-black?logo=vercel)](vercel.json)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)

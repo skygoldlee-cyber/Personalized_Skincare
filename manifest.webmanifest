@@ -1,8 +1,8 @@
 {
   "id": "cosmetic-pass",
-  "name": "맞춤형화장품 조제관리사 스마트 학습 플랫폼",
+  "name": "맞춤형화장품 조제관리사 스마트 통합 플랫폼",
   "short_name": "Pass Master",
-  "description": "2026 맞춤형화장품 조제관리사 시험 대비 스마트 학습 플랫폼",
+  "description": "2026 맞춤형화장품 조제관리사 시험 대비 · Formula OS 실무 통합 플랫폼",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
