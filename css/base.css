@@ -725,6 +725,9 @@ body {
     border-bottom: 1px solid var(--border-color);
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
+    /* backdrop-filter가 스태킹 컨텍스트를 만들어 설정 드롭다운이 아래 카드에 가려지는 것을 방지 */
+    position: relative;
+    z-index: var(--z-sticky);
 }
 
 .header-title h2 {
