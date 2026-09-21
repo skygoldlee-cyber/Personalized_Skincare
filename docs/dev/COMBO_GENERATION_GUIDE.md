@@ -235,6 +235,11 @@ ref_md는 `ref_md/과목N/{문서}/{문서}.md` 과목 폴더 구조이며, `ext
    진술 절단 의심(조사·연결어미 종결), '모두' 퇴화/위반 옵션, 정답 위치 편향(>30%),
    과목별·생성 경로별(bank/cluster/ref:*) 통계. 오류 시 exit 1, `--strict`는 경고도 실패 처리.
    상세 리포트는 `combo_audit_report.json` (gitignore 대상)
+   - **회귀 가드**: `combo_baseline.json`(커밋됨)과 과목별 문항 수 비교 — 10% 감소 시 경고, 30% 시 오류.
+     의도된 생성량 변경 후 `--update-baseline`으로 갱신
+   - **검수 큐**: cluster·ref:note 경로 + 경고 문항을 `combo_review_queue.md`로 출력.
+     불량 문항은 id를 `<contentRoot>/combo_blocklist.json`의 `ids`(또는 `derivedFromPrefixes`)에
+     등록하면 다음 빌드에서 제외됨
 3. 같은 문항 정오답 텍스트 중복 — 정규화 키 비교로 0이어야 함
 4. 큐레이션 교차 오류 — 별표1 문항 오답이 `banned_ingredients.md` 멤버이면 오류
 5. 잔재 스캔 — `?`·`법제처`·단자 접두·조사 종료 진술

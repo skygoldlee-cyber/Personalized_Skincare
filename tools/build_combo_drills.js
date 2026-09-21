@@ -782,6 +782,29 @@ async function buildForExam(target) {
       if (problems.length) errs.push(`${it.id}(${it.derivedFrom}): ${problems.join(', ')}`);
       else valid.push(it);
     }
+
+    // 검수 블록리스트 — 사람이 불량 판정한 문항을 생성 산출물에서 제외한다.
+    // audit:combo의 검수 큐(combo_review_queue.md)에서 id를 옮겨 등록.
+    // 형식: { "ids": ["law_combo_…"], "derivedFromPrefixes": ["ref:note|…"] }
+    const blPath = path.join(ROOT, target.contentRoot, 'combo_blocklist.json');
+    if (fs.existsSync(blPath)) {
+      try {
+        const bl = JSON.parse(fs.readFileSync(blPath, 'utf8'));
+        const ids = new Set(bl.ids || []);
+        const prefixes = bl.derivedFromPrefixes || [];
+        let dropped = 0;
+        for (let i = valid.length - 1; i >= 0; i--) {
+          const it = valid[i];
+          if (ids.has(it.id) ||
+              prefixes.some(p => String(it.derivedFrom || '').startsWith(p))) {
+            valid.splice(i, 1); dropped++;
+          }
+        }
+        if (dropped) console.log(`  [blocklist] ${key}: 검수 제외 ${dropped}문`);
+      } catch (e) {
+        errs.push(`${key}: combo_blocklist.json 파싱 실패 — ${e.message}`);
+      }
+    }
     totalErrors += errs.length + stats.errors.length;
 
     if (!DRY_RUN) {

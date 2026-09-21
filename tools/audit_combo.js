@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * check_combo.js — 복수정답형 생성 번들 품질 감사
+ * audit_combo.js — 복수정답형 생성 번들 품질 감사
  *
  * 대상: data/exams/<id>/drills/combo_subjectN.js (+ combo_pilot.js 있으면 함께)
  *
@@ -20,10 +20,19 @@
  * 참고 카운트 (경고 아님):
  *   - 동일 truth 근접중복 쌍 — 수치 혼동쌍·법령 열거 멤버의 접두사 공유는 정상
  *
+ * 회귀 가드:
+ *   - combo_baseline.json(루트, 커밋됨)의 과목별 문항 수와 비교 —
+ *     10% 이상 감소 시 경고, 30% 이상 감소 시 오류 (소스·규칙 변경의 조용한 품질 붕괴 감지)
+ *
+ * 검수 큐:
+ *   - 검수 필요 문항(cluster·ref:note 경로 + 경고 대상)을 combo_review_queue.md로 출력
+ *   - 사람이 불량 판정한 id는 <contentRoot>/combo_blocklist.json에 등록 → 빌드에서 제외
+ *
  * 통계 리포트: 과목별 문항 수·단일참 비율·derivedFrom 경로별 분포·정답 위치 히스토그램
  *
- * 사용: node tools/check_combo.js          (오류 시 exit 1)
- *       node tools/check_combo.js --strict (경고도 exit 1)
+ * 사용: node tools/audit_combo.js                    (오류 시 exit 1)
+ *       node tools/audit_combo.js --strict           (경고도 exit 1)
+ *       node tools/audit_combo.js --update-baseline  (회귀 기준선 갱신)
  */
 const fs = require('fs');
 const path = require('path');
@@ -33,11 +42,19 @@ const { pathToFileURL } = require('url');
 const ROOT = path.join(__dirname, '..');
 const { getExamTargets } = require('./build/exam-targets.js');
 const STRICT = process.argv.includes('--strict');
+const UPDATE_BASELINE = process.argv.includes('--update-baseline');
+const BASELINE_PATH = path.join(ROOT, 'combo_baseline.json');
+const REVIEW_Q_PATH = path.join(ROOT, 'combo_review_queue.md');
+
+/** 사람 검수가 필요한 생성 경로 (cluster 재조합·note 편집본 — 생성 주석상 '검수 권장') */
+const REVIEW_PATHS = new Set(['cluster', 'ref:note']);
 
 const errors = [];
 const warnings = [];
 const warnCats = {};
 const infoCats = {};   // 경고 아닌 참고 카운트 (혼동쌍·열거 멤버 접두사 공유 등)
+const reviewQueue = []; // 검수 큐 — {exam, file, q, reasons[]}
+const newBaseline = {}; // 이번 감사의 과목별 문항 수 (회귀 기준선용)
 const err = m => errors.push(m);
 const warn = (cat, m) => { warnings.push(m); warnCats[cat] = (warnCats[cat] || 0) + 1; };
 
@@ -105,7 +122,9 @@ async function auditExam(target, validateQuestion, deriveComboAnswer) {
 
     for (const q of items) {
       total++;
-      paths[pathOf(q)] = (paths[pathOf(q)] || 0) + 1;
+      const qPath = pathOf(q);
+      paths[qPath] = (paths[qPath] || 0) + 1;
+      const qFlags = new Set();   // 이 문항에 붙은 경고 카테고리
 
       // ① 스키마·정답 유일성 재검증
       const problems = validateQuestion(q);
@@ -118,8 +137,10 @@ async function auditExam(target, validateQuestion, deriveComboAnswer) {
       if ((q.options || []).length !== 5)
         err(`${file} ${q.id}: 옵션 ${(q.options || []).length}개 (5여야 함)`);
       if (!trues.length) err(`${file} ${q.id}: 참 진술 0 — 정답 조합 불성립`);
-      if (trues.length === stmts.length && stmts.length > 0)
-        warn('allTrue',`${file} ${q.id}: 전원 참 (${stmts.length}개) — '모두' 퇴화`);
+      if (trues.length === stmts.length && stmts.length > 0) {
+        warn('allTrue', `${file} ${q.id}: 전원 참 (${stmts.length}개) — '모두' 퇴화`);
+        qFlags.add('allTrue');
+      }
       if (trues.length === 1) singleTruth++;
       if (trues.length === stmts.length) allTrue++;
 
@@ -133,8 +154,10 @@ async function auditExam(target, validateQuestion, deriveComboAnswer) {
       for (let i = 0; i < stmts.length; i++) {
         for (let j = i + 1; j < stmts.length; j++) {
           const a = stmts[i], b = stmts[j];
-          if (normKey(a.text) === normKey(b.text) && a.truth !== b.truth)
+          if (normKey(a.text) === normKey(b.text) && a.truth !== b.truth) {
             warn('contradict', `${file} ${q.id}: 동일 텍스트·상반 truth — "${a.text.slice(0, 40)}…" (${a.id}=${a.truth}, ${b.id}=${b.truth}) 모순 의심`);
+            qFlags.add('contradict');
+          }
           else if (nearDup(a.text, b.text) && a.truth === b.truth)
             // 수치 구분 혼동쌍(7일/30일)·법령 열거 멤버(상호/소재지 변경)는 접두사
             // 공유가 정상 — 경고가 아니라 참고 카운트로만 집계한다.
@@ -143,8 +166,10 @@ async function auditExam(target, validateQuestion, deriveComboAnswer) {
         const t = String(stmts[i].text || '').trim();
         // 절단 의심: 명사 어미와 충돌하지 않는 조사·연결어미 종결만 — 이/가/의/로/도/만/와/과는
         // 보고서·빈도·효과 같은 정상 명사 어미라 제외한다.
-        if (/을$|를$|은$|는$|에서$|에게$|부터$|까지$|및$|하고$|하여$|하며$|이며$|이고$|거나$|든지$/.test(t))
+        if (/을$|를$|은$|는$|에서$|에게$|부터$|까지$|및$|하고$|하여$|하며$|이며$|이고$|거나$|든지$/.test(t)) {
           warn('truncated', `${file} ${q.id}: 진술 ${stmts[i].id} 절단 의심 — "…${t.slice(-30)}"`);
+          qFlags.add('truncated');
+        }
         if (t.length > 170) warn('longStmt', `${file} ${q.id}: 진술 ${stmts[i].id} 장문(${t.length}자)`);
       }
 
@@ -153,13 +178,20 @@ async function auditExam(target, validateQuestion, deriveComboAnswer) {
       for (const o of q.options || []) {
         if ((o.members || []).length === allIds.size &&
             (o.members || []).every(m => allIds.has(m)) &&
-            trues.length !== stmts.length)
-          warn('allOfAboveOpt',`${file} ${q.id}: '모두' 옵션 ${o.id} 존재 — banFull 대상인데 생성됨`);
+            trues.length !== stmts.length) {
+          warn('allOfAboveOpt', `${file} ${q.id}: '모두' 옵션 ${o.id} 존재 — banFull 대상인데 생성됨`);
+          qFlags.add('allOfAboveOpt');
+        }
       }
 
       // ⑥ 정답 위치 집계
       const ans = deriveComboAnswer(q);
       if (ans) answerPos[ans] = (answerPos[ans] || 0) + 1;
+
+      // ⑦ 검수 큐 적립 — 검수 경로(cluster·ref:note) 또는 경고가 붙은 문항
+      const reasons = [...qFlags];
+      if (REVIEW_PATHS.has(qPath)) reasons.unshift(`검수경로:${qPath}`);
+      if (reasons.length) reviewQueue.push({ exam: target.id, file, q, reasons });
     }
 
     // 중복 집합 리포트
@@ -174,6 +206,7 @@ async function auditExam(target, validateQuestion, deriveComboAnswer) {
       warn('posBias',`${file}: 정답 위치 편향 — 최다 위치 ${(maxPos / posTotal * 100).toFixed(0)}%`);
 
     rows.push({ key, file, n: items.length, singleTruth, allTrue, paths, answerPos });
+    (newBaseline[target.id] = newBaseline[target.id] || {})[key] = items.length;
   }
 
   // 수제 파일럿 문항도 동일 검증
@@ -199,6 +232,44 @@ async function main() {
   for (const target of getExamTargets(ROOT)) {
     await auditExam(target, validateQuestion, deriveComboAnswer);
   }
+
+  // ── 회귀 가드: 기준선 대비 문항 수 감소 감지 ──
+  if (UPDATE_BASELINE) {
+    fs.writeFileSync(BASELINE_PATH, JSON.stringify(newBaseline, null, 2) + '\n');
+    console.log(`\n기준선 갱신 → combo_baseline.json (${Object.values(newBaseline)
+      .map(m => Object.values(m).reduce((a, b) => a + b, 0)).reduce((a, b) => a + b, 0)}문)`);
+  } else if (fs.existsSync(BASELINE_PATH)) {
+    const base = JSON.parse(fs.readFileSync(BASELINE_PATH, 'utf8'));
+    for (const [examId, subs] of Object.entries(newBaseline)) {
+      for (const [key, n] of Object.entries(subs)) {
+        const prev = base[examId] && base[examId][key];
+        if (prev == null) continue;
+        const drop = (prev - n) / prev;
+        if (drop >= 0.3) err(`${examId}/${key}: 문항 수 급감 ${prev}→${n} (-${(drop * 100).toFixed(0)}%)`);
+        else if (drop >= 0.1) warn('regression', `${examId}/${key}: 문항 수 감소 ${prev}→${n} (-${(drop * 100).toFixed(0)}%)`);
+      }
+    }
+  } else {
+    console.log('\n(기준선 없음 — --update-baseline으로 combo_baseline.json 생성 가능)');
+  }
+
+  // ── 검수 큐 출력 ──
+  const rq = ['# 복수정답형 검수 큐', '',
+    `> audit:combo 자동 생성 (${new Date().toISOString().slice(0, 10)}) — ` +
+    `검수 필요 문항 ${reviewQueue.length}건`,
+    '> 불량 문항은 id를 content/exams/<id>/combo_blocklist.json 의 ids에 추가하면 다음 빌드에서 제외됩니다.',
+    ''];
+  for (const { exam, file, q, reasons } of reviewQueue) {
+    rq.push(`## ${q.id}`, '',
+      `- 시험/번들: ${exam} / ${file}`,
+      `- 사유: ${reasons.join(', ')}`,
+      `- 출처: ${q.derivedFrom || '—'} · ${q.citation || '—'}`,
+      `- 발문: ${q.stem}`, '',
+      ...(q.statements || []).map(s => `- ${s.truth ? '⭕' : '❌'} ${s.id}. ${s.text}`),
+      '', '---', '');
+  }
+  fs.writeFileSync(REVIEW_Q_PATH, rq.join('\n'));
+  console.log(`\n검수 큐: ${reviewQueue.length}문항 → combo_review_queue.md`);
 
   console.log(`\n결과: 오류 ${errors.length}건 / 경고 ${warnings.length}건`);
   if (Object.keys(warnCats).length) {
