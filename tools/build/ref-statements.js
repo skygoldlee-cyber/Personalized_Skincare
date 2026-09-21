@@ -20,20 +20,38 @@
 const fs = require('fs');
 const path = require('path');
 
-/* ---------- 문서 → 과목 귀속 규칙 (references.json referenceFiles 기준) ---------- */
-const DOC_SUBJECT_RULES = [
+/* ---------- 문서 → 과목 귀속 규칙 ----------
+ * 진실은 {contentRoot}/references.json의 docSubjectRules (첫 매칭 우선).
+ * 아래 목록은 references.json에 키가 없을 때의 폴백 — 편집은 references.json에서 수행. */
+const DOC_SUBJECT_RULES_FALLBACK = [
   [/화장품법\(법률\)|화장품법 시행규칙/, 1],
-  // 시행규칙 별표는 내용 도메인으로 귀속 (일괄 과목1 아님)
-  [/시행규칙_별표1_/, 2],              // 품질관리기준 → 제조·품질관리
-  [/시행규칙_별표3_/, 4],              // 사용시주의사항 → 주의사항 규칙과 동일 귀속
-  [/시행규칙_별표[2456]_/, 3],         // 책임판매안전관리·포장표시·표시광고·위해화장품 → 유통 안전관리
-  [/시행규칙_별표/, 1],                // 별표7 행정처분·별표9 수수료 + 미지정 별표
+  [/시행규칙_별표1_/, 2],
+  [/시행규칙_별표3_/, 4],
+  [/시행규칙_별표[2456]_/, 3],
+  [/시행규칙_별표/, 1],
   [/개인정보/, 1],
-  [/유통안전관리/, 3],                  // 안전기준_별표4_유통안전관리시험방법 — 안전기준 규칙보다 선행 필요
+  [/유통안전관리/, 3],
   [/안전기준|우수화장품|CGMP|색소/, 2],
   [/KFCC|기능성화장품/, 2],
   [/주의사항|알레르기/, 4],
 ];
+
+const _docRulesCache = {};
+
+/** references.json의 docSubjectRules 로드 (없으면 내장 폴백). contentRoot 단위 캐시. */
+function docSubjectRules(contentRoot) {
+  const root = contentRoot || path.join(__dirname, '..', '..', 'content');
+  if (_docRulesCache[root]) return _docRulesCache[root];
+  let rules = DOC_SUBJECT_RULES_FALLBACK;
+  try {
+    const doc = JSON.parse(fs.readFileSync(path.join(root, 'references.json'), 'utf-8'));
+    if (Array.isArray(doc.docSubjectRules) && doc.docSubjectRules.length) {
+      rules = doc.docSubjectRules.map(r => [new RegExp(r[0]), r[1]]);
+    }
+  } catch { /* 폴백 사용 */ }
+  _docRulesCache[root] = rules;
+  return rules;
+}
 
 /* ---------- 정규식 ---------- */
 const ART_RE = /^제(\d+)조(?:의(\d+))?\(([^)]*)\)/;   // 제2조(정의) / 제3조의2(…)
@@ -57,9 +75,9 @@ function isSpaceless(text) {
   return sample.length > 0 && (sample.match(/ /g) || []).length / sample.length < 0.07;
 }
 
-/** dirName → 과목 번호 (규칙 미일치 시 null) */
-function docSubject(dirName) {
-  for (const [re, s] of DOC_SUBJECT_RULES) if (re.test(dirName)) return s;
+/** dirName → 과목 번호 (규칙 미일치 시 null). contentRoot 미지정 시 기본 content/ */
+function docSubject(dirName, contentRoot) {
+  for (const [re, s] of docSubjectRules(contentRoot)) if (re.test(dirName)) return s;
   return null;
 }
 
@@ -686,7 +704,8 @@ function extractRefAtoms(refDir) {
   const bySubject = {};
   if (!fs.existsSync(refDir)) return bySubject;
   // ref_md/과목N/{doc}/{doc}.md — 과목 폴더가 귀속의 진실, 평탄 잔존 디렉터리는
-  // DOC_SUBJECT_RULES로 후진 처리한다.
+  // references.json의 docSubjectRules로 후진 처리한다.
+  const contentRoot = path.resolve(refDir, '..', '..');
   const docDirs = [];   // {dirName, dirPath, subject}
   for (const e of fs.readdirSync(refDir, { withFileTypes: true })) {
     if (!e.isDirectory()) continue;
@@ -698,7 +717,7 @@ function extractRefAtoms(refDir) {
         }
       }
     } else {
-      docDirs.push({ dirName: e.name, dirPath: path.join(refDir, e.name), subject: docSubject(e.name) });
+      docDirs.push({ dirName: e.name, dirPath: path.join(refDir, e.name), subject: docSubject(e.name, contentRoot) });
     }
   }
   for (const { dirName, dirPath, subject } of docDirs) {

@@ -48,6 +48,7 @@ npm.cmd run audit:cards                 # 카드 품질 자동 감사 (짧은 �
 npm.cmd run check:content               # 인용·귀속·레이아웃·드릴·파서·임포트·자산·카드·테스트 일괄 검증
 npm.cmd run check:content -- --build    # build:data 선실행 후 검증 (교재 교체 시 권장)
 npm.cmd run check:content -- --quick    # DOM 테스트 생략
+npm.cmd run check:manifest              # manifest 선언 ↔ 파일/과목 자산 정합성만 단독 검증
 npm.cmd run check:reflayout             # 참조자료 4계층 정합성 (PDF 폴더↔ref_md↔references.json↔규칙, 링크 해석)
 npm.cmd run check:refsubjects           # ref_md 문서의 인용 득표↔과목 귀속 교차 검증
 ```

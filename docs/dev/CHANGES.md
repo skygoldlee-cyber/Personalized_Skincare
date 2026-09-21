@@ -22,6 +22,27 @@ ref_md 과목 귀속 → 레이아웃 → 콤보 드릴 → 파서 등가성 →
 
 `CONTENT_WORKFLOW.md`에 "3.1-1 과목 교재 전체 교체 체크리스트"(7계층) 추가.
 
+## 2026-09-21 교재 전체 교체 용이화 리팩토링 (R2→R1→R5)
+
+**R2 — `check:manifest`** (`tools/check_manifest.js`): manifest 선언 ↔ 실제 파일
+정합성을 빌드 전에 검증 — 교재/문제은행 파일 존재, subjects key·order 유일성,
+exams→subjects 해석, 과목별 자산(glossary·number-drills·ref_md 폴더),
+교재 파서 계약(챕터 헤딩·마커). `check:content` 첫 단계로 편입.
+
+**R1 — 과목 식별자 단일화**: 하드코딩 매핑을 manifest/references.json 파생으로 교체.
+- `check_ref_subjects.js`: `SUBJECT_DIRS` 상수 제거 → manifest의 dir↔order 사용
+- `trainer-drills.js`: `SID_SUBJECT` 상수 제거 → DataLoader.registry에서 sid 접두사 해석
+- `ref-statements.js`: `DOC_SUBJECT_RULES` → `references.json`의 `docSubjectRules`로 이전
+  (내장 목록은 폴백으로 유지) — 문서→과목 귀속 진실을 콘텐츠 설정에 집중
+- `build_keyword_index.js`: `_DIR_PRIORITY` 4과목 하드코딩 → refDirs 키에서 파생
+
+**R5 — ID 마이그레이션 자동 생성** (`tools/build_id_migration.js`, build:data 체인 말미):
+`data/card_terms_snapshot.json`(커밋 대상, 직전 빌드의 ID·term 스냅샷)과 현재 파싱을
+비교해 term이 유일하게 일치하는 구ID→신ID 맵을 `data/id_migration.js`로 생성.
+런타임은 `state.js`의 `cleanOrphansForSubject`가 고아 정리 전 이관을 적용 —
+교재 갱신으로 ID 해시가 바뀌어도 term이 유지된 카드의 학습 진도가 보존된다.
+index.html에 번들 로드 추가, sw.js DATA_ASSETS 프리캐시 편입(build/index.js 자동 목록).
+
 ## 2026-09-20 ref_md PDF→MD 전면 재변환 (품질 개선)
 
 구 변환(pypdfium2 raw 추출)은 한국어 PDF의 좌표 기반 공백을 유실해

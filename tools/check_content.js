@@ -26,6 +26,8 @@ const STEPS = [
     'npm.cmd', ['run', 'build:data'], true,
     '빌드', 'build:data — data/ 번들 전체 재생성 (+인용 라인 동기화)'
   ]] : []),
+  ['node', ['tools/check_manifest.js'], false,
+    '선언', 'manifest 선언 ↔ 파일/과목 자산 정합성'],
   ['node', ['tools/sync_citation_lines.js', '--check'], false,
     '인용', '문제은행 → 교재 #L라인번호 인용 동기화 상태'],
   ['node', ['tools/check_ref_subjects.js'], false,

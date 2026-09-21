@@ -137,13 +137,20 @@ function buildForExam(target) {
     const SUBJECT_DIR_TO_ID = refsJson.subjectDirMap;
     const REF_DIRS = refsJson.refDirs;
 
-    const _DIR_PRIORITY = ['과목4', '과목3', '과목2', '과목1', '공통', '법령고시'];
+    // 우선순위: 과목N 디렉터리(N 내림차순) → 나머지(공통·법령고시). 과목 수 하드코딩 금지.
+    const _DIR_PRIORITY = Object.keys(REF_DIRS).sort((a, b) => {
+        const na = a.match(/^과목(\d+)$/), nb = b.match(/^과목(\d+)$/);
+        if (na && nb) return +nb[1] - +na[1];
+        if (na) return -1;
+        if (nb) return 1;
+        return 0;
+    });
     const REF_FILE_TO_PATH = {};
     for (const dir of _DIR_PRIORITY) {
         for (const f of REF_DIRS[dir] || []) {
             const base = f.replace(/\.pdf$/, '');
             if (!REF_FILE_TO_PATH[f]) {
-                const sub = docSubject(base);
+                const sub = docSubject(base, path.join(ROOT, contentRoot));
                 REF_FILE_TO_PATH[f] = `${contentRoot}/참조자료/ref_md/${sub ? `과목${sub}/` : ''}${base}/${base}.md`;
             }
         }

@@ -442,7 +442,7 @@ if (typeof window !== 'undefined') {
     const mdAssets = [];
     for (const t of allTargets) {
       // 존재하는 경량 번들만 프리캐시 (없는 파일은 precache 실패/404 방지)
-      for (const rel of ['registry.js', 'audio_manifest.js']) {
+      for (const rel of ['registry.js', 'audio_manifest.js', 'id_migration.js']) {
         if (fs.existsSync(path.join(WORKSPACE_DIR, t.dataRoot, rel))) {
           assetsToCache.push(`./${t.dataRoot}/${rel}`);
         }

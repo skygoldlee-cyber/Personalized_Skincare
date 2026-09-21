@@ -148,7 +148,8 @@ const SHELL_ASSETS = [
  */
 const DATA_ASSETS = [
   './data/registry.js',
-  './data/audio_manifest.js'
+  './data/audio_manifest.js',
+  './data/id_migration.js'
 ];
 
 /** 설치 시 프리캐시할 마크다운 문서 (매뉴얼·요약집 — 오프라인 보장) */

@@ -14,13 +14,11 @@
 const fs = require('fs');
 const path = require('path');
 const { docSubject } = require('./build/ref-statements.js');
+const { getExamTargets } = require('./build/exam-targets.js');
 
 const ROOT = path.resolve(__dirname, '..');
 const CONTENT = path.join(ROOT, 'content');
 const REF_MD = path.join(CONTENT, '참조자료', 'ref_md');
-
-// 과목 키 → 과목 번호 (문제은행 파일명 + 교재 디렉터리)
-const SUBJECT_DIRS = { law: 1, manufacturing: 2, safety: 3, understanding: 4 };
 
 /** dir 안의 모든 .md 파일 재귀 수집 */
 function mdFiles(dir) {
@@ -72,16 +70,28 @@ function main() {
     }
   };
 
-  // 문제은행
-  const bankDir = path.join(CONTENT, '문제은행');
-  for (const f of fs.existsSync(bankDir) ? fs.readdirSync(bankDir) : []) {
-    const m = f.match(/^과목(\d)/);
-    if (m && f.endsWith('.md')) addVotes(+m[1], fs.readFileSync(path.join(bankDir, f), 'utf8'));
-  }
-  // 교재 (디렉터리명 → 과목)
-  for (const [dir, s] of Object.entries(SUBJECT_DIRS)) {
-    for (const f of mdFiles(path.join(CONTENT, '교재', dir))) {
-      addVotes(s, fs.readFileSync(f, 'utf8'));
+  // [멀티시험] 과목키/dir↔order 매핑은 각 시험 manifest에서 파생 (하드코딩 테이블 제거)
+  for (const target of getExamTargets(ROOT)) {
+    if (!target.manifest) continue;
+    const troot = path.join(ROOT, target.contentRoot);
+    const subjOrder = {}; // subjectKey → order
+    for (const s of target.manifest.subjects || []) subjOrder[s.key] = s.order;
+    const fileOrder = {}; // 문제은행 파일명 → order
+    for (const e of target.manifest.exams || []) fileOrder[e.file] = subjOrder[e.subject];
+
+    // 문제은행 — manifest 등록 파일은 선언 과목으로, 나머지는 파일명 과목N으로 귀속
+    const bankDir = path.join(troot, '문제은행');
+    for (const f of fs.existsSync(bankDir) ? fs.readdirSync(bankDir) : []) {
+      if (!f.endsWith('.md')) continue;
+      const m = f.match(/^과목(\d)/);
+      const s = fileOrder[f] || (m ? +m[1] : null);
+      if (s) addVotes(s, fs.readFileSync(path.join(bankDir, f), 'utf8'));
+    }
+    // 교재 — manifest 선언 dir의 모든 .md를 subject.order로 귀속
+    for (const s of target.manifest.subjects || []) {
+      for (const f of mdFiles(path.join(troot, s.dir))) {
+        addVotes(s.order, fs.readFileSync(f, 'utf8'));
+      }
     }
   }
 

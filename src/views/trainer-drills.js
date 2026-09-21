@@ -653,15 +653,19 @@ function renderComboResult() {
    🎯 취약 진술 리뷰 — 누적 오판 진술 열람 + 개념 그룹핑
    ======================================================= */
 
-const SID_SUBJECT = { law: 1, manufacturing: 2, safety: 3, understanding: 4 };
-
-/** sid → 과목 번호 (생성형 prefix 또는 파일럿 st-0N- 형식) */
+/** sid → 과목 번호 (생성형 과목키 prefix 또는 파일럿 st-0N- 형식) */
 function sidSubject(sid) {
     const s = String(sid || '');
-    const m = s.match(/^(law|manufacturing|safety|understanding)_/);
-    if (m) return SID_SUBJECT[m[1]];
     const p = s.match(/^st-0(\d)-/);
-    return p ? parseInt(p[1], 10) : null;
+    if (p) return parseInt(p[1], 10);
+    // sid 접두사(과목키)를 활성 시험 레지스트리의 subjects[].key로 해석
+    const m = s.match(/^([a-z][a-z0-9]*)_/);
+    if (m) {
+        const subjects = (DataLoader.registry && DataLoader.registry.subjects) || [];
+        const hit = subjects.find(sub => sub.key === m[1]);
+        if (hit) return hit.order;
+    }
+    return null;
 }
 
 /** 취약 진술 패널 열기 */

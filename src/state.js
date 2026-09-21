@@ -247,7 +247,33 @@ export function cleanOrphansForSubject(subjKey, subjData) {
     
     if (subjData.cards) subjData.cards.forEach(c => validCardIds.add(c.id));
     if (subjData.quizzes) subjData.quizzes.forEach(q => validQuizIds.add(q.id));
-    
+
+    // ID 마이그레이션: 콘텐츠 갱신으로 해시가 바뀐 카드/퀴즈의 진도를 신ID로 이관
+    // (data/id_migration.js — build_id_migration.js가 스냅샷 비교로 생성)
+    const mig = (typeof window !== 'undefined' && window.ID_MIGRATION_MAP) || {};
+    let migrated = 0;
+    const migrateId = (id, validSet, prefix) => {
+        const nid = mig[id];
+        return (nid && id.startsWith(prefix) && validSet.has(nid)) ? nid : null;
+    };
+    for (const set of [state.memorizedCards, state.weakCards]) {
+        for (const id of [...set]) {
+            const nid = migrateId(id, validCardIds, subjKey + '_card_');
+            if (nid && !set.has(nid)) { set.delete(id); set.add(nid); migrated++; }
+        }
+    }
+    Object.keys(state.quizResults).forEach(id => {
+        const nid = migrateId(id, validQuizIds, subjKey + '_quiz_');
+        if (nid && !(nid in state.quizResults)) {
+            state.quizResults[nid] = state.quizResults[id];
+            delete state.quizResults[id];
+            migrated++;
+        }
+    });
+    if (migrated > 0) {
+        console.debug(`[ID Migration] ${subjKey}: ${migrated}건 이관`);
+    }
+
     // 외운 카드 및 틀린 카드 청소
     const cardsToClean = [...state.memorizedCards].filter(id => id.startsWith(subjKey + '_card_') && !validCardIds.has(id));
     const weakToClean = [...state.weakCards].filter(id => id.startsWith(subjKey + '_card_') && !validCardIds.has(id));

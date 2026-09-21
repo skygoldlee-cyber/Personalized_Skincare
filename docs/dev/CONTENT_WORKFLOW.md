@@ -220,10 +220,13 @@ npm.cmd run check:content -- --build   # build:data + 전 계층 검증을 한 �
 **6. 참조자료(ref_md) 귀속**
 - [ ] `node tools/check_ref_subjects.js` — 불일치 건수가 교체 전 기준선보다 늘었는지 확인
 - [ ] `node tools/check_reflayout.js` — 폴더/레지스트리 정합성
+- [ ] 문서→과목 귀속 규칙은 `content/references.json`의 `docSubjectRules`가 진실 (폴더 이동보다 규칙이 우선인 평탄 잔존 문서용)
 
 **7. 사용자 진행 데이터 (localStorage)**
-- [ ] 카드/퀴즈 ID는 `stableId(subjectKey, chapterKey, type, term)` — 교재 내용이 바뀌면 term 해시가 달라져 기존 외운카드·약점·퀴즈 기록이 고아가 되어 `cleanOrphansForSubject`가 정리(삭제)합니다
-- [ ] 과목 통째 교체 = 사실상 해당 과목 진행 초기화 — 사용자 안내 또는 백업 안내 필요
+- [ ] 카드/퀴즈 ID는 `stableId(subjectKey, chapterKey, type, term)` — 교재가 바뀌면 term 해시가 달라집니다
+- [ ] `npm.cmd run build:id-migration`이 이전 스냅샷(`data/card_terms_snapshot.json`)과 비교해 term이 유일하게 일치하는 구ID→신ID 이관 맵(`data/id_migration.js`)을 생성합니다 — 같은 용어가 남아 있으면 진도가 자동 이관됩니다
+- [ ] 스냅샷 파일은 커밋 대상입니다 — 배포된 직전 빌드의 ID 집합을 보존해야 이관이 동작합니다
+- [ ] term이 바뀌거나 삭제된 카드의 진도는 이관 불가 → `cleanOrphansForSubject`가 정리(삭제). 과목 통째 교체 시 잔량을 사용자에게 안내하세요
 
 ### 3.2 과목 추가
 
