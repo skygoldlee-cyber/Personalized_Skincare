@@ -255,6 +255,16 @@
     font-size: 0.82rem;
     cursor: pointer;
 }
+/* 드롭다운 옵션 — 반투명 배경 상속 시 흰 글자/흰 배경으로 깨지는 것을 방지
+   (.form-select option과 동일 패턴, dashboard.css 참조) */
+.f-row .f-phase option {
+    background-color: var(--bg-sidebar);
+    color: var(--color-text-main);
+}
+.light-theme .f-row .f-phase option {
+    background-color: var(--bg-input);
+    color: var(--color-text-main);
+}
 .f-row .f-name:focus,
 .f-row .f-conc:focus,
 .f-row .f-phase:focus {
