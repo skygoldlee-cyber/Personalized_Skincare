@@ -68,11 +68,15 @@
           if (!hadController) return;  // 최초 등록이면 리로드 불필요
           refreshing = true;
           showSWUpdateToast('새 버전 적용 완료 — 페이지를 새로고침합니다.', true);
-          // 열려 있는 알림/확인 모달(원료 DB 갱신 등)이 있으면 닫힐 때까지 리로드 유예.
-          // 최대 ~30초 대기 후에는 리로드 — 모달 미확인 시 플래그 미저장으로 다음 방문에 재고지됨.
+          // 열려 있는 알림/확인 모달(원료 DB 갱신 등)이 있으면 닫힐 때까지 무제한 유예.
+          // 모달이 아직 안 떴을 수 있으므로 앱 초기화(__APP_INITIALIZED) 전에는 최대 ~30초 대기.
           var attempts = 0;
           function tryReload() {
-            if (document.getElementById('app-confirm-overlay') && attempts < 60) {
+            if (document.getElementById('app-confirm-overlay')) {
+              setTimeout(tryReload, 500);
+              return;
+            }
+            if (!window.__APP_INITIALIZED && attempts < 60) {
               attempts++;
               setTimeout(tryReload, 500);
               return;
