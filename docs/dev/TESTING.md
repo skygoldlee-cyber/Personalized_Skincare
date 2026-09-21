@@ -182,7 +182,7 @@ npm run test:watch
 - **mindmap 들여쓰기 검증**: 각 레벨이 최소 1 space 증가해야 함 (동일 들여쓰기 → "There can be only one root" 에러)
 - **파서 출력 타입 감지**: `parseMarkdown()` 출력 HTML에서 Mermaid 블록 추출 후 타입 판별
 - **파이프라인 통합**: MD → 파싱 → 포맷팅 → 타입 감지 전체 흐름 검증
-- **실제 교재 파일 검증**: `content/교재/*.md` 파일의 모든 Mermaid 블록에 대해 들여쓰기 및 문법 유효성 확인
+- **실제 교재 파일 검증**: `content/exams/cosmetic/교재/*.md` 파일의 모든 Mermaid 블록에 대해 들여쓰기 및 문법 유효성 확인
 - **CSS 클래스 분리 로직**: mindmap → `mermaid-mindmap`, flowchart → `mermaid-flowchart` 클래스 할당
 - **`<br/>` 태그 보존**: mindmap과 flowchart 모두에서 `<br/>`이 엔티티로 보존됨
 

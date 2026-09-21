@@ -35,7 +35,7 @@
 ```
 content/*.md (교재 원문)
        │
-       ├── [빌드 타임] textbook.plugin.js → data/subjects/*.js (번들)
+       ├── [빌드 타임] textbook.plugin.js → data/exams/cosmetic/subjects/*.js (번들)
        │
        └── [런타임] textbook-parser.js → window.STUDY_DATA (메모리)
                     │
@@ -51,7 +51,7 @@ content/*.md (교재 원문)
 1. `tools/build/index.js`가 `manifest.json`의 과목 목록을 순회
 2. 각 과목에 대해 `textbook.plugin.js`의 `build()` 호출
 3. `parseMarkdownFile()`이 각 챕터 MD 파일을 파싱하여 `{ cards, quizzes, warnings }` 반환
-4. 과목 단위로 중복 카드/퀴즈 제거 후 `data/subjects/<key>.<hash>.js` 번들로 출력
+4. 과목 단위로 중복 카드/퀴즈 제거 후 `data/exams/cosmetic/subjects/<key>.<hash>.js` 번들로 출력
 
 ### 런타임 경로
 

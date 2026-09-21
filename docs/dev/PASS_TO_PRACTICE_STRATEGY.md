@@ -169,21 +169,21 @@ INCI Name: Sodium Hyaluronate
 
 | 실무 DB 섹션 | 기존 시험 데이터 소스 | 추가 필요 데이터 | 데이터 신뢰성 |
 |-------------|---------------------|-----------------|-------------|
-| 기본 정보 | `content/참조자료/원료/*.md` | INCI Name, 기능 분류 | 공식 데이터 |
+| 기본 정보 | `content/exams/cosmetic/참조자료/원료/*.md` | INCI Name, 기능 분류 | 공식 데이터 |
 | 제형별 적합도 | (신규) | 제형별 권장 사용량 | 학술 근거 필요 |
 | 배합 참고 | 교재 내 수치 데이터 | 제형별 상세 사용량 | 공식 고시 우선 |
 | 궁합 | (신규) | 원료 간 상호작용 정보 | 학술 근거 필요 |
 | 배합 활용 | (신규) | 제형별 배합 패턴 | 크라우드소싱 (검증 필요) |
-| 관련 규정 | `content/참조자료/ref_md/` | (기존 데이터 재사용) | 공식 데이터 |
+| 관련 규정 | `content/exams/cosmetic/참조자료/ref_md/` | (기존 데이터 재사용) | 공식 데이터 |
 
 ### 2.4 기존 데이터 재사용
 
 ```mermaid
 flowchart LR
     subgraph EXISTING ["기존 시험 데이터"]
-        A["content/참조자료/원료/<br/>approved_ingredients.md<br/>restricted_ingredients.md<br/>banned_ingredients.md"]
-        B["content/참조자료/ref_md/<br/>별표 1, 별표 2, 별표 4"]
-        C["content/교재/<br/>2과목 원료학<br/>4과목 조제 실무"]
+        A["content/exams/cosmetic/참조자료/원료/<br/>approved_ingredients.md<br/>restricted_ingredients.md<br/>banned_ingredients.md"]
+        B["content/exams/cosmetic/참조자료/ref_md/<br/>별표 1, 별표 2, 별표 4"]
+        C["content/exams/cosmetic/교재/<br/>2과목 원료학<br/>4과목 조제 실무"]
         D["src/keyword-index.js<br/>GLOSSARY_INDEX"]
     end
     A --> R["원료 기본 정보"]
@@ -401,8 +401,8 @@ flowchart TD
 | `src/keyword-index.js` | 교재 ↔ 참조자료 매핑 | 원료 ↔ 법령 매핑 |
 | `src/pdf-registry.js` | 참조자료 중앙 설정 | 법령 원문 참조 |
 | `src/html-viewer.js` | 참조자료 뷰어 | 법령 원문 뷰어 |
-| `content/참조자료/원료/` | 시험용 원료 목록 | 실무용 원료 DB |
-| `content/참조자료/ref_md/` | 시험용 법령 원문 | 실무용 법령 참조 |
+| `content/exams/cosmetic/참조자료/원료/` | 시험용 원료 목록 | 실무용 원료 DB |
+| `content/exams/cosmetic/참조자료/ref_md/` | 시험용 법령 원문 | 실무용 법령 참조 |
 | `src/views/dictionary.js` | 성분 검색 (시험용) | 성분 검색 (실무용) |
 | `src/views/trainer.js` | 배합 계산 연습 | 배합 계산 (실무) |
 | `src/trainer-calc.js` | 계산 문제 생성 | 실무 배합량 계산 |
@@ -664,7 +664,7 @@ flowchart TD
 
 | 소스 | 기존 활용 | 실무 확장 |
 |------|----------|----------|
-| `content/참조자료/ref_md/` | 시험용 법령 원문 | 개정 감지용 원본 |
+| `content/exams/cosmetic/참조자료/ref_md/` | 시험용 법령 원문 | 개정 감지용 원본 |
 | `src/pdf-registry.js` | 참조자료 중앙 설정 | 버전 추적 |
 | `docs/dev/CHANGES.md` | 개발 변경 이력 | 콘텐츠 버전 관리 |
 

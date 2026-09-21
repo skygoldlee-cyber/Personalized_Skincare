@@ -69,12 +69,12 @@
 
 **데이터 파이프라인** (빌드 타임)
 - Node.js 모듈러 빌드 파이프라인으로 MD 교재/문제 → 해시드 JS 번들 생성
-  - `tools/build/index.js` → `data/registry.js` + `data/exams/*.hash.js` + `data/ingredients_data.*.js`
-  - `tools/build_exam_bundles.js` → `data/exams_md/*.js` (문제은행 MD file:// 폴리백 번들)
-  - `tools/build_study_md_bundle.js` → `data/study_md/` (교재 MD file:// 폴백, 과목별 분할)
+  - `tools/build/index.js` → `data/exams/cosmetic/registry.js` + `data/exams/*.hash.js` + `data/exams/cosmetic/ingredients_data.*.js`
+  - `tools/build_exam_bundles.js` → `data/exams/cosmetic/exams_md/*.js` (문제은행 MD file:// 폴리백 번들)
+  - `tools/build_study_md_bundle.js` → `data/exams/cosmetic/study_md/` (교재 MD file:// 폴백, 과목별 분할)
   - 런타임: `src/data-loader.js`가 registry를 보고 필요한 과목/시험만 온디맨드 로드
 
-**오디오북 파이프라인** (`content/audiobook/`)
+**오디오북 파이프라인** (`content/exams/cosmetic/audiobook/`)
 - Python: 마크다운 청크 분할 → TTS(Google gTTS / ElevenLabs) → MP3 병합
 - 모델: `ko_KR-jimin-medium.onnx`
 
@@ -269,13 +269,13 @@ npm run build:study-md
 ## 🎧 오디오북 생성
 
 ```bash
-cd content/audiobook
+cd content/exams/cosmetic/audiobook
 pip install -r requirements.txt
 cp .env.example .env   # API 키 입력
 python run_pipeline.py
 ```
 
-사용법은 [`content/audiobook/README.md`](content/audiobook/README.md) 참고.
+사용법은 [`content/exams/cosmetic/audiobook/README.md`](content/exams/cosmetic/audiobook/README.md) 참고.
 
 ---
 
@@ -302,8 +302,8 @@ cmd /c vercel --prod
 
 대용량 파일은 Git 추적에서 제외됩니다 ([`.gitignore`](.gitignore)):
 
-- `content/audiobook/mp3/`, `*.mp3` — 생성된 음성 파일 (외부 CDN 권장)
-- `content/audiobook/models/`, `*.onnx` — TTS 모델
+- `content/exams/cosmetic/audiobook/mp3/`, `*.mp3` — 생성된 음성 파일 (외부 CDN 권장)
+- `content/exams/cosmetic/audiobook/models/`, `*.onnx` — TTS 모델
 - `content/**/*.html` — 100MB 초과 HTML
 - `archive/`, `.env` 등
 

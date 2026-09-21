@@ -6,7 +6,7 @@
 
 이 프로젝트는 `content/exams/<id>/` 폴더의 Markdown/JSON 파일이 **단일 소스 오브 트루스(SSOT)** 역할을 합니다. 소스 코드(`src/`)를 직접 수정하지 않고, content 파일과 매니페스트만 편집하면 빌드 파이프라인이 나머지를 자동 처리합니다.
 
-> **멀티시험 대칭 구조 (2026-09-21~)**: 모든 시험이 `content/exams/<id>/`·`data/exams/<id>/` 루트를 갖습니다 — 기본 시험(cosmetic)도 `content/exams/cosmetic/`·`data/exams/cosmetic/`에 있으며 예외가 없습니다. 이 문서의 `content/`·`data/` 경로 표기는 **각 시험의 `contentRoot`/`dataRoot`를 의미**합니다 (예: `content/manifest.json` = `content/exams/cosmetic/manifest.json`). `content/`·`data/` 루트 자체에는 전역 파일만 있습니다: `exams.json`/`exams.js`(시험 목록), `audio_manifest.js`(시험 id 키 분리), `docs_md/`(앱 공용 문서). `build:data`는 `content/exams.json`의 모든 시험을 순회 빌드하므로 절차는 동일합니다. 새 시험 추가는 `AGENTS.md`의 "멀티시험 구조" 섹션을 참조하세요.
+> **멀티시험 대칭 구조 (2026-09-21~)**: 모든 시험이 `content/exams/<id>/`·`data/exams/<id>/` 루트를 갖습니다 — 기본 시험(cosmetic)도 `content/exams/cosmetic/`·`data/exams/cosmetic/`에 있으며 예외가 없습니다. 이 문서의 `content/`·`data/` 경로 표기는 **각 시험의 `contentRoot`/`dataRoot`를 의미**합니다 (예: `content/exams/cosmetic/manifest.json` = `content/exams/cosmetic/manifest.json`). `content/`·`data/` 루트 자체에는 전역 파일만 있습니다: `exams.json`/`exams.js`(시험 목록), `audio_manifest.js`(시험 id 키 분리), `docs_md/`(앱 공용 문서). `build:data`는 `content/exams.json`의 모든 시험을 순회 빌드하므로 절차는 동일합니다. 새 시험 추가는 `AGENTS.md`의 "멀티시험 구조" 섹션을 참조하세요.
 
 ```mermaid
 flowchart LR
@@ -92,16 +92,16 @@ flowchart LR
 
 | 변경 유형 | 수정할 파일 | 비고 |
 |----------|------------|------|
-| **교재 내용 수정** | `content/교재/{과목}/*.md` | 표준형/이야기형 모두 수정 |
-| **문제은행 수정** | `content/문제은행/과목N_단일정답형.md` | 문제 추가/삭제/수정 |
-| **과목 추가/삭제** | `content/manifest.json` | `subjects` 배열 수정 |
-| **시험 추가/삭제** | `content/manifest.json` | `exams` 배열 수정 |
-| **참조자료 추가/삭제** | `content/references.json` | 참조자료 매핑 수정 |
-| **오디오북 추가** | `content/audiobook/mp3/{과목}/` | MP3 파일 배치 |
-| **통합 모의고사 문제 수 변경** | `content/manifest.json` | `integratedExam.questionsPerSubject` 수정 |
-| **UI 텍스트 변경** | `content/manifest.json` | `uiText` 객체 수정 |
-| **추천 링크 변경** | `content/manifest.json` | `resources` 객체 수정 |
-| **원료 데이터 변경** | `content/ingredients/` | 원료 MD/JSON 수정 |
+| **교재 내용 수정** | `content/exams/cosmetic/교재/{과목}/*.md` | 표준형/이야기형 모두 수정 |
+| **문제은행 수정** | `content/exams/cosmetic/문제은행/과목N_단일정답형.md` | 문제 추가/삭제/수정 |
+| **과목 추가/삭제** | `content/exams/cosmetic/manifest.json` | `subjects` 배열 수정 |
+| **시험 추가/삭제** | `content/exams/cosmetic/manifest.json` | `exams` 배열 수정 |
+| **참조자료 추가/삭제** | `content/exams/cosmetic/references.json` | 참조자료 매핑 수정 |
+| **오디오북 추가** | `content/exams/cosmetic/audiobook/mp3/{과목}/` | MP3 파일 배치 |
+| **통합 모의고사 문제 수 변경** | `content/exams/cosmetic/manifest.json` | `integratedExam.questionsPerSubject` 수정 |
+| **UI 텍스트 변경** | `content/exams/cosmetic/manifest.json` | `uiText` 객체 수정 |
+| **추천 링크 변경** | `content/exams/cosmetic/manifest.json` | `resources` 객체 수정 |
+| **원료 데이터 변경** | `content/exams/cosmetic/ingredients/` | 원료 MD/JSON 수정 |
 
 ---
 
@@ -120,7 +120,7 @@ npm.cmd run build:data
 ```mermaid
 flowchart TD
     A["npm run build:data"] --> B["build:pdf-registry"]
-    B --> B1["content/references.json<br/>→ src/pdf-registry.js"]
+    B --> B1["content/exams/cosmetic/references.json<br/>→ src/pdf-registry.js"]
     B1 --> C["build:keyword-index"]
     C --> C1["교재 MD 스캔 + references.json<br/>→ src/keyword-index.js"]
     C1 --> D["build:index (tools/build/index.js)"]
@@ -168,7 +168,7 @@ npm.cmd run build:audio-manifest     # 오디오 매니페스트만
 
 ### 3.1 교재 내용 수정
 
-1. `content/교재/{과목}/{파일명}.md` 편집 (표준형, 이야기형 모두)
+1. `content/exams/cosmetic/교재/{과목}/{파일명}.md` 편집 (표준형, 이야기형 모두)
 2. `npm.cmd run build:data` 실행
 3. **인용 라인 동기화** (교재 라인 변경 시):
    ```powershell
@@ -212,8 +212,8 @@ flowchart TD
 ```
 
 **1. 매니페스트/등록**
-- [ ] `content/manifest.json` — `subjects[].dir`·`file`/`storyFile` 경로가 새 교재를 가리키는지, `exams[].subject`·`integratedExam.questionsPerSubject` 키 정합
-- [ ] `content/references.json` — `subjectDirMap`·`refDirs`·`referenceFiles` 과목 귀속
+- [ ] `content/exams/cosmetic/manifest.json` — `subjects[].dir`·`file`/`storyFile` 경로가 새 교재를 가리키는지, `exams[].subject`·`integratedExam.questionsPerSubject` 키 정합
+- [ ] `content/exams/cosmetic/references.json` — `subjectDirMap`·`refDirs`·`referenceFiles` 과목 귀속
 
 **2. 콘텐츠 파서 계약 (새 교재가 지켜야 할 형식)**
 - [ ] 카드 추출용 표 `| 용어 | 설명 |` 2열 구조, `- **용어**: 설명` 리스트
@@ -222,9 +222,9 @@ flowchart TD
 - [ ] 참조 링크 `../참조자료/ref_md/과목N/...` 형식 (상세: `docs/dev/TEXTBOOK_AUTHORING_GUIDE.md`)
 
 **3. 과목별 자산 (번호·키 기준 하드코딩 지점)**
-- [ ] `content/교재/glossary/subject{N}.json` — 큐레이션 용어집 (과목 order 번호 기준)
-- [ ] `content/number-drills/{과목키}.json`
-- [ ] `content/audiobook/mp3/{과목키}/` — 교재 교체 시 TTS 재생성(`generate_all_mp3.py`)
+- [ ] `content/exams/cosmetic/교재/glossary/subject{N}.json` — 큐레이션 용어집 (과목 order 번호 기준)
+- [ ] `content/exams/cosmetic/number-drills/{과목키}.json`
+- [ ] `content/exams/cosmetic/audiobook/mp3/{과목키}/` — 교재 교체 시 TTS 재생성(`generate_all_mp3.py`)
 - [ ] `tools/check_ref_subjects.js`는 manifest의 `dir`↔`order`에서 과목 매핑을 자동 파생 — 별도 상수 없음
 
 **4. 빌드 재생성**
@@ -243,7 +243,7 @@ npm.cmd run check:content -- --build   # build:data + 전 계층 검증을 한 �
 **6. 참조자료(ref_md) 귀속**
 - [ ] `node tools/check_ref_subjects.js` — 불일치 건수가 교체 전 기준선보다 늘었는지 확인
 - [ ] `node tools/check_reflayout.js` — 폴더/레지스트리 정합성
-- [ ] 문서→과목 귀속 규칙은 `content/references.json`의 `docSubjectRules`가 진실 (폴더 이동보다 규칙이 우선인 평탄 잔존 문서용)
+- [ ] 문서→과목 귀속 규칙은 `content/exams/cosmetic/references.json`의 `docSubjectRules`가 진실 (폴더 이동보다 규칙이 우선인 평탄 잔존 문서용)
 
 **7. 사용자 진행 데이터 (localStorage)**
 - [ ] 카드/퀴즈 ID는 `stableId(subjectKey, chapterKey, type, term)` — 교재가 바뀌면 term 해시가 달라집니다
@@ -253,8 +253,8 @@ npm.cmd run check:content -- --build   # build:data + 전 계층 검증을 한 �
 
 ### 3.2 과목 추가
 
-1. `content/교재/{새과목키}/` 디렉토리 생성, MD 파일 배치
-2. `content/manifest.json`의 `subjects` 배열에 항목 추가:
+1. `content/exams/cosmetic/교재/{새과목키}/` 디렉토리 생성, MD 파일 배치
+2. `content/exams/cosmetic/manifest.json`의 `subjects` 배열에 항목 추가:
    ```json
    {
      "key": "newsubject",
@@ -267,20 +267,20 @@ npm.cmd run check:content -- --build   # build:data + 전 계층 검증을 한 �
      ]
    }
    ```
-3. `content/references.json`의 `subjectDirMap`에 매핑 추가:
+3. `content/exams/cosmetic/references.json`의 `subjectDirMap`에 매핑 추가:
    ```json
    "newsubject": "과목5"
    ```
-4. `content/references.json`의 `referenceFiles`에 과목별 참조자료 추가
-5. `content/references.json`의 `refDirs`에 `과목5` 배열 추가
-6. `content/문제은행/과목5_단일정답형.md` 생성 후 `manifest.json`의 `exams`에 추가
+4. `content/exams/cosmetic/references.json`의 `referenceFiles`에 과목별 참조자료 추가
+5. `content/exams/cosmetic/references.json`의 `refDirs`에 `과목5` 배열 추가
+6. `content/exams/cosmetic/문제은행/과목5_단일정답형.md` 생성 후 `manifest.json`의 `exams`에 추가
 7. `npm.cmd run build:data` 실행
 8. 검증 + 커밋 + 배포
 
 ### 3.3 참조자료 추가
 
-1. `content/참조자료/ref_md/과목N/{파일명}/{파일명}.md` 배치 (PDF→MD 변환본 — 과목 폴더가 문항 생성 귀속의 진실)
-2. `content/references.json` 수정:
+1. `content/exams/cosmetic/참조자료/ref_md/과목N/{파일명}/{파일명}.md` 배치 (PDF→MD 변환본 — 과목 폴더가 문항 생성 귀속의 진실)
+2. `content/exams/cosmetic/references.json` 수정:
    - `refDirs.{해당폴더}` 배열에 파일명 추가
    - `referenceFiles.{과목}` 또는 `referenceCommon`에 항목 추가
    - 출처 매칭이 필요하면 `sourceRefMap`에 정규식 매핑 추가
@@ -314,7 +314,7 @@ python tools/convert_ref_pdfs_v2.py --verify
 
 ### 3.4 오디오북 추가
 
-1. `content/audiobook/mp3/{과목키}/` 디렉토리에 MP3 파일 배치
+1. `content/exams/cosmetic/audiobook/mp3/{과목키}/` 디렉토리에 MP3 파일 배치
 2. `npm.cmd run build:audio-manifest` 실행 (또는 `npm.cmd run build:data`)
 3. 검증 + 커밋 + 배포
 
@@ -323,7 +323,7 @@ python tools/convert_ref_pdfs_v2.py --verify
 
 ### 3.5 통합 모의고사 문제 수 변경
 
-1. `content/manifest.json`의 `integratedExam.questionsPerSubject` 수정:
+1. `content/exams/cosmetic/manifest.json`의 `integratedExam.questionsPerSubject` 수정:
    ```json
    "integratedExam": {
      "questionsPerSubject": {
@@ -479,18 +479,18 @@ flowchart LR
 ## 7. 빠른 참조: 변경 시 수정 파일 매트릭스
 
 ```
-교재 내용 수정        → content/교재/*.md
+교재 내용 수정        → content/exams/cosmetic/교재/*.md
 교재 전체 교체        → §3.1-1 체크리스트 (7계층) + npm.cmd run check:content -- --build
-문제은행 수정         → content/문제은행/*.md (+ npm run build:drills 로 드릴 번들 재생성)
+문제은행 수정         → content/exams/cosmetic/문제은행/*.md (+ npm run build:drills 로 드릴 번들 재생성)
 복수정답형 파일럿 추가     → {dataRoot}/drills/combo_pilot.js 직접 편집 + npm run check:combo 검증
-과목 추가/삭제        → content/manifest.json + content/references.json + content/교재/ + content/문제은행/
-시험 추가/삭제         → content/manifest.json + content/문제은행/
-참조자료 추가/삭제     → content/references.json + content/참조자료/ref_md/과목N/ (+ 해당 과목 폴더의 PDF)
-오디오북 추가         → content/audiobook/mp3/
-통합 모의고사 설정     → content/manifest.json (integratedExam)
-UI 텍스트             → content/manifest.json (uiText)
-추천 링크             → content/manifest.json (resources)
-원료 데이터           → content/ingredients/
+과목 추가/삭제        → content/exams/cosmetic/manifest.json + content/exams/cosmetic/references.json + content/exams/cosmetic/교재/ + content/exams/cosmetic/문제은행/
+시험 추가/삭제         → content/exams/cosmetic/manifest.json + content/exams/cosmetic/문제은행/
+참조자료 추가/삭제     → content/exams/cosmetic/references.json + content/exams/cosmetic/참조자료/ref_md/과목N/ (+ 해당 과목 폴더의 PDF)
+오디오북 추가         → content/exams/cosmetic/audiobook/mp3/
+통합 모의고사 설정     → content/exams/cosmetic/manifest.json (integratedExam)
+UI 텍스트             → content/exams/cosmetic/manifest.json (uiText)
+추천 링크             → content/exams/cosmetic/manifest.json (resources)
+원료 데이터           → content/exams/cosmetic/ingredients/
 
 공통: npm.cmd run build:data → 검증 → 커밋 → 배포
 ```

@@ -37,7 +37,7 @@
 | **Vanilla First** | React/Vue 등 프레임워크 미사용. 순수 HTML/CSS/JS (ESM) |
 | **Offline-Capable PWA** | Service Worker로 App Shell + 학습 데이터 캐시. 설치 가능 |
 | **Mobile-First** | 모바일 하단 탭 바 ↔ 데스크톱 사이드바 적응형 네비게이션 |
-| **Content-Agnostic** | `content/manifest.json`을 SSOT로 사용. 교재 전체 교체 시 소스 수정 불필요 |
+| **Content-Agnostic** | `content/exams/cosmetic/manifest.json`을 SSOT로 사용. 교재 전체 교체 시 소스 수정 불필요 |
 
 ---
 
@@ -250,7 +250,7 @@
 | EV-03 | 인쇄/PDF 버튼 | ✅ |
 | EV-04 | `Esc` / 모바일 뒤로가기(`history.pushState`) 닫기 | ✅ |
 | EV-05 | sessionStorage 캐시 (24h TTL) | ✅ |
-| EV-06 | `file://` 폴백 번들 (`data/exams_md/*.js`, 클래식 `<script>` 주입) | ✅ |
+| EV-06 | `file://` 폴백 번들 (`data/exams/cosmetic/exams_md/*.js`, 클래식 `<script>` 주입) | ✅ |
 | EV-07 | 시험 제목 registry 동적 조회 (하드코딩 없음) | ✅ |
 | EV-08 | 교재 본문 기출문제 링크 → 문제집 뷰어 연동 | ✅ |
 
@@ -395,10 +395,10 @@
 
 | ID | 요구사양 | 구현 상태 |
 |----|---------|-----------|
-| DA-01 | `content/manifest.json`을 SSOT로 사용 (과목, 단원, 시험, 추천 링크) | ✅ |
+| DA-01 | `content/exams/cosmetic/manifest.json`을 SSOT로 사용 (과목, 단원, 시험, 추천 링크) | ✅ |
 | DA-02 | 시험/성분 데이터: 빌드 타임 해시드 JS 번들 (`<script>` 로드) | ✅ |
 | DA-03 | 교재/카드/퀴즈: 런타임 MD fetch + 파싱 (재빌드 불필요) | ✅ |
-| DA-04 | `file://` 폴백: 과목별 분할 JS 번들 (`data/study_md/`) | ✅ |
+| DA-04 | `file://` 폴백: 과목별 분할 JS 번들 (`data/exams/cosmetic/study_md/`) | ✅ |
 | DA-05 | 사용자 진행 상황: `localStorage` 영속화 (계정/로그인 불필요) | ✅ |
 
 ### 5.2 안정적 ID 체계
@@ -427,13 +427,13 @@
 
 | ID | 요구사양 | 구현 상태 |
 |----|---------|-----------|
-| CS-01 | 교재: `content/교재/{과목키}/*.md` (본문 + 이야기형) | ✅ |
-| CS-02 | 문제은행: `content/문제은행/과목N_단일정답형.md` | ✅ |
-| CS-03 | 참조자료: `content/참조자료/ref_md/과목N/` (MD 변환본 41종, 원본 PDF는 배포 제외) | ✅ |
-| CS-04 | 성분 원본: `content/참조자료/원료/` | ✅ |
-| CS-05 | 학습안내서: `content/학습안내서.md` | ✅ |
-| CS-06 | 용어집 큐레이션: `content/교재/glossary/subject{1-4}.json` | ✅ |
-| CS-07 | 오디오북: `content/audiobook/` (Python TTS 파이프라인) | ✅ |
+| CS-01 | 교재: `content/exams/cosmetic/교재/{과목키}/*.md` (본문 + 이야기형) | ✅ |
+| CS-02 | 문제은행: `content/exams/cosmetic/문제은행/과목N_단일정답형.md` | ✅ |
+| CS-03 | 참조자료: `content/exams/cosmetic/참조자료/ref_md/과목N/` (MD 변환본 41종, 원본 PDF는 배포 제외) | ✅ |
+| CS-04 | 성분 원본: `content/exams/cosmetic/참조자료/원료/` | ✅ |
+| CS-05 | 학습안내서: `content/exams/cosmetic/학습안내서.md` | ✅ |
+| CS-06 | 용어집 큐레이션: `content/exams/cosmetic/교재/glossary/subject{1-4}.json` | ✅ |
+| CS-07 | 오디오북: `content/exams/cosmetic/audiobook/` (Python TTS 파이프라인) | ✅ |
 | CS-08 | 파일명 ASCII 슬러그화 (CP949↔UTF-8 불일치 원천 제거) | ✅ |
 
 ### 5.5 교재 콘텐츠 학습 보조 요소
@@ -486,12 +486,12 @@
 | 변경 유형 | 수정 필요 파일 |
 |-----------|---------------|
 | 교재 MD 내용 수정 (기존 파일) | (수정 불필요) |
-| 교재 MD 파일 추가/삭제/이름 변경 | `content/manifest.json`, `sw.js`, `content/utils/batch_convert.py` |
+| 교재 MD 파일 추가/삭제/이름 변경 | `content/exams/cosmetic/manifest.json`, `sw.js`, `content/exams/cosmetic/utils/batch_convert.py` |
 | 참조자료 변경 | `src/pdf-registry.js` (유일 수정 파일) |
-| 새 과목 추가 | `content/manifest.json`, `src/pdf-registry.js`, `sw.js`, `content/utils/batch_convert.py` |
+| 새 과목 추가 | `content/exams/cosmetic/manifest.json`, `src/pdf-registry.js`, `sw.js`, `content/exams/cosmetic/utils/batch_convert.py` |
 | 과목명 표시 | `manifest.json` `shortName` 필드 (소스 수정 불필요) |
-| 시험 추가/변경 | `content/manifest.json` `exams` 섹션 (소스 수정 불필요) |
-| 추천 링크 변경 | `content/manifest.json` `resources` 섹션 (소스 수정 불필요) |
+| 시험 추가/변경 | `content/exams/cosmetic/manifest.json` `exams` 섹션 (소스 수정 불필요) |
+| 추천 링크 변경 | `content/exams/cosmetic/manifest.json` `resources` 섹션 (소스 수정 불필요) |
 
 ---
 

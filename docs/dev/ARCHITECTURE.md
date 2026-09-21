@@ -157,7 +157,7 @@
 | `css/` | UI 모듈별 스타일시트 (`base`, `dashboard`, `study`, `exam`, `trainer`, `reader`) |
 | `data/` | 빌드 산출물 (레지스트리, 과목/시험/성분 번들, MD 폴백) |
 | `content/` | 교재 MD 원본(`교재/`), 문제은행(`문제은행/`), 참조자료(`참조자료/`), 학습안내서, 오디오북 파이프라인, report, utils |
-| ~~`exams/`~~ | (삭제됨 — `content/문제은행/`로 이동) |
+| ~~`exams/`~~ | (삭제됨 — `content/exams/cosmetic/문제은행/`로 이동) |
 | `docs/` | 프로젝트 문서 (`dev/` 개발 문서, `user/` 사용자 문서) |
 | `tools/` | 빌드 스크립트, 로컬 개발 서버, 검증 도구 |
 | `tests/` | 자동화 테스트 (`unit/` Node.js, `dom/` Vitest+jsdom) |
@@ -450,21 +450,21 @@ Personalized_Skincare/
 | [`src/pdf-registry.js`](../../src/pdf-registry.js) | 참조자료 중앙 설정 모듈. 과목별 참조자료 매핑, 출처→PDF 파일명 매핑, MD 변환본 경로 자동 생성 (`REF_DIRS`, `resolveRefPath`, `mapSourceToRef`). 원본 PDF는 `.vercelignore`로 배포 제외, `ref_md/과목N/*/*.md` 변환본(3.7MB)으로 인앱 뷰어+PDF 저장 지원 |
 | [`src/html-viewer.js`](../../src/html-viewer.js) | 앱 내 HTML/MD 참조자료 뷰어. `fetch()`+`DOMParser`(HTML) 또는 `parseMarkdown()`(MD)로 로드 후 DOM 직접 주입 (iframe 없음). **키워드 기반 스크롤**: `KEYWORD_INDEX`에서 추출한 셀 텍스트 키워드로 검색→첫 번째 하이라이트로 스크롤 (L###은 스크롤에 사용하지 않음). **성능 최적화**: sessionStorage 캐싱(24h TTL)으로 재방문 시 즉시 렌더링, span 일괄 제거(normalize 호출 최소화), 검색 조기 종료(첫 매치 즉시 스크롤 + 나머지 `requestIdleCallback` 지연 하이라이트). 텍스트 노드 순회 검색 + `<mark>` 하이라이트, 검색 결과 내비게이션(이전/다음), 인쇄 지원. **PDF 저장** (v210 도입): 인쇄 전용 CSS로 오버레이 제약 없이 전체 문서를 브라우저 인쇄 다이얼로그로 출력 → "PDF로 저장" 선택 가능 |
 | [`src/reader-format.js`](../../src/reader-format.js) | 교재 리더 본문 포맷터. `parseMarkdown()` + HTML 참조 링크 변환 (`data-ref-html`, `data-ref-search`) + 참조자료 인라인 렌더링. **참조자료 인라인 프리뷰 툴팁** (데스크톱 hover 400ms / 모바일 롱프레스 600ms, 200자 스니펫) |
-| [`src/exam-viewer.js`](../../src/exam-viewer.js) | 문제집(MD) 런타임 뷰어. `content/문제은행/*.md` fetch → 자체 MD→HTML 변환 → 인앱 전체화면 오버레이 렌더링. TOC 생성·인쇄·sessionStorage 캐시(24h)·`file://` 번들 폴리백(`data/exams_md/*.js`) 지원. **시험 제목은 registry에서 동적 조회** (하드코딩 없음) |
+| [`src/exam-viewer.js`](../../src/exam-viewer.js) | 문제집(MD) 런타임 뷰어. `content/exams/cosmetic/문제은행/*.md` fetch → 자체 MD→HTML 변환 → 인앱 전체화면 오버레이 렌더링. TOC 생성·인쇄·sessionStorage 캐시(24h)·`file://` 번들 폴리백(`data/exams/cosmetic/exams_md/*.js`) 지원. **시험 제목은 registry에서 동적 조회** (하드코딩 없음) |
 
 | 파일 | 내용 | 생성 주체 |
 |------|------|-----------|
-| [`data/registry.js`](../../data/registry.js) | 시험/성분 번들 목록·메타 + 과목 목록/통계 + 추천 링크. **과목 `shortName`**, 시험 **`file`**, **`resources`** 필드 포함 → 소스 코드 하드코딩 제거 | `tools/build/index.js` |
-| [`content/**/*.md`](../../content/) + [`content/manifest.json`](../../content/manifest.json) | **교재/카드/퀴즈/시험/추천링크의 원본 (SSOT).** `manifest.json`에 과목 `shortName`, 시험 `file`, `resources`(추천 링크·채널 요약) 등 메타 포함 → 소스 코드 하드코딩 없이 전체 콘텐츠 교체 가능 | 저자 직접 작성 |
-| [`data/study_md/`](../../data/study_md/) | 교재 MD `file://` 폴백 번들 (**과목별 분할**: manifest.js + 과목별 `.js`). http에선 미사용. 과목 로드 시 해당 파일만 온디맨드 로드 | `tools/build_study_md_bundle.js` |
+| [`data/exams/cosmetic/registry.js`](../../data/exams/cosmetic/registry.js) | 시험/성분 번들 목록·메타 + 과목 목록/통계 + 추천 링크. **과목 `shortName`**, 시험 **`file`**, **`resources`** 필드 포함 → 소스 코드 하드코딩 제거 | `tools/build/index.js` |
+| [`content/**/*.md`](../../content/) + [`content/exams/cosmetic/manifest.json`](../../content/exams/cosmetic/manifest.json) | **교재/카드/퀴즈/시험/추천링크의 원본 (SSOT).** `manifest.json`에 과목 `shortName`, 시험 `file`, `resources`(추천 링크·채널 요약) 등 메타 포함 → 소스 코드 하드코딩 없이 전체 콘텐츠 교체 가능 | 저자 직접 작성 |
+| [`data/exams/cosmetic/study_md/`](../../data/exams/cosmetic/study_md/) | 교재 MD `file://` 폴백 번들 (**과목별 분할**: manifest.js + 과목별 `.js`). http에선 미사용. 과목 로드 시 해당 파일만 온디맨드 로드 | `tools/build_study_md_bundle.js` |
 | [`data/exams/<key>.<hash>.js`](../../data/exams/) | 시험별 문항 번들 | `tools/build/index.js` (exams plugin) |
-| [`data/ingredients_data.<hash>.js`](../../data/) | 화장품 성분 사전 (가용/금지/제한) | `tools/build/index.js` (ingredients plugin) |
-| [`data/id_migration.js`](../../data/id_migration.js) | 레거시 ID → 안정 ID 일회성 매핑 | `tools/build/index.js` (id-factory) |
+| [`data/exams/cosmetic/ingredients_data.<hash>.js`](../../data/) | 화장품 성분 사전 (가용/금지/제한) | `tools/build/index.js` (ingredients plugin) |
+| [`data/exams/cosmetic/id_migration.js`](../../data/exams/cosmetic/id_migration.js) | 레거시 ID → 안정 ID 일회성 매핑 | `tools/build/index.js` (id-factory) |
 | [`data/audio_manifest.js`](../../data/audio_manifest.js) | 오디오 파일 경로 매니페스트 | 오디오북 파이프라인 |
 
-> ⚠️ `data/subjects/<key>.<hash>.js`(과목 학습 번들)는 **2026-08-24부터 런타임 MD 파싱으로 대체·제거**되었다. 디렉토리 자체도 삭제되었으며, `npm run build:data`가 재생성하더라도 앱은 로드하지 않고 배포에서도 제외(`.vercelignore`)된다.
+> ⚠️ `data/exams/cosmetic/subjects/<key>.<hash>.js`(과목 학습 번들)는 **2026-08-24부터 런타임 MD 파싱으로 대체·제거**되었다. 디렉토리 자체도 삭제되었으며, `npm run build:data`가 재생성하더라도 앱은 로드하지 않고 배포에서도 제외(`.vercelignore`)된다.
 
-**특징**: 시험/성분 번들은 전역 상수 JS로 `<script>` 로드만으로 즉시 사용(오프라인 핵심). 교재/카드/퀴즈는 `content/*.md`를 런타임 fetch(http, SW `Cache First`로 오프라인 대응)하거나 `file://`에선 `data/study_md/` 과목별 분할 폴백을 사용한다.
+**특징**: 시험/성분 번들은 전역 상수 JS로 `<script>` 로드만으로 즉시 사용(오프라인 핵심). 교재/카드/퀴즈는 `content/*.md`를 런타임 fetch(http, SW `Cache First`로 오프라인 대응)하거나 `file://`에선 `data/exams/cosmetic/study_md/` 과목별 분할 폴백을 사용한다.
 
 ### 4. Persistence Layer (영속성 계층)
 
@@ -485,7 +485,7 @@ Personalized_Skincare/
   2. src/pwa-install-capture.js (클래식 — beforeinstallprompt 조기 캡처 + SW 등록)
 
 <body> 하단 (DOMContentLoaded 이후)
-  3. data/registry.js       (type=module — 번들 메타, window.DATA_REGISTRY 할당)
+  3. data/exams/cosmetic/registry.js       (type=module — 번들 메타, window.DATA_REGISTRY 할당)
   4. data/audio_manifest.js (type=module — 오디오 경로, window.AUDIO_MANIFEST 할당)
   5. vendor/mermaid/mermaid.min.js (defer — 다이어그램 렌더링)
   6. src/app.js             (type=module — ESM 진입점, 모든 src/ 모듈을 내부 import)
@@ -637,7 +637,7 @@ const state = {
 - 데스크톱 사이드바 푸터 + 모바일 탭 바의 "시험 전환" 버튼 → `showExamSelect()` → 카드 선택 시 `selectExam()` → 리로드
 
 ### 레지스트리 로딩
-- 기본 시험: `data/registry.js` 정적 로드 (`window.DATA_REGISTRY`)
+- 기본 시험: `data/exams/cosmetic/registry.js` 정적 로드 (`window.DATA_REGISTRY`)
 - 비기본 시험: `DataLoader.ensureRegistry()`가 `{dataRoot}/registry.js`를 클래식 스크립트로 동적 주입 (`DATA_REGISTRY_<examId>` 전역 — ESM export 불가라 `var` + `window` 할당 형태로 생성)
 
 ### 빌드 순회
@@ -693,7 +693,7 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 | 우선순위 | 대상 | 전략 | 근거 |
 |:---:|------|------|------|
 | 1 | 네비게이션 (`navigate`) | **Cache First** | HTML과 JS 모듈이 항상 동일한 `CACHE_VERSION` 캐시에서 서빙되도록 보장. `Network First`를 쓰면 구 SW가 신버전 HTML(네트워크) + 구버전 JS(캐시)를 섞어 반환하여 ESM import 그래프가 붕괴하는 **캐시 스큐** 발생 (v39 수정, 상세 후술) |
-| 2 | 시험/성분 데이터 번들 (`data/exams/*.hash.js`, `data/ingredients_data.*.js`) · 교재 원본 (`content/*.md`) | **Cache First** | 해시 파일명/정적 MD로 자연 갱신, 오프라인 학습 핵심. 교재 MD는 최초 fetch 시 캐시됨 |
+| 2 | 시험/성분 데이터 번들 (`data/exams/*.hash.js`, `data/exams/cosmetic/ingredients_data.*.js`) · 교재 원본 (`content/*.md`) | **Cache First** | 해시 파일명/정적 MD로 자연 갱신, 오프라인 학습 핵심. 교재 MD는 최초 fetch 시 캐시됨 |
 | 3 | 외부 CDN (Google Fonts) | **Stale-While-Revalidate** | 외부 리소스 안정성 확보. FontAwesome은 2026-08-24부터 자체 호스팅([`vendor/fontawesome/`](../../vendor/fontawesome/))으로 전환하여 CDN 의존 제거, App Shell 프리캐시에 포함 |
 | 4 | MP3 오디오 (302MB) | **네트워크 직행 (바이패스)** | 대용량 미디어는 캐시 제외 (저장공간 보호) |
 | 5 | `/src/` 하위 JS 모듈 | **Cache First** | ESM import 그래프는 한 모듈이라도 버전이 어긋나면 전체가 드랍됨. `Network First`를 쓰면 모바일 불안정 네트워크에서 일부는 신버전(네트워크), 일부는 구버전(캐시)이 섞여 import 그래프 붕괴. `Cache First` + `SHELL_ASSETS` 프리캐시로 동일 버전 파일만 일관 서빙 (v38부터 적용) |
@@ -706,7 +706,7 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 - **빌드 타임 자동 치환**: `tools/build/stamp-sw-version.js`가 빌드 완료 시 `CACHE_VERSION`을 `${prefix}-${YYYYMMDD}-${gitShort}` 형태로 자동 갱신 → 수동 관리 불필요
 - **배포 시 버전을 올리면 구 캐시 자동 정리** → 모바일 구버전 고착(Stale Cache) 문제 방지
 - `SHELL_ASSETS`에는 [`src/utils.js`](../../src/utils.js), [`src/trainer-calc.js`](../../src/trainer-calc.js) 등 분리된 모듈이 모두 프리캐시에 포함됨
-- `data/registry.js`, `data/audio_manifest.js`도 프리캐시에 포함 (2026-08-25, window 전역 참조 방식 전환으로 모듈 그래프에서 분리되어 별도 캐싱 필요)
+- `data/exams/cosmetic/registry.js`, `data/audio_manifest.js`도 프리캐시에 포함 (2026-08-25, window 전역 참조 방식 전환으로 모듈 그래프에서 분리되어 별도 캐싱 필요)
 
 ### 캐시 스큐 방지 설계 (v39, 2026-08-26)
 
@@ -1091,20 +1091,20 @@ app-fallback.js 폴링 시작 (400ms 간격, 15s 데드라인)
 
 ```
 [원본 콘텐츠]                [변환]                              [산출/소비]
-content/manifest.json ──► tools/build/index.js        ──► data/registry.js (과목목록·시험·성분 메타)
+content/exams/cosmetic/manifest.json ──► tools/build/index.js        ──► data/exams/cosmetic/registry.js (과목목록·시험·성분 메타)
 content/exams/**/*.md       ──► (exams plugin)             ──► data/exams/<key>.<hash>.js
-content/ingredients/*.md ──► (ingredients plugin)       ──► data/ingredients_data.<hash>.js
+content/exams/cosmetic/ingredients/*.md ──► (ingredients plugin)       ──► data/exams/cosmetic/ingredients_data.<hash>.js
 
 content/**/*.md ───(런타임 fetch)──► src/data-loader.js + src/textbook-parser.js ──► STUDY_DATA (카드/퀴즈/챕터)
-content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.js ──► data/study_md/ (과목별 분할)
+content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.js ──► data/exams/cosmetic/study_md/ (과목별 분할)
 
-data/exams/*.js ──► tools/build_ox_drills.js    ──► data/drills/ox_subject*.js   (O/X 3,700+문)
-data/exams/*.js ──► tools/build_combo_drills.js ──► data/drills/combo_subject*.js (복수정답형 755문)
-                └──────────────────────────────► content/문제은행/과목N_복수정답형.md (검토용 MD)
+data/exams/*.js ──► tools/build_ox_drills.js    ──► data/exams/cosmetic/drills/ox_subject*.js   (O/X 3,700+문)
+data/exams/*.js ──► tools/build_combo_drills.js ──► data/exams/cosmetic/drills/combo_subject*.js (복수정답형 755문)
+                └──────────────────────────────► content/exams/cosmetic/문제은행/과목N_복수정답형.md (검토용 MD)
 ```
 
 **특징**:
-- **SSOT**: `content/manifest.json` + `content/**/*.md`가 교재/카드/퀴즈의 단일 진실 원천
+- **SSOT**: `content/exams/cosmetic/manifest.json` + `content/**/*.md`가 교재/카드/퀴즈의 단일 진실 원천
 - **런타임 파싱**: `src/textbook-parser.js`가 브라우저에서 카드/퀴즈/챕터를 조립. 카드/퀴즈 안정 ID는 `src/sha256.js`(Node `crypto`와 동일)로 재현되어 진도 보존
 - **재빌드 불필요**: `content/*.md` 수정 시 http 배포는 즉시 반영. `file://` 지원이 필요할 때만 `npm run build:study-md` 실행 (과목별 분할 번들 생성)
 - **온디맨드 로딩**: `src/data-loader.js`가 필요한 과목/시험만 로드하고, 로드 후 registry stats를 실제 개수로 갱신
@@ -1115,8 +1115,8 @@ data/exams/*.js ──► tools/build_combo_drills.js ──► data/drills/comb
 시험 문항 스키마·채점 유틸([`src/questions.js`](../../src/questions.js))을 중심으로, `data/exams` 번들에서 학습 드릴을 파생 생성합니다.
 
 ```
-data/exams/subjectN.*.js ──► build_ox_drills.js    ──► data/drills/ox_subject*.js   (type:'ox')
-                         ──► build_combo_drills.js ──► data/drills/combo_subject*.js (type:'combo')
+data/exams/subjectN.*.js ──► build_ox_drills.js    ──► data/exams/cosmetic/drills/ox_subject*.js   (type:'ox')
+                         ──► build_combo_drills.js ──► data/exams/cosmetic/drills/combo_subject*.js (type:'combo')
 ```
 
 - **스키마**: `single`/`combo`/`short`/`ox` 4유형. combo는 진술 `truth`에서 정답 조합을 **도출**(`deriveComboAnswer`)하고 `validateQuestion`으로 유일성을 검증 — 정답 오타를 구조적으로 차단.
@@ -1124,12 +1124,12 @@ data/exams/subjectN.*.js ──► build_ox_drills.js    ──► data/drills/o
 - **진술 원자 추적**: 진술의 `sid`(`stableId`)를 O/X·복수정답형이 공유 → [`src/statement-tracker.js`](../../src/statement-tracker.js)가 `perStatement.judgedCorrect` 판정을 `sid` 단위로 `statement_stats` `{j, w, lw, t, truth, cid, last, streak}` + SM-2 큐(`spaced-repetition.js`)에 누적. **연속 정답 3회(`WEAK_GRADUATE_STREAK`) 시 취약 목록 졸업**, 재오판 시 복귀. 드릴 편성은 **SM-2 기한 도래(`getDueStatementSids`) → 오판 진술 → 임의** 순.
 - **드릴 모드**: 과목별(1~4) 외에 전 과목 특수 모드 `weak`(취약·복습 진술 필터)·`num`(수치·한도·기한 태그 필터 — `inferTags` 부여분) 지원, 출제 수 10/20/전체 선택. 복수정답형은 진술별 O/X 토글 2단계 응시 + 판정과 모순되는 선지 실시간 소거 표시(시험장 소거 전술 훈련).
 - **취약 진술 리뷰 패널**: 누적 통계 열람 — conceptId 개념 그룹핑(참/거짓 혼동쌍 2단 대조), 복습 대상 필터, 최근 판정 배지, 졸업 수 표시, 바로 드릴 진입.
-- **런타임**: `DataLoader.loadOxDrills(N)`/`loadComboDrills(N)`가 `data/drills/` 번들을 클래식 `<script>` 주입으로 로드(`file://` 호환). 복수정답형은 수작업 파일럿(`combo_pilot.js`)과 자동 번들을 병합. UI는 `views/trainer-drills.js` + 트레이너 패널(`index.html`).
+- **런타임**: `DataLoader.loadOxDrills(N)`/`loadComboDrills(N)`가 `data/exams/cosmetic/drills/` 번들을 클래식 `<script>` 주입으로 로드(`file://` 호환). 복수정답형은 수작업 파일럿(`combo_pilot.js`)과 자동 번들을 병합. UI는 `views/trainer-drills.js` + 트레이너 패널(`index.html`).
 - **모의고사 연동**: 과목 카드의 "복수정답형 풀기"(40/60/전체 선택) → `startComboMockExam('N[:count]')`(`views/exam-simulator.js`)이 combo 번들을 `comboToSimQuestion`으로 시뮬 형식 평탄화(citation·진술 본문 편입, members 문자열화, 정답→지시자)해 시뮬레이터 세션 실행. 원본 members는 `comboOptions`에 보존돼 채점 시 `deriveComboJudgments`로 진술 판정을 역산해 `recordStatementJudgments`에 기록 — 시뮬 성적이 취약 추적·SM-2에 반영. 오답 리뷰는 진술 정오표 표시, 오답 복습(`weak_sim_*_combo_*` 카드)도 해당 번들 로드 후 지원. 통합 모의고사는 `#integrated-mix-combo` 체크 시 과목별 약 20%를 복수정답형으로 혼합.
-- **캐시**: `data/drills/`는 레지스트리 미등록 번들이라 `sw.js`의 `pruneStaleDataBundles`에서 `ALWAYS_KEEP`으로 명시 보존.
+- **캐시**: `data/exams/cosmetic/drills/`는 레지스트리 미등록 번들이라 `sw.js`의 `pruneStaleDataBundles`에서 `ALWAYS_KEEP`으로 명시 보존.
 - **재생성·검증**: `npm run build:drills` (O/X + 복수정답형 일괄), `npm run check:combo` (파일럿 + 생성 번들 5개 전체 스키마·citation·채점 스모크 검증).
 
-**오디오북 파이프라인** ([`content/audiobook/`](../../content/audiobook/README.md))은 Python 기반 별도 파이프라인으로, MD 청크 분할 → TTS → MP3 병합을 수행합니다.
+**오디오북 파이프라인** ([`content/exams/cosmetic/audiobook/`](../../content/exams/cosmetic/audiobook/README.md))은 Python 기반 별도 파이프라인으로, MD 청크 분할 → TTS → MP3 병합을 수행합니다.
 
 ### 🔑 안정적 ID 체계 (Stable ID)
 
@@ -1154,14 +1154,14 @@ data/exams/subjectN.*.js ──► build_ox_drills.js    ──► data/drills/o
 
 ```
 [원본 PDF]                    [빌드 타임 변환]                    [런타임 서비스]
-content/참조자료/*.pdf  →  tools/build  →  content/참조자료/ref_md/과목N/{base}/{base}.md
+content/exams/cosmetic/참조자료/*.pdf  →  tools/build  →  content/exams/cosmetic/참조자료/ref_md/과목N/{base}/{base}.md
                          (PDF→MD 추출)        ↓
                                               DataLoader fetch + parseMarkdown
                                                    ↓
                                               html-viewer.js (data-ref-html)
 ```
 
-- **SSOT**: [`content/references.json`](../../content/references.json)이 참조자료 중앙 설정
+- **SSOT**: [`content/exams/cosmetic/references.json`](../../content/exams/cosmetic/references.json)이 참조자료 중앙 설정
 - **자동 생성**: [`tools/build/build-pdf-registry.js`](../../tools/build/build-pdf-registry.js)가 `references.json` → `src/pdf-registry.js` 자동 생성
 - **매핑 키**: PDF 파일명은 `pdf-registry.js`의 `resolveRefPath()`에서 MD 경로 조회 키로만 사용 (직접 fetch 안 함)
 
@@ -1184,7 +1184,7 @@ PDF 파일명은 매핑 키로만 사용되며, 실제 서비스되는 것은 �
 | 루틴 | 위치 | 동작 |
 |------|------|------|
 | `resolveRefPath()` | `src/pdf-registry.js:242` | PDF 파일명 → MD 경로 조회 (`REF_FILE_TO_PATH` 테이블) |
-| `_toMdPath()` | `src/pdf-registry.js:217` | `xxx.pdf` → `content/참조자료/ref_md/과목N/xxx/xxx.md` 변환 (`REF_MD_SUBJECTS` 맵) |
+| `_toMdPath()` | `src/pdf-registry.js:217` | `xxx.pdf` → `content/exams/cosmetic/참조자료/ref_md/과목N/xxx/xxx.md` 변환 (`REF_MD_SUBJECTS` 맵) |
 | `mapSourceToRef()` | `src/pdf-registry.js:248` | 출처 텍스트 → PDF 파일명 → MD 경로 |
 | PDF 링크 인터셉트 | `src/reader-format.js:61,111,126` | 교재 본문 PDF 링크 → `data-ref-html` MD 링크 변환 |
 | PDF 링크 인터셉트 | `src/exam-viewer.js:251-263` | 시험 문제 HTML PDF 링크 → MD 경로 치환 |
@@ -1195,8 +1195,8 @@ PDF 파일명은 매핑 키로만 사용되며, 실제 서비스되는 것은 �
 
 | 항목 | 개수 | 비고 |
 |------|-----:|------|
-| `content/참조자료/` 내 PDF 원본 | 41개 | 레지스트리 매핑 키로만 사용 (직접 서비스 안 함) |
-| `content/참조자료/ref_md/과목N/` 내 MD 파일 | 41개 | 실제 서비스되는 참조자료 — 과목 폴더가 귀속의 진실 |
+| `content/exams/cosmetic/참조자료/` 내 PDF 원본 | 41개 | 레지스트리 매핑 키로만 사용 (직접 서비스 안 함) |
+| `content/exams/cosmetic/참조자료/ref_md/과목N/` 내 MD 파일 | 41개 | 실제 서비스되는 참조자료 — 과목 폴더가 귀속의 진실 |
 | `sw.js` PDF 캐시 | 0개 | PDF는 캐시하지 않음 |
 
 #### 제약
@@ -1307,7 +1307,7 @@ PDF 파일명은 매핑 키로만 사용되며, 실제 서비스되는 것은 �
    - **단위 테스트 추가** (2026-09-02): `tests/unit/mermaid-rendering.test.js` (23개 테스트) — 다이어그램 타입 감지, mindmap 들여쓰기 검증, 파서 출력 타입 감지, 파이프라인 통합, 실제 교재 파일 검증, CSS 클래스 분리 로직, `<br/>` 태그 보존
 
 17. **과목별 큐레이션 용어집 (Glossary Curation)** ✅ (2026-09-01)
-   - `content/교재/glossary/subject{1-4}.json`: 과목별 큐레이션 용어 정의 파일 (수작성)
+   - `content/exams/cosmetic/교재/glossary/subject{1-4}.json`: 과목별 큐레이션 용어 정의 파일 (수작성)
    - `tools/build/build_keyword_index.js`: 빌드 시 JSON 파일을 읽어 `GLOSSARY_INDEX`의 `explanation`을 큐레이션 정의로 덮어쓰기, `curated: true` 플래그 추가
    - `src/views/textbook-reader.js`: 용어집 테이블 헤더 "설명 (참조문서 발췌)" → "설명"으로 변경
    - `css/reader.css`: 용어집 테이블 `table-layout: fixed` 적용 — 과목별 컬럼 폭 일관성 확보
@@ -1361,21 +1361,21 @@ PDF 파일명은 매핑 키로만 사용되며, 실제 서비스되는 것은 �
 | 변경 유형 | 수정 필요 파일 | 설명 |
 |-----------|---------------|------|
 | **교재 MD 내용 수정** (기존 파일) | (수정 불필요) | `manifest.json`의 `dir`/`file` 필드가 경로를 참조하므로, 파일명이 같으면 자동 반영 |
-| **교재 MD 파일 추가/삭제/이름 변경** | `content/manifest.json` | `subjects[].chapters[].file` 필드 갱신 |
+| **교재 MD 파일 추가/삭제/이름 변경** | `content/exams/cosmetic/manifest.json` | `subjects[].chapters[].file` 필드 갱신 |
 | | `sw.js` | `MD_ASSETS` 배열의 경로 갱신 + `CACHE_VERSION` 버전업 |
-| | `content/utils/batch_convert.py` | `BATCH_TARGETS["교재"]` 경로 갱신 |
-| **문제은행 MD 변경** | `content/manifest.json` | `exams` 섹션의 파일 경로 갱신 |
-| | `content/utils/batch_convert.py` | `BATCH_TARGETS["문제은행"]` 경로 갱신 |
+| | `content/exams/cosmetic/utils/batch_convert.py` | `BATCH_TARGETS["교재"]` 경로 갱신 |
+| **문제은행 MD 변경** | `content/exams/cosmetic/manifest.json` | `exams` 섹션의 파일 경로 갱신 |
+| | `content/exams/cosmetic/utils/batch_convert.py` | `BATCH_TARGETS["문제은행"]` 경로 갱신 |
 | **참조자료 MD/HTML 변경** | `src/pdf-registry.js` | 참조자료 파일 목록·경로 매핑 (중앙 설정 모듈, HTML 변환본 경로 자동 생성) |
 | | `tools/build/plugins/ingredients.plugin.js` | `INGREDIENTS_DIR` 경로 (원료 하위 폴더 변경 시) |
-| **학습안내서 MD 변경** | (파일명 동일 시 수정 불필요) | `manual-viewer.js`, `build_doc_bundles.js`, `sw.js`가 `content/학습안내서.md` 경로 참조 |
-| | `content/utils/batch_convert.py` | 파일명 변경 시 `BATCH_TARGETS["학습안내서"]` 갱신 |
-| **보고서 MD 변경** (`content/report/`) | `content/utils/batch_convert.py` | `BATCH_TARGETS["report"]` 경로 갱신 |
-| **새 과목 추가** | `content/manifest.json` | `subjects[]`에 새 과목 항목 추가 (`key`, `name`, `dir`, `chapters`) |
+| **학습안내서 MD 변경** | (파일명 동일 시 수정 불필요) | `manual-viewer.js`, `build_doc_bundles.js`, `sw.js`가 `content/exams/cosmetic/학습안내서.md` 경로 참조 |
+| | `content/exams/cosmetic/utils/batch_convert.py` | 파일명 변경 시 `BATCH_TARGETS["학습안내서"]` 갱신 |
+| **보고서 MD 변경** (`content/report/`) | `content/exams/cosmetic/utils/batch_convert.py` | `BATCH_TARGETS["report"]` 경로 갱신 |
+| **새 과목 추가** | `content/exams/cosmetic/manifest.json` | `subjects[]`에 새 과목 항목 추가 (`key`, `name`, `dir`, `chapters`) |
 | | `src/pdf-registry.js` | `SUBJECT_DIR_MAP`, `REF_DIRS`, `REFERENCE_FILES`에 새 과목 항목 추가 |
 | | `sw.js` | `MD_ASSETS`에 새 과목 MD 경로 추가 |
-| | `content/utils/batch_convert.py` | `BATCH_TARGETS["교재"]`에 새 파일 추가 |
-| | `content/audiobook/` | 오디오북 파이프라인 스크립트에 새 과목 추가 (필요 시) |
+| | `content/exams/cosmetic/utils/batch_convert.py` | `BATCH_TARGETS["교재"]`에 새 파일 추가 |
+| | `content/exams/cosmetic/audiobook/` | 오디오북 파이프라인 스크립트에 새 과목 추가 (필요 시) |
 | **폴더 구조 개편** | 위 모든 파일 | 경로가 일괄 변경되므로 모든 참조 파일 검토 필요 |
 
 ### 빌드 절차 (content/ 변경 후)
@@ -1397,7 +1397,7 @@ node tools/check_parser_parity.js
 npm test
 
 # 6. Python 배치 변환 (독립 HTML 파일 필요 시)
-cd content/utils
+cd content/exams/cosmetic/utils
 python batch_convert.py
 ```
 
@@ -1425,19 +1425,19 @@ cmd /c vercel --prod 2>&1
 
 | 파일 | 생성 스크립트 |
 |------|-------------|
-| `data/registry.js` | `tools/build/index.js` |
+| `data/exams/cosmetic/registry.js` | `tools/build/index.js` |
 | `data/exams/*.hash.js` | `tools/build/index.js` (exams.plugin.js) |
-| `data/exams_md/*.js` | `tools/build_exam_bundles.js` |
-| `data/study_md/*.js` | `tools/build_study_md_bundle.js` |
+| `data/exams/cosmetic/exams_md/*.js` | `tools/build_exam_bundles.js` |
+| `data/exams/cosmetic/study_md/*.js` | `tools/build_study_md_bundle.js` |
 | `data/docs_md/*.js` | `tools/build_doc_bundles.js` |
-| `data/ingredients_data.*.js` | `tools/build/index.js` (ingredients.plugin.js) |
-| `data/id_migration.js` | `tools/build/index.js` (id-factory.plugin.js) |
+| `data/exams/cosmetic/ingredients_data.*.js` | `tools/build/index.js` (ingredients.plugin.js) |
+| `data/exams/cosmetic/id_migration.js` | `tools/build/index.js` (id-factory.plugin.js) |
 
 ### 주요 참조 파일 목록 (content/ 경로 의존)
 
 | 파일 | 참조 방식 | 비고 |
 |------|----------|------|
-| `content/manifest.json` | SSOT — 모든 빌드의 원천 | `subjects[].dir`, `chapters[].file` |
+| `content/exams/cosmetic/manifest.json` | SSOT — 모든 빌드의 원천 | `subjects[].dir`, `chapters[].file` |
 | `sw.js` | `MD_ASSETS` 하드코딩 | 프리캐시 대상 MD 파일 경로 |
 | `src/manual-viewer.js` | `MD_SOURCES` 객체 | 학습안내서, 사용자매뉴얼 경로 |
 | `src/pdf-registry.js` | `SUBJECT_DIR_MAP`, `REF_DIRS`, `REFERENCE_FILES`, `MD_CONVERSION_TARGETS` | 참조자료 중앙 설정 (HTML/MD 변환본 경로 자동 생성, 대용량 3개는 `.md` 반환, 과목 변경 시 유일 수정 파일) |
@@ -1445,15 +1445,15 @@ cmd /c vercel --prod 2>&1
 | `src/textbook-parser.js` | `manifest.subjects[].dir` 동적 참조 | 런타임 MD 파싱 |
 | `tools/build/manifest-loader.js` | `manifest.json` 검증 | 빌드 시 파일 존재 확인 |
 | `tools/build/plugins/textbook.plugin.js` | `subject.dir` 동적 참조 | 빌드 시 MD 파싱 |
-| `tools/build/plugins/ingredients.plugin.js` | `INGREDIENTS_DIR` 하드코딩 | `content/참조자료/원료/` |
+| `tools/build/plugins/ingredients.plugin.js` | `INGREDIENTS_DIR` 하드코딩 | `content/exams/cosmetic/참조자료/원료/` |
 | `tools/build/plugins/exams.plugin.js` | `manifest.exams` 참조 | 문제은행 MD 처리 |
 | `tools/build_doc_bundles.js` | `DOC_FILES` 배열 | 학습안내서, 사용자매뉴얼 번들 |
 | `tools/build_study_md_bundle.js` | `manifest.subjects[].dir` 동적 참조 | 교재 MD 폴백 번들 |
 | `tools/check_parser_parity.js` | `manifest.subjects[].dir` 동적 참조 | 파서 정합성 검증 |
-| `content/utils/batch_convert.py` | `BATCH_TARGETS` 딕셔너리 | 배치 HTML 변환 대상 |
-| `content/utils/md_to_html.py` | `--in` 인자 (기본값 `학습안내서.md`) | 단일 HTML 변환 |
-| `content/utils/convert_ref_md.py` | `MD_CONVERSION_TARGETS` Set (스크립트 내 하드코딩) | ref_md 대용량 HTML→MD 변환 및 body-only 추출 |
-| `content/audiobook/generate_all_mp3.py` | 과목 키 참조 | 오디오북 생성 |
+| `content/exams/cosmetic/utils/batch_convert.py` | `BATCH_TARGETS` 딕셔너리 | 배치 HTML 변환 대상 |
+| `content/exams/cosmetic/utils/md_to_html.py` | `--in` 인자 (기본값 `학습안내서.md`) | 단일 HTML 변환 |
+| `content/exams/cosmetic/utils/convert_ref_md.py` | `MD_CONVERSION_TARGETS` Set (스크립트 내 하드코딩) | ref_md 대용량 HTML→MD 변환 및 body-only 추출 |
+| `content/exams/cosmetic/audiobook/generate_all_mp3.py` | 과목 키 참조 | 오디오북 생성 |
 
 ---
 
@@ -1464,9 +1464,9 @@ cmd /c vercel --prod 2>&1
 
 ### 설계 원칙
 
-프로젝트는 **content/manifest.json**을 SSOT(Single Source of Truth)로 사용하여, 교재 원문 교체/과목 추가 시 소스 코드 수정을 최소화하도록 설계되어 있다.
+프로젝트는 **content/exams/cosmetic/manifest.json**을 SSOT(Single Source of Truth)로 사용하여, 교재 원문 교체/과목 추가 시 소스 코드 수정을 최소화하도록 설계되어 있다.
 
-- 교재 원문(`content/교재/*.md`) 교체 → 소스 수정 불필요
+- 교재 원문(`content/exams/cosmetic/교재/*.md`) 교체 → 소스 수정 불필요
 - 과목 추가/제거 → `manifest.json` 수정 + `npm run build:data` 만으로 반영
 - 과목명 표시 → `manifest.json`의 `shortName` 필드를 동적 사용 (`app.js`, `charts.js`, `exam-simulator.js`)
 - 교재 파싱 로직 → 마커(🔖기출, 📌중요), 정규식, 카드 분류 로직은 모든 교재에 범용 적용
@@ -1501,7 +1501,7 @@ cmd /c vercel --prod 2>&1
 | 하드코딩 대상 | 위치 | 수정 조건 |
 |---------------|------|----------|
 | 기출문제 링크 패턴 `기출문제/과목N_...` | `reader-format.js:21` | 기출문제 파일명 규칙 변경 시 |
-| ~~문제은행 경로 `content/문제은행/과목${N}_단일정답형.md`~~ | ~~`reader-format.js:23`~~ | ✅ **제거됨** — `DATA_REGISTRY.exams[].file`에서 동적 조회 (2026-09-03) |
+| ~~문제은행 경로 `content/exams/cosmetic/문제은행/과목${N}_단일정답형.md`~~ | ~~`reader-format.js:23`~~ | ✅ **제거됨** — `DATA_REGISTRY.exams[].file`에서 동적 조회 (2026-09-03) |
 | 참조자료 폴더명 `참조자료`, `공통참조자료`, `N과목_참조자료` | `reader-format.js:31` | 참조자료 폴더 구조 변경 시 |
 | 출처 경로 패턴 `../참조자료/...md`, `N과목_참조자료/...md` | `reader-format.js:48` | 참조자료 경로 규칙 변경 시 |
 
@@ -1545,7 +1545,7 @@ cmd /c vercel --prod 2>&1
 
 ### 7순위: `src/keyword-index.js` — **불필요** (자동 생성)
 
-빌드 도구(`tools/build/build_keyword_index.js`)가 `content/참조자료/`에서 자동 생성. 교재가 바뀌면 **재빌드만 하면 됨**.
+빌드 도구(`tools/build/build_keyword_index.js`)가 `content/exams/cosmetic/참조자료/`에서 자동 생성. 교재가 바뀌면 **재빌드만 하면 됨**.
 
 ### 요약 매트릭스
 

@@ -1,6 +1,6 @@
 # 교재 번호체계 가이드
 
-> 본 문서는 `content/교재/` 내 8개 교재 Markdown 파일(표준형 4 + 이야기형 4)에 적용되는 **공식 번호체계**를 정의한다.
+> 본 문서는 `content/exams/cosmetic/교재/` 내 8개 교재 Markdown 파일(표준형 4 + 이야기형 4)에 적용되는 **공식 번호체계**를 정의한다.
 > 최종 갱신: 2026-09-13 (십진법 전환 완료)
 
 ---
@@ -232,11 +232,11 @@ npm.cmd run test:dom
 
 | # | 항목 | 확인 방법 |
 |---|---|---|
-| 1 | `### (N)` 잔재 | `grep -r "^### (" content/교재/` → 0개 |
-| 2 | `#### ①` 잔재 | `grep -r "^#### [①-⑳]" content/교재/` → 0개 |
-| 3 | `##### 가.` 잔재 | `grep -r "^##### [가-하]\." content/교재/` → 0개 |
-| 4 | `#### 0.N` 잔재 | `grep -r "^#### 0\." content/교재/` → 0개 |
-| 5 | 잘린 헤더 | `grep -r "^#{1,6} .*\.\.\.$" content/교재/` → 0개 |
+| 1 | `### (N)` 잔재 | `grep -r "^### (" content/exams/cosmetic/교재/` → 0개 |
+| 2 | `#### ①` 잔재 | `grep -r "^#### [①-⑳]" content/exams/cosmetic/교재/` → 0개 |
+| 3 | `##### 가.` 잔재 | `grep -r "^##### [가-하]\." content/exams/cosmetic/교재/` → 0개 |
+| 4 | `#### 0.N` 잔재 | `grep -r "^#### 0\." content/exams/cosmetic/교재/` → 0개 |
+| 5 | 잘린 헤더 | `grep -r "^#{1,6} .*\.\.\.$" content/exams/cosmetic/교재/` → 0개 |
 | 6 | `### N.` 연속성 | 각 `##`마다 1부터 순차 증가 |
 | 7 | `#### N.M` 연속성 | 각 `###`마다 M이 1부터 순차 증가 |
 | 8 | `##### N.M.K` 연속성 | 각 `####`마다 K가 1부터 순차 증가 |
@@ -255,10 +255,10 @@ npm.cmd run test:dom
 
 | 파일 | 역할 |
 |---|---|
-| `content/교재/law/1과목_*.md` | 과목1 교재 (표준형/이야기형) |
-| `content/교재/manufacturing/2과목_*.md` | 과목2 교재 |
-| `content/교재/safety/3과목_*.md` | 과목3 교재 |
-| `content/교재/understanding/4과목_*.md` | 과목4 교재 |
+| `content/exams/cosmetic/교재/law/1과목_*.md` | 과목1 교재 (표준형/이야기형) |
+| `content/exams/cosmetic/교재/manufacturing/2과목_*.md` | 과목2 교재 |
+| `content/exams/cosmetic/교재/safety/3과목_*.md` | 과목3 교재 |
+| `content/exams/cosmetic/교재/understanding/4과목_*.md` | 과목4 교재 |
 | `src/views/textbook-reader.js` | TOC 렌더링, `_getTocLevel()`, `_extractSubHeadings()` |
 | `src/textbook-parser.js` | 교재 Markdown 파서 |
 | `src/reader-format.js` | 교재 본문 포맷터 |
@@ -270,7 +270,7 @@ npm.cmd run test:dom
 
 ### 7.1 원칙
 
-1. **참조자료가 구조적 기준**: 참조자료(`content/참조자료/`)의 구성을 기본으로 교재가 작성된다.
+1. **참조자료가 구조적 기준**: 참조자료(`content/exams/cosmetic/참조자료/`)의 구성을 기본으로 교재가 작성된다.
 2. **교재는 학습용 압축 구조**: 교재는 참조자료의 모든 섹션을 1:1로 복사하지 않고, 관련 섹션을 그룹화하여 학습 단위로 압축한다.
 3. **전 과목 일관성**: 모든 과목이 학습용 압축 구조를 사용한다.
 4. **표준형/이야기형 일치**: 두 형식은 동일한 섹션 수와 그룹화를 유지한다.

@@ -59,7 +59,7 @@ content/
       "subject": "law",          // 위 subject.key와 매칭
       "part": 1,
       "title": "화장품법의 이해 (100제)",
-      "file": "과목1_단일정답형.md"   // content/문제은행/ 하위 파일명
+      "file": "과목1_단일정답형.md"   // content/exams/cosmetic/문제은행/ 하위 파일명
     }
   ]
 }
@@ -823,7 +823,7 @@ npm run build:data
 2. 교재 Markdown 파싱 → 카드/퀴즈/챕터 데이터 생성
 3. 문제은행 Markdown 파식 → 문제 데이터 생성
 4. 파서 등가성 검사 (빌드 파서 ↔ 런타임 파서)
-5. `data/registry.js` 재생성
+5. `data/exams/cosmetic/registry.js` 재생성
 6. `sw.js` 캐시 버전 자동 bump
 
 빌드 시 `[마커 감시]` 경고가 나오면 `🔖기출` 마커가 있는데 퀴즈가 생성되지 않은 항목이 있다는 뜻이므로, 해당 항목의 볼드/숫자 패턴을 확인하라.

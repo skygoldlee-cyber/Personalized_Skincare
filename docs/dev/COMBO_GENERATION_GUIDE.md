@@ -11,18 +11,18 @@
 혼동쌍 대조 학습에 적합합니다 (`COMBO_STUDY_STRATEGY.md` §2-①).
 
 ```
-입력  →  content/문제은행/*.md ──(build:data)──> data/exams/*.js (choice)
-        content/참조자료/ref_md/과목N/{문서}/{문서}.md  (법령·고시 마크다운 — 과목 폴더가 귀속의 진실)
-        content/참조자료/원료/*.md              (큐레이션 원료 DB)
+입력  →  content/exams/cosmetic/문제은행/*.md ──(build:data)──> data/exams/*.js (choice)
+        content/exams/cosmetic/참조자료/ref_md/과목N/{문서}/{문서}.md  (법령·고시 마크다운 — 과목 폴더가 귀속의 진실)
+        content/exams/cosmetic/참조자료/원료/*.md              (큐레이션 원료 DB)
 
 처리  →  build_combo_drills.js
           ├─ choice → combo 변환 (fact / answer 모드)
           ├─ 개념 재조합 (같은 교재 구간 L####의 진술 묶음)
           └─ 참조자료 원자 추출 → 멤버십·정의 문항 (ref-statements.js)
 
-출력  →  data/drills/combo_subjectN.js   (var COMBO_DRILLS_subjectN)
-        data/drills/combo_index.js       (var COMBO_INDEX — 과목별 문항 수)
-        content/문제은행/과목N_복수정답형.md   (사람이 읽는 문제집 형식)
+출력  →  data/exams/cosmetic/drills/combo_subjectN.js   (var COMBO_DRILLS_subjectN)
+        data/exams/cosmetic/drills/combo_index.js       (var COMBO_INDEX — 과목별 문항 수)
+        content/exams/cosmetic/문제은행/과목N_복수정답형.md   (사람이 읽는 문제집 형식)
 ```
 
 실행:
@@ -75,7 +75,7 @@ fact 진술을 모아 **참 2~3 + 거짓 2~3**의 진짜 복수정답 문항을 
 
 ## 3. 소스 ② — 참조자료 원문 추출 (`ref:`)
 
-`ref-statements.js`가 `content/참조자료/ref_md`의 법령·고시 마크다운에서
+`ref-statements.js`가 `content/exams/cosmetic/참조자료/ref_md`의 법령·고시 마크다운에서
 검증 원자(atom)를 추출합니다. 법령 텍스트는 구조가 참/거짓을 보장합니다.
 
 ### 3-1. 추출 원자
@@ -169,7 +169,7 @@ ref_md는 `ref_md/과목N/{문서}/{문서}.md` 과목 폴더 구조이며, `ext
 
 ## 4. 소스 ③ — 원료 큐레이션 DB (`원료|`)
 
-`content/참조자료/원료/`의 수작업 정제 파일은 PDF 변환본보다 품질이 높은
+`content/exams/cosmetic/참조자료/원료/`의 수작업 정제 파일은 PDF 변환본보다 품질이 높은
 **권위 소스**입니다 (`INGREDIENT_FILES` 스펙).
 
 | 파일 | docShort | 추출 목록 | 파일별 상한 |
@@ -199,9 +199,9 @@ ref_md는 `ref_md/과목N/{문서}/{문서}.md` 과목 폴더 구조이며, `ext
 
 ### 5-2. 산출물
 
-- `data/drills/combo_subjectN.js` — `var COMBO_DRILLS_subjectN = [...]`
-- `data/drills/combo_index.js` — 과목별 문항 수(`combo_pilot.js` 수작업 문항 합산)
-- `content/문제은행/과목N_복수정답형.md` — 문제부(### Qn. 발문/인용/진술/조합 선지) +
+- `data/exams/cosmetic/drills/combo_subjectN.js` — `var COMBO_DRILLS_subjectN = [...]`
+- `data/exams/cosmetic/drills/combo_index.js` — 과목별 문항 수(`combo_pilot.js` 수작업 문항 합산)
+- `content/exams/cosmetic/문제은행/과목N_복수정답형.md` — 문제부(### Qn. 발문/인용/진술/조합 선지) +
   정답부(정답 조합·진술별 O/X 판정표·해설)
 
 ### 5-3. 빌드 로그 읽기

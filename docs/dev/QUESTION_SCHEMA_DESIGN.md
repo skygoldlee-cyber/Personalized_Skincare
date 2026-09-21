@@ -281,7 +281,7 @@ O/X 드릴 문항을 담는 유형. combo의 `statements[]`와 single의 `option
 ### 6-3c. 참조자료 원문 추출 문항 (`ref:`)
 
 원본 MCQ는 유한한 검증 원자를 다 쓰므로, 신규 진술 재료를
-`content/참조자료/ref_md`의 법령·고시·별표 원문 마크다운에서 추출한다
+`content/exams/cosmetic/참조자료/ref_md`의 법령·고시·별표 원문 마크다운에서 추출한다
 (`tools/build/ref-statements.js`). 법령 텍스트는 구조가 참/거짓을 보장한다.
 > 생성 절차·필터 규칙·수치 조정의 실행 가이드는 `COMBO_GENERATION_GUIDE.md` 참조.
 
@@ -294,7 +294,7 @@ O/X 드릴 문항을 담는 유형. combo의 `statements[]`와 single의 `option
 | `enum` 연번 표 | `연번` 단독줄 + 첫 셀 이름 (알레르기 25종, 색소 등) | 참=표 이름, 거짓=다른 표의 이름 |
 | `enum` MD 표 | `| 원료명 \| CAS \| … |` 정상 표의 이름 열 (사용불가·사용제한 원료, 알레르기 25종 등) | 참=표 이름, 거짓=다른 표의 이름 |
 | `enum` 별표 계층 | `가. 카테고리` + `N)` 멤버 (유형별 주의사항 표시 대상 등) | 참=카테고리 멤버, 거짓=다른 목록 멤버 |
-| `enum` 원료 큐레이션 | `content/참조자료/원료/*.md`의 섹션별·전체 표 첫 열 (banned/restricted/approved) | 참=해당 카테고리·별표 멤버, 거짓=다른 목록 멤버. **같은 파일의 다른 섹션 멤버는 오답 배제**(별표1 문항에 별표1 타 카테고리 원료가 오답이면 모순) |
+| `enum` 원료 큐레이션 | `content/exams/cosmetic/참조자료/원료/*.md`의 섹션별·전체 표 첫 열 (banned/restricted/approved) | 참=해당 카테고리·별표 멤버, 거짓=다른 목록 멤버. **같은 파일의 다른 섹션 멤버는 오답 배제**(별표1 문항에 별표1 타 카테고리 원료가 오답이면 모순) |
 
 **발문 규칙** — 멤버십을 명시해야 오답이 거짓이 된다. `옳은 것` 발문은 다른 목록의
 **참인 사실**을 거짓으로 표기하는 모순이므로 금지. 인용 용어(`"X"`) 주제는
@@ -378,8 +378,8 @@ python tools/convert_ref_pdfs_v2.py 별표1     # 이름 필터 부분 변환
 
 | 산출물 | 경로 | 용도 |
 |---|---|---|
-| 런타임 번들 | `data/drills/combo_subjectN.js` → `var COMBO_DRILLS_subjectN` | `DataLoader.loadComboDrills(N)`이 로드 — 파일럿(`combo_pilot.js`, cb- 접두)과 병합 |
-| 검토용 MD | `content/문제은행/과목N_복수정답형.md` | 문제은행 MD와 동일 구조(문제부/정답부 분리). 자동 변환분만 수록해 과목당 100/250/250/400 정합 |
+| 런타임 번들 | `data/exams/cosmetic/drills/combo_subjectN.js` → `var COMBO_DRILLS_subjectN` | `DataLoader.loadComboDrills(N)`이 로드 — 파일럿(`combo_pilot.js`, cb- 접두)과 병합 |
+| 검토용 MD | `content/exams/cosmetic/문제은행/과목N_복수정답형.md` | 문제은행 MD와 동일 구조(문제부/정답부 분리). 자동 변환분만 수록해 과목당 100/250/250/400 정합 |
 
 재생성: `npm run build:drills` (O/X + 복수정답형 번들 일괄).
 

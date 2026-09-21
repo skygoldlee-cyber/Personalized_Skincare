@@ -3,7 +3,7 @@
 > **작성일**: 2026-08-29 (최종 갱신: 2026-08-31)
 > **대상**: `content/*.md`, `docs/user/*.md` 마크다운 문서를 HTML로 변환하는 두 가지 파이프라인
 > - **런타임 (JS)**: PWA 앱 내 `manual-viewer.js`가 실시간 MD → HTML 변환
-> - **빌드 타임 (Python)**: `content/utils/md_to_html.py`가 독립 HTML 파일 생성
+> - **빌드 타임 (Python)**: `content/exams/cosmetic/utils/md_to_html.py`가 독립 HTML 파일 생성
 
 ---
 
@@ -93,8 +93,8 @@
 | `src/exam-viewer.js` | 예상문제집 뷰어 (`parseMarkdown` 사용, Mermaid 비활성) |
 | `sw.js` | Service Worker — `.md` 파일 Cache First, 프리캐시 |
 | `tools/build_doc_bundles.js` | `file://` 폴백용 JS 번들 빌드 (`data/docs_md/*.js`) |
-| `content/utils/md_to_html.py` | Python 독립 HTML 변환기 (GUI/CLI, Tailwind + Mermaid 임베드) |
-| `content/utils/batch_convert.py` | 배치 변환 스크립트 (교재/학습안내서/보고서/문제은행 일괄 HTML 변환) |
+| `content/exams/cosmetic/utils/md_to_html.py` | Python 독립 HTML 변환기 (GUI/CLI, Tailwind + Mermaid 임베드) |
+| `content/exams/cosmetic/utils/batch_convert.py` | 배치 변환 스크립트 (교재/학습안내서/보고서/문제은행 일괄 HTML 변환) |
 
 ---
 
@@ -107,7 +107,7 @@
 ```javascript
 const MD_SOURCES = {
     'user_manual': { path: 'docs/user/user_manual.md', title: '사용자 매뉴얼' },
-    'study_summary': { path: 'content/학습안내서.md', title: '학습 안내서' }
+    'study_summary': { path: 'content/exams/cosmetic/학습안내서.md', title: '학습 안내서' }
 };
 ```
 
@@ -145,7 +145,7 @@ async function _loadMd(sourceKey) {
 
 ```
 docs/user/user_manual.md  →  data/docs_md/user_manual.js
-content/학습안내서.md      →  data/docs_md/학습안내서.js
+content/exams/cosmetic/학습안내서.md      →  data/exams/cosmetic/docs_md/학습안내서.js
 ```
 
 ---
@@ -159,11 +159,11 @@ content/학습안내서.md      →  data/docs_md/학습안내서.js
 ```javascript
 const MD_ASSETS = [
   './docs/user/user_manual.md',
-  './content/학습안내서.md',
-  './content/교재/law/1과목_화장품법의이해_표준형.md',
-  './content/교재/manufacturing/2과목_제조및품질관리_표준형.md',
-  './content/교재/safety/3과목_유통화장품안전관리_표준형.md',
-  './content/교재/understanding/4과목_맞춤형화장품의이해_표준형.md'
+  './content/exams/cosmetic/학습안내서.md',
+  './content/exams/cosmetic/교재/law/1과목_화장품법의이해_표준형.md',
+  './content/exams/cosmetic/교재/manufacturing/2과목_제조및품질관리_표준형.md',
+  './content/exams/cosmetic/교재/safety/3과목_유통화장품안전관리_표준형.md',
+  './content/exams/cosmetic/교재/understanding/4과목_맞춤형화장품의이해_표준형.md'
 ];
 ```
 
@@ -201,7 +201,7 @@ if (MD_PATTERN.test(url.pathname)) {
 |------|------|------|
 | **Cache First** | `*.md` | 정적 원본, 배포 시 `CACHE_VERSION` 갱신으로 캐시 무효화 |
 | **Cache First** | navigation, `/src/*.js`, CSS | 캐시 스큐 방지 (동일 버전 캐시 세대 보장) |
-| **Network First** | `data/registry.js` | 레지스트리는 최신 변경사항 즉시 반영 |
+| **Network First** | `data/exams/cosmetic/registry.js` | 레지스트리는 최신 변경사항 즉시 반영 |
 
 ### 3.3 캐시 무효화
 
@@ -509,8 +509,8 @@ flowchart TD
 | Service Worker | `sw.js` |
 | 번들 빌더 | `tools/build_doc_bundles.js` |
 | 이벤트 위임 | `src/app.js` |
-| Python 변환기 | `content/utils/md_to_html.py` |
-| 배치 변환 스크립트 | `content/utils/batch_convert.py` |
+| Python 변환기 | `content/exams/cosmetic/utils/md_to_html.py` |
+| 배치 변환 스크립트 | `content/exams/cosmetic/utils/batch_convert.py` |
 
 ---
 
@@ -679,12 +679,12 @@ BATCH_TARGETS = {
 ```
 
 - 총 13개 MD 파일 → 13개 HTML 파일 변환
-- 출력: 각 그룹별 `html/` 하위 폴더 (예: `content/교재/html/`, `content/report/html/`)
+- 출력: 각 그룹별 `html/` 하위 폴더 (예: `content/exams/cosmetic/교재/html/`, `content/report/html/`)
 
 ### 10.3 실행
 
 ```bash
-cd content/utils
+cd content/exams/cosmetic/utils
 python batch_convert.py
 ```
 

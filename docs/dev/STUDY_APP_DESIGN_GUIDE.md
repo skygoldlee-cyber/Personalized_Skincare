@@ -447,10 +447,10 @@ content/
 
 | 파일 | 수정 내용 | 시점 |
 |------|-----------|------|
-| `content/manifest.json` | 과목 key, 이름, 파일 경로, 시험 정보, UI 텍스트 | 새 교재 적용 시 |
-| `content/교재/*.md` | 교재 본문 | 새 교재 작성 |
-| `content/문제은행/*.md` | 문제은행 | 새 문제 작성 |
-| `content/참조자료/` | 참조자료 PDF/MD | 해당 시험의 법령/자료 |
+| `content/exams/cosmetic/manifest.json` | 과목 key, 이름, 파일 경로, 시험 정보, UI 텍스트 | 새 교재 적용 시 |
+| `content/exams/cosmetic/교재/*.md` | 교재 본문 | 새 교재 작성 |
+| `content/exams/cosmetic/문제은행/*.md` | 문제은행 | 새 문제 작성 |
+| `content/exams/cosmetic/참조자료/` | 참조자료 PDF/MD | 해당 시험의 법령/자료 |
 | `src/pdf-registry.js` | 참조자료 매핑, 키워드 링크 | 참조자료 변경 시 |
 | `index.html` | `<title>`, 자격증명, 과목명 | 자격증 변경 시 |
 
@@ -461,7 +461,7 @@ content/
 | `src/study-aids.js` | 단위 목록(`%`, `g`, `ml` 등), 키워드 리스트 | 완전히 다른 분야 교재로 변경 시 |
 | `src/trainer-calc.js` | 계산 문제 유형 | 계산 문제가 있는 시험인 경우 |
 | `src/reader-format.js` | 참조자료 폴더명 패턴 | 폴더 구조 변경 시 |
-| `content/참조자료/원료/` | 성분 데이터 | 화학/식약 분야인 경우 |
+| `content/exams/cosmetic/참조자료/원료/` | 성분 데이터 | 화학/식약 분야인 경우 |
 
 ### 8.3 수정 불필요 (재빌드만)
 
@@ -469,7 +469,7 @@ content/
 |------|------|
 | `src/keyword-index.js` | 빌드 도구가 자동 생성 |
 | `src/app.js` | `manifest.json` `uiText`에서 동적 조회 |
-| `data/registry.js` | 빌드 시 자동 생성 |
+| `data/exams/cosmetic/registry.js` | 빌드 시 자동 생성 |
 | `sw.js` | 빌드 시 `CACHE_VERSION` 자동 스탬프 |
 
 ### 8.4 요약 매트릭스

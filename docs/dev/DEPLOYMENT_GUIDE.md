@@ -79,7 +79,7 @@ cmd /c vercel --prod
 
 | 구분 | 실제 용량 | Vercel 배포 여부 | 최적화 조치 |
 |---|---|---|---|
-| `content/audiobook/mp3/` | 302 MB | ❌ 배포 제외 | 외부 GitHub Releases로 호스팅 우회 |
+| `content/exams/cosmetic/audiobook/mp3/` | 302 MB | ❌ 배포 제외 | 외부 GitHub Releases로 호스팅 우회 |
 | `content/**/*.html` | 501 MB | ❌ 배포 제외 | 빌드타임/런타임에서 마크다운 파싱 뷰어로 완전 대체 |
 | `src/*.js` 및 `style.css` | ~1.2 MB | ✅ 배포 포함 | 앱 실행 핵심 코드 |
 | `data/` (레지스트리, 통계) | 1.88 MB | ✅ 배포 포함 | DB 대체 정적 리소스 |
@@ -96,7 +96,7 @@ cmd /c vercel --prod
 # .vercelignore
 
 # 1. 오디오북 소스코드 및 대용량 MP3 폴더 통째로 제외
-content/audiobook/
+content/exams/cosmetic/audiobook/
 
 # 2. 빌드타임에서 런타임 MD 변환으로 대체되어 더 이상 쓰지 않는 HTML 파일들 제외
 content/**/*.html
@@ -261,11 +261,11 @@ manifest-src 'self'
 | `/manifest.webmanifest` | `public, max-age=0, must-revalidate` | PWA 매니페스트 즉시 갱신 |
 | `/index.html` | `public, max-age=0, must-revalidate` | 진입점 항상 최신 |
 | `/src/(.*)` | `public, max-age=0, must-revalidate` | JS 모듈 배포 시 즉시 반영 |
-| `/data/registry.js` | `public, max-age=0, must-revalidate` | 레지스트리 갱신 즉시 반영 |
+| `/data/exams/cosmetic/registry.js` | `public, max-age=0, must-revalidate` | 레지스트리 갱신 즉시 반영 |
 | `/data/audio_manifest.js` | `public, max-age=0, must-revalidate` | 오디오 매니페스트 갱신 즉시 반영 |
-| `/data/id_migration.js` | `public, max-age=0, must-revalidate` | 마이그레이션 맵 갱신 |
+| `/data/exams/cosmetic/id_migration.js` | `public, max-age=0, must-revalidate` | 마이그레이션 맵 갱신 |
 | `/data/exams/(.*)` | `public, max-age=31536000, immutable` | 해시 파일명 — 1년 불변 캐시 |
-| `/data/ingredients_data.(.*)` | `public, max-age=31536000, immutable` | 해시 파일명 — 1년 불변 캐시 |
+| `/data/exams/cosmetic/ingredients_data.(.*)` | `public, max-age=31536000, immutable` | 해시 파일명 — 1년 불변 캐시 |
 
 ---
 
@@ -300,7 +300,7 @@ Vercel 용량 한도를 피하기 위해 대용량 MP3 파일은 **GitHub Releas
           return `${AUDIO_BASE_URL}/${filename}`;
       }
       // 로컬 개발 폴백 경로
-      return `./content/audiobook/mp3/${subjectKey}/${filename}`;
+      return `./content/exams/cosmetic/audiobook/mp3/${subjectKey}/${filename}`;
   }
   ```
 

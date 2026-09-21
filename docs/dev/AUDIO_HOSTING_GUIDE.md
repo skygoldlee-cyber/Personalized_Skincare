@@ -13,10 +13,10 @@
 
 - **오디오 파일**: 4개 병합 MP3 + 292개 청크 MP3, 총 **~854MB**
 - **TTS 엔진**: Google Translate TTS 직접 호출 (`tts_google_direct.py`)
-- **위치**: `content/audiobook/mp3/{과목키}/`
+- **위치**: `content/exams/cosmetic/audiobook/mp3/{과목키}/`
   - 병합: `ch##_과목명_이야기형.mp3`
   - 청크: `ch##_chunks/ch##_###.mp3` (청크당 2-4MB)
-- **배포 제외**: `.vercelignore`에서 `*.mp3` + `content/audiobook/` 규칙으로 Vercel 배포에서 제외 (용량 초과 방지)
+- **배포 제외**: `.vercelignore`에서 `*.mp3` + `content/exams/cosmetic/audiobook/` 규칙으로 Vercel 배포에서 제외 (용량 초과 방지)
 
 | 과목 | 청크 수 | 병합 MP3 크기 |
 |------|---------|-------------|
@@ -29,7 +29,7 @@
 ### 1-2. 기존 일반형 교재 오디오 (구 방식)
 
 - **오디오 파일**: 19개 MP3, 총 **302.6MB** (단원별 분할)
-- **위치**: `content/audiobook/mp3/{과목키}/{파일명}.mp3`
+- **위치**: `content/exams/cosmetic/audiobook/mp3/{과목키}/{파일명}.mp3`
 
 ---
 
@@ -41,10 +41,10 @@
 export const AUDIO_BASE_URL = null; // null = 로컬 개발 모드, 문자열 = 외부 CDN URL
 
 export const AUDIO_MANIFEST = {
-  "law": { "0": "content/audiobook/mp3/law/ch01_1과목_화장품법의이해_이야기형.mp3" },
-  "manufacturing": { "0": "content/audiobook/mp3/manufacturing/ch02_2과목_제조및품질관리_이야기형.mp3" },
-  "safety": { "0": "content/audiobook/mp3/safety/ch03_3과목_유통화장품안전관리_이야기형.mp3" },
-  "understanding": { "0": "content/audiobook/mp3/understanding/ch04_4과목_맞춤형화장품의이해_이야기형.mp3" }
+  "law": { "0": "content/exams/cosmetic/audiobook/mp3/law/ch01_1과목_화장품법의이해_이야기형.mp3" },
+  "manufacturing": { "0": "content/exams/cosmetic/audiobook/mp3/manufacturing/ch02_2과목_제조및품질관리_이야기형.mp3" },
+  "safety": { "0": "content/exams/cosmetic/audiobook/mp3/safety/ch03_3과목_유통화장품안전관리_이야기형.mp3" },
+  "understanding": { "0": "content/exams/cosmetic/audiobook/mp3/understanding/ch04_4과목_맞춤형화장품의이해_이야기형.mp3" }
 };
 
 export function getAudioUrl(localPath) {
@@ -57,7 +57,7 @@ export function getAudioUrl(localPath) {
 }
 ```
 
-- `AUDIO_BASE_URL`이 `null`이면 로컬 상대 경로(`content/audiobook/mp3/...`) 반환
+- `AUDIO_BASE_URL`이 `null`이면 로컬 상대 경로(`content/exams/cosmetic/audiobook/mp3/...`) 반환
 - `AUDIO_BASE_URL`을 외부 CDN URL로 설정하면 `${BASE}/${과목키}/${파일명}.mp3` 형태로 변환
 - 현재 매니페스트는 이야기형 교재 4개 과목만 등록되어 있음
 
@@ -193,7 +193,7 @@ default-src 'self'; ... media-src 'self' https://github.com https://*.githubuser
 
 ```
 *.mp3
-content/audiobook/
+content/exams/cosmetic/audiobook/
 ```
 
 - MP3는 Vercel에 업로드하지 않음 (GitHub Releases에서 호스팅)
@@ -262,7 +262,7 @@ content/audiobook/
 ## 6. 로컬 개발 모드
 
 `AUDIO_BASE_URL = null`일 때:
-- `getAudioUrl()`이 로컬 상대 경로(`content/audiobook/mp3/...`)를 그대로 반환
+- `getAudioUrl()`이 로컬 상대 경로(`content/exams/cosmetic/audiobook/mp3/...`)를 그대로 반환
 - `serve.js` 개발 서버(`npm run serve`) 또는 `file://` 직접 열기로 로컬 MP3 재생
 - Service Worker는 `.mp3` 패턴을 bypass하므로 로컬에서도 SW 간섭 없이 재생
 
@@ -284,8 +284,8 @@ content/audiobook/
 
 | 단계 | 작업 | 파일 |
 |------|------|------|
-| **1. 빌드** | `generate_all_mp3.py`에 `chunk_manifest.js` 자동 생성 추가 | `content/audiobook/generate_all_mp3.py` |
-| **2. 업로드** | `gh release create audio-v1` + 청크 파일 일괄 업로드 스크립트 | 신규 `content/audiobook/upload_to_github.sh` |
+| **1. 빌드** | `generate_all_mp3.py`에 `chunk_manifest.js` 자동 생성 추가 | `content/exams/cosmetic/audiobook/generate_all_mp3.py` |
+| **2. 업로드** | `gh release create audio-v1` + 청크 파일 일괄 업로드 스크립트 | 신규 `content/exams/cosmetic/audiobook/upload_to_github.sh` |
 | **3. 설정** | `AUDIO_BASE_URL`을 GitHub Releases URL로 변경 | `data/audio_manifest.js` |
 | **4. 런타임** | 순차 청크 재생 + preload + 섹션 동기화 구현 | `src/views/textbook-reader.js` |
 
@@ -320,7 +320,7 @@ content/audiobook/
 }
 ```
 
-각 청크의 `sectionTitle`은 `md_chunker.py`의 `Chunk.section_title`에서 이미 추출됨 (`content/audiobook/md_chunker.py:168-170`).
+각 청크의 `sectionTitle`은 `md_chunker.py`의 `Chunk.section_title`에서 이미 추출됨 (`content/exams/cosmetic/audiobook/md_chunker.py:168-170`).
 
 ### 7-4. Phase 2: 런타임 — 순차 청크 재생
 
@@ -351,8 +351,8 @@ content/audiobook/
 | [`sw.js`](../../sw.js) | MP3 캐시 우회 (BYPASS_PATTERNS), cross-origin 직행 |
 | [`vercel.json`](../../vercel.json) | CSP 헤더 (`media-src` 설정 필요) |
 | [`.vercelignore`](../../.vercelignore) | MP3 배포 제외 규칙 |
-| [`content/audiobook/`](../../content/audiobook/) | MP3 원본 파일 + Python TTS 파이프라인 |
-| [`content/audiobook/generate_all_mp3.py`](../../content/audiobook/generate_all_mp3.py) | TTS 배치 생성 스크립트 (chunk_manifest.js 생성 추가 예정) |
-| [`content/audiobook/md_chunker.py`](../../content/audiobook/md_chunker.py) | MD 청킹 모듈 (Chunk.section_title 포함) |
-| [`content/audiobook/mp3_merger.py`](../../content/audiobook/mp3_merger.py) | 청크 MP3 병합 모듈 |
-| [`content/audiobook/tts_google_direct.py`](../../content/audiobook/tts_google_direct.py) | Google Translate TTS 직접 호출 엔진 |
+| [`content/exams/cosmetic/audiobook/`](../../content/exams/cosmetic/audiobook/) | MP3 원본 파일 + Python TTS 파이프라인 |
+| [`content/exams/cosmetic/audiobook/generate_all_mp3.py`](../../content/exams/cosmetic/audiobook/generate_all_mp3.py) | TTS 배치 생성 스크립트 (chunk_manifest.js 생성 추가 예정) |
+| [`content/exams/cosmetic/audiobook/md_chunker.py`](../../content/exams/cosmetic/audiobook/md_chunker.py) | MD 청킹 모듈 (Chunk.section_title 포함) |
+| [`content/exams/cosmetic/audiobook/mp3_merger.py`](../../content/exams/cosmetic/audiobook/mp3_merger.py) | 청크 MP3 병합 모듈 |
+| [`content/exams/cosmetic/audiobook/tts_google_direct.py`](../../content/exams/cosmetic/audiobook/tts_google_direct.py) | Google Translate TTS 직접 호출 엔진 |

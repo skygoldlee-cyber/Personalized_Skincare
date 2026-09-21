@@ -27,7 +27,7 @@ docs/
     └── user_manual.md         ← 사용자 매뉴얼 (앱 내 매뉴얼 뷰어 연동)
 ```
 
-> `content/학습안내서.md` (학습 안내서)는 교재 콘텐츠이므로 `content/` 폴더에 있습니다.
+> `content/exams/cosmetic/학습안내서.md` (학습 안내서)는 교재 콘텐츠이므로 `content/exams/<id>/` 아래에 있습니다.
 
 ---
 
@@ -55,7 +55,7 @@ docs/
 | 문서 | 설명 | 접근 방법 |
 |------|------|-----------|
 | [user_manual.md](user/user_manual.md) | 사용자 매뉴얼 | 앱 내 "매뉴얼" 메뉴 또는 직접 열기 — 이야기형 모드, SM-2 간격 반복, 학습 통계/약점 분석, 접근성, 역색인 검색 등 최신 UI/UX 반영 |
-| [학습안내서.md](../content/학습안내서.md) | 학습 안내서 | 앱 내 "요약집" 메뉴 또는 직접 열기 (`content/` 폴더) |
+| [학습안내서.md](../content/exams/cosmetic/학습안내서.md) | 학습 안내서 | 앱 내 "요약집" 메뉴 또는 직접 열기 (`content/exams/cosmetic/` 폴더) |
 
 > 사용자 문서는 앱의 `manual-viewer.js`가 런타임에 fetch하여 인앱 오버레이로 렌더링합니다.
 
