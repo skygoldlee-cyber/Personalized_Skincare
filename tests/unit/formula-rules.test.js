@@ -283,3 +283,46 @@ test('내보내기→가져오기 라운드트립: 직렬화 포맷 왕복 보�
   assert.deepEqual(rules.base['보습제'], ['판테놀']);
   assert.deepEqual(rules.skin['민감성'], ['이눌린']);
 });
+
+// ── 고객 안전 필드 (알레르기·임신·사용제품) ──────────
+
+test('알레르기 이력: 해당 원료가 추천 원료·베이스 후보에서 제외 + 주의문', () => {
+  const r = recommendFor({
+    formulation: '세럼·에센스',
+    concerns: ['미백·잡티'],
+    allergies: ['나이아신아마이드', '페녹시에탄올'],
+  }, INDEX);
+  const names = r.ingredients.map(i => i.name);
+  assert.ok(!names.includes('나이아신아마이드'));
+  const pres = r.bases.find(b => b.role === '보존제');
+  assert.ok(!pres.candidates.includes('페녹시에탄올'));
+  assert.ok(r.cautions.some(c => c.includes('알레르기') && c.includes('나이아신아마이드')));
+});
+
+test('알레르기 이력: 맞춤 후보로 등록된 원료도 제외됨', () => {
+  const custom = { base: {}, concern: { '건조': ['우레아'] }, skin: {} };
+  const r = recommendFor({ concerns: ['건조'], allergies: ['우레아'] }, INDEX, custom);
+  assert.ok(!r.ingredients.some(i => i.name === '우레아'));
+});
+
+test('임신·수유: 주의문 발화 + 레티놀 자극 플래그', () => {
+  const r = recommendFor({ pregnancy: '임신 중', concerns: ['주름·탄력'] }, INDEX);
+  const retinol = r.ingredients.find(i => i.name === '레티놀');
+  assert.equal(retinol.irritant, true);
+  assert.ok(r.cautions.some(c => c.includes('임신·수유')));
+
+  const normal = recommendFor({ concerns: ['주름·탄력'] }, INDEX);
+  assert.equal(normal.ingredients.find(i => i.name === '레티놀').irritant, false);
+  assert.ok(!normal.cautions.some(c => c.includes('임신')));
+});
+
+test('사용 중인 제품: 추천 원료와 이름 중복 시 주의문', () => {
+  const r = recommendFor({
+    concerns: ['미백·잡티'],
+    products: '나이아신아마이드 앰플 사용 중',
+  }, INDEX);
+  assert.ok(r.cautions.some(c => c.includes('중복') && c.includes('나이아신아마이드')));
+
+  const clean = recommendFor({ concerns: ['미백·잡티'], products: '선크림만 사용' }, INDEX);
+  assert.ok(!clean.cautions.some(c => c.includes('중복')));
+});

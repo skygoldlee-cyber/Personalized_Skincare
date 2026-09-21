@@ -94,7 +94,10 @@
 - `amount = totalVolume × concentration / 100` (저장 시 계산값도 함께 보관 — 재계산 버그 방지용 스냅샷)
 - `check`는 저장 시점의 검증 결과 스냅샷. 고시 개정 시 재검증 대상이 됨(5-B 영향 분석의 기반).
 - 실제 구현 스키마는 `formula-store.js` 주석 참조 — `targetVolume`/`unit`/`customer`/`ingredients[].snapshot` 필드명이 다르다.
-- `customer` 필드는 후속 커밋에서 추가됨: `{name, age, gender, skinType, concerns[], formulation}` — 맞춤 조제 대상 컨텍스트, 전 항목 선택.
+- `customer` 필드는 후속 커밋에서 추가됨: `{name, age, gender, skinType, concerns[], formulation, allergies[], pregnancy, products}` — 맞춤 조제 대상 컨텍스트, 전 항목 선택.
+  - `allergies[]` — 알레르기·부작용 이력 원료명 (최대 15종, 각 ≤60자) → 추천 자동 제외
+  - `pregnancy` — `'임신 중'|'수유 중'` enum → 주의 원료 ⚠ 플래그·주의문
+  - `products` — 사용 중인 제품·약물 자유 기술 (≤300자) → 추천 중복 주의문
 - 후속 추가 필드: `phTarget`/`phActual`(0~14 클램프), `steps[]`(제조 절차, 최대 20단계×200자), `ingredients[].phase`(PHASE_OPTIONS — 수상부/유상부/실리콘부/기능성/후첨가/기타). 전부 선택 항목이라 하위호환 유지.
 - 포뮬러 단건 JSON 공유: `serializeFormula()`/`importFormula()` — `{type:'formula-os', version:1, formula}` 래퍼, id·타임스탬프 제외 후 재부여, 한도 적용.
 - 조제 기록지 인쇄: `#formula-print-area` 전용 DOM + `body.formula-printing` 토글 (print.css).
@@ -254,12 +257,13 @@ tests/unit/formula-store.test.js   # CRUD·Free 한도 테스트
 `recommendFor(customer, index, custom)` 순수 함수 — 입력 고객 필드(+맞춤 규칙), 출력 3블록:
 
 ```
-입력: { gender, age, skinType, concerns[], formulation }
+입력: { gender, age, skinType, concerns[], formulation,
+        allergies[], pregnancy, products }
       custom: loadCustomRules() 결과 — { base:{역할:[이름]}, concern:{고민:[이름]}, skin:{유형:[이름]} }
 출력: {
-  bases: [{ role, required, candidates[] }],   // ① 제형 → 베이스 템플릿 (+ 맞춤 후보 병합)
-  ingredients: [{ name, reasons, type, limit, irritant }], // ② 고민+피부유형 → 기능성 원료
-  cautions: []                                  // ③ 나이·피부유형 → 주의문
+  bases: [{ role, required, candidates[] }],   // ① 제형 → 베이스 템플릿 (+ 맞춤 후보 병합, 알레르기 제외)
+  ingredients: [{ name, reasons, type, limit, irritant }], // ② 고민+피부유형 → 기능성 원료 (알레르기 제외)
+  cautions: []                                  // ③ 알레르기 제외·임신·제품중복·나이·피부유형 → 주의문
 }
 ```
 
@@ -294,11 +298,14 @@ tests/unit/formula-store.test.js   # CRUD·Free 한도 테스트
 
 피부유형 매핑도 각 5종 (건성·지성·복합성·민감성·중성).
 
-**③ 피부유형·나이 → 가중치·주의문**:
+**③ 피부유형·나이·안전 필드 → 가중치·주의문**:
 
 - 건성: 오일·보습 후보 우선 정렬 / 지성: 아연PCA·수성 보습 우선
 - 민감성: 주의문 "향료·에탄올 계열 자극 가능 — 소량 패치 테스트 권장"
 - 나이 <20 또는 >65: 자극 원료(레티놀·살리실산) 추천 시 주의 플래그
+- **알레르기 이력**: `allergies[]`에 있는 원료명은 베이스 후보·추천 원료·맞춤 후보에서 전부 자동 제외 + 제외 목록 주의문. 정확 일치만 적용(부분 매칭은 오탐 위험)
+- **임신·수유**: `pregnancy` 설정 시 `PREGNANCY_CAUTION`(레티놀·살리실산·살리실릭애씨드) 추천에 ⚠ 플래그 + "전문의 상담 후 사용 권장" 주의문 — 제외가 아닌 플래그 방식 (정보 차단보다 고지가 안전)
+- **사용 중인 제품·약물**: `products` 자유 기술과 추천 원료명의 부분 일치 시 "성분 중복 가능" 주의문 — 약물 상호작용 판정은 하지 않음
 - **성별은 추천 점수에 미반영** — 조성 영향이 실질적으로 없어 표시 목적으로만 저장 (정직한 설계)
 
 ### 9.3 안전 원칙 (§1 연장)
@@ -309,6 +316,7 @@ tests/unit/formula-store.test.js   # CRUD·Free 한도 테스트
 4. **고지 상시** — 추천 패널 상단 "학습·작업 참고용 — 최종 조성은 고시 원문 확인".
 5. **미커버는 정직 표시** — 매핑 없는 고민/제형 조합은 "추천 데이터 준비 중" 안내 (빈 화면 금지).
 6. **커스텀 후보도 동일 필터** — 사용자/외부 JSON 입력 이름은 DB 존재·비banned 검증 없이 저장되더라도 추천 출력에서 자동 제외된다.
+7. **고객 안전 정보는 진단이 아님** — 알레르기·임신·사용제품 필드는 고객 제공 참고 정보다. 제외/플래그/주의문까지만 제공하고 의학적 안전 판정·약물 상호작용 판정은 하지 않는다 (기존 "한도 이내 ≠ 안전 보장" 원칙의 연장).
 
 ### 9.4 UI/인터랙션
 

@@ -490,6 +490,19 @@
     flex-wrap: wrap;
 }
 
+/* 알레르기 이력 입력 */
+.formula-allergy-input-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin-bottom: 0.4rem;
+}
+.formula-allergy-input-row .form-input { flex: 1; min-width: 0; }
+.formula-allergy-chip {
+    background: var(--bg-danger-muted, var(--bg-muted));
+    border-color: var(--color-danger-muted, var(--border-color));
+}
+
 /* 목록 카드 고객 요약 */
 .formula-card-customer {
     font-size: 0.82rem;

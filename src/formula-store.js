@@ -5,11 +5,15 @@
 //
 // 포뮬러 스키마:
 //   { id, name, targetVolume, unit('g'|'ml'), phTarget, phActual, notes, steps[],
-//     customer: {name, age, gender, skinType, concerns[], formulation},
+//     customer: {name, age, gender, skinType, concerns[], formulation,
+//                allergies[], pregnancy, products},
 //     ingredients: [{name, engName, concentration, phase, note, snapshot:{type,limit}}],
 //     createdAt, updatedAt }
 //
 // customer — 맞춤 조제 대상 고객 컨텍스트. 모든 필드 선택(optional).
+//   allergies — 알레르기·부작용 이력 원료명 배열 (추천에서 자동 제외).
+//   pregnancy — '임신 중'|'수유 중' (주의 원료 플래그·주의문에 반영).
+//   products — 현재 사용 중인 제품/약물 자유 기술 (추천 중복 주의문에 반영).
 // phase — 원료의 제조 단계 (PHASE_OPTIONS). steps — 제조 절차 단계 문자열 배열.
 // phTarget/phActual — 목표·실측 pH (0~14, 범위 밖은 null).
 //
@@ -28,6 +32,7 @@ export const CUSTOMER_OPTIONS = Object.freeze({
   skinType: ['건성', '지성', '복합성', '중성', '민감성'],
   concerns: ['건조', '피지·모공', '여드름·트러블', '민감·홍조', '미백·잡티', '주름·탄력', '각질', '진정'],
   formulation: ['세럼·에센스', '토너·미스트', '로션·에멀전', '크림·밤', '젤', '오일', '클렌저', '선크림', '마스크·팩'],
+  pregnancy: ['임신 중', '수유 중'],
 });
 
 // 원료 제조 단계(Phase) — 조제 공정상의 투입 단계 (공정 순서대로 정렬됨)
@@ -38,6 +43,9 @@ const MAX_NOTE_LEN = 500;
 const MAX_STEPS = 20;
 const MAX_STEP_LEN = 200;
 const MAX_PH = 14;
+const MAX_ALLERGIES = 15;
+const MAX_ALLERGY_LEN = 60;
+const MAX_PRODUCTS_LEN = 300;
 
 /** 고유 ID 생성: fml_<base36시간><난수> */
 export function newFormulaId() {
@@ -113,10 +121,20 @@ function sanitizeCustomer(customer) {
       ? customer.concerns.filter(v => CUSTOMER_OPTIONS.concerns.includes(v))
       : [],
     formulation: pickEnum(customer.formulation, CUSTOMER_OPTIONS.formulation),
+    allergies: Array.isArray(customer.allergies)
+      ? customer.allergies
+          .map(v => (typeof v === 'string' ? v.trim() : ''))
+          .filter(Boolean)
+          .slice(0, MAX_ALLERGIES)
+          .map(v => v.slice(0, MAX_ALLERGY_LEN))
+      : [],
+    pregnancy: pickEnum(customer.pregnancy, CUSTOMER_OPTIONS.pregnancy),
+    products: clampStr(customer.products || '', MAX_PRODUCTS_LEN).trim(),
   };
   // 모든 필드가 비어 있으면 null — 빈 객체보다 부재가 낫다
   const empty = !c.name && c.age == null && !c.gender && !c.skinType
-    && !c.concerns.length && !c.formulation;
+    && !c.concerns.length && !c.formulation
+    && !c.allergies.length && !c.pregnancy && !c.products;
   return empty ? null : c;
 }
 

@@ -149,6 +149,8 @@ export function openFormulaList() {
       if (f.customer.skinType) custParts.push(f.customer.skinType);
       if (f.customer.formulation) custParts.push(`제형: ${f.customer.formulation}`);
       if (f.customer.concerns && f.customer.concerns.length) custParts.push(`고민: ${f.customer.concerns.join(', ')}`);
+      if (f.customer.pregnancy) custParts.push(f.customer.pregnancy);
+      if (f.customer.allergies && f.customer.allergies.length) custParts.push(`알레르기 ${f.customer.allergies.length}종`);
     }
     return `
       <div class="formula-card">
@@ -381,11 +383,21 @@ function populateCustomerFields() {
       chipBox.appendChild(label);
     });
   }
+  const pregEl = document.getElementById('formula-cust-pregnancy');
+  if (pregEl && !pregEl.dataset.bound) {
+    pregEl.dataset.bound = '1';
+    CUSTOMER_OPTIONS.pregnancy.forEach(v => {
+      const o = document.createElement('option');
+      o.value = v; o.textContent = v;
+      pregEl.appendChild(o);
+    });
+  }
 
   // 고객 필드 변경 → 추천 패널 갱신 (1회 바인딩)
   if (!populateCustomerFields._recBound) {
     populateCustomerFields._recBound = true;
-    ['formula-cust-gender', 'formula-cust-skintype', 'formula-cust-formulation', 'formula-cust-age', 'formula-cust-name']
+    ['formula-cust-gender', 'formula-cust-skintype', 'formula-cust-formulation', 'formula-cust-age', 'formula-cust-name',
+      'formula-cust-pregnancy', 'formula-cust-products']
       .forEach(id => {
         const el = document.getElementById(id);
         if (el) el.addEventListener(el.tagName === 'SELECT' ? 'change' : 'input', renderRecommend);
@@ -405,6 +417,10 @@ function readCustomerInputs() {
   const concerns = chipBox
     ? Array.from(chipBox.querySelectorAll('input:checked')).map(cb => cb.value)
     : [];
+  const allergyBox = document.getElementById('formula-cust-allergies');
+  const allergies = allergyBox
+    ? Array.from(allergyBox.querySelectorAll('.formula-allergy-chip')).map(c => c.dataset.name || '').filter(Boolean)
+    : [];
   return {
     name: val('formula-cust-name').trim(),
     age: ageRaw === '' ? null : parseInt(ageRaw, 10),
@@ -412,6 +428,9 @@ function readCustomerInputs() {
     skinType: val('formula-cust-skintype'),
     concerns,
     formulation: val('formula-cust-formulation'),
+    allergies,
+    pregnancy: val('formula-cust-pregnancy'),
+    products: val('formula-cust-products').trim(),
   };
 }
 
@@ -427,6 +446,9 @@ function writeCustomerInputs(customer) {
   set('formula-cust-gender', c.gender || '');
   set('formula-cust-skintype', c.skinType || '');
   set('formula-cust-formulation', c.formulation || '');
+  set('formula-cust-pregnancy', c.pregnancy || '');
+  set('formula-cust-products', c.products || '');
+  renderAllergyChips(Array.isArray(c.allergies) ? c.allergies : []);
   const chipBox = document.getElementById('formula-cust-concerns');
   if (chipBox) {
     const selected = Array.isArray(c.concerns) ? c.concerns : [];
@@ -434,6 +456,44 @@ function writeCustomerInputs(customer) {
       cb.checked = selected.includes(cb.value);
     });
   }
+}
+
+/** 알레르기 원료 칩 렌더 */
+function renderAllergyChips(allergies) {
+  const box = document.getElementById('formula-cust-allergies');
+  if (!box) return;
+  box.innerHTML = allergies.length
+    ? allergies.map(n => `<span class="formula-rule-chip formula-allergy-chip" data-name="${esc(n)}">${esc(n)}`
+        + `<button type="button" class="formula-rule-chip-x" data-click="formulaAllergyRemove" data-arg="${esc(n)}" aria-label="${esc(n)} 알레르기 이력 삭제"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></span>`).join('')
+    : '';
+}
+
+/** 알레르기 원료 추가 — 입력값을 칩으로 등록 */
+export function formulaAllergyAdd() {
+  const input = document.getElementById('formula-allergy-input');
+  const name = input ? input.value.trim() : '';
+  if (!name) return;
+  const current = readCustomerInputs().allergies;
+  if (current.includes(name)) {
+    showToast(`"${name}"은(는) 이미 등록되어 있습니다.`, 'info');
+    return;
+  }
+  if (current.length >= 15) {
+    showToast('알레르기 이력은 최대 15종까지 등록할 수 있습니다.', 'info');
+    return;
+  }
+  renderAllergyChips([...current, name]);
+  if (input) input.value = '';
+  const ing = getIndex().get(name);
+  if (!ing) showToast(`"${name}"은(는) DB 미등록 — 추천 필터에는 동작하지만 원문 확인이 필요합니다.`, 'info');
+  renderRecommend();
+}
+
+/** 알레르기 원료 칩 삭제 */
+export function formulaAllergyRemove(name) {
+  if (typeof name !== 'string') return;
+  renderAllergyChips(readCustomerInputs().allergies.filter(n => n !== name));
+  renderRecommend();
 }
 
 /* =======================================================
@@ -445,7 +505,8 @@ function renderRecommend() {
   if (!panel) return;
   const customer = readCustomerInputs();
   const hasInput = customer.skinType || customer.formulation
-    || customer.concerns.length || customer.age != null;
+    || customer.concerns.length || customer.age != null
+    || customer.pregnancy || customer.allergies.length;
   if (!hasInput) {
     panel.classList.add('is-hidden');
     panel.innerHTML = '';
@@ -872,7 +933,10 @@ function buildPrintHtml(f) {
   const cust = f.customer || {};
   const custParts = [cust.name, cust.age != null ? `${cust.age}세` : '', cust.gender,
     cust.skinType, cust.formulation ? `제형: ${cust.formulation}` : '',
-    cust.concerns && cust.concerns.length ? `고민: ${cust.concerns.join(', ')}` : '']
+    cust.concerns && cust.concerns.length ? `고민: ${cust.concerns.join(', ')}` : '',
+    cust.pregnancy,
+    cust.allergies && cust.allergies.length ? `알레르기: ${cust.allergies.join(', ')}` : '',
+    cust.products ? `사용 중: ${cust.products}` : '']
     .filter(Boolean).join(' · ');
 
   const amounts = calcAmounts(f);

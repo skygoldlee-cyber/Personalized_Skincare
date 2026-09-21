@@ -248,6 +248,49 @@ test('customer: update로 수정 가능', () => {
   assert.equal(r.formula.customer.skinType, '지성');
 });
 
+test('customer 안전 필드: 알레르기·임신·사용제품 저장+복원', () => {
+  const { formula } = createFormula({
+    name: 't',
+    customer: {
+      name: '박고객',
+      allergies: ['파라벤류', '페녹시에탄올'],
+      pregnancy: '임신 중',
+      products: '레티놀 세럼 사용 중',
+    },
+  });
+  const c = getFormula(formula.id).customer;
+  assert.deepEqual(c.allergies, ['파라벤류', '페녹시에탄올']);
+  assert.equal(c.pregnancy, '임신 중');
+  assert.equal(c.products, '레티놀 세럼 사용 중');
+});
+
+test('customer 안전 필드: enum 외 임신 값·비문자열·초과 항목 필터', () => {
+  const { formula } = createFormula({
+    name: 't',
+    customer: {
+      pregnancy: '알수없음',
+      allergies: ['유효', 123, '', '   ', 'a'.repeat(100)],
+      products: 'x'.repeat(400),
+    },
+  });
+  const c = getFormula(formula.id).customer;
+  assert.equal(c.pregnancy, '');
+  assert.deepEqual(c.allergies[0], '유효');
+  assert.equal(c.allergies.length, 2);          // '유효' + 60자 절단본
+  assert.equal(c.allergies[1].length, 60);      // 길이 클램프
+  assert.equal(c.products.length, 300);         // 길이 클램프
+});
+
+test('customer 안전 필드: 안전 필드만 있어도 고객 객체 유지', () => {
+  const { formula } = createFormula({
+    name: 't',
+    customer: { pregnancy: '수유 중' },
+  });
+  const c = getFormula(formula.id).customer;
+  assert.ok(c);
+  assert.equal(c.pregnancy, '수유 중');
+});
+
 // ── 제조 단계(phase) · pH · 절차(steps) ─────────────────
 
 test('phase: PHASE_OPTIONS 값만 보존, enum 외는 빈 문자열', () => {

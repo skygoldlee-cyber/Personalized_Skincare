@@ -1424,6 +1424,30 @@
                                 <span class="formula-field-label">피부 고민·증상 (복수 선택)</span>
                                 <div id="formula-cust-concerns" class="formula-chip-row"></div>
                             </div>
+                            <div class="formula-field-row">
+                                <label class="formula-field formula-field-gender">
+                                    <span class="formula-field-label">임신·수유</span>
+                                    <select id="formula-cust-pregnancy" class="form-select" aria-label="임신·수유 여부">
+                                        <option value="">해당 없음</option>
+                                    </select>
+                                </label>
+                                <label class="formula-field">
+                                    <span class="formula-field-label">사용 중인 제품·약물</span>
+                                    <input type="text" id="formula-cust-products" class="form-input" maxlength="300"
+                                           placeholder="예: 레티놀 세럼, 스테로이드 연고" aria-label="사용 중인 제품·약물">
+                                </label>
+                            </div>
+                            <div class="formula-field">
+                                <span class="formula-field-label">알레르기·부작용 이력 원료 (추천에서 자동 제외)</span>
+                                <div class="formula-allergy-input-row">
+                                    <input type="text" id="formula-allergy-input" class="form-input" list="formula-ing-datalist"
+                                           placeholder="원료명 입력 후 추가 (예: 파라벤류)" maxlength="60" aria-label="알레르기 원료명">
+                                    <button type="button" class="btn btn-secondary btn-sm" data-click="formulaAllergyAdd">
+                                        <i class="fa-solid fa-plus" aria-hidden="true"></i> 추가
+                                    </button>
+                                </div>
+                                <div id="formula-cust-allergies" class="formula-chip-row"></div>
+                            </div>
                         </fieldset>
 
                         <!-- 추천 베이스·원료 (고객 조건 선택 시 표시) -->

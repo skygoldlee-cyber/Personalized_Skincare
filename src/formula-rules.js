@@ -251,14 +251,27 @@ export function recommendFor(customer, index, custom) {
   if (!customer || typeof customer !== 'object') return result;
   const cu = custom && typeof custom === 'object' ? custom : emptyCustomRules();
 
-  // ① 제형 → 베이스 템플릿 (+ 맞춤 후보 병합)
+  // 알레르기·부작용 이력 원료 — 모든 추천(기본·맞춤 후보 포함)에서 제외
+  const allergies = new Set(
+    (Array.isArray(customer.allergies) ? customer.allergies : [])
+      .map(a => (typeof a === 'string' ? a.trim() : ''))
+      .filter(Boolean)
+  );
+  const excludedByAllergy = new Set();
+  const notAllergen = n => {
+    if (allergies.has(n)) { excludedByAllergy.add(n); return false; }
+    return true;
+  };
+
+  // ① 제형 → 베이스 템플릿 (+ 맞춤 후보 병합, 알레르기 제외)
   const template = BASE_TEMPLATES[customer.formulation];
   if (template) {
     result.bases = template.map(r => ({
       role: r.role,
       required: !!r.required,
       candidates: filterCandidateNames(
-        r.candidates.concat((cu.base && cu.base[r.role]) || []), index),
+        r.candidates.concat((cu.base && cu.base[r.role]) || []), index)
+        .filter(notAllergen),
     }));
   }
 
@@ -277,20 +290,36 @@ export function recommendFor(customer, index, custom) {
 
   const age = typeof customer.age === 'number' ? customer.age : null;
   const youngOrOld = age != null && (age < 20 || age > 65);
+  const pregnant = customer.pregnancy === '임신 중' || customer.pregnancy === '수유 중';
+  const productsText = typeof customer.products === 'string' ? customer.products : '';
+  const overlap = [];
 
   for (const [name, meta] of seen) {
     const ing = index && index.get(name);
     if (!ing || ing.type === 'banned') continue; // 미등록·금지 원료는 추천하지 않음
+    if (!notAllergen(name)) continue;            // 알레르기 이력 원료 제외
+    // 사용 중인 제품/약물과의 성분 중복 감지 (자유 기술 문자열 부분 일치)
+    if (productsText && productsText.includes(name)) overlap.push(name);
     result.ingredients.push({
       name,
       reasons: [...meta.reasons],
       type: ing.type || '',
       limit: ing.limit || '',
-      irritant: youngOrOld && IRRITANT_INGREDIENTS.includes(name),
+      irritant: (youngOrOld && IRRITANT_INGREDIENTS.includes(name))
+        || (pregnant && PREGNANCY_CAUTION.includes(name)),
     });
   }
 
   // ③ 주의문
+  if (excludedByAllergy.size) {
+    result.cautions.push(`알레르기 이력: ${[...excludedByAllergy].join(', ')} — 추천에서 자동 제외됨`);
+  }
+  if (pregnant) {
+    result.cautions.push('임신·수유 중: 레티놀 등 비타민A 유도체·살리실산 계열은 전문의 상담 후 사용 권장');
+  }
+  if (overlap.length) {
+    result.cautions.push(`사용 중인 제품/약물과 성분 중복 가능: ${overlap.join(', ')} — 병용 시 자극·중복 확인`);
+  }
   if (customer.skinType === '민감성') {
     result.cautions.push('민감성 피부: 향료·에탄올 계열은 자극 가능성 — 소량 패치 테스트 권장');
   }
@@ -304,6 +333,9 @@ export function recommendFor(customer, index, custom) {
 
   return result;
 }
+
+// 임신·수유 시 주의 원료 — 비타민A 유도체·각질제거 계열 (추천 칩에 ⚠ 표시)
+const PREGNANCY_CAUTION = ['레티놀', '살리실산', '살리실릭애씨드'];
 
 // 베이스 역할 → 제조 단계(Phase) 기본 매핑 — 추천 칩으로 행 추가 시 자동 태깅용
 // (formula-store.js PHASE_OPTIONS 값과 정합 유지 — 테스트가 검증)
