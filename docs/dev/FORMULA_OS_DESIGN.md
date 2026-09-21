@@ -62,10 +62,11 @@
 | 키 | 내용 | 스코프 |
 |---|---|---|
 | `formula_items` | 포뮬러 배열 (최대 Free 5개) | `cosmetic:` (scopedKey 자동) |
+| `formula_rules` | 사용자 맞춤 추천 규칙 `{base, concern, skin}` (§9.7) | `cosmetic:` |
 | `formula_last_used` | 마지막 사용 일시 배열 (재방문 지표용) | `cosmetic:` |
 | `formula_seq` | id 채번 카운터 | `cosmetic:` |
 
-`BACKUP_KEYS`에 `formula_items` 추가 → 기존 백업/복원이 그대로 포뮬러를 포함.
+`BACKUP_KEYS`에 `formula_items`·`formula_rules` 등록 → 기존 백업/복원이 포뮬러와 맞춤 규칙을 포함.
 
 ### 3.2 포뮬러 스키마 (5-A 단순화판)
 
@@ -92,7 +93,9 @@
 
 - `amount = totalVolume × concentration / 100` (저장 시 계산값도 함께 보관 — 재계산 버그 방지용 스냅샷)
 - `check`는 저장 시점의 검증 결과 스냅샷. 고시 개정 시 재검증 대상이 됨(5-B 영향 분석의 기반).
-- 버전 관리·고객 연결은 5-B — 5-A에서는 `version`/`customer` 필드를 만들지 않는다.
+- 실제 구현 스키마는 `formula-store.js` 주석 참조 — `targetVolume`/`unit`/`customer`/`ingredients[].snapshot` 필드명이 다르다.
+- `customer` 필드는 후속 커밋에서 추가됨: `{name, age, gender, skinType, concerns[], formulation}` — 맞춤 조제 대상 컨텍스트, 전 항목 선택.
+- 버전 관리는 5-B — `version` 필드는 만들지 않는다.
 
 ### 3.3 Free 한도
 
@@ -234,24 +237,25 @@ tests/unit/formula-store.test.js   # CRUD·Free 한도 테스트
 
 | 항목 | 수치 | 설계상 함의 |
 |---|---|---|
-| 전체 원료 | 1,357종 | |
-| banned | 1,073종 | 추천 후보에서 **절대 제외** (매핑 무결성 테스트로 강제) |
-| 비금지 (approved+restricted) | 284종 | 추천 풀은 작지만 전부 고시 기반 — 신뢰 가능 |
+| 전체 원료 | 1,376종 | 유화제 7종·베이스 원료 12종 보강 반영 |
+| banned | 1,073종 | 추천 후보에서 **절대 제외** (매핑 무결성 테스트 + 런타임 필터로 강제) |
+| 비금지 (approved+restricted) | 303종 | 추천 풀은 작지만 전부 고시 기반 — 신뢰 가능 |
 | 기능성 성분 | 18종 | 고민 매핑의 핵심 풀 (나이아신아마이드·시카·판테놀·세라마이드·레티놀·아데노신·알부틴·비타민C·살리실산·아연PCA·프리바이오틱스류 등) |
-| 보습제/오일/점증제/계면활성제/보존제 | 각 3~57종 | 베이스 역할별 후보 확보 가능 |
-| **DB에 없는 베이스 원료** | 정제수·유화제·왁스 등 | DB가 규제 중심이라 상품성 베이스 부재 → 베이스는 "역할 카드"로 제시하고 DB 후보만 클릭 가능 |
+| 베이스 원료 보강 | 유화제 7종 + 기타 12종 | 용제(DPG)·오일(호호바·아르간)·실리콘 3종·APG 계면활성제 2종·pH 조절제 2종·산화방지제 2종 추가로 **모든 베이스 역할 후보 ≥5** 달성 (테스트 불변식으로 고정) |
+| **DB에 없는 베이스 원료** | 정제수·왁스 등 | 역할 카드로 안내 — 후보 없는 역할은 '직접 입력' 표시 |
 | 염모제 49종 | 제형 목록에 헤어염색 없음 | 추천 대상 카테고리에서 제외 |
 | 향료 60종 | 전부 approved | 민감성 선택 시 주의문의 대상 |
 
 ### 9.2 추천 모델 — 3계층 규칙
 
-`recommendFor(customer)` 순수 함수 — 입력 고객 필드, 출력 3블록:
+`recommendFor(customer, index, custom)` 순수 함수 — 입력 고객 필드(+맞춤 규칙), 출력 3블록:
 
 ```
 입력: { gender, age, skinType, concerns[], formulation }
+      custom: loadCustomRules() 결과 — { base:{역할:[이름]}, concern:{고민:[이름]}, skin:{유형:[이름]} }
 출력: {
-  bases: [{ role, required, candidates[] }],   // ① 제형 → 베이스 템플릿
-  ingredients: [{ name, reason, type, limit }], // ② 고민+피부유형 → 기능성 원료
+  bases: [{ role, required, candidates[] }],   // ① 제형 → 베이스 템플릿 (+ 맞춤 후보 병합)
+  ingredients: [{ name, reasons, type, limit, irritant }], // ② 고민+피부유형 → 기능성 원료
   cautions: []                                  // ③ 나이·피부유형 → 주의문
 }
 ```
@@ -270,20 +274,22 @@ tests/unit/formula-store.test.js   # CRUD·Free 한도 테스트
 | 선크림 | 자외선차단제 + 오일·실리콘 + 유화제 + 보존제* |
 | 마스크·팩 | 용제 + 보습제 + 점증제 + 보존제* |
 
-역할별 candidates는 DB 매칭 (점증제→카보머·잔탄검·히드록시에틸셀룰로오스 / 계면활성제→코카미도프로필베타인 등 / 보존제→페녹시에탄올·벤질알코올). DB 없는 역할(정제수·유화제)은 후보 없이 역할명만 표시.
+역할별 candidates는 DB 매칭이며 **모든 역할 5종 이상** (테스트 불변식). 예: 유화제→솔비탄라우레이트·글리세릴스테아레이트·세테아릴알코올·폴리소르베이트60·세테아릴글루코사이드·레시틴·스테아릭애씨드·폴리소르베이트20 / 점증제→카보머·잔탄검·히드록시에틸셀룰로오스·알기네이트·셀룰로오스. `required` 역할의 첫 후보는 '베이스 불러오기' 기본값이 되므로 범용성 순으로 배치 (용제 첫 후보 = 부틸렌글라이콜, 에탄올 아님). 후보 없는 역할은 '직접 입력' 표시.
 
-**② 고민 → 기능성 원료 매핑** (큐레이션 — 전문가 조정 포인트):
+**② 고민 → 기능성 원료 매핑** (큐레이션 — 전문가 조정 포인트, 각 5종):
 
 | 고민 | 추천 원료 (사유 태그) |
 |---|---|
 | 건조 | 히알루론산·세라마이드·판테놀·스쿠알렌·글리세린 |
-| 피지·모공 | 아연PCA·살리실산·나이아신아마이드 |
-| 여드름·트러블 | 살리실산·아연PCA·시카 |
-| 민감·홍조 | 시카·판테놀·세라마이드·이눌린 |
-| 미백·잡티 | 나이아신아마이드(≤5%)·알부틴·비타민C |
-| 주름·탄력 | 아데노신·레티놀(≤1%)·콜라겐 |
-| 각질 | 살리실산·살리실릭애씨드 |
-| 진정 | 시카·판테놀·알파글루칸올리고사카라이드 |
+| 피지·모공 | 아연PCA·살리실산·나이아신아마이드·살리실릭애씨드·알클록사 |
+| 여드름·트러블 | 살리실산·아연PCA·시카·살리실릭애씨드·알클록사 |
+| 민감·홍조 | 시카·판테놀·세라마이드·이눌린·알클록사 |
+| 미백·잡티 | 나이아신아마이드(≤5%)·알부틴·비타민C·아스코르빌팔미테이트·AHA |
+| 주름·탄력 | 아데노신·레티놀(≤1%)·콜라겐·비타민C·올리고펩타이드-1(EGF) |
+| 각질 | 살리실산·살리실릭애씨드·AHA·우레아·시트릭애씨드 |
+| 진정 | 시카·판테놀·알파글루칸올리고사카라이드·이눌린·알클록사 |
+
+피부유형 매핑도 각 5종 (건성·지성·복합성·민감성·중성).
 
 **③ 피부유형·나이 → 가중치·주의문**:
 
@@ -296,9 +302,10 @@ tests/unit/formula-store.test.js   # CRUD·Free 한도 테스트
 
 1. **이름만 추천** — 농도 값은 절대 제안하지 않는다. 칩 클릭 시 계산 행에 이름만 추가되고 %는 빈칸 → 기존 규정 Check가 그대로 검증.
 2. **restricted 표기** — 추천 칩에 한도 배지 병기 (예: `레티놀 ≤1%`).
-3. **banned 불가** — 매핑 테이블 무결성 테스트로 강제 (테이블에 banned 이름 존재 시 테스트 실패).
+3. **banned 불가** — 이중 방어: ①매핑 테이블 무결성 테스트(기본 규칙) ②`filterCandidateNames`/`recommendFor` 런타임 필터(커스텀 후보·미래 매핑 오류).
 4. **고지 상시** — 추천 패널 상단 "학습·작업 참고용 — 최종 조성은 고시 원문 확인".
 5. **미커버는 정직 표시** — 매핑 없는 고민/제형 조합은 "추천 데이터 준비 중" 안내 (빈 화면 금지).
+6. **커스텀 후보도 동일 필터** — 사용자/외부 JSON 입력 이름은 DB 존재·비banned 검증 없이 저장되더라도 추천 출력에서 자동 제외된다.
 
 ### 9.4 UI/인터랙션
 
@@ -314,22 +321,56 @@ tests/unit/formula-store.test.js   # CRUD·Free 한도 테스트
 └───────────────────────────────────────────────┘
 ```
 
-- 고객 필드 change 이벤트 → `recommendFor()` 재실행 → 패널 재렌더
-- 칩 클릭 → 계산기 행 추가 (기존 `formulaAddIngredient` 흐름 재사용, 뷰 전환 없음)
+- 고객 필드 change 이벤트 → `recommendFor(customer, index, loadCustomRules())` 재실행 → 패널 재렌더
+- 칩 클릭 → 계산기 행 추가 (`formulaRecAdd`, 뷰 전환 없음)
 - '베이스 불러오기' → required 역할의 첫 후보를 행으로 채움 (기존 행 보존, 이름만)
+- 패널 아래 `<details class="formula-rules-edit">` — 맞춤 규칙 관리 (§9.7)
 
 ### 9.5 파일·테스트
 
 | 파일 | 역할 |
 |---|---|
-| `src/formula-rules.js` | 베이스 템플릿·고민 매핑·주의문 데이터 + `recommendFor()` 순수 함수 |
-| `src/views/formula.js` | 추천 패널 렌더, 칩/불러오기 핸들러 |
-| `index.html` | `#formula-recommend` 컨테이너 |
-| `tests/unit/formula-rules.test.js` | 매핑 무결성: ①테이블 내 모든 이름이 DB에 존재 ②banned 이름 0개 ③추천 출력에 limit 스냅샷 부착 ④빈 입력 → 빈 추천 ⑤민감성 → 주의문 발화 |
+| `src/formula-rules.js` | 베이스 템플릿·고민 매핑·주의문 데이터 + `recommendFor()` + 맞춤 규칙 저장소(`loadCustomRules`·`addCustomCandidate`·`removeCustomCandidate`·`resetCustomRules`·`serializeCustomRules`·`importCustomRules`) |
+| `src/views/formula.js` | 추천 패널 렌더, 칩/불러오기 핸들러, 맞춤 규칙 UI (`renderCustomRules`·`formulaRuleAdd/Remove/Reset/Export/Import`) |
+| `index.html` | `#formula-recommend` 컨테이너 + `.formula-rules-edit` details 블록 |
+| `tests/unit/formula-rules.test.js` | 매핑 무결성: ①테이블 내 모든 이름이 DB에 존재 ②banned 이름 0개 ③추천 출력에 limit 스냅샷 부착 ④빈 입력 → 빈 추천 ⑤민감성 → 주의문 발화 ⑥역할 후보 ≥5·고민 매핑 ≥5 ⑦커스텀 규칙 라운드트립·병합·필터·JSON 입출력 |
 | `sw.js` | SHELL_ASSETS에 formula-rules.js 추가 |
 
 ### 9.6 미결정·한계 (명시)
 
-- 매핑 테이블은 **큐레이션 영역** — 조제 전문가 검토로 원료 추가/교체 가능, 테이블만 수정하면 됨
-- 베이스 역할 중 DB 없는 원료(정제수·유화제·왁스)는 텍스트 안내만 — 추후 DB 보강 과제
+- 매핑 테이블은 **큐레이션 영역** — 조제 전문가 검토로 원료 추가/교체 가능, 테이블만 수정하면 됨. 사용자 단의 큐레이션 확장은 §9.7 맞춤 규칙이 담당.
+- 베이스 역할 중 DB 없는 원료(정제수·왁스)는 텍스트 안내만 — 유화제·오일·실리콘 등은 19종 보강으로 해소됨
 - 추천 로그는 재방문 지표와 별도로 수집하지 않음 (5-A 로컬 원칙 유지)
+
+### 9.7 맞춤 추천 규칙 (Custom Rules) — 사용자·외부 JSON
+
+사용자가 기본 매핑 위에 자기 후보를 얹는 계층. **추가만 병합** — 기본 규칙 삭제는 불가(초기화는 사용자분 전체 리셋).
+
+**저장 스키마** (`formula_rules`, 시험 스코프, BACKUP_KEYS 포함):
+
+```json
+{
+  "base":    { "<베이스 역할명>": ["원료명"] },
+  "concern": { "<피부 고민 키>": ["원료명"] },
+  "skin":    { "<피부 유형 키>": ["원료명"] }
+}
+```
+
+- 스코프 대상은 `customRuleTargets()`가 제공: base = BASE_TEMPLATES의 역할명 집합, concern/skin = 매핑 키
+- 키당 최대 30명 (`MAX_CUSTOM_PER_KEY`), 이름 trim·dedupe는 `sanitizeRulesObject()`가 강제
+
+**병합 시점**: `recommendFor(customer, index, custom)` — ①베이스는 역할 라벨 매칭으로 candidates에 concat 후 `filterCandidateNames` 정제(미등록·banned 제거·dedupe) ②고민·피부유형은 `seen` 수집에 같은 이유 태그로 합류. 최종 ingredients는 `type==='banned'`도 제외.
+
+**외부 JSON 포맷** (가져오기/내보내기):
+
+```json
+{ "version": 1, "base": {...}, "concern": {...}, "skin": {...} }
+```
+
+- `serializeCustomRules()` → version 포함 직렬화 / `importCustomRules(input, {merge})` → 스키마 정제 후 병합(기본) 또는 대체(`merge:false`)
+- 가져오기 결과 `{ok, added, skipped}` — 중복·한도 초과는 skipped 집계, 모두 중복이면 실패
+- version 등 메타 필드는 무시 — 스키마 외 키는 sanitize에서 자연 탈락
+
+**UI**: 계산기 패널 `<details class="formula-rules-edit">` — 대상 optgroup 셀렉트 + 원료명 입력(datalist 재사용) + 칩 목록(개별 삭제) + JSON 내보내기/가져오기 + 초기화. 추가 시 banned·미등록이면 토스트로 사전 안내.
+
+**설계 의도**: 큐레이션 매핑의 권위는 코드(기본 규칙)가 유지하고, 현장의 원료 확장은 사용자 규칙으로 흡수 — 전문가 배포용 규칙 파일을 JSON으로 공유하는 경로까지 하나의 스키마로 통일.
