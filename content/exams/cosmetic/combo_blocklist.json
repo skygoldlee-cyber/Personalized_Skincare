@@ -2,5 +2,18 @@
   "note": "검수 결과 반영 — ids/derivedFromPrefixes는 빌드에서 제외, approved는 검수 완료(양호)로 검수 큐에서 제외됨",
   "ids": [],
   "derivedFromPrefixes": [],
-  "approved": []
+  "approved": [
+    "manufacturing_combo-cluster_a0a2b8",
+    "manufacturing_combo-cluster_698fcc",
+    "safety_combo_25d4f1",
+    "safety_combo_6a8492",
+    "safety_combo-cluster_db2e10",
+    "safety_combo-cluster_40236a",
+    "safety_combo-cluster_215ca6",
+    "safety_combo-cluster_62670d",
+    "safety_combo-cluster_9a1f02",
+    "safety_combo-cluster_6957f4",
+    "understanding_combo-cluster_ed233d",
+    "understanding_combo-cluster_a1996c"
+  ]
 }
