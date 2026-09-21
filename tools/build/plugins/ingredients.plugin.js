@@ -129,6 +129,10 @@ module.exports = {
 
         const existingIdx = list.findIndex(i => i.name === name);
         if (existingIdx !== -1) {
+          // 뒤에 오는 포괄 목록(Chapter 01 등)이 고빈도 섹션의 구체 카테고리를 덮지 않도록 보존
+          if (ingredientObj.category === '사용 금지 원료' && list[existingIdx].category !== '사용 금지 원료') {
+            ingredientObj.category = list[existingIdx].category;
+          }
           list[existingIdx] = ingredientObj;
         } else {
           list.push(ingredientObj);

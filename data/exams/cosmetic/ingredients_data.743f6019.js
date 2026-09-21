@@ -886,7 +886,7 @@ var INGREDIENTS_DATA = [
     "name": "납 및 그 화합물",
     "engName": "Lead and its compounds",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "중금속 및 유해 화학물질",
     "description": "중금속 대표",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -895,7 +895,7 @@ var INGREDIENTS_DATA = [
     "name": "수은 및 그 화합물",
     "engName": "Mercury and its compounds",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "중금속 및 유해 화학물질",
     "description": "중금속 대표 / 과거 미백크림에 불법 첨가되어 금지",
     "limit": "사용 불가 (0%)",
     "tip": "미백(불법 사용)"
@@ -904,7 +904,7 @@ var INGREDIENTS_DATA = [
     "name": "비소 및 그 화합물",
     "engName": "Arsenic and its compounds",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "중금속 및 유해 화학물질",
     "description": "중금속 대표",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -913,7 +913,7 @@ var INGREDIENTS_DATA = [
     "name": "카드뮴 및 그 화합물",
     "engName": "Cadmium and its compounds",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "중금속 및 유해 화학물질",
     "description": "중금속 대표",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -922,7 +922,7 @@ var INGREDIENTS_DATA = [
     "name": "니코틴 및 그 염류",
     "engName": "Nicotine and its salts",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "의약품 및 마약류",
     "description": "마약류",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -940,7 +940,7 @@ var INGREDIENTS_DATA = [
     "name": "벤젠",
     "engName": "Benzene",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "유기 용매 및 화학물질",
     "description": "발암성 용매",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -949,7 +949,7 @@ var INGREDIENTS_DATA = [
     "name": "디옥산",
     "engName": "Dioxane",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "유기 용매 및 화학물질",
     "description": "발암성 용매",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -958,7 +958,7 @@ var INGREDIENTS_DATA = [
     "name": "디에칠렌글라이콜",
     "engName": "Diethylene Glycol (except as a non-intentional residue at 0.1% or less)",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "기타 고빈도 성분",
     "description": "(다만, 비의도적 잔류물로서 0.1% 이하인 경우는 제외)",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -967,7 +967,7 @@ var INGREDIENTS_DATA = [
     "name": "디메칠설폭사이드",
     "engName": "Dimethyl sulfoxide",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "기타 고빈도 성분",
     "description": "유기 용매",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -976,7 +976,7 @@ var INGREDIENTS_DATA = [
     "name": "1,2-디브로모에탄",
     "engName": "1,2-Dibromoethane",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "유기할로겐화물",
     "description": "유기 용매",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -985,7 +985,7 @@ var INGREDIENTS_DATA = [
     "name": "1,2-디브로모-3-클로로프로판",
     "engName": "1,2-Dibromo-3-chloropropane",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "유기할로겐화물",
     "description": "유기 용매",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -994,7 +994,7 @@ var INGREDIENTS_DATA = [
     "name": "벤조[a]피렌",
     "engName": "Benzo[a]pyrene",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "발암성 물질",
     "description": "발암성 물질 대표",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -1003,7 +1003,7 @@ var INGREDIENTS_DATA = [
     "name": "석면",
     "engName": "Asbestos",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "발암성 물질",
     "description": "발암성 물질",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -1012,7 +1012,7 @@ var INGREDIENTS_DATA = [
     "name": "미세플라스틱",
     "engName": "Microplastics",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "기타 고빈도 성분",
     "description": "환경오염물질",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -2857,7 +2857,7 @@ var INGREDIENTS_DATA = [
     "name": "니켈 및 그 화합물",
     "engName": "Nickel and its compounds",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "중금속 및 유해 화학물질",
     "description": "알레르기 유발",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -2866,7 +2866,7 @@ var INGREDIENTS_DATA = [
     "name": "베릴륨 및 그 화합물",
     "engName": "Beryllium and its compounds",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "중금속 및 유해 화학물질",
     "description": "중금속",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -2875,7 +2875,7 @@ var INGREDIENTS_DATA = [
     "name": "셀렌 및 그 화합물 (셀레늄아스파테이트 제외)",
     "engName": "Selenium and its compounds (except Selenium Aspartate)",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "중금속 및 유해 화학물질",
     "description": "중금속",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -2884,7 +2884,7 @@ var INGREDIENTS_DATA = [
     "name": "금염",
     "engName": "Gold salts",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "중금속 및 유해 화학물질",
     "description": "중금속",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -2893,7 +2893,7 @@ var INGREDIENTS_DATA = [
     "name": "메탄올",
     "engName": "Methanol",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "유기 용매 및 화학물질",
     "description": "변성제로서만 알코올 중 5%까지 허용",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -2902,7 +2902,7 @@ var INGREDIENTS_DATA = [
     "name": "디클로로에탄(에칠렌클로라이드)",
     "engName": "Dichloroethane (Ethylene chloride)",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "유기 용매 및 화학물질",
     "description": "발암성 용매",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -2911,7 +2911,7 @@ var INGREDIENTS_DATA = [
     "name": "디클로로에칠렌(아세틸렌클로라이드)",
     "engName": "Dichloroethylene (Acetylene chloride) (e.g. Vinylidene chloride)",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "유기 용매 및 화학물질",
     "description": "(예 비닐리덴클로라이드)",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -2920,7 +2920,7 @@ var INGREDIENTS_DATA = [
     "name": "디에칠설페이트",
     "engName": "Diethyl sulfate",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "유기 용매 및 화학물질",
     "description": "유기 용매",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -2929,7 +2929,7 @@ var INGREDIENTS_DATA = [
     "name": "벤즈[a]안트라센",
     "engName": "Benz[a]anthracene",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "발암성 물질",
     "description": "발암성 물질",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -2938,7 +2938,7 @@ var INGREDIENTS_DATA = [
     "name": "디벤즈[a,h]안트라센",
     "engName": "Dibenz[a,h]anthracene",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "발암성 물질",
     "description": "발암성 물질",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -2947,7 +2947,7 @@ var INGREDIENTS_DATA = [
     "name": "날로르핀, 그 염류 및 에텔",
     "engName": "Nalorphine, its salts and ethers",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "의약품 및 마약류",
     "description": "마약류",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -2956,7 +2956,7 @@ var INGREDIENTS_DATA = [
     "name": "노스카핀 및 그 염류",
     "engName": "Noscapine and its salts",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "의약품 및 마약류",
     "description": "진해제",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -2965,7 +2965,7 @@ var INGREDIENTS_DATA = [
     "name": "글루코코르티코이드",
     "engName": "Glucocorticoids",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "의약품 및 마약류",
     "description": "스테로이드 / 진정·항염 목적 불법 첨가 사례 다수",
     "limit": "사용 불가 (0%)",
     "tip": "항염·진정(사용금지)"
@@ -2974,7 +2974,7 @@ var INGREDIENTS_DATA = [
     "name": "리도카인",
     "engName": "Lidocaine",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "의약품 및 마약류",
     "description": "마취제",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -2983,7 +2983,7 @@ var INGREDIENTS_DATA = [
     "name": "마취제(천연 및 합성)",
     "engName": "Anesthetics (natural and synthetic)",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "의약품 및 마약류",
     "description": "복합화합물",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -2992,7 +2992,7 @@ var INGREDIENTS_DATA = [
     "name": "2,7-나프탈렌디올 및 그 염류",
     "engName": "2,7-Naphthalenediol and its salts",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "염모제 관련",
     "description": "(다만, 2,7-나프탈렌디올은 염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.0% 이하 제외)",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -3001,7 +3001,7 @@ var INGREDIENTS_DATA = [
     "name": "1-나프톨 및 그 염류",
     "engName": "1-Naphthol and its salts",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "염모제 관련",
     "description": "(다만, 1-나프톨은 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 2.0% 이하는 제외)",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -3010,7 +3010,7 @@ var INGREDIENTS_DATA = [
     "name": "1,5-디-(베타-하이드록시에칠)아미노-2-니트로-4-클로로벤젠 및 그 염류",
     "engName": "1,5-Di-(beta-hydroxyethyl)amino-2-nitro-4-chlorobenzene and its salts",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "염모제 관련",
     "description": "(다만, 비산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.1% 이하는 제외)",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -3019,7 +3019,7 @@ var INGREDIENTS_DATA = [
     "name": "2,6-디메톡시-3,5-피리딘디아민 하이드로클롤로라이드",
     "engName": "2,6-Dimethoxy-3,5-pyridinediamine HCl",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "염모제 관련",
     "description": "산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.25% 이하 제외",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -3028,7 +3028,7 @@ var INGREDIENTS_DATA = [
     "name": "2,4-디아미노페녹시에탄올 하이드로클로라이드",
     "engName": "2,4-Diaminophenoxyethanol HCl",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "염모제 관련",
     "description": "산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.5% 이하 제외",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -3037,7 +3037,7 @@ var INGREDIENTS_DATA = [
     "name": "돼지폐 추출물",
     "engName": "Pig Lung Extract",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "동물성 원료",
     "description": "동물성 원료",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -3046,7 +3046,7 @@ var INGREDIENTS_DATA = [
     "name": "경막(dura mater)",
     "engName": "Dura mater",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "동물성 원료",
     "description": "동물성 원료",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -3055,7 +3055,7 @@ var INGREDIENTS_DATA = [
     "name": "삼차신경(trigeminal ganglia)",
     "engName": "Trigeminal ganglia",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "동물성 원료",
     "description": "동물성 원료",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -3064,7 +3064,7 @@ var INGREDIENTS_DATA = [
     "name": "척주(vertebral column)",
     "engName": "Vertebral column",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "동물성 원료",
     "description": "동물성 원료",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -3073,7 +3073,7 @@ var INGREDIENTS_DATA = [
     "name": "편도(tonsil)",
     "engName": "Tonsil",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "동물성 원료",
     "description": "동물성 원료",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -3082,7 +3082,7 @@ var INGREDIENTS_DATA = [
     "name": "십이지장에서 직장까지의 장관(intestines from the duodenum to the rectum)",
     "engName": "Intestines from the duodenum to the rectum",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "동물성 원료",
     "description": "동물성 원료",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -3091,7 +3091,7 @@ var INGREDIENTS_DATA = [
     "name": "비장(spleen)",
     "engName": "Spleen",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "동물성 원료",
     "description": "동물성 원료",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -3100,7 +3100,7 @@ var INGREDIENTS_DATA = [
     "name": "부신(adrenal gland)",
     "engName": "Adrenal gland",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "동물성 원료",
     "description": "동물성 원료",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -3109,7 +3109,7 @@ var INGREDIENTS_DATA = [
     "name": "두개골(skull)",
     "engName": "Skull",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "동물성 원료",
     "description": "동물성 원료",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -3118,7 +3118,7 @@ var INGREDIENTS_DATA = [
     "name": "뇌척수액(cerebrospinal fluid)",
     "engName": "Cerebrospinal fluid",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "동물성 원료",
     "description": "동물성 원료",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -3127,7 +3127,7 @@ var INGREDIENTS_DATA = [
     "name": "하수체(pituitary gland)",
     "engName": "Pituitary gland",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "동물성 원료",
     "description": "동물성 원료",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -3136,7 +3136,7 @@ var INGREDIENTS_DATA = [
     "name": "눈(eye)",
     "engName": "Eye",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "동물성 원료",
     "description": "동물성 원료",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -3145,7 +3145,7 @@ var INGREDIENTS_DATA = [
     "name": "배측근신경절(dorsal root ganglia)",
     "engName": "Dorsal root ganglia",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "동물성 원료",
     "description": "동물성 원료",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -3154,7 +3154,7 @@ var INGREDIENTS_DATA = [
     "name": "림프절(lymph nodes)",
     "engName": "Lymph nodes",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "동물성 원료",
     "description": "동물성 원료",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -3163,7 +3163,7 @@ var INGREDIENTS_DATA = [
     "name": "흉선(thymus)",
     "engName": "Thymus",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "동물성 원료",
     "description": "동물성 원료",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -3172,7 +3172,7 @@ var INGREDIENTS_DATA = [
     "name": "태반(placenta)",
     "engName": "Placenta",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "동물성 원료",
     "description": "동물성 원료",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -3181,7 +3181,7 @@ var INGREDIENTS_DATA = [
     "name": "디클로로벤지딘",
     "engName": "Dichlorobenzidine",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "기타 고빈도 성분",
     "description": "니트로계 화합물",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
@@ -3190,7 +3190,7 @@ var INGREDIENTS_DATA = [
     "name": "니트로벤젠",
     "engName": "Nitrobenzene",
     "type": "banned",
-    "category": "사용 금지 원료",
+    "category": "기타 고빈도 성분",
     "description": "발암성 용매",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."

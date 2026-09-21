@@ -922,13 +922,20 @@ function checkIngredientsUpdate() {
             const prevNote = history.length
                 ? `\n\n이전 개정:\n${history.slice(0, 3).map(h => `· v${h.version} (${h.updatedAt || '—'}) ${h.notice || ''}`).join('\n')}`
                 : '';
-            showAlert(`원료 데이터베이스가${version}로 갱신되었습니다.${notice}${count}${prevNote}`, '원료 DB 갱신');
-            safeSetItem(STORAGE_KEYS.INGREDIENTS_DB_NOTIFIED, hash);
+            // 확인 플래그는 사용자가 모달을 실제로 닫은 뒤에만 기록한다.
+            // (SW 업데이트 리로드 등으로 모달이 조기 소실되면 다음 방문에 다시 고지)
+            showAlert(`원료 데이터베이스가${version}로 갱신되었습니다.${notice}${count}${prevNote}`, '원료 DB 갱신')
+                .then(() => {
+                    safeSetItem(STORAGE_KEYS.INGREDIENTS_DB_NOTIFIED, hash);
+                    safeSetItem(STORAGE_KEYS.INGREDIENTS_HASH, hash);
+                })
+                .catch(() => {});
         } else if (prev === null) {
             // 신규 사용자: 현재 버전을 '이미 확인한 것'으로 기록해 향후 오발화 방지
             safeSetItem(STORAGE_KEYS.INGREDIENTS_DB_NOTIFIED, hash);
+        } else if (prev !== hash) {
+            safeSetItem(STORAGE_KEYS.INGREDIENTS_HASH, hash);
         }
-        if (prev !== hash) safeSetItem(STORAGE_KEYS.INGREDIENTS_HASH, hash);
     } catch (e) { /* 알림 실패가 초기화를 막지 않도록 무시 */ }
 }
 

@@ -2,7 +2,7 @@
 var DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2026",
-  "generatedAt": "2026-09-21T17:11:55.331Z",
+  "generatedAt": "2026-09-21T17:33:40.857Z",
   "subjects": [
     {
       "key": "law",
@@ -93,9 +93,9 @@ var DATA_REGISTRY = {
       "part": 1,
       "title": "화장품 제조 및 품질관리 (250제)",
       "file": "과목2_단일정답형.md",
-      "bundle": "./data/exams/cosmetic/exams/subject2.1e96cbd5.js",
+      "bundle": "./data/exams/cosmetic/exams/subject2.a7f4f192.js",
       "global": "EXAM_DATA_subject2",
-      "contentHash": "1e96cbd5",
+      "contentHash": "a7f4f192",
       "stats": {
         "questions": 250
       }
@@ -128,13 +128,18 @@ var DATA_REGISTRY = {
     }
   ],
   "ingredients": {
-    "bundle": "./data/exams/cosmetic/ingredients_data.2141c989.js",
+    "bundle": "./data/exams/cosmetic/ingredients_data.743f6019.js",
     "global": "INGREDIENTS_DATA",
-    "contentHash": "2141c989",
-    "version": "2026.09.3",
+    "contentHash": "743f6019",
+    "version": "2026.09.4",
     "updatedAt": "2026-09-22",
-    "notice": "원료 표 스키마 통일 (11컬럼 표준) · 감사 표가 덮어쓰던 4종 한도·INCI 복원 · 별표1 주요항목 설명 6건 보충",
+    "notice": "금지 원료 카테고리 세분화 — 고빈도 52종이 '사용 금지 원료' 대신 섹션 분류(중금속·발암성·의약품/마약류·염모제·동물성 원료 등)로 표시",
     "history": [
+      {
+        "version": "2026.09.3",
+        "updatedAt": "2026-09-22",
+        "notice": "원료 표 스키마 통일 (11컬럼 표준) · 감사 표가 덮어쓰던 4종 한도·INCI 복원 · 별표1 주요항목 설명 6건 보충"
+      },
       {
         "version": "2026.09.2",
         "updatedAt": "2026-09-22",
