@@ -625,6 +625,15 @@
     font-weight: var(--font-weight-medium);
 }
 
+.dict-detail-item--col {
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.dict-detail-item--col .dict-detail-value {
+    text-align: left;
+}
+
 .dict-card-tip {
     font-size: var(--text-sm-md);
     background: var(--bg-subtle);

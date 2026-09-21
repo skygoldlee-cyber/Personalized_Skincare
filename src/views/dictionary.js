@@ -145,7 +145,7 @@ function createIngredientCard(ing) {
         <div class="dict-card-subtitle">${esc(ing.engName || '영문명 없음')}</div>
         <div class="dict-card-details is-hidden">
             <div class="dict-detail-item"><span class="dict-detail-label">카테고리</span><span class="dict-detail-value">${esc(ing.category || '기타')}</span></div>
-            <div class="dict-detail-item"><span class="dict-detail-label">설명/특성</span><span class="dict-detail-value">${esc(ing.description || '-')}</span></div>
+            <div class="dict-detail-item dict-detail-item--col"><span class="dict-detail-label">설명/특성</span><span class="dict-detail-value">${esc(ing.description || '-')}</span></div>
             <div class="dict-detail-item"><span class="dict-detail-label">배합 한도</span><span class="dict-detail-value">${esc(ing.limit || '제한 없음')}</span></div>
             ${ing.tip ? `<div class="dict-card-tip">💡 <strong>TIP:</strong> ${esc(ing.tip)}</div>` : ''}
             ${hasFeature('formula') ? `<button class="btn btn-primary btn-sm dict-add-btn" data-click="formulaAddIngredient" data-arg="${esc(ing.name)}"><i class="fa-solid fa-plus" aria-hidden="true"></i> 포뮬러에 추가</button>` : ''}
