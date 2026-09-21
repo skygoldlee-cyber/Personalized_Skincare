@@ -2,7 +2,7 @@
 var DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2026",
-  "generatedAt": "2026-09-21T13:19:56.284Z",
+  "generatedAt": "2026-09-21T13:23:03.462Z",
   "subjects": [
     {
       "key": "law",
@@ -128,9 +128,9 @@ var DATA_REGISTRY = {
     }
   ],
   "ingredients": {
-    "bundle": "./data/exams/cosmetic/ingredients_data.6082969f.js",
+    "bundle": "./data/exams/cosmetic/ingredients_data.5083b04f.js",
     "global": "INGREDIENTS_DATA",
-    "contentHash": "6082969f",
+    "contentHash": "5083b04f",
     "stats": {
       "count": 1376
     }

@@ -2040,7 +2040,7 @@ var INGREDIENTS_DATA = [
     "type": "restricted",
     "category": "염모제",
     "description": "사용 제한 필요한 원료",
-    "limit": "산화염모제에 0.5%",
+    "limit": "산화염모제에 0.02%",
     "tip": "기타 제품에는 사용금지"
   },
   {
