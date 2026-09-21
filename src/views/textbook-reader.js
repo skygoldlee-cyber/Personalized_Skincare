@@ -663,7 +663,7 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
             <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.55rem;">
                 <i class="fa-solid fa-circle-play" style="color: var(--color-primary);"></i>
                 <span id="reader-audio-now-playing" style="color: var(--color-text-main); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></span>
-                <span id="reader-audio-status" style="margin-left: auto; font-size: 0.78rem; color: var(--warning); display: none;"></span>
+                <span id="reader-audio-status" class="is-hidden" style="margin-left: auto; font-size: 0.78rem; color: var(--warning);"></span>
             </div>
             <div id="reader-audio-controls" style="display: flex; align-items: center; gap: 0.6rem;">
                 <button id="reader-audio-playpause-btn" class="btn btn-secondary" data-click="toggleReaderPlayPause" title="재생" style="display: inline-flex; align-items: center; justify-content: center; width: 2rem; height: 2rem; padding: 0; border-radius: 50%; flex-shrink: 0;">

@@ -189,7 +189,7 @@ function showDailyModal() {
                 <div id="daily-modal-answer-area" style="margin-bottom: 2rem;">
                 </div>
                 
-                <div class="quiz-feedback" id="daily-modal-feedback" style="display: none; margin-bottom: 2rem; padding: 1.25rem;">
+                <div class="quiz-feedback is-hidden" id="daily-modal-feedback" style="margin-bottom: 2rem; padding: 1.25rem;">
                     <div class="feedback-icon" id="daily-modal-feedback-icon"><i class="fa-solid fa-check"></i></div>
                     <div class="feedback-content">
                         <h4 id="daily-modal-feedback-title">정답입니다!</h4>
@@ -199,7 +199,7 @@ function showDailyModal() {
                 
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <button class="btn btn-secondary" data-click="closeDailyModal"><i class="fa-solid fa-xmark"></i> 나가기</button>
-                    <button id="daily-modal-next-btn" class="btn btn-success" style="display: none;" data-click="nextDailyStep">다음 단계 <i class="fa-solid fa-arrow-right"></i></button>
+                    <button id="daily-modal-next-btn" class="btn btn-success is-hidden" data-click="nextDailyStep">다음 단계 <i class="fa-solid fa-arrow-right"></i></button>
                 </div>
             </div>
         </div>

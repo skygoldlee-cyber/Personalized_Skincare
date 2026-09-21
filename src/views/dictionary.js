@@ -143,7 +143,7 @@ function createIngredientCard(ing) {
             <span class="dict-badge ${ing.type}">${badgeText}</span>
         </div>
         <div class="dict-card-subtitle">${esc(ing.engName || '영문명 없음')}</div>
-        <div class="dict-card-details" style="display: none;">
+        <div class="dict-card-details is-hidden">
             <div class="dict-detail-item"><span class="dict-detail-label">카테고리</span><span class="dict-detail-value">${esc(ing.category || '기타')}</span></div>
             <div class="dict-detail-item"><span class="dict-detail-label">설명/특성</span><span class="dict-detail-value">${esc(ing.description || '-')}</span></div>
             <div class="dict-detail-item"><span class="dict-detail-label">배합 한도</span><span class="dict-detail-value">${esc(ing.limit || '제한 없음')}</span></div>

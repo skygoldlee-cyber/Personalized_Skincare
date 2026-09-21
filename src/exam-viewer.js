@@ -191,7 +191,7 @@ body.exam-open{overflow:hidden;}
                 <button type="button" class="exam-ov-btn" data-exam-close aria-label="닫기">
                     <i class="fa-solid fa-xmark"></i> 닫기
                 </button>
-                <button type="button" class="exam-ov-btn" data-exam-back aria-label="이전 문서로" style="display:none">
+                <button type="button" class="exam-ov-btn is-hidden" data-exam-back aria-label="이전 문서로">
                     <i class="fa-solid fa-arrow-left"></i> 뒤로
                 </button>
                 <div class="exam-ov-title" id="exam-ov-title" role="heading" aria-level="1"></div>
