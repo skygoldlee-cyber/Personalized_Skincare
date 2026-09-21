@@ -2306,7 +2306,8 @@ body.landscape-mode .glass-card {
 }
 
 /* 6) 테마 토글 버튼 아이콘 미세 정렬 */
-#theme-toggle-btn {
+#theme-toggle-btn,
+#settings-toggle-btn {
     padding: var(--space-2);
     min-width: 40px;
     justify-content: center;

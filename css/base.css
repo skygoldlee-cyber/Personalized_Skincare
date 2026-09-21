@@ -742,6 +742,13 @@ body {
     color: var(--color-text-muted);
 }
 
+/* 헤더 액션 버튼 행 — PC에서도 가로 배치 (기존엔 모바일 미디어쿼리에서만 flex) */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
 /* 설정 메뉴 — 헤더 우측 ⚙️ 드롭다운 (백업/초기화 등 관리 기능 통합) */
 .settings-menu {
     position: relative;
