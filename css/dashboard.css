@@ -487,11 +487,6 @@
     font-weight: var(--font-weight-bold, 600);
 }
 
-/* 사이드바 시험 전환 버튼 */
-.exam-switch-btn {
-    width: 100%;
-}
-
 /* 대시보드 상세 분석 접이식 — 기본 접힘으로 첫 화면 복잡도 완화 */
 .analysis-fold {
     margin-top: var(--space-5);
