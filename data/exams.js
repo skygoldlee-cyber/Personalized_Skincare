@@ -2,15 +2,13 @@
 // 원본: content/exams.json (생성: node tools/build_exams_list.js)
 var EXAMS_LIST = {
   "schemaVersion": 1,
-  "note": "시험 레지스트리 — 새 시험은 이 파일에 엔트리를 추가하고 content/exams/<id>/ + data/exams/<id>/ 구조로 콘텐츠를 배치한다. 주의: data/exams/ 는 현재 문제집 번들(subjectN.<hash>.js)도 담고 있으므로, 신규 시험 id가 파일명과 충돌하지 않도록 확인한다 (공존은 가능하나 혼동 방지). data/exams.js 는 tools/build_exams_list.js가 이 파일에서 생성한다.",
+  "note": "시험 레지스트리 — 새 시험은 이 파일에 엔트리를 추가하고 content/exams/<id>/ + data/exams/<id>/ 구조로 콘텐츠를 배치한다 (모든 시험이 대칭 구조). data/exams.js 는 tools/build_exams_list.js가 이 파일에서 생성한다.",
   "exams": [
     {
       "id": "cosmetic",
       "name": "맞춤형화장품 조제관리사",
       "shortName": "조제관리사",
       "title": "맞춤형화장품 조제관리사 스마트 학습 플랫폼",
-      "logoMain": "Cosmetic",
-      "logoSub": "Pass Master",
       "desc": "화장품법·제조·품질관리·안전관리·맞춤형화장품 4과목 · 문제은행 1,000문",
       "icon": "fa-solid fa-wand-magic-sparkles",
       "year": "2026",
