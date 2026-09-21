@@ -860,6 +860,7 @@ const DELEGATED_HANDLERS = {
     formulaSortPhase, formulaStepAdd, formulaStepRemove,
     formulaPrint, formulaExportJson, formulaCardExport, formulaImportJson,
     formulaAllergyAdd, formulaAllergyRemove, formulaOpenCustomer,
+    showIngredientsChangelog,
     /** 복수정답형 모의고사 문항 수 선택 행 토글 — 다른 과목의 열린 행은 닫는다 */
     toggleComboPicker(rowId) {
         const row = document.getElementById(rowId);
@@ -917,7 +918,11 @@ function checkIngredientsUpdate() {
             const version = meta.version ? ` v${meta.version}` : '';
             const notice = meta.notice ? `\n\n갱신 내역: ${meta.notice}` : '';
             const count = meta.stats && meta.stats.count ? `\n수록 원료 ${meta.stats.count}종 · 성분 사전과 Formula OS 규정 검증이 최신 기준으로 적용됩니다.` : '';
-            showAlert(`원료 데이터베이스가${version}로 갱신되었습니다.${notice}${count}`, '원료 DB 갱신');
+            const history = Array.isArray(meta.history) ? meta.history : [];
+            const prevNote = history.length
+                ? `\n\n이전 개정:\n${history.slice(0, 3).map(h => `· v${h.version} (${h.updatedAt || '—'}) ${h.notice || ''}`).join('\n')}`
+                : '';
+            showAlert(`원료 데이터베이스가${version}로 갱신되었습니다.${notice}${count}${prevNote}`, '원료 DB 갱신');
             safeSetItem(STORAGE_KEYS.INGREDIENTS_DB_NOTIFIED, hash);
         } else if (prev === null) {
             // 신규 사용자: 현재 버전을 '이미 확인한 것'으로 기록해 향후 오발화 방지
@@ -925,6 +930,21 @@ function checkIngredientsUpdate() {
         }
         if (prev !== hash) safeSetItem(STORAGE_KEYS.INGREDIENTS_HASH, hash);
     } catch (e) { /* 알림 실패가 초기화를 막지 않도록 무시 */ }
+}
+
+/** 성분 사전 버전 배지 탭 → 원료 DB 버전 이력 모달 (현재 버전 + 누적 개정 내역) */
+function showIngredientsChangelog() {
+    const meta = (DataLoader.registry && DataLoader.registry.ingredients) || null;
+    if (!meta || !meta.version) { showToast('원료 DB 버전 정보가 없습니다.', 'info'); return; }
+    const lines = [`현재: v${meta.version} (${meta.updatedAt || '—'})`];
+    if (meta.notice) lines.push(`  ${meta.notice}`);
+    const history = Array.isArray(meta.history) ? meta.history : [];
+    if (history.length) {
+        lines.push('', '이전 개정:');
+        history.forEach(h => lines.push(`· v${h.version} (${h.updatedAt || '—'}) ${h.notice || ''}`));
+    }
+    if (meta.stats && meta.stats.count) lines.push('', `수록 원료 ${meta.stats.count}종`);
+    showAlert(lines.join('\n'), '원료 DB 버전 이력');
 }
 
 /** 활성 시험의 features 플래그에 따라 도메인 특화 UI 숨김 (data-feature 속성 기반) */

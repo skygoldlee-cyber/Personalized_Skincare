@@ -392,7 +392,12 @@ function main() {
         bundle: `./${EXAM_DATA_ROOT}/${outputFilename}`,
         global: 'INGREDIENTS_DATA',
         contentHash: hash,
-        ...(dbMeta.version ? { version: dbMeta.version, updatedAt: dbMeta.updatedAt || null, notice: dbMeta.notice || '' } : {}),
+        ...(dbMeta.version ? {
+          version: dbMeta.version,
+          updatedAt: dbMeta.updatedAt || null,
+          notice: dbMeta.notice || '',
+          history: Array.isArray(dbMeta.history) ? dbMeta.history : []
+        } : {}),
         stats: { count: data.length }
       };
 

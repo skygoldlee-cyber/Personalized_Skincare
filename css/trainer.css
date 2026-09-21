@@ -636,10 +636,11 @@
     line-height: 1.4;
 }
 
-/* 원료 DB 버전 배지 */
+/* 원료 DB 버전 배지 (버튼 — 탭하면 버전 이력 모달) */
 .dict-db-version {
     display: inline-block;
     font-size: var(--font-size-xs);
+    font-family: inherit;
     color: var(--color-text-muted);
     background: var(--bg-subtle);
     border: 1px solid var(--border-color);
@@ -647,7 +648,10 @@
     padding: 1px 8px;
     margin-left: var(--space-1);
     vertical-align: middle;
+    cursor: pointer;
 }
+.dict-db-version:hover { color: var(--color-text-main); border-color: var(--color-primary); }
+.dict-db-version:empty { display: none; }
 
 /* Category Active Filter Button */
 .dict-filter-buttons .btn.active-filter {
