@@ -893,18 +893,30 @@ function applyExamBranding() {
  * 정정/개정 배포로 바뀐 경우 1회 알림을 띄운다. 최초 방문(저장값 없음)은 조용히 기록만 한다.
  * contentHash는 원료 파일 내용의 해시라 배포 시점이 아니라 실제 데이터 변경 때만 발화한다.
  */
+// 기존 사용자 식별용 — 실제 사용으로만 생성되는 진행 데이터 키들 (알림 기능 도입 전 사용자 구분)
+const RETURNING_USER_KEYS = [
+    STORAGE_KEYS.QUIZ_RESULTS, STORAGE_KEYS.STUDY_CALENDAR, STORAGE_KEYS.STUDY_STREAK,
+    STORAGE_KEYS.FC_MEMORIZED, STORAGE_KEYS.FC_SPACED_REPETITION,
+    STORAGE_KEYS.SIM_RESULTS_HISTORY, STORAGE_KEYS.FORMULA_ITEMS, STORAGE_KEYS.READER_LAST_POSITION
+];
+
 function checkIngredientsUpdate() {
     const meta = (DataLoader.registry && DataLoader.registry.ingredients) || null;
     const hash = meta && meta.contentHash;
     if (!hash) return;
     try {
         const prev = safeGetItem(STORAGE_KEYS.INGREDIENTS_HASH);
-        if (prev && prev !== hash) {
-            const count = meta.stats && meta.stats.count ? ` ${meta.stats.count}종` : '';
+        const notified = safeGetItem(STORAGE_KEYS.INGREDIENTS_DB_NOTIFIED) === '1';
+        // 알림 미수신 + 진행 데이터 존재 = 기능 도입 전부터 쓰던 기존 사용자 → 현재 버전을 '신규'로 1회 고지
+        const isReturningUser = RETURNING_USER_KEYS.some(k => safeGetItem(k) !== null);
+        if ((prev && prev !== hash) || (!notified && isReturningUser)) {
             const version = meta.version ? ` v${meta.version}` : '';
-            showToast(`원료 데이터베이스${version}가 갱신되었습니다 — 규정 검증·성분 사전이 최신 기준입니다 (원료${count})`, 'info');
+            const notice = meta.notice ? ` — ${meta.notice}` : '';
+            const count = meta.stats && meta.stats.count ? ` (원료 ${meta.stats.count}종)` : '';
+            showToast(`원료 데이터베이스가${version}로 갱신되었습니다${notice}${count}`, 'info');
+            safeSetItem(STORAGE_KEYS.INGREDIENTS_DB_NOTIFIED, '1');
         }
-        safeSetItem(STORAGE_KEYS.INGREDIENTS_HASH, hash);
+        if (prev !== hash) safeSetItem(STORAGE_KEYS.INGREDIENTS_HASH, hash);
     } catch (e) { /* 알림 실패가 초기화를 막지 않도록 무시 */ }
 }
 

@@ -45,6 +45,8 @@ export const STORAGE_KEYS = {
 
   // 원료 DB 갱신 감지 — 마지막으로 본 ingredients contentHash (기기 로컬 마커, 백업 제외)
   INGREDIENTS_HASH: 'ingredients_hash',
+  // 원료 DB 갱신 알림 수신 여부 ('1' = 1회 고지 완료 — 기존 사용자 마이그레이션용)
+  INGREDIENTS_DB_NOTIFIED: 'ingredients_db_notified',
 
   // 교재 리더
   READER_LAST_POSITION: 'readerLastPosition',
