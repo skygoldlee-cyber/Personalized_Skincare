@@ -118,12 +118,20 @@ import {
     formulaCalcSave,
     formulaAddIngredient,
     formulaRecAdd,
+    formulaRecAddBase,
     formulaLoadBase,
     formulaRuleAdd,
     formulaRuleRemove,
     formulaRuleReset,
     formulaRuleExport,
-    formulaRuleImport
+    formulaRuleImport,
+    formulaSortPhase,
+    formulaStepAdd,
+    formulaStepRemove,
+    formulaPrint,
+    formulaExportJson,
+    formulaCardExport,
+    formulaImportJson
 } from './views/formula.js';
 import { recordStudyActivity } from './study-tracker.js';
 import {
@@ -842,9 +850,11 @@ const DELEGATED_HANDLERS = {
     openFormulaList, openFormulaCalc, openIngredientDict, exitFormulaSubView,
     formulaNew, formulaOpen, formulaDuplicate, formulaDelete,
     formulaCalcAddRow, formulaCalcRemoveRow, formulaCalcSave, formulaAddIngredient,
-    formulaRecAdd, formulaLoadBase,
+    formulaRecAdd, formulaRecAddBase, formulaLoadBase,
     formulaRuleAdd, formulaRuleRemove, formulaRuleReset,
     formulaRuleExport, formulaRuleImport,
+    formulaSortPhase, formulaStepAdd, formulaStepRemove,
+    formulaPrint, formulaExportJson, formulaCardExport, formulaImportJson,
     /** 복수정답형 모의고사 문항 수 선택 행 토글 — 다른 과목의 열린 행은 닫는다 */
     toggleComboPicker(rowId) {
         const row = document.getElementById(rowId);

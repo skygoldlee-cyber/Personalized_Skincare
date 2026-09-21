@@ -127,11 +127,11 @@
     color: var(--color-text-muted);
 }
 
-/* 원료 행 그리드 */
+/* 원료 행 그리드 — 원료명|배합률|단계|투입량|검증|삭제 */
 .formula-rows-head,
 .f-row {
     display: grid;
-    grid-template-columns: minmax(140px, 1fr) 90px 90px minmax(90px, auto) 36px;
+    grid-template-columns: minmax(140px, 1fr) 90px 104px 90px minmax(90px, auto) 36px;
     gap: 0.5rem;
     align-items: center;
 }
@@ -148,7 +148,8 @@
 }
 
 .f-row .f-name,
-.f-row .f-conc {
+.f-row .f-conc,
+.f-row .f-phase {
     width: 100%;
     padding: 0.55rem 0.7rem;
     border-radius: var(--radius-sm);
@@ -159,8 +160,14 @@
     font-size: 0.9rem;
     outline: none;
 }
+.f-row .f-phase {
+    padding: 0.55rem 0.35rem;
+    font-size: 0.82rem;
+    cursor: pointer;
+}
 .f-row .f-name:focus,
-.f-row .f-conc:focus {
+.f-row .f-conc:focus,
+.f-row .f-phase:focus {
     border-color: var(--color-primary);
 }
 .f-row .f-amount {
@@ -190,15 +197,68 @@
 .formula-rows-foot {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     flex-wrap: wrap;
     gap: 0.6rem;
+}
+.formula-foot-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
 }
 .formula-sum {
     font-size: 0.88rem;
     color: var(--color-text-muted);
+    text-align: right;
 }
 .formula-sum strong { color: var(--color-text-main); }
+.formula-sum-badge {
+    display: inline-block;
+    margin-left: 0.35rem;
+}
+.formula-sum-badge:empty { display: none; }
+.formula-phase-sums {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    margin-top: 0.25rem;
+}
+.formula-phase-sums:empty { display: none; }
+
+/* 제조 절차 단계 목록 */
+.formula-steps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 0.6rem;
+}
+.formula-step-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.formula-step-no {
+    flex: 0 0 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--secondary-tint-12);
+    color: var(--color-secondary);
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-bold);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.formula-step-row .f-step { flex: 1; }
+
+.formula-actions-row {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-top: 0.6rem;
+}
+
+/* 인쇄 전용 조제 기록지 — 화면에서는 숨김 (print.css에서 formula-printing 시 표시) */
+#formula-print-area { display: none; }
 
 .formula-save-row {
     display: flex;
@@ -448,13 +508,14 @@
         grid-template-areas:
             "name name del"
             "conc amount del"
-            "check check check";
+            "phase check check";
         padding: 0.6rem;
         border: 1px solid var(--border-color);
         border-radius: var(--radius-sm);
     }
     .f-row .f-name { grid-area: name; }
     .f-row .f-conc { grid-area: conc; }
+    .f-row .f-phase { grid-area: phase; }
     .f-row .f-amount { grid-area: amount; }
     .f-row .f-check-cell { grid-area: check; }
     .f-row .f-del { grid-area: del; }

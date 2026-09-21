@@ -14,21 +14,24 @@ import {
 } from '../formula-check.js';
 import {
   listFormulas, getFormula, createFormula, updateFormula,
-  deleteFormula, duplicateFormula, getFormulaUsage,
-  CUSTOMER_OPTIONS,
+  deleteFormula, duplicateFormula, getFormulaUsage, calcAmounts,
+  CUSTOMER_OPTIONS, PHASE_OPTIONS,
+  serializeFormula, importFormula,
 } from '../formula-store.js';
 import {
   recommendFor, baseDefaultCandidates,
   loadCustomRules, addCustomCandidate, removeCustomCandidate,
   resetCustomRules, customRuleTargets,
   serializeCustomRules, importCustomRules,
+  ROLE_PHASE,
 } from '../formula-rules.js';
 
 const PANELS = ['formula-menu-panel', 'formula-list-panel', 'formula-calc-panel'];
 
 // 계산기 드래프트 상태 (저장 전 작업 데이터)
 const calc = {
-  rows: [{ name: '', concentration: null }],
+  rows: [{ name: '', concentration: null, phase: '' }],
+  steps: [],
   editingId: null,   // null이면 신규, id면 기존 포뮬러 수정
 };
 
@@ -81,7 +84,7 @@ export function formulaAddIngredient(name) {
   if (last && !last.name) {
     last.name = trimmed;
   } else {
-    calc.rows.push({ name: trimmed, concentration: null });
+    calc.rows.push({ name: trimmed, concentration: null, phase: '' });
   }
   // 사전 등 다른 뷰에서 호출될 수 있으므로 formula-view로 전환 후 계산기 표시
   switchView('formula-view');
@@ -158,6 +161,7 @@ export function openFormulaList() {
         <div class="formula-card-actions">
           <button class="btn btn-primary btn-sm" data-click="formulaOpen" data-arg="${esc(f.id)}"><i class="fa-solid fa-calculator" aria-hidden="true"></i> 열기</button>
           <button class="btn btn-secondary btn-sm" data-click="formulaDuplicate" data-arg="${esc(f.id)}"><i class="fa-solid fa-copy" aria-hidden="true"></i> 복제</button>
+          <button class="btn btn-secondary btn-sm" data-click="formulaCardExport" data-arg="${esc(f.id)}" title="JSON 파일로보내기"><i class="fa-solid fa-file-export" aria-hidden="true"></i> 보내기</button>
           <button class="btn btn-secondary btn-sm f-danger" data-click="formulaDelete" data-arg="${esc(f.id)}"><i class="fa-solid fa-trash" aria-hidden="true"></i> 삭제</button>
         </div>
       </div>`;
@@ -165,7 +169,8 @@ export function openFormulaList() {
 }
 
 export function formulaNew() {
-  calc.rows = [{ name: '', concentration: null }];
+  calc.rows = [{ name: '', concentration: null, phase: '' }];
+  calc.steps = [];
   calc.editingId = null;
   openFormulaCalc();
 }
@@ -173,8 +178,9 @@ export function formulaNew() {
 export function formulaOpen(id) {
   const f = getFormula(id);
   if (!f) { showToast('포뮬러를 찾을 수 없습니다.', 'error'); return; }
-  calc.rows = (f.ingredients || []).map(i => ({ name: i.name, concentration: i.concentration }));
-  if (!calc.rows.length) calc.rows = [{ name: '', concentration: null }];
+  calc.rows = (f.ingredients || []).map(i => ({ name: i.name, concentration: i.concentration, phase: i.phase || '' }));
+  if (!calc.rows.length) calc.rows = [{ name: '', concentration: null, phase: '' }];
+  calc.steps = Array.isArray(f.steps) ? f.steps.slice() : [];
   calc.editingId = f.id;
   openFormulaCalc(f);
 }
@@ -204,9 +210,14 @@ export function formulaDelete(id) {
 function readCalcInputs() {
   const volEl = document.getElementById('formula-target-volume');
   const unitEl = document.getElementById('formula-unit');
+  const phTEl = document.getElementById('formula-ph-target');
+  const phAEl = document.getElementById('formula-ph-actual');
+  const num = el => (el && el.value !== '' ? parseFloat(el.value) : null);
   return {
-    targetVolume: volEl && volEl.value !== '' ? parseFloat(volEl.value) : null,
+    targetVolume: num(volEl),
     unit: unitEl ? unitEl.value : 'g',
+    phTarget: num(phTEl),
+    phActual: num(phAEl),
   };
 }
 
@@ -219,7 +230,7 @@ function rowCheckBadge(item) {
   return `<span class="f-check ${info.cls}" title="${esc(r.note)}">${label}</span>`;
 }
 
-// 행을 다시 그리지 않고 계산 결과(투입량·배지·합계)만 갱신 — 입력 중 포커스 유지
+// 행을 다시 그리지 않고 계산 결과(투입량·배지·합계·단계 소계)만 갱신 — 입력 중 포커스 유지
 function updateCalcComputed() {
   const { targetVolume, unit } = readCalcInputs();
   const container = document.getElementById('formula-calc-rows');
@@ -227,6 +238,7 @@ function updateCalcComputed() {
 
   let sumConc = 0;
   let sumAmount = 0;
+  const phaseSums = {}; // 단계별 배합률 소계
   container.querySelectorAll('.f-row').forEach((rowEl, i) => {
     const item = calc.rows[i];
     if (!item) return;
@@ -236,14 +248,44 @@ function updateCalcComputed() {
     const amount = targetVolume != null && conc != null ? Math.round(targetVolume * conc) / 100 : null;
     if (amountEl) amountEl.textContent = amount != null ? `${amount.toFixed(2)}${unit}` : '—';
     if (checkEl) checkEl.innerHTML = item.name ? rowCheckBadge(item) : '';
-    if (conc != null) sumConc += conc;
+    if (conc != null) {
+      sumConc += conc;
+      const ph = item.phase || '기타';
+      phaseSums[ph] = (phaseSums[ph] || 0) + conc;
+    }
     if (amount != null) sumAmount += amount;
   });
 
   const sumConcEl = document.getElementById('formula-sum-conc');
   const sumAmountEl = document.getElementById('formula-sum-amount');
-  if (sumConcEl) sumConcEl.textContent = `${Math.round(sumConc * 100) / 100}%`;
+  const statusEl = document.getElementById('formula-sum-status');
+  const rounded = Math.round(sumConc * 100) / 100;
+  if (sumConcEl) sumConcEl.textContent = `${rounded}%`;
   if (sumAmountEl) sumAmountEl.textContent = targetVolume != null ? `${sumAmount.toFixed(2)}${unit}` : '—';
+  // 합계 100% 판정 — 조제 기록으로서 전성분 합계 검증
+  if (statusEl) {
+    if (sumConc <= 0) {
+      statusEl.textContent = '';
+      statusEl.className = 'formula-sum-badge';
+    } else if (Math.abs(rounded - 100) < 0.01) {
+      statusEl.textContent = '100% 정상';
+      statusEl.className = 'formula-sum-badge f-check f-check-ok';
+    } else if (rounded > 100) {
+      statusEl.textContent = `${(rounded - 100).toFixed(2)}% 초과`;
+      statusEl.className = 'formula-sum-badge f-check f-check-banned';
+    } else {
+      statusEl.textContent = `${(100 - rounded).toFixed(2)}% 부족`;
+      statusEl.className = 'formula-sum-badge f-check f-check-warn';
+    }
+  }
+  // 단계별 소계 (입력된 단계만, PHASE_OPTIONS 순서)
+  const phaseEl = document.getElementById('formula-phase-sums');
+  if (phaseEl) {
+    const parts = PHASE_OPTIONS
+      .filter(p => phaseSums[p] != null)
+      .map(p => `${p} ${Math.round(phaseSums[p] * 100) / 100}%`);
+    phaseEl.textContent = parts.length ? `단계별: ${parts.join(' · ')}` : '';
+  }
 }
 
 function renderCalcRows() {
@@ -259,6 +301,10 @@ function renderCalcRows() {
              placeholder="원료명 (예: 글리세린)" aria-label="원료 ${i + 1} 이름">
       <input type="number" class="f-conc" min="0" step="0.01" value="${item.concentration != null ? item.concentration : ''}"
              placeholder="%" aria-label="원료 ${i + 1} 배합률(%)">
+      <select class="f-phase" aria-label="원료 ${i + 1} 제조 단계">
+        <option value="">단계</option>
+        ${PHASE_OPTIONS.map(p => `<option value="${esc(p)}">${esc(p)}</option>`).join('')}
+      </select>
       <span class="f-amount">—</span>
       <span class="f-check-cell"></span>
       <button type="button" class="f-del" data-click="formulaCalcRemoveRow" data-arg="${i}"
@@ -266,6 +312,8 @@ function renderCalcRows() {
 
     const nameEl = row.querySelector('.f-name');
     const concEl = row.querySelector('.f-conc');
+    const phaseEl = row.querySelector('.f-phase');
+    phaseEl.value = item.phase || '';
     nameEl.addEventListener('input', () => {
       calc.rows[i].name = nameEl.value.trim();
       updateCalcComputed();
@@ -275,9 +323,23 @@ function renderCalcRows() {
       calc.rows[i].concentration = (v != null && !Number.isNaN(v)) ? v : null;
       updateCalcComputed();
     });
+    phaseEl.addEventListener('change', () => {
+      calc.rows[i].phase = phaseEl.value;
+      updateCalcComputed();
+    });
     container.appendChild(row);
   });
   updateCalcComputed();
+}
+
+/** 행을 제조 단계(PHASE_OPTIONS) 순서로 정렬 — 지정 안 한 행은 맨 뒤 */
+export function formulaSortPhase() {
+  const order = p => {
+    const i = PHASE_OPTIONS.indexOf(p);
+    return i < 0 ? PHASE_OPTIONS.length : i;
+  };
+  calc.rows.sort((a, b) => order(a.phase) - order(b.phase));
+  renderCalcRows();
 }
 
 /** 고객 정보 선택지(select·칩)를 CUSTOMER_OPTIONS에서 채운다 — 1회만 */
@@ -408,7 +470,7 @@ function renderRecommend() {
     rec.bases.forEach(b => {
       const star = b.required ? ' <span class="formula-rec-req" title="수상 제형 필수">*</span>' : '';
       const cands = b.candidates.length
-        ? b.candidates.map(c => `<button type="button" class="formula-rec-chip" data-click="formulaRecAdd" data-arg="${esc(c)}">${esc(c)}</button>`).join('')
+        ? b.candidates.map(c => `<button type="button" class="formula-rec-chip" data-click="formulaRecAddBase" data-arg="${esc(`${b.role}|${c}`)}">${esc(c)}</button>`).join('')
         : '<span class="formula-rec-nocand">직접 입력</span>';
       html += `<div class="formula-rec-role"><span class="formula-rec-role-name">${esc(b.role)}${star}</span><span class="formula-rec-cands">${cands}</span></div>`;
     });
@@ -434,38 +496,73 @@ function renderRecommend() {
   panel.classList.remove('is-hidden');
 }
 
-/** 추천 칩 클릭 → 현재 계산기에 행 추가 (뷰 전환 없음) */
-export function formulaRecAdd(name) {
-  if (typeof name !== 'string' || !name.trim()) return;
+/** 추천 행 추가 공통 — name + 제조 단계(phase) 태깅 */
+function addRecRow(name, phase) {
   const trimmed = name.trim();
   if (calc.rows.some(r => r.name === trimmed)) {
     showToast(`"${trimmed}"은(는) 이미 추가되어 있습니다.`, 'info');
-    return;
+    return false;
   }
   const last = calc.rows[calc.rows.length - 1];
-  if (last && !last.name) last.name = trimmed;
-  else calc.rows.push({ name: trimmed, concentration: null });
+  if (last && !last.name) {
+    last.name = trimmed;
+    if (!last.phase) last.phase = phase;
+  } else {
+    calc.rows.push({ name: trimmed, concentration: null, phase });
+  }
   renderCalcRows();
+  return true;
 }
 
-/** 베이스 불러오기 — required 역할의 첫 후보를 행으로 채움 */
+/** 추천 원료 칩 클릭 → 기능성 단계로 행 추가 */
+export function formulaRecAdd(name) {
+  if (typeof name !== 'string' || !name.trim()) return;
+  addRecRow(name, '기능성');
+}
+
+/** 베이스 역할 칩 클릭 — data-arg: "role|name", 역할에 맞는 phase 자동 태깅 */
+export function formulaRecAddBase(arg) {
+  if (typeof arg !== 'string') return;
+  const sep = arg.indexOf('|');
+  const role = sep > 0 ? arg.slice(0, sep) : '';
+  const name = sep > 0 ? arg.slice(sep + 1) : arg;
+  if (!name.trim()) return;
+  addRecRow(name, ROLE_PHASE[role] || '');
+}
+
+/** 베이스 불러오기 — required 역할의 첫 후보를 phase 태깅과 함께 행으로 채움 */
 export function formulaLoadBase() {
   const { formulation } = readCustomerInputs();
-  const names = baseDefaultCandidates(formulation);
-  if (!names.length) {
+  const rows = baseDefaultCandidates(formulation);
+  if (!rows.length) {
     showToast('이 제형의 자동 베이스가 없습니다.', 'info');
     return;
   }
   let added = 0;
-  names.forEach(name => {
-    if (calc.rows.some(r => r.name === name)) return;
-    const empty = calc.rows.find(r => !r.name);
-    if (empty) empty.name = name;
-    else calc.rows.push({ name, concentration: null });
+  rows.forEach(r => {
+    if (calc.rows.some(row => row.name === r.name)) return;
+    const empty = calc.rows.find(row => !row.name);
+    if (empty) {
+      empty.name = r.name;
+      if (!empty.phase) empty.phase = r.phase;
+    } else {
+      calc.rows.push({ name: r.name, concentration: null, phase: r.phase });
+    }
     added++;
   });
   renderCalcRows();
   showToast(added ? `베이스 원료 ${added}종을 추가했습니다 — 배합률을 입력하세요.` : '이미 모두 추가되어 있습니다.', 'success');
+}
+
+/** JSON 파일 다운로드 공용 헬퍼 */
+function downloadJson(json, filename) {
+  const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(json);
+  const a = document.createElement('a');
+  a.setAttribute('href', dataStr);
+  a.setAttribute('download', filename);
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
 }
 
 /* =======================================================
@@ -566,14 +663,7 @@ export function formulaRuleReset() {
 
 /** 맞춤 규칙 JSON 내보내기 — 외부 공유·편집용 파일 다운로드 */
 export function formulaRuleExport() {
-  const json = serializeCustomRules();
-  const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(json);
-  const a = document.createElement('a');
-  a.setAttribute('href', dataStr);
-  a.setAttribute('download', `formula_rules_${new Date().toISOString().split('T')[0]}.json`);
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
+  downloadJson(serializeCustomRules(), `formula_rules_${new Date().toISOString().split('T')[0]}.json`);
   showToast('맞춤 추천 규칙 파일을 다운로드했습니다.', 'success');
 }
 
@@ -635,19 +725,26 @@ export function openFormulaCalc(sourceFormula) {
 
   const volEl = document.getElementById('formula-target-volume');
   const unitEl = document.getElementById('formula-unit');
+  const phTEl = document.getElementById('formula-ph-target');
+  const phAEl = document.getElementById('formula-ph-actual');
   const nameEl = document.getElementById('formula-name-input');
   const notesEl = document.getElementById('formula-notes-input');
   if (sourceFormula) {
     if (volEl) volEl.value = sourceFormula.targetVolume != null ? sourceFormula.targetVolume : '';
     if (unitEl) unitEl.value = sourceFormula.unit || 'g';
+    if (phTEl) phTEl.value = sourceFormula.phTarget != null ? sourceFormula.phTarget : '';
+    if (phAEl) phAEl.value = sourceFormula.phActual != null ? sourceFormula.phActual : '';
     if (nameEl) nameEl.value = sourceFormula.name || '';
     if (notesEl) notesEl.value = sourceFormula.notes || '';
   } else {
     if (volEl && !volEl.value) volEl.value = '100';
     if (unitEl) unitEl.value = 'g';
+    if (phTEl) phTEl.value = '';
+    if (phAEl) phAEl.value = '';
     if (nameEl) nameEl.value = '';
     if (notesEl) notesEl.value = '';
   }
+  renderSteps();
   writeCustomerInputs(sourceFormula ? sourceFormula.customer : null);
   renderRecommend();
   renderCustomRules();
@@ -681,32 +778,217 @@ export function formulaCalcRemoveRow(idx) {
   renderCalcRows();
 }
 
+/* =======================================================
+   제조 절차 (steps) — 조제 순서 기록
+   ======================================================= */
+
+function renderSteps() {
+  const list = document.getElementById('formula-steps-list');
+  if (!list) return;
+  if (!calc.steps.length) {
+    list.innerHTML = '<div class="formula-rec-note">단계를 추가해 조제 순서를 기록하세요. (예: 수상부 가열 → 유상부 용해 → 유화 → 후첨가)</div>';
+    return;
+  }
+  list.innerHTML = '';
+  calc.steps.forEach((text, i) => {
+    const row = document.createElement('div');
+    row.className = 'formula-step-row';
+    row.innerHTML = `
+      <span class="formula-step-no" aria-hidden="true">${i + 1}</span>
+      <input type="text" class="f-step form-input" maxlength="200" value="${esc(text)}"
+             placeholder="예: 수상부 80℃ 가열 후 교반" aria-label="제조 절차 ${i + 1}단계">
+      <button type="button" class="f-del" data-click="formulaStepRemove" data-arg="${i}"
+              aria-label="절차 ${i + 1} 삭제"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>`;
+    const input = row.querySelector('.f-step');
+    input.addEventListener('input', () => { calc.steps[i] = input.value; });
+    list.appendChild(row);
+  });
+}
+
+export function formulaStepAdd() {
+  calc.steps.push('');
+  renderSteps();
+  const list = document.getElementById('formula-steps-list');
+  const last = list && list.querySelector('.formula-step-row:last-child .f-step');
+  if (last) last.focus();
+}
+
+export function formulaStepRemove(idx) {
+  const i = parseInt(idx, 10);
+  if (Number.isNaN(i) || i < 0 || i >= calc.steps.length) return;
+  calc.steps.splice(i, 1);
+  renderSteps();
+}
+
+/* =======================================================
+   저장 / 인쇄 / JSON보내기·가져오기
+   ======================================================= */
+
+/** 현재 화면 입력을 포뮬러 데이터로 수집 (저장·인쇄·보내기 공용) */
+function currentDraft() {
+  const nameEl = document.getElementById('formula-name-input');
+  const notesEl = document.getElementById('formula-notes-input');
+  const { targetVolume, unit, phTarget, phActual } = readCalcInputs();
+  const index = getIndex();
+  return {
+    name: nameEl ? nameEl.value.trim() : '',
+    targetVolume, unit, phTarget, phActual,
+    notes: notesEl ? notesEl.value.trim() : '',
+    steps: calc.steps.slice(),
+    customer: readCustomerInputs(),
+    ingredients: calc.rows
+      .filter(r => r.name)
+      .map(r => {
+        const ing = index.get(r.name);
+        return {
+          name: r.name,
+          engName: ing && ing.engName ? ing.engName : '',
+          concentration: r.concentration,
+          phase: r.phase || '',
+          snapshot: ing ? { type: ing.type || '', limit: ing.limit || '' } : null,
+        };
+      }),
+  };
+}
+
 /** 계산 결과를 포뮬러로 저장 (신규 또는 editingId 갱신) */
 export function formulaCalcSave() {
-  const nameEl = document.getElementById('formula-name-input');
-  const name = nameEl ? nameEl.value.trim() : '';
-  const notesEl = document.getElementById('formula-notes-input');
-  const notes = notesEl ? notesEl.value.trim() : '';
-  const { targetVolume, unit } = readCalcInputs();
-
-  const index = getIndex();
-  const ingredients = calc.rows
-    .filter(r => r.name)
-    .map(r => {
-      const ing = index.get(r.name);
-      return {
-        name: r.name,
-        engName: ing && ing.engName ? ing.engName : '',
-        concentration: r.concentration,
-        snapshot: ing ? { type: ing.type || '', limit: ing.limit || '' } : null,
-      };
-    });
-
-  const data = { name, targetVolume, unit, notes, customer: readCustomerInputs(), ingredients };
+  const data = currentDraft();
   const r = calc.editingId ? updateFormula(calc.editingId, data) : createFormula(data);
 
   if (!r.ok) { showToast(r.error || '저장에 실패했습니다.', 'error'); return; }
   calc.editingId = r.formula.id;
   showToast(`"${r.formula.name}" 포뮬러가 저장되었습니다.`, 'success');
   initFormulaView();
+}
+
+/* =======================================================
+   조제 기록지 인쇄 · 포뮬러 JSON보내기/가져오기
+   ======================================================= */
+
+/** 인쇄용 조제 기록지 HTML 생성 */
+function buildPrintHtml(f) {
+  const vol = f.targetVolume != null ? `${f.targetVolume}${f.unit || 'g'}` : '—';
+  const cust = f.customer || {};
+  const custParts = [cust.name, cust.age != null ? `${cust.age}세` : '', cust.gender,
+    cust.skinType, cust.formulation ? `제형: ${cust.formulation}` : '',
+    cust.concerns && cust.concerns.length ? `고민: ${cust.concerns.join(', ')}` : '']
+    .filter(Boolean).join(' · ');
+
+  const amounts = calcAmounts(f);
+  const checks = checkFormulaItems(
+    f.ingredients.map(i => ({ name: i.name, concentration: i.concentration })),
+    getIndex()
+  );
+  let sumConc = 0;
+  const rowsHtml = f.ingredients.map((item, i) => {
+    const conc = item.concentration;
+    if (conc != null) sumConc += conc;
+    const amount = amounts[i] && amounts[i].amount != null ? `${amounts[i].amount.toFixed(2)}${f.unit || 'g'}` : '—';
+    const badge = CHECK_BADGE[checks.results[i] ? checks.results[i].check : CHECK.UNKNOWN] || CHECK_BADGE[CHECK.UNKNOWN];
+    const limit = item.snapshot && item.snapshot.limit ? ` (한도 ${item.snapshot.limit})` : '';
+    return `<tr>
+      <td>${i + 1}</td>
+      <td>${esc(item.phase || '—')}</td>
+      <td>${esc(item.name)}${item.engName ? `<br><span class="fp-eng">${esc(item.engName)}</span>` : ''}</td>
+      <td class="fp-num">${conc != null ? `${conc}%` : '—'}</td>
+      <td class="fp-num">${amount}</td>
+      <td>${badge.label}${esc(limit)}</td>
+    </tr>`;
+  }).join('');
+  const rounded = Math.round(sumConc * 100) / 100;
+
+  const stepsHtml = (f.steps && f.steps.length)
+    ? `<h3>제조 절차</h3><ol class="fp-steps">${f.steps.map(s => `<li>${esc(s)}</li>`).join('')}</ol>`
+    : '';
+  const notesHtml = f.notes ? `<h3>메모</h3><p class="fp-notes">${esc(f.notes)}</p>` : '';
+  const phLine = (f.phTarget != null || f.phActual != null)
+    ? `<p class="fp-meta-line">목표 pH: ${f.phTarget != null ? f.phTarget : '—'} · 실측 pH: ${f.phActual != null ? f.phActual : '—'}</p>`
+    : '';
+
+  return `
+    <div class="fp-doc">
+      <h1>조제 기록지 — ${esc(f.name || '(이름 없음)')}</h1>
+      <p class="fp-meta-line">총 제조량: ${vol} · 작성일: ${new Date().toLocaleDateString('ko-KR')}</p>
+      ${custParts ? `<p class="fp-meta-line">고객: ${esc(custParts)}</p>` : ''}
+      ${phLine}
+      <table class="fp-table">
+        <thead><tr><th>#</th><th>단계</th><th>원료명</th><th>배합률</th><th>투입량</th><th>규정 검증</th></tr></thead>
+        <tbody>${rowsHtml}</tbody>
+        <tfoot><tr><td colspan="3">합계</td><td class="fp-num">${rounded}%</td><td></td><td></td></tr></tfoot>
+      </table>
+      ${stepsHtml}
+      ${notesHtml}
+      <p class="fp-disclaimer">검증 결과는 법정 배합 한도 기준일 뿐 제품의 안전성·안정성·품질을 보장하지 않습니다.</p>
+    </div>`;
+}
+
+/** 조제 기록지 인쇄 — 인쇄 전용 영역에 렌더 후 window.print() */
+export function formulaPrint() {
+  const area = document.getElementById('formula-print-area');
+  if (!area) return;
+  const draft = currentDraft();
+  if (!draft.ingredients.length) {
+    showToast('인쇄할 원료가 없습니다.', 'info');
+    return;
+  }
+  area.innerHTML = buildPrintHtml(draft);
+  document.body.classList.add('formula-printing');
+  const cleanup = () => {
+    document.body.classList.remove('formula-printing');
+    window.removeEventListener('afterprint', cleanup);
+  };
+  window.addEventListener('afterprint', cleanup);
+  window.print();
+}
+
+/** 현재 드래프트를 JSON 파일로보내기 */
+export function formulaExportJson() {
+  const draft = currentDraft();
+  if (!draft.ingredients.length) {
+    showToast('보낼 원료가 없습니다.', 'info');
+    return;
+  }
+  const safeName = (draft.name || 'formula').replace(/[\\/:*?"<>|]/g, '_').slice(0, 40);
+  downloadJson(serializeFormula(draft), `formula_${safeName}_${new Date().toISOString().split('T')[0]}.json`);
+  showToast('포뮬러 JSON 파일을 다운로드했습니다.', 'success');
+}
+
+/** 목록 카드에서 저장된 포뮬러를 JSON으로보내기 */
+export function formulaCardExport(id) {
+  const f = getFormula(id);
+  if (!f) { showToast('포뮬러를 찾을 수 없습니다.', 'error'); return; }
+  const safeName = (f.name || 'formula').replace(/[\\/:*?"<>|]/g, '_').slice(0, 40);
+  downloadJson(serializeFormula(f), `formula_${safeName}_${new Date().toISOString().split('T')[0]}.json`);
+  showToast(`"${f.name}" 포뮬러를 다운로드했습니다.`, 'success');
+}
+
+/** 포뮬러 JSON 가져오기 트리거 — 숨겨진 파일 입력 클릭 */
+export function formulaImportJson() {
+  const input = document.getElementById('formula-file-input');
+  if (!input) return;
+  if (!input.dataset.bound) {
+    input.dataset.bound = '1';
+    input.addEventListener('change', formulaImportFile);
+  }
+  input.click();
+}
+
+function formulaImportFile(event) {
+  const input = event.target;
+  const file = input && input.files && input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const r = importFormula(e.target && e.target.result);
+    if (!r.ok) {
+      showToast(r.error || '가져오기에 실패했습니다.', 'error');
+    } else {
+      showToast(`"${r.formula.name}" 포뮬러를 가져왔습니다.`, 'success');
+      openFormulaList();
+    }
+    input.value = '';
+  };
+  reader.onerror = () => { showToast('파일을 읽지 못했습니다.', 'error'); input.value = ''; };
+  reader.readAsText(file);
 }

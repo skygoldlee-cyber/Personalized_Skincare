@@ -21,10 +21,11 @@ import {
   customRuleTargets,
   serializeCustomRules,
   importCustomRules,
+  ROLE_PHASE,
   _RULE_KEYS,
 } from '../../src/formula-rules.js';
 import { buildIngredientIndex } from '../../src/formula-check.js';
-import { CUSTOMER_OPTIONS } from '../../src/formula-store.js';
+import { CUSTOMER_OPTIONS, PHASE_OPTIONS } from '../../src/formula-store.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -164,11 +165,23 @@ test('DB에 없는 이름이 매핑에 섞여도 추천에서 제외', () => {
 
 // ── baseDefaultCandidates ──────────────────────────
 
-test('베이스 불러오기: required 역할의 첫 후보만 반환', () => {
-  const names = baseDefaultCandidates('세럼·에센스');
+test('베이스 불러오기: required 역할의 첫 후보만 반환 (name+role+phase)', () => {
+  const rows = baseDefaultCandidates('세럼·에센스');
+  const names = rows.map(r => r.name);
   assert.ok(names.includes('페녹시에탄올'));   // 보존제(required) 첫 후보
   assert.ok(!names.includes('글리세린'));      // 보습제는 required 아님
   assert.deepEqual(baseDefaultCandidates('없는제형'), []);
+  rows.forEach(r => assert.ok(r.role && typeof r.phase === 'string'));
+});
+
+test('ROLE_PHASE: 모든 템플릿 역할이 PHASE_OPTIONS 값으로 매핑됨', () => {
+  const roles = new Set();
+  Object.values(BASE_TEMPLATES).flat().forEach(r => roles.add(r.role));
+  for (const role of roles) {
+    const phase = ROLE_PHASE[role];
+    assert.ok(phase, `역할 '${role}'에 phase 매핑이 있어야 함`);
+    assert.ok(PHASE_OPTIONS.includes(phase), `phase '${phase}'는 PHASE_OPTIONS에 있어야 함`);
+  }
 });
 
 // ── 맞춤 추천 규칙 ──────────────────────────────────

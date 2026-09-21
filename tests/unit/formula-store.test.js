@@ -6,6 +6,7 @@ import { test, beforeEach, afterEach } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   FORMULA_LIMIT_FREE,
+  PHASE_OPTIONS,
   newFormulaId,
   listFormulas,
   getFormula,
@@ -15,6 +16,8 @@ import {
   deleteFormula,
   duplicateFormula,
   calcAmounts,
+  serializeFormula,
+  importFormula,
 } from '../../src/formula-store.js';
 
 // --- localStorage 모킹 (state.test.js와 동일 패턴) ---
@@ -243,4 +246,83 @@ test('customer: update로 수정 가능', () => {
   });
   assert.equal(r.formula.customer.name, '이고객');
   assert.equal(r.formula.customer.skinType, '지성');
+});
+
+// ── 제조 단계(phase) · pH · 절차(steps) ─────────────────
+
+test('phase: PHASE_OPTIONS 값만 보존, enum 외는 빈 문자열', () => {
+  const { formula } = createFormula({
+    name: 't',
+    ingredients: [
+      { name: 'a', phase: '수상부' },
+      { name: 'b', phase: '없는단계' },
+      { name: 'c' },
+    ],
+  });
+  const ings = getFormula(formula.id).ingredients;
+  assert.equal(ings[0].phase, '수상부');
+  assert.equal(ings[1].phase, '');
+  assert.equal(ings[2].phase, '');
+  PHASE_OPTIONS.forEach(p => assert.equal(typeof p, 'string'));
+});
+
+test('pH: 0~14 범위만 저장, 범위 밖은 null', () => {
+  const { formula } = createFormula({ name: 't', phTarget: 5.5, phActual: '6.0' });
+  const f = getFormula(formula.id);
+  assert.equal(f.phTarget, 5.5);
+  assert.equal(f.phActual, 6);
+
+  const { formula: bad } = createFormula({ name: 't2', phTarget: 15, phActual: -1 });
+  const bf = getFormula(bad.id);
+  assert.equal(bf.phTarget, null);
+  assert.equal(bf.phActual, null);
+});
+
+test('steps: 공백 제거·빈 단계 필터·20개·200자 클램프', () => {
+  const { formula } = createFormula({
+    name: 't',
+    steps: ['  수상부 80℃ 가열  ', '', null, '유상부 가열·용해', 'x'.repeat(250)],
+  });
+  const s = getFormula(formula.id).steps;
+  assert.equal(s.length, 3);
+  assert.equal(s[0], '수상부 80℃ 가열');
+  assert.equal(s[2].length, 200);
+
+  const { formula: empty } = createFormula({ name: 't2' });
+  assert.deepEqual(getFormula(empty.id).steps, []);
+});
+
+// ── 포뮬러 JSON보내기/가져오기 ─────────────────────
+
+test('serialize/import: 왕복 보존 + id 재부여', () => {
+  const { formula } = createFormula({
+    ...sample(),
+    phTarget: 5.5,
+    steps: ['수상부 가열', '유상부 투입'],
+    ingredients: [{ name: '글리세린', concentration: 10, phase: '수상부' }],
+  });
+  const json = serializeFormula(formula);
+  const r = importFormula(json);
+  assert.equal(r.ok, true);
+  assert.notEqual(r.formula.id, formula.id);
+  assert.equal(r.formula.name, '수분 세럼 v1');
+  assert.equal(r.formula.phTarget, 5.5);
+  assert.deepEqual(r.formula.steps, ['수상부 가열', '유상부 투입']);
+  assert.equal(r.formula.ingredients[0].phase, '수상부');
+});
+
+test('import: 잘못된 JSON·비객체 거부', () => {
+  assert.equal(importFormula('{bad json').ok, false);
+  assert.equal(importFormula('123').ok, false);
+  assert.equal(importFormula('[1,2]').ok, false);
+});
+
+test('import: 이름 없는 데이터 → 생성 거부, 한도 초과 → 한도 오류', () => {
+  assert.equal(importFormula('{"type":"formula-os","formula":{"name":""}}').ok, false);
+  for (let i = 0; i < FORMULA_LIMIT_FREE; i++) {
+    createFormula({ name: `f${i}` });
+  }
+  const r = importFormula('{"name":"over"}');
+  assert.equal(r.ok, false);
+  assert.match(r.error, /최대/);
 });

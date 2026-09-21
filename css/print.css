@@ -173,4 +173,99 @@
         color: var(--print-fg) !important;
         border: 1px solid var(--print-fg) !important;
     }
+
+    /* ============================================================
+       Formula OS 조제 기록지 — body.formula-printing 시 전용 영역만 출력
+       ============================================================ */
+    body.formula-printing #review-view.view-section {
+        display: none !important;
+    }
+
+    body.formula-printing #formula-print-area {
+        display: block !important;
+    }
+
+    #formula-print-area .fp-doc {
+        font-family: 'Noto Sans KR', sans-serif;
+        color: var(--print-fg);
+        max-width: 720px;
+        margin: 0 auto;
+    }
+
+    #formula-print-area .fp-doc h1 {
+        font-size: 16pt;
+        border-bottom: 2px solid var(--print-fg);
+        padding-bottom: 6pt;
+        margin: 0 0 8pt;
+    }
+
+    #formula-print-area .fp-meta-line {
+        font-size: 10pt;
+        color: var(--print-muted);
+        margin: 2pt 0;
+    }
+
+    #formula-print-area .fp-doc h3 {
+        font-size: 11pt;
+        margin: 12pt 0 4pt;
+        border-bottom: 1px solid var(--print-border);
+        padding-bottom: 2pt;
+    }
+
+    #formula-print-area .fp-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 8pt;
+        font-size: 9.5pt;
+    }
+
+    #formula-print-area .fp-table th,
+    #formula-print-area .fp-table td {
+        border: 1px solid var(--print-border);
+        padding: 4pt 6pt;
+        text-align: left;
+        vertical-align: top;
+    }
+
+    #formula-print-area .fp-table th {
+        background: var(--print-bg-subtle);
+    }
+
+    #formula-print-area .fp-table .fp-num {
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+    }
+
+    #formula-print-area .fp-table tfoot td {
+        font-weight: 700;
+    }
+
+    #formula-print-area .fp-eng {
+        font-size: 8pt;
+        color: var(--print-light);
+    }
+
+    #formula-print-area .fp-steps {
+        margin: 4pt 0;
+        padding-left: 18pt;
+        font-size: 10pt;
+    }
+
+    #formula-print-area .fp-steps li { margin-bottom: 2pt; }
+
+    #formula-print-area .fp-notes {
+        font-size: 10pt;
+        white-space: pre-wrap;
+        border: 1px solid var(--print-border);
+        border-radius: var(--print-radius);
+        padding: 6pt;
+    }
+
+    #formula-print-area .fp-disclaimer {
+        margin-top: 14pt;
+        font-size: 8.5pt;
+        color: var(--print-warning);
+        border-top: 1px solid var(--print-border);
+        padding-top: 6pt;
+    }
 }

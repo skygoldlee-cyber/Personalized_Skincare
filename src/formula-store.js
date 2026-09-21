@@ -4,12 +4,14 @@
 // (safeGetItem/safeSetItem 경유 → 시험별 네임스페이스 자동 적용).
 //
 // 포뮬러 스키마:
-//   { id, name, targetVolume, unit('g'|'ml'), notes,
+//   { id, name, targetVolume, unit('g'|'ml'), phTarget, phActual, notes, steps[],
 //     customer: {name, age, gender, skinType, concerns[], formulation},
-//     ingredients: [{name, engName, concentration, note, snapshot:{type,limit}}],
+//     ingredients: [{name, engName, concentration, phase, note, snapshot:{type,limit}}],
 //     createdAt, updatedAt }
 //
 // customer — 맞춤 조제 대상 고객 컨텍스트. 모든 필드 선택(optional).
+// phase — 원료의 제조 단계 (PHASE_OPTIONS). steps — 제조 절차 단계 문자열 배열.
+// phTarget/phActual — 목표·실측 pH (0~14, 범위 밖은 null).
 //
 // ingredients[].snapshot — 저장 시점의 규정 기준(type/limit)을 보존한다.
 // 원료 DB가 갱신돼도 과거 포뮬러의 검증 근거가 바뀌지 않게 하기 위함.
@@ -28,8 +30,14 @@ export const CUSTOMER_OPTIONS = Object.freeze({
   formulation: ['세럼·에센스', '토너·미스트', '로션·에멀전', '크림·밤', '젤', '오일', '클렌저', '선크림', '마스크·팩'],
 });
 
+// 원료 제조 단계(Phase) — 조제 공정상의 투입 단계 (공정 순서대로 정렬됨)
+export const PHASE_OPTIONS = Object.freeze(['수상부', '유상부', '실리콘부', '기능성', '후첨가', '기타']);
+
 const MAX_NAME_LEN = 60;
 const MAX_NOTE_LEN = 500;
+const MAX_STEPS = 20;
+const MAX_STEP_LEN = 200;
+const MAX_PH = 14;
 
 /** 고유 ID 생성: fml_<base36시간><난수> */
 export function newFormulaId() {
@@ -61,12 +69,27 @@ function numOrNull(v) {
   return typeof n === 'number' && !Number.isNaN(n) ? n : null;
 }
 
+function phOrNull(v) {
+  const n = numOrNull(v);
+  return n != null && n >= 0 && n <= MAX_PH ? n : null;
+}
+
+function sanitizeSteps(steps) {
+  if (!Array.isArray(steps)) return [];
+  return steps
+    .map(s => (typeof s === 'string' ? s.trim() : ''))
+    .filter(Boolean)
+    .slice(0, MAX_STEPS)
+    .map(s => s.slice(0, MAX_STEP_LEN));
+}
+
 function sanitizeIngredient(item) {
   if (!item || typeof item.name !== 'string' || !item.name.trim()) return null;
   return {
     name: item.name.trim(),
     engName: clampStr(item.engName || '', 120),
     concentration: numOrNull(item.concentration),
+    phase: pickEnum(item.phase, PHASE_OPTIONS),
     note: clampStr(item.note || '', MAX_NOTE_LEN),
     // 저장 시점의 규정 기준 스냅샷 — 없으면 null (미등록 원료)
     snapshot: item.snapshot && typeof item.snapshot === 'object'
@@ -105,7 +128,10 @@ function sanitizeFormula(data) {
     name: clampStr(data.name || '', MAX_NAME_LEN).trim(),
     targetVolume: numOrNull(data.targetVolume),
     unit: data.unit === 'ml' ? 'ml' : 'g',
+    phTarget: phOrNull(data.phTarget),
+    phActual: phOrNull(data.phActual),
     notes: clampStr(data.notes || '', MAX_NOTE_LEN),
+    steps: sanitizeSteps(data.steps),
     customer: sanitizeCustomer(data.customer),
     ingredients,
   };
@@ -186,6 +212,30 @@ export function duplicateFormula(id) {
     ...src,
     name: `${src.name} (복사본)`.slice(0, MAX_NAME_LEN),
   });
+}
+
+/**
+ * 포뮬러 단건 JSON 직렬화 — 외부 공유용. id·타임스탬프는 제외(가져오기 시 새로 부여).
+ */
+export function serializeFormula(formula) {
+  const clean = sanitizeFormula(formula || {});
+  return JSON.stringify({ type: 'formula-os', version: 1, formula: clean }, null, 2);
+}
+
+/**
+ * 포뮬러 JSON 가져오기 — sanitize + createFormula(Free 한도 적용).
+ * type 래퍼가 있으면 풀고, 날것의 포뮬러 객체도 허용한다.
+ * @returns {{ok:boolean, formula?:object, error?:string}}
+ */
+export function importFormula(input) {
+  let parsed;
+  try { parsed = typeof input === 'string' ? JSON.parse(input) : input; }
+  catch (e) { return { ok: false, error: 'JSON 파일을 해석할 수 없습니다.' }; }
+  const data = parsed && parsed.type === 'formula-os' ? parsed.formula : parsed;
+  if (!data || typeof data !== 'object' || Array.isArray(data)) {
+    return { ok: false, error: '포뮬러 데이터가 없습니다.' };
+  }
+  return createFormula(data);
 }
 
 /**

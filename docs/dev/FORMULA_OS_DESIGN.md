@@ -95,6 +95,9 @@
 - `check`는 저장 시점의 검증 결과 스냅샷. 고시 개정 시 재검증 대상이 됨(5-B 영향 분석의 기반).
 - 실제 구현 스키마는 `formula-store.js` 주석 참조 — `targetVolume`/`unit`/`customer`/`ingredients[].snapshot` 필드명이 다르다.
 - `customer` 필드는 후속 커밋에서 추가됨: `{name, age, gender, skinType, concerns[], formulation}` — 맞춤 조제 대상 컨텍스트, 전 항목 선택.
+- 후속 추가 필드: `phTarget`/`phActual`(0~14 클램프), `steps[]`(제조 절차, 최대 20단계×200자), `ingredients[].phase`(PHASE_OPTIONS — 수상부/유상부/실리콘부/기능성/후첨가/기타). 전부 선택 항목이라 하위호환 유지.
+- 포뮬러 단건 JSON 공유: `serializeFormula()`/`importFormula()` — `{type:'formula-os', version:1, formula}` 래퍼, id·타임스탬프 제외 후 재부여, 한도 적용.
+- 조제 기록지 인쇄: `#formula-print-area` 전용 DOM + `body.formula-printing` 토글 (print.css).
 - 버전 관리는 5-B — `version` 필드는 만들지 않는다.
 
 ### 3.3 Free 한도

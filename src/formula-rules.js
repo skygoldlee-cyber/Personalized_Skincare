@@ -305,13 +305,30 @@ export function recommendFor(customer, index, custom) {
   return result;
 }
 
-/** '베이스 불러오기' 대상: 템플릿에서 required 역할의 첫 후보 이름들 */
+// 베이스 역할 → 제조 단계(Phase) 기본 매핑 — 추천 칩으로 행 추가 시 자동 태깅용
+// (formula-store.js PHASE_OPTIONS 값과 정합 유지 — 테스트가 검증)
+export const ROLE_PHASE = Object.freeze({
+  '용제 (정제수)': '수상부',
+  '보습제': '수상부',
+  '점증제': '수상부',
+  '계면활성제': '수상부',
+  '오일': '유상부',
+  '유화제': '유상부',
+  '산화방지제': '유상부',
+  '자외선차단제': '유상부',
+  '오일·실리콘': '유상부',
+  '실리콘': '실리콘부',
+  '보존제': '후첨가',
+  'pH 조절제': '후첨가',
+});
+
+/** '베이스 불러오기' 대상: required 역할의 첫 후보 → {name, role, phase} */
 export function baseDefaultCandidates(formulation) {
   const template = BASE_TEMPLATES[formulation];
   if (!template) return [];
   return template
     .filter(r => r.required && r.candidates.length)
-    .map(r => r.candidates[0]);
+    .map(r => ({ name: r.candidates[0], role: r.role, phase: ROLE_PHASE[r.role] || '' }));
 }
 
 // 매핑 무결성 점검용 — 테스트에서 참조하는 전체 추천 이름 수집

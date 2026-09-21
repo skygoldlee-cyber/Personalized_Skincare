@@ -1329,6 +1329,8 @@
                         <div class="sim-title-group">
                             <h4>My 포뮬러</h4>
                             <span class="badge badge-quiz-cat" id="formula-list-usage">0/5 저장됨</span>
+                            <button class="btn btn-secondary btn-sm" data-click="formulaImportJson" title="JSON 포뮬러 파일 가져오기"><i class="fa-solid fa-upload" aria-hidden="true"></i> JSON 가져오기</button>
+                            <input type="file" id="formula-file-input" class="is-hidden" accept=".json,application/json" aria-label="포뮬러 JSON 파일">
                         </div>
                     </div>
                     <div id="formula-list" class="formula-list"></div>
@@ -1357,18 +1359,32 @@
                                     <option value="ml">ml</option>
                                 </select>
                             </label>
+                            <label class="formula-field formula-field-unit">
+                                <span class="formula-field-label">목표 pH</span>
+                                <input type="number" id="formula-ph-target" class="form-input" min="0" max="14" step="0.1" placeholder="—" aria-label="목표 pH">
+                            </label>
+                            <label class="formula-field formula-field-unit">
+                                <span class="formula-field-label">실측 pH</span>
+                                <input type="number" id="formula-ph-actual" class="form-input" min="0" max="14" step="0.1" placeholder="—" aria-label="실측 pH">
+                            </label>
                         </div>
 
                         <div class="formula-rows-head">
-                            <span>원료명</span><span>배합률(%)</span><span>투입량</span><span>규정 검증</span><span></span>
+                            <span>원료명</span><span>배합률(%)</span><span>단계</span><span>투입량</span><span>규정 검증</span><span></span>
                         </div>
                         <div id="formula-calc-rows" class="formula-rows"></div>
                         <datalist id="formula-ing-datalist"></datalist>
 
                         <div class="formula-rows-foot">
-                            <button class="btn btn-secondary btn-sm" data-click="formulaCalcAddRow"><i class="fa-solid fa-plus" aria-hidden="true"></i> 원료 추가</button>
+                            <div class="formula-foot-actions">
+                                <button class="btn btn-secondary btn-sm" data-click="formulaCalcAddRow"><i class="fa-solid fa-plus" aria-hidden="true"></i> 원료 추가</button>
+                                <button class="btn btn-secondary btn-sm" data-click="formulaSortPhase" title="제조 단계 순서로 행 정렬"><i class="fa-solid fa-layer-group" aria-hidden="true"></i> 단계별 정렬</button>
+                            </div>
                             <div class="formula-sum">
-                                합계 <strong id="formula-sum-conc">0%</strong> · <strong id="formula-sum-amount">—</strong>
+                                합계 <strong id="formula-sum-conc">0%</strong>
+                                <span id="formula-sum-status" class="formula-sum-badge"></span>
+                                · <strong id="formula-sum-amount">—</strong>
+                                <div id="formula-phase-sums" class="formula-phase-sums"></div>
                             </div>
                         </div>
 
@@ -1437,6 +1453,12 @@
                             </div>
                         </details>
 
+                        <fieldset class="formula-customer">
+                            <legend>제조 절차 (선택)</legend>
+                            <div id="formula-steps-list" class="formula-steps-list"></div>
+                            <button type="button" class="btn btn-secondary btn-sm" data-click="formulaStepAdd"><i class="fa-solid fa-plus" aria-hidden="true"></i> 단계 추가</button>
+                        </fieldset>
+
                         <label class="formula-field">
                             <span class="formula-field-label">메모 (선택)</span>
                             <textarea id="formula-notes-input" class="form-input" rows="2" maxlength="500"
@@ -1447,6 +1469,10 @@
                             <input type="text" id="formula-name-input" class="form-input" maxlength="60"
                                    placeholder="포뮬러 이름 (예: 수분 세럼 v1)" aria-label="포뮬러 이름">
                             <button class="btn btn-primary" data-click="formulaCalcSave"><i class="fa-solid fa-floppy-disk" aria-hidden="true"></i> 포뮬러로 저장</button>
+                        </div>
+                        <div class="formula-actions-row">
+                            <button type="button" class="btn btn-secondary btn-sm" data-click="formulaPrint"><i class="fa-solid fa-print" aria-hidden="true"></i> 조제 기록지 인쇄</button>
+                            <button type="button" class="btn btn-secondary btn-sm" data-click="formulaExportJson"><i class="fa-solid fa-download" aria-hidden="true"></i> JSON 보내기</button>
                         </div>
                         <p class="formula-save-hint">저장된 포뮬러는 이 기기에만 보관되며 '데이터 백업'으로 내보낼 수 있습니다.</p>
                     </div>
@@ -1656,6 +1682,9 @@
     </div>
 
     <!-- 정적 전역 데이터 및 라이브러리 로드 (클래식 스크립트 및 ESM) -->
+    <!-- Formula OS 조제 기록지 인쇄 영역 — 화면에서는 숨기고 인쇄 시에만 표시 -->
+    <div id="formula-print-area" aria-hidden="true"></div>
+
     <!-- 시험 레지스트리 (멀티시험): 클래식 번들 — file://에서도 동기 로드됨 -->
     <script src="data/exams.js"></script>
     <!-- 카드/퀴즈 ID 이관 맵 (콘텐츠 갱신 시 진도 보존 — build_id_migration.js 생성) -->
