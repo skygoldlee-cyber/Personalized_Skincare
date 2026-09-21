@@ -2,7 +2,7 @@
 var DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2026",
-  "generatedAt": "2026-09-21T13:25:15.428Z",
+  "generatedAt": "2026-09-21T13:33:31.480Z",
   "subjects": [
     {
       "key": "law",
@@ -131,6 +131,9 @@ var DATA_REGISTRY = {
     "bundle": "./data/exams/cosmetic/ingredients_data.5083b04f.js",
     "global": "INGREDIENTS_DATA",
     "contentHash": "5083b04f",
+    "version": "2026.09.1",
+    "updatedAt": "2026-09-21",
+    "notice": "식약처 고시 제2026-16호 반영 · 별표1 금지 염모제 12종 대조 완료 · 염산 2,4-디아미노페놀 한도 정정",
     "stats": {
       "count": 1376
     }

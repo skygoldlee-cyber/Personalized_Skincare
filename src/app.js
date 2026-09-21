@@ -1,5 +1,5 @@
 // app.js - 맞춤형화장품 조제관리사 스마트 통합 플랫폼 애플리케이션 로직
-import { state, loadProgress, saveProgress } from './state.js';
+import { state, loadProgress, saveProgress, safeGetItem, safeSetItem } from './state.js';
 import { esc } from './sanitize.js';
 import { shuffle } from './utils.js';
 import { clearScratchpad, toggleCalcScratchpad, toggleScratchpadEraser } from './scratchpad.js';
@@ -888,6 +888,26 @@ function applyExamBranding() {
     if (logoSub && exam.logoSub) logoSub.textContent = exam.logoSub;
 }
 
+/**
+ * 원료 DB 갱신 감지 — 레지스트리의 ingredients.contentHash를 마지막 확인 값과 비교해
+ * 정정/개정 배포로 바뀐 경우 1회 알림을 띄운다. 최초 방문(저장값 없음)은 조용히 기록만 한다.
+ * contentHash는 원료 파일 내용의 해시라 배포 시점이 아니라 실제 데이터 변경 때만 발화한다.
+ */
+function checkIngredientsUpdate() {
+    const meta = (DataLoader.registry && DataLoader.registry.ingredients) || null;
+    const hash = meta && meta.contentHash;
+    if (!hash) return;
+    try {
+        const prev = safeGetItem(STORAGE_KEYS.INGREDIENTS_HASH);
+        if (prev && prev !== hash) {
+            const count = meta.stats && meta.stats.count ? ` ${meta.stats.count}종` : '';
+            const version = meta.version ? ` v${meta.version}` : '';
+            showToast(`원료 데이터베이스${version}가 갱신되었습니다 — 규정 검증·성분 사전이 최신 기준입니다 (원료${count})`, 'info');
+        }
+        safeSetItem(STORAGE_KEYS.INGREDIENTS_HASH, hash);
+    } catch (e) { /* 알림 실패가 초기화를 막지 않도록 무시 */ }
+}
+
 /** 활성 시험의 features 플래그에 따라 도메인 특화 UI 숨김 (data-feature 속성 기반) */
 function applyFeatureFlags() {
     document.querySelectorAll('[data-feature]').forEach(el => {
@@ -904,6 +924,7 @@ function applyFeatureFlags() {
 async function initExamContext() {
     DataLoader.init();
     await DataLoader.ensureRegistry();
+    checkIngredientsUpdate();
     await DataLoader.loadComboIndex();
     await DataLoader.loadQuestionChapters();
     applyExamBranding();

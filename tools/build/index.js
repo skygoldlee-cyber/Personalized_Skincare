@@ -379,10 +379,20 @@ function main() {
       const jsContent = `// 자동 생성된 화장품 원료 데이터 파일입니다. 수정하지 마십시오.\nvar INGREDIENTS_DATA = ${JSON.stringify(data, null, 2)};\n`;
       fs.writeFileSync(outputPath, jsContent, 'utf-8');
 
+      // 원료 DB 버전 메타데이터 (db_version.json — 원료 파일 정정 시 수동 범프)
+      const dbVersionPath = path.join(ctx.workspaceDir, ctx.contentRoot || 'content', '참조자료', '원료', 'db_version.json');
+      let dbMeta = {};
+      try {
+        if (fs.existsSync(dbVersionPath)) dbMeta = JSON.parse(fs.readFileSync(dbVersionPath, 'utf-8'));
+      } catch (e) {
+        console.warn('- Warning: db_version.json 파싱 실패:', e.message);
+      }
+
       registry.ingredients = {
         bundle: `./${EXAM_DATA_ROOT}/${outputFilename}`,
         global: 'INGREDIENTS_DATA',
         contentHash: hash,
+        ...(dbMeta.version ? { version: dbMeta.version, updatedAt: dbMeta.updatedAt || null, notice: dbMeta.notice || '' } : {}),
         stats: { count: data.length }
       };
 

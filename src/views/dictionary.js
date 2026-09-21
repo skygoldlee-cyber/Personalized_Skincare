@@ -20,6 +20,10 @@ export function renderDictionary() {
     const container = document.getElementById('dict-results-container');
     if (!container) return;
     
+    const meta = (typeof DataLoader !== 'undefined' && DataLoader.registry && DataLoader.registry.ingredients) || null;
+    const verEl = document.getElementById('dict-db-version');
+    if (verEl) verEl.textContent = meta && meta.version ? `원료 DB v${meta.version}` : '';
+
     const db = typeof window.INGREDIENTS_DATA !== 'undefined' ? window.INGREDIENTS_DATA : [];
     if (db.length === 0) {
         container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--color-text-muted);">원료 데이터베이스가 비어있습니다. 빌드 스크립트를 실행해 주세요.</div>';

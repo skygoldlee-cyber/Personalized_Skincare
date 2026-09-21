@@ -43,6 +43,9 @@ export const STORAGE_KEYS = {
   // Formula OS — 사용자 맞춤 추천 규칙 (formula-rules.js)
   FORMULA_RULES: 'formula_rules',
 
+  // 원료 DB 갱신 감지 — 마지막으로 본 ingredients contentHash (기기 로컬 마커, 백업 제외)
+  INGREDIENTS_HASH: 'ingredients_hash',
+
   // 교재 리더
   READER_LAST_POSITION: 'readerLastPosition',
   READER_FONT_SCALE: 'readerFontScale',
