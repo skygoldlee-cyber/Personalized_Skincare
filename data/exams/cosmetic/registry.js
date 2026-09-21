@@ -2,7 +2,7 @@
 var DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2026",
-  "generatedAt": "2026-09-21T16:50:31.290Z",
+  "generatedAt": "2026-09-21T17:11:55.331Z",
   "subjects": [
     {
       "key": "law",
@@ -93,9 +93,9 @@ var DATA_REGISTRY = {
       "part": 1,
       "title": "화장품 제조 및 품질관리 (250제)",
       "file": "과목2_단일정답형.md",
-      "bundle": "./data/exams/cosmetic/exams/subject2.27b50374.js",
+      "bundle": "./data/exams/cosmetic/exams/subject2.1e96cbd5.js",
       "global": "EXAM_DATA_subject2",
-      "contentHash": "27b50374",
+      "contentHash": "1e96cbd5",
       "stats": {
         "questions": 250
       }
@@ -128,13 +128,18 @@ var DATA_REGISTRY = {
     }
   ],
   "ingredients": {
-    "bundle": "./data/exams/cosmetic/ingredients_data.c1f2661f.js",
+    "bundle": "./data/exams/cosmetic/ingredients_data.2141c989.js",
     "global": "INGREDIENTS_DATA",
-    "contentHash": "c1f2661f",
-    "version": "2026.09.2",
+    "contentHash": "2141c989",
+    "version": "2026.09.3",
     "updatedAt": "2026-09-22",
-    "notice": "설명/특성 필드 정규화 — 제한·금지 원료의 설명문이 누락되거나 '-'로 표시되던 매핑 교정 (내용 데이터 자체는 동일)",
+    "notice": "원료 표 스키마 통일 (11컬럼 표준) · 감사 표가 덮어쓰던 4종 한도·INCI 복원 · 별표1 주요항목 설명 6건 보충",
     "history": [
+      {
+        "version": "2026.09.2",
+        "updatedAt": "2026-09-22",
+        "notice": "설명/특성 필드 정규화 — 제한·금지 원료의 설명문이 누락되거나 '-'로 표시되던 매핑 교정 (내용 데이터 자체는 동일)"
+      },
       {
         "version": "2026.09.1",
         "updatedAt": "2026-09-21",

@@ -932,9 +932,9 @@ var INGREDIENTS_DATA = [
     "engName": "Narcotics",
     "type": "approved",
     "category": "마약류",
-    "description": "",
+    "description": "마약 및 향정신성 의약품 성분으로 화장품 배합이 금지됩니다.",
     "limit": "",
-    "tip": ""
+    "tip": "별표1 사용 금지 원료"
   },
   {
     "name": "벤젠",
@@ -1060,7 +1060,7 @@ var INGREDIENTS_DATA = [
     "category": "염모제 성분",
     "description": "염모제 조성물에 산화제로 사용되어 모발의 색소 변화 과정에 중요한 역할을 하는 성분입니다.",
     "limit": "12.0%",
-    "tip": "염모제에서 과산화수소로서"
+    "tip": "제2단계 퍼머액 주성분, 12% 제한"
   },
   {
     "name": "살리실릭애씨드",
@@ -1069,7 +1069,7 @@ var INGREDIENTS_DATA = [
     "category": "기타 제한 성분",
     "description": "피부의 묵은 각질을 부드럽게 관리하여 피부결을 유연하게 가꾸는 데 도움을 주는 성분입니다.",
     "limit": "0.5% (일반), 2.0% (세정용), 3.0% (두발용)",
-    "tip": "3세 이하 영유아 사용금지"
+    "tip": "3세 이하 영유아 사용금지 중요"
   },
   {
     "name": "아이오도프로피닐부틸카바메이트(IPBC)",
@@ -1087,7 +1087,7 @@ var INGREDIENTS_DATA = [
     "category": "기타 제한 성분",
     "description": "피부를 부드럽고 유연하게 가꾸는 데 도움을 주며, 사용 시 특수 제한이 필요한 성분입니다.",
     "limit": "10% 초과 시 표시",
-    "tip": "0.5% 이하 제외, 자외선 차단제 병용 권장"
+    "tip": "10% 초과 또는 pH 3.5 미만 시 주의사항 표시"
   },
   {
     "name": "트리클로산",
@@ -1105,7 +1105,7 @@ var INGREDIENTS_DATA = [
     "category": "기타 제한 성분",
     "description": "화장품 제형에 첨가되어 사용되며, 특정 용도에 따라 사용량 및 조건에 엄격한 제한이 따르는 성분입니다.",
     "limit": "11% (퍼머넌트 웨이브)",
-    "tip": "기타 제품에는 사용금지"
+    "tip": "퍼머넌트 웨이브 제1제 환원제, 11% 제한"
   },
   {
     "name": "살리실릭애씨드 및 그 염류",
@@ -1381,10 +1381,10 @@ var INGREDIENTS_DATA = [
     "name": "염디엠하이단토인",
     "engName": "Chloromethyl DMDM Hydantoin",
     "type": "restricted",
-    "category": "사용 제한 원료",
+    "category": "방부제",
     "description": "화장품의 변질을 막는 방부제로, 사용이 제한된 원료이며 최대 0.2%까지 사용 가능한 성분입니다.",
-    "limit": "",
-    "tip": "화장품의 변질을 막는 방부제로, 사용이 제한된 원료이며 최대 0.2%까지 사용 가능한 성분입니다."
+    "limit": "0.2%",
+    "tip": "방부제"
   },
   {
     "name": "알킬디아미노에칠글라이신하이드로클로라이드용액(30%)",
@@ -2542,10 +2542,10 @@ var INGREDIENTS_DATA = [
     "name": "메칠엔다이엔",
     "engName": "Methylenedioxyphenyl Methylpropanal",
     "type": "restricted",
-    "category": "사용 제한 원료",
+    "category": "향료",
     "description": "메칠엔다이엔은 화장품에 향을 부여하는 향료 성분으로, 사용이 제한되어 최대 0.002%까지만 배합 가능한 원료입니다.",
-    "limit": "",
-    "tip": "메칠엔다이엔은 화장품에 향을 부여하는 향료 성분으로, 사용이 제한되어 최대 0.002%까지만 배합 가능한 원료입니다."
+    "limit": "0.002%",
+    "tip": "디엔"
   },
   {
     "name": "메톡시디시클로펜타디엔카복스알데하이드",
@@ -2623,19 +2623,19 @@ var INGREDIENTS_DATA = [
     "name": "아이바놀카르비닐아세테이트",
     "engName": "Isobornyl Cyclohexanol Acetate",
     "type": "restricted",
-    "category": "사용 제한 원료",
+    "category": "향료",
     "description": "아이바놀카르비닐아세테이트는 화장품에 향을 부여하는 향료 성분으로, 사용 제한이 있으며 최대 0.3%까지 배합 가능한 성분입니다.",
-    "limit": "",
-    "tip": "아이바놀카르비닐아세테이트는 화장품에 향을 부여하는 향료 성분으로, 사용 제한이 있으며 최대 0.3%까지 배합 가능한 성분입니다."
+    "limit": "0.3%",
+    "tip": "비타민류"
   },
   {
     "name": "아이사클로멘테인",
     "engName": "Isocyclocitral",
     "type": "restricted",
-    "category": "사용 제한 원료",
+    "category": "방부제",
     "description": "화장품의 변질을 막는 방부제 역할을 하며, 사용이 엄격히 제한되는 원료 성분입니다.",
-    "limit": "",
-    "tip": "화장품의 변질을 막는 방부제 역할을 하며, 사용이 엄격히 제한되는 원료 성분입니다."
+    "limit": "0.1%",
+    "tip": "항진균제"
   },
   {
     "name": "아세틸헥사메칠인단",
