@@ -43,7 +43,7 @@ export const PHASE_OPTIONS = Object.freeze(['수상부', '유상부', '실리콘
 // 안정성 실험 확인 선택지 — 규칙 경고는 참고일 뿐, 실제 안정성은 실험으로만 확정된다.
 // 사용자가 수행한 확인 방법·결과를 기록해 포뮬러의 확인 상태를 추적한다.
 export const STABILITY_METHODS = Object.freeze([
-  '실온 경시 관찰', '가속(고온) 시험', '동결-융해 시험', '원심분리 시험', '보존력 시험', '기타',
+  '실온 경시 관찰', '가속(고온) 시험', '가혹 시험', '동결-융해 시험', '원심분리 시험', '보존력 시험', '기타',
 ]);
 export const STABILITY_RESULTS = Object.freeze(['양호', '이상 발견']);
 
