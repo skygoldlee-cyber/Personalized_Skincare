@@ -20,6 +20,15 @@ const ROOT = path.resolve(__dirname, '..');
 const CONTENT = path.join(ROOT, 'content');
 const REF_MD = path.join(CONTENT, '참조자료', 'ref_md');
 
+// 다수 과목 공동 인용 문서 — references.json의 multiSubjectDocs에 등록되면
+// '불일치'가 아닌 '다과목'으로 판정한다 (귀속 진실은 물리 폴더, 규칙은 폴백 기준선).
+function loadMultiSubjectDocs() {
+  try {
+    const doc = JSON.parse(fs.readFileSync(path.join(CONTENT, 'references.json'), 'utf-8'));
+    return new Set(doc.multiSubjectDocs || []);
+  } catch { return new Set(); }
+}
+
 /** dir 안의 모든 .md 파일 재귀 수집 */
 function mdFiles(dir) {
   if (!fs.existsSync(dir)) return [];
@@ -96,6 +105,7 @@ function main() {
   }
 
   // 집계·판정
+  const multiDocs = loadMultiSubjectDocs();
   const mismatches = [], multi = [], uncited = [], weak = [];
   const rows = [];
   for (const doc of refDocs) {
@@ -109,7 +119,7 @@ function main() {
     if (total < 3) { weak.push({ doc, rule, v, total }); continue; }
 
     const [topSubj, topN] = top;
-    if (topSubj !== rule && topN >= 3 && topN >= (v[rule] || 0) * 2) {
+    if (topSubj !== rule && topN >= 3 && topN >= (v[rule] || 0) * 2 && !multiDocs.has(doc)) {
       mismatches.push({ doc, rule, topSubj, topN, ruleN: v[rule] || 0 });
     } else if (second && second[1] >= top[1] * 0.4 && second[0] !== rule) {
       multi.push({ doc, rule, v });

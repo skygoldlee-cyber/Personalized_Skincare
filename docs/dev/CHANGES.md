@@ -43,6 +43,15 @@ exams→subjects 해석, 과목별 자산(glossary·number-drills·ref_md 폴더
 교재 갱신으로 ID 해시가 바뀌어도 term이 유지된 카드의 학습 진도가 보존된다.
 index.html에 번들 로드 추가, sw.js DATA_ASSETS 프리캐시 편입(build/index.js 자동 목록).
 
+**귀속 불일치 7건 정리**: 다수 과목이 공동 인용하는 문서(CGMP 고시·주의사항
+규정 등)를 `references.json`의 `multiSubjectDocs`에 명시 등록 — 물리 폴더가
+귀속의 진실이고 규칙은 폴백 기준선이므로, 의도된 다과목 인용을 불일치로
+오판하지 않게 함. `check:refsubjects --strict` 기준 불일치 0건으로 게이트 정상화.
+
+※ R3(앵커 인용)·R4(과목 코로케이션)는 보류 — R3은 전면 교체 시나리오에서
+앵커도 의미 재검토가 필요해 실익이 작고(라인 드리프트는 지문 재탐색이 처리),
+R4는 수백 파일 규모라 별도 단계로 진행 예정.
+
 ## 2026-09-20 ref_md PDF→MD 전면 재변환 (품질 개선)
 
 구 변환(pypdfium2 raw 추출)은 한국어 PDF의 좌표 기반 공백을 유실해
