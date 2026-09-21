@@ -4,7 +4,7 @@
 
 ## 프로젝트 개요
 
-**Cosmetic Pass Master** — 맞춤형화장품 조제관리사 자격시험 대비 + Formula OS 실무 배합 통합 플랫폼.
+**Passmula** — 맞춤형화장품 조제관리사 자격시험 대비 + Formula OS 실무 배합 통합 플랫폼.
 
 - 순수 HTML/CSS/JavaScript (Vanilla ES Modules, 프레임워크 없음)
 - PWA (Service Worker 오프라인 캐시, 설치 가능)

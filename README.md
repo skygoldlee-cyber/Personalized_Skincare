@@ -1,6 +1,6 @@
-# 💄 Cosmetic Pass Master
+# 💄 Passmula
 
-> **맞춤형화장품 조제관리사 자격시험 스마트 통합 플랫폼**
+> **Pass + Formula — 맞춤형화장품 조제관리사 자격시험 통합 플랫폼**
 >
 > 교재 읽기 · 플래시카드 · 기출 퀴즈 · 오답 복습 · 성적 분석 · 오디오북 · Formula OS 실무 배합까지 하나로.
 
@@ -11,7 +11,7 @@
 
 ## 📖 프로젝트 소개
 
-**Cosmetic Pass Master**는 한국 **맞춤형화장품 조제관리사** 국가자격시험을 준비하는 수험생을 위한 웹 기반 학습 애플리케이션입니다. 순수 HTML/CSS/JavaScript로 구현된 SPA(Single Page Application)로, 별도의 백엔드 없이 Vercel에 정적 배포됩니다.
+**Passmula**는 한국 **맞춤형화장품 조제관리사** 국가자격시험을 준비하는 수험생을 위한 웹 기반 학습 애플리케이션입니다. 순수 HTML/CSS/JavaScript로 구현된 SPA(Single Page Application)로, 별도의 백엔드 없이 Vercel에 정적 배포됩니다.
 
 ### 시험 과목 (4과목 · 19단원)
 
@@ -316,5 +316,5 @@ MIT License
 ---
 
 <div align="center">
-  <sub>© 2026 Cosmetic Pass Master — 맞춤형화장품 조제관리사 합격을 향해 🎯</sub>
+  <sub>© 2026 Passmula — 맞춤형화장품 조제관리사 합격을 향해 🎯</sub>
 </div>
