@@ -668,16 +668,6 @@ function updateFoldSummaries() {
   }
 }
 
-/** 빈 상태 안내의 '고객 정보 입력' — 접이식 섹션을 열고 첫 필드로 이동 */
-export function formulaOpenCustomer() {
-  const fold = document.getElementById('formula-fold-customer');
-  if (!fold) return;
-  fold.open = true;
-  fold.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  const first = fold.querySelector('#formula-cust-name');
-  if (first) first.focus();
-}
-
 /* =======================================================
    추천 베이스 · 원료 패널 (규칙 기반 — 이름만 제안, 농도 미제안)
    ======================================================= */
