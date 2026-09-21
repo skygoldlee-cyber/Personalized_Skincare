@@ -14,10 +14,10 @@
 const fs = require('fs');
 const path = require('path');
 const { docSubject } = require('./build/ref-statements.js');
-const { getExamTargets } = require('./build/exam-targets.js');
+const { getExamTargets, getDefaultExamRoots } = require('./build/exam-targets.js');
 
 const ROOT = path.resolve(__dirname, '..');
-const CONTENT = path.join(ROOT, 'content');
+const CONTENT = path.join(ROOT, getDefaultExamRoots(ROOT).contentRoot);
 const REF_MD = path.join(CONTENT, '참조자료', 'ref_md');
 
 // 다수 과목 공동 인용 문서 — references.json의 multiSubjectDocs에 등록되면

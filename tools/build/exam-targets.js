@@ -33,6 +33,14 @@ function getExamTargets(workspaceDir) {
     });
 }
 
+/** 기본 시험(default:true, 없으면 첫 항목)의 루트 해석 — 레거시 도구용 */
+function getDefaultExamRoots(workspaceDir) {
+    const targets = getExamTargets(workspaceDir);
+    const t = targets.find(x => x.isDefault) || targets[0];
+    return t ? { contentRoot: t.contentRoot, dataRoot: t.dataRoot, id: t.id }
+        : { contentRoot: 'content', dataRoot: 'data', id: 'cosmetic' };
+}
+
 /**
  * manifest에서 exam key → 과목번호(order)/과목키/과목명 매핑 생성.
  * 기존 하드코딩된 SUBJECT_NUM/SUBJECT_KEY/SUBJECT_TITLE 테이블 대체용.
@@ -52,4 +60,4 @@ function getSubjectMaps(manifest) {
     return { SUBJECT_NUM, SUBJECT_KEY, SUBJECT_TITLE };
 }
 
-module.exports = { getExamTargets, getSubjectMaps };
+module.exports = { getExamTargets, getSubjectMaps, getDefaultExamRoots };

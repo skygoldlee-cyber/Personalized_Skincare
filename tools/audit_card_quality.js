@@ -97,9 +97,13 @@ function auditCards(subjects) {
     return { issues, totalCards: allCards.length, crossDupes };
 }
 
-function auditLinks(subjects) {
+function auditLinks(subjects, examRoots) {
     const linkIssues = [];
-    const contentDir = path.join(ROOT, 'content');
+    // 시험별 contentRoot 해석 (subjects 키는 `${examId}:${subjectKey}`)
+    const rootOf = (subjId) => {
+        const examId = subjId.split(':')[0];
+        return path.join(ROOT, (examRoots[examId] || 'content/exams/' + examId));
+    };
     // 원시 마크다운의 참조자료 링크: ../참조자료/... (URL 인코딩 포함)
     const linkRegex = /참조자료\/[^\s)`'"<>*]+/g;
     const seen = new Set();
@@ -113,7 +117,7 @@ function auditLinks(subjects) {
             const dedupeKey = `${subjId}|${refPath}`;
             if (seen.has(dedupeKey)) continue;
             seen.add(dedupeKey);
-            if (!fs.existsSync(path.join(contentDir, refPath))) {
+            if (!fs.existsSync(path.join(rootOf(subjId), refPath))) {
                 linkIssues.push({
                     type: 'BROKEN_LINK',
                     severity: 'ERROR',
@@ -185,7 +189,9 @@ function main() {
     
     // 링크 유효성 감사
     console.log('\n--- 참조자료 링크 감사 ---');
-    const linkIssues = auditLinks(subjects);
+    const examRoots = {};
+    for (const t of getExamTargets(ROOT)) examRoots[t.id] = t.contentRoot;
+    const linkIssues = auditLinks(subjects, examRoots);
     console.log(`이슈: ${linkIssues.length}건`);
     if (linkIssues.length > 0) {
         console.log('\n--- 상세 ---');

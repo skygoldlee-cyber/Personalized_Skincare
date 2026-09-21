@@ -63,7 +63,7 @@ test('출처 링크: "출처: `../참조자료/...md`" → data-ref-md', () => {
     const md = '출처: `../참조자료/과목1/1.cosmetic-law.md`';
     const html = formatSectionContentForReader(md);
     assert.ok(html.includes('data-ref-md'), 'data-ref-md 속성');
-    assert.ok(html.includes('content/참조자료/'), '절대 경로 변환');
+    assert.ok(html.includes('참조자료/과목1/'), '절대 경로 변환');
 });
 
 test('출처 링크: "출처: `xxx.pdf`" → data-ref-html', () => {

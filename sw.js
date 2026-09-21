@@ -19,7 +19,7 @@
  *     (구 해시 번들은 activate의 pruneStaleDataBundles가 레지스트리 기준으로 정리)
  * ============================================================ */
 
-const CACHE_VERSION = 'v369-20260921-ec25d2f';   // 전과목 숫자암기 통합정리 고유 수치를 Part 2에 이식
+const CACHE_VERSION = 'v369-20260921-736230b';   // 전과목 숫자암기 통합정리 고유 수치를 Part 2에 이식
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
@@ -79,9 +79,9 @@ const SHELL_ASSETS = [
   './src/views/glossary-renderer.js',
   './src/views/pomodoro.js',
   './src/views/study-calendar.js',
-  // data/registry.js, data/audio_manifest.js, data/exams.js: 이전 app.js ESM import 그래프에
+  // data/audio_manifest.js, data/exams.js: 이전 app.js ESM import 그래프에
   // 포함되었으나 window 전역 참조 방식으로 변경되어 별도 프리캐시 필요 (오프라인 최초 실행 대비)
-  './data/registry.js',
+  // ※ registry.js는 시험별 dataRoot 아래에 있으므로 DATA_ASSETS에서 프리캐시
   './data/audio_manifest.js',
   './data/exams.js',
   './src/views/dashboard.js',
@@ -96,8 +96,8 @@ const SHELL_ASSETS = [
   './src/study-tracker.js',
   './src/spaced-repetition.js',
   './src/views/dictionary.js',
-  './content/교재/understanding/images/피부의 구조 단면도 보완_인포그래픽.png',
-  './content/교재/understanding/images/모발의 구조 단면도 보완_인포그래픽.png',
+  './content/exams/cosmetic/교재/understanding/images/피부의 구조 단면도 보완_인포그래픽.png',
+  './content/exams/cosmetic/교재/understanding/images/모발의 구조 단면도 보완_인포그래픽.png',
   './src/views/backup.js',
   './src/views/textbook-search.js',
   './src/views/textbook-reader.js',
@@ -147,32 +147,31 @@ const SHELL_ASSETS = [
  *     이 배열에 번들을 다시 추가할 수 있으나, 그 경우 변경-격리 이점을 일부 포기한다.
  */
 const DATA_ASSETS = [
-  './data/registry.js',
-  './data/audio_manifest.js',
-  './data/id_migration.js'
+  './data/exams/cosmetic/registry.js',
+  './data/exams/cosmetic/id_migration.js'
 ];
 
 /** 설치 시 프리캐시할 마크다운 문서 (매뉴얼·요약집 — 오프라인 보장) */
 const MD_ASSETS = [
-  './content/학습안내서.md',
-  './content/교재/law/1과목_화장품법의이해_표준형.md',
-  './content/교재/law/1과목_화장품법의이해_이야기형.md',
-  './content/교재/manufacturing/2과목_제조및품질관리_표준형.md',
-  './content/교재/manufacturing/2과목_제조및품질관리_이야기형.md',
-  './content/교재/safety/3과목_유통화장품안전관리_표준형.md',
-  './content/교재/safety/3과목_유통화장품안전관리_이야기형.md',
-  './content/교재/understanding/4과목_맞춤형화장품의이해_표준형.md',
-  './content/교재/understanding/4과목_맞춤형화장품의이해_이야기형.md',
-  './content/문제은행/과목1_단일정답형.md',
-  './content/문제은행/과목2_단일정답형.md',
-  './content/문제은행/과목3_단일정답형.md',
-  './content/문제은행/과목4_단일정답형.md'
+  './content/exams/cosmetic/학습안내서.md',
+  './content/exams/cosmetic/교재/law/1과목_화장품법의이해_표준형.md',
+  './content/exams/cosmetic/교재/law/1과목_화장품법의이해_이야기형.md',
+  './content/exams/cosmetic/교재/manufacturing/2과목_제조및품질관리_표준형.md',
+  './content/exams/cosmetic/교재/manufacturing/2과목_제조및품질관리_이야기형.md',
+  './content/exams/cosmetic/교재/safety/3과목_유통화장품안전관리_표준형.md',
+  './content/exams/cosmetic/교재/safety/3과목_유통화장품안전관리_이야기형.md',
+  './content/exams/cosmetic/교재/understanding/4과목_맞춤형화장품의이해_표준형.md',
+  './content/exams/cosmetic/교재/understanding/4과목_맞춤형화장품의이해_이야기형.md',
+  './content/exams/cosmetic/문제은행/과목1_단일정답형.md',
+  './content/exams/cosmetic/문제은행/과목2_단일정답형.md',
+  './content/exams/cosmetic/문제은행/과목3_단일정답형.md',
+  './content/exams/cosmetic/문제은행/과목4_단일정답형.md'
 ];
 
 /** 캐시하지 않을 요청 패턴 (오디오 등 대용량 미디어) */
 const BYPASS_PATTERNS = [
   /\.mp3$/i,
-  /content\/audiobook\/mp3\//i
+  /content\/exams\/[^/]+\/audiobook\/mp3\//i
 ];
 
 /** 마크다운 원본 → Cache First (정적 원본, 배포 시 갱신) */

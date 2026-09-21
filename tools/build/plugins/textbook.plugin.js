@@ -594,7 +594,7 @@ module.exports = {
         });
       }
 
-      const chapterData = parseTextbookContent(filePath, file, `content/${subject.dir}`);
+      const chapterData = parseTextbookContent(filePath, file, `${ctx.contentRoot || 'content'}/${subject.dir}`);
       chapterData.chapterKey = chapter.key;
       data.chapters.push(chapterData);
     });

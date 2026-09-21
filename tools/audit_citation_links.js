@@ -15,14 +15,11 @@
 const fs = require('fs');
 const path = require('path');
 
-const EXAM_FILES = [
-    'content/문제은행/과목1_단일정답형.md',
-    'content/문제은행/과목2_단일정답형.md',
-    'content/문제은행/과목3_단일정답형.md',
-    'content/문제은행/과목4_단일정답형.md',
-];
-
 const ROOT = path.resolve(__dirname, '..');
+const { getDefaultExamRoots } = require('./build/exam-targets.js');
+const _cr = getDefaultExamRoots(ROOT).contentRoot;
+
+const EXAM_FILES = [1, 2, 3, 4].map(n => `${_cr}/문제은행/과목${n}_단일정답형.md`);
 
 // Match ALL citation link patterns: [any label: L####] or [any label: L####] with URL
 // Pattern 1: [label: L####](<path#L####>)

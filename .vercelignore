@@ -6,7 +6,7 @@
 # ============================================
 
 # ---------- 🎧 대용량 오디오 (302MB) ----------
-audiobook/mp3/
+content/exams/*/audiobook/mp3/
 *.mp3
 
 # ---------- 📚 정적 HTML 콘텐츠 ----------
@@ -14,7 +14,7 @@ audiobook/mp3/
 # 참조자료 HTML 변환본(ref_md)은 앱 내 HTML 뷰어가 fetch하므로 배포에 포함.
 # 루트 index.html(진입점)도 배포에 포함.
 # content/html/의 사전 렌더 HTML만 제외 (negation 패턴 대신 디렉토리 단위 제외)
-content/html/
+content/exams/*/html/
 
 # ---------- 🗑️ 구(모놀리식) 죽은 데이터 파일 ----------
 # index.html은 모듈러 구조(registry + data/subjects·exams/*.hash.js)만 로드한다.
@@ -29,8 +29,8 @@ data/exam_data.js
 # data/exams_md/, data/study_md/는 file:// 프로토콜(로컬 직접 열기) 전용 폴백이다.
 # http(s) 배포에서는 content/*.md를 직접 fetch하므로 불필요하여 배포에서 제외한다.
 # (data/docs_md/는 PWA 오프라인 fetch 실패 시 폴백으로도 사용되므로 배포에 포함 = 제외 규칙 없음)
-data/exams_md/
-data/study_md/
+data/exams/*/exams_md/
+data/exams/*/study_md/
 
 # ---------- ⏳ ID 마이그레이션 맵 (배포 포함) ----------
 # data/id_migration.js는 교재 교체 시 구ID→신ID 이관 맵으로,
@@ -49,12 +49,12 @@ archive/
 docs/report_archive/
 
 # ---------- 📖 참조자료 PDF (배포 제외 — HTML 변환본으로 대체) ----------
-# content/참조자료/ 하위 PDF 파일들은 ref_md의 HTML 변환본으로 대체되어 배포에서 제외.
+# {contentRoot}/참조자료/ 하위 PDF 파일들은 ref_md의 HTML 변환본으로 대체되어 배포에서 제외.
 # HTML 변환본(~35MB)만 배포에 포함.
-content/참조자료/**/*.pdf
+content/exams/*/참조자료/**/*.pdf
 
 # ---------- 🔧 개발 도구 및 파이프라인 ----------
-content/audiobook/
+content/exams/*/audiobook/
 tools/
 *.py
 *.ps1

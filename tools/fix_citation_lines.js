@@ -13,12 +13,9 @@ const path = require('path');
 const { execSync } = require('child_process');
 
 const ROOT = path.resolve(__dirname, '..');
-const EXAM_FILES = [
-    'content/문제은행/과목1_단일정답형.md',
-    'content/문제은행/과목2_단일정답형.md',
-    'content/문제은행/과목3_단일정답형.md',
-    'content/문제은행/과목4_단일정답형.md',
-];
+const { getDefaultExamRoots } = require('./build/exam-targets.js');
+const _cr = getDefaultExamRoots(ROOT).contentRoot;
+const EXAM_FILES = [1, 2, 3, 4].map(n => `${_cr}/문제은행/과목${n}_단일정답형.md`);
 
 const CITATION_RE = /\[([^\]]+?):\s*L(\d+)\]\(<([^>]+\.md)#L(\d+)>\)/g;
 const EVIDENCE_RE = /📖\s*[^\[]*?\[L(\d+)\]\(<([^>]+\.md)#L(\d+)>\)/g;

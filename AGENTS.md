@@ -22,8 +22,8 @@ npm.cmd run test:dom                  # DOM 테스트 (Vitest + jsdom)
 npm.cmd run test:all                   # 전체 테스트 (unit + parser + dom)
 
 # 빌드
-npm.cmd run build:data                 # content/*.md → data/ 번들 생성
-node tools/build_doc_bundles.js        # docs/user/user_manual.md, content/학습안내서.md → data/docs_md/ 번들 (앱 내 문서 갱신 시 필수)
+npm.cmd run build:data                 # content/exams/<id>/*.md → data/exams/<id>/ 번들 생성 (모든 시험 순회)
+node tools/build_doc_bundles.js        # docs/user/user_manual.md, content/exams/cosmetic/학습안내서.md → data/docs_md/ + {dataRoot}/docs_md/ 번들 (앱 내 문서 갱신 시 필수)
 npm.cmd run check:parser               # 빌드 파서 ↔ 런타임 파서 등가성 검증
 npm.cmd run check:imports              # src/ 내 ES 모듈 import/export 교차 검증
 npm.cmd run stamp:sw                   # sw.js CACHE_VERSION을 커밋 해시로 스탬프
@@ -120,15 +120,23 @@ src/                    # ES Modules
     exam-viewer.js      # 문제집 뷰어
     exam-select.js      # 시험 선택/전환 뷰
 css/                    # 스타일시트 모듈 (base.css, reader.css, reader-mermaid.css, trainer.css, exam.css, dashboard.css, study.css, study-calendar.css, print.css, ui-overlay.css, html-viewer.css)
-content/                # 교재/문제은행/참조자료 Markdown 원본 (기본 시험 cosmetic의 contentRoot)
+content/                # 시험 콘텐츠 컨테이너 (시험 소유 파일 없음 — 순수 네임스페이스)
   exams.json            # 시험 레지스트리 (멀티시험 엔트리 — 멀티시험 구조 섹션 참조)
-  exams/<id>/           # 추가 시험의 독립 콘텐츠 루트 (동일 내부 구조)
-  교재/                  # 4과목 MD 파일 (표준형 8 + 이야기형 8 = 16파일, 총 20챕터)
-  문제은행/              # 과목별 문제은행 MD
-  참조자료/              # 법령고시/별표/참조자료 — PDF는 공통·과목1~4 폴더, MD 변환본은 ref_md/과목N/{문서}/{문서}.md (과목 폴더가 귀속의 진실)
-  audiobook/            # 오디오북 MP3 + 매니페스트
-  ingredients/          # 원료 데이터
-data/                   # 빌드 생성 번들 (registry.js, subjects/, exams/, ingredients_data.js)
+  exams/cosmetic/       # 기본 시험 콘텐츠 루트 (contentRoot)
+    manifest.json       # 과목/교재/문제은행 선언
+    references.json     # 참조자료 매핑 설정
+    교재/                # 4과목 MD 파일 (표준형 8 + 이야기형 8 = 16파일, 총 20챕터)
+    문제은행/            # 과목별 문제은행 MD
+    참조자료/            # 법령고시/별표/참조자료 — PDF는 공통·과목1~4 폴더, MD 변환본은 ref_md/과목N/{문서}/{문서}.md (과목 폴더가 귀속의 진실)
+    audiobook/          # 오디오북 MP3 + 매니페스트
+    number-drills/      # 숫자 암기 드릴 JSON
+  exams/<id>/           # 추가 시험도 동일한 내부 구조 (대칭)
+data/                   # 빌드 생성 번들
+  exams.js              # 전역 시험 목록 (window.EXAMS_LIST)
+  audio_manifest.js     # 전역 오디오 매니페스트 (시험 id 키 분리)
+  docs_md/              # 앱 공용 문서 번들 (user_manual 등 — 시험 무관)
+  exams/cosmetic/       # 기본 시험 데이터 루트 (dataRoot: registry.js, subjects/, exams/, drills/, study_md/, docs_md/, id_migration.js 등)
+  exams/<id>/           # 추가 시험 데이터 루트 (동일 구조)
 tools/                  # 빌드 스크립트
   build/                # 데이터 파이프라인 (manifest → registry + 해시 번들)
   sync_citation_lines.js # 문제은행 인용 링크 라인번호 동기화 (교재 변경 시)
@@ -145,7 +153,7 @@ docs/                   # 개발 문서
 
 1. **Zero-Backend**: 순수 프론트엔드, Vercel 정적 호스팅
 2. **Vanilla ES Modules**: `<script type="module">`, import/export, 프레임워크 없음
-3. **DataLoader 온디맨드**: `content/*.md`를 런타임 fetch + parseMarkdown으로 렌더링
+3. **DataLoader 온디맨드**: `{contentRoot}/*.md`를 런타임 fetch + parseMarkdown으로 렌더링
 4. **Service Worker**: Cache First (HTML/JS/CSS), DATA_CACHE (MD/참조자료, 배포 간 유지)
 5. **이벤트 위임**: `data-click`/`data-arg` 속성 기반, CSP `script-src 'self'` 호환
 6. **멀티시험 플랫폼**: 시험별 `contentRoot`/`dataRoot` 분리 — 아래 "멀티시험 구조" 참조
@@ -153,10 +161,10 @@ docs/                   # 개발 문서
 ## 멀티시험 구조
 
 - **시험 레지스트리**: `content/exams.json` → `data/exams.js` 번들(`window.EXAMS_LIST`, `npm run build:data`에 포함). 각 시험 엔트리: `id`, `name`, `title`/`logoMain`/`logoSub`(브랜딩), `desc`, `icon`, `year`, `default`, `contentRoot`, `dataRoot`, `registryBundle`, `registryGlobal`, `features`(기능 플래그)
-- **시험별 루트**: 기본 시험은 `content/`·`data/` 그대로. 추가 시험은 `content/exams/<id>/`(manifest.json + 교재/문제은행/참조자료)와 `data/exams/<id>/`(registry.js, exams/, drills/, study_md/, docs_md/, supplements/) 구조
+- **시험별 루트 (대칭)**: 모든 시험이 `content/exams/<id>/`(manifest.json + references.json + 교재/문제은행/참조자료/audiobook 등)와 `data/exams/<id>/`(registry.js, subjects/, exams/, drills/, study_md/, docs_md/, supplements/, id_migration.js 등) 구조 — 기본 시험(cosmetic)도 예외 없음. `content/`·`data/` 루트에는 전역 파일만: `exams.json`/`exams.js`, `audio_manifest.js`(시험 id 키 분리), `docs_md/`(앱 공용 문서)
 - **시험 컨텍스트**: `src/exam-context.js` — `contentPath()`/`dataPath()`(경로 해석), `hasFeature()`(기능 게이팅), `selectExam()`(전환 = `location.reload()`로 모듈 상태 리셋), `scopedKey()`(진도 네임스페이스 `<examId>:key`)
 - **진도 격리**: `safeGetItem`/`safeSetItem` 등이 자동으로 시험 접두사 적용. 테마·리더 설정 등 `GLOBAL_KEYS`만 비네임스페이스. 백업 파일은 비접두사 논리 키(시험 간 호환)
-- **새 시험 추가 절차**: ① `content/exams/<id>/`에 manifest.json + 교재/문제은행 배치 ② `content/exams.json`에 엔트리 추가 ③ `npm.cmd run build:data && npm.cmd run build:drills` → 끝 (앱 로직 변경 불필요)
+- **새 시험 추가 절차**: ① `content/exams/<id>/`에 manifest.json + references.json + 교재/문제은행 배치 ② `content/exams.json`에 엔트리 추가 (`contentRoot`/`dataRoot`/`registryBundle`/`registryGlobal` 지정 — 비기본 시험은 `registryGlobal: "DATA_REGISTRY_<id>"`) ③ `npm.cmd run check:content -- --build` → 끝 (앱 로직 변경 불필요)
 - **기능 플래그**: `features`에 없는 기능은 `data-feature` 속성/`hasFeature()`로 자동 숨김 — 성분사전·원료배합·계산연습·오디오북·참조자료 등 도메인 특화 기능
 - **Node 도구**: `EXAM_ID`/`EXAM_CONTENT_ROOT`/`EXAM_DATA_ROOT` env로 대상 시험 지정 (예: `EXAM_ID=<id> node tools/build/index.js`)
 

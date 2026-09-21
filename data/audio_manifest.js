@@ -21,16 +21,16 @@ export const AUDIO_BASE_URL = null;
 export const AUDIO_MANIFEST = {
   "cosmetic": {
     "law": {
-      "0": "content/audiobook/mp3/law/ch01_1과목_화장품법의이해_이야기형.mp3"
+      "0": "content/exams/cosmetic/audiobook/mp3/law/ch01_1과목_화장품법의이해_이야기형.mp3"
     },
     "manufacturing": {
-      "0": "content/audiobook/mp3/manufacturing/ch02_2과목_제조및품질관리_이야기형.mp3"
+      "0": "content/exams/cosmetic/audiobook/mp3/manufacturing/ch02_2과목_제조및품질관리_이야기형.mp3"
     },
     "safety": {
-      "0": "content/audiobook/mp3/safety/ch03_3과목_유통화장품안전관리_이야기형.mp3"
+      "0": "content/exams/cosmetic/audiobook/mp3/safety/ch03_3과목_유통화장품안전관리_이야기형.mp3"
     },
     "understanding": {
-      "0": "content/audiobook/mp3/understanding/ch04_4과목_맞춤형화장품의이해_이야기형.mp3"
+      "0": "content/exams/cosmetic/audiobook/mp3/understanding/ch04_4과목_맞춤형화장품의이해_이야기형.mp3"
     }
   }
 };

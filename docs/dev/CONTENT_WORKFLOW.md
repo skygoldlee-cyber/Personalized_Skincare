@@ -1,16 +1,16 @@
 # Content 변경 작업 절차 가이드
 
-> content/ 폴더의 교재, 문제은행, 참조자료, 오디오북, 원료 데이터가 변경될 때 따라야 할 표준 작업 절차.
+> content/exams/<id>/ 폴더의 교재, 문제은행, 참조자료, 오디오북, 원료 데이터가 변경될 때 따라야 할 표준 작업 절차.
 
 ## 개요
 
-이 프로젝트는 `content/` 폴더의 Markdown/JSON 파일이 **단일 소스 오브 트루스(SSOT)** 역할을 합니다. 소스 코드(`src/`)를 직접 수정하지 않고, content 파일과 매니페스트만 편집하면 빌드 파이프라인이 나머지를 자동 처리합니다.
+이 프로젝트는 `content/exams/<id>/` 폴더의 Markdown/JSON 파일이 **단일 소스 오브 트루스(SSOT)** 역할을 합니다. 소스 코드(`src/`)를 직접 수정하지 않고, content 파일과 매니페스트만 편집하면 빌드 파이프라인이 나머지를 자동 처리합니다.
 
-> **멀티시험 구조 (2026-09-20~)**: 이 문서의 `content/`·`data/` 경로는 각 시험의 `contentRoot`/`dataRoot`를 의미합니다. 기본 시험(cosmetic)은 `content/`·`data/` 루트이며, 추가 시험은 `content/exams/<id>/`·`data/exams/<id>/` 루트를 갖습니다. `build:data`는 `content/exams.json`의 모든 시험을 순회 빌드하므로 절차는 동일합니다. 새 시험 추가는 `AGENTS.md`의 "멀티시험 구조" 섹션을 참조하세요.
+> **멀티시험 대칭 구조 (2026-09-21~)**: 모든 시험이 `content/exams/<id>/`·`data/exams/<id>/` 루트를 갖습니다 — 기본 시험(cosmetic)도 `content/exams/cosmetic/`·`data/exams/cosmetic/`에 있으며 예외가 없습니다. 이 문서의 `content/`·`data/` 경로 표기는 **각 시험의 `contentRoot`/`dataRoot`를 의미**합니다 (예: `content/manifest.json` = `content/exams/cosmetic/manifest.json`). `content/`·`data/` 루트 자체에는 전역 파일만 있습니다: `exams.json`/`exams.js`(시험 목록), `audio_manifest.js`(시험 id 키 분리), `docs_md/`(앱 공용 문서). `build:data`는 `content/exams.json`의 모든 시험을 순회 빌드하므로 절차는 동일합니다. 새 시험 추가는 `AGENTS.md`의 "멀티시험 구조" 섹션을 참조하세요.
 
 ```mermaid
 flowchart LR
-    subgraph SSOT["content/ (단일 소스 오브 트루스)"]
+    subgraph SSOT["content/exams/<id>/ (단일 소스 오브 트루스)"]
         M["manifest.json<br/>과목·시험·UI·추천링크"]
         R["references.json<br/>참조자료 매핑"]
         T["교재/*.md<br/>표준형+이야기형"]
@@ -32,12 +32,12 @@ flowchart LR
     subgraph OUT["자동 생성 산출물"]
         O1["src/pdf-registry.js"]
         O2["src/keyword-index.js"]
-        O3["data/registry.js"]
-        O4["data/subjects/*.js"]
-        O5["data/exams/*.js"]
-        O6["data/study_md/*.js"]
-        O7["data/exams_md/*.js"]
-        O8["data/audio_manifest.js"]
+        O3["dataRoot/registry.js"]
+        O4["dataRoot/subjects/*.js"]
+        O5["dataRoot/exams/*.js"]
+        O6["dataRoot/study_md/*.js"]
+        O7["dataRoot/exams_md/*.js"]
+        O8["data/audio_manifest.js (전역)"]
         O9["sw.js (DATA_ASSETS+MD_ASSETS)"]
     end
 
@@ -124,17 +124,17 @@ flowchart TD
     B1 --> C["build:keyword-index"]
     C --> C1["교재 MD 스캔 + references.json<br/>→ src/keyword-index.js"]
     C1 --> D["build:index (tools/build/index.js)"]
-    D --> D1["manifest.json<br/>→ data/registry.js"]
-    D --> D2["content/교재/*.md<br/>→ data/subjects/*.js"]
-    D --> D3["content/문제은행/*.md<br/>→ data/exams/*.js"]
-    D --> D4["content/ingredients/<br/>→ data/ingredients_data.js"]
+    D --> D1["manifest.json<br/>→ dataRoot/registry.js"]
+    D --> D2["contentRoot/교재/*.md<br/>→ dataRoot/subjects/*.js"]
+    D --> D3["contentRoot/문제은행/*.md<br/>→ dataRoot/exams/*.js"]
+    D --> D4["contentRoot/ingredients/<br/>→ dataRoot/ingredients_data.js"]
     D --> D5["sw.js DATA_ASSETS<br/>+ MD_ASSETS 자동 갱신"]
     D5 --> E["build:study-md"]
-    E --> E1["content/교재/*.md<br/>→ data/study_md/*.js"]
+    E --> E1["contentRoot/교재/*.md<br/>→ dataRoot/study_md/*.js"]
     E1 --> F["build:exam-bundles"]
-    F --> F1["content/문제은행/*.md<br/>→ data/exams_md/*.js"]
+    F --> F1["contentRoot/문제은행/*.md<br/>→ dataRoot/exams_md/*.js"]
     F1 --> G["build:audio-manifest"]
-    G --> G1["content/audiobook/mp3/<br/>→ data/audio_manifest.js"]
+    G --> G1["contentRoot/audiobook/mp3/<br/>→ data/audio_manifest.js (전역)"]
     G1 --> H["check:parser"]
     H --> H1["빌드 파서 ↔ 런타임 파서<br/>등가성 검증"]
     H1 --> I["✅ 빌드 완료"]
@@ -225,7 +225,7 @@ flowchart TD
 - [ ] `content/교재/glossary/subject{N}.json` — 큐레이션 용어집 (과목 order 번호 기준)
 - [ ] `content/number-drills/{과목키}.json`
 - [ ] `content/audiobook/mp3/{과목키}/` — 교재 교체 시 TTS 재생성(`generate_all_mp3.py`)
-- [ ] `tools/check_ref_subjects.js`의 `SUBJECT_DIRS` 매핑 (과목키↔번호 변경 시)
+- [ ] `tools/check_ref_subjects.js`는 manifest의 `dir`↔`order`에서 과목 매핑을 자동 파생 — 별도 상수 없음
 
 **4. 빌드 재생성**
 
@@ -247,7 +247,7 @@ npm.cmd run check:content -- --build   # build:data + 전 계층 검증을 한 �
 
 **7. 사용자 진행 데이터 (localStorage)**
 - [ ] 카드/퀴즈 ID는 `stableId(subjectKey, chapterKey, type, term)` — 교재가 바뀌면 term 해시가 달라집니다
-- [ ] `npm.cmd run build:id-migration`이 이전 스냅샷(`data/card_terms_snapshot.json`)과 비교해 term이 유일하게 일치하는 구ID→신ID 이관 맵(`data/id_migration.js`)을 생성합니다 — 같은 용어가 남아 있으면 진도가 자동 이관됩니다
+- [ ] `npm.cmd run build:id-migration`이 이전 스냅샷(`{dataRoot}/card_terms_snapshot.json`)과 비교해 term이 유일하게 일치하는 구ID→신ID 이관 맵(`{dataRoot}/id_migration.js`)을 생성합니다 — 같은 용어가 남아 있으면 진도가 자동 이관됩니다
 - [ ] 스냅샷 파일은 커밋 대상입니다 — 배포된 직전 빌드의 ID 집합을 보존해야 이관이 동작합니다
 - [ ] term이 바뀌거나 삭제된 카드의 진도는 이관 불가 → `cleanOrphansForSubject`가 정리(삭제). 과목 통째 교체 시 잔량을 사용자에게 안내하세요
 
@@ -445,20 +445,23 @@ flowchart LR
 
 | 파일 | 생성 스크립트 | 소스 |
 |------|-------------|------|
-| `src/pdf-registry.js` | `tools/build/build-pdf-registry.js` | `content/references.json` |
-| `src/keyword-index.js` | `tools/build/build_keyword_index.js` | `content/교재/*.md` + `content/references.json` |
-| `data/registry.js` | `tools/build/index.js` | `content/manifest.json` |
-| `data/subjects/*.js` | `tools/build/index.js` | `content/교재/*.md` |
-| `data/exams/*.js` | `tools/build/index.js` | `content/문제은행/*.md` |
-| `data/study_md/*.js` | `tools/build_study_md_bundle.js` | `content/교재/*.md` |
-| `data/exams_md/*.js` | `tools/build_exam_bundles.js` | `content/문제은행/*.md` (manifest `exams` 등록분만) |
-| `data/audio_manifest.js` | `tools/build/build-audio-manifest.js` | `content/audiobook/mp3/` |
-| `data/drills/ox_subject*.js` | `tools/build_ox_drills.js` | `data/exams/*.js` (객관식) |
-| `data/drills/combo_subject*.js` | `tools/build_combo_drills.js` | `data/exams/*.js` (객관식+단답형) |
-| `content/문제은행/과목N_복수정답형.md` | `tools/build_combo_drills.js` | `data/exams/*.js` (검토용 산출물) |
-| `sw.js` (DATA_ASSETS, MD_ASSETS) | `tools/build/index.js` | `content/manifest.json` |
+| `src/pdf-registry.js` | `tools/build/build-pdf-registry.js` | `{contentRoot}/references.json` |
+| `src/keyword-index.js` | `tools/build/build_keyword_index.js` | `{contentRoot}/교재/*.md` + `{contentRoot}/references.json` |
+| `data/exams.js` | `tools/build_exams_list.js` | `content/exams.json` (전역 시험 목록) |
+| `data/audio_manifest.js` | `tools/build/build-audio-manifest.js` | `{contentRoot}/audiobook/mp3/` (전 시험 순회, 시험 id 키 분리) |
+| `{dataRoot}/registry.js` | `tools/build/index.js` | `{contentRoot}/manifest.json` |
+| `{dataRoot}/subjects/*.js` | `tools/build/index.js` | `{contentRoot}/교재/*.md` |
+| `{dataRoot}/exams/*.js` | `tools/build/index.js` | `{contentRoot}/문제은행/*.md` |
+| `{dataRoot}/study_md/*.js` | `tools/build_study_md_bundle.js` | `{contentRoot}/교재/*.md` |
+| `{dataRoot}/exams_md/*.js` | `tools/build_exam_bundles.js` | `{contentRoot}/문제은행/*.md` (manifest `exams` 등록분만) |
+| `{dataRoot}/docs_md/*.js` | `tools/build_doc_bundles.js` | `{contentRoot}/학습안내서.md` 등 (앱 공용 `data/docs_md/`는 `docs/user/` 소스) |
+| `{dataRoot}/drills/ox_subject*.js` | `tools/build_ox_drills.js` | `{dataRoot}/exams/*.js` (객관식) |
+| `{dataRoot}/drills/combo_subject*.js` | `tools/build_combo_drills.js` | `{dataRoot}/exams/*.js` (객관식+단답형) |
+| `{contentRoot}/문제은행/과목N_복수정답형.md` | `tools/build_combo_drills.js` | `{dataRoot}/exams/*.js` (검토용 산출물) |
+| `{dataRoot}/id_migration.js` + `{dataRoot}/card_terms_snapshot.json` | `tools/build_id_migration.js` | 이전 스냅샷 ↔ 현재 파싱 비교 |
+| `sw.js` (DATA_ASSETS, MD_ASSETS) | `tools/build/index.js` | `{contentRoot}/manifest.json` |
 
-> ※ `data/drills/`는 `data/exams/`의 2차 파생물입니다 — 문제은행 변경 시 `build:data` 후 `npm run build:drills`로 재생성해야 최신 문항이 반영됩니다.
+> ※ `{dataRoot}/drills/`는 `{dataRoot}/exams/`의 2차 파생물입니다 — 문제은행 변경 시 `build:data` 후 `npm run build:drills`로 재생성해야 최신 문항이 반영됩니다.
 
 ### 6.2 PowerShell 환경
 
@@ -479,7 +482,7 @@ flowchart LR
 교재 내용 수정        → content/교재/*.md
 교재 전체 교체        → §3.1-1 체크리스트 (7계층) + npm.cmd run check:content -- --build
 문제은행 수정         → content/문제은행/*.md (+ npm run build:drills 로 드릴 번들 재생성)
-복수정답형 파일럿 추가     → data/drills/combo_pilot.js 직접 편집 + npm run check:combo 검증
+복수정답형 파일럿 추가     → {dataRoot}/drills/combo_pilot.js 직접 편집 + npm run check:combo 검증
 과목 추가/삭제        → content/manifest.json + content/references.json + content/교재/ + content/문제은행/
 시험 추가/삭제         → content/manifest.json + content/문제은행/
 참조자료 추가/삭제     → content/references.json + content/참조자료/ref_md/과목N/ (+ 해당 과목 폴더의 PDF)

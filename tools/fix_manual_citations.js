@@ -10,23 +10,23 @@ const ROOT = path.resolve(__dirname, '..');
 // Manual mappings: { examFile, relPath, oldLineNum, newLineNum }
 const manualMappings = [
     // 2과목
-    { examFile: 'content/문제은행/과목2_단일정답형.md', relPath: '../교재/manufacturing/2과목_제조및품질관리_표준형.md', oldLineNum: 2415, newLineNum: 2475 },
-    { examFile: 'content/문제은행/과목2_단일정답형.md', relPath: '../교재/manufacturing/2과목_제조및품질관리_표준형.md', oldLineNum: 3672, newLineNum: 3785 },
-    { examFile: 'content/문제은행/과목2_단일정답형.md', relPath: '../교재/manufacturing/2과목_제조및품질관리_표준형.md', oldLineNum: 3002, newLineNum: 3079 },
-    { examFile: 'content/문제은행/과목2_단일정답형.md', relPath: '../교재/manufacturing/2과목_제조및품질관리_표준형.md', oldLineNum: 2323, newLineNum: 83 },
-    { examFile: 'content/문제은행/과목2_단일정답형.md', relPath: '../교재/manufacturing/2과목_제조및품질관리_표준형.md', oldLineNum: 3556, newLineNum: 3378 },
+    { examFile: 'content/exams/cosmetic/문제은행/과목2_단일정답형.md', relPath: '../교재/manufacturing/2과목_제조및품질관리_표준형.md', oldLineNum: 2415, newLineNum: 2475 },
+    { examFile: 'content/exams/cosmetic/문제은행/과목2_단일정답형.md', relPath: '../교재/manufacturing/2과목_제조및품질관리_표준형.md', oldLineNum: 3672, newLineNum: 3785 },
+    { examFile: 'content/exams/cosmetic/문제은행/과목2_단일정답형.md', relPath: '../교재/manufacturing/2과목_제조및품질관리_표준형.md', oldLineNum: 3002, newLineNum: 3079 },
+    { examFile: 'content/exams/cosmetic/문제은행/과목2_단일정답형.md', relPath: '../교재/manufacturing/2과목_제조및품질관리_표준형.md', oldLineNum: 2323, newLineNum: 83 },
+    { examFile: 'content/exams/cosmetic/문제은행/과목2_단일정답형.md', relPath: '../교재/manufacturing/2과목_제조및품질관리_표준형.md', oldLineNum: 3556, newLineNum: 3378 },
     // 3과목
-    { examFile: 'content/문제은행/과목3_단일정답형.md', relPath: '../교재/safety/3과목_유통화장품안전관리_표준형.md', oldLineNum: 1791, newLineNum: 1837 },
-    { examFile: 'content/문제은행/과목3_단일정답형.md', relPath: '../교재/safety/3과목_유통화장품안전관리_표준형.md', oldLineNum: 1997, newLineNum: 2071 },
-    { examFile: 'content/문제은행/과목3_단일정답형.md', relPath: '../교재/safety/3과목_유통화장품안전관리_표준형.md', oldLineNum: 1990, newLineNum: 2064 },
-    { examFile: 'content/문제은행/과목3_단일정답형.md', relPath: '../교재/safety/3과목_유통화장품안전관리_표준형.md', oldLineNum: 1988, newLineNum: 2062 },
-    { examFile: 'content/문제은행/과목3_단일정답형.md', relPath: '../교재/safety/3과목_유통화장품안전관리_표준형.md', oldLineNum: 1797, newLineNum: 1843 },
-    { examFile: 'content/문제은행/과목3_단일정답형.md', relPath: '../교재/safety/3과목_유통화장품안전관리_표준형.md', oldLineNum: 1863, newLineNum: 1909 },
+    { examFile: 'content/exams/cosmetic/문제은행/과목3_단일정답형.md', relPath: '../교재/safety/3과목_유통화장품안전관리_표준형.md', oldLineNum: 1791, newLineNum: 1837 },
+    { examFile: 'content/exams/cosmetic/문제은행/과목3_단일정답형.md', relPath: '../교재/safety/3과목_유통화장품안전관리_표준형.md', oldLineNum: 1997, newLineNum: 2071 },
+    { examFile: 'content/exams/cosmetic/문제은행/과목3_단일정답형.md', relPath: '../교재/safety/3과목_유통화장품안전관리_표준형.md', oldLineNum: 1990, newLineNum: 2064 },
+    { examFile: 'content/exams/cosmetic/문제은행/과목3_단일정답형.md', relPath: '../교재/safety/3과목_유통화장품안전관리_표준형.md', oldLineNum: 1988, newLineNum: 2062 },
+    { examFile: 'content/exams/cosmetic/문제은행/과목3_단일정답형.md', relPath: '../교재/safety/3과목_유통화장품안전관리_표준형.md', oldLineNum: 1797, newLineNum: 1843 },
+    { examFile: 'content/exams/cosmetic/문제은행/과목3_단일정답형.md', relPath: '../교재/safety/3과목_유통화장품안전관리_표준형.md', oldLineNum: 1863, newLineNum: 1909 },
     // 4과목
-    { examFile: 'content/문제은행/과목4_단일정답형.md', relPath: '../교재/understanding/4과목_맞춤형화장품의이해_표준형.md', oldLineNum: 1208, newLineNum: 1237 },
-    { examFile: 'content/문제은행/과목4_단일정답형.md', relPath: '../교재/understanding/4과목_맞춤형화장품의이해_표준형.md', oldLineNum: 2338, newLineNum: 2428 },
-    { examFile: 'content/문제은행/과목4_단일정답형.md', relPath: '../교재/understanding/4과목_맞춤형화장품의이해_표준형.md', oldLineNum: 3719, newLineNum: 3903 },
-    { examFile: 'content/문제은행/과목4_단일정답형.md', relPath: '../교재/understanding/4과목_맞춤형화장품의이해_표준형.md', oldLineNum: 2957, newLineNum: 3109 },
+    { examFile: 'content/exams/cosmetic/문제은행/과목4_단일정답형.md', relPath: '../교재/understanding/4과목_맞춤형화장품의이해_표준형.md', oldLineNum: 1208, newLineNum: 1237 },
+    { examFile: 'content/exams/cosmetic/문제은행/과목4_단일정답형.md', relPath: '../교재/understanding/4과목_맞춤형화장품의이해_표준형.md', oldLineNum: 2338, newLineNum: 2428 },
+    { examFile: 'content/exams/cosmetic/문제은행/과목4_단일정답형.md', relPath: '../교재/understanding/4과목_맞춤형화장품의이해_표준형.md', oldLineNum: 3719, newLineNum: 3903 },
+    { examFile: 'content/exams/cosmetic/문제은행/과목4_단일정답형.md', relPath: '../교재/understanding/4과목_맞춤형화장품의이해_표준형.md', oldLineNum: 2957, newLineNum: 3109 },
 ];
 
 // Group by exam file

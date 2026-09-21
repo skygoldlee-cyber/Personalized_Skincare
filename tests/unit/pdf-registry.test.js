@@ -25,9 +25,10 @@ const {
 
 // ==================== resolveRefPath ====================
 
-test('resolveRefPath: content/ 접두어 passthrough', () => {
-    const result = resolveRefPath('content/참조자료/ref_md/test/test.md');
-    assert.equal(result, 'content/참조자료/ref_md/test/test.md');
+test('resolveRefPath: contentRoot 접두어 passthrough', () => {
+    const root = getRefTables().contentRoot || 'content';
+    const p = `${root}/참조자료/ref_md/test/test.md`;
+    assert.equal(resolveRefPath(p), p);
 });
 
 test('resolveRefPath: 빈 입력 → 빈 문자열', () => {
@@ -38,7 +39,7 @@ test('resolveRefPath: 빈 입력 → 빈 문자열', () => {
 
 test('resolveRefPath: 등록된 PDF 파일 → MD 경로', () => {
     const result = resolveRefPath('화장품법(법률)(제20901호)(20260402).pdf');
-    assert.ok(result.includes('content/참조자료/ref_md/'), 'ref_md 경로 포함');
+    assert.ok(result.includes('참조자료/ref_md/'), 'ref_md 경로 포함');
     assert.ok(result.endsWith('.md'), '.md 확장자');
     assert.ok(!result.includes('.pdf'), '.pdf 확장자 제거됨');
 });

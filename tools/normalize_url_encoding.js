@@ -8,7 +8,8 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
-const TEXTBOOK_DIR = path.join(ROOT, 'content', '교재');
+const { getDefaultExamRoots } = require('./build/exam-targets.js');
+const TEXTBOOK_DIR = path.join(ROOT, getDefaultExamRoots(ROOT).contentRoot, '교재');
 const DRY_RUN = process.argv.includes('--dry-run');
 
 // 교재 파일 수집

@@ -7,7 +7,7 @@ import { parseMarkdown } from '../../src/markdown-parser.js';
 import { formatSectionContentForReader } from '../../src/reader-format.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const CONTENT_DIR = path.resolve(__dirname, '../../content/교재');
+const CONTENT_DIR = path.resolve(__dirname, '../../content/exams/cosmetic/교재');
 
 const READER_OPTS = {
     allowMermaid: true,

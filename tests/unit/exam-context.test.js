@@ -12,7 +12,7 @@ import {
 const EXAMS = {
     exams: [
         { id: 'alpha', name: '알파시험', contentRoot: 'content/exams/alpha', dataRoot: 'data/exams/alpha', features: { refDocs: true } },
-        { id: 'cosmetic', name: '조제관리사', contentRoot: 'content', dataRoot: 'data', default: true, features: { dictionary: true } },
+        { id: 'cosmetic', name: '조제관리사', contentRoot: 'content/exams/cosmetic', dataRoot: 'data/exams/cosmetic', default: true, features: { dictionary: true } },
     ]
 };
 
@@ -84,8 +84,8 @@ test('getExamList: malformed 데이터도 배열로 정규화', () => {
 // ==================== 경로 해석 ====================
 
 test('contentPath/dataPath: 활성 시험 루트 기준', () => {
-    assert.equal(contentPath('교재/a.md'), 'content/교재/a.md');
-    assert.equal(dataPath('drills/x.js'), 'data/drills/x.js');
+    assert.equal(contentPath('교재/a.md'), 'content/exams/cosmetic/교재/a.md');
+    assert.equal(dataPath('drills/x.js'), 'data/exams/cosmetic/drills/x.js');
     mockStorage.setItem('current_exam', 'alpha');
     assert.equal(contentPath('교재/a.md'), 'content/exams/alpha/교재/a.md');
     assert.equal(dataPath('drills/x.js'), 'data/exams/alpha/drills/x.js');

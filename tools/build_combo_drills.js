@@ -39,7 +39,7 @@ const fs = require('fs');
 const path = require('path');
 const { stableId } = require('./build/id-factory.js');
 const { inferTags } = require('./drill-utils.js');
-const { getExamTargets, getSubjectMaps } = require('./build/exam-targets.js');
+const { getExamTargets, getSubjectMaps, getDefaultExamRoots } = require('./build/exam-targets.js');
 const { extractRefAtoms } = require('./build/ref-statements.js');
 
 const ROOT = path.resolve(__dirname, '..');
@@ -50,8 +50,9 @@ const DRY_RUN = process.argv.includes('--dry-run');
 let SUBJECT_NUM = {};
 let SUBJECT_KEY = {};
 let SUBJECT_TITLE = {};
-let OUT_DIR = path.join(ROOT, 'data', 'drills');
-let MD_DIR = path.join(ROOT, 'content', '문제은행');
+const _defRoots = getDefaultExamRoots(ROOT);
+let OUT_DIR = path.join(ROOT, _defRoots.dataRoot, 'drills');
+let MD_DIR = path.join(ROOT, _defRoots.contentRoot, '문제은행');
 
 const AUTOGEN_HEADER = '// 자동 생성된 복수정답형 드릴 데이터입니다. 수정하지 마십시오. (tools/build_combo_drills.js)';
 

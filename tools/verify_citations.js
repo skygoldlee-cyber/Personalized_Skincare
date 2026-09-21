@@ -9,7 +9,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const baseDir = path.join(__dirname, '..', 'content');
+const { getDefaultExamRoots } = require('./build/exam-targets.js');
+const baseDir = path.join(__dirname, '..', getDefaultExamRoots(path.join(__dirname, '..')).contentRoot);
 
 const subjects = [
   {

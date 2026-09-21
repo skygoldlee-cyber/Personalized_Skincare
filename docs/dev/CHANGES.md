@@ -4,6 +4,37 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-21 완전 대칭 멀티시험 마이그레이션 (content/exams/cosmetic/ + data/exams/cosmetic/)
+
+기본 시험(cosmetic)만 `content/`·`data/` 루트를 특권적으로 쓰던 비대칭 구조를
+폐기하고, 모든 시험이 `content/exams/<id>/`·`data/exams/<id>/`를 갖는 대칭
+구조로 이행. `content/`·`data/` 루트에는 전역 파일만 남는다:
+`content/exams.json`·`data/exams.js`(시험 목록), `data/audio_manifest.js`
+(시험 id 키 분리 — 전역 유지), `data/docs_md/`(앱 공용 문서).
+
+- **파일 이동**: `content/*` → `content/exams/cosmetic/` (exams.json 제외),
+  `data/*` → `data/exams/cosmetic/` (exams.js·audio_manifest.js·docs_md/user_manual.js 제외)
+- **exams.json**: `contentRoot`/`dataRoot`/`manifestPath`/`registryBundle`을 중첩 경로로 갱신
+- **런타임**: `exam-context.js` 폴백 → `content/exams/<id>`/`data/exams/<id>`;
+  `index.html` 정적 스크립트 → `data/exams/cosmetic/registry.js` 등
+- **빌드**: `tools/build/index.js` — `IS_DEFAULT_EXAM`을 경로 문자열 비교가 아닌
+  `default` 플래그로 판정; `EXAM_ID` 미지정 시 exams.json의 default 시험으로 해석.
+  `textbook.plugin.js`의 `content/` 하드코딩 → `ctx.contentRoot` 사용
+- **도구 전수 전환**: `getDefaultExamRoots()`/`getExamTargets()` 기반으로
+  check_ref_subjects·check_reflayout·audit_*·citation 계열·combo/ox 드릴 등
+  `content/`·`data/` 직접 경로 제거
+- **audio_manifest 버그 수정**: 스캔 공백 시 기존 매니페스트 보존 로직이
+  구 contentRoot 경로를 그대로 잔존시키던 것을, 보존 시 현재 contentRoot로
+  경로 재작성하도록 수정
+- **무결성 규칙**: `.gitignore`(`content/**`)·`.vercelignore`(`content/exams/*/`)
+  와일드카드가 중첩 시험까지 커버; `vercel.json` 캐시 헤더에 `/data/audio_manifest.js`
+  전역 규칙 추가; `sw.js` SHELL/DATA/MD 자산·BYPASS 패턴을 신규 경로로 갱신
+- **진도 보존**: localStorage 키는 시험 id(`cosmetic:`) 네임스페이스 기준이라
+  물리 경로 이동과 무관하게 사용자 진도 유지
+
+검증: `check:content --quick` 전 단계 통과 · 유닛 294 · DOM 21 · 파서 등가성 ·
+verify:assets 101개.
+
 ## 2026-09-21 콘텐츠 의존성 통합 검증 도구 (check:content) + 감사 도구 현행화
 
 교재 교체 등 대규모 콘텐츠 변경 후 흩어진 검증 도구를 한 명령으로 실행하는

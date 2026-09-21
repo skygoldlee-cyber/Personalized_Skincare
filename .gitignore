@@ -5,11 +5,11 @@
 # ============================================
 
 # ---------- 🎧 대용량 오디오 파일 ----------
-content/audiobook/mp3/
+content/**/audiobook/mp3/
 *.mp3
 
 # ---------- 🤖 TTS 모델 파일 ----------
-content/audiobook/models/
+content/**/audiobook/models/
 *.onnx
 *.pt
 *.pth
@@ -60,11 +60,11 @@ archive/
 # ----------  대용량 HTML (GitHub 100MB 한도 초과) ----------
 content/**/*.html
 # 예외: 참조자료 HTML 변환본 (ref_md) — PDF 대체, Git 추적 필요
-!content/참조자료/ref_md/**/*.html
+!content/**/참조자료/ref_md/**/*.html
 # 예외: 참조자료 MD 변환본 (ref_md) — 대용량 법령 원문, Git 추적 필요
-!content/참조자료/ref_md/**/*.md
+!content/**/참조자료/ref_md/**/*.md
 .vercel
 !.vercel/project.json
 .env*
 # 스테이징: PDF→MD 재변환 검수 산출물 (로컬 전용)
-content/참조자료/ref_md_v2/
+content/**/참조자료/ref_md_v2/

@@ -74,7 +74,7 @@ export function contentPath(rel) {
     const exam = getActiveExam();
     const root = (exam && exam.contentRoot)
         || (typeof process !== 'undefined' && process.env && process.env.EXAM_CONTENT_ROOT)
-        || 'content';
+        || `content/exams/${DEFAULT_EXAM_ID}`;
     return `${root}/${rel}`;
 }
 
@@ -83,7 +83,7 @@ export function dataPath(rel) {
     const exam = getActiveExam();
     const root = (exam && exam.dataRoot)
         || (typeof process !== 'undefined' && process.env && process.env.EXAM_DATA_ROOT)
-        || 'data';
+        || `data/exams/${DEFAULT_EXAM_ID}`;
     return `${root}/${rel}`;
 }
 

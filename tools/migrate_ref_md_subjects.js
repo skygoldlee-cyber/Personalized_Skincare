@@ -10,8 +10,9 @@ const path = require('path');
 const { docSubject } = require('./build/ref-statements.js');
 
 const ROOT = path.resolve(__dirname, '..');
-const REF_MD = path.join(ROOT, 'content', '참조자료', 'ref_md');
-const CONTENT = path.join(ROOT, 'content');
+const { getDefaultExamRoots } = require('./build/exam-targets.js');
+const CONTENT = path.join(ROOT, getDefaultExamRoots(ROOT).contentRoot);
+const REF_MD = path.join(CONTENT, '참조자료', 'ref_md');
 const check = process.argv.includes('--check');
 
 /** 디렉터리 재귀 파일 수집 */

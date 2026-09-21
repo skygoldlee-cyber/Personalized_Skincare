@@ -58,7 +58,23 @@ function build() {
       manifest[target.id] = scanned;
     } else if (existingManifest && existingManifest[target.id]) {
       // 스캔 결과가 비어있으면(오디오 미커밋 등) 기존 매니페스트 보존
-      manifest[target.id] = existingManifest[target.id];
+      // 단, 저장된 경로의 contentRoot는 현재 target.contentRoot로 재작성한다
+      // (시험 폴더 이동/대칭 마이그레이션 후에도 경로가 stale하지 않도록).
+      const preserved = existingManifest[target.id];
+      manifest[target.id] = Object.fromEntries(
+        Object.entries(preserved).map(([subj, chapters]) => [
+          subj,
+          Object.fromEntries(
+            Object.entries(chapters).map(([idx, p]) => [
+              idx,
+              // 기존 경로에서 audiobook/ 이하만 추출해 현재 contentRoot에 결합
+              p.includes('/audiobook/')
+                ? `${target.contentRoot}/audiobook/${p.split('/audiobook/')[1]}`
+                : p,
+            ])
+          ),
+        ])
+      );
     }
   }
 

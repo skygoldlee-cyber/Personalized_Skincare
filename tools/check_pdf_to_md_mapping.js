@@ -4,7 +4,8 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
-const REF_BASE = path.join(ROOT, 'content', '참조자료');
+const { getDefaultExamRoots } = require('./build/exam-targets.js');
+const REF_BASE = path.join(ROOT, getDefaultExamRoots(ROOT).contentRoot, '참조자료');
 const REF_MD_DIR = path.join(REF_BASE, 'ref_md');
 
 // ref_md/과목N/{doc}/ 구조 — 문서 디렉터리는 과목 폴더 1단계 아래에 있다

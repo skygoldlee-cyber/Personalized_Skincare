@@ -8,8 +8,10 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
-const TEXTBOOK_DIR = path.join(ROOT, 'content', '교재');
-const REF_BASE = path.join(ROOT, 'content', '참조자료');
+const { getDefaultExamRoots } = require('./build/exam-targets.js');
+const CONTENT_ROOT = path.join(ROOT, getDefaultExamRoots(ROOT).contentRoot);
+const TEXTBOOK_DIR = path.join(CONTENT_ROOT, '교재');
+const REF_BASE = path.join(CONTENT_ROOT, '참조자료');
 const REF_MD_DIR = path.join(REF_BASE, 'ref_md');
 
 const DRY_RUN = process.argv.includes('--dry-run');

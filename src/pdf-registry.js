@@ -19,7 +19,7 @@ const _DEFAULT_EXAM_ID = "cosmetic";
 
 const _EXAM_TABLES = {
     "cosmetic": {
-        contentRoot: "content",
+        contentRoot: "content/exams/cosmetic",
         SUBJECT_DIR_MAP: {
         "law": "과목1",
         "manufacturing": "과목2",

@@ -6,8 +6,10 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
-const TEXTBOOK_DIR = path.join(ROOT, 'content', '교재');
-const REF_BASE = path.join(ROOT, 'content', '참조자료');
+const { getDefaultExamRoots } = require('./build/exam-targets.js');
+const CONTENT_ROOT = path.join(ROOT, getDefaultExamRoots(ROOT).contentRoot);
+const TEXTBOOK_DIR = path.join(CONTENT_ROOT, '교재');
+const REF_BASE = path.join(CONTENT_ROOT, '참조자료');
 
 // 교재 파일 목록
 const textbookFiles = [];
@@ -38,9 +40,9 @@ const results = {
 
 // 앱 렌더러와 동일한 경로 재작성 로직
 function rewriteRefPath(linkUrl) {
-  // ../참조자료/... → content/참조자료/...
+  // ../참조자료/... → {contentRoot}/참조자료/...
   let decoded = decodeURIComponent(linkUrl);
-  let rewritten = decoded.replace(/^\.\.\/참조자료\//, 'content/참조자료/');
+  let rewritten = decoded.replace(/^\.\.\/참조자료\//, `${getDefaultExamRoots(ROOT).contentRoot}/참조자료/`);
   return rewritten;
 }
 

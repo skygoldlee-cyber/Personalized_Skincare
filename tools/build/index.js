@@ -11,21 +11,34 @@ const WORKSPACE_DIR = path.resolve(__dirname, '../..');
 // [멀티시험] 비기본 시험 빌드:
 //   EXAM_ID=<id> node tools/build/index.js   (content/exams.json에서 루트/전역명 자동 해석)
 //   또는 EXAM_CONTENT_ROOT/EXAM_DATA_ROOT 를 직접 지정
-let EXAM_CONTENT_ROOT = process.env.EXAM_CONTENT_ROOT || 'content';
-let EXAM_DATA_ROOT = process.env.EXAM_DATA_ROOT || 'data';
+// [멀티시험] 루트 기본값: EXAM_CONTENT_ROOT/EXAM_DATA_ROOT env → 없으면
+// exams.json의 default 시험(또는 첫 항목)으로 해석. IS_DEFAULT_EXAM은 경로
+// 문자열이 아니라 default 플래그로 판정한다 (시험 이동/이름변경과 무관).
+const { getExamTargets } = require('./exam-targets');
+const EXAM_TARGETS = getExamTargets(WORKSPACE_DIR);
+const examsDoc = JSON.parse(fs.readFileSync(path.join(WORKSPACE_DIR, 'content', 'exams.json'), 'utf-8'));
+
+const _defaultTarget = EXAM_TARGETS.find(t => t.isDefault) || EXAM_TARGETS[0] || null;
+let IS_DEFAULT_EXAM = !_defaultTarget;
+let EXAM_CONTENT_ROOT = process.env.EXAM_CONTENT_ROOT || (_defaultTarget && _defaultTarget.contentRoot) || 'content';
+let EXAM_DATA_ROOT = process.env.EXAM_DATA_ROOT || (_defaultTarget && _defaultTarget.dataRoot) || 'data';
 let REGISTRY_GLOBAL = 'DATA_REGISTRY';
-if (process.env.EXAM_ID) {
-  const { getExamTargets } = require('./exam-targets');
-  const targets = getExamTargets(WORKSPACE_DIR);
-  const target = targets.find(t => t.id === process.env.EXAM_ID);
-  if (!target) throw new Error(`EXAM_ID '${process.env.EXAM_ID}'가 content/exams.json에 없습니다`);
-  EXAM_CONTENT_ROOT = target.contentRoot;
-  EXAM_DATA_ROOT = target.dataRoot;
-  const entry = JSON.parse(fs.readFileSync(path.join(WORKSPACE_DIR, 'content', 'exams.json'), 'utf-8'))
-    .exams.find(x => x.id === process.env.EXAM_ID);
-  REGISTRY_GLOBAL = (entry && entry.registryGlobal) || `DATA_REGISTRY_${process.env.EXAM_ID}`;
+{
+  const target = process.env.EXAM_ID
+    ? EXAM_TARGETS.find(t => t.id === process.env.EXAM_ID)
+    : _defaultTarget;
+  if (process.env.EXAM_ID && !target) {
+    throw new Error(`EXAM_ID '${process.env.EXAM_ID}'가 content/exams.json에 없습니다`);
+  }
+  if (target) {
+    EXAM_CONTENT_ROOT = process.env.EXAM_CONTENT_ROOT || target.contentRoot;
+    EXAM_DATA_ROOT = process.env.EXAM_DATA_ROOT || target.dataRoot;
+    IS_DEFAULT_EXAM = !!target.isDefault;
+    const entry = (examsDoc.exams || []).find(x => x.id === target.id);
+    REGISTRY_GLOBAL = (entry && entry.registryGlobal)
+      || (target.isDefault ? 'DATA_REGISTRY' : `DATA_REGISTRY_${target.id}`);
+  }
 }
-const IS_DEFAULT_EXAM = EXAM_CONTENT_ROOT === 'content' && EXAM_DATA_ROOT === 'data';
 
 const DATA_DIR = path.join(WORKSPACE_DIR, EXAM_DATA_ROOT);
 const SUBJECTS_OUT_DIR = path.join(DATA_DIR, 'subjects');
@@ -440,9 +453,10 @@ if (typeof window !== 'undefined') {
 
     const assetsToCache = [];
     const mdAssets = [];
+    // 참고: 전역 data/exams.js·data/audio_manifest.js는 SHELL_ASSETS에 수동 등록됨 (중복 방지)
     for (const t of allTargets) {
       // 존재하는 경량 번들만 프리캐시 (없는 파일은 precache 실패/404 방지)
-      for (const rel of ['registry.js', 'audio_manifest.js', 'id_migration.js']) {
+      for (const rel of ['registry.js', 'id_migration.js']) {
         if (fs.existsSync(path.join(WORKSPACE_DIR, t.dataRoot, rel))) {
           assetsToCache.push(`./${t.dataRoot}/${rel}`);
         }

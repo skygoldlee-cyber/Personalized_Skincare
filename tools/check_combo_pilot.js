@@ -14,7 +14,10 @@ const { validateQuestion, deriveComboAnswer, gradeAnswer } = await import(
   pathToFileURL(path.join(src, 'src', 'questions.js')).href
 );
 
-const DRILLS_DIR = path.join(src, 'data', 'drills');
+const { getDefaultExamRoots } = (await import(
+  pathToFileURL(path.join(src, 'tools', 'build', 'exam-targets.js')).href
+)).default;
+const DRILLS_DIR = path.join(src, getDefaultExamRoots(src).dataRoot, 'drills');
 
 function loadBundle(file, globalName) {
   return readFile(file, 'utf8').then(code => {

@@ -55,7 +55,7 @@ export const DataLoader = {
 
     /**
      * 활성 시험의 레지스트리 확보 (비기본 시험은 번들을 동적 로드).
-     * 기본 시험은 index.html의 정적 <script src="data/registry.js">가 이미 제공한다.
+     * 기본 시험은 index.html의 정적 <script src="data/exams/cosmetic/registry.js">가 이미 제공한다.
      */
     async ensureRegistry() {
         const exam = this.exam || getActiveExam();
@@ -153,7 +153,7 @@ export const DataLoader = {
         }
         this._fallbackManifestInjected = true;
         if (!window.__STUDY_MD_MANIFEST__) {
-            throw new Error('폴백 manifest를 찾을 수 없습니다. `node tools/build_study_md_bundle.js` 로 data/study_md/ 를 생성하세요.');
+            throw new Error('폴백 manifest를 찾을 수 없습니다. `node tools/build_study_md_bundle.js` 로 data/exams/<id>/study_md/ 를 생성하세요.');
         }
         return window.__STUDY_MD_MANIFEST__;
     },

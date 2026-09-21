@@ -22,7 +22,8 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
-const CONTENT = path.join(ROOT, 'content');
+const { getDefaultExamRoots } = require('./build/exam-targets.js');
+const CONTENT = path.join(ROOT, getDefaultExamRoots(ROOT).contentRoot);
 const REF_BASE = path.join(CONTENT, '참조자료');
 const REF_MD = path.join(REF_BASE, 'ref_md');
 const { docSubject } = require('./build/ref-statements.js');
