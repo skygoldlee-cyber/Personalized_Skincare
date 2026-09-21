@@ -338,9 +338,10 @@
 #formula-print-area { display: none; }
 
 .formula-save-hint {
-    margin: 0;
+    margin: 0.75rem 0 0;
     font-size: 0.78rem;
     color: var(--color-text-muted);
+    text-align: center;
 }
 
 .f-danger:hover { color: var(--color-danger); border-color: var(--color-danger); }
