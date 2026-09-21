@@ -4,6 +4,18 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-22 전성분 표시 자동 생성 (fullIngredients)
+
+안정성 '양호' 확인된 배합만 화장품법 전성분 표시 규칙으로 성분 순서를 생성·저장.
+
+- **`buildFullIngredients(ingredients)`** (formula-store.js) — 1% 초과 함량
+  내림차순 → 1% 이하·농도 미기입 → 색소(타르색소 호수·CI 번호·산화철·카민 등
+  이름 패턴 탐지)는 함량 무관 최하단
+- **스키마**: `formula.fullIngredients: string[]` — sanitizeFormula에서
+  stability.result === '양호'일 때만 생성, 아니면 빈 배열. serialize/import 왕복
+- **UI**: 포뮬러 카드에 전성분 행(2행 클램프), 조제 기록지 인쇄 '제형 안정성'
+  섹션에 '전성분 표시' 행 추가
+
 ## 2026-09-22 안정성 확인 기록 일시 자동 부여(recordedAt)
 
 수동 일자/일시 입력 필드를 제거하고, 저장 시각을 자동 기록하는 방식으로 전환.

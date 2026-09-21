@@ -178,6 +178,7 @@ export function openFormulaList() {
         </div>
         ${custParts.length ? `<div class="formula-card-customer"><i class="fa-solid fa-user" aria-hidden="true"></i> ${esc(custParts.join(' · '))}</div>` : ''}
         <div class="formula-card-checks">${checkSummaryHtml(f)}</div>
+        ${f.fullIngredients && f.fullIngredients.length ? `<div class="formula-card-inci" title="전성분 표시 순서 — 안정성 확인된 배합에 저장 시 자동 생성"><i class="fa-solid fa-list-ol" aria-hidden="true"></i> ${esc(f.fullIngredients.join(', '))}</div>` : ''}
         <div class="formula-card-actions">
           <button class="btn btn-primary btn-sm" data-click="formulaOpen" data-arg="${esc(f.id)}"><i class="fa-solid fa-calculator" aria-hidden="true"></i> 열기</button>
           <button class="btn btn-secondary btn-sm" data-click="formulaDuplicate" data-arg="${esc(f.id)}"><i class="fa-solid fa-copy" aria-hidden="true"></i> 복제</button>
@@ -1190,8 +1191,11 @@ function buildPrintHtml(f) {
   const stabConfirm = f.stability
     ? `<p class="fp-meta-line">안정성 실험 확인: ${esc([f.stability.method, f.stability.result, f.stability.recordedAt && `기록 ${f.stability.recordedAt.replace('T', ' ')}`, f.stability.note].filter(Boolean).join(' · '))}</p>`
     : '';
-  const stabHtml = (stab.warnings.length || f.stability)
-    ? `<h3>제형 안정성</h3>${stabConfirm}${stab.warnings.length ? `<ul class="fp-stab">${stab.warnings.map(w => `<li>${w.level === STAB.WARN ? '[주의] ' : '[참고] '}${esc(w.msg)}</li>`).join('')}</ul>` : ''}`
+  const inciHtml = (f.fullIngredients && f.fullIngredients.length)
+    ? `<p class="fp-meta-line fp-inci">전성분 표시: ${esc(f.fullIngredients.join(', '))}</p>`
+    : '';
+  const stabHtml = (stab.warnings.length || f.stability || inciHtml)
+    ? `<h3>제형 안정성</h3>${stabConfirm}${inciHtml}${stab.warnings.length ? `<ul class="fp-stab">${stab.warnings.map(w => `<li>${w.level === STAB.WARN ? '[주의] ' : '[참고] '}${esc(w.msg)}</li>`).join('')}</ul>` : ''}`
     : '';
   const notesHtml = f.notes ? `<h3>메모</h3><p class="fp-notes">${esc(f.notes)}</p>` : '';
   const phLine = (f.phTarget != null || f.phActual != null)

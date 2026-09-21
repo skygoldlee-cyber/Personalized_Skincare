@@ -414,3 +414,37 @@ test('stability: updateFormula·serialize 왕복 보존', () => {
   assert.equal(imp.formula.stability.method, '가속(고온) 시험');
   assert.equal(imp.formula.stability.note, '40℃ 2주 분리');
 });
+
+// ── 전성분 표시 (fullIngredients) ────────────────────
+
+test('fullIngredients: 안정성 양호 시 표시 순서 자동 생성', () => {
+  const { formula } = createFormula({
+    name: 't',
+    ingredients: [
+      { name: '황색4호', concentration: 0.5 },
+      { name: '페녹시에탄올', concentration: 0.8 },
+      { name: '정제수', concentration: 88 },
+      { name: '글리세린', concentration: 5 },
+      { name: '향료', concentration: 0.2 },
+      { name: '미기입원료', concentration: null },
+    ],
+    stability: { method: '실온 경시 관찰', result: '양호', recordedAt: '2026-09-22T14:30', note: '' },
+  });
+  // 1% 초과 내림차순 → 1% 이하(농도 미기입 포함) → 색소 최하단
+  assert.deepEqual(getFormula(formula.id).fullIngredients,
+    ['정제수', '글리세린', '페녹시에탄올', '향료', '미기입원료', '황색4호']);
+});
+
+test('fullIngredients: 양호 아니거나 기록 없으면 생성 안 함', () => {
+  const { formula } = createFormula({
+    name: 't',
+    ingredients: [{ name: '정제수', concentration: 90 }],
+    stability: { method: '실온 경시 관찰', result: '이상 발견', recordedAt: '2026-09-22T14:30', note: '' },
+  });
+  assert.deepEqual(getFormula(formula.id).fullIngredients, []);
+
+  const { formula: f2 } = createFormula({
+    name: 't2', ingredients: [{ name: '정제수', concentration: 90 }],
+  });
+  assert.deepEqual(getFormula(f2.id).fullIngredients, []);
+});

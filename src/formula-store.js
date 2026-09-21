@@ -18,6 +18,8 @@
 // phTarget/phActual — 목표·실측 pH (0~14, 범위 밖은 null).
 // stability — 안정성 실험 확인 기록 {method(STABILITY_METHODS), result(STABILITY_RESULTS), recordedAt(YYYY-MM-DDTHH:MM 저장 시 자동), note}.
 //   규칙 기반 경고는 참고일 뿐 실제 안정성은 실험으로만 확정되므로, 사용자의 실험 결과를 저장한다.
+// fullIngredients — 전성분 표시 순서 원료명 배열. 안정성 '양호' 확인된 배합에만 저장 시 자동 생성
+//   (화장품법 표시 규칙: 1% 초과 함량 내림차순 → 1% 이하 → 색소는 함량 무관 최하단).
 //
 // ingredients[].snapshot — 저장 시점의 규정 기준(type/limit)을 보존한다.
 // 원료 DB가 갱신돼도 과거 포뮬러의 검증 근거가 바뀌지 않게 하기 위함.
@@ -160,10 +162,32 @@ function sanitizeStability(stab) {
   return (s.method || s.result || s.recordedAt || s.note) ? s : null;
 }
 
+// 색소 탐지 — 타르색소 호수 표기(황색4호·적색201호 등), CI 번호, 무기 색소·광택소재
+const COLORANT_RE = /색\s*\d+호|(?:C\.?I\.?)\s*\d{4,6}|카민|산화철|울트라마린|망가니스바이올렛|페릭페로시아나이드|크롬옥사이드|수산화크롬|구아닌/i;
+
+/**
+ * 전성분 표시 순서 생성 — 화장품법 전성분 표시 규칙.
+ * 1% 초과는 함량 내림차순, 1% 이하는 그 뒤(순서 자유 — 관행상 내림차순),
+ * 색소는 함량과 무관하게 최하단. 농도 미기입은 1% 이하 그룹에 둔다(보수적).
+ * @param {Array<{name:string, concentration:number|null}>} ingredients
+ * @returns {string[]} 전성분 순서의 원료명 배열
+ */
+export function buildFullIngredients(ingredients) {
+  const isColorant = i => COLORANT_RE.test(i.name);
+  const byConc = (a, b) => (b.concentration != null ? b.concentration : 0)
+    - (a.concentration != null ? a.concentration : 0);
+  const normal = ingredients.filter(i => !isColorant(i));
+  const above = normal.filter(i => i.concentration != null && i.concentration > 1).sort(byConc);
+  const below = normal.filter(i => i.concentration == null || i.concentration <= 1).sort(byConc);
+  const colorants = ingredients.filter(isColorant).sort(byConc);
+  return [...above, ...below, ...colorants].map(i => i.name);
+}
+
 function sanitizeFormula(data) {
   const ingredients = Array.isArray(data.ingredients)
     ? data.ingredients.map(sanitizeIngredient).filter(Boolean)
     : [];
+  const stability = sanitizeStability(data.stability);
   return {
     name: clampStr(data.name || '', MAX_NAME_LEN).trim(),
     targetVolume: numOrNull(data.targetVolume),
@@ -173,7 +197,11 @@ function sanitizeFormula(data) {
     notes: clampStr(data.notes || '', MAX_NOTE_LEN),
     steps: sanitizeSteps(data.steps),
     customer: sanitizeCustomer(data.customer),
-    stability: sanitizeStability(data.stability),
+    stability,
+    // 전성분 표시 — 안정성 '양호' 확인된 배합만 저장 시 자동 생성
+    fullIngredients: stability && stability.result === '양호'
+      ? buildFullIngredients(ingredients)
+      : [],
     ingredients,
   };
 }
