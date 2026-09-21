@@ -22,7 +22,7 @@
 
 | 구분 | 프레임워크 | 환경 | 파일 위치 | 테스트 수 |
 |------|-----------|------|-----------|-----------|
-| **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 394 |
+| **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 396 |
 | **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 21 |
 | **합계** | | | | **393** |
 
@@ -39,7 +39,7 @@
 ## 2. 실행 명령어
 
 ```bash
-# Unit 테스트만 실행 (394개)
+# Unit 테스트만 실행 (396개)
 npm test
 # 또는
 npm run test:unit
@@ -100,7 +100,7 @@ npm run test:watch
 | 26 | `formula-rules.test.js` | 23 | `src/formula-rules.js` — 추천 규칙, 안전 필터(금지·알레르기·임신수유), 맞춤 규칙 병합·직렬화 | Formula OS, 합성 데이터 |
 | 27 | `formula-check.test.js` | 20 | `src/formula-check.js` — 원료 인덱스, 배합 검증(한도이내/초과/금지/확인필요), 고시 출처 | Formula OS, 합성 데이터 |
 | 28 | `formula-stability.test.js` | 22 | `src/formula-stability.js` — 상 비율·상호작용·투입 단계·pH 규칙, 미판정 불변식 | Formula OS, 합성 데이터 |
-| | **합계** | **394** | | |
+| | **합계** | **396** | | |
 
 ### DOM 테스트 (`tests/dom/`)
 

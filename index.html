@@ -1505,6 +1505,26 @@
                                     <div id="formula-steps-list" class="formula-steps-list"></div>
                                     <button type="button" class="btn btn-secondary btn-sm" data-click="formulaStepAdd"><i class="fa-solid fa-plus" aria-hidden="true"></i> 단계 추가</button>
                                 </div>
+                                <div class="formula-field">
+                                    <span class="formula-field-label">안정성 실험 확인 <span class="fold-hint">규칙 경고는 참고 — 실제 안정성은 실험으로 확정</span></span>
+                                    <div class="formula-field-row">
+                                        <label class="formula-field">
+                                            <select id="formula-stab-method" class="form-select" aria-label="안정성 확인 방법">
+                                                <option value="">확인 방법 선택</option>
+                                            </select>
+                                        </label>
+                                        <label class="formula-field formula-field-unit">
+                                            <select id="formula-stab-result" class="form-select" aria-label="안정성 실험 결과">
+                                                <option value="">결과 미기록</option>
+                                            </select>
+                                        </label>
+                                        <label class="formula-field formula-field-unit">
+                                            <input type="date" id="formula-stab-date" class="form-input" aria-label="안정성 확인 일자">
+                                        </label>
+                                    </div>
+                                    <input type="text" id="formula-stab-note" class="form-input" maxlength="120"
+                                           placeholder="실험 조건·관찰 내용 (예: 40℃ 4주 분리 없음)" aria-label="안정성 확인 메모">
+                                </div>
                                 <label class="formula-field">
                                     <span class="formula-field-label">메모</span>
                                     <textarea id="formula-notes-input" class="form-input" rows="2" maxlength="500"

@@ -357,6 +357,29 @@
 .formula-stab-list .f-stab-info { color: var(--color-text-muted); }
 .formula-stab-list .f-stab-info i { color: var(--color-secondary); }
 
+/* 안정성 실험 확인 기록 — 사용자가 실험으로 확정한 결과 */
+.formula-stab-confirm {
+    font-size: 0.78rem;
+    line-height: 1.45;
+    display: flex;
+    gap: 0.45rem;
+    align-items: baseline;
+    padding: 0.45rem 0.6rem;
+    border-radius: var(--radius-sm);
+    border: 1px dashed var(--border-color);
+    margin-bottom: 0.45rem;
+}
+.formula-stab-confirm:only-of-type { margin-bottom: 0; }
+.formula-stab-confirm.f-stab-good {
+    color: var(--color-success);
+    border-color: var(--color-success);
+}
+.formula-stab-confirm.f-stab-bad {
+    color: var(--color-danger);
+    border-color: var(--color-danger);
+}
+.formula-stab-confirm.f-stab-info { color: var(--color-text-muted); }
+
 /* 제조 절차 단계 목록 */
 .formula-steps-list {
     display: flex;

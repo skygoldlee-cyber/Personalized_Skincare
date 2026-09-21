@@ -4,6 +4,22 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-22 Formula OS 안정성 실험 확인 기록 추가
+
+규칙 경고는 "가능성"일 뿐 실제 안정성은 실험으로만 확정되므로, 사용자의
+실험 결과를 포뮬러에 기록·추적하는 확인 레이어 추가.
+
+- **스키마**: `formula.stability {method, result, date, note}` —
+  `STABILITY_METHODS`(실온 경시·가속·동결-융해·원심분리·보존력·기타),
+  `STABILITY_RESULTS`(양호·이상 발견) enum 정제, 날짜 YYYY-MM-DD만 허용,
+  전부 빈 값이면 null. serialize/import 왕복 보존
+- **UI**: 제조 정보 접이식에 '안정성 실험 확인' 필드(방법·결과·일자·메모),
+  접이식 요약·안정성 패널 상단에 확인 기록 표시(양호=초록·이상=빨강),
+  My 포뮬러 카드에 '안정성 확인/안정성 이상' 배지, 조제 기록지 인쇄 반영
+- **설계**: 규칙 경고(formula-stability.js)와 확인 기록(formula-store.js)은
+  별개 축 — 경고는 사용자가 직접 해소·확인하는 참고 정보로 유지
+- **테스트**: formula-store.test.js에 스키마·왕복 테스트 2건 추가
+
 ## 2026-09-22 Formula OS 제형 안정성 체크 (formula-stability.js) 신규
 
 배합비·배합방법이 제형 안정성에 미치는 영향을 평가하는 세 번째 검증 축 추가

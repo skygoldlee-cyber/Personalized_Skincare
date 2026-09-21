@@ -580,7 +580,7 @@
 
 | 항목 | 내용 |
 |------|------|
-| 단위 테스트 | 394개 (`tests/unit/`, Node.js) |
+| 단위 테스트 | 396개 (`tests/unit/`, Node.js) |
 | DOM 테스트 | Vitest + jsdom (`tests/dom/`) |
 | 회귀 가드 | `delegation-guard.test.js` (인라인 `on*=` 잔존 검출) |
 | CI | GitHub Actions (`npm test` + `check_parser_parity` + `verify:assets`) |

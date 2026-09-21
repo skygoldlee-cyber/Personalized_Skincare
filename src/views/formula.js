@@ -16,7 +16,7 @@ import { STAB, evaluateStability } from '../formula-stability.js';
 import {
   listFormulas, getFormula, createFormula, updateFormula,
   deleteFormula, duplicateFormula, getFormulaUsage, calcAmounts,
-  CUSTOMER_OPTIONS, PHASE_OPTIONS,
+  CUSTOMER_OPTIONS, PHASE_OPTIONS, STABILITY_METHODS, STABILITY_RESULTS,
   serializeFormula, importFormula,
 } from '../formula-store.js';
 import {
@@ -124,6 +124,12 @@ function checkSummaryHtml(formula) {
   const infos = stab.warnings.length - warns;
   if (warns) parts.push(`<span class="f-check f-check-warn" title="제형 안정성 경고">안정성 ${warns}</span>`);
   if (infos) parts.push(`<span class="f-check f-check-unknown" title="제형 안정성 참고">참고 ${infos}</span>`);
+  // 실험 확인 결과 — 규칙 경고보다 사용자 실험이 확정 근거
+  if (formula.stability && formula.stability.result === '양호') {
+    parts.push(`<span class="f-check f-check-ok" title="안정성 실험 확인${formula.stability.method ? `: ${esc(formula.stability.method)}` : ''}">안정성 확인</span>`);
+  } else if (formula.stability && formula.stability.result === '이상 발견') {
+    parts.push(`<span class="f-check f-check-banned" title="안정성 실험에서 이상 확인">안정성 이상</span>`);
+  }
   return parts.join('');
 }
 
@@ -339,20 +345,31 @@ function renderStability() {
     phTarget, phActual,
     steps: calc.steps,
   });
-  if (!warnings.length) {
+  const stab = readStabilityInputs();
+  const stabRecorded = stab.method || stab.result || stab.date || stab.note;
+  if (!warnings.length && !stabRecorded) {
     panel.classList.add('is-hidden');
     panel.innerHTML = '';
     return;
+  }
+  // 실험 확인 상태 — 규칙 경고보다 사용자 실험이 확정 근거
+  let confirmHtml = '';
+  if (stabRecorded) {
+    const parts = [stab.method, stab.result, stab.date, stab.note].filter(Boolean);
+    const cls = stab.result === '양호' ? 'f-stab-good' : (stab.result === '이상 발견' ? 'f-stab-bad' : 'f-stab-info');
+    const ic = stab.result === '양호' ? 'fa-circle-check' : (stab.result === '이상 발견' ? 'fa-triangle-exclamation' : 'fa-flask');
+    confirmHtml = `<div class="formula-stab-confirm ${cls}"><i class="fa-solid ${ic}" aria-hidden="true"></i> 실험 확인 기록: ${esc(parts.join(' · '))}</div>`;
   }
   const icon = l => l === STAB.WARN
     ? '<i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>'
     : '<i class="fa-solid fa-circle-info" aria-hidden="true"></i>';
   panel.innerHTML = `
     <div class="formula-stab-head"><i class="fa-solid fa-flask" aria-hidden="true"></i> 제형 안정성
-      <span class="formula-rec-note">규칙 기반 참고 — 실제 안정성은 보존·가속 시험으로 확인</span></div>
-    <ul class="formula-stab-list">
+      <span class="formula-rec-note">규칙 기반 참고 — 실제 안정성은 제조 정보의 실험 확인으로 확정</span></div>
+    ${confirmHtml}
+    ${warnings.length ? `<ul class="formula-stab-list">
       ${warnings.map(w => `<li class="f-stab-${w.level}">${icon(w.level)} ${esc(w.msg)}</li>`).join('')}
-    </ul>`;
+    </ul>` : ''}`;
   panel.classList.remove('is-hidden');
 }
 
@@ -480,6 +497,55 @@ function populateCustomerFields() {
   }
 }
 
+/** 안정성 실험 확인 셀렉트를 STABILITY_* 상수에서 채운다 — 1회만 */
+function populateStabilityFields() {
+  const methodEl = document.getElementById('formula-stab-method');
+  if (methodEl && !methodEl.dataset.bound) {
+    methodEl.dataset.bound = '1';
+    STABILITY_METHODS.forEach(v => {
+      const o = document.createElement('option');
+      o.value = v; o.textContent = v;
+      methodEl.appendChild(o);
+    });
+  }
+  const resultEl = document.getElementById('formula-stab-result');
+  if (resultEl && !resultEl.dataset.bound) {
+    resultEl.dataset.bound = '1';
+    STABILITY_RESULTS.forEach(v => {
+      const o = document.createElement('option');
+      o.value = v; o.textContent = v;
+      resultEl.appendChild(o);
+    });
+  }
+}
+
+/** 안정성 확인 필드 현재 값 읽기 → store 스키마 */
+function readStabilityInputs() {
+  const val = id => {
+    const el = document.getElementById(id);
+    return el ? el.value : '';
+  };
+  return {
+    method: val('formula-stab-method'),
+    result: val('formula-stab-result'),
+    date: val('formula-stab-date'),
+    note: val('formula-stab-note').trim(),
+  };
+}
+
+/** 안정성 확인 필드에 값 복원 (sourceFormula.stability) */
+function writeStabilityInputs(stab) {
+  const s = stab || {};
+  const set = (id, v) => {
+    const el = document.getElementById(id);
+    if (el) el.value = v || '';
+  };
+  set('formula-stab-method', s.method || '');
+  set('formula-stab-result', s.result || '');
+  set('formula-stab-date', s.date || '');
+  set('formula-stab-note', s.note || '');
+}
+
 /** 고객 필드 현재 값 읽기 → store 스키마 */
 function readCustomerInputs() {
   const val = id => {
@@ -592,6 +658,9 @@ function updateFoldSummaries() {
       parts.push(`pH ${phTarget != null ? phTarget : '—'}/${phActual != null ? phActual : '—'}`);
     }
     if (calc.steps.length) parts.push(`절차 ${calc.steps.length}단계`);
+    const stab = readStabilityInputs();
+    if (stab.result) parts.push(`안정성 ${stab.result}`);
+    else if (stab.method) parts.push('안정성 기록');
     if (notesEl && notesEl.value.trim()) parts.push('메모');
     procEl.textContent = parts.join(' · ');
   }
@@ -898,6 +967,7 @@ export function openFormulaCalc(sourceFormula) {
   showPanel('formula-calc-panel');
   populateDatalist();
   populateCustomerFields();
+  populateStabilityFields();
 
   const title = document.getElementById('formula-calc-title');
   if (title) title.textContent = calc.editingId ? '포뮬러 수정' : '배합 계산기';
@@ -925,6 +995,7 @@ export function openFormulaCalc(sourceFormula) {
   }
   renderSteps();
   writeCustomerInputs(sourceFormula ? sourceFormula.customer : null);
+  writeStabilityInputs(sourceFormula ? sourceFormula.stability : null);
   renderRecommend();
   renderCustomRules();
 
@@ -937,8 +1008,9 @@ export function openFormulaCalc(sourceFormula) {
     unitEl.dataset.bound = '1';
     unitEl.addEventListener('change', updateCalcComputed);
   }
-  // pH·메모 변경 → 제조 정보 접이식 요약 + 안정성 평가 갱신
-  ['formula-ph-target', 'formula-ph-actual', 'formula-notes-input'].forEach(id => {
+  // pH·메모·안정성 확인 필드 변경 → 제조 정보 접이식 요약 + 안정성 평가 갱신
+  ['formula-ph-target', 'formula-ph-actual', 'formula-notes-input',
+    'formula-stab-method', 'formula-stab-result', 'formula-stab-date', 'formula-stab-note'].forEach(id => {
     const el = document.getElementById(id);
     if (el && !el.dataset.foldBound) {
       el.dataset.foldBound = '1';
@@ -955,7 +1027,8 @@ export function openFormulaCalc(sourceFormula) {
       || c.pregnancy || (c.allergies && c.allergies.length) || c.products || c.age != null;
     if (custFold) custFold.open = !!hasCust;
     const hasProc = sourceFormula.phTarget != null || sourceFormula.phActual != null
-      || (sourceFormula.steps && sourceFormula.steps.length) || sourceFormula.notes;
+      || (sourceFormula.steps && sourceFormula.steps.length) || sourceFormula.notes
+      || sourceFormula.stability;
     if (procFold) procFold.open = !!hasProc;
   } else {
     if (custFold) custFold.open = false;
@@ -1041,6 +1114,7 @@ function currentDraft() {
     notes: notesEl ? notesEl.value.trim() : '',
     steps: calc.steps.slice(),
     customer: readCustomerInputs(),
+    stability: readStabilityInputs(),
     ingredients: calc.rows
       .filter(r => r.name)
       .map(r => {
@@ -1112,8 +1186,11 @@ function buildPrintHtml(f) {
   const stab = evaluateStability(f.ingredients, getIndex(), {
     formulation: cust.formulation, phTarget: f.phTarget, phActual: f.phActual, steps: f.steps,
   });
-  const stabHtml = stab.warnings.length
-    ? `<h3>제형 안정성 참고</h3><ul class="fp-stab">${stab.warnings.map(w => `<li>${w.level === STAB.WARN ? '[주의] ' : '[참고] '}${esc(w.msg)}</li>`).join('')}</ul>`
+  const stabConfirm = f.stability
+    ? `<p class="fp-meta-line">안정성 실험 확인: ${esc([f.stability.method, f.stability.result, f.stability.date, f.stability.note].filter(Boolean).join(' · '))}</p>`
+    : '';
+  const stabHtml = (stab.warnings.length || f.stability)
+    ? `<h3>제형 안정성</h3>${stabConfirm}${stab.warnings.length ? `<ul class="fp-stab">${stab.warnings.map(w => `<li>${w.level === STAB.WARN ? '[주의] ' : '[참고] '}${esc(w.msg)}</li>`).join('')}</ul>` : ''}`
     : '';
   const notesHtml = f.notes ? `<h3>메모</h3><p class="fp-notes">${esc(f.notes)}</p>` : '';
   const phLine = (f.phTarget != null || f.phActual != null)

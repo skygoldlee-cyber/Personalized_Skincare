@@ -369,3 +369,41 @@ test('import: 이름 없는 데이터 → 생성 거부, 한도 초과 → 한�
   assert.equal(r.ok, false);
   assert.match(r.error, /최대/);
 });
+
+// ── 안정성 실험 확인 (stability) ────────────────────
+
+test('stability: enum 클램프 + 빈 값이면 null', () => {
+  const { formula } = createFormula({
+    name: 't',
+    stability: { method: '실온 경시 관찰', result: '양호', date: '2026-09-22', note: '4주 분리 없음' },
+  });
+  const s = getFormula(formula.id).stability;
+  assert.equal(s.method, '실온 경시 관찰');
+  assert.equal(s.result, '양호');
+  assert.equal(s.date, '2026-09-22');
+  assert.equal(s.note, '4주 분리 없음');
+
+  // 허용 목록 밖 값·잘못된 날짜는 제거, 전부 무효면 null
+  const { formula: f2 } = createFormula({
+    name: 't2',
+    stability: { method: '임의값', result: '모름', date: '22/09/2026', note: '' },
+  });
+  assert.equal(getFormula(f2.id).stability, null);
+
+  const { formula: f3 } = createFormula({ name: 't3' });
+  assert.equal(getFormula(f3.id).stability, null);
+});
+
+test('stability: updateFormula·serialize 왕복 보존', () => {
+  const { formula } = createFormula({ name: 't' });
+  const r = updateFormula(formula.id, {
+    name: 't',
+    stability: { method: '가속(고온) 시험', result: '이상 발견', date: '2026-09-23', note: '40℃ 2주 분리' },
+  });
+  assert.equal(r.formula.stability.result, '이상 발견');
+
+  const imp = importFormula(serializeFormula(r.formula));
+  assert.equal(imp.ok, true);
+  assert.equal(imp.formula.stability.method, '가속(고온) 시험');
+  assert.equal(imp.formula.stability.note, '40℃ 2주 분리');
+});

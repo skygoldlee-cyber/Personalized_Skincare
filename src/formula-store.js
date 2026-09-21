@@ -16,6 +16,8 @@
 //   products — 현재 사용 중인 제품/약물 자유 기술 (추천 중복 주의문에 반영).
 // phase — 원료의 제조 단계 (PHASE_OPTIONS). steps — 제조 절차 단계 문자열 배열.
 // phTarget/phActual — 목표·실측 pH (0~14, 범위 밖은 null).
+// stability — 안정성 실험 확인 기록 {method(STABILITY_METHODS), result(STABILITY_RESULTS), date(YYYY-MM-DD), note}.
+//   규칙 기반 경고는 참고일 뿐 실제 안정성은 실험으로만 확정되므로, 사용자의 실험 결과를 저장한다.
 //
 // ingredients[].snapshot — 저장 시점의 규정 기준(type/limit)을 보존한다.
 // 원료 DB가 갱신돼도 과거 포뮬러의 검증 근거가 바뀌지 않게 하기 위함.
@@ -37,6 +39,13 @@ export const CUSTOMER_OPTIONS = Object.freeze({
 
 // 원료 제조 단계(Phase) — 조제 공정상의 투입 단계 (공정 순서대로 정렬됨)
 export const PHASE_OPTIONS = Object.freeze(['수상부', '유상부', '실리콘부', '기능성', '후첨가', '기타']);
+
+// 안정성 실험 확인 선택지 — 규칙 경고는 참고일 뿐, 실제 안정성은 실험으로만 확정된다.
+// 사용자가 수행한 확인 방법·결과를 기록해 포뮬러의 확인 상태를 추적한다.
+export const STABILITY_METHODS = Object.freeze([
+  '실온 경시 관찰', '가속(고온) 시험', '동결-융해 시험', '원심분리 시험', '보존력 시험', '기타',
+]);
+export const STABILITY_RESULTS = Object.freeze(['양호', '이상 발견']);
 
 const MAX_NAME_LEN = 60;
 const MAX_NOTE_LEN = 500;
@@ -138,6 +147,19 @@ function sanitizeCustomer(customer) {
   return empty ? null : c;
 }
 
+function sanitizeStability(stab) {
+  if (!stab || typeof stab !== 'object') return null;
+  const s = {
+    method: pickEnum(stab.method, STABILITY_METHODS),
+    result: pickEnum(stab.result, STABILITY_RESULTS),
+    date: clampStr(stab.date || '', 10).trim(),
+    note: clampStr(stab.note || '', 120).trim(),
+  };
+  // 날짜는 YYYY-MM-DD만 허용
+  if (s.date && !/^\d{4}-\d{2}-\d{2}$/.test(s.date)) s.date = '';
+  return (s.method || s.result || s.date || s.note) ? s : null;
+}
+
 function sanitizeFormula(data) {
   const ingredients = Array.isArray(data.ingredients)
     ? data.ingredients.map(sanitizeIngredient).filter(Boolean)
@@ -151,6 +173,7 @@ function sanitizeFormula(data) {
     notes: clampStr(data.notes || '', MAX_NOTE_LEN),
     steps: sanitizeSteps(data.steps),
     customer: sanitizeCustomer(data.customer),
+    stability: sanitizeStability(data.stability),
     ingredients,
   };
 }
