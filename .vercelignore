@@ -32,10 +32,10 @@ data/exam_data.js
 data/exams_md/
 data/study_md/
 
-# ---------- ⏳ 일회성 ID 마이그레이션 맵 (제거 완료) ----------
-# data/id_migration.js(약 63KB)는 레거시 ID → 안정 ID 일회성 이관용이었으나
-# 마이그레이션이 완료되어 index.html에서 제거 및 배포에서 제외됨.
-data/id_migration.js
+# ---------- ⏳ ID 마이그레이션 맵 (배포 포함) ----------
+# data/id_migration.js는 교재 교체 시 구ID→신ID 이관 맵으로,
+# build:data가 자동 생성하고 index.html이 로드하므로 배포에 포함한다.
+# (이전 레거시 일회성 이관용 제외 규칙은 2026-09-21 재도입으로 폐기)
 
 # ---------- 🔁 Vercel 빌드 캐시 ----------
 .vercel/
