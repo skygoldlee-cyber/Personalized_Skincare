@@ -12,6 +12,7 @@ import { switchView } from './navigation.js';
 import {
   CHECK, buildIngredientIndex, checkFormulaItems,
 } from '../formula-check.js';
+import { STAB, evaluateStability } from '../formula-stability.js';
 import {
   listFormulas, getFormula, createFormula, updateFormula,
   deleteFormula, duplicateFormula, getFormulaUsage, calcAmounts,
@@ -113,6 +114,16 @@ function checkSummaryHtml(formula) {
   if (summary.warn) parts.push(`<span class="f-check f-check-warn">초과 ${summary.warn}</span>`);
   if (summary.unknown) parts.push(`<span class="f-check f-check-unknown">확인 ${summary.unknown}</span>`);
   if (summary.ok) parts.push(`<span class="f-check f-check-ok">정상 ${summary.ok}</span>`);
+  const stab = evaluateStability(formula.ingredients || [], getIndex(), {
+    formulation: formula.customer && formula.customer.formulation,
+    phTarget: formula.phTarget,
+    phActual: formula.phActual,
+    steps: formula.steps,
+  });
+  const warns = stab.warnings.filter(w => w.level === STAB.WARN).length;
+  const infos = stab.warnings.length - warns;
+  if (warns) parts.push(`<span class="f-check f-check-warn" title="제형 안정성 경고">안정성 ${warns}</span>`);
+  if (infos) parts.push(`<span class="f-check f-check-unknown" title="제형 안정성 참고">참고 ${infos}</span>`);
   return parts.join('');
 }
 
@@ -309,6 +320,40 @@ function updateCalcComputed() {
       .map(p => `${p} ${Math.round(phaseSums[p] * 100) / 100}%`);
     phaseEl.textContent = parts.length ? `단계별: ${parts.join(' · ')}` : '';
   }
+  renderStability();
+}
+
+/** 제형 안정성 패널 — 배합비·투입 단계·절차·pH 규칙 기반 경고 (법규 검증과 별개 축) */
+function renderStability() {
+  const panel = document.getElementById('formula-stability');
+  if (!panel) return;
+  const named = calc.rows.filter(r => r.name);
+  if (!named.length) {
+    panel.classList.add('is-hidden');
+    panel.innerHTML = '';
+    return;
+  }
+  const { phTarget, phActual } = readCalcInputs();
+  const { warnings } = evaluateStability(named, getIndex(), {
+    formulation: readCustomerInputs().formulation,
+    phTarget, phActual,
+    steps: calc.steps,
+  });
+  if (!warnings.length) {
+    panel.classList.add('is-hidden');
+    panel.innerHTML = '';
+    return;
+  }
+  const icon = l => l === STAB.WARN
+    ? '<i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>'
+    : '<i class="fa-solid fa-circle-info" aria-hidden="true"></i>';
+  panel.innerHTML = `
+    <div class="formula-stab-head"><i class="fa-solid fa-flask" aria-hidden="true"></i> 제형 안정성
+      <span class="formula-rec-note">규칙 기반 참고 — 실제 안정성은 보존·가속 시험으로 확인</span></div>
+    <ul class="formula-stab-list">
+      ${warnings.map(w => `<li class="f-stab-${w.level}">${icon(w.level)} ${esc(w.msg)}</li>`).join('')}
+    </ul>`;
+  panel.classList.remove('is-hidden');
 }
 
 function renderCalcRows() {
@@ -577,6 +622,7 @@ function renderRecommend() {
     panel.classList.add('is-hidden');
     panel.innerHTML = '';
     updateFoldSummaries();
+    renderStability();
     return;
   }
 
@@ -623,6 +669,7 @@ function renderRecommend() {
   panel.innerHTML = html;
   panel.classList.remove('is-hidden');
   updateFoldSummaries();
+  renderStability(); // 제형 선택 변경이 상 비율 규칙에 영향
 }
 
 /** 추천 행 추가 공통 — name + 제조 단계(phase) 태깅 */
@@ -890,12 +937,12 @@ export function openFormulaCalc(sourceFormula) {
     unitEl.dataset.bound = '1';
     unitEl.addEventListener('change', updateCalcComputed);
   }
-  // pH·메모 변경 → 제조 정보 접이식 요약 갱신
+  // pH·메모 변경 → 제조 정보 접이식 요약 + 안정성 평가 갱신
   ['formula-ph-target', 'formula-ph-actual', 'formula-notes-input'].forEach(id => {
     const el = document.getElementById(id);
     if (el && !el.dataset.foldBound) {
       el.dataset.foldBound = '1';
-      el.addEventListener('input', updateFoldSummaries);
+      el.addEventListener('input', () => { updateFoldSummaries(); renderStability(); });
     }
   });
 
@@ -957,7 +1004,7 @@ function renderSteps() {
       <button type="button" class="f-del" data-click="formulaStepRemove" data-arg="${i}"
               aria-label="절차 ${i + 1} 삭제"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>`;
     const input = row.querySelector('.f-step');
-    input.addEventListener('input', () => { calc.steps[i] = input.value; updateFoldSummaries(); });
+    input.addEventListener('input', () => { calc.steps[i] = input.value; updateFoldSummaries(); renderStability(); });
     list.appendChild(row);
   });
   updateFoldSummaries();
@@ -1062,6 +1109,12 @@ function buildPrintHtml(f) {
   const stepsHtml = (f.steps && f.steps.length)
     ? `<h3>제조 절차</h3><ol class="fp-steps">${f.steps.map(s => `<li>${esc(s)}</li>`).join('')}</ol>`
     : '';
+  const stab = evaluateStability(f.ingredients, getIndex(), {
+    formulation: cust.formulation, phTarget: f.phTarget, phActual: f.phActual, steps: f.steps,
+  });
+  const stabHtml = stab.warnings.length
+    ? `<h3>제형 안정성 참고</h3><ul class="fp-stab">${stab.warnings.map(w => `<li>${w.level === STAB.WARN ? '[주의] ' : '[참고] '}${esc(w.msg)}</li>`).join('')}</ul>`
+    : '';
   const notesHtml = f.notes ? `<h3>메모</h3><p class="fp-notes">${esc(f.notes)}</p>` : '';
   const phLine = (f.phTarget != null || f.phActual != null)
     ? `<p class="fp-meta-line">목표 pH: ${f.phTarget != null ? f.phTarget : '—'} · 실측 pH: ${f.phActual != null ? f.phActual : '—'}</p>`
@@ -1079,6 +1132,7 @@ function buildPrintHtml(f) {
         <tfoot><tr><td colspan="3">합계</td><td class="fp-num">${rounded}%</td><td></td><td></td></tr></tfoot>
       </table>
       ${stepsHtml}
+      ${stabHtml}
       ${notesHtml}
       <p class="fp-disclaimer">검증 결과는 법정 배합 한도 기준일 뿐 제품의 안전성·안정성·품질을 보장하지 않습니다.</p>
     </div>`;

@@ -253,6 +253,14 @@
 
     #formula-print-area .fp-steps li { margin-bottom: 2pt; }
 
+    #formula-print-area .fp-stab {
+        margin: 4pt 0;
+        padding-left: 14pt;
+        font-size: 9.5pt;
+    }
+
+    #formula-print-area .fp-stab li { margin-bottom: 2pt; }
+
     #formula-print-area .fp-notes {
         font-size: 10pt;
         white-space: pre-wrap;

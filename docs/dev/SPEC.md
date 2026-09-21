@@ -297,6 +297,7 @@
 | FO-09 | 조제 기록지 인쇄 + 포뮬러 JSON 내보내기·가져오기 | ✅ |
 | FO-10 | 계산기 UI — 상단 고정 요약바(총량·합계·검증 건수), 하단 고정 액션바(이름·저장·인쇄·JSON), 카드형 원료 행, 접이식 섹션 요약, 빈 상태 안내 | ✅ |
 | FO-11 | 성분 사전 연동 — 상세 카드에서 '포뮬러에 추가', 원료 DB 버전 배지 + 개정 이력 모달 | ✅ |
+| FO-12 | 제형 안정성 체크 — 상 비율(유화제·점증제)·원료 상호작용·투입 단계(열 민감)·pH 적정대 규칙 평가, 계산기 실시간 경고 패널 + 카드 배지 + 인쇄 반영 (`formula-stability.js`) | ✅ |
 
 ---
 
@@ -559,6 +560,7 @@
 | `src/formula-store.js` | 포뮬러 CRUD·저장 한도(5개), 고객·원료 스키마 정제, PHASE/CUSTOMER 옵션 |
 | `src/formula-rules.js` | 추천 규칙 — 베이스 템플릿·고민/피부 매핑, 안전 필터, 맞춤 규칙 병합·직렬화 |
 | `src/formula-check.js` | 고시 한도 검증 엔진 — 원료 인덱스 구축, 배합 검증(4상태+요약) |
+| `src/formula-stability.js` | 제형 안정성 체크 — 상 비율·상호작용·투입 단계·pH 규칙 기반 경고 (warn/info) |
 
 ### 자가 복구
 
@@ -578,7 +580,7 @@
 
 | 항목 | 내용 |
 |------|------|
-| 단위 테스트 | 372개 (`tests/unit/`, Node.js) |
+| 단위 테스트 | 394개 (`tests/unit/`, Node.js) |
 | DOM 테스트 | Vitest + jsdom (`tests/dom/`) |
 | 회귀 가드 | `delegation-guard.test.js` (인라인 `on*=` 잔존 검출) |
 | CI | GitHub Actions (`npm test` + `check_parser_parity` + `verify:assets`) |

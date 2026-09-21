@@ -308,6 +308,45 @@
 }
 .formula-phase-sums:empty { display: none; }
 
+/* 제형 안정성 경고 패널 — 배합비·투입 단계·절차·pH 규칙 기반 */
+.formula-stability {
+    margin-top: 0.8rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 0.7rem 0.9rem 0.8rem;
+    background: var(--bg-subtle);
+}
+.formula-stab-head {
+    font-size: 0.82rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-main);
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.45rem;
+}
+.formula-stab-head > i { color: var(--color-secondary); }
+.formula-stab-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+.formula-stab-list li {
+    font-size: 0.78rem;
+    line-height: 1.45;
+    display: flex;
+    gap: 0.45rem;
+    align-items: baseline;
+}
+.formula-stab-list li i { flex: 0 0 auto; }
+.formula-stab-list .f-stab-warn { color: var(--color-warning); }
+.formula-stab-list .f-stab-info { color: var(--color-text-muted); }
+.formula-stab-list .f-stab-info i { color: var(--color-secondary); }
+
 /* 제조 절차 단계 목록 */
 .formula-steps-list {
     display: flex;

@@ -4,6 +4,30 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-22 Formula OS 제형 안정성 체크 (formula-stability.js) 신규
+
+배합비·배합방법이 제형 안정성에 미치는 영향을 평가하는 세 번째 검증 축 추가
+(법규 검증 formula-check.js·추천 formula-rules.js와 분리). 큐레이션 규칙 테이블
+기반 결정적 평가 — 규칙에 없는 조합은 미판정(보수 원칙).
+
+- **`src/formula-stability.js`** — `evaluateStability(items, index, ctx)` →
+  `{warnings:[{level:'warn'|'info', msg}], phaseSums}`
+  - 상 비율: 수상부+유상부인데 유화제 미감지(warn), 유화제:유상부 <10%(warn),
+    점증제 없는 에멀전(info), 유화 대상 없는 유화제(info)
+  - 상호작용: 카보머×양이온성(warn), 음이온×양이온 계면활성제(warn),
+    비이온성 계면활성제 >5% 시 보존제 미셀 흡착(info)
+  - 배합방법: 열 민감 원료(비타민C·레티놀·히알루론산·알부틴·콜라겐·펩타이드·
+    우레아·시카·향료)의 가열 단계 배치(warn/info), 카보머 중화 단계 누락(info),
+    에멀전인데 절차에 유화 단계 누락(info)
+  - pH 적정대: 실측 우선·목표 폴백으로 원료별 권장 범위(카보머·살리실산·AHA·
+    비타민C·레티놀·나이아신아마이드·알부틴·MIT) 이탈 경고(warn)
+  - 원료 분류는 DB `category` 우선 + 이름 패턴 폴백 (미등록 원료도 평가)
+- **UI**: 원료 행 아래 `#formula-stability` 패널(aria-live) — 입력·단계·
+  pH·절차·제형 변경 시 실시간 재평가. My 포뮬러 카드에 '안정성 n/참고 n'
+  배지, 조제 기록지 인쇄에 '제형 안정성 참고' 섹션 추가
+- **테스트**: `tests/unit/formula-stability.test.js` 22건 — 규칙별 발화·
+  미발화 불변식 커버
+
 ## 2026-09-21 상위 문서 Formula OS 반영 점검·동기화
 
 Formula OS 기능 추가(고객 안전 필드·추천 규칙·제조 단계·인쇄·JSON 공유·원료 DB 이력·계산기 UI 재구성)가 상위 문서에 반영되었는지 전수 점검 후 갱신.
