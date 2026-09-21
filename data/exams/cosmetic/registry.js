@@ -2,7 +2,7 @@
 var DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2026",
-  "generatedAt": "2026-09-21T17:33:40.857Z",
+  "generatedAt": "2026-09-21T17:44:33.725Z",
   "subjects": [
     {
       "key": "law",
@@ -131,10 +131,15 @@ var DATA_REGISTRY = {
     "bundle": "./data/exams/cosmetic/ingredients_data.743f6019.js",
     "global": "INGREDIENTS_DATA",
     "contentHash": "743f6019",
-    "version": "2026.09.4",
+    "version": "2026.09.5",
     "updatedAt": "2026-09-22",
-    "notice": "금지 원료 카테고리 세분화 — 고빈도 52종이 '사용 금지 원료' 대신 섹션 분류(중금속·발암성·의약품/마약류·염모제·동물성 원료 등)로 표시",
+    "notice": "알림 표시 안정화 — 갱신 알림이 SW 업데이트 리로드에 밀려 자동 소실되던 문제 수정 (데이터 내용 변경 없음)",
     "history": [
+      {
+        "version": "2026.09.4",
+        "updatedAt": "2026-09-22",
+        "notice": "금지 원료 카테고리 세분화 — 고빈도 52종이 '사용 금지 원료' 대신 섹션 분류(중금속·발암성·의약품/마약류·염모제·동물성 원료 등)로 표시"
+      },
       {
         "version": "2026.09.3",
         "updatedAt": "2026-09-22",

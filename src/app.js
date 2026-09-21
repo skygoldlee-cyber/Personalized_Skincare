@@ -909,11 +909,13 @@ function checkIngredientsUpdate() {
     if (!hash) return;
     try {
         const prev = safeGetItem(STORAGE_KEYS.INGREDIENTS_HASH);
+        // 알림 키는 '버전:해시' — 데이터 해시가 같아도 db_version 범프(표시 전용 개정)는 발화한다.
+        const notifyKey = `${meta.version || 'data'}:${hash}`;
         const notifiedHash = safeGetItem(STORAGE_KEYS.INGREDIENTS_DB_NOTIFIED);
         // 진행 데이터 존재 = 알림 기능 도입 전부터 쓰던 기존 사용자 → 이 버전 알림을 아직 못 봤다면 1회 고지
         const isReturningUser = RETURNING_USER_KEYS.some(k => safeGetItem(k) !== null);
         const hashChanged = prev !== null && prev !== hash;
-        const missedNotice = isReturningUser && notifiedHash !== hash;
+        const missedNotice = isReturningUser && notifiedHash !== notifyKey;
         if (hashChanged || missedNotice) {
             const version = meta.version ? ` v${meta.version}` : '';
             const notice = meta.notice ? `\n\n갱신 내역: ${meta.notice}` : '';
@@ -926,13 +928,13 @@ function checkIngredientsUpdate() {
             // (SW 업데이트 리로드 등으로 모달이 조기 소실되면 다음 방문에 다시 고지)
             showAlert(`원료 데이터베이스가${version}로 갱신되었습니다.${notice}${count}${prevNote}`, '원료 DB 갱신')
                 .then(() => {
-                    safeSetItem(STORAGE_KEYS.INGREDIENTS_DB_NOTIFIED, hash);
+                    safeSetItem(STORAGE_KEYS.INGREDIENTS_DB_NOTIFIED, notifyKey);
                     safeSetItem(STORAGE_KEYS.INGREDIENTS_HASH, hash);
                 })
                 .catch(() => {});
         } else if (prev === null) {
             // 신규 사용자: 현재 버전을 '이미 확인한 것'으로 기록해 향후 오발화 방지
-            safeSetItem(STORAGE_KEYS.INGREDIENTS_DB_NOTIFIED, hash);
+            safeSetItem(STORAGE_KEYS.INGREDIENTS_DB_NOTIFIED, notifyKey);
         } else if (prev !== hash) {
             safeSetItem(STORAGE_KEYS.INGREDIENTS_HASH, hash);
         }
