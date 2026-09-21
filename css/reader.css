@@ -1607,6 +1607,18 @@ body.reader-focus-mode .reader-readable-width {
         transform: scale(0.92);
     }
 
+    /* Formula OS — 실무 도메인 구분 (사이드바와 동일한 violet 아이덴티티) */
+    .mobile-tab-item.mobile-tab-formula {
+        color: var(--color-secondary);
+        background: var(--secondary-tint-12);
+        border-radius: var(--radius-md);
+    }
+
+    .mobile-tab-item.mobile-tab-formula.active {
+        color: var(--color-secondary);
+        background: var(--secondary-tint-15);
+    }
+
     /* 통계 카드 그리드 2열로 변경 */
     .stats-grid {
         grid-template-columns: repeat(2, 1fr) !important;

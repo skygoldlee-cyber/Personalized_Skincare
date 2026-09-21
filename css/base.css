@@ -683,6 +683,49 @@ body {
     color: var(--color-primary);
 }
 
+/* Formula OS — 실무 도메인 시각 구분 (학습 메뉴는 cyan, 실무는 violet) */
+.nav-group-label-formula {
+    color: var(--color-secondary);
+    opacity: 0.9;
+}
+
+.nav-item-formula {
+    border: 1px solid var(--secondary-tint-15);
+    background: linear-gradient(135deg, var(--secondary-tint-12), transparent 65%);
+}
+
+.nav-item-formula i {
+    color: var(--color-secondary);
+}
+
+.nav-item-formula:hover {
+    background: linear-gradient(135deg, var(--secondary-tint-15), var(--bg-subtle));
+    border-color: rgba(139, 92, 246, 0.4);
+}
+
+.nav-pill-formula {
+    margin-left: auto;
+    font-size: var(--text-2xs);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.05em;
+    color: var(--color-secondary);
+    background: var(--secondary-tint-15);
+    border: 1px solid rgba(139, 92, 246, 0.35);
+    border-radius: 999px;
+    padding: 0.15rem 0.5rem;
+    flex-shrink: 0;
+}
+
+.nav-item-formula.active {
+    background: linear-gradient(135deg, var(--secondary-tint-15), var(--secondary-tint-12));
+    border-color: rgba(139, 92, 246, 0.4);
+    border-left: 3px solid var(--color-secondary);
+}
+
+.nav-item-formula.active i {
+    color: var(--color-secondary);
+}
+
 .sidebar-footer {
     padding-top: var(--space-5);
     border-top: 1px solid var(--border-color);
