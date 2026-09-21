@@ -53,6 +53,8 @@ Thumbs.db
 
 # ---------- 📊 생성 진행 상태 ----------
 .generation_progress.json
+# 복수정답형 감사 리포트 (audit:combo 산출물 — 로컬 전용)
+combo_audit_report.json
 
 # ---------- 📂 아카이브 ----------
 archive/

@@ -230,11 +230,16 @@ ref_md는 `ref_md/과목N/{문서}/{문서}.md` 과목 폴더 구조이며, `ext
 재생성 후 확인할 것:
 
 1. `node tools/check_combo_pilot.js` — 정답 분포·스키마 무결성
-2. 같은 문항 정오답 텍스트 중복 — 정규화 키 비교로 0이어야 함
-3. 큐레이션 교차 오류 — 별표1 문항 오답이 `banned_ingredients.md` 멤버이면 오류
-4. 잔재 스캔 — `?`·`법제처`·단자 접두·조사 종료 진술
-5. 발문 분포 — 한 발문이 과도하게 반복되지 않는지, 무의미 토픽(`명칭` 등) 없는지
-6. `npm.cmd test` · `check:parser` · `check:imports` · `verify:assets`
+2. `npm.cmd run audit:combo` — 생성 번들 품질 감사 (`tools/audit_combo.js`):
+   스키마·정답 유일성 재검증, 동일 진술집합 중복 문항, 모순 의심 쌍(동일 텍스트·상반 truth),
+   진술 절단 의심(조사·연결어미 종결), '모두' 퇴화/위반 옵션, 정답 위치 편향(>30%),
+   과목별·생성 경로별(bank/cluster/ref:*) 통계. 오류 시 exit 1, `--strict`는 경고도 실패 처리.
+   상세 리포트는 `combo_audit_report.json` (gitignore 대상)
+3. 같은 문항 정오답 텍스트 중복 — 정규화 키 비교로 0이어야 함
+4. 큐레이션 교차 오류 — 별표1 문항 오답이 `banned_ingredients.md` 멤버이면 오류
+5. 잔재 스캔 — `?`·`법제처`·단자 접두·조사 종료 진술
+6. 발문 분포 — 한 발문이 과도하게 반복되지 않는지, 무의미 토픽(`명칭` 등) 없는지
+7. `npm.cmd test` · `check:parser` · `check:imports` · `verify:assets`
 
 ## 8. 다른 과목·시험 콘텐츠에의 재사용성
 
