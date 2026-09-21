@@ -137,6 +137,49 @@ export function showConfirm(message, title = '확인') {
     });
 }
 
+// 알림 모달 (alert 대체) — 확인 버튼만 있는 단일 공지용, Promise 반환
+export function showAlert(message, title = '알림') {
+    return new Promise((resolve) => {
+        const existing = document.getElementById('app-confirm-overlay');
+        if (existing) existing.remove();
+
+        const overlay = document.createElement('div');
+        overlay.id = 'app-confirm-overlay';
+        overlay.innerHTML = `
+            <div class="app-confirm-dialog">
+                <h3>${escapeHtml(title)}</h3>
+                <p>${escapeHtml(message)}</p>
+                <div class="app-confirm-actions">
+                    <button class="app-confirm-ok">확인</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+        requestAnimationFrame(() => {
+            overlay.classList.add('is-visible');
+            overlay.querySelector('.app-confirm-dialog').classList.add('is-visible');
+        });
+
+        const untrapFocus = trapFocus(overlay.querySelector('.app-confirm-dialog'));
+        const close = () => {
+            overlay.classList.remove('is-visible');
+            overlay.querySelector('.app-confirm-dialog').classList.remove('is-visible');
+            setTimeout(() => {
+                untrapFocus();
+                overlay.remove();
+            }, 200);
+            resolve(true);
+        };
+
+        overlay.querySelector('.app-confirm-ok').addEventListener('click', close);
+        overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+        const onKey = (e) => {
+            if (e.key === 'Escape') { document.removeEventListener('keydown', onKey); close(); }
+        };
+        document.addEventListener('keydown', onKey);
+    });
+}
+
 function escapeHtml(str) {
     const div = document.createElement('div');
     div.textContent = String(str);

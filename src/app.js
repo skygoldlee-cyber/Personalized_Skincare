@@ -163,7 +163,8 @@ import {
     showGlobalLoading,
     hideGlobalLoading,
     showToast,
-    showConfirm
+    showConfirm,
+    showAlert
 } from './ui-utils.js';
 import {
     simState,
@@ -911,9 +912,9 @@ function checkIngredientsUpdate() {
         const isReturningUser = RETURNING_USER_KEYS.some(k => safeGetItem(k) !== null);
         if ((prev && prev !== hash) || (!notified && isReturningUser)) {
             const version = meta.version ? ` v${meta.version}` : '';
-            const notice = meta.notice ? ` — ${meta.notice}` : '';
-            const count = meta.stats && meta.stats.count ? ` (원료 ${meta.stats.count}종)` : '';
-            showToast(`원료 데이터베이스가${version}로 갱신되었습니다${notice}${count}`, 'info');
+            const notice = meta.notice ? `\n\n갱신 내역: ${meta.notice}` : '';
+            const count = meta.stats && meta.stats.count ? `\n수록 원료 ${meta.stats.count}종 · 성분 사전과 Formula OS 규정 검증이 최신 기준으로 적용됩니다.` : '';
+            showAlert(`원료 데이터베이스가${version}로 갱신되었습니다.${notice}${count}`, '원료 DB 갱신');
             safeSetItem(STORAGE_KEYS.INGREDIENTS_DB_NOTIFIED, '1');
         }
         if (prev !== hash) safeSetItem(STORAGE_KEYS.INGREDIENTS_HASH, hash);
