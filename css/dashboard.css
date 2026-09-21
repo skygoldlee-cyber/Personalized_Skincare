@@ -249,6 +249,14 @@
     color: var(--color-text-main);
 }
 
+/* optgroup 라벨 — OS 기본 검정 글자로 렌더돼 어두운 팝업 배경에 묻히는 것을 방지 */
+.form-select optgroup {
+    background-color: var(--bg-sidebar);
+    color: var(--color-text-muted);
+    font-style: normal;
+    font-weight: var(--font-weight-bold);
+}
+
 .light-theme .form-select {
     background-color: var(--bg-input);
     color: var(--color-text-main);
@@ -258,6 +266,11 @@
 .light-theme .form-select option {
     background-color: var(--bg-input);
     color: var(--color-text-main);
+}
+
+.light-theme .form-select optgroup {
+    background-color: var(--bg-input);
+    color: var(--color-text-muted);
 }
 
 /* 4. 학습 통계/분석 강화 — 히트맵 + 약점 추천 */
