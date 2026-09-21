@@ -172,8 +172,10 @@ TIP:  폴리올의 대표 성분, 고농도 시 피부 자극
 ```
 src/views/formula.js          # 허브 + 라우팅 + 목록 렌더
 src/views/formula-edit.js     # 편집 서브뷰 (원료 행 CRUD, 실시간 계산·검증)
-src/formula-store.js          # localStorage CRUD, 한도 게이팅, 채번
+src/formula-store.js          # localStorage CRUD, 한도 게이팅, 채번, 안정성 기록·전성분 스키마
 src/formula-check.js          # 규정 Check 엔진 (limit 파서 + type 판정)
+src/formula-rules.js          # 추천 규칙 (베이스 템플릿·고민/피부 매핑, 안전 필터)
+src/formula-stability.js      # 제형 안정성 체크 (상 비율·상호작용·투입 단계·pH)
 index.html                    # formula-view 섹션 + 내비 아이템 + 그룹 라벨
 css/                          # 기존 토큰 재사용, 소규모 추가분
 tests/unit/formula-check.test.js   # limit 파서·판정 경계 테스트

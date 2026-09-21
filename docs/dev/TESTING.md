@@ -22,9 +22,9 @@
 
 | 구분 | 프레임워크 | 환경 | 파일 위치 | 테스트 수 |
 |------|-----------|------|-----------|-----------|
-| **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 396 |
+| **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 398 |
 | **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 21 |
-| **합계** | | | | **393** |
+| **합계** | | | | **419** |
 
 ### 설계 원칙
 
@@ -39,7 +39,7 @@
 ## 2. 실행 명령어
 
 ```bash
-# Unit 테스트만 실행 (396개)
+# Unit 테스트만 실행 (398개)
 npm test
 # 또는
 npm run test:unit
@@ -96,11 +96,11 @@ npm run test:watch
 | 22 | `data-loader.test.js` | 7 | `src/data-loader.js` — 데이터 번들 로딩, 캐시 동작 | `window` 글로벌 모킹 |
 | 23 | `exam-context.test.js` | 12 | `src/exam-context.js` — 시험 해석, `scopedKey` 네임스페이스, 기능 플래그 | 합성 데이터 |
 | 24 | `storage-key-sync.test.js` | 2 | `src/storage-keys.js` 선언 키 ↔ 실제 사용 키 동기화 | 키 누락 회귀 가드 |
-| 25 | `formula-store.test.js` | 27 | `src/formula-store.js` — 포뮬러 CRUD·저장 한도(5), 고객·원료 스키마 정제 | Formula OS, localStorage 모킹 |
+| 25 | `formula-store.test.js` | 31 | `src/formula-store.js` — 포뮬러 CRUD·저장 한도(5), 고객·원료·안정성 스키마 정제, 전성분 표시 순서 | Formula OS, localStorage 모킹 |
 | 26 | `formula-rules.test.js` | 23 | `src/formula-rules.js` — 추천 규칙, 안전 필터(금지·알레르기·임신수유), 맞춤 규칙 병합·직렬화 | Formula OS, 합성 데이터 |
 | 27 | `formula-check.test.js` | 20 | `src/formula-check.js` — 원료 인덱스, 배합 검증(한도이내/초과/금지/확인필요), 고시 출처 | Formula OS, 합성 데이터 |
 | 28 | `formula-stability.test.js` | 22 | `src/formula-stability.js` — 상 비율·상호작용·투입 단계·pH 규칙, 미판정 불변식 | Formula OS, 합성 데이터 |
-| | **합계** | **396** | | |
+| | **합계** | **398** | | |
 
 ### DOM 테스트 (`tests/dom/`)
 
@@ -270,12 +270,14 @@ npm run test:watch
 
 ### 4.11 Formula OS — 배합 계산기
 
-#### `formula-store.test.js` (27개)
+#### `formula-store.test.js` (31개)
 - `src/formula-store.js`: 포뮬러 저장/조회/복제/삭제 CRUD
 - 저장 한도 `FORMULA_LIMIT`(5개) 초과 시 오래된 항목 삭제
 - 고객 정보 정제 — 이름 길이, 피부 유형/제형 화이트리스트(`CUSTOMER_OPTIONS`), 알레르기·임신수유·사용 중 제품 필드
 - 원료 행 정제 — 이름/배합률/제조 단계(`PHASES`), 빈 행 제거, 단계별 정렬 순서
 - 규정 검증 스냅샷(`checkResult`) 보존, 저장 시각 필드
+- 안정성 실험 확인 정제 — 방법·결과 enum, `recordedAt` 형식 검증, serialize 왕복
+- 전성분 표시(`fullIngredients`) — 안정성 '양호' 시 표시 순서 자동 생성(1% 초과 내림차순 → 1% 이하 → 색소 최하단), 미확인 시 미생성
 - localStorage 모킹 (`getItem`/`setItem`/`removeItem`)
 
 #### `formula-rules.test.js` (23개)
