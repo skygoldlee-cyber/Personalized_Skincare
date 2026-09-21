@@ -31,28 +31,19 @@ export function initWebVitals() {
         }).observe({ type: 'layout-shift', buffered: true });
     } catch (e) { /* CLS 미지원 브라우저 */ }
 
-    // INP (Interaction to Next Paint) — 최대 값 추적
-    try {
-        new PerformanceObserver((entryList) => {
-            for (const entry of entryList.getEntries()) {
-                const duration = entry.duration;
-                if (duration > _inpValue) {
-                    _inpValue = duration;
-                }
-            }
-        }).observe({ type: 'interaction', buffered: true });
-    } catch (e) {
-        // INP 미지원 시 Event Timing API fallback
+    // INP (Interaction to Next Paint) — Event Timing API의 'event' 엔트리로 최대 duration 추적
+    // ('interaction'은 표준 엔트리 타입이 아니므로 지원 여부 확인 후 관찰 — 콘솔 경고 방지)
+    if (PerformanceObserver.supportedEntryTypes && PerformanceObserver.supportedEntryTypes.includes('event')) {
         try {
             new PerformanceObserver((entryList) => {
                 for (const entry of entryList.getEntries()) {
                     const duration = entry.duration;
-                    if (duration > _inpValue && entry.startTime > 0) {
+                    if (duration > _inpValue) {
                         _inpValue = duration;
                     }
                 }
-            }).observe({ type: 'event', buffered: true });
-        } catch (e2) { /* Event Timing 미지원 */ }
+            }).observe({ type: 'event', buffered: true, durationThreshold: 40 });
+        } catch (e) { /* Event Timing 미지원 브라우저 */ }
     }
 
     // 페이지 언로드 시 최종 값 출력
