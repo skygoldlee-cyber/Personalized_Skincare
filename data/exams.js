@@ -25,7 +25,8 @@ var EXAMS_LIST = {
         "audiobook": true,
         "refDocs": true,
         "appendixDocs": true,
-        "pomodoro": true
+        "pomodoro": true,
+        "formula": true
       }
     }
   ]

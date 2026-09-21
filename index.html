@@ -66,6 +66,10 @@
                 <button class="nav-item" data-target="exam-view">
                     <i class="fa-solid fa-file-invoice" aria-hidden="true"></i> 실전 모의고사
                 </button>
+                <div class="nav-group-label">실무</div>
+                <button class="nav-item" data-target="formula-view" data-feature="formula">
+                    <i class="fa-solid fa-flask-vial" aria-hidden="true"></i> Formula OS
+                </button>
                 <div class="nav-group-label">자료 · 도구</div>
                 <button class="nav-item" data-target="textbook-reader-view">
                     <i class="fa-solid fa-book-open" aria-hidden="true"></i> 교재 본문 읽기
@@ -1276,6 +1280,107 @@
                 </div>
             </section>
 
+            <!-- Formula OS — 실전 배합 작업실 -->
+            <section id="formula-view" class="view-section" data-feature="formula">
+                <!-- 1. 허브 메뉴 -->
+                <div id="formula-menu-panel">
+                    <div class="section-title-area">
+                        <h3>🧪 Formula OS — 실전 배합 작업실</h3>
+                        <p>원료를 조회하고, 배합률을 계산하고, 나만의 포뮬러를 저장·검증하세요.</p>
+                    </div>
+                    <div class="trainer-menu-grid">
+                        <div class="trainer-menu-card" data-click="openFormulaList">
+                            <div class="trainer-card-icon icon-blue">
+                                <i class="fa-solid fa-book" aria-hidden="true"></i>
+                            </div>
+                            <h4>My 포뮬러</h4>
+                            <p>저장한 배합 레시피를 열고, 복제하고, 규정 검증 결과를 확인합니다.</p>
+                            <span class="trainer-card-btn">목록 열기 <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
+                        </div>
+                        <div class="trainer-menu-card" data-click="formulaNew">
+                            <div class="trainer-card-icon icon-green">
+                                <i class="fa-solid fa-calculator" aria-hidden="true"></i>
+                            </div>
+                            <h4>배합 계산기</h4>
+                            <p>총 제조량과 원료별 배합률(%)로 실제 투입량을 계산하고 법정 한도를 즉시 검증합니다.</p>
+                            <span class="trainer-card-btn">계산 시작 <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
+                        </div>
+                        <div class="trainer-menu-card" data-click="openIngredientDict">
+                            <div class="trainer-card-icon icon-orange">
+                                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                            </div>
+                            <h4>원료 검색</h4>
+                            <p>1,357종 원료의 배합 한도·사용 제한·금지 여부를 성분 사전에서 확인합니다.</p>
+                            <span class="trainer-card-btn">사전 열기 <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
+                        </div>
+                    </div>
+                    <div class="formula-safety-note">
+                        <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+                        검증 결과는 법정 배합 한도 기준일 뿐 제품의 안전성·품질을 보장하지 않습니다.
+                        '한도 이내'는 규정 준수 확인이며 안전하다는 의미가 아닙니다.
+                    </div>
+                </div>
+
+                <!-- 2. My 포뮬러 목록 -->
+                <div id="formula-list-panel" class="is-hidden">
+                    <div class="sim-arena-header mb-6">
+                        <button class="btn btn-secondary" data-click="exitFormulaSubView"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
+                        <div class="sim-title-group">
+                            <h4>My 포뮬러</h4>
+                            <span class="badge badge-quiz-cat" id="formula-list-usage">0/5 저장됨</span>
+                        </div>
+                    </div>
+                    <div id="formula-list" class="formula-list"></div>
+                </div>
+
+                <!-- 3. 배합 계산기 / 포뮬러 편집 -->
+                <div id="formula-calc-panel" class="is-hidden">
+                    <div class="sim-arena-header mb-6">
+                        <button class="btn btn-secondary" data-click="exitFormulaSubView"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
+                        <div class="sim-title-group">
+                            <h4 id="formula-calc-title">배합 계산기</h4>
+                            <span class="badge badge-quiz-cat" id="formula-usage-badge">저장 0/5</span>
+                        </div>
+                    </div>
+
+                    <div class="formula-calc-form glass-card">
+                        <div class="formula-field-row">
+                            <label class="formula-field">
+                                <span class="formula-field-label">총 제조량</span>
+                                <input type="number" id="formula-target-volume" class="form-input" min="0" step="0.1" value="100" aria-label="총 제조량">
+                            </label>
+                            <label class="formula-field formula-field-unit">
+                                <span class="formula-field-label">단위</span>
+                                <select id="formula-unit" class="form-input" aria-label="제조량 단위">
+                                    <option value="g">g</option>
+                                    <option value="ml">ml</option>
+                                </select>
+                            </label>
+                        </div>
+
+                        <div class="formula-rows-head">
+                            <span>원료명</span><span>배합률(%)</span><span>투입량</span><span>규정 검증</span><span></span>
+                        </div>
+                        <div id="formula-calc-rows" class="formula-rows"></div>
+                        <datalist id="formula-ing-datalist"></datalist>
+
+                        <div class="formula-rows-foot">
+                            <button class="btn btn-secondary btn-sm" data-click="formulaCalcAddRow"><i class="fa-solid fa-plus" aria-hidden="true"></i> 원료 추가</button>
+                            <div class="formula-sum">
+                                합계 <strong id="formula-sum-conc">0%</strong> · <strong id="formula-sum-amount">—</strong>
+                            </div>
+                        </div>
+
+                        <div class="formula-save-row">
+                            <input type="text" id="formula-name-input" class="form-input" maxlength="60"
+                                   placeholder="포뮬러 이름 (예: 수분 세럼 v1)" aria-label="포뮬러 이름">
+                            <button class="btn btn-primary" data-click="formulaCalcSave"><i class="fa-solid fa-floppy-disk" aria-hidden="true"></i> 포뮬러로 저장</button>
+                        </div>
+                        <p class="formula-save-hint">저장된 포뮬러는 이 기기에만 보관되며 '데이터 백업'으로 내보낼 수 있습니다.</p>
+                    </div>
+                </div>
+            </section>
+
             <!-- 시험 선택 (멀티시험 플랫폼 홈) -->
             <section id="exam-select-view" class="view-section">
                 <div class="section-title-area">
@@ -1332,6 +1437,10 @@
             <button class="mobile-tab-item" data-target="textbook-view">
                 <i class="fa-solid fa-book" aria-hidden="true"></i>
                 <span>교재검색</span>
+            </button>
+            <button class="mobile-tab-item" data-target="formula-view" data-feature="formula">
+                <i class="fa-solid fa-flask-vial" aria-hidden="true"></i>
+                <span>포뮬러</span>
             </button>
             <button class="mobile-tab-item" data-target="dictionary-view" data-feature="dictionary">
                 <i class="fa-solid fa-search" aria-hidden="true"></i>

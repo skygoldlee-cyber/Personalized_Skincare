@@ -1,0 +1,227 @@
+/* css/formula.css — Formula OS (배합 작업실) 스타일 */
+
+/* ── 허브 안전 고지 ─────────────────────────────── */
+.formula-safety-note {
+    margin-top: 1.5rem;
+    padding: 0.9rem 1.1rem;
+    border-radius: var(--radius-md, 8px);
+    border: 1px solid var(--color-warning, #d97706);
+    background: color-mix(in srgb, var(--color-warning, #d97706) 8%, transparent);
+    color: var(--color-text-secondary, #aaa);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-start;
+}
+.formula-safety-note i { color: var(--color-warning, #d97706); margin-top: 0.15rem; }
+
+/* ── 포뮬러 목록 ─────────────────────────────── */
+.formula-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.formula-card {
+    padding: 1.1rem 1.25rem;
+    border-radius: var(--radius-md, 8px);
+    border: 1px solid var(--color-border, rgba(255,255,255,0.08));
+    background: var(--color-surface, rgba(255,255,255,0.03));
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.formula-card-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem 0.9rem;
+}
+.formula-card-name { margin: 0; font-size: 1.05rem; }
+.formula-card-meta {
+    font-size: 0.8rem;
+    color: var(--color-text-muted, #888);
+}
+
+.formula-card-checks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.formula-card-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.formula-empty {
+    text-align: center;
+    padding: 3rem 1.5rem;
+    color: var(--color-text-muted, #888);
+}
+.formula-empty i { font-size: 2.2rem; display: block; margin-bottom: 0.9rem; opacity: 0.6; }
+.formula-empty h4 { margin: 0 0 0.4rem; color: var(--color-text, #eee); }
+.formula-empty p { margin: 0 0 1.2rem; font-size: 0.9rem; }
+
+/* ── 규정 검증 배지 ─────────────────────────────── */
+.f-check {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.15rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    border: 1px solid transparent;
+    white-space: nowrap;
+}
+.f-check-ok {
+    color: var(--color-success, #22c55e);
+    border-color: var(--color-success, #22c55e);
+    background: color-mix(in srgb, var(--color-success, #22c55e) 12%, transparent);
+}
+.f-check-warn {
+    color: var(--color-warning, #f59e0b);
+    border-color: var(--color-warning, #f59e0b);
+    background: color-mix(in srgb, var(--color-warning, #f59e0b) 12%, transparent);
+}
+.f-check-banned {
+    color: var(--color-danger, #ef4444);
+    border-color: var(--color-danger, #ef4444);
+    background: color-mix(in srgb, var(--color-danger, #ef4444) 14%, transparent);
+}
+.f-check-unknown {
+    color: var(--color-text-muted, #94a3b8);
+    border-color: var(--color-text-muted, #94a3b8);
+    background: color-mix(in srgb, var(--color-text-muted, #94a3b8) 10%, transparent);
+}
+
+/* ── 계산기 폼 ─────────────────────────────── */
+.formula-calc-form {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+}
+
+.formula-field-row {
+    display: flex;
+    gap: 0.9rem;
+    flex-wrap: wrap;
+}
+.formula-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    flex: 1;
+    min-width: 140px;
+}
+.formula-field-unit { flex: 0 0 90px; min-width: 90px; }
+.formula-field-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--color-text-muted, #888);
+}
+
+/* 원료 행 그리드 */
+.formula-rows-head,
+.f-row {
+    display: grid;
+    grid-template-columns: minmax(140px, 1fr) 90px 90px minmax(90px, auto) 36px;
+    gap: 0.5rem;
+    align-items: center;
+}
+.formula-rows-head {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-text-muted, #888);
+    padding: 0 0.2rem;
+}
+.formula-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.f-row .f-name,
+.f-row .f-conc {
+    width: 100%;
+    padding: 0.55rem 0.7rem;
+    border-radius: var(--radius-sm, 6px);
+    border: 1px solid var(--color-border, rgba(255,255,255,0.1));
+    background: var(--color-bg-input, rgba(255,255,255,0.04));
+    color: var(--color-text, #eee);
+    font-size: 0.9rem;
+}
+.f-row .f-amount {
+    font-variant-numeric: tabular-nums;
+    font-size: 0.9rem;
+    color: var(--color-text-secondary, #bbb);
+    text-align: right;
+}
+.f-row .f-check-cell { display: flex; justify-content: flex-start; }
+.f-row .f-del {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid var(--color-border, rgba(255,255,255,0.1));
+    background: transparent;
+    color: var(--color-text-muted, #888);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.f-row .f-del:hover {
+    color: var(--color-danger, #ef4444);
+    border-color: var(--color-danger, #ef4444);
+}
+
+.formula-rows-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+.formula-sum {
+    font-size: 0.88rem;
+    color: var(--color-text-muted, #888);
+}
+.formula-sum strong { color: var(--color-text, #eee); }
+
+.formula-save-row {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+.formula-save-row .form-input { flex: 1; min-width: 200px; }
+.formula-save-hint {
+    margin: 0;
+    font-size: 0.78rem;
+    color: var(--color-text-muted, #888);
+}
+
+.f-danger:hover { color: var(--color-danger, #ef4444); border-color: var(--color-danger, #ef4444); }
+
+/* 모바일: 행 그리드 압축 */
+@media (max-width: 768px) {
+    .formula-rows-head { display: none; }
+    .f-row {
+        grid-template-columns: 1fr 72px 32px;
+        grid-template-areas:
+            "name name del"
+            "conc amount del"
+            "check check check";
+        padding: 0.6rem;
+        border: 1px solid var(--color-border, rgba(255,255,255,0.08));
+        border-radius: var(--radius-sm, 6px);
+    }
+    .f-row .f-name { grid-area: name; }
+    .f-row .f-conc { grid-area: conc; }
+    .f-row .f-amount { grid-area: amount; }
+    .f-row .f-check-cell { grid-area: check; }
+    .f-row .f-del { grid-area: del; }
+}

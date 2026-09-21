@@ -19,6 +19,7 @@ export function getViewTitles(registry) {
         'textbook-view': uiText.textbook || { title: '교재 본문 검색', subtitle: '교재의 모든 본문 내용을 실시간 키워드로 검색' },
         'textbook-reader-view': uiText['textbook-reader'] || { title: '교재 본문 읽기', subtitle: '과목을 선택하여 교재 본문을 읽기' },
         'dictionary-view': uiText.dictionary || { title: '성분 검색 사전', subtitle: '화장품 성분별 배합한도 및 고시 기준 통합 검색기' },
+        'formula-view': { title: 'Formula OS', subtitle: '원료 조회 · 배합 계산 · My 포뮬러 저장·검증' },
         'calendar-view': { title: '학습 캘린더', subtitle: '날짜별 학습 기록 및 목표 달성률 추적' },
         'exam-select-view': { title: '시험 선택', subtitle: '학습할 시험을 선택하세요 — 진도는 시험별로 독립 관리됩니다' }
     };

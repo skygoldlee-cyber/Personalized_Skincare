@@ -103,6 +103,20 @@ import {
     closeGoalSettings,
     saveGoalSettings
 } from './views/study-calendar.js';
+import {
+    initFormulaView,
+    exitFormulaSubView,
+    openFormulaList,
+    openFormulaCalc,
+    openIngredientDict,
+    formulaNew,
+    formulaOpen,
+    formulaDuplicate,
+    formulaDelete,
+    formulaCalcAddRow,
+    formulaCalcRemoveRow,
+    formulaCalcSave
+} from './views/formula.js';
 import { recordStudyActivity } from './study-tracker.js';
 import {
     getBackupKeys,
@@ -599,6 +613,17 @@ function setupNavigation() {
                 renderDictionary();
             });
         },
+        'formula-view': () => {
+            showGlobalLoading('Formula OS 데이터를 불러오는 중입니다...');
+            DataLoader.loadIngredients().then(() => {
+                hideGlobalLoading();
+                initFormulaView();
+            }).catch(() => {
+                hideGlobalLoading();
+                showToast('원료 데이터를 불러오지 못했습니다.', 'error');
+                initFormulaView();
+            });
+        },
         'calendar-view': () => {
             renderStudyCalendar();
         },
@@ -805,6 +830,10 @@ const DELEGATED_HANDLERS = {
     submitDailyCardAnswer, submitDailyShortAnswer,
     // 사전/시험 전환
     clearDictSearch, setDictFilter, showExamSelect, selectExamAction,
+    // Formula OS (배합 계산·My 포뮬러)
+    openFormulaList, openFormulaCalc, openIngredientDict, exitFormulaSubView,
+    formulaNew, formulaOpen, formulaDuplicate, formulaDelete,
+    formulaCalcAddRow, formulaCalcRemoveRow, formulaCalcSave,
     /** 복수정답형 모의고사 문항 수 선택 행 토글 — 다른 과목의 열린 행은 닫는다 */
     toggleComboPicker(rowId) {
         const row = document.getElementById(rowId);
