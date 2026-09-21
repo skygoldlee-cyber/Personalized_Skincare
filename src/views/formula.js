@@ -194,15 +194,15 @@ export function formulaDuplicate(id) {
   openFormulaList();
 }
 
-export function formulaDelete(id) {
+export async function formulaDelete(id) {
   const f = getFormula(id);
   if (!f) return;
-  showConfirm(`"${f.name}" 포뮬러를 삭제할까요? 이 작업은 되돌릴 수 없습니다.`, () => {
-    const r = deleteFormula(id);
-    if (!r.ok) { showToast(r.error || '삭제에 실패했습니다.', 'error'); return; }
-    showToast('포뮬러가 삭제되었습니다.', 'success');
-    openFormulaList();
-  });
+  const ok = await showConfirm(`"${f.name}" 포뮬러를 삭제할까요? 이 작업은 되돌릴 수 없습니다.`, '포뮬러 삭제');
+  if (!ok) return;
+  const r = deleteFormula(id);
+  if (!r.ok) { showToast(r.error || '삭제에 실패했습니다.', 'error'); return; }
+  showToast('포뮬러가 삭제되었습니다.', 'success');
+  openFormulaList();
 }
 
 /* =======================================================
@@ -223,16 +223,16 @@ function readCalcInputs() {
   };
 }
 
-function rowCheckBadge(item) {
+function rowCheckInfo(item) {
   const index = getIndex();
   const ing = item.name ? index.get(item.name) : null;
   const r = checkFormulaItems([{ name: item.name, concentration: item.concentration }], index).results[0];
   const info = CHECK_BADGE[r.check] || CHECK_BADGE[CHECK.UNKNOWN];
   const label = !item.name ? '원료명 입력' : (ing ? info.label : 'DB 미등록');
-  return `<span class="f-check ${info.cls}" title="${esc(r.note)}">${label}</span>`;
+  return { check: r.check, html: `<span class="f-check ${info.cls}" title="${esc(r.note)}">${label}</span>` };
 }
 
-// 행을 다시 그리지 않고 계산 결과(투입량·배지·합계·단계 소계)만 갱신 — 입력 중 포커스 유지
+// 행을 다시 그리지 않고 계산 결과(투입량·배지·합계·단계 소계·검증 요약)만 갱신 — 입력 중 포커스 유지
 function updateCalcComputed() {
   const { targetVolume, unit } = readCalcInputs();
   const container = document.getElementById('formula-calc-rows');
@@ -241,6 +241,7 @@ function updateCalcComputed() {
   let sumConc = 0;
   let sumAmount = 0;
   const phaseSums = {}; // 단계별 배합률 소계
+  const checkCounts = { ok: 0, warn: 0, banned: 0, unknown: 0 }; // 검증 요약 카운트
   container.querySelectorAll('.f-row').forEach((rowEl, i) => {
     const item = calc.rows[i];
     if (!item) return;
@@ -248,8 +249,16 @@ function updateCalcComputed() {
     const checkEl = rowEl.querySelector('.f-check-cell');
     const conc = item.concentration;
     const amount = targetVolume != null && conc != null ? Math.round(targetVolume * conc) / 100 : null;
-    if (amountEl) amountEl.textContent = amount != null ? `${amount.toFixed(2)}${unit}` : '—';
-    if (checkEl) checkEl.innerHTML = item.name ? rowCheckBadge(item) : '';
+    if (amountEl) amountEl.textContent = amount != null ? `= ${amount.toFixed(2)}${unit}` : '';
+    if (checkEl) {
+      if (item.name) {
+        const info = rowCheckInfo(item);
+        checkEl.innerHTML = info.html;
+        checkCounts[info.check] = (checkCounts[info.check] || 0) + 1;
+      } else {
+        checkEl.innerHTML = '';
+      }
+    }
     if (conc != null) {
       sumConc += conc;
       const ph = item.phase || '기타';
@@ -257,6 +266,18 @@ function updateCalcComputed() {
     }
     if (amount != null) sumAmount += amount;
   });
+
+  // 검증 요약 — 상단바 (문제 건수만, 전부 정상이면 정상 배지)
+  const checkSumEl = document.getElementById('formula-check-summary');
+  if (checkSumEl) {
+    const named = calc.rows.filter(r => r.name).length;
+    const parts = [];
+    if (checkCounts.banned) parts.push(`<span class="f-check f-check-banned">금지 ${checkCounts.banned}</span>`);
+    if (checkCounts.warn) parts.push(`<span class="f-check f-check-warn">초과 ${checkCounts.warn}</span>`);
+    if (checkCounts.unknown) parts.push(`<span class="f-check f-check-unknown">확인 ${checkCounts.unknown}</span>`);
+    if (!parts.length && named) parts.push(`<span class="f-check f-check-ok">정상 ${checkCounts.ok}</span>`);
+    checkSumEl.innerHTML = parts.join('');
+  }
 
   const sumConcEl = document.getElementById('formula-sum-conc');
   const sumAmountEl = document.getElementById('formula-sum-amount');
@@ -294,23 +315,31 @@ function renderCalcRows() {
   const container = document.getElementById('formula-calc-rows');
   if (!container) return;
 
+  // 빈 상태 안내 배너 — 이름 있는 행이 없을 때만 표시
+  const emptyEl = document.getElementById('formula-empty-state');
+  if (emptyEl) emptyEl.classList.toggle('is-hidden', calc.rows.some(r => r.name));
+
   container.innerHTML = '';
   calc.rows.forEach((item, i) => {
     const row = document.createElement('div');
     row.className = 'f-row';
     row.innerHTML = `
-      <input type="text" class="f-name" list="formula-ing-datalist" value="${esc(item.name)}"
-             placeholder="원료명 (예: 글리세린)" aria-label="원료 ${i + 1} 이름">
-      <input type="number" class="f-conc" min="0" step="0.01" value="${item.concentration != null ? item.concentration : ''}"
-             placeholder="%" aria-label="원료 ${i + 1} 배합률(%)">
-      <select class="f-phase" aria-label="원료 ${i + 1} 제조 단계">
-        <option value="">단계</option>
-        ${PHASE_OPTIONS.map(p => `<option value="${esc(p)}">${esc(p)}</option>`).join('')}
-      </select>
-      <span class="f-amount">—</span>
-      <span class="f-check-cell"></span>
-      <button type="button" class="f-del" data-click="formulaCalcRemoveRow" data-arg="${i}"
-              aria-label="원료 ${i + 1} 삭제"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>`;
+      <div class="f-row-top">
+        <input type="text" class="f-name" list="formula-ing-datalist" value="${esc(item.name)}"
+               placeholder="원료명 (예: 글리세린)" aria-label="원료 ${i + 1} 이름">
+        <span class="f-check-cell"></span>
+        <button type="button" class="f-del" data-click="formulaCalcRemoveRow" data-arg="${i}"
+                aria-label="원료 ${i + 1} 삭제"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+      </div>
+      <div class="f-row-bottom">
+        <input type="number" class="f-conc" min="0" step="0.01" value="${item.concentration != null ? item.concentration : ''}"
+               placeholder="%" aria-label="원료 ${i + 1} 배합률(%)">
+        <span class="f-amount"></span>
+        <select class="f-phase" aria-label="원료 ${i + 1} 제조 단계">
+          <option value="">단계</option>
+          ${PHASE_OPTIONS.map(p => `<option value="${esc(p)}">${esc(p)}</option>`).join('')}
+        </select>
+      </div>`;
 
     const nameEl = row.querySelector('.f-name');
     const concEl = row.querySelector('.f-conc');
@@ -496,6 +525,43 @@ export function formulaAllergyRemove(name) {
   renderRecommend();
 }
 
+/** 접이식 섹션 제목 옆 요약 — 내용이 있으면 '김OO · 건성' 형태로 표시 */
+function updateFoldSummaries() {
+  const custEl = document.getElementById('fold-sum-customer');
+  if (custEl) {
+    const c = readCustomerInputs();
+    const parts = [
+      c.name, c.age != null ? `${c.age}세` : '', c.gender, c.skinType, c.formulation,
+      c.concerns.length ? `고민 ${c.concerns.length}` : '',
+      c.pregnancy, c.allergies.length ? `알레르기 ${c.allergies.length}종` : '',
+      c.products ? '제품 기록' : '',
+    ].filter(Boolean);
+    custEl.textContent = parts.join(' · ');
+  }
+  const procEl = document.getElementById('fold-sum-process');
+  if (procEl) {
+    const { phTarget, phActual } = readCalcInputs();
+    const notesEl = document.getElementById('formula-notes-input');
+    const parts = [];
+    if (phTarget != null || phActual != null) {
+      parts.push(`pH ${phTarget != null ? phTarget : '—'}/${phActual != null ? phActual : '—'}`);
+    }
+    if (calc.steps.length) parts.push(`절차 ${calc.steps.length}단계`);
+    if (notesEl && notesEl.value.trim()) parts.push('메모');
+    procEl.textContent = parts.join(' · ');
+  }
+}
+
+/** 빈 상태 안내의 '고객 정보 입력' — 접이식 섹션을 열고 첫 필드로 이동 */
+export function formulaOpenCustomer() {
+  const fold = document.getElementById('formula-fold-customer');
+  if (!fold) return;
+  fold.open = true;
+  fold.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  const first = fold.querySelector('#formula-cust-name');
+  if (first) first.focus();
+}
+
 /* =======================================================
    추천 베이스 · 원료 패널 (규칙 기반 — 이름만 제안, 농도 미제안)
    ======================================================= */
@@ -510,6 +576,7 @@ function renderRecommend() {
   if (!hasInput) {
     panel.classList.add('is-hidden');
     panel.innerHTML = '';
+    updateFoldSummaries();
     return;
   }
 
@@ -555,6 +622,7 @@ function renderRecommend() {
 
   panel.innerHTML = html;
   panel.classList.remove('is-hidden');
+  updateFoldSummaries();
 }
 
 /** 추천 행 추가 공통 — name + 제조 단계(phase) 태깅 */
@@ -594,7 +662,8 @@ export function formulaRecAddBase(arg) {
 /** 베이스 불러오기 — required 역할의 첫 후보를 phase 태깅과 함께 행으로 채움 */
 export function formulaLoadBase() {
   const { formulation } = readCustomerInputs();
-  const rows = baseDefaultCandidates(formulation);
+  const fallback = !formulation;
+  const rows = baseDefaultCandidates(formulation || '세럼·에센스');
   if (!rows.length) {
     showToast('이 제형의 자동 베이스가 없습니다.', 'info');
     return;
@@ -612,7 +681,9 @@ export function formulaLoadBase() {
     added++;
   });
   renderCalcRows();
-  showToast(added ? `베이스 원료 ${added}종을 추가했습니다 — 배합률을 입력하세요.` : '이미 모두 추가되어 있습니다.', 'success');
+  if (!added) { showToast('이미 모두 추가되어 있습니다.', 'info'); return; }
+  const note = fallback ? ' (제형 미선택 — 세럼·에센스 기준)' : '';
+  showToast(`베이스 원료 ${added}종을 추가했습니다${note} — 배합률을 입력하세요.`, 'success');
 }
 
 /** JSON 파일 다운로드 공용 헬퍼 */
@@ -710,16 +781,16 @@ export function formulaRuleRemove(arg) {
 }
 
 /** 맞춤 규칙 전체 초기화 */
-export function formulaRuleReset() {
-  showConfirm('등록한 맞춤 추천 규칙을 모두 초기화할까요?', () => {
-    if (resetCustomRules()) {
-      showToast('맞춤 추천 규칙을 초기화했습니다.', 'success');
-      renderCustomRules();
-      renderRecommend();
-    } else {
-      showToast('초기화에 실패했습니다.', 'error');
-    }
-  });
+export async function formulaRuleReset() {
+  const ok = await showConfirm('등록한 맞춤 추천 규칙을 모두 초기화할까요?', '맞춤 규칙 초기화');
+  if (!ok) return;
+  if (resetCustomRules()) {
+    showToast('맞춤 추천 규칙을 초기화했습니다.', 'success');
+    renderCustomRules();
+    renderRecommend();
+  } else {
+    showToast('초기화에 실패했습니다.', 'error');
+  }
 }
 
 /** 맞춤 규칙 JSON 내보내기 — 외부 공유·편집용 파일 다운로드 */
@@ -819,6 +890,31 @@ export function openFormulaCalc(sourceFormula) {
     unitEl.dataset.bound = '1';
     unitEl.addEventListener('change', updateCalcComputed);
   }
+  // pH·메모 변경 → 제조 정보 접이식 요약 갱신
+  ['formula-ph-target', 'formula-ph-actual', 'formula-notes-input'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el && !el.dataset.foldBound) {
+      el.dataset.foldBound = '1';
+      el.addEventListener('input', updateFoldSummaries);
+    }
+  });
+
+  // 내용이 있는 접이식 섹션은 자동 펼침 (기존 포뮬러 수정 진입 시)
+  const custFold = document.getElementById('formula-fold-customer');
+  const procFold = document.getElementById('formula-fold-process');
+  if (sourceFormula) {
+    const c = sourceFormula.customer || {};
+    const hasCust = c.name || c.skinType || c.formulation || (c.concerns && c.concerns.length)
+      || c.pregnancy || (c.allergies && c.allergies.length) || c.products || c.age != null;
+    if (custFold) custFold.open = !!hasCust;
+    const hasProc = sourceFormula.phTarget != null || sourceFormula.phActual != null
+      || (sourceFormula.steps && sourceFormula.steps.length) || sourceFormula.notes;
+    if (procFold) procFold.open = !!hasProc;
+  } else {
+    if (custFold) custFold.open = false;
+    if (procFold) procFold.open = false;
+  }
+  updateFoldSummaries();
 
   renderCalcRows();
 }
@@ -861,9 +957,10 @@ function renderSteps() {
       <button type="button" class="f-del" data-click="formulaStepRemove" data-arg="${i}"
               aria-label="절차 ${i + 1} 삭제"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>`;
     const input = row.querySelector('.f-step');
-    input.addEventListener('input', () => { calc.steps[i] = input.value; });
+    input.addEventListener('input', () => { calc.steps[i] = input.value; updateFoldSummaries(); });
     list.appendChild(row);
   });
+  updateFoldSummaries();
 }
 
 export function formulaStepAdd() {

@@ -1347,32 +1347,33 @@
                         </div>
                     </div>
 
+                    <!-- 상단 고정 요약바: 총량·합계·검증 요약 상시 표시 -->
+                    <div class="formula-calc-bar fcb-top">
+                        <div class="fcb-volume" role="group" aria-label="총 제조량">
+                            <input type="number" id="formula-target-volume" class="form-input fcb-vol" min="0" step="0.1" value="100" aria-label="총 제조량">
+                            <select id="formula-unit" class="form-select fcb-unit" aria-label="제조량 단위">
+                                <option value="g">g</option>
+                                <option value="ml">ml</option>
+                            </select>
+                        </div>
+                        <div class="fcb-sum">
+                            합계 <strong id="formula-sum-conc">0%</strong>
+                            <span id="formula-sum-status" class="formula-sum-badge"></span>
+                            <span id="formula-sum-amount" class="fcb-amount"></span>
+                        </div>
+                        <div class="fcb-checks" id="formula-check-summary"></div>
+                    </div>
+
                     <div class="formula-calc-form glass-card">
-                        <div class="formula-field-row">
-                            <label class="formula-field">
-                                <span class="formula-field-label">총 제조량</span>
-                                <input type="number" id="formula-target-volume" class="form-input" min="0" step="0.1" value="100" aria-label="총 제조량">
-                            </label>
-                            <label class="formula-field formula-field-unit">
-                                <span class="formula-field-label">단위</span>
-                                <select id="formula-unit" class="form-select" aria-label="제조량 단위">
-                                    <option value="g">g</option>
-                                    <option value="ml">ml</option>
-                                </select>
-                            </label>
-                            <label class="formula-field formula-field-unit">
-                                <span class="formula-field-label">목표 pH</span>
-                                <input type="number" id="formula-ph-target" class="form-input" min="0" max="14" step="0.1" placeholder="—" aria-label="목표 pH">
-                            </label>
-                            <label class="formula-field formula-field-unit">
-                                <span class="formula-field-label">실측 pH</span>
-                                <input type="number" id="formula-ph-actual" class="form-input" min="0" max="14" step="0.1" placeholder="—" aria-label="실측 pH">
-                            </label>
+                        <!-- 빈 상태 안내 (이름 있는 행이 없을 때만 표시) -->
+                        <div id="formula-empty-state" class="formula-empty-state is-hidden">
+                            <i class="fa-solid fa-flask-vial" aria-hidden="true"></i>
+                            <span>원료명과 배합률(%)을 입력하면 투입량이 자동 계산됩니다.</span>
+                            <button class="btn btn-secondary btn-sm" data-click="formulaLoadBase"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> 추천 베이스 불러오기</button>
+                            <button class="btn btn-secondary btn-sm" data-click="formulaOpenCustomer"><i class="fa-solid fa-user" aria-hidden="true"></i> 고객 정보 입력</button>
                         </div>
 
-                        <div class="formula-rows-head">
-                            <span>원료명</span><span>배합률(%)</span><span>단계</span><span>투입량</span><span>규정 검증</span><span></span>
-                        </div>
+                        <!-- 원료 행 (카드형) -->
                         <div id="formula-calc-rows" class="formula-rows"></div>
                         <datalist id="formula-ing-datalist"></datalist>
 
@@ -1381,16 +1382,16 @@
                                 <button class="btn btn-secondary btn-sm" data-click="formulaCalcAddRow"><i class="fa-solid fa-plus" aria-hidden="true"></i> 원료 추가</button>
                                 <button class="btn btn-secondary btn-sm" data-click="formulaSortPhase" title="제조 단계 순서로 행 정렬"><i class="fa-solid fa-layer-group" aria-hidden="true"></i> 단계별 정렬</button>
                             </div>
-                            <div class="formula-sum">
-                                합계 <strong id="formula-sum-conc">0%</strong>
-                                <span id="formula-sum-status" class="formula-sum-badge"></span>
-                                · <strong id="formula-sum-amount">—</strong>
-                                <div id="formula-phase-sums" class="formula-phase-sums"></div>
-                            </div>
+                            <div id="formula-phase-sums" class="formula-phase-sums"></div>
                         </div>
 
-                        <fieldset class="formula-customer">
-                            <legend>고객 정보 (선택)</legend>
+                        <!-- 고객 정보 (접이식 — 입력 시 맞춤 추천) -->
+                        <details class="formula-fold" id="formula-fold-customer">
+                            <summary>
+                                <span><i class="fa-solid fa-user" aria-hidden="true"></i> 고객 정보 <span class="fold-hint">선택 — 입력 시 맞춤 원료 추천</span></span>
+                                <span class="fold-sum" id="fold-sum-customer"></span>
+                            </summary>
+                            <div class="fold-body">
                             <div class="formula-field-row">
                                 <label class="formula-field">
                                     <span class="formula-field-label">고객명</span>
@@ -1447,12 +1448,13 @@
                                         <i class="fa-solid fa-plus" aria-hidden="true"></i> 추가
                                     </button>
                                 </div>
-                                <div id="formula-cust-allergies" class="formula-chip-row"></div>
-                            </div>
-                        </fieldset>
+                                    <div id="formula-cust-allergies" class="formula-chip-row"></div>
+                                </div>
 
-                        <!-- 추천 베이스·원료 (고객 조건 선택 시 표시) -->
-                        <div id="formula-recommend" class="formula-recommend is-hidden"></div>
+                                <!-- 추천 베이스·원료 (고객 조건 선택 시 표시) -->
+                                <div id="formula-recommend" class="formula-recommend is-hidden"></div>
+                            </div>
+                        </details>
 
                         <!-- 맞춤 추천 규칙 관리 (사용자 후보 추가 — 기본 매핑에 병합) -->
                         <details class="formula-rules-edit">
@@ -1478,29 +1480,47 @@
                             </div>
                         </details>
 
-                        <fieldset class="formula-customer">
-                            <legend>제조 절차 (선택)</legend>
-                            <div id="formula-steps-list" class="formula-steps-list"></div>
-                            <button type="button" class="btn btn-secondary btn-sm" data-click="formulaStepAdd"><i class="fa-solid fa-plus" aria-hidden="true"></i> 단계 추가</button>
-                        </fieldset>
-
-                        <label class="formula-field">
-                            <span class="formula-field-label">메모 (선택)</span>
-                            <textarea id="formula-notes-input" class="form-input" rows="2" maxlength="500"
-                                      placeholder="제조 조건, pH, 보존 방법 등" aria-label="포뮬러 메모"></textarea>
-                        </label>
-
-                        <div class="formula-save-row">
-                            <input type="text" id="formula-name-input" class="form-input" maxlength="60"
-                                   placeholder="포뮬러 이름 (예: 수분 세럼 v1)" aria-label="포뮬러 이름">
-                            <button class="btn btn-primary" data-click="formulaCalcSave"><i class="fa-solid fa-floppy-disk" aria-hidden="true"></i> 포뮬러로 저장</button>
-                        </div>
-                        <div class="formula-actions-row">
-                            <button type="button" class="btn btn-secondary btn-sm" data-click="formulaPrint"><i class="fa-solid fa-print" aria-hidden="true"></i> 조제 기록지 인쇄</button>
-                            <button type="button" class="btn btn-secondary btn-sm" data-click="formulaExportJson"><i class="fa-solid fa-download" aria-hidden="true"></i> JSON 보내기</button>
-                        </div>
-                        <p class="formula-save-hint">저장된 포뮬러는 이 기기에만 보관되며 '데이터 백업'으로 내보낼 수 있습니다.</p>
+                        <!-- 제조 정보 (접이식 — pH·절차·메모) -->
+                        <details class="formula-fold" id="formula-fold-process">
+                            <summary>
+                                <span><i class="fa-solid fa-list-ol" aria-hidden="true"></i> 제조 정보 <span class="fold-hint">선택 — pH · 절차 · 메모</span></span>
+                                <span class="fold-sum" id="fold-sum-process"></span>
+                            </summary>
+                            <div class="fold-body">
+                                <div class="formula-field-row">
+                                    <label class="formula-field formula-field-unit">
+                                        <span class="formula-field-label">목표 pH</span>
+                                        <input type="number" id="formula-ph-target" class="form-input" min="0" max="14" step="0.1" placeholder="—" aria-label="목표 pH">
+                                    </label>
+                                    <label class="formula-field formula-field-unit">
+                                        <span class="formula-field-label">실측 pH</span>
+                                        <input type="number" id="formula-ph-actual" class="form-input" min="0" max="14" step="0.1" placeholder="—" aria-label="실측 pH">
+                                    </label>
+                                </div>
+                                <div class="formula-field">
+                                    <span class="formula-field-label">제조 절차</span>
+                                    <div id="formula-steps-list" class="formula-steps-list"></div>
+                                    <button type="button" class="btn btn-secondary btn-sm" data-click="formulaStepAdd"><i class="fa-solid fa-plus" aria-hidden="true"></i> 단계 추가</button>
+                                </div>
+                                <label class="formula-field">
+                                    <span class="formula-field-label">메모</span>
+                                    <textarea id="formula-notes-input" class="form-input" rows="2" maxlength="500"
+                                              placeholder="제조 조건, 보존 방법 등" aria-label="포뮬러 메모"></textarea>
+                                </label>
+                            </div>
+                        </details>
                     </div>
+
+                    <!-- 하단 고정 액션바: 이름·저장·인쇄·JSON -->
+                    <div class="formula-calc-bar fcb-bottom">
+                        <input type="text" id="formula-name-input" class="form-input fcb-name" maxlength="60"
+                               placeholder="포뮬러 이름 (예: 수분 세럼 v1)" aria-label="포뮬러 이름">
+                        <button class="btn btn-primary" data-click="formulaCalcSave"><i class="fa-solid fa-floppy-disk" aria-hidden="true"></i> 저장</button>
+                        <button type="button" class="btn btn-secondary btn-sm" data-click="formulaPrint" title="조제 기록지 인쇄"><i class="fa-solid fa-print" aria-hidden="true"></i><span class="fcb-btn-text"> 인쇄</span></button>
+                        <button type="button" class="btn btn-secondary btn-sm" data-click="formulaExportJson" title="JSON 파일로보내기"><i class="fa-solid fa-download" aria-hidden="true"></i><span class="fcb-btn-text"> JSON</span></button>
+                    </div>
+                    <p class="formula-save-hint">저장된 포뮬러는 이 기기에만 보관되며 '데이터 백업'으로 보낼 수 있습니다.</p>
+
                 </div>
             </section>
 

@@ -133,7 +133,8 @@ import {
     formulaCardExport,
     formulaImportJson,
     formulaAllergyAdd,
-    formulaAllergyRemove
+    formulaAllergyRemove,
+    formulaOpenCustomer
 } from './views/formula.js';
 import { recordStudyActivity } from './study-tracker.js';
 import {
@@ -858,7 +859,7 @@ const DELEGATED_HANDLERS = {
     formulaRuleExport, formulaRuleImport,
     formulaSortPhase, formulaStepAdd, formulaStepRemove,
     formulaPrint, formulaExportJson, formulaCardExport, formulaImportJson,
-    formulaAllergyAdd, formulaAllergyRemove,
+    formulaAllergyAdd, formulaAllergyRemove, formulaOpenCustomer,
     /** 복수정답형 모의고사 문항 수 선택 행 토글 — 다른 과목의 열린 행은 닫는다 */
     toggleComboPicker(rowId) {
         const row = document.getElementById(rowId);
