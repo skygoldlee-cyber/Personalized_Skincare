@@ -16,7 +16,7 @@
 //   products — 현재 사용 중인 제품/약물 자유 기술 (추천 중복 주의문에 반영).
 // phase — 원료의 제조 단계 (PHASE_OPTIONS). steps — 제조 절차 단계 문자열 배열.
 // phTarget/phActual — 목표·실측 pH (0~14, 범위 밖은 null).
-// stability — 안정성 실험 확인 기록 {method(STABILITY_METHODS), result(STABILITY_RESULTS), date(YYYY-MM-DD), note}.
+// stability — 안정성 실험 확인 기록 {method(STABILITY_METHODS), result(STABILITY_RESULTS), date(YYYY-MM-DD[THH:MM]), note}.
 //   규칙 기반 경고는 참고일 뿐 실제 안정성은 실험으로만 확정되므로, 사용자의 실험 결과를 저장한다.
 //
 // ingredients[].snapshot — 저장 시점의 규정 기준(type/limit)을 보존한다.
@@ -152,11 +152,11 @@ function sanitizeStability(stab) {
   const s = {
     method: pickEnum(stab.method, STABILITY_METHODS),
     result: pickEnum(stab.result, STABILITY_RESULTS),
-    date: clampStr(stab.date || '', 10).trim(),
+    date: clampStr(stab.date || '', 16).trim(),
     note: clampStr(stab.note || '', 120).trim(),
   };
-  // 날짜는 YYYY-MM-DD만 허용
-  if (s.date && !/^\d{4}-\d{2}-\d{2}$/.test(s.date)) s.date = '';
+  // 날짜는 YYYY-MM-DD 또는 YYYY-MM-DDTHH:MM (datetime-local) 허용
+  if (s.date && !/^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2})?$/.test(s.date)) s.date = '';
   return (s.method || s.result || s.date || s.note) ? s : null;
 }
 

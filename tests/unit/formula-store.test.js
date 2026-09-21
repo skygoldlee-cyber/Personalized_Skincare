@@ -375,13 +375,20 @@ test('import: 이름 없는 데이터 → 생성 거부, 한도 초과 → 한�
 test('stability: enum 클램프 + 빈 값이면 null', () => {
   const { formula } = createFormula({
     name: 't',
-    stability: { method: '실온 경시 관찰', result: '양호', date: '2026-09-22', note: '4주 분리 없음' },
+    stability: { method: '실온 경시 관찰', result: '양호', date: '2026-09-22T14:30', note: '4주 분리 없음' },
   });
   const s = getFormula(formula.id).stability;
   assert.equal(s.method, '실온 경시 관찰');
   assert.equal(s.result, '양호');
-  assert.equal(s.date, '2026-09-22');
+  assert.equal(s.date, '2026-09-22T14:30');
   assert.equal(s.note, '4주 분리 없음');
+
+  // 날짜만(구 형식)도 여전히 유효
+  const { formula: f4 } = createFormula({
+    name: 't4',
+    stability: { method: '실온 경시 관찰', result: '양호', date: '2026-09-22', note: '' },
+  });
+  assert.equal(getFormula(f4.id).stability.date, '2026-09-22');
 
   // 허용 목록 밖 값·잘못된 날짜는 제거, 전부 무효면 null
   const { formula: f2 } = createFormula({

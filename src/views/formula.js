@@ -355,7 +355,7 @@ function renderStability() {
   // 실험 확인 상태 — 규칙 경고보다 사용자 실험이 확정 근거
   let confirmHtml = '';
   if (stabRecorded) {
-    const parts = [stab.method, stab.result, stab.date, stab.note].filter(Boolean);
+    const parts = [stab.method, stab.result, stab.date && stab.date.replace('T', ' '), stab.note].filter(Boolean);
     const cls = stab.result === '양호' ? 'f-stab-good' : (stab.result === '이상 발견' ? 'f-stab-bad' : 'f-stab-info');
     const ic = stab.result === '양호' ? 'fa-circle-check' : (stab.result === '이상 발견' ? 'fa-triangle-exclamation' : 'fa-flask');
     confirmHtml = `<div class="formula-stab-confirm ${cls}"><i class="fa-solid ${ic}" aria-hidden="true"></i> 실험 확인 기록: ${esc(parts.join(' · '))}</div>`;
@@ -1187,7 +1187,7 @@ function buildPrintHtml(f) {
     formulation: cust.formulation, phTarget: f.phTarget, phActual: f.phActual, steps: f.steps,
   });
   const stabConfirm = f.stability
-    ? `<p class="fp-meta-line">안정성 실험 확인: ${esc([f.stability.method, f.stability.result, f.stability.date, f.stability.note].filter(Boolean).join(' · '))}</p>`
+    ? `<p class="fp-meta-line">안정성 실험 확인: ${esc([f.stability.method, f.stability.result, f.stability.date && f.stability.date.replace('T', ' '), f.stability.note].filter(Boolean).join(' · '))}</p>`
     : '';
   const stabHtml = (stab.warnings.length || f.stability)
     ? `<h3>제형 안정성</h3>${stabConfirm}${stab.warnings.length ? `<ul class="fp-stab">${stab.warnings.map(w => `<li>${w.level === STAB.WARN ? '[주의] ' : '[참고] '}${esc(w.msg)}</li>`).join('')}</ul>` : ''}`

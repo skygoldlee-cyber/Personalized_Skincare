@@ -120,14 +120,16 @@
 }
 .formula-field-unit { flex: 0 0 110px; min-width: 110px; }
 .formula-field-gender { flex: 0 0 150px; min-width: 150px; }
-.formula-field-date { flex: 0 0 175px; min-width: 175px; }
+.formula-field-date { flex: 0 0 230px; min-width: 230px; }
 
 /* 날짜 달력 아이콘 — OS 기본 검정 글리프라 다크 테마에서 반전 필요 */
-input[type="date"]::-webkit-calendar-picker-indicator {
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
     filter: invert(0.85);
     cursor: pointer;
 }
-.light-theme input[type="date"]::-webkit-calendar-picker-indicator {
+.light-theme input[type="date"]::-webkit-calendar-picker-indicator,
+.light-theme input[type="datetime-local"]::-webkit-calendar-picker-indicator {
     filter: none;
 }
 .formula-field .form-select { width: 100%; }
