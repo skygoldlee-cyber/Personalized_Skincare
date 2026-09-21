@@ -84,7 +84,7 @@ src/                    # ES Modules
   markdown-parser.js    # 공통 MD 파서
   mermaid-utils.js       # Mermaid 다이어그램 설정
   mermaid-render.js      # Mermaid 지연 로딩 + 컨테이너 렌더링 (reader/search/manual 공용)
-  pwa-manifest.js        # 시험별 동적 PWA 매니페스트 (클래식 스크립트, blob 주입)
+  pwa-manifest.js        # 시험별 동적 PWA 매니페스트 (클래식 스크립트 — 빌드 산출물 manifest.<id>.webmanifest 실제 파일로 링크 교체, blob: 금지)
   keyword-index.js      # 교재 셀→참조자료 키워드 매핑 (시험별 — 자동 생성)
   web-vitals.js         # Core Web Vitals 모니터링
   sha256.js             # 안정적 ID 해시

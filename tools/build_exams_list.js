@@ -11,6 +11,7 @@ const path = require('path');
 const ROOT = path.resolve(__dirname, '..');
 const SRC = path.join(ROOT, 'content', 'exams.json');
 const OUT = path.join(ROOT, 'data', 'exams.js');
+const MANIFEST_TEMPLATE = path.join(ROOT, 'manifest.webmanifest');
 
 function main() {
     const exams = JSON.parse(fs.readFileSync(SRC, 'utf-8'));
@@ -34,6 +35,32 @@ function main() {
     fs.mkdirSync(path.dirname(OUT), { recursive: true });
     fs.writeFileSync(OUT, js, 'utf-8');
     console.log(`✅ data/exams.js 생성 — 시험 ${exams.exams.length}개 (${[...ids].join(', ')})`);
+
+    // 시험별 정적 PWA 매니페스트 생성 (manifest.<id>.webmanifest)
+    // pwa-manifest.js가 활성 시험에 맞춰 링크를 이 실제 파일로 교체한다.
+    // blob:/data: URL은 Chrome 설치 요건에서 유효하지 않은 스킴으로 판정되어
+    // beforeinstallprompt가 발생하지 않으므로 반드시 실제 파일이어야 한다.
+    const base = JSON.parse(fs.readFileSync(MANIFEST_TEMPLATE, 'utf-8'));
+    const emitted = new Set();
+    exams.exams.forEach(e => {
+        const manifest = Object.assign({}, base, {
+            id: e.id + '-pass',
+            name: e.title || e.name,
+            short_name: e.shortName || e.name,
+            description: e.desc || base.description || ''
+        });
+        const fname = `manifest.${e.id}.webmanifest`;
+        fs.writeFileSync(path.join(ROOT, fname), JSON.stringify(manifest, null, 2) + '\n', 'utf-8');
+        emitted.add(fname);
+    });
+    // exams.json에서 제거된 시험의 stale 매니페스트 정리
+    fs.readdirSync(ROOT).forEach(f => {
+        if (/^manifest\..+\.webmanifest$/.test(f) && !emitted.has(f)) {
+            fs.unlinkSync(path.join(ROOT, f));
+            console.log(`  🗑 stale 매니페스트 제거: ${f}`);
+        }
+    });
+    console.log(`✅ 시험별 매니페스트 생성 — ${emitted.size}개 (${[...emitted].join(', ')})`);
 }
 
 main();
