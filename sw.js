@@ -93,6 +93,8 @@ const SHELL_ASSETS = [
   './src/views/trainer-ingredients.js',
   './src/questions.js',
   './src/statement-tracker.js',
+  './src/formula-check.js',
+  './src/formula-store.js',
   './src/study-tracker.js',
   './src/spaced-repetition.js',
   './src/views/dictionary.js',

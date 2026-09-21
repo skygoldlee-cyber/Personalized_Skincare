@@ -37,6 +37,9 @@ export const STORAGE_KEYS = {
   // 복수정답형/OX 진술 단위 오판 통계 (statement-tracker.js)
   STATEMENT_STATS: 'statement_stats',
 
+  // Formula OS — My Formula 저장소 (formula-store.js)
+  FORMULA_ITEMS: 'formula_items',
+
   // 교재 리더
   READER_LAST_POSITION: 'readerLastPosition',
   READER_FONT_SCALE: 'readerFontScale',
@@ -67,6 +70,7 @@ export const BACKUP_KEYS = [
   STORAGE_KEYS.CALC_HISTORY,
   STORAGE_KEYS.FC_MIGRATED_V2,
   STORAGE_KEYS.STATEMENT_STATS,
+  STORAGE_KEYS.FORMULA_ITEMS,
 ];
 
 // 전체 초기화(Reset Progress) 시 제거할 키 목록

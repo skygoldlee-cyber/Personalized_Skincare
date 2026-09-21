@@ -1,0 +1,193 @@
+// tests/unit/formula-store.test.js
+// src/formula-store.js — My Formula 영속성 계층 테스트.
+// CRUD·Free 한도·스냅샷 보존·투입량 계산의 불변식을 고정한다.
+
+import { test, beforeEach, afterEach } from 'node:test';
+import assert from 'node:assert/strict';
+import {
+  FORMULA_LIMIT_FREE,
+  newFormulaId,
+  listFormulas,
+  getFormula,
+  getFormulaUsage,
+  createFormula,
+  updateFormula,
+  deleteFormula,
+  duplicateFormula,
+  calcAmounts,
+} from '../../src/formula-store.js';
+
+// --- localStorage 모킹 (state.test.js와 동일 패턴) ---
+
+function createMockStorage() {
+  const store = {};
+  return {
+    getItem(key) { return key in store ? store[key] : null; },
+    setItem(key, value) { store[key] = String(value); },
+    removeItem(key) { delete store[key]; },
+    clear() { for (const k of Object.keys(store)) delete store[k]; },
+    _store: store,
+  };
+}
+
+let mockStorage;
+let originalLocalStorage;
+
+beforeEach(() => {
+  mockStorage = createMockStorage();
+  originalLocalStorage = global.localStorage;
+  Object.defineProperty(global, 'localStorage', {
+    value: mockStorage, writable: true, configurable: true,
+  });
+});
+
+afterEach(() => {
+  if (originalLocalStorage !== undefined) {
+    Object.defineProperty(global, 'localStorage', {
+      value: originalLocalStorage, writable: true, configurable: true,
+    });
+  } else {
+    delete global.localStorage;
+  }
+});
+
+const sample = () => ({
+  name: '수분 세럼 v1',
+  targetVolume: 100,
+  unit: 'g',
+  notes: '테스트 메모',
+  ingredients: [
+    { name: '정제수', engName: 'Water', concentration: 80, snapshot: { type: 'approved', limit: '' } },
+    { name: '페녹시에탄올', engName: 'Phenoxyethanol', concentration: 0.8,
+      snapshot: { type: 'restricted', limit: '1.0%' } },
+  ],
+});
+
+// ── ID ─────────────────────────────────────────────────────
+
+test('newFormulaId: fml_ 접두사 + 유일성', () => {
+  const a = newFormulaId();
+  const b = newFormulaId();
+  assert.match(a, /^fml_/);
+  assert.notEqual(a, b);
+});
+
+// ── create / list / get ────────────────────────────────────
+
+test('createFormula: 정상 생성 + 목록·단건 조회', () => {
+  const r = createFormula(sample());
+  assert.equal(r.ok, true);
+  assert.match(r.formula.id, /^fml_/);
+  assert.equal(r.formula.name, '수분 세럼 v1');
+
+  const list = listFormulas();
+  assert.equal(list.length, 1);
+  assert.equal(getFormula(r.formula.id).name, '수분 세럼 v1');
+  assert.equal(getFormula('fml_nonexistent'), null);
+});
+
+test('createFormula: 이름 없으면 거부', () => {
+  assert.equal(createFormula({ name: '' }).ok, false);
+  assert.equal(createFormula({}).ok, false);
+});
+
+test('createFormula: 이름/메모 길이 클램프', () => {
+  const r = createFormula({ name: 'x'.repeat(100), notes: 'y'.repeat(600) });
+  assert.equal(r.ok, true);
+  assert.equal(r.formula.name.length, 60);
+  assert.equal(r.formula.notes.length, 500);
+});
+
+test('createFormula: 무효 원료 행은 제거', () => {
+  const r = createFormula({
+    name: 't',
+    ingredients: [
+      { name: '정제수', concentration: 80 },
+      { name: '', concentration: 5 },           // 빈 이름 → 제거
+      null,                                     // 비객체 → 제거
+      { concentration: 3 },                     // name 없음 → 제거
+    ],
+  });
+  assert.equal(r.formula.ingredients.length, 1);
+  assert.equal(r.formula.ingredients[0].name, '정제수');
+});
+
+// ── 한도 (Free 5개) ────────────────────────────────────────
+
+test('한도: FORMULA_LIMIT_FREE 초과 생성 거부', () => {
+  for (let i = 0; i < FORMULA_LIMIT_FREE; i++) {
+    assert.equal(createFormula({ name: `f${i}` }).ok, true);
+  }
+  const usage = getFormulaUsage();
+  assert.equal(usage.count, FORMULA_LIMIT_FREE);
+  assert.equal(usage.canCreate, false);
+
+  const over = createFormula({ name: 'overflow' });
+  assert.equal(over.ok, false);
+  assert.match(over.error, /최대/);
+});
+
+test('한도: 삭제 후 재생성 가능', () => {
+  const ids = [];
+  for (let i = 0; i < FORMULA_LIMIT_FREE; i++) {
+    ids.push(createFormula({ name: `f${i}` }).formula.id);
+  }
+  assert.equal(deleteFormula(ids[0]).ok, true);
+  assert.equal(createFormula({ name: 'new' }).ok, true);
+});
+
+// ── update ─────────────────────────────────────────────────
+
+test('updateFormula: 필드 갱신 + id/createdAt 보존', () => {
+  const { formula } = createFormula(sample());
+  const r = updateFormula(formula.id, {
+    ...formula, name: '세럼 v2', targetVolume: 50,
+  });
+  assert.equal(r.ok, true);
+  assert.equal(r.formula.name, '세럼 v2');
+  assert.equal(r.formula.id, formula.id);
+  assert.equal(r.formula.createdAt, formula.createdAt);
+  assert.ok(r.formula.updatedAt >= formula.updatedAt);
+});
+
+test('updateFormula: 없는 id → 오류', () => {
+  assert.equal(updateFormula('fml_x', { name: 'a' }).ok, false);
+});
+
+// ── duplicate ──────────────────────────────────────────────
+
+test('duplicateFormula: 복사본 생성 + 한도 적용', () => {
+  const { formula } = createFormula(sample());
+  const r = duplicateFormula(formula.id);
+  assert.equal(r.ok, true);
+  assert.match(r.formula.name, /복사본/);
+  assert.notEqual(r.formula.id, formula.id);
+  assert.equal(r.formula.ingredients.length, 2);
+
+  assert.equal(duplicateFormula('fml_none').ok, false);
+});
+
+// ── snapshot 보존 ──────────────────────────────────────────
+
+test('snapshot: 저장 시점 규정 기준이 행에 보존된다', () => {
+  const { formula } = createFormula(sample());
+  const saved = getFormula(formula.id);
+  assert.deepEqual(saved.ingredients[1].snapshot, { type: 'restricted', limit: '1.0%' });
+});
+
+// ── calcAmounts ────────────────────────────────────────────
+
+test('calcAmounts: 총량×농도 → 투입량 (소수 2자리)', () => {
+  const { formula } = createFormula(sample());
+  const amounts = calcAmounts(formula);
+  assert.equal(amounts[0].amount, 80);      // 100g × 80%
+  assert.equal(amounts[1].amount, 0.8);     // 100g × 0.8%
+});
+
+test('calcAmounts: 총량 없으면 amount=null', () => {
+  const { formula } = createFormula({
+    name: 't', ingredients: [{ name: 'a', concentration: 10 }],
+  });
+  assert.equal(calcAmounts(formula)[0].amount, null);
+  assert.deepEqual(calcAmounts(null), []);
+});
