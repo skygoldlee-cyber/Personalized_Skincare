@@ -30,9 +30,15 @@
  *
  * 통계 리포트: 과목별 문항 수·단일참 비율·derivedFrom 경로별 분포·정답 위치 히스토그램
  *
+ * 런타임 이상 반영:
+ *   --anomalies <backup.json> — 앱 백업 파일의 statement_stats에서
+ *   오판율 극단(j≥5·w/j≥0.8) 진술을 추출해 포함 문항을 검수 큐에 추가.
+ *   (앱 내 '이상 의심' 배지와 동일 기준 — 콘텐츠 오류 후보의 검수 반영 경로)
+ *
  * 사용: node tools/audit_combo.js                    (오류 시 exit 1)
  *       node tools/audit_combo.js --strict           (경고도 exit 1)
  *       node tools/audit_combo.js --update-baseline  (회귀 기준선 갱신)
+ *       node tools/audit_combo.js --anomalies backup.json
  */
 const fs = require('fs');
 const path = require('path');
@@ -43,6 +49,10 @@ const ROOT = path.join(__dirname, '..');
 const { getExamTargets } = require('./build/exam-targets.js');
 const STRICT = process.argv.includes('--strict');
 const UPDATE_BASELINE = process.argv.includes('--update-baseline');
+const ANOM_IDX = process.argv.indexOf('--anomalies');
+const ANOM_FILE = ANOM_IDX > -1 ? process.argv[ANOM_IDX + 1] : null;
+// 런타임 이상 임계 — 앱 getAnomalousStatements와 동일 기준
+const ANOM_MIN_J = 5, ANOM_RATIO = 0.8;
 const BASELINE_PATH = path.join(ROOT, 'combo_baseline.json');
 const REVIEW_Q_PATH = path.join(ROOT, 'combo_review_queue.md');
 
@@ -136,6 +146,7 @@ async function auditExam(target, validateQuestion, deriveComboAnswer) {
 
   let total = 0;
   const rows = [];
+  const sidMap = new Map();   // 진술 sid → {q, file} — 런타임 이상 진술의 문항 역매핑용
 
   for (const { key, items, file } of bundles) {
     const sidSets = new Map();       // 진술집합 → 문항 id[]
@@ -155,6 +166,9 @@ async function auditExam(target, validateQuestion, deriveComboAnswer) {
 
       const stmts = q.statements || [];
       const trues = stmts.filter(s => s.truth);
+      for (const s of stmts) {
+        if (s.sid && !sidMap.has(s.sid)) sidMap.set(s.sid, { q, file });
+      }
 
       // ② 옵션 수·참 진술 극단
       if ((q.options || []).length !== 5)
@@ -254,6 +268,29 @@ async function auditExam(target, validateQuestion, deriveComboAnswer) {
   for (const q of pilotItems) {
     const problems = validateQuestion(q);
     if (problems.length) err(`combo_pilot.js ${q.id}: ${problems.join(', ')}`);
+  }
+
+  // 런타임 이상 진술 → 문항 역매핑 → 검수 큐 추가 (--anomalies backup.json)
+  if (ANOM_FILE && fs.existsSync(ANOM_FILE)) {
+    try {
+      const backup = JSON.parse(fs.readFileSync(ANOM_FILE, 'utf8'));
+      const raw = backup.statement_stats ?? backup[`${target.id}:statement_stats`] ?? {};
+      const stats = typeof raw === 'string' ? JSON.parse(raw) : raw;
+      let mapped = 0;
+      for (const [sid, v] of Object.entries(stats)) {
+        if (!v.j || v.j < ANOM_MIN_J || (v.w || 0) / v.j < ANOM_RATIO) continue;
+        const hit = sidMap.get(sid);
+        if (!hit || approvedIds.has(hit.q.id)) continue;
+        if (!reviewQueue.some(r => r.q.id === hit.q.id)) {
+          reviewQueue.push({ exam: target.id, file: hit.file, q: hit.q,
+            reasons: [`런타임이상(오판 ${v.w}/${v.j})`] });
+        }
+        mapped++;
+      }
+      if (mapped) console.log(`  런타임 이상 진술 ${mapped}개 → 포함 문항 검수 큐 추가`);
+    } catch (e) {
+      warn('anomaly', `--anomalies 백업 파싱 실패: ${e.message}`);
+    }
   }
 
   console.log(`\n[check:combo] ${target.id}: 번들 ${bundles.length}개, 자동생성 ${total}문 + 수제 ${pilotItems.length}문`);
