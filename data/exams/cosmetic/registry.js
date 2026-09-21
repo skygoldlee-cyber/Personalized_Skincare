@@ -2,7 +2,7 @@
 var DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2026",
-  "generatedAt": "2026-09-21T16:48:53.568Z",
+  "generatedAt": "2026-09-21T16:50:31.290Z",
   "subjects": [
     {
       "key": "law",
@@ -131,10 +131,16 @@ var DATA_REGISTRY = {
     "bundle": "./data/exams/cosmetic/ingredients_data.c1f2661f.js",
     "global": "INGREDIENTS_DATA",
     "contentHash": "c1f2661f",
-    "version": "2026.09.1",
-    "updatedAt": "2026-09-21",
-    "notice": "식약처 고시 제2026-16호 반영 · 별표1 금지 염모제 12종 대조 완료 · 염산 2,4-디아미노페놀 한도 정정",
-    "history": [],
+    "version": "2026.09.2",
+    "updatedAt": "2026-09-22",
+    "notice": "설명/특성 필드 정규화 — 제한·금지 원료의 설명문이 누락되거나 '-'로 표시되던 매핑 교정 (내용 데이터 자체는 동일)",
+    "history": [
+      {
+        "version": "2026.09.1",
+        "updatedAt": "2026-09-21",
+        "notice": "식약처 고시 제2026-16호 반영 · 별표1 금지 염모제 12종 대조 완료 · 염산 2,4-디아미노페놀 한도 정정"
+      }
+    ],
     "stats": {
       "count": 1376
     }
