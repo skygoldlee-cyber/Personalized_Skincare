@@ -17,6 +17,7 @@ import {
   deleteFormula, duplicateFormula, getFormulaUsage,
   CUSTOMER_OPTIONS,
 } from '../formula-store.js';
+import { recommendFor, baseDefaultCandidates } from '../formula-rules.js';
 
 const PANELS = ['formula-menu-panel', 'formula-list-panel', 'formula-calc-panel'];
 
@@ -313,6 +314,17 @@ function populateCustomerFields() {
       chipBox.appendChild(label);
     });
   }
+
+  // 고객 필드 변경 → 추천 패널 갱신 (1회 바인딩)
+  if (!populateCustomerFields._recBound) {
+    populateCustomerFields._recBound = true;
+    ['formula-cust-gender', 'formula-cust-skintype', 'formula-cust-formulation', 'formula-cust-age', 'formula-cust-name']
+      .forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener(el.tagName === 'SELECT' ? 'change' : 'input', renderRecommend);
+      });
+    if (chipBox) chipBox.addEventListener('change', renderRecommend);
+  }
 }
 
 /** 고객 필드 현재 값 읽기 → store 스키마 */
@@ -357,6 +369,100 @@ function writeCustomerInputs(customer) {
   }
 }
 
+/* =======================================================
+   추천 베이스 · 원료 패널 (규칙 기반 — 이름만 제안, 농도 미제안)
+   ======================================================= */
+
+function renderRecommend() {
+  const panel = document.getElementById('formula-recommend');
+  if (!panel) return;
+  const customer = readCustomerInputs();
+  const hasInput = customer.skinType || customer.formulation
+    || customer.concerns.length || customer.age != null;
+  if (!hasInput) {
+    panel.classList.add('is-hidden');
+    panel.innerHTML = '';
+    return;
+  }
+
+  const rec = recommendFor(customer, getIndex());
+  const hasBase = rec.bases.length > 0;
+  const hasIngs = rec.ingredients.length > 0;
+  const hasCautions = rec.cautions.length > 0;
+
+  if (!hasBase && !hasIngs && !hasCautions) {
+    panel.classList.remove('is-hidden');
+    panel.innerHTML = '<div class="formula-rec-note">선택한 조합의 추천 데이터는 준비 중입니다.</div>';
+    return;
+  }
+
+  let html = '<div class="formula-rec-head">추천 베이스 · 원료 <span class="formula-rec-note">참고용 — 최종 조성은 고시 원문 확인</span></div>';
+
+  if (hasBase) {
+    html += `<div class="formula-rec-section"><div class="formula-rec-label">베이스 구성${customer.formulation ? ` — ${esc(customer.formulation)}` : ''}</div><div class="formula-rec-roles">`;
+    rec.bases.forEach(b => {
+      const star = b.required ? ' <span class="formula-rec-req" title="수상 제형 필수">*</span>' : '';
+      const cands = b.candidates.length
+        ? b.candidates.map(c => `<button type="button" class="formula-rec-chip" data-click="formulaRecAdd" data-arg="${esc(c)}">${esc(c)}</button>`).join('')
+        : '<span class="formula-rec-nocand">직접 입력</span>';
+      html += `<div class="formula-rec-role"><span class="formula-rec-role-name">${esc(b.role)}${star}</span><span class="formula-rec-cands">${cands}</span></div>`;
+    });
+    html += `</div><button type="button" class="btn btn-secondary btn-sm" data-click="formulaLoadBase"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> 베이스 불러오기 (필수 역할)</button></div>`;
+  }
+
+  if (hasIngs) {
+    html += `<div class="formula-rec-section"><div class="formula-rec-label">추천 원료</div><div class="formula-rec-cands">`;
+    rec.ingredients.forEach(i => {
+      const limitTag = i.limit ? ` <span class="formula-rec-limit">≤${esc(i.limit)}</span>` : '';
+      const cautionTag = i.irritant ? ' <span class="formula-rec-irritant" title="연령대 자극 주의">⚠</span>' : '';
+      const reason = i.reasons.join('·');
+      html += `<button type="button" class="formula-rec-chip" data-click="formulaRecAdd" data-arg="${esc(i.name)}" title="${esc(reason)}">${esc(i.name)}${limitTag}${cautionTag}<span class="formula-rec-reason">${esc(reason)}</span></button>`;
+    });
+    html += '</div></div>';
+  }
+
+  if (hasCautions) {
+    html += `<div class="formula-rec-cautions">${rec.cautions.map(c => `<div><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> ${esc(c)}</div>`).join('')}</div>`;
+  }
+
+  panel.innerHTML = html;
+  panel.classList.remove('is-hidden');
+}
+
+/** 추천 칩 클릭 → 현재 계산기에 행 추가 (뷰 전환 없음) */
+export function formulaRecAdd(name) {
+  if (typeof name !== 'string' || !name.trim()) return;
+  const trimmed = name.trim();
+  if (calc.rows.some(r => r.name === trimmed)) {
+    showToast(`"${trimmed}"은(는) 이미 추가되어 있습니다.`, 'info');
+    return;
+  }
+  const last = calc.rows[calc.rows.length - 1];
+  if (last && !last.name) last.name = trimmed;
+  else calc.rows.push({ name: trimmed, concentration: null });
+  renderCalcRows();
+}
+
+/** 베이스 불러오기 — required 역할의 첫 후보를 행으로 채움 */
+export function formulaLoadBase() {
+  const { formulation } = readCustomerInputs();
+  const names = baseDefaultCandidates(formulation);
+  if (!names.length) {
+    showToast('이 제형의 자동 베이스가 없습니다.', 'info');
+    return;
+  }
+  let added = 0;
+  names.forEach(name => {
+    if (calc.rows.some(r => r.name === name)) return;
+    const empty = calc.rows.find(r => !r.name);
+    if (empty) empty.name = name;
+    else calc.rows.push({ name, concentration: null });
+    added++;
+  });
+  renderCalcRows();
+  showToast(added ? `베이스 원료 ${added}종을 추가했습니다 — 배합률을 입력하세요.` : '이미 모두 추가되어 있습니다.', 'success');
+}
+
 function populateDatalist() {
   const dl = document.getElementById('formula-ing-datalist');
   if (!dl || dl.childElementCount) return;
@@ -396,6 +502,7 @@ export function openFormulaCalc(sourceFormula) {
     if (notesEl) notesEl.value = '';
   }
   writeCustomerInputs(sourceFormula ? sourceFormula.customer : null);
+  renderRecommend();
 
   // 총량/단위 변경 시 재계산
   if (volEl && !volEl.dataset.bound) {
