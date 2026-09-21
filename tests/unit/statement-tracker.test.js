@@ -131,3 +131,19 @@ test('recordStatementJudgments: 정답 선택은 오판 누적 없이 SM-2만 �
     assert.equal(Object.keys(sch).length, 3);
     assert.equal(sch['st-t-1'].repetition, 1);
 });
+
+test('getAnomalousStatements: 오판율 극단 진술만 플래그 (j≥5·w/j≥0.8)', async () => {
+    const { getAnomalousStatements } = await import('../../src/statement-tracker.js');
+    const judge = (sid, n, wrongs) => {
+        for (let i = 0; i < n; i++)
+            recordStatementJudgments([{ sid, judgedCorrect: i >= wrongs }]);
+    };
+    judge('st-bad', 6, 6);   // 6/6 오판 → 이상 의심
+    judge('st-ok', 6, 1);    // 1/6 오판 → 정상
+    judge('st-few', 3, 3);   // 3/3 오판이지만 표본 부족 → 제외
+    const anomalous = getAnomalousStatements();
+    assert.deepEqual(anomalous.map(a => a.sid), ['st-bad']);
+    assert.equal(anomalous[0].ratio, 1);
+    // 임계 조정 확인
+    assert.deepEqual(getAnomalousStatements(3).map(a => a.sid).sort(), ['st-bad', 'st-few']);
+});

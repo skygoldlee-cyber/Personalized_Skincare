@@ -12,7 +12,7 @@ import { shuffle } from '../utils.js';
 import { vibrate, showToast, HAPTIC } from '../ui-utils.js';
 import { DataLoader } from '../data-loader.js';
 import { gradeAnswer } from '../questions.js';
-import { recordStatementJudgments, getWeakStatements, getDueStatementSids, getAllStatementStats, WEAK_GRADUATE_STREAK } from '../statement-tracker.js';
+import { recordStatementJudgments, getWeakStatements, getDueStatementSids, getAllStatementStats, getAnomalousStatements, WEAK_GRADUATE_STREAK } from '../statement-tracker.js';
 import { recordStudyActivity } from '../study-tracker.js';
 
 const DRILL_COUNT = 10;
@@ -687,16 +687,19 @@ export function setWeakFilter(filter) {
 }
 
 /** 취약 진술 행 렌더 — O/X 배지·과목·복습 대상·오판 통계·최근 판정 */
-function weakRow(w, due) {
+function weakRow(w, due, anomalies) {
     const sub = sidSubject(w.sid);
     const dueBadge = due.has(w.sid) ? '<span class="weak-due-badge">복습 대상</span>' : '';
+    // 이상 의심: 판정 누적 후에도 오판율 극단 — 진술 표현/진위 자체 검수 후보
+    const anomalyBadge = anomalies && anomalies.has(w.sid)
+        ? '<span class="weak-anomaly" title="오판율이 극단적으로 높아 문항 자체 검수가 필요할 수 있습니다">이상 의심</span>' : '';
     const lastBadge = w.last === true ? '<span class="weak-last is-ok">최근 정답</span>'
         : w.last === false ? '<span class="weak-last is-bad">최근 오판</span>' : '';
     return `<div class="weak-row">
         <div class="weak-row-head">
             <span class="weak-truth ${w.truth ? 'is-o' : 'is-x'}">${w.truth === true ? 'O' : w.truth === false ? 'X' : '?'}</span>
             ${sub ? `<span class="weak-subject">과목${sub}</span>` : ''}
-            ${dueBadge}${lastBadge}
+            ${dueBadge}${lastBadge}${anomalyBadge}
             <span class="weak-stat">오판 ${w.w}회 / 판정 ${w.j}회${w.lw ? ` · 최근 ${w.lw}` : ''}</span>
             <button class="btn btn-secondary weak-retry-btn" data-click="startOxDrill" data-arg="sid:${esc(w.sid)}" aria-label="이 진술 O/X로 재시도"><i class="fa-solid fa-rotate"></i> 재시도</button>
         </div>
@@ -712,6 +715,8 @@ function renderWeakReview() {
     const weak = getWeakStatements(); // 졸업(연속 정답) 제외, w 내림차순
     const graduated = getWeakStatements(undefined, true).length - weak.length;
     const due = new Set(getDueStatementSids());
+    const anomalyList = getAnomalousStatements();
+    const anomalies = new Set(anomalyList.map(a => a.sid));
     const dueCount = weak.filter(w => due.has(w.sid)).length;
     const shown = weakFilter === 'due' ? weak.filter(w => due.has(w.sid)) : weak;
 
@@ -740,7 +745,7 @@ function renderWeakReview() {
     if (summaryEl) {
         summaryEl.innerHTML = weak.length === 0
             ? (graduated > 0 ? '모든 취약 진술을 졸업했습니다.' : '아직 오판 이력이 없습니다. O/X·복수정답형 드릴을 풀면 진술 단위로 추적됩니다.')
-            : `취약 진술 ${weak.length}개 · 오늘 복습 대상 ${dueCount}개${graduated ? ` · 졸업 ${graduated}개` : ''}
+            : `취약 진술 ${weak.length}개 · 오늘 복습 대상 ${dueCount}개${graduated ? ` · 졸업 ${graduated}개` : ''}${anomalyList.length ? ` · <span class="weak-anomaly">이상 의심 ${anomalyList.length}개</span>` : ''}
                <span class="weak-toolbar">
                    <button class="btn btn-primary weak-drill-btn" data-click="startOxDrill" data-arg="weak"><i class="fa-solid fa-crosshairs"></i> 취약·복습 드릴</button>
                    <button class="btn btn-secondary weak-filter-btn${weakFilter === 'all' ? ' active' : ''}" data-click="setWeakFilter" data-arg="all">전체</button>
@@ -774,10 +779,10 @@ function renderWeakReview() {
         const xItems = g.items.filter(i => i.truth !== true);
         const rows = (oItems.length > 0 && xItems.length > 0)
             ? `<div class="weak-pair">
-                <div class="weak-col is-o"><div class="weak-col-head">참 진술</div>${oItems.map(w => weakRow(w, due)).join('')}</div>
-                <div class="weak-col is-x"><div class="weak-col-head">거짓(함정) 진술</div>${xItems.map(w => weakRow(w, due)).join('')}</div>
+                <div class="weak-col is-o"><div class="weak-col-head">참 진술</div>${oItems.map(w => weakRow(w, due, anomalies)).join('')}</div>
+                <div class="weak-col is-x"><div class="weak-col-head">거짓(함정) 진술</div>${xItems.map(w => weakRow(w, due, anomalies)).join('')}</div>
                </div>`
-            : g.items.map(w => weakRow(w, due)).join('');
+            : g.items.map(w => weakRow(w, due, anomalies)).join('');
         return `<div class="weak-group">${header}${rows}</div>`;
     }).join('');
 }

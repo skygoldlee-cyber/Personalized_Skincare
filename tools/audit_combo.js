@@ -84,6 +84,21 @@ function loadPilotFile(filePath) {
   return (sandbox.window.COMBO_PILOT && sandbox.window.COMBO_PILOT.questions) || [];
 }
 
+/** 모순 탐지 보조 — 수치 슬롯(숫자만 다른 동일 문장)·극성 반쌍 */
+const stripNum = s => normKey(s).replace(/\d+/g, '#');
+const numVals = s => (String(s).match(/\d+/g) || []).join(',');
+// 참조 번호(제N호/항/조) 차이는 목록 멤버 구분이라 모순이 아님
+const isArticleRef = s => /제\s*\d+\s*(조|항|호|목|의\d+)/.test(s);
+const NEG_PAIRS = [
+  ['있다', '없다'], ['가능하다', '불가능하다'], ['해야한다', '하지않아도된다'],
+  ['포함한다', '포함하지않는다'], ['필요하다', '불필요하다'],
+  ['허용된다', '금지된다'], ['해당한다', '해당하지않는다'],
+];
+const antonymEqual = (a, b) => {
+  const x = normKey(a), y = normKey(b);
+  return NEG_PAIRS.some(([p, n]) => x.replaceAll(n, p) === y || y.replaceAll(n, p) === x);
+};
+
 /** derivedFrom → 생성 경로 분류 */
 function pathOf(q) {
   const d = String(q.derivedFrom || '');
@@ -157,11 +172,27 @@ async function auditExam(target, validateQuestion, deriveComboAnswer) {
           if (normKey(a.text) === normKey(b.text) && a.truth !== b.truth) {
             warn('contradict', `${file} ${q.id}: 동일 텍스트·상반 truth — "${a.text.slice(0, 40)}…" (${a.id}=${a.truth}, ${b.id}=${b.truth}) 모순 의심`);
             qFlags.add('contradict');
+          } else if (a.truth === b.truth) {
+            // 극성 반쌍(있다/없다·가능/불가능 등)을 같은 진위로 표기 — 모순 의심.
+            // (nearDup에 먼저 걸리는 불가능하다⊃가능하다 포함 — 같은 진위면 먼저 검사)
+            if (antonymEqual(a.text, b.text)) {
+              warn('negConflict', `${file} ${q.id}: 극성 반쌍 동일 truth(${a.truth}) — "${a.text.slice(0, 30)}…" vs "${b.text.slice(0, 30)}…" 모순 의심`);
+              qFlags.add('negConflict');
+            } else if (nearDup(a.text, b.text)) {
+              // 수치 구분 혼동쌍(7일/30일)·법령 열거 멤버(상호/소재지 변경)는 접두사
+              // 공유가 정상 — 경고가 아니라 참고 카운트로만 집계한다.
+              infoCats.nearDupSameTruth = (infoCats.nearDupSameTruth || 0) + 1;
+
+              // 같은 술어에 다른 수치를 '둘 다 참'으로 표기하면 실제 모순
+              // (둘 다 거짓은 복수 오답값이라 정상). 제N호 참조 차이는 제외.
+              if (a.truth && stripNum(a.text) === stripNum(b.text) &&
+                  numVals(a.text) !== numVals(b.text) &&
+                  !(isArticleRef(a.text) && isArticleRef(b.text))) {
+                warn('numConflict', `${file} ${q.id}: 수치 모순 의심 — "${a.text.slice(0, 30)}…" vs "${b.text.slice(0, 30)}…" 둘 다 참`);
+                qFlags.add('numConflict');
+              }
+            }
           }
-          else if (nearDup(a.text, b.text) && a.truth === b.truth)
-            // 수치 구분 혼동쌍(7일/30일)·법령 열거 멤버(상호/소재지 변경)는 접두사
-            // 공유가 정상 — 경고가 아니라 참고 카운트로만 집계한다.
-            infoCats.nearDupSameTruth = (infoCats.nearDupSameTruth || 0) + 1;
         }
         const t = String(stmts[i].text || '').trim();
         // 절단 의심: 명사 어미와 충돌하지 않는 조사·연결어미 종결만 — 이/가/의/로/도/만/와/과는

@@ -240,6 +240,12 @@ ref_md는 `ref_md/과목N/{문서}/{문서}.md` 과목 폴더 구조이며, `ext
    - **검수 큐**: cluster·ref:note 경로 + 경고 문항을 `combo_review_queue.md`로 출력.
      불량 문항은 id를 `<contentRoot>/combo_blocklist.json`의 `ids`(또는 `derivedFromPrefixes`)에
      등록하면 다음 빌드에서 제외됨
+   - **모순 휴리스틱**: 같은 술어·다른 수치를 둘 다 참으로 표기(numConflict),
+     극성 반쌍(있다/없다·가능/불가 등) 동일 truth(negConflict) — 모순 의심 경고
+   - **런타임 이상 탐지**: 판정 5회+ 누적 후 오판율 ≥80%인 진술은 `getAnomalousStatements()`가
+     '이상 의심'으로 표시 — 취약 진술 목록에서 배지로 노출 (진술 표현·진위 검수 후보)
+   - **골든 테스트**: `tests/unit/combo-transform.test.js`가 변환 규칙(극성 역전·'모두' 복구·
+     스킵 조건·발문 변환)을 고정 — 변환 로직 변경 시 회귀 감지
 3. 같은 문항 정오답 텍스트 중복 — 정규화 키 비교로 0이어야 함
 4. 큐레이션 교차 오류 — 별표1 문항 오답이 `banned_ingredients.md` 멤버이면 오류
 5. 잔재 스캔 — `?`·`법제처`·단자 접두·조사 종료 진술

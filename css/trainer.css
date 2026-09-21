@@ -1228,6 +1228,15 @@ mark.txt-highlight {
     background: var(--danger-tint-15, rgba(220, 60, 60, 0.15));
     color: var(--color-danger);
 }
+/* 이상 의심 — 반복 오판으로 진술 표현/진위 검수가 필요한 후보 */
+.weak-anomaly {
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-danger);
+    border: 1px dashed var(--color-danger);
+    border-radius: var(--radius-full);
+    padding: 0.1rem 0.5rem;
+}
 
 /* 혼동쌍 대조 — 참/거짓 진술 2단 배치 (전략 ⑤) */
 .weak-pair {

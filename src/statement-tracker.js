@@ -73,6 +73,21 @@ export function getWeakStatements(limit, includeGraduated = false) {
 }
 
 /**
+ * 이상 의심 진술 — 판정이 충분히 누적(j ≥ minJ)됐는데 오판율이 극단(w/j ≥ ratio)인 진술.
+ * 반복 오판은 단순 취약이 아니라 진술 표현·진위 자체의 문제(오탈자·모호·오답)
+ * 가능성이 있으므로 검수 후보로 별도 표시한다 (콘텐츠 품질 피드백 루프).
+ * @param {number} [minJ] 최소 판정 횟수 (기본 5 — 표본 부족 노이즈 차단)
+ * @param {number} [wrongRatio] 오판율 임계 (기본 0.8)
+ */
+export function getAnomalousStatements(minJ = 5, wrongRatio = 0.8) {
+    const stats = loadStats();
+    return Object.entries(stats)
+        .filter(([, v]) => (v.j || 0) >= minJ && v.j > 0 && (v.w || 0) / v.j >= wrongRatio)
+        .map(([sid, v]) => ({ sid, ...v, ratio: v.w / v.j }))
+        .sort((a, b) => (b.ratio - a.ratio) || (b.j - a.j));
+}
+
+/**
  * 전체 진술 통계 원본 — 과목별 마스터 진행도 집계용
  * @returns {Object} { sid: { j, w, lw, t, truth, cid, last, streak } }
  */
