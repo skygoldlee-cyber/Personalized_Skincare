@@ -17,7 +17,7 @@
 
 ```powershell
 # 테스트
-npm.cmd test                          # 유닛 테스트 (node --test, 294개)
+npm.cmd test                          # 유닛 테스트 (node --test, 372개)
 npm.cmd run test:dom                  # DOM 테스트 (Vitest + jsdom)
 npm.cmd run test:all                   # 전체 테스트 (unit + parser + dom)
 
@@ -92,6 +92,9 @@ src/                    # ES Modules
   storage-keys.js       # localStorage 키 중앙 관리
   paths.js              # 파일 경로 상수 중앙 관리 (시험 루트 인지형)
   exam-context.js       # 활성 시험 해석/전환, scopedKey 네임스페이스, hasFeature
+  formula-store.js      # Formula OS — 포뮬러 CRUD·저장 한도(5개), 고객·원료 스키마 정제
+  formula-rules.js      # Formula OS — 추천 규칙 (베이스·고민/피부 매핑, 안전 필터, 맞춤 규칙)
+  formula-check.js      # Formula OS — 고시 한도 규정 검증 엔진 (원료 인덱스, 4상태 판정)
   pwa-install.js        # PWA 설치 프롬프트 설정
   theme-init.js         # 테마 초기화 (즉시 실행)
   theme-toggle.js       # 테마 토글 UI
@@ -113,6 +116,7 @@ src/                    # ES Modules
     exam-sim-state.js   # 시뮬레이터 상태
     exam-sim-review.js  # 시뮬레이터 결과 리뷰
     dictionary.js       # 용어집
+    formula.js          # Formula OS 뷰 — 배합 계산기, 추천, My 포뮬러, 인쇄·JSON 공유
     study-calendar.js    # 학습 캘린더/목표 뷰
     glossary-renderer.js # 용어집 렌더링
     backup.js           # 백업/복원
@@ -120,7 +124,7 @@ src/                    # ES Modules
     manual-viewer.js    # 학습안내서 뷰어
     exam-viewer.js      # 문제집 뷰어
     exam-select.js      # 시험 선택/전환 뷰
-css/                    # 스타일시트 모듈 (base.css, reader.css, reader-mermaid.css, trainer.css, exam.css, dashboard.css, study.css, study-calendar.css, print.css, ui-overlay.css, html-viewer.css)
+css/                    # 스타일시트 모듈 (base.css, reader.css, reader-mermaid.css, trainer.css, exam.css, dashboard.css, study.css, study-calendar.css, formula.css, print.css, ui-overlay.css, html-viewer.css)
 content/                # 시험 콘텐츠 컨테이너 (시험 소유 파일 없음 — 순수 네임스페이스)
   exams.json            # 시험 레지스트리 (멀티시험 엔트리 — 멀티시험 구조 섹션 참조)
   exams/cosmetic/       # 기본 시험 콘텐츠 루트 (contentRoot)
@@ -129,6 +133,7 @@ content/                # 시험 콘텐츠 컨테이너 (시험 소유 파일 �
     교재/                # 4과목 MD 파일 (표준형 8 + 이야기형 8 = 16파일, 총 20챕터)
     문제은행/            # 과목별 문제은행 MD
     참조자료/            # 법령고시/별표/참조자료 — PDF는 공통·과목1~4 폴더, MD 변환본은 ref_md/과목N/{문서}/{문서}.md (과목 폴더가 귀속의 진실)
+      원료/              # 원료 DB — approved/restricted/banned/colorants_ingredients.md + db_version.json (버전·이력)
     audiobook/          # 오디오북 MP3 + 매니페스트
     number-drills/      # 숫자 암기 드릴 JSON
   exams/<id>/           # 추가 시험도 동일한 내부 구조 (대칭)
@@ -213,7 +218,7 @@ docs/                   # 개발 문서
 ## 검증 체크리스트 (변경 후 필수)
 
 1. `node --check` — 수정한 JS 파일 문법 검증
-2. `npm.cmd test` — 유닛 테스트 294개 통과 확인
+2. `npm.cmd test` — 유닛 테스트 372개 통과 확인
 3. `npm.cmd run check:parser` — 콘텐츠 변경 시 파서 등가성 검증
 4. `npm.cmd run check:imports` — src/ 내 ES 모듈 import/export 교차 검증
 5. `npm.cmd run verify:assets` — SHELL_ASSETS 파일 존재 확인

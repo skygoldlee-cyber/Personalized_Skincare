@@ -22,9 +22,9 @@
 
 | 구분 | 프레임워크 | 환경 | 파일 위치 | 테스트 수 |
 |------|-----------|------|-----------|-----------|
-| **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 248 |
-| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 11 |
-| **합계** | | | | **259** |
+| **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 372 |
+| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 21 |
+| **합계** | | | | **393** |
 
 ### 설계 원칙
 
@@ -39,12 +39,12 @@
 ## 2. 실행 명령어
 
 ```bash
-# Unit 테스트만 실행 (248개)
+# Unit 테스트만 실행 (372개)
 npm test
 # 또는
 npm run test:unit
 
-# DOM 테스트만 실행 (11개)
+# DOM 테스트만 실행 (21개)
 npm run test:dom
 
 # 전체 실행 (Unit + 파서 정합성 + DOM)
@@ -85,12 +85,21 @@ npm run test:watch
 | 11 | `mermaid-reader-format.test.js` | 4 | `formatSectionContentForReader()` 처리 후 Mermaid 블록 보존 | `<br/>` 엔티티, 페이지 참조/용어집 링크 간섭 |
 | 12 | `mermaid-pipeline.test.js` | 4 | 전체 파이프라인: MD → HTML → Mermaid 블록 | HTML 태그 미혼입, 볼드/이탤릭/링크 비적용 |
 | 13 | `mermaid-rendering.test.js` | 23 | 다이어그램 타입 감지, mindmap 들여쓰기, CSS 클래스 분리, 실제 교재 파일 검증 | 2026-09-02 추가 |
-| 14 | `study-aids.test.js` | 27 | `extractExamHighlights()`, `extractNumberDrills()`, `detectProcedureFlow()`, `detectAdminPenalty()`, `isKeySection()` | 합성 데이터, 교재 무관 |
+| 14 | `study-aids.test.js` | 25 | `extractExamHighlights()`, `extractNumberDrills()`, `detectProcedureFlow()`, `detectAdminPenalty()`, `isKeySection()` | 합성 데이터, 교재 무관 |
 | 15 | `pdf-registry.test.js` | 21 | `resolveRefPath()`, `mapSourceToRef()`, `resolveKeywordRef()`, 데이터 구조 검증 | 합성 데이터, 교재 무관 |
 | 16 | `glossary-query.test.js` | 13 | `getGlossaryByRefFile()`, `getGlossaryByRefFiles()`, `getGlossaryEntry()`, `getAllGlossaryKeywords()` | 합성 데이터, 교재 무관 |
 | 17 | `markdown-parser-general.test.js` | 35 | 헤더, 표, 리스트, 인라인 서식, 코드블록, 인용문, 특수 토큰, 빈 입력 | 합성 데이터, 교재 무관 |
 | 18 | `reader-format-general.test.js` | 19 | 페이지 참조 제거, 기출문제/참조자료/출처 링크 변환, 용어집 자동 링크, Mermaid 보호 | 합성 데이터, 교재 무관 |
-| | **합계** | **248** | | |
+| 19 | `combo-transform.test.js` | 7 | 복수정답형(ⓐⓑⓒ) 문항 변환 — 진술 추출, 정답 조합, 변형 ID | 빌드 타임, `tools/build/combo-transform.js` |
+| 20 | `statement-tracker.test.js` | 9 | 복수정답형 진술별 정답 추적·통계 | `tools/build/statement-tracker.js` |
+| 21 | `questions.test.js` | 17 | `src/questions.js` — 문제 필터·출제 로직 | 합성 데이터 |
+| 22 | `data-loader.test.js` | 7 | `src/data-loader.js` — 데이터 번들 로딩, 캐시 동작 | `window` 글로벌 모킹 |
+| 23 | `exam-context.test.js` | 12 | `src/exam-context.js` — 시험 해석, `scopedKey` 네임스페이스, 기능 플래그 | 합성 데이터 |
+| 24 | `storage-key-sync.test.js` | 2 | `src/storage-keys.js` 선언 키 ↔ 실제 사용 키 동기화 | 키 누락 회귀 가드 |
+| 25 | `formula-store.test.js` | 27 | `src/formula-store.js` — 포뮬러 CRUD·저장 한도(5), 고객·원료 스키마 정제 | Formula OS, localStorage 모킹 |
+| 26 | `formula-rules.test.js` | 23 | `src/formula-rules.js` — 추천 규칙, 안전 필터(금지·알레르기·임신수유), 맞춤 규칙 병합·직렬화 | Formula OS, 합성 데이터 |
+| 27 | `formula-check.test.js` | 20 | `src/formula-check.js` — 원료 인덱스, 배합 검증(한도이내/초과/금지/확인필요), 고시 출처 | Formula OS, 합성 데이터 |
+| | **합계** | **372** | | |
 
 ### DOM 테스트 (`tests/dom/`)
 
@@ -98,7 +107,7 @@ npm run test:watch
 |---|------|-----------|-----------|------|
 | 1 | `backup.dom.test.js` | 10 | `getBackupKeys()`, `exportData()`, `triggerImport()`, `importData()` | localStorage + DOM 조작 |
 | 2 | `router.dom.test.js` | 11 | `getViewTitles()`, `navigateToView()` | 뷰 타이틀 맵, active 클래스 동기화, 렌더러 호출, 오디오 정지, 포커스 모드 | 2026-09-03 추가 |
-| | **합계** | **11** | | |
+| | **합계** | **21** | | |
 
 ---
 
@@ -188,7 +197,7 @@ npm run test:watch
 
 ### 4.5 학습 보조 (Study Aids) — 교재 무관, 합성 데이터
 
-#### `study-aids.test.js` (27개)
+#### `study-aids.test.js` (25개)
 - `extractExamHighlights()`: 🔖기출/📌중요 마커 라인 추출, 마커/볼드 제거, 표 행 제외, 120자 자름
 - `extractNumberDrills()`: 숫자+단위 정규식 매칭, 중복 제거(`Set`), 빈칸(`▓▓`) 치환, `isKey` 플래그
 - `detectProcedureFlow()`: 절차 키워드 감지, 번호/원문자 리스트 추출, 기한 추출, 단계 2개 미만 → null
@@ -257,6 +266,55 @@ npm run test:watch
   - `textbook-reader-view`로 이동 시 `stopReaderAudio` 미호출
   - 포커스 모드 해제 (`body.focus-mode` 클래스 제거)
   - `data-view` 속성 기반 네비게이션
+
+### 4.11 Formula OS — 배합 계산기
+
+#### `formula-store.test.js` (27개)
+- `src/formula-store.js`: 포뮬러 저장/조회/복제/삭제 CRUD
+- 저장 한도 `FORMULA_LIMIT`(5개) 초과 시 오래된 항목 삭제
+- 고객 정보 정제 — 이름 길이, 피부 유형/제형 화이트리스트(`CUSTOMER_OPTIONS`), 알레르기·임신수유·사용 중 제품 필드
+- 원료 행 정제 — 이름/배합률/제조 단계(`PHASES`), 빈 행 제거, 단계별 정렬 순서
+- 규정 검증 스냅샷(`checkResult`) 보존, 저장 시각 필드
+- localStorage 모킹 (`getItem`/`setItem`/`removeItem`)
+
+#### `formula-rules.test.js` (23개)
+- `src/formula-rules.js`: 제형별 베이스 템플릿(세럼·크림 등) 추천 역할 규칙
+- 고민·피부 유형별 원료 제안 매핑
+- 안전 필터 — `banned` 상태 원료 제외, 고객 알레르기 원료 제외, 임신수유 `⚠` 플래그
+- 맞춤 규칙 추가/삭제/초기화, 기본 규칙과 병합 시키기
+- 맞춤 규칙 JSON 직렬화/역직렬화 (export/import 형식)
+- 합성 데이터 (가짜 원료 레지스트리 주입), 실제 DB 무관
+
+#### `formula-check.test.js` (20개)
+- `src/formula-check.js`: 원료 이름 인덱스 구축 (표기 변형·별표 병기)
+- 배합 검증 4상태 — 한도이내(`within`) / 한도초과(`over`) / 금지(`banned`) / 확인필요(`unknown`)
+- 고시 한도(`maxPercent`)와 실제 배합률 비교, 경계값(같음 = 이내)
+- 고시 출처(`고시/별표 번호`) 문자열 추적
+- 합계 100% 판정 보조 계산
+
+### 4.12 복수정답형 파이프라인
+
+#### `combo-transform.test.js` (7개)
+- `tools/build/combo-transform.js`: 단일정답 문항 → 복수정답형(ⓐⓑⓒ 선택) 변환
+- 진술 추출, 정답 조합 매칭, 변형 문항 ID 생성
+
+#### `statement-tracker.test.js` (9개)
+- `tools/build/statement-tracker.js`: 진술별 정답률 추적·통계 집계
+
+### 4.13 기타 신규 분류
+
+#### `questions.test.js` (17개)
+- `src/questions.js`: 과목/유형 필터, 출제 순서·개수 로직
+
+#### `data-loader.test.js` (7개)
+- `src/data-loader.js`: 번들 fetch·캐시, `window` 글로벌 주입 검증
+
+#### `exam-context.test.js` (12개)
+- `src/exam-context.js`: 시험 해석, `scopedKey()` 네임스페이스, `hasFeature()` 기능 게이팅
+
+#### `storage-key-sync.test.js` (2개)
+- `src/storage-keys.js`에 선언된 키 ↔ `src/`에서 실제 사용하는 `localStorage` 키 일치
+- 미등록 키 회귀 가드
 
 ---
 

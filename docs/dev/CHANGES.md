@@ -4,6 +4,18 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-21 상위 문서 Formula OS 반영 점검·동기화
+
+Formula OS 기능 추가(고객 안전 필드·추천 규칙·제조 단계·인쇄·JSON 공유·원료 DB 이력·계산기 UI 재구성)가 상위 문서에 반영되었는지 전수 점검 후 갱신.
+
+- `SPEC.md` — §3.18 Formula OS 요구사항 표 신설(FO-01~11) + 뷰·도메인 모듈 표 추가, 단위 테스트 수 248→372 정정
+- `CONTENT_WORKFLOW.md` — 원료 경로 `content/exams/cosmetic/ingredients/` → `참조자료/원료/` 정정, §3.6 "원료 데이터 변경 + DB 버전 절차" 신설 (`db_version.json` history 누적 규칙, `colorants_ingredients.md`는 색소 참조 문서로 파싱 대상 아님 명시)
+- `TESTING.md` — 단위 248→372·DOM 11→21 정정, 누락 9개 테스트 파일(formula-store/rules/check, combo-transform, statement-tracker, questions, data-loader, exam-context, storage-key-sync) 추가 + §4.11~4.13 상세 분류 신설
+- `ARCHITECTURE.md` — 뷰 계층에 formula 모듈군 추가, 데이터 테이블에 registry `ingredients` 메타(version·history·contentHash)와 Formula OS 모듈 행 추가, 빌드 파이프라인 원료 경로 정정
+- `README.md` — 기능 표에 Formula OS 행 추가, 성분 사전에 DB 버전/이력 조회 명시
+- `FORMULA_OS_DESIGN.md`·`PASS_TO_PRACTICE_STRATEGY.md`·`FEATURE_PROPOSALS.md` — Phase 5-A 구현 완료 상태 주석 추가 (제안 문서가 미구현으로 오인되지 않도록)
+- `AGENTS.md` — 디렉토리 트리에 `참조자료/원료/` 항목 추가
+
 ## 2026-09-21 배합 계산기 UI/UX 재구성 (sticky 요약·액션바, 카드형 행, 접이식 섹션)
 
 계산기의 단일 세로 폼 구조를 "상단 요약 / 중앙 작업 / 하단 액션" 3층으로 재편.

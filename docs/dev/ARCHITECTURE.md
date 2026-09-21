@@ -97,6 +97,7 @@
 │ │  │  backup · textbook-search · textbook-reader        │  │ │
 │ │  │  reader-audio · exam-simulator · exam-sim-state   │  │ │
 │ │  │  exam-sim-review · glossary-renderer · navigation  │  │ │
+│ │  │  formula (Formula OS 뷰) · formula-store/rules/check│  │ │
 │ │  └──────────────────────────────────────────────────┘  │ │
 │ │  ┌──────────────────────────────────────────────────┐  │ │
 │ │  │  app/ (app.js에서 추출된 모듈)                      │  │ │
@@ -459,6 +460,9 @@ Personalized_Skincare/
 | [`data/exams/cosmetic/study_md/`](../../data/exams/cosmetic/study_md/) | 교재 MD `file://` 폴백 번들 (**과목별 분할**: manifest.js + 과목별 `.js`). http에선 미사용. 과목 로드 시 해당 파일만 온디맨드 로드 | `tools/build_study_md_bundle.js` |
 | [`data/exams/<key>.<hash>.js`](../../data/exams/) | 시험별 문항 번들 | `tools/build/index.js` (exams plugin) |
 | [`data/exams/cosmetic/ingredients_data.<hash>.js`](../../data/) | 화장품 성분 사전 (가용/금지/제한) | `tools/build/index.js` (ingredients plugin) |
+| `registry.js` → `ingredients` 메타 | 원료 DB `version`·`updatedAt`·`notice`·`history`(개정 이력 누적)·`contentHash`(내용 지문) — `content/…/원료/db_version.json`에서 병합. 사전 버전 배지·갱신 알림·Formula OS 검증 기준이 여기서 나옴 | `tools/build/index.js` |
+| `src/formula-store.js` · `src/formula-rules.js` · `src/formula-check.js` | Formula OS 도메인 레이어 — 포뮬러 CRUD/한도(5개)·고객 스키마, 추천 규칙(BASE_TEMPLATES·고민/피부 매핑·맞춤 규칙 병합), 고시 한도 검증 엔진 | 수동 관리 |
+| `src/views/formula.js` | Formula OS 뷰 — 배합 계산기(sticky 요약·액션바, 카드형 원료 행, 접이식 고객/제조 정보), My 포뮬러, 추천 패널, 인쇄·JSON 공유 | 수동 관리 |
 | [`data/exams/cosmetic/id_migration.js`](../../data/exams/cosmetic/id_migration.js) | 레거시 ID → 안정 ID 일회성 매핑 | `tools/build/index.js` (id-factory) |
 | [`data/audio_manifest.js`](../../data/audio_manifest.js) | 오디오 파일 경로 매니페스트 | 오디오북 파이프라인 |
 
@@ -1093,7 +1097,8 @@ app-fallback.js 폴링 시작 (400ms 간격, 15s 데드라인)
 [원본 콘텐츠]                [변환]                              [산출/소비]
 content/exams/cosmetic/manifest.json ──► tools/build/index.js        ──► data/exams/cosmetic/registry.js (과목목록·시험·성분 메타)
 content/exams/**/*.md       ──► (exams plugin)             ──► data/exams/<key>.<hash>.js
-content/exams/cosmetic/ingredients/*.md ──► (ingredients plugin)       ──► data/exams/cosmetic/ingredients_data.<hash>.js
+content/exams/cosmetic/참조자료/원료/*.md ──► (ingredients plugin)       ──► data/exams/cosmetic/ingredients_data.<hash>.js
+content/exams/cosmetic/참조자료/원료/db_version.json ──► (ingredients plugin) ──► registry.js의 ingredients 메타 (version·history·contentHash)
 
 content/**/*.md ───(런타임 fetch)──► src/data-loader.js + src/textbook-parser.js ──► STUDY_DATA (카드/퀴즈/챕터)
 content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.js ──► data/exams/cosmetic/study_md/ (과목별 분할)

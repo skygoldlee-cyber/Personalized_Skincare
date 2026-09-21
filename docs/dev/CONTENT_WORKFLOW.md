@@ -101,7 +101,7 @@ flowchart LR
 | **통합 모의고사 문제 수 변경** | `content/exams/cosmetic/manifest.json` | `integratedExam.questionsPerSubject` 수정 |
 | **UI 텍스트 변경** | `content/exams/cosmetic/manifest.json` | `uiText` 객체 수정 |
 | **추천 링크 변경** | `content/exams/cosmetic/manifest.json` | `resources` 객체 수정 |
-| **원료 데이터 변경** | `content/exams/cosmetic/ingredients/` | 원료 MD/JSON 수정 |
+| **원료 데이터 변경** | `content/exams/cosmetic/참조자료/원료/` | 원료 MD 수정 (`approved`/`restricted`/`banned`/`colorants`) + `db_version.json` 버전 범프 (아래 §원료 DB 버전 절차) |
 
 ---
 
@@ -127,7 +127,7 @@ flowchart TD
     D --> D1["manifest.json<br/>→ dataRoot/registry.js"]
     D --> D2["contentRoot/교재/*.md<br/>→ dataRoot/subjects/*.js"]
     D --> D3["contentRoot/문제은행/*.md<br/>→ dataRoot/exams/*.js"]
-    D --> D4["contentRoot/ingredients/<br/>→ dataRoot/ingredients_data.js"]
+    D --> D4["contentRoot/참조자료/원료/<br/>→ dataRoot/ingredients_data.<hash>.js<br/>(+ registry.js의 version/history/contentHash)"]
     D --> D5["sw.js DATA_ASSETS<br/>+ MD_ASSETS 자동 갱신"]
     D5 --> E["build:study-md"]
     E --> E1["contentRoot/교재/*.md<br/>→ dataRoot/study_md/*.js"]
@@ -337,6 +337,38 @@ python tools/convert_ref_pdfs_v2.py --verify
 2. `npm.cmd run build:data` 실행
 3. 검증 + 커밋 + 배포
 
+### 3.6 원료 데이터 변경 + DB 버전 절차
+
+원료 파일 위치: `content/exams/cosmetic/참조자료/원료/`
+
+| 파일 | 용도 |
+|------|------|
+| `approved_ingredients.md` | 배합가능원료(별표2) + 마스터 스키마·공통 안내 헤더 |
+| `restricted_ingredients.md` | 사용제한 원료 (한도·조건) |
+| `banned_ingredients.md` | 사용금지 원료 (별표1) |
+| `colorants_ingredients.md` | 색소 DB — 별도 고시(「화장품의 색소 종류와 기준 및 시험방법」) 소관, **사전·규정검증 파싱 대상 아님** (참조 문서) |
+| `db_version.json` | 원료 DB 버전 메타 — `version`·`updatedAt`·`notice`·`history` |
+
+**절차:**
+
+1. 원료 MD 정정
+2. `db_version.json` 갱신 — 현재 버전 객체를 `history` 배열 **앞쪽**에 넣고, 최상위 `version`/`updatedAt`/`notice`를 새 값으로:
+   ```json
+   {
+     "version": "2026.10.1",
+     "updatedAt": "2026-10-15",
+     "notice": "새 개정 내역",
+     "history": [
+       { "version": "2026.09.1", "updatedAt": "2026-09-21", "notice": "이전 개정 내역" }
+     ]
+   }
+   ```
+   버전 규칙: `연도.월.차수` (예: `2026.09.1` = 2026년 9월 첫 개정분)
+3. `npm.cmd run build:data` → `registry.js`의 `ingredients`에 `version`·`history`·`contentHash`·`stats.count`가 병합됨
+4. 검증 + 커밋 + 배포
+
+**동작**: `contentHash`가 실제 데이터 내용의 해시라, 배포 후 접속한 기존 사용자에게 `원료 DB 갱신` 모달이 1회 표시되고(이전 개정 최근 3건 포함), 성분 사전 버전 배지 탭으로 전체 이력을 조회할 수 있다. MD 비고·헤더 주석처럼 데이터 행이 아닌 변경은 contentHash가 그대로라 알림이 발화하지 않는다.
+
 ---
 
 ## 4. 검증 체크리스트
@@ -490,7 +522,7 @@ flowchart LR
 통합 모의고사 설정     → content/exams/cosmetic/manifest.json (integratedExam)
 UI 텍스트             → content/exams/cosmetic/manifest.json (uiText)
 추천 링크             → content/exams/cosmetic/manifest.json (resources)
-원료 데이터           → content/exams/cosmetic/ingredients/
+원료 데이터           → content/exams/cosmetic/참조자료/원료/ (approved/restricted/banned/colorants_ingredients.md + db_version.json)
 
 공통: npm.cmd run build:data → 검증 → 커밋 → 배포
 ```
