@@ -2,7 +2,7 @@
 var DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2026",
-  "generatedAt": "2026-09-21T17:44:33.725Z",
+  "generatedAt": "2026-09-21T18:06:31.345Z",
   "subjects": [
     {
       "key": "law",
@@ -128,13 +128,18 @@ var DATA_REGISTRY = {
     }
   ],
   "ingredients": {
-    "bundle": "./data/exams/cosmetic/ingredients_data.743f6019.js",
+    "bundle": "./data/exams/cosmetic/ingredients_data.35731e31.js",
     "global": "INGREDIENTS_DATA",
-    "contentHash": "743f6019",
-    "version": "2026.09.5",
+    "contentHash": "35731e31",
+    "version": "2026.09.6",
     "updatedAt": "2026-09-22",
-    "notice": "알림 표시 안정화 — 갱신 알림이 SW 업데이트 리로드에 밀려 자동 소실되던 문제 수정 (데이터 내용 변경 없음)",
+    "notice": "금지 원료 1,073종 전체에 분류 체계 적용 — 기타 화학물질·의약품 성분·유기용제·색소·생약·농약·염모제 중간체·중금속 등 13개 카테고리로 세분화",
     "history": [
+      {
+        "version": "2026.09.5",
+        "updatedAt": "2026-09-22",
+        "notice": "알림 표시 안정화 — 갱신 알림이 SW 업데이트 리로드에 밀려 자동 소실되던 문제 수정 (데이터 내용 변경 없음)"
+      },
       {
         "version": "2026.09.4",
         "updatedAt": "2026-09-22",
