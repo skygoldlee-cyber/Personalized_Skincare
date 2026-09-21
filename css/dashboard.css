@@ -14,8 +14,6 @@
     display: flex;
     align-items: center;
     gap: 1.25rem;
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
     transition: transform var(--transition-base), border-color var(--transition-base);
 }
 
@@ -112,8 +110,6 @@
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     padding: 1.75rem;
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
     display: flex;
     flex-direction: column;
     gap: 1.25rem;

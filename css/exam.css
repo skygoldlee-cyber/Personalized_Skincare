@@ -318,8 +318,6 @@
     border-radius: var(--radius-lg);
     padding: var(--space-5);
     margin-bottom: var(--space-6);
-    -webkit-backdrop-filter: blur(16px);
-    backdrop-filter: blur(16px);
     animation: fadeIn 0.4s ease-out;
 }
 
@@ -559,8 +557,6 @@
     background-color: var(--overlay-bg-dark-60);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
-    -webkit-backdrop-filter: blur(16px);
-    backdrop-filter: blur(16px);
     box-shadow: var(--shadow-lg);
     max-width: 640px;
     margin: 3rem auto;
@@ -574,8 +570,6 @@
     border-radius: var(--radius-lg);
     padding: var(--space-5);
     margin-bottom: var(--space-6);
-    -webkit-backdrop-filter: blur(16px);
-    backdrop-filter: blur(16px);
     animation: fadeIn 0.3s ease;
 }
 

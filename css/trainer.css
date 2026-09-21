@@ -725,7 +725,6 @@
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     padding: var(--space-5);
-    backdrop-filter: blur(12px);
 }
 
 .textbook-filter-buttons .btn {
@@ -755,7 +754,6 @@
     padding: 1.75rem;
     position: relative;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    backdrop-filter: blur(8px);
 }
 
 .textbook-result-card:hover {
