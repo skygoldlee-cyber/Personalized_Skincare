@@ -188,6 +188,29 @@ npm.cmd run build:audio-manifest     # 오디오 매니페스트만
 과목의 교재를 통째로 다른 문서로 교체할 때는 단순 수정보다 의존성이 넓습니다.
 아래 7개 계층을 순서대로 확인하세요.
 
+```mermaid
+flowchart TD
+    S["새 교재 MD 준비"] --> S1["① 매니페스트/등록<br/>manifest.json + references.json"]
+    S1 --> S2["② 파서 계약 확인<br/>표 2열 · 🔖마커 · ## N. 챕터"]
+    S2 --> S3["③ 과목별 자산<br/>glossary · number-drills · audiobook"]
+    S3 --> S4["④ 통합 빌드+검증<br/>npm.cmd run check:content -- --build"]
+
+    S4 --> Q1{"전 단계 통과?"}
+    Q1 -- No --> F1["실패 단계 수정 후 재실행"]
+    F1 --> S4
+
+    Q1 -- Yes --> S5["⑤ 인용 라인 동기화<br/>sync_citation_lines --check → 미발견 0건"]
+    S5 --> S6["⑥ ref_md 귀속 확인<br/>check_ref_subjects 불일치 기준선 이내"]
+    S6 --> S7["⑦ 진행 데이터 이관<br/>id_migration.js 생성 → 사용자 안내"]
+    S7 --> D["커밋 + sw bump + 배포"]
+
+    style S fill:#e8f5e9
+    style S4 fill:#fff3e0
+    style Q1 fill:#fff3e0
+    style F1 fill:#fce4ec
+    style D fill:#27ae60,color:#fff
+```
+
 **1. 매니페스트/등록**
 - [ ] `content/manifest.json` — `subjects[].dir`·`file`/`storyFile` 경로가 새 교재를 가리키는지, `exams[].subject`·`integratedExam.questionsPerSubject` 키 정합
 - [ ] `content/references.json` — `subjectDirMap`·`refDirs`·`referenceFiles` 과목 귀속
