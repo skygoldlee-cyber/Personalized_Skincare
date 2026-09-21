@@ -1371,6 +1371,44 @@
                             </div>
                         </div>
 
+                        <fieldset class="formula-customer">
+                            <legend>고객 정보 (선택)</legend>
+                            <div class="formula-field-row">
+                                <label class="formula-field">
+                                    <span class="formula-field-label">고객명</span>
+                                    <input type="text" id="formula-cust-name" class="form-input" maxlength="30" placeholder="예: 김OO" aria-label="고객명">
+                                </label>
+                                <label class="formula-field formula-field-unit">
+                                    <span class="formula-field-label">나이</span>
+                                    <input type="number" id="formula-cust-age" class="form-input" min="0" max="120" placeholder="세" aria-label="고객 나이">
+                                </label>
+                                <label class="formula-field formula-field-unit">
+                                    <span class="formula-field-label">성별</span>
+                                    <select id="formula-cust-gender" class="form-input" aria-label="고객 성별">
+                                        <option value="">미선택</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <div class="formula-field-row">
+                                <label class="formula-field">
+                                    <span class="formula-field-label">피부 유형</span>
+                                    <select id="formula-cust-skintype" class="form-input" aria-label="피부 유형">
+                                        <option value="">미선택</option>
+                                    </select>
+                                </label>
+                                <label class="formula-field">
+                                    <span class="formula-field-label">선택 제형</span>
+                                    <select id="formula-cust-formulation" class="form-input" aria-label="선택 제형">
+                                        <option value="">미선택</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <div class="formula-field">
+                                <span class="formula-field-label">피부 고민·증상 (복수 선택)</span>
+                                <div id="formula-cust-concerns" class="formula-chip-row"></div>
+                            </div>
+                        </fieldset>
+
                         <label class="formula-field">
                             <span class="formula-field-label">메모 (선택)</span>
                             <textarea id="formula-notes-input" class="form-input" rows="2" maxlength="500"

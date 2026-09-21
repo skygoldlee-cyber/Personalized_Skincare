@@ -191,3 +191,56 @@ test('calcAmounts: 총량 없으면 amount=null', () => {
   assert.equal(calcAmounts(formula)[0].amount, null);
   assert.deepEqual(calcAmounts(null), []);
 });
+
+// ── 고객 정보 (customer) ─────────────────────────────────
+
+test('customer: 정상 필드 저장 + 복원', () => {
+  const { formula } = createFormula({
+    name: '고객 포뮬러',
+    customer: {
+      name: '김고객', age: 32, gender: '여성', skinType: '민감성',
+      concerns: ['민감·홍조', '진정'], formulation: '세럼·에센스',
+    },
+  });
+  const c = getFormula(formula.id).customer;
+  assert.equal(c.name, '김고객');
+  assert.equal(c.age, 32);
+  assert.equal(c.gender, '여성');
+  assert.equal(c.skinType, '민감성');
+  assert.deepEqual(c.concerns, ['민감·홍조', '진정']);
+  assert.equal(c.formulation, '세럼·에센스');
+});
+
+test('customer: enum 외 값은 빈 문자열로 필터', () => {
+  const { formula } = createFormula({
+    name: 't',
+    customer: { gender: '알수없음', skinType: '악성', formulation: '앰플', concerns: ['없는항목', '진정'] },
+  });
+  const c = getFormula(formula.id).customer;
+  assert.equal(c.gender, '');
+  assert.equal(c.skinType, '');
+  assert.equal(c.formulation, '');
+  assert.deepEqual(c.concerns, ['진정']);  // 허용 목록 내만 유지
+});
+
+test('customer: 전부 비어 있으면 null 저장', () => {
+  const { formula } = createFormula({
+    name: 't',
+    customer: { name: '', gender: '', concerns: [] },
+  });
+  assert.equal(getFormula(formula.id).customer, null);
+});
+
+test('customer: 없으면 null — 하위호환', () => {
+  const { formula } = createFormula({ name: 't' });
+  assert.equal(getFormula(formula.id).customer, null);
+});
+
+test('customer: update로 수정 가능', () => {
+  const { formula } = createFormula({ name: 't' });
+  const r = updateFormula(formula.id, {
+    name: 't', customer: { name: '이고객', skinType: '지성' },
+  });
+  assert.equal(r.formula.customer.name, '이고객');
+  assert.equal(r.formula.customer.skinType, '지성');
+});

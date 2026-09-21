@@ -15,6 +15,7 @@ import {
 import {
   listFormulas, getFormula, createFormula, updateFormula,
   deleteFormula, duplicateFormula, getFormulaUsage,
+  CUSTOMER_OPTIONS,
 } from '../formula-store.js';
 
 const PANELS = ['formula-menu-panel', 'formula-list-panel', 'formula-calc-panel'];
@@ -131,12 +132,22 @@ export function openFormulaList() {
     const ingCount = (f.ingredients || []).length;
     const date = f.updatedAt ? new Date(f.updatedAt).toLocaleDateString('ko-KR') : '';
     const vol = f.targetVolume != null ? `${f.targetVolume}${f.unit || 'g'}` : '총량 미지정';
+    const custParts = [];
+    if (f.customer) {
+      if (f.customer.name) custParts.push(f.customer.name);
+      if (f.customer.age != null) custParts.push(`${f.customer.age}세`);
+      if (f.customer.gender) custParts.push(f.customer.gender);
+      if (f.customer.skinType) custParts.push(f.customer.skinType);
+      if (f.customer.formulation) custParts.push(`제형: ${f.customer.formulation}`);
+      if (f.customer.concerns && f.customer.concerns.length) custParts.push(`고민: ${f.customer.concerns.join(', ')}`);
+    }
     return `
       <div class="formula-card">
         <div class="formula-card-head">
           <h4 class="formula-card-name">${esc(f.name)}</h4>
           <span class="formula-card-meta">${esc(vol)} · 원료 ${ingCount}종 · ${date}</span>
         </div>
+        ${custParts.length ? `<div class="formula-card-customer"><i class="fa-solid fa-user" aria-hidden="true"></i> ${esc(custParts.join(' · '))}</div>` : ''}
         <div class="formula-card-checks">${checkSummaryHtml(f)}</div>
         <div class="formula-card-actions">
           <button class="btn btn-primary btn-sm" data-click="formulaOpen" data-arg="${esc(f.id)}"><i class="fa-solid fa-calculator" aria-hidden="true"></i> 열기</button>
@@ -263,6 +274,89 @@ function renderCalcRows() {
   updateCalcComputed();
 }
 
+/** 고객 정보 선택지(select·칩)를 CUSTOMER_OPTIONS에서 채운다 — 1회만 */
+function populateCustomerFields() {
+  const genderEl = document.getElementById('formula-cust-gender');
+  if (genderEl && !genderEl.dataset.bound) {
+    genderEl.dataset.bound = '1';
+    CUSTOMER_OPTIONS.gender.forEach(v => {
+      const o = document.createElement('option');
+      o.value = v; o.textContent = v;
+      genderEl.appendChild(o);
+    });
+  }
+  const skinEl = document.getElementById('formula-cust-skintype');
+  if (skinEl && !skinEl.dataset.bound) {
+    skinEl.dataset.bound = '1';
+    CUSTOMER_OPTIONS.skinType.forEach(v => {
+      const o = document.createElement('option');
+      o.value = v; o.textContent = v;
+      skinEl.appendChild(o);
+    });
+  }
+  const formEl = document.getElementById('formula-cust-formulation');
+  if (formEl && !formEl.dataset.bound) {
+    formEl.dataset.bound = '1';
+    CUSTOMER_OPTIONS.formulation.forEach(v => {
+      const o = document.createElement('option');
+      o.value = v; o.textContent = v;
+      formEl.appendChild(o);
+    });
+  }
+  const chipBox = document.getElementById('formula-cust-concerns');
+  if (chipBox && !chipBox.dataset.bound) {
+    chipBox.dataset.bound = '1';
+    CUSTOMER_OPTIONS.concerns.forEach(v => {
+      const label = document.createElement('label');
+      label.className = 'formula-chip';
+      label.innerHTML = `<input type="checkbox" value="${esc(v)}"><span>${esc(v)}</span>`;
+      chipBox.appendChild(label);
+    });
+  }
+}
+
+/** 고객 필드 현재 값 읽기 → store 스키마 */
+function readCustomerInputs() {
+  const val = id => {
+    const el = document.getElementById(id);
+    return el ? el.value : '';
+  };
+  const ageRaw = val('formula-cust-age');
+  const chipBox = document.getElementById('formula-cust-concerns');
+  const concerns = chipBox
+    ? Array.from(chipBox.querySelectorAll('input:checked')).map(cb => cb.value)
+    : [];
+  return {
+    name: val('formula-cust-name').trim(),
+    age: ageRaw === '' ? null : parseInt(ageRaw, 10),
+    gender: val('formula-cust-gender'),
+    skinType: val('formula-cust-skintype'),
+    concerns,
+    formulation: val('formula-cust-formulation'),
+  };
+}
+
+/** 고객 필드에 값 복원 (sourceFormula.customer) */
+function writeCustomerInputs(customer) {
+  const c = customer || {};
+  const set = (id, v) => {
+    const el = document.getElementById(id);
+    if (el) el.value = v == null ? '' : v;
+  };
+  set('formula-cust-name', c.name || '');
+  set('formula-cust-age', c.age != null ? c.age : '');
+  set('formula-cust-gender', c.gender || '');
+  set('formula-cust-skintype', c.skinType || '');
+  set('formula-cust-formulation', c.formulation || '');
+  const chipBox = document.getElementById('formula-cust-concerns');
+  if (chipBox) {
+    const selected = Array.isArray(c.concerns) ? c.concerns : [];
+    chipBox.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+      cb.checked = selected.includes(cb.value);
+    });
+  }
+}
+
 function populateDatalist() {
   const dl = document.getElementById('formula-ing-datalist');
   if (!dl || dl.childElementCount) return;
@@ -281,6 +375,7 @@ function populateDatalist() {
 export function openFormulaCalc(sourceFormula) {
   showPanel('formula-calc-panel');
   populateDatalist();
+  populateCustomerFields();
 
   const title = document.getElementById('formula-calc-title');
   if (title) title.textContent = calc.editingId ? '포뮬러 수정' : '배합 계산기';
@@ -300,6 +395,7 @@ export function openFormulaCalc(sourceFormula) {
     if (nameEl) nameEl.value = '';
     if (notesEl) notesEl.value = '';
   }
+  writeCustomerInputs(sourceFormula ? sourceFormula.customer : null);
 
   // 총량/단위 변경 시 재계산
   if (volEl && !volEl.dataset.bound) {
@@ -351,7 +447,7 @@ export function formulaCalcSave() {
       };
     });
 
-  const data = { name, targetVolume, unit, notes, ingredients };
+  const data = { name, targetVolume, unit, notes, customer: readCustomerInputs(), ingredients };
   const r = calc.editingId ? updateFormula(calc.editingId, data) : createFormula(data);
 
   if (!r.ok) { showToast(r.error || '저장에 실패했습니다.', 'error'); return; }

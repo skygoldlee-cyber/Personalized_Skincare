@@ -5,8 +5,11 @@
 //
 // 포뮬러 스키마:
 //   { id, name, targetVolume, unit('g'|'ml'), notes,
+//     customer: {name, age, gender, skinType, concerns[], formulation},
 //     ingredients: [{name, engName, concentration, note, snapshot:{type,limit}}],
 //     createdAt, updatedAt }
+//
+// customer — 맞춤 조제 대상 고객 컨텍스트. 모든 필드 선택(optional).
 //
 // ingredients[].snapshot — 저장 시점의 규정 기준(type/limit)을 보존한다.
 // 원료 DB가 갱신돼도 과거 포뮬러의 검증 근거가 바뀌지 않게 하기 위함.
@@ -16,6 +19,14 @@ import { STORAGE_KEYS } from './storage-keys.js';
 
 // Free 플랜 저장 한도 (결제 연동 없이 정책 상수로만 동작)
 export const FORMULA_LIMIT_FREE = 5;
+
+// 고객 필드 선택지 (formula-store sanitize + formula.js UI가 공유)
+export const CUSTOMER_OPTIONS = Object.freeze({
+  gender: ['남성', '여성', '기타'],
+  skinType: ['건성', '지성', '복합성', '중성', '민감성'],
+  concerns: ['건조', '피지·모공', '여드름·트러블', '민감·홍조', '미백·잡티', '주름·탄력', '각질', '진정'],
+  formulation: ['세럼·에센스', '토너·미스트', '로션·에멀전', '크림·밤', '젤', '오일', '클렌저', '선크림', '마스크·팩'],
+});
 
 const MAX_NAME_LEN = 60;
 const MAX_NOTE_LEN = 500;
@@ -64,6 +75,28 @@ function sanitizeIngredient(item) {
   };
 }
 
+function pickEnum(value, allowed) {
+  return typeof value === 'string' && allowed.includes(value) ? value : '';
+}
+
+function sanitizeCustomer(customer) {
+  if (!customer || typeof customer !== 'object') return null;
+  const c = {
+    name: clampStr(customer.name || '', 30).trim(),
+    age: numOrNull(customer.age),
+    gender: pickEnum(customer.gender, CUSTOMER_OPTIONS.gender),
+    skinType: pickEnum(customer.skinType, CUSTOMER_OPTIONS.skinType),
+    concerns: Array.isArray(customer.concerns)
+      ? customer.concerns.filter(v => CUSTOMER_OPTIONS.concerns.includes(v))
+      : [],
+    formulation: pickEnum(customer.formulation, CUSTOMER_OPTIONS.formulation),
+  };
+  // 모든 필드가 비어 있으면 null — 빈 객체보다 부재가 낫다
+  const empty = !c.name && c.age == null && !c.gender && !c.skinType
+    && !c.concerns.length && !c.formulation;
+  return empty ? null : c;
+}
+
 function sanitizeFormula(data) {
   const ingredients = Array.isArray(data.ingredients)
     ? data.ingredients.map(sanitizeIngredient).filter(Boolean)
@@ -73,6 +106,7 @@ function sanitizeFormula(data) {
     targetVolume: numOrNull(data.targetVolume),
     unit: data.unit === 'ml' ? 'ml' : 'g',
     notes: clampStr(data.notes || '', MAX_NOTE_LEN),
+    customer: sanitizeCustomer(data.customer),
     ingredients,
   };
 }

@@ -206,6 +206,68 @@
 
 .f-danger:hover { color: var(--color-danger, #ef4444); border-color: var(--color-danger, #ef4444); }
 
+/* ── 고객 정보 섹션 ─────────────────────────────── */
+.formula-customer {
+    border: 1px solid var(--color-border, rgba(255,255,255,0.1));
+    border-radius: var(--radius-md, 8px);
+    padding: 0.9rem 1rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    margin: 0;
+}
+.formula-customer legend {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-text-muted, #888);
+    padding: 0 0.4rem;
+}
+
+/* 고민 칩 (체크박스 토글) */
+.formula-chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+}
+.formula-chip {
+    position: relative;
+    cursor: pointer;
+}
+.formula-chip input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+.formula-chip span {
+    display: inline-flex;
+    padding: 0.32rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-border, rgba(255,255,255,0.12));
+    background: transparent;
+    font-size: 0.8rem;
+    color: var(--color-text-secondary, #bbb);
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.formula-chip input:checked + span {
+    background: color-mix(in srgb, var(--color-primary, #6366f1) 20%, transparent);
+    border-color: var(--color-primary, #6366f1);
+    color: var(--color-text, #eee);
+}
+.formula-chip input:focus-visible + span {
+    outline: 2px solid var(--color-primary, #6366f1);
+    outline-offset: 2px;
+}
+
+/* 목록 카드 고객 요약 */
+.formula-card-customer {
+    font-size: 0.82rem;
+    color: var(--color-text-secondary, #bbb);
+    display: flex;
+    gap: 0.45rem;
+    align-items: center;
+}
+.formula-card-customer i { color: var(--color-text-muted, #888); font-size: 0.75rem; }
+
 /* 모바일: 행 그리드 압축 */
 @media (max-width: 768px) {
     .formula-rows-head { display: none; }
