@@ -119,6 +119,7 @@
     min-width: 140px;
 }
 .formula-field-unit { flex: 0 0 110px; min-width: 110px; }
+.formula-field-gender { flex: 0 0 150px; min-width: 150px; }
 .formula-field .form-select { width: 100%; }
 .formula-field-label {
     font-size: 0.78rem;

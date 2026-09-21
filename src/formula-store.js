@@ -22,7 +22,7 @@ export const FORMULA_LIMIT_FREE = 5;
 
 // 고객 필드 선택지 (formula-store sanitize + formula.js UI가 공유)
 export const CUSTOMER_OPTIONS = Object.freeze({
-  gender: ['남성', '여성', '기타'],
+  gender: ['남성', '여성'],
   skinType: ['건성', '지성', '복합성', '중성', '민감성'],
   concerns: ['건조', '피지·모공', '여드름·트러블', '민감·홍조', '미백·잡티', '주름·탄력', '각질', '진정'],
   formulation: ['세럼·에센스', '토너·미스트', '로션·에멀전', '크림·밤', '젤', '오일', '클렌저', '선크림', '마스크·팩'],
