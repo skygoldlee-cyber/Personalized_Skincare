@@ -4,7 +4,7 @@
 // 트레이너와 동일한 패턴: 하나의 view-section 안에서 패널을 is-hidden으로 전환.
 //
 // 안전 원칙: 배합량을 "제안"하지 않고 사용자가 입력한 값을 고시 데이터로
-// "검증"만 한다. 검증 결과는 법정 한도 기준이며 제품 안정성·안전성·품질 보장이 아니다.
+// "검증"만 한다. 검증 결과는 법정 한도 기준이며 제품 안전성·안정성·품질 보장이 아니다.
 
 import { esc } from '../sanitize.js';
 import { showToast, showConfirm } from '../ui-utils.js';
