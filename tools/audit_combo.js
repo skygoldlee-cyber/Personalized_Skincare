@@ -111,6 +111,14 @@ function pathOf(q) {
 }
 
 async function auditExam(target, validateQuestion, deriveComboAnswer) {
+  // 검수 승인 목록 — 사람이 "양호" 판정한 id는 큐에서 제외 (소진형 검수 워크플로)
+  const blPath = path.join(ROOT, target.contentRoot, 'combo_blocklist.json');
+  let approvedIds = new Set();
+  if (fs.existsSync(blPath)) {
+    try { approvedIds = new Set(JSON.parse(fs.readFileSync(blPath, 'utf8')).approved || []); }
+    catch { /* blocklist 파싱 오류는 빌드 측에서 보고 */ }
+  }
+
   const drillsDir = path.join(ROOT, target.dataRoot, 'drills');
   if (!fs.existsSync(drillsDir)) {
     console.log(`[check:combo] ${target.id}: drills 없음 — 건너뜀`);
@@ -219,10 +227,12 @@ async function auditExam(target, validateQuestion, deriveComboAnswer) {
       const ans = deriveComboAnswer(q);
       if (ans) answerPos[ans] = (answerPos[ans] || 0) + 1;
 
-      // ⑦ 검수 큐 적립 — 검수 경로(cluster·ref:note) 또는 경고가 붙은 문항
+      // ⑦ 검수 큐 적립 — 검수 경로(cluster·ref:note) 또는 경고가 붙은 문항.
+      // blocklist.approved에 등록된 id는 검수 완료(양호)라 큐에서 제외한다.
       const reasons = [...qFlags];
       if (REVIEW_PATHS.has(qPath)) reasons.unshift(`검수경로:${qPath}`);
-      if (reasons.length) reviewQueue.push({ exam: target.id, file, q, reasons });
+      if (reasons.length && !approvedIds.has(q.id))
+        reviewQueue.push({ exam: target.id, file, q, reasons });
     }
 
     // 중복 집합 리포트
@@ -288,7 +298,7 @@ async function main() {
   const rq = ['# 복수정답형 검수 큐', '',
     `> audit:combo 자동 생성 (${new Date().toISOString().slice(0, 10)}) — ` +
     `검수 필요 문항 ${reviewQueue.length}건`,
-    '> 불량 문항은 id를 content/exams/<id>/combo_blocklist.json 의 ids에 추가하면 다음 빌드에서 제외됩니다.',
+    '> 불량 문항은 id를 combo_blocklist.json 의 `ids`에, 검수 완료(양호)는 `approved`에 추가하세요.',
     ''];
   for (const { exam, file, q, reasons } of reviewQueue) {
     rq.push(`## ${q.id}`, '',

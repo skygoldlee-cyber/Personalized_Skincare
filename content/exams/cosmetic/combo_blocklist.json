@@ -1,1 +1,6 @@
-{ "note": "검수 불량 문항 id 목록 — audit:combo의 combo_review_queue.md에서 옮겨 등록하면 빌드에서 제외됨", "ids": [], "derivedFromPrefixes": [] }
+{
+  "note": "검수 결과 반영 — ids/derivedFromPrefixes는 빌드에서 제외, approved는 검수 완료(양호)로 검수 큐에서 제외됨",
+  "ids": [],
+  "derivedFromPrefixes": [],
+  "approved": []
+}

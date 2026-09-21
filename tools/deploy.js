@@ -79,6 +79,16 @@ function main() {
 
     console.log('✅ 배포 전 검사 통과 (main · clean · origin/main 동기화)');
 
+    // 콘텐츠 품질 게이트 — 콤보 감사 오류(무결성·회귀)가 있으면 배포 차단.
+    // 경고는 통과시키되 리포트는 combo_audit_report.json에 남는다.
+    const audit = spawnSync('node', ['tools/audit_combo.js'], { encoding: 'utf8' });
+    if (audit.status !== 0) {
+        process.stdout.write(audit.stdout || '');
+        process.stderr.write(audit.stderr || '');
+        fail('audit:combo 품질 게이트 실패 — 오류 해소 후 배포하세요.');
+    }
+    console.log('✅ 콤보 품질 게이트 통과');
+
     // sw.js CACHE_VERSION 스탬프 — 바뀌면 자동 커밋 + push
     const stamp = stampSwVersion();
     if (stamp.changed) {

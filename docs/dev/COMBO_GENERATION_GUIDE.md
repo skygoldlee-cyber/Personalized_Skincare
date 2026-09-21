@@ -239,7 +239,10 @@ ref_md는 `ref_md/과목N/{문서}/{문서}.md` 과목 폴더 구조이며, `ext
      의도된 생성량 변경 후 `--update-baseline`으로 갱신
    - **검수 큐**: cluster·ref:note 경로 + 경고 문항을 `combo_review_queue.md`로 출력.
      불량 문항은 id를 `<contentRoot>/combo_blocklist.json`의 `ids`(또는 `derivedFromPrefixes`)에
-     등록하면 다음 빌드에서 제외됨
+     등록하면 다음 빌드에서 제외됨. 검수 완료(양호)는 `approved`에 등록 → 큐에서 제외되어
+     미검토 문항만 남는다
+   - **배포 게이트**: `npm run deploy`가 git 검사 후 `audit:combo`를 자동 실행 —
+     오류 시 배포 차단 (경고는 통과)
    - **모순 휴리스틱**: 같은 술어·다른 수치를 둘 다 참으로 표기(numConflict),
      극성 반쌍(있다/없다·가능/불가 등) 동일 truth(negConflict) — 모순 의심 경고
    - **런타임 이상 탐지**: 판정 5회+ 누적 후 오판율 ≥80%인 진술은 `getAnomalousStatements()`가
