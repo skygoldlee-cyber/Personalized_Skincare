@@ -33,6 +33,7 @@
     "test:watch": "node --test --watch tests/unit/*.test.js",
     "serve": "node serve.js",
     "audit:cards": "node tools/audit_card_quality.js",
+    "check:content": "node tools/check_content.js",
     "deploy": "node tools/deploy.js"
   },
   "keywords": [

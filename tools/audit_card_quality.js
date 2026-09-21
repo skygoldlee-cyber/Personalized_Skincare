@@ -15,44 +15,42 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { createRequire } from 'module';
 
+const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, '..');
+const plugin = require('./build/plugins/textbook.plugin.js');
+const idFactory = require('./build/id-factory.js');
+const { getExamTargets } = require('./build/exam-targets.js');
 
 function loadStudyData() {
-    // data/subjects/*.js 파일에서 카드 데이터 로드
-    const dataDir = path.join(ROOT, 'data', 'subjects');
-    if (!fs.existsSync(dataDir)) {
-        console.error('data/subjects/ 디렉토리가 없습니다. 먼저 빌드하세요: npm run build');
-        process.exit(1);
-    }
+    // data/subjects/*.js 번들은 폐지됨 — 앱과 동일하게 content/*.md를
+    // 빌드 파서(textbook.plugin)로 직접 파싱해 카드/챕터를 얻는다.
     const subjects = {};
-    const files = fs.readdirSync(dataDir).filter(f => f.endsWith('.js'));
-    files.forEach(f => {
-        const content = fs.readFileSync(path.join(dataDir, f), 'utf-8');
-        // 번들 파일에서 window.STUDY_DATA 할당 부분 추출
-        const match = content.match(/window\.STUDY_DATA\s*\[["']([^"']+)["']\]\s*=\s*(\{[\s\S]*\});?\s*$/);
-        if (match) {
-            try {
-                const key = match[1];
-                const data = eval('(' + match[2] + ')');
-                subjects[key] = data;
-            } catch (e) {
-                console.warn(`파싱 실패: ${f} — ${e.message}`);
-            }
+    for (const target of getExamTargets(ROOT)) {
+        if (!target.manifest) continue;
+        for (const subject of target.manifest.subjects || []) {
+            subjects[`${target.id}:${subject.key}`] = plugin.build(subject, {
+                workspaceDir: ROOT, idFactory,
+                contentRoot: target.contentRoot, dataRoot: target.dataRoot
+            });
         }
-    });
+    }
     return subjects;
 }
 
 function auditCards(subjects) {
     const issues = [];
     const allCards = [];
-    const seenTerms = new Map(); // term|definition → [cardId, ...]
+    const seenTerms = new Map();   // subjId → Map(term|definition → [cardId, ...]) — 과목 내 중복만 오류
+    const crossSubject = new Map(); // term|definition → Set(subjId) — 과목 간 중복은 정보 보고
 
     Object.keys(subjects).forEach(subjId => {
         const subj = subjects[subjId];
         if (!subj.cards) return;
+        if (!seenTerms.has(subjId)) seenTerms.set(subjId, new Map());
+        const subjSeen = seenTerms.get(subjId);
         subj.cards.forEach(card => {
             allCards.push({ ...card, subjId });
             const term = card.term || '';
@@ -62,13 +60,16 @@ function auditCards(subjects) {
             if (def.length <= 10) {
                 issues.push({ type: 'SHORT_DEF', severity: 'WARN', cardId: card.id, subjId, term, definition: def, message: `설명이 너무 짧음 (${def.length}자)` });
             }
-            // 2. 중복 카드
+            // 2. 중복 카드 — 같은 과목 내 term+definition 중복만 오류.
+            //    과목 간 동일 카드는 시험 범위 중첩으로 정상이므로 별도 집계.
             const key = `${term}|${def}`;
-            if (seenTerms.has(key)) {
-                issues.push({ type: 'DUPLICATE', severity: 'ERROR', cardId: card.id, subjId, term, definition: def, message: `중복 카드: ${seenTerms.get(key).join(', ')}` });
+            if (subjSeen.has(key)) {
+                issues.push({ type: 'DUPLICATE', severity: 'ERROR', cardId: card.id, subjId, term, definition: def, message: `과목 내 중복 카드: ${subjSeen.get(key).join(', ')}` });
             } else {
-                seenTerms.set(key, [card.id]);
+                subjSeen.set(key, [card.id]);
             }
+            if (!crossSubject.has(key)) crossSubject.set(key, new Set());
+            crossSubject.get(key).add(subjId);
             // 3. 의미 없는 카드
             if (term === def && term.length > 0) {
                 issues.push({ type: 'SELF_REF', severity: 'ERROR', cardId: card.id, subjId, term, definition: def, message: 'term과 definition이 동일' });
@@ -92,38 +93,48 @@ function auditCards(subjects) {
         });
     });
 
-    return { issues, totalCards: allCards.length };
+    const crossDupes = [...crossSubject.values()].filter(s => s.size > 1).length;
+    return { issues, totalCards: allCards.length, crossDupes };
 }
 
 function auditLinks(subjects) {
     const linkIssues = [];
-    const refMdDir = path.join(ROOT, 'content', '참조자료', 'ref_md');
-    
+    const contentDir = path.join(ROOT, 'content');
+    // 원시 마크다운의 참조자료 링크: ../참조자료/... (URL 인코딩 포함)
+    const linkRegex = /참조자료\/[^\s)`'"<>*]+/g;
+    const seen = new Set();
+
+    const checkContent = (subjId, chapterTitle, sectionTitle, content) => {
+        if (!content) return;
+        linkRegex.lastIndex = 0;
+        let match;
+        while ((match = linkRegex.exec(content)) !== null) {
+            const refPath = decodeURIComponent(match[0]);
+            const dedupeKey = `${subjId}|${refPath}`;
+            if (seen.has(dedupeKey)) continue;
+            seen.add(dedupeKey);
+            if (!fs.existsSync(path.join(contentDir, refPath))) {
+                linkIssues.push({
+                    type: 'BROKEN_LINK',
+                    severity: 'ERROR',
+                    subjId,
+                    chapterTitle,
+                    sectionTitle,
+                    refPath,
+                    message: `참조자료 파일 없음: ${refPath}`
+                });
+            }
+        }
+    };
+
     Object.keys(subjects).forEach(subjId => {
         const subj = subjects[subjId];
         if (!subj.chapters) return;
         subj.chapters.forEach(chapter => {
-            if (!chapter.sections) return;
-            chapter.sections.forEach(section => {
-                // 섹션 콘텐츠에서 data-ref-html 링크 추출
-                const content = section.content || '';
-                const linkRegex = /data-ref-html="([^"]+)"/g;
-                let match;
-                while ((match = linkRegex.exec(content)) !== null) {
-                    const refPath = match[1];
-                    const fullPath = path.join(refMdDir, refPath);
-                    if (!fs.existsSync(fullPath)) {
-                        linkIssues.push({
-                            type: 'BROKEN_LINK',
-                            severity: 'ERROR',
-                            subjId,
-                            chapterTitle: chapter.chapterTitle,
-                            sectionTitle: section.title,
-                            refPath,
-                            message: `참조자료 파일 없음: ${refPath}`
-                        });
-                    }
-                }
+            (chapter.sections || []).forEach(section => {
+                checkContent(subjId, chapter.chapterTitle, section.title, section.content);
+                (section.subsections || []).forEach(sub =>
+                    checkContent(subjId, chapter.chapterTitle, `${section.title} > ${sub.title}`, sub.content));
             });
         });
     });
@@ -144,9 +155,10 @@ function main() {
     
     // 카드 품질 감사
     console.log('--- 카드 품질 감사 ---');
-    const { issues, totalCards } = auditCards(subjects);
+    const { issues, totalCards, crossDupes } = auditCards(subjects);
     console.log(`총 카드: ${totalCards}장`);
-    console.log(`이슈: ${issues.length}건\n`);
+    console.log(`이슈: ${issues.length}건`);
+    console.log(`과목 간 중복(정보): ${crossDupes}건 — 시험 범위 중첩으로 정상\n`);
     
     const byType = {};
     issues.forEach(i => {

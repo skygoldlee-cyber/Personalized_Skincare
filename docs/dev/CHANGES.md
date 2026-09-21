@@ -4,6 +4,24 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-21 콘텐츠 의존성 통합 검증 도구 (check:content) + 감사 도구 현행화
+
+교재 교체 등 대규모 콘텐츠 변경 후 흩어진 검증 도구를 한 명령으로 실행하는
+`npm.cmd run check:content`(`tools/check_content.js`) 추가 — 인용 라인 동기화 →
+ref_md 과목 귀속 → 레이아웃 → 콤보 드릴 → 파서 등가성 → 임포트 → 셸 자산 →
+카드 감사 → 유닛/DOM 테스트를 계층 순서대로 실행하고 실패 단계의 출력을 모아
+한 장짜리 리포트로 출력. `--build`(build:data 선실행), `--quick`(DOM 생략) 옵션.
+
+**선행 결함 수정 — `audit_card_quality.js`**: 런타임 파싱 전환 이후 폐지된
+`data/subjects/*.js` 번들을 여전히 읽고 있어 "과목 0개"로 무동작하던 것을
+`plugin.build()` 직접 파싱으로 전환(check_parser_parity와 동일 경로).
+링크 감사도 원시 MD의 `../참조자료/...` 링크 존재 여부를 검사하도록 복구
+(기존 `data-ref-html` 정규식은 원시 MD에 존재하지 않아 사실상 무동작).
+과목 간 동일 카드(시험 범위 중첩, 정상)는 오류에서 제외하고 정보로 집계 —
+과목 내 중복만 오류로 유지.
+
+`CONTENT_WORKFLOW.md`에 "3.1-1 과목 교재 전체 교체 체크리스트"(7계층) 추가.
+
 ## 2026-09-20 ref_md PDF→MD 전면 재변환 (품질 개선)
 
 구 변환(pypdfium2 raw 추출)은 한국어 PDF의 좌표 기반 공백을 유실해

@@ -183,6 +183,48 @@ npm.cmd run build:audio-manifest     # 오디오 매니페스트만
 4. `npm.cmd test` 통과 확인
 5. 커밋 + 배포
 
+### 3.1-1 과목 교재 전체 교체 체크리스트
+
+과목의 교재를 통째로 다른 문서로 교체할 때는 단순 수정보다 의존성이 넓습니다.
+아래 7개 계층을 순서대로 확인하세요.
+
+**1. 매니페스트/등록**
+- [ ] `content/manifest.json` — `subjects[].dir`·`file`/`storyFile` 경로가 새 교재를 가리키는지, `exams[].subject`·`integratedExam.questionsPerSubject` 키 정합
+- [ ] `content/references.json` — `subjectDirMap`·`refDirs`·`referenceFiles` 과목 귀속
+
+**2. 콘텐츠 파서 계약 (새 교재가 지켜야 할 형식)**
+- [ ] 카드 추출용 표 `| 용어 | 설명 |` 2열 구조, `- **용어**: 설명` 리스트
+- [ ] 퀴즈 마커 `🔖기출`/`📌중요`/`★필수` + `**볼드**` 빈칸 대상
+- [ ] 챕터 헤딩 `## 📚 Chapter NN.` 또는 `## N.` (question_chapters 경계)
+- [ ] 참조 링크 `../참조자료/ref_md/과목N/...` 형식 (상세: `docs/dev/TEXTBOOK_AUTHORING_GUIDE.md`)
+
+**3. 과목별 자산 (번호·키 기준 하드코딩 지점)**
+- [ ] `content/교재/glossary/subject{N}.json` — 큐레이션 용어집 (과목 order 번호 기준)
+- [ ] `content/number-drills/{과목키}.json`
+- [ ] `content/audiobook/mp3/{과목키}/` — 교재 교체 시 TTS 재생성(`generate_all_mp3.py`)
+- [ ] `tools/check_ref_subjects.js`의 `SUBJECT_DIRS` 매핑 (과목키↔번호 변경 시)
+
+**4. 빌드 재생성**
+
+```powershell
+npm.cmd run check:content -- --build   # build:data + 전 계층 검증을 한 번에 실행
+```
+
+`--build` 없이 실행하면 검증만 수행합니다. 단계별 실패는 리포트에 모아 출력됩니다.
+
+**5. 인용 라인번호 (가장 깨지기 쉬운 지점)**
+- [ ] 문제은행의 `(<교재파일.md#L1234>)` 인용은 라인 번호에 하드 의존 — 교재 교체로 라인이 밀리면 인용 전수 재검증
+- [ ] `node tools/sync_citation_lines.js --check` 결과 미발견 0건 확인
+- [ ] `tools/citation_fingerprints.json` 지문 재생성 필요 시 `--fingerprint`
+
+**6. 참조자료(ref_md) 귀속**
+- [ ] `node tools/check_ref_subjects.js` — 불일치 건수가 교체 전 기준선보다 늘었는지 확인
+- [ ] `node tools/check_reflayout.js` — 폴더/레지스트리 정합성
+
+**7. 사용자 진행 데이터 (localStorage)**
+- [ ] 카드/퀴즈 ID는 `stableId(subjectKey, chapterKey, type, term)` — 교재 내용이 바뀌면 term 해시가 달라져 기존 외운카드·약점·퀴즈 기록이 고아가 되어 `cleanOrphansForSubject`가 정리(삭제)합니다
+- [ ] 과목 통째 교체 = 사실상 해당 과목 진행 초기화 — 사용자 안내 또는 백업 안내 필요
+
 ### 3.2 과목 추가
 
 1. `content/교재/{새과목키}/` 디렉토리 생성, MD 파일 배치
@@ -272,6 +314,8 @@ python tools/convert_ref_pdfs_v2.py --verify
 ---
 
 ## 4. 검증 체크리스트
+
+> **통합 명령**: `npm.cmd run check:content`은 아래 전 항목(+귀속·레이아웃·드릴·카드 감사)을 한 번에 실행합니다.
 
 빌드 후 반드시 확인:
 
@@ -407,6 +451,7 @@ flowchart LR
 
 ```
 교재 내용 수정        → content/교재/*.md
+교재 전체 교체        → §3.1-1 체크리스트 (7계층) + npm.cmd run check:content -- --build
 문제은행 수정         → content/문제은행/*.md (+ npm run build:drills 로 드릴 번들 재생성)
 복수정답형 파일럿 추가     → data/drills/combo_pilot.js 직접 편집 + npm run check:combo 검증
 과목 추가/삭제        → content/manifest.json + content/references.json + content/교재/ + content/문제은행/
