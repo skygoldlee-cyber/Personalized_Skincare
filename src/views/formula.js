@@ -34,6 +34,7 @@ const calc = {
   rows: [{ name: '', concentration: null, phase: '' }],
   steps: [],
   editingId: null,   // null이면 신규, id면 기존 포뮬러 수정
+  stabRecordedAt: null, // 안정성 확인 기록의 저장 시각(자동 부여)
 };
 
 let ingredientIndex = null;
@@ -191,6 +192,7 @@ export function formulaNew() {
   calc.rows = [{ name: '', concentration: null, phase: '' }];
   calc.steps = [];
   calc.editingId = null;
+  calc.stabRecordedAt = null;
   openFormulaCalc();
 }
 
@@ -201,6 +203,7 @@ export function formulaOpen(id) {
   if (!calc.rows.length) calc.rows = [{ name: '', concentration: null, phase: '' }];
   calc.steps = Array.isArray(f.steps) ? f.steps.slice() : [];
   calc.editingId = f.id;
+  calc.stabRecordedAt = f.stability && f.stability.recordedAt ? f.stability.recordedAt : null;
   openFormulaCalc(f);
 }
 
@@ -346,7 +349,7 @@ function renderStability() {
     steps: calc.steps,
   });
   const stab = readStabilityInputs();
-  const stabRecorded = stab.method || stab.result || stab.date || stab.note;
+  const stabRecorded = stab.method || stab.result || stab.note;
   if (!warnings.length && !stabRecorded) {
     panel.classList.add('is-hidden');
     panel.innerHTML = '';
@@ -355,7 +358,8 @@ function renderStability() {
   // 실험 확인 상태 — 규칙 경고보다 사용자 실험이 확정 근거
   let confirmHtml = '';
   if (stabRecorded) {
-    const parts = [stab.method, stab.result, stab.date && stab.date.replace('T', ' '), stab.note].filter(Boolean);
+    const recorded = calc.stabRecordedAt ? `기록 ${calc.stabRecordedAt.replace('T', ' ')}` : '';
+    const parts = [stab.method, stab.result, recorded, stab.note].filter(Boolean);
     const cls = stab.result === '양호' ? 'f-stab-good' : (stab.result === '이상 발견' ? 'f-stab-bad' : 'f-stab-info');
     const ic = stab.result === '양호' ? 'fa-circle-check' : (stab.result === '이상 발견' ? 'fa-triangle-exclamation' : 'fa-flask');
     confirmHtml = `<div class="formula-stab-confirm ${cls}"><i class="fa-solid ${ic}" aria-hidden="true"></i> 실험 확인 기록: ${esc(parts.join(' · '))}</div>`;
@@ -528,7 +532,6 @@ function readStabilityInputs() {
   return {
     method: val('formula-stab-method'),
     result: val('formula-stab-result'),
-    date: val('formula-stab-date'),
     note: val('formula-stab-note').trim(),
   };
 }
@@ -542,7 +545,6 @@ function writeStabilityInputs(stab) {
   };
   set('formula-stab-method', s.method || '');
   set('formula-stab-result', s.result || '');
-  set('formula-stab-date', s.date || '');
   set('formula-stab-note', s.note || '');
 }
 
@@ -1010,7 +1012,7 @@ export function openFormulaCalc(sourceFormula) {
   }
   // pH·메모·안정성 확인 필드 변경 → 제조 정보 접이식 요약 + 안정성 평가 갱신
   ['formula-ph-target', 'formula-ph-actual', 'formula-notes-input',
-    'formula-stab-method', 'formula-stab-result', 'formula-stab-date', 'formula-stab-note'].forEach(id => {
+    'formula-stab-method', 'formula-stab-result', 'formula-stab-note'].forEach(id => {
     const el = document.getElementById(id);
     if (el && !el.dataset.foldBound) {
       el.dataset.foldBound = '1';
@@ -1133,10 +1135,19 @@ function currentDraft() {
 /** 계산 결과를 포뮬러로 저장 (신규 또는 editingId 갱신) */
 export function formulaCalcSave() {
   const data = currentDraft();
+  // 안정성 확인 기록이 있으면 저장 시각 자동 부여 — 내용이 바뀐 경우만 갱신
+  if (data.stability && (data.stability.method || data.stability.result || data.stability.note)) {
+    const prev = calc.editingId ? (getFormula(calc.editingId) || {}).stability : null;
+    const same = prev && prev.method === data.stability.method
+      && prev.result === data.stability.result && prev.note === data.stability.note;
+    data.stability.recordedAt = same ? (prev.recordedAt || '')
+      : new Date().toISOString().slice(0, 16);
+  }
   const r = calc.editingId ? updateFormula(calc.editingId, data) : createFormula(data);
 
   if (!r.ok) { showToast(r.error || '저장에 실패했습니다.', 'error'); return; }
   calc.editingId = r.formula.id;
+  calc.stabRecordedAt = r.formula.stability ? r.formula.stability.recordedAt : null;
   showToast(`"${r.formula.name}" 포뮬러가 저장되었습니다.`, 'success');
   initFormulaView();
 }
@@ -1187,7 +1198,7 @@ function buildPrintHtml(f) {
     formulation: cust.formulation, phTarget: f.phTarget, phActual: f.phActual, steps: f.steps,
   });
   const stabConfirm = f.stability
-    ? `<p class="fp-meta-line">안정성 실험 확인: ${esc([f.stability.method, f.stability.result, f.stability.date && f.stability.date.replace('T', ' '), f.stability.note].filter(Boolean).join(' · '))}</p>`
+    ? `<p class="fp-meta-line">안정성 실험 확인: ${esc([f.stability.method, f.stability.result, f.stability.recordedAt && `기록 ${f.stability.recordedAt.replace('T', ' ')}`, f.stability.note].filter(Boolean).join(' · '))}</p>`
     : '';
   const stabHtml = (stab.warnings.length || f.stability)
     ? `<h3>제형 안정성</h3>${stabConfirm}${stab.warnings.length ? `<ul class="fp-stab">${stab.warnings.map(w => `<li>${w.level === STAB.WARN ? '[주의] ' : '[참고] '}${esc(w.msg)}</li>`).join('')}</ul>` : ''}`

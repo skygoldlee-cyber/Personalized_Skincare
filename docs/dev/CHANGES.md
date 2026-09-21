@@ -4,13 +4,14 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
-## 2026-09-22 안정성 확인 일자 → 일시(datetime-local) 확장
+## 2026-09-22 안정성 확인 기록 일시 자동 부여(recordedAt)
 
-- `formula-stab-date`를 `datetime-local`로 변경해 시·분까지 기록
-- 스토어 정제: `YYYY-MM-DD` 또는 `YYYY-MM-DDTHH:MM` 허용(구 데이터 호환),
-  표시는 `T`→공백으로 가독화(패널·인쇄)
-- `.formula-field-date` 230px 확장(datetime-local 세그먼트), 달력 아이콘
-  다크모드 반전 규칙에 `datetime-local` 추가
+수동 일자/일시 입력 필드를 제거하고, 저장 시각을 자동 기록하는 방식으로 전환.
+
+- **스키마**: `stability.date` → `stability.recordedAt` (YYYY-MM-DDTHH:MM) —
+  저장 시 자동 부여, 내용(method·result·note)이 바뀐 경우만 갱신되고
+  동일 내용 재저장은 기존 시각 유지
+- **UI**: 일자 입력 필드 제거(방법·결과·메모만), 패널·인쇄에 `기록 YYYY-MM-DD HH:MM` 표시
 - 확인 방법 enum에 `가혹 시험` 추가(가속 다음 순서)
 
 ## 2026-09-22 Formula OS 안정성 실험 확인 기록 추가

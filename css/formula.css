@@ -120,10 +120,6 @@
 }
 .formula-field-unit { flex: 0 0 110px; min-width: 110px; }
 .formula-field-gender { flex: 0 0 150px; min-width: 150px; }
-.formula-field-date { flex: 0 0 270px; min-width: 270px; }
-/* datetime-local은 세그먼트가 넓어 좌우 패딩을 줄여 표시 영역 확보 */
-#formula-stab-date { padding-left: 0.5rem; padding-right: 0.25rem; }
-
 /* 날짜 달력 아이콘 — OS 기본 검정 글리프라 다크 테마에서 반전 필요 */
 input[type="date"]::-webkit-calendar-picker-indicator,
 input[type="datetime-local"]::-webkit-calendar-picker-indicator {
