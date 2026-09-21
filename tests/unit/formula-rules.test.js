@@ -51,6 +51,17 @@ test('매핑 키 정합: 베이스 템플릿·고민 키가 CUSTOMER_OPTIONS와 
   assert.deepEqual([..._RULE_KEYS.concerns].sort(), [...CUSTOMER_OPTIONS.concerns].sort());
 });
 
+test('후보 풍부도: 모든 베이스 역할 후보 ≥5, 고민 매핑 ≥5', () => {
+  const thin = [];
+  Object.values(BASE_TEMPLATES).flat().forEach(r => {
+    if (r.candidates.length < 5) thin.push(`${r.role}(${r.candidates.length})`);
+  });
+  Object.entries(CONCERN_INGREDIENTS).forEach(([k, v]) => {
+    if (v.length < 5) thin.push(`고민:${k}(${v.length})`);
+  });
+  assert.deepEqual(thin, [], `후보 5개 미만: ${thin}`);
+});
+
 // ── recommendFor ───────────────────────────────────
 
 test('제형 선택 시 베이스 템플릿 반환 + required 보존제 포함', () => {
