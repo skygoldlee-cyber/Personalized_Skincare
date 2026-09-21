@@ -833,12 +833,15 @@ async function buildForExam(target) {
   }
 
   console.log(`[combo-drills] ${target.id}: 총 ${totalItems}개 복수정답형 문항 생성${DRY_RUN ? ' (dry-run)' : ''}, 오류 ${totalErrors}건 → ${path.relative(ROOT, OUT_DIR)}/`);
+  return totalErrors;
 }
 
 async function main() {
+  let totalErrors = 0;
   for (const target of getExamTargets(ROOT)) {
-    await buildForExam(target);
+    totalErrors += await buildForExam(target);
   }
+  if (totalErrors > 0) process.exitCode = 1;   // 문항 오류를 CI/배포 가드가 감지하도록
 }
 
 main().catch(e => { console.error(e); process.exit(1); });

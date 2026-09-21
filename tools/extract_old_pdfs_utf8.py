@@ -3,16 +3,16 @@
 import pypdfium2 as pdfium
 import os
 
-BASE = r"C:\Project\Personalized_Skincare\content\참조자료"
+BASE = r"C:\Project\Personalized_Skincare\content\exams\cosmetic\참조자료"
 OUT = r"C:\Project\Personalized_Skincare\tools\pdf_preview"
 os.makedirs(OUT, exist_ok=True)
 
 old_pdfs = [
-    ("공통", "안전기준_별표1_독성시험법_구.pdf"),
-    ("공통", "안전기준_별표2_기준시험방법작성요령_구.pdf"),
-    ("공통", "안전기준_별표3_자외선차단효과측정_구.pdf"),
-    ("공통", "안전기준_별표4_자료제출생략기능성_구.pdf"),
-    ("과목2", "안전기준_별표1_색소_구.pdf"),
+    ("_archive", "안전기준_별표1_독성시험법_구.pdf"),
+    ("_archive", "안전기준_별표2_기준시험방법작성요령_구.pdf"),
+    ("_archive", "안전기준_별표3_자외선차단효과측정_구.pdf"),
+    ("_archive", "안전기준_별표4_자료제출생략기능성_구.pdf"),
+    ("_archive", "안전기준_별표1_색소_구.pdf"),
 ]
 
 for subdir, filename in old_pdfs:
