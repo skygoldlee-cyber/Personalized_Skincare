@@ -867,4 +867,12 @@ async function main() {
   if (totalErrors > 0) process.exitCode = 1;   // 문항 오류를 CI/배포 가드가 감지하도록
 }
 
-main().catch(e => { console.error(e); process.exit(1); });
+if (require.main === module) {
+  main().catch(e => { console.error(e); process.exit(1); });
+}
+
+// 테스트용 export — buildComboItems는 SUBJECT_NUM/SUBJECT_KEY 설정이 필요
+module.exports = {
+  buildComboItems, buildClusterCombos, nearDup, normKey, comboStem, topicContext,
+  _setSubjectMaps: m => ({ SUBJECT_NUM, SUBJECT_KEY, SUBJECT_TITLE } = m),
+};
