@@ -2,6 +2,7 @@
 import { state } from '../state.js';
 import { esc } from '../sanitize.js';
 import { getChosung } from '../utils.js';
+import { hasFeature } from '../exam-context.js';
 
 export const dictState = {
     query: '',
@@ -143,10 +144,13 @@ function createIngredientCard(ing) {
             <div class="dict-detail-item"><span class="dict-detail-label">설명/특성</span><span class="dict-detail-value">${esc(ing.description || '-')}</span></div>
             <div class="dict-detail-item"><span class="dict-detail-label">배합 한도</span><span class="dict-detail-value">${esc(ing.limit || '제한 없음')}</span></div>
             ${ing.tip ? `<div class="dict-card-tip">💡 <strong>TIP:</strong> ${esc(ing.tip)}</div>` : ''}
+            ${hasFeature('formula') ? `<button class="btn btn-primary btn-sm dict-add-btn" data-click="formulaAddIngredient" data-arg="${esc(ing.name)}"><i class="fa-solid fa-plus" aria-hidden="true"></i> 포뮬러에 추가</button>` : ''}
         </div>
     `;
-    
-    card.addEventListener('click', () => {
+
+    card.addEventListener('click', (e) => {
+        // 카드 내부의 위임 버튼(포뮬러 추가 등) 클릭은 상세 토글과 무관
+        if (e.target.closest('[data-click]')) return;
         const details = card.querySelector('.dict-card-details');
         if (details.classList.contains('is-hidden')) {
             details.classList.remove('is-hidden');

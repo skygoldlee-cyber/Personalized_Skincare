@@ -115,7 +115,8 @@ import {
     formulaDelete,
     formulaCalcAddRow,
     formulaCalcRemoveRow,
-    formulaCalcSave
+    formulaCalcSave,
+    formulaAddIngredient
 } from './views/formula.js';
 import { recordStudyActivity } from './study-tracker.js';
 import {
@@ -833,7 +834,7 @@ const DELEGATED_HANDLERS = {
     // Formula OS (배합 계산·My 포뮬러)
     openFormulaList, openFormulaCalc, openIngredientDict, exitFormulaSubView,
     formulaNew, formulaOpen, formulaDuplicate, formulaDelete,
-    formulaCalcAddRow, formulaCalcRemoveRow, formulaCalcSave,
+    formulaCalcAddRow, formulaCalcRemoveRow, formulaCalcSave, formulaAddIngredient,
     /** 복수정답형 모의고사 문항 수 선택 행 토글 — 다른 과목의 열린 행은 닫는다 */
     toggleComboPicker(rowId) {
         const row = document.getElementById(rowId);

@@ -61,6 +61,27 @@ export function openIngredientDict() {
   switchView('dictionary-view');
 }
 
+/**
+ * 성분 사전/원료 상세에서 "포뮬러에 추가" — 현재 계산기 드래프트에 행을 추가하고
+ * 배합 계산기로 이동한다. 농도는 비워 두어 사용자가 직접 입력(검증 대상)하게 한다.
+ * @param {string} name - INGREDIENTS_DATA의 원료명
+ */
+export function formulaAddIngredient(name) {
+  if (typeof name !== 'string' || !name.trim()) return;
+  const trimmed = name.trim();
+  // 마지막 빈 행 재사용, 아니면 새 행 추가
+  const last = calc.rows[calc.rows.length - 1];
+  if (last && !last.name) {
+    last.name = trimmed;
+  } else {
+    calc.rows.push({ name: trimmed, concentration: null });
+  }
+  // 사전 등 다른 뷰에서 호출될 수 있으므로 formula-view로 전환 후 계산기 표시
+  switchView('formula-view');
+  openFormulaCalc();
+  showToast(`"${trimmed}"을(를) 추가했습니다 — 배합률(%)을 입력하세요.`, 'success');
+}
+
 /* =======================================================
    My 포뮬러 목록
    ======================================================= */
@@ -267,14 +288,17 @@ export function openFormulaCalc(sourceFormula) {
   const volEl = document.getElementById('formula-target-volume');
   const unitEl = document.getElementById('formula-unit');
   const nameEl = document.getElementById('formula-name-input');
+  const notesEl = document.getElementById('formula-notes-input');
   if (sourceFormula) {
     if (volEl) volEl.value = sourceFormula.targetVolume != null ? sourceFormula.targetVolume : '';
     if (unitEl) unitEl.value = sourceFormula.unit || 'g';
     if (nameEl) nameEl.value = sourceFormula.name || '';
+    if (notesEl) notesEl.value = sourceFormula.notes || '';
   } else {
     if (volEl && !volEl.value) volEl.value = '100';
     if (unitEl) unitEl.value = 'g';
     if (nameEl) nameEl.value = '';
+    if (notesEl) notesEl.value = '';
   }
 
   // 총량/단위 변경 시 재계산
@@ -310,6 +334,8 @@ export function formulaCalcRemoveRow(idx) {
 export function formulaCalcSave() {
   const nameEl = document.getElementById('formula-name-input');
   const name = nameEl ? nameEl.value.trim() : '';
+  const notesEl = document.getElementById('formula-notes-input');
+  const notes = notesEl ? notesEl.value.trim() : '';
   const { targetVolume, unit } = readCalcInputs();
 
   const index = getIndex();
@@ -325,7 +351,7 @@ export function formulaCalcSave() {
       };
     });
 
-  const data = { name, targetVolume, unit, ingredients };
+  const data = { name, targetVolume, unit, notes, ingredients };
   const r = calc.editingId ? updateFormula(calc.editingId, data) : createFormula(data);
 
   if (!r.ok) { showToast(r.error || '저장에 실패했습니다.', 'error'); return; }
