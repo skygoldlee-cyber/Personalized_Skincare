@@ -101,7 +101,8 @@ const GLOBAL_KEYS = new Set([
     'readerFontScale',
     'readerLineHeight',
     'readerAudioRate',
-    'readerAudioAutoScroll'
+    'readerAudioAutoScroll',
+    'ui_analysis_open'
 ]);
 
 /** 진도 키에 시험 접두사 부여 (`fc_memorized` → `cosmetic:fc_memorized`) */

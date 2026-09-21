@@ -51,7 +51,45 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
         
         showToast("학습 진도가 모두 초기화되었습니다.", "success");
     });
-    
+
+    // 1-1. 설정 메뉴 토글 — 외부 클릭/Escape/항목 선택 시 닫힘
+    const settingsBtn = document.getElementById('settings-toggle-btn');
+    const settingsPanel = document.getElementById('settings-panel');
+    if (settingsBtn && settingsPanel) {
+        const closeSettings = () => {
+            settingsPanel.classList.add('is-hidden');
+            settingsBtn.setAttribute('aria-expanded', 'false');
+        };
+        settingsBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const willOpen = settingsPanel.classList.contains('is-hidden');
+            settingsPanel.classList.toggle('is-hidden');
+            settingsBtn.setAttribute('aria-expanded', String(willOpen));
+        });
+        settingsPanel.addEventListener('click', (e) => {
+            if (e.target.closest('.settings-item')) closeSettings();
+        });
+        document.addEventListener('click', (e) => {
+            if (!settingsPanel.classList.contains('is-hidden') && !e.target.closest('.settings-menu')) {
+                closeSettings();
+            }
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeSettings();
+        });
+    }
+
+    // 1-2. 대시보드 분석 접이식 — 열림 상태를 세션 간 유지
+    const analysisFold = document.getElementById('dashboard-analysis-fold');
+    if (analysisFold) {
+        try {
+            if (localStorage.getItem('ui_analysis_open') === '1') analysisFold.open = true;
+        } catch (_) {}
+        analysisFold.addEventListener('toggle', () => {
+            try { localStorage.setItem('ui_analysis_open', analysisFold.open ? '1' : '0'); } catch (_) {}
+        });
+    }
+
     // 2. 플래시카드 이벤트
     const cardEl = document.getElementById('flashcard-item');
     if (cardEl) {

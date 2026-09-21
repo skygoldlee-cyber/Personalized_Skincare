@@ -611,6 +611,21 @@ body {
     flex: 1;
 }
 
+/* 내비 그룹 라벨 — 학습/훈련·평가/자료·도구 그룹 구분 */
+.nav-group-label {
+    font-size: var(--text-xs-sm);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+    opacity: 0.65;
+    padding: var(--space-4) var(--space-3) var(--space-1);
+    user-select: none;
+}
+
+.nav-group-label:first-of-type {
+    padding-top: var(--space-2);
+}
+
 .nav-item {
     background: transparent;
     border: none;
@@ -722,6 +737,66 @@ body {
 .header-title p {
     font-size: var(--text-sm-md);
     color: var(--color-text-muted);
+}
+
+/* 설정 메뉴 — 헤더 우측 ⚙️ 드롭다운 (백업/초기화 등 관리 기능 통합) */
+.settings-menu {
+    position: relative;
+}
+
+.settings-panel {
+    position: absolute;
+    top: calc(100% + var(--space-2));
+    right: 0;
+    min-width: 200px;
+    background-color: var(--bg-sidebar);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-popover-lg);
+    padding: var(--space-2);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    z-index: var(--z-dropdown);
+}
+
+.settings-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    width: 100%;
+    padding: var(--space-2) var(--space-3);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-sm);
+    color: var(--color-text-main);
+    font-size: var(--text-sm-md);
+    text-align: left;
+    cursor: pointer;
+    transition: var(--transition-base);
+}
+
+.settings-item:hover {
+    background-color: var(--bg-hover);
+}
+
+.settings-item i {
+    width: 16px;
+    color: var(--color-text-muted);
+}
+
+.settings-item-danger {
+    color: var(--color-danger-light);
+}
+
+.settings-item-danger i {
+    color: var(--color-danger-light);
+}
+
+.settings-divider {
+    height: 1px;
+    background-color: var(--border-subtle);
+    margin: var(--space-1) 0;
 }
 
 /* General Button Styles */

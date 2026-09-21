@@ -46,6 +46,7 @@
                 <button type="button" data-click="ManualViewer.openManual" class="manual-nav-link">
                     <i class="fa-solid fa-circle-info" aria-hidden="true"></i> 사용자 매뉴얼
                 </button>
+                <div class="nav-group-label">학습</div>
                 <button class="nav-item active" data-target="dashboard-view">
                     <i class="fa-solid fa-chart-pie" aria-hidden="true"></i> 대시보드
                 </button>
@@ -55,15 +56,17 @@
                 <button class="nav-item" data-target="quiz-view">
                     <i class="fa-solid fa-circle-question" aria-hidden="true"></i> 기출 퀴즈
                 </button>
-                <button class="nav-item" data-target="review-view">
-                    <i class="fa-solid fa-star" aria-hidden="true"></i> 오답/중요 복습
-                </button>
+                <div class="nav-group-label">훈련 · 평가</div>
                 <button class="nav-item" data-target="trainer-view">
                     <i class="fa-solid fa-dumbbell" aria-hidden="true"></i> 스마트 훈련소
+                </button>
+                <button class="nav-item" data-target="review-view">
+                    <i class="fa-solid fa-star" aria-hidden="true"></i> 오답/중요 복습
                 </button>
                 <button class="nav-item" data-target="exam-view">
                     <i class="fa-solid fa-file-invoice" aria-hidden="true"></i> 실전 모의고사
                 </button>
+                <div class="nav-group-label">자료 · 도구</div>
                 <button class="nav-item" data-target="textbook-reader-view">
                     <i class="fa-solid fa-book-open" aria-hidden="true"></i> 교재 본문 읽기
                 </button>
@@ -109,9 +112,31 @@
                     <button id="pwa-install-btn" class="btn btn-primary">
                         <i class="fa-solid fa-download" aria-hidden="true"></i> <span class="btn-text">앱 설치</span>
                     </button>
-                    <button id="reset-progress-btn" class="btn btn-secondary">
-                        <i class="fa-solid fa-rotate-left" aria-hidden="true"></i> 진도 초기화
-                    </button>
+                    <!-- 설정 메뉴: 백업/복원·초기화·시험 전환 등 관리 기능 통합 -->
+                    <div class="settings-menu">
+                        <button id="settings-toggle-btn" class="btn btn-secondary" title="설정 및 데이터 관리" aria-label="설정" aria-expanded="false">
+                            <i class="fa-solid fa-gear" aria-hidden="true"></i>
+                        </button>
+                        <div id="settings-panel" class="settings-panel is-hidden">
+                            <button type="button" class="settings-item" data-click="exportData">
+                                <i class="fa-solid fa-download" aria-hidden="true"></i> 데이터 백업
+                            </button>
+                            <button type="button" class="settings-item" data-click="triggerImport">
+                                <i class="fa-solid fa-upload" aria-hidden="true"></i> 백업 가져오기
+                            </button>
+                            <button type="button" class="settings-item" data-click="showExamSelect">
+                                <i class="fa-solid fa-arrow-right-arrow-left" aria-hidden="true"></i> 시험 전환
+                            </button>
+                            <button type="button" class="settings-item" data-click="ManualViewer.openManual">
+                                <i class="fa-solid fa-circle-info" aria-hidden="true"></i> 사용자 매뉴얼
+                            </button>
+                            <div class="settings-divider"></div>
+                            <button id="reset-progress-btn" class="settings-item settings-item-danger">
+                                <i class="fa-solid fa-rotate-left" aria-hidden="true"></i> 진도 초기화
+                            </button>
+                        </div>
+                        <input type="file" id="import-file-input" class="is-hidden" accept=".json">
+                    </div>
                 </div>
             </header>
 
@@ -202,26 +227,7 @@
                         </div>
                     </div>
 
-                    <!-- 2. Data Backup & Restore Card -->
-                    <div class="glass-card backup-restore-card glass-card-col">
-                        <div>
-                            <h4 class="backup-card-title"><i class="fa-solid fa-database color-primary text-primary" aria-hidden="true"></i> 데이터 관리</h4>
-                            <p class="backup-card-desc">
-                                나의 공부 진척도, 모의고사 기록, 오답 노트를 파일로 안전하게 백업 및 복원합니다.
-                            </p>
-                        </div>
-                        <div class="flex-col gap-3">
-                            <button class="btn btn-secondary w-full justify-center" data-click="exportData">
-                                <i class="fa-solid fa-download" aria-hidden="true"></i> 데이터 백업
-                            </button>
-                            <button class="btn btn-secondary w-full justify-center" data-click="triggerImport">
-                                <i class="fa-solid fa-upload" aria-hidden="true"></i> 백업 가져오기
-                            </button>
-                            <input type="file" id="import-file-input" class="is-hidden" accept=".json">
-                        </div>
-                    </div>
-
-                    <!-- 3. Study Guide Card -->
+                    <!-- 2. Study Guide Card -->
                     <div class="glass-card study-guide-card glass-card-col">
                         <div>
                             <h4 class="backup-card-title"><i class="fa-solid fa-book color-primary text-primary" aria-hidden="true"></i> 학습 안내서</h4>
@@ -236,6 +242,14 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- 상세 분석·도구 — 기본 접힘, 필요 시 펼침 (복잡도 완화) -->
+                <details class="analysis-fold" id="dashboard-analysis-fold">
+                    <summary class="analysis-fold-summary">
+                        <span class="analysis-fold-title"><i class="fa-solid fa-chart-pie" aria-hidden="true"></i> 내 학습 분석 · 도구</span>
+                        <span class="analysis-fold-hint">과목별 상태 · 정답률 · 모의고사 분석 · 뽀모도로</span>
+                        <i class="fa-solid fa-chevron-down analysis-fold-chevron" aria-hidden="true"></i>
+                    </summary>
 
                 <!-- Pomodoro Timer Row -->
                 <div class="pomo-section-container mt-5 mb-7" data-feature="pomodoro">
@@ -322,6 +336,7 @@
                         </div>
                     </div>
                 </div>
+                </details>
             </section>
 
             <!-- Flashcard View -->

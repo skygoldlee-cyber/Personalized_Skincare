@@ -491,3 +491,64 @@
 .exam-switch-btn {
     width: 100%;
 }
+
+/* 대시보드 상세 분석 접이식 — 기본 접힘으로 첫 화면 복잡도 완화 */
+.analysis-fold {
+    margin-top: var(--space-5);
+}
+
+.analysis-fold-summary {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+    cursor: pointer;
+    list-style: none;
+    padding: var(--space-4);
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    transition: var(--transition-base);
+}
+
+.analysis-fold-summary::-webkit-details-marker {
+    display: none;
+}
+
+.analysis-fold-summary:hover {
+    background-color: var(--bg-card-hover);
+}
+
+.analysis-fold-title {
+    font-size: var(--text-lg-sm);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-main);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.analysis-fold-title i {
+    color: var(--color-primary);
+}
+
+.analysis-fold-hint {
+    font-size: var(--text-xs-sm);
+    color: var(--color-text-muted);
+    flex: 1;
+}
+
+.analysis-fold-chevron {
+    color: var(--color-text-muted);
+    transition: transform var(--transition-base);
+}
+
+.analysis-fold[open] .analysis-fold-chevron {
+    transform: rotate(180deg);
+}
+
+.analysis-fold[open] .analysis-fold-summary {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-color: var(--border-subtle);
+}
