@@ -49,6 +49,7 @@ export const PATHS = {
 
   // 문서 (앱 공용)
   USER_MANUAL: 'docs/user/user_manual.md',
+  FORMULA_MANUAL: 'docs/user/formula_manual.md',
 };
 
 // 참조자료 경로 상대 경로를 절대 경로로 정규화

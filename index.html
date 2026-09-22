@@ -44,7 +44,10 @@
             </div>
             <nav class="nav-menu">
                 <button type="button" data-click="ManualViewer.openManual" class="manual-nav-link">
-                    <i class="fa-solid fa-circle-info" aria-hidden="true"></i> 사용자 매뉴얼
+                    <i class="fa-solid fa-circle-info" aria-hidden="true"></i> 학습 매뉴얼
+                </button>
+                <button type="button" data-click="ManualViewer.openFormulaManual" class="manual-nav-link">
+                    <i class="fa-solid fa-flask" aria-hidden="true"></i> 실무 매뉴얼
                 </button>
                 <div class="nav-group-label">학습</div>
                 <button class="nav-item active" data-target="dashboard-view">
@@ -131,7 +134,10 @@
                                 <i class="fa-solid fa-arrow-right-arrow-left" aria-hidden="true"></i> 시험 전환
                             </button>
                             <button type="button" class="settings-item" data-click="ManualViewer.openManual">
-                                <i class="fa-solid fa-circle-info" aria-hidden="true"></i> 사용자 매뉴얼
+                                <i class="fa-solid fa-circle-info" aria-hidden="true"></i> 학습 매뉴얼
+                            </button>
+                            <button type="button" class="settings-item" data-click="ManualViewer.openFormulaManual">
+                                <i class="fa-solid fa-flask" aria-hidden="true"></i> 실무 매뉴얼
                             </button>
                             <div class="settings-divider"></div>
                             <button id="reset-progress-btn" class="settings-item settings-item-danger">
@@ -1288,7 +1294,9 @@
                 <div id="formula-menu-panel">
                     <div class="section-title-area">
                         <h3>🧪 Formula OS — 실전 배합 작업실</h3>
-                        <p>원료를 조회하고, 배합률을 계산하고, 나만의 포뮬러를 저장·검증하세요.</p>
+                        <p>원료를 조회하고, 배합률을 계산하고, 나만의 포뮬러를 저장·검증하세요.
+                            <a href="#" data-click="ManualViewer.openFormulaManual" class="comp-ref-link"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> 실무 매뉴얼</a>
+                        </p>
                     </div>
                     <div class="trainer-menu-grid">
                         <div class="trainer-menu-card" data-click="openFormulaList">

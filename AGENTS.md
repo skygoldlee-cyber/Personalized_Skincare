@@ -23,7 +23,7 @@ npm.cmd run test:all                   # 전체 테스트 (unit + parser + dom)
 
 # 빌드
 npm.cmd run build:data                 # content/exams/<id>/*.md → data/exams/<id>/ 번들 생성 (모든 시험 순회)
-node tools/build_doc_bundles.js        # docs/user/user_manual.md, content/exams/cosmetic/학습안내서.md → data/docs_md/ + {dataRoot}/docs_md/ 번들 (앱 내 문서 갱신 시 필수)
+node tools/build_doc_bundles.js        # docs/user/{user_manual,formula_manual}.md, content/exams/cosmetic/학습안내서.md → data/docs_md/ + {dataRoot}/docs_md/ 번들 (앱 내 문서 갱신 시 필수)
 npm.cmd run check:parser               # 빌드 파서 ↔ 런타임 파서 등가성 검증
 npm.cmd run check:imports              # src/ 내 ES 모듈 import/export 교차 검증
 npm.cmd run stamp:sw                   # sw.js CACHE_VERSION을 커밋 해시로 스탬프
@@ -95,6 +95,12 @@ src/                    # ES Modules
   formula-store.js      # Formula OS — 포뮬러 CRUD·저장 한도(5개), 고객·원료 스키마 정제
   formula-rules.js      # Formula OS — 추천 규칙 (베이스·고민/피부 매핑, 안전 필터, 맞춤 규칙)
   formula-check.js      # Formula OS — 고시 한도 규정 검증 엔진 (원료 인덱스, 4상태 판정)
+  formula-stability.js  # Formula OS — 제형 안정성 체크 (상 비율·상호작용·단계·pH)
+  store-utils.js        # Formula OS — 스토어 공통 헬퍼 (loadItems/newId/clamp…)
+  batch-store.js        # Formula OS — 조제 기록(배치) 채번·QC·위생·스냅샷 (50건)
+  customer-store.js     # Formula OS — 고객 카드·상담 이력(append-only) (20명)
+  material-ledger.js    # Formula OS — 원료 입고·사용기한·재고, 기한 경고 (30종)
+  usage-guide.js        # Formula OS — 사용 안내문 생성기 (제형 템플릿+원료 주의)
   pwa-install.js        # PWA 설치 프롬프트 설정
   theme-init.js         # 테마 초기화 (즉시 실행)
   theme-toggle.js       # 테마 토글 UI
@@ -116,7 +122,12 @@ src/                    # ES Modules
     exam-sim-state.js   # 시뮬레이터 상태
     exam-sim-review.js  # 시뮬레이터 결과 리뷰
     dictionary.js       # 용어집
-    formula.js          # Formula OS 뷰 — 배합 계산기, 추천, My 포뮬러, 인쇄·JSON 공유
+    formula.js          # Formula OS 뷰 — 배합 계산기, 추천, My 포뮬러, 서브내비 칩, 인쇄·JSON 공유
+    formula-batch.js    # Formula OS — 조제 기록(배치) 목록·폼·상세 패널
+    formula-customer.js # Formula OS — 고객 관리 패널 (카드·상담 이력·역참조)
+    formula-material.js # Formula OS — 원료 장부 패널 (기한 배지·경고)
+    formula-compliance.js # Formula OS — 법규 준수 체크리스트 + 법령 MD 링크
+    formula-print.js    # Formula OS — 인쇄 빌더 (조제 기록지·라벨·안내문)
     study-calendar.js    # 학습 캘린더/목표 뷰
     glossary-renderer.js # 용어집 렌더링
     backup.js           # 백업/복원
@@ -140,7 +151,7 @@ content/                # 시험 콘텐츠 컨테이너 (시험 소유 파일 �
 data/                   # 빌드 생성 번들
   exams.js              # 전역 시험 목록 (window.EXAMS_LIST)
   audio_manifest.js     # 전역 오디오 매니페스트 (시험 id 키 분리)
-  docs_md/              # 앱 공용 문서 번들 (user_manual 등 — 시험 무관)
+  docs_md/              # 앱 공용 문서 번들 (user_manual·formula_manual — 시험 무관)
   exams/cosmetic/       # 기본 시험 데이터 루트 (dataRoot: registry.js, subjects/, exams/, drills/, study_md/, docs_md/, id_migration.js 등)
   exams/<id>/           # 추가 시험 데이터 루트 (동일 구조)
 tools/                  # 빌드 스크립트
@@ -247,4 +258,5 @@ docs/                   # 개발 문서
 - `docs/dev/FORMULA_OS_WORKFLOW_DESIGN.md` — 조제관리사 9개 업무 전체 커버리지 확장 설계안 (고객·배치·원료장부·안내문)
 - `docs/dev/COMBO_GENERATION_GUIDE.md` — 복수정답형 문항 생성 절차·품질 게이트·수치 조정 가이드
 - `docs/dev/COMBO_STUDY_STRATEGY.md` — 복수정답형 학습 전략 (전략→기능 매핑 포함)
-- `docs/user/user_manual.md` — 사용자 매뉴얼
+- `docs/user/user_manual.md` — 학습 매뉴얼 (시험 대비)
+- `docs/user/formula_manual.md` — 실무 매뉴얼 (Formula OS)

@@ -28,7 +28,8 @@ const ROOT = path.resolve(__dirname, '..');
 // 앱 공용 문서 — 시험과 무관, 항상 data/docs_md/ 에 출력
 // (src/manual-viewer.js 의 MD_SOURCES 와 동기화 유지)
 const GLOBAL_DOCS = [
-    { file: 'user_manual.md', dir: path.join(ROOT, 'docs', 'user'), key: 'docs/user/user_manual.md' }
+    { file: 'user_manual.md', dir: path.join(ROOT, 'docs', 'user'), key: 'docs/user/user_manual.md' },
+    { file: 'formula_manual.md', dir: path.join(ROOT, 'docs', 'user'), key: 'docs/user/formula_manual.md' }
 ];
 
 // 시험별 문서 — 각 시험의 {contentRoot}/ 아래 파일을 {dataRoot}/docs_md/ 에 출력.

@@ -18,7 +18,8 @@ import { CACHE } from './config/cache.js';
 export const ManualViewer = (() => {
     // 지원하는 마크다운 소스 정의
     const MD_SOURCES = {
-        'user_manual': { path: PATHS.USER_MANUAL, title: '사용자 매뉴얼' },
+        'user_manual': { path: PATHS.USER_MANUAL, title: '학습 매뉴얼' },
+        'formula_manual': { path: PATHS.FORMULA_MANUAL, title: '실무 매뉴얼 (Formula OS)' },
         'study_summary': { path: PATHS.STUDY_GUIDE, title: '학습 안내서' },
         'mnemonic_guide': { path: PATHS.MNEMONIC_GUIDE, title: '두음법·숫자 암기 총정리' }
     };
@@ -257,6 +258,12 @@ body.manual-open{overflow:hidden;}
             const href = a.getAttribute('href');
             if (!href || href.startsWith('#')) return; // 내부 앵커는 무시
             e.preventDefault();
+            // 매뉴얼 간 이동 (doc:키) — 같은 오버레이에서 다른 문서로 전환
+            const docMatch = href.match(/^doc:([a-z_]+)$/);
+            if (docMatch && MD_SOURCES[docMatch[1]]) {
+                openDocument(docMatch[1]);
+                return;
+            }
             // 교재 바로가기 (subj:과목#chNN) → 오버레이 닫고 교재 리더 해당 과목·챕터로 이동
             const subjMatch = href.match(/^subj:([a-z]+)(?:#(ch\d+))?$/);
             if (subjMatch) {
@@ -454,6 +461,7 @@ body.manual-open{overflow:hidden;}
 
     // 편의 메서드
     function openManual() { return openDocument('user_manual'); }
+    function openFormulaManual() { return openDocument('formula_manual'); }
     function openSummary() { return openDocument('study_summary'); }
     function openMnemonicGuide() { return openDocument('mnemonic_guide'); }
 
@@ -470,6 +478,7 @@ body.manual-open{overflow:hidden;}
     return {
         openDocument,
         openManual,
+        openFormulaManual,
         openSummary,
         openMnemonicGuide,
         close,
