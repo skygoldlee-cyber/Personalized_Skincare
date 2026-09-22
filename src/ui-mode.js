@@ -15,6 +15,9 @@ const STUDY_ONLY_VIEWS = new Set([
     'trainer-view',
     'review-view',
     'exam-view',
+    'textbook-reader-view',
+    'textbook-view',
+    'calendar-view',
 ]);
 
 const PRACTICE_LANDING = 'formula-view';

@@ -26,6 +26,7 @@ import {
 const STUDY_ONLY = [
     'dashboard-view', 'flashcard-view', 'quiz-view',
     'trainer-view', 'review-view', 'exam-view',
+    'textbook-reader-view', 'textbook-view', 'calendar-view',
 ];
 
 // formula 피처 활성 시험 스텁 — hasFeature('formula')가 true여야 실무 랜딩이 발화
@@ -71,9 +72,9 @@ describe('UI 모드 — 학습/실무 전환', () => {
         // 실제 base.css 캐스케이드로 nav-item이 display:none인지 검증
         const targets = visibleNavTargets();
         STUDY_ONLY.forEach(v => expect(targets).not.toContain(v));
+        // 실무에서도 필요한 항목만 표시 — 실무 작업실 + 성분 사전
         expect(targets).toContain('formula-view');
         expect(targets).toContain('dictionary-view');
-        expect(targets).toContain('textbook-reader-view');
         // 학습 도구 라벨은 실무 모드에서 표시
         expect(getComputedStyle(document.querySelector('.nav-study-tools-label')).display).not.toBe('none');
         expect(el('ui-mode-label').textContent).toBe('실무 모드');
