@@ -47,6 +47,7 @@ const SHELL_ASSETS = [
   './src/pwa-install-capture.js',
   './src/pwa-install.js',
   './src/theme-toggle.js',
+  './src/ui-mode.js',
   './src/sanitize.js',
   './src/state.js',
   './src/charts.js',

@@ -23,8 +23,8 @@
 | 구분 | 프레임워크 | 환경 | 파일 위치 | 테스트 수 |
 |------|-----------|------|-----------|-----------|
 | **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 458 |
-| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 221 |
-| **합계** | | | | **679** |
+| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 228 |
+| **합계** | | | | **686** |
 
 ### 설계 원칙
 
@@ -44,7 +44,7 @@ npm test
 # 또는
 npm run test:unit
 
-# DOM 테스트만 실행 (221개)
+# DOM 테스트만 실행 (228개)
 npm run test:dom
 
 # 전체 실행 (Unit + 파서 정합성 + DOM)
@@ -140,7 +140,8 @@ npm run test:watch
 | 25 | `common-offline.dom.test.js` | 4 | 오프라인 감지 | offline 이벤트·프로브 실패→배너 표시, online 복귀→해제 (fake timers) | 2026-09-23 추가 |
 | 26 | `common-scratchpad.dom.test.js` | 4 | 스크래치패드 | 열기/닫기·지우기·포인터 그리기 (canvas 2d 스텁, resetModules) | 2026-09-23 추가 |
 | 27 | `common-a11y.dom.test.js` | 7 | 접근성 | 토스트 role=status, 모달 trapFocus·aria-modal, 아이콘 버튼 aria-label 전수 | 2026-09-23 추가 |
-| | **합계** | **221** | | |
+| 28 | `common-uimode.dom.test.js` | 7 | 학습/실무 UI 모드 | 모드 전환→학습 항목 CSS 숨김(실제 캐스케이드)·학습 도구 펼침·랜딩 리다이렉트·영속 복원 | 2026-09-23 추가 |
+| | **합계** | **228** | | |
 
 ---
 

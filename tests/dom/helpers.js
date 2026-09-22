@@ -33,6 +33,20 @@ export function el(id) {
     return document.getElementById(id);
 }
 
+/**
+ * 실제 CSS 파일을 <style>로 주입한다 — jsdom은 외부 스타일시트를 로드하지 않아
+ * `body.ui-mode-practice .nav-study-only{display:none}` 같은 상태 기반 규칙의
+ * 캐스케이드를 검증하려면 실제 규칙 텍스트가 필요하다.
+ * @param {string} relPath - 루트 기준 상대 경로 (예: 'css/base.css')
+ */
+export function injectCssFile(relPath) {
+    const css = readFileSync(join(ROOT, relPath), 'utf-8');
+    const style = document.createElement('style');
+    style.textContent = css;
+    document.head.appendChild(style);
+    return style;
+}
+
 /** is-hidden이 없으면 표시 중으로 간주 */
 export function isVisible(id) {
     const node = el(id);

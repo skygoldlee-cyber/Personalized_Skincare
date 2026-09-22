@@ -1,0 +1,128 @@
+// tests/dom/common-uimode.dom.test.js — 학습/실무 UI 모드 시나리오
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { loadIndexHtml, el, lastToast, injectCssFile } from './helpers.js';
+
+vi.mock('../../src/ui-utils.js', () => ({
+    showToast: vi.fn(),
+    showConfirm: vi.fn(() => Promise.resolve(true)),
+    showAlert: vi.fn(),
+    vibrate: vi.fn(),
+    HAPTIC: {},
+}));
+
+vi.mock('../../src/views/navigation.js', () => ({
+    switchView: vi.fn(),
+    saveScrollPosition: vi.fn(),
+    restoreScrollPosition: vi.fn(),
+}));
+
+import { switchView } from '../../src/views/navigation.js';
+import { state } from '../../src/state.js';
+import {
+    getUiMode, isPracticeMode, applyUiMode, initUiMode,
+    toggleUiMode, toggleStudyTools,
+} from '../../src/ui-mode.js';
+
+const STUDY_ONLY = [
+    'dashboard-view', 'flashcard-view', 'quiz-view',
+    'trainer-view', 'review-view', 'exam-view',
+];
+
+// formula 피처 활성 시험 스텁 — hasFeature('formula')가 true여야 실무 랜딩이 발화
+const EXAMS = {
+    exams: [
+        { id: 'cosmetic', name: '조제관리사', default: true, features: { formula: true } },
+    ],
+};
+
+function visibleNavTargets() {
+    return [...document.querySelectorAll('.nav-item')]
+        .filter(b => getComputedStyle(b).display !== 'none')
+        .map(b => b.dataset.target);
+}
+
+describe('UI 모드 — 학습/실무 전환', () => {
+    beforeEach(() => {
+        localStorage.clear();
+        document.head.querySelectorAll('style').forEach(s => s.remove());
+        injectCssFile('css/base.css');
+        loadIndexHtml();
+        window.EXAMS_LIST = EXAMS;
+        document.body.classList.remove('ui-mode-practice', 'study-tools-open');
+        state.currentView = 'dashboard-view';
+        vi.clearAllMocks();
+    });
+
+    it('기본 상태 — 학습 모드: 학습 항목 표시·학습 도구 라벨 숨김 (H/E)', () => {
+        applyUiMode();
+        expect(getUiMode()).toBe('study');
+        expect(document.body.classList.contains('ui-mode-practice')).toBe(false);
+        STUDY_ONLY.forEach(v => expect(visibleNavTargets()).toContain(v));
+        expect(getComputedStyle(document.querySelector('.nav-study-tools-label')).display).toBe('none');
+        expect(el('ui-mode-label').textContent).toBe('학습 모드');
+        expect(el('ui-mode-toggle').getAttribute('aria-pressed')).toBe('false');
+    });
+
+    it('실무 모드 전환 — 학습 항목 실제 숨김·도구 라벨 표시·영속 (H/P)', () => {
+        toggleUiMode();
+        expect(isPracticeMode()).toBe(true);
+        expect(localStorage.getItem('ui_mode')).toBe('practice');
+        expect(document.body.classList.contains('ui-mode-practice')).toBe(true);
+        // 실제 base.css 캐스케이드로 nav-item이 display:none인지 검증
+        const targets = visibleNavTargets();
+        STUDY_ONLY.forEach(v => expect(targets).not.toContain(v));
+        expect(targets).toContain('formula-view');
+        expect(targets).toContain('dictionary-view');
+        expect(targets).toContain('textbook-reader-view');
+        // 학습 도구 라벨은 실무 모드에서 표시
+        expect(getComputedStyle(document.querySelector('.nav-study-tools-label')).display).not.toBe('none');
+        expect(el('ui-mode-label').textContent).toBe('실무 모드');
+        expect(el('ui-mode-toggle').getAttribute('aria-pressed')).toBe('true');
+        expect(lastToast()[0]).toContain('실무 모드');
+    });
+
+    it('실무 모드 전환 — 학습 전용 뷰에 있으면 formula-view로 이동 (H)', () => {
+        state.currentView = 'dashboard-view';
+        toggleUiMode();
+        expect(switchView).toHaveBeenCalledWith('formula-view');
+    });
+
+    it('실무 모드 전환 — 실무 뷰에 있으면 이동하지 않음 (B)', () => {
+        state.currentView = 'formula-view';
+        toggleUiMode();
+        expect(switchView).not.toHaveBeenCalled();
+    });
+
+    it('학습 도구 펼침 — 숨겨진 항목 재표시 + aria-expanded·영속 (H/P)', () => {
+        toggleUiMode(); // 실무 모드 진입
+        toggleStudyTools();
+        expect(document.body.classList.contains('study-tools-open')).toBe(true);
+        expect(localStorage.getItem('ui_study_tools_open')).toBe('1');
+        expect(document.querySelector('.nav-study-tools-label').getAttribute('aria-expanded')).toBe('true');
+        // 펼치면 학습 항목이 실제로 다시 표시됨
+        STUDY_ONLY.forEach(v => expect(visibleNavTargets()).toContain(v));
+        toggleStudyTools();
+        expect(document.body.classList.contains('study-tools-open')).toBe(false);
+        expect(localStorage.getItem('ui_study_tools_open')).toBe('0');
+        STUDY_ONLY.forEach(v => expect(visibleNavTargets()).not.toContain(v));
+    });
+
+    it('저장된 실무 모드 복원 — initUiMode 시 formula-view 랜딩 (P/R)', () => {
+        localStorage.setItem('ui_mode', 'practice');
+        localStorage.setItem('ui_study_tools_open', '1');
+        initUiMode();
+        expect(document.body.classList.contains('ui-mode-practice')).toBe(true);
+        expect(document.body.classList.contains('study-tools-open')).toBe(true);
+        expect(switchView).toHaveBeenCalledWith('formula-view');
+        expect(el('ui-mode-label').textContent).toBe('실무 모드');
+    });
+
+    it('학습 모드 복귀 — 클래스 해제·학습 항목 표시 (R)', () => {
+        toggleUiMode(); // practice
+        toggleUiMode(); // study
+        expect(getUiMode()).toBe('study');
+        expect(document.body.classList.contains('ui-mode-practice')).toBe(false);
+        STUDY_ONLY.forEach(v => expect(visibleNavTargets()).toContain(v));
+        expect(lastToast()[0]).toContain('학습 모드');
+    });
+});

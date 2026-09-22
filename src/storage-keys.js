@@ -69,6 +69,8 @@ export const STORAGE_KEYS = {
   // 설정
   APP_THEME: 'appTheme',
   PREFERRED_ORIENTATION: 'preferredOrientation',
+  UI_MODE: 'ui_mode',                      // 'study' | 'practice' (합격 후 실무 모드)
+  UI_STUDY_TOOLS_OPEN: 'ui_study_tools_open',  // 실무 모드 내 학습 도구 펼침 상태
 
   // 세션 (sessionStorage)
   INAPP_GUIDE_SHOWN: '__inappGuideShown',

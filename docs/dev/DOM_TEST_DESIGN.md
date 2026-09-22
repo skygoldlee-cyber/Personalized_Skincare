@@ -1,6 +1,6 @@
 # DOM 시나리오 테스트 설계 (jsdom)
 
-> 상태: ✅ Phase 1~5 완료 (221개) · 작성일: 2026-09-23 · Phase 6(Playwright) 보류
+> 상태: ✅ Phase 1~5 완료 (228개) · 작성일: 2026-09-23 · Phase 6(Playwright) 보류
 
 ## 1. 목적
 
@@ -61,6 +61,7 @@ tests/dom/
   common-offline.dom.test.js      ✅ Phase 5 — 오프라인 배너·복귀
   common-scratchpad.dom.test.js   ✅ Phase 5 — 캔버스 열기·그리기·지우기
   common-a11y.dom.test.js         ✅ Phase 5 — role=status·trapFocus·aria-label
+  common-uimode.dom.test.js       ✅ Phase 5 — 학습/실무 모드 전환·CSS 캐스케이드
 ```
 
 ### 3.1 helpers.js API
@@ -302,7 +303,7 @@ P(영속성)를 필수**로, **입력 폼이 있는 뷰는 X(오류/거부)를 �
 | **2** | 실무 잔여: 계산기·배치·출력물 | 42개 | ✅ 완료 |
 | **3** | 학습 코어: 퀴즈·플래시카드·대시보드·복습 (helpers에 STUDY_DATA/진도 픽스처 추가) | 28개 | ✅ 완료 |
 | **4** | 학습 확장: 리더·검색·사전·시뮬레이터·캘린더·챌린지·훈련소·뽀모도로 (용어집은 리더 통합 커버) | 69개 | ✅ 완료 |
-| **5** | 공통: 테마·오프라인·스크래치패드·a11y·매뉴얼/문제집/시험선택 뷰어 | 34개 | ✅ 완료 |
+| **5** | 공통: 테마·오프라인·스크래치패드·a11y·UI모드·매뉴얼/문제집/시험선택 뷰어 | 41개 | ✅ 완료 |
 | **6** | Playwright E2E (별도 설계) — 레이아웃·SW·PWA·실제 다운로드/인쇄 | 스모크 5개 내외 | ⏸️ 보류 |
 
 Phase 3~5는 helpers 픽스처(§3.1 추가 예정 API)가 선행 과제다 — 학습 뷰는

@@ -49,24 +49,28 @@
                 <button type="button" data-click="ManualViewer.openFormulaManual" class="manual-nav-link">
                     <i class="fa-solid fa-flask" aria-hidden="true"></i> 실무 매뉴얼
                 </button>
-                <div class="nav-group-label">학습</div>
-                <button class="nav-item active" data-target="dashboard-view">
+                <!-- 실무 모드에서만 표시되는 접이식 라벨 — 클릭 시 학습 항목 펼침/접힘 -->
+                <button type="button" class="nav-group-label nav-study-tools-label" data-click="toggleStudyTools" aria-expanded="false">
+                    학습 도구 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                </button>
+                <div class="nav-group-label nav-study-only">학습</div>
+                <button class="nav-item nav-study-only active" data-target="dashboard-view">
                     <i class="fa-solid fa-chart-pie" aria-hidden="true"></i> 대시보드
                 </button>
-                <button class="nav-item" data-target="flashcard-view">
+                <button class="nav-item nav-study-only" data-target="flashcard-view">
                     <i class="fa-solid fa-layer-group" aria-hidden="true"></i> 플래시카드
                 </button>
-                <button class="nav-item" data-target="quiz-view">
+                <button class="nav-item nav-study-only" data-target="quiz-view">
                     <i class="fa-solid fa-circle-question" aria-hidden="true"></i> 기출 퀴즈
                 </button>
-                <div class="nav-group-label">훈련 · 평가</div>
-                <button class="nav-item" data-target="trainer-view">
+                <div class="nav-group-label nav-study-only">훈련 · 평가</div>
+                <button class="nav-item nav-study-only" data-target="trainer-view">
                     <i class="fa-solid fa-dumbbell" aria-hidden="true"></i> 스마트 훈련소
                 </button>
-                <button class="nav-item" data-target="review-view">
+                <button class="nav-item nav-study-only" data-target="review-view">
                     <i class="fa-solid fa-star" aria-hidden="true"></i> 오답/중요 복습
                 </button>
-                <button class="nav-item" data-target="exam-view">
+                <button class="nav-item nav-study-only" data-target="exam-view">
                     <i class="fa-solid fa-file-lines" aria-hidden="true"></i> 실전 모의고사
                 </button>
                 <div class="nav-group-label nav-group-label-formula">실무</div>
@@ -88,6 +92,9 @@
                 </button>
             </nav>
             <div class="sidebar-footer">
+                <button type="button" id="ui-mode-toggle" class="ui-mode-toggle" data-click="toggleUiMode" aria-pressed="false" title="학습/실무 모드 전환 — 합격 후 실무 중심 사용자는 실무 모드를 추천합니다">
+                    <i class="fa-solid fa-repeat" aria-hidden="true"></i> <span id="ui-mode-label">학습 모드</span>
+                </button>
                 <div class="sidebar-footer-meta">
                     <p>© Passmula</p>
                     <span id="sidebar-version">v1.0.0</span>
@@ -1940,27 +1947,27 @@
                 <i class="fa-solid fa-moon" aria-hidden="true"></i>
                 <span>테마</span>
             </button>
-            <button class="mobile-tab-item active" data-target="dashboard-view">
+            <button class="mobile-tab-item nav-study-only active" data-target="dashboard-view">
                 <i class="fa-solid fa-chart-pie" aria-hidden="true"></i>
                 <span>대시보드</span>
             </button>
-            <button class="mobile-tab-item" data-target="flashcard-view">
+            <button class="mobile-tab-item nav-study-only" data-target="flashcard-view">
                 <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
                 <span>카드</span>
             </button>
-            <button class="mobile-tab-item" data-target="quiz-view">
+            <button class="mobile-tab-item nav-study-only" data-target="quiz-view">
                 <i class="fa-solid fa-circle-question" aria-hidden="true"></i>
                 <span>퀴즈</span>
             </button>
-            <button class="mobile-tab-item" data-target="exam-view">
+            <button class="mobile-tab-item nav-study-only" data-target="exam-view">
                 <i class="fa-solid fa-file-lines" aria-hidden="true"></i>
                 <span>모의고사</span>
             </button>
-            <button class="mobile-tab-item" data-target="trainer-view">
+            <button class="mobile-tab-item nav-study-only" data-target="trainer-view">
                 <i class="fa-solid fa-dumbbell" aria-hidden="true"></i>
                 <span>훈련소</span>
             </button>
-            <button class="mobile-tab-item" data-target="review-view">
+            <button class="mobile-tab-item nav-study-only" data-target="review-view">
                 <i class="fa-solid fa-star" aria-hidden="true"></i>
                 <span>복습</span>
             </button>

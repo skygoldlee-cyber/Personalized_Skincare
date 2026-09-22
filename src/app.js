@@ -246,6 +246,7 @@ import { setupEventListeners } from './views/event-listeners.js';
 import { getViewTitles, navigateToView } from './router.js';
 import { contentPath, getActiveExam, getCurrentExamId, getExamList, purgeLegacyStorage, hasFeature } from './exam-context.js';
 import { renderExamSelect, showExamSelect, selectExamAction } from './views/exam-select.js';
+import { initUiMode, toggleUiMode, toggleStudyTools } from './ui-mode.js';
 
 // --- 런타임 에러 안전망 (런타임 ReferenceError 등을 사용자에게 알림) ---
 window.addEventListener('error', function (event) {
@@ -509,6 +510,8 @@ function initApp() {
     step('populateResourceCards', populateResourceCards);
     step('setupImportListener', setupImportListener);
     const navOk = step('setupNavigation', setupNavigation);
+    // 학습/실무 모드 반영 — setupNavigation 이후에 실행해야 switchView가 라우터로 디스패치됨
+    step('initUiMode', initUiMode);
     step('setupEventListeners', () => setupEventListeners(enhanceDataClickAccessibility));
     step('setupPWAInstall', setupPWAInstall);
     step('setupThemeToggle', setupThemeToggle);
@@ -921,6 +924,8 @@ const DELEGATED_HANDLERS = {
     // Formula OS — 법규 준수 체크리스트
     openCompliancePanel, compToggle, compReset, compOpenLaw,
     showIngredientsChangelog,
+    // 학습/실무 UI 모드
+    toggleUiMode, toggleStudyTools,
     /** 복수정답형 모의고사 문항 수 선택 행 토글 — 다른 과목의 열린 행은 닫는다 */
     toggleComboPicker(rowId) {
         const row = document.getElementById(rowId);

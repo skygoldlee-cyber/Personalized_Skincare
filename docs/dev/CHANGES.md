@@ -4,6 +4,28 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-23 학습/실무 UI 모드 + 내비 자기설명성 개선
+
+- **학습/실무 UI 모드** (`src/ui-mode.js` 신규): 합격 후 실무 중심 사용자를
+  위한 모드 전환. 사이드바 푸터의 `학습 모드 ⇄ 실무 모드` 토글로 전환하고
+  `ui_mode`(전역 키, GLOBAL_KEYS 등록)에 영속. 실무 모드 시
+  `body.ui-mode-practice` + `.nav-study-only` 마킹의 CSS 규칙으로 학습·
+  훈련 그룹(6항목)과 모바일 탭바 학습 탭을 숨기고, 접이식 `학습 도구`
+  라벨로 필요 시 펼침(`ui_study_tools_open` 영속). 실무 모드 랜딩은
+  `formula-view`(hasFeature 게이팅), 학습 전용 뷰에서 전환하면 자동
+  리다이렉트. 실무 매뉴얼 버튼은 CSS order로 최상단 재배치.
+- **내비 명명 통일** (e4bee31): 사이드바 `Formula OS`+pill`실무` →
+  `실무 작업실`(3중 명명 해소), 모바일 탭 `포뮬러`→`실무`, `교재`→`교재읽기`,
+  모의고사 아이콘 `fa-file-lines` 통일, 허브 `원료 검색` 카드 → `성분 사전`
+  (dictionary-view 목적지와 정합), 훈련소 부제 6개 카드 범위로 확장.
+- **모바일 탭바 스크롤 힌트** (e4bee31): `background-attachment:
+  scroll/local` 조합의 순수 CSS 스크롤 섀도 — 양 끝 추가 항목 존재를
+  스크롤 위치에 따라 표시/소멸.
+- **테스트 픽스처 확장**: `injectCssFile()` — 실제 base.css를 `<style>`로
+  주입해 jsdom에서 상태 기반 CSS 규칙(display:none 등)의 실제 캐스케이드
+  검증 가능.
+- 테스트: 유닛 458, DOM 228 (+7 common-uimode), import 0 오류, 자산 120개.
+
 ## 2026-09-23 UI 접근성·문서 보강 (커밋 816343e·a42a421·17f943a)
 
 - **단일 시험 시 시험 선택 생략** (816343e): 초기 시험 피커를 `current_exam`

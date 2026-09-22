@@ -629,6 +629,66 @@ body {
     padding-top: var(--space-2);
 }
 
+/* ===== 학습/실무 UI 모드 (ui_mode) ===== */
+/* 실무 모드에서만 보이는 접이식 라벨 — 기본은 숨김 */
+.nav-study-tools-label {
+    display: none;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    text-align: left;
+}
+.nav-study-tools-label i {
+    font-size: var(--text-2xs);
+    transition: transform var(--transition-fast);
+}
+
+body.ui-mode-practice .nav-study-tools-label {
+    display: flex;
+}
+body.ui-mode-practice.study-tools-open .nav-study-tools-label i {
+    transform: rotate(180deg);
+}
+
+/* 실무 모드: 학습 전용 항목 숨김 (학습 도구 펼침 시 표시) — 사이드바·모바일 탭바 공통 */
+body.ui-mode-practice:not(.study-tools-open) .nav-study-only {
+    display: none;
+}
+
+/* 실무 모드에서는 실무 매뉴얼 버튼을 학습 매뉴얼보다 먼저 표시 */
+body.ui-mode-practice .manual-nav-link[data-click$="openFormulaManual"] {
+    order: -1;
+}
+
+/* 사이드바 푸터의 모드 전환 버튼 */
+.ui-mode-toggle {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    background: var(--bg-subtle);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-muted);
+    padding: 0.55rem 0.8rem;
+    font-size: var(--text-xs-sm);
+    font-weight: var(--font-weight-medium);
+    font-family: inherit;
+    cursor: pointer;
+    transition: color var(--transition-base), border-color var(--transition-base);
+}
+.ui-mode-toggle:hover {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+body.ui-mode-practice .ui-mode-toggle {
+    color: var(--color-secondary);
+    border-color: rgba(139, 92, 246, 0.4);
+}
+
 .nav-item {
     background: transparent;
     border: none;
