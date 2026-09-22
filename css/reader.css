@@ -1482,9 +1482,9 @@ body.reader-focus-mode .reader-readable-width {
         background: var(--drawer-bg);
         -webkit-backdrop-filter: blur(12px);
         backdrop-filter: blur(12px);
-        /* 모바일에서 헤더가 넘치지 않도록 */
+        /* 모바일에서 헤더가 넘치지 않도록 (h2 min-width:0 말줄임 + header-actions flex-shrink:0으로 제어)
+           ※ overflow:hidden 금지 — 설정 드롭다운이 헤더 아래로 펼쳐질 때 잘려서 보이지 않음 */
         flex-wrap: nowrap;
-        overflow: hidden;
     }
 
     .app-header h2 {
