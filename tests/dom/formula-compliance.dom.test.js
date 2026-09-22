@@ -1,6 +1,6 @@
 // tests/dom/formula-compliance.dom.test.js — 법규 준수 체크리스트 시나리오
 // 설계: docs/dev/DOM_TEST_DESIGN.md §4
-// 검증: 25항목 렌더·진행 배지, 체크 토글→localStorage 영속·재렌더 checked 유지,
+// 검증: 27항목 렌더·진행 배지, 체크 토글→localStorage 영속·재렌더 checked 유지,
 //       초기화(confirm), 법령 링크→ExamViewer 연동
 
 import { describe, it, beforeEach, expect, vi } from 'vitest';

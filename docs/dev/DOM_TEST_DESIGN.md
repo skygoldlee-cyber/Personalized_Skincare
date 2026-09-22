@@ -115,8 +115,8 @@ tests/dom/
 - CSV 가져오기 — 이름+LOT 중복 건너뜀, 날짜 `YYYY.M.D`/`YYYY/M/D` 정규화 반영
 
 ### formula-compliance.dom.test.js (8)
-- 패널 렌더 — 6개 섹션·25항목·진행 배지 `0/25`
-- `compToggle` → localStorage 영속 + 재렌더 시 checked 유지 + 배지 `1/25`
+- 패널 렌더 — 6개 섹션·27항목·진행 배지 `0/27`
+- `compToggle` → localStorage 영속 + 재렌더 시 checked 유지 + 배지 `1/27`
 - 재토글 → 해제, 미등록 id → 무동작
 - `compReset` confirm 승인/거부 분기
 - `compOpenLaw` → `window.ExamViewer.openExam`에 참조자료 경로 전달 / 미존재 시 안내 토스트
