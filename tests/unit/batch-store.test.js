@@ -154,7 +154,30 @@ test('nextBatchNo — 날짜 접두사로 직접 채번', () => {
 test('checkSnapshot — 생성 시점 검증 요약이 그대로 보존', () => {
   const snap = { ok: 3, warn: 1, banned: 0, unknown: 2, stabWarn: 1, stabInfo: 0 };
   const r = createBatch({ ...sample(), checkSnapshot: snap });
-  assert.deepEqual(r.batch.checkSnapshot, snap);
+  assert.deepEqual(r.batch.checkSnapshot, { ...snap, dbVersion: '' });
+});
+
+test('checkSnapshot — dbVersion 보존 + 카운트 전부 0이어도 버전이 있으면 유지', () => {
+  const snap = { ok: 0, warn: 0, banned: 0, unknown: 0, stabWarn: 0, stabInfo: 0, dbVersion: '2026-03' };
+  const r = createBatch({ ...sample(), checkSnapshot: snap });
+  assert.equal(r.batch.checkSnapshot.dbVersion, '2026-03');
+  // 카운트·버전 모두 없으면 스냅샷 자체를 버림
+  const r2 = createBatch({ ...sample(), checkSnapshot: { ok: 0 } });
+  assert.equal(r2.batch.checkSnapshot, null);
+});
+
+test('phMeasured — 0~14 범위 정제 + 보정으로 갱신', () => {
+  const r = createBatch({ ...sample(), phMeasured: 5.5 });
+  assert.equal(r.batch.phMeasured, 5.5);
+  // 범위 밖 → null
+  const r2 = createBatch({ ...sample(), phMeasured: 15 });
+  assert.equal(r2.batch.phMeasured, null);
+  const r3 = createBatch({ ...sample(), phMeasured: 'abc' });
+  assert.equal(r3.batch.phMeasured, null);
+  // 보정으로 갱신 가능
+  const u = updateBatch(r.batch.id, { phMeasured: 4.2 });
+  assert.equal(u.ok, true);
+  assert.equal(getBatch(r.batch.id).phMeasured, 4.2);
 });
 
 test('QC_FIELDS·QC_VALUES·HYGIENE_FIELDS — 스키마 상수', () => {

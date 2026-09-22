@@ -19,6 +19,7 @@ import {
   QC_FIELDS, QC_VALUES, HYGIENE_FIELDS,
 } from '../batch-store.js';
 import { localDateTimeNow } from '../store-utils.js';
+import { DataLoader } from '../data-loader.js';
 import { daysUntilExpiry } from '../material-ledger.js';
 import {
   buildBatchRecordHtml, buildLabelHtml, buildGuideHtml, printHtml, batchQcSummary,
@@ -129,6 +130,7 @@ function writeBatchForm(b) {
   set('batch-customer-id', (b && b.customerId) || '');
   set('batch-customer-name', (b && b.customerName) || '');
   set('batch-expiry', (b && b.expiryAt) || '');
+  set('batch-ph', b && b.phMeasured != null ? b.phMeasured : '');
   set('batch-notes', (b && b.notes) || '');
   QC_FIELDS.forEach(f => {
     const v = (b && b.qc && b.qc[f.key]) || '';
@@ -154,6 +156,7 @@ export function batchNew(formulaId) {
   const f = typeof formulaId === 'string' ? getFormula(formulaId) : null;
   if (f) applyFormulaDefaults(f);
   updateBatchFormMode();
+  updateAllergyWarn();
 }
 
 /** 보정 모드 — identity 필드(처방·조제일시·배치번호)는 읽기 전용 표시 */
@@ -169,6 +172,7 @@ export function batchEdit(id) {
   const title = document.getElementById('batch-form-title');
   if (title) title.textContent = `조제 기록 보정 — ${b.batchNo}`;
   updateBatchFormMode();
+  updateAllergyWarn();
 }
 
 /** 보정 모드에서는 처방·조제일시 변경 불가 (기록 무결성 — 틀린 회차는 삭제 후 재기록) */
@@ -208,12 +212,39 @@ export function batchCustChanged() {
   if (idEl) idEl.value = id;
   const c = id ? getCustomer(id) : null;
   if (nameEl) nameEl.value = c ? c.name : '';
+  updateAllergyWarn();
 }
 
 export function batchFormulaChanged() {
   const sel = document.getElementById('batch-formula');
   const f = sel && sel.value ? getFormula(sel.value) : null;
   if (f) applyFormulaDefaults(f);
+  updateAllergyWarn();
+}
+
+/** 선택된 고객 카드의 알레르기 이력 ↔ 처방 원료 충돌을 폼에 실시간 표시 */
+function updateAllergyWarn() {
+  const warnEl = document.getElementById('batch-allergy-warn');
+  if (!warnEl) return;
+  const conflicts = currentAllergyConflicts();
+  if (!conflicts.length) {
+    warnEl.classList.add('is-hidden');
+    warnEl.innerHTML = '';
+    return;
+  }
+  warnEl.classList.remove('is-hidden');
+  warnEl.innerHTML = `<div class="f-check f-check-banned batch-allergy-warn-box">`
+    + `<i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> `
+    + `고객 알레르기 이력 원료가 처방에 포함되어 있습니다: ${esc(conflicts.join(', '))} — 저장 전 반드시 확인하세요.</div>`;
+}
+
+/** 현재 폼 상태 기준 알레르기 충돌 원료 목록 */
+function currentAllergyConflicts() {
+  const fsel = document.getElementById('batch-formula');
+  const csel = document.getElementById('batch-customer-id');
+  const formula = fsel && fsel.value ? getFormula(fsel.value) : null;
+  const customer = csel && csel.value ? getCustomer(csel.value) : null;
+  return findAllergyConflicts(customer, formula);
 }
 
 /** QC 라디오 그룹 렌더 — QC_FIELDS/QC_VALUES에서 생성, 1회만 */
@@ -271,6 +302,7 @@ function readBatchForm() {
     customerId: val('batch-customer-id'),
     customerName: val('batch-customer-name'),
     expiryAt: val('batch-expiry'),
+    phMeasured: val('batch-ph') === '' ? null : parseFloat(val('batch-ph')),
     notes: val('batch-notes'),
     qc, hygiene,
   };
@@ -292,21 +324,50 @@ function buildCheckSnapshot(formula) {
     phTarget: formula.phTarget, phActual: formula.phActual, steps: formula.steps,
   });
   const stabWarn = stab.warnings.filter(w => w.level === STAB.WARN).length;
+  const meta = (DataLoader.registry && DataLoader.registry.ingredients) || null;
   return {
     ok: summary.ok || 0, warn: summary.warn || 0, banned: summary.banned || 0,
     unknown: summary.unknown || 0, stabWarn, stabInfo: stab.warnings.length - stabWarn,
+    dbVersion: meta && meta.version ? String(meta.version) : '',
   };
 }
 
-export function batchSave() {
+/**
+ * 고객 알레르기·임신 조건과 처방 원료의 충돌을 검사한다.
+ * 알레르기 이력은 자유 텍스트라 양방향 부분 일치로 판정한다
+ * ("파라벤" 이력 ↔ "메칠파라벤" 원료처럼 상위/하위 표기 차이를 커버).
+ * @returns {string[]} 충돌 원료명 배열
+ */
+export function findAllergyConflicts(customer, formula) {
+  if (!customer || !formula || !Array.isArray(formula.ingredients)) return [];
+  const allergies = (Array.isArray(customer.allergies) ? customer.allergies : [])
+    .map(a => (typeof a === 'string' ? a.trim() : '')).filter(Boolean);
+  if (!allergies.length) return [];
+  return formula.ingredients
+    .map(i => i.name)
+    .filter(n => typeof n === 'string' && allergies.some(a => n.includes(a) || a.includes(n)));
+}
+
+export async function batchSave() {
   const data = readBatchForm();
 
+  // 알레르기 교차검증 — 신규·보정 모두 저장 전 확인 (기록이므로 차단이 아닌 확인)
+  const conflicts = currentAllergyConflicts();
+  if (conflicts.length) {
+    const ok = await showConfirm(
+      `고객 알레르기 이력 원료가 처방에 포함되어 있습니다:\n${conflicts.join(', ')}\n\n그래도 이 조제 기록을 저장할까요?`,
+      '알레르기 원료 확인'
+    );
+    if (!ok) return;
+  }
+
   if (draft.editingId) {
-    // 보정 — QC·위생·기한·고객·메모만 갱신
+    // 보정 — QC·위생·기한·고객·메모·실측 pH만 갱신
     const r = updateBatch(draft.editingId, {
       customerId: data.customerId, customerName: data.customerName,
       targetVolume: data.targetVolume, unit: data.unit,
-      qc: data.qc, hygiene: data.hygiene, expiryAt: data.expiryAt, notes: data.notes,
+      qc: data.qc, phMeasured: data.phMeasured, hygiene: data.hygiene,
+      expiryAt: data.expiryAt, notes: data.notes,
     });
     if (!r.ok) { showToast(r.error || '저장에 실패했습니다.', 'error'); return; }
     showToast(`${r.batch.batchNo} 기록이 보정되었습니다.`, 'success');
@@ -352,7 +413,7 @@ export function batchOpen(id) {
   }).join(' ');
   const snap = b.checkSnapshot;
   const snapHtml = snap
-    ? `<div class="formula-card-meta">규정 검증 스냅샷 — 정상 ${snap.ok}${snap.warn ? ` · 초과 ${snap.warn}` : ''}${snap.banned ? ` · 금지 ${snap.banned}` : ''}${snap.unknown ? ` · 확인 ${snap.unknown}` : ''}${snap.stabWarn ? ` · 안정성 경고 ${snap.stabWarn}` : ''}</div>`
+    ? `<div class="formula-card-meta">규정 검증 스냅샷${snap.dbVersion ? ` (원료 DB v${esc(snap.dbVersion)})` : ''} — 정상 ${snap.ok}${snap.warn ? ` · 초과 ${snap.warn}` : ''}${snap.banned ? ` · 금지 ${snap.banned}` : ''}${snap.unknown ? ` · 확인 ${snap.unknown}` : ''}${snap.stabWarn ? ` · 안정성 경고 ${snap.stabWarn}` : ''}</div>`
     : '';
 
   box.innerHTML = `
@@ -363,6 +424,7 @@ export function batchOpen(id) {
       </div>
       <div class="formula-card-customer"><i class="fa-solid fa-user" aria-hidden="true"></i> ${esc(b.customerName || '고객 미기록')} · 권장 사용기한 ${esc(b.expiryAt || '미기록')}</div>
       <div class="batch-qc-grid">${qcRows}</div>
+      ${b.phMeasured != null ? `<div class="formula-card-meta">실측 pH: ${esc(String(b.phMeasured))}</div>` : ''}
       <div class="formula-card-checks">${hyg}</div>
       ${b.fullIngredients && b.fullIngredients.length ? `<div class="formula-card-inci"><i class="fa-solid fa-list-ol" aria-hidden="true"></i> ${esc(b.fullIngredients.join(', '))}</div>` : ''}
       ${snapHtml}

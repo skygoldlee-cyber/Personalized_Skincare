@@ -10,10 +10,11 @@
 //     customerId, customerName,                        // 인라인 폴백 겸용 (Phase B에서 참조 승격)
 //     targetVolume, unit, madeAt:'YYYY-MM-DDTHH:MM',
 //     qc:{appearance,color,scent,viscosity,foreign},   // '정상'|'이상'|'미확인'
+//     phMeasured,                                       // 회차별 실측 pH (0~14, QC 계량 항목)
 //     hygiene:{toolsSterilized,workspaceCleaned,glovesWorn},
 //     expiryAt:'YYYY-MM-DD',                           // 권장 사용기한
 //     formulation, fullIngredients[],                  // 라벨·안내문용 스냅샷 (처방 수정·삭제와 무관)
-//     checkSnapshot:{ok,warn,banned,unknown,stabWarn,stabInfo},
+//     checkSnapshot:{ok,warn,banned,unknown,stabWarn,stabInfo,dbVersion},
 //     notes, createdAt }
 //
 // 기록 원칙: 배치는 append 지향 — identity 필드(batchNo·formulaId·madeAt·
@@ -88,8 +89,10 @@ function sanitizeCheckSnapshot(snap) {
   const s = {
     ok: intOr0(snap.ok), warn: intOr0(snap.warn), banned: intOr0(snap.banned),
     unknown: intOr0(snap.unknown), stabWarn: intOr0(snap.stabWarn), stabInfo: intOr0(snap.stabInfo),
+    // 검증에 쓰인 원료 DB 버전 — 고시 개정 후에도 "당시 기준"을 특정할 수 있게 보존
+    dbVersion: clampStr(snap.dbVersion || '', 20).trim(),
   };
-  return Object.values(s).some(v => v > 0) ? s : null;
+  return Object.values(s).some(v => v > 0) || s.dbVersion ? s : null;
 }
 
 function sanitizeBatch(data) {
@@ -102,6 +105,10 @@ function sanitizeBatch(data) {
     unit: data.unit === 'ml' ? 'ml' : 'g',
     madeAt: clampDateTime(data.madeAt),
     qc: sanitizeQc(data.qc),
+    phMeasured: (() => {
+      const n = numOrNull(data.phMeasured);
+      return n != null && n >= 0 && n <= 14 ? n : null;
+    })(),
     hygiene: sanitizeHygiene(data.hygiene),
     expiryAt: clampDate(data.expiryAt),
     // 라벨·안내문용 스냅샷 — 처방 수정·삭제와 무관하게 이 회차의 정보를 보존
@@ -203,7 +210,7 @@ export function updateBatch(id, patch) {
     ...src,
     customerId: merged.customerId, customerName: merged.customerName,
     targetVolume: merged.targetVolume, unit: merged.unit,
-    qc: merged.qc, hygiene: merged.hygiene,
+    qc: merged.qc, phMeasured: merged.phMeasured, hygiene: merged.hygiene,
     expiryAt: merged.expiryAt, notes: merged.notes,
   };
   if (!saveAll(all)) return { ok: false, error: '저장에 실패했습니다.' };

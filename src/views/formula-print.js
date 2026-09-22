@@ -34,7 +34,8 @@ export function buildBatchRecordHtml(b) {
     const v = b.qc && b.qc[f.key] ? b.qc[f.key] : '';
     const cls = v === '이상' ? 'fp-qc-bad' : (v === '정상' ? 'fp-qc-ok' : '');
     return `<tr><td>${esc(f.label)}</td><td class="${cls}">${v ? `${QC_BADGE[v]} ${esc(v)}` : '미기록'}</td></tr>`;
-  }).join('');
+  }).join('')
+    + (b.phMeasured != null ? `<tr><td>실측 pH</td><td>${esc(String(b.phMeasured))}</td></tr>` : '');
   const hygItems = HYGIENE_FIELDS.map(f => {
     const done = !!(b.hygiene && b.hygiene[f.key]);
     return `<li>${done ? '☑' : '☐'} ${esc(f.label)}</li>`;
@@ -42,7 +43,8 @@ export function buildBatchRecordHtml(b) {
   const snap = b.checkSnapshot;
   const snapParts = snap
     ? [`정상 ${snap.ok}`, snap.warn ? `초과 ${snap.warn}` : '', snap.banned ? `금지 ${snap.banned}` : '',
-       snap.unknown ? `확인 필요 ${snap.unknown}` : '', snap.stabWarn ? `안정성 경고 ${snap.stabWarn}` : '']
+       snap.unknown ? `확인 필요 ${snap.unknown}` : '', snap.stabWarn ? `안정성 경고 ${snap.stabWarn}` : '',
+       snap.dbVersion ? `원료 DB v${snap.dbVersion}` : '']
       .filter(Boolean).join(' · ')
     : '';
 

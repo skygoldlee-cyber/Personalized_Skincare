@@ -20,6 +20,7 @@ import {
 import { createFormula } from '../../src/formula-store.js';
 import { createCustomer } from '../../src/customer-store.js';
 import { listBatches, getBatch, createBatch, QC_FIELDS, HYGIENE_FIELDS } from '../../src/batch-store.js';
+import { DataLoader } from '../../src/data-loader.js';
 
 const INGREDIENTS_STUB = [
     { name: '정제수', engName: 'Water', type: 'approved', category: '용제', description: '', limit: '' },
@@ -52,6 +53,7 @@ describe('조제 기록 — 배치 시나리오', () => {
         loadIndexHtml();
         window.INGREDIENTS_DATA = INGREDIENTS_STUB;
         window.print = vi.fn();
+        DataLoader.registry = { ingredients: { version: '2026-03' } };
         vi.mocked(showToast).mockClear();
         vi.mocked(showConfirm).mockClear();
         vi.mocked(showConfirm).mockResolvedValue(true);
@@ -97,14 +99,14 @@ describe('조제 기록 — 배치 시나리오', () => {
         expect(el('batch-customer-name').value).toBe('이OO');
     });
 
-    it('저장 → 배치번호 채번·검증 스냅샷·상세 패널 전환', () => {
+    it('저장 → 배치번호 채번·검증 스냅샷·상세 패널 전환', async () => {
         const f = seedFormula({ ingredients: [{ name: '살리실산', concentration: 5 }] });
         batchNew(f.id);
         checkQc('appearance', '정상');
         checkQc('scent', '정상');
         el('batch-hyg-toolsSterilized').checked = true;
 
-        batchSave();
+        await batchSave();
 
         const b = listBatches()[0];
         expect(b.batchNo).toMatch(/^\d{8}-01$/);
@@ -112,8 +114,10 @@ describe('조제 기록 — 배치 시나리오', () => {
         expect(b.qc.appearance).toBe('정상');
         expect(b.hygiene.toolsSterilized).toBe(true);
         expect(b.hygiene.glovesWorn).toBe(false);
-        // 규정 검증 스냅샷 — 살리실산 5% > 한도 2% → warn 1
+        // 규정 검증 스냅샷 — 살리실산 5% > 한도 2% → warn 1, DB 버전 기록
         expect(b.checkSnapshot.warn).toBe(1);
+        expect(b.checkSnapshot.dbVersion).toBe('2026-03');
+        expect(el('batch-detail').innerHTML).toContain('원료 DB v2026-03');
         expect(lastToast()[0]).toContain(b.batchNo);
         expect(lastToast()[1]).toBe('success');
         // 저장 후 상세 패널로 전환 — 스냅샷·QC 행 표시
@@ -123,27 +127,27 @@ describe('조제 기록 — 배치 시나리오', () => {
         expect(el('batch-detail').innerHTML).toContain('초과 1');
     });
 
-    it('같은 일자 두 번째 배치 → 순번 -02', () => {
+    it('같은 일자 두 번째 배치 → 순번 -02', async () => {
         const f = seedFormula();
         batchNew(f.id);
-        batchSave();
+        await batchSave();
         batchNew(f.id);
-        batchSave();
+        await batchSave();
 
         const nos = listBatches().map(b => b.batchNo).sort();
         expect(nos[0]).toMatch(/-01$/);
         expect(nos[1]).toMatch(/-02$/);
     });
 
-    it('처방 미선택 저장 → 에러 토스트·미저장', () => {
+    it('처방 미선택 저장 → 에러 토스트·미저장', async () => {
         batchNew();
-        batchSave();
+        await batchSave();
         expect(listBatches().length).toBe(0);
         expect(lastToast()[0]).toContain('처방을 선택');
         expect(lastToast()[1]).toBe('error');
     });
 
-    it('보정 모드 — 처방·조제일시 잠금 + QC 부분 병합·배치번호 불변', () => {
+    it('보정 모드 — 처방·조제일시 잠금 + QC 부분 병합·배치번호 불변', async () => {
         const { batch } = createBatch({
             formulaName: '수분 세럼', madeAt: '2026-09-20T10:00',
             qc: { appearance: '정상' }, hygiene: { glovesWorn: true },
@@ -158,7 +162,7 @@ describe('조제 기록 — 배치 시나리오', () => {
         expect(el('batch-hyg-glovesWorn').checked).toBe(true);
 
         checkQc('scent', '이상');
-        batchSave();
+        await batchSave();
 
         const b = getBatch(batch.id);
         expect(b.batchNo).toBe(batch.batchNo);          // identity 불변
@@ -192,6 +196,58 @@ describe('조제 기록 — 배치 시나리오', () => {
         const list = el('batch-list').innerHTML;
         expect(list).toContain('QC 이상: 향');
         expect(list).toContain('위생 2/3');
+    });
+
+    it('실측 pH — 폼 입력 → 저장·상세 표시, 보정으로 갱신', async () => {
+        const f = seedFormula();
+        batchNew(f.id);
+        el('batch-ph').value = '5.5';
+        await batchSave();
+
+        const b = listBatches()[0];
+        expect(b.phMeasured).toBe(5.5);
+        expect(el('batch-detail').innerHTML).toContain('실측 pH: 5.5');
+
+        batchEdit(b.id);
+        expect(el('batch-ph').value).toBe('5.5');
+        el('batch-ph').value = '4.2';
+        await batchSave();
+        expect(getBatch(b.id).phMeasured).toBe(4.2);
+    });
+
+    it('고객 알레르기 × 처방 원료 충돌 → 저장 전 confirm 경고', async () => {
+        const { customer } = createCustomer({ name: '박OO', allergies: ['글리세린'] });
+        const f = seedFormula(); // 글리세린 5% 포함
+        batchNew(f.id);
+        el('batch-customer-select').value = customer.id;
+        el('batch-customer-select').dispatchEvent(new Event('change'));
+
+        // 실시간 경고 표시
+        expect(el('batch-allergy-warn').classList.contains('is-hidden')).toBe(false);
+        expect(el('batch-allergy-warn').textContent).toContain('글리세린');
+
+        // confirm 거부 → 미저장
+        vi.mocked(showConfirm).mockResolvedValueOnce(false);
+        await batchSave();
+        expect(listBatches().length).toBe(0);
+        expect(vi.mocked(showConfirm).mock.calls[0][0]).toContain('글리세린');
+
+        // confirm 승인 → 저장
+        await batchSave();
+        expect(listBatches().length).toBe(1);
+    });
+
+    it('알레르기 무관 고객 → 경고 없이 바로 저장', async () => {
+        const { customer } = createCustomer({ name: '최OO', allergies: ['레티놀'] });
+        const f = seedFormula();
+        batchNew(f.id);
+        el('batch-customer-select').value = customer.id;
+        el('batch-customer-select').dispatchEvent(new Event('change'));
+
+        expect(el('batch-allergy-warn').classList.contains('is-hidden')).toBe(true);
+        await batchSave();
+        expect(vi.mocked(showConfirm)).not.toHaveBeenCalled();
+        expect(listBatches().length).toBe(1);
     });
 
     it('인쇄 — 기록지·라벨 → print-area 렌더 + printing 클래스', () => {

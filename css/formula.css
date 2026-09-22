@@ -723,6 +723,19 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 }
 .batch-qc-chip input { margin-right: 0.25rem; }
 
+/* 배치 폼 실측 pH 입력 */
+.batch-ph-input { max-width: 7rem; }
+
+/* 배치 폼 알레르기 충돌 경고 */
+#batch-allergy-warn { margin-top: 0.5rem; }
+.batch-allergy-warn-box {
+    display: block;
+    padding: 0.6rem 0.8rem;
+    border-radius: var(--radius-md, 8px);
+    border: 1px solid currentColor;
+    font-weight: 600;
+}
+
 /* 배치 상세 QC 그리드 */
 .batch-qc-grid {
     display: grid;

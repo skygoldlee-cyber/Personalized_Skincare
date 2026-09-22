@@ -1658,7 +1658,12 @@
                         <div class="formula-field">
                             <span class="formula-field-label">품질 확인 (이 회차) <span class="fold-hint">외관·색상·향·점도·이물</span></span>
                             <div class="batch-qc-form" id="batch-qc-fields"></div>
+                            <div class="batch-qc-row">
+                                <span class="batch-qc-label">실측 pH</span>
+                                <input type="number" id="batch-ph" class="form-input batch-ph-input" min="0" max="14" step="0.1" placeholder="예: 5.5" aria-label="실측 pH">
+                            </div>
                         </div>
+                        <div id="batch-allergy-warn" class="is-hidden" role="status" aria-live="polite"></div>
                         <div class="formula-field">
                             <span class="formula-field-label">위생·안전 확인</span>
                             <div class="formula-chip-row">
