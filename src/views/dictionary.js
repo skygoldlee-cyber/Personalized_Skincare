@@ -3,6 +3,8 @@ import { state } from '../state.js';
 import { esc } from '../sanitize.js';
 import { getChosung } from '../utils.js';
 import { hasFeature } from '../exam-context.js';
+import { toCsv, downloadCsv } from '../csv-utils.js';
+import { showToast } from '../ui-utils.js';
 
 export const dictState = {
     query: '',
@@ -12,6 +14,22 @@ export const dictState = {
 // 가상 스크롤 관련 상태
 let isScrollBound = false;
 let currentFilteredList = [];
+
+/** 검색어·카테고리 필터를 적용한 원료 목록 — 렌더와 CSV보내기가 공유 */
+export function filterIngredients(db, query, filter) {
+    const q = (query || '').toLowerCase().trim();
+    return db.filter(ing => {
+        if (filter !== 'all' && ing.type !== filter) return false;
+        if (!q) return true;
+        const name = ing.name.toLowerCase();
+        const eng = ing.engName ? ing.engName.toLowerCase() : '';
+        const cat = ing.category ? ing.category.toLowerCase() : '';
+        // 초성 검색 매칭
+        const nameChosung = getChosung(name);
+        const queryChosung = getChosung(q);
+        return name.includes(q) || eng.includes(q) || cat.includes(q) || nameChosung.includes(queryChosung);
+    });
+}
 
 /**
  * 성분 사전을 렌더링하고 가상 스크롤을 초기화합니다.
@@ -30,27 +48,7 @@ export function renderDictionary() {
         return;
     }
     
-    const query = dictState.query.toLowerCase().trim();
-    const filter = dictState.filter;
-    
-    // 필터링 적용
-    currentFilteredList = db.filter(ing => {
-        // 1. 카테고리 필터
-        if (filter !== 'all' && ing.type !== filter) return false;
-        
-        // 2. 검색어 필터
-        if (!query) return true;
-        
-        const name = ing.name.toLowerCase();
-        const eng = ing.engName ? ing.engName.toLowerCase() : '';
-        const cat = ing.category ? ing.category.toLowerCase() : '';
-        
-        // 초성 검색 매칭
-        const nameChosung = getChosung(name);
-        const queryChosung = getChosung(query);
-        
-        return name.includes(query) || eng.includes(query) || cat.includes(query) || nameChosung.includes(queryChosung);
-    });
+    currentFilteredList = filterIngredients(db, dictState.query, dictState.filter);
     
     if (currentFilteredList.length === 0) {
         container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--color-text-muted);"><i class="fa-solid fa-face-sad-tear" style="font-size: 2rem; margin-bottom: 1rem; display: block;"></i> 검색 결과가 없습니다. 다른 검색어를 입력해보세요.</div>';
@@ -229,4 +227,34 @@ export function clearDictSearch() {
         dictState.query = '';
         renderDictionary();
     }
+}
+
+/**
+ * 원료 DB CSV보내기 — 현재 검색어·필터가 적용된 목록을 저장한다.
+ * 유형 코드는 한국어 표기(사용 가능/사용 제한/사용 금지)로 변환해 가독성을 확보한다.
+ */
+const DICT_CSV_HEADERS = ['원료명', '영문명', '유형', '유형코드', '카테고리', '배합한도', '설명', 'TIP'];
+const TYPE_LABEL = { approved: '사용 가능', restricted: '사용 제한', banned: '사용 금지' };
+
+export function dictExportCsv() {
+    const db = typeof window.INGREDIENTS_DATA !== 'undefined' ? window.INGREDIENTS_DATA : [];
+    // 렌더된 목록 대신 현재 검색어·필터로 재계산 — 렌더 순서와 무관하게 정확
+    const rows = filterIngredients(db, dictState.query, dictState.filter);
+    if (!rows.length) { showToast('보낼 원료 데이터가 없습니다.', 'warning'); return; }
+    const meta = (typeof DataLoader !== 'undefined' && DataLoader.registry && DataLoader.registry.ingredients) || null;
+    const ver = meta && meta.version ? `_v${meta.version}` : '';
+    downloadCsv(
+        toCsv([...DICT_CSV_HEADERS], rows, ing => [
+            ing.name || '',
+            ing.engName || '',
+            TYPE_LABEL[ing.type] || ing.type || '',
+            ing.type || '',
+            ing.category || '',
+            ing.limit || '',
+            ing.description || '',
+            ing.tip || '',
+        ]),
+        `ingredients${ver}_${new Date().toISOString().split('T')[0]}.csv`
+    );
+    showToast(`원료 ${rows.length}종을 CSV로 저장했습니다.`, 'success');
 }

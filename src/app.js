@@ -93,7 +93,8 @@ import {
     renderDictionary,
     filterDictionary,
     setDictFilter,
-    clearDictSearch
+    clearDictSearch,
+    dictExportCsv
 } from './views/dictionary.js';
 import {
     renderStudyCalendar,
@@ -895,7 +896,7 @@ const DELEGATED_HANDLERS = {
     startDailyChallenge, closeDailyModal, nextDailyStep,
     submitDailyCardAnswer, submitDailyShortAnswer,
     // 사전/시험 전환
-    clearDictSearch, setDictFilter, showExamSelect, selectExamAction,
+    clearDictSearch, setDictFilter, dictExportCsv, showExamSelect, selectExamAction,
     // Formula OS (배합 계산·My 포뮬러)
     openFormulaList, openFormulaCalc, openIngredientDict, exitFormulaSubView,
     formulaNew, formulaOpen, formulaDuplicate, formulaDelete,

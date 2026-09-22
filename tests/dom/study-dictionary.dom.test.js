@@ -14,10 +14,12 @@ vi.mock('../../src/ui-utils.js', () => ({
     HAPTIC: { correct: 30, wrong: [40, 30, 40], tap: 10 },
 }));
 
-import { loadIndexHtml, el, resetStudyState } from './helpers.js';
+import { loadIndexHtml, el, resetStudyState, spyAnchorDownload, lastToast } from './helpers.js';
 import {
     renderDictionary, filterDictionary, setDictFilter, clearDictSearch, dictState,
+    dictExportCsv,
 } from '../../src/views/dictionary.js';
+import { showToast } from '../../src/ui-utils.js';
 
 const DB = [
     { name: '글리세린', engName: 'Glycerin', type: 'approved', category: '보습제', description: '습윤제', limit: '제한 없음', tip: '보습 핵심' },
@@ -117,5 +119,37 @@ describe('성분 사전 — 검색·필터·카드', () => {
 
         expect(el('dict-search-input').value).toBe('');
         expect(el('dict-results-container').querySelectorAll('.dict-card').length).toBe(3);
+    });
+
+    it('CSV보내기 — 전체 목록 다운로드 트리거 + 건수 토스트', () => {
+        const dl = spyAnchorDownload();
+        dictExportCsv();
+        dl.restore();
+
+        expect(dl.clicks.length).toBe(1);
+        expect(dl.clicks[0].download).toMatch(/^ingredients.*\.csv$/);
+        expect(lastToast()[0]).toContain('3종');
+        expect(lastToast()[1]).toBe('success');
+    });
+
+    it('CSV보내기 — 필터 적용 시 해당 유형만보내기', () => {
+        setDictFilter('banned');
+        const dl = spyAnchorDownload();
+        dictExportCsv();
+        dl.restore();
+
+        expect(dl.clicks.length).toBe(1);
+        expect(lastToast()[0]).toContain('1종');
+    });
+
+    it('CSV보내기 — 검색 결과 0건이면 warning 토스트, 다운로드 없음', () => {
+        el('dict-search-input').value = '없는성분';
+        filterDictionary();
+        const dl = spyAnchorDownload();
+        dictExportCsv();
+        dl.restore();
+
+        expect(dl.clicks.length).toBe(0);
+        expect(vi.mocked(showToast).mock.calls.at(-1)[1]).toBe('warning');
     });
 });
