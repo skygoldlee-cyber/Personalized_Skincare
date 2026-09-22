@@ -18,7 +18,7 @@
 ```powershell
 # 테스트
 npm.cmd test                          # 유닛 테스트 (node --test, 454개)
-npm.cmd run test:dom                  # DOM 테스트 (Vitest + jsdom)
+npm.cmd run test:dom                  # DOM 테스트 (Vitest + jsdom, 48개)
 npm.cmd run test:all                   # 전체 테스트 (unit + parser + dom)
 
 # 빌드
@@ -253,6 +253,7 @@ docs/                   # 개발 문서
 - `docs/dev/CONTENT_WORKFLOW.md` — content 변경 시 작업 절차 가이드
 - `docs/dev/CHANGES.md` — 변경 이력
 - `docs/dev/TESTING.md` — 테스트 가이드
+- `docs/dev/DOM_TEST_DESIGN.md` — jsdom UI 시나리오 테스트 설계
 - `docs/dev/TEXTBOOK_AUTHORING_GUIDE.md` — 교재 작성 가이드
 - `docs/dev/NUMBERING_SYSTEM.md` — 교재 번호체계 가이드 (십진법)
 - `docs/dev/QUESTION_SCHEMA_DESIGN.md` — 문항 스키마 + 복수정답형 변환 파이프라인 설계

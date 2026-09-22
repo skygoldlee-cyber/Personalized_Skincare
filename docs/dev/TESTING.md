@@ -23,8 +23,8 @@
 | 구분 | 프레임워크 | 환경 | 파일 위치 | 테스트 수 |
 |------|-----------|------|-----------|-----------|
 | **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 454 |
-| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 21 |
-| **합계** | | | | **475** |
+| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 48 |
+| **합계** | | | | **502** |
 
 ### 설계 원칙
 
@@ -44,7 +44,7 @@ npm test
 # 또는
 npm run test:unit
 
-# DOM 테스트만 실행 (21개)
+# DOM 테스트만 실행 (48개)
 npm run test:dom
 
 # 전체 실행 (Unit + 파서 정합성 + DOM)
@@ -114,7 +114,12 @@ npm run test:watch
 |---|------|-----------|-----------|------|
 | 1 | `backup.dom.test.js` | 10 | `getBackupKeys()`, `exportData()`, `triggerImport()`, `importData()` | localStorage + DOM 조작 |
 | 2 | `router.dom.test.js` | 11 | `getViewTitles()`, `navigateToView()` | 뷰 타이틀 맵, active 클래스 동기화, 렌더러 호출, 오디오 정지, 포커스 모드 | 2026-09-03 추가 |
-| | **합계** | **21** | | |
+| — | `helpers.js` | — | 공통 픽스처 | `loadIndexHtml()`(실제 index.html 주입), `selectFile`, `flushAsync`, `lastToast`, `spyAnchorDownload` | 2026-09-23 추가 |
+| 3 | `formula-nav.dom.test.js` | 5 | 패널 전환·서브내비 | 허브↔서브패널 is-hidden 전환, 서브내비 6칩·활성 칩 | 2026-09-23 추가 |
+| 4 | `formula-customer.dom.test.js` | 9 | 고객 CRUD + CSV | 빈 상태→등록→목록, CSV UTF-8/EUC-KR·중복·confirm 거부·보내기·양식 | 2026-09-23 추가 |
+| 5 | `formula-material.dom.test.js` | 5 | 원료 장부 + CSV | 기한 4상태 배지·경고 배너, CSV 이름+LOT 중복·날짜 정규화 | 2026-09-23 추가 |
+| 6 | `formula-compliance.dom.test.js` | 8 | 법규 체크리스트 | 25항목 렌더·배지, 체크 토글 영속·재토글·초기화, ExamViewer 연동 | 2026-09-23 추가 |
+| | **합계** | **48** | | |
 
 ---
 
@@ -309,6 +314,31 @@ npm run test:watch
 
 #### `statement-tracker.test.js` (9개)
 - `tools/build/statement-tracker.js`: 진술별 정답률 추적·통계 집계
+
+### 4.10b DOM — Formula OS UI 시나리오 (2026-09-23, 설계: DOM_TEST_DESIGN.md)
+
+`tests/dom/helpers.js`가 실제 `index.html`의 `<body>`를 jsdom에 주입 — 컨트롤러
+export 함수를 직접 호출하고 DOM 반영을 검증한다. `data-click` 위임 자체는
+`delegation-guard`가 정적 검증하므로 중복 테스트하지 않는다.
+
+#### `formula-nav.dom.test.js` (5개)
+- `initFormulaView`/`open*Panel`/`exitFormulaSubView` — 12개 패널의 `is-hidden` 전수 검증
+- 서브내비 칩 개수·활성 칩 텍스트·칩의 `data-click` 핸들러명 존재
+
+#### `formula-customer.dom.test.js` (9개)
+- 빈 상태→`custNew`→폼 입력→`custSave`→상세 패널·목록 카드·사용 배지
+- CSV: UTF-8 2행 가져오기(confirm 후 토스트 요약), EUC-KR 바이트 파일 디코딩,
+  중복 건너뜀 집계, 헤더 불일치 오류, confirm 거부,보내기·양식 다운로드 트리거
+
+#### `formula-material.dom.test.js` (5개)
+- 등록→목록 반영, 기한 4상태 배지(expired/soon/ok/none)·경고 배너 표시·숨김
+- CSV: `YYYY.M.D`/`YYYY/M/D` 날짜 정규화, 이름+LOT 중복 건너뜀
+
+#### `formula-compliance.dom.test.js` (8개)
+- 6섹션·25항목 렌더, `점검 N/25` 배지
+- `compToggle` → `cosmetic:formula_compliance` 영속 + 재렌더 checked 유지,
+  재토글 해제, 미등록 id 무동작
+- `compReset` confirm 승인/거부 분기, `compOpenLaw` → `window.ExamViewer.openExam` 경로·미존재 시 안내 토스트
 
 ### 4.12b Formula OS — 업무 레이어 (Phase A~D) + CSV
 
