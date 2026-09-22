@@ -180,6 +180,45 @@ test('phMeasured — 0~14 범위 정제 + 보정으로 갱신', () => {
   assert.equal(getBatch(r.batch.id).phMeasured, 4.2);
 });
 
+test('materialLots — {name,materialId,lot} 정제 + name/materialId 없으면 제외', () => {
+  const r = createBatch({
+    ...sample(),
+    materialLots: [
+      { name: '글리세린', materialId: 'mat_1', lot: 'L2401' },
+      { name: '정제수', materialId: 'mat_2' },           // lot 없음 허용
+      { name: '', materialId: 'mat_3', lot: 'X' },        // name 없음 → 제외
+      { name: '폐기', lot: 'Y' },                         // materialId 없음 → 제외
+      'junk',
+    ],
+  });
+  assert.equal(r.batch.materialLots.length, 2);
+  assert.equal(r.batch.materialLots[0].lot, 'L2401');
+  // 보정으로 갱신 가능
+  const u = updateBatch(r.batch.id, {
+    materialLots: [{ name: '글리세린', materialId: 'mat_9', lot: 'L9999' }],
+  });
+  assert.equal(u.ok, true);
+  assert.equal(getBatch(r.batch.id).materialLots[0].materialId, 'mat_9');
+});
+
+test('deliveredAt·disposition — 날짜 형식·열거형 정제', () => {
+  const r = createBatch({
+    ...sample(),
+    deliveredAt: '2026-09-25',
+    disposition: '폐기',
+  });
+  assert.equal(r.batch.deliveredAt, '2026-09-25');
+  assert.equal(r.batch.disposition, '폐기');
+  // 잘못된 값 정제
+  const r2 = createBatch({ ...sample(), deliveredAt: '25/09/2026', disposition: '버림' });
+  assert.equal(r2.batch.deliveredAt, '');
+  assert.equal(r2.batch.disposition, '');
+  // 보정으로 인도일·조치 기록
+  const u = updateBatch(r2.batch.id, { deliveredAt: '2026-09-26', disposition: '재조제' });
+  assert.equal(u.batch.deliveredAt, '2026-09-26');
+  assert.equal(u.batch.disposition, '재조제');
+});
+
 test('QC_FIELDS·QC_VALUES·HYGIENE_FIELDS — 스키마 상수', () => {
   assert.equal(QC_FIELDS.length, 5);
   assert.deepEqual([...QC_VALUES], ['정상', '이상', '미확인']);

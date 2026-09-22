@@ -11,8 +11,11 @@
 //     targetVolume, unit, madeAt:'YYYY-MM-DDTHH:MM',
 //     qc:{appearance,color,scent,viscosity,foreign},   // '정상'|'이상'|'미확인'
 //     phMeasured,                                       // 회차별 실측 pH (0~14, QC 계량 항목)
+//     disposition,                                      // QC 이상 배치 조치: '폐기'|'재조제'|'보류'|''
 //     hygiene:{toolsSterilized,workspaceCleaned,glovesWorn},
 //     expiryAt:'YYYY-MM-DD',                           // 권장 사용기한
+//     deliveredAt:'YYYY-MM-DD',                        // 고객 인도·판매일 (판매내역서 근거)
+//     materialLots:[{name,materialId,lot}],            // 사용 원료 LOT 스냅샷 (역추적용)
 //     formulation, fullIngredients[],                  // 라벨·안내문용 스냅샷 (처방 수정·삭제와 무관)
 //     checkSnapshot:{ok,warn,banned,unknown,stabWarn,stabInfo,dbVersion},
 //     notes, createdAt }
@@ -49,9 +52,14 @@ export const HYGIENE_FIELDS = Object.freeze([
   { key: 'glovesWorn', label: '장갑 착용' },
 ]);
 
+// QC 이상 배치의 후속 조치 — 기록이므로 열거형 외 값은 ''으로 정제
+export const DISPOSITION_OPTIONS = Object.freeze(['폐기', '재조제', '보류']);
+
 const MAX_NAME_LEN = 60;
 const MAX_NOTE_LEN = 500;
 const MAX_INCI = 60;
+const MAX_LOTS = 60;
+const MAX_LOT_LEN = 40;
 
 /** 고유 ID 생성: bat_<base36시간><난수> */
 export function newBatchId() {
@@ -95,6 +103,20 @@ function sanitizeCheckSnapshot(snap) {
   return Object.values(s).some(v => v > 0) || s.dbVersion ? s : null;
 }
 
+function sanitizeLots(lots) {
+  if (!Array.isArray(lots)) return [];
+  return lots
+    .map(l => {
+      if (!l || typeof l !== 'object') return null;
+      const name = clampStr(l.name || '', MAX_NAME_LEN).trim();
+      const materialId = clampStr(l.materialId || '', 40).trim();
+      const lot = clampStr(l.lot || '', MAX_LOT_LEN).trim();
+      return name && materialId ? { name, materialId, lot } : null;
+    })
+    .filter(Boolean)
+    .slice(0, MAX_LOTS);
+}
+
 function sanitizeBatch(data) {
   return {
     formulaId: clampStr(data.formulaId || '', 40).trim(),
@@ -111,6 +133,9 @@ function sanitizeBatch(data) {
     })(),
     hygiene: sanitizeHygiene(data.hygiene),
     expiryAt: clampDate(data.expiryAt),
+    deliveredAt: clampDate(data.deliveredAt),
+    disposition: pickEnum(data.disposition, DISPOSITION_OPTIONS),
+    materialLots: sanitizeLots(data.materialLots),
     // 라벨·안내문용 스냅샷 — 처방 수정·삭제와 무관하게 이 회차의 정보를 보존
     formulation: clampStr(data.formulation || '', 30).trim(),
     fullIngredients: Array.isArray(data.fullIngredients)
@@ -211,7 +236,9 @@ export function updateBatch(id, patch) {
     customerId: merged.customerId, customerName: merged.customerName,
     targetVolume: merged.targetVolume, unit: merged.unit,
     qc: merged.qc, phMeasured: merged.phMeasured, hygiene: merged.hygiene,
-    expiryAt: merged.expiryAt, notes: merged.notes,
+    expiryAt: merged.expiryAt, deliveredAt: merged.deliveredAt,
+    disposition: merged.disposition, materialLots: merged.materialLots,
+    notes: merged.notes,
   };
   if (!saveAll(all)) return { ok: false, error: '저장에 실패했습니다.' };
   return { ok: true, batch: all[idx] };

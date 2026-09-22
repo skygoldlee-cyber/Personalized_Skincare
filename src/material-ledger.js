@@ -77,6 +77,25 @@ export function findMaterialByName(name) {
   return loadAll().find(m => m.name === target) || null;
 }
 
+/**
+ * 이름 정확 매칭 전부 — 같은 원료가 복수 LOT으로 등록된 경우를 위한 조회.
+ * 기한 임박 순 정렬 (기한 없음은 맨 뒤) — 선입선출 기본값으로 사용.
+ * @param {string} name
+ * @returns {object[]} 매칭된 원료 항목 배열
+ */
+export function findMaterialsByName(name) {
+  if (typeof name !== 'string' || !name.trim()) return [];
+  const target = name.trim();
+  return loadAll()
+    .filter(m => m.name === target)
+    .sort((a, b) => {
+      if (!a.expiryAt && !b.expiryAt) return 0;
+      if (!a.expiryAt) return 1;
+      if (!b.expiryAt) return -1;
+      return a.expiryAt.localeCompare(b.expiryAt);
+    });
+}
+
 /** 저장 한도·현재 개수 */
 export function getMaterialUsage() {
   const count = loadAll().length;

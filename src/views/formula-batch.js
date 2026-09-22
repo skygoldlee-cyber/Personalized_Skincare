@@ -20,7 +20,7 @@ import {
 } from '../batch-store.js';
 import { localDateTimeNow } from '../store-utils.js';
 import { DataLoader } from '../data-loader.js';
-import { daysUntilExpiry } from '../material-ledger.js';
+import { daysUntilExpiry, findMaterialsByName } from '../material-ledger.js';
 import {
   buildBatchRecordHtml, buildLabelHtml, buildGuideHtml, printHtml, batchQcSummary,
 } from './formula-print.js';
@@ -73,13 +73,23 @@ export function openBatchPanel() {
           : `<span class="f-check f-check-ok">QC 정상 ${QC_FIELDS.length - s.bad.length - s.unchecked}/${QC_FIELDS.length}</span>`);
     const hygHtml = `<span class="f-check ${s.hygDone === s.hygTotal ? 'f-check-ok' : 'f-check-warn'}">위생 ${s.hygDone}/${s.hygTotal}</span>`;
     const expiryHtml = b.expiryAt ? expiryBadge(b.expiryAt) : '';
+    // 인도일 — 판매내역서 근거 (미기록 시 회색 배지)
+    const delivHtml = b.deliveredAt
+      ? `<span class="f-check f-check-ok">인도 ${esc(b.deliveredAt)}</span>`
+      : '<span class="f-check f-check-unknown">미인도</span>';
+    // QC 이상인데 조치 미기록이면 경고 배지
+    const dispHtml = s.bad.length
+      ? (b.disposition
+          ? `<span class="f-check f-check-warn">조치: ${esc(b.disposition)}</span>`
+          : '<span class="f-check f-check-banned">조치 미기록</span>')
+      : (b.disposition ? `<span class="f-check f-check-unknown">조치: ${esc(b.disposition)}</span>` : '');
     return `
       <div class="formula-card">
         <div class="formula-card-head">
           <h4 class="formula-card-name">${esc(b.batchNo)} — ${esc(b.formulaName)}</h4>
           <span class="formula-card-meta">조제 ${esc((b.madeAt || '').replace('T', ' '))} · ${b.targetVolume != null ? `${b.targetVolume}${b.unit || 'g'}` : '총량 미지정'}${b.customerName ? ` · ${esc(b.customerName)}` : ''}</span>
         </div>
-        <div class="formula-card-checks">${qcHtml}${hygHtml}${expiryHtml}</div>
+        <div class="formula-card-checks">${qcHtml}${hygHtml}${expiryHtml}${delivHtml}${dispHtml}</div>
         <div class="formula-card-actions">
           <button class="btn btn-primary btn-sm" data-click="batchOpen" data-arg="${esc(b.id)}"><i class="fa-solid fa-eye" aria-hidden="true"></i> 상세</button>
           <button class="btn btn-secondary btn-sm" data-click="batchPrintLabel" data-arg="${esc(b.id)}" title="제품 라벨 인쇄"><i class="fa-solid fa-tag" aria-hidden="true"></i> 라벨</button>
@@ -130,6 +140,8 @@ function writeBatchForm(b) {
   set('batch-customer-id', (b && b.customerId) || '');
   set('batch-customer-name', (b && b.customerName) || '');
   set('batch-expiry', (b && b.expiryAt) || '');
+  set('batch-delivered', (b && b.deliveredAt) || '');
+  set('batch-disposition', (b && b.disposition) || '');
   set('batch-ph', b && b.phMeasured != null ? b.phMeasured : '');
   set('batch-notes', (b && b.notes) || '');
   QC_FIELDS.forEach(f => {
@@ -156,7 +168,9 @@ export function batchNew(formulaId) {
   const f = typeof formulaId === 'string' ? getFormula(formulaId) : null;
   if (f) applyFormulaDefaults(f);
   updateBatchFormMode();
+  renderLotFields(f, null);
   updateAllergyWarn();
+  updateStockWarn();
 }
 
 /** 보정 모드 — identity 필드(처방·조제일시·배치번호)는 읽기 전용 표시 */
@@ -172,7 +186,10 @@ export function batchEdit(id) {
   const title = document.getElementById('batch-form-title');
   if (title) title.textContent = `조제 기록 보정 — ${b.batchNo}`;
   updateBatchFormMode();
+  const f = b.formulaId ? getFormula(b.formulaId) : null;
+  renderLotFields(f, b);
   updateAllergyWarn();
+  updateStockWarn();
 }
 
 /** 보정 모드에서는 처방·조제일시 변경 불가 (기록 무결성 — 틀린 회차는 삭제 후 재기록) */
@@ -219,7 +236,97 @@ export function batchFormulaChanged() {
   const sel = document.getElementById('batch-formula');
   const f = sel && sel.value ? getFormula(sel.value) : null;
   if (f) applyFormulaDefaults(f);
+  renderLotFields(f, null);
   updateAllergyWarn();
+  updateStockWarn();
+}
+
+/* =======================================================
+   사용 원료 LOT 선택 + 재고 부족 경고
+   ======================================================= */
+
+/**
+ * 처방 원료 ↔ 원료 장부 이름 매칭으로 LOT 선택 UI를 렌더한다.
+ * 복수 LOT이면 select, 단일이면 고정 표기. 기존 배치(b)의 materialLots를 복원.
+ */
+function renderLotFields(formula, b) {
+  const box = document.getElementById('batch-lots');
+  if (!box) return;
+  const saved = new Map(
+    (b && Array.isArray(b.materialLots) ? b.materialLots : []).map(l => [l.name, l.materialId])
+  );
+  const rows = (formula && Array.isArray(formula.ingredients) ? formula.ingredients : [])
+    .map(i => {
+      const name = (i && i.name || '').trim();
+      if (!name) return '';
+      const mats = findMaterialsByName(name);
+      if (!mats.length) return '';
+      const opts = mats.map(m => {
+        const days = daysUntilExpiry(m);
+        const exp = m.expiryAt ? ` · 기한 ${m.expiryAt}${days != null && days < 0 ? ' (경과)' : days != null && days <= 30 ? ` (D-${days})` : ''}` : '';
+        return `<option value="${esc(m.id)}">${esc(m.lot || m.name)}${esc(exp)}${m.qty != null ? ` · 잔량 ${m.qty}${esc(m.unit || '')}` : ''}</option>`;
+      }).join('');
+      return `<div class="batch-qc-row">
+        <span class="batch-qc-label">${esc(name)}</span>
+        <select class="form-select batch-lot-select" data-name="${esc(name)}" aria-label="${esc(name)} 사용 LOT">${opts}</select>
+      </div>`;
+    }).filter(Boolean);
+  box.innerHTML = rows.length
+    ? rows.join('')
+    : '<div class="formula-rec-note">장부에 매칭되는 원료가 없습니다 — 원료 장부에 등록하면 LOT 추적이 가능합니다.</div>';
+  // 기존 선택 복원 (보정 모드)
+  box.querySelectorAll('.batch-lot-select').forEach(sel => {
+    const prev = saved.get(sel.dataset.name);
+    if (prev) sel.value = prev;
+  });
+}
+
+/** 폼에서 선택된 LOT 목록 → {name, materialId, lot}[] */
+function readLotSelections() {
+  return Array.from(document.querySelectorAll('#batch-lots .batch-lot-select'))
+    .map(sel => {
+      const m = findMaterialsByName(sel.dataset.name).find(x => x.id === sel.value);
+      return m ? { name: sel.dataset.name, materialId: m.id, lot: m.lot || '' } : null;
+    })
+    .filter(Boolean);
+}
+
+/**
+ * 소요량 vs 장부 잔량 — 같은 이름 원료의 잔량 합계가 필요량보다 적으면 경고.
+ * 단위가 배치 단위와 같은 항목만 합산 (g↔ml 혼합 방지). LOT 선택 변경에도 반응.
+ */
+function updateStockWarn() {
+  const warnEl = document.getElementById('batch-stock-warn');
+  if (!warnEl) return;
+  const fsel = document.getElementById('batch-formula');
+  const formula = fsel && fsel.value ? getFormula(fsel.value) : null;
+  const volEl = document.getElementById('batch-target-volume');
+  const unitEl = document.getElementById('batch-unit');
+  const vol = volEl && volEl.value !== '' ? parseFloat(volEl.value) : null;
+  const unit = unitEl ? unitEl.value : 'g';
+  const shortages = [];
+  if (formula && vol != null && !Number.isNaN(vol)) {
+    (formula.ingredients || []).forEach(i => {
+      const name = (i && i.name || '').trim();
+      if (!name || i.concentration == null) return;
+      const need = vol * i.concentration / 100;
+      const stock = findMaterialsByName(name)
+        .filter(m => m.qty != null && (!m.unit || m.unit === unit))
+        .reduce((s, m) => s + m.qty, 0);
+      const mats = findMaterialsByName(name);
+      if (mats.length && stock < need) {
+        shortages.push(`${name} — 필요 ${Math.round(need * 100) / 100}${unit}, 잔량 ${stock}${unit}`);
+      }
+    });
+  }
+  if (!shortages.length) {
+    warnEl.classList.add('is-hidden');
+    warnEl.innerHTML = '';
+    return;
+  }
+  warnEl.classList.remove('is-hidden');
+  warnEl.innerHTML = `<div class="f-check f-check-warn batch-stock-warn-box">`
+    + `<i class="fa-solid fa-box-open" aria-hidden="true"></i> 재고 부족: ${esc(shortages.join(' · '))}</div>`;
 }
 
 /** 선택된 고객 카드의 알레르기 이력 ↔ 처방 원료 충돌을 폼에 실시간 표시 */
@@ -276,6 +383,15 @@ function bindFormOnce() {
     custSel.dataset.bound = '1';
     custSel.addEventListener('change', batchCustChanged);
   }
+  // 총량·단위 변경 → 재고 부족 경고 갱신
+  ['batch-target-volume', 'batch-unit'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el && !el.dataset.stockBound) {
+      el.dataset.stockBound = '1';
+      el.addEventListener('input', updateStockWarn);
+      el.addEventListener('change', updateStockWarn);
+    }
+  });
 }
 
 function readBatchForm() {
@@ -302,7 +418,10 @@ function readBatchForm() {
     customerId: val('batch-customer-id'),
     customerName: val('batch-customer-name'),
     expiryAt: val('batch-expiry'),
+    deliveredAt: val('batch-delivered'),
+    disposition: val('batch-disposition'),
     phMeasured: val('batch-ph') === '' ? null : parseFloat(val('batch-ph')),
+    materialLots: readLotSelections(),
     notes: val('batch-notes'),
     qc, hygiene,
   };
@@ -367,7 +486,9 @@ export async function batchSave() {
       customerId: data.customerId, customerName: data.customerName,
       targetVolume: data.targetVolume, unit: data.unit,
       qc: data.qc, phMeasured: data.phMeasured, hygiene: data.hygiene,
-      expiryAt: data.expiryAt, notes: data.notes,
+      expiryAt: data.expiryAt, deliveredAt: data.deliveredAt,
+      disposition: data.disposition, materialLots: data.materialLots,
+      notes: data.notes,
     });
     if (!r.ok) { showToast(r.error || '저장에 실패했습니다.', 'error'); return; }
     showToast(`${r.batch.batchNo} 기록이 보정되었습니다.`, 'success');
@@ -422,9 +543,11 @@ export function batchOpen(id) {
         <h4 class="formula-card-name">${esc(b.batchNo)} — ${esc(b.formulaName)}</h4>
         <span class="formula-card-meta">조제 ${esc((b.madeAt || '').replace('T', ' '))} · ${b.targetVolume != null ? `${b.targetVolume}${b.unit || 'g'}` : '총량 미지정'}${b.formulation ? ` · 제형 ${esc(b.formulation)}` : ''}</span>
       </div>
-      <div class="formula-card-customer"><i class="fa-solid fa-user" aria-hidden="true"></i> ${esc(b.customerName || '고객 미기록')} · 권장 사용기한 ${esc(b.expiryAt || '미기록')}</div>
+      <div class="formula-card-customer"><i class="fa-solid fa-user" aria-hidden="true"></i> ${esc(b.customerName || '고객 미기록')} · 권장 사용기한 ${esc(b.expiryAt || '미기록')}${b.deliveredAt ? ` · 인도일 ${esc(b.deliveredAt)}` : ' · 미인도'}</div>
       <div class="batch-qc-grid">${qcRows}</div>
       ${b.phMeasured != null ? `<div class="formula-card-meta">실측 pH: ${esc(String(b.phMeasured))}</div>` : ''}
+      ${b.disposition ? `<div class="formula-card-meta">QC 이상 조치: ${esc(b.disposition)}</div>` : ''}
+      ${b.materialLots && b.materialLots.length ? `<div class="formula-card-meta">사용 LOT: ${esc(b.materialLots.map(l => `${l.name} ${l.lot || ''}`.trim()).join(' · '))}</div>` : ''}
       <div class="formula-card-checks">${hyg}</div>
       ${b.fullIngredients && b.fullIngredients.length ? `<div class="formula-card-inci"><i class="fa-solid fa-list-ol" aria-hidden="true"></i> ${esc(b.fullIngredients.join(', '))}</div>` : ''}
       ${snapHtml}

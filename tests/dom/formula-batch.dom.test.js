@@ -20,6 +20,7 @@ import {
 import { createFormula } from '../../src/formula-store.js';
 import { createCustomer } from '../../src/customer-store.js';
 import { listBatches, getBatch, createBatch, QC_FIELDS, HYGIENE_FIELDS } from '../../src/batch-store.js';
+import { createMaterial } from '../../src/material-ledger.js';
 import { DataLoader } from '../../src/data-loader.js';
 
 const INGREDIENTS_STUB = [
@@ -250,13 +251,85 @@ describe('조제 기록 — 배치 시나리오', () => {
         expect(listBatches().length).toBe(1);
     });
 
+    it('LOT 선택 — 장부 매칭 select 렌더 + 저장 스냅샷', async () => {
+        createMaterial({ name: '글리세린', lot: 'L2401', expiryAt: '2027-01-01', qty: 500, unit: 'g' });
+        createMaterial({ name: '글리세린', lot: 'L2506', expiryAt: '2028-01-01', qty: 300, unit: 'g' });
+        const f = seedFormula();
+        batchNew(f.id);
+
+        const sel = document.querySelector('.batch-lot-select[data-name="글리세린"]');
+        expect(sel).toBeTruthy();
+        expect(sel.options.length).toBe(2);
+        expect(sel.value).toBeTruthy(); // 기한 임박 순 첫 항목이 기본 선택
+
+        await batchSave();
+        const b = listBatches()[0];
+        expect(b.materialLots.length).toBe(1);
+        expect(b.materialLots[0].name).toBe('글리세린');
+        expect(b.materialLots[0].lot).toBe('L2401'); // 임박 LOT가 기본값
+        expect(el('batch-detail').innerHTML).toContain('L2401');
+    });
+
+    it('재고 부족 경고 — 소요량 > 잔량 합계 시 표시', async () => {
+        // 글리세린 잔량 3g — 처방은 100ml × 5% = 5 필요
+        createMaterial({ name: '글리세린', lot: 'L1', qty: 3, unit: 'ml' });
+        const f = seedFormula(); // targetVolume 100ml, 글리세린 5%
+        batchNew(f.id);
+
+        const warn = el('batch-stock-warn');
+        expect(warn.classList.contains('is-hidden')).toBe(false);
+        expect(warn.textContent).toContain('글리세린');
+        expect(warn.textContent).toContain('재고 부족');
+
+        // 총량을 50으로 줄이면 필요 2.5 ≤ 잔량 3 → 경고 해제
+        el('batch-target-volume').value = '50';
+        el('batch-target-volume').dispatchEvent(new Event('input'));
+        expect(el('batch-stock-warn').classList.contains('is-hidden')).toBe(true);
+    });
+
+    it('인도일 + QC 이상 조치 — 저장·목록 배지·상세·인쇄 반영', async () => {
+        const f = seedFormula();
+        batchNew(f.id);
+        el('batch-delivered').value = '2026-09-25';
+        checkQc('appearance', '이상');
+        el('batch-disposition').value = '폐기';
+        await batchSave();
+
+        const b = listBatches()[0];
+        expect(b.deliveredAt).toBe('2026-09-25');
+        expect(b.disposition).toBe('폐기');
+        const detail = el('batch-detail').innerHTML;
+        expect(detail).toContain('인도일 2026-09-25');
+        expect(detail).toContain('조치: 폐기');
+
+        openBatchPanel();
+        const list = el('batch-list').innerHTML;
+        expect(list).toContain('인도 2026-09-25');
+        expect(list).toContain('조치: 폐기');
+    });
+
+    it('QC 이상 + 조치 미기록 → 목록에 "조치 미기록" 배지', () => {
+        createBatch({
+            formulaName: '세럼', madeAt: '2026-09-20T10:00',
+            qc: { appearance: '이상' },
+        });
+        openBatchPanel();
+        expect(el('batch-list').innerHTML).toContain('조치 미기록');
+    });
+
     it('인쇄 — 기록지·라벨 → print-area 렌더 + printing 클래스', () => {
         const { batch } = createBatch({
             formulaName: '세럼', madeAt: '2026-09-20T10:00',
             fullIngredients: ['정제수', '글리세린'],
+            deliveredAt: '2026-09-21',
+            materialLots: [{ name: '글리세린', materialId: 'mat_1', lot: 'L2401' }],
         });
         batchPrintRecord(batch.id);
-        expect(el('formula-print-area').innerHTML).toContain(batch.batchNo);
+        const html = el('formula-print-area').innerHTML;
+        expect(html).toContain(batch.batchNo);
+        expect(html).toContain('인도일');
+        expect(html).toContain('L2401');
+        expect(html).toContain('조제자(조제관리사)'); // 서명란
         expect(document.body.classList.contains('formula-printing')).toBe(true);
         expect(window.print).toHaveBeenCalledTimes(1);
 

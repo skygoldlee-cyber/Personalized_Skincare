@@ -52,15 +52,22 @@ export function buildBatchRecordHtml(b) {
     <div class="fp-doc">
       <h1>조제 기록 — ${esc(b.batchNo || '')}</h1>
       <p class="fp-meta-line">처방: ${esc(b.formulaName || '—')} · 조제 일시: ${esc(fmtDateTime(b.madeAt))}</p>
-      <p class="fp-meta-line">고객: ${esc(b.customerName || '—')} · 제조량: ${b.targetVolume != null ? `${b.targetVolume}${b.unit || 'g'}` : '—'} · 권장 사용기한: ${esc(fmtDate(b.expiryAt))}</p>
+      <p class="fp-meta-line">고객: ${esc(b.customerName || '—')} · 제조량: ${b.targetVolume != null ? `${b.targetVolume}${b.unit || 'g'}` : '—'} · 권장 사용기한: ${esc(fmtDate(b.expiryAt))} · 인도일: ${esc(fmtDate(b.deliveredAt))}</p>
       ${b.formulation ? `<p class="fp-meta-line">제형: ${esc(b.formulation)}</p>` : ''}
+      ${b.disposition ? `<p class="fp-meta-line">QC 이상 조치: ${esc(b.disposition)}</p>` : ''}
       <h3>품질 확인 (회차)</h3>
       <table class="fp-table"><tbody>${qcRows}</tbody></table>
       <h3>위생·안전 확인</h3>
       <ul class="fp-steps">${hygItems}</ul>
       ${b.fullIngredients && b.fullIngredients.length ? `<h3>전성분 표시</h3><p class="fp-meta-line fp-inci">${esc(b.fullIngredients.join(', '))}</p>` : ''}
+      ${b.materialLots && b.materialLots.length ? `<h3>사용 원료 LOT</h3><p class="fp-meta-line">${esc(b.materialLots.map(l => `${l.name} (LOT ${l.lot || '—'})`).join(' · '))}</p>` : ''}
       ${snapParts ? `<h3>규정 검증 (조제 시점 스냅샷)</h3><p class="fp-meta-line">${esc(snapParts)}</p>` : ''}
       ${b.notes ? `<h3>메모</h3><p class="fp-notes">${esc(b.notes)}</p>` : ''}
+      <div class="fp-sign-row">
+        <span class="fp-sign">조제자(조제관리사): ______________</span>
+        <span class="fp-sign">확인자: ______________</span>
+        <span class="fp-sign">확인일: ________</span>
+      </div>
       <p class="fp-disclaimer">검증 결과는 법정 배합 한도 기준일 뿐 제품의 안전성·안정성·품질을 보장하지 않습니다.</p>
     </div>`;
 }

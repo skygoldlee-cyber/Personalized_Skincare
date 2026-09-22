@@ -277,6 +277,20 @@
         padding-top: 6pt;
     }
 
+    /* 조제 기록지 서명란 — 조제관리사 확인 기록용 */
+    #formula-print-area .fp-sign-row {
+        display: flex;
+        gap: 18pt;
+        margin-top: 18pt;
+        padding-top: 10pt;
+        border-top: 1px solid var(--print-border);
+    }
+    #formula-print-area .fp-sign {
+        font-size: 10pt;
+        color: var(--print-text);
+        letter-spacing: 0.02em;
+    }
+
     /* 배치 QC 셀 표시 */
     #formula-print-area .fp-qc-ok { color: var(--print-text); }
     #formula-print-area .fp-qc-bad { color: var(--print-warning); font-weight: 700; }

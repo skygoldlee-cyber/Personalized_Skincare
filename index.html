@@ -1642,6 +1642,10 @@
                                 <span class="formula-field-label">권장 사용기한</span>
                                 <input type="date" id="batch-expiry" class="form-input" aria-label="권장 사용기한">
                             </label>
+                            <label class="formula-field">
+                                <span class="formula-field-label">고객 인도일 <span class="fold-hint">판매내역서 근거</span></span>
+                                <input type="date" id="batch-delivered" class="form-input" aria-label="고객 인도일">
+                            </label>
                         </div>
                         <div class="formula-field-row">
                             <label class="formula-field">
@@ -1656,6 +1660,11 @@
                         </div>
 
                         <div class="formula-field">
+                            <span class="formula-field-label">사용 원료 LOT <span class="fold-hint">장부 매칭 — 기한 임박 순 기본 선택</span></span>
+                            <div id="batch-lots" class="batch-lots-form"></div>
+                        </div>
+
+                        <div class="formula-field">
                             <span class="formula-field-label">품질 확인 (이 회차) <span class="fold-hint">외관·색상·향·점도·이물</span></span>
                             <div class="batch-qc-form" id="batch-qc-fields"></div>
                             <div class="batch-qc-row">
@@ -1664,6 +1673,16 @@
                             </div>
                         </div>
                         <div id="batch-allergy-warn" class="is-hidden" role="status" aria-live="polite"></div>
+                        <div id="batch-stock-warn" class="is-hidden" role="status" aria-live="polite"></div>
+                        <div class="formula-field">
+                            <span class="formula-field-label">QC 이상 시 조치 <span class="fold-hint">해당 시에만 선택</span></span>
+                            <select id="batch-disposition" class="form-select" aria-label="QC 이상 배치 조치">
+                                <option value="">미지정</option>
+                                <option value="폐기">폐기</option>
+                                <option value="재조제">재조제</option>
+                                <option value="보류">보류</option>
+                            </select>
+                        </div>
                         <div class="formula-field">
                             <span class="formula-field-label">위생·안전 확인</span>
                             <div class="formula-chip-row">
