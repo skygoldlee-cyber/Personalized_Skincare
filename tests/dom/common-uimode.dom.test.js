@@ -62,6 +62,9 @@ describe('UI 모드 — 학습/실무 전환', () => {
         expect(getComputedStyle(document.querySelector('.nav-study-tools-label')).display).toBe('none');
         expect(el('ui-mode-label').textContent).toBe('학습 모드');
         expect(el('ui-mode-toggle').getAttribute('aria-pressed')).toBe('false');
+        // 학습 매뉴얼 표시·실무 전용 탭 숨김
+        expect(getComputedStyle(document.querySelector('.manual-nav-link.nav-study-only')).display).not.toBe('none');
+        expect(getComputedStyle(document.querySelector('.nav-practice-only')).display).toBe('none');
     });
 
     it('실무 모드 전환 — 학습 항목 실제 숨김·도구 라벨 표시·영속 (H/P)', () => {
@@ -77,6 +80,9 @@ describe('UI 모드 — 학습/실무 전환', () => {
         expect(targets).toContain('dictionary-view');
         // 학습 도구 라벨은 실무 모드에서 표시
         expect(getComputedStyle(document.querySelector('.nav-study-tools-label')).display).not.toBe('none');
+        // 학습 매뉴얼 숨김·실무 매뉴얼 탭은 표시 (모바일 실무매뉴얼 교체)
+        expect(getComputedStyle(document.querySelector('.manual-nav-link.nav-study-only')).display).toBe('none');
+        expect(getComputedStyle(document.querySelector('.nav-practice-only')).display).not.toBe('none');
         expect(el('ui-mode-label').textContent).toBe('실무 모드');
         expect(el('ui-mode-toggle').getAttribute('aria-pressed')).toBe('true');
         expect(lastToast()[0]).toContain('실무 모드');

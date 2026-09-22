@@ -43,7 +43,7 @@
                 </div>
             </div>
             <nav class="nav-menu">
-                <button type="button" data-click="ManualViewer.openManual" class="manual-nav-link">
+                <button type="button" data-click="ManualViewer.openManual" class="manual-nav-link nav-study-only">
                     <i class="fa-solid fa-circle-info" aria-hidden="true"></i> 학습 매뉴얼
                 </button>
                 <button type="button" data-click="ManualViewer.openFormulaManual" class="manual-nav-link">
@@ -139,7 +139,7 @@
                             <button type="button" class="settings-item" data-click="showExamSelect" data-feature="examSwitch">
                                 <i class="fa-solid fa-arrow-right-arrow-left" aria-hidden="true"></i> 시험 전환
                             </button>
-                            <button type="button" class="settings-item" data-click="ManualViewer.openManual">
+                            <button type="button" class="settings-item nav-study-only" data-click="ManualViewer.openManual">
                                 <i class="fa-solid fa-circle-info" aria-hidden="true"></i> 학습 매뉴얼
                             </button>
                             <button type="button" class="settings-item" data-click="ManualViewer.openFormulaManual">
@@ -1991,9 +1991,14 @@
                 <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
                 <span>캘린더</span>
             </button>
-            <button type="button" data-click="ManualViewer.openManual" class="mobile-tab-item">
+            <button type="button" data-click="ManualViewer.openManual" class="mobile-tab-item nav-study-only">
                 <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
                 <span>매뉴얼</span>
+            </button>
+            <!-- 실무 모드 전용 탭 — 학습 매뉴얼 탭 자리에 실무 매뉴얼 표시 -->
+            <button type="button" data-click="ManualViewer.openFormulaManual" class="mobile-tab-item nav-practice-only">
+                <i class="fa-solid fa-flask" aria-hidden="true"></i>
+                <span>실무매뉴얼</span>
             </button>
             <!-- 시험 전환: 등록 시험이 2개 이상일 때만 표시 (exams.json) -->
             <button type="button" data-click="showExamSelect" class="mobile-tab-item" title="다른 시험으로 전환" data-feature="examSwitch">
