@@ -284,7 +284,8 @@ pre.mermaid-flowchart svg defs marker path {
 pre.mermaid-flowchart .node rect,
 pre.mermaid-flowchart .node circle,
 pre.mermaid-flowchart .node ellipse,
-pre.mermaid-flowchart .node polygon {
+pre.mermaid-flowchart .node polygon,
+pre.mermaid-flowchart .node path {
     fill: var(--mermaid-node-fill) !important;
     stroke: var(--mermaid-stroke) !important;
     stroke-width: 1px !important;
@@ -339,7 +340,8 @@ pre.mermaid-other .titleText {
 pre.mermaid-other .node rect,
 pre.mermaid-other .node circle,
 pre.mermaid-other .node ellipse,
-pre.mermaid-other .node polygon {
+pre.mermaid-other .node polygon,
+pre.mermaid-other .node path {
     fill: var(--mermaid-node-fill) !important;
     stroke: var(--mermaid-stroke) !important;
     stroke-width: 1px !important;
