@@ -176,6 +176,8 @@ function sanitizeFormula(data) {
     notes: clampStr(data.notes || '', MAX_NOTE_LEN),
     steps: sanitizeSteps(data.steps),
     customer: sanitizeCustomer(data.customer),
+    // 고객 카드 참조 — customer 객체는 인라인 스냅샷으로 유지, 참조는 병기
+    customerId: clampStr(data.customerId || '', 40).trim(),
     stability,
     // 전성분 표시 — 안정성 '양호' 확인된 배합만 저장 시 자동 생성
     fullIngredients: stability && stability.result === '양호'
@@ -236,6 +238,22 @@ export function updateFormula(id, data) {
   all[idx] = updated;
   if (!saveAll(all)) return { ok: false, error: '저장에 실패했습니다.' };
   return { ok: true, formula: updated };
+}
+
+/**
+ * 고객 삭제 시 참조 해제 — 포뮬러의 인라인 customer 스냅샷은 보존하고
+ * customerId만 비운다 (기록 보존 원칙).
+ * @returns {number} 참조가 해제된 포뮬러 수
+ */
+export function unlinkCustomerFromFormulas(customerId) {
+  if (!customerId) return 0;
+  const all = loadAll();
+  let touched = 0;
+  all.forEach(f => {
+    if (f.customerId === customerId) { f.customerId = ''; touched++; }
+  });
+  if (touched) saveAll(all);
+  return touched;
 }
 
 /** @returns {{ok:boolean, error?:string}} */

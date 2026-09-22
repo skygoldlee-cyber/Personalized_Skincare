@@ -26,10 +26,12 @@ import {
   serializeCustomRules, importCustomRules,
   ROLE_PHASE,
 } from '../formula-rules.js';
+import { listCustomers, getCustomer, createCustomer } from '../customer-store.js';
 
 const PANELS = [
   'formula-menu-panel', 'formula-list-panel', 'formula-calc-panel',
   'formula-batch-panel', 'formula-batch-form-panel', 'formula-batch-detail-panel',
+  'formula-customer-panel', 'formula-customer-form-panel', 'formula-customer-detail-panel',
 ];
 
 // 계산기 드래프트 상태 (저장 전 작업 데이터)
@@ -61,10 +63,11 @@ export function showPanel(id) {
    서브내비 — 허브 복귀 없이 관련 섹션으로 1클릭 이동
    ======================================================= */
 
-// 구현된 섹션만 나열 (Phase B·C에서 고객 관리·원료 장부 추가)
+// 구현된 섹션만 나열 (Phase C에서 원료 장부 추가)
 const SUBNAV_ITEMS = [
   { id: 'list', label: 'My 포뮬러', click: 'openFormulaList' },
   { id: 'calc', label: '배합 계산기', click: 'formulaNew' },
+  { id: 'customer', label: '고객 관리', click: 'openCustomerPanel' },
   { id: 'batch', label: '조제 기록', click: 'openBatchPanel' },
 ];
 
@@ -528,6 +531,49 @@ function populateCustomerFields() {
       });
     if (chipBox) chipBox.addEventListener('change', renderRecommend);
   }
+
+  // 고객 카드 셀렉트 — 등록 고객이 변하므로 매번 다시 채운다
+  const refEl = document.getElementById('formula-cust-ref');
+  if (refEl) {
+    refEl.innerHTML = '<option value="">고객 카드에서 불러오기…</option>'
+      + listCustomers().map(c => `<option value="${esc(c.id)}">${esc(c.name)}</option>`).join('');
+    refEl.value = (document.getElementById('formula-cust-id') || {}).value || '';
+    if (!refEl.dataset.bound) {
+      refEl.dataset.bound = '1';
+      refEl.addEventListener('change', formulaCustLoad);
+    }
+  }
+}
+
+/** 고객 카드 선택 → 고객 정보 필드 채우기 + customerId 참조 저장 */
+export function formulaCustLoad() {
+  const sel = document.getElementById('formula-cust-ref');
+  const id = sel ? sel.value : '';
+  if (!id) return;
+  const c = getCustomer(id);
+  if (!c) { showToast('고객을 찾을 수 없습니다.', 'error'); return; }
+  writeCustomerInputs(c, c.id);
+  updateFoldSummaries();
+  renderRecommend();
+  showToast(`"${c.name}" 고객 정보를 불러왔습니다.`, 'success');
+}
+
+/** 현재 고객 정보 입력값을 고객 카드로 저장 + 이 포뮬러에 참조 연결 */
+export function formulaCustSaveAs() {
+  const data = readCustomerInputs();
+  const r = createCustomer(data);
+  if (!r.ok) { showToast(r.error || '고객 등록에 실패했습니다.', 'error'); return; }
+  const idEl = document.getElementById('formula-cust-id');
+  if (idEl) idEl.value = r.customer.id;
+  const refEl = document.getElementById('formula-cust-ref');
+  if (refEl) {
+    const opt = document.createElement('option');
+    opt.value = r.customer.id;
+    opt.textContent = r.customer.name;
+    refEl.appendChild(opt);
+    refEl.value = r.customer.id;
+  }
+  showToast(`"${r.customer.name}" 고객 카드를 만들고 연결했습니다.`, 'success');
 }
 
 /** 안정성 실험 확인 셀렉트를 STABILITY_* 상수에서 채운다 — 1회만 */
@@ -605,13 +651,16 @@ function readCustomerInputs() {
   };
 }
 
-/** 고객 필드에 값 복원 (sourceFormula.customer) */
-function writeCustomerInputs(customer) {
+/** 고객 필드에 값 복원 (sourceFormula.customer) + 고객 카드 참조 복원 */
+function writeCustomerInputs(customer, customerId) {
   const c = customer || {};
   const set = (id, v) => {
     const el = document.getElementById(id);
     if (el) el.value = v == null ? '' : v;
   };
+  set('formula-cust-id', customerId || '');
+  const refEl = document.getElementById('formula-cust-ref');
+  if (refEl) refEl.value = customerId || '';
   set('formula-cust-name', c.name || '');
   set('formula-cust-age', c.age != null ? c.age : '');
   set('formula-cust-gender', c.gender || '');
@@ -1015,7 +1064,8 @@ export function openFormulaCalc(sourceFormula) {
     if (notesEl) notesEl.value = '';
   }
   renderSteps();
-  writeCustomerInputs(sourceFormula ? sourceFormula.customer : null);
+  writeCustomerInputs(sourceFormula ? sourceFormula.customer : null,
+    sourceFormula ? sourceFormula.customerId : '');
   writeStabilityInputs(sourceFormula ? sourceFormula.stability : null);
   renderRecommend();
   renderCustomRules();
@@ -1135,6 +1185,10 @@ function currentDraft() {
     notes: notesEl ? notesEl.value.trim() : '',
     steps: calc.steps.slice(),
     customer: readCustomerInputs(),
+    customerId: (() => {
+      const el = document.getElementById('formula-cust-id');
+      return el ? el.value : '';
+    })(),
     stability: readStabilityInputs(),
     ingredients: calc.rows
       .filter(r => r.name)

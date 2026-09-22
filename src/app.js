@@ -133,7 +133,9 @@ import {
     formulaCardExport,
     formulaImportJson,
     formulaAllergyAdd,
-    formulaAllergyRemove
+    formulaAllergyRemove,
+    formulaCustLoad,
+    formulaCustSaveAs
 } from './views/formula.js';
 import {
     openBatchPanel,
@@ -143,10 +145,22 @@ import {
     batchOpen,
     batchDelete,
     batchFormulaChanged,
+    batchCustChanged,
     batchPrintRecord,
     batchPrintLabel,
     batchPrintGuide,
 } from './views/formula-batch.js';
+import {
+    openCustomerPanel,
+    custNew,
+    custEdit,
+    custSave,
+    custOpen,
+    custDelete,
+    custLogAdd,
+    custAllergyAdd,
+    custAllergyRemove,
+} from './views/formula-customer.js';
 import { recordStudyActivity } from './study-tracker.js';
 import {
     getBackupKeys,
@@ -870,10 +884,13 @@ const DELEGATED_HANDLERS = {
     formulaRuleExport, formulaRuleImport,
     formulaSortPhase, formulaStepAdd, formulaStepRemove,
     formulaPrint, formulaExportJson, formulaCardExport, formulaImportJson,
-    formulaAllergyAdd, formulaAllergyRemove,
+    formulaAllergyAdd, formulaAllergyRemove, formulaCustLoad, formulaCustSaveAs,
     // Formula OS — 조제 기록(배치)
     openBatchPanel, batchNew, batchEdit, batchSave, batchOpen, batchDelete,
-    batchFormulaChanged, batchPrintRecord, batchPrintLabel, batchPrintGuide,
+    batchFormulaChanged, batchCustChanged, batchPrintRecord, batchPrintLabel, batchPrintGuide,
+    // Formula OS — 고객 관리
+    openCustomerPanel, custNew, custEdit, custSave, custOpen, custDelete,
+    custLogAdd, custAllergyAdd, custAllergyRemove,
     showIngredientsChangelog,
     /** 복수정답형 모의고사 문항 수 선택 행 토글 — 다른 과목의 열린 행은 닫는다 */
     toggleComboPicker(rowId) {

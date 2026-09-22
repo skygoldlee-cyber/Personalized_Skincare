@@ -1315,6 +1315,14 @@
                             <p>1,357종 원료의 배합 한도·사용 제한·금지 여부를 성분 사전에서 확인합니다.</p>
                             <span class="trainer-card-btn">사전 열기 <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
                         </div>
+                        <div class="trainer-menu-card" data-click="openCustomerPanel">
+                            <div class="trainer-card-icon icon-purple">
+                                <i class="fa-solid fa-users" aria-hidden="true"></i>
+                            </div>
+                            <h4>고객 관리</h4>
+                            <p>고객 카드에 피부 타입·알레르기·상담 이력을 기록하고 처방·조제 기록과 연결합니다.</p>
+                            <span class="trainer-card-btn">고객 목록 <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
+                        </div>
                         <div class="trainer-menu-card" data-click="openBatchPanel">
                             <div class="trainer-card-icon icon-teal">
                                 <i class="fa-solid fa-clipboard-list" aria-hidden="true"></i>
@@ -1403,6 +1411,17 @@
                                 <span class="fold-sum" id="fold-sum-customer"></span>
                             </summary>
                             <div class="fold-body">
+                            <div class="formula-field-row">
+                                <label class="formula-field">
+                                    <span class="formula-field-label">고객 카드 연동</span>
+                                    <select id="formula-cust-ref" class="form-select" aria-label="고객 카드에서 불러오기"></select>
+                                    <input type="hidden" id="formula-cust-id">
+                                </label>
+                                <label class="formula-field formula-field-unit">
+                                    <span class="formula-field-label">&nbsp;</span>
+                                    <button type="button" class="btn btn-secondary btn-sm" data-click="formulaCustSaveAs" title="현재 입력값을 고객 카드로 저장하고 이 처방에 연결"><i class="fa-solid fa-user-plus" aria-hidden="true"></i> 고객으로 저장</button>
+                                </label>
+                            </div>
                             <div class="formula-field-row">
                                 <label class="formula-field">
                                     <span class="formula-field-label">고객명</span>
@@ -1596,14 +1615,19 @@
                                 </select>
                             </label>
                             <label class="formula-field">
-                                <span class="formula-field-label">고객명</span>
-                                <input type="text" id="batch-customer-name" class="form-input" maxlength="30" placeholder="예: 김OO" aria-label="고객명">
+                                <span class="formula-field-label">권장 사용기한</span>
+                                <input type="date" id="batch-expiry" class="form-input" aria-label="권장 사용기한">
                             </label>
                         </div>
                         <div class="formula-field-row">
                             <label class="formula-field">
-                                <span class="formula-field-label">권장 사용기한</span>
-                                <input type="date" id="batch-expiry" class="form-input" aria-label="권장 사용기한">
+                                <span class="formula-field-label">고객 카드</span>
+                                <select id="batch-customer-select" class="form-select" aria-label="고객 카드 선택"></select>
+                                <input type="hidden" id="batch-customer-id">
+                            </label>
+                            <label class="formula-field">
+                                <span class="formula-field-label">고객명 <span class="fold-hint">카드 미등록 시 직접 입력</span></span>
+                                <input type="text" id="batch-customer-name" class="form-input" maxlength="30" placeholder="예: 김OO" aria-label="고객명">
                             </label>
                         </div>
 
@@ -1640,6 +1664,104 @@
                     </div>
                     <div id="batch-detail-subnav"></div>
                     <div id="batch-detail"></div>
+                </div>
+
+                <!-- 7. 고객 관리 목록 -->
+                <div id="formula-customer-panel" class="is-hidden">
+                    <div class="sim-arena-header mb-6">
+                        <button class="btn btn-secondary" data-click="exitFormulaSubView"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
+                        <div class="sim-title-group">
+                            <h4>고객 관리</h4>
+                            <span class="badge badge-quiz-cat" id="customer-list-usage">0/20 등록</span>
+                            <button class="btn btn-secondary btn-sm" data-click="custNew"><i class="fa-solid fa-plus" aria-hidden="true"></i> 고객 등록</button>
+                        </div>
+                    </div>
+                    <div id="formula-customer-subnav"></div>
+                    <div id="customer-list" class="formula-list"></div>
+                </div>
+
+                <!-- 8. 고객 폼 (등록 · 수정) -->
+                <div id="formula-customer-form-panel" class="is-hidden">
+                    <div class="sim-arena-header mb-6">
+                        <button class="btn btn-secondary" data-click="openCustomerPanel"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 목록으로</button>
+                        <div class="sim-title-group">
+                            <h4 id="customer-form-title">고객 등록</h4>
+                        </div>
+                    </div>
+                    <div class="formula-calc-form glass-card">
+                        <div class="formula-field-row">
+                            <label class="formula-field">
+                                <span class="formula-field-label">고객명 *</span>
+                                <input type="text" id="cust-name" class="form-input" maxlength="30" placeholder="예: 김OO" aria-label="고객명">
+                            </label>
+                            <label class="formula-field formula-field-unit">
+                                <span class="formula-field-label">나이</span>
+                                <input type="number" id="cust-age" class="form-input" min="0" max="120" placeholder="세" aria-label="고객 나이">
+                            </label>
+                            <label class="formula-field formula-field-gender">
+                                <span class="formula-field-label">성별</span>
+                                <select id="cust-gender" class="form-select" aria-label="고객 성별"></select>
+                            </label>
+                        </div>
+                        <div class="formula-field-row">
+                            <label class="formula-field">
+                                <span class="formula-field-label">피부 유형</span>
+                                <select id="cust-skintype" class="form-select" aria-label="피부 유형"></select>
+                            </label>
+                            <label class="formula-field">
+                                <span class="formula-field-label">두피 유형</span>
+                                <select id="cust-scalptype" class="form-select" aria-label="두피 유형"></select>
+                            </label>
+                            <label class="formula-field formula-field-gender">
+                                <span class="formula-field-label">임신·수유</span>
+                                <select id="cust-pregnancy" class="form-select" aria-label="임신·수유 여부"></select>
+                            </label>
+                        </div>
+                        <div class="formula-field">
+                            <span class="formula-field-label">피부 고민·증상 (복수 선택)</span>
+                            <div id="cust-concerns" class="formula-chip-row"></div>
+                        </div>
+                        <div class="formula-field-row">
+                            <label class="formula-field">
+                                <span class="formula-field-label">조제 목적</span>
+                                <input type="text" id="cust-purpose" class="form-input" maxlength="120" placeholder="예: 데일리 수분 케어" aria-label="조제 목적">
+                            </label>
+                            <label class="formula-field">
+                                <span class="formula-field-label">사용 중인 제품·약물</span>
+                                <input type="text" id="cust-products" class="form-input" maxlength="300" placeholder="예: 레티놀 세럼, 스테로이드 연고" aria-label="사용 중인 제품·약물">
+                            </label>
+                        </div>
+                        <div class="formula-field">
+                            <span class="formula-field-label">알레르기·부작용 이력 원료</span>
+                            <div class="formula-allergy-input-row">
+                                <input type="text" id="cust-allergy-input" class="form-input" list="formula-ing-datalist"
+                                       placeholder="원료명 입력 후 추가 (예: 파라벤류)" maxlength="60" aria-label="알레르기 원료명">
+                                <button type="button" class="btn btn-secondary btn-sm" data-click="custAllergyAdd">
+                                    <i class="fa-solid fa-plus" aria-hidden="true"></i> 추가
+                                </button>
+                            </div>
+                            <div id="cust-allergies" class="formula-chip-row"></div>
+                        </div>
+                        <label class="formula-field">
+                            <span class="formula-field-label">메모</span>
+                            <textarea id="cust-notes" class="form-input" rows="2" maxlength="500" placeholder="특이사항, 선호 제형 등" aria-label="고객 메모"></textarea>
+                        </label>
+                    </div>
+                    <div class="formula-calc-bar fcb-bottom">
+                        <button class="btn btn-primary" data-click="custSave"><i class="fa-solid fa-floppy-disk" aria-hidden="true"></i> 저장</button>
+                    </div>
+                </div>
+
+                <!-- 9. 고객 상세 (상담 이력·연결된 처방·조제) -->
+                <div id="formula-customer-detail-panel" class="is-hidden">
+                    <div class="sim-arena-header mb-6">
+                        <button class="btn btn-secondary" data-click="openCustomerPanel"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 목록으로</button>
+                        <div class="sim-title-group">
+                            <h4>고객 상세</h4>
+                        </div>
+                    </div>
+                    <div id="customer-detail-subnav"></div>
+                    <div id="customer-detail"></div>
                 </div>
             </section>
 

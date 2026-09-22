@@ -10,6 +10,7 @@ import { esc } from '../sanitize.js';
 import { showToast, showConfirm } from '../ui-utils.js';
 import { showPanel, formulaSubNav } from './formula.js';
 import { listFormulas, getFormula } from '../formula-store.js';
+import { listCustomers, getCustomer } from '../customer-store.js';
 import { buildIngredientIndex, checkFormulaItems } from '../formula-check.js';
 import { evaluateStability, STAB } from '../formula-stability.js';
 import {
@@ -106,6 +107,15 @@ function fillFormulaSelect(selectedId) {
   if (selectedId) sel.value = selectedId;
 }
 
+/** 고객 카드 셀렉트 — 등록 고객이 변하므로 매번 다시 채운다 */
+function fillCustomerSelect(selectedId) {
+  const sel = document.getElementById('batch-customer-select');
+  if (!sel) return;
+  sel.innerHTML = '<option value="">고객 카드에서 선택…</option>'
+    + listCustomers().map(c => `<option value="${esc(c.id)}">${esc(c.name)}</option>`).join('');
+  sel.value = selectedId || '';
+}
+
 function writeBatchForm(b) {
   const set = (id, v) => {
     const el = document.getElementById(id);
@@ -114,6 +124,7 @@ function writeBatchForm(b) {
   set('batch-made-at', b ? b.madeAt : localDateTimeNow());
   set('batch-target-volume', b && b.targetVolume != null ? b.targetVolume : '');
   set('batch-unit', (b && b.unit) || 'g');
+  set('batch-customer-id', (b && b.customerId) || '');
   set('batch-customer-name', (b && b.customerName) || '');
   set('batch-expiry', (b && b.expiryAt) || '');
   set('batch-notes', (b && b.notes) || '');
@@ -133,6 +144,7 @@ export function batchNew(formulaId) {
   draft.editingId = null;
   showPanel('formula-batch-form-panel');
   fillFormulaSelect(typeof formulaId === 'string' ? formulaId : '');
+  fillCustomerSelect('');
   writeBatchForm(null);
   const title = document.getElementById('batch-form-title');
   if (title) title.textContent = '조제 기록 — 신규';
@@ -149,6 +161,7 @@ export function batchEdit(id) {
   draft.editingId = b.id;
   showPanel('formula-batch-form-panel');
   fillFormulaSelect(b.formulaId);
+  fillCustomerSelect(b.customerId);
   writeBatchForm(b);
   const title = document.getElementById('batch-form-title');
   if (title) title.textContent = `조제 기록 보정 — ${b.batchNo}`;
@@ -165,14 +178,34 @@ function updateBatchFormMode() {
   });
 }
 
-/** 처방 선택 시 총량·단위·고객명 기본값 채우기 (입력된 값은 덮어쓰지 않음) */
+/** 처방 선택 시 총량·단위·고객 기본값 채우기 (입력된 값은 덮어쓰지 않음) */
 function applyFormulaDefaults(f) {
   const volEl = document.getElementById('batch-target-volume');
   const unitEl = document.getElementById('batch-unit');
   const custEl = document.getElementById('batch-customer-name');
+  const custIdEl = document.getElementById('batch-customer-id');
+  const custSel = document.getElementById('batch-customer-select');
   if (volEl && !volEl.value && f.targetVolume != null) volEl.value = f.targetVolume;
   if (unitEl && f.unit) unitEl.value = f.unit;
-  if (custEl && !custEl.value && f.customer && f.customer.name) custEl.value = f.customer.name;
+  // 처방에 연결된 고객 카드가 있으면 참조 우선, 아니면 인라인 이름만 채움
+  if (f.customerId && getCustomer(f.customerId)) {
+    if (custIdEl) custIdEl.value = f.customerId;
+    if (custSel) custSel.value = f.customerId;
+    if (custEl) custEl.value = getCustomer(f.customerId).name;
+  } else if (custEl && !custEl.value && f.customer && f.customer.name) {
+    custEl.value = f.customer.name;
+  }
+}
+
+/** 고객 카드 선택 → 이름 필드 + customerId 참조 저장 */
+export function batchCustChanged() {
+  const sel = document.getElementById('batch-customer-select');
+  const id = sel ? sel.value : '';
+  const idEl = document.getElementById('batch-customer-id');
+  const nameEl = document.getElementById('batch-customer-name');
+  if (idEl) idEl.value = id;
+  const c = id ? getCustomer(id) : null;
+  if (nameEl) nameEl.value = c ? c.name : '';
 }
 
 export function batchFormulaChanged() {
@@ -205,6 +238,11 @@ function bindFormOnce() {
     sel.dataset.bound = '1';
     sel.addEventListener('change', batchFormulaChanged);
   }
+  const custSel = document.getElementById('batch-customer-select');
+  if (custSel && !custSel.dataset.bound) {
+    custSel.dataset.bound = '1';
+    custSel.addEventListener('change', batchCustChanged);
+  }
 }
 
 function readBatchForm() {
@@ -228,6 +266,7 @@ function readBatchForm() {
     madeAt: val('batch-made-at'),
     targetVolume: val('batch-target-volume') === '' ? null : parseFloat(val('batch-target-volume')),
     unit: val('batch-unit'),
+    customerId: val('batch-customer-id'),
     customerName: val('batch-customer-name'),
     expiryAt: val('batch-expiry'),
     notes: val('batch-notes'),
@@ -263,7 +302,8 @@ export function batchSave() {
   if (draft.editingId) {
     // 보정 — QC·위생·기한·고객·메모만 갱신
     const r = updateBatch(draft.editingId, {
-      customerName: data.customerName, targetVolume: data.targetVolume, unit: data.unit,
+      customerId: data.customerId, customerName: data.customerName,
+      targetVolume: data.targetVolume, unit: data.unit,
       qc: data.qc, hygiene: data.hygiene, expiryAt: data.expiryAt, notes: data.notes,
     });
     if (!r.ok) { showToast(r.error || '저장에 실패했습니다.', 'error'); return; }
