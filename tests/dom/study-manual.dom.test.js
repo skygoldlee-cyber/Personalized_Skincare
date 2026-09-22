@@ -11,6 +11,7 @@ import { loadIndexHtml, el, flushAsync } from './helpers.js';
 import { PATHS } from '../../src/paths.js';
 
 const MD_USER = '# 학습 매뉴얼\n\n## 섹션 1\n\n본문 내용입니다.\n\n## 섹션 2\n\n[실무 매뉴얼로](doc:formula_manual)\n';
+const MD_MERMAID = '# 다이어그램 문서\n\n```mermaid\nflowchart LR\n  A --> B\n```\n';
 const MD_FORMULA = '# 실무 매뉴얼\n\n## 배합\n\n포뮬러 내용.\n';
 
 describe('매뉴얼 뷰어 — 문서 열기·TOC·전환', () => {
@@ -76,6 +77,17 @@ describe('매뉴얼 뷰어 — 문서 열기·TOC·전환', () => {
 
         expect(el('manual-article').textContent).toContain('매뉴얼을 불러올 수 없습니다');
         expect(ManualViewer.isOpen()).toBe(true);
+    });
+
+    it('mermaid 블록 → pre.mermaid 마크업으로 렌더 (H)', async () => {
+        window.__DOC_MD__[PATHS.USER_MANUAL] = MD_MERMAID;
+        await ManualViewer.openManual();
+        await flushAsync(30);
+
+        const pre = el('manual-article').querySelector('pre.mermaid');
+        expect(pre).not.toBeNull();
+        expect(pre.textContent).toContain('A --> B');
+        // 지연 로딩 트리거 호출 — jsdom에서는 라이브러리 미로드로 렌더 생략, 마크업만 검증
     });
 
     it('닫기 → 오버레이 닫힘·body 클래스 해제', async () => {
