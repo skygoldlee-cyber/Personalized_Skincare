@@ -157,6 +157,65 @@ tests/dom/
 - 약점 추천 → 3문 이상 응시 과목 중 최저 정답률 + 헷갈림 最多 (H)
 - 응시 3문 미만 → 정답률 추천 제외, 헷갈림 추천만 유지 (B)
 
+## 4c. 구현 완료 — 학습 영역 Phase 4 (66개)
+
+### study-challenge.dom.test.js (12)
+- 오늘 미완료 → 시작 버튼·스트릭 0 표시 (H/E)
+- 어제 완료 → 스트릭 유지, 이틀+ 공백 → 리셋 (P/B)
+- 모달 → 8문항 생성·진행률·OX/단답 응답·외움/헷갈림 분류 (H)
+- 완주 → 완료 키·스트릭 영속 + 모달 닫힘 + 재진입 완료 상태 (P/R)
+- 중도 이탈 → confirm 경로 (X)
+
+### study-pomodoro.dom.test.js (7)
+- 시작/일시정지/리셋 → 상태·표시 전이 (H) — fake timers
+- 25분 완주 → 완료 상태·누적 집계 (H)
+- 날짜 경계 → 오늘 누적 리셋 (B)
+
+### study-trainer.dom.test.js (12)
+- `initTrainer` → 메뉴 표시·서브패널 숨김·재진입 리셋 (H/R)
+- 한도 퀴즈 → 4지선다·정오답 피드백·정답 하이라이트·완주 결과 (H)
+- 계산 연습 → 정답·오답 채점·이력 영속·비수치 경고 (H/P/X)
+- 원료 챌린지 → 안전 분류 정오답, 빈 DB → 경고 토스트 (H/E — 빈 DB 크래시 가드 추가)
+- 취약 진술 복습 → 시딩 렌더·요약·빈 상태 (H/E)
+
+### study-calendar.dom.test.js (6)
+- 기본 렌더 → 목표 카드 3개·주간 헤더 7·오늘 셀 (H/E)
+- 활동 기록 → 오늘 studied·툴팁·목표 달성률 재계산·영속 (H/P)
+- 이전/다음 달 이동 → 타이틀 전환·복귀 (H)
+- 목표 설정 모달 → 기본값·저장→`STUDY_GOALS` 영속·재렌더 (P)
+- 취소 → 목표 불변 (X)
+
+### study-simulator.dom.test.js (8)
+- `startSimSession` → 아레나 전환·OMR 버블·문항·타이머 (H)
+- 선지 클릭 → 답안 저장·OMR solved·진행 카운트 (H)
+- 다음/OMR 점프 → 문항 이동·마지막 문항 제출 버튼 (H)
+- 제출 → 채점·결과 패널·오답 `weak_sim_*` 자동 등록·드래프트 제거 (H/P)
+- 결과 리뷰 → 오답·미응답(공란)·해설 목록 (H/B)
+- 답안 → 임시 세션 저장·배너·이어하기 복원 (P/R)
+- 제한시간 만료 → 자동 제출 (B — fake timers)
+
+### study-reader.dom.test.js (5)
+- 과목 셀렉트 → 레지스트리 과목 옵션 (H)
+- 과목 선택 → 섹션 카드·TOC·툴바 렌더 + 위치 저장 (H/P)
+- 저장 위치 이어하기 → 과목 자동 복원·본문 재렌더 (P/R)
+- 북마크 토글 → `readerBookmarks` 영속·아이콘 상태 (P)
+- 과목 해제 → 빈 상태 (E)
+- 참고: `seedStudyData`가 `chapters`도 `STUDY_DATA`에 전달하도록 helpers 수정
+
+### study-search.dom.test.js (7)
+- 빈 검색어 → 안내 (E) / 초기화 → 복귀 (R)
+- Enter 검색 → 역색인 매칭·카드·`<mark>` 하이라이트·건수 (H)
+- 복수 키워드 → AND 교집합 (H)
+- 과목 필터 → 결과 필터링·전체 버튼 비활성 (H)
+- 일치 없음 → 안내 (B) / 장문 → 더보기 토글 (H)
+- 확인된 역색인 스펙: 완전 토큰 우선 매칭 — 공백 없는 장어 내 부분 문자열은 미색인
+
+### study-dictionary.dom.test.js (9)
+- DB → 카드·3상태 배지 (H) / 빈 DB 안내 (E)
+- 이름·영문·초성(ㄱㄹㅅㄹ) 검색 (H)
+- type 필터 → 배지 필터링·버튼 활성 (H)
+- 결과 없음 (B) / 카드 상세 토글 (H) / 검색 초기화 (R)
+
 ## 5. 전체 영역 시나리오 매트릭스
 
 모든 뷰에 대해 6가지 케이스 유형을 기준으로 시나리오를 정의한다:
@@ -192,15 +251,15 @@ tests/dom/
 | 플래시카드 | `study-flashcard` ✅ | 카드 로드(H) · 빈 과목 안내(E) · 뒤집기(H) · 암기/취약 표시→localStorage(P) · 기출/난이도 필터(B) | STUDY_DATA(cards) + setupEventListeners 실바인딩 |
 | 기출 퀴즈 | `study-quiz` ✅ | 시작→10문제 출제(H) · 과목 무퀴즈 경고(E) · 단답/객관식/OX 즉시 채점(H) · 종료→결과 화면(H) · 오답 결과 영속(P) · 중도 이탈(R) | STUDY_DATA(quizzes) |
 | 오답/중요 복습 | `study-quiz` ✅ | 약점 0건 안내(E) · 약점 카드 재출제(H) · 복습 중 정답 시 약점 해제+영속(P) · 과목 필터(H) · 수동 제외(P) | seedProgress({weak}) |
-| 데일리 챌린지 | `study-challenge` | 오늘 문항 생성(H) · 완료 후 재진입 시 완료 상태(R/P) · 스트릭 갱신(B) | STUDY_DATA + 날짜 고정 |
-| 스마트 훈련소 | `study-trainer` | 취약 카드 집계(H) · 계산 연습 정답/오답 판정(H/X) · 원료 배합 챌린지(B) | STUDY_DATA + seedProgress |
-| 뽀모도로 | `study-pomodoro` | 시작/정지→누적 표시(H) · 날짜 경계 리셋(P/B) | 타이머 fake timers |
-| 모의고사 | `study-simulator` | 세트 선택(H) · 상태 전이(state 모듈) → 제출→리뷰(H) · 미응답 경고(B) | 문제은행 스텁 |
-| 교재 리더 | `study-reader` | 단원 열기→MD 렌더(H) · 읽기 위치 저장→이어하기(P) · TOC 클릭(H) · 미로드 과목 안내(E) | DataLoader 모킹(정적 MD 스텁) |
-| 교재 검색 | `study-search` | 쿼리→결과 목록(H) · 결과 0건(E) · 결과 클릭→리더 이동(H) | 역색인 스텁 |
-| 성분 사전 | `study-dictionary` | 검색→결과·배합한도(H) · 금지 성분 경고 표시(X) · 결과 없음(E) | 성분 데이터 스텁 |
-| 용어집 | `study-glossary` | 목록 렌더(H) · 검색 필터(H) · 참조 링크(H) | glossary 인덱스 스텁 |
-| 학습 캘린더 | `study-calendar` | 기록→히트맵 반영(H/P) · 목표 설정(B) | seedProgress |
+| 데일리 챌린지 | `study-challenge` ✅ | 오늘 문항 생성(H) · 완료 후 재진입 시 완료 상태(R/P) · 스트릭 갱신(B) | STUDY_DATA + 날짜 고정 |
+| 스마트 훈련소 | `study-trainer` ✅ | 취약 카드 집계(H) · 계산 연습 정답/오답 판정(H/X) · 원료 배합 챌린지(B) | STUDY_DATA + seedProgress |
+| 뽀모도로 | `study-pomodoro` ✅ | 시작/정지→누적 표시(H) · 날짜 경계 리셋(P/B) | 타이머 fake timers |
+| 모의고사 | `study-simulator` ✅ | 세션 시작→아레나·OMR(H) · 답안→제출→리뷰(H) · 미응답 오답(B) · 임시저장→이어하기(P/R) · 시간만료 자동제출(B) | 스텁 시험지 주입 |
+| 교재 리더 | `study-reader` ✅ | 과목 선택→본문·TOC 렌더(H) · 읽기 위치 저장→이어하기(P/R) · 북마크(P) · 미선택 안내(E) | STUDY_DATA(chapters) + stubRegistry |
+| 교재 검색 | `study-search` ✅ | 쿼리→결과 카드·하이라이트(H) · AND 교집합(H) · 과목 필터(H) · 결과 0건(E) · 더보기 토글(H) | 역색인 (STUDY_DATA chapters) |
+| 성분 사전 | `study-dictionary` ✅ | 검색(이름/영문/초성)→카드·배지(H) · type 필터(H) · 빈 DB(E) · 결과 없음(B) | `window.INGREDIENTS_DATA` 스텁 |
+| 용어집 | — (리더 통합) | 별도 뷰 없음 — `collectGlossaryItems`는 리더 렌더 경로에서 실행. 마커 포함 섹션 픽스처로 추후 보강 가능 | 리더 테스트 경유 |
+| 학습 캘린더 | `study-calendar` ✅ | 기록→학습일·달성률 반영(H/P) · 목표 설정 저장·기본값(B) · 월 이동(H) | STUDY_CALENDAR + STUDY_GOALS |
 | 매뉴얼 뷰어 | `study-manual` | 학습↔실무 전환(H) · `doc:` 링크 전환(H) · mermaid 블록 마크업(H) | 번들 스텁 + `_renderMermaid` 모킹 |
 | 문제집 뷰어 | `study-examviewer` | MD 문제집 열기·목차(H) · 인쇄 버튼(H) | 번들 스텁 |
 | 시험 선택 | `study-examselect` | 목록 렌더(H) · 전환 호출→reload 트리거(H) | EXAMS_LIST 스텁 + reload 모킹 |
@@ -230,7 +289,7 @@ P(영속성)를 필수**로, **입력 폼이 있는 뷰는 X(오류/거부)를 �
 | **1** | 실무 코어: nav·고객·원료·법규 | 27개 | ✅ 완료 |
 | **2** | 실무 잔여: 계산기·배치·출력물 | 28개 | ✅ 완료 |
 | **3** | 학습 코어: 퀴즈·플래시카드·대시보드·복습 (helpers에 STUDY_DATA/진도 픽스처 추가) | 28개 | ✅ 완료 |
-| **4** | 학습 확장: 리더·검색·사전·용어집·시뮬레이터·캘린더·챌린지·훈련소·뽀모도로 | ~35개 | 📋 설계 |
+| **4** | 학습 확장: 리더·검색·사전·시뮬레이터·캘린더·챌린지·훈련소·뽀모도로 (용어집은 리더 통합 커버) | 66개 | ✅ 완료 |
 | **5** | 공통: 테마·오프라인·스크래치패드·a11y·매뉴얼/문제집/시험선택 뷰어 | ~15개 | 📋 설계 |
 | **6** | Playwright E2E (별도 설계) — 레이아웃·SW·PWA·실제 다운로드/인쇄 | 스모크 5개 내외 | ⏸️ 보류 |
 

@@ -8,11 +8,16 @@ import { showToast, vibrate, HAPTIC } from '../ui-utils.js';
    🧪 화장품 원료 안전성 챌린지 훈련 로직 (Ingredients Safety Trainer)
    ======================================================= */
 export function startIngredientsChallenge() {
+    const questions = generateIngredientsQuestions();
+    if (questions.length === 0) {
+        showToast('원료 데이터를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.', 'warning');
+        return;
+    }
     state.trainer.activeSubView = 'ingredients';
     state.trainer.ingredients.currentIndex = 0;
     state.trainer.ingredients.correctCount = 0;
     state.trainer.ingredients.solvedList = [];
-    state.trainer.ingredients.shuffledQuestions = generateIngredientsQuestions();
+    state.trainer.ingredients.shuffledQuestions = questions;
     
     const menuPanel = document.getElementById('trainer-menu-panel');
     const ingPanel = document.getElementById('trainer-ingredients-panel');
@@ -145,6 +150,7 @@ export function generateIngredientsQuestions() {
 export function renderIngQuestion() {
     const ingState = state.trainer.ingredients;
     const currentQ = ingState.shuffledQuestions[ingState.currentIndex];
+    if (!currentQ) return;
     
     const progressEl = document.getElementById('ing-progress-indicator');
     const labelEl = document.getElementById('ing-q-type-label');

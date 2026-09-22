@@ -12,6 +12,8 @@ import { vi } from 'vitest';
 import { showToast } from '../../src/ui-utils.js';
 import { state, loadProgress, safeSetItem, safeGetItem } from '../../src/state.js';
 import { STORAGE_KEYS } from '../../src/storage-keys.js';
+import { DataLoader } from '../../src/data-loader.js';
+import { TIMING } from '../../src/config/timing.js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 
@@ -93,9 +95,9 @@ export function spyAnchorDownload() {
  * 과목별 카운트는 카드/퀴즈 ID 접두사(`<subj>_card_N`·`<subj>_quiz_N`, [a-z]+)로
  * 집계되므로 과목 키는 소문자 영문 형태를 권장한다 (예: 'subj1').
  */
-export function seedStudyData(subjId, { name, cards = [], quizzes = [] } = {}) {
+export function seedStudyData(subjId, { name, cards = [], quizzes = [], chapters = [] } = {}) {
     window.STUDY_DATA = window.STUDY_DATA || {};
-    window.STUDY_DATA[subjId] = { name: name || subjId, cards, quizzes };
+    window.STUDY_DATA[subjId] = { name: name || subjId, cards, quizzes, chapters };
 }
 
 /**
@@ -119,10 +121,48 @@ export function resetStudyState() {
     state.quiz.currentIndex = 0;
     state.quiz.correctCount = 0;
     state.quiz.solvedList = [];
+    // 트레이너 서브 상태 — 이전 테스트의 진행 결과 잔류 방지
+    if (state.trainer) {
+        state.trainer.activeSubView = 'menu';
+        ['limits', 'calc', 'ingredients', 'oxdrill', 'combo'].forEach(k => {
+            const sub = state.trainer[k];
+            if (!sub) return;
+            if ('currentIndex' in sub) sub.currentIndex = 0;
+            if ('correctCount' in sub) sub.correctCount = 0;
+            if ('solvedList' in sub) sub.solvedList = [];
+            if ('shuffledData' in sub) sub.shuffledData = [];
+            if ('shuffledQuestions' in sub) sub.shuffledQuestions = [];
+            if ('currentQuestion' in sub) sub.currentQuestion = null;
+            if ('totalSolved' in sub) sub.totalSolved = 0;
+            if ('data' in sub) sub.data = [];
+            if ('judgments' in sub) sub.judgments = {};
+        });
+    }
+    // 뽀모도로 타이머 — 실행 중 인터벌 잔류 방지
+    const pomo = state.trainer && state.trainer.pomodoro;
+    if (pomo) {
+        if (pomo.timerId) clearInterval(pomo.timerId);
+        pomo.timerId = null;
+        pomo.isRunning = false;
+        pomo.status = 'idle';
+        pomo.timeLeft = TIMING.POMODORO_WORK_SEC;
+        pomo.duration = 0;
+        pomo.startTime = 0;
+        pomo.totalTimeToday = 0;
+        pomo.sessionCount = 0;
+    }
     state._prevMemCount = 0;
     state._prevQuizCount = 0;
     delete window.STUDY_DATA;
     delete window.EXAM_DATA;
+    delete window.DATA_REGISTRY;
+    delete window.INGREDIENTS_DATA;
+    // DataLoader 캐시/레지스트리 리셋 — 테스트 간 로드 결과 오염 방지
+    DataLoader.registry = null;
+    DataLoader._loaded = {};
+    DataLoader._loadedExams = {};
+    DataLoader._loadedDrills = {};
+    DataLoader._manifest = null;
 }
 
 /**
@@ -140,4 +180,35 @@ export function seedProgress({ memorized = [], weak = [], quizResults = {} } = {
 export function storedJson(key) {
     const raw = safeGetItem(key);
     try { return raw ? JSON.parse(raw) : null; } catch (_) { return raw; }
+}
+
+/**
+ * DataLoader 레지스트리 스텁 — fetch 없이 과목 메타·데이터를 주입한다.
+ * subjects: [{key, name, cards, quizzes, chapters}]
+ * `DataLoader._loaded[key]`를 미리 채우므로 `loadSubject()`는 fetch 없이 즉시 resolve.
+ * 대시보드/데일리 챌린지 등 `DataLoader.getSubjectList()` 경유 뷰에서 사용.
+ */
+export function stubRegistry(subjects = []) {
+    DataLoader.registry = {
+        subjects: subjects.map(s => ({
+            key: s.key,
+            name: s.name || s.key,
+            stats: {
+                cards: (s.cards || []).length,
+                quizzes: (s.quizzes || []).length,
+                chapters: (s.chapters || []).length,
+            },
+        })),
+        exams: [],
+    };
+    subjects.forEach(s => {
+        const data = {
+            name: s.name || s.key,
+            cards: s.cards || [],
+            quizzes: s.quizzes || [],
+            chapters: s.chapters || [],
+        };
+        DataLoader._loaded[s.key] = data;
+        seedStudyData(s.key, data);
+    });
 }
