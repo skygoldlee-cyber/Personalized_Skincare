@@ -1404,6 +1404,7 @@
                         </div>
                         <div class="fcb-checks" id="formula-check-summary"></div>
                     </div>
+                    <div id="formula-std-warn" class="is-hidden" role="status"></div>
 
                     <div class="formula-calc-form glass-card">
                         <!-- 빈 상태 안내 (이름 있는 행이 없을 때만 표시) -->
@@ -1604,6 +1605,7 @@
                         </div>
                     </div>
                     <div id="formula-batch-subnav"></div>
+                    <div id="batch-filter-bar" class="batch-filter-bar"></div>
                     <div id="batch-list" class="formula-list"></div>
                 </div>
 
@@ -1639,7 +1641,7 @@
                                 </select>
                             </label>
                             <label class="formula-field">
-                                <span class="formula-field-label">권장 사용기한</span>
+                                <span class="formula-field-label">권장 사용기한 <span class="fold-hint" id="batch-expiry-hint"></span></span>
                                 <input type="date" id="batch-expiry" class="form-input" aria-label="권장 사용기한">
                             </label>
                             <label class="formula-field">

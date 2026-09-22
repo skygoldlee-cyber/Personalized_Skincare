@@ -699,6 +699,27 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
     font-weight: 600;
 }
 
+/* 배치 목록 필터 바 */
+.batch-filter-bar {
+    display: flex;
+    gap: 0.45rem;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 0 0 0.9rem;
+}
+.batch-filter-bar:empty { display: none; }
+.batch-filter-sel {
+    width: auto;
+    min-width: 7rem;
+    padding: 0.35rem 0.6rem;
+    font-size: 0.82rem;
+}
+.batch-filter-input {
+    width: 8.5rem;
+    padding: 0.35rem 0.6rem;
+    font-size: 0.82rem;
+}
+
 /* 배치 폼 QC 라디오 행 */
 .batch-qc-form {
     display: flex;

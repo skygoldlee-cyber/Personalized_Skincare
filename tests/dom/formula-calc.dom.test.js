@@ -17,7 +17,7 @@ import {
 } from './helpers.js';
 import {
     formulaNew, openFormulaCalc, openFormulaList, formulaCalcAddRow,
-    formulaCalcSave, formulaDelete, formulaCustLoad,
+    formulaCalcSave, formulaDelete, formulaCustLoad, formulaOpen,
     formulaExportJson, formulaImportJson,
 } from '../../src/views/formula.js';
 import { listFormulas, createFormula, serializeFormula } from '../../src/formula-store.js';
@@ -213,5 +213,36 @@ describe('배합 계산기 — 입력·검증·저장 시나리오', () => {
         expect(listFormulas()[0].name).toBe('가져온 포뮬러');
         expect(lastToast()[0]).toContain('가져온 포뮬러');
         expect(el('formula-list').innerHTML).toContain('가져온 포뮬러');
+    });
+
+    it('고시 개정 감지 — 저장 스냅샷과 현재 DB 불일치 시 배지·배너', () => {
+        const { formula } = createFormula({
+            name: '구기준 포뮬러',
+            ingredients: [
+                // 스텁 DB는 살리실산 restricted/2.0% — 저장 시점이 approved/5.0%로 다름
+                { name: '살리실산', concentration: 1, snapshot: { type: 'approved', limit: '5.0%' } },
+                { name: '정제수', concentration: 99 }, // 스냅샷 없음 → 비교 제외
+            ],
+        });
+        openFormulaList();
+        expect(el('formula-list').innerHTML).toContain('기준 변경 1');
+
+        formulaOpen(formula.id);
+        expect(el('formula-std-warn').classList.contains('is-hidden')).toBe(false);
+        expect(el('formula-std-warn').textContent).toContain('1종');
+    });
+
+    it('고시 개정 감지 — 스냅샷이 현재 DB와 동일하면 배지·배너 없음', () => {
+        const { formula } = createFormula({
+            name: '최신 포뮬러',
+            ingredients: [
+                { name: '살리실산', concentration: 1, snapshot: { type: 'restricted', limit: '2.0%' } },
+            ],
+        });
+        openFormulaList();
+        expect(el('formula-list').innerHTML).not.toContain('기준 변경');
+
+        formulaOpen(formula.id);
+        expect(el('formula-std-warn').classList.contains('is-hidden')).toBe(true);
     });
 });

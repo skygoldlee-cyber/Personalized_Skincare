@@ -137,12 +137,35 @@ const CHECK_BADGE = {
   [CHECK.UNKNOWN]: { cls: 'f-check-unknown', label: '확인 필요' },
 };
 
+/**
+ * 저장 시점 스냅샷(ingredients[].snapshot)과 현재 원료 DB를 비교해
+ * 고시 개정으로 기준(type/limit)이 바뀐 원료 수를 반환한다.
+ */
+export function countChangedStandards(formula, index) {
+  let changed = 0;
+  (formula.ingredients || []).forEach(item => {
+    if (!item || !item.snapshot || !item.name) return;
+    const cur = index && typeof index.get === 'function' ? index.get(item.name) : null;
+    if (!cur) return; // 현재 DB 미등록은 unknown 판정이 이미 커버
+    if ((item.snapshot.type || '') !== (cur.type || '')
+      || (item.snapshot.limit || '') !== (cur.limit || '')) {
+      changed++;
+    }
+  });
+  return changed;
+}
+
 function checkSummaryHtml(formula) {
+  const index = getIndex();
   const { summary } = checkFormulaItems(
     (formula.ingredients || []).map(i => ({ name: i.name, concentration: i.concentration })),
-    getIndex()
+    index
   );
   const parts = [];
+  const changed = countChangedStandards(formula, index);
+  if (changed) {
+    parts.push(`<span class="f-check f-check-warn" title="저장 후 고시 기준이 변경된 원료 ${changed}종 — 재검증 권장">기준 변경 ${changed}</span>`);
+  }
   if (summary.banned) parts.push(`<span class="f-check f-check-banned">금지 ${summary.banned}</span>`);
   if (summary.warn) parts.push(`<span class="f-check f-check-warn">초과 ${summary.warn}</span>`);
   if (summary.unknown) parts.push(`<span class="f-check f-check-unknown">확인 ${summary.unknown}</span>`);
@@ -1104,6 +1127,21 @@ export function openFormulaCalc(sourceFormula) {
       el.addEventListener('input', () => { updateFoldSummaries(); renderStability(); });
     }
   });
+
+  // 고시 개정 감지 — 저장된 스냅샷 기준과 현재 DB가 다른 원료가 있으면 배너 표시
+  const stdWarnEl = document.getElementById('formula-std-warn');
+  if (stdWarnEl) {
+    const changed = sourceFormula ? countChangedStandards(sourceFormula, getIndex()) : 0;
+    if (changed) {
+      stdWarnEl.classList.remove('is-hidden');
+      stdWarnEl.innerHTML = `<div class="f-check f-check-warn batch-allergy-warn-box">`
+        + `<i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> `
+        + `저장 후 고시 기준이 변경된 원료가 ${changed}종 있습니다 — 한도를 재검증하고 다시 저장하면 스냅샷이 갱신됩니다.</div>`;
+    } else {
+      stdWarnEl.classList.add('is-hidden');
+      stdWarnEl.innerHTML = '';
+    }
+  }
 
   // 내용이 있는 접이식 섹션은 자동 펼침 (기존 포뮬러 수정 진입 시)
   const custFold = document.getElementById('formula-fold-customer');

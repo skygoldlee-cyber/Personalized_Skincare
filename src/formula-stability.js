@@ -69,7 +69,7 @@ const PRESERVATIVE_PAT = [
   '이소치아졸리논', '이미다졸리디닐', '디아졸리디닐', '벤질알코올', '클로페네신',
   '디엠디엠', '디하이드로아세틱', '메칠클로로이소치아졸리논',
 ];
-const isPreservative = (ing, name) =>
+export const isPreservative = (ing, name) =>
   hasCat(ing, /방부제|보존제/) || nameHas(name, PRESERVATIVE_PAT);
 
 // 중화제 — 카보머 젤화용 알칼리

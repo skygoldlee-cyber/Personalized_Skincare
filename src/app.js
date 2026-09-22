@@ -149,6 +149,8 @@ import {
     batchPrintRecord,
     batchPrintLabel,
     batchPrintGuide,
+    batchFilterReset,
+    batchExportCsv,
 } from './views/formula-batch.js';
 import {
     openCustomerPanel,
@@ -907,6 +909,7 @@ const DELEGATED_HANDLERS = {
     // Formula OS — 조제 기록(배치)
     openBatchPanel, batchNew, batchEdit, batchSave, batchOpen, batchDelete,
     batchFormulaChanged, batchCustChanged, batchPrintRecord, batchPrintLabel, batchPrintGuide,
+    batchFilterReset, batchExportCsv,
     // Formula OS — 고객 관리
     openCustomerPanel, custNew, custEdit, custSave, custOpen, custDelete,
     custLogAdd, custAllergyAdd, custAllergyRemove,

@@ -12,10 +12,11 @@ vi.mock('../../src/ui-utils.js', () => ({
 }));
 
 import { showToast, showConfirm } from '../../src/ui-utils.js';
-import { loadIndexHtml, el, isVisible, lastToast } from './helpers.js';
+import { loadIndexHtml, el, isVisible, lastToast, spyAnchorDownload } from './helpers.js';
 import {
     openBatchPanel, batchNew, batchEdit, batchSave, batchOpen,
     batchDelete, batchPrintRecord, batchPrintLabel,
+    batchExportCsv, batchFilterReset, suggestExpiryDays,
 } from '../../src/views/formula-batch.js';
 import { createFormula } from '../../src/formula-store.js';
 import { createCustomer } from '../../src/customer-store.js';
@@ -336,5 +337,98 @@ describe('조제 기록 — 배치 시나리오', () => {
         batchPrintLabel(batch.id);
         expect(el('formula-print-area').innerHTML).toContain('정제수');
         expect(window.print).toHaveBeenCalledTimes(2);
+    });
+
+    it('사용기한 자동 제안 — 보존제 180일 / 수상 무보존제 14일 / 무수 90일', () => {
+        // 수상부 + 보존제 없음 → 14일
+        const fWater = seedFormula();
+        expect(suggestExpiryDays(fWater)).toBe(14);
+        // 보존제 포함 → 180일
+        const fPres = seedFormula({
+            ingredients: [{ name: '페녹시에탄올', concentration: 1 }],
+        });
+        expect(suggestExpiryDays(fPres)).toBe(180);
+        // 무수(정제수·수상부 없음) + 보존제 없음 → 90일
+        const fOil = seedFormula({
+            ingredients: [{ name: '스쿠알렌', concentration: 100, phase: '유상부' }],
+        });
+        expect(suggestExpiryDays(fOil)).toBe(90);
+        // 원료 없음 → null
+        expect(suggestExpiryDays(seedFormula({ ingredients: [] }))).toBeNull();
+    });
+
+    it('사용기한 자동 제안 — 신규 폼에서 빈 필드만 채우고 힌트 표시', () => {
+        const f = seedFormula(); // 수상 무보존제 → 14일
+        batchNew(f.id);
+        expect(el('batch-expiry').value).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+        expect(el('batch-expiry-hint').textContent).toContain('자동 제안 14일');
+        // 사용자 입력은 덮어쓰지 않음
+        el('batch-expiry').value = '2027-12-31';
+        el('batch-formula').dispatchEvent(new Event('change'));
+        expect(el('batch-expiry').value).toBe('2027-12-31');
+    });
+
+    it('목록 필터 — 처방·고객·QC·인도별 필터링 + 초기화', () => {
+        createBatch({ formulaName: '수분 세럼', customerName: '김OO', madeAt: '2026-09-20T10:00' });
+        createBatch({
+            formulaName: '진정 크림', customerName: '이OO', madeAt: '2026-09-21T10:00',
+            qc: { appearance: '이상' }, deliveredAt: '2026-09-22',
+        });
+        openBatchPanel();
+        expect(el('batch-list').innerHTML).toContain('수분 세럼');
+        expect(el('batch-list').innerHTML).toContain('진정 크림');
+
+        // 처방 필터
+        el('batch-filter-formula').value = '수분 세럼';
+        el('batch-filter-formula').dispatchEvent(new Event('change'));
+        expect(el('batch-list').innerHTML).toContain('수분 세럼');
+        expect(el('batch-list').innerHTML).not.toContain('진정 크림');
+        batchFilterReset();
+
+        // 고객명 텍스트 필터
+        el('batch-filter-customer').value = '이OO';
+        el('batch-filter-customer').dispatchEvent(new Event('input'));
+        expect(el('batch-list').innerHTML).not.toContain('수분 세럼');
+        expect(el('batch-list').innerHTML).toContain('진정 크림');
+        batchFilterReset();
+
+        // QC 이상 필터
+        el('batch-filter-qc').value = 'bad';
+        el('batch-filter-qc').dispatchEvent(new Event('change'));
+        expect(el('batch-list').innerHTML).not.toContain('수분 세럼');
+        expect(el('batch-list').innerHTML).toContain('진정 크림');
+        batchFilterReset();
+
+        // 인도 여부 필터 — 미인도만
+        el('batch-filter-delivered').value = 'no';
+        el('batch-filter-delivered').dispatchEvent(new Event('change'));
+        expect(el('batch-list').innerHTML).toContain('수분 세럼');
+        expect(el('batch-list').innerHTML).not.toContain('진정 크림');
+        batchFilterReset();
+
+        // 조건 불일치 → 필터 전용 빈 상태
+        el('batch-filter-customer').value = '없는고객';
+        el('batch-filter-customer').dispatchEvent(new Event('input'));
+        expect(el('batch-list').innerHTML).toContain('필터 조건에 맞는 기록이 없습니다');
+        batchFilterReset(); // 모듈 필터 상태는 테스트 간 유지되므로 정리
+    });
+
+    it('CSV보내기 — 필터된 목록 다운로드 트리거 + 건수 토스트', () => {
+        createBatch({ formulaName: '수분 세럼', customerName: '김OO', madeAt: '2026-09-20T10:00' });
+        createBatch({ formulaName: '진정 크림', customerName: '이OO', madeAt: '2026-09-21T10:00' });
+        const dl = spyAnchorDownload();
+        batchExportCsv();
+        dl.restore();
+        expect(dl.clicks.length).toBe(1);
+        expect(dl.clicks[0].download).toMatch(/^batches_\d{4}-\d{2}-\d{2}\.csv$/);
+        expect(lastToast()[0]).toContain('2건');
+    });
+
+    it('CSV보내기 — 기록이 없으면 warning 토스트, 다운로드 없음', () => {
+        const dl = spyAnchorDownload();
+        batchExportCsv();
+        dl.restore();
+        expect(dl.clicks.length).toBe(0);
+        expect(lastToast()[1]).toBe('warning');
     });
 });
