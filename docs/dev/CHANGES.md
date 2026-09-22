@@ -4,6 +4,23 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-23 DOM 시나리오 테스트 Phase 1~5 완료 (커밋 b040b9a~106d769)
+
+`docs/dev/DOM_TEST_DESIGN.md` 매트릭스 기반으로 Vitest+jsdom DOM 테스트를
+전 뷰로 확장 — 48개 → **204개** (27파일).
+
+- **Phase 1** 실무 코어(27): 내비·고객 CRUD·원료 장부·법규 체크리스트
+- **Phase 2** 실무 잔여(28): 배합 계산기·포뮬러 목록·배치(QC·위생·채번)·인쇄 산출물
+- **Phase 3** 학습 코어(28): 퀴즈·플래시카드·대시보드·약점 복습 — helpers에
+  `seedStudyData`/`seedProgress`/`stubRegistry`/`resetStudyState` 픽스처 추가
+- **Phase 4** 학습 확장(66): 데일리·뽀모도로·훈련소·캘린더·모의고사·리더·검색·사전
+  (fake timers·DataLoader 스텁)
+- **Phase 5** 공통(34): 테마·오프라인·스크래치패드·a11y·매뉴얼/문제집/시험선택 뷰어
+- **테스트가 잡아낸 실버그 5건**: 계산기 빈 상태 배너 미해제, 배치 보정 모드 QC
+  데이터 손실(라디오 렌더 순서), 인쇄 시 전성분·기록일시 누락(currentDraft 메타),
+  약점 퀴즈 정답 시 약점 미해제, 기본 시험 선택 시 불필요 리로드
+  (getCurrentExamId→getActiveExamId)
+
 ## 2026-09-23 띄어쓰기 교정 + 문서 전수 동기화 (커밋 95504a6·9ac3e34)
 
 - **띄어쓰기 교정**: `CSV로보내다`→`CSV로 보내다`, `JSON으로보내기`→`JSON으로 보내기`,
