@@ -244,6 +244,7 @@ docs/                   # 개발 문서
 - `docs/dev/TEXTBOOK_AUTHORING_GUIDE.md` — 교재 작성 가이드
 - `docs/dev/NUMBERING_SYSTEM.md` — 교재 번호체계 가이드 (십진법)
 - `docs/dev/QUESTION_SCHEMA_DESIGN.md` — 문항 스키마 + 복수정답형 변환 파이프라인 설계
+- `docs/dev/FORMULA_OS_WORKFLOW_DESIGN.md` — 조제관리사 9개 업무 전체 커버리지 확장 설계안 (고객·배치·원료장부·안내문)
 - `docs/dev/COMBO_GENERATION_GUIDE.md` — 복수정답형 문항 생성 절차·품질 게이트·수치 조정 가이드
 - `docs/dev/COMBO_STUDY_STRATEGY.md` — 복수정답형 학습 전략 (전략→기능 매핑 포함)
 - `docs/user/user_manual.md` — 사용자 매뉴얼
