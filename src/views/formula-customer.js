@@ -14,10 +14,14 @@ import { listBatches } from '../batch-store.js';
 import {
   listCustomers, getCustomer, getCustomerUsage,
   createCustomer, updateCustomer, deleteCustomer, addConsultLog,
+  importCustomers,
   CUSTOMER_LIMIT_FREE, SCALP_OPTIONS,
 } from '../customer-store.js';
 import { CUSTOMER_OPTIONS } from '../formula-store.js';
 import { clampDate } from '../store-utils.js';
+import {
+  parseCsv, csvToObjects, readCsvFile, toCsv, downloadCsv,
+} from '../csv-utils.js';
 
 // 폼 상태 — editingId + 알레르기 칩 목록 (포뮬러 폼과 동일 패턴)
 const cust = { editingId: null, allergies: [] };
@@ -303,4 +307,123 @@ export async function custDelete(id) {
   if (!r.ok) { showToast(r.error || '삭제에 실패했습니다.', 'error'); return; }
   showToast('고객이 삭제되었습니다.', 'success');
   openCustomerPanel();
+}
+
+/* =======================================================
+   CSV 가져오기·보내기·양식
+   ======================================================= */
+
+// CSV 헤더 → 고객 필드 매핑 (키는 정규화 형태: 소문자·공백 제거)
+export const CUST_CSV_COLS = Object.freeze({
+  '이름': 'name', '고객명': 'name', 'name': 'name',
+  '나이': 'age', '연령': 'age', 'age': 'age',
+  '성별': 'gender', 'gender': 'gender',
+  '피부타입': 'skinType', '피부유형': 'skinType', 'skintype': 'skinType',
+  '두피타입': 'scalpType', '두피': 'scalpType', 'scalptype': 'scalpType',
+  '고민': 'concerns', '피부고민': 'concerns', 'concerns': 'concerns',
+  '알레르기': 'allergies', 'allergies': 'allergies',
+  '임신수유': 'pregnancy', '임신': 'pregnancy', 'pregnancy': 'pregnancy',
+  '사용제품': 'products', '사용중인제품': 'products', 'products': 'products',
+  '목적': 'purpose', '조제목적': 'purpose', 'purpose': 'purpose',
+  '메모': 'notes', '비고': 'notes', 'notes': 'notes',
+});
+
+//보내기·양식의 표준 헤더 (한글)
+export const CUST_CSV_HEADERS = Object.freeze(
+  ['이름', '나이', '성별', '피부타입', '두피타입', '고민', '알레르기', '임신수유', '사용제품', '목적', '메모']);
+
+/** 목록형 셀 분리 — `;` `|` `/` 구분 */
+function splitCsvList(v) {
+  return String(v || '').split(/[;|/]/).map(s => s.trim()).filter(Boolean);
+}
+
+/** 임신·수유 표기 정규화 — 옵션 외 값은 sanitize의 pickEnum이 제거 */
+function normPregnancy(v) {
+  const s = String(v || '').trim();
+  if (s.includes('임신')) return '임신 중';
+  if (s.includes('수유')) return '수유 중';
+  return s;
+}
+
+/** CSV 행 객체 → sanitizeCustomer 입력 형태 */
+export function csvRowToCustomer(o) {
+  return {
+    name: o.name,
+    age: o.age,
+    gender: o.gender,
+    skinType: o.skinType,
+    scalpType: o.scalpType,
+    concerns: splitCsvList(o.concerns),
+    allergies: splitCsvList(o.allergies),
+    pregnancy: normPregnancy(o.pregnancy),
+    products: o.products,
+    purpose: o.purpose,
+    notes: o.notes,
+  };
+}
+
+function custToCsvRow(c) {
+  return [
+    c.name, c.age != null ? c.age : '', c.gender, c.skinType, c.scalpType,
+    (c.concerns || []).join(';'), (c.allergies || []).join(';'),
+    c.pregnancy, c.products, c.purpose, c.notes,
+  ];
+}
+
+/** CSV 가져오기 트리거 — 숨겨진 파일 입력 클릭 (formula.js JSON 패턴과 동일) */
+export function custImportCsv() {
+  const input = document.getElementById('customer-file-input');
+  if (!input) return;
+  if (!input.dataset.bound) {
+    input.dataset.bound = '1';
+    input.addEventListener('change', custImportFile);
+  }
+  input.click();
+}
+
+async function custImportFile(event) {
+  const input = event.target;
+  const file = input && input.files && input.files[0];
+  input.value = '';
+  if (!file) return;
+
+  let text;
+  try {
+    text = await readCsvFile(file);
+  } catch (e) {
+    showToast('파일을 읽지 못했습니다.', 'error');
+    return;
+  }
+  const rows = csvToObjects(parseCsv(text), CUST_CSV_COLS);
+  if (!rows.length) {
+    showToast('인식 가능한 행이 없습니다 — "양식" 버튼의 헤더를 사용하세요.', 'error');
+    return;
+  }
+  const records = rows.map(csvRowToCustomer);
+  const ok = await showConfirm(
+    `CSV에서 ${records.length}건을 읽었습니다. 이름이 같은 기존 고객은 건너뜁니다. 가져올까요?`,
+    '고객 CSV 가져오기');
+  if (!ok) return;
+
+  const st = importCustomers(records);
+  const parts = [`${st.added}건 추가`];
+  if (st.duplicate) parts.push(`중복 ${st.duplicate}건 건너뜀`);
+  if (st.skipped) parts.push(`이름 없음 ${st.skipped}건 제외`);
+  if (st.overLimit) parts.push(`한도 초과 ${st.overLimit}건 제외`);
+  showToast(`가져오기 완료 — ${parts.join(', ')}`, st.added ? 'success' : 'info');
+  openCustomerPanel();
+}
+
+/** 고객 목록 CSV보내기 (UTF-8 BOM — Excel 한글 호환) */
+export function custExportCsv() {
+  const list = listCustomers();
+  if (!list.length) { showToast('보낼 고객이 없습니다.', 'info'); return; }
+  downloadCsv(toCsv([...CUST_CSV_HEADERS], list, custToCsvRow), `customers_${new Date().toISOString().split('T')[0]}.csv`);
+  showToast(`${list.length}명의 고객을 CSV로보냈습니다.`, 'success');
+}
+
+/** 빈 CSV 양식 다운로드 — 표준 헤더만 */
+export function custCsvTemplate() {
+  downloadCsv(toCsv([...CUST_CSV_HEADERS], [], () => []), 'customers_template.csv');
+  showToast('고객 CSV 양식을 다운로드했습니다.', 'success');
 }

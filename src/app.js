@@ -160,6 +160,9 @@ import {
     custLogAdd,
     custAllergyAdd,
     custAllergyRemove,
+    custImportCsv,
+    custExportCsv,
+    custCsvTemplate,
 } from './views/formula-customer.js';
 import {
     openMaterialPanel,
@@ -167,6 +170,9 @@ import {
     matEdit,
     matSave,
     matDelete,
+    matImportCsv,
+    matExportCsv,
+    matCsvTemplate,
 } from './views/formula-material.js';
 import {
     openCompliancePanel,
@@ -904,8 +910,10 @@ const DELEGATED_HANDLERS = {
     // Formula OS — 고객 관리
     openCustomerPanel, custNew, custEdit, custSave, custOpen, custDelete,
     custLogAdd, custAllergyAdd, custAllergyRemove,
+    custImportCsv, custExportCsv, custCsvTemplate,
     // Formula OS — 원료 장부
     openMaterialPanel, matNew, matEdit, matSave, matDelete,
+    matImportCsv, matExportCsv, matCsvTemplate,
     // Formula OS — 법규 준수 체크리스트
     openCompliancePanel, compToggle, compReset, compOpenLaw,
     showIngredientsChangelog,

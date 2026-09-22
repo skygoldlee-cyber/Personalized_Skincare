@@ -1698,6 +1698,10 @@
                             <h4>고객 관리</h4>
                             <span class="badge badge-quiz-cat" id="customer-list-usage">0/20 등록</span>
                             <button class="btn btn-secondary btn-sm" data-click="custNew"><i class="fa-solid fa-plus" aria-hidden="true"></i> 고객 등록</button>
+                            <button class="btn btn-secondary btn-sm" data-click="custImportCsv" title="CSV 파일에서 고객 가져오기"><i class="fa-solid fa-file-import" aria-hidden="true"></i> CSV 가져오기</button>
+                            <button class="btn btn-secondary btn-sm" data-click="custExportCsv" title="고객 목록을 CSV 파일로보내기"><i class="fa-solid fa-file-export" aria-hidden="true"></i>보내기</button>
+                            <button class="btn btn-secondary btn-sm" data-click="custCsvTemplate" title="빈 CSV 양식 다운로드"><i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i> 양식</button>
+                            <input type="file" id="customer-file-input" class="is-hidden" accept=".csv,text/csv" aria-label="고객 CSV 파일">
                         </div>
                     </div>
                     <div id="formula-customer-subnav"></div>
@@ -1796,6 +1800,10 @@
                             <h4>원료 장부</h4>
                             <span class="badge badge-quiz-cat" id="material-list-usage">0/30 등록</span>
                             <button class="btn btn-secondary btn-sm" data-click="matNew"><i class="fa-solid fa-plus" aria-hidden="true"></i> 원료 등록</button>
+                            <button class="btn btn-secondary btn-sm" data-click="matImportCsv" title="CSV 파일에서 원료 가져오기"><i class="fa-solid fa-file-import" aria-hidden="true"></i> CSV 가져오기</button>
+                            <button class="btn btn-secondary btn-sm" data-click="matExportCsv" title="원료 장부를 CSV 파일로보내기"><i class="fa-solid fa-file-export" aria-hidden="true"></i>보내기</button>
+                            <button class="btn btn-secondary btn-sm" data-click="matCsvTemplate" title="빈 CSV 양식 다운로드"><i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i> 양식</button>
+                            <input type="file" id="material-file-input" class="is-hidden" accept=".csv,text/csv" aria-label="원료 CSV 파일">
                         </div>
                     </div>
                     <div id="formula-material-subnav"></div>

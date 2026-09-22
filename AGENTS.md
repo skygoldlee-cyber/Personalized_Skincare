@@ -101,6 +101,7 @@ src/                    # ES Modules
   customer-store.js     # Formula OS — 고객 카드·상담 이력(append-only) (20명)
   material-ledger.js    # Formula OS — 원료 입고·사용기한·재고, 기한 경고 (30종)
   usage-guide.js        # Formula OS — 사용 안내문 생성기 (제형 템플릿+원료 주의)
+  csv-utils.js          # Formula OS — CSV 파서·EUC-KR 폴백 디코딩·BOM 직렬화
   pwa-install.js        # PWA 설치 프롬프트 설정
   theme-init.js         # 테마 초기화 (즉시 실행)
   theme-toggle.js       # 테마 토글 UI

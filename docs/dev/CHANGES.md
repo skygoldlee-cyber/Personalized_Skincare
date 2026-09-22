@@ -4,6 +4,27 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-23 Formula OS — 고객·원료 CSV 가져오기/보내기
+
+고객 관리·원료 장부에 CSV 상호운용 추가 — 기존 Excel 장부 데이터를 가져오고
+현재 데이터를 CSV로보내 재활용할 수 있다.
+
+- **`src/csv-utils.js`** (신규): `parseCsv`(RFC4180 따옴표 필드·필드 내 쉼표/개행·
+  구분자 `,`/`;`/탭 자동 감지) · `decodeCsvBuffer`(UTF-8 BOM → UTF-8 strict →
+  **EUC-KR/CP949 폴백** — 한국 Excel CSV 대응) · `csvToObjects`(헤더 정규화 —
+  소문자·공백 제거, 한/영 별칭 매핑) · `toCsv`(UTF-8 BOM + 필요 시 따옴표 +
+  CRLF, Excel 한글 호환) · `downloadCsv`(data URI 다운로드)
+- **스토어**: `importCustomers`/`importMaterials` — sanitize 경유 후 일괄 삽입,
+  중복 건너뜀(고객=이름, 원료=이름+LOT), 기존 항목 덮어쓰지 않음, 이름 없는 행
+  제외, Free 한도(20명/30종) 초과분 집계 → `{added,skipped,duplicate,overLimit}`
+- **뷰**: `formula-customer.js`/`formula-material.js`에 헤더 맵
+  (`CUST_CSV_COLS`/`MAT_CSV_COLS`)·행 변환(목록 `;`/`|`/`/` 분리, 임신 표기·
+  날짜 `YYYY.M.D`/`YYYY/M/D` 정규화)·가져오기(showConfirm 건수 확인 후
+  요약 토스트)·보내기·양식 다운로드 핸들러. 헤더 버튼 3개 + 숨김 file input
+  (기존 JSON 가져오기 패턴과 동일)
+- **테스트**: `csv-import.test.js` 17건 (파서 9 + 가져오기 8) — 유닛 437→454
+- **문서**: `formula_manual.md` §3·§5에 CSV 헤더 표·인코딩 안내 추가
+
 ## 2026-09-22 Formula OS 업무 확장 Phase A~D (커밋 f6cd274·5b9c356·9bce945·0389ed7)
 
 조제관리사 9개 업무 영역 전체 커버 (설계: FORMULA_OS_WORKFLOW_DESIGN.md).

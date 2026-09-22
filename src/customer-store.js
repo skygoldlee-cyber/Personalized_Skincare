@@ -144,6 +144,31 @@ export function updateCustomer(id, data) {
 }
 
 /**
+ * 외부 데이터 일괄 가져오기 (CSV 등) — sanitize 후 이름 중복은 건너뛴다.
+ * 기존 항목은 절대 덮어쓰지 않는다. 한도 도달 시 나머지 행은 overLimit으로 집계.
+ * @param {object[]} rows - sanitizeCustomer에 넘길 원시 객체 배열
+ * @returns {{added:number, skipped:number, duplicate:number, overLimit:number}}
+ */
+export function importCustomers(rows) {
+  const existing = loadAll();
+  const seen = new Set(existing.map(c => c.name));
+  const stats = { added: 0, skipped: 0, duplicate: 0, overLimit: 0 };
+  const incoming = [];
+  for (const raw of rows || []) {
+    const clean = sanitizeCustomer(raw);
+    if (!clean.name) { stats.skipped++; continue; }
+    if (seen.has(clean.name)) { stats.duplicate++; continue; }
+    if (existing.length + incoming.length >= CUSTOMER_LIMIT_FREE) { stats.overLimit++; continue; }
+    seen.add(clean.name);
+    const now = Date.now();
+    incoming.push({ id: newCustomerId(), ...clean, createdAt: now, updatedAt: now });
+  }
+  if (incoming.length) saveAll(existing.concat(incoming));
+  stats.added = incoming.length;
+  return stats;
+}
+
+/**
  * 상담 이력 추가 — append 전용 (수정·삭제 없음, 기록 보존 원칙).
  * @param {string} id - 고객 id
  * @param {string} text - 상담 내용

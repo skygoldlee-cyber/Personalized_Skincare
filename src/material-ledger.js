@@ -84,6 +84,32 @@ export function getMaterialUsage() {
 }
 
 /**
+ * 외부 데이터 일괄 가져오기 (CSV 등) — sanitize 후 원료명+LOT 중복은 건너뛴다.
+ * 기존 항목은 절대 덮어쓰지 않는다. 한도 도달 시 나머지 행은 overLimit으로 집계.
+ * @param {object[]} rows - sanitizeMaterial에 넘길 원시 객체 배열
+ * @returns {{added:number, skipped:number, duplicate:number, overLimit:number}}
+ */
+export function importMaterials(rows) {
+  const existing = loadAll();
+  const keyOf = m => `${m.name}|${m.lot || ''}`;
+  const seen = new Set(existing.map(keyOf));
+  const stats = { added: 0, skipped: 0, duplicate: 0, overLimit: 0 };
+  const incoming = [];
+  for (const raw of rows || []) {
+    const clean = sanitizeMaterial(raw);
+    if (!clean.name) { stats.skipped++; continue; }
+    if (seen.has(keyOf(clean))) { stats.duplicate++; continue; }
+    if (existing.length + incoming.length >= MATERIAL_LIMIT_FREE) { stats.overLimit++; continue; }
+    seen.add(keyOf(clean));
+    const now = Date.now();
+    incoming.push({ id: newMaterialId(), ...clean, createdAt: now, updatedAt: now });
+  }
+  if (incoming.length) saveAll(existing.concat(incoming));
+  stats.added = incoming.length;
+  return stats;
+}
+
+/**
  * 기한 상태 — 'expired'(기한일 지남) | 'soon'(EXPIRY_SOON_DAYS 이내) | 'ok' | 'none'(기한 미기재)
  * 기한일 당일은 아직 사용 가능(D-0) — 경과는 기한일 다음날부터.
  * @param {object} m - 원료 항목

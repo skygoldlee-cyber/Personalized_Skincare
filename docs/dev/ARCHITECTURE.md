@@ -99,7 +99,8 @@
 │ │  │  exam-sim-review · glossary-renderer · navigation  │  │ │
 │ │  │  formula (Formula OS 뷰) · formula-store/rules/check/stability│  │ │
 │ │  │  formula-batch/customer/material/compliance/print (뷰)        │  │ │
-│ │  │  batch-store · customer-store · material-ledger · usage-guide │  │ │
+│ │  │  batch-store · customer-store · material-ledger · usage-guide    │  │ │
+│ │  │  csv-utils (CSV 파서·EUC-KR 폴백·BOM 직렬화)                     │  │ │
 │ │  └──────────────────────────────────────────────────┘  │ │
 │ │  ┌──────────────────────────────────────────────────┐  │ │
 │ │  │  app/ (app.js에서 추출된 모듈)                      │  │ │
@@ -464,7 +465,7 @@ Personalized_Skincare/
 | [`data/exams/cosmetic/ingredients_data.<hash>.js`](../../data/) | 화장품 성분 사전 (가용/금지/제한) | `tools/build/index.js` (ingredients plugin) |
 | `registry.js` → `ingredients` 메타 | 원료 DB `version`·`updatedAt`·`notice`·`history`(개정 이력 누적)·`contentHash`(내용 지문) — `content/…/원료/db_version.json`에서 병합. 사전 버전 배지·갱신 알림·Formula OS 검증 기준이 여기서 나옴 | `tools/build/index.js` |
 | `src/formula-store.js` · `src/formula-rules.js` · `src/formula-check.js` · `src/formula-stability.js` | Formula OS 도메인 레이어 — 포뮬러 CRUD/한도(5개)·고객·안정성 스키마·전성분 표시 순서, 추천 규칙(BASE_TEMPLATES·고민/피부 매핑·맞춤 규칙 병합), 고시 한도 검증 엔진, 제형 안정성 체크(상 비율·상호작용·투입 단계·pH) | 수동 관리 |
-| `src/batch-store.js` · `src/customer-store.js` · `src/material-ledger.js` · `src/usage-guide.js` · `src/store-utils.js` | Formula OS 업무 레이어 — 배치(조제 기록) 채번·QC·위생·스냅샷, 고객 카드·상담 이력, 원료 입고·기한·재고, 사용 안내문 생성기, 스토어 공통 헬퍼 (FORMULA_OS_WORKFLOW_DESIGN.md) | 수동 관리 |
+| `src/batch-store.js` · `src/customer-store.js` · `src/material-ledger.js` · `src/usage-guide.js` · `src/store-utils.js` · `src/csv-utils.js` | Formula OS 업무 레이어 — 배치(조제 기록) 채번·QC·위생·스냅샷, 고객 카드·상담 이력, 원료 입고·기한·재고, 사용 안내문 생성기, 스토어 공통 헬퍼, CSV 파서·인코딩(EUC-KR 폴백)·직렬화 (FORMULA_OS_WORKFLOW_DESIGN.md) | 수동 관리 |
 | `src/views/formula.js` | Formula OS 뷰 — 배합 계산기(sticky 요약·액션바, 카드형 원료 행, 접이식 고객/제조 정보), My 포뮬러, 추천 패널, 서브내비 칩, 인쇄·JSON 공유 | 수동 관리 |
 | `src/views/formula-batch.js` · `formula-customer.js` · `formula-material.js` · `formula-compliance.js` · `formula-print.js` | Formula OS 패널 뷰 — 조제 기록(목록·폼·상세), 고객 관리, 원료 장부, 법규 준수 체크리스트(법령 MD 링크·체크 영속), 인쇄 빌더(기록지·라벨·안내문) | 수동 관리 |
 | [`data/exams/cosmetic/id_migration.js`](../../data/exams/cosmetic/id_migration.js) | 레거시 ID → 안정 ID 일회성 매핑 | `tools/build/index.js` (id-factory) |

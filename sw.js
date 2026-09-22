@@ -102,6 +102,7 @@ const SHELL_ASSETS = [
   './src/batch-store.js',
   './src/customer-store.js',
   './src/material-ledger.js',
+  './src/csv-utils.js',
   './src/usage-guide.js',
   './src/views/formula.js',
   './src/views/formula-batch.js',

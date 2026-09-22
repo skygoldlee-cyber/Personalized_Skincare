@@ -59,6 +59,13 @@
 | `src/views/formula-customer.js` | 고객 목록·폼·상세(상담 이력·역참조) 패널 | 1 | ✅ Phase B |
 | `src/views/formula-material.js` | 원료 장부 목록·폼 패널 | 4 | ✅ Phase C |
 | `src/views/formula-compliance.js` | 법규 준수 체크리스트 — 6개 카테고리 25항목 + 법령 원문 링크 + 체크 상태 영속 | 9 | ✅ Phase D |
+| `src/csv-utils.js` | CSV 파서·인코딩(EUC-KR 폴백)·직렬화 — 고객·원료 가져오기/보내기 공용 | 1·4 | ✅ |
+
+### CSV 상호운용 (고객·원료)
+
+- **가져오기**: 파일 선택 → `decodeCsvBuffer`(UTF-8 BOM → UTF-8 strict → EUC-KR 폴백) → `parseCsv` → `csvToObjects`(한/영 헤더 별칭, 정규화: 소문자·공백 제거) → 행 변환 → `showConfirm` 건수 확인 → `importCustomers`/`importMaterials`.
+- **중복 정책**: 고객=이름, 원료=이름+LOT — 기존 항목은 절대 덮어쓰지 않고 건너뜀 집계. 이름 없는 행 제외, Free 한도 초과분 집계 → `{added,skipped,duplicate,overLimit}`.
+- **보내기·양식**: `toCsv` — UTF-8 BOM + CRLF + 필요 시 따옴표(Excel 한글 호환). 양식은 표준 한글 헤더만 포함.
 
 기존 `formula-store.js`/`formula-rules.js`/`formula-check.js`/`formula-stability.js`는 그대로 유지 — 처방 계층으로 역할 고정.
 
