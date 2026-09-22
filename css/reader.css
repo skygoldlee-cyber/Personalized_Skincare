@@ -1553,7 +1553,16 @@ body.reader-focus-mode .reader-readable-width {
         right: 0;
         height: calc(70px + env(safe-area-inset-bottom, 0px));
         padding-bottom: env(safe-area-inset-bottom, 0px);
-        background: var(--bg-sidebar);
+        /* 가로 스크롤 힌트 — 양 끝에 더 있음을 나타내는 섀도 (background-attachment: scroll/local) */
+        background:
+            linear-gradient(to right, var(--bg-sidebar) 30%, rgba(0,0,0,0)),
+            linear-gradient(to left, var(--bg-sidebar) 30%, rgba(0,0,0,0)),
+            radial-gradient(farthest-side at 0% 50%, rgba(0,0,0,0.25), rgba(0,0,0,0)),
+            radial-gradient(farthest-side at 100% 50%, rgba(0,0,0,0.25), rgba(0,0,0,0));
+        background-color: var(--bg-sidebar);
+        background-attachment: local, local, scroll, scroll;
+        background-repeat: no-repeat;
+        background-size: 32px 100%, 32px 100%, 12px 100%, 12px 100%;
         border-top: 1px solid var(--border-color);
         display: flex;
         justify-content: flex-start;

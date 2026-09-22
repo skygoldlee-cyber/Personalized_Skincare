@@ -706,19 +706,6 @@ body {
     border-color: rgba(139, 92, 246, 0.4);
 }
 
-.nav-pill-formula {
-    margin-left: auto;
-    font-size: var(--text-2xs);
-    font-weight: var(--font-weight-bold);
-    letter-spacing: 0.05em;
-    color: var(--color-secondary);
-    background: var(--secondary-tint-15);
-    border: 1px solid rgba(139, 92, 246, 0.35);
-    border-radius: 999px;
-    padding: 0.15rem 0.5rem;
-    flex-shrink: 0;
-}
-
 .nav-item-formula.active {
     background: linear-gradient(135deg, var(--secondary-tint-15), var(--secondary-tint-12));
     border-color: rgba(139, 92, 246, 0.4);
