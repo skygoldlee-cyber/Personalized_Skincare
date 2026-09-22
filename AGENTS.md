@@ -17,8 +17,8 @@
 
 ```powershell
 # 테스트
-npm.cmd test                          # 유닛 테스트 (node --test, 454개)
-npm.cmd run test:dom                  # DOM 테스트 (Vitest + jsdom, 204개)
+npm.cmd test                          # 유닛 테스트 (node --test, 458개)
+npm.cmd run test:dom                  # DOM 테스트 (Vitest + jsdom, 221개)
 npm.cmd run test:all                   # 전체 테스트 (unit + parser + dom)
 
 # 빌드
@@ -230,7 +230,7 @@ docs/                   # 개발 문서
 ## 검증 체크리스트 (변경 후 필수)
 
 1. `node --check` — 수정한 JS 파일 문법 검증
-2. `npm.cmd test` — 유닛 테스트 454개 통과 확인
+2. `npm.cmd test` — 유닛 테스트 458개 통과 확인
 3. `npm.cmd run check:parser` — 콘텐츠 변경 시 파서 등가성 검증
 4. `npm.cmd run check:imports` — src/ 내 ES 모듈 import/export 교차 검증
 5. `npm.cmd run verify:assets` — SHELL_ASSETS 파일 존재 확인
@@ -244,7 +244,7 @@ docs/                   # 개발 문서
 - **Mermaid `!important`**: `css/reader.css`의 Mermaid 규칙 `!important`는 제거 금지 (Mermaid 라이브러리 인라인 스타일 덮어쓰기용)
 - **콘텐츠 편집 후**: `npm.cmd run build:data` 실행 후 `data/` 번들 커밋 필요
 - **CSP**: `vercel.json`에 `script-src 'self'` (인라인 스크립트 금지)
-- **DOM 테스트**: `tests/dom/` 27파일 204개 — Phase 1~5 전 뷰 커버 (매트릭스·작성 규칙은 `docs/dev/DOM_TEST_DESIGN.md`, 파일별 목록은 `docs/dev/TESTING.md`)
+- **DOM 테스트**: `tests/dom/` 27파일 221개 — Phase 1~5 전 뷰 커버 (매트릭스·작성 규칙은 `docs/dev/DOM_TEST_DESIGN.md`, 파일별 목록은 `docs/dev/TESTING.md`)
 
 ## 관련 문서
 

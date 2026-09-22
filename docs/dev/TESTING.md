@@ -22,9 +22,9 @@
 
 | 구분 | 프레임워크 | 환경 | 파일 위치 | 테스트 수 |
 |------|-----------|------|-----------|-----------|
-| **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 454 |
-| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 204 |
-| **합계** | | | | **657** |
+| **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 458 |
+| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 221 |
+| **합계** | | | | **679** |
 
 ### 설계 원칙
 
@@ -39,12 +39,12 @@
 ## 2. 실행 명령어
 
 ```bash
-# Unit 테스트만 실행 (454개)
+# Unit 테스트만 실행 (458개)
 npm test
 # 또는
 npm run test:unit
 
-# DOM 테스트만 실행 (204개)
+# DOM 테스트만 실행 (221개)
 npm run test:dom
 
 # 전체 실행 (Unit + 파서 정합성 + DOM)
@@ -100,13 +100,13 @@ npm run test:watch
 | 26 | `formula-rules.test.js` | 23 | `src/formula-rules.js` — 추천 규칙, 안전 필터(금지·알레르기·임신수유), 맞춤 규칙 병합·직렬화 | Formula OS, 합성 데이터 |
 | 27 | `formula-check.test.js` | 20 | `src/formula-check.js` — 원료 인덱스, 배합 검증(한도이내/초과/금지/확인필요), 고시 출처 | Formula OS, 합성 데이터 |
 | 28 | `formula-stability.test.js` | 22 | `src/formula-stability.js` — 상 비율·상호작용·투입 단계·pH 규칙, 미판정 불변식 | Formula OS, 합성 데이터 |
-| 29 | `batch-store.test.js` | 10 | `src/batch-store.js` — 배치 채번(YYYYMMDD-NN), identity 불변, QC·위생 병합, `checkSnapshot` 보존, 50건 한도 | Formula OS Phase A |
+| 29 | `batch-store.test.js` | 14 | `src/batch-store.js` — 배치 채번(YYYYMMDD-NN), identity 불변, QC·위생 병합, `checkSnapshot` 보존, 50건 한도, LOT 추적·인도일·재고 경고·QC 조치 | Formula OS Phase A |
 | 30 | `usage-guide.test.js` | 7 | `src/usage-guide.js` — 제형 템플릿, 원료 주의 규칙(레티노이드·AHA·향료 등), 임신/알레르기 병기 | Formula OS Phase A |
 | 31 | `customer-store.test.js` | 9 | `src/customer-store.js` — 고객 CRUD, 상담 이력 append-only, `unlinkCustomerFromFormulas`, 20명 한도 | Formula OS Phase B |
 | 32 | `material-ledger.test.js` | 9 | `src/material-ledger.js` — 원료 CRUD, 기한 상태 파생(expired/soon/ok/none), `daysUntilExpiry` 자정 기준 | Formula OS Phase C |
 | 33 | `formula-compliance.test.js` | 4 | `src/views/formula-compliance.js` — 항목 id 고유성, refs 유효성, 법령 파일 실존, 필수 섹션 커버리지 | Formula OS Phase D |
 | 34 | `csv-import.test.js` | 17 | `src/csv-utils.js` 파서·EUC-KR 디코딩 + `importCustomers`/`importMaterials` 중복·한도·sanitize | Formula OS CSV |
-| | **합계** | **454** | | |
+| | **합계** | **458** | | |
 
 ### DOM 테스트 (`tests/dom/`)
 
@@ -119,8 +119,8 @@ npm run test:watch
 | 4 | `formula-customer.dom.test.js` | 9 | 고객 CRUD + CSV | 빈 상태→등록→목록, CSV UTF-8/EUC-KR·중복·confirm 거부·보내기·양식 | 2026-09-23 추가 |
 | 5 | `formula-material.dom.test.js` | 5 | 원료 장부 + CSV | 기한 4상태 배지·경고 배너, CSV 이름+LOT 중복·날짜 정규화 | 2026-09-23 추가 |
 | 6 | `formula-compliance.dom.test.js` | 8 | 법규 체크리스트 | 27항목 렌더·배지, 체크 토글 영속·재토글·초기화, ExamViewer 연동 | 2026-09-23 추가 |
-| 7 | `formula-calc.dom.test.js` | 10 | 배합 계산기·포뮬러 목록 | 투입량 계산, 합계 100% 판정, 한도 초과/금지/미등록 배지, 고객 불러오기, 저장→목록, 삭제 confirm, JSON 왕복 | 2026-09-23 추가 |
-| 8 | `formula-batch.dom.test.js` | 10 | 조제 기록(배치) | 빈 목록, 처방 바인딩·기본값, QC·위생 렌더, 저장→채번·스냅샷·상세, 순번 증가, 보정 identity 잠금·QC 병합, 삭제 confirm, 인쇄 | 2026-09-23 추가 |
+| 7 | `formula-calc.dom.test.js` | 12 | 배합 계산기·포뮬러 목록 | 투입량 계산, 합계 100% 판정, 한도 초과/금지/미등록 배지, 고객 불러오기, 저장→목록, 삭제 confirm, JSON 왕복 | 2026-09-23 추가 |
+| 8 | `formula-batch.dom.test.js` | 22 | 조제 기록(배치) | 빈 목록, 처방 바인딩·기본값, QC·위생 렌더, 저장→채번·스냅샷·상세, 순번 증가, 보정 identity 잠금·QC 병합, 삭제 confirm, 인쇄 | 2026-09-23 추가 |
 | 9 | `formula-print.dom.test.js` | 8 | 인쇄 산출물 | 포뮬러/배치 기록지, 라벨 전성분·폴백, 안내문 템플릿·원료 주의, afterprint 정리, 거부 케이스 | 2026-09-23 추가 |
 | 10 | `study-quiz.dom.test.js` | 14 | 기출 퀴즈·오답 복습 | 출제·단답/객관식/OX 채점·결과 화면·오답 영속·재시작·약점 퀴즈·복습 필터/제외 | 2026-09-23 추가 |
 | 11 | `study-flashcard.dom.test.js` | 8 | 플래시카드 | 중요도 정렬·뒤집기·순환 이동·빈 과목·기출/난이도 필터·외움/헷갈림 영속·재진입 복원 | 2026-09-23 추가 |
@@ -132,7 +132,7 @@ npm run test:watch
 | 17 | `study-simulator.dom.test.js` | 8 | 모의고사 | 아레나·OMR, 답안·문항 이동, 제출 채점·오답 카드 등록, 리뷰, 드래프트 이어하기, 시간 만료 자동 제출 | 2026-09-23 추가 |
 | 18 | `study-reader.dom.test.js` | 5 | 교재 리더 | 과목 옵션·본문/TOC 렌더, 읽기 위치 이어하기, 북마크 영속, 빈 상태 | 2026-09-23 추가 |
 | 19 | `study-search.dom.test.js` | 7 | 교재 검색 | 역색인 검색·하이라이트·건수, AND 교집합, 과목 필터, 결과 없음, 더보기 토글, 초기화 | 2026-09-23 추가 |
-| 20 | `study-dictionary.dom.test.js` | 9 | 성분 사전 | 카드·3상태 배지, 이름/영문/초성 검색, type 필터, 빈 DB·결과 없음, 상세 토글 | 2026-09-23 추가 |
+| 20 | `study-dictionary.dom.test.js` | 12 | 성분 사전 | 카드·3상태 배지, 이름/영문/초성 검색, type 필터, 빈 DB·결과 없음, 상세 토글 | 2026-09-23 추가 |
 | 21 | `study-manual.dom.test.js` | 6 | 매뉴얼 뷰어 | 오버레이·MD 렌더·TOC, doc: 링크 문서 전환, sessionStorage 캐시, mermaid 마크업, 미등록 소스 오류, 닫기 | 2026-09-23 추가 |
 | 22 | `study-examviewer.dom.test.js` | 5 | 문제집 뷰어 | 오버레이·MD 렌더·TOC, 인쇄 버튼→window.print, 캐시 재사용, 미존재 문서 오류, 닫기 | 2026-09-23 추가 |
 | 23 | `study-examselect.dom.test.js` | 4 | 시험 선택 | 카드 렌더·현재 시험 배지, 다른 시험→저장·리로드, 같은 시험→대시보드 복귀, 빈 목록 | 2026-09-23 추가 |
@@ -140,7 +140,7 @@ npm run test:watch
 | 25 | `common-offline.dom.test.js` | 4 | 오프라인 감지 | offline 이벤트·프로브 실패→배너 표시, online 복귀→해제 (fake timers) | 2026-09-23 추가 |
 | 26 | `common-scratchpad.dom.test.js` | 4 | 스크래치패드 | 열기/닫기·지우기·포인터 그리기 (canvas 2d 스텁, resetModules) | 2026-09-23 추가 |
 | 27 | `common-a11y.dom.test.js` | 7 | 접근성 | 토스트 role=status, 모달 trapFocus·aria-modal, 아이콘 버튼 aria-label 전수 | 2026-09-23 추가 |
-| | **합계** | **204** | | |
+| | **합계** | **221** | | |
 
 ---
 

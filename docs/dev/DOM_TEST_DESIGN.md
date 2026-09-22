@@ -1,6 +1,6 @@
 # DOM 시나리오 테스트 설계 (jsdom)
 
-> 상태: ✅ Phase 1~5 완료 (204개) · 작성일: 2026-09-23 · Phase 6(Playwright) 보류
+> 상태: ✅ Phase 1~5 완료 (221개) · 작성일: 2026-09-23 · Phase 6(Playwright) 보류
 
 ## 1. 목적
 
@@ -43,12 +43,24 @@ tests/dom/
   formula-calc.dom.test.js        ✅ Phase 2a — 계산기·규정 검증·포뮬러 저장·JSON
   formula-batch.dom.test.js       ✅ Phase 2b — 배치 채번·QC·위생·보정·인쇄
   formula-print.dom.test.js       ✅ Phase 2c — 기록지·라벨·안내문·print-area
-  ── 이하 설계 (§5 매트릭스) ──
   study-quiz.dom.test.js          ✅ Phase 3 — 출제→채점→결과·약점 퀴즈·복습
   study-flashcard.dom.test.js     ✅ Phase 3 — 카드 로드→뒤집기→암기/헷갈림 영속
   study-dashboard.dom.test.js     ✅ Phase 3 — 통계 렌더·히트맵·약점 추천
-  study-reader.dom.test.js        교재 열기·읽기 위치 이어하기
-  …
+  study-challenge.dom.test.js     ✅ Phase 4 — 데일리 챌린지·스트릭
+  study-pomodoro.dom.test.js      ✅ Phase 4 — 타이머 전이·누적·날짜 경계
+  study-trainer.dom.test.js       ✅ Phase 4 — 훈련소 메뉴·한도/계산/원료 훈련
+  study-calendar.dom.test.js      ✅ Phase 4 — 학습일·달성률·목표 설정
+  study-simulator.dom.test.js     ✅ Phase 4 — 모의고사 세션·OMR·제출·리뷰
+  study-reader.dom.test.js        ✅ Phase 4 — 교재 열기·읽기 위치 이어하기
+  study-search.dom.test.js        ✅ Phase 4 — 역색인 검색·하이라이트·필터
+  study-dictionary.dom.test.js    ✅ Phase 4 — 성분 사전 검색·배지·필터
+  study-manual.dom.test.js        ✅ Phase 5 — 매뉴얼 오버레이·doc: 링크
+  study-examviewer.dom.test.js    ✅ Phase 5 — 문제집 뷰어·인쇄·캐시
+  study-examselect.dom.test.js    ✅ Phase 5 — 시험 목록·전환
+  common-theme.dom.test.js        ✅ Phase 5 — 테마 토글·영속
+  common-offline.dom.test.js      ✅ Phase 5 — 오프라인 배너·복귀
+  common-scratchpad.dom.test.js   ✅ Phase 5 — 캔버스 열기·그리기·지우기
+  common-a11y.dom.test.js         ✅ Phase 5 — role=status·trapFocus·aria-label
 ```
 
 ### 3.1 helpers.js API
@@ -287,9 +299,9 @@ P(영속성)를 필수**로, **입력 폼이 있는 뷰는 X(오류/거부)를 �
 | Phase | 범위 | 예상 규모 | 상태 |
 |---|---|---|---|
 | **1** | 실무 코어: nav·고객·원료·법규 | 27개 | ✅ 완료 |
-| **2** | 실무 잔여: 계산기·배치·출력물 | 28개 | ✅ 완료 |
+| **2** | 실무 잔여: 계산기·배치·출력물 | 42개 | ✅ 완료 |
 | **3** | 학습 코어: 퀴즈·플래시카드·대시보드·복습 (helpers에 STUDY_DATA/진도 픽스처 추가) | 28개 | ✅ 완료 |
-| **4** | 학습 확장: 리더·검색·사전·시뮬레이터·캘린더·챌린지·훈련소·뽀모도로 (용어집은 리더 통합 커버) | 66개 | ✅ 완료 |
+| **4** | 학습 확장: 리더·검색·사전·시뮬레이터·캘린더·챌린지·훈련소·뽀모도로 (용어집은 리더 통합 커버) | 69개 | ✅ 완료 |
 | **5** | 공통: 테마·오프라인·스크래치패드·a11y·매뉴얼/문제집/시험선택 뷰어 | 34개 | ✅ 완료 |
 | **6** | Playwright E2E (별도 설계) — 레이아웃·SW·PWA·실제 다운로드/인쇄 | 스모크 5개 내외 | ⏸️ 보류 |
 

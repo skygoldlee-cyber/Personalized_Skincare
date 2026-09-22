@@ -64,8 +64,8 @@
 - **반응형 모바일 레이아웃**: 하단 탭 바 네비게이션, safe-area-inset 대응, 100dvh 동적 뷰포트
 
 **테스트**
-- Node.js 내장 테스트 러너 (`node --test`) — 454 unit tests (sanitize, state, parser, Formula OS 스토어·검증·CSV 등)
-- Vitest + jsdom — 204 DOM tests (backup, router, Formula OS·학습·공통 시나리오)
+- Node.js 내장 테스트 러너 (`node --test`) — 458 unit tests (sanitize, state, parser, Formula OS 스토어·검증·CSV 등)
+- Vitest + jsdom — 221 DOM tests (backup, router, Formula OS·학습·공통 시나리오)
 - GitHub Actions CI — push 시 `npm test` + parser parity 자동 실행
 
 **데이터 파이프라인** (빌드 타임)
@@ -160,8 +160,8 @@ Personalized Skincare/
 │   └── audiobook/                   ← 오디오북 파이프라인 (Python)
 │
 ├── 📂 tests/                        ← 자동화 테스트
-│   ├── unit/                        ← Node.js 내장 테스트 러너 (454 tests)
-│   └── dom/                         ← Vitest + jsdom DOM 테스트 (204 tests)
+│   ├── unit/                        ← Node.js 내장 테스트 러너 (458 tests)
+│   └── dom/                         ← Vitest + jsdom DOM 테스트 (221 tests)
 ├── 📂 .github/workflows/            ← GitHub Actions CI (test + parser parity)
 │
 └── 📂 docs/                         ← 문서 (개발 + 사용자)
