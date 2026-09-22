@@ -164,6 +164,8 @@ export function submitQuizAnswer() {
     // 점수 및 상태 누적
     if (isCorrect) {
         quizState.correctCount++;
+        // 약점 집중 퀴즈(복습)에서 카드 기반 문제를 맞히면 약점 해제 — 데일리 챌린지와 동일 규칙
+        state.weakCards.delete(currentQuiz.id);
     }
     
     // solvedList에 기록
@@ -237,6 +239,7 @@ function submitQuizChoiceAnswer(selectedBtn, selectedValue, correctValue) {
         selectedBtn.classList.add('incorrect');
     } else {
         quizState.correctCount++;
+        state.weakCards.delete(currentQuiz.id);
     }
     
     // solvedList에 기록

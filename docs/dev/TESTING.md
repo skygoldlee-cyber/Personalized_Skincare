@@ -23,8 +23,8 @@
 | 구분 | 프레임워크 | 환경 | 파일 위치 | 테스트 수 |
 |------|-----------|------|-----------|-----------|
 | **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 454 |
-| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 76 |
-| **합계** | | | | **530** |
+| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 104 |
+| **합계** | | | | **558** |
 
 ### 설계 원칙
 
@@ -44,7 +44,7 @@ npm test
 # 또는
 npm run test:unit
 
-# DOM 테스트만 실행 (76개)
+# DOM 테스트만 실행 (104개)
 npm run test:dom
 
 # 전체 실행 (Unit + 파서 정합성 + DOM)
@@ -122,7 +122,10 @@ npm run test:watch
 | 7 | `formula-calc.dom.test.js` | 10 | 배합 계산기·포뮬러 목록 | 투입량 계산, 합계 100% 판정, 한도 초과/금지/미등록 배지, 고객 불러오기, 저장→목록, 삭제 confirm, JSON 왕복 | 2026-09-23 추가 |
 | 8 | `formula-batch.dom.test.js` | 10 | 조제 기록(배치) | 빈 목록, 처방 바인딩·기본값, QC·위생 렌더, 저장→채번·스냅샷·상세, 순번 증가, 보정 identity 잠금·QC 병합, 삭제 confirm, 인쇄 | 2026-09-23 추가 |
 | 9 | `formula-print.dom.test.js` | 8 | 인쇄 산출물 | 포뮬러/배치 기록지, 라벨 전성분·폴백, 안내문 템플릿·원료 주의, afterprint 정리, 거부 케이스 | 2026-09-23 추가 |
-| | **합계** | **76** | | |
+| 10 | `study-quiz.dom.test.js` | 14 | 기출 퀴즈·오답 복습 | 출제·단답/객관식/OX 채점·결과 화면·오답 영속·재시작·약점 퀴즈·복습 필터/제외 | 2026-09-23 추가 |
+| 11 | `study-flashcard.dom.test.js` | 8 | 플래시카드 | 중요도 정렬·뒤집기·순환 이동·빈 과목·기출/난이도 필터·외움/헷갈림 영속·재진입 복원 | 2026-09-23 추가 |
+| 12 | `study-dashboard.dom.test.js` | 6 | 대시보드 | 0건 통계·시딩 통계·과목 카드·히트맵·약점 추천(3문 조건)·헷갈림 추천 | 2026-09-23 추가 |
+| | **합계** | **104** | | |
 
 ---
 
@@ -322,7 +325,11 @@ npm run test:watch
 
 `tests/dom/helpers.js`가 실제 `index.html`의 `<body>`를 jsdom에 주입 — 컨트롤러
 export 함수를 직접 호출하고 DOM 반영을 검증한다. `data-click` 위임 자체는
-`delegation-guard`가 정적 검증하므로 중복 테스트하지 않는다.
+`delegation-guard`가 정적 검증하므로 중복 테스트하지 않는다. 학습 영역은
+`seedStudyData`/`seedProgress`/`resetStudyState`/`storedJson` 픽스처로
+`window.STUDY_DATA`·진도 localStorage를 시딩한다 — 과목 키는 `[a-z]+` 전용
+(대시보드 집계 정규식 접두사 매칭). 플래시카드는 실제 `setupEventListeners`
+바인딩을 경유해 클릭 경로까지 검증한다.
 
 #### `formula-nav.dom.test.js` (5개)
 - `initFormulaView`/`open*Panel`/`exitFormulaSubView` — 12개 패널의 `is-hidden` 전수 검증
@@ -338,10 +345,23 @@ export 함수를 직접 호출하고 DOM 반영을 검증한다. `data-click` �
 - CSV: `YYYY.M.D`/`YYYY/M/D` 날짜 정규화, 이름+LOT 중복 건너뜀
 
 #### `formula-compliance.dom.test.js` (8개)
-- 6섹션·25항목 렌더, `점검 N/25` 배지
+- 6섹션·27항목 렌더, `점검 N/27` 배지
 - `compToggle` → `cosmetic:formula_compliance` 영속 + 재렌더 checked 유지,
   재토글 해제, 미등록 id 무동작
 - `compReset` confirm 승인/거부 분기, `compOpenLaw` → `window.ExamViewer.openExam` 경로·미존재 시 안내 토스트
+
+#### `study-quiz.dom.test.js` (14개)
+- 출제→아레나·진행률·문제 렌더, 무퀴즈 과목 경고, 단답/객관식/OX 채점·피드백
+- 완주→결과 화면 점수·오답 리뷰, 중도 재시작 초기화, 오답 `quizResults` 영속
+- 복습: 약점 0건 안내, 약점 카드 재출제(약점 집중 퀴즈), 정답 시 약점 해제+영속, 과목 필터, 수동 제외
+
+#### `study-flashcard.dom.test.js` (8개)
+- 중요도순 정렬·용어/배지/인덱스 렌더, 클릭 뒤집기(aria), 다음/이전 순환
+- 빈 과목 안내, 기출만/난이도 필터, 외움/헷갈림→localStorage 영속+배지, 재진입 복원
+
+#### `study-dashboard.dom.test.js` (6개)
+- 진도 0건 통계·안내, 시딩→암기율/정답률/복습 대기, 과목 카드·히트맵
+- 약점 추천: 3문 이상 응시 과목 중 최저 정답률 + 헷갈림 카드最多
 
 ### 4.12b Formula OS — 업무 레이어 (Phase A~D) + CSV
 
@@ -362,7 +382,7 @@ export 함수를 직접 호출하고 DOM 반영을 검증한다. `data-click` �
 - `daysUntilExpiry` 자정 기준 D-day (기한 당일 D-0, 익일부터 경과)
 
 #### `formula-compliance.test.js` (4개)
-- 25항목 id 고유성, `refs` 구조 유효성, **법령 MD 파일 실존 검증**(ref_md 경로), 6개 필수 섹션 커버리지
+- 27항목 id 고유성, `refs` 구조 유효성, **법령 MD 파일 실존 검증**(ref_md 경로), 6개 필수 섹션 커버리지
 
 #### `csv-import.test.js` (17개)
 - `src/csv-utils.js`: 따옴표 필드(쉼표·개행·`""`), 구분자 `,`/`;`/탭 감지, UTF-8 BOM·EUC-KR 폴백, 헤더 정규화 매핑, `toCsv` BOM+이스케이프

@@ -1,6 +1,6 @@
 # DOM 시나리오 테스트 설계 (jsdom)
 
-> 상태: 🔄 확장 진행 중 — Phase 1(실무 코어) 완료 · 작성일: 2026-09-23 · 확장: 2026-09-23
+> 상태: 🔄 확장 진행 중 — Phase 1~3 완료 · 작성일: 2026-09-23 · 확장: 2026-09-23
 
 ## 1. 목적
 
@@ -44,9 +44,9 @@ tests/dom/
   formula-batch.dom.test.js       ✅ Phase 2b — 배치 채번·QC·위생·보정·인쇄
   formula-print.dom.test.js       ✅ Phase 2c — 기록지·라벨·안내문·print-area
   ── 이하 설계 (§5 매트릭스) ──
-  study-quiz.dom.test.js          퀴즈 시작→채점→결과
-  study-flashcard.dom.test.js     카드 로드→뒤집기→암기 표시
-  study-dashboard.dom.test.js     통계 렌더·약점 추천
+  study-quiz.dom.test.js          ✅ Phase 3 — 출제→채점→결과·약점 퀴즈·복습
+  study-flashcard.dom.test.js     ✅ Phase 3 — 카드 로드→뒤집기→암기/헷갈림 영속
+  study-dashboard.dom.test.js     ✅ Phase 3 — 통계 렌더·히트맵·약점 추천
   study-reader.dom.test.js        교재 열기·읽기 위치 이어하기
   …
 ```
@@ -63,13 +63,16 @@ tests/dom/
 | `lastToast()` | 모킹된 `showToast`의 마지막 호출 인자 `[message, type]` |
 | `spyAnchorDownload()` | `a.click()` spy로 다운로드 트리거 검증 |
 
-학습 영역 확장 시 추가 예정 (§5.3):
+학습 영역용으로 추가된 픽스처 (Phase 3에서 구현):
 
 | 함수 | 역할 |
 |---|---|
-| `seedStudyData(subjId, {cards, quizzes})` | `window.STUDY_DATA` 과목 스텁 주입 |
+| `seedStudyData(subjId, {name, cards, quizzes})` | `window.STUDY_DATA` 과목 스텁 주입 — **과목 키는 `[a-z]+` 전용이어야 함** (대시보드 집계 정규식이 `^([a-z]+)_card_`·`_quiz_` 접두사 매칭 — `law`·`safety`처럼 숫자 없는 키) |
+| `resetStudyState()` | 싱글턴 `state`의 학습 필드 초기화 + `STUDY_DATA`/`EXAM_DATA` 제거 — beforeEach용 |
 | `seedProgress({memorized, weak, quizResults})` | localStorage 시딩 후 `loadProgress()`로 `state` 재구성 |
-| `stubRegistry(subjects)` | `window.DATA_REGISTRY` 최소 레지스트리 스텁 |
+| `storedJson(key)` | 네임스페이스 적용된 localStorage 값 읽기 (영속 검증용) |
+
+`stubRegistry`는 불필요로 확정 — `updateGlobalStats`/`renderDashboard`가 `DataLoader.registry` 부재 시 `STUDY_DATA` 폴백으로 동작한다.
 
 ### 3.2 핸들러 호출 방식
 
@@ -122,6 +125,38 @@ tests/dom/
 - `compReset` confirm 승인/거부 분기
 - `compOpenLaw` → `window.ExamViewer.openExam`에 참조자료 경로 전달 / 미존재 시 안내 토스트
 
+## 4b. 구현 완료 — 학습 영역 Phase 3 (28개)
+
+### study-quiz.dom.test.js (14)
+- `startQuiz` → 아레나 표시·빈 상태 숨김·진행률 1/N·문제 렌더, 최대 10문제 슬라이스
+- 무퀴즈 과목 → 경고 토스트 + 아레나 미표시 (E)
+- 단답형 정답/오답 → 피드백·입력 잠금·`quizResults` 영속 (H/P)
+- 빈 답안 → 경고 토스트, 채점 미진행 (X)
+- 객관식 → 옵션 버튼 렌더, 오답 클릭 시 정답 하이라이트 + 전체 비활성 (H)
+- OX → O/X 버튼 채점 (H)
+- 완주 → 결과 화면 점수·오답 리뷰 / 전부 정답 시 완주 문구 (H)
+- 중도 재시작 → currentIndex·correctCount·solvedList 초기화 (R)
+- 복습: 약점 0건 안내(E) · 약점 카드 목록 + 제외 시 영속(P) · 과목 필터(H)
+- 약점 집중 퀴즈 → 카드를 단답 문제로 재출제(H), 정답 시 약점 해제+영속(P)
+  — 데일리 챌린지와 동일 규칙 적용 (quiz.js 두 제출 경로에 `weakCards.delete` 추가)
+
+### study-flashcard.dom.test.js (8)
+- `loadFlashcards` → 중요도순 정렬·용어/카테고리/타입 배지·인덱스·기출 별 렌더 (H)
+- 카드 클릭 → `flipped` 토글 + aria-expanded (H) — 실제 `setupEventListeners` 바인딩 경유
+- 다음/이전 → 이동·순환·뒤집힘 해제 (H)
+- 빈 과목 → 안내 문구 + 카운터 0 (E)
+- 기출만/난이도 필터 → 일치 카드만 (B)
+- 외움/헷갈림 → Set + localStorage 영속 + 배지 카운트 (P)
+- `seedProgress` 시딩 → 재진입 배지 복원 (P)
+
+### study-dashboard.dom.test.js (6)
+- 진도 0건 → 전체 통계 0 + '충분한 학습 데이터' 안내 (E)
+- 시딩 진도 → 암기율·정답률·복습 대기 반영 (H/P)
+- 과목 카드 → 과목별 암기 수·정답률·진도율 (H)
+- 히트맵 → 미응시/정답률 구간 셀 (H)
+- 약점 추천 → 3문 이상 응시 과목 중 최저 정답률 + 헷갈림 最多 (H)
+- 응시 3문 미만 → 정답률 추천 제외, 헷갈림 추천만 유지 (B)
+
 ## 5. 전체 영역 시나리오 매트릭스
 
 모든 뷰에 대해 6가지 케이스 유형을 기준으로 시나리오를 정의한다:
@@ -153,10 +188,10 @@ tests/dom/
 
 | 뷰 | 파일(계획) | 시나리오 (케이스) | 주요 픽스처 |
 |---|---|---|---|
-| 대시보드 | `study-dashboard` | 진도 0건 렌더(E) · 진도 시딩→통계 반영(H/P) · 약점 과목 추천(H) | STUDY_DATA + seedProgress, charts 부분 모킹 |
-| 플래시카드 | `study-flashcard` | 카드 로드(H) · 빈 과목 안내(E) · 뒤집기(H) · 암기/취약 표시→localStorage(P) · SM-2 due 필터(B) | STUDY_DATA(cards) |
-| 기출 퀴즈 | `study-quiz` | 시작→10문제 출제(H) · 과목 무퀴즈 경고(E) · 답 선택→즉시 채점(H) · 종료→결과 화면(H) · 오답 결과 영속(P) · 중도 이탈(R) | STUDY_DATA(quizzes) |
-| 오답/중요 복습 | `study-quiz` | 오답 0건 안내(E) · 오답만 재출제(H) · 복습 중 정답 시 목록 제외(P) | seedProgress(quizResults) |
+| 대시보드 | `study-dashboard` ✅ | 진도 0건 렌더(E) · 진도 시딩→통계 반영(H/P) · 약점 과목 추천(H) | STUDY_DATA + seedProgress (charts 실사용 — jsdom 안전) |
+| 플래시카드 | `study-flashcard` ✅ | 카드 로드(H) · 빈 과목 안내(E) · 뒤집기(H) · 암기/취약 표시→localStorage(P) · 기출/난이도 필터(B) | STUDY_DATA(cards) + setupEventListeners 실바인딩 |
+| 기출 퀴즈 | `study-quiz` ✅ | 시작→10문제 출제(H) · 과목 무퀴즈 경고(E) · 단답/객관식/OX 즉시 채점(H) · 종료→결과 화면(H) · 오답 결과 영속(P) · 중도 이탈(R) | STUDY_DATA(quizzes) |
+| 오답/중요 복습 | `study-quiz` ✅ | 약점 0건 안내(E) · 약점 카드 재출제(H) · 복습 중 정답 시 약점 해제+영속(P) · 과목 필터(H) · 수동 제외(P) | seedProgress({weak}) |
 | 데일리 챌린지 | `study-challenge` | 오늘 문항 생성(H) · 완료 후 재진입 시 완료 상태(R/P) · 스트릭 갱신(B) | STUDY_DATA + 날짜 고정 |
 | 스마트 훈련소 | `study-trainer` | 취약 카드 집계(H) · 계산 연습 정답/오답 판정(H/X) · 원료 배합 챌린지(B) | STUDY_DATA + seedProgress |
 | 뽀모도로 | `study-pomodoro` | 시작/정지→누적 표시(H) · 날짜 경계 리셋(P/B) | 타이머 fake timers |
@@ -194,7 +229,7 @@ P(영속성)를 필수**로, **입력 폼이 있는 뷰는 X(오류/거부)를 �
 |---|---|---|---|
 | **1** | 실무 코어: nav·고객·원료·법규 | 27개 | ✅ 완료 |
 | **2** | 실무 잔여: 계산기·배치·출력물 | 28개 | ✅ 완료 |
-| **3** | 학습 코어: 퀴즈·플래시카드·대시보드 (helpers에 STUDY_DATA/registry 픽스처 추가) | ~20개 | 📋 설계 |
+| **3** | 학습 코어: 퀴즈·플래시카드·대시보드·복습 (helpers에 STUDY_DATA/진도 픽스처 추가) | 28개 | ✅ 완료 |
 | **4** | 학습 확장: 리더·검색·사전·용어집·시뮬레이터·캘린더·챌린지·훈련소·뽀모도로 | ~35개 | 📋 설계 |
 | **5** | 공통: 테마·오프라인·스크래치패드·a11y·매뉴얼/문제집/시험선택 뷰어 | ~15개 | 📋 설계 |
 | **6** | Playwright E2E (별도 설계) — 레이아웃·SW·PWA·실제 다운로드/인쇄 | 스모크 5개 내외 | ⏸️ 보류 |

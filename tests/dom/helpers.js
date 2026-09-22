@@ -10,6 +10,8 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { vi } from 'vitest';
 import { showToast } from '../../src/ui-utils.js';
+import { state, loadProgress, safeSetItem, safeGetItem } from '../../src/state.js';
+import { STORAGE_KEYS } from '../../src/storage-keys.js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 
@@ -80,4 +82,62 @@ export function spyAnchorDownload() {
         clicks,
         restore() { spy.mockRestore(); },
     };
+}
+
+/* =======================================================
+   학습 영역 픽스처 (§3.1 — window.STUDY_DATA / state / 진도)
+   ======================================================= */
+
+/**
+ * window.STUDY_DATA에 과목 스텁을 주입한다.
+ * 과목별 카운트는 카드/퀴즈 ID 접두사(`<subj>_card_N`·`<subj>_quiz_N`, [a-z]+)로
+ * 집계되므로 과목 키는 소문자 영문 형태를 권장한다 (예: 'subj1').
+ */
+export function seedStudyData(subjId, { name, cards = [], quizzes = [] } = {}) {
+    window.STUDY_DATA = window.STUDY_DATA || {};
+    window.STUDY_DATA[subjId] = { name: name || subjId, cards, quizzes };
+}
+
+/**
+ * 학습 모듈의 모듈 레벨 상태를 초기화한다 — beforeEach에서 호출.
+ * state는 싱글턴이므로 테스트 간 Set/객체가 새어 나가지 않게 재할당한다.
+ */
+export function resetStudyState() {
+    state.memorizedCards = new Set();
+    state.weakCards = new Set();
+    state.quizResults = {};
+    state.reviewFilter = 'all';
+    state.flashcards.subject = null;
+    state.flashcards.currentIndex = 0;
+    state.flashcards.keyOnly = false;
+    state.flashcards.shuffle = false;
+    state.flashcards.difficultyFilter = 'all';
+    state.flashcards.sortBy = 'importance';
+    state.flashcards.data = [];
+    state.quiz.subject = null;
+    state.quiz.data = [];
+    state.quiz.currentIndex = 0;
+    state.quiz.correctCount = 0;
+    state.quiz.solvedList = [];
+    state._prevMemCount = 0;
+    state._prevQuizCount = 0;
+    delete window.STUDY_DATA;
+    delete window.EXAM_DATA;
+}
+
+/**
+ * localStorage에 진도를 쓰고 loadProgress()로 state에 복원한다 —
+ * 재진입 복원(P) 경로를 실제로 통과시킨다.
+ */
+export function seedProgress({ memorized = [], weak = [], quizResults = {} } = {}) {
+    safeSetItem(STORAGE_KEYS.FC_MEMORIZED, JSON.stringify(memorized));
+    safeSetItem(STORAGE_KEYS.FC_WEAK, JSON.stringify(weak));
+    safeSetItem(STORAGE_KEYS.QUIZ_RESULTS, JSON.stringify(quizResults));
+    loadProgress();
+}
+
+/** localStorage에 실제로 저장된 진도 값을 읽는다 (영속 검증용 — 시험 네임스페이스 자동 적용) */
+export function storedJson(key) {
+    const raw = safeGetItem(key);
+    try { return raw ? JSON.parse(raw) : null; } catch (_) { return raw; }
 }
