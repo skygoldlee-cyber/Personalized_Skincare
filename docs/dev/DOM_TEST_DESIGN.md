@@ -40,9 +40,9 @@ tests/dom/
   formula-customer.dom.test.js    ✅ Phase 1 — 고객 CRUD + CSV
   formula-material.dom.test.js    ✅ Phase 1 — 원료 기한 배지 + CSV
   formula-compliance.dom.test.js  ✅ Phase 1 — 체크 토글 영속·초기화
+  formula-calc.dom.test.js        ✅ Phase 2a — 계산기·규정 검증·포뮬러 저장·JSON
   ── 이하 설계 (§5 매트릭스) ──
   formula-batch.dom.test.js       배치 생성→QC→상세
-  formula-calc.dom.test.js        계산기·규정 검증·포뮬러 저장
   study-quiz.dom.test.js          퀴즈 시작→채점→결과
   study-flashcard.dom.test.js     카드 로드→뒤집기→암기 표시
   study-dashboard.dom.test.js     통계 렌더·약점 추천
@@ -142,11 +142,11 @@ tests/dom/
 | 고객 관리 | `formula-customer` | CRUD(H/E) · CSV 인코딩·중복·거부(B/X) ·보내기(H) | ✅ 완료 |
 | 원료 장부 | `formula-material` | CRUD(H) · 기한 4상태(B) · CSV 중복·날짜(X) | ✅ 완료 |
 | 법규 체크 | `formula-compliance` | 렌더(H) · 토글·초기화(P/X) · 뷰어 연동(H/X) | ✅ 완료 |
-| 배합 계산기 | `formula-calc` | 배합률→투입량 계산(H) · 합계≠100 경고(X) · 고시 한도 초과 경고(B) · 고객 불러오기 연동(H) · 포뮬러 저장→배지(P) | 📋 설계 |
-| 포뮬러 목록 | `formula-calc` | 빈 목록(E) · 저장→목록 반영(H) · 삭제 confirm(X) · JSON보내기/가져오기(P) | 📋 설계 |
+| 배합 계산기 | `formula-calc` | 배합률→투입량 계산(H) · 합계≠100 경고(X) · 고시 한도 초과 경고(B) · 고객 불러오기 연동(H) · 포뮬러 저장→배지(P) | ✅ 완료 |
+| 포뮬러 목록 | `formula-calc` | 빈 목록(E) · 저장→목록 반영(H) · 삭제 confirm(X) · JSON보내기/가져오기(P) | ✅ 완료 |
 | 조제 기록(배치) | `formula-batch` | 생성 채번(H) · QC 스냅샷 저장(H) · 상세·불변 정책(X) · 포뮬러 연결(H) | 📋 설계 |
 | 출력물 | `formula-print` | 라벨·안내문·판매내역서 생성 → print-area DOM 내용 검증(H) · 미선택 시 안내(X) | 📋 설계 |
-| 안정성 | `formula-calc` | 안정성 기록 입력→판정 배지(H/B) | 📋 설계 |
+| 안정성 | `formula-calc` | 안정성 기록 입력→판정 배지(H/B) | ✅ 완료 |
 
 ### 5.2 학습 영역 — `window.STUDY_DATA`·`state` 의존
 
@@ -192,7 +192,7 @@ P(영속성)를 필수**로, **입력 폼이 있는 뷰는 X(오류/거부)를 �
 | Phase | 범위 | 예상 규모 | 상태 |
 |---|---|---|---|
 | **1** | 실무 코어: nav·고객·원료·법규 | 27개 | ✅ 완료 |
-| **2** | 실무 잔여: 계산기·배치·출력물 | ~15개 | 📋 다음 |
+| **2** | 실무 잔여: 계산기·배치·출력물 | ~15개 | � 진행 (계산기 10개 ✅ — 배치·출력물 잔여) |
 | **3** | 학습 코어: 퀴즈·플래시카드·대시보드 (helpers에 STUDY_DATA/registry 픽스처 추가) | ~20개 | 📋 설계 |
 | **4** | 학습 확장: 리더·검색·사전·용어집·시뮬레이터·캘린더·챌린지·훈련소·뽀모도로 | ~35개 | 📋 설계 |
 | **5** | 공통: 테마·오프라인·스크래치패드·a11y·매뉴얼/문제집/시험선택 뷰어 | ~15개 | 📋 설계 |

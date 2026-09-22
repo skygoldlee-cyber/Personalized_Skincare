@@ -306,6 +306,10 @@ function updateCalcComputed() {
   const container = document.getElementById('formula-calc-rows');
   if (!container) return;
 
+  // 빈 상태 안내 배너 — 이름 있는 행이 없을 때만 표시 (입력 시점에도 갱신)
+  const emptyEl = document.getElementById('formula-empty-state');
+  if (emptyEl) emptyEl.classList.toggle('is-hidden', calc.rows.some(r => r.name));
+
   let sumConc = 0;
   let sumAmount = 0;
   const phaseSums = {}; // 단계별 배합률 소계
@@ -428,10 +432,6 @@ function renderStability() {
 function renderCalcRows() {
   const container = document.getElementById('formula-calc-rows');
   if (!container) return;
-
-  // 빈 상태 안내 배너 — 이름 있는 행이 없을 때만 표시
-  const emptyEl = document.getElementById('formula-empty-state');
-  if (emptyEl) emptyEl.classList.toggle('is-hidden', calc.rows.some(r => r.name));
 
   container.innerHTML = '';
   calc.rows.forEach((item, i) => {
