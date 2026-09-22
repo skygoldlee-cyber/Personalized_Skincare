@@ -27,11 +27,13 @@ import {
   ROLE_PHASE,
 } from '../formula-rules.js';
 import { listCustomers, getCustomer, createCustomer } from '../customer-store.js';
+import { findMaterialByName, materialStatus, daysUntilExpiry } from '../material-ledger.js';
 
 const PANELS = [
   'formula-menu-panel', 'formula-list-panel', 'formula-calc-panel',
   'formula-batch-panel', 'formula-batch-form-panel', 'formula-batch-detail-panel',
   'formula-customer-panel', 'formula-customer-form-panel', 'formula-customer-detail-panel',
+  'formula-material-panel', 'formula-material-form-panel',
 ];
 
 // 계산기 드래프트 상태 (저장 전 작업 데이터)
@@ -69,6 +71,7 @@ const SUBNAV_ITEMS = [
   { id: 'calc', label: '배합 계산기', click: 'formulaNew' },
   { id: 'customer', label: '고객 관리', click: 'openCustomerPanel' },
   { id: 'batch', label: '조제 기록', click: 'openBatchPanel' },
+  { id: 'material', label: '원료 장부', click: 'openMaterialPanel' },
 ];
 
 /**
@@ -281,7 +284,19 @@ function rowCheckInfo(item) {
   const r = checkFormulaItems([{ name: item.name, concentration: item.concentration }], index).results[0];
   const info = CHECK_BADGE[r.check] || CHECK_BADGE[CHECK.UNKNOWN];
   const label = !item.name ? '원료명 입력' : (ing ? info.label : 'DB 미등록');
-  return { check: r.check, html: `<span class="f-check ${info.cls}" title="${esc(r.note)}">${label}</span>` };
+  let html = `<span class="f-check ${info.cls}" title="${esc(r.note)}">${label}</span>`;
+  // 원료 장부 연동 — 이름 정확 매칭 시 기한 임박·경과 경고 병기
+  const mat = item.name ? findMaterialByName(item.name) : null;
+  if (mat) {
+    const s = materialStatus(mat);
+    const days = daysUntilExpiry(mat);
+    if (s === 'expired') {
+      html += ` <span class="f-check f-check-banned" title="원료 장부 기한 경과 — 사용 금지">재고 기한 경과</span>`;
+    } else if (s === 'soon') {
+      html += ` <span class="f-check f-check-warn" title="원료 장부 기한 임박">재고 D-${days != null ? days : '?'}</span>`;
+    }
+  }
+  return { check: r.check, html };
 }
 
 // 행을 다시 그리지 않고 계산 결과(투입량·배지·합계·단계 소계·검증 요약)만 갱신 — 입력 중 포커스 유지

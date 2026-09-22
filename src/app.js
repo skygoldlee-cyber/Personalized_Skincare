@@ -161,6 +161,13 @@ import {
     custAllergyAdd,
     custAllergyRemove,
 } from './views/formula-customer.js';
+import {
+    openMaterialPanel,
+    matNew,
+    matEdit,
+    matSave,
+    matDelete,
+} from './views/formula-material.js';
 import { recordStudyActivity } from './study-tracker.js';
 import {
     getBackupKeys,
@@ -891,6 +898,8 @@ const DELEGATED_HANDLERS = {
     // Formula OS — 고객 관리
     openCustomerPanel, custNew, custEdit, custSave, custOpen, custDelete,
     custLogAdd, custAllergyAdd, custAllergyRemove,
+    // Formula OS — 원료 장부
+    openMaterialPanel, matNew, matEdit, matSave, matDelete,
     showIngredientsChangelog,
     /** 복수정답형 모의고사 문항 수 선택 행 토글 — 다른 과목의 열린 행은 닫는다 */
     toggleComboPicker(rowId) {

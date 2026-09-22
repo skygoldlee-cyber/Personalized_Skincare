@@ -19,6 +19,7 @@ import {
   QC_FIELDS, QC_VALUES, HYGIENE_FIELDS,
 } from '../batch-store.js';
 import { localDateTimeNow } from '../store-utils.js';
+import { daysUntilExpiry } from '../material-ledger.js';
 import {
   buildBatchRecordHtml, buildLabelHtml, buildGuideHtml, printHtml, batchQcSummary,
 } from './formula-print.js';
@@ -88,8 +89,9 @@ export function openBatchPanel() {
 }
 
 function expiryBadge(expiryAt) {
-  const days = Math.ceil((new Date(`${expiryAt}T00:00`) - Date.now()) / 86400000);
-  if (days < 0) return '<span class="f-check f-check-banned">사용기한 경과</span>';
+  const days = daysUntilExpiry({ expiryAt });
+  if (days == null) return '';
+  if (days < 0) return `<span class="f-check f-check-banned">사용기한 경과 D+${Math.abs(days)}</span>`;
   if (days <= 30) return `<span class="f-check f-check-warn">기한 D-${days}</span>`;
   return `<span class="f-check f-check-unknown">기한 ${esc(expiryAt)}</span>`;
 }

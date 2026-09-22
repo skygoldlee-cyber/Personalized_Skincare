@@ -1331,6 +1331,14 @@
                             <p>처방별 조제 회차의 일시·품질 확인·위생 점검을 기록하고 라벨·안내문을 인쇄합니다.</p>
                             <span class="trainer-card-btn">기록 열기 <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
                         </div>
+                        <div class="trainer-menu-card" data-click="openMaterialPanel">
+                            <div class="trainer-card-icon icon-red">
+                                <i class="fa-solid fa-boxes-stacked" aria-hidden="true"></i>
+                            </div>
+                            <h4>원료 장부</h4>
+                            <p>원료의 입고일·사용기한·보관조건·잔량을 관리하고 기한 임박을 경고합니다.</p>
+                            <span class="trainer-card-btn">장부 열기 <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
+                        </div>
                     </div>
                     <div class="formula-safety-note">
                         <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
@@ -1762,6 +1770,75 @@
                     </div>
                     <div id="customer-detail-subnav"></div>
                     <div id="customer-detail"></div>
+                </div>
+
+                <!-- 10. 원료 장부 목록 -->
+                <div id="formula-material-panel" class="is-hidden">
+                    <div class="sim-arena-header mb-6">
+                        <button class="btn btn-secondary" data-click="exitFormulaSubView"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
+                        <div class="sim-title-group">
+                            <h4>원료 장부</h4>
+                            <span class="badge badge-quiz-cat" id="material-list-usage">0/30 등록</span>
+                            <button class="btn btn-secondary btn-sm" data-click="matNew"><i class="fa-solid fa-plus" aria-hidden="true"></i> 원료 등록</button>
+                        </div>
+                    </div>
+                    <div id="formula-material-subnav"></div>
+                    <div id="material-expiry-alert" class="formula-safety-note is-hidden" role="status"></div>
+                    <div id="material-list" class="formula-list"></div>
+                </div>
+
+                <!-- 11. 원료 폼 (등록 · 수정) -->
+                <div id="formula-material-form-panel" class="is-hidden">
+                    <div class="sim-arena-header mb-6">
+                        <button class="btn btn-secondary" data-click="openMaterialPanel"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 목록으로</button>
+                        <div class="sim-title-group">
+                            <h4 id="material-form-title">원료 등록</h4>
+                        </div>
+                    </div>
+                    <div class="formula-calc-form glass-card">
+                        <div class="formula-field-row">
+                            <label class="formula-field">
+                                <span class="formula-field-label">원료명 *</span>
+                                <input type="text" id="mat-name" class="form-input" list="formula-ing-datalist" maxlength="120" placeholder="예: 글리세린" aria-label="원료명">
+                            </label>
+                            <label class="formula-field formula-field-unit">
+                                <span class="formula-field-label">LOT 번호</span>
+                                <input type="text" id="mat-lot" class="form-input" maxlength="40" placeholder="예: A123" aria-label="LOT 번호">
+                            </label>
+                        </div>
+                        <div class="formula-field-row">
+                            <label class="formula-field">
+                                <span class="formula-field-label">입고일</span>
+                                <input type="date" id="mat-received" class="form-input" aria-label="입고일">
+                            </label>
+                            <label class="formula-field">
+                                <span class="formula-field-label">사용기한</span>
+                                <input type="date" id="mat-expiry" class="form-input" aria-label="사용기한">
+                            </label>
+                            <label class="formula-field formula-field-gender">
+                                <span class="formula-field-label">보관 조건</span>
+                                <select id="mat-storage" class="form-select" aria-label="보관 조건"></select>
+                            </label>
+                        </div>
+                        <div class="formula-field-row">
+                            <label class="formula-field">
+                                <span class="formula-field-label">잔량</span>
+                                <input type="number" id="mat-qty" class="form-input" min="0" step="0.1" placeholder="500" aria-label="잔량">
+                            </label>
+                            <label class="formula-field formula-field-unit">
+                                <span class="formula-field-label">단위</span>
+                                <input type="text" id="mat-unit" class="form-input" maxlength="10" placeholder="g" aria-label="잔량 단위">
+                            </label>
+                        </div>
+                        <label class="formula-field">
+                            <span class="formula-field-label">메모</span>
+                            <textarea id="mat-notes" class="form-input" rows="2" maxlength="300" placeholder="공급처, 주의사항 등" aria-label="원료 메모"></textarea>
+                        </label>
+                    </div>
+                    <div class="formula-calc-bar fcb-bottom">
+                        <button class="btn btn-primary" data-click="matSave"><i class="fa-solid fa-floppy-disk" aria-hidden="true"></i> 저장</button>
+                    </div>
+                    <p class="formula-save-hint">기한 임박(30일)·경과 원료는 장부 상단과 배합 계산기 원료 행에서 경고됩니다.</p>
                 </div>
             </section>
 

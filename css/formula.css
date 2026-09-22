@@ -766,3 +766,13 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
     font-size: 0.78rem;
     min-width: 5rem;
 }
+
+/* ===== 원료 장부 — Phase C ===== */
+
+/* 기한 임박·경과 카드 강조 */
+.material-card.is-expiring {
+    border-left: 3px solid var(--color-warning);
+}
+.material-card.is-expired {
+    border-left: 3px solid var(--color-danger);
+}
