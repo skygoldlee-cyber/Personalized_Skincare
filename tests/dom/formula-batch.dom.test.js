@@ -1,0 +1,211 @@
+// tests/dom/formula-batch.dom.test.js — 조제 기록(배치) 시나리오
+// 설계: docs/dev/DOM_TEST_DESIGN.md §5.1 (Phase 2b)
+// 검증: 빈 목록, 신규 폼 처방 바인딩·QC 렌더, 저장→채번·스냅샷·상세 전환,
+//       순번 증가, 처방 미선택 거부, 보정 모드 identity 잠금·QC 병합,
+//       삭제 confirm, QC 이상 목록 배지, 인쇄 → print-area
+
+import { describe, it, beforeEach, expect, vi } from 'vitest';
+
+vi.mock('../../src/ui-utils.js', () => ({
+    showToast: vi.fn(),
+    showConfirm: vi.fn(() => Promise.resolve(true)),
+}));
+
+import { showToast, showConfirm } from '../../src/ui-utils.js';
+import { loadIndexHtml, el, isVisible, lastToast } from './helpers.js';
+import {
+    openBatchPanel, batchNew, batchEdit, batchSave, batchOpen,
+    batchDelete, batchPrintRecord, batchPrintLabel,
+} from '../../src/views/formula-batch.js';
+import { createFormula } from '../../src/formula-store.js';
+import { createCustomer } from '../../src/customer-store.js';
+import { listBatches, getBatch, createBatch, QC_FIELDS, HYGIENE_FIELDS } from '../../src/batch-store.js';
+
+const INGREDIENTS_STUB = [
+    { name: '정제수', engName: 'Water', type: 'approved', category: '용제', description: '', limit: '' },
+    { name: '글리세린', engName: 'Glycerin', type: 'approved', category: '보습제', description: '', limit: '' },
+    { name: '살리실산', engName: 'Salicylic Acid', type: 'restricted', category: '기타', description: '', limit: '2.0%' },
+];
+
+function seedFormula(extra = {}) {
+    return createFormula({
+        name: '수분 세럼',
+        targetVolume: 100,
+        unit: 'ml',
+        customer: { name: '김OO' },
+        ingredients: [
+            { name: '정제수', concentration: 95 },
+            { name: '글리세린', concentration: 5 },
+        ],
+        ...extra,
+    }).formula;
+}
+
+function checkQc(key, value) {
+    const r = document.querySelector(`input[name="batch-qc-${key}"][value="${value}"]`);
+    r.checked = true;
+}
+
+describe('조제 기록 — 배치 시나리오', () => {
+    beforeEach(() => {
+        localStorage.clear();
+        loadIndexHtml();
+        window.INGREDIENTS_DATA = INGREDIENTS_STUB;
+        window.print = vi.fn();
+        vi.mocked(showToast).mockClear();
+        vi.mocked(showConfirm).mockClear();
+        vi.mocked(showConfirm).mockResolvedValue(true);
+    });
+
+    it('빈 목록 → 안내 + 기록 배지', () => {
+        openBatchPanel();
+        expect(isVisible('formula-batch-panel')).toBe(true);
+        expect(el('batch-list').innerHTML).toContain('조제 기록이 없습니다');
+        expect(el('batch-list-usage').textContent).toBe('기록 0/50');
+    });
+
+    it('신규 폼 — 처방 바인딩·기본값 채움·QC·위생 필드 렌더', () => {
+        const f = seedFormula();
+        batchNew(f.id);
+
+        expect(isVisible('formula-batch-form-panel')).toBe(true);
+        expect(el('batch-form-title').textContent).toBe('조제 기록 — 신규');
+        expect(el('batch-formula').value).toBe(f.id);
+        // applyFormulaDefaults — 처방의 총량·단위·고객명
+        expect(el('batch-target-volume').value).toBe('100');
+        expect(el('batch-unit').value).toBe('ml');
+        expect(el('batch-customer-name').value).toBe('김OO');
+        // QC 라디오 5항목×3값, 위생 체크박스 3개
+        QC_FIELDS.forEach(q => {
+            expect(document.querySelectorAll(`input[name="batch-qc-${q.key}"]`).length).toBe(3);
+        });
+        HYGIENE_FIELDS.forEach(h => {
+            expect(el(`batch-hyg-${h.key}`)).toBeTruthy();
+        });
+    });
+
+    it('고객 카드 선택 → 이름·customerId 자동 반영', () => {
+        const { customer } = createCustomer({ name: '이OO', skinType: '지성' });
+        const f = seedFormula();
+        batchNew(f.id);
+
+        const sel = el('batch-customer-select');
+        sel.value = customer.id;
+        sel.dispatchEvent(new Event('change'));
+
+        expect(el('batch-customer-id').value).toBe(customer.id);
+        expect(el('batch-customer-name').value).toBe('이OO');
+    });
+
+    it('저장 → 배치번호 채번·검증 스냅샷·상세 패널 전환', () => {
+        const f = seedFormula({ ingredients: [{ name: '살리실산', concentration: 5 }] });
+        batchNew(f.id);
+        checkQc('appearance', '정상');
+        checkQc('scent', '정상');
+        el('batch-hyg-toolsSterilized').checked = true;
+
+        batchSave();
+
+        const b = listBatches()[0];
+        expect(b.batchNo).toMatch(/^\d{8}-01$/);
+        expect(b.formulaName).toBe('수분 세럼');
+        expect(b.qc.appearance).toBe('정상');
+        expect(b.hygiene.toolsSterilized).toBe(true);
+        expect(b.hygiene.glovesWorn).toBe(false);
+        // 규정 검증 스냅샷 — 살리실산 5% > 한도 2% → warn 1
+        expect(b.checkSnapshot.warn).toBe(1);
+        expect(lastToast()[0]).toContain(b.batchNo);
+        expect(lastToast()[1]).toBe('success');
+        // 저장 후 상세 패널로 전환 — 스냅샷·QC 행 표시
+        expect(isVisible('formula-batch-detail-panel')).toBe(true);
+        expect(el('batch-detail').innerHTML).toContain(b.batchNo);
+        expect(el('batch-detail').innerHTML).toContain('규정 검증 스냅샷');
+        expect(el('batch-detail').innerHTML).toContain('초과 1');
+    });
+
+    it('같은 일자 두 번째 배치 → 순번 -02', () => {
+        const f = seedFormula();
+        batchNew(f.id);
+        batchSave();
+        batchNew(f.id);
+        batchSave();
+
+        const nos = listBatches().map(b => b.batchNo).sort();
+        expect(nos[0]).toMatch(/-01$/);
+        expect(nos[1]).toMatch(/-02$/);
+    });
+
+    it('처방 미선택 저장 → 에러 토스트·미저장', () => {
+        batchNew();
+        batchSave();
+        expect(listBatches().length).toBe(0);
+        expect(lastToast()[0]).toContain('처방을 선택');
+        expect(lastToast()[1]).toBe('error');
+    });
+
+    it('보정 모드 — 처방·조제일시 잠금 + QC 부분 병합·배치번호 불변', () => {
+        const { batch } = createBatch({
+            formulaName: '수분 세럼', madeAt: '2026-09-20T10:00',
+            qc: { appearance: '정상' }, hygiene: { glovesWorn: true },
+        });
+        batchEdit(batch.id);
+
+        expect(el('batch-form-title').textContent).toContain('보정');
+        expect(el('batch-formula').disabled).toBe(true);
+        expect(el('batch-made-at').disabled).toBe(true);
+        // 기존 값이 폼에 복원됨
+        expect(document.querySelector('input[name="batch-qc-appearance"]:checked').value).toBe('정상');
+        expect(el('batch-hyg-glovesWorn').checked).toBe(true);
+
+        checkQc('scent', '이상');
+        batchSave();
+
+        const b = getBatch(batch.id);
+        expect(b.batchNo).toBe(batch.batchNo);          // identity 불변
+        expect(b.madeAt).toBe('2026-09-20T10:00');
+        expect(b.qc.appearance).toBe('정상');            // 기존 QC 유지
+        expect(b.qc.scent).toBe('이상');                 // 부분 병합
+        expect(lastToast()[0]).toContain('보정');
+    });
+
+    it('삭제 — confirm 거부 시 유지, 승인 시 제거·목록 갱신', async () => {
+        const { batch } = createBatch({ formulaName: '세럼', madeAt: '2026-09-20T10:00' });
+        openBatchPanel();
+
+        vi.mocked(showConfirm).mockResolvedValueOnce(false);
+        await batchDelete(batch.id);
+        expect(listBatches().length).toBe(1);
+
+        await batchDelete(batch.id);
+        expect(listBatches().length).toBe(0);
+        expect(lastToast()[1]).toBe('success');
+        expect(el('batch-list').innerHTML).toContain('조제 기록이 없습니다');
+    });
+
+    it('QC 이상·위생 미완료 → 목록 카드 배지', () => {
+        createBatch({
+            formulaName: '세럼', madeAt: '2026-09-20T10:00',
+            qc: { appearance: '정상', scent: '이상' },
+            hygiene: { toolsSterilized: true, glovesWorn: true },
+        });
+        openBatchPanel();
+        const list = el('batch-list').innerHTML;
+        expect(list).toContain('QC 이상: 향');
+        expect(list).toContain('위생 2/3');
+    });
+
+    it('인쇄 — 기록지·라벨 → print-area 렌더 + printing 클래스', () => {
+        const { batch } = createBatch({
+            formulaName: '세럼', madeAt: '2026-09-20T10:00',
+            fullIngredients: ['정제수', '글리세린'],
+        });
+        batchPrintRecord(batch.id);
+        expect(el('formula-print-area').innerHTML).toContain(batch.batchNo);
+        expect(document.body.classList.contains('formula-printing')).toBe(true);
+        expect(window.print).toHaveBeenCalledTimes(1);
+
+        batchPrintLabel(batch.id);
+        expect(el('formula-print-area').innerHTML).toContain('정제수');
+        expect(window.print).toHaveBeenCalledTimes(2);
+    });
+});

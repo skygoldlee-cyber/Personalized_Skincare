@@ -138,7 +138,8 @@ function sanitizeStability(stab) {
   };
   // 기록 일시는 YYYY-MM-DDTHH:MM(:SS)만 허용 — 저장 시각 자동 부여
   if (s.recordedAt && !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?$/.test(s.recordedAt)) s.recordedAt = '';
-  return (s.method || s.result || s.recordedAt || s.note) ? s : null;
+  // 내용(방법·결과·메모)이 없으면 기록 아님 — recordedAt 단독 잔존은 무시
+  return (s.method || s.result || s.note) ? s : null;
 }
 
 // 색소 탐지 — 타르색소 호수 표기(황색4호·적색201호 등), CI 번호, 무기 색소·광택소재

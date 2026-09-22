@@ -1195,6 +1195,8 @@ function currentDraft() {
   const notesEl = document.getElementById('formula-notes-input');
   const { targetVolume, unit, phTarget, phActual } = readCalcInputs();
   const index = getIndex();
+  // 보정 중인 저장본의 기록 메타 — 인쇄·직렬화에서 전성분·기록일시 보존
+  const existing = calc.editingId ? getFormula(calc.editingId) : null;
   return {
     name: nameEl ? nameEl.value.trim() : '',
     targetVolume, unit, phTarget, phActual,
@@ -1205,7 +1207,11 @@ function currentDraft() {
       const el = document.getElementById('formula-cust-id');
       return el ? el.value : '';
     })(),
-    stability: readStabilityInputs(),
+    stability: {
+      ...readStabilityInputs(),
+      recordedAt: existing && existing.stability ? (existing.stability.recordedAt || '') : '',
+    },
+    fullIngredients: existing && existing.fullIngredients ? existing.fullIngredients : [],
     ingredients: calc.rows
       .filter(r => r.name)
       .map(r => {

@@ -23,8 +23,8 @@
 | 구분 | 프레임워크 | 환경 | 파일 위치 | 테스트 수 |
 |------|-----------|------|-----------|-----------|
 | **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 454 |
-| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 58 |
-| **합계** | | | | **512** |
+| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 76 |
+| **합계** | | | | **530** |
 
 ### 설계 원칙
 
@@ -44,7 +44,7 @@ npm test
 # 또는
 npm run test:unit
 
-# DOM 테스트만 실행 (58개)
+# DOM 테스트만 실행 (76개)
 npm run test:dom
 
 # 전체 실행 (Unit + 파서 정합성 + DOM)
@@ -120,7 +120,9 @@ npm run test:watch
 | 5 | `formula-material.dom.test.js` | 5 | 원료 장부 + CSV | 기한 4상태 배지·경고 배너, CSV 이름+LOT 중복·날짜 정규화 | 2026-09-23 추가 |
 | 6 | `formula-compliance.dom.test.js` | 8 | 법규 체크리스트 | 27항목 렌더·배지, 체크 토글 영속·재토글·초기화, ExamViewer 연동 | 2026-09-23 추가 |
 | 7 | `formula-calc.dom.test.js` | 10 | 배합 계산기·포뮬러 목록 | 투입량 계산, 합계 100% 판정, 한도 초과/금지/미등록 배지, 고객 불러오기, 저장→목록, 삭제 confirm, JSON 왕복 | 2026-09-23 추가 |
-| | **합계** | **58** | | |
+| 8 | `formula-batch.dom.test.js` | 10 | 조제 기록(배치) | 빈 목록, 처방 바인딩·기본값, QC·위생 렌더, 저장→채번·스냅샷·상세, 순번 증가, 보정 identity 잠금·QC 병합, 삭제 confirm, 인쇄 | 2026-09-23 추가 |
+| 9 | `formula-print.dom.test.js` | 8 | 인쇄 산출물 | 포뮬러/배치 기록지, 라벨 전성분·폴백, 안내문 템플릿·원료 주의, afterprint 정리, 거부 케이스 | 2026-09-23 추가 |
+| | **합계** | **76** | | |
 
 ---
 

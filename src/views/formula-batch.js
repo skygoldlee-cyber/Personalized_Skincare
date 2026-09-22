@@ -147,12 +147,12 @@ export function batchNew(formulaId) {
   showPanel('formula-batch-form-panel');
   fillFormulaSelect(typeof formulaId === 'string' ? formulaId : '');
   fillCustomerSelect('');
+  bindFormOnce(); // QC 라디오 렌더 선행 — writeBatchForm이 라디오를 체크하려면 DOM이 있어야 함
   writeBatchForm(null);
   const title = document.getElementById('batch-form-title');
   if (title) title.textContent = '조제 기록 — 신규';
   const f = typeof formulaId === 'string' ? getFormula(formulaId) : null;
   if (f) applyFormulaDefaults(f);
-  bindFormOnce();
   updateBatchFormMode();
 }
 
@@ -164,10 +164,10 @@ export function batchEdit(id) {
   showPanel('formula-batch-form-panel');
   fillFormulaSelect(b.formulaId);
   fillCustomerSelect(b.customerId);
+  bindFormOnce(); // QC 라디오 렌더 선행 — 기존 QC 값 복원이 라디오 DOM에 의존
   writeBatchForm(b);
   const title = document.getElementById('batch-form-title');
   if (title) title.textContent = `조제 기록 보정 — ${b.batchNo}`;
-  bindFormOnce();
   updateBatchFormMode();
 }
 
