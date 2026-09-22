@@ -61,7 +61,7 @@ tests/dom/
   common-offline.dom.test.js      ✅ Phase 5 — 오프라인 배너·복귀
   common-scratchpad.dom.test.js   ✅ Phase 5 — 캔버스 열기·그리기·지우기
   common-a11y.dom.test.js         ✅ Phase 5 — role=status·trapFocus·aria-label
-  common-uimode.dom.test.js       ✅ Phase 5 — 학습/실무 모드 전환·CSS 캐스케이드
+  common-uimode.dom.test.js       ✅ Phase 5 — 학습/실무 모드 전환·CSS 캐스케이드·매뉴얼 가시성·이중 토글 동기화
 ```
 
 ### 3.1 helpers.js API
