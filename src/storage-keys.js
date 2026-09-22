@@ -43,6 +43,15 @@ export const STORAGE_KEYS = {
   // Formula OS — 사용자 맞춤 추천 규칙 (formula-rules.js)
   FORMULA_RULES: 'formula_rules',
 
+  // Formula OS — 조제 기록 배치 (batch-store.js)
+  BATCH_ITEMS: 'batch_items',
+
+  // Formula OS — 고객 카드·상담 이력 (customer-store.js)
+  CUSTOMER_ITEMS: 'customer_items',
+
+  // Formula OS — 원료 장부 (material-ledger.js)
+  MATERIAL_ITEMS: 'material_items',
+
   // 원료 DB 갱신 감지 — 마지막으로 본 ingredients contentHash (기기 로컬 마커, 백업 제외)
   INGREDIENTS_HASH: 'ingredients_hash',
   // 원료 DB 갱신 알림 — 마지막으로 알림을 본 contentHash (해시별 1회 고지용)
@@ -80,6 +89,9 @@ export const BACKUP_KEYS = [
   STORAGE_KEYS.STATEMENT_STATS,
   STORAGE_KEYS.FORMULA_ITEMS,
   STORAGE_KEYS.FORMULA_RULES,
+  STORAGE_KEYS.BATCH_ITEMS,
+  STORAGE_KEYS.CUSTOMER_ITEMS,
+  STORAGE_KEYS.MATERIAL_ITEMS,
 ];
 
 // 전체 초기화(Reset Progress) 시 제거할 키 목록

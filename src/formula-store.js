@@ -24,8 +24,8 @@
 // ingredients[].snapshot — 저장 시점의 규정 기준(type/limit)을 보존한다.
 // 원료 DB가 갱신돼도 과거 포뮬러의 검증 근거가 바뀌지 않게 하기 위함.
 
-import { safeGetItem, safeSetItem } from './state.js';
 import { STORAGE_KEYS } from './storage-keys.js';
+import { loadItems, saveItems, newId, clampStr, numOrNull, pickEnum } from './store-utils.js';
 
 // Free 플랜 저장 한도 (결제 연동 없이 정책 상수로만 동작)
 export const FORMULA_LIMIT_FREE = 5;
@@ -60,32 +60,15 @@ const MAX_PRODUCTS_LEN = 300;
 
 /** 고유 ID 생성: fml_<base36시간><난수> */
 export function newFormulaId() {
-  const rand = Math.random().toString(36).slice(2, 6);
-  return `fml_${Date.now().toString(36)}${rand}`;
+  return newId('fml');
 }
 
 function loadAll() {
-  const raw = safeGetItem(STORAGE_KEYS.FORMULA_ITEMS);
-  if (!raw) return [];
-  try {
-    const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : [];
-  } catch (e) {
-    return [];
-  }
+  return loadItems(STORAGE_KEYS.FORMULA_ITEMS);
 }
 
 function saveAll(formulas) {
-  return safeSetItem(STORAGE_KEYS.FORMULA_ITEMS, JSON.stringify(formulas));
-}
-
-function clampStr(s, max) {
-  return typeof s === 'string' ? s.slice(0, max) : '';
-}
-
-function numOrNull(v) {
-  const n = typeof v === 'string' ? parseFloat(v) : v;
-  return typeof n === 'number' && !Number.isNaN(n) ? n : null;
+  return saveItems(STORAGE_KEYS.FORMULA_ITEMS, formulas);
 }
 
 function phOrNull(v) {
@@ -115,10 +98,6 @@ function sanitizeIngredient(item) {
       ? { type: item.snapshot.type || '', limit: item.snapshot.limit || '' }
       : null,
   };
-}
-
-function pickEnum(value, allowed) {
-  return typeof value === 'string' && allowed.includes(value) ? value : '';
 }
 
 function sanitizeCustomer(customer) {

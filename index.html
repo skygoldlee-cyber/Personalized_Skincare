@@ -1315,6 +1315,14 @@
                             <p>1,357종 원료의 배합 한도·사용 제한·금지 여부를 성분 사전에서 확인합니다.</p>
                             <span class="trainer-card-btn">사전 열기 <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
                         </div>
+                        <div class="trainer-menu-card" data-click="openBatchPanel">
+                            <div class="trainer-card-icon icon-teal">
+                                <i class="fa-solid fa-clipboard-list" aria-hidden="true"></i>
+                            </div>
+                            <h4>조제 기록</h4>
+                            <p>처방별 조제 회차의 일시·품질 확인·위생 점검을 기록하고 라벨·안내문을 인쇄합니다.</p>
+                            <span class="trainer-card-btn">기록 열기 <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
+                        </div>
                     </div>
                     <div class="formula-safety-note">
                         <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
@@ -1334,6 +1342,7 @@
                             <input type="file" id="formula-file-input" class="is-hidden" accept=".json,application/json" aria-label="포뮬러 JSON 파일">
                         </div>
                     </div>
+                    <div id="formula-list-subnav"></div>
                     <div id="formula-list" class="formula-list"></div>
                 </div>
 
@@ -1540,6 +1549,97 @@
                     </div>
                     <p class="formula-save-hint">저장된 포뮬러는 이 기기에만 보관되며 '데이터 백업'으로 보낼 수 있습니다.</p>
 
+                </div>
+
+                <!-- 4. 조제 기록 목록 -->
+                <div id="formula-batch-panel" class="is-hidden">
+                    <div class="sim-arena-header mb-6">
+                        <button class="btn btn-secondary" data-click="exitFormulaSubView"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
+                        <div class="sim-title-group">
+                            <h4>조제 기록</h4>
+                            <span class="badge badge-quiz-cat" id="batch-list-usage">기록 0/50</span>
+                        </div>
+                    </div>
+                    <div id="formula-batch-subnav"></div>
+                    <div id="batch-list" class="formula-list"></div>
+                </div>
+
+                <!-- 5. 조제 기록 폼 (신규 · 보정) -->
+                <div id="formula-batch-form-panel" class="is-hidden">
+                    <div class="sim-arena-header mb-6">
+                        <button class="btn btn-secondary" data-click="openBatchPanel"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 목록으로</button>
+                        <div class="sim-title-group">
+                            <h4 id="batch-form-title">조제 기록 — 신규</h4>
+                        </div>
+                    </div>
+                    <div class="formula-calc-form glass-card">
+                        <div class="formula-field-row">
+                            <label class="formula-field">
+                                <span class="formula-field-label">처방</span>
+                                <select id="batch-formula" class="form-select" aria-label="조제한 처방"></select>
+                            </label>
+                            <label class="formula-field">
+                                <span class="formula-field-label">조제 일시</span>
+                                <input type="datetime-local" id="batch-made-at" class="form-input" aria-label="조제 일시">
+                            </label>
+                        </div>
+                        <div class="formula-field-row">
+                            <label class="formula-field">
+                                <span class="formula-field-label">총 제조량</span>
+                                <input type="number" id="batch-target-volume" class="form-input" min="0" step="0.1" placeholder="100" aria-label="총 제조량">
+                            </label>
+                            <label class="formula-field formula-field-unit">
+                                <span class="formula-field-label">단위</span>
+                                <select id="batch-unit" class="form-select" aria-label="제조량 단위">
+                                    <option value="g">g</option>
+                                    <option value="ml">ml</option>
+                                </select>
+                            </label>
+                            <label class="formula-field">
+                                <span class="formula-field-label">고객명</span>
+                                <input type="text" id="batch-customer-name" class="form-input" maxlength="30" placeholder="예: 김OO" aria-label="고객명">
+                            </label>
+                        </div>
+                        <div class="formula-field-row">
+                            <label class="formula-field">
+                                <span class="formula-field-label">권장 사용기한</span>
+                                <input type="date" id="batch-expiry" class="form-input" aria-label="권장 사용기한">
+                            </label>
+                        </div>
+
+                        <div class="formula-field">
+                            <span class="formula-field-label">품질 확인 (이 회차) <span class="fold-hint">외관·색상·향·점도·이물</span></span>
+                            <div class="batch-qc-form" id="batch-qc-fields"></div>
+                        </div>
+                        <div class="formula-field">
+                            <span class="formula-field-label">위생·안전 확인</span>
+                            <div class="formula-chip-row">
+                                <label class="formula-chip"><input type="checkbox" id="batch-hyg-toolsSterilized"><span>도구·기구 소독</span></label>
+                                <label class="formula-chip"><input type="checkbox" id="batch-hyg-workspaceCleaned"><span>작업 공간 정리</span></label>
+                                <label class="formula-chip"><input type="checkbox" id="batch-hyg-glovesWorn"><span>장갑 착용</span></label>
+                            </div>
+                        </div>
+                        <label class="formula-field">
+                            <span class="formula-field-label">메모</span>
+                            <textarea id="batch-notes" class="form-input" rows="2" maxlength="500" placeholder="제조 조건, 특이사항 등" aria-label="조제 기록 메모"></textarea>
+                        </label>
+                    </div>
+                    <div class="formula-calc-bar fcb-bottom">
+                        <button class="btn btn-primary" data-click="batchSave"><i class="fa-solid fa-floppy-disk" aria-hidden="true"></i> 저장</button>
+                    </div>
+                    <p class="formula-save-hint">배치번호·처방·조제일시는 저장 후 변경할 수 없습니다 — 틀린 회차는 삭제 후 다시 기록하세요.</p>
+                </div>
+
+                <!-- 6. 조제 기록 상세 -->
+                <div id="formula-batch-detail-panel" class="is-hidden">
+                    <div class="sim-arena-header mb-6">
+                        <button class="btn btn-secondary" data-click="openBatchPanel"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 목록으로</button>
+                        <div class="sim-title-group">
+                            <h4>조제 기록 상세</h4>
+                        </div>
+                    </div>
+                    <div id="batch-detail-subnav"></div>
+                    <div id="batch-detail"></div>
                 </div>
             </section>
 

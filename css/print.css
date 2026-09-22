@@ -276,4 +276,42 @@
         border-top: 1px solid var(--print-border);
         padding-top: 6pt;
     }
+
+    /* 배치 QC 셀 표시 */
+    #formula-print-area .fp-qc-ok { color: var(--print-text); }
+    #formula-print-area .fp-qc-bad { color: var(--print-warning); font-weight: 700; }
+
+    /* 제품 라벨 — 소형 라벨지 레이아웃 */
+    #formula-print-area .fp-label {
+        width: 70mm;
+        border: 1.5pt solid var(--print-text);
+        border-radius: var(--print-radius);
+        padding: 8pt 10pt;
+        font-size: 8pt;
+        line-height: 1.45;
+    }
+    #formula-print-area .fp-label-name {
+        font-size: 12pt;
+        font-weight: 700;
+        border-bottom: 1pt solid var(--print-border);
+        padding-bottom: 3pt;
+        margin-bottom: 4pt;
+    }
+    #formula-print-area .fp-label-line { margin-bottom: 1.5pt; }
+    #formula-print-area .fp-label-inci {
+        margin-top: 4pt;
+        font-size: 7pt;
+        color: var(--print-light);
+    }
+    #formula-print-area .fp-label-cap {
+        font-weight: 700;
+        color: var(--print-text);
+    }
+    #formula-print-area .fp-label-caution {
+        margin-top: 5pt;
+        padding-top: 3pt;
+        border-top: 1pt solid var(--print-border);
+        font-size: 7pt;
+        color: var(--print-warning);
+    }
 }

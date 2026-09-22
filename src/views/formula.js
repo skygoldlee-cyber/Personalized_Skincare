@@ -27,7 +27,10 @@ import {
   ROLE_PHASE,
 } from '../formula-rules.js';
 
-const PANELS = ['formula-menu-panel', 'formula-list-panel', 'formula-calc-panel'];
+const PANELS = [
+  'formula-menu-panel', 'formula-list-panel', 'formula-calc-panel',
+  'formula-batch-panel', 'formula-batch-form-panel', 'formula-batch-detail-panel',
+];
 
 // 계산기 드래프트 상태 (저장 전 작업 데이터)
 const calc = {
@@ -47,11 +50,33 @@ function getIndex() {
   return ingredientIndex;
 }
 
-function showPanel(id) {
+export function showPanel(id) {
   PANELS.forEach(p => {
     const el = document.getElementById(p);
     if (el) el.classList.toggle('is-hidden', p !== id);
   });
+}
+
+/* =======================================================
+   서브내비 — 허브 복귀 없이 관련 섹션으로 1클릭 이동
+   ======================================================= */
+
+// 구현된 섹션만 나열 (Phase B·C에서 고객 관리·원료 장부 추가)
+const SUBNAV_ITEMS = [
+  { id: 'list', label: 'My 포뮬러', click: 'openFormulaList' },
+  { id: 'calc', label: '배합 계산기', click: 'formulaNew' },
+  { id: 'batch', label: '조제 기록', click: 'openBatchPanel' },
+];
+
+/**
+ * 서브내비 칩 HTML — 서브패널 헤더에 삽입.
+ * @param {string} active - 현재 패널의 SUBNAV_ITEMS.id (활성 칩 표시)
+ */
+export function formulaSubNav(active) {
+  return `<div class="formula-subnav" role="navigation" aria-label="Formula OS 섹션 이동">${SUBNAV_ITEMS.map(item => {
+    const cls = item.id === active ? 'formula-subnav-chip is-active' : 'formula-subnav-chip';
+    return `<button type="button" class="${cls}" data-click="${item.click}">${esc(item.label)}</button>`;
+  }).join('')}</div>`;
 }
 
 /* =======================================================
@@ -136,6 +161,8 @@ function checkSummaryHtml(formula) {
 
 export function openFormulaList() {
   showPanel('formula-list-panel');
+  const subnav = document.getElementById('formula-list-subnav');
+  if (subnav) subnav.innerHTML = formulaSubNav('list');
   const list = document.getElementById('formula-list');
   if (!list) return;
 
@@ -181,6 +208,7 @@ export function openFormulaList() {
         ${f.fullIngredients && f.fullIngredients.length ? `<div class="formula-card-inci" title="전성분 표시 순서 — 안정성 확인된 배합에 저장 시 자동 생성"><i class="fa-solid fa-list-ol" aria-hidden="true"></i> ${esc(f.fullIngredients.join(', '))}</div>` : ''}
         <div class="formula-card-actions">
           <button class="btn btn-primary btn-sm" data-click="formulaOpen" data-arg="${esc(f.id)}"><i class="fa-solid fa-calculator" aria-hidden="true"></i> 열기</button>
+          <button class="btn btn-secondary btn-sm" data-click="batchNew" data-arg="${esc(f.id)}" title="이 처방으로 조제한 회차 기록"><i class="fa-solid fa-clipboard-list" aria-hidden="true"></i> 조제 기록</button>
           <button class="btn btn-secondary btn-sm" data-click="formulaDuplicate" data-arg="${esc(f.id)}"><i class="fa-solid fa-copy" aria-hidden="true"></i> 복제</button>
           <button class="btn btn-secondary btn-sm" data-click="formulaCardExport" data-arg="${esc(f.id)}" title="JSON 파일로보내기"><i class="fa-solid fa-file-export" aria-hidden="true"></i> 보내기</button>
           <button class="btn btn-secondary btn-sm f-danger" data-click="formulaDelete" data-arg="${esc(f.id)}"><i class="fa-solid fa-trash" aria-hidden="true"></i> 삭제</button>

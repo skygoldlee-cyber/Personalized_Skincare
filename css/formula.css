@@ -668,3 +668,65 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
     .formula-calc-bar { gap: 0.5rem; padding: 0.5rem 0.6rem; }
     .f-row-bottom .f-phase { flex: 1; }
 }
+
+/* ===== 조제 기록(배치) — Phase A ===== */
+
+/* 서브내비 칩 — 서브패널 간 1클릭 이동 */
+.formula-subnav {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    margin: 0 0 0.9rem;
+}
+.formula-subnav-chip {
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-border, var(--primary-tint-25));
+    background: transparent;
+    color: var(--color-text-muted);
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+.formula-subnav-chip:hover {
+    background: var(--primary-tint-12);
+    color: var(--color-text-main);
+}
+.formula-subnav-chip.is-active {
+    background: var(--primary-tint-12);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+/* 배치 폼 QC 라디오 행 */
+.batch-qc-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+.batch-qc-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+.batch-qc-label {
+    min-width: 4.5rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+}
+.batch-qc-opts {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+}
+.batch-qc-chip input { margin-right: 0.25rem; }
+
+/* 배치 상세 QC 그리드 */
+.batch-qc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 0.4rem 0.9rem;
+    margin: 0.5rem 0 0.3rem;
+}

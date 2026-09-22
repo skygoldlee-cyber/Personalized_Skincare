@@ -1021,6 +1021,12 @@ mark.txt-highlight {
     border: 1px solid var(--secondary-tint-25);
 }
 
+.icon-teal {
+    background: var(--teal-tint-12);
+    color: var(--color-teal);
+    border: 1px solid var(--teal-tint-12);
+}
+
 /* O/X 버튼은 2열 그리드 유지, 크게 */
 .oxdrill-ox-btn {
     justify-content: center;

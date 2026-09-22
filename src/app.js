@@ -135,6 +135,18 @@ import {
     formulaAllergyAdd,
     formulaAllergyRemove
 } from './views/formula.js';
+import {
+    openBatchPanel,
+    batchNew,
+    batchEdit,
+    batchSave,
+    batchOpen,
+    batchDelete,
+    batchFormulaChanged,
+    batchPrintRecord,
+    batchPrintLabel,
+    batchPrintGuide,
+} from './views/formula-batch.js';
 import { recordStudyActivity } from './study-tracker.js';
 import {
     getBackupKeys,
@@ -859,6 +871,9 @@ const DELEGATED_HANDLERS = {
     formulaSortPhase, formulaStepAdd, formulaStepRemove,
     formulaPrint, formulaExportJson, formulaCardExport, formulaImportJson,
     formulaAllergyAdd, formulaAllergyRemove,
+    // Formula OS — 조제 기록(배치)
+    openBatchPanel, batchNew, batchEdit, batchSave, batchOpen, batchDelete,
+    batchFormulaChanged, batchPrintRecord, batchPrintLabel, batchPrintGuide,
     showIngredientsChangelog,
     /** 복수정답형 모의고사 문항 수 선택 행 토글 — 다른 과목의 열린 행은 닫는다 */
     toggleComboPicker(rowId) {
