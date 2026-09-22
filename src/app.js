@@ -243,7 +243,7 @@ import { switchView } from './views/navigation.js';
 import { setupOfflineDetection } from './views/offline-detection.js';
 import { setupEventListeners } from './views/event-listeners.js';
 import { getViewTitles, navigateToView } from './router.js';
-import { contentPath, getActiveExam, getCurrentExamId, purgeLegacyStorage, hasFeature } from './exam-context.js';
+import { contentPath, getActiveExam, getCurrentExamId, getExamList, purgeLegacyStorage, hasFeature } from './exam-context.js';
 import { renderExamSelect, showExamSelect, selectExamAction } from './views/exam-select.js';
 
 // --- 런타임 에러 안전망 (런타임 ReferenceError 등을 사용자에게 알림) ---
@@ -1017,8 +1017,13 @@ function showIngredientsChangelog() {
 
 /** 활성 시험의 features 플래그에 따라 도메인 특화 UI 숨김 (data-feature 속성 기반) */
 function applyFeatureFlags() {
+    const multiExam = getExamList().length > 1;
     document.querySelectorAll('[data-feature]').forEach(el => {
-        if (!hasFeature(el.dataset.feature)) el.classList.add('is-hidden');
+        // 시험 전환 버튼은 플래그가 아닌 실제 시험 수로 결정 — 1개면 무의미
+        const on = el.dataset.feature === 'examSwitch'
+            ? multiExam
+            : hasFeature(el.dataset.feature);
+        if (!on) el.classList.add('is-hidden');
     });
 }
 
@@ -1051,8 +1056,9 @@ async function startAppInit() {
         console.error('[init] 시험 컨텍스트 초기화 실패 — 기본 시험으로 계속:', e);
     }
     initApp();
-    // 시험 미선택 상태(최초 실행/신규 시험 추가 후)면 시험 선택 화면을 홈으로 표시
-    if (!getCurrentExamId()) {
+    // 시험 미선택 상태이고 선택지가 2개 이상일 때만 시험 선택 화면을 홈으로 표시
+    // (시험이 1개뿐이면 선택 의미가 없으므로 기본 시험으로 바로 진입)
+    if (!getCurrentExamId() && getExamList().length > 1) {
         try { showExamSelect(); } catch (e) { console.error('[init] 시험 선택 뷰 실패:', e); }
     }
     // DOM이 완전히 로드된 후 토글 버튼 설정
