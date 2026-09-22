@@ -642,8 +642,8 @@ const state = {
 - `scopedKey(key)` — 진도 localStorage 키를 `<examId>:key`로 네임스페이스. 앱 전역 키(테마·리더 설정 등 `GLOBAL_KEYS`)는 비네임스페이스 유지. `purgeLegacyStorage()`가 마이그레이션 1회에 레거시 비네임스페이스 진도 키 정리
 
 ### 시험 선택/전환
-- `src/views/exam-select.js` — 시험 선택 카드 뷰(`exam-select-view`). `current_exam` 미설정 시 홈으로 표시
-- 데스크톱 사이드바 푸터 + 모바일 탭 바의 "시험 전환" 버튼 → `showExamSelect()` → 카드 선택 시 `selectExam()` → 리로드
+- `src/views/exam-select.js` — 시험 선택 카드 뷰(`exam-select-view`). `current_exam` 미설정 **+ 등록 시험 2개 이상**일 때만 홈으로 표시 — 단일 시험 레지스트리에서는 기본 시험으로 바로 진입해 피커 생략
+- 데스크톱 사이드바 푸터 + 모바일 탭 바의 "시험 전환" 버튼 → `showExamSelect()` → 카드 선택 시 `selectExam()` → 리로드. 버튼도 등록 시험 2개 이상일 때만 노출
 
 ### 레지스트리 로딩
 - 기본 시험: `data/exams/cosmetic/registry.js` 정적 로드 (`window.DATA_REGISTRY`)
