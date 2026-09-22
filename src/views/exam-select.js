@@ -1,6 +1,6 @@
 // src/views/exam-select.js — 시험 선택(피커) 뷰
 // 멀티시험 플랫폼의 홈: 등록된 시험 목록을 카드로 표시하고 선택 시 시험을 전환한다.
-import { getExamList, getCurrentExamId, selectExam } from '../exam-context.js';
+import { getExamList, getActiveExamId, selectExam } from '../exam-context.js';
 import { esc } from '../sanitize.js';
 import { switchView } from './navigation.js';
 
@@ -9,7 +9,7 @@ export function renderExamSelect() {
     const container = document.getElementById('exam-select-list');
     if (!container) return;
     const exams = getExamList();
-    const currentId = getCurrentExamId();
+    const currentId = getActiveExamId(); // 저장값 없으면 기본 시험 폴백 — "현재 시험" 배지가 유효 시험을 반영
 
     if (!exams.length) {
         container.innerHTML = '<p style="color:var(--color-text-muted);">등록된 시험이 없습니다. content/exams.json을 확인하세요.</p>';

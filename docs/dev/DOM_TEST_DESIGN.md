@@ -260,9 +260,9 @@ tests/dom/
 | 성분 사전 | `study-dictionary` ✅ | 검색(이름/영문/초성)→카드·배지(H) · type 필터(H) · 빈 DB(E) · 결과 없음(B) | `window.INGREDIENTS_DATA` 스텁 |
 | 용어집 | — (리더 통합) | 별도 뷰 없음 — `collectGlossaryItems`는 리더 렌더 경로에서 실행. 마커 포함 섹션 픽스처로 추후 보강 가능 | 리더 테스트 경유 |
 | 학습 캘린더 | `study-calendar` ✅ | 기록→학습일·달성률 반영(H/P) · 목표 설정 저장·기본값(B) · 월 이동(H) | STUDY_CALENDAR + STUDY_GOALS |
-| 매뉴얼 뷰어 | `study-manual` | 학습↔실무 전환(H) · `doc:` 링크 전환(H) · mermaid 블록 마크업(H) | 번들 스텁 + `_renderMermaid` 모킹 |
-| 문제집 뷰어 | `study-examviewer` | MD 문제집 열기·목차(H) · 인쇄 버튼(H) | 번들 스텁 |
-| 시험 선택 | `study-examselect` | 목록 렌더(H) · 전환 호출→reload 트리거(H) | EXAMS_LIST 스텁 + reload 모킹 |
+| 매뉴얼 뷰어 | `study-manual` ✅ | 학습↔실무 전환(H) · `doc:` 링크 전환(H) · mermaid 블록 마크업(H) | 번들 스텁 + `_renderMermaid` 모킹 |
+| 문제집 뷰어 | `study-examviewer` ✅ | MD 문제집 열기·목차(H) · 인쇄 버튼(H) | 번들 스텁 |
+| 시험 선택 | `study-examselect` ✅ | 목록 렌더(H) · 전환 호출→reload 트리거(H) | EXAMS_LIST 스텁 + reload 모킹 |
 
 ### 5.3 공통/시스템 영역
 
@@ -270,10 +270,10 @@ tests/dom/
 |---|---|---|
 | 백업/복원 | `backup` (기존) |보내기(H) · 복원(H) · 손상 파일(X) | ✅ 완료 |
 | 라우터 | `router` (기존) | 뷰 전환·타이틀·active 동기화(H) | ✅ 완료 |
-| 테마 | `common-theme` | 토글→`data-theme` 속성·localStorage(H/P) · 시스템 테마(B) |
-| 오프라인 감지 | `common-offline` | `offline` 이벤트→배너 표시(H) · 복귀→해제(H) | navigator.onLine 스텁 |
-| 스크래치패드 | `common-scratchpad` | 열기/닫기(H) · 지우기(H) | canvas 2d 컨텍스트 스텁 |
-| 접근성 | `common-a11y` | 토스트 `role="status"` 갱신 · 모달 `trapFocus` · 아이콘 버튼 `aria-label` 존재 전수 |
+| 테마 | `common-theme` ✅ | 토글→`data-theme` 속성·localStorage(H/P) · 시스템 테마(B) |
+| 오프라인 감지 | `common-offline` ✅ | `offline` 이벤트→배너 표시(H) · 복귀→해제(H) | navigator.onLine 스텁 |
+| 스크래치패드 | `common-scratchpad` ✅ | 열기/닫기(H) · 지우기(H) | canvas 2d 컨텍스트 스텁 |
+| 접근성 | `common-a11y` ✅ | 토스트 `role="status"` 갱신 · 모달 `trapFocus` · 아이콘 버튼 `aria-label` 존재 전수 |
 | `data-click` 위임 | (유닛) | `delegation-guard`가 정적 검증 — DOM 테스트 범위 제외 | ✅ 완료(유닛) |
 
 ### 5.4 케이스 우선순위
@@ -290,7 +290,7 @@ P(영속성)를 필수**로, **입력 폼이 있는 뷰는 X(오류/거부)를 �
 | **2** | 실무 잔여: 계산기·배치·출력물 | 28개 | ✅ 완료 |
 | **3** | 학습 코어: 퀴즈·플래시카드·대시보드·복습 (helpers에 STUDY_DATA/진도 픽스처 추가) | 28개 | ✅ 완료 |
 | **4** | 학습 확장: 리더·검색·사전·시뮬레이터·캘린더·챌린지·훈련소·뽀모도로 (용어집은 리더 통합 커버) | 66개 | ✅ 완료 |
-| **5** | 공통: 테마·오프라인·스크래치패드·a11y·매뉴얼/문제집/시험선택 뷰어 | ~15개 | 📋 설계 |
+| **5** | 공통: 테마·오프라인·스크래치패드·a11y·매뉴얼/문제집/시험선택 뷰어 | 33개 | ✅ 완료 |
 | **6** | Playwright E2E (별도 설계) — 레이아웃·SW·PWA·실제 다운로드/인쇄 | 스모크 5개 내외 | ⏸️ 보류 |
 
 Phase 3~5는 helpers 픽스처(§3.1 추가 예정 API)가 선행 과제다 — 학습 뷰는

@@ -55,7 +55,7 @@ export function selectExam(id) {
     const exams = getExamList();
     const exam = exams.find(e => e.id === id);
     if (!exam) return false;
-    if (getCurrentExamId() === id) return false;
+    if (getActiveExamId() === id) return false; // 미선택 상태에서도 기본 시험 선택 시 불필요 리로드 방지
     try {
         localStorage.setItem(CURRENT_EXAM_KEY, id);
     } catch (e) { /* noop */ }
