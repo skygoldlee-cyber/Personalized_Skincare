@@ -93,7 +93,7 @@
             </nav>
             <div class="sidebar-footer">
                 <button type="button" id="ui-mode-toggle" class="ui-mode-toggle" data-click="toggleUiMode" aria-pressed="false" title="학습/실무 모드 전환 — 합격 후 실무 중심 사용자는 실무 모드를 추천합니다">
-                    <i class="fa-solid fa-repeat" aria-hidden="true"></i> <span id="ui-mode-label">학습 모드</span>
+                    <i class="fa-solid fa-repeat" aria-hidden="true"></i> <span id="ui-mode-label" class="ui-mode-label">학습 모드</span>
                 </button>
                 <div class="sidebar-footer-meta">
                     <p>© Passmula</p>
@@ -144,6 +144,10 @@
                             </button>
                             <button type="button" class="settings-item" data-click="ManualViewer.openFormulaManual">
                                 <i class="fa-solid fa-flask" aria-hidden="true"></i> 실무 매뉴얼
+                            </button>
+                            <!-- 모바일 등 사이드바가 숨겨진 환경에서도 모드 전환 가능하도록 설정 메뉴에도 배치 -->
+                            <button type="button" class="settings-item" data-click="toggleUiMode" aria-pressed="false" title="학습/실무 모드 전환 — 합격 후 실무 중심 사용자는 실무 모드를 추천합니다">
+                                <i class="fa-solid fa-repeat" aria-hidden="true"></i> 모드: <span class="ui-mode-label">학습 모드</span>
                             </button>
                             <div class="settings-divider"></div>
                             <button id="reset-progress-btn" class="settings-item settings-item-danger" title="학습 진도·통계를 모두 삭제 (복구 불가)">

@@ -36,10 +36,13 @@ export function applyUiMode() {
     const open = safeGetItem(STORAGE_KEYS.UI_STUDY_TOOLS_OPEN) === '1';
     document.body.classList.toggle('ui-mode-practice', practice);
     document.body.classList.toggle('study-tools-open', open);
-    const label = document.getElementById('ui-mode-label');
-    if (label) label.textContent = practice ? '실무 모드' : '학습 모드';
-    const btn = document.getElementById('ui-mode-toggle');
-    if (btn) btn.setAttribute('aria-pressed', String(practice));
+    // 토글이 두 곳(사이드바 푸터·설정 패널)에 있으므로 라벨/aria를 일괄 동기화
+    document.querySelectorAll('.ui-mode-label').forEach(el => {
+        el.textContent = practice ? '실무 모드' : '학습 모드';
+    });
+    document.querySelectorAll('[data-click="toggleUiMode"]').forEach(btn => {
+        btn.setAttribute('aria-pressed', String(practice));
+    });
     const toolsBtn = document.querySelector('.nav-study-tools-label');
     if (toolsBtn) toolsBtn.setAttribute('aria-expanded', String(open));
 }

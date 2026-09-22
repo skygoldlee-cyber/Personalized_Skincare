@@ -60,8 +60,9 @@ describe('UI 모드 — 학습/실무 전환', () => {
         expect(document.body.classList.contains('ui-mode-practice')).toBe(false);
         STUDY_ONLY.forEach(v => expect(visibleNavTargets()).toContain(v));
         expect(getComputedStyle(document.querySelector('.nav-study-tools-label')).display).toBe('none');
-        expect(el('ui-mode-label').textContent).toBe('학습 모드');
-        expect(el('ui-mode-toggle').getAttribute('aria-pressed')).toBe('false');
+        // 토글 2곳(푸터·설정) 라벨·aria 동기화
+        document.querySelectorAll('.ui-mode-label').forEach(l => expect(l.textContent).toBe('학습 모드'));
+        document.querySelectorAll('[data-click="toggleUiMode"]').forEach(b => expect(b.getAttribute('aria-pressed')).toBe('false'));
         // 학습 매뉴얼 표시·실무 전용 탭 숨김
         expect(getComputedStyle(document.querySelector('.manual-nav-link.nav-study-only')).display).not.toBe('none');
         expect(getComputedStyle(document.querySelector('.nav-practice-only')).display).toBe('none');
@@ -83,8 +84,8 @@ describe('UI 모드 — 학습/실무 전환', () => {
         // 학습 매뉴얼 숨김·실무 매뉴얼 탭은 표시 (모바일 실무매뉴얼 교체)
         expect(getComputedStyle(document.querySelector('.manual-nav-link.nav-study-only')).display).toBe('none');
         expect(getComputedStyle(document.querySelector('.nav-practice-only')).display).not.toBe('none');
-        expect(el('ui-mode-label').textContent).toBe('실무 모드');
-        expect(el('ui-mode-toggle').getAttribute('aria-pressed')).toBe('true');
+        document.querySelectorAll('.ui-mode-label').forEach(l => expect(l.textContent).toBe('실무 모드'));
+        document.querySelectorAll('[data-click="toggleUiMode"]').forEach(b => expect(b.getAttribute('aria-pressed')).toBe('true'));
         expect(lastToast()[0]).toContain('실무 모드');
     });
 
