@@ -43,8 +43,10 @@ export function applyUiMode() {
     document.querySelectorAll('[data-click="toggleUiMode"]').forEach(btn => {
         btn.setAttribute('aria-pressed', String(practice));
     });
-    const toolsBtn = document.querySelector('.nav-study-tools-label');
-    if (toolsBtn) toolsBtn.setAttribute('aria-expanded', String(open));
+    // 펼침 토글도 두 곳(사이드바 라벨·모바일 탭) — aria 일괄 동기화
+    document.querySelectorAll('[data-click="toggleStudyTools"]').forEach(btn => {
+        btn.setAttribute('aria-expanded', String(open));
+    });
 }
 
 /** 앱 초기화 시 호출 — 모드 반영 후 실무 모드면 실무 작업실로 랜딩한다. */
@@ -65,7 +67,7 @@ export function toggleUiMode() {
         switchView(PRACTICE_LANDING);
     }
     showToast(next === 'practice'
-        ? '실무 모드로 전환했습니다. 학습 기능은 사이드바의 "학습 도구"에서 열 수 있습니다.'
+        ? '실무 모드로 전환했습니다. 학습 기능은 "학습 도구"에서 열 수 있습니다.'
         : '학습 모드로 전환했습니다.');
 }
 
@@ -74,6 +76,7 @@ export function toggleStudyTools() {
     const open = !document.body.classList.contains('study-tools-open');
     document.body.classList.toggle('study-tools-open', open);
     safeSetItem(STORAGE_KEYS.UI_STUDY_TOOLS_OPEN, open ? '1' : '0');
-    const toolsBtn = document.querySelector('.nav-study-tools-label');
-    if (toolsBtn) toolsBtn.setAttribute('aria-expanded', String(open));
+    document.querySelectorAll('[data-click="toggleStudyTools"]').forEach(btn => {
+        btn.setAttribute('aria-expanded', String(open));
+    });
 }

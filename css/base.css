@@ -664,6 +664,11 @@ body:not(.ui-mode-practice) .nav-practice-only {
     display: none;
 }
 
+/* 모바일 '학습도구' 탭 — 펼침 상태 시각 표시 */
+body.ui-mode-practice.study-tools-open .mobile-tab-item[data-click="toggleStudyTools"] {
+    color: var(--color-primary);
+}
+
 /* 실무 모드에서는 실무 매뉴얼 버튼을 학습 매뉴얼보다 먼저 표시 */
 body.ui-mode-practice .manual-nav-link[data-click$="openFormulaManual"] {
     order: -1;

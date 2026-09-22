@@ -83,7 +83,15 @@ describe('UI 모드 — 학습/실무 전환', () => {
         expect(getComputedStyle(document.querySelector('.nav-study-tools-label')).display).not.toBe('none');
         // 학습 매뉴얼 숨김·실무 매뉴얼 탭은 표시 (모바일 실무매뉴얼 교체)
         expect(getComputedStyle(document.querySelector('.manual-nav-link.nav-study-only')).display).toBe('none');
-        expect(getComputedStyle(document.querySelector('.nav-practice-only')).display).not.toBe('none');
+        // 실무 전용 탭 2개(실무매뉴얼·학습도구) 모두 표시
+        expect(document.querySelectorAll('.nav-practice-only')).toHaveLength(2);
+        document.querySelectorAll('.nav-practice-only').forEach(t => {
+            expect(getComputedStyle(t).display).not.toBe('none');
+        });
+        // 모바일 학습도구 탭 존재 — 사이드바 없는 환경의 학습 항목 펼침 경로
+        const mobileToolsTab = document.querySelector('.mobile-tab-item[data-click="toggleStudyTools"]');
+        expect(mobileToolsTab).not.toBeNull();
+        expect(mobileToolsTab.getAttribute('aria-expanded')).toBe('false');
         document.querySelectorAll('.ui-mode-label').forEach(l => expect(l.textContent).toBe('실무 모드'));
         document.querySelectorAll('[data-click="toggleUiMode"]').forEach(b => expect(b.getAttribute('aria-pressed')).toBe('true'));
         expect(lastToast()[0]).toContain('실무 모드');
@@ -106,7 +114,10 @@ describe('UI 모드 — 학습/실무 전환', () => {
         toggleStudyTools();
         expect(document.body.classList.contains('study-tools-open')).toBe(true);
         expect(localStorage.getItem('ui_study_tools_open')).toBe('1');
-        expect(document.querySelector('.nav-study-tools-label').getAttribute('aria-expanded')).toBe('true');
+        // 펼침 토글 2곳(사이드바 라벨·모바일 탭) aria 동기화
+        document.querySelectorAll('[data-click="toggleStudyTools"]').forEach(b => {
+            expect(b.getAttribute('aria-expanded')).toBe('true');
+        });
         // 펼치면 학습 항목이 실제로 다시 표시됨
         STUDY_ONLY.forEach(v => expect(visibleNavTargets()).toContain(v));
         toggleStudyTools();
