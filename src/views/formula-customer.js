@@ -414,7 +414,7 @@ async function custImportFile(event) {
   openCustomerPanel();
 }
 
-/** 고객 목록 CSV보내기 (UTF-8 BOM — Excel 한글 호환) */
+/** 고객 목록 CSV 보내기 (UTF-8 BOM — Excel 한글 호환) */
 export function custExportCsv() {
   const list = listCustomers();
   if (!list.length) { showToast('보낼 고객이 없습니다.', 'info'); return; }

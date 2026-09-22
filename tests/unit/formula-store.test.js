@@ -335,7 +335,7 @@ test('steps: 공백 제거·빈 단계 필터·20개·200자 클램프', () => {
   assert.deepEqual(getFormula(empty.id).steps, []);
 });
 
-// ── 포뮬러 JSON보내기/가져오기 ─────────────────────
+// ── 포뮬러 JSON 보내기/가져오기 ─────────────────────
 
 test('serialize/import: 왕복 보존 + id 재부여', () => {
   const { formula } = createFormula({

@@ -217,7 +217,7 @@ export function openFormulaList() {
           <button class="btn btn-primary btn-sm" data-click="formulaOpen" data-arg="${esc(f.id)}"><i class="fa-solid fa-calculator" aria-hidden="true"></i> 열기</button>
           <button class="btn btn-secondary btn-sm" data-click="batchNew" data-arg="${esc(f.id)}" title="이 처방으로 조제한 회차 기록"><i class="fa-solid fa-clipboard-list" aria-hidden="true"></i> 조제 기록</button>
           <button class="btn btn-secondary btn-sm" data-click="formulaDuplicate" data-arg="${esc(f.id)}"><i class="fa-solid fa-copy" aria-hidden="true"></i> 복제</button>
-          <button class="btn btn-secondary btn-sm" data-click="formulaCardExport" data-arg="${esc(f.id)}" title="JSON 파일로보내기"><i class="fa-solid fa-file-export" aria-hidden="true"></i> 보내기</button>
+          <button class="btn btn-secondary btn-sm" data-click="formulaCardExport" data-arg="${esc(f.id)}" title="JSON 파일로 보내기"><i class="fa-solid fa-file-export" aria-hidden="true"></i> 보내기</button>
           <button class="btn btn-secondary btn-sm f-danger" data-click="formulaDelete" data-arg="${esc(f.id)}"><i class="fa-solid fa-trash" aria-hidden="true"></i> 삭제</button>
         </div>
       </div>`;
@@ -1186,7 +1186,7 @@ export function formulaStepRemove(idx) {
 }
 
 /* =======================================================
-   저장 / 인쇄 / JSON보내기·가져오기
+   저장 / 인쇄 / JSON 보내기·가져오기
    ======================================================= */
 
 /** 현재 화면 입력을 포뮬러 데이터로 수집 (저장·인쇄·보내기 공용) */
@@ -1242,7 +1242,7 @@ export function formulaCalcSave() {
 }
 
 /* =======================================================
-   조제 기록지 인쇄 · 포뮬러 JSON보내기/가져오기
+   조제 기록지 인쇄 · 포뮬러 JSON 보내기/가져오기
    ======================================================= */
 
 /** 인쇄용 조제 기록지 HTML 생성 */
@@ -1337,7 +1337,7 @@ export function formulaPrint() {
   window.print();
 }
 
-/** 현재 드래프트를 JSON 파일로보내기 */
+/** 현재 드래프트를 JSON 파일로 보내기 */
 export function formulaExportJson() {
   const draft = currentDraft();
   if (!draft.ingredients.length) {
@@ -1349,7 +1349,7 @@ export function formulaExportJson() {
   showToast('포뮬러 JSON 파일을 다운로드했습니다.', 'success');
 }
 
-/** 목록 카드에서 저장된 포뮬러를 JSON으로보내기 */
+/** 목록 카드에서 저장된 포뮬러를 JSON으로 보내기 */
 export function formulaCardExport(id) {
   const f = getFormula(id);
   if (!f) { showToast('포뮬러를 찾을 수 없습니다.', 'error'); return; }

@@ -271,7 +271,7 @@ async function matImportFile(event) {
   openMaterialPanel();
 }
 
-/** 원료 장부 CSV보내기 (UTF-8 BOM — Excel 한글 호환) */
+/** 원료 장부 CSV 보내기 (UTF-8 BOM — Excel 한글 호환) */
 export function matExportCsv() {
   const list = listMaterials();
   if (!list.length) { showToast('보낼 원료가 없습니다.', 'info'); return; }

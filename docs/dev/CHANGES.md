@@ -7,7 +7,7 @@
 ## 2026-09-23 Formula OS — 고객·원료 CSV 가져오기/보내기
 
 고객 관리·원료 장부에 CSV 상호운용 추가 — 기존 Excel 장부 데이터를 가져오고
-현재 데이터를 CSV로보내 재활용할 수 있다.
+현재 데이터를 CSV로 보내 재활용할 수 있다.
 
 - **`src/csv-utils.js`** (신규): `parseCsv`(RFC4180 따옴표 필드·필드 내 쉼표/개행·
   구분자 `,`/`;`/탭 자동 감지) · `decodeCsvBuffer`(UTF-8 BOM → UTF-8 strict →
