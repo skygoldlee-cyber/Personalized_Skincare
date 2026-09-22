@@ -4,6 +4,40 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-22 Formula OS 업무 확장 Phase A~D (커밋 f6cd274·5b9c356·9bce945·0389ed7)
+
+조제관리사 9개 업무 영역 전체 커버 (설계: FORMULA_OS_WORKFLOW_DESIGN.md).
+처방(formula)·고객(customer)·조제 회차(batch)·원료(material) 엔티티 분리 +
+법규 준수 자가점검. 허브 카드 7개 + 서브내비 칩 6개(인뷰 탭 대신 절충안 채택).
+
+- **Phase A — 조제 기록·인쇄** (f6cd274): `store-utils.js`(스토어 공통 헬퍼,
+  formula-store 공용화) · `batch-store.js`(배치번호 YYYYMMDD-NN 채번, identity
+  불변, QC·위생만 보정, `checkSnapshot` 보존, 50건 한도) · `usage-guide.js`
+  (제형 9종 템플릿 + 원료 주의 규칙 7종 + 임신/알레르기 병기) ·
+  `views/formula-batch.js`(목록·폼·상세) · `views/formula-print.js`
+  (기록지·70mm 라벨·안내문) · 서브내비 칩 `formulaSubNav()` 도입
+- **Phase B — 고객 관리** (5b9c356): `customer-store.js`(20명 한도, 상담 이력
+  append-only, 삭제 시 참조 해제+인라인 스냅샷 보존) · `views/formula-customer.js`
+  (목록·폼·상세+처방/배치 역참조) · `formula.customerId` 참조 필드(기존 포뮬러
+  무수정 호환) · 계산기 고객 카드 불러오기/저장 · 배치 폼 고객 select
+- **Phase C — 원료 장부** (9bce945): `material-ledger.js`(30종 한도, 기한 상태
+  파생 — expired/soon(30일)/ok/none, `daysUntilExpiry` 자정 기준 D-day) ·
+  `views/formula-material.js` · 계산기 원료 행에 장부 기한 배지(이름 정확 매칭)
+- **Phase D — 법규 준수** (0389ed7): `views/formula-compliance.js` — 6개
+  카테고리 25항목 체크리스트(영업·자격/시설·위생/혼합·소분/기록/표시/안전·보고)
+  + 법령 문서 10종 링크(`ExamViewer.openExam`, ref_md 경로) + 앱 기능 바로가기.
+  체크 상태 `formula_compliance` 키 영속(시험별 격리·백업 포함)
+- **수정한 결함**: `updateBatch` qc 객체 통째 덮어쓰기 → 필드 단위 병합 /
+  `daysUntilExpiry` 기한 당일 오차 → 자정 기준 정정(배치 배지도 동일 함수로
+  통일) / `formula-stability.js` SHELL_ASSETS 누락 등록 /
+  고객 select 복원 타이밍(populate → writeCustomerInputs 순서 보장)
+- **스토리지 키**: `batch_items`·`customer_items`·`material_items`·
+  `formula_compliance` — 전부 scopedKey 시험별 격리 + BACKUP/RESET_KEYS 등록
+- **테스트**: 신규 유닛 39건(batch-store 10·usage-guide 7·customer-store 9·
+  material-ledger 9·formula-compliance 4) — 유닛 398→437
+- **문서**: FORMULA_OS_WORKFLOW_DESIGN.md 전체 갱신(구현 완료 상태·실제 스키마·
+  UI 절충안·로드맵), ARCHITECTURE.md 모듈 다이어그램·데이터 테이블
+
 ## 2026-09-22 전성분 표시 자동 생성 (fullIngredients)
 
 안정성 '양호' 확인된 배합만 화장품법 전성분 표시 규칙으로 성분 순서를 생성·저장.
