@@ -34,6 +34,7 @@ const PANELS = [
   'formula-batch-panel', 'formula-batch-form-panel', 'formula-batch-detail-panel',
   'formula-customer-panel', 'formula-customer-form-panel', 'formula-customer-detail-panel',
   'formula-material-panel', 'formula-material-form-panel',
+  'formula-compliance-panel',
 ];
 
 // 계산기 드래프트 상태 (저장 전 작업 데이터)
@@ -65,13 +66,13 @@ export function showPanel(id) {
    서브내비 — 허브 복귀 없이 관련 섹션으로 1클릭 이동
    ======================================================= */
 
-// 구현된 섹션만 나열 (Phase C에서 원료 장부 추가)
 const SUBNAV_ITEMS = [
   { id: 'list', label: 'My 포뮬러', click: 'openFormulaList' },
   { id: 'calc', label: '배합 계산기', click: 'formulaNew' },
   { id: 'customer', label: '고객 관리', click: 'openCustomerPanel' },
   { id: 'batch', label: '조제 기록', click: 'openBatchPanel' },
   { id: 'material', label: '원료 장부', click: 'openMaterialPanel' },
+  { id: 'compliance', label: '법규 준수', click: 'openCompliancePanel' },
 ];
 
 /**

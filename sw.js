@@ -107,6 +107,7 @@ const SHELL_ASSETS = [
   './src/views/formula-batch.js',
   './src/views/formula-customer.js',
   './src/views/formula-material.js',
+  './src/views/formula-compliance.js',
   './src/views/formula-print.js',
   './src/study-tracker.js',
   './src/spaced-repetition.js',

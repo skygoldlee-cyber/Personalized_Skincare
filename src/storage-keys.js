@@ -52,6 +52,9 @@ export const STORAGE_KEYS = {
   // Formula OS — 원료 장부 (material-ledger.js)
   MATERIAL_ITEMS: 'material_items',
 
+  // Formula OS — 법규 준수 체크리스트 체크 상태 (formula-compliance.js)
+  COMPLIANCE_CHECKS: 'formula_compliance',
+
   // 원료 DB 갱신 감지 — 마지막으로 본 ingredients contentHash (기기 로컬 마커, 백업 제외)
   INGREDIENTS_HASH: 'ingredients_hash',
   // 원료 DB 갱신 알림 — 마지막으로 알림을 본 contentHash (해시별 1회 고지용)
@@ -92,6 +95,7 @@ export const BACKUP_KEYS = [
   STORAGE_KEYS.BATCH_ITEMS,
   STORAGE_KEYS.CUSTOMER_ITEMS,
   STORAGE_KEYS.MATERIAL_ITEMS,
+  STORAGE_KEYS.COMPLIANCE_CHECKS,
 ];
 
 // 전체 초기화(Reset Progress) 시 제거할 키 목록

@@ -776,3 +776,116 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 .material-card.is-expired {
     border-left: 3px solid var(--color-danger);
 }
+
+/* ===== 법규 준수 체크리스트 — Phase D ===== */
+
+.comp-section {
+    margin-bottom: 1.1rem;
+}
+.comp-section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+.comp-count {
+    margin-left: auto;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+}
+.comp-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+.comp-item {
+    background: var(--color-surface, #fff);
+    border: 1px solid var(--color-border, #e2e8f0);
+    border-radius: var(--radius-md, 8px);
+    padding: 0.55rem 0.7rem;
+}
+.comp-item.is-done {
+    opacity: 0.62;
+}
+.comp-item.is-done .comp-item-text {
+    text-decoration: line-through;
+}
+.comp-item-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    cursor: pointer;
+}
+.comp-check {
+    margin-top: 0.2rem;
+    flex-shrink: 0;
+    accent-color: var(--color-primary, #1f6feb);
+    width: 1rem;
+    height: 1rem;
+}
+.comp-item-text {
+    font-size: 0.88rem;
+    line-height: 1.45;
+}
+.comp-item-note {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    margin-top: 0.15rem;
+}
+.comp-item-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 0.7rem;
+    margin-top: 0.35rem;
+    padding-left: 1.55rem;
+}
+.comp-ref-link {
+    font-size: 0.76rem;
+    color: var(--color-primary, #1f6feb);
+    text-decoration: none;
+    white-space: nowrap;
+}
+.comp-ref-link:hover {
+    text-decoration: underline;
+}
+.comp-app-link {
+    color: var(--color-teal, #0d9488);
+}
+.comp-doc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 0.5rem;
+}
+.comp-doc-link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.6rem 0.7rem;
+    background: var(--color-surface, #fff);
+    border: 1px solid var(--color-border, #e2e8f0);
+    border-radius: var(--radius-md, 8px);
+    text-decoration: none;
+    color: var(--color-text);
+}
+.comp-doc-link:hover {
+    border-color: var(--color-primary, #1f6feb);
+}
+.comp-doc-link > i {
+    color: var(--color-primary, #1f6feb);
+    font-size: 0.85rem;
+}
+.comp-doc-label {
+    font-size: 0.84rem;
+    font-weight: 600;
+}
+.comp-doc-desc {
+    font-size: 0.74rem;
+    color: var(--color-text-muted);
+}

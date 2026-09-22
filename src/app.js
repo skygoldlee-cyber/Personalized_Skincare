@@ -168,6 +168,12 @@ import {
     matSave,
     matDelete,
 } from './views/formula-material.js';
+import {
+    openCompliancePanel,
+    compToggle,
+    compReset,
+    compOpenLaw,
+} from './views/formula-compliance.js';
 import { recordStudyActivity } from './study-tracker.js';
 import {
     getBackupKeys,
@@ -900,6 +906,8 @@ const DELEGATED_HANDLERS = {
     custLogAdd, custAllergyAdd, custAllergyRemove,
     // Formula OS — 원료 장부
     openMaterialPanel, matNew, matEdit, matSave, matDelete,
+    // Formula OS — 법규 준수 체크리스트
+    openCompliancePanel, compToggle, compReset, compOpenLaw,
     showIngredientsChangelog,
     /** 복수정답형 모의고사 문항 수 선택 행 토글 — 다른 과목의 열린 행은 닫는다 */
     toggleComboPicker(rowId) {

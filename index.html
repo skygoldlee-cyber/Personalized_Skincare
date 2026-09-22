@@ -1339,6 +1339,14 @@
                             <p>원료의 입고일·사용기한·보관조건·잔량을 관리하고 기한 임박을 경고합니다.</p>
                             <span class="trainer-card-btn">장부 열기 <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
                         </div>
+                        <div class="trainer-menu-card" data-click="openCompliancePanel">
+                            <div class="trainer-card-icon icon-blue">
+                                <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
+                            </div>
+                            <h4>법규 준수</h4>
+                            <p>영업 신고·시설 위생·기록 보관·표시 의무 등 법정 준수사항을 점검하고 법령 원문을 확인합니다.</p>
+                            <span class="trainer-card-btn">체크리스트 열기 <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
+                        </div>
                     </div>
                     <div class="formula-safety-note">
                         <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
@@ -1839,6 +1847,29 @@
                         <button class="btn btn-primary" data-click="matSave"><i class="fa-solid fa-floppy-disk" aria-hidden="true"></i> 저장</button>
                     </div>
                     <p class="formula-save-hint">기한 임박(30일)·경과 원료는 장부 상단과 배합 계산기 원료 행에서 경고됩니다.</p>
+                </div>
+
+                <!-- 12. 법규 준수 체크리스트 -->
+                <div id="formula-compliance-panel" class="is-hidden">
+                    <div class="sim-arena-header mb-6">
+                        <button class="btn btn-secondary" data-click="exitFormulaSubView"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
+                        <div class="sim-title-group">
+                            <h4>법규 준수 체크리스트</h4>
+                            <span class="badge badge-quiz-cat" id="comp-progress-badge">점검 0/0</span>
+                            <button class="btn btn-secondary btn-sm" data-click="compReset"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> 초기화</button>
+                        </div>
+                    </div>
+                    <div id="formula-compliance-subnav"></div>
+                    <div class="formula-safety-note">
+                        <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+                        이 체크리스트는 자가점검용 참고 자료이며 법률 자문이 아닙니다.
+                        실제 의무·기준의 판단은 법령 원문과 관할 지방식약청 안내를 따르세요.
+                    </div>
+                    <div id="comp-list"></div>
+                    <section class="comp-section">
+                        <h5 class="comp-section-title"><i class="fa-solid fa-book" aria-hidden="true"></i> 법령·참조 문서</h5>
+                        <div id="comp-docs" class="comp-doc-grid"></div>
+                    </section>
                 </div>
             </section>
 
