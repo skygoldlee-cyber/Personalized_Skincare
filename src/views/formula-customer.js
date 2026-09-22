@@ -75,9 +75,9 @@ export function openCustomerPanel() {
         ${tags ? `<div class="formula-card-customer"><i class="fa-solid fa-tag" aria-hidden="true"></i> ${esc(tags)}</div>` : ''}
         <div class="formula-card-meta">처방 ${fCount}건 · 조제 ${bCount}회 · 상담 ${logCount}건</div>
         <div class="formula-card-actions">
-          <button class="btn btn-primary btn-sm" data-click="custOpen" data-arg="${esc(c.id)}"><i class="fa-solid fa-eye" aria-hidden="true"></i> 상세</button>
+          <button class="btn btn-primary btn-sm" data-click="custOpen" data-arg="${esc(c.id)}" title="고객 카드 상세 보기"><i class="fa-solid fa-eye" aria-hidden="true"></i> 상세</button>
           <button class="btn btn-secondary btn-sm" data-click="custEdit" data-arg="${esc(c.id)}"><i class="fa-solid fa-pen" aria-hidden="true"></i> 수정</button>
-          <button class="btn btn-secondary btn-sm f-danger" data-click="custDelete" data-arg="${esc(c.id)}"><i class="fa-solid fa-trash" aria-hidden="true"></i> 삭제</button>
+          <button class="btn btn-secondary btn-sm f-danger" data-click="custDelete" data-arg="${esc(c.id)}" title="고객 카드 삭제 (복구 불가)"><i class="fa-solid fa-trash" aria-hidden="true"></i> 삭제</button>
         </div>
       </div>`;
   }).join('');
@@ -265,7 +265,7 @@ export function custOpen(id) {
         <div class="cust-log-list">${logHtml}</div>
         <div class="formula-allergy-input-row">
           <input type="text" id="cust-log-input" class="form-input" maxlength="300" placeholder="상담 내용 (예: 건조함 호소, 수분 세럼 요청)" aria-label="상담 내용">
-          <button type="button" class="btn btn-secondary btn-sm" data-click="custLogAdd" data-arg="${esc(c.id)}"><i class="fa-solid fa-plus" aria-hidden="true"></i> 추가</button>
+          <button type="button" class="btn btn-secondary btn-sm" data-click="custLogAdd" data-arg="${esc(c.id)}" title="상담 이력 추가 (오늘 날짜)"><i class="fa-solid fa-plus" aria-hidden="true"></i> 추가</button>
         </div>
       </div>
 
@@ -280,7 +280,7 @@ export function custOpen(id) {
 
       <div class="formula-card-actions">
         <button class="btn btn-secondary btn-sm" data-click="custEdit" data-arg="${esc(c.id)}"><i class="fa-solid fa-pen" aria-hidden="true"></i> 수정</button>
-        <button class="btn btn-secondary btn-sm f-danger" data-click="custDelete" data-arg="${esc(c.id)}"><i class="fa-solid fa-trash" aria-hidden="true"></i> 삭제</button>
+        <button class="btn btn-secondary btn-sm f-danger" data-click="custDelete" data-arg="${esc(c.id)}" title="고객 카드 삭제 (복구 불가)"><i class="fa-solid fa-trash" aria-hidden="true"></i> 삭제</button>
       </div>
     </div>`;
 }

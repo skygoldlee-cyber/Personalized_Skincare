@@ -91,7 +91,7 @@ export function openMaterialPanel() {
         ${m.notes ? `<div class="formula-card-meta">메모: ${esc(m.notes)}</div>` : ''}
         <div class="formula-card-actions">
           <button class="btn btn-secondary btn-sm" data-click="matEdit" data-arg="${esc(m.id)}"><i class="fa-solid fa-pen" aria-hidden="true"></i> 수정</button>
-          <button class="btn btn-secondary btn-sm f-danger" data-click="matDelete" data-arg="${esc(m.id)}"><i class="fa-solid fa-trash" aria-hidden="true"></i> 삭제</button>
+          <button class="btn btn-secondary btn-sm f-danger" data-click="matDelete" data-arg="${esc(m.id)}" title="원료 항목 삭제 (복구 불가)"><i class="fa-solid fa-trash" aria-hidden="true"></i> 삭제</button>
         </div>
       </div>`;
   }).join('');

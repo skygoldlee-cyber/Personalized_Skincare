@@ -343,7 +343,7 @@ function renderLimitsResult() {
 
     panel.innerHTML = `
         <div class="sim-arena-header" style="margin-bottom: 2rem;">
-            <button class="btn btn-secondary" data-click="exitTrainerSubView"><i class="fa-solid fa-arrow-left"></i> 나가기</button>
+            <button class="btn btn-secondary" data-click="exitTrainerSubView" title="훈련소 메뉴로 돌아가기"><i class="fa-solid fa-arrow-left"></i> 나가기</button>
             <div class="sim-title-group">
                 <h4>핵심 수치 암기 마스터 결과</h4>
                 <span class="badge badge-quiz-cat">수치 암기 훈련</span>

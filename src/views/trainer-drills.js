@@ -434,8 +434,8 @@ function renderComboQuestion() {
                 <span class="combo-stmt-id">${esc(s.id)}</span>
                 <span class="combo-stmt-text">${safeTextWithBreaks(s.text)}</span>
                 <span class="combo-judge-btns" role="group" aria-label="진술 ${esc(s.id)} 판정">
-                    <button type="button" class="combo-judge-btn" data-v="true" aria-pressed="false">O</button>
-                    <button type="button" class="combo-judge-btn" data-v="false" aria-pressed="false">X</button>
+                    <button type="button" class="combo-judge-btn" data-v="true" aria-pressed="false" title="이 진술이 맞다">O</button>
+                    <button type="button" class="combo-judge-btn" data-v="false" aria-pressed="false" title="이 진술이 틀리다">X</button>
                 </span>
             </div>`).join('');
         stmtsEl.querySelectorAll('.combo-judge-btn').forEach(btn => {

@@ -237,11 +237,11 @@ export function openFormulaList() {
         <div class="formula-card-checks">${checkSummaryHtml(f)}</div>
         ${f.fullIngredients && f.fullIngredients.length ? `<div class="formula-card-inci" title="전성분 표시 순서 — 안정성 확인된 배합에 저장 시 자동 생성"><i class="fa-solid fa-list-ol" aria-hidden="true"></i> ${esc(f.fullIngredients.join(', '))}</div>` : ''}
         <div class="formula-card-actions">
-          <button class="btn btn-primary btn-sm" data-click="formulaOpen" data-arg="${esc(f.id)}"><i class="fa-solid fa-calculator" aria-hidden="true"></i> 열기</button>
+          <button class="btn btn-primary btn-sm" data-click="formulaOpen" data-arg="${esc(f.id)}" title="배합 계산기에서 이 처방 열기"><i class="fa-solid fa-calculator" aria-hidden="true"></i> 열기</button>
           <button class="btn btn-secondary btn-sm" data-click="batchNew" data-arg="${esc(f.id)}" title="이 처방으로 조제한 회차 기록"><i class="fa-solid fa-clipboard-list" aria-hidden="true"></i> 조제 기록</button>
-          <button class="btn btn-secondary btn-sm" data-click="formulaDuplicate" data-arg="${esc(f.id)}"><i class="fa-solid fa-copy" aria-hidden="true"></i> 복제</button>
+          <button class="btn btn-secondary btn-sm" data-click="formulaDuplicate" data-arg="${esc(f.id)}" title="이 처방을 복제해 새 포뮬러로 저장"><i class="fa-solid fa-copy" aria-hidden="true"></i> 복제</button>
           <button class="btn btn-secondary btn-sm" data-click="formulaCardExport" data-arg="${esc(f.id)}" title="JSON 파일로 보내기"><i class="fa-solid fa-file-export" aria-hidden="true"></i> 보내기</button>
-          <button class="btn btn-secondary btn-sm f-danger" data-click="formulaDelete" data-arg="${esc(f.id)}"><i class="fa-solid fa-trash" aria-hidden="true"></i> 삭제</button>
+          <button class="btn btn-secondary btn-sm f-danger" data-click="formulaDelete" data-arg="${esc(f.id)}" title="포뮬러 삭제 (복구 불가)"><i class="fa-solid fa-trash" aria-hidden="true"></i> 삭제</button>
         </div>
       </div>`;
   }).join('');
@@ -822,11 +822,11 @@ function renderRecommend() {
     rec.bases.forEach(b => {
       const star = b.required ? ' <span class="formula-rec-req" title="수상 제형 필수">*</span>' : '';
       const cands = b.candidates.length
-        ? b.candidates.map(c => `<button type="button" class="formula-rec-chip" data-click="formulaRecAddBase" data-arg="${esc(`${b.role}|${c}`)}">${esc(c)}</button>`).join('')
+        ? b.candidates.map(c => `<button type="button" class="formula-rec-chip" data-click="formulaRecAddBase" data-arg="${esc(`${b.role}|${c}`)}" title="이 원료를 처방에 추가">${esc(c)}</button>`).join('')
         : '<span class="formula-rec-nocand">직접 입력</span>';
       html += `<div class="formula-rec-role"><span class="formula-rec-role-name">${esc(b.role)}${star}</span><span class="formula-rec-cands">${cands}</span></div>`;
     });
-    html += `</div><button type="button" class="btn btn-secondary btn-sm" data-click="formulaLoadBase"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> 베이스 불러오기 (필수 역할)</button></div>`;
+    html += `</div><button type="button" class="btn btn-secondary btn-sm" data-click="formulaLoadBase" title="선택한 추천 원료를 필수 역할별로 처방에 일괄 추가"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> 베이스 불러오기 (필수 역할)</button></div>`;
   }
 
   if (hasIngs) {

@@ -198,7 +198,7 @@ function showDailyModal() {
                 </div>
                 
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <button class="btn btn-secondary" data-click="closeDailyModal"><i class="fa-solid fa-xmark"></i> 나가기</button>
+                    <button class="btn btn-secondary" data-click="closeDailyModal" title="데일리 챌린지 닫기"><i class="fa-solid fa-xmark"></i> 나가기</button>
                     <button id="daily-modal-next-btn" class="btn btn-success is-hidden" data-click="nextDailyStep">다음 단계 <i class="fa-solid fa-arrow-right"></i></button>
                 </div>
             </div>

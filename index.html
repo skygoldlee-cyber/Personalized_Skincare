@@ -140,7 +140,7 @@
                                 <i class="fa-solid fa-flask" aria-hidden="true"></i> 실무 매뉴얼
                             </button>
                             <div class="settings-divider"></div>
-                            <button id="reset-progress-btn" class="settings-item settings-item-danger">
+                            <button id="reset-progress-btn" class="settings-item settings-item-danger" title="학습 진도·통계를 모두 삭제 (복구 불가)">
                                 <i class="fa-solid fa-rotate-left" aria-hidden="true"></i> 진도 초기화
                             </button>
                         </div>
@@ -162,7 +162,7 @@
                     </div>
                     <div class="flex-row gap-2">
                         <button class="btn btn-warning badge-pill" data-click="resumeSimDraft"><i class="fa-solid fa-play" aria-hidden="true"></i> 이어서 풀기</button>
-                        <button class="btn btn-secondary badge-pill" data-click="clearSimDraft"><i class="fa-solid fa-trash" aria-hidden="true"></i> 새로 시작</button>
+                        <button class="btn btn-secondary badge-pill" data-click="clearSimDraft" title="진행 중인 모의고사 기록을 버리고 새로 시작"><i class="fa-solid fa-trash" aria-hidden="true"></i> 새로 시작</button>
                     </div>
                 </div>
 
@@ -424,8 +424,8 @@
                 </div>
 
                 <div class="flashcard-actions">
-                    <button id="fc-easy-btn" class="btn btn-success"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> 완벽히 외움 (쉽다)</button>
-                    <button id="fc-hard-btn" class="btn btn-danger"><i class="fa-solid fa-circle-xmark" aria-hidden="true"></i> 아직 헷갈림 (어렵다)</button>
+                    <button id="fc-easy-btn" class="btn btn-success" title="다음 복습까지 간격이 길어집니다"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> 완벽히 외움 (쉽다)</button>
+                    <button id="fc-hard-btn" class="btn btn-danger" title="가까운 시점에 다시 복습합니다"><i class="fa-solid fa-circle-xmark" aria-hidden="true"></i> 아직 헷갈림 (어렵다)</button>
                 </div>
             </section>
 
@@ -467,8 +467,8 @@
 
                             <!-- OX 선택 컨테이너 -->
                             <div id="quiz-ox-container" class="is-hidden gap-4 mb-4">
-                                <button class="btn btn-secondary quiz-ox-btn icon-stat" data-ox="O">O</button>
-                                <button class="btn btn-secondary quiz-ox-btn icon-stat" data-ox="X">X</button>
+                                <button class="btn btn-secondary quiz-ox-btn icon-stat" data-ox="O" title="진술이 맞다">O</button>
+                                <button class="btn btn-secondary quiz-ox-btn icon-stat" data-ox="X" title="진술이 틀리다">X</button>
                             </div>
 
                             <div class="quiz-input-group" id="quiz-input-group">
@@ -532,7 +532,7 @@
                         <button id="start-weak-exam-btn" class="btn btn-primary is-hidden" data-click="startWeakExam" >
                             <i class="fa-solid fa-file-signature" aria-hidden="true"></i> 헷갈린 문제 집중 모의고사
                         </button>
-                        <button id="print-review-btn" class="btn btn-secondary is-hidden" data-click="printReviewNotes" >
+                        <button id="print-review-btn" class="btn btn-secondary is-hidden" data-click="printReviewNotes" title="틀린 문제와 정답을 모아 인쇄합니다">
                             <i class="fa-solid fa-print" aria-hidden="true"></i> 오답노트 인쇄
                         </button>
                     </div>
@@ -626,7 +626,7 @@
                 <!-- 2. Limits Trainer Panel -->
                 <div id="trainer-limits-panel" class="is-hidden">
                     <div class="sim-arena-header mb-6">
-                        <button class="btn btn-secondary" data-click="exitTrainerSubView"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
+                        <button class="btn btn-secondary" data-click="exitTrainerSubView" title="훈련소 메뉴로 돌아가기"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
                         <div class="sim-title-group">
                             <h4>핵심 수치 암기 마스터</h4>
                             <span class="badge badge-quiz-cat">수치 암기 훈련</span>
@@ -674,7 +674,7 @@
                 <!-- 3. O/X 판정 드릴 Panel -->
                 <div id="trainer-oxdrill-panel" class="is-hidden">
                     <div class="sim-arena-header mb-6">
-                        <button class="btn btn-secondary" data-click="exitTrainerSubView"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
+                        <button class="btn btn-secondary" data-click="exitTrainerSubView" title="훈련소 메뉴로 돌아가기"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
                         <div class="sim-title-group">
                             <h4>O/X 판정 드릴</h4>
                             <span class="badge badge-quiz-cat">진위 판정 훈련</span>
@@ -745,7 +745,7 @@
                 <!-- 4. 복수정답형(combo) 드릴 Panel -->
                 <div id="trainer-combo-panel" class="is-hidden">
                     <div class="sim-arena-header mb-6">
-                        <button class="btn btn-secondary" data-click="exitTrainerSubView"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
+                        <button class="btn btn-secondary" data-click="exitTrainerSubView" title="훈련소 메뉴로 돌아가기"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
                         <div class="sim-title-group">
                             <h4>복수정답형 훈련</h4>
                             <span class="badge badge-quiz-cat">진술 조합 판정</span>
@@ -819,7 +819,7 @@
                 <!-- 4-2. 취약 진술 리뷰 Panel -->
                 <div id="trainer-weak-panel" class="is-hidden">
                     <div class="sim-arena-header mb-6">
-                        <button class="btn btn-secondary" data-click="exitTrainerSubView"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
+                        <button class="btn btn-secondary" data-click="exitTrainerSubView" title="훈련소 메뉴로 돌아가기"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
                         <div class="sim-title-group">
                             <h4>취약 진술 리뷰</h4>
                             <span class="badge badge-quiz-cat">진술 단위 약점</span>
@@ -839,7 +839,7 @@
                 <!-- 5. Blending Calculator Panel -->
                 <div id="trainer-calc-panel" class="is-hidden">
                     <div class="sim-arena-header mb-6">
-                        <button class="btn btn-secondary" data-click="exitTrainerSubView"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
+                        <button class="btn btn-secondary" data-click="exitTrainerSubView" title="훈련소 메뉴로 돌아가기"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
                         <div class="sim-title-group">
                             <h4>원료 배합 계산 연습기</h4>
                             <span class="badge badge-quiz-cat">실전 계산 훈련</span>
@@ -921,7 +921,7 @@
                 <!-- 4. Ingredients Challenge Panel -->
                 <div id="trainer-ingredients-panel" class="is-hidden">
                     <div class="sim-arena-header mb-6">
-                        <button class="btn btn-secondary" data-click="exitTrainerSubView"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
+                        <button class="btn btn-secondary" data-click="exitTrainerSubView" title="훈련소 메뉴로 돌아가기"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
                         <div class="sim-title-group">
                             <h4>원료 안전성 챌린지</h4>
                             <span class="badge badge-quiz-cat">원료 규격 & 안전성</span>
@@ -1017,7 +1017,7 @@
                 <!-- 2. Simulation Arena Panel -->
                 <div id="sim-arena-panel" class="is-hidden">
                     <div class="sim-arena-header">
-                        <button class="btn btn-secondary" data-click="exitSimArena"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
+                        <button class="btn btn-secondary" data-click="exitSimArena" title="모의고사 목록으로 돌아가기"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
                         <div class="sim-title-group">
                             <h4 id="sim-exam-title">모의고사 타이틀</h4>
                             <div class="sim-timer"><i class="fa-regular fa-clock" aria-hidden="true"></i> 남은 시간: <span id="sim-time-left">120:00</span></div>
@@ -1367,7 +1367,7 @@
                 <!-- 2. My 포뮬러 목록 -->
                 <div id="formula-list-panel" class="is-hidden">
                     <div class="sim-arena-header mb-6">
-                        <button class="btn btn-secondary" data-click="exitFormulaSubView"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
+                        <button class="btn btn-secondary" data-click="exitFormulaSubView" title="Formula OS 메뉴로 돌아가기"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
                         <div class="sim-title-group">
                             <h4>My 포뮬러</h4>
                             <span class="badge badge-quiz-cat" id="formula-list-usage">0/5 저장됨</span>
@@ -1382,7 +1382,7 @@
                 <!-- 3. 배합 계산기 / 포뮬러 편집 -->
                 <div id="formula-calc-panel" class="is-hidden">
                     <div class="sim-arena-header mb-6">
-                        <button class="btn btn-secondary" data-click="exitFormulaSubView"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
+                        <button class="btn btn-secondary" data-click="exitFormulaSubView" title="Formula OS 메뉴로 돌아가기"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
                         <div class="sim-title-group">
                             <h4 id="formula-calc-title">배합 계산기</h4>
                             <span class="badge badge-quiz-cat" id="formula-usage-badge">저장 0/5</span>
@@ -1532,7 +1532,7 @@
                                     <i class="fa-solid fa-upload" aria-hidden="true"></i> JSON 가져오기
                                 </button>
                                 <input type="file" id="formula-rule-file-input" class="is-hidden" accept=".json,application/json">
-                                <button type="button" class="btn btn-secondary btn-sm" data-click="formulaRuleReset">맞춤 규칙 초기화</button>
+                                <button type="button" class="btn btn-secondary btn-sm" data-click="formulaRuleReset" title="추가한 맞춤 규칙을 모두 삭제하고 기본 규칙으로 되돌림">맞춤 규칙 초기화</button>
                             </div>
                         </details>
 
@@ -1599,7 +1599,7 @@
                 <!-- 4. 조제 기록 목록 -->
                 <div id="formula-batch-panel" class="is-hidden">
                     <div class="sim-arena-header mb-6">
-                        <button class="btn btn-secondary" data-click="exitFormulaSubView"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
+                        <button class="btn btn-secondary" data-click="exitFormulaSubView" title="Formula OS 메뉴로 돌아가기"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
                         <div class="sim-title-group">
                             <h4>조제 기록</h4>
                             <span class="badge badge-quiz-cat" id="batch-list-usage">기록 0/50</span>
@@ -1720,7 +1720,7 @@
                 <!-- 7. 고객 관리 목록 -->
                 <div id="formula-customer-panel" class="is-hidden">
                     <div class="sim-arena-header mb-6">
-                        <button class="btn btn-secondary" data-click="exitFormulaSubView"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
+                        <button class="btn btn-secondary" data-click="exitFormulaSubView" title="Formula OS 메뉴로 돌아가기"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
                         <div class="sim-title-group">
                             <h4>고객 관리</h4>
                             <span class="badge badge-quiz-cat" id="customer-list-usage">0/20 등록</span>
@@ -1822,7 +1822,7 @@
                 <!-- 10. 원료 장부 목록 -->
                 <div id="formula-material-panel" class="is-hidden">
                     <div class="sim-arena-header mb-6">
-                        <button class="btn btn-secondary" data-click="exitFormulaSubView"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
+                        <button class="btn btn-secondary" data-click="exitFormulaSubView" title="Formula OS 메뉴로 돌아가기"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
                         <div class="sim-title-group">
                             <h4>원료 장부</h4>
                             <span class="badge badge-quiz-cat" id="material-list-usage">0/30 등록</span>
@@ -1895,11 +1895,11 @@
                 <!-- 12. 법규 준수 체크리스트 -->
                 <div id="formula-compliance-panel" class="is-hidden">
                     <div class="sim-arena-header mb-6">
-                        <button class="btn btn-secondary" data-click="exitFormulaSubView"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
+                        <button class="btn btn-secondary" data-click="exitFormulaSubView" title="Formula OS 메뉴로 돌아가기"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
                         <div class="sim-title-group">
                             <h4>법규 준수 체크리스트</h4>
                             <span class="badge badge-quiz-cat" id="comp-progress-badge">점검 0/0</span>
-                            <button class="btn btn-secondary btn-sm" data-click="compReset"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> 초기화</button>
+                            <button class="btn btn-secondary btn-sm" data-click="compReset" title="체크리스트를 전부 미완료 상태로 초기화"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> 초기화</button>
                         </div>
                     </div>
                     <div id="formula-compliance-subnav"></div>

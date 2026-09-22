@@ -146,7 +146,7 @@ function renderBatchList(batches) {
         <i class="fa-solid fa-filter" aria-hidden="true"></i>
         <h4>필터 조건에 맞는 기록이 없습니다</h4>
         <p>필터를 바꾸거나 초기화해 보세요.</p>
-        <button class="btn btn-secondary" data-click="batchFilterReset"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> 필터 초기화</button>
+        <button class="btn btn-secondary" data-click="batchFilterReset" title="모든 필터 조건을 초기화"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> 필터 초기화</button>
       </div>`;
     return;
   }
@@ -178,7 +178,7 @@ function renderBatchList(batches) {
         </div>
         <div class="formula-card-checks">${qcHtml}${hygHtml}${expiryHtml}${delivHtml}${dispHtml}</div>
         <div class="formula-card-actions">
-          <button class="btn btn-primary btn-sm" data-click="batchOpen" data-arg="${esc(b.id)}"><i class="fa-solid fa-eye" aria-hidden="true"></i> 상세</button>
+          <button class="btn btn-primary btn-sm" data-click="batchOpen" data-arg="${esc(b.id)}" title="조제 기록 상세 보기"><i class="fa-solid fa-eye" aria-hidden="true"></i> 상세</button>
           <button class="btn btn-secondary btn-sm" data-click="batchPrintLabel" data-arg="${esc(b.id)}" title="제품 라벨 인쇄"><i class="fa-solid fa-tag" aria-hidden="true"></i> 라벨</button>
           <button class="btn btn-secondary btn-sm" data-click="batchPrintGuide" data-arg="${esc(b.id)}" title="사용 안내문 인쇄"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> 안내문</button>
         </div>
@@ -727,11 +727,11 @@ export function batchOpen(id) {
       ${snapHtml}
       ${b.notes ? `<div class="formula-card-meta">메모: ${esc(b.notes)}</div>` : ''}
       <div class="formula-card-actions">
-        <button class="btn btn-secondary btn-sm" data-click="batchPrintRecord" data-arg="${esc(b.id)}"><i class="fa-solid fa-print" aria-hidden="true"></i> 기록지</button>
-        <button class="btn btn-secondary btn-sm" data-click="batchPrintLabel" data-arg="${esc(b.id)}"><i class="fa-solid fa-tag" aria-hidden="true"></i> 라벨</button>
-        <button class="btn btn-secondary btn-sm" data-click="batchPrintGuide" data-arg="${esc(b.id)}"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> 안내문</button>
+        <button class="btn btn-secondary btn-sm" data-click="batchPrintRecord" data-arg="${esc(b.id)}" title="조제 기록지 인쇄"><i class="fa-solid fa-print" aria-hidden="true"></i> 기록지</button>
+        <button class="btn btn-secondary btn-sm" data-click="batchPrintLabel" data-arg="${esc(b.id)}" title="제품 라벨 인쇄"><i class="fa-solid fa-tag" aria-hidden="true"></i> 라벨</button>
+        <button class="btn btn-secondary btn-sm" data-click="batchPrintGuide" data-arg="${esc(b.id)}" title="고객용 사용 안내문 인쇄"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> 안내문</button>
         <button class="btn btn-secondary btn-sm" data-click="batchEdit" data-arg="${esc(b.id)}" title="QC·위생·기한·메모 보정"><i class="fa-solid fa-pen" aria-hidden="true"></i> 보정</button>
-        <button class="btn btn-secondary btn-sm f-danger" data-click="batchDelete" data-arg="${esc(b.id)}"><i class="fa-solid fa-trash" aria-hidden="true"></i> 삭제</button>
+        <button class="btn btn-secondary btn-sm f-danger" data-click="batchDelete" data-arg="${esc(b.id)}" title="조제 기록 삭제 (복구 불가)"><i class="fa-solid fa-trash" aria-hidden="true"></i> 삭제</button>
       </div>
     </div>`;
 }

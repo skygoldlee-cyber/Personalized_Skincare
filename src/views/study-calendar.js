@@ -87,11 +87,11 @@ export function renderStudyCalendar() {
 
             <!-- 월별 캘린더 -->
             <div class="calendar-nav">
-                <button class="btn btn-secondary btn-sm" data-click="prevCalendarMonth">
+                <button class="btn btn-secondary btn-sm" data-click="prevCalendarMonth" title="이전 달" aria-label="이전 달">
                     <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
                 </button>
                 <h3 class="calendar-title">${_currentYear}년 ${MONTH_NAMES[_currentMonth]}</h3>
-                <button class="btn btn-secondary btn-sm" data-click="nextCalendarMonth">
+                <button class="btn btn-secondary btn-sm" data-click="nextCalendarMonth" title="다음 달" aria-label="다음 달">
                     <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
                 </button>
             </div>
@@ -187,7 +187,7 @@ export function openGoalSettings() {
                     <h3 style="font-weight:700;color:var(--color-primary);margin:0;">
                         <i class="fa-solid fa-bullseye" aria-hidden="true"></i> 학습 목표 설정
                     </h3>
-                    <button class="btn btn-secondary btn-sm" data-click="closeGoalSettings">
+                    <button class="btn btn-secondary btn-sm" data-click="closeGoalSettings" title="닫기" aria-label="닫기">
                         <i class="fa-solid fa-xmark" aria-hidden="true"></i>
                     </button>
                 </div>

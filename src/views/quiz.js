@@ -114,12 +114,11 @@ export function renderQuizQuestion() {
         if (oxContainer) {
             oxContainer.classList.remove('is-hidden');
             oxContainer.querySelectorAll('.quiz-ox-btn').forEach(btn => {
+                if (btn._oxHandler) btn.removeEventListener('click', btn._oxHandler);
                 btn.disabled = false;
                 btn.classList.remove('correct', 'incorrect');
-                btn.addEventListener('click', function handler() {
-                    btn.removeEventListener('click', handler);
-                    submitQuizChoiceAnswer(btn, btn.dataset.ox, currentQuiz.answer);
-                }, { once: true });
+                btn._oxHandler = () => submitQuizChoiceAnswer(btn, btn.dataset.ox, currentQuiz.answer);
+                btn.addEventListener('click', btn._oxHandler);
             });
         }
     } else {
@@ -449,7 +448,7 @@ export function renderReviewList() {
             <div class="review-card-item" id="rev-${card.id}">
                 <div class="review-card-item-header">
                     <span class="card-badge">${esc(card.subjectName)}</span>
-                    <button class="review-remove-btn" data-click="removeWeakCard" data-arg="${esc(card.id)}">
+                    <button class="review-remove-btn" data-click="removeWeakCard" data-arg="${esc(card.id)}" title="약점 카드 목록에서 제외 (카드 자체는 유지)">
                         <i class="fa-solid fa-trash-can"></i> 제외
                     </button>
                 </div>
