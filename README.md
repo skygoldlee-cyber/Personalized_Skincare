@@ -37,7 +37,7 @@
 | � **중요 숫자 암기표** | 과목별 빈출 숫자 카테고리별 분류 (기한·기간 / 농도·함량 / 시험·측정 / 제조·원료 / 금액) |
 | � **실전 예상문제집** | 과목별 모의고사 (100문항 × 다수 세트) + MD 문제집 인앱 뷰어 (목차·인쇄, 팝업 없음) |
 | 🔍 **성분 검색 사전** | 사용 가능/금지/제한 화장품 성분 검색 (배합 한도 포함), 원료 DB 버전 표시 + 개정 이력 조회 |
-| 🧪 **Formula OS** | 실전 배합 작업실 — 배합률→투입량 자동 계산, 고시 한도 실시간 규정 검증, 고객 정보 기반 추천, 포뮬러 저장·조제 기록지 인쇄·JSON 공유 |
+| 🧪 **Formula OS** | 실전 배합 작업실 — 배합률→투입량 자동 계산, 고시 한도 실시간 규정 검증, 고객 정보 기반 추천, 포뮬러 저장·조제 기록지 인쇄·JSON 공유, 고객 관리·원료 장부·조제 기록·법규 체크리스트 (CSV 가져오기/보내기 지원) |
 | 🎧 **오디오북** | TTS로 생성한 단원별 음성 강의 (MP3), Media Session API 연동 (잠금화면 미디어 제어) |
 | ✏️ **스크래치패드** | HTML5 Canvas 손글씨 연습장 |
 | 🌗 **라이트/다크 테마** | 시스템 테마 자동 감지 + 수동 토글 (헤더·모바일 탭 바), FOUC 없는 즉시 적용 |
@@ -64,8 +64,8 @@
 - **반응형 모바일 레이아웃**: 하단 탭 바 네비게이션, safe-area-inset 대응, 100dvh 동적 뷰포트
 
 **테스트**
-- Node.js 내장 테스트 러너 (`node --test`) — 250 unit tests (sha256, sanitize, state, parser, trainer-calc, utils, delegation-guard, study-aids, pdf-registry)
-- Vitest + jsdom — 11 DOM tests (backup, router)
+- Node.js 내장 테스트 러너 (`node --test`) — 454 unit tests (sanitize, state, parser, Formula OS 스토어·검증·CSV 등)
+- Vitest + jsdom — 21 DOM tests (backup, router)
 - GitHub Actions CI — push 시 `npm test` + parser parity 자동 실행
 
 **데이터 파이프라인** (빌드 타임)
@@ -160,8 +160,8 @@ Personalized Skincare/
 │   └── audiobook/                   ← 오디오북 파이프라인 (Python)
 │
 ├── 📂 tests/                        ← 자동화 테스트
-│   ├── unit/                        ← Node.js 내장 테스트 러너 (250 tests)
-│   └── dom/                         ← Vitest + jsdom DOM 테스트 (11 tests)
+│   ├── unit/                        ← Node.js 내장 테스트 러너 (454 tests)
+│   └── dom/                         ← Vitest + jsdom DOM 테스트 (21 tests)
 ├── 📂 .github/workflows/            ← GitHub Actions CI (test + parser parity)
 │
 └── 📂 docs/                         ← 문서 (개발 + 사용자)

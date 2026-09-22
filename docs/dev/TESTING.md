@@ -22,9 +22,9 @@
 
 | 구분 | 프레임워크 | 환경 | 파일 위치 | 테스트 수 |
 |------|-----------|------|-----------|-----------|
-| **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 398 |
+| **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 454 |
 | **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 21 |
-| **합계** | | | | **419** |
+| **합계** | | | | **475** |
 
 ### 설계 원칙
 
@@ -39,7 +39,7 @@
 ## 2. 실행 명령어
 
 ```bash
-# Unit 테스트만 실행 (398개)
+# Unit 테스트만 실행 (454개)
 npm test
 # 또는
 npm run test:unit
@@ -100,7 +100,13 @@ npm run test:watch
 | 26 | `formula-rules.test.js` | 23 | `src/formula-rules.js` — 추천 규칙, 안전 필터(금지·알레르기·임신수유), 맞춤 규칙 병합·직렬화 | Formula OS, 합성 데이터 |
 | 27 | `formula-check.test.js` | 20 | `src/formula-check.js` — 원료 인덱스, 배합 검증(한도이내/초과/금지/확인필요), 고시 출처 | Formula OS, 합성 데이터 |
 | 28 | `formula-stability.test.js` | 22 | `src/formula-stability.js` — 상 비율·상호작용·투입 단계·pH 규칙, 미판정 불변식 | Formula OS, 합성 데이터 |
-| | **합계** | **398** | | |
+| 29 | `batch-store.test.js` | 10 | `src/batch-store.js` — 배치 채번(YYYYMMDD-NN), identity 불변, QC·위생 병합, `checkSnapshot` 보존, 50건 한도 | Formula OS Phase A |
+| 30 | `usage-guide.test.js` | 7 | `src/usage-guide.js` — 제형 템플릿, 원료 주의 규칙(레티노이드·AHA·향료 등), 임신/알레르기 병기 | Formula OS Phase A |
+| 31 | `customer-store.test.js` | 9 | `src/customer-store.js` — 고객 CRUD, 상담 이력 append-only, `unlinkCustomerFromFormulas`, 20명 한도 | Formula OS Phase B |
+| 32 | `material-ledger.test.js` | 9 | `src/material-ledger.js` — 원료 CRUD, 기한 상태 파생(expired/soon/ok/none), `daysUntilExpiry` 자정 기준 | Formula OS Phase C |
+| 33 | `formula-compliance.test.js` | 4 | `src/views/formula-compliance.js` — 항목 id 고유성, refs 유효성, 법령 파일 실존, 필수 섹션 커버리지 | Formula OS Phase D |
+| 34 | `csv-import.test.js` | 17 | `src/csv-utils.js` 파서·EUC-KR 디코딩 + `importCustomers`/`importMaterials` 중복·한도·sanitize | Formula OS CSV |
+| | **합계** | **454** | | |
 
 ### DOM 테스트 (`tests/dom/`)
 
@@ -303,6 +309,31 @@ npm run test:watch
 
 #### `statement-tracker.test.js` (9개)
 - `tools/build/statement-tracker.js`: 진술별 정답률 추적·통계 집계
+
+### 4.12b Formula OS — 업무 레이어 (Phase A~D) + CSV
+
+#### `batch-store.test.js` (10개)
+- 배치번호 `YYYYMMDD-NN` 당일 채번, 처방·일시·스냅샷 identity 불변
+- QC·위생 필드 단위 병합(통째 덮어쓰기 방지), `checkSnapshot` 보존, 50건 한도
+
+#### `usage-guide.test.js` (7개)
+- 제형 9종 템플릿 선택, 원료 주의 규칙 발화(레티노이드·AHA·BHA·비타민C·향료·알코올·BPO)
+- 고객 임신/알레르기 조건 주의문 병기
+
+#### `customer-store.test.js` (9개)
+- 고객 CRUD·20명 한도, 상담 이력 `addConsultLog` append-only(수정·삭제 불가)
+- 고객 삭제 시 `unlinkCustomerFromFormulas` — 인라인 스냅샷 보존 + 참조 해제
+
+#### `material-ledger.test.js` (9개)
+- 원료 CRUD·30종 한도, 기한 상태 파생(`expired`/`soon`/`ok`/`none`)
+- `daysUntilExpiry` 자정 기준 D-day (기한 당일 D-0, 익일부터 경과)
+
+#### `formula-compliance.test.js` (4개)
+- 25항목 id 고유성, `refs` 구조 유효성, **법령 MD 파일 실존 검증**(ref_md 경로), 6개 필수 섹션 커버리지
+
+#### `csv-import.test.js` (17개)
+- `src/csv-utils.js`: 따옴표 필드(쉼표·개행·`""`), 구분자 `,`/`;`/탭 감지, UTF-8 BOM·EUC-KR 폴백, 헤더 정규화 매핑, `toCsv` BOM+이스케이프
+- `importCustomers`/`importMaterials`: 중복 건너뜀(고객=이름, 원료=이름+LOT), 이름 없음 제외, 한도 초과 집계, sanitize 경유, CSV 왕복
 
 ### 4.13 기타 신규 분류
 
