@@ -2,6 +2,7 @@
 // 설계: docs/dev/SUPABASE_DESIGN.md §5·§9 — window.supabase 스텁으로 세션 상태를 제어
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { loadIndexHtml, el, isVisible, lastToast, flushAsync } from './helpers.js';
+import { showConfirm } from '../../src/ui-utils.js';
 
 vi.mock('../../src/ui-utils.js', () => ({
     showToast: vi.fn(),
@@ -37,7 +38,7 @@ window.supabase = { createClient: vi.fn(() => ({ auth: authStub })) };
 import {
     initAuthView, openAuthModal, closeAuthModal, refreshAuthUI,
     authSignIn, authSignUp, authEmailLogin, authMagicLink, authSignOut, authSetPassword,
-    authSendOtp, authVerifyOtp,
+    authSendOtp, authVerifyOtp, resetEmailLoginCooldown,
 } from '../../src/auth-view.js';
 
 function fillAuth(email, pw) {
@@ -50,6 +51,7 @@ describe('계정/로그인 모달', () => {
         session = null;
         localStorage.clear();
         loadIndexHtml();
+        resetEmailLoginCooldown();
         vi.clearAllMocks();
         // clearAllMocks는 구현도 지우므로 호출 횟수만 검증하는 용도로 재설정 불필요 —
         // 스텁은 async 함수로 재정의
@@ -117,7 +119,7 @@ describe('계정/로그인 모달', () => {
         expect(authStub.signInWithOtp).not.toHaveBeenCalled();
         fillAuth('link@test.com', '');
         await authMagicLink();
-        expect(authStub.signInWithOtp).toHaveBeenCalledWith({ email: 'link@test.com' });
+        expect(authStub.signInWithOtp).toHaveBeenCalledWith({ email: 'link@test.com', options: { emailRedirectTo: location.origin } });
         expect(el('auth-modal-msg').textContent).toContain('로그인 링크');
     });
 
@@ -163,7 +165,7 @@ describe('계정/로그인 모달', () => {
         await openAuthModal();
         el('auth-email').value = 'otp@test.com';
         await authSendOtp();
-        expect(authStub.signInWithOtp).toHaveBeenCalledWith({ email: 'otp@test.com' });
+        expect(authStub.signInWithOtp).toHaveBeenCalledWith({ email: 'otp@test.com', options: { emailRedirectTo: location.origin } });
         expect(isVisible('auth-otp-area')).toBe(true);
         expect(el('auth-modal-msg').textContent).toContain('인증 코드');
     });
@@ -201,7 +203,7 @@ describe('계정/로그인 모달', () => {
         await openAuthModal();
         el('auth-email').value = 'uni@test.com';
         await authEmailLogin();
-        expect(authStub.signInWithOtp).toHaveBeenCalledWith({ email: 'uni@test.com' });
+        expect(authStub.signInWithOtp).toHaveBeenCalledWith({ email: 'uni@test.com', options: { emailRedirectTo: location.origin } });
         expect(isVisible('auth-otp-area')).toBe(true);
         const msg = el('auth-modal-msg').textContent;
         expect(msg).toContain('로그인 링크');
@@ -224,5 +226,36 @@ describe('계정/로그인 모달', () => {
         cb('SIGNED_IN', session);
         expect(lastToast()[0]).toContain('로그인했습니다');
         location.hash = '';
+    });
+
+    it('token_hash 랜딩 — 확인 시 verifyOtp로 세션 성립 + URL 정리 (H)', async () => {
+        history.replaceState(null, '', '/?token_hash=tok_hash_1&type=email');
+        await initAuthView();
+        await flushAsync();
+        expect(showConfirm).toHaveBeenCalled();
+        expect(authStub.verifyOtp).toHaveBeenCalledWith({ token_hash: 'tok_hash_1', type: 'email' });
+        expect(lastToast()[0]).toContain('로그인했습니다');
+        expect(location.search).toBe('');
+    });
+
+    it('token_hash 랜딩 — 취소 시 토큰 미소비 (스캐너 방어) (X)', async () => {
+        showConfirm.mockResolvedValueOnce(false);
+        history.replaceState(null, '', '/?token_hash=tok_hash_2&type=email');
+        await initAuthView();
+        await flushAsync();
+        expect(showConfirm).toHaveBeenCalled();
+        expect(authStub.verifyOtp).not.toHaveBeenCalled();
+    });
+
+    it('재발송 쿨다운 — 발송 후 버튼 비활성 + 재호출 차단 (R)', async () => {
+        await openAuthModal();
+        el('auth-email').value = 'cd@test.com';
+        await authEmailLogin();
+        expect(authStub.signInWithOtp).toHaveBeenCalledTimes(1);
+        const btn = document.querySelector('[data-click="authEmailLogin"]');
+        expect(btn.disabled).toBe(true);
+        await authEmailLogin();
+        expect(authStub.signInWithOtp).toHaveBeenCalledTimes(1);
+        expect(el('auth-modal-msg').textContent).toContain('재발송');
     });
 });

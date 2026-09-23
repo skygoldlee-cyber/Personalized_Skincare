@@ -27,7 +27,15 @@ export async function getSupabase() {
     if (!isSupabaseConfigured()) return null;
     if (_client) return _client;
     await loadVendor();
-    _client = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+    _client = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
+        auth: {
+            // 기본값과 동일하지만 명시 — vendor 갱신으로 기본값이 바뀌어도 동작이 깨지지 않게 고정
+            flowType: 'implicit',
+            persistSession: true,
+            autoRefreshToken: true,
+            detectSessionInUrl: true,
+        },
+    });
     return _client;
 }
 

@@ -110,6 +110,25 @@
   남는 자료 항목은 성분 사전뿐.
 - 테스트: 유닛 458, DOM 228 (+7 common-uimode), import 0 오류, 자산 120개.
 
+## 2026-09-23 Supabase 로그인 UX 통합 + 운영 견고화 (커밋 c07473f·b63e50f)
+
+- **이메일 로그인 단일 버튼** (c07473f): 매직링크·인증 코드 버튼을
+  `authEmailLogin`으로 통합 — signInWithOtp 메일 하나에 링크+코드 동봉.
+  브라우저(링크)·PWA(코드) 동일 절차, 별칭으로 기존 핸들러 호환 유지.
+  매직링크 랜딩 오류·성공 토스트 추가.
+- **token_hash 랜딩** (이번): 메일 링크를 앱 도메인 `?token_hash=`로
+  변경해 랜딩에서 확인 클릭 시에만 `verifyOtp`로 토큰 소비 — 메일
+  스캐너·미리보기의 사전 소진 방지, iOS에 코드 경로 안내, Android
+  링크 캡처 확률 상승, flowType 무관. 해시 랜딩은 하위 호환 유지.
+- **운영 견고화**: `signInWithOtp`에 `emailRedirectTo: location.origin`
+  명시, 발송 버튼 60초 재발송 쿨다운, OTP 입력 `one-time-code` 자동완성+
+  공백 제거+6~10자리 허용, `createClient`에 `flowType:'implicit'` 명시 고정.
+- **문서**: SUPABASE_DESIGN §A.7~A.8 — "두 변수는 독립적"을 "같은 일회용
+  토큰의 두 표현"으로 정정, Confirm signup 템플릿 필수화, HTML 템플릿
+  권장안, E2E에 신규 이메일 항목. SMTP/OTP 운영 런북 신규 등록.
+- 테스트 +6 (DOM 259): 통합 버튼, 랜딩 오류·성공, token_hash 승인·취소,
+  쿨다운 차단.
+
 ## 2026-09-23 UI 접근성·문서 보강 (커밋 816343e·a42a421·17f943a)
 
 - **단일 시험 시 시험 선택 생략** (816343e): 초기 시험 피커를 `current_exam`

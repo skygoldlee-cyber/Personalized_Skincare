@@ -21,17 +21,17 @@ Supabase 프로젝트
       ↓
 Authentication → Emails
       │
-      └─ ② Magic link or OTP 템플릿
+      └─ ② Magic link or OTP 템플릿 (+ Confirm signup)
               │
               ├─ {{ .Token }}
-              └─ {{ .ConfirmationURL }}
+              └─ ?token_hash={{ .TokenHash }} 링크
                        │
                        ↓
                   이메일 발송
                        │
               ┌────────┴────────┐
               ↓                 ↓
-         OTP 코드 입력       링크 클릭
+         OTP 코드 입력       링크 → 앱 랜딩 확인
               ↓                 ↓
          PWA 로그인          브라우저 로그인
 ```
@@ -45,6 +45,8 @@ Authentication → Emails
 Supabase 대시보드에서 다음으로 이동합니다.
 
 **Authentication → SMTP Settings**
+
+> 대시보드 버전에 따라 **Authentication → Emails** 안의 **SMTP** 탭에 있는 경우도 있습니다. 둘 중 보이는 쪽을 사용하세요.
 
 Magic Link/OTP 템플릿을 직접 수정하려면 먼저 Custom SMTP를 설정해야 합니다.
 
@@ -115,25 +117,23 @@ Custom SMTP를 활성화한 다음 Supabase에서:
 
 ---
 
-# 6. Body에 `{{ .Token }}` 추가
+# 6. Body에 `{{ .Token }}` 추가 (HTML 권장안)
 
 **Content → Body** 영역을 수정합니다.
 
-다음과 같이 구성할 수 있습니다.
+> ⚠️ **Body는 HTML입니다** — 줄바꿈만 쓴 텍스트는 한 문단으로 뭉쳐 보이고, `<a>` 태그 없는 URL은 클릭이 안 될 수 있습니다. 아래 HTML 권장안을 사용하세요.
 
-```text
-Your sign-in code
-
-Enter this code in the app to sign in:
-
-{{ .Token }}
-
-Or click the link below to sign in:
-
-{{ .ConfirmationURL }}
+```html
+<h2>Passmula 로그인</h2>
+<p>앱에 아래 인증 코드를 입력하세요.</p>
+<p style="font-size:28px;font-weight:700;letter-spacing:6px">{{ .Token }}</p>
+<p>브라우저에서 이용 중이라면 아래 버튼으로도 로그인할 수 있습니다.<br>
+(홈 화면 앱에서 로그인 중이면 버튼 대신 코드를 입력하세요)</p>
+<p><a href="{{ .SiteURL }}/?token_hash={{ .TokenHash }}&type=email">브라우저에서 로그인</a></p>
+<p>코드와 링크 중 하나만 사용할 수 있으며, 잠시 후 만료됩니다.</p>
 ```
 
-핵심 변수는 두 가지입니다.
+핵심 변수는 세 가지입니다.
 
 ### OTP 코드
 
@@ -141,15 +141,25 @@ Or click the link below to sign in:
 {{ .Token }}
 ```
 
-### 로그인 링크
+### 로그인 링크용 토큰 해시
 
 ```text
-{{ .ConfirmationURL }}
+{{ .TokenHash }}
 ```
+
+기본 `{{ .ConfirmationURL }}` 대신 **`{{ .SiteURL }}/?token_hash={{ .TokenHash }}&type=email`** 형태의 앱 도메인 링크를 권장합니다 — 기본 ConfirmationURL은 메일 보안 스캐너·미리보기의 GET 요청 한 번에 토큰이 소진되지만, `token_hash` 링크는 앱 안에서 확인 클릭 시에만 소비됩니다.
+
+### 앱 도메인
+
+```text
+{{ .SiteURL }}
+```
+
+대시보드 Site URL로 자동 치환됩니다.
 
 ---
 
-# 7. 두 변수의 역할
+# 7. 두 수단의 역할 — 같은 일회용 토큰
 
 ## 7.1 `{{ .Token }}`
 
@@ -167,24 +177,31 @@ Your sign-in code
 
 ---
 
-## 7.2 `{{ .ConfirmationURL }}`
+## 7.2 `{{ .TokenHash }}` 링크
 
-Supabase가 실제 로그인 링크로 자동 치환합니다.
+`{{ .SiteURL }}/?token_hash={{ .TokenHash }}&type=email` 형태로 쓰면 앱 도메인으로 바로 가는 로그인 링크가 됩니다.
 
-사용자가 링크를 클릭하면 브라우저에서 로그인할 수 있습니다.
+사용자가 링크를 클릭하면 앱이 열리고, 앱 안의 확인 창에서 로그인을 완료합니다.
 
 ---
 
-## 7.3 전체 동작 구조
+## 7.3 ⚠️ 코드와 링크는 독립적이지 않습니다
+
+**둘은 같은 일회용 토큰의 두 표현입니다 — 한쪽을 쓰면 다른 쪽도 함께 소진됩니다.**
+
+- iOS PWA 사용자가 습관적으로 링크를 누르면 Safari에서 토큰이 소비돼, 돌아와서 코드를 입력하면 "만료" 오류가 뜹니다.
+- 메일 보안 스캐너·미리보기가 링크를 먼저 열어도 소진될 수 있습니다 — `token_hash` 방식은 앱에서 확인 클릭을 요구하므로 이 함정을 피합니다.
+
+## 7.4 전체 동작 구조
 
 ```text
                     Supabase 이메일
                           │
               ┌───────────┴───────────┐
               ↓                       ↓
-       {{ .Token }}            {{ .ConfirmationURL }}
+       {{ .Token }}        ?token_hash= 링크
               ↓                       ↓
-         OTP 숫자 입력              링크 클릭
+         OTP 숫자 입력        앱 랜딩 → 확인 클릭
               ↓                       ↓
           PWA 로그인             브라우저 로그인
 ```
@@ -195,11 +212,19 @@ Supabase가 이메일 발송 시 자동으로 실제 값으로 치환합니다.
 
 ---
 
+## 7.5 `Confirm signup` 템플릿에도 동일하게 적용 (필수)
+
+`signInWithOtp`는 **미등록 이메일로 새 계정을 만듭니다**. `Confirm email`이 켜져 있으면 신규 사용자에게는 `Magic link or OTP`가 아니라 **`Confirm signup` 템플릿**이 발송됩니다.
+
+이 템플릿에 `{{ .Token }}`이 없으면 **처음 가입하는 iOS PWA 사용자만 코드 없는 메일**을 받습니다. `Confirm signup` 템플릿에도 §6의 HTML 권장안을 적용하세요.
+
+---
+
 # 8. Subject는 변경하지 않아도 됨
 
 Subject는 기본값을 그대로 사용해도 됩니다.
 
-이번 설정에서는 **Body에 `{{ .Token }}`와 `{{ .ConfirmationURL }}`를 넣는 것**이 핵심입니다.
+이번 설정에서는 **Body에 `{{ .Token }}`와 `?token_hash={{ .TokenHash }}` 링크를 넣는 것**이 핵심입니다.
 
 ---
 
@@ -253,6 +278,15 @@ Body를 수정한 후:
 
 ---
 
+# 10.5 메일이 아예 오지 않는 경우
+
+1. **Gmail 앱 비밀번호 폐기 확인** — Google 계정 비밀번호를 변경하면 앱 비밀번호가 폐기돼 로그인 메일이 조용히 끊깁니다. 재발급 후 SMTP Password 갱신.
+2. 발송 한도 확인 — Custom SMTP 적용 후 **Auth → Rate Limits**의 시간당 발송 한도에 걸릴 수 있습니다.
+3. 스팸함 확인.
+4. Authentication → Users에 대상 계정 존재 여부 확인.
+
+---
+
 # 11. 실제 이메일 테스트
 
 설정을 완료한 후 앱에서:
@@ -270,14 +304,21 @@ Supabase
 이메일에 다음과 같이 표시되면 정상입니다.
 
 ```text
-Your sign-in code
+Passmula 로그인
 
-123456
+앱에 아래 인증 코드를 입력하세요.
 
-Or click the link below to sign in.
+123456          ← 크게 표시된 숫자 코드
 
-[로그인 링크]
+브라우저에서 이용 중이라면 아래 버튼으로도 로그인할 수 있습니다.
+(홈 화면 앱에서 로그인 중이면 버튼 대신 코드를 입력하세요)
+
+[브라우저에서 로그인]   ← 앱 도메인 링크
+
+코드와 링크 중 하나만 사용할 수 있으며, 잠시 후 만료됩니다.
 ```
+
+> ⚠️ **Users에 없는 새 이메일로도 한 번 테스트하세요** — 신규 계정은 `Confirm signup` 템플릿이 발송되므로, 이 템플릿에도 코드가 들어있는지 반드시 확인해야 합니다 (§7.5).
 
 ---
 
@@ -319,12 +360,14 @@ OTP 방식은 링크를 다른 브라우저에서 열 필요가 없기 때문에
   ↓
 [로그인 링크 클릭]
   ↓
-브라우저
+앱 랜딩 → "이 브라우저에서 로그인" 확인
   ↓
 Supabase 세션 생성
   ↓
 로그인 완료
 ```
+
+확인 클릭을 거치므로 메일 스캐너·미리보기가 링크를 열어도 토큰이 소진되지 않습니다. 취소하면 토큰이 남아 있어 같은 메일의 코드로 계속 로그인할 수 있습니다.
 
 따라서 동일한 이메일을 다음 두 환경에서 사용할 수 있습니다.
 
@@ -392,10 +435,11 @@ PWA
 
 - [ ] Authentication → Emails
 - [ ] `Magic link or OTP` 선택
-- [ ] Body 편집
+- [ ] Body 편집 (HTML)
 - [ ] `{{ .Token }}` 추가
-- [ ] `{{ .ConfirmationURL }}` 추가
+- [ ] `{{ .SiteURL }}/?token_hash={{ .TokenHash }}&type=email` 링크 추가
 - [ ] Save
+- [ ] **`Confirm signup` 템플릿에도 동일하게 적용** — 신규 계정은 이 템플릿이 발송됨
 
 ## 앱 테스트
 
@@ -403,28 +447,26 @@ PWA
 - [ ] 「로그인 메일 보내기」 클릭
 - [ ] 이메일 수신 확인
 - [ ] OTP 코드 표시 확인
+- [ ] **Users에 없는 새 이메일로도 발송 — `Confirm signup` 메일에 코드 확인**
 - [ ] PWA에서 코드 입력
 - [ ] 로그인 상태 확인
-- [ ] 브라우저에서 로그인 링크도 테스트
+- [ ] 브라우저에서 로그인 링크 → 앱 랜딩 → 확인 클릭으로 로그인
+- [ ] 링크 클릭 후 취소 시 토큰 미소비 — 코드로 계속 로그인 가능한지 확인
 
 ---
 
 # 16. 최종 템플릿
 
-실제 Supabase Body에는 아래 내용을 사용하면 됩니다.
+실제 Supabase Body에는 아래 HTML을 사용하면 됩니다 (`Magic link or OTP`와 `Confirm signup` 양쪽에 적용).
 
-```text
-Your sign-in code
-
-Enter this code in the app to sign in:
-
-{{ .Token }}
-
-Or click the link below to sign in:
-
-{{ .ConfirmationURL }}
-
-This code and link expire shortly and can only be used once.
+```html
+<h2>Passmula 로그인</h2>
+<p>앱에 아래 인증 코드를 입력하세요.</p>
+<p style="font-size:28px;font-weight:700;letter-spacing:6px">{{ .Token }}</p>
+<p>브라우저에서 이용 중이라면 아래 버튼으로도 로그인할 수 있습니다.<br>
+(홈 화면 앱에서 로그인 중이면 버튼 대신 코드를 입력하세요)</p>
+<p><a href="{{ .SiteURL }}/?token_hash={{ .TokenHash }}&type=email">브라우저에서 로그인</a></p>
+<p>코드와 링크 중 하나만 사용할 수 있으며, 잠시 후 만료됩니다.</p>
 ```
 
-> `{{ .Token }}`과 `{{ .ConfirmationURL }}`는 Supabase가 이메일 발송 시 자동으로 실제 값으로 치환합니다.
+> `{{ .Token }}`·`{{ .TokenHash }}`·`{{ .SiteURL }}`는 Supabase가 이메일 발송 시 자동으로 실제 값으로 치환합니다. 코드와 링크는 **같은 일회용 토큰** — 한쪽을 쓰면 다른 쪽도 소진됩니다.

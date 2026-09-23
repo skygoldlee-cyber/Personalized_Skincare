@@ -294,11 +294,13 @@ select polname, polrelid::regclass from pg_policy;
 
 `로그인 메일 보내기`가 두 환경에서 동일하게 동작하는지 검증하는 절차 — 상세는 운영 런북(`Supabase_Custom_SMTP_MagicLink_OTP_설정가이드.md` §15) 참조.
 
-- [ ] 앱 → 설정 → `계정 / 로그인` → 이메일 입력 → `로그인 메일 보내기` → 코드 입력 칸 표시
-- [ ] 수신 메일에 **인증 코드(`{{ .Token }}` 치환)와 로그인 링크(`{{ .ConfirmationURL }}`)가 둘 다** 표시됨 — 코드가 없으면 Custom SMTP/템플릿 설정 누락
-- [ ] **브라우저 경로**: 메일의 링크 클릭 → 앱이 열리며 로그인 토스트 → 설정 라벨이 이메일로 변경
+- [ ] 앱 → 설정 → `계정 / 로그인` → 이메일 입력 → `로그인 메일 보내기` → 코드 입력 칸 표시 + 버튼 60초 쿨다운
+- [ ] 수신 메일에 **인증 코드(`{{ .Token }}` 치환)와 로그인 링크가 둘 다** 표시됨 — 코드가 없으면 Custom SMTP/템플릿 설정 누락
+- [ ] **⚠️ Users에 없는 새 이메일로도 발송** — 신규 계정은 `Confirm signup` 템플릿이 나가므로 이 템플릿에도 코드가 있는지 확인
+- [ ] **브라우저 경로**: 메일의 링크 클릭 → 앱 랜딩 → "이 브라우저에서 로그인" 확인 → 로그인 토스트 → 설정 라벨이 이메일로 변경
 - [ ] **PWA 경로**: PWA에서 메일 발송 → 메일의 숫자 코드를 앱의 인증 코드 칸에 입력 → `확인` → 로그인 토스트
-- [ ] 만료된 링크 재클릭 → "로그인 링크가 만료되었습니다" 토스트 확인 (§A.8 랜딩 핸들러)
+- [ ] 링크 클릭 후 **취소** 시 토큰 미소비 — 같은 메일의 코드로 계속 로그인 가능 (스캐너 방어 확인)
+- [ ] 만료된 링크·코드 → "만료" 계열 한글 안내 확인 (§A.8 랜딩 핸들러)
 - [ ] 로그인 후 진도 변경 → `sync_snapshots` 행 갱신 확인
 
 #### 실측 이슈 기록
@@ -312,7 +314,7 @@ select polname, polrelid::regclass from pg_policy;
 
 #### 이메일 로그인 — 링크·코드 통합 단일 경로 (2026-09-23 2차 개정)
 
-- 앱: `로그인 메일 보내기` → `signInWithOtp({email})` → 코드 입력 칸 표시. 메일에는 **링크(`{{ .ConfirmationURL }}`)와 코드(`{{ .Token }}`)가 동봉**되므로 사용자가 환경에 맞게 선택 — 브라우저는 링크 클릭, PWA는 코드 입력
+- 앱: `로그인 메일 보내기` → `signInWithOtp({email, options:{emailRedirectTo}})` → 코드 입력 칸 표시. 메일에는 **`?token_hash=` 앱 링크와 코드(`{{ .Token }}`)가 동봉**되므로 사용자가 환경에 맞게 선택 — 브라우저는 링크→앱 랜딩 확인, PWA는 코드 입력
 - 두 수단이 같은 메일을 공유하므로 버튼을 분리할 이유가 없고, 분리 시 PWA 사용자가 "매직링크"를 눌러 세션이 브라우저에 생기는 **조용한 실패**가 발생 — 단일 버튼으로 통합해 URL·PWA 간 동일 UX 확보
 - 코드 입력: `verifyOtp({email, token, type:'email'})` — 리다이렉트 없이 세션 성립
 - `authMagicLink`/`authSendOtp`는 `authEmailLogin`의 별칭으로 유지 (기존 호출 호환)
@@ -345,28 +347,27 @@ select polname, polrelid::regclass from pg_policy;
 
 3. 저장 + **Enable Custom SMTP** ON → 이후 Templates 편집 가능
 
-1. 대시보드 → **Authentication → Emails** (또는 Email Templates) → **`Magic link or OTP`** 템플릿 선택
-2. **Content → Body** 영역 클릭 후 `{{ .Token }}` 줄 추가. 추천 본문:
+1. 대시보드 → **Authentication → Emails** (또는 Email Templates — 대시보드 버전에 따라 SMTP 설정이 이 안의 탭에 있기도 함) → **`Magic link or OTP`** 템플릿 선택
+2. **Content → Body** 영역 클릭 후 아래 권장안 적용. **Body는 HTML**이므로 줄바꿈만 쓰면 한 문단으로 뭉치고 URL도 링크가 안 될 수 있음 — `<a>` 태그 포함 HTML로 작성:
 
-   ```text
-   Your sign-in code
-
-   Enter this code in the app to sign in:
-
-   {{ .Token }}
-
-   Or click the link below to sign in:
-
-   {{ .ConfirmationURL }}
-
-   This code and link expire shortly and can only be used once.
+   ```html
+   <h2>Passmula 로그인</h2>
+   <p>앱에 아래 인증 코드를 입력하세요.</p>
+   <p style="font-size:28px;font-weight:700;letter-spacing:6px">{{ .Token }}</p>
+   <p>브라우저에서 이용 중이라면 아래 버튼으로도 로그인할 수 있습니다.<br>
+   (홈 화면 앱에서 로그인 중이면 버튼 대신 코드를 입력하세요)</p>
+   <p><a href="{{ .SiteURL }}/?token_hash={{ .TokenHash }}&type=email">브라우저에서 로그인</a></p>
+   <p>코드와 링크 중 하나만 사용할 수 있으며, 잠시 후 만료됩니다.</p>
    ```
 
-   - `{{ .Token }}`·`{{ .ConfirmationURL }}`는 발송 시점에 사용자별 값으로 자동 치환되는 변수 — 실제 값을 어디선가 가져올 필요 없음
-   - 두 변수는 독립적: 링크는 브라우저 로그인용, 코드는 PWA용 — 한쪽 사용 시 다른 쪽은 무효화 (일회용)
+   - `{{ .Token }}`·`{{ .TokenHash }}`·`{{ .SiteURL }}`는 발송 시점에 자동 치환 — 실제 값을 가져올 필요 없음
+   - ⚠️ **링크와 코드는 독립적이지 않고 같은 일회용 토큰의 두 표현** — 한쪽을 쓰면 다른 쪽도 함께 소진된다. iOS 사용자가 습관적으로 링크를 누르면 코드가 죽어 "코드가 안 먹는다"로 보이고, 메일 보안 스캐너·미리보기가 `ConfirmationURL`에 GET을 보내면 사용자가 열기 전에 토큰이 소진된다 → **기본 `{{ .ConfirmationURL }}` 대신 앱 도메인 `?token_hash=` 링크를 쓰는 것이 권장** (앱이 확인 클릭을 요구해 스캐너 소진을 막고, iOS에 코드 경로 안내 기회를 준다 — §A.8)
+   - `{{ .SiteURL }}`는 대시보드 Site URL로 치환 — Redirect URLs 허용 목록과 무관하게 Site URL 값이 들어간다
    - Subject는 변경 불필요
 
-3. **Save** — 내용이 바뀌어야 버튼이 활성화됨. 프로젝트 전역 설정이므로 사용자별 작업 불필요
+3. **`Confirm signup` 템플릿에도 동일하게 적용** — `signInWithOtp`는 미등록 이메일로 새 계정을 만들며, `Confirm email` ON 상태에서 신규 사용자에게는 `Magic link or OTP`가 아니라 **`Confirm signup` 템플릿이 나간다**. 이 템플릿에 `{{ .Token }}`이 없으면 처음 가입하는 iOS PWA 사용자만 코드 없는 메일을 받는다. **E2E 테스트는 반드시 Users에 없는 새 이메일로도 수행할 것.**
+
+4. **Save** — 내용이 바뀌어야 버튼이 활성화됨. 프로젝트 전역 설정이므로 사용자별 작업 불필요
 
 **Body 편집이 안 될 때**: Subject/Body가 회색 비활성이면 **Custom SMTP 미설정**이 원인 (위 선행 조건). 그 외에는 ① 기존 텍스트 위 직접 클릭(에디터 포커스) ② 페이지 새로고침 ③ 시크릿 모드/다른 브라우저 ④ Management API(`PATCH /v1/projects/{ref}/config/auth`의 `mailer_templates_magic_link_content`). SMTP 없이는 OTP 불가 — 비밀번호 경로로 대체 가능 (OTP는 편의 개선)
 
@@ -376,9 +377,9 @@ select polname, polrelid::regclass from pg_policy;
 
 | 환경 | 완료 수단 | 비고 |
 |---|---|---|
-| 브라우저 (PC/모바일) | 메일의 **링크 클릭** → 같은 탭에서 세션 성립 | 코드 입력도 가능 |
-| Android PWA | 링크 클릭 시 OS 링크 캡처로 **PWA에서 세션 성립**(Chrome이 설치된 PWA 스코프 링크를 앱으로 라우팅). 캡처가 안 되면 코드 입력 | 기기·브라우저 설정 의존 → 코드가 보험 |
-| iOS PWA (홈 화면) | **코드 입력 필수** — 링크는 항상 Safari를 열고 세션은 Safari에만 생김 | 플랫폼 한계: 홈 화면 앱으로의 링크 라우팅 API 없음 |
+| 브라우저 (PC/모바일) | 메일의 **링크 클릭** → 앱 랜딩 → 확인 클릭 → 세션 성립 | 코드 입력도 가능 |
+| Android PWA | 링크 클릭 시 OS 링크 캡처로 **PWA에서 랜딩**(앱 도메인 직행 링크라 캡처 확률↑). 캡처가 안 되면 코드 입력 | 기기·브라우저 설정 의존 → 코드가 보험. Chrome 설치 PWA는 Chrome과 저장소를 공유해 브라우저 로그인 세션이 PWA에도 보일 수 있음 — 실기기 확인 필요 |
+| iOS PWA (홈 화면) | **코드 입력 필수** — 링크는 항상 Safari를 열고 세션은 Safari에만 생김 | 플랫폼 한계: 홈 화면 앱으로의 링크 라우팅 API 없음. 랜딩 확인 창에 코드 경로 안내 포함 |
 
 보조 경로:
 
@@ -393,15 +394,22 @@ select polname, polrelid::regclass from pg_policy;
 
 **flowType 확인 결과 — PKCE 함정 없음**: vendored supabase-js 2.116.0의 기본값은 `flowType: 'implicit'`. 매직링크는 `?code=` PKCE 교환이 아니라 `#access_token=` 해시 토큰 방식이라 `code_verifier`를 요구하지 않는다 — **링크를 요청한 컨텍스트와 다른 컨텍스트에서 열어도** 그곳의 `detectSessionInUrl`이 토큰을 소비해 세션이 성립한다. (PKCE였다면 verifier 부재로 무조건 실패했을 경로.) 보안상 implicit은 공개 클라이언트·정적 사이트에 적합하며, 크로스 디바이스 매직링크에는 오히려 PKCE보다 호환성이 높다.
 
-**환경별 매직링크 동작 매트릭스** (implicit 기준):
+**환경별 매직링크 동작 매트릭스** (권장 `?token_hash=` 템플릿 기준):
 
 | 요청 → 링크 오픈 | 결과 |
 |---|---|
-| 브라우저 → 브라우저 | ✅ 세션 성립 |
-| PWA → Android 링크 캡처로 PWA | ✅ 세션 성립 |
-| PWA → 브라우저 (iOS·캡처 실패) | 세션이 브라우저에 성립, PWA는 비로그인 — **코드 입력 경로로 커버** |
+| 브라우저 → 브라우저 | ✅ 랜딩 → 확인 클릭 → `verifyOtp` → 세션 성립 |
+| PWA → Android 링크 캡처로 PWA | ✅ 동일 랜딩 경로 (앱 도메인 첫 URL이라 캡처 확률 상승 — 기본 ConfirmationURL은 `*.supabase.co`를 경유해 인텐트가 브라우저로 잡힘) |
+| PWA → 브라우저 (iOS·캡처 실패) | 랜딩 확인 창이 "PWA 로그인 중이면 코드 입력" 안내 — 취소하면 토큰 미소비, 확인하면 브라우저에 세션 |
+| 메일 스캐너/미리보기 | 링크 GET만으로는 토큰 미소비 (확인 클릭이 필요) — 기본 `ConfirmationURL`은 GET 한 번에 검증 완료돼 취약했음 |
 
-**랜딩 피드백 (구현)**: `initAuthView` 시작 시 `location.hash`를 파싱해 `error`/`error_code`/`error_description`이 있으면 한글 토스트로 안내(`otp_expired` → 만료 안내)하고 `history.replaceState`로 URL 정리. `access_token` 해시가 있던 랜딩은 플래그를 세워 `onAuthStateChange`의 `SIGNED_IN` 이벤트에서 "로그인했습니다" 토스트 — 수동 로그인(`signInWithPassword` 등 자체 토스트 보유)과 중복되지 않게 랜딩 플래그로 게이트.
+**랜딩 피드백 (구현)**: `initAuthView` 시작 시 두 형태를 처리한다.
+① `?token_hash=` — `replaceState`로 파라미터 정리 후 `showConfirm`으로 "이 브라우저에서 로그인할까요?(PWA 로그인 중이면 취소)" 확인 → 승인 시 `verifyOtp({token_hash, type:'email'})`. 확인 클릭 전까지 토큰을 소비하지 않아 스캐너·미리보기 소진을 막고 flowType과 무관하게 동작한다.
+② `#access_token`/`#error_*` 해시(기본 ConfirmationURL 링크, 하위 호환) — 오류 파라미터는 한글 토스트 + URL 정리, `access_token`은 supabase-js가 소비하므로 `SIGNED_IN` 이벤트에서 성공 토스트(수동 로그인과 중복되지 않게 랜딩 플래그로 게이트).
+
+**보조 세부 (구현)**: `signInWithOtp`에 `emailRedirectTo: location.origin` 명시(Redirect URLs 허용 목록과 일치 필요 — 로컬/프로덕션 각자 자기 도메인 복귀). 발송 버튼에 60초 재발송 쿨다운(동일 주소 재요청 제한 대응, 429는 한글 매핑). OTP 입력칸은 `inputmode="numeric"` + `autocomplete="one-time-code"` + 공백 제거, 자릿수는 Email OTP Length 설정에 따르므로 6~10자리 허용. `createClient`에 `auth:{flowType:'implicit',…}` 명시 — vendor 갱신으로 기본값이 바뀌어도 조용히 깨지지 않게 고정.
+
+**운영 주의**: Gmail 앱 비밀번호는 Google 계정 비밀번호 변경 시 폐기된다 — 로그인 메일이 조용히 끊기므로 트러블슈팅 1순위로 앱 비밀번호 재발급을 확인. Custom SMTP 적용 후 Auth → Rate Limits의 시간당 발송 한도도 별도로 생긴다.
 
 **통합 버튼 결정 근거**: `authMagicLink`와 `authSendOtp`는 동일한 `signInWithOtp` 호출이며 차이는 코드 입력칸 표시뿐이었다. 분리 상태에서는 PWA 사용자가 '매직링크'를 선택하면 링크가 브라우저에서 열려 세션이 엉뚱한 저장 공간에 생기는 조용한 실패가 발생 — 단일 버튼 + 코드 입력칸 상시 표시로 URL·PWA 간 절차를 완전히 동일하게 만들었다.
 

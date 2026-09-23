@@ -1,7 +1,7 @@
 // src/auth-view.js — 계정/로그인 모달 (Phase 1: 인증만, 동기화는 Phase 2)
 // 이메일+비밀번호 로그인·회원가입·매직링크. 세션은 supabase-js가 localStorage에 자동 보관.
 import { getSupabase, onAuthChange } from './supabase-client.js';
-import { showToast } from './ui-utils.js';
+import { showToast, showConfirm } from './ui-utils.js';
 
 const el = id => document.getElementById(id);
 const show = n => n && n.classList.remove('is-hidden');
@@ -103,6 +103,28 @@ export async function authSignUp() {
     await refreshAuthUI();
 }
 
+// 이메일 재발송 쿨다운 — Supabase는 같은 주소 재요청을 짧은 간격으로 제한하고,
+// Custom SMTP 적용 후 시간당 발송 한도도 별도로 생긴다.
+let _emailLoginCooldown = 0;
+
+function startEmailLoginCooldown(btn) {
+    _emailLoginCooldown = 60;
+    if (!btn) return;
+    const label = btn.textContent;
+    const tick = () => {
+        if (_emailLoginCooldown <= 0) {
+            btn.disabled = false;
+            btn.textContent = label;
+            return;
+        }
+        btn.disabled = true;
+        btn.textContent = `다시 보내기 (${_emailLoginCooldown}초)`;
+        _emailLoginCooldown--;
+        setTimeout(tick, 1000);
+    };
+    tick();
+}
+
 /**
  * 이메일 로그인 통합 — signInWithOtp 메일 하나에 링크+인증 코드가 동봉되므로
  * 버튼을 나누지 않는다. 발송 후 코드 입력 칸을 항상 표시해
@@ -113,24 +135,34 @@ export async function authEmailLogin() {
     if (!sb) return;
     const { email } = readCredentials();
     if (!email) { setMsg('이메일을 입력하세요.', true); return; }
+    if (_emailLoginCooldown > 0) { setMsg(`재발송은 ${_emailLoginCooldown}초 후에 가능합니다.`, true); return; }
     setMsg('로그인 메일 발송 중...');
-    const { error } = await sb.auth.signInWithOtp({ email });
+    const { error } = await sb.auth.signInWithOtp({
+        email,
+        // Redirect URLs 허용 목록과 일치해야 함 — 로컬/프로덕션이 각자 자기 도메인으로 복귀
+        options: { emailRedirectTo: window.location.origin },
+    });
     if (error) { setMsg(friendlyError(error), true); return; }
     show(el('auth-otp-area'));
     setMsg('로그인 링크와 인증 코드를 이메일로 보냈습니다. 메일의 링크를 누르거나, 메일의 인증 코드를 아래에 입력하세요.');
+    startEmailLoginCooldown(document.querySelector('[data-click="authEmailLogin"]'));
 }
 
 /** @deprecated authEmailLogin으로 통합 — 기존 핸들러 호환용 별칭 */
 export const authMagicLink = authEmailLogin;
 export const authSendOtp = authEmailLogin;
 
+/** 재발송 쿨다운 초기화 — 테스트 간 모듈 상태 리셋용 */
+export function resetEmailLoginCooldown() { _emailLoginCooldown = 0; }
+
 export async function authVerifyOtp() {
     const sb = await getSupabase();
     if (!sb) return;
     const { email } = readCredentials();
-    const token = (el('auth-otp-code')?.value || '').trim();
+    const token = (el('auth-otp-code')?.value || '').replace(/\s/g, '');
     if (!email) { setMsg('이메일을 입력하세요.', true); return; }
-    if (!/^\d{6,8}$/.test(token)) { setMsg('메일에 표시된 숫자 인증 코드를 입력하세요.', true); return; }
+    // 자릿수 고정 금지 — Email OTP Length 설정(6~10)에 따라 달라진다
+    if (!/^\d{6,10}$/.test(token)) { setMsg('메일에 표시된 숫자 인증 코드를 입력하세요.', true); return; }
     setMsg('코드 확인 중...');
     const { error } = await sb.auth.verifyOtp({ email, token, type: 'email' });
     if (error) { setMsg(friendlyError(error), true); return; }
@@ -169,11 +201,31 @@ export async function authSignOut() {
 let _magicLinkLanding = false;
 
 /**
- * 매직링크 랜딩 처리 — URL 해시의 error_* 파라미터는 한글 토스트로 안내 후 정리,
- * access_token이 있으면 supabase-js가 세션을 소비하므로 성공 토스트를 예약한다.
+ * 로그인 링크 랜딩 처리 (두 형태):
+ *  ① ?token_hash= — 권장 템플릿. 앱 도메인으로 직행하며, 확인 클릭 시에만
+ *     verifyOtp로 토큰을 소비한다 (메일 스캐너·미리보기의 사전 소진 방지,
+ *     iOS 사용자에게 코드 경로 안내 기회 확보, flowType 무관).
+ *  ② #access_token/#error — 기본 ConfirmationURL 해시 (하위 호환).
  * supabase 초기화(해시 소비) 전에 호출해야 파라미터를 읽을 수 있다.
  */
-function handleAuthLanding() {
+async function handleAuthLanding() {
+    const query = new URLSearchParams(window.location?.search || '');
+    const tokenHash = query.get('token_hash');
+    if (tokenHash) {
+        try { history.replaceState(null, '', location.pathname); } catch (_) {}
+        const ok = await showConfirm(
+            '이 브라우저에서 로그인할까요? 설치된 앱(PWA)에서 로그인 중이라면 취소하고 메일의 인증 코드를 앱에 입력하세요.',
+            '로그인 링크'
+        );
+        if (!ok) return;
+        const sb = await getSupabase();
+        if (!sb) return;
+        const { error } = await sb.auth.verifyOtp({ token_hash: tokenHash, type: 'email' });
+        if (error) showToast(friendlyError(error), 'error');
+        else showToast('로그인했습니다.', 'success');
+        return;
+    }
+
     const hash = (typeof window !== 'undefined' && window.location?.hash) || '';
     if (hash.length < 2) return;
     const params = new URLSearchParams(hash.slice(1));
@@ -193,7 +245,7 @@ function handleAuthLanding() {
 /** 앱 초기화 시 1회 — 매직링크 랜딩 처리 + 세션 복원 반영 + 상태 변화 구독 */
 export async function initAuthView() {
     if (!el('auth-modal')) return;
-    try { handleAuthLanding(); } catch (_) {}
+    try { handleAuthLanding().catch(() => {}); } catch (_) {}
     try { await refreshAuthUI(); } catch (_) { /* 오프라인 등 — 로그인 UI는 비로그인 상태로 둠 */ }
     try {
         await onAuthChange((_session, event) => {
