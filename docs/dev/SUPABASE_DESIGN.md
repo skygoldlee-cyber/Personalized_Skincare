@@ -296,18 +296,39 @@ select polname, polrelid::regclass from pg_policy;
 | 확인 메일이 localhost로 리다이렉트 | Site URL 기본값 `localhost:3000` | URL Configuration에서 프로덕션으로 변경 (위 표) |
 | 로그인 시 "이메일 또는 비밀번호가 올바르지 않습니다" | 매직링크로 가입 → 비밀번호 미설정 상태 | 매직링크로 로그인 후 계정 모달에서 비밀번호 설정. 소셜 계정 비밀번호는 Supabase와 무관 — 어떤 비밀번호도 통과 불가 |
 | PWA에서 매직링크 로그인 불가 | 메일 링크가 브라우저를 열고 세션은 브라우저에 저장 — PWA는 별도 저장 공간 | ① **인증 코드(OTP) 로그인** — PWA 안에서 완결 (아래 참조) ② 비밀번호 설정 후 이메일+비밀번호 로그인 |
+| 계정 상태 확인 필요 시 | — | Authentication → Users에서 행 존재 + `email_confirmed_at` 확인 |
 
 #### 이메일 인증 코드(OTP) 로그인 — PWA 자체 완결 (구현됨)
 
 - 앱: `인증 코드 보내기` → `signInWithOtp({email})` → 코드 입력 칸 표시 → `verifyOtp({email, token, type:'email'})` — 리다이렉트 없이 세션 성립
-- **필수 대시보드 설정**: Authentication → Email Templates → **Magic Link** 템플릿 본문에 `{{ .Token }}` 추가 — 기본 템플릿은 링크만 표시하므로 코드가 안 보임. 예:
-
-  ```text
-  로그인 코드: {{ .Token }}
-  (또는 아래 링크를 눌러 브라우저에서 로그인) {{ .ConfirmationURL }}
-  ```
-
 - 동일한 `signInWithOtp` 호출이라 매직링크·코드는 같은 메일을 공유 — 템플릿에 둘 다 넣으면 사용자가 환경에 맞게 선택 가능
+
+##### `{{ .Token }}` 템플릿 설정 절차 (1회, 프로젝트 전역)
+
+기본 Magic Link 템플릿은 링크만 표시하므로 코드가 메일에 안 보인다 — **OTP 로그인 사용 전 필수 설정**:
+
+1. 대시보드 → **Authentication → Emails** (또는 Email Templates) → **`Magic link or OTP`** 템플릿 선택
+2. **Content → Body** 영역 클릭 후 `{{ .Token }}` 줄 추가. 추천 본문:
+
+   ```text
+   Your sign-in code
+
+   Enter this code in the app to sign in:
+
+   {{ .Token }}
+
+   Or click the link below to sign in. This link expires shortly and can only be used once.
+
+   {{ .ConfirmationURL }}
+   ```
+
+   - `{{ .Token }}`·`{{ .ConfirmationURL }}`는 발송 시점에 사용자별 값으로 자동 치환되는 변수 — 실제 값을 어디선가 가져올 필요 없음
+   - 두 변수는 독립적: 링크는 브라우저 로그인용, 코드는 PWA용 — 한쪽 사용 시 다른 쪽은 무효화 (일회용)
+   - Subject는 변경 불필요
+
+3. **Save** — 내용이 바뀌어야 버튼이 활성화됨. 프로젝트 전역 설정이므로 사용자별 작업 불필요
+
+**Body 편집이 안 될 때**: ① 기존 텍스트 위를 직접 클릭(에디터 포커스) ② 페이지 새로고침 ③ 시크릿 모드/다른 브라우저(확장 프로그램 차단 가능) ④ 그래도 안 되면 Management API(`PATCH /v1/projects/{ref}/config/auth`의 `mailer_templates_magic_link_content`) — 또는 ② 비밀번호 경로로 대체 가능 (OTP는 편의 개선)
 
 #### 설치형 PWA에서 로그인하는 방법 (사용자 절차)
 
@@ -320,7 +341,6 @@ select polname, polrelid::regclass from pg_policy;
 | **③ PWA에서 가입** | PWA → 이메일+비밀번호 → `회원가입` → 확인 메일 링크를 브라우저에서 1번 클릭(서버 측 확인만 됨) → PWA로 돌아와 비밀번호 로그인. `Confirm email` OFF면 이 클릭도 생략 | 확인 클릭 1회 (설정으로 생략 가능) |
 
 > 핵심 원리: 세션은 **로그인 API가 완료된 저장 공간**에 생긴다. 비밀번호·OTP는 앱 안에서 완결되므로 PWA에 세션이 저장되고, 매직링크는 브라우저에서 완료되므로 브라우저에만 저장된다.
-| 계정 상태 확인 필요 시 | — | Authentication → Users에서 행 존재 + `email_confirmed_at` 확인 |
 
 #### 알려진 UX 갭 (후속 과제)
 
