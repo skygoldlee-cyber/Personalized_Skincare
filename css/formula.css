@@ -437,6 +437,23 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
     text-align: center;
 }
 
+/* 로컬 전용 데이터 안내 박스 — 고객 카드 등 동기화 제외 고지 */
+.formula-data-notice {
+    margin: 0.75rem 0;
+    padding: 0.6rem 0.85rem;
+    background: var(--primary-tint-8);
+    border: 1px solid var(--primary-tint-20);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-main);
+    font-size: 0.8rem;
+    line-height: 1.5;
+    text-align: left;
+}
+.formula-data-notice i {
+    color: var(--color-primary);
+    margin-right: 0.3rem;
+}
+
 .f-danger:hover { color: var(--color-danger); border-color: var(--color-danger); }
 
 /* 고민 칩 (체크박스 토글) */
