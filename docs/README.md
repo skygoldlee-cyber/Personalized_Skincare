@@ -46,6 +46,8 @@
 1. DEPLOYMENT_GUIDE.md    — Vercel 배포·CSP/캐시 정책·트러블슈팅
 2. MULTI_MACHINE_SETUP.md — 새 머신에서 Git/Vercel 환경 재현
 3. AUDIO_HOSTING_GUIDE.md — 오디오북 호스팅 구조
+4. SUPABASE_DESIGN.md §A.7~A.8 — 계정·동기화 구조 + 대시보드 설정 요건
+5. Supabase_Custom_SMTP_MagicLink_OTP_설정가이드.md — SMTP·메일 템플릿 운영 절차
 ```
 
 ### ⑤ 제품 전략·수익화 방향 검토
@@ -74,7 +76,7 @@ user/user_manual.md → 학습안내서(앱 내) → user/exam_strategy.md → u
 docs/
 ├── README.md                    ← 본 파일 (문서 인덱스 + 읽기 순서)
 ├── 맞춤형화장품_조제관리사_자격증플랫폼_사업기획서.md
-├── dev/                         ← 개발·설계·운영 문서 (26개)
+├── dev/                         ← 개발·설계·운영 문서 (28개)
 ├── user/                        ← 사용자/학습자 문서 (7개)
 └── report_archive/              ← 1회성 분석 보고서 아카이브 (4개)
 ```
@@ -89,6 +91,7 @@ docs/
 |------|------|
 | [ARCHITECTURE.md](dev/ARCHITECTURE.md) | 시스템 아키텍처·설계 철학 — Zero-Backend, ESM 구조, 데이터 흐름, PWA/SW 전략, 강건성 가이드라인 |
 | [SPEC.md](dev/SPEC.md) | 요구사양 명세서 — 구현된 기능을 역공학해 정리 (현행 기준서) |
+| [SUPABASE_DESIGN.md](dev/SUPABASE_DESIGN.md) | Supabase 계정·클라우드 동기화·Pro 권한 설계 — Phase 1~2 구현 완료, URL/PWA 동일 로그인 UX |
 | [FLASHCARD_LOGIC.md](dev/FLASHCARD_LOGIC.md) | 플래시카드 생성·난이도·필터·SM-2 간격 반복 로직 |
 | [MD_TO_HTML_LOGIC.md](dev/MD_TO_HTML_LOGIC.md) | MD→HTML 변환 로직 — 런타임 파서(manual-viewer)와 빌드 파이프라인 |
 
@@ -125,6 +128,7 @@ docs/
 | [DEPLOYMENT_GUIDE.md](dev/DEPLOYMENT_GUIDE.md) | Vercel 배포·오디오 호스팅 — 용량 최적화, CSP/캐시 정책, 체크리스트, 트러블슈팅 |
 | [MULTI_MACHINE_SETUP.md](dev/MULTI_MACHINE_SETUP.md) | 다중 머신 개발 환경 — GitHub SSH, Vercel CLI 인증, Actions 자동 배포 |
 | [AUDIO_HOSTING_GUIDE.md](dev/AUDIO_HOSTING_GUIDE.md) | 오디오북 호스팅·청취 아키텍처 — GitHub Releases 연동, 모바일 청취 동작 |
+| [Supabase_Custom_SMTP_MagicLink_OTP_설정가이드.md](dev/Supabase_Custom_SMTP_MagicLink_OTP_%EC%84%A4%EC%A0%95%EA%B0%80%EC%9D%B4%EB%93%9C.md) | Supabase 운영 런북 — Custom SMTP(Gmail 앱 비밀번호)·Magic Link/OTP 템플릿·체크리스트 |
 | [CHANGES.md](dev/CHANGES.md) | 코드 변경 이력 (Changelog) — 변경의 이유와 맥락 |
 
 ### 제품 전략·기획

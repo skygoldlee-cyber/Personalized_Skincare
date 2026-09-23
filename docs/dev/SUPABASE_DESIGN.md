@@ -290,6 +290,17 @@ select polname, polrelid::regclass from pg_policy;
 5. **Table Editor → `sync_snapshots`**에 `(user_id, cosmetic)` 행 생성 확인
 6. 계정 모달 재오픈 → `지금 동기화` 버튼 + `동기화:` 상태 라인 확인
 
+#### 통합 이메일 로그인 E2E 체크리스트 (링크+코드 동봉 메일)
+
+`로그인 메일 보내기`가 두 환경에서 동일하게 동작하는지 검증하는 절차 — 상세는 운영 런북(`Supabase_Custom_SMTP_MagicLink_OTP_설정가이드.md` §15) 참조.
+
+- [ ] 앱 → 설정 → `계정 / 로그인` → 이메일 입력 → `로그인 메일 보내기` → 코드 입력 칸 표시
+- [ ] 수신 메일에 **인증 코드(`{{ .Token }}` 치환)와 로그인 링크(`{{ .ConfirmationURL }}`)가 둘 다** 표시됨 — 코드가 없으면 Custom SMTP/템플릿 설정 누락
+- [ ] **브라우저 경로**: 메일의 링크 클릭 → 앱이 열리며 로그인 토스트 → 설정 라벨이 이메일로 변경
+- [ ] **PWA 경로**: PWA에서 메일 발송 → 메일의 숫자 코드를 앱의 인증 코드 칸에 입력 → `확인` → 로그인 토스트
+- [ ] 만료된 링크 재클릭 → "로그인 링크가 만료되었습니다" 토스트 확인 (§A.8 랜딩 핸들러)
+- [ ] 로그인 후 진도 변경 → `sync_snapshots` 행 갱신 확인
+
 #### 실측 이슈 기록
 
 | 증상 | 원인 | 해결 |
@@ -307,6 +318,8 @@ select polname, polrelid::regclass from pg_policy;
 - `authMagicLink`/`authSendOtp`는 `authEmailLogin`의 별칭으로 유지 (기존 호출 호환)
 
 ##### `{{ .Token }}` 템플릿 설정 절차 (1회, 프로젝트 전역)
+
+> 📋 **상세 운영 런북**: 단계별 화면 이동·체크리스트·트러블슈팅은 `dev/Supabase_Custom_SMTP_MagicLink_OTP_설정가이드.md` 참조. 이 문서는 설계 근거·필수 조건만 다룬다.
 
 기본 Magic Link 템플릿은 링크만 표시하므로 코드가 메일에 안 보인다 — **OTP 로그인 사용 전 필수 설정**.
 
@@ -342,9 +355,11 @@ select polname, polrelid::regclass from pg_policy;
 
    {{ .Token }}
 
-   Or click the link below to sign in. This link expires shortly and can only be used once.
+   Or click the link below to sign in:
 
    {{ .ConfirmationURL }}
+
+   This code and link expire shortly and can only be used once.
    ```
 
    - `{{ .Token }}`·`{{ .ConfirmationURL }}`는 발송 시점에 사용자별 값으로 자동 치환되는 변수 — 실제 값을 어디선가 가져올 필요 없음
