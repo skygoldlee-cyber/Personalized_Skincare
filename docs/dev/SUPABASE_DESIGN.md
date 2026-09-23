@@ -115,6 +115,7 @@ create policy "own snapshots" on sync_snapshots
 - **수단**: 이메일+비밀번호 / **매직링크**(권장 — 학습 앱 특성상 비밀번호 부담 최소) / Google·Kakao OAuth (Supabase 내장 프로바이더)
 - **세션**: supabase-js가 토큰을 localStorage 보관·자동 갱신 — PWA 재시작에도 유지
 - **계정 패널**: 이메일, plan 뱃지(Free/Pro), "지금 동기화" 버튼, 마지막 동기화 시각, 로그아웃
+- **⚠️ 매직링크 가입 계정은 비밀번호 없음** — 이메일+비밀번호 로그인은 항상 `Invalid login credentials`로 실패 (구글 등 소셜 계정 비밀번호와 무관). 매직링크로만 로그인하거나 로그인 후 비밀번호 설정 필요 (미구현 — `updateUser({password})` 추가 과제, §A.7 참조)
 
 ---
 
@@ -265,3 +266,39 @@ select polname, polrelid::regclass from pg_policy;
 | OAuth 프로바이더 | 전부 OFF — 이메일/매직링크만으로 Phase 1 진행 가능 |
 
 ※ Node fetch가 환경의 undici 파싱 문제로 실패한 적 있음 — 연결 테스트는 `curl` 사용 권장 (본 문서 §A 명령 참조)
+
+### A.7 회원가입·로그인 검증 절차 (2026-09-23 E2E 실측)
+
+#### 필수 선행 설정 — Site URL
+
+**Authentication → URL Configuration**:
+
+| 항목 | 값 |
+|---|---|
+| Site URL | `https://personalized-skincare-study.vercel.app` |
+| Redirect URLs | `https://personalized-skincare-study.vercel.app/**` + `http://localhost:3000/**` (로컬 테스트용) |
+
+> 기본 Site URL은 `http://localhost:3000` — 설정 전에 발송된 확인 메일·매직링크는 localhost로 리다이렉트된다. **토큰 검증 자체는 Supabase 서버에서 완료되므로 리다이렉트가 실패해도 이메일 확인은 성공** — 이후 프로덕션에서 정상 로그인 가능. 단, 매직링크 로그인은 리다이렉트가 앱으로 돌아와야 세션이 성립하므로 Site URL 변경은 사실상 필수.
+
+#### 검증 절차
+
+1. 앱 → 설정 메뉴 → `계정 / 로그인` → 이메일+비밀번호 입력 → `회원가입` → "확인 메일" 안내
+2. 받은 메일에서 "Confirm email address" 클릭 → 이메일 확인 완료
+3. 앱에서 같은 이메일+비밀번호로 `로그인` → 모달 닫힘 + 설정 라벨이 이메일로 변경
+4. 진도 변경(플래시카드 암기 등) → 2~3초 후 자동 push
+5. **Table Editor → `sync_snapshots`**에 `(user_id, cosmetic)` 행 생성 확인
+6. 계정 모달 재오픈 → `지금 동기화` 버튼 + `동기화:` 상태 라인 확인
+
+#### 실측 이슈 기록
+
+| 증상 | 원인 | 해결 |
+|---|---|---|
+| 확인 메일이 localhost로 리다이렉트 | Site URL 기본값 `localhost:3000` | URL Configuration에서 프로덕션으로 변경 (위 표) |
+| 로그인 시 "이메일 또는 비밀번호가 올바르지 않습니다" | 매직링크로 가입 → 비밀번호 미설정 상태 | 매직링크로 로그인. 구글 등 소셜 계정 비밀번호는 Supabase와 무관 — 어떤 비밀번호도 통과 불가 |
+| 계정 상태 확인 필요 시 | — | Authentication → Users에서 행 존재 + `email_confirmed_at` 확인 |
+
+#### 알려진 UX 갭 (후속 과제)
+
+- 비밀번호 설정/재설정 UI 없음 — 매직링크 가입자가 비밀번호 로그인을 쓰려면 로그인 상태에서 `supabase.auth.updateUser({ password })` 호출 UI 필요
+- 비밀번호 분실 시 대시보드 Users → Delete 후 재가입이 유일한 경로
+- Supabase 기본 SMTP는 스팸함에 들어갈 수 있음 — 규모 커지면 커스텀 SMTP 검토
