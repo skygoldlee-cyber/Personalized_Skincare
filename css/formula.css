@@ -2,7 +2,7 @@
 
 /* ── 허브 안전 고지 ─────────────────────────────── */
 .formula-safety-note {
-    margin-top: 1.5rem;
+    margin: 1.5rem 0 0.9rem;
     padding: 0.9rem 1.1rem;
     border-radius: var(--radius-sm);
     border: 1px solid var(--color-warning);
