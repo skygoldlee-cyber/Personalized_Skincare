@@ -62,6 +62,8 @@ archive/
 
 # ----------  대용량 HTML (GitHub 100MB 한도 초과) ----------
 content/**/*.html
+# MD_to_HTML.py 생성 산출물 (로컬 뷰잉용, 재생성 가능)
+docs/**/*.html
 # 예외: 참조자료 HTML 변환본 (ref_md) — PDF 대체, Git 추적 필요
 !content/**/참조자료/ref_md/**/*.html
 # 예외: 참조자료 MD 변환본 (ref_md) — 대용량 법령 원문, Git 추적 필요
