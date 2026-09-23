@@ -4,6 +4,24 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-24 Formula OS UI 정리 + 고객 데이터 고지
+
+- **배합 계산기 서브내비 추가** (`index.html`, `formula.js`): 다른 서브패널에만
+  있던 섹션 이동 칩 6개를 계산기 상단에도 배치 — `formulaSubNav('calc')`
+- **허브 카드 정리** (`index.html`): 성분 사전 카드 제거 (사이드바 메뉴와 중복)
+  — 허브 7개 → 6개. `openIngredientDict` 핸들러·사이드바 항목은 유지
+- **고객 데이터 로컬 전용 고지** (`index.html`, `formula.css`):
+  `.formula-data-notice` 콜아웃 박스 신규 (primary tint 배경·테두리·아이콘,
+  본문 `text-main`) — 고객 카드·상담 이력이 동기화 제외임을 고객 관리 화면에 명시,
+  서브내비 아래 배치
+- **다크모드 가독성 수정** (`formula.css`): `.comp-item`·`.comp-doc-link`가
+  미정의 변수(`--color-surface`/`--color-text`) 폴백으로 항상 흰 배경이던 문제 —
+  `--bg-card`/`--border-color`/`--color-text-main` 테마 변수로 교체
+- **`formula-safety-note` 아래 마진**: 경고 박스와 첫 섹션 간격 확보
+  (법규 준수 '영업·자격' 붙음 해소, 원료 기한 경고 → 목록도 개선)
+- **사용자 매뉴얼 갱신** (`formula_manual.md` + 번들 재생성): 허브 6개,
+  성분 사전 접근 경로, 고객 데이터 로컬 전용, §7 동기화 설명 갱신
+
 ## 2026-09-23 UI/문구 미세 수정 일괄
 
 - **SW 업데이트 토스트 스피너 찌그러짐 수정** (`pwa-install-capture.js`):
