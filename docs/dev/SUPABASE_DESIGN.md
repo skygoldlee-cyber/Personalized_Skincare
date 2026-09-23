@@ -224,6 +224,17 @@ Formula OS의 고객 카드·상담 이력은 **타인의 개인정보**(이름�
 
 ### A.5 프로젝트 생성 후 작업 순서
 
-1. SQL Editor에서 §3 스키마·RLS 정책 실행
-2. Authentication → Providers에서 이메일/매직링크·OAuth 활성화
-3. Project URL + Publishable key를 `src/supabase-client.js` config에 반영
+1. SQL Editor에서 `tools/supabase/schema.sql` 전체 실행 (§3 스키마 + RLS + 가입 트리거 + `redeem_code` RPC 포함)
+2. Authentication → Providers에서 이메일 활성화 확인 (기본 ON)
+3. Project URL + Publishable key를 `src/supabase-config.js`에 반영
+
+### A.6 연결 테스트 결과 (2026-09-23 실측)
+
+| 검사 | 결과 |
+|---|---|
+| 프로젝트·Publishable key | ✅ 유효 — `/rest/v1/` 인증 통과, 테이블 미생성은 PGRST205 (정상) |
+| Auth `/auth/v1/settings` | ✅ 200 — email 프로바이더 ON, `disable_signup:false` |
+| 이메일 인증 | `mailer_autoconfirm:false` — 가입 시 확인 메일 발송 (개발 편의 시 대시보드에서 해제 가능) |
+| OAuth 프로바이더 | 전부 OFF — 이메일/매직링크만으로 Phase 1 진행 가능 |
+
+※ Node fetch가 환경의 undici 파싱 문제로 실패한 적 있음 — 연결 테스트는 `curl` 사용 권장 (본 문서 §A 명령 참조)
