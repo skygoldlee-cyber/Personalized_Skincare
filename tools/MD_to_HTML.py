@@ -1926,7 +1926,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 
   <!-- 테마 토글 label: input은 body 최상단에 있음 (JS 없이도 작동, 모바일 file:// 대응).
        JS가 작동하면 change 이벤트로 data-theme 동기화 + localStorage 저장 + Mermaid 재렌더. -->
-  <label for="themeSwitch" id="btnThemeFab" class="theme-fab">Theme</label>
+  <label for="themeSwitch" id="btnThemeFab" class="theme-fab"></label>
 
   <!-- 글자 크기 패널: radio input은 body 최상단에 있음 — JS 없이도 동작.
        JS가 작동하면 change 이벤트로 localStorage 저장 + 선택값 복원. -->
