@@ -36,6 +36,20 @@ Authentication → Emails
          PWA 로그인          브라우저 로그인
 ```
 
+```mermaid
+flowchart TD
+    A[Supabase 프로젝트] --> B["① Custom SMTP 설정<br/>Gmail 앱 비밀번호"]
+    B --> C["② Emails → Magic link or OTP<br/>+ Confirm signup 템플릿"]
+    C --> C1["{{ .Token }} 추가"]
+    C --> C2["?token_hash={{ .TokenHash }} 링크"]
+    C1 --> D[이메일 발송]
+    C2 --> D
+    D --> E["OTP 코드 입력"]
+    D --> F["링크 → 앱 랜딩 → 확인 클릭"]
+    E --> G["✅ PWA 로그인<br/>(브라우저 불필요)"]
+    F --> H["✅ 브라우저 로그인"]
+```
+
 ---
 
 ## 2.5 대시보드 바로가기
@@ -221,6 +235,14 @@ Supabase가 이메일 발송 시 실제 OTP 숫자로 자동 치환합니다.
          OTP 숫자 입력        앱 랜딩 → 확인 클릭
               ↓                       ↓
           PWA 로그인             브라우저 로그인
+```
+
+```mermaid
+flowchart LR
+    M["Supabase 이메일<br/>(같은 일회용 토큰)"] --> T["{{ .Token }}"]
+    M --> L["?token_hash= 링크"]
+    T --> O["OTP 숫자 입력"] --> P["PWA 로그인"]
+    L --> V["앱 랜딩 → 확인 클릭"] --> B["브라우저 로그인"]
 ```
 
 두 변수는 별도로 입력할 필요가 없습니다.
