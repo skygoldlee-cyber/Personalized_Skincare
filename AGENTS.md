@@ -255,6 +255,7 @@ docs/                   # 개발 문서
 - `docs/dev/CHANGES.md` — 변경 이력
 - `docs/dev/TESTING.md` — 테스트 가이드
 - `docs/dev/DOM_TEST_DESIGN.md` — jsdom UI 시나리오 테스트 설계
+- `docs/dev/SUPABASE_DESIGN.md` — 계정·클라우드 동기화·Pro 권한 설계안 (착수 전 §10 결정 필요)
 - `docs/dev/TEXTBOOK_AUTHORING_GUIDE.md` — 교재 작성 가이드
 - `docs/dev/NUMBERING_SYSTEM.md` — 교재 번호체계 가이드 (십진법)
 - `docs/dev/QUESTION_SCHEMA_DESIGN.md` — 문항 스키마 + 복수정답형 변환 파이프라인 설계

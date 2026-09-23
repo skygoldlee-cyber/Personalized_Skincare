@@ -1583,3 +1583,4 @@ cmd /c vercel --prod 2>&1
 - [`MD_TO_HTML_LOGIC.md`](MD_TO_HTML_LOGIC.md) — MD→HTML 변환·표시 로직 기술 문서
 - [`TESTING.md`](TESTING.md) — 단위 테스트 가이드 (686 tests: 458 unit + 228 DOM)
 - [`DOM_TEST_DESIGN.md`](DOM_TEST_DESIGN.md) — jsdom UI 시나리오 테스트 설계 (helpers·모킹 전략·Playwright 확장 경로)
+- [`SUPABASE_DESIGN.md`](SUPABASE_DESIGN.md) — Supabase 계정·클라우드 동기화·Pro entitlement 설계안 (미구현, §10 결정 필요)
