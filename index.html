@@ -2042,8 +2042,7 @@
                 <div class="auth-modal-actions">
                     <button type="button" class="btn btn-primary" data-click="authSignIn">로그인</button>
                     <button type="button" class="btn btn-secondary" data-click="authSignUp">회원가입</button>
-                    <button type="button" class="btn btn-secondary" data-click="authMagicLink">매직링크 보내기</button>
-                    <button type="button" class="btn btn-secondary" data-click="authSendOtp">인증 코드 보내기 (앱/PWA)</button>
+                    <button type="button" class="btn btn-secondary" data-click="authEmailLogin">로그인 메일 보내기</button>
                 </div>
                 <div id="auth-otp-area" class="auth-otp-area is-hidden">
                     <label class="auth-field-label" for="auth-otp-code">이메일 인증 코드</label>
@@ -2052,7 +2051,7 @@
                         <button type="button" class="btn btn-primary" data-click="authVerifyOtp">확인</button>
                     </div>
                 </div>
-                <p class="auth-modal-hint">매직링크는 비밀번호 없이 이메일 링크로 로그인합니다. 설치된 앱(PWA)에서는 '인증 코드 보내기' 후 메일의 숫자 코드를 입력하세요. 로그인하면 학습 진도가 클라우드에 동기화됩니다.</p>
+                <p class="auth-modal-hint">로그인 메일에는 링크와 인증 코드가 함께 들어있습니다 — 브라우저에서는 메일의 링크를 누르고, 설치된 앱(PWA)에서는 아래 칸에 메일의 숫자 코드를 입력하세요. 로그인하면 학습 진도가 클라우드에 동기화됩니다.</p>
             </div>
             <!-- 로그인 상태 -->
             <div id="auth-account-area" class="auth-modal-body is-hidden">

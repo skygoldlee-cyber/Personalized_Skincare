@@ -36,7 +36,7 @@ window.supabase = { createClient: vi.fn(() => ({ auth: authStub })) };
 
 import {
     initAuthView, openAuthModal, closeAuthModal, refreshAuthUI,
-    authSignIn, authSignUp, authMagicLink, authSignOut, authSetPassword,
+    authSignIn, authSignUp, authEmailLogin, authMagicLink, authSignOut, authSetPassword,
     authSendOtp, authVerifyOtp,
 } from '../../src/auth-view.js';
 
@@ -195,5 +195,34 @@ describe('계정/로그인 모달', () => {
         session = { user: { email: 'saved@test.com' } };
         await initAuthView();
         expect(el('auth-menu-label').textContent).toBe('saved@test.com');
+    });
+
+    it('로그인 메일 통합 — 발송 시 코드 입력 영역 + 링크·코드 안내 (H)', async () => {
+        await openAuthModal();
+        el('auth-email').value = 'uni@test.com';
+        await authEmailLogin();
+        expect(authStub.signInWithOtp).toHaveBeenCalledWith({ email: 'uni@test.com' });
+        expect(isVisible('auth-otp-area')).toBe(true);
+        const msg = el('auth-modal-msg').textContent;
+        expect(msg).toContain('로그인 링크');
+        expect(msg).toContain('인증 코드');
+    });
+
+    it('매직링크 랜딩 오류 — 해시 error 파라미터 → 만료 안내 토스트 + URL 정리 (H)', async () => {
+        location.hash = '#error=access_denied&error_code=otp_expired&error_description=Email+link+is+invalid+or+has+expired';
+        await initAuthView();
+        expect(lastToast()[0]).toContain('만료');
+        expect(location.hash).toBe('');
+        location.hash = '';
+    });
+
+    it('매직링크 랜딩 성공 — access_token 해시 → SIGNED_IN 시 로그인 토스트 (H)', async () => {
+        location.hash = '#access_token=tok123&refresh_token=ref&type=magiclink';
+        await initAuthView();
+        const cb = authStub.onAuthStateChange.mock.calls[0][0];
+        session = { user: { email: 'link@test.com' } };
+        cb('SIGNED_IN', session);
+        expect(lastToast()[0]).toContain('로그인했습니다');
+        location.hash = '';
     });
 });

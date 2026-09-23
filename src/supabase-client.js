@@ -38,9 +38,9 @@ export async function getAuthSession() {
     return data?.session ?? null;
 }
 
-/** 로그인 상태 변화 구독 — session=null이면 로그아웃 상태 */
+/** 로그인 상태 변화 구독 — session=null이면 로그아웃 상태. 두 번째 인자로 이벤트명 전달 */
 export async function onAuthChange(cb) {
     const sb = await getSupabase();
     if (!sb) return;
-    sb.auth.onAuthStateChange((_event, session) => cb(session));
+    sb.auth.onAuthStateChange((event, session) => cb(session, event));
 }

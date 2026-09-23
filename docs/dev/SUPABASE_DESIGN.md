@@ -2,7 +2,8 @@
 
 > 상위 문서: `ARCHITECTURE.md` (전체 구조), `FORMULA_OS_DESIGN.md` (실무 데이터 모델)
 > 목적: localStorage 전용 구조에 **선택적 계정(로그인) + 클라우드 동기화 + 서버 측 Pro entitlement**를 추가한다.
-> **구현 상태**: ✅ Phase 1~2 구현 완료 (2026-09-23) — Phase 1: `supabase-client.js` lazy init + `auth-view.js` 로그인 모달(이메일+PW·가입·매직링크) + CSP `connect-src` 확장 + vendor/supabase 2.116.0 self-host. Phase 2: `src/sync.js` 스냅샷 동기화(쓰기 훅 dirty·2.5s 디바운스 push·pull·LWW+확인 모달·`지금 동기화` 버튼·`device_id`). 고객 카드·상담 이력은 개인정보 보호로 동기화 제외(§7). Pro(Phase 3)만 남음 — `tools/supabase/schema.sql`을 SQL Editor에서 실행 필요.
+> **구현 상태**: ✅ Phase 1~2 구현 완료 (2026-09-23) — Phase 1: `supabase-client.js` lazy init + `auth-view.js` 로그인 모달(이메일+PW·가입·이메일 로그인 통합) + CSP `connect-src` 확장 + vendor/supabase 2.116.0 self-host. Phase 2: `src/sync.js` 스냅샷 동기화(쓰기 훅 dirty·2.5s 디바운스 push·pull·LWW+확인 모달·`지금 동기화` 버튼·`device_id`). 고객 카드·상담 이력은 개인정보 보호로 동기화 제외(§7). Pro(Phase 3)만 남음 — `tools/supabase/schema.sql`을 SQL Editor에서 실행 필요.
+> **UX 개정 (2026-09-23 2차)**: 매직링크·인증 코드 버튼을 **단일 "로그인 메일 보내기"로 통합** — 같은 `signInWithOtp` 메일에 링크+코드가 동봉되므로 URL/PWA 어느 환경이든 동일 절차. 매직링크 랜딩 오류·성공 토스트 추가 (§A.8).
 > 전제: 기존 오프라인 PWA·Zero-Backend 철학 유지 — Supabase는 "없어도 되는" 선택 계층
 
 ---
@@ -298,10 +299,12 @@ select polname, polrelid::regclass from pg_policy;
 | PWA에서 매직링크 로그인 불가 | 메일 링크가 브라우저를 열고 세션은 브라우저에 저장 — PWA는 별도 저장 공간 | ① **인증 코드(OTP) 로그인** — PWA 안에서 완결 (아래 참조) ② 비밀번호 설정 후 이메일+비밀번호 로그인 |
 | 계정 상태 확인 필요 시 | — | Authentication → Users에서 행 존재 + `email_confirmed_at` 확인 |
 
-#### 이메일 인증 코드(OTP) 로그인 — PWA 자체 완결 (구현됨)
+#### 이메일 로그인 — 링크·코드 통합 단일 경로 (2026-09-23 2차 개정)
 
-- 앱: `인증 코드 보내기` → `signInWithOtp({email})` → 코드 입력 칸 표시 → `verifyOtp({email, token, type:'email'})` — 리다이렉트 없이 세션 성립
-- 동일한 `signInWithOtp` 호출이라 매직링크·코드는 같은 메일을 공유 — 템플릿에 둘 다 넣으면 사용자가 환경에 맞게 선택 가능
+- 앱: `로그인 메일 보내기` → `signInWithOtp({email})` → 코드 입력 칸 표시. 메일에는 **링크(`{{ .ConfirmationURL }}`)와 코드(`{{ .Token }}`)가 동봉**되므로 사용자가 환경에 맞게 선택 — 브라우저는 링크 클릭, PWA는 코드 입력
+- 두 수단이 같은 메일을 공유하므로 버튼을 분리할 이유가 없고, 분리 시 PWA 사용자가 "매직링크"를 눌러 세션이 브라우저에 생기는 **조용한 실패**가 발생 — 단일 버튼으로 통합해 URL·PWA 간 동일 UX 확보
+- 코드 입력: `verifyOtp({email, token, type:'email'})` — 리다이렉트 없이 세션 성립
+- `authMagicLink`/`authSendOtp`는 `authEmailLogin`의 별칭으로 유지 (기존 호출 호환)
 
 ##### `{{ .Token }}` 템플릿 설정 절차 (1회, 프로젝트 전역)
 
@@ -354,18 +357,44 @@ select polname, polrelid::regclass from pg_policy;
 
 #### 설치형 PWA에서 로그인하는 방법 (사용자 절차)
 
-매직링크는 메일 링크가 기본 브라우저를 열므로 PWA에 세션이 생기지 않는다. PWA에서 로그인하는 경로 3가지:
+**기본 경로는 환경 무관하게 동일** — `로그인 메일 보내기` 한 버튼이 링크+코드를 동봉한 메일을 보낸다. 완료 수단만 환경에 따라 갈린다:
+
+| 환경 | 완료 수단 | 비고 |
+|---|---|---|
+| 브라우저 (PC/모바일) | 메일의 **링크 클릭** → 같은 탭에서 세션 성립 | 코드 입력도 가능 |
+| Android PWA | 링크 클릭 시 OS 링크 캡처로 **PWA에서 세션 성립**(Chrome이 설치된 PWA 스코프 링크를 앱으로 라우팅). 캡처가 안 되면 코드 입력 | 기기·브라우저 설정 의존 → 코드가 보험 |
+| iOS PWA (홈 화면) | **코드 입력 필수** — 링크는 항상 Safari를 열고 세션은 Safari에만 생김 | 플랫폼 한계: 홈 화면 앱으로의 링크 라우팅 API 없음 |
+
+보조 경로:
 
 | 방법 | 절차 | 브라우저 필요? |
 |---|---|---|
-| **① 인증 코드** | PWA → 설정 → `계정 / 로그인` → 이메일 입력 → `인증 코드 보내기` → 메일에서 6자리 코드 확인(링크 클릭 불필요) → PWA에 코드 입력 → `확인` | ❌ 완전 불필요 — 단, **Custom SMTP + 템플릿에 `{{ .Token }}` 포함 필수** |
-| **② 비밀번호 (SMTP 없이 가능 — 현재 권장)** | 브라우저에서 1회: 매직링크 로그인 → 계정 모달 → `비밀번호 설정`. 이후 PWA → 이메일+비밀번호 → `로그인` | 최초 1회만 |
-| **③ PWA에서 가입** | PWA → 이메일+비밀번호 → `회원가입` → 확인 메일 링크를 브라우저에서 1번 클릭(서버 측 확인만 됨) → PWA로 돌아와 비밀번호 로그인. `Confirm email` OFF면 이 클릭도 생략 | 확인 클릭 1회 (설정으로 생략 가능) |
+| 비밀번호 | 브라우저에서 1회: 로그인 메일 링크로 로그인 → 계정 모달 → `비밀번호 설정`. 이후 어디서든 이메일+비밀번호 | 최초 1회만 (SMTP 없이 가능) |
+| PWA에서 가입 | 이메일+비밀번호 → `회원가입` → 확인 메일 링크를 브라우저에서 1번 클릭 → PWA로 돌아와 비밀번호 로그인. `Confirm email` OFF면 생략 | 확인 클릭 1회 |
 
-> 핵심 원리: 세션은 **로그인 API가 완료된 저장 공간**에 생긴다. 비밀번호·OTP는 앱 안에서 완결되므로 PWA에 세션이 저장되고, 매직링크는 브라우저에서 완료되므로 브라우저에만 저장된다.
+> 핵심 원리: 세션은 **로그인 API가 완료된 저장 공간**에 생긴다. 비밀번호·OTP 코드는 앱 안에서 완결되므로 PWA에 세션이 저장되고, 매직링크는 링크를 연 쪽(브라우저 또는 링크 캡처된 PWA)에 저장된다.
+
+#### A.8 매직링크 플로우 정밀 검토 + 랜딩 피드백 (2026-09-23 2차)
+
+**flowType 확인 결과 — PKCE 함정 없음**: vendored supabase-js 2.116.0의 기본값은 `flowType: 'implicit'`. 매직링크는 `?code=` PKCE 교환이 아니라 `#access_token=` 해시 토큰 방식이라 `code_verifier`를 요구하지 않는다 — **링크를 요청한 컨텍스트와 다른 컨텍스트에서 열어도** 그곳의 `detectSessionInUrl`이 토큰을 소비해 세션이 성립한다. (PKCE였다면 verifier 부재로 무조건 실패했을 경로.) 보안상 implicit은 공개 클라이언트·정적 사이트에 적합하며, 크로스 디바이스 매직링크에는 오히려 PKCE보다 호환성이 높다.
+
+**환경별 매직링크 동작 매트릭스** (implicit 기준):
+
+| 요청 → 링크 오픈 | 결과 |
+|---|---|
+| 브라우저 → 브라우저 | ✅ 세션 성립 |
+| PWA → Android 링크 캡처로 PWA | ✅ 세션 성립 |
+| PWA → 브라우저 (iOS·캡처 실패) | 세션이 브라우저에 성립, PWA는 비로그인 — **코드 입력 경로로 커버** |
+
+**랜딩 피드백 (구현)**: `initAuthView` 시작 시 `location.hash`를 파싱해 `error`/`error_code`/`error_description`이 있으면 한글 토스트로 안내(`otp_expired` → 만료 안내)하고 `history.replaceState`로 URL 정리. `access_token` 해시가 있던 랜딩은 플래그를 세워 `onAuthStateChange`의 `SIGNED_IN` 이벤트에서 "로그인했습니다" 토스트 — 수동 로그인(`signInWithPassword` 등 자체 토스트 보유)과 중복되지 않게 랜딩 플래그로 게이트.
+
+**통합 버튼 결정 근거**: `authMagicLink`와 `authSendOtp`는 동일한 `signInWithOtp` 호출이며 차이는 코드 입력칸 표시뿐이었다. 분리 상태에서는 PWA 사용자가 '매직링크'를 선택하면 링크가 브라우저에서 열려 세션이 엉뚱한 저장 공간에 생기는 조용한 실패가 발생 — 단일 버튼 + 코드 입력칸 상시 표시로 URL·PWA 간 절차를 완전히 동일하게 만들었다.
 
 #### 알려진 UX 갭 (후속 과제)
 
 - ~~비밀번호 설정 UI 없음~~ — ✅ 해결: 계정 모달 `비밀번호 설정` (`authSetPassword` → `updateUser`). 매직링크 가입자는 로그인 후 비밀번호를 등록하면 PWA(리다이렉트 불가 환경)에서도 이메일+비밀번호 로그인 가능
+- ~~매직링크/인증 코드 버튼 분리로 인한 PWA 조용한 실패~~ — ✅ 해결: `authEmailLogin` 단일 버튼 통합 (§A.8)
+- ~~매직링크 랜딩 오류 무표시~~ — ✅ 해결: 해시 `error_*` 파라미터 파싱 → 한글 토스트 (§A.8)
 - 비밀번호 분실 시 대시보드 Users → Delete 후 재가입이 유일한 경로 (비밀번호 재설정 메일 플로우 미구현)
+- iOS PWA의 매직링크 완결 불가는 플랫폼 한계 — 코드 입력 경로로 커버 (통합 버튼으로 기본 UX는 동일)
 - Supabase 기본 SMTP는 스팸함에 들어갈 수 있음 + 이메일 발송 레이트리밋이 낮음 + **템플릿 편집 자체가 Custom SMTP 설정을 요구** — Resend/SendGrid 등 연결 권장 (OTP 코드 메일도 이게 있어야 동작)
