@@ -1074,6 +1074,8 @@ function populateDatalist() {
 
 export function openFormulaCalc(sourceFormula) {
   showPanel('formula-calc-panel');
+  const subnav = document.getElementById('formula-calc-subnav');
+  if (subnav) subnav.innerHTML = formulaSubNav('calc');
   populateDatalist();
   populateCustomerFields();
   populateStabilityFields();

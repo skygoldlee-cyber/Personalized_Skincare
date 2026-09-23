@@ -10,7 +10,7 @@ vi.mock('../../src/ui-utils.js', () => ({
 }));
 
 import { loadIndexHtml, el, isVisible } from './helpers.js';
-import { initFormulaView, exitFormulaSubView } from '../../src/views/formula.js';
+import { initFormulaView, exitFormulaSubView, openFormulaCalc } from '../../src/views/formula.js';
 import { openCustomerPanel } from '../../src/views/formula-customer.js';
 import { openMaterialPanel } from '../../src/views/formula-material.js';
 import { openCompliancePanel } from '../../src/views/formula-compliance.js';
@@ -64,6 +64,14 @@ describe('Formula OS — 패널 전환·서브내비', () => {
         onlyVisible('formula-compliance-panel');
         const active = el('formula-compliance-subnav').querySelector('.is-active');
         expect(active.textContent).toBe('법규 준수');
+    });
+
+    it('openFormulaCalc — 배합 계산기 패널 + 서브내비 6칩·계산기 활성', () => {
+        openFormulaCalc();
+        onlyVisible('formula-calc-panel');
+        const subnav = el('formula-calc-subnav');
+        expect(subnav.querySelectorAll('.formula-subnav-chip').length).toBe(6);
+        expect(subnav.querySelector('.is-active').textContent).toBe('배합 계산기');
     });
 
     it('exitFormulaSubView — 허브로 복귀', () => {
