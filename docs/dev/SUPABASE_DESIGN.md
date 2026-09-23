@@ -224,9 +224,36 @@ Formula OS의 고객 카드·상담 이력은 **타인의 개인정보**(이름�
 
 ### A.5 프로젝트 생성 후 작업 순서
 
-1. SQL Editor에서 `tools/supabase/schema.sql` 전체 실행 (§3 스키마 + RLS + 가입 트리거 + `redeem_code` RPC 포함)
-2. Authentication → Providers에서 이메일 활성화 확인 (기본 ON)
-3. Project URL + Publishable key를 `src/supabase-config.js`에 반영
+#### 1. 스키마 실행 (SQL Editor)
+
+1. 대시보드 → 좌측 메뉴 **SQL Editor** (`>_` 아이콘) → **+ New query**
+2. `tools/supabase/schema.sql` 전체 복사 → 붙여넣기 → **Run** (`Ctrl+Enter`)
+3. "Success" 메시지 확인 — `create table if not exists`/`create or replace` 구조라 **재실행 안전** (스키마 수정·프로젝트 이전 시 다시 붙여넣으면 됨)
+
+포함 내용: `profiles`·`sync_snapshots`·`pro_codes` 테이블 + RLS 정책 + 가입 트리거(`handle_new_user`) + `redeem_code` RPC + 기존 사용자 profiles 백필.
+
+#### 2. 생성 확인
+
+```sql
+select table_name from information_schema.tables where table_schema='public';
+select polname, polrelid::regclass from pg_policy;
+```
+
+기대: 테이블 3개(`profiles`·`sync_snapshots`·`pro_codes`), 정책 2개(`own profile read`·`own snapshots`). Table Editor에서도 테이블이 보이면 정상.
+
+#### 3. 인증 설정
+
+- Authentication → Providers에서 **Email 활성화 확인** (기본 ON)
+- 개발 중 이메일 확인 메일이 번거로우면 Authentication → Sign In / Up에서 **Confirm email OFF** 가능 (프로덕션은 ON 권장)
+
+#### 4. 클라이언트 연결
+
+- Project URL + Publishable key를 `src/supabase-config.js`에 반영 (§A.3 — 2개만, 나머지 불필요)
+- `connect-src 'self' https://*.supabase.co` (vercel.json) + vendor 자산이 `sw.js`에 등록되어 있어야 함 — Phase 1 커밋에서 완료
+
+#### 5. 동작 검증
+
+앱에서 계정 생성·로그인 후 데이터 변경 → **Table Editor → sync_snapshots**에 `(user_id, exam_id)` 행이 upsert되면 Phase 2 동기화 정상.
 
 ### A.6 연결 테스트 결과 (2026-09-23 실측)
 
