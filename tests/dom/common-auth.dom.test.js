@@ -25,6 +25,11 @@ const authStub = {
     signInWithOtp: vi.fn(async () => ({ data: {}, error: null })),
     signOut: vi.fn(async () => { session = null; return { error: null }; }),
     updateUser: vi.fn(async () => ({ data: {}, error: null })),
+    verifyOtp: vi.fn(async ({ email, token }) => {
+        if (token === '000000') return { data: {}, error: new Error('Token has expired or is invalid') };
+        session = { user: { email } };
+        return { data: { session }, error: null };
+    }),
     onAuthStateChange: vi.fn(),
 };
 window.supabase = { createClient: vi.fn(() => ({ auth: authStub })) };
@@ -32,6 +37,7 @@ window.supabase = { createClient: vi.fn(() => ({ auth: authStub })) };
 import {
     initAuthView, openAuthModal, closeAuthModal, refreshAuthUI,
     authSignIn, authSignUp, authMagicLink, authSignOut, authSetPassword,
+    authSendOtp, authVerifyOtp,
 } from '../../src/auth-view.js';
 
 function fillAuth(email, pw) {
@@ -57,6 +63,11 @@ describe('계정/로그인 모달', () => {
         authStub.signInWithOtp.mockImplementation(async () => ({ data: {}, error: null }));
         authStub.signOut.mockImplementation(async () => { session = null; return { error: null }; });
         authStub.updateUser.mockImplementation(async () => ({ data: {}, error: null }));
+        authStub.verifyOtp.mockImplementation(async ({ email, token }) => {
+            if (token === '000000') return { data: {}, error: new Error('Token has expired or is invalid') };
+            session = { user: { email } };
+            return { data: { session }, error: null };
+        });
     });
 
     it('모달 열기 — 비로그인 시 로그인 폼 표시·계정 영역 숨김 (H)', async () => {
@@ -146,6 +157,38 @@ describe('계정/로그인 모달', () => {
         await authSetPassword();
         expect(authStub.updateUser).not.toHaveBeenCalled();
         expect(el('auth-modal-msg').textContent).toContain('6자 이상');
+    });
+
+    it('인증 코드 발송 — signInWithOtp 호출 + 코드 입력 영역 표시 (H)', async () => {
+        await openAuthModal();
+        el('auth-email').value = 'otp@test.com';
+        await authSendOtp();
+        expect(authStub.signInWithOtp).toHaveBeenCalledWith({ email: 'otp@test.com' });
+        expect(isVisible('auth-otp-area')).toBe(true);
+        expect(el('auth-modal-msg').textContent).toContain('인증 코드');
+    });
+
+    it('인증 코드 검증 — 숫자 코드로 verifyOtp → 로그인 완료 (H)', async () => {
+        await openAuthModal();
+        el('auth-email').value = 'otp@test.com';
+        await authSendOtp();
+        el('auth-otp-code').value = '123456';
+        await authVerifyOtp();
+        expect(authStub.verifyOtp).toHaveBeenCalledWith({ email: 'otp@test.com', token: '123456', type: 'email' });
+        expect(isVisible('auth-modal')).toBe(false);
+        expect(lastToast()[0]).toContain('로그인');
+    });
+
+    it('인증 코드 검증 — 비숫자·만료 코드는 오류 안내 (X)', async () => {
+        await openAuthModal();
+        el('auth-email').value = 'otp@test.com';
+        el('auth-otp-code').value = 'abc';
+        await authVerifyOtp();
+        expect(authStub.verifyOtp).not.toHaveBeenCalled();
+        expect(el('auth-modal-msg').textContent).toContain('인증 코드');
+        el('auth-otp-code').value = '000000';
+        await authVerifyOtp();
+        expect(el('auth-modal-msg').textContent).toContain('만료');
     });
 
     it('initAuthView — 저장된 세션 복원 시 라벨에 이메일 (P/R)', async () => {

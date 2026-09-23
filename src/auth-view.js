@@ -15,6 +15,7 @@ const ERR_MAP = [
     [/unable to validate email|invalid email/i, '이메일 형식이 올바르지 않습니다.'],
     [/email not confirmed/i, '이메일 인증이 완료되지 않았습니다. 받은 메일의 링크를 눌러주세요.'],
     [/rate limit|too many requests/i, '요청이 너무 많습니다. 잠시 후 다시 시도하세요.'],
+    [/token has expired|invalid.*token|otp.*expired|otp.*invalid/i, '인증 코드가 만료되었거나 올바르지 않습니다.'],
 ];
 function friendlyError(err) {
     const msg = err?.message || String(err);
@@ -58,6 +59,7 @@ export async function openAuthModal() {
     const modal = el('auth-modal');
     if (!modal) return;
     setMsg('');
+    hide(el('auth-otp-area'));
     show(modal);
     try { await refreshAuthUI(); }
     catch (e) { setMsg(friendlyError(e), true); }
@@ -110,6 +112,35 @@ export async function authMagicLink() {
     const { error } = await sb.auth.signInWithOtp({ email });
     if (error) { setMsg(friendlyError(error), true); return; }
     setMsg('로그인 링크를 이메일로 보냈습니다. 메일을 확인하세요.');
+}
+
+/** 이메일 인증 코드(OTP) 발송 — 메일 링크 대신 6자리 코드를 입력하는 PWA 자체 완결 로그인 */
+export async function authSendOtp() {
+    const sb = await getSupabase();
+    if (!sb) return;
+    const { email } = readCredentials();
+    if (!email) { setMsg('이메일을 입력하세요.', true); return; }
+    setMsg('인증 코드 발송 중...');
+    const { error } = await sb.auth.signInWithOtp({ email });
+    if (error) { setMsg(friendlyError(error), true); return; }
+    show(el('auth-otp-area'));
+    setMsg('인증 코드를 이메일로 보냈습니다. 메일의 6자리 코드를 입력하세요.');
+}
+
+export async function authVerifyOtp() {
+    const sb = await getSupabase();
+    if (!sb) return;
+    const { email } = readCredentials();
+    const token = (el('auth-otp-code')?.value || '').trim();
+    if (!email) { setMsg('이메일을 입력하세요.', true); return; }
+    if (!/^\d{6,8}$/.test(token)) { setMsg('메일에 표시된 숫자 인증 코드를 입력하세요.', true); return; }
+    setMsg('코드 확인 중...');
+    const { error } = await sb.auth.verifyOtp({ email, token, type: 'email' });
+    if (error) { setMsg(friendlyError(error), true); return; }
+    setMsg('');
+    closeAuthModal();
+    showToast('로그인했습니다.', 'success');
+    await refreshAuthUI();
 }
 
 /** 로그인 상태에서 비밀번호 설정/변경 — 매직링크 가입 계정이 PWA 등에서 비밀번호 로그인할 수 있게 한다 */

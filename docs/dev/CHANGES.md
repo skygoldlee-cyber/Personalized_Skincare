@@ -4,6 +4,16 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-23 계정 모달 — 이메일 인증 코드(OTP) 로그인
+
+- **`authSendOtp`/`authVerifyOtp`** (`auth-view.js`): `signInWithOtp`로 코드 발송 →
+  6~8자리 코드 입력 → `verifyOtp({type:'email'})` — 리다이렉트 없이
+  **PWA 안에서 로그인 완결** (매직링크는 브라우저로 열려 PWA 세션 불가)
+- 로그인 폼에 `인증 코드 보내기 (앱/PWA)` 버튼 + 코드 입력 행 (발송 후 표시)
+- 오류 매핑 추가: `Token has expired` → "인증 코드가 만료되었거나 올바르지 않습니다"
+- **주의**: Magic Link 이메일 템플릿에 `{{ .Token }}` 추가 필요 (SUPABASE_DESIGN §A.7)
+- 테스트: DOM 253개 (+3 common-auth)
+
 ## 2026-09-23 계정 모달 — 비밀번호 설정 (PWA 로그인 경로)
 
 - **`authSetPassword`** (`auth-view.js`): 로그인 상태에서 `updateUser({password})`로

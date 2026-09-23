@@ -334,3 +334,5 @@
 }
 .auth-pw-row .auth-field { flex: 1; }
 .auth-pw-row .btn { flex-shrink: 0; }
+.auth-otp-area { margin-top: var(--space-3); }
+#auth-otp-code { letter-spacing: 0.25em; text-align: center; font-weight: 600; }

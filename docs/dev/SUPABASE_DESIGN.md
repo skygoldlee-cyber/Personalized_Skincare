@@ -295,7 +295,19 @@ select polname, polrelid::regclass from pg_policy;
 |---|---|---|
 | 확인 메일이 localhost로 리다이렉트 | Site URL 기본값 `localhost:3000` | URL Configuration에서 프로덕션으로 변경 (위 표) |
 | 로그인 시 "이메일 또는 비밀번호가 올바르지 않습니다" | 매직링크로 가입 → 비밀번호 미설정 상태 | 매직링크로 로그인 후 계정 모달에서 비밀번호 설정. 소셜 계정 비밀번호는 Supabase와 무관 — 어떤 비밀번호도 통과 불가 |
-| PWA에서 매직링크 로그인 불가 | 메일 링크가 브라우저를 열고 세션은 브라우저에 저장 — PWA는 별도 저장 공간 | PWA에서는 이메일+비밀번호 로그인 사용 (계정 모달에서 비밀번호 설정 필요) |
+| PWA에서 매직링크 로그인 불가 | 메일 링크가 브라우저를 열고 세션은 브라우저에 저장 — PWA는 별도 저장 공간 | ① **인증 코드(OTP) 로그인** — PWA 안에서 완결 (아래 참조) ② 비밀번호 설정 후 이메일+비밀번호 로그인 |
+
+#### 이메일 인증 코드(OTP) 로그인 — PWA 자체 완결 (구현됨)
+
+- 앱: `인증 코드 보내기` → `signInWithOtp({email})` → 코드 입력 칸 표시 → `verifyOtp({email, token, type:'email'})` — 리다이렉트 없이 세션 성립
+- **필수 대시보드 설정**: Authentication → Email Templates → **Magic Link** 템플릿 본문에 `{{ .Token }}` 추가 — 기본 템플릿은 링크만 표시하므로 코드가 안 보임. 예:
+
+  ```text
+  로그인 코드: {{ .Token }}
+  (또는 아래 링크를 눌러 브라우저에서 로그인) {{ .ConfirmationURL }}
+  ```
+
+- 동일한 `signInWithOtp` 호출이라 매직링크·코드는 같은 메일을 공유 — 템플릿에 둘 다 넣으면 사용자가 환경에 맞게 선택 가능
 | 계정 상태 확인 필요 시 | — | Authentication → Users에서 행 존재 + `email_confirmed_at` 확인 |
 
 #### 알려진 UX 갭 (후속 과제)

@@ -1242,7 +1242,7 @@ PDF 파일명은 매핑 키로만 사용되며, 실제 서비스되는 것은 �
    - `ui-utils.js` 공통 UI 유틸 분리로 순환 의존성 방지
 
 3. **DOM 테스트 환경 도입** ✅
-   - Vitest + jsdom으로 DOM 렌더링/이벤트 테스트 기반 구축 (708 tests: 458 unit + 250 DOM)
+   - Vitest + jsdom으로 DOM 렌더링/이벤트 테스트 기반 구축 (711 tests: 458 unit + 253 DOM)
    - GitHub Actions CI로 push 시 자동 테스트 실행
 
 4. **타입 안정성 도입** ✅
@@ -1581,6 +1581,6 @@ cmd /c vercel --prod 2>&1
 - [`MULTI_MACHINE_SETUP.md`](MULTI_MACHINE_SETUP.md) — 다중 머신 개발 환경 설정
 - [`CHANGES.md`](CHANGES.md) — 코드 리뷰 및 아키텍처 개편 수정 이력 (Changelog)
 - [`MD_TO_HTML_LOGIC.md`](MD_TO_HTML_LOGIC.md) — MD→HTML 변환·표시 로직 기술 문서
-- [`TESTING.md`](TESTING.md) — 단위 테스트 가이드 (708 tests: 458 unit + 250 DOM)
+- [`TESTING.md`](TESTING.md) — 단위 테스트 가이드 (711 tests: 458 unit + 253 DOM)
 - [`DOM_TEST_DESIGN.md`](DOM_TEST_DESIGN.md) — jsdom UI 시나리오 테스트 설계 (helpers·모킹 전략·Playwright 확장 경로)
 - [`SUPABASE_DESIGN.md`](SUPABASE_DESIGN.md) — Supabase 계정·클라우드 동기화·Pro entitlement 설계안 (미구현, §10 결정 필요)
