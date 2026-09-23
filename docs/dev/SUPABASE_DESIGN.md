@@ -305,7 +305,15 @@ select polname, polrelid::regclass from pg_policy;
 
 ##### `{{ .Token }}` 템플릿 설정 절차 (1회, 프로젝트 전역)
 
-기본 Magic Link 템플릿은 링크만 표시하므로 코드가 메일에 안 보인다 — **OTP 로그인 사용 전 필수 설정**:
+기본 Magic Link 템플릿은 링크만 표시하므로 코드가 메일에 안 보인다 — **OTP 로그인 사용 전 필수 설정**.
+
+> ⚠️ **선행 조건 — Custom SMTP**: Supabase는 기본 이메일 발송 서비스에서 템플릿 편집을 막는다 ("Set up custom SMTP to edit templates" — Subject/Body 비활성). 템플릿을 바꾸려면 먼저 SMTP를 연결해야 한다.
+>
+> 1. **Authentication → SMTP Settings** (또는 Emails 화면의 Set up SMTP)
+> 2. SMTP 정보 입력 — Resend(`smtp.resend.com`)/SendGrid/Gmail 앱 비밀번호/SES 등. Gmail은 계정 비밀번호가 아닌 **앱 비밀번호** 사용
+> 3. 저장 후 Authentication → Emails → Templates가 편집 가능해짐
+>
+> SMTP는 어차피 운영 필수 — 기본 발송은 시간당 한도가 매우 낮고 스팸함 분류가 잦다.
 
 1. 대시보드 → **Authentication → Emails** (또는 Email Templates) → **`Magic link or OTP`** 템플릿 선택
 2. **Content → Body** 영역 클릭 후 `{{ .Token }}` 줄 추가. 추천 본문:
@@ -328,7 +336,7 @@ select polname, polrelid::regclass from pg_policy;
 
 3. **Save** — 내용이 바뀌어야 버튼이 활성화됨. 프로젝트 전역 설정이므로 사용자별 작업 불필요
 
-**Body 편집이 안 될 때**: ① 기존 텍스트 위를 직접 클릭(에디터 포커스) ② 페이지 새로고침 ③ 시크릿 모드/다른 브라우저(확장 프로그램 차단 가능) ④ 그래도 안 되면 Management API(`PATCH /v1/projects/{ref}/config/auth`의 `mailer_templates_magic_link_content`) — 또는 ② 비밀번호 경로로 대체 가능 (OTP는 편의 개선)
+**Body 편집이 안 될 때**: Subject/Body가 회색 비활성이면 **Custom SMTP 미설정**이 원인 (위 선행 조건). 그 외에는 ① 기존 텍스트 위 직접 클릭(에디터 포커스) ② 페이지 새로고침 ③ 시크릿 모드/다른 브라우저 ④ Management API(`PATCH /v1/projects/{ref}/config/auth`의 `mailer_templates_magic_link_content`). SMTP 없이는 OTP 불가 — 비밀번호 경로로 대체 가능 (OTP는 편의 개선)
 
 #### 설치형 PWA에서 로그인하는 방법 (사용자 절차)
 
@@ -336,8 +344,8 @@ select polname, polrelid::regclass from pg_policy;
 
 | 방법 | 절차 | 브라우저 필요? |
 |---|---|---|
-| **① 인증 코드 (권장)** | PWA → 설정 → `계정 / 로그인` → 이메일 입력 → `인증 코드 보내기` → 메일에서 6자리 코드 확인(링크 클릭 불필요) → PWA에 코드 입력 → `확인` | ❌ 완전 불필요 — 단, Magic Link 템플릿에 `{{ .Token }}` 포함 필수 |
-| **② 비밀번호** | 브라우저에서 1회: 매직링크 로그인 → 계정 모달 → `비밀번호 설정`. 이후 PWA → 이메일+비밀번호 → `로그인` | 최초 1회만 |
+| **① 인증 코드** | PWA → 설정 → `계정 / 로그인` → 이메일 입력 → `인증 코드 보내기` → 메일에서 6자리 코드 확인(링크 클릭 불필요) → PWA에 코드 입력 → `확인` | ❌ 완전 불필요 — 단, **Custom SMTP + 템플릿에 `{{ .Token }}` 포함 필수** |
+| **② 비밀번호 (SMTP 없이 가능 — 현재 권장)** | 브라우저에서 1회: 매직링크 로그인 → 계정 모달 → `비밀번호 설정`. 이후 PWA → 이메일+비밀번호 → `로그인` | 최초 1회만 |
 | **③ PWA에서 가입** | PWA → 이메일+비밀번호 → `회원가입` → 확인 메일 링크를 브라우저에서 1번 클릭(서버 측 확인만 됨) → PWA로 돌아와 비밀번호 로그인. `Confirm email` OFF면 이 클릭도 생략 | 확인 클릭 1회 (설정으로 생략 가능) |
 
 > 핵심 원리: 세션은 **로그인 API가 완료된 저장 공간**에 생긴다. 비밀번호·OTP는 앱 안에서 완결되므로 PWA에 세션이 저장되고, 매직링크는 브라우저에서 완료되므로 브라우저에만 저장된다.
@@ -346,4 +354,4 @@ select polname, polrelid::regclass from pg_policy;
 
 - ~~비밀번호 설정 UI 없음~~ — ✅ 해결: 계정 모달 `비밀번호 설정` (`authSetPassword` → `updateUser`). 매직링크 가입자는 로그인 후 비밀번호를 등록하면 PWA(리다이렉트 불가 환경)에서도 이메일+비밀번호 로그인 가능
 - 비밀번호 분실 시 대시보드 Users → Delete 후 재가입이 유일한 경로 (비밀번호 재설정 메일 플로우 미구현)
-- Supabase 기본 SMTP는 스팸함에 들어갈 수 있음 + 이메일 발송 레이트리밋이 낮음 — 규모 커지면 커스텀 SMTP 검토
+- Supabase 기본 SMTP는 스팸함에 들어갈 수 있음 + 이메일 발송 레이트리밋이 낮음 + **템플릿 편집 자체가 Custom SMTP 설정을 요구** — Resend/SendGrid 등 연결 권장 (OTP 코드 메일도 이게 있어야 동작)
