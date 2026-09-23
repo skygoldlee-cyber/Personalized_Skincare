@@ -231,6 +231,20 @@ body.exam-open{overflow:hidden;}
         article.innerHTML = bodyHtml;
         article.dataset.examMdpath = mdPath || '';
 
+        // 상대 이미지 경로(images/...)를 MD 파일 위치 기준 절대 URL로 변환
+        // (변환 없으면 앱 루트 기준으로 해석되어 ref_md 문서 이미지가 깨짐)
+        if (mdPath) {
+            const baseUrl = new URL(
+                mdPath.substring(0, mdPath.lastIndexOf('/') + 1),
+                location.href).href;
+            article.querySelectorAll('img').forEach(img => {
+                const src = img.getAttribute('src');
+                if (src && !src.startsWith('http') && !src.startsWith('data:')) {
+                    img.src = new URL(src, baseUrl).href;
+                }
+            });
+        }
+
         // 목차를 본문 앞에 삽입 (오버레이 스크롤 컨테이너 안쪽 상단)
         const scroll = el.querySelector('.exam-ov-scroll');
         const oldToc = scroll.querySelector('.exam-ov-toc');
