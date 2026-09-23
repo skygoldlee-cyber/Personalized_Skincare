@@ -4,6 +4,21 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-23 UI/문구 미세 수정 일괄
+
+- **SW 업데이트 토스트 스피너 찌그러짐 수정** (`pwa-install-capture.js`):
+  flex 컨테이너 안 16px 원이 좁은 화면에서 축소되어 타원이 되던 문제 —
+  `flex:none`으로 크기 고정. ※ 토스트는 교체되는 구버전이 그리므로
+  다음 배포의 토스트부터 효과 확인 가능
+- **계정 모달 문구** (`index.html`, `auth-view.js`):
+  - 가입 절차 안내 추가 — "로그인 메일" 경로는 첫 로그인 시 계정 자동 생성,
+    회원가입 버튼은 비밀번호 로그인용임을 명시
+  - 동기화 대상 표현을 "학습 진도 또는 포뮬러·조제 기록"으로 수정
+  - `비밀번호 찾기` title·발송 메시지 — 사용 조건과 절차를 명확히
+- **`MD_to_HTML.py`** — 테마 버튼 `ThemeTheme: Dark` 중복 표기 수정
+  (라벨 텍스트 제거, `::after`만 표시)
+- **`.gitignore`** — `docs/**/*.html` 생성 산출물 제외
+
 ## 2026-09-23 계정 모달 — 이메일 인증 코드(OTP) 로그인
 
 - **`authSendOtp`/`authVerifyOtp`** (`auth-view.js`): `signInWithOtp`로 코드 발송 →
