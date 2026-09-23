@@ -4,6 +4,15 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-23 계정 모달 — 비밀번호 설정 (PWA 로그인 경로)
+
+- **`authSetPassword`** (`auth-view.js`): 로그인 상태에서 `updateUser({password})`로
+  비밀번호 등록 — 매직링크 가입 계정이 PWA(메일 링크가 브라우저를 여는 환경)에서도
+  이메일+비밀번호로 로그인 가능해짐
+- 계정 모달 로그인 영역에 비밀번호 입력 행 + `설정` 버튼, 6자 미만 로컬 검증
+- SUPABASE_DESIGN §5·§A.7 갱신 — 비밀번호 미설정 이슈·PWA 매직링크 한계 해결 표기
+- 테스트: DOM 250개 (+2 common-auth), 자산 125개
+
 ## 2026-09-23 Supabase Phase 2 — 스냅샷 클라우드 동기화
 
 - **`src/sync.js` 신규**: `sync_snapshots` 테이블과 시험별 push/pull —

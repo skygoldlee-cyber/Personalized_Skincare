@@ -112,6 +112,21 @@ export async function authMagicLink() {
     setMsg('로그인 링크를 이메일로 보냈습니다. 메일을 확인하세요.');
 }
 
+/** 로그인 상태에서 비밀번호 설정/변경 — 매직링크 가입 계정이 PWA 등에서 비밀번호 로그인할 수 있게 한다 */
+export async function authSetPassword() {
+    const sb = await getSupabase();
+    if (!sb) return;
+    const input = el('auth-new-password');
+    const password = input?.value || '';
+    if (password.length < 6) { setMsg('비밀번호는 6자 이상이어야 합니다.', true); return; }
+    setMsg('비밀번호 설정 중...');
+    const { error } = await sb.auth.updateUser({ password });
+    if (error) { setMsg(friendlyError(error), true); return; }
+    if (input) input.value = '';
+    setMsg('');
+    showToast('비밀번호가 설정되었습니다. 다음부터 이메일+비밀번호로 로그인할 수 있습니다.', 'success');
+}
+
 export async function authSignOut() {
     const sb = await getSupabase();
     if (!sb) return;

@@ -18,7 +18,7 @@
 ```powershell
 # 테스트
 npm.cmd test                          # 유닛 테스트 (node --test, 458개)
-npm.cmd run test:dom                  # DOM 테스트 (Vitest + jsdom, 248개)
+npm.cmd run test:dom                  # DOM 테스트 (Vitest + jsdom, 250개)
 npm.cmd run test:all                   # 전체 테스트 (unit + parser + dom)
 
 # 빌드
@@ -249,7 +249,7 @@ docs/                   # 개발 문서
 - **Mermaid `!important`**: `css/reader.css`의 Mermaid 규칙 `!important`는 제거 금지 (Mermaid 라이브러리 인라인 스타일 덮어쓰기용)
 - **콘텐츠 편집 후**: `npm.cmd run build:data` 실행 후 `data/` 번들 커밋 필요
 - **CSP**: `vercel.json`에 `script-src 'self'` (인라인 스크립트 금지)
-- **DOM 테스트**: `tests/dom/` 30파일 248개 — Phase 1~5 전 뷰 커버 (매트릭스·작성 규칙은 `docs/dev/DOM_TEST_DESIGN.md`, 파일별 목록은 `docs/dev/TESTING.md`)
+- **DOM 테스트**: `tests/dom/` 30파일 250개 — Phase 1~5 전 뷰 커버 (매트릭스·작성 규칙은 `docs/dev/DOM_TEST_DESIGN.md`, 파일별 목록은 `docs/dev/TESTING.md`)
 
 ## 관련 문서
 

@@ -24,13 +24,14 @@ const authStub = {
     signUp: vi.fn(async () => ({ data: {}, error: null })),
     signInWithOtp: vi.fn(async () => ({ data: {}, error: null })),
     signOut: vi.fn(async () => { session = null; return { error: null }; }),
+    updateUser: vi.fn(async () => ({ data: {}, error: null })),
     onAuthStateChange: vi.fn(),
 };
 window.supabase = { createClient: vi.fn(() => ({ auth: authStub })) };
 
 import {
     initAuthView, openAuthModal, closeAuthModal, refreshAuthUI,
-    authSignIn, authSignUp, authMagicLink, authSignOut,
+    authSignIn, authSignUp, authMagicLink, authSignOut, authSetPassword,
 } from '../../src/auth-view.js';
 
 function fillAuth(email, pw) {
@@ -55,6 +56,7 @@ describe('계정/로그인 모달', () => {
         authStub.signUp.mockImplementation(async () => ({ data: {}, error: null }));
         authStub.signInWithOtp.mockImplementation(async () => ({ data: {}, error: null }));
         authStub.signOut.mockImplementation(async () => { session = null; return { error: null }; });
+        authStub.updateUser.mockImplementation(async () => ({ data: {}, error: null }));
     });
 
     it('모달 열기 — 비로그인 시 로그인 폼 표시·계정 영역 숨김 (H)', async () => {
@@ -125,6 +127,25 @@ describe('계정/로그인 모달', () => {
         expect(lastToast()[0]).toContain('로그아웃');
         await refreshAuthUI();
         expect(el('auth-menu-label').textContent).toBe('계정 / 로그인');
+    });
+
+    it('비밀번호 설정 — updateUser 호출·토스트·입력란 비움 (H)', async () => {
+        session = { user: { email: 'me@test.com' } };
+        await openAuthModal();
+        el('auth-new-password').value = 'newpass6';
+        await authSetPassword();
+        expect(authStub.updateUser).toHaveBeenCalledWith({ password: 'newpass6' });
+        expect(lastToast()[0]).toContain('비밀번호');
+        expect(el('auth-new-password').value).toBe('');
+    });
+
+    it('비밀번호 설정 — 6자 미만은 API 호출 없이 검증 메시지 (X)', async () => {
+        session = { user: { email: 'me@test.com' } };
+        await openAuthModal();
+        el('auth-new-password').value = '123';
+        await authSetPassword();
+        expect(authStub.updateUser).not.toHaveBeenCalled();
+        expect(el('auth-modal-msg').textContent).toContain('6자 이상');
     });
 
     it('initAuthView — 저장된 세션 복원 시 라벨에 이메일 (P/R)', async () => {

@@ -115,7 +115,7 @@ create policy "own snapshots" on sync_snapshots
 - **수단**: 이메일+비밀번호 / **매직링크**(권장 — 학습 앱 특성상 비밀번호 부담 최소) / Google·Kakao OAuth (Supabase 내장 프로바이더)
 - **세션**: supabase-js가 토큰을 localStorage 보관·자동 갱신 — PWA 재시작에도 유지
 - **계정 패널**: 이메일, plan 뱃지(Free/Pro), "지금 동기화" 버튼, 마지막 동기화 시각, 로그아웃
-- **⚠️ 매직링크 가입 계정은 비밀번호 없음** — 이메일+비밀번호 로그인은 항상 `Invalid login credentials`로 실패 (구글 등 소셜 계정 비밀번호와 무관). 매직링크로만 로그인하거나 로그인 후 비밀번호 설정 필요 (미구현 — `updateUser({password})` 추가 과제, §A.7 참조)
+- **⚠️ 매직링크 가입 계정은 비밀번호 없음** — 이메일+비밀번호 로그인은 `Invalid login credentials`로 실패 (소셜 계정 비밀번호와 무관). 계정 모달의 **비밀번호 설정**(`authSetPassword` → `updateUser({password})`)으로 등록하면 PWA 등 리다이렉트 불가 환경에서도 비밀번호 로그인 가능 (§A.7)
 
 ---
 
@@ -294,11 +294,12 @@ select polname, polrelid::regclass from pg_policy;
 | 증상 | 원인 | 해결 |
 |---|---|---|
 | 확인 메일이 localhost로 리다이렉트 | Site URL 기본값 `localhost:3000` | URL Configuration에서 프로덕션으로 변경 (위 표) |
-| 로그인 시 "이메일 또는 비밀번호가 올바르지 않습니다" | 매직링크로 가입 → 비밀번호 미설정 상태 | 매직링크로 로그인. 구글 등 소셜 계정 비밀번호는 Supabase와 무관 — 어떤 비밀번호도 통과 불가 |
+| 로그인 시 "이메일 또는 비밀번호가 올바르지 않습니다" | 매직링크로 가입 → 비밀번호 미설정 상태 | 매직링크로 로그인 후 계정 모달에서 비밀번호 설정. 소셜 계정 비밀번호는 Supabase와 무관 — 어떤 비밀번호도 통과 불가 |
+| PWA에서 매직링크 로그인 불가 | 메일 링크가 브라우저를 열고 세션은 브라우저에 저장 — PWA는 별도 저장 공간 | PWA에서는 이메일+비밀번호 로그인 사용 (계정 모달에서 비밀번호 설정 필요) |
 | 계정 상태 확인 필요 시 | — | Authentication → Users에서 행 존재 + `email_confirmed_at` 확인 |
 
 #### 알려진 UX 갭 (후속 과제)
 
-- 비밀번호 설정/재설정 UI 없음 — 매직링크 가입자가 비밀번호 로그인을 쓰려면 로그인 상태에서 `supabase.auth.updateUser({ password })` 호출 UI 필요
-- 비밀번호 분실 시 대시보드 Users → Delete 후 재가입이 유일한 경로
-- Supabase 기본 SMTP는 스팸함에 들어갈 수 있음 — 규모 커지면 커스텀 SMTP 검토
+- ~~비밀번호 설정 UI 없음~~ — ✅ 해결: 계정 모달 `비밀번호 설정` (`authSetPassword` → `updateUser`). 매직링크 가입자는 로그인 후 비밀번호를 등록하면 PWA(리다이렉트 불가 환경)에서도 이메일+비밀번호 로그인 가능
+- 비밀번호 분실 시 대시보드 Users → Delete 후 재가입이 유일한 경로 (비밀번호 재설정 메일 플로우 미구현)
+- Supabase 기본 SMTP는 스팸함에 들어갈 수 있음 + 이메일 발송 레이트리밋이 낮음 — 규모 커지면 커스텀 SMTP 검토

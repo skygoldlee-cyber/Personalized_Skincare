@@ -247,7 +247,7 @@ import { getViewTitles, navigateToView } from './router.js';
 import { contentPath, getActiveExam, getCurrentExamId, getExamList, purgeLegacyStorage, hasFeature } from './exam-context.js';
 import { renderExamSelect, showExamSelect, selectExamAction } from './views/exam-select.js';
 import { initUiMode, toggleUiMode, toggleStudyTools } from './ui-mode.js';
-import { initAuthView, openAuthModal, closeAuthModal, authSignIn, authSignUp, authMagicLink, authSignOut } from './auth-view.js';
+import { initAuthView, openAuthModal, closeAuthModal, authSignIn, authSignUp, authMagicLink, authSignOut, authSetPassword } from './auth-view.js';
 import { initSync, syncNow } from './sync.js';
 
 // --- 런타임 에러 안전망 (런타임 ReferenceError 등을 사용자에게 알림) ---
@@ -933,7 +933,7 @@ const DELEGATED_HANDLERS = {
     // 학습/실무 UI 모드
     toggleUiMode, toggleStudyTools,
     // 계정/로그인 (Supabase Auth)
-    openAuthModal, closeAuthModal, authSignIn, authSignUp, authMagicLink, authSignOut,
+    openAuthModal, closeAuthModal, authSignIn, authSignUp, authMagicLink, authSignOut, authSetPassword,
     syncNow,
     /** 복수정답형 모의고사 문항 수 선택 행 토글 — 다른 과목의 열린 행은 닫는다 */
     toggleComboPicker(rowId) {
