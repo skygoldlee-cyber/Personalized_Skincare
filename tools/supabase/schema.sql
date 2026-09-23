@@ -28,6 +28,10 @@ create trigger on_auth_user_created
   after insert on auth.users
   for each row execute function public.handle_new_user();
 
+-- 스키마 실행 전에 가입된 기존 사용자 백필 (트리거는 신규 가입에만 발화하므로)
+insert into public.profiles (id)
+  select id from auth.users on conflict (id) do nothing;
+
 -- ============================================================
 -- 2) sync_snapshots — 시험별 진도 스냅샷 (backup.js 논리 키→값 JSON)
 -- ============================================================
