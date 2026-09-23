@@ -72,6 +72,11 @@ export const STORAGE_KEYS = {
   UI_MODE: 'ui_mode',                      // 'study' | 'practice' (합격 후 실무 모드)
   UI_STUDY_TOOLS_OPEN: 'ui_study_tools_open',  // 실무 모드 내 학습 도구 펼침 상태
 
+  // 클라우드 동기화 (sync.js — Phase 2)
+  SYNC_DIRTY: 'sync_dirty',        // 미동기화 로컬 변경 존재 ('1'/'0')
+  SYNC_LAST_TS: 'sync_last_ts',    // 마지막으로 반영/푸시한 원격 updated_at
+  DEVICE_ID: 'device_id',          // 기기 식별 UUID (GLOBAL_KEYS — 시험 무관)
+
   // 세션 (sessionStorage)
   INAPP_GUIDE_SHOWN: '__inappGuideShown',
 };

@@ -248,6 +248,7 @@ import { contentPath, getActiveExam, getCurrentExamId, getExamList, purgeLegacyS
 import { renderExamSelect, showExamSelect, selectExamAction } from './views/exam-select.js';
 import { initUiMode, toggleUiMode, toggleStudyTools } from './ui-mode.js';
 import { initAuthView, openAuthModal, closeAuthModal, authSignIn, authSignUp, authMagicLink, authSignOut } from './auth-view.js';
+import { initSync, syncNow } from './sync.js';
 
 // --- 런타임 에러 안전망 (런타임 ReferenceError 등을 사용자에게 알림) ---
 window.addEventListener('error', function (event) {
@@ -517,6 +518,8 @@ function initApp() {
     step('setupPWAInstall', setupPWAInstall);
     // 계정 세션 복원/구독 — 비동기, 내부에서 오류를 삼켜 앱 초기화를 막지 않음
     step('initAuthView', () => { initAuthView(); });
+    // 클라우드 동기화 — 쓰기 훅 등록 + 로그인 상태면 시작 pull (비동기·실패 무시)
+    step('initSync', () => { initSync(); });
     step('setupThemeToggle', setupThemeToggle);
     // 초기 뷰 렌더링
     step('renderDashboard', renderDashboard);
@@ -931,6 +934,7 @@ const DELEGATED_HANDLERS = {
     toggleUiMode, toggleStudyTools,
     // 계정/로그인 (Supabase Auth)
     openAuthModal, closeAuthModal, authSignIn, authSignUp, authMagicLink, authSignOut,
+    syncNow,
     /** 복수정답형 모의고사 문항 수 선택 행 토글 — 다른 과목의 열린 행은 닫는다 */
     toggleComboPicker(rowId) {
         const row = document.getElementById(rowId);

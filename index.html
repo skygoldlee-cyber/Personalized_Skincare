@@ -2044,16 +2044,18 @@
                     <button type="button" class="btn btn-secondary" data-click="authSignUp">회원가입</button>
                     <button type="button" class="btn btn-secondary" data-click="authMagicLink">매직링크 보내기</button>
                 </div>
-                <p class="auth-modal-hint">매직링크는 비밀번호 없이 이메일 링크로 로그인합니다. 클라우드 동기화는 로그인 후 제공됩니다.</p>
+                <p class="auth-modal-hint">매직링크는 비밀번호 없이 이메일 링크로 로그인합니다. 로그인하면 학습 진도가 클라우드에 동기화됩니다.</p>
             </div>
             <!-- 로그인 상태 -->
             <div id="auth-account-area" class="auth-modal-body is-hidden">
                 <p class="auth-account-line">로그인됨: <strong id="auth-account-email"></strong></p>
                 <p class="auth-account-line">플랜: <span id="auth-account-plan">Free</span></p>
+                <p class="auth-account-line">동기화: <span id="auth-sync-status">대기 중</span></p>
                 <div class="auth-modal-actions">
+                    <button type="button" class="btn btn-primary" data-click="syncNow">지금 동기화</button>
                     <button type="button" class="btn btn-secondary" data-click="authSignOut">로그아웃</button>
                 </div>
-                <p class="auth-modal-hint">클라우드 동기화는 다음 단계에서 제공됩니다. 로그아웃해도 이 기기의 데이터는 유지됩니다.</p>
+                <p class="auth-modal-hint">학습 진도와 포뮬러·조제 기록이 클라우드와 동기화됩니다. 고객 카드는 개인정보 보호를 위해 이 기기에만 저장됩니다. 로그아웃해도 이 기기의 데이터는 유지됩니다.</p>
             </div>
         </div>
     </div>

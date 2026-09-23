@@ -111,9 +111,14 @@ export function safeGetItem(key) {
 // 저장 실패 경고를 1회만 출력하기 위한 모듈 스코프 플래그(반복 스팸 방지).
 let storageWarnEmitted = false;
 
+// 동기화용 쓰기 훅 — sync.js가 setDataWriteHook으로 등록 (순환 import 방지용 콜백 패턴)
+let _dataWriteHook = null;
+export function setDataWriteHook(fn) { _dataWriteHook = fn; }
+
 export function safeSetItem(key, value) {
     try {
         localStorage.setItem(scopedKey(key), value);
+        if (_dataWriteHook) { try { _dataWriteHook(key); } catch (_) {} }
         return true;
     } catch (e) {
         if (!storageWarnEmitted) {

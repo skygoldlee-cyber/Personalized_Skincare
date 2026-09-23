@@ -4,6 +4,20 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-23 Supabase Phase 2 — 스냅샷 클라우드 동기화
+
+- **`src/sync.js` 신규**: `sync_snapshots` 테이블과 시험별 push/pull —
+  페이로드는 backup.js의 논리 키→값 포맷 재사용(§4), `customer_items` 제외(§7).
+  - 쓰기 훅: `state.js` `setDataWriteHook()` 콜백 — 순환 import 없이
+    `safeSetItem` 성공 시 동기화 대상 키만 `sync_dirty` 표시 (메타 키 재귀 가드)
+  - 로그인 시 변경마다 2.5초 디바운스 push(upsert), `online` 이벤트에서 미동기화 재시도
+  - pull: 원격 최신 → 화이트리스트 적용 후 리로드; 로컬 dirty + 원격 최신 =
+    충돌 → `showConfirm`으로 "클라우드 가져오기/이 기기 유지(=push)" 선택(LWW)
+  - `device_id`(전역 UUID)·`sync_last_ts`·`sync_dirty` 키 추가 — 메타는 시험 스코프
+- **UI**: 계정 모달에 동기화 상태 라인 + `지금 동기화` 버튼 + 개인정보 안내 문구
+- **테스트**: DOM 248개 (+11 common-sync — 페이로드 수집/훅/디바운스/pull·
+  충돌 양방향/실패/비로그인), import 0 오류, 자산 125개 (`src/sync.js` 등록)
+
 ## 2026-09-23 Supabase Phase 1 — 계정/로그인
 
 - **Supabase 연동 기반**: `src/supabase-config.js`(프로젝트 URL·

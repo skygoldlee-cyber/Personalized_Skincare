@@ -2,7 +2,7 @@
 
 > 상위 문서: `ARCHITECTURE.md` (전체 구조), `FORMULA_OS_DESIGN.md` (실무 데이터 모델)
 > 목적: localStorage 전용 구조에 **선택적 계정(로그인) + 클라우드 동기화 + 서버 측 Pro entitlement**를 추가한다.
-> **구현 상태**: ✅ Phase 1 구현 완료 (2026-09-23) — `supabase-client.js` lazy init + `auth-view.js` 로그인 모달(이메일+PW·가입·매직링크) + 설정 메뉴 계정 항목 + CSP `connect-src` 확장 + vendor/supabase 2.116.0 self-host. 동기화(Phase 2)·Pro(Phase 3)는 스키마 실행 후 진행 — `tools/supabase/schema.sql`을 SQL Editor에서 실행 필요.
+> **구현 상태**: ✅ Phase 1~2 구현 완료 (2026-09-23) — Phase 1: `supabase-client.js` lazy init + `auth-view.js` 로그인 모달(이메일+PW·가입·매직링크) + CSP `connect-src` 확장 + vendor/supabase 2.116.0 self-host. Phase 2: `src/sync.js` 스냅샷 동기화(쓰기 훅 dirty·2.5s 디바운스 push·pull·LWW+확인 모달·`지금 동기화` 버튼·`device_id`). 고객 카드·상담 이력은 개인정보 보호로 동기화 제외(§7). Pro(Phase 3)만 남음 — `tools/supabase/schema.sql`을 SQL Editor에서 실행 필요.
 > 전제: 기존 오프라인 PWA·Zero-Backend 철학 유지 — Supabase는 "없어도 되는" 선택 계층
 
 ---

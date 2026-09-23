@@ -51,6 +51,7 @@ const SHELL_ASSETS = [
   './src/supabase-config.js',
   './src/supabase-client.js',
   './src/auth-view.js',
+  './src/sync.js',
   './src/sanitize.js',
   './src/state.js',
   './src/charts.js',

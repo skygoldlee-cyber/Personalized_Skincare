@@ -23,7 +23,7 @@
 | 구분 | 프레임워크 | 환경 | 파일 위치 | 테스트 수 |
 |------|-----------|------|-----------|-----------|
 | **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 458 |
-| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 237 |
+| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 248 |
 | **합계** | | | | **686** |
 
 ### 설계 원칙
@@ -44,7 +44,7 @@ npm test
 # 또는
 npm run test:unit
 
-# DOM 테스트만 실행 (237개)
+# DOM 테스트만 실행 (248개)
 npm run test:dom
 
 # 전체 실행 (Unit + 파서 정합성 + DOM)
@@ -142,7 +142,8 @@ npm run test:watch
 | 27 | `common-a11y.dom.test.js` | 7 | 접근성 | 토스트 role=status, 모달 trapFocus·aria-modal, 아이콘 버튼 aria-label 전수 | 2026-09-23 추가 |
 | 28 | `common-uimode.dom.test.js` | 7 | 학습/실무 UI 모드 | 모드 전환→학습 항목 CSS 숨김(실제 캐스케이드)·학습 도구 펼침·랜딩 리다이렉트·영속 복원·학습/실무 매뉴얼 가시성·토글 2곳(푸터·설정) 동기화 | 2026-09-23 추가 |
 | 29 | `common-auth.dom.test.js` | 9 | 계정/로그인 (Supabase) | 모달 열기·로그인 성공/실패 한글 매핑·회원가입·매직링크·로그아웃·세션 복원 (window.supabase 스텁) | 2026-09-23 추가 |
-| | **합계** | **237** | | |
+| 30 | `common-sync.dom.test.js` | 11 | 클라우드 동기화 | 페이로드 수집(고객 제외)·쓰기 훅 dirty·디바운스 push·pull 적용·충돌 양방향·push 실패·비로그인 무시 | 2026-09-23 추가 |
+| | **합계** | **248** | | |
 
 ---
 

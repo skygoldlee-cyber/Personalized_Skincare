@@ -104,7 +104,8 @@ const GLOBAL_KEYS = new Set([
     'readerAudioAutoScroll',
     'ui_analysis_open',
     'ui_mode',
-    'ui_study_tools_open'
+    'ui_study_tools_open',
+    'device_id'                    // 동기화 기기 식별 — 시험 무관
 ]);
 
 /** 진도 키에 시험 접두사 부여 (`fc_memorized` → `cosmetic:fc_memorized`) */
