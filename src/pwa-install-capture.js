@@ -115,7 +115,7 @@
         ].join(';');
         document.body.appendChild(toast);
       }
-      toast.innerHTML = '<span style="display:inline-block;width:16px;height:16px;'
+      toast.innerHTML = '<span style="display:inline-block;flex:none;width:16px;height:16px;'
         + 'border:2px solid rgba(255,255,255,0.2);border-top-color:#4ade80;'
         + 'border-radius:50%;animation:sw-spin 0.8s linear infinite;'
         + (isFinal ? 'animation:none;border-color:#4ade80;' : '')
