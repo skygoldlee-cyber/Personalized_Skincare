@@ -38,6 +38,23 @@ Authentication → Emails
 
 ---
 
+## 2.5 대시보드 바로가기
+
+프로젝트 대시보드: `https://supabase.com/dashboard/project/hunpzznyiaddekuggupu`
+
+| 용도 | 경로 | 링크 |
+|---|---|---|
+| SMTP 설정 | Authentication → SMTP Settings | https://supabase.com/dashboard/project/hunpzznyiaddekuggupu/settings/auth |
+| 이메일 템플릿 | Authentication → Emails | https://supabase.com/dashboard/project/hunpzznyiaddekuggupu/auth/templates |
+| URL 설정 | Site URL·Redirect URLs | https://supabase.com/dashboard/project/hunpzznyiaddekuggupu/auth/url-configuration |
+| 사용자 목록 | Authentication → Users | https://supabase.com/dashboard/project/hunpzznyiaddekuggupu/auth/users |
+| 테이블 편집기 | `sync_snapshots` 행 확인 | https://supabase.com/dashboard/project/hunpzznyiaddekuggupu/editor |
+| SQL Editor | 스키마·검증 쿼리 | https://supabase.com/dashboard/project/hunpzznyiaddekuggupu/sql/new |
+
+> 대시보드 버전에 따라 메뉴 경로가 약간 다를 수 있습니다 — 링크가 바로 해당 페이지로 이동합니다.
+
+---
+
 # 3. Custom SMTP 설정
 
 ## 3.1 Supabase 메뉴
