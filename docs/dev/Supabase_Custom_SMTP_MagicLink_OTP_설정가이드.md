@@ -180,6 +180,8 @@ Custom SMTP를 활성화한 다음 Supabase에서:
 
 기본 `{{ .ConfirmationURL }}` 대신 **`{{ .SiteURL }}/?token_hash={{ .TokenHash }}&type=email`** 형태의 앱 도메인 링크를 권장합니다 — 기본 ConfirmationURL은 메일 보안 스캐너·미리보기의 GET 요청 한 번에 토큰이 소진되지만, `token_hash` 링크는 앱 안에서 확인 클릭 시에만 소비됩니다.
 
+> ⚠️ **`Confirm signup` 템플릿에서는 링크 끝을 `type=signup`으로 바꾸세요** — 앱은 쿼리의 `type` 값을 `verifyOtp`에 그대로 전달하므로, 가입 확인 토큰을 `email`로 검증하면 실패합니다.
+
 ### 앱 도메인
 
 ```text
@@ -483,7 +485,7 @@ PWA
 - [ ] `{{ .Token }}` 추가
 - [ ] `{{ .SiteURL }}/?token_hash={{ .TokenHash }}&type=email` 링크 추가
 - [ ] Save
-- [ ] **`Confirm signup` 템플릿에도 동일하게 적용** — 신규 계정은 이 템플릿이 발송됨
+- [ ] **`Confirm signup` 템플릿에도 동일하게 적용 — 링크는 `type=signup`** — 신규 계정은 이 템플릿이 발송됨
 
 ## 앱 테스트
 
@@ -501,7 +503,7 @@ PWA
 
 # 16. 최종 템플릿
 
-실제 Supabase Body에는 아래 HTML을 사용하면 됩니다 (`Magic link or OTP`와 `Confirm signup` 양쪽에 적용).
+실제 Supabase Body에는 아래 HTML을 사용하면 됩니다 (`Magic link or OTP`와 `Confirm signup` 양쪽에 적용 — `Confirm signup`에서는 링크 끝의 `type=email`을 **`type=signup`**으로 변경).
 
 ```html
 <h2>Passmula 로그인</h2>

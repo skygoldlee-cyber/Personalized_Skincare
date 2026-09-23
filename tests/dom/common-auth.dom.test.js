@@ -9,6 +9,7 @@ vi.mock('../../src/ui-utils.js', () => ({
     showConfirm: vi.fn(() => Promise.resolve(true)),
     showAlert: vi.fn(),
     vibrate: vi.fn(),
+    trapFocus: vi.fn(() => () => {}),
     HAPTIC: {},
 }));
 
@@ -38,7 +39,7 @@ window.supabase = { createClient: vi.fn(() => ({ auth: authStub })) };
 import {
     initAuthView, openAuthModal, closeAuthModal, refreshAuthUI,
     authSignIn, authSignUp, authEmailLogin, authMagicLink, authSignOut, authSetPassword,
-    authSendOtp, authVerifyOtp, resetEmailLoginCooldown,
+    authSendOtp, authVerifyOtp, authForgotPassword, resetEmailLoginCooldown,
 } from '../../src/auth-view.js';
 
 function fillAuth(email, pw) {
@@ -238,13 +239,21 @@ describe('계정/로그인 모달', () => {
         expect(location.search).toBe('');
     });
 
-    it('token_hash 랜딩 — 취소 시 토큰 미소비 (스캐너 방어) (X)', async () => {
+    it('token_hash 랜딩 — 취소 시 토큰 미소비 + 코드 경로 안내 토스트 (X)', async () => {
         showConfirm.mockResolvedValueOnce(false);
         history.replaceState(null, '', '/?token_hash=tok_hash_2&type=email');
         await initAuthView();
         await flushAsync();
         expect(showConfirm).toHaveBeenCalled();
         expect(authStub.verifyOtp).not.toHaveBeenCalled();
+        expect(lastToast()[0]).toContain('인증 코드');
+    });
+
+    it('token_hash 랜딩 — type 파라미터를 verifyOtp에 그대로 전달 (signup) (H)', async () => {
+        history.replaceState(null, '', '/?token_hash=tok_signup&type=signup');
+        await initAuthView();
+        await flushAsync();
+        expect(authStub.verifyOtp).toHaveBeenCalledWith({ token_hash: 'tok_signup', type: 'signup' });
     });
 
     it('재발송 쿨다운 — 발송 후 버튼 비활성 + 재호출 차단 (R)', async () => {
@@ -257,5 +266,38 @@ describe('계정/로그인 모달', () => {
         await authEmailLogin();
         expect(authStub.signInWithOtp).toHaveBeenCalledTimes(1);
         expect(el('auth-modal-msg').textContent).toContain('재발송');
+    });
+
+    it('재발송 쿨다운 — localStorage에 만료 시각 저장 (재시작 후에도 유지) (H)', async () => {
+        await openAuthModal();
+        el('auth-email').value = 'cd@test.com';
+        await authEmailLogin();
+        const until = parseInt(localStorage.getItem('passmula_auth_mail_cooldown_until') || '0', 10);
+        expect(until).toBeGreaterThan(Date.now());
+    });
+
+    it('비밀번호 찾기 — 로그인 메일 발송 + 재설정 절차 안내 (H)', async () => {
+        await openAuthModal();
+        el('auth-email').value = 'lost@test.com';
+        await authForgotPassword();
+        expect(authStub.signInWithOtp).toHaveBeenCalledWith({
+            email: 'lost@test.com',
+            options: { emailRedirectTo: location.origin },
+        });
+        expect(el('auth-modal-msg').textContent).toContain('비밀번호 설정');
+        expect(isVisible('auth-otp-area')).toBe(true);
+    });
+
+    it('Enter 키 — 이메일 칸에서 로그인·코드 칸에서 OTP 검증 제출 (H)', async () => {
+        await initAuthView();
+        fillAuth('enter@test.com', 'pw12345');
+        el('auth-email').dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+        await flushAsync();
+        expect(authStub.signInWithPassword).toHaveBeenCalled();
+        el('auth-email').value = 'otp@test.com';
+        el('auth-otp-code').value = '123456';
+        el('auth-otp-code').dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+        await flushAsync();
+        expect(authStub.verifyOtp).toHaveBeenCalledWith({ email: 'otp@test.com', token: '123456', type: 'email' });
     });
 });

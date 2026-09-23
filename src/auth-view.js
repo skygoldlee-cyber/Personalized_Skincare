@@ -1,7 +1,7 @@
 // src/auth-view.js — 계정/로그인 모달 (Phase 1: 인증만, 동기화는 Phase 2)
 // 이메일+비밀번호 로그인·회원가입·매직링크. 세션은 supabase-js가 localStorage에 자동 보관.
 import { getSupabase, onAuthChange } from './supabase-client.js';
-import { showToast, showConfirm } from './ui-utils.js';
+import { showToast, showConfirm, trapFocus } from './ui-utils.js';
 
 const el = id => document.getElementById(id);
 const show = n => n && n.classList.remove('is-hidden');
@@ -61,12 +61,16 @@ export async function openAuthModal() {
     setMsg('');
     hide(el('auth-otp-area'));
     show(modal);
+    if (modal._untrapFocus) modal._untrapFocus();
+    modal._untrapFocus = trapFocus(modal);
     try { await refreshAuthUI(); }
     catch (e) { setMsg(friendlyError(e), true); }
 }
 
 export function closeAuthModal() {
-    hide(el('auth-modal'));
+    const modal = el('auth-modal');
+    if (modal && modal._untrapFocus) { modal._untrapFocus(); modal._untrapFocus = null; }
+    hide(modal);
     setMsg('');
 }
 
@@ -105,16 +109,33 @@ export async function authSignUp() {
 
 // 이메일 재발송 쿨다운 — Supabase는 같은 주소 재요청을 짧은 간격으로 제한하고,
 // Custom SMTP 적용 후 시간당 발송 한도도 별도로 생긴다.
+// 만료 시각을 localStorage에 보관해 새로고침해도 쿨다운이 유지되게 한다.
+const COOLDOWN_KEY = 'passmula_auth_mail_cooldown_until';
+const COOLDOWN_SEC = 60;
 let _emailLoginCooldown = 0;
 
-function startEmailLoginCooldown(btn) {
-    _emailLoginCooldown = 60;
+function _loadCooldownUntil() {
+    try { return parseInt(localStorage.getItem(COOLDOWN_KEY) || '0', 10) || 0; }
+    catch (_) { return 0; }
+}
+function _saveCooldownUntil(ts) {
+    try {
+        if (ts > 0) localStorage.setItem(COOLDOWN_KEY, String(ts));
+        else localStorage.removeItem(COOLDOWN_KEY);
+    } catch (_) {}
+}
+
+function startEmailLoginCooldown(btn, remainingSec = COOLDOWN_SEC) {
+    _emailLoginCooldown = remainingSec;
+    _saveCooldownUntil(Date.now() + remainingSec * 1000);
     if (!btn) return;
-    const label = btn.textContent;
+    const label = btn.dataset.cooldownLabel || btn.textContent;
+    btn.dataset.cooldownLabel = label;
     const tick = () => {
         if (_emailLoginCooldown <= 0) {
             btn.disabled = false;
             btn.textContent = label;
+            _saveCooldownUntil(0);
             return;
         }
         btn.disabled = true;
@@ -148,12 +169,30 @@ export async function authEmailLogin() {
     startEmailLoginCooldown(document.querySelector('[data-click="authEmailLogin"]'));
 }
 
+/** 비밀번호 분실 — 로그인 메일(OTP)로 로그인한 뒤 계정 화면에서 새 비밀번호 설정 */
+export async function authForgotPassword() {
+    const sb = await getSupabase();
+    if (!sb) return;
+    const { email } = readCredentials();
+    if (!email) { setMsg('비밀번호를 재설정할 이메일을 입력하세요.', true); return; }
+    if (_emailLoginCooldown > 0) { setMsg(`재발송은 ${_emailLoginCooldown}초 후에 가능합니다.`, true); return; }
+    setMsg('로그인 메일 발송 중...');
+    const { error } = await sb.auth.signInWithOtp({
+        email,
+        options: { emailRedirectTo: window.location.origin },
+    });
+    if (error) { setMsg(friendlyError(error), true); return; }
+    show(el('auth-otp-area'));
+    setMsg('로그인 메일을 보냈습니다. 코드로 로그인한 뒤 계정 화면의 "비밀번호 설정"에서 새 비밀번호를 지정하세요.');
+    startEmailLoginCooldown(document.querySelector('[data-click="authEmailLogin"]'));
+}
+
 /** @deprecated authEmailLogin으로 통합 — 기존 핸들러 호환용 별칭 */
 export const authMagicLink = authEmailLogin;
 export const authSendOtp = authEmailLogin;
 
 /** 재발송 쿨다운 초기화 — 테스트 간 모듈 상태 리셋용 */
-export function resetEmailLoginCooldown() { _emailLoginCooldown = 0; }
+export function resetEmailLoginCooldown() { _emailLoginCooldown = 0; _saveCooldownUntil(0); }
 
 export async function authVerifyOtp() {
     const sb = await getSupabase();
@@ -217,10 +256,15 @@ async function handleAuthLanding() {
             '이 브라우저에서 로그인할까요? 설치된 앱(PWA)에서 로그인 중이라면 취소하고 메일의 인증 코드를 앱에 입력하세요.',
             '로그인 링크'
         );
-        if (!ok) return;
+        if (!ok) {
+            showToast('링크 로그인을 취소했습니다. 토큰은 유지됩니다 — 같은 메일의 인증 코드로 계속 로그인할 수 있습니다.', 'info');
+            return;
+        }
         const sb = await getSupabase();
         if (!sb) return;
-        const { error } = await sb.auth.verifyOtp({ token_hash: tokenHash, type: 'email' });
+        // 템플릿이 지정한 토큰 종류를 그대로 전달 — Confirm signup 메일은 type=signup
+        const type = query.get('type') || 'email';
+        const { error } = await sb.auth.verifyOtp({ token_hash: tokenHash, type });
         if (error) showToast(friendlyError(error), 'error');
         else showToast('로그인했습니다.', 'success');
         return;
@@ -245,6 +289,18 @@ async function handleAuthLanding() {
 /** 앱 초기화 시 1회 — 매직링크 랜딩 처리 + 세션 복원 반영 + 상태 변화 구독 */
 export async function initAuthView() {
     if (!el('auth-modal')) return;
+    // Enter 키 제출 — 버튼 클릭 없이 폼 완료
+    const enter = (id, fn) => {
+        const node = el(id);
+        if (node) node.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); fn(); } });
+    };
+    enter('auth-email', authSignIn);
+    enter('auth-password', authSignIn);
+    enter('auth-otp-code', authVerifyOtp);
+    enter('auth-new-password', authSetPassword);
+    // 새로고침 전 발송의 남은 쿨다운 복원
+    const remaining = Math.ceil((_loadCooldownUntil() - Date.now()) / 1000);
+    if (remaining > 0) startEmailLoginCooldown(document.querySelector('[data-click="authEmailLogin"]'), remaining);
     try { handleAuthLanding().catch(() => {}); } catch (_) {}
     try { await refreshAuthUI(); } catch (_) { /* 오프라인 등 — 로그인 UI는 비로그인 상태로 둠 */ }
     try {

@@ -361,11 +361,14 @@ select polname, polrelid::regclass from pg_policy;
    ```
 
    - `{{ .Token }}`·`{{ .TokenHash }}`·`{{ .SiteURL }}`는 발송 시점에 자동 치환 — 실제 값을 가져올 필요 없음
+   - 링크 끝 `type=`은 토큰 종류 — `Magic link or OTP`는 `email`, `Confirm signup`은 `signup`. 앱이 이 값을 `verifyOtp`에 전달한다
    - ⚠️ **링크와 코드는 독립적이지 않고 같은 일회용 토큰의 두 표현** — 한쪽을 쓰면 다른 쪽도 함께 소진된다. iOS 사용자가 습관적으로 링크를 누르면 코드가 죽어 "코드가 안 먹는다"로 보이고, 메일 보안 스캐너·미리보기가 `ConfirmationURL`에 GET을 보내면 사용자가 열기 전에 토큰이 소진된다 → **기본 `{{ .ConfirmationURL }}` 대신 앱 도메인 `?token_hash=` 링크를 쓰는 것이 권장** (앱이 확인 클릭을 요구해 스캐너 소진을 막고, iOS에 코드 경로 안내 기회를 준다 — §A.8)
    - `{{ .SiteURL }}`는 대시보드 Site URL로 치환 — Redirect URLs 허용 목록과 무관하게 Site URL 값이 들어간다
    - Subject는 변경 불필요
 
-3. **`Confirm signup` 템플릿에도 동일하게 적용** — `signInWithOtp`는 미등록 이메일로 새 계정을 만들며, `Confirm email` ON 상태에서 신규 사용자에게는 `Magic link or OTP`가 아니라 **`Confirm signup` 템플릿이 나간다**. 이 템플릿에 `{{ .Token }}`이 없으면 처음 가입하는 iOS PWA 사용자만 코드 없는 메일을 받는다. **E2E 테스트는 반드시 Users에 없는 새 이메일로도 수행할 것.**
+3. **`Confirm signup` 템플릿에도 동일하게 적용 — 단, 링크 끝을 `type=signup`으로** — `signInWithOtp`는 미등록 이메일로 새 계정을 만들며, `Confirm email` ON 상태에서 신규 사용자에게는 `Magic link or OTP`가 아니라 **`Confirm signup` 템플릿이 나간다**. 이 템플릿에 `{{ .Token }}`이 없으면 처음 가입하는 iOS PWA 사용자만 코드 없는 메일을 받는다. **E2E 테스트는 반드시 Users에 없는 새 이메일로도 수행할 것.**
+
+   > 앱의 `token_hash` 랜딩은 쿼리의 `type` 값을 `verifyOtp`에 그대로 전달한다 — `Magic link or OTP`는 `type=email`, `Confirm signup`은 `type=signup`. 잘못된 type은 검증 실패로 이어진다.
 
 4. **Save** — 내용이 바뀌어야 버튼이 활성화됨. 프로젝트 전역 설정이므로 사용자별 작업 불필요
 
