@@ -309,11 +309,25 @@ select polname, polrelid::regclass from pg_policy;
 
 > ⚠️ **선행 조건 — Custom SMTP**: Supabase는 기본 이메일 발송 서비스에서 템플릿 편집을 막는다 ("Set up custom SMTP to edit templates" — Subject/Body 비활성). 템플릿을 바꾸려면 먼저 SMTP를 연결해야 한다.
 >
-> 1. **Authentication → SMTP Settings** (또는 Emails 화면의 Set up SMTP)
-> 2. SMTP 정보 입력 — Resend(`smtp.resend.com`)/SendGrid/Gmail 앱 비밀번호/SES 등. Gmail은 계정 비밀번호가 아닌 **앱 비밀번호** 사용
-> 3. 저장 후 Authentication → Emails → Templates가 편집 가능해짐
->
 > SMTP는 어차피 운영 필수 — 기본 발송은 시간당 한도가 매우 낮고 스팸함 분류가 잦다.
+
+##### Custom SMTP 설정 — 권장: Gmail 앱 비밀번호
+
+**권장 이유**: 주 사용자층이 설치형 PWA라 브라우저 없는 로그인(OTP)이 필요하고, OTP는 `{{ .Token }}` 템플릿 → **Custom SMTP**가 선행 조건이다. SMTP 제공자 중 Gmail 앱 비밀번호는 ① 기존 Gmail 계정으로 즉시 가능(별도 가입·도메인 인증 불필요) ② Resend는 도메인 없으면 소유자 메일로만 발송 가능하고 vercel.app 도메인은 DNS 레코드를 못 넣어 실사용 발송엔 자체 도메인 필요 ③ 이 앱 규모에서는 일 ~500통 한도로 충분. 규모 확장 시 Resend/SES로 설정만 교체하면 되고 앱 코드 변경은 없다.
+
+1. **myaccount.google.com** → 보안 → 2단계 인증 활성화 → "앱 비밀번호" 생성 (이름 예: `Supabase`) → 16자리 발급
+2. Supabase 대시보드 → **Authentication → SMTP Settings**에 입력:
+
+   | 항목 | 값 |
+   |---|---|
+   | Host | `smtp.gmail.com` |
+   | Port | `465` |
+   | Username | 발신용 Gmail 주소 |
+   | Password | 16자리 앱 비밀번호 (공백 제외) |
+   | Sender email | 같은 Gmail 주소 |
+   | Sender name | 서비스명 (예: `Passmula`) |
+
+3. 저장 + **Enable Custom SMTP** ON → 이후 Templates 편집 가능
 
 1. 대시보드 → **Authentication → Emails** (또는 Email Templates) → **`Magic link or OTP`** 템플릿 선택
 2. **Content → Body** 영역 클릭 후 `{{ .Token }}` 줄 추가. 추천 본문:
