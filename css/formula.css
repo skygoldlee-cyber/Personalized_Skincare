@@ -856,8 +856,8 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
     gap: 0.4rem;
 }
 .comp-item {
-    background: var(--color-surface, #fff);
-    border: 1px solid var(--color-border, #e2e8f0);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
     border-radius: var(--radius-md, 8px);
     padding: 0.55rem 0.7rem;
 }
@@ -919,11 +919,11 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
     flex-direction: column;
     gap: 0.15rem;
     padding: 0.6rem 0.7rem;
-    background: var(--color-surface, #fff);
-    border: 1px solid var(--color-border, #e2e8f0);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
     border-radius: var(--radius-md, 8px);
     text-decoration: none;
-    color: var(--color-text);
+    color: var(--color-text-main);
 }
 .comp-doc-link:hover {
     border-color: var(--color-primary, #1f6feb);
