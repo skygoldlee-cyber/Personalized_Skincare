@@ -21,6 +21,10 @@
     --stroke-subtle: rgba(255, 255, 255, 0.05);   /* SVG stroke 희미 */
     --stroke-medium: rgba(255, 255, 255, 0.08);   /* SVG stroke 중간 */
     --stroke-strong: rgba(255, 255, 255, 0.12);   /* SVG stroke 강함 */
+
+    /* 스크롤바 — 한눈에 찾을 수 있도록 대비 있는 thumb */
+    --scrollbar-thumb: rgba(255, 255, 255, 0.3);
+    --scrollbar-thumb-hover: rgba(255, 255, 255, 0.48);
     
     /* Brand Colors */
     --color-primary: #06b6d4;      /* Luminous Cyan */
@@ -307,14 +311,10 @@
     --glow-warning: 0 0 15px rgba(245, 158, 11, 0.15);
     --glow-danger: 0 0 15px rgba(239, 68, 68, 0.15);
     --shadow-modal: 0 20px 60px rgba(0, 0, 0, 0.25);
-}
 
-/* Light-mode scrollbar */
-.light-theme ::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.15);
-}
-.light-theme ::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 0, 0, 0.25);
+    /* 스크롤바 — 다크 대비 라이트는 어두운 thumb로 대비 확보 */
+    --scrollbar-thumb: rgba(0, 0, 0, 0.38);
+    --scrollbar-thumb-hover: rgba(0, 0, 0, 0.55);
 }
 
 /* 카드 박스에 그림자 추가하여 경계 명확화 (다크/라이트 공통) */
@@ -516,20 +516,24 @@ body {
     border-radius: var(--radius-2xs);
 }
 
-/* Scrollbar Style */
+/* Scrollbar Style — 다크/라이트 모두 thumb 대비를 높여 발견이 쉽게 */
+html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) var(--bg-subtle);
+}
 ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 10px;
+    height: 10px;
 }
 ::-webkit-scrollbar-track {
-    background: transparent;
+    background: var(--bg-subtle);
 }
 ::-webkit-scrollbar-thumb {
-    background: var(--bg-elevated);
+    background: var(--scrollbar-thumb);
     border-radius: var(--radius-sm);
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--border-strong);
+    background: var(--scrollbar-thumb-hover);
 }
 
 /* A4: 전정 감각 민감 사용자 — 애니메이션/전환 축소 */
