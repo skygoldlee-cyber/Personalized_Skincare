@@ -512,10 +512,10 @@
 
 /* Custom Scrollbar for OMR grid */
 .omr-grid-container::-webkit-scrollbar {
-    width: 4px;
+    width: 6px;
 }
 .omr-grid-container::-webkit-scrollbar-thumb {
-    background-color: var(--bg-elevated);
+    background-color: var(--scrollbar-thumb);
     border-radius: var(--radius-xs);
 }
 

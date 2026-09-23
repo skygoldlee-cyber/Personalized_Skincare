@@ -1331,7 +1331,7 @@ body.reader-focus-mode .reader-readable-width {
         padding-bottom: var(--space-1);
     }
     .nav-menu::-webkit-scrollbar {
-        height: 4px;
+        height: 6px;
     }
     .nav-item {
         padding: 0.55rem 0.85rem;
