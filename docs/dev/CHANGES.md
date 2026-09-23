@@ -4,6 +4,25 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-23 Supabase Phase 1 — 계정/로그인
+
+- **Supabase 연동 기반**: `src/supabase-config.js`(프로젝트 URL·
+  Publishable key — 공개 설계상 키, 보안은 RLS 담당) +
+  `src/supabase-client.js`(vendor UMD lazy 로드·클라이언트 싱글턴·
+  세션 헬퍼). `vendor/supabase/supabase.js` 2.116.0 self-host
+  (`script-src 'self'`로 CDN 불가). 미설정 환경에서는
+  `isSupabaseConfigured()` 게이트로 조용히 비활성.
+- **로그인 모달** (`src/auth-view.js` + index.html): 설정 메뉴
+  `계정 / 로그인` 항목 → 이메일+비밀번호 로그인·회원가입·매직링크.
+  영문 오류를 한글로 매핑, 로그인 시 설정 라벨이 이메일로 전환.
+  로그아웃 시 로컬 데이터 유지 안내.
+- **인프라**: vercel.json `connect-src`에 `*.supabase.co` 추가,
+  sw.js 자산 124개(외부 오리진은 기존 cross-origin 조기 리턴으로
+  캐시 제외 — 변경 불필요 확인).
+- **스키마**: `tools/supabase/schema.sql` — profiles·sync_snapshots·
+  pro_codes + RLS + 가입 트리거 + redeem_code RPC.
+- 테스트: DOM 237개 (+9 common-auth), import 0 오류, 자산 124개.
+
 ## 2026-09-23 모바일 실무 모드 학습도구 탭
 
 - **모바일 학습 항목 펼침 경로**: `학습 도구` 펼침 라벨이 사이드바

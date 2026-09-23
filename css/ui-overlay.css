@@ -237,3 +237,92 @@
 .chart-tooltip.is-visible {
   opacity: 1;
 }
+
+/* ── 계정/로그인 모달 (Supabase Auth, Phase 1) ── */
+.auth-modal {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal, 1000);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+}
+.auth-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(11, 15, 25, 0.6);
+  backdrop-filter: blur(4px);
+}
+.auth-modal-card {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-popover-lg);
+  padding: var(--space-5);
+}
+.auth-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+.auth-modal-header h3 {
+  margin: 0;
+  font-size: var(--text-lg);
+}
+.auth-modal-close {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  padding: var(--space-2);
+  font-size: var(--text-lg);
+}
+.auth-modal-close:hover { color: var(--color-text-main); }
+.auth-modal-msg {
+  padding: var(--space-2) var(--space-3);
+  margin-bottom: var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+  color: var(--color-text-main);
+  font-size: var(--text-sm-md);
+}
+.auth-modal-msg-error {
+  background: rgba(239, 68, 68, 0.12);
+  color: var(--color-danger-light, #f87171);
+}
+.auth-modal-body { display: flex; flex-direction: column; gap: var(--space-2); }
+.auth-field-label {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin-top: var(--space-2);
+}
+.auth-field {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+  color: var(--color-text-main);
+  font-size: var(--text-md);
+}
+.auth-field:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+.auth-modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+.auth-modal-hint {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin: var(--space-2) 0 0;
+}
+.auth-account-line { margin: var(--space-1) 0; }

@@ -49,6 +49,8 @@ const SHELL_ASSETS = [
   './src/theme-toggle.js',
   './src/ui-mode.js',
   './src/supabase-config.js',
+  './src/supabase-client.js',
+  './src/auth-view.js',
   './src/sanitize.js',
   './src/state.js',
   './src/charts.js',
@@ -135,6 +137,7 @@ const SHELL_ASSETS = [
   './icons/icon-512.png',
   './icons/icon-maskable-512.png',
   // FontAwesome 자체 호스팅 (오프라인/모바일에서도 아이콘 확실히 표시)
+  './vendor/supabase/supabase.js',
   './vendor/fontawesome/css/all.min.css',
   './vendor/fontawesome/webfonts/fa-solid-900.woff2',
   './vendor/fontawesome/webfonts/fa-brands-400.woff2',

@@ -129,6 +129,11 @@
                             <i class="fa-solid fa-gear" aria-hidden="true"></i>
                         </button>
                         <div id="settings-panel" class="settings-panel is-hidden">
+                            <!-- 계정: 로그인/로그아웃·동기화 (Supabase) — 미설정 환경에서는 안내 문구로 표시 -->
+                            <button type="button" class="settings-item" data-click="openAuthModal">
+                                <i class="fa-solid fa-user" aria-hidden="true"></i> <span id="auth-menu-label">계정 / 로그인</span>
+                            </button>
+                            <div class="settings-divider"></div>
                             <button type="button" class="settings-item" data-click="exportData">
                                 <i class="fa-solid fa-download" aria-hidden="true"></i> 데이터 백업
                             </button>
@@ -2015,6 +2020,42 @@
                 <span>시험전환</span>
             </button>
         </nav>
+    </div>
+
+    <!-- 계정/로그인 모달 (Supabase Auth — Phase 1: 인증만, 동기화는 Phase 2) -->
+    <div id="auth-modal" class="auth-modal is-hidden" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title">
+        <div class="auth-modal-backdrop" data-click="closeAuthModal"></div>
+        <div class="auth-modal-card">
+            <div class="auth-modal-header">
+                <h3 id="auth-modal-title"><i class="fa-solid fa-user" aria-hidden="true"></i> 계정</h3>
+                <button type="button" class="auth-modal-close" data-click="closeAuthModal" aria-label="닫기">
+                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div id="auth-modal-msg" class="auth-modal-msg is-hidden" role="status" aria-live="polite"></div>
+            <!-- 로그인 폼 -->
+            <div id="auth-form-area" class="auth-modal-body">
+                <label class="auth-field-label" for="auth-email">이메일</label>
+                <input id="auth-email" class="auth-field" type="email" autocomplete="email" placeholder="you@example.com">
+                <label class="auth-field-label" for="auth-password">비밀번호</label>
+                <input id="auth-password" class="auth-field" type="password" autocomplete="current-password" placeholder="6자 이상">
+                <div class="auth-modal-actions">
+                    <button type="button" class="btn btn-primary" data-click="authSignIn">로그인</button>
+                    <button type="button" class="btn btn-secondary" data-click="authSignUp">회원가입</button>
+                    <button type="button" class="btn btn-secondary" data-click="authMagicLink">매직링크 보내기</button>
+                </div>
+                <p class="auth-modal-hint">매직링크는 비밀번호 없이 이메일 링크로 로그인합니다. 클라우드 동기화는 로그인 후 제공됩니다.</p>
+            </div>
+            <!-- 로그인 상태 -->
+            <div id="auth-account-area" class="auth-modal-body is-hidden">
+                <p class="auth-account-line">로그인됨: <strong id="auth-account-email"></strong></p>
+                <p class="auth-account-line">플랜: <span id="auth-account-plan">Free</span></p>
+                <div class="auth-modal-actions">
+                    <button type="button" class="btn btn-secondary" data-click="authSignOut">로그아웃</button>
+                </div>
+                <p class="auth-modal-hint">클라우드 동기화는 다음 단계에서 제공됩니다. 로그아웃해도 이 기기의 데이터는 유지됩니다.</p>
+            </div>
+        </div>
     </div>
 
     <!-- PWA 설치 안내 모달 (iOS/Android 분기) -->

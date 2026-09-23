@@ -247,6 +247,7 @@ import { getViewTitles, navigateToView } from './router.js';
 import { contentPath, getActiveExam, getCurrentExamId, getExamList, purgeLegacyStorage, hasFeature } from './exam-context.js';
 import { renderExamSelect, showExamSelect, selectExamAction } from './views/exam-select.js';
 import { initUiMode, toggleUiMode, toggleStudyTools } from './ui-mode.js';
+import { initAuthView, openAuthModal, closeAuthModal, authSignIn, authSignUp, authMagicLink, authSignOut } from './auth-view.js';
 
 // --- 런타임 에러 안전망 (런타임 ReferenceError 등을 사용자에게 알림) ---
 window.addEventListener('error', function (event) {
@@ -514,6 +515,8 @@ function initApp() {
     step('initUiMode', initUiMode);
     step('setupEventListeners', () => setupEventListeners(enhanceDataClickAccessibility));
     step('setupPWAInstall', setupPWAInstall);
+    // 계정 세션 복원/구독 — 비동기, 내부에서 오류를 삼켜 앱 초기화를 막지 않음
+    step('initAuthView', () => { initAuthView(); });
     step('setupThemeToggle', setupThemeToggle);
     // 초기 뷰 렌더링
     step('renderDashboard', renderDashboard);
@@ -926,6 +929,8 @@ const DELEGATED_HANDLERS = {
     showIngredientsChangelog,
     // 학습/실무 UI 모드
     toggleUiMode, toggleStudyTools,
+    // 계정/로그인 (Supabase Auth)
+    openAuthModal, closeAuthModal, authSignIn, authSignUp, authMagicLink, authSignOut,
     /** 복수정답형 모의고사 문항 수 선택 행 토글 — 다른 과목의 열린 행은 닫는다 */
     toggleComboPicker(rowId) {
         const row = document.getElementById(rowId);
