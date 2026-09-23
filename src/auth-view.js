@@ -183,7 +183,7 @@ export async function authForgotPassword() {
     });
     if (error) { setMsg(friendlyError(error), true); return; }
     show(el('auth-otp-area'));
-    setMsg('로그인 메일을 보냈습니다. 코드로 로그인한 뒤 계정 화면의 "비밀번호 설정"에서 새 비밀번호를 지정하세요.');
+    setMsg('로그인 메일을 보냈습니다. 메일의 코드로 로그인한 뒤 계정 화면의 "비밀번호 설정"에서 새 비밀번호를 지정하세요. (메일 로그인만 사용하는 경우 그대로 로그인하면 됩니다)');
     startEmailLoginCooldown(document.querySelector('[data-click="authEmailLogin"]'));
 }
 
