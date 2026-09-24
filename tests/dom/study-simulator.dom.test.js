@@ -18,13 +18,16 @@ vi.mock('../../src/ui-utils.js', () => ({
 import { showToast } from '../../src/ui-utils.js';
 import {
     loadIndexHtml, el, isVisible, resetStudyState, storedJson,
+    stubRegistry, flushAsync,
 } from './helpers.js';
 import { state } from '../../src/state.js';
 import { simState } from '../../src/views/exam-sim-state.js';
 import {
     startSimSession, saveSimAnswer, jumpToSimQuestion, renderSimQuestion,
     submitExam, exitSimArena, checkExamDraft, resumeSimDraft, clearSimDraft,
+    startWeakExam,
 } from '../../src/views/exam-simulator.js';
+import { DataLoader } from '../../src/data-loader.js';
 import { showSimAnswerReview } from '../../src/views/exam-sim-review.js';
 import { setupEventListeners } from '../../src/views/event-listeners.js';
 import { STORAGE_KEYS } from '../../src/storage-keys.js';
@@ -182,5 +185,172 @@ describe('모의고사 시뮬레이터 — 세션·답안·제출·이어하기'
         } finally {
             vi.useRealTimers();
         }
+    });
+});
+
+/* =======================================================
+   오답 모의고사 (startWeakExam → _startWeakExamImpl)
+   ======================================================= */
+
+// 실제 레지스트리 형태: 과목 키는 알파벳, 시험 키는 subjectN ↔ subject 매핑
+const WEAK_REGISTRY = {
+    subjects: [
+        { key: 'law', name: '화장품법', shortName: '법규', order: 1 },
+        { key: 'manufacturing', name: '제조·품질', shortName: '제조', order: 2 },
+    ],
+    exams: [
+        { key: 'subject1', subject: 'law' },
+        { key: 'subject2', subject: 'manufacturing' },
+    ],
+};
+
+function seedWeakRegistry() {
+    // stubRegistry: DataLoader.getSubjectList + loadSubject(_loaded 프리셋)
+    stubRegistry([
+        { key: 'law', name: '화장품법' },
+        { key: 'manufacturing', name: '제조·품질' },
+    ]);
+    // examIdToSubjectId·comboSubjOrder·필터명 조회는 window.DATA_REGISTRY 사용
+    window.DATA_REGISTRY = WEAK_REGISTRY;
+}
+
+describe('오답 모의고사 — 헷갈린 카드·오답 퀴즈 재조립', () => {
+    beforeEach(() => {
+        localStorage.clear();
+        resetStudyState();
+        resetSim();
+        loadIndexHtml();
+        vi.clearAllMocks();
+    });
+
+    afterEach(() => {
+        if (simState.timerInterval) clearInterval(simState.timerInterval);
+    });
+
+    it('약점 데이터 없음 → info 토스트, 세션 미시작', async () => {
+        seedWeakRegistry();
+        startWeakExam();
+        await flushAsync();
+
+        expect(showToast).toHaveBeenCalledWith(expect.stringContaining('복습할 헷갈린 카드나 오답 퀴즈가 없습니다'), 'info', 4000);
+        expect(el('sim-arena-panel').classList.contains('is-hidden')).toBe(true);
+    });
+
+    it('모의고사 오답 카드(weak_sim_) → EXAM_DATA에서 원문 조회 후 세션 시작', async () => {
+        seedWeakRegistry();
+        window.EXAM_DATA = {
+            subject1: { questions: [
+                { id: 'subject1_q7', type: 'choice', question: '화장품 정의는?', options: ['a', 'b', 'c', 'd', 'e'], answer: '①', explanation: '법 제2조' },
+            ] },
+        };
+        state.weakCards = new Set(['weak_sim_subject1_q7']);
+
+        startWeakExam();
+        await flushAsync();
+
+        expect(isVisible('sim-arena-panel')).toBe(true);
+        expect(el('sim-exam-title').textContent).toContain('오답 모의고사');
+        expect(simState.data.questions.length).toBe(1);
+        const q = simState.data.questions[0];
+        expect(q.id).toBe('weak_exam_subject1_q7');
+        expect(q.subject).toBe('law');               // examId→subject 매핑
+        expect(q.type).toBe('choice');
+        expect(q.explanation).toBe('법 제2조');
+        // 카드형 카드 → blank(단답) 문항
+    });
+
+    it('플래시카드·오답 퀴즈 혼합 → STUDY_DATA 기반 문항 조립', async () => {
+        seedWeakRegistry();
+        window.STUDY_DATA = {
+            law: {
+                name: '화장품법',
+                cards: [{ id: 'law_card_1', term: '화장품', definition: '피부를 청결·미화하는 물품' }],
+                quizzes: [],
+            },
+            manufacturing: {
+                name: '제조·품질',
+                cards: [],
+                quizzes: [{ id: 'mfg_quiz_1', type: 'ox', question: '품질관리기록은 3년 보관이다', options: ['O', 'X'], answer: 'O' }],
+            },
+        };
+        state.weakCards = new Set(['law_card_1']);
+        state.quizResults = { mfg_quiz_1: { correct: false }, mfg_quiz_2: { correct: true } };
+
+        startWeakExam();
+        await flushAsync();
+
+        const qs = simState.data.questions;
+        expect(qs.length).toBe(2); // 정답 맞힌 퀴즈는 제외
+        const card = qs.find(q => q.id === 'weak_card_law_card_1');
+        const quiz = qs.find(q => q.id === 'weak_quiz_mfg_quiz_1');
+        expect(card.type).toBe('blank');
+        expect(card.answer).toBe('화장품');
+        expect(card.subject).toBe('law');
+        expect(quiz.type).toBe('ox');
+        expect(quiz.subject).toBe('manufacturing');
+    });
+
+    it('복수정답형 오답 카드 → combo 번들 로드·평탄화 후 출제', async () => {
+        seedWeakRegistry();
+        // comboSubjOrder('law') → order 1 → loadComboDrills(1) → combo_subject1 키 프리셋
+        const comboQ = {
+            id: 'law_combo_abc',
+            citation: '화장품법 제3조',
+            stem: '다음 중 옳은 것은?',
+            statements: [
+                { id: 'ㄱ', sid: 's1', text: '진술ㄱ', truth: true },
+                { id: 'ㄴ', sid: 's2', text: '진술ㄴ', truth: false },
+            ],
+            options: [{ id: 'A', members: ['ㄱ'] }, { id: 'B', members: ['ㄴ'] }],
+            answer: 'A',
+            explain: '해설',
+        };
+        DataLoader._loadedDrills['combo_subject1'] = [comboQ];
+        window.COMBO_DRILLS_subject1 = [comboQ];
+        state.weakCards = new Set(['weak_sim_law_combo_abc']);
+
+        startWeakExam();
+        await flushAsync();
+
+        expect(isVisible('sim-arena-panel')).toBe(true);
+        const q = simState.data.questions[0];
+        expect(q.id).toBe('weak_exam_law_combo_abc');
+        expect(q.type).toBe('combo');
+        expect(q.subject).toBe('law');
+        expect(q.answer).toBe('①');             // options 인덱스 → 지시자 기호
+        expect(q.comboOptions).toEqual(comboQ.options); // 원본 members 구조 보존
+        expect(q.question).toContain('ㄱ. 진술ㄱ');
+    });
+
+    it('과목 필터(reviewFilter) 적용 → 다른 과목 오답 제외', async () => {
+        seedWeakRegistry();
+        window.EXAM_DATA = {
+            subject1: { questions: [
+                { id: 'subject1_q1', type: 'choice', question: '법규 문항', options: ['a', 'b'], answer: '①' },
+            ] },
+            subject2: { questions: [
+                { id: 'subject2_q1', type: 'choice', question: '제조 문항', options: ['a', 'b'], answer: '①' },
+            ] },
+        };
+        state.weakCards = new Set(['weak_sim_subject1_q1', 'weak_sim_subject2_q1']);
+        state.reviewFilter = 'law';
+
+        startWeakExam();
+        await flushAsync();
+
+        expect(simState.data.questions.length).toBe(1);
+        expect(simState.data.questions[0].subject).toBe('law');
+    });
+
+    it('필터 결과 0건 → 필터명 포함 안내 토스트', async () => {
+        seedWeakRegistry();
+        state.weakCards = new Set(['weak_sim_subject2_q1']);
+        state.reviewFilter = 'law';
+
+        startWeakExam();
+        await flushAsync();
+
+        expect(showToast).toHaveBeenCalledWith(expect.stringContaining('1과목 (법규)'), 'info', 4000);
+        expect(el('sim-arena-panel').classList.contains('is-hidden')).toBe(true);
     });
 });

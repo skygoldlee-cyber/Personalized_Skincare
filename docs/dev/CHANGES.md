@@ -4,6 +4,18 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-24 커버리지 공백 보강 — mermaid-utils·오답 모의고사
+
+- **테스트 추가** (+14): `tests/unit/mermaid-utils.test.js`(8 —
+  다이어그램 타입 감지 전 타입, CSS 클래스, init 옵션 테마 분기),
+  `study-simulator.dom.test.js` 오답 모의고사(+6 — `startWeakExam`의
+  카드/퀴즈/combo 재조립, 과목 필터, 빈 데이터 토스트).
+- **실버그 수정**: `_startWeakExamImpl`이 combo 문항 조립 시
+  `comboOptions`·`statements`를 버려 `deriveComboJudgments`가 항상
+  null → 진술 판정·리뷰 미동작하던 문제. 두 필드 유지로 수정.
+- **커버리지**: 병합 라인 77.3→78.3%, `mermaid-utils` 0→100%,
+  `exam-simulator` 49→69%.
+
 ## 2026-09-24 테스트 커버리지 실측 개선 (병합 리포트)
 
 - **병합 리포트 도구**: 유닛(node:test)과 DOM(vitest)이 갈린 두 러너의

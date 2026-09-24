@@ -883,6 +883,9 @@ function _startWeakExamImpl() {
                     question: foundQ.question,
                     answer: foundQ.answer,
                     options: foundQ.options || null,
+                    // combo 문항은 members·진술 구조를 유지해야 채점(deriveComboJudgments)·리뷰가 동작
+                    comboOptions: foundQ.comboOptions || null,
+                    statements: foundQ.statements || null,
                     explanation: foundQ.explanation || '모의고사 오답 복습 문제입니다.'
                 });
             }

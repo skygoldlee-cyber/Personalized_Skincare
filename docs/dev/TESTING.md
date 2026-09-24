@@ -22,7 +22,7 @@
 
 | 구분 | 프레임워크 | 환경 | 파일 위치 | 테스트 수 |
 |------|-----------|------|-----------|-----------|
-| **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 481 |
+| **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 489 |
 | **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 294 |
 | **합계** | | | | **775** |
 
@@ -97,7 +97,7 @@ npm run test:watch
 | 14 | `study-aids.test.js` | 25 | `extractExamHighlights()`, `extractNumberDrills()`, `detectProcedureFlow()`, `detectAdminPenalty()`, `isKeySection()` | 합성 데이터, 교재 무관 |
 | 15 | `pdf-registry.test.js` | 21 | `resolveRefPath()`, `mapSourceToRef()`, `resolveKeywordRef()`, 데이터 구조 검증 | 합성 데이터, 교재 무관 |
 | 16 | `glossary-query.test.js` | 13 | `getGlossaryByRefFile()`, `getGlossaryByRefFiles()`, `getGlossaryEntry()`, `getAllGlossaryKeywords()` | 합성 데이터, 교재 무관 |
-| 17 | `markdown-parser-general.test.js` | 35 | 헤더, 표, 리스트, 인라인 서식, 코드블록, 인용문, 특수 토큰, 빈 입력 | 합성 데이터, 교재 무관 |
+| 17 | `markdown-parser-general.test.js` | 47 | 헤더, 표, 리스트, 인용문, 특수 토큰, 빈 입력 + `joinWraps`(ref_md 시각적 줄 병합, 러닝헤더 스킵) | 합성 데이터, 교재 무관 |
 | 18 | `reader-format-general.test.js` | 19 | 페이지 참조 제거, 기출문제/참조자료/출처 링크 변환, 용어집 자동 링크, Mermaid 보호 | 합성 데이터, 교재 무관 |
 | 19 | `combo-transform.test.js` | 7 | 복수정답형(ⓐⓑⓒ) 문항 변환 — 진술 추출, 정답 조합, 변형 ID | 빌드 타임, `tools/build/combo-transform.js` |
 | 20 | `statement-tracker.test.js` | 9 | 복수정답형 진술별 정답 추적·통계 | `tools/build/statement-tracker.js` |
@@ -115,7 +115,10 @@ npm run test:watch
 | 32 | `material-ledger.test.js` | 9 | `src/material-ledger.js` — 원료 CRUD, 기한 상태 파생(expired/soon/ok/none), `daysUntilExpiry` 자정 기준 | Formula OS Phase C |
 | 33 | `formula-compliance.test.js` | 4 | `src/views/formula-compliance.js` — 항목 id 고유성, refs 유효성, 법령 파일 실존, 필수 섹션 커버리지 | Formula OS Phase D |
 | 34 | `csv-import.test.js` | 17 | `src/csv-utils.js` 파서·EUC-KR 디코딩 + `importCustomers`/`importMaterials` 중복·한도·sanitize | Formula OS CSV |
-| | **합계** | **458** | | |
+| 35 | `supabase-client.test.js` | 6 | `src/supabase-client.js` — lazy init, UMD 동적 로드, 미설정 폴백 | window 스텁 |
+| 36 | `sw-prune.test.js` | 5 | `sw.js` 캐시 프루닝 — 한글 경로 인코딩 오삭제 회귀 가드 | 서비스워커 로직 |
+| 37 | `mermaid-utils.test.js` | 8 | `src/mermaid-utils.js` — 다이어그램 타입 감지, CSS 클래스, init 옵션(테마 분기) | 순수 함수 |
+| | **합계** | **489** | | |
 
 ### DOM 테스트 (`tests/dom/`)
 
@@ -138,12 +141,12 @@ npm run test:watch
 | 14 | `study-pomodoro.dom.test.js` | 7 | 뽀모도로 | 시작/일시정지/리셋, 완주 누적, 날짜 경계 리셋 (fake timers) | 2026-09-23 추가 |
 | 15 | `study-trainer.dom.test.js` | 12 | 스마트 훈련소 | 메뉴/서브패널 전환, 한도 퀴즈 채점, 계산 연습 이력·비수치 경고, 원료 챌린지·빈DB 가드, 취약 진술 복습 | 2026-09-23 추가 |
 | 16 | `study-calendar.dom.test.js` | 6 | 학습 캘린더 | 목표 카드·월 그리드, 활동 기록→학습일·달성률, 월 이동, 목표 저장·기본값, 취소 불변 | 2026-09-23 추가 |
-| 17 | `study-simulator.dom.test.js` | 8 | 모의고사 | 아레나·OMR, 답안·문항 이동, 제출 채점·오답 카드 등록, 리뷰, 드래프트 이어하기, 시간 만료 자동 제출 | 2026-09-23 추가 |
+| 17 | `study-simulator.dom.test.js` | 14 | 모의고사 | 아레나·OMR, 답안·문항 이동, 제출 채점·오답 카드 등록, 리뷰, 드래프트 이어하기, 시간 만료 자동 제출, 오답 모의고사(startWeakExam — 카드/퀴즈/combo 재조립·과목 필터) | 2026-09-23 추가 |
 | 18 | `study-reader.dom.test.js` | 5 | 교재 리더 | 과목 옵션·본문/TOC 렌더, 읽기 위치 이어하기, 북마크 영속, 빈 상태 | 2026-09-23 추가 |
 | 19 | `study-search.dom.test.js` | 7 | 교재 검색 | 역색인 검색·하이라이트·건수, AND 교집합, 과목 필터, 결과 없음, 더보기 토글, 초기화 | 2026-09-23 추가 |
 | 20 | `study-dictionary.dom.test.js` | 12 | 성분 사전 | 카드·3상태 배지, 이름/영문/초성 검색, type 필터, 빈 DB·결과 없음, 상세 토글 | 2026-09-23 추가 |
 | 21 | `study-manual.dom.test.js` | 6 | 매뉴얼 뷰어 | 오버레이·MD 렌더·TOC, doc: 링크 문서 전환, sessionStorage 캐시, mermaid 마크업, 미등록 소스 오류, 닫기 | 2026-09-23 추가 |
-| 22 | `study-examviewer.dom.test.js` | 5 | 문제집 뷰어 | 오버레이·MD 렌더·TOC, 인쇄 버튼→window.print, 캐시 재사용, 미존재 문서 오류, 닫기 | 2026-09-23 추가 |
+| 22 | `study-examviewer.dom.test.js` | 7 | 문제집 뷰어 | 오버레이·MD 렌더·TOC, 인쇄 버튼→window.print, 캐시 재사용, 미존재 문서 오류, 닫기 | 2026-09-23 추가 |
 | 23 | `study-examselect.dom.test.js` | 4 | 시험 선택 | 카드 렌더·현재 시험 배지, 다른 시험→저장·리로드, 같은 시험→대시보드 복귀, 빈 목록 | 2026-09-23 추가 |
 | 24 | `common-theme.dom.test.js` | 4 | 테마 토글 | data-theme·localStorage 영속, 아이콘 전환, 시스템 테마 초기화 | 2026-09-23 추가 |
 | 25 | `common-offline.dom.test.js` | 4 | 오프라인 감지 | offline 이벤트·프로브 실패→배너 표시, online 복귀→해제 (fake timers) | 2026-09-23 추가 |
@@ -152,7 +155,11 @@ npm run test:watch
 | 28 | `common-uimode.dom.test.js` | 7 | 학습/실무 UI 모드 | 모드 전환→학습 항목 CSS 숨김(실제 캐스케이드)·학습 도구 펼침·랜딩 리다이렉트·영속 복원·학습/실무 매뉴얼 가시성·토글 2곳(푸터·설정) 동기화 | 2026-09-23 추가 |
 | 29 | `common-auth.dom.test.js` | 24 | 계정/로그인 (Supabase) | 모달 열기·로그인 성공/실패 한글 매핑·회원가입·매직링크·OTP 코드 발송/검증·비밀번호 설정·로그아웃·세션 복원 (window.supabase 스텁) | 2026-09-23 추가 |
 | 30 | `common-sync.dom.test.js` | 11 | 클라우드 동기화 | 페이로드 수집(고객 제외)·쓰기 훅 dirty·디바운스 push·pull 적용·충돌 양방향·push 실패·비로그인 무시 | 2026-09-23 추가 |
-| | **합계** | **264** | | |
+| 31 | `common-glossary.dom.test.js` | 5 | 용어집 공용 경로 | 용어집 인덱스·링크 렌더 | 2026-09-24 추가 |
+| 32 | `common-htmlviewer.dom.test.js` | 7 | HTML 뷰어 | 외부 HTML 콘텐츠 로드·렌더 경로 | 2026-09-24 추가 |
+| 33 | `common-navigation.dom.test.js` | 4 | 뷰 전환 공용 | navigation 유틸 경로 | 2026-09-24 추가 |
+| 34 | `study-trainer-drills.dom.test.js` | 12 | O/X·복수정답 드릴 | 드릴 UI·채점 경로 | 2026-09-24 추가 |
+| | **합계** | **300** | | |
 
 ---
 
@@ -531,7 +538,7 @@ function detectDiagramType(textContent) {
 
 ## 6. 커버리지 현황
 
-`npm run coverage:all` 기준 **병합 라인 77.3%** (`src/` 최상위 80.7%, `src/views` 72.7%).
+`npm run coverage:all` 기준 **병합 라인 78.3%** (`src/` 최상위 81.5%, `src/views` 74.0%).
 
 - 병합 리포트(`coverage-merged/index.html`)가 실질 수치 — vitest 단독 리포트는 유닛 테스트가 커버하는 순수 로직을 0%로 표시하므로 과소평가된다.
 - jsdom으로 검증 불가한 환경 의존 모듈은 `vitest.config.mjs` `coverage.exclude`로 분모에서 제외 (`types.js`, `app-fallback`, `pwa-install*`, `theme-init`, `web-vitals`, `reader-audio`).
@@ -556,7 +563,7 @@ function detectDiagramType(textContent) {
 | `event-listeners.js` | 34% | `data-click` 위임 바인딩 — 위임 테이블 자체는 delegation-guard 유닛 테스트가 정적 검증 | 위임 클릭 디스패치 경로를 jsdom에서 시뮬레이션 |
 | `textbook-reader.js` | 38% | 대형 뷰 컨트롤러 (1650 라인) | 미커버 블록 단위로 시나리오 확충 |
 | `exam-viewer.js` | ~54% | 문제집 뷰어 | 해설·인용 링크 경로 보강 |
-| `exam-simulator.js` | 48% | 시뮬레이터 (937 라인) | 타이머·일시정지·이어풀기 경로 보강 |
+| `exam-simulator.js` | 69% | 시뮬레이터 | 오답 모의고사(startWeakExam) 커버 완료 — 잔여는 결과 리뷰 세부 경로 |
 | `data-loader.js` | ~73% | `_loadScript` 스크립트 로딩 경로 | jsdom의 script 로드 제약 — 스텁 분기 커버 가능 |
 | `manual-viewer.js` | ~67% | 학습안내서 뷰어 | 섹션 네비게이션 경로 보강 |
 

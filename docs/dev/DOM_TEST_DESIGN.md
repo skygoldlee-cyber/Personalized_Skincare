@@ -1,6 +1,7 @@
 # DOM 시나리오 테스트 설계 (jsdom)
 
-> 상태: ✅ Phase 1~5 완료 (264개) · 작성일: 2026-09-23 · Phase 6(Playwright) 보류
+> 상태: ✅ Phase 1~5 완료 (300개) · 작성일: 2026-09-23 · Phase 6(Playwright) 보류
+> ※ 파일별 최신 테스트 수는 TESTING.md §3 표가 정본 — 이 문서의 Phase 수치는 설계 시점 스냅샷
 
 ## 1. 목적
 
@@ -64,6 +65,10 @@ tests/dom/
   common-uimode.dom.test.js       ✅ Phase 5 — 학습/실무 모드 전환·CSS 캐스케이드·매뉴얼 가시성·이중 토글 동기화
   common-auth.dom.test.js         ✅ Phase 5 — Supabase 로그인 모달·세션 복원·비밀번호 설정·OTP 코드·오류 한글 매핑 (window.supabase 스텁)
   common-sync.dom.test.js         ✅ Phase 5 — 스냅샷 동기화·dirty 훅·디바운스 push·pull·충돌 양방향 (window.supabase 스텁)
+  common-glossary.dom.test.js     ✅ 사후 추가 — 용어집 공용 경로
+  common-htmlviewer.dom.test.js   ✅ 사후 추가 — HTML 뷰어 렌더 경로
+  common-navigation.dom.test.js   ✅ 사후 추가 — 뷰 전환 공용 유틸
+  study-trainer-drills.dom.test.js ✅ 사후 추가 — O/X·복수정답 드릴 UI
 ```
 
 ### 3.1 helpers.js API
