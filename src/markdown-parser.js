@@ -58,21 +58,30 @@ function _jwSep(prev, cur) {
     const n = cur.charAt(0);
     if (/[A-Za-z]/.test(p) || /[A-Za-z]/.test(n)) return ' ';
     if (/\d/.test(n) && /[가-힣]/.test(p)) return ' ';
+    // 매우 짧은 prev 줄(<16자)은 고정폭 wrap이 아닌 독립 라벨/필드일 가능성이
+    // 높다 (서식의 "전화번호"+"지방식품…" 류) — 기본은 공백이 안전한 실패 모드.
+    // 단, cur이 짧은 문장부호 종료 꼬리("한다.", "니다.")면 어형 절단이므로 무공백.
+    if (prev.length < 16) {
+        const tail = cur.replace(/&gt;$/, '>').replace(/<[^>]+>/g, '').trim();
+        if (tail.length <= 8 && /[.。,，、!?)\]〉》」』】>]$/.test(tail)) return '';
+        return ' ';
+    }
     return '';
 }
 
 // output 마지막 요소가 <p>…</p> 또는 …</li></ol|ul>이면 연속줄을 병합한다.
-// 병합 시 첫 줄의 data-md-line이 유지되어 L#### 인용은 단락 시작으로 도착한다.
-function _jwMerge(output, line, sep) {
+// 연속줄은 <span data-md-line>으로 감싸 L#### 인용이 원줄 위치에 도착하게 한다.
+function _jwMerge(output, line, sep, lineNo) {
+    const frag = sep + `<span data-md-line="${lineNo}">` + line + '</span>';
     const last = output[output.length - 1];
     if (!last) return false;
     if (last.endsWith('</p>')) {
-        output[output.length - 1] = last.slice(0, -4) + sep + line + '</p>';
+        output[output.length - 1] = last.slice(0, -4) + frag + '</p>';
         return true;
     }
     const m = last.match(/<\/li>(<\/[ou]l>)$/);
     if (m) {
-        output[output.length - 1] = last.slice(0, -m[0].length) + sep + line + m[0];
+        output[output.length - 1] = last.slice(0, -m[0].length) + frag + m[0];
         return true;
     }
     return false;
@@ -316,16 +325,36 @@ export function parseMarkdown(mdText, options = {}) {
     // 병합 판정용 직전 평문/리스트 항목 텍스트 (joinWraps 모드에서만 사용)
     let _jwPrev = null;
 
+    // joinWraps 전용: 페이지 러닝헤더 감지 — H1 제목의 '(' 앞부분과 정확히
+    // 일치하는 반복 단독줄(예: "화장품법 시행규칙"×35)을 투명하게 건너뛴다.
+    // _jwPrev를 리셋하지 않아 페이지 경계로 끊긴 문장 병합이 이어진다.
+    // (소스 라인은 유지되므로 L#### 인용 라인번호에 영향 없음)
+    let _jwTitle = null, _jwTitleSeen = false;
+    if (joinWraps) {
+        const h1 = lines.map(l => l.trim()).find(t => /^#\s/.test(t));
+        if (h1) {
+            const t = h1.replace(/^#\s+/, '').split(/[(<]/)[0].trim();
+            if (t.length >= 4 && t.length <= 45) _jwTitle = t;
+        }
+    }
+
     lines.forEach(line => {
         _lineNo++;
         const trimmed = line.trim();
 
-        // joinWraps: 직전 평문이 미종결이고 연속부호(, ㆍ ( 등)로 끝날 때
-        // 연도형 숫자 시작("2023. 6. 22.>" — 개정일 나열)은 목록이 아닌 연속줄로 본다
+        // joinWraps: olMatch(`N.`/`N)`)에 걸리지만 실제로는 연속줄인 패턴 판정
+        //  - 날짜 꼬리: "2018. 3. 13.>" (<개정|<신설이 줄넘김된 개정일 나열)
+        //  - 화학식 꼬리: "113)", "1000)" (Freon 113, 1→1000 희석배수 절단)
+        //  - 연속부호 종료 prev + 3자리 이상 숫자 시작
+        //  - 미닫힘 꺾쇠 prev: "…<개정" (&lt;개정)
         const _jwForce = joinWraps && _jwPrev != null
-            && /^\d{3,}[.)]/.test(trimmed)
+            && /^\d+[.)]\s/.test(trimmed)
             && !_JW_CLOSED.test(_jwPrev)
-            && /[,，、ㆍ·(〈「『(\-–—→\/]\s*$/.test(_jwPrev);
+            && (/^\d{4}\.\s*\d{1,2}\./.test(trimmed)
+                || /^\d{3,}\)\s/.test(trimmed)
+                || (/^\d{3,}[.)]/.test(trimmed)
+                    && /[,，、ㆍ·(〈「『(\-–—→\/=＝]\s*$/.test(_jwPrev))
+                || /&lt;[가-힣\s:]*$/.test(_jwPrev));
 
         // 6-1. 코드블록 시작/끝 감지
         if (trimmed.startsWith('```')) {
@@ -345,6 +374,13 @@ export function parseMarkdown(mdText, options = {}) {
             codeLines.push(line);
             _jwPrev = null;
             return;
+        }
+
+        // joinWraps: 러닝헤더 스킵 — 문서 제목과 동일한 반복 단독줄.
+        // 첫 등장(문서 표제)은 유지하고 이후 반복만 투명하게 건너뛴다.
+        if (_jwTitle && trimmed === _jwTitle) {
+            if (_jwTitleSeen) return;
+            _jwTitleSeen = true;
         }
 
         // 6-2. 테이블 파싱
@@ -449,7 +485,7 @@ export function parseMarkdown(mdText, options = {}) {
         if (joinWraps && _jwPrev != null
             && !_JW_CLOSED.test(_jwPrev)
             && (_jwForce || !_JW_STRUCT.test(trimmed))) {
-            if (_jwMerge(output, line, _jwSep(_jwPrev, trimmed))) {
+            if (_jwMerge(output, line, _jwSep(_jwPrev, trimmed), _lineNo)) {
                 _jwPrev = line;
                 return;
             }

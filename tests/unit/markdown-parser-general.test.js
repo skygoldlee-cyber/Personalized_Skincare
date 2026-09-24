@@ -233,13 +233,13 @@ test('일반 문단: customSpacing 시 빈 줄에 div', () => {
 
 test('joinWraps: 문장 중간 절단 줄 병합 (무공백)', () => {
     const html = parseMarkdown('화장품을 말\n한다.', { joinWraps: true });
-    assert.ok(html.includes('화장품을 말한다.'), '무공백 결합');
+    assert.ok(html.includes('화장품을 말<span data-md-line="2">한다.</span>'), '무공백 결합 + 원줄 span');
     assert.equal((html.match(/<p>/g) || []).length, 1, '단락 1개');
 });
 
 test('joinWraps: 조사 종료 줄은 공백 결합', () => {
     const html = parseMarkdown('유지 또는\n증진하기 위하여', { joinWraps: true });
-    assert.ok(html.includes('또는 증진하기'), '공백 결합');
+    assert.ok(html.includes('또는 <span data-md-line="2">증진하기'), '공백 결합');
 });
 
 test('joinWraps: 문장 종결 줄은 병합하지 않음', () => {
@@ -257,14 +257,40 @@ test('joinWraps: 구조 마커(가./제N조/[) 시작 줄은 병합하지 않음
 
 test('joinWraps: 리스트 항목 연속줄은 <li>에 병합', () => {
     const html = parseMarkdown('1. 화장품을 말\n한다.\n2. 다음 항목', { joinWraps: true });
-    assert.ok(html.includes('화장품을 말한다.'), 'li 내부 병합');
+    assert.ok(html.includes('화장품을 말<span data-md-line="2">한다.</span>'), 'li 내부 병합');
     assert.ok(html.includes('<li>다음 항목</li>'), '다음 항목 분리');
 });
 
 test('joinWraps: 쉼표 종료 뒤 연도형 숫자는 목록이 아닌 연속줄', () => {
     const html = parseMarkdown('개정 2019. 1. 15.,\n2020. 4. 7.>', { joinWraps: true });
     assert.ok(!html.includes('<ol>'), '목록 아님');
-    assert.ok(html.includes('2019. 1. 15., 2020. 4. 7.'), '날짜 나열 병합');
+    assert.ok(html.includes('2019. 1. 15., <span data-md-line="2">2020. 4. 7.'), '날짜 나열 병합');
+});
+
+test('joinWraps: 미닫힘 <개정 꼬리 뒤 날짜는 목록이 아닌 연속줄', () => {
+    const html = parseMarkdown('면제할 수 있다.<개정\n2018. 3. 13.>', { joinWraps: true });
+    assert.ok(!html.includes('<ol>'), '목록 아님');
+    assert.ok(html.includes('&lt;개정 <span data-md-line="2">2018. 3. 13.&gt;'), '개정일 병합');
+});
+
+test('joinWraps: 화학식 꼬리(3자리+N))는 목록이 아닌 연속줄', () => {
+    const html = parseMarkdown('트리클로로트리플루오로에탄(Freon\n113) 5㎖로 씻는다.', { joinWraps: true });
+    assert.ok(!html.includes('<ol>'), '목록 아님');
+    assert.ok(html.includes('Freon <span data-md-line="2">113) 5㎖로'), '화학명 복원');
+});
+
+test('joinWraps: 짧은 prev 줄은 공백 결합 (서식 필드 라벨)', () => {
+    const html = parseMarkdown('담당자 전화번호\n지방식품의약품안전청', { joinWraps: true });
+    assert.ok(html.includes('전화번호 <span data-md-line="2">지방식품의약품안전청'), '공백 결합');
+});
+
+test('joinWraps: 러닝헤더(문서 제목 반복줄)는 투명하게 스킵', () => {
+    const md = '# 화장품법 시행규칙(총리령)(제02109호)\n\n화장품법 시행규칙\n[시행 2026. 4. 2.]\n제1조(목적)\n혼합ㆍ소분\n화장품법 시행규칙\n과정에서 위해가';
+    const html = parseMarkdown(md, { joinWraps: true });
+    // L4 첫 등장(표제)은 유지, L7 반복 헤더는 스킵되어 L6+L8이 페이지 경계 병합
+    assert.ok(html.includes('혼합ㆍ소분 <span data-md-line="8">과정에서'), '헤더 건너뛰고 문장 병합');
+    const titleCount = (html.match(/<p>화장품법 시행규칙<\/p>/g) || []).length;
+    assert.equal(titleCount, 1, '첫 표제만 유지 (반복 헤더 제거)');
 });
 
 test('joinWraps: 표/코드블록/빈줄은 병합 경계', () => {

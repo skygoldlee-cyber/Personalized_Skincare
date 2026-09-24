@@ -72,6 +72,32 @@ describe('문제집 뷰어 — 열기·TOC·인쇄·캐시', () => {
         expect(el('exam-article').textContent).toContain('문제집을 불러올 수 없습니다');
     });
 
+    it('ref_md 문서 → joinWraps로 문장 중간 절단 병합 + 라인 span 유지 (H)', async () => {
+        const REF_PATH = 'content/exams/cosmetic/참조자료/ref_md/과목1/화장품법/화장품법.md';
+        window.__EXAM_MD__[REF_PATH] =
+            '# 화장품법(법률)\n\n제1조(목적) 이 법은 화장품의 품질을 적정하게 관리하여 국민보건 향상에 이바지함을 목\n' +
+            '적으로 한다.\n제2조(정의) 이 법에서 사용하는 용어의 뜻은 다음과 같다.';
+
+        await ExamViewer.openExam(REF_PATH);
+        await flushAsync(30);
+
+        const article = el('exam-article');
+        // "목\n적으로"가 하나의 문단으로 병합 (무공백 결합)
+        expect(article.querySelectorAll('p').length).toBe(2);
+        expect(article.textContent).toContain('목적으로 한다');
+        // 연속줄에 data-md-line span이 유지되어 인용 스크롤 대상 존재
+        const span = article.querySelector('span[data-md-line]');
+        expect(span).not.toBeNull();
+        expect(span.textContent).toContain('적으로');
+    });
+
+    it('비 ref_md 문서 → joinWraps 미적용 (줄 단위 문단 유지) (H)', async () => {
+        await ExamViewer.openExam(EXAM_PATH);
+        await flushAsync(30);
+        // 문제은행 경로는 ref_md가 아니므로 병합 없이 렌더
+        expect(el('exam-article').querySelector('span[data-md-line]')).toBeNull();
+    });
+
     it('닫기 → 오버레이 닫힘·body 클래스 해제', async () => {
         await ExamViewer.openExam(EXAM_PATH);
         await flushAsync(30);

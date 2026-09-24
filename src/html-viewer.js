@@ -7,7 +7,7 @@ let _overlayEl = null;
 let _contentEl = null;
 let _searchResults = [];
 let _searchIdx = -1;
-const _FETCH_CACHE_PREFIX = 'ref_doc_v1_';
+const _FETCH_CACHE_PREFIX = 'ref_doc_v2_';
 const _FETCH_CACHE_TTL = CACHE.FETCH_CACHE_TTL_MS; // 24시간
 // LRU 캐시 제한: sessionStorage 용량(5-10MB) 초과 방지를 위해 최대 항목 수 제한
 const _FETCH_CACHE_MAX_ENTRIES = CACHE.FETCH_CACHE_MAX_ENTRIES;

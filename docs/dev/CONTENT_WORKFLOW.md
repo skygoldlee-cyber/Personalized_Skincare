@@ -308,8 +308,15 @@ python tools/convert_ref_pdfs_v2.py --verify
   `tools/convert_ref_pdfs_v2.py` 주석). `#L####` 인용이 라인 번호에
   의존하므로 고정폭 wrap의 문장 중간 절단("…말\n한다.")이 그대로 남는다.
   표시 단에서는 `parseMarkdown`의 `joinWraps` 옵션이 연속줄을 병합한다
-  (`exam-viewer`/`html-viewer`가 ref_md 경로에서 자동 적용 — 소스 라인
-  번호는 유지되며 인용은 병합 단락 시작으로 도착).
+  (`exam-viewer`/`html-viewer`가 ref_md 경로에서 자동 적용). 연속줄은
+  `<span data-md-line>`으로 감싸 인용이 원줄 위치에 도착하고, H1 제목과
+  동일한 반복 단독줄(러닝헤더)은 투명하게 스킵해 페이지 경계 문장도
+  병합한다. 병합 품질은 `npm.cmd run check:refmerge`로 감사한다.
+- **한계**: 첨자/수식 조각(`t`+`0`, `6 6 2`)은 추출 단계 아티팩트로
+  렌더 복원 불가. pdfplumber의 x0 들여쓰기(연속줄 +10~13pt, 러닝헤더
+  x0≈480)로 연속줄을 확정 판별하는 방식도 가능하나 소스 재생성+인용
+  재동기화 비용 대비 실익이 적어 보류 — 필요 시 `tools/pdf2md.py`에
+  마커 삽입으로 구현.
 - 누락 0이면 `ref_md_v2/{doc}/{doc}.md`와 `images/`를 `ref_md/과목N/`의
   동명 디렉터리에 복사해 승격한다(`index.html` 보존). 문서 과목은
   `tools/build/ref-statements.js`의 `DOC_SUBJECT_RULES`로 확인.

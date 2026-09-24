@@ -22,6 +22,7 @@
     "check:imports": "node tools/check-imports.js",
     "check:combo": "node tools/check_combo_pilot.js",
     "check:refsubjects": "node tools/check_ref_subjects.js",
+    "check:refmerge": "node tools/check_refmerge.js",
     "check:reflayout": "node tools/check_reflayout.js",
     "build:drills": "node tools/build_ox_drills.js && node tools/build_combo_drills.js",
     "stamp:sw": "node tools/build/stamp-sw-version.js",

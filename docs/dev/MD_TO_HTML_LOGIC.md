@@ -256,7 +256,7 @@ if (MD_PATTERN.test(url.pathname)) {
 | `allowItalics` | `true` | 전체 |
 | `allowInlineCode` | `true` | 전체 |
 | `addLineNumbers` | `false` | `exam-viewer.js` (`true`) — 각 블록에 `data-md-line="N"` 부여, `#L####` 인용 스크롤 기준 |
-| `joinWraps` | `false` | `exam-viewer.js`/`html-viewer.js` — ref_md 경로에서 `true`. PDF 고정폭 wrap의 문장 중간 절단("…말\n한다.")을 이전 `<p>`/`<li>`에 병합. 병합 단락의 `data-md-line`은 첫 줄 번호 유지 |
+| `joinWraps` | `false` | `exam-viewer.js`/`html-viewer.js` — ref_md 경로에서 `true`. PDF 고정폭 wrap의 문장 중간 절단("…말\n한다.")을 이전 `<p>`/`<li>`에 병합. 연속줄은 `<span data-md-line>`으로 감싸 인용이 원줄에 도착. H1 제목과 동일한 반복 단독줄(러닝헤더)은 투명 스킵 |
 
 ### 4.4 테이블 파싱 상세
 

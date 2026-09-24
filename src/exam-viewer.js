@@ -25,8 +25,8 @@ import { contentPath, dataPath } from './exam-context.js';
 import { CACHE } from './config/cache.js';
 
 export const ExamViewer = (() => {
-    // 캐시 포맷 변경: v5 — data-md-line 속성 추가로 라인 기반 스크롤 지원
-    const CACHE_PREFIX = 'exam_md_cache_v5_';
+    // 캐시 포맷 변경: v6 — joinWraps 병합 렌더링 (연속줄 span data-md-line 포함)
+    const CACHE_PREFIX = 'exam_md_cache_v6_';
     const CACHE_TTL = CACHE.EXAM_CACHE_TTL_MS; // 24시간
 
     // 네비게이션 히스토리 스택 (인용 링크 이동 후 뒤로가기용)
