@@ -115,10 +115,6 @@
                     <button id="theme-toggle-btn" class="btn btn-secondary" title="라이트/다크 모드 전환" aria-label="테마 전환">
                         <i class="fa-solid fa-moon" aria-hidden="true"></i>
                     </button>
-                    <!-- 가로/세로 보기 토글 버튼 (모바일 전용) -->
-                    <button id="orientation-toggle-btn" class="btn btn-secondary" title="가로/세로 보기 전환" aria-label="가로/세로 보기 전환">
-                        <i class="fa-solid fa-rotate" aria-hidden="true"></i>
-                    </button>
                     <!-- PWA 설치 버튼 (beforeinstallprompt 이벤트 발생 시 표시) -->
                     <button id="pwa-install-btn" class="btn btn-primary">
                         <i class="fa-solid fa-download" aria-hidden="true"></i> <span class="btn-text">앱 설치</span>
@@ -129,17 +125,21 @@
                             <i class="fa-solid fa-gear" aria-hidden="true"></i>
                         </button>
                         <div id="settings-panel" class="settings-panel is-hidden">
+                            <p class="settings-group-label">계정</p>
                             <!-- 계정: 로그인/로그아웃·동기화 (Supabase) — 미설정 환경에서는 안내 문구로 표시 -->
                             <button type="button" class="settings-item" data-click="openAuthModal">
                                 <i class="fa-solid fa-user" aria-hidden="true"></i> <span id="auth-menu-label">계정 / 로그인</span>
                             </button>
                             <div class="settings-divider"></div>
+                            <p class="settings-group-label">데이터</p>
                             <button type="button" class="settings-item" data-click="exportData">
                                 <i class="fa-solid fa-download" aria-hidden="true"></i> 데이터 백업
                             </button>
                             <button type="button" class="settings-item" data-click="triggerImport">
                                 <i class="fa-solid fa-upload" aria-hidden="true"></i> 백업 가져오기
                             </button>
+                            <div class="settings-divider"></div>
+                            <p class="settings-group-label">보기 · 도구</p>
                             <!-- 시험 전환: 등록 시험이 2개 이상일 때만 표시 (exams.json) -->
                             <button type="button" class="settings-item" data-click="showExamSelect" data-feature="examSwitch">
                                 <i class="fa-solid fa-arrow-right-arrow-left" aria-hidden="true"></i> 시험 전환
@@ -154,14 +154,20 @@
                             <button type="button" class="settings-item" data-click="toggleUiMode" aria-pressed="false" title="학습/실무 모드 전환 — 합격 후 실무 중심 사용자는 실무 모드를 추천합니다">
                                 <i class="fa-solid fa-repeat" aria-hidden="true"></i> 모드: <span class="ui-mode-label">학습 모드</span>
                             </button>
+                            <button type="button" id="orientation-toggle-btn" class="settings-item" title="가로/세로 보기 전환">
+                                <i class="fa-solid fa-rotate" aria-hidden="true"></i> 가로/세로 보기
+                            </button>
+                            <div class="settings-divider"></div>
+                            <p class="settings-group-label">앱</p>
                             <!-- 앱 종료: 설치형 PWA(standalone)에서만 표시 — 모바일은 OS가 종료를 막아 안내 다이얼로그 표시 -->
                             <button type="button" id="app-quit-btn" class="settings-item is-hidden" data-click="quitApp" title="앱 종료 방법 안내 — 모바일에서는 최근 앱 목록에서 닫아야 완전히 종료됩니다">
                                 <i class="fa-solid fa-power-off" aria-hidden="true"></i> 앱 종료
                             </button>
-                            <div class="settings-divider"></div>
                             <button id="reset-progress-btn" class="settings-item settings-item-danger" title="학습 진도·통계를 모두 삭제 (복구 불가)">
                                 <i class="fa-solid fa-rotate-left" aria-hidden="true"></i> 진도 초기화
                             </button>
+                            <div class="settings-divider"></div>
+                            <p class="settings-meta">© Passmula · <span id="settings-version">v1.0.0</span></p>
                         </div>
                         <input type="file" id="import-file-input" class="is-hidden" accept=".json">
                     </div>

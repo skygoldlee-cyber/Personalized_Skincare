@@ -72,6 +72,17 @@
   opacity: 1;
   transform: translate(-50%, -50%) scale(1);
 }
+/* 모바일: 중앙 토스트가 콘텐츠를 가리므로 하단 탭 바 위로 이동 */
+@media (max-width: 768px), (orientation: landscape) and (max-height: 500px) {
+  #app-toast {
+    top: auto;
+    bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+    transform: translate(-50%, 0) scale(0.9);
+  }
+  #app-toast.is-visible {
+    transform: translate(-50%, 0) scale(1);
+  }
+}
 
 /* ── 컨펌 모달 ── */
 #app-confirm-overlay {

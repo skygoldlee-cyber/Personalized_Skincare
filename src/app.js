@@ -542,13 +542,14 @@ function initApp() {
         console.error('[init] setupNavigation 실패 — __APP_INITIALIZED 미설정, 폴백 대기');
     }
 
-    // 사이드바 버전 표시 동기화
-    const versionEl = document.getElementById('sidebar-version');
-    if (versionEl) {
+    // 사이드바·설정 메뉴 버전 표시 동기화 (모바일은 사이드바가 숨겨져 설정에서 확인)
+    const versionEls = ['sidebar-version', 'settings-version']
+        .map(id => document.getElementById(id)).filter(Boolean);
+    if (versionEls.length) {
         navigator.serviceWorker?.getRegistration?.().then(reg => {
             if (reg?.active?.scriptURL) {
                 const match = reg.active.scriptURL.match(/v\d+-\d{8}-[\w-]+/);
-                if (match) versionEl.textContent = match[0];
+                if (match) versionEls.forEach(el => { el.textContent = match[0]; });
             }
         }).catch(() => {});
     }

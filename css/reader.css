@@ -487,6 +487,14 @@
     opacity: 0.7;
     width: 12px;
 }
+/* 최초 방문 시 존재를 알리는 펄스 — animationend 시 클래스 해제 */
+.reader-toc-edge-hint.is-attention {
+    animation: tocHintPulse 1.2s ease-in-out 4;
+}
+@keyframes tocHintPulse {
+    0%, 100% { opacity: 0.35; width: 8px; }
+    50% { opacity: 0.9; width: 14px; }
+}
 @media (max-width: 900px) {
     /* TOC가 로드된 경우(=is-hidden 해제)만 표시 */
     .reader-toc:not(.is-hidden) ~ .reader-toc-edge-hint { display: block; }

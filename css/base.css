@@ -291,6 +291,7 @@
     --border-subtle: rgba(15, 23, 42, 0.15);
     --border-strong: rgba(15, 23, 42, 0.3);
     --overlay-bg: rgba(233, 228, 212, 0.95);
+    --drawer-bg: rgba(224, 220, 203, 0.95);
     --stroke-subtle: rgba(15, 23, 42, 0.1);
     --stroke-medium: rgba(15, 23, 42, 0.15);
     --stroke-strong: rgba(15, 23, 42, 0.2);
@@ -560,7 +561,7 @@ html {
 /* App Container */
 .app-container {
     display: flex;
-    width: 100vw;
+    width: 100%; /* 100vw는 스크롤바 폭을 포함해 가로 오버플로 유발 가능 */
     height: 100vh;
     height: 100dvh; /* iOS Safari 주소창 변동 대응 */
 }
@@ -841,10 +842,12 @@ body.ui-mode-practice .ui-mode-toggle {
     align-items: center;
     padding: 2rem 3rem 1.5rem 3rem;
     border-bottom: 1px solid var(--border-color);
+    /* 스크롤해도 설정/테마에 접근 가능하도록 고정 — drawer-bg + blur로 하단 콘텐츠 비침 */
+    position: sticky;
+    top: 0;
+    background: var(--drawer-bg);
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
-    /* backdrop-filter가 스태킹 컨텍스트를 만들어 설정 드롭다운이 아래 카드에 가려지는 것을 방지 */
-    position: relative;
     z-index: var(--z-sticky);
 }
 
@@ -886,6 +889,29 @@ body.ui-mode-practice .ui-mode-toggle {
     flex-direction: column;
     gap: var(--space-1);
     z-index: var(--z-dropdown);
+    /* 항목 증가 대비 — 뷰포트를 넘지 않도록 제한 + 내부 스크롤 */
+    max-height: calc(100dvh - 5rem);
+    overflow-y: auto;
+}
+
+/* 설정 패널 그룹 라벨 (계정/데이터/보기·도구/앱) */
+.settings-group-label {
+    margin: var(--space-1) 0 0;
+    padding: 0 var(--space-3);
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+/* 설정 패널 하단 버전 표기 — 모바일은 사이드바 푸터가 숨겨지므로 여기서 확인 */
+.settings-meta {
+    margin: 0;
+    padding: var(--space-1) var(--space-3);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    text-align: center;
 }
 
 .settings-item {
@@ -893,6 +919,7 @@ body.ui-mode-practice .ui-mode-toggle {
     align-items: center;
     gap: var(--space-3);
     width: 100%;
+    min-height: 44px; /* 터치 타겟 최소 크기 */
     padding: var(--space-2) var(--space-3);
     background: transparent;
     border: none;

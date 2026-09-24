@@ -1109,6 +1109,16 @@ function bindReaderScrollEvents() {
                 if (tocBackdrop) tocBackdrop.classList.remove('is-hidden');
             }
         });
+        // 최초 1회 — 힌트 존재를 알리는 펄스 (표시된 후 애니메이션 종료 시 해제)
+        try {
+            if (localStorage.getItem('ui_toc_hint_seen') !== '1') {
+                edgeHint.classList.add('is-attention');
+                edgeHint.addEventListener('animationend', () => {
+                    edgeHint.classList.remove('is-attention');
+                    try { localStorage.setItem('ui_toc_hint_seen', '1'); } catch (_) { /* 무시 */ }
+                }, { once: true });
+            }
+        } catch (_) { /* 무시 */ }
     }
 }
 
