@@ -4,6 +4,30 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-24 앱 종료 기능 + 모바일 스크롤바 숨김
+
+- **설정 메뉴 '앱 종료' 항목** (`index.html`, `app.js`, `ui-overlay.css`):
+  설치형 PWA(standalone, `display-mode`/`navigator.standalone` 감지)에서만
+  설정 패널에 표시. 클릭 → `showConfirm` 확인 → `window.close()`(데스크톱 PWA
+  동작) → `history.back()` 시도 → 모두 차단되면 600ms 후 전체 화면
+  `.app-exit-screen` 안내로 대체 ("최근 앱 목록에서 밀어 닫기").
+  모바일 OS는 웹의 자체 종료를 차단하므로 안내+제스처 유도가 실질적 종료 경로.
+  항목 툴팁에도 동일 안내 포함
+- **모바일 스크롤바 완전 숨김** (`base.css`): `@media (pointer: coarse),
+  (max-width: 900px)`에서 `::-webkit-scrollbar` 폭 0 + `scrollbar-width: none`
+  (`*` 컨테이너). 데스크톱은 10px·진한 thumb 유지. 터치 환경은 드래그용이
+  아니므로 위치 표시 불필요 판단
+- **참조자료 이미지 표시 수정** (`exam-viewer.js`): `parseMarkdown` 결과 주입 시
+  상대 이미지 경로를 md 디렉터리 기준 절대 URL로 재작성 — `data-ref-md`·법규
+  준수 문서·문제은행 인용 경로에서 `이미지` alt 텍스트로 보이던 문제 해소
+- **ref_md 아티팩트 정리**: 변환 조각 이미지 74건 제거(별표 제목 글자-이미지
+  중복 56 + 수식 기호 조각 18). 참조 무결성 0건 깨짐, 의미 이미지
+  (QR·로고·심벌·구조식·장치도) 전량 보존
+- **스크롤바 가시성 강화** (`base.css`): 폭 6→10px, thumb 대비 상승,
+  track `--bg-subtle`, Firefox `scrollbar-*` 추가 — 이후 모바일은 숨김 처리
+- **잔여 스크롤 오버라이드 정리**: 모바일 네비·OMR 그리드 4→6px + 새 변수
+- **미해결 확인**: 우측 가장자리 회색 띠 신고 → 삼성 엣지 패널(OS 핸들)로 판명
+
 ## 2026-09-24 Formula OS UI 정리 + 고객 데이터 고지
 
 - **배합 계산기 서브내비 추가** (`index.html`, `formula.js`): 다른 서브패널에만
