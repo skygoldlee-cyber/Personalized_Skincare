@@ -17,8 +17,8 @@
 
 ```powershell
 # 테스트
-npm.cmd test                          # 유닛 테스트 (node --test, 458개)
-npm.cmd run test:dom                  # DOM 테스트 (Vitest + jsdom, 264개)
+npm.cmd test                          # 유닛 테스트 (node --test, 489개)
+npm.cmd run test:dom                  # DOM 테스트 (Vitest + jsdom, 332개)
 npm.cmd run test:all                   # 전체 테스트 (unit + parser + dom)
 
 # 빌드
@@ -240,7 +240,7 @@ docs/                   # 개발 문서
 ## 검증 체크리스트 (변경 후 필수)
 
 1. `node --check` — 수정한 JS 파일 문법 검증
-2. `npm.cmd test` — 유닛 테스트 458개 통과 확인
+2. `npm.cmd test` — 유닛 테스트 489개 통과 확인
 3. `npm.cmd run check:parser` — 콘텐츠 변경 시 파서 등가성 검증
 4. `npm.cmd run check:imports` — src/ 내 ES 모듈 import/export 교차 검증
 5. `npm.cmd run verify:assets` — SHELL_ASSETS 파일 존재 확인

@@ -23,8 +23,8 @@
 | 구분 | 프레임워크 | 환경 | 파일 위치 | 테스트 수 |
 |------|-----------|------|-----------|-----------|
 | **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 489 |
-| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 294 |
-| **합계** | | | | **775** |
+| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 332 |
+| **합계** | | | | **821** |
 
 ### 설계 원칙
 
@@ -40,12 +40,12 @@
 ## 2. 실행 명령어
 
 ```bash
-# Unit 테스트만 실행 (458개)
+# Unit 테스트만 실행 (489개)
 npm test
 # 또는
 npm run test:unit
 
-# DOM 테스트만 실행 (294개)
+# DOM 테스트만 실행 (332개)
 npm run test:dom
 
 # 전체 실행 (Unit + 파서 정합성 + DOM)
@@ -276,7 +276,7 @@ npm run test:watch
 
 ### 4.8 일반 마크다운 파싱 (Markdown Parser General) — 교재 무관, 합성 데이터
 
-#### `markdown-parser-general.test.js` (35개)
+#### `markdown-parser-general.test.js` (47개)
 - **헤더**: `#`→`<h1>`, `##`→`<h2>`, `###`→`<h3>`, `useReaderStyles` 시 `<h3 class="md-h3">`/`<h4 class="md-h4">`
 - **표**: 기본 테이블, 구분선 행 제외, 빈 셀 보존, `reader-table-wrapper` 클래스
 - **리스트**: ul(`-`), ol(번호), `useCustomListDiv` 시 `md-list-item` div 렌더링
@@ -287,6 +287,7 @@ npm run test:watch
 - **빈 입력**: 빈 문자열, 공백만
 - **구분선**: `---`→`<hr>`, `useReaderStyles` 시 `reader-hr`
 - **일반 문단**: `<p>`, `useReaderStyles` 시 `md-para`, `customSpacing` 시 빈 줄에 spacing div
+- **joinWraps (ref_md 시각적 줄 병합)**: 문장 중간 절단 복원, `span data-md-line` 인용 정밀도 유지, 날짜 꼬리(`<개정`+`2018. 3. 13.>`)·화학식(`Freon 113)`) 오분류 교정, 러닝헤더 스킵(페이지 경계 병합 복원), 짧은 prev 줄 공백 결합 vs 문장부호 꼬리 무공백 구분
 
 ### 4.9 교재 리더 포맷팅 (Reader Format General) — 교재 무관, 합성 데이터
 
@@ -396,11 +397,11 @@ export 함수를 직접 호출하고 DOM 반영을 검증한다. `data-click` �
 
 #### `study-dashboard.dom.test.js` (6개)
 - 진도 0건 통계·안내, 시딩→암기율/정답률/복습 대기, 과목 카드·히트맵
-- 약점 추천: 3문 이상 응시 과목 중 최저 정답률 + 헷갈림 카드最多
+- 약점 추천: 3문 이상 응시 과목 중 최저 정답률 + 헷갈림 카드 최다
 
 ### 4.12b Formula OS — 업무 레이어 (Phase A~D) + CSV
 
-#### `batch-store.test.js` (10개)
+#### `batch-store.test.js` (14개)
 - 배치번호 `YYYYMMDD-NN` 당일 채번, 처방·일시·스냅샷 identity 불변
 - QC·위생 필드 단위 병합(통째 덮어쓰기 방지), `checkSnapshot` 보존, 50건 한도
 
@@ -622,6 +623,7 @@ npm run verify:assets
 | `ReferenceError: document is not defined` | jsdom 환경 미적용 | `vitest.config.mjs`의 `environment: 'jsdom'` 확인 |
 | `localStorage.clear is not a function` | jsdom localStorage 미초기화 | `beforeEach`에서 `localStorage.clear()` 호출 |
 | 타이머 관련 비결정적 실패 | `setTimeout`/`setInterval` 비동기 | `vi.useFakeTimers()` / `vi.useRealTimers()` 사용 |
+| 전체 스위트에서만 간헐 실패, 단독 실행은 통과 | 테스트 간 상태 공유·타이밍 경합 (관측 사례: `study-trainer` 수치 훈련, `formula-calc`) | 단독 재실행으로 확인 — 반복되면 `beforeEach` 상태 초기화·fake timer 경계 점검 |
 
 ### 8.3 Mermaid 테스트 실패
 
