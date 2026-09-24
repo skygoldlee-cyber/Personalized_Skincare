@@ -4,6 +4,17 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-24 이벤트 위임·리더 툴바 DOM 테스트 추가 (+32)
+
+- `common-eventlisteners.dom.test.js`(+21): data-click/data-args/data-input
+  위임 디스패치, 네임스페이스 핸들러 해석, Enter/Space 키보드 접근성,
+  설정 메뉴, 진도 초기화, 플래시카드 버튼·집계, sim 이동, 퀴즈 숫자/OX 단축키.
+  `event-listeners.js` 라인 38→68%.
+- `study-reader.dom.test.js`(+11): 리더 툴바(글자/줄간격·집중모드·접기),
+  본문 검색 하이라이트+순환 네비, 모바일 TOC 드로어, 표 확장 모달,
+  TOC 클릭 스크롤, themechange 동기화. `textbook-reader.js` 40→53%.
+- 병합 라인 커버리지 78.3→79.7%.
+
 ## 2026-09-24 커버리지 공백 보강 — mermaid-utils·오답 모의고사
 
 - **테스트 추가** (+14): `tests/unit/mermaid-utils.test.js`(8 —

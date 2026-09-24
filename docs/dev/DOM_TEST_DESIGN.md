@@ -1,6 +1,6 @@
 # DOM 시나리오 테스트 설계 (jsdom)
 
-> 상태: ✅ Phase 1~5 완료 (300개) · 작성일: 2026-09-23 · Phase 6(Playwright) 보류
+> 상태: ✅ Phase 1~5 완료 (332개) · 작성일: 2026-09-23 · Phase 6(Playwright) 보류
 > ※ 파일별 최신 테스트 수는 TESTING.md §3 표가 정본 — 이 문서의 Phase 수치는 설계 시점 스냅샷
 
 ## 1. 목적
@@ -69,6 +69,7 @@ tests/dom/
   common-htmlviewer.dom.test.js   ✅ 사후 추가 — HTML 뷰어 렌더 경로
   common-navigation.dom.test.js   ✅ 사후 추가 — 뷰 전환 공용 유틸
   study-trainer-drills.dom.test.js ✅ 사후 추가 — O/X·복수정답 드릴 UI
+  common-eventlisteners.dom.test.js ✅ 사후 추가 — data-click 위임·리스너 핸들러 본문
 ```
 
 ### 3.1 helpers.js API

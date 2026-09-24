@@ -142,7 +142,7 @@ npm run test:watch
 | 15 | `study-trainer.dom.test.js` | 12 | 스마트 훈련소 | 메뉴/서브패널 전환, 한도 퀴즈 채점, 계산 연습 이력·비수치 경고, 원료 챌린지·빈DB 가드, 취약 진술 복습 | 2026-09-23 추가 |
 | 16 | `study-calendar.dom.test.js` | 6 | 학습 캘린더 | 목표 카드·월 그리드, 활동 기록→학습일·달성률, 월 이동, 목표 저장·기본값, 취소 불변 | 2026-09-23 추가 |
 | 17 | `study-simulator.dom.test.js` | 14 | 모의고사 | 아레나·OMR, 답안·문항 이동, 제출 채점·오답 카드 등록, 리뷰, 드래프트 이어하기, 시간 만료 자동 제출, 오답 모의고사(startWeakExam — 카드/퀴즈/combo 재조립·과목 필터) | 2026-09-23 추가 |
-| 18 | `study-reader.dom.test.js` | 5 | 교재 리더 | 과목 옵션·본문/TOC 렌더, 읽기 위치 이어하기, 북마크 영속, 빈 상태 | 2026-09-23 추가 |
+| 18 | `study-reader.dom.test.js` | 16 | 교재 리더 | 과목 옵션·본문/TOC 렌더, 읽기 위치 이어하기, 북마크 영속, 빈 상태 + 툴바(글자/줄간격·집중모드·접기·모두접기)·본문 검색 하이라이트·모바일 TOC 드로어·표 확장 모달·TOC 클릭 스크롤·테마 동기화 | 2026-09-23 추가 |
 | 19 | `study-search.dom.test.js` | 7 | 교재 검색 | 역색인 검색·하이라이트·건수, AND 교집합, 과목 필터, 결과 없음, 더보기 토글, 초기화 | 2026-09-23 추가 |
 | 20 | `study-dictionary.dom.test.js` | 12 | 성분 사전 | 카드·3상태 배지, 이름/영문/초성 검색, type 필터, 빈 DB·결과 없음, 상세 토글 | 2026-09-23 추가 |
 | 21 | `study-manual.dom.test.js` | 6 | 매뉴얼 뷰어 | 오버레이·MD 렌더·TOC, doc: 링크 문서 전환, sessionStorage 캐시, mermaid 마크업, 미등록 소스 오류, 닫기 | 2026-09-23 추가 |
@@ -159,7 +159,8 @@ npm run test:watch
 | 32 | `common-htmlviewer.dom.test.js` | 7 | HTML 뷰어 | 외부 HTML 콘텐츠 로드·렌더 경로 | 2026-09-24 추가 |
 | 33 | `common-navigation.dom.test.js` | 4 | 뷰 전환 공용 | navigation 유틸 경로 | 2026-09-24 추가 |
 | 34 | `study-trainer-drills.dom.test.js` | 12 | O/X·복수정답 드릴 | 드릴 UI·채점 경로 | 2026-09-24 추가 |
-| | **합계** | **300** | | |
+| 35 | `common-eventlisteners.dom.test.js` | 21 | 이벤트 위임·리스너 | data-click/data-args/data-input 디스패치·키보드 접근성, 설정 메뉴·진도 초기화, 플래시카드 버튼·시뮬 이동·퀴즈 단축키 | 2026-09-24 추가 |
+| | **합계** | **332** | | |
 
 ---
 
@@ -538,7 +539,7 @@ function detectDiagramType(textContent) {
 
 ## 6. 커버리지 현황
 
-`npm run coverage:all` 기준 **병합 라인 78.3%** (`src/` 최상위 81.5%, `src/views` 74.0%).
+`npm run coverage:all` 기준 **병합 라인 79.7%** (`src/` 최상위 81.5%, `src/views` 77.2%).
 
 - 병합 리포트(`coverage-merged/index.html`)가 실질 수치 — vitest 단독 리포트는 유닛 테스트가 커버하는 순수 로직을 0%로 표시하므로 과소평가된다.
 - jsdom으로 검증 불가한 환경 의존 모듈은 `vitest.config.mjs` `coverage.exclude`로 분모에서 제외 (`types.js`, `app-fallback`, `pwa-install*`, `theme-init`, `web-vitals`, `reader-audio`).
@@ -560,8 +561,8 @@ function detectDiagramType(textContent) {
 |------|------|------|-----------|
 | `app.js` | 0% | 메인 진입점 (1100+ 라인) — 모듈 로드 시 즉시 실행돼 DOM 테스트로는 임포트 불가 | 부분 함수를 별도 모듈로 분리해 테스트 가능하게 하거나, E2E 도구로 커버 |
 | `charts.js` | 17% | SVG 차트 렌더링 | 렌더 출력 DOM을 스냅샷/구조 검증하는 방식으로 가능 |
-| `event-listeners.js` | 34% | `data-click` 위임 바인딩 — 위임 테이블 자체는 delegation-guard 유닛 테스트가 정적 검증 | 위임 클릭 디스패치 경로를 jsdom에서 시뮬레이션 |
-| `textbook-reader.js` | 38% | 대형 뷰 컨트롤러 (1650 라인) | 미커버 블록 단위로 시나리오 확충 |
+| `event-listeners.js` | 68% | `data-click` 위임 바인딩 — 디스패치·키보드 접근성·핸들러 본문 커버 완료 | 잔여는 스와이프 제스처·일부 분기 |
+| `textbook-reader.js` | 53% | 대형 뷰 컨트롤러 (1650 라인) — 툴바·본문 검색·TOC 드로어·표 모달 커버 완료 | 스크롤 스파이·참조 미리보기·오디오 연동 경로 |
 | `exam-viewer.js` | ~54% | 문제집 뷰어 | 해설·인용 링크 경로 보강 |
 | `exam-simulator.js` | 69% | 시뮬레이터 | 오답 모의고사(startWeakExam) 커버 완료 — 잔여는 결과 리뷰 세부 경로 |
 | `data-loader.js` | ~73% | `_loadScript` 스크립트 로딩 경로 | jsdom의 script 로드 제약 — 스텁 분기 커버 가능 |
