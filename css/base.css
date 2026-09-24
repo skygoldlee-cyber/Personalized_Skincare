@@ -535,9 +535,10 @@ html {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--scrollbar-thumb-hover);
 }
-/* 터치 환경(모바일)은 스크롤바를 드래그하지 않으므로 완전히 숨김 — 굵은 띠 방지 */
-@media (pointer: coarse) {
-    html {
+/* 모바일/터치 환경은 스크롤바를 드래그하지 않으므로 완전히 숨김 — 굵은 띠 방지.
+   pointer 감지가 실패하는 기기를 위해 폭 기준(모바일 레이아웃 분기)도 병기 */
+@media (pointer: coarse), (max-width: 900px) {
+    * {
         scrollbar-width: none;
     }
     ::-webkit-scrollbar {
