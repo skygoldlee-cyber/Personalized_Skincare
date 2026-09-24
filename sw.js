@@ -284,7 +284,8 @@ async function pruneStaleDataBundles() {
     const text = await res.text();
 
     // 레지스트리가 참조하는 모든 ./data/*.js 경로 수집 (+ 항상 보존할 경량 파일)
-    const referenced = new Set(text.match(/\.\/data\/[A-Za-z0-9_./-]+\.js/g) || []);
+    // 유니코드 경로 허용 — 한글 파일명 번들(예: docs_md/학습안내서.js)도 참조로 인식
+    const referenced = new Set(text.match(/\.\/data\/[\p{L}\p{N}_./-]+\.js/gu) || []);
     referenced.add('./data/registry.js');
     referenced.add('./data/audio_manifest.js');
     referenced.add('./data/question_chapters.js'); // 단원별 취약 분석 인덱스 (init 시 로드)
@@ -295,7 +296,10 @@ async function pruneStaleDataBundles() {
     const requests = await cache.keys();
     await Promise.all(
       requests.map(async (req) => {
-        const pathname = new URL(req.url).pathname;
+        // req.url은 퍼센트 인코딩 상태 — 한글 경로가 endsWith 비교에서 어긋나지 않게 디코딩
+        let pathname;
+        try { pathname = decodeURIComponent(new URL(req.url).pathname); }
+        catch (_) { pathname = new URL(req.url).pathname; }
         if (!pathname.includes('/data/')) return; // 데이터 번들만 대상
         if (ALWAYS_KEEP.test(pathname)) return;   // drills 번들은 보존
         const isReferenced = refSuffixes.some((suffix) => pathname.endsWith(suffix));

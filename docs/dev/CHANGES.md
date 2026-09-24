@@ -4,6 +4,21 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-24 SW 프루닝 한글 경로 인코딩 함정 수정
+
+- **배경**: `sw.js` `pruneStaleDataBundles`가 캐시 요청의
+  `new URL(req.url).pathname`(퍼센트 인코딩 상태)과 레지스트리에서
+  추출한 원시 경로 접미사를 `endsWith`로 직접 비교 — 한글 파일명 번들이
+  레지스트리에 참조돼 있어도 매칭 실패로 **참조 중인 번들을 오삭제**할 수
+  있었다. 참조 추출 정규식도 `[A-Za-z0-9_./-]` ASCII 전용이라 한글 참조를
+  인식하지 못했다 (html-viewer 테스트 작성 중 발견한 함정의 프로덕션 잔재).
+- **수정**: 추출 정규식을 `[\p{L}\p{N}_./-]`(u 플래그)로 유니코드 확장,
+  `pathname`은 `decodeURIComponent` 후 비교(실패 시 원본 폴백).
+- **테스트**: `tests/unit/sw-prune.test.js` (+5) — vm 샌드박스에서 실제
+  sw.js를 실행해 프루닝 동작 검증: 한글 참조 번들 보존, 비ASCII 참조 추출,
+  서브디렉터리 배포 끝 일치, ALWAYS_KEEP 경로, registry fetch 실패 시
+  best-effort 무동작.
+
 ## 2026-09-24 테스트 커버리지 보강
 
 - **커버리지 도구 도입**: `@vitest/coverage-v8` + `npm run coverage`
