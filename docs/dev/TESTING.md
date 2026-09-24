@@ -529,7 +529,43 @@ function detectDiagramType(textContent) {
 
 ---
 
-## 6. CI 연동
+## 6. 커버리지 현황
+
+`npm run coverage:all` 기준 **병합 라인 77.3%** (`src/` 최상위 80.7%, `src/views` 72.7%).
+
+- 병합 리포트(`coverage-merged/index.html`)가 실질 수치 — vitest 단독 리포트는 유닛 테스트가 커버하는 순수 로직을 0%로 표시하므로 과소평가된다.
+- jsdom으로 검증 불가한 환경 의존 모듈은 `vitest.config.mjs` `coverage.exclude`로 분모에서 제외 (`types.js`, `app-fallback`, `pwa-install*`, `theme-init`, `web-vitals`, `reader-audio`).
+
+### 측정 제외 파일 (수동 검증 영역)
+
+| 파일 | 성격 | 사유 |
+|------|------|------|
+| `types.js` | JSDoc typedef 선언 | 런타임 코드 없음 — 측정 자체가 무의미 |
+| `app-fallback.js` | ESM 로드 실패 복구 부트스트랩 | `window.onerror` 경계 — 모듈 로드 실패 재현 불가 |
+| `pwa-install.js`, `pwa-install-capture.js`, `pwa-manifest.js` | 설치 프롬프트·매니페스트 | `beforeinstallprompt` 브라우저 이벤트 |
+| `theme-init.js` | DOM 이전 즉시 실행 스크립트 | FOUC 방지 초기화 — 부트스트랩 영역 |
+| `web-vitals.js` | 성능 모니터링 | `PerformanceObserver` |
+| `reader-audio.js` | 오디오북 플레이어 | `Audio` API |
+
+### 남은 저커버리지 영역
+
+| 파일 | 라인 | 성격 | 개선 방향 |
+|------|------|------|-----------|
+| `app.js` | 0% | 메인 진입점 (1100+ 라인) — 모듈 로드 시 즉시 실행돼 DOM 테스트로는 임포트 불가 | 부분 함수를 별도 모듈로 분리해 테스트 가능하게 하거나, E2E 도구로 커버 |
+| `charts.js` | 17% | SVG 차트 렌더링 | 렌더 출력 DOM을 스냅샷/구조 검증하는 방식으로 가능 |
+| `event-listeners.js` | 34% | `data-click` 위임 바인딩 — 위임 테이블 자체는 delegation-guard 유닛 테스트가 정적 검증 | 위임 클릭 디스패치 경로를 jsdom에서 시뮬레이션 |
+| `textbook-reader.js` | 38% | 대형 뷰 컨트롤러 (1650 라인) | 미커버 블록 단위로 시나리오 확충 |
+| `exam-viewer.js` | ~54% | 문제집 뷰어 | 해설·인용 링크 경로 보강 |
+| `exam-simulator.js` | 48% | 시뮬레이터 (937 라인) | 타이머·일시정지·이어풀기 경로 보강 |
+| `data-loader.js` | ~73% | `_loadScript` 스크립트 로딩 경로 | jsdom의 script 로드 제약 — 스텁 분기 커버 가능 |
+| `manual-viewer.js` | ~67% | 학습안내서 뷰어 | 섹션 네비게이션 경로 보강 |
+
+> 수치는 `coverage-merged` 기준. 특정 파일의 미커버 라인은 리포트의
+> `Uncovered Line #s` 컬럼 참조.
+
+---
+
+## 7. CI 연동
 
 ### GitHub Actions
 
@@ -561,9 +597,9 @@ npm run verify:assets
 
 ---
 
-## 7. 트러블슈팅
+## 8. 트러블슈팅
 
-### 7.1 Unit 테스트 실패
+### 8.1 Unit 테스트 실패
 
 | 증상 | 원인 | 해결 |
 |------|------|------|
@@ -571,7 +607,7 @@ npm run verify:assets
 | `require is not defined` | CommonJS 모듈을 ESM에서 직접 import | `createRequire(import.meta.url)` 사용 |
 | `localStorage is not defined` | Unit 테스트에 DOM API 없음 | 해당 테스트를 `tests/dom/`으로 이동 |
 
-### 7.2 DOM 테스트 실패
+### 8.2 DOM 테스트 실패
 
 | 증상 | 원인 | 해결 |
 |------|------|------|
@@ -579,7 +615,7 @@ npm run verify:assets
 | `localStorage.clear is not a function` | jsdom localStorage 미초기화 | `beforeEach`에서 `localStorage.clear()` 호출 |
 | 타이머 관련 비결정적 실패 | `setTimeout`/`setInterval` 비동기 | `vi.useFakeTimers()` / `vi.useRealTimers()` 사용 |
 
-### 7.3 Mermaid 테스트 실패
+### 8.3 Mermaid 테스트 실패
 
 | 증상 | 원인 | 해결 |
 |------|------|------|
