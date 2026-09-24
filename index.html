@@ -91,10 +91,6 @@
                     <i class="fa-solid fa-calendar-check" aria-hidden="true"></i> 학습 캘린더
                 </button>
             </nav>
-            <!-- 앱 종료: 설치형 PWA(standalone)에서만 표시 — 모바일에서 숨겨지는 .sidebar-footer 밖에 둠 -->
-            <button type="button" id="app-quit-btn" class="ui-mode-toggle is-hidden" data-click="quitApp" title="앱 종료">
-                <i class="fa-solid fa-power-off" aria-hidden="true"></i> <span>앱 종료</span>
-            </button>
             <div class="sidebar-footer">
                 <button type="button" id="ui-mode-toggle" class="ui-mode-toggle" data-click="toggleUiMode" aria-pressed="false" title="학습/실무 모드 전환 — 합격 후 실무 중심 사용자는 실무 모드를 추천합니다">
                     <i class="fa-solid fa-repeat" aria-hidden="true"></i> <span id="ui-mode-label" class="ui-mode-label">학습 모드</span>
@@ -126,6 +122,10 @@
                     <!-- PWA 설치 버튼 (beforeinstallprompt 이벤트 발생 시 표시) -->
                     <button id="pwa-install-btn" class="btn btn-primary">
                         <i class="fa-solid fa-download" aria-hidden="true"></i> <span class="btn-text">앱 설치</span>
+                    </button>
+                    <!-- 앱 종료: 설치형 PWA(standalone)에서만 표시 -->
+                    <button type="button" id="app-quit-btn" class="btn btn-secondary is-hidden" data-click="quitApp" title="앱 종료" aria-label="앱 종료">
+                        <i class="fa-solid fa-power-off" aria-hidden="true"></i>
                     </button>
                     <!-- 설정 메뉴: 백업/복원·초기화·시험 전환 등 관리 기능 통합 -->
                     <div class="settings-menu">
