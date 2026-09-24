@@ -6,6 +6,7 @@ import re
 import argparse
 import base64
 import glob
+import random
 import hashlib
 import json
 import sys
@@ -3509,10 +3510,10 @@ def _inline_mermaid_fences(md_text: str) -> str:
                                r'\[(?!["\'])(?P<label>[^\]]*?)\]')
     node_pat_par = re.compile(r'(?P<prefix>^|[^A-Za-z0-9_"\'])'
                                r'(?P<id>[A-Za-z_][A-Za-z0-9_]*)'
-                               r'\((?!["\'])(?P<label>[^\)]*?)\)')
+                               r'\((?!["\'\x00\[])(?P<label>[^\)]*?)\)')
     node_pat_cur = re.compile(r'(?P<prefix>^|[^A-Za-z0-9_"\'])'
                                r'(?P<id>[A-Za-z_][A-Za-z0-9_]*)'
-                               r'\{(?!["\'])(?P<label>[^\}]*?)\}')
+                               r'\{(?!["\'\x00])(?P<label>[^\}]*?)\}')
 
     def _sanitize_label(label: str) -> str:
         s = label
@@ -3535,11 +3536,15 @@ def _inline_mermaid_fences(md_text: str) -> str:
         # Mermaid does not reliably support "\\n" escapes inside labels; use <br/>.
         line = line.replace("\\n", "<br/>")
 
+        _cur_diagram_type = getattr(sanitize_mermaid_line, '_diagram_type', '')
+
         # Sanitize edge labels written as |label| (flowchart links)
         # FIX: |"label"| 형태(이미 큰따옴표로 감싸진 엣지 레이블)는 그대로 유지.
         # |label| 형태(따옴표 없는 것)만 _sanitize_label 처리.
         # 이유: _sanitize_label의 " → ' 변환이 |"label"| → |'label'| 로 만들어
         # mermaid 파서가 ' 를 구분자로 오해하여 파싱 오류 발생.
+        # FIX2: |label| 문법은 flowchart/graph/stateDiagram 전용 — erDiagram의
+        # 카디널리티(||--||, }o--o{ 등)가 \|...\|에 오매칭되어 -- → — 로 파괴됨.
         def _edge_label_repl(m: re.Match) -> str:
             inner = m.group(1)
             # 이미 큰따옴표로 감싸진 경우: |"label"| → 그대로 유지
@@ -3551,14 +3556,14 @@ def _inline_mermaid_fences(md_text: str) -> str:
             sanitized = sanitized.replace("(", "（").replace(")", "）")
             return "|" + sanitized + "|"
 
-        line = re.sub(r"\|([^|]+)\|", _edge_label_repl, line)
+        if _cur_diagram_type in ('', 'flowchart', 'graph', 'stateDiagram', 'stateDiagram-v2'):
+            line = re.sub(r"\|([^|]+)\|", _edge_label_repl, line)
 
         # quadrantChart 전용: title/x-axis/y-axis/quadrant-N 라인 처리.
         # ★ diagram_type 체크 필수 — xychart-beta 등 다른 다이어그램의
         #   x-axis/y-axis 문법은 완전히 달라 이 처리를 적용하면 파싱 오류 발생.
         _s_stripped = line.lstrip()
         _indent_qc  = line[: len(line) - len(_s_stripped)]
-        _cur_diagram_type = getattr(sanitize_mermaid_line, '_diagram_type', '')
 
         if _cur_diagram_type == 'quadrantChart':
             # title: 그대로 유지 (lexer가 [^\n]* 로 읽어 한글 OK)
@@ -3884,7 +3889,7 @@ def _prerender_mermaid_to_svg(html_body: str, progress_cb=None) -> str:
     # 진행 표시용 라벨 (다이어그램 소스 첫 줄)
     labels = [html.unescape(m.group(1)).strip().split('\n')[0][:60] for m in matches]
 
-    def _render_one(m: re.Match) -> str:
+    def _render_one(m: re.Match, label: str = "") -> str:
         src = html.unescape(m.group(1)).strip()
         if not src:
             return m.group(0)
@@ -3899,37 +3904,46 @@ def _prerender_mermaid_to_svg(html_body: str, progress_cb=None) -> str:
         url = f"https://mermaid.ink/svg/{encoded}?theme=default&bgColor=ffffff"
 
         svg = None
-        for _attempt in range(3):
+        last_err = None
+        for _attempt in range(4):
             try:
                 req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-                with urllib.request.urlopen(req, timeout=15) as resp:
+                with urllib.request.urlopen(req, timeout=30) as resp:
                     svg = resp.read().decode("utf-8", errors="replace")
                 if svg and svg.strip().startswith("<svg") and "</svg>" in svg:
                     break
                 svg = None
+                last_err = "empty/invalid SVG response"
             except Exception as e:
-                if _attempt < 2:
-                    time.sleep(1.5 * (_attempt + 1))  # 503 레이트리밋 대비 백오프
-                    continue
-                try:
-                    print(f"[Mermaid pre-render failed] {e}", file=sys.stderr)
-                except Exception:
-                    pass
-                break
+                last_err = e
+                svg = None
+            if _attempt < 3:
+                # 503 레이트리밋 대비 지터 백오프 (워커 간 요청 분산)
+                time.sleep(1.5 * (_attempt + 1) + random.random())
 
         if svg is None:
             # Fallback renderer: kroki.io (deflate + base64url path encoding).
             # Transparent-background SVG sits on .mermaid-img's own background.
+            kdata = base64.urlsafe_b64encode(
+                zlib.compress(src.encode("utf-8"), 9)
+            ).decode("ascii")
+            kurl = f"https://kroki.io/mermaid/svg/{kdata}"
+            for _kattempt in range(2):
+                try:
+                    req = urllib.request.Request(kurl, headers={"User-Agent": "Mozilla/5.0"})
+                    with urllib.request.urlopen(req, timeout=30) as resp:
+                        cand = resp.read().decode("utf-8", errors="replace")
+                    if cand and cand.strip().startswith("<svg") and "</svg>" in cand:
+                        svg = cand
+                        break
+                except Exception as e:
+                    last_err = e
+                    if _kattempt == 0:
+                        time.sleep(1.0)
+
+        if svg is None:
             try:
-                kdata = base64.urlsafe_b64encode(
-                    zlib.compress(src.encode("utf-8"), 9)
-                ).decode("ascii")
-                kurl = f"https://kroki.io/mermaid/svg/{kdata}"
-                req = urllib.request.Request(kurl, headers={"User-Agent": "Mozilla/5.0"})
-                with urllib.request.urlopen(req, timeout=15) as resp:
-                    cand = resp.read().decode("utf-8", errors="replace")
-                if cand and cand.strip().startswith("<svg") and "</svg>" in cand:
-                    svg = cand
+                print(f"[Mermaid pre-render failed] {label}: {last_err}", file=sys.stderr)
             except Exception:
                 pass
 
@@ -3956,9 +3970,10 @@ def _prerender_mermaid_to_svg(html_body: str, progress_cb=None) -> str:
 
     # 다이어그램 렌더링은 네트워크 바운드이므로 병렬 처리한다.
     # 결과는 원래 순서대로 재조립하고, progress_cb는 이 스레드에서만 호출한다.
+    # 워커 2개 + 지터 백오프로 mermaid.ink 레이트리밋(503)을 완화한다.
     replacements: list[str] = [m.group(0) for m in matches]
-    with ThreadPoolExecutor(max_workers=4) as pool:
-        fut_map = {pool.submit(_render_one, m): i for i, m in enumerate(matches)}
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        fut_map = {pool.submit(_render_one, m, labels[i]): i for i, m in enumerate(matches)}
         done = 0
         for fut in as_completed(fut_map):
             i = fut_map[fut]
