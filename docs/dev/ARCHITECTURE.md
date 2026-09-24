@@ -916,7 +916,7 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 | 우선순위 | 대상 | 전략 | 근거 |
 |:---:|------|------|------|
 | 1 | 네비게이션 (`navigate`) | **Cache First** | HTML과 JS 모듈이 항상 동일한 `CACHE_VERSION` 캐시에서 서빙되도록 보장. `Network First`를 쓰면 구 SW가 신버전 HTML(네트워크) + 구버전 JS(캐시)를 섞어 반환하여 ESM import 그래프가 붕괴하는 **캐시 스큐** 발생 (v39 수정, 상세 후술) |
-| 2 | 시험/성분 데이터 번들 (`data/exams/*.hash.js`, `data/exams/cosmetic/ingredients_data.*.js`) · 교재 원본 (`content/*.md`) | **Cache First** | 해시 파일명/정적 MD로 자연 갱신, 오프라인 학습 핵심. 교재 MD는 최초 fetch 시 캐시됨 |
+| 2 | 시험/성분 데이터 번들 (`data/exams/<id>/exams/*.hash.js`, `data/exams/<id>/ingredients_data.*.js`) · 교재 원본 (`content/**/*.md`) | **Cache First** | 해시 파일명/정적 MD로 자연 갱신, 오프라인 학습 핵심. 교재 MD는 최초 fetch 시 캐시됨 |
 | 3 | 외부 CDN (Google Fonts) | **Stale-While-Revalidate** | 외부 리소스 안정성 확보. FontAwesome은 2026-08-24부터 자체 호스팅([`vendor/fontawesome/`](../../vendor/fontawesome/))으로 전환하여 CDN 의존 제거, App Shell 프리캐시에 포함 |
 | 4 | MP3 오디오 (302MB) | **네트워크 직행 (바이패스)** | 대용량 미디어는 캐시 제외 (저장공간 보호) |
 | 5 | `/src/` 하위 JS 모듈 | **Cache First** | ESM import 그래프는 한 모듈이라도 버전이 어긋나면 전체가 드랍됨. `Network First`를 쓰면 모바일 불안정 네트워크에서 일부는 신버전(네트워크), 일부는 구버전(캐시)이 섞여 import 그래프 붕괴. `Cache First` + `SHELL_ASSETS` 프리캐시로 동일 버전 파일만 일관 서빙 (v38부터 적용) |
@@ -1322,8 +1322,8 @@ content/exams/cosmetic/참조자료/원료/db_version.json ──► (ingredient
 content/**/*.md ───(런타임 fetch)──► src/data-loader.js + src/textbook-parser.js ──► STUDY_DATA (카드/퀴즈/챕터)
 content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.js ──► data/exams/cosmetic/study_md/ (과목별 분할)
 
-data/exams/*.js ──► tools/build_ox_drills.js    ──► data/exams/cosmetic/drills/ox_subject*.js   (O/X 3,700+문)
-data/exams/*.js ──► tools/build_combo_drills.js ──► data/exams/cosmetic/drills/combo_subject*.js (복수정답형 755문)
+data/exams/<id>/exams/*.js ──► tools/build_ox_drills.js    ──► data/exams/<id>/drills/ox_subject*.js   (O/X 3,700+문)
+data/exams/<id>/exams/*.js ──► tools/build_combo_drills.js ──► data/exams/<id>/drills/combo_subject*.js (복수정답형 755문)
                 └──────────────────────────────► content/exams/cosmetic/문제은행/과목N_복수정답형.md (검토용 MD)
 ```
 

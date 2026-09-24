@@ -11,16 +11,16 @@
 
 ## 📖 프로젝트 소개
 
-**Passmula**는 한국 **맞춤형화장품 조제관리사** 국가자격시험을 준비하는 수험생을 위한 웹 기반 학습 애플리케이션입니다. 순수 HTML/CSS/JavaScript로 구현된 SPA(Single Page Application)로, 별도의 백엔드 없이 Vercel에 정적 배포됩니다.
+**Passmula**는 한국 **맞춤형화장품 조제관리사** 국가자격시험을 준비하는 수험생을 위한 웹 기반 학습 애플리케이션입니다. 순수 HTML/CSS/JavaScript로 구현된 SPA(Single Page Application)로, Vercel에 정적 배포되며 **localStorage가 1차 저장소**입니다 (계정 없이 전 기능 사용 가능). 로그인한 사용자에게는 **선택적 Supabase 클라우드 동기화**를 제공합니다.
 
 ### 시험 과목 (4과목 · 19단원)
 
 | 과목 | 단원 수 | 내용 |
 |------|:---:|------|
-| 1. 맞춤형화장품의 이해 | 7 | 개요, 피부·모발 생리구조, 관능평가, 제품 상담·안내, 혼합·소분, 충진·포장 |
-| 2. 유통화장품 안전관리 | 5 | 작업장·작업자 위생관리, 설비·기구관리, 내용물·원료관리, 포장재 관리 |
-| 3. 화장품 제조 및 품질관리 | 5 | 원료의 종류와 특성, 기능과 품질, 사용제한 원료, 화장품 관리, 위해사례 판단·보고 |
-| 4. 화장품법의 이해 | 2 | 화장품법, 개인정보 보호법 |
+| 1. 화장품법의 이해 | 2 | 화장품법, 개인정보 보호법 |
+| 2. 화장품 제조 및 품질관리 | 5 | 원료의 종류와 특성, 기능과 품질, 사용제한 원료, 화장품 관리, 위해사례 판단·보고 |
+| 3. 유통화장품 안전관리 | 5 | 작업장·작업자 위생관리, 설비·기구관리, 내용물·원료관리, 포장재 관리 |
+| 4. 맞춤형화장품의 이해 | 7 | 개요, 피부·모발 생리구조, 관능평가, 제품 상담·안내, 혼합·소분, 충진·포장 |
 
 ---
 
@@ -29,22 +29,26 @@
 | 기능 | 설명 |
 |------|------|
 | 📊 **대시보드** | 학습 진도, 과목별 성적 레이더 차트, 성적 추이 꺾은선 그래프, 정답률 히트맵, 약점 과목 추천 |
-|  **교재 본문 읽기** | 4과목 19단원 교재 전문 열기/검색, 읽기 위치 이어하기 (30일 보관), 이야기형 모드, TOC/브레드크럼/스크롤 스파이, 이전/다음 단원 이동 |
+| 📖 **교재 본문 읽기** | 4과목 19단원 교재 전문 열기/검색, 읽기 위치 이어하기 (30일 보관), 이야기형 모드, TOC/브레드크럼/스크롤 스파이, 이전/다음 단원 이동 |
 | 🃏 **플래시카드** | 단원별 핵심 개념 암기 카드 (앞/뒤 뒤집기), SM-2 간격 반복 복습 스케줄링, 난이도 필터, 키보드 지원 |
 | ❓ **기출 퀴즈** | 900+ 문항 풀이, 즉시 채점 및 해설 |
 | ⭐ **오답/중요 복습** | 틀린 문제·북마크 문제 집중 복습 |
 | 🏋️ **스마트 훈련소** | 취약 영역 집중 연습 |
-| � **중요 숫자 암기표** | 과목별 빈출 숫자 카테고리별 분류 (기한·기간 / 농도·함량 / 시험·측정 / 제조·원료 / 금액) |
-| � **실전 예상문제집** | 과목별 모의고사 (100문항 × 다수 세트) + MD 문제집 인앱 뷰어 (목차·인쇄, 팝업 없음) |
+| 🔢 **중요 숫자 암기표** | 과목별 빈출 숫자 카테고리별 분류 (기한·기간 / 농도·함량 / 시험·측정 / 제조·원료 / 금액) |
+| 📝 **실전 예상문제집** | 과목별 모의고사 (100문항 × 다수 세트) + MD 문제집 인앱 뷰어 (목차·인쇄, 팝업 없음) |
 | 🔍 **성분 검색 사전** | 사용 가능/금지/제한 화장품 성분 검색 (배합 한도 포함), 원료 DB 버전 표시 + 개정 이력 조회 |
 | 🧪 **Formula OS** | 실전 배합 작업실 — 배합률→투입량 자동 계산, 고시 한도 실시간 규정 검증, 고객 정보 기반 추천, 포뮬러 저장·조제 기록지 인쇄·JSON 공유, 고객 관리·원료 장부·조제 기록·법규 체크리스트 (CSV 가져오기/보내기 지원) |
 | 🎧 **오디오북** | TTS로 생성한 단원별 음성 강의 (MP3), Media Session API 연동 (잠금화면 미디어 제어) |
 | ✏️ **스크래치패드** | HTML5 Canvas 손글씨 연습장 |
 | 🌗 **라이트/다크 테마** | 시스템 테마 자동 감지 + 수동 토글 (헤더·모바일 탭 바), FOUC 없는 즉시 적용 |
 | 📱 **모바일 최적화** | 하단 탭 바 네비게이션, safe-area 대응, 스크롤 복원, 오프라인 감지, 가로/세로 보기 토글 |
-| � **역색인 교재 검색** | inverted index + 2-gram 보조 인덱스로 교재 본문 실시간 검색 (자동 캐싱) |
+| 🔎 **역색인 교재 검색** | inverted index + 2-gram 보조 인덱스로 교재 본문 실시간 검색 (자동 캐싱) |
 | 📚 **참조자료 연결** | 법령·별표·KFCC 등 참조자료 인앱 뷰어, 인라인 프리뷰 툴팁 (hover/롱프레스), 용어집 자동 링크 + 원래 위치로 돌아가기 |
-| �📄 **참조자료 PDF 저장** | 법령·별표·KFCC 등 참조자료 인앱 뷰어에서 PDF로 저장 (브라우저 인쇄 다이얼로그) |
+| 📄 **참조자료 PDF 저장** | 법령·별표·KFCC 등 참조자료 인앱 뷰어에서 PDF로 저장 (브라우저 인쇄 다이얼로그) |
+| 🗓️ **학습 캘린더** | 월간 학습 기록 캘린더, 일일 목표 링, 스트릭 추적 |
+| 🧠 **문항 드릴** | O/X 판정 드릴(3,700+문), 복수정답형 드릴(755문), 진술 원자 단위 취약 추적 + SM-2 복습 |
+| 🎚️ **학습/실무 모드 전환** | 학습 도구 ↔ Formula OS 실무 중심 네비게이션 전환 (설정 메뉴) |
+| 👤 **계정·동기화 (선택)** | 이메일 로그인/로그인 메일 OTP (Supabase), 학습 데이터 클라우드 스냅샷 동기화 — 고객 PII는 로컬 전용으로 구조적 제외 |
 | ♿ **접근성** | :focus-visible 포커스 링, 커스텀 토스트/컨펌 모달, prefers-reduced-motion 대응, ARIA 속성 |
 | 🔄 **SW 자동 업데이트** | 새 버전 감지 시 3단계 토스트 팝업 (다운로드→설치→완료) 후 자동 새로고침 |
 | 🛡️ **콘텐츠 품질 감사** | npm run audit:cards — 카드 품질 자동 감사 (중복/빈 정의/저품질 검출) |
@@ -65,12 +69,12 @@
 
 **테스트**
 - Node.js 내장 테스트 러너 (`node --test`) — 458 unit tests (sanitize, state, parser, Formula OS 스토어·검증·CSV 등)
-- Vitest + jsdom — 253 DOM tests (backup, router, Formula OS·학습·공통·계정/동기화 시나리오)
+- Vitest + jsdom — 264 DOM tests (backup, router, Formula OS·학습·공통·계정/동기화 시나리오)
 - GitHub Actions CI — push 시 `npm test` + parser parity 자동 실행
 
 **데이터 파이프라인** (빌드 타임)
 - Node.js 모듈러 빌드 파이프라인으로 MD 교재/문제 → 해시드 JS 번들 생성
-  - `tools/build/index.js` → `data/exams/cosmetic/registry.js` + `data/exams/*.hash.js` + `data/exams/cosmetic/ingredients_data.*.js`
+  - `tools/build/index.js` → `data/exams/<id>/registry.js` + `data/exams/<id>/exams/*.hash.js` + `data/exams/<id>/ingredients_data.*.js` (시험별 루트, `exams.json`의 모든 시험 순회)
   - `tools/build_exam_bundles.js` → `data/exams/cosmetic/exams_md/*.js` (문제은행 MD file:// 폴리백 번들)
   - `tools/build_study_md_bundle.js` → `data/exams/cosmetic/study_md/` (교재 MD file:// 폴백, 과목별 분할)
   - 런타임: `src/data-loader.js`가 registry를 보고 필요한 과목/시험만 온디맨드 로드
@@ -122,46 +126,55 @@ Personalized Skincare/
 │   ├── manual-viewer.js             ← 매뉴얼/요약집 런타임 MD 뷰어 (Mermaid 지원)
 │   ├── mermaid-utils.js             ← Mermaid 다이어그램 타입 감지 공용 유틸
 │   ├── pwa-install-capture.js       ← SW 조기 등록 + 업데이트 토스트 + 설치 프롬프트 캡처
-│   ├── views/                       ← 뷰 컨트롤러 모듈 (app.js에서 분리)
+│   ├── views/                       ← 뷰 컨트롤러 모듈 29개 (app.js에서 분리)
 │   │   ├── dashboard.js             ← 대시보드 통계 및 챌린지
 │   │   ├── flashcard.js             ← 플래시카드 학습
 │   │   ├── quiz.js                  ← 기출 퀴즈 및 오답 복습
 │   │   ├── daily-challenge.js       ← 데일리 챌린지 (quiz.js에서 분리)
-│   │   ├── trainer.js               ← 스마트 훈련소
-│   │   ├── pomodoro.js              ← 뽀모도로 타이머 (trainer.js에서 분리)
+│   │   ├── trainer*.js              ← 훈련소 (허브·계산·원료·드릴) + pomodoro.js
+│   │   ├── exam-sim*.js             ← 모의고사 (시뮬레이터·상태·리뷰) + exam-select.js
 │   │   ├── dictionary.js            ← 성분 검색 사전
+│   │   ├── study-calendar.js        ← 학습 캘린더·목표
 │   │   ├── backup.js                ← 데이터 백업/복원
 │   │   ├── textbook-search.js       ← 교재 본문 검색
-│   │   ├── textbook-reader.js       ← 교재 리더 + 오디오 재생
+│   │   ├── textbook-reader.js       ← 교재 리더 + reader-audio.js (오디오)
+│   │   ├── formula*.js              ← Formula OS 패널 (허브·배치·고객·원료·법규·인쇄)
 │   │   ├── glossary-renderer.js     ← 용어집 렌더링
-│   │   ├── navigation.js            ← 뷰 전환 유틸
-│   │   └── exam-simulator.js        ← 실전 모의고사 시뮬레이터
+│   │   ├── event-listeners.js       ← 이벤트 리스너 일괄 바인딩
+│   │   ├── offline-detection.js     ← 오프라인 감지
+│   │   └── navigation.js            ← 뷰 전환 유틸
 │   └── app.js                       ← 메인 앱 (초기화, 이벤트 위임, 라우터 연결)
 │
 ├── 📂 data/                         ← ✅ 배포 (빌드 산출물 — 수정 금지)
-│   ├── registry.js                  ← 번들 목록/메타
-│   ├── audio_manifest.js            ← 오디오 파일 경로 매니페스트
-│   ├── exams/<key>.<hash>.js        ← 시험별 문항 번들
-│   ├── exams_md/<stem>.js           ← 문제집 MD 번들 (file:// 프로토콜 폴백)
-│   ├── study_md/                    ← 교재 MD file:// 폴백 (과목별 분할)
-│   │   ├── manifest.js              ← 폴백 manifest (~3KB)
-│   │   └── <subjectKey>.js          ← 과목별 MD 원문 (온디맨드 로드)
-│   └── ingredients_data.<hash>.js   ← 성분 사전 번들
+│   ├── exams.js                     ← 전역 시험 레지스트리 (window.EXAMS_LIST)
+│   ├── audio_manifest.js            ← 오디오 파일 경로 매니페스트 (시험 id 키 분리)
+│   ├── docs_md/                     ← 앱 공용 문서 번들 (user_manual·formula_manual)
+│   └── exams/<id>/                  ← 시험별 데이터 루트 (대칭 구조)
+│       ├── registry.js              ← 번들 목록/메타
+│       ├── exams/<key>.<hash>.js    ← 시험별 문항 번들
+│       ├── exams_md/<stem>.js       ← 문제집 MD 번들 (file:// 프로토콜 폴백)
+│       ├── study_md/                ← 교재 MD file:// 폴백 (과목별 분할)
+│       ├── drills/                  ← O/X·복수정답형 드릴 번들
+│       ├── id_migration.js          ← 레거시→안정 ID 이관 맵
+│       └── ingredients_data.<hash>.js ← 성분 사전 번들
 │
-├── 📂 content/                      ← 교재 MD 원본 (manifest만 빌드에 참조)
-│   ├── manifest.json                ← 단일 진실 원천(SSOT): 과목/단원/파일 정의
-│   ├── 교재/                        ← 4과목 교재 MD (law, manufacturing, safety, understanding)
-│   ├── 문제은행/                    ← 문제은행 MD (4개 파일)
-│   ├── 참조자료/                    ← 참조자료 (원본 PDF는 공통·과목1~4/, MD 변환본은 ref_md/과목N/{문서}/)
-│   ├── 학습안내서.md                ← 학습 안내서 (앱 내 뷰어 연동)
-│   ├── number-drills/               ← 중요 숫자 암기표 JSON (과목별 4개 파일)
-│   ├── 두음법_암기_총정리.md        ← 두음법+중요숫자 통합 암기 문서 (앱 내 뷰어 연동)
-│   ├── utils/                       ← Python 변환 스크립트 (md_to_html, batch_convert, check_laws)
-│   └── audiobook/                   ← 오디오북 파이프라인 (Python)
+├── 📂 content/                      ← 시험 콘텐츠 컨테이너 (순수 네임스페이스)
+│   ├── exams.json                   ← 시험 레지스트리 SSOT
+│   └── exams/<id>/                  ← 시험별 콘텐츠 루트 (예: exams/cosmetic/)
+│       ├── manifest.json            ← 단일 진실 원천(SSOT): 과목/단원/파일 정의
+│       ├── references.json          ← 참조자료 매핑 설정
+│       ├── 교재/                    ← 4과목 교재 MD (law, manufacturing, safety, understanding — 각 표준형+이야기형)
+│       ├── 문제은행/                ← 문제은행 MD (4개 파일)
+│       ├── 참조자료/                ← 참조자료 (원본 PDF는 공통·과목1~4/, MD 변환본은 ref_md/과목N/{문서}/)
+│       ├── 학습안내서.md            ← 학습 안내서 (앱 내 뷰어 연동)
+│       ├── number-drills/           ← 중요 숫자 암기표 JSON (과목별 4개 파일)
+│       ├── 두음법_암기_총정리.md    ← 두음법+중요숫자 통합 암기 문서 (앱 내 뷰어 연동)
+│       ├── utils/                   ← Python 변환 스크립트 (md_to_html, batch_convert, check_laws)
+│       └── audiobook/               ← 오디오북 파이프라인 (Python)
 │
 ├── 📂 tests/                        ← 자동화 테스트
 │   ├── unit/                        ← Node.js 내장 테스트 러너 (458 tests)
-│   └── dom/                         ← Vitest + jsdom DOM 테스트 (253 tests)
+│   └── dom/                         ← Vitest + jsdom DOM 테스트 (264 tests)
 ├── 📂 .github/workflows/            ← GitHub Actions CI (test + parser parity)
 │
 └── 📂 docs/                         ← 문서 (개발 + 사용자)
@@ -211,10 +224,11 @@ python -m http.server 8000
 
 [`vercel.json`](vercel.json)과 [`.vercelignore`](.vercelignore)가 이미 구성되어 있습니다.
 
-```bash
-npm i -g vercel
-vercel --prod
+```powershell
+npm.cmd run deploy
 ```
+
+> `npm run deploy`가 배포 가드(main 브랜치·clean tree·origin 동기화 검사) → 콤보 품질 게이트 → `CACHE_VERSION` 자동 스탬프 → `vercel --prod`를 순서대로 수행합니다. `vercel --prod` 직접 실행은 금지 (미푸시 커밋이 프로덕션에 올라갈 수 있음).
 
 배포 최적화 및 오디오 호스팅 상세는 [`docs/dev/DEPLOYMENT_GUIDE.md`](docs/dev/DEPLOYMENT_GUIDE.md)를 참고하세요.
 
@@ -222,7 +236,7 @@ vercel --prod
 
 스마트폰에서 접속하면 자동으로 모바일 최적화 레이아웃이 적용됩니다.
 
-- **하단 탭 바**: 테마/대시보드/카드/퀴즈/모의고사/훈련소/복습/교재읽기/교재검색/실무/성분검색/캘린더/매뉴얼/시험전환 14개 메뉴 (가로 스크롤 + 스크롤 섀도 힌트, 실무 모드 시 5개로 축소)
+- **하단 탭 바**: 테마/대시보드/카드/퀴즈/모의고사/훈련소/복습/교재읽기/교재검색/실무/성분검색/캘린더/매뉴얼/시험전환 (가로 스크롤 + 스크롤 섀도 힌트, 실무 모드 시 학습 메뉴 자동 축소)
 - **가로/세로 보기 토글**: 헤더의 회전 아이콘 버튼으로 강제 가로 레이아웃 전환 가능
 - **safe-area 대응**: iPhone 하단 홈 인디케이터 영역 자동 확보
 - **스크롤 복원**: 탭 전환 시 이전 스크롤 위치 기억
@@ -282,24 +296,15 @@ python run_pipeline.py
 
 ## 🚀 배포 파이프라인
 
-작업 완료 후 다음 순서로 실행하면 빌드 → 커밋/푸시 → Vercel 배포가 처리됩니다.
-
-```bash
-# 1. 데이터 빌드 (빌드 + 파서 등가성 검사 + SW 버전 자동 스탬프)
-npm run build:data
-
-# 2. Git 커밋 & 푸시
-git add -A && git commit -m "<커밋 메시지>" && git push
-
-# 3. Vercel 배포
-cmd /c vercel --prod
+```powershell
+npm.cmd run deploy
 ```
 
-> `stamp-sw-version.js`가 빌드 시 `CACHE_VERSION`을 date + git hash로 자동 갱신합니다.
+`tools/deploy.js`가 git 가드(main·clean·origin 동기화) → 콤보 품질 게이트 → `sw.js` `CACHE_VERSION` 자동 스탬프(변경 시 자동 커밋·푸시) → `vercel --prod`를 일괄 수행합니다. 콘텐츠 변경 시에는 먼저 `npm.cmd run build:data`로 번들을 재생성하고 커밋하세요.
 
 ---
 
-## �📦 Git 관리 참고
+## 📦 Git 관리 참고
 
 대용량 파일은 Git 추적에서 제외됩니다 ([`.gitignore`](.gitignore)):
 

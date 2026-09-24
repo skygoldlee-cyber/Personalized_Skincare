@@ -23,7 +23,7 @@
 | 구분 | 프레임워크 | 환경 | 파일 위치 | 테스트 수 |
 |------|-----------|------|-----------|-----------|
 | **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 458 |
-| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 253 |
+| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 264 |
 | **합계** | | | | **686** |
 
 ### 설계 원칙
@@ -44,7 +44,7 @@ npm test
 # 또는
 npm run test:unit
 
-# DOM 테스트만 실행 (253개)
+# DOM 테스트만 실행 (264개)
 npm run test:dom
 
 # 전체 실행 (Unit + 파서 정합성 + DOM)
@@ -115,7 +115,7 @@ npm run test:watch
 | 1 | `backup.dom.test.js` | 10 | `getBackupKeys()`, `exportData()`, `triggerImport()`, `importData()` | localStorage + DOM 조작 |
 | 2 | `router.dom.test.js` | 11 | `getViewTitles()`, `navigateToView()` | 뷰 타이틀 맵, active 클래스 동기화, 렌더러 호출, 오디오 정지, 포커스 모드 | 2026-09-03 추가 |
 | — | `helpers.js` | — | 공통 픽스처 | `loadIndexHtml()`(실제 index.html 주입), `selectFile`, `flushAsync`, `lastToast`, `spyAnchorDownload` | 2026-09-23 추가 |
-| 3 | `formula-nav.dom.test.js` | 5 | 패널 전환·서브내비 | 허브↔서브패널 is-hidden 전환, 서브내비 6칩·활성 칩 | 2026-09-23 추가 |
+| 3 | `formula-nav.dom.test.js` | 6 | 패널 전환·서브내비 | 허브↔서브패널 is-hidden 전환, 서브내비 6칩·활성 칩 | 2026-09-23 추가 |
 | 4 | `formula-customer.dom.test.js` | 9 | 고객 CRUD + CSV | 빈 상태→등록→목록, CSV UTF-8/EUC-KR·중복·confirm 거부·보내기·양식 | 2026-09-23 추가 |
 | 5 | `formula-material.dom.test.js` | 5 | 원료 장부 + CSV | 기한 4상태 배지·경고 배너, CSV 이름+LOT 중복·날짜 정규화 | 2026-09-23 추가 |
 | 6 | `formula-compliance.dom.test.js` | 8 | 법규 체크리스트 | 27항목 렌더·배지, 체크 토글 영속·재토글·초기화, ExamViewer 연동 | 2026-09-23 추가 |
@@ -141,9 +141,9 @@ npm run test:watch
 | 26 | `common-scratchpad.dom.test.js` | 4 | 스크래치패드 | 열기/닫기·지우기·포인터 그리기 (canvas 2d 스텁, resetModules) | 2026-09-23 추가 |
 | 27 | `common-a11y.dom.test.js` | 7 | 접근성 | 토스트 role=status, 모달 trapFocus·aria-modal, 아이콘 버튼 aria-label 전수 | 2026-09-23 추가 |
 | 28 | `common-uimode.dom.test.js` | 7 | 학습/실무 UI 모드 | 모드 전환→학습 항목 CSS 숨김(실제 캐스케이드)·학습 도구 펼침·랜딩 리다이렉트·영속 복원·학습/실무 매뉴얼 가시성·토글 2곳(푸터·설정) 동기화 | 2026-09-23 추가 |
-| 29 | `common-auth.dom.test.js` | 14 | 계정/로그인 (Supabase) | 모달 열기·로그인 성공/실패 한글 매핑·회원가입·매직링크·OTP 코드 발송/검증·비밀번호 설정·로그아웃·세션 복원 (window.supabase 스텁) | 2026-09-23 추가 |
+| 29 | `common-auth.dom.test.js` | 24 | 계정/로그인 (Supabase) | 모달 열기·로그인 성공/실패 한글 매핑·회원가입·매직링크·OTP 코드 발송/검증·비밀번호 설정·로그아웃·세션 복원 (window.supabase 스텁) | 2026-09-23 추가 |
 | 30 | `common-sync.dom.test.js` | 11 | 클라우드 동기화 | 페이로드 수집(고객 제외)·쓰기 훅 dirty·디바운스 push·pull 적용·충돌 양방향·push 실패·비로그인 무시 | 2026-09-23 추가 |
-| | **합계** | **253** | | |
+| | **합계** | **264** | | |
 
 ---
 
@@ -349,7 +349,7 @@ export 함수를 직접 호출하고 DOM 반영을 검증한다. `data-click` �
 (대시보드 집계 정규식 접두사 매칭). 플래시카드는 실제 `setupEventListeners`
 바인딩을 경유해 클릭 경로까지 검증한다.
 
-#### `formula-nav.dom.test.js` (5개)
+#### `formula-nav.dom.test.js` (6개)
 - `initFormulaView`/`open*Panel`/`exitFormulaSubView` — 12개 패널의 `is-hidden` 전수 검증
 - 서브내비 칩 개수·활성 칩 텍스트·칩의 `data-click` 핸들러명 존재
 

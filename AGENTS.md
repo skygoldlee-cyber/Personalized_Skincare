@@ -8,8 +8,8 @@
 
 - 순수 HTML/CSS/JavaScript (Vanilla ES Modules, 프레임워크 없음)
 - PWA (Service Worker 오프라인 캐시, 설치 가능)
-- Vercel 정적 배포 (백엔드 없음)
-- 사용자 진행 상황은 localStorage에만 저장 (계정/로그인 불필요)
+- Vercel 정적 배포 + **선택적 Supabase** (로그인 사용자 클라우드 동기화 — 미설정 시 앱 정상 동작)
+- 사용자 진행 상황은 localStorage가 1차 저장소 (계정 없이 전 기능 사용 가능)
 
 ## 핵심 명령어
 
@@ -18,7 +18,7 @@
 ```powershell
 # 테스트
 npm.cmd test                          # 유닛 테스트 (node --test, 458개)
-npm.cmd run test:dom                  # DOM 테스트 (Vitest + jsdom, 253개)
+npm.cmd run test:dom                  # DOM 테스트 (Vitest + jsdom, 264개)
 npm.cmd run test:all                   # 전체 테스트 (unit + parser + dom)
 
 # 빌드
@@ -66,7 +66,6 @@ src/                    # ES Modules
   app.js                # 메인 애플리케이션 로직 (초기화, 이벤트 위임, 라우팅)
   app-fallback.js       # ESM 로드 실패 시 자동 복구 (모바일 PWA 대응)
   router.js             # 뷰 라우터 (navigateToView, getViewTitles)
-  navigation.js         # 뷰 전환 (switchView) — views/navigation.js
   state.js              # 전역 상태 + localStorage 저장 (saveProgress, safeGet/SetItem)
   ui-utils.js           # showToast, showConfirm, showGlobalLoading, trapFocus
   sanitize.js           # XSS 방어 (escapeHTML, safeTextWithBreaks)
@@ -75,6 +74,10 @@ src/                    # ES Modules
   spaced-repetition.js  # SM-2 간격 반복 알고리즘
   study-aids.js         # 기출 필터, 숫자 암기표
   study-tracker.js      # 학습 캘린더/목표 추적 헬퍼 (recordStudyActivity, getStudyGoals)
+  statement-tracker.js  # 진술 원자(sid) 단위 오판 통계·졸업 추적 (SM-2 연동)
+  questions.js          # 문항 스키마 (single/combo/short/ox), deriveComboAnswer, validateQuestion
+  exam-viewer.js        # 문제집/참조자료 MD 뷰어
+  manual-viewer.js      # 학습안내서/매뉴얼 MD 뷰어
   charts.js             # SVG 레이더/꺾은선 차트
   pdf-registry.js       # 참조자료 경로 매핑 (시험별 테이블 — getRefTables())
   glossary-query.js     # 용어집 인덱스 쿼리 API (getGlossaryIndex())
@@ -113,34 +116,36 @@ src/                    # ES Modules
   config/
     timing.js           # 타이밍 상수 (PWA 프로브, 스와이프 임계값 등)
     cache.js            # 캐시 설정 상수
-  views/                # 뷰 컨트롤러
+  views/                # 뷰 컨트롤러 (29개)
+    navigation.js       # 뷰 전환 유틸 (switchView)
     textbook-reader.js  # 교재 리더 (본문 + 참조자료)
     reader-audio.js     # 오디오북 플레이어
     textbook-search.js # 교재 검색 (역색인)
     quiz.js             # 기출 퀴즈
+    flashcard.js        # 3D 플래시카드
     daily-challenge.js  # 데일리 챌린지
     dashboard.js        # 대시보드 (통계, 히트맵)
     trainer.js          # 스마트 훈련소 허브 (재수출)
     trainer-calc-practice.js  # 계산 연습기
     trainer-ingredients.js    # 원료 배합 챌린지
+    trainer-drills.js   # O/X·복수정답형 드릴 UI
     pomodoro.js         # 뽀모도로 타이머
     exam-simulator.js   # 실전 모의고사 시뮬레이터
     exam-sim-state.js   # 시뮬레이터 상태
     exam-sim-review.js  # 시뮬레이터 결과 리뷰
+    exam-select.js      # 시험 선택/전환 뷰
     dictionary.js       # 용어집
+    study-calendar.js    # 학습 캘린더/목표 뷰
+    glossary-renderer.js # 용어집 렌더링
+    event-listeners.js  # 이벤트 리스너 일괄 바인딩
     formula.js          # Formula OS 뷰 — 배합 계산기, 추천, My 포뮬러, 서브내비 칩, 인쇄·JSON 공유
     formula-batch.js    # Formula OS — 조제 기록(배치) 목록·폼·상세 패널
     formula-customer.js # Formula OS — 고객 관리 패널 (카드·상담 이력·역참조)
     formula-material.js # Formula OS — 원료 장부 패널 (기한 배지·경고)
     formula-compliance.js # Formula OS — 법규 준수 체크리스트 + 법령 MD 링크
     formula-print.js    # Formula OS — 인쇄 빌더 (조제 기록지·라벨·안내문)
-    study-calendar.js    # 학습 캘린더/목표 뷰
-    glossary-renderer.js # 용어집 렌더링
     backup.js           # 백업/복원
     offline-detection.js # 오프라인 감지 (app.js에서 분리)
-    manual-viewer.js    # 학습안내서 뷰어
-    exam-viewer.js      # 문제집 뷰어
-    exam-select.js      # 시험 선택/전환 뷰
 css/                    # 스타일시트 모듈 (base.css, reader.css, reader-mermaid.css, trainer.css, exam.css, dashboard.css, study.css, study-calendar.css, formula.css, print.css, ui-overlay.css, html-viewer.css)
 content/                # 시험 콘텐츠 컨테이너 (시험 소유 파일 없음 — 순수 네임스페이스)
   exams.json            # 시험 레지스트리 (멀티시험 엔트리 — 멀티시험 구조 섹션 참조)
@@ -174,7 +179,7 @@ docs/                   # 개발 문서
 
 ## 아키텍처 핵심
 
-1. **Zero-Backend**: 순수 프론트엔드, Vercel 정적 호스팅
+1. **Local-First + Optional Cloud**: 순수 프론트엔드 + Vercel 정적 호스팅이 기본, Supabase는 로그인 사용자에게만 붙는 선택 레이어 (미설정 시 완전 정상 동작)
 2. **Vanilla ES Modules**: `<script type="module">`, import/export, 프레임워크 없음
 3. **DataLoader 온디맨드**: `{contentRoot}/*.md`를 런타임 fetch + parseMarkdown으로 렌더링
 4. **Service Worker**: Cache First (HTML/JS/CSS), DATA_CACHE (MD/참조자료, 배포 간 유지)
@@ -249,7 +254,7 @@ docs/                   # 개발 문서
 - **Mermaid `!important`**: `css/reader.css`의 Mermaid 규칙 `!important`는 제거 금지 (Mermaid 라이브러리 인라인 스타일 덮어쓰기용)
 - **콘텐츠 편집 후**: `npm.cmd run build:data` 실행 후 `data/` 번들 커밋 필요
 - **CSP**: `vercel.json`에 `script-src 'self'` (인라인 스크립트 금지)
-- **DOM 테스트**: `tests/dom/` 30파일 253개 — Phase 1~5 전 뷰 커버 (매트릭스·작성 규칙은 `docs/dev/DOM_TEST_DESIGN.md`, 파일별 목록은 `docs/dev/TESTING.md`)
+- **DOM 테스트**: `tests/dom/` 30파일 264개 — Phase 1~5 전 뷰 커버 (매트릭스·작성 규칙은 `docs/dev/DOM_TEST_DESIGN.md`, 파일별 목록은 `docs/dev/TESTING.md`)
 
 ## 관련 문서
 
@@ -259,7 +264,7 @@ docs/                   # 개발 문서
 - `docs/dev/CHANGES.md` — 변경 이력
 - `docs/dev/TESTING.md` — 테스트 가이드
 - `docs/dev/DOM_TEST_DESIGN.md` — jsdom UI 시나리오 테스트 설계
-- `docs/dev/SUPABASE_DESIGN.md` — 계정·클라우드 동기화·Pro 권한 설계안 (착수 전 §10 결정 필요)
+- `docs/dev/SUPABASE_DESIGN.md` — 계정·클라우드 동기화 설계안 (Phase 1~2 구현 완료, Pro entitlement는 미구현)
 - `docs/dev/TEXTBOOK_AUTHORING_GUIDE.md` — 교재 작성 가이드
 - `docs/dev/NUMBERING_SYSTEM.md` — 교재 번호체계 가이드 (십진법)
 - `docs/dev/QUESTION_SCHEMA_DESIGN.md` — 문항 스키마 + 복수정답형 변환 파이프라인 설계

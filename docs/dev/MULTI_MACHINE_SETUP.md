@@ -13,7 +13,7 @@
 | Git remote | `git@github-skygold:skygoldlee-cyber/Personalized_Skincare.git` | SSH 별칭 방식 (개인 키 필요) |
 | GitHub CLI (`gh`) | 미설치 | 설치 권장 |
 | Vercel 링크 | `.vercel/project.json` Git 추적됨 (`810de57`부터) | projectId/orgId 자동 인식 |
-| Vercel CLI | 설치됨 | `vercel --prod` 사용 중 |
+| Vercel CLI | 설치됨 | `npm run deploy` 경유 (deploy.js 가드) |
 
 > **문제점**: SSH 키 방식은 새 머신마다 키 생성 → GitHub 등록 → `~/.ssh/config` 별칭 설정이 필요해 번거롭습니다.
 
@@ -99,9 +99,11 @@ export VERCEL_TOKEN="발급받은_토큰"
 
 환경변수 설정 후에는 토큰 옵션 없이 바로 배포 가능합니다.
 
-```bash
-cmd /c vercel --prod --yes
+```powershell
+npm.cmd run deploy
 ```
+
+> 표준 배포는 `npm run deploy`입니다 — `tools/deploy.js`가 git 가드(clean tree·origin 동기화) → 콤보 품질 게이트 → `sw.js` CACHE_VERSION 자동 스탬프 → `vercel --prod`를 일괄 수행합니다. `vercel --prod` 직접 실행은 미푸시 커밋이 프로덕션에 올라갈 수 있어 금지입니다.
 
 ---
 

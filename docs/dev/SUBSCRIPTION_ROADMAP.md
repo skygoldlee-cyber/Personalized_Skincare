@@ -2,6 +2,7 @@
 
 > **작성일**: 2026-08-27
 > **개정일**: 2026-08-27 — 아키텍처(ARCHITECTURE.md) 정합성 리뷰 반영
+> **⚠️ 시점 주의 (2026-09-24)**: §1 "현재 상태"는 작성 시점 스냅샷. 이후 **Supabase Phase 1~2가 구현 완료**되어 계정(이메일+PW/로그인 메일 OTP)·클라우드 스냅샷 동기화(`sync_snapshots`)가 이미 존재한다 — CSP `connect-src` 확장·vendor supabase self-host·dirty 훅 디바운스 push·LWW 충돌 확인 모두 완료. "인증: 없음"·"서버 DB 없음" 등의 기술 난이도 항목 중 상당수는 해소됨. 현행 상태는 `SUPABASE_DESIGN.md`·`ARCHITECTURE.md` §10 참조. Pro entitlement(서버 검증)만 미구현.
 > **목적**: 현재 무료 PWA 학습 플랫폼을 월 구독 기반 서비스로 전환하기 위한 필요 작업 정리
 
 ---

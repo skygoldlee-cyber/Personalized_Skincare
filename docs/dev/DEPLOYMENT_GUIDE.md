@@ -52,18 +52,13 @@
 
 배포 전 반드시 다음 순서로 빌드 및 테스트를 수행합니다:
 
-```bash
-# 1. 데이터 빌드 (content/*.md → data/*.hash.js 번들 생성)
-node tools/build/index.js
-
-# 2. 단위 테스트 (88개)
-npm test
-
-# 3. Vercel 프로덕션 배포
-cmd /c vercel --prod
+```powershell
+# 배포 일괄 (가드 + 콤보 게이트 + SW 스탬프 + vercel --prod)
+npm.cmd run deploy
 ```
 
-> ⚠️ `npx vercel` 대신 `cmd /c vercel --prod`를 사용합니다 (Windows pwsh 환경).
+> ⚠️ `vercel --prod` 직접 실행 금지 — `tools/deploy.js`가 main 브랜치·clean tree·origin 동기화를 검증하고 `CACHE_VERSION`을 자동 스탬프합니다. 미푸시 커밋이 프로덕션에 올라가는 사고 방지.
+> 콘텐츠 변경 시 배포 전 `npm.cmd run build:data`로 `data/` 번들을 재생성·커밋합니다.
 
 ---
 
@@ -122,17 +117,17 @@ __pycache__/
 Git push 후 터미널에서 직접 배포합니다. 현재 프로젝트에서 사용하는 방식입니다.
 
 ```bash
-# 1. 빌드
-node tools/build/index.js
+# 1. 빌드 (콘텐츠 변경 시)
+npm.cmd run build:data
 
 # 2. 테스트
-npm test
+npm.cmd test
 
 # 3. Git 커밋 및 푸시
 git add -A && git commit -m "feat: ..." && git push origin main
 
-# 4. Vercel 배포 (Windows pwsh)
-cmd /c vercel --prod
+# 4. 배포 (가드 + SW 스탬프 + vercel --prod 일괄)
+npm.cmd run deploy
 ```
 
 배포 완료 후 출력 예:

@@ -1,7 +1,7 @@
 # 📚 문서 인덱스 (Documentation Index)
 
 > **Cosmetic Pass Master / Passmula** — 맞춤형화장품 조제관리사 스마트 학습 + 실무(Formula OS) 플랫폼
-> 최종 갱신: 2026-09-22
+> 최종 갱신: 2026-09-24
 
 이 문서는 `docs/` 아래 모든 문서의 **역할 설명**과 **목적별 읽기 순서**를 제공합니다.
 
@@ -14,10 +14,10 @@
 ```
 1. README.md (루트)          — 프로젝트 소개·기능·기술 스택·폴더 구조
 2. AGENTS.md (루트)          — 명령어·코드 규칙·검증 체크리스트 (작업 전 필수)
-3. docs/dev/ARCHITECTURE.md  — Zero-Backend·ESM·DataLoader·SW 캐시 등 설계 결정
+3. docs/dev/ARCHITECTURE.md  — Local-First·ESM·DataLoader·SW 캐시·동기화 등 설계 결정
 4. docs/dev/SPEC.md          — 구현 완료된 기능의 요구사양 명세
 5. docs/dev/CONTENT_WORKFLOW.md — 콘텐츠=SSOT, 빌드 파이프라인 개요
-6. docs/dev/TESTING.md       — 유닛 454 + DOM 204 테스트 구조
+6. docs/dev/TESTING.md       — 유닛 458 + DOM 264 테스트 구조
 7. docs/dev/CHANGES.md       — 변경 이력 (왜 바뀌었는지의 맥락)
 ```
 
@@ -89,7 +89,7 @@ docs/
 
 | 문서 | 설명 |
 |------|------|
-| [ARCHITECTURE.md](dev/ARCHITECTURE.md) | 시스템 아키텍처·설계 철학 — Zero-Backend, ESM 구조, 데이터 흐름, PWA/SW 전략, 강건성 가이드라인 |
+| [ARCHITECTURE.md](dev/ARCHITECTURE.md) | 시스템 아키텍처·설계 철학 — Local-First + 선택적 클라우드, ESM 구조, 데이터 흐름, PWA/SW 전략, 계정·동기화, UI 모드, Formula OS, 배포 파이프라인, 구현 레시피, 강건성 가이드라인 |
 | [SPEC.md](dev/SPEC.md) | 요구사양 명세서 — 구현된 기능을 역공학해 정리 (현행 기준서) |
 | [SUPABASE_DESIGN.md](dev/SUPABASE_DESIGN.md) | Supabase 계정·클라우드 동기화·Pro 권한 설계 — Phase 1~2 구현 완료, URL/PWA 동일 로그인 UX |
 | [FLASHCARD_LOGIC.md](dev/FLASHCARD_LOGIC.md) | 플래시카드 생성·난이도·필터·SM-2 간격 반복 로직 |

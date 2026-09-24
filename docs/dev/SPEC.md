@@ -543,7 +543,7 @@
 | DA-02 | 시험/성분 데이터: 빌드 타임 해시드 JS 번들 (`<script>` 로드) | ✅ |
 | DA-03 | 교재/카드/퀴즈: 런타임 MD fetch + 파싱 (재빌드 불필요) | ✅ |
 | DA-04 | `file://` 폴백: 과목별 분할 JS 번들 (`data/exams/cosmetic/study_md/`) | ✅ |
-| DA-05 | 사용자 진행 상황: `localStorage` 영속화 (계정/로그인 불필요) | ✅ |
+| DA-05 | 사용자 진행 상황: `localStorage`가 1차 저장소 (계정 없이 전 기능 사용 가능, 로그인 시 선택적 클라우드 동기화 — §3.19) | ✅ |
 | DA-06 | **멀티시험 대칭 구조**: `content/exams.json` 레지스트리 → 시험별 `content/exams/<id>/`·`data/exams/<id>/` 동일 내부 구조, `exam-context.js`의 `contentPath()`/`dataPath()`/`selectExam()`(전환 = reload) | ✅ |
 | DA-07 | **스코프드 진도 키**: `safeGetItem`/`safeSetItem`이 `<examId>:` 네임스페이스 자동 접두(`scopedKey`) — 시험 간 진도 격리, `GLOBAL_KEYS`(테마 등)만 비네임스페이스. 백업 파일은 비접두사 논리 키로 시험 간 호환 | ✅ |
 | DA-08 | **기능 플래그 게이팅**: exams.json `features` + `hasFeature()` + `data-feature` 속성 — 시험별 도메인 특화 기능(성분사전·오디오북 등) 자동 숨김 | ✅ |
