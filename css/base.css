@@ -703,6 +703,12 @@ body.ui-mode-practice .ui-mode-toggle {
     border-color: rgba(139, 92, 246, 0.4);
 }
 
+/* 앱 종료 버튼 — .sidebar-footer 밖(모바일에서 푸터가 숨겨져도 표시) */
+#app-quit-btn {
+    margin-top: var(--space-4);
+    justify-content: center;
+}
+
 .nav-item {
     background: transparent;
     border: none;
