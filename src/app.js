@@ -939,11 +939,11 @@ const DELEGATED_HANDLERS = {
     showIngredientsChangelog,
     // 학습/실무 UI 모드
     toggleUiMode, toggleStudyTools,
-    /** 앱 종료 (설치형 PWA) — window.close()가 막히는 환경(iOS 등)이면 안내 표시 */
+    /** 앱 종료 (설치형 PWA) — window.close()가 막히는 환경(모바일·iOS 등)이면 완전 종료 방법 안내 */
     quitApp() {
         window.close();
         setTimeout(() => {
-            showToast('이 환경에서는 앱 종료가 지원되지 않습니다 — 최근 앱 목록에서 종료하세요');
+            showAlert('앱을 완전히 종료하려면 최근 앱 화면을 열어 이 앱을 위로 밀거나 \'모두 닫기\'를 누르세요. 데스크톱에서는 창 닫기(✕)로 종료됩니다.', '앱 종료');
         }, 300);
     },
     // 계정/로그인 (Supabase Auth)
