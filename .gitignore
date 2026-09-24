@@ -57,7 +57,10 @@ Thumbs.db
 combo_audit_report.json
 combo_review_queue.md
 
-# ---------- 📂 아카이브 ----------
+# ---------- � 테스트 커버리지 ----------
+coverage/
+
+# ---------- �📂 아카이브 ----------
 archive/
 
 # ----------  대용량 HTML (GitHub 100MB 한도 초과) ----------

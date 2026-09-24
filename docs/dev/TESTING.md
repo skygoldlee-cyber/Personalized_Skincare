@@ -61,6 +61,7 @@ npm run test:watch
 | `test` | `node --test tests/unit/*.test.js` | Unit 테스트 |
 | `test:unit` | `node --test tests/unit/*.test.js` | `test`와 동일 |
 | `test:dom` | `vitest run` | DOM 테스트 (jsdom) |
+| `coverage` | `vitest run --coverage` | DOM 테스트 + V8 커버리지 (src/ 대상, `coverage/` 출력) |
 | `test:all` | `node --test tests/unit/*.test.js && node tools/check_parser_parity.js && vitest run` | 전체 |
 | `test:watch` | `node --test --watch tests/unit/*.test.js` | Watch 모드 |
 

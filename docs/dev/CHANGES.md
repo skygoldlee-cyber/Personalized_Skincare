@@ -4,6 +4,20 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-24 테스트 커버리지 보강
+
+- **커버리지 도구 도입**: `@vitest/coverage-v8` + `npm run coverage`
+  스크립트 — DOM 테스트 기준 라인 53%·문 50% 실측 가능.
+  `coverage/` 산출물은 gitignore 등록.
+- **html-viewer DOM 테스트 신규** (+7): MD/HTML 렌더·제목, XSS 제거
+  (script·on* 핸들러·javascript: URI), 검색 하이라이트·이전다음 이동,
+  sessionStorage LRU 캐시 재사용, fetch 실패 오류, ref_md joinWraps,
+  닫기. 한글 경로 퍼센트 인코딩 대응 fetch 스텁.
+- **supabase-client 유닛 테스트 신규** (+6): window/document 스텁으로
+  vendor lazy 로드 검증 — 로드 생략(기존 window.supabase), 스크립트
+  생성·auth 옵션(flowType:implicit 등), 클라이언트 캐시, 로드 실패
+  reject+재시도, getAuthSession, onAuthChange (session, event) 순서.
+
 ## 2026-09-24 ref_md 문장 중간 절단 복원 (joinWraps)
 
 - **배경**: ref_md(법령·고시 원문 41문서)는 PDF 고정폭 wrap 산출물이라
