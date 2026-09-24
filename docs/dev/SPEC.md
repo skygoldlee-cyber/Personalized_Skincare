@@ -1,7 +1,7 @@
 # 📋 요구사양 명세서 (Software Requirements Specification)
 
 > **프로젝트**: Cosmetic Pass Master — 맞춤형화장품 조제관리사 스마트 학습 플랫폼
-> **버전**: 1.7 (2026-09-24 기준 — §4.8 UI/UX 설계 요구사양, §3.19~3.21 계정·동기화/캘린더/UI모드, Formula OS 확장, 멀티시험·PII 분리 반영)
+> **버전**: 1.8 (2026-09-24 기준 — §4.8 UI/UX, §3.19~3.22 계정·동기화/캘린더/UI모드/시험전환, Formula OS 확장, 드릴·진술추적, 멀티시험·PII 분리 반영)
 > **문서 성격**: 구현 완료된 기능을 역공학하여 체계적으로 정리한 요구사양 명세서
 
 ---
@@ -263,15 +263,6 @@
 | MV-03 | `popstate` 타이밍 가드 (open 후 300ms 이내 이벤트 무시) | ✅ |
 | MV-04 | `file://` 폴백 번들 (`data/docs_md/*.js`) | ✅ |
 
-### 3.17 콘텐츠 품질 감사 (Content Quality Audit)
-
-| ID | 요구사양 | 구현 상태 |
-|----|---------|-----------|
-| CQ-01 | 카드 품질 자동 감사 (짧은 설명, 중복, 의미 없음, 긴/짧은 term, 빈 definition, 저품질) | ✅ |
-| CQ-02 | 참조자료 링크 유효성 감사 (`data-ref-html` 파일 존재 여부) | ✅ |
-| CQ-03 | `npm run audit:cards` 스크립트 (`tools/audit_card_quality.js`) | ✅ |
-| CQ-04 | 심각도 분류 (ERROR/WARN) 및 요약 리포트 출력 | ✅ |
-
 ### 3.16 차트 및 시각화 (Charts)
 
 | ID | 요구사양 | 구현 상태 |
@@ -281,6 +272,16 @@
 | C-03 | 인터랙티브 툴팁 (hover/touch, 날짜/점수/증감/합격상태 표시) | ✅ |
 | C-04 | 모바일 터치 지원 (2초 후 자동 숨김, 화면 경계 자동 보정) | ✅ |
 | C-05 | 외부 차트 라이브러리 미사용 (직접 SVG 생성) | ✅ |
+
+### 3.17 콘텐츠 품질 감사 (Content Quality Audit)
+
+| ID | 요구사양 | 구현 상태 |
+|----|---------|-----------|
+| CQ-01 | 카드 품질 자동 감사 (짧은 설명, 중복, 의미 없음, 긴/짧은 term, 빈 definition, 저품질) | ✅ |
+| CQ-02 | 참조자료 링크 유효성 감사 (`data-ref-html` 파일 존재 여부) | ✅ |
+| CQ-03 | `npm run audit:cards` 스크립트 (`tools/audit_card_quality.js`) | ✅ |
+| CQ-04 | 심각도 분류 (ERROR/WARN) 및 요약 리포트 출력 | ✅ |
+| CQ-05 | 복수정답형 품질 감사 (`npm run audit:combo` — 정답 유일성·중복 진술집합·모순쌍·위치편향, 배포 게이트 연동) | ✅ |
 
 ### 3.18 Formula OS — 실전 배합 작업실
 
@@ -332,6 +333,13 @@
 | SC-03 | 학습 활동 자동 기록 (`recordStudyActivity` — 카드 외움·퀴즈 응답 등) | ✅ |
 | RV-01 | 오답/중요 복습 뷰 — 헷갈림 카드·틀린 문제 통합 목록 (`review-view`) | ✅ |
 | ND-01 | 숫자 암기 드릴 — `number-drills/` JSON 기반 수치·기한·횟수 훈련 (훈련소 수치 훈련) | ✅ |
+| DR-01 | **O/X 판정 드릴** — 객관식 문항을 진위형으로 자동 변환 (3,700+문, `build_ox_drills.js` → `drills/ox_subject*.js`, `trainer-drills.js`) | ✅ |
+| DR-02 | **복수정답형 드릴** — 진술별 O/X 토글 2단계 응시 + 판정과 모순되는 선지 실시간 소거 표시 (755문, `combo_subject*.js` + 수작업 파일럿 병합) | ✅ |
+| DR-03 | **진술 원자 추적** — 진술 `sid` 단위로 O/X·복수정답형 공유 판정 누적 (`statement_stats` + SM-2 큐, 연속 정답 3회 시 취약 졸업, `statement-tracker.js`) | ✅ |
+| DR-04 | **특수 드릴 모드** — `weak`(취약·복습 진술 필터) / `num`(수치·한도·기한 태그 필터) 전 과목 모드, 출제 수 10/20/전체 | ✅ |
+| DR-05 | **취약 진술 리뷰 패널** — conceptId 개념 그룹핑(참/거짓 혼동쌍 대조), 복습 대상 필터, 졸업 수 표시 | ✅ |
+| DR-06 | **복수정답형 모의고사 연동** — `startComboMockExam`으로 combo 번들→시뮬 형식 평탄화, 채점 시 `deriveComboJudgments`로 진술 판정 역산 → 취약 추적·SM-2 반영 | ✅ |
+| DR-07 | **문항 스키마 정합성** — single/combo/short/ox 4유형, `deriveComboAnswer`로 정답 도출 + `validateQuestion` 유일성 검증 (정답 오타 구조적 차단, `questions.js`) | ✅ |
 
 ### 3.21 UI 모드 전환 (학습 ↔ 실무)
 
@@ -342,6 +350,16 @@
 | UM-03 | 학습 도구 접이식 — 실무 모드에서 숨겨진 학습 메뉴를 `toggleStudyTools`로 펼침, `aria-expanded` + 영속 | ✅ |
 | UM-04 | 실무 모드에서 학습 전용 뷰 접근 시 formula-view로 리다이렉트 | ✅ |
 | UM-05 | 설정 메뉴에도 모드 전환 항목 — 사이드바 숨겨진 모바일에서 접근 보장 | ✅ |
+
+### 3.22 시험 선택·전환 (멀티시험)
+
+| ID | 요구사양 | 구현 상태 |
+|----|---------|-----------|
+| ES-01 | 시험 선택 카드 뷰 (`exam-select-view`) — `current_exam` 미설정 + 등록 시험 2개 이상일 때만 표시, 단일 시험 시 피커 생략 | ✅ |
+| ES-02 | 시험 전환 버튼 — 사이드바 푸터 + 모바일 탭 바 (등록 시험 2개 이상일 때만 노출) | ✅ |
+| ES-03 | 전환 = `selectExam()` → `location.reload()` — 모듈 상태·전역 캐시 완전 리셋 | ✅ |
+| ES-04 | 진도 격리 — `scopedKey`가 `<examId>:` 접두사 자동 부여, 시험 간 진행상황 독립 | ✅ |
+| ES-05 | 기능 플래그 — 시험별 `features`로 도메인 특화 기능(성분사전·오디오북·참조자료 등) 자동 숨김 (`data-feature` 속성 + `hasFeature()`) | ✅ |
 
 ---
 
@@ -653,6 +671,11 @@
 | 용어집 렌더러 | `src/views/glossary-renderer.js` | 용어집 테이블 렌더링, `scrollToGlossary()` 공유 함수 |
 | 학습 보조 | `src/study-aids.js` | 기출 필터, 숫자 암기표 |
 | 간격 반복 | `src/spaced-repetition.js` | SM-2 알고리즘, 복습 스케줄링, 오늘 복습 카드 수 |
+| 문항 스키마 | `src/questions.js` | single/combo/short/ox 스키마, `deriveComboAnswer`, `validateQuestion` |
+| 진술 추적 | `src/statement-tracker.js` | 진술 원자(sid) 단위 오판 통계, 졸업 추적, SM-2 연동 |
+| 학습 추적 | `src/study-tracker.js` | 캘린더 활동 기록·목표 달성률 (`recordStudyActivity`, `getStudyGoals`) |
+| 동적 매니페스트 | `src/pwa-manifest.js` | 활성 시험 기준 PWA manifest 링크 교체 (클래식 스크립트) |
+| 설정 상수 | `src/config/timing.js` · `cache.js` | 타이밍·캐시 상수 중앙 관리 |
 | 콘텐츠 감사 | `tools/audit_card_quality.js` | 카드 품질 자동 감사, 참조자료 링크 유효성 검사 |
 
 ### 뷰 컨트롤러 (`src/views/`)
@@ -661,23 +684,31 @@
 |------|------|
 | `dashboard.js` | 대시보드 통계, 과목 카드 |
 | `flashcard.js` | 3D 플래시카드 |
-| `quiz.js` | 퀴즈 + 복습 + 일일 챌린지 |
-| `trainer.js` | 훈련소 (계산, 원료, 뽀모도로) |
+| `quiz.js` | 퀴즈 + 복습 |
+| `daily-challenge.js` | 데일리 챌린지 |
+| `trainer.js` | 훈련소 허브 (재수출) |
+| `trainer-calc-practice.js` | 계산 연습기 |
+| `trainer-ingredients.js` | 원료 배합 챌린지 |
+| `trainer-drills.js` | O/X·복수정답형 드릴 UI |
+| `pomodoro.js` | 뽀모도로 타이머 |
 | `exam-simulator.js` | 모의고사 시뮬레이터 |
+| `exam-sim-state.js` | 시뮬레이터 상태 |
+| `exam-sim-review.js` | 시뮬레이터 결과 리뷰 |
+| `exam-select.js` | 시험 선택/전환 뷰 |
 | `textbook-reader.js` | 교재 리더 + 오디오 + Media Session |
+| `reader-audio.js` | 오디오북 플레이어 |
 | `textbook-search.js` | 교재 본문 검색 |
 | `dictionary.js` | 성분 사전 검색 |
+| `study-calendar.js` | 학습 캘린더·목표 뷰 |
+| `glossary-renderer.js` | 용어집 렌더링 + `scrollToGlossary()` |
+| `event-listeners.js` | 이벤트 리스너 일괄 바인딩 |
 | `formula.js` | Formula OS — 배합 계산기, 추천, My 포뮬러, 서브내비 칩, 인쇄·JSON 공유 |
 | `formula-batch.js` | 조제 기록(배치) 목록·폼·상세 패널 |
 | `formula-customer.js` | 고객 관리 패널 (카드·상담 이력·역참조) |
 | `formula-material.js` | 원료 장부 패널 (기한 배지·경고) |
 | `formula-compliance.js` | 법규 준수 체크리스트 + 법령 MD 링크 |
 | `formula-print.js` | 인쇄 빌더 (조제 기록지·라벨·안내문) |
-| `study-calendar.js` | 학습 캘린더·목표 뷰 |
-| `exam-select.js` | 시험 선택/전환 뷰 |
 | `offline-detection.js` | 오프라인 감지 (app.js에서 분리) |
-| `manual-viewer.js` | 학습안내서·매뉴얼 뷰어 |
-| `exam-viewer.js` | 문제집/참조자료 MD 뷰어 |
 | `backup.js` | 데이터 백업/복원 |
 | `navigation.js` | 뷰 전환 유틸 |
 

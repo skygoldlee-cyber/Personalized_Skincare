@@ -1,8 +1,8 @@
 # 🏛️ 설계 컨셉 & 아키텍처 (Architecture & Design Concept)
 
-> **대상 프로젝트**: Cosmetic Pass Master — 맞춤형화장품 조제관리사 스마트 학습 플랫폼
-> **최종 업데이트**: 2026-09-12
-> **목적**: 시스템의 설계 철학, 아키텍처 구조, 주요 설계 결정 사항을 설명
+> **대상 프로젝트**: Passmula (Cosmetic Pass Master) — 맞춤형화장품 조제관리사 스마트 학습 + Formula OS 실무 플랫폼
+> **최종 업데이트**: 2026-09-24
+> **목적**: 시스템의 설계 철학, 아키텍처 구조, 주요 설계 결정 사항을 설명 — 이 문서만으로 신규 기여자가 설계 의도를 파악하고 동일한 패턴으로 구현할 수 있는 수준을 지향
 
 ---
 
@@ -17,15 +17,23 @@
 7. [데이터 흐름](#-데이터-흐름)
 8. [상태 관리 전략](#-상태-관리-전략)
 9. [멀티시험 플랫폼 구조](#-멀티시험-플랫폼-구조)
-10. [테마 시스템 (라이트/다크)](#-테마-시스템-라이트다크)
-11. [PWA & 오프라인 전략](#-pwa--오프라인-전략)
-12. [Service Worker 동작 메커니즘](#-service-worker-동작-메커니즘)
-13. [반응형 & 모바일 설계](#-반응형--모바일-설계)
-14. [보안 설계](#-보안-설계)
-15. [빌드 타임 데이터 파이프라인](#-빌드-타임-데이터-파이프라인)
-16. [주요 설계 결정 및 근거](#-주요-설계-결정-및-근거)
-17. [향후 확장 방향](#-향후-확장-방향)
-18. [`content/` 내용 변경 시 수정 파일 및 절차 가이드](#content-내용-변경-시-수정-파일-및-절차-가이드)
+10. [계정·클라우드 동기화 (Supabase, 선택적)](#-계정클라우드-동기화-supabase-선택적)
+11. [UI 모드 (학습 ↔ 실무)](#-ui-모드-학습--실무)
+12. [Formula OS 도메인 아키텍처](#-formula-os-도메인-아키텍처)
+13. [localStorage 키 체계](#-localstorage-키-체계)
+14. [테마 시스템 (라이트/다크)](#-테마-시스템-라이트다크)
+15. [PWA & 오프라인 전략](#-pwa--오프라인-전략)
+16. [Service Worker 동작 메커니즘](#-service-worker-동작-메커니즘)
+17. [반응형 & 모바일 설계](#-반응형--모바일-설계)
+18. [보안 설계](#-보안-설계)
+19. [강건성 가이드라인](#️-강건성-가이드라인-robustness-guidelines)
+20. [데이터 파이프라인 (빌드 타임 + 런타임)](#️-데이터-파이프라인-빌드-타임--런타임)
+21. [배포 파이프라인](#-배포-파이프라인)
+22. [신규 기능 구현 레시피](#-신규-기능-구현-레시피)
+23. [주요 설계 결정 및 근거](#-주요-설계-결정-및-근거)
+24. [향후 확장 방향](#-향후-확장-방향)
+25. [`content/` 내용 변경 시 수정 파일 및 절차 가이드](#content-내용-변경-시-수정-파일-및-절차-가이드)
+26. [교재 변경 시 소스 수정 필요성 검토](#-교재-변경-시-소스-수정-필요성-검토)
 
 ---
 
@@ -33,13 +41,13 @@
 
 본 프로젝트는 다음 4가지 핵심 원칙 위에 설계되었습니다.
 
-### 1. **Zero-Backend (서버리스 정적 아키텍처)**
-- 별도의 백엔드 서버, 데이터베이스, 인증 시스템 없이 **순수 프론트엔드만으로 완결**되는 애플리케이션
-- 학습 데이터 중 **시험 문항·성분 사전은 빌드 타임 JS 번들**, **교재 본문·카드·퀴즈는 `content/*.md`를 런타임에 fetch+파싱**하여 사용 (2026-08-24~ 런타임 MD 전환)
-- 사용자 진행 상황은 `localStorage`에만 저장 → 계정/로그인 불필요
-- **근거**: 개인 학습 도구 특성상 서버 운영 비용·복잡성을 제거하고, Vercel 묵료 정적 호스팅으로 무한 확장 가능
+### 1. **Local-First + Optional Cloud (로컬 우선, 선택적 클라우드)**
+- **기본 동작은 백엔드 없이 완결**: 학습·실무 모든 기능이 정적 프론트엔드 + `localStorage`만으로 동작하며, 계정 없이 즉시 사용 가능
+- **선택적 Supabase 레이어**: 로그인한 사용자에게만 이메일 인증·클라우드 스냅샷 동기화(`sync_snapshots`)를 제공. Supabase 미설정(`supabase-config.js` 플레이스홀더) 환경에서는 관련 UI가 안내 문구로 대체되고 앱은 그대로 동작
+- 학습 데이터 중 **시험 문항·성분 사전은 빌드 타임 JS 번들**, **교재 본문·카드·퀴즈는 `content/**/*.md`를 런타임에 fetch+파싱**하여 사용 (2026-08-24~ 런타임 MD 전환)
+- **근거**: 서버 운영 비용·복잡성을 없애면서(Vercel 정적 호스팅), 멀티기기 사용자를 위한 선택적 동기화 경로를 확보. **타인 개인정보(고객 카드·상담 이력)는 동기화에서 구조적으로 제외** — 조제관리사가 고객 PII를 서버에 올리지 않는 프라이버시 설계 (§10 참조)
 
-### 2. **Vanilla First (프레임워크 묵 의존)**
+### 2. **Vanilla First (프레임워크 무 의존)**
 - React/Vue 같은 프레임워크나 빌드 도구(Webpack/Vite) 없이 **순수 HTML/CSS/JavaScript**로 구현
 - 외부 런타임 라이브러리 최소화 (차트도 직접 SVG 생성)
 - **근거**:
@@ -48,7 +56,7 @@
   - 번들 크기 최소화 → 모바일 환경에서 빠른 초기 로드
 
 ### 3. **Offline-Capable PWA (오프라인 우선)**
-- Service Worker로 App Shell과 학습 데이터를 캐시하여 **지하철 등 묵인터넷 환경에서도 학습 가능**
+- Service Worker로 App Shell과 학습 데이터를 캐시하여 **지하철 등 무인터넷 환경에서도 학습 가능**
 - 설치 가능한(Installable) PWA로 홈 화면 추가 지원
 - **근거**: 수험생의 주요 학습 공간(이동 중, 스터디카페)을 고려한 가용성 확보
 
@@ -66,69 +74,76 @@
 │                        Browser (Client)                      │
 │ ┌─────────────────────────────────────────────────────────┐ │
 │ │                     Presentation Layer                   │ │
-│ │   index.html (App Shell)  +  style.css (디자인 시스템)    │ │
+│ │   index.html (App Shell)  +  style.css (@import css/*)   │ │
 │ └─────────────────────────────────────────────────────────┘ │
 │ ┌─────────────────────────────────────────────────────────┐ │
 │ │                    Application Layer                     │ │
-│ │  ┌─────────┐ ┌─────────┐ ┌────────────┐ ┌────────────┐ │ │
-│ │  │ app.js  │ │router.js│ │scratchpad  │ │trainer-    │ │ │
-│ │  │ (초기화· │ │ (SPA    │ │  .js       │ │ calc.js    │ │ │
-│ │  │ 이벤트) │ │ 라우팅) │ │ (캔버스)   │ │ (문제생성) │ │ │
-│ │  └─────────┘ └─────────┘ └────────────┘ └────────────┘ │ │
-│ │  ┌─────────┐ ┌─────────┐ ┌────────────┐                │ │
-│ │  │state.js │ │utils.js │ │ ui-utils   │  sanitize.js  │ │
-│ │  │ (상태·  │ │ (초성·  │ │ (로딩UI)   │  (보안 유틸)   │ │
-│ │  │  영속성)│ │  헬퍼)  │ └────────────┘                │ │
-│ │  └─────────┘ └─────────┘                                │ │
-│ │  ┌─────────┐ ┌──────────────┐                          │ │
-│ │  │types.js │ │reader-format │  navigation.js           │ │
-│ │  │(JSDoc   │ │  .js         │  (뷰 전환 유틸)           │ │
-│ │  │ 타입)   │ │ (리더 포맷)  │                          │ │
-│ │  └─────────┘ └──────────────┘                          │ │
-│ │  ┌──────────────┐ ┌──────────────┐                     │ │
-│ │  │pdf-registry │ │html-viewer   │  (MD 참조자료 뷰어)    │ │
-│ │  │  .js         │ │  .js         │  (fetch+DOM+검색+PDF)  │ │
-│ │  └──────────────┘ └──────────────┘                     │ │
-│ │  ┌──────────────────────────────────────────────────┐  │ │
-│ │  │  views/ (뷰 컨트롤러 모듈)                          │  │ │
-│ │  │  dashboard · flashcard · quiz · daily-challenge    │  │ │
-│ │  │  trainer · trainer-calc-practice                  │  │ │
-│ │  │  trainer-ingredients · pomodoro · dictionary      │  │ │
-│ │  │  backup · textbook-search · textbook-reader        │  │ │
-│ │  │  reader-audio · exam-simulator · exam-sim-state   │  │ │
-│ │  │  exam-sim-review · glossary-renderer · navigation  │  │ │
-│ │  │  formula (Formula OS 뷰) · formula-store/rules/check/stability│  │ │
-│ │  │  formula-batch/customer/material/compliance/print (뷰)        │  │ │
-│ │  │  batch-store · customer-store · material-ledger · usage-guide    │  │ │
-│ │  │  csv-utils (CSV 파서·EUC-KR 폴백·BOM 직렬화)                     │  │ │
-│ │  └──────────────────────────────────────────────────┘  │ │
-│ │  ┌──────────────────────────────────────────────────┐  │ │
-│ │  │  app/ (app.js에서 추출된 모듈)                      │  │ │
-│ │  │  pwa-install · theme-toggle · ui-mode · pwa-install-capture  │  │ │
-│ │  └──────────────────────────────────────────────────┘  │ │
+│ │  ┌──────────────────────────────────────────────────┐   │ │
+│ │  │ 코어: app.js(오케스트레이터) · router.js · state.js │   │ │
+│ │  │ exam-context.js(시험 해석·scopedKey) · ui-mode.js   │   │ │
+│ │  │ storage-keys.js · paths.js · data-loader.js         │   │ │
+│ │  └──────────────────────────────────────────────────┘   │ │
+│ │  ┌──────────────────────────────────────────────────┐   │ │
+│ │  │ 유틸: utils · sanitize · sha256 · charts · ui-utils │   │ │
+│ │  │ spaced-repetition · study-tracker · study-aids      │   │ │
+│ │  │ textbook-parser · markdown-parser · reader-format   │   │ │
+│ │  │ questions · statement-tracker · scratchpad          │   │ │
+│ │  │ pdf-registry · keyword-index · glossary-query       │   │ │
+│ │  │ web-vitals · trainer-calc · types(JSDoc)            │   │ │
+│ │  └──────────────────────────────────────────────────┘   │ │
+│ │  ┌──────────────────────────────────────────────────┐   │ │
+│ │  │ 뷰어: html-viewer · exam-viewer · manual-viewer     │   │ │
+│ │  │ mermaid-render · mermaid-utils · pwa-manifest       │   │ │
+│ │  └──────────────────────────────────────────────────┘   │ │
+│ │  ┌──────────────────────────────────────────────────┐   │ │
+│ │  │ Formula OS 도메인: formula-store · formula-rules    │   │ │
+│ │  │ formula-check · formula-stability · batch-store     │   │ │
+│ │  │ customer-store · material-ledger · usage-guide      │   │ │
+│ │  │ store-utils(공통) · csv-utils                       │   │ │
+│ │  └──────────────────────────────────────────────────┘   │ │
+│ │  ┌──────────────────────────────────────────────────┐   │ │
+│ │  │ 계정·동기화(선택): auth-view · sync                 │   │ │
+│ │  │ supabase-client(lazy) · supabase-config             │   │ │
+│ │  └──────────────────────────────────────────────────┘   │ │
+│ │  ┌──────────────────────────────────────────────────┐   │ │
+│ │  │ views/ (28개 뷰 컨트롤러): dashboard · flashcard     │   │ │
+│ │  │ quiz · daily-challenge · trainer(+calc/ingredients/ │   │ │
+│ │  │ drills) · pomodoro · exam-simulator(+state/review)  │   │ │
+│ │  │ textbook-reader · reader-audio · textbook-search    │   │ │
+│ │  │ dictionary · study-calendar · backup · navigation   │   │ │
+│ │  │ glossary-renderer · event-listeners · exam-select   │   │ │
+│ │  │ offline-detection · formula(+batch/customer/        │   │ │
+│ │  │ material/compliance/print)                          │   │ │
+│ │  └──────────────────────────────────────────────────┘   │ │
+│ │  ┌──────────────────────────────────────────────────┐   │ │
+│ │  │ 부팅(클래식 스크립트): theme-init ·                  │   │ │
+│ │  │ pwa-install-capture · pwa-manifest · app-fallback   │   │ │
+│ │  └──────────────────────────────────────────────────┘   │ │
 │ └─────────────────────────────────────────────────────────┘ │
 │ ┌─────────────────────────────────────────────────────────┐ │
 │ │                       Data Layer                         │ │
-│ │  registry.js · ingredients_data.js · audio_manifest.js    │ │
+│ │  data/exams.js(레지스트리) · data/exams/<id>/registry.js  │ │
+│ │  · ingredients_data.*.js · audio_manifest.js · drills/    │ │
 │ └─────────────────────────────────────────────────────────┘ │
 │ ┌─────────────────────────────────────────────────────────┐ │
 │ │                    Persistence Layer                     │ │
-│ │   localStorage (학습 진행·설정)  +  Cache Storage (SW)   │ │
+│ │   localStorage (1차 저장소, 시험 스코프 키)                │ │
+│ │   Cache Storage (SW 오프라인) · sessionStorage (뷰어 캐시)│ │
 │ └─────────────────────────────────────────────────────────┘ │
 └─────────────────────────────────────────────────────────────┘
-         ▲                                    ▲
-         │ 정적 파일 서빙                       │ MP3 스트리밍 (캐시 제외)
-┌────────┴──────────┐                ┌────────┴──────────┐
-│   Vercel (CDN)    │                │  외부 오디오 CDN   │
-│  - App Shell      │                │  (302MB, 선택적)   │
-│  - 데이터 번들     │                └───────────────────┘
-│  - content/*.md   │
+         ▲                    ▲                    ▲
+         │ 정적 파일 서빙       │ MP3 스트리밍        │ 선택적 동기화
+┌────────┴──────────┐ ┌────────┴──────────┐ ┌───────┴───────────┐
+│   Vercel (CDN)    │ │  외부 오디오 CDN   │ │  Supabase (선택)   │
+│  - App Shell      │ │  (302MB, 캐시 제외)│ │  Auth +            │
+│  - 데이터 번들     │ └───────────────────┘ │  sync_snapshots    │
+│  - content/*.md   │                       └───────────────────┘
 └───────────────────┘
 ```
 
 ---
 
-## � 프로젝트 루트 파일 분류
+## 🗂️ 프로젝트 루트 파일 분류
 
 프로젝트 루트에는 프레임워크/도구 요구사항으로 인해 반드시 루트에 위치해야 하는 파일들이 있습니다.
 
@@ -157,15 +172,14 @@
 
 | 디렉터리 | 용도 |
 |-----------|------|
-| `src/` | 애플리케이션 소스 코드 (ESM 모듈 + 뷰 컨트롤러) |
-| `css/` | UI 모듈별 스타일시트 (`base`, `dashboard`, `study`, `exam`, `trainer`, `reader`) |
-| `data/` | 빌드 산출물 (레지스트리, 과목/시험/성분 번들, MD 폴백) |
-| `content/` | 교재 MD 원본(`교재/`), 문제은행(`문제은행/`), 참조자료(`참조자료/`), 학습안내서, 오디오북 파이프라인, report, utils |
-| ~~`exams/`~~ | (삭제됨 — `content/exams/cosmetic/문제은행/`로 이동) |
+| `src/` | 애플리케이션 소스 코드 (ESM 모듈 + `views/` 뷰 컨트롤러 + `config/` 상수) |
+| `css/` | UI 모듈별 스타일시트 (`base`, `dashboard`, `study`, `exam`, `trainer`, `reader`, `formula` 등 12개) |
+| `data/` | 빌드 산출물 — 전역(`exams.js`, `audio_manifest.js`, `docs_md/`) + 시험별 루트(`exams/<id>/`) |
+| `content/` | 콘텐츠 SSOT — 전역(`exams.json` 시험 레지스트리) + 시험별 루트(`exams/<id>/`에 manifest/교재/문제은행/참조자료/오디오북) |
 | `docs/` | 프로젝트 문서 (`dev/` 개발 문서, `user/` 사용자 문서) |
-| `tools/` | 빌드 스크립트, 로컬 개발 서버, 검증 도구 |
-| `tests/` | 자동화 테스트 (`unit/` Node.js, `dom/` Vitest+jsdom) |
-| `vendor/` | 자체 호스팅 라이브러리 (FontAwesome, 웹폰트, Mermaid.js) |
+| `tools/` | 빌드 스크립트, 배포 가드(`deploy.js`), 검증 도구 |
+| `tests/` | 자동화 테스트 (`unit/` Node.js 458개, `dom/` Vitest+jsdom 264개) |
+| `vendor/` | 자체 호스팅 라이브러리 (FontAwesome, 웹폰트, Mermaid.js, Supabase UMD) |
 | `icons/` | PWA 아이콘 (192/512/maskable) |
 
 ---
@@ -194,8 +208,8 @@ Personalized_Skincare/
 │
 ├── icons/                      # PWA 아이콘 (192/512/maskable)
 │
-├── css/                        # UI 모듈별 스타일시트
-│   ├── base.css                #   전역, 레이아웃, 네비게이션, 스크롤바
+├── css/                        # UI 모듈별 스타일시트 (style.css가 @import로 로드)
+│   ├── base.css                #   전역, 레이아웃, 네비게이션, 스크롤바, 테마 변수
 │   ├── dashboard.css           #   대시보드
 │   ├── study.css               #   플래시카드, 퀴즈
 │   ├── exam.css                #   모의고사, 배지
@@ -205,7 +219,8 @@ Personalized_Skincare/
 │   ├── html-viewer.css         #   참조자료 HTML 뷰어
 │   ├── ui-overlay.css          #   오버레이, 모달, 토스트
 │   ├── study-calendar.css      #   학습 캘린더, 목표 달성률
-│   └── print.css               #   인쇄 전용
+│   ├── formula.css             #   Formula OS (계산기·배치·고객·장부·체크리스트)
+│   └── print.css               #   인쇄 전용 (조제 기록지·라벨·안내문)
 │
 ├── src/                        # 애플리케이션 소스 (ESM)
 │   ├── app.js                  #   오케스트레이터 (초기화, 이벤트 위임, 라우터 연결)
@@ -231,6 +246,8 @@ Personalized_Skincare/
 │   ├── study-aids.js           #   기출 필터, 숫자 암기표
 │   ├── study-tracker.js        #   학습 캘린더/목표 추적 (recordStudyActivity, getStudyGoals)
 │   ├── spaced-repetition.js    #   SM-2 간격 반복 알고리즘, 복습 스케줄링
+│   ├── questions.js            #   문항 스키마·채점 유틸 (single/combo/short/ox)
+│   ├── statement-tracker.js    #   진술 원자(sid) 단위 오판 통계 + 졸업 추적
 │   ├── charts.js               #   SVG 레이더/꺾은선 차트 + 툴팁
 │   ├── sanitize.js             #   XSS 방어
 │   ├── sha256.js               #   안정적 ID 해시
@@ -241,16 +258,39 @@ Personalized_Skincare/
 │   ├── ui-utils.js             #   로딩 UI, 커스텀 토스트/컨펌 모달 (showToast/showConfirm)
 │   ├── utils.js                #   초성 추출, Fisher-Yates 셔플
 │   ├── globals.d.ts            #   전역 타입 선언
+│   ├── exam-context.js         #   활성 시험 해석/전환, scopedKey 네임스페이스, hasFeature (리프 모듈)
+│   ├── ui-mode.js              #   학습/실무 UI 모드 전환
+│   ├── supabase-config.js      #   Supabase URL·Publishable key (공개 설계상 키)
+│   ├── supabase-client.js      #   Supabase lazy init — vendor UMD 동적 로드
+│   ├── auth-view.js            #   계정/로그인 모달 (이메일+PW·회원가입·매직링크 OTP)
+│   ├── sync.js                 #   클라우드 스냅샷 동기화 (sync_snapshots push/pull)
+│   ├── formula-store.js        #   Formula OS — 포뮬러 CRUD·한도(5)·스키마 정제·전성분 생성
+│   ├── formula-rules.js        #   Formula OS — 추천 규칙 (베이스·고민/피부 매핑·안전 필터)
+│   ├── formula-check.js        #   Formula OS — 고시 한도 검증 엔진 (4상태 판정)
+│   ├── formula-stability.js    #   Formula OS — 제형 안정성 체크 (상 비율·상호작용·단계·pH)
+│   ├── batch-store.js          #   Formula OS — 조제 기록(배치) 채번·QC·스냅샷 (한도 50)
+│   ├── customer-store.js       #   Formula OS — 고객 카드·상담 이력 (한도 20, 동기화 제외)
+│   ├── material-ledger.js      #   Formula OS — 원료 입고·기한·재고 (한도 30)
+│   ├── usage-guide.js          #   Formula OS — 사용 안내문 생성기
+│   ├── store-utils.js          #   Formula OS — 스토어 공통 헬퍼 (loadItems/newId/clamp…)
+│   ├── csv-utils.js            #   CSV 파서·EUC-KR 폴백·BOM 직렬화
+│   ├── config/
+│   │   ├── timing.js           #   타이밍 상수 (PWA 프로브, 스와이프 임계값)
+│   │   └── cache.js            #   캐시 설정 상수
 │   └── views/                  #   뷰 컨트롤러 모듈
 │       ├── dashboard.js        #     대시보드 통계
 │       ├── flashcard.js        #     3D 플래시카드
 │       ├── quiz.js             #     퀴즈 + 복습
 │       ├── daily-challenge.js  #     데일리 챌린지 (quiz.js에서 분리)
-│       ├── trainer.js          #     훈련소 UI
+│       ├── trainer.js          #     훈련소 허브 (재수출)
+│       ├── trainer-calc-practice.js  # 계산 연습기
+│       ├── trainer-ingredients.js    # 원료 배합 챌린지
+│       ├── trainer-drills.js   #     O/X·복수정답형 드릴 UI
 │       ├── pomodoro.js         #     뽀모도로 타이머 (trainer.js에서 분리)
 │       ├── exam-simulator.js   #     모의고사 시뮬레이터
 │       ├── exam-sim-state.js   #     시뮬레이터 상태
 │       ├── exam-sim-review.js  #     시뮬레이터 결과 리뷰
+│       ├── exam-select.js      #     시험 선택/전환 뷰
 │       ├── textbook-reader.js  #     교재 리더 + 오디오 + Media Session
 │       ├── reader-audio.js    #     오디오북 플레이어
 │       ├── textbook-search.js  #     교재 본문 검색
@@ -258,61 +298,67 @@ Personalized_Skincare/
 │       ├── study-calendar.js   #     학습 캘린더/목표 뷰
 │       ├── backup.js           #     데이터 백업/복원
 │       ├── glossary-renderer.js #    용어집 렌더링 + scrollToGlossary()
+│       ├── formula.js          #     Formula OS 허브 — 계산기·추천·My 포뮬러·서브내비
+│       ├── formula-batch.js    #     조제 기록(배치) 목록·폼·상세
+│       ├── formula-customer.js #     고객 관리 패널
+│       ├── formula-material.js #     원료 장부 패널
+│       ├── formula-compliance.js #   법규 준수 체크리스트
+│       ├── formula-print.js    #     인쇄 빌더 (기록지·라벨·안내문)
 │       ├── event-listeners.js  #     이벤트 리스너 일괄 바인딩
 │       ├── offline-detection.js #    오프라인 감지
 │       └── navigation.js       #     뷰 전환 유틸
 │
-├── content/                    # SSOT — 모든 교재/문제/참조자료 원본
-│   ├── manifest.json           #   과목/단원/시험/추천링크 메타데이터
-│   ├── references.json         #   참조자료 메타데이터
-│   ├── 학습안내서.md
-│   ├── 두음법_암기_총정리.md        #   두음법+중요숫자 통합 암기 문서
-│   ├── 교재/
-│   │   ├── glossary/           #   과목별 큐레이션 용어 정의 JSON (subject1~4)
-│   │   ├── law/                #   1과목 (본문 + 이야기형)
-│   │   ├── manufacturing/      #   2과목
-│   │   ├── safety/             #   3과목
-│   │   └── understanding/      #   4과목
-│   ├── 문제은행/                #   과목N_단일정답형.md (4개, manifest 등록) + 과목N_복수정답형.md (생성 산출물)
-│   ├── 참조자료/
-│   │   ├── ref_md/과목N/{문서}/ #   PDF→MD 변환본 (41개, ~26MB) — 과목 폴더가 귀속의 진실
-│   │   ├── 공통/               #   공통 참조자료 PDF
-│   │   ├── 과목1~4/            #   과목별 참조자료 PDF (+ 과목 노트 N.*.md)
-│   │   ├── 법령고시/           #   법령 원문
-│   │   └── 원료/               #   성분 원본 MD
-│   ├── html/                   #   HTML 콘텐츠 (학습안내서 등)
-│   ├── number-drills/          #   숫자 암기 드릴 데이터
-│   ├── audiobook/              #   Python TTS 파이프라인
-│   │   ├── run_pipeline.py     #     전체 파이프라인
-│   │   ├── md_chunker.py       #     MD 청크 분할
-│   │   ├── tts_elevenlabs.py   #     ElevenLabs TTS
-│   │   ├── tts_google_direct.py #    Google TTS
-│   │   ├── mp3_merger.py       #     MP3 병합
-│   │   ├── script_polisher.py  #     스크립트 정제
-│   │   ├── generate_all_mp3.py #     전 과목 일괄 생성
-│   │   └── mp3/                #     생성된 MP3 (gitignore)
-│   └── utils/                  #   Python 변환 스크립트
-│       ├── batch_convert.py    #     배치 HTML 변환
-│       ├── convert_ref_md.py   #     ref_md HTML→MD 변환
-│       ├── check_laws.py       #     법령 업데이트 검사
-│       └── md_to_html.py       #     단일 HTML 변환
+├── content/                    # 콘텐츠 컨테이너 (시험 소유 파일 없음 — 순수 네임스페이스)
+│   ├── exams.json              #   시험 레지스트리 — 멀티시험 엔트리 (id/name/branding/contentRoot/dataRoot/features)
+│   └── exams/
+│       └── <examId>/           #   시험별 콘텐츠 루트 (모든 시험 동일 내부 구조 — 대칭)
+│           ├── manifest.json   #     과목/단원/시험/추천링크 메타데이터 (SSOT)
+│           ├── references.json #     참조자료 매핑 설정
+│           ├── 학습안내서.md
+│           ├── 두음법_암기_총정리.md  #   두음법+중요숫자 통합 암기 문서
+│           ├── combo_blocklist.json #  복수정답형 자동변환 제외 목록
+│           ├── number-drills/  #     숫자 암기 드릴 JSON
+│           ├── 교재/
+│           │   ├── glossary/   #     과목별 큐레이션 용어 정의 JSON (subject1~4)
+│           │   ├── law/        #     1과목 (본문 + 이야기형)
+│           │   ├── manufacturing/  # 2과목
+│           │   ├── safety/     #     3과목
+│           │   └── understanding/  # 4과목
+│           ├── 문제은행/        #    과목N_단일정답형.md (manifest 등록) + 과목N_복수정답형.md (생성 산출물)
+│           ├── 참조자료/
+│           │   ├── ref_md/과목N/{문서}/  # PDF→MD 변환본 (41개, ~26MB) — 과목 폴더가 귀속의 진실
+│           │   ├── 공통/       #     공통 참조자료 PDF
+│           │   ├── 과목1~4/    #     과목별 참조자료 PDF (+ 과목 노트 N.*.md)
+│           │   ├── 법령고시/   #     법령 원문
+│           │   └── 원료/       #     성분 원본 MD + db_version.json (버전·이력)
+│           ├── audiobook/      #     Python TTS 파이프라인
+│           │   ├── run_pipeline.py · md_chunker.py · tts_*.py · mp3_merger.py
+│           │   ├── script_polisher.py · generate_all_mp3.py
+│           │   └── mp3/        #     생성된 MP3 (gitignore)
+│           └── utils/          #     Python 변환 스크립트
+│               ├── batch_convert.py · convert_ref_md.py · check_laws.py · md_to_html.py
 │
 ├── data/                       # 빌드 타임 생성 (자동 생성, 직접 수정 금지)
-│   ├── registry.js             #   과목/시험/성분 메타
-│   ├── audio_manifest.js       #   오디오 챕터 매핑
-│   ├── ingredients_data.*.js   #   성분 데이터 (해시 파일명)
-│   ├── id_migration.js         #   ID 마이그레이션 스크립트
-│   ├── exams/                  #   시험 데이터 번들 (해시 파일명)
-│   ├── subjects/               #   과목별 카드/퀴즈 번들
-│   ├── exams_md/               #   문제은행 MD 폴백 번들 (file:// 전용)
-│   ├── study_md/               #   교재 MD 폴백 번들 (과목별 분할, file:// 전용)
-│   ├── docs_md/                #   학습안내서/매뉴얼 MD 폴백 번들
-│   ├── drills/                 #   문항 드릴 번들 (레지스트리 미등록, 별도 생성기)
-│   │   ├── ox_subject*.js      #     O/X 판정 드릴 (build_ox_drills.js)
-│   │   ├── combo_subject*.js   #     복수정답형 드릴 자동 변환 (build_combo_drills.js)
-│   │   └── combo_pilot.js      #     복수정답형 수작업 파일럿 (check:combo 검증)
-│   ├── supplements/            #   문제은행 보충 카드/퀴즈 (tools/build/supplements.js)
-│   │                           #     부족 과목을 출제 비중 목표치까지 보충, 런타임 loadSubject 병합
+│   ├── exams.js                #   전역 시험 레지스트리 번들 (window.EXAMS_LIST, 클래식 스크립트)
+│   ├── audio_manifest.js       #   오디오 챕터 매핑 (시험 id 키 분리)
+│   ├── docs_md/                #   앱 공용 문서 폴백 번들 (user_manual·formula_manual — 시험 무관)
+│   └── exams/
+│       └── <examId>/           #   시험별 데이터 루트 (dataRoot — 모든 시험 대칭)
+│           ├── registry.js     #     과목/시험/성분 메타 (shortName·file·resources·uiText)
+│           ├── ingredients_data.<hash>.js  # 성분 사전 (해시 파일명)
+│           ├── id_migration.js #     레거시 ID → 안정 ID 매핑
+│           ├── card_terms_snapshot.json    # 카드 ID 추적 스냅샷
+│           ├── question_chapters.js        # 문항id→단원 매핑 (취약 분석용)
+│           ├── exams/          #     시험 문항 번들 (해시 파일명)
+│           ├── exams_md/       #     문제은행 MD 폴백 번들 (file:// 전용)
+│           ├── study_md/       #     교재 MD 폴백 번들 (과목별 분할, file:// 전용)
+│           ├── docs_md/        #     시험 문서 폴백 (학습안내서)
+│           ├── drills/         #     문항 드릴 번들 (레지스트리 미등록)
+│           │   ├── ox_subject*.js    #   O/X 판정 드릴 (build_ox_drills.js)
+│           │   ├── combo_subject*.js #   복수정답형 자동 변환 (build_combo_drills.js)
+│           │   ├── combo_pilot.js    #   수작업 파일럿 (check:combo 검증)
+│           │   └── combo_index.js    #   과목별 복수정답형 문항 수
+│           └── supplements/    #     문제은행 비율 기반 보충 카드/퀴즈 (build/supplements.js)
 │
 ├── tools/                      # 빌드/검증 도구
 │   ├── build/
@@ -354,28 +400,17 @@ Personalized_Skincare/
 │   └── fix-mindmap-indent.mjs  #   Mermaid mindmap 들여쓰기 수정
 │
 ├── tests/                      # 자동화 테스트
-│   ├── unit/                   #   단위 테스트 (18개 파일, 248 tests)
-│   │   ├── delegation-guard.test.js
-│   │   ├── glossary-query.test.js
-│   │   ├── id-factory.test.js
-│   │   ├── markdown-parser-general.test.js
-│   │   ├── mermaid-parser.test.js
-│   │   ├── mermaid-pipeline.test.js
-│   │   ├── mermaid-reader-format.test.js
-│   │   ├── mermaid-rendering.test.js
-│   │   ├── mermaid-textcontent.test.js
-│   │   ├── pdf-registry.test.js
-│   │   ├── reader-format-general.test.js
-│   │   ├── sanitize.test.js
-│   │   ├── sha256.test.js
-│   │   ├── state.test.js
-│   │   ├── study-aids.test.js
-│   │   ├── textbook-parser.test.js
-│   │   ├── trainer-calc.test.js
-│   │   └── utils.test.js
-│   └── dom/                    #   DOM 테스트 (Vitest + jsdom)
-│       ├── backup.dom.test.js
-│       └── router.dom.test.js
+│   ├── unit/                   #   단위 테스트 (35개 파일, 458 tests, node --test)
+│   │   └── *.test.js           #     delegation-guard · parser · mermaid · sanitize ·
+│   │                           #     state · store(batch/customer/material/formula) ·
+│   │                           #     sync · exam-context · questions · statement-tracker 등
+│   └── dom/                    #   DOM 테스트 (30개 파일, 264 tests, Vitest + jsdom)
+│       ├── helpers.js          #     공통 DOM 셋업·모킹 헬퍼
+│       ├── supabase.js         #     Supabase 모킹
+│       ├── common-*.dom.test.js    # 공통 시나리오 (a11y/auth/offline/theme/uimode/sync…)
+│       ├── formula-*.dom.test.js   # Formula OS 시나리오
+│       ├── study-*.dom.test.js     # 학습 뷰 시나리오
+│       └── backup · router.dom.test.js
 │
 ├── vendor/                     # 자체 호스팅 라이브러리
 │   ├── fontawesome/
@@ -385,8 +420,10 @@ Personalized_Skincare/
 │   │   ├── fonts.css           #   @font-face 정의
 │   │   ├── noto-sans-kr-*.woff2 #  5 가중치
 │   │   └── outfit-*.woff2      #   4 가중치
-│   └── mermaid/
-│       └── mermaid.min.js      #   3.3MB, 온디맨드 로드
+│   ├── mermaid/
+│   │   └── mermaid.min.js      #   3.3MB, 온디맨드 로드 (mermaid 블록 있을 때만)
+│   └── supabase/
+│       └── supabase.js         #   Supabase UMD — 로그인 시에만 동적 로드
 │
 └── docs/                       # 프로젝트 문서
     ├── README.md               #   문서 인덱스
@@ -408,12 +445,17 @@ Personalized_Skincare/
     │   ├── FEATURE_PROPOSALS.md #    기능 제안 (Pass Core Loop)
     │   ├── PASS_CORE_LOOP_REVIEW.md # 합격 핵심 루프 리뷰
     │   ├── PASS_TO_PRACTICE_STRATEGY.md # 합격→실무 전략
+    │   ├── FORMULA_OS_DESIGN.md #      Formula OS 도메인 설계
+    │   ├── FORMULA_OS_WORKFLOW_DESIGN.md # 배치·고객·장부 업무 플로우 설계
+    │   ├── SUPABASE_DESIGN.md #        Supabase 계정·동기화 설계안
+    │   ├── Supabase_Custom_SMTP_MagicLink_OTP_설정가이드.md # SMTP·매직링크 설정
     │   ├── READER_FEEDBACK_DESIGN.md #  교재 리더 피드백 설계
     │   ├── STUDY_APP_DESIGN_GUIDE.md #  학습 앱 디자인 가이드
     │   └── Cosmetic Master Business Plan.md
     ├── report_archive/         #   분석 보고서 아카이브 (앱 미참조)
     └── user/
         ├── user_manual.md      #   사용자 매뉴얼
+        ├── formula_manual.md   #   Formula OS 실무 매뉴얼
         ├── exam_strategy.md    #   시험 전략
         ├── subject1_numbers.md #   1과목 핵심 숫자
         ├── subject2_numbers.md #   2과목 핵심 숫자
@@ -434,9 +476,11 @@ Personalized_Skincare/
 | [`manifest.webmanifest`](../../manifest.webmanifest) | PWA 매니페스트 (앱 이름, 아이콘, 테마 색상) |
 
 **SPA 뷰 전환 방식**:
-- 10개의 `<section class="view-section">`이 하나의 HTML에 공존
-- `switchView(targetView)`가 `.active` 클래스를 토글하여 화면 전환 (페이지 리로드 없음)
-- 뷰 목록: dashboard / flashcard / quiz / review / trainer / exam / textbook / textbook-reader / dictionary / calendar
+- 12개의 `<section class="view-section">`이 하나의 HTML에 공존
+- `router.js`의 `navigateToView(target, ctx)`가 `.active` 클래스를 토글하여 화면 전환 (페이지 리로드 없음). 타이틀/서브타이틀은 `getViewTitles(registry)`가 `DATA_REGISTRY.uiText`에서 동적 생성
+- 뷰 목록: dashboard / flashcard / quiz / review / trainer / exam / textbook / textbook-reader / dictionary / formula / exam-select / calendar
+- 내비게이션 동기화: `.nav-item`(사이드바)과 `.mobile-tab-item`(탭 바)에 동일 `data-target` 부여 → 뷰 전환 시 양쪽 활성 상태 자동 동기화
+- 전환 부가 동작: 이전 뷰 스크롤 위치 저장·복원, 리더 집중 모드 해제, 오디오 정지, 뷰별 렌더 핸들러 호출 (`ctx.handlers`)
 
 ### 2. Application Layer (응용 계층)
 
@@ -493,17 +537,24 @@ Personalized_Skincare/
   1. src/theme-init.js     (클래식 — 페인트 전 테마 클래스 적용)
   2. src/pwa-install-capture.js (클래식 — beforeinstallprompt 조기 캡처 + SW 등록)
 
-<body> 하단 (DOMContentLoaded 이후)
-  3. data/exams/cosmetic/registry.js       (type=module — 번들 메타, window.DATA_REGISTRY 할당)
-  4. data/audio_manifest.js (type=module — 오디오 경로, window.AUDIO_MANIFEST 할당)
-  5. vendor/mermaid/mermaid.min.js (defer — 다이어그램 렌더링)
-  6. src/app.js             (type=module — ESM 진입점, 모든 src/ 모듈을 내부 import)
-  7. src/app-fallback.js    (defer — ESM 로드 실패 시 자동 복구, app.js와 독립 실행)
+<body> 하단
+  3. data/exams.js                    (클래식 — window.EXAMS_LIST 시험 레지스트리, file:// 호환)
+  4. data/exams/cosmetic/id_migration.js (클래식 — 레거시→안정 ID 이관 맵)
+  5. src/pwa-manifest.js              (클래식 — 활성 시험 기준 동적 manifest 링크 교체)
+  6. data/exams/cosmetic/registry.js  (type=module — 기본 시험 메타, window.DATA_REGISTRY 할당)
+  7. data/audio_manifest.js           (type=module — 오디오 경로, window.AUDIO_MANIFEST 할당)
+  8. src/app.js                       (type=module — ESM 진입점, 모든 src/ 모듈을 내부 import)
+  9. src/app-fallback.js              (defer — ESM 로드 실패 시 자동 복구, app.js와 독립 실행)
+
+지연 로드 (초기 로드에서 제외):
+  - vendor/mermaid/mermaid.min.js (3.3MB) — mermaid 블록이 있는 문서를 열 때만 주입
+  - vendor/supabase/supabase.js     — 로그인/동기화 첫 사용 시에만 주입 (supabase-client.js)
+  - 비기본 시험 registry.js        — 시험 전환 시 {dataRoot}/registry.js를 클래식 스크립트로 주입
 ```
 
 ### 모듈화 전략: "점진적 모듈화 (Progressive Modularization)"
 
-거대한 단일 `app.js`(원래 약 4,900줄)를 한 번에 ES Modules로 전환하는 대신, **부수효과 없는 순수 로직부터 글로벌 스코프 스크립트로 점진 분리**하는 전략을 채택했습니다. 2026-09-13 기준 `app.js`는 **약 1,360줄**로 축소되었고, 라우팅 로직은 `router.js`로 분리, 18개 뷰 컨트롤러 모듈이 `src/views/`에 분리되었습니다.
+거대한 단일 `app.js`(원래 약 4,900줄)를 한 번에 ES Modules로 전환하는 대신, **부수효과 없는 순수 로직부터 글로벌 스코프 스크립트로 점진 분리**하는 전략을 채택했습니다. `app.js`는 초기화·이벤트 위임 중심으로 축소되었고, 라우팅은 `router.js`, **29개 뷰 컨트롤러 모듈**이 `src/views/`에 분리되었습니다.
 
 **분리 원칙**:
 1. **DOM 의존성 없는 순수 로직 우선 분리** → `trainer-calc.js`(문제 생성), `utils.js`(초성 추출), `reader-format.js`(리더 포맷터)
@@ -514,26 +565,50 @@ Personalized_Skincare/
 6. **재수출 패턴 제거** → `app.js`가 `daily-challenge.js`/`pomodoro.js`를 직접 import
 
 ```
-[분리 완료]
-utils.js (헬퍼·Fisher-Yates shuffle)  views/backup.js (백업/복원)
-trainer-calc.js (문제 생성)       views/textbook-search.js (교재 검색)
-state.js (상태·영속성)            views/textbook-reader.js (리더+TOC+참조링크)
-charts.js (시각화+인터랙티브 툴팁) views/reader-audio.js (오디오북+Media Session)
-sanitize.js (보안)                views/exam-simulator.js (모의고사+오답 복습)
-scratchpad.js (캔버스)            views/exam-sim-state.js (시뮬레이터 상태)
-reader-format.js (리더 포맷터+키워드 자동링크+L### 확장)  views/exam-sim-review.js (시뮬레이터 리뷰)
-ui-utils.js (로딩 UI)             views/dashboard.js (대시보드)
-types.js (JSDoc 타입 정의)        views/flashcard.js (플래시카드)
-html-viewer.js (참조자료 뷰어+키워드 스크롤+PDF 저장)    views/quiz.js (퀴즈+복습)
-pdf-registry.js (참조자료 레지스트리+KEYWORD_REF_MAP 자동링크)  views/daily-challenge.js (데일리 챌린지)
-keyword-index.js (KEYWORD_INDEX: 교재 셀→참조자료 키워드 매핑)  views/trainer.js (훈련소 메뉴+배합한도)
-markdown-parser.js (MD→HTML 파서)  views/trainer-calc-practice.js (계산 연습기)
-router.js (SPA 라우터: 타이틀 맵+네비게이션 디스패치)  views/trainer-ingredients.js (원료 안전성 챌린지)
-pwa-install.js (PWA 설치 프롬프트)  views/pomodoro.js (뽀모도로 타이머)
-theme-toggle.js (테마 토글)        views/dictionary.js (성분 검색)
-pwa-install-capture.js (SW 등록+beforeinstallprompt 캡처)  views/navigation.js (뷰 전환 유틸)
-                                  views/glossary-renderer.js (용어집 렌더링)
-study-tracker.js (학습 캘린더/목표 추적)  views/study-calendar.js (학습 캘린더 뷰)
+[분리 완료 — src/ 루트]
+app.js (초기화·이벤트 위임)          state.js (전역 상태·영속성)
+router.js (SPA 라우터)               storage-keys.js (키 중앙 관리)
+paths.js (경로 상수)                 exam-context.js (시험 해석·scopedKey·hasFeature)
+ui-utils.js (토스트·모달·로딩)        sanitize.js (XSS 방어)
+utils.js (헬퍼·shuffle)              types.js (JSDoc 타입)
+data-loader.js (온디맨드 MD 로더)     markdown-parser.js (공통 MD 파서)
+textbook-parser.js (교재 MD 파서)     reader-format.js (리더 포맷터+키워드 링크)
+keyword-index.js (교재 셀→참조 키워드) pdf-registry.js (참조자료 레지스트리)
+html-viewer.js (참조자료 뷰어)        exam-viewer.js (문제집 MD 뷰어)
+manual-viewer.js (안내서/매뉴얼 뷰어)  mermaid-render.js + mermaid-utils.js
+charts.js (SVG 차트)                 scratchpad.js (캔버스)
+spaced-repetition.js (SM-2)          statement-tracker.js (진술 원자 추적)
+questions.js (문항 스키마 검증)       study-aids.js (기출 필터·숫자표)
+study-tracker.js (캘린더 추적)        sha256.js (안정 ID 해시)
+web-vitals.js (성능 모니터링)         glossary-query.js (용어집 쿼리)
+trainer-calc.js (계산 문제 생성)      csv-utils.js (CSV 파서·직렬화)
+store-utils.js (스토어 공통 헬퍼)     formula-store.js (포뮬러 CRUD)
+formula-rules.js (추천 규칙)          formula-check.js (고시 한도 검증)
+formula-stability.js (제형 안정성)    batch-store.js (조제 기록)
+customer-store.js (고객 카드)         material-ledger.js (원료 장부)
+usage-guide.js (안내문 생성)          ui-mode.js (학습/실무 모드)
+supabase-config.js (설정)            supabase-client.js (lazy init)
+auth-view.js (계정 모달)             sync.js (스냅샷 동기화)
+pwa-install.js (설치 프롬프트)        theme-init.js + theme-toggle.js
+pwa-manifest.js (동적 매니페스트)     pwa-install-capture.js (SW 등록 캡처)
+config/timing.js + cache.js          app-fallback.js (ESM 실패 복구)
+
+[분리 완료 — src/views/ (29개)]
+navigation.js (뷰 전환 유틸)         dashboard.js (대시보드)
+flashcard.js (플래시카드)            quiz.js (퀴즈+복습)
+daily-challenge.js (데일리 챌린지)    study-calendar.js (학습 캘린더)
+textbook-reader.js (교재 리더)        reader-audio.js (오디오북)
+textbook-search.js (본문 검색)       dictionary.js (성분 사전)
+exam-simulator.js (모의고사)         exam-sim-state.js (시뮬 상태)
+exam-sim-review.js (시뮬 리뷰)       exam-select.js (시험 선택)
+trainer.js (훈련소 허브)             trainer-calc-practice.js
+trainer-ingredients.js              trainer-drills.js (O/X·복수 드릴)
+pomodoro.js (뽀모도로)              formula.js (Formula OS 허브)
+formula-batch.js (조제 기록)         formula-customer.js (고객)
+formula-material.js (원료 장부)      formula-compliance.js (법규 체크)
+formula-print.js (인쇄 빌더)         glossary-renderer.js (용어집)
+backup.js (백업/복원)               offline-detection.js (오프라인 감지)
+event-listeners.js (이벤트 바인딩)
 ```
 
 > `app.js`에 남은 함수: `startFocusSubjectStudy`(뷰 간 브릿지), 초기화/이벤트 바인딩. 라우팅은 `router.js`의 `navigateToView()`로 위임. `examIdToSubjectId`는 `exam-simulator.js`에서 정의 후 `app.js`를 통해 re-export되어 `quiz.js`가 import.
@@ -583,7 +658,7 @@ DOMContentLoaded
 
 ### 3. 데이터 백업/복원 흐름
 
-- **낵스port**: `exportData()` → 허용 키만 추출 → JSON 다운로드
+- **export**: `exportData()` → 허용 키만 추출 → JSON 다운로드
 - **Import**: `importData()` → **`ALLOWED_KEYS` 화이트리스트 검증** → localStorage 복원 → 새로고침
   - 악의적 키 주입으로 인한 localStorage 오염 방지 (보안 설계)
 
@@ -632,7 +707,7 @@ const state = {
 ### 시험 레지스트리
 - **소스**: `content/exams.json` — 시험 엔트리(`id`, `name`, 브랜딩 `title`/`logoMain`/`logoSub`, `desc`, `icon`, `year`, `default`, `contentRoot`, `dataRoot`, `registryBundle`, `registryGlobal`, `features` 기능 플래그)
 - **번들**: `data/exams.js` — `window.EXAMS_LIST` 클래식 스크립트 (`file://` 호환, `build:data` 체인에 포함)
-- **기본 시험(cosmetic)**: `content/`·`data/` 루트 유지. 추가 시험은 `content/exams/<id>/` + `data/exams/<id>/`에 독립 루트 보유
+- **완전 대칭 구조** (2026-09-22~): **기본 시험(cosmetic)을 포함한 모든 시험**이 `content/exams/<id>/` + `data/exams/<id>/`에 독립 루트 보유. `content/`·`data/` 루트에는 전역 파일(`exams.json`/`exams.js`, `audio_manifest.js`, `docs_md/` 앱 공용 문서)만 존재 — 시험 소유 파일 없음
 
 ### 시험 컨텍스트 (`src/exam-context.js`, 리프 모듈)
 - `getActiveExam()`/`getExamList()` — `current_exam` localStorage 키 + `EXAMS_LIST`로 활성 시험 해석
@@ -656,9 +731,148 @@ const state = {
 - **공유 모듈 예외**: `src/pdf-registry.js`, `keyword-index.js`는 단일 공유 출력이라 기본 시험 바인딩 유지 — 비기본 시험에 참조자료 기능이 필요하면 시험별 파일 분리가 후속 과제
 
 ### 새 시험 추가 절차
-1. `content/exams/<id>/`에 `manifest.json` + `교재/` + `문제은행/` 배치
-2. `content/exams.json`에 엔트리 추가 (기능 플래그 포함)
-3. `npm.cmd run build:data && npm.cmd run build:drills` — 앱 로직 변경 불필요
+1. `content/exams/<id>/`에 `manifest.json` + `references.json` + `교재/` + `문제은행/` 배치
+2. `content/exams.json`에 엔트리 추가 (`contentRoot`/`dataRoot`/`registryBundle`/`registryGlobal` + 기능 플래그)
+3. `npm.cmd run check:content -- --build` — 빌드 + 통합 검증 일괄. **앱 로직 변경 불필요**
+
+---
+
+## 🔐 계정·클라우드 동기화 (Supabase, 선택적)
+
+> 설계안: [`SUPABASE_DESIGN.md`](SUPABASE_DESIGN.md) · SMTP/매직링크 설정: [`Supabase_Custom_SMTP_MagicLink_OTP_설정가이드.md`](Supabase_Custom_SMTP_MagicLink_OTP_설정가이드.md)
+
+**원칙**: localStorage가 유일한 1차 저장소. Supabase는 "로그인한 사용자에게만" 붙는 선택적 레이어이며, 미설정/오프라인/비로그인 시 앱은 완전 정상 동작한다.
+
+### 구성 요소
+
+| 모듈 | 역할 |
+|------|------|
+| [`src/supabase-config.js`](../../src/supabase-config.js) | 프로젝트 URL·Publishable Key 상수 + `isSupabaseConfigured()` (플레이스홀더 감지) |
+| [`src/supabase-client.js`](../../src/supabase-client.js) | lazy 초기화 — `vendor/supabase/supabase.js`(UMD)를 첫 사용 시점에 `<script>` 동적 주입 → `window.supabase.createClient`. `flowType: 'implicit'`, `persistSession`, `autoRefreshToken` 고정 |
+| [`src/auth-view.js`](../../src/auth-view.js) | 계정 모달 — 이메일+PW 로그인/회원가입, `signInWithOtp` 로그인 메일(매직링크+OTP 코드 동봉), `verifyOtp`, 비밀번호 재설정(`updateUser`), 메일 재발송 60초 쿨다운 |
+| [`src/sync.js`](../../src/sync.js) | 스냅샷 동기화 — `sync_snapshots` 테이블 push/pull |
+
+### 동기화 데이터 흐름
+
+```
+쓰기 발생 (safeSetItem)
+  │
+  ├─ state.js _dataWriteHook → sync.js onLocalWrite(key)
+  │     ├─ META_KEYS(동기화 메타 자체) 또는 비동기화 키 → 무시
+  │     ├─ _applyingRemote 중 → 무시 (재귀 방지)
+  │     └─ markDirty() → sync_dirty='1' → 로그인 시 2.5s 디바운스 pushSync()
+  │
+  └─ pushSync(): sync_snapshots upsert { user_id, exam_id, payload, updated_at, device_id }
+        payload = BACKUP_KEYS(− customer_items) + daily_completed_* 동적 키
+
+initSync() (앱 시작 시 1회)
+  ├─ isSupabaseConfigured() 아니면 조용히 return
+  ├─ setDataWriteHook 등록 (순환 import 방지용 콜백 패턴)
+  ├─ 세션 확인 → 로그인 상태면 pullSync()
+  └─ onAuthStateChange 구독: 로그인 전환 시 pullSync()
+       + online 이벤트 시 dirty면 pushSync() 재시도
+
+pullSync() (로그인 시 / "지금 동기화" 버튼)
+  ├─ sync_snapshots select (user_id + exam_id 행)
+  ├─ 원격 없음 → dirty면 최초 push
+  ├─ remoteTs ≤ localTs → 로컬 최신, dirty면 push
+  └─ 원격이 최신 → dirty면 showConfirm 충돌 확인 → applyPayload()
+        화이트리스트 키만 현재 시험 네임스페이스에 기록 → 토스트 후 reload
+```
+
+### 프라이버시 설계 — 고객 PII 동기화 제외
+
+`SYNC_EXCLUDE = { customer_items }` — 고객 카드·상담 이력은 **타인의 개인정보**이므로 페이로드·Supabase 테이블 양쪽에서 구조적으로 제외된다. 백업 파일(`BACKUP_KEYS`)과 전체 초기화(`RESET_KEYS`)에는 포함되어 로컬 관리는 정상 동작한다.
+
+### CSP 연동
+
+`vercel.json`의 CSP에 `connect-src 'self' https://*.supabase.co` — Supabase API 호출만 허용. UMD vendor 파일은 `'self'`라 별도 예외 불필요.
+
+---
+
+## 🎚️ UI 모드 (학습 ↔ 실무)
+
+합격 후 실무 중심 사용자를 위한 네비게이션 모드 전환입니다 ([`src/ui-mode.js`](../../src/ui-mode.js)).
+
+- **키**: `ui_mode` = `'study' | 'practice'` (GLOBAL_KEYS — 시험 무관 기기 설정)
+- **게이팅**: `body.ui-mode-practice` 클래스 + `.nav-study-only`(실무에서 숨김) / `.nav-practice-only`(학습에서 숨김) 클래스로 CSS 제어
+- **랜딩**: 실무 모드 초기화 시 `formula-view`로 랜딩 (`hasFeature('formula')` 게이트)
+- **학습 도구 접이식**: 실무 모드에서 숨겨진 학습 메뉴를 `toggleStudyTools`로 펼침 — `ui_study_tools_open` 키 영속 + `aria-expanded` 동기화
+- **진입점 이중화**: 사이드바 푸터 버튼 + 설정 패널 항목 (모바일은 사이드바가 숨겨지므로 설정 경로 필수)
+- **학습 전용 뷰 가드**: `STUDY_ONLY_VIEWS` — 실무 모드에서 학습 뷰 접근 시 formula-view로 리다이렉트
+
+---
+
+## 🧪 Formula OS 도메인 아키텍처
+
+> 설계안: [`FORMULA_OS_DESIGN.md`](FORMULA_OS_DESIGN.md) · 업무 플로우: [`FORMULA_OS_WORKFLOW_DESIGN.md`](FORMULA_OS_WORKFLOW_DESIGN.md) · 사용자 매뉴얼: `docs/user/formula_manual.md`
+
+학습 앱 안에 내장된 실무 작업실. 9개 조제관리 업무 영역을 6개 패널로 묶어 `formula-view` 하나의 뷰 안에서 서브내비 칩으로 전환한다.
+
+### 패널 구조 (허브 + 서브내비)
+
+| 서브패널 | 스토어 | 뷰 | 주요 기능 |
+|---------|--------|-----|----------|
+| 배합 계산기 | `formula-store.js` | `formula.js` | 총량×배합률→투입량, 고시 한도 4상태 검증, 안정성 경고, 접이식 고객/제조 정보 |
+| My 포뮬러 | `formula-store.js` | `formula.js` | 저장(5)·열기·복제·삭제, 규정 스냅샷, 전성분 표시 자동 생성 |
+| 고객 관리 | `customer-store.js` | `formula-customer.js` | 고객 카드 + 상담 이력(append-only), CSV 입출력, 포뮬러·배치 역참조 |
+| 조제 기록 | `batch-store.js` | `formula-batch.js` | 날짜-순번 채번(`YYYYMMDD-NN`), 처방 스냅샷, QC·위생 필드, 기록지 인쇄 |
+| 원료 장부 | `material-ledger.js` | `formula-material.js` | 입고·사용기한·재고, 기한 경고 배지, 계산기 원료명 자동 매칭 |
+| 법규 준수 | (체크 상태) | `formula-compliance.js` | 실무 체크리스트 + 관련 법령 MD `openExam` 링크 |
+
+- **서브내비 칩**: 모든 패널 상단에 동일한 `formulaSubNav` 칩 바 — 패널 간 상호 이동
+- **공유 컨텍스트**: 계산기의 고객/처방이 배치 폼과 안내문 생성에 재사용됨 (customerId 바인딩)
+- **생성기**: `usage-guide.js` — 제형 템플릿 + 원료 주의 규칙 자동 합성
+- **인쇄**: `formula-print.js` + `css/print.css` — `#formula-print-area`(화면 숨김)에 인쇄 전용 DOM 렌더 → `window.print()` → `afterprint` 정리
+- **CSV**: `csv-utils.js` — EUC-KR 폴백 디코딩(엑셀 한글 깨짐 방지) + BOM 직렬화
+
+### 스토어 공통 패턴 (`store-utils.js`)
+
+모든 스토어 모듈이 동일한 계약을 따른다:
+
+- `STORAGE_KEYS.<X>_ITEMS` 키에 JSON 배열로 영속 (`loadItems`/`saveItems`)
+- `newId()` ID 발급, `clamp()` 입력 클램프, 스키마 정제(`sanitize*`)
+- `*_LIMIT_FREE` 상수 + `canCreate()` 게이트 — 초과 시 안내 토스트
+- Free 한도: **포뮬러 5 · 고객 20 · 배치 50 · 원료 30**
+
+### 저장 스키마 개요
+
+| 키 | 내용 | 한도 |
+|----|------|------|
+| `formula_items` | 포뮬러 {id, name, phase별 원료[], customer, process[], stability, 전성분} | 5 |
+| `customer_items` | 고객 {id, name, 연락처, 피부, 알레르기, consults[](append-only)} | 20 — **동기화 제외** |
+| `batch_items` | 배치 {id(YYYYMMDD-NN), formulaId, snapshot, qc, hygiene, producedAt} | 50 |
+| `material_items` | 원료 {id, name, lot, receivedAt, useBy, stock, unit} | 30 |
+| `formula_compliance` | 법규 체크리스트 체크 상태 | — |
+| `formula_rules` | 사용자 맞춤 추천 규칙 (기본 규칙에 병합) | — |
+
+---
+
+## 🗝️ localStorage 키 체계
+
+모든 영속 키는 [`src/storage-keys.js`](../../src/storage-keys.js)의 `STORAGE_KEYS`에 중앙 선언된다. 접근은 반드시 `state.js`의 `safeGetItem`/`safeSetItem`(try/catch 래핑 + 시험 네임스페이스 자동 적용 + 쓰기 훅 호출)를 통한다.
+
+### 키 분류
+
+| 분류 | 판별 | 예시 |
+|------|------|------|
+| **스코프드 진도 키** | `scopedKey()`가 `<examId>:` 접두사 부여 | `cosmetic:fc_memorized`, `cosmetic:quiz_results`, `cosmetic:formula_items` |
+| **전역 키** | `GLOBAL_KEYS` Set — 접두사 없음 | `appTheme`, `ui_mode`, `readerFontScale`, `device_id`, `current_exam` |
+| **동적 키** | 접두사 패턴 (`isDailyCompletedKey`) | `daily_completed_2026-09-24` |
+| **동기화 메타** | `META_KEYS` — 쓰기 훅에서 제외 | `sync_dirty`, `sync_last_ts` |
+| **세션 키** | `sessionStorage` | `__inappGuideShown` |
+
+### 키 집합 (목적별 묶음)
+
+| 집합 | 용도 |
+|------|------|
+| `BACKUP_KEYS` | 백업/복원·동기화 페이로드의 정적 키 화이트리스트 |
+| `RESET_KEYS` | "진도 초기화" 시 제거할 키 (BACKUP_KEYS + 리더 위치 등) |
+| `SYNC_EXCLUDE` | 동기화에서 제외 — `customer_items`(타인 PII) |
+| `META_KEYS` | 쓰기 훅 재귀 방지 — 동기화 메타 키 자체 |
+| `GLOBAL_KEYS` | 시험 네임스페이스에서 제외할 앱 전역 키 |
+
+**규칙**: 새 영속 키를 추가할 때는 ① `STORAGE_KEYS`에 상수 선언 → ② 필요 시 `BACKUP_KEYS`/`RESET_KEYS`/`GLOBAL_KEYS` 등록 → ③ `data-click` 핸들러에서 `safeSetItem`으로만 쓰기 (동기화 dirty 추적이 자동 동작).
 
 ---
 
@@ -707,7 +921,7 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 | 4 | MP3 오디오 (302MB) | **네트워크 직행 (바이패스)** | 대용량 미디어는 캐시 제외 (저장공간 보호) |
 | 5 | `/src/` 하위 JS 모듈 | **Cache First** | ESM import 그래프는 한 모듈이라도 버전이 어긋나면 전체가 드랍됨. `Network First`를 쓰면 모바일 불안정 네트워크에서 일부는 신버전(네트워크), 일부는 구버전(캐시)이 섞여 import 그래프 붕괴. `Cache First` + `SHELL_ASSETS` 프리캐시로 동일 버전 파일만 일관 서빙 (v38부터 적용) |
 | 6 | CSS (`*.css`) | **Cache First** | 배포 전환 순간 "구버전 HTML(cacheFirst) + 신버전 CSS(networkFirst)" 혼합으로 화면 깨짐 방지. `/src/` JS와 동일 사유로 `cacheFirst` + `SHELL_ASSETS` 프리캐시로 세대 일관성 확보 (2026-08-26 수정) |
-| 7 | 그 외 JS (`*.js`) | **Network First** | 온라인이면 항상 최신 배포본 제공, 오프라인이면 캐시 폴리백. `CACHE_VERSION` 범프를 깜빡핬어도 모바일에 구버전이 남지 않도록 함 |
+| 7 | 그 외 JS (`*.js`) | **Network First** | 온라인이면 항상 최신 배포본 제공, 오프라인이면 캐시 폴리백. `CACHE_VERSION` 범프를 깜빡해도 모바일에 구버전이 남지 않도록 함 |
 | 8 | 그 외 App Shell (아이콘/이미지 등) | **Stale-While-Revalidate** | 빠른 표시 + 백그라운드 갱신 |
 
 ### 캐시 버전 관리
@@ -744,7 +958,7 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 
 - **1차 게이트 — `navigator.onLine` 억제 신뢰**: `true`이면 프로브 없이 온라인으로 간주.
   - 이 API는 "온라인인데 `false`"로 오탐하는 경우는 있어도 "오프라인인데 `true`"로 허위 보고하는 경우는 사실상 없으므로, **`true`는 신뢰(억제 방향), `false`는 불신(재확인)** 하는 비대칭 신뢰를 적용합니다.
-  - 이 한 줄이 모바일 콜드스타트/저속망에서 프로브가 일시 실패핮라도 가짜 배너가 뜨는 것을 원천 차단합니다. (v11)
+  - 이 한 줄이 모바일 콜드스타트/저속망에서 프로브가 일시 실패하더라도 가짜 배너가 뜨는 것을 원천 차단합니다. (v11)
 - **2차 게이트 — 실제 도달 프로브**: `onLine === false`일 때만 **same-origin** `./ping.txt?_probe={timestamp}` fetch 수행.
   - 과거 `www.gstatic.com/generate_204`(제3자, 지역 차단 시 오탐) → `manifest.webmanifest`를 거쳐 전용 `ping.txt`(내용 `1`)로 정착.
   - `cache: 'no-store'`는 일부 웹뷰/보안정책과 충돌해 fetch 자체가 실패하는 사례가 있어 제거하고, **쿼리스트링 타임스탬프로만 캐시를 우회**합니다.
@@ -1217,16 +1431,108 @@ PDF 파일명은 매핑 키로만 사용되며, 실제 서비스되는 것은 �
 
 ---
 
+## 🚀 배포 파이프라인
+
+배포는 **`npm run deploy` 하나로만** 수행한다 (`tools/deploy.js`). `vercel --prod` 직접 실행은 git을 거치지 않고 로컬 파일을 직접 업로드하므로 금지.
+
+### deploy.js 가드 순서
+
+```
+npm run deploy
+  │
+  ├─ 1) git fetch → 브랜치/트리/동기화 검사
+  │     ├─ main 브랜치가 아니면 차단
+  │     ├─ 커밋되지 않은 변경 있으면 차단 (untracked 포함)
+  │     ├─ origin/main에 없는 로컬 커밋 있으면 차단
+  │     └─ origin/main보다 뒤처져 있으면 차단
+  │
+  ├─ 2) 콘텐츠 품질 게이트 — audit_combo.js 실행, 오류 시 배포 차단
+  │
+  ├─ 3) sw.js CACHE_VERSION 스탬프 (stamp-sw-version.js)
+  │     └─ 값이 바뀌면 'chore(sw): CACHE_VERSION 스탬프' 자동 커밋 + push
+  │
+  └─ 4) vercel --prod --yes 실행
+        (팀 프로젝트는 .vercel/project.json의 orgId를 --scope로 명시)
+```
+
+**근거**: 미푸시 커밋/미커밋 변경이 프로덕션에 올라가는 사고 방지 + SW 캐시 버전 자동 스탬프(모바일 구버전 고착 방지) + 콤보 문항 무결성 게이트를 배포 경로에 강제.
+
+### 개발/검증 명령 요약
+
+| 명령 | 역할 |
+|------|------|
+| `npm test` | 단위 테스트 (node --test, 458개) |
+| `npm run test:dom` | DOM 테스트 (Vitest + jsdom, 264개) |
+| `npm run test:all` | unit + parser + imports + dom 일괄 |
+| `npm run build:data` | 시험별 콘텐츠→데이터 번들 (모든 시험 순회) |
+| `npm run check:content -- --build` | 콘텐츠 통합 검증 (교재 교체 등 대규모 변경 후) |
+| `npm run verify:assets` | SHELL/DATA_ASSETS 파일 존재 검증 |
+| `npm run deploy` | 배포 가드 + SW 스탬프 + vercel --prod |
+
+---
+
+## 🧩 신규 기능 구현 레시피
+
+> "누구라도 설계·구현할 수 있게" — 새 기능을 추가할 때 따라야 할 표준 절차와 코드 계약.
+
+### A. 새 뷰(화면) 추가
+
+1. `index.html`에 `<section id="xxx-view" class="view-section">` 추가
+2. 사이드바 `.nav-item` + 모바일 `.mobile-tab-item`에 `data-target="xxx-view"` 항목 추가
+3. `src/router.js`의 `getViewTitles()`에 `'xxx-view': { title, subtitle }` 추가 (또는 `manifest.uiText` 활용)
+4. `src/views/xxx.js` 뷰 컨트롤러 작성 → `app.js`의 `ctx.handlers`에 렌더 함수 등록
+5. `sw.js` `SHELL_ASSETS`에 새 JS 파일 추가
+6. DOM 테스트 추가 (`tests/dom/xxx.dom.test.js`)
+
+### B. 새 영속 데이터 추가
+
+1. `src/storage-keys.js`의 `STORAGE_KEYS`에 상수 선언
+2. 백업·초기화 대상이면 `BACKUP_KEYS`/`RESET_KEYS`에 등록
+3. 시험 무관 설정이면 `exam-context.js`의 `GLOBAL_KEYS`에 등록
+4. 동기화 제외 대상(PII 등)이면 `sync.js`의 `SYNC_EXCLUDE`에 등록
+5. 읽기/쓰기는 반드시 `safeGetItem`/`safeSetItem` 사용 (네임스페이스 + dirty 추적 자동)
+
+### C. 새 상호작용 추가 (CSP-safe)
+
+- 인라인 핸들러 금지 → `data-click="handlerName"` 또는 `data-args='[...]'`
+- 핸들러는 `app.js` 하단의 `window.X = X` 브리지로 노출
+- `data-input`은 input 이벤트용 (`el.value` 전달)
+- DOM 표시 제어는 `classList`의 `.is-hidden`/`is-flex`/`is-grid` 사용 — `el.style.display` 금지
+- `alert`/`confirm` 금지 → `showToast`/`showConfirm`/`showAlert`
+
+### D. 새 Formula OS 스토어 추가
+
+1. `src/store-utils.js`의 공통 헬퍼(`loadItems`/`saveItems`/`newId`/`clamp`) 재사용
+2. `*_LIMIT_FREE` 상수 + `canCreate()` 게이트로 Free 한도 적용
+3. 스키마 정제 함수(`sanitize*`)로 입력 정규화
+4. `formula.js`의 PANELS/서브내비에 패널 등록 + `index.html`에 패널 섹션 추가
+
+### E. 새 시험 추가
+
+§9 "새 시험 추가 절차" 참조 — `content/exams/<id>/` 배치 + `exams.json` 엔트리 + `check:content -- --build`. 앱 로직 변경 불필요.
+
+### 코딩 규칙 요약 (AGENTS.md 기준)
+
+- 2-space 들여쓰기, ES Modules (`import`/`export`)
+- `getElementById` 결과 null 체크, `localStorage`는 safeGetItem/safeSetItem
+- Promise 체인에 `.catch()` 필수
+- 배열 인덱스 접근 후 `if (!item) return;` bounds 체크
+- `window.X` 접근 시 존재 체크, `parseInt` 결과 `isNaN` 체크
+- 접근성: 터치 타겟 ≥44px, `aria-label`/`aria-expanded`/`aria-live` 유지
+- UI/UX 규칙: SPEC.md §4.8 (재사용 가이드) 준수
+
+---
+
 ## ⚖️ 주요 설계 결정 및 근거
 
 | 결정 | 선택 | 대안 | 근거 |
 |------|------|------|------|
-| **아키텍처** | Zero-Backend 정적 SPA | 서버 + DB | 개인 학습 도구, 운영비 0, Vercel 묵료 배포 |
+| **아키텍처** | Local-First 정적 SPA + 선택적 Supabase | 서버 + DB | 개인 학습 도구, 운영비 0, Vercel 무료 배포. Supabase는 로그인 사용자에게만 붙는 선택 레이어 — 미설정 시에도 완전 동작 |
 | **프레임워크** | Vanilla JS | React/Vue | 빌드 불필요, 장기 유지보수성, 번들 최소화 |
 | **상태 관리** | 단일 전역 객체 + localStorage | Redux/MobX | 규모 대비 복잡도 과다, 직렬화 단순성 |
 | **차트** | 직접 SVG 생성 | Chart.js 등 | 외부 의존성 제거, 가벼움, 커스터마이징 자유 |
 | **데이터 로딩** | 시험/성분: JS 상수 `<script>` · 교재/카드/퀴즈: 런타임 MD fetch+파싱 | 전량 번들 또는 전량 백엔드 | 시험/성분은 오프라인 단순화, 교재는 재빌드 없이 최신 반영 + 표현 중복 제거 |
-| **모듈 시스템** | 글로벌 스코프 + 점진 분리 | ES Modules 즉시 전환 | 리스크 최소화, `export` 추가만으로 전환 가능하게 준비 |
+| **모듈 시스템** | ES Modules (전환 완료) + 데이터 파일만 클래식 스크립트 | 글로벌 스코프 유지 | 점진 분리 전략으로 무중단 전환 완료; 데이터 번들은 `file://` 동기 로드를 위해 클래식 유지 |
 | **오디오** | 외부 CDN (캐시 제외) | 앱 번들 포함 | 302MB → Vercel 용량 제한 및 캐시 저장공간 보호 |
 
 ---
@@ -1242,15 +1548,17 @@ PDF 파일명은 매핑 키로만 사용되며, 실제 서비스되는 것은 �
    - `ui-utils.js` 공통 UI 유틸 분리로 순환 의존성 방지
 
 3. **DOM 테스트 환경 도입** ✅
-   - Vitest + jsdom으로 DOM 렌더링/이벤트 테스트 기반 구축 (711 tests: 458 unit + 253 DOM)
+   - Vitest + jsdom으로 DOM 렌더링/이벤트 테스트 기반 구축 (722 tests: 458 unit + 264 DOM)
    - GitHub Actions CI로 push 시 자동 테스트 실행
 
 4. **타입 안정성 도입** ✅
    - JSDoc `@typedef` 타입 정의 구축 (`src/types.js`, 217줄)
    - `jsconfig.json` checkJs로 편집기 타입 검사/자동완성 활성화
 
-5. **백엔드 연동 확장성 (필요 시)**
-   - 상태 영속성 계층(`state.js`의 `saveProgress`)을 추상화핛두어, 향후 클라우드 동기화 시 해당 지점만 API 호출로 교체 가능하도록 설계
+5. **백엔드 연동 확장성** ✅ (2026-09-23 — Supabase Phase 1~2 구현)
+   - `state.js`의 `safeSetItem`에 쓰기 훅(`_dataWriteHook`)을 두어 순환 import 없이 `sync.js`가 dirty 추적에 연결
+   - `sync_snapshots`(user_id + exam_id → payload/updated_at/device_id) upsert 스냅샷 방식으로 클라우드 동기화 구현 — 상세는 §10
+   - **남은 과제**: 서버 기반 Pro entitlement(플랜 검증·한도 해제), 시험별 데이터 테이블 분리 — SUPABASE_DESIGN.md §10 결정 사항 참조
 
 6. **성능 계측** ✅ (2026-09-03)
    - `src/web-vitals.js`: PerformanceObserver API로 LCP/CLS/INP 측정 (zero-dependency)
@@ -1365,109 +1673,104 @@ PDF 파일명은 매핑 키로만 사용되며, 실제 서비스되는 것은 �
 ## 📋 `content/` 내용 변경 시 수정 파일 및 절차 가이드
 
 > `content/` 폴더의 마크다운 원문, 폴더 구조, 또는 매니페스트가 변경될 때 수행해야 할 수정 작업과 빌드/배포 절차를 정리합니다.
+> 아래 `<root>` = `content/exams/<examId>/` (멀티시험 대칭 구조 — 어떤 시험이든 동일 절차).
 
 ### 변경 유형별 수정 파일 매트릭스
 
 | 변경 유형 | 수정 필요 파일 | 설명 |
 |-----------|---------------|------|
 | **교재 MD 내용 수정** (기존 파일) | (수정 불필요) | `manifest.json`의 `dir`/`file` 필드가 경로를 참조하므로, 파일명이 같으면 자동 반영 |
-| **교재 MD 파일 추가/삭제/이름 변경** | `content/exams/cosmetic/manifest.json` | `subjects[].chapters[].file` 필드 갱신 |
+| **교재 MD 파일 추가/삭제/이름 변경** | `<root>/manifest.json` | `subjects[].chapters[].file` 필드 갱신 |
 | | `sw.js` | `MD_ASSETS` 배열의 경로 갱신 + `CACHE_VERSION` 버전업 |
-| | `content/exams/cosmetic/utils/batch_convert.py` | `BATCH_TARGETS["교재"]` 경로 갱신 |
-| **문제은행 MD 변경** | `content/exams/cosmetic/manifest.json` | `exams` 섹션의 파일 경로 갱신 |
-| | `content/exams/cosmetic/utils/batch_convert.py` | `BATCH_TARGETS["문제은행"]` 경로 갱신 |
-| **참조자료 MD/HTML 변경** | `src/pdf-registry.js` | 참조자료 파일 목록·경로 매핑 (중앙 설정 모듈, HTML 변환본 경로 자동 생성) |
+| | `<root>/utils/batch_convert.py` | `BATCH_TARGETS["교재"]` 경로 갱신 |
+| **문제은행 MD 변경** | `<root>/manifest.json` | `exams` 섹션의 파일 경로 갱신 |
+| | `<root>/utils/batch_convert.py` | `BATCH_TARGETS["문제은행"]` 경로 갱신 |
+| **참조자료 MD/HTML 변경** | `<root>/references.json` + `src/pdf-registry.js` | 참조자료 파일 목록·경로 매핑 (`references.json` → `build-pdf-registry.js`가 `pdf-registry.js` 자동 생성) |
 | | `tools/build/plugins/ingredients.plugin.js` | `INGREDIENTS_DIR` 경로 (원료 하위 폴더 변경 시) |
-| **학습안내서 MD 변경** | (파일명 동일 시 수정 불필요) | `manual-viewer.js`, `build_doc_bundles.js`, `sw.js`가 `content/exams/cosmetic/학습안내서.md` 경로 참조 |
-| | `content/exams/cosmetic/utils/batch_convert.py` | 파일명 변경 시 `BATCH_TARGETS["학습안내서"]` 갱신 |
-| **보고서 MD 변경** (`content/report/`) | `content/exams/cosmetic/utils/batch_convert.py` | `BATCH_TARGETS["report"]` 경로 갱신 |
-| **새 과목 추가** | `content/exams/cosmetic/manifest.json` | `subjects[]`에 새 과목 항목 추가 (`key`, `name`, `dir`, `chapters`) |
+| **학습안내서 MD 변경** | (파일명 동일 시 수정 불필요) | `manual-viewer.js`, `build_doc_bundles.js`, `sw.js`가 `<root>/학습안내서.md` 경로 참조 |
+| | `<root>/utils/batch_convert.py` | 파일명 변경 시 `BATCH_TARGETS["학습안내서"]` 갱신 |
+| **새 과목 추가** | `<root>/manifest.json` | `subjects[]`에 새 과목 항목 추가 (`key`, `name`, `dir`, `chapters`) |
 | | `src/pdf-registry.js` | `SUBJECT_DIR_MAP`, `REF_DIRS`, `REFERENCE_FILES`에 새 과목 항목 추가 |
 | | `sw.js` | `MD_ASSETS`에 새 과목 MD 경로 추가 |
-| | `content/exams/cosmetic/utils/batch_convert.py` | `BATCH_TARGETS["교재"]`에 새 파일 추가 |
-| | `content/exams/cosmetic/audiobook/` | 오디오북 파이프라인 스크립트에 새 과목 추가 (필요 시) |
+| | `<root>/utils/batch_convert.py` | `BATCH_TARGETS["교재"]`에 새 파일 추가 |
+| | `<root>/audiobook/` | 오디오북 파이프라인 스크립트에 새 과목 추가 (필요 시) |
+| **새 시험 추가** | `content/exams.json` + `content/exams/<id>/` | §9 "새 시험 추가 절차" 참조 — 앱 로직 변경 불필요 |
 | **폴더 구조 개편** | 위 모든 파일 | 경로가 일괄 변경되므로 모든 참조 파일 검토 필요 |
 
 ### 빌드 절차 (content/ 변경 후)
 
-```bash
-# 1. 데이터 빌드 (registry, exam bundles, ingredients)
-npm run build:data
+```powershell
+# 통합 검증 (빌드 + 인용·귀속·레이아웃·드릴·파서·임포트·자산·테스트 일괄)
+npm.cmd run check:content -- --build
 
-# 2. 교재 MD 폴백 번들 재생성
-npm run build:study-md
-
-# 3. 문서 번들 재생성 (학습안내서, 사용자 매뉴얼)
-node tools/build_doc_bundles.js
-
-# 4. 파서 정합성 검증 (선택)
-node tools/check_parser_parity.js
-
-# 5. 테스트
-npm test
-
-# 6. Python 배치 변환 (독립 HTML 파일 필요 시)
-cd content/exams/cosmetic/utils
-python batch_convert.py
+# 개별 단계가 필요한 경우:
+npm.cmd run build:data             # 데이터 빌드 (모든 시험 순회 — registry, exams, ingredients, drills, 번들)
+node tools/build_doc_bundles.js    # 문서 번들 (학습안내서, 사용자/포뮬러 매뉴얼)
+npm.cmd test                       # 단위 테스트
 ```
 
 ### 배포 절차
 
-```bash
-# 1. SW 캐시 버전 갱신 (필수 — 모바일 PWA 반영을 위해)
-#    sw.js의 CACHE_VERSION을 갱신
-#    형식: v<번호>-<날짜>-<설명> (예: v44-20260831-content-update)
-
-# 2. Git 커밋 & 푸시
+```powershell
+# 1. Git 커밋 & 푸시
 git add -A
 git commit -m "content: <변경 내용 요약>"
 git push
 
-# 3. Vercel 배포
-cmd /c vercel --prod 2>&1
+# 2. 배포 (가드 + SW 스탬프 + vercel --prod 일괄)
+npm.cmd run deploy
 ```
 
-> **주의**: `CACHE_VERSION`을 갱신하지 않으면 모바일 PWA에서 구버전 캐시가 유지되어 변경사항이 반영되지 않습니다.
+> **주의**: `npm run deploy`가 clean-tree·origin 동기화 검사 → 콤보 품질 게이트 → `CACHE_VERSION` 자동 스탬프(변경 시 자동 커밋·푸시) → `vercel --prod`를 순서대로 수행한다. `vercel --prod` 직접 실행 금지 — 상세는 §20 "배포 파이프라인". `CACHE_VERSION`이 갱신되지 않으면 모바일 PWA에서 구버전 캐시가 유지되어 변경사항이 반영되지 않는다.
 
 ### 자동 생성 파일 (수정 금지)
 
 다음 파일들은 빌드 스크립트에 의해 자동 생성되므로 **직접 수정하지 마세요**:
 
+> `<droot>` = `data/exams/<examId>/` (시험별 데이터 루트)
+
 | 파일 | 생성 스크립트 |
 |------|-------------|
-| `data/exams/cosmetic/registry.js` | `tools/build/index.js` |
-| `data/exams/*.hash.js` | `tools/build/index.js` (exams.plugin.js) |
-| `data/exams/cosmetic/exams_md/*.js` | `tools/build_exam_bundles.js` |
-| `data/exams/cosmetic/study_md/*.js` | `tools/build_study_md_bundle.js` |
-| `data/docs_md/*.js` | `tools/build_doc_bundles.js` |
-| `data/exams/cosmetic/ingredients_data.*.js` | `tools/build/index.js` (ingredients.plugin.js) |
-| `data/exams/cosmetic/id_migration.js` | `tools/build/index.js` (id-factory.plugin.js) |
+| `data/exams.js` | `tools/build_exams_list.js` |
+| `<droot>/registry.js` | `tools/build/index.js` |
+| `<droot>/exams/*.hash.js` | `tools/build/index.js` (exams.plugin.js) |
+| `<droot>/exams_md/*.js` | `tools/build_exam_bundles.js` |
+| `<droot>/study_md/*.js` | `tools/build_study_md_bundle.js` |
+| `data/docs_md/*.js` + `<droot>/docs_md/*.js` | `tools/build_doc_bundles.js` |
+| `<droot>/ingredients_data.*.js` | `tools/build/index.js` (ingredients.plugin.js) |
+| `<droot>/id_migration.js` | `tools/build_id_migration.js` |
+| `<droot>/question_chapters.js` | `tools/build_question_chapters.js` |
+| `src/pdf-registry.js` | `tools/build/build-pdf-registry.js` (references.json → 자동 생성) |
+| `src/keyword-index.js` | `tools/build/build_keyword_index.js` |
 
 ### 주요 참조 파일 목록 (content/ 경로 의존)
 
 | 파일 | 참조 방식 | 비고 |
 |------|----------|------|
-| `content/exams/cosmetic/manifest.json` | SSOT — 모든 빌드의 원천 | `subjects[].dir`, `chapters[].file` |
+| `content/exams.json` | 시험 레지스트리 SSOT | `build_exams_list.js` → `data/exams.js` |
+| `<root>/manifest.json` | 시험 콘텐츠 SSOT — 모든 빌드의 원천 | `subjects[].dir`, `chapters[].file`, `uiText`, `resources` |
+| `<root>/references.json` | 참조자료 매핑 SSOT | `build-pdf-registry.js`의 입력 |
 | `sw.js` | `MD_ASSETS` 하드코딩 | 프리캐시 대상 MD 파일 경로 |
 | `src/manual-viewer.js` | `MD_SOURCES` 객체 | 학습안내서, 사용자매뉴얼 경로 |
-| `src/pdf-registry.js` | `SUBJECT_DIR_MAP`, `REF_DIRS`, `REFERENCE_FILES`, `MD_CONVERSION_TARGETS` | 참조자료 중앙 설정 (HTML/MD 변환본 경로 자동 생성, 대용량 3개는 `.md` 반환, 과목 변경 시 유일 수정 파일) |
-| `src/data-loader.js` | `manifest.subjects[].dir` 동적 참조 | 런타임 MD 로드 |
+| `src/pdf-registry.js` | `SUBJECT_DIR_MAP`, `REF_DIRS`, `REFERENCE_FILES`, `MD_CONVERSION_TARGETS` | 참조자료 중앙 설정 (자동 생성 파일 — `references.json` 수정 후 리빌드) |
+| `src/data-loader.js` | `manifest.subjects[].dir` 동적 참조 | 런타임 MD 로드 (`contentPath()` 경유) |
 | `src/textbook-parser.js` | `manifest.subjects[].dir` 동적 참조 | 런타임 MD 파싱 |
 | `tools/build/manifest-loader.js` | `manifest.json` 검증 | 빌드 시 파일 존재 확인 |
 | `tools/build/plugins/textbook.plugin.js` | `subject.dir` 동적 참조 | 빌드 시 MD 파싱 |
-| `tools/build/plugins/ingredients.plugin.js` | `INGREDIENTS_DIR` 하드코딩 | `content/exams/cosmetic/참조자료/원료/` |
+| `tools/build/plugins/ingredients.plugin.js` | `INGREDIENTS_DIR` 하드코딩 | `<root>/참조자료/원료/` |
 | `tools/build/plugins/exams.plugin.js` | `manifest.exams` 참조 | 문제은행 MD 처리 |
-| `tools/build_doc_bundles.js` | `DOC_FILES` 배열 | 학습안내서, 사용자매뉴얼 번들 |
+| `tools/build_doc_bundles.js` | `DOC_FILES` 배열 | 학습안내서, 사용자/포뮬러 매뉴얼 번들 |
 | `tools/build_study_md_bundle.js` | `manifest.subjects[].dir` 동적 참조 | 교재 MD 폴백 번들 |
 | `tools/check_parser_parity.js` | `manifest.subjects[].dir` 동적 참조 | 파서 정합성 검증 |
-| `content/exams/cosmetic/utils/batch_convert.py` | `BATCH_TARGETS` 딕셔너리 | 배치 HTML 변환 대상 |
-| `content/exams/cosmetic/utils/md_to_html.py` | `--in` 인자 (기본값 `학습안내서.md`) | 단일 HTML 변환 |
-| `content/exams/cosmetic/utils/convert_ref_md.py` | `MD_CONVERSION_TARGETS` Set (스크립트 내 하드코딩) | ref_md 대용량 HTML→MD 변환 및 body-only 추출 |
-| `content/exams/cosmetic/audiobook/generate_all_mp3.py` | 과목 키 참조 | 오디오북 생성 |
+| `tools/deploy.js` | `npm run deploy` | 배포 가드 (clean tree + origin 동기화 + 콤보 게이트 + SW 스탬프) |
+| `<root>/utils/batch_convert.py` | `BATCH_TARGETS` 딕셔너리 | 배치 HTML 변환 대상 |
+| `<root>/utils/md_to_html.py` | `--in` 인자 (기본값 `학습안내서.md`) | 단일 HTML 변환 |
+| `<root>/utils/convert_ref_md.py` | `MD_CONVERSION_TARGETS` Set (스크립트 내 하드코딩) | ref_md 대용량 HTML→MD 변환 및 body-only 추출 |
+| `<root>/audiobook/generate_all_mp3.py` | 과목 키 참조 | 오디오북 생성 |
 
 ---
 
-## � 교재 변경 시 소스 수정 필요성 검토
+## 📖 교재 변경 시 소스 수정 필요성 검토
 
 > **검토일**: 2026-09-02
 > **목적**: 교재 콘텐츠가 변경될 때 소스 코드 수정이 최소화되는지 검증
@@ -1573,7 +1876,7 @@ cmd /c vercel --prod 2>&1
 
 ---
 
-## �� 관련 문서
+## 📚 관련 문서
 
 - [`README.md`](../../README.md) — 프로젝트 소개 및 시작 가이드 (폴더 구조 포함)
 - [`DEPLOYMENT_GUIDE.md`](DEPLOYMENT_GUIDE.md) — Vercel 배포 및 오디오 호스팅 가이드
@@ -1581,6 +1884,10 @@ cmd /c vercel --prod 2>&1
 - [`MULTI_MACHINE_SETUP.md`](MULTI_MACHINE_SETUP.md) — 다중 머신 개발 환경 설정
 - [`CHANGES.md`](CHANGES.md) — 코드 리뷰 및 아키텍처 개편 수정 이력 (Changelog)
 - [`MD_TO_HTML_LOGIC.md`](MD_TO_HTML_LOGIC.md) — MD→HTML 변환·표시 로직 기술 문서
-- [`TESTING.md`](TESTING.md) — 단위 테스트 가이드 (711 tests: 458 unit + 253 DOM)
+- [`TESTING.md`](TESTING.md) — 테스트 가이드 (722 tests: 458 unit + 264 DOM)
 - [`DOM_TEST_DESIGN.md`](DOM_TEST_DESIGN.md) — jsdom UI 시나리오 테스트 설계 (helpers·모킹 전략·Playwright 확장 경로)
-- [`SUPABASE_DESIGN.md`](SUPABASE_DESIGN.md) — Supabase 계정·클라우드 동기화·Pro entitlement 설계안 (미구현, §10 결정 필요)
+- [`SPEC.md`](SPEC.md) — 요구사양 명세서 (기능 ID별 구현 상태, UI/UX 재사용 가이드 §4.8)
+- [`FORMULA_OS_DESIGN.md`](FORMULA_OS_DESIGN.md) — Formula OS 도메인 설계
+- [`FORMULA_OS_WORKFLOW_DESIGN.md`](FORMULA_OS_WORKFLOW_DESIGN.md) — 배치·고객·원료 장부 업무 플로우 설계
+- [`SUPABASE_DESIGN.md`](SUPABASE_DESIGN.md) — Supabase 계정·클라우드 동기화 설계안 (Phase 1~2 구현 완료 — §10)
+- [`Supabase_Custom_SMTP_MagicLink_OTP_설정가이드.md`](Supabase_Custom_SMTP_MagicLink_OTP_설정가이드.md) — SMTP·매직링크·OTP 설정 가이드
