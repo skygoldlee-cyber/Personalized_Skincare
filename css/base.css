@@ -535,17 +535,14 @@ html {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--scrollbar-thumb-hover);
 }
-/* 터치 환경(모바일)은 스크롤바를 드래그하지 않으므로 얇은 오버레이 스타일로 */
+/* 터치 환경(모바일)은 스크롤바를 드래그하지 않으므로 완전히 숨김 — 굵은 띠 방지 */
 @media (pointer: coarse) {
     html {
         scrollbar-width: none;
     }
     ::-webkit-scrollbar {
-        width: 4px;
-        height: 4px;
-    }
-    ::-webkit-scrollbar-track {
-        background: transparent;
+        width: 0;
+        height: 0;
     }
 }
 
