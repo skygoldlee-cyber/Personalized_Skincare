@@ -939,12 +939,22 @@ const DELEGATED_HANDLERS = {
     showIngredientsChangelog,
     // 학습/실무 UI 모드
     toggleUiMode, toggleStudyTools,
-    /** 앱 종료 (설치형 PWA) — window.close()가 막히는 환경(모바일·iOS 등)이면 완전 종료 방법 안내 */
+    /** 앱 종료 (설치형 PWA) — 확인 후 종료 시도. 모바일 OS가 자체 종료를 막으면 종료 안내 화면으로 전환 */
     quitApp() {
-        window.close();
-        setTimeout(() => {
-            showAlert('앱을 완전히 종료하려면 최근 앱 화면을 열어 이 앱을 위로 밀거나 \'모두 닫기\'를 누르세요. 데스크톱에서는 창 닫기(✕)로 종료됩니다.', '앱 종료');
-        }, 300);
+        showConfirm('앱을 종료할까요?\n모바일 OS는 앱의 자체 종료를 막는 경우가 있습니다 — 종료되지 않으면 최근 앱 목록에서 이 화면을 위로 밀어 닫아주세요.', '앱 종료').then((ok) => {
+            if (!ok) return;
+            // 데스크톱 설치 PWA는 여기서 창이 닫힘
+            window.close();
+            // Android PWA: 루트에서 뒤로가기는 앱을 홈으로 내리는 동작과 유사
+            try { window.history.back(); } catch (_) { /* 무시 */ }
+            // 모두 차단되면 종료 안내 화면으로 대체 — 사용자가 제스처로 마무리
+            setTimeout(() => {
+                const exitScreen = document.createElement('div');
+                exitScreen.className = 'app-exit-screen';
+                exitScreen.innerHTML = '<i class="fa-solid fa-power-off" aria-hidden="true"></i><p>앱을 종료했습니다.<br>완전히 닫으려면 최근 앱 목록에서 이 화면을 위로 밀어주세요.</p>';
+                document.body.appendChild(exitScreen);
+            }, 600);
+        });
     },
     // 계정/로그인 (Supabase Auth)
     openAuthModal, closeAuthModal, authSignIn, authSignUp, authEmailLogin, authMagicLink, authSignOut, authSetPassword, authSendOtp, authVerifyOtp, authForgotPassword,

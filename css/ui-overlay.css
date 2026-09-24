@@ -215,6 +215,30 @@
   text-align: center;
 }
 
+/* ── 앱 종료 안내 화면 — OS가 종료를 막는 환경에서 앱 전체를 대체 ── */
+.app-exit-screen {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-toast-top);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  background: var(--bg-app);
+  color: var(--color-text-main);
+  text-align: center;
+  padding: var(--space-6);
+}
+.app-exit-screen i {
+  font-size: 2.5rem;
+  color: var(--color-primary);
+}
+.app-exit-screen p {
+  font-size: var(--text-md);
+  line-height: var(--lh-body);
+}
+
 /* ── 차트 툴팁 (charts.js에서 동적 생성) ── */
 .chart-tooltip {
   position: fixed;
