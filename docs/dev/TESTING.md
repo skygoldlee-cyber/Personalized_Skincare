@@ -22,9 +22,9 @@
 
 | 구분 | 프레임워크 | 환경 | 파일 위치 | 테스트 수 |
 |------|-----------|------|-----------|-----------|
-| **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 458 |
-| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 264 |
-| **합계** | | | | **686** |
+| **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 481 |
+| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 294 |
+| **합계** | | | | **775** |
 
 ### 설계 원칙
 
@@ -33,6 +33,7 @@
 - **회귀 가드**: CSP 위반(`delegation-guard`), Mermaid 렌더링 파이프라인 등 배포 후에만 발견되는 버그를 사전 차단
 - **실제 콘텐츠 검증**: 교재 MD 파일의 Mermaid 블록 들여쓰기, 문법 등 실제 콘텐츠를 대상으로 검증
 - **교재 무관 공통 테스트**: 합성 데이터(synthetic data)를 사용하여 교재 콘텐츠가 바뀌어도 로직 자체를 검증 (`study-aids`, `pdf-registry`, `glossary-query`, `markdown-parser-general`, `reader-format-general`)
+- **커버리지 측정**: 두 러너가 갈라 있어(vitest=DOM, node:test=유닛) 단일 리포트로는 실수치가 안 나온다 — `coverage:all`이 c8+vitest 결과를 병합해 실질 커버리지를 산출. jsdom으로 검증 불가한 환경 의존 모듈(PWA 설치·Audio·PerformanceObserver·typedef-only)은 `vitest.config.mjs`의 `coverage.exclude`로 분모에서 제외
 
 ---
 
@@ -44,11 +45,16 @@ npm test
 # 또는
 npm run test:unit
 
-# DOM 테스트만 실행 (264개)
+# DOM 테스트만 실행 (294개)
 npm run test:dom
 
 # 전체 실행 (Unit + 파서 정합성 + DOM)
 npm run test:all
+
+# 커버리지 — DOM만 / 유닛만 / 병합(실질 수치)
+npm run coverage          # vitest(V8) → coverage/
+npm run coverage:unit     # c8 + node:test → coverage-unit/
+npm run coverage:all      # 둘 다 실행 후 coverage-merged/ 병합 리포트 생성
 
 # Watch 모드 (Unit, 파일 변경 시 자동 재실행)
 npm run test:watch
@@ -62,6 +68,8 @@ npm run test:watch
 | `test:unit` | `node --test tests/unit/*.test.js` | `test`와 동일 |
 | `test:dom` | `vitest run` | DOM 테스트 (jsdom) |
 | `coverage` | `vitest run --coverage` | DOM 테스트 + V8 커버리지 (src/ 대상, `coverage/` 출력) |
+| `coverage:unit` | `c8 ... node --test tests/unit/*.test.js` | 유닛 테스트 커버리지 (src/ 대상, `coverage-unit/` 출력) |
+| `coverage:all` | 두 커버리지 실행 + `tools/coverage-merge.js` | 유닛+DOM 병합 리포트 (`coverage-merged/`) — 실질 커버리지는 이 수치 |
 | `test:all` | `node --test tests/unit/*.test.js && node tools/check_parser_parity.js && vitest run` | 전체 |
 | `test:watch` | `node --test --watch tests/unit/*.test.js` | Watch 모드 |
 

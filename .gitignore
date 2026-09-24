@@ -59,6 +59,8 @@ combo_review_queue.md
 
 # ---------- � 테스트 커버리지 ----------
 coverage/
+coverage-unit/
+coverage-merged/
 
 # ---------- �📂 아카이브 ----------
 archive/

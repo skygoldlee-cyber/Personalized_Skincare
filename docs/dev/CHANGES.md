@@ -4,6 +4,24 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-24 테스트 커버리지 실측 개선 (병합 리포트)
+
+- **병합 리포트 도구**: 유닛(node:test)과 DOM(vitest)이 갈린 두 러너의
+  커버리지를 하나로 합산 — `c8`(유닛 측정) + `tools/coverage-merge.js`
+  (istanbul-lib-coverage 머지) + `npm run coverage:all` 일괄 스크립트.
+  `coverage-unit/`·`coverage-merged/` gitignore 등록.
+- **측정 제외**: jsdom으로 검증 불가한 환경 의존 모듈을
+  `vitest.config.mjs` `coverage.exclude`에 명시 — `types.js`(typedef
+  전용), `app-fallback`, `pwa-install(-capture/-manifest)`, `theme-init`,
+  `web-vitals`, `reader-audio`. 분모가 정직해짐.
+- **결과**: 병합 기준 **라인 77.3%** (기존 vitest 단독 표시 53.2% →
+  유닛 커버 합산 + 제외 정정의 합성). `src/` 최상위 80.7%.
+- **테스트 공백 보강** (+21): `study-trainer-drills`(12 — OX/복수정답형
+  전 플로우, 진술 판정·소거·키보드 단축키, 취약 리뷰),
+  `common-navigation`(4 — 뷰 전환·스크롤 복원), `common-glossary`(5 —
+  용어집 수집·렌더·스크롤). trainer-drills 15→91%, glossary-renderer
+  20→82%, navigation 24→48%.
+
 ## 2026-09-24 SW 프루닝 한글 경로 인코딩 함정 수정
 
 - **배경**: `sw.js` `pruneStaleDataBundles`가 캐시 요청의
