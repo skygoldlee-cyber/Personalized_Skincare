@@ -228,3 +228,55 @@ test('일반 문단: customSpacing 시 빈 줄에 div', () => {
     const html = parseMarkdown('A\n\nB', { customSpacing: true });
     assert.ok(html.includes('height: 0.5rem'), '빈 줄에 spacing div');
 });
+
+// ==================== joinWraps (ref_md PDF wrap 복원) ====================
+
+test('joinWraps: 문장 중간 절단 줄 병합 (무공백)', () => {
+    const html = parseMarkdown('화장품을 말\n한다.', { joinWraps: true });
+    assert.ok(html.includes('화장품을 말한다.'), '무공백 결합');
+    assert.equal((html.match(/<p>/g) || []).length, 1, '단락 1개');
+});
+
+test('joinWraps: 조사 종료 줄은 공백 결합', () => {
+    const html = parseMarkdown('유지 또는\n증진하기 위하여', { joinWraps: true });
+    assert.ok(html.includes('또는 증진하기'), '공백 결합');
+});
+
+test('joinWraps: 문장 종결 줄은 병합하지 않음', () => {
+    const html = parseMarkdown('목적으로 한다.\n제2조(정의) 이 법에서', { joinWraps: true });
+    assert.equal((html.match(/<p>/g) || []).length, 2, '단락 2개 유지');
+});
+
+test('joinWraps: 구조 마커(가./제N조/[) 시작 줄은 병합하지 않음', () => {
+    const html = parseMarkdown('화장품을 말\n가. 피부의 미백\n제3조(정의)\n[시행 2026. 1. 1.]', { joinWraps: true });
+    assert.ok(html.includes('화장품을 말'), '평문 유지');
+    assert.ok(html.includes('<p>가. 피부의 미백</p>'), '항목 분리');
+    assert.ok(html.includes('<p>제3조(정의)</p>'), '조항 분리');
+    assert.ok(html.includes('<p>[시행 2026. 1. 1.]</p>'), '시행일 분리');
+});
+
+test('joinWraps: 리스트 항목 연속줄은 <li>에 병합', () => {
+    const html = parseMarkdown('1. 화장품을 말\n한다.\n2. 다음 항목', { joinWraps: true });
+    assert.ok(html.includes('화장품을 말한다.'), 'li 내부 병합');
+    assert.ok(html.includes('<li>다음 항목</li>'), '다음 항목 분리');
+});
+
+test('joinWraps: 쉼표 종료 뒤 연도형 숫자는 목록이 아닌 연속줄', () => {
+    const html = parseMarkdown('개정 2019. 1. 15.,\n2020. 4. 7.>', { joinWraps: true });
+    assert.ok(!html.includes('<ol>'), '목록 아님');
+    assert.ok(html.includes('2019. 1. 15., 2020. 4. 7.'), '날짜 나열 병합');
+});
+
+test('joinWraps: 표/코드블록/빈줄은 병합 경계', () => {
+    const md = '이전 문장\n\n| a | b |\n|---|---|\n| 1 | 2 |\n```\ncode\n```\n새 문장';
+    const html = parseMarkdown(md, { joinWraps: true });
+    assert.ok(html.includes('<p>이전 문장</p>'), '표 앞 문단 분리');
+    assert.ok(html.includes('<table'), '표 유지');
+    assert.ok(html.includes('code'), '코드블록 유지');
+    assert.ok(html.includes('<p>새 문장</p>'), '표 뒤 문단 분리');
+});
+
+test('joinWraps: 옵션 미지정 시 줄 단위 문단 유지 (기본 동작 불변)', () => {
+    const html = parseMarkdown('화장품을 말\n한다.');
+    assert.equal((html.match(/<p>/g) || []).length, 2, '기본은 병합 없음');
+});

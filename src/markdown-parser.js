@@ -1,6 +1,83 @@
 // src/markdown-parser.js - 공통 마크다운 런타임 파서 (브라우저 ESM)
 import { escapeHTML } from './sanitize.js';
 
+/* ============================================================
+   joinWraps — PDF 고정폭 wrap 연속줄 복원 (ref_md 전용)
+
+   배경: tools/pdf2md.py는 `#L####` 인용 라인번호 보존을 위해
+   segment=False(시각적 줄 그대로)로 ref_md를 생성한다. 그 결과 법령
+   원문이 ~63자 고정폭에서 단어 중간("…화장품을 말\n한다.")까지 잘린다.
+   파서가 줄 단위로 <p>를 만들면 이 절단이 문단 경계로 보이므로,
+   joinWraps=true일 때 "이전 평문이 문장부호 없이 끝나고 다음 줄이
+   구조 마커로 시작하지 않는" 연속줄을 이전 <p>/<li>에 병합한다.
+
+   경계 공백은 PDF 추출 단계에서 소실되므로 구분자는 휴리스틱으로 추정:
+   - 다음 줄이 조사·어미 꼬리로 시작("…에|서", "…말|한다") → 무공백
+   - 이전 줄이 조사·어미 음절로 종료("…또는|증진", "…활동을|지원") → 공백
+   - 그 외(한글+한글 등) → 단어 중간 절단이 지배적이므로 무공백
+   ============================================================ */
+
+// 단위 종결 — 문장부호/종결어미로 끝나면 다음 줄은 새 단위
+// (escapeHTML 통과 후이므로 > " ' 는 엔티티 형태로 온다)
+const _JW_CLOSED = /(?:[.。:!?\)\]〉》」』】]|다|음|함|요|죠|까|네|세|오|됨|임)(?:["'」』\)\]\}〉》】\s]|&gt;|&quot;|&#39;|<\/[a-zA-Z]+>|&nbsp;)*$/;
+
+// 새 단위 시작 마커 — 법령 계층·항호·괄호·기호
+// (헤더/표/인용/리스트/구분선/코드는 블록 파서가 먼저 걸러낸다)
+const _JW_STRUCT = /^(?:제\s*\d+\s*(?:조|장|편|절|관|항|호|목)|\d+의\d+|[가-힣][.)]\s|\([가-힣\d]+\)|[①-⑳㉑-㉟]|[IVXivx]+[.)]\s|부칙|별[표지첨]|【|※|◆|[○●▷▶◇■□☞]|〈|「|『|\[|<|&lt;|·)/;
+
+// 이음 시작 — 조사·어미 꼬리로 시작하면 이전 토큰의 연속 (무공백)
+// 1군: 단어 초성으로 거의 안 쓰이는 음절 (을/를/은/는/습/니/…)
+// 2군: 하·되·있·없·같·않 계열 어미 ("한다/되어/있는/없는/같은/않는")
+// 3군: 고아 조사 — 조사+공백 ("의 발전에", "에 관한", "로 정한다")
+//      ※ 이/가는 지시어·단어 시작이 흔해 제외 ("이 액", "가열")
+const _JW_CONT = /^(?:[을를은는습니런던느았였했람려러둠]|[하되있없같않](?=[는여고기지서던었함이어으다])|[의에로지도만여고며요우으서터게](?=\s)|다(?=[.。,，、!?]|$))/;
+
+// 다음 줄이 지시어/단어 시작("이 액", "가 열"과 달리 독립 어절) → 공백 강제
+const _JW_LEADSPACE = /^[이가]\s/;
+
+// 이전 줄 끝이 조사/어미 음절 → 어절 경계로 보고 공백 결합
+const _JW_ENDSYL = /[은는을를이가의에로과와도만한된할있없같않힌고게요여]$/;
+
+// 끝 태그/공백을 걷어낸 마지막 문자 (엔티티 1개 복원)
+function _jwLastChar(t) {
+    const s = t.replace(/(?:<\/[a-zA-Z]+>|<br\s*\/?>|&nbsp;|\s)+$/g, '')
+        .replace(/&gt;$/, '>').replace(/&quot;$/, '"')
+        .replace(/&#39;$/, "'").replace(/&lt;$/, '<').replace(/&amp;$/, '&');
+    return s.charAt(s.length - 1);
+}
+
+// 결합 구분자 — 경계 공백 추정 (위 휴리스틱 주석 참조)
+function _jwSep(prev, cur) {
+    if (_JW_CONT.test(cur)) return '';
+    if (_JW_LEADSPACE.test(cur)) return ' ';
+    const p = _jwLastChar(prev);
+    if (p === '') return ' ';
+    if (_JW_ENDSYL.test(p)) return ' ';
+    if (/[,，、;；]/.test(p)) return ' ';
+    if (/[-–—\/·ㆍ([{〈「『]/.test(p)) return '';
+    const n = cur.charAt(0);
+    if (/[A-Za-z]/.test(p) || /[A-Za-z]/.test(n)) return ' ';
+    if (/\d/.test(n) && /[가-힣]/.test(p)) return ' ';
+    return '';
+}
+
+// output 마지막 요소가 <p>…</p> 또는 …</li></ol|ul>이면 연속줄을 병합한다.
+// 병합 시 첫 줄의 data-md-line이 유지되어 L#### 인용은 단락 시작으로 도착한다.
+function _jwMerge(output, line, sep) {
+    const last = output[output.length - 1];
+    if (!last) return false;
+    if (last.endsWith('</p>')) {
+        output[output.length - 1] = last.slice(0, -4) + sep + line + '</p>';
+        return true;
+    }
+    const m = last.match(/<\/li>(<\/[ou]l>)$/);
+    if (m) {
+        output[output.length - 1] = last.slice(0, -m[0].length) + sep + line + m[0];
+        return true;
+    }
+    return false;
+}
+
 /**
  * 마크다운 텍스트를 HTML로 변환하는 공통 함수.
  * @param {string} mdText - 변환할 마크다운 원문
@@ -12,6 +89,7 @@ import { escapeHTML } from './sanitize.js';
  * @param {boolean} [options.allowItalics=true] - 이탤릭체(*) 지원 여부
  * @param {boolean} [options.allowInlineCode=true] - 인라인 코드(`) 지원 여부
  * @param {boolean} [options.addLineNumbers=false] - 원문 라인 번호 주석 추가 여부
+ * @param {boolean} [options.joinWraps=false] - PDF 고정폭 wrap의 문장 중간 절단 줄을 병합 여부 (ref_md 전용)
  * @returns {string} 변환된 HTML 문자열
  */
 export function parseMarkdown(mdText, options = {}) {
@@ -22,7 +100,8 @@ export function parseMarkdown(mdText, options = {}) {
         customSpacing = false,
         allowItalics = true,
         allowInlineCode = true,
-        addLineNumbers = false
+        addLineNumbers = false,
+        joinWraps = false
     } = options;
 
     let html = String(mdText);
@@ -234,9 +313,19 @@ export function parseMarkdown(mdText, options = {}) {
         return html.replace(/^(<\w+)/, `$1 data-md-line="${lineNo}"`);
     }
 
+    // 병합 판정용 직전 평문/리스트 항목 텍스트 (joinWraps 모드에서만 사용)
+    let _jwPrev = null;
+
     lines.forEach(line => {
         _lineNo++;
         const trimmed = line.trim();
+
+        // joinWraps: 직전 평문이 미종결이고 연속부호(, ㆍ ( 등)로 끝날 때
+        // 연도형 숫자 시작("2023. 6. 22.>" — 개정일 나열)은 목록이 아닌 연속줄로 본다
+        const _jwForce = joinWraps && _jwPrev != null
+            && /^\d{3,}[.)]/.test(trimmed)
+            && !_JW_CLOSED.test(_jwPrev)
+            && /[,，、ㆍ·(〈「『(\-–—→\/]\s*$/.test(_jwPrev);
 
         // 6-1. 코드블록 시작/끝 감지
         if (trimmed.startsWith('```')) {
@@ -248,11 +337,13 @@ export function parseMarkdown(mdText, options = {}) {
                 inCodeBlock = true;
                 codeLang = trimmed.slice(3).trim().toLowerCase();
             }
+            _jwPrev = null;
             return;
         }
         if (inCodeBlock) {
             if (codeLines.length === 0) _codeStartLine = _lineNo;
             codeLines.push(line);
+            _jwPrev = null;
             return;
         }
 
@@ -261,6 +352,7 @@ export function parseMarkdown(mdText, options = {}) {
             flushQuote(); flushList();
             tableRows.push(line);
             _lastTableLine = _lineNo;
+            _jwPrev = null;
             return;
         } else {
             flushTable();
@@ -276,6 +368,7 @@ export function parseMarkdown(mdText, options = {}) {
             else qText = qText.slice(1);
             qText = qText.trim();
             if (qText) quoteLines.push(qText);
+            _jwPrev = null;
             return;
         } else {
             flushQuote();
@@ -287,6 +380,7 @@ export function parseMarkdown(mdText, options = {}) {
             if (listMatch) {
                 const indentLevel = Math.floor(listMatch[1].length / 2);
                 output.push(`<div class="md-list-item" style="padding-left: ${0.5 + indentLevel * 1.25}rem;"><span class="md-bullet">•</span> <span>${listMatch[2]}</span></div>`);
+                _jwPrev = null;
                 return;
             }
         } else {
@@ -295,10 +389,12 @@ export function parseMarkdown(mdText, options = {}) {
             if (ulMatch) {
                 if (listType !== 'ul') { flushList(); listType = 'ul'; _listStartLine = _lineNo; }
                 listItems.push(ulMatch[1]);
+                _jwPrev = ulMatch[1];
                 return;
-            } else if (olMatch) {
+            } else if (olMatch && !_jwForce) {
                 if (listType !== 'ol') { flushList(); listType = 'ol'; _listStartLine = _lineNo; }
                 listItems.push(olMatch[1]);
+                _jwPrev = olMatch[1];
                 return;
             } else {
                 flushList();
@@ -309,30 +405,34 @@ export function parseMarkdown(mdText, options = {}) {
         if (useReaderStyles) {
             if (trimmed.startsWith('##### ')) {
                 output.push(_wrapWithLine(`<h5 class="md-h5">${line.replace(/^#####\s+/, '')}</h5>`, _lineNo));
+                _jwPrev = null;
                 return;
             }
             if (trimmed.startsWith('#### ')) {
                 output.push(_wrapWithLine(`<h4 class="md-h4">${line.replace(/^####\s+/, '')}</h4>`, _lineNo));
+                _jwPrev = null;
                 return;
             }
             if (trimmed.startsWith('### ')) {
                 output.push(_wrapWithLine(`<h3 class="md-h3">${line.replace(/^###\s+/, '')}</h3>`, _lineNo));
+                _jwPrev = null;
                 return;
             }
         } else {
-            if (trimmed.startsWith('### ')) { output.push(_wrapWithLine(`<h3>${trimmed.slice(4)}</h3>`, _lineNo)); return; }
-            if (trimmed.startsWith('## ')) { output.push(_wrapWithLine(`<h2>${trimmed.slice(3)}</h2>`, _lineNo)); return; }
-            if (trimmed.startsWith('# ')) { output.push(_wrapWithLine(`<h1>${trimmed.slice(2)}</h1>`, _lineNo)); return; }
+            if (trimmed.startsWith('### ')) { output.push(_wrapWithLine(`<h3>${trimmed.slice(4)}</h3>`, _lineNo)); _jwPrev = null; return; }
+            if (trimmed.startsWith('## ')) { output.push(_wrapWithLine(`<h2>${trimmed.slice(3)}</h2>`, _lineNo)); _jwPrev = null; return; }
+            if (trimmed.startsWith('# ')) { output.push(_wrapWithLine(`<h1>${trimmed.slice(2)}</h1>`, _lineNo)); _jwPrev = null; return; }
         }
 
         // 6-6. 구분선 파싱
         if (useReaderStyles) {
             if (trimmed === '---') {
                 output.push('<hr class="reader-hr">');
+                _jwPrev = null;
                 return;
             }
         } else {
-            if (/^-{3,}$/.test(trimmed) || /^\*{3,}$/.test(trimmed)) { output.push('<hr>'); return; }
+            if (/^-{3,}$/.test(trimmed) || /^\*{3,}$/.test(trimmed)) { output.push('<hr>'); _jwPrev = null; return; }
         }
 
         // 6-7. 빈 줄 파싱
@@ -340,15 +440,27 @@ export function parseMarkdown(mdText, options = {}) {
             if (customSpacing) {
                 output.push('<div style="height: 0.5rem;"></div>');
             }
+            _jwPrev = null;
             return;
         }
 
         // 6-8. 일반 문단 파싱
+        // joinWraps: 이전 평문/항목이 미종결 + 현재 줄이 구조 마커가 아니면 병합
+        if (joinWraps && _jwPrev != null
+            && !_JW_CLOSED.test(_jwPrev)
+            && (_jwForce || !_JW_STRUCT.test(trimmed))) {
+            if (_jwMerge(output, line, _jwSep(_jwPrev, trimmed))) {
+                _jwPrev = line;
+                return;
+            }
+        }
         if (useReaderStyles) {
             output.push(_wrapWithLine(`<p class="md-para">${line}</p>`, _lineNo));
         } else {
             output.push(_wrapWithLine(`<p>${line}</p>`, _lineNo));
         }
+        // 이미지 단독 줄은 연속 대상이 아님 (다음 텍스트가 사진 캡션으로 붙는 것 방지)
+        _jwPrev = /^<img/.test(trimmed) ? null : line;
     });
 
     // 최종 블록 플러시

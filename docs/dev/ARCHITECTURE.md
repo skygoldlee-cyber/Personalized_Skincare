@@ -1172,6 +1172,7 @@ app-fallback.js 폴링 시작 (400ms 간격, 15s 데드라인)
 | 구성 요소 | 위치 | 역할 |
 |-----------|------|------|
 | **`addLineNumbers` 옵션** | [`src/markdown-parser.js`](../../src/markdown-parser.js) | `parseMarkdown` 호출 시 `addLineNumbers: true`로 각 HTML 요소에 `data-md-line="N"` 속성 부여 (N = MD 원본 라인 번호) |
+| **`joinWraps` 옵션** | [`src/markdown-parser.js`](../../src/markdown-parser.js) | ref_md 전용. PDF 고정폭 wrap으로 문장 중간에 잘린 연속줄을 이전 `<p>`/`<li>`에 병합. `exam-viewer`/`html-viewer`가 경로에 `ref_md` 포함 시 자동 적용. 라인번호는 첫 줄 것을 유지하므로 `data-md-line` 인용은 병합 단락 시작으로 도착 |
 | **인용 링크 클릭 인터셉트** | [`src/exam-viewer.js`](../../src/exam-viewer.js) `_renderBody` | 뷰어 내 `.md` 링크 클릭 시 `e.preventDefault()` 후 `openExam(mdPath, lineNum)` 호출 |
 | **`_scrollToLine`** | [`src/exam-viewer.js`](../../src/exam-viewer.js) | `data-md-line` 속성 기반으로 정확한 라인 매칭 → `scrollIntoView({ block: 'center' })` + 펄스 하이라이트 |
 | **네비게이션 스택** | [`src/exam-viewer.js`](../../src/exam-viewer.js) `_navStack` | 인용 링크 이동 시 현재 문서 경로와 스크롤 위치를 push, "뒤로" 버튼으로 pop |

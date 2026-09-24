@@ -304,6 +304,12 @@ python tools/convert_ref_pdfs_v2.py --verify
 - `--verify`는 현행 문서의 비잡행 라인(워터마크·쪽번호 제외)이 신규 문서에
   존재하는지 **멀티셋(등장 횟수) 기준**으로 검사한다. 줄 병합·분할은
   정규화 부분문자열 매칭으로 흡수한다.
+- **ref_md는 의도적으로 시각적 줄 그대로 변환한다**(`segment=False`,
+  `tools/convert_ref_pdfs_v2.py` 주석). `#L####` 인용이 라인 번호에
+  의존하므로 고정폭 wrap의 문장 중간 절단("…말\n한다.")이 그대로 남는다.
+  표시 단에서는 `parseMarkdown`의 `joinWraps` 옵션이 연속줄을 병합한다
+  (`exam-viewer`/`html-viewer`가 ref_md 경로에서 자동 적용 — 소스 라인
+  번호는 유지되며 인용은 병합 단락 시작으로 도착).
 - 누락 0이면 `ref_md_v2/{doc}/{doc}.md`와 `images/`를 `ref_md/과목N/`의
   동명 디렉터리에 복사해 승격한다(`index.html` 보존). 문서 과목은
   `tools/build/ref-statements.js`의 `DOC_SUBJECT_RULES`로 확인.

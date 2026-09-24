@@ -212,7 +212,11 @@ async function openHtmlViewer(htmlPath, searchKeyword, anchorId, lineNum) {
             const rawText = await resp.text();
 
             if (isMarkdown) {
-                innerHTML = parseMarkdown(rawText, { allowInlineCode: false });
+                // ref_md는 문장 중간 절단이 있는 PDF 추출 산출물 — 연속줄 병합 적용
+                innerHTML = parseMarkdown(rawText, {
+                    allowInlineCode: false,
+                    joinWraps: htmlPath.indexOf('ref_md') !== -1
+                });
             } else {
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(rawText, 'text/html');

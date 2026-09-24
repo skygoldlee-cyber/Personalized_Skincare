@@ -69,8 +69,11 @@ export const ExamViewer = (() => {
     /* =========================================================
        마크다운 → HTML 변환 (기존 로직 그대로 — 정상 동작 확인됨)
        ========================================================= */
-    function _mdToHtml(mdText) {
-        return parseMarkdown(mdText, { allowMermaid: false, addLineNumbers: true });
+    function _mdToHtml(mdText, mdPath) {
+        // ref_md는 #L#### 인용 라인번호 보존을 위해 시각적 줄 그대로 변환된 산출물이라
+        // 문장 중간 절단이 많다 — joinWraps로 연속줄을 병합한다 (라인번호는 유지됨)
+        const joinWraps = typeof mdPath === 'string' && mdPath.indexOf('ref_md') !== -1;
+        return parseMarkdown(mdText, { allowMermaid: false, addLineNumbers: true, joinWraps: joinWraps });
     }
 
     /* =========================================================
@@ -478,7 +481,7 @@ body.exam-open{overflow:hidden;}
 
         try {
             const mdText = await _loadMd(mdPath);
-            const bodyHtml = _mdToHtml(mdText);
+            const bodyHtml = _mdToHtml(mdText, mdPath);
             _setCached(mdPath, bodyHtml, mdText);
             _renderBody(title, bodyHtml, mdPath);
             _updateBackButton();
