@@ -1,7 +1,7 @@
 # 📋 요구사양 명세서 (Software Requirements Specification)
 
 > **프로젝트**: Cosmetic Pass Master — 맞춤형화장품 조제관리사 스마트 학습 플랫폼
-> **버전**: 1.6 (2026-09-24 기준 — §4.8 UI/UX 설계 요구사양 추가)
+> **버전**: 1.7 (2026-09-24 기준 — §4.8 UI/UX 설계 요구사양, §3.19~3.21 계정·동기화/캘린더/UI모드, Formula OS 확장, 멀티시험·PII 분리 반영)
 > **문서 성격**: 구현 완료된 기능을 역공학하여 체계적으로 정리한 요구사양 명세서
 
 ---
@@ -33,7 +33,7 @@
 
 | 원칙 | 내용 |
 |------|------|
-| **Zero-Backend** | 서버, DB, 인증 없이 순수 정적 프론트엔드. Vercel 무료 호스팅 |
+| **Local-First + Optional Cloud** | 기본은 로컬(localStorage) 전용으로 즉시 사용 가능. 선택적 Supabase 계정 레이어로 로그인·클라우드 스냅샷 동기화 제공 — 비로그인 시 모든 기능 정상 동작 (§3.19) |
 | **Vanilla First** | React/Vue 등 프레임워크 미사용. 순수 HTML/CSS/JS (ESM) |
 | **Offline-Capable PWA** | Service Worker로 App Shell + 학습 데이터 캐시. 설치 가능 |
 | **Mobile-First** | 모바일 하단 탭 바 ↔ 데스크톱 사이드바 적응형 네비게이션 |
@@ -300,6 +300,48 @@
 | FO-12 | 제형 안정성 체크 — 상 비율(유화제·점증제)·원료 상호작용·투입 단계(열 민감)·pH 적정대 규칙 평가, 계산기 실시간 경고 패널 + 카드 배지 + 인쇄 반영 (`formula-stability.js`) | ✅ |
 | FO-13 | 안정성 실험 확인 기록 — 방법·결과·메모 저장, `recordedAt` 저장 시각 자동 부여(내용 변경 시만 갱신), 카드 배지(안정성 확인/이상)·패널·인쇄·JSON 반영 | ✅ |
 | FO-14 | 전성분 표시 자동 생성 — 안정성 '양호' 배합만 저장 시 생성, 화장품법 규칙(1% 초과 내림차순 → 1% 이하 → 색소 최하단), 카드·인쇄·JSON 반영 | ✅ |
+| FO-15 | **허브 6개 메뉴 + 서브내비 칩** — My 포뮬러·배합 계산기·고객 관리·조제 기록·원료 장부·법규 준수, 모든 서브패널 상단에 동일 칩 바(`formulaSubNav`)로 상호 이동 | ✅ |
+| FO-16 | **조제 기록(배치)** — 날짜-순번 자동 채번(`YYYYMMDD-NN`), 처방 바인딩, QC·위생 필드, 저장 시점 처방 스냅샷(`checkSnapshot`) 보존 (`batch-store.js`) | ✅ |
+| FO-17 | **고객 관리** — 고객 카드(연락처·피부·알레르기·사용 제품·목적) + 상담 이력 append-only, CSV 가져오기(중복 이름 병합)/보내기, 포뮬러·배치 역참조 (`customer-store.js`, `formula-customer.js`) | ✅ |
+| FO-18 | **원료 장부** — 입고일·사용기한·재고 관리, 기한 경고 배지, 계산기 원료명 자동 매칭(`findMaterialsByName`) (`material-ledger.js`, `formula-material.js`) | ✅ |
+| FO-19 | **법규 준수 체크리스트** — 영업·자격/표시/기록 등 실무 체크 항목 + 관련 법령 문서 `openExam` 링크 (`formula-compliance.js`) | ✅ |
+| FO-20 | **사용 안내문 생성기** — 제형별 안내 템플릿 + 원료별 주의 규칙 자동 합성 (`usage-guide.js`) | ✅ |
+| FO-21 | **인쇄 빌더** — 조제 기록지·용기 라벨·사용 안내문 인쇄 전용 레이아웃, `afterprint` 정리 (`formula-print.js`, `print.css`) | ✅ |
+| FO-22 | **CSV 유틸** — EUC-KR 폴백 디코딩(엑셀 한글 깨짐 방지), BOM 직렬화 (`csv-utils.js`) | ✅ |
+| FO-23 | **Free 저장 한도** — 포뮬러 5개·고객 20명·배치 50건·원료 30종, `*_LIMIT_FREE` 상수 + `canCreate()` 게이트, 초과 시 안내 | ✅ |
+
+### 3.19 계정·클라우드 동기화 (Supabase Auth, 선택적)
+
+| ID | 요구사양 | 구현 상태 |
+|----|---------|-----------|
+| AU-01 | **선택적 계정** — 비로그인 상태에서 모든 기능 정상, localStorage가 1차 저장소로 유지 | ✅ |
+| AU-02 | 이메일+비밀번호 로그인/회원가입, 로그인 메일(매직링크+OTP 코드 동봉) 통합 로그인 (`auth-view.js`) | ✅ |
+| AU-03 | 비밀번호 찾기 — 로그인 메일로 로그인 후 계정 화면에서 새 비밀번호 설정 | ✅ |
+| AU-04 | 메일 재발송 쿨다운 (`passmula_auth_mail_cooldown_until`) | ✅ |
+| AU-05 | **스냅샷 동기화** — `sync_snapshots` 테이블 upsert(시험별 페이로드), 로그인 시 pull → 최신성 비교(`last_ts`) → 적용/충돌 확인 (`sync.js`) | ✅ |
+| AU-06 | 쓰기 훅 → dirty 표시 → 디바운스 push; 원격 적용 중 쓰기는 dirty로 세지 않음(`_applyingRemote`) | ✅ |
+| AU-07 | **고객 데이터 동기화 제외** — `SYNC_EXCLUDE`가 `customer_items`를 페이로드에서 제외 (타인 PII 로컬 전용 설계, §5.1 DA-08) | ✅ |
+| AU-08 | 미설정 환경(Supabase 미구성)에서 설정 메뉴에 안내 문구로 대체 표시 | ✅ |
+
+### 3.20 학습 캘린더·복습·드릴
+
+| ID | 요구사양 | 구현 상태 |
+|----|---------|-----------|
+| SC-01 | 월간 학습 캘린더 — 학습일 마킹, 오늘 목표 달성률 링(`--p` 진행률), 주간 목표일수·월간 학습일 카드 (`study-calendar.js`, `study-tracker.js`) | ✅ |
+| SC-02 | 목표 설정 모달 — 일일 카드/퀴즈 목표 + 주간 학습 일수, localStorage 영속·재렌더 | ✅ |
+| SC-03 | 학습 활동 자동 기록 (`recordStudyActivity` — 카드 외움·퀴즈 응답 등) | ✅ |
+| RV-01 | 오답/중요 복습 뷰 — 헷갈림 카드·틀린 문제 통합 목록 (`review-view`) | ✅ |
+| ND-01 | 숫자 암기 드릴 — `number-drills/` JSON 기반 수치·기한·횟수 훈련 (훈련소 수치 훈련) | ✅ |
+
+### 3.21 UI 모드 전환 (학습 ↔ 실무)
+
+| ID | 요구사양 | 구현 상태 |
+|----|---------|-----------|
+| UM-01 | 학습/실무 모드 전환 — `ui_mode` 전역 키, `body.ui-mode-practice` 클래스 게이팅 (`ui-mode.js`) | ✅ |
+| UM-02 | 항목 표시 제어 — `nav-study-only`(실무 모드에서 숨김) / `nav-practice-only`(학습 모드에서 숨김) 클래스 | ✅ |
+| UM-03 | 학습 도구 접이식 — 실무 모드에서 숨겨진 학습 메뉴를 `toggleStudyTools`로 펼침, `aria-expanded` + 영속 | ✅ |
+| UM-04 | 실무 모드에서 학습 전용 뷰 접근 시 formula-view로 리다이렉트 | ✅ |
+| UM-05 | 설정 메뉴에도 모드 전환 항목 — 사이드바 숨겨진 모바일에서 접근 보장 | ✅ |
 
 ---
 
@@ -484,6 +526,10 @@
 | DA-03 | 교재/카드/퀴즈: 런타임 MD fetch + 파싱 (재빌드 불필요) | ✅ |
 | DA-04 | `file://` 폴백: 과목별 분할 JS 번들 (`data/exams/cosmetic/study_md/`) | ✅ |
 | DA-05 | 사용자 진행 상황: `localStorage` 영속화 (계정/로그인 불필요) | ✅ |
+| DA-06 | **멀티시험 대칭 구조**: `content/exams.json` 레지스트리 → 시험별 `content/exams/<id>/`·`data/exams/<id>/` 동일 내부 구조, `exam-context.js`의 `contentPath()`/`dataPath()`/`selectExam()`(전환 = reload) | ✅ |
+| DA-07 | **스코프드 진도 키**: `safeGetItem`/`safeSetItem`이 `<examId>:` 네임스페이스 자동 접두(`scopedKey`) — 시험 간 진도 격리, `GLOBAL_KEYS`(테마 등)만 비네임스페이스. 백업 파일은 비접두사 논리 키로 시험 간 호환 | ✅ |
+| DA-08 | **기능 플래그 게이팅**: exams.json `features` + `hasFeature()` + `data-feature` 속성 — 시험별 도메인 특화 기능(성분사전·오디오북 등) 자동 숨김 | ✅ |
+| DA-09 | **고객 PII 로컬 전용**: `customer_items`는 동기화(`SYNC_EXCLUDE`)·Supabase 테이블 모두에서 제외 — 백업/초기화에는 포함. 조제관리사가 타인 개인정보를 서버에 올리지 않는 설계 | ✅ |
 
 ### 5.2 안정적 ID 체계
 
@@ -519,6 +565,8 @@
 | CS-06 | 용어집 큐레이션: `content/exams/cosmetic/교재/glossary/subject{1-4}.json` | ✅ |
 | CS-07 | 오디오북: `content/exams/cosmetic/audiobook/` (Python TTS 파이프라인) | ✅ |
 | CS-08 | 파일명 ASCII 슬러그화 (CP949↔UTF-8 불일치 원천 제거) | ✅ |
+| CS-09 | 참조자료 귀속은 폴더가 진실 — `ref_md/과목N/{문서}/{문서}.md`, `references.json` 매핑 + `pdf-registry.js`의 `getRefTables()`가 시험별 해석 | ✅ |
+| CS-10 | 문서 이미지는 `ref_md/**/images/` 상대 참조 — 뷰어가 md 디렉터리 기준 절대 URL로 재작성(`html-viewer.js`·`exam-viewer.js`) | ✅ |
 
 ### 5.5 교재 콘텐츠 학습 보조 요소
 
@@ -567,15 +615,18 @@
 
 ### 6.3 콘텐츠 변경 시 수정 파일
 
+> `<root>` = `content/exams/<examId>/` (멀티시험 대칭 구조, DA-06)
+
 | 변경 유형 | 수정 필요 파일 |
 |-----------|---------------|
 | 교재 MD 내용 수정 (기존 파일) | (수정 불필요) |
-| 교재 MD 파일 추가/삭제/이름 변경 | `content/exams/cosmetic/manifest.json`, `sw.js`, `content/exams/cosmetic/utils/batch_convert.py` |
-| 참조자료 변경 | `src/pdf-registry.js` (유일 수정 파일) |
-| 새 과목 추가 | `content/exams/cosmetic/manifest.json`, `src/pdf-registry.js`, `sw.js`, `content/exams/cosmetic/utils/batch_convert.py` |
+| 교재 MD 파일 추가/삭제/이름 변경 | `<root>/manifest.json`, `sw.js`, `<root>/utils/batch_convert.py` |
+| 참조자료 변경 | `<root>/references.json` + `src/pdf-registry.js` (`getRefTables()`) |
+| 새 과목 추가 | `<root>/manifest.json`, `src/pdf-registry.js`, `sw.js`, `<root>/utils/batch_convert.py` |
 | 과목명 표시 | `manifest.json` `shortName` 필드 (소스 수정 불필요) |
-| 시험 추가/변경 | `content/exams/cosmetic/manifest.json` `exams` 섹션 (소스 수정 불필요) |
-| 추천 링크 변경 | `content/exams/cosmetic/manifest.json` `resources` 섹션 (소스 수정 불필요) |
+| 시험 문항/일정 변경 | `<root>/manifest.json` `exams` 섹션 (소스 수정 불필요) |
+| 추천 링크 변경 | `<root>/manifest.json` `resources` 섹션 (소스 수정 불필요) |
+| **새 시험 추가** | `content/exams/<id>/`에 manifest + references + 콘텐츠 배치 → `content/exams.json` 엔트리 추가 → `npm.cmd run check:content -- --build` (앱 로직 변경 불필요) |
 
 ---
 
@@ -616,7 +667,17 @@
 | `textbook-reader.js` | 교재 리더 + 오디오 + Media Session |
 | `textbook-search.js` | 교재 본문 검색 |
 | `dictionary.js` | 성분 사전 검색 |
-| `formula.js` | Formula OS — 배합 계산기, 추천, My 포뮬러, 인쇄·JSON 공유 |
+| `formula.js` | Formula OS — 배합 계산기, 추천, My 포뮬러, 서브내비 칩, 인쇄·JSON 공유 |
+| `formula-batch.js` | 조제 기록(배치) 목록·폼·상세 패널 |
+| `formula-customer.js` | 고객 관리 패널 (카드·상담 이력·역참조) |
+| `formula-material.js` | 원료 장부 패널 (기한 배지·경고) |
+| `formula-compliance.js` | 법규 준수 체크리스트 + 법령 MD 링크 |
+| `formula-print.js` | 인쇄 빌더 (조제 기록지·라벨·안내문) |
+| `study-calendar.js` | 학습 캘린더·목표 뷰 |
+| `exam-select.js` | 시험 선택/전환 뷰 |
+| `offline-detection.js` | 오프라인 감지 (app.js에서 분리) |
+| `manual-viewer.js` | 학습안내서·매뉴얼 뷰어 |
+| `exam-viewer.js` | 문제집/참조자료 MD 뷰어 |
 | `backup.js` | 데이터 백업/복원 |
 | `navigation.js` | 뷰 전환 유틸 |
 
@@ -628,6 +689,24 @@
 | `src/formula-rules.js` | 추천 규칙 — 베이스 템플릿·고민/피부 매핑, 안전 필터, 맞춤 규칙 병합·직렬화 |
 | `src/formula-check.js` | 고시 한도 검증 엔진 — 원료 인덱스 구축, 배합 검증(4상태+요약) |
 | `src/formula-stability.js` | 제형 안정성 체크 — 상 비율·상호작용·투입 단계·pH 규칙 기반 경고 (warn/info) |
+| `src/batch-store.js` | 조제 기록 채번·QC·위생·처방 스냅샷 (한도 50건) |
+| `src/customer-store.js` | 고객 카드·상담 이력 append-only (한도 20명, 동기화 제외) |
+| `src/material-ledger.js` | 원료 입고·사용기한·재고, 기한 경고 (한도 30종) |
+| `src/usage-guide.js` | 사용 안내문 생성기 (제형 템플릿+원료 주의 규칙) |
+| `src/store-utils.js` | 스토어 공통 헬퍼 (loadItems/newId/clamp…) |
+| `src/csv-utils.js` | CSV 파서·EUC-KR 폴백 디코딩·BOM 직렬화 |
+
+### 계정·동기화·시험 컨텍스트
+
+| 모듈 | 책임 |
+|------|------|
+| `src/auth-view.js` | 계정/로그인 모달 (이메일+PW·회원가입·로그인 메일 OTP) |
+| `src/sync.js` | 클라우드 스냅샷 동기화 (sync_snapshots push/pull, dirty 훅·디바운스·충돌 확인, 고객 키 제외) |
+| `src/supabase-client.js` | Supabase lazy init — vendor UMD 동적 로드 |
+| `src/exam-context.js` | 활성 시험 해석/전환, `scopedKey` 네임스페이스, `hasFeature` |
+| `src/ui-mode.js` | 학습/실무 UI 모드 전환 (`ui_mode` 키, 학습 도구 접이식) |
+| `src/storage-keys.js` | localStorage 키 중앙 관리 |
+| `src/paths.js` | 파일 경로 상수 (시험 루트 인지형) |
 
 ### 자가 복구
 
@@ -647,7 +726,7 @@
 
 | 항목 | 내용 |
 |------|------|
-| 단위 테스트 | 396개 (`tests/unit/`, Node.js) |
-| DOM 테스트 | Vitest + jsdom (`tests/dom/`) |
+| 단위 테스트 | 458개 (`tests/unit/`, Node.js) |
+| DOM 테스트 | 264개 (`tests/dom/`, Vitest + jsdom) |
 | 회귀 가드 | `delegation-guard.test.js` (인라인 `on*=` 잔존 검출) |
 | CI | GitHub Actions (`npm test` + `check_parser_parity` + `verify:assets`) |
