@@ -95,6 +95,10 @@
                 <button type="button" id="ui-mode-toggle" class="ui-mode-toggle" data-click="toggleUiMode" aria-pressed="false" title="학습/실무 모드 전환 — 합격 후 실무 중심 사용자는 실무 모드를 추천합니다">
                     <i class="fa-solid fa-repeat" aria-hidden="true"></i> <span id="ui-mode-label" class="ui-mode-label">학습 모드</span>
                 </button>
+                <!-- 앱 종료: 설치형 PWA(standalone)에서만 표시 -->
+                <button type="button" id="app-quit-btn" class="ui-mode-toggle is-hidden" data-click="quitApp" title="앱 종료">
+                    <i class="fa-solid fa-power-off" aria-hidden="true"></i> <span>앱 종료</span>
+                </button>
                 <div class="sidebar-footer-meta">
                     <p>© Passmula</p>
                     <span id="sidebar-version">v1.0.0</span>

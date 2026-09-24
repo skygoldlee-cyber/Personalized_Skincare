@@ -516,6 +516,13 @@ function initApp() {
     step('initUiMode', initUiMode);
     step('setupEventListeners', () => setupEventListeners(enhanceDataClickAccessibility));
     step('setupPWAInstall', setupPWAInstall);
+    // 앱 종료 버튼은 설치형 PWA(standalone)에서만 노출 — 브라우저 탭에서는 무의미
+    step('setupAppQuit', () => {
+        const quitBtn = document.getElementById('app-quit-btn');
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches
+            || window.navigator.standalone === true;
+        if (quitBtn && isStandalone) quitBtn.classList.remove('is-hidden');
+    });
     // 계정 세션 복원/구독 — 비동기, 내부에서 오류를 삼켜 앱 초기화를 막지 않음
     step('initAuthView', () => { initAuthView(); });
     // 클라우드 동기화 — 쓰기 훅 등록 + 로그인 상태면 시작 pull (비동기·실패 무시)
@@ -932,6 +939,13 @@ const DELEGATED_HANDLERS = {
     showIngredientsChangelog,
     // 학습/실무 UI 모드
     toggleUiMode, toggleStudyTools,
+    /** 앱 종료 (설치형 PWA) — window.close()가 막히는 환경(iOS 등)이면 안내 표시 */
+    quitApp() {
+        window.close();
+        setTimeout(() => {
+            showToast('이 환경에서는 앱 종료가 지원되지 않습니다 — 최근 앱 목록에서 종료하세요');
+        }, 300);
+    },
     // 계정/로그인 (Supabase Auth)
     openAuthModal, closeAuthModal, authSignIn, authSignUp, authEmailLogin, authMagicLink, authSignOut, authSetPassword, authSendOtp, authVerifyOtp, authForgotPassword,
     syncNow,
