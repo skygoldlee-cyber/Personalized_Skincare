@@ -85,6 +85,8 @@ src/                    # ES Modules
   study-aids.js         # 기출 필터, 숫자 암기표
   study-tracker.js      # 학습 캘린더/목표 추적 헬퍼 (recordStudyActivity, getStudyGoals)
   statement-tracker.js  # 진술 원자(sid) 단위 오판 통계·졸업 추적 (SM-2 연동)
+  recommendations.js    # 합격 전략 추천 엔진 + 예상 점수 추정 + 실제 결과 보고 (순수 로직)
+  command-palette.js    # 통합 검색 팔레트 (Ctrl+K) — 뷰/교재/카드/퀴즈/성분/문제집 검색·실행
   questions.js          # 문항 스키마 (single/combo/short/ox), deriveComboAnswer, validateQuestion
   exam-viewer.js        # 문제집/참조자료 MD 뷰어
   manual-viewer.js      # 학습안내서/매뉴얼 MD 뷰어
