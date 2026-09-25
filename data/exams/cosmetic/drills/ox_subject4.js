@@ -1,5 +1,5 @@
 // 자동 생성된 O/X 드릴 데이터입니다. 수정하지 마십시오. (tools/build_ox_drills.js)
-// 원본: data/exams/subject4.dce4fb33.js — mode: fact(명제 판정) 17문 / answer(정답 판정) 255문
+// 원본: data/exams/cosmetic/exams/subject4.dce4fb33.js — mode: fact(명제 판정) 17문 / answer(정답 판정) 255문
 var OX_DRILLS_subject4 = [
  {
   "id": "ox-04-0001",

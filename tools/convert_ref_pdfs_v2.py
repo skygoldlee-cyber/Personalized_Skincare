@@ -23,9 +23,9 @@ import pdf2md
 
 sys.stdout.reconfigure(encoding='utf-8')
 
-# 프로젝트 고정 경로
-BASE = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-REF_BASE = os.path.join(BASE, 'content', '참조자료')
+# 프로젝트 고정 경로 — pdf2md의 contentRoot 해석을 공유한다
+# (EXAM_CONTENT_ROOT/EXAM_ID env로 대상 시험 지정 가능)
+REF_BASE = pdf2md.DEFAULT_PDF_ROOT
 OUT_DIR = os.path.join(REF_BASE, 'ref_md_v2')
 PROD_DIR = os.path.join(REF_BASE, 'ref_md')
 

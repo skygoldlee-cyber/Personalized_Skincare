@@ -1,5 +1,5 @@
 // 자동 생성된 복수정답형 드릴 데이터입니다. 수정하지 마십시오. (tools/build_combo_drills.js)
-// 원본: data/exams/cosmetic/exams/subject3.c1175502.js — mode: fact(명제 조합) 23문 / answer(정답 조합) 226문
+// 원본: data/exams/cosmetic/exams/subject3.19f7b12f.js — mode: fact(명제 조합) 23문 / answer(정답 조합) 226문
 var COMBO_DRILLS_subject3 = [
  {
   "id": "safety_combo_86b500",
@@ -8764,28 +8764,28 @@ var COMBO_DRILLS_subject3 = [
    {
     "id": "ㄱ",
     "sid": "safety_st_5a7451",
-    "conceptId": "L336",
+    "conceptId": "L318",
     "text": "포름알데하이드 전처리 및 분석조건 개정",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_f10a3f",
-    "conceptId": "L336",
+    "conceptId": "L318",
     "text": "유리알칼리 전처리 및 분석조건 개정",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_034101",
-    "conceptId": "L336",
+    "conceptId": "L318",
     "text": "디옥산 전처리 및 분석조건 개정",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_b4247f",
-    "conceptId": "L336",
+    "conceptId": "L318",
     "text": "시험방법의 개정은 없었다",
     "truth": false
    }
@@ -8834,7 +8834,7 @@ var COMBO_DRILLS_subject3 = [
    "수치"
   ],
   "derivedFrom": "subject3_q95",
-  "explain": "📖 교재 근거 (L336):\n7. 디옥산",
+  "explain": "📖 교재 근거 (L318):\n7. 디옥산",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "2"
  },

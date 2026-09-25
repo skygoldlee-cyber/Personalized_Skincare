@@ -148,8 +148,8 @@ function isValidQuiz(type, question, answer) {
     if (/참고\s*-/.test(answer)) return false;
     // 질문 정제: 앞쪽 •/· 제거
     const cleanQ = question.replace(/^[•·]\s*/, '').trim();
-    // 질문이 너무 짧음 (맥락 부족)
-    if (cleanQ.length < 15) return false;
+    // 질문이 너무 짧음 (맥락 부족) — term형은 카드 단계의 desc>10과 동일 하한
+    if (cleanQ.length < (type === 'term' ? 11 : 15)) return false;
     // 질문에 [ 빈칸 ] 만 있는 경우 (빈 질문)
     if (/^\[\s*빈칸\s*\]\.?$/i.test(cleanQ)) return false;
     return true;
@@ -265,7 +265,9 @@ function parseMarkdownFile(content, subjectId, filename, chapterKey) {
                 }
 
                 const numMatches = [];
-                const numRegex = /\b\d+(?:\.\d+)?(?:%|세 이하|세 이상|개월|일|년|배|종|가지|개|시간|g|ml|kg|℃|도|분|초|주|ppm|㎛|회\/hr|개\/hr|개\/㎥)\b/g;
+                // 빌드 플러그인과 동일 규칙 유지 필수 (check:parser 등가성):
+                // 끝 \b 는 JS \w 에 한글/%·℃ 가 없어 단위 뒤 공백·괄호에서 미매칭되는 사장 코드였음.
+                const numRegex = /\b\d+(?:\.\d+)?\s*(?:%|세 이하|세 이상|개월|일|년|배|종|가지|개|시간|g|ml|kg|℃|도|분|초|주|ppm|㎛|회\/hr|개\/hr|개\/㎥)(?![가-힣0-9A-Za-z])/g;
                 while ((match = numRegex.exec(rawDesc)) !== null) {
                     numMatches.push(match);
                 }
@@ -372,7 +374,14 @@ function parseMarkdownFile(content, subjectId, filename, chapterKey) {
                 inTable = false;
             }
 
-            if (/🔖기출|📌중요|🎯\s*기출|🎯\s*중요/.test(line)) {
+            // 헤더(###)·볼드 라벨·내용 없는 번호/불릿 항목은 퀴즈 생성 대상이 아님
+            // (빌드 플러그인과 동일 규칙 — check:parser 등가성)
+            const markerStripped = line.replace(/🔖기출|🎯\s*기출|📌중요|🎯\s*중요|`/g, '').trim();
+            const isLabelLine = /^#{1,6}\s/.test(markerStripped)
+                || /^>?\s*\*\*[^*]+\*\*\s*[:：]?\s*$/.test(markerStripped)
+                || (/^>?\s*(?:[-*]\s+|[①-⑳]\s*)/.test(markerStripped) && !/[0-9:：,，•·*]/.test(markerStripped));
+
+            if (!isLabelLine && /🔖기출|📌중요|🎯\s*기출|🎯\s*중요/.test(line)) {
                 const has기출Line = /🔖기출|🎯\s*기출/.test(line);
                 let quizzesForLine = 0;
                 const cleanedLine = cleanText(line);
@@ -429,7 +438,7 @@ function parseMarkdownFile(content, subjectId, filename, chapterKey) {
             } else {
                 const numMatches = [];
                 let match;
-                const numRegex = /\b\d+(?:\.\d+)?(?:%|세 이하|세 이상|개월|일|년|배|종|가지|개|시간|g|ml|kg|℃|도|분|초|주|ppm|㎛|회\/hr|개\/hr|개\/㎥)\b/g;
+                const numRegex = /\b\d+(?:\.\d+)?\s*(?:%|세 이하|세 이상|개월|일|년|배|종|가지|개|시간|g|ml|kg|℃|도|분|초|주|ppm|㎛|회\/hr|개\/hr|개\/㎥)(?![가-힣0-9A-Za-z])/g;
                 while ((match = numRegex.exec(cleanedLine)) !== null) {
                     numMatches.push(match);
                 }
@@ -633,6 +642,22 @@ export function buildSubjectData(subjectMeta, mdByFile, opts = {}) {
         }
     });
     data.quizzes = uniqueQuizzes;
+
+    // term형 모호성 제거 (빌드 플러그인과 동일 — 같은 질문에 정답이 둘 이상이면
+    // 타이핑 채점이 불가. 사실 자체는 카드로 계속 노출)
+    const termAnswers = new Map();
+    uniqueQuizzes.forEach(q => {
+        if (q.type !== 'term') return;
+        if (!termAnswers.has(q.question)) termAnswers.set(q.question, new Set());
+        termAnswers.get(q.question).add(q.answer);
+    });
+    const ambiguous = new Set();
+    termAnswers.forEach((answers, question) => {
+        if (answers.size > 1) ambiguous.add(question);
+    });
+    if (ambiguous.size > 0) {
+        data.quizzes = uniqueQuizzes.filter(q => !(q.type === 'term' && ambiguous.has(q.question)));
+    }
 
     return data;
 }

@@ -23,6 +23,24 @@ function checkStatsAnomaly(statsFile, currentStats, logger) {
           logger.warn(`[WARN] Subject "${key}" quizzes decreased significantly! Prev: ${prev.quizzes}, Curr: ${curr.quizzes} (>=20% loss)`);
         }
       }
+      // 파일 단위 diff — 과목 합계 20% 미만의 소규모 무소음 드롭 탐지
+      const prevFiles = (prev && prev.files) || {};
+      const currFiles = curr.files || {};
+      for (const [f, p] of Object.entries(prevFiles)) {
+        const c = currFiles[f];
+        if (!c) {
+          logger.warn(`[WARN] Subject "${key}": 교재 파일이 빌드에서 사라짐: ${f} (이전 카드 ${p.cards})`);
+        } else if (c.cards === 0 && p.cards > 0) {
+          logger.warn(`[WARN] Subject "${key}": "${f}" 카드 ${p.cards} → 0 — 파서 계약/섹션 스킵 확인 필요`);
+        } else if (c.cards < p.cards * 0.8) {
+          logger.warn(`[WARN] Subject "${key}": "${f}" 카드 감소 ${p.cards} → ${c.cards} (>=20% loss)`);
+        }
+      }
+      for (const [f, c] of Object.entries(currFiles)) {
+        if (!(f in prevFiles) && c.cards === 0) {
+          logger.warn(`[WARN] Subject "${key}": "${f}" 카드 0건 (신규) — 파서 계약 확인 필요`);
+        }
+      }
     });
 
     // Compare exam question counts
@@ -60,10 +78,16 @@ function printMarkerWarnings(warnings, logger) {
   warnings.forEach(w => {
     w.files.forEach(f => {
       logger.warn(`[WARN] ${f.file}: 🔖기출 마커가 있으나 퀴즈 미생성 — ${f.count}건`);
-      f.samples.forEach(s => {
-        const snippet = s.length > 40 ? s.substring(0, 40) + '…' : s;
-        logger.warn(`  - "${snippet}"`);
+      const samples = f.samples || [];
+      samples.slice(0, 10).forEach(s => {
+        const text = typeof s === 'object' ? s.text : s;
+        const line = typeof s === 'object' && s.line ? `L${s.line} ` : '';
+        const snippet = text.length > 40 ? text.substring(0, 40) + '…' : text;
+        logger.warn(`  - ${line}"${snippet}"`);
       });
+      if (samples.length > 10) {
+        logger.warn(`  … 외 ${samples.length - 10}건`);
+      }
     });
   });
 }

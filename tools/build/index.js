@@ -257,7 +257,8 @@ function main() {
 
       currentStats.subjects[subj.key] = {
         cards: data.cards.length,
-        quizzes: data.quizzes.length
+        quizzes: data.quizzes.length,
+        files: data._fileStats || {}
       };
 
       console.log(`- Success: Cards: ${data.cards.length}, Quizzes: ${data.quizzes.length}`);

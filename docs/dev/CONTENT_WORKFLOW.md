@@ -508,7 +508,7 @@ flowchart LR
 | `{dataRoot}/id_migration.js` + `{dataRoot}/card_terms_snapshot.json` | `tools/build_id_migration.js` | 이전 스냅샷 ↔ 현재 파싱 비교 |
 | `sw.js` (DATA_ASSETS, MD_ASSETS) | `tools/build/index.js` | `{contentRoot}/manifest.json` |
 
-> ※ `{dataRoot}/drills/`는 `{dataRoot}/exams/`의 2차 파생물입니다 — 문제은행 변경 시 `build:data` 후 `npm run build:drills`로 재생성해야 최신 문항이 반영됩니다.
+> ※ `{dataRoot}/drills/`는 `{dataRoot}/exams/`의 2차 파생물입니다 — 문제은행 변경 시 `build:data` 후 `npm run build:drills`로 재생성해야 최신 문항이 반영됩니다. 재생성 누락은 `npm run check:drillfresh`(check:content에 포함)가 감지합니다.
 
 ### 6.2 PowerShell 환경
 

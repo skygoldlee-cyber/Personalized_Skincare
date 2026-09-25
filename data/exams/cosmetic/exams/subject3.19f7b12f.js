@@ -1426,7 +1426,7 @@ var EXAM_DATA_subject3 = {
         "시험방법의 개정은 없었다"
       ],
       "answer": "①",
-      "explanation": "📖 교재 근거 (L336):\n7. 디옥산"
+      "explanation": "📖 교재 근거 (L318):\n7. 디옥산"
     },
     {
       "id": "subject3_q96",

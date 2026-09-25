@@ -41,7 +41,37 @@ sys.stdout.reconfigure(encoding='utf-8')
 
 # ── 경로 기본값 (모두 CLI로 오버라이드 가능) ──────────────────────────────
 BASE = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-DEFAULT_PDF_ROOT = os.path.join(BASE, 'content', '참조자료')
+
+
+def _default_content_root():
+    """대상 시험의 contentRoot 해석 — Node 도구(tools/build/exam-targets.js)와
+    같은 env 계약: EXAM_CONTENT_ROOT(절대/프로젝트 상대 경로) > EXAM_ID
+    > content/exams.json의 default 시험 > 'content'"""
+    root = os.environ.get('EXAM_CONTENT_ROOT')
+    if root:
+        return root if os.path.isabs(root) else os.path.join(BASE, root)
+    try:
+        with open(os.path.join(BASE, 'content', 'exams.json'),
+                  encoding='utf-8') as f:
+            exams = json.load(f).get('exams', [])
+        eid = os.environ.get('EXAM_ID')
+        target = None
+        if eid:
+            target = next((e for e in exams if e.get('id') == eid), None)
+            if target is None:
+                print(f'경고: EXAM_ID={eid} 미등록 — 기본 시험 사용',
+                      file=sys.stderr)
+        if target is None:
+            target = next((e for e in exams if e.get('default')),
+                          exams[0] if exams else None)
+        if target:
+            return os.path.join(BASE, target.get('contentRoot', 'content'))
+    except Exception:
+        pass
+    return os.path.join(BASE, 'content')
+
+
+DEFAULT_PDF_ROOT = os.path.join(_default_content_root(), '참조자료')
 # 입력 스캔에서 제외할 하위 디렉토리 (변환 산출물 폴더)
 EXCLUDE_DIRS = {'ref_md', 'ref_md_v2', 'out', 'md'}
 

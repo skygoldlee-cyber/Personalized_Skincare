@@ -2016,7 +2016,7 @@ var EXAM_DATA_subject2 = {
         "세틸알코올"
       ],
       "answer": "②",
-      "explanation": "📖 법령 근거 (L438):\n| 벤젠 | 71-43-2 |  |"
+      "explanation": "📖 법령 근거 (L430):\n| 벤젠 | 71-43-2 |  |"
     },
     {
       "id": "subject2_q136",

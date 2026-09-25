@@ -1,5 +1,5 @@
 // 자동 생성된 O/X 드릴 데이터입니다. 수정하지 마십시오. (tools/build_ox_drills.js)
-// 원본: data/exams/subject3.c1175502.js — mode: fact(명제 판정) 22문 / answer(정답 판정) 226문
+// 원본: data/exams/cosmetic/exams/subject3.19f7b12f.js — mode: fact(명제 판정) 22문 / answer(정답 판정) 226문
 var OX_DRILLS_subject3 = [
  {
   "id": "ox-03-0001",
@@ -8805,7 +8805,7 @@ var OX_DRILLS_subject3 = [
   "mode": "answer",
   "sid": "safety_st_5a7451",
   "derivedFrom": "subject3_q95#2",
-  "explain": "📖 교재 근거 (L336):\n7. 디옥산",
+  "explain": "📖 교재 근거 (L318):\n7. 디옥산",
   "tags": [
    "정답판정",
    "수치"
@@ -8824,7 +8824,7 @@ var OX_DRILLS_subject3 = [
   "mode": "answer",
   "sid": "safety_st_f10a3f",
   "derivedFrom": "subject3_q95#3",
-  "explain": "📖 교재 근거 (L336):\n7. 디옥산",
+  "explain": "📖 교재 근거 (L318):\n7. 디옥산",
   "tags": [
    "정답판정",
    "수치"
@@ -8843,7 +8843,7 @@ var OX_DRILLS_subject3 = [
   "mode": "answer",
   "sid": "safety_st_034101",
   "derivedFrom": "subject3_q95#4",
-  "explain": "📖 교재 근거 (L336):\n7. 디옥산",
+  "explain": "📖 교재 근거 (L318):\n7. 디옥산",
   "tags": [
    "정답판정",
    "수치"
@@ -8862,7 +8862,7 @@ var OX_DRILLS_subject3 = [
   "mode": "answer",
   "sid": "safety_st_b4247f",
   "derivedFrom": "subject3_q95#5",
-  "explain": "📖 교재 근거 (L336):\n7. 디옥산",
+  "explain": "📖 교재 근거 (L318):\n7. 디옥산",
   "tags": [
    "정답판정",
    "수치"

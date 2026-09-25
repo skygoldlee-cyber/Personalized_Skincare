@@ -126,7 +126,8 @@ function isValidQuiz(type, question, answer) {
   if (/^[•·]/.test(answer)) return false;
   if (/참고\s*-/.test(answer)) return false;
   const cleanQ = question.replace(/^[•·]\s*/, '').trim();
-  if (cleanQ.length < 15) return false;
+  // term형은 카드 단계에서 이미 desc>10을 보장하므로 그 하한에 맞춘다
+  if (cleanQ.length < (type === 'term' ? 11 : 15)) return false;
   if (/^\[\s*빈칸\s*\]\.?$/i.test(cleanQ)) return false;
   return true;
 }
@@ -169,10 +170,11 @@ const parseMarkdownFile = (filePath, subjectId, filename, chapterKey, stableId) 
     const descIdx = headers.length > 1 ? 1 : 0;
 
     rows.forEach(row => {
-      if (row.length < 2) return;
+      const cells = row.cells || [];
+      if (cells.length < 2) return;
 
-      const rawTerm = row[termIdx] || '';
-      const rawDesc = row[descIdx] || '';
+      const rawTerm = cells[termIdx] || '';
+      const rawDesc = cells[descIdx] || '';
 
       const term = cleanText(rawTerm);
       const desc = cleanText(rawDesc);
@@ -243,7 +245,10 @@ const parseMarkdownFile = (filePath, subjectId, filename, chapterKey, stableId) 
         }
 
         const numMatches = [];
-        const numRegex = /\b\d+(?:\.\d+)?(?:%|세 이하|세 이상|개월|일|년|배|종|가지|개|시간|g|ml|kg|℃|도|분|초|주|ppm|㎛|회\/hr|개\/hr|개\/㎥)\b/g;
+        // 주의: 끝에 \b 를 쓰면 안 된다 — JS \w 에 한글/%·℃ 가 없어 단위 뒤 공백·괄호에서
+        // 경계가 성립하지 않아 모든 한글 단위 숫자가 미매칭되던 사장 코드였음.
+        // 대신 단위 직후 한글/영숫자 붙음만 제외하는 후방 금지로 대체한다.
+        const numRegex = /\b\d+(?:\.\d+)?\s*(?:%|세 이하|세 이상|개월|일|년|배|종|가지|개|시간|g|ml|kg|℃|도|분|초|주|ppm|㎛|회\/hr|개\/hr|개\/㎥)(?![가-힣0-9A-Za-z])/g;
         while ((match = numRegex.exec(rawDesc)) !== null) {
           numMatches.push(match);
         }
@@ -298,7 +303,7 @@ const parseMarkdownFile = (filePath, subjectId, filename, chapterKey, stableId) 
 
         // #3: 🔖기출 표시가 있는데 이 행에서 퀴즈가 하나도 안 나오면 경고 수집
         if (has기출 && quizzesForRow === 0) {
-          warnings.push(cleanTerm || desc.substring(0, 40));
+          warnings.push({ line: row.line || 0, text: cleanTerm || desc.substring(0, 40) });
         }
       } else if (importance >= 50 && isValidQuiz('term', cleanDesc, cleanTerm)) {
         quizzes.push({
@@ -342,7 +347,7 @@ const parseMarkdownFile = (filePath, subjectId, filename, chapterKey, stableId) 
       } else {
         const rowCells = line.split('|').map(c => c.trim()).filter((c, idx, arr) => idx > 0 && idx < arr.length - 1);
         if (rowCells.length > 0) {
-          tableRows.push(rowCells);
+          tableRows.push({ cells: rowCells, line: i + 1 });
         }
       }
     } else {
@@ -351,7 +356,14 @@ const parseMarkdownFile = (filePath, subjectId, filename, chapterKey, stableId) 
         inTable = false;
       }
 
-      if (/🔖기출|📌중요|🎯\s*기출|🎯\s*중요/.test(line)) {
+      // 헤더(###)·볼드 라벨·내용 없는 번호/불릿 항목은 퀴즈 생성 대상이 아니므로
+      // 마커 경고에서 제외 (예: "### 1. 항목 🎯 기출", "> **참고 - X 🎯 기출**", "④ 항목명")
+      const markerStripped = line.replace(/🔖기출|🎯\s*기출|📌중요|🎯\s*중요|`/g, '').trim();
+      const isLabelLine = /^#{1,6}\s/.test(markerStripped)
+        || /^>?\s*\*\*[^*]+\*\*\s*[:：]?\s*$/.test(markerStripped)
+        || (/^>?\s*(?:[-*]\s+|[①-⑳]\s*)/.test(markerStripped) && !/[0-9:：,，•·*]/.test(markerStripped));
+
+      if (!isLabelLine && /🔖기출|📌중요|🎯\s*기출|🎯\s*중요/.test(line)) {
         const has기출Line = /🔖기출|🎯\s*기출/.test(line);
         let quizzesForLine = 0;
         const cleanedLine = cleanText(line);
@@ -408,7 +420,7 @@ const parseMarkdownFile = (filePath, subjectId, filename, chapterKey, stableId) 
         } else {
           const numMatches = [];
           let match;
-          const numRegex = /\b\d+(?:\.\d+)?(?:%|세 이하|세 이상|개월|일|년|배|종|가지|개|시간|g|ml|kg|℃|도|분|초|주|ppm|㎛|회\/hr|개\/hr|개\/㎥)\b/g;
+          const numRegex = /\b\d+(?:\.\d+)?\s*(?:%|세 이하|세 이상|개월|일|년|배|종|가지|개|시간|g|ml|kg|℃|도|분|초|주|ppm|㎛|회\/hr|개\/hr|개\/㎥)(?![가-힣0-9A-Za-z])/g;
           while ((match = numRegex.exec(cleanedLine)) !== null) {
             numMatches.push(match);
           }
@@ -458,7 +470,7 @@ const parseMarkdownFile = (filePath, subjectId, filename, chapterKey, stableId) 
 
         // #3: 🔖기출 지문/리스트인데 퀴즈가 하나도 안 나오면 경고 수집 (조용한 손실 방지)
         if (has기출Line && quizzesForLine === 0) {
-          warnings.push(cleanedLine.substring(0, 40));
+          warnings.push({ line: i + 1, text: cleanedLine.substring(0, 60) });
         }
       }
     }
@@ -573,6 +585,8 @@ module.exports = {
 
     // #3: 마커 감시 경고 (빌드 산출물/해시에는 포함되지 않는 메타. index.js가 소비 후 제거)
     const markerWarnings = [];
+    // 파일 단위 카드/퀴즈 수 — 이전 빌드와의 파일별 diff로 무소음 드롭 탐지
+    const fileStats = {};
 
     const chapters = subject.chapters || [];
     chapters.forEach(chapter => {
@@ -585,12 +599,13 @@ module.exports = {
       const { cards, quizzes, warnings } = parseMarkdownFile(filePath, subject.key, file, chapter.key, ctx.idFactory.stableId);
       data.cards.push(...cards);
       data.quizzes.push(...quizzes);
+      fileStats[`${subject.dir}/${file}`] = { cards: cards.length, quizzes: quizzes.length };
 
       if (warnings && warnings.length > 0) {
         markerWarnings.push({
           file: `${subject.dir}/${file}`,
           count: warnings.length,
-          samples: warnings.slice(0, 5)
+          samples: warnings
         });
       }
 
@@ -602,6 +617,10 @@ module.exports = {
     // 산출물에는 섞이지 않도록 언더스코어 필드로 부착 (index.js가 delete)
     Object.defineProperty(data, '_warnings', {
       value: markerWarnings,
+      enumerable: false
+    });
+    Object.defineProperty(data, '_fileStats', {
+      value: fileStats,
       enumerable: false
     });
 
@@ -627,6 +646,22 @@ module.exports = {
       }
     });
     data.quizzes = uniqueQuizzes;
+
+    // term형 모호성 제거: 같은 질문에 정답이 둘 이상이면 타이핑 채점이 불가하므로 제외
+    // (사실 자체는 카드로 계속 노출되므로 정보 손실 없음)
+    const termAnswers = new Map();
+    uniqueQuizzes.forEach(q => {
+      if (q.type !== 'term') return;
+      if (!termAnswers.has(q.question)) termAnswers.set(q.question, new Set());
+      termAnswers.get(q.question).add(q.answer);
+    });
+    const ambiguous = new Set();
+    termAnswers.forEach((answers, question) => {
+      if (answers.size > 1) ambiguous.add(question);
+    });
+    if (ambiguous.size > 0) {
+      data.quizzes = uniqueQuizzes.filter(q => !(q.type === 'term' && ambiguous.has(q.question)));
+    }
 
     return data;
   }
