@@ -501,10 +501,25 @@ function checkStorageWarning() {
     banner.addEventListener('click', () => { banner.remove(); });
 }
 
+// 설치형 PWA 콜드 스타트에서 dvh가 실제 화면보다 크게 측정되는 경우가 있어
+// (스플래시 직후 시스템 바 확정 전) — visualViewport 기준으로 재측정해 자정시킨다.
+// 과대 측정 시 .main-content 끝이 화면 밖으로 나가 스크롤 끝 콘텐츠가 탭 바에 가려짐.
+function initViewportHeight() {
+    const sync = () => {
+        const h = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+        document.documentElement.style.setProperty('--app-height', `${h}px`);
+    };
+    sync();
+    window.addEventListener('resize', sync);
+    window.addEventListener('orientationchange', sync);
+    window.visualViewport?.addEventListener('resize', sync);
+}
+
 function initApp() {
     // 한 단계가 실패해도 나머지 버튼 연결/렌더가 죽지 않도록 각 단계를 격리한다.
     // (배포 간 캐시 스큐로 특정 요소/바인딩이 어긋나도 앱이 통째로 벽돌이 되는 것 방지)
     const step = (label, fn) => { try { fn(); console.debug('[init] ' + label + ' OK'); return true; } catch (e) { console.error('[init] ' + label + ' 실패:', e); return false; } };
+    step('initViewportHeight', initViewportHeight);
     step('loadProgress', loadProgress);
     step('checkStorageWarning', checkStorageWarning);
     step('populateSubjectSelects', populateSubjectSelects);

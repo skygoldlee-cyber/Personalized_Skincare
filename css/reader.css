@@ -1474,6 +1474,7 @@ body.reader-focus-mode .reader-readable-width {
         width: 100%;
         height: 100vh;
         height: 100dvh; /* 동적 뷰포트 높이 사용 */
+        height: var(--app-height, 100dvh); /* JS 실측 뷰포트 — PWA 콜드 스타트 dvh 과대측정 대응 */
         overflow: hidden;
     }
 

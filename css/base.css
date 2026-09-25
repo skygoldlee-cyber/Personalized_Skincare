@@ -564,6 +564,7 @@ html {
     width: 100%; /* 100vw는 스크롤바 폭을 포함해 가로 오버플로 유발 가능 */
     height: 100vh;
     height: 100dvh; /* iOS Safari 주소창 변동 대응 */
+    height: var(--app-height, 100dvh); /* JS 실측 뷰포트 — PWA 콜드 스타트 dvh 과대측정 대응 */
 }
 
 /* Sidebar Navigation */
