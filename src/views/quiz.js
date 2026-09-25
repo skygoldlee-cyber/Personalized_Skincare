@@ -426,6 +426,28 @@ export function nextQuizQuestion() {
 /**
  * 퀴즈 결과 화면 렌더링 (오답 리뷰 포함)
  */
+/**
+ * 오답 항목의 교재 근거 조회 — 퀴즈의 category(섹션명)로 STUDY_DATA 섹션을 찾아
+ * 📌 출처 근거(법령 조문명 등)를 반환한다. 교체 교재에서도 섹션 제목 매칭으로 동작.
+ * @returns {{section:string, source:string|null}|null}
+ */
+function _citationForQuiz(quizId) {
+    const q = (state.quiz.data || []).find(x => x.id === quizId);
+    if (!q || !q.category) return null;
+    const subjId = subjectForWeakItem(weakItemKey(quizId));
+    const subj = ((typeof window !== 'undefined' && window.STUDY_DATA) || {})[subjId];
+    if (!subj) return null;
+    for (const ch of (subj.chapters || [])) {
+        for (const sec of (ch.sections || [])) {
+            if (sec.title === q.category) {
+                const m = (sec.content || '').match(/출처[^:：]*[:：]\s*([^|\n]+)/);
+                return { section: sec.title, source: m ? m[1].trim() : null };
+            }
+        }
+    }
+    return null;
+}
+
 export function renderQuizResult() {
     const quizState = state.quiz;
     
@@ -460,6 +482,7 @@ export function renderQuizResult() {
             wrongAnswers.forEach((s, idx) => {
                 const itemId = weakItemKey(s.quizId);
                 const causeInfo = state.wrongCauses[itemId];
+                const cite = _citationForQuiz(s.quizId);
                 const item = document.createElement('div');
                 item.className = 'quiz-review-item';
                 item.innerHTML = `
@@ -467,6 +490,7 @@ export function renderQuizResult() {
                     <p style="font-size:0.9rem; margin-bottom:0.4rem;">${safeTextWithBreaks(s.question)}</p>
                     <p style="font-size:0.85rem; color:var(--color-danger);">내 답: ${esc(s.selected)}</p>
                     <p style="font-size:0.85rem; color:var(--color-success);">정답: <strong>${esc(s.correctAnswer)}</strong></p>
+                    ${cite ? `<p class="quiz-cite"><i class="fa-solid fa-book" aria-hidden="true"></i> 교재 근거: <strong>${esc(cite.source || cite.section)}</strong>${cite.source ? ` <span class="quiz-cite-sec">(${esc(cite.section)})</span>` : ''}</p>` : ''}
                     <div class="wrong-cause-inline">
                         ${causeInfo
                             ? `<span class="wrong-cause-chip"><i class="fa-solid fa-tag"></i> ${WRONG_CAUSES[causeInfo.cause] || ''}</span>`

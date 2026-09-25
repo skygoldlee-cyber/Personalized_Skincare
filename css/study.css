@@ -691,3 +691,16 @@
     color: var(--color-danger);
 }
 
+
+/* 오답 리뷰 교재 근거 (인라인 인용) */
+.quiz-cite {
+    font-size: 0.8rem;
+    color: var(--color-text-secondary, #94a3b8);
+    margin: 0.25rem 0 0.5rem;
+    padding: 0.35rem 0.6rem;
+    background: var(--color-bg-secondary, rgba(148, 163, 184, 0.08));
+    border-left: 3px solid var(--color-primary, #6366f1);
+    border-radius: 0 6px 6px 0;
+}
+.quiz-cite strong { color: var(--color-text, #e2e8f0); font-weight: 600; }
+.quiz-cite-sec { opacity: 0.7; }
