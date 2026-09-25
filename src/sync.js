@@ -110,13 +110,18 @@ function applyPayload(payload) {
 }
 
 // ── 충돌 시 미선택 쪽 보존 — 덮어쓰기 전에 로컬 백업 키에 남긴다 ──
+// 배열로 최근 3건까지 보관 (연속 충돌 시 이전 백업이 덮어쓰이지 않게)
+const CONFLICT_BACKUP_MAX = 3;
+
 function preserveLoserSnapshot(payload, source) {
     if (!payload || typeof payload !== 'object') return;
-    safeSetItem(STORAGE_KEYS.SYNC_CONFLICT_BACKUP, JSON.stringify({
-        savedAt: new Date().toISOString(),
-        source,                       // 'local' | 'remote' — 어느 쪽이 버려졌는지
-        payload,
-    }));
+    let list = [];
+    try {
+        const prev = JSON.parse(safeGetItem(STORAGE_KEYS.SYNC_CONFLICT_BACKUP) || '[]');
+        if (Array.isArray(prev)) list = prev;
+    } catch (_) { /* 손상된 백업은 새로 시작 */ }
+    list.unshift({ savedAt: new Date().toISOString(), source, payload });
+    safeSetItem(STORAGE_KEYS.SYNC_CONFLICT_BACKUP, JSON.stringify(list.slice(0, CONFLICT_BACKUP_MAX)));
 }
 
 // ── pull: 원격 조회 → 최신성 비교 → 적용/충돌 확인/push ──────────
