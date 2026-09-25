@@ -61,6 +61,7 @@
 6. READER_FEEDBACK_DESIGN.md     — 독자 피드백 공유 기능 설계안
 7. SUBSCRIPTION_ROADMAP.md       — 월 구독 전환 로드맵
 8. FORMULA_OS_경쟁전략.md          — Formula OS 경쟁 지도·차별화 축·시나리오별 대응
+9. 판매업소_인터뷰_스크립트.md      — Step 0 판매업소 인터뷰 질문·중단 기준·집계 시트
 ```
 
 ### ⑥ 학습자(사용자) 관점 문서
