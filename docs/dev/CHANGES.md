@@ -4,6 +4,24 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-25 모바일 하단 탭 바 겹침 수정 + PWA 콜드 스타트 뷰포트 보정
+
+- **하단 플로팅 요소 탭 바 겹침 수정**: `.reader-back-to-top`(`bottom:1.25rem`)이
+  탭 바(높이 `calc(70px+safe)`, z 1400)에 완전히 가려지던 문제 — 스크롤 시 나타나야
+  하는 버튼이 보이지 않았음. `.glossary-back-btn`(5rem), `#storage-warning-banner`,
+  `.nav-init-fail-banner`(bottom:0)도 동일하게 탭 바 위로 이동.
+- **스크롤 하단 여유**: `.main-content` `padding-bottom` 70→80px(탭 바+여유) +
+  `scroll-padding-bottom` 신설 — 포커스/`scrollIntoView`로 요소가 탭 바 밑으로
+  들어가지 않도록.
+- **PWA 콜드 스타트 `dvh` 과대측정 대응**: 설치형 PWA 첫 실행에서 뷰포트가 실제
+  화면보다 크게 측정되면 `.main-content` 끝이 화면 밖으로 밀려 스크롤 끝 위젯
+  (대시보드 '내 학습 분석·도구')이 탭 바에 가려지는 간헐 장애 — `initViewportHeight()`가
+  `visualViewport.height`를 `--app-height`로 반영하고 resize 계열 이벤트에 자동 갱신,
+  `.app-container { height: var(--app-height, 100dvh) }` (JS 미실행 시 dvh 폴백).
+  실기기 검증 완료.
+- 설계 규칙 문서화: ARCHITECTURE.md 모바일 최적화 기법, SPEC.md UX-NAV-05/UX-PWA-05 +
+  환경적 제약표.
+
 ## 2026-09-25 참조자료 파이프라인 검증 체계 + 퀴즈 추출 버그 수정
 
 - **PDF→MD 파이프라인 복구/검증 강화**: `pdf2md.py`·`convert_ref_pdfs_v2.py`가

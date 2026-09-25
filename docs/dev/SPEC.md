@@ -478,6 +478,7 @@
 | UX-NAV-02 | **헤더는 sticky**: `position: sticky; top: 0` + 반투명 배경(`--drawer-bg`) + `backdrop-filter: blur()` | 스크롤 중에도 설정·테마에 접근 가능. 단, 부모가 스크롤 컨테이너(`overflow-y: auto`)일 때만 작동 — `body` 스크롤 구조면 의도대로 동작하는지 확인할 것 |
 | UX-NAV-03 | **`overflow: hidden` 금지 on 헤더**: sticky 헤더에 `overflow:hidden`을 주면 헤더 아래로 펼쳐지는 드롭다운이 잘림 | 드롭다운은 절대위치로 헤더 경계를 넘어야 함. 넘침 제어는 `min-width:0`+말줄임과 `flex-shrink:0`으로 처리 |
 | UX-NAV-04 | **`100vw` 대신 `100%`**: 뷰포트 기준 너비는 수직 스크롤바 폭을 포함해 가로 오버플로를 유발할 수 있음 | `.app-container { width: 100% }`. 특히 클래식 스크롤바가 상시 표시되는 데스크톱에서 차이 발생 |
+| UX-NAV-05 | **하단 `position:fixed` 요소는 탭 바 위로**: 모바일에서 `bottom` 고정 요소는 `calc(70px + safe-area)` 이상으로 배치 | back-to-top(`bottom:1.25rem`)이 탭 바(z 1400)에 완전히 가려진 실제 사례. 배너·토스트·플로팅 버튼 신규 추가 시에도 동일 규칙 적용. `.main-content`는 `padding-bottom: calc(80px + safe)` + `scroll-padding-bottom`으로 콘텐츠·포커스 요소 보호 |
 
 #### 4.8.2 스크롤바 전략
 
@@ -514,6 +515,7 @@
 | UX-PWA-02 | **PWA 전용 기능은 standalone 감지로 게이팅**: `matchMedia('(display-mode: standalone)').matches \|\| navigator.standalone === true` | 브라우저 탭에서 의미 없는 버튼(앱 종료 등)을 숨겨 혼란 방지. iOS는 `navigator.standalone`만 지원하므로 둘 다 확인 필수 |
 | UX-PWA-03 | **SW Cache First는 CSS/JS 즉시 반영 안 됨**: 배포 후 최소 1~2회 재실행 필요 (구 SW 서빙 → 새 SW 설치 → 재실행 시 반영) | "배포했는데 안 바뀐다" 보고의 대부분이 이 패턴. 사용자 안내 문구와 업데이트 토스트 필수 |
 | UX-PWA-04 | **설치 버튼은 `beforeinstallprompt` 캡처 후에만 표시** | 미설치 상태에서만 노출, 설치 후 자동 숨김 — 헤더 공간 절약 |
+| UX-PWA-05 | **앱 셸 높이는 JS 실측 `--app-height` 사용**: `.app-container { height: var(--app-height, 100dvh) }` + `visualViewport.height`/`innerHeight` 측정, resize 계열 이벤트에 자동 갱신 | PWA 콜드 스타트에서 `dvh`가 실제 화면보다 크게 측정되면 `.main-content` 끝이 화면 밖으로 밀려 스크롤 끝 콘텐츠가 탭 바에 가려짐(대시보드 '내 학습 분석·도구' 실제 장애). JS 미실행 시 `100dvh` 폴백 |
 
 #### 4.8.6 폼·입력
 
@@ -630,6 +632,7 @@
 | `file://` 프로토콜 | fetch 차단 | 클래식 `<script>` 주입 폴백 번들 |
 | CSP `script-src 'self'` | 인라인 스크립트/핸들러 차단 | 이벤트 위임 패턴 |
 | 모바일 주소창 | 뷰포트 점프 | `100dvh` 동적 뷰포트 |
+| PWA 콜드 스타트 | 초기 `dvh`가 실 화면보다 과대 측정 → 하단 콘텐츠 가려짐 | `--app-height` JS 실측 변수(UX-PWA-05) |
 
 ### 6.3 콘텐츠 변경 시 수정 파일
 

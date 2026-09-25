@@ -1218,11 +1218,19 @@ app-fallback.js 폴링 시작 (400ms 간격, 15s 데드라인)
 
 ### 모바일 최적화 기법
 
-1. **동적 뷰포트**: `100dvh` 사용 → 모바일 브라우저 주소창 표시/숨김에 따른 레이아웃 점프 방지
+1. **동적 뷰포트 + 실측 보정**: `100dvh` 사용 → 모바일 브라우저 주소창 표시/숨김에 따른 레이아웃 점프 방지.
+   단, 설치형 PWA 콜드 스타트에서 `dvh`가 실제 화면보다 크게 측정되는 사례가 있어(스플래시~시스템 인셋 확정 사이),
+   `initViewportHeight()`가 `visualViewport.height`를 `--app-height` CSS 변수로 반영하고
+   `.app-container { height: var(--app-height, 100dvh) }`로 사용 — `resize`/`orientationchange`/`visualViewport.resize`에 자동 갱신.
+   과대측정 시 `.main-content` 끝이 화면 밖으로 밀려 스크롤 끝 콘텐츠가 탭 바에 가려지는 실제 장애를 유발했다
 2. **Safe Area 대응**: `env(safe-area-inset-bottom)` → iPhone 홈 인디케이터 영역 자동 확보
-3. **스크롤 위치 복원**: 뷰 전환 시 `saveScrollPosition()`/`restoreScrollPosition()`으로 이전 위치 기억
-4. **터치 타겟**: 최소 44×44px 터치 영역 확보
-5. **그리드 종열 전환**: 데스크톱 다열 그리드(성적 분석 3열 등) → 모바일 세로보기에서 `1fr` 단일 열로 자동 전환
+3. **하단 탭 바 겹침 방지**: `.main-content`는 `padding-bottom: calc(80px + safe)`(탭 바 70px + 여유 10px)와
+   `scroll-padding-bottom`을 적용 — 스크롤 끝 콘텐츠와 포커스/`scrollIntoView` 요소가 탭 바 밑으로 들어가지 않음.
+   뷰 내 `position:fixed` 하단 요소(back-to-top, 배너, 토스트, 플로팅 버튼)도 `bottom: calc(70px + safe)` 이상으로 배치 필수 —
+   `bottom: 0~2rem`이면 탭 바(z 1400)에 완전히 가려짐
+4. **스크롤 위치 복원**: 뷰 전환 시 `saveScrollPosition()`/`restoreScrollPosition()`으로 이전 위치 기억
+5. **터치 타겟**: 최소 44×44px 터치 영역 확보
+6. **그리드 종열 전환**: 데스크톱 다열 그리드(성적 분석 3열 등) → 모바일 세로보기에서 `1fr` 단일 열로 자동 전환
 
 ### CSS 설계 원칙
 - **CSS 변수 기반 디자인 토큰**: `--color-primary`, `--bg-card`, `--radius-md` 등으로 테마 일관성 유지
