@@ -51,6 +51,112 @@
               ↘ 비로그인 → localStorage만 사용, Supabase 불요
 ```
 
+#### 동작 흐름 (시퀀스)
+
+**① 앱 로드 + 세션 복원** — Vercel은 파일 배달만 담당하고, Supabase는 로그인 세션이 있을 때만 접촉한다:
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor U as 사용자
+    participant V as Vercel (정적 호스팅)
+    participant A as 앱 (브라우저/PWA)
+    participant L as localStorage
+    participant S as Supabase
+
+    U->>V: 앱 접속
+    V->>A: index.html + JS/CSS + 데이터 번들
+    A->>L: 로컬 진도 로드 (오프라인 가능)
+    alt 로그인 세션 없음
+        A->>U: 전 기능 즉시 사용 (Supabase 불요)
+    else 로그인 세션 있음
+        A->>S: 세션 복원 (토큰 자동 갱신)
+        A->>S: pull sync_snapshots
+        S-->>A: 원격 스냅샷 + updated_at
+        A->>A: LWW 비교 → 최신 쪽 적용
+    end
+```
+
+**② 로그인 (매직링크/OTP)** — 한 통의 메일에 링크와 코드가 동봉되어 URL/PWA 어느 환경이든 동일 절차:
+
+```mermaid
+sequenceDiagram
+    actor U as 사용자
+    participant A as 앱
+    participant S as Supabase Auth
+    participant DB as Postgres (RLS)
+
+    U->>A: 이메일 입력 → "로그인 메일 보내기"
+    A->>S: signInWithOtp(email)
+    S-->>U: 로그인 메일 (매직링크 + 인증 코드 동봉)
+    alt 매직링크 (URL 접근 가능)
+        U->>S: 링크 클릭 → 세션 발급
+    else 인증 코드 (PWA 등 리다이렉트 불가)
+        U->>A: 코드 입력
+        A->>S: verifyOtp(email, code)
+    end
+    S-->>A: session (access + refresh token)
+    A->>DB: pull sync_snapshots
+    DB-->>A: 본인 행만 반환 (RLS: auth.uid() = user_id)
+```
+
+**③ 데이터 동기화 push** — 쓰기 훅이 깃발을 세우고 2.5초 디바운스 후 한 번에 업로드:
+
+```mermaid
+sequenceDiagram
+    actor U as 사용자
+    participant A as 앱
+    participant L as localStorage
+    participant DB as Supabase (sync_snapshots)
+
+    U->>A: 카드 암기·학습 진행
+    A->>L: saveProgress → scopedKey 저장
+    A->>A: sync.markDirty() — dirty 깃발
+    Note over A: 2.5초 디바운스 (연속 입력 묶음)
+    A->>DB: upsert payload (device_id 포함)
+    DB-->>A: OK — RLS로 본인 행만 허용
+```
+
+**④ 충돌 처리 pull** — 양쪽이 다 바뀐 경우만 사용자에게 묻는다:
+
+```mermaid
+sequenceDiagram
+    participant A as 앱
+    participant L as localStorage
+    participant DB as Supabase
+    actor U as 사용자
+
+    A->>DB: pull (로그인·앱 시작·online 이벤트)
+    DB-->>A: 원격 updated_at
+    alt 원격이 최신 + 로컬 변경 없음
+        A->>L: 원격 스냅샷 적용
+    else 로컬이 최신
+        A->>DB: push
+    else 양쪽 모두 변경 (충돌)
+        A->>U: 확인 모달 — "클라우드 가져오기 / 이 기기 유지"
+    end
+```
+
+**⑤ Pro 코드 교환** — plan 갱신은 `security definer` RPC만 가능해 클라이언트 우회를 차단:
+
+```mermaid
+sequenceDiagram
+    actor U as 사용자
+    participant A as 앱
+    participant R as redeem_code RPC
+    participant DB as pro_codes / profiles
+
+    U->>A: Pro 코드 입력
+    A->>R: rpc('redeem_code', code)
+    R->>DB: pro_codes에서 코드 확인 (클라이언트 직접 접근 불가)
+    alt 유효한 미사용 코드
+        R->>DB: profiles.plan = 'pro' 갱신
+        R-->>A: success → Pro 활성화
+    else 무효·이미 사용됨
+        R-->>A: 오류 반환
+    end
+```
+
 ### 2.2 배포·CSP 제약 (실측 확인)
 
 | 제약 | 현황 | 조치 |
