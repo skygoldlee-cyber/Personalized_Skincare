@@ -20,8 +20,9 @@ export const state = {
 
     // 로컬스토리지 연동 데이터
     memorizedCards: new Set(), // 외운 카드 ID 목록
-    weakCards: new Set(),      // 헷갈린 카드 ID 목록
+    weakCards: new Set(),      // 헷갈린 카드 ID 목록 (weak_sim_/weak_quiz_ 접두사 포함)
     quizResults: {},           // { quizId: { solved: true, correct: true } }
+    wrongCauses: {},           // { itemId: { cause: 'memorize'|'concept'|'calc', ts, subjectId } }
     reviewFilter: 'all',       // 오답노트 필터 상태 ('all' 또는 과목 key — 런타임에 registry에서 동적 생성)
 
     // 플래시카드 현재 세션 상태
@@ -41,7 +42,8 @@ export const state = {
         data: [],        // 출제된 퀴즈 목록 (보통 10문제)
         currentIndex: 0,
         correctCount: 0,
-        solvedList: []   // 이번 세션에 제출한 답 기록
+        solvedList: [],  // 이번 세션에 제출한 답 기록
+        diagnostic: false // 진단 평가 모드 (전 과목 샘플링)
     },
 
     // 스마트 훈련소 세션 상태
@@ -179,6 +181,13 @@ export function loadProgress() {
         } catch (e) { console.error(e); }
     }
 
+    const wrongCauses = safeGetItem(STORAGE_KEYS.QUIZ_WRONG_CAUSES);
+    if (wrongCauses) {
+        try {
+            state.wrongCauses = JSON.parse(wrongCauses);
+        } catch (e) { console.error(e); }
+    }
+
     // 뽀모도로 누적 시간은 "오늘" 기준이므로, 날짜가 바뀌었으면 0으로 리셋
     const pomoDate = safeGetItem(STORAGE_KEYS.POMO_TOTAL_TIME_DATE);
     const todayStr = new Date().toISOString().split('T')[0];
@@ -215,6 +224,7 @@ export function saveProgress() {
     safeSetItem(STORAGE_KEYS.FC_MEMORIZED, JSON.stringify([...state.memorizedCards]));
     safeSetItem(STORAGE_KEYS.FC_WEAK, JSON.stringify([...state.weakCards]));
     safeSetItem(STORAGE_KEYS.QUIZ_RESULTS, JSON.stringify(state.quizResults));
+    safeSetItem(STORAGE_KEYS.QUIZ_WRONG_CAUSES, JSON.stringify(state.wrongCauses));
 
     // 학습 활동 기록 (증분만)
     const memDelta = state.memorizedCards.size - prevMemCount;
@@ -282,9 +292,18 @@ export function cleanOrphansForSubject(subjKey, subjData) {
     // 외운 카드 및 틀린 카드 청소
     const cardsToClean = [...state.memorizedCards].filter(id => id.startsWith(subjKey + '_card_') && !validCardIds.has(id));
     const weakToClean = [...state.weakCards].filter(id => id.startsWith(subjKey + '_card_') && !validCardIds.has(id));
-    
+    // 기출 퀴즈 오답(weak_quiz_<quizId>)도 해당 퀴즈가 사라졌으면 청소
+    const weakQuizToClean = [...state.weakCards].filter(id => {
+        if (!id.startsWith('weak_quiz_')) return false;
+        const orig = id.substring('weak_quiz_'.length);
+        return orig.startsWith(subjKey + '_quiz_') && !validQuizIds.has(orig);
+    });
+
     cardsToClean.forEach(id => state.memorizedCards.delete(id));
     weakToClean.forEach(id => state.weakCards.delete(id));
+    weakQuizToClean.forEach(id => state.weakCards.delete(id));
+    // 청소된 항목의 오답 원인 태그도 함께 정리
+    weakQuizToClean.forEach(id => { delete state.wrongCauses[id]; });
     
     // 퀴즈 결과 청소
     let quizzesCleaned = false;

@@ -731,6 +731,27 @@ export function submitExam() {
     renderSimResultBreakdown({ score, total, subjectScores, chapterStats, subjects });
 }
 
+/**
+ * 모의고사 결과를 성적 이력(sim_results_history)에 저장한다.
+ * 차트(성적 추이/레이더/합격 진단)와 추천 엔진의 과락 감지가 이 데이터를 소비한다.
+ * 최근 50건만 유지한다.
+ */
+export function saveExamResultToHistory(examId, score, total, subjectRates) {
+    let history = [];
+    try {
+        const parsed = JSON.parse(safeGetItem(STORAGE_KEYS.SIM_RESULTS_HISTORY) || '[]');
+        if (Array.isArray(parsed)) history = parsed;
+    } catch (e) { history = []; }
+    history.push({
+        date: new Date().toISOString().split('T')[0],
+        examId: examId,
+        rate: Math.round((score / total) * 100),
+        subjectRates: subjectRates || null
+    });
+    if (history.length > 50) history = history.slice(-50);
+    safeSetItem(STORAGE_KEYS.SIM_RESULTS_HISTORY, JSON.stringify(history));
+}
+
 export function examIdToSubjectId(examId) {
     const registry = window.DATA_REGISTRY;
     if (registry && registry.exams) {

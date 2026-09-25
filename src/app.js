@@ -34,7 +34,13 @@ import {
     renderReviewList,
     removeWeakCard,
     setReviewFilter,
-    startWeakFocusQuiz
+    startWeakFocusQuiz,
+    tagWrongCause,
+    tagWrongCauseAt,
+    wrongActionCard,
+    wrongActionTextbook,
+    wrongActionSimilar,
+    startDiagnosticQuiz
 } from './views/quiz.js';
 import {
     updateStreakAndDailyUI,
@@ -234,7 +240,8 @@ import {
     saveSimAnswer,
     submitExam,
     examIdToSubjectId,
-    startWeakExam
+    startWeakExam,
+    saveExamResultToHistory
 } from './views/exam-simulator.js';
 import {
     showSimAnswerReview,
@@ -911,6 +918,7 @@ const DELEGATED_HANDLERS = {
     exitSimArena, clearSimDraft, resumeSimDraft, showSimAnswerReview,
     showSimResultsSummary, startMockExamSim, startComboMockExam,
     startIntegratedMockExam, startWeakExam, startFocusSubjectStudy,
+    saveExamResultToHistory,
     // 훈련소 드릴 (O/X·복수정답형·약점)
     openOxDrillSetup, startOxDrill, nextOxDrill,
     openComboDrillSetup, startComboDrill, nextComboDrill, submitComboJudgments,
@@ -923,6 +931,8 @@ const DELEGATED_HANDLERS = {
     // 대시보드/리뷰/백업 (과거 브리지 누락으로 배포판에서 죽어 있던 핸들러 포함)
     startSubjectStudy, startSubjectQuiz, startSubjectReader,
     removeWeakCard, setReviewFilter, printReviewNotes,
+    tagWrongCause, tagWrongCauseAt, wrongActionCard, wrongActionTextbook, wrongActionSimilar,
+    startDiagnosticQuiz,
     exportData, triggerImport, checkStorageWarning,
     // 데일리 챌린지
     startDailyChallenge, closeDailyModal, nextDailyStep,

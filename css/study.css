@@ -449,6 +449,136 @@
     background: var(--bg-card);
 }
 
+/* 오답 원인 자가 태깅 + 재학습 연결 (quiz.js에서 동적 생성) */
+.wrong-cause-picker {
+    margin-top: 0.75rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.wrong-cause-label {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.4rem;
+}
+
+.wrong-cause-btns,
+.wrong-cause-inline,
+.wrong-relearn-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    align-items: center;
+}
+
+.wrong-cause-inline {
+    margin-top: 0.5rem;
+}
+
+.wrong-relearn-row {
+    margin-top: 0.5rem;
+}
+
+.wrong-cause-btn,
+.wrong-relearn-btn {
+    padding: 0.3rem 0.7rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-pill);
+    background: var(--bg-card);
+    color: var(--color-text-main);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.wrong-cause-btn:hover,
+.wrong-relearn-btn:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.wrong-cause-btn.active {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-on-brand);
+}
+
+.wrong-cause-reco {
+    margin-top: 0.5rem;
+    font-size: 0.82rem;
+    color: var(--color-text-main);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    align-items: center;
+}
+
+.wrong-cause-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.25rem 0.65rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    border-radius: var(--radius-pill);
+    background: var(--warning-tint-10);
+    color: var(--color-warning);
+    border: 1px solid var(--warning-tint-20);
+}
+
+/* 오답 패턴 요약 (복습 노트 상단) */
+.wrong-cause-summary {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    background: var(--bg-muted);
+    font-size: 0.85rem;
+}
+
+.wrong-cause-advice {
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+}
+
+/* 진단 평가 프로파일 */
+.diagnostic-profile {
+    margin-bottom: 1rem;
+    padding: 0.875rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    background: var(--bg-muted);
+}
+
+.diagnostic-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.4rem 0;
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.diagnostic-row:last-of-type {
+    border-bottom: none;
+}
+
+.diagnostic-rank { width: 1.2rem; flex-shrink: 0; }
+.diagnostic-name { flex: 1; min-width: 0; font-weight: 600; }
+.diagnostic-rate { font-weight: 700; white-space: nowrap; }
+
+.diagnostic-hint {
+    margin-top: 0.6rem;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+}
+
 .result-actions {
     display: flex;
     gap: var(--space-4);

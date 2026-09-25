@@ -11,6 +11,7 @@ export const STORAGE_KEYS = {
 
   // 퀴즈 / 시험
   QUIZ_RESULTS: 'quiz_results',
+  QUIZ_WRONG_CAUSES: 'quiz_wrong_causes',  // { itemId: { cause, ts, subjectId } } — 오답 원인 자가 태깅
   SIM_RESULTS_HISTORY: 'sim_results_history',
   SIM_DRAFT_SESSION: 'sim_draft_session',
 
@@ -30,6 +31,7 @@ export const STORAGE_KEYS = {
 
   // 학습 목표
   STUDY_GOALS: 'study_goals',  // { dailyCards: 50, dailyQuizzes: 10, weeklyStudyDays: 5 }
+  EXAM_DATE: 'exam_date',      // 'YYYY-MM-DD' — 시험일 (D-day 역산)
 
   // 트레이너
   CALC_HISTORY: 'calc_history',
@@ -87,6 +89,7 @@ export const BACKUP_KEYS = [
   STORAGE_KEYS.FC_MEMORIZED,
   STORAGE_KEYS.FC_WEAK,
   STORAGE_KEYS.QUIZ_RESULTS,
+  STORAGE_KEYS.QUIZ_WRONG_CAUSES,
   STORAGE_KEYS.SIM_RESULTS_HISTORY,
   STORAGE_KEYS.SIM_DRAFT_SESSION,
   STORAGE_KEYS.POMO_TOTAL_TIME,
@@ -95,6 +98,7 @@ export const BACKUP_KEYS = [
   STORAGE_KEYS.STUDY_STREAK_LAST_DATE,
   STORAGE_KEYS.STUDY_CALENDAR,
   STORAGE_KEYS.STUDY_GOALS,
+  STORAGE_KEYS.EXAM_DATE,
   STORAGE_KEYS.CALC_HISTORY,
   STORAGE_KEYS.FC_MIGRATED_V2,
   STORAGE_KEYS.STATEMENT_STATS,

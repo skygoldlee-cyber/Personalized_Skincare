@@ -7,6 +7,8 @@ import { switchView } from './navigation.js';
 import { updateStreakAndDailyUI } from './daily-challenge.js';
 import { updatePomodoroUI } from './pomodoro.js';
 import { getDueCount } from '../spaced-repetition.js';
+import { computeRecommendations } from '../recommendations.js';
+import { getDDay, getSuggestedDailyCount } from '../study-tracker.js';
 
 /**
  * @type {boolean}
@@ -86,6 +88,27 @@ export function updateGlobalStats() {
     // 2. 간격 반복 — 오늘 복습 대기 카드 수
     const dueReviewEl = document.getElementById('due-review-count');
     if (dueReviewEl) dueReviewEl.textContent = getDueCount();
+
+    // 2-b. 시험일 D-day + 역산 권장량 표시
+    const ddayEl = document.getElementById('exam-dday-count');
+    if (ddayEl) {
+        const dday = getDDay();
+        if (dday === null) {
+            ddayEl.textContent = '미설정';
+        } else if (dday < 0) {
+            ddayEl.textContent = `D+${-dday}`;
+        } else {
+            ddayEl.textContent = dday === 0 ? 'D-Day' : `D-${dday}`;
+        }
+        const descEl = ddayEl.closest('.stat-info')?.querySelector('.stat-desc');
+        if (descEl) {
+            const remaining = Math.max(0, totalCards - state.memorizedCards.size);
+            const suggested = getSuggestedDailyCount(remaining);
+            descEl.innerHTML = suggested !== null
+                ? `역산 권장: 하루 카드 ${suggested}장 · <button type="button" class="dday-set-btn" data-click="openGoalSettings"><i class="fa-solid fa-gear"></i> 설정</button>`
+                : `<button type="button" class="dday-set-btn" data-click="openGoalSettings"><i class="fa-solid fa-gear"></i> 시험일·목표 설정</button>`;
+        }
+    }
     
     // 전체 진척도 퍼센트 계산
     const totalProgress = totalCards > 0 ? Math.round((state.memorizedCards.size / totalCards) * 100) : 0;
@@ -240,68 +263,31 @@ function _renderSubjectHeatmap(subjects) {
     heatmapEl.innerHTML = html;
 }
 
-// 4. 약점 과목 자동 추천
+// 4. 약점 과목 자동 추천 — "오늘의 합격 전략" (recommendations.js 엔진)
 function _renderWeakSubjectRecommendation(subjects) {
     const recEl = document.getElementById('weak-subject-recommendation');
     if (!recEl) return;
-    const subjCounts = _getSubjCounts();
-    
-    // 정답률이 가장 낮은 과목 (최소 3문 이상 푼 과목만)
-    let weakest = null;
-    let weakestRate = 101;
-    subjects.forEach(subj => {
-        const sc = subjCounts[subj.key] || { quizSolved: 0, quizCorrect: 0 };
-        if (sc.quizSolved >= 3) {
-            const rate = sc.quizCorrect / sc.quizSolved;
-            if (rate < weakestRate) {
-                weakestRate = rate;
-                weakest = subj;
-            }
-        }
-    });
-    
-    // 헷갈린 카드가 가장 많은 과목
-    let mostWeak = null;
-    let mostWeakCount = 0;
-    subjects.forEach(subj => {
-        const sc = subjCounts[subj.key] || { weak: 0 };
-        if (sc.weak > mostWeakCount) {
-            mostWeakCount = sc.weak;
-            mostWeak = subj;
-        }
-    });
-    
-    if (!weakest && !mostWeak) {
+
+    const recs = computeRecommendations(subjects, _getSubjCounts());
+
+    if (recs.length === 0) {
         recEl.innerHTML = '<p class="rec-empty">아직 충분한 학습 데이터가 없습니다. 퀴즈를 풀어보세요!</p>';
         return;
     }
-    
+
     let html = '<div class="rec-list">';
-    if (weakest) {
-        const rate = Math.round(weakestRate * 100);
+    recs.forEach(rec => {
+        const actions = rec.actions.map(a =>
+            `<button class="btn btn-sm ${a.cls}" data-click="${a.click}" data-arg="${esc(a.arg)}"><i class="fa-solid ${a.icon}"></i> ${esc(a.label)}</button>`
+        ).join('');
         html += `
             <div class="rec-item">
-                <i class="fa-solid fa-bullseye" style="color:var(--color-danger);"></i>
-                <span>정답률 최저: <strong>${esc(weakest.name)}</strong> (${rate}%)</span>
-                <div class="rec-actions">
-                    <button class="btn btn-sm btn-primary" data-click="startSubjectQuiz" data-arg="${weakest.key}"><i class="fa-solid fa-play"></i> 퀴즈</button>
-                    <button class="btn btn-sm btn-secondary" data-click="startSubjectReader" data-arg="${weakest.key}"><i class="fa-solid fa-book-open"></i> 교재</button>
-                </div>
+                <i class="fa-solid ${rec.icon}" style="color:${rec.color};"></i>
+                <span class="rec-text"><strong>${esc(rec.title)}</strong><span class="rec-reason">${esc(rec.reason)}</span></span>
+                <div class="rec-actions">${actions}</div>
             </div>
         `;
-    }
-    if (mostWeak && mostWeakCount > 0) {
-        html += `
-            <div class="rec-item">
-                <i class="fa-solid fa-triangle-exclamation" style="color:var(--color-warning);"></i>
-                <span>헷갈린 카드最多: <strong>${esc(mostWeak.name)}</strong> (${mostWeakCount}장)</span>
-                <div class="rec-actions">
-                    <button class="btn btn-sm btn-secondary" data-click="startSubjectStudy" data-arg="${mostWeak.key}"><i class="fa-solid fa-layer-group"></i> 카드</button>
-                    <button class="btn btn-sm btn-secondary" data-click="startSubjectReader" data-arg="${mostWeak.key}"><i class="fa-solid fa-book-open"></i> 교재</button>
-                </div>
-            </div>
-        `;
-    }
+    });
     html += '</div>';
     recEl.innerHTML = html;
 }

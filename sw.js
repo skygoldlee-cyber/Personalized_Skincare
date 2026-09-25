@@ -117,6 +117,7 @@ const SHELL_ASSETS = [
   './src/views/formula-print.js',
   './src/study-tracker.js',
   './src/spaced-repetition.js',
+  './src/recommendations.js',
   './src/views/dictionary.js',
   './content/exams/cosmetic/교재/understanding/images/피부의 구조 단면도 보완_인포그래픽.png',
   './content/exams/cosmetic/교재/understanding/images/모발의 구조 단면도 보완_인포그래픽.png',

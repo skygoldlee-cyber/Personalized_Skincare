@@ -2,15 +2,102 @@
 import { state, saveProgress } from '../state.js';
 import { safeTextWithBreaks, esc } from '../sanitize.js';
 import { switchView } from './navigation.js';
+import { DataLoader } from '../data-loader.js';
+import { computeWrongCauseSummary, WRONG_CAUSE_LABELS } from '../recommendations.js';
 import { examIdToSubjectId } from './exam-simulator.js';
 import { checkShortAnswer } from './trainer.js';
-import { updateGlobalStats } from './dashboard.js';
+import { updateGlobalStats, startSubjectReader } from './dashboard.js';
 import { shuffle } from '../utils.js';
 import { showToast, vibrate, HAPTIC } from '../ui-utils.js';
 
+// 기출 퀴즈 오답을 weakCards에 담을 때의 접두사 (모의고사 오답 weak_sim_ 과 대칭)
+const WRONG_QUIZ_PREFIX = 'weak_quiz_';
+
+// 오답 원인 자가 태깅 분류 (FEATURE_PROPOSALS §4.2)
+export const WRONG_CAUSES = {
+    memorize: '암기 부족',
+    concept: '개념 오해',
+    calc: '계산 실수'
+};
+
 /**
- * 퀴즈 시작 로직
+ * 퀴즈 항목 ID → weakCards/wrongCauses에서 쓰는 약점 항목 키
+ * (weak_sim_/weak_quiz_/카드 ID는 그대로, 일반 퀴즈 ID는 weak_quiz_ 접두사)
  */
+function weakItemKey(quizId) {
+    if (quizId.startsWith('weak_') || quizId.includes('_card_')) return quizId;
+    return WRONG_QUIZ_PREFIX + quizId;
+}
+
+/**
+ * weak_quiz_<origId> 또는 일반 퀴즈 ID로 원본 퀴즈 객체를 찾는다.
+ * @returns {{quiz: object, subjectId: string}|null}
+ */
+function resolveWrongQuiz(quizId) {
+    const origId = quizId.startsWith(WRONG_QUIZ_PREFIX)
+        ? quizId.substring(WRONG_QUIZ_PREFIX.length)
+        : quizId;
+    if (!window.STUDY_DATA) return null;
+    for (const subjId of Object.keys(window.STUDY_DATA)) {
+        const found = (window.STUDY_DATA[subjId].quizzes || []).find(q => q.id === origId);
+        if (found) return { quiz: found, subjectId: subjId };
+    }
+    return null;
+}
+
+/**
+ * 약점 항목 ID → 해당 항목의 과목 ID (약점 집중 퀴즈는 과목이 섞일 수 있음)
+ */
+function subjectForWeakItem(itemId) {
+    if (itemId.startsWith('weak_sim_')) {
+        const examId = itemId.replace('weak_sim_', '').split('_q')[0];
+        return examIdToSubjectId(examId);
+    }
+    const resolved = resolveWrongQuiz(itemId);
+    if (resolved) return resolved.subjectId;
+    if (window.STUDY_DATA) {
+        for (const subjId of Object.keys(window.STUDY_DATA)) {
+            if ((window.STUDY_DATA[subjId].cards || []).some(c => c.id === itemId)) return subjId;
+        }
+    }
+    return state.quiz.subject;
+}
+
+/**
+ * 퀴즈 오답 후 피드백 패널에 "틀린 이유" 자가 태깅 버튼을 표시한다.
+ */
+function renderWrongCausePicker() {
+    const feedbackPanel = document.getElementById('quiz-feedback-panel');
+    if (!feedbackPanel) return;
+    feedbackPanel.querySelector('.wrong-cause-picker')?.remove();
+    const row = document.createElement('div');
+    row.className = 'wrong-cause-picker';
+    row.innerHTML = `
+        <p class="wrong-cause-label">틀린 이유를 선택해 보세요:</p>
+        <div class="wrong-cause-btns">
+            ${Object.entries(WRONG_CAUSES).map(([k, label]) =>
+                `<button type="button" class="wrong-cause-btn" data-click="tagWrongCause" data-args='["${k}"]'>${label}</button>`).join('')}
+        </div>
+        <div class="wrong-cause-reco is-hidden"></div>
+    `;
+    feedbackPanel.appendChild(row);
+}
+
+/**
+ * 퀴즈 오답 시 weakCards에 weak_quiz_ 항목으로 추가 + 원인 태깅 UI 표시.
+ */
+function markQuizWrong(currentQuiz) {
+    state.weakCards.add(weakItemKey(currentQuiz.id));
+    renderWrongCausePicker();
+}
+
+/**
+ * 퀴즈 정답 시 약점 해제 — 카드 ID와 weak_quiz_ 오답 항목 둘 다 제거한다.
+ */
+function clearQuizWeakness(currentQuiz) {
+    state.weakCards.delete(currentQuiz.id);
+    state.weakCards.delete(WRONG_QUIZ_PREFIX + currentQuiz.id);
+}
 export function startQuiz() {
     const subjId = state.quiz.subject;
     const subjData = (window.STUDY_DATA && window.STUDY_DATA[subjId]);
@@ -24,11 +111,48 @@ export function startQuiz() {
     
     // 최대 10문제만 출제
     state.quiz.data = shuffled.slice(0, 10);
+    state.quiz.diagnostic = false;
+    _beginQuizRun();
+}
+
+/**
+ * 진단 평가 — 전 과목에서 골고루 샘플링해 약점 프로파일을 생성한다.
+ * 오답은 weakCards/wrongCauses로 자동 연결되므로 결과가 추천 엔진에 반영된다.
+ */
+export async function startDiagnosticQuiz() {
+    const subjects = DataLoader.getSubjectList();
+    if (!subjects || subjects.length === 0) {
+        showToast('과목 데이터를 불러오지 못했습니다.', 'warning');
+        return;
+    }
+    // 전 과목 로드 (미로드 과목 대비)
+    await Promise.all(subjects.map(s => DataLoader.loadSubject(s.key).catch(() => null)));
+
+    const perSubject = Math.max(3, Math.ceil(20 / subjects.length));
+    let data = [];
+    subjects.forEach(s => {
+        const qs = (window.STUDY_DATA && window.STUDY_DATA[s.key] && window.STUDY_DATA[s.key].quizzes) || [];
+        data.push(...shuffle(qs).slice(0, perSubject));
+    });
+    if (data.length === 0) {
+        showToast('출제 가능한 문제가 없습니다.', 'warning');
+        return;
+    }
+    state.quiz.subject = subjects[0].key;
+    state.quiz.data = shuffle(data);
+    state.quiz.diagnostic = true;
+    switchView('quiz-view');
+    _beginQuizRun();
+}
+
+/**
+ * 출제된 state.quiz.data로 퀴즈 실행 화면을 연다 (UI 전환 + 첫 문제 렌더).
+ */
+function _beginQuizRun() {
     state.quiz.currentIndex = 0;
     state.quiz.correctCount = 0;
     state.quiz.solvedList = [];
-    
-    // UI 세팅
+
     const emptyStateEl = document.getElementById('quiz-empty-state');
     const resultPanelEl = document.getElementById('quiz-result-panel');
     const arenaPanelEl = document.getElementById('quiz-arena-panel');
@@ -38,7 +162,7 @@ export function startQuiz() {
     if (resultPanelEl) resultPanelEl.classList.add('is-hidden');
     if (arenaPanelEl) arenaPanelEl.classList.remove('is-hidden');
     if (progressHeaderEl) progressHeaderEl.classList.remove('is-hidden');
-    
+
     renderQuizQuestion();
 }
 
@@ -90,7 +214,10 @@ export function renderQuizQuestion() {
     if (inputGroup) inputGroup.classList.add('is-hidden');
     if (submitBtn) submitBtn.classList.add('is-hidden');
     if (nextBtn) nextBtn.classList.add('is-hidden');
-    if (feedbackPanel) feedbackPanel.classList.add('is-hidden');
+    if (feedbackPanel) {
+        feedbackPanel.classList.add('is-hidden');
+        feedbackPanel.querySelector('.wrong-cause-picker')?.remove();
+    }
 
     if (quizType === 'choice' && currentQuiz.options && currentQuiz.options.length > 0) {
         // 객관식
@@ -164,7 +291,9 @@ export function submitQuizAnswer() {
     if (isCorrect) {
         quizState.correctCount++;
         // 약점 집중 퀴즈(복습)에서 카드 기반 문제를 맞히면 약점 해제 — 데일리 챌린지와 동일 규칙
-        state.weakCards.delete(currentQuiz.id);
+        clearQuizWeakness(currentQuiz);
+    } else {
+        markQuizWrong(currentQuiz);
     }
     
     // solvedList에 기록
@@ -236,9 +365,10 @@ function submitQuizChoiceAnswer(selectedBtn, selectedValue, correctValue) {
     }
     if (!isCorrect) {
         selectedBtn.classList.add('incorrect');
+        markQuizWrong(currentQuiz);
     } else {
         quizState.correctCount++;
-        state.weakCards.delete(currentQuiz.id);
+        clearQuizWeakness(currentQuiz);
     }
     
     // solvedList에 기록
@@ -318,7 +448,7 @@ export function renderQuizResult() {
     
     const rate = Math.round((quizState.correctCount / quizState.data.length) * 100);
     if (percentEl) percentEl.textContent = `${rate}%`;
-    
+
     // 오답 리뷰 목록 렌더링
     const reviewListEl = document.getElementById('quiz-review-list');
     if (reviewListEl) {
@@ -328,6 +458,8 @@ export function renderQuizResult() {
         } else {
             reviewListEl.innerHTML = `<h3 style="margin-bottom:0.75rem; font-size:1.1rem;"><i class="fa-solid fa-triangle-exclamation"></i> 오답 리뷰 (${wrongAnswers.length}문제)</h3>`;
             wrongAnswers.forEach((s, idx) => {
+                const itemId = weakItemKey(s.quizId);
+                const causeInfo = state.wrongCauses[itemId];
                 const item = document.createElement('div');
                 item.className = 'quiz-review-item';
                 item.innerHTML = `
@@ -335,11 +467,72 @@ export function renderQuizResult() {
                     <p style="font-size:0.9rem; margin-bottom:0.4rem;">${safeTextWithBreaks(s.question)}</p>
                     <p style="font-size:0.85rem; color:var(--color-danger);">내 답: ${esc(s.selected)}</p>
                     <p style="font-size:0.85rem; color:var(--color-success);">정답: <strong>${esc(s.correctAnswer)}</strong></p>
+                    <div class="wrong-cause-inline">
+                        ${causeInfo
+                            ? `<span class="wrong-cause-chip"><i class="fa-solid fa-tag"></i> ${WRONG_CAUSES[causeInfo.cause] || ''}</span>`
+                            : `<span class="wrong-cause-label">틀린 이유:</span>
+                               ${Object.entries(WRONG_CAUSES).map(([k, label]) =>
+                                   `<button type="button" class="wrong-cause-btn" data-click="tagWrongCauseAt" data-args='["${esc(s.quizId)}", "${k}"]'>${label}</button>`).join('')}`
+                        }
+                    </div>
+                    <div class="wrong-relearn-row">
+                        <button type="button" class="wrong-relearn-btn" data-click="wrongActionCard" data-args='["${esc(itemId)}"]'><i class="fa-solid fa-note-sticky"></i> 복습 노트</button>
+                        <button type="button" class="wrong-relearn-btn" data-click="wrongActionTextbook" data-args='["${esc(subjectForWeakItem(itemId))}"]'><i class="fa-solid fa-book-open"></i> 교재 보기</button>
+                        <button type="button" class="wrong-relearn-btn" data-click="wrongActionSimilar" data-args='["${esc(s.quizId)}"]'><i class="fa-solid fa-layer-group"></i> 유사 문제</button>
+                    </div>
                 `;
                 reviewListEl.appendChild(item);
             });
         }
     }
+
+    // 진단 평가 모드 — 과목별 약점 프로파일을 오답 리뷰 위에 삽입
+    if (quizState.diagnostic) {
+        _renderDiagnosticProfile(reviewListEl);
+    }
+}
+
+/**
+ * 진단 평가 결과 — 과목별 정답률 프로파일을 오답 리뷰 위에 삽입한다.
+ */
+function _renderDiagnosticProfile(reviewListEl) {
+    if (!reviewListEl) return;
+    const perSubj = {};
+    state.quiz.solvedList.forEach(s => {
+        const m = (s.quizId || '').match(/^([a-z]+)_quiz_/);
+        const key = m ? m[1] : 'unknown';
+        perSubj[key] = perSubj[key] || { solved: 0, correct: 0 };
+        perSubj[key].solved++;
+        if (s.correct) perSubj[key].correct++;
+    });
+
+    const subjects = (typeof DataLoader !== 'undefined' && DataLoader.registry)
+        ? DataLoader.getSubjectList()
+        : [];
+    const nameOf = (key) => {
+        const s = subjects.find(x => x.key === key);
+        return s ? s.name : key;
+    };
+
+    const rows = Object.entries(perSubj)
+        .map(([key, v]) => ({ key, ...v, rate: Math.round((v.correct / v.solved) * 100) }))
+        .sort((a, b) => a.rate - b.rate);
+
+    let html = `
+        <div class="diagnostic-profile">
+            <h3 style="margin-bottom:0.6rem; font-size:1.1rem;"><i class="fa-solid fa-stethoscope"></i> 진단 결과 — 과목별 약점 프로파일</h3>`;
+    rows.forEach((r, i) => {
+        const color = r.rate < 40 ? 'var(--color-danger)' : (r.rate >= 80 ? 'var(--color-success)' : 'var(--color-warning)');
+        html += `
+            <div class="diagnostic-row">
+                <span class="diagnostic-rank">${i === 0 ? '<i class="fa-solid fa-bullseye" style="color:var(--color-danger);"></i>' : ''}</span>
+                <span class="diagnostic-name">${esc(nameOf(r.key))}</span>
+                <span class="diagnostic-rate" style="color:${color};">${r.correct}/${r.solved} (${r.rate}%)</span>
+                <button type="button" class="wrong-relearn-btn" data-click="startSubjectQuiz" data-arg="${esc(r.key)}"><i class="fa-solid fa-play"></i> 집중 퀴즈</button>
+            </div>`;
+    });
+    html += `<p class="diagnostic-hint">오답은 자동으로 복습 노트에 수집되었습니다 — 정답률이 낮은 과목부터 보강하세요.</p></div>`;
+    reviewListEl.insertAdjacentHTML('afterbegin', html);
 }
 
 /**
@@ -359,8 +552,24 @@ export function getWeakCardsList() {
         });
     }
     
-    // 2. 모의고사 오답 카드 복구
+    // 2. 모의고사·기출 퀴즈 오답 카드 복구
     state.weakCards.forEach(cardId => {
+        if (cardId.startsWith(WRONG_QUIZ_PREFIX)) {
+            const resolved = resolveWrongQuiz(cardId);
+            if (resolved) {
+                const { quiz: q, subjectId } = resolved;
+                const subjectName = window.STUDY_DATA[subjectId].name;
+                list.push({
+                    id: cardId,
+                    subjectId: subjectId,
+                    category: q.category,
+                    term: `[기출 퀴즈 오답] ${q.question.substring(0, 30)}...`,
+                    definition: `문제: ${q.question}\n정답: ${q.answer}`,
+                    subjectName: subjectName
+                });
+            }
+            return;
+        }
         if (cardId.startsWith('weak_sim_')) {
             const parts = cardId.replace('weak_sim_', '').split('_q');
             if (parts.length === 2) {
@@ -442,7 +651,22 @@ export function renderReviewList() {
     if (focusQuizBtn) focusQuizBtn.classList.remove('is-hidden');
     if (examBtn) examBtn.classList.remove('is-hidden');
     if (printBtn) printBtn.classList.remove('is-hidden');
-    
+
+    // 오답 패턴 분석 요약 — 최근 7일 원인 분포 + 권장 학습법
+    const causeSummary = computeWrongCauseSummary(state.wrongCauses);
+    if (causeSummary.total > 0) {
+        const dist = Object.entries(WRONG_CAUSE_LABELS)
+            .filter(([k]) => causeSummary.counts[k] > 0)
+            .map(([k, label]) => `${label} ${causeSummary.counts[k]}`)
+            .join(' · ');
+        container.insertAdjacentHTML('beforeend', `
+            <div class="wrong-cause-summary">
+                <span class="wrong-cause-chip"><i class="fa-solid fa-chart-pie"></i> 오답 패턴 (7일): ${dist}</span>
+                <span class="wrong-cause-advice">${esc(causeSummary.advice)}</span>
+            </div>
+        `);
+    }
+
     allCards.forEach(card => {
         const itemHTML = `
             <div class="review-card-item" id="rev-${card.id}">
@@ -518,6 +742,20 @@ export function startWeakFocusQuiz() {
     if (weakCards.length === 0) return;
     
     const weakList = weakCards.map(card => {
+        if (card.id.startsWith(WRONG_QUIZ_PREFIX)) {
+            const resolved = resolveWrongQuiz(card.id);
+            if (!resolved) return null;
+            const q = resolved.quiz;
+            return {
+                id: card.id,
+                category: q.category,
+                context: `[기출 퀴즈 오답 퀴즈]`,
+                question: q.question,
+                answer: q.answer,
+                type: q.type,
+                options: q.options || null
+            };
+        }
         if (card.id.startsWith('weak_sim_')) {
             const parts = card.id.replace('weak_sim_', '').split('_q');
             const examId = parts[0];
@@ -555,21 +793,131 @@ export function startWeakFocusQuiz() {
     });
     
     state.quiz.data = shuffle(weakList.filter(Boolean)).slice(0, 10);
-    state.quiz.currentIndex = 0;
-    state.quiz.correctCount = 0;
-    state.quiz.solvedList = [];
-    
+    state.quiz.diagnostic = false;
     switchView('quiz-view');
-    
-    const emptyStateEl = document.getElementById('quiz-empty-state');
-    const resultPanelEl = document.getElementById('quiz-result-panel');
-    const arenaPanelEl = document.getElementById('quiz-arena-panel');
-    const progressHeaderEl = document.querySelector('.quiz-progress-header');
+    _beginQuizRun();
+}
 
-    if (emptyStateEl) emptyStateEl.classList.add('is-hidden');
-    if (resultPanelEl) resultPanelEl.classList.add('is-hidden');
-    if (arenaPanelEl) arenaPanelEl.classList.remove('is-hidden');
-    if (progressHeaderEl) progressHeaderEl.classList.remove('is-hidden');
-    
-    renderQuizQuestion();
+/* =======================================================
+   오답 원인 태깅 + 재학습 연결 (FEATURE_PROPOSALS §4.2)
+   ======================================================= */
+
+/**
+ * 오답 원인 저장 + 원인별 즉시 재학습 사이드 이펙트.
+ * memorize는 관련 플래시카드를 weakCards에 추가한다.
+ */
+function _storeCause(quizId, cause) {
+    if (!(cause in WRONG_CAUSES)) return;
+    const itemId = weakItemKey(quizId);
+    state.wrongCauses[itemId] = {
+        cause: cause,
+        ts: Date.now(),
+        subjectId: subjectForWeakItem(itemId)
+    };
+    if (cause === 'memorize') _addRelatedCardToWeak(quizId);
+    saveProgress();
+}
+
+/**
+ * 퀴즈의 [용어: X] 컨텍스트에서 관련 카드를 찾아 weakCards에 추가한다.
+ */
+function _addRelatedCardToWeak(quizId) {
+    const resolved = resolveWrongQuiz(quizId);
+    if (!resolved || !window.STUDY_DATA) return;
+    const termMatch = /\[용어:\s*(.+?)\s*\]/.exec(resolved.quiz.context || '');
+    if (!termMatch) return;
+    const card = (window.STUDY_DATA[resolved.subjectId].cards || []).find(c => c.term === termMatch[1]);
+    if (card) state.weakCards.add(card.id);
+}
+
+/**
+ * 원인별 재학습 추천 UI HTML.
+ */
+function _causeRecoHtml(cause, quizId) {
+    const itemId = weakItemKey(quizId);
+    const subjId = subjectForWeakItem(itemId);
+    switch (cause) {
+        case 'memorize':
+            return `<i class="fa-solid fa-lightbulb"></i> 관련 플래시카드를 복습 노트에 추가했습니다.
+                <button type="button" class="wrong-relearn-btn" data-click="wrongActionCard" data-args='["${esc(itemId)}"]'>복습 노트 보기</button>`;
+        case 'concept':
+            return `<i class="fa-solid fa-book-open"></i> 개념을 교재에서 다시 확인해 보세요.
+                <button type="button" class="wrong-relearn-btn" data-click="wrongActionTextbook" data-args='["${esc(subjId)}"]'>교재 보기</button>
+                <button type="button" class="wrong-relearn-btn" data-click="wrongActionSimilar" data-args='["${esc(quizId)}"]'>유사 문제</button>`;
+        case 'calc':
+            return `<i class="fa-solid fa-calculator"></i> 같은 유형의 문제로 다시 연습해 보세요.
+                <button type="button" class="wrong-relearn-btn" data-click="wrongActionSimilar" data-args='["${esc(quizId)}"]'>유사 문제 풀기</button>`;
+        default:
+            return '';
+    }
+}
+
+/**
+ * 피드백 패널에서 현재 문제의 오답 원인을 태깅한다. (data-click)
+ */
+export function tagWrongCause(cause) {
+    const quizState = state.quiz;
+    const currentQuiz = quizState.data[quizState.currentIndex];
+    if (!currentQuiz) return;
+    _storeCause(currentQuiz.id, cause);
+
+    const feedbackPanel = document.getElementById('quiz-feedback-panel');
+    if (!feedbackPanel) return;
+    const causeKeys = Object.keys(WRONG_CAUSES);
+    feedbackPanel.querySelectorAll('.wrong-cause-btn').forEach((btn, i) => {
+        btn.classList.toggle('active', causeKeys[i] === cause);
+    });
+    const reco = feedbackPanel.querySelector('.wrong-cause-reco');
+    if (reco) {
+        reco.classList.remove('is-hidden');
+        reco.innerHTML = _causeRecoHtml(cause, currentQuiz.id);
+    }
+}
+
+/**
+ * 결과 화면 오답 아이템에서 원인을 태깅한다. (data-args: [quizId, cause])
+ */
+export function tagWrongCauseAt(quizId, cause) {
+    _storeCause(quizId, cause);
+    renderQuizResult();
+}
+
+/**
+ * 오답 항목을 복습 노트로 연다. (data-args: [itemId])
+ */
+export function wrongActionCard(itemId) {
+    state.weakCards.add(itemId);
+    state.reviewFilter = 'all';
+    saveProgress();
+    switchView('review-view');
+}
+
+/**
+ * 오답 항목의 과목 교재로 이동한다. (data-args: [subjectId])
+ */
+export function wrongActionTextbook(subjId) {
+    startSubjectReader(subjId);
+}
+
+/**
+ * 오답 문제와 같은 단원의 유사 문제로 퀴즈를 시작한다. (data-args: [quizId])
+ */
+export function wrongActionSimilar(quizId) {
+    const resolved = resolveWrongQuiz(quizId);
+    if (!resolved) {
+        showToast('원본 문제를 찾지 못했습니다.', 'warning');
+        return;
+    }
+    const { quiz, subjectId } = resolved;
+    const pool = (window.STUDY_DATA[subjectId].quizzes || [])
+        .filter(q => q.category === quiz.category && q.id !== quiz.id);
+    if (pool.length === 0) {
+        showToast('같은 단원에 유사 문제가 없습니다.', 'info');
+        return;
+    }
+    state.quiz.subject = subjectId;
+    state.quiz.data = shuffle(pool).slice(0, 10);
+    state.quiz.diagnostic = false;
+    switchView('quiz-view');
+    _beginQuizRun();
 }

@@ -88,7 +88,7 @@ export function updateCardSchedule(cardId, knew) {
  * 오늘 복습해야 할 카드 ID 목록 반환
  * @returns {string[]} 오늘 복습할 카드 ID 목록
  */
-function getDueCards() {
+export function getDueCards() {
     const schedules = loadSchedules();
     const todayStr = new Date().toISOString().split('T')[0];
     return Object.keys(schedules).filter(id => schedules[id].nextReview <= todayStr);

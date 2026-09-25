@@ -148,3 +148,53 @@ export function getWeeklyGoalProgress() {
         percent
     };
 }
+
+/* =======================================================
+   🗓️ 시험일 / D-day (역산 학습 계획)
+   ======================================================= */
+
+function _isValidDateStr(dateStr) {
+    if (!dateStr || !/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return false;
+    const [y, m, d] = dateStr.split('-').map(Number);
+    const dt = new Date(y, m - 1, d);
+    return dt.getFullYear() === y && dt.getMonth() === m - 1 && dt.getDate() === d;
+}
+
+/**
+ * 시험일 조회 (YYYY-MM-DD 또는 null)
+ */
+export function getExamDate() {
+    const v = safeGetItem(STORAGE_KEYS.EXAM_DATE);
+    return _isValidDateStr(v) ? v : null;
+}
+
+/**
+ * 시험일 저장 (null/빈 문자열/유효하지 않은 날짜면 제거)
+ */
+export function setExamDate(dateStr) {
+    safeSetItem(STORAGE_KEYS.EXAM_DATE, _isValidDateStr(dateStr) ? dateStr : '');
+}
+
+/**
+ * 시험까지 남은 일수 (오늘=0 기준). 미설정이면 null.
+ * 시험일이 지났으면 음수.
+ */
+export function getDDay() {
+    const examStr = getExamDate();
+    if (!examStr) return null;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const exam = new Date(examStr + 'T00:00:00');
+    return Math.round((exam - today) / (1000 * 60 * 60 * 24));
+}
+
+/**
+ * D-day 역산 일일 권장량.
+ * @param {number} remainingItems 남은 학습 항목 수 (예: 미암기 카드 수)
+ * @returns {number|null} 일일 권장 개수 (올림). 미설정/D-day 지남이면 null.
+ */
+export function getSuggestedDailyCount(remainingItems) {
+    const dday = getDDay();
+    if (dday === null || dday <= 0 || remainingItems <= 0) return null;
+    return Math.ceil(remainingItems / dday);
+}

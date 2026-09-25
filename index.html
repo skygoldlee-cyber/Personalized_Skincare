@@ -235,6 +235,14 @@
                             <p class="stat-desc">간격 반복 대기 카드</p>
                         </div>
                     </div>
+                    <div class="stat-card">
+                        <div class="stat-icon icon-orange"><i class="fa-solid fa-calendar-day" aria-hidden="true"></i></div>
+                        <div class="stat-info">
+                            <h3>시험까지</h3>
+                            <div class="stat-value" id="exam-dday-count">미설정</div>
+                            <p class="stat-desc"><button type="button" class="dday-set-btn" data-click="openGoalSettings"><i class="fa-solid fa-gear"></i> 시험일·목표 설정</button></p>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Daily Challenge & Streak and Data Management Row -->
@@ -464,6 +472,7 @@
                         </select>
                     </div>
                     <button id="start-quiz-btn" class="btn btn-primary">퀴즈 시작</button>
+                    <button id="start-diagnostic-btn" class="btn btn-secondary" data-click="startDiagnosticQuiz" title="전 과목에서 골고루 출제해 약점 프로파일 생성"><i class="fa-solid fa-stethoscope"></i> 진단 평가</button>
                 </div>
 
                 <!-- Quiz Progress Area -->

@@ -1,5 +1,5 @@
 // src/views/study-calendar.js — 학습 캘린더/목표 뷰
-import { getStudyCalendar, getStudyGoals, setStudyGoals, getTodayGoalProgress, getWeeklyGoalProgress, getMonthlyStudyDays, getTodayStr } from '../study-tracker.js';
+import { getStudyCalendar, getStudyGoals, setStudyGoals, getTodayGoalProgress, getWeeklyGoalProgress, getMonthlyStudyDays, getTodayStr, getExamDate, setExamDate, getDDay } from '../study-tracker.js';
 import { showToast } from '../ui-utils.js';
 import { STORAGE_KEYS } from '../storage-keys.js';
 import { safeGetItem } from '../state.js';
@@ -78,11 +78,12 @@ export function renderStudyCalendar() {
                 </div>
             </div>
 
-            <!-- 목표 설정 버튼 -->
+            <!-- 목표 설정 버튼 + D-day -->
             <div class="goal-settings-row">
                 <button class="btn btn-secondary btn-sm" data-click="openGoalSettings">
                     <i class="fa-solid fa-sliders" aria-hidden="true"></i> 목표 설정
                 </button>
+                ${_ddayChipHtml()}
             </div>
 
             <!-- 월별 캘린더 -->
@@ -115,6 +116,14 @@ export function renderStudyCalendar() {
             </div>
         </div>
     `;
+}
+
+function _ddayChipHtml() {
+    const dday = getDDay();
+    if (dday === null) return '';
+    const label = dday === 0 ? 'D-Day' : (dday < 0 ? `D+${-dday}` : `D-${dday}`);
+    const cls = dday <= 7 ? 'dday-chip dday-urgent' : 'dday-chip';
+    return `<span class="${cls}" title="시험일 ${getExamDate()}"><i class="fa-solid fa-calendar-day"></i> 시험까지 ${label}</span>`;
 }
 
 function _renderCalendarDays() {
@@ -177,6 +186,7 @@ export function nextCalendarMonth() {
  */
 export function openGoalSettings() {
     const goals = getStudyGoals();
+    const examDate = getExamDate() || '';
     const oldModal = document.getElementById('goal-settings-modal');
     if (oldModal) oldModal.remove();
 
@@ -204,6 +214,10 @@ export function openGoalSettings() {
                         <label style="display:block;margin-bottom:0.5rem;font-weight:600;">주간 학습 일수 (일)</label>
                         <input type="number" id="goal-weekly-days" class="form-input" value="${goals.weeklyStudyDays}" min="1" max="7" style="width:100%;height:48px;">
                     </div>
+                    <div>
+                        <label style="display:block;margin-bottom:0.5rem;font-weight:600;">시험일 (D-day 역산)</label>
+                        <input type="date" id="goal-exam-date" class="form-input" value="${examDate}" style="width:100%;height:48px;">
+                    </div>
                 </div>
                 <div style="display:flex;gap:0.75rem;margin-top:1.5rem;">
                     <button class="btn btn-secondary" style="flex:1;" data-click="closeGoalSettings">취소</button>
@@ -225,7 +239,9 @@ export function saveGoalSettings() {
     const quizzes = parseInt(document.getElementById('goal-daily-quizzes')?.value) || 10;
     const weeklyDays = parseInt(document.getElementById('goal-weekly-days')?.value) || 5;
     setStudyGoals({ dailyCards: cards, dailyQuizzes: quizzes, weeklyStudyDays: weeklyDays });
+    setExamDate(document.getElementById('goal-exam-date')?.value || '');
     closeGoalSettings();
     showToast('학습 목표가 저장되었습니다.', 'success');
     renderStudyCalendar();
+    if (typeof updateGlobalStats === 'function') updateGlobalStats();
 }

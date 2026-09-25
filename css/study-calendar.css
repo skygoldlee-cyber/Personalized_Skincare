@@ -72,11 +72,43 @@
     color: var(--color-text-main);
 }
 
-/* === 목표 설정 버튼 === */
+/* === 목표 설정 버튼 + D-day 칩 === */
 .goal-settings-row {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
+    gap: 0.75rem;
     margin-bottom: 1.5rem;
+}
+
+.dday-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    border-radius: var(--radius-pill);
+    background: var(--primary-tint-10);
+    color: var(--color-primary);
+    border: 1px solid var(--primary-tint-20, var(--border-color));
+}
+
+.dday-chip.dday-urgent {
+    background: var(--danger-tint-10, rgba(239, 68, 68, 0.1));
+    color: var(--color-danger);
+    border-color: var(--danger-tint-20, var(--color-danger));
+}
+
+.dday-set-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    font-size: inherit;
+    color: var(--color-primary);
+    cursor: pointer;
+    text-decoration: underline;
 }
 
 /* === 캘린더 네비게이션 === */
