@@ -64,4 +64,5 @@ A1 → A2 (배선 복구, 공수 소)
 - [FEATURE_PROPOSALS.md](FEATURE_PROPOSALS.md) — 추천 기능 제안 (합격 핵심 루프 정의)
 - [PASS_CORE_LOOP_REVIEW.md](PASS_CORE_LOOP_REVIEW.md) — 파이프라인 끊김 지점 코드 리뷰
 - [SUBSCRIPTION_ROADMAP.md](SUBSCRIPTION_ROADMAP.md) — 수익화 3단계 전환 로드맵
+- [PRO_MULTI_EXAM_EVALUATION.md](PRO_MULTI_EXAM_EVALUATION.md) — 멀티시험 킬러 피처 적합성 평가
 - [사업기획서 §5.4·§8.4·§12.3](../맞춤형화장품_조제관리사_자격증플랫폼_사업기획서.md)
