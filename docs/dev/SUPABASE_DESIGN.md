@@ -278,7 +278,7 @@ Formula OS의 고객 카드·상담 이력은 **타인의 개인정보**(이름�
 
 **결정 ① 저장 구조 — append-only 행 단위 테이블**
 
-- `sync_snapshots`는 문서 단위 LWW — 매장 PC와 태블릿이 동시에 판매를 기록하면 충돌 모달에서 한쪽 기록이 소실된다. **법정 기록에는 LWW 불가.**
+- `sync_snapshots`는 문서 단위 LWW — 매장 PC와 태블릿이 동시에 판매·조제·원료 입고를 기록하면 충돌 모달에서 한쪽 기록이 소실된다. **건별 기록에는 LWW 불가.**
 - 신규 테이블 예시: `sales_records(user_id, sale_id uuid, sold_at, product_lot, expiry, qty, …법정 항목)` — INSERT 전용, UPDATE/DELETE 없음 (RLS: insert + select only)
 - 이는 Phase 4의 엔티티 테이블화 작업 일부를 앞당기는 것 — 스냅샷과 다른 쓰기 경로(행 단위 upsert·offline 큐)가 필요해 작업량은 Phase 2보다 크다
 
