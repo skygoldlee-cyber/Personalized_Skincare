@@ -256,6 +256,10 @@ import { renderExamSelect, showExamSelect, selectExamAction } from './views/exam
 import { initUiMode, toggleUiMode, toggleStudyTools } from './ui-mode.js';
 import { initAuthView, openAuthModal, closeAuthModal, authSignIn, authSignUp, authEmailLogin, authMagicLink, authSignOut, authSetPassword, authSendOtp, authVerifyOtp, authForgotPassword } from './auth-view.js';
 import { initSync, syncNow } from './sync.js';
+import {
+    initCommandPalette, openCommandPalette, closeCommandPalette,
+    executePaletteResult
+} from './command-palette.js';
 
 // --- 런타임 에러 안전망 (런타임 ReferenceError 등을 사용자에게 알림) ---
 window.addEventListener('error', function (event) {
@@ -550,6 +554,8 @@ function initApp() {
     // 클라우드 동기화 — 쓰기 훅 등록 + 로그인 상태면 시작 pull (비동기·실패 무시)
     step('initSync', () => { initSync(); });
     step('setupThemeToggle', setupThemeToggle);
+    // 통합 검색 팔레트 (Ctrl+K)
+    step('initCommandPalette', initCommandPalette);
     // 초기 뷰 렌더링
     step('renderDashboard', renderDashboard);
     step('updateGlobalStats', updateGlobalStats);
@@ -933,6 +939,8 @@ const DELEGATED_HANDLERS = {
     removeWeakCard, setReviewFilter, printReviewNotes,
     tagWrongCause, tagWrongCauseAt, wrongActionCard, wrongActionTextbook, wrongActionSimilar,
     startDiagnosticQuiz,
+    // 통합 검색 팔레트
+    openCommandPalette, closeCommandPalette, executePaletteResult,
     exportData, triggerImport, checkStorageWarning,
     // 데일리 챌린지
     startDailyChallenge, closeDailyModal, nextDailyStep,

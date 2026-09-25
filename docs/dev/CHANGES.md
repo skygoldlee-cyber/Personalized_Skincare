@@ -4,6 +4,22 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-25 통합 검색 팔레트 (Ctrl+K) — Learning Pro C2
+
+- **`src/command-palette.js` 신규**: 하나의 검색창에서 뷰 이동·교재 섹션·플래시카드·
+  기출 퀴즈·성분 사전(초성 검색)·문제집 파일을 통합 검색 — `searchAll()`은 주입 가능한
+  순수 함수로 분리해 유닛 테스트 가능.
+- **진입점**: 헤더 돋보기 버튼(모바일 포함) + `Ctrl/Cmd+K` 전역 단축키.
+  `↑↓` 이동·`Enter` 실행·`ESC` 닫기, 배경 클릭 닫기.
+- **실행 경로는 기존 앱 경로 재사용**: 뷰 → nav-item 클릭 시뮬레이션(feature 게이팅
+  `is-hidden` 반영), 카드 → `startSubjectStudy`, 퀴즈 → `startSubjectQuiz`,
+  교재 → `openSubjectChapter`(Chapter N → `chN` 앵커), 성분 → 사전 뷰 쿼리 주입,
+  문제집 → `ExamViewer.openExam`. 신규 네비게이션 분기 없음.
+- **오프라인 완전 동작**: 모든 검색 대상이 `STUDY_DATA`/`INGREDIENTS_DATA`/`DataLoader.registry`
+  등 로컬 데이터 — SW 프리캐시에 모듈 등록.
+- 검증: 유닛 +10개(검색 매칭·그룹 상한·초성), DOM +9개(단축키·그룹 렌더·키보드
+  내비·XSS 이스케이프·feature 게이팅) — 512/341 전체 통과.
+
 ## 2026-09-25 모바일 하단 탭 바 겹침 수정 + PWA 콜드 스타트 뷰포트 보정
 
 - **하단 플로팅 요소 탭 바 겹침 수정**: `.reader-back-to-top`(`bottom:1.25rem`)이
