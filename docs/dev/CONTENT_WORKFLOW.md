@@ -217,7 +217,7 @@ flowchart TD
 
 **2. 콘텐츠 파서 계약 (새 교재가 지켜야 할 형식)**
 - [ ] 카드 추출용 표 `| 용어 | 설명 |` 2열 구조, `- **용어**: 설명` 리스트
-- [ ] 퀴즈 마커 `🔖기출`/`📌중요`/`★필수` + `**볼드**` 빈칸 대상
+- [ ] 퀴즈 마커 `🔖기출`/`📌중요`/`★필수` + `**볼드**` 또는 숫자+단위(`0.5%`, `6개월` 등) 빈칸 대상 — 헤더·라벨 라인의 마커는 퀴즈 미생성(상세: TEXTBOOK_AUTHORING_GUIDE §3.5)
 - [ ] 챕터 헤딩 `## 📚 Chapter NN.` 또는 `## N.` (question_chapters 경계)
 - [ ] 참조 링크 `../참조자료/ref_md/과목N/...` 형식 (상세: `docs/dev/TEXTBOOK_AUTHORING_GUIDE.md`)
 
@@ -388,12 +388,12 @@ python tools/convert_ref_pdfs_v2.py --verify
 
 ## 4. 검증 체크리스트
 
-> **통합 명령**: `npm.cmd run check:content`은 아래 전 항목(+귀속·레이아웃·드릴·카드 감사)을 한 번에 실행합니다.
+> **통합 명령**: `npm.cmd run check:content`은 아래 전 항목(+귀속·레이아웃·PDF 신선도·참조라인·드릴신선도·드릴·카드 감사)을 한 번에 실행합니다.
 
 빌드 후 반드시 확인:
 
 ```powershell
-# 1. 유닛 테스트 (248개)
+# 1. 유닛 테스트
 npm.cmd test
 
 # 2. import/export 검증
@@ -411,7 +411,7 @@ git status
 
 ```mermaid
 flowchart TD
-    Start["빌드 완료"] --> T1{"npm test<br/>248개 통과?"}
+    Start["빌드 완료"] --> T1{"npm test<br/>전부 통과?"}
     T1 -- No --> F1["❌ 테스트 실패<br/>원인 수정"]
     F1 --> Start
     T1 -- Yes --> T2{"check:imports<br/>0 오류?"}
