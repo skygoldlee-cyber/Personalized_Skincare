@@ -105,9 +105,23 @@ test('멀티토큰 AND 매칭 — 모든 토큰 포함 항목만', () => {
     r.forEach(x => assert.ok(
         (x.title + ' ' + x.sub).toLowerCase().includes('화장품') || true // 그룹 경계 검증 대신 토큰 검증은 매처 내부에서 수행
     ));
-    // 단일토큰이면 매칭 안 되는 조합 확인
+    // 단일토큰이면 매칭 안 되는 조합 확인 — 매칭 결과는 없고 본문검색 브리지만 남음
     const none = searchAll('존재하지않는어휘 검색어', sources);
-    assert.equal(none.length, 0);
+    assert.deepEqual(none.map(x => x.type), ['fulltext']);
+});
+
+test('본문 전수검색 브리지 — 매칭 여부와 무관하게 항상 맨 끝 항목', () => {
+    const withMatches = searchAll('화장품', sources);
+    const last = withMatches[withMatches.length - 1];
+    assert.equal(last.type, 'fulltext');
+    assert.equal(last.action.kind, 'fulltext');
+    assert.equal(last.action.query, '화장품');
+    assert.ok(last.title.includes('화장품'));
+
+    // 제목 매칭 0건이어도 브리지는 항상 존재 (본문에만 있는 내용 탐색 경로)
+    const noMatches = searchAll('고시 별표 9호', sources);
+    assert.equal(noMatches.length, 1);
+    assert.equal(noMatches[0].type, 'fulltext');
 });
 
 test('그룹별 최대 개수 제한 (MAX_PER_GROUP=5)', () => {

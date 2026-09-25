@@ -118,6 +118,14 @@ export function setTextbookFilter(filterVal) {
     performTextbookSearch();
 }
 
+/** 외부(통합 검색 팔레트)에서 검색어 주입 — 뷰 진입 전 호출해도 상태가 유지되어 로드 후 렌더에 반영된다 */
+export function setTextbookSearchQuery(query) {
+    textbookState.searchQuery = (query || '').trim();
+    const searchInput = document.getElementById('textbook-search-input');
+    if (searchInput) searchInput.value = textbookState.searchQuery;
+    performTextbookSearch();
+}
+
 export function clearTextbookSearch() {
     const searchInput = document.getElementById('textbook-search-input');
     if (searchInput) {

@@ -59,10 +59,12 @@ describe('command-palette — 통합 검색', () => {
         expect(labels).toContain('플래시카드');
     });
 
-    it('결과 없음 상태 표시', () => {
+    it('매칭 없을 때 본문검색 브리지 항목 표시', () => {
         openCommandPalette();
         type('존재하지않는검색어');
-        expect(document.getElementById('cmdk-results').textContent).toContain('결과가 없습니다');
+        const items = document.querySelectorAll('#cmdk-results .cmdk-item');
+        expect(items.length).toBe(1);
+        expect(document.getElementById('cmdk-results').textContent).toContain('본문에서');
     });
 
     it('화살표 키로 활성 항목 이동, Enter로 실행', () => {

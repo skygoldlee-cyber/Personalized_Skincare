@@ -6,6 +6,7 @@ import { esc } from './sanitize.js';
 import { getChosung } from './utils.js';
 import { contentPath } from './exam-context.js';
 import { openSubjectSection } from './views/textbook-reader.js';
+import { setTextbookSearchQuery } from './views/textbook-search.js';
 import { dictState } from './views/dictionary.js';
 
 const MAX_PER_GROUP = 5;
@@ -137,14 +138,24 @@ export function searchAll(query, sources) {
         groups[type].sort((a, b) => b.score - a.score);
         flat.push(...groups[type]);
     });
-    return flat.slice(0, MAX_TOTAL);
+    const results = flat.slice(0, MAX_TOTAL);
+
+    // 본문 전수검색 브리지 — 팔레트는 섹션 "제목"만 인덱스하므로, 본문에서 찾아야 하는
+    // 쿼리는 항상 이 항목으로 교재 본문검색(역색인) 뷰에 넘긴다. 결과가 있어도 항상 맨 아래 표시.
+    results.push({
+        type: 'fulltext', icon: 'fa-magnifying-glass',
+        title: `교재 본문에서 "${query}" 전체 검색`, sub: '본문 내용까지 전수 검색 (제목 매칭만으로는 못 찾는 내용)',
+        action: { kind: 'fulltext', query: (query || '').trim() }, score: 0
+    });
+    return results;
 }
 
 /* ---------- 팔레트 UI ---------- */
 
 const TYPE_LABELS = {
     view: '화면', section: '교재', card: '플래시카드',
-    quiz: '기출 퀴즈', ingredient: '성분 사전', exam: '문제집'
+    quiz: '기출 퀴즈', ingredient: '성분 사전', exam: '문제집',
+    fulltext: '본문 검색'
 };
 
 function _buildDom() {
@@ -280,6 +291,10 @@ export function executePaletteResult(idx) {
             if (window.ExamViewer && window.ExamViewer.openExam) {
                 window.ExamViewer.openExam(contentPath(a.path));
             }
+            break;
+        case 'fulltext':
+            setTextbookSearchQuery(a.query);
+            clickNav('textbook-view');
             break;
     }
 }
