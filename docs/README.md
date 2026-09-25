@@ -60,6 +60,7 @@
 5. PASS_CORE_LOOP_REVIEW.md      — 핵심 루프의 코드 반영도 진단 (시점 스냅샷)
 6. READER_FEEDBACK_DESIGN.md     — 독자 피드백 공유 기능 설계안
 7. SUBSCRIPTION_ROADMAP.md       — 월 구독 전환 로드맵
+8. FORMULA_OS_경쟁전략.md          — Formula OS 경쟁 지도·차별화 축·시나리오별 대응
 ```
 
 ### ⑥ 학습자(사용자) 관점 문서
@@ -76,6 +77,7 @@ user/user_manual.md → 학습안내서(앱 내) → user/exam_strategy.md → u
 docs/
 ├── README.md                    ← 본 파일 (문서 인덱스 + 읽기 순서)
 ├── 맞춤형화장품_조제관리사_자격증플랫폼_사업기획서.md
+├── FORMULA_OS_경쟁전략.md          ← Formula OS 경쟁·차별화 전략
 ├── dev/                         ← 개발·설계·운영 문서 (28개)
 ├── user/                        ← 사용자/학습자 문서 (7개)
 └── report_archive/              ← 1회성 분석 보고서 아카이브 (4개)
