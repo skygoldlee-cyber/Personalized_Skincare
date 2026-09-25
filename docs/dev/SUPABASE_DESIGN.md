@@ -28,7 +28,30 @@
 [Supabase] auth.users + profiles + sync_snapshots
 ```
 
-### 2.1 배포·CSP 제약 (실측 확인)
+### 2.1 플랫폼 역할 분담 (Vercel vs Supabase)
+
+| 영역 | Vercel | Supabase |
+|---|---|---|
+| 앱 호스팅 | 정적 파일 서빙 (HTML/JS/CSS/번들) | — |
+| CDN·HTTPS·배포 | 글로벌 엣지 캐시, TLS 자동, `git push` → 자동 배포 | — |
+| 서버 코드 | 없음 (정적 전용) | Postgres + PostgREST + RPC |
+| 인증 | — | 이메일/PW·매직링크 OTP (`auth.users`, Custom SMTP 가능) |
+| DB | — | `profiles`(요금제) · `sync_snapshots`(학습 진도 백업) · `pro_codes`(Pro 코드) |
+| 접근 제어 | — | RLS 정책 (`auth.uid() = user_id` 행 소유자 검증) |
+| 권한 로직 | — | `redeem_code` RPC (security definer — plan 변경의 유일한 경로) |
+| 실시간 동기화 | — | `sync_snapshots` push/pull (2.5s 디바운스 · LWW) |
+| 오프라인 | PWA Service Worker가 담당 (Vercel 무관) | 미연결 시 앱 정상 동작 (localStorage가 1차) |
+| 비용 | Hobby 무료 → 상업화 시 Pro $20/월 | 무료 티어 운영 중 |
+
+> **경계선 요약**: Vercel은 "파일 배달부", Supabase는 "선택적 계정·동기화 계층". Supabase가 다운되거나 미설정이어도 앱 전 기능이 동작하는 Local-First 구조다.
+
+```text
+[사용자] → Vercel (앱 파일 다운로드) → 브라우저에서 실행
+              ↘ 로그인 시에만 → Supabase (인증 + 스냅샷 동기화)
+              ↘ 비로그인 → localStorage만 사용, Supabase 불요
+```
+
+### 2.2 배포·CSP 제약 (실측 확인)
 
 | 제약 | 현황 | 조치 |
 |---|---|---|
@@ -37,7 +60,7 @@
 | Service Worker | 모든 fetch가 동일 오리진이었음 | `url.origin !== location.origin` → network-only 조기 리턴 (Supabase 응답 캐시 금지) |
 | `Permissions-Policy payment=()` | — | 코드 방식은 불필요. 향후 Payment Request API 도입 시에만 재검토 |
 
-### 2.2 신규/변경 파일
+### 2.3 신규/변경 파일
 
 | 파일 | 역할 |
 |---|---|
