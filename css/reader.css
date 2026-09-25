@@ -1218,8 +1218,13 @@ body.reader-focus-mode .reader-readable-width {
         width: 100%;
     }
     .reader-back-to-top {
-        bottom: 1.25rem;
+        /* 하단 탭 바(70px + safe-area) 위에 띄움 — 기존 1.25rem은 탭 바에 완전히 가려짐 */
+        bottom: calc(78px + env(safe-area-inset-bottom, 0px));
         right: 1.25rem;
+    }
+    /* 용어집 복귀 버튼도 탭 바 위로 — safe-area가 10px 넘으면 기존 5rem은 탭 바와 겹침 */
+    .glossary-back-btn {
+        bottom: calc(78px + env(safe-area-inset-bottom, 0px));
     }
     /* M1: 챕터 헤더 카드 제거됨 — 툴바로 통합 */
     .reader-chapter-meta {
@@ -1477,7 +1482,10 @@ body.reader-focus-mode .reader-readable-width {
         flex: 1;
         overflow-y: auto;
         overflow-x: hidden;
-        padding-bottom: calc(70px + env(safe-area-inset-bottom, 0px)); /* safe-area 대응 */
+        /* 탭 바 높이(70px) + 여유 10px — 서브픽셀/전이 상태에서 마지막 위젯이 탭 바에 붙지 않도록 */
+        padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+        /* 포커스/scrollIntoView로 요소가 하단 탭 바 밑으로 들어가지 않도록 */
+        scroll-padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
         -webkit-overflow-scrolling: touch;
     }
 

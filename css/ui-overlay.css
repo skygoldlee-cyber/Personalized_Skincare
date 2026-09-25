@@ -82,6 +82,11 @@
   #app-toast.is-visible {
     transform: translate(-50%, 0) scale(1);
   }
+  /* 하단 고정 배너들도 탭 바(70px + safe-area)를 덮지 않도록 위로 이동 */
+  #storage-warning-banner,
+  .nav-init-fail-banner {
+    bottom: calc(70px + env(safe-area-inset-bottom, 0px));
+  }
 }
 
 /* ── 컨펌 모달 ── */
