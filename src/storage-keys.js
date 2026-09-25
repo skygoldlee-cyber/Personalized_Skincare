@@ -14,6 +14,7 @@ export const STORAGE_KEYS = {
   QUIZ_WRONG_CAUSES: 'quiz_wrong_causes',  // { itemId: { cause, ts, subjectId } } — 오답 원인 자가 태깅
   SIM_RESULTS_HISTORY: 'sim_results_history',
   SIM_DRAFT_SESSION: 'sim_draft_session',
+  ACTUAL_EXAM_RESULT: 'actual_exam_result', // { passed, score|null, reportedAt, examId } — 실제 시험 결과 자가 보고
 
   // 뽀모도로
   POMO_TOTAL_TIME: 'pomo_total_time',
@@ -92,6 +93,7 @@ export const BACKUP_KEYS = [
   STORAGE_KEYS.QUIZ_WRONG_CAUSES,
   STORAGE_KEYS.SIM_RESULTS_HISTORY,
   STORAGE_KEYS.SIM_DRAFT_SESSION,
+  STORAGE_KEYS.ACTUAL_EXAM_RESULT,
   STORAGE_KEYS.POMO_TOTAL_TIME,
   STORAGE_KEYS.POMO_TOTAL_TIME_DATE,
   STORAGE_KEYS.STUDY_STREAK,

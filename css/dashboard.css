@@ -558,3 +558,46 @@
     border-bottom-right-radius: 0;
     border-bottom-color: var(--border-subtle);
 }
+
+/* ===== 예상 점수 추정 + 실제 결과 자가 보고 (C1) ===== */
+.estimate-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px dashed var(--color-border);
+  flex-wrap: wrap;
+}
+.estimate-label { font-size: var(--text-sm); color: var(--color-text-muted); }
+.estimate-score { font-size: 1.15rem; color: var(--color-text); }
+.estimate-trend { font-size: var(--text-sm); display: inline-flex; align-items: center; gap: var(--space-1); }
+.est-up { color: var(--color-success); }
+.est-flat { color: var(--color-text-muted); }
+.est-down { color: var(--color-danger, #ef4444); }
+.estimate-note {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  margin-top: var(--space-1);
+}
+.actual-result {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  font-size: var(--text-sm);
+}
+.actual-badge {
+  font-weight: 700;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+}
+.actual-badge.actual-pass { background: rgba(34, 197, 94, 0.15); color: #16a34a; }
+.actual-badge.actual-fail { background: rgba(239, 68, 68, 0.12); color: #dc2626; }
+.actual-edit-btn { padding: 0.2rem 0.6rem; font-size: 0.75rem; }
+.actual-form { margin-top: var(--space-3); }
+.actual-form-title { font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: var(--space-2); }
+.actual-form-row { display: flex; gap: var(--space-2); align-items: center; }
+.actual-form-row .form-select { flex: 1; min-width: 0; }
+.actual-form-row input[type="number"] { max-width: 110px; }

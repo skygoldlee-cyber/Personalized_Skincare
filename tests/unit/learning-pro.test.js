@@ -188,3 +188,64 @@ test('getSimHistory — 저장된 이력 파싱/비정상 값 방어', () => {
     mockStorage.setItem(scopedKey(STORAGE_KEYS.SIM_RESULTS_HISTORY), 'not-json');
     assert.deepEqual(getSimHistory(), []);
 });
+
+// --- C1: 예상 점수 추정 + 실제 결과 자가 보고 ---
+
+import { estimateExpectedScore, getActualResult, saveActualResult, clearActualResult } from '../../src/recommendations.js';
+
+test('estimateExpectedScore — 이력 없으면 null', () => {
+    assert.equal(estimateExpectedScore([]), null);
+    assert.equal(estimateExpectedScore(null), null);
+});
+
+test('estimateExpectedScore — 1건이면 고정 ±5 범위', () => {
+    const e = estimateExpectedScore([{ rate: 60 }]);
+    assert.equal(e.expected, 60);
+    assert.equal(e.lo, 55);
+    assert.equal(e.hi, 65);
+    assert.equal(e.trend, 'flat');
+});
+
+test('estimateExpectedScore — 최근 5건 평균과 σ 범위', () => {
+    const hist = [50, 55, 60, 65, 70, 75].map(rate => ({ rate }));
+    const e = estimateExpectedScore(hist);
+    // 최근 5건: 55..75 → 평균 65
+    assert.equal(e.expected, 65);
+    assert.ok(e.lo < e.expected && e.hi > e.expected);
+    assert.equal(e.n, 6);
+});
+
+test('estimateExpectedScore — 상승/하락 추세 판정', () => {
+    const up = estimateExpectedScore([40, 50, 60, 70].map(rate => ({ rate })));
+    assert.equal(up.trend, 'up');
+    const down = estimateExpectedScore([80, 70, 60, 50].map(rate => ({ rate })));
+    assert.equal(down.trend, 'down');
+    const flat = estimateExpectedScore([60, 61, 60, 61].map(rate => ({ rate })));
+    assert.equal(flat.trend, 'flat');
+});
+
+test('estimateExpectedScore — 범위는 0~100으로 클램프', () => {
+    const e = estimateExpectedScore([98, 99, 100].map(rate => ({ rate })));
+    assert.ok(e.hi <= 100);
+    const e2 = estimateExpectedScore([0, 1, 2].map(rate => ({ rate })));
+    assert.ok(e2.lo >= 0);
+});
+
+test('saveActualResult/getActualResult — 영속 + 유효성 검사', () => {
+    assert.equal(saveActualResult(true, 78), true);
+    const r = getActualResult();
+    assert.equal(r.passed, true);
+    assert.equal(r.score, 78);
+    assert.ok(r.reportedAt);
+
+    // 점수 미기입 허용
+    assert.equal(saveActualResult(false, null), true);
+    assert.equal(getActualResult().score, null);
+
+    // 범위 초과 거부
+    assert.equal(saveActualResult(true, 101), false);
+    assert.equal(saveActualResult(true, -1), false);
+
+    clearActualResult();
+    assert.equal(getActualResult(), null);
+});

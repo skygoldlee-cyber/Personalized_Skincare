@@ -4,9 +4,10 @@
 // 우선순위가 정해진 추천 항목을 생성한다.
 // DOM 비의존 순수 로직 — 렌더링은 dashboard.js가 담당.
 
-import { safeGetItem } from './state.js';
+import { safeGetItem, safeSetItem } from './state.js';
 import { STORAGE_KEYS } from './storage-keys.js';
 import { getDueCards } from './spaced-repetition.js';
+import { getCurrentExamId } from './exam-context.js';
 
 /**
  * 모의고사 성적 이력 로드 (charts.js getSimResults와 같은 저장 키)
@@ -208,4 +209,79 @@ export function computeWrongCauseSummary(wrongCauses, { days = 7, now = Date.now
         topSubject,
         advice: topCause ? WRONG_CAUSE_ADVICE[topCause] : ''
     };
+}
+
+// ===== C1 — 예상 점수 추정 + 실제 결과 자가 보고 =====
+// "합격 확률"이 아니라 모의고사 이력 기반의 점수 추정치만 제시한다.
+// 보정된 합격 확률은 실제 결과 데이터가 축적된 후에야 의미가 있다.
+
+/**
+ * 모의고사 이력에서 예상 점수 대·추세를 추정한다.
+ * @param {Array<{rate:number}>} history sim_results_history 레코드
+ * @returns {{n:number, expected:number, lo:number, hi:number,
+ *   trend:'up'|'flat'|'down', slope:number}|null} 이력 없으면 null
+ */
+export function estimateExpectedScore(history) {
+    const rates = (history || []).map(h => h.rate).filter(r => typeof r === 'number');
+    if (!rates.length) return null;
+    const recent = rates.slice(-5);
+    const expected = Math.round(recent.reduce((a, b) => a + b, 0) / recent.length);
+
+    // ±1σ 범위 (2회 미만이면 ±5 고정)
+    let lo, hi;
+    if (recent.length >= 2) {
+        const mean = recent.reduce((a, b) => a + b, 0) / recent.length;
+        const sd = Math.sqrt(recent.reduce((s, r) => s + (r - mean) ** 2, 0) / recent.length);
+        lo = Math.max(0, Math.round(expected - sd));
+        hi = Math.min(100, Math.round(expected + sd));
+    } else {
+        lo = Math.max(0, expected - 5);
+        hi = Math.min(100, expected + 5);
+    }
+
+    // 추세: 전체 이력의 선형 회귀 기울기 (회당 점수 변화)
+    let slope = 0;
+    const ys = rates.slice(-8);
+    if (ys.length >= 3) {
+        const n = ys.length;
+        const xm = (n - 1) / 2;
+        const ym = ys.reduce((a, b) => a + b, 0) / n;
+        let num = 0, den = 0;
+        ys.forEach((y, x) => { num += (x - xm) * (y - ym); den += (x - xm) ** 2; });
+        slope = den ? num / den : 0;
+    }
+    const trend = slope > 1.5 ? 'up' : slope < -1.5 ? 'down' : 'flat';
+
+    return { n: rates.length, expected, lo, hi, trend, slope };
+}
+
+/** 실제 시험 결과 자가 보고 로드 */
+export function getActualResult() {
+    try {
+        const parsed = JSON.parse(safeGetItem(STORAGE_KEYS.ACTUAL_EXAM_RESULT) || 'null');
+        return parsed && typeof parsed === 'object' ? parsed : null;
+    } catch (e) {
+        return null;
+    }
+}
+
+/**
+ * 실제 시험 결과 저장 — 예측 정확도 보정 데이터 축적용.
+ * @param {boolean} passed
+ * @param {number|null} score 0~100 또는 null(미기입)
+ */
+export function saveActualResult(passed, score) {
+    if (score !== null && (typeof score !== 'number' || score < 0 || score > 100)) return false;
+    const examId = getCurrentExamId();
+    safeSetItem(STORAGE_KEYS.ACTUAL_EXAM_RESULT, JSON.stringify({
+        passed: !!passed,
+        score,
+        reportedAt: new Date().toISOString(),
+        examId
+    }));
+    return true;
+}
+
+export function clearActualResult() {
+    safeSetItem(STORAGE_KEYS.ACTUAL_EXAM_RESULT, 'null');
 }

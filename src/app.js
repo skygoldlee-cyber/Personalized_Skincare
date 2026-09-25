@@ -18,7 +18,9 @@ import {
     renderDashboard,
     startSubjectStudy,
     startSubjectQuiz,
-    startSubjectReader
+    startSubjectReader,
+    saveActualExamResult,
+    editActualExamResult
 } from './views/dashboard.js';
 import {
     loadFlashcards,
@@ -939,6 +941,8 @@ const DELEGATED_HANDLERS = {
     removeWeakCard, setReviewFilter, printReviewNotes,
     tagWrongCause, tagWrongCauseAt, wrongActionCard, wrongActionTextbook, wrongActionSimilar,
     startDiagnosticQuiz,
+    // 실제 시험 결과 자가 보고 (C1)
+    saveActualExamResult, editActualExamResult,
     // 통합 검색 팔레트
     openCommandPalette, closeCommandPalette, executePaletteResult,
     exportData, triggerImport, checkStorageWarning,
