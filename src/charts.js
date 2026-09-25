@@ -6,6 +6,7 @@
 import { STORAGE_KEYS } from './storage-keys.js';
 import { safeGetItem } from './state.js';
 import { TIMING } from './config/timing.js';
+import { getExamRules } from './exam-context.js';
 
 // CSS 변수에서 색상 읽기 (하드코딩 대체)
 function cssVar(name, fallback) {
@@ -301,32 +302,34 @@ export function renderPassFailDiagnosis() {
         subjectNames[sub.key] = `${idx + 1}과목: ${sub.name}`;
     });
     
+    // 합격/과락 기준은 매니페스트 선언값 사용 (시험별 규칙 차이 대응)
+    const rules = getExamRules();
     let isGuarak = false;
     let guarakSubjects = [];
-    
+
     subjects.forEach(sub => {
         const rate = getLatestRate(sub.key);
-        if (rate !== null && rate < 60) {
+        if (rate !== null && rate < rules.subjectFailBelow) {
             isGuarak = true;
             guarakSubjects.push(sub.name);
         }
     });
-    
+
     let statusClass = 'pass';
     let statusText = '합격 안정권';
     let advice = '현재 페이스를 유지하시면 무난하게 시험에 통과하실 것으로 예측됩니다!';
-    
-    if (avgRate >= 60 && !isGuarak) {
+
+    if (avgRate >= rules.passAverage && !isGuarak) {
         statusClass = 'pass';
         statusText = '합격 예측';
-    } else if (avgRate >= 60 && isGuarak) {
+    } else if (avgRate >= rules.passAverage && isGuarak) {
         statusClass = 'warning';
         statusText = '과락 경계';
-        advice = `평균 점수는 합격선이나, 일부 과목(${guarakSubjects.join(', ')})에서 과락(60점 미만) 위기가 감지되었습니다. 해당 과목을 더 학습하세요!`;
+        advice = `평균 점수는 합격선이나, 일부 과목(${guarakSubjects.join(', ')})에서 과락(${rules.subjectFailBelow}점 미만) 위기가 감지되었습니다. 해당 과목을 더 학습하세요!`;
     } else {
         statusClass = 'fail';
         statusText = '합격 미달';
-        advice = `평균 점수가 합격 기준(60%)에 도달하지 못했습니다. 플래시카드와 스마트 훈련소를 통해 암기량을 보충하세요!`;
+        advice = `평균 점수가 합격 기준(${rules.passAverage}%)에 도달하지 못했습니다. 플래시카드와 스마트 훈련소를 통해 암기량을 보충하세요!`;
     }
     
     let subjectsHTML = '<div class="pred-subject-scores">';
@@ -335,9 +338,9 @@ export function renderPassFailDiagnosis() {
         if (rate !== null) {
             const shortName = sub.shortName || sub.name;
             subjectsHTML += `
-                <div class="pred-subject-row ${rate < 60 ? 'danger' : ''}">
+                <div class="pred-subject-row ${rate < rules.subjectFailBelow ? 'danger' : ''}">
                     <span>${idx + 1}과목 (${shortName})</span>
-                    <strong>${rate}% ${rate < 60 ? '(과락)' : ''}</strong>
+                    <strong>${rate}% ${rate < rules.subjectFailBelow ? '(과락)' : ''}</strong>
                 </div>
             `;
         }
@@ -480,8 +483,8 @@ export function renderRadarChart() {
         const rates = subjectRates[sub.key] || [];
         const examCount = rates.length;
         const shortName = sub.shortName || sub.name;
-        const status = rate < 60 ? '과락 위험' : '안정권';
-        const statusColor = rate < 60 ? CHART_COLORS.danger() : CHART_COLORS.success();
+        const status = rate < getExamRules().subjectFailBelow ? '과락 위험' : '안정권';
+        const statusColor = rate < getExamRules().subjectFailBelow ? CHART_COLORS.danger() : CHART_COLORS.success();
         bindTooltip(dot,
             `<div style="font-size:0.85rem;">${idx + 1}과목: ${shortName}</div>` +
             `<div style="font-size:1.1rem;color:${CHART_COLORS.primary()};margin-top:2px;">${rate}%</div>` +

@@ -77,11 +77,11 @@ test('퀴즈 문항 매칭 → quiz 결과', () => {
     assert.equal(q.action.subject, 'law');
 });
 
-test('교재 섹션 매칭 → chapter 앵커 유도', () => {
+test('교재 섹션 매칭 → 섹션 제목 전달 (형식 독립 딥링크)', () => {
     const r = searchAll('화장품의 정의', sources);
     const s = r.find(x => x.type === 'section');
     assert.ok(s);
-    assert.equal(s.action.anchor, 'ch01');
+    assert.equal(s.action.title, '화장품의 정의');
     assert.equal(s.action.subject, 'law');
 });
 

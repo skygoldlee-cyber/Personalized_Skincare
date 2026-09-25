@@ -2,7 +2,7 @@
 var DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2026",
-  "generatedAt": "2026-09-25T12:11:46.927Z",
+  "generatedAt": "2026-09-25T14:43:31.391Z",
   "subjects": [
     {
       "key": "law",
@@ -255,7 +255,9 @@ var DATA_REGISTRY = {
       "safety": 25,
       "understanding": 40
     },
-    "examTimeMin": 120
+    "examTimeMin": 120,
+    "passAverage": 60,
+    "subjectFailBelow": 40
   },
   "uiText": {
     "dashboard": {

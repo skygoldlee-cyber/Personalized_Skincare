@@ -7,7 +7,7 @@
 import { safeGetItem, safeSetItem } from './state.js';
 import { STORAGE_KEYS } from './storage-keys.js';
 import { getDueCards } from './spaced-repetition.js';
-import { getCurrentExamId } from './exam-context.js';
+import { getCurrentExamId, getExamRules } from './exam-context.js';
 
 /**
  * 모의고사 성적 이력 로드 (charts.js getSimResults와 같은 저장 키)
@@ -22,8 +22,12 @@ export function getSimHistory() {
     }
 }
 
+// 카드/퀴즈 ID → 과목 키 추출.
+// weak_quiz_/weak_sim_ 접두사를 먼저 벗기고, 과목 키가 숫자·밑줄을 포함해도 동작하도록
+// '<subj>_(card|quiz)_' 꼬리 패턴 기준으로 분리한다 (콘텐츠 교체에도 유효).
 const subjectKeyOf = (id) => {
-    const m = id.match(/^([a-z]+)_(?:card|quiz)_/);
+    const clean = id.replace(/^weak_(quiz|sim)_/, '');
+    const m = clean.match(/^(.+)_(?:card|quiz)_/);
     return m ? m[1] : null;
 };
 
@@ -61,19 +65,20 @@ export function computeRecommendations(subjects, counts) {
         });
     }
 
-    // 2순위: 최근 모의고사 과락 과목 (40점 미만)
+    // 2순위: 최근 모의고사 과락 과목 (매니페스트 subjectFailBelow 미만)
+    const failBelow = getExamRules().subjectFailBelow;
     const history = getSimHistory();
     if (history.length > 0) {
         const last = history[history.length - 1];
         if (last && last.subjectRates) {
             Object.entries(last.subjectRates).forEach(([subj, rate]) => {
-                if (rate === null || rate === undefined || rate >= 40) return;
+                if (rate === null || rate === undefined || rate >= failBelow) return;
                 const key = subj.startsWith('subject') ? _legacySubjectKey(subj) : subj;
                 if (!subjects.some(s => s.key === key)) return;
                 recs.push({
                     icon: 'fa-triangle-exclamation', color: 'var(--color-danger)',
                     title: `${subjName(key)} 과락 위험`,
-                    reason: `최근 모의고사 ${rate}% — 40점 미만 과락 기준`,
+                    reason: `최근 모의고사 ${rate}% — ${failBelow}점 미만 과락 기준`,
                     actions: [
                         { click: 'startSubjectQuiz', arg: key, label: '지금 풀기', icon: 'fa-play', cls: 'btn-primary' },
                         { click: 'startSubjectReader', arg: key, label: '교재 보기', icon: 'fa-book-open', cls: 'btn-secondary' }

@@ -13,6 +13,7 @@ import {
 } from '../recommendations.js';
 import { getDDay, getSuggestedDailyCount } from '../study-tracker.js';
 import { showToast } from '../ui-utils.js';
+import { getExamRules } from '../exam-context.js';
 
 /**
  * @type {boolean}
@@ -361,7 +362,7 @@ export function renderExpectedScore() {
                     <i class="fa-solid ${t.icon}" aria-hidden="true"></i> ${t.label}
                 </span>
             </div>
-            <div class="estimate-note">최근 모의고사 ${est.n}회 기준 — 실제 합격 여부가 아닌 점수 추정치입니다.</div>`;
+            <div class="estimate-note">최근 모의고사 ${est.n}회 기준 (합격선 평균 ${getExamRules().passAverage}점) — 실제 합격 여부가 아닌 점수 추정치입니다.</div>`;
     }
 
     // 실제 결과: 기록됨 → 요약 표시 / 시험일 경과 → 입력 폼

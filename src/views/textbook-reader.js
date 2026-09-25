@@ -165,6 +165,41 @@ export function openSubjectChapter(subject, chapterAnchor = '') {
     }
 }
 
+/**
+ * 교재 리더를 특정 과목의 섹션 제목으로 이동시킨다.
+ * chapter 앵커("Chapter N" 형식 종속) 대신 렌더된 섹션 제목 텍스트로 매칭하므로
+ * 교재 형식이 바뀌어도 동작한다. (통합 검색 팔레트에서 사용)
+ * @param {string} subject - 과목 키
+ * @param {string} sectionTitle - 섹션 제목 (부분 매칭)
+ */
+export function openSubjectSection(subject, sectionTitle) {
+    if (!subject) return;
+    const subjectSelect = document.getElementById('reader-subject-select');
+    if (subjectSelect) {
+        subjectSelect.value = subject;
+        subjectSelect.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+    if (!sectionTitle) return;
+    setTimeout(() => {
+        const container = document.getElementById('textbook-reader-container');
+        if (!container) return;
+        let foundSection = null;
+        container.querySelectorAll('.reader-section-card').forEach(card => {
+            if (foundSection) return;
+            const titleEl = card.querySelector('.reader-section-title');
+            if (titleEl && (titleEl.textContent || '').includes(sectionTitle)) {
+                foundSection = card;
+            }
+        });
+        if (foundSection) {
+            foundSection.classList.remove('collapsed');
+            foundSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+            container.scrollTop = 0;
+        }
+    }, 800); // 콘텐츠 로드 대기
+}
+
 export function renderTextbookReader() {
     const subjectSelect = document.getElementById('reader-subject-select');
     const container = document.getElementById('textbook-reader-container');

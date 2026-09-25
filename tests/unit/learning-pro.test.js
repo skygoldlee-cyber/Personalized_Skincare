@@ -249,3 +249,23 @@ test('saveActualResult/getActualResult — 영속 + 유효성 검사', () => {
     clearActualResult();
     assert.equal(getActualResult(), null);
 });
+
+// --- 교재/시험 교체 대비: 매니페스트 선언 합격 규칙 ---
+
+import { getExamRules } from '../../src/exam-context.js';
+
+test('getExamRules — manifest 선언 우선, 미선언 시 60/40 기본값', () => {
+    const origWindow = globalThis.window;
+    try {
+        globalThis.window = { DATA_REGISTRY: { integratedExam: { passAverage: 70, subjectFailBelow: 50 } } };
+        assert.deepEqual(getExamRules(), { passAverage: 70, subjectFailBelow: 50 });
+
+        globalThis.window = { DATA_REGISTRY: { integratedExam: {} } };
+        assert.deepEqual(getExamRules(), { passAverage: 60, subjectFailBelow: 40 });
+
+        globalThis.window = {};
+        assert.deepEqual(getExamRules(), { passAverage: 60, subjectFailBelow: 40 });
+    } finally {
+        globalThis.window = origWindow;
+    }
+});

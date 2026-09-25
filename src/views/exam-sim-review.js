@@ -2,6 +2,7 @@
 import { simState } from './exam-sim-state.js';
 import { esc, safeTextWithBreaks } from '../sanitize.js';
 import { DataLoader } from '../data-loader.js';
+import { getExamRules } from '../exam-context.js';
 
 const OPTION_INDICATORS = ['①', '②', '③', '④', '⑤'];
 
@@ -135,17 +136,18 @@ export function renderSimResultBreakdown({ score, total, subjectScores, chapterS
     });
 
     let failedSubjects = [];
+    const rules = getExamRules();
 
     Object.keys(subjectScores).forEach(subj => {
         const data = subjectScores[subj];
         if (data.total > 0) {
             const subRate = Math.round((data.score / data.total) * 100);
-            const isFail = subRate < 40;
+            const isFail = subRate < rules.subjectFailBelow;
             if (isFail) {
                 failedSubjects.push({ id: subj, name: subjNames[subj], rate: subRate });
             }
 
-            const progressColor = isFail ? 'var(--color-danger)' : (subRate >= 60 ? 'var(--color-success)' : 'var(--color-warning)');
+            const progressColor = isFail ? 'var(--color-danger)' : (subRate >= rules.passAverage ? 'var(--color-success)' : 'var(--color-warning)');
             const hasWrongs = data.score < data.total;
 
             breakdownHTML += `
@@ -214,7 +216,7 @@ export function renderSimResultBreakdown({ score, total, subjectScores, chapterS
             <div style="margin-top: 1.25rem; padding: 0.75rem 1rem; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 6px;">
                 <h5 style="margin: 0 0 0.5rem 0; color: var(--color-danger); font-size: 0.9rem; font-weight: bold;"><i class="fa-solid fa-triangle-exclamation"></i> 과락 주의 경고!</h5>
                 <p style="margin: 0; font-size: 0.8rem; color: var(--color-danger-tint, #fca5a5); line-height: 1.5;">
-                    실제 시험 기준 한 과목이라도 40점 미만(100점 환산) 득점 시 전체 평균이 60점을 넘어도 불합격 처리됩니다. 아래 추천 학습으로 약점을 빠르게 보완해 보세요.
+                    실제 시험 기준 한 과목이라도 ${rules.subjectFailBelow}점 미만(100점 환산) 득점 시 전체 평균이 ${rules.passAverage}점을 넘어도 불합격 처리됩니다. 아래 추천 학습으로 약점을 빠르게 보완해 보세요.
                 </p>
                 <div style="margin-top: 0.75rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
         `;

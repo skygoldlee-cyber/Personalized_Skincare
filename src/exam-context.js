@@ -142,3 +142,17 @@ export function purgeLegacyStorage(knownKeys, knownPrefixes) {
         localStorage.setItem(FLAG, '1');
     } catch (e) { /* noop */ }
 }
+
+/**
+ * 활성 시험의 합격/과락 규칙 — manifest `integratedExam` 필드에서 읽는다.
+ * 교재/시험 교체 시 매니페스트만 바꾸면 판정 로직이 그대로 유효하다.
+ * @returns {{passAverage:number, subjectFailBelow:number}}
+ *   passAverage: 평균 합격선(기본 60) / subjectFailBelow: 과목 과락선(기본 40)
+ */
+export function getExamRules() {
+    const ie = (typeof window !== 'undefined' && window.DATA_REGISTRY && window.DATA_REGISTRY.integratedExam) || {};
+    return {
+        passAverage: typeof ie.passAverage === 'number' ? ie.passAverage : 60,
+        subjectFailBelow: typeof ie.subjectFailBelow === 'number' ? ie.subjectFailBelow : 40
+    };
+}

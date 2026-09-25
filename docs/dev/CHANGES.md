@@ -4,6 +4,23 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-25 Learning Pro 콘텐츠 독립성 강화 (유료 기능 선결 조건)
+
+- **합격 규칙 매니페스트 선언**: `integratedExam.passAverage`(60)·`subjectFailBelow`(40)
+  신설 + `getExamRules()` 헬퍼(exam-context). 기존 3곳의 하드코딩 제거 —
+  recommendations.js(과락 40), exam-sim-review.js(40/60), charts.js(60).
+  시험/교재 교체 시 매니페스트만 수정하면 전체 판정 로직이 유효.
+- **시맨틱 버그 수정**: `renderPassFailDiagnosis`가 60점 미만을 "과락"으로
+  표기하던 것을 실제 과락선(`subjectFailBelow`=40) 기준으로 정정 —
+  과목 점수행 `(과락)`·레이더 툴팁 "과락 위험" 동일 적용.
+- **`subjectKeyOf` 강화**: `[a-z]+` 전제 제거 + `weak_quiz_`/`weak_sim_` 접두사
+  사전 제거 — 과목 키에 숫자·밑줄이 들어가는 시험에서도 정확 추출.
+- **섹션 딥링크 형식 독립**: 팔레트 교재 이동이 "Chapter N" 영문 형식에 종속
+  되던 것을 섹션 제목 직접 매칭(`openSubjectSection`)으로 교체 — 교재 형식이
+  바뀌어도 동작.
+- 검증: 유닛 +1(getExamRules)·팔레트 테스트 갱신 — 519/341 전체 통과,
+  registry 재빌드로 선언값 전파 확인.
+
 ## 2026-09-25 예상 점수 추정 + 실제 결과 자가 보고 — Learning Pro C1(부분)
 
 - **`estimateExpectedScore`**: 최근 모의고사 5회 평균 ±1σ로 예상 점수 대 산출,

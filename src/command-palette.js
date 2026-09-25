@@ -5,7 +5,7 @@
 import { esc } from './sanitize.js';
 import { getChosung } from './utils.js';
 import { contentPath } from './exam-context.js';
-import { openSubjectChapter } from './views/textbook-reader.js';
+import { openSubjectSection } from './views/textbook-reader.js';
 import { dictState } from './views/dictionary.js';
 
 const MAX_PER_GROUP = 5;
@@ -96,11 +96,10 @@ export function searchAll(query, sources) {
             (ch.sections || []).forEach(sec => {
                 const s = _matchScore(`${sec.title} ${ch.chapterTitle}`, sec.title, terms);
                 if (s >= 0) {
-                    const m = /chapter\s*(\d+)/i.exec(ch.chapterTitle || '');
                     push('section', {
                         type: 'section', icon: 'fa-book-open', title: sec.title,
                         sub: `${subjName} · ${ch.chapterTitle || '교재'}`,
-                        action: { kind: 'section', subject: subjId, anchor: m ? `ch${m[1]}` : '' },
+                        action: { kind: 'section', subject: subjId, title: sec.title },
                         score: s + 1
                     });
                 }
@@ -270,7 +269,7 @@ export function executePaletteResult(idx) {
             break;
         case 'section':
             clickNav('textbook-reader-view');
-            openSubjectChapter(a.subject, a.anchor);
+            openSubjectSection(a.subject, a.title);
             break;
         case 'ingredient':
             dictState.query = a.name;
