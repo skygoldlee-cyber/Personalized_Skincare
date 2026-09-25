@@ -1,17 +1,18 @@
 # Formula OS — Phase 5-A 기본 설계안
 
-> 상위 문서: `PASS_TO_PRACTICE_STRATEGY.md` (전략), `Cosmetic Master Business Plan.md` (사업)
+> 상위 문서: `PASS_TO_PRACTICE_STRATEGY.md` (전략), `Cosmetic Master Business Plan.md` (구판 사업기획서) — 최신 사업 방향은 `docs/맞춤형화장품_조제관리사_자격증플랫폼_사업기획서.md` (v3.5) 참조
+> **문서 성격**: Phase 5-A 시점의 설계안 + 구현 후기. 섹션별 수치·범위는 설계 당시 기준이며, **현재 구현 상태의 진실은 `SPEC.md` §3.18과 `FORMULA_OS_WORKFLOW_DESIGN.md`** 가 우선한다.
 > 범위: **Phase 5-A MVP만** — 원료 DB + 배합 계산기 + My Formula + 규정 Check
 > **구현 상태**: ✅ Phase 5-A 구현·배포 완료 (2026-09). 이후 개선분: 고객 안전 필드(알레르기·임신수유·사용 중 제품), 맞춤 추천 규칙, 제조 단계·pH·절차, 조제 기록지 인쇄, 포뮬러 JSON 공유, 원료 DB 버전 이력 — 상세 요구사양은 `SPEC.md` §3.18 참조. 계산기 UI는 sticky 상단 요약바·하단 액션바·카드형 원료 행으로 재구성됨.
 > **후속 확장**: 조제관리사 9개 업무(고객·배치·원료·법규) 확장 Phase A~D 구현 완료 — `FORMULA_OS_WORKFLOW_DESIGN.md` 참조.
-> 검증 지표: **"한 달 후에도 포뮬러를 만들러 다시 오는가"** (5-A 사용자의 30%가 2개월차에 ≥1개 포뮬러 생성)
+> 검증 지표: **"한 달 후에도 포뮬러를 만들러 다시 오는가"** (5-A 사용자의 30%가 2개월차에 ≥1개 포뮬러 생성) — ⚠️ 아직 미측정. 측정은 사업기획서 v3.5 §12 검증 계획(Step 0 지표 계측)의 일부다.
 
 ---
 
 ## 1. 설계 원칙
 
 1. **Zero-Backend 유지** — 5-A는 localStorage + 기존 데이터 번들로 완결. Supabase·인증은 5-C에서 검토.
-2. **기존 자산 최대 재사용** — 원료 데이터(1,357종), 계산 엔진, 사전 뷰, 백업/복원, 이벤트 위임 패턴 그대로.
+2. **기존 자산 최대 재사용** — 원료 데이터(1,376종 — §9.1), 계산 엔진, 사전 뷰, 백업/복원, 이벤트 위임 패턴 그대로.
 3. **기능 삭제 없이 추가** — Pass Loop(시험 학습)과 병존. 실무 모드는 내비의 별도 그룹.
 4. **생성 vs 검증 분리** — 시스템은 배합량을 "제안"하지 않는다. 사용자가 입력하고 시스템이 고시 데이터로 "검증"만 한다.
 5. **규정 ≠ 안전성** — "법정 한도 내"와 "안전함"을 UI에서 분리 표기.
@@ -41,7 +42,7 @@
 ┌─ Formula OS ──────────────────────────┐
 │ [📋 내 포뮬러]  3개 · 최근 수정 2일 전   │
 │ [⚖️ 배합 계산기] 총량×배합률→투입량      │
-│ [🧴 원료 DB]    1,357종 검색·한도 확인   │
+│ [🧴 원료 DB]    1,376종 검색·한도 확인   │
 │ [✅ 규정 Check]  배합표 → 한도 검증      │
 └────────────────────────────────────────┘
 ```
@@ -68,23 +69,30 @@
 | `formula_last_used` | 마지막 사용 일시 배열 (재방문 지표용) | `cosmetic:` |
 | `formula_seq` | id 채번 카운터 | `cosmetic:` |
 
+> 후속 Phase A~D에서 추가된 키(`batch_items`·`customer_items`·`material_items`·`formula_compliance` 등)는 `FORMULA_OS_WORKFLOW_DESIGN.md` 참조 — 이 표는 5-A 범위다.
+
 `BACKUP_KEYS`에 `formula_items`·`formula_rules` 등록 → 기존 백업/복원이 포뮬러와 맞춤 규칙을 포함.
 
-### 3.2 포뮬러 스키마 (5-A 단순화판)
+### 3.2 포뮬러 스키마 (구현 기준 — `formula-store.js` 주석과 동일)
 
 ```json
 {
   "id": "f_0007",
   "name": "보습 세럼 A",
-  "totalVolume": 100,
-  "totalUnit": "g",
+  "targetVolume": 100,
+  "unit": "g",
+  "phTarget": null,
+  "phActual": null,
+  "steps": [],
+  "customer": null,
   "ingredients": [
     {
       "name": "페녹시에탄올",
+      "engName": "Phenoxyethanol",
       "concentration": 0.8,
-      "amount": 0.8,
-      "limitText": "1.0%",
-      "check": "ok | warn | banned | unknown"
+      "phase": "후첨가",
+      "note": "",
+      "snapshot": { "type": "restricted", "limit": "1.0%" }
     }
   ],
   "notes": "지성 피부용",
@@ -93,9 +101,9 @@
 }
 ```
 
-- `amount = totalVolume × concentration / 100` (저장 시 계산값도 함께 보관 — 재계산 버그 방지용 스냅샷)
-- `check`는 저장 시점의 검증 결과 스냅샷. 고시 개정 시 재검증 대상이 됨(5-B 영향 분석의 기반).
-- 실제 구현 스키마는 `formula-store.js` 주석 참조 — `targetVolume`/`unit`/`customer`/`ingredients[].snapshot` 필드명이 다르다.
+- 투입량은 `targetVolume × concentration / 100`으로 **표시 시 계산** — 저장은 농도(%)만.
+- `ingredients[].snapshot`은 저장 시점의 규정 기준(`type`/`limit`)을 보존한다. 고시 개정 시 재검증 대상이 됨(5-B 영향 분석의 기반).
+- `check`(ok/warn/banned/unknown)는 저장하지 않고 `formula-check.js`가 렌더 시 재계산한다.
 - `customer` 필드는 후속 커밋에서 추가됨: `{name, age, gender, skinType, concerns[], formulation, allergies[], pregnancy, products}` — 맞춤 조제 대상 컨텍스트, 전 항목 선택.
   - `allergies[]` — 알레르기·부작용 이력 원료명 (최대 15종, 각 ≤60자) → 추천 자동 제외
   - `pregnancy` — `'임신 중'|'수유 중'` enum → 주의 원료 ⚠ 플래그·주의문
@@ -162,13 +170,14 @@ TIP:  폴리올의 대표 성분, 고농도 시 피부 자극
 ```
 
 - "포뮬러에 추가" → 편집 중인 포뮬러가 있으면 원료 행 삽입, 없으면 새 포뮬러 생성
-- 시험용 사전(정의 검색)과 실무용(한도·적합성)은 **같은 데이터, 다른 컨텍스트** — dictionary 뷰에 "실무 정보" 섹션을 추가하는 방식도 가능하나, 5-A에서는 formula-view 안의 검색으로 분리해 Pass/Practice 경계를 유지
+- 시험용 사전(정의 검색)과 실무용(한도·적합성)은 **같은 데이터, 다른 컨텍스트**
+- **구현된 방식**: 원료 행 입력칸의 `formula-ing-datalist` 자동완성(허브 내 검색) + 성분 사전 뷰(`dictionary-view`) 연결 — 금지 원료도 검색은 가능하며 배합 검증에서 banned으로 표시된다
 
 ---
 
 ## 5. 기술 구조
 
-### 5.1 신규 파일
+### 5.1 신규 파일 (5-A 시점 목록)
 
 ```
 src/views/formula.js          # 허브 + 라우팅 + 목록 렌더
@@ -183,6 +192,8 @@ tests/unit/formula-check.test.js   # limit 파서·판정 경계 테스트
 tests/unit/formula-store.test.js   # CRUD·Free 한도 테스트
 ```
 
+> 후속 Phase A~D에서 추가된 파일(`store-utils.js`·`batch-store.js`·`customer-store.js`·`material-ledger.js`·`usage-guide.js`·`csv-utils.js`·`views/formula-{batch,customer,material,compliance,print}.js`·`ui-mode.js` 등)은 `FORMULA_OS_WORKFLOW_DESIGN.md` 참조.
+
 ### 5.2 연결점
 
 | 연결 | 방법 |
@@ -193,7 +204,7 @@ tests/unit/formula-store.test.js   # CRUD·Free 한도 테스트
 | 저장 | `safeGetItem`/`safeSetItem` → 자동 `cosmetic:` 스코프 |
 | 백업 | `BACKUP_KEYS`에 `formula_items` 추가 |
 | 기능 게이트 | `features` 플래그 `formula` — cosmetic만 활성 (다른 시험에서 자동 숨김) |
-| SW 캐시 | 신규 JS는 `SHELL_ASSETS` 자동 포함 검증(`verify:assets`)에 의존 — 목록 추가 필요 |
+| SW 캐시 | ✅ 완료 — `SHELL_ASSETS`에 formula 계열 JS·CSS 등록됨 (`verify:assets`로 존재 검증) |
 
 ### 5.3 재방문 지표 (검증용, 로컬)
 
@@ -216,13 +227,17 @@ tests/unit/formula-store.test.js   # CRUD·Free 한도 테스트
 
 ---
 
-## 7. 5-A에서 하지 않는 것 (명시적 제외)
+## 7. 5-A에서 하지 않는 것 (명시적 제외 — 이후 상태 주석)
 
-- 버전 관리, 고객 기록, 법령 알림, 영향 분석 → **5-B**
-- AI 배합 참고 → **5-C** (법률 검토 선행)
-- Supabase·계정·동기화·결제 → **5-C**
-- 커뮤니티 → **5-D**
-- 포뮬러 템플릿/공유 → 검증 후 검토
+| 항목 | 당시 계획 | 현재 상태 |
+|---|---|---|
+| 버전 관리·법령 알림·영향 분석 | 5-B | ⏳ 미구현 |
+| 고객 기록 | 5-B | ✅ Phase A~D로 구현 (`customer-store.js` — `FORMULA_OS_WORKFLOW_DESIGN.md`) |
+| AI 배합 참고 | 5-C (법률 검토 선행) | ⏳ 미구현 |
+| Supabase 계정·동기화 | 5-C | ✅ Phase 1~2 구현 완료 (`SUPABASE_DESIGN.md` — 학습 진도·포뮬러·배치·원료 스냅샷 동기화) |
+| 결제·Pro entitlement | 5-C | ⏳ 미구현 (`redeem_code` RPC 설계만 존재) |
+| 커뮤니티 | 5-D | ⏳ 미구현 |
+| 포뮬러 템플릿/공유 | 검증 후 검토 | ✅ 단건 JSON 공유 구현 (`serializeFormula`/`importFormula`, §3.2) — 템플릿 스토어는 미구현 |
 
 ## 8. 리스크
 
