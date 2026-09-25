@@ -109,6 +109,16 @@ function applyPayload(payload) {
     return count;
 }
 
+// ── 충돌 시 미선택 쪽 보존 — 덮어쓰기 전에 로컬 백업 키에 남긴다 ──
+function preserveLoserSnapshot(payload, source) {
+    if (!payload || typeof payload !== 'object') return;
+    safeSetItem(STORAGE_KEYS.SYNC_CONFLICT_BACKUP, JSON.stringify({
+        savedAt: new Date().toISOString(),
+        source,                       // 'local' | 'remote' — 어느 쪽이 버려졌는지
+        payload,
+    }));
+}
+
 // ── pull: 원격 조회 → 최신성 비교 → 적용/충돌 확인/push ──────────
 export async function pullSync() {
     const sb = await getSupabase();
@@ -149,9 +159,11 @@ export async function pullSync() {
     if (dirty) {
         const useRemote = await showConfirm(
             `클라우드에 더 최신 데이터가 있습니다 (${fmtTs(remoteTs)}, 기기 ${data.device_id || '알 수 없음'}).\n` +
-            `가져오면 이 기기에서 아직 동기화되지 않은 변경이 덮어씌워집니다.`,
+            `가져오면 이 기기에서 아직 동기화되지 않은 변경이 덮어씌워집니다.\n` +
+            `선택되지 않은 쪽 데이터는 이 기기에 백업으로 보관됩니다.`,
             '동기화 충돌');
-        if (!useRemote) { await pushSync(); return 'pushed'; }
+        if (!useRemote) { preserveLoserSnapshot(data.payload, 'remote'); await pushSync(); return 'pushed'; }
+        preserveLoserSnapshot(collectSyncPayload(), 'local');
     }
 
     const n = applyPayload(data.payload);

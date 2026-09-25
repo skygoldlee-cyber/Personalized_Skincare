@@ -75,6 +75,7 @@ export const STORAGE_KEYS = {
   // 클라우드 동기화 (sync.js — Phase 2)
   SYNC_DIRTY: 'sync_dirty',        // 미동기화 로컬 변경 존재 ('1'/'0')
   SYNC_LAST_TS: 'sync_last_ts',    // 마지막으로 반영/푸시한 원격 updated_at
+  SYNC_CONFLICT_BACKUP: 'sync_conflict_backup', // 충돌 시 미선택 쪽 스냅샷 보존
   DEVICE_ID: 'device_id',          // 기기 식별 UUID (GLOBAL_KEYS — 시험 무관)
 
   // 세션 (sessionStorage)
