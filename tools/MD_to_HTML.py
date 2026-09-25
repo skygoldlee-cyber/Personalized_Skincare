@@ -3663,8 +3663,17 @@ def _inline_mermaid_fences(md_text: str) -> str:
                 _ph_counter[0] += 1
                 return key
 
-            # ["..."] 구간 보호 (내부에 "] 가 없는 단순 구간만 대상)
-            protected = re.sub(r'\["[^"]*?"\]', _protect_quoted_label, line)
+            # 따옴표 레이블 구간 보호: ["..."], ("..."), {"..."}, [("...")],
+            # {{"..."}}, (("...")), >"..."], [/"..."/] 등 모든 셰이프.
+            # 열림 기호 연속 + "..." + 닫힘 기호 연속을 통째로 보호해야
+            # 레이블 내부의 foo() 같은 텍스트가 node_pat_par에 오매칭되지 않고
+            # [("...")] 실린더 형태도 유지된다.
+            # 주의: 레이블 밖의 따옴표(예: A[foo "bar" baz] 내부)는 보호하지 않아
+            # _sanitize_label의 " → ' 치환이 계속 동작한다.
+            protected = re.sub(
+                r'[\[({>/\\]+"[^"]*?"[\])}/\\\]]*'
+                r'|"[^"]*?"(?=\s*(?:-->|---|==>|==|-\.-|\.->))',
+                _protect_quoted_label, line)
 
             protected = node_pat_sq.sub(repl_sq, protected)
             protected = node_pat_par.sub(repl_par, protected)
