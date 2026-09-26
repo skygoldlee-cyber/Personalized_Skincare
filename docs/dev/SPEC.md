@@ -327,7 +327,7 @@
 | AU-02 | 이메일+비밀번호 로그인/회원가입, 로그인 메일(매직링크+OTP 코드 동봉) 통합 로그인 (`auth-view.js`) | ✅ |
 | AU-03 | 비밀번호 찾기 — 로그인 메일로 로그인 후 계정 화면에서 새 비밀번호 설정 | ✅ |
 | AU-04 | 메일 재발송 쿨다운 (`passmula_auth_mail_cooldown_until`) | ✅ |
-| AU-05 | **스냅샷 동기화** — `sync_snapshots` 테이블 upsert(시험별 페이로드), 로그인 시 pull → 최신성 비교(`last_ts`) → 적용/충돌 확인 (`sync.js`) | ✅ |
+| AU-05 | **스냅샷 동기화** — `sync_snapshots` 테이블 upsert(시험별 페이로드), 로그인 시 pull → 최신성 비교(`last_ts`) → 적용/충돌 확인 (`sync.js`). 충돌 시 버려지는 쪽 스냅샷은 `sync_conflict_backup`에 최근 3건 보존 | ✅ |
 | AU-06 | 쓰기 훅 → dirty 표시 → 디바운스 push; 원격 적용 중 쓰기는 dirty로 세지 않음(`_applyingRemote`) | ✅ |
 | AU-07 | **고객 데이터 동기화 제외** — `SYNC_EXCLUDE`가 `customer_items`를 페이로드에서 제외 (타인 PII 로컬 전용 설계, §5.1 DA-08) | ✅ |
 | AU-08 | 미설정 환경(Supabase 미구성)에서 설정 메뉴에 안내 문구로 대체 표시 | ✅ |
@@ -557,6 +557,7 @@
 | DA-05 | 사용자 진행 상황: `localStorage`가 1차 저장소 (계정 없이 전 기능 사용 가능, 로그인 시 선택적 클라우드 동기화 — §3.19) | ✅ |
 | DA-06 | **멀티시험 대칭 구조**: `content/exams.json` 레지스트리 → 시험별 `content/exams/<id>/`·`data/exams/<id>/` 동일 내부 구조, `exam-context.js`의 `contentPath()`/`dataPath()`/`selectExam()`(전환 = reload) | ✅ |
 | DA-07 | **스코프드 진도 키**: `safeGetItem`/`safeSetItem`이 `<examId>:` 네임스페이스 자동 접두(`scopedKey`) — 시험 간 진도 격리, `GLOBAL_KEYS`(테마 등)만 비네임스페이스. 백업 파일은 비접두사 논리 키로 시험 간 호환 | ✅ |
+| DA-09 | **저장소 추상화 계층** (`src/storage.js`): 모든 영속 읽기·쓰기의 단일 퍼널 — `setStorageBackend()`로 백엔드 교체 가능, 동기·Async 이중 API로 IndexedDB/SQLite 이행 경로 확보. 다중 키 쓰기 `setMany`/`setJSONMany`는 중간 실패 시 이전 값으로 롤백 (다중 엔티티 갱신의 중간 상태 방지) | ✅ |
 | DA-08 | **기능 플래그 게이팅**: exams.json `features` + `hasFeature()` + `data-feature` 속성 — 시험별 도메인 특화 기능(성분사전·오디오북 등) 자동 숨김 | ✅ |
 | DA-09 | **고객 PII 로컬 전용**: `customer_items`는 동기화(`SYNC_EXCLUDE`)·Supabase 테이블 모두에서 제외 — 백업/초기화에는 포함. 조제관리사가 타인 개인정보를 서버에 올리지 않는 설계 | ✅ |
 
@@ -630,7 +631,7 @@
 | Vercel 파일 크기 | 100MB/파일 | 문제집 정적 HTML(220MB) → 런타임 MD 뷰어로 대체 |
 | Vercel 배포 용량 | ~100MB | ref_md MD 변환(41% 절감), 폴백 번들 `.vercelignore` |
 | 오디오북 | 302MB | 외부 CDN 호스팅 (SW 캐시 제외) |
-| `localStorage` | ~5MB | 용량 초과 시 사용자 경고 배너 |
+| `localStorage` | ~5MB | 용량 초과 시 사용자 경고 배너. 규모 성장 시 `storage.js` 백엔드 교체로 IndexedDB 이행 경로 확보됨 (DA-09) |
 
 ### 6.2 환경적 제약
 
@@ -667,7 +668,11 @@
 | 모듈 | 파일 | 책임 |
 |------|------|------|
 | 오케스트레이터 | `src/app.js` | 초기화, SPA 라우팅, 이벤트 위임, 뷰 간 브릿지 |
-| 상태 관리 | `src/state.js` | 전역 상태 객체, localStorage 영속성 |
+| 상태 관리 | `src/state.js` | 전역 상태 객체, 진행 영속성 (저장은 storage.js 위임) |
+| 저장소 추상화 | `src/storage.js` | 영속 읽기·쓰기 단일 퍼널 — 교체 가능 백엔드(기본 localStorage), 동기·Async 이중 API, `setMany`/`setJSONMany` 롤백 다중 쓰기, 쓰기 훅·쿼터 감지 |
+| 약점 항목 | `src/weak-items.js` | 약점(오답) ID 문법 단일 소스(`weak_quiz_`/`weak_sim_`), 퀴즈·카드 인덱스 캐시, DOM 비의존 |
+| 합격 전략 | `src/recommendations.js` | "오늘의 합격 전략" 추천·오답 원인 집계·예상 점수 추정·실제 결과 보고 (DOM 비의존 순수 로직) |
+| 통합 검색 | `src/command-palette.js` | Ctrl/Cmd+K 통합 검색 팔레트 — `searchAll()` 순수 함수 + UI 지연 생성 |
 | 데이터 로더 | `src/data-loader.js` | 온디맨드 과목/시험 로딩 |
 | 교재 파서 | `src/textbook-parser.js` | 런타임 MD → 카드/퀴즈/챕터 조립 |
 | 리더 포맷터 | `src/reader-format.js` | MD→HTML 변환, 링크 재작성, 키워드 자동 링크 |
@@ -769,7 +774,7 @@
 
 | 항목 | 내용 |
 |------|------|
-| 단위 테스트 | 458개 (`tests/unit/`, Node.js) |
-| DOM 테스트 | 264개 (`tests/dom/`, Vitest + jsdom) |
+| 단위 테스트 | `tests/unit/` (Node.js `node:test`) |
+| DOM 테스트 | `tests/dom/` (Vitest + jsdom) |
 | 회귀 가드 | `delegation-guard.test.js` (인라인 `on*=` 잔존 검출) |
 | CI | GitHub Actions (`npm test` + `check_parser_parity` + `verify:assets`) |
