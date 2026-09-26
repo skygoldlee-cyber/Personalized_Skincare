@@ -15,7 +15,10 @@
   `showReleaseNotesModal()`(설정 메뉴 "변경 이력" 재열람). `last_seen_version`은
   시험 무관 `GLOBAL_KEYS`. 건너뛴 버전은 최근 3개·항목 10개 상한 + 폴백 문구.
 - 설정 메뉴에 "변경 이력" 버튼 추가, SHELL_ASSETS에 신규 자산 3건 등록.
-- 검증: 유닛 539(+7) · DOM 347(+6) · check:imports 0 오류 · verify:assets 130개 통과.
+- **데뷔 배포 결함 수정**: `last_seen_version` 부재를 무조건 최초 설치로 판정해
+  기존 사용자에게 모달이 안 뜨던 문제 — 학습 데이터 키(quiz_results 등) 존재
+  여부로 복귀 사용자를 판별해 업데이트로 간주하도록 정정.
+- 검증: 유닛 539(+7) · DOM 347(+7) · check:imports 0 오류 · verify:assets 130개 통과.
 
 ## 2026-09-26 수치 훈련 flaky 테스트 근본 수정 — 부분문자열 매칭 제거
 

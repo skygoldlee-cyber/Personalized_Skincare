@@ -24,6 +24,15 @@ describe('whats-new.js — 새 버전 알림', () => {
         expect(safeGetItem('last_seen_version')).toBe('v-test-new');
     });
 
+    it('last_seen 없지만 기존 학습 데이터가 있으면 업데이트로 간주해 모달 표시', () => {
+        // 이 기능 도입 전부터 사용하던 사용자는 last_seen_version이 없음
+        localStorage.setItem('cosmetic:quiz_results', '{}');
+        maybeShowWhatsNew();
+        const overlay = document.getElementById('app-confirm-overlay');
+        expect(overlay).not.toBeNull();
+        expect(overlay.textContent).toContain('새 기능 추가됨');
+    });
+
     it('버전이 바뀐 부팅이면 변경 이력 모달 표시', () => {
         localStorage.setItem('last_seen_version', 'v-test-old');
         maybeShowWhatsNew();

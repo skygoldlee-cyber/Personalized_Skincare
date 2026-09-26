@@ -84,15 +84,24 @@ export function showReleaseNotesModal(entries, title = '새로운 소식') {
     document.addEventListener('keydown', onKey);
 }
 
+// 기존 학습 데이터가 있으면 "신규 설치"가 아니라 이 기능 도입 전부터 쓰던 사용자
+// (last_seen_version 키 자체가 없음) — 업데이트로 간주해 변경 이력을 보여준다.
+const RETURNING_USER_HINTS = ['quiz_results', 'fc_memorized', 'study_streak', 'sim_results_history'];
+
 /** 앱 초기화 시 호출 — 버전이 바뀐 첫 부팅에서만 자동 표시 */
 export function maybeShowWhatsNew() {
     const current = appVersion();
     if (!current) return;
     const lastSeen = safeGetItem(SEEN_KEY);
     if (lastSeen === current) return;
-    // 최초 설치(이력 없음)에는 모달 없이 버전만 기록
     if (!lastSeen) {
         safeSetItem(SEEN_KEY, current);
+        const isReturning = RETURNING_USER_HINTS.some(k => safeGetItem(k) !== null);
+        if (!isReturning) return; // 진짜 최초 설치 — 모달 없이 기록만
+        const entry = releaseNotes().find(e => e.version === current);
+        if (entry) {
+            showReleaseNotesModal([{ ...entry, notes: entry.notes?.length ? entry.notes : [FALLBACK_NOTE] }]);
+        }
         return;
     }
     showReleaseNotesModal(collectNewEntries(releaseNotes(), lastSeen));
