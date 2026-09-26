@@ -5,7 +5,7 @@
 // pending 항목 없이 배포하면 커밋 subject가 그대로 노트가 되므로 배포 전 편집 권장.
 window.RELEASE_NOTES = [
   {
-    pending: true,
+    version: 'v369-20260926-6006f4d',
     date: '2026-09-26',
     notes: [
       '새 버전 적용 시 "무엇이 바뀌었는지" 알려주는 변경 이력 알림 추가 (설정 메뉴에서도 열람 가능)',
