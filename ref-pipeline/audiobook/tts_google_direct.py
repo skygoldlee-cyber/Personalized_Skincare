@@ -126,6 +126,6 @@ if __name__ == "__main__":
         "안녕하세요. 구글 TTS 직접 호출 테스트입니다. "
         "이 음성은 구글 트랜슬레이트의 음성 합성 엔진으로 생성되었습니다."
     )
-    out = Path(__file__).resolve().parent / "mp3" / "_test_google_direct.mp3"
+    out = Path(__file__).resolve().parent / "out" / "_test_google_direct.mp3"
     synthesize_google_direct(test_text, out)
     print(f"생성 완료: {out} ({out.stat().st_size:,} bytes)")

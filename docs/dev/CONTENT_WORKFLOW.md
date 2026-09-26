@@ -224,7 +224,7 @@ flowchart TD
 **3. 과목별 자산 (번호·키 기준 하드코딩 지점)**
 - [ ] `content/exams/cosmetic/교재/glossary/subject{N}.json` — 큐레이션 용어집 (과목 order 번호 기준)
 - [ ] `content/exams/cosmetic/number-drills/{과목키}.json`
-- [ ] `content/exams/cosmetic/audiobook/mp3/{과목키}/` — 교재 교체 시 TTS 재생성(`generate_all_mp3.py`)
+- [ ] `content/exams/cosmetic/audiobook/mp3/{과목키}/` — 교재 교체 시 TTS 재생성(`ref-pipeline/audiobook/generate_all_mp3.py`)
 - [ ] `tools/check_ref_subjects.js`는 manifest의 `dir`↔`order`에서 과목 매핑을 자동 파생 — 별도 상수 없음
 
 **4. 빌드 재생성**

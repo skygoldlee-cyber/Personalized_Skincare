@@ -1,4 +1,4 @@
-# ref-pipeline — 콘텐츠 변환 도구함 (PDF→MD, MD→HTML)
+# ref-pipeline — 콘텐츠 변환 도구함 (PDF→MD, MD→HTML, 오디오북 TTS)
 
 > **독립 실행 단위**: 앱 빌드와 분리된 콘텐츠 제작 도구. 변환 엔진·래퍼·GUI·의존성을 한 폴더에 모아, 저장소 구조와 무관하게 독립 실행된다.
 
@@ -11,6 +11,7 @@
 | `pdf2md_gui.py` | pdf2md의 PySide6 GUI 프런트엔드 (엔진 재사용) |
 | `MD_to_HTML.py` | MD→독립 HTML 변환기 (~4,700줄) — 모바일 file:// 대응·Mermaid 프리렌더·콜아웃 규칙, `--gui` 지원 |
 | `callout_rules.json` | MD_to_HTML 콜아웃 패턴 규칙 (스크립트 옆 파일로 자동 인식) |
+| `audiobook/` | 교재 MD → 청취용 원고 → TTS MP3 파이프라인 (초기 일회성 제작 도구, `audiobook/README.md` 참조) |
 | `requirements.txt` | Python 의존성 (pdfplumber·markdown 필수, PyMuPDF·PySide6 선택) |
 
 ## 설치
@@ -47,9 +48,20 @@ python ref-pipeline/pdf2md.py --pdf-root "D:\PDFs" -o out_dir --flat
 MD→독립 HTML 변환 (공유·인쇄용, 모바일 file:// 대응):
 
 ```powershell
-python ref-pipeline/MD_to_HTML.py --in doc.md --out doc.html
+python ref-pipeline/MD_to_HTML.py --cli --in doc.md --out doc.html
 python ref-pipeline/MD_to_HTML.py --gui        # GUI 모드 (PySide6 필요)
 ```
+
+오디오북 파이프라인 (교재 MD → TTS MP3, `audiobook/requirements.txt` 별도 — elevenlabs 필요):
+
+```powershell
+python ref-pipeline/audiobook/run_pipeline.py --list          # 처리 대상 확인
+python ref-pipeline/audiobook/run_pipeline.py --polish-only   # 원고 정제까지만 (API 키 불필요)
+python ref-pipeline/audiobook/run_pipeline.py --tts           # TTS + MP3 병합 (ELEVENLABS_API_KEY)
+```
+
+산출물은 콘텐츠 측에 기록: `content/exams/cosmetic/audiobook/{scripts,chunks,mp3}/`.
+`EXAM_CONTENT_ROOT` 환경변수로 대상 시험을 바꿀 수 있다.
 
 ## 프로덕션 승격 절차 (저장소 워크플로)
 

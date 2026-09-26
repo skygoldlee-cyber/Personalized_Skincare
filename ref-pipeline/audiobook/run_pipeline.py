@@ -48,11 +48,14 @@ from md_chunker import (  # noqa: E402
 from script_polisher import polish_chapter  # noqa: E402
 
 
-# 프로젝트 루트 = content/audiobook/ 의 2단계 상위 디렉터리 (작업공간 루트)
-PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+# 시험 콘텐츠 루트 (기본: 저장소 내 cosmetic 시험, EXAM_CONTENT_ROOT로 재지정 가능)
+import os
+REPO_ROOT = Path(__file__).resolve().parents[2]          # ref-pipeline/audiobook/ 기준 저장소 루트
+EXAM_ROOT = Path(os.environ.get("EXAM_CONTENT_ROOT",
+                               REPO_ROOT / "content" / "exams" / "cosmetic"))
 
-# content/manifest.json에서 과목 정보 동적 로드
-MANIFEST_PATH = PROJECT_ROOT / "content" / "manifest.json"
+# manifest.json에서 과목 정보 동적 로드
+MANIFEST_PATH = EXAM_ROOT / "manifest.json"
 SUBJECT_DIRS = {}
 
 try:
@@ -62,20 +65,20 @@ try:
             key = sub["key"]
             directory = sub["dir"]
             name = sub["name"]
-            SUBJECT_DIRS[key] = (f"content/{directory}", name)
+            SUBJECT_DIRS[key] = (directory, name)
 except Exception as e:
     # 폴백: 파일 로드 실패 시 기존 기본값 적용
     SUBJECT_DIRS = {
-        "understanding":  ("content/understanding", "맞춤형화장품의 이해"),
-        "safety":         ("content/safety", "유통화장품 안전관리"),
-        "manufacturing":  ("content/manufacturing", "화장품 제조 및 품질관리"),
-        "law":            ("content/law", "화장품법의 이해"),
+        "understanding":  ("교재/understanding", "맞춤형화장품의 이해"),
+        "safety":         ("교재/safety", "유통화장품 안전관리"),
+        "manufacturing":  ("교재/manufacturing", "화장품 제조 및 품질관리"),
+        "law":            ("교재/law", "화장품법의 이해"),
     }
 
 # 출력 디렉터리
-SCRIPTS_DIR = PROJECT_ROOT / "content" / "audiobook" / "scripts"   # 청취용 원고 (.txt)
-CHUNKS_DIR  = PROJECT_ROOT / "content" / "audiobook" / "chunks"    # 원본 청크 (.md, 검수용)
-MP3_DIR     = PROJECT_ROOT / "content" / "audiobook" / "mp3"       # MP3 출력
+SCRIPTS_DIR = EXAM_ROOT / "audiobook" / "scripts"   # 청취용 원고 (.txt)
+CHUNKS_DIR  = EXAM_ROOT / "audiobook" / "chunks"    # 원본 청크 (.md, 검수용)
+MP3_DIR     = EXAM_ROOT / "audiobook" / "mp3"       # MP3 출력
 
 
 @dataclass
@@ -102,7 +105,7 @@ def scan_chapter_jobs(subject_filter: Optional[str] = None,
     for key, (dirname, subject_name) in SUBJECT_DIRS.items():
         if subject_filter and key != subject_filter:
             continue
-        folder = PROJECT_ROOT / dirname
+        folder = EXAM_ROOT / dirname
         if not folder.is_dir():
             print(f"[warn] 폴터 없음: {folder}")
             continue

@@ -24,7 +24,12 @@ if not _tts_mod._HAS_SDK:
     _tts_mod.VoiceSettings = MagicMock()
 
 # audiobook/ 디렉터리를 import 경로에 추가
+import os
 AUDIOBOOK_DIR = Path(__file__).resolve().parent
+EXAM_ROOT = Path(os.environ.get(
+    "EXAM_CONTENT_ROOT",
+    AUDIOBOOK_DIR.parents[1] / "content" / "exams" / "cosmetic",
+))
 sys.path.insert(0, str(AUDIOBOOK_DIR))
 
 from md_chunker import (  # noqa: E402
@@ -691,7 +696,7 @@ class TestIntegration(unittest.TestCase):
 
     def test_chunk_and_polish_real_file(self):
         """실제 manufacturing ch01 MD 파일을 청킹→정제까지 수행."""
-        md_path = AUDIOBOOK_DIR.parent / "manufacturing" / "1.화장품 원료의 종류와 특성 및 제품의 제조관리2026.md"
+        md_path = EXAM_ROOT / "교재" / "manufacturing" / "2과목_제조및품질관리_표준형.md"
         if not md_path.exists():
             self.skipTest(f"테스트 파일 없음: {md_path}")
 
@@ -711,7 +716,7 @@ class TestIntegration(unittest.TestCase):
 
     def test_chunk_sizes_within_limit(self):
         """모든 청크가 max_chars 이내인지 확인."""
-        md_path = AUDIOBOOK_DIR.parent / "manufacturing" / "1.화장품 원료의 종류와 특성 및 제품의 제조관리2026.md"
+        md_path = EXAM_ROOT / "교재" / "manufacturing" / "2과목_제조및품질관리_표준형.md"
         if not md_path.exists():
             self.skipTest(f"테스트 파일 없음: {md_path}")
 

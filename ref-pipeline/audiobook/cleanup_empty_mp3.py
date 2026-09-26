@@ -6,12 +6,18 @@ cleanup_empty_mp3.py
 gTTS 생성 중 중단되어 빈 파일이 남은 경우 정리용.
 
 실행:
-    python audiobook/cleanup_empty_mp3.py          # 확인만
-    python audiobook/cleanup_empty_mp3.py --delete  # 실제 삭제
+    python ref-pipeline/audiobook/cleanup_empty_mp3.py          # 확인만
+    python ref-pipeline/audiobook/cleanup_empty_mp3.py --delete  # 실제 삭제
 """
 
 import argparse
+import os
 from pathlib import Path
+
+EXAM_ROOT = Path(os.environ.get(
+    "EXAM_CONTENT_ROOT",
+    Path(__file__).resolve().parents[2] / "content" / "exams" / "cosmetic",
+))
 
 
 def find_empty_mp3s(root: Path) -> list[Path]:
@@ -28,7 +34,7 @@ def main():
     ap.add_argument("--delete", action="store_true", help="실제 삭제 (기본: 확인만)")
     args = ap.parse_args()
 
-    root = Path(__file__).parent / "mp3"
+    root = EXAM_ROOT / "audiobook" / "mp3"
     empty = find_empty_mp3s(root)
 
     if not empty:

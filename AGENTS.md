@@ -173,7 +173,7 @@ content/                # 시험 콘텐츠 컨테이너 (시험 소유 파일 �
     문제은행/            # 과목별 문제은행 MD
     참조자료/            # 법령고시/별표/참조자료 — PDF는 공통·과목1~4 폴더, MD 변환본은 ref_md/과목N/{문서}/{문서}.md (과목 폴더가 귀속의 진실)
       원료/              # 원료 DB — approved/restricted/banned/colorants_ingredients.md + db_version.json (버전·이력)
-    audiobook/          # 오디오북 MP3 + 매니페스트
+    audiobook/          # 오디오북 MP3 산출물 (생성 스크립트는 ref-pipeline/audiobook/)
     number-drills/      # 숫자 암기 드릴 JSON
   exams/<id>/           # 추가 시험도 동일한 내부 구조 (대칭)
 data/                   # 빌드 생성 번들

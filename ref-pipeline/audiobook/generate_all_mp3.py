@@ -26,8 +26,13 @@ import sys
 import time
 from pathlib import Path
 
-AUDIOBOOK_DIR = Path(__file__).resolve().parent
-PROJECT_ROOT = AUDIOBOOK_DIR.parent.parent
+import os
+AUDIOBOOK_DIR = Path(__file__).resolve().parent          # ref-pipeline/audiobook/
+EXAM_ROOT = Path(os.environ.get(
+    "EXAM_CONTENT_ROOT",
+    AUDIOBOOK_DIR.parents[1] / "content" / "exams" / "cosmetic",
+))
+OUT_AUDIOBOOK_DIR = EXAM_ROOT / "audiobook"              # mp3 산출물 루트 (콘텐츠 측)
 sys.path.insert(0, str(AUDIOBOOK_DIR))
 
 from md_chunker import chunk_markdown_file
@@ -75,7 +80,7 @@ GTTS_SLOW = False
 RATE_LIMIT_DELAY = 3.0   # gTTS 호출 간 기본 대기 (초)
 MAX_RETRIES = 5
 RETRY_BASE_DELAY = 10.0  # 실패 시 대기 시작 (초)
-PROGRESS_FILE = AUDIOBOOK_DIR / ".generation_progress.json"
+PROGRESS_FILE = OUT_AUDIOBOOK_DIR / ".generation_progress.json"
 
 # pyttsx3 설정
 PYTTSX3_RATE = 150  # 말하기 속도 (기본값: 200, 한국어는 150이 적당)
@@ -373,7 +378,7 @@ def main() -> int:
         print("\n--dry-run 모드: 실제 변환은 수행하지 않습니다.")
         return 0
 
-    output_root = AUDIOBOOK_DIR / "mp3"
+    output_root = OUT_AUDIOBOOK_DIR / "mp3"
     progress = load_progress()
     ok, fail, skipped = 0, 0, 0
     start_time = time.time()

@@ -14,13 +14,17 @@ gTTS(묣 Google TTS)를 사용해 실제 교재 MD → 청킹 → 원고 정제 
 from __future__ import annotations
 
 import argparse
+import os
 import sys
 import time
 from pathlib import Path
 
-# audiobook/ 디렉터리를 import 경로에 추가
+# ref-pipeline/audiobook/ 디렉터리를 import 경로에 추가
 AUDIOBOOK_DIR = Path(__file__).resolve().parent
-PROJECT_ROOT = AUDIOBOOK_DIR.parent.parent
+EXAM_ROOT = Path(os.environ.get(
+    "EXAM_CONTENT_ROOT",
+    AUDIOBOOK_DIR.parents[1] / "content" / "exams" / "cosmetic",
+))
 sys.path.insert(0, str(AUDIOBOOK_DIR))
 
 from md_chunker import chunk_markdown_file
@@ -34,8 +38,8 @@ from gtts import gTTS
 # 설정
 # ---------------------------------------------------------------------------
 
-SUBJECT_DIR = PROJECT_ROOT / "content/manufacturing"
-OUTPUT_DIR = AUDIOBOOK_DIR / "mp3" / "test_gtts"
+SUBJECT_DIR = EXAM_ROOT / "교재" / "manufacturing"
+OUTPUT_DIR = EXAM_ROOT / "audiobook" / "mp3" / "test_gtts"
 GTTS_LANG = "ko"
 GTTS_SLOW = False
 MAX_CHUNKS_DEFAULT = 3  # 기본은 처음 3청크만 (빠른 테스트)

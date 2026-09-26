@@ -4,6 +4,17 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-27 audiobook 스크립트 → ref-pipeline/audiobook/ 이동
+
+- `content/exams/cosmetic/audiobook/`의 파이썬 스크립트 9개 + README·requirements·AUDIOBOOK_SUMMARY를
+  `ref-pipeline/audiobook/`으로 이동 (초기 일회성 MP3 제작 도구 — 산출물 mp3/만 콘텐츠에 잔류).
+- 경로 상수 수정: 멀티시험 마이그레이션(340f01f) 이후 깨져 있던 `PROJECT_ROOT` 체인을
+  `EXAM_ROOT`(=`EXAM_CONTENT_ROOT` env 또는 `content/exams/cosmetic`) 기준으로 재작성.
+  - manifest `subjects[].dir`(`교재/law` 등)를 그대로 사용해 과목 폴더 해석.
+  - 출력은 콘텐츠 측 `{EXAM_ROOT}/audiobook/{scripts,chunks,mp3}/` 유지.
+- `test_audiobook.py` 통합 테스트의 구형 파일명(`1.화장품 원료…`)을 현재 교재 파일(`2과목_제조및품질관리_표준형.md`)로 갱신.
+- 검증: `run_pipeline.py --list` 8개 과목 파일 스캔 성공, `pytest test_audiobook.py` 80 passed/2 skipped.
+
 ## 2026-09-27 MD_to_HTML.py → ref-pipeline/ 이동
 
 - `tools/MD_to_HTML.py` + `tools/callout_rules.json`을 `ref-pipeline/`으로 이동 (git mv — 이력 보존).
