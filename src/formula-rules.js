@@ -3,7 +3,7 @@
 // 고객 조건(제형·고민·피부유형·나이) → 추천 베이스·원료.
 // AI 생성이 아닌 큐레이션 매핑 테이블 + 결정적 로직.
 //
-// 안전 원칙 (FORMULA_OS_DESIGN.md §9.3):
+// 안전 원칙 (docs/report_archive/FORMULA_OS_DESIGN.md §9.3):
 //   - 이름만 추천, 농도 값은 제안하지 않는다
 //   - 매핑에는 approved/restricted만 허용 — banned 이름은 무결성 테스트로 차단
 //   - 사용자 커스텀 후보도 런타임에 banned/미등록 이름을 필터링한다

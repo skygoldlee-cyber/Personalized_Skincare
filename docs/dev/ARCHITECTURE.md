@@ -452,17 +452,16 @@ Personalized_Skincare/
     │   ├── TEXTBOOK_AUTHORING_GUIDE.md
     │   ├── AUDIO_HOSTING_GUIDE.md
     │   ├── SUBSCRIPTION_ROADMAP.md
-    │   ├── FEATURE_PROPOSALS.md #    기능 제안 (Pass Core Loop)
-    │   ├── PASS_CORE_LOOP_REVIEW.md # 합격 핵심 루프 리뷰
-    │   ├── PASS_TO_PRACTICE_STRATEGY.md # 합격→실무 전략
-    │   ├── FORMULA_OS_DESIGN.md #      Formula OS 도메인 설계
+    │   ├── LEARNING_PREMIUM_PLAN.md # Learning Pro 구현 과제 (우선순위·공수)
     │   ├── FORMULA_OS_WORKFLOW_DESIGN.md # 배치·고객·장부 업무 플로우 설계
     │   ├── SUPABASE_DESIGN.md #        Supabase 계정·동기화 설계안
     │   ├── Supabase_Custom_SMTP_MagicLink_OTP_설정가이드.md # SMTP·매직링크 설정
     │   ├── READER_FEEDBACK_DESIGN.md #  교재 리더 피드백 설계
-    │   ├── STUDY_APP_DESIGN_GUIDE.md #  학습 앱 디자인 가이드
-    │   └── Cosmetic Master Business Plan.md
-    ├── report_archive/         #   분석 보고서 아카이브 (앱 미참조)
+    │   └── STUDY_APP_DESIGN_GUIDE.md #  학습 앱 디자인 가이드
+    ├── report_archive/         #   분석 보고서·대체된 전략 문서 아카이브 (앱 미참조)
+    │   #   — Cosmetic Master Business Plan·FEATURE_PROPOSALS·PASS_TO_PRACTICE_STRATEGY·
+    │   #     PASS_CORE_LOOP_REVIEW·FORMULA_OS_DESIGN·PRO_MULTI_EXAM_EVALUATION·
+    │   #     EXTERNAL_REVIEW_LEARNING_PRO 등 (현행 기준서는 SPEC.md·사업기획서 v3.5)
     └── user/
         ├── user_manual.md      #   사용자 매뉴얼
         ├── formula_manual.md   #   Formula OS 실무 매뉴얼
@@ -823,7 +822,7 @@ pullSync() (로그인 시 / "지금 동기화" 버튼)
 
 ## 🧪 Formula OS 도메인 아키텍처
 
-> 설계안: [`FORMULA_OS_DESIGN.md`](FORMULA_OS_DESIGN.md) · 업무 플로우: [`FORMULA_OS_WORKFLOW_DESIGN.md`](FORMULA_OS_WORKFLOW_DESIGN.md) · 사용자 매뉴얼: `docs/user/formula_manual.md`
+> 설계안: [`FORMULA_OS_DESIGN.md`](../report_archive/FORMULA_OS_DESIGN.md) (Phase 5-A, 아카이브) · 업무 플로우: [`FORMULA_OS_WORKFLOW_DESIGN.md`](FORMULA_OS_WORKFLOW_DESIGN.md) · 사용자 매뉴얼: `docs/user/formula_manual.md`
 
 학습 앱 안에 내장된 실무 작업실. 9개 조제관리 업무 영역을 6개 패널로 묶어 `formula-view` 하나의 뷰 안에서 서브내비 칩으로 전환한다.
 
@@ -1920,7 +1919,6 @@ npm.cmd run deploy
 - [`TESTING.md`](TESTING.md) — 테스트 가이드·정책 (unit + DOM)
 - [`DOM_TEST_DESIGN.md`](DOM_TEST_DESIGN.md) — jsdom UI 시나리오 테스트 설계 (helpers·모킹 전략·Playwright 확장 경로)
 - [`SPEC.md`](SPEC.md) — 요구사양 명세서 (기능 ID별 구현 상태, UI/UX 재사용 가이드 §4.8)
-- [`FORMULA_OS_DESIGN.md`](FORMULA_OS_DESIGN.md) — Formula OS 도메인 설계
-- [`FORMULA_OS_WORKFLOW_DESIGN.md`](FORMULA_OS_WORKFLOW_DESIGN.md) — 배치·고객·원료 장부 업무 플로우 설계
+- [`FORMULA_OS_WORKFLOW_DESIGN.md`](FORMULA_OS_WORKFLOW_DESIGN.md) — 배치·고객·원료 장부 업무 플로우 설계 (Phase 5-A 기본 설계는 `docs/report_archive/FORMULA_OS_DESIGN.md`)
 - [`SUPABASE_DESIGN.md`](SUPABASE_DESIGN.md) — Supabase 계정·클라우드 동기화 설계안 (Phase 1~2 구현 완료 — §10)
 - [`Supabase_Custom_SMTP_MagicLink_OTP_설정가이드.md`](Supabase_Custom_SMTP_MagicLink_OTP_설정가이드.md) — SMTP·매직링크·OTP 설정 가이드

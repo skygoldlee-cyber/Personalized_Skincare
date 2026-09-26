@@ -4,6 +4,20 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-26 docs/dev 문서 아카이브 정리
+
+- 대체된 전략/설계 원전 7건을 `docs/report_archive/`로 이동: Cosmetic Master
+  Business Plan(구판, 사업기획서 v3.5로 대체), PASS_TO_PRACTICE_STRATEGY,
+  FEATURE_PROPOSALS, PASS_CORE_LOOP_REVIEW(시점 진단), EXTERNAL_REVIEW_LEARNING_PRO,
+  PRO_MULTI_EXAM_EVALUATION, FORMULA_OS_DESIGN(Phase 5-A — 현행은 SPEC §3.18 +
+  FORMULA_OS_WORKFLOW_DESIGN).
+- 참조 경로 동기화: docs/README.md 인덱스 재편(dev 28→24), ARCHITECTURE.md
+  문서 트리·관련 문서 링크, SPEC §7 로드맵, SUPABASE_DESIGN·FORMULA_OS_WORKFLOW_DESIGN·
+  LEARNING_PREMIUM_PLAN 상위 문서 헤더, 사업기획서 관련 문서 표, src 주석 3곳
+  (formula-rules·recommendations·quiz).
+- DEPLOYMENT_GUIDE §6 오디오 호스팅 절차가 AUDIO_HOSTING_GUIDE §3~5와 이중
+  기술돼 있어 요약+링크로 축소 — 호스팅 절차의 진실 소스를 AUDIO_HOSTING_GUIDE로 일원화.
+
 ## 2026-09-26 앱 종료 문구 환경별 분기
 
 - `quitApp()` 확인 다이얼로그·종료 안내 화면의 모바일 제스처 안내를 터치 환경

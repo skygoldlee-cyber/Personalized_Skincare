@@ -264,40 +264,15 @@ manifest-src 'self'
 
 ---
 
-## 6. 대용량 오디오북 외부 호스팅 (GitHub Releases)
+## 6. 대용량 오디오북 외부 호스팅 (GitHub Releases) — 요약
 
-Vercel 용량 한도를 피하기 위해 대용량 MP3 파일은 **GitHub Releases** 공간에 릴리스 파일(Binaries) 형식으로 호스팅하여 무제한 다운로드 대역폭과 Range 요청(이어듣기) 지원을 무료로 확보합니다.
+Vercel 용량 한도를 피하기 위해 대용량 MP3 파일은 **GitHub Releases** 공간에 릴리스 파일(Binaries) 형식으로 호스팅합니다. Release 생성·업로드 절차, `AUDIO_BASE_URL` 매니페스트 연동, CSP `media-src` 설정, 모바일 청취 동작 체인 등 **상세 절차의 진실 소스는 [`AUDIO_HOSTING_GUIDE.md`](AUDIO_HOSTING_GUIDE.md) §3~5**를 참조하세요.
 
-### 6-1. GitHub Release 생성 및 MP3 업로드
-1. GitHub 저장소의 우측 메뉴에서 **Releases** ➔ **Create a new release**를 클릭합니다.
-2. **Tag version**에 `audiobook-v1`을 입력하고 타이틀을 `Audiobook v1`으로 정합니다.
-3. 19개 챕터의 통합 MP3 파일들을 **Attach binaries** 영역에 드래그 앤 드롭하여 업로드한 후 **Publish release**를 클릭합니다.
-4. 업로드된 파일의 개별 URL은 다음과 같은 고정 규칙을 가집니다.
-   ```
-   https://github.com/skygoldlee-cyber/Personalized_Skincare/releases/download/audiobook-v1/ch01_1_화장품법.mp3
-   ```
+배포 관점에서 알아야 할 요지만:
 
-### 6-2. 오디오 매니페스트 연동 코드 수정
-업로드된 주소를 앱에서 접근할 수 있도록 [`data/audio_manifest.js`](file:///c:/Project/Personalized_Skincare/data/audio_manifest.js) 파일을 수정합니다.
-
-- **`AUDIO_BASE_URL` 설정**:
-  ```javascript
-  // data/audio_manifest.js
-  const AUDIO_BASE_URL = 'https://github.com/skygoldlee-cyber/Personalized_Skincare/releases/download/audiobook-v1';
-  ```
-- **`getAudioUrl()` 경로 해소 로직**: GitHub Releases 에셋은 폴더 깊이 구조를 지원하지 않고 단일 경로 아래 파일명으로 서빙하므로, 파일 경로를 조합할 때 중간 과목 폴더명을 제외하도록 수정합니다.
-  ```javascript
-  export function getAudioUrl(chapterNo, subjectKey) {
-      const filename = getAudioFilename(chapterNo, subjectKey);
-      if (!filename) return null;
-      if (AUDIO_BASE_URL) {
-          // Releases 다운로드 URL: BASE_URL + 파일명
-          return `${AUDIO_BASE_URL}/${filename}`;
-      }
-      // 로컬 개발 폴백 경로
-      return `./content/exams/cosmetic/audiobook/mp3/${subjectKey}/${filename}`;
-  }
-  ```
+- MP3는 `.vercelignore`로 배포에서 제외 (`*.mp3`, `content/exams/cosmetic/audiobook/`)
+- `vercel.json` CSP의 `media-src`에 `https://github.com` + `https://*.githubusercontent.com` 필요
+- 오디오 URL 변경 시 `data/audio_manifest.js`만 수정하면 됨 (SW `CACHE_VERSION`은 `deploy`가 자동 스탬프)
 
 ---
 

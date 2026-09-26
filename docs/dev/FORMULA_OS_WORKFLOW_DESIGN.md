@@ -1,6 +1,6 @@
 # Formula OS — 조제관리사 업무 전체 커버리지 설계안
 
-> 상위 문서: `FORMULA_OS_DESIGN.md` (Phase 5-A 기본 설계, 구현 완료)
+> 상위 문서: `../report_archive/FORMULA_OS_DESIGN.md` (Phase 5-A 기본 설계, 구현 완료 — 아카이브)
 > 범위: 맞춤형화장품 조제관리사 **9개 주요 업무** 전체를 Formula OS가 유기적으로 커버하도록 확장
 > 상태: ✅ 구현 완료 — Phase A~D 전부 반영 (f6cd274 · 5b9c356 · 9bce945 · 0389ed7)
 

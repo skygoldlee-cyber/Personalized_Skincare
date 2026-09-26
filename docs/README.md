@@ -35,9 +35,9 @@
 ### ③ Formula OS(실무 기능)를 이해·확장하는 경우
 
 ```
-1. FORMULA_OS_DESIGN.md          — Phase 5-A 기본 설계 (원료DB·계산기·검증)
-2. FORMULA_OS_WORKFLOW_DESIGN.md — 9개 조제 업무 확장 설계 (Phase A~D)
-3. SPEC.md §3.18                 — 구현된 상세 요구사양
+1. FORMULA_OS_WORKFLOW_DESIGN.md — 9개 조제 업무 확장 설계 (Phase A~D)
+2. SPEC.md §3.18                 — 구현된 상세 요구사양
+3. report_archive/FORMULA_OS_DESIGN.md — Phase 5-A 기본 설계 (아카이브, 설계 근거 참고용)
 ```
 
 ### ④ 배포·환경·운영 작업
@@ -53,17 +53,19 @@
 ### ⑤ 제품 전략·수익화 방향 검토
 
 ```
-1. docs/맞춤형화장품_조제관리사_자격증플랫폼_사업기획서.md — 플랫폼 사업기획서 (법적 경계·기술 자산)
-2. dev/Cosmetic Master Business Plan.md — 상위 브랜드 전략 (Pass+Practice 두 루프, TAM·Moat·GTM)
-3. FEATURE_PROPOSALS.md          — 합격 핵심 루프 11단계 제품 전략
-4. PASS_TO_PRACTICE_STRATEGY.md  — 합격 후 실무 플랫폼 전환 전략
-5. PASS_CORE_LOOP_REVIEW.md      — 핵심 루프의 코드 반영도 진단 (시점 스냅샷)
-6. READER_FEEDBACK_DESIGN.md     — 독자 피드백 공유 기능 설계안
-7. SUBSCRIPTION_ROADMAP.md       — 월 구독 전환 로드맵
-8. FORMULA_OS_경쟁전략.md          — Formula OS 경쟁 지도·차별화 축·시나리오별 대응
-9. 판매업소_인터뷰_스크립트.md      — Step 0 판매업소 인터뷰 질문·중단 기준·집계 시트
-10. 맞춤형화장품판매업소_조사_2026-09.md — 판매업소·솔루션 공급사·시장 수치·규제 동향 조사 (인터뷰 모집 자료)
+1. docs/맞춤형화장품_조제관리사_자격증플랫폼_사업기획서.md — 플랫폼 사업기획서 v3.5 (현행 기준서)
+2. LEARNING_PREMIUM_PLAN.md      — Learning Pro 구현 과제 (우선순위·공수·전제)
+3. SUBSCRIPTION_ROADMAP.md       — 월 구독 전환 로드맵
+4. READER_FEEDBACK_DESIGN.md     — 독자 피드백 공유 기능 설계안 (미구현)
+5. FORMULA_OS_경쟁전략.md          — Formula OS 경쟁 지도·차별화 축·시나리오별 대응
+6. 판매업소_인터뷰_스크립트.md      — Step 0 판매업소 인터뷰 질문·중단 기준·집계 시트
+7. 맞춤형화장품판매업소_조사_2026-09.md — 판매업소·솔루션 공급사·시장 수치·규제 동향 조사 (인터뷰 모집 자료)
 ```
+
+> **전략 원전 문서 (아카이브)**: 사업기획서 v3.5가 재구성한 상위 전략 문서들은 `report_archive/`에 보관 —
+> Cosmetic Master Business Plan(구판 기획서)·PASS_TO_PRACTICE_STRATEGY(Pass→Practice 전략)·
+> FEATURE_PROPOSALS(핵심 루프 제안)·PASS_CORE_LOOP_REVIEW(코드 반영도 진단)·
+> EXTERNAL_REVIEW_LEARNING_PRO·PRO_MULTI_EXAM_EVALUATION. 설계 근거·결정 이력 참고용.
 
 ### ⑥ 학습자(사용자) 관점 문서
 
@@ -80,9 +82,9 @@ docs/
 ├── README.md                    ← 본 파일 (문서 인덱스 + 읽기 순서)
 ├── 맞춤형화장품_조제관리사_자격증플랫폼_사업기획서.md
 ├── FORMULA_OS_경쟁전략.md          ← Formula OS 경쟁·차별화 전략
-├── dev/                         ← 개발·설계·운영 문서 (28개)
+├── dev/                         ← 개발·설계·운영 문서 (24개)
 ├── user/                        ← 사용자/학습자 문서 (7개)
-└── report_archive/              ← 1회성 분석 보고서 아카이브 (4개)
+└── report_archive/              ← 분석 보고서 + 대체된 전략 문서 아카이브 (11개)
 ```
 
 ---
@@ -115,8 +117,7 @@ docs/
 
 | 문서 | 설명 |
 |------|------|
-| [FORMULA_OS_DESIGN.md](dev/FORMULA_OS_DESIGN.md) | Phase 5-A 기본 설계 — 원료 DB·배합 계산기·My 포뮬러·규정 검증 (구현 완료) |
-| [FORMULA_OS_WORKFLOW_DESIGN.md](dev/FORMULA_OS_WORKFLOW_DESIGN.md) | 조제관리사 9개 업무 전체 커버리지 — 고객·배치·원료장부·법규 (Phase A~D 구현 완료) |
+| [FORMULA_OS_WORKFLOW_DESIGN.md](dev/FORMULA_OS_WORKFLOW_DESIGN.md) | 조제관리사 9개 업무 전체 커버리지 — 고객·배치·원료장부·법규 (Phase A~D 구현 완료). Phase 5-A 기본 설계는 `report_archive/FORMULA_OS_DESIGN.md` |
 
 ### 테스트·품질
 
@@ -139,10 +140,7 @@ docs/
 
 | 문서 | 설명 |
 |------|------|
-| [Cosmetic Master Business Plan.md](dev/Cosmetic%20Master%20Business%20Plan.md) | 상위 브랜드 전략 — Pass Master + Formula OS 두 루프, TAM/SAM/SOM, Moat, GTM |
-| [FEATURE_PROPOSALS.md](dev/FEATURE_PROPOSALS.md) | 합격 핵심 루프 중심 제품 전략 — Free/Pro 경계, Phase 로드맵 |
-| [PASS_TO_PRACTICE_STRATEGY.md](dev/PASS_TO_PRACTICE_STRATEGY.md) | Pass→Practice 전략 — 합격 후 실무 플랫폼으로 전환하는 설계 |
-| [PASS_CORE_LOOP_REVIEW.md](dev/PASS_CORE_LOOP_REVIEW.md) | 합격 핵심 루프 코드 반영도 진단 (작성 시점 스냅샷) |
+| [LEARNING_PREMIUM_PLAN.md](dev/LEARNING_PREMIUM_PLAN.md) | Learning Pro 구현 과제 — 우선순위·공수·전제 조건 |
 | [READER_FEEDBACK_DESIGN.md](dev/READER_FEEDBACK_DESIGN.md) | 독자 피드백 공유 기능 설계 제안 (미구현) |
 | [SUBSCRIPTION_ROADMAP.md](dev/SUBSCRIPTION_ROADMAP.md) | 월 구독 서비스 전환 로드맵 |
 | [STUDY_APP_DESIGN_GUIDE.md](dev/STUDY_APP_DESIGN_GUIDE.md) | 학습 앱 재사용 설계 가이드 — 다른 자격시험/교재 적용 템플릿 |
@@ -165,10 +163,17 @@ docs/
 
 ## 🗄️ 아카이브 (docs/report_archive/)
 
-1회성 분석 보고서 — 앱 코드에서 참조하지 않음. 이력 보관용.
+1회성 분석 보고서 + **대체된 전략/설계 원전** — 앱 코드에서 참조하지 않음. 이력·설계 근거 보관용.
 
 | 문서 | 설명 |
 |------|------|
+| Cosmetic Master Business Plan.md | 구판 사업기획서 — 사업기획서 v3.5(`docs/`)로 대체됨 |
+| PASS_TO_PRACTICE_STRATEGY.md | Pass→Practice 전략 원전 — 사업기획서·SPEC §3.18에 흡수 |
+| FEATURE_PROPOSALS.md | 합격 핵심 루프 11단계 제안 원전 — 잔여 과제는 SPEC §7·LEARNING_PREMIUM_PLAN |
+| PASS_CORE_LOOP_REVIEW.md | 핵심 루프 코드 반영도 진단 (2026-09-11 스냅샷) |
+| EXTERNAL_REVIEW_LEARNING_PRO.md | Learning Pro 외부 리뷰 인풋 — 채택분은 LEARNING_PREMIUM_PLAN에 반영 |
+| PRO_MULTI_EXAM_EVALUATION.md | Learning Pro 멀티시험 적합성 평가 — 결론은 SPEC §7.4 |
+| FORMULA_OS_DESIGN.md | Phase 5-A 기본 설계 원전 — 현행은 SPEC §3.18 + FORMULA_OS_WORKFLOW_DESIGN |
 | 법령최신확인결과.md | 교재 법령 수치의 최신 개정 반영 여부 조사 |
 | 오답위험_분석보고서.md | 문제은행 오답 유발 패턴 분석 |
 | 출제비중기반학습방법.md | 출제 비중 기반 학습 우선순위 제안 |

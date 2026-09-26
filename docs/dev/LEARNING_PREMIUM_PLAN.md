@@ -2,7 +2,7 @@
 
 > **작성일**: 2026-09-25
 > **목적**: 학습(시험 준비) 측 Premium의 구현 대상을 우선순위·공수·전제 조건과 함께 정리
-> **관련 문서**: [FEATURE_PROPOSALS.md](FEATURE_PROPOSALS.md), [PASS_CORE_LOOP_REVIEW.md](PASS_CORE_LOOP_REVIEW.md), [SUBSCRIPTION_ROADMAP.md](SUBSCRIPTION_ROADMAP.md), [사업기획서](../맞춤형화장품_조제관리사_자격증플랫폼_사업기획서.md)
+> **관련 문서**: [FEATURE_PROPOSALS.md](../report_archive/FEATURE_PROPOSALS.md), [PASS_CORE_LOOP_REVIEW.md](../report_archive/PASS_CORE_LOOP_REVIEW.md), [SUBSCRIPTION_ROADMAP.md](SUBSCRIPTION_ROADMAP.md), [사업기획서](../맞춤형화장품_조제관리사_자격증플랫폼_사업기획서.md)
 
 ---
 
@@ -10,8 +10,8 @@
 
 - Premium의 유료 근거는 콘텐츠 차단이 아니라 **"나에게 맞게 공부시켜주는 개인화"** (사업기획서 §8.1).
 - **사용자용 한 문장 정의** (외부 리뷰 채택): *틀린 문제를 그냥 다시 풀게 하지 않고, 왜 틀렸는지 찾아서 교재 → 개념 → 유사문제 → 재시험까지 연결해 주는 개인 맞춤 합격 학습 시스템*
-- 가치 서사는 **콘텐츠 연결 → 학습 데이터 → 개인화 → 예측** 순 (개인화가 아니라 연결 루프가 1차 차별점 — 외부 리뷰 + PRO_MULTI_EXAM_EVALUATION §2).
-- 학습 콘텐츠 엔진(교재 파싱, 카드/퀴즈 추출, SM-2, 모의고사·과락 판정)은 완성됨 — 과제는 **끊어진 파이프라인 배선 + 개인화 계층** (PASS_CORE_LOOP_REVIEW §6).
+- 가치 서사는 **콘텐츠 연결 → 학습 데이터 → 개인화 → 예측** 순 (개인화가 아니라 연결 루프가 1차 차별점 — 외부 리뷰 + PRO_MULTI_EXAM_EVALUATION §2 — `docs/report_archive/`).
+- 학습 콘텐츠 엔진(교재 파싱, 카드/퀴즈 추출, SM-2, 모의고사·과락 판정)은 완성됨 — 과제는 **끊어진 파이프라인 배선 + 개인화 계층** (PASS_CORE_LOOP_REVIEW §6 — `docs/report_archive/`).
 - 사업 순서상 학습 Premium은 **개인화 완성 후**이며, Formula OS Pro 검증과 병행 (사업기획서 §12.3).
 
 ## A. 끊어진 파이프라인 복구 (공수 소~중)
@@ -112,8 +112,8 @@ A1 → A2 → A3 (연결 루프 — 차별점의 실체)
 
 ## 📎 관련 문서
 
-- [FEATURE_PROPOSALS.md](FEATURE_PROPOSALS.md) — 추천 기능 제안 (합격 핵심 루프 정의)
-- [PASS_CORE_LOOP_REVIEW.md](PASS_CORE_LOOP_REVIEW.md) — 파이프라인 끊김 지점 코드 리뷰
+- [FEATURE_PROPOSALS.md](../report_archive/FEATURE_PROPOSALS.md) — 추천 기능 제안 (합격 핵심 루프 정의)
+- [PASS_CORE_LOOP_REVIEW.md](../report_archive/PASS_CORE_LOOP_REVIEW.md) — 파이프라인 끊김 지점 코드 리뷰
 - [SUBSCRIPTION_ROADMAP.md](SUBSCRIPTION_ROADMAP.md) — 수익화 3단계 전환 로드맵
-- [PRO_MULTI_EXAM_EVALUATION.md](PRO_MULTI_EXAM_EVALUATION.md) — 멀티시험 킬러 피처 적합성 평가
+- [PRO_MULTI_EXAM_EVALUATION.md](../report_archive/PRO_MULTI_EXAM_EVALUATION.md) — 멀티시험 킬러 피처 적합성 평가
 - [사업기획서 §5.4·§8.4·§12.3](../맞춤형화장품_조제관리사_자격증플랫폼_사업기획서.md)
