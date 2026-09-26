@@ -11,6 +11,7 @@ export function getViewTitles(registry) {
     const uiText = (registry && registry.uiText) || {};
     return {
         'dashboard-view': uiText.dashboard || { title: '학습 대시보드', subtitle: '시험 합격을 위한 분석 및 스마트 툴' },
+        'analysis-view': uiText.analysis || { title: '내 맞춤 분석', subtitle: '학습 기록을 바탕으로 약점과 우선순위를 진단합니다' },
         'flashcard-view': uiText.flashcard || { title: '개념 플래시카드', subtitle: '과목별 핵심 개념을 카드로 뒤집으며 암기' },
         'quiz-view': uiText.quiz || { title: '기출 및 핵심 퀴즈', subtitle: '빈칸 채우기형 퀴즈로 실전 완벽 대비' },
         'review-view': uiText.review || { title: '오답 및 중요 복습', subtitle: '헷갈리거나 어려운 약점 카드 집중 복습' },

@@ -305,6 +305,11 @@ export function renderTextbookReader() {
         storyToggle.checked = textbookReaderState.storyMode;
         storyToggle.addEventListener('change', (e) => {
             if (e.target.checked) proFeatureNotice('story_textbook', '이야기형 교재 본문 읽기');
+            // 표준형으로 돌아가면 오디오 버튼/플레이어가 숨겨지므로 재생 중인 오디오 정지
+            if (!e.target.checked && readerAudioState.audio) {
+                stopReaderAudio();
+                showAudioToast('표준형 모드로 전환되어 오디오 재생이 중지되었습니다.');
+            }
             textbookReaderState.storyMode = e.target.checked;
             // Re-render current chapter if one is selected
             if (textbookReaderState.selectedSubject && textbookReaderState.selectedChapter) {
@@ -639,7 +644,8 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
     const readMinutes = Math.max(1, Math.round(totalChars / 500));
 
     // [멀티시험] 오디오북·참조자료는 시험 features 플래그로 게이트
-    const audioPath = hasFeature('audiobook') ? getAudioPathForChapter(subjId, chapter) : null;
+    // 오디오 MP3는 이야기형 교재 내레이션이므로 이야기형 모드(story_textbook Pro)에서만 표시
+    const audioPath = (hasFeature('audiobook') && isStoryMode) ? getAudioPathForChapter(subjId, chapter) : null;
     const hasAudio = !!audioPath;
     const refsEnabled = hasFeature('refDocs');
 

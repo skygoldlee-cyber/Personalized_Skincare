@@ -9,9 +9,11 @@ import { updatePomodoroUI } from './pomodoro.js';
 import { getDueCount } from '../spaced-repetition.js';
 import {
     computeRecommendations, estimateExpectedScore, getActualResult,
-    saveActualResult, clearActualResult, getSimHistory
+    saveActualResult, clearActualResult, getSimHistory,
+    computeWrongCauseSummary, WRONG_CAUSE_LABELS
 } from '../recommendations.js';
-import { getDDay, getSuggestedDailyCount } from '../study-tracker.js';
+import { getDDay, getSuggestedDailyCount, getTodayGoalProgress, getWeeklyGoalProgress } from '../study-tracker.js';
+import { getWeakStatements, getDueStatementSids, getAnomalousStatements } from '../statement-tracker.js';
 import { showToast } from '../ui-utils.js';
 import { getExamRules } from '../exam-context.js';
 
@@ -296,6 +298,78 @@ function _renderWeakSubjectRecommendation(subjects) {
     });
     html += '</div>';
     recEl.innerHTML = html;
+}
+
+/* =======================================================
+   🎯 내 맞춤 분석 뷰 — 개인화 학습 허브
+   과목 카드·히트맵·모의고사 차트의 DOM 요소는 이 뷰에 있다
+   (renderDashboard가 ID 기준으로 채우므로 그대로 재사용).
+   ======================================================= */
+
+/**
+ * 내 맞춤 분석 뷰 렌더링 — renderDashboard()가 과목 카드·히트맵·차트를
+ * 채운 뒤, 이 뷰 전용 진단 요약 카드 3종을 추가로 렌더링한다.
+ */
+export function renderAnalysisView() {
+    renderDashboard();
+    _renderWrongCauseInsight();
+    _renderWeakStatementInsight();
+    _renderStudyRhythmInsight();
+}
+
+/** 오답 패턴 분석 카드 — 최근 7일 원인 분포 + 권장 학습법 */
+function _renderWrongCauseInsight() {
+    const el = document.getElementById('analysis-wrong-cause');
+    if (!el) return;
+    const sum = computeWrongCauseSummary(state.wrongCauses);
+    const goBtn = `<button class="btn btn-secondary btn-sm analysis-card-btn" data-click="switchView" data-arg="review-view"><i class="fa-solid fa-star" aria-hidden="true"></i> 오답 복습으로</button>`;
+    if (sum.total === 0) {
+        el.innerHTML = `<h4>🧩 오답 패턴 분석</h4>
+            <p class="analysis-empty">오답 복습에서 "틀린 이유"를 태그하면 최근 7일의 실수 패턴을 분석합니다.</p>${goBtn}`;
+        return;
+    }
+    const rows = Object.entries(WRONG_CAUSE_LABELS)
+        .map(([k, label]) => `<div class="wc-row"><span>${label}</span><strong>${sum.counts[k] || 0}건</strong></div>`).join('');
+    el.innerHTML = `<h4>🧩 오답 패턴 분석 <span class="analysis-meta">최근 7일 · ${sum.total}건</span></h4>
+        ${rows}
+        <p class="analysis-advice">${esc(sum.advice)}</p>${goBtn}`;
+}
+
+/** 취약 진술 카드 — 반복 오판 진술 수 + 오늘 복습 대기 + 리뷰 딥링크 */
+function _renderWeakStatementInsight() {
+    const el = document.getElementById('analysis-weak-statements');
+    if (!el) return;
+    const weak = getWeakStatements(5);
+    const dueCount = getDueStatementSids().length;
+    const anomalous = getAnomalousStatements();
+    if (weak.length === 0) {
+        el.innerHTML = `<h4>🎯 취약 진술 추적</h4>
+            <p class="analysis-empty">O/X·복수정답형 드릴을 풀면 반복 오판 진술을 추적해 보여줍니다.</p>
+            <button class="btn btn-secondary btn-sm analysis-card-btn" data-click="switchView" data-arg="trainer-view"><i class="fa-solid fa-dumbbell" aria-hidden="true"></i> 훈련소로</button>`;
+        return;
+    }
+    const rows = weak.slice(0, 3).map(w =>
+        `<div class="wc-row"><span class="analysis-sid">${esc(w.sid)}</span><strong>${w.w}회 오판</strong></div>`).join('');
+    const anomalousNote = anomalous.length > 0
+        ? `<p class="analysis-advice">⚠️ 반복 오판 진술 ${anomalous.length}개 — 표현 검수가 필요할 수 있습니다.</p>` : '';
+    el.innerHTML = `<h4>🎯 취약 진술 추적 <span class="analysis-meta">오늘 복습 대기 ${dueCount}개</span></h4>
+        ${rows}${anomalousNote}
+        <button class="btn btn-secondary btn-sm analysis-card-btn" data-click="gotoWeakReview"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i> 취약 리뷰 열기</button>`;
+}
+
+/** 학습 리듬 카드 — 오늘 목표·주간 학습일·D-day 요약 + 캘린더 링크 */
+function _renderStudyRhythmInsight() {
+    const el = document.getElementById('analysis-study-rhythm');
+    if (!el) return;
+    const today = getTodayGoalProgress();
+    const week = getWeeklyGoalProgress();
+    const dday = getDDay();
+    const ddayLabel = dday === null ? '미설정' : (dday < 0 ? `D+${-dday}` : (dday === 0 ? 'D-Day' : `D-${dday}`));
+    el.innerHTML = `<h4>📅 학습 리듬</h4>
+        <div class="wc-row"><span>오늘 목표 달성</span><strong>${today.overallPercent}%</strong></div>
+        <div class="wc-row"><span>이번 주 학습일</span><strong>${week.studyDays}/${week.goalDays}일</strong></div>
+        <div class="wc-row"><span>시험일</span><strong>${ddayLabel}</strong></div>
+        <button class="btn btn-secondary btn-sm analysis-card-btn" data-click="switchView" data-arg="calendar-view"><i class="fa-solid fa-calendar-check" aria-hidden="true"></i> 캘린더 보기</button>`;
 }
 
 /**

@@ -15,6 +15,7 @@ import { gradeAnswer } from '../questions.js';
 import { recordStatementJudgments, getWeakStatements, getDueStatementSids, getAllStatementStats, getAnomalousStatements, WEAK_GRADUATE_STREAK } from '../statement-tracker.js';
 import { recordStudyActivity } from '../study-tracker.js';
 import { proFeatureNotice } from '../pro-upgrade.js';
+import { switchView } from './navigation.js';
 
 const DRILL_COUNT = 10;
 const OPTION_INDICATORS = ['①', '②', '③', '④', '⑤'];
@@ -673,6 +674,12 @@ function sidSubject(sid) {
 }
 
 /** 취약 진술 패널 열기 */
+/** 내 맞춤 분석 뷰 → 취약 진술 리뷰 딥링크 (훈련소 뷰 전환 후 패널 오픈) */
+export function gotoWeakReview() {
+    switchView('trainer-view');
+    openWeakReview();
+}
+
 export function openWeakReview() {
     state.trainer.activeSubView = 'weak';
     const menu = document.getElementById('trainer-menu-panel');

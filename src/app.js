@@ -12,13 +12,14 @@ import { setupPWAInstall } from './pwa-install.js';
 import { setupThemeToggle } from './theme-toggle.js';
 import { maybeShowWhatsNew } from './whats-new.js';
 import { captureEntrySource, flushPendingFeedback, initFeedbackHint } from './feedback.js';
-import { loadFeaturePlan, refreshProBadges } from './pro-upgrade.js';
+import { loadFeaturePlan, refreshProBadges, proFeatureNotice } from './pro-upgrade.js';
 
 // --- 뷰 컨트롤러 모듈 임포트 ---
 import {
     updateGlobalStats,
     refreshDashboardStatsInBackground,
     renderDashboard,
+    renderAnalysisView,
     startSubjectStudy,
     startSubjectQuiz,
     startSubjectReader,
@@ -90,6 +91,7 @@ import {
     nextComboDrill,
     submitComboJudgments,
     openWeakReview,
+    gotoWeakReview,
     setWeakFilter,
     setDrillCount
 } from './views/trainer-drills.js';
@@ -672,6 +674,11 @@ function setupNavigation() {
             refreshDashboardStatsInBackground();
             checkExamDraft();
         },
+        'analysis-view': () => {
+            proFeatureNotice('personal_analysis', '내 맞춤 분석');
+            renderAnalysisView();
+            refreshDashboardStatsInBackground();
+        },
         'flashcard-view': () => {
             showGlobalLoading('플래시카드를 불러오는 중입니다...');
             DataLoader.loadSubject(state.flashcards.subject).then(() => {
@@ -940,6 +947,8 @@ const DELEGATED_HANDLERS = {
     openOxDrillSetup, startOxDrill, nextOxDrill,
     openComboDrillSetup, startComboDrill, nextComboDrill, submitComboJudgments,
     openWeakReview, setWeakFilter, setDrillCount,
+    // 뷰 전환 (data-click="switchView" data-arg="<view-id>") — 딥링크 공용
+    switchView, gotoWeakReview,
     // 훈련소 (제한값·계산·원료·뽀모도로)
     exitTrainerSubView, startLimitsTrainer, nextLimitsQuestion,
     startCalcPractice, generateCalcQuestion, submitCalcAnswer,

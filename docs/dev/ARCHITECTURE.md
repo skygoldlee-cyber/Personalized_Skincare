@@ -502,9 +502,9 @@ Personalized_Skincare/
 | [`manifest.webmanifest`](../../manifest.webmanifest) | PWA 매니페스트 (앱 이름, 아이콘, 테마 색상) |
 
 **SPA 뷰 전환 방식**:
-- 12개의 `<section class="view-section">`이 하나의 HTML에 공존
+- 13개의 `<section class="view-section">`이 하나의 HTML에 공존
 - `router.js`의 `navigateToView(target, ctx)`가 `.active` 클래스를 토글하여 화면 전환 (페이지 리로드 없음). 타이틀/서브타이틀은 `getViewTitles(registry)`가 `DATA_REGISTRY.uiText`에서 동적 생성
-- 뷰 목록: dashboard / flashcard / quiz / review / trainer / exam / textbook / textbook-reader / dictionary / formula / exam-select / calendar
+- 뷰 목록: dashboard / analysis / flashcard / quiz / review / trainer / exam / textbook / textbook-reader / dictionary / formula / exam-select / calendar
 - 내비게이션 동기화: `.nav-item`(사이드바)과 `.mobile-tab-item`(탭 바)에 동일 `data-target` 부여 → 뷰 전환 시 양쪽 활성 상태 자동 동기화
 - 전환 부가 동작: 이전 뷰 스크롤 위치 저장·복원, 리더 집중 모드 해제, 오디오 정지, 뷰별 렌더 핸들러 호출 (`ctx.handlers`)
 

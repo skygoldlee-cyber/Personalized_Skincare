@@ -18,7 +18,8 @@ import {
     loadIndexHtml, el,
     seedStudyData, seedProgress, resetStudyState,
 } from './helpers.js';
-import { updateGlobalStats, renderDashboard } from '../../src/views/dashboard.js';
+import { updateGlobalStats, renderDashboard, renderAnalysisView } from '../../src/views/dashboard.js';
+import { state } from '../../src/state.js';
 
 function seedTwoSubjects() {
     seedStudyData('subja', {
@@ -162,5 +163,42 @@ describe('대시보드 — 통계·과목 카드·약점 추천', () => {
         const rec = el('weak-subject-recommendation').textContent;
         expect(rec).not.toContain('정답률 최저');
         expect(rec).toContain('과목2'); // 헷갈린 카드最多 추천은 유지
+    });
+});
+
+describe('내 맞춤 분석 뷰 — 진단 요약 카드', () => {
+    beforeEach(() => {
+        localStorage.clear();
+        resetStudyState();
+        state.wrongCauses = {};
+        loadIndexHtml();
+    });
+
+    it('빈 데이터 → 분석 뷰 렌더 + 안내 카드 3종', () => {
+        seedTwoSubjects();
+        renderAnalysisView();
+
+        // 과목 카드·히트맵은 analysis-view로 이동해도 ID 기반 렌더 유지
+        expect(el('subject-cards-container').querySelectorAll('.subject-card').length).toBe(2);
+        expect(el('subject-heatmap').querySelectorAll('.heatmap-cell').length).toBe(2);
+
+        expect(el('analysis-wrong-cause').textContent).toContain('오답 패턴');
+        expect(el('analysis-weak-statements').textContent).toContain('취약 진술');
+        expect(el('analysis-study-rhythm').textContent).toContain('학습 리듬');
+    });
+
+    it('오답 원인 태그 → 분포와 권장 학습법 표시', () => {
+        seedTwoSubjects();
+        state.wrongCauses = {
+            subja_quiz_1: { cause: 'memorize', ts: Date.now(), subjectId: 'subja' },
+            subja_quiz_2: { cause: 'memorize', ts: Date.now(), subjectId: 'subja' },
+            subjb_quiz_1: { cause: 'calc', ts: Date.now(), subjectId: 'subjb' },
+        };
+        renderAnalysisView();
+
+        const card = el('analysis-wrong-cause').textContent;
+        expect(card).toContain('암기 부족');
+        expect(card).toContain('3건');
+        expect(card).toContain('플래시카드');
     });
 });
