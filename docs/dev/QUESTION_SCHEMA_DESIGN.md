@@ -333,7 +333,7 @@ ref_md로 채울 수 없다 — 추가 확충은 `참조자료/과목4/*.md` 노
 
 구 변환(`pypdfium2` `get_text_range`)은 한국어 PDF의 좌표 기반 공백을 유실해
 18개 별표 문서가 공백 <7%로 판독 불가였고, 표는 셀 단위 파편화됐다.
-`tools/convert_ref_pdfs_v2.py`(pdfplumber + pymupdf)로 전면 재변환했다:
+`ref-pipeline/convert.py`(엔진 `pdf2md.py` — pdfplumber + pymupdf)로 전면 재변환했다:
 
 - **공백 복원**: 문자 좌표 간격(≈5pt+)으로 공백 재구성 — `품질관리업무를적정하고`
   → `품질관리 업무를 적정하고`, `ㆍ` 문자도 복원
@@ -351,8 +351,8 @@ ref_md로 채울 수 없다 — 추가 확충은 `참조자료/과목4/*.md` 노
 등 손상 표가 정상 행 구조로 복원. `ref_md` 재변환 시:
 
 ```powershell
-python tools/convert_ref_pdfs_v2.py          # 전체 (ref_md_v2/ 스테이징)
-python tools/convert_ref_pdfs_v2.py 별표1     # 이름 필터 부분 변환
+python ref-pipeline/convert.py               # 전체 (ref_md_v2/ 스테이징) — npm.cmd run convert:refs
+python ref-pipeline/convert.py 별표1          # 이름 필터 부분 변환
 ```
 
 ### 6-4. 결정론성·추적성·검증

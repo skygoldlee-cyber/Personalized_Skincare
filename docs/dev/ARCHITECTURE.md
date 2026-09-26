@@ -338,12 +338,9 @@ Personalized_Skincare/
 │           │   ├── 과목1~4/    #     과목별 참조자료 PDF (+ 과목 노트 N.*.md)
 │           │   ├── 법령고시/   #     법령 원문
 │           │   └── 원료/       #     성분 원본 MD + db_version.json (버전·이력)
-│           ├── audiobook/      #     Python TTS 파이프라인
-│           │   ├── run_pipeline.py · md_chunker.py · tts_*.py · mp3_merger.py
-│           │   ├── script_polisher.py · generate_all_mp3.py
+│           ├── audiobook/      #     MP3 산출물만 (생성 스크립트는 ref-pipeline/audiobook/)
 │           │   └── mp3/        #     생성된 MP3 (gitignore)
-│           └── utils/          #     Python 변환 스크립트
-│               ├── batch_convert.py · convert_ref_md.py · check_laws.py · md_to_html.py
+│           └── html/           #     공유용 HTML 산출물 (gitignore, ref-pipeline/batch_convert.py)
 │
 ├── data/                       # 빌드 타임 생성 (자동 생성, 직접 수정 금지)
 │   ├── exams.js                #   전역 시험 레지스트리 번들 (window.EXAMS_LIST, 클래식 스크립트)
@@ -402,7 +399,14 @@ Personalized_Skincare/
 │       #   (audit_citation_links·audit_hyperlinks·check_pdf_to_md_mapping·
 │       #    convert_pdf_links_to_md·normalize_url_encoding·migrate_ref_md_subjects·
 │       #    extract_notfound·fix_citation_lines·fix_manual_citations·
-│       #    verify_citation_lines·verify_citations 등 — 참조용, 현행 파이프라인 아님)
+│       #    verify_citation_lines·verify_citations·convert_ref_md 등 — 참조용, 현행 파이프라인 아님)
+│
+├── ref-pipeline/               # 교재·참조자료 생성/변환 독립 도구함 (Python — 저장소와 무관하게 실행)
+│   ├── pdf2md.py · convert.py · pdf2md_gui.py    #   참조자료 PDF → ref_md 변환 (절차: README.md)
+│   ├── MD_to_HTML.py · callout_rules.json · batch_convert.py  # MD → 독립 HTML
+│   ├── check_laws.py           #   법령 현행성 검증 → {EXAM}/report/ (LAW_OC)
+│   ├── audiobook/              #   교재 MD → TTS MP3 파이프라인 → {EXAM}/audiobook/mp3/
+│   └── requirements.txt        #   Python 의존성 (공통 계약: EXAM_CONTENT_ROOT)
 │
 ├── tests/                      # 자동화 테스트
 │   ├── unit/                   #   단위 테스트 (node --test)
@@ -1710,18 +1714,14 @@ npm run deploy
 | **교재 MD 내용 수정** (기존 파일) | (수정 불필요) | `manifest.json`의 `dir`/`file` 필드가 경로를 참조하므로, 파일명이 같으면 자동 반영 |
 | **교재 MD 파일 추가/삭제/이름 변경** | `<root>/manifest.json` | `subjects[].chapters[].file` 필드 갱신 |
 | | `sw.js` | `MD_ASSETS` 배열의 경로 갱신 + `CACHE_VERSION` 버전업 |
-| | `<root>/utils/batch_convert.py` | `BATCH_TARGETS["교재"]` 경로 갱신 |
 | **문제은행 MD 변경** | `<root>/manifest.json` | `exams` 섹션의 파일 경로 갱신 |
-| | `<root>/utils/batch_convert.py` | `BATCH_TARGETS["문제은행"]` 경로 갱신 |
 | **참조자료 MD/HTML 변경** | `<root>/references.json` + `src/pdf-registry.js` | 참조자료 파일 목록·경로 매핑 (`references.json` → `build-pdf-registry.js`가 `pdf-registry.js` 자동 생성) |
 | | `tools/build/plugins/ingredients.plugin.js` | `INGREDIENTS_DIR` 경로 (원료 하위 폴더 변경 시) |
 | **학습안내서 MD 변경** | (파일명 동일 시 수정 불필요) | `manual-viewer.js`, `build_doc_bundles.js`, `sw.js`가 `<root>/학습안내서.md` 경로 참조 |
-| | `<root>/utils/batch_convert.py` | 파일명 변경 시 `BATCH_TARGETS["학습안내서"]` 갱신 |
 | **새 과목 추가** | `<root>/manifest.json` | `subjects[]`에 새 과목 항목 추가 (`key`, `name`, `dir`, `chapters`) |
 | | `src/pdf-registry.js` | `SUBJECT_DIR_MAP`, `REF_DIRS`, `REFERENCE_FILES`에 새 과목 항목 추가 |
 | | `sw.js` | `MD_ASSETS`에 새 과목 MD 경로 추가 |
-| | `<root>/utils/batch_convert.py` | `BATCH_TARGETS["교재"]`에 새 파일 추가 |
-| | `<root>/audiobook/` | 오디오북 파이프라인 스크립트에 새 과목 추가 (필요 시) |
+| | (ref-pipeline 자동) | `batch_convert.py`가 manifest `subjects[].dir` 기준 glob이라 과목 추가 시 자동 대상화 — 스크립트 수정 불필요 |
 | **새 시험 추가** | `content/exams.json` + `content/exams/<id>/` | §9 "새 시험 추가 절차" 참조 — 앱 로직 변경 불필요 |
 | **폴더 구조 개편** | 위 모든 파일 | 경로가 일괄 변경되므로 모든 참조 파일 검토 필요 |
 
@@ -1791,10 +1791,11 @@ npm.cmd run deploy
 | `tools/build_study_md_bundle.js` | `manifest.subjects[].dir` 동적 참조 | 교재 MD 폴백 번들 |
 | `tools/check_parser_parity.js` | `manifest.subjects[].dir` 동적 참조 | 파서 정합성 검증 |
 | `tools/deploy.js` | `npm run deploy` | 배포 가드 (clean tree + origin 동기화 + 콤보 게이트 + SW 스탬프) |
-| `<root>/utils/batch_convert.py` | `BATCH_TARGETS` 딕셔너리 | 배치 HTML 변환 대상 |
-| `<root>/utils/md_to_html.py` | `--in` 인자 (기본값 `학습안내서.md`) | 단일 HTML 변환 |
-| `<root>/utils/convert_ref_md.py` | `MD_CONVERSION_TARGETS` Set (스크립트 내 하드코딩) | ref_md 대용량 HTML→MD 변환 및 body-only 추출 |
-| `<root>/audiobook/generate_all_mp3.py` | 과목 키 참조 | 오디오북 생성 |
+| `ref-pipeline/batch_convert.py` | `load_target_groups()` — manifest `subjects[].dir` 기준 glob | 배치 HTML 변환 대상 (과목 추가 시 자동) |
+| `ref-pipeline/MD_to_HTML.py` | `--cli --in` 인자 (미지정 시 GUI) | 단일 HTML 변환 |
+| `tools/_archive/convert_ref_md.py` | (아카이브 — 임무 완료) | 구 ref_md HTML→MD 일회성 변환 |
+| `ref-pipeline/audiobook/generate_all_mp3.py` | 과목 키 참조 (`--subject`) | 오디오북 생성 |
+| `ref-pipeline/check_laws.py` | `LAWS` 리스트 (cosmetic 전용 8법령) | 법령 현행성 검증 — 외부화 계획: `law_watch.json` |
 
 ---
 

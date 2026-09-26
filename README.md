@@ -169,8 +169,14 @@ Personalized Skincare/
 │       ├── 학습안내서.md            ← 학습 안내서 (앱 내 뷰어 연동)
 │       ├── number-drills/           ← 중요 숫자 암기표 JSON (과목별 4개 파일)
 │       ├── 두음법_암기_총정리.md    ← 두음법+중요숫자 통합 암기 문서 (앱 내 뷰어 연동)
-│       ├── utils/                   ← Python 변환 스크립트 (md_to_html, batch_convert, check_laws)
-│       └── audiobook/               ← 오디오북 파이프라인 (Python)
+│       └── audiobook/               ← 오디오북 MP3 산출물 (생성 스크립트는 ref-pipeline/audiobook/)
+│
+├── 📂 ref-pipeline/                 ← 교재·참조자료 생성/변환 독립 도구함 (Python — 저장소와 무관 실행)
+│   ├── pdf2md.py · convert.py       ← 참조자료 PDF → ref_md 변환
+│   ├── MD_to_HTML.py · batch_convert.py ← MD → 독립 HTML
+│   ├── check_laws.py                ← 법령 현행성 검증 → report/
+│   ├── audiobook/                   ← 교재 MD → TTS MP3 파이프라인
+│   └── README.md                    ← 사용 절차·시나리오 (교재 교체 시 재사용)
 │
 ├── 📂 tests/                        ← 자동화 테스트
 │   ├── unit/                        ← Node.js 내장 테스트 러너 (489 tests)

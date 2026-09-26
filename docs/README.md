@@ -107,6 +107,8 @@ docs/
 | 문서 | 설명 |
 |------|------|
 | [CONTENT_WORKFLOW.md](dev/CONTENT_WORKFLOW.md) | 콘텐츠 변경 표준 절차 — `content/`=SSOT, `build:data` 파이프라인, 검증 명령 |
+| [TEXTBOOK_REPLACEMENT_RUNBOOK.md](dev/TEXTBOOK_REPLACEMENT_RUNBOOK.md) | 교재 교체 작업 순서도 — 준비→교체→빌드→인용→이관→파생물→배포·롤백 단일 런북 |
+| [ref-pipeline/README.md](../ref-pipeline/README.md) | 교재·참조자료 변환 도구 — PDF→MD, MD→HTML, 오디오북 TTS, 법령 검증 (독립 실행) |
 | [TEXTBOOK_AUTHORING_GUIDE.md](dev/TEXTBOOK_AUTHORING_GUIDE.md) | 교재 Markdown 작성 지침 — 카드/퀴즈 추출 규칙, manifest.json, 빌드 검증 |
 | [NUMBERING_SYSTEM.md](dev/NUMBERING_SYSTEM.md) | 교재 챕터/섹션 십진 번호체계 |
 | [QUESTION_SCHEMA_DESIGN.md](dev/QUESTION_SCHEMA_DESIGN.md) | 문항 데이터 스키마 — 복수정답형의 "진술 단위 O/X → 조합 도출" 구조 |

@@ -653,9 +653,9 @@
 | 변경 유형 | 수정 필요 파일 |
 |-----------|---------------|
 | 교재 MD 내용 수정 (기존 파일) | (수정 불필요) |
-| 교재 MD 파일 추가/삭제/이름 변경 | `<root>/manifest.json`, `sw.js`, `<root>/utils/batch_convert.py` |
+| 교재 MD 파일 추가/삭제/이름 변경 | `<root>/manifest.json`, `sw.js` (`ref-pipeline/batch_convert.py`는 glob 패턴이라 갱신 불필요) |
 | 참조자료 변경 | `<root>/references.json` + `src/pdf-registry.js` (`getRefTables()`) |
-| 새 과목 추가 | `<root>/manifest.json`, `src/pdf-registry.js`, `sw.js`, `<root>/utils/batch_convert.py` |
+| 새 과목 추가 | `<root>/manifest.json`, `src/pdf-registry.js`, `sw.js` (`ref-pipeline/batch_convert.py`는 manifest 기준 glob이라 갱신 불필요) |
 | 과목명 표시 | `manifest.json` `shortName` 필드 (소스 수정 불필요) |
 | 시험 문항/일정 변경 | `<root>/manifest.json` `exams` 섹션 (소스 수정 불필요) |
 | 추천 링크 변경 | `<root>/manifest.json` `resources` 섹션 (소스 수정 불필요) |

@@ -3,7 +3,7 @@
 > **작성일**: 2026-08-29 (최종 갱신: 2026-08-31)
 > **대상**: `content/*.md`, `docs/user/*.md` 마크다운 문서를 HTML로 변환하는 두 가지 파이프라인
 > - **런타임 (JS)**: PWA 앱 내 `manual-viewer.js`가 실시간 MD → HTML 변환
-> - **빌드 타임 (Python)**: `content/exams/cosmetic/utils/md_to_html.py`가 독립 HTML 파일 생성
+> - **빌드 타임 (Python)**: `ref-pipeline/MD_to_HTML.py`가 독립 HTML 파일 생성
 
 ---
 
@@ -93,8 +93,8 @@
 | `src/exam-viewer.js` | 예상문제집 뷰어 (`parseMarkdown` 사용, Mermaid 비활성) |
 | `sw.js` | Service Worker — `.md` 파일 Cache First, 프리캐시 |
 | `tools/build_doc_bundles.js` | `file://` 폴백용 JS 번들 빌드 (`data/docs_md/*.js`) |
-| `content/exams/cosmetic/utils/md_to_html.py` | Python 독립 HTML 변환기 (GUI/CLI, Tailwind + Mermaid 임베드) |
-| `content/exams/cosmetic/utils/batch_convert.py` | 배치 변환 스크립트 (교재/학습안내서/보고서/문제은행 일괄 HTML 변환) |
+| `ref-pipeline/MD_to_HTML.py` | Python 독립 HTML 변환기 (GUI/CLI, Tailwind + Mermaid 임베드) |
+| `ref-pipeline/batch_convert.py` | 배치 변환 스크립트 (교재/학습안내서/보고서/문제은행 일괄 HTML 변환) |
 
 ---
 
@@ -511,8 +511,8 @@ flowchart TD
 | Service Worker | `sw.js` |
 | 번들 빌더 | `tools/build_doc_bundles.js` |
 | 이벤트 위임 | `src/app.js` |
-| Python 변환기 | `content/exams/cosmetic/utils/md_to_html.py` |
-| 배치 변환 스크립트 | `content/exams/cosmetic/utils/batch_convert.py` |
+| Python 변환기 | `ref-pipeline/MD_to_HTML.py` |
+| 배치 변환 스크립트 | `ref-pipeline/batch_convert.py` |
 
 ---
 
