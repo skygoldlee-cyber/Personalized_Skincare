@@ -1,15 +1,17 @@
-# ref-pipeline — 참조자료 PDF → Markdown 변환 파이프라인
+# ref-pipeline — 콘텐츠 변환 도구함 (PDF→MD, MD→HTML)
 
-> **독립 실행 단위**: 앱 빌드와 분리된 콘텐츠 제작 도구. 변환 엔진·래퍼·GUI·의존성을 한 폴더에 모아, 저장소 구조와 무관하게 어떤 PDF 폴더든 변환할 수 있다.
+> **독립 실행 단위**: 앱 빌드와 분리된 콘텐츠 제작 도구. 변환 엔진·래퍼·GUI·의존성을 한 폴더에 모아, 저장소 구조와 무관하게 독립 실행된다.
 
 ## 구성
 
 | 파일 | 역할 |
 |---|---|
-| `pdf2md.py` | 변환 엔진 (공백 복원·표 구조화·무선 표 재구성·마진 잡행 제거) — ~980줄, 도메인 프로파일 내장 |
+| `pdf2md.py` | PDF→MD 변환 엔진 (공백 복원·표 구조화·무선 표 재구성·마진 잡행 제거) — ~980줄, 도메인 프로파일 내장 |
 | `convert.py` | 스테이징 워크플로 래퍼 — `pdf_root → ref_md_v2(스테이징) → ref_md(프로덕션)` |
-| `pdf2md_gui.py` | PySide6 GUI 프런트엔드 (엔진 재사용) |
-| `requirements.txt` | Python 의존성 (pdfplumber 필수, PyMuPDF·PySide6 선택) |
+| `pdf2md_gui.py` | pdf2md의 PySide6 GUI 프런트엔드 (엔진 재사용) |
+| `MD_to_HTML.py` | MD→독립 HTML 변환기 (~4,700줄) — 모바일 file:// 대응·Mermaid 프리렌더·콜아웃 규칙, `--gui` 지원 |
+| `callout_rules.json` | MD_to_HTML 콜아웃 패턴 규칙 (스크립트 옆 파일로 자동 인식) |
+| `requirements.txt` | Python 의존성 (pdfplumber·markdown 필수, PyMuPDF·PySide6 선택) |
 
 ## 설치
 
@@ -40,6 +42,13 @@ python ref-pipeline/convert.py --verify --staging "D:\out\ref_md_v2" --prod "D:\
 ```powershell
 python ref-pipeline/pdf2md.py "file.pdf" -o out.md --doctor
 python ref-pipeline/pdf2md.py --pdf-root "D:\PDFs" -o out_dir --flat
+```
+
+MD→독립 HTML 변환 (공유·인쇄용, 모바일 file:// 대응):
+
+```powershell
+python ref-pipeline/MD_to_HTML.py --in doc.md --out doc.html
+python ref-pipeline/MD_to_HTML.py --gui        # GUI 모드 (PySide6 필요)
 ```
 
 ## 프로덕션 승격 절차 (저장소 워크플로)

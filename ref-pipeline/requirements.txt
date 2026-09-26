@@ -1,6 +1,7 @@
-# ref-pipeline — 참조자료 PDF → Markdown 변환 의존성
+# ref-pipeline — 콘텐츠 변환 도구 의존성
 # 설치: pip install -r ref-pipeline/requirements.txt
 
-pdfplumber>=0.11.0        # PDF 텍스트·표 추출 (필수)
+pdfplumber>=0.11.0        # PDF 텍스트·표 추출 (convert.py/pdf2md.py — 필수)
 PyMuPDF>=1.24.0           # 이미지 추출 (선택 — 없으면 텍스트만 변환)
-# PySide6>=6.6.0          # GUI(pdf2md_gui.py) 사용 시에만 필요
+markdown>=3.5             # MD → HTML 변환 (MD_to_HTML.py — 필수)
+# PySide6>=6.6.0          # GUI(pdf2md_gui.py, MD_to_HTML.py --gui) 사용 시에만 필요

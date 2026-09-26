@@ -4,6 +4,14 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-27 MD_to_HTML.py → ref-pipeline/ 이동
+
+- `tools/MD_to_HTML.py` + `tools/callout_rules.json`을 `ref-pipeline/`으로 이동 (git mv — 이력 보존).
+  - MD→독립 HTML 변환기도 앱 빌드와 무관한 독립 콘텐츠 제작 도구이므로 PDF→MD 도구들과 같은 폴더에 배치.
+- `callout_rules.json`은 스크립트 옆 파일로 자동 인식되므로 동반 이동만으로 동작 유지 (`--callout-rules`로 경로 재지정 가능).
+- `ref-pipeline/requirements.txt`에 `markdown>=3.5` 추가, README에 MD→HTML 도구 설명·사용법 추가.
+- CLI 주의: `--cli` 미지정 시 GUI로 진입 (`--cli --in a.md --out b.html`).
+
 ## 2026-09-26 의견 보내기 발견성 힌트 + 매뉴얼 갱신
 
 - `initFeedbackHint()` 신규 — 신기능 안내: 설정 ⚙️ 버튼에 빨간 점(설정 패널 첫 오픈까지),
