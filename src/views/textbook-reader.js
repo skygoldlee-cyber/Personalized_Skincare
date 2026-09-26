@@ -1,5 +1,6 @@
 // views/textbook-reader.js - 교재 본문 읽기 및 오디오북 플레이어 (Textbook Reader + Audio)
 import { esc } from '../sanitize.js';
+import { proFeatureNotice } from '../pro-upgrade.js';
 import { formatSectionContentForReader } from '../reader-format.js';
 import { parseTextbookContent } from '../textbook-parser.js';
 import { renderStudyAids, bindStudyAidToggles, renderExamFilterToggle, applyExamFilter } from '../study-aids.js';
@@ -303,6 +304,7 @@ export function renderTextbookReader() {
         storyToggle.dataset.bound = 'true';
         storyToggle.checked = textbookReaderState.storyMode;
         storyToggle.addEventListener('change', (e) => {
+            if (e.target.checked) proFeatureNotice('story_textbook', '이야기형 교재 본문 읽기');
             textbookReaderState.storyMode = e.target.checked;
             // Re-render current chapter if one is selected
             if (textbookReaderState.selectedSubject && textbookReaderState.selectedChapter) {

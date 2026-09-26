@@ -12,6 +12,7 @@ import { simState } from './exam-sim-state.js';
 import { chapterForQuestion, renderSimResultBreakdown } from './exam-sim-review.js';
 import { recordStatementJudgments } from '../statement-tracker.js';
 import { examIdToSubjectId } from '../exam-context.js';
+import { proFeatureNotice } from '../pro-upgrade.js';
 import { WEAK_SIM_PREFIX, parseWeakSimId, resolveCard, cardSubjectOf } from '../weak-items.js';
 
 // --- 5. 실전 모의고사 시뮬레이터 구현 ---
@@ -48,6 +49,7 @@ export function startSimSession(examData) {
 }
 
 export function startMockExamSim(examId) {
+    proFeatureNotice('mock_exam', '실전 모의고사');
     showGlobalLoading('모의고사 데이터를 불러오는 중입니다...');
     DataLoader.loadExam(examId).then((examData) => {
         hideGlobalLoading();
@@ -120,6 +122,7 @@ export function startComboMockExam(arg) {
     const orders = DataLoader.getSubjectOrders();
     if (isNaN(num) || !orders.includes(num)) return;
     const want = countStr ? parseInt(countStr, 10) : NaN;
+    proFeatureNotice('combo_mock', '복수정답형 모의고사');
     showGlobalLoading('복수정답형 모의고사 데이터를 불러오는 중입니다...');
     DataLoader.loadComboDrills(num).then(questions => {
         hideGlobalLoading();
@@ -148,6 +151,7 @@ export function startComboMockExam(arg) {
 }
 
 export function startIntegratedMockExam() {
+    proFeatureNotice('mock_exam', '실전 모의고사');
     // 복수정답형 혼합 옵션 체크 시 combo 번들도 함께 로드
     const mixCombo = !!(document.getElementById('integrated-mix-combo') && document.getElementById('integrated-mix-combo').checked);
     showGlobalLoading('통합 모의고사 데이터를 불러오는 중입니다...');
@@ -760,6 +764,7 @@ export function saveExamResultToHistory(examId, score, total, subjectRates) {
    📋 "틀린 문제만 모아 풀기" 오답 모의고사 (Weakness Exam)
    ======================================================= */
 export function startWeakExam() {
+    proFeatureNotice('mock_exam', '헷갈린 문제 집중 모의고사');
     const loaderPromises = DataLoader.getSubjectList().map(s => DataLoader.loadSubject(s.key));
     // 복수정답형 모의고사 오답이 있으면 해당 과목의 combo 번들도 함께 로드
     const comboSubsNeeded = new Set();

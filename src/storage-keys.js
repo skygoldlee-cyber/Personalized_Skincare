@@ -58,6 +58,9 @@ export const STORAGE_KEYS = {
   // Formula OS — 법규 준수 체크리스트 체크 상태 (formula-compliance.js)
   COMPLIANCE_CHECKS: 'formula_compliance',
 
+  // Pro 기능 안내 표시 이력 — 기능별 1회 안내 (pro-upgrade.js)
+  PRO_NOTICE_SEEN: 'pro_notice_seen',
+
   // 원료 DB 갱신 감지 — 마지막으로 본 ingredients contentHash (기기 로컬 마커, 백업 제외)
   INGREDIENTS_HASH: 'ingredients_hash',
   // 원료 DB 갱신 알림 — 마지막으로 알림을 본 contentHash (해시별 1회 고지용)

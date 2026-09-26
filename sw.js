@@ -42,6 +42,7 @@ const SHELL_ASSETS = [
   './css/study-calendar.css',
   './css/formula.css',
   './manifest.webmanifest',
+  './feature-plan.json',
   './ping.txt',
   './src/theme-init.js',
   './src/pwa-install-capture.js',

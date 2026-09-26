@@ -109,6 +109,10 @@
 
 > **무료 티어 게이팅 주의**: 위 "제1과목만" 제한은 클라이언트에서만 거르면 우회된다. 무료 대상이 아닌 과목의 `content/*.md`는 **인증 없이는 서버에서 서빙되지 않아야** 한다 (§5).
 
+> **현재 구현 상태 (결제 인프라 도입 전)**: Pro 예정 기능에는 앱 내 "PRO" 배지 + 진입 시 1회 안내 모달(`src/pro-upgrade.js`의 `proFeatureNotice`)만 표시하고 접근은 차단하지 않는다 — 무료 회수 반발 없이 유료 경계를 사전 인지시키는 단계. 대상: 복수정답형 문제집·모의고사·복수정답형 훈련·이야기형 교재 + Formula OS 저장 한도(포뮬러 5·고객 20·배치 50·원료 30) 도달 시 업그레이드 안내 모달(`showUpgradeNotice`).
+>
+> **무료/Pro 전환 설정**: 루트 `feature-plan.json`의 `features` 맵에서 기능별 `"pro"`/`"free"`를 선택한다. `pro` = PRO 배지 + 진입 안내, `free` = 배지·안내 제거(완전 무료). 키: `mock_exam`(실전·집중 모의고사), `combo_mock`(복수정답형 모의고사), `combo_set`(복수정답형 문제집), `combo_drill`(복수정답형 훈련), `story_textbook`(이야기형 교재). 배지는 `data-pro-feature` 속성으로 연결.
+
 ### 3.5 결제 흐름 (Stripe 기준)
 1. 사용자가 프로 플랜 선택 → Stripe Checkout 이동
 2. 결제 완료 → 웹훅(`checkout.session.completed`)으로 서버리스 함수 호출

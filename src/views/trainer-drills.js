@@ -14,6 +14,7 @@ import { DataLoader } from '../data-loader.js';
 import { gradeAnswer } from '../questions.js';
 import { recordStatementJudgments, getWeakStatements, getDueStatementSids, getAllStatementStats, getAnomalousStatements, WEAK_GRADUATE_STREAK } from '../statement-tracker.js';
 import { recordStudyActivity } from '../study-tracker.js';
+import { proFeatureNotice } from '../pro-upgrade.js';
 
 const DRILL_COUNT = 10;
 const OPTION_INDICATORS = ['①', '②', '③', '④', '⑤'];
@@ -395,7 +396,10 @@ function renderOxDrillResult() {
    ======================================================= */
 
 /** 패널 열기 (과목 선택 화면) */
-export function openComboDrillSetup() { openDrillSetup('combo'); }
+export function openComboDrillSetup() {
+  proFeatureNotice('combo_drill', '복수정답형 훈련');
+  openDrillSetup('combo');
+}
 
 /**
  * 과목별 복수정답형 드릴 시작 — 취약 진술(sid) 포함 문항 우선 편성

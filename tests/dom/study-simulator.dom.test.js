@@ -12,6 +12,7 @@ vi.mock('../../src/ui-utils.js', () => ({
     showGlobalLoading: vi.fn(),
     hideGlobalLoading: vi.fn(),
     vibrate: vi.fn(),
+    trapFocus: vi.fn(() => () => {}),
     HAPTIC: { correct: 30, wrong: [40, 30, 40], tap: 10 },
 }));
 

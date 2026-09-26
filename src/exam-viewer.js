@@ -23,6 +23,7 @@ import { parseMarkdown } from './markdown-parser.js';
 import { resolveRefPath } from './pdf-registry.js';
 import { contentPath, dataPath } from './exam-context.js';
 import { CACHE } from './config/cache.js';
+import { proFeatureNotice } from './pro-upgrade.js';
 
 export const ExamViewer = (() => {
     // 캐시 포맷 변경: v6 — joinWraps 병합 렌더링 (연속줄 span data-md-line 포함)
@@ -498,6 +499,10 @@ body.exam-open{overflow:hidden;}
     }
 
     async function openExam(mdPath, lineNum) {
+        // 복수정답형 문제집(과목N_복수정답형.md 규약)은 Pro 제공 예정 기능
+        if (typeof mdPath === 'string' && mdPath.includes('복수정답형')) {
+            proFeatureNotice('combo_set', '복수정답형 문제집');
+        }
         // 이미 열려있는 상태에서 다른 파일을 여는 경우 (인용 링크 클릭)
         // 현재 문서를 히스토리에 저장
         if (isOpen() && _currentMdPath && _currentMdPath !== mdPath) {

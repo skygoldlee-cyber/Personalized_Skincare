@@ -12,6 +12,7 @@ import { setupPWAInstall } from './pwa-install.js';
 import { setupThemeToggle } from './theme-toggle.js';
 import { maybeShowWhatsNew } from './whats-new.js';
 import { captureEntrySource, flushPendingFeedback, initFeedbackHint } from './feedback.js';
+import { loadFeaturePlan, refreshProBadges } from './pro-upgrade.js';
 
 // --- 뷰 컨트롤러 모듈 임포트 ---
 import {
@@ -397,7 +398,7 @@ function populateExamCards() {
             const btnClass = subjExams.length > 1 ? '' : ' btn-cyan';
             return `                                <div class="exam-btn-pair">
                                     <button data-click="ExamViewer.openExam" data-arg="${contentPath(`문제은행/${exam.file}`)}" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> ${pdfLabel}</button>
-                                    <button class="exam-btn-sim${btnClass}" data-click="startMockExamSim" data-arg="${exam.key}"><i class="fa-solid fa-circle-play"></i> ${simLabel}</button>
+                                    <button class="exam-btn-sim${btnClass}" data-click="startMockExamSim" data-arg="${exam.key}"><i class="fa-solid fa-circle-play"></i> ${simLabel} <span class="pro-badge" data-pro-feature="mock_exam">PRO</span></button>
                                     <small class="exam-btn-caption">선다형 + 단답형 혼합 · 수작업 원본</small>
                                 </div>`;
         }).join('\n');
@@ -413,8 +414,8 @@ function populateExamCards() {
             .concat(`<button class="exam-btn-sim combo-count-chip" data-click="startComboMockExam" data-arg="${idx + 1}">${comboTotal ? `전체 ${comboTotal}문` : '전체'}</button>`)
             .join('\n                                            ');
         const comboPair = `                                <div class="exam-btn-pair">
-                                    <button data-click="ExamViewer.openExam" data-arg="${contentPath(`문제은행/${comboFile}`)}" class="exam-btn-link"><i class="fa-solid fa-file-lines"></i> 복수정답형 문제집</button>
-                                    <button class="exam-btn-sim" data-click="toggleComboPicker" data-arg="combo-picker-${idx + 1}"><i class="fa-solid fa-circle-play"></i> 복수정답형 모의고사</button>
+                                    <button data-click="ExamViewer.openExam" data-arg="${contentPath(`문제은행/${comboFile}`)}" class="exam-btn-link"><i class="fa-solid fa-file-lines"></i> 복수정답형 문제집 <span class="pro-badge" data-pro-feature="combo_set">PRO</span></button>
+                                    <button class="exam-btn-sim" data-click="toggleComboPicker" data-arg="combo-picker-${idx + 1}"><i class="fa-solid fa-circle-play"></i> 복수정답형 모의고사 <span class="pro-badge" data-pro-feature="combo_mock">PRO</span></button>
                                     <small class="exam-btn-caption">ㄱㄴㄷㄹ 조합형 · 원본 문항 자동 변환</small>
                                     <div class="combo-count-row is-hidden" id="combo-picker-${idx + 1}">
                                             ${comboChips}
@@ -434,6 +435,9 @@ ${allBtnsHtml}
 
         container.insertAdjacentHTML('beforeend', cardHtml);
     });
+
+    // 플랜이 이미 로드됐다면 새로 그린 배지에도 무료/Pro 표시 반영
+    refreshProBadges(container);
 
     // 정적 텍스트 동적 치환 (manifest 기반)
     const totalAllQuestions = exams.reduce((sum, e) => sum + (e.stats && e.stats.questions || 0), 0);
@@ -538,6 +542,8 @@ function initApp() {
     step('checkStorageWarning', checkStorageWarning);
     step('populateSubjectSelects', populateSubjectSelects);
     step('populateExamCards', populateExamCards);
+    // feature-plan.json 로드 — 완료 시 PRO 배지 표시/숨김 갱신 (비동기·실패 시 기본값 유지)
+    step('loadFeaturePlan', () => { loadFeaturePlan(); });
     step('populateResourceCards', populateResourceCards);
     step('setupImportListener', setupImportListener);
     const navOk = step('setupNavigation', setupNavigation);
