@@ -34,7 +34,10 @@ export function createLocalStorageBackend() {
         removeItem(k) { localStorage.removeItem(k); },
         keys() {
             const out = [];
-            for (let i = 0; i < localStorage.length; i++) out.push(localStorage.key(i));
+            for (let i = 0; i < localStorage.length; i++) {
+                const k = localStorage.key(i);
+                if (k !== null) out.push(k);
+            }
             return out;
         },
     };
@@ -130,6 +133,7 @@ export function listKeys(matchUnscoped) {
     const out = [];
     try {
         for (const raw of _backend.keys()) {
+            if (typeof raw !== 'string') continue;
             const unscoped = unscopedKey(raw);
             if (unscoped !== null && matchUnscoped(unscoped)) out.push(raw);
         }
