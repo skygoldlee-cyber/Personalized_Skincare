@@ -73,6 +73,7 @@ index.html              # App Shell (단일 HTML)
 style.css               # CSS 진입점 (@import로 모듈 로드)
 sw.js                   # Service Worker
 manifest.webmanifest    # PWA 매니페스트
+feature-plan.json       # 기능별 무료/Pro 전환 설정 (pro = 배지+안내, free = 완전 무료)
 serve.js                # 로컬 개발 서버
 src/                    # ES Modules
   app.js                # 메인 애플리케이션 로직 (초기화, 이벤트 위임, 라우팅)
@@ -124,6 +125,7 @@ src/                    # ES Modules
   pwa-install.js        # PWA 설치 프롬프트 설정
   whats-new.js          # 새 버전 변경 이력 알림 (APP_VERSION 비교 → 모달, 설정 "변경 이력" 재열람)
   feedback.js           # 의견 수신 — 설정 "의견 보내기" 모달, ?src= 유입 추적, 익명 insert, 오프라인 큐
+  pro-upgrade.js        # Pro 안내 — feature-plan.json 로드, PRO 배지(data-pro-feature) 제어, 한도 초과 업그레이드 모달
   theme-init.js         # 테마 초기화 (즉시 실행)
   theme-toggle.js       # 테마 토글 UI
   ui-mode.js            # 학습/실무 UI 모드 전환 (ui_mode 전역 키, 학습 도구 접이식)

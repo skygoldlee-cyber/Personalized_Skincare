@@ -686,6 +686,7 @@
 | ROAD-P2 | **결제·구독 관리**: 토스/Stripe 연동, 웹훅 처리, 구독 상태 머신 | SUBSCRIPTION_ROADMAP §3 | 미구현 |
 | ROAD-P3 | **콘텐츠 게이팅 + CSP/SW 재작업**: 콘텐츠 접근 제어 시 Cache First SW와 인증 토큰의 충돌 해소, 해지·다운그레이드 시 캐시 purge, CSP `connect-src` 확장 | SUBSCRIPTION_ROADMAP §4~§6 | 미구현 |
 | ROAD-P4 | **무료 티어 축소·그랜드파더링 정책**: 클라우드 동기화는 유료 전환 대상에서 제외 (회수 반발 리스크) | 정책 결정 | 미결정 |
+| ROAD-P0 | **Pro 안내 계층**: `feature-plan.json` 기능별 `pro`/`free` 전환 + `src/pro-upgrade.js` (PRO 배지 `data-pro-feature` 제어, 진입 1회 안내 `proFeatureNotice`, Formula OS 한도 초과 업그레이드 모달 `showUpgradeNotice`) — 접근 차단 없이 유료 경계만 인지 | `SUBSCRIPTION_ROADMAP.md` §3.4 구현 상태 주석 | ✅ |
 
 ### 7.3 Learning Pro 잔여·차별화
 
