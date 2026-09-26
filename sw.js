@@ -73,6 +73,7 @@ const SHELL_ASSETS = [
   './src/app.js',
   './src/app-fallback.js',
   './src/ui-utils.js',
+  './src/pro-upgrade.js',
   './src/pwa-manifest.js',
   './src/router.js',
   './src/types.js',

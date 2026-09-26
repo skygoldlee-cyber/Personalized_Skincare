@@ -8,6 +8,7 @@
 
 import { esc } from '../sanitize.js';
 import { showToast, showConfirm } from '../ui-utils.js';
+import { showStoreError, showUpgradeNotice } from '../pro-upgrade.js';
 import { showPanel, formulaSubNav } from './formula.js';
 import { listFormulas } from '../formula-store.js';
 import { setJSONMany } from '../storage.js';
@@ -189,6 +190,11 @@ function readCustomerForm() {
 }
 
 export function custNew() {
+  const usage = getCustomerUsage();
+  if (!usage.canCreate) {
+    showUpgradeNotice('고객 관리', `Free 플랜은 최대 ${usage.limit}명까지 등록할 수 있습니다.`);
+    return;
+  }
   cust.editingId = null;
   showPanel('formula-customer-form-panel');
   fillCustomerSelects();
@@ -211,7 +217,7 @@ export function custEdit(id) {
 export function custSave() {
   const data = readCustomerForm();
   const r = cust.editingId ? updateCustomer(cust.editingId, data) : createCustomer(data);
-  if (!r.ok) { showToast(r.error || '저장에 실패했습니다.', 'error'); return; }
+  if (!r.ok) { showStoreError(r, '고객 관리', showToast); return; }
   showToast(`"${r.customer.name}" 고객이 저장되었습니다.`, 'success');
   custOpen(r.customer.id);
 }

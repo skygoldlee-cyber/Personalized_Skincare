@@ -8,6 +8,7 @@
 
 import { esc } from '../sanitize.js';
 import { showToast, showConfirm } from '../ui-utils.js';
+import { showStoreError } from '../pro-upgrade.js';
 import { switchView } from './navigation.js';
 import {
   CHECK, buildIngredientIndex, checkFormulaItems,
@@ -268,7 +269,7 @@ export function formulaOpen(id) {
 
 export function formulaDuplicate(id) {
   const r = duplicateFormula(id);
-  if (!r.ok) { showToast(r.error || '복제에 실패했습니다.', 'error'); return; }
+  if (!r.ok) { showStoreError(r, 'My 포뮬러', showToast, '복제에 실패했습니다.'); return; }
   showToast(`"${r.formula.name}"이 생성되었습니다.`, 'success');
   openFormulaList();
 }
@@ -601,7 +602,7 @@ export function formulaCustLoad() {
 export function formulaCustSaveAs() {
   const data = readCustomerInputs();
   const r = createCustomer(data);
-  if (!r.ok) { showToast(r.error || '고객 등록에 실패했습니다.', 'error'); return; }
+  if (!r.ok) { showStoreError(r, '고객 관리', showToast, '고객 등록에 실패했습니다.'); return; }
   const idEl = document.getElementById('formula-cust-id');
   if (idEl) idEl.value = r.customer.id;
   const refEl = document.getElementById('formula-cust-ref');
@@ -1280,7 +1281,7 @@ export function formulaCalcSave() {
   }
   const r = calc.editingId ? updateFormula(calc.editingId, data) : createFormula(data);
 
-  if (!r.ok) { showToast(r.error || '저장에 실패했습니다.', 'error'); return; }
+  if (!r.ok) { showStoreError(r, 'My 포뮬러', showToast); return; }
   calc.editingId = r.formula.id;
   calc.stabRecordedAt = r.formula.stability ? r.formula.stability.recordedAt : null;
   showToast(`"${r.formula.name}" 포뮬러가 저장되었습니다.`, 'success');
@@ -1423,7 +1424,7 @@ function formulaImportFile(event) {
   reader.onload = e => {
     const r = importFormula(e.target && e.target.result);
     if (!r.ok) {
-      showToast(r.error || '가져오기에 실패했습니다.', 'error');
+      showStoreError(r, 'My 포뮬러', showToast, '가져오기에 실패했습니다.');
     } else {
       showToast(`"${r.formula.name}" 포뮬러를 가져왔습니다.`, 'success');
       openFormulaList();

@@ -5,6 +5,7 @@
 
 import { esc } from '../sanitize.js';
 import { showToast, showConfirm } from '../ui-utils.js';
+import { showStoreError, showUpgradeNotice } from '../pro-upgrade.js';
 import { showPanel, formulaSubNav } from './formula.js';
 import {
   listMaterials, getMaterial, getMaterialUsage,
@@ -144,6 +145,11 @@ function readMaterialForm() {
 }
 
 export function matNew() {
+  const usage = getMaterialUsage();
+  if (!usage.canCreate) {
+    showUpgradeNotice('원료 장부', `Free 플랜은 최대 ${usage.limit}종까지 등록할 수 있습니다.`);
+    return;
+  }
   mat.editingId = null;
   showPanel('formula-material-form-panel');
   writeMaterialForm(null);
@@ -164,7 +170,7 @@ export function matEdit(id) {
 export function matSave() {
   const data = readMaterialForm();
   const r = mat.editingId ? updateMaterial(mat.editingId, data) : createMaterial(data);
-  if (!r.ok) { showToast(r.error || '저장에 실패했습니다.', 'error'); return; }
+  if (!r.ok) { showStoreError(r, '원료 장부', showToast); return; }
   showToast(`"${r.material.name}" 원료가 저장되었습니다.`, 'success');
   openMaterialPanel();
 }

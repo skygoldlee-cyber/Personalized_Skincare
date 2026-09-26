@@ -8,6 +8,7 @@
 
 import { esc } from '../sanitize.js';
 import { showToast, showConfirm } from '../ui-utils.js';
+import { showStoreError, showUpgradeNotice } from '../pro-upgrade.js';
 import { showPanel, formulaSubNav } from './formula.js';
 import { listFormulas, getFormula } from '../formula-store.js';
 import { listCustomers, getCustomer } from '../customer-store.js';
@@ -293,6 +294,11 @@ function writeBatchForm(b) {
 
 /** 신규 배치 폼 — data-arg로 formulaId를 받으면 해당 처방으로 바인딩 */
 export function batchNew(formulaId) {
+  const usage = getBatchUsage();
+  if (!usage.canCreate) {
+    showUpgradeNotice('조제 기록', `Free 플랜은 최대 ${usage.limit}건까지 기록할 수 있습니다.`);
+    return;
+  }
   draft.editingId = null;
   showPanel('formula-batch-form-panel');
   fillFormulaSelect(typeof formulaId === 'string' ? formulaId : '');
@@ -679,7 +685,7 @@ export async function batchSave() {
     fullIngredients: formula.fullIngredients || [],
     checkSnapshot: buildCheckSnapshot(formula),
   });
-  if (!r.ok) { showToast(r.error || '저장에 실패했습니다.', 'error'); return; }
+  if (!r.ok) { showStoreError(r, '조제 기록', showToast); return; }
   showToast(`${r.batch.batchNo} 조제 기록이 저장되었습니다.`, 'success');
   batchOpen(r.batch.id);
 }

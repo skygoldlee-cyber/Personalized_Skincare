@@ -92,7 +92,8 @@
 /* ── 컨펌 모달 / 변경 이력 모달 공용 백드롭 ── */
 #app-confirm-overlay,
 #whats-new-overlay,
-#feedback-overlay {
+#feedback-overlay,
+#pro-upgrade-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
@@ -107,7 +108,8 @@
 }
 #app-confirm-overlay.is-visible,
 #whats-new-overlay.is-visible,
-#feedback-overlay.is-visible {
+#feedback-overlay.is-visible,
+#pro-upgrade-overlay.is-visible {
   opacity: 1;
 }
 .app-confirm-dialog {
@@ -594,4 +596,18 @@
   font-size: 0.75rem;
   color: var(--color-text-muted, #9ca3af);
   margin: 0;
+}
+
+/* ── Pro 업그레이드 안내 ── */
+.pro-upgrade-benefits .pro-upgrade-sub {
+  margin: 0 0 0.4rem;
+  font-size: 0.9rem;
+  color: var(--color-text-main, #fff);
+}
+.pro-upgrade-benefits ul {
+  margin: 0 0 1.25rem;
+  padding-left: 1.15rem;
+  font-size: 0.88rem;
+  color: var(--color-text-muted, #9ca3af);
+  line-height: 1.7;
 }
