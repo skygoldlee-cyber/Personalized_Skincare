@@ -156,3 +156,16 @@ export function getExamRules() {
         subjectFailBelow: typeof ie.subjectFailBelow === 'number' ? ie.subjectFailBelow : 40
     };
 }
+
+/**
+ * 구버전 'subjectN' 형식 ID → 현재 레지스트리의 과목 키로 매핑.
+ * 모의고사 이력의 구형 키를 현재 과목으로 환산하는 공용 규칙
+ * (charts.js 성적 집계와 recommendations.js 과락 추천이 같은 규칙을 쓴다).
+ * @param {string} subj
+ * @returns {string} 매핑된 과목 키 (매핑 실패 시 입력 그대로)
+ */
+export function resolveLegacySubjectKey(subj) {
+    const exams = (typeof window !== 'undefined' && window.DATA_REGISTRY && window.DATA_REGISTRY.exams) || [];
+    const exam = exams.find(e => e.key === subj || e.key.startsWith(subj));
+    return exam ? exam.subject : subj;
+}

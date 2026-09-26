@@ -3,10 +3,9 @@
 // 채우는 window 전역을 "가드"해서 읽는다. 정적 import 로 하드 의존하면, 레지스트리 파일
 // 로드가 실패할 때 이 모듈(및 상위 app.js) 전체가 실행되지 않아 흰 화면이 되므로 지양.
 
-import { STORAGE_KEYS } from './storage-keys.js';
-import { safeGetItem } from './state.js';
+import { getSimResultsHistory as getSimResults } from './state.js';
 import { TIMING } from './config/timing.js';
-import { getExamRules } from './exam-context.js';
+import { getExamRules, resolveLegacySubjectKey } from './exam-context.js';
 
 // CSS 변수에서 색상 읽기 (하드코딩 대체)
 function cssVar(name, fallback) {
@@ -21,29 +20,6 @@ const CHART_COLORS = {
     danger: () => cssVar('--color-danger', '#ef4444'),
     white: '#ffffff'
 };
-
-/* =======================================================
-   📊 SIM_RESULTS_HISTORY 캐싱 (중복 읽기 방지)
-   ======================================================= */
-/** @type {any[]|null} */
-let _simResultsCache = null;
-let _simResultsCacheRaw = null;
-
-function getSimResults() {
-    let raw;
-    raw = safeGetItem(STORAGE_KEYS.SIM_RESULTS_HISTORY);
-    if (raw === _simResultsCacheRaw && _simResultsCache !== null) {
-        return _simResultsCache;
-    }
-    _simResultsCacheRaw = raw;
-    try {
-        const parsed = raw ? JSON.parse(raw) : [];
-        _simResultsCache = Array.isArray(parsed) ? parsed : [];
-    } catch {
-        _simResultsCache = [];
-    }
-    return _simResultsCache;
-}
 
 /* =======================================================
    📊 공통 툴팁 유틸리티 (Interactive Tooltip)
@@ -239,13 +215,8 @@ function aggregateSubjectRates(history) {
             Object.keys(r.subjectRates).forEach(subj => {
                 const rate = r.subjectRates[subj];
                 if (rate !== null && rate !== undefined) {
-                    let key = subj;
-                    // legacy subjectN 형식 → registry에서 매핑
-                    if (subj.startsWith('subject')) {
-                        const exams = (window.DATA_REGISTRY && window.DATA_REGISTRY.exams) || [];
-                        const exam = exams.find(e => e.key === subj || e.key.startsWith(subj));
-                        if (exam) key = exam.subject;
-                    }
+                    // legacy subjectN 형식 → registry 매핑 (공용 규칙: exam-context.js)
+                    const key = subj.startsWith('subject') ? resolveLegacySubjectKey(subj) : subj;
                     if (subjectRates[key]) {
                         subjectRates[key].push(rate);
                     }

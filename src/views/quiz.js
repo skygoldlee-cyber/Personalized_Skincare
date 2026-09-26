@@ -13,12 +13,7 @@ import { showToast, vibrate, HAPTIC } from '../ui-utils.js';
 // 기출 퀴즈 오답을 weakCards에 담을 때의 접두사 (모의고사 오답 weak_sim_ 과 대칭)
 const WRONG_QUIZ_PREFIX = 'weak_quiz_';
 
-// 오답 원인 자가 태깅 분류 (FEATURE_PROPOSALS §4.2)
-export const WRONG_CAUSES = {
-    memorize: '암기 부족',
-    concept: '개념 오해',
-    calc: '계산 실수'
-};
+
 
 /**
  * 퀴즈 항목 ID → weakCards/wrongCauses에서 쓰는 약점 항목 키
@@ -75,7 +70,7 @@ function renderWrongCausePicker() {
     row.innerHTML = `
         <p class="wrong-cause-label">틀린 이유를 선택해 보세요:</p>
         <div class="wrong-cause-btns">
-            ${Object.entries(WRONG_CAUSES).map(([k, label]) =>
+            ${Object.entries(WRONG_CAUSE_LABELS).map(([k, label]) =>
                 `<button type="button" class="wrong-cause-btn" data-click="tagWrongCause" data-args='["${k}"]'>${label}</button>`).join('')}
         </div>
         <div class="wrong-cause-reco is-hidden"></div>
@@ -493,9 +488,9 @@ export function renderQuizResult() {
                     ${cite ? `<p class="quiz-cite"><i class="fa-solid fa-book" aria-hidden="true"></i> 교재 근거: <strong>${esc(cite.source || cite.section)}</strong>${cite.source ? ` <span class="quiz-cite-sec">(${esc(cite.section)})</span>` : ''}</p>` : ''}
                     <div class="wrong-cause-inline">
                         ${causeInfo
-                            ? `<span class="wrong-cause-chip"><i class="fa-solid fa-tag"></i> ${WRONG_CAUSES[causeInfo.cause] || ''}</span>`
+                            ? `<span class="wrong-cause-chip"><i class="fa-solid fa-tag"></i> ${WRONG_CAUSE_LABELS[causeInfo.cause] || ''}</span>`
                             : `<span class="wrong-cause-label">틀린 이유:</span>
-                               ${Object.entries(WRONG_CAUSES).map(([k, label]) =>
+                               ${Object.entries(WRONG_CAUSE_LABELS).map(([k, label]) =>
                                    `<button type="button" class="wrong-cause-btn" data-click="tagWrongCauseAt" data-args='["${esc(s.quizId)}", "${k}"]'>${label}</button>`).join('')}`
                         }
                     </div>
@@ -831,7 +826,7 @@ export function startWeakFocusQuiz() {
  * memorize는 관련 플래시카드를 weakCards에 추가한다.
  */
 function _storeCause(quizId, cause) {
-    if (!(cause in WRONG_CAUSES)) return;
+    if (!(cause in WRONG_CAUSE_LABELS)) return;
     const itemId = weakItemKey(quizId);
     state.wrongCauses[itemId] = {
         cause: cause,
@@ -887,7 +882,7 @@ export function tagWrongCause(cause) {
 
     const feedbackPanel = document.getElementById('quiz-feedback-panel');
     if (!feedbackPanel) return;
-    const causeKeys = Object.keys(WRONG_CAUSES);
+    const causeKeys = Object.keys(WRONG_CAUSE_LABELS);
     feedbackPanel.querySelectorAll('.wrong-cause-btn').forEach((btn, i) => {
         btn.classList.toggle('active', causeKeys[i] === cause);
     });

@@ -323,3 +323,28 @@ export function cleanOrphansForSubject(subjKey, subjData) {
         saveProgress();
     }
 }
+
+/* =======================================================
+   📊 모의고사 성적 이력 로더 (SIM_RESULTS_HISTORY 캐싱)
+   charts.js 성적 집계와 recommendations.js 추천이 공용으로 사용 —
+   동일 원문이면 JSON.parse를 건너뛰어 대시보드 재렌더 시 중복 파싱 방지
+   ======================================================= */
+let _simHistoryCacheRaw = null;
+let _simHistoryCache = null;
+
+/**
+ * 모의고사 성적 이력 로드
+ * @returns {Array<{date:string, examId:string, rate:number, subjectRates:Object|null}>}
+ */
+export function getSimResultsHistory() {
+    const raw = safeGetItem(STORAGE_KEYS.SIM_RESULTS_HISTORY);
+    if (raw === _simHistoryCacheRaw && _simHistoryCache !== null) return _simHistoryCache;
+    _simHistoryCacheRaw = raw;
+    try {
+        const parsed = raw ? JSON.parse(raw) : [];
+        _simHistoryCache = Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+        _simHistoryCache = [];
+    }
+    return _simHistoryCache;
+}

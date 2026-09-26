@@ -4,22 +4,17 @@
 // 우선순위가 정해진 추천 항목을 생성한다.
 // DOM 비의존 순수 로직 — 렌더링은 dashboard.js가 담당.
 
-import { safeGetItem, safeSetItem } from './state.js';
+import { safeGetItem, safeSetItem, getSimResultsHistory } from './state.js';
 import { STORAGE_KEYS } from './storage-keys.js';
 import { getDueCards } from './spaced-repetition.js';
-import { getCurrentExamId, getExamRules } from './exam-context.js';
+import { getCurrentExamId, getExamRules, resolveLegacySubjectKey } from './exam-context.js';
 
 /**
  * 모의고사 성적 이력 로드 (charts.js getSimResults와 같은 저장 키)
  * @returns {Array<{date:string, examId:string, rate:number, subjectRates:Object|null}>}
  */
 export function getSimHistory() {
-    try {
-        const parsed = JSON.parse(safeGetItem(STORAGE_KEYS.SIM_RESULTS_HISTORY) || '[]');
-        return Array.isArray(parsed) ? parsed : [];
-    } catch (e) {
-        return [];
-    }
+    return getSimResultsHistory(); // 캐싱 로더 공용 (state.js)
 }
 
 // 카드/퀴즈 ID → 과목 키 추출.
@@ -73,7 +68,7 @@ export function computeRecommendations(subjects, counts) {
         if (last && last.subjectRates) {
             Object.entries(last.subjectRates).forEach(([subj, rate]) => {
                 if (rate === null || rate === undefined || rate >= failBelow) return;
-                const key = subj.startsWith('subject') ? _legacySubjectKey(subj) : subj;
+                const key = subj.startsWith('subject') ? resolveLegacySubjectKey(subj) : subj;
                 if (!subjects.some(s => s.key === key)) return;
                 recs.push({
                     icon: 'fa-triangle-exclamation', color: 'var(--color-danger)',
@@ -158,12 +153,7 @@ export function computeRecommendations(subjects, counts) {
     return recs;
 }
 
-// 구버전 subjectN 형식 → 레지스트리 exams 매핑 (charts.js aggregateSubjectRates와 동일 규칙)
-function _legacySubjectKey(subj) {
-    const exams = (typeof window !== 'undefined' && window.DATA_REGISTRY && window.DATA_REGISTRY.exams) || [];
-    const exam = exams.find(e => e.key === subj || e.key.startsWith(subj));
-    return exam ? exam.subject : subj;
-}
+
 
 /* =======================================================
    📈 오답 패턴 분석 (원인 자가 태깅 집계 — FEATURE_PROPOSALS §4.2)
