@@ -188,6 +188,7 @@ data/                   # 빌드 생성 번들
 tools/                  # 빌드 스크립트
   build/                # 데이터 파이프라인 (manifest → registry + 해시 번들)
   sync_citation_lines.js # 문제은행 인용 링크 라인번호 동기화 (교재 변경 시)
+ref-pipeline/           # 참조자료 PDF→MD 변환 독립 단위 (pdf2md.py 엔진 + convert.py 래퍼 + GUI + requirements.txt) — 저장소와 무관하게도 실행 가능
 vendor/                 # 자체 호스팅 자산 (fonts/, fontawesome/)
 tests/                  # 테스트
   unit/                 # node --test 유닛 테스트

@@ -145,6 +145,17 @@
   `resolveCard()` 인덱스 조회로 전환.
 - 검증: 유닛 520 · DOM 341 통과, check:imports 오류 0.
 
+## 2026-09-26 ref-pipeline/ — PDF→MD 변환 독립 폴더 분리
+
+- `tools/pdf2md.py`·`pdf2md_gui.py` → `ref-pipeline/` 이동 (git mv 이력 보존),
+  래퍼는 `convert.py`로 교체 — `--pdf-root/--staging/--prod` CLI 인자로
+  저장소와 무관한 독립 실행 지원 (미지정 시 기존 env/exams.json 경로 유지).
+- `requirements.txt`·`README.md` 신규 — Python 의존 분리 + 승격 절차 문서화.
+- 검증 계층(`check_ref_*`·`sync_citation_lines`)은 저장소에 유지 — 교재↔
+  문제은행↔ref_md 교차 참조라 저장소에서만 의미 있음. 향후 별도 저장소
+  승격 가능한 I/O 계약 확보.
+- npm `convert:refs`/`verify:refs` 경로 갱신, end-to-end 검증 통과.
+
 ## 2026-09-26 오답 리뷰 교재 근거 인라인 + 외부 리뷰 반영
 
 - **오답 항목에 교재 근거 인라인 표시** (`_citationForQuiz`): 퀴즈의
