@@ -108,6 +108,23 @@ A1 → A2 → A3 (연결 루프 — 차별점의 실체)
 
 > 목표: Pro 코드 수정 0줄로 신규 시험 동작 — 이것이 아키텍처 검증 테스트.
 
+### 두 번째 시험 추가 전 선결 과제 (ref-pipeline 계류 항목)
+
+현재 `EXAM_CONTENT_ROOT` env/CLI 인자로 시험을 지정하는 계약은 있으나,
+cosmetic 전용 가정이 일부 남아 있다. 두 번째 시험 추가 **전에** 정리하면
+콘텐츠 제작시간 KPI 측정이 깔끔해진다:
+
+| 과제 | 현재 상태 | 개선 방향 |
+|---|---|---|
+| `EXAM_CONTENT_ROOT` 보일러플레이트 | 5개 파일에 동일 패턴 중복 (check_laws·batch_convert·run_pipeline·generate_all_mp3·cleanup_empty_mp3 + 테스트 2종) | `ref-pipeline/_exam_root.py` 공유 헬퍼로 추출 — 해석 순서(CLI 인자 > env > exams.json default)를 한곳에서 관리 |
+| `check_laws.py` 법령 목록 하드코딩 | `LAWS` 상수에 cosmetic 전용 8개 법령 박혀 있음 | `{EXAM_CONTENT_ROOT}/law_watch.json` 등 콘텐츠 측 설정 파일로 외부화 — 시험별 감시 목록이 콘텐츠와 함께 관리됨 |
+| `report/` 산출물 gitignore 정책 | `html/`는 ignore되지만 `report/`는 미정 (이력상 한때 추적→제거됨) | 생성물인지 문서인지 정책 결정 후 `.gitignore` 명시 |
+| ref-pipeline 자체 테스트 | `audiobook/` 내부 테스트(80개)만 존재 | pdf2md의 `--doctor`/`--verify`를 활용한 골든 회귀 샘플을 `ref-pipeline/tests/`에 추가 — 엔진 수정 시 안전망 |
+| win32 UTF-8 보일러플레이트 | `sys.stdout.reconfigure(encoding="utf-8")` 블록이 4~5개 파일에 반복 | 공유 헬퍼와 함께 정리 |
+
+> 이유: 두 번째 시험 추가는 "콘텐츠만 배치하면 되는가"를 실증하는 테스트다.
+> 위 잔재가 남아 있으면 신규 시험용 스크립트 사본이 생겨 KPI 측정(=순수 콘텐츠 공수)이 오염된다.
+
 ---
 
 ## 📎 관련 문서
