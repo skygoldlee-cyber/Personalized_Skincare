@@ -185,6 +185,8 @@ npm.cmd run build:audio-manifest     # 오디오 매니페스트만
 
 ### 3.1-1 과목 교재 전체 교체 체크리스트
 
+> **시간 순서 런북**: `docs/dev/TEXTBOOK_REPLACEMENT_RUNBOOK.md` — 이 체크리스트와 ref-pipeline 파생물 단계를 실행 순서로 통합한 단일 페이지 절차.
+
 과목의 교재를 통째로 다른 문서로 교체할 때는 단순 수정보다 의존성이 넓습니다.
 아래 8개 계층을 순서대로 확인하세요.
 
