@@ -4,6 +4,27 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-26 Learning Pro 모듈화 정리 + 약점 항목 인덱스 캐시
+
+- **중복 로직 3건 공용화** (`ea9324b4`): `WRONG_CAUSES` 중복 정의 제거
+  (`WRONG_CAUSE_LABELS` 단일화), 모의고사 이력 로더를 `state.js`의
+  `getSimResultsHistory()`로 통합(charts·recommendations 공용, 캐싱 포함),
+  레거시 과목 키 매핑을 `exam-context.js`의 `resolveLegacySubjectKey()`로 추출.
+- **`src/weak-items.js` 신설** (`ef858b00`): 4개 파일에 흩어진 약점 항목 ID
+  문법(`<subj>_card_N`/`weak_quiz_`/`weak_sim_`)을 전용 leaf 모듈로 집중 —
+  `weakItemKey`·`resolveWrongQuiz`·`parseWeakSimId`·`subjectForWeakItem`·
+  `subjectKeyFromItemId`. `examIdToSubjectId`는 exam-context.js로 이동.
+- **창구 가드·상수 통일** (`af3a5e6d`): `window.STUDY_DATA` 접근에
+  `typeof window` 가드(Node 테스트 안전), 접두사 리터럴 전량 상수화,
+  exam-simulator의 `examIdToSubjectId` 재수출 제거.
+- **인덱스 캐시** (`e0770bda`): 퀴즈·카드를 `id → {항목, subjectId}` Map으로
+  인덱싱 — `resolveWrongQuiz`/`subjectForWeakItem`의 과목 전체 선형 탐색 제거.
+  무효화는 STUDY_DATA 참조·과목 키·과목별 배열 참조/길이 비교로 처리해
+  `DataLoader.loadSubject()` 점진 로드에도 자동 재구축. exam-simulator의
+  약점 카드→문항 생성 루프와 quiz.js `getWeakCardsList`의 전체 카드 순회를
+  `resolveCard()` 인덱스 조회로 전환.
+- 검증: 유닛 520 · DOM 341 통과, check:imports 오류 0.
+
 ## 2026-09-26 오답 리뷰 교재 근거 인라인 + 외부 리뷰 반영
 
 - **오답 항목에 교재 근거 인라인 표시** (`_citationForQuiz`): 퀴즈의

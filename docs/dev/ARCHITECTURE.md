@@ -248,6 +248,7 @@ Personalized_Skincare/
 │   ├── spaced-repetition.js    #   SM-2 간격 반복 알고리즘, 복습 스케줄링
 │   ├── recommendations.js      #   "오늘의 합격 전략" 추천 엔진 + 예상 점수 추정 + 실제 결과 보고 (순수 로직)
 │   ├── command-palette.js      #   통합 검색 팔레트 (Ctrl+K) — 뷰/교재/카드/퀴즈/성분/문제집 통합 검색·실행
+│   ├── weak-items.js           #   약점(오답) 항목 ID 문법·해석 + 퀴즈·카드 인덱스 캐시 (DOM 비의존)
 │   ├── questions.js            #   문항 스키마·채점 유틸 (single/combo/short/ox)
 │   ├── statement-tracker.js    #   진술 원자(sid) 단위 오판 통계 + 졸업 추적
 │   ├── charts.js               #   SVG 레이더/꺾은선 차트 + 툴팁
@@ -497,6 +498,7 @@ Personalized_Skincare/
 | [`src/study-tracker.js`](../../src/study-tracker.js) | 학습 캘린더/목표 추적 헬퍼. 날짜별 학습 활동 기록(`recordStudyActivity`), 학습 목표 조회/저장(`getStudyGoals`/`setStudyGoals`), 오늘/이번주/이번달 달성률 계산, 시험일 D-day·역산 권장량(`getDDay`/`getSuggestedDailyCount`) |
 | [`src/recommendations.js`](../../src/recommendations.js) | "오늘의 합격 전략" 추천 엔진 (Learning Pro). SM-2 대기 → 과락 → 정답률 최저 → 헷갈린 카드 → 미학습 우선순위(`computeRecommendations`), 오답 원인 패턴 집계(`computeWrongCauseSummary`), 모의고사 이력 기반 예상 점수 추정(`estimateExpectedScore` — 합격 확률 아닌 점수 추정치), 실제 결과 자가 보고(`actual_exam_result`). DOM 비의존 순수 로직 |
 | [`src/command-palette.js`](../../src/command-palette.js) | 통합 검색 팔레트 (Ctrl/Cmd+K). `searchAll()` 순수 함수가 뷰(nav-item 스캔 → feature 게이팅 반영)/교재 섹션/카드/퀴즈/성분(초성)/문제집을 통합 검색, 팔레트 UI는 ↑↓·Enter·ESC 키보드 내비. 실행은 기존 경로 재사용(nav 클릭 시뮬레이션, `startSubjectStudy/Quiz`, `openSubjectChapter`, `ExamViewer.openExam`). 전 소스 로컬 데이터로 오프라인 동작 |
+| [`src/weak-items.js`](../../src/weak-items.js) | 약점(오답) 항목 ID 문법의 단일 소스 — `weak_quiz_`/`weak_sim_` 접두사 상수, `weakItemKey`/`parseWeakSimId`/`subjectKeyFromItemId`, 오답 해석(`resolveWrongQuiz`/`resolveCard`/`subjectForWeakItem`). **인덱스 캐시**: 퀴즈·카드를 `id → {항목, subjectId}` Map으로 인덱싱하고 STUDY_DATA·과목 키·배열 참조/길이 비교로 무효화 — `DataLoader.loadSubject()` 점진 로드 시 자동 재구축. DOM 비의존(`window` 가드) |
 | [`src/utils.js`](../../src/utils.js) | 의존성 없는 범용 헬퍼 (한글 초성 추출 `getChosung()` 등) |
 | [`src/sanitize.js`](../../src/sanitize.js) | HTML/XSS 방어 및 텍스트 정제 유틸리티 |
 | [`src/pdf-registry.js`](../../src/pdf-registry.js) | 참조자료 중앙 설정 모듈. 과목별 참조자료 매핑, 출처→PDF 파일명 매핑, MD 변환본 경로 자동 생성 (`REF_DIRS`, `resolveRefPath`, `mapSourceToRef`). 원본 PDF는 `.vercelignore`로 배포 제외, `ref_md/과목N/*/*.md` 변환본(3.7MB)으로 인앱 뷰어+PDF 저장 지원 |
@@ -719,6 +721,8 @@ const state = {
 - `selectExam(id)` — 시험 전환은 `location.reload()`로 수행해 모듈 상태·전역 캐시를 완전 리셋
 - `hasFeature(name)` — 도메인 특화 기능(성분사전/계산연습/원료배합/오디오북/참조자료/뽀모도로/부록문서)을 시험별 `features` 플래그로 게이팅. HTML은 `data-feature` 속성, 동적 버튼은 `hasFeature()` 분기
 - `scopedKey(key)` — 진도 localStorage 키를 `<examId>:key`로 네임스페이스. 앱 전역 키(테마·리더 설정 등 `GLOBAL_KEYS`)는 비네임스페이스 유지. `purgeLegacyStorage()`가 마이그레이션 1회에 레거시 비네임스페이스 진도 키 정리
+- `examIdToSubjectId(examId)` — 모의고사/기출 시험지 id → 소유 과목 키 매핑 (약점 항목의 과목 귀속에 사용)
+- `resolveLegacySubjectKey(key)` — 레거시 진도 키(`subject1` 등) → 현재 과목 키 정규화. charts.js·recommendations.js 공용 — 규칙 변경 시 이 함수만 수정
 
 ### 시험 선택/전환
 - `src/views/exam-select.js` — 시험 선택 카드 뷰(`exam-select-view`). `current_exam` 미설정 **+ 등록 시험 2개 이상**일 때만 홈으로 표시 — 단일 시험 레지스트리에서는 기본 시험으로 바로 진입해 피커 생략
