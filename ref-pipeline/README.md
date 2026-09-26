@@ -4,11 +4,32 @@
 > **교재가 바뀔 때마다 재사용**된다. 변환 엔진·래퍼·GUI·의존성을 한 폴더에 모아
 > 저장소 구조와 무관하게 독립 실행 가능하다.
 
-```
-PDF 원문 ──→ ref_md (라인 인용의 기준 문서)
-교재 MD ──→ 독립 HTML (공유·인쇄용)
-교재 MD ──→ 청취 원고 → TTS MP3 (오디오북)
-법령 목록 ─→ 현행성 검증 리포트
+```mermaid
+flowchart LR
+    subgraph 입력
+        PDF["참조자료 PDF"]
+        MD["교재·안내서·문제은행 MD"]
+        LAWS["법령 목록 (내장)"]
+    end
+
+    subgraph "ref-pipeline"
+        P1["pdf2md.py<br/>+ convert.py"]
+        P2["MD_to_HTML.py<br/>+ batch_convert.py"]
+        P3["audiobook/<br/>run_pipeline.py"]
+        P4["check_laws.py"]
+    end
+
+    subgraph "산출물 (EXAM_CONTENT_ROOT 측)"
+        O1["참조자료/ref_md_v2<br/>→ ref_md/과목N/"]
+        O2["html/"]
+        O3["audiobook/mp3/"]
+        O4["report/법령최신확인결과.md"]
+    end
+
+    PDF --> P1 --> O1
+    MD --> P2 --> O2
+    MD --> P3 --> O3
+    LAWS --> P4 --> O4
 ```
 
 ---
@@ -67,6 +88,16 @@ winget install ffmpeg        # MP3 병합 품질 향상 (없으면 바이너리 
 ## 3. 시나리오별 절차 (교재 변경 시 재사용)
 
 ### 시나리오 A — 참조자료 PDF 교체/추가 → ref_md 재변환
+
+```mermaid
+flowchart TD
+    A["① PDF 교체/추가<br/>참조자료/공통·과목N/"] --> B["② convert:refs<br/>→ ref_md_v2 스테이징"]
+    B --> C["③ verify:refs<br/>골든 비교"]
+    C -->|누락 있음| B
+    C -->|통과| D["④ 수동 승격<br/>ref_md_v2/ → ref_md/과목N/"]
+    D --> E["⑤ check:reffresh --update<br/>pdf_hashes.json 스탬프"]
+    E --> F["⑥ check:content<br/>인용·귀속·레이아웃 검증"]
+```
 
 법령 개정으로 참조자료 PDF가 바뀌거나 새 문서를 추가할 때:
 
@@ -171,6 +202,33 @@ python ref-pipeline/MD_to_HTML.py --gui                       # GUI 모드
 - [ ] `npm.cmd test` + `npm.cmd run test:dom` — 회귀 테스트
 
 ## 5. 저장소와의 경계
+
+```mermaid
+flowchart TB
+    subgraph RP["ref-pipeline/ — 변환 로직 소유"]
+        T1["PDF→MD<br/>pdf2md·convert"]
+        T2["MD→HTML<br/>MD_to_HTML·batch_convert"]
+        T3["MD→TTS<br/>audiobook/"]
+        T4["법령 조회<br/>check_laws"]
+    end
+
+    subgraph CT["content/exams/&lt;id&gt;/ — 산출물"]
+        C1["참조자료/ref_md"]
+        C2["html/·report/"]
+        C3["audiobook/mp3"]
+    end
+
+    subgraph REPO["저장소 소유 — 교차 검증·런타임"]
+        V1["check_ref_lines<br/>check_ref_subjects"]
+        V2["check_reflayout<br/>check_ref_freshness"]
+        V3["sync_citation_lines<br/>pdf_hashes.json"]
+        V4["check:content · build:data"]
+    end
+
+    RP -- 산출물 기록 --> CT
+    CT -- 교재·문제은행 인용 기준 --> REPO
+    REPO -- "인용 라인 (L###) 피드백" --> RP
+```
 
 - **이 폴더 소유**: 변환 로직 전부 (PDF→MD, MD→HTML, MD→TTS, 법령 조회)
 - **저장소 소유 (`tools/check_ref_*.js` 등)**: 교재 `(L###)`·📌출처·과목 귀속·`pdf_hashes.json` 신선도 검증 — 교재·문제은행↔ref_md 교차 참조라 저장소에서만 의미 있음
