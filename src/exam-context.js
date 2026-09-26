@@ -103,9 +103,11 @@ const GLOBAL_KEYS = new Set([
     'readerAudioRate',
     'readerAudioAutoScroll',
     'ui_analysis_open',
+    'ui_toc_hint_seen',
     'ui_mode',
     'ui_study_tools_open',
-    'device_id'                    // 동기화 기기 식별 — 시험 무관
+    'device_id',                   // 동기화 기기 식별 — 시험 무관
+    'passmula_auth_mail_cooldown_until' // 로그인 메일 재발송 쿨다운 — 시험 무관
 ]);
 
 /** 진도 키에 시험 접두사 부여 (`fc_memorized` → `cosmetic:fc_memorized`) */

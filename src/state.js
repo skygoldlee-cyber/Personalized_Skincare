@@ -9,8 +9,14 @@
 // 호출합니다. 전역 함수 참조이므로 모듈 분리 후에도 동작은 동일합니다.
 
 import { STORAGE_KEYS } from './storage-keys.js';
-import { scopedKey, unscopedKey } from './exam-context.js';
 import { WEAK_QUIZ_PREFIX } from './weak-items.js';
+import {
+    getItem as storageGetItem,
+    setItem as storageSetItem,
+    removeItem as storageRemoveItem,
+    listKeys as storageListKeys,
+    setStorageErrorHook,
+} from './storage.js';
 
 /* =======================================================
    📦 전역 학습 상태 객체 (Global Application State)
@@ -98,47 +104,24 @@ export const state = {
    💾 상태 영속성 (localStorage Load / Save)
    ======================================================= */
 
-// 로컬스토리지 안전 접근 래퍼.
+// 로컬스토리지 안전 접근 래퍼 — 실제 구현은 저장소 추상화 계층(src/storage.js)에 위임.
 // Safari 프라이빗 모드/용량 초과(QuotaExceededError)/스토리지 비활성 환경에서
 // localStorage 접근 자체가 예외를 던질 수 있으므로, 앱 흐름이 중단되지 않도록 감싼다.
 // - 읽기 실패: null 반환(값 없음과 동일 취급)
 // - 쓰기 실패: false 반환 + 1회 콘솔 경고(반복 스팸 방지)
 export function safeGetItem(key) {
-    try {
-        return localStorage.getItem(scopedKey(key));
-    } catch (e) {
-        return null;
-    }
+    return storageGetItem(key);
 }
 
-// 저장 실패 경고를 1회만 출력하기 위한 모듈 스코프 플래그(반복 스팸 방지).
-let storageWarnEmitted = false;
-
-// 동기화용 쓰기 훅 — sync.js가 setDataWriteHook으로 등록 (순환 import 방지용 콜백 패턴)
-let _dataWriteHook = null;
-export function setDataWriteHook(fn) { _dataWriteHook = fn; }
+// 동기화용 쓰기 훅 — sync.js가 등록 (실제 등록지는 storage.js, 하위호환용 재노출)
+export { setDataWriteHook } from './storage.js';
 
 export function safeSetItem(key, value) {
-    try {
-        localStorage.setItem(scopedKey(key), value);
-        if (_dataWriteHook) { try { _dataWriteHook(key); } catch (_) {} }
-        return true;
-    } catch (e) {
-        if (!storageWarnEmitted) {
-            storageWarnEmitted = true;
-            console.warn('[Storage] 로컬 저장 실패 — 진행상황이 저장되지 않을 수 있습니다 ' +
-                '(용량 초과/프라이빗 모드/스토리지 비활성).', e && e.name);
-        }
-        // 다른 모듈이 배너/토스트로 안내하고 싶을 때 쓸 수 있는 플래그
-        try { state._storageUnavailable = true; } catch (_) {}
-        return false;
-    }
+    return storageSetItem(key, value);
 }
 
 export function safeRemoveItem(key) {
-    try {
-        localStorage.removeItem(scopedKey(key));
-    } catch (e) { /* noop */ }
+    storageRemoveItem(key);
 }
 
 /**
@@ -147,16 +130,13 @@ export function safeRemoveItem(key) {
  * @returns {string[]} 매칭된 실제(접두사 포함) 키 배열
  */
 export function listScopedKeys(matchUnscoped) {
-    const out = [];
-    try {
-        for (let i = 0; i < localStorage.length; i++) {
-            const raw = localStorage.key(i);
-            const unscoped = unscopedKey(raw);
-            if (unscoped !== null && matchUnscoped(unscoped)) out.push(raw);
-        }
-    } catch (e) { /* noop */ }
-    return out;
+    return storageListKeys(matchUnscoped);
 }
+
+// 저장소 불가 감지 → 앱 배너용 플래그 (app.js에서 state._storageUnavailable 참조)
+setStorageErrorHook(() => {
+    try { state._storageUnavailable = true; } catch (_) { /* noop */ }
+});
 
 // 로컬스토리지에서 진도 가져오기
 export function loadProgress() {

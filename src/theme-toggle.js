@@ -1,5 +1,6 @@
 // src/theme-toggle.js — 테마 토글 로직 (app.js에서 추출)
 import { STORAGE_KEYS } from './storage-keys.js';
+import { safeGetItem, safeSetItem } from './state.js';
 
 /**
  * 헤더/모바일 테마 토글 버튼을 초기화하고 전역 테마 API를 노출합니다.
@@ -11,7 +12,7 @@ export function setupThemeToggle() {
     function apply(light) {
         root.classList.toggle('light-theme', light);
         if (meta) meta.setAttribute('content', light ? '#dde3ec' : '#0b0f19');
-        try { localStorage.setItem(STORAGE_KEYS.APP_THEME, light ? 'light' : 'dark'); } catch (e) {}
+        safeSetItem(STORAGE_KEYS.APP_THEME, light ? 'light' : 'dark');
         // 리더 등 다른 모듈이 동일한 테마 상태를 공유하도록 이벤트 브로드캐스트
         document.dispatchEvent(new CustomEvent('themechange', { detail: { light: light } }));
     }
@@ -45,9 +46,7 @@ export function setupThemeToggle() {
     if (window.matchMedia) {
         var mq = window.matchMedia('(prefers-color-scheme: light)');
         var onChange = function (e) {
-            var hasTheme;
-            try { hasTheme = localStorage.getItem(STORAGE_KEYS.APP_THEME); } catch (_) { hasTheme = null; }
-            if (hasTheme) return;
+            if (safeGetItem(STORAGE_KEYS.APP_THEME)) return;
             apply(e.matches);
         };
         if (mq.addEventListener) mq.addEventListener('change', onChange);

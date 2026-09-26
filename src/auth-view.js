@@ -2,6 +2,7 @@
 // 이메일+비밀번호 로그인·회원가입·매직링크. 세션은 supabase-js가 localStorage에 자동 보관.
 import { getSupabase, onAuthChange } from './supabase-client.js';
 import { showToast, showConfirm, trapFocus } from './ui-utils.js';
+import { safeGetItem, safeSetItem, safeRemoveItem } from './state.js';
 
 const el = id => document.getElementById(id);
 const show = n => n && n.classList.remove('is-hidden');
@@ -115,14 +116,12 @@ const COOLDOWN_SEC = 60;
 let _emailLoginCooldown = 0;
 
 function _loadCooldownUntil() {
-    try { return parseInt(localStorage.getItem(COOLDOWN_KEY) || '0', 10) || 0; }
-    catch (_) { return 0; }
+    const v = parseInt(safeGetItem(COOLDOWN_KEY) || '0', 10);
+    return Number.isNaN(v) ? 0 : v;
 }
 function _saveCooldownUntil(ts) {
-    try {
-        if (ts > 0) localStorage.setItem(COOLDOWN_KEY, String(ts));
-        else localStorage.removeItem(COOLDOWN_KEY);
-    } catch (_) {}
+    if (ts > 0) safeSetItem(COOLDOWN_KEY, String(ts));
+    else safeRemoveItem(COOLDOWN_KEY);
 }
 
 function startEmailLoginCooldown(btn, remainingSec = COOLDOWN_SEC) {

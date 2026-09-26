@@ -4,6 +4,27 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-26 저장소 추상화 계층 도입 (`src/storage.js`)
+
+- **단일 퍼널**: 앱의 모든 영속 읽기·쓰기가 `storage.js`를 경유 — `state.js`의
+  `safeGetItem`/`safeSetItem`/`safeRemoveItem`/`listScopedKeys`는 위임으로 유지해
+  기존 23개 호출 파일 무수정.
+- **교체 가능 백엔드**: `setStorageBackend()` — 기본 localStorage. 비동기 백엔드
+  (IndexedDB/SQLite WASM 등)는 `*Async` 메서드만 구현하면 되며, sync:false일 때
+  동기 API는 null/false+경고로 실패를 표면화.
+- **이중 API**: 동기(`getItem`/`setItem`/`removeItem`/`listKeys`/`getJSON`/`setJSON` +
+  `removeItemRaw`)와 비동기(`*Async`) — 신규 코드는 Async 계열 권장.
+  `store-utils.js`에 `loadItemsAsync`/`saveItemsAsync` 추가.
+- **중앙화된 부수기능**: sync dirty 쓰기 훅(`setDataWriteHook` — 논리 키로 통지),
+  쿼터/불가 감지(`isStorageUnavailable` + `setStorageErrorHook` → `state._storageUnavailable`).
+- **직접 localStorage 접근 정리**: app.js(orientation)·theme-toggle·auth-view
+  (쿨다운)·event-listeners·textbook-reader의 잔여 직접 접근을 퍼널로 이행 —
+  시험 무관 키 2개(`passmula_auth_mail_cooldown_until`, `ui_toc_hint_seen`)를
+  `GLOBAL_KEYS`에 추가해 비스코프 동작 유지. 클래식 스크립트(theme-init,
+  pwa-manifest)는 ESM 불가로 예외.
+- 테스트: `tests/unit/storage.test.js` 신설 (+10 — 스코프·JSON·훅·비동기 전용
+  백엔드 교체·쿼터 실패), 유닛 530 · DOM 341 통과.
+
 ## 2026-09-26 Learning Pro 모듈화 정리 + 약점 항목 인덱스 캐시
 
 - **중복 로직 3건 공용화** (`ea9324b4`): `WRONG_CAUSES` 중복 정의 제거

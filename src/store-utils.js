@@ -4,23 +4,28 @@
 // 저장·식별·정제 부품. 모든 키는 safeGetItem/safeSetItem 경유로
 // 시험별 네임스페이스(scopedKey)가 자동 적용된다.
 
-import { safeGetItem, safeSetItem } from './state.js';
+import { getJSON, setJSON, getJSONAsync, setJSONAsync } from './storage.js';
 
 /** 키의 배열 항목 전체 로드 — 파싱 실패·비배열은 빈 배열 */
 export function loadItems(key) {
-  const raw = safeGetItem(key);
-  if (!raw) return [];
-  try {
-    const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : [];
-  } catch (e) {
-    return [];
-  }
+  const parsed = getJSON(key);
+  return Array.isArray(parsed) ? parsed : [];
 }
 
 /** 배열 항목 전체 저장 — 실패 시 false */
 export function saveItems(key, items) {
-  return safeSetItem(key, JSON.stringify(items));
+  return setJSON(key, items);
+}
+
+/** loadItems의 비동기 판 — 백엔드 교체(IndexedDB 등) 후에도 동작. 신규 코드 권장 */
+export async function loadItemsAsync(key) {
+  const parsed = await getJSONAsync(key);
+  return Array.isArray(parsed) ? parsed : [];
+}
+
+/** saveItems의 비동기 판 — 백엔드 교체(IndexedDB 등) 후에도 동작. 신규 코드 권장 */
+export async function saveItemsAsync(key, items) {
+  return setJSONAsync(key, items);
 }
 
 /** 고유 ID 생성: <prefix>_<base36시간><난수> */

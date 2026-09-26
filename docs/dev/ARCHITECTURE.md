@@ -228,7 +228,8 @@ Personalized_Skincare/
 │   ├── app-fallback.js         #   ESM 로드 실패 시 자가 복구
 │   ├── pwa-install-capture.js  #   beforeinstallprompt 조기 캡처 + SW 등록
 │   ├── theme-init.js           #   FOUC 방지 (페인트 전 테마 적용)
-│   ├── state.js                #   전역 상태 + localStorage 영속성
+│   ├── state.js                #   전역 상태 + 진행 영속성 (저장은 storage.js 위임)
+│   ├── storage.js              #   저장소 추상화 계층 (교체 가능 백엔드, 동기·Async 이중 API)
 │   ├── data-loader.js          #   온디맨드 과목/시험 로딩
 │   ├── textbook-parser.js      #   런타임 MD → 카드/퀴즈/챕터 파싱
 │   ├── reader-format.js        #   MD→HTML 변환, 링크 재작성, 키워드 자동링크
@@ -494,7 +495,8 @@ Personalized_Skincare/
 | [`src/charts.js`](../../src/charts.js) | SVG 기반 차트 생성 (레이더 차트, 성적 꺾은선 그래프). **인터랙티브 툴팁**(hover/touch) 지원. 외부 차트 라이브러리 미사용 |
 | [`src/scratchpad.js`](../../src/scratchpad.js) | HTML5 Canvas 손글씨 연습장 (계산 문제 풀이용) |
 | [`src/trainer-calc.js`](../../src/trainer-calc.js) | 계산 훈련 문제 생성기. **순수 로직** — DOM 의존 없이 문제 데이터 객첼만 반환 |
-| [`src/state.js`](../../src/state.js) | 전역 상태 객체(`state`) 정의 + localStorage 영속성(`loadProgress`/`saveProgress`). 기본 과목은 `null`이며 `initApp()`에서 registry 첫 과목으로 설정. `saveProgress()`에서 학습 활동 증분을 `study-tracker.js`로 자동 기록 |
+| [`src/state.js`](../../src/state.js) | 전역 상태 객체(`state`) 정의 + 진행 영속성(`loadProgress`/`saveProgress`). 기본 과목은 `null`이며 `initApp()`에서 registry 첫 과목으로 설정. `saveProgress()`에서 학습 활동 증분을 `study-tracker.js`로 자동 기록. `safeGetItem`/`safeSetItem` 등은 `storage.js` 위임 (하위호환 유지) |
+| [`src/storage.js`](../../src/storage.js) | **저장소 추상화 계층** — 앱의 모든 영속 읽기·쓰기의 단일 퍼널. 논리 키 → `scopedKey` 시험 네임스페이스 적용, 백엔드는 `setStorageBackend()`로 교체 가능(기본 localStorage). 동기 API(`getItem`/`setItem`/`removeItem`/`listKeys`/`getJSON`/`setJSON`)와 비동기 API(`*Async`) 이중 제공 — IndexedDB/SQLite 등 비동기 백엔드는 Async 메서드만 구현하면 되고, sync:false 백엔드에서 동기 API는 null/false+경고. sync dirty 쓰기 훅·쿼터 불가 플래그(`isStorageUnavailable`) 중앙화 |
 | [`src/study-tracker.js`](../../src/study-tracker.js) | 학습 캘린더/목표 추적 헬퍼. 날짜별 학습 활동 기록(`recordStudyActivity`), 학습 목표 조회/저장(`getStudyGoals`/`setStudyGoals`), 오늘/이번주/이번달 달성률 계산, 시험일 D-day·역산 권장량(`getDDay`/`getSuggestedDailyCount`) |
 | [`src/recommendations.js`](../../src/recommendations.js) | "오늘의 합격 전략" 추천 엔진 (Learning Pro). SM-2 대기 → 과락 → 정답률 최저 → 헷갈린 카드 → 미학습 우선순위(`computeRecommendations`), 오답 원인 패턴 집계(`computeWrongCauseSummary`), 모의고사 이력 기반 예상 점수 추정(`estimateExpectedScore` — 합격 확률 아닌 점수 추정치), 실제 결과 자가 보고(`actual_exam_result`). DOM 비의존 순수 로직 |
 | [`src/command-palette.js`](../../src/command-palette.js) | 통합 검색 팔레트 (Ctrl/Cmd+K). `searchAll()` 순수 함수가 뷰(nav-item 스캔 → feature 게이팅 반영)/교재 섹션/카드/퀴즈/성분(초성)/문제집을 통합 검색, 팔레트 UI는 ↑↓·Enter·ESC 키보드 내비. 실행은 기존 경로 재사용(nav 클릭 시뮬레이션, `startSubjectStudy/Quiz`, `openSubjectChapter`, `ExamViewer.openExam`). 전 소스 로컬 데이터로 오프라인 동작 |

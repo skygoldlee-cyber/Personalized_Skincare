@@ -1,5 +1,5 @@
 // app.js - Passmula (맞춤형화장품 조제관리사) 애플리케이션 로직
-import { state, loadProgress, saveProgress, safeGetItem, safeSetItem } from './state.js';
+import { state, loadProgress, saveProgress, safeGetItem, safeSetItem, safeRemoveItem } from './state.js';
 import { esc } from './sanitize.js';
 import { shuffle } from './utils.js';
 import { clearScratchpad, toggleCalcScratchpad, toggleScratchpadEraser } from './scratchpad.js';
@@ -592,23 +592,18 @@ function setupOrientationToggle() {
     if (!btn) return;
 
     // 초기 상태 복원
-    try {
-        const saved = localStorage.getItem(STORAGE_KEYS.PREFERRED_ORIENTATION);
-        if (saved === 'landscape') {
-            document.body.classList.add('landscape-mode');
-            btn.querySelector('i').className = 'fa-solid fa-mobile-screen';
-        }
-    } catch (e) { /* 무시 */ }
+    if (safeGetItem(STORAGE_KEYS.PREFERRED_ORIENTATION) === 'landscape') {
+        document.body.classList.add('landscape-mode');
+        btn.querySelector('i').className = 'fa-solid fa-mobile-screen';
+    }
 
     btn.addEventListener('click', () => {
         const isLandscape = document.body.classList.toggle('landscape-mode');
-        try {
-            if (isLandscape) {
-                localStorage.setItem(STORAGE_KEYS.PREFERRED_ORIENTATION, 'landscape');
-            } else {
-                localStorage.removeItem(STORAGE_KEYS.PREFERRED_ORIENTATION);
-            }
-        } catch (e) { /* 무시 */ }
+        if (isLandscape) {
+            safeSetItem(STORAGE_KEYS.PREFERRED_ORIENTATION, 'landscape');
+        } else {
+            safeRemoveItem(STORAGE_KEYS.PREFERRED_ORIENTATION);
+        }
         // 아이콘 업데이트
         const icon = btn.querySelector('i');
         if (icon) {

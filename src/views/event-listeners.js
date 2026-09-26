@@ -1,5 +1,6 @@
 // src/views/event-listeners.js — 이벤트 리스너 설정 (app.js에서 분리)
-import { state, saveProgress, safeRemoveItem, listScopedKeys } from '../state.js';
+import { state, saveProgress, safeGetItem, safeSetItem, safeRemoveItem, listScopedKeys } from '../state.js';
+import { removeItemRaw } from '../storage.js';
 import { shuffle } from '../utils.js';
 import { DataLoader } from '../data-loader.js';
 import { ManualViewer } from '../manual-viewer.js';
@@ -40,7 +41,7 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
         RESET_KEYS.forEach(k => safeRemoveItem(k));
 
         // 날짜 기반 동적 키(daily_completed_*) 일괄 제거
-        listScopedKeys(isDailyCompletedKey).forEach(k => { try { localStorage.removeItem(k); } catch(_) {} });
+        listScopedKeys(isDailyCompletedKey).forEach(k => removeItemRaw(k));
         
         saveProgress();
         
@@ -82,11 +83,9 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
     // 1-2. 대시보드 분석 접이식 — 열림 상태를 세션 간 유지
     const analysisFold = document.getElementById('dashboard-analysis-fold');
     if (analysisFold) {
-        try {
-            if (localStorage.getItem('ui_analysis_open') === '1') analysisFold.open = true;
-        } catch (_) {}
+        if (safeGetItem('ui_analysis_open') === '1') analysisFold.open = true;
         analysisFold.addEventListener('toggle', () => {
-            try { localStorage.setItem('ui_analysis_open', analysisFold.open ? '1' : '0'); } catch (_) {}
+            safeSetItem('ui_analysis_open', analysisFold.open ? '1' : '0');
         });
     }
 

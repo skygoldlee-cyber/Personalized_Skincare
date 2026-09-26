@@ -76,7 +76,8 @@ src/                    # ES Modules
   app.js                # 메인 애플리케이션 로직 (초기화, 이벤트 위임, 라우팅)
   app-fallback.js       # ESM 로드 실패 시 자동 복구 (모바일 PWA 대응)
   router.js             # 뷰 라우터 (navigateToView, getViewTitles)
-  state.js              # 전역 상태 + localStorage 저장 (saveProgress, safeGet/SetItem)
+  state.js              # 전역 상태 + 진행 영속성 (saveProgress — 저장은 storage.js 위임)
+  storage.js            # 저장소 추상화 계층 — 백엔드 교체 가능(getItem/setItem 동기·Async 이중 API), 스코프·쓰기훅·쿼터 감지 중앙화
   ui-utils.js           # showToast, showConfirm, showGlobalLoading, trapFocus
   sanitize.js           # XSS 방어 (escapeHTML, safeTextWithBreaks)
   data-loader.js        # 온디맨드 콘텐츠 로더 (DataLoader)
