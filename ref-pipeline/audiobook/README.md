@@ -26,7 +26,7 @@ MD 교재 → 청킹(≤2,500자) → 청취용 원고 정제 → ElevenLabs TTS
    ```powershell
    c:\Python\WPy64-31241\python-3.12.4.amd64\python.exe -m pip install -r ref-pipeline\audiobook\requirements.txt
    ```
-3. **API 키** (TTS 사용 시에만 필요): `content\.env.example` 참고 → `ELEVENLABS_API_KEY` 환경변수 설정
+3. **API 키** (TTS 사용 시에만 필요): `{EXAM_CONTENT_ROOT}/audiobook/.env.example` 참고 → `ELEVENLABS_API_KEY` 환경변수 설정
 4. **ffmpeg** (선택, MP3 병합 품질 향상): `winget install ffmpeg`
 
 ## 사용법

@@ -1,0 +1,71 @@
+[
+  {
+    "file": "docs/dev/ARCHITECTURE.md",
+    "ref": "src/concept-map.js",
+    "reason": "변경 이력 섹션의 과거 파일 언급 (삭제 이력 서술)"
+  },
+  {
+    "file": "docs/dev/ARCHITECTURE.md",
+    "ref": "tools/fix-mindmap-indent.mjs",
+    "reason": "변경 이력 섹션의 과거 스크립트 언급 (2026-09-02 이력)"
+  },
+  {
+    "file": "docs/dev/AUDIO_HOSTING_GUIDE.md",
+    "ref": "ref-pipeline/audiobook/upload_to_github.sh",
+    "reason": "가이드에서 신규 작성을 지시하는 계획 스크립트"
+  },
+  {
+    "file": "docs/dev/DOM_TEST_DESIGN.md",
+    "ref": "tests/e2e/",
+    "reason": "로드맵상 계획 디렉터리 (E2E 도입 전)"
+  },
+  {
+    "file": "docs/dev/LEARNING_PREMIUM_PLAN.md",
+    "ref": "ref-pipeline/_exam_root.py",
+    "reason": "두 번째 시험 추가 전 선결 과제 (계획 파일)"
+  },
+  {
+    "file": "docs/dev/LEARNING_PREMIUM_PLAN.md",
+    "ref": "{EXAM_CONTENT_ROOT}/law_watch.json",
+    "reason": "선결 과제: check_laws 법령 목록 외부화 예정 경로"
+  },
+  {
+    "file": "docs/dev/LEARNING_PREMIUM_PLAN.md",
+    "ref": "ref-pipeline/tests/",
+    "reason": "선결 과제: ref-pipeline 회귀 테스트 디렉터리 (계획)"
+  },
+  {
+    "file": "docs/dev/READER_FEEDBACK_DESIGN.md",
+    "ref": "content/피드백/*.md",
+    "reason": "설계안 제안 경로 — 실제 저장은 Supabase 테이블"
+  },
+  {
+    "file": "docs/dev/READER_FEEDBACK_DESIGN.md",
+    "ref": "data/feedback.js",
+    "reason": "설계안 제안 번들 경로 — 미구현"
+  },
+  {
+    "file": "docs/dev/SUBSCRIPTION_ROADMAP.md",
+    "ref": "src/views/subscription.js",
+    "reason": "로드맵상 신규 뷰 (미구현)"
+  },
+  {
+    "file": "docs/dev/TEXTBOOK_AUTHORING_GUIDE.md",
+    "reason": "인용 문법 예시 링크 — 문서 상대경로가 아닌 콘텐츠 상대경로 표기"
+  },
+  {
+    "file": "ref-pipeline/audiobook/README.md",
+    "ref": "content/exams/cosmetic/audiobook/scripts/<과목>/ch01_001.txt",
+    "reason": "TTS 실행 후 생성되는 산출물 예시 경로"
+  },
+  {
+    "file": "ref-pipeline/audiobook/README.md",
+    "ref": "content/exams/cosmetic/audiobook/chunks/<과목>/ch01/ch01_001.md",
+    "reason": "TTS 실행 후 생성되는 산출물 예시 경로"
+  },
+  {
+    "file": "ref-pipeline/audiobook/README.md",
+    "ref": "content/exams/cosmetic/audiobook/scripts/",
+    "reason": "파이프라인 실행 전에는 없는 산출물 디렉터리"
+  }
+]

@@ -188,7 +188,7 @@ submittedAt: 2026-09-01
 
 | 파일 | 역할 |
 |------|------|
-| `src/views/feedback.js` | 피드백 뷰 컨트롤러 (탭 전환, 렌더링) |
+| `src/feedback.js` | 피드백 뷰 컨트롤러 (탭 전환, 렌더링) |
 | `index.html` | 사이드바 메뉴 + `<section id="feedback-view">` 추가 |
 | `css/feedback.css` | 피드백 페이지 전용 스타일 |
 
@@ -234,7 +234,7 @@ submittedAt: 2026-09-01
 기존 `DataLoader` 패턴 재사용:
 
 ```javascript
-// src/views/feedback.js
+// src/feedback.js
 import { esc } from '../sanitize.js';
 import { switchView } from './navigation.js';
 
@@ -525,7 +525,7 @@ Phase 2에서 Supabase SDK 로드를 위해 `vercel.json` CSP 헤더에 추가:
 
 | 규칙 | 준수 방안 |
 |------|----------|
-| Vanilla ES Modules | `src/views/feedback.js` ESM 모듈 |
+| Vanilla ES Modules | `src/feedback.js` ESM 모듈 |
 | `data-click` 이벤트 위임 | 탭 전환, 제출 버튼 모두 `data-click` 사용 |
 | CSP `script-src 'self'` | Phase 1: 영향 없음. Phase 2: `connect-src`만 추가, 인라인 스크립트 없음 |
 | Service Worker 캐시 | `content/피드백/*.md` 및 `data/feedback.js`를 DATA_CACHE에 추가 |
@@ -574,7 +574,7 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
 
 ### 7.1 Phase 1 검증
 
-- [ ] `node --check src/views/feedback.js` — 문법 검증
+- [ ] `node --check src/feedback.js` — 문법 검증
 - [ ] `npm.cmd run build:data` — 피드백 번들 생성 확인
 - [ ] `npm.cmd test` — 유닛 테스트 통과
 - [ ] `npm.cmd run check:parser` — 파서 등가성 검증

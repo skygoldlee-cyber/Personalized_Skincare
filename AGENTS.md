@@ -47,7 +47,7 @@ npm.cmd run audit:cards                 # 카드 품질 자동 감사 (짧은 �
 npm.cmd run audit:combo                 # 복수정답형 품질 감사 (정답 유일성·중복 진술집합·모순쌍·위치편향·경로별 통계)
 
 # 콘텐츠 통합 검증 (교재 교체 등 대규모 콘텐츠 변경 후)
-npm.cmd run check:content               # 인용·귀속·레이아웃·드릴·파서·임포트·자산·카드·테스트 일괄 검증
+npm.cmd run check:content               # 인용·귀속·레이아웃·드릴·파서·임포트·자산·카드·문서·테스트 일괄 검증
 npm.cmd run check:content -- --build    # build:data 선실행 후 검증 (교재 교체 시 권장)
 npm.cmd run check:content -- --quick    # DOM 테스트 생략
 npm.cmd run check:manifest              # manifest 선언 ↔ 파일/과목 자산 정합성만 단독 검증
@@ -56,6 +56,7 @@ npm.cmd run check:refsubjects           # ref_md 문서의 인용 득표↔과�
 npm.cmd run check:reffresh              # 참조자료 PDF 해시 ↔ ref_md 신선도 (PDF 교체 감지)
 npm.cmd run check:reflines              # 교재 (LNN)/📌출처 조문 ↔ ref_md 실제 내용 검증
 npm.cmd run check:drillfresh            # 드릴 번들 ↔ 문제은행 번들 신선도 (stale 시 npm run build:drills)
+npm.cmd run check:docs                  # README·AGENTS·docs/*.md 내 경로 참조 존재 검증 (파일 이동/삭제 후 스테일 참조 탐지)
 
 # 참조자료 PDF → ref_md 변환 (Python 3 + pdfplumber, 이미지 추출 시 pymupdf 필요)
 npm.cmd run convert:refs                # 참조자료 PDF 전체 → ref_md_v2/ 스테이징 변환 (파일명 필터 인자 가능)
@@ -216,6 +217,12 @@ docs/                   # 개발 문서
 - **새 시험 추가 절차**: ① `content/exams/<id>/`에 manifest.json + references.json + 교재/문제은행 배치 ② `content/exams.json`에 엔트리 추가 (`contentRoot`/`dataRoot`/`registryBundle`/`registryGlobal` 지정 — 비기본 시험은 `registryGlobal: "DATA_REGISTRY_<id>"`) ③ `npm.cmd run check:content -- --build` → 끝 (앱 로직 변경 불필요)
 - **기능 플래그**: `features`에 없는 기능은 `data-feature` 속성/`hasFeature()`로 자동 숨김 — 성분사전·원료배합·계산연습·오디오북·참조자료 등 도메인 특화 기능
 - **Node 도구**: `EXAM_ID`/`EXAM_CONTENT_ROOT`/`EXAM_DATA_ROOT` env로 대상 시험 지정 (예: `EXAM_ID=<id> node tools/build/index.js`)
+
+## 구조 변경 시 문서 갱신 규칙
+
+- 디렉터리/파일 이동·삭제·추가 시 경로를 참조하는 문서를 함께 갱신: `README.md`·`AGENTS.md` 디렉터리 트리, `docs/dev/ARCHITECTURE.md` 트리·변경 매트릭스, `docs/README.md` 인덱스, 관련 런북(`docs/dev/CONTENT_WORKFLOW.md`, `docs/dev/TEXTBOOK_REPLACEMENT_RUNBOOK.md`, `ref-pipeline/README.md`)
+- 갱신 후 `npm.cmd run check:docs` 통과 필수 — 문서 내 스테일 경로 참조를 자동 탐지 (`check:content`에도 통합돼 자동 실행)
+- 계획/미구현 경로·이력 서술 등 의도적 참조는 `tools/docs_paths_allowlist.json`에 `reason`과 함께 등록
 
 ## 코드 스타일 및 규칙
 

@@ -296,7 +296,7 @@ cp .env.example .env   # API 키 입력
 python run_pipeline.py
 ```
 
-사용법은 [`content/exams/cosmetic/audiobook/README.md`](content/exams/cosmetic/audiobook/README.md) 참고.
+사용법은 [`ref-pipeline/audiobook/README.md`](ref-pipeline/audiobook/README.md) 참고.
 
 ---
 
@@ -315,7 +315,7 @@ npm.cmd run deploy
 대용량 파일은 Git 추적에서 제외됩니다 ([`.gitignore`](.gitignore)):
 
 - `content/exams/cosmetic/audiobook/mp3/`, `*.mp3` — 생성된 음성 파일 (외부 CDN 권장)
-- `content/exams/cosmetic/audiobook/models/`, `*.onnx` — TTS 모델
+- `content/**/audiobook/models/`, `*.onnx` — TTS 모델 (모델 배치 시 생성)
 - `content/**/*.html` — 100MB 초과 HTML
 - `archive/`, `.env` 등
 

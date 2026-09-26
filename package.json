@@ -27,6 +27,7 @@
     "check:reffresh": "node tools/check_ref_freshness.js",
     "check:reflines": "node tools/check_ref_lines.js",
     "check:drillfresh": "node tools/check_drill_freshness.js",
+    "check:docs": "node tools/check_docs_paths.js",
     "convert:refs": "python ref-pipeline/convert.py",
     "verify:refs": "python ref-pipeline/convert.py --verify",
     "build:drills": "node tools/build_ox_drills.js && node tools/build_combo_drills.js",

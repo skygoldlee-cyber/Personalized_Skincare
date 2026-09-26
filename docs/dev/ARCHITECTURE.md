@@ -1381,7 +1381,7 @@ data/exams/subjectN.*.js ──► build_ox_drills.js    ──► data/exams/co
 - **캐시**: `data/exams/cosmetic/drills/`는 레지스트리 미등록 번들이라 `sw.js`의 `pruneStaleDataBundles`에서 `ALWAYS_KEEP`으로 명시 보존.
 - **재생성·검증**: `npm run build:drills` (O/X + 복수정답형 일괄), `npm run check:combo` (파일럿 + 생성 번들 5개 전체 스키마·citation·채점 스모크 검증).
 
-**오디오북 파이프라인** ([`content/exams/cosmetic/audiobook/`](../../content/exams/cosmetic/audiobook/README.md))은 Python 기반 별도 파이프라인으로, MD 청크 분할 → TTS → MP3 병합을 수행합니다.
+**오디오북 파이프라인** ([`ref-pipeline/audiobook/`](../../ref-pipeline/audiobook/README.md))은 Python 기반 별도 파이프라인으로, MD 청크 분할 → TTS → MP3 병합을 수행합니다.
 
 ### 🔑 안정적 ID 체계 (Stable ID)
 

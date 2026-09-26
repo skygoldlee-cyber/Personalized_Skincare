@@ -132,8 +132,8 @@ npm run test:watch
 | 16 | `glossary-query.test.js` | 13 | `getGlossaryByRefFile()`, `getGlossaryByRefFiles()`, `getGlossaryEntry()`, `getAllGlossaryKeywords()` | 합성 데이터, 교재 무관 |
 | 17 | `markdown-parser-general.test.js` | 47 | 헤더, 표, 리스트, 인용문, 특수 토큰, 빈 입력 + `joinWraps`(ref_md 시각적 줄 병합, 러닝헤더 스킵) | 합성 데이터, 교재 무관 |
 | 18 | `reader-format-general.test.js` | 19 | 페이지 참조 제거, 기출문제/참조자료/출처 링크 변환, 용어집 자동 링크, Mermaid 보호 | 합성 데이터, 교재 무관 |
-| 19 | `combo-transform.test.js` | 7 | 복수정답형(ⓐⓑⓒ) 문항 변환 — 진술 추출, 정답 조합, 변형 ID | 빌드 타임, `tools/build/combo-transform.js` |
-| 20 | `statement-tracker.test.js` | 9 | 복수정답형 진술별 정답 추적·통계 | `tools/build/statement-tracker.js` |
+| 19 | `combo-transform.test.js` | 7 | 복수정답형(ⓐⓑⓒ) 문항 변환 — 진술 추출, 정답 조합, 변형 ID | `src/questions.js` (`generateComboOptions`, `deriveComboAnswer`) |
+| 20 | `statement-tracker.test.js` | 9 | 복수정답형 진술별 정답 추적·통계 | `src/questions.js` (`gradeAnswer`) + `src/statement-tracker.js` |
 | 21 | `questions.test.js` | 17 | `src/questions.js` — 문제 필터·출제 로직 | 합성 데이터 |
 | 22 | `data-loader.test.js` | 7 | `src/data-loader.js` — 데이터 번들 로딩, 캐시 동작 | `window` 글로벌 모킹 |
 | 23 | `exam-context.test.js` | 12 | `src/exam-context.js` — 시험 해석, `scopedKey` 네임스페이스, 기능 플래그 | 합성 데이터 |
@@ -392,11 +392,11 @@ npm run test:watch
 ### 4.12 복수정답형 파이프라인
 
 #### `combo-transform.test.js` (7개)
-- `tools/build/combo-transform.js`: 단일정답 문항 → 복수정답형(ⓐⓑⓒ 선택) 변환
+- `src/questions.js`: 단일정답 문항 → 복수정답형(ⓐⓑⓒ 선택) 변환 (`generateComboOptions`)
 - 진술 추출, 정답 조합 매칭, 변형 문항 ID 생성
 
 #### `statement-tracker.test.js` (9개)
-- `tools/build/statement-tracker.js`: 진술별 정답률 추적·통계 집계
+- `src/statement-tracker.js`: 진술별 정답률 추적·통계 집계
 
 ### 4.10b DOM — Formula OS UI 시나리오 (2026-09-23, 설계: DOM_TEST_DESIGN.md)
 

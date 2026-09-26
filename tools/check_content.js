@@ -50,6 +50,8 @@ const STEPS = [
     '자산', 'sw.js SHELL_ASSETS/DATA_ASSETS 파일 존재'],
   ['node', ['tools/audit_card_quality.js'], false,
     '카드', '카드 품질 감사 (짧은 설명·중복·참조 링크)'],
+  ['node', ['tools/check_docs_paths.js'], false,
+    '문서', 'README·AGENTS·docs/*.md 경로 참조 존재 검증 (스테일 탐지)'],
   ['node', ['--test', 'tests/unit/*.test.js'], false,
     '테스트', '유닛 테스트 (node --test)'],
   ...(QUICK ? [] : [[

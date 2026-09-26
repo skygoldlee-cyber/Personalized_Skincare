@@ -240,8 +240,8 @@
 ## 🖥️ 9. 프론트엔드 변경 사항
 
 ### 9.1 새 페이지/컴포넌트
-- **로그인/회원가입 뷰**: 이메일, 비밀번호, 소셜 로그인 (`src/views/auth.js`)
-- **구독 관리 뷰**: 현재 플랜, 결제 내역, 업그레이드/해지 (`src/views/subscription.js`)
+- **로그인/회원가입 뷰**: 이메일, 비밀번호, 소셜 로그인 (`src/auth-view.js` — 이미 구현됨)
+- **구독 관리 뷰**: 현재 플랜, 결제 내역, 업그레이드/해지 (`src/views/subscription.js` — 신규)
 - **결제 뷰**: Stripe Checkout(또는 토스페이먼츠) 연동
 - **프로필 뷰**: 사용자 정보, 학습 통계 요약
 - **관리자 대시보드**: (별도) 사용자/구독/매출 관리
@@ -413,5 +413,5 @@ flowchart LR
 
 ## 📎 관련 문서
 - [ARCHITECTURE.md](ARCHITECTURE.md) — 현재 아키텍처 설계 (CSP·SW·상태·stable ID·saveProgress seam 근거)
-- [DEPLOY.md](DEPLOY.md) — 배포 가이드
+- [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) — 배포 가이드
 - [AUDIO_HOSTING_GUIDE.md](AUDIO_HOSTING_GUIDE.md) — 오디오 호스팅 가이드

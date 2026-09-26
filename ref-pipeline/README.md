@@ -231,7 +231,7 @@ flowchart TB
 ```
 
 - **이 폴더 소유**: 변환 로직 전부 (PDF→MD, MD→HTML, MD→TTS, 법령 조회)
-- **저장소 소유 (`tools/check_ref_*.js` 등)**: 교재 `(L###)`·📌출처·과목 귀속·`pdf_hashes.json` 신선도 검증 — 교재·문제은행↔ref_md 교차 참조라 저장소에서만 의미 있음
+- **저장소 소유 (`tools/check_ref_*.js` 등)**: 교재 `(L###)`·📌출처·과목 귀속·`참조자료/pdf_hashes.json` 신선도 검증 — 교재·문제은행↔ref_md 교차 참조라 저장소에서만 의미 있음
 - 이 폴더는 별도 저장소로 승격해도 무방한 설계 (입출력이 CLI 인자/`EXAM_CONTENT_ROOT`로 명시적)
 
 ## 6. 트러블슈팅

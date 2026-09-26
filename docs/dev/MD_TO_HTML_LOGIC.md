@@ -681,7 +681,7 @@ BATCH_TARGETS = {
 ```
 
 - 총 13개 MD 파일 → 13개 HTML 파일 변환
-- 출력: 각 그룹별 `html/` 하위 폴더 (예: `content/exams/cosmetic/교재/html/`, `content/report/html/`)
+- 출력: `{EXAM_CONTENT_ROOT}/html/` 하위 flat 구조 (예: `content/exams/cosmetic/html/학습안내서.html`, `content/exams/cosmetic/html/1과목_화장품법의이해_표준형.html`)
 
 ### 10.3 실행
 
