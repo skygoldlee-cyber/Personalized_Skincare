@@ -168,7 +168,7 @@ content/                # 시험 콘텐츠 컨테이너 (시험 소유 파일 �
   exams/cosmetic/       # 기본 시험 콘텐츠 루트 (contentRoot)
     manifest.json       # 과목/교재/문제은행 선언
     references.json     # 참조자료 매핑 설정
-    교재/                # 4과목 MD 파일 (표준형 8 + 이야기형 8 = 16파일, 총 20챕터)
+    교재/                # 4과목 MD 파일 (표준형 4 + 이야기형 4 = 8파일, 과목당 5챕터·총 20챕터)
     문제은행/            # 과목별 문제은행 MD
     참조자료/            # 법령고시/별표/참조자료 — PDF는 공통·과목1~4 폴더, MD 변환본은 ref_md/과목N/{문서}/{문서}.md (과목 폴더가 귀속의 진실)
       원료/              # 원료 DB — approved/restricted/banned/colorants_ingredients.md + db_version.json (버전·이력)
