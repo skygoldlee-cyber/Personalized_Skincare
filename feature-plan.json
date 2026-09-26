@@ -2,10 +2,10 @@
   "version": 1,
   "_comment": "기능별 무료/Pro 전환 설정. 'pro' = PRO 배지 + 진입 시 안내 모달, 'free' = 배지·안내 없이 완전 무료. 키 누락 시 pro로 간주.",
   "features": {
-    "mock_exam": "pro",
-    "combo_mock": "pro",
-    "combo_set": "pro",
-    "combo_drill": "pro",
+    "mock_exam": "free",
+    "combo_mock": "free",
+    "combo_set": "free",
+    "combo_drill": "free",
     "story_textbook": "pro"
   }
 }
