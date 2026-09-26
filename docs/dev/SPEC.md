@@ -522,7 +522,7 @@
 
 | ID | 요구사양 | 근거·구현 포인트 |
 |----|---------|------------------|
-| UX-PWA-01 | **앱 종료는 "시도 + 안내" 2단 구조**: `window.close()` → `history.back()` → 전체화면 종료 안내(`.app-exit-screen`) | 모바일 OS(Android/iOS)는 웹의 자체 종료를 차단 — 프로그래밍으로 완전 종료 불가. 데스크톱 설치 PWA는 `close()`가 동작. 차단되면 "최근 앱 목록에서 밀어 닫으세요" 안내 화면으로 대체하는 것이 최선 |
+| UX-PWA-01 | **앱 종료는 "시도 + 안내" 2단 구조**: `window.close()` → `history.back()` → 전체화면 종료 안내(`.app-exit-screen`). 확인 문구·안내 화면은 터치 환경(`pointer: coarse`/`maxTouchPoints`)에서만 모바일 제스처 안내 표시 — 데스크톱은 단순 확인 | 모바일 OS(Android/iOS)는 웹의 자체 종료를 차단 — 프로그래밍으로 완전 종료 불가. 데스크톱 설치 PWA는 `close()`가 동작하므로 모바일 안내는 불필요. 차단되면 "최근 앱 목록에서 밀어 닫으세요"(터치)/"창을 닫아주세요"(데스크톱) 안내 화면으로 대체하는 것이 최선 |
 | UX-PWA-02 | **PWA 전용 기능은 standalone 감지로 게이팅**: `matchMedia('(display-mode: standalone)').matches \|\| navigator.standalone === true` | 브라우저 탭에서 의미 없는 버튼(앱 종료 등)을 숨겨 혼란 방지. iOS는 `navigator.standalone`만 지원하므로 둘 다 확인 필수 |
 | UX-PWA-03 | **SW Cache First는 CSS/JS 즉시 반영 안 됨**: 배포 후 최소 1~2회 재실행 필요 (구 SW 서빙 → 새 SW 설치 → 재실행 시 반영) | "배포했는데 안 바뀐다" 보고의 대부분이 이 패턴. 사용자 안내 문구와 업데이트 토스트 필수 |
 | UX-PWA-04 | **설치 버튼은 `beforeinstallprompt` 캡처 후에만 표시** | 미설치 상태에서만 노출, 설치 후 자동 숨김 — 헤더 공간 절약 |

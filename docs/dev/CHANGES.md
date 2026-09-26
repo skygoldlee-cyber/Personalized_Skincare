@@ -4,6 +4,12 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-26 앱 종료 문구 환경별 분기
+
+- `quitApp()` 확인 다이얼로그·종료 안내 화면의 모바일 제스처 안내를 터치 환경
+  (`pointer: coarse`/`maxTouchPoints`)에서만 표시 — 데스크톱 PWA는 `window.close()`가
+  동작하므로 모바일 안내가 불필요했음 (UX-PWA-01 반영).
+
 ## 2026-09-26 새 버전 변경 이력 알림 (What's New)
 
 - **`data/version.js`**: `window.APP_VERSION` 전역 — `stamp-release-notes.js`가
