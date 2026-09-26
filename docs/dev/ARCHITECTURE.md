@@ -396,18 +396,12 @@ Personalized_Skincare/
 │   ├── check-imports.js        #   ES 모듈 import/export 교차 검증
 │   ├── verify-shell-assets.js  #   프리캐시 파일 존재 CI 검증
 │   ├── audit_card_quality.js  #   카드 품질 자동 감사 (npm run audit:cards)
-│   ├── audit_citation_links.js #  인용 링크 감사
-│   ├── audit_hyperlinks.js     #   하이퍼링크 감사
 │   ├── sync_citation_lines.js  #   문제은행 인용 라인번호 동기화 (build:data에 통합)
-│   ├── check_pdf_to_md_mapping.js # PDF→MD 매핑 검사
-│   ├── convert_pdf_links_to_md.js # PDF 링크→MD 변환
-│   ├── normalize_url_encoding.js # URL 인코딩 정규화
-│   ├── extract_notfound.js     #   404 인용 추출
-│   ├── fix_citation_lines.js   #   인용 라인번호 수동 수정
-│   ├── fix_manual_citations.js #   매뉴얼 인용 수정
-│   ├── verify_citation_lines.js #  인용 라인번호 검증
-│   ├── verify_citations.js     #   인용 검증
-│   └── fix-mindmap-indent.mjs  #   Mermaid mindmap 들여쓰기 수정
+│   └── _archive/               #   일회성 마이그레이션·수동 수정 스크립트 보관
+│       #   (audit_citation_links·audit_hyperlinks·check_pdf_to_md_mapping·
+│       #    convert_pdf_links_to_md·normalize_url_encoding·migrate_ref_md_subjects·
+│       #    extract_notfound·fix_citation_lines·fix_manual_citations·
+│       #    verify_citation_lines·verify_citations 등 — 참조용, 현행 파이프라인 아님)
 │
 ├── tests/                      # 자동화 테스트
 │   ├── unit/                   #   단위 테스트 (node --test)

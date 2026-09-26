@@ -4,6 +4,14 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-26 불필요 파일 정리
+
+- `L3)` (0바이트, 커밋 ad8315ef의 셸 리다이렉션 사고 산출물) 삭제.
+- 참조 0건의 일회성 스크립트 6건 `tools/_archive/`로 이동: `audit_citation_links.js`,
+  `audit_hyperlinks.js`, `check_pdf_to_md_mapping.js`, `convert_pdf_links_to_md.js`,
+  `normalize_url_encoding.js`, `migrate_ref_md_subjects.js`.
+- `ping.txt`는 오프라인 감지(`offline-detection.js`·sw.js)가 사용하는 의도된 파일로 유지.
+
 ## 2026-09-26 docs/dev 문서 아카이브 정리
 
 - 대체된 전략/설계 원전 7건을 `docs/report_archive/`로 이동: Cosmetic Master
