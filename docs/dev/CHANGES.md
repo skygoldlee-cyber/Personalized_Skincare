@@ -4,6 +4,14 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-27 ref-pipeline 운영 문서화 — 교재 교체 시 재사용 절차 명기
+
+- `ref-pipeline/README.md`를 전면 재작성: 도구 목록(언제 쓰나 표), 사전 준비(의존성·API 키),
+  공통 계약(`EXAM_CONTENT_ROOT` + 산출물 기록 위치 표), 시나리오 A~D 절차
+  (A: 참조자료 PDF 교체 → ref_md 승격 / B: 교재 MD 교체 → HTML·오디오북 재생성 /
+   C: 법령 현행성 점검 / D: 개별 파일 변환), 교재 전면 교체 체크리스트, 트러블슈팅.
+- `AGENTS.md`의 ref-pipeline 항목에 README 포인터 추가.
+
 ## 2026-09-27 utils/ 해소 — check_laws·batch_convert → ref-pipeline/, convert_ref_md → _archive
 
 - `content/exams/cosmetic/utils/` 3종 정리로 폴더 자체 해소:

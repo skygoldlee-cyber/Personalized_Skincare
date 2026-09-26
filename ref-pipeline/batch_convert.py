@@ -2,10 +2,10 @@
 """batch_convert.py — 교재·학습안내서·report MD 파일을 HTML로 일괄 변환
 
 사용법:
-    python batch_convert.py                  # 기본: 모든 대상 파일 변환 → ../html/
-    python batch_convert.py --no-prerender   # Mermaid SVG 사전 렌더링 생략 (PC용, 가벼운 HTML)
-    python batch_convert.py --no-embed       # Mermaid 라이브러리 인라인 생략 (CDN 사용)
-    python batch_convert.py --only 교재       # 특정 그룹만 변환
+    python ref-pipeline/batch_convert.py                  # 기본: 모든 대상 파일 변환 → {EXAM}/html/
+    python ref-pipeline/batch_convert.py --no-prerender   # Mermaid SVG 사전 렌더링 생략 (PC용, 가벼운 HTML)
+    python ref-pipeline/batch_convert.py --no-embed       # Mermaid 라이브러리 인라인 생략 (CDN 사용)
+    python ref-pipeline/batch_convert.py --only 교재       # 특정 그룹만 변환
 
 대상 파일 (ROOT 기준 상대경로):
     교재/1과목_화장품법의이해.md
