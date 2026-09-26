@@ -731,6 +731,12 @@ body.ui-mode-practice .ui-mode-toggle {
     text-align: left;
     cursor: pointer;
     transition: var(--transition-base);
+    white-space: nowrap;
+}
+
+.nav-item .pro-badge {
+    flex-shrink: 0;
+    margin-left: auto;
 }
 
 .nav-item i {
