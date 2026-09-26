@@ -11,6 +11,8 @@
 | `pdf2md_gui.py` | pdf2md의 PySide6 GUI 프런트엔드 (엔진 재사용) |
 | `MD_to_HTML.py` | MD→독립 HTML 변환기 (~4,700줄) — 모바일 file:// 대응·Mermaid 프리렌더·콜아웃 규칙, `--gui` 지원 |
 | `callout_rules.json` | MD_to_HTML 콜아웃 패턴 규칙 (스크립트 옆 파일로 자동 인식) |
+| `batch_convert.py` | 시험 교재·안내서·문제은행 MD → `html/` 일괄 HTML 변환 (MD_to_HTML 엔진 사용) |
+| `check_laws.py` | 국가법령정보센터 OPEN API로 시험 대상 법령 현행성 확인 → `report/` (LAW_OC 키 필요) |
 | `audiobook/` | 교재 MD → 청취용 원고 → TTS MP3 파이프라인 (초기 일회성 제작 도구, `audiobook/README.md` 참조) |
 | `requirements.txt` | Python 의존성 (pdfplumber·markdown 필수, PyMuPDF·PySide6 선택) |
 
@@ -62,6 +64,13 @@ python ref-pipeline/audiobook/run_pipeline.py --tts           # TTS + MP3 병합
 
 산출물은 콘텐츠 측에 기록: `content/exams/cosmetic/audiobook/{scripts,chunks,mp3}/`.
 `EXAM_CONTENT_ROOT` 환경변수로 대상 시험을 바꿀 수 있다.
+
+시험 콘텐츠 보조 도구 (산출물 모두 `EXAM_CONTENT_ROOT` 기준 콘텐츠 측에 기록):
+
+```powershell
+python ref-pipeline/batch_convert.py                  # 교재·안내서·문제은행 → html/
+python ref-pipeline/check_laws.py                     # 법령 현행성 → report/ (LAW_OC 필요)
+```
 
 ## 프로덕션 승격 절차 (저장소 워크플로)
 

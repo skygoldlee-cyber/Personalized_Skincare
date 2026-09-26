@@ -19,12 +19,19 @@ check_laws.py (v2) — 시험 대상 8개 법령의 현행 호수·시행일 확
 
 ■ 사용법
     export LAW_OC=your_oc_id
-    python check_laws.py                 # 콘솔 출력 + report/법령최신확인결과.md 생성
-    python check_laws.py your_oc_id      # OC를 인자로 전달해도 됨
+    python ref-pipeline/check_laws.py                 # 콘솔 출력 + report/법령최신확인결과.md 생성
+    python ref-pipeline/check_laws.py your_oc_id      # OC를 인자로 전달해도 됨
+
+  출력 경로: {EXAM_CONTENT_ROOT}/report/ (기본: content/exams/cosmetic/report/)
 """
 import os, sys, re, datetime, urllib.parse, urllib.request
 import xml.etree.ElementTree as ET
 from pathlib import Path
+
+EXAM_ROOT = Path(os.environ.get(
+    "EXAM_CONTENT_ROOT",
+    Path(__file__).resolve().parents[1] / "content" / "exams" / "cosmetic",
+))
 
 OC = os.environ.get("LAW_OC") or (sys.argv[1] if len(sys.argv) > 1 else "")
 API = "https://www.law.go.kr/DRF/lawSearch.do"
@@ -147,7 +154,8 @@ def write_md(rows, api_down):
           "- 식약처 법령정보 https://law.mfds.go.kr (식약처 고시)\n",
           "> 값을 지어내지 않는 것이 이 스크립트의 핵심입니다. "
           "'확인실패'는 정보가 없다는 뜻이지, 개정이 있었다는 뜻이 아닙니다."]
-    out_path = Path(__file__).resolve().parent.parent / "report" / "법령최신확인결과.md"
+    out_path = EXAM_ROOT / "report" / "법령최신확인결과.md"
+    out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text("\n".join(L) + "\n", encoding="utf-8")
 
 if __name__ == "__main__":

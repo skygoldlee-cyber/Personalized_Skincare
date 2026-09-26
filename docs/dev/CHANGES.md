@@ -4,6 +4,16 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-27 utils/ 해소 — check_laws·batch_convert → ref-pipeline/, convert_ref_md → _archive
+
+- `content/exams/cosmetic/utils/` 3종 정리로 폴더 자체 해소:
+  - `check_laws.py` → `ref-pipeline/check_laws.py` — 출력을 `EXAM_ROOT/report/`로 재지정 + `mkdir -p` 추가
+    (마이그레이션 후 report/ 디렉토리가 없어 쓰기 실패 상태였음).
+  - `batch_convert.py` → `ref-pipeline/batch_convert.py` — MD_to_HTML 임포트를 같은 폴더로 단순화,
+    대상 루트를 `EXAM_CONTENT_ROOT` 기준으로.
+  - `convert_ref_md.py` → `tools/_archive/` — ref_md의 HTML→MD 일회성 변환 임무 완료,
+    현 파이프라인(pdf2md)이 MD를 직접 생성하므로 아카이브.
+
 ## 2026-09-27 audiobook 스크립트 → ref-pipeline/audiobook/ 이동
 
 - `content/exams/cosmetic/audiobook/`의 파이썬 스크립트 9개 + README·requirements·AUDIOBOOK_SUMMARY를

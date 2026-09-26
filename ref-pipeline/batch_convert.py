@@ -26,15 +26,19 @@
 """
 
 import argparse
+import os
 import sys
 import time
 from pathlib import Path
 
-# ref-pipeline/MD_to_HTML.py의 변환 함수를 임포트
-sys.path.insert(0, str(Path(__file__).resolve().parents[4] / "ref-pipeline"))
+# MD_to_HTML.py의 변환 함수를 임포트 (같은 폴더)
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from MD_to_HTML import markdown_to_tailwind_html, RenderConfig
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(os.environ.get(
+    "EXAM_CONTENT_ROOT",
+    Path(__file__).resolve().parents[1] / "content" / "exams" / "cosmetic",
+))
 HTML_DIR = ROOT / "html"
 
 BATCH_TARGETS = {
