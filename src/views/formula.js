@@ -67,9 +67,9 @@ export function showPanel(id) {
    ======================================================= */
 
 const SUBNAV_ITEMS = [
-  { id: 'list', label: 'My 포뮬러', click: 'openFormulaList' },
-  { id: 'calc', label: '배합 계산기', click: 'formulaNew' },
   { id: 'customer', label: '고객 관리', click: 'openCustomerPanel' },
+  { id: 'calc', label: '배합 계산기', click: 'formulaNew' },
+  { id: 'list', label: 'My 포뮬러', click: 'openFormulaList' },
   { id: 'batch', label: '조제 기록', click: 'openBatchPanel' },
   { id: 'material', label: '원료 장부', click: 'openMaterialPanel' },
   { id: 'compliance', label: '법규 준수', click: 'openCompliancePanel' },
