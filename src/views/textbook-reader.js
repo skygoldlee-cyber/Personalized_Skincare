@@ -644,8 +644,11 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
     const readMinutes = Math.max(1, Math.round(totalChars / 500));
 
     // [멀티시험] 오디오북·참조자료는 시험 features 플래그로 게이트
-    // 오디오 MP3는 이야기형 교재 내레이션이므로 이야기형 모드(story_textbook Pro)에서만 표시
-    const audioPath = (hasFeature('audiobook') && isStoryMode) ? getAudioPathForChapter(subjId, chapter) : null;
+    // 오디오 MP3는 이야기형 교재 내레이션이므로 이야기형 모드(story_textbook Pro)에서만 표시.
+    // 매니페스트 조회는 단원 인덱스 기반이므로 정규 챕터 객체로 해석한다 —
+    // 이야기형 chapter 객체는 신규 객체라 indexOf 실패 + fileName 규칙 불일치로 경로를 못 찾는다.
+    const audioChapter = (subj.chapters && subj.chapters[chapterIdx]) || chapter;
+    const audioPath = (hasFeature('audiobook') && isStoryMode) ? getAudioPathForChapter(subjId, audioChapter) : null;
     const hasAudio = !!audioPath;
     const refsEnabled = hasFeature('refDocs');
 
