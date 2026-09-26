@@ -358,7 +358,7 @@ body.manual-open{overflow:hidden;}
     }
 
     /* ---------------------------------------------------------
-       file:// 지원용 번들 로더 (tools/build_doc_bundles.js 가 구은
+       file:// 지원용 번들 로더 (tools/build/build_doc_bundles.js 가 구은
        data/docs_md/<stem>.js 를 클래식 <script>로 주입 — file:// 에서도 동작)
        --------------------------------------------------------- */
 
@@ -404,12 +404,12 @@ body.manual-open{overflow:hidden;}
         try {
             await _injectScript(_bundlePathFor(sourceKey));
         } catch (e) {
-            throw new Error('문서 번들을 찾을 수 없습니다. 터미널에서 `node tools/build_doc_bundles.js` 를 실행해 번들을 생성하세요.');
+            throw new Error('문서 번들을 찾을 수 없습니다. 터미널에서 `node tools/build/build_doc_bundles.js` 를 실행해 번들을 생성하세요.');
         }
         if (window.__DOC_MD__ && typeof window.__DOC_MD__[src.path] === 'string') {
             return window.__DOC_MD__[src.path];
         }
-        throw new Error('문서 번들에 해당 문서가 없습니다. `node tools/build_doc_bundles.js` 로 다시 빌드하세요.');
+        throw new Error('문서 번들에 해당 문서가 없습니다. `node tools/build/build_doc_bundles.js` 로 다시 빌드하세요.');
     }
 
     // 프로토콜에 맞춰 마크다운 원문 확보

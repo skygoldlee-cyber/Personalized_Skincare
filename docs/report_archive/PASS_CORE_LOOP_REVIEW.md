@@ -478,5 +478,5 @@ D-Day, 학습 목표, 요약 노트가 없습니다.
 - [FEATURE_PROPOSALS.md](FEATURE_PROPOSALS.md) — 추천 기능 제안 (합격 핵심 루프 정의)
 - [SPEC.md](SPEC.md) — 기존 요구사양 명세서 (16개 영역)
 - [ARCHITECTURE.md](ARCHITECTURE.md) — 시스템 아키텍처
-- [SUBSCRIPTION_ROADMAP.md](SUBSCRIPTION_ROADMAP.md) — 구독 서비스 전환 로드맵
-- [READER_FEEDBACK_DESIGN.md](READER_FEEDBACK_DESIGN.md) — 독자 피드백 공유 기능 설계
+- [SUBSCRIPTION_ROADMAP.md](../dev/design/SUBSCRIPTION_ROADMAP.md) — 구독 서비스 전환 로드맵
+- [READER_FEEDBACK_DESIGN.md](../dev/design/READER_FEEDBACK_DESIGN.md) — 독자 피드백 공유 기능 설계

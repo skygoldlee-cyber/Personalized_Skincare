@@ -1,5 +1,5 @@
 // tests/unit/feedback.test.js — 의견 수신 모듈 (src/feedback.js) 검증
-// 설계: docs/dev/USER_FEEDBACK_DESIGN.md
+// 설계: docs/dev/design/USER_FEEDBACK_DESIGN.md
 // node:test 환경 — window/document/localStorage를 스텁하고,
 // 모듈 상태 클린업을 위해 케이스마다 쿼리스트링으로 신선한 인스턴스를 import한다.
 import { test, beforeEach } from 'node:test';

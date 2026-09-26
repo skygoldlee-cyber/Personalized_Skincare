@@ -1,5 +1,5 @@
 // tests/dom/feedback.dom.test.js — 의견 보내기 모달 시나리오
-// 설계: docs/dev/USER_FEEDBACK_DESIGN.md — 모달 표시 → 유형/별점 선택 → 제출 → 큐/토스트 검증
+// 설계: docs/dev/design/USER_FEEDBACK_DESIGN.md — 모달 표시 → 유형/별점 선택 → 제출 → 큐/토스트 검증
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { loadIndexHtml, el, lastToast, flushAsync } from './helpers.js';
 

@@ -16,8 +16,8 @@
 2. AGENTS.md (루트)          — 명령어·코드 규칙·검증 체크리스트 (작업 전 필수)
 3. docs/dev/ARCHITECTURE.md  — Local-First·ESM·DataLoader·SW 캐시·동기화 등 설계 결정
 4. docs/dev/SPEC.md          — 구현 완료된 기능의 요구사양 명세
-5. docs/dev/CONTENT_WORKFLOW.md — 콘텐츠=SSOT, 빌드 파이프라인 개요
-6. docs/dev/TESTING.md       — 유닛 489 + DOM 332 테스트 구조
+5. docs/dev/runbooks/CONTENT_WORKFLOW.md — 콘텐츠=SSOT, 빌드 파이프라인 개요
+6. docs/dev/reference/TESTING.md       — 유닛 489 + DOM 332 테스트 구조
 7. docs/dev/CHANGES.md       — 변경 이력 (왜 바뀌었는지의 맥락)
 ```
 
@@ -53,14 +53,14 @@
 ### ⑤ 제품 전략·수익화 방향 검토
 
 ```
-1. docs/맞춤형화장품_조제관리사_자격증플랫폼_사업기획서.md — 플랫폼 사업기획서 v3.5 (현행 기준서)
+1. docs/business/맞춤형화장품_조제관리사_자격증플랫폼_사업기획서.md — 플랫폼 사업기획서 v3.5 (현행 기준서)
 2. LEARNING_PREMIUM_PLAN.md      — Learning Pro 구현 과제 (우선순위·공수·전제)
 3. SUBSCRIPTION_ROADMAP.md       — 월 구독 전환 로드맵
 4. READER_FEEDBACK_DESIGN.md     — 독자 피드백 공유 기능 설계안 (미구현)
-5. FORMULA_OS_경쟁전략.md          — Formula OS 경쟁 지도·차별화 축·시나리오별 대응
-6. 판매업소_인터뷰_스크립트.md      — Step 0 판매업소 인터뷰 질문·중단 기준·집계 시트
-7. 맞춤형화장품판매업소_조사_2026-09.md — 판매업소·솔루션 공급사·시장 수치·규제 동향 조사 (인터뷰 모집 자료)
-8. 유튜브_홍보동영상_제작의뢰서.md   — 홍보 영상 외주 제작 브리프 (콘티·사양·납품 기준)
+5. business/FORMULA_OS_경쟁전략.md          — Formula OS 경쟁 지도·차별화 축·시나리오별 대응
+6. business/판매업소_인터뷰_스크립트.md      — Step 0 판매업소 인터뷰 질문·중단 기준·집계 시트
+7. business/맞춤형화장품판매업소_조사_2026-09.md — 판매업소·솔루션 공급사·시장 수치·규제 동향 조사 (인터뷰 모집 자료)
+8. business/유튜브_홍보동영상_제작의뢰서.md   — 홍보 영상 외주 제작 브리프 (콘티·사양·납품 기준)
 ```
 
 > **전략 원전 문서 (아카이브)**: 사업기획서 v3.5가 재구성한 상위 전략 문서들은 `report_archive/`에 보관 —
@@ -81,9 +81,12 @@ user/user_manual.md → 학습안내서(앱 내) → user/exam_strategy.md → u
 ```
 docs/
 ├── README.md                    ← 본 파일 (문서 인덱스 + 읽기 순서)
-├── 맞춤형화장품_조제관리사_자격증플랫폼_사업기획서.md
-├── FORMULA_OS_경쟁전략.md          ← Formula OS 경쟁·차별화 전략
-├── dev/                         ← 개발·설계·운영 문서 (24개)
+├── business/                    ← 사업 기획·시장 조사·마케팅 문서 (5개)
+├── dev/                         ← 개발 문서 (26개)
+│   ├── ARCHITECTURE.md·SPEC.md·CHANGES.md  ← 수위 문서 (아키텍처·명세·이력)
+│   ├── runbooks/              ← 실행 절차·운영 런북 (8개)
+│   ├── design/                ← 설계·계획·평가 문서 (9개)
+│   └── reference/             ← 명세·로직·참조 문서 (6개)
 ├── user/                        ← 사용자/학습자 문서 (7개)
 └── report_archive/              ← 분석 보고서 + 대체된 전략 문서 아카이브 (11개)
 ```
@@ -98,60 +101,74 @@ docs/
 |------|------|
 | [ARCHITECTURE.md](dev/ARCHITECTURE.md) | 시스템 아키텍처·설계 철학 — Local-First + 선택적 클라우드, ESM 구조, 데이터 흐름, PWA/SW 전략, 계정·동기화, UI 모드, Formula OS, 배포 파이프라인, 구현 레시피, 강건성 가이드라인 |
 | [SPEC.md](dev/SPEC.md) | 요구사양 명세서 — 구현된 기능을 역공학해 정리 (현행 기준서) |
-| [SUPABASE_DESIGN.md](dev/SUPABASE_DESIGN.md) | Supabase 계정·클라우드 동기화·Pro 권한 설계 — Phase 1~2 구현 완료, URL/PWA 동일 로그인 UX |
-| [FLASHCARD_LOGIC.md](dev/FLASHCARD_LOGIC.md) | 플래시카드 생성·난이도·필터·SM-2 간격 반복 로직 |
-| [MD_TO_HTML_LOGIC.md](dev/MD_TO_HTML_LOGIC.md) | MD→HTML 변환 로직 — 런타임 파서(manual-viewer)와 빌드 파이프라인 |
+| [SUPABASE_DESIGN.md](dev/design/SUPABASE_DESIGN.md) | Supabase 계정·클라우드 동기화·Pro 권한 설계 — Phase 1~2 구현 완료, URL/PWA 동일 로그인 UX |
+| [FLASHCARD_LOGIC.md](dev/reference/FLASHCARD_LOGIC.md) | 플래시카드 생성·난이도·필터·SM-2 간격 반복 로직 |
+| [MD_TO_HTML_LOGIC.md](dev/reference/MD_TO_HTML_LOGIC.md) | MD→HTML 변환 로직 — 런타임 파서(manual-viewer)와 빌드 파이프라인 |
 
 ### 콘텐츠 파이프라인
 
 | 문서 | 설명 |
 |------|------|
-| [CONTENT_WORKFLOW.md](dev/CONTENT_WORKFLOW.md) | 콘텐츠 변경 표준 절차 — `content/`=SSOT, `build:data` 파이프라인, 검증 명령 |
-| [TEXTBOOK_REPLACEMENT_RUNBOOK.md](dev/TEXTBOOK_REPLACEMENT_RUNBOOK.md) | 교재 교체 작업 순서도 — 준비→교체→빌드→인용→이관→파생물→배포·롤백 단일 런북 |
+| [CONTENT_WORKFLOW.md](dev/runbooks/CONTENT_WORKFLOW.md) | 콘텐츠 변경 표준 절차 — `content/`=SSOT, `build:data` 파이프라인, 검증 명령 |
+| [TEXTBOOK_REPLACEMENT_RUNBOOK.md](dev/runbooks/TEXTBOOK_REPLACEMENT_RUNBOOK.md) | 교재 교체 작업 순서도 — 준비→교체→빌드→인용→이관→파생물→배포·롤백 단일 런북 |
 | [ref-pipeline/README.md](../ref-pipeline/README.md) | 교재·참조자료 변환 도구 — PDF→MD, MD→HTML, 오디오북 TTS, 법령 검증 (독립 실행) |
-| [TEXTBOOK_AUTHORING_GUIDE.md](dev/TEXTBOOK_AUTHORING_GUIDE.md) | 교재 Markdown 작성 지침 — 카드/퀴즈 추출 규칙, manifest.json, 빌드 검증 |
-| [NUMBERING_SYSTEM.md](dev/NUMBERING_SYSTEM.md) | 교재 챕터/섹션 십진 번호체계 |
-| [QUESTION_SCHEMA_DESIGN.md](dev/QUESTION_SCHEMA_DESIGN.md) | 문항 데이터 스키마 — 복수정답형의 "진술 단위 O/X → 조합 도출" 구조 |
-| [COMBO_GENERATION_GUIDE.md](dev/COMBO_GENERATION_GUIDE.md) | 복수정답형 드릴 생성 도구 — `build_combo_drills.js` + `ref-statements.js` |
-| [TEXTBOOK_REFERENCE_MAPPING.md](dev/TEXTBOOK_REFERENCE_MAPPING.md) | 교재 챕터/섹션 ↔ 참조자료 파일 매핑 정의 |
-| [COMBO_STUDY_STRATEGY.md](dev/COMBO_STUDY_STRATEGY.md) | 복수정답형 학습 전략 — 진술 원자 단위 학습법, 전략→기능 매핑 (코드 주석에서 참조) |
+| [TEXTBOOK_AUTHORING_GUIDE.md](dev/runbooks/TEXTBOOK_AUTHORING_GUIDE.md) | 교재 Markdown 작성 지침 — 카드/퀴즈 추출 규칙, manifest.json, 빌드 검증 |
+| [NUMBERING_SYSTEM.md](dev/reference/NUMBERING_SYSTEM.md) | 교재 챕터/섹션 십진 번호체계 |
+| [QUESTION_SCHEMA_DESIGN.md](dev/design/QUESTION_SCHEMA_DESIGN.md) | 문항 데이터 스키마 — 복수정답형의 "진술 단위 O/X → 조합 도출" 구조 |
+| [COMBO_GENERATION_GUIDE.md](dev/runbooks/COMBO_GENERATION_GUIDE.md) | 복수정답형 드릴 생성 도구 — `build_combo_drills.js` + `ref-statements.js` |
+| [TEXTBOOK_REFERENCE_MAPPING.md](dev/reference/TEXTBOOK_REFERENCE_MAPPING.md) | 교재 챕터/섹션 ↔ 참조자료 파일 매핑 정의 |
+| [COMBO_STUDY_STRATEGY.md](dev/reference/COMBO_STUDY_STRATEGY.md) | 복수정답형 학습 전략 — 진술 원자 단위 학습법, 전략→기능 매핑 (코드 주석에서 참조) |
 
 ### Formula OS (실무)
 
 | 문서 | 설명 |
 |------|------|
-| [FORMULA_OS_WORKFLOW_DESIGN.md](dev/FORMULA_OS_WORKFLOW_DESIGN.md) | 조제관리사 9개 업무 전체 커버리지 — 고객·배치·원료장부·법규 (Phase A~D 구현 완료). Phase 5-A 기본 설계는 `report_archive/FORMULA_OS_DESIGN.md` |
+| [FORMULA_OS_WORKFLOW_DESIGN.md](dev/design/FORMULA_OS_WORKFLOW_DESIGN.md) | 조제관리사 9개 업무 전체 커버리지 — 고객·배치·원료장부·법규 (Phase A~D 구현 완료). Phase 5-A 기본 설계는 `report_archive/FORMULA_OS_DESIGN.md` |
 
 ### 테스트·품질
 
 | 문서 | 설명 |
 |------|------|
-| [TESTING.md](dev/TESTING.md) | 테스트 가이드 — 유닛(node:test) + DOM(Vitest/jsdom) 전체 목록·규칙 |
-| [DOM_TEST_DESIGN.md](dev/DOM_TEST_DESIGN.md) | DOM 시나리오 테스트 설계 — jsdom 경계, 케이스 유형 매트릭스, Phase 1~5 로드맵 |
+| [TESTING.md](dev/reference/TESTING.md) | 테스트 가이드 — 유닛(node:test) + DOM(Vitest/jsdom) 전체 목록·규칙 |
+| [DOM_TEST_DESIGN.md](dev/design/DOM_TEST_DESIGN.md) | DOM 시나리오 테스트 설계 — jsdom 경계, 케이스 유형 매트릭스, Phase 1~5 로드맵 |
 
 ### 운영·환경
 
 | 문서 | 설명 |
 |------|------|
-| [DEPLOYMENT_GUIDE.md](dev/DEPLOYMENT_GUIDE.md) | Vercel 배포·오디오 호스팅 — 용량 최적화, CSP/캐시 정책, 체크리스트, 트러블슈팅 |
-| [MULTI_MACHINE_SETUP.md](dev/MULTI_MACHINE_SETUP.md) | 다중 머신 개발 환경 — GitHub SSH, Vercel CLI 인증, Actions 자동 배포 |
-| [AUDIO_HOSTING_GUIDE.md](dev/AUDIO_HOSTING_GUIDE.md) | 오디오북 호스팅·청취 아키텍처 — GitHub Releases 연동, 모바일 청취 동작 |
-| [Supabase_Custom_SMTP_MagicLink_OTP_설정가이드.md](dev/Supabase_Custom_SMTP_MagicLink_OTP_%EC%84%A4%EC%A0%95%EA%B0%80%EC%9D%B4%EB%93%9C.md) | Supabase 운영 런북 — Custom SMTP(Gmail 앱 비밀번호)·Magic Link/OTP 템플릿·체크리스트 |
+| [DEPLOYMENT_GUIDE.md](dev/runbooks/DEPLOYMENT_GUIDE.md) | Vercel 배포·오디오 호스팅 — 용량 최적화, CSP/캐시 정책, 체크리스트, 트러블슈팅 |
+| [MULTI_MACHINE_SETUP.md](dev/runbooks/MULTI_MACHINE_SETUP.md) | 다중 머신 개발 환경 — GitHub SSH, Vercel CLI 인증, Actions 자동 배포 |
+| [AUDIO_HOSTING_GUIDE.md](dev/runbooks/AUDIO_HOSTING_GUIDE.md) | 오디오북 호스팅·청취 아키텍처 — GitHub Releases 연동, 모바일 청취 동작 |
+| [Supabase_Custom_SMTP_MagicLink_OTP_설정가이드.md](dev/runbooks/Supabase_Custom_SMTP_MagicLink_OTP_설정가이드.md) | Supabase 운영 런북 — Custom SMTP(Gmail 앱 비밀번호)·Magic Link/OTP 템플릿·체크리스트 |
 | [CHANGES.md](dev/CHANGES.md) | 코드 변경 이력 (Changelog) — 변경의 이유와 맥락 |
 
 ### 제품 전략·기획
 
 | 문서 | 설명 |
 |------|------|
-| [LEARNING_PREMIUM_PLAN.md](dev/LEARNING_PREMIUM_PLAN.md) | Learning Pro 구현 과제 — 우선순위·공수·전제 조건 |
-| [USER_FEEDBACK_DESIGN.md](dev/USER_FEEDBACK_DESIGN.md) | 사용자 피드백 수신 — YouTube 유입 추적 + 앱 내 의견 제출 (구현됨: `src/feedback.js`, `feedback` 테이블은 Supabase SQL Editor 수동 실행 필요) |
-| [READER_FEEDBACK_DESIGN.md](dev/READER_FEEDBACK_DESIGN.md) | 독자 피드백 공유 기능 설계 제안 (미구현) |
-| [SUBSCRIPTION_ROADMAP.md](dev/SUBSCRIPTION_ROADMAP.md) | 월 구독 서비스 전환 로드맵 |
-| [STUDY_APP_DESIGN_GUIDE.md](dev/STUDY_APP_DESIGN_GUIDE.md) | 학습 앱 재사용 설계 가이드 — 다른 자격시험/교재 적용 템플릿 |
+| [LEARNING_PREMIUM_PLAN.md](dev/design/LEARNING_PREMIUM_PLAN.md) | Learning Pro 구현 과제 — 우선순위·공수·전제 조건 |
+| [USER_FEEDBACK_DESIGN.md](dev/design/USER_FEEDBACK_DESIGN.md) | 사용자 피드백 수신 — YouTube 유입 추적 + 앱 내 의견 제출 (구현됨: `src/feedback.js`, `feedback` 테이블은 Supabase SQL Editor 수동 실행 필요) |
+| [READER_FEEDBACK_DESIGN.md](dev/design/READER_FEEDBACK_DESIGN.md) | 독자 피드백 공유 기능 설계 제안 (미구현) |
+| [SUBSCRIPTION_ROADMAP.md](dev/design/SUBSCRIPTION_ROADMAP.md) | 월 구독 서비스 전환 로드맵 |
+| [STUDY_APP_DESIGN_GUIDE.md](dev/design/STUDY_APP_DESIGN_GUIDE.md) | 학습 앱 재사용 설계 가이드 — 다른 자격시험/교재 적용 템플릿 |
 
 ---
 
-## 👤 사용자 문서 (docs/user/)
+## � 사업 문서 (docs/business/)
+
+| 문서 | 설명 |
+|------|------|
+| [맞춤형화장품_조제관리사_자격증플랫폼_사업기획서.md](business/맞춤형화장품_조제관리사_자격증플랫폼_사업기획서.md) | 플랫폼 사업기획서 v3.5 — 현행 기준서 (구판은 report_archive) |
+| [FORMULA_OS_경쟁전략.md](business/FORMULA_OS_경쟁전략.md) | Formula OS 경쟁 지도·차별화 축·시나리오별 대응 |
+| [판매업소_인터뷰_스크립트.md](business/판매업소_인터뷰_스크립트.md) | Step 0 판매업소 인터뷰 질문·중단 기준·집계 시트 |
+| [맞춤형화장품판매업소_조사_2026-09.md](business/맞춤형화장품판매업소_조사_2026-09.md) | 판매업소·솔루션 공급사·시장 수치·규제 동향 조사 |
+| [유튜브_홍보동영상_제작의뢰서.md](business/유튜브_홍보동영상_제작의뢰서.md) | 홍보 영상 외주 제작 브리프 (콘티·사양·납품 기준) |
+
+> `.html`은 `MD_to_HTML.py` 생성물 (gitignore 대상) — `.md`가 원본입니다.
+
+---
+
+## �👤 사용자 문서 (docs/user/)
 
 | 문서 | 설명 | 접근 방법 |
 |------|------|-----------|
@@ -171,7 +188,7 @@ docs/
 
 | 문서 | 설명 |
 |------|------|
-| Cosmetic Master Business Plan.md | 구판 사업기획서 — 사업기획서 v3.5(`docs/`)로 대체됨 |
+| Cosmetic Master Business Plan.md | 구판 사업기획서 — 사업기획서 v3.5(`docs/business/`)로 대체됨 |
 | PASS_TO_PRACTICE_STRATEGY.md | Pass→Practice 전략 원전 — 사업기획서·SPEC §3.18에 흡수 |
 | FEATURE_PROPOSALS.md | 합격 핵심 루프 11단계 제안 원전 — 잔여 과제는 SPEC §7·LEARNING_PREMIUM_PLAN |
 | PASS_CORE_LOOP_REVIEW.md | 핵심 루프 코드 반영도 진단 (2026-09-11 스냅샷) |

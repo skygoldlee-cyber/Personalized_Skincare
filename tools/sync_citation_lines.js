@@ -36,7 +36,7 @@ function collectExamFiles() {
 }
 
 const EXAM_FILES = collectExamFiles();
-const FINGERPRINT_FILE = path.join(ROOT, 'tools', 'citation_fingerprints.json');
+const FINGERPRINT_FILE = path.join(ROOT, 'tools', 'config', 'citation_fingerprints.json');
 
 // Match citation link patterns: [라벨 ... L####](<path#L####>)
 // 라벨은 "교재: L123", "교재: 2과목 L1091", "참조: L289" 등 다양한 형태 허용

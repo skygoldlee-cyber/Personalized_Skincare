@@ -1,5 +1,5 @@
 // tests/dom/formula-batch.dom.test.js — 조제 기록(배치) 시나리오
-// 설계: docs/dev/DOM_TEST_DESIGN.md §5.1 (Phase 2b)
+// 설계: docs/dev/design/DOM_TEST_DESIGN.md §5.1 (Phase 2b)
 // 검증: 빈 목록, 신규 폼 처방 바인딩·QC 렌더, 저장→채번·스냅샷·상세 전환,
 //       순번 증가, 처방 미선택 거부, 보정 모드 identity 잠금·QC 병합,
 //       삭제 confirm, QC 이상 목록 배지, 인쇄 → print-area

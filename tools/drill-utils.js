@@ -2,7 +2,7 @@
  * tools/drill-utils.js — O/X·복수정답형 드릴 생성기 공용 유틸
  * ------------------------------------------------------------
  * inferTags: 문항 텍스트에서 STANDARD_TAGS(src/questions.js) 어휘를 추론.
- *   "숫자·기준 카드 덱"(docs/dev/COMBO_STUDY_STRATEGY.md §2-④) 필터용 태그 부여에 사용.
+ *   "숫자·기준 카드 덱"(docs/dev/reference/COMBO_STUDY_STRATEGY.md §2-④) 필터용 태그 부여에 사용.
  * ============================================================ */
 'use strict';
 

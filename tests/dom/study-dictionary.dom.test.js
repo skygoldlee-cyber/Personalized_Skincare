@@ -1,5 +1,5 @@
 // tests/dom/study-dictionary.dom.test.js — 성분 사전 시나리오
-// 설계: docs/dev/DOM_TEST_DESIGN.md §5.2 (Phase 4)
+// 설계: docs/dev/design/DOM_TEST_DESIGN.md §5.2 (Phase 4)
 // 검증: 원료 카드 렌더·배지(H) · 검색(이름/영문/초성)·필터(H) · 빈 DB(E)
 //       · 결과 없음(B) · 카드 펼침(H) · 검색 초기화(H)
 

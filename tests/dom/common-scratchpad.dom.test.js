@@ -1,5 +1,5 @@
 // tests/dom/common-scratchpad.dom.test.js — 계산 스크래치패드 시나리오
-// 설계: docs/dev/DOM_TEST_DESIGN.md §5.3 (Phase 5)
+// 설계: docs/dev/design/DOM_TEST_DESIGN.md §5.3 (Phase 5)
 // 검증: 토글→컨테이너·버튼 라벨(H) · 캔버스 초기화·그리기 스트로크(H)
 //       · 지우기→clearRect(H) · 지우개 토글→strokeStyle/굵기(B)
 // 참고: 모듈 레벨 `scratchpadCanvasInitialized` 잔존 방지를 위해 매 테스트 모듈 리셋

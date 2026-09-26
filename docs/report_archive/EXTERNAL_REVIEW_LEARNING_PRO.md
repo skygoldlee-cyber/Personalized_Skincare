@@ -1,6 +1,6 @@
 # Learning Pro 문서 외부 리뷰 (수신: 2026-09-26)
 
-> [LEARNING_PREMIUM_PLAN.md](LEARNING_PREMIUM_PLAN.md) + [PRO_MULTI_EXAM_EVALUATION.md](PRO_MULTI_EXAM_EVALUATION.md)에 대한 외부 리뷰 원문과 코드 기준 검증 결과.
+> [LEARNING_PREMIUM_PLAN.md](../dev/design/LEARNING_PREMIUM_PLAN.md) + [PRO_MULTI_EXAM_EVALUATION.md](PRO_MULTI_EXAM_EVALUATION.md)에 대한 외부 리뷰 원문과 코드 기준 검증 결과.
 
 ## 리뷰 종합 평가 (원문)
 

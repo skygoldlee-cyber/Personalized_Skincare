@@ -5,7 +5,7 @@
 // 설계 원칙
 //  - combo는 "정답 옵션"을 직접 신뢰하지 않고 진술(statement)의 truth로 도출/검증한다.
 //    → 데이터 무결성(정답 오타 방지) + "어느 진술에서 틀렸는지" 진술 단위 피드백을 동시에 얻는다.
-//  - 진술은 문항 내부 데이터가 아니라 독립 추적 가능한 학습 원자다 (docs/dev/COMBO_STUDY_STRATEGY.md §2-①③).
+//  - 진술은 문항 내부 데이터가 아니라 독립 추적 가능한 학습 원자다 (docs/dev/reference/COMBO_STUDY_STRATEGY.md §2-①③).
 //    sid(전역 안정 ID)로 오답 통계·SM-2 큐를 진술 단위로 누적하고,
 //    conceptId로 "신고 vs 등록" 같은 혼동쌍을 묶어 대조 학습에 쓴다.
 //  - single 옵션의 truth는 "발문의 정답 여부"(correct)와 무관한 명제 자체의 참/거짓.

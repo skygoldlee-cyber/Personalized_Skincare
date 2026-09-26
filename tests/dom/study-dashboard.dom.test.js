@@ -1,5 +1,5 @@
 // tests/dom/study-dashboard.dom.test.js — 대시보드 통계·추천 시나리오
-// 설계: docs/dev/DOM_TEST_DESIGN.md §5.2 (Phase 3)
+// 설계: docs/dev/design/DOM_TEST_DESIGN.md §5.2 (Phase 3)
 // 검증: 진도 0건 렌더(E), 시딩 진도→통계 반영(H/P), 과목 카드·히트맵(H),
 //       약점 과목 추천(H — 최소 3문 응시 조건·헷갈림 카드最多)
 

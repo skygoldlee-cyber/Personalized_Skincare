@@ -1,5 +1,5 @@
 // tests/dom/study-pomodoro.dom.test.js — 뽀모도로 타이머 시나리오
-// 설계: docs/dev/DOM_TEST_DESIGN.md §5.2 (Phase 4)
+// 설계: docs/dev/design/DOM_TEST_DESIGN.md §5.2 (Phase 4)
 // 검증: 시작/일시정지/재개(H) · tick 경과→잔여시간 표시(H) · 25분 완주→휴식 전이+
 //       누적/세션 영속(P) · 리셋(H) · 날짜 경계 리셋(P/B)
 // vi.useFakeTimers — Date.now·setInterval을 가짜 시계로 제어

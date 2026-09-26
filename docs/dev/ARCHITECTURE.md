@@ -379,20 +379,25 @@ Personalized_Skincare/
 │   │   ├── report.js           #   빌드 통계
 │   │   ├── stamp-sw-version.js #   SW 캐시 버전 자동 스탬프
 │   │   ├── stamp-release-notes.js # APP_VERSION 스탬프 + 릴리스 노트 pending 확정/커밋 초안 (--draft)
+│   │   ├── supplements.js      #   문제은행 비율 기반 카드/퀴즈 목표 배분 + 보충 번들 (build:data 내 3.5단계)
+│   │   ├── build_doc_bundles.js    #   학습안내서/매뉴얼 폴백 번들
+│   │   ├── build_exam_bundles.js   #   문제은행 폴백 번들
+│   │   ├── build_study_md_bundle.js #  교재 폴백 번들 (과목별 분할)
+│   │   ├── build_exams_list.js     #   exams.json → data/exams.js 레지스트리 번들
+│   │   ├── build_all_data.js       #   전 시험 순회 빌드 오케스트레이터
+│   │   ├── build_question_chapters.js # 문항→챕터 매핑 번들
+│   │   ├── build_id_migration.js   #   진도 이관 맵 생성
+│   │   ├── build_ox_drills.js      #   O/X 드릴 생성기 (객관식 → 진위형 3,700+문)
+│   │   ├── build_combo_drills.js   #   복수정답형 변환기 (choice → 755문)
 │   │   └── plugins/
 │   │       ├── textbook.plugin.js
 │   │       ├── exams.plugin.js
 │   │       └── ingredients.plugin.js
-│   ├── build/supplements.js    #   문제은행 비율 기반 카드/퀴즈 목표 배분 + 보충 번들 (build:data 내 3.5단계)
-│   ├── build_doc_bundles.js    #   학습안내서/매뉴얼 폴백 번들
-│   ├── build_exam_bundles.js   #   문제은행 폴백 번들
-│   ├── build_study_md_bundle.js #  교재 폴백 번들 (과목별 분할)
-│   ├── build_ox_drills.js      #   O/X 드릴 생성기 (객관식 → 진위형 3,700+문)
-│   ├── build_combo_drills.js   #   복수정답형 변환기 (choice → 755문 + 과목N_복수정답형.md)
+│   ├── config/                 #   도구 설정 데이터 (citation_fingerprints·docs_paths_allowlist)
 │   ├── check_combo_pilot.js    #   복수정답형 파일럿 검증 (check:combo)
 │   ├── check_parser_parity.js  #   빌드 파서 ↔ 런타임 파서 등가성 검증
-│   ├── check-imports.js        #   ES 모듈 import/export 교차 검증
-│   ├── verify-shell-assets.js  #   프리캐시 파일 존재 CI 검증
+│   ├── check_imports.js        #   ES 모듈 import/export 교차 검증
+│   ├── verify_shell_assets.js  #   프리캐시 파일 존재 CI 검증
 │   ├── audit_card_quality.js  #   카드 품질 자동 감사 (npm run audit:cards)
 │   ├── sync_citation_lines.js  #   문제은행 인용 라인번호 동기화 (build:data에 통합)
 │   └── _archive/               #   일회성 마이그레이션·수동 수정 스크립트 보관
@@ -436,27 +441,37 @@ Personalized_Skincare/
 │
 └── docs/                       # 프로젝트 문서
     ├── README.md               #   문서 인덱스
+    ├── business/               #   사업 기획·시장 조사·마케팅 문서
     ├── dev/                    #   개발자 문서
     │   ├── ARCHITECTURE.md     #     아키텍처 설계서 (본 문서)
     │   ├── SPEC.md             #     요구사양 명세서
     │   ├── CHANGES.md          #     변경 이력
-    │   ├── TESTING.md          #     테스트 가이드
-    │   ├── DEPLOYMENT_GUIDE.md #     배포 가이드
-    │   ├── CONTENT_WORKFLOW.md #     콘텐츠 변경 시 작업 절차
-    │   ├── MULTI_MACHINE_SETUP.md
-    │   ├── FLASHCARD_LOGIC.md
-    │   ├── QUESTION_SCHEMA_DESIGN.md #  문항 스키마 + 복수정답형 변환 설계 (구 문제은행/문항 스키마 설계.md)
-    │   ├── COMBO_STUDY_STRATEGY.md  #     복수정답형 학습전략 — 진술 원자 단위 학습법 (구 문제은행/복수정답형 학습전략.md)
-    │   ├── MD_TO_HTML_LOGIC.md
-    │   ├── TEXTBOOK_AUTHORING_GUIDE.md
-    │   ├── AUDIO_HOSTING_GUIDE.md
-    │   ├── SUBSCRIPTION_ROADMAP.md
-    │   ├── LEARNING_PREMIUM_PLAN.md # Learning Pro 구현 과제 (우선순위·공수)
-    │   ├── FORMULA_OS_WORKFLOW_DESIGN.md # 배치·고객·장부 업무 플로우 설계
-    │   ├── SUPABASE_DESIGN.md #        Supabase 계정·동기화 설계안
-    │   ├── Supabase_Custom_SMTP_MagicLink_OTP_설정가이드.md # SMTP·매직링크 설정
-    │   ├── READER_FEEDBACK_DESIGN.md #  교재 리더 피드백 설계
-    │   └── STUDY_APP_DESIGN_GUIDE.md #  학습 앱 디자인 가이드
+    │   ├── runbooks/           #     실행 절차·운영 런북
+    │   │   ├── CONTENT_WORKFLOW.md        #  콘텐츠 변경 표준 절차
+    │   │   ├── TEXTBOOK_REPLACEMENT_RUNBOOK.md # 교재 교체 작업 순서도
+    │   │   ├── DEPLOYMENT_GUIDE.md        #  배포 가이드
+    │   │   ├── AUDIO_HOSTING_GUIDE.md     #  오디오 호스팅 구조
+    │   │   ├── TEXTBOOK_AUTHORING_GUIDE.md #  교재 작성 지침
+    │   │   ├── COMBO_GENERATION_GUIDE.md  #  복수정답형 드릴 생성 절차
+    │   │   ├── MULTI_MACHINE_SETUP.md     #  다중 머신 환경 재현
+    │   │   └── Supabase_Custom_SMTP_MagicLink_OTP_설정가이드.md # SMTP·매직링크 설정
+    │   ├── design/             #     설계·계획·평가 문서
+    │   │   ├── SUPABASE_DESIGN.md         #  Supabase 계정·동기화 설계안
+    │   │   ├── FORMULA_OS_WORKFLOW_DESIGN.md # 배치·고객·장부 업무 플로우 설계
+    │   │   ├── QUESTION_SCHEMA_DESIGN.md  #  문항 스키마 + 복수정답형 변환 설계
+    │   │   ├── DOM_TEST_DESIGN.md         #  jsdom 시나리오 테스트 설계
+    │   │   ├── READER_FEEDBACK_DESIGN.md  #  교재 리더 피드백 설계
+    │   │   ├── USER_FEEDBACK_DESIGN.md    #  사용자 피드백 수신 설계
+    │   │   ├── STUDY_APP_DESIGN_GUIDE.md  #  학습 앱 디자인 가이드
+    │   │   ├── LEARNING_PREMIUM_PLAN.md   #  Learning Pro 구현 과제
+    │   │   └── SUBSCRIPTION_ROADMAP.md    #  월 구독 전환 로드맵
+    │   └── reference/          #     명세·로직·참조 문서
+    │       ├── TESTING.md                 #  테스트 가이드
+    │       ├── NUMBERING_SYSTEM.md        #  교재 번호체계
+    │       ├── FLASHCARD_LOGIC.md         #  플래시카드·SM-2 로직
+    │       ├── MD_TO_HTML_LOGIC.md        #  MD→HTML 변환 로직
+    │       ├── COMBO_STUDY_STRATEGY.md    #  복수정답형 학습전략
+    │       └── TEXTBOOK_REFERENCE_MAPPING.md # 교재↔참조자료 매핑
     ├── report_archive/         #   분석 보고서·대체된 전략 문서 아카이브 (앱 미참조)
     │   #   — Cosmetic Master Business Plan·FEATURE_PROPOSALS·PASS_TO_PRACTICE_STRATEGY·
     │   #     PASS_CORE_LOOP_REVIEW·FORMULA_OS_DESIGN·PRO_MULTI_EXAM_EVALUATION·
@@ -515,10 +530,10 @@ Personalized_Skincare/
 | 파일 | 내용 | 생성 주체 |
 |------|------|-----------|
 | [`data/exams/cosmetic/registry.js`](../../data/exams/cosmetic/registry.js) | 시험/성분 번들 목록·메타 + 과목 목록/통계 + 추천 링크. **과목 `shortName`**, 시험 **`file`**, **`resources`** 필드 포함 → 소스 코드 하드코딩 제거 | `tools/build/index.js` |
-| [`content/**/*.md`](../../content/) + [`content/exams/cosmetic/manifest.json`](../../content/exams/cosmetic/manifest.json) | **교재/카드/퀴즈/시험/추천링크의 원본 (SSOT).** `manifest.json`에 과목 `shortName`, 시험 `file`, `resources`(추천 링크·채널 요약) 등 메타 포함 → 소스 코드 하드코딩 없이 전체 콘텐츠 교체 가능 | 저자 직접 작성 |
-| [`data/exams/cosmetic/study_md/`](../../data/exams/cosmetic/study_md/) | 교재 MD `file://` 폴백 번들 (**과목별 분할**: manifest.js + 과목별 `.js`). http에선 미사용. 과목 로드 시 해당 파일만 온디맨드 로드 | `tools/build_study_md_bundle.js` |
-| [`data/exams/<key>.<hash>.js`](../../data/exams/) | 시험별 문항 번들 | `tools/build/index.js` (exams plugin) |
-| [`data/exams/cosmetic/ingredients_data.<hash>.js`](../../data/) | 화장품 성분 사전 (가용/금지/제한) | `tools/build/index.js` (ingredients plugin) |
+| [`content/**/*.md`](../../content) + [`content/exams/cosmetic/manifest.json`](../../content/exams/cosmetic/manifest.json) | **교재/카드/퀴즈/시험/추천링크의 원본 (SSOT).** `manifest.json`에 과목 `shortName`, 시험 `file`, `resources`(추천 링크·채널 요약) 등 메타 포함 → 소스 코드 하드코딩 없이 전체 콘텐츠 교체 가능 | 저자 직접 작성 |
+| [`data/exams/cosmetic/study_md/`](../../data/exams/cosmetic/study_md) | 교재 MD `file://` 폴백 번들 (**과목별 분할**: manifest.js + 과목별 `.js`). http에선 미사용. 과목 로드 시 해당 파일만 온디맨드 로드 | `tools/build/build_study_md_bundle.js` |
+| [`data/exams/<key>.<hash>.js`](../../data/exams) | 시험별 문항 번들 | `tools/build/index.js` (exams plugin) |
+| [`data/exams/cosmetic/ingredients_data.<hash>.js`](../../data) | 화장품 성분 사전 (가용/금지/제한) | `tools/build/index.js` (ingredients plugin) |
 | `registry.js` → `ingredients` 메타 | 원료 DB `version`·`updatedAt`·`notice`·`history`(개정 이력 누적)·`contentHash`(내용 지문) — `content/…/원료/db_version.json`에서 병합. 사전 버전 배지·갱신 알림·Formula OS 검증 기준이 여기서 나옴 | `tools/build/index.js` |
 | `src/formula-store.js` · `src/formula-rules.js` · `src/formula-check.js` · `src/formula-stability.js` | Formula OS 도메인 레이어 — 포뮬러 CRUD/한도(5개)·고객·안정성 스키마·전성분 표시 순서, 추천 규칙(BASE_TEMPLATES·고민/피부 매핑·맞춤 규칙 병합), 고시 한도 검증 엔진, 제형 안정성 체크(상 비율·상호작용·투입 단계·pH) | 수동 관리 |
 | `src/batch-store.js` · `src/customer-store.js` · `src/material-ledger.js` · `src/usage-guide.js` · `src/store-utils.js` · `src/csv-utils.js` | Formula OS 업무 레이어 — 배치(조제 기록) 채번·QC·위생·스냅샷, 고객 카드·상담 이력, 원료 입고·기한·재고, 사용 안내문 생성기, 스토어 공통 헬퍼, CSV 파서·인코딩(EUC-KR 폴백)·직렬화 (FORMULA_OS_WORKFLOW_DESIGN.md) | 수동 관리 |
@@ -742,7 +757,7 @@ const state = {
 
 ### 빌드 순회
 - `tools/build/exam-targets.js` — `getExamTargets()`가 exams.json을 순회해 시험별 contentRoot/dataRoot/manifest 해석, `getSubjectMaps()`가 manifest에서 과목 매핑 파생(기존 `subject1~4` 하드코딩 테이블 대체)
-- `tools/build_all_data.js` — `build:data`가 모든 시험을 `EXAM_ID`로 순회 빌드. ox/combo 드릴, exam/study_md/doc 번들, audio_manifest, citations, parser parity, question_chapters(문항→단원 매핑) 모두 시험 순회형
+- `tools/build/build_all_data.js` — `build:data`가 모든 시험을 `EXAM_ID`로 순회 빌드. ox/combo 드릴, exam/study_md/doc 번들, audio_manifest, citations, parser parity, question_chapters(문항→단원 매핑) 모두 시험 순회형
 - 인덱스 번들: `{dataRoot}/drills/combo_index.js`(과목별 복수정답형 문항 수), `{dataRoot}/question_chapters.js`(문항id→단원 + 과목별 라인 경계) — 결과 화면 라벨/단원별 취약 분석용, `DataLoader.loadComboIndex`/`loadQuestionChapters`로 로드
 - **공유 모듈 예외**: `src/pdf-registry.js`, `keyword-index.js`는 단일 공유 출력이라 기본 시험 바인딩 유지 — 비기본 시험에 참조자료 기능이 필요하면 시험별 파일 분리가 후속 과제
 
@@ -755,7 +770,7 @@ const state = {
 
 ## 🔐 계정·클라우드 동기화 (Supabase, 선택적)
 
-> 설계안: [`SUPABASE_DESIGN.md`](SUPABASE_DESIGN.md) · SMTP/매직링크 설정: [`Supabase_Custom_SMTP_MagicLink_OTP_설정가이드.md`](Supabase_Custom_SMTP_MagicLink_OTP_설정가이드.md)
+> 설계안: [`SUPABASE_DESIGN.md`](design/SUPABASE_DESIGN.md) · SMTP/매직링크 설정: [`Supabase_Custom_SMTP_MagicLink_OTP_설정가이드.md`](runbooks/Supabase_Custom_SMTP_MagicLink_OTP_설정가이드.md)
 
 **원칙**: localStorage가 유일한 1차 저장소. Supabase는 "로그인한 사용자에게만" 붙는 선택적 레이어이며, 미설정/오프라인/비로그인 시 앱은 완전 정상 동작한다.
 
@@ -821,7 +836,7 @@ pullSync() (로그인 시 / "지금 동기화" 버튼)
 
 ## 🧪 Formula OS 도메인 아키텍처
 
-> 설계안: [`FORMULA_OS_DESIGN.md`](../report_archive/FORMULA_OS_DESIGN.md) (Phase 5-A, 아카이브) · 업무 플로우: [`FORMULA_OS_WORKFLOW_DESIGN.md`](FORMULA_OS_WORKFLOW_DESIGN.md) · 사용자 매뉴얼: `docs/user/formula_manual.md`
+> 설계안: [`FORMULA_OS_DESIGN.md`](../report_archive/FORMULA_OS_DESIGN.md) (Phase 5-A, 아카이브) · 업무 플로우: [`FORMULA_OS_WORKFLOW_DESIGN.md`](design/FORMULA_OS_WORKFLOW_DESIGN.md) · 사용자 매뉴얼: `docs/user/formula_manual.md`
 
 학습 앱 안에 내장된 실무 작업실. 9개 조제관리 업무 영역을 6개 패널로 묶어 `formula-view` 하나의 뷰 안에서 서브내비 칩으로 전환한다.
 
@@ -933,7 +948,7 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 |:---:|------|------|------|
 | 1 | 네비게이션 (`navigate`) | **Cache First** | HTML과 JS 모듈이 항상 동일한 `CACHE_VERSION` 캐시에서 서빙되도록 보장. `Network First`를 쓰면 구 SW가 신버전 HTML(네트워크) + 구버전 JS(캐시)를 섞어 반환하여 ESM import 그래프가 붕괴하는 **캐시 스큐** 발생 (v39 수정, 상세 후술) |
 | 2 | 시험/성분 데이터 번들 (`data/exams/<id>/exams/*.hash.js`, `data/exams/<id>/ingredients_data.*.js`) · 교재 원본 (`content/**/*.md`) | **Cache First** | 해시 파일명/정적 MD로 자연 갱신, 오프라인 학습 핵심. 교재 MD는 최초 fetch 시 캐시됨 |
-| 3 | 외부 CDN (Google Fonts) | **Stale-While-Revalidate** | 외부 리소스 안정성 확보. FontAwesome은 2026-08-24부터 자체 호스팅([`vendor/fontawesome/`](../../vendor/fontawesome/))으로 전환하여 CDN 의존 제거, App Shell 프리캐시에 포함 |
+| 3 | 외부 CDN (Google Fonts) | **Stale-While-Revalidate** | 외부 리소스 안정성 확보. FontAwesome은 2026-08-24부터 자체 호스팅([`vendor/fontawesome/`](../../vendor/fontawesome))으로 전환하여 CDN 의존 제거, App Shell 프리캐시에 포함 |
 | 4 | MP3 오디오 (302MB) | **네트워크 직행 (바이패스)** | 대용량 미디어는 캐시 제외 (저장공간 보호) |
 | 5 | `/src/` 하위 JS 모듈 | **Cache First** | ESM import 그래프는 한 모듈이라도 버전이 어긋나면 전체가 드랍됨. `Network First`를 쓰면 모바일 불안정 네트워크에서 일부는 신버전(네트워크), 일부는 구버전(캐시)이 섞여 import 그래프 붕괴. `Cache First` + `SHELL_ASSETS` 프리캐시로 동일 버전 파일만 일관 서빙 (v38부터 적용) |
 | 6 | CSS (`*.css`) | **Cache First** | 배포 전환 순간 "구버전 HTML(cacheFirst) + 신버전 CSS(networkFirst)" 혼합으로 화면 깨짐 방지. `/src/` JS와 동일 사유로 `cacheFirst` + `SHELL_ASSETS` 프리캐시로 세대 일관성 확보 (2026-08-26 수정) |
@@ -962,7 +977,7 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 **해결**:
 1. **navigation을 `Cache First`로 전환**: HTML과 JS가 항상 동일한 `CACHE_VERSION` 캐시에서 서빙 → 세대 내 불일치 원천 차단. 새 SW install + `skipWaiting()` + `controllerchange` 리로드 후 신버전 캐시로 일괄 전환.
 2. **`precacheResilient()` 도입**: `cache.addAll()`의 원자성(all-or-nothing)을 버리고 `Promise.allSettled()` + 개별 `cache.add()`로 변경. `addAll`은 하나라도 404면 전체 reject → `skipWaiting()` 미실행 → `cacheFirst` 환경에서 사용자가 구버전에 영영 갇힘. `allSettled`는 일부 실패해도 SW 활성화 보장, 실패분은 `cacheFirst`의 네트워크 폴백으로 온디맨드 자가 치유.
-3. **`verify-shell-assets.js` CI 검증**: 배포 전 `SHELL_ASSETS`/`DATA_ASSETS`의 모든 파일이 저장소에 존재하는지 확인. `precacheResilient`이 누락을 조용히 넘기므로 CI에서 사전 차단.
+3. **`verify_shell_assets.js` CI 검증**: 배포 전 `SHELL_ASSETS`/`DATA_ASSETS`의 모든 파일이 저장소에 존재하는지 확인. `precacheResilient`이 누락을 조용히 넘기므로 CI에서 사전 차단.
 
 **검증 결과** (모바일 Chrome 실기기):
 - `PL=1` (리로드 루프 없음), `CC=1` (SW 교체 1회, 자동 리로드 없음)
@@ -1174,13 +1189,13 @@ app-fallback.js 폴링 시작 (400ms 간격, 15s 데드라인)
 - **단계적 복구**: 가벼운 갱신 → 하드 리셋 → 수동 복구 순으로 부작용 최소화
 - **세션 스토리지 카운터**: `sessionStorage`로 리로드 횟수 추적 → 무한 루프 방지 (최대 3회)
 
-### 6. CI 검증 (verify-shell-assets.js)
+### 6. CI 검증 (verify_shell_assets.js)
 
 `precacheResilient`이 개별 실패를 조용히 넘기므로, CI에서 배포 전 사전 검증을 수행합니다:
 
 - `SHELL_ASSETS` / `DATA_ASSETS`에 나열된 모든 파일이 저장소에 존재하는지 확인
 - 누락 발견 시 `exit code 1`로 CI 실패 → 배포 차단
-- `npm run verify:assets` 또는 `node tools/verify-shell-assets.js`로 실행
+- `npm run verify:assets` 또는 `node tools/verify_shell_assets.js`로 실행
 
 ### 7. 문제은행 인용 링크 시스템 (exam-viewer.js)
 
@@ -1348,10 +1363,10 @@ content/exams/cosmetic/참조자료/원료/*.md ──► (ingredients plugin)  
 content/exams/cosmetic/참조자료/원료/db_version.json ──► (ingredients plugin) ──► registry.js의 ingredients 메타 (version·history·contentHash)
 
 content/**/*.md ───(런타임 fetch)──► src/data-loader.js + src/textbook-parser.js ──► STUDY_DATA (카드/퀴즈/챕터)
-content/**/*.md ───(file:// 폴백)──► tools/build_study_md_bundle.js ──► data/exams/cosmetic/study_md/ (과목별 분할)
+content/**/*.md ───(file:// 폴백)──► tools/build/build_study_md_bundle.js ──► data/exams/cosmetic/study_md/ (과목별 분할)
 
-data/exams/<id>/exams/*.js ──► tools/build_ox_drills.js    ──► data/exams/<id>/drills/ox_subject*.js   (O/X 3,700+문)
-data/exams/<id>/exams/*.js ──► tools/build_combo_drills.js ──► data/exams/<id>/drills/combo_subject*.js (복수정답형 755문)
+data/exams/<id>/exams/*.js ──► tools/build/build_ox_drills.js    ──► data/exams/<id>/drills/ox_subject*.js   (O/X 3,700+문)
+data/exams/<id>/exams/*.js ──► tools/build/build_combo_drills.js ──► data/exams/<id>/drills/combo_subject*.js (복수정답형 755문)
                 └──────────────────────────────► content/exams/cosmetic/문제은행/과목N_복수정답형.md (검토용 MD)
 ```
 
@@ -1372,7 +1387,7 @@ data/exams/subjectN.*.js ──► build_ox_drills.js    ──► data/exams/co
 ```
 
 - **스키마**: `single`/`combo`/`short`/`ox` 4유형. combo는 진술 `truth`에서 정답 조합을 **도출**(`deriveComboAnswer`)하고 `validateQuestion`으로 유일성을 검증 — 정답 오타를 구조적으로 차단.
-- **복수정답형 변환**(상세: [`QUESTION_SCHEMA_DESIGN.md`](./QUESTION_SCHEMA_DESIGN.md) §6): 객관식은 선지를 `fact`(명제 진위)/`answer`(정답 여부) 모드로 진술화, 같은 교재 구간(conceptId)의 fact 진술은 재조합해 복수정답 문항을 추가 생성. 단답형은 빈칸 정답이 하나뿐이라 100% 단일정답이 되므로 제외 — 원본 문제은행의 단답형으로 출제. 과목당 65/158/255/277 = 755문.
+- **복수정답형 변환**(상세: [`QUESTION_SCHEMA_DESIGN.md`](design/QUESTION_SCHEMA_DESIGN.md) §6): 객관식은 선지를 `fact`(명제 진위)/`answer`(정답 여부) 모드로 진술화, 같은 교재 구간(conceptId)의 fact 진술은 재조합해 복수정답 문항을 추가 생성. 단답형은 빈칸 정답이 하나뿐이라 100% 단일정답이 되므로 제외 — 원본 문제은행의 단답형으로 출제. 과목당 65/158/255/277 = 755문.
 - **진술 원자 추적**: 진술의 `sid`(`stableId`)를 O/X·복수정답형이 공유 → [`src/statement-tracker.js`](../../src/statement-tracker.js)가 `perStatement.judgedCorrect` 판정을 `sid` 단위로 `statement_stats` `{j, w, lw, t, truth, cid, last, streak}` + SM-2 큐(`spaced-repetition.js`)에 누적. **연속 정답 3회(`WEAK_GRADUATE_STREAK`) 시 취약 목록 졸업**, 재오판 시 복귀. 드릴 편성은 **SM-2 기한 도래(`getDueStatementSids`) → 오판 진술 → 임의** 순.
 - **드릴 모드**: 과목별(1~4) 외에 전 과목 특수 모드 `weak`(취약·복습 진술 필터)·`num`(수치·한도·기한 태그 필터 — `inferTags` 부여분) 지원, 출제 수 10/20/전체 선택. 복수정답형은 진술별 O/X 토글 2단계 응시 + 판정과 모순되는 선지 실시간 소거 표시(시험장 소거 전술 훈련).
 - **취약 진술 리뷰 패널**: 누적 통계 열람 — conceptId 개념 그룹핑(참/거짓 혼동쌍 2단 대조), 복습 대상 필터, 최근 판정 배지, 졸업 수 표시, 바로 드릴 진입.
@@ -1733,7 +1748,7 @@ npm.cmd run check:content -- --build
 
 # 개별 단계가 필요한 경우:
 npm.cmd run build:data             # 데이터 빌드 (모든 시험 순회 — registry, exams, ingredients, drills, 번들)
-node tools/build_doc_bundles.js    # 문서 번들 (학습안내서, 사용자/포뮬러 매뉴얼)
+node tools/build/build_doc_bundles.js    # 문서 번들 (학습안내서, 사용자/포뮬러 매뉴얼)
 npm.cmd test                       # 단위 테스트
 ```
 
@@ -1759,15 +1774,15 @@ npm.cmd run deploy
 
 | 파일 | 생성 스크립트 |
 |------|-------------|
-| `data/exams.js` | `tools/build_exams_list.js` |
+| `data/exams.js` | `tools/build/build_exams_list.js` |
 | `<droot>/registry.js` | `tools/build/index.js` |
 | `<droot>/exams/*.hash.js` | `tools/build/index.js` (exams.plugin.js) |
-| `<droot>/exams_md/*.js` | `tools/build_exam_bundles.js` |
-| `<droot>/study_md/*.js` | `tools/build_study_md_bundle.js` |
-| `data/docs_md/*.js` + `<droot>/docs_md/*.js` | `tools/build_doc_bundles.js` |
+| `<droot>/exams_md/*.js` | `tools/build/build_exam_bundles.js` |
+| `<droot>/study_md/*.js` | `tools/build/build_study_md_bundle.js` |
+| `data/docs_md/*.js` + `<droot>/docs_md/*.js` | `tools/build/build_doc_bundles.js` |
 | `<droot>/ingredients_data.*.js` | `tools/build/index.js` (ingredients.plugin.js) |
-| `<droot>/id_migration.js` | `tools/build_id_migration.js` |
-| `<droot>/question_chapters.js` | `tools/build_question_chapters.js` |
+| `<droot>/id_migration.js` | `tools/build/build_id_migration.js` |
+| `<droot>/question_chapters.js` | `tools/build/build_question_chapters.js` |
 | `src/pdf-registry.js` | `tools/build/build-pdf-registry.js` (references.json → 자동 생성) |
 | `src/keyword-index.js` | `tools/build/build_keyword_index.js` |
 
@@ -1787,8 +1802,8 @@ npm.cmd run deploy
 | `tools/build/plugins/textbook.plugin.js` | `subject.dir` 동적 참조 | 빌드 시 MD 파싱 |
 | `tools/build/plugins/ingredients.plugin.js` | `INGREDIENTS_DIR` 하드코딩 | `<root>/참조자료/원료/` |
 | `tools/build/plugins/exams.plugin.js` | `manifest.exams` 참조 | 문제은행 MD 처리 |
-| `tools/build_doc_bundles.js` | `DOC_FILES` 배열 | 학습안내서, 사용자/포뮬러 매뉴얼 번들 |
-| `tools/build_study_md_bundle.js` | `manifest.subjects[].dir` 동적 참조 | 교재 MD 폴백 번들 |
+| `tools/build/build_doc_bundles.js` | `DOC_FILES` 배열 | 학습안내서, 사용자/포뮬러 매뉴얼 번들 |
+| `tools/build/build_study_md_bundle.js` | `manifest.subjects[].dir` 동적 참조 | 교재 MD 폴백 번들 |
 | `tools/check_parser_parity.js` | `manifest.subjects[].dir` 동적 참조 | 파서 정합성 검증 |
 | `tools/deploy.js` | `npm run deploy` | 배포 가드 (clean tree + origin 동기화 + 콤보 게이트 + SW 스탬프) |
 | `ref-pipeline/batch_convert.py` | `load_target_groups()` — manifest `subjects[].dir` 기준 glob | 배치 HTML 변환 대상 (과목 추가 시 자동) |
@@ -1908,14 +1923,14 @@ npm.cmd run deploy
 ## 📚 관련 문서
 
 - [`README.md`](../../README.md) — 프로젝트 소개 및 시작 가이드 (폴더 구조 포함)
-- [`DEPLOYMENT_GUIDE.md`](DEPLOYMENT_GUIDE.md) — Vercel 배포 및 오디오 호스팅 가이드
-- [`AUDIO_HOSTING_GUIDE.md`](AUDIO_HOSTING_GUIDE.md) — 오디오북 호스팅 및 청취 가이드
-- [`MULTI_MACHINE_SETUP.md`](MULTI_MACHINE_SETUP.md) — 다중 머신 개발 환경 설정
+- [`DEPLOYMENT_GUIDE.md`](runbooks/DEPLOYMENT_GUIDE.md) — Vercel 배포 및 오디오 호스팅 가이드
+- [`AUDIO_HOSTING_GUIDE.md`](runbooks/AUDIO_HOSTING_GUIDE.md) — 오디오북 호스팅 및 청취 가이드
+- [`MULTI_MACHINE_SETUP.md`](runbooks/MULTI_MACHINE_SETUP.md) — 다중 머신 개발 환경 설정
 - [`CHANGES.md`](CHANGES.md) — 코드 리뷰 및 아키텍처 개편 수정 이력 (Changelog)
-- [`MD_TO_HTML_LOGIC.md`](MD_TO_HTML_LOGIC.md) — MD→HTML 변환·표시 로직 기술 문서
-- [`TESTING.md`](TESTING.md) — 테스트 가이드·정책 (unit + DOM)
-- [`DOM_TEST_DESIGN.md`](DOM_TEST_DESIGN.md) — jsdom UI 시나리오 테스트 설계 (helpers·모킹 전략·Playwright 확장 경로)
+- [`MD_TO_HTML_LOGIC.md`](reference/MD_TO_HTML_LOGIC.md) — MD→HTML 변환·표시 로직 기술 문서
+- [`TESTING.md`](reference/TESTING.md) — 테스트 가이드·정책 (unit + DOM)
+- [`DOM_TEST_DESIGN.md`](design/DOM_TEST_DESIGN.md) — jsdom UI 시나리오 테스트 설계 (helpers·모킹 전략·Playwright 확장 경로)
 - [`SPEC.md`](SPEC.md) — 요구사양 명세서 (기능 ID별 구현 상태, UI/UX 재사용 가이드 §4.8)
-- [`FORMULA_OS_WORKFLOW_DESIGN.md`](FORMULA_OS_WORKFLOW_DESIGN.md) — 배치·고객·원료 장부 업무 플로우 설계 (Phase 5-A 기본 설계는 `docs/report_archive/FORMULA_OS_DESIGN.md`)
-- [`SUPABASE_DESIGN.md`](SUPABASE_DESIGN.md) — Supabase 계정·클라우드 동기화 설계안 (Phase 1~2 구현 완료 — §10)
-- [`Supabase_Custom_SMTP_MagicLink_OTP_설정가이드.md`](Supabase_Custom_SMTP_MagicLink_OTP_설정가이드.md) — SMTP·매직링크·OTP 설정 가이드
+- [`FORMULA_OS_WORKFLOW_DESIGN.md`](design/FORMULA_OS_WORKFLOW_DESIGN.md) — 배치·고객·원료 장부 업무 플로우 설계 (Phase 5-A 기본 설계는 `docs/report_archive/FORMULA_OS_DESIGN.md`)
+- [`SUPABASE_DESIGN.md`](design/SUPABASE_DESIGN.md) — Supabase 계정·클라우드 동기화 설계안 (Phase 1~2 구현 완료 — §10)
+- [`Supabase_Custom_SMTP_MagicLink_OTP_설정가이드.md`](runbooks/Supabase_Custom_SMTP_MagicLink_OTP_설정가이드.md) — SMTP·매직링크·OTP 설정 가이드

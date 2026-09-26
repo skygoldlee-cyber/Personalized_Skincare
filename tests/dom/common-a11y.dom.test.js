@@ -1,5 +1,5 @@
 // tests/dom/common-a11y.dom.test.js — 접근성(a11y) 공통 시나리오
-// 설계: docs/dev/DOM_TEST_DESIGN.md §5.3 (Phase 5)
+// 설계: docs/dev/design/DOM_TEST_DESIGN.md §5.3 (Phase 5)
 // 검증: 토스트 role=status/aria-live(H) · confirm 모달 포커스 트랩·Escape(X)
 //       · trapFocus Tab 순환(H) · 아이콘 버튼 aria-label 전수(H)
 // 주의: 이 파일은 ui-utils.js를 모킹하지 않고 실 구현을 검증한다.

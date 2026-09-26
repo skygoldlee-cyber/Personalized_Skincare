@@ -14,9 +14,9 @@
 // [file:// 지원] 브라우저는 file:// 에서 fetch()를 차단합니다(=Failed to fetch).
 //   그래서 로드 소스를 프로토콜에 따라 고릅니다.
 //     - http(s) : 라이브 fetch 우선 → 실패 시 번들 폴백 (재빌드 없이 항상 최신 .md)
-//     - file:// : tools/build_exam_bundles.js 가 구운 data/exams_md/<stem>.js 번들 사용
+//     - file:// : tools/build/build_exam_bundles.js 가 구운 data/exams_md/<stem>.js 번들 사용
 //                 (클래식 <script> 는 file:// 에서도 로드되므로 동작)
-//   번들이 없으면 `node tools/build_exam_bundles.js` 를 실행하라는 안내를 띄웁니다.
+//   번들이 없으면 `node tools/build/build_exam_bundles.js` 를 실행하라는 안내를 띄웁니다.
 
 import { escapeHTML } from './sanitize.js';
 import { parseMarkdown } from './markdown-parser.js';
@@ -409,12 +409,12 @@ body.exam-open{overflow:hidden;}
         try {
             await _injectScript(_bundlePathFor(mdPath));
         } catch (e) {
-            throw new Error('문제집 번들을 찾을 수 없습니다. 터미널에서 `node tools/build_exam_bundles.js` 를 실행해 번들을 생성하세요.');
+            throw new Error('문제집 번들을 찾을 수 없습니다. 터미널에서 `node tools/build/build_exam_bundles.js` 를 실행해 번들을 생성하세요.');
         }
         if (window.__EXAM_MD__ && typeof window.__EXAM_MD__[mdPath] === 'string') {
             return window.__EXAM_MD__[mdPath];
         }
-        throw new Error('문제집 번들에 해당 문항이 없습니다. `node tools/build_exam_bundles.js` 로 다시 빌드하세요.');
+        throw new Error('문제집 번들에 해당 문항이 없습니다. `node tools/build/build_exam_bundles.js` 로 다시 빌드하세요.');
     }
 
     // http(s) 라이브 fetch

@@ -1,5 +1,5 @@
 // tests/dom/study-examselect.dom.test.js — 시험 선택 뷰 시나리오
-// 설계: docs/dev/DOM_TEST_DESIGN.md §5.2 (Phase 5)
+// 설계: docs/dev/design/DOM_TEST_DESIGN.md §5.2 (Phase 5)
 // 검증: EXAMS_LIST→카드 렌더·현재 시험 표시(H) · 다른 시험 선택→저장·리로드(P)
 //       · 같은 시험 선택→대시보드 복귀(H) · 목록 비어있음(E)
 

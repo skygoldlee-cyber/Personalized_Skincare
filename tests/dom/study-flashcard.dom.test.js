@@ -1,5 +1,5 @@
 // tests/dom/study-flashcard.dom.test.js — 플래시카드 시나리오
-// 설계: docs/dev/DOM_TEST_DESIGN.md §5.2 (Phase 3)
+// 설계: docs/dev/design/DOM_TEST_DESIGN.md §5.2 (Phase 3)
 // 검증: 카드 로드·렌더(H), 빈 과목(E), 뒤집기(H), 이전/다음 이동·순환(H),
 //       외움/헷갈림 표시→localStorage 영속(P), 기출/난이도 필터(B)
 

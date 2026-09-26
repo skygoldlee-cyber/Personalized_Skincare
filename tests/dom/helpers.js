@@ -1,5 +1,5 @@
 // tests/dom/helpers.js — DOM 시나리오 테스트 공통 픽스처·유틸
-// 설계: docs/dev/DOM_TEST_DESIGN.md
+// 설계: docs/dev/design/DOM_TEST_DESIGN.md
 //
 // 원칙: index.html의 실제 마크업을 jsdom에 주입해 컨트롤러 export 함수를
 // 직접 호출한다. data-click 위임 자체는 delegation-guard 유닛 테스트가

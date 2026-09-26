@@ -78,3 +78,5 @@ docs/**/*.html
 .env*
 # 스테이징: PDF→MD 재변환 검수 산출물 (로컬 전용)
 content/**/참조자료/ref_md_v2/
+# 생성 리포트: check_laws.py 등 파이프라인 산출물 (재생성 가능, 로컬 전용)
+content/**/report/

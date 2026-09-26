@@ -1,4 +1,4 @@
--- Passmula Supabase 스키마 — docs/dev/SUPABASE_DESIGN.md §3
+-- Passmula Supabase 스키마 — docs/dev/design/SUPABASE_DESIGN.md §3
 -- 실행 방법: Supabase 대시보드 → SQL Editor → New query → 이 파일 전체 붙여넣기 → Run
 -- 재실행 안전 (IF NOT EXISTS / OR REPLACE 사용)
 

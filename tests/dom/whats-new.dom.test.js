@@ -1,5 +1,5 @@
 // tests/dom/whats-new.dom.test.js — 새 버전 알림 모달 시나리오
-// 설계: docs/dev/DOM_TEST_DESIGN.md — 함수 호출 → DOM 반영 검증
+// 설계: docs/dev/design/DOM_TEST_DESIGN.md — 함수 호출 → DOM 반영 검증
 
 import { describe, it, beforeEach, expect } from 'vitest';
 import { maybeShowWhatsNew, showReleaseNotesModal } from '../../src/whats-new.js';

@@ -1,5 +1,5 @@
 // tests/dom/formula-print.dom.test.js — Formula OS 인쇄 산출물 시나리오
-// 설계: docs/dev/DOM_TEST_DESIGN.md §5.1 (Phase 2c)
+// 설계: docs/dev/design/DOM_TEST_DESIGN.md §5.1 (Phase 2c)
 // 검증: formulaPrint 빈 드래프트 거부·기록지 렌더, 배치 기록지 QC·위생·스냅샷,
 //       라벨 전성분·폴백, 안내문 제형 템플릿·원료 주의, afterprint 정리,
 //       미존재 배치 에러

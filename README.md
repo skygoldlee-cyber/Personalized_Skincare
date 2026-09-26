@@ -63,7 +63,7 @@
 - ES Modules (ESM) — `import`/`export` 기반 명시적 의존성 그래프
 - SPA 라우팅 (자체 구현)
 - SVG 기반 차트 (레이더/꺾은선, 외부 라이브러리 없음)
-- Noto Sans KR · Outfit (Google Fonts), FontAwesome 아이콘 (자체 호스팅 — [`vendor/fontawesome/`](vendor/fontawesome/), CDN 의존 없음)
+- Noto Sans KR · Outfit (Google Fonts), FontAwesome 아이콘 (자체 호스팅 — [`vendor/fontawesome/`](vendor/fontawesome), CDN 의존 없음)
 - **라이트/다크 듀얼 테마 UI**: CSS 변수 기반 디자인 토큰, 시스템 테마 연동, `localStorage` 선택 영속화
 - **반응형 모바일 레이아웃**: 하단 탭 바 네비게이션, safe-area-inset 대응, 100dvh 동적 뷰포트
 
@@ -75,8 +75,8 @@
 **데이터 파이프라인** (빌드 타임)
 - Node.js 모듈러 빌드 파이프라인으로 MD 교재/문제 → 해시드 JS 번들 생성
   - `tools/build/index.js` → `data/exams/<id>/registry.js` + `data/exams/<id>/exams/*.hash.js` + `data/exams/<id>/ingredients_data.*.js` (시험별 루트, `exams.json`의 모든 시험 순회)
-  - `tools/build_exam_bundles.js` → `data/exams/cosmetic/exams_md/*.js` (문제은행 MD file:// 폴리백 번들)
-  - `tools/build_study_md_bundle.js` → `data/exams/cosmetic/study_md/` (교재 MD file:// 폴백, 과목별 분할)
+  - `tools/build/build_exam_bundles.js` → `data/exams/cosmetic/exams_md/*.js` (문제은행 MD file:// 폴리백 번들)
+  - `tools/build/build_study_md_bundle.js` → `data/exams/cosmetic/study_md/` (교재 MD file:// 폴백, 과목별 분할)
   - 런타임: `src/data-loader.js`가 registry를 보고 필요한 과목/시험만 온디맨드 로드
 
 **오디오북 파이프라인** (`content/exams/cosmetic/audiobook/`)
@@ -236,7 +236,7 @@ npm.cmd run deploy
 
 > `npm run deploy`가 배포 가드(main 브랜치·clean tree·origin 동기화 검사) → 콤보 품질 게이트 → `CACHE_VERSION` 자동 스탬프 → `vercel --prod`를 순서대로 수행합니다. `vercel --prod` 직접 실행은 금지 (미푸시 커밋이 프로덕션에 올라갈 수 있음).
 
-배포 최적화 및 오디오 호스팅 상세는 [`docs/dev/DEPLOYMENT_GUIDE.md`](docs/dev/DEPLOYMENT_GUIDE.md)를 참고하세요.
+배포 최적화 및 오디오 호스팅 상세는 [`docs/dev/runbooks/DEPLOYMENT_GUIDE.md`](docs/dev/runbooks/DEPLOYMENT_GUIDE.md)를 참고하세요.
 
 ### 모바일 접속
 

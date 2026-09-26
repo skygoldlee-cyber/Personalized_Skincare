@@ -693,7 +693,7 @@
 
 ## 2026-09-23 DOM 시나리오 테스트 Phase 1~5 완료 (커밋 b040b9a~106d769)
 
-`docs/dev/DOM_TEST_DESIGN.md` 매트릭스 기반으로 Vitest+jsdom DOM 테스트를
+`docs/dev/design/DOM_TEST_DESIGN.md` 매트릭스 기반으로 Vitest+jsdom DOM 테스트를
 전 뷰로 확장 — 48개 → **204개** (27파일).
 
 - **Phase 1** 실무 코어(27): 내비·고객 CRUD·원료 장부·법규 체크리스트
@@ -1151,7 +1151,7 @@ check_combo_pilot 전 과목 무결성.
 
 ## 2026-09-19 복수정답형 학습 체계 구축 — 스키마·변환기·드릴 UI·약점 추적
 
-> **목표**: `docs/dev/QUESTION_SCHEMA_DESIGN.md` + `docs/dev/COMBO_STUDY_STRATEGY.md`를 실제 앱 파이프라인에 구현 — 진술(sid) 원자 단위로 O/X·복수정답형·약점 추적을 통합
+> **목표**: `docs/dev/design/QUESTION_SCHEMA_DESIGN.md` + `docs/dev/reference/COMBO_STUDY_STRATEGY.md`를 실제 앱 파이프라인에 구현 — 진술(sid) 원자 단위로 O/X·복수정답형·약점 추적을 통합
 
 ### 문항 스키마 기반 (`src/questions.js`, e528f81)
 
@@ -1414,7 +1414,7 @@ check_combo_pilot 전 과목 무결성.
 
 ### 관련 문서 갱신
 
-- `docs/dev/TEXTBOOK_AUTHORING_GUIDE.md`: "한 줄 핵심" → "한 줄 요약" 형식 갱신, 두음법 섹션 추가
+- `docs/dev/runbooks/TEXTBOOK_AUTHORING_GUIDE.md`: "한 줄 핵심" → "한 줄 요약" 형식 갱신, 두음법 섹션 추가
 
 ### 검증
 
@@ -1722,7 +1722,7 @@ check_combo_pilot 전 과목 무결성.
 - **SW**: v337-20260912-content-flexibility
 
 ### docs — content 변경 작업 절차 가이드 (f287309)
-- `docs/dev/CONTENT_WORKFLOW.md` 신규 작성: 변경 유형별 매트릭스, 빌드 파이프라인 순서도(Mermaid), 검증 플로우차트, 배포 워크플로우
+- `docs/dev/runbooks/CONTENT_WORKFLOW.md` 신규 작성: 변경 유형별 매트릭스, 빌드 파이프라인 순서도(Mermaid), 검증 플로우차트, 배포 워크플로우
 - AGENTS.md 관련 문서 섹션에 CONTENT_WORKFLOW.md 추가
 
 ### docs — 사용자 매뉴얼 갱신
@@ -2085,7 +2085,7 @@ check_combo_pilot 전 과목 무결성.
 - 본문 내용 표(안전장비·중금속 등)의 "해당 없음"은 유지
 
 ### 관련 문서 갱신
-- `docs/dev/TEXTBOOK_AUTHORING_GUIDE.md` 3.7.2절 신설: 매핑 표 형식 규칙 문서화
+- `docs/dev/runbooks/TEXTBOOK_AUTHORING_GUIDE.md` 3.7.2절 신설: 매핑 표 형식 규칙 문서화
   - 3단 표 통일, 배치 순서, "해당 없음" 금지, 소분류 `·` 병합 규칙
 
 ### 검증
@@ -2221,7 +2221,7 @@ check_combo_pilot 전 과목 무결성.
 2. `vercel.json`의 CSP는 인라인 스크립트/핸들러 때문에 `script-src 'unsafe-inline'`을 포함합니다.
    장기적으로 인라인 제거 후 nonce/hash 기반으로 강화 가능.
 3. ~~FontAwesome SRI는 `cdnjs.com/libraries/font-awesome/6.4.0`의 "Copy SRI" 값으로 채워 넣으세요.~~
-   → **(2026-08-24 폐기)** FontAwesome을 자체 호스팅([`vendor/fontawesome/`](../../vendor/fontawesome/))으로 전환하여 CDN/SRI가 더 이상 필요하지 않습니다. 모바일 아이콘 깨짐(네모) 문제 해결 목적. CSP의 `font-src`/`style-src`에서 cdnjs도 제거되었습니다.
+   → **(2026-08-24 폐기)** FontAwesome을 자체 호스팅([`vendor/fontawesome/`](../../vendor/fontawesome))으로 전환하여 CDN/SRI가 더 이상 필요하지 않습니다. 모바일 아이콘 깨짐(네모) 문제 해결 목적. CSP의 `font-src`/`style-src`에서 cdnjs도 제거되었습니다.
 
 ---
 
@@ -2259,7 +2259,7 @@ check_combo_pilot 전 과목 무결성.
   - [`src/exam-viewer.js`](../../src/exam-viewer.js) 신규: `exams/*.md`를 런타임 fetch → 자체 MD→HTML 변환(`_mdToHtml`) → `#exam-overlay` 오버레이 렌더링. 팝업/별도 HTML 문서 불필요.
   - 목차(TOC) 자동 생성, 인쇄/PDF 버튼, `Esc`·모바일 뒤로가기(`history.pushState`) 닫기.
   - sessionStorage 캐시(`exam_md_cache_v2_`, 24h TTL) — 재염 시 네트워크 0회.
-- **file:// 지원 번들**: [`tools/build_exam_bundles.js`](../../tools/build_exam_bundles.js)가 `exams/*.md` → `data/exams_md/<stem>.js`(전역 `window.__EXAM_MD__`) 생성. `file://`의 fetch 차단을 클래식 `<script>` 주입으로 우회. http(s)는 live fetch 우선 + 번들 폴리백.
+- **file:// 지원 번들**: [`tools/build_exam_bundles.js`](../../tools/build/build_exam_bundles.js)가 `exams/*.md` → `data/exams_md/<stem>.js`(전역 `window.__EXAM_MD__`) 생성. `file://`의 fetch 차단을 클래식 `<script>` 주입으로 우회. http(s)는 live fetch 우선 + 번들 폴리백.
 - **삭제**: `exams/*.html` 9종, `exams/exam-style.css` (오버레이가 스타일 자체 주입). `.vercelignore`의 `!exams/*.html` 예외 규칙 폐기.
 - **변환기 수정**: 코드펜스 보호(`FENCE_TOKEN`), 이탤릭 정규식이 목록 마커(`* `)를 오식하던 버그, blockquote의 `>` 엔티티 판별.
 - **SW**: `CACHE_VERSION` v13 → **v15-20260824**. `.md` Cache First + `/data/` Cache First(번들 포함).
@@ -2280,7 +2280,7 @@ check_combo_pilot 전 과목 무결성.
   - 모든 인라인 스크립트가 배제됨에 따라 [`vercel.json`](vercel.json) 헤더 설정의 Content Security Policy에서 `script-src` 정책의 `'unsafe-inline'` 지시어를 영구 제거하고 **`script-src 'self'`** 로 하드닝을 완료했습니다.
 - **구글 웹폰트 로컬 자체 호스팅**:
   - 오프라인 환경 기동성 제고를 위해 Google Fonts CDN 의존성을 제거하고 `Noto Sans KR` 및 `Outfit` 서체를 로컬화했습니다.
-  - google-webfonts-helper API를 통해 Noto Sans KR(5개 가중치) 및 Outfit(4개 가중치)의 경량화된 `.woff2` 단일 폰트 파일들을 다운로드하여 [`vendor/fonts/`](vendor/fonts/) 에 배치하고, `@font-face`를 정의한 [`vendor/fonts/fonts.css`](vendor/fonts/fonts.css)를 연동했습니다.
+  - google-webfonts-helper API를 통해 Noto Sans KR(5개 가중치) 및 Outfit(4개 가중치)의 경량화된 `.woff2` 단일 폰트 파일들을 다운로드하여 [`vendor/fonts/`](vendor/fonts) 에 배치하고, `@font-face`를 정의한 [`vendor/fonts/fonts.css`](vendor/fonts/fonts.css)를 연동했습니다.
   - `vercel.json` CSP 설정의 `font-src` 및 `style-src` 에서 외부 구글 폰트 도메인들(`fonts.googleapis.com`, `fonts.gstatic.com`)을 완전히 걷어냈습니다.
 - **서비스 워커 캐싱 전략 보강**:
   - [`sw.js`](sw.js)의 `SHELL_ASSETS` 프리캐시 목록에 신설된 `src/theme-init.js` 및 `vendor/fonts/*` 자산들을 모두 추가하였습니다.
@@ -3352,7 +3352,7 @@ PWA에서 새 Service Worker가 감지되어 백그라운드에서 새 데이터
    - `document.body` 미준비 시 `DOMContentLoaded`까지 토스트 생성 지연
    - 페이지 로드 시 `reg.update()` 강제 호출로 브라우저 기본 긴 업데이트 주기 단축
 2. **`docs/dev/ARCHITECTURE.md`**: SW Lifecycle 섹션에 토스트 팝업 알림 흐름 문서화
-3. **`docs/dev/DEPLOYMENT_GUIDE.md`**: 배포 체크리스트에 SW 캐시 버전 갱신 단계 추가
+3. **`docs/dev/runbooks/DEPLOYMENT_GUIDE.md`**: 배포 체크리스트에 SW 캐시 버전 갱신 단계 추가
 
 ### 검증
 
@@ -3903,7 +3903,7 @@ PWA에서 교재 근거 인용 링크(`[교재: L####](<../교재/.../*.md#L####
 
 ### 변경 내용
 
-1. **`docs/dev/TEXTBOOK_AUTHORING_GUIDE.md`**:
+1. **`docs/dev/runbooks/TEXTBOOK_AUTHORING_GUIDE.md`**:
    - `## 📖 핵심 용어 정리` → `## 📌 용어 정리` 3곳 반영 (아스키아트 다이어그램, 헤더 표, 템플릿)
    - 카드 추출 제외 목록: `📖` (통합 정리)와 `📌` (용어 정리) 분리
    - 2-D 섹션에 `📌 용어 정리 섹션 규칙` 블록 추가 (챕터당 1개, 표준/이야기 동일 용어 세트, 영어 약어 full name 병기)

@@ -23,7 +23,7 @@ npm.cmd run test:all                   # 전체 테스트 (unit + parser + dom)
 
 # 빌드
 npm.cmd run build:data                 # content/exams/<id>/*.md → data/exams/<id>/ 번들 생성 (모든 시험 순회)
-node tools/build_doc_bundles.js        # docs/user/{user_manual,formula_manual}.md, content/exams/cosmetic/학습안내서.md → data/docs_md/ + {dataRoot}/docs_md/ 번들 (앱 내 문서 갱신 시 필수)
+node tools/build/build_doc_bundles.js        # docs/user/{user_manual,formula_manual}.md, content/exams/cosmetic/학습안내서.md → data/docs_md/ + {dataRoot}/docs_md/ 번들 (앱 내 문서 갱신 시 필수)
 npm.cmd run check:parser               # 빌드 파서 ↔ 런타임 파서 등가성 검증
 npm.cmd run check:imports              # src/ 내 ES 모듈 import/export 교차 검증
 npm.cmd run stamp:sw                   # sw.js CACHE_VERSION을 커밋 해시로 스탬프
@@ -220,9 +220,9 @@ docs/                   # 개발 문서
 
 ## 구조 변경 시 문서 갱신 규칙
 
-- 디렉터리/파일 이동·삭제·추가 시 경로를 참조하는 문서를 함께 갱신: `README.md`·`AGENTS.md` 디렉터리 트리, `docs/dev/ARCHITECTURE.md` 트리·변경 매트릭스, `docs/README.md` 인덱스, 관련 런북(`docs/dev/CONTENT_WORKFLOW.md`, `docs/dev/TEXTBOOK_REPLACEMENT_RUNBOOK.md`, `ref-pipeline/README.md`)
+- 디렉터리/파일 이동·삭제·추가 시 경로를 참조하는 문서를 함께 갱신: `README.md`·`AGENTS.md` 디렉터리 트리, `docs/dev/ARCHITECTURE.md` 트리·변경 매트릭스, `docs/README.md` 인덱스, 관련 런북(`docs/dev/runbooks/CONTENT_WORKFLOW.md`, `docs/dev/runbooks/TEXTBOOK_REPLACEMENT_RUNBOOK.md`, `ref-pipeline/README.md`)
 - 갱신 후 `npm.cmd run check:docs` 통과 필수 — 문서 내 스테일 경로 참조를 자동 탐지 (`check:content`에도 통합돼 자동 실행)
-- 계획/미구현 경로·이력 서술 등 의도적 참조는 `tools/docs_paths_allowlist.json`에 `reason`과 함께 등록
+- 계획/미구현 경로·이력 서술 등 의도적 참조는 `tools/config/docs_paths_allowlist.json`에 `reason`과 함께 등록
 
 ## 코드 스타일 및 규칙
 
@@ -282,22 +282,22 @@ docs/                   # 개발 문서
 - **Mermaid `!important`**: `css/reader.css`의 Mermaid 규칙 `!important`는 제거 금지 (Mermaid 라이브러리 인라인 스타일 덮어쓰기용)
 - **콘텐츠 편집 후**: `npm.cmd run build:data` 실행 후 `data/` 번들 커밋 필요
 - **CSP**: `vercel.json`에 `script-src 'self'` (인라인 스크립트 금지)
-- **DOM 테스트**: `tests/dom/` — Phase 1~5 전 뷰 커버 (매트릭스·작성 규칙은 `docs/dev/DOM_TEST_DESIGN.md`, 파일별 목록·정책은 `docs/dev/TESTING.md`)
+- **DOM 테스트**: `tests/dom/` — Phase 1~5 전 뷰 커버 (매트릭스·작성 규칙은 `docs/dev/design/DOM_TEST_DESIGN.md`, 파일별 목록·정책은 `docs/dev/reference/TESTING.md`)
 
 ## 관련 문서
 
 - `docs/dev/ARCHITECTURE.md` — 시스템 아키텍처 상세
-- `docs/dev/DEPLOYMENT_GUIDE.md` — 배포 가이드
-- `docs/dev/CONTENT_WORKFLOW.md` — content 변경 시 작업 절차 가이드
+- `docs/dev/runbooks/DEPLOYMENT_GUIDE.md` — 배포 가이드
+- `docs/dev/runbooks/CONTENT_WORKFLOW.md` — content 변경 시 작업 절차 가이드
 - `docs/dev/CHANGES.md` — 변경 이력
-- `docs/dev/TESTING.md` — 테스트 가이드
-- `docs/dev/DOM_TEST_DESIGN.md` — jsdom UI 시나리오 테스트 설계
-- `docs/dev/SUPABASE_DESIGN.md` — 계정·클라우드 동기화 설계안 (Phase 1~2 구현 완료, Pro entitlement는 미구현)
-- `docs/dev/TEXTBOOK_AUTHORING_GUIDE.md` — 교재 작성 가이드
-- `docs/dev/NUMBERING_SYSTEM.md` — 교재 번호체계 가이드 (십진법)
-- `docs/dev/QUESTION_SCHEMA_DESIGN.md` — 문항 스키마 + 복수정답형 변환 파이프라인 설계
-- `docs/dev/FORMULA_OS_WORKFLOW_DESIGN.md` — 조제관리사 9개 업무 전체 커버리지 확장 설계안 (고객·배치·원료장부·안내문)
-- `docs/dev/COMBO_GENERATION_GUIDE.md` — 복수정답형 문항 생성 절차·품질 게이트·수치 조정 가이드
-- `docs/dev/COMBO_STUDY_STRATEGY.md` — 복수정답형 학습 전략 (전략→기능 매핑 포함)
+- `docs/dev/reference/TESTING.md` — 테스트 가이드
+- `docs/dev/design/DOM_TEST_DESIGN.md` — jsdom UI 시나리오 테스트 설계
+- `docs/dev/design/SUPABASE_DESIGN.md` — 계정·클라우드 동기화 설계안 (Phase 1~2 구현 완료, Pro entitlement는 미구현)
+- `docs/dev/runbooks/TEXTBOOK_AUTHORING_GUIDE.md` — 교재 작성 가이드
+- `docs/dev/reference/NUMBERING_SYSTEM.md` — 교재 번호체계 가이드 (십진법)
+- `docs/dev/design/QUESTION_SCHEMA_DESIGN.md` — 문항 스키마 + 복수정답형 변환 파이프라인 설계
+- `docs/dev/design/FORMULA_OS_WORKFLOW_DESIGN.md` — 조제관리사 9개 업무 전체 커버리지 확장 설계안 (고객·배치·원료장부·안내문)
+- `docs/dev/runbooks/COMBO_GENERATION_GUIDE.md` — 복수정답형 문항 생성 절차·품질 게이트·수치 조정 가이드
+- `docs/dev/reference/COMBO_STUDY_STRATEGY.md` — 복수정답형 학습 전략 (전략→기능 매핑 포함)
 - `docs/user/user_manual.md` — 학습 매뉴얼 (시험 대비)
 - `docs/user/formula_manual.md` — 실무 매뉴얼 (Formula OS)

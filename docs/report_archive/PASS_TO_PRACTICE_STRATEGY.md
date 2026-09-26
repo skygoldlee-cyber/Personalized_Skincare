@@ -5,7 +5,7 @@
 > **작성일**: 2026-09-11
 > **개정일**: 2026-09-12 — 종합 리뷰 반영: Formula OS 핵심 격상, AI 배합 참고 한 단계 뒤로, verified 세분화, MVP 축소(Phase 5-A), 고객 개인정보 최소화, 법적 한도 ≠ 안전성 UI 분리, ingredient_practice 관계형 분리, 법령 알림 Actionable Alert 강화, Pass Pro vs Practice Pro 분리, Practice 타깃 확장, Knowledge Flywheel, 상위 브랜드 Cosmetic Master 적용
 > **목적**: 합격 후 이탈하는 일반 자격증 플랫폼과 달리, 맞춤형화장품조제관리사의 특성을 활용하여 **합격 후에도 계속 머무는 실무 플랫폼** 으로 확장하는 전략
-> **관련 문서**: [FEATURE_PROPOSALS.md](FEATURE_PROPOSALS.md), [SUBSCRIPTION_ROADMAP.md](SUBSCRIPTION_ROADMAP.md), [READER_FEEDBACK_DESIGN.md](READER_FEEDBACK_DESIGN.md)
+> **관련 문서**: [FEATURE_PROPOSALS.md](FEATURE_PROPOSALS.md), [SUBSCRIPTION_ROADMAP.md](../dev/design/SUBSCRIPTION_ROADMAP.md), [READER_FEEDBACK_DESIGN.md](../dev/design/READER_FEEDBACK_DESIGN.md)
 
 ---
 
@@ -1224,7 +1224,7 @@ flowchart LR
 
 - [FEATURE_PROPOSALS.md](FEATURE_PROPOSALS.md) — 추천 기능 제안 (Phase 1~4, 본 문서가 Phase 5에 해당)
 - [PASS_CORE_LOOP_REVIEW.md](PASS_CORE_LOOP_REVIEW.md) — 합격 핵심 루프 코드 반영도 리뷰
-- [SUBSCRIPTION_ROADMAP.md](SUBSCRIPTION_ROADMAP.md) — 구독 서비스 전환 로드맵 (본 전략이 2단계 LTV 모델로 확장)
-- [READER_FEEDBACK_DESIGN.md](READER_FEEDBACK_DESIGN.md) — 독자 피드백 공유 기능 설계 (Phase 3~4 커뮤니티 연동)
+- [SUBSCRIPTION_ROADMAP.md](../dev/design/SUBSCRIPTION_ROADMAP.md) — 구독 서비스 전환 로드맵 (본 전략이 2단계 LTV 모델로 확장)
+- [READER_FEEDBACK_DESIGN.md](../dev/design/READER_FEEDBACK_DESIGN.md) — 독자 피드백 공유 기능 설계 (Phase 3~4 커뮤니티 연동)
 - [SPEC.md](SPEC.md) — 기존 요구사양 명세서
 - [ARCHITECTURE.md](ARCHITECTURE.md) — 시스템 아키텍처

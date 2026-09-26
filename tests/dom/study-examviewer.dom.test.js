@@ -1,5 +1,5 @@
 // tests/dom/study-examviewer.dom.test.js — 문제집 뷰어 시나리오
-// 설계: docs/dev/DOM_TEST_DESIGN.md §5.2 (Phase 5)
+// 설계: docs/dev/design/DOM_TEST_DESIGN.md §5.2 (Phase 5)
 // 검증: 문제집 열기→오버레이·MD 렌더·TOC(H) · 인쇄 버튼→window.print(H)
 //       · 캐시(P) · 닫기(H) · 미존재 문서 오류(X)
 // __EXAM_MD__ 번들 스텁으로 주입

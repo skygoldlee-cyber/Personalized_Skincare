@@ -15,7 +15,7 @@
  *   - 마크다운 링크 [x](상대경로) — 문서 파일 기준 상대경로 해석
  *   - docs/report_archive/·docs/dev/CHANGES.md = 이력 영역이라 검사 제외
  *   - 플레이스홀더(<id>, {과목}, *, xxx, ... 등)는 구체 접두사까지만 검증
- *   - 의도된 미래 파일 등 예외는 tools/docs_paths_allowlist.json에 등록
+ *   - 의도된 미래 파일 등 예외는 tools/config/docs_paths_allowlist.json에 등록
  */
 const fs = require('fs');
 const path = require('path');
@@ -111,7 +111,7 @@ function exists(ref) {
 }
 
 // 의도적 참조(미래 파일·설명용 예시) 허용 목록
-const allowlistPath = path.join(ROOT, 'tools', 'docs_paths_allowlist.json');
+const allowlistPath = path.join(ROOT, 'tools', 'config', 'docs_paths_allowlist.json');
 const ALLOWLIST = fs.existsSync(allowlistPath)
   ? JSON.parse(fs.readFileSync(allowlistPath, 'utf8'))
   : [];
@@ -177,5 +177,5 @@ for (const [file, issues] of Object.entries(byFile)) {
   }
 }
 console.log(`\n${Object.keys(byFile).length}개 문서에서 ${allIssues.length}건 — 파일 이동/삭제 후 문서 갱신이 필요합니다.`);
-console.log(`의도된 참조라면 tools/docs_paths_allowlist.json에 등록하세요.`);
+console.log(`의도된 참조라면 tools/config/docs_paths_allowlist.json에 등록하세요.`);
 process.exit(1);

@@ -1,5 +1,5 @@
 // tests/dom/common-offline.dom.test.js — 오프라인 감지 시나리오
-// 설계: docs/dev/DOM_TEST_DESIGN.md §5.3 (Phase 5)
+// 설계: docs/dev/design/DOM_TEST_DESIGN.md §5.3 (Phase 5)
 // 검증: offline 이벤트→프로브 실패 누적→배너 표시(H/B) · online 복귀→배너 해제(H)
 //       · visibilitychange hidden → 뽀모도로 자동 일시정지(H)
 // 참고: 콜드스타트 유예(PWA_WAKE_GRACE_MS) 경과 후부터 실패가 누적됨 — fake timers

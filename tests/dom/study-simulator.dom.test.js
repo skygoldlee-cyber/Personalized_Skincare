@@ -1,5 +1,5 @@
 // tests/dom/study-simulator.dom.test.js — 실전 모의고사 시뮬레이터 시나리오
-// 설계: docs/dev/DOM_TEST_DESIGN.md §5.2 (Phase 4)
+// 설계: docs/dev/design/DOM_TEST_DESIGN.md §5.2 (Phase 4)
 // 검증: 세션 시작→아레나·OMR 렌더(H) · 답안 선택·문항 이동(H) · 제출→채점·
 //       오답 카드 등록(P) · 미응답 오답 처리(B) · 임시저장→배너→이어하기(R/P)
 //       · 제한시간 만료 자동 제출(B — fake timers)

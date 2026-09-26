@@ -1,5 +1,5 @@
 // tests/dom/common-theme.dom.test.js — 테마 토글 시나리오
-// 설계: docs/dev/DOM_TEST_DESIGN.md §5.3 (Phase 5)
+// 설계: docs/dev/design/DOM_TEST_DESIGN.md §5.3 (Phase 5)
 // 검증: 토글→light-theme 클래스·localStorage·아이콘·theme-color(H/P)
 //       · 모바일 버튼 동기화(H) · 시스템 테마 변경 추종(B)
 

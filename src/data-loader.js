@@ -153,7 +153,7 @@ export const DataLoader = {
         }
         this._fallbackManifestInjected = true;
         if (!window.__STUDY_MD_MANIFEST__) {
-            throw new Error('폴백 manifest를 찾을 수 없습니다. `node tools/build_study_md_bundle.js` 로 data/exams/<id>/study_md/ 를 생성하세요.');
+            throw new Error('폴백 manifest를 찾을 수 없습니다. `node tools/build/build_study_md_bundle.js` 로 data/exams/<id>/study_md/ 를 생성하세요.');
         }
         return window.__STUDY_MD_MANIFEST__;
     },

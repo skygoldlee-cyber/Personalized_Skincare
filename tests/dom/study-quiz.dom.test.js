@@ -1,5 +1,5 @@
 // tests/dom/study-quiz.dom.test.js — 기출 퀴즈·오답 복습 시나리오
-// 설계: docs/dev/DOM_TEST_DESIGN.md §5.2 (Phase 3)
+// 설계: docs/dev/design/DOM_TEST_DESIGN.md §5.2 (Phase 3)
 // 검증: 출제→렌더(H), 빈 과목(E), 단답/객관식/OX 채점(H), 완주→결과(H),
 //       오답 영속(P), 재시작 초기화(R), 복습 목록·약점 퀴즈(H/P)
 

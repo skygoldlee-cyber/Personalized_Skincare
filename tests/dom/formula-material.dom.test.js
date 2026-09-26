@@ -1,5 +1,5 @@
 // tests/dom/formula-material.dom.test.js — 원료 장부 CRUD·기한 배지 + CSV 시나리오
-// 설계: docs/dev/DOM_TEST_DESIGN.md §4
+// 설계: docs/dev/design/DOM_TEST_DESIGN.md §4
 // 검증: 빈 상태→등록→목록, 기한 4상태 배지·경고 배너, CSV 가져오기(이름+LOT 중복)
 
 import { describe, it, beforeEach, expect, vi } from 'vitest';

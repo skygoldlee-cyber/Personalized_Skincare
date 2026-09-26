@@ -1,5 +1,5 @@
 // tests/dom/study-reader.dom.test.js — 교재 리더 시나리오
-// 설계: docs/dev/DOM_TEST_DESIGN.md §5.2 (Phase 4)
+// 설계: docs/dev/design/DOM_TEST_DESIGN.md §5.2 (Phase 4)
 // 검증: 과목 목록 로드(H) · 과목 선택→본문·TOC 렌더(H) · 읽기 위치 저장·복원(P/R)
 //       · 북마크 토글→영속(P) · 미선택 빈 상태(E)
 

@@ -1,5 +1,5 @@
 // tests/dom/common-auth.dom.test.js — Supabase 계정/로그인 모달 시나리오
-// 설계: docs/dev/SUPABASE_DESIGN.md §5·§9 — window.supabase 스텁으로 세션 상태를 제어
+// 설계: docs/dev/design/SUPABASE_DESIGN.md §5·§9 — window.supabase 스텁으로 세션 상태를 제어
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { loadIndexHtml, el, isVisible, lastToast, flushAsync } from './helpers.js';
 import { showConfirm } from '../../src/ui-utils.js';

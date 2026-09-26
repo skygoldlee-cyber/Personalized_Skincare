@@ -1,5 +1,5 @@
 // tests/dom/common-sync.dom.test.js — 클라우드 스냅샷 동기화 (Phase 2) 시나리오
-// 설계: docs/dev/SUPABASE_DESIGN.md §4·§9 — window.supabase 스텁으로 원격 상태를 제어
+// 설계: docs/dev/design/SUPABASE_DESIGN.md §4·§9 — window.supabase 스텁으로 원격 상태를 제어
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { loadIndexHtml, el, lastToast, flushAsync, storedJson } from './helpers.js';
 

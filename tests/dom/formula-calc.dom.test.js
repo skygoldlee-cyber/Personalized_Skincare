@@ -1,5 +1,5 @@
 // tests/dom/formula-calc.dom.test.js — 배합 계산기 + 포뮬러 목록 시나리오
-// 설계: docs/dev/DOM_TEST_DESIGN.md §5.1 (Phase 2a)
+// 설계: docs/dev/design/DOM_TEST_DESIGN.md §5.1 (Phase 2a)
 // 검증: 배합률→투입량 계산, 합계 100% 판정, 한도 초과/금지/미등록 배지,
 //       고객 카드 불러오기, 저장→목록 반영, 삭제 confirm, JSON보내기/가져오기,
 //       안정성 기록→카드 배지·전성분

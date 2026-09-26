@@ -1,5 +1,5 @@
 // tests/dom/common-htmlviewer.dom.test.js — 참조자료 HTML/MD 뷰어 오버레이 시나리오
-// 설계: docs/dev/DOM_TEST_DESIGN.md — src/html-viewer.js (window.HtmlViewer)
+// 설계: docs/dev/design/DOM_TEST_DESIGN.md — src/html-viewer.js (window.HtmlViewer)
 // 검증: MD 렌더·제목(H) · XSS 제거(X) · 검색 하이라이트·이동(H) · LRU 캐시(P)
 //       · fetch 실패 오류(X) · 닫기(H)
 // _overlayEl 모듈 상태 잔존 방지를 위해 매 테스트 모듈 리셋

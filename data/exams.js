@@ -1,5 +1,5 @@
 // 자동 생성된 시험 레지스트리 번들입니다. 수정하지 마십시오.
-// 원본: content/exams.json (생성: node tools/build_exams_list.js)
+// 원본: content/exams.json (생성: node tools/build/build_exams_list.js)
 var EXAMS_LIST = {
   "schemaVersion": 1,
   "note": "시험 레지스트리 — 새 시험은 이 파일에 엔트리를 추가하고 content/exams/<id>/ + data/exams/<id>/ 구조로 콘텐츠를 배치한다 (모든 시험이 대칭 구조). data/exams.js 는 tools/build_exams_list.js가 이 파일에서 생성한다.",

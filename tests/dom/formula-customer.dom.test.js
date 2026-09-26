@@ -1,5 +1,5 @@
 // tests/dom/formula-customer.dom.test.js — 고객 관리 CRUD + CSV 가져오기 시나리오
-// 설계: docs/dev/DOM_TEST_DESIGN.md §4
+// 설계: docs/dev/design/DOM_TEST_DESIGN.md §4
 // 검증: 빈 상태→등록→목록, CSV UTF-8/EUC-KR 디코딩, 중복 건너뜀, confirm 거부,
 //       헤더 불일치 오류,보내기·양식 다운로드 트리거
 
