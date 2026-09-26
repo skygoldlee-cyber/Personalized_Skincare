@@ -7,7 +7,7 @@ import { computeWrongCauseSummary, WRONG_CAUSE_LABELS } from '../recommendations
 import { examIdToSubjectId } from '../exam-context.js';
 import {
     WEAK_QUIZ_PREFIX, WEAK_SIM_PREFIX,
-    weakItemKey, resolveWrongQuiz, subjectForWeakItem, parseWeakSimId
+    weakItemKey, resolveWrongQuiz, resolveCard, subjectForWeakItem, parseWeakSimId
 } from '../weak-items.js';
 import { checkShortAnswer } from './trainer.js';
 import { updateGlobalStats, startSubjectReader } from './dashboard.js';
@@ -516,14 +516,13 @@ function _renderDiagnosticProfile(reviewListEl) {
 export function getWeakCardsList() {
     const list = [];
     
-    // 1. 일반 카드 복구
+    // 1. 일반 카드 복구 (인덱스 캐시 — weak-items.js)
     if (window.STUDY_DATA) {
-        Object.keys(window.STUDY_DATA).forEach(subjId => {
-            window.STUDY_DATA[subjId].cards.forEach(card => {
-                if (state.weakCards.has(card.id)) {
-                    list.push({ ...card, subjectId: subjId, subjectName: window.STUDY_DATA[subjId].name });
-                }
-            });
+        state.weakCards.forEach(cardId => {
+            const rc = resolveCard(cardId);
+            if (rc) {
+                list.push({ ...rc.card, subjectId: rc.subjectId, subjectName: window.STUDY_DATA[rc.subjectId].name });
+            }
         });
     }
     

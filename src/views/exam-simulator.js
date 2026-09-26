@@ -12,7 +12,7 @@ import { simState } from './exam-sim-state.js';
 import { chapterForQuestion, renderSimResultBreakdown } from './exam-sim-review.js';
 import { recordStatementJudgments } from '../statement-tracker.js';
 import { examIdToSubjectId } from '../exam-context.js';
-import { WEAK_SIM_PREFIX, parseWeakSimId } from '../weak-items.js';
+import { WEAK_SIM_PREFIX, parseWeakSimId, resolveCard, cardSubjectOf } from '../weak-items.js';
 
 // --- 5. 실전 모의고사 시뮬레이터 구현 ---
 export { simState };
@@ -793,11 +793,8 @@ function _startWeakExamImpl() {
                 const targetSub = examIdToSubjectId(simId.examId);
                 return targetSub === state.reviewFilter;
             } else {
-                for (const subjId of Object.keys(STUDY_DATA)) {
-                    if (STUDY_DATA[subjId].cards.some(c => c.id === cardId)) {
-                        return subjId === state.reviewFilter;
-                    }
-                }
+                const cardSubj = cardSubjectOf(cardId);
+                return cardSubj === state.reviewFilter;
             }
             return false;
         });
@@ -829,17 +826,10 @@ function _startWeakExamImpl() {
     
     // 1. 헷갈린 카드로부터 질문 생성
     weakCards.forEach(cardId => {
-        // 1-a) 일반 플래시카드: STUDY_DATA에서 카드 검색
-        let cardObj = null;
-        let subject = '';
-        for (const subjId of Object.keys(STUDY_DATA)) {
-            const found = STUDY_DATA[subjId].cards.find(c => c.id === cardId);
-            if (found) {
-                cardObj = found;
-                subject = subjId;
-                break;
-            }
-        }
+        // 1-a) 일반 플래시카드: 인덱스 캐시로 검색 (weak-items.js)
+        const rc = resolveCard(cardId);
+        const cardObj = rc && rc.card;
+        const subject = rc ? rc.subjectId : '';
 
         if (cardObj) {
             questions.push({

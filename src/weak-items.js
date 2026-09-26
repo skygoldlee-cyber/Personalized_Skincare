@@ -22,6 +22,42 @@ export function weakItemKey(quizId) {
     return WEAK_QUIZ_PREFIX + quizId;
 }
 
+/* ---------- 콘텐츠 인덱스 캐시 ----------
+   STUDY_DATA는 DataLoader.loadSubject로 과목이 점진 추가되므로,
+   과목 객체의 참조 비교로 증분 무효화한다 (새 과목 로드·번들 교체 감지).
+   호출마다 전 과목 선형 탐색하지 않도록 퀴즈·카드 ID 인덱스를 지연 구축. */
+const _subjectRef = new Map();   // subjId → 마지막으로 색인한 과목 객체
+let _quizIdx = null;             // quizId → { quiz, subjectId }
+let _cardIdx = null;             // cardId → subjectId
+
+function _studyData() {
+    return (typeof window !== 'undefined' && window.STUDY_DATA) || null;
+}
+
+function _ensureIndexes() {
+    const data = _studyData();
+    if (!data) {
+        _quizIdx = _cardIdx = null;
+        _subjectRef.clear();
+        return;
+    }
+    if (!_quizIdx) { _quizIdx = new Map(); _cardIdx = new Map(); }
+    // 교체·제거된 과목의 인덱스 항목 정리
+    for (const subjId of [..._subjectRef.keys()]) {
+        if (data[subjId] === _subjectRef.get(subjId)) continue;
+        for (const [id, v] of _quizIdx) { if (v.subjectId === subjId) _quizIdx.delete(id); }
+        for (const [id, v] of _cardIdx) { if (v.subjectId === subjId) _cardIdx.delete(id); }
+        _subjectRef.delete(subjId);
+    }
+    // 신규·교체 과목 색인
+    for (const subjId of Object.keys(data)) {
+        if (_subjectRef.get(subjId) === data[subjId]) continue;
+        _subjectRef.set(subjId, data[subjId]);
+        (data[subjId].quizzes || []).forEach(q => _quizIdx.set(q.id, { quiz: q, subjectId: subjId }));
+        (data[subjId].cards || []).forEach(c => _cardIdx.set(c.id, { card: c, subjectId: subjId }));
+    }
+}
+
 /**
  * weak_quiz_<origId> 또는 일반 퀴즈 ID로 원본 퀴즈 객체를 찾는다.
  * @returns {{quiz: object, subjectId: string}|null}
@@ -30,13 +66,23 @@ export function resolveWrongQuiz(quizId) {
     const origId = quizId.startsWith(WEAK_QUIZ_PREFIX)
         ? quizId.substring(WEAK_QUIZ_PREFIX.length)
         : quizId;
-    const data = (typeof window !== 'undefined' && window.STUDY_DATA) || null;
-    if (!data) return null;
-    for (const subjId of Object.keys(data)) {
-        const found = (data[subjId].quizzes || []).find(q => q.id === origId);
-        if (found) return { quiz: found, subjectId: subjId };
-    }
-    return null;
+    _ensureIndexes();
+    return (_quizIdx && _quizIdx.get(origId)) || null;
+}
+
+/**
+ * 카드 ID → 원본 카드 객체·과목 ID (인덱스 조회)
+ * @returns {{card: object, subjectId: string}|null}
+ */
+export function resolveCard(cardId) {
+    _ensureIndexes();
+    return (_cardIdx && _cardIdx.get(cardId)) || null;
+}
+
+/** 카드 ID → 과목 ID (인덱스 조회, 없으면 null) */
+export function cardSubjectOf(cardId) {
+    const r = resolveCard(cardId);
+    return r ? r.subjectId : null;
 }
 
 /**
@@ -61,13 +107,7 @@ export function subjectForWeakItem(itemId, fallbackSubj = null) {
     if (sim) return examIdToSubjectId(sim.examId);
     const resolved = resolveWrongQuiz(itemId);
     if (resolved) return resolved.subjectId;
-    const data = (typeof window !== 'undefined' && window.STUDY_DATA) || null;
-    if (data) {
-        for (const subjId of Object.keys(data)) {
-            if ((data[subjId].cards || []).some(c => c.id === itemId)) return subjId;
-        }
-    }
-    return fallbackSubj;
+    return cardSubjectOf(itemId) || fallbackSubj;
 }
 
 /**
