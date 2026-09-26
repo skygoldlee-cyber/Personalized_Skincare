@@ -4,6 +4,18 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-26 수치 훈련 flaky 테스트 근본 수정 — 부분문자열 매칭 제거
+
+- **원인**: `study-trainer.dom.test.js`가 정답 버튼을
+  `textContent.includes(cur.value)`로 탐색 — `"5"`가 `"50"`·`"0.5"` 오답지에도
+  부분문자열 매칭되어 셔플 순서에 따라 오답 클릭 → `correctCount` 0으로 간헐 실패.
+- **프로덕션 결함 동반 발견**: `trainer.js`의 정답 하이라이트가 같은
+  `includes()` 패턴이라 오답지를 정답으로 표시할 수 있었음.
+- **수정**: 버튼 렌더 시 `dataset.value = optValue` 저장 → 정답 판정을
+  `dataset.value === correctValue` 정확 비교로 전환. 테스트는 단위·접미사를
+  제거한 `limitsOptValue()` 헬퍼로 정확 매칭.
+- 교훈은 `DOM_TEST_DESIGN.md` §3.3에 규칙으로 추가.
+
 ## 2026-09-26 강건성 보강 — 다중 키 쓰기 롤백 + XSS 경로 정리
 
 - **`storage.js`에 `setMany`/`setJSONMany` 추가** — 여러 논리 키를 한 번에 쓰고,

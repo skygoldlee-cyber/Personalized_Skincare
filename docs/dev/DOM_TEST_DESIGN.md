@@ -118,6 +118,14 @@ tests/dom/
 | `matchMedia`/`scrollTo`/`IntersectionObserver` | jsdom 미지원 — helpers에 폴리필 스텁 집중 |
 | 모듈 상태 | `vi.resetModules()` 미사용 — 모듈 레벨 폼 상태(`cust.editingId`)는 흐름상 컨트롤러가 재설정 |
 
+> **⚠️ 랜덤 셔플 선택지의 정답 매칭 규칙** — 수치 훈련처럼 선택지가 셔플·랜덤
+> 생성되는 UI에서 정답 버튼을 `textContent.includes(정답)`로 찾으면 안 된다.
+> `"5"`가 `"50"`·`"0.5"` 오답지에도 부분문자열 매칭되어 **간헐 실패(flaky)**
+> 의 원인이 되고, 같은 패턴이 프로덕션 하이라이트에 있으면 오답지를 정답으로
+> 표시하는 실제 결함이 된다. `data-value` 속성에 원본 값을 심고 정확 비교하거나,
+> 테스트에서는 단위·접미사를 제거한 뒤 `===`로 매칭한다
+> (study-trainer.dom.test.js의 `limitsOptValue` 패턴 참조).
+
 ## 4. 구현 완료 — 실무 영역 Phase 1 (27개)
 
 ### formula-nav.dom.test.js (5)
