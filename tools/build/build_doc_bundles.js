@@ -21,7 +21,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { getExamTargets } = require('./exam-targets');
+const { getExamTargets } = require('./exam_targets');
 
 const ROOT = path.resolve(__dirname, '..', '..');
 
@@ -33,8 +33,8 @@ const GLOBAL_DOCS = [
 ];
 
 // 시험별 문서 — 각 시험의 {contentRoot}/ 아래 파일을 {dataRoot}/docs_md/ 에 출력.
-// key는 contentPath() 결과와 동일해야 한다 ('{contentRoot}/학습안내서.md').
-const EXAM_DOC_FILES = ['학습안내서.md', '두음법_암기_총정리.md'];
+// key는 contentPath() 결과와 동일해야 한다 ('{contentRoot}/docs/학습안내서.md').
+const EXAM_DOC_FILES = ['docs/학습안내서.md', 'docs/두음법_암기_총정리.md'];
 
 const AUTOGEN_HEADER = '// 자동 생성된 문서 번들입니다. 수정하지 마십시오. (tools/build/build_doc_bundles.js)';
 
@@ -45,7 +45,7 @@ function writeBundle(outDir, srcPath, key, file, generated) {
         `// 원본: ${key}\n` +
         '(window.__DOC_MD__ = window.__DOC_MD__ || {})[' +
         JSON.stringify(key) + '] = ' + JSON.stringify(md) + ';\n';
-    const stem = file.replace(/\.md$/i, '');
+    const stem = path.basename(file).replace(/\.md$/i, '');
     const outPath = path.join(outDir, stem + '.js');
     fs.writeFileSync(outPath, body, 'utf8');
     generated.push({ key, out: path.relative(ROOT, outPath), bytes: Buffer.byteLength(body, 'utf8') });

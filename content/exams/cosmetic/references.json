@@ -13,7 +13,7 @@
     "safety": "과목3",
     "understanding": "과목4"
   },
-  "docSubjectRulesComment": "ref_md 문서 디렉터리명 → 과목 번호 귀속 규칙. 첫 매칭이 우선. 복수정답형 문항의 과목 귀속(build_combo_drills)과 check:refsubjects의 기준선으로 사용됨. ref-statements.js에 내장 폴백이 있으나 편집은 이 목록에서 수행.",
+  "docSubjectRulesComment": "ref_md 문서 디렉터리명 → 과목 번호 귀속 규칙. 첫 매칭이 우선. 복수정답형 문항의 과목 귀속(build_combo_drills)과 check:refsubjects의 기준선으로 사용됨. ref_statements.js에 내장 폴백이 있으나 편집은 이 목록에서 수행.",
   "docSubjectRules": [
     ["화장품법\\(법률\\)|화장품법 시행규칙", 1, "법률·시행규칙 본문"],
     ["시행규칙_별표1_", 2, "품질관리기준 → 제조·품질관리"],

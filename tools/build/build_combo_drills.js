@@ -37,10 +37,10 @@
 
 const fs = require('fs');
 const path = require('path');
-const { stableId } = require('./id-factory.js');
+const { stableId } = require('./id_factory.js');
 const { inferTags } = require('../drill-utils.js');
-const { getExamTargets, getSubjectMaps, getDefaultExamRoots } = require('./exam-targets.js');
-const { extractRefAtoms } = require('./ref-statements.js');
+const { getExamTargets, getSubjectMaps, getDefaultExamRoots } = require('./exam_targets.js');
+const { extractRefAtoms } = require('./ref_statements.js');
 
 const ROOT = path.resolve(__dirname, '..', '..');
 const DRY_RUN = process.argv.includes('--dry-run');

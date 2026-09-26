@@ -81,7 +81,7 @@ function toHex8(x) {
 
 const ID_HASH_LEN = 6;
 
-/** 빌드 id-factory.js의 stableId와 동일: `${subjectKey}_${type}_${sha256(subjectKey|chapterKey|term)[:6]}` */
+/** 빌드 id_factory.js의 stableId와 동일: `${subjectKey}_${type}_${sha256(subjectKey|chapterKey|term)[:6]}` */
 export function stableId(subjectKey, chapterKey, type, term) {
     const raw = `${subjectKey}|${chapterKey}|${term}`;
     return `${subjectKey}_${type}_${sha256hex(raw).substring(0, ID_HASH_LEN)}`;

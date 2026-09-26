@@ -166,9 +166,8 @@ Personalized Skincare/
 │       ├── 교재/                    ← 4과목 교재 MD (law, manufacturing, safety, understanding — 각 표준형+이야기형)
 │       ├── 문제은행/                ← 문제은행 MD (4개 파일)
 │       ├── 참조자료/                ← 참조자료 (원본 PDF는 공통·과목1~4/, MD 변환본은 ref_md/과목N/{문서}/)
-│       ├── 학습안내서.md            ← 학습 안내서 (앱 내 뷰어 연동)
+│       ├── docs/                    ← 시험 소유 문서 (학습안내서.md, 두음법_암기_총정리.md — 앱 내 뷰어 연동)
 │       ├── number-drills/           ← 중요 숫자 암기표 JSON (과목별 4개 파일)
-│       ├── 두음법_암기_총정리.md    ← 두음법+중요숫자 통합 암기 문서 (앱 내 뷰어 연동)
 │       └── audiobook/               ← 오디오북 MP3 산출물 (생성 스크립트는 ref-pipeline/audiobook/)
 │
 ├── 📂 ref-pipeline/                 ← 교재·참조자료 생성/변환 독립 도구함 (Python — 저장소와 무관 실행)

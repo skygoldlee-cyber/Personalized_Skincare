@@ -3,9 +3,9 @@ import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
 import crypto from 'node:crypto';
 
-// id-factory.js는 CommonJS(require)이므로 createRequire로 로드
+// id_factory.js는 CommonJS(require)이므로 createRequire로 로드
 const require = createRequire(import.meta.url);
-const { stableId, shortHash, CONTENT_HASH_LEN, ID_HASH_LEN } = require('../../tools/build/id-factory.js');
+const { stableId, shortHash, CONTENT_HASH_LEN, ID_HASH_LEN } = require('../../tools/build/id_factory.js');
 
 function nodeSha256(str) {
     return crypto.createHash('sha256').update(str, 'utf8').digest('hex');

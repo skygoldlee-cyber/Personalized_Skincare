@@ -2,10 +2,10 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 
-const { loadAndValidateManifest } = require('./manifest-loader');
+const { loadAndValidateManifest } = require('./manifest_loader');
 const { validateSubjectData, validateExamData, validateIngredientsData } = require('./schema');
 const { checkStatsAnomaly, printMarkerWarnings } = require('./report');
-const idFactory = require('./id-factory');
+const idFactory = require('./id_factory');
 
 const WORKSPACE_DIR = path.resolve(__dirname, '../..');
 // [멀티시험] 비기본 시험 빌드:
@@ -14,7 +14,7 @@ const WORKSPACE_DIR = path.resolve(__dirname, '../..');
 // [멀티시험] 루트 기본값: EXAM_CONTENT_ROOT/EXAM_DATA_ROOT env → 없으면
 // exams.json의 default 시험(또는 첫 항목)으로 해석. IS_DEFAULT_EXAM은 경로
 // 문자열이 아니라 default 플래그로 판정한다 (시험 이동/이름변경과 무관).
-const { getExamTargets } = require('./exam-targets');
+const { getExamTargets } = require('./exam_targets');
 const EXAM_TARGETS = getExamTargets(WORKSPACE_DIR);
 const examsDoc = JSON.parse(fs.readFileSync(path.join(WORKSPACE_DIR, 'content', 'exams.json'), 'utf-8'));
 
@@ -464,7 +464,7 @@ if (typeof window !== 'undefined') {
     let swContent = fs.readFileSync(swPath, 'utf-8');
 
     // 모든 시험의 자산을 집계 (프리캐시는 앱 셸 차원이므로 전 시험 포함)
-    const { getExamTargets } = require('./exam-targets');
+    const { getExamTargets } = require('./exam_targets');
     const allTargets = getExamTargets(WORKSPACE_DIR);
 
     const assetsToCache = [];
@@ -483,7 +483,7 @@ if (typeof window !== 'undefined') {
       const pushMd = (rel) => {
         if (fs.existsSync(path.join(WORKSPACE_DIR, rel))) mdAssets.push(`./${rel}`);
       };
-      pushMd(`${t.contentRoot}/학습안내서.md`);
+      pushMd(`${t.contentRoot}/docs/학습안내서.md`);
       for (const subj of tm.subjects || []) {
         for (const ch of subj.chapters || []) {
           pushMd(`${t.contentRoot}/${subj.dir}/${ch.file}`);
@@ -506,7 +506,7 @@ if (typeof window !== 'undefined') {
     
     // 자동화된 서비스 워커 버전 관리 (stampSwVersion) 연동
     try {
-      const { stampSwVersion } = require('./stamp-sw-version');
+      const { stampSwVersion } = require('./stamp_sw_version');
       stampSwVersion({ swPath: swPath });
     } catch (err) {
       console.warn('Warning: Failed to stamp sw version:', err.message);

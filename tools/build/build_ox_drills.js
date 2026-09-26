@@ -23,9 +23,9 @@
 
 const fs = require('fs');
 const path = require('path');
-const { stableId } = require('./id-factory.js');
+const { stableId } = require('./id_factory.js');
 const { inferTags } = require('../drill-utils.js');
-const { getExamTargets, getSubjectMaps } = require('./exam-targets.js');
+const { getExamTargets, getSubjectMaps } = require('./exam_targets.js');
 
 const ROOT = path.resolve(__dirname, '..', '..');
 

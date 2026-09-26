@@ -6,7 +6,7 @@
  *   ① 물리 PDF 폴더    content/참조자료/{법령고시,공통,과목N,_archive}/*.pdf
  *   ② ref_md 변환본    content/참조자료/ref_md/과목N/{문서}/{문서}.md
  *   ③ UI 매니페스트    content/references.json (refDirs/referenceFiles/referenceCommon/referenceLaw)
- *   ④ 생성 규칙        tools/build/ref-statements.js DOC_SUBJECT_RULES → docSubject()
+ *   ④ 생성 규칙        tools/build/ref_statements.js DOC_SUBJECT_RULES → docSubject()
  *
  * 검사:
  *   - refDirs에 등록된 PDF → ref_md/과목N/{base}/{base}.md 존재 + N == docSubject(base)
@@ -22,11 +22,11 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
-const { getDefaultExamRoots } = require('./build/exam-targets.js');
+const { getDefaultExamRoots } = require('./build/exam_targets.js');
 const CONTENT = path.join(ROOT, getDefaultExamRoots(ROOT).contentRoot);
 const REF_BASE = path.join(CONTENT, '참조자료');
 const REF_MD = path.join(REF_BASE, 'ref_md');
-const { docSubject } = require('./build/ref-statements.js');
+const { docSubject } = require('./build/ref_statements.js');
 
 const refs = JSON.parse(fs.readFileSync(path.join(CONTENT, 'references.json'), 'utf8'));
 const subjectDirMap = refs.subjectDirMap || {};

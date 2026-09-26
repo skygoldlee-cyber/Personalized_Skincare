@@ -185,7 +185,7 @@ const DATA_ASSETS = [
 
 /** 설치 시 프리캐시할 마크다운 문서 (매뉴얼·요약집 — 오프라인 보장) */
 const MD_ASSETS = [
-  './content/exams/cosmetic/학습안내서.md',
+  './content/exams/cosmetic/docs/학습안내서.md',
   './content/exams/cosmetic/교재/law/1과목_화장품법의이해_표준형.md',
   './content/exams/cosmetic/교재/law/1과목_화장품법의이해_이야기형.md',
   './content/exams/cosmetic/교재/manufacturing/2과목_제조및품질관리_표준형.md',

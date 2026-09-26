@@ -13,7 +13,7 @@
  */
 const fs = require('fs');
 const path = require('path');
-const { getExamTargets } = require('./build/exam-targets.js');
+const { getExamTargets } = require('./build/exam_targets.js');
 
 const ROOT = path.resolve(__dirname, '..');
 

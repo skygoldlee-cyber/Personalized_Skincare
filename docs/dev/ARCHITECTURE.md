@@ -324,8 +324,8 @@ Personalized_Skincare/
 │       └── <examId>/           #   시험별 콘텐츠 루트 (모든 시험 동일 내부 구조 — 대칭)
 │           ├── manifest.json   #     과목/단원/시험/추천링크 메타데이터 (SSOT)
 │           ├── references.json #     참조자료 매핑 설정
-│           ├── 학습안내서.md
-│           ├── 두음법_암기_총정리.md  #   두음법+중요숫자 통합 암기 문서
+│           ├── docs/학습안내서.md
+│           ├── docs/두음법_암기_총정리.md  #   두음법+중요숫자 통합 암기 문서
 │           ├── combo_blocklist.json #  복수정답형 자동변환 제외 목록
 │           ├── number-drills/  #     숫자 암기 드릴 JSON
 │           ├── 교재/
@@ -348,7 +348,7 @@ Personalized_Skincare/
 ├── data/                       # 빌드 타임 생성 (자동 생성, 직접 수정 금지)
 │   ├── exams.js                #   전역 시험 레지스트리 번들 (window.EXAMS_LIST, 클래식 스크립트)
 │   ├── audio_manifest.js       #   오디오 챕터 매핑 (시험 id 키 분리)
-│   ├── version.js              #   window.APP_VERSION — 배포 스탬프와 동기화 (stamp-release-notes.js)
+│   ├── version.js              #   window.APP_VERSION — 배포 스탬프와 동기화 (stamp_release_notes.js)
 │   ├── release-notes.json      #   사용자용 변경 이력 진실 소스 (수동 편집 대상 — 파싱 오류는 배포 차단)
 │   ├── release-notes.js        #   window.RELEASE_NOTES — JSON에서 생성되는 래퍼 (직접 편집 금지)
 │   ├── docs_md/                #   앱 공용 문서 폴백 번들 (user_manual·formula_manual — 시험 무관)
@@ -373,15 +373,15 @@ Personalized_Skincare/
 ├── tools/                      # 빌드/검증 도구
 │   ├── build/
 │   │   ├── index.js            #   메인 빌드 (registry, exams, ingredients)
-│   │   ├── manifest-loader.js  #   manifest.json 검증
+│   │   ├── manifest_loader.js  #   manifest.json 검증
 │   │   ├── schema.js           #   스키마 검증
-│   │   ├── id-factory.js       #   안정적 ID 생성
+│   │   ├── id_factory.js       #   안정적 ID 생성
 │   │   ├── build_keyword_index.js # GLOSSARY_INDEX + 큐레이션 병합
-│   │   ├── build-audio-manifest.js # 오디오 챕터 매니페스트 생성
-│   │   ├── build-pdf-registry.js # PDF 레지스트리 생성
+│   │   ├── build_audio_manifest.js # 오디오 챕터 매니페스트 생성
+│   │   ├── build_pdf_registry.js # PDF 레지스트리 생성
 │   │   ├── report.js           #   빌드 통계
-│   │   ├── stamp-sw-version.js #   SW 캐시 버전 자동 스탬프
-│   │   ├── stamp-release-notes.js # APP_VERSION 스탬프 + 릴리스 노트 pending 확정/커밋 초안 (--draft)
+│   │   ├── stamp_sw_version.js #   SW 캐시 버전 자동 스탬프
+│   │   ├── stamp_release_notes.js # APP_VERSION 스탬프 + 릴리스 노트 pending 확정/커밋 초안 (--draft)
 │   │   ├── supplements.js      #   문제은행 비율 기반 카드/퀴즈 목표 배분 + 보충 번들 (build:data 내 3.5단계)
 │   │   ├── build_doc_bundles.js    #   학습안내서/매뉴얼 폴백 번들
 │   │   ├── build_exam_bundles.js   #   문제은행 폴백 번들
@@ -543,7 +543,7 @@ Personalized_Skincare/
 | `src/batch-store.js` · `src/customer-store.js` · `src/material-ledger.js` · `src/usage-guide.js` · `src/store-utils.js` · `src/csv-utils.js` | Formula OS 업무 레이어 — 배치(조제 기록) 채번·QC·위생·스냅샷, 고객 카드·상담 이력, 원료 입고·기한·재고, 사용 안내문 생성기, 스토어 공통 헬퍼, CSV 파서·인코딩(EUC-KR 폴백)·직렬화 (FORMULA_OS_WORKFLOW_DESIGN.md) | 수동 관리 |
 | `src/views/formula.js` | Formula OS 뷰 — 배합 계산기(sticky 요약·액션바, 카드형 원료 행, 접이식 고객/제조 정보), My 포뮬러, 추천 패널, 서브내비 칩, 인쇄·JSON 공유 | 수동 관리 |
 | `src/views/formula-batch.js` · `formula-customer.js` · `formula-material.js` · `formula-compliance.js` · `formula-print.js` | Formula OS 패널 뷰 — 조제 기록(목록·폼·상세), 고객 관리, 원료 장부, 법규 준수 체크리스트(법령 MD 링크·체크 영속), 인쇄 빌더(기록지·라벨·안내문) | 수동 관리 |
-| [`data/exams/cosmetic/id_migration.js`](../../data/exams/cosmetic/id_migration.js) | 레거시 ID → 안정 ID 일회성 매핑 | `tools/build/index.js` (id-factory) |
+| [`data/exams/cosmetic/id_migration.js`](../../data/exams/cosmetic/id_migration.js) | 레거시 ID → 안정 ID 일회성 매핑 | `tools/build/index.js` (id_factory) |
 | [`data/audio_manifest.js`](../../data/audio_manifest.js) | 오디오 파일 경로 매니페스트 | 오디오북 파이프라인 |
 
 > ⚠️ `data/exams/cosmetic/subjects/<key>.<hash>.js`(과목 학습 번들)는 **2026-08-24부터 런타임 MD 파싱으로 대체·제거**되었다. 디렉토리 자체도 삭제되었으며, `npm run build:data`가 재생성하더라도 앱은 로드하지 않고 배포에서도 제외(`.vercelignore`)된다.
@@ -760,7 +760,7 @@ const state = {
 - 비기본 시험: `DataLoader.ensureRegistry()`가 `{dataRoot}/registry.js`를 클래식 스크립트로 동적 주입 (`DATA_REGISTRY_<examId>` 전역 — ESM export 불가라 `var` + `window` 할당 형태로 생성)
 
 ### 빌드 순회
-- `tools/build/exam-targets.js` — `getExamTargets()`가 exams.json을 순회해 시험별 contentRoot/dataRoot/manifest 해석, `getSubjectMaps()`가 manifest에서 과목 매핑 파생(기존 `subject1~4` 하드코딩 테이블 대체)
+- `tools/build/exam_targets.js` — `getExamTargets()`가 exams.json을 순회해 시험별 contentRoot/dataRoot/manifest 해석, `getSubjectMaps()`가 manifest에서 과목 매핑 파생(기존 `subject1~4` 하드코딩 테이블 대체)
 - `tools/build/build_all_data.js` — `build:data`가 모든 시험을 `EXAM_ID`로 순회 빌드. ox/combo 드릴, exam/study_md/doc 번들, audio_manifest, citations, parser parity, question_chapters(문항→단원 매핑) 모두 시험 순회형
 - 인덱스 번들: `{dataRoot}/drills/combo_index.js`(과목별 복수정답형 문항 수), `{dataRoot}/question_chapters.js`(문항id→단원 + 과목별 라인 경계) — 결과 화면 라벨/단원별 취약 분석용, `DataLoader.loadComboIndex`/`loadQuestionChapters`로 로드
 - **공유 모듈 예외**: `src/pdf-registry.js`, `keyword-index.js`는 단일 공유 출력이라 기본 시험 바인딩 유지 — 비기본 시험에 참조자료 기능이 필요하면 시험별 파일 분리가 후속 과제
@@ -961,7 +961,7 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 
 ### 캐시 버전 관리
 - `CACHE_VERSION` 상수로 캐시 네임스페이스 관리 (빌드 시 자동 갱신)
-- **빌드 타임 자동 치환**: `tools/build/stamp-sw-version.js`가 빌드 완료 시 `CACHE_VERSION`을 `${prefix}-${YYYYMMDD}-${gitShort}` 형태로 자동 갱신 → 수동 관리 불필요
+- **빌드 타임 자동 치환**: `tools/build/stamp_sw_version.js`가 빌드 완료 시 `CACHE_VERSION`을 `${prefix}-${YYYYMMDD}-${gitShort}` 형태로 자동 갱신 → 수동 관리 불필요
 - **배포 시 버전을 올리면 구 캐시 자동 정리** → 모바일 구버전 고착(Stale Cache) 문제 방지
 - `SHELL_ASSETS`에는 [`src/utils.js`](../../src/utils.js), [`src/trainer-calc.js`](../../src/trainer-calc.js) 등 분리된 모듈이 모두 프리캐시에 포함됨
 - `data/exams/cosmetic/registry.js`, `data/audio_manifest.js`도 프리캐시에 포함 (2026-08-25, window 전역 참조 방식 전환으로 모듈 그래프에서 분리되어 별도 캐싱 필요)
@@ -1433,7 +1433,7 @@ content/exams/cosmetic/참조자료/*.pdf  →  tools/build  →  content/exams/
 ```
 
 - **SSOT**: [`content/exams/cosmetic/references.json`](../../content/exams/cosmetic/references.json)이 참조자료 중앙 설정
-- **자동 생성**: [`tools/build/build-pdf-registry.js`](../../tools/build/build-pdf-registry.js)가 `references.json` → `src/pdf-registry.js` 자동 생성
+- **자동 생성**: [`tools/build/build_pdf_registry.js`](../../tools/build/build_pdf_registry.js)가 `references.json` → `src/pdf-registry.js` 자동 생성
 - **매핑 키**: PDF 파일명은 `pdf-registry.js`의 `resolveRefPath()`에서 MD 경로 조회 키로만 사용 (직접 fetch 안 함)
 
 #### PDF 직접 참조 대비 우위
@@ -1495,8 +1495,8 @@ npm run deploy
   │
   ├─ 2) 콘텐츠 품질 게이트 — audit_combo.js 실행, 오류 시 배포 차단
   │
-  ├─ 3) sw.js CACHE_VERSION 스탬프 (stamp-sw-version.js)
-  │     ├─ + stamp-release-notes.js: data/version.js APP_VERSION 동기화,
+  ├─ 3) sw.js CACHE_VERSION 스탬프 (stamp_sw_version.js)
+  │     ├─ + stamp_release_notes.js: data/version.js APP_VERSION 동기화,
   │     │   release-notes.json pending 확정(없으면 커밋 subject 자동 초안) →
   │     │   release-notes.js 래퍼 재생성 (JSON 파싱 실패 시 배포 차단)
   │     └─ 값이 바뀌면 'chore(sw): CACHE_VERSION 스탬프' 자동 커밋 + push
@@ -1734,9 +1734,9 @@ npm run deploy
 | **교재 MD 파일 추가/삭제/이름 변경** | `<root>/manifest.json` | `subjects[].chapters[].file` 필드 갱신 |
 | | `sw.js` | `MD_ASSETS` 배열의 경로 갱신 + `CACHE_VERSION` 버전업 |
 | **문제은행 MD 변경** | `<root>/manifest.json` | `exams` 섹션의 파일 경로 갱신 |
-| **참조자료 MD/HTML 변경** | `<root>/references.json` + `src/pdf-registry.js` | 참조자료 파일 목록·경로 매핑 (`references.json` → `build-pdf-registry.js`가 `pdf-registry.js` 자동 생성) |
+| **참조자료 MD/HTML 변경** | `<root>/references.json` + `src/pdf-registry.js` | 참조자료 파일 목록·경로 매핑 (`references.json` → `build_pdf_registry.js`가 `pdf-registry.js` 자동 생성) |
 | | `tools/build/plugins/ingredients.plugin.js` | `INGREDIENTS_DIR` 경로 (원료 하위 폴더 변경 시) |
-| **학습안내서 MD 변경** | (파일명 동일 시 수정 불필요) | `manual-viewer.js`, `build_doc_bundles.js`, `sw.js`가 `<root>/학습안내서.md` 경로 참조 |
+| **학습안내서 MD 변경** | (파일명 동일 시 수정 불필요) | `manual-viewer.js`, `build_doc_bundles.js`, `sw.js`가 `<root>/docs/학습안내서.md` 경로 참조 |
 | **새 과목 추가** | `<root>/manifest.json` | `subjects[]`에 새 과목 항목 추가 (`key`, `name`, `dir`, `chapters`) |
 | | `src/pdf-registry.js` | `SUBJECT_DIR_MAP`, `REF_DIRS`, `REFERENCE_FILES`에 새 과목 항목 추가 |
 | | `sw.js` | `MD_ASSETS`에 새 과목 MD 경로 추가 |
@@ -1787,7 +1787,7 @@ npm.cmd run deploy
 | `<droot>/ingredients_data.*.js` | `tools/build/index.js` (ingredients.plugin.js) |
 | `<droot>/id_migration.js` | `tools/build/build_id_migration.js` |
 | `<droot>/question_chapters.js` | `tools/build/build_question_chapters.js` |
-| `src/pdf-registry.js` | `tools/build/build-pdf-registry.js` (references.json → 자동 생성) |
+| `src/pdf-registry.js` | `tools/build/build_pdf_registry.js` (references.json → 자동 생성) |
 | `src/keyword-index.js` | `tools/build/build_keyword_index.js` |
 
 ### 주요 참조 파일 목록 (content/ 경로 의존)
@@ -1796,13 +1796,13 @@ npm.cmd run deploy
 |------|----------|------|
 | `content/exams.json` | 시험 레지스트리 SSOT | `build_exams_list.js` → `data/exams.js` |
 | `<root>/manifest.json` | 시험 콘텐츠 SSOT — 모든 빌드의 원천 | `subjects[].dir`, `chapters[].file`, `uiText`, `resources` |
-| `<root>/references.json` | 참조자료 매핑 SSOT | `build-pdf-registry.js`의 입력 |
+| `<root>/references.json` | 참조자료 매핑 SSOT | `build_pdf_registry.js`의 입력 |
 | `sw.js` | `MD_ASSETS` 하드코딩 | 프리캐시 대상 MD 파일 경로 |
 | `src/manual-viewer.js` | `MD_SOURCES` 객체 | 학습안내서, 사용자매뉴얼 경로 |
 | `src/pdf-registry.js` | `SUBJECT_DIR_MAP`, `REF_DIRS`, `REFERENCE_FILES`, `MD_CONVERSION_TARGETS` | 참조자료 중앙 설정 (자동 생성 파일 — `references.json` 수정 후 리빌드) |
 | `src/data-loader.js` | `manifest.subjects[].dir` 동적 참조 | 런타임 MD 로드 (`contentPath()` 경유) |
 | `src/textbook-parser.js` | `manifest.subjects[].dir` 동적 참조 | 런타임 MD 파싱 |
-| `tools/build/manifest-loader.js` | `manifest.json` 검증 | 빌드 시 파일 존재 확인 |
+| `tools/build/manifest_loader.js` | `manifest.json` 검증 | 빌드 시 파일 존재 확인 |
 | `tools/build/plugins/textbook.plugin.js` | `subject.dir` 동적 참조 | 빌드 시 MD 파싱 |
 | `tools/build/plugins/ingredients.plugin.js` | `INGREDIENTS_DIR` 하드코딩 | `<root>/참조자료/원료/` |
 | `tools/build/plugins/exams.plugin.js` | `manifest.exams` 참조 | 문제은행 MD 처리 |

@@ -116,7 +116,7 @@ npm run test:watch
 |---|------|-----------|-----------|------|
 | 1 | `sanitize.test.js` | 9 | `escapeHTML()`, `safeTextWithBreaks()`, `esc()` | XSS 방어 유틸리티 |
 | 2 | `sha256.test.js` | 13 | `sha256hex()`, `stableId()` | Node `crypto`와 교차 검증 |
-| 3 | `id-factory.test.js` | 13 | `stableId()`, `shortHash()` | 빌드 타임 ID 생성 로직 |
+| 3 | `id_factory.test.js` | 13 | `stableId()`, `shortHash()` | 빌드 타임 ID 생성 로직 |
 | 4 | `utils.test.js` | 7 | `getChosung()` | 한글 초성 추출 |
 | 5 | `trainer-calc.test.js` | 8 | `buildCalcQuestion()` | 계산 훈련 문제 생성 |
 | 6 | `state.test.js` | 16 | `loadProgress()`, `saveProgress()`, `cleanOrphansForSubject()` | localStorage 모킹 |
@@ -226,8 +226,8 @@ npm run test:watch
 - `stableId()`: 카드/퀴즈 안정 ID 생성 (`subjectKey_card_hash6` 형식)
 - 빈 문자열, 한글, 긴 문자열 등 다양한 입력 검증
 
-#### `id-factory.test.js` (13개)
-- 빌드 타임 `tools/build/id-factory.js`의 ID 생성 로직
+#### `id_factory.test.js` (13개)
+- 빌드 타임 `tools/build/id_factory.js`의 ID 생성 로직
 - `stableId()`: 동일 입력 → 동일 ID, 다른 subjectKey → 다른 ID
 - `shortHash()`: 해시 길이 일관성
 
@@ -505,7 +505,7 @@ test('myFunction: 엣지 케이스', () => {
 **규칙**:
 - `import` from `node:test` 및 `node:assert/strict`
 - 테스트 대상 모듈은 `../../src/`에서 ESM import
-- CommonJS 모듈은 `createRequire(import.meta.url)`로 로드 (`id-factory.test.js` 참조)
+- CommonJS 모듈은 `createRequire(import.meta.url)`로 로드 (`id_factory.test.js` 참조)
 - DOM API(`document`, `localStorage` 등) 사용 불가 → DOM 테스트로 이동
 
 ### 5.2 DOM 테스트 (브라우저 환경 필요)

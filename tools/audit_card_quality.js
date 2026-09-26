@@ -21,8 +21,8 @@ const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, '..');
 const plugin = require('./build/plugins/textbook.plugin.js');
-const idFactory = require('./build/id-factory.js');
-const { getExamTargets } = require('./build/exam-targets.js');
+const idFactory = require('./build/id_factory.js');
+const { getExamTargets } = require('./build/exam_targets.js');
 
 function loadStudyData() {
     // data/subjects/*.js 번들은 폐지됨 — 앱과 동일하게 content/*.md를

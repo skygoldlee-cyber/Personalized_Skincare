@@ -282,7 +282,7 @@ O/X 드릴 문항을 담는 유형. combo의 `statements[]`와 single의 `option
 
 원본 MCQ는 유한한 검증 원자를 다 쓰므로, 신규 진술 재료를
 `content/exams/cosmetic/참조자료/ref_md`의 법령·고시·별표 원문 마크다운에서 추출한다
-(`tools/build/ref-statements.js`). 법령 텍스트는 구조가 참/거짓을 보장한다.
+(`tools/build/ref_statements.js`). 법령 텍스트는 구조가 참/거짓을 보장한다.
 > 생성 절차·필터 규칙·수치 조정의 실행 가이드는 `COMBO_GENERATION_GUIDE.md` 참조.
 
 **추출 원자**

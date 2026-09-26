@@ -15,8 +15,8 @@ const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
 const plugin = require('./build/plugins/textbook.plugin.js');
-const idFactory = require('./build/id-factory.js');
-const { getExamTargets } = require('./build/exam-targets.js');
+const idFactory = require('./build/id_factory.js');
+const { getExamTargets } = require('./build/exam_targets.js');
 
 function firstDiff(aArr, bArr, label) {
     const n = Math.max(aArr.length, bArr.length);

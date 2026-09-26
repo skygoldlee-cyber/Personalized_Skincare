@@ -23,8 +23,8 @@
 const fs = require('fs');
 const path = require('path');
 const plugin = require('./plugins/textbook.plugin.js');
-const idFactory = require('./id-factory.js');
-const { getExamTargets } = require('./exam-targets.js');
+const idFactory = require('./id_factory.js');
+const { getExamTargets } = require('./exam_targets.js');
 
 const ROOT = path.resolve(__dirname, '..', '..');
 const norm = s => String(s || '').replace(/\s+/g, ' ').trim();

@@ -17,8 +17,8 @@
  */
 const fs = require('fs');
 const path = require('path');
-const { getExamTargets } = require('./build/exam-targets.js');
-const { docSubject } = require('./build/ref-statements.js');
+const { getExamTargets } = require('./build/exam_targets.js');
+const { docSubject } = require('./build/ref_statements.js');
 
 const ROOT = path.resolve(__dirname, '..');
 

@@ -11,7 +11,7 @@
 
 const path = require('path');
 const { spawnSync } = require('child_process');
-const { getExamTargets } = require('./exam-targets');
+const { getExamTargets } = require('./exam_targets');
 
 const ROOT = path.resolve(__dirname, '..', '..');
 const passthrough = process.argv.slice(2); // --only 등

@@ -46,7 +46,7 @@ const vm = require('vm');
 const { pathToFileURL } = require('url');
 
 const ROOT = path.join(__dirname, '..');
-const { getExamTargets } = require('./build/exam-targets.js');
+const { getExamTargets } = require('./build/exam_targets.js');
 const STRICT = process.argv.includes('--strict');
 const UPDATE_BASELINE = process.argv.includes('--update-baseline');
 const ANOM_IDX = process.argv.indexOf('--anomalies');

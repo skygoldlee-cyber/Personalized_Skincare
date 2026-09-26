@@ -32,10 +32,10 @@ export const PATHS = {
   NUMBER_DRILLS: (subjId) => contentPath(`number-drills/${subjId}.json`),
 
   // 학습 안내서
-  get STUDY_GUIDE() { return contentPath('학습안내서.md'); },
+  get STUDY_GUIDE() { return contentPath('docs/학습안내서.md'); },
 
   // 두음법·숫자 암기 총정리 (두음법 Part 1 + 중요 숫자 Part 2 통합 문서)
-  get MNEMONIC_GUIDE() { return contentPath('두음법_암기_총정리.md'); },
+  get MNEMONIC_GUIDE() { return contentPath('docs/두음법_암기_총정리.md'); },
 
   // 매니페스트
   get MANIFEST_URL() { return `./${contentPath('manifest.json')}`; },

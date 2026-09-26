@@ -77,9 +77,9 @@ test('stableId: 다른 term은 다른 ID', () => {
     assert.notEqual(id1, id2);
 });
 
-test('stableId: 빌드 id-factory와 동일 결과 (크로스 검증)', async () => {
-    // tools/build/id-factory.js는 CommonJS → 동적 import
-    const { stableId: buildStableId } = await import('../../tools/build/id-factory.js');
+test('stableId: 빌드 id_factory와 동일 결과 (크로스 검증)', async () => {
+    // tools/build/id_factory.js는 CommonJS → 동적 import
+    const { stableId: buildStableId } = await import('../../tools/build/id_factory.js');
     const cases = [
         ['law', 'ch1', 'card', '화장품법'],
         ['safety', 'ch2', 'quiz', '작업장 위생관리'],

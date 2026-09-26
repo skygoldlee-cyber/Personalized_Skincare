@@ -15,7 +15,7 @@ const { validateQuestion, deriveComboAnswer, gradeAnswer } = await import(
 );
 
 const { getDefaultExamRoots } = (await import(
-  pathToFileURL(path.join(src, 'tools', 'build', 'exam-targets.js')).href
+  pathToFileURL(path.join(src, 'tools', 'build', 'exam_targets.js')).href
 )).default;
 const DRILLS_DIR = path.join(src, getDefaultExamRoots(src).dataRoot, 'drills');
 

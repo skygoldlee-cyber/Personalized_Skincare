@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /* ============================================================
- * tools/build/stamp-sw-version.js
+ * tools/build/stamp_sw_version.js
  * ------------------------------------------------------------
  * sw.js 의 `CACHE_VERSION` 상수를 빌드 타임에 자동 치환한다.
  * (개선안 2-2: 서비스 워커 버전 관리 자동화)
@@ -23,12 +23,12 @@
  *     마커가 상시 켜져 신호로서 무의미하기 때문.
  *
  * 사용:
- *   - 모듈:   const { stampSwVersion } = require('./stamp-sw-version.js');
+ *   - 모듈:   const { stampSwVersion } = require('./stamp_sw_version.js');
  *             stampSwVersion();            // index.js 빌드 말미에서 호출
- *   - 단독:   node tools/build/stamp-sw-version.js
- *             node tools/build/stamp-sw-version.js --dry-run
- *             node tools/build/stamp-sw-version.js --prefix v29
- *             node tools/build/stamp-sw-version.js --full-timestamp
+ *   - 단독:   node tools/build/stamp_sw_version.js
+ *             node tools/build/stamp_sw_version.js --dry-run
+ *             node tools/build/stamp_sw_version.js --prefix v29
+ *             node tools/build/stamp_sw_version.js --full-timestamp
  *
  * 의존성 없음 (Node 내장 모듈만 사용).
  * ============================================================ */
@@ -131,7 +131,7 @@ function stampSwVersion(opts = {}) {
   }
   if (idx === -1) {
     throw new Error(
-      `[stamp-sw-version] CACHE_VERSION 선언 라인을 찾지 못했습니다: ${swPath}\n` +
+      `[stamp_sw_version] CACHE_VERSION 선언 라인을 찾지 못했습니다: ${swPath}\n` +
       `  기대 형식: const CACHE_VERSION = '...';`
     );
   }
@@ -146,7 +146,7 @@ function stampSwVersion(opts = {}) {
   const result = { changed: oldValue !== newValue, oldValue, newValue, path: swPath };
 
   if (!result.changed) {
-    if (!opts.silent) console.log(`[stamp-sw-version] 변경 없음 (CACHE_VERSION = '${oldValue}')`);
+    if (!opts.silent) console.log(`[stamp_sw_version] 변경 없음 (CACHE_VERSION = '${oldValue}')`);
     return result;
   }
 
@@ -154,12 +154,12 @@ function stampSwVersion(opts = {}) {
   const out = lines.join(eol);
 
   if (opts.dryRun) {
-    if (!opts.silent) console.log(`[stamp-sw-version] (dry-run) '${oldValue}' → '${newValue}'`);
+    if (!opts.silent) console.log(`[stamp_sw_version] (dry-run) '${oldValue}' → '${newValue}'`);
     return result;
   }
 
   fs.writeFileSync(swPath, out); // utf8, EOL 보존
-  if (!opts.silent) console.log(`[stamp-sw-version] CACHE_VERSION '${oldValue}' → '${newValue}'`);
+  if (!opts.silent) console.log(`[stamp_sw_version] CACHE_VERSION '${oldValue}' → '${newValue}'`);
   return result;
 }
 

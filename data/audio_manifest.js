@@ -1,5 +1,5 @@
 // 자동 생성: 오디오 매니페스트 (audio_manifest.js)
-// tools/build/build-audio-manifest.js로 재생성 가능. 수동 편집 주의.
+// tools/build/build_audio_manifest.js로 재생성 가능. 수동 편집 주의.
 //
 // [Vercel 배포용 수정]
 // - AUDIO_BASE_URL: 오디오 파일이 호스팅된 외부 CDN/스토리지 주소

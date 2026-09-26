@@ -329,7 +329,7 @@ npm.cmd run verify:refs                        # (= python ref-pipeline/convert.
   마커 삽입으로 구현.
 - 누락 0이면 `ref_md_v2/{doc}/{doc}.md`와 `images/`를 `ref_md/과목N/`의
   동명 디렉터리에 복사해 승격한다(`index.html` 보존). 문서 과목은
-  `tools/build/ref-statements.js`의 `DOC_SUBJECT_RULES`로 확인.
+  `tools/build/ref_statements.js`의 `DOC_SUBJECT_RULES`로 확인.
 - 승격 후 라인 번호가 밀리므로 반드시 `npm.cmd run sync:citations` →
   `node tools/sync_citation_lines.js --check`(미발견 0 확인) →
   `npm.cmd run build:data` → `node tools/build/build_combo_drills.js` 순서로
@@ -515,16 +515,16 @@ flowchart LR
 
 | 파일 | 생성 스크립트 | 소스 |
 |------|-------------|------|
-| `src/pdf-registry.js` | `tools/build/build-pdf-registry.js` | `{contentRoot}/references.json` |
+| `src/pdf-registry.js` | `tools/build/build_pdf_registry.js` | `{contentRoot}/references.json` |
 | `src/keyword-index.js` | `tools/build/build_keyword_index.js` | `{contentRoot}/교재/*.md` + `{contentRoot}/references.json` |
 | `data/exams.js` | `tools/build/build_exams_list.js` | `content/exams.json` (전역 시험 목록) |
-| `data/audio_manifest.js` | `tools/build/build-audio-manifest.js` | `{contentRoot}/audiobook/mp3/` (전 시험 순회, 시험 id 키 분리) |
+| `data/audio_manifest.js` | `tools/build/build_audio_manifest.js` | `{contentRoot}/audiobook/mp3/` (전 시험 순회, 시험 id 키 분리) |
 | `{dataRoot}/registry.js` | `tools/build/index.js` | `{contentRoot}/manifest.json` |
 | `{dataRoot}/subjects/*.js` | `tools/build/index.js` | `{contentRoot}/교재/*.md` |
 | `{dataRoot}/exams/*.js` | `tools/build/index.js` | `{contentRoot}/문제은행/*.md` |
 | `{dataRoot}/study_md/*.js` | `tools/build/build_study_md_bundle.js` | `{contentRoot}/교재/*.md` |
 | `{dataRoot}/exams_md/*.js` | `tools/build/build_exam_bundles.js` | `{contentRoot}/문제은행/*.md` (manifest `exams` 등록분만) |
-| `{dataRoot}/docs_md/*.js` | `tools/build/build_doc_bundles.js` | `{contentRoot}/학습안내서.md` 등 (앱 공용 `data/docs_md/`는 `docs/user/` 소스) |
+| `{dataRoot}/docs_md/*.js` | `tools/build/build_doc_bundles.js` | `{contentRoot}/docs/학습안내서.md` 등 (앱 공용 `data/docs_md/`는 `docs/user/` 소스) |
 | `{dataRoot}/drills/ox_subject*.js` | `tools/build/build_ox_drills.js` | `{dataRoot}/exams/*.js` (객관식) |
 | `{dataRoot}/drills/combo_subject*.js` | `tools/build/build_combo_drills.js` | `{dataRoot}/exams/*.js` (객관식+단답형) |
 | `{contentRoot}/문제은행/과목N_복수정답형.md` | `tools/build/build_combo_drills.js` | `{dataRoot}/exams/*.js` (검토용 산출물) |

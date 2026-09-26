@@ -1,4 +1,4 @@
-// tools/build/exam-targets.js — 멀티시험 빌드 대상 해석 (공통 헬퍼)
+// tools/build/exam_targets.js — 멀티시험 빌드 대상 해석 (공통 헬퍼)
 //
 // content/exams.json의 모든 시험을 빌드 대상으로 반환한다.
 // 각 시험은 자신의 contentRoot/dataRoot를 가지며, manifest는

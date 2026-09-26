@@ -15,7 +15,7 @@
 const fs = require('fs');
 const path = require('path');
 const ROOT = path.join(__dirname, '..', '..');
-const { getExamTargets } = require('./exam-targets.js');
+const { getExamTargets } = require('./exam_targets.js');
 
 // 챕터/단원 헤딩: "## 📚 Chapter 01. 화장품법의 이해" 또는 "## 3. 영업의 등록" (번호 있는 ## 절만)
 const CHAPTER_HEADING_RE = /^##\s+(?:📚\s*)?((?:Chapter\s+)?\d+\..+?)\s*$/;

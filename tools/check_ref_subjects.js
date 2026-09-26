@@ -13,8 +13,8 @@
 //   --strict: '불일치' 문서가 있으면 종료코드 1 (CI 연동용)
 const fs = require('fs');
 const path = require('path');
-const { docSubject } = require('./build/ref-statements.js');
-const { getExamTargets, getDefaultExamRoots } = require('./build/exam-targets.js');
+const { docSubject } = require('./build/ref_statements.js');
+const { getExamTargets, getDefaultExamRoots } = require('./build/exam_targets.js');
 
 const ROOT = path.resolve(__dirname, '..');
 const CONTENT = path.join(ROOT, getDefaultExamRoots(ROOT).contentRoot);

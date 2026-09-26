@@ -13,7 +13,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { getExamTargets } = require('./exam-targets');
+const { getExamTargets } = require('./exam_targets');
 
 const ROOT = path.resolve(__dirname, '..', '..');
 const AUTOGEN_HEADER = '// 자동 생성된 문제집 번들입니다. 수정하지 마십시오. (tools/build/build_exam_bundles.js)';

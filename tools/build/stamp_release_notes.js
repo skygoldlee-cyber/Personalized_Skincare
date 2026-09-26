@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /* ============================================================
- * tools/build/stamp-release-notes.js
+ * tools/build/stamp_release_notes.js
  * ------------------------------------------------------------
  * 배포 시 앱 버전 번들(data/version.js)과 사용자용 변경 이력을 갱신한다.
  *
@@ -9,16 +9,16 @@
  *
  * 역할:
  *   1) data/version.js 의 window.APP_VERSION 을 배포 버전으로 치환
- *      (sw.js CACHE_VERSION과 동일 값 — stamp-sw-version.js와 세트)
+ *      (sw.js CACHE_VERSION과 동일 값 — stamp_sw_version.js와 세트)
  *   2) release-notes.json 의 pending 항목({ "pending": true })에
  *      실제 버전을 부여해 확정하고 release-notes.js를 재생성한다.
  *   3) pending 항목이 없으면 이전 버전 커밋 이후의 커밋 subject로
  *      초안을 자동 생성한다 (수동 편집 워크플로: npm run notes:draft).
  *
  * 사용:
- *   - 모듈: const { stampReleaseNotes } = require('./stamp-release-notes.js');
+ *   - 모듈: const { stampReleaseNotes } = require('./stamp_release_notes.js');
  *           stampReleaseNotes({ version: stamp.newValue });
- *   - 단독 초안: node tools/build/stamp-release-notes.js --draft
+ *   - 단독 초안: node tools/build/stamp_release_notes.js --draft
  *     → 커밋 subject로 pending 항목을 만들고, 개발자가 JSON을 수동 편집 후 배포.
  *
  * 의존성 없음 (Node 내장 모듈만 사용).
@@ -69,7 +69,7 @@ function stampAppVersion(version, { dryRun = false, silent = false } = {}) {
   }
   if (!dryRun) {
     fs.writeFileSync(VERSION_PATH,
-      `// data/version.js — 앱 버전 전역 (배포 시 tools/build/stamp-release-notes.js가 갱신)\n` +
+      `// data/version.js — 앱 버전 전역 (배포 시 tools/build/stamp_release_notes.js가 갱신)\n` +
       `// sw.js CACHE_VERSION과 동일 값을 유지한다.\n` +
       `window.APP_VERSION = '${version}';\n`);
   }

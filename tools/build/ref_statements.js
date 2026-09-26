@@ -1,5 +1,5 @@
 /* ============================================================
- * tools/build/ref-statements.js
+ * tools/build/ref_statements.js
  * ------------------------------------------------------------
  * content/참조자료/ref_md/*.md (법령·고시·별표 원문)에서 복수정답형
  * 진술 원자를 추출한다. 법령 텍스트는 구조가 참/거짓을 보장한다:
@@ -13,7 +13,7 @@
  * 추출 원자 형태:
  *   { kind:'def'|'enum', text, docShort, article, term?, listId?, topic? }
  *
- * 사용: const { extractRefAtoms } = require('./ref-statements.js');
+ * 사용: const { extractRefAtoms } = require('./ref_statements.js');
  * ============================================================ */
 'use strict';
 

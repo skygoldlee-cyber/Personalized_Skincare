@@ -7,7 +7,7 @@
  *
  * 순서:
  *   1) main 브랜치 + 작업 트리 clean + origin/main 동기화 검사
- *   2) sw.js CACHE_VERSION 스탬프 (stamp-sw-version.js)
+ *   2) sw.js CACHE_VERSION 스탬프 (stamp_sw_version.js)
  *      → 값이 바뀌면 'chore(sw): CACHE_VERSION 스탬프' 자동 커밋 + push
  *   3) vercel --prod --yes 실행
  *
@@ -22,8 +22,8 @@
 const { execSync, spawnSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
-const { stampSwVersion } = require('./build/stamp-sw-version.js');
-const { stampReleaseNotes } = require('./build/stamp-release-notes.js');
+const { stampSwVersion } = require('./build/stamp_sw_version.js');
+const { stampReleaseNotes } = require('./build/stamp_release_notes.js');
 
 // 팀 프로젝트는 개인 계정 기본 스코프로는 배포가 거부되므로(Not authorized),
 // .vercel/project.json의 orgId를 --scope로 명시한다. 개인 프로젝트(orgId 없음)면 생략.

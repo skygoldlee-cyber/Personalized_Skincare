@@ -1,6 +1,6 @@
 # 복수정답형(ㄱㄴㄷ 조합) 문항 생성 가이드
 
-> `tools/build/build_combo_drills.js` + `tools/build/ref-statements.js`가
+> `tools/build/build_combo_drills.js` + `tools/build/ref_statements.js`가
 > 문제은행 객관식과 참조자료 원문을 **복수정답형 드릴 문항**으로 변환·생성하는
 > 전체 과정을 설명합니다. 스키마 자체는 `QUESTION_SCHEMA_DESIGN.md` §6 참조.
 
@@ -18,7 +18,7 @@
 처리  →  build_combo_drills.js
           ├─ choice → combo 변환 (fact / answer 모드)
           ├─ 개념 재조합 (같은 교재 구간 L####의 진술 묶음)
-          └─ 참조자료 원자 추출 → 멤버십·정의 문항 (ref-statements.js)
+          └─ 참조자료 원자 추출 → 멤버십·정의 문항 (ref_statements.js)
 
 출력  →  data/exams/cosmetic/drills/combo_subjectN.js   (var COMBO_DRILLS_subjectN)
         data/exams/cosmetic/drills/combo_index.js       (var COMBO_INDEX — 과목별 문항 수)
@@ -75,7 +75,7 @@ fact 진술을 모아 **참 2~3 + 거짓 2~3**의 진짜 복수정답 문항을 
 
 ## 3. 소스 ② — 참조자료 원문 추출 (`ref:`)
 
-`ref-statements.js`가 `content/exams/cosmetic/참조자료/ref_md`의 법령·고시 마크다운에서
+`ref_statements.js`가 `content/exams/cosmetic/참조자료/ref_md`의 법령·고시 마크다운에서
 검증 원자(atom)를 추출합니다. 법령 텍스트는 구조가 참/거짓을 보장합니다.
 
 ### 3-1. 추출 원자
@@ -219,11 +219,11 @@ ref_md는 `ref_md/과목N/{문서}/{문서}.md` 과목 폴더 구조이며, `ext
 | 조정 대상 | 위치 |
 |---|---|
 | 참조자료 과목별 상한 | `build_combo_drills.js` `REF_COMBO_CAP` |
-| 큐레이션 총량·파일별 상한 | `buildRefCombos` `curatedCap`(60%) / `ref-statements.js` `INGREDIENT_FILES[].cap` |
-| 원료 파일·섹션 스펙 | `ref-statements.js` `INGREDIENT_FILES` (`sectionRe`/`sectionAllow`) |
+| 큐레이션 총량·파일별 상한 | `buildRefCombos` `curatedCap`(60%) / `ref_statements.js` `INGREDIENT_FILES[].cap` |
+| 원료 파일·섹션 스펙 | `ref_statements.js` `INGREDIENT_FILES` (`sectionRe`/`sectionAllow`) |
 | 멤버 필터 | `build_combo_drills.js` `memberOk`, `isSentence` |
 | 목록별 문항 수 | 목록 규모 상한: 멤버 ≥12 → 7문, ≥24 → 10문, ≥60 → 20문 |
-| 과목 귀속 | `ref-statements.js` `DOC_SUBJECT_RULES` |
+| 과목 귀속 | `ref_statements.js` `DOC_SUBJECT_RULES` |
 
 ## 7. 품질 감사 체크리스트
 
@@ -273,9 +273,9 @@ ref_md는 `ref_md/과목N/{문서}/{문서}.md` 과목 폴더 구조이며, `ext
 
 | 위치 | 역할 | 미설정 시 동작 |
 |---|---|---|
-| `DOC_SUBJECT_RULES` (`ref-statements.js`) | 문서명 → 과목 귀속 | 규칙 미일치 → `docSubject` null → 해당 문서 원자 미생성 |
-| `INGREDIENT_FILES` (`ref-statements.js`) | 원료 DB 파일·섹션 스펙 | `원료/` 폴더 없으면 조용히 스킵 |
-| `TABLE_TOPICS` (`ref-statements.js`) | 표 문서별 발문 주제 | 주제 없으면 조문/문서명 발문, 둘 다 없으면 목록 스킵 |
+| `DOC_SUBJECT_RULES` (`ref_statements.js`) | 문서명 → 과목 귀속 | 규칙 미일치 → `docSubject` null → 해당 문서 원자 미생성 |
+| `INGREDIENT_FILES` (`ref_statements.js`) | 원료 DB 파일·섹션 스펙 | `원료/` 폴더 없으면 조용히 스킵 |
+| `TABLE_TOPICS` (`ref_statements.js`) | 표 문서별 발문 주제 | 주제 없으면 조문/문서명 발문, 둘 다 없으면 목록 스킵 |
 | `REF_COMBO_CAP` (`build_combo_drills.js`) | 과목별 참조자료 상한 | 과목 번호 미정의 → cap 0 → 참조자료 문항 0개 (안전한 기본값) |
 | `cat` 목록 추출 한정 (`/주의사항\|알레르기/`) | 계층 목록 추출 대상 문서 | 미일치 문서의 cat 목록은 추출 안 함 |
 

@@ -44,7 +44,7 @@ BASE = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 
 def _default_content_root():
-    """대상 시험의 contentRoot 해석 — Node 도구(tools/build/exam-targets.js)와
+    """대상 시험의 contentRoot 해석 — Node 도구(tools/build/exam_targets.js)와
     같은 env 계약: EXAM_CONTENT_ROOT(절대/프로젝트 상대 경로) > EXAM_ID
     > content/exams.json의 default 시험 > 'content'"""
     root = os.environ.get('EXAM_CONTENT_ROOT')

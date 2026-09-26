@@ -108,7 +108,7 @@
 
 ## 2026-09-26 새 버전 변경 이력 알림 (What's New)
 
-- **`data/version.js`**: `window.APP_VERSION` 전역 — `stamp-release-notes.js`가
+- **`data/version.js`**: `window.APP_VERSION` 전역 — `stamp_release_notes.js`가
   배포 시 sw.js CACHE_VERSION과 동일 값으로 갱신. 기존 `settings-version`이
   SW scriptURL 정규식에 의존해 항상 `v1.0.0`이던 결함도 함께 수정.
 - **`data/release-notes.json`**: 사용자용 변경 이력 진실 소스(최신순).
@@ -929,7 +929,7 @@ exams→subjects 해석, 과목별 자산(glossary·number-drills·ref_md 폴더
 **R1 — 과목 식별자 단일화**: 하드코딩 매핑을 manifest/references.json 파생으로 교체.
 - `check_ref_subjects.js`: `SUBJECT_DIRS` 상수 제거 → manifest의 dir↔order 사용
 - `trainer-drills.js`: `SID_SUBJECT` 상수 제거 → DataLoader.registry에서 sid 접두사 해석
-- `ref-statements.js`: `DOC_SUBJECT_RULES` → `references.json`의 `docSubjectRules`로 이전
+- `ref_statements.js`: `DOC_SUBJECT_RULES` → `references.json`의 `docSubjectRules`로 이전
   (내장 목록은 폴백으로 유지) — 문서→과목 귀속 진실을 콘텐츠 설정에 집중
 - `build_keyword_index.js`: `_DIR_PRIORITY` 4과목 하드코딩 → refDirs 키에서 파생
 
@@ -964,7 +964,7 @@ R4는 수백 파일 규모라 별도 단계로 진행 예정.
 - **이미지 보존**: pymupdf로 원본 바이트 추출, y좌표 위치에 `![이미지]` 참조 삽입
 - **지표**: 전 문서 공백 16.7~27.6%로 균일화(기존 2.6~25%), 손상 표 0건
 
-추출기 연동(`ref-statements.js`): 정상 MD 표 행에서 멤버 열 추출 추가
+추출기 연동(`ref_statements.js`): 정상 MD 표 행에서 멤버 열 추출 추가
 (헤더 매칭 → 이름형 열 스코어링 폴백, 연번 열 회피, 페이지 경계 표 병합).
 오답 풀을 이름형↔문장형 멤버 단위로 분리(길이로 정답이 들통나는 문제 방지),
 토픽·멤버 필터 보강(문장형 토픽 강등, 조사/마커 시작 조각 제외).
@@ -976,7 +976,7 @@ check_combo_pilot 전 과목 무결성.
 ## 2026-09-20 참조자료 원문(ref_md) 복수정답형 생성 파일럿
 
 `content/참조자료/ref_md` 법령·고시·별표 원문에서 검증된 진술 원자를 추출해
-복수정답형 풀을 확충 — `tools/build/ref-statements.js` 신규 + `build_combo_drills.js` 연동:
+복수정답형 풀을 확충 — `tools/build/ref_statements.js` 신규 + `build_combo_drills.js` 연동:
 
 - **추출 원자 3종**: 정의조항(용어↔정의 교차 결합으로 거짓 생성), 조문 열거
   목록(각 호/목 멤버십), 연번 표(알레르기 25종·색소) + 별표 계층 목록(유형별 주의사항)
@@ -1075,11 +1075,11 @@ check_combo_pilot 전 과목 무결성.
 - `data/audio_manifest.js` — 시험 id 키로 분리된 단일 매니페스트(`AUDIO_MANIFEST['<examId>']`), `getAudioManifest(examId)` 헬퍼 추가, `reader-audio.js`가 활성 시험분 선택
 
 ### 빌드 파이프라인
-- `tools/build/exam-targets.js` (신규) — `getExamTargets()`(exams.json → contentRoot/dataRoot/manifest 해석), `getSubjectMaps()`(manifest → SUBJECT_NUM/KEY/TITLE 파생 — 기존 하드코딩 테이블 대체)
+- `tools/build/exam_targets.js` (신규) — `getExamTargets()`(exams.json → contentRoot/dataRoot/manifest 해석), `getSubjectMaps()`(manifest → SUBJECT_NUM/KEY/TITLE 파생 — 기존 하드코딩 테이블 대체)
 - `tools/build_all_data.js` (신규) — `build:data`가 모든 시험을 순회 빌드 (`EXAM_ID`로 `tools/build/index.js` 재실행). `--only` 인자 패스스루
 - `tools/build/index.js` — `EXAM_ID`/`EXAM_CONTENT_ROOT`/`EXAM_DATA_ROOT` 지원, 레지스트리 `bundle` 경로를 `{dataRoot}` 기준으로, 비기본 시험은 `DATA_REGISTRY_<id>` 전역명 + `var`-only(클래식 스크립트 주입 호환). sw.js 프리캐시 갱신은 기본 시험만
-- 시험 순회로 일반화: `build_ox_drills.js`, `build_combo_drills.js`(과목 매핑/출력 디렉터리/MD 산출물), `build_exam_bundles.js`, `build_study_md_bundle.js`(storyFile 포함), `build_doc_bundles.js`, `build-audio-manifest.js`, `sync_citation_lines.js`, `check_parser_parity.js`
-- `build-pdf-registry.js`/`build_keyword_index.js` — 기본 시험 전용 유지 + `EXAM_CONTENT_ROOT` env 지원 (공유 모듈 출력이라 시험별 분리는 후속 과제)
+- 시험 순회로 일반화: `build_ox_drills.js`, `build_combo_drills.js`(과목 매핑/출력 디렉터리/MD 산출물), `build_exam_bundles.js`, `build_study_md_bundle.js`(storyFile 포함), `build_doc_bundles.js`, `build_audio_manifest.js`, `sync_citation_lines.js`, `check_parser_parity.js`
+- `build_pdf_registry.js`/`build_keyword_index.js` — 기본 시험 전용 유지 + `EXAM_CONTENT_ROOT` env 지원 (공유 모듈 출력이라 시험별 분리는 후속 과제)
 - `supplements.js` — `ctx.contentRoot`/`ctx.dataRoot` 사용, 보충 번들 경로 `{dataRoot}/supplements/`
 
 ### 검증
@@ -1711,11 +1711,11 @@ check_combo_pilot 전 과목 무결성.
 > content/ 폴더 변경 시 소스 코드 수정 없이 JSON/MD 파일만 편집하면 빌드 파이프라인이 자동 처리하도록 개선.
 
 ### refactor — content 변경 유연성 6개 항목 (b2dd72b)
-- **#1 pdf-registry.js 자동 생성**: `content/references.json` 신규 생성(SSOT), `tools/build/build-pdf-registry.js`로 빌드 시 자동 생성
+- **#1 pdf-registry.js 자동 생성**: `content/references.json` 신규 생성(SSOT), `tools/build/build_pdf_registry.js`로 빌드 시 자동 생성
 - **#2 sw.js MD_ASSETS 자동 갱신**: `tools/build/index.js`에서 manifest 기반으로 MD_ASSETS 배열 자동 생성, 이야기형 파일 자동 포함
 - **#3 exam-simulator.js 동적화**: `subject1-4` 접두사 매칭 → registry.exams의 subject 필드 기반 동적 그룹화, 문제 수 manifest.integratedExam에서 관리
 - **#4 빌드 파이프라인 통합**: `build:data` 한 번으로 pdf-registry → keyword-index → index → study-md → exam-bundles → audio-manifest → check:parser 순차 실행
-- **#5 audio_manifest.js 자동 생성**: `tools/build/build-audio-manifest.js` 디렉토리 스캔, 기존 매니페스트 보존
+- **#5 audio_manifest.js 자동 생성**: `tools/build/build_audio_manifest.js` 디렉토리 스캔, 기존 매니페스트 보존
 - **#6 index.html 정적 텍스트 동적화**: "1,000제" 등 하드코딩 제거, populateExamCards()에서 registry 기반 동적 치환
 - **build_keyword_index.js 중복 제거**: REF_DIRS/SUBJECT_DIR_TO_ID 하드코딩 → references.json에서 로드
 - **검증**: npm test 248 pass, check:imports 54파일 0오류, verify:assets 81개, build:data 전체 파이프라인 성공
@@ -2514,7 +2514,7 @@ check_combo_pilot 전 과목 무결성.
 - **`index.html`**: 6개 유튜브/외부링크 카드 + 4개 채널 요약 판넬 + 부록 설명 하드코딩 제거 → `#resources-section` 동적 컨테이너
 - **`content/manifest.json`**: 모든 과목에 `shortName` 필드 추가; `resources` 섹션 추가 (sectionTitle, summaries, links)
 - **`tools/build/index.js`**: registry 출력에 `shortName`, `file`, `resources` 필드 추가
-- **`tools/build/manifest-loader.js`**: 시험 파일 경로 `exams/` → `content/exams/` 수정
+- **`tools/build/manifest_loader.js`**: 시험 파일 경로 `exams/` → `content/exams/` 수정
 - **`tools/build/plugins/exams.plugin.js`**: 동일 경로 수정
 - **`src/types.js`**: `SubjectMeta.shortName`, `ExamMeta.file`, `ResourcesMeta` typedef 추가; `DataRegistry.resources` 필드 추가; `FlashcardsState.subject`/`QuizSessionState.subject` → `string|null`
 

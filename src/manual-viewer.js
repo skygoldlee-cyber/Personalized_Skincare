@@ -363,7 +363,7 @@ body.manual-open{overflow:hidden;}
        --------------------------------------------------------- */
 
     // 'docs/user_manual.md' → 'data/docs_md/user_manual.js' (앱 공용 문서)
-    // 'content/학습안내서.md' → '{dataRoot}/docs_md/학습안내서.js' (시험별 문서 — 멀티시험)
+    // 'content/.../docs/학습안내서.md' → '{dataRoot}/docs_md/학습안내서.js' (시험별 문서 — 멀티시험)
     function _bundlePathFor(sourceKey) {
         const src = MD_SOURCES[sourceKey];
         if (!src) return null;

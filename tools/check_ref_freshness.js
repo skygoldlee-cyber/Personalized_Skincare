@@ -23,7 +23,7 @@
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
-const { getExamTargets } = require('./build/exam-targets.js');
+const { getExamTargets } = require('./build/exam_targets.js');
 
 const ROOT = path.resolve(__dirname, '..');
 const UPDATE = process.argv.includes('--update');

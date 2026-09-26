@@ -16,8 +16,8 @@ import { createRequire } from 'module';
 const ROOT = path.resolve(import.meta.dirname, '../..');
 const OUTPUT = path.join(ROOT, 'src/keyword-index.js');
 const require = createRequire(import.meta.url);
-const { getExamTargets } = require('./exam-targets.js');
-const { docSubject } = require('./ref-statements.js');
+const { getExamTargets } = require('./exam_targets.js');
+const { docSubject } = require('./ref_statements.js');
 
 // --- 참조문서 텍스트 캐시 (키는 contentRoot를 포함한 전체 상대경로 — 시험 간 공유 안전) ---
 const refTextCache = {};

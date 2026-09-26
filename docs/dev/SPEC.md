@@ -582,7 +582,7 @@
 | BP-04 | 파싱 마커 감시 (`🔖기출` 마커 + 정답 빈칸 누락 경고) | ✅ |
 | BP-05 | 빌드 파서 ↔ 런타임 파서 등가성 검증 (`check_parser_parity.js`) | ✅ |
 | BP-06 | `GLOSSARY_INDEX` 자동 생성 + 큐레이션 JSON 병합 (`build_keyword_index.js`) | ✅ |
-| BP-07 | SW 캐시 버전 자동 스탬프 (`stamp-sw-version.js`) | ✅ |
+| BP-07 | SW 캐시 버전 자동 스탬프 (`stamp_sw_version.js`) | ✅ |
 | BP-08 | 콘텐츠 품질 감사 (`audit_card_quality.js`, `npm run audit:cards`) | ✅ |
 
 ### 5.4 콘텐츠 구조
@@ -593,7 +593,7 @@
 | CS-02 | 문제은행: `content/exams/cosmetic/문제은행/과목N_단일정답형.md` | ✅ |
 | CS-03 | 참조자료: `content/exams/cosmetic/참조자료/ref_md/과목N/` (MD 변환본 41종, 원본 PDF는 배포 제외) | ✅ |
 | CS-04 | 성분 원본: `content/exams/cosmetic/참조자료/원료/` | ✅ |
-| CS-05 | 학습안내서: `content/exams/cosmetic/학습안내서.md` | ✅ |
+| CS-05 | 학습안내서: `content/exams/cosmetic/docs/학습안내서.md` | ✅ |
 | CS-06 | 용어집 큐레이션: `content/exams/cosmetic/교재/glossary/subject{1-4}.json` | ✅ |
 | CS-07 | 오디오북: `content/exams/cosmetic/audiobook/` (Python TTS 파이프라인) | ✅ |
 | CS-08 | 파일명 ASCII 슬러그화 (CP949↔UTF-8 불일치 원천 제거) | ✅ |
