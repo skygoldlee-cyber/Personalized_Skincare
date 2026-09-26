@@ -80,8 +80,9 @@
 │ │                    Application Layer                     │ │
 │ │  ┌──────────────────────────────────────────────────┐   │ │
 │ │  │ 코어: app.js(오케스트레이터) · router.js · state.js │   │ │
+│ │  │ storage.js(저장소 추상화·백엔드 교체) · storage-keys │   │ │
 │ │  │ exam-context.js(시험 해석·scopedKey) · ui-mode.js   │   │ │
-│ │  │ storage-keys.js · paths.js · data-loader.js         │   │ │
+│ │  │ paths.js · data-loader.js · weak-items.js           │   │ │
 │ │  └──────────────────────────────────────────────────┘   │ │
 │ │  ┌──────────────────────────────────────────────────┐   │ │
 │ │  │ 유틸: utils · sanitize · sha256 · charts · ui-utils │   │ │
@@ -178,7 +179,7 @@
 | `content/` | 콘텐츠 SSOT — 전역(`exams.json` 시험 레지스트리) + 시험별 루트(`exams/<id>/`에 manifest/교재/문제은행/참조자료/오디오북) |
 | `docs/` | 프로젝트 문서 (`dev/` 개발 문서, `user/` 사용자 문서) |
 | `tools/` | 빌드 스크립트, 배포 가드(`deploy.js`), 검증 도구 |
-| `tests/` | 자동화 테스트 (`unit/` Node.js 458개, `dom/` Vitest+jsdom 264개) |
+| `tests/` | 자동화 테스트 (`unit/` Node.js, `dom/` Vitest+jsdom) |
 | `vendor/` | 자체 호스팅 라이브러리 (FontAwesome, 웹폰트, Mermaid.js, Supabase UMD) |
 | `icons/` | PWA 아이콘 (192/512/maskable) |
 
@@ -404,11 +405,11 @@ Personalized_Skincare/
 │   └── fix-mindmap-indent.mjs  #   Mermaid mindmap 들여쓰기 수정
 │
 ├── tests/                      # 자동화 테스트
-│   ├── unit/                   #   단위 테스트 (35개 파일, 458 tests, node --test)
+│   ├── unit/                   #   단위 테스트 (node --test)
 │   │   └── *.test.js           #     delegation-guard · parser · mermaid · sanitize ·
-│   │                           #     state · store(batch/customer/material/formula) ·
+│   │                           #     state · storage · store(batch/customer/material/formula) ·
 │   │                           #     sync · exam-context · questions · statement-tracker 등
-│   └── dom/                    #   DOM 테스트 (30개 파일, 264 tests, Vitest + jsdom)
+│   └── dom/                    #   DOM 테스트 (Vitest + jsdom)
 │       ├── helpers.js          #     공통 DOM 셋업·모킹 헬퍼
 │       ├── supabase.js         #     Supabase 모킹
 │       ├── common-*.dom.test.js    # 공통 시나리오 (a11y/auth/offline/theme/uimode/sync…)
@@ -575,7 +576,8 @@ Personalized_Skincare/
 ```
 [분리 완료 — src/ 루트]
 app.js (초기화·이벤트 위임)          state.js (전역 상태·영속성)
-router.js (SPA 라우터)               storage-keys.js (키 중앙 관리)
+router.js (SPA 라우터)               storage.js (저장소 추상화·백엔드 교체)
+storage-keys.js (키 중앙 관리)       weak-items.js (약점 ID 문법·인덱스 캐시)
 paths.js (경로 상수)                 exam-context.js (시험 해석·scopedKey·hasFeature)
 ui-utils.js (토스트·모달·로딩)        sanitize.js (XSS 방어)
 utils.js (헬퍼·shuffle)              types.js (JSDoc 타입)
@@ -590,6 +592,7 @@ questions.js (문항 스키마 검증)       study-aids.js (기출 필터·숫�
 study-tracker.js (캘린더 추적)        sha256.js (안정 ID 해시)
 web-vitals.js (성능 모니터링)         glossary-query.js (용어집 쿼리)
 trainer-calc.js (계산 문제 생성)      csv-utils.js (CSV 파서·직렬화)
+recommendations.js (합격 전략 추천)    command-palette.js (통합 검색 팔레트)
 store-utils.js (스토어 공통 헬퍼)     formula-store.js (포뮬러 CRUD)
 formula-rules.js (추천 규칙)          formula-check.js (고시 한도 검증)
 formula-stability.js (제형 안정성)    batch-store.js (조제 기록)
@@ -860,7 +863,7 @@ pullSync() (로그인 시 / "지금 동기화" 버튼)
 
 ## 🗝️ localStorage 키 체계
 
-모든 영속 키는 [`src/storage-keys.js`](../../src/storage-keys.js)의 `STORAGE_KEYS`에 중앙 선언된다. 접근은 반드시 `state.js`의 `safeGetItem`/`safeSetItem`(try/catch 래핑 + 시험 네임스페이스 자동 적용 + 쓰기 훅 호출)를 통한다.
+모든 영속 키는 [`src/storage-keys.js`](../../src/storage-keys.js)의 `STORAGE_KEYS`에 중앙 선언된다. 접근은 저장소 추상화 계층 [`src/storage.js`](../../src/storage.js)를 통한다 — `state.js`의 `safeGetItem`/`safeSetItem`(try/catch 래핑 + 시험 네임스페이스 자동 적용 + 쓰기 훅 호출)이 백엔드에 위임하는 형태. 백엔드는 `setStorageBackend()`로 교체 가능하며(기본 localStorage), 비동기 백엔드 이행 대비 `*Async` API를 병행 제공한다. 다중 키 원자적 쓰기는 `setMany`/`setJSONMany`(중간 실패 시 이전 값으로 롤백).
 
 ### 키 분류
 
@@ -1480,8 +1483,8 @@ npm run deploy
 
 | 명령 | 역할 |
 |------|------|
-| `npm test` | 단위 테스트 (node --test, 458개) |
-| `npm run test:dom` | DOM 테스트 (Vitest + jsdom, 264개) |
+| `npm test` | 단위 테스트 (node --test) |
+| `npm run test:dom` | DOM 테스트 (Vitest + jsdom) |
 | `npm run test:all` | unit + parser + imports + dom 일괄 |
 | `npm run build:data` | 시험별 콘텐츠→데이터 번들 (모든 시험 순회) |
 | `npm run check:content -- --build` | 콘텐츠 통합 검증 (교재 교체 등 대규모 변경 후) |
@@ -1903,7 +1906,7 @@ npm.cmd run deploy
 - [`MULTI_MACHINE_SETUP.md`](MULTI_MACHINE_SETUP.md) — 다중 머신 개발 환경 설정
 - [`CHANGES.md`](CHANGES.md) — 코드 리뷰 및 아키텍처 개편 수정 이력 (Changelog)
 - [`MD_TO_HTML_LOGIC.md`](MD_TO_HTML_LOGIC.md) — MD→HTML 변환·표시 로직 기술 문서
-- [`TESTING.md`](TESTING.md) — 테스트 가이드 (722 tests: 458 unit + 264 DOM)
+- [`TESTING.md`](TESTING.md) — 테스트 가이드·정책 (unit + DOM)
 - [`DOM_TEST_DESIGN.md`](DOM_TEST_DESIGN.md) — jsdom UI 시나리오 테스트 설계 (helpers·모킹 전략·Playwright 확장 경로)
 - [`SPEC.md`](SPEC.md) — 요구사양 명세서 (기능 ID별 구현 상태, UI/UX 재사용 가이드 §4.8)
 - [`FORMULA_OS_DESIGN.md`](FORMULA_OS_DESIGN.md) — Formula OS 도메인 설계
