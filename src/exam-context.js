@@ -169,3 +169,22 @@ export function resolveLegacySubjectKey(subj) {
     const exam = exams.find(e => e.key === subj || e.key.startsWith(subj));
     return exam ? exam.subject : subj;
 }
+
+/**
+ * 문제집(exam) 키 → 과목 키 매핑.
+ * 정확 일치 → 접두 매칭(subject2_p1 ↔ subject2 호환) → 첫 과목 폴백 순.
+ */
+export function examIdToSubjectId(examId) {
+    const registry = (typeof window !== 'undefined' && window.DATA_REGISTRY) || null;
+    if (registry && registry.exams) {
+        const exam = registry.exams.find(e => e.key === examId);
+        if (exam) return exam.subject;
+        // prefix 매칭 호환성 (예: subject2_p1 또는 subject2)
+        const partialExam = registry.exams.find(e => examId.startsWith(e.key) || e.key.startsWith(examId));
+        if (partialExam) return partialExam.subject;
+    }
+    if (registry && registry.subjects && registry.subjects.length > 0) {
+        return registry.subjects[0].key;
+    }
+    return null;
+}

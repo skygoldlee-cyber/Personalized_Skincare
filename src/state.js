@@ -10,6 +10,7 @@
 
 import { STORAGE_KEYS } from './storage-keys.js';
 import { scopedKey, unscopedKey } from './exam-context.js';
+import { WEAK_QUIZ_PREFIX } from './weak-items.js';
 
 /* =======================================================
    📦 전역 학습 상태 객체 (Global Application State)
@@ -294,8 +295,8 @@ export function cleanOrphansForSubject(subjKey, subjData) {
     const weakToClean = [...state.weakCards].filter(id => id.startsWith(subjKey + '_card_') && !validCardIds.has(id));
     // 기출 퀴즈 오답(weak_quiz_<quizId>)도 해당 퀴즈가 사라졌으면 청소
     const weakQuizToClean = [...state.weakCards].filter(id => {
-        if (!id.startsWith('weak_quiz_')) return false;
-        const orig = id.substring('weak_quiz_'.length);
+        if (!id.startsWith(WEAK_QUIZ_PREFIX)) return false;
+        const orig = id.substring(WEAK_QUIZ_PREFIX.length);
         return orig.startsWith(subjKey + '_quiz_') && !validQuizIds.has(orig);
     });
 

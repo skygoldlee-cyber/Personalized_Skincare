@@ -11,6 +11,8 @@ import { TIMING } from '../config/timing.js';
 import { simState } from './exam-sim-state.js';
 import { chapterForQuestion, renderSimResultBreakdown } from './exam-sim-review.js';
 import { recordStatementJudgments } from '../statement-tracker.js';
+import { examIdToSubjectId } from '../exam-context.js';
+import { WEAK_SIM_PREFIX, parseWeakSimId } from '../weak-items.js';
 
 // --- 5. 실전 모의고사 시뮬레이터 구현 ---
 export { simState };
@@ -680,7 +682,7 @@ export function submitExam() {
             });
             
             // 틀린 문제는 복습용 오답 카드로 자동으로 등록! (중요 기능 요구사항 구현)
-            const fakeCardId = `weak_sim_${q.id}`;
+            const fakeCardId = `${WEAK_SIM_PREFIX}${q.id}`;
             state.weakCards.add(fakeCardId);
         }
         
@@ -752,20 +754,8 @@ export function saveExamResultToHistory(examId, score, total, subjectRates) {
     safeSetItem(STORAGE_KEYS.SIM_RESULTS_HISTORY, JSON.stringify(history));
 }
 
-export function examIdToSubjectId(examId) {
-    const registry = window.DATA_REGISTRY;
-    if (registry && registry.exams) {
-        const exam = registry.exams.find(e => e.key === examId);
-        if (exam) return exam.subject;
-        // prefix 매칭 호환성 (예: subject2_p1 또는 subject2)
-        const partialExam = registry.exams.find(e => examId.startsWith(e.key) || e.key.startsWith(examId));
-        if (partialExam) return partialExam.subject;
-    }
-    if (registry && registry.subjects && registry.subjects.length > 0) {
-        return registry.subjects[0].key;
-    }
-    return null;
-}
+// examIdToSubjectId는 exam-context.js로 이동 (공용 매핑)
+export { examIdToSubjectId } from '../exam-context.js';
 
 /* =======================================================
    📋 "틀린 문제만 모아 풀기" 오답 모의고사 (Weakness Exam)
@@ -799,12 +789,10 @@ function _startWeakExamImpl() {
     // 필터링 적용 (신규 Feature 3)
     if (state.reviewFilter && state.reviewFilter !== 'all') {
         weakCards = weakCards.filter(cardId => {
-            if (cardId.startsWith('weak_sim_')) {
-                const parts = cardId.replace('weak_sim_', '').split('_q');
-                if (parts.length === 2) {
-                    const targetSub = examIdToSubjectId(parts[0]);
-                    return targetSub === state.reviewFilter;
-                }
+            const simId = parseWeakSimId(cardId);
+            if (simId) {
+                const targetSub = examIdToSubjectId(simId.examId);
+                return targetSub === state.reviewFilter;
             } else {
                 for (const subjId of Object.keys(STUDY_DATA)) {
                     if (STUDY_DATA[subjId].cards.some(c => c.id === cardId)) {
@@ -868,8 +856,8 @@ function _startWeakExamImpl() {
 
         // 1-b) 모의고사 오답: weak_sim_<examId>_q<num> 형태의 ID
         // STUDY_DATA에 없으므로 window.EXAM_DATA에서 원본 문제를 찾아 복습 문제로 조립
-        if (cardId.startsWith('weak_sim_')) {
-            const origQId = cardId.replace('weak_sim_', '');
+        if (cardId.startsWith(WEAK_SIM_PREFIX)) {
+            const origQId = cardId.substring(WEAK_SIM_PREFIX.length);
             const EXAM_DATA = (typeof window !== 'undefined' && window.EXAM_DATA) ? window.EXAM_DATA : {};
             let foundQ = null;
             let foundSubj = '';

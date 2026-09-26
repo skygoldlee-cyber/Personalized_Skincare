@@ -4,59 +4,15 @@ import { safeTextWithBreaks, esc } from '../sanitize.js';
 import { switchView } from './navigation.js';
 import { DataLoader } from '../data-loader.js';
 import { computeWrongCauseSummary, WRONG_CAUSE_LABELS } from '../recommendations.js';
-import { examIdToSubjectId } from './exam-simulator.js';
+import { examIdToSubjectId } from '../exam-context.js';
+import {
+    WEAK_QUIZ_PREFIX as WRONG_QUIZ_PREFIX, WEAK_SIM_PREFIX,
+    weakItemKey, resolveWrongQuiz, subjectForWeakItem, parseWeakSimId
+} from '../weak-items.js';
 import { checkShortAnswer } from './trainer.js';
 import { updateGlobalStats, startSubjectReader } from './dashboard.js';
 import { shuffle } from '../utils.js';
 import { showToast, vibrate, HAPTIC } from '../ui-utils.js';
-
-// 기출 퀴즈 오답을 weakCards에 담을 때의 접두사 (모의고사 오답 weak_sim_ 과 대칭)
-const WRONG_QUIZ_PREFIX = 'weak_quiz_';
-
-
-
-/**
- * 퀴즈 항목 ID → weakCards/wrongCauses에서 쓰는 약점 항목 키
- * (weak_sim_/weak_quiz_/카드 ID는 그대로, 일반 퀴즈 ID는 weak_quiz_ 접두사)
- */
-function weakItemKey(quizId) {
-    if (quizId.startsWith('weak_') || quizId.includes('_card_')) return quizId;
-    return WRONG_QUIZ_PREFIX + quizId;
-}
-
-/**
- * weak_quiz_<origId> 또는 일반 퀴즈 ID로 원본 퀴즈 객체를 찾는다.
- * @returns {{quiz: object, subjectId: string}|null}
- */
-function resolveWrongQuiz(quizId) {
-    const origId = quizId.startsWith(WRONG_QUIZ_PREFIX)
-        ? quizId.substring(WRONG_QUIZ_PREFIX.length)
-        : quizId;
-    if (!window.STUDY_DATA) return null;
-    for (const subjId of Object.keys(window.STUDY_DATA)) {
-        const found = (window.STUDY_DATA[subjId].quizzes || []).find(q => q.id === origId);
-        if (found) return { quiz: found, subjectId: subjId };
-    }
-    return null;
-}
-
-/**
- * 약점 항목 ID → 해당 항목의 과목 ID (약점 집중 퀴즈는 과목이 섞일 수 있음)
- */
-function subjectForWeakItem(itemId) {
-    if (itemId.startsWith('weak_sim_')) {
-        const examId = itemId.replace('weak_sim_', '').split('_q')[0];
-        return examIdToSubjectId(examId);
-    }
-    const resolved = resolveWrongQuiz(itemId);
-    if (resolved) return resolved.subjectId;
-    if (window.STUDY_DATA) {
-        for (const subjId of Object.keys(window.STUDY_DATA)) {
-            if ((window.STUDY_DATA[subjId].cards || []).some(c => c.id === itemId)) return subjId;
-        }
-    }
-    return state.quiz.subject;
-}
 
 /**
  * 퀴즈 오답 후 피드백 패널에 "틀린 이유" 자가 태깅 버튼을 표시한다.
@@ -429,7 +385,7 @@ export function nextQuizQuestion() {
 function _citationForQuiz(quizId) {
     const q = (state.quiz.data || []).find(x => x.id === quizId);
     if (!q || !q.category) return null;
-    const subjId = subjectForWeakItem(weakItemKey(quizId));
+    const subjId = subjectForWeakItem(weakItemKey(quizId), state.quiz.subject);
     const subj = ((typeof window !== 'undefined' && window.STUDY_DATA) || {})[subjId];
     if (!subj) return null;
     for (const ch of (subj.chapters || [])) {
@@ -496,7 +452,7 @@ export function renderQuizResult() {
                     </div>
                     <div class="wrong-relearn-row">
                         <button type="button" class="wrong-relearn-btn" data-click="wrongActionCard" data-args='["${esc(itemId)}"]'><i class="fa-solid fa-note-sticky"></i> 복습 노트</button>
-                        <button type="button" class="wrong-relearn-btn" data-click="wrongActionTextbook" data-args='["${esc(subjectForWeakItem(itemId))}"]'><i class="fa-solid fa-book-open"></i> 교재 보기</button>
+                        <button type="button" class="wrong-relearn-btn" data-click="wrongActionTextbook" data-args='["${esc(subjectForWeakItem(itemId, state.quiz.subject))}"]'><i class="fa-solid fa-book-open"></i> 교재 보기</button>
                         <button type="button" class="wrong-relearn-btn" data-click="wrongActionSimilar" data-args='["${esc(s.quizId)}"]'><i class="fa-solid fa-layer-group"></i> 유사 문제</button>
                     </div>
                 `;
@@ -589,11 +545,11 @@ export function getWeakCardsList() {
             }
             return;
         }
-        if (cardId.startsWith('weak_sim_')) {
-            const parts = cardId.replace('weak_sim_', '').split('_q');
-            if (parts.length === 2) {
-                const examId = parts[0];
-                const qNum = parseInt(parts[1]);
+        if (cardId.startsWith(WEAK_SIM_PREFIX)) {
+            const simId = parseWeakSimId(cardId);
+            if (simId) {
+                const examId = simId.examId;
+                const qNum = simId.qNum;
                 if (window.EXAM_DATA && window.EXAM_DATA[examId]) {
                     const exam = window.EXAM_DATA[examId];
                     const q = exam.questions.find(quest => quest.num === qNum);
@@ -775,11 +731,12 @@ export function startWeakFocusQuiz() {
                 options: q.options || null
             };
         }
-        if (card.id.startsWith('weak_sim_')) {
-            const parts = card.id.replace('weak_sim_', '').split('_q');
-            const examId = parts[0];
-            const qNum = parseInt(parts[1]);
-            if (!window.EXAM_DATA || !window.EXAM_DATA[examId] || isNaN(qNum)) return null;
+        if (card.id.startsWith(WEAK_SIM_PREFIX)) {
+            const simId = parseWeakSimId(card.id);
+            if (!simId) return null;
+            const examId = simId.examId;
+            const qNum = simId.qNum;
+            if (!window.EXAM_DATA || !window.EXAM_DATA[examId]) return null;
             const exam = window.EXAM_DATA[examId];
             const q = exam.questions.find(quest => quest.num === qNum);
             if (!q) return null;
@@ -831,7 +788,7 @@ function _storeCause(quizId, cause) {
     state.wrongCauses[itemId] = {
         cause: cause,
         ts: Date.now(),
-        subjectId: subjectForWeakItem(itemId)
+        subjectId: subjectForWeakItem(itemId, state.quiz.subject)
     };
     if (cause === 'memorize') _addRelatedCardToWeak(quizId);
     saveProgress();
@@ -854,7 +811,7 @@ function _addRelatedCardToWeak(quizId) {
  */
 function _causeRecoHtml(cause, quizId) {
     const itemId = weakItemKey(quizId);
-    const subjId = subjectForWeakItem(itemId);
+    const subjId = subjectForWeakItem(itemId, state.quiz.subject);
     switch (cause) {
         case 'memorize':
             return `<i class="fa-solid fa-lightbulb"></i> 관련 플래시카드를 복습 노트에 추가했습니다.

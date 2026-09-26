@@ -17,14 +17,8 @@ export function getSimHistory() {
     return getSimResultsHistory(); // 캐싱 로더 공용 (state.js)
 }
 
-// 카드/퀴즈 ID → 과목 키 추출.
-// weak_quiz_/weak_sim_ 접두사를 먼저 벗기고, 과목 키가 숫자·밑줄을 포함해도 동작하도록
-// '<subj>_(card|quiz)_' 꼬리 패턴 기준으로 분리한다 (콘텐츠 교체에도 유효).
-const subjectKeyOf = (id) => {
-    const clean = id.replace(/^weak_(quiz|sim)_/, '');
-    const m = clean.match(/^(.+)_(?:card|quiz)_/);
-    return m ? m[1] : null;
-};
+import { subjectKeyFromItemId } from './weak-items.js';
+const subjectKeyOf = subjectKeyFromItemId;
 
 /**
  * 우선순위 추천 목록 생성.
