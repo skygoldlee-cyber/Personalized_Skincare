@@ -674,7 +674,7 @@ function sidSubject(sid) {
 }
 
 /** 취약 진술 패널 열기 */
-/** 내 맞춤 분석 뷰 → 취약 진술 리뷰 딥링크 (훈련소 뷰 전환 후 패널 오픈) */
+/** 맞춤 학습 리포트 뷰 → 취약 진술 리뷰 딥링크 (훈련소 뷰 전환 후 패널 오픈) */
 export function gotoWeakReview() {
     switchView('trainer-view');
     openWeakReview();

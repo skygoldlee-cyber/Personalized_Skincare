@@ -144,7 +144,7 @@ src/                    # ES Modules
     quiz.js             # 기출 퀴즈
     flashcard.js        # 3D 플래시카드
     daily-challenge.js  # 데일리 챌린지
-    dashboard.js        # 대시보드 (통계, 히트맵)
+    dashboard.js        # 대시보드 + 맞춤 학습 리포트 뷰 (통계·히트맵·개인화 진단 카드)
     trainer.js          # 스마트 훈련소 허브 (재수출)
     trainer-calc-practice.js  # 계산 연습기
     trainer-ingredients.js    # 원료 배합 챌린지

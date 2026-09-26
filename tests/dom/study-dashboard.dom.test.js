@@ -166,7 +166,7 @@ describe('대시보드 — 통계·과목 카드·약점 추천', () => {
     });
 });
 
-describe('내 맞춤 분석 뷰 — 진단 요약 카드', () => {
+describe('맞춤 학습 리포트 뷰 — 진단 요약 카드', () => {
     beforeEach(() => {
         localStorage.clear();
         resetStudyState();

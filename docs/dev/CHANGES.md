@@ -4,6 +4,18 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-10-13 개인화 분석 뷰 분리 — "맞춤 학습 리포트"(`analysis-view`) + 오디오 이야기형 게이트
+
+- `analysis-view` 신설: 학습 진단 요약 3카드(오답 패턴·취약 진술·학습 리듬) +
+  과목별 상태·히트맵·모의고사 분석을 대시보드 접이식 영역에서 이동.
+  `renderAnalysisView()`가 `renderDashboard()`에 위임해 기존 ID 기반 렌더를 그대로 재사용.
+- 대시보드는 "오늘의 맞춤 학습 추천" 요약만 유지하고 "맞춤 리포트 보기" 버튼으로 퍼널 연결.
+- `feature-plan.json`에 `personal_analysis`(pro) 추가 — 네비 PRO 배지 + 진입 1회 안내.
+- `switchView`·`gotoWeakReview`를 `DELEGATED_HANDLERS`에 등록 — `data-click` 딥링크 지원.
+- 오디오 MP3는 이야기형 교재 내레이션이므로 오디오 버튼을 `isStoryMode`일 때만 표시하고,
+  표준형 전환 시 재생 정지. 단, 오디오 경로 해석은 정규 챕터 객체로 수행해야 함
+  (이야기형 chapter는 신규 객체라 `chapters.indexOf` 실패 → 매니페스트 미스).
+
 ## 2026-09-27 ref-pipeline 버그 수정 — batch_convert 스테일 대상 + 오디오북 의존성
 
 - `batch_convert.py`: `BATCH_TARGETS`이 구형 파일명(`1과목_화장품법의이해.md`,

@@ -288,7 +288,7 @@ Personalized_Skincare/
 │   │   ├── timing.js           #   타이밍 상수 (PWA 프로브, 스와이프 임계값)
 │   │   └── cache.js            #   캐시 설정 상수
 │   └── views/                  #   뷰 컨트롤러 모듈
-│       ├── dashboard.js        #     대시보드 통계
+│       ├── dashboard.js        #     대시보드 통계 + 맞춤 학습 리포트 뷰(analysis-view) 렌더
 │       ├── flashcard.js        #     3D 플래시카드
 │       ├── quiz.js             #     퀴즈 + 복습
 │       ├── daily-challenge.js  #     데일리 챌린지 (quiz.js에서 분리)

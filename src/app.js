@@ -675,7 +675,7 @@ function setupNavigation() {
             checkExamDraft();
         },
         'analysis-view': () => {
-            proFeatureNotice('personal_analysis', '내 맞춤 분석');
+            proFeatureNotice('personal_analysis', '맞춤 학습 리포트');
             renderAnalysisView();
             refreshDashboardStatsInBackground();
         },
