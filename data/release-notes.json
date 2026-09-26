@@ -1,5 +1,13 @@
 [
   {
+    "version": "v369-20260926-5993462",
+    "date": "2026-09-26",
+    "notes": [
+      "docs: feature-plan.json/pro-upgrade.js를 상위 문서에 반영",
+      "feat(pro): Pro 제공 예정 기능 안내 + feature-plan.json 무료/Pro 전환"
+    ]
+  },
+  {
     "version": "v369-20260926-31a5368",
     "date": "2026-09-26",
     "notes": [
