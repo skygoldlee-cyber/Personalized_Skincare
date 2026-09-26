@@ -99,6 +99,12 @@
     gap: var(--space-2);
 }
 
+.section-subtitle {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    margin-top: var(--space-1);
+}
+
 .subject-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
