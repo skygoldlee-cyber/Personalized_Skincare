@@ -196,6 +196,7 @@ export function renderLimitsQuestion() {
             displayStr = `${optValue}${currentQ.unit}${isRange ? '' : ' 이상'}`;
         }
         
+        btn.dataset.value = optValue;
         btn.innerHTML = `<span class="limits-opt-num">${esc(optionIndicators[idx])}</span> <span class="limits-opt-text">${esc(displayStr)}</span>`;
         btn.addEventListener('click', () => {
             submitLimitsAnswer(btn, optValue, currentQ.value);
@@ -264,8 +265,9 @@ export function submitLimitsAnswer(selectedBtn, selectedValue, correctValue) {
     
     buttons.forEach(btn => {
         btn.disabled = true;
-        const textSpan = btn.querySelector('.limits-opt-text');
-        if (textSpan && textSpan.textContent.includes(correctValue)) {
+        // 표시 텍스트 부분문자열이 아닌 데이터값으로 정답 버튼 판정
+        // ('5'가 '50'·'0.5' 오답지에도 매칭되던 문제)
+        if (btn.dataset.value === correctValue) {
             btn.classList.add('correct');
         }
     });

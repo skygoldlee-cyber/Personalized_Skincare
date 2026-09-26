@@ -38,6 +38,13 @@ import { recordStatementJudgments } from '../../src/statement-tracker.js';
 import { STORAGE_KEYS } from '../../src/storage-keys.js';
 
 describe('스마트 훈련소 — 수치·계산·원료·취약 리뷰', () => {
+    // 선택지 버튼의 표시 문자열("<값><단위> 이하/이상")에서 원본 수치만 추출 —
+    // '5'가 '50'·'0.5'에 부분문자열로 매칭되는 오선택을 방지 (flaky 원인)
+    function limitsOptValue(btn, unit) {
+        const t = btn.querySelector('.limits-opt-text').textContent.trim();
+        return t.replace(/\s*(이하|이상)\s*$/, '').split(unit).join('').trim();
+    }
+
     beforeEach(() => {
         localStorage.clear();
         resetStudyState();
@@ -68,8 +75,8 @@ describe('스마트 훈련소 — 수치·계산·원료·취약 리뷰', () => 
         const opts = el('limits-options-container').querySelectorAll('.limits-opt-btn');
         expect(opts.length).toBe(4);
 
-        // 정답 텍스트를 포함한 버튼을 찾아 클릭
-        const correctBtn = [...opts].find(b => b.querySelector('.limits-opt-text').textContent.includes(cur.value));
+        // 정답 수치와 정확히 일치하는 버튼을 찾아 클릭
+        const correctBtn = [...opts].find(b => limitsOptValue(b, cur.unit) === cur.value);
         correctBtn.click();
 
         expect(state.trainer.limits.correctCount).toBe(1);
@@ -83,7 +90,7 @@ describe('스마트 훈련소 — 수치·계산·원료·취약 리뷰', () => 
         startLimitsTrainer();
         const cur = state.trainer.limits.shuffledData[0];
         const opts = el('limits-options-container').querySelectorAll('.limits-opt-btn');
-        const wrongBtn = [...opts].find(b => !b.querySelector('.limits-opt-text').textContent.includes(cur.value));
+        const wrongBtn = [...opts].find(b => limitsOptValue(b, cur.unit) !== cur.value);
         wrongBtn.click();
 
         expect(state.trainer.limits.correctCount).toBe(0);
