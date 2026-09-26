@@ -42,8 +42,9 @@ export function collectNewEntries(notes, lastSeen) {
 /** 변경 이력 모달 — 부팅 자동 표시와 설정 메뉴 재열람 공용 */
 export function showReleaseNotesModal(entries, title = '새로운 소식') {
     if (!entries.length) return;
-    // ui-utils의 showConfirm/showAlert와 같은 오버레이 ID 공유 — 동시 표시 시 교체
-    const existing = document.getElementById('app-confirm-overlay');
+    // 전용 오버레이 ID — showConfirm/showAlert(app-confirm-overlay)와 독립.
+    // 원료 DB 갱신 알림 등 후속 모달이 떠도 이 모달은 유지된다(그 아래에 남음).
+    const existing = document.getElementById('whats-new-overlay');
     if (existing) existing.remove();
 
     const sections = entries.map(e => `
@@ -53,7 +54,7 @@ export function showReleaseNotesModal(entries, title = '새로운 소식') {
         </div>`).join('');
 
     const overlay = document.createElement('div');
-    overlay.id = 'app-confirm-overlay';
+    overlay.id = 'whats-new-overlay';
     overlay.innerHTML = `
         <div class="app-confirm-dialog whats-new-dialog" role="dialog" aria-modal="true" aria-label="${esc(title)}">
             <h3><i class="fa-solid fa-sparkles" aria-hidden="true"></i> ${esc(title)}</h3>

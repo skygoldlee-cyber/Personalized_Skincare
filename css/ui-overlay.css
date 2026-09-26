@@ -89,8 +89,9 @@
   }
 }
 
-/* ── 컨펌 모달 ── */
-#app-confirm-overlay {
+/* ── 컨펌 모달 / 변경 이력 모달 공용 백드롭 ── */
+#app-confirm-overlay,
+#whats-new-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
@@ -103,7 +104,8 @@
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
 }
-#app-confirm-overlay.is-visible {
+#app-confirm-overlay.is-visible,
+#whats-new-overlay.is-visible {
   opacity: 1;
 }
 .app-confirm-dialog {

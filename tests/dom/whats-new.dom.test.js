@@ -20,7 +20,7 @@ describe('whats-new.js — 새 버전 알림', () => {
 
     it('최초 실행(last_seen 없음)은 모달 없이 버전만 기록', () => {
         maybeShowWhatsNew();
-        expect(document.getElementById('app-confirm-overlay')).toBeNull();
+        expect(document.getElementById('whats-new-overlay')).toBeNull();
         expect(safeGetItem('last_seen_version')).toBe('v-test-new');
     });
 
@@ -28,7 +28,7 @@ describe('whats-new.js — 새 버전 알림', () => {
         // 이 기능 도입 전부터 사용하던 사용자는 last_seen_version이 없음
         localStorage.setItem('cosmetic:quiz_results', '{}');
         maybeShowWhatsNew();
-        const overlay = document.getElementById('app-confirm-overlay');
+        const overlay = document.getElementById('whats-new-overlay');
         expect(overlay).not.toBeNull();
         expect(overlay.textContent).toContain('새 기능 추가됨');
     });
@@ -36,7 +36,7 @@ describe('whats-new.js — 새 버전 알림', () => {
     it('버전이 바뀐 부팅이면 변경 이력 모달 표시', () => {
         localStorage.setItem('last_seen_version', 'v-test-old');
         maybeShowWhatsNew();
-        const overlay = document.getElementById('app-confirm-overlay');
+        const overlay = document.getElementById('whats-new-overlay');
         expect(overlay).not.toBeNull();
         expect(overlay.textContent).toContain('새 기능 추가됨');
         // 이전 버전 노트는 미포함 (새 버전분만)
@@ -46,19 +46,19 @@ describe('whats-new.js — 새 버전 알림', () => {
     it('같은 버전 재부팅이면 모달 없음', () => {
         localStorage.setItem('last_seen_version', 'v-test-new');
         maybeShowWhatsNew();
-        expect(document.getElementById('app-confirm-overlay')).toBeNull();
+        expect(document.getElementById('whats-new-overlay')).toBeNull();
     });
 
     it('확인 클릭 시 last_seen_version 갱신 → 다음 부팅은 무표시', () => {
         localStorage.setItem('last_seen_version', 'v-test-old');
         maybeShowWhatsNew();
-        document.querySelector('#app-confirm-overlay .app-confirm-ok').click();
+        document.querySelector('#whats-new-overlay .app-confirm-ok').click();
         expect(safeGetItem('last_seen_version')).toBe('v-test-new');
     });
 
     it('설정 메뉴 재열람: 전체 이력 표시', () => {
         showReleaseNotesModal(NOTES, '변경 이력');
-        const overlay = document.getElementById('app-confirm-overlay');
+        const overlay = document.getElementById('whats-new-overlay');
         expect(overlay.textContent).toContain('새 기능 추가됨');
         expect(overlay.textContent).toContain('이전 변경');
     });
@@ -66,6 +66,6 @@ describe('whats-new.js — 새 버전 알림', () => {
     it('APP_VERSION이 없으면 아무 동작도 안 함', () => {
         delete window.APP_VERSION;
         maybeShowWhatsNew();
-        expect(document.getElementById('app-confirm-overlay')).toBeNull();
+        expect(document.getElementById('whats-new-overlay')).toBeNull();
     });
 });
