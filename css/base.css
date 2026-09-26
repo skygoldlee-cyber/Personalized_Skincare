@@ -1075,3 +1075,29 @@ table {
     to { opacity: 1; transform: translateY(0); }
 }
 
+
+/* ── 신기능 힌트 — 설정 ⚙️ 점 + "의견 보내기" NEW 배지 (feedback.js, 각 1회성) ── */
+#settings-toggle-btn {
+    position: relative;
+}
+.feedback-dot {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ef4444;
+    pointer-events: none;
+}
+.feedback-new {
+    margin-left: auto;
+    padding: 0 0.35rem;
+    border-radius: 999px;
+    background: var(--color-primary, #06b6d4);
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: var(--font-weight-bold, 700);
+    line-height: 1.4;
+    pointer-events: none;
+}

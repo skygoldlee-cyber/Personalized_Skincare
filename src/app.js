@@ -11,7 +11,7 @@ import { STORAGE_KEYS } from './storage-keys.js';
 import { setupPWAInstall } from './pwa-install.js';
 import { setupThemeToggle } from './theme-toggle.js';
 import { maybeShowWhatsNew } from './whats-new.js';
-import { captureEntrySource, flushPendingFeedback } from './feedback.js';
+import { captureEntrySource, flushPendingFeedback, initFeedbackHint } from './feedback.js';
 
 // --- 뷰 컨트롤러 모듈 임포트 ---
 import {
@@ -582,6 +582,9 @@ function initApp() {
 
     // 유입 채널(?src=) 캡처 — 피드백의 entry_src로 첨부 (최초 1회 보존)
     step('captureEntrySource', captureEntrySource);
+
+    // "의견 보내기" 신기능 힌트 — 설정 ⚙️ 점 + NEW 배지 (각 1회)
+    step('initFeedbackHint', initFeedbackHint);
 
     // 새 버전 적용 후 첫 부팅이면 변경 이력 모달 (최초 설치는 기록만)
     step('maybeShowWhatsNew', maybeShowWhatsNew);

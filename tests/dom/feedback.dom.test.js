@@ -29,7 +29,7 @@ window.supabase = {
     })),
 };
 
-import { showFeedbackModal, flushPendingFeedback } from '../../src/feedback.js';
+import { showFeedbackModal, flushPendingFeedback, initFeedbackHint, dismissFeedbackHint, dismissFeedbackDot } from '../../src/feedback.js';
 
 function openModal() {
     showFeedbackModal('dashboard');
@@ -123,6 +123,28 @@ describe('feedback.js — 의견 보내기 모달', () => {
         await flushAsync();
         expect(insertCalls.length).toBe(0);
         expect(lastToast()[0]).toContain('감사'); // 봇에겐 성공인 척
+    });
+
+    it('신기능 힌트: 처음엔 ⚙️ 점 + NEW 배지, 확인 후 각각 제거', () => {
+        loadIndexHtml();
+        initFeedbackHint();
+        expect(document.querySelector('#settings-toggle-btn .feedback-dot')).not.toBeNull();
+        expect(document.querySelector('#feedback-btn .feedback-new')).not.toBeNull();
+
+        dismissFeedbackDot();   // 패널 첫 오픈
+        expect(document.querySelector('#settings-toggle-btn .feedback-dot')).toBeNull();
+        expect(localStorage.getItem('feedback_dot_seen')).toBe('1');
+
+        dismissFeedbackHint();  // 의견 보내기 첫 클릭
+        expect(document.querySelector('#feedback-btn .feedback-new')).toBeNull();
+        expect(localStorage.getItem('feedback_hint_seen')).toBe('1');
+
+        // 다음 부팅에는 표시되지 않음
+        document.body.innerHTML = '';
+        loadIndexHtml();
+        initFeedbackHint();
+        expect(document.querySelector('.feedback-dot')).toBeNull();
+        expect(document.querySelector('.feedback-new')).toBeNull();
     });
 
     it('본문 컨텍스트에 XSS 문자가 있어도 모달이 이스케이프 렌더링', () => {

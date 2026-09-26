@@ -14,6 +14,8 @@ import { trapFocus, showToast } from './ui-utils.js';
 const ENTRY_SRC_KEY = 'entry_source';
 const QUEUE_KEY = 'pending_feedback';
 const COOLDOWN_KEY = 'feedback_last_ts';
+const HINT_KEY = 'feedback_hint_seen';   // "의견 보내기" NEW 배지 클릭 여부
+const DOT_KEY = 'feedback_dot_seen';     // 설정 버튼 점 — 패널 첫 오픈까지
 const COOLDOWN_MS = 60_000;
 const QUEUE_MAX = 20;
 const BODY_MIN = 4;
@@ -53,6 +55,48 @@ export function captureEntrySource() {
 
 export function getEntrySource() {
     return getJSON(ENTRY_SRC_KEY)?.src ?? null;
+}
+
+// ---------------------------------------------------------------------------
+// 신기능 안내 힌트 — 설정 ⚙️ 점 + "의견 보내기" NEW 배지 (각 1회성)
+// ---------------------------------------------------------------------------
+
+/** 부팅 시 호출 — 아직 안 봤으면 설정 버튼에 점, 메뉴 항목에 NEW 배지 부착 */
+export function initFeedbackHint() {
+    if (!getItem(DOT_KEY)) {
+        const btn = document.getElementById('settings-toggle-btn');
+        if (btn && !btn.querySelector('.feedback-dot')) {
+            const dot = document.createElement('span');
+            dot.className = 'feedback-dot';
+            dot.setAttribute('aria-hidden', 'true');
+            btn.appendChild(dot);
+        }
+    }
+    if (!getItem(HINT_KEY)) {
+        const fb = document.getElementById('feedback-btn');
+        if (fb && !fb.querySelector('.feedback-new')) {
+            const badge = document.createElement('span');
+            badge.className = 'feedback-new';
+            badge.textContent = 'NEW';
+            fb.appendChild(badge);
+        }
+    }
+}
+
+/** 설정 패널 첫 오픈 → ⚙️ 점 제거 */
+export function dismissFeedbackDot() {
+    if (!getItem(DOT_KEY)) {
+        setItem(DOT_KEY, '1');
+        document.querySelector('#settings-toggle-btn .feedback-dot')?.remove();
+    }
+}
+
+/** "의견 보내기" 첫 클릭 → NEW 배지 제거 */
+export function dismissFeedbackHint() {
+    if (!getItem(HINT_KEY)) {
+        setItem(HINT_KEY, '1');
+        document.querySelector('#feedback-btn .feedback-new')?.remove();
+    }
 }
 
 // ---------------------------------------------------------------------------

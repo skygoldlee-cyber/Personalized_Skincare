@@ -17,7 +17,7 @@ import { showGlobalLoading, hideGlobalLoading, showToast, showConfirm } from '..
 import { simState, renderSimQuestion, submitExam } from './exam-simulator.js';
 import { switchView } from './navigation.js';
 import { showReleaseNotesModal, releaseNotes } from '../whats-new.js';
-import { showFeedbackModal } from '../feedback.js';
+import { showFeedbackModal, dismissFeedbackHint, dismissFeedbackDot } from '../feedback.js';
 
 function debounce(func, delay = 150) {
     let timer;
@@ -64,6 +64,7 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
 
     // 1-0a. 의견 보내기 버튼 — 피드백 모달 (현재 뷰 컨텍스트 첨부)
     document.getElementById('feedback-btn')?.addEventListener('click', () => {
+        dismissFeedbackHint(); // NEW 배지 1회성 제거
         showFeedbackModal(state.currentView);
     });
 
@@ -80,6 +81,7 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
             const willOpen = settingsPanel.classList.contains('is-hidden');
             settingsPanel.classList.toggle('is-hidden');
             settingsBtn.setAttribute('aria-expanded', String(willOpen));
+            if (willOpen) dismissFeedbackDot(); // 패널 첫 오픈 → 점 제거
         });
         settingsPanel.addEventListener('click', (e) => {
             if (e.target.closest('.settings-item')) closeSettings();
