@@ -9,11 +9,13 @@
 import { esc } from '../sanitize.js';
 import { showToast, showConfirm } from '../ui-utils.js';
 import { showPanel, formulaSubNav } from './formula.js';
-import { listFormulas, unlinkCustomerFromFormulas } from '../formula-store.js';
+import { listFormulas } from '../formula-store.js';
+import { setJSONMany } from '../storage.js';
+import { STORAGE_KEYS } from '../storage-keys.js';
 import { listBatches } from '../batch-store.js';
 import {
   listCustomers, getCustomer, getCustomerUsage,
-  createCustomer, updateCustomer, deleteCustomer, addConsultLog,
+  createCustomer, updateCustomer, addConsultLog,
   importCustomers,
   CUSTOMER_LIMIT_FREE, SCALP_OPTIONS,
 } from '../customer-store.js';
@@ -302,9 +304,18 @@ export async function custDelete(id) {
   const warn = linked ? ` 연결된 처방 ${linked}건은 고객 정보만 남기고 연결이 해제됩니다.` : '';
   const ok = await showConfirm(`"${c.name}" 고객을 삭제할까요?${warn} 이 작업은 되돌릴 수 없습니다.`, '고객 삭제');
   if (!ok) return;
-  unlinkCustomerFromFormulas(id);
-  const r = deleteCustomer(id);
-  if (!r.ok) { showToast(r.error || '삭제에 실패했습니다.', 'error'); return; }
+  // 고객 삭제 + 포뮬러 연결 해제는 두 키를 쓰는 작업 — 한쪽만 성공하는
+  // 중간 상태를 막기 위해 롤백 지원 다중 쓰기로 처리한다.
+  const nextFormulas = listFormulas().map(f =>
+    f.customerId === id ? { ...f, customerId: '' } : f);
+  const nextCustomers = listCustomers().filter(cu => cu.id !== id);
+  if (!setJSONMany({
+    [STORAGE_KEYS.FORMULA_ITEMS]: nextFormulas,
+    [STORAGE_KEYS.CUSTOMER_ITEMS]: nextCustomers,
+  })) {
+    showToast('삭제에 실패했습니다. 저장 공간을 확인해 주세요.', 'error');
+    return;
+  }
   showToast('고객이 삭제되었습니다.', 'success');
   openCustomerPanel();
 }

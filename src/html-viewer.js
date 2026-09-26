@@ -1,6 +1,7 @@
 // src/html-viewer.js — 앱 내 HTML 참조자료 뷰어 오버레이 (검색 + 하이라이트)
 // ref_md의 HTML/MD 변환본을 fetch로 로드하여 DOM에 직접 주입 (iframe 없음)
 import { parseMarkdown } from './markdown-parser.js';
+import { esc } from './sanitize.js';
 import { CACHE } from './config/cache.js';
 
 let _overlayEl = null;
@@ -342,7 +343,7 @@ async function openHtmlViewer(htmlPath, searchKeyword, anchorId, lineNum) {
         }
     } catch (err) {
         console.error('HTML viewer load failed:', err);
-        loading.innerHTML = `<div style="color:var(--color-danger,#f85149);">문서 로딩 실패: ${err && err.message ? err.message : String(err)}</div>`;
+        loading.innerHTML = `<div style="color:var(--color-danger,#f85149);">문서 로딩 실패: ${esc(err && err.message ? err.message : String(err))}</div>`;
         loading.classList.remove('is-hidden');
     }
 }

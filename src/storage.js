@@ -160,6 +160,47 @@ export function setJSON(key, value) {
     }
 }
 
+/**
+ * 다중 논리 키 일괄 쓰기 — 중간 실패 시 이미 기록된 키를 이전 값으로 복원한다.
+ * localStorage에는 진짜 트랜잭션이 없으므로 "최선 노력 롤백"이다
+ * (복원 자체가 실패하는 극단적 상황까지는 방어하지 못함).
+ * 다중 엔티티 갱신(예: 고객 삭제 + 포뮬러 연결 해제)의 중간 상태 방지에 사용.
+ * @param {Object.<string, string>} entries - {논리 키: 저장할 문자열}
+ * @returns {boolean} 전체 성공 시 true
+ */
+export function setMany(entries) {
+    if (!_backend.sync) { _syncUnsupported('setMany'); return false; }
+    const keys = Object.keys(entries);
+    const prev = {};
+    for (const k of keys) prev[k] = getItem(k);
+
+    const written = [];
+    for (const k of keys) {
+        if (setItem(k, entries[k])) { written.push(k); continue; }
+        // 롤백 — 이미 기록된 키를 이전 값(없었으면 삭제)으로 되돌린다
+        for (const w of written) {
+            try {
+                if (prev[w] === null) _backend.removeItem(scopedKey(w));
+                else _backend.setItem(scopedKey(w), prev[w]);
+            } catch (e) { /* 복원 실패는 삼키되 상위 false로 표면화 */ }
+        }
+        return false;
+    }
+    return true;
+}
+
+/** setMany의 JSON 판 — 값은 직렬화 가능한 객체 */
+export function setJSONMany(entries) {
+    const serialized = {};
+    try {
+        for (const k of Object.keys(entries)) serialized[k] = JSON.stringify(entries[k]);
+    } catch (e) {
+        _markUnavailable(e && e.name);
+        return false;
+    }
+    return setMany(serialized);
+}
+
 // ---------------------------------------------------------------------------
 // 비동기 API — 백엔드 교체(IndexedDB/SQLite) 후에도 호출부 변경 없이 동작.
 // 신규 코드는 이 계열 사용 권장.

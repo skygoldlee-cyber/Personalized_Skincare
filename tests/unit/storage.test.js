@@ -21,6 +21,8 @@ import {
   getJSONAsync,
   setJSONAsync,
   setDataWriteHook,
+  setMany,
+  setJSONMany,
   isStorageUnavailable,
 } from '../../src/storage.js';
 
@@ -138,6 +140,38 @@ test('Async API도 쓰기 훅과 listKeys 필터가 동일하게 적용된다', 
   assert.deepEqual(seen, ['quiz_results']);
   assert.deepEqual(await getJSONAsync('quiz_results'), [1, 2]);
   assert.deepEqual(await listKeysAsync((u) => u === 'quiz_results'), ['cosmetic:quiz_results']);
+});
+
+test('setMany 중간 실패 시 이미 쓴 키를 이전 값으로 복원한다', () => {
+  const mem = new Map();
+  mem.set('cosmetic:existing', 'old');   // 덮어쓰기 대상 기존값
+  let calls = 0;
+  setStorageBackend({
+    name: 'fail-on-third-write',
+    sync: true,
+    getItem: (k) => (mem.has(k) ? mem.get(k) : null),
+    setItem: (k, v) => {
+      calls++;
+      if (calls === 3) { const e = new Error('quota'); e.name = 'QuotaExceededError'; throw e; }
+      mem.set(k, String(v));
+    },
+    removeItem: (k) => mem.delete(k),
+    keys: () => [...mem.keys()],
+  });
+
+  // 쓰기 순서: new_key(성공) → existing(성공) → failing_key(실패 → 롤백)
+  const ok = setMany({ new_key: 'A', existing: 'new', failing_key: 'B' });
+  assert.equal(ok, false);
+  assert.equal(mem.has('cosmetic:new_key'), false);        // 없던 키는 삭제로 복원
+  assert.equal(mem.get('cosmetic:existing'), 'old');       // 기존 키는 이전 값으로 복원
+  assert.equal(mem.has('cosmetic:failing_key'), false);    // 실패한 키는 기록되지 않음
+});
+
+test('setMany 전체 성공 경로', () => {
+  const ok = setJSONMany({ a_key: { x: 1 }, b_key: [1, 2] });
+  assert.equal(ok, true);
+  assert.deepEqual(getJSON('a_key'), { x: 1 });
+  assert.deepEqual(getJSON('b_key'), [1, 2]);
 });
 
 test('쓰기 실패 시 false를 반환하고 unavailable 플래그가 선다', () => {
