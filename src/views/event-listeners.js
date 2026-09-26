@@ -16,6 +16,7 @@ import { seekReaderAudio } from './textbook-reader.js';
 import { showGlobalLoading, hideGlobalLoading, showToast, showConfirm } from '../ui-utils.js';
 import { simState, renderSimQuestion, submitExam } from './exam-simulator.js';
 import { switchView } from './navigation.js';
+import { showReleaseNotesModal, releaseNotes } from '../whats-new.js';
 
 function debounce(func, delay = 150) {
     let timer;
@@ -51,6 +52,13 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
         else if (state.currentView === 'review-view') renderReviewList();
         
         showToast("학습 진도가 모두 초기화되었습니다.", "success");
+    });
+
+    // 1-0. 변경 이력 버튼 — 누적된 전체 릴리스 노트 표시
+    document.getElementById('whats-new-btn')?.addEventListener('click', () => {
+        const entries = releaseNotes().filter(e => e && e.version);
+        if (entries.length) showReleaseNotesModal(entries, '변경 이력');
+        else showToast('표시할 변경 이력이 없습니다.', 'info');
     });
 
     // 1-1. 설정 메뉴 토글 — 외부 클릭/Escape/항목 선택 시 닫힘

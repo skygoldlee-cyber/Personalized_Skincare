@@ -171,6 +171,9 @@
                             <button id="reset-progress-btn" class="settings-item settings-item-danger" title="학습 진도·통계를 모두 삭제 (복구 불가)">
                                 <i class="fa-solid fa-rotate-left" aria-hidden="true"></i> 진도 초기화
                             </button>
+                            <button id="whats-new-btn" class="settings-item" title="최근 업데이트 변경 내용 보기">
+                                <i class="fa-solid fa-sparkles" aria-hidden="true"></i> 변경 이력
+                            </button>
                             <div class="settings-divider"></div>
                             <p class="settings-meta">© Passmula · <span id="settings-version">v1.0.0</span></p>
                         </div>
@@ -2223,6 +2226,9 @@
 
     <!-- 시험 레지스트리 (멀티시험): 클래식 번들 — file://에서도 동기 로드됨 -->
     <script src="data/exams.js"></script>
+    <!-- 앱 버전 + 변경 이력 (배포 시 stamp-release-notes.js가 갱신 — whats-new.js가 소비) -->
+    <script src="data/version.js"></script>
+    <script src="data/release-notes.js"></script>
     <!-- 카드/퀴즈 ID 이관 맵 (콘텐츠 갱신 시 진도 보존 — build_id_migration.js 생성) -->
     <script src="data/exams/cosmetic/id_migration.js"></script>
     <!-- 활성 시험 기준 동적 PWA 매니페스트 (실패 시 정적 manifest.webmanifest 폴백) -->

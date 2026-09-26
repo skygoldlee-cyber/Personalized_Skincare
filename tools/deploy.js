@@ -23,6 +23,7 @@ const { execSync, spawnSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const { stampSwVersion } = require('./build/stamp-sw-version.js');
+const { stampReleaseNotes } = require('./build/stamp-release-notes.js');
 
 // 팀 프로젝트는 개인 계정 기본 스코프로는 배포가 거부되므로(Not authorized),
 // .vercel/project.json의 orgId를 --scope로 명시한다. 개인 프로젝트(orgId 없음)면 생략.
@@ -89,11 +90,14 @@ function main() {
     }
     console.log('✅ 콤보 품질 게이트 통과');
 
-    // sw.js CACHE_VERSION 스탬프 — 바뀌면 자동 커밋 + push
+    // sw.js CACHE_VERSION + 앱 버전/릴리스 노트 스탬프 — 바뀌면 자동 커밋 + push
     const stamp = stampSwVersion();
     if (stamp.changed) {
+        // data/version.js를 동일 버전으로 갱신하고, pending 노트를 확정
+        // (pending이 없으면 커밋 subject로 자동 초안 — 배포 전 notes:draft로 편집 권장)
+        stampReleaseNotes({ version: stamp.newValue, prevVersion: stamp.oldValue });
         try {
-            git('add sw.js');
+            git('add sw.js data/version.js data/release-notes.js');
             git('commit -m "chore(sw): CACHE_VERSION 스탬프" --quiet');
             git('push origin main --quiet');
         } catch (e) {

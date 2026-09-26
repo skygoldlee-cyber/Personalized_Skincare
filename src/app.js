@@ -10,6 +10,7 @@ import { initWebVitals } from './web-vitals.js';
 import { STORAGE_KEYS } from './storage-keys.js';
 import { setupPWAInstall } from './pwa-install.js';
 import { setupThemeToggle } from './theme-toggle.js';
+import { maybeShowWhatsNew } from './whats-new.js';
 
 // --- 뷰 컨트롤러 모듈 임포트 ---
 import {
@@ -571,17 +572,15 @@ function initApp() {
         console.error('[init] setupNavigation 실패 — __APP_INITIALIZED 미설정, 폴백 대기');
     }
 
-    // 사이드바·설정 메뉴 버전 표시 동기화 (모바일은 사이드바가 숨겨져 설정에서 확인)
-    const versionEls = ['sidebar-version', 'settings-version']
-        .map(id => document.getElementById(id)).filter(Boolean);
-    if (versionEls.length) {
-        navigator.serviceWorker?.getRegistration?.().then(reg => {
-            if (reg?.active?.scriptURL) {
-                const match = reg.active.scriptURL.match(/v\d+-\d{8}-[\w-]+/);
-                if (match) versionEls.forEach(el => { el.textContent = match[0]; });
-            }
-        }).catch(() => {});
+    // 사이드바·설정 메뉴 버전 표시 (data/version.js의 APP_VERSION — 배포 스탬프와 동일 값)
+    if (window.APP_VERSION) {
+        ['sidebar-version', 'settings-version']
+            .map(id => document.getElementById(id)).filter(Boolean)
+            .forEach(el => { el.textContent = window.APP_VERSION; });
     }
+
+    // 새 버전 적용 후 첫 부팅이면 변경 이력 모달 (최초 설치는 기록만)
+    step('maybeShowWhatsNew', maybeShowWhatsNew);
 }
 
 // --- 가로/세로 보기 ---

@@ -27,6 +27,7 @@ node tools/build_doc_bundles.js        # docs/user/{user_manual,formula_manual}.
 npm.cmd run check:parser               # 빌드 파서 ↔ 런타임 파서 등가성 검증
 npm.cmd run check:imports              # src/ 내 ES 모듈 import/export 교차 검증
 npm.cmd run stamp:sw                   # sw.js CACHE_VERSION을 커밋 해시로 스탬프
+npm.cmd run notes:draft                # 릴리스 노트 pending 초안 생성 (커밋 subject 기반 → data/release-notes.js 수동 편집 후 배포)
 npm.cmd run verify:assets              # SHELL_ASSETS/DATA_ASSETS 파일 존재 검증
 
 # 콘텐츠 동기화 (build:data에 자동 통합됨)
@@ -120,6 +121,7 @@ src/                    # ES Modules
   usage-guide.js        # Formula OS — 사용 안내문 생성기 (제형 템플릿+원료 주의)
   csv-utils.js          # Formula OS — CSV 파서·EUC-KR 폴백 디코딩·BOM 직렬화
   pwa-install.js        # PWA 설치 프롬프트 설정
+  whats-new.js          # 새 버전 변경 이력 알림 (APP_VERSION 비교 → 모달, 설정 "변경 이력" 재열람)
   theme-init.js         # 테마 초기화 (즉시 실행)
   theme-toggle.js       # 테마 토글 UI
   ui-mode.js            # 학습/실무 UI 모드 전환 (ui_mode 전역 키, 학습 도구 접이식)

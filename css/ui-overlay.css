@@ -160,6 +160,37 @@
   color: var(--color-on-brand);
 }
 
+/* ── 새 버전 변경 이력 모달 (whats-new.js) ── */
+.whats-new-dialog {
+  max-width: 440px;
+}
+.whats-new-body {
+  max-height: 50vh;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+}
+.whats-new-version {
+  font-size: 0.8rem;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary, #06b6d4);
+  margin: 0 0 0.4rem;
+  white-space: normal;
+}
+.whats-new-date {
+  color: var(--color-text-muted, #9ca3af);
+  font-weight: normal;
+}
+.whats-new-entry ul {
+  margin: 0 0 1rem;
+  padding-left: 1.2rem;
+}
+.whats-new-entry li {
+  font-size: 0.9rem;
+  color: var(--color-text-main, #fff);
+  line-height: 1.6;
+  margin-bottom: 0.25rem;
+}
+
 /* ── 필터 버튼 (리뷰/교재 과목 필터) ── */
 .filter-btn {
   padding: 0.4rem 0.8rem;

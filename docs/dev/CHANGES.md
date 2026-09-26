@@ -4,6 +4,19 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-26 새 버전 변경 이력 알림 (What's New)
+
+- **`data/version.js`**: `window.APP_VERSION` 전역 — `stamp-release-notes.js`가
+  배포 시 sw.js CACHE_VERSION과 동일 값으로 갱신. 기존 `settings-version`이
+  SW scriptURL 정규식에 의존해 항상 `v1.0.0`이던 결함도 함께 수정.
+- **`data/release-notes.js`**: 사용자용 변경 이력(최신순). `npm run notes:draft`로
+  커밋 subject 기반 pending 초안 생성 → 수동 편집 → 배포 시 자동 버전 부여.
+- **`src/whats-new.js`**: `maybeShowWhatsNew()`(부팅 시 버전 비교 → 변경분만 모달),
+  `showReleaseNotesModal()`(설정 메뉴 "변경 이력" 재열람). `last_seen_version`은
+  시험 무관 `GLOBAL_KEYS`. 건너뛴 버전은 최근 3개·항목 10개 상한 + 폴백 문구.
+- 설정 메뉴에 "변경 이력" 버튼 추가, SHELL_ASSETS에 신규 자산 3건 등록.
+- 검증: 유닛 539(+7) · DOM 347(+6) · check:imports 0 오류 · verify:assets 130개 통과.
+
 ## 2026-09-26 수치 훈련 flaky 테스트 근본 수정 — 부분문자열 매칭 제거
 
 - **원인**: `study-trainer.dom.test.js`가 정답 버튼을

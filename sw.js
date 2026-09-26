@@ -90,6 +90,9 @@ const SHELL_ASSETS = [
   // ※ registry.js는 시험별 dataRoot 아래에 있으므로 DATA_ASSETS에서 프리캐시
   './data/audio_manifest.js',
   './data/exams.js',
+  './data/version.js',
+  './data/release-notes.js',
+  './src/whats-new.js',
   './src/views/dashboard.js',
   './src/views/flashcard.js',
   './src/views/quiz.js',

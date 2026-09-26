@@ -31,6 +31,7 @@
     "verify:refs": "python tools/convert_ref_pdfs_v2.py --verify",
     "build:drills": "node tools/build_ox_drills.js && node tools/build_combo_drills.js",
     "stamp:sw": "node tools/build/stamp-sw-version.js",
+    "notes:draft": "node tools/build/stamp-release-notes.js --draft",
     "verify:assets": "node tools/verify-shell-assets.js",
     "build:study-md": "node tools/build_study_md_bundle.js",
     "test": "node --test tests/unit/*.test.js",
