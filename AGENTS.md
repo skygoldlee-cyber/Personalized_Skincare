@@ -178,6 +178,8 @@ content/                # 시험 콘텐츠 컨테이너 (시험 소유 파일 �
 data/                   # 빌드 생성 번들
   exams.js              # 전역 시험 목록 (window.EXAMS_LIST)
   audio_manifest.js     # 전역 오디오 매니페스트 (시험 id 키 분리)
+  version.js            # window.APP_VERSION — 배포 스탬프와 동기화
+  release-notes.js      # window.RELEASE_NOTES — 사용자용 변경 이력 (notes:draft → 수동 편집 → deploy)
   docs_md/              # 앱 공용 문서 번들 (user_manual·formula_manual — 시험 무관)
   exams/cosmetic/       # 기본 시험 데이터 루트 (dataRoot: registry.js, subjects/, exams/, drills/, study_md/, docs_md/, id_migration.js 등)
   exams/<id>/           # 추가 시험 데이터 루트 (동일 구조)

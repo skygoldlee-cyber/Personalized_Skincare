@@ -265,6 +265,7 @@ Personalized_Skincare/
 │   ├── globals.d.ts            #   전역 타입 선언
 │   ├── exam-context.js         #   활성 시험 해석/전환, scopedKey 네임스페이스, hasFeature (리프 모듈)
 │   ├── ui-mode.js              #   학습/실무 UI 모드 전환
+│   ├── whats-new.js            #   새 버전 변경 이력 알림 (APP_VERSION 비교 → 모달, 전용 whats-new-overlay)
 │   ├── supabase-config.js      #   Supabase URL·Publishable key (공개 설계상 키)
 │   ├── supabase-client.js      #   Supabase lazy init — vendor UMD 동적 로드
 │   ├── auth-view.js            #   계정/로그인 모달 (이메일+PW·회원가입·매직링크 OTP)
@@ -346,6 +347,8 @@ Personalized_Skincare/
 ├── data/                       # 빌드 타임 생성 (자동 생성, 직접 수정 금지)
 │   ├── exams.js                #   전역 시험 레지스트리 번들 (window.EXAMS_LIST, 클래식 스크립트)
 │   ├── audio_manifest.js       #   오디오 챕터 매핑 (시험 id 키 분리)
+│   ├── version.js              #   window.APP_VERSION — 배포 스탬프와 동기화 (stamp-release-notes.js)
+│   ├── release-notes.js        #   window.RELEASE_NOTES — 사용자용 변경 이력 (수동 편집 대상)
 │   ├── docs_md/                #   앱 공용 문서 폴백 번들 (user_manual·formula_manual — 시험 무관)
 │   └── exams/
 │       └── <examId>/           #   시험별 데이터 루트 (dataRoot — 모든 시험 대칭)
@@ -376,6 +379,7 @@ Personalized_Skincare/
 │   │   ├── build-pdf-registry.js # PDF 레지스트리 생성
 │   │   ├── report.js           #   빌드 통계
 │   │   ├── stamp-sw-version.js #   SW 캐시 버전 자동 스탬프
+│   │   ├── stamp-release-notes.js # APP_VERSION 스탬프 + 릴리스 노트 pending 확정/커밋 초안 (--draft)
 │   │   └── plugins/
 │   │       ├── textbook.plugin.js
 │   │       ├── exams.plugin.js
@@ -994,10 +998,12 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 | **설치 안내 모달** | `#pwa-install-modal` (`index.html`) | `deferredPrompt`가 null일 때 플랫폼별 수동 설치 안내 (Android/iOS/generic/inapp 분기) |
 | **진단 패널** | `#pwa-diagnostics` (`index.html`) | `beforeinstallprompt` 미발생 시 원인 진단 정보 화면 표시 (SW 상태, display-mode, manifest 검증 등) |
 | **인앱 브라우저 감지** | `detectPlatform()` ([`src/app.js`](../../src/app.js)) | UA 기반 WebView/인앱 브라우저 감지 (`wv)` 플래그, KakaoTalk, Instagram, Facebook, LINE, Twitter, Snapchat). 감지 시 "Chrome으로 열기" 안내 모달 자동 표시 |
+| **변경 이력 알림** | [`src/whats-new.js`](../../src/whats-new.js) | `window.APP_VERSION`(data/version.js 배포 스탬프) vs `last_seen_version` 비교 → 업데이트 후 첫 부팅에 "새로운 소식" 모달. 전용 `#whats-new-overlay`로 다른 모달(showConfirm/showAlert의 `#app-confirm-overlay`)과 공존 — 후속 모달이 떠도 제거되지 않음. `last_seen_version` 부재 시 학습 데이터 키로 복귀 사용자 판별(데뷔 배포 대응). 설정 메뉴 "변경 이력"으로 재열람 |
 
 **설계 결정사항**:
 - SW 등록을 `app.js`(deferred module)가 아닌 `pwa-install-capture.js`(클래직 스크립트, `<head>`)에서 수행 → Android Chrome이 SW 활성화 상태를 빨리 인식하여 `beforeinstallprompt` 발생 조건 충족
 - SW 업데이트 시 `updatefound`/`statechange`/`controllerchange` 3단계 추적 토스트 팝업으로 진행 상황 표시 (v207)
+- 업데이트 체인: 토스트(진행) → `controllerchange` 리로드 → 신버전 부팅 시 `whats-new.js` 변경 이력 모달 — 노트는 `data/release-notes.js` 큐레이션(`npm run notes:draft`로 커밋 subject 초안 → 수동 편집 → deploy가 pending에 버전 부여)
 - `manifest.webmanifest`의 `Content-Type`을 `vercel.json`에서 `application/manifest+json; charset=utf-8`으로 명시 → Android Chrome의 엄격한 Content-Type 검사 대응
 - 인앱 브라우저(WebView)는 구조적으로 `beforeinstallprompt`를 발생시키지 않으므로, 감지 시 "Chrome으로 열기" 안내만 제공 (코드 수정으로 해결 불가능한 환경적 제약)
 
@@ -1471,6 +1477,8 @@ npm run deploy
   ├─ 2) 콘텐츠 품질 게이트 — audit_combo.js 실행, 오류 시 배포 차단
   │
   ├─ 3) sw.js CACHE_VERSION 스탬프 (stamp-sw-version.js)
+  │     ├─ + stamp-release-notes.js: data/version.js APP_VERSION 동기화,
+  │     │   release-notes.js pending 항목 확정(없으면 커밋 subject 자동 초안)
   │     └─ 값이 바뀌면 'chore(sw): CACHE_VERSION 스탬프' 자동 커밋 + push
   │
   └─ 4) vercel --prod --yes 실행
@@ -1489,7 +1497,8 @@ npm run deploy
 | `npm run build:data` | 시험별 콘텐츠→데이터 번들 (모든 시험 순회) |
 | `npm run check:content -- --build` | 콘텐츠 통합 검증 (교재 교체 등 대규모 변경 후) |
 | `npm run verify:assets` | SHELL/DATA_ASSETS 파일 존재 검증 |
-| `npm run deploy` | 배포 가드 + SW 스탬프 + vercel --prod |
+| `npm run deploy` | 배포 가드 + SW/버전·릴리스 노트 스탬프 + vercel --prod |
+| `npm run notes:draft` | 릴리스 노트 pending 초안 (커밋 subject → 수동 편집 후 배포) |
 
 ---
 

@@ -391,6 +391,7 @@
 | P-10 | `manifest.webmanifest` Content-Type 명시 (`application/manifest+json`) | ✅ |
 | P-11 | 자가 복구 메커니즘 (`app-fallback.js`, 단계적 복구: SW update → 하드 리셋 → 수동 복구) | ✅ |
 | P-12 | CI 검증 (`verify-shell-assets.js`, 배포 전 프리캐시 파일 존재 확인) | ✅ |
+| P-13 | **새 버전 변경 이력 알림** (`src/whats-new.js`) — `APP_VERSION`(data/version.js, 배포 스탬프) vs `last_seen_version` 비교 → 업데이트 후 첫 부팅에 변경 이력 모달 + 설정 메뉴 "변경 이력" 재열람. 전용 `whats-new-overlay`로 다른 모달과 공존, 복귀 사용자는 학습 데이터 키로 판별, 노트 소스는 `data/release-notes.js`(커밋 subject 자동 초안 → 수동 편집) | ✅ |
 
 ### 4.2 오프라인 감지
 

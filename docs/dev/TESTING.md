@@ -23,8 +23,8 @@
 
 | 구분 | 프레임워크 | 환경 | 파일 위치 | 테스트 수 |
 |------|-----------|------|-----------|-----------|
-| **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 532 |
-| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 341 |
+| **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 539 |
+| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 348 |
 | **합계** | | | | **873** |
 
 ### 설계 원칙
@@ -151,7 +151,11 @@ npm run test:watch
 | 35 | `supabase-client.test.js` | 6 | `src/supabase-client.js` — lazy init, UMD 동적 로드, 미설정 폴백 | window 스텁 |
 | 36 | `sw-prune.test.js` | 5 | `sw.js` 캐시 프루닝 — 한글 경로 인코딩 오삭제 회귀 가드 | 서비스워커 로직 |
 | 37 | `mermaid-utils.test.js` | 8 | `src/mermaid-utils.js` — 다이어그램 타입 감지, CSS 클래스, init 옵션(테마 분기) | 순수 함수 |
-| | **합계** | **489** | | |
+| 38 | `command-palette.test.js` | 11 | `src/command-palette.js` — `searchAll()` 통합 검색 순수 로직 | 2026-09-26 추가 |
+| 39 | `learning-pro.test.js` | 20 | `src/recommendations.js` — 추천·오답 원인·예상 점수 순수 로직 | 2026-09-26 추가 |
+| 40 | `storage.test.js` | 12 | `src/storage.js` — 스코프·JSON 헬퍼·쓰기 훅·백엔드 교체·`setMany` 롤백 | 저장소 추상화 |
+| 41 | `whats-new.test.js` | 7 | `src/whats-new.js` — `collectNewEntries` 버전 비교·집계·상한·폴백 | 순수 함수 |
+| | **합계** | **539** | | |
 
 ### DOM 테스트 (`tests/dom/`)
 
@@ -193,7 +197,9 @@ npm run test:watch
 | 33 | `common-navigation.dom.test.js` | 4 | 뷰 전환 공용 | navigation 유틸 경로 | 2026-09-24 추가 |
 | 34 | `study-trainer-drills.dom.test.js` | 12 | O/X·복수정답 드릴 | 드릴 UI·채점 경로 | 2026-09-24 추가 |
 | 35 | `common-eventlisteners.dom.test.js` | 21 | 이벤트 위임·리스너 | data-click/data-args/data-input 디스패치·키보드 접근성, 설정 메뉴·진도 초기화, 플래시카드 버튼·시뮬 이동·퀴즈 단축키 | 2026-09-24 추가 |
-| | **합계** | **332** | | |
+| 36 | `study-commandpalette.dom.test.js` | 9 | 통합 검색 팔레트 | 팔레트 열기·검색·키보드 내비·실행 | 2026-09-26 추가 |
+| 37 | `whats-new.dom.test.js` | 7 | 새 버전 변경 이력 알림 | 최초 실행/업데이트/재부팅 분기, 복귀 사용자 판별, 확인→last_seen 기록, 설정 재열람 | 2026-09-26 추가 |
+| | **합계** | **348** | | |
 
 ---
 
