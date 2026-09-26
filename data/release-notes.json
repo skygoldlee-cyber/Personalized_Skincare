@@ -1,5 +1,12 @@
 [
   {
+    "version": "v369-20260926-f6f2fa9",
+    "date": "2026-09-26",
+    "notes": [
+      "refactor: tools/build 네이밍 snake_case 통일 + 시험 문서 docs/ 정리"
+    ]
+  },
+  {
     "version": "v369-20260926-8b5679c",
     "date": "2026-09-26",
     "notes": [
