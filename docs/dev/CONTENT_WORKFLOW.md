@@ -186,7 +186,7 @@ npm.cmd run build:audio-manifest     # 오디오 매니페스트만
 ### 3.1-1 과목 교재 전체 교체 체크리스트
 
 과목의 교재를 통째로 다른 문서로 교체할 때는 단순 수정보다 의존성이 넓습니다.
-아래 7개 계층을 순서대로 확인하세요.
+아래 8개 계층을 순서대로 확인하세요.
 
 ```mermaid
 flowchart TD
@@ -202,7 +202,8 @@ flowchart TD
     Q1 -- Yes --> S5["⑤ 인용 라인 동기화<br/>sync_citation_lines --check → 미발견 0건"]
     S5 --> S6["⑥ ref_md 귀속 확인<br/>check_ref_subjects 불일치 기준선 이내"]
     S6 --> S7["⑦ 진행 데이터 이관<br/>id_migration.js 생성 → 사용자 안내"]
-    S7 --> D["커밋 + sw bump + 배포"]
+    S7 --> S8["⑧ 파생물 재생성<br/>html/ · 오디오북 · 법령 리포트"]
+    S8 --> D["커밋 + sw bump + 배포"]
 
     style S fill:#e8f5e9
     style S4 fill:#fff3e0
@@ -251,6 +252,11 @@ npm.cmd run check:content -- --build   # build:data + 전 계층 검증을 한 �
 - [ ] 스냅샷 파일은 커밋 대상입니다 — 배포된 직전 빌드의 ID 집합을 보존해야 이관이 동작합니다
 - [ ] term이 바뀌거나 삭제된 카드의 진도는 이관 불가 → `cleanOrphansForSubject`가 정리(삭제). 과목 통째 교체 시 잔량을 사용자에게 안내하세요
 
+**8. 파생물 재생성 (`ref-pipeline/` — 상세 절차: `ref-pipeline/README.md`)**
+- [ ] `python ref-pipeline/batch_convert.py` — 교재·안내서·문제은행 → `{EXAM}/html/` 공유용 HTML 재생성 (manifest `subjects[].dir` 기준 glob이라 과목 추가 시에도 자동 대상화)
+- [ ] 오디오북 재생성(사용 시): `python ref-pipeline/audiobook/run_pipeline.py --subject {과목키} --tts` → `audiobook/mp3/` 갱신 후 §3.4 절차 (재생성 없이 MP3만 교체한 경우도 §3.4)
+- [ ] `python ref-pipeline/check_laws.py` — 인용 법령 현행성 재확인 → `{EXAM}/report/` (`LAW_OC` 키 필요, `업데이트 필요` 판정 시 §3.3-1로 연계)
+
 ### 3.2 과목 추가
 
 1. `content/exams/cosmetic/교재/{새과목키}/` 디렉토리 생성, MD 파일 배치
@@ -289,6 +295,8 @@ npm.cmd run check:content -- --build   # build:data + 전 계층 검증을 한 �
 4. 검증 + 커밋 + 배포
 
 ### 3.3-1 PDF → MD 재변환 절차 (ref_md 갱신)
+
+> 변환 도구 전체 사용법·시나리오: **`ref-pipeline/README.md`** (PDF→MD, MD→HTML, 오디오북 TTS, 법령 검증 — `EXAM_CONTENT_ROOT` 공통 계약)
 
 참조자료 PDF를 추가·교체하거나 변환 규칙을 수정했을 때의 표준 절차:
 
@@ -330,6 +338,19 @@ npm.cmd run verify:refs                        # (= python ref-pipeline/convert.
 1. `content/exams/cosmetic/audiobook/mp3/{과목키}/` 디렉토리에 MP3 파일 배치
 2. `npm.cmd run build:audio-manifest` 실행 (또는 `npm.cmd run build:data`)
 3. 검증 + 커밋 + 배포
+
+**MP3 재생성이 필요한 경우** — 생성 스크립트는 `ref-pipeline/audiobook/`에 있다 (교재 MD → 청취 원고 → TTS → MP3):
+
+```powershell
+python ref-pipeline/audiobook/run_pipeline.py --list                            # 대상 챕터 확인
+python ref-pipeline/audiobook/run_pipeline.py --subject {과목키} --polish-only  # 원고 정제까지만 (API 키 불필요)
+python ref-pipeline/audiobook/run_pipeline.py --subject {과목키} --tts          # TTS + MP3 병합 (ELEVENLABS_API_KEY 필요)
+# 무료/로컬 대안: generate_all_mp3.py (gTTS/pyttsx3 — audiobook/requirements.txt)
+```
+
+- 산출물은 콘텐츠 측 `{EXAM}/audiobook/{scripts,chunks,mp3}/`에 기록 — 재생성 후 위 2번(build:audio-manifest)부터 진행
+- 0바이트 잔여 MP3 정리: `python ref-pipeline/audiobook/cleanup_empty_mp3.py`
+- 청킹·원고 정제 규칙·엔진 선택 상세: `ref-pipeline/audiobook/README.md`
 
 > **주의**: MP3 파일은 Vercel 배포 시 용량 초과(302MB)로 인해 함께 배포할 수 없음.
 > `data/audio_manifest.js`의 `AUDIO_BASE_URL`을 외부 CDN으로 설정 필요.
@@ -508,6 +529,15 @@ flowchart LR
 | `{dataRoot}/id_migration.js` + `{dataRoot}/card_terms_snapshot.json` | `tools/build_id_migration.js` | 이전 스냅샷 ↔ 현재 파싱 비교 |
 | `sw.js` (DATA_ASSETS, MD_ASSETS) | `tools/build/index.js` | `{contentRoot}/manifest.json` |
 
+**앱 외 파생물** (`ref-pipeline/` 도구가 생성 — 앱 런타임과 무관, `{EXAM_CONTENT_ROOT}` 측에 기록):
+
+| 파일 | 생성 스크립트 | 소스 |
+|------|-------------|------|
+| `{contentRoot}/참조자료/ref_md_v2/` → `ref_md/과목N/` | `ref-pipeline/convert.py` (엔진 `pdf2md.py`) | `{contentRoot}/참조자료/{공통,과목N}/*.pdf` |
+| `{contentRoot}/html/*.html` | `ref-pipeline/batch_convert.py` | `교재/*.md`·`학습안내서.md`·`문제은행/*.md`·`report/*.md` |
+| `{contentRoot}/report/법령최신확인결과.md` | `ref-pipeline/check_laws.py` | 내장 법령 목록 + law.go.kr API (`LAW_OC`) |
+| `{contentRoot}/audiobook/{scripts,chunks,mp3}/` | `ref-pipeline/audiobook/run_pipeline.py` | `{contentRoot}/교재/*.md` |
+
 > ※ `{dataRoot}/drills/`는 `{dataRoot}/exams/`의 2차 파생물입니다 — 문제은행 변경 시 `build:data` 후 `npm run build:drills`로 재생성해야 최신 문항이 반영됩니다. 재생성 누락은 `npm run check:drillfresh`(check:content에 포함)가 감지합니다.
 
 ### 6.2 PowerShell 환경
@@ -527,7 +557,7 @@ flowchart LR
 
 ```
 교재 내용 수정        → content/exams/cosmetic/교재/*.md
-교재 전체 교체        → §3.1-1 체크리스트 (7계층) + npm.cmd run check:content -- --build
+교재 전체 교체        → §3.1-1 체크리스트 (8계층) + npm.cmd run check:content -- --build + ref-pipeline 파생물(§3.1-1 ⑧)
 문제은행 수정         → content/exams/cosmetic/문제은행/*.md (+ npm run build:drills 로 드릴 번들 재생성)
 복수정답형 파일럿 추가     → {dataRoot}/drills/combo_pilot.js 직접 편집 + npm run check:combo 검증
 과목 추가/삭제        → content/exams/cosmetic/manifest.json + content/exams/cosmetic/references.json + content/exams/cosmetic/교재/ + content/exams/cosmetic/문제은행/
