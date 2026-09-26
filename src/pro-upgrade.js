@@ -44,7 +44,7 @@ export function showUpgradeNotice(featureLabel, limitMessage) {
                 <ul>
                     <li>${esc(featureLabel)} 저장 한도 무제한</li>
                     <li>클라우드 동기화 · 멀티기기 이어쓰기</li>
-                    <li>오디오북 · 상세 학습 리포트</li>
+                    <li>오디오북 · 개인화된 맞춤형 리포트</li>
                 </ul>
             </div>
             <div class="app-confirm-actions">
