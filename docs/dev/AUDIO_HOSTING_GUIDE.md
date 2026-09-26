@@ -284,8 +284,8 @@ content/exams/cosmetic/audiobook/
 
 | 단계 | 작업 | 파일 |
 |------|------|------|
-| **1. 빌드** | `generate_all_mp3.py`에 `chunk_manifest.js` 자동 생성 추가 | `content/exams/cosmetic/audiobook/generate_all_mp3.py` |
-| **2. 업로드** | `gh release create audio-v1` + 청크 파일 일괄 업로드 스크립트 | 신규 `content/exams/cosmetic/audiobook/upload_to_github.sh` |
+| **1. 빌드** | `generate_all_mp3.py`에 `chunk_manifest.js` 자동 생성 추가 | `ref-pipeline/audiobook/generate_all_mp3.py` |
+| **2. 업로드** | `gh release create audio-v1` + 청크 파일 일괄 업로드 스크립트 | 신규 `ref-pipeline/audiobook/upload_to_github.sh` |
 | **3. 설정** | `AUDIO_BASE_URL`을 GitHub Releases URL로 변경 | `data/audio_manifest.js` |
 | **4. 런타임** | 순차 청크 재생 + preload + 섹션 동기화 구현 | `src/views/textbook-reader.js` |
 
@@ -320,7 +320,7 @@ content/exams/cosmetic/audiobook/
 }
 ```
 
-각 청크의 `sectionTitle`은 `md_chunker.py`의 `Chunk.section_title`에서 이미 추출됨 (`content/exams/cosmetic/audiobook/md_chunker.py:168-170`).
+각 청크의 `sectionTitle`은 `md_chunker.py`의 `Chunk.section_title`에서 이미 추출됨 (`ref-pipeline/audiobook/md_chunker.py:168-170`).
 
 ### 7-4. Phase 2: 런타임 — 순차 청크 재생
 
@@ -351,8 +351,8 @@ content/exams/cosmetic/audiobook/
 | [`sw.js`](../../sw.js) | MP3 캐시 우회 (BYPASS_PATTERNS), cross-origin 직행 |
 | [`vercel.json`](../../vercel.json) | CSP 헤더 (`media-src` 설정 필요) |
 | [`.vercelignore`](../../.vercelignore) | MP3 배포 제외 규칙 |
-| [`content/exams/cosmetic/audiobook/`](../../content/exams/cosmetic/audiobook/) | MP3 원본 파일 + Python TTS 파이프라인 |
-| [`content/exams/cosmetic/audiobook/generate_all_mp3.py`](../../content/exams/cosmetic/audiobook/generate_all_mp3.py) | TTS 배치 생성 스크립트 (chunk_manifest.js 생성 추가 예정) |
-| [`content/exams/cosmetic/audiobook/md_chunker.py`](../../content/exams/cosmetic/audiobook/md_chunker.py) | MD 청킹 모듈 (Chunk.section_title 포함) |
-| [`content/exams/cosmetic/audiobook/mp3_merger.py`](../../content/exams/cosmetic/audiobook/mp3_merger.py) | 청크 MP3 병합 모듈 |
-| [`content/exams/cosmetic/audiobook/tts_google_direct.py`](../../content/exams/cosmetic/audiobook/tts_google_direct.py) | Google Translate TTS 직접 호출 엔진 |
+| [`content/exams/cosmetic/audiobook/`](../../content/exams/cosmetic/audiobook/) | MP3 원본 파일 (산출물 — 생성 스크립트는 `ref-pipeline/audiobook/`) |
+| [`ref-pipeline/audiobook/generate_all_mp3.py`](../../ref-pipeline/audiobook/generate_all_mp3.py) | TTS 배치 생성 스크립트 (chunk_manifest.js 생성 추가 예정) |
+| [`ref-pipeline/audiobook/md_chunker.py`](../../ref-pipeline/audiobook/md_chunker.py) | MD 청킹 모듈 (Chunk.section_title 포함) |
+| [`ref-pipeline/audiobook/mp3_merger.py`](../../ref-pipeline/audiobook/mp3_merger.py) | 청크 MP3 병합 모듈 |
+| [`ref-pipeline/audiobook/tts_google_direct.py`](../../ref-pipeline/audiobook/tts_google_direct.py) | Google Translate TTS 직접 호출 엔진 |

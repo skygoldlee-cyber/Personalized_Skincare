@@ -4,7 +4,7 @@ import { escapeHTML } from './sanitize.js';
 /* ============================================================
    joinWraps — PDF 고정폭 wrap 연속줄 복원 (ref_md 전용)
 
-   배경: tools/pdf2md.py는 `#L####` 인용 라인번호 보존을 위해
+   배경: ref-pipeline/pdf2md.py는 `#L####` 인용 라인번호 보존을 위해
    segment=False(시각적 줄 그대로)로 ref_md를 생성한다. 그 결과 법령
    원문이 ~63자 고정폭에서 단어 중간("…화장품을 말\n한다.")까지 잘린다.
    파서가 줄 단위로 <p>를 만들면 이 절단이 문단 경계로 보이므로,
