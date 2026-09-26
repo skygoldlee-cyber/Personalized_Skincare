@@ -27,7 +27,7 @@ node tools/build_doc_bundles.js        # docs/user/{user_manual,formula_manual}.
 npm.cmd run check:parser               # 빌드 파서 ↔ 런타임 파서 등가성 검증
 npm.cmd run check:imports              # src/ 내 ES 모듈 import/export 교차 검증
 npm.cmd run stamp:sw                   # sw.js CACHE_VERSION을 커밋 해시로 스탬프
-npm.cmd run notes:draft                # 릴리스 노트 pending 초안 생성 (커밋 subject 기반 → data/release-notes.js 수동 편집 후 배포)
+npm.cmd run notes:draft                # 릴리스 노트 pending 초안 생성 (커밋 subject 기반 → data/release-notes.json 수동 편집 후 배포)
 npm.cmd run verify:assets              # SHELL_ASSETS/DATA_ASSETS 파일 존재 검증
 
 # 콘텐츠 동기화 (build:data에 자동 통합됨)
@@ -179,7 +179,8 @@ data/                   # 빌드 생성 번들
   exams.js              # 전역 시험 목록 (window.EXAMS_LIST)
   audio_manifest.js     # 전역 오디오 매니페스트 (시험 id 키 분리)
   version.js            # window.APP_VERSION — 배포 스탬프와 동기화
-  release-notes.js      # window.RELEASE_NOTES — 사용자용 변경 이력 (notes:draft → 수동 편집 → deploy)
+  release-notes.json    # 사용자용 변경 이력 진실 소스 (notes:draft → JSON 편집 → deploy)
+  release-notes.js      # window.RELEASE_NOTES — 생성 파일 (직접 편집 금지)
   docs_md/              # 앱 공용 문서 번들 (user_manual·formula_manual — 시험 무관)
   exams/cosmetic/       # 기본 시험 데이터 루트 (dataRoot: registry.js, subjects/, exams/, drills/, study_md/, docs_md/, id_migration.js 등)
   exams/<id>/           # 추가 시험 데이터 루트 (동일 구조)

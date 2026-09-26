@@ -97,7 +97,7 @@ function main() {
         // (pending이 없으면 커밋 subject로 자동 초안 — 배포 전 notes:draft로 편집 권장)
         stampReleaseNotes({ version: stamp.newValue, prevVersion: stamp.oldValue });
         try {
-            git('add sw.js data/version.js data/release-notes.js');
+            git('add sw.js data/version.js data/release-notes.js data/release-notes.json');
             git('commit -m "chore(sw): CACHE_VERSION 스탬프" --quiet');
             git('push origin main --quiet');
         } catch (e) {

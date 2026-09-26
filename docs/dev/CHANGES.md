@@ -9,8 +9,10 @@
 - **`data/version.js`**: `window.APP_VERSION` 전역 — `stamp-release-notes.js`가
   배포 시 sw.js CACHE_VERSION과 동일 값으로 갱신. 기존 `settings-version`이
   SW scriptURL 정규식에 의존해 항상 `v1.0.0`이던 결함도 함께 수정.
-- **`data/release-notes.js`**: 사용자용 변경 이력(최신순). `npm run notes:draft`로
-  커밋 subject 기반 pending 초안 생성 → 수동 편집 → 배포 시 자동 버전 부여.
+- **`data/release-notes.json`**: 사용자용 변경 이력 진실 소스(최신순).
+  `npm run notes:draft`로 커밋 subject 기반 pending 초안 생성 → JSON 수동 편집 →
+  배포 시 자동 버전 부여. `release-notes.js`는 JSON에서 생성되는 래퍼
+  (JSON 파싱 실패 시 배포 차단 → 문법 오류 사고 예방).
 - **`src/whats-new.js`**: `maybeShowWhatsNew()`(부팅 시 버전 비교 → 변경분만 모달),
   `showReleaseNotesModal()`(설정 메뉴 "변경 이력" 재열람). `last_seen_version`은
   시험 무관 `GLOBAL_KEYS`. 건너뛴 버전은 최근 3개·항목 10개 상한 + 폴백 문구.

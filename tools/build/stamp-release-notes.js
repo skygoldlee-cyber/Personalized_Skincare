@@ -2,14 +2,16 @@
 /* ============================================================
  * tools/build/stamp-release-notes.js
  * ------------------------------------------------------------
- * 배포 시 앱 버전 번들(data/version.js)과 사용자용 변경 이력
- * (data/release-notes.js)을 갱신한다.
+ * 배포 시 앱 버전 번들(data/version.js)과 사용자용 변경 이력을 갱신한다.
+ *
+ * 데이터 소스: data/release-notes.json  (사람이 편집하는 진실 소스)
+ * 생성 산출물: data/release-notes.js    (window.RELEASE_NOTES 래퍼 — 직접 편집 금지)
  *
  * 역할:
  *   1) data/version.js 의 window.APP_VERSION 을 배포 버전으로 치환
  *      (sw.js CACHE_VERSION과 동일 값 — stamp-sw-version.js와 세트)
- *   2) release-notes.js 의 pending 항목({ pending: true })에
- *      실제 버전을 부여해 확정한다.
+ *   2) release-notes.json 의 pending 항목({ "pending": true })에
+ *      실제 버전을 부여해 확정하고 release-notes.js를 재생성한다.
  *   3) pending 항목이 없으면 이전 버전 커밋 이후의 커밋 subject로
  *      초안을 자동 생성한다 (수동 편집 워크플로: npm run notes:draft).
  *
@@ -17,7 +19,7 @@
  *   - 모듈: const { stampReleaseNotes } = require('./stamp-release-notes.js');
  *           stampReleaseNotes({ version: stamp.newValue });
  *   - 단독 초안: node tools/build/stamp-release-notes.js --draft
- *     → 커밋 subject로 pending 항목을 만들고, 개발자가 수동 편집 후 배포.
+ *     → 커밋 subject로 pending 항목을 만들고, 개발자가 JSON을 수동 편집 후 배포.
  *
  * 의존성 없음 (Node 내장 모듈만 사용).
  * ============================================================ */
@@ -29,7 +31,9 @@ const { execFileSync } = require('child_process');
 
 const ROOT = path.resolve(__dirname, '..', '..');
 const VERSION_PATH = path.join(ROOT, 'data', 'version.js');
-const NOTES_PATH = path.join(ROOT, 'data', 'release-notes.js');
+const NOTES_JSON_PATH = path.join(ROOT, 'data', 'release-notes.json');
+const NOTES_JS_PATH = path.join(ROOT, 'data', 'release-notes.js');
+const MAX_ENTRIES = 20; // 최근 20개 버전만 유지
 
 function git(args) {
   try {
@@ -73,47 +77,26 @@ function stampAppVersion(version, { dryRun = false, silent = false } = {}) {
   return { changed: true, oldValue, newValue: version };
 }
 
-/**
- * release-notes.js 파싱 — JS 배열 리터럴이므로 require 대신 정규 파싱.
- * 엔트리: { version, date, notes[] } 또는 { pending: true, date, notes[] }
- */
+/** JSON 소스 로드 — 문법 오류는 배포를 차단하는 명시적 실패로 던진다 */
 function loadNotes() {
-  if (!fs.existsSync(NOTES_PATH)) return [];
-  const src = fs.readFileSync(NOTES_PATH, 'utf8')
-    .split('\n').filter(l => !l.trim().startsWith('//')).join('\n'); // 헤더 주석의 예시 블록 제외
-  const entries = [];
-  const entryRe = /\{([^{}]*)\}/g;
-  let m;
-  while ((m = entryRe.exec(src))) {
-    const body = m[1];
-    const version = /version\s*:\s*'([^']+)'/.exec(body)?.[1] || null;
-    const date = /date\s*:\s*'([^']+)'/.exec(body)?.[1] || today();
-    const pending = /pending\s*:\s*true/.test(body);
-    const notesBody = /notes\s*:\s*\[([\s\S]*?)\]/.exec(body)?.[1] || '';
-    const notes = [...notesBody.matchAll(/'((?:[^'\\]|\\.)*)'/g)]
-      .map(x => x[1].replace(/\\'/g, "'"));
-    entries.push({ version, date, pending, notes });
+  if (!fs.existsSync(NOTES_JSON_PATH)) return [];
+  try {
+    const entries = JSON.parse(fs.readFileSync(NOTES_JSON_PATH, 'utf8'));
+    if (!Array.isArray(entries)) throw new Error('최상위가 배열이 아닙니다');
+    return entries;
+  } catch (e) {
+    throw new Error(`[release-notes] release-notes.json 파싱 실패 — JSON 문법을 확인하세요: ${e.message}`);
   }
-  return entries;
 }
 
-function jsStr(s) { return `'${String(s).replace(/'/g, "\\'")}'`; }
-
+/** JSON 저장 + JS 래퍼 재생성 */
 function writeNotes(entries) {
-  const body = entries.map(e => {
-    const head = e.pending
-      ? `    pending: true,`
-      : `    version: ${jsStr(e.version)},`;
-    return `  {\n${head}\n    date: ${jsStr(e.date)},\n    notes: [\n` +
-      e.notes.map(n => `      ${jsStr(n)},`).join('\n') + `\n    ],\n  }`;
-  }).join(',\n');
-  fs.writeFileSync(NOTES_PATH,
-    `// data/release-notes.js — 사용자용 변경 이력 (최신순)\n` +
-    `// 형식: { version: 'v000-YYYYMMDD-hash', date: 'YYYY-MM-DD', notes: ['...'] }\n` +
-    `// 작성 워크플로: \`npm run notes:draft\` → pending 항목 자동 초안(커밋 subject 기반)\n` +
-    `//   → 수동 편집 → \`npm run deploy\` 시 pending 항목에 실제 버전 부여.\n` +
-    `// pending 항목 없이 배포하면 커밋 subject가 그대로 노트가 되므로 배포 전 편집 권장.\n` +
-    `window.RELEASE_NOTES = [\n${body},\n];\n`);
+  const trimmed = entries.slice(0, MAX_ENTRIES);
+  fs.writeFileSync(NOTES_JSON_PATH, JSON.stringify(trimmed, null, 2) + '\n');
+  fs.writeFileSync(NOTES_JS_PATH,
+    `// data/release-notes.js — 생성 파일, 직접 편집 금지\n` +
+    `// 진실 소스: data/release-notes.json — npm run notes:draft → JSON 편집 → deploy\n` +
+    `window.RELEASE_NOTES = ${JSON.stringify(trimmed)};\n`);
 }
 
 /** 기준 버전 이후 커밋 subject 목록 (릴리스 노트 초안용) */
@@ -137,9 +120,10 @@ function stampReleaseNotes({ version, prevVersion, dryRun = false } = {}) {
   const entries = loadNotes();
   if (entries.length && entries[0].version === version) return { stamped: false };
 
-  const pendingIdx = entries.findIndex(e => e.pending);
+  const pendingIdx = entries.findIndex(e => e.pending === true);
   if (pendingIdx >= 0) {
-    entries[pendingIdx].pending = false;
+    entries[pendingIdx].pending = undefined;
+    delete entries[pendingIdx].pending;
     entries[pendingIdx].version = version;
     entries[pendingIdx].date = today();
     // pending이 최상단이 아니면 맨 앞으로
@@ -153,7 +137,7 @@ function stampReleaseNotes({ version, prevVersion, dryRun = false } = {}) {
     });
     console.log(`[release-notes] ⚠️ pending 노트 없음 — 커밋 subject ${notes.length}건으로 자동 초안 생성. 다음 배포부터 'npm run notes:draft'로 미리 편집하세요.`);
   }
-  if (!dryRun) writeNotes(entries.slice(0, 20)); // 최근 20개 버전만 유지
+  if (!dryRun) writeNotes(entries);
   return { stamped: true };
 }
 
@@ -163,21 +147,27 @@ function draftNotes() {
   const lastReleased = entries.find(e => e.version);
   const notes = commitsSince(lastReleased?.version);
   const draft = { pending: true, date: today(), notes: notes.length ? notes : ['(변경 내용을 직접 작성하세요)'] };
-  const pendingIdx = entries.findIndex(e => e.pending);
-  if (pendingIdx >= 0) entries[pendingIdx] = draft;
-  else entries.unshift(draft);
-  writeNotes(entries.slice(0, 20));
-  console.log(`[release-notes] pending 초안 ${draft.notes.length}건 생성 — data/release-notes.js를 편집 후 배포하세요.`);
+  const pendingIdx = entries.findIndex(e => e.pending === true);
+  if (pendingIdx >= 0) {
+    // 이미 pending이 있으면 덮어쓰지 않는다 — 수동 편집분 보존
+    console.log(`[release-notes] pending 항목이 이미 있습니다 (${entries[pendingIdx].notes.length}건) — 기존 내용 유지.`);
+    return;
+  }
+  entries.unshift(draft);
+  writeNotes(entries);
+  console.log(`[release-notes] pending 초안 ${draft.notes.length}건 생성 — data/release-notes.json을 편집 후 배포하세요.`);
 }
 
 module.exports = { stampReleaseNotes, stampAppVersion, draftNotes, loadNotes };
 
 if (require.main === module) {
+  const dryRun = process.argv.includes('--dry-run');
   if (process.argv.includes('--draft')) {
+    if (dryRun) { console.log(loadNotes()); return; }
     draftNotes();
   } else {
     const i = process.argv.indexOf('--version');
-    if (i < 0) { console.error('사용법: --draft | --version <v>'); process.exit(1); }
-    stampReleaseNotes({ version: process.argv[i + 1] });
+    if (i < 0) { console.error('사용법: --draft | --version <v> [--dry-run]'); process.exit(1); }
+    stampReleaseNotes({ version: process.argv[i + 1], dryRun });
   }
 }

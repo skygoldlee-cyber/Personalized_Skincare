@@ -348,7 +348,8 @@ Personalized_Skincare/
 │   ├── exams.js                #   전역 시험 레지스트리 번들 (window.EXAMS_LIST, 클래식 스크립트)
 │   ├── audio_manifest.js       #   오디오 챕터 매핑 (시험 id 키 분리)
 │   ├── version.js              #   window.APP_VERSION — 배포 스탬프와 동기화 (stamp-release-notes.js)
-│   ├── release-notes.js        #   window.RELEASE_NOTES — 사용자용 변경 이력 (수동 편집 대상)
+│   ├── release-notes.json      #   사용자용 변경 이력 진실 소스 (수동 편집 대상 — 파싱 오류는 배포 차단)
+│   ├── release-notes.js        #   window.RELEASE_NOTES — JSON에서 생성되는 래퍼 (직접 편집 금지)
 │   ├── docs_md/                #   앱 공용 문서 폴백 번들 (user_manual·formula_manual — 시험 무관)
 │   └── exams/
 │       └── <examId>/           #   시험별 데이터 루트 (dataRoot — 모든 시험 대칭)
@@ -1003,7 +1004,7 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 **설계 결정사항**:
 - SW 등록을 `app.js`(deferred module)가 아닌 `pwa-install-capture.js`(클래직 스크립트, `<head>`)에서 수행 → Android Chrome이 SW 활성화 상태를 빨리 인식하여 `beforeinstallprompt` 발생 조건 충족
 - SW 업데이트 시 `updatefound`/`statechange`/`controllerchange` 3단계 추적 토스트 팝업으로 진행 상황 표시 (v207)
-- 업데이트 체인: 토스트(진행) → `controllerchange` 리로드 → 신버전 부팅 시 `whats-new.js` 변경 이력 모달 — 노트는 `data/release-notes.js` 큐레이션(`npm run notes:draft`로 커밋 subject 초안 → 수동 편집 → deploy가 pending에 버전 부여)
+- 업데이트 체인: 토스트(진행) → `controllerchange` 리로드 → 신버전 부팅 시 `whats-new.js` 변경 이력 모달 — 노트는 `data/release-notes.json` 큐레이션(`npm run notes:draft`로 커밋 subject 초안 → JSON 수동 편집 → deploy가 pending에 버전 부여하고 `release-notes.js` 래퍼 재생성)
 - `manifest.webmanifest`의 `Content-Type`을 `vercel.json`에서 `application/manifest+json; charset=utf-8`으로 명시 → Android Chrome의 엄격한 Content-Type 검사 대응
 - 인앱 브라우저(WebView)는 구조적으로 `beforeinstallprompt`를 발생시키지 않으므로, 감지 시 "Chrome으로 열기" 안내만 제공 (코드 수정으로 해결 불가능한 환경적 제약)
 
@@ -1478,7 +1479,8 @@ npm run deploy
   │
   ├─ 3) sw.js CACHE_VERSION 스탬프 (stamp-sw-version.js)
   │     ├─ + stamp-release-notes.js: data/version.js APP_VERSION 동기화,
-  │     │   release-notes.js pending 항목 확정(없으면 커밋 subject 자동 초안)
+  │     │   release-notes.json pending 확정(없으면 커밋 subject 자동 초안) →
+  │     │   release-notes.js 래퍼 재생성 (JSON 파싱 실패 시 배포 차단)
   │     └─ 값이 바뀌면 'chore(sw): CACHE_VERSION 스탬프' 자동 커밋 + push
   │
   └─ 4) vercel --prod --yes 실행
