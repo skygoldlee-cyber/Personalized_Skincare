@@ -144,9 +144,40 @@ create policy "public insert" on public.feedback
 
 ## 8. 관리(조회) 측
 
-- **Supabase 대시보드 Table Editor**로 `feedback` 조회 — `entry_src='yt-*'` 필터로 유튜브 유입 의견만 추출
-- (선택) DB Webhook → Edge Function → 이메일/Discord 알림 — 건수가 보이면 추가
+### 8-1. 조회
+
+- **Supabase 대시보드 Table Editor**로 `feedback` 조회 — `entry_src` 필터로 유튜브 유입 의견만 추출
+- 자주 쓰는 조회 (SQL Editor에 저장 권장):
+
+```sql
+-- 최근 7일 의견
+select created_at, kind, rating, body, view, entry_src
+from public.feedback
+where created_at > now() - interval '7 days'
+order by created_at desc;
+
+-- 유튜브 유입분만
+select * from public.feedback where entry_src like 'yt-%' order by created_at desc;
+```
+
 - 수신된 유용한 피드백은 `READER_FEEDBACK_DESIGN.md`의 큐레이션 파이프라인으로 이어짐 (해당 문서의 "수집" 단계가 본 기능으로 대체)
+
+### 8-2. 실시간 알림 — Database Webhook → Edge Function → Discord
+
+구현됨: `tools/supabase/functions/feedback-notify/index.ts`. insert 시 즉시 Discord 채널에 요약 전달.
+
+**설정 절차** (전부 대시보드/CLI에서, 앱 코드 변경 없음):
+
+1. **Discord webhook 생성**: Discord 채널 설정 → 연동 → 웹후크 → URL 복사
+2. **Edge Function 배포**: `supabase functions deploy feedback-notify` (`tools/supabase/functions/` 하위)
+3. **시크릿 등록**: `supabase secrets set DISCORD_WEBHOOK_URL=<url> WEBHOOK_SECRET=<임의 문자열>`
+4. **Database Webhook 생성**: Supabase 대시보드 → Database → Webhooks → 새 webhook
+   - Table: `feedback` · Events: `INSERT` · Type: HTTP Request
+   - URL: `https://<project>.supabase.co/functions/v1/feedback-notify`
+   - HTTP Headers: `x-webhook-secret: <동일 문자열>`
+
+시크릿은 Edge Function 환경변수에만 존재 — 클라이언트 코드에 새 키를 추가하지 않는다.
+webhook 대상을 Discord 대신 Slack/Telegram으로 바꾸려면 함수의 fetch 부분만 교체.
 
 ## 9. 구현 범위 견적
 
@@ -187,5 +218,5 @@ MVP는 수신 전용이지만, 회신이 필요해지면 아래 중 선택합니
 - **선택적 이메일 회신 필드** (§10-1 첫 확장 권장) — 스키마 `contact_email` + 개인정보 안내 문구
 - 뷰별 피드백 아이콘 + 컨텍스트 자동 첨부 고도화 (스크린샷 첨부는 의무적으로 수동)
 - 만족도(NPS) 주기 서베이 — 피드백 모달과 같은 채널
-- 대시보드 알림 Edge Function, 주간 요약
+- ~~대시보드 알림 Edge Function~~ — **구현됨** (§8-2, Discord). 주간 요약은 미구현
 - 피드백 → GitHub Issue 자동 변환

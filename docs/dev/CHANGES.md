@@ -4,6 +4,13 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-26 피드백 관리자 알림 — Database Webhook → Discord
+
+- `tools/supabase/functions/feedback-notify/index.ts` 신규 — `feedback` 테이블 INSERT 시
+  Edge Function이 Discord webhook으로 유형·별점·본문·컨텍스트 요약을 전달.
+- `x-webhook-secret` 헤더 검증으로 무단 호출 차단. 시크릿은 Edge Function 환경변수에만 존재.
+- 설정 절차: USER_FEEDBACK_DESIGN.md §8-2 (대시보드·CLI 전부 수동 — 앱 코드 변경 없음).
+
 ## 2026-09-26 사용자 의견 수신 기능 (USER_FEEDBACK_DESIGN.md 구현)
 
 - `src/feedback.js` 신규 — 설정 메뉴 "의견 보내기" 모달: 유형(칭찬/개선/오류/제안)·별점(선택)·본문(4~2000자) →
