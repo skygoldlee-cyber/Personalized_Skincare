@@ -164,20 +164,66 @@ select * from public.feedback where entry_src like 'yt-%' order by created_at de
 
 ### 8-2. 실시간 알림 — Database Webhook → Edge Function → Discord
 
-구현됨: `tools/supabase/functions/feedback-notify/index.ts`. insert 시 즉시 Discord 채널에 요약 전달.
+구현됨: `tools/supabase/functions/feedback-notify/index.ts`. `feedback` 테이블 INSERT 시
+즉시 Discord 채널에 요약(유형·별점·본문·뷰/버전/유입채널)을 전달한다.
+앱 코드 변경·재배포 없이 아래 절차만으로 활성화된다.
 
-**설정 절차** (전부 대시보드/CLI에서, 앱 코드 변경 없음):
+#### ① Discord 측 준비
 
-1. **Discord webhook 생성**: Discord 채널 설정 → 연동 → 웹후크 → URL 복사
-2. **Edge Function 배포**: `supabase functions deploy feedback-notify` (`tools/supabase/functions/` 하위)
-3. **시크릿 등록**: `supabase secrets set DISCORD_WEBHOOK_URL=<url> WEBHOOK_SECRET=<임의 문자열>`
-4. **Database Webhook 생성**: Supabase 대시보드 → Database → Webhooks → 새 webhook
-   - Table: `feedback` · Events: `INSERT` · Type: HTTP Request
-   - URL: `https://<project>.supabase.co/functions/v1/feedback-notify`
-   - HTTP Headers: `x-webhook-secret: <동일 문자열>`
+1. 알림을 받을 Discord 서버에 채널 생성 (예: `#app-feedback`) — 서버가 없으면 새로 생성
+2. 채널 우클릭 → **채널 편집** → **연동(Integrations)** → **웹후크(Webhooks)** → **웹후크 만들기**
+3. 이름을 `Passmula 피드백` 등으로 짓고 **웹후크 URL 복사**
+   - 형태: `https://discord.com/api/webhooks/<id>/<token>` — 이 URL이 곧 발송 키이므로 외부 노출 금지
 
-시크릿은 Edge Function 환경변수에만 존재 — 클라이언트 코드에 새 키를 추가하지 않는다.
-webhook 대상을 Discord 대신 Slack/Telegram으로 바꾸려면 함수의 fetch 부분만 교체.
+#### ② Supabase CLI 로그인·프로젝트 연결 (최초 1회)
+
+```powershell
+npm.cmd install -g supabase      # 또는: scoop install supabase
+supabase login                   # 브라우저가 열리며 계정 인증
+cd C:\Project\Personalized_Skincare
+supabase link --project-ref hunpzznyiaddekuggupu   # supabase-config.js의 URL과 같은 프로젝트
+```
+
+#### ③ Edge Function 배포 + 시크릿 등록
+
+```powershell
+supabase functions deploy feedback-notify --project-ref hunpzznyiaddekuggupu
+supabase secrets set `
+  DISCORD_WEBHOOK_URL="https://discord.com/api/webhooks/...." `
+  WEBHOOK_SECRET="<임의의 긴 문자열 — 예: 승인용 비밀번호 생성기로 만든 32자>"
+```
+
+- `WEBHOOK_SECRET`은 무단 호출 차단용 — 아무 값이나 가능, ④에서 같은 값을 헤더에 넣는다
+- 시크릿은 Edge Function 환경변수에만 존재 — 클라이언트 번들에 키가 추가되지 않는다
+
+#### ④ Database Webhook 생성
+
+Supabase 대시보드 → **Database → Webhooks → Create a new hook**:
+
+| 항목 | 값 |
+|------|-----|
+| Name | `feedback-discord` |
+| Table | `public.feedback` |
+| Events | `Insert` 만 체크 |
+| Type of webhook | `HTTP Request` |
+| Method | `POST` |
+| URL | `https://hunpzznyiaddekuggupu.supabase.co/functions/v1/feedback-notify` |
+| HTTP Headers | `x-webhook-secret: <③과 동일한 문자열>` |
+
+#### ⑤ 동작 확인
+
+1. 앱에서 테스트 의견 1건 제출 (또는 SQL Editor에서 `insert into public.feedback (kind, body) values ('praise','테스트');`)
+2. Discord 채널에 `새 의견 — 칭찬` embed가 도착하면 성공
+3. 안 오면: Supabase 대시보드 → **Edge Functions → feedback-notify → Logs**에서 오류 확인
+   - `403 forbidden` → WEBHOOK_SECRET과 webhook 헤더 값 불일치
+   - `502 discord error` → DISCORD_WEBHOOK_URL 오타·만료
+
+#### 참고
+
+- 알림 채널을 Slack/Telegram으로 바꾸려면 함수의 `fetch` 블록만 교체 (Slack: `{"text": ...}` JSON POST,
+  Telegram: `https://api.telegram.org/bot<token>/sendMessage`)
+- 관리자가 여럿이면 각자 Discord 서버에 접속만 하면 되므로 별도 계정 발급 불필요
+- 알림이 시끄러워지면 Discord 채널을 음소거하거나 webhook만 삭제하면 즉시 중단 — 함수·테이블은 그대로
 
 ## 9. 구현 범위 견적
 
