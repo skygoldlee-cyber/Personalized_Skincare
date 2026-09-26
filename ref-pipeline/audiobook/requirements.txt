@@ -1,9 +1,14 @@
-# 오디오북 파이프라인 필수 패키지
+# 오디오북 파이프라인 패키지
 # 설치: pip install -r requirements.txt
+# 사용하는 TTS 엔진에 따라 필요한 것만 설치해도 됨.
 
-# ElevenLabs TTS API 클라이언트 (--polish-only 모드에서는 불필요)
+# ElevenLabs TTS API 클라이언트 (run_pipeline.py --tts, ELEVENLABS_API_KEY 필요)
 elevenlabs>=1.0.0
 
-# 참고: MP3 병합은 시스템에 설치된 ffmpeg를 우선 사용합니다.
-# ffmpeg가 없으면 바이너리 연결로 폴트백되므로 pydub 등은 필수 아님.
+# 무료/로컬 TTS 대안 (generate_all_mp3.py, test_gtts_mp3.py)
+gtts>=2.5        # Google TTS — 무료, 레이트리밋 주의
+pyttsx3>=2.90    # 로컬 TTS — 오프라인, 음질 낮음
+
+# MP3 병합 보조 (시스템 ffmpeg를 우선 사용하므로 선택)
+pydub>=0.25
 # ffmpeg 설치 (Windows): winget install ffmpeg  또는  https://ffmpeg.org/download.html

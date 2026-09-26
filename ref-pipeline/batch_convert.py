@@ -7,25 +7,17 @@
     python ref-pipeline/batch_convert.py --no-embed       # Mermaid 라이브러리 인라인 생략 (CDN 사용)
     python ref-pipeline/batch_convert.py --only 교재       # 특정 그룹만 변환
 
-대상 파일 (ROOT 기준 상대경로):
-    교재/1과목_화장품법의이해.md
-    교재/2과목_제조및품질관리.md
-    교재/3과목_유통화장품안전관리.md
-    교재/4과목_맞춤형화장품의이해.md
+대상 파일 (EXAM_CONTENT_ROOT 기준 glob 패턴):
+    교재/<과목 dir>/*.md   — manifest subjects[].dir 기준 (표준형·이야기형 모두)
     학습안내서.md
-    report/출제비중분포조사결과.md
-    report/출제비중기반학습방법.md
-    report/법령최신확인결과.md
-    report/오답위험_분석보고서.md
-    문제은행/과목1_문제은행_교재인용.md
-    문제은행/과목2_문제은행_교재인용.md
-    문제은행/과목3_문제은행_교재인용.md
-    문제은행/과목4_문제은행_교재인용.md
+    report/*.md            — report/ 존재 시에만
+    문제은행/*.md          — 단일정답형·복수정답형 모두
 
-출력: ../html/ (각 파일명과 동일한 .html)
+출력: {EXAM_CONTENT_ROOT}/html/ (각 파일명과 동일한 .html)
 """
 
 import argparse
+import json
 import os
 import sys
 import time
@@ -41,29 +33,23 @@ ROOT = Path(os.environ.get(
 ))
 HTML_DIR = ROOT / "html"
 
-BATCH_TARGETS = {
-    "교재": [
-        "교재/law/1과목_화장품법의이해.md",
-        "교재/manufacturing/2과목_제조및품질관리.md",
-        "교재/safety/3과목_유통화장품안전관리.md",
-        "교재/understanding/4과목_맞춤형화장품의이해.md",
-    ],
-    "학습안내서": [
-        "학습안내서.md",
-    ],
-    "report": [
-        "report/출제비중분포조사결과.md",
-        "report/출제비중기반학습방법.md",
-        "report/법령최신확인결과.md",
-        "report/오답위험_분석보고서.md",
-    ],
-    "문제은행": [
-        "문제은행/과목1_문제은행_교재인용.md",
-        "문제은행/과목2_문제은행_교재인용.md",
-        "문제은행/과목3_문제은행_교재인용.md",
-        "문제은행/과목4_문제은행_교재인용.md",
-    ],
-}
+
+def load_target_groups(root: Path) -> dict[str, list[str]]:
+    """manifest의 과목 dir을 읽어 그룹별 glob 패턴 목록을 구성."""
+    subject_dirs = []
+    try:
+        manifest = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
+        subject_dirs = [s["dir"] for s in manifest.get("subjects", []) if s.get("dir")]
+    except Exception:
+        pass
+    if not subject_dirs:
+        subject_dirs = ["교재/law", "교재/manufacturing", "교재/safety", "교재/understanding"]
+    return {
+        "교재": [f"{d}/*.md" for d in subject_dirs],
+        "학습안내서": ["학습안내서.md"],
+        "report": ["report/*.md"],
+        "문제은행": ["문제은행/*.md"],
+    }
 
 
 def convert_one(md_path: Path, out_path: Path, config: RenderConfig) -> float:
@@ -94,7 +80,7 @@ def main():
     )
     parser.add_argument(
         "--only",
-        choices=list(BATCH_TARGETS.keys()),
+        choices=["교재", "학습안내서", "report", "문제은행"],
         help="특정 그룹만 변환 (교재, 학습안내서, report, 문제은행)",
     )
     args = parser.parse_args()
@@ -104,14 +90,23 @@ def main():
         embed_mermaid=not args.no_embed,
     )
 
+    target_groups = load_target_groups(ROOT)
     if args.only:
-        groups = {args.only: BATCH_TARGETS[args.only]}
+        groups = {args.only: target_groups[args.only]}
     else:
-        groups = BATCH_TARGETS
+        groups = target_groups
 
     HTML_DIR.mkdir(parents=True, exist_ok=True)
 
-    total_files = sum(len(v) for v in groups.values())
+    # glob 패턴을 실제 파일 목록으로 전개
+    expanded: dict[str, list[Path]] = {}
+    for group_name, patterns in groups.items():
+        files = []
+        for pat in patterns:
+            files.extend(sorted(ROOT.glob(pat)))
+        expanded[group_name] = files
+
+    total_files = sum(len(v) for v in expanded.values())
     total_elapsed = 0.0
     done = 0
     failed = []
@@ -121,21 +116,18 @@ def main():
           f"embed={'ON' if config.embed_mermaid else 'OFF'}")
     print()
 
-    for group_name, files in groups.items():
+    for group_name, files in expanded.items():
+        if not files:
+            continue
         print(f"[{group_name}]")
-        for rel in files:
-            md_path = ROOT / rel
+        for md_path in files:
             out_path = HTML_DIR / (md_path.stem + ".html")
-            if not md_path.exists():
-                print(f"  ✗ {rel} — 파일 없음, 건너뜀")
-                failed.append(rel)
-                continue
             try:
                 total_elapsed += convert_one(md_path, out_path, config)
                 done += 1
             except Exception as e:
-                print(f"  ✗ {rel} — 변환 실패: {e}")
-                failed.append(rel)
+                print(f"  ✗ {md_path.relative_to(ROOT)} — 변환 실패: {e}")
+                failed.append(str(md_path.relative_to(ROOT)))
         print()
 
     print(f"완료: {done}/{total_files} 파일, 총 {total_elapsed:.1f}s")

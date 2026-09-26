@@ -4,6 +4,15 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-27 ref-pipeline 버그 수정 — batch_convert 스테일 대상 + 오디오북 의존성
+
+- `batch_convert.py`: `BATCH_TARGETS`이 구형 파일명(`1과목_화장품법의이해.md`,
+  `과목N_문제은행_교재인용.md`, `report/` 4종)을 가리켜 13개 중 학습안내서 1개만 변환되던
+  문제 수정. manifest `subjects[].dir` 기준 glob 패턴(`교재/<과목>/*.md`, `문제은행/*.md`,
+  `report/*.md`)으로 전환 → **18/18 변환 확인** (표준형·이야기형·단일/복수정답형 전부).
+- `audiobook/requirements.txt`: 실제 임포트 의존성(`gtts`, `pyttsx3`, `pydub`) 추가 —
+  기존엔 `elevenlabs`만 선언돼 무료 TTS 경로가 문서화된 설치로 재현 불가였음.
+
 ## 2026-09-27 ref-pipeline 운영 문서화 — 교재 교체 시 재사용 절차 명기
 
 - `ref-pipeline/README.md`를 전면 재작성: 도구 목록(언제 쓰나 표), 사전 준비(의존성·API 키),
