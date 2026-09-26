@@ -266,7 +266,7 @@ Personalized_Skincare/
 │   ├── exam-context.js         #   활성 시험 해석/전환, scopedKey 네임스페이스, hasFeature (리프 모듈)
 │   ├── ui-mode.js              #   학습/실무 UI 모드 전환
 │   ├── whats-new.js            #   새 버전 변경 이력 알림 (APP_VERSION 비교 → 모달, 전용 whats-new-overlay)
-│   ├── feedback.js             #   의견 수신 — 설정 "의견 보내기" 모달, ?src= 유입 추적, 익명 insert, 오프라인 큐(pending_feedback)
+│   ├── feedback.js             #   의견 수신 — 설정 "의견 보내기" 모달, ?src= 유입 추적, 익명 insert, 오프라인 큐(pending_feedback), 신기능 힌트(⚙️ 점+NEW 배지)
 │   ├── supabase-config.js      #   Supabase URL·Publishable key (공개 설계상 키)
 │   ├── supabase-client.js      #   Supabase lazy init — vendor UMD 동적 로드
 │   ├── auth-view.js            #   계정/로그인 모달 (이메일+PW·회원가입·매직링크 OTP)

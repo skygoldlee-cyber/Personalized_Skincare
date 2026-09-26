@@ -4,6 +4,13 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-26 의견 보내기 발견성 힌트 + 매뉴얼 갱신
+
+- `initFeedbackHint()` 신규 — 신기능 안내: 설정 ⚙️ 버튼에 빨간 점(설정 패널 첫 오픈까지),
+  "의견 보내기" 항목에 NEW 배지(첫 클릭까지). `feedback_dot_seen`/`feedback_hint_seen` global 키로 1회성 관리.
+- 사용자 매뉴얼 반영: `user_manual.md` 설정 메뉴 항목·의견 보내기·변경 이력 설명 추가,
+  `formula_manual.md` §7에 의견 보내기 한 줄 — `build_doc_bundles.js`로 앱 내 번들 재생성.
+
 ## 2026-09-26 피드백 관리자 알림 — Database Webhook → Discord
 
 - `tools/supabase/functions/feedback-notify/index.ts` 신규 — `feedback` 테이블 INSERT 시
