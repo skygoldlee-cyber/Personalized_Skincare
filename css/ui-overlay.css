@@ -91,7 +91,8 @@
 
 /* ── 컨펌 모달 / 변경 이력 모달 공용 백드롭 ── */
 #app-confirm-overlay,
-#whats-new-overlay {
+#whats-new-overlay,
+#feedback-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
@@ -105,7 +106,8 @@
   -webkit-backdrop-filter: blur(2px);
 }
 #app-confirm-overlay.is-visible,
-#whats-new-overlay.is-visible {
+#whats-new-overlay.is-visible,
+#feedback-overlay.is-visible {
   opacity: 1;
 }
 .app-confirm-dialog {
@@ -525,4 +527,71 @@
 @media (max-width: 768px) {
   .cmdk-overlay { padding-top: 8vh; }
   .cmdk-footer { display: none; }
+}
+
+/* ── 의견 보내기 모달 (feedback.js) ── */
+.feedback-dialog { max-width: 440px; }
+.feedback-body { margin-bottom: 1rem; }
+.feedback-kinds {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 0.6rem;
+}
+.feedback-kind {
+  flex: 1;
+  padding: 0.45rem 0;
+  border: 1px solid var(--border-color, rgba(255,255,255,0.15));
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.feedback-kind[aria-pressed="true"] {
+  background: var(--color-primary, #06b6d4);
+  border-color: var(--color-primary, #06b6d4);
+  color: #fff;
+}
+.feedback-stars {
+  display: flex;
+  gap: 0.2rem;
+  margin-bottom: 0.6rem;
+}
+.feedback-star {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  color: var(--color-text-muted, #9ca3af);
+  cursor: pointer;
+  padding: 0 0.15rem;
+}
+.feedback-star.is-on { color: #fbbf24; }
+.feedback-text {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.6rem;
+  border: 1px solid var(--border-color, rgba(255,255,255,0.15));
+  border-radius: var(--radius-sm);
+  background: var(--bg-input, transparent);
+  color: var(--color-text);
+  font-size: 0.9rem;
+  font-family: inherit;
+  resize: vertical;
+}
+.feedback-hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+.feedback-ctx {
+  font-size: 0.75rem;
+  color: var(--color-text-muted, #9ca3af);
+  margin: 0.5rem 0 0.2rem;
+}
+.feedback-note {
+  font-size: 0.75rem;
+  color: var(--color-text-muted, #9ca3af);
+  margin: 0;
 }

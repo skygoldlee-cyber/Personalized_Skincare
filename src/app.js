@@ -11,6 +11,7 @@ import { STORAGE_KEYS } from './storage-keys.js';
 import { setupPWAInstall } from './pwa-install.js';
 import { setupThemeToggle } from './theme-toggle.js';
 import { maybeShowWhatsNew } from './whats-new.js';
+import { captureEntrySource, flushPendingFeedback } from './feedback.js';
 
 // --- 뷰 컨트롤러 모듈 임포트 ---
 import {
@@ -579,8 +580,14 @@ function initApp() {
             .forEach(el => { el.textContent = window.APP_VERSION; });
     }
 
+    // 유입 채널(?src=) 캡처 — 피드백의 entry_src로 첨부 (최초 1회 보존)
+    step('captureEntrySource', captureEntrySource);
+
     // 새 버전 적용 후 첫 부팅이면 변경 이력 모달 (최초 설치는 기록만)
     step('maybeShowWhatsNew', maybeShowWhatsNew);
+
+    // 오프라인 큐에 쌓인 의견은 온라인 복귀 시 플러시
+    window.addEventListener('online', () => { flushPendingFeedback(); });
 }
 
 // --- 가로/세로 보기 ---

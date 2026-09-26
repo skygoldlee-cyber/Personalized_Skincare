@@ -3,7 +3,7 @@
 > **작성일**: 2026-09-26
 > **목적**: 유튜브 홍보 영상을 보고 유입된 사용자의 의견·오류 신고·기능 제안을 앱 안에서 수집하는 기능 설계
 > **관련 문서**: [SUPABASE_DESIGN.md](SUPABASE_DESIGN.md) (계정·동기화 인프라), [READER_FEEDBACK_DESIGN.md](READER_FEEDBACK_DESIGN.md) (수신된 피드백의 큐레이션·공유 — 본 문서는 **수신 쪽 절반**), [유튜브_홍보동영상_제작의뢰서](../유튜브_홍보동영상_제작의뢰서.md)
-> **상태**: 설계안 — 미구현
+> **상태**: **구현됨** (2026-09-26) — `src/feedback.js`, 설정 메뉴 "의견 보내기". `feedback` 테이블은 `tools/supabase/schema.sql`에 정의됐으나 실제 적용은 Supabase SQL Editor 수동 실행 필요
 
 ---
 
@@ -139,7 +139,7 @@ create policy "public insert" on public.feedback
 ## 7. 오프라인·실패 처리
 
 - 제출 실패(오프라인·Supabase 미설정) 시 `pending_feedback` 배열에 `{kind, rating, body, view, app_version, entry_src, ts}` push (최대 20건)
-- 재전송 타이밍: ① `online` 이벤트, ② 다음 `submit` 시 선행 플러시, ③ sync.js의 주기 push 훅에 편승
+- 재전송 타이밍: ① `online` 이벤트(app.js에서 `flushPendingFeedback` 호출), ② 다음 `submit` 시 선행 큐와 함께 일괄 전송 — sync.js 훅 편승은 로그인 전용 경로라 익명 큐에는 적용하지 않음
 - Supabase 미설정 환경(로컬 개발)에서는 큐에만 쌓고 "오프라인으로 저장됐어요" 안내 — 앱 동작은 동일
 
 ## 8. 관리(조회) 측

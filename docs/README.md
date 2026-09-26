@@ -142,7 +142,7 @@ docs/
 | 문서 | 설명 |
 |------|------|
 | [LEARNING_PREMIUM_PLAN.md](dev/LEARNING_PREMIUM_PLAN.md) | Learning Pro 구현 과제 — 우선순위·공수·전제 조건 |
-| [USER_FEEDBACK_DESIGN.md](dev/USER_FEEDBACK_DESIGN.md) | 사용자 피드백 수신 설계 — YouTube 유입 추적 + 앱 내 의견 제출 (설계안) |
+| [USER_FEEDBACK_DESIGN.md](dev/USER_FEEDBACK_DESIGN.md) | 사용자 피드백 수신 — YouTube 유입 추적 + 앱 내 의견 제출 (구현됨: `src/feedback.js`, `feedback` 테이블은 Supabase SQL Editor 수동 실행 필요) |
 | [READER_FEEDBACK_DESIGN.md](dev/READER_FEEDBACK_DESIGN.md) | 독자 피드백 공유 기능 설계 제안 (미구현) |
 | [SUBSCRIPTION_ROADMAP.md](dev/SUBSCRIPTION_ROADMAP.md) | 월 구독 서비스 전환 로드맵 |
 | [STUDY_APP_DESIGN_GUIDE.md](dev/STUDY_APP_DESIGN_GUIDE.md) | 학습 앱 재사용 설계 가이드 — 다른 자격시험/교재 적용 템플릿 |

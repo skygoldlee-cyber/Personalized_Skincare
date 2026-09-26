@@ -4,6 +4,20 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-26 사용자 의견 수신 기능 (USER_FEEDBACK_DESIGN.md 구현)
+
+- `src/feedback.js` 신규 — 설정 메뉴 "의견 보내기" 모달: 유형(칭찬/개선/오류/제안)·별점(선택)·본문(4~2000자) →
+  Supabase `feedback` 테이블 익명 insert. `?src=` 유입 채널을 `entry_source`(global 키)에 최초 1회 보존,
+  캡처 후 URL 파라미터 제거.
+- 오프라인·전송 실패 시 `pending_feedback` 큐(최대 20건)에 보관, `online` 이벤트 및 다음 제출 시 플러시.
+- 스팸 완화: 허니팝 필드(meta 기록 후 조용히 성공 처리) + 60초 쿨다운(`feedback_last_ts`) +
+  이메일/전화번호 패턴 감지 시 제출 경고 + 서버 `char_length` CHECK.
+- `tools/supabase/schema.sql`에 `feedback` 테이블 + `anon, authenticated` insert 정책 추가
+  (select/update/delete 정책 없음 = 클라이언트 조회 차단). **실제 적용은 Supabase SQL Editor 수동 실행 필요.**
+- 배선: `index.html` 설정 버튼, `event-listeners.js` 클릭 핸들러, `app.js` 부팅 시 `captureEntrySource` +
+  `online` 플러시, `sw.js` 프리캐시, `css/ui-overlay.css` 모달 스타일.
+- 테스트: `tests/unit/feedback.test.js` 13건, `tests/dom/feedback.dom.test.js` 9건.
+
 ## 2026-09-26 불필요 파일 정리
 
 - `L3)` (0바이트, 커밋 ad8315ef의 셸 리다이렉션 사고 산출물) 삭제.

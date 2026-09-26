@@ -266,6 +266,7 @@ Personalized_Skincare/
 │   ├── exam-context.js         #   활성 시험 해석/전환, scopedKey 네임스페이스, hasFeature (리프 모듈)
 │   ├── ui-mode.js              #   학습/실무 UI 모드 전환
 │   ├── whats-new.js            #   새 버전 변경 이력 알림 (APP_VERSION 비교 → 모달, 전용 whats-new-overlay)
+│   ├── feedback.js             #   의견 수신 — 설정 "의견 보내기" 모달, ?src= 유입 추적, 익명 insert, 오프라인 큐(pending_feedback)
 │   ├── supabase-config.js      #   Supabase URL·Publishable key (공개 설계상 키)
 │   ├── supabase-client.js      #   Supabase lazy init — vendor UMD 동적 로드
 │   ├── auth-view.js            #   계정/로그인 모달 (이메일+PW·회원가입·매직링크 OTP)
@@ -993,6 +994,7 @@ localStorage('appTheme')  >  prefers-color-scheme: light  >  다크(기본)
 | **진단 패널** | `#pwa-diagnostics` (`index.html`) | `beforeinstallprompt` 미발생 시 원인 진단 정보 화면 표시 (SW 상태, display-mode, manifest 검증 등) |
 | **인앱 브라우저 감지** | `detectPlatform()` ([`src/app.js`](../../src/app.js)) | UA 기반 WebView/인앱 브라우저 감지 (`wv)` 플래그, KakaoTalk, Instagram, Facebook, LINE, Twitter, Snapchat). 감지 시 "Chrome으로 열기" 안내 모달 자동 표시 |
 | **변경 이력 알림** | [`src/whats-new.js`](../../src/whats-new.js) | `window.APP_VERSION`(data/version.js 배포 스탬프) vs `last_seen_version` 비교 → 업데이트 후 첫 부팅에 "새로운 소식" 모달. 전용 `#whats-new-overlay`로 다른 모달(showConfirm/showAlert의 `#app-confirm-overlay`)과 공존 — 후속 모달이 떠도 제거되지 않음. `last_seen_version` 부재 시 학습 데이터 키로 복귀 사용자 판별(데뷔 배포 대응). 설정 메뉴 "변경 이력"으로 재열람 |
+| **의견 수신** | [`src/feedback.js`](../../src/feedback.js) | 설정 메뉴 "의견 보내기" 모달 — 유형(칭찬/개선/오류/제안)·별점(선택)·본문 → Supabase `feedback` 테이블 익명 insert (RLS insert-only). `?src=` 유입 채널을 `entry_source`에 최초 1회 보존 후 URL 제거. 실패·오프라인 시 `pending_feedback` 큐에 쌓아 온라인 복귀(`online` 이벤트) 시 플러시. 스팸: 허니팝 + 60초 쿨다운(`feedback_last_ts`) + 개인정보 패턴 경고. 설계: USER_FEEDBACK_DESIGN.md |
 
 **설계 결정사항**:
 - SW 등록을 `app.js`(deferred module)가 아닌 `pwa-install-capture.js`(클래직 스크립트, `<head>`)에서 수행 → Android Chrome이 SW 활성화 상태를 빨리 인식하여 `beforeinstallprompt` 발생 조건 충족

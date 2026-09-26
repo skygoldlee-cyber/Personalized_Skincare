@@ -101,7 +101,34 @@ create policy "own snapshots" on public.sync_snapshots
 -- pro_codes: 클라이언트 직접 접근 금지 (정책 없음 = 모든 접근 차단, RPC만 사용)
 
 -- ============================================================
--- 확인 쿼리 (선택): 실행 후 테이블 3개·정책 2개·함수 2개가 보이면 성공
+-- feedback: 사용자 의견 수신 (USER_FEEDBACK_DESIGN.md §5)
+--   - 익명 insert 허용 (비로그인 유튜브 유입자도 제출)
+--   - select/update/delete 정책 없음 = 클라이언트 조회 전면 차단
+--   - 조회는 대시보드(service role)에서만
+-- ============================================================
+create table if not exists public.feedback (
+  id          uuid primary key default gen_random_uuid(),
+  created_at  timestamptz not null default now(),
+  user_id     uuid references auth.users,          -- 로그인 시만, 없으면 익명
+  kind        text not null check (kind in ('praise','improve','bug','idea')),
+  rating      smallint check (rating between 1 and 5),
+  body        text not null check (char_length(body) between 4 and 2000),
+  view        text,                                -- 제출 시점 뷰 id
+  app_version text,
+  entry_src   text,                                -- yt-main 등 유입 채널
+  exam_id     text,
+  user_agent  text,
+  meta        jsonb                                -- 허니팝 통과 여부 등
+);
+
+alter table public.feedback enable row level security;
+
+drop policy if exists "public insert" on public.feedback;
+create policy "public insert" on public.feedback
+  for insert to anon, authenticated with check (true);
+
+-- ============================================================
+-- 확인 쿼리 (선택): 실행 후 테이블 4개·정책 3개·함수 2개가 보이면 성공
 --   select table_name from information_schema.tables where table_schema='public';
 --   select polname, polrelid::regclass from pg_policy;
 -- ============================================================

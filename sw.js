@@ -93,6 +93,7 @@ const SHELL_ASSETS = [
   './data/version.js',
   './data/release-notes.js',
   './src/whats-new.js',
+  './src/feedback.js',
   './src/views/dashboard.js',
   './src/views/flashcard.js',
   './src/views/quiz.js',
