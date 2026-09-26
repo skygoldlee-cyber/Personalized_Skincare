@@ -6,7 +6,7 @@ import { DataLoader } from '../data-loader.js';
 import { computeWrongCauseSummary, WRONG_CAUSE_LABELS } from '../recommendations.js';
 import { examIdToSubjectId } from '../exam-context.js';
 import {
-    WEAK_QUIZ_PREFIX as WRONG_QUIZ_PREFIX, WEAK_SIM_PREFIX,
+    WEAK_QUIZ_PREFIX, WEAK_SIM_PREFIX,
     weakItemKey, resolveWrongQuiz, subjectForWeakItem, parseWeakSimId
 } from '../weak-items.js';
 import { checkShortAnswer } from './trainer.js';
@@ -47,7 +47,7 @@ function markQuizWrong(currentQuiz) {
  */
 function clearQuizWeakness(currentQuiz) {
     state.weakCards.delete(currentQuiz.id);
-    state.weakCards.delete(WRONG_QUIZ_PREFIX + currentQuiz.id);
+    state.weakCards.delete(WEAK_QUIZ_PREFIX + currentQuiz.id);
 }
 export function startQuiz() {
     const subjId = state.quiz.subject;
@@ -529,7 +529,7 @@ export function getWeakCardsList() {
     
     // 2. 모의고사·기출 퀴즈 오답 카드 복구
     state.weakCards.forEach(cardId => {
-        if (cardId.startsWith(WRONG_QUIZ_PREFIX)) {
+        if (cardId.startsWith(WEAK_QUIZ_PREFIX)) {
             const resolved = resolveWrongQuiz(cardId);
             if (resolved) {
                 const { quiz: q, subjectId } = resolved;
@@ -717,7 +717,7 @@ export function startWeakFocusQuiz() {
     if (weakCards.length === 0) return;
     
     const weakList = weakCards.map(card => {
-        if (card.id.startsWith(WRONG_QUIZ_PREFIX)) {
+        if (card.id.startsWith(WEAK_QUIZ_PREFIX)) {
             const resolved = resolveWrongQuiz(card.id);
             if (!resolved) return null;
             const q = resolved.quiz;

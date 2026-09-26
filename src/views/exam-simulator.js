@@ -754,8 +754,7 @@ export function saveExamResultToHistory(examId, score, total, subjectRates) {
     safeSetItem(STORAGE_KEYS.SIM_RESULTS_HISTORY, JSON.stringify(history));
 }
 
-// examIdToSubjectId는 exam-context.js로 이동 (공용 매핑)
-export { examIdToSubjectId } from '../exam-context.js';
+
 
 /* =======================================================
    📋 "틀린 문제만 모아 풀기" 오답 모의고사 (Weakness Exam)
@@ -765,7 +764,7 @@ export function startWeakExam() {
     // 복수정답형 모의고사 오답이 있으면 해당 과목의 combo 번들도 함께 로드
     const comboSubsNeeded = new Set();
     (state.weakCards || new Set()).forEach(cardId => {
-        const m = cardId.match(/^weak_sim_([a-z]+)_combo_/);
+        const m = cardId.match(new RegExp('^' + WEAK_SIM_PREFIX + '([a-z]+)_combo_'));
         if (m) {
             const order = comboSubjOrder(m[1]);
             if (order) comboSubsNeeded.add(order);

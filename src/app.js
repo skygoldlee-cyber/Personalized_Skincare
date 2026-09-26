@@ -241,7 +241,6 @@ import {
     renderSimQuestion,
     saveSimAnswer,
     submitExam,
-    examIdToSubjectId,
     startWeakExam,
     saveExamResultToHistory
 } from './views/exam-simulator.js';
@@ -253,7 +252,7 @@ import { switchView } from './views/navigation.js';
 import { setupOfflineDetection } from './views/offline-detection.js';
 import { setupEventListeners } from './views/event-listeners.js';
 import { getViewTitles, navigateToView } from './router.js';
-import { contentPath, getActiveExam, getCurrentExamId, getExamList, purgeLegacyStorage, hasFeature } from './exam-context.js';
+import { contentPath, getActiveExam, getCurrentExamId, getExamList, purgeLegacyStorage, hasFeature, examIdToSubjectId } from './exam-context.js';
 import { renderExamSelect, showExamSelect, selectExamAction } from './views/exam-select.js';
 import { initUiMode, toggleUiMode, toggleStudyTools } from './ui-mode.js';
 import { initAuthView, openAuthModal, closeAuthModal, authSignIn, authSignUp, authEmailLogin, authMagicLink, authSignOut, authSetPassword, authSendOtp, authVerifyOtp, authForgotPassword } from './auth-view.js';

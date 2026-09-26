@@ -30,9 +30,10 @@ export function resolveWrongQuiz(quizId) {
     const origId = quizId.startsWith(WEAK_QUIZ_PREFIX)
         ? quizId.substring(WEAK_QUIZ_PREFIX.length)
         : quizId;
-    if (!window.STUDY_DATA) return null;
-    for (const subjId of Object.keys(window.STUDY_DATA)) {
-        const found = (window.STUDY_DATA[subjId].quizzes || []).find(q => q.id === origId);
+    const data = (typeof window !== 'undefined' && window.STUDY_DATA) || null;
+    if (!data) return null;
+    for (const subjId of Object.keys(data)) {
+        const found = (data[subjId].quizzes || []).find(q => q.id === origId);
         if (found) return { quiz: found, subjectId: subjId };
     }
     return null;
@@ -60,9 +61,10 @@ export function subjectForWeakItem(itemId, fallbackSubj = null) {
     if (sim) return examIdToSubjectId(sim.examId);
     const resolved = resolveWrongQuiz(itemId);
     if (resolved) return resolved.subjectId;
-    if (window.STUDY_DATA) {
-        for (const subjId of Object.keys(window.STUDY_DATA)) {
-            if ((window.STUDY_DATA[subjId].cards || []).some(c => c.id === itemId)) return subjId;
+    const data = (typeof window !== 'undefined' && window.STUDY_DATA) || null;
+    if (data) {
+        for (const subjId of Object.keys(data)) {
+            if ((data[subjId].cards || []).some(c => c.id === itemId)) return subjId;
         }
     }
     return fallbackSubj;
