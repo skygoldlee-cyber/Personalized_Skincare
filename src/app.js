@@ -972,7 +972,12 @@ const DELEGATED_HANDLERS = {
     toggleUiMode, toggleStudyTools,
     /** 앱 종료 (설치형 PWA) — 확인 후 종료 시도. 모바일 OS가 자체 종료를 막으면 종료 안내 화면으로 전환 */
     quitApp() {
-        showConfirm('앱을 종료할까요?\n모바일 OS는 앱의 자체 종료를 막는 경우가 있습니다 — 종료되지 않으면 최근 앱 목록에서 이 화면을 위로 밀어 닫아주세요.', '앱 종료').then((ok) => {
+        // 모바일 OS 종료 안내는 터치 환경에서만 — 데스크톱 PWA는 window.close()가 동작하므로 불필요
+        const isTouch = window.matchMedia?.('(pointer: coarse)').matches || navigator.maxTouchPoints > 1;
+        const msg = isTouch
+            ? '앱을 종료할까요?\n종료되지 않으면 최근 앱 목록에서 이 화면을 위로 밀어 닫아주세요.'
+            : '앱을 종료할까요?';
+        showConfirm(msg, '앱 종료').then((ok) => {
             if (!ok) return;
             // 데스크톱 설치 PWA는 여기서 창이 닫힘
             window.close();
@@ -982,7 +987,10 @@ const DELEGATED_HANDLERS = {
             setTimeout(() => {
                 const exitScreen = document.createElement('div');
                 exitScreen.className = 'app-exit-screen';
-                exitScreen.innerHTML = '<i class="fa-solid fa-power-off" aria-hidden="true"></i><p>앱을 종료했습니다.<br>완전히 닫으려면 최근 앱 목록에서 이 화면을 위로 밀어주세요.</p>';
+                const guide = isTouch
+                    ? '완전히 닫으려면 최근 앱 목록에서 이 화면을 위로 밀어주세요.'
+                    : '이 창을 직접 닫아주세요.';
+                exitScreen.innerHTML = `<i class="fa-solid fa-power-off" aria-hidden="true"></i><p>앱을 종료했습니다.<br>${guide}</p>`;
                 document.body.appendChild(exitScreen);
             }, 600);
         });
