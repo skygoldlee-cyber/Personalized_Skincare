@@ -381,7 +381,7 @@ export function startSubjectStudy(subjId) {
     state.flashcards.currentIndex = 0;
     const select = document.getElementById('fc-subject-select');
     if (select) select.value = subjId;
-    switchView('flashcard-view');
+    switchView('flashcard-view', { scrollTop: true });
 }
 
 /**
@@ -392,7 +392,7 @@ export function startSubjectQuiz(subjId) {
     state.quiz.subject = subjId;
     const select = document.getElementById('quiz-subject-select');
     if (select) select.value = subjId;
-    switchView('quiz-view');
+    switchView('quiz-view', { scrollTop: true });
     const startQuizBtn = document.getElementById('start-quiz-btn');
     if (startQuizBtn) startQuizBtn.click();
 }
@@ -404,7 +404,7 @@ export function startSubjectQuiz(subjId) {
 export function startSubjectReader(subjId) {
     const select = document.getElementById('reader-subject-select');
     if (select) select.value = subjId;
-    switchView('textbook-reader-view');
+    switchView('textbook-reader-view', { scrollTop: true });
 }
 
 // ===== C1 — 예상 점수 추정 + 실제 결과 자가 보고 =====

@@ -35,7 +35,7 @@ export function renderExamSelect() {
 /** 시험 전환 버튼 → 피커 뷰 표시 */
 export function showExamSelect() {
     renderExamSelect();
-    switchView('exam-select-view');
+    switchView('exam-select-view', { scrollTop: true });
 }
 
 /** 시험 카드 선택 — 다른 시험이면 selectExam이 리로드, 같으면 대시보드로 복귀 */

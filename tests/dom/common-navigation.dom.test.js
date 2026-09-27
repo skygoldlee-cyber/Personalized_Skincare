@@ -73,6 +73,33 @@ describe('navigation — 뷰 전환 + 스크롤 복원', () => {
         switchView(target.id);
         expect(window.stopReaderAudio).toHaveBeenCalled();
     });
+
+    it('switchView — scrollTop 옵션은 저장된 스크롤 대신 맨 위에서 연다', async () => {
+        // 대시보드 "맞춤 리포트 보기"처럼 문서형 뷰 딥링크용 — 이전 방문 스크롤 무시
+        const main = document.querySelector('.main-content');
+        const target = document.createElement('section');
+        target.id = 'synthetic-view-2';
+        target.className = 'view-section';
+        document.body.appendChild(target);
+
+        // 기본 동작: 이전 방문의 스크롤 위치 복원
+        main.scrollTop = 400;
+        saveScrollPosition('synthetic-view-2');
+        main.scrollTop = 77;
+        switchView('synthetic-view-2');
+        await flushAsync(50);
+        expect(main.scrollTop).toBe(400);
+
+        // scrollTop 옵션: 복원 무시하고 맨 위로
+        main.scrollTop = 400;
+        saveScrollPosition('synthetic-view-2');
+        main.scrollTop = 77;
+        switchView('synthetic-view-2', { scrollTop: true });
+        await flushAsync(50);
+        expect(main.scrollTop).toBe(0);
+
+        target.remove();
+    });
 });
 
 describe('사이드바 ↔ 모바일 탭 바 메뉴 일치', () => {

@@ -24,7 +24,7 @@
 | 구분 | 프레임워크 | 환경 | 파일 위치 | 테스트 수 |
 |------|-----------|------|-----------|-----------|
 | **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 552 |
-| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 358 |
+| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 364 |
 | **합계** | | | | **873** |
 
 ### 설계 원칙
@@ -195,13 +195,13 @@ npm run test:watch
 | 30 | `common-sync.dom.test.js` | 11 | 클라우드 동기화 | 페이로드 수집(고객 제외)·쓰기 훅 dirty·디바운스 push·pull 적용·충돌 양방향·push 실패·비로그인 무시 | 2026-09-23 추가 |
 | 31 | `common-glossary.dom.test.js` | 5 | 용어집 공용 경로 | 용어집 인덱스·링크 렌더 | 2026-09-24 추가 |
 | 32 | `common-htmlviewer.dom.test.js` | 7 | HTML 뷰어 | 외부 HTML 콘텐츠 로드·렌더 경로 | 2026-09-24 추가 |
-| 33 | `common-navigation.dom.test.js` | 4 | 뷰 전환 공용 | navigation 유틸 경로 | 2026-09-24 추가 |
+| 33 | `common-navigation.dom.test.js` | 8 | 뷰 전환 공용 | navigation 유틸 경로, 스크롤 복원·scrollTop 옵션, 사이드바↔탭 바 parity | 2026-09-27 scrollTop 추가 |
 | 34 | `study-trainer-drills.dom.test.js` | 12 | O/X·복수정답 드릴 | 드릴 UI·채점 경로 | 2026-09-24 추가 |
 | 35 | `common-eventlisteners.dom.test.js` | 21 | 이벤트 위임·리스너 | data-click/data-args/data-input 디스패치·키보드 접근성, 설정 메뉴·진도 초기화, 플래시카드 버튼·시뮬 이동·퀴즈 단축키 | 2026-09-24 추가 |
 | 36 | `study-commandpalette.dom.test.js` | 9 | 통합 검색 팔레트 | 팔레트 열기·검색·키보드 내비·실행 | 2026-09-26 추가 |
 | 37 | `whats-new.dom.test.js` | 7 | 새 버전 변경 이력 알림 | 최초 실행/업데이트/재부팅 분기, 복귀 사용자 판별, 확인→last_seen 기록, 설정 재열람 | 2026-09-26 추가 |
 | 38 | `feedback.dom.test.js` | 10 | 의견 보내기 모달 | 렌더링, 유형/별점 선택, 성공 제출, 오프라인 큐+플러시, 검증 거부, 허니팝, XSS 이스케이프, 신기능 힌트(점+배지) 표시·소멸 | 2026-09-26 추가 |
-| | **합계** | **358** | | |
+| | **합계** | **364** | | |
 
 ---
 

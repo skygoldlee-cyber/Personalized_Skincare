@@ -92,7 +92,7 @@ export async function startDiagnosticQuiz() {
     state.quiz.subject = subjects[0].key;
     state.quiz.data = shuffle(data);
     state.quiz.diagnostic = true;
-    switchView('quiz-view');
+    switchView('quiz-view', { scrollTop: true });
     _beginQuizRun();
 }
 
@@ -769,7 +769,7 @@ export function startWeakFocusQuiz() {
     
     state.quiz.data = shuffle(weakList.filter(Boolean)).slice(0, 10);
     state.quiz.diagnostic = false;
-    switchView('quiz-view');
+    switchView('quiz-view', { scrollTop: true });
     _beginQuizRun();
 }
 
@@ -864,7 +864,7 @@ export function wrongActionCard(itemId) {
     state.weakCards.add(itemId);
     state.reviewFilter = 'all';
     saveProgress();
-    switchView('review-view');
+    switchView('review-view', { scrollTop: true });
 }
 
 /**
@@ -893,6 +893,6 @@ export function wrongActionSimilar(quizId) {
     state.quiz.subject = subjectId;
     state.quiz.data = shuffle(pool).slice(0, 10);
     state.quiz.diagnostic = false;
-    switchView('quiz-view');
+    switchView('quiz-view', { scrollTop: true });
     _beginQuizRun();
 }

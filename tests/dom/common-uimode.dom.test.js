@@ -100,7 +100,7 @@ describe('UI 모드 — 학습/실무 전환', () => {
     it('실무 모드 전환 — 학습 전용 뷰에 있으면 formula-view로 이동 (H)', () => {
         state.currentView = 'dashboard-view';
         toggleUiMode();
-        expect(switchView).toHaveBeenCalledWith('formula-view');
+        expect(switchView).toHaveBeenCalledWith('formula-view', { scrollTop: true });
     });
 
     it('실무 모드 전환 — 실무 뷰에 있으면 이동하지 않음 (B)', () => {
@@ -132,7 +132,7 @@ describe('UI 모드 — 학습/실무 전환', () => {
         initUiMode();
         expect(document.body.classList.contains('ui-mode-practice')).toBe(true);
         expect(document.body.classList.contains('study-tools-open')).toBe(true);
-        expect(switchView).toHaveBeenCalledWith('formula-view');
+        expect(switchView).toHaveBeenCalledWith('formula-view', { scrollTop: true });
         expect(el('ui-mode-label').textContent).toBe('실무 모드');
     });
 

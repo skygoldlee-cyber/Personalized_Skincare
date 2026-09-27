@@ -467,7 +467,7 @@
 | R-01 | 적응형 네비게이션 (데스크톱 사이드바 ↔ 모바일 하단 탭 바) | ✅ |
 | R-02 | 동적 뷰포트 (`100dvh`, 주소창 표시/숨김 레이아웃 점프 방지) | ✅ |
 | R-03 | Safe Area 대응 (`env(safe-area-inset-bottom)`) | ✅ |
-| R-04 | 스크롤 위치 복원 (뷰 전환 시) | ✅ |
+| R-04 | 스크롤 위치 복원 (내비게이션 복귀 시) — 액션 딥링크는 `scrollTop: true`로 맨 위 오픈 (UX-NAV-07) | ✅ |
 | R-05 | 그리드 종열 전환 (데스크톱 다열 → 모바일 단일 열) | ✅ |
 | R-06 | 인라인 스타일 오버라이드 패턴 (`[style*="..."]` + `!important`) | ✅ |
 | R-07 | 전역 테이블 가로 스크롤 (`width:max-content;min-width:100%` + wrapper `overflow-x:auto`) | ✅ |
@@ -499,6 +499,7 @@
 | UX-NAV-04 | **`100vw` 대신 `100%`**: 뷰포트 기준 너비는 수직 스크롤바 폭을 포함해 가로 오버플로를 유발할 수 있음 | `.app-container { width: 100% }`. 특히 클래식 스크롤바가 상시 표시되는 데스크톱에서 차이 발생 |
 | UX-NAV-05 | **하단 `position:fixed` 요소는 탭 바 위로**: 모바일에서 `bottom` 고정 요소는 `calc(70px + safe-area)` 이상으로 배치 | back-to-top(`bottom:1.25rem`)이 탭 바(z 1400)에 완전히 가려진 실제 사례. 배너·토스트·플로팅 버튼 신규 추가 시에도 동일 규칙 적용. `.main-content`는 `padding-bottom: calc(80px + safe)` + `scroll-padding-bottom`으로 콘텐츠·포커스 요소 보호 |
 | UX-NAV-06 | **통합 검색 팔레트 (Ctrl/Cmd+K)**: `src/command-palette.js` — 뷰/교재 섹션/카드/퀴즈/성분/문제집을 한 검색창에서 찾아 실행. `↑↓` 이동·`Enter` 실행·`ESC`/배경 클릭 닫기, 헤더 돋보기 버튼(모바일 진입점) | `searchAll()`은 소스 주입 가능한 순수 함수로 분리해 테스트 가능. 실행은 기존 경로 재사용(nav 클릭 시뮬레이션, `startSubjectStudy/Quiz`, `openSubjectChapter`, `ExamViewer.openExam`) — 네비게이션 분기 신설 금지. 뷰 목록은 nav-item DOM 스캔이라 feature 게이팅(`is-hidden`)을 자동 반영. z-index 2500 (탭 바·모달 위). 전 소스 로컬 데이터로 오프라인 동작 |
+| UX-NAV-07 | **뷰 전환 스크롤 규칙**: 내비/복귀는 `scrollTop` 복원, **액션 딥링크는 맨 위 오픈** — `switchView(target, { scrollTop: true })` | 내비게이션(사이드바·탭 바·뒤로가기)은 사용자의 이전 위치를 보존하는 게 기대 동작이지만, "맞춤 리포트 보기"·"퀴즈 풀기" 같은 액션 버튼이 이전 스크롤을 복원하면 중간에서 열려 맥락을 잃는다. `restoreScrollPosition`의 `pendingTop` 플래그가 복원 시점에 소비되어 `saveScrollPosition` 덮어쓰기와 무관하게 동작. 새 액션 딥링크 추가 시 `scrollTop: true` 필수 — `data-args='["view-id", {"scrollTop": true}]'` 또는 직접 호출 모두 지원 |
 
 #### 4.8.2 스크롤바 전략
 

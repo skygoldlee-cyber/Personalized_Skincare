@@ -4,6 +4,23 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-09-27 뷰 전환 딥링크가 저장된 스크롤 위치로 열리던 문제 — 전수 점검·수정
+
+- 원인: 메뉴 내 버튼이 `switchView`로 다른 뷰를 열 때 `restoreScrollPosition`이
+  이전 방문 스크롤(또는 미저장 시 현재 스크롤 유지)을 그대로 복원해 중간 위치로 열림.
+- `src/views/navigation.js`: `switchView(target, { scrollTop: true })` 옵션 추가 —
+  `pendingTop` 플래그가 `saveScrollPosition`의 덮어쓰기와 무관하게 복원 시점에
+  소비돼 타겟 뷰를 `scrollTop=0`에서 연다. PC·모바일 공통 스크롤 컨테이너
+  `.main-content`에 적용되어 양쪽 모두 해결.
+- 적용(액션 딥링크 → 맨 위): "맞춤 리포트 보기"(index.html data-args),
+  startSubjectStudy/Quiz/Reader, startFocusSubjectStudy, 진단·약점·유사 퀴즈,
+  wrongActionCard→review-view, gotoWeakReview→trainer-view, openIngredientDict,
+  formulaAddIngredient→formula-view, 실무 모드 랜딩(ui-mode ×2), showExamSelect.
+- 복원 유지(내비/복귀): 사이드바 nav-item·모바일 탭(app.js:786), "대시보드로 돌아가기"
+  (event-listeners:365), 같은 시험 선택 후 피커 닫기(exam-select:44).
+- 교재 리더는 자체 `#textbook-reader-container` 스크롤로 별도 위치 복원 — 영향 없음.
+- DOM 테스트: navigation scrollTop 케이스 추가, common-uimode 단언을 신규 인자에 맞춰 갱신.
+
 ## 2026-10-13 개인화 분석 뷰 분리 — "맞춤 학습 리포트"(`analysis-view`) + 오디오 이야기형 게이트
 
 - `analysis-view` 신설: 학습 진단 요약 3카드(오답 패턴·취약 진술·학습 리듬) +

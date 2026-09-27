@@ -103,7 +103,7 @@ export function exitFormulaSubView() {
 }
 
 export function openIngredientDict() {
-  switchView('dictionary-view');
+  switchView('dictionary-view', { scrollTop: true });
 }
 
 /**
@@ -122,7 +122,7 @@ export function formulaAddIngredient(name) {
     calc.rows.push({ name: trimmed, concentration: null, phase: '' });
   }
   // 사전 등 다른 뷰에서 호출될 수 있으므로 formula-view로 전환 후 계산기 표시
-  switchView('formula-view');
+  switchView('formula-view', { scrollTop: true });
   openFormulaCalc();
   showToast(`"${trimmed}"을(를) 추가했습니다 — 배합률(%)을 입력하세요.`, 'success');
 }

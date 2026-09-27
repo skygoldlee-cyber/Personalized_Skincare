@@ -507,6 +507,7 @@ Personalized_Skincare/
 - 뷰 목록: dashboard / analysis / flashcard / quiz / review / trainer / exam / textbook / textbook-reader / dictionary / formula / exam-select / calendar
 - 내비게이션 동기화: `.nav-item`(사이드바)과 `.mobile-tab-item`(탭 바)에 동일 `data-target` 부여 → 뷰 전환 시 양쪽 활성 상태 자동 동기화. 양쪽 `data-target` 집합·뷰별 PRO 배지(`data-pro-feature`) 일치는 `tests/dom/common-navigation.dom.test.js`의 parity 테스트가 강제 (한쪽 누락 시 실패)
 - 전환 부가 동작: 이전 뷰 스크롤 위치 저장·복원, 리더 집중 모드 해제, 오디오 정지, 뷰별 렌더 핸들러 호출 (`ctx.handlers`)
+- **스크롤 규칙**: 내비 전환은 이전 `scrollTop` 복원, **액션 딥링크(다른 화면을 여는 버튼)는 `switchView(target, { scrollTop: true })`로 맨 위 오픈** — `restoreScrollPosition`의 `pendingTop` 플래그가 복원 시점에 1회 소비되어 `saveScrollPosition` 덮어쓰기와 무관 (SPEC §4.8.1 UX-NAV-07)
 
 ### 2. Application Layer (응용 계층)
 
@@ -1266,7 +1267,7 @@ app-fallback.js 폴링 시작 (400ms 간격, 15s 데드라인)
    `scroll-padding-bottom`을 적용 — 스크롤 끝 콘텐츠와 포커스/`scrollIntoView` 요소가 탭 바 밑으로 들어가지 않음.
    뷰 내 `position:fixed` 하단 요소(back-to-top, 배너, 토스트, 플로팅 버튼)도 `bottom: calc(70px + safe)` 이상으로 배치 필수 —
    `bottom: 0~2rem`이면 탭 바(z 1400)에 완전히 가려짐
-4. **스크롤 위치 복원**: 뷰 전환 시 `saveScrollPosition()`/`restoreScrollPosition()`으로 이전 위치 기억
+4. **스크롤 위치 규칙**: 내비 전환 시 `saveScrollPosition()`/`restoreScrollPosition()`으로 이전 위치 복원 — 단 **액션 딥링크는 `switchView(target, { scrollTop: true })`로 맨 위 오픈** (UX-NAV-07, `pendingTop` 플래그). 교재 리더는 `#textbook-reader-container` 자체 스크롤로 별도 위치 복원
 5. **터치 타겟**: 최소 44×44px 터치 영역 확보
 6. **그리드 종열 전환**: 데스크톱 다열 그리드(성적 분석 3열 등) → 모바일 세로보기에서 `1fr` 단일 열로 자동 전환
 

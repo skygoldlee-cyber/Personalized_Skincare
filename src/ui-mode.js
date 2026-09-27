@@ -53,7 +53,7 @@ export function applyUiMode() {
 export function initUiMode() {
     applyUiMode();
     if (isPracticeMode() && hasFeature('formula')) {
-        switchView(PRACTICE_LANDING);
+        switchView(PRACTICE_LANDING, { scrollTop: true });
     }
 }
 
@@ -64,7 +64,7 @@ export function toggleUiMode() {
     if (next === 'practice'
         && STUDY_ONLY_VIEWS.has(state.currentView)
         && hasFeature('formula')) {
-        switchView(PRACTICE_LANDING);
+        switchView(PRACTICE_LANDING, { scrollTop: true });
     }
     showToast(next === 'practice'
         ? '실무 모드로 전환했습니다. 학습 기능은 "학습 도구"에서 열 수 있습니다.'

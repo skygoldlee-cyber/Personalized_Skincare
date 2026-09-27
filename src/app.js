@@ -906,7 +906,7 @@ function startFocusSubjectStudy(subKey) {
             renderQuizQuestion();
             
             // 퀴즈 탭 활성화
-            switchView('quiz-view');
+            switchView('quiz-view', { scrollTop: true });
         }
     }).catch(err => {
         console.error(err);
