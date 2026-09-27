@@ -82,12 +82,12 @@ describe('사이드바 ↔ 모바일 탭 바 메뉴 일치', () => {
         loadIndexHtml();
     });
 
-    it('사이드바 .nav-item과 모바일 .mobile-tab-item의 data-target 집합이 동일하다', () => {
+    it('사이드바 .nav-item과 모바일 .mobile-tab-item의 data-target 집합·순서가 동일하다', () => {
         const sidebarTargets = [...document.querySelectorAll('.nav-item[data-target]')]
             .map(n => n.getAttribute('data-target'));
         const mobileTargets = [...document.querySelectorAll('.mobile-tab-item[data-target]')]
             .map(n => n.getAttribute('data-target'));
-        expect([...sidebarTargets].sort()).toEqual([...mobileTargets].sort());
+        expect(sidebarTargets).toEqual(mobileTargets);
     });
 
     it('각 data-target은 대응하는 .view-section을 갖는다', () => {
