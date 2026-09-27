@@ -6,6 +6,14 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-14 커버리지 공백 해소 + Playwright E2E 계층 신설
+
+- **`tests/unit/content-engineering.test.js` 신규** — CE-01~05 + TR-16a 커버: 표준형 교재 4과목의 학습 가이드(출제 빈도★·소요 시간·핵심 키워드), `> **한 줄 요약**` blockquote, 비교표(마크다운 표), 확인문제, 챕터별 용어 표를 검증. 용어 섹션은 과목별 제목 표기 차이("용어 정리"·"관련 용어"·"「법」 용어")를 허용하되 `| 용어 |` 표 존재를 고정. TR-16a는 툴바 자동 숨김(하향 6px·140px 임계, 상향 복귀) 구현 + CSS 규칙 정적 검증
+- **Playwright E2E 계층 신설** (`tests/e2e/app.spec.js` + `playwright.config.js`) — jsdom 불가 영역 커버: `__APP_INITIALIZED` 부트스트랩, pageerror 부재, 폴백 오버레이 미표시, 네비게이션 뷰 전환(데스크톱 사이드바 + 모바일 하단 탭 바), manifest.webmanifest Content-Type, sw.js 서빙·등록, App Shell 자산 200, 헤더 액션·설정 패널 토글 — chromium + Pixel 7 프로젝트 16개 통과
+- **CI 연결**: `playwright install --with-deps chromium` + `npm run test:e2e` 스텝, 실패 시 `test-results/` 아티팩트 업로드
+- **설정**: `test:e2e` npm 스크립트, `.gitignore`에 `/test-results/`·`/playwright-report/` 추가, `@playwright/test@1.63.0` devDependency
+- 결과: 커버리지 공백 10→**4개** (ROAD-P1~P4 미구현 결제 로드맵만 — 코드 참조 없음이 정상) · unit 687 · DOM 388 · E2E 16 · lint 0 · check:types 0
+
 ## 2026-10-14 테스트 갭 완전 소진 — 103→0, TEST_GAP_BASELINE 0
 
 - **신규 테스트 파일 12개 추가** (unit 9 + DOM 3):

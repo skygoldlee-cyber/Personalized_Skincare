@@ -22,6 +22,7 @@
 # 테스트
 npm.cmd test                          # 유닛 테스트 (node --test)
 npm.cmd run test:dom                  # DOM 테스트 (Vitest + jsdom)
+npm.cmd run test:e2e                   # E2E 테스트 (Playwright 실브라우저 — 부트스트랩·SW·PWA·네비게이션, serve.js 자동 기동)
 npm.cmd run test:all                   # 전체 테스트 (unit + parser + dom)
 
 # 빌드

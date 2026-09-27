@@ -72,6 +72,20 @@ jobs:
       - name: Run parser parity check
         run: npm run check:parser
 
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run E2E tests (Playwright)
+        run: npm run test:e2e
+
+      - name: Upload Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-results
+          path: test-results/
+          retention-days: 7
+
       - name: PR impact report
         if: github.event_name == 'pull_request'
         run: node tools/impact_tests.js --ref origin/main
