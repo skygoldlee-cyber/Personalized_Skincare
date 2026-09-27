@@ -45,6 +45,7 @@ describe('사용 카운터 (trackView/trackAction)', () => {
         expect(d.views['flashcard-view']).toBe(1);
         expect(d.actions.weak_to_textbook).toBe(1);
         expect(d.firstUse).toBeTruthy();
+        expect(d.owner).toBeTruthy(); // 익명 유저 식별(device_id) — 로그인 없는 기간의 유저 단위
         expect(Object.keys(d.days)).toHaveLength(1);
     });
 
@@ -84,15 +85,20 @@ describe('내 사용 통계 모달 (showUsageStats)', () => {
         expect(el.textContent).toContain('이 기기에만 저장');
     });
 
-    it('유료가치 판정 기준(20회) 표시와 충족 판정을 반영한다', async () => {
+    it('유료가치 판정은 Pro 후보 액션만 합산한다 (20회)', async () => {
+        // 편의/UI 액션은 판정에서 제외 — plan_compare 20회로는 미충족
+        for (let i = 0; i < PRO_VALUE_THRESHOLD; i++) trackAction('plan_compare');
+        expect(isValueThresholdMet()).toBe(false);
         await showUsageStats();
-        expect(overlay().textContent).toContain(`기준 ${PRO_VALUE_THRESHOLD}회 중`);
+        expect(overlay().textContent).toContain(`0/${PRO_VALUE_THRESHOLD}회`);
         expect(overlay().textContent).not.toContain('충족');
         overlay().querySelector('.app-confirm-ok').click();
 
+        // Pro 후보(weak_to_textbook) 20회 → 충족
         for (let i = 0; i < PRO_VALUE_THRESHOLD; i++) trackAction('weak_to_textbook');
         expect(isValueThresholdMet()).toBe(true);
         await showUsageStats();
+        expect(overlay().textContent).toContain(`${PRO_VALUE_THRESHOLD}/${PRO_VALUE_THRESHOLD}회`);
         expect(overlay().textContent).toContain('충족');
     });
 

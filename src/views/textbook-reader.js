@@ -2,6 +2,7 @@
 // @spec TR-01~18,SA-01~05,G-01~09,RR-02~06,ST-01~07
 import { esc } from '../sanitize.js';
 import { proFeatureNotice } from '../pro-upgrade.js';
+import { trackAction } from '../usage-stats.js';
 import { formatSectionContentForReader } from '../reader-format.js';
 import { parseTextbookContent } from '../textbook-parser.js';
 import { renderStudyAids, bindStudyAidToggles, renderExamFilterToggle, applyExamFilter } from '../study-aids.js';
@@ -300,7 +301,10 @@ export function renderTextbookReader() {
         storyToggle.dataset.bound = 'true';
         storyToggle.checked = textbookReaderState.storyMode;
         storyToggle.addEventListener('change', (e) => {
-            if ((/** @type {HTMLInputElement} */ (e.target)).checked) proFeatureNotice('story_textbook', '이야기형 교재 본문 읽기');
+            if ((/** @type {HTMLInputElement} */ (e.target)).checked) {
+                trackAction('story_textbook');
+                proFeatureNotice('story_textbook', '이야기형 교재 본문 읽기');
+            }
             // 표준형으로 돌아가면 오디오 버튼/플레이어가 숨겨지므로 재생 중인 오디오 정지
             if (!(/** @type {HTMLInputElement} */ (e.target)).checked && readerAudioState.audio) {
                 stopReaderAudio();

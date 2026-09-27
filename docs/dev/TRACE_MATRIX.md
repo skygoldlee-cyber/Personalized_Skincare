@@ -3,7 +3,7 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: 28b591ac9447e83e
+> 입력 해시: 70f7b67160f72c9b
 > 생성: 2026-09-27 · 원천: SPEC.md(344개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
@@ -13,7 +13,7 @@
 | 테스트 | 검증 테스트 파일 | `// @spec` 태그 (tests/) |
 | 보고서 | 분석·결과 보고서 | report_archive 헤더 |
 
-**커버리지 요약**: 요구사항 344개 — 문서 연결 222 · 소스 연결 325 · 테스트 연결 340 · 보고서 연결 109
+**커버리지 요약**: 요구사항 344개 — 문서 연결 222 · 소스 연결 326 · 테스트 연결 341 · 보고서 연결 109
 
 ---
 
@@ -554,7 +554,7 @@
 | ROAD-P1 | DOC-BIZ-01<br>DOC-BIZ-02<br>DOC-BIZ-03<br>DOC-BIZ-04<br>…외 2개 | — | — | DOC-ARC-01<br>DOC-ARC-03<br>DOC-ARC-06 |
 | ROAD-P2 | DOC-BIZ-01<br>DOC-BIZ-02<br>DOC-BIZ-03<br>DOC-BIZ-04<br>…외 2개 | — | — | DOC-ARC-01<br>DOC-ARC-03<br>DOC-ARC-06 |
 | ROAD-P3 | DOC-BIZ-01<br>DOC-BIZ-02<br>DOC-BIZ-03<br>DOC-BIZ-04<br>…외 2개 | — | — | DOC-ARC-01<br>DOC-ARC-02<br>DOC-ARC-03<br>DOC-ARC-06 |
-| ROAD-P4 | DOC-BIZ-01<br>DOC-BIZ-02<br>DOC-BIZ-03<br>DOC-BIZ-04<br>…외 2개 | — | — | DOC-ARC-01<br>DOC-ARC-03<br>DOC-ARC-06<br>DOC-ARC-07 |
+| ROAD-P4 | DOC-BIZ-01<br>DOC-BIZ-02<br>DOC-BIZ-03<br>DOC-BIZ-04<br>…외 2개 | src/sync.js | tests/dom/common-sync.dom.test.js | DOC-ARC-01<br>DOC-ARC-03<br>DOC-ARC-06<br>DOC-ARC-07 |
 
 ---
 

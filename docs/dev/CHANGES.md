@@ -13,7 +13,8 @@
 - **`pro-upgrade.js`**: `hasProEntitlement()`(`pro_entitled` GLOBAL 로컬 플래그 — ROAD-P1 서버 검증 전 임시 시임) + `canCloudSync()` = `!isProFeature('cloud_sync') || hasProEntitlement()`
 - **`sync.js`**: `canCloudSync()`로 `markDirty` 디바운스·`pushSync`·`pullSync`·`syncNow` 차단 — 로그인해도 게이트 시 push/pull·원격 호출 없음, 계정 모달 동기화 상태에 'Pro 전용' 표시. 로컬 데이터 무손실(로컬 퍼스트 유지)
 - **`auth-view.js`/`index.html`**: 계정 모달 '플랜: Free'를 `hasProEntitlement()` 연동으로 동적화, 로그인 전·후 힌트 문구를 "동기화는 Pro 기능"으로 정정
-- **`usage-stats.js`**: `PRO_VALUE_THRESHOLD = 20` + `isValueThresholdMet()` — '내 사용 통계'에 '유료가치 판정: 기준 20회 중 N회 (충족)' 표시, ROAD-P1 착수 판정 근거
+- **`usage-stats.js`**: `PRO_VALUE_THRESHOLD = 20` + `isValueThresholdMet()` — '내 사용 통계'에 'Pro 후보 기능 사용 N/20회 (충족)' 표시, ROAD-P1 착수 판정 근거
+- **유저 단위·판정 대상 정밀화**: `usage_stats`를 GLOBAL 키로 전환 + 레코드에 `owner`(익명 `device_id`) 기록 — 로그인 없는 프로모션 기간에 기기=유저 단위로 근사, 시험 전환해도 누적 유지. 판정 합산은 `VALUE_ACTIONS`(오답 루프 3종·진단 평가·이야기형·맞춤 리포트·실제 결과 보고)만 — `command_palette`·`plan_compare` 등 편의/UI 액션 제외. 이야기형 토글 ON(`story_textbook`)·리포트 뷰 진입(`personal_analysis`) 계측 추가
 - **테스트**: pro-plan 5→9(cloud_sync 행·entitlement 3상태), usage-stats 7→8(판정 표시·isValueThresholdMet), common-sync 11→13(pro_entitled 세팅·게이트 차단 2건) — DOM 400→407
 
 ## 2026-10-16 로컬 사용 카운터 구현 (ROAD-L5)

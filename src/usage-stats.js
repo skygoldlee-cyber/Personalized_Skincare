@@ -2,9 +2,10 @@
 // @spec ROAD-L5
 //
 // 외부 전송 없이 이 기기의 localStorage에만 누적한다. 뷰 전환과 유료가치
-// 후보 기능(오답→교재 근거·진단 평가·통합 검색 등)의 사용 횟수를 측정해
-// 설정의 '내 사용 통계'에서 확인 — Pro 전환 의향 판단의 정량 근거.
-// 시험별 스코프 키(scopedKey)로 저장되어 시험 전환 시 독립 집계된다.
+// 후보 기능(오답→교재 근거·진단 평가·이야기형·맞춤 리포트 등)의 사용 횟수를
+// 측정해 설정의 '내 사용 통계'에서 확인 — Pro 전환 의향 판단의 정량 근거.
+// GLOBAL 키(기기 단위)로 저장 — 로그인 없는 프로모션 기간에는 owner의
+// 익명 device_id가 "유저" 단위이며, 시험 전환해도 누적이 유지된다.
 
 import { STORAGE_KEYS } from './storage-keys.js';
 import { safeGetItem, safeSetItem } from './state.js';
@@ -22,10 +23,21 @@ const ACTION_LABELS = {
     weak_to_card: '오답 → 복습 노트',
     weak_to_similar: '오답 → 유사 문제',
     diagnostic_quiz: '진단 평가',
+    story_textbook: '이야기형 교재 읽기',
+    personal_analysis: '맞춤 학습 리포트 보기',
+    actual_exam_report: '실제 시험 결과 보고',
     command_palette: '통합 검색 (Ctrl+K)',
     plan_compare: 'Free/Pro 플랜 비교',
-    actual_exam_report: '실제 시험 결과 보고',
 };
+
+/**
+ * 유료가치 판정 대상 (Pro 후보 기능) — PRO_VALUE_THRESHOLD 합산에만 포함.
+ * command_palette·plan_compare 같은 편의/UI 액션은 통계 표시용으로만 남긴다.
+ */
+const VALUE_ACTIONS = new Set([
+    'weak_to_textbook', 'weak_to_card', 'weak_to_similar',
+    'diagnostic_quiz', 'story_textbook', 'personal_analysis', 'actual_exam_report',
+]);
 
 function _todayStr() { return new Date().toISOString().slice(0, 10); }
 
@@ -35,13 +47,24 @@ function _load() {
         if (d && typeof d === 'object' && d.v === 1
             && typeof d.views === 'object' && typeof d.actions === 'object' && typeof d.days === 'object') return d;
     } catch (e) { /* 손상 데이터는 초기값으로 복구 */ }
-    return { v: 1, firstUse: null, lastUse: null, days: {}, views: {}, actions: {} };
+    return { v: 1, owner: null, firstUse: null, lastUse: null, days: {}, views: {}, actions: {} };
+}
+
+/** 익명 유저 식별 — 로그인 없는 기간의 "유저" 단위. sync.js getDeviceId와 같은 키 공유 */
+function _ownerId() {
+    let id = safeGetItem(STORAGE_KEYS.DEVICE_ID);
+    if (!id) {
+        id = (crypto.randomUUID && crypto.randomUUID()) || `dev-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+        safeSetItem(STORAGE_KEYS.DEVICE_ID, id);
+    }
+    return id;
 }
 
 function _bump(bucket, key) {
     if (!key) return;
     const d = _load();
     const now = new Date().toISOString();
+    if (!d.owner) d.owner = _ownerId();
     if (!d.firstUse) d.firstUse = now;
     d.lastUse = now;
     const day = _todayStr();
@@ -63,15 +86,22 @@ export function trackAction(key) { _bump('actions', key); }
 
 export function getUsageStats() { return _load(); }
 
-/** 기능 액션 합계가 유료가치 판정 기준(PRO_VALUE_THRESHOLD)에 도달했는지 */
+/** Pro 후보 기능 사용 합계가 유료가치 판정 기준(PRO_VALUE_THRESHOLD)에 도달했는지 */
 export function isValueThresholdMet() {
-    const d = _load();
-    return Object.values(d.actions).reduce((s, n) => s + n, 0) >= PRO_VALUE_THRESHOLD;
+    return getValueActionTotal() >= PRO_VALUE_THRESHOLD;
 }
 
 export function resetUsageStats() {
     safeSetItem(STORAGE_KEYS.USAGE_STATS,
-        JSON.stringify({ v: 1, firstUse: null, lastUse: null, days: {}, views: {}, actions: {} }));
+        JSON.stringify({ v: 1, owner: null, firstUse: null, lastUse: null, days: {}, views: {}, actions: {} }));
+}
+
+/** 유료가치 판정 대상 액션 합계 — Pro 후보 기능(VALUE_ACTIONS) 사용 횟수만 집계 */
+export function getValueActionTotal() {
+    const d = _load();
+    return Object.entries(d.actions)
+        .filter(([k]) => VALUE_ACTIONS.has(k))
+        .reduce((s, [, n]) => s + n, 0);
 }
 
 function _fmtDate(iso) {
@@ -96,6 +126,8 @@ export async function showUsageStats() {
     const actionRows = Object.entries(d.actions).sort((a, b) => b[1] - a[1])
         .map(([k, n]) => `<tr><td>${esc(ACTION_LABELS[k] || k)}</td><td class="usage-num">${n}회</td></tr>`).join('');
     const totalActions = Object.values(d.actions).reduce((s, n) => s + n, 0);
+    const valueTotal = Object.entries(d.actions)
+        .filter(([k]) => VALUE_ACTIONS.has(k)).reduce((s, [, n]) => s + n, 0);
     const activeDays = Object.keys(d.days).length;
 
     const existing = document.getElementById('usage-stats-overlay');
@@ -110,7 +142,7 @@ export async function showUsageStats() {
                 <ul>
                     <li>첫 사용: <strong>${_fmtDate(d.firstUse)}</strong> · 최근 사용: <strong>${_fmtDate(d.lastUse)}</strong></li>
                     <li>학습 활동 일수: <strong>${activeDays}일</strong> · 기능 사용 합계: <strong>${totalActions}회</strong></li>
-                    <li>유료가치 판정: 기준 ${PRO_VALUE_THRESHOLD}회 중 <strong>${totalActions}회</strong>${totalActions >= PRO_VALUE_THRESHOLD ? ' — <strong>충족</strong>' : ''}</li>
+                    <li>Pro 후보 기능 사용: <strong>${valueTotal}/${PRO_VALUE_THRESHOLD}회</strong>${valueTotal >= PRO_VALUE_THRESHOLD ? ' — 유료가치 판정 <strong>충족</strong>' : ''}</li>
                 </ul>
             </div>
             ${viewRows ? `<h4 class="usage-stats-sub">화면별 사용</h4><table class="usage-stats-table">${viewRows}</table>` : ''}

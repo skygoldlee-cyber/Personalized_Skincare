@@ -62,7 +62,7 @@ export const STORAGE_KEYS = {
   // Pro 기능 안내 표시 이력 — 기능별 1회 안내 (pro-upgrade.js)
   PRO_NOTICE_SEEN: 'pro_notice_seen',
 
-  // 기능 사용 카운터 (usage-stats.js — ROAD-L5 유료가치 측정, 로컬 전용·백업/동기화 제외)
+  // 기능 사용 카운터 (usage-stats.js — ROAD-L5 유료가치 측정, 로컬 전용·백업/동기화 제외, GLOBAL_KEYS — 익명 유저 단위)
   USAGE_STATS: 'usage_stats',
 
   // 원료 DB 갱신 감지 — 마지막으로 본 ingredients contentHash (기기 로컬 마커, 백업 제외)

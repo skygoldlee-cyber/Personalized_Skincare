@@ -14,7 +14,7 @@ import { setupThemeToggle } from './theme-toggle.js';
 import { maybeShowWhatsNew } from './whats-new.js';
 import { captureEntrySource, flushPendingFeedback, initFeedbackHint } from './feedback.js';
 import { loadFeaturePlan, refreshProBadges, proFeatureNotice, showPlanCompare } from './pro-upgrade.js';
-import { showUsageStats } from './usage-stats.js';
+import { showUsageStats, trackAction } from './usage-stats.js';
 
 // --- 뷰 컨트롤러 모듈 임포트 ---
 import {
@@ -639,6 +639,7 @@ function setupNavigation() {
             checkExamDraft();
         },
         'analysis-view': () => {
+            trackAction('personal_analysis');
             proFeatureNotice('personal_analysis', '맞춤 학습 리포트');
             renderAnalysisView();
             refreshDashboardStatsInBackground();

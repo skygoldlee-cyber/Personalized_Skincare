@@ -273,7 +273,7 @@ npm run hooks:install
 | 40 | `charts.dom.test.js` | 7 | 분석 차트 (C-01~05) | 성적 라인차트·합격/과락 진단·레이더 N축·과목 점수행·툴팁 | 성적 이력 시딩(safeSetItem scopedKey), 2026-10-14 추가 |
 | 41 | `review-drills-formula.dom.test.js` | 11 | 복습·숫자 드릴·계산기 (RV-01·ND-01·FO-10/11) | 복습 통합 목록·과목 필터·number-drills fetch/캐시/렌더·계산기 상하 고정바·사전 연동·DB 버전 배지 | fetch 스텁, 2026-10-14 추가 |
 | 42 | `pro-plan.dom.test.js` | 9 | 플랜 안내 모달 (ROAD-P0) | showPlanCompare 플랜 반영 PRO/무료 태그·플랜 전환 반영·설정 진입점·proFeatureNotice 동기화 안내·free 스킵·cloud_sync 행 반영·canCloudSync entitlement 게이트(3 상태) | fetch 스텁, 2026-10-14 추가 |
-| 43 | `usage-stats.dom.test.js` | 8 | 로컬 사용 카운터 (ROAD-L5) | scoped usage_stats 누적·초기화·손상 복구·모달 라벨/합계 렌더·유료가치 판정 기준(20회) 표시·빈 상태·리셋 버튼·설정 진입점 | ui-utils 모킹, 2026-10-16 추가 |
+| 43 | `usage-stats.dom.test.js` | 8 | 로컬 사용 카운터 (ROAD-L5) | GLOBAL usage_stats 누적·owner 익명 ID·초기화·손상 복구·모달 라벨/합계 렌더·Pro 후보 액션만 판정 합산(20회)·빈 상태·리셋 버튼·설정 진입점 | ui-utils 모킹, 2026-10-16 추가 |
 | | **합계** | **407** | | |
 
 ---
