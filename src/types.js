@@ -131,8 +131,9 @@
  * 플래시카드 한 장.
  * @typedef {Object} Card
  * @property {string}  id       안정적 카드 ID
- * @property {string}  question 앞면(질문/키워드)
- * @property {string}  answer   뒷면(정답/설명)
+ * @property {string}  term        앞면(용어/키워드)
+ * @property {string}  definition  뒷면(정의/설명)
+ * @property {boolean} [isKey]     핵심(기출·중요) 카드 여부
  * @property {string} [chapter] 소속 단원명
  * @property {string} [subject] 소속 과목 키
  * @property {string} [cardType]   카드 유형 ('penalty'|'prohibition'|'exception'|'number'|'requirement'|'comparison'|'procedure'|'definition')

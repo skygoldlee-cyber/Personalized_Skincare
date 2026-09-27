@@ -194,6 +194,7 @@ export function setMany(entries) {
 
 /** setMany의 JSON 판 — 값은 직렬화 가능한 객체 */
 export function setJSONMany(entries) {
+    /** @type {Object.<string, string>} */
     const serialized = {};
     try {
         for (const k of Object.keys(entries)) serialized[k] = JSON.stringify(entries[k]);

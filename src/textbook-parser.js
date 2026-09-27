@@ -58,7 +58,7 @@ function isGenericTerm(term) {
 }
 
 // ── 카드 타입 분류 (8가지 후보 유형) ──
-function classifyCardType(term, definition, category) {
+function classifyCardType(term, definition, _category) {
     const text = `${term} ${definition}`;
     // 벌칙·행정처분 (최우선)
     if (/벌금|징역|과태료|벌칙|행정처분|등록취소|영업정지|폐지|처벌/.test(text)) return 'penalty';
@@ -101,7 +101,7 @@ function scoreCard(term, definition, isKey, category, cardType) {
     else if (['requirement', 'procedure'].includes(cardType)) numericScore = 50;
 
     // 기출관련성 (0-100)
-    let examRel = isKey ? 100 : (category && /기출/.test(category) ? 30 : 0);
+    const examRel = isKey ? 100 : (category && /기출/.test(category) ? 30 : 0);
 
     // 카드적합성 (0-100)
     let cardFit = 70;
@@ -484,6 +484,9 @@ function parseMarkdownFile(content, subjectId, filename, chapterKey) {
                         }
                     });
                 }
+                }
+                if (has기출Line && quizzesForLine === 0) {
+                    warnings.push(cleanedLine.substring(0, 40));
                 }
             }
         }

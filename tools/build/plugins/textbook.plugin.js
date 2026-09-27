@@ -54,7 +54,7 @@ function isGenericTerm(term) {
 }
 
 // ── 카드 타입 분류 (8가지 후보 유형) ──
-function classifyCardType(term, definition, category) {
+function classifyCardType(term, definition, _category) {
   const text = `${term} ${definition}`;
   if (/벌금|징역|과태료|벌칙|행정처분|등록취소|영업정지|폐지|처벌/.test(text)) return 'penalty';
   if (/금지|안\s*된다|수\s*없|불가|하지\s*아니|금지함/.test(text)) return 'prohibition';
