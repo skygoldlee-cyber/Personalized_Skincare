@@ -1,5 +1,13 @@
 [
   {
+    "version": "v369-20260927-7a85e00",
+    "date": "2026-09-27",
+    "notes": [
+      "feat(quality): IDE 오류 게이트 — 커밋·푸시·배포 3중 차단",
+      "fix(trace): 절 이전 언급 ID가 빈 절로 등록되던 표시 버그 수정"
+    ]
+  },
+  {
     "version": "v369-20260927-9422d83",
     "date": "2026-09-27",
     "notes": [
@@ -140,13 +148,6 @@
     "date": "2026-09-26",
     "notes": [
       "feat(formula): 허브 소개 문구에 피부정보 수집 단계 추가"
-    ]
-  },
-  {
-    "version": "v369-20260926-f6f2fa9",
-    "date": "2026-09-26",
-    "notes": [
-      "refactor: tools/build 네이밍 snake_case 통일 + 시험 문서 docs/ 정리"
     ]
   }
 ]
