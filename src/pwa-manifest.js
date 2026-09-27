@@ -23,7 +23,7 @@
         if (!exam) exam = exams[0];
         if (!exam) return;
 
-        const link = document.querySelector('link[rel="manifest"]');
+        const link = /** @type {HTMLLinkElement|null} */ (document.querySelector('link[rel="manifest"]'));
         if (!link) return;
 
         // 기본 시험은 정적 manifest.webmanifest가 이미 동일 내용이므로 유지.

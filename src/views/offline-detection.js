@@ -12,7 +12,7 @@ import { TIMING } from '../config/timing.js';
  * @param {function} togglePomodoro - 뽀모도로 토글 함수
  */
 export function setupOfflineDetection(state, togglePomodoro) {
-    const banner = document.getElementById('offline-banner');
+    const banner = /** @type {HTMLElement} */ (document.getElementById('offline-banner'));
     if (!banner) return;
 
     // 설치형(standalone)에서는 온라인인데도 navigator.onLine이 false로

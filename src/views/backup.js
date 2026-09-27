@@ -61,7 +61,8 @@ export function importData(event) {
     const reader = new FileReader();
     reader.onload = function(e) {
         try {
-            const data = JSON.parse(e.target.result);
+            const result = /** @type {FileReader|null} */ (e.target)?.result;
+            const data = JSON.parse(typeof result === 'string' ? result : 'null');
             if (!data || typeof data !== 'object') {
                 showToast('유효하지 않은 백업 파일입니다.', 'error');
                 return;

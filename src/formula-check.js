@@ -31,6 +31,7 @@ const BAN_TEXT_RE = /사용\s*불가|사용\s*금지/;
  *   labeling: "N% 초과 시 표시" 등 한도가 아닌 표시 기준 여부
  */
 export function parseLimitText(limitText) {
+  /** @type {{values:number[], primary:number|null, conditional:boolean, labeling:boolean}} */
   const result = { values: [], primary: null, conditional: false, labeling: false };
   if (!limitText || typeof limitText !== 'string') return result;
 
@@ -42,6 +43,7 @@ export function parseLimitText(limitText) {
     return result;
   }
 
+  /** @type {number[]} */
   const values = [];
   let m;
   PCT_RE.lastIndex = 0;
@@ -71,6 +73,7 @@ export function parseLimitText(limitText) {
  * @returns {{check:string, primaryLimit:number|null, conditional:boolean, note:string, raw:string}}
  */
 export function checkIngredient(ingredient, concentration) {
+  /** @type {{check:string, primaryLimit:number|null, conditional:boolean, note:string, raw:string}} */
   const base = { check: CHECK.UNKNOWN, primaryLimit: null, conditional: false, note: '', raw: '' };
 
   if (!ingredient || typeof ingredient !== 'object') {
@@ -109,7 +112,7 @@ export function checkIngredient(ingredient, concentration) {
     return { ...base, note: '한도 수치 해석 불가 — 원문을 확인하세요.' };
   }
 
-  if (conc > parsed.primary) {
+  if (conc > /** @type {number} */ (parsed.primary)) {
     return {
       ...base,
       check: CHECK.WARN,

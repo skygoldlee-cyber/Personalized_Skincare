@@ -36,15 +36,15 @@ export function generateCalcQuestion() {
     const typeBadge = document.getElementById('calc-type-badge');
     const questionText = document.getElementById('calc-question-text');
     const unitText = document.getElementById('calc-unit-text');
-    const input = document.getElementById('calc-answer-input');
-    const submitBtn = document.getElementById('submit-calc-btn');
+    const input = /** @type {HTMLInputElement|null} */ (document.getElementById('calc-answer-input'));
+    const submitBtn = /** @type {HTMLButtonElement|null} */ (document.getElementById('submit-calc-btn'));
     const feedbackPanel = document.getElementById('calc-feedback-panel');
     const solutionPanel = document.getElementById('calc-solution-panel');
     const nextBtn = document.getElementById('next-calc-btn');
 
-    if (typeBadge) typeBadge.textContent = qData.type;
+    if (typeBadge) typeBadge.textContent = qData.type || '';
     if (questionText) questionText.innerHTML = qData.question;
-    if (unitText) unitText.textContent = qData.unit;
+    if (unitText) unitText.textContent = qData.unit || '';
     
     if (input) {
         input.value = '';
@@ -73,7 +73,7 @@ export function submitCalcAnswer() {
     const calcState = state.trainer.calc;
     const currentQ = calcState.currentQuestion;
     if (!currentQ) return;
-    const input = document.getElementById('calc-answer-input');
+    const input = /** @type {HTMLInputElement|null} */ (document.getElementById('calc-answer-input'));
     if (!input) return;
     const userVal = parseFloat(input.value);
     
@@ -83,12 +83,12 @@ export function submitCalcAnswer() {
     }
     
     input.disabled = true;
-    const submitBtn = document.getElementById('submit-calc-btn');
+    const submitBtn = /** @type {HTMLButtonElement|null} */ (document.getElementById('submit-calc-btn'));
     if (submitBtn) submitBtn.disabled = true;
     
     calcState.totalSolved++;
     
-    const correctVal = parseFloat(currentQ.answer);
+    const correctVal = parseFloat(String(currentQ.answer));
     const isCorrect = Math.abs(userVal - correctVal) <= 0.02;
     vibrate(isCorrect ? HAPTIC.correct : HAPTIC.wrong);
     
@@ -116,7 +116,7 @@ export function submitCalcAnswer() {
         if (feedbackDesc) feedbackDesc.textContent = `정답은 약 ${currentQ.answer}${currentQ.unit} 입니다. 아래의 공식을 활용하여 풀이법을 다시 체크해 보세요.`;
     }
     
-    if (solutionBody) solutionBody.innerHTML = currentQ.solution;
+    if (solutionBody) solutionBody.innerHTML = currentQ.solution || '';
     if (solutionPanel) solutionPanel.classList.remove('is-hidden');
     if (nextBtn) nextBtn.classList.remove('is-hidden');
 }

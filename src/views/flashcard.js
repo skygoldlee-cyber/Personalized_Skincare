@@ -20,7 +20,7 @@ const CARD_TYPE_LABELS = {
  */
 export function loadFlashcards() {
     const fcConfig = state.flashcards;
-    const subjData = (window.STUDY_DATA && window.STUDY_DATA[fcConfig.subject]);
+    const subjData = (window.STUDY_DATA && fcConfig.subject != null ? window.STUDY_DATA[fcConfig.subject] : undefined);
     if (!subjData) return;
     
     // 카드 필터링
@@ -88,8 +88,8 @@ export function renderFlashcard() {
     // 마크업 데이터 주입
     if (termEl) termEl.textContent = card.term;
     if (defEl) defEl.innerHTML = safeTextWithBreaks(card.definition);
-    if (frontCatEl) frontCatEl.textContent = card.category;
-    if (backCatEl) backCatEl.textContent = card.category;
+    if (frontCatEl) frontCatEl.textContent = card.category || '';
+    if (backCatEl) backCatEl.textContent = card.category || '';
     
     // 카드 타입 배지 표시
     const typeLabel = card.cardType ? (CARD_TYPE_LABELS[card.cardType] || card.cardType) : '';
@@ -116,8 +116,8 @@ export function renderFlashcard() {
     }
     
     // 인덱스 상태 갱신
-    if (curIdxEl) curIdxEl.textContent = fcConfig.currentIndex + 1;
-    if (totalEl) totalEl.textContent = fcConfig.data.length;
+    if (curIdxEl) curIdxEl.textContent = String(fcConfig.currentIndex + 1);
+    if (totalEl) totalEl.textContent = String(fcConfig.data.length);
     
     // 외움/헷갈림 카드 카운트 표시 (현재 필터된 카드 기준)
     const memorizedCount = fcConfig.data.filter(c => state.memorizedCards.has(c.id)).length;
@@ -127,9 +127,9 @@ export function renderFlashcard() {
     const weakBadge = document.getElementById('fc-weak-badge');
     const weakCountEl = document.getElementById('fc-weak-count');
     if (memBadge) { memBadge.classList.toggle('is-hidden', memorizedCount === 0); }
-    if (memCountEl) memCountEl.textContent = memorizedCount;
+    if (memCountEl) memCountEl.textContent = String(memorizedCount);
     if (weakBadge) { weakBadge.classList.toggle('is-hidden', weakCount === 0); }
-    if (weakCountEl) weakCountEl.textContent = weakCount;
+    if (weakCountEl) weakCountEl.textContent = String(weakCount);
     
     // 진도 버튼들 스타일 동적 제어
     const easyBtn = document.getElementById('fc-easy-btn');

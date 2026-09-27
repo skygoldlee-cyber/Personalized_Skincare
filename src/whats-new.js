@@ -65,7 +65,7 @@ export function showReleaseNotesModal(entries, title = '새로운 소식') {
             </div>
         </div>`;
     document.body.appendChild(overlay);
-    const dialog = overlay.querySelector('.app-confirm-dialog');
+    const dialog = /** @type {HTMLElement} */ (overlay.querySelector('.app-confirm-dialog'));
     requestAnimationFrame(() => {
         overlay.classList.add('is-visible');
         dialog.classList.add('is-visible');
@@ -78,7 +78,7 @@ export function showReleaseNotesModal(entries, title = '새로운 소식') {
         setTimeout(() => { untrapFocus(); overlay.remove(); }, 200);
         safeSetItem(SEEN_KEY, appVersion() || '');
     };
-    overlay.querySelector('.app-confirm-ok').addEventListener('click', close);
+    overlay.querySelector('.app-confirm-ok')?.addEventListener('click', close);
     overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
     const onKey = (e) => {
         if (e.key === 'Escape') { document.removeEventListener('keydown', onKey); close(); }

@@ -40,12 +40,16 @@ const PANELS = [
 ];
 
 // 계산기 드래프트 상태 (저장 전 작업 데이터)
+/** @type {{rows: {name:string, concentration:number|null, phase?:string}[], steps: string[], editingId: string|null, stabRecordedAt: string|null}} */
 const calc = {
   rows: [{ name: '', concentration: null, phase: '' }],
   steps: [],
   editingId: null,   // null이면 신규, id면 기존 포뮬러 수정
   stabRecordedAt: null, // 안정성 확인 기록의 저장 시각(자동 부여)
 };
+
+/** id로 폼 요소 조회 — formula 뷰의 입력류(input/select/textarea) 전용 */
+const getEl = id => /** @type {HTMLInputElement} */ (document.getElementById(id));
 
 let ingredientIndex = null;
 
@@ -59,7 +63,7 @@ function getIndex() {
 
 export function showPanel(id) {
   PANELS.forEach(p => {
-    const el = document.getElementById(p);
+    const el = getEl(p);
     if (el) el.classList.toggle('is-hidden', p !== id);
   });
 }
@@ -95,7 +99,7 @@ export function formulaSubNav(active) {
 export function initFormulaView() {
   showPanel('formula-menu-panel');
   const usage = getFormulaUsage();
-  const badge = document.getElementById('formula-usage-badge');
+  const badge = getEl('formula-usage-badge');
   if (badge) badge.textContent = `저장 ${usage.count}/${usage.limit}`;
 }
 
@@ -193,13 +197,13 @@ function checkSummaryHtml(formula) {
 
 export function openFormulaList() {
   showPanel('formula-list-panel');
-  const subnav = document.getElementById('formula-list-subnav');
+  const subnav = getEl('formula-list-subnav');
   if (subnav) subnav.innerHTML = formulaSubNav('list');
-  const list = document.getElementById('formula-list');
+  const list = getEl('formula-list');
   if (!list) return;
 
   const usage = getFormulaUsage();
-  const usageEl = document.getElementById('formula-list-usage');
+  const usageEl = getEl('formula-list-usage');
   if (usageEl) usageEl.textContent = `${usage.count}/${usage.limit} 저장됨`;
 
   const formulas = listFormulas();
@@ -291,10 +295,10 @@ export async function formulaDelete(id) {
    ======================================================= */
 
 function readCalcInputs() {
-  const volEl = document.getElementById('formula-target-volume');
-  const unitEl = document.getElementById('formula-unit');
-  const phTEl = document.getElementById('formula-ph-target');
-  const phAEl = document.getElementById('formula-ph-actual');
+  const volEl = getEl('formula-target-volume');
+  const unitEl = getEl('formula-unit');
+  const phTEl = getEl('formula-ph-target');
+  const phAEl = getEl('formula-ph-actual');
   const num = el => (el && el.value !== '' ? parseFloat(el.value) : null);
   return {
     targetVolume: num(volEl),
@@ -328,11 +332,11 @@ function rowCheckInfo(item) {
 // 행을 다시 그리지 않고 계산 결과(투입량·배지·합계·단계 소계·검증 요약)만 갱신 — 입력 중 포커스 유지
 function updateCalcComputed() {
   const { targetVolume, unit } = readCalcInputs();
-  const container = document.getElementById('formula-calc-rows');
+  const container = getEl('formula-calc-rows');
   if (!container) return;
 
   // 빈 상태 안내 배너 — 이름 있는 행이 없을 때만 표시 (입력 시점에도 갱신)
-  const emptyEl = document.getElementById('formula-empty-state');
+  const emptyEl = getEl('formula-empty-state');
   if (emptyEl) emptyEl.classList.toggle('is-hidden', calc.rows.some(r => r.name));
 
   let sumConc = 0;
@@ -365,7 +369,7 @@ function updateCalcComputed() {
   });
 
   // 검증 요약 — 상단바 (문제 건수만, 전부 정상이면 정상 배지)
-  const checkSumEl = document.getElementById('formula-check-summary');
+  const checkSumEl = getEl('formula-check-summary');
   if (checkSumEl) {
     const named = calc.rows.filter(r => r.name).length;
     const parts = [];
@@ -376,9 +380,9 @@ function updateCalcComputed() {
     checkSumEl.innerHTML = parts.join('');
   }
 
-  const sumConcEl = document.getElementById('formula-sum-conc');
-  const sumAmountEl = document.getElementById('formula-sum-amount');
-  const statusEl = document.getElementById('formula-sum-status');
+  const sumConcEl = getEl('formula-sum-conc');
+  const sumAmountEl = getEl('formula-sum-amount');
+  const statusEl = getEl('formula-sum-status');
   const rounded = Math.round(sumConc * 100) / 100;
   if (sumConcEl) sumConcEl.textContent = `${rounded}%`;
   if (sumAmountEl) sumAmountEl.textContent = targetVolume != null ? `${sumAmount.toFixed(2)}${unit}` : '—';
@@ -399,7 +403,7 @@ function updateCalcComputed() {
     }
   }
   // 단계별 소계 (입력된 단계만, PHASE_OPTIONS 순서)
-  const phaseEl = document.getElementById('formula-phase-sums');
+  const phaseEl = getEl('formula-phase-sums');
   if (phaseEl) {
     const parts = PHASE_OPTIONS
       .filter(p => phaseSums[p] != null)
@@ -411,7 +415,7 @@ function updateCalcComputed() {
 
 /** 제형 안정성 패널 — 배합비·투입 단계·절차·pH 규칙 기반 경고 (법규 검증과 별개 축) */
 function renderStability() {
-  const panel = document.getElementById('formula-stability');
+  const panel = getEl('formula-stability');
   if (!panel) return;
   const named = calc.rows.filter(r => r.name);
   if (!named.length) {
@@ -455,7 +459,7 @@ function renderStability() {
 }
 
 function renderCalcRows() {
-  const container = document.getElementById('formula-calc-rows');
+  const container = getEl('formula-calc-rows');
   if (!container) return;
 
   container.innerHTML = '';
@@ -480,9 +484,9 @@ function renderCalcRows() {
         </select>
       </div>`;
 
-    const nameEl = row.querySelector('.f-name');
-    const concEl = row.querySelector('.f-conc');
-    const phaseEl = row.querySelector('.f-phase');
+    const nameEl = /** @type {HTMLInputElement} */ (row.querySelector('.f-name'));
+    const concEl = /** @type {HTMLInputElement} */ (row.querySelector('.f-conc'));
+    const phaseEl = /** @type {HTMLSelectElement} */ (row.querySelector('.f-phase'));
     phaseEl.value = item.phase || '';
     nameEl.addEventListener('input', () => {
       calc.rows[i].name = nameEl.value.trim();
@@ -514,7 +518,7 @@ export function formulaSortPhase() {
 
 /** 고객 정보 선택지(select·칩)를 CUSTOMER_OPTIONS에서 채운다 — 1회만 */
 function populateCustomerFields() {
-  const genderEl = document.getElementById('formula-cust-gender');
+  const genderEl = getEl('formula-cust-gender');
   if (genderEl && !genderEl.dataset.bound) {
     genderEl.dataset.bound = '1';
     CUSTOMER_OPTIONS.gender.forEach(v => {
@@ -523,7 +527,7 @@ function populateCustomerFields() {
       genderEl.appendChild(o);
     });
   }
-  const skinEl = document.getElementById('formula-cust-skintype');
+  const skinEl = getEl('formula-cust-skintype');
   if (skinEl && !skinEl.dataset.bound) {
     skinEl.dataset.bound = '1';
     CUSTOMER_OPTIONS.skinType.forEach(v => {
@@ -532,7 +536,7 @@ function populateCustomerFields() {
       skinEl.appendChild(o);
     });
   }
-  const formEl = document.getElementById('formula-cust-formulation');
+  const formEl = getEl('formula-cust-formulation');
   if (formEl && !formEl.dataset.bound) {
     formEl.dataset.bound = '1';
     CUSTOMER_OPTIONS.formulation.forEach(v => {
@@ -541,7 +545,7 @@ function populateCustomerFields() {
       formEl.appendChild(o);
     });
   }
-  const chipBox = document.getElementById('formula-cust-concerns');
+  const chipBox = getEl('formula-cust-concerns');
   if (chipBox && !chipBox.dataset.bound) {
     chipBox.dataset.bound = '1';
     CUSTOMER_OPTIONS.concerns.forEach(v => {
@@ -551,7 +555,7 @@ function populateCustomerFields() {
       chipBox.appendChild(label);
     });
   }
-  const pregEl = document.getElementById('formula-cust-pregnancy');
+  const pregEl = getEl('formula-cust-pregnancy');
   if (pregEl && !pregEl.dataset.bound) {
     pregEl.dataset.bound = '1';
     CUSTOMER_OPTIONS.pregnancy.forEach(v => {
@@ -562,23 +566,24 @@ function populateCustomerFields() {
   }
 
   // 고객 필드 변경 → 추천 패널 갱신 (1회 바인딩)
-  if (!populateCustomerFields._recBound) {
-    populateCustomerFields._recBound = true;
+  const self = /** @type {{_recBound?: boolean}} */ (/** @type {any} */ (populateCustomerFields));
+  if (!self._recBound) {
+    self._recBound = true;
     ['formula-cust-gender', 'formula-cust-skintype', 'formula-cust-formulation', 'formula-cust-age', 'formula-cust-name',
       'formula-cust-pregnancy', 'formula-cust-products']
       .forEach(id => {
-        const el = document.getElementById(id);
+        const el = getEl(id);
         if (el) el.addEventListener(el.tagName === 'SELECT' ? 'change' : 'input', renderRecommend);
       });
     if (chipBox) chipBox.addEventListener('change', renderRecommend);
   }
 
   // 고객 카드 셀렉트 — 등록 고객이 변하므로 매번 다시 채운다
-  const refEl = document.getElementById('formula-cust-ref');
+  const refEl = getEl('formula-cust-ref');
   if (refEl) {
     refEl.innerHTML = '<option value="">고객 카드에서 불러오기…</option>'
       + listCustomers().map(c => `<option value="${esc(c.id)}">${esc(c.name)}</option>`).join('');
-    refEl.value = (document.getElementById('formula-cust-id') || {}).value || '';
+    refEl.value = (getEl('formula-cust-id') || {}).value || '';
     if (!refEl.dataset.bound) {
       refEl.dataset.bound = '1';
       refEl.addEventListener('change', formulaCustLoad);
@@ -588,7 +593,7 @@ function populateCustomerFields() {
 
 /** 고객 카드 선택 → 고객 정보 필드 채우기 + customerId 참조 저장 */
 export function formulaCustLoad() {
-  const sel = document.getElementById('formula-cust-ref');
+  const sel = getEl('formula-cust-ref');
   const id = sel ? sel.value : '';
   if (!id) return;
   const c = getCustomer(id);
@@ -604,9 +609,9 @@ export function formulaCustSaveAs() {
   const data = readCustomerInputs();
   const r = createCustomer(data);
   if (!r.ok) { showStoreError(r, '고객 관리', showToast, '고객 등록에 실패했습니다.'); return; }
-  const idEl = document.getElementById('formula-cust-id');
+  const idEl = getEl('formula-cust-id');
   if (idEl) idEl.value = r.customer.id;
-  const refEl = document.getElementById('formula-cust-ref');
+  const refEl = getEl('formula-cust-ref');
   if (refEl) {
     const opt = document.createElement('option');
     opt.value = r.customer.id;
@@ -619,7 +624,7 @@ export function formulaCustSaveAs() {
 
 /** 안정성 실험 확인 셀렉트를 STABILITY_* 상수에서 채운다 — 1회만 */
 function populateStabilityFields() {
-  const methodEl = document.getElementById('formula-stab-method');
+  const methodEl = getEl('formula-stab-method');
   if (methodEl && !methodEl.dataset.bound) {
     methodEl.dataset.bound = '1';
     STABILITY_METHODS.forEach(v => {
@@ -628,7 +633,7 @@ function populateStabilityFields() {
       methodEl.appendChild(o);
     });
   }
-  const resultEl = document.getElementById('formula-stab-result');
+  const resultEl = getEl('formula-stab-result');
   if (resultEl && !resultEl.dataset.bound) {
     resultEl.dataset.bound = '1';
     STABILITY_RESULTS.forEach(v => {
@@ -642,7 +647,7 @@ function populateStabilityFields() {
 /** 안정성 확인 필드 현재 값 읽기 → store 스키마 */
 function readStabilityInputs() {
   const val = id => {
-    const el = document.getElementById(id);
+    const el = getEl(id);
     return el ? el.value : '';
   };
   return {
@@ -656,7 +661,7 @@ function readStabilityInputs() {
 function writeStabilityInputs(stab) {
   const s = stab || {};
   const set = (id, v) => {
-    const el = document.getElementById(id);
+    const el = getEl(id);
     if (el) el.value = v || '';
   };
   set('formula-stab-method', s.method || '');
@@ -667,17 +672,17 @@ function writeStabilityInputs(stab) {
 /** 고객 필드 현재 값 읽기 → store 스키마 */
 function readCustomerInputs() {
   const val = id => {
-    const el = document.getElementById(id);
+    const el = getEl(id);
     return el ? el.value : '';
   };
   const ageRaw = val('formula-cust-age');
-  const chipBox = document.getElementById('formula-cust-concerns');
+  const chipBox = getEl('formula-cust-concerns');
   const concerns = chipBox
-    ? Array.from(chipBox.querySelectorAll('input:checked')).map(cb => cb.value)
+    ? Array.from(chipBox.querySelectorAll('input:checked')).map(cb => /** @type {HTMLInputElement} */ (cb).value)
     : [];
-  const allergyBox = document.getElementById('formula-cust-allergies');
+  const allergyBox = getEl('formula-cust-allergies');
   const allergies = allergyBox
-    ? Array.from(allergyBox.querySelectorAll('.formula-allergy-chip')).map(c => c.dataset.name || '').filter(Boolean)
+    ? Array.from(allergyBox.querySelectorAll('.formula-allergy-chip')).map(c => /** @type {HTMLElement} */ (c).dataset.name || '').filter(Boolean)
     : [];
   return {
     name: val('formula-cust-name').trim(),
@@ -696,11 +701,11 @@ function readCustomerInputs() {
 function writeCustomerInputs(customer, customerId) {
   const c = customer || {};
   const set = (id, v) => {
-    const el = document.getElementById(id);
+    const el = getEl(id);
     if (el) el.value = v == null ? '' : v;
   };
   set('formula-cust-id', customerId || '');
-  const refEl = document.getElementById('formula-cust-ref');
+  const refEl = getEl('formula-cust-ref');
   if (refEl) refEl.value = customerId || '';
   set('formula-cust-name', c.name || '');
   set('formula-cust-age', c.age != null ? c.age : '');
@@ -710,10 +715,11 @@ function writeCustomerInputs(customer, customerId) {
   set('formula-cust-pregnancy', c.pregnancy || '');
   set('formula-cust-products', c.products || '');
   renderAllergyChips(Array.isArray(c.allergies) ? c.allergies : []);
-  const chipBox = document.getElementById('formula-cust-concerns');
+  const chipBox = getEl('formula-cust-concerns');
   if (chipBox) {
     const selected = Array.isArray(c.concerns) ? c.concerns : [];
-    chipBox.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+    chipBox.querySelectorAll('input[type="checkbox"]').forEach(el => {
+      const cb = /** @type {HTMLInputElement} */ (el);
       cb.checked = selected.includes(cb.value);
     });
   }
@@ -721,7 +727,7 @@ function writeCustomerInputs(customer, customerId) {
 
 /** 알레르기 원료 칩 렌더 */
 function renderAllergyChips(allergies) {
-  const box = document.getElementById('formula-cust-allergies');
+  const box = getEl('formula-cust-allergies');
   if (!box) return;
   box.innerHTML = allergies.length
     ? allergies.map(n => `<span class="formula-rule-chip formula-allergy-chip" data-name="${esc(n)}">${esc(n)}`
@@ -731,7 +737,7 @@ function renderAllergyChips(allergies) {
 
 /** 알레르기 원료 추가 — 입력값을 칩으로 등록 */
 export function formulaAllergyAdd() {
-  const input = document.getElementById('formula-allergy-input');
+  const input = getEl('formula-allergy-input');
   const name = input ? input.value.trim() : '';
   if (!name) return;
   const current = readCustomerInputs().allergies;
@@ -759,7 +765,7 @@ export function formulaAllergyRemove(name) {
 
 /** 접이식 섹션 제목 옆 요약 — 내용이 있으면 '김OO · 건성' 형태로 표시 */
 function updateFoldSummaries() {
-  const custEl = document.getElementById('fold-sum-customer');
+  const custEl = getEl('fold-sum-customer');
   if (custEl) {
     const c = readCustomerInputs();
     const parts = [
@@ -770,10 +776,10 @@ function updateFoldSummaries() {
     ].filter(Boolean);
     custEl.textContent = parts.join(' · ');
   }
-  const procEl = document.getElementById('fold-sum-process');
+  const procEl = getEl('fold-sum-process');
   if (procEl) {
     const { phTarget, phActual } = readCalcInputs();
-    const notesEl = document.getElementById('formula-notes-input');
+    const notesEl = getEl('formula-notes-input');
     const parts = [];
     if (phTarget != null || phActual != null) {
       parts.push(`pH ${phTarget != null ? phTarget : '—'}/${phActual != null ? phActual : '—'}`);
@@ -792,7 +798,7 @@ function updateFoldSummaries() {
    ======================================================= */
 
 function renderRecommend() {
-  const panel = document.getElementById('formula-recommend');
+  const panel = getEl('formula-recommend');
   if (!panel) return;
   const customer = readCustomerInputs();
   const hasInput = customer.skinType || customer.formulation
@@ -931,8 +937,8 @@ function downloadJson(json, filename) {
 const RULE_SCOPE_LABEL = { base: '베이스 역할', concern: '피부 고민', skin: '피부 유형' };
 
 function renderCustomRules() {
-  const targetEl = document.getElementById('formula-rule-target');
-  const listEl = document.getElementById('formula-rule-list');
+  const targetEl = getEl('formula-rule-target');
+  const listEl = getEl('formula-rule-list');
   if (!listEl) return;
 
   // 대상 셀렉트 1회 채우기 (optgroup: 베이스 역할 / 피부 고민 / 피부 유형)
@@ -968,8 +974,8 @@ function renderCustomRules() {
 
 /** 맞춤 후보 추가 — 셀렉트 대상 + 원료명 입력 */
 export function formulaRuleAdd() {
-  const targetEl = document.getElementById('formula-rule-target');
-  const nameEl = document.getElementById('formula-rule-name');
+  const targetEl = getEl('formula-rule-target');
+  const nameEl = getEl('formula-rule-name');
   const target = targetEl ? targetEl.value : '';
   const sep = target.indexOf('|');
   const scope = sep > 0 ? target.slice(0, sep) : '';
@@ -1028,7 +1034,7 @@ export function formulaRuleExport() {
 
 /** JSON 가져오기 트리거 — 숨겨진 파일 입력 클릭 */
 export function formulaRuleImport() {
-  const input = document.getElementById('formula-rule-file-input');
+  const input = getEl('formula-rule-file-input');
   if (!input) return;
   if (!input.dataset.bound) {
     input.dataset.bound = '1';
@@ -1060,7 +1066,7 @@ function formulaRuleImportFile(event) {
 }
 
 function populateDatalist() {
-  const dl = document.getElementById('formula-ing-datalist');
+  const dl = getEl('formula-ing-datalist');
   if (!dl || dl.childElementCount) return;
   const db = typeof window.INGREDIENTS_DATA !== 'undefined' ? window.INGREDIENTS_DATA : [];
   // 금지 원료도 검색은 되되, 배합 검증에서 banned으로 표시된다.
@@ -1076,21 +1082,21 @@ function populateDatalist() {
 
 export function openFormulaCalc(sourceFormula) {
   showPanel('formula-calc-panel');
-  const subnav = document.getElementById('formula-calc-subnav');
+  const subnav = getEl('formula-calc-subnav');
   if (subnav) subnav.innerHTML = formulaSubNav('calc');
   populateDatalist();
   populateCustomerFields();
   populateStabilityFields();
 
-  const title = document.getElementById('formula-calc-title');
+  const title = getEl('formula-calc-title');
   if (title) title.textContent = calc.editingId ? '포뮬러 수정' : '배합 계산기';
 
-  const volEl = document.getElementById('formula-target-volume');
-  const unitEl = document.getElementById('formula-unit');
-  const phTEl = document.getElementById('formula-ph-target');
-  const phAEl = document.getElementById('formula-ph-actual');
-  const nameEl = document.getElementById('formula-name-input');
-  const notesEl = document.getElementById('formula-notes-input');
+  const volEl = getEl('formula-target-volume');
+  const unitEl = getEl('formula-unit');
+  const phTEl = getEl('formula-ph-target');
+  const phAEl = getEl('formula-ph-actual');
+  const nameEl = getEl('formula-name-input');
+  const notesEl = getEl('formula-notes-input');
   if (sourceFormula) {
     if (volEl) volEl.value = sourceFormula.targetVolume != null ? sourceFormula.targetVolume : '';
     if (unitEl) unitEl.value = sourceFormula.unit || 'g';
@@ -1125,7 +1131,7 @@ export function openFormulaCalc(sourceFormula) {
   // pH·메모·안정성 확인 필드 변경 → 제조 정보 접이식 요약 + 안정성 평가 갱신
   ['formula-ph-target', 'formula-ph-actual', 'formula-notes-input',
     'formula-stab-method', 'formula-stab-result', 'formula-stab-note'].forEach(id => {
-    const el = document.getElementById(id);
+    const el = getEl(id);
     if (el && !el.dataset.foldBound) {
       el.dataset.foldBound = '1';
       el.addEventListener('input', () => { updateFoldSummaries(); renderStability(); });
@@ -1133,7 +1139,7 @@ export function openFormulaCalc(sourceFormula) {
   });
 
   // 고시 개정 감지 — 저장된 스냅샷 기준과 현재 DB가 다른 원료가 있으면 배너 표시
-  const stdWarnEl = document.getElementById('formula-std-warn');
+  const stdWarnEl = getEl('formula-std-warn');
   if (stdWarnEl) {
     const changed = sourceFormula ? countChangedStandards(sourceFormula, getIndex()) : 0;
     if (changed) {
@@ -1148,8 +1154,8 @@ export function openFormulaCalc(sourceFormula) {
   }
 
   // 내용이 있는 접이식 섹션은 자동 펼침 (기존 포뮬러 수정 진입 시)
-  const custFold = document.getElementById('formula-fold-customer');
-  const procFold = document.getElementById('formula-fold-process');
+  const custFold = /** @type {HTMLDetailsElement} */ (document.getElementById('formula-fold-customer'));
+  const procFold = /** @type {HTMLDetailsElement} */ (document.getElementById('formula-fold-process'));
   if (sourceFormula) {
     const c = sourceFormula.customer || {};
     const hasCust = c.name || c.skinType || c.formulation || (c.concerns && c.concerns.length)
@@ -1171,9 +1177,9 @@ export function openFormulaCalc(sourceFormula) {
 export function formulaCalcAddRow() {
   calc.rows.push({ name: '', concentration: null });
   renderCalcRows();
-  const container = document.getElementById('formula-calc-rows');
+  const container = getEl('formula-calc-rows');
   const last = container && container.querySelector('.f-row:last-child .f-name');
-  if (last) last.focus();
+  if (last) /** @type {HTMLElement} */ (last).focus();
 }
 
 export function formulaCalcRemoveRow(idx) {
@@ -1189,7 +1195,7 @@ export function formulaCalcRemoveRow(idx) {
    ======================================================= */
 
 function renderSteps() {
-  const list = document.getElementById('formula-steps-list');
+  const list = getEl('formula-steps-list');
   if (!list) return;
   if (!calc.steps.length) {
     list.innerHTML = '<div class="formula-rec-note">단계를 추가해 조제 순서를 기록하세요. (예: 수상부 가열 → 유상부 용해 → 유화 → 후첨가)</div>';
@@ -1205,7 +1211,7 @@ function renderSteps() {
              placeholder="예: 수상부 80℃ 가열 후 교반" aria-label="제조 절차 ${i + 1}단계">
       <button type="button" class="f-del" data-click="formulaStepRemove" data-arg="${i}"
               aria-label="절차 ${i + 1} 삭제"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>`;
-    const input = row.querySelector('.f-step');
+    const input = /** @type {HTMLInputElement} */ (row.querySelector('.f-step'));
     input.addEventListener('input', () => { calc.steps[i] = input.value; updateFoldSummaries(); renderStability(); });
     list.appendChild(row);
   });
@@ -1215,9 +1221,9 @@ function renderSteps() {
 export function formulaStepAdd() {
   calc.steps.push('');
   renderSteps();
-  const list = document.getElementById('formula-steps-list');
+  const list = getEl('formula-steps-list');
   const last = list && list.querySelector('.formula-step-row:last-child .f-step');
-  if (last) last.focus();
+  if (last) /** @type {HTMLElement} */ (last).focus();
 }
 
 export function formulaStepRemove(idx) {
@@ -1233,8 +1239,8 @@ export function formulaStepRemove(idx) {
 
 /** 현재 화면 입력을 포뮬러 데이터로 수집 (저장·인쇄·보내기 공용) */
 function currentDraft() {
-  const nameEl = document.getElementById('formula-name-input');
-  const notesEl = document.getElementById('formula-notes-input');
+  const nameEl = getEl('formula-name-input');
+  const notesEl = getEl('formula-notes-input');
   const { targetVolume, unit, phTarget, phActual } = readCalcInputs();
   const index = getIndex();
   // 보정 중인 저장본의 기록 메타 — 인쇄·직렬화에서 전성분·기록일시 보존
@@ -1246,7 +1252,7 @@ function currentDraft() {
     steps: calc.steps.slice(),
     customer: readCustomerInputs(),
     customerId: (() => {
-      const el = document.getElementById('formula-cust-id');
+      const el = getEl('formula-cust-id');
       return el ? el.value : '';
     })(),
     stability: {
@@ -1368,7 +1374,7 @@ function buildPrintHtml(f) {
 
 /** 조제 기록지 인쇄 — 인쇄 전용 영역에 렌더 후 window.print() */
 export function formulaPrint() {
-  const area = document.getElementById('formula-print-area');
+  const area = getEl('formula-print-area');
   if (!area) return;
   const draft = currentDraft();
   if (!draft.ingredients.length) {
@@ -1408,7 +1414,7 @@ export function formulaCardExport(id) {
 
 /** 포뮬러 JSON 가져오기 트리거 — 숨겨진 파일 입력 클릭 */
 export function formulaImportJson() {
-  const input = document.getElementById('formula-file-input');
+  const input = getEl('formula-file-input');
   if (!input) return;
   if (!input.dataset.bound) {
     input.dataset.bound = '1';

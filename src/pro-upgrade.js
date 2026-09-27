@@ -44,7 +44,7 @@ function isProFeature(featureKey) {
 export function refreshProBadges(root = document) {
     if (!_featurePlan) return;
     root.querySelectorAll('[data-pro-feature]').forEach(el => {
-        el.classList.toggle('is-hidden', !isProFeature(el.dataset.proFeature));
+        el.classList.toggle('is-hidden', !isProFeature(/** @type {HTMLElement} */ (el).dataset.proFeature));
     });
 }
 
@@ -91,18 +91,19 @@ export function proFeatureNotice(featureKey, featureName) {
         </div>
     `;
     document.body.appendChild(overlay);
+    const dialog = /** @type {HTMLElement} */ (overlay.querySelector('.app-confirm-dialog'));
     requestAnimationFrame(() => {
         overlay.classList.add('is-visible');
-        overlay.querySelector('.app-confirm-dialog').classList.add('is-visible');
+        dialog.classList.add('is-visible');
     });
 
-    const untrapFocus = trapFocus(overlay.querySelector('.app-confirm-dialog'));
+    const untrapFocus = trapFocus(dialog);
     const close = () => {
         overlay.classList.remove('is-visible');
-        overlay.querySelector('.app-confirm-dialog').classList.remove('is-visible');
+        dialog.classList.remove('is-visible');
         setTimeout(() => { untrapFocus(); overlay.remove(); }, 200);
     };
-    overlay.querySelector('.app-confirm-ok').addEventListener('click', close);
+    overlay.querySelector('.app-confirm-ok')?.addEventListener('click', close);
     overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
     const onKey = (e) => {
         if (e.key === 'Escape') { document.removeEventListener('keydown', onKey); close(); }
@@ -136,18 +137,19 @@ export function showUpgradeNotice(featureLabel, limitMessage) {
         </div>
     `;
     document.body.appendChild(overlay);
+    const dialog = /** @type {HTMLElement} */ (overlay.querySelector('.app-confirm-dialog'));
     requestAnimationFrame(() => {
         overlay.classList.add('is-visible');
-        overlay.querySelector('.app-confirm-dialog').classList.add('is-visible');
+        dialog.classList.add('is-visible');
     });
 
-    const untrapFocus = trapFocus(overlay.querySelector('.app-confirm-dialog'));
+    const untrapFocus = trapFocus(dialog);
     const close = () => {
         overlay.classList.remove('is-visible');
-        overlay.querySelector('.app-confirm-dialog').classList.remove('is-visible');
+        dialog.classList.remove('is-visible');
         setTimeout(() => { untrapFocus(); overlay.remove(); }, 200);
     };
-    overlay.querySelector('.app-confirm-ok').addEventListener('click', close);
+    overlay.querySelector('.app-confirm-ok')?.addEventListener('click', close);
     overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
     const onKey = (e) => {
         if (e.key === 'Escape') { document.removeEventListener('keydown', onKey); close(); }

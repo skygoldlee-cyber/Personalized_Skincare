@@ -144,7 +144,7 @@ function bindGlossaryEvents(container) {
     container.querySelectorAll('[data-glossary]').forEach(a => {
         a.addEventListener('click', (e) => {
             e.preventDefault();
-            scrollToGlossary(a.dataset.glossary, a);
+            scrollToGlossary(/** @type {HTMLElement} */ (a).dataset.glossary, a);
         });
     });
 }

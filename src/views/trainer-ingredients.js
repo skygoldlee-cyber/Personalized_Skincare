@@ -170,7 +170,7 @@ export function renderIngQuestion() {
     
     const optionsContainer = document.getElementById('ing-options-container');
     const inputContainer = document.getElementById('ing-input-container');
-    const answerInput = document.getElementById('ing-answer-input');
+    const answerInput = /** @type {HTMLInputElement|null} */ (document.getElementById('ing-answer-input'));
     
     if (optionsContainer) optionsContainer.innerHTML = '';
     if (answerInput) answerInput.value = '';
@@ -207,7 +207,8 @@ export function submitIngChoiceAnswer(selectedBtn, selectedValue, correctValue) 
     if (!container) return;
     const buttons = container.querySelectorAll('.limits-opt-btn');
     
-    buttons.forEach(btn => {
+    buttons.forEach(el => {
+        const btn = /** @type {HTMLButtonElement} */ (el);
         btn.disabled = true;
         const textSpan = btn.querySelector('.limits-opt-text');
         if (textSpan && textSpan.textContent === correctValue) {
@@ -236,7 +237,7 @@ export function submitIngChoiceAnswer(selectedBtn, selectedValue, correctValue) 
 export function submitIngAnswer() {
     const ingState = state.trainer.ingredients;
     const currentQ = ingState.shuffledQuestions[ingState.currentIndex];
-    const input = document.getElementById('ing-answer-input');
+    const input = /** @type {HTMLInputElement|null} */ (document.getElementById('ing-answer-input'));
     if (!input) return;
     const userInput = input.value.trim();
     
@@ -266,7 +267,7 @@ export function showIngFeedback(isCorrect, correctValue) {
     const ingState = state.trainer.ingredients;
     const currentQ = ingState.shuffledQuestions[ingState.currentIndex];
     
-    const feedbackPanel = document.getElementById('ing-feedback-panel');
+    const feedbackPanel = /** @type {HTMLElement} */ (document.getElementById('ing-feedback-panel'));
     const feedbackTitle = document.getElementById('ing-feedback-title');
     const feedbackDesc = document.getElementById('ing-feedback-desc');
     
@@ -285,22 +286,22 @@ export function showIngFeedback(isCorrect, correctValue) {
     const nextBtn = document.getElementById('next-ing-btn');
     if (nextBtn) nextBtn.classList.remove('is-hidden');
     
-    const submitBtn = document.getElementById('submit-ing-btn');
+    const submitBtn = /** @type {HTMLButtonElement|null} */ (document.getElementById('submit-ing-btn'));
     if (submitBtn) {
         submitBtn.disabled = true;
     }
-    const answerInput = document.getElementById('ing-answer-input');
+    const answerInput = /** @type {HTMLInputElement|null} */ (document.getElementById('ing-answer-input'));
     if (answerInput) {
         answerInput.disabled = true;
     }
 }
 
 export function nextIngQuestion() {
-    const submitBtn = document.getElementById('submit-ing-btn');
+    const submitBtn = /** @type {HTMLButtonElement|null} */ (document.getElementById('submit-ing-btn'));
     if (submitBtn) {
         submitBtn.disabled = false;
     }
-    const answerInput = document.getElementById('ing-answer-input');
+    const answerInput = /** @type {HTMLInputElement|null} */ (document.getElementById('ing-answer-input'));
     if (answerInput) {
         answerInput.disabled = false;
     }

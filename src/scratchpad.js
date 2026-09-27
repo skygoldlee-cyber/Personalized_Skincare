@@ -10,7 +10,7 @@ let lastY = 0;
 export function toggleCalcScratchpad() {
     const container = document.getElementById('calc-scratchpad-container');
     const toggleBtn = document.getElementById('calc-scratchpad-toggle');
-    if (!container) return;
+    if (!container || !toggleBtn) return;
     
     const isHidden = container.classList.contains('is-hidden');
     if (isHidden) {
@@ -27,11 +27,12 @@ export function toggleCalcScratchpad() {
 }
 
 function initScratchpadCanvas() {
-    const canvas = document.getElementById('scratchpad-canvas');
+    const canvas = /** @type {HTMLCanvasElement} */ (document.getElementById('scratchpad-canvas'));
     if (!canvas) return;
     if (scratchpadCanvasInitialized) return;
 
     const ctx = canvas.getContext('2d');
+    if (!ctx) return;
     
     ctx.lineWidth = 3;
     ctx.lineCap = 'round';
@@ -61,7 +62,7 @@ function initScratchpadCanvas() {
     }
     
     function draw(e) {
-        if (!isDrawing) return;
+        if (!isDrawing || !ctx) return;
         const coords = getCoords(e);
         
         ctx.beginPath();
@@ -92,18 +93,20 @@ function initScratchpadCanvas() {
 }
 
 export function clearScratchpad() {
-    const canvas = document.getElementById('scratchpad-canvas');
+    const canvas = /** @type {HTMLCanvasElement} */ (document.getElementById('scratchpad-canvas'));
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
+    if (!ctx) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
 export function toggleScratchpadEraser() {
-    const canvas = document.getElementById('scratchpad-canvas');
+    const canvas = /** @type {HTMLCanvasElement} */ (document.getElementById('scratchpad-canvas'));
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
-    const eraserBtn = document.getElementById('scratchpad-eraser-btn');
-    
+    const eraserBtn = /** @type {HTMLButtonElement} */ (document.getElementById('scratchpad-eraser-btn'));
+    if (!ctx || !eraserBtn) return;
+
     isEraser = !isEraser;
     if (isEraser) {
         const _style = getComputedStyle(document.documentElement);

@@ -31,6 +31,22 @@ declare global {
     __STUDY_MD_MANIFEST__?: any;
     /** file:// 폴백 과목별 MD 원문 맵 (data/study_md/<key>.js) */
     __STUDY_MD_FILES__?: Record<string, Record<string, string>>;
+    /** 앱 초기화 완료 플래그 — app.js 가 설정, app-fallback.js 가 폴링 */
+    __APP_INITIALIZED?: boolean;
+    /** vendor mermaid UMD 번들 (지연 로드 — mermaid-render.js) */
+    mermaid?: any;
+    /** theme-toggle.js 가 노출하는 전역 테마 API */
+    AppTheme?: { isLight: () => boolean; apply: (light: boolean) => void; toggle: () => void };
+    /** exam-viewer.js 가 바인딩하는 전역 뷰어 (formula-compliance 법령 링크 등) */
+    ExamViewer?: any;
+    /** PWA 설치 이벤트 캡처 (pwa-install-capture.js — beforeinstallprompt 지연 저장) */
+    __deferredPrompt?: any;
+    __pwaInstallReady?: boolean;
+    __swRegistered?: boolean;
+    /** window.APP_VERSION — data/version.js 배포 스탬프 */
+    APP_VERSION?: string;
+    /** window.RELEASE_NOTES — data/release-notes.js 번들 */
+    RELEASE_NOTES?: any;
     /** 시험 목록 번들 (data/exams.js) */
     EXAMS_LIST?: { exams?: import('./types.js').ExamDef[] };
     /** 복수정답형 파일럿 번들 (data/drills/combo_pilot.js) */
@@ -55,6 +71,18 @@ declare global {
 
   /** app.js 가 정의하는 전역 통계 갱신 함수. state.js 가 저장 후 호출. */
   function updateGlobalStats(): void;
+
+  /** trainer.js 가 정의·app.js 가 window 바인딩하는 단답형 채점 함수. */
+  function checkShortAnswer(userInput: string, correctAnswer: any): boolean;
+
+  /** iOS Safari 의 standalone 감지 속성 (PWA 설치 여부). */
+  interface Navigator { standalone?: boolean }
+
+  /** Event Timing API 의 durationThreshold 옵션 (INP 측정). */
+  interface PerformanceObserverInit { durationThreshold?: number }
+
+  /** Layout Shift 엔트리 확장 필드 (hadRecentInput·value). */
+  interface PerformanceEntry { hadRecentInput?: boolean; value?: number }
 
   /**
    * Node 환경 전용 전역 — 브라우저에는 없으므로 `typeof process !== 'undefined'`

@@ -150,8 +150,8 @@ export function startLimitsTrainer() {
     state.trainer.limits.solvedList = [];
     state.trainer.limits.shuffledData = shuffle(LIMITS_DB);
     
-    document.getElementById('trainer-menu-panel').classList.add('is-hidden');
-    document.getElementById('trainer-limits-panel').classList.remove('is-hidden');
+    document.getElementById('trainer-menu-panel')?.classList.add('is-hidden');
+    document.getElementById('trainer-limits-panel')?.classList.remove('is-hidden');
     
     renderLimitsQuestion();
 }
@@ -264,7 +264,8 @@ export function submitLimitsAnswer(selectedBtn, selectedValue, correctValue) {
     if (!container) return;
     const buttons = container.querySelectorAll('.limits-opt-btn');
     
-    buttons.forEach(btn => {
+    buttons.forEach(el => {
+        const btn = /** @type {HTMLButtonElement} */ (el);
         btn.disabled = true;
         // 표시 텍스트 부분문자열이 아닌 데이터값으로 정답 버튼 판정
         // ('5'가 '50'·'0.5' 오답지에도 매칭되던 문제)

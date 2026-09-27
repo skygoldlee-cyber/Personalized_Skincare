@@ -35,6 +35,7 @@ export function getViewTitles(registry) {
  * @param {object} ctx.handlers - 뷰별 렌더 핸들러 함수들
  * @param {function} [ctx.handlers.onExitReader] - 리더 뷰 벗어날 때 (focus mode 해제 등)
  * @param {function} [ctx.handlers.stopReaderAudio] - 오디오 정지
+ * @param {Object.<string, function>} [ctx.handlers.viewRenderers] - 뷰 ID → 렌더 함수 맵
  */
 export function navigateToView(target, ctx) {
     const { titlesMap, handlers } = ctx;

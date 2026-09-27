@@ -236,11 +236,11 @@ export function closeGoalSettings() {
 }
 
 export function saveGoalSettings() {
-    const cards = parseInt(document.getElementById('goal-daily-cards')?.value) || 50;
-    const quizzes = parseInt(document.getElementById('goal-daily-quizzes')?.value) || 10;
-    const weeklyDays = parseInt(document.getElementById('goal-weekly-days')?.value) || 5;
+    const cards = parseInt(/** @type {HTMLInputElement} */ (document.getElementById('goal-daily-cards'))?.value) || 50;
+    const quizzes = parseInt(/** @type {HTMLInputElement} */ (document.getElementById('goal-daily-quizzes'))?.value) || 10;
+    const weeklyDays = parseInt(/** @type {HTMLInputElement} */ (document.getElementById('goal-weekly-days'))?.value) || 5;
     setStudyGoals({ dailyCards: cards, dailyQuizzes: quizzes, weeklyStudyDays: weeklyDays });
-    setExamDate(document.getElementById('goal-exam-date')?.value || '');
+    setExamDate(/** @type {HTMLInputElement} */ (document.getElementById('goal-exam-date'))?.value || '');
     closeGoalSettings();
     showToast('학습 목표가 저장되었습니다.', 'success');
     renderStudyCalendar();

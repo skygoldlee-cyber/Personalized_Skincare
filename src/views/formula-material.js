@@ -104,7 +104,7 @@ export function openMaterialPanel() {
    ======================================================= */
 
 function fillStorageSelect(value) {
-  const sel = document.getElementById('mat-storage');
+  const sel = /** @type {HTMLSelectElement|null} */ (document.getElementById('mat-storage'));
   if (!sel) return;
   sel.innerHTML = '<option value="">보관 조건 선택…</option>'
     + STORAGE_OPTIONS.map(v => `<option value="${esc(v)}">${esc(v)}</option>`).join('');
@@ -113,7 +113,7 @@ function fillStorageSelect(value) {
 
 function writeMaterialForm(m) {
   const set = (id, v) => {
-    const el = document.getElementById(id);
+    const el = /** @type {HTMLInputElement|null} */ (document.getElementById(id));
     if (el) el.value = v == null ? '' : v;
   };
   const src = m || {};

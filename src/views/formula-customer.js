@@ -28,7 +28,7 @@ import {
 } from '../csv-utils.js';
 
 // 폼 상태 — editingId + 알레르기 칩 목록 (포뮬러 폼과 동일 패턴)
-const cust = { editingId: null, allergies: [] };
+const cust = /** @type {{editingId: string|null, allergies: string[]}} */ ({ editingId: null, allergies: [] });
 
 /* =======================================================
    고객 목록
@@ -93,7 +93,7 @@ export function openCustomerPanel() {
 
 function fillCustomerSelects() {
   const fill = (id, options, placeholder) => {
-    const el = document.getElementById(id);
+    const el = /** @type {HTMLSelectElement|null} */ (document.getElementById(id));
     if (!el) return;
     el.innerHTML = `<option value="">${placeholder}</option>`
       + options.map(v => `<option value="${esc(v)}">${esc(v)}</option>`).join('');
@@ -121,7 +121,7 @@ function renderCustAllergyChips() {
 }
 
 export function custAllergyAdd() {
-  const input = document.getElementById('cust-allergy-input');
+  const input = /** @type {HTMLInputElement|null} */ (document.getElementById('cust-allergy-input'));
   const name = input ? input.value.trim() : '';
   if (!name) return;
   if (cust.allergies.includes(name)) {
@@ -141,7 +141,7 @@ export function custAllergyRemove(name) {
 
 function writeCustomerForm(c) {
   const set = (id, v) => {
-    const el = document.getElementById(id);
+    const el = /** @type {HTMLInputElement|null} */ (document.getElementById(id));
     if (el) el.value = v == null ? '' : v;
   };
   const src = c || {};
@@ -159,7 +159,8 @@ function writeCustomerForm(c) {
   const chipBox = document.getElementById('cust-concerns');
   if (chipBox) {
     const selected = Array.isArray(src.concerns) ? src.concerns : [];
-    chipBox.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+    chipBox.querySelectorAll('input[type="checkbox"]').forEach(el => {
+      const cb = /** @type {HTMLInputElement} */ (el);
       cb.checked = selected.includes(cb.value);
     });
   }
@@ -167,13 +168,13 @@ function writeCustomerForm(c) {
 
 function readCustomerForm() {
   const val = id => {
-    const el = document.getElementById(id);
+    const el = /** @type {HTMLInputElement|null} */ (document.getElementById(id));
     return el ? el.value : '';
   };
   const ageRaw = val('cust-age');
   const chipBox = document.getElementById('cust-concerns');
   const concerns = chipBox
-    ? Array.from(chipBox.querySelectorAll('input:checked')).map(cb => cb.value)
+    ? Array.from(chipBox.querySelectorAll('input:checked')).map(el => /** @type {HTMLInputElement} */ (el).value)
     : [];
   return {
     name: val('cust-name'),
@@ -296,7 +297,7 @@ export function custOpen(id) {
 
 /** 상담 이력 추가 — 오늘 날짜로 append */
 export function custLogAdd(id) {
-  const input = document.getElementById('cust-log-input');
+  const input = /** @type {HTMLInputElement|null} */ (document.getElementById('cust-log-input'));
   const text = input ? input.value.trim() : '';
   const r = addConsultLog(id, text);
   if (!r.ok) { showToast(r.error || '추가에 실패했습니다.', 'error'); return; }
@@ -400,9 +401,9 @@ export function custImportCsv() {
 }
 
 async function custImportFile(event) {
-  const input = event.target;
+  const input = /** @type {HTMLInputElement|null} */ (event.target);
   const file = input && input.files && input.files[0];
-  input.value = '';
+  if (input) input.value = '';
   if (!file) return;
 
   let text;

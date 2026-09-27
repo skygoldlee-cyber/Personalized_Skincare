@@ -99,7 +99,7 @@ const NUMBER_DRILL_CACHE = {};
 /**
  * 과목별 JSON 파일에서 숫자 암기표 데이터를 로드합니다.
  * @param {string} subjId - 과목 키 (law, manufacturing, safety, understanding)
- * @returns {Promise<{ numbers: {number: string, unit: string}[], context: string, isKey: boolean }[]>}
+ * @returns {Promise<{ numbers: {number: string, unit: string}[], context: string, isKey: boolean, category?: string }[]>}
  */
 export async function loadNumberDrills(subjId) {
     if (NUMBER_DRILL_CACHE[subjId]) return NUMBER_DRILL_CACHE[subjId];
@@ -552,7 +552,7 @@ export function bindStudyAidToggles(container) {
     });
 
     // 중요 숫자 암기표: 일반 항목 토글
-    const normalToggle = container.querySelector('#number-drill-normal-toggle');
+    const normalToggle = /** @type {HTMLElement|null} */ (container.querySelector('#number-drill-normal-toggle'));
     if (normalToggle && !normalToggle.dataset.bound) {
         normalToggle.dataset.bound = 'true';
         normalToggle.style.cursor = 'pointer';

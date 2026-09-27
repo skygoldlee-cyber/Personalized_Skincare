@@ -6,6 +6,16 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-14 checkJs 백로그 2차 편입 — 15파일 진단 해소 (869→611)
+
+- **백로그 편입**: jsconfig exclude에서 15파일 제거 — `formula-rules`·`scratchpad`·`views/formula`·`whats-new` 외 1차 배치(exam-viewer·flashcard·formula-customer·trainer-calc·trainer-calc-practice·trainer-ingredients·pro-upgrade·pwa-install-capture 등)
+- **formula.js(67건) 해소**: `getEl()` 헬퍼(HTMLInputElement 캐스트)로 `document.getElementById` 72곳 일괄 좁힘 — `.value`·`.checked` 오류 대량 해소. `calc` 상태 객체에 rows/steps/editingId/stabRecordedAt 타입 주석(never[]·null 추론 해소). details 요소는 `HTMLDetailsElement`로 별도 캐스트
+- **타입 교정**: `CalcQuestion.answer`를 number→string으로 교정(실제 `toFixed(2)` 문자열), `evaluateStability` items의 `phase`를 선택 속성으로 완화, `Card.category` 등 typedef가 런타임 형태를 따르도록 정정
+- **globals.d.ts 보강**: `APP_VERSION`·`RELEASE_NOTES`·`deferredInstallPrompt`·`swRegistration` 등 클래식 스크립트가 제공하는 window 전역 선언 추가
+- **DOM 좁힘 패턴**: querySelector 결과에 `HTMLInputElement`/`HTMLSelectElement`/`HTMLCanvasElement` 캐스트 + null 가드 — scratchpad canvas·eraser, formula-customer 폼 요소, exam-viewer TOC 등
+- **미사용 변수 정리**: check_imports.js `dynImportFiles` 제거로 lint 213→212 — `--max-warnings` 래칫 212로 갱신
+- 결과: 활성 그래프 **0 에러** 유지, 백로그 49→34파일(전체 진단 869→611), unit 552·DOM 364 통과
+
 ## 2026-10-14 check:imports 경고 0 + npm audit CI 스텝 — 데드 코드·취약 의존성 차단
 
 - **check_imports.js 보강**: 테스트의 동적 import(`await import()`, 백틱 템플릿 + 캐시버스터 쿼리, `pathToFileURL` 계산 경로) 인식 — 오탐 7건 해소. `keep-export` 주석 규약 추가 — 의도된 공개 API는 선언부 주석에 `keep-export` 표기로 억제

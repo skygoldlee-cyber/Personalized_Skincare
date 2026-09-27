@@ -295,7 +295,6 @@ function main() {
     const DYN_IMPORT_RE = /import\(\s*['"`]([^'"`]+)['"`]\s*\)/g;
     const cleanDynPath = p => p.split('?')[0].replace(/\$\{[^}]*\}/g, '');
     const allImports = new Set(); // "filepath::name" 형태
-    const dynImportFiles = new Set(); // 동적 import로 참조되는 파일 절대경로
     for (const file of files) {
         const src = fs.readFileSync(file, 'utf8');
         const imports = parseImports(src);

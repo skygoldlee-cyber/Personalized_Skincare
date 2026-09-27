@@ -136,6 +136,7 @@
  * @property {boolean} [isKey]     핵심(기출·중요) 카드 여부
  * @property {string} [chapter] 소속 단원명
  * @property {string} [subject] 소속 과목 키
+ * @property {string} [category] 분류/카테고리
  * @property {string} [cardType]   카드 유형 ('penalty'|'prohibition'|'exception'|'number'|'requirement'|'comparison'|'procedure'|'definition')
  * @property {number} [importance] 중요도 점수 (0-100)
  * @property {string} [difficulty] 난이도 ('easy'|'medium'|'hard')
@@ -157,7 +158,8 @@
  * 계산 연습 문제(trainer-calc.js buildCalcQuestion 산출물).
  * @typedef {Object} CalcQuestion
  * @property {string} question   문제 지문
- * @property {number} answer     정답 수치
+ * @property {string} answer     정답 수치(toFixed 문자열 — 비교 시 parseFloat)
+ * @property {string} [type]     문항 유형 레이블
  * @property {string} [unit]     단위
  * @property {string} [solution] 풀이 과정(HTML 허용)
  */

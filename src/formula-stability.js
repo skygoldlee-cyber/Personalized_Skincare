@@ -125,7 +125,7 @@ const EMULSION_FORMULATIONS = new Set(['로션·에멀전', '크림·밤', '선�
 
 /**
  * 포뮬러의 제형 안정성을 평가한다.
- * @param {Array<{name:string, concentration:number|null, phase:string}>} items - 이름 있는 원료 행
+ * @param {Array<{name:string, concentration:number|null, phase?:string}>} items - 이름 있는 원료 행
  * @param {Map<string,object>|null} index - buildIngredientIndex() 결과 (없어도 이름 패턴으로 평가)
  * @param {{formulation?:string, phTarget?:number|null, phActual?:number|null, steps?:string[]}} [ctx]
  * @returns {{warnings:Array<{level:string, msg:string}>, phaseSums:object}}

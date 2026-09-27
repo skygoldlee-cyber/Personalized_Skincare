@@ -248,6 +248,7 @@ function filterCandidateNames(names, index) {
  * @returns {{bases:Array, ingredients:Array<{name,reasons,type,limit,irritant}>, cautions:string[]}}
  */
 export function recommendFor(customer, index, custom) {
+  /** @type {{bases: Array<{role:string, required:boolean, candidates:string[]}>, ingredients: Array<{name:string, reasons:string[], type:string, limit:string, irritant:boolean}>, cautions: string[]}} */
   const result = { bases: [], ingredients: [], cautions: [] };
   if (!customer || typeof customer !== 'object') return result;
   const cu = custom && typeof custom === 'object' ? custom : emptyCustomRules();
@@ -293,6 +294,7 @@ export function recommendFor(customer, index, custom) {
   const youngOrOld = age != null && (age < 20 || age > 65);
   const pregnant = customer.pregnancy === '임신 중' || customer.pregnancy === '수유 중';
   const productsText = typeof customer.products === 'string' ? customer.products : '';
+  /** @type {string[]} */
   const overlap = [];
 
   for (const [name, meta] of seen) {
