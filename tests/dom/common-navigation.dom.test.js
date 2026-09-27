@@ -100,4 +100,25 @@ describe('사이드바 ↔ 모바일 탭 바 메뉴 일치', () => {
             expect(section.classList.contains('view-section'), `${t}은 view-section이 아님`).toBe(true);
         });
     });
+
+    it('사이드바와 모바일 탭의 PRO 배지(data-pro-feature)가 뷰별로 일치한다', () => {
+        // 뷰별 → 배지 기능 키 집합 매핑 (한쪽에만 배지를 달면 실패)
+        const badgeMap = selector => {
+            const map = {};
+            document.querySelectorAll(`${selector}[data-target]`).forEach(item => {
+                map[item.getAttribute('data-target')] =
+                    [...item.querySelectorAll('[data-pro-feature]')]
+                        .map(b => b.getAttribute('data-pro-feature'))
+                        .sort();
+            });
+            return map;
+        };
+        const sidebar = badgeMap('.nav-item');
+        const mobile = badgeMap('.mobile-tab-item');
+        Object.keys(sidebar).forEach(target => {
+            expect(mobile[target],
+                `${target} — 모바일 탭의 PRO 배지가 사이드바와 다름`)
+                .toEqual(sidebar[target]);
+        });
+    });
 });
