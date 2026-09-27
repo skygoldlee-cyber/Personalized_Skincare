@@ -95,7 +95,8 @@
 #app-confirm-overlay,
 #whats-new-overlay,
 #feedback-overlay,
-#pro-upgrade-overlay {
+#pro-upgrade-overlay,
+#usage-stats-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
@@ -111,7 +112,8 @@
 #app-confirm-overlay.is-visible,
 #whats-new-overlay.is-visible,
 #feedback-overlay.is-visible,
-#pro-upgrade-overlay.is-visible {
+#pro-upgrade-overlay.is-visible,
+#usage-stats-overlay.is-visible {
   opacity: 1;
 }
 .app-confirm-dialog {
@@ -668,4 +670,10 @@
   margin-top: 0.9rem;
   font-size: 0.78rem;
   color: var(--color-text-muted, #9ca3af);
+}
+
+/* 통계 표가 길어질 때 대비 — 뷰포트 내 스크롤 */
+#usage-stats-overlay .app-confirm-dialog {
+  max-height: 85vh;
+  overflow-y: auto;
 }
