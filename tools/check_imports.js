@@ -290,7 +290,12 @@ function main() {
 
     // --- unused export 검출 ---
     // 각 export가 다른 파일에서 import되는지 추적
+    // 테스트는 await import() 동적 import를 쓰므로 별도 수집한다.
+    // 백틱 템플릿(캐시버스터 쿼리 포함)도 허용 — `?case=${n}` 등은 해석 전에 제거
+    const DYN_IMPORT_RE = /import\(\s*['"`]([^'"`]+)['"`]\s*\)/g;
+    const cleanDynPath = p => p.split('?')[0].replace(/\$\{[^}]*\}/g, '');
     const allImports = new Set(); // "filepath::name" 형태
+    const dynImportFiles = new Set(); // 동적 import로 참조되는 파일 절대경로
     for (const file of files) {
         const src = fs.readFileSync(file, 'utf8');
         const imports = parseImports(src);
@@ -305,6 +310,47 @@ function main() {
         }
     }
 
+    // 의도된 공개 API 억제: 선언부 바로 위 주석에 'keep-export' 가 있으면 경고 제외
+    function isKeptExport(src, name) {
+        const lines = src.split('\n');
+        const declRe = new RegExp(
+            '^\\s*export\\s+(?:async\\s+)?(?:function|const|let|var|class)\\s+' + name + '\\b'
+        );
+        for (let i = 0; i < lines.length; i++) {
+            if (declRe.test(lines[i])) {
+                return lines.slice(Math.max(0, i - 3), i + 1).some(l => l.includes('keep-export'));
+            }
+        }
+        return false;
+    }
+
+    // 테스트 파일이 해당 모듈 export를 사용하는지 (정적 + 동적 import)
+    function testFileUses(tf, file, name) {
+        const tsrc = fs.readFileSync(tf, 'utf8');
+        const tdir = path.dirname(tf);
+        for (const timp of parseImports(tsrc)) {
+            const tresolved = resolveModule(tdir, timp.modulePath);
+            if (tresolved === file && timp.names.includes(name)) return true;
+        }
+        // 동적 import: 모듈을 await import()하고 이름이 본문에 등장하면 사용으로 간주
+        const nameRe = new RegExp('\\b' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b');
+        let dm;
+        DYN_IMPORT_RE.lastIndex = 0;
+        while ((dm = DYN_IMPORT_RE.exec(tsrc)) !== null) {
+            if (resolveModule(tdir, cleanDynPath(dm[1])) === file && nameRe.test(tsrc)) {
+                return true;
+            }
+        }
+        // 계산 경로 폴백: import(pathToFileURL(join(ROOT,'src/x.js')).href) 등
+        // 모듈 파일명을 직접 언급하고 이름이 본문에 있으면 사용으로 간주
+        const relPath = path.relative(ROOT, file).replace(/\\/g, '/');
+        const baseName = path.basename(file);
+        if ((tsrc.includes(relPath) || tsrc.includes(baseName)) && nameRe.test(tsrc)) {
+            return true;
+        }
+        return false;
+    }
+
     for (const file of files) {
         const exports = moduleExports.get(file) || new Set();
         const relFile = path.relative(ROOT, file).replace(/\\/g, '/');
@@ -314,24 +360,12 @@ function main() {
             const starTargets = moduleStarReExports.get(file) || [];
             if (starTargets.length > 0) continue;
             if (!allImports.has(file + '::' + name)) {
-                // 테스트 파일에서 import하는지 확인
+                // 의도된 공개 API (keep-export 주석) 억제
+                if (isKeptExport(fs.readFileSync(file, 'utf8'), name)) continue;
+                // 테스트 파일에서 import하는지 확인 (정적 + await import())
                 const testDir = path.join(ROOT, 'tests');
-                if (fs.existsSync(testDir)) {
-                    let testUses = false;
-                    for (const tf of collectJsFiles(testDir)) {
-                        const tsrc = fs.readFileSync(tf, 'utf8');
-                        const timports = parseImports(tsrc);
-                        const tdir = path.dirname(tf);
-                        for (const timp of timports) {
-                            const tresolved = resolveModule(tdir, timp.modulePath);
-                            if (tresolved === file && timp.names.includes(name)) {
-                                testUses = true;
-                                break;
-                            }
-                        }
-                        if (testUses) break;
-                    }
-                    if (testUses) continue;
+                if (fs.existsSync(testDir) && collectJsFiles(testDir).some(tf => testFileUses(tf, file, name))) {
+                    continue;
                 }
                 warnings.push(
                     `${relFile}: '${name}'을(를) export하지만 아무 모듈에서 import하지 않음 (unused export)`

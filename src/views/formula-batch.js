@@ -638,7 +638,7 @@ function buildCheckSnapshot(formula) {
  * ("파라벤" 이력 ↔ "메칠파라벤" 원료처럼 상위/하위 표기 차이를 커버).
  * @returns {string[]} 충돌 원료명 배열
  */
-export function findAllergyConflicts(customer, formula) {
+function findAllergyConflicts(customer, formula) {
   if (!customer || !formula || !Array.isArray(formula.ingredients)) return [];
   const allergies = (Array.isArray(customer.allergies) ? customer.allergies : [])
     .map(a => (typeof a === 'string' ? a.trim() : '')).filter(Boolean);

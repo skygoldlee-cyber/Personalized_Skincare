@@ -254,7 +254,7 @@ export function closeCommandPalette() {
     if (overlay) overlay.classList.add('is-hidden');
 }
 
-export function toggleCommandPalette() {
+function toggleCommandPalette() {
     if (_open) closeCommandPalette(); else openCommandPalette();
 }
 

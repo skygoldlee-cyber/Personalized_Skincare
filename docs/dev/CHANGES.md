@@ -6,6 +6,15 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-14 check:imports 경고 0 + npm audit CI 스텝 — 데드 코드·취약 의존성 차단
+
+- **check_imports.js 보강**: 테스트의 동적 import(`await import()`, 백틱 템플릿 + 캐시버스터 쿼리, `pathToFileURL` 계산 경로) 인식 — 오탐 7건 해소. `keep-export` 주석 규약 추가 — 의도된 공개 API는 선언부 주석에 `keep-export` 표기로 억제
+- **미사용 import 2건 제거**: app.js `examIdToSubjectId`, formula-customer.js `clampDate`
+- **내부 전용 export 13건 정리**: 같은 파일 내부에서만 쓰이는 export를 모듈 비공개로 전환 (DISPOSITION_OPTIONS·newBatchId·toggleCommandPalette·newCustomerId·FEEDBACK_KINDS·newMaterialId·buildFullIngredients·isFreeLimitError·isProFeature·renderExpectedScore·filterIngredients·findAllergyConflicts·materialBadgeHtml·countChangedStandards) — API 표면 축소
+- **공개 API 유지 표시**: `loadItemsAsync`·`saveItemsAsync`는 비동기 저장소 이행용 의도된 API — `keep-export` 주석으로 보존
+- **CI `npm audit --audit-level=high` 스텝 추가**: high+ 취약점 발견 시 빌드 차단 (현재 0 취약점)
+- 결과: check:imports **오류·경고 0** — 테스트 전용 export(searchAll·submitFeedback·LAW_DOCS 등)는 동적 import 인식으로 정상 유지
+
 ## 2026-10-14 병합 커버리지 임계값 게이트 — 유닛+DOM 실질 커버리지 강제
 
 - **`coverage_merge.js --check` 추가**: vitest(DOM) 단독 임계값과 별개로 유닛+DOM 병합 리포트에 임계값 적용 — stmts 68 / branches 62 / funcs 62 / lines 74 (기준선 70.74/66.3/64.92/77.58 대비 여유분, TEST_GAP·lint 래칫과 동일 정책)

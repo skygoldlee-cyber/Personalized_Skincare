@@ -17,7 +17,7 @@ let isScrollBound = false;
 let currentFilteredList = [];
 
 /** 검색어·카테고리 필터를 적용한 원료 목록 — 렌더와 CSV보내기가 공유 */
-export function filterIngredients(db, query, filter) {
+function filterIngredients(db, query, filter) {
     const q = (query || '').toLowerCase().trim();
     return db.filter(ing => {
         if (filter !== 'all' && ing.type !== filter) return false;

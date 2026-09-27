@@ -143,7 +143,7 @@ const CHECK_BADGE = {
  * 저장 시점 스냅샷(ingredients[].snapshot)과 현재 원료 DB를 비교해
  * 고시 개정으로 기준(type/limit)이 바뀐 원료 수를 반환한다.
  */
-export function countChangedStandards(formula, index) {
+function countChangedStandards(formula, index) {
   let changed = 0;
   (formula.ingredients || []).forEach(item => {
     if (!item || !item.snapshot || !item.name) return;

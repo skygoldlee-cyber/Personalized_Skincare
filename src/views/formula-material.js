@@ -27,7 +27,7 @@ const STATUS_LABEL = {
 };
 
 /** 기한 배지 HTML — 목록 카드·계산기 경고 공용 */
-export function materialBadgeHtml(m) {
+function materialBadgeHtml(m) {
   const s = materialStatus(m);
   const days = daysUntilExpiry(m);
   const info = STATUS_LABEL[s];

@@ -38,7 +38,7 @@ const MAX_PRODUCTS_LEN = 300;
 const MAX_PURPOSE_LEN = 120;
 
 /** 고유 ID 생성: cust_<base36시간><난수> */
-export function newCustomerId() {
+function newCustomerId() {
   return newId('cust');
 }
 

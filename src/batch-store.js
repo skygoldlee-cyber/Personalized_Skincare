@@ -54,7 +54,7 @@ export const HYGIENE_FIELDS = Object.freeze([
 ]);
 
 // QC 이상 배치의 후속 조치 — 기록이므로 열거형 외 값은 ''으로 정제
-export const DISPOSITION_OPTIONS = Object.freeze(['폐기', '재조제', '보류']);
+const DISPOSITION_OPTIONS = Object.freeze(['폐기', '재조제', '보류']);
 
 const MAX_NAME_LEN = 60;
 const MAX_NOTE_LEN = 500;
@@ -63,7 +63,7 @@ const MAX_LOTS = 60;
 const MAX_LOT_LEN = 40;
 
 /** 고유 ID 생성: bat_<base36시간><난수> */
-export function newBatchId() {
+function newBatchId() {
   return newId('bat');
 }
 

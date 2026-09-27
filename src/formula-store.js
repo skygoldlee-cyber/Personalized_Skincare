@@ -153,7 +153,7 @@ const COLORANT_RE = /색\s*\d+호|(?:C\.?I\.?)\s*\d{4,6}|카민|산화철|울트
  * @param {Array<{name:string, concentration:number|null}>} ingredients
  * @returns {string[]} 전성분 순서의 원료명 배열
  */
-export function buildFullIngredients(ingredients) {
+function buildFullIngredients(ingredients) {
   const isColorant = i => COLORANT_RE.test(i.name);
   const byConc = (a, b) => (b.concentration != null ? b.concentration : 0)
     - (a.concentration != null ? a.concentration : 0);

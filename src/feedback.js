@@ -25,7 +25,7 @@ const SRC_RE = /^[a-z0-9-]{1,20}$/;
 // 이메일·전화번호 등 개인정보 패턴 — 제출 전 경고용 (best-effort 차단)
 const PII_RE = /[\w.+-]+@[\w-]+\.[\w.]+|0?1[0-9]-?\d{3,4}-?\d{4}/;
 
-export const FEEDBACK_KINDS = [
+const FEEDBACK_KINDS = [
     { id: 'improve', label: '개선' },
     { id: 'praise', label: '칭찬' },
     { id: 'bug', label: '오류' },

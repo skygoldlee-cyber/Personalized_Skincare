@@ -14,7 +14,7 @@ import { safeGetItem, safeSetItem } from './state.js';
 import { STORAGE_KEYS } from './storage-keys.js';
 
 /** 스토어 오류가 무료 한도 초과인지 판별 */
-export function isFreeLimitError(error) {
+function isFreeLimitError(error) {
     return typeof error === 'string' && error.startsWith('Free 플랜');
 }
 
@@ -35,7 +35,7 @@ export async function loadFeaturePlan() {
 }
 
 /** 기능이 Pro 표기 대상인지 판별 (플랜 미로드·키 누락 시 pro로 간주) */
-export function isProFeature(featureKey) {
+function isProFeature(featureKey) {
     const v = _featurePlan && _featurePlan.features && _featurePlan.features[featureKey];
     return v !== 'free';
 }

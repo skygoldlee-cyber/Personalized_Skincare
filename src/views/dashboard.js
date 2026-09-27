@@ -418,7 +418,7 @@ const TREND_META = {
 };
 
 /** 예상 점수 대·추세·실제 결과 블록을 합격 진단 카드 하단에 렌더링한다 */
-export function renderExpectedScore() {
+function renderExpectedScore() {
     const area = document.getElementById('prediction-estimate-area');
     if (!area) return;
     const history = getSimHistory();

@@ -32,7 +32,7 @@ const MAX_STORAGE_LEN = 30;
 const MAX_NOTE_LEN = 300;
 
 /** 고유 ID 생성: mat_<base36시간><난수> */
-export function newMaterialId() {
+function newMaterialId() {
   return newId('mat');
 }
 

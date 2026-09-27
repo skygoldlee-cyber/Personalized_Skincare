@@ -18,13 +18,13 @@ export function saveItems(key, items) {
   return setJSON(key, items);
 }
 
-/** loadItems의 비동기 판 — 백엔드 교체(IndexedDB 등) 후에도 동작. 신규 코드 권장 */
+/** loadItems의 비동기 판 — 백엔드 교체(IndexedDB 등) 후에도 동작. 신규 코드 권장. keep-export: 비동기 저장소 이행용 공개 API */
 export async function loadItemsAsync(key) {
   const parsed = await getJSONAsync(key);
   return Array.isArray(parsed) ? parsed : [];
 }
 
-/** saveItems의 비동기 판 — 백엔드 교체(IndexedDB 등) 후에도 동작. 신규 코드 권장 */
+/** saveItems의 비동기 판 — 백엔드 교체(IndexedDB 등) 후에도 동작. 신규 코드 권장. keep-export: 비동기 저장소 이행용 공개 API */
 export async function saveItemsAsync(key, items) {
   return setJSONAsync(key, items);
 }
