@@ -6,6 +6,11 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-14 병합 커버리지 임계값 게이트 — 유닛+DOM 실질 커버리지 강제
+
+- **`coverage_merge.js --check` 추가**: vitest(DOM) 단독 임계값과 별개로 유닛+DOM 병합 리포트에 임계값 적용 — stmts 68 / branches 62 / funcs 62 / lines 74 (기준선 70.74/66.3/64.92/77.58 대비 여유분, TEST_GAP·lint 래칫과 동일 정책)
+- **`coverage:all`에 --check 통합** + **CI에 `coverage:unit`·병합 게이트 스텝 추가**: 지금까지 CI는 DOM 커버리지만 검사했고 유닛 커버리지는 수집되지 않았음 — 이제 실질 커버리지 하락을 CI가 차단. 아티팩트에 coverage-unit/·coverage-merged/ 포함
+
 ## 2026-10-14 ESLint 자동수정 + 경고 래칫 + EditorConfig — 서식·품질 경고 증가 차단
 
 - **`eslint --fix` 전체 적용**: 239 → 213 경고 (var→const 등 자동수정 60건, 16파일) — unit 552·DOM 364 통과 확인

@@ -46,7 +46,7 @@
     "test:dom": "vitest run",
     "coverage": "vitest run --coverage",
     "coverage:unit": "c8 --reporter=json --report-dir=coverage-unit --include \"src/**/*.js\" node --test tests/unit/*.test.js",
-    "coverage:all": "npm run coverage && npm run coverage:unit && node tools/coverage_merge.js",
+    "coverage:all": "npm run coverage && npm run coverage:unit && node tools/coverage_merge.js --check",
     "test:all": "node --test tests/unit/*.test.js && node tools/check_parser_parity.js && node tools/check_imports.js && vitest run",
     "test:watch": "node --test --watch tests/unit/*.test.js",
     "serve": "node serve.js",

@@ -53,3 +53,23 @@ const tree = new SummarizerFactory(map).pkg;
 tree.visit(reports.create('text'), context);
 tree.visit(reports.create('html'), context);
 console.log('\n📊 병합 HTML 리포트: coverage-merged/index.html');
+
+// --check: 병합 커버리지 임계값 게이트 (vitest 단독 임계값과 별개 — 유닛+DOM 실질 커버리지)
+// 기준선(2026-10-14): stmts 70.74 / branches 66.3 / funcs 64.92 / lines 77.58
+// 임계값은 기준선 대비 여유분으로 설정 — 상향은 언제든 가능, 하향 시 CHANGES.md에 사유 기록
+const MERGED_THRESHOLDS = { statements: 68, branches: 62, functions: 62, lines: 74 };
+if (process.argv.includes('--check')) {
+    const summary = map.getCoverageSummary();
+    const actual = summary.toJSON();
+    const failed = [];
+    for (const [metric, min] of Object.entries(MERGED_THRESHOLDS)) {
+        const pct = actual[metric].pct;
+        if (pct < min) failed.push(`${metric} ${pct}% < ${min}%`);
+        console.log(`${pct >= min ? '✅' : '❌'} ${metric}: ${pct}% (임계값 ${min}%)`);
+    }
+    if (failed.length) {
+        console.error(`\n병합 커버리지 임계값 미달: ${failed.join(', ')}`);
+        process.exit(1);
+    }
+    console.log('\n✅ 병합 커버리지 임계값 통과');
+}

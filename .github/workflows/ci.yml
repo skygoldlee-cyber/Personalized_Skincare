@@ -46,12 +46,21 @@ jobs:
       - name: Run DOM tests with coverage
         run: npm run coverage
 
+      - name: Run unit tests with coverage (c8)
+        run: npm run coverage:unit
+
+      - name: Merged coverage threshold gate
+        run: node tools/coverage_merge.js --check
+
       - name: Upload coverage report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: coverage/
+          path: |
+            coverage/
+            coverage-unit/
+            coverage-merged/
           retention-days: 14
 
       - name: Verify SW precache assets
