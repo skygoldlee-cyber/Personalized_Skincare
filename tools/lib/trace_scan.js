@@ -93,7 +93,9 @@ function extractSpec() {
   for (const l of lines) {
     if (/^#{2,3} /.test(l)) sec = l.replace(/^#+\s*/, '').replace(/\s*\(.*?\)\s*$/, '').trim();
     for (const m of l.matchAll(ID_RE)) {
-      if (!m[1].startsWith('DOC-') && !ids.has(m[1])) ids.set(m[1], sec);
+      if (m[1].startsWith('DOC-')) continue;
+      // 절 이전(버전 헤더 등) 언급은 빈 절로 등록 — 실제 선언 절을 만나면 갱신
+      if (!ids.has(m[1]) || (!ids.get(m[1]) && sec)) ids.set(m[1], sec);
     }
   }
   return ids;

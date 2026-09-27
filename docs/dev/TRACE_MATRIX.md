@@ -17,10 +17,18 @@
 
 ---
 
-## 기타 (SPEC 헤더·본문 언급)
+## 5.1 데이터 아키텍처
 
 | ID | 문서 | 소스 | 테스트 | 보고서 |
 |----|------|------|--------|--------|
+| DA-01 | DOC-RBK-03<br>DOC-RBK-08 | tools/build/index.js<br>tools/build/manifest_loader.js | — | — |
+| DA-02 | DOC-RBK-03 | src/data-loader.js<br>tools/build/index.js | — | — |
+| DA-03 | DOC-RBK-03 | src/data-loader.js | tests/unit/data-loader.test.js | — |
+| DA-04 | DOC-RBK-03 | tools/build/build_study_md_bundle.js | — | — |
+| DA-05 | DOC-RBK-03 | src/state.js<br>src/storage.js | tests/unit/state.test.js | — |
+| DA-06 | DOC-RBK-03 | src/exam-context.js<br>src/paths.js<br>src/pwa-manifest.js<br>tools/build/exam_targets.js | — | — |
+| DA-07 | DOC-RBK-03 | src/exam-context.js<br>src/storage-keys.js<br>src/storage.js | tests/unit/storage-key-sync.test.js | — |
+| DA-08 | DOC-DSN-08<br>DOC-RBK-03 | src/exam-context.js | — | — |
 | DA-09 | DOC-RBK-03 | src/storage.js | tests/unit/storage.test.js | — |
 
 ## 3.1 대시보드
@@ -478,19 +486,6 @@
 | UX-SET-03 | — | css/ui-overlay.css | — | — |
 | UX-SET-04 | — | css/ui-overlay.css | — | — |
 | UX-SET-05 | — | css/ui-overlay.css | — | — |
-
-## 5.1 데이터 아키텍처
-
-| ID | 문서 | 소스 | 테스트 | 보고서 |
-|----|------|------|--------|--------|
-| DA-01 | DOC-RBK-03<br>DOC-RBK-08 | tools/build/index.js<br>tools/build/manifest_loader.js | — | — |
-| DA-02 | DOC-RBK-03 | src/data-loader.js<br>tools/build/index.js | — | — |
-| DA-03 | DOC-RBK-03 | src/data-loader.js | tests/unit/data-loader.test.js | — |
-| DA-04 | DOC-RBK-03 | tools/build/build_study_md_bundle.js | — | — |
-| DA-05 | DOC-RBK-03 | src/state.js<br>src/storage.js | tests/unit/state.test.js | — |
-| DA-06 | DOC-RBK-03 | src/exam-context.js<br>src/paths.js<br>src/pwa-manifest.js<br>tools/build/exam_targets.js | — | — |
-| DA-07 | DOC-RBK-03 | src/exam-context.js<br>src/storage-keys.js<br>src/storage.js | tests/unit/storage-key-sync.test.js | — |
-| DA-08 | DOC-DSN-08<br>DOC-RBK-03 | src/exam-context.js | — | — |
 
 ## 5.2 안정적 ID 체계
 
