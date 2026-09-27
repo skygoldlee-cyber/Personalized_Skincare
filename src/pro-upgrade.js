@@ -40,7 +40,9 @@ function isProFeature(featureKey) {
     return v !== 'free';
 }
 
-/** data-pro-feature 속성을 가진 PRO 배지를 플랜에 맞춰 표시/숨긴다 */
+/** data-pro-feature 속성을 가진 PRO 배지를 플랜에 맞춰 표시/숨긴다
+ * @param {Document|HTMLElement} [root]
+ */
 export function refreshProBadges(root = document) {
     if (!_featurePlan) return;
     root.querySelectorAll('[data-pro-feature]').forEach(el => {

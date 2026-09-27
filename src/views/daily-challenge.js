@@ -11,6 +11,7 @@ import { STORAGE_KEYS, dailyCompletedKey } from '../storage-keys.js';
 /* =======================================================
    🧩 일일 5분 데일리 챌린지 (Daily 5-Min Challenge) & Streak
    ======================================================= */
+/** @type {{currentIndex: number, correctCount: number, questions: Array<Record<string,any>>}} */
 const dailyState = {
     currentIndex: 0,
     correctCount: 0,
@@ -23,18 +24,18 @@ const dailyState = {
 export function updateStreakAndDailyUI() {
     const streakDaysEl = document.getElementById('streak-days');
     const challengeStatusEl = document.getElementById('daily-challenge-status');
-    const startBtn = document.getElementById('start-daily-btn');
+    const startBtn = /** @type {HTMLButtonElement|null} */ (document.getElementById('start-daily-btn'));
     
     if (!streakDaysEl) return;
     
-    let streak = parseInt(safeGetItem(STORAGE_KEYS.STUDY_STREAK)) || 0;
+    let streak = parseInt(safeGetItem(STORAGE_KEYS.STUDY_STREAK) || '0') || 0;
     const lastDate = safeGetItem(STORAGE_KEYS.STUDY_STREAK_LAST_DATE);
     const todayStr = new Date().toISOString().split('T')[0];
-    
+
     if (lastDate) {
         const last = new Date(lastDate);
         const today = new Date(todayStr);
-        const diffTime = Math.abs(today - last);
+        const diffTime = Math.abs(today.getTime() - last.getTime());
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
         
         if (diffDays > 1) {
@@ -45,7 +46,7 @@ export function updateStreakAndDailyUI() {
         streak = 0;
     }
     
-    streakDaysEl.textContent = streak;
+    streakDaysEl.textContent = String(streak);
     
     const todayCompleted = safeGetItem(dailyCompletedKey(todayStr));
     if (todayCompleted) {
@@ -96,7 +97,7 @@ function _startDailyChallengeImpl() {
     let allCards = [];
     if (window.STUDY_DATA) {
         Object.keys(window.STUDY_DATA).forEach(subjId => {
-            allCards = allCards.concat(window.STUDY_DATA[subjId].cards.map(c => ({...c, subject: subjId})));
+            allCards = allCards.concat((window.STUDY_DATA || {})[subjId].cards.map(c => ({...c, subject: subjId})));
         });
     }
     const selectedCards = shuffle(allCards).slice(0, 3);
@@ -113,7 +114,7 @@ function _startDailyChallengeImpl() {
     let allQuizzes = [];
     if (window.STUDY_DATA) {
         Object.keys(window.STUDY_DATA).forEach(subjId => {
-            allQuizzes = allQuizzes.concat(window.STUDY_DATA[subjId].quizzes.map(q => ({...q, subject: subjId})));
+            allQuizzes = allQuizzes.concat((window.STUDY_DATA || {})[subjId].quizzes.map(q => ({...q, subject: subjId})));
         });
     }
     const selectedQuizzes = shuffle(allQuizzes).slice(0, 3);
@@ -227,15 +228,19 @@ export async function closeDailyModal() {
 export function renderDailyStep() {
     const q = dailyState.questions[dailyState.currentIndex];
     
-    document.getElementById('daily-modal-progress').textContent = `진행: ${dailyState.currentIndex + 1} / ${dailyState.questions.length}`;
-    document.getElementById('daily-modal-bar').style.width = `${((dailyState.currentIndex + 1) / dailyState.questions.length) * 100}%`;
-    document.getElementById('daily-modal-feedback').classList.add('is-hidden');
-    document.getElementById('daily-modal-next-btn').classList.add('is-hidden');
-    
+    const progEl = document.getElementById('daily-modal-progress');
+    if (progEl) progEl.textContent = `진행: ${dailyState.currentIndex + 1} / ${dailyState.questions.length}`;
+    const barEl = /** @type {HTMLElement|null} */ (document.getElementById('daily-modal-bar'));
+    if (barEl) barEl.style.width = `${((dailyState.currentIndex + 1) / dailyState.questions.length) * 100}%`;
+    document.getElementById('daily-modal-feedback')?.classList.add('is-hidden');
+    document.getElementById('daily-modal-next-btn')?.classList.add('is-hidden');
+
     const qBody = document.getElementById('daily-modal-q-body');
+    if (!qBody) return;
     qBody.innerHTML = `<h4 style="font-size: 1.15rem; line-height: 1.8; font-weight: 500;">${safeTextWithBreaks(q.question)}</h4>`;
-    
+
     const answerArea = document.getElementById('daily-modal-answer-area');
+    if (!answerArea) return;
     answerArea.innerHTML = '';
     
     if (q.type === 'card') {
@@ -254,9 +259,9 @@ export function renderDailyStep() {
         `;
         
         const cardContainer = document.getElementById('daily-card-container');
-        cardContainer.addEventListener('click', () => {
-            const inner = document.getElementById('daily-card-inner');
-            inner.style.transform = inner.style.transform === 'rotateY(180deg)' ? 'rotateY(0deg)' : 'rotateY(180deg)';
+        cardContainer?.addEventListener('click', () => {
+            const inner = /** @type {HTMLElement|null} */ (document.getElementById('daily-card-inner'));
+            if (inner) inner.style.transform = inner.style.transform === 'rotateY(180deg)' ? 'rotateY(0deg)' : 'rotateY(180deg)';
         });
         
         answerArea.innerHTML = `
@@ -318,9 +323,10 @@ export function submitDailyCardAnswer(isMemorized) {
 export function submitDailyChoiceAnswer(selectedBtn, selectedValue, correctValue) {
     const isCorrect = (selectedValue === correctValue);
     const answerArea = document.getElementById('daily-modal-answer-area');
-    const buttons = answerArea.querySelectorAll('.limits-opt-btn');
-    
-    buttons.forEach(btn => {
+    const buttons = answerArea ? answerArea.querySelectorAll('.limits-opt-btn') : [];
+
+    buttons.forEach(node => {
+        const btn = /** @type {HTMLButtonElement} */ (node);
         btn.disabled = true;
         const textSpan = btn.querySelector('.limits-opt-text');
         if (textSpan && textSpan.textContent === correctValue) {
@@ -338,7 +344,7 @@ export function submitDailyChoiceAnswer(selectedBtn, selectedValue, correctValue
 }
 
 export function submitDailyShortAnswer() {
-    const input = document.getElementById('daily-answer-input');
+    const input = /** @type {HTMLInputElement|null} */ (document.getElementById('daily-answer-input'));
     if (!input) return;
     const userInput = input.value.trim();
     if (!userInput) {
@@ -354,7 +360,7 @@ export function submitDailyShortAnswer() {
     }
     
     input.disabled = true;
-    const btn = document.querySelector('#daily-modal-answer-area button');
+    const btn = /** @type {HTMLButtonElement|null} */ (document.querySelector('#daily-modal-answer-area button'));
     if (btn) btn.disabled = true;
     
     showDailyFeedback(isCorrect, q.correct);
@@ -365,8 +371,9 @@ export function showDailyFeedback(isCorrect, correctValue) {
     const feedback = document.getElementById('daily-modal-feedback');
     const title = document.getElementById('daily-modal-feedback-title');
     const desc = document.getElementById('daily-modal-feedback-desc');
-    
-    if (feedback) feedback.classList.remove('is-hidden');
+
+    if (!feedback) return;
+    feedback.classList.remove('is-hidden');
     if (title) {
         if (isCorrect) {
             feedback.classList.remove('incorrect');
@@ -399,8 +406,8 @@ export function finishDailyChallenge() {
     
     const todayStr = new Date().toISOString().split('T')[0];
     safeSetItem(dailyCompletedKey(todayStr), "true");
-    
-    let streak = parseInt(safeGetItem(STORAGE_KEYS.STUDY_STREAK)) || 0;
+
+    let streak = parseInt(safeGetItem(STORAGE_KEYS.STUDY_STREAK) || '0') || 0;
     const lastDate = safeGetItem(STORAGE_KEYS.STUDY_STREAK_LAST_DATE);
     
     if (lastDate !== todayStr) {

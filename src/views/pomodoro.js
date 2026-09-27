@@ -143,7 +143,7 @@ export function updatePomodoroUI() {
 
     if (pomoTimeEl) pomoTimeEl.textContent = `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
     if (pomoTotalEl) pomoTotalEl.textContent = `${pomoState.totalTimeToday}분`;
-    if (pomoSessionEl) pomoSessionEl.textContent = pomoState.sessionCount;
+    if (pomoSessionEl) pomoSessionEl.textContent = String(pomoState.sessionCount);
 }
 
 function triggerPomodoroBeep() {

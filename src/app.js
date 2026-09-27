@@ -290,7 +290,7 @@ function populateSubjectSelects() {
         : [];
     
     // 1. Flashcard subject select
-    const fcSelect = document.getElementById('fc-subject-select');
+    const fcSelect = /** @type {HTMLSelectElement|null} */ (document.getElementById('fc-subject-select'));
     if (fcSelect) {
         const prevVal = fcSelect.value || state.flashcards.subject;
         fcSelect.innerHTML = '';
@@ -310,7 +310,7 @@ function populateSubjectSelects() {
     }
     
     // 2. Quiz subject select
-    const quizSelect = document.getElementById('quiz-subject-select');
+    const quizSelect = /** @type {HTMLSelectElement|null} */ (document.getElementById('quiz-subject-select'));
     if (quizSelect) {
         const prevVal = quizSelect.value || state.quiz.subject;
         quizSelect.innerHTML = '';
@@ -586,7 +586,7 @@ function initApp() {
     if (window.APP_VERSION) {
         ['sidebar-version', 'settings-version']
             .map(id => document.getElementById(id)).filter(Boolean)
-            .forEach(el => { el.textContent = window.APP_VERSION; });
+            .forEach(node => { /** @type {HTMLElement} */ (node).textContent = window.APP_VERSION || ''; });
     }
 
     // 유입 채널(?src=) 캡처 — 피드백의 entry_src로 첨부 (최초 1회 보존)
@@ -612,7 +612,8 @@ function setupOrientationToggle() {
     // 초기 상태 복원
     if (safeGetItem(STORAGE_KEYS.PREFERRED_ORIENTATION) === 'landscape') {
         document.body.classList.add('landscape-mode');
-        btn.querySelector('i').className = 'fa-solid fa-mobile-screen';
+        const icon = btn.querySelector('i');
+        if (icon) icon.className = 'fa-solid fa-mobile-screen';
     }
 
     btn.addEventListener('click', () => {
@@ -774,7 +775,7 @@ function setupNavigation() {
     navItems.forEach(item => {
         item.addEventListener('click', () => {
             const target = item.getAttribute('data-target');
-            navigateToView(target, routerCtx);
+            if (target) navigateToView(target, routerCtx);
         });
     });
 
@@ -802,7 +803,7 @@ function setupModalBackHandler() {
     const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
             if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-                const target = mutation.target;
+                const target = /** @type {HTMLElement} */ (mutation.target);
                 if (target.classList.contains('modal') ||
                     target.classList.contains('modal-content') ||
                     target.id === 'reader-table-modal') {
@@ -845,6 +846,7 @@ function setupModalBackHandler() {
 // 초기화 확장
 // ============================================================
 const originalInitApp = initApp;
+// @ts-ignore — 함수 선언 재할당 패턴: 모듈 스코프 함수 바인딩은 런타임에서 재할당 가능
 initApp = function() {
     originalInitApp();
     setupOfflineDetection(state, togglePomodoro);
@@ -865,14 +867,15 @@ const _dataClickObserver = new MutationObserver((mutations) => {
     for (const mutation of mutations) {
         for (const node of mutation.addedNodes) {
             if (node.nodeType !== Node.ELEMENT_NODE) continue;
-            if (node.matches && node.matches('[data-click]')) {
-                if (node.tagName !== 'BUTTON' && node.tagName !== 'A' && node.tagName !== 'INPUT' && node.tagName !== 'SELECT' && node.tagName !== 'TEXTAREA') {
-                    if (!node.hasAttribute('tabindex')) node.setAttribute('tabindex', '0');
-                    if (!node.hasAttribute('role')) node.setAttribute('role', 'button');
+            const el = /** @type {Element} */ (node);
+            if (el.matches('[data-click]')) {
+                if (el.tagName !== 'BUTTON' && el.tagName !== 'A' && el.tagName !== 'INPUT' && el.tagName !== 'SELECT' && el.tagName !== 'TEXTAREA') {
+                    if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
+                    if (!el.hasAttribute('role')) el.setAttribute('role', 'button');
                 }
             }
-            if (node.querySelectorAll) {
-                node.querySelectorAll('[data-click]').forEach(el => {
+            if (el.querySelectorAll) {
+                el.querySelectorAll('[data-click]').forEach(el => {
                     if (el.tagName === 'BUTTON' || el.tagName === 'A' || el.tagName === 'INPUT' || el.tagName === 'SELECT' || el.tagName === 'TEXTAREA') return;
                     if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
                     if (!el.hasAttribute('role')) el.setAttribute('role', 'button');
@@ -891,18 +894,19 @@ if (document.body) {
    ======================================================= */
 function startFocusSubjectStudy(subKey) {
     DataLoader.loadSubject(subKey).then(() => {
-        if (typeof STUDY_DATA !== 'undefined' && STUDY_DATA[subKey]) {
-            const subj = STUDY_DATA[subKey];
+        if (typeof window.STUDY_DATA !== 'undefined' && window.STUDY_DATA[subKey]) {
+            const subj = window.STUDY_DATA[subKey];
             state.quiz.data = shuffle(subj.quizzes).slice(0, 10);
             state.quiz.currentIndex = 0;
             state.quiz.correctCount = 0;
             state.quiz.solvedList = [];
             
             // 퀴즈 화면 초기화 및 활성화
-            document.getElementById('quiz-setup-panel').classList.add('is-hidden');
-            document.getElementById('quiz-result-panel').classList.add('is-hidden');
-            document.getElementById('quiz-arena-panel').classList.remove('is-hidden');
-            document.getElementById('quiz-q-category').textContent = subj.name;
+            document.getElementById('quiz-setup-panel')?.classList.add('is-hidden');
+            document.getElementById('quiz-result-panel')?.classList.add('is-hidden');
+            document.getElementById('quiz-arena-panel')?.classList.remove('is-hidden');
+            const qCat = document.getElementById('quiz-q-category');
+            if (qCat) qCat.textContent = subj.name;
             
             renderQuizQuestion();
             
@@ -1122,7 +1126,8 @@ function showIngredientsChangelog() {
 /** 활성 시험의 features 플래그에 따라 도메인 특화 UI 숨김 (data-feature 속성 기반) */
 function applyFeatureFlags() {
     const multiExam = getExamList().length > 1;
-    document.querySelectorAll('[data-feature]').forEach(el => {
+    document.querySelectorAll('[data-feature]').forEach(node => {
+        const el = /** @type {HTMLElement} */ (node);
         // 시험 전환 버튼은 플래그가 아닌 실제 시험 수로 결정 — 1개면 무의미
         const on = el.dataset.feature === 'examSwitch'
             ? multiExam

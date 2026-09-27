@@ -88,7 +88,7 @@ export function navigateToView(target, ctx) {
     state.currentView = target;
 
     // 각 뷰 진입 시 렌더링 갱신 — 핸들러 맵에서 디스패치
-    const renderFn = handlers.viewRenderers[target];
+    const renderFn = handlers.viewRenderers && handlers.viewRenderers[target];
     if (typeof renderFn === 'function') {
         renderFn();
     }

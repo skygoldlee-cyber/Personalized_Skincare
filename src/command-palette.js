@@ -22,7 +22,8 @@ let _results = [];
 /** 활성 시험에서 보이는 뷰 목록 — 사이드바 nav-item을 스캔해 feature 게이팅(is-hidden)을 그대로 반영한다 */
 function getViewItems() {
     const seen = new Map();
-    document.querySelectorAll('.nav-item[data-target]').forEach(el => {
+    document.querySelectorAll('.nav-item[data-target]').forEach(node => {
+        const el = /** @type {HTMLElement} */ (node);
         const target = el.dataset.target;
         if (!target || seen.has(target) || el.classList.contains('is-hidden')) return;
         seen.set(target, el.textContent.trim());
@@ -183,9 +184,11 @@ function _buildDom() {
 
     overlay.addEventListener('click', e => { if (e.target === overlay) closeCommandPalette(); });
 
-    const input = overlay.querySelector('#cmdk-input');
+    const input = /** @type {HTMLInputElement|null} */ (overlay.querySelector('#cmdk-input'));
+    if (!input) return;
     input.addEventListener('input', () => _renderResults(input.value));
-    input.addEventListener('keydown', e => {
+    input.addEventListener('keydown', ev => {
+        const e = /** @type {KeyboardEvent} */ (ev);
         if (e.key === 'ArrowDown') { e.preventDefault(); _moveActive(1); }
         else if (e.key === 'ArrowUp') { e.preventDefault(); _moveActive(-1); }
         else if (e.key === 'Enter') { e.preventDefault(); executePaletteResult(_activeIdx); }
@@ -231,7 +234,7 @@ function _moveActive(delta) {
     if (!_results.length) return;
     _activeIdx = (_activeIdx + delta + _results.length) % _results.length;
     const items = document.querySelectorAll('#cmdk-results .cmdk-item');
-    items.forEach(el => el.classList.toggle('is-active', +el.dataset.idx === _activeIdx));
+    items.forEach(node => /** @type {HTMLElement} */ (node).classList.toggle('is-active', +(/** @type {HTMLElement} */ (node).dataset.idx || '') === _activeIdx));
     const active = document.querySelector(`#cmdk-results .cmdk-item[data-idx="${_activeIdx}"]`);
     if (active && active.scrollIntoView) active.scrollIntoView({ block: 'nearest' });
 }
@@ -242,7 +245,8 @@ export function openCommandPalette() {
     if (!overlay) return;
     _open = true;
     overlay.classList.remove('is-hidden');
-    const input = document.getElementById('cmdk-input');
+    const input = /** @type {HTMLInputElement|null} */ (document.getElementById('cmdk-input'));
+    if (!input) return;
     input.value = '';
     _renderResults('');
     input.focus();
@@ -267,7 +271,7 @@ export function executePaletteResult(idx) {
     const clickNav = target => {
         const btn = document.querySelector(`.nav-item[data-target="${target}"]`)
             || document.querySelector(`.mobile-tab-item[data-target="${target}"]`);
-        if (btn) btn.click();
+        if (btn) /** @type {HTMLElement} */ (btn).click();
     };
     switch (a.kind) {
         case 'view':

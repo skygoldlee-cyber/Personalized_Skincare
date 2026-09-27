@@ -22,12 +22,14 @@ const DRILL_COUNT = 10;
 const OPTION_INDICATORS = ['①', '②', '③', '④', '⑤'];
 
 // 출제 수 설정 — 10/20/'all' (두 드릴 setup의 칩에서 공유)
+/** @type {number|'all'} */
 let drillCountSetting = DRILL_COUNT;
 
 /** 출제 수 칩 전환 — data-arg: '10' | '20' | 'all' */
 export function setDrillCount(v) {
     drillCountSetting = v === 'all' ? 'all' : (parseInt(v, 10) || DRILL_COUNT);
-    document.querySelectorAll('.drill-count-chip').forEach(chip => {
+    document.querySelectorAll('.drill-count-chip').forEach(node => {
+        const chip = /** @type {HTMLElement} */ (node);
         chip.classList.toggle('active', chip.dataset.arg === String(v));
     });
 }
@@ -176,7 +178,7 @@ function startDrill(type, subjectNum) {
     const cfg = DRILL_TYPES[type];
     const special = String(subjectNum);
     const isSpecial = cfg.isSpecial(special);
-    const num = parseInt(subjectNum, 10);
+    const num = parseInt(String(subjectNum), 10);
     const subjectOrders = DataLoader.getSubjectOrders();
     if (!isSpecial && (isNaN(num) || !subjectOrders.includes(num))) return;
     // 취약 리뷰 등 다른 서브뷰에서 호출돼도 자기 패널을 표시한다
@@ -524,7 +526,7 @@ function updateComboJudgeHint(q) {
                 : `판정 조합 ${label} — 일치하는 선지가 없습니다.`;
         }
     }
-    if (submitBtn) submitBtn.disabled = judged < total;
+    if (submitBtn) /** @type {HTMLButtonElement} */ (submitBtn).disabled = judged < total;
 }
 
 /** 2단계 응시: 전 진술 판정 후 제출 — 판정 집합과 일치하는 선지로 응답 (없으면 판정만 제출) */
@@ -546,7 +548,7 @@ function submitComboAnswer(selectedBtn, optId, optIdx) {
     const q = st.data[st.currentIndex];
     if (!q) return;
 
-    const judgments = Object.keys(st.judgments || {}).length ? st.judgments : null;
+    const judgments = Object.keys(st.judgments || {}).length ? st.judgments : undefined;
     const res = gradeAnswer(q, { optionId: optId, judgments });
     const isCorrect = res.correct;
     vibrate(isCorrect ? HAPTIC.correct : HAPTIC.wrong);
@@ -569,8 +571,8 @@ function submitComboAnswer(selectedBtn, optId, optIdx) {
 
     // 진술 판정 버튼 잠금 (제출 후 변경 불가)
     const stmtsArea = document.getElementById('combo-statements');
-    if (stmtsArea) stmtsArea.querySelectorAll('.combo-judge-btn').forEach(b => { b.disabled = true; });
-    const judgeSubmit = document.getElementById('combo-judge-submit');
+    if (stmtsArea) stmtsArea.querySelectorAll('.combo-judge-btn').forEach(b => { /** @type {HTMLButtonElement} */ (b).disabled = true; });
+    const judgeSubmit = /** @type {HTMLButtonElement|null} */ (document.getElementById('combo-judge-submit'));
     if (judgeSubmit) judgeSubmit.disabled = true;
 
     // 판정 모드(선지 미일치)일 때는 판정 조합 자체를 선택 라벨로 표시
@@ -747,7 +749,7 @@ function renderWeakReview() {
             }
         });
         masteryEl.innerHTML = `<div class="weak-mastery-grid">` +
-            Object.keys(perSub).sort((a, b) => a - b).map(n => {
+            Object.keys(perSub).sort((a, b) => Number(a) - Number(b)).map(n => {
                 const m = perSub[n];
                 if (!m.j) return '';
                 return `<div class="weak-mastery-cell"><strong>과목${n}</strong><span>판정 ${m.j} · 취약 ${m.w} · 졸업 ${m.g}</span></div>`;
@@ -806,7 +808,7 @@ function renderWeakReview() {
 if (typeof document !== 'undefined') {
     document.addEventListener('keydown', (e) => {
         if (!e || !e.key) return;
-        if (e.target && /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
+        if (e.target instanceof HTMLElement && /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
         const view = state.trainer && state.trainer.activeSubView;
         const oxArena = document.getElementById('oxdrill-arena');
         const comboArena = document.getElementById('combo-arena');
@@ -825,14 +827,14 @@ if (typeof document !== 'undefined') {
         if (oxActive) {
             const key = e.key.toLowerCase();
             if (key === 'o' || key === 'x') {
-                const btn = oxArena.querySelector(`.oxdrill-ox-btn[data-ox="${key.toUpperCase()}"]:not([disabled])`);
+                const btn = /** @type {HTMLElement|null} */ (oxArena.querySelector(`.oxdrill-ox-btn[data-ox="${key.toUpperCase()}"]:not([disabled])`));
                 if (btn) { e.preventDefault(); btn.click(); }
             }
         } else if (comboActive) {
             const idx = parseInt(e.key, 10) - 1;
             if (idx >= 0 && idx < 5) {
                 const btns = comboArena.querySelectorAll('#combo-options-container .limits-opt-btn:not([disabled])');
-                if (btns[idx]) { e.preventDefault(); btns[idx].click(); }
+                if (btns[idx]) { e.preventDefault(); /** @type {HTMLElement} */ (btns[idx]).click(); }
             }
         }
     });

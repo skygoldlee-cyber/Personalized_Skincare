@@ -49,6 +49,17 @@ declare global {
     RELEASE_NOTES?: any;
     /** 시험 목록 번들 (data/exams.js) */
     EXAMS_LIST?: { exams?: import('./types.js').ExamDef[] };
+    /** html-viewer.js 가 바인딩하는 전역 뷰어 API */
+    HtmlViewer?: any;
+    /** build_doc_bundles.js 산출 문서 원문 맵 (data/docs_md/*.js) */
+    __DOC_MD__?: Record<string, string>;
+    /** 구형 Safari prefix AudioContext */
+    webkitAudioContext?: typeof AudioContext;
+    /** app.js 가 노출하는 과목 바로가기 (command-palette 등) */
+    startSubjectStudy?: (subject: string) => void;
+    startSubjectQuiz?: (subject: string) => void;
+    /** exam-history.js 가 노출하는 모의고사 성적 기록 함수 */
+    saveExamResultToHistory?: (examId: string, score: number, total: number, subjectRates: any) => void;
     /** 복수정답형 파일럿 번들 (data/drills/combo_pilot.js) */
     COMBO_PILOT?: { questions?: Array<{ subject?: number; [k: string]: any }> };
     /** 복수정답형 문항 수 인덱스 (data/drills/combo_index.js) */
@@ -75,8 +86,11 @@ declare global {
   /** trainer.js 가 정의·app.js 가 window 바인딩하는 단답형 채점 함수. */
   function checkShortAnswer(userInput: string, correctAnswer: any): boolean;
 
-  /** iOS Safari 의 standalone 감지 속성 (PWA 설치 여부). */
-  interface Navigator { standalone?: boolean }
+  /** iOS Safari 의 standalone 감지 속성 (PWA 설치 여부) + 관련 앱 설치 확인 (Android). */
+  interface Navigator { standalone?: boolean; getInstalledRelatedApps?: () => Promise<any[]> }
+
+  /** src/data-loader.js 모듈의 DataLoader — 일부 뷰가 window 전역으로 참조. */
+  var DataLoader: { registry?: any } | undefined;
 
   /** Event Timing API 의 durationThreshold 옵션 (INP 측정). */
   interface PerformanceObserverInit { durationThreshold?: number }

@@ -173,7 +173,7 @@ export async function flushPendingFeedback() {
 
 /**
  * 의견 제출 — 성공/큐잉/거부를 구분해 반환.
- * @returns {{status:'sent'|'queued'|'cooldown'|'invalid'|'spam'|'pii', queuedCount?:number}}
+ * @returns {Promise<{status:'sent'|'queued'|'cooldown'|'invalid'|'spam'|'pii'|'short'|'long', queuedCount?:number}>}
  */
 export async function submitFeedback(input) {
     if (cooldownRemaining() > 0) return { status: 'cooldown' };
@@ -234,7 +234,8 @@ export function showFeedbackModal(currentView) {
             </div>
         </div>`;
     document.body.appendChild(overlay);
-    const dialog = overlay.querySelector('.app-confirm-dialog');
+    const dialog = /** @type {HTMLElement|null} */ (overlay.querySelector('.app-confirm-dialog'));
+    if (!dialog) return;
     requestAnimationFrame(() => {
         overlay.classList.add('is-visible');
         dialog.classList.add('is-visible');
@@ -242,19 +243,21 @@ export function showFeedbackModal(currentView) {
 
     let kind = 'improve';
     let rating = null;
-    overlay.querySelectorAll('.feedback-kind').forEach(btn => {
+    overlay.querySelectorAll('.feedback-kind').forEach(node => {
+        const btn = /** @type {HTMLElement} */ (node);
         btn.addEventListener('click', () => {
-            kind = btn.dataset.kind;
+            kind = btn.dataset.kind || 'improve';
             overlay.querySelectorAll('.feedback-kind').forEach(b =>
                 b.setAttribute('aria-pressed', String(b === btn)));
         });
     });
-    overlay.querySelectorAll('.feedback-star').forEach(btn => {
+    overlay.querySelectorAll('.feedback-star').forEach(node => {
+        const btn = /** @type {HTMLElement} */ (node);
         btn.addEventListener('click', () => {
             const n = Number(btn.dataset.star);
             rating = (rating === n) ? null : n; // 같은 별 재클릭 → 해제
             overlay.querySelectorAll('.feedback-star').forEach(b =>
-                b.classList.toggle('is-on', Number(b.dataset.star) <= (rating || 0)));
+                b.classList.toggle('is-on', Number(/** @type {HTMLElement} */ (b).dataset.star) <= (rating || 0)));
         });
     });
 
@@ -264,16 +267,17 @@ export function showFeedbackModal(currentView) {
         dialog.classList.remove('is-visible');
         setTimeout(() => { untrapFocus(); overlay.remove(); }, 200);
     };
-    overlay.querySelector('.app-confirm-cancel').addEventListener('click', close);
+    overlay.querySelector('.app-confirm-cancel')?.addEventListener('click', close);
     overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
-    const onKey = (e) => {
+    const onKey = (ev) => {
+        const e = /** @type {KeyboardEvent} */ (ev);
         if (e.key === 'Escape') { document.removeEventListener('keydown', onKey); close(); }
     };
     document.addEventListener('keydown', onKey);
 
-    overlay.querySelector('.feedback-submit').addEventListener('click', async () => {
-        const body = overlay.querySelector('.feedback-text').value;
-        const honeypot = overlay.querySelector('.feedback-hp').value;
+    overlay.querySelector('.feedback-submit')?.addEventListener('click', async () => {
+        const body = /** @type {HTMLTextAreaElement|null} */ (overlay.querySelector('.feedback-text'))?.value || '';
+        const honeypot = /** @type {HTMLInputElement|null} */ (overlay.querySelector('.feedback-hp'))?.value || '';
         const result = await submitFeedback({ kind, rating, body, view: currentView, honeypot });
         switch (result.status) {
             case 'sent':

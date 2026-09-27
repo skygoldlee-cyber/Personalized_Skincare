@@ -88,7 +88,7 @@ function _ensureOverlay() {
     document.body.appendChild(el);
     _overlayEl = el;
 
-    el.querySelector('#hr-close-btn').addEventListener('click', close);
+    el.querySelector('#hr-close-btn')?.addEventListener('click', close);
     function _printContent(label) {
         const content = el.querySelector('.hr-ov-content');
         if (!content) return;
@@ -103,12 +103,13 @@ function _ensureOverlay() {
             printWin.print();
         }
     }
-    el.querySelector('#hr-print-btn').addEventListener('click', () => _printContent('인쇄'));
-    el.querySelector('#hr-pdf-btn').addEventListener('click', () => _printContent('PDF 저장'));
-    el.querySelector('#hr-search-btn').addEventListener('click', () => _doSearch());
-    el.querySelector('#hr-prev-btn').addEventListener('click', () => _navigateSearch(-1));
-    el.querySelector('#hr-next-btn').addEventListener('click', () => _navigateSearch(1));
-    el.querySelector('#hr-search-input').addEventListener('keydown', (e) => {
+    el.querySelector('#hr-print-btn')?.addEventListener('click', () => _printContent('인쇄'));
+    el.querySelector('#hr-pdf-btn')?.addEventListener('click', () => _printContent('PDF 저장'));
+    el.querySelector('#hr-search-btn')?.addEventListener('click', () => _doSearch());
+    el.querySelector('#hr-prev-btn')?.addEventListener('click', () => _navigateSearch(-1));
+    el.querySelector('#hr-next-btn')?.addEventListener('click', () => _navigateSearch(1));
+    el.querySelector('#hr-search-input')?.addEventListener('keydown', (ev) => {
+        const e = /** @type {KeyboardEvent} */ (ev);
         if (e.key === 'Enter') {
             if (e.shiftKey) _navigateSearch(-1);
             else if (_searchResults.length > 0) _navigateSearch(1);
@@ -272,6 +273,7 @@ async function openHtmlViewer(htmlPath, searchKeyword, anchorId, lineNum) {
             const parentsToNormalize = new Set();
             for (const span of spans) {
                 const parent = span.parentNode;
+                if (!parent) continue;
                 while (span.firstChild) {
                     parent.insertBefore(span.firstChild, span);
                 }
@@ -392,8 +394,8 @@ async function _doSearch(keyword, skipScroll) {
     const lowerKw = kw.toLowerCase();
     const walker = document.createTreeWalker(_contentEl, NodeFilter.SHOW_TEXT, {
         acceptNode: (node) => {
-            if (!node.textContent.trim()) return NodeFilter.FILTER_REJECT;
-            const tag = node.parentNode.tagName;
+            if (!(node.textContent || '').trim()) return NodeFilter.FILTER_REJECT;
+            const tag = /** @type {HTMLElement|null} */ (node.parentNode)?.tagName;
             if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'MARK') return NodeFilter.FILTER_REJECT;
             return NodeFilter.FILTER_ACCEPT;
         }

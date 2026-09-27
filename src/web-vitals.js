@@ -26,7 +26,7 @@ export function initWebVitals() {
         new PerformanceObserver((entryList) => {
             for (const entry of entryList.getEntries()) {
                 if (!entry.hadRecentInput) {
-                    _clsValue += entry.value;
+                    _clsValue += entry.value || 0;
                 }
             }
         }).observe({ type: 'layout-shift', buffered: true });

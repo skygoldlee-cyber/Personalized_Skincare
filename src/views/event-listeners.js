@@ -30,7 +30,7 @@ function debounce(func, delay = 150) {
 
 export function setupEventListeners(enhanceDataClickAccessibility) {
     // 1. 진도 초기화 버튼
-    document.getElementById('reset-progress-btn').addEventListener('click', async () => {
+    document.getElementById('reset-progress-btn')?.addEventListener('click', async () => {
         const ok = await showConfirm("정말 모든 학습 진도를 초기화하시겠습니까?\n외운 카드, 오답 정보, 모의고사 성적 이력, 연속 학습일, 계산 기록이 모두 지워집니다.", "학습 진도 초기화");
         if (!ok) return;
         // 인메모리 상태 초기화
@@ -85,10 +85,10 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
             if (willOpen) dismissFeedbackDot(); // 패널 첫 오픈 → 점 제거
         });
         settingsPanel.addEventListener('click', (e) => {
-            if (e.target.closest('.settings-item')) closeSettings();
+            if ((/** @type {Element|null} */ (e.target))?.closest('.settings-item')) closeSettings();
         });
         document.addEventListener('click', (e) => {
-            if (!settingsPanel.classList.contains('is-hidden') && !e.target.closest('.settings-menu')) {
+            if (!settingsPanel.classList.contains('is-hidden') && !(/** @type {Element|null} */ (e.target))?.closest('.settings-menu')) {
                 closeSettings();
             }
         });
@@ -98,7 +98,7 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
     }
 
     // 1-2. 대시보드 분석 접이식 — 열림 상태를 세션 간 유지
-    const analysisFold = document.getElementById('dashboard-analysis-fold');
+    const analysisFold = /** @type {HTMLDetailsElement|null} */ (document.getElementById('dashboard-analysis-fold'));
     if (analysisFold) {
         if (safeGetItem('ui_analysis_open') === '1') analysisFold.open = true;
         analysisFold.addEventListener('toggle', () => {
@@ -107,7 +107,7 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
     }
 
     // 2. 플래시카드 이벤트
-    const cardEl = document.getElementById('flashcard-item');
+    const cardEl = /** @type {HTMLElement & {_swipeHandled?: boolean} | null} */ (document.getElementById('flashcard-item'));
     if (cardEl) {
         cardEl.setAttribute('role', 'button');
         cardEl.setAttribute('tabindex', '0');
@@ -170,16 +170,17 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
         }, { passive: false });
     }
     
-    document.getElementById('fc-subject-select').addEventListener('change', (e) => {
-        state.flashcards.subject = e.target.value;
+    document.getElementById('fc-subject-select')?.addEventListener('change', (e) => {
+        const subj = (/** @type {HTMLSelectElement|null} */ (e.target) || { value: '' }).value;
+        state.flashcards.subject = subj;
         state.flashcards.currentIndex = 0;
-        DataLoader.loadSubject(e.target.value).then(() => {
+        DataLoader.loadSubject(subj).then(() => {
             loadFlashcards();
         }).catch(() => loadFlashcards());
     });
     
-    document.getElementById('fc-key-only').addEventListener('change', (e) => {
-        state.flashcards.keyOnly = e.target.checked;
+    document.getElementById('fc-key-only')?.addEventListener('change', (e) => {
+        state.flashcards.keyOnly = (/** @type {HTMLInputElement} */ (e.target)).checked;
         state.flashcards.currentIndex = 0;
         loadFlashcards();
     });
@@ -187,7 +188,7 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
     const fcShuffleCheckbox = document.getElementById('fc-shuffle');
     if (fcShuffleCheckbox) {
         fcShuffleCheckbox.addEventListener('change', (e) => {
-            state.flashcards.shuffle = e.target.checked;
+            state.flashcards.shuffle = (/** @type {HTMLInputElement} */ (e.target)).checked;
             state.flashcards.currentIndex = 0;
             loadFlashcards();
         });
@@ -196,13 +197,13 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
     const fcDifficultySelect = document.getElementById('fc-difficulty-select');
     if (fcDifficultySelect) {
         fcDifficultySelect.addEventListener('change', (e) => {
-            state.flashcards.difficultyFilter = e.target.value;
+            state.flashcards.difficultyFilter = (/** @type {HTMLSelectElement} */ (e.target)).value;
             state.flashcards.currentIndex = 0;
             loadFlashcards();
         });
     }
     
-    document.getElementById('fc-prev-btn').addEventListener('click', (e) => {
+    document.getElementById('fc-prev-btn')?.addEventListener('click', (e) => {
         e.stopPropagation();
         if (state.flashcards.data.length === 0) return;
         state.flashcards.currentIndex--;
@@ -212,7 +213,7 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
         renderFlashcard();
     });
     
-    document.getElementById('fc-next-btn').addEventListener('click', (e) => {
+    document.getElementById('fc-next-btn')?.addEventListener('click', (e) => {
         e.stopPropagation();
         if (state.flashcards.data.length === 0) return;
         state.flashcards.currentIndex++;
@@ -222,7 +223,7 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
         renderFlashcard();
     });
     
-    document.getElementById('fc-easy-btn').addEventListener('click', () => {
+    document.getElementById('fc-easy-btn')?.addEventListener('click', () => {
         const fc = state.flashcards;
         if (fc.data.length === 0) return;
         const currentCard = fc.data[fc.currentIndex];
@@ -233,14 +234,14 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
         saveProgress();
         
         // 시각 효과 피드백 후 다음 카드로
-        document.getElementById('fc-easy-btn').style.transform = 'scale(1.05)';
+        /** @type {HTMLElement} */ (document.getElementById('fc-easy-btn')).style.transform = 'scale(1.05)';
         setTimeout(() => {
-            document.getElementById('fc-easy-btn').style.transform = 'scale(1)';
-            document.getElementById('fc-next-btn').click();
+            /** @type {HTMLElement} */ (document.getElementById('fc-easy-btn')).style.transform = 'scale(1)';
+            /** @type {HTMLElement} */ (document.getElementById('fc-next-btn')).click();
         }, 150);
     });
     
-    document.getElementById('fc-hard-btn').addEventListener('click', () => {
+    document.getElementById('fc-hard-btn')?.addEventListener('click', () => {
         const fc = state.flashcards;
         if (fc.data.length === 0) return;
         const currentCard = fc.data[fc.currentIndex];
@@ -251,17 +252,18 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
         saveProgress();
         
         // 시각 효과 피드백 후 다음 카드로
-        document.getElementById('fc-hard-btn').style.transform = 'scale(1.05)';
+        /** @type {HTMLElement} */ (document.getElementById('fc-hard-btn')).style.transform = 'scale(1.05)';
         setTimeout(() => {
-            document.getElementById('fc-hard-btn').style.transform = 'scale(1)';
-            document.getElementById('fc-next-btn').click();
+            /** @type {HTMLElement} */ (document.getElementById('fc-hard-btn')).style.transform = 'scale(1)';
+            /** @type {HTMLElement} */ (document.getElementById('fc-next-btn')).click();
         }, 150);
     });
 
     // 플래시카드 키보드 단축키 (flashcard-view 활성 시에만 동작)
     document.addEventListener('keydown', (e) => {
         if (state.currentView !== 'flashcard-view') return;
-        if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') return;
+        const tgt = /** @type {HTMLElement|null} */ (e.target);
+        if (tgt && (tgt.tagName === 'INPUT' || tgt.tagName === 'SELECT' || tgt.tagName === 'TEXTAREA')) return;
 
         const cardEl = document.getElementById('flashcard-item');
         if (!cardEl || state.flashcards.data.length === 0) return;
@@ -269,11 +271,11 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
         switch (e.key) {
             case 'ArrowLeft':
                 e.preventDefault();
-                document.getElementById('fc-prev-btn').click();
+                /** @type {HTMLElement} */ (document.getElementById('fc-prev-btn')).click();
                 break;
             case 'ArrowRight':
                 e.preventDefault();
-                document.getElementById('fc-next-btn').click();
+                /** @type {HTMLElement} */ (document.getElementById('fc-next-btn')).click();
                 break;
             case ' ':
             case 'Spacebar':
@@ -283,22 +285,22 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
             case 'e':
             case 'E':
                 e.preventDefault();
-                document.getElementById('fc-easy-btn').click();
+                /** @type {HTMLElement} */ (document.getElementById('fc-easy-btn')).click();
                 break;
             case 'h':
             case 'H':
                 e.preventDefault();
-                document.getElementById('fc-hard-btn').click();
+                /** @type {HTMLElement} */ (document.getElementById('fc-hard-btn')).click();
                 break;
         }
     });
     
     // 3. 퀴즈 이벤트
-    document.getElementById('quiz-subject-select').addEventListener('change', (e) => {
-        state.quiz.subject = e.target.value;
+    document.getElementById('quiz-subject-select')?.addEventListener('change', (e) => {
+        state.quiz.subject = (/** @type {HTMLSelectElement} */ (e.target)).value;
     });
     
-    document.getElementById('start-quiz-btn').addEventListener('click', () => {
+    document.getElementById('start-quiz-btn')?.addEventListener('click', () => {
         showGlobalLoading('퀴즈 데이터를 불러오는 중입니다...');
         DataLoader.loadSubject(state.quiz.subject).then(() => {
             hideGlobalLoading();
@@ -310,29 +312,29 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
         });
     });
     
-    document.getElementById('submit-quiz-btn').addEventListener('click', () => {
+    document.getElementById('submit-quiz-btn')?.addEventListener('click', () => {
         submitQuizAnswer();
     });
     
     // 엔터키 정답 제출 대응
-    document.getElementById('quiz-answer-input').addEventListener('keypress', (e) => {
+    document.getElementById('quiz-answer-input')?.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
             const submitBtn = document.getElementById('submit-quiz-btn');
             const nextBtn = document.getElementById('next-quiz-btn');
             
-            if (!submitBtn.classList.contains('is-hidden')) {
+            if (submitBtn && !submitBtn.classList.contains('is-hidden')) {
                 submitQuizAnswer();
-            } else if (!nextBtn.classList.contains('is-hidden')) {
+            } else if (nextBtn && !nextBtn.classList.contains('is-hidden')) {
                 nextQuizQuestion();
             }
         }
     });
     
-    document.getElementById('next-quiz-btn').addEventListener('click', () => {
+    document.getElementById('next-quiz-btn')?.addEventListener('click', () => {
         nextQuizQuestion();
     });
     
-    document.getElementById('retry-quiz-btn').addEventListener('click', () => {
+    document.getElementById('retry-quiz-btn')?.addEventListener('click', () => {
         startQuiz();
     });
 
@@ -341,7 +343,7 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
     if (calcInput) {
         calcInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
-                const submitBtn = document.getElementById('submit-calc-btn');
+                const submitBtn = /** @type {HTMLButtonElement|null} */ (document.getElementById('submit-calc-btn'));
                 if (submitBtn && !submitBtn.disabled) {
                     submitCalcAnswer();
                 }
@@ -354,7 +356,7 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
     if (ingInput) {
         ingInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
-                const submitBtn = document.getElementById('submit-ing-btn');
+                const submitBtn = /** @type {HTMLButtonElement|null} */ (document.getElementById('submit-ing-btn'));
                 if (submitBtn && !submitBtn.disabled) {
                     submitIngAnswer();
                 }
@@ -362,31 +364,31 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
         });
     }
     
-    document.getElementById('back-to-dashboard-btn').addEventListener('click', () => {
+    document.getElementById('back-to-dashboard-btn')?.addEventListener('click', () => {
         switchView('dashboard-view');
     });
     
     // 4. 오답 퀴즈 이벤트 바인딩
-    document.getElementById('start-weak-quiz-btn').addEventListener('click', () => {
+    document.getElementById('start-weak-quiz-btn')?.addEventListener('click', () => {
         startWeakFocusQuiz();
     });
 
     // 5. 모의고사 시뮬레이터 이벤트 바인딩
-    document.getElementById('sim-prev-btn').addEventListener('click', () => {
+    document.getElementById('sim-prev-btn')?.addEventListener('click', () => {
         if (simState.currentIndex > 0) {
             simState.currentIndex--;
             renderSimQuestion();
         }
     });
     
-    document.getElementById('sim-next-btn').addEventListener('click', () => {
+    document.getElementById('sim-next-btn')?.addEventListener('click', () => {
         if (simState.currentIndex < simState.data.questions.length - 1) {
             simState.currentIndex++;
             renderSimQuestion();
         }
     });
     
-    document.getElementById('sim-submit-exam-btn').addEventListener('click', async () => {
+    document.getElementById('sim-submit-exam-btn')?.addEventListener('click', async () => {
         const ok = await showConfirm("정말로 답안지를 제출하고 시험을 종료하시겠습니까?", "시험 제출");
         if (ok) submitExam();
     });
@@ -414,7 +416,7 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
 
     // 전역 범위(window)에서 함수 찾기 (ManualViewer.openManual 등의 점 표기 네임스페이스 허용)
     function resolveDelegatedHandler(name) {
-        let handler = window;
+        let handler = /** @type {any} */ (window);
         for (const part of name.split('.')) {
             if (handler) handler = handler[part];
         }
@@ -441,9 +443,9 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
     document.body.addEventListener('click', (e) => {
         // 일부 안드로이드 Chrome에서 e.target이 Text 노드가 될 수 있어
         // closest()가 없어 TypeError 발생 → 버튼 동작 안 함 (PC/최신 모바일은 정상)
-        const targetEl = e.target instanceof Element ? e.target : e.target.parentElement;
+        const targetEl = e.target instanceof Element ? e.target : (/** @type {Node|null} */ (e.target))?.parentElement;
         if (!targetEl) return;
-        const el = targetEl.closest('[data-click]');
+        const el = /** @type {HTMLElement|null} */ (targetEl.closest('[data-click]'));
         if (!el) return;
 
         const handlerName = el.getAttribute('data-click');
@@ -467,9 +469,9 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
     // 키보드 접근성: [data-click] 요소에서 Enter/Space 시 클릭 트리거
     document.body.addEventListener('keydown', (e) => {
         if (e.key !== 'Enter' && e.key !== ' ') return;
-        const targetEl = e.target instanceof Element ? e.target : e.target.parentElement;
+        const targetEl = e.target instanceof Element ? e.target : (/** @type {Node|null} */ (e.target))?.parentElement;
         if (!targetEl) return;
-        const el = targetEl.closest('[data-click]');
+        const el = /** @type {HTMLElement|null} */ (targetEl.closest('[data-click]'));
         if (!el) return;
         // 네이티브 버튼/링크/입력은 자체 키보드 처리가 있으므로 제외
         if (el.tagName === 'BUTTON' || el.tagName === 'A' || el.tagName === 'INPUT' || el.tagName === 'SELECT' || el.tagName === 'TEXTAREA') return;
@@ -479,9 +481,9 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
 
     // 입력 이벤트 위임 (range 슬라이더 등). 인라인 oninput 속성(CSP 차단) 대체.
     document.body.addEventListener('input', (e) => {
-        const targetEl = e.target instanceof Element ? e.target : e.target.parentElement;
+        const targetEl = e.target instanceof Element ? e.target : (/** @type {Node|null} */ (e.target))?.parentElement;
         if (!targetEl) return;
-        const el = targetEl.closest('[data-input]');
+        const el = /** @type {HTMLInputElement|null} */ (targetEl.closest('[data-input]'));
         if (!el) return;
 
         const handlerName = el.getAttribute('data-input');
@@ -499,7 +501,8 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
     // 퀴즈/훈련소 객관식 숫자키 1-5 / OX O,P 단축키
     document.addEventListener('keydown', (e) => {
         if (state.currentView !== 'quiz-view' && state.currentView !== 'trainer-view') return;
-        if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') return;
+        const tgt = /** @type {HTMLElement|null} */ (e.target);
+        if (tgt && (tgt.tagName === 'INPUT' || tgt.tagName === 'SELECT' || tgt.tagName === 'TEXTAREA')) return;
         if (e.ctrlKey || e.metaKey || e.altKey) return;
 
         // 객관식: 1-5
@@ -511,9 +514,9 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
                 document.getElementById('limits-options-container'),
                 document.getElementById('ing-options-container')
             ].filter(Boolean);
-            for (const c of containers) {
+            for (const c of /** @type {HTMLElement[]} */ (containers)) {
                 if (c.classList.contains('is-hidden')) continue;
-                const btns = c.querySelectorAll('.limits-opt-btn');
+                const btns = /** @type {NodeListOf<HTMLButtonElement>} */ (c.querySelectorAll('.limits-opt-btn'));
                 if (btns[idx] && !btns[idx].disabled) {
                     e.preventDefault();
                     btns[idx].click();
@@ -524,13 +527,13 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
 
         // OX: o/p
         if (e.key === 'o' || e.key === 'O') {
-            const oxBtns = document.querySelectorAll('.quiz-ox-btn');
+            const oxBtns = /** @type {NodeListOf<HTMLButtonElement>} */ (document.querySelectorAll('.quiz-ox-btn'));
             if (oxBtns.length && !oxBtns[0].disabled) {
                 e.preventDefault();
                 oxBtns[0].click();
             }
         } else if (e.key === 'p' || e.key === 'P') {
-            const oxBtns = document.querySelectorAll('.quiz-ox-btn');
+            const oxBtns = /** @type {NodeListOf<HTMLButtonElement>} */ (document.querySelectorAll('.quiz-ox-btn'));
             if (oxBtns.length > 1 && !oxBtns[1].disabled) {
                 e.preventDefault();
                 oxBtns[1].click();

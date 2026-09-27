@@ -19,7 +19,7 @@ export const WEAK_GRADUATE_STREAK = 3;
 
 /**
  * gradeAnswer()의 perStatement 결과를 기록한다.
- * @param {Array<{sid?: string, judgedCorrect?: boolean}>} perStatement
+ * @param {Array<{sid?: string, id?: string, judgedCorrect?: boolean|null, userJudged?: boolean|null, text?: string, truth?: boolean, conceptId?: string, explain?: string}>|undefined} perStatement
  * @returns {number} 기록된 진술 수
  */
 export function recordStatementJudgments(perStatement) {
@@ -62,7 +62,7 @@ export function getStatementStat(sid) {
  * 연속 정답 WEAK_GRADUATE_STREAK회 도달 진술은 졸업 처리(기본 제외)
  * @param {number} [limit]
  * @param {boolean} [includeGraduated] 졸업 진술도 포함할지
- * @returns {Array<{sid: string, j: number, w: number, lw: string|null}>}
+ * @returns {Array<{sid: string, j: number, w: number, lw: string|null, t?: string, truth?: boolean|null, cid?: string|null, last?: boolean|null, streak?: number}>}
  */
 export function getWeakStatements(limit, includeGraduated = false) {
     const stats = loadStats();

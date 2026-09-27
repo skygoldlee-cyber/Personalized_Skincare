@@ -79,15 +79,16 @@ export function computeRecommendations(subjects, counts) {
     }
 
     // 3순위: 정답률 최저 과목 (최소 3문 이상 푼 과목만)
+    /** @type {{key:string,name:string,stats?:Object}|null} */
     let weakest = null;
     let weakestRate = 101;
-    subjects.forEach(subj => {
+    for (const subj of subjects) {
         const sc = counts[subj.key];
         if (sc && sc.quizSolved >= 3) {
             const rate = sc.quizCorrect / sc.quizSolved;
             if (rate < weakestRate) { weakestRate = rate; weakest = subj; }
         }
-    });
+    }
     if (weakest) {
         const rate = Math.round(weakestRate * 100);
         const alreadyRec = recs.some(r => r.actions.some(a => a.arg === weakest.key));
@@ -105,12 +106,13 @@ export function computeRecommendations(subjects, counts) {
     }
 
     // 4순위: 헷갈린 카드가 가장 많은 과목
+    /** @type {{key:string,name:string,stats?:Object}|null} */
     let mostWeak = null;
     let mostWeakCount = 0;
-    subjects.forEach(subj => {
+    for (const subj of subjects) {
         const sc = counts[subj.key];
         if (sc && sc.weak > mostWeakCount) { mostWeakCount = sc.weak; mostWeak = subj; }
-    });
+    }
     if (mostWeak && mostWeakCount > 0 && mostWeak !== weakest) {
         recs.push({
             icon: 'fa-note-sticky', color: 'var(--color-warning)',
@@ -168,7 +170,7 @@ const WRONG_CAUSE_ADVICE = {
 
 /**
  * 오답 원인 태그 집계 — 최근 N일 분포 + 최다 원인/과목 + 권장 학습법.
- * @param {Object<string,{cause:string,ts:number,subjectId:string}>} wrongCauses
+ * @param {Object<string,{cause:string,ts:number,subjectId:string|null}>} wrongCauses
  * @param {{days?:number, now?:number}} opts
  * @returns {{counts:Object, total:number, topCause:string|null, topSubject:string|null, advice:string}}
  */

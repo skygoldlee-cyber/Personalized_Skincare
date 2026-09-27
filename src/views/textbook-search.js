@@ -9,7 +9,7 @@ import { TIMING } from '../config/timing.js';
 const textbookState = {
     filter: 'all',
     searchQuery: '',
-    debounceTimer: null
+    debounceTimer: /** @type {number|undefined} */ (undefined)
 };
 
 let _searchIndex = null;
@@ -77,7 +77,7 @@ function _buildInvertedIndex() {
 }
 
 export function renderTextbookSearch() {
-    const searchInput = document.getElementById('textbook-search-input');
+    const searchInput = /** @type {HTMLInputElement} */ (document.getElementById('textbook-search-input'));
     
     // Bind search input events only once
     if (searchInput && !searchInput.dataset.bound) {
@@ -86,7 +86,7 @@ export function renderTextbookSearch() {
         searchInput.addEventListener('input', (e) => {
             clearTimeout(textbookState.debounceTimer);
             textbookState.debounceTimer = setTimeout(() => {
-                textbookState.searchQuery = e.target.value.trim();
+                textbookState.searchQuery = (e.target instanceof HTMLInputElement ? e.target.value : '').trim();
                 performTextbookSearch();
             }, TIMING.SEARCH_DEBOUNCE_MS);
         });
@@ -94,7 +94,7 @@ export function renderTextbookSearch() {
         searchInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
                 clearTimeout(textbookState.debounceTimer);
-                textbookState.searchQuery = e.target.value.trim();
+                textbookState.searchQuery = (e.target instanceof HTMLInputElement ? e.target.value : '').trim();
                 performTextbookSearch();
             }
         });
@@ -122,13 +122,13 @@ export function setTextbookFilter(filterVal) {
 /** 외부(통합 검색 팔레트)에서 검색어 주입 — 뷰 진입 전 호출해도 상태가 유지되어 로드 후 렌더에 반영된다 */
 export function setTextbookSearchQuery(query) {
     textbookState.searchQuery = (query || '').trim();
-    const searchInput = document.getElementById('textbook-search-input');
+    const searchInput = /** @type {HTMLInputElement} */ (document.getElementById('textbook-search-input'));
     if (searchInput) searchInput.value = textbookState.searchQuery;
     performTextbookSearch();
 }
 
 export function clearTextbookSearch() {
-    const searchInput = document.getElementById('textbook-search-input');
+    const searchInput = /** @type {HTMLInputElement} */ (document.getElementById('textbook-search-input'));
     if (searchInput) {
         searchInput.value = '';
     }
@@ -139,7 +139,7 @@ export function clearTextbookSearch() {
 function performTextbookSearch() {
     const container = document.getElementById('textbook-results-container');
     const summary = document.getElementById('textbook-search-summary');
-    if (!container) return;
+    if (!container || !summary) return;
     
     const query = textbookState.searchQuery.toLowerCase().trim();
     if (!query) {
@@ -278,7 +278,7 @@ export function toggleTextbookCard(cardId) {
         body.classList.add('collapsed');
         body.style.maxHeight = '';
         btn.innerHTML = `<i class="fa-solid fa-chevron-down"></i> 더 보기`;
-        body.parentElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        body.parentElement?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 }
 

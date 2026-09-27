@@ -18,6 +18,7 @@ import { evaluateStability, STAB } from '../formula-stability.js';
 import {
   listBatches, getBatch, getBatchUsage,
   createBatch, updateBatch, deleteBatch,
+
   QC_FIELDS, QC_VALUES, HYGIENE_FIELDS,
 } from '../batch-store.js';
 import { localDateTimeNow } from '../store-utils.js';
@@ -27,6 +28,9 @@ import { isPreservative } from '../formula-stability.js';
 import {
   buildBatchRecordHtml, buildLabelHtml, buildGuideHtml, printHtml, batchQcSummary,
 } from './formula-print.js';
+
+/** id → 폼 요소 (배치 폼 필드는 템플릿에서 모두 input/select/textarea) */
+const getEl = (id) => /** @type {HTMLInputElement} */ (document.getElementById(id));
 import { toCsv, downloadCsv } from '../csv-utils.js';
 
 // 폼 상태 — editingId가 있으면 보정 모드(identity 필드 읽기 전용)
@@ -72,7 +76,7 @@ function applyListFilter(batches) {
 
 /** 필터 바 렌더 — 처방 옵션은 실제 배치에 있는 처방명으로 구성 */
 function renderFilterBar(batches) {
-  const bar = document.getElementById('batch-filter-bar');
+  const bar = getEl('batch-filter-bar');
   if (!bar) return;
   const names = [...new Set(batches.map(b => b.formulaName).filter(Boolean))].sort();
   const opt = (v, cur) => `<option value="${esc(v)}"${v === cur ? ' selected' : ''}>${esc(v || '전체')}</option>`;
@@ -98,19 +102,19 @@ function renderFilterBar(batches) {
       <i class="fa-solid fa-file-csv" aria-hidden="true"></i> CSV
     </button>`;
   const bind = (id, key, evt) => {
-    const el = document.getElementById(id);
+    const el = getEl(id);
     if (el) el.addEventListener(evt, () => { listFilter[key] = el.value.trim(); openBatchPanel(); });
   };
   bind('batch-filter-formula', 'formula', 'change');
   bind('batch-filter-qc', 'qc', 'change');
   bind('batch-filter-delivered', 'delivered', 'change');
-  const custEl = document.getElementById('batch-filter-customer');
+  const custEl = getEl('batch-filter-customer');
   if (custEl) custEl.addEventListener('input', () => { listFilter.customer = custEl.value.trim(); renderBatchList(); });
 }
 
 export function openBatchPanel() {
   showPanel('formula-batch-panel');
-  const subnav = document.getElementById('formula-batch-subnav');
+  const subnav = getEl('formula-batch-subnav');
   if (subnav) subnav.innerHTML = formulaSubNav('batch');
   const batches = listBatches();
   renderFilterBar(batches);
@@ -119,12 +123,12 @@ export function openBatchPanel() {
 
 /** 목록 본문만 다시 그림 — 필터 입력 중 필터 바 재생성(포커스 손실)을 피하기 위함 */
 function renderBatchList(batches) {
-  const list = document.getElementById('batch-list');
+  const list = getEl('batch-list');
   if (!list) return;
   const all = batches || listBatches();
 
   const usage = getBatchUsage();
-  const usageEl = document.getElementById('batch-list-usage');
+  const usageEl = getEl('batch-list-usage');
   const filtered = applyListFilter(all);
   if (usageEl) {
     usageEl.textContent = filtered.length === all.length
@@ -250,7 +254,7 @@ export function batchExportCsv() {
    ======================================================= */
 
 function fillFormulaSelect(selectedId) {
-  const sel = document.getElementById('batch-formula');
+  const sel = getEl('batch-formula');
   if (!sel) return;
   const formulas = listFormulas();
   sel.innerHTML = '<option value="">처방 선택…</option>'
@@ -260,7 +264,7 @@ function fillFormulaSelect(selectedId) {
 
 /** 고객 카드 셀렉트 — 등록 고객이 변하므로 매번 다시 채운다 */
 function fillCustomerSelect(selectedId) {
-  const sel = document.getElementById('batch-customer-select');
+  const sel = getEl('batch-customer-select');
   if (!sel) return;
   sel.innerHTML = '<option value="">고객 카드에서 선택…</option>'
     + listCustomers().map(c => `<option value="${esc(c.id)}">${esc(c.name)}</option>`).join('');
@@ -269,7 +273,7 @@ function fillCustomerSelect(selectedId) {
 
 function writeBatchForm(b) {
   const set = (id, v) => {
-    const el = document.getElementById(id);
+    const el = getEl(id);
     if (el) el.value = v == null ? '' : v;
   };
   set('batch-made-at', b ? b.madeAt : localDateTimeNow());
@@ -284,11 +288,11 @@ function writeBatchForm(b) {
   set('batch-notes', (b && b.notes) || '');
   QC_FIELDS.forEach(f => {
     const v = (b && b.qc && b.qc[f.key]) || '';
-    const radio = document.querySelector(`input[name="batch-qc-${f.key}"][value="${v || '미확인'}"]`);
+    const radio = /** @type {HTMLInputElement|null} */ (document.querySelector(`input[name="batch-qc-${f.key}"][value="${v || '미확인'}"]`));
     if (radio) radio.checked = true;
   });
   HYGIENE_FIELDS.forEach(f => {
-    const el = document.getElementById(`batch-hyg-${f.key}`);
+    const el = getEl(`batch-hyg-${f.key}`);
     if (el) el.checked = !!(b && b.hygiene && b.hygiene[f.key]);
   });
 }
@@ -306,7 +310,7 @@ export function batchNew(formulaId) {
   fillCustomerSelect('');
   bindFormOnce(); // QC 라디오 렌더 선행 — writeBatchForm이 라디오를 체크하려면 DOM이 있어야 함
   writeBatchForm(null);
-  const title = document.getElementById('batch-form-title');
+  const title = getEl('batch-form-title');
   if (title) title.textContent = '조제 기록 — 신규';
   const f = typeof formulaId === 'string' ? getFormula(formulaId) : null;
   if (f) applyFormulaDefaults(f);
@@ -326,7 +330,7 @@ export function batchEdit(id) {
   fillCustomerSelect(b.customerId);
   bindFormOnce(); // QC 라디오 렌더 선행 — 기존 QC 값 복원이 라디오 DOM에 의존
   writeBatchForm(b);
-  const title = document.getElementById('batch-form-title');
+  const title = getEl('batch-form-title');
   if (title) title.textContent = `조제 기록 보정 — ${b.batchNo}`;
   updateBatchFormMode();
   const f = b.formulaId ? getFormula(b.formulaId) : null;
@@ -339,7 +343,7 @@ export function batchEdit(id) {
 function updateBatchFormMode() {
   const editing = !!draft.editingId;
   ['batch-formula', 'batch-made-at'].forEach(id => {
-    const el = document.getElementById(id);
+    const el = getEl(id);
     if (el) el.disabled = editing;
   });
 }
@@ -368,13 +372,13 @@ export function suggestExpiryDays(formula) {
 
 /** 처방 선택 시 사용기한이 비어 있으면 제안값으로 채우고 근거 힌트를 표시한다 */
 function updateExpiryHint(formula) {
-  const expEl = document.getElementById('batch-expiry');
-  const hintEl = document.getElementById('batch-expiry-hint');
+  const expEl = getEl('batch-expiry');
+  const hintEl = getEl('batch-expiry-hint');
   if (!expEl) return;
   const days = suggestExpiryDays(formula);
   if (hintEl) hintEl.textContent = days != null ? `자동 제안 ${days}일 — 필요 시 수정` : '';
   if (days == null || expEl.value) return;
-  const madeEl = document.getElementById('batch-made-at');
+  const madeEl = getEl('batch-made-at');
   const base = madeEl && madeEl.value ? new Date(madeEl.value) : new Date();
   if (Number.isNaN(base.getTime())) return;
   const d = new Date(base.getTime() + days * 86400000);
@@ -383,11 +387,11 @@ function updateExpiryHint(formula) {
 
 /** 처방 선택 시 총량·단위·고객 기본값 채우기 (입력된 값은 덮어쓰지 않음) */
 function applyFormulaDefaults(f) {
-  const volEl = document.getElementById('batch-target-volume');
-  const unitEl = document.getElementById('batch-unit');
-  const custEl = document.getElementById('batch-customer-name');
-  const custIdEl = document.getElementById('batch-customer-id');
-  const custSel = document.getElementById('batch-customer-select');
+  const volEl = getEl('batch-target-volume');
+  const unitEl = getEl('batch-unit');
+  const custEl = getEl('batch-customer-name');
+  const custIdEl = getEl('batch-customer-id');
+  const custSel = getEl('batch-customer-select');
   if (volEl && !volEl.value && f.targetVolume != null) volEl.value = f.targetVolume;
   if (unitEl && f.unit) unitEl.value = f.unit;
   // 처방에 연결된 고객 카드가 있으면 참조 우선, 아니면 인라인 이름만 채움
@@ -403,10 +407,10 @@ function applyFormulaDefaults(f) {
 
 /** 고객 카드 선택 → 이름 필드 + customerId 참조 저장 */
 export function batchCustChanged() {
-  const sel = document.getElementById('batch-customer-select');
+  const sel = getEl('batch-customer-select');
   const id = sel ? sel.value : '';
-  const idEl = document.getElementById('batch-customer-id');
-  const nameEl = document.getElementById('batch-customer-name');
+  const idEl = getEl('batch-customer-id');
+  const nameEl = getEl('batch-customer-name');
   if (idEl) idEl.value = id;
   const c = id ? getCustomer(id) : null;
   if (nameEl) nameEl.value = c ? c.name : '';
@@ -414,7 +418,7 @@ export function batchCustChanged() {
 }
 
 export function batchFormulaChanged() {
-  const sel = document.getElementById('batch-formula');
+  const sel = getEl('batch-formula');
   const f = sel && sel.value ? getFormula(sel.value) : null;
   if (f) applyFormulaDefaults(f);
   renderLotFields(f, null);
@@ -431,7 +435,7 @@ export function batchFormulaChanged() {
  * 복수 LOT이면 select, 단일이면 고정 표기. 기존 배치(b)의 materialLots를 복원.
  */
 function renderLotFields(formula, b) {
-  const box = document.getElementById('batch-lots');
+  const box = getEl('batch-lots');
   if (!box) return;
   const saved = new Map(
     (b && Array.isArray(b.materialLots) ? b.materialLots : []).map(l => [l.name, l.materialId])
@@ -456,7 +460,8 @@ function renderLotFields(formula, b) {
     ? rows.join('')
     : '<div class="formula-rec-note">장부에 매칭되는 원료가 없습니다 — 원료 장부에 등록하면 LOT 추적이 가능합니다.</div>';
   // 기존 선택 복원 (보정 모드)
-  box.querySelectorAll('.batch-lot-select').forEach(sel => {
+  box.querySelectorAll('.batch-lot-select').forEach(node => {
+    const sel = /** @type {HTMLSelectElement} */ (node);
     const prev = saved.get(sel.dataset.name);
     if (prev) sel.value = prev;
   });
@@ -465,8 +470,9 @@ function renderLotFields(formula, b) {
 /** 폼에서 선택된 LOT 목록 → {name, materialId, lot}[] */
 function readLotSelections() {
   return Array.from(document.querySelectorAll('#batch-lots .batch-lot-select'))
-    .map(sel => {
-      const m = findMaterialsByName(sel.dataset.name).find(x => x.id === sel.value);
+    .map(node => {
+      const sel = /** @type {HTMLSelectElement} */ (node);
+      const m = findMaterialsByName(sel.dataset.name || '').find(x => x.id === sel.value);
       return m ? { name: sel.dataset.name, materialId: m.id, lot: m.lot || '' } : null;
     })
     .filter(Boolean);
@@ -477,12 +483,12 @@ function readLotSelections() {
  * 단위가 배치 단위와 같은 항목만 합산 (g↔ml 혼합 방지). LOT 선택 변경에도 반응.
  */
 function updateStockWarn() {
-  const warnEl = document.getElementById('batch-stock-warn');
+  const warnEl = getEl('batch-stock-warn');
   if (!warnEl) return;
-  const fsel = document.getElementById('batch-formula');
+  const fsel = getEl('batch-formula');
   const formula = fsel && fsel.value ? getFormula(fsel.value) : null;
-  const volEl = document.getElementById('batch-target-volume');
-  const unitEl = document.getElementById('batch-unit');
+  const volEl = getEl('batch-target-volume');
+  const unitEl = getEl('batch-unit');
   const vol = volEl && volEl.value !== '' ? parseFloat(volEl.value) : null;
   const unit = unitEl ? unitEl.value : 'g';
   const shortages = [];
@@ -512,7 +518,7 @@ function updateStockWarn() {
 
 /** 선택된 고객 카드의 알레르기 이력 ↔ 처방 원료 충돌을 폼에 실시간 표시 */
 function updateAllergyWarn() {
-  const warnEl = document.getElementById('batch-allergy-warn');
+  const warnEl = getEl('batch-allergy-warn');
   if (!warnEl) return;
   const conflicts = currentAllergyConflicts();
   if (!conflicts.length) {
@@ -528,8 +534,8 @@ function updateAllergyWarn() {
 
 /** 현재 폼 상태 기준 알레르기 충돌 원료 목록 */
 function currentAllergyConflicts() {
-  const fsel = document.getElementById('batch-formula');
-  const csel = document.getElementById('batch-customer-id');
+  const fsel = getEl('batch-formula');
+  const csel = getEl('batch-customer-id');
   const formula = fsel && fsel.value ? getFormula(fsel.value) : null;
   const customer = csel && csel.value ? getCustomer(csel.value) : null;
   return findAllergyConflicts(customer, formula);
@@ -537,7 +543,7 @@ function currentAllergyConflicts() {
 
 /** QC 라디오 그룹 렌더 — QC_FIELDS/QC_VALUES에서 생성, 1회만 */
 function renderQcFields() {
-  const box = document.getElementById('batch-qc-fields');
+  const box = getEl('batch-qc-fields');
   if (!box || box.dataset.bound) return;
   box.dataset.bound = '1';
   box.innerHTML = QC_FIELDS.map(f => `
@@ -554,19 +560,19 @@ function renderQcFields() {
 
 function bindFormOnce() {
   renderQcFields();
-  const sel = document.getElementById('batch-formula');
+  const sel = getEl('batch-formula');
   if (sel && !sel.dataset.bound) {
     sel.dataset.bound = '1';
     sel.addEventListener('change', batchFormulaChanged);
   }
-  const custSel = document.getElementById('batch-customer-select');
+  const custSel = getEl('batch-customer-select');
   if (custSel && !custSel.dataset.bound) {
     custSel.dataset.bound = '1';
     custSel.addEventListener('change', batchCustChanged);
   }
   // 총량·단위 변경 → 재고 부족 경고 갱신
   ['batch-target-volume', 'batch-unit'].forEach(id => {
-    const el = document.getElementById(id);
+    const el = getEl(id);
     if (el && !el.dataset.stockBound) {
       el.dataset.stockBound = '1';
       el.addEventListener('input', updateStockWarn);
@@ -577,20 +583,20 @@ function bindFormOnce() {
 
 function readBatchForm() {
   const val = id => {
-    const el = document.getElementById(id);
+    const el = getEl(id);
     return el ? el.value : '';
   };
   const qc = {};
   QC_FIELDS.forEach(f => {
-    const r = document.querySelector(`input[name="batch-qc-${f.key}"]:checked`);
+    const r = /** @type {HTMLInputElement|null} */ (document.querySelector(`input[name="batch-qc-${f.key}"]:checked`));
     qc[f.key] = r ? r.value : '';
   });
   const hygiene = {};
   HYGIENE_FIELDS.forEach(f => {
-    const el = document.getElementById(`batch-hyg-${f.key}`);
+    const el = getEl(`batch-hyg-${f.key}`);
     hygiene[f.key] = !!(el && el.checked);
   });
-  const sel = document.getElementById('batch-formula');
+  const sel = getEl('batch-formula');
   return {
     formulaId: sel ? sel.value : '',
     madeAt: val('batch-made-at'),
@@ -699,9 +705,9 @@ export function batchOpen(id) {
   const b = getBatch(id);
   if (!b) { showToast('조제 기록을 찾을 수 없습니다.', 'error'); return; }
   showPanel('formula-batch-detail-panel');
-  const subnav = document.getElementById('batch-detail-subnav');
+  const subnav = getEl('batch-detail-subnav');
   if (subnav) subnav.innerHTML = formulaSubNav('batch');
-  const box = document.getElementById('batch-detail');
+  const box = getEl('batch-detail');
   if (!box) return;
 
   const qcRows = QC_FIELDS.map(f => {

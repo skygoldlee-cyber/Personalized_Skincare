@@ -29,10 +29,11 @@ function comboTruthTableHTML(q) {
 }
 
 export function showSimAnswerReview() {
-    document.getElementById('sim-result-panel').classList.add('is-hidden');
-    document.getElementById('sim-review-panel').classList.remove('is-hidden');
-    
+    document.getElementById('sim-result-panel')?.classList.add('is-hidden');
+    document.getElementById('sim-review-panel')?.classList.remove('is-hidden');
+
     const container = document.getElementById('sim-review-list-container');
+    if (!container) return;
     container.innerHTML = '';
     
     if (simState.wrongQuestions.length === 0) {
@@ -72,8 +73,8 @@ export function showSimAnswerReview() {
 }
 
 export function showSimResultsSummary() {
-    document.getElementById('sim-review-panel').classList.add('is-hidden');
-    document.getElementById('sim-result-panel').classList.remove('is-hidden');
+    document.getElementById('sim-review-panel')?.classList.add('is-hidden');
+    document.getElementById('sim-result-panel')?.classList.remove('is-hidden');
 }
 
 /**

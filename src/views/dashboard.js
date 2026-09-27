@@ -74,8 +74,9 @@ export function updateGlobalStats() {
             totalCards += _displayCounts(subj).cards;
         });
     } else if (typeof window.STUDY_DATA !== 'undefined' && window.STUDY_DATA) {
-        Object.keys(window.STUDY_DATA).forEach(subj => {
-            totalCards += window.STUDY_DATA[subj].cards.length;
+        const sd = window.STUDY_DATA;
+        Object.keys(sd).forEach(subj => {
+            totalCards += sd[subj].cards.length;
         });
     }
     
@@ -88,14 +89,14 @@ export function updateGlobalStats() {
     const solvedQuizzesEl = document.getElementById('solved-quizzes-count');
     const successRateEl = document.getElementById('quiz-success-rate');
 
-    if (totalCardsEl) totalCardsEl.textContent = totalCards;
-    if (memorizedCardsEl) memorizedCardsEl.textContent = state.memorizedCards.size;
-    if (weakCardsEl) weakCardsEl.textContent = state.weakCards.size;
-    if (reviewCardEl) reviewCardEl.textContent = state.weakCards.size;
-    
+    if (totalCardsEl) totalCardsEl.textContent = String(totalCards);
+    if (memorizedCardsEl) memorizedCardsEl.textContent = String(state.memorizedCards.size);
+    if (weakCardsEl) weakCardsEl.textContent = String(state.weakCards.size);
+    if (reviewCardEl) reviewCardEl.textContent = String(state.weakCards.size);
+
     // 2. 간격 반복 — 오늘 복습 대기 카드 수
     const dueReviewEl = document.getElementById('due-review-count');
-    if (dueReviewEl) dueReviewEl.textContent = getDueCount();
+    if (dueReviewEl) dueReviewEl.textContent = String(getDueCount());
 
     // 2-b. 시험일 D-day + 역산 권장량 표시
     const ddayEl = document.getElementById('exam-dday-count');
@@ -129,7 +130,7 @@ export function updateGlobalStats() {
     const correctCount = quizKeys.filter(k => state.quizResults[k].correct).length;
     const successRate = solvedCount > 0 ? Math.round((correctCount / solvedCount) * 100) : 0;
     
-    if (solvedQuizzesEl) solvedQuizzesEl.textContent = solvedCount;
+    if (solvedQuizzesEl) solvedQuizzesEl.textContent = String(solvedCount);
     if (successRateEl) successRateEl.textContent = `${successRate}%`;
 }
 
@@ -157,7 +158,7 @@ export function renderDashboard() {
     
     const subjects = (typeof DataLoader !== 'undefined' && DataLoader.registry)
         ? DataLoader.getSubjectList()
-        : Object.keys(window.STUDY_DATA || {}).map(key => ({ key, name: window.STUDY_DATA[key].name, stats: { cards: window.STUDY_DATA[key].cards.length, quizzes: window.STUDY_DATA[key].quizzes.length } }));
+        : Object.keys(window.STUDY_DATA || {}).map(key => { const d = (window.STUDY_DATA || {})[key]; return { key, name: d.name, stats: { cards: d.cards.length, quizzes: d.quizzes.length } }; });
     
     subjects.forEach(subjMeta => {
         const subjId = subjMeta.key;
@@ -380,7 +381,7 @@ function _renderStudyRhythmInsight() {
 export function startSubjectStudy(subjId) {
     state.flashcards.subject = subjId;
     state.flashcards.currentIndex = 0;
-    const select = document.getElementById('fc-subject-select');
+    const select = /** @type {HTMLSelectElement|null} */ (document.getElementById('fc-subject-select'));
     if (select) select.value = subjId;
     switchView('flashcard-view', { scrollTop: true });
 }
@@ -391,10 +392,10 @@ export function startSubjectStudy(subjId) {
  */
 export function startSubjectQuiz(subjId) {
     state.quiz.subject = subjId;
-    const select = document.getElementById('quiz-subject-select');
+    const select = /** @type {HTMLSelectElement|null} */ (document.getElementById('quiz-subject-select'));
     if (select) select.value = subjId;
     switchView('quiz-view', { scrollTop: true });
-    const startQuizBtn = document.getElementById('start-quiz-btn');
+    const startQuizBtn = /** @type {HTMLElement|null} */ (document.getElementById('start-quiz-btn'));
     if (startQuizBtn) startQuizBtn.click();
 }
 
@@ -403,7 +404,7 @@ export function startSubjectQuiz(subjId) {
  * @param {string} subjId
  */
 export function startSubjectReader(subjId) {
-    const select = document.getElementById('reader-subject-select');
+    const select = /** @type {HTMLSelectElement|null} */ (document.getElementById('reader-subject-select'));
     if (select) select.value = subjId;
     switchView('textbook-reader-view', { scrollTop: true });
 }
@@ -473,12 +474,12 @@ function renderExpectedScore() {
 
 /** 실제 시험 결과 저장 (합격/불합격 + 선택 점수) */
 export function saveActualExamResult() {
-    const sel = document.getElementById('actual-passed-select');
-    const inp = document.getElementById('actual-score-input');
+    const sel = /** @type {HTMLSelectElement|null} */ (document.getElementById('actual-passed-select'));
+    const inp = /** @type {HTMLInputElement|null} */ (document.getElementById('actual-score-input'));
     if (!sel || !inp) return;
     const raw = inp.value.trim();
     const score = raw === '' ? null : parseInt(raw, 10);
-    if (raw !== '' && (isNaN(score) || score < 0 || score > 100)) {
+    if (score !== null && (isNaN(score) || score < 0 || score > 100)) {
         showToast('점수는 0~100 사이로 입력해주세요.', 'error');
         return;
     }

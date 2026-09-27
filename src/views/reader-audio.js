@@ -7,6 +7,7 @@ import { PATHS } from '../paths.js';
 import { getActiveExamId } from '../exam-context.js';
 
 // --- 오디오북 플레이어 상태 ---
+/** @type {{audio: HTMLAudioElement|null, currentSrc: string, subjId: string, chapterIdx: number, chapterTitle: string, wasPlayingBeforeHidden: boolean, sectionBoundaries: {start:number,end:number}[], lastSectionIdx: number, autoScroll: boolean}} */
 export const readerAudioState = {
     audio: null,          // 현재 Audio 객체
     currentSrc: '',       // 현재 로드된 오디오 경로
@@ -27,6 +28,7 @@ const READER_AUDIO_RATE_KEY = 'readerAudioRate';
 const READER_AUDIO_AUTOSCROLL_KEY = 'readerAudioAutoScroll';
 
 export function getAudioPathForChapter(subjId, chapter) {
+    /** @type {string|null} */
     let localPath = null;
 
     // 1) 매니페스트 우선 (단원 인덱스 기반)
@@ -40,7 +42,7 @@ export function getAudioPathForChapter(subjId, chapter) {
             : ((typeof window !== 'undefined' && window.AUDIO_MANIFEST) || null);
         if (manifest &&
             manifest[subjId] && idx >= 0 && manifest[subjId][idx]) {
-            localPath = manifest[subjId][idx];
+            localPath = /** @type {string} */ (manifest[subjId][idx]);
         }
     } catch (e) { /* 매니페스트 조회 실패 시 폘백 */ }
 
@@ -187,7 +189,7 @@ function getAudioUI() {
         playerArea: document.getElementById('reader-audio-player-area'),
         label: document.getElementById('reader-audio-now-playing'),
         playPauseBtn: document.getElementById('reader-audio-playpause-btn'),
-        seek: document.getElementById('reader-audio-seek'),
+        seek: /** @type {HTMLInputElement|null} */ (document.getElementById('reader-audio-seek')),
         curTime: document.getElementById('reader-audio-current'),
         durTime: document.getElementById('reader-audio-duration'),
         rateBtn: document.getElementById('reader-audio-rate-btn'),
@@ -234,7 +236,7 @@ function highlightAndScrollToSection(idx) {
 
     // 하이라이트 갱신
     container.querySelectorAll('.reader-section-card').forEach(card => {
-        card.classList.toggle('current-section', parseInt(card.dataset.sectionIdx) === idx);
+        card.classList.toggle('current-section', parseInt(/** @type {HTMLElement} */ (card).dataset.sectionIdx || '') === idx);
     });
 
     // 자동 스크롤
@@ -320,7 +322,7 @@ function setAudioStatus(msg) {
 /** 저장된 재생 속도 적용 */
 function getSavedRate() {
     try {
-        const v = parseFloat(safeGetItem(READER_AUDIO_RATE_KEY));
+        const v = parseFloat(safeGetItem(READER_AUDIO_RATE_KEY) || '');
         return (isFinite(v) && v >= 0.5 && v <= 3) ? v : 1;
     } catch (e) { return 1; }
 }

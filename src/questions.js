@@ -177,7 +177,7 @@ function gradeAnswer(q, response) {
   const judgments = isObj ? (response.judgments || null) : null;
 
   if (q.type === 'single') {
-    const key = (q.options.find(o => o.correct) || {}).id;
+    const key = ((q.options || []).find(o => o.correct) || {}).id || '';
     correctAnswer = key;
     correct = optId === key;
   } else if (q.type === 'combo') {
@@ -190,7 +190,7 @@ function gradeAnswer(q, response) {
       ((q.options || []).find(o => o.id === optId) || {}).members || []
     );
     const hasJudgmentSource = (optId != null && optId !== '') || judgments;
-    perStatement = q.statements.map(s => {
+    perStatement = (q.statements || []).map(s => {
       const userJudged = !hasJudgmentSource ? null
         : (judgments && s.id in judgments) ? !!judgments[s.id]
         : selected.has(s.id);
@@ -211,9 +211,9 @@ function gradeAnswer(q, response) {
       : String(response || '').trim().toUpperCase();
     correct = r === correctAnswer;
   } else if (q.type === 'short') {
-    const target = new Set(q.accept.map(normalizeText));
+    const target = new Set((q.accept || []).map(normalizeText));
     correct = target.has(normalizeText(response));
-    correctAnswer = q.accept[0];
+    correctAnswer = (q.accept || [])[0] || '';
   }
   return { correct, earned: correct ? max : 0, max, correctAnswer, perStatement };
 }

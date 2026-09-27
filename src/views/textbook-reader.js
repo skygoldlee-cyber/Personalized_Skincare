@@ -119,7 +119,7 @@ export { textbookReaderState };
 export function openSubjectChapter(subject, chapterAnchor = '') {
     if (!subject) return;
     // 과목 선택 드롭다운 업데이트
-    const subjectSelect = document.getElementById('reader-subject-select');
+    const subjectSelect = /** @type {HTMLSelectElement|null} */ (document.getElementById('reader-subject-select'));
     if (subjectSelect) {
         subjectSelect.value = subject;
         // change 이벤트 트리거
@@ -136,7 +136,7 @@ export function openSubjectChapter(subject, chapterAnchor = '') {
             const chNumPadded = chNum.padStart(2, '0');
             // 섹션 카드 중 제목에 "Chapter 01" 또는 "Chapter 1" 포함한 것 찾기
             const sectionCards = container.querySelectorAll('.reader-section-card');
-            let foundSection = null;
+            let foundSection = /** @type {Element|null} */ (null);
             sectionCards.forEach(card => {
                 if (foundSection) return;
                 const titleEl = card.querySelector('.reader-section-title');
@@ -176,7 +176,7 @@ export function openSubjectChapter(subject, chapterAnchor = '') {
  */
 export function openSubjectSection(subject, sectionTitle) {
     if (!subject) return;
-    const subjectSelect = document.getElementById('reader-subject-select');
+    const subjectSelect = /** @type {HTMLSelectElement|null} */ (document.getElementById('reader-subject-select'));
     if (subjectSelect) {
         subjectSelect.value = subject;
         subjectSelect.dispatchEvent(new Event('change', { bubbles: true }));
@@ -185,7 +185,7 @@ export function openSubjectSection(subject, sectionTitle) {
     setTimeout(() => {
         const container = document.getElementById('textbook-reader-container');
         if (!container) return;
-        let foundSection = null;
+        let foundSection = /** @type {Element|null} */ (null);
         container.querySelectorAll('.reader-section-card').forEach(card => {
             if (foundSection) return;
             const titleEl = card.querySelector('.reader-section-title');
@@ -203,7 +203,7 @@ export function openSubjectSection(subject, sectionTitle) {
 }
 
 export function renderTextbookReader() {
-    const subjectSelect = document.getElementById('reader-subject-select');
+    const subjectSelect = /** @type {HTMLSelectElement|null} */ (document.getElementById('reader-subject-select'));
     const container = document.getElementById('textbook-reader-container');
     
     if (!subjectSelect || !container) return;
@@ -267,7 +267,7 @@ export function renderTextbookReader() {
         subjectSelect.dataset.bound = 'true';
         
         subjectSelect.addEventListener('change', (e) => {
-            const subjId = e.target.value;
+            const subjId = (/** @type {HTMLSelectElement|null} */ (e.target) || { value: '' }).value;
             textbookReaderState.selectedSubject = subjId;
             const hadAudio = !!readerAudioState.audio;
             stopReaderAudio();
@@ -300,18 +300,18 @@ export function renderTextbookReader() {
     }
 
     // Story mode checkbox binding (bind once)
-    const storyToggle = document.getElementById('reader-story-mode-toggle');
+    const storyToggle = /** @type {HTMLInputElement|null} */ (document.getElementById('reader-story-mode-toggle'));
     if (storyToggle && !storyToggle.dataset.bound) {
         storyToggle.dataset.bound = 'true';
         storyToggle.checked = textbookReaderState.storyMode;
         storyToggle.addEventListener('change', (e) => {
-            if (e.target.checked) proFeatureNotice('story_textbook', '이야기형 교재 본문 읽기');
+            if ((/** @type {HTMLInputElement} */ (e.target)).checked) proFeatureNotice('story_textbook', '이야기형 교재 본문 읽기');
             // 표준형으로 돌아가면 오디오 버튼/플레이어가 숨겨지므로 재생 중인 오디오 정지
-            if (!e.target.checked && readerAudioState.audio) {
+            if (!(/** @type {HTMLInputElement} */ (e.target)).checked && readerAudioState.audio) {
                 stopReaderAudio();
                 showAudioToast('표준형 모드로 전환되어 오디오 재생이 중지되었습니다.');
             }
-            textbookReaderState.storyMode = e.target.checked;
+            textbookReaderState.storyMode = (/** @type {HTMLInputElement} */ (e.target)).checked;
             // Re-render current chapter if one is selected
             if (textbookReaderState.selectedSubject && textbookReaderState.selectedChapter) {
                 renderChapterContent(textbookReaderState.selectedSubject, parseInt(textbookReaderState.selectedChapter));
@@ -557,17 +557,18 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
         tocList.innerHTML = tocHtml;
 
         // Bind TOC item clicks — section scroll + toggle (B)
-        tocList.querySelectorAll('.reader-toc-item').forEach(item => {
+        tocList.querySelectorAll('.reader-toc-item').forEach(node => {
+            const item = /** @type {HTMLElement} */ (node);
             item.addEventListener('click', (e) => {
-                const toggleIcon = e.target.closest('.toc-toggle-icon');
-                const idx = parseInt(item.dataset.sectionIdx);
+                const toggleIcon = (/** @type {Element|null} */ (e.target))?.closest('.toc-toggle-icon');
+                const idx = parseInt(item.dataset.sectionIdx || '');
                 if (toggleIcon) {
                     // 토글: 바로 다음 형제 children 컨테이너 찾기
                     let next = item.nextElementSibling;
                     while (next && !next.classList.contains('reader-toc-children')) {
                         next = next.nextElementSibling;
                     }
-                    if (next && next.dataset.parentIdx == idx) {
+                    if (next && Number((/** @type {HTMLElement} */ (next)).dataset.parentIdx) === idx) {
                         const collapsed = next.classList.toggle('collapsed');
                         toggleIcon.classList.toggle('fa-chevron-down', !collapsed);
                         toggleIcon.classList.toggle('fa-chevron-right', collapsed);
@@ -586,10 +587,11 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
         });
 
         // Bind sub-item clicks — heading scroll (F)
-        tocList.querySelectorAll('.reader-toc-sub-item').forEach(sub => {
+        tocList.querySelectorAll('.reader-toc-sub-item').forEach(node => {
+            const sub = /** @type {HTMLElement} */ (node);
             sub.addEventListener('click', () => {
-                const secIdx = parseInt(sub.dataset.sectionIdx);
-                const hIdx = parseInt(sub.dataset.headingIdx);
+                const secIdx = parseInt(sub.dataset.sectionIdx || '');
+                const hIdx = parseInt(sub.dataset.headingIdx || '');
                 const sectionEl = document.getElementById(`reader-section-${secIdx}`);
                 if (!sectionEl) return;
                 if (sectionEl.classList.contains('collapsed')) {
@@ -806,7 +808,7 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
     // Section collapse toggles
     container.querySelectorAll('.reader-section-header').forEach(header => {
         header.addEventListener('click', (e) => {
-            if (e.target.closest('.reader-bookmark-btn')) return;
+            if ((/** @type {Element|null} */ (e.target))?.closest('.reader-bookmark-btn')) return;
             const card = header.closest('.reader-section-card');
             if (card) card.classList.toggle('collapsed');
         });
@@ -817,14 +819,14 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
         link.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
-            const jumpText = (link.dataset.tocJump || '').trim();
+            const jumpText = ((/** @type {HTMLElement} */ (link)).dataset.tocJump || '').trim();
             if (!jumpText) return;
             // 이모지 제거한 정규화 텍스트 (매칭용)
             const normalize = (s) => s.replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2190}-\u{21FF}\u{2B00}-\u{2BFF}]/gu, '').replace(/\s+/g, ' ').trim();
             const jumpNorm = normalize(jumpText);
             // 목차 항목 텍스트가 포함된 섹션 찾기
             const sectionCards = container.querySelectorAll('.reader-section-card');
-            let found = null;
+            let found = /** @type {Element|null} */ (null);
             // 1순위: 정확 매칭 (이모지 포함)
             sectionCards.forEach(card => {
                 const titleEl = card.querySelector('.reader-section-title');
@@ -911,7 +913,7 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
     container.querySelectorAll('.reader-bookmark-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
-            toggleReaderBookmark(btn.dataset.bookmarkKey, btn);
+            toggleReaderBookmark((/** @type {HTMLElement} */ (btn)).dataset.bookmarkKey, btn);
         });
     });
 
@@ -941,13 +943,13 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
 
 // --- Reader convenience feature state & logic ---
 const readerChapterContext = { subjId: '', chapterIdx: 0 };
-let readerFontScale = (() => { try { return parseFloat(safeGetItem(STORAGE_KEYS.READER_FONT_SCALE)) || 1; } catch (e) { return 1; } })();
-let readerLineHeight = (() => { try { return parseFloat(safeGetItem(STORAGE_KEYS.READER_LINE_HEIGHT)) || 2.05; } catch (e) { return 2.05; } })();
+let readerFontScale = (() => { try { return parseFloat(safeGetItem(STORAGE_KEYS.READER_FONT_SCALE) || '') || 1; } catch (e) { return 1; } })();
+let readerLineHeight = (() => { try { return parseFloat(safeGetItem(STORAGE_KEYS.READER_LINE_HEIGHT) || '') || 2.05; } catch (e) { return 2.05; } })();
 let readerScrollBound = false;
 
 function getReaderBookmarks() {
     try {
-        return JSON.parse(safeGetItem(STORAGE_KEYS.READER_BOOKMARKS)) || [];
+        return JSON.parse(safeGetItem(STORAGE_KEYS.READER_BOOKMARKS) || '[]') || [];
     } catch { return []; }
 }
 
@@ -971,7 +973,7 @@ function toggleReaderBookmark(key, btn) {
 function applyReaderFontScale() {
     const container = document.getElementById('textbook-reader-container');
     const display = document.getElementById('reader-font-size-display');
-    if (container) container.style.setProperty('--reader-font-scale', readerFontScale);
+    if (container) container.style.setProperty('--reader-font-scale', String(readerFontScale));
     if (display) display.textContent = Math.round(readerFontScale * 100) + '%';
     safeSetItem(STORAGE_KEYS.READER_FONT_SCALE, readerFontScale);
 }
@@ -979,7 +981,7 @@ function applyReaderFontScale() {
 function applyReaderLineHeight() {
     const container = document.getElementById('textbook-reader-container');
     const display = document.getElementById('reader-line-height-display');
-    if (container) container.style.setProperty('--reader-line-height', readerLineHeight);
+    if (container) container.style.setProperty('--reader-line-height', String(readerLineHeight));
     if (display) display.textContent = readerLineHeight.toFixed(2);
     safeSetItem(STORAGE_KEYS.READER_LINE_HEIGHT, readerLineHeight);
 }
@@ -1042,10 +1044,10 @@ function bindReaderScrollEvents() {
                 if (rect.top - containerTop < 120) {
                     currentIdx = parseInt(card.dataset.sectionIdx);
                 }
-                card.classList.toggle('current-section', parseInt(card.dataset.sectionIdx) === currentIdx);
+                card.classList.toggle('current-section', parseInt((/** @type {HTMLElement} */ (card)).dataset.sectionIdx || '') === currentIdx);
             });
             document.querySelectorAll('.reader-toc-item').forEach(item => {
-                item.classList.toggle('active', parseInt(item.dataset.sectionIdx) === currentIdx);
+                item.classList.toggle('active', parseInt((/** @type {HTMLElement} */ (item)).dataset.sectionIdx || '') === currentIdx);
             });
             // D: 브레드크럼 제거됨 — sticky heading으로 대체
             // Section progress (e.g. "3/5 섹션")
@@ -1251,7 +1253,7 @@ function initReaderToolbar() {
         });
     }
     // P2-7: 본문 내 검색 하이라이트
-    const searchInput = document.getElementById('reader-in-content-search');
+    const searchInput = /** @type {HTMLInputElement|null} */ (document.getElementById('reader-in-content-search'));
     const searchCount = document.getElementById('reader-search-count');
     const searchPrev = document.getElementById('reader-search-prev');
     const searchNext = document.getElementById('reader-search-next');
@@ -1278,7 +1280,8 @@ function initReaderToolbar() {
             // Clear previous highlights
             container.querySelectorAll('.reader-search-highlight').forEach(el => {
                 const parent = el.parentNode;
-                parent.replaceChild(document.createTextNode(el.textContent), el);
+                if (!parent) return;
+                parent.replaceChild(document.createTextNode(el.textContent || ''), el);
                 parent.normalize();
             });
             if (!query || query.length < 2) {
@@ -1290,8 +1293,9 @@ function initReaderToolbar() {
             // Highlight matches in text nodes
             const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT, {
                 acceptNode: (node) => {
-                    if (!node.textContent.trim()) return NodeFilter.FILTER_REJECT;
-                    const parent = node.parentNode;
+                    if (!(node.textContent || '').trim()) return NodeFilter.FILTER_REJECT;
+                    const parent = /** @type {Element|null} */ (node.parentNode);
+                    if (!parent) return NodeFilter.FILTER_REJECT;
                     if (parent.classList.contains('reader-search-highlight')) return NodeFilter.FILTER_REJECT;
                     if (['SCRIPT', 'STYLE', 'INPUT', 'TEXTAREA'].includes(parent.nodeName)) return NodeFilter.FILTER_REJECT;
                     return NodeFilter.FILTER_ACCEPT;
@@ -1303,7 +1307,7 @@ function initReaderToolbar() {
             const lowerQuery = query.toLowerCase();
             let matchCount = 0;
             textNodes.forEach(textNode => {
-                const text = textNode.textContent;
+                const text = textNode.textContent || '';
                 const lowerText = text.toLowerCase();
                 let idx = lowerText.indexOf(lowerQuery);
                 if (idx === -1) return;
@@ -1320,7 +1324,7 @@ function initReaderToolbar() {
                     idx = lowerText.indexOf(lowerQuery, lastIdx);
                 }
                 if (lastIdx < text.length) frag.appendChild(document.createTextNode(text.slice(lastIdx)));
-                textNode.parentNode.replaceChild(frag, textNode);
+                if (textNode.parentNode) textNode.parentNode.replaceChild(frag, textNode);
             });
             currentMatchIdx = 0;
             if (searchCount) searchCount.textContent = matchCount > 0 ? `1/${matchCount}` : '결과 없음';
@@ -1378,7 +1382,8 @@ function initReaderToolbar() {
         // TOC 항목 클릭 시 즉시 드로어 닫기 (스크롤 애니메이션과 겹침 방지)
         if (tocAside) {
             tocAside.addEventListener('click', (e) => {
-                if (e.target.closest('.reader-toc-item') || e.target.closest('.reader-toc-sub-item')) {
+                const t = /** @type {Element|null} */ (e.target);
+                if (t && (t.closest('.reader-toc-item') || t.closest('.reader-toc-sub-item'))) {
                     closeMobileToc();
                 }
             });
@@ -1404,7 +1409,7 @@ function initReaderToolbar() {
     }
     if (modal && !modal.dataset.bound) {
         modal.dataset.bound = 'true';
-        modal.querySelector('.reader-table-modal-backdrop').addEventListener('click', closeTableModal);
+        modal.querySelector('.reader-table-modal-backdrop')?.addEventListener('click', closeTableModal);
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && !modal.classList.contains('is-hidden')) closeTableModal();
         });
@@ -1412,7 +1417,7 @@ function initReaderToolbar() {
 }
 
 function openTableModal(wrapper) {
-    const modal = document.getElementById('reader-table-modal');
+    const modal = /** @type {HTMLElement & {_untrapFocus?: (() => void) | null} | null} */ (document.getElementById('reader-table-modal'));
     const body = document.getElementById('reader-table-modal-body');
     if (!modal || !body) return;
     const table = wrapper.querySelector('table');
@@ -1426,7 +1431,7 @@ function openTableModal(wrapper) {
 }
 
 function closeTableModal() {
-    const modal = document.getElementById('reader-table-modal');
+    const modal = /** @type {HTMLElement & {_untrapFocus?: (() => void) | null} | null} */ (document.getElementById('reader-table-modal'));
     if (modal) {
         modal.classList.add('is-hidden');
         if (modal._untrapFocus) {
@@ -1608,7 +1613,7 @@ function _initRefLinkDelegation() {
     _refLinksDelegationInitialized = true;
     // click 이벤트 위임: document에서 단일 리스너로 처리
     document.addEventListener('click', (e) => {
-        const a = e.target.closest('[data-exam-md], [data-ref-md], [data-ref-html], [data-ref-subject], [data-glossary]');
+        const a = /** @type {HTMLElement|null} */ ((/** @type {Element|null} */ (e.target))?.closest('[data-exam-md], [data-ref-md], [data-ref-html], [data-ref-subject], [data-glossary]'));
         if (!a) return;
         if (a.hasAttribute('data-exam-md')) {
             e.preventDefault();

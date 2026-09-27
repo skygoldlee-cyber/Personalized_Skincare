@@ -199,8 +199,8 @@ body.manual-open{overflow:hidden;}
             </div>`;
         document.body.appendChild(el);
 
-        el.querySelector('[data-manual-close]').addEventListener('click', close);
-        el.querySelector('[data-manual-print]').addEventListener('click', () => window.print());
+        el.querySelector('[data-manual-close]')?.addEventListener('click', close);
+        el.querySelector('[data-manual-print]')?.addEventListener('click', () => window.print());
         _overlayEl = el;
         return el;
     }
@@ -241,12 +241,13 @@ body.manual-open{overflow:hidden;}
             const wrap = document.createElement('div');
             wrap.innerHTML = tocHtml;
             const toc = wrap.firstElementChild;
-            scroll.insertBefore(toc, article);
-            toc.addEventListener('click', (e) => {
-                const a = e.target.closest('[data-manual-jump]');
+            if (toc) scroll.insertBefore(toc, article);
+            toc?.addEventListener('click', (e) => {
+                const a = e.target instanceof Element ? e.target.closest('[data-manual-jump]') : null;
                 if (!a) return;
                 e.preventDefault();
-                const target = document.getElementById(a.getAttribute('data-manual-jump'));
+                const jumpId = a.getAttribute('data-manual-jump');
+                const target = jumpId ? document.getElementById(jumpId) : null;
                 if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
         }
@@ -270,7 +271,7 @@ body.manual-open{overflow:hidden;}
             if (subjMatch) {
                 close();
                 const navItem = document.querySelector('.nav-item[data-target="textbook-reader-view"]');
-                if (navItem) navItem.click();
+                if (navItem) /** @type {HTMLElement} */ (navItem).click();
                 openSubjectChapter(subjMatch[1], subjMatch[2] || '');
                 return;
             }
@@ -375,8 +376,8 @@ body.manual-open{overflow:hidden;}
 
     // 클래식 <script> 동적 주입 (file:// 에서도 동작). 재사용/캐시 처리 포함.
     function _injectScript(src) {
-        return new Promise((resolve, reject) => {
-            const existing = document.querySelector(`script[data-doc-bundle="${src}"]`);
+        return /** @type {Promise<void>} */ (new Promise((resolve, reject) => {
+            const existing = /** @type {HTMLElement|null} */ (document.querySelector(`script[data-doc-bundle="${src}"]`));
             if (existing) {
                 if (existing.dataset.loaded === 'true') { resolve(); return; }
                 if (existing.dataset.loaded === 'error') { reject(new Error('bundle load error: ' + src)); return; }
@@ -392,7 +393,7 @@ body.manual-open{overflow:hidden;}
             s.addEventListener('load', () => { s.dataset.loaded = 'true'; resolve(); });
             s.addEventListener('error', () => { s.dataset.loaded = 'error'; reject(new Error('bundle load error: ' + src)); });
             document.head.appendChild(s);
-        });
+        }));
     }
 
     // 번들(전역 __DOC_MD__)에서 마크다운 조회 — 없으면 해당 번들 스크립트를 주입 후 재조회

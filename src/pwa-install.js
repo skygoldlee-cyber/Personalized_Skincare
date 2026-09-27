@@ -51,7 +51,7 @@ export function setupPWAInstall() {
     });
 
     // 설치 안내 모달 제어 (iOS/Android 분기)
-    const installModal = document.getElementById('pwa-install-modal');
+    const installModal = /** @type {HTMLElement & {_untrapFocus?: (() => void) | null} | null} */ (document.getElementById('pwa-install-modal'));
     const guideAndroid = document.getElementById('pwa-guide-android');
     const guideIos = document.getElementById('pwa-guide-ios');
     const guideGeneric = document.getElementById('pwa-guide-generic');
@@ -116,9 +116,10 @@ export function setupPWAInstall() {
             let anyIcon = null;
             const manifestLink = document.querySelector('link[rel="manifest"]');
             let manifestStatus = '';
-            if (manifestLink) {
+            const manifestHref = manifestLink && manifestLink.getAttribute('href');
+            if (manifestHref) {
                 try {
-                    const resp = await fetch(manifestLink.getAttribute('href'), { cache: 'no-cache' });
+                    const resp = await fetch(manifestHref, { cache: 'no-cache' });
                     manifestStatus = resp.status + ' ' + resp.statusText;
                     if (resp.ok) {
                         const json = await resp.json();

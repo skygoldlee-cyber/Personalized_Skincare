@@ -6,6 +6,16 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-14 checkJs 백로그 완전 소진 — src 전체 0 에러
+
+- **백로그 0 달성**: jsconfig exclude의 남은 34파일 전부 진단 해소 후 편입 — 869→0. `exclude`에 파일 목록이 더 이상 없으며 신규 파일은 기본으로 검사 대상
+- **대형 파일 해소**: `event-listeners`(84건)·`app.js`(55건)·`formula-batch`(45건)·`quiz`(40건)·`exam-simulator`(33건)·`daily-challenge`(31건)·`reader-audio`(28건)·`trainer-drills`(26건) 등 — `getEl()` 헬퍼·DOM 캐스트·null 가드로 대량 해소
+- **typedef 교정**: `Quiz`에 `category`/`context` 추가, solvedList에 `question`/`correctAnswer` 추가, `wrongCauses.subjectId`를 `string|null`로 완화, `ExamMeta.comboFile`·`IngredientsMeta.version/notice/history/updatedAt` 필드 보강 — 런타임 실측 형태에 맞춤
+- **shared state 수정**: `state.oxdrill`에 `judgments` 초기화 추가 (DrillSessionState typedef 충족)
+- **app.js 특수 패턴**: `initApp` 함수 재할당에 `// @ts-ignore` 1건 (모듈 스코프 함수 바인딩은 런타임 허용 — 변경 회피), bare `STUDY_DATA` → `window.STUDY_DATA`, MutationObserver의 Node→Element 캐스트
+- **린트 래칫 조임**: 212→211 (`--max-warnings` 211로 갱신)
+- 결과: `check:types` 0 에러(전체 src 포함) · lint 0 errors/211 warnings · unit 552 · DOM 364 · imports/docs/specrefs/trace 통과
+
 ## 2026-10-14 checkJs 백로그 2차 편입 — 15파일 진단 해소 (869→611)
 
 - **백로그 편입**: jsconfig exclude에서 15파일 제거 — `formula-rules`·`scratchpad`·`views/formula`·`whats-new` 외 1차 배치(exam-viewer·flashcard·formula-customer·trainer-calc·trainer-calc-practice·trainer-ingredients·pro-upgrade·pwa-install-capture 등)

@@ -153,8 +153,9 @@ function createIngredientCard(ing) {
 
     card.addEventListener('click', (e) => {
         // 카드 내부의 위임 버튼(포뮬러 추가 등) 클릭은 상세 토글과 무관
-        if (e.target.closest('[data-click]')) return;
+        if (!(e.target instanceof Element) || e.target.closest('[data-click]')) return;
         const details = card.querySelector('.dict-card-details');
+        if (!details) return;
         if (details.classList.contains('is-hidden')) {
             details.classList.remove('is-hidden');
         } else {
@@ -192,7 +193,7 @@ function setupDictionaryVirtualScroll() {
  * 성분 사전 검색 필터링
  */
 export function filterDictionary() {
-    const input = document.getElementById('dict-search-input');
+    const input = /** @type {HTMLInputElement|null} */ (document.getElementById('dict-search-input'));
     if (input) {
         dictState.query = input.value;
         renderDictionary();
@@ -222,7 +223,7 @@ export function setDictFilter(filterType) {
  * 성분 검색어 초기화
  */
 export function clearDictSearch() {
-    const input = document.getElementById('dict-search-input');
+    const input = /** @type {HTMLInputElement|null} */ (document.getElementById('dict-search-input'));
     if (input) {
         input.value = '';
         dictState.query = '';

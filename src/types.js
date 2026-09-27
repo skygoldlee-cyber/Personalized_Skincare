@@ -35,7 +35,7 @@
  * @property {Quiz[]}   data         출제된 퀴즈 목록(보통 10문제)
  * @property {number}   currentIndex 현재 문제 인덱스
  * @property {number}   correctCount 맞힌 개수
- * @property {Array<{quizId: string, selected: (number|string), correct: boolean}>} solvedList 이번 세션 제출 기록
+ * @property {Array<{quizId: string, question?: string, selected: (number|string), correctAnswer?: (number|string), correct: boolean}>} solvedList 이번 세션 제출 기록
  * @property {boolean} [diagnostic]    진단 평가 모드 (전 과목 샘플링)
  */
 
@@ -68,7 +68,10 @@
 /**
  * 뽀모도로 타이머 상태.
  * @typedef {Object} PomodoroState
- * @property {?number} timerId       setInterval 핸들(없으면 null)
+ * @property {number|undefined} timerId setInterval 핸들(없으면 undefined)
+ * @property {boolean} isRunning     실행 중 여부
+ * @property {number}  duration      현재 세션 길이(초)
+ * @property {number}  startTime     세션 시작 시각(epoch ms)
  * @property {number}  timeLeft      남은 시간(초)
  * @property {'idle'|'work'|'break'} status 타이머 상태
  * @property {number}  totalTimeToday 오늘 누적 집중 시간(초)
@@ -84,7 +87,7 @@
  * @property {number}   currentIndex  현재 문항 인덱스
  * @property {number}   correctCount  정답 수
  * @property {Array<*>} solvedList    제출 기록
- * @property {Object.<string, *>} [judgments] 진술별 O/X 판정 (복수정답형 전용)
+ * @property {Object.<string, boolean>} judgments 진술별 O/X 판정 (복수정답형 전용, 초기값 {})
  */
 
 /**
@@ -110,7 +113,7 @@
  * @property {FlashcardsState}        flashcards
  * @property {QuizSessionState}       quiz
  * @property {TrainerState}           trainer
- * @property {Object.<string, {cause: string, ts: number, subjectId: string}>} wrongCauses 오답 원인 맵 { itemId: 원인 기록 }
+ * @property {Object.<string, {cause: string, ts: number, subjectId: string|null}>} wrongCauses 오답 원인 맵 { itemId: 원인 기록 }
  * @property {boolean} [_storageUnavailable] localStorage 사용 불가 감지 플래그
  * @property {number}  [_prevMemCount]   이전 외운 카드 수 (변동 감지용)
  * @property {number}  [_prevQuizCount]  이전 퀴즈 결과 수 (변동 감지용)
@@ -151,6 +154,8 @@
  * @property {(number|string)} answer    정답(보기 인덱스 또는 단답 문자열)
  * @property {string}       [explanation] 해설
  * @property {string}       [chapter]    소속 단원명
+ * @property {string}       [category]   분류 라벨 (퀴즈 화면 표시용)
+ * @property {string}       [context]    지문 맥락/출처 라벨
  * @property {string}       [type]       문항 유형 ('single'|'combo'|'short'|'ox')
  */
 
@@ -213,6 +218,7 @@
  * @property {number}      [part]      파트 번호
  * @property {string}      title
  * @property {string}      file        원본 MD 파일명 ({contentRoot}/문제은행/ 기준)
+ * @property {string}      [comboFile] 복수정답형 MD 파일명 (manifest 선언 시 규약 파일명 대신 사용)
  * @property {string}      bundle
  * @property {string}      global      전역 변수명(예: 'EXAM_DATA_subject4_p3')
  * @property {string}      contentHash
@@ -225,6 +231,10 @@
  * @property {string}      bundle
  * @property {string}      global      전역 변수명('INGREDIENTS_DATA')
  * @property {string}      contentHash
+ * @property {(string|number)} [version] 원료 DB 버전 (db_version.json)
+ * @property {string}      [updatedAt]   갱신 일자
+ * @property {string}      [notice]      갱신 내역 요약
+ * @property {Array<{version?: (string|number), updatedAt?: string, notice?: string}>} [history] 이전 개정 이력
  * @property {BundleStats} stats
  */
 

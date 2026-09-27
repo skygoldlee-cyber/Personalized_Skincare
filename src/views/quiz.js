@@ -52,7 +52,7 @@ function clearQuizWeakness(currentQuiz) {
 }
 export function startQuiz() {
     const subjId = state.quiz.subject;
-    const subjData = (window.STUDY_DATA && window.STUDY_DATA[subjId]);
+    const subjData = (window.STUDY_DATA && subjId && window.STUDY_DATA[subjId]);
     if (!subjData || subjData.quizzes.length === 0) {
         showToast("이 과목에는 출제 가능한 퀴즈가 없습니다.", "warning");
         return;
@@ -135,7 +135,7 @@ export function renderQuizQuestion() {
     const categoryEl = document.getElementById('quiz-category');
     const contextTitleEl = document.getElementById('quiz-context-title');
     const questionEl = document.getElementById('quiz-question');
-    const inputEl = document.getElementById('quiz-answer-input');
+    const inputEl = /** @type {HTMLInputElement|null} */ (document.getElementById('quiz-answer-input'));
     const submitBtn = document.getElementById('submit-quiz-btn');
     const nextBtn = document.getElementById('next-quiz-btn');
     const feedbackPanel = document.getElementById('quiz-feedback-panel');
@@ -144,13 +144,13 @@ export function renderQuizQuestion() {
     const inputGroup = document.getElementById('quiz-input-group');
 
     if (runProgressEl) runProgressEl.style.width = `${progressPercent}%`;
-    if (currIdxEl) currIdxEl.textContent = quizState.currentIndex + 1;
-    if (totalIdxEl) totalIdxEl.textContent = quizState.data.length;
-    if (correctCountEl) correctCountEl.textContent = quizState.correctCount;
+    if (currIdxEl) currIdxEl.textContent = String(quizState.currentIndex + 1);
+    if (totalIdxEl) totalIdxEl.textContent = String(quizState.data.length);
+    if (correctCountEl) correctCountEl.textContent = String(quizState.correctCount);
     
     // 카드 정보 바인딩
-    if (categoryEl) categoryEl.textContent = currentQuiz.category;
-    if (contextTitleEl) contextTitleEl.textContent = currentQuiz.context;
+    if (categoryEl) categoryEl.textContent = currentQuiz.category || '';
+    if (contextTitleEl) contextTitleEl.textContent = currentQuiz.context || '';
     
     // 질문 빈칸 파싱
     let qText = currentQuiz.question;
@@ -192,7 +192,8 @@ export function renderQuizQuestion() {
         // OX 진위형
         if (oxContainer) {
             oxContainer.classList.remove('is-hidden');
-            oxContainer.querySelectorAll('.quiz-ox-btn').forEach(btn => {
+            oxContainer.querySelectorAll('.quiz-ox-btn').forEach(node => {
+                const btn = /** @type {HTMLButtonElement & {_oxHandler?: EventListener}} */ (node);
                 if (btn._oxHandler) btn.removeEventListener('click', btn._oxHandler);
                 btn.disabled = false;
                 btn.classList.remove('correct', 'incorrect');
@@ -222,7 +223,7 @@ export function submitQuizAnswer() {
         showToast("퀴즈 데이터를 불러오지 못했습니다.", "error");
         return;
     }
-    const input = document.getElementById('quiz-answer-input');
+    const input = /** @type {HTMLInputElement|null} */ (document.getElementById('quiz-answer-input'));
     if (!input) return;
     const userAnswer = input.value.trim();
     
@@ -269,8 +270,8 @@ export function submitQuizAnswer() {
     const feedbackAnswer = document.getElementById('feedback-correct-answer');
     
     if (feedbackPanel) feedbackPanel.classList.remove('is-hidden');
-    if (feedbackAnswer) feedbackAnswer.textContent = currentQuiz.answer;
-    
+    if (feedbackAnswer) feedbackAnswer.textContent = String(currentQuiz.answer);
+
     if (isCorrect) {
         if (feedbackPanel) feedbackPanel.classList.remove('incorrect');
         if (feedbackTitle) feedbackTitle.textContent = "정답입니다!";
@@ -310,7 +311,8 @@ function submitQuizChoiceAnswer(selectedBtn, selectedValue, correctValue) {
         });
     }
     if (oxContainer) {
-        oxContainer.querySelectorAll('.quiz-ox-btn').forEach(btn => {
+        oxContainer.querySelectorAll('.quiz-ox-btn').forEach(node => {
+            const btn = /** @type {HTMLButtonElement} */ (node);
             btn.disabled = true;
             if (btn.dataset.ox === correctValue) btn.classList.add('correct');
         });
@@ -387,7 +389,7 @@ function _citationForQuiz(quizId) {
     const q = (state.quiz.data || []).find(x => x.id === quizId);
     if (!q || !q.category) return null;
     const subjId = subjectForWeakItem(weakItemKey(quizId), state.quiz.subject);
-    const subj = ((typeof window !== 'undefined' && window.STUDY_DATA) || {})[subjId];
+    const subj = ((typeof window !== 'undefined' && window.STUDY_DATA) || {})[subjId || ''];
     if (!subj) return null;
     for (const ch of (subj.chapters || [])) {
         for (const sec of (ch.sections || [])) {
@@ -417,8 +419,8 @@ export function renderQuizResult() {
     const totalNumEl = document.getElementById('result-total-num');
     const percentEl = document.getElementById('result-percent');
 
-    if (correctNumEl) correctNumEl.textContent = quizState.correctCount;
-    if (totalNumEl) totalNumEl.textContent = quizState.data.length;
+    if (correctNumEl) correctNumEl.textContent = String(quizState.correctCount);
+    if (totalNumEl) totalNumEl.textContent = String(quizState.data.length);
     
     const rate = Math.round((quizState.correctCount / quizState.data.length) * 100);
     if (percentEl) percentEl.textContent = `${rate}%`;
@@ -522,7 +524,7 @@ export function getWeakCardsList() {
         state.weakCards.forEach(cardId => {
             const rc = resolveCard(cardId);
             if (rc) {
-                list.push({ ...rc.card, subjectId: rc.subjectId, subjectName: window.STUDY_DATA[rc.subjectId].name });
+                list.push({ ...rc.card, subjectId: rc.subjectId, subjectName: (window.STUDY_DATA || {})[rc.subjectId].name });
             }
         });
     }
@@ -533,7 +535,7 @@ export function getWeakCardsList() {
             const resolved = resolveWrongQuiz(cardId);
             if (resolved) {
                 const { quiz: q, subjectId } = resolved;
-                const subjectName = window.STUDY_DATA[subjectId].name;
+                const subjectName = (window.STUDY_DATA || {})[subjectId].name;
                 list.push({
                     id: cardId,
                     subjectId: subjectId,
@@ -555,7 +557,7 @@ export function getWeakCardsList() {
                     const q = exam.questions.find(quest => quest.num === qNum);
                     if (q) {
                         const targetSubject = examIdToSubjectId(examId);
-                        const subjectName = (window.STUDY_DATA && window.STUDY_DATA[targetSubject]) ? window.STUDY_DATA[targetSubject].name : '모의고사';
+                        const subjectName = (window.STUDY_DATA && targetSubject && window.STUDY_DATA[targetSubject]) ? (window.STUDY_DATA || {})[targetSubject].name : '모의고사';
                         list.push({
                             id: cardId,
                             subjectId: targetSubject,
@@ -686,7 +688,8 @@ export function setReviewFilter(filterType) {
     state.reviewFilter = filterType;
     
     const buttons = document.querySelectorAll('#review-filter-group .filter-btn');
-    buttons.forEach(btn => {
+    buttons.forEach(node => {
+        const btn = /** @type {HTMLElement} */ (node);
         if (btn.getAttribute('data-filter') === filterType) {
             btn.classList.add('active');
             btn.style.background = 'var(--color-primary)';
@@ -885,7 +888,7 @@ export function wrongActionSimilar(quizId) {
         return;
     }
     const { quiz, subjectId } = resolved;
-    const pool = (window.STUDY_DATA[subjectId].quizzes || [])
+    const pool = ((window.STUDY_DATA || {})[subjectId].quizzes || [])
         .filter(q => q.category === quiz.category && q.id !== quiz.id);
     if (pool.length === 0) {
         showToast('같은 단원에 유사 문제가 없습니다.', 'info');

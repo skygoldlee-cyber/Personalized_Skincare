@@ -144,6 +144,12 @@ export function listKeys(matchUnscoped) {
     return out;
 }
 
+/**
+ * localStorage JSON 파싱 헬퍼 — 파싱 실패·키 없음 시 fallback 반환.
+ * @param {string} key
+ * @param {*} [fallback]
+ * @returns {any}
+ */
 export function getJSON(key, fallback = null) {
     const raw = getItem(key);
     if (raw === null || raw === undefined) return fallback;
@@ -256,6 +262,12 @@ export async function listKeysAsync(matchUnscoped) {
     return out;
 }
 
+/**
+ * getJSON의 비동기 저장소 버전.
+ * @param {string} key
+ * @param {*} [fallback]
+ * @returns {Promise<any>}
+ */
 export async function getJSONAsync(key, fallback = null) {
     const raw = await getItemAsync(key);
     if (raw === null || raw === undefined) return fallback;

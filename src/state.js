@@ -80,7 +80,8 @@ export const state = {
             data: [],
             currentIndex: 0,
             correctCount: 0,
-            solvedList: []
+            solvedList: [],
+            judgments: {}
         },
         combo: {
             subject: null,      // 1~4 (특수 모드는 0)
@@ -92,7 +93,10 @@ export const state = {
             judgments: {}       // 진술별 O/X 판정 (2단계 응시)
         },
         pomodoro: {
-            timerId: null,
+            timerId: undefined,
+            isRunning: false,
+            duration: 25 * 60,
+            startTime: 0,
             timeLeft: 25 * 60,
             status: 'idle', // 'idle', 'work', 'break'
             totalTimeToday: 0,

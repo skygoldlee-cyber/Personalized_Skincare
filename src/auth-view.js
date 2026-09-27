@@ -5,11 +5,12 @@ import { getSupabase, onAuthChange } from './supabase-client.js';
 import { showToast, showConfirm, trapFocus } from './ui-utils.js';
 import { safeGetItem, safeSetItem, safeRemoveItem } from './state.js';
 
-const el = id => document.getElementById(id);
+const el = id => /** @type {HTMLInputElement|null} */ (document.getElementById(id));
 const show = n => n && n.classList.remove('is-hidden');
 const hide = n => n && n.classList.add('is-hidden');
 
 // Supabase 영문 오류 → 한글 안내
+/** @type {Array<[RegExp, string]>} */
 const ERR_MAP = [
     [/invalid login credentials/i, '이메일 또는 비밀번호가 올바르지 않습니다.'],
     [/user already registered|already been registered/i, '이미 가입된 이메일입니다. 로그인을 이용하세요.'],
@@ -63,15 +64,17 @@ export async function openAuthModal() {
     setMsg('');
     hide(el('auth-otp-area'));
     show(modal);
-    if (modal._untrapFocus) modal._untrapFocus();
-    modal._untrapFocus = trapFocus(modal);
+    const m = /** @type {any} */ (modal);
+    if (m._untrapFocus) m._untrapFocus();
+    m._untrapFocus = trapFocus(modal);
     try { await refreshAuthUI(); }
     catch (e) { setMsg(friendlyError(e), true); }
 }
 
 export function closeAuthModal() {
     const modal = el('auth-modal');
-    if (modal && modal._untrapFocus) { modal._untrapFocus(); modal._untrapFocus = null; }
+    const m = /** @type {any} */ (modal);
+    if (m && m._untrapFocus) { m._untrapFocus(); m._untrapFocus = null; }
     hide(modal);
     setMsg('');
 }

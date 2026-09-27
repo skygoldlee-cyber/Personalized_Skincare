@@ -154,9 +154,10 @@ export function startComboMockExam(arg) {
 export function startIntegratedMockExam() {
     proFeatureNotice('mock_exam', '실전 모의고사');
     // 복수정답형 혼합 옵션 체크 시 combo 번들도 함께 로드
-    const mixCombo = !!(document.getElementById('integrated-mix-combo') && document.getElementById('integrated-mix-combo').checked);
+    const mixChk = /** @type {HTMLInputElement|null} */ (document.getElementById('integrated-mix-combo'));
+    const mixCombo = !!(mixChk && mixChk.checked);
     showGlobalLoading('통합 모의고사 데이터를 불러오는 중입니다...');
-    const loaderPromises = DataLoader.registry.exams.map(e => DataLoader.loadExam(e.key));
+    const loaderPromises = (DataLoader.registry?.exams || []).map(e => DataLoader.loadExam(e.key));
     if (mixCombo) DataLoader.getSubjectOrders().forEach(n => loaderPromises.push(DataLoader.loadComboDrills(n)));
     Promise.all(loaderPromises).then(() => {
         hideGlobalLoading();
@@ -425,7 +426,7 @@ export function startSimTimer() {
 
 export function tickSimTimer() {
     // 절대 시각 기반 남은 시간 계산 (백그라운드 스로틀링 극복 핵심)
-    const remaining = Math.max(0, Math.round((simState.endTime - Date.now()) / 1000));
+    const remaining = Math.max(0, Math.round(((simState.endTime || 0) - Date.now()) / 1000));
     simState.timeLeft = remaining;
     
     if (simState.timeLeft <= 0) {
@@ -439,7 +440,8 @@ export function tickSimTimer() {
     
     const minutes = Math.floor(simState.timeLeft / 60);
     const seconds = simState.timeLeft % 60;
-    document.getElementById('sim-time-left').textContent =
+    const timeEl = document.getElementById('sim-time-left');
+    if (timeEl) timeEl.textContent =
         `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
         
     // 매 5초마다 타이머 임시 저장
@@ -450,16 +452,18 @@ export function tickSimTimer() {
 
 export function renderOMRSheet() {
     const omrGrid = document.getElementById('omr-grid');
+    if (!omrGrid) return;
     omrGrid.innerHTML = '';
-    
+
     const total = simState.data.questions.length;
-    document.getElementById('omr-total-count').textContent = total;
+    const totalEl = document.getElementById('omr-total-count');
+    if (totalEl) totalEl.textContent = String(total);
     
     for (let i = 0; i < total; i++) {
         const bubble = document.createElement('div');
         bubble.className = 'omr-bubble';
         bubble.id = `omr-b-${i}`;
-        bubble.textContent = i + 1;
+        bubble.textContent = String(i + 1);
         bubble.setAttribute('role', 'button');
         bubble.setAttribute('tabindex', '0');
         bubble.setAttribute('aria-label', `문제 ${i + 1}번으로 이동`);
@@ -503,7 +507,8 @@ export function updateOMRProgress() {
         }
     }
     
-    document.getElementById('omr-solved-count').textContent = solvedCount;
+    const solvedEl = document.getElementById('omr-solved-count');
+    if (solvedEl) solvedEl.textContent = String(solvedCount);
 }
 
 export function jumpToSimQuestion(index) {
@@ -532,6 +537,7 @@ export function renderSimQuestion() {
     
     // 옵션 컨테이너 채우기
     const container = document.getElementById('sim-options-container');
+    if (!container) return;
     container.innerHTML = '';
     
     const savedAns = simState.userAnswers[q.id] || '';
@@ -588,18 +594,20 @@ export function renderSimQuestion() {
         `;
         container.appendChild(inputDiv);
         
-        const textInput = document.getElementById('sim-text-input');
+        const textInput = /** @type {HTMLInputElement|null} */ (document.getElementById('sim-text-input'));
+        if (!textInput) return;
         textInput.focus();
-        
+
         // 입력 변경 감지
         textInput.addEventListener('input', (e) => {
-            saveSimAnswer(q.id, e.target.value, false);
+            saveSimAnswer(q.id, e.target instanceof HTMLInputElement ? e.target.value : '', false);
         });
-        
+
         // 엔터키 누르면 다음 문제
-        textInput.addEventListener('keypress', (e) => {
+        textInput.addEventListener('keypress', (ev) => {
+            const e = /** @type {KeyboardEvent} */ (ev);
             if (e.key === 'Enter') {
-                document.getElementById('sim-next-btn').click();
+                /** @type {HTMLElement} */ (document.getElementById('sim-next-btn'))?.click();
             }
         });
     }
@@ -608,6 +616,7 @@ export function renderSimQuestion() {
     const prevBtn = document.getElementById('sim-prev-btn');
     const nextBtn = document.getElementById('sim-next-btn');
     const submitBtn = document.getElementById('sim-submit-exam-btn');
+    if (!prevBtn || !nextBtn || !submitBtn) return;
     
     if (simState.currentIndex === 0) {
         prevBtn.classList.add('is-hidden');
@@ -649,6 +658,7 @@ export function submitExam() {
     simState.wrongQuestions = [];
     
     // 과목별 정답 및 총 문제수 집계용 (레지스트리 기반 동적 초기화)
+    /** @type {Object<string,{score:number,total:number}>} */
     const subjectScores = {};
     const subjects = (window.DATA_REGISTRY && window.DATA_REGISTRY.subjects) || [];
     subjects.forEach(sub => {
@@ -660,6 +670,7 @@ export function submitExam() {
         questions: window.QUESTION_CHAPTERS || {},
         ranges: window.CHAPTER_RANGES || {}
     };
+    /** @type {Object<string,Object<string,{score:number,total:number}>>} */
     const chapterStats = {};
     
     for (let i = 0; i < total; i++) {
@@ -854,6 +865,7 @@ function _startWeakExamImpl() {
             const origQId = cardId.substring(WEAK_SIM_PREFIX.length);
             const EXAM_DATA = (typeof window !== 'undefined' && window.EXAM_DATA) ? window.EXAM_DATA : {};
             let foundQ = null;
+            /** @type {string|null} */
             let foundSubj = '';
             for (const examId of Object.keys(EXAM_DATA)) {
                 const qs = EXAM_DATA[examId].questions || [];

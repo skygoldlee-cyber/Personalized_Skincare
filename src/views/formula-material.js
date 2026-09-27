@@ -129,7 +129,7 @@ function writeMaterialForm(m) {
 
 function readMaterialForm() {
   const val = id => {
-    const el = document.getElementById(id);
+    const el = /** @type {HTMLInputElement|null} */ (document.getElementById(id));
     return el ? el.value : '';
   };
   const qtyRaw = val('mat-qty');
