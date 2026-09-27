@@ -133,6 +133,31 @@
     gap: var(--space-4);
 }
 
+/* 맞춤 학습 리포트 상단 안내 카드 */
+.analysis-intro {
+    border-left: 3px solid var(--color-primary);
+}
+
+.analysis-intro h4 {
+    margin-bottom: var(--space-2);
+}
+
+.analysis-intro .section-subtitle {
+    margin-bottom: 0;
+}
+
+.analysis-intro-list {
+    margin: var(--space-3) 0 0;
+    padding-left: var(--space-5);
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: 1.8;
+}
+
+.analysis-intro-list li {
+    margin-bottom: var(--space-1);
+}
+
 .analysis-insight-grid .analytics-card h4 {
     display: flex;
     align-items: baseline;
