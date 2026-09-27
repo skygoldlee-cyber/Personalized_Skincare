@@ -1,3 +1,4 @@
+// @spec ID-01,ID-02
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';

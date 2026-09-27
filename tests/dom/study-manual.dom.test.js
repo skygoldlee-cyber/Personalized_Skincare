@@ -1,4 +1,5 @@
 // tests/dom/study-manual.dom.test.js — 매뉴얼 뷰어 시나리오
+// @spec MV-01~04
 // 설계: docs/dev/design/DOM_TEST_DESIGN.md §5.2 (Phase 5)
 // 검증: 문서 열기→오버레이·MD 렌더·TOC(H) · doc: 링크로 문서 간 전환(H)
 //       · 캐시(P) · 닫기(H) · 미등록 소스 오류(X)

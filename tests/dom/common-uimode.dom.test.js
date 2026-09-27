@@ -1,4 +1,5 @@
 // tests/dom/common-uimode.dom.test.js — 학습/실무 UI 모드 시나리오
+// @spec UM-01~05
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { loadIndexHtml, el, lastToast, injectCssFile } from './helpers.js';
 

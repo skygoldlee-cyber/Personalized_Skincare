@@ -1,4 +1,5 @@
 // tests/unit/reader-format-general.test.js
+// @spec TR-01
 // reader-format.js의 포맷팅 로직을 합성 데이터로 검증.
 // 교재 콘텐츠와 무관하게 포맷팅 로직 자체가 정확해야 함.
 

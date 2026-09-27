@@ -1,4 +1,5 @@
 // tools/build/build_keyword_index.js
+// @spec BP-01,PF-12,BP-06,CS-06
 // GLOSSARY_INDEX 자동 생성: 교재 MD 테이블에서 (LNN|file.pdf) / (LNN) 패턴 추출
 // 참조문서에서 키워드를 찾아 주변 문맥을 설명으로 추출
 // **참조문서에서 키워드가 검색되는 경우만 등록** (검색 불가 → 미등록 → 런타임에 L? 처리)

@@ -1,4 +1,5 @@
 // src/views/dictionary.js - 화장품 성분 검색 사전 뷰 로직 및 그리드 스페이서 가상 스크롤 구현
+// @spec DI-01~03,PF-09
 import { state } from '../state.js';
 import { esc } from '../sanitize.js';
 import { getChosung } from '../utils.js';

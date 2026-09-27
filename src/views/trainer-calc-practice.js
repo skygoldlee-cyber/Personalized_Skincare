@@ -1,4 +1,5 @@
 // views/trainer-calc-practice.js — 원료 배합 계산 연습기 (trainer.js에서 추출)
+// @spec T-01,T-05
 import { state, safeGetItem, safeSetItem } from '../state.js';
 import { esc, safeTextWithBreaks } from '../sanitize.js';
 import { buildCalcQuestion } from '../trainer-calc.js';

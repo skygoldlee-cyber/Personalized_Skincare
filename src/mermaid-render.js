@@ -2,6 +2,8 @@
  * mermaid-render.js — Mermaid 지연 로딩 + 컨테이너 렌더링 공용 모듈.
  * textbook-reader.js와 textbook-search.js의 중복 구현을 통합한 것.
  */
+
+// @spec TR-06~08,MV-02,TS-07,PF-13,PF-16
 import { detectMermaidType, getMermaidClassName, getMermaidInitOptions } from './mermaid-utils.js';
 import { PATHS } from './paths.js';
 

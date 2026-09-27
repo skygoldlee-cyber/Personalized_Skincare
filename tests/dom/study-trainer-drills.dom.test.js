@@ -1,4 +1,5 @@
 // tests/dom/study-trainer-drills.dom.test.js — O/X·복수정답형 드릴 + 취약 리뷰 시나리오
+// @spec DR-01~07
 // 커버리지 갭 보강: trainer-drills.js (setup→arena→result 파이프라인,
 // 진술 판정 토글·소거 표시·키보드 단축키·취약 리뷰 렌더링)
 

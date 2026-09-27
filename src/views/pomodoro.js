@@ -1,4 +1,5 @@
 // src/views/pomodoro.js - 뽀모도로 타이머 로직 (trainer.js에서 분리)
+// @spec T-03
 import { state, safeSetItem } from '../state.js';
 import { showToast } from '../ui-utils.js';
 import { STORAGE_KEYS } from '../storage-keys.js';

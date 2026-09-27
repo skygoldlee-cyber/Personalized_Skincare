@@ -13,6 +13,8 @@
  *
  * 사용: node tools/check_drill_freshness.js   (불일치 시 exit 1)
  */
+
+// @spec BP-01
 const fs = require('fs');
 const path = require('path');
 const { getExamTargets } = require('./build/exam_targets.js');

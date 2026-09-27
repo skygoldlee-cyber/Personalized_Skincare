@@ -1,4 +1,5 @@
 // src/views/formula-batch.js — Formula OS 조제 기록(배치) 뷰 (Phase A)
+// @spec FO-16
 //
 // 목록 패널(formula-batch-panel) + 폼(formula-batch-form-panel) +
 // 상세(formula-batch-detail-panel) — formula.js의 showPanel/subNav 재사용.

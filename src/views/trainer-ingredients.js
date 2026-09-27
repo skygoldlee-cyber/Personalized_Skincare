@@ -1,4 +1,5 @@
 // views/trainer-ingredients.js — 화장품 원료 안전성 챌린지 (trainer.js에서 추출)
+// @spec T-02
 import { state } from '../state.js';
 import { esc, safeTextWithBreaks } from '../sanitize.js';
 import { shuffle } from '../utils.js';

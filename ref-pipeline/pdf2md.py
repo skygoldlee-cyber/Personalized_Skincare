@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# @spec CS-03,CS-10,PF-11
 """pdf2md — 한국어 법령·참조 PDF → Markdown 일반화 변환기 (pdfplumber 기반)
 
 convert_ref_pdfs_v2.py의 변환 엔진(좌표 공백 복원 + 표 구조화 + 무선 표

@@ -1,4 +1,5 @@
 // sw.js pruneStaleDataBundles — 한글(비ASCII) 번들 경로 프루닝 회귀 테스트
+// @spec P-06
 // 함정: req.url의 pathname은 퍼센트 인코딩 상태인데 레지스트리 참조는 원시 문자열.
 // 디코딩 없이 endsWith 비교하면 참조 중인 한글 번들을 고아로 오인해 삭제한다.
 import { test } from 'node:test';

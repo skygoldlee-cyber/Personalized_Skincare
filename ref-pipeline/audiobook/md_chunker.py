@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# @spec CS-07
 """
 md_chunker.py
 =============

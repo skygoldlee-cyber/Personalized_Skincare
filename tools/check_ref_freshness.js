@@ -20,6 +20,8 @@
  *   ③ npm run verify:refs (골든 비교) ④ ref_md/과목N/ 승격
  *   ⑤ npm run check:reffresh -- --update (해시 스탬프)
  */
+
+// @spec CS-03
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');

@@ -1,4 +1,5 @@
 // src/study-tracker.js — 학습 캘린더/목표 추적 헬퍼
+// @spec SC-03
 // 학습 활동을 날짜별로 기록하고, 목표 달성률을 계산합니다.
 import { safeGetItem, safeSetItem } from './state.js';
 import { STORAGE_KEYS } from './storage-keys.js';

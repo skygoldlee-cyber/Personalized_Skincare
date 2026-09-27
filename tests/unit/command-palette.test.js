@@ -1,4 +1,5 @@
 // tests/unit/command-palette.test.js — 통합 검색 searchAll 로직
+// @spec UX-NAV-06
 import { test, before } from 'node:test';
 import assert from 'node:assert/strict';
 

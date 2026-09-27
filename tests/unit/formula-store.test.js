@@ -1,4 +1,5 @@
 // tests/unit/formula-store.test.js
+// @spec FO-08,FO-23
 // src/formula-store.js — My Formula 영속성 계층 테스트.
 // CRUD·Free 한도·스냅샷 보존·투입량 계산의 불변식을 고정한다.
 

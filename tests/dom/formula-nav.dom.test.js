@@ -1,4 +1,5 @@
 // tests/dom/formula-nav.dom.test.js — Formula OS 패널 전환·서브내비 시나리오
+// @spec FO-15
 // 설계: docs/dev/design/DOM_TEST_DESIGN.md §4
 // 검증: 허브→서브패널 전환(is-hidden), 서브내비 칩 6개·활성 상태, 나가기 복귀
 

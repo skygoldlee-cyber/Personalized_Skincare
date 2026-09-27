@@ -1,4 +1,5 @@
 // tools/build/build_exam_bundles.js — 문제은행 MD → {dataRoot}/exams_md/<stem>.js 번들 생성
+// @spec BP-01,BP-04
 // ============================================================
 // 입력 : {contentRoot}/문제은행/<manifest.json의 exams[].file>
 //        (manifest 미등록 MD — 설계 문서, 생성 산출물(*_복수정답형.md) 등 — 은 번들하지 않음)

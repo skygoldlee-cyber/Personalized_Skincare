@@ -1,4 +1,5 @@
 // tests/dom/study-search.dom.test.js — 교재 검색 시나리오
+// @spec TS-01~09
 // 설계: docs/dev/design/DOM_TEST_DESIGN.md §5.2 (Phase 4)
 // 검증: 검색어 입력→역색인 검색→결과 카드(H) · 과목 필터(H) · 결과 없음(B)
 //       · 초기화→빈 상태(E) · 하이라이트·더보기 토글(H)

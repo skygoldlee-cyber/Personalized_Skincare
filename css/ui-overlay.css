@@ -3,6 +3,8 @@
  * 요소는 JS로 동적 생성되지만 CSS는 정적 로드 시점에 이미 사용 가능.
  */
 
+/* @spec UX-FB-01~04,UX-SET-01~05,A-05 */
+
 /* 스피너 애니메이션 (ui-utils.js에서 inline <style>로 주입하던 것을 중앙화) */
 @keyframes spin {
   to { transform: rotate(360deg); }

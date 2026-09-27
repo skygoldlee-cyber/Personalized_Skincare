@@ -1,4 +1,5 @@
 // app-fallback.js - ESM 로드 실패 시 자동 복구 (모바일 PWA 대응)
+// @spec P-11
 //
 // app.js는 type="module"(deferred)로 로드되며, 의존성 모듈 중 하나라도
 // 네트워크/SW 캐시 실패로 로드되지 않으면(ESM 정적 import는 실패 시 그래프 전체가 드랍)

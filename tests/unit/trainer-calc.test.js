@@ -1,3 +1,4 @@
+// @spec T-01
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { buildCalcQuestion } from '../../src/trainer-calc.js';

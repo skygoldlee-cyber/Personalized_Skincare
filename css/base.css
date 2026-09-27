@@ -1,4 +1,6 @@
 /* Modern Design Tokens */
+
+/* @spec TH-01~06,A-03~06,R-02,R-03,UX-FORM-02,PF-14 */
 :root {
     --bg-app: #0b0f19;
     --bg-sidebar: #111827;

@@ -1,4 +1,5 @@
 // src/views/formula-print.js — Formula OS 인쇄 산출물 빌더 (Phase A)
+// @spec FO-14,FO-21
 //
 // 조제 기록지(배치)·제품 라벨·사용 안내문 HTML 생성 + 공용 인쇄 트리거.
 // 기존 formula.js의 조제 기록지와 같은 #formula-print-area + body.formula-printing

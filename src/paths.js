@@ -1,4 +1,5 @@
 // paths.js — 콘텐츠/데이터/벤더 경로 중앙 관리
+// @spec DA-06
 // 모든 content/, data/, vendor/, docs/ 경로는 이 모듈에서 import하여 사용.
 //
 // [멀티시험] 경로는 활성 시험(exam-context)의 contentRoot/dataRoot를 기준으로

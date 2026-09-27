@@ -1,4 +1,5 @@
 // src/scratchpad.js - 손글씨 계산 연습장(Canvas Scratchpad) 로직 모듈 (글로벌 스코프 실행)
+// @spec T-04
 
 let scratchpadCanvasInitialized = false;
 let isDrawing = false;

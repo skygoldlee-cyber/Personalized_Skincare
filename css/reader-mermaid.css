@@ -1,5 +1,7 @@
 /* Textbook Reader Styles — Mermaid & Story Mode Design Tokens (reader.css에서 추출) */
 
+/* @spec TR-06,TH-06 */
+
 /* === Mermaid & Story Mode Design Tokens === */
 :root {
     /* Mermaid 다크 테마 */

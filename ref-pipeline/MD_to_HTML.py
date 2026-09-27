@@ -1,3 +1,4 @@
+# @spec CS-01,CS-05
 import markdown
 from pathlib import Path
 import unicodedata

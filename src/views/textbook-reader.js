@@ -1,4 +1,5 @@
 // views/textbook-reader.js - 교재 본문 읽기 및 오디오북 플레이어 (Textbook Reader + Audio)
+// @spec TR-01~18,SA-01~05,G-01~09,RR-02~06,ST-01~07
 import { esc } from '../sanitize.js';
 import { proFeatureNotice } from '../pro-upgrade.js';
 import { formatSectionContentForReader } from '../reader-format.js';

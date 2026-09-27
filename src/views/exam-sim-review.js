@@ -1,4 +1,5 @@
 // views/exam-sim-review.js — 시뮬레이터 결과 리뷰/요약 (exam-simulator.js에서 추출)
+// @spec E-04,E-06,E-07
 import { simState } from './exam-sim-state.js';
 import { esc, safeTextWithBreaks } from '../sanitize.js';
 import { DataLoader } from '../data-loader.js';

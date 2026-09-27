@@ -1,5 +1,7 @@
 /* css/html-viewer.css — 참조자료 HTML 뷰어 오버레이 스타일 (html-viewer.js에서 추출) */
 
+/* @spec RR-15 */
+
 #html-ref-overlay{position:fixed;top:0;left:0;right:0;bottom:0;width:100vw;height:100vh;height:100dvh;z-index:var(--z-orientation-toast);display:none;
   background:var(--bg-overlay,rgba(0,0,0,.85));backdrop-filter:blur(4px);}
 #html-ref-overlay.open{display:block;overflow:hidden;}

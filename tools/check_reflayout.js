@@ -18,6 +18,8 @@
  *
  * 사용: node tools/check_reflayout.js   (불일치 시 exit 1)
  */
+
+// @spec CS-03,CS-09
 const fs = require('fs');
 const path = require('path');
 

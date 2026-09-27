@@ -1,4 +1,5 @@
 // tests/dom/common-eventlisteners.dom.test.js — 이벤트 위임·리스너 디스패치 경로
+// @spec S-02,S-03
 // 커버리지 갭 보강: src/views/event-listeners.js
 //   data-click/data-args/data-input 위임, Enter/Space 키보드 접근성,
 //   설정 메뉴·플래시카드 버튼·시뮬레이터 이동·단축키 핸들러 본문

@@ -1,4 +1,5 @@
 // recommendations.js — "오늘의 합격 전략" 추천 엔진 (docs/report_archive/FEATURE_PROPOSALS.md §4.1)
+// @spec D-11,D-13
 //
 // 학습 데이터(SM-2 복습 대기·과락 과목·정답률·헷갈린 카드·미학습)를 종합해
 // 우선순위가 정해진 추천 항목을 생성한다.

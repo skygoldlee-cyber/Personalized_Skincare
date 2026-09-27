@@ -1,4 +1,5 @@
 // src/router.js - 뷰 라우터: 타이틀 맵 및 뷰 렌더링 디스패치 (app.js에서 분리)
+// @spec UX-NAV-01,UM-04
 import { state } from './state.js';
 import { saveScrollPosition, restoreScrollPosition } from './views/navigation.js';
 

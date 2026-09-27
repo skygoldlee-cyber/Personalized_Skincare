@@ -1,4 +1,5 @@
 // tests/unit/combo-transform.test.js
+// @spec DR-02,DR-07
 // tools/build/build_combo_drills.js — 문제은행 choice → 복수정답형 변환 규칙 골든 테스트.
 // 변환 로직 변경(극성 판정·'모두' 복구·스킵 조건) 시 이 파일이 회귀를 감지한다.
 // 진술 truth 배열과 발문이 고정값과 일치하는지가 핵심 — 옵션 순서는 seededRng로 결정적.

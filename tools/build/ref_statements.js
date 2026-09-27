@@ -15,6 +15,8 @@
  *
  * 사용: const { extractRefAtoms } = require('./ref_statements.js');
  * ============================================================ */
+
+// @spec BP-01
 'use strict';
 
 const fs = require('fs');

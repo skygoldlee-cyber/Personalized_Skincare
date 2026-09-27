@@ -1,4 +1,5 @@
 // tests/unit/usage-guide.test.js
+// @spec FO-20
 // src/usage-guide.js — 사용 안내문 생성기 테스트.
 // 제형 템플릿·원료 주의 규칙·고객 조건 주의 병기를 고정한다.
 

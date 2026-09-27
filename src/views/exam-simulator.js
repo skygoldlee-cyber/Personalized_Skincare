@@ -1,4 +1,5 @@
 // views/exam-simulator.js - 실전 모의고사 시뮬레이터 (Exam Simulator)
+// @spec E-01~07,DR-06
 import { state, saveProgress, safeGetItem, safeSetItem, safeRemoveItem } from '../state.js';
 import { esc, safeTextWithBreaks } from '../sanitize.js';
 import { checkShortAnswer } from './trainer.js';

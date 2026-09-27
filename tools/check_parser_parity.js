@@ -10,6 +10,8 @@
  * 사용:  node tools/check_parser_parity.js   (npm run check:parser)
  * 종료코드: 일치 0 / 불일치 1
  */
+
+// @spec BP-05
 const fs = require('fs');
 const path = require('path');
 

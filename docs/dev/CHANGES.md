@@ -4,6 +4,13 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-10-13 소스코드 `@spec` 태그 추적 체계 — check:specrefs 신설
+
+- **자동 검증 도구 `tools/check_spec_refs.js` 신설**: SPEC.md의 ID 전수 추출(344개) ↔ src/tests/tools/css/ref-pipeline의 `@spec` 주석 태그 수집 → 양방향 리포트. 스테일 참조(코드가 SPEC에 없는 ID 참조)는 exit 1, 커버리지 공백은 경고. `check:content` 체인 통합.
+- **335개 ID에 820개 코드 참조** — 모듈 헤더 `// @spec XX-YY` 형식 전수 태깅 (src/ + views/ + tests/ + tools/ + css/ + ref-pipeline/*.py + sw.js/index.html).
+- 태그 규격: 범위 `FB-01~08`·나열 `Q-04,Q-05`·미커버 명시 `@spec none (사유)` 지원. 로드맵 미구현(ROAD-P1~P4)과 저작 규칙(CE-*)만 의도적 공백.
+- SPEC `DA-09` 중복 ID 정정 — 저장소 추상화와 고객 PII가 같은 번호를 공유하던 것을 PII 행을 `DA-10`으로 재명명, AU-07의 참조(`§5.1 DA-08` → `DA-10`)도 함께 정정.
+
 ## 2026-10-13 SPEC ID 추적 체계 전면 도입 — 매트릭스·문서 헤더·FB ID 신설
 
 - ARCHITECTURE.md에 "🔗 요구사양 추적 (SPEC ID 매트릭스)" 신설 — SPEC §3/§4/§5

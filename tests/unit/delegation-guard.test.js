@@ -1,4 +1,5 @@
 // tests/unit/delegation-guard.test.js
+// @spec S-04
 //
 // CSP 회귀 가드 (코드 리뷰 후속).
 //

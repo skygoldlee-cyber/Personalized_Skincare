@@ -16,6 +16,8 @@
  *   node tools/sync_citation_lines.js --check   # 변경사항 확인만 (수정 안 함)
  *   node tools/sync_citation_lines.js --fingerprint  # 지문 파일 생성/갱신
  */
+
+// @spec CS-01
 const fs = require('fs');
 const path = require('path');
 const { getExamTargets } = require('./build/exam_targets');

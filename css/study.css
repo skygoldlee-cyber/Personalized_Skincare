@@ -1,4 +1,6 @@
 /* Flashcard Arena & 3D Flipping */
+
+/* @spec F-01,F-02,A-06 */
 .flashcard-arena {
     display: flex;
     justify-content: center;

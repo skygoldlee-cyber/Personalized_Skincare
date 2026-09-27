@@ -1,4 +1,5 @@
 // tests/dom/common-glossary.dom.test.js — 용어집 수집·렌더·스크롤
+// @spec G-01~09
 // 커버리지 갭 보강: src/views/glossary-renderer.js
 
 import { describe, it, beforeEach, expect, vi } from 'vitest';

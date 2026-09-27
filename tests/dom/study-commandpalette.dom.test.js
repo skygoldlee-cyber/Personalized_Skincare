@@ -1,4 +1,5 @@
 // tests/dom/study-commandpalette.dom.test.js — 통합 검색 팔레트 UI
+// @spec UX-NAV-06
 import { describe, it, beforeEach, expect, vi } from 'vitest';
 import {
     initCommandPalette, openCommandPalette, closeCommandPalette, executePaletteResult

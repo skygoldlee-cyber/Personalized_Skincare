@@ -1,5 +1,7 @@
 /* css/study-calendar.css — 학습 캘린더/목표 스타일 */
 
+/* @spec SC-01 */
+
 /* === 목표 요약 카드 === */
 .study-goals-summary {
     display: grid;

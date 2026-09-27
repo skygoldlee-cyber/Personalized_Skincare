@@ -1,4 +1,5 @@
 // tests/unit/exam-context.test.js
+// @spec ES-01~05
 // 멀티시험 컨텍스트 — 활성 시험 해석, 진도 키 네임스페이스, 경로 해석을 검증.
 
 import { test, beforeEach, afterEach } from 'node:test';

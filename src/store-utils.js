@@ -1,4 +1,5 @@
 // src/store-utils.js — localStorage 엔티티 스토어 공통 헬퍼 (Formula OS)
+// @spec FO-16~18
 //
 // formula-store·batch-store·customer-store·material-ledger가 공유하는
 // 저장·식별·정제 부품. 모든 키는 safeGetItem/safeSetItem 경유로

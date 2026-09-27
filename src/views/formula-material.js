@@ -1,4 +1,5 @@
 // src/views/formula-material.js — Formula OS 원료 장부 뷰 (Phase C)
+// @spec FO-18
 //
 // 목록(formula-material-panel) + 폼(formula-material-form-panel).
 // 기한 상태는 저장하지 않고 표시 시 계산한다 — materialStatus/daysUntilExpiry.

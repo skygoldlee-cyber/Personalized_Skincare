@@ -20,6 +20,8 @@
  *
  * 실행: node tools/build/build_id_migration.js   (npm run build:id-migration / build:data 체인 말미)
  */
+
+// @spec BP-01,ID-04
 const fs = require('fs');
 const path = require('path');
 const plugin = require('./plugins/textbook.plugin.js');

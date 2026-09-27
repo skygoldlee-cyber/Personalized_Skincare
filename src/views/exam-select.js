@@ -1,4 +1,5 @@
 // src/views/exam-select.js — 시험 선택(피커) 뷰
+// @spec ES-01~03
 // 멀티시험 플랫폼의 홈: 등록된 시험 목록을 카드로 표시하고 선택 시 시험을 전환한다.
 import { getExamList, getActiveExamId, selectExam } from '../exam-context.js';
 import { esc } from '../sanitize.js';

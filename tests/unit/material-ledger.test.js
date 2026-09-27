@@ -1,4 +1,5 @@
 // tests/unit/material-ledger.test.js
+// @spec FO-18
 // src/material-ledger.js — 원료 장부 영속성 계층 테스트.
 // CRUD·기한 상태(expired/soon/ok/none)·이름 매칭·정렬을 고정한다.
 

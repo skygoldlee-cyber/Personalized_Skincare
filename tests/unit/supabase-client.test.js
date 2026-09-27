@@ -1,4 +1,5 @@
 // tests/unit/supabase-client.test.js — Supabase 클라이언트 lazy 초기화 검증
+// @spec AU-02,AU-08
 // node:test 환경(DOM 없음)이므로 window/document를 스텁한다.
 // 모듈 상태(_client·_vendorPromise) 리셋을 위해 테스트마다 쿼리스트링으로 신선한 인스턴스 import.
 import { test } from 'node:test';

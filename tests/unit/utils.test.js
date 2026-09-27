@@ -1,3 +1,4 @@
+// @spec F-05,Q-05
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { getChosung } from '../../src/utils.js';

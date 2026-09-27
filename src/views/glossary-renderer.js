@@ -1,4 +1,5 @@
 // src/views/glossary-renderer.js — 용어집(중요 용어 해설) 렌더링 모듈
+// @spec G-01~07,G-09
 // textbook-reader.js에서 용어집 수집·렌더링·이벤트 바인딩을 분리한 모듈.
 // 데이터 접근은 glossary-query.js를 통해 추상화됩니다.
 import { esc } from '../sanitize.js';

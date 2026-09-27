@@ -1,4 +1,5 @@
 // storage-keys.js — localStorage/sessionStorage 키 중앙 관리
+// @spec S-06,DA-07
 // 모든 저장소 키는 이 모듈에서 import하여 사용한다.
 // 키 추가/변경 시 이 파일만 수정하면 된다.
 

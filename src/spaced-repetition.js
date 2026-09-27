@@ -1,4 +1,5 @@
 // spaced-repetition.js — SM-2 알고리즘 기반 간격 반복 학습 시스템
+// @spec F-07~09
 //
 // 각 카드의 복습 스케줄을 관리:
 // - repetition: 연속 정답 횟수 (0부터 시작)

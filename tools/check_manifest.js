@@ -11,6 +11,8 @@
  * 사용: node tools/check_manifest.js   (npm run check:manifest / check:content 첫 단계)
  * 종료코드: ERROR 1건 이상이면 1
  */
+
+// @spec BP-03
 const fs = require('fs');
 const path = require('path');
 const { getExamTargets } = require('./build/exam_targets.js');

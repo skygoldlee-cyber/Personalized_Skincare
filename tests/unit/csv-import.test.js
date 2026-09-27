@@ -1,4 +1,5 @@
 // tests/unit/csv-import.test.js
+// @spec FO-22
 // src/csv-utils.js 파서·인코딩 + 고객/원료 CSV 가져오기(importCustomers·importMaterials)
 // 정합성 테스트 — 중복 건너뜀·한도·sanitize 경유를 고정한다.
 

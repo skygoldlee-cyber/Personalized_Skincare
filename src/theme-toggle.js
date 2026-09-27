@@ -1,4 +1,5 @@
 // src/theme-toggle.js — 테마 토글 로직 (app.js에서 추출)
+// @spec TH-01~05
 import { STORAGE_KEYS } from './storage-keys.js';
 import { safeGetItem, safeSetItem } from './state.js';
 

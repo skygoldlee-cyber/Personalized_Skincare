@@ -1,4 +1,5 @@
 // app.js - Passmula (맞춤형화장품 조제관리사) 애플리케이션 로직
+// @spec S-02,S-03,S-08,UX-NAV-01,UX-PWA-01,UX-PWA-05,PF-10
 import { state, loadProgress, saveProgress, safeGetItem, safeSetItem, safeRemoveItem } from './state.js';
 import { esc } from './sanitize.js';
 import { shuffle } from './utils.js';

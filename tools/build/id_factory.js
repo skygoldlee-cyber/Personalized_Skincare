@@ -1,3 +1,4 @@
+// @spec BP-01,ID-01~04
 const crypto = require('crypto');
 
 const CONTENT_HASH_LEN = 8;

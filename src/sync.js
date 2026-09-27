@@ -1,4 +1,5 @@
 // src/sync.js — 클라우드 스냅샷 동기화 (Phase 2)
+// @spec AU-05~08,DA-10
 // localStorage가 1차 저장소로 남고, 로그인 상태에서만 sync_snapshots 테이블과
 // push/pull한다. 페이로드는 backup.js의 논리 키→값 포맷을 재사용하되
 // 고객 카드·상담 이력(타인 개인정보)은 동기화에서 제외한다 (설계 §7).

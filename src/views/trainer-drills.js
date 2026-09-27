@@ -1,4 +1,5 @@
 // src/views/trainer-drills.js — O/X 판정 드릴 + 복수정답형(combo) 드릴
+// @spec DR-01~07,ND-01
 //
 // 데이터: DataLoader.loadOxDrills(N) → OX_DRILLS_subjectN (build_ox_drills.js 생성)
 //         DataLoader.loadComboDrills() → COMBO_PILOT (수작업 저작)

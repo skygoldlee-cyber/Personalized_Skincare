@@ -1,4 +1,5 @@
 // src/exam-viewer.js - 실전 예상문제집 런타임 MD→HTML 변환 뷰어
+// @spec EV-01~08
 // 외부 의존성: escapeHTML (src/sanitize.js — index.html에서 가장 먼저 로드됨)
 //
 // [변경 요약] 새 창(window.open + about:blank + document.write) 방식을

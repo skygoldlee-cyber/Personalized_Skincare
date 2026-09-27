@@ -1,4 +1,5 @@
 // tools/build/build_audio_manifest.js
+// @spec BP-01
 // 각 시험의 {contentRoot}/audiobook/mp3/ 디렉토리 스캔 → data/audio_manifest.js 자동 생성
 // [멀티시험] content/exams.json의 모든 시험을 순회해 시험 id 키로 분리된 매니페스트를
 //           단일 파일(data/audio_manifest.js — 항상 앱 공용 data 루트)로 발행한다.

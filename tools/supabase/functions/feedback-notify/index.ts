@@ -1,4 +1,5 @@
 // feedback-notify — Supabase Database Webhook → Discord 알림
+// @spec FB-08
 // ------------------------------------------------------------
 // feedback 테이블 INSERT 시 호출되어 Discord webhook으로 요약을 전달한다.
 // 설정: USER_FEEDBACK_DESIGN.md §8

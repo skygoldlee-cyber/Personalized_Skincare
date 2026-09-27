@@ -1,4 +1,5 @@
 // Formula OS — CSV 유틸리티 (가져오기/보내기/양식)
+// @spec FO-22
 // 외부 라이브러리 없이 RFC4180 따옴표 필드·구분자 자동 감지·한글 인코딩 폴백을 처리한다.
 // Excel이 생성하는 CSV는 대부분 CP949(EUC-KR)이므로 UTF-8 strict 디코딩 실패 시
 // EUC-KR로 재시도한다. 보내기는 UTF-8 BOM을 붙여 Excel에서 한글이 깨지지 않게 한다.

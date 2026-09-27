@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# @spec CS-03
 """
 check_laws.py (v2) — 시험 대상 8개 법령의 현행 호수·시행일 확인
 

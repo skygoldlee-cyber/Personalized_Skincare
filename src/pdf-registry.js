@@ -1,4 +1,5 @@
 // src/pdf-registry.js — 참조자료 중앙 설정 모듈 (MD 변환본 기반)
+// @spec RR-13
 // ================================================================
 // ⚠️ 이 파일은 {contentRoot}/references.json에서 빌드 시 자동 생성됩니다.
 // 직접 수정하지 마시고 해당 시험의 references.json을 수정 후 npm run build:pdf-registry 실행.

@@ -1,4 +1,5 @@
 // views/textbook-search.js - 교재 검색 통합 로직 (Textbook Search Integration)
+// @spec TS-01~09,PF-08
 import { escapeHTML, esc } from '../sanitize.js';
 import { parseMarkdown } from '../markdown-parser.js';
 import { renderMermaidIn } from '../mermaid-render.js';

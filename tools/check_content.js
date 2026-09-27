@@ -12,6 +12,8 @@
  *
  * 종료코드: 실패 단계가 있으면 1
  */
+
+// @spec none (검증 오케스트레이터)
 const { spawnSync } = require('child_process');
 const path = require('path');
 
@@ -52,6 +54,8 @@ const STEPS = [
     '카드', '카드 품질 감사 (짧은 설명·중복·참조 링크)'],
   ['node', ['tools/check_docs_paths.js'], false,
     '문서', 'README·AGENTS·docs/*.md 경로 참조 존재 검증 (스테일 탐지)'],
+  ['node', ['tools/check_spec_refs.js'], false,
+    '추적', 'SPEC ID ↔ 코드 @spec 태그 양방향 정합성 (스테일 참조 탐지)'],
   ['node', ['--test', 'tests/unit/*.test.js'], false,
     '테스트', '유닛 테스트 (node --test)'],
   ...(QUICK ? [] : [[

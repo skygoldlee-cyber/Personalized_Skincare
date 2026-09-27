@@ -1,4 +1,5 @@
 // src/views/formula-customer.js — Formula OS 고객 관리 뷰 (Phase B)
+// @spec FO-17
 //
 // 목록(formula-customer-panel) + 폼(formula-customer-form-panel) +
 // 상세(formula-customer-detail-panel) — formula.js의 showPanel/subNav 재사용.

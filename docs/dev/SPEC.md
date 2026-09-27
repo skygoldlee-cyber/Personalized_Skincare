@@ -339,7 +339,7 @@
 | AU-04 | 메일 재발송 쿨다운 (`passmula_auth_mail_cooldown_until`) | ✅ |
 | AU-05 | **스냅샷 동기화** — `sync_snapshots` 테이블 upsert(시험별 페이로드), 로그인 시 pull → 최신성 비교(`last_ts`) → 적용/충돌 확인 (`sync.js`). 충돌 시 버려지는 쪽 스냅샷은 `sync_conflict_backup`에 최근 3건 보존 | ✅ |
 | AU-06 | 쓰기 훅 → dirty 표시 → 디바운스 push; 원격 적용 중 쓰기는 dirty로 세지 않음(`_applyingRemote`) | ✅ |
-| AU-07 | **고객 데이터 동기화 제외** — `SYNC_EXCLUDE`가 `customer_items`를 페이로드에서 제외 (타인 PII 로컬 전용 설계, §5.1 DA-08) | ✅ |
+| AU-07 | **고객 데이터 동기화 제외** — `SYNC_EXCLUDE`가 `customer_items`를 페이로드에서 제외 (타인 PII 로컬 전용 설계, §5.1 DA-10) | ✅ |
 | AU-08 | 미설정 환경(Supabase 미구성)에서 설정 메뉴에 안내 문구로 대체 표시 | ✅ |
 
 ### 3.20 학습 캘린더·복습·드릴
@@ -678,7 +678,7 @@
 | DA-07 | **스코프드 진도 키**: `safeGetItem`/`safeSetItem`이 `<examId>:` 네임스페이스 자동 접두(`scopedKey`) — 시험 간 진도 격리, `GLOBAL_KEYS`(테마 등)만 비네임스페이스. 백업 파일은 비접두사 논리 키로 시험 간 호환 | ✅ |
 | DA-09 | **저장소 추상화 계층** (`src/storage.js`): 모든 영속 읽기·쓰기의 단일 퍼널 — `setStorageBackend()`로 백엔드 교체 가능, 동기·Async 이중 API로 IndexedDB/SQLite 이행 경로 확보. 다중 키 쓰기 `setMany`/`setJSONMany`는 중간 실패 시 이전 값으로 롤백 (다중 엔티티 갱신의 중간 상태 방지) | ✅ |
 | DA-08 | **기능 플래그 게이팅**: exams.json `features` + `hasFeature()` + `data-feature` 속성 — 시험별 도메인 특화 기능(성분사전·오디오북 등) 자동 숨김 | ✅ |
-| DA-09 | **고객 PII 로컬 전용**: `customer_items`는 동기화(`SYNC_EXCLUDE`)·Supabase 테이블 모두에서 제외 — 백업/초기화에는 포함. 조제관리사가 타인 개인정보를 서버에 올리지 않는 설계 | ✅ |
+| DA-10 | **고객 PII 로컬 전용**: `customer_items`는 동기화(`SYNC_EXCLUDE`)·Supabase 테이블 모두에서 제외 — 백업/초기화에는 포함. 조제관리사가 타인 개인정보를 서버에 올리지 않는 설계 | ✅ |
 
 ### 5.2 안정적 ID 체계
 

@@ -1,3 +1,4 @@
+// @spec B-01~04,S-06
 import { describe, it, beforeEach, expect, vi } from 'vitest';
 import { getBackupKeys, exportData, triggerImport, importData } from '../../src/views/backup.js';
 import { scopedKey } from '../../src/exam-context.js';

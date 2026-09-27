@@ -1,4 +1,5 @@
 // src/whats-new.js — 새 버전 알림 순수 로직 테스트.
+// @spec P-13
 // collectNewEntries의 버전 비교·집계·상한·폴백 불변식을 고정한다.
 
 import { test } from 'node:test';

@@ -1,4 +1,5 @@
 // src/customer-store.js — Formula OS 고객 카드·상담 이력 영속성 계층 (Phase B)
+// @spec FO-17,DA-10
 //
 // 고객은 처방·배치와 독립된 엔티티 — 여러 포뮬러·배치가 customerId로 참조한다.
 // localStorage `customer_items` (safeGetItem/safeSetItem 경유 → 시험별

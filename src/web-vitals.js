@@ -1,4 +1,5 @@
 // src/web-vitals.js — Core Web Vitals 모니터링 (Zero-dependency, PerformanceObserver API)
+// @spec none (성능 계측 인프라)
 // LCP, CLS, INP를 측정하여 console.debug에 출력. Zero-backend이므로 외부 전송 없음.
 
 let _lcpValue = 0;

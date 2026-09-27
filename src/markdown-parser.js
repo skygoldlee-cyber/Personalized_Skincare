@@ -1,4 +1,5 @@
 // src/markdown-parser.js - 공통 마크다운 런타임 파서 (브라우저 ESM)
+// @spec TR-01,TR-09
 import { escapeHTML } from './sanitize.js';
 
 /* ============================================================

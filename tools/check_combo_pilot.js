@@ -3,6 +3,8 @@
  * 대상: data/drills/combo_pilot.js (수작업) + data/drills/combo_subject*.js (자동 생성)
  * 실행: node tools/check_combo_pilot.js
  */
+
+// @spec CQ-05
 import { readFile, readdir } from 'node:fs/promises';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import path from 'node:path';

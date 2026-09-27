@@ -1,5 +1,7 @@
 /* css/formula.css — Formula OS (배합 작업실) 스타일 */
 
+/* @spec FO-10,FO-15 */
+
 /* ── 허브 안전 고지 ─────────────────────────────── */
 .formula-safety-note {
     margin: 1.5rem 0 0.9rem;

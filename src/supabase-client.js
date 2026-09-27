@@ -1,4 +1,5 @@
 // src/supabase-client.js — Supabase 클라이언트 lazy 초기화 + 인증 헬퍼
+// @spec AU-02,AU-08
 // vendor/supabase/supabase.js (UMD → window.supabase)는 첫 사용 시점에 동적 로드 —
 // 앱 시작 비용을 늘리지 않고, 미설정 환경(isSupabaseConfigured()=false)에서는 조용히 비활성.
 import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, isSupabaseConfigured } from './supabase-config.js';

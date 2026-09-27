@@ -4,6 +4,8 @@
  * inferTags: 문항 텍스트에서 STANDARD_TAGS(src/questions.js) 어휘를 추론.
  *   "숫자·기준 카드 덱"(docs/dev/reference/COMBO_STUDY_STRATEGY.md §2-④) 필터용 태그 부여에 사용.
  * ============================================================ */
+
+// @spec DR-01,DR-02
 'use strict';
 
 // STANDARD_TAGS = ['수치','한도','기한','금지원료','처분기준','구성비','절차','정의']

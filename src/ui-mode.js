@@ -1,4 +1,5 @@
 // src/ui-mode.js — 학습/실무 UI 모드 전환
+// @spec UM-01~05
 // 합격 후 실무 중심 사용자를 위해 학습 전용 네비게이션을 접고 실무 작업실을 랜딩으로 둔다.
 // 모드는 시험과 무관한 기기 설정(GLOBAL_KEYS) — 'ui_mode': 'study' | 'practice'.
 import { state, safeGetItem, safeSetItem } from './state.js';

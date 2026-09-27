@@ -1,4 +1,5 @@
 // src/feedback.js — 사용자 의견 수신 (USER_FEEDBACK_DESIGN.md)
+// @spec FB-01~08
 // ------------------------------------------------------------
 // 익명 insert 가능한 Supabase `feedback` 테이블로 의견을 보낸다.
 // 오프라인·미설정 환경에서는 localStorage 큐(pending_feedback)에 쌓아

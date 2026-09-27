@@ -1,3 +1,4 @@
+// @spec DA-05
 import { test, beforeEach, afterEach } from 'node:test';
 import assert from 'node:assert/strict';
 import { state, loadProgress, saveProgress, cleanOrphansForSubject } from '../../src/state.js';

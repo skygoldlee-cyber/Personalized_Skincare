@@ -1,4 +1,5 @@
 // 정적 파일 서버 (HTTP Range 지원) - 오디오 탐색(시크) 안정화용
+// @spec none (로컬 개발 서버)
 // 사용: node serve.js [포트]  또는  PORT=포트 node serve.js  (기본 3000)
 // 외부 라이브러리 없이 Node 내장 모듈만 사용.
 const http = require('http');

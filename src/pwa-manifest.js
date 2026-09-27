@@ -1,4 +1,5 @@
 // src/pwa-manifest.js — 시험별 동적 PWA 매니페스트 (클래식 스크립트, 모듈 아님)
+// @spec P-10,DA-06
 // 정적 manifest.webmanifest는 기본 시험 기준 폴백으로 유지하고,
 // 비기본 시험이 활성이면 빌드가 생성한 실제 파일 manifest.<id>.webmanifest로 링크를 교체한다.
 // ⚠️ blob:/data: URL 주입은 금지 — Chrome이 설치 요건에서 유효하지 않은 스킴으로

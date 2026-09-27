@@ -17,6 +17,8 @@
  *   - 플레이스홀더(<id>, {과목}, *, xxx, ... 등)는 구체 접두사까지만 검증
  *   - 의도된 미래 파일 등 예외는 tools/config/docs_paths_allowlist.json에 등록
  */
+
+// @spec none (문서 경로 검증)
 const fs = require('fs');
 const path = require('path');
 

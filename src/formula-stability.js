@@ -1,4 +1,5 @@
 // src/formula-stability.js — Formula OS 제형 안정성 체크 엔진
+// @spec FO-12~14
 //
 // 원료 조합 + 배합비(상 비율) + 배합방법(투입 단계·절차·pH) → 제형 안정성 경고.
 // 법규 검증(formula-check.js)과 별개 축이다 — 규정 OK ≠ 안정성 보장.

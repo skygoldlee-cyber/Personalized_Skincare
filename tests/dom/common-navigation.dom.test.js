@@ -1,4 +1,5 @@
 // tests/dom/common-navigation.dom.test.js — 뷰 전환·스크롤 복원
+// @spec UX-NAV-01~07,R-01~09
 // 커버리지 갭 보강: src/views/navigation.js (save/restoreScrollPosition, switchView)
 
 import { describe, it, beforeEach, expect, vi } from 'vitest';

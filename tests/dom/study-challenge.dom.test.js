@@ -1,4 +1,5 @@
 // tests/dom/study-challenge.dom.test.js — 데일리 챌린지·스트릭 시나리오
+// @spec D-07,Q-06
 // 설계: docs/dev/design/DOM_TEST_DESIGN.md §5.2 (Phase 4)
 // 검증: 오늘 문항 생성(H) · 모달 진행·피드백(H) · 완료 후 재진입 시 완료 상태(R/P)
 //       · 스트릭 갱신·경과일 리셋(B) · 나가기 confirm(X)

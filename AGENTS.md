@@ -231,6 +231,8 @@ docs/                   # 개발 문서
 - `docs/dev/SPEC.md`의 기능/비기능/데이터 요구사항은 **접두사+번호 ID**로 식별 (예: `Q-05`, `FB-01`, `UX-NAV-07`). 접두사는 절별 유일 — 신규 기능은 SPEC에 먼저 ID를 부여한다.
 - ID → 구현 매핑은 `docs/dev/ARCHITECTURE.md` "🔗 요구사양 추적 (SPEC ID 매트릭스)" 절 참조.
 - 다른 dev 문서는 헤더에 `> **관련 SPEC ID**: XX-##` 행으로 자신이 다루는 요구사항을 표기한다. CHANGES.md·커밋 메시지에서도 관련 ID 인용 권장.
+- **코드 추적**: 소스/테스트 파일의 헤더 주석에 `// @spec FB-01~08` (JS/TS), `/* @spec TH-01 */` (CSS), `# @spec CS-03` (Python), `<!-- @spec S-01 -->` (HTML) 형태로 구현 범위를 표기. SPEC 미해당 인프라 파일은 `@spec none (사유)` 표기로 "의도적 미커버"를 명시. 비자명한 로직에는 함수 직상단에 `// @spec UX-NAV-07 — 이유` 형태의 선택 태그 권장.
+- `npm.cmd run check:specrefs`로 양방향 검증 — 코드가 참조하는 ID가 SPEC에 없으면 실패(ID 삭제·개명 시 스테일 참조 탐지), SPEC ID가 어떤 코드에도 없으면 커버리지 공백 경고. `check:content`에 통합됨.
 
 ## 코드 스타일 및 규칙
 

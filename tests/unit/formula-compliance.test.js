@@ -1,4 +1,5 @@
 // 법규 준수 체크리스트 정합성 — 항목 id 고유성, 참조 키 유효성,
+// @spec FO-19
 // LAW_DOCS 경로가 실제 content 파일과 일치하는지 검증한다.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';

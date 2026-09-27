@@ -33,6 +33,8 @@
  *
  * 사용 : node tools/build/build_combo_drills.js [--dry-run]
  * ============================================================ */
+
+// @spec BP-01,DR-02
 'use strict';
 
 const fs = require('fs');

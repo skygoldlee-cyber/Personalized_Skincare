@@ -1,3 +1,4 @@
+// @spec UX-NAV-01,UM-04
 import { describe, it, beforeEach, expect, vi } from 'vitest';
 import { getViewTitles, navigateToView } from '../../src/router.js';
 

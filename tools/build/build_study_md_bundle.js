@@ -18,6 +18,8 @@
  * http(s) 배포에서는 content/*.md 를 직접 fetch 하므로 이 번들이 불필요하지만,
  * 로컬 파일(file://) 실행 시에는 fetch가 차단되어 이 폴백이 사용된다.
  */
+
+// @spec BP-01,DA-04,CS-01,CS-08
 const fs = require('fs');
 const path = require('path');
 const { getExamTargets } = require('./exam_targets.js');

@@ -1,4 +1,5 @@
 // Formula OS — 법규 준수 체크리스트 (Phase D)
+// @spec FO-19
 // 맞춤형화장품판매업자·조제관리사의 법정 의무를 카테고리별 자가점검 항목으로 정리.
 // 항목 내용은 참조자료 법령 정리(과목1 cosmetic-law, 과목4 mixing-subdivision·overview)와
 // ref_md 법령 원문에 근거하며, 각 항목은 근거 문서로 바로 이동 링크를 가진다.

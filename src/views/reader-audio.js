@@ -1,4 +1,5 @@
 // views/reader-audio.js — 오디오북 플레이어 (textbook-reader.js에서 추출)
+// @spec AO-01~05
 import { showToast } from '../ui-utils.js';
 import { safeGetItem, safeSetItem, safeRemoveItem } from '../state.js';
 import { TIMING } from '../config/timing.js';

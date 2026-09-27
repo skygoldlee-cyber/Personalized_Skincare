@@ -1,4 +1,5 @@
 // config/timing.js — UI 타이머/지연값 중앙 관리
+// @spec O-06
 // 도메인 규칙(Pomodoro 25/5분, 시험 1분/문항)은 이 파일에서 명명만 부여하고 보존.
 
 export const TIMING = {

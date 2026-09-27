@@ -15,6 +15,8 @@
  *
  * 사용: node tools/check_ref_lines.js   (불일치 시 exit 1)
  */
+
+// @spec CS-03
 const fs = require('fs');
 const path = require('path');
 const { getExamTargets } = require('./build/exam_targets.js');

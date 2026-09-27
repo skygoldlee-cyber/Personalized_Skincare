@@ -1,3 +1,4 @@
+// @spec BP-02
 function validateSubjectData(subjKey, data) {
   const errors = [];
 

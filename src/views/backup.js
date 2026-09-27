@@ -1,4 +1,5 @@
 // views/backup.js - 로컬 데이터 백업 및 복원 (Data Backup & Restore)
+// @spec B-01~04,S-06
 //
 // [멀티시험] 백업 파일은 비접두사 "논리 키"를 사용한다 (예: fc_memorized).
 //   -보내기: 현재 시험 네임스페이스(<examId>:key)에서 읽어 논리 키로 저장

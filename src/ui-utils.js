@@ -1,4 +1,5 @@
 // ui-utils.js - 로딩 오버레이 및 스피너 UI 유틸리티 (공통 모듈)
+// @spec A-07,UX-FB-01~04
 
 function showLoading(containerId, message = '로딩 중...') {
     const container = document.getElementById(containerId);

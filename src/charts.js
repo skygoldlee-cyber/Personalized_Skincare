@@ -1,4 +1,5 @@
 // src/charts.js - SVG 차트 및 합격 진단 로직 모듈
+// @spec C-01~05
 // [모바일 PWA 견고성] 레지스트리는 index.html의 <script type=module data/registry.js>가
 // 채우는 window 전역을 "가드"해서 읽는다. 정적 import 로 하드 의존하면, 레지스트리 파일
 // 로드가 실패할 때 이 모듈(및 상위 app.js) 전체가 실행되지 않아 흰 화면이 되므로 지양.

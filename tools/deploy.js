@@ -19,6 +19,8 @@
  *
  * 사용: npm run deploy
  */
+
+// @spec BP-07
 const { execSync, spawnSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');

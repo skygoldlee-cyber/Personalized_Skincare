@@ -1,4 +1,5 @@
 // tests/unit/glossary-query.test.js
+// @spec G-08
 // 용어집 쿼리 API를 검증.
 // GLOSSARY_INDEX 데이터가 바뀌어도 쿼리 로직 자체는 동일해야 함.
 

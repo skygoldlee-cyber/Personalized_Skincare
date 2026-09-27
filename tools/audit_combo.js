@@ -40,6 +40,8 @@
  *       node tools/audit_combo.js --update-baseline  (회귀 기준선 갱신)
  *       node tools/audit_combo.js --anomalies backup.json
  */
+
+// @spec CQ-05
 const fs = require('fs');
 const path = require('path');
 const vm = require('vm');

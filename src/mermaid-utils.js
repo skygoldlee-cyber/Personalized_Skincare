@@ -1,4 +1,5 @@
 // src/mermaid-utils.js — Mermaid 다이어그램 타입 감지 공용 유틸리티
+// @spec TR-06~08,TH-06
 // 모든 렌더링 컨텍스트 (textbook-reader, textbook-search, manual-viewer)에서 공유.
 
 /**

@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# @spec CS-01,CS-05
 """batch_convert.py — 교재·학습안내서·report MD 파일을 HTML로 일괄 변환
 
 사용법:

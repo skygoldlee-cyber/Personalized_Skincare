@@ -1,4 +1,5 @@
 // src/views/event-listeners.js — 이벤트 리스너 설정 (app.js에서 분리)
+// @spec S-02,S-03
 import { state, saveProgress, safeGetItem, safeSetItem, safeRemoveItem, listScopedKeys } from '../state.js';
 import { removeItemRaw } from '../storage.js';
 import { shuffle } from '../utils.js';

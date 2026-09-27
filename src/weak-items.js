@@ -1,4 +1,5 @@
 // src/weak-items.js — 약점(오답) 항목 ID 문법과 해석 (DOM 비의존)
+// @spec Q-08,DR-04
 //
 // weakCards / wrongCauses에 들어가는 항목 ID는 세 종류다:
 //   - 플래시카드 ID 그대로:  <subj>_card_<n>

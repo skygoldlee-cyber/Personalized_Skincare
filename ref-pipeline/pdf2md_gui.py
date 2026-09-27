@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# @spec CS-03
 """pdf2md_gui.py — pdf2md.py 변환 엔진의 PySide6 프런트엔드
 
 pdf2md.py를 모듈로 import해 변환 로직을 100% 재사용한다(중복 없음).

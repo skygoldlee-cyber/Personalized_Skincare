@@ -1,4 +1,5 @@
 // tools/coverage-merge.js — 유닛(node:test + c8)과 DOM(vitest) 커버리지 병합
+// @spec none (커버리지 병합)
 //
 // 배경: 유닛 테스트는 node:test, DOM 테스트는 vitest로 따로 실행돼
 // 커버리지가 두 리포트로 갈린다. 각각 coverage-final.json(istanbul 형식)을

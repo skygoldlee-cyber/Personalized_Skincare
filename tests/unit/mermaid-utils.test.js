@@ -1,3 +1,4 @@
+// @spec TR-06~08,TH-06
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { detectMermaidType, getMermaidClassName, getMermaidInitOptions } from '../../src/mermaid-utils.js';

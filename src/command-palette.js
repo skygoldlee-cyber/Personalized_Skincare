@@ -1,4 +1,5 @@
 // command-palette.js — 통합 검색 팔레트 (Ctrl+K)
+// @spec UX-NAV-06
 // 뷰 이동·플래시카드·퀴즈·교재 섹션·성분 사전·문제집을 하나의 검색창에서 찾아 실행한다.
 // 모든 데이터는 로컬(window.STUDY_DATA/INGREDIENTS_DATA/DataLoader.registry) — 오프라인 완전 동작.
 

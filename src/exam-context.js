@@ -1,4 +1,5 @@
 // src/exam-context.js — 멀티시험 컨텍스트 (활성 시험 해석 + 경로/기능 해결)
+// @spec ES-01~05,DA-06~08
 //
 // 시험 목록: data/exams.js 클래식 번들이 window.EXAMS_LIST를 채운다
 // (file:// 호환 — fetch 불가 환경에서도 스크립트 태그로 로드).

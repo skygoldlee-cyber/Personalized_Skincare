@@ -1,4 +1,5 @@
 // src/data-loader.js — 학습 데이터 로더
+// @spec DA-03,PF-01,PF-02,PF-03,PF-07,DA-02
 // [변경] 교재/카드/퀴즈(STUDY_DATA)는 더 이상 사전 빌드된 data/subjects/*.js 번들을 쓰지 않고,
 //        content/*.md 를 런타임에 fetch → src/textbook-parser.js 로 파싱하여 조립한다.
 //        - http(s): content/manifest.json + content/**/*.md 라이브 fetch (항상 최신, 재빌드 불필요)

@@ -1,4 +1,5 @@
 // src/views/formula.js — Formula OS 뷰 컨트롤러 (Phase 5-A)
+// @spec FO-01~11,FO-15
 //
 // 허브(메뉴) + My 포뮬러 목록 + 배합 계산기 서브뷰.
 // 트레이너와 동일한 패턴: 하나의 view-section 안에서 패널을 is-hidden으로 전환.

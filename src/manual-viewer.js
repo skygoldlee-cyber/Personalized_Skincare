@@ -1,4 +1,5 @@
 // src/manual-viewer.js - 사용자 매뉴얼 런타임 MD→HTML 변환 뷰어
+// @spec MV-01~04
 // 외부 의존성: escapeHTML (src/sanitize.js — index.html에서 가장 먼저 로드됨)
 //
 // [설계] 예상문제집 뷰어(src/exam-viewer.js)와 동일한 패턴을 사용하여

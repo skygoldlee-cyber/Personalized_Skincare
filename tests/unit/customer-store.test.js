@@ -1,4 +1,5 @@
 // tests/unit/customer-store.test.js
+// @spec FO-17,DA-10
 // src/customer-store.js — 고객 카드·상담 이력 영속성 계층 테스트.
 // CRUD·상담 이력 append-only·참조 해제(unlinkCustomerFromFormulas)를 고정한다.
 

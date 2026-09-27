@@ -1,4 +1,5 @@
 // src/views/daily-challenge.js - 일일 5분 데일리 챌린지 & Streak 로직 (quiz.js에서 분리)
+// @spec D-07,Q-06
 import { state, saveProgress, safeGetItem, safeSetItem } from '../state.js';
 import { safeTextWithBreaks, esc } from '../sanitize.js';
 import { DataLoader } from '../data-loader.js';

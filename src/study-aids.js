@@ -1,4 +1,5 @@
 // src/study-aids.js — 교재 학습 보조 모듈 (기출 필터, 숫자 암기표, 절차 플로우, 비교 시각화)
+// @spec SA-01~05
 // 순수 함수 기반, CSP-safe, 외부 의존성 없음
 
 import { escapeHTML as esc } from './sanitize.js';  // escapeHTML을 esc로 alias하여 사용

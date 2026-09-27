@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# @spec CS-07,AO-01
 """
 generate_all_mp3.py
 ====================

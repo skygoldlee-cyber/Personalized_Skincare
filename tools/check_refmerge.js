@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 // tools/check_refmerge.js — ref_md joinWraps 병합 품질 감사
+// @spec CS-09
 //
 // ref_md는 인용 라인번호 보존을 위해 시각적 줄 유지로 변환되고(segment=False),
 // 표시 시 parseMarkdown(joinWraps)가 연속줄을 병합한다. 이 스크립트는 전체

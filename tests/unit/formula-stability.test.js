@@ -1,4 +1,5 @@
 // tests/unit/formula-stability.test.js
+// @spec FO-12~14
 // src/formula-stability.js — 제형 안정성 체크 엔진 테스트.
 // 핵심 불변식: 규칙에 없는 조합은 경고를 만들지 않는다 (미판정이 안전).
 

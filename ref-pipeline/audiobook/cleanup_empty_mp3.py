@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# @spec CS-07
 """
 cleanup_empty_mp3.py
 ====================

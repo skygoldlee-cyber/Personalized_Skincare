@@ -1,4 +1,5 @@
 // tools/audit_card_quality.js — 콘텐츠 품질 자동 감사 도구
+// @spec CQ-01~04,BP-08
 //
 // 실행: node tools/audit_card_quality.js
 //

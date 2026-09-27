@@ -1,4 +1,5 @@
 // views/exam-sim-state.js — 실전 모의고사 시뮬레이터 상태 (exam-simulator.js에서 추출)
+// @spec E-03
 export const simState = {
     examId: '',
     data: null,

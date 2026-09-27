@@ -1,4 +1,5 @@
 // src/glossary-query.js — 용어집 데이터 접근 추상화 계층
+// @spec G-08
 // GLOSSARY_INDEX 데이터 구조를 캡슐화하고, 뷰 모듈에 쿼리 API를 제공합니다.
 // 데이터 구조가 변경되어도 이 파일만 수정하면 됩니다.
 import { getGlossaryIndex } from './keyword-index.js';

@@ -1,4 +1,5 @@
 // tools/check_ref_subjects.js — ref_md 문서의 실제 인용 과목 vs DOC_SUBJECT_RULES 귀속 교차 검증
+// @spec CS-09
 //
 // 신호: 문제은행·교재·참조노트 본문의 ref_md 링크를 과목별로 집계(인용 득표).
 // 파일명 규칙(DOC_SUBJECT_RULES)은 문서 내용을 보지 않으므로, 실제 사용 과목과

@@ -6,6 +6,8 @@
  * isFreeLimitError()로 판별 후 showUpgradeNotice()를 호출한다.
  */
 
+// @spec ROAD-P0
+
 import { esc } from './sanitize.js';
 import { trapFocus } from './ui-utils.js';
 import { safeGetItem, safeSetItem } from './state.js';

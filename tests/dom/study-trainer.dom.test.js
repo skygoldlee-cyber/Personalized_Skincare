@@ -1,4 +1,5 @@
 // tests/dom/study-trainer.dom.test.js — 스마트 훈련소 시나리오
+// @spec T-01~05
 // 설계: docs/dev/design/DOM_TEST_DESIGN.md §5.2 (Phase 4)
 // 검증: 메뉴/서브뷰 전이(R) · 수치 훈련 채점(H) · 계산 연습 정답/오답/비수치(X)
 //       · 원료 챌린지 객관식(H/B) · 취약 진술 집계·리뷰(H)

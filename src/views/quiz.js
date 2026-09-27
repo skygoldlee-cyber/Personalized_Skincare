@@ -1,4 +1,5 @@
 // src/views/quiz.js - 기출 퀴즈 및 오답 복습 뷰 로직 (데일리 챌린지는 daily-challenge.js로 분리)
+// @spec Q-01~11,RV-01
 import { state, saveProgress } from '../state.js';
 import { safeTextWithBreaks, esc } from '../sanitize.js';
 import { switchView } from './navigation.js';

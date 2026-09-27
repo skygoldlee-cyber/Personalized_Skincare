@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# @spec CS-03,CS-09,CS-10,PF-11,PF-15
 """convert.py — 참조자료 PDF → ref_md 스테이징 변환 래퍼 (독립 실행)
 
 변환 엔진(공백 복원/표 구조화/무선 표 재구성/마진 잡행 제거)은

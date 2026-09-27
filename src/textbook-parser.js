@@ -1,4 +1,5 @@
 // src/textbook-parser.js — 교재 MD 런타임 파서 (브라우저 ESM)
+// @spec TR-01
 // tools/build/plugins/textbook.plugin.js 의 충실한 포팅.
 // 목표: 기존 빌드 산출물(data/subjects/*.js)과 카드/퀴즈/챕터/ID가 바이트 단위로 동일.
 // 어떤 정규식/분기/트림도 결과를 바꾸지 않도록 원본 로직을 그대로 유지한다.

@@ -1,4 +1,5 @@
 // src/sanitize.js — XSS 방어 유틸리티 모듈 (글로벌 스코프 실행)
+// @spec S-05
 //
 // v2 리뷰 권고 #3 (XSS 잠재 경로 — innerHTML 직접 주입) 대응.
 // 학습 데이터를 innerHTML로 주입하기 전에 HTML 특수문자를 이스케이프하여

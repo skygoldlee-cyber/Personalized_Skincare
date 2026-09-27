@@ -1,4 +1,5 @@
 // tests/dom/study-calendar.dom.test.js — 학습 캘린더·목표 시나리오
+// @spec SC-01,SC-02
 // 설계: docs/dev/design/DOM_TEST_DESIGN.md §5.2 (Phase 4)
 // 검증: 캘린더 렌더(H) · 활동 기록→학습일 반영·목표 달성률(H/P) · 월 이동(H)
 //       · 목표 설정 저장→달성률 재계산(B/P) · 빈 달력(E)

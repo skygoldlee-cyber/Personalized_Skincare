@@ -1,4 +1,5 @@
 // 스토리지 키 드리프트 가드 — 클래식 스크립트/비모듈 코드에 하드코딩된
+// @spec DA-07,AU-07
 // localStorage 키 리터럴이 STORAGE_KEYS 와 어긋나지 않는지 검증한다.
 // 대표 사례: src/theme-init.js는 classic <script>라 import 불가 → 'appTheme' 리터럴 사용.
 import { test } from 'node:test';

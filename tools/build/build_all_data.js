@@ -1,4 +1,5 @@
 // tools/build/build_all_data.js — content/exams.json의 모든 시험에 대해
+// @spec BP-01
 // tools/build/index.js를 EXAM_ID 환경변수와 함께 순차 실행한다.
 //
 // 각 시험은 자신의 contentRoot/dataRoot로 빌드된다:

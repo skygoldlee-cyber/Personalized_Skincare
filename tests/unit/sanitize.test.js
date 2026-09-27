@@ -1,3 +1,4 @@
+// @spec S-05
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { escapeHTML, safeTextWithBreaks, esc } from '../../src/sanitize.js';

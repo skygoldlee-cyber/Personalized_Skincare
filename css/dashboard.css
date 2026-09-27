@@ -1,4 +1,6 @@
 /* Dashboard: Stats Grid */
+
+/* @spec D-09,R-05 */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));

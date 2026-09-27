@@ -1,4 +1,5 @@
 // tests/unit/data-loader.test.js
+// @spec DA-03
 // DataLoader의 레지스트리 기반 조회 로직 (순수 부분) 검증.
 // DOM/스크립트 로딩이 필요한 부분은 제외하고 registry 주입으로 테스트한다.
 

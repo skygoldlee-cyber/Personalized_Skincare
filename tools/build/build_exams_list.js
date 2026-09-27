@@ -5,6 +5,8 @@
  * 클래식 스크립트 번들(window.EXAMS_LIST)로 발행한다.
  * 사용: node tools/build/build_exams_list.js  (build:data 체인에 포함)
  */
+
+// @spec BP-01
 const fs = require('fs');
 const path = require('path');
 

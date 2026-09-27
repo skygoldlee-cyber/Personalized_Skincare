@@ -1,4 +1,5 @@
 // src/material-ledger.js — Formula OS 원료 장부 영속성 계층 (Phase C)
+// @spec FO-18
 //
 // 원료 재고 항목: 입고일·사용기한·보관조건·잔량을 관리하고 기한 임박/경과를
 // 경고한다. localStorage `material_items` (safeGetItem/safeSetItem 경유 →

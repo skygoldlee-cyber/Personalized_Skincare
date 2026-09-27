@@ -1,4 +1,5 @@
 // pwa-install-capture.js - beforeinstallprompt 조기 캡처 + SW 조기 등록
+// @spec P-07
 // app.js는 type="module"(deferred)이라 실행이 늦어:
 //   1) beforeinstallprompt 이벤트를 놓칠 수 있음
 //   2) SW 등록이 늦어져 Chrome이 PWA 설치 가능 판정을 내리지 못할 수 있음

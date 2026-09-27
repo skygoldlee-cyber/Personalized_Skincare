@@ -19,6 +19,8 @@
  *
  * 사용 : node tools/build/build_ox_drills.js
  * ============================================================ */
+
+// @spec BP-01,DR-01
 'use strict';
 
 const fs = require('fs');

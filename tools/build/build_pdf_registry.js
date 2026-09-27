@@ -1,4 +1,5 @@
 // tools/build/build_pdf_registry.js
+// @spec BP-01,RR-13
 // {contentRoot}/references.json → src/pdf-registry.js 자동 생성 (content/exams.json의 모든 시험 순회)
 // 참조자료 추가/삭제/변경 시 해당 시험의 references.json만 수정하면 됨 (빌드 시 pdf-registry.js 재생성)
 //

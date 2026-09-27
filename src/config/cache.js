@@ -1,4 +1,5 @@
 // config/cache.js — 캐시 TTL/최대 항목 수 중앙 관리
+// @spec P-02
 
 export const CACHE = {
   // MD/HTML 뷰어 fetch 캐시
