@@ -6,6 +6,11 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-09-28 설정 메뉴 매뉴얼 항목 제거
+
+- **`index.html`**: 설정 드롭다운의 `학습 매뉴얼`·`실무 매뉴얼` 항목 제거 — 사이드바·모바일 하단 탭에 이미 있어 중복
+- **`user_manual.md`**: 설정 메뉴 설명에서 매뉴얼 항목 제외 + 매뉴얼 진입 경로(사이드바/하단 탭) 안내 추가 → docs_md 번들 재생성
+
 ## 2026-10-16 교재 파일 구조 동기화 도구 — sync_textbook_files.js
 
 - **`tools/sync_textbook_files.js` 신규**: 교재/문제은행 파일시스템을 진실로 `manifest.json`(chapters file/storyFile, exams 미등록 자동 등록)과 `sw.js` `MD_ASSETS`를 동기화. `--check`는 drift 보고+exit 1, `--rename <구> <신>`은 파일 이동+manifest+sw.js+인용 경로 원자 전파 (`#L` 프래그먼트·URL 인코딩 보존)
