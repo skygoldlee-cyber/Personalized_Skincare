@@ -87,6 +87,9 @@ export function proFeatureNotice(featureKey, featureName) {
         <div class="app-confirm-dialog pro-upgrade-dialog" role="alertdialog" aria-modal="true" aria-labelledby="pro-notice-title">
             <h3 id="pro-notice-title">💎 Pro 기능 안내</h3>
             <p><strong>${esc(featureName)}</strong>은(는) Pro 버전에서 제공되는 기능입니다.<br>현재는 무료 체험 기간으로 누구나 이용할 수 있습니다.</p>
+            <div class="pro-upgrade-benefits">
+                <p class="pro-upgrade-sub">Pro 가입 시 로그인 계정의 클라우드 동기화로 <strong>여러 디바이스 간 학습 상태가 공유</strong>됩니다.</p>
+            </div>
             <div class="app-confirm-actions">
                 <button class="app-confirm-ok">확인</button>
             </div>
@@ -129,7 +132,7 @@ export function showUpgradeNotice(featureLabel, limitMessage) {
                 <p class="pro-upgrade-sub"><strong>Pro 플랜(준비 중)</strong>에서는:</p>
                 <ul>
                     <li>${esc(featureLabel)} 저장 한도 무제한</li>
-                    <li>클라우드 동기화 · 멀티기기 이어쓰기</li>
+                    <li>클라우드 동기화 — 여러 디바이스 간 학습 상태 공유</li>
                     <li>오디오북 · 개인화된 맞춤형 리포트</li>
                 </ul>
             </div>

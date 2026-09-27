@@ -6,6 +6,12 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-14 Pro 안내에 멀티디바이스 동기화 안내 추가
+
+- **`pro-upgrade.js` `proFeatureNotice` 모달**: Pro 기능 진입 안내에 "Pro 가입 시 로그인 계정의 클라우드 동기화로 여러 디바이스 간 학습 상태가 공유됩니다" 문구 추가 (pro-upgrade-benefits 래퍼로 한도 모달과 동일 스타일)
+- **`pro-upgrade.js` `showUpgradeNotice`**: 혜택 목록의 "클라우드 동기화 · 멀티기기 이어쓰기"를 "클라우드 동기화 — 여러 디바이스 간 학습 상태 공유"로 명확화
+- **`index.html` 계정 모달 힌트**: "클라우드에 동기화됩니다" → "클라우드에 동기화되어 여러 디바이스 간 상태가 공유됩니다" — 로그인 동기화 혜택을 디바이스 관점으로 명시
+
 ## 2026-10-14 맞춤 학습 리포트 본문에 PRO 배지 명기
 
 - **`index.html` analysis-view 안내 카드**: `🎯 맞춤 학습 리포트란?` 제목에 `<span class="pro-badge" data-pro-feature="personal_analysis">PRO</span>` 추가 — 사이드바·모바일 탭의 내비 배지와 동일한 `personal_analysis` 플랜 키를 쓰므로 `feature-plan.json`이 `free`로 바뀌면 `refreshProBadges`가 내비·본문 배지를 함께 숨긴다
