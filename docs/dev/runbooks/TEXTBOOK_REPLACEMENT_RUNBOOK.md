@@ -3,6 +3,7 @@
 > **대상**: 과목 교재를 통째로 교체하거나 교재 전면 개정을 반영할 때의 **시간 순서 작업 절차**.
 > 상세 근거는 `docs/dev/runbooks/CONTENT_WORKFLOW.md` §3.1-1(8계층)과 `ref-pipeline/README.md` 시나리오 A/B를 따른다.
 > **관련 SPEC ID**: `DA-01` (manifest SSOT) · `CS-01~10` · `BP-01~08` · `ID-01~04`
+> **문서 ID**: DOC-RBK-08
 
 ```powershell
 # 작업 시작 전 — 대상 시험 지정 (cosmetic이 기본값, 다른 시험은 명시)

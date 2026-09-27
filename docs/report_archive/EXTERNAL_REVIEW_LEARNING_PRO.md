@@ -1,6 +1,9 @@
 # Learning Pro 문서 외부 리뷰 (수신: 2026-09-26)
 
 > [LEARNING_PREMIUM_PLAN.md](../dev/design/LEARNING_PREMIUM_PLAN.md) + [PRO_MULTI_EXAM_EVALUATION.md](PRO_MULTI_EXAM_EVALUATION.md)에 대한 외부 리뷰 원문과 코드 기준 검증 결과.
+> **문서 ID**: DOC-ARC-02
+> **관련 SPEC ID**: ROAD-P3 (Learning Pro)
+> **성격**: 1회 분석·원전 | **결과**: 아카이브 (외부 리뷰 — 채택분은 DOC-DSN-03 LEARNING_PREMIUM_PLAN에 반영)
 
 ## 리뷰 종합 평가 (원문)
 

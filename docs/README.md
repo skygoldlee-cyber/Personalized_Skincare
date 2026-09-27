@@ -2,6 +2,8 @@
 
 > **Cosmetic Pass Master / Passmula** — 맞춤형화장품 조제관리사 스마트 학습 + 실무(Formula OS) 플랫폼
 > 최종 갱신: 2026-09-24
+> **문서 ID**: DOC-IDX-01
+> **관련 SPEC ID**: 해당 없음 (문서 인덱스·ID 레지스트리)
 
 이 문서는 `docs/` 아래 모든 문서의 **역할 설명**과 **목적별 읽기 순서**를 제공합니다.
 
@@ -86,7 +88,7 @@ docs/
 │   ├── ARCHITECTURE.md·SPEC.md·CHANGES.md  ← 수위 문서 (아키텍처·명세·이력)
 │   ├── runbooks/              ← 실행 절차·운영 런북 (8개)
 │   ├── design/                ← 설계·계획·평가 문서 (9개)
-│   └── reference/             ← 명세·로직·참조 문서 (6개)
+│   └── reference/             ← 명세·로직·참조 문서 (7개)
 ├── user/                        ← 사용자/학습자 문서 (7개)
 └── report_archive/              ← 분석 보고서 + 대체된 전략 문서 아카이브 (11개)
 ```
@@ -101,6 +103,7 @@ docs/
 |------|------|
 | [ARCHITECTURE.md](dev/ARCHITECTURE.md) | 시스템 아키텍처·설계 철학 — Local-First + 선택적 클라우드, ESM 구조, 데이터 흐름, PWA/SW 전략, 계정·동기화, UI 모드, Formula OS, 배포 파이프라인, 구현 레시피, 강건성 가이드라인 |
 | [SPEC.md](dev/SPEC.md) | 요구사양 명세서 — 구현된 기능을 역공학해 정리 (현행 기준서) |
+| [DEV_ENVIRONMENT.md](dev/reference/DEV_ENVIRONMENT.md) | 개발환경 요구사양 — Node/Python/CLI 도구 버전, 최초 설정 절차, 검증·빌드·배포 명령 |
 | [SUPABASE_DESIGN.md](dev/design/SUPABASE_DESIGN.md) | Supabase 계정·클라우드 동기화·Pro 권한 설계 — Phase 1~2 구현 완료, URL/PWA 동일 로그인 UX |
 | [FLASHCARD_LOGIC.md](dev/reference/FLASHCARD_LOGIC.md) | 플래시카드 생성·난이도·필터·SM-2 간격 반복 로직 |
 | [MD_TO_HTML_LOGIC.md](dev/reference/MD_TO_HTML_LOGIC.md) | MD→HTML 변환 로직 — 런타임 파서(manual-viewer)와 빌드 파이프라인 |
@@ -213,9 +216,90 @@ docs/
 
 ## 📌 문서 작성 규칙
 
+- **문서 ID**: 모든 문서 상단에 `> **문서 ID**: DOC-XX-NN` 표기 — 아래 레지스트리에서 채번. `npm run check:docs`가 누락·중복을 검증
 - **업데이트 날짜**: 각 문서 상단에 `최종 업데이트` 명시
 - **링크**: 상대 경로 사용 (`../`, `dev/`, `user/`); 공백 파일명은 `%20` 인코딩
 - **Mermaid 다이어그램**: `securityLevel: 'strict'` + crypto nonce로 인앱 및 GitHub 렌더링 지원
+
+---
+
+## 🏷️ 문서 ID 레지스트리
+
+모든 문서는 `DOC-{영역}-{NN}` 고유 ID를 갖는다. 신규 문서는 해당 영역의 다음 번호를 채번하고 이 표에 등록한다.
+
+| 접두사 | 영역 | 범위 |
+|--------|------|------|
+| `DOC-ROOT` | 루트 문서 | README.md · AGENTS.md |
+| `DOC-IDX` | 문서 인덱스 | docs/README.md (본 파일) |
+| `DOC-DEV` | 개발 수위 문서 | SPEC · ARCHITECTURE · CHANGES · TRACE_MATRIX |
+| `DOC-DSN` | 설계·계획 | docs/dev/design/ |
+| `DOC-REF` | 명세·로직 참조 | docs/dev/reference/ |
+| `DOC-RBK` | 운영 런북·절차 | docs/dev/runbooks/ |
+| `DOC-USR` | 사용자 문서 | docs/user/ |
+| `DOC-BIZ` | 사업 문서 | docs/business/ |
+| `DOC-ARC` | 아카이브 | docs/report_archive/ |
+| `DOC-PPL` | 파이프라인 도구 | ref-pipeline/ |
+
+| ID | 파일 |
+|----|------|
+| DOC-ROOT-01 | `README.md` |
+| DOC-ROOT-02 | `AGENTS.md` |
+| DOC-ROOT-03 | `combo_review_queue.md` (자동 생성, gitignore) |
+| DOC-IDX-01 | `docs/README.md` |
+| DOC-DEV-01 | `docs/dev/SPEC.md` |
+| DOC-DEV-02 | `docs/dev/ARCHITECTURE.md` |
+| DOC-DEV-03 | `docs/dev/CHANGES.md` |
+| DOC-DEV-04 | `docs/dev/TRACE_MATRIX.md` (자동 생성 — npm run build:trace) |
+| DOC-DSN-01 | `docs/dev/design/DOM_TEST_DESIGN.md` |
+| DOC-DSN-02 | `docs/dev/design/FORMULA_OS_WORKFLOW_DESIGN.md` |
+| DOC-DSN-03 | `docs/dev/design/LEARNING_PREMIUM_PLAN.md` |
+| DOC-DSN-04 | `docs/dev/design/QUESTION_SCHEMA_DESIGN.md` |
+| DOC-DSN-05 | `docs/dev/design/READER_FEEDBACK_DESIGN.md` |
+| DOC-DSN-06 | `docs/dev/design/STUDY_APP_DESIGN_GUIDE.md` |
+| DOC-DSN-07 | `docs/dev/design/SUBSCRIPTION_ROADMAP.md` |
+| DOC-DSN-08 | `docs/dev/design/SUPABASE_DESIGN.md` |
+| DOC-DSN-09 | `docs/dev/design/USER_FEEDBACK_DESIGN.md` |
+| DOC-REF-01 | `docs/dev/reference/COMBO_STUDY_STRATEGY.md` |
+| DOC-REF-02 | `docs/dev/reference/DEV_ENVIRONMENT.md` |
+| DOC-REF-03 | `docs/dev/reference/FLASHCARD_LOGIC.md` |
+| DOC-REF-04 | `docs/dev/reference/MD_TO_HTML_LOGIC.md` |
+| DOC-REF-05 | `docs/dev/reference/NUMBERING_SYSTEM.md` |
+| DOC-REF-06 | `docs/dev/reference/TESTING.md` |
+| DOC-REF-07 | `docs/dev/reference/TEXTBOOK_REFERENCE_MAPPING.md` |
+| DOC-RBK-01 | `docs/dev/runbooks/AUDIO_HOSTING_GUIDE.md` |
+| DOC-RBK-02 | `docs/dev/runbooks/COMBO_GENERATION_GUIDE.md` |
+| DOC-RBK-03 | `docs/dev/runbooks/CONTENT_WORKFLOW.md` |
+| DOC-RBK-04 | `docs/dev/runbooks/DEPLOYMENT_GUIDE.md` |
+| DOC-RBK-05 | `docs/dev/runbooks/MULTI_MACHINE_SETUP.md` |
+| DOC-RBK-06 | `docs/dev/runbooks/Supabase_Custom_SMTP_MagicLink_OTP_설정가이드.md` |
+| DOC-RBK-07 | `docs/dev/runbooks/TEXTBOOK_AUTHORING_GUIDE.md` |
+| DOC-RBK-08 | `docs/dev/runbooks/TEXTBOOK_REPLACEMENT_RUNBOOK.md` |
+| DOC-USR-01 | `docs/user/exam_strategy.md` |
+| DOC-USR-02 | `docs/user/formula_manual.md` |
+| DOC-USR-03 | `docs/user/subject1_numbers.md` |
+| DOC-USR-04 | `docs/user/subject2_numbers.md` |
+| DOC-USR-05 | `docs/user/subject3_numbers.md` |
+| DOC-USR-06 | `docs/user/subject4_numbers.md` |
+| DOC-USR-07 | `docs/user/user_manual.md` |
+| DOC-BIZ-01 | `docs/business/FORMULA_OS_경쟁전략.md` |
+| DOC-BIZ-02 | `docs/business/맞춤형화장품_조제관리사_자격증플랫폼_사업기획서.md` |
+| DOC-BIZ-03 | `docs/business/맞춤형화장품판매업소_조사_2026-09.md` |
+| DOC-BIZ-04 | `docs/business/유튜브_홍보동영상_제작의뢰서.md` |
+| DOC-BIZ-05 | `docs/business/판매업소_인터뷰_스크립트.md` |
+| DOC-ARC-01 | docs/report_archive/Cosmetic Master Business Plan.md |
+| DOC-ARC-02 | `docs/report_archive/EXTERNAL_REVIEW_LEARNING_PRO.md` |
+| DOC-ARC-03 | `docs/report_archive/FEATURE_PROPOSALS.md` |
+| DOC-ARC-04 | `docs/report_archive/FORMULA_OS_DESIGN.md` |
+| DOC-ARC-05 | `docs/report_archive/PASS_CORE_LOOP_REVIEW.md` |
+| DOC-ARC-06 | `docs/report_archive/PASS_TO_PRACTICE_STRATEGY.md` |
+| DOC-ARC-07 | `docs/report_archive/PRO_MULTI_EXAM_EVALUATION.md` |
+| DOC-ARC-08 | `docs/report_archive/법령최신확인결과.md` |
+| DOC-ARC-09 | `docs/report_archive/오답위험_분석보고서.md` |
+| DOC-ARC-10 | `docs/report_archive/출제비중기반학습방법.md` |
+| DOC-ARC-11 | `docs/report_archive/출제비중분포조사결과.md` |
+| DOC-PPL-01 | `ref-pipeline/README.md` |
+| DOC-PPL-02 | `ref-pipeline/audiobook/README.md` |
+| DOC-PPL-03 | `ref-pipeline/audiobook/AUDIOBOOK_SUMMARY.md` |
 - **인코딩**: UTF-8 (BOM 없음)
 - **신규 문서 추가 시**: 이 인덱스의 해당 분류 표에 행 추가 + 읽기 순서 경로에 필요 시 반영
 - **시점 스냅샷 문서** (리뷰·조사 보고서): `report_archive/`에 두거나 문서 상단에 작성 시점 명시

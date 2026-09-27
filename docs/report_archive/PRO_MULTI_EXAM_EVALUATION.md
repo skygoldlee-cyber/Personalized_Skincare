@@ -1,6 +1,9 @@
 # Learning Pro 멀티시험 킬러 피처 적합성 평가
 
 > 작성: 2026-09-25 · 관련: [LEARNING_PREMIUM_PLAN.md](../dev/design/LEARNING_PREMIUM_PLAN.md) · [사업기획서](../사업기획서_통합플랫폼.md)
+> **문서 ID**: DOC-ARC-07
+> **관련 SPEC ID**: ES-01~05, ROAD-P4
+> **성격**: 1회 분석·원전 | **결과**: 아카이브 (평가 — 결론은 SPEC §7.4)
 
 **질문**: Learning Premium(Pro) 기능이 여러 자격증 시험의 킬러 피처가 될 수 있는가?
 

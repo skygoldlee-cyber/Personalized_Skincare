@@ -4,6 +4,7 @@
 > **목적**: 사용중인 고객(학습자)의 피드백을 큐레이션하여 구독중인 독자(Pro)에게 공유하는 기능 설계
 > **관련 문서**: [SUBSCRIPTION_ROADMAP.md](SUBSCRIPTION_ROADMAP.md), [ARCHITECTURE.md](../ARCHITECTURE.md)
 > **관련 SPEC ID**: `FB-01~08` (수신 인프라 — USER_FEEDBACK_DESIGN.md), 본 문서는 큐레이션·공유 쪽 미구현 확장
+> **문서 ID**: DOC-DSN-05
 
 ---
 

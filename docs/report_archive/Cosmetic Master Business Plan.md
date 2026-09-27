@@ -1,5 +1,9 @@
 # 📘 Cosmetic Master 사업기획서
 
+> **문서 ID**: DOC-ARC-01
+> **관련 SPEC ID**: ROAD-P0~P4, FO-01~23
+> **성격**: 1회 분석·원전 | **결과**: 아카이브 (구판 기획서 — docs/business/ 사업기획서 v3.5로 대체)
+
 **"합격시키고, 합격 후에도 계속 쓰게 만드는 조제관리사 Formula OS"**
 
 > **브랜드 구조**: **Cosmetic Master** (상위 브랜드) = **Pass Master** (Pass Loop, 시험 합격) + **Formula OS** (Practice Loop, 실무)

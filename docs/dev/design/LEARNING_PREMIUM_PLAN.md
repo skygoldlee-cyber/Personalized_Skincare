@@ -4,6 +4,7 @@
 > **목적**: 학습(시험 준비) 측 Premium의 구현 대상을 우선순위·공수·전제 조건과 함께 정리
 > **관련 문서**: [FEATURE_PROPOSALS.md](../../report_archive/FEATURE_PROPOSALS.md), [PASS_CORE_LOOP_REVIEW.md](../../report_archive/PASS_CORE_LOOP_REVIEW.md), [SUBSCRIPTION_ROADMAP.md](SUBSCRIPTION_ROADMAP.md), [사업기획서](../../business/맞춤형화장품_조제관리사_자격증플랫폼_사업기획서.md)
 > **관련 SPEC ID**: `AN-01~03` (맞춤 리포트) · `ROAD-P0` (Pro 안내 계층)
+> **문서 ID**: DOC-DSN-03
 
 ---
 

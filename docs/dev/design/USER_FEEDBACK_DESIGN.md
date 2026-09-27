@@ -5,6 +5,7 @@
 > **관련 문서**: [SUPABASE_DESIGN.md](SUPABASE_DESIGN.md) (계정·동기화 인프라), [READER_FEEDBACK_DESIGN.md](READER_FEEDBACK_DESIGN.md) (수신된 피드백의 큐레이션·공유 — 본 문서는 **수신 쪽 절반**), [유튜브_홍보동영상_제작의뢰서](../../business/유튜브_홍보동영상_제작의뢰서.md)
 > **관련 SPEC ID**: `FB-01~08` (SPEC §3.23) · `AU-01~08` (인증 기반) · `S-01` (CSP `connect-src`)
 > **상태**: **구현됨** (2026-09-26) — `src/feedback.js`, 설정 메뉴 "의견 보내기". `feedback` 테이블은 `tools/supabase/schema.sql`에 정의됐으나 실제 적용은 Supabase SQL Editor 수동 실행 필요
+> **문서 ID**: DOC-DSN-09
 
 ---
 

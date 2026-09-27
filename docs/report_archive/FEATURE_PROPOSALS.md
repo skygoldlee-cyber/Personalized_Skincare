@@ -4,6 +4,9 @@
 > **개정일**: 2026-09-11 — 합격 핵심 루프 중심 재구성, Free/Pro 균형 조정, PASS MASTER 브랜드 전략 반영, Phase 5 Practice Platform 연동
 > **목적**: 단순 기능 목록이 아닌, **"합격시키고, 합격 후에도 계속 쓰게 만드는 플랫폼"** 의 핵심 제품 전략 문서
 > **관련 문서**: [SPEC.md](SPEC.md), [SUBSCRIPTION_ROADMAP.md](../dev/design/SUBSCRIPTION_ROADMAP.md), [READER_FEEDBACK_DESIGN.md](../dev/design/READER_FEEDBACK_DESIGN.md), [PASS_TO_PRACTICE_STRATEGY.md](PASS_TO_PRACTICE_STRATEGY.md)
+> **문서 ID**: DOC-ARC-03
+> **관련 SPEC ID**: ROAD-P0~P4 (핵심 루프 잔여 과제)
+> **성격**: 1회 분석·원전 | **결과**: 아카이브 (제안 원전 — 잔여 과제는 SPEC §7·DOC-DSN-03)
 
 ---
 

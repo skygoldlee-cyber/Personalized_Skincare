@@ -1,5 +1,7 @@
 # Supabase Custom SMTP + Magic Link/OTP 설정 가이드
 
+> **문서 ID**: DOC-RBK-06
+
 ## 1. 개요
 
 > **관련 SPEC ID**: `AU-02~04` (로그인 메일·쿨다운) — 설계 배경은 `../design/SUPABASE_DESIGN.md`

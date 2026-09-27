@@ -4,6 +4,8 @@
 > **출처**: `ARCHITECTURE.md`, `SPEC.md`, `TEXTBOOK_AUTHORING_GUIDE.md`의 실제 구현 경험을 추출·정리
 > **ID 체계**: 본 문서의 요구사항 ID는 `SPEC.md`와 동일 접두사를 공유 (본 문서는 "적용 조건" 기준, SPEC은 "구현 상태" 기준 — 동일 ID면 동일 요구사항). 예외: 오디오북은 SPEC에서 `AO-`로 재명명됨
 > **최종 업데이트**: 2026-09-03
+> **문서 ID**: DOC-DSN-06
+> **관련 SPEC ID**: 전 영역 (본 문서 요구사항 ID는 SPEC.md와 동일 접두사 공유)
 
 ---
 

@@ -6,6 +6,9 @@
 > **개정일**: 2026-09-12 — 종합 리뷰 반영: Formula OS 핵심 격상, AI 배합 참고 한 단계 뒤로, verified 세분화, MVP 축소(Phase 5-A), 고객 개인정보 최소화, 법적 한도 ≠ 안전성 UI 분리, ingredient_practice 관계형 분리, 법령 알림 Actionable Alert 강화, Pass Pro vs Practice Pro 분리, Practice 타깃 확장, Knowledge Flywheel, 상위 브랜드 Cosmetic Master 적용
 > **목적**: 합격 후 이탈하는 일반 자격증 플랫폼과 달리, 맞춤형화장품조제관리사의 특성을 활용하여 **합격 후에도 계속 머무는 실무 플랫폼** 으로 확장하는 전략
 > **관련 문서**: [FEATURE_PROPOSALS.md](FEATURE_PROPOSALS.md), [SUBSCRIPTION_ROADMAP.md](../dev/design/SUBSCRIPTION_ROADMAP.md), [READER_FEEDBACK_DESIGN.md](../dev/design/READER_FEEDBACK_DESIGN.md)
+> **문서 ID**: DOC-ARC-06
+> **관련 SPEC ID**: FO-01~23, UM-01~05, ROAD-P0~P4
+> **성격**: 1회 분석·원전 | **결과**: 아카이브 (전략 원전 — 사업기획서·SPEC §3.18에 흡수)
 
 ---
 

@@ -3,6 +3,24 @@
 > 대상: Personalized_Skincare (Cosmetic Pass Master) 배포판
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
+> **문서 ID**: DOC-DEV-03
+> **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
+
+## 2026-10-13 TRACE MATRIX 구축 — 문서·소스·테스트·보고서 유기 추적
+
+- **문서→요구사항 링크 완성**: 모든 문서(56개) 헤더에 `관련 SPEC ID` 부여 — dev 문서는 구체 ID(`FO-01~23` 등·범위·와일드카드 지원), 비해당 문서는 "해당 없음 (사유)" 명시
+- **보고서 규약**: report_archive 11개에 `성격|결과` 행 추가 — "아카이브 (대체 문서/흡수처 명시)"
+- **`tools/build_trace_matrix.js` 신설**: SPEC ID 축으로 문서·소스·테스트·보고서 4열 매트릭스 자동 생성 → `docs/dev/TRACE_MATRIX.md`(DOC-DEV-04). 절별 그룹핑 + 커버리지 요약 + 부록(문서→요구사항 역방향·헤더 누락 목록). `npm run build:trace`
+- **`check_spec_refs.js` 확장**: 문서 헤더 "관련 SPEC ID"도 스캔해 SPEC에 없는 ID를 스테일로 실패 처리 — 토큰 파싱에 백틱·`·` 구분·`P` 범위(ROAD-P0~P4)·와일드카드(`Q-*`)·"전 영역/해당 없음" 지원 추가
+- 결과: 요구사항 344개 — 문서 198 · 소스 325 · 테스트 232 · 보고서 106 연결 (TRACE_MATRIX.md 커버리지 요약)
+
+## 2026-10-13 전 문서 DOC ID 부여 — 문서 추적성 확보
+
+- **문서 ID 체계 도입**: 모든 마크다운 문서(docs/·ref-pipeline/·루트 README·AGENTS) 상단에 `> **문서 ID**: DOC-{영역}-{NN}` 헤더 부여 — 영역 접두사 ROOT/IDX/DEV/DSN/REF/RBK/USR/BIZ/ARC/PPL
+- **레지스트리**: `docs/README.md`에 "문서 ID 레지스트리" 절 신설 — ID→파일 매핑 표 + 채번 규칙
+- **검증 통합**: `tools/check_doc_ids.js` 신설 — 헤더 누락·형식 오류·ID 중복 자동 탐지. `npm run check:docs`에 연쇄(경로 검증 + ID 검증)
+- 목적: SPEC ID(요구사항 추적)와 별개로 **문서 자체의 참조·인용 가능 ID** 확보 — CHANGES·커밋·문서 상호참조에서 `DOC-XXX-NN`으로 지칭 가능
+- `combo_review_queue.md`는 자동 생성물이라 예외(gitignore). ref-pipeline `.pytest_cache` 등 숨김 디렉터리는 검사 제외
 
 ## 2026-10-13 check:docs 스테일 경로 해소 + 함수 레벨 @spec 태깅
 

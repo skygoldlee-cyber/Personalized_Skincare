@@ -37,8 +37,14 @@ const EXCLUDE_FILES = [path.join('tools', 'check_spec_refs.js')];
 // ID 패턴: AA-NN, AA-BB-NN (예: UX-NAV-07), AA-PN (예: ROAD-P0 로드맵)
 const ID_RE = /\b([A-Z]{1,4}(?:-[A-Z]{1,4})?-(?:\d{2}|P\d))\b/g;
 const SPEC_TAG_RE = /@spec\s+([^\n]*)/g;
-const RANGE_RE = /^([A-Z]{1,4}(?:-[A-Z]{1,4})?-)(\d{2})~(\d{2})$/;
+const RANGE_RE = /^([A-Z]{1,4}(?:-[A-Z]{1,4})?-P?)(\d{1,2})~P?(\d{1,2})$/
+;const WILDCARD_ID_RE = /^([A-Z]{1,4}(?:-[A-Z]{1,4})?)-\*$/;
 const PURE_ID_RE = /^[A-Z]{1,4}(?:-[A-Z]{1,4})?-(?:\d{2}|P\d)$/;
+const RELATED_RE = /^>\s*\*\*관련 SPEC ID\*\*:\s*(.+)$/m;
+
+// 문서 헤더 "관련 SPEC ID" 스캔 대상 (check_doc_ids.js와 동일 범위)
+const DOC_SCAN_DIRS = ['docs', 'ref-pipeline'];
+const DOC_SCAN_FILES = ['AGENTS.md', 'README.md'];
 
 function* walk(dir) {
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -57,24 +63,37 @@ function* walk(dir) {
 function extractSpecIds() {
   const text = fs.readFileSync(SPEC_FILE, 'utf8');
   const ids = new Set();
-  for (const m of text.matchAll(ID_RE)) ids.add(m[1]);
+  for (const m of text.matchAll(ID_RE)) {
+    if (m[1].startsWith('DOC-')) continue; // 문서 ID는 요구사양 ID가 아님
+    ids.add(m[1]);
+  }
   return ids;
 }
 
-/** @spec 토큰 문자열 → ID 집합 확장 (범위·나열 지원) */
-function parseSpecTag(tagText, file, line, errors) {
+/** @spec 토큰 문자열 → ID 집합 확장 (범위·나열·접두사 와일드카드 지원) */
+function parseSpecTag(tagText, file, line, errors, specIds = new Set()) {
   const ids = new Set();
-  for (const raw of tagText.split(',')) {
+  if (/^(none\b|해당|전 영역)/.test(tagText.trim())) return ids; // 의도적 미커버 표기
+  for (const raw of tagText.split(/[,·]/)) {
     const token = raw.trim()
       .replace(/\*\/\s*$/, '')       // 블록 주석 종결자 */ 제거
       .replace(/-->\s*$/, '')        // HTML 주석 종결자 --> 제거
-      .replace(/[)）].*$/, '').trim(); // 뒤 주석 제거
+      .replace(/[)）(].*$/, '')      // 뒤 주석 제거
+      .replace(/[가-힣\s].*$/, '')   // 한글 설명 제거
+      .replace(/[`'"]/g, '')         // 백틱·인용부호 제거 (`FO-01~23` 형태)
+      .trim();
     if (!token) continue;
     if (/^none\b/i.test(token)) return ids; // 의도적 미커버 표기
     const range = token.match(RANGE_RE);
     if (range) {
       const [, prefix, from, to] = range;
-      for (let i = +from; i <= +to; i++) ids.add(prefix + String(i).padStart(2, '0'));
+      const pad = prefix.endsWith('P') ? 1 : 2; // ROAD-P0~P4는 단자리
+      for (let i = +from; i <= +to; i++) ids.add(prefix + String(i).padStart(pad, '0'));
+      continue;
+    }
+    const wild = token.match(WILDCARD_ID_RE);
+    if (wild) {
+      for (const id of specIds) if (id.startsWith(wild[1] + '-')) ids.add(id);
       continue;
     }
     if (PURE_ID_RE.test(token)) { ids.add(token); continue; }
@@ -84,7 +103,7 @@ function parseSpecTag(tagText, file, line, errors) {
   return ids;
 }
 
-function collectCodeRefs() {
+function collectCodeRefs(specIds) {
   const refs = new Map(); // id → [{file, line}]
   const errors = [];
   const files = [...SCAN_FILES.map((f) => path.join(ROOT, f)).filter((f) => fs.existsSync(f))];
@@ -97,7 +116,7 @@ function collectCodeRefs() {
     const lines = fs.readFileSync(file, 'utf8').split('\n');
     lines.forEach((text, i) => {
       for (const m of text.matchAll(SPEC_TAG_RE)) {
-        for (const id of parseSpecTag(m[1], file, i + 1, errors)) {
+        for (const id of parseSpecTag(m[1], file, i + 1, errors, specIds)) {
           if (!refs.has(id)) refs.set(id, []);
           refs.get(id).push({ file: path.relative(ROOT, file), line: i + 1 });
         }
@@ -107,13 +126,48 @@ function collectCodeRefs() {
   return { refs, errors };
 }
 
+function* walkDocs(dir) {
+  if (!fs.existsSync(dir)) return;
+  for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+    const p = path.join(dir, e.name);
+    if (e.isDirectory()) {
+      if (!e.name.startsWith('.')) yield* walkDocs(p);
+    } else if (e.name.endsWith('.md')) yield p;
+  }
+}
+
+/** 문서 헤더 "관련 SPEC ID" 수집 — id → [{file}] */
+function collectDocRefs(specIds) {
+  const refs = new Map();
+  const errors = [];
+  const missing = [];
+  const files = DOC_SCAN_FILES.map(f => path.join(ROOT, f)).filter(f => fs.existsSync(f));
+  for (const d of DOC_SCAN_DIRS) files.push(...walkDocs(path.join(ROOT, d)));
+  for (const file of files) {
+    const rel = path.relative(ROOT, file).replace(/\\/g, '/');
+    const text = fs.readFileSync(file, 'utf8');
+    const m = text.match(RELATED_RE);
+    if (!m) { missing.push(rel); continue; }
+    for (const id of parseSpecTag(m[1], file, 0, errors, specIds)) {
+      if (!refs.has(id)) refs.set(id, []);
+      refs.get(id).push({ file: rel });
+    }
+  }
+  return { refs, errors, missing };
+}
+
 function main() {
   const specIds = extractSpecIds();
-  const { refs, errors } = collectCodeRefs();
+  const { refs, errors } = collectCodeRefs(specIds);
+  const { refs: docRefs, errors: docErrors, missing: missingHeaders } = collectDocRefs(specIds);
+  errors.push(...docErrors);
 
-  const stale = [];   // 코드 → SPEC에 없는 ID
+  const stale = [];   // 코드·문서 → SPEC에 없는 ID
   for (const [id, locs] of refs) {
     if (!specIds.has(id)) for (const l of locs) stale.push(`${l.file}:${l.line} — SPEC에 없는 ID: ${id}`);
+  }
+  for (const [id, locs] of docRefs) {
+    if (!specIds.has(id)) for (const l of locs) stale.push(`${l.file} — 헤더 "관련 SPEC ID"가 SPEC에 없는 ID: ${id}`);
   }
 
   const uncovered = [...specIds].filter((id) => !refs.has(id)).sort();
@@ -121,6 +175,7 @@ function main() {
   console.log('SPEC ID 추적 검증');
   console.log(`  SPEC.md 선언 ID: ${specIds.size}개`);
   console.log(`  코드 @spec 참조: ${refs.size}개 ID, ${[...refs.values()].flat().length}개 위치`);
+  console.log(`  문서 헤더 참조: ${docRefs.size}개 ID (TRACE_MATRIX 재생성은 npm run build:trace)`);
 
   if (errors.length) {
     console.log('\n태그 파싱 오류:');
@@ -129,6 +184,11 @@ function main() {
   if (stale.length) {
     console.log('\n스테일 참조 (SPEC에 없는 ID):');
     for (const s of stale) console.log(`  - ${s}`);
+  }
+  if (missingHeaders.length) {
+    console.log(`\n"관련 SPEC ID" 헤더 누락 문서 ${missingHeaders.length}개 (경고):`);
+    for (const f of missingHeaders.slice(0, 15)) console.log(`  - ${f}`);
+    if (missingHeaders.length > 15) console.log(`  …외 ${missingHeaders.length - 15}개`);
   }
   if (uncovered.length) {
     console.log(`\n커버리지 공백 (코드 미참조 ID ${uncovered.length}개):`);

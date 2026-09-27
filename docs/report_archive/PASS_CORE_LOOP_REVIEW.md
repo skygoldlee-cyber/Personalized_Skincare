@@ -3,6 +3,9 @@
 > **작성일**: 2026-09-11
 > **목적**: FEATURE_PROPOSALS.md에 정의된 합격 핵심 루프 11단계가 현재 코드에 얼마나 구현되어 있는지, 단계 간 파이프라인이 얼마나 연결되어 있는지 실제 코드 기반으로 진단
 > **관련 문서**: [FEATURE_PROPOSALS.md](FEATURE_PROPOSALS.md), [SPEC.md](SPEC.md), [ARCHITECTURE.md](ARCHITECTURE.md)
+> **문서 ID**: DOC-ARC-05
+> **관련 SPEC ID**: F-01~10, Q-01~11, E-01~07, D-01~15, T-01~05, SC-01~03, DR-01~07
+> **성격**: 1회 분석·원전 | **결과**: 아카이브 (진단 스냅샷 — 2026-09-11 기준)
 
 ---
 

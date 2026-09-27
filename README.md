@@ -3,6 +3,8 @@
 > **Pass + Formula — 맞춤형화장품 조제관리사 자격시험 통합 플랫폼**
 >
 > 교재 읽기 · 플래시카드 · 기출 퀴즈 · 오답 복습 · 성적 분석 · 오디오북 · Formula OS 실무 배합까지 하나로.
+> **문서 ID**: DOC-ROOT-01
+> **관련 SPEC ID**: 해당 없음 (프로젝트 소개)
 
 [![Deploy](https://img.shields.io/badge/deploy-Vercel-black?logo=vercel)](vercel.json)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)

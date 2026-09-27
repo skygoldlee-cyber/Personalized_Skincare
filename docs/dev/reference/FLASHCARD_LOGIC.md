@@ -3,6 +3,7 @@
 > **최종 업데이트**: 2026-09-10
 > **관련 파일**: `src/textbook-parser.js`, `tools/build/plugins/textbook.plugin.js`, `src/views/flashcard.js`, `src/state.js`, `src/spaced-repetition.js`, `index.html`, `css/study.css`
 > **관련 SPEC ID**: `F-01~10` (플래시카드) · `TR-01` (MD 파싱) · `ID-01~04` (카드 ID)
+> **문서 ID**: DOC-REF-03
 
 ---
 

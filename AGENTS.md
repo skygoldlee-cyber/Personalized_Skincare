@@ -1,6 +1,8 @@
 # AGENTS.md — AI 에이전트 프로젝트 가이드라인
 
 > 이 파일은 Devin, Claude Code, Cursor 등 AI 코딩 에이전트가 프로젝트에 진입했을 때 참조하는 가이드라인입니다.
+> **문서 ID**: DOC-ROOT-02
+> **관련 SPEC ID**: 해당 없음 (작업 가이드 — ID 인용 규약은 별도 절)
 
 ## 프로젝트 개요
 
@@ -14,6 +16,7 @@
 ## 핵심 명령어
 
 > **주의**: Windows PowerShell 환경. `npm`/`npx` 스크립트가 실행 정책으로 차단되므로 `npm.cmd`/`npx.cmd` 사용.
+> **환경 요구사양**(Node/Python 버전, 선택 도구, 최초 설정 절차)은 `docs/dev/reference/DEV_ENVIRONMENT.md` 참조.
 
 ```powershell
 # 테스트
@@ -56,7 +59,7 @@ npm.cmd run check:refsubjects           # ref_md 문서의 인용 득표↔과�
 npm.cmd run check:reffresh              # 참조자료 PDF 해시 ↔ ref_md 신선도 (PDF 교체 감지)
 npm.cmd run check:reflines              # 교재 (LNN)/📌출처 조문 ↔ ref_md 실제 내용 검증
 npm.cmd run check:drillfresh            # 드릴 번들 ↔ 문제은행 번들 신선도 (stale 시 npm run build:drills)
-npm.cmd run check:docs                  # README·AGENTS·docs/*.md 내 경로 참조 존재 검증 (파일 이동/삭제 후 스테일 참조 탐지)
+npm.cmd run check:docs                  # README·AGENTS·docs/*.md 내 경로 참조 존재 검증 + 문서 ID 누락·중복 검증
 
 # 참조자료 PDF → ref_md 변환 (Python 3 + pdfplumber, 이미지 추출 시 pymupdf 필요)
 npm.cmd run convert:refs                # 참조자료 PDF 전체 → ref_md_v2/ 스테이징 변환 (파일명 필터 인자 가능)
@@ -233,6 +236,19 @@ docs/                   # 개발 문서
 - 다른 dev 문서는 헤더에 `> **관련 SPEC ID**: XX-##` 행으로 자신이 다루는 요구사항을 표기한다. CHANGES.md·커밋 메시지에서도 관련 ID 인용 권장.
 - **코드 추적**: 소스/테스트 파일의 헤더 주석에 `// @spec FB-01~08` (JS/TS), `/* @spec TH-01 */` (CSS), `# @spec CS-03` (Python), `<!-- @spec S-01 -->` (HTML) 형태로 구현 범위를 표기. SPEC 미해당 인프라 파일은 `@spec none (사유)` 표기로 "의도적 미커버"를 명시. 비자명한 로직에는 함수 직상단에 `// @spec UX-NAV-07 — 이유` 형태의 선택 태그 권장.
 - `npm.cmd run check:specrefs`로 양방향 검증 — 코드가 참조하는 ID가 SPEC에 없으면 실패(ID 삭제·개명 시 스테일 참조 탐지), SPEC ID가 어떤 코드에도 없으면 커버리지 공백 경고. `check:content`에 통합됨.
+
+## 문서 ID 체계 (DOC ID)
+
+- 모든 마크다운 문서(`docs/`, `ref-pipeline/`, 루트 `README.md`·`AGENTS.md`)는 상단에 `> **문서 ID**: DOC-XX-NN` 헤더를 갖는다.
+- 접두사는 영역별 구분 — `DOC-ROOT`(루트) · `DOC-IDX`(인덱스) · `DOC-DEV`(수위 문서) · `DOC-DSN`(design/) · `DOC-REF`(reference/) · `DOC-RBK`(runbooks/) · `DOC-USR`(user/) · `DOC-BIZ`(business/) · `DOC-ARC`(report_archive/) · `DOC-PPL`(ref-pipeline/).
+- ID → 파일 매핑 레지스트리는 `docs/README.md` "문서 ID 레지스트리" 절 — 신규 문서는 해당 영역 다음 번호를 채번해 표에 등록한다.
+- `npm.cmd run check:docs`(check_doc_ids.js 포함)가 헤더 누락·형식 오류·ID 중복을 검증한다.
+
+## 추적 매트릭스 (TRACE MATRIX)
+
+- 요구사양(SPEC ID) ↔ 문서(DOC ID) ↔ 소스·테스트(@spec) ↔ 보고서(report_archive 헤더)의 유기적 추적은 `docs/dev/TRACE_MATRIX.md`(DOC-DEV-04)가 담당 — `npm.cmd run build:trace`로 재생성하는 자동 산출물(직접 편집 금지).
+- 연결 규약: 각 문서 헤더의 `> **관련 SPEC ID**: XX-##` 행 + 코드의 `@spec` 태그가 원천. `check:specrefs`가 양쪽 모두 SPEC 존재 여부를 검증한다.
+- SPEC ID 변경·문서 추가·@spec 태그 변경 후에는 `npm.cmd run build:trace`로 매트릭스를 갱신한다.
 
 ## 코드 스타일 및 규칙
 
