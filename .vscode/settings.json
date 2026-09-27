@@ -1,0 +1,7 @@
+{
+  // 모든 PC의 VS Code 계열 IDE(VS Code·Windsurf·Cursor)가
+  // 번들 TS가 아니라 프로젝트에 고정된 typescript(5.9.3)를
+  // 진단 엔진으로 사용 — "IDE에 보이는 오류 = check:types 결과" 일치.
+  // WebStorm은 Preferences > TypeScript에서 node_modules/typescript 지정.
+  "typescript.tsdk": "node_modules\\typescript\\lib"
+}

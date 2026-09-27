@@ -80,6 +80,8 @@ CI(`.github/workflows/ci.yml`)가 push/PR마다 `npm ci` → `lint`·`check:type
 
 **선택적 Git 훅**: `npm.cmd run hooks:install`로 `.githooks/` 활성화 — `pre-commit`은 `check:types`+`lint`(IDE 오류 상태의 커밋 차단, `--no-verify` 우회), `pre-push`는 `check:trace`·`check:specrefs`·`check:docs` 추가 (`SKIP_PREPUSH=1 git push` 우회).
 
+**IDE 버전 차이 대응**: PC·IDE마다 번들된 TypeScript 버전이 달라 같은 코드에 다른 진단이 뜰 수 있습니다. 프로젝트는 `typescript@5.9.3`을 devDependency로 고정하고 `.vscode/settings.json`의 `typescript.tsdk`로 VS Code 계열(VS Code·Windsurf·Cursor)이 워크스페이스 TS를 쓰게 지정했습니다 — **IDE에 보이는 오류 = `check:types` 결과**가 모든 PC에서 일치합니다. WebStorm 등 다른 IDE는 설정에서 `node_modules/typescript`를 TS 서비스로 지정하면 동일해집니다. 실제 차단(훅·CI·deploy 가드)은 항상 워크스페이스 tsc 기준이라 IDE 종류와 무관하게 동작합니다.
+
 ## 6. 빌드 명령어
 
 | 명령 | 용도 | 사전 요구 |
