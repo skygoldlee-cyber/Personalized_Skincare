@@ -6,6 +6,15 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-14 문서 동기화 게이트 신설 — 소스 변경 시 문서 갱신 강제
+
+- **`tools/check_doc_sync.js` 신규**: 소스(src/·tools/·tests/·css/·.github/·.githooks/·루트 설정)가 변경됐는데 문서(docs/·AGENTS.md·README.md 계열)가 동반 갱신되지 않으면 실패. 3모드 — 작업 트리(기본)·`--staged`·`--ref origin/main`. 위반 시 트리거 파일 목록 + 경로별 갱신 후보 문서(CHANGES·TESTING·AGENTS·DEV_ENVIRONMENT 등) 안내
+- **면제 경로**: `sw.js`·`data/`(deploy 스탬프 자동 커밋이 게이트에 걸리지 않도록), `content/`(check:content 파이프라인 별도), `ref-pipeline/`·`vendor/`(독립 도구함·서드파티)
+- **3층 강제**: pre-commit(`--staged`: 소스 스테이징 시 문서 동반 스테이징 필수) → pre-push(`--ref origin/main`: push 범위 통합 검사 — pre-commit 우회해도 push에서 재차단) → CI(`--ref origin/main`, PR에서 실효)
+- **우회**: 커밋 메시지 `[no-docs]`(ref 모드 인식) · `SKIP_DOCSYNC=1` · `git commit --no-verify`
+- **`tests/unit/doc-sync.test.js`**: 트리거/면제/문서 경로 분류 + analyze 위반 판정 6개 — unit 687→**693**
+- 스크립트 `check:docsync` 추가. AGENTS·DEV_ENVIRONMENT(훅·CI 설명)·TESTING(§3·§7)·ARCHITECTURE 갱신
+
 ## 2026-10-14 관련 문서 갱신 — 테스트 수치·E2E 계층·게이트 현행화
 
 - **`docs/dev/reference/TESTING.md`**: 테스트 표 전면 갱신 — unit 552→687·DOM 364→388·E2E 16 추가(합계 1091), 신규 unit 12파일·DOM 3파일·§4.14 E2E 섹션 추가, 병합 커버리지 실측(stmts 70.9/branches 66.4/funcs 67.1/lines 78.4)으로 §6 갱신, §7 CI 순서를 실제 워크플로(audit·coverage:unit·병합 임계값·playwright 스텝)와 동기화

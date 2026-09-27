@@ -37,6 +37,9 @@ jobs:
       - name: Docs path + document ID check
         run: npm run check:docs
 
+      - name: Doc sync gate (소스 변경 시 문서 갱신 강제)
+        run: node tools/check_doc_sync.js --ref origin/main
+
       - name: SPEC refs + test gap check
         run: npm run check:specrefs
 

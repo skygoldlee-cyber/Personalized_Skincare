@@ -28,6 +28,7 @@
     "check:reflines": "node tools/check_ref_lines.js",
     "check:drillfresh": "node tools/check_drill_freshness.js",
     "check:docs": "node tools/check_docs_paths.js && node tools/check_doc_ids.js",
+    "check:docsync": "node tools/check_doc_sync.js",
     "check:specrefs": "node tools/check_spec_refs.js",
     "build:trace": "node tools/build_trace_matrix.js",
     "check:trace": "node tools/build_trace_matrix.js --check",

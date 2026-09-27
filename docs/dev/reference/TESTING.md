@@ -26,10 +26,10 @@
 
 | 구분 | 프레임워크 | 환경 | 파일 위치 | 테스트 수 |
 |------|-----------|------|-----------|-----------|
-| **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 687 |
+| **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 693 |
 | **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 388 |
 | **E2E** | Playwright | 실브라우저 (Chromium + 모바일) | `tests/e2e/*.spec.js` | 16 |
-| **합계** | | | | **1091** |
+| **합계** | | | | **1097** |
 
 ### 설계 원칙
 
@@ -107,6 +107,7 @@ npm run lint              # ESLint — 0 problems 필수 (--max-warnings 0, 규�
 npm run check:types       # tsc --noEmit (jsconfig.json의 checkJs — src 전체 검사, JSDoc 진단)
 npm run check:imports     # src/ import↔export 교차 검증 (경고도 0)
 npm run check:docs        # 문서 경로 참조 + DOC ID 정합
+npm run check:docsync     # 소스 변경 시 문서 갱신 강제 (작업 트리 기준 — pre-commit은 --staged, pre-push/CI는 --ref origin/main)
 npm run check:specrefs    # SPEC↔@spec 양방향 + 테스트 갭 기준선(기준선 0 — 신규 갭 즉시 실패)
 npm run check:trace       # TRACE_MATRIX 신선도 (입력 해시 — 미재생성 시 실패)
 
@@ -222,7 +223,8 @@ npm run hooks:install
 | 52 | `perf-invariants.test.js` | 16 | PF-01~16 — 런타임 MD 파싱·과목별 로딩·캐시 TTL·지연 하이라이트·normalize·디바운스·console.log 금지·ref_md·Mermaid 지연·법령 정본 | 소스 패턴 정적 검증, 2026-10-14 추가 |
 | 53 | `ux-invariants.test.js` | 20 | UX-FB/FORM/PWA/SCR/SET — 스크롤바·CSS 변수·설정 패널·44px·버전·토스트·모달·펄스·standalone·app-height·폼 16px·터치 피드백 | CSS·HTML·JS 정적 검증, 2026-10-14 추가 |
 | 54 | `content-engineering.test.js` | 6 | CE-01~05 + TR-16a — 학습 가이드·한 줄 요약·비교표·확인문제·용어 표·툴바 자동 숨김 | 콘텐츠·소스 정적 검증, 2026-10-14 추가 |
-| | **합계** | **687** | | |
+| 55 | `doc-sync.test.js` | 6 | `tools/check_doc_sync.js` — 트리거/면제/문서 경로 분류, analyze 위반 판정 | 정적 패턴 검증, 2026-10-14 추가 |
+| | **합계** | **693** | | |
 
 ### DOM 테스트 (`tests/dom/`)
 
@@ -714,6 +716,7 @@ function detectDiagramType(textContent) {
 - npm run check:types     # tsc --noEmit — JSDoc 타입 진단 (src 전체)
 - npm run check:imports   # import/export 교차 검증
 - npm run check:docs      # 문서 경로 + DOC ID
+- node tools/check_doc_sync.js --ref origin/main   # 소스 변경 시 문서 갱신 강제
 - npm run check:specrefs  # 스테일 SPEC 참조 + 테스트 갭 기준선(0)
 - npm run check:trace     # TRACE_MATRIX 신선도 (해시)
 - npm test                # Unit 테스트

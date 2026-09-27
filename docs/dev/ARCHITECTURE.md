@@ -1528,6 +1528,7 @@ npm run deploy
 | `npm run test:all` | unit + parser + imports + dom 일괄 |
 | `npm run build:data` | 시험별 콘텐츠→데이터 번들 (모든 시험 순회) |
 | `npm run check:content -- --build` | 콘텐츠 통합 검증 (교재 교체 등 대규모 변경 후) |
+| `npm run check:docsync` | 문서 동기화 게이트 — 소스 변경 시 docs/·AGENTS·README 갱신 동반 필수 |
 | `npm run verify:assets` | SHELL/DATA_ASSETS 파일 존재 검증 |
 | `npm run deploy` | 배포 가드 + SW/버전·릴리스 노트 스탬프 + vercel --prod |
 | `npm run notes:draft` | 릴리스 노트 pending 초안 (커밋 subject → 수동 편집 후 배포) |

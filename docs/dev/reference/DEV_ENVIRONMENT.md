@@ -69,6 +69,7 @@ npm.cmd run test:e2e          # E2E 테스트 (Playwright — 최초 1회 `npx p
 npm.cmd run check:imports     # ES 모듈 import/export 교차 검증
 npm.cmd run verify:assets     # sw.js SHELL_ASSETS/DATA_ASSETS 파일 존재 검증
 npm.cmd run check:docs        # 문서 내 경로 참조 유효성 + 문서 ID 누락·중복 검증
+npm.cmd run check:docsync     # 소스 변경 시 문서 갱신 강제 (우회: [no-docs] 메시지·SKIP_DOCSYNC=1)
 npm.cmd run check:specrefs    # SPEC ID ↔ 코드 @spec 태그 양방향 검증 + 테스트 갭 기준선
 npm.cmd run check:trace       # TRACE_MATRIX 신선도 (입력 해시 — 스테일 시 실패)
 npm.cmd run lint              # ESLint — 0 problems 필수 (--max-warnings 0, 경고도 차단)
@@ -77,9 +78,9 @@ npm.cmd run coverage          # DOM 테스트 + 커버리지 임계값 (lines 60
 npm.cmd run check:content     # 콘텐츠 통합 검증 (대규모 콘텐츠 변경 후)
 ```
 
-CI(`.github/workflows/ci.yml`)가 push/PR마다 `npm ci` → `npm audit`(high+) → `lint`·`check:types`·`check:imports`·`check:docs`·`check:specrefs`·`check:trace` → `test`·`coverage`·`coverage:unit`·병합 임계값(`coverage_merge.js --check`)·`verify:assets`·`check:parser` → Playwright 설치 + `test:e2e`를 Node 20으로 실행합니다. PR에는 영향 요구사항 리포트(`tools/impact_tests.js --ref origin/main`)가 추가됩니다.
+CI(`.github/workflows/ci.yml`)가 push/PR마다 `npm ci` → `npm audit`(high+) → `lint`·`check:types`·`check:imports`·`check:docs`·`check_doc_sync`(문서 동기화 게이트)·`check:specrefs`·`check:trace` → `test`·`coverage`·`coverage:unit`·병합 임계값(`coverage_merge.js --check`)·`verify:assets`·`check:parser` → Playwright 설치 + `test:e2e`를 Node 20으로 실행합니다. PR에는 영향 요구사항 리포트(`tools/impact_tests.js --ref origin/main`)가 추가됩니다.
 
-**선택적 Git 훅**: `npm.cmd run hooks:install`로 `.githooks/` 활성화 — `pre-commit`은 `check:types`+`lint`(IDE 오류 상태의 커밋 차단, `--no-verify` 우회), `pre-push`는 `check:trace`·`check:specrefs`·`check:docs` 추가 (`SKIP_PREPUSH=1 git push` 우회).
+**선택적 Git 훅**: `npm.cmd run hooks:install`로 `.githooks/` 활성화 — `pre-commit`은 `check:types`+`lint`+문서 동기화 게이트(`check_doc_sync.js --staged`: 소스 스테이징 시 문서 동반 스테이징 강제, `--no-verify` 우회), `pre-push`는 `check:trace`·`check:specrefs`·`check:docs`·문서 동기화(`--ref origin/main`) 추가 (`SKIP_PREPUSH=1 git push` 우회).
 
 **IDE 버전 차이 대응**: PC·IDE마다 번들된 TypeScript 버전이 달라 같은 코드에 다른 진단이 뜰 수 있습니다. 프로젝트는 `typescript@5.9.3`을 devDependency로 고정하고 `.vscode/settings.json`의 `typescript.tsdk`로 VS Code 계열(VS Code·Windsurf·Cursor)이 워크스페이스 TS를 쓰게 지정했습니다 — **IDE에 보이는 오류 = `check:types` 결과**가 모든 PC에서 일치합니다. WebStorm 등 다른 IDE는 설정에서 `node_modules/typescript`를 TS 서비스로 지정하면 동일해집니다. 실제 차단(훅·CI·deploy 가드)은 항상 워크스페이스 tsc 기준이라 IDE 종류와 무관하게 동작합니다.
 

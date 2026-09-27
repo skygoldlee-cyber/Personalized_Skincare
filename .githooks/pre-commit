@@ -23,3 +23,12 @@ for check in check:types lint; do
         exit 1
     }
 done
+
+# 문서 동기화 게이트 — 소스(src/tools/tests/설정)가 스테이징됐는데
+# 문서(docs/·AGENTS.md·README.md)가 함께 스테이징되지 않으면 차단.
+echo "  - node tools/check_doc_sync.js --staged"
+node tools/check_doc_sync.js --staged || {
+    echo "✗ 커밋 차단: 소스 변경에 문서 갱신이 동반되지 않았습니다"
+    echo "  우회: git commit --no-verify"
+    exit 1
+}
