@@ -14,7 +14,7 @@ vi.mock('../../src/ui-utils.js', () => ({
 }));
 
 import {
-    loadIndexHtml, el, resetStudyState, flushAsync,
+    loadIndexHtml, resetStudyState, flushAsync,
 } from './helpers.js';
 import { state } from '../../src/state.js';
 import {

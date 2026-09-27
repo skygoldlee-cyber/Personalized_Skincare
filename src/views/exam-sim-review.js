@@ -41,7 +41,7 @@ export function showSimAnswerReview() {
         return;
     }
     
-    simState.wrongQuestions.forEach((q, idx) => {
+    simState.wrongQuestions.forEach((q) => {
         let optionsHTML = '';
         if (q.options && q.options.length > 0) {
             optionsHTML = `<ul class="review-q-options">

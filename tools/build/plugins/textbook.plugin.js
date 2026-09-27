@@ -138,7 +138,7 @@ const parseMarkdownFile = (filePath, subjectId, filename, chapterKey, stableId) 
   const lines = content.split(/\r?\n/);
 
   const filePrefixMatch = filename.match(/^(\d+)\./);
-  const filePrefix = filePrefixMatch ? filePrefixMatch[1] : '0';
+  const _filePrefix = filePrefixMatch ? filePrefixMatch[1] : '0';
 
   const cards = [];
   const quizzes = [];

@@ -107,7 +107,7 @@
   // ── 폴링 감지: 정상 초기화되면 즉시 종료, 아니면 데드라인에 복구 ──
   console.debug('[fallback] 폴링 시작 — __APP_INITIALIZED 대기 (15s 데드라인)');
   let elapsed = 0;
-  var timer = setInterval(function () {
+  const timer = setInterval(function () {
     if (window.__APP_INITIALIZED) {
       clearInterval(timer);
       resetReloadCount();

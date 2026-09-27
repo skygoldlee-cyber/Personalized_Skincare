@@ -18,7 +18,6 @@ export function renderStudyCalendar() {
     const container = document.getElementById('study-calendar-content');
     if (!container) return;
 
-    const today = getTodayStr();
     const todayProgress = getTodayGoalProgress();
     const weeklyProgress = getWeeklyGoalProgress();
     const monthlyDays = getMonthlyStudyDays(_currentYear, _currentMonth);

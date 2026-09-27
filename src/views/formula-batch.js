@@ -760,7 +760,7 @@ export async function batchDelete(id) {
   openBatchPanel();
 }
 
-function printBatch(id, builder, emptyMsg) {
+function printBatch(id, builder, _emptyMsg) {
   const b = getBatch(id);
   if (!b) { showToast('조제 기록을 찾을 수 없습니다.', 'error'); return; }
   printHtml(builder(b));

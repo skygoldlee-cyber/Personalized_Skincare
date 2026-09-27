@@ -136,7 +136,7 @@ export function toggleSolutionAccordion() {
     }
 }
 
-export function renderCalcHistory() {
+function renderCalcHistory() {
     const listContainer = document.getElementById('calc-history-list');
     if (!listContainer) return;
     
@@ -180,7 +180,7 @@ export function renderCalcHistory() {
     });
 }
 
-export function addCalcHistoryItem(questionText, type, userVal, correctAns, isCorrect, unit) {
+function addCalcHistoryItem(questionText, type, userVal, correctAns, isCorrect, unit) {
     const historyJSON = safeGetItem(STORAGE_KEYS.CALC_HISTORY);
     let history = [];
     if (historyJSON) {

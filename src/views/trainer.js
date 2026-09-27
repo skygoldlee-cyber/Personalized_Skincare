@@ -8,17 +8,11 @@ import {
     startCalcPractice,
     generateCalcQuestion,
     submitCalcAnswer,
-    toggleSolutionAccordion,
-    renderCalcHistory,
-    addCalcHistoryItem
+    toggleSolutionAccordion
 } from './trainer-calc-practice.js';
 import {
     startIngredientsChallenge,
-    generateIngredientsQuestions,
-    renderIngQuestion,
-    submitIngChoiceAnswer,
     submitIngAnswer,
-    showIngFeedback,
     nextIngQuestion
 } from './trainer-ingredients.js';
 import { updateDueBadges } from './trainer-drills.js';
@@ -29,14 +23,8 @@ export {
     generateCalcQuestion,
     submitCalcAnswer,
     toggleSolutionAccordion,
-    renderCalcHistory,
-    addCalcHistoryItem,
     startIngredientsChallenge,
-    generateIngredientsQuestions,
-    renderIngQuestion,
-    submitIngChoiceAnswer,
     submitIngAnswer,
-    showIngFeedback,
     nextIngQuestion
 };
 
@@ -156,7 +144,7 @@ export function startLimitsTrainer() {
     renderLimitsQuestion();
 }
 
-export function renderLimitsQuestion() {
+function renderLimitsQuestion() {
     const limitsState = state.trainer.limits;
     const currentQ = limitsState.shuffledData[limitsState.currentIndex];
     
@@ -257,7 +245,7 @@ function generateLimitsOptions(question) {
     return shuffle([...optionsSet]);
 }
 
-export function submitLimitsAnswer(selectedBtn, selectedValue, correctValue) {
+function submitLimitsAnswer(selectedBtn, selectedValue, correctValue) {
     const isCorrect = (selectedValue === correctValue);
     vibrate(isCorrect ? HAPTIC.correct : HAPTIC.wrong);
     const container = document.getElementById('limits-options-container');

@@ -10,7 +10,6 @@ import {
   getStorageBackend,
   getItem,
   setItem,
-  removeItem,
   removeItemRaw,
   listKeys,
   getJSON,

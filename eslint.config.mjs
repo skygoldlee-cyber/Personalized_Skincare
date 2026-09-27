@@ -47,11 +47,11 @@ export default [
       'no-fallthrough': 'error',
       'valid-typeof': 'error',
       'use-isnan': 'error',
-      // 점진 정리 — warn (위반 정리 후 error 승격)
-      'no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_', caughtErrors: 'none' }],
-      'eqeqeq': 'warn',
-      'no-var': 'warn',
-      'prefer-const': 'warn',
+      // 위반 0 달성 후 error로 승격 — 재발 즉시 차단
+      'no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_', caughtErrors: 'none' }],
+      'eqeqeq': ['error', 'always', { null: 'ignore' }],
+      'no-var': 'error',
+      'prefer-const': 'error',
       'no-console': 'off', // tools/ 스크립트는 console 사용이 정상
     },
   },

@@ -110,9 +110,9 @@ test('용어집 자동 링크: 기존 <a> 태그 내 키워드는 링크하지 �
     const glossaryKeywords = [{ keyword: '화장품법', idxKey: 'test.md|L1' }];
     const html = formatSectionContentForReader(md, '', '', [], '', glossaryKeywords);
     // 기존 링크 내의 키워드는 중복 링크되지 않아야 함
-    const links = html.match(/<a\s[^>]*>화장품법[^<]*<\/a>/g) || [];
+    const _links = html.match(/<a\s[^>]*>화장품법[^<]*<\/a>/g) || [];
     // 원래 링크는 glossary-term-link가 아닌 일반 링크
-    const glossaryLinks = html.match(/glossary-term-link/g) || [];
+    const _glossaryLinks = html.match(/glossary-term-link/g) || [];
     // 기존 href 링크가 있고, 그 안에 키워드가 있으면 glossary 링크는 없어야 함
     assert.ok(html.includes('href="https://example.com"'), '원래 링크 보존');
 });

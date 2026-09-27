@@ -102,7 +102,7 @@ test('loadNumberDrills: JSON 파일 로드 (fetch mock)', async () => {
         { numbers: [{ number: '15', unit: '일' }], context: '신속보고 15일 이내', isKey: true },
         { numbers: [{ number: '5', unit: '일' }], context: '회수계획서 5일 이내', isKey: true },
     ];
-    globalThis.fetch = async (url) => ({
+    globalThis.fetch = async (_url) => ({
         ok: true,
         json: async () => mockData,
     });

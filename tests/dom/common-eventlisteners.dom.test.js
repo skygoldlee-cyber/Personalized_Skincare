@@ -21,12 +21,11 @@ vi.mock('../../src/ui-utils.js', () => ({
 
 import { showToast, showConfirm } from '../../src/ui-utils.js';
 import {
-    loadIndexHtml, el, isVisible, resetStudyState, flushAsync,
+    loadIndexHtml, el, resetStudyState, flushAsync,
 } from './helpers.js';
 import { state } from '../../src/state.js';
 import { simState } from '../../src/views/exam-sim-state.js';
 import { setupEventListeners } from '../../src/views/event-listeners.js';
-import { STORAGE_KEYS } from '../../src/storage-keys.js';
 
 const CARDS = [
     { id: 'c1', term: '용어1', definition: '정의1', category: '법령', cardType: 'definition', isKey: true, difficulty: 'easy', importance: 5 },

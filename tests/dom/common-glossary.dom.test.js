@@ -38,7 +38,7 @@ vi.mock('../../src/pdf-registry.js', () => ({
 }));
 
 import {
-    loadIndexHtml, resetStudyState, flushAsync,
+    loadIndexHtml, resetStudyState,
 } from './helpers.js';
 import {
     collectGlossaryItems, renderGlossaryTable, appendGlossaryTocItem, scrollToGlossary,

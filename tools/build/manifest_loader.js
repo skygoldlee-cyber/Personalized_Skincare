@@ -2,7 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 
-function loadAndValidateManifest(manifestPath, workspaceDir) {
+function loadAndValidateManifest(manifestPath, _workspaceDir) {
   if (!fs.existsSync(manifestPath)) {
     throw new Error(`Manifest file not found at: ${manifestPath}`);
   }

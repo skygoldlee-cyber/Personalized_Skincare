@@ -98,16 +98,6 @@ export function getDueCards() {
 }
 
 /**
- * 특정 카드의 복습 정보 반환
- * @param {string} cardId
- * @returns {{repetition: number, easiness: number, nextReview: string, lastReview: string|null}|null}
- */
-function getCardSchedule(cardId) {
-    const schedules = loadSchedules();
-    return schedules[cardId] || null;
-}
-
-/**
  * 오늘 복습 대기 카드 수
  * @returns {number}
  */
@@ -136,19 +126,3 @@ function saveSchedules(schedules) {
     safeSetItem(SR_KEY, JSON.stringify(schedules));
 }
 
-/**
- * 특정 카드의 복습 스케줄 삭제
- * @param {string} cardId
- */
-function removeCardSchedule(cardId) {
-    const schedules = loadSchedules();
-    delete schedules[cardId];
-    saveSchedules(schedules);
-}
-
-/**
- * 모든 복습 스케줄 초기화
- */
-function clearAllSchedules() {
-    saveSchedules({});
-}

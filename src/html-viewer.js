@@ -89,7 +89,7 @@ function _ensureOverlay() {
     _overlayEl = el;
 
     el.querySelector('#hr-close-btn')?.addEventListener('click', close);
-    function _printContent(label) {
+    function _printContent(_label) {
         const content = el.querySelector('.hr-ov-content');
         if (!content) return;
         const titleEl = el.querySelector('#hr-title');

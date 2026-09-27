@@ -114,7 +114,7 @@ function saveAudioPos(src, pos, duration) {
 }
 
 /** 현재 오디오 재생 위치 저장 (단원 전환/화면 이동 전 호출) */
-export function persistCurrentAudioPos() {
+function persistCurrentAudioPos() {
     const a = readerAudioState.audio;
     if (a && readerAudioState.currentSrc) {
         saveAudioPos(readerAudioState.currentSrc, a.currentTime, a.duration);

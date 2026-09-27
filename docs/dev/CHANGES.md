@@ -6,6 +6,15 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-14 ESLint 경고 완전 소진 — 211→0, 규칙 error 승격
+
+- **`eqeqeq` 96건**: 전부 `== null`/`!= null` 관용 패턴 — 규칙을 `{ null: 'ignore' }`로 설정해 의도된 null/undefined 동시 검사는 허용하고 실수성 `==`만 차단
+- **`no-unused-vars` 113건**: app.js 미사용 import 38개 제거(data-click 위임은 DELEGATED_HANDLERS 경유라 직접 import 불필요 — 사용처 0 검증 후 제거), 데드 함수 삭제(renderProcedureFlowCard·renderAdminPenaltyCard·getCardSchedule·removeCardSchedule·clearAllSchedules·showLoading·hideLoading·bindGlossaryEvents·getWebVitals·clearReaderPosition — 호출처 0 확인), 데드 변수·미사용 인자는 `_` 접두사 또는 삭제
+- **`no-var` 2건**: `var`→`let`/`const` (클래식 스크립트지만 window 노출 참조 없음 확인)
+- **미사용 export 22건 비공개화**: import 제거로 표면화된 내부 전용 export를 모듈 비공개로 전환 — trainer.js 재수출 정리, 내부 호출만 하는 함수(renderLimitsQuestion·submitLimitsAnswer·renderDailyStep·tickPomodoro·startSimTimer 등)는 export 키워드 제거. data-click 위임 참조 없음을 전수 확인
+- **규칙 승격**: `no-unused-vars`·`eqeqeq`·`no-var`·`prefer-const`를 warn→error로 격상, lint 스크립트 `--max-warnings 0` — 경고·오류 0 유지가 필수 조건이 됨
+- 결과: ESLint **0 problems** · check:types 0 · check:imports 오류·경고 0 · unit 552 · DOM 364 통과
+
 ## 2026-10-14 checkJs 백로그 완전 소진 — src 전체 0 에러
 
 - **백로그 0 달성**: jsconfig exclude의 남은 34파일 전부 진단 해소 후 편입 — 869→0. `exclude`에 파일 목록이 더 이상 없으며 신규 파일은 기본으로 검사 대상

@@ -1,6 +1,5 @@
 // @spec BP-01
 const fs = require('fs');
-const path = require('path');
 
 function checkStatsAnomaly(statsFile, currentStats, logger) {
   if (!fs.existsSync(statsFile)) {

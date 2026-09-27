@@ -552,7 +552,6 @@ body.exam-open{overflow:hidden;}
 
         // lineNum에 가장 가까운 요소 찾기 (data-md-line <= lineNum 중 최대)
         let bestEl = null;
-        let bestLine = 0;
         let bestDiff = Infinity;
 
         // 정확히 일치하는 요소가 있으면 우선 선택
@@ -566,7 +565,6 @@ body.exam-open{overflow:hidden;}
             if (diff >= 0 && diff < bestDiff) {
                 bestDiff = diff;
                 bestEl = e;
-                bestLine = elLine;
             }
         }
 
@@ -576,7 +574,6 @@ body.exam-open{overflow:hidden;}
                 // 테이블 행들 중에서 가장 가까운 행 찾기
                 const rows = bestEl.querySelectorAll('tbody tr');
                 if (rows.length > 0 && mdText) {
-                    const lines = mdText.replace(/\r\n/g, '\n').split('\n');
                     const tableStart = parseInt(bestEl.getAttribute('data-md-line'));
                     // 테이블 내에서 목표 라인과 가장 가까운 행 찾기
                     let bestRow = rows[0];

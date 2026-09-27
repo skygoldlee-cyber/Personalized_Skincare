@@ -1,6 +1,6 @@
 // app.js - Passmula (맞춤형화장품 조제관리사) 애플리케이션 로직
 // @spec S-02,S-03,S-08,UX-NAV-01,UX-PWA-01,UX-PWA-05,PF-10
-import { state, loadProgress, saveProgress, safeGetItem, safeSetItem, safeRemoveItem } from './state.js';
+import { state, loadProgress, safeGetItem, safeSetItem, safeRemoveItem } from './state.js';
 import { esc } from './sanitize.js';
 import { shuffle } from './utils.js';
 import { clearScratchpad, toggleCalcScratchpad, toggleScratchpadEraser } from './scratchpad.js';
@@ -29,19 +29,12 @@ import {
 } from './views/dashboard.js';
 import {
     loadFlashcards,
-    renderFlashcard
 } from './views/flashcard.js';
 import {
-    startQuiz,
     renderQuizQuestion,
-    submitQuizAnswer,
-    nextQuizQuestion,
-    renderQuizResult,
-    getWeakCardsList,
     renderReviewList,
     removeWeakCard,
     setReviewFilter,
-    startWeakFocusQuiz,
     tagWrongCause,
     tagWrongCauseAt,
     wrongActionCard,
@@ -50,38 +43,24 @@ import {
     startDiagnosticQuiz
 } from './views/quiz.js';
 import {
-    updateStreakAndDailyUI,
     startDailyChallenge,
     closeDailyModal,
-    renderDailyStep,
     submitDailyCardAnswer,
-    submitDailyChoiceAnswer,
     submitDailyShortAnswer,
-    showDailyFeedback,
     nextDailyStep,
-    finishDailyChallenge
 } from './views/daily-challenge.js';
 import {
     initTrainer,
     exitTrainerSubView,
     startLimitsTrainer,
-    renderLimitsQuestion,
-    submitLimitsAnswer,
     nextLimitsQuestion,
     startCalcPractice,
     generateCalcQuestion,
     submitCalcAnswer,
     toggleSolutionAccordion,
-    checkShortAnswer,
     startIngredientsChallenge,
-    generateIngredientsQuestions,
-    renderIngQuestion,
-    submitIngChoiceAnswer,
     submitIngAnswer,
-    showIngFeedback,
     nextIngQuestion,
-    renderCalcHistory,
-    addCalcHistoryItem
 } from './views/trainer.js';
 import {
     openOxDrillSetup,
@@ -98,14 +77,10 @@ import {
 } from './views/trainer-drills.js';
 import {
     togglePomodoro,
-    tickPomodoro,
     resetPomodoro,
-    updatePomodoroUI
 } from './views/pomodoro.js';
 import {
-    dictState,
     renderDictionary,
-    filterDictionary,
     setDictFilter,
     clearDictSearch,
     dictExportCsv
@@ -199,10 +174,8 @@ import {
 } from './views/formula-compliance.js';
 import { recordStudyActivity } from './study-tracker.js';
 import {
-    getBackupKeys,
     exportData,
     triggerImport,
-    importData,
     setupImportListener
 } from './views/backup.js';
 import {
@@ -229,24 +202,13 @@ import {
     showAlert
 } from './ui-utils.js';
 import {
-    simState,
-    startSimSession,
     startMockExamSim,
     startComboMockExam,
     startIntegratedMockExam,
-    saveSimDraft,
     clearSimDraft,
     checkExamDraft,
     resumeSimDraft,
     exitSimArena,
-    startSimTimer,
-    tickSimTimer,
-    renderOMRSheet,
-    updateOMRProgress,
-    jumpToSimQuestion,
-    renderSimQuestion,
-    saveSimAnswer,
-    submitExam,
     startWeakExam,
     saveExamResultToHistory
 } from './views/exam-simulator.js';
@@ -388,7 +350,6 @@ function populateExamCards() {
 
         const totalQuestions = subjExams.reduce((sum, e) => sum + (e.stats && e.stats.questions || 0), 0);
         const badgeColor = badgeColors[subj.key] || 'badge-gray';
-        const shortName = subj.shortName || subj.name;
 
         const btnsHtml = subjExams.map((exam, partIdx) => {
             const partLabel = subjExams.length > 1 ? `${partIdx + 1}부` : '';
@@ -444,7 +405,7 @@ ${allBtnsHtml}
 
     // 정적 텍스트 동적 치환 (manifest 기반)
     const totalAllQuestions = exams.reduce((sum, e) => sum + (e.stats && e.stats.questions || 0), 0);
-    const subjCounts = subjects.map((s, i) => {
+    const subjCounts = subjects.map((s) => {
         const subjExams = exams.filter(e => e.subject === s.key);
         const count = subjExams.reduce((sum, e) => sum + (e.stats && e.stats.questions || 0), 0);
         return count;
@@ -827,7 +788,7 @@ function setupModalBackHandler() {
     });
 
     // 뒤로가기 버튼 처리
-    window.addEventListener('popstate', (e) => {
+    window.addEventListener('popstate', () => {
         if (modalOpenState) {
             // 열린 모달 찾아서 닫기
             const openModals = document.querySelectorAll('.modal, .modal-content, [id$="-modal"]');

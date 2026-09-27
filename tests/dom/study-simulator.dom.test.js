@@ -25,8 +25,8 @@ import {
 import { state } from '../../src/state.js';
 import { simState } from '../../src/views/exam-sim-state.js';
 import {
-    startSimSession, saveSimAnswer, jumpToSimQuestion, renderSimQuestion,
-    submitExam, exitSimArena, checkExamDraft, resumeSimDraft, clearSimDraft,
+    startSimSession, saveSimAnswer, jumpToSimQuestion,
+    submitExam, exitSimArena, checkExamDraft, resumeSimDraft,
     startWeakExam,
 } from '../../src/views/exam-simulator.js';
 import { DataLoader } from '../../src/data-loader.js';

@@ -287,7 +287,7 @@ function buildForExam(target) {
 
     // GLOSSARY_INDEX에 큐레이션 정의 병합 (subjectId 범위 매칭)
     let mergedCount = 0;
-    for (const [idxKey, entry] of Object.entries(GLOSSARY_INDEX)) {
+    for (const [_idxKey, entry] of Object.entries(GLOSSARY_INDEX)) {
         const candidates = curatedMap.get(entry.keyword);
         if (!candidates) continue;
         // 1순위: entry.subjectId와 일치하는 큐레이션 정의

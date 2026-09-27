@@ -61,7 +61,7 @@ function validateMindmapIndentation(textContent) {
 
     // root 노드 찾기
     let rootIndent = -1;
-    let prevIndent = -1;
+    const _prevIndent = -1;
     const nodeLines = [];
 
     for (let i = 1; i < lines.length; i++) {
@@ -74,7 +74,7 @@ function validateMindmapIndentation(textContent) {
             rootIndent = indent;
         }
         nodeLines.push({ lineNum: i + 1, indent, text });
-        prevIndent = indent;
+
     }
 
     if (rootIndent < 0) {

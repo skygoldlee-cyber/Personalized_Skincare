@@ -225,7 +225,7 @@ export async function closeDailyModal() {
     }
 }
 
-export function renderDailyStep() {
+function renderDailyStep() {
     const q = dailyState.questions[dailyState.currentIndex];
     
     const progEl = document.getElementById('daily-modal-progress');
@@ -320,7 +320,7 @@ export function submitDailyCardAnswer(isMemorized) {
     if (nextBtn) nextBtn.classList.remove('is-hidden');
 }
 
-export function submitDailyChoiceAnswer(selectedBtn, selectedValue, correctValue) {
+function submitDailyChoiceAnswer(selectedBtn, selectedValue, correctValue) {
     const isCorrect = (selectedValue === correctValue);
     const answerArea = document.getElementById('daily-modal-answer-area');
     const buttons = answerArea ? answerArea.querySelectorAll('.limits-opt-btn') : [];
@@ -366,7 +366,7 @@ export function submitDailyShortAnswer() {
     showDailyFeedback(isCorrect, q.correct);
 }
 
-export function showDailyFeedback(isCorrect, correctValue) {
+function showDailyFeedback(isCorrect, correctValue) {
     const q = dailyState.questions[dailyState.currentIndex];
     const feedback = document.getElementById('daily-modal-feedback');
     const title = document.getElementById('daily-modal-feedback-title');
@@ -398,7 +398,7 @@ export function nextDailyStep() {
     }
 }
 
-export function finishDailyChallenge() {
+function finishDailyChallenge() {
     const modal = document.getElementById('daily-challenge-modal');
     if (modal) modal.remove();
     

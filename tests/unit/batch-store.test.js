@@ -6,7 +6,6 @@
 import { test, beforeEach, afterEach } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  BATCH_LIMIT_FREE,
   QC_FIELDS,
   QC_VALUES,
   HYGIENE_FIELDS,

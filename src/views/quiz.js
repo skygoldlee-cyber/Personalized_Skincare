@@ -402,7 +402,7 @@ function _citationForQuiz(quizId) {
     return null;
 }
 
-export function renderQuizResult() {
+function renderQuizResult() {
     const quizState = state.quiz;
     
     // UI 전환
@@ -516,7 +516,7 @@ function _renderDiagnosticProfile(reviewListEl) {
 /**
  * 헷갈린 카드 목록을 반환
  */
-export function getWeakCardsList() {
+function getWeakCardsList() {
     const list = [];
     
     // 1. 일반 카드 복구 (인덱스 캐시 — weak-items.js)
@@ -743,12 +743,6 @@ export function startWeakFocusQuiz() {
             const exam = window.EXAM_DATA[examId];
             const q = exam.questions.find(quest => quest.num === qNum);
             if (!q) return null;
-            
-            let qText = q.question;
-            if (q.options && q.options.length) {
-                const optionIndicators = ['①', '②', '③', '④', '⑤'];
-                qText += '\n' + q.options.map((o, idx) => optionIndicators[idx] + ' ' + o).join('\n');
-            }
             
             return {
                 id: card.id,

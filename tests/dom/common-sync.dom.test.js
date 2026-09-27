@@ -2,7 +2,7 @@
 // @spec AU-05~08
 // 설계: docs/dev/design/SUPABASE_DESIGN.md §4·§9 — window.supabase 스텁으로 원격 상태를 제어
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { loadIndexHtml, el, lastToast, flushAsync, storedJson } from './helpers.js';
+import { loadIndexHtml, el, flushAsync, storedJson } from './helpers.js';
 
 let confirmResult = true;
 vi.mock('../../src/ui-utils.js', () => ({

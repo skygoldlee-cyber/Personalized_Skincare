@@ -19,7 +19,7 @@ import {
   listCustomers, getCustomer, getCustomerUsage,
   createCustomer, updateCustomer, addConsultLog,
   importCustomers,
-  CUSTOMER_LIMIT_FREE, SCALP_OPTIONS,
+  SCALP_OPTIONS,
 } from '../customer-store.js';
 import { CUSTOMER_OPTIONS } from '../formula-store.js';
 

@@ -28,7 +28,7 @@ export function startIngredientsChallenge() {
     renderIngQuestion();
 }
 
-export function generateIngredientsQuestions() {
+function generateIngredientsQuestions() {
     const list = [];
     const db = typeof window.INGREDIENTS_DATA !== 'undefined' ? window.INGREDIENTS_DATA : [];
     if (db.length === 0) return [];
@@ -148,7 +148,7 @@ export function generateIngredientsQuestions() {
     return list;
 }
 
-export function renderIngQuestion() {
+function renderIngQuestion() {
     const ingState = state.trainer.ingredients;
     const currentQ = ingState.shuffledQuestions[ingState.currentIndex];
     if (!currentQ) return;
@@ -200,7 +200,7 @@ export function renderIngQuestion() {
     if (nextBtn) nextBtn.classList.add('is-hidden');
 }
 
-export function submitIngChoiceAnswer(selectedBtn, selectedValue, correctValue) {
+function submitIngChoiceAnswer(selectedBtn, selectedValue, correctValue) {
     const isCorrect = (selectedValue === correctValue);
     vibrate(isCorrect ? HAPTIC.correct : HAPTIC.wrong);
     const container = document.getElementById('ing-options-container');
@@ -263,7 +263,7 @@ export function submitIngAnswer() {
     showIngFeedback(isCorrect, currentQ.correct);
 }
 
-export function showIngFeedback(isCorrect, correctValue) {
+function showIngFeedback(isCorrect, correctValue) {
     const ingState = state.trainer.ingredients;
     const currentQ = ingState.shuffledQuestions[ingState.currentIndex];
     

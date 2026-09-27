@@ -188,7 +188,7 @@ function performTextbookSearch() {
         ? [...candidateIndices].map(i => ({ entry: index[i], originalIdx: i }))
         : index.map((entry, i) => ({ entry, originalIdx: i }));
     
-    for (const { entry, originalIdx } of searchEntries) {
+    for (const { entry } of searchEntries) {
         if (textbookState.filter !== 'all' && textbookState.filter !== entry.subjId) continue;
         const isMatch = terms.every(term => entry._searchText.includes(term));
         if (isMatch) {

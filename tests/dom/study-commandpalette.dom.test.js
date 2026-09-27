@@ -2,7 +2,7 @@
 // @spec UX-NAV-06
 import { describe, it, beforeEach, expect, vi } from 'vitest';
 import {
-    initCommandPalette, openCommandPalette, closeCommandPalette, executePaletteResult
+    initCommandPalette, openCommandPalette, executePaletteResult
 } from '../../src/command-palette.js';
 
 function seedDom() {

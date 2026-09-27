@@ -11,7 +11,6 @@ import { loadIndexHtml, el, flushAsync } from './helpers.js';
 const MD_PATH = 'content/exams/cosmetic/참조자료/ref_md/과목1/화장품법/화장품법.md';
 const MD_TEXT = '# 화장품법\n\n제1조(목적) 이 법은 화장품의 안전성 확보를 목적으로 한다.\n\n제2조(정의) 용어 정의.';
 const HTML_PATH = 'content/exams/cosmetic/참조자료/html/규정.html';
-const HTML_TEXT = '<html><body><h1>규정 본문</h1><p>배합한도 기준입니다.</p></body></html>';
 
 let fetchMock;
 function stubFetch(map) {

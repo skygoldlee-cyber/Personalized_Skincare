@@ -14,7 +14,6 @@ import { collectGlossaryItems, renderGlossaryTable, appendGlossaryTocItem, scrol
 import {
     readerAudioState,
     showAudioToast,
-    persistCurrentAudioPos,
     stopReaderAudio,
     toggleReaderAudio,
     toggleReaderPlayPause,
@@ -35,7 +34,7 @@ export {
 // [모바일 PWA 견고성] 오디오 매니페스트는 window 전역(가드)에서 읽는다(정적 import 하드 의존 지양).
 import { DataLoader } from '../data-loader.js';
 import { hasFeature } from '../exam-context.js';
-import { safeGetItem, safeSetItem, safeRemoveItem } from '../state.js';
+import { safeGetItem, safeSetItem } from '../state.js';
 import { trapFocus } from '../ui-utils.js';
 import { STORAGE_KEYS } from '../storage-keys.js';
 import { TIMING } from '../config/timing.js';
@@ -77,10 +76,6 @@ function loadReaderPosition() {
         if (pos.ts && (Date.now() - pos.ts > 30 * 24 * 60 * 60 * 1000)) return null;
         return pos;
     } catch (e) { return null; }
-}
-
-function clearReaderPosition() {
-    safeRemoveItem(READER_POSITION_KEY);
 }
 
 // 스크롤 위치 저장 (디바운스: 1초 후 저장)
@@ -642,9 +637,6 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
         }
     }
 
-    // Estimate reading time (Korean ~500 chars/min)
-    const totalChars = chapter.sections.reduce((acc, s) => acc + (s.content ? s.content.length : 0), 0);
-    const readMinutes = Math.max(1, Math.round(totalChars / 500));
 
     // [멀티시험] 오디오북·참조자료는 시험 features 플래그로 게이트
     // 오디오 MP3는 이야기형 교재 내레이션이므로 이야기형 모드(story_textbook Pro)에서만 표시.
@@ -1458,7 +1450,6 @@ function buildReferenceLinks(subjId, contextRefPath) {
 
     // 컨텍스트 추천: 현재 단원의 출처와 관련된 참조자료를 상단에 표시
     if (contextRefPath) {
-        const contextName = contextRefPath.split('/').pop().replace(/\.(html|md)$/, '');
         const allRefs = [
             ...subjectFiles.map(f => ({ ...f, path: f.type === 'md' ? PATHS.REFERENCE_FILE(dirName, f.file) : resolveRefPath(f.file) })),
             ...REFERENCE_COMMON.map(f => ({ ...f, path: resolveRefPath(f.file) })),

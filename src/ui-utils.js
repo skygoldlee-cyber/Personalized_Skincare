@@ -1,27 +1,6 @@
 // ui-utils.js - 로딩 오버레이 및 스피너 UI 유틸리티 (공통 모듈)
 // @spec A-07,UX-FB-01~04
 
-function showLoading(containerId, message = '로딩 중...') {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-    
-    container.innerHTML = `
-        <div class="loading-state" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3rem; color: var(--color-text-muted);">
-            <div class="spinner" style="width: 40px; height: 40px; border: 3px solid var(--border-color); border-top-color: var(--color-primary); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 1rem;"></div>
-            <p>${message}</p>
-        </div>
-    `;
-}
-
-function hideLoading(containerId) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-    const loading = container.querySelector('.loading-state');
-    if (loading) {
-        loading.remove();
-    }
-}
-
 export function showGlobalLoading(message = '로딩 중...') {
     let overlay = document.getElementById('global-loading-overlay');
     if (!overlay) {

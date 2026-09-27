@@ -61,7 +61,7 @@ beforeEach(() => {
 });
 
 function stubLocation(url) {
-  const u = new URL(url);
+  const _u = new URL(url);
   global.window.location = { href: url };
   const replaces = [];
   global.window.history = {

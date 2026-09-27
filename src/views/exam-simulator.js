@@ -286,7 +286,7 @@ function _startIntegratedMockExamImpl(mixCombo = false) {
     startSimSession(integratedExam);
 }
 
-export function saveSimDraft() {
+function saveSimDraft() {
     if (!simState.data || !simState.data.questions) return;
     const draft = {
         examId: simState.examId,
@@ -416,7 +416,7 @@ export function exitSimArena() {
     * 기반으로 남은 시간을 계산하여, 백그라운드 탭 전환 시에도 실제 경과 시간이
     * 정확히 반영되도록 합니다. (뽀모도로 타이머와 동일한 방식)
     ======================================================= */
-export function startSimTimer() {
+function startSimTimer() {
     if (simState.timerInterval) clearInterval(simState.timerInterval);
     // 현재 남은 시간을 기준으로 종료 시각을 고정
     simState.endTime = Date.now() + (simState.timeLeft * 1000);
@@ -424,7 +424,7 @@ export function startSimTimer() {
     tickSimTimer();
 }
 
-export function tickSimTimer() {
+function tickSimTimer() {
     // 절대 시각 기반 남은 시간 계산 (백그라운드 스로틀링 극복 핵심)
     const remaining = Math.max(0, Math.round(((simState.endTime || 0) - Date.now()) / 1000));
     simState.timeLeft = remaining;
@@ -450,7 +450,7 @@ export function tickSimTimer() {
     }
 }
 
-export function renderOMRSheet() {
+function renderOMRSheet() {
     const omrGrid = document.getElementById('omr-grid');
     if (!omrGrid) return;
     omrGrid.innerHTML = '';
@@ -481,7 +481,7 @@ export function renderOMRSheet() {
     updateOMRProgress();
 }
 
-export function updateOMRProgress() {
+function updateOMRProgress() {
     let solvedCount = 0;
     const total = simState.data.questions.length;
     

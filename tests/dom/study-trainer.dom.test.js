@@ -30,11 +30,11 @@ import {
 import { state } from '../../src/state.js';
 import {
     initTrainer, exitTrainerSubView,
-    startLimitsTrainer, renderLimitsQuestion, submitLimitsAnswer, nextLimitsQuestion,
-    startCalcPractice, generateCalcQuestion, submitCalcAnswer,
-    startIngredientsChallenge, renderIngQuestion,
+    startLimitsTrainer, nextLimitsQuestion,
+    startCalcPractice, submitCalcAnswer,
+    startIngredientsChallenge,
 } from '../../src/views/trainer.js';
-import { openWeakReview, setWeakFilter } from '../../src/views/trainer-drills.js';
+import { openWeakReview } from '../../src/views/trainer-drills.js';
 import { recordStatementJudgments } from '../../src/statement-tracker.js';
 import { STORAGE_KEYS } from '../../src/storage-keys.js';
 

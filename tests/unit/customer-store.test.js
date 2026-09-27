@@ -119,7 +119,7 @@ test('addConsultLog — append-only·날짜 기본값·정렬 불변', () => {
 
 test('listCustomers — updatedAt 내림차순', () => {
   const a = createCustomer(sample());
-  const b = createCustomer({ ...sample(), name: '이OO' });
+  const _b = createCustomer({ ...sample(), name: '이OO' });
   updateCustomer(a.customer.id, { ...sample(), name: '김OO(갱신)' });
   const list = listCustomers();
   assert.equal(list[0].name, '김OO(갱신)');

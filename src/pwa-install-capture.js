@@ -57,7 +57,7 @@
 
         // 페이지 로드 시 브라우저 기본 업데이트 확인 외에 추가로 reg.update() 호출.
         // 브라우저는 기본적으로 ~24h마다 자동 확인하지만, 즉시 확인하도록 강제.
-        reg.update().catch(function (e) {
+        reg.update().catch(function () {
           // 오프라인 등 실패는 무해 — 조용히 무시
         });
 
@@ -96,7 +96,7 @@
   // 주의: 이 스크립트는 <head>에서 실행되므로 document.body가 아직 없을 수 있음.
   // updatefound는 보통 다음 방문 시 발생하지만, 빠른 연속 배포 시 body 생성 전에
   // 발생할 수 있으므로 body 대기를 포함한다.
-  var swToastTimer = null;
+  let swToastTimer = null;
   function showSWUpdateToast(message, isFinal) {
     function renderToast() {
       let toast = document.getElementById('sw-update-toast');

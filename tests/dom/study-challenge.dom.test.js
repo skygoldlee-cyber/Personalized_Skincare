@@ -19,7 +19,7 @@ vi.mock('../../src/ui-utils.js', () => ({
 import { showToast, showConfirm } from '../../src/ui-utils.js';
 import {
     loadIndexHtml, el, isVisible, flushAsync,
-    seedStudyData, stubRegistry, resetStudyState, storedJson,
+    stubRegistry, resetStudyState, storedJson,
 } from './helpers.js';
 import { state, safeSetItem } from '../../src/state.js';
 import {

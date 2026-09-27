@@ -38,7 +38,7 @@ const authStub = {
 window.supabase = { createClient: vi.fn(() => ({ auth: authStub })) };
 
 import {
-    initAuthView, openAuthModal, closeAuthModal, refreshAuthUI,
+    initAuthView, openAuthModal, refreshAuthUI,
     authSignIn, authSignUp, authEmailLogin, authMagicLink, authSignOut, authSetPassword,
     authSendOtp, authVerifyOtp, authForgotPassword, resetEmailLoginCooldown,
 } from '../../src/auth-view.js';

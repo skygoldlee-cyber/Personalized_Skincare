@@ -15,7 +15,7 @@ vi.mock('../../src/ui-utils.js', () => ({
 import { showToast, showConfirm } from '../../src/ui-utils.js';
 import { loadIndexHtml, el, isVisible, lastToast, spyAnchorDownload } from './helpers.js';
 import {
-    openBatchPanel, batchNew, batchEdit, batchSave, batchOpen,
+    openBatchPanel, batchNew, batchEdit, batchSave,
     batchDelete, batchPrintRecord, batchPrintLabel,
     batchExportCsv, batchFilterReset, suggestExpiryDays,
 } from '../../src/views/formula-batch.js';

@@ -92,7 +92,7 @@ const DRILL_TYPES = {
         stateOf: () => state.trainer.oxdrill,
         load: (n) => DataLoader.loadOxDrills(n),
         sidsOf: (i) => [i.sid],
-        initState: (st) => {},
+        initState: () => {},
         renderQuestion: () => renderOxDrillQuestion(),
         renderResult: () => renderOxDrillResult(),
         // 특수 모드: 'weak'=취약·복습 진술만(전 과목), 'num'=수치 집중(전 과목),
@@ -315,7 +315,7 @@ function renderOxDrillQuestion() {
 
     if (oxBox) {
         oxBox.innerHTML = '';
-        [['O', '맞다 (O)', 'correct'], ['X', '틀리다 (X)', 'incorrect']].forEach(([val, label, cls]) => {
+        [['O', '맞다 (O)'], ['X', '틀리다 (X)']].forEach(([val, label]) => {
             const btn = document.createElement('button');
             btn.className = 'limits-opt-btn oxdrill-ox-btn';
             btn.dataset.ox = val;

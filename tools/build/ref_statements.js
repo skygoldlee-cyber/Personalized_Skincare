@@ -147,8 +147,8 @@ function enumTopic(blockText, articleTitle) {
   return { topic: articleTitle, src: 'title' };
 }
 
-const CAT_RE = /^([가-하])\.\s*(.+)$/;      // 별표 카테고리: 가. 영유아용 제품류
-const NP_RE = /^(\d+)\)\s*(.+)$/;           // 카테고리 멤버: 1) 영유아용 샴푸
+const _CAT_RE = /^([가-하])\.\s*(.+)$/;      // 별표 카테고리: 가. 영유아용 제품류
+const _NP_RE = /^(\d+)\)\s*(.+)$/;           // 카테고리 멤버: 1) 영유아용 샴푸
 
 /**
  * 별표 계층 목록 — '가. 카테고리명' 아래 'N) 멤버' 구조
@@ -206,7 +206,7 @@ function extractCategoryLists(lines) {
 /** MD 표 멤버 열 후보 헤더 (이 순서로 우선 매칭) */
 const MD_MEMBER_COL_RE = /^(원 ?료 ?명|성분명?|품목명?|항목|명칭|종류|제품명|색소명|화학물질명|구분|대상)$/;
 /** 헤더 매칭 실패 시 대체: 1열 값이 이름형(한글 비율·길이)인 표 */
-const NAME_LIKE_RE = /[가-힣]/;
+const _NAME_LIKE_RE = /[가-힣]/;
 
 function isNameCell(t) {
   return !!t && /[가-힣]/.test(t) && t.length >= 3 && t.length <= 60

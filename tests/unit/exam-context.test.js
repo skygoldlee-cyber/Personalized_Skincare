@@ -5,7 +5,7 @@
 import { test, beforeEach, afterEach } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-    getExamList, getActiveExam, getActiveExamId, getCurrentExamId,
+    getExamList, getActiveExam, getActiveExamId,
     contentPath, dataPath, hasFeature, scopedKey, unscopedKey,
     purgeLegacyStorage,
 } from '../../src/exam-context.js';

@@ -2,9 +2,7 @@
 // @spec S-02,S-03
 import { state, saveProgress, safeGetItem, safeSetItem, safeRemoveItem, listScopedKeys } from '../state.js';
 import { removeItemRaw } from '../storage.js';
-import { shuffle } from '../utils.js';
 import { DataLoader } from '../data-loader.js';
-import { ManualViewer } from '../manual-viewer.js';
 import { updateCardSchedule } from '../spaced-repetition.js';
 import { RESET_KEYS, isDailyCompletedKey } from '../storage-keys.js';
 import { TIMING } from '../config/timing.js';
@@ -13,7 +11,6 @@ import { loadFlashcards, renderFlashcard } from './flashcard.js';
 import { startQuiz, submitQuizAnswer, nextQuizQuestion, renderReviewList, startWeakFocusQuiz } from './quiz.js';
 import { submitCalcAnswer, submitIngAnswer } from './trainer.js';
 import { filterDictionary } from './dictionary.js';
-import { seekReaderAudio } from './textbook-reader.js';
 import { showGlobalLoading, hideGlobalLoading, showToast, showConfirm } from '../ui-utils.js';
 import { simState, renderSimQuestion, submitExam } from './exam-simulator.js';
 import { switchView } from './navigation.js';

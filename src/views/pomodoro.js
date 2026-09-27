@@ -61,7 +61,7 @@ export function togglePomodoro() {
     updatePomodoroUI();
 }
 
-export function tickPomodoro() {
+function tickPomodoro() {
     const pomoState = state.trainer.pomodoro;
     if (!pomoState.isRunning) return;
 

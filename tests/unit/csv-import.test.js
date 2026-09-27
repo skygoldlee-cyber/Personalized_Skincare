@@ -107,7 +107,7 @@ test('csvToObjects — 매핑 불가 헤더만 있으면 빈 배열', () => {
 });
 
 test('toCsv — BOM 선두·쉼표 이스케이프·CRLF', () => {
-  const csv = toCsv(['이름', '메모'], [{ n: 'a' }], r => ['김,OO', 'say "hi"']);
+  const csv = toCsv(['이름', '메모'], [{ n: 'a' }], _r => ['김,OO', 'say "hi"']);
   assert.ok(csv.charCodeAt(0) === 0xFEFF);
   assert.ok(csv.includes('"김,OO"'));
   assert.ok(csv.includes('"say ""hi"""'));

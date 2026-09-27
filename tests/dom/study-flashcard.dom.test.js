@@ -16,11 +16,11 @@ vi.mock('../../src/ui-utils.js', () => ({
 }));
 
 import {
-    loadIndexHtml, el, isVisible, flushAsync,
+    loadIndexHtml, el, flushAsync,
     seedStudyData, seedProgress, resetStudyState, storedJson,
 } from './helpers.js';
 import { state } from '../../src/state.js';
-import { loadFlashcards, renderFlashcard } from '../../src/views/flashcard.js';
+import { loadFlashcards } from '../../src/views/flashcard.js';
 import { setupEventListeners } from '../../src/views/event-listeners.js';
 import { STORAGE_KEYS } from '../../src/storage-keys.js';
 

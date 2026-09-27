@@ -248,7 +248,6 @@ export function detectProcedureFlow(chapter) {
 
     for (const sec of sections) {
         const content = sec.content || '';
-        const titleLower = sec.title.toLowerCase();
 
         // 절차 키워드가 제목에 있거나 본문에 충분히 많으면
         const titleMatch = PROCEDURE_KEYWORDS.some(kw => sec.title.includes(kw));
@@ -288,72 +287,6 @@ export function detectProcedureFlow(chapter) {
     return null;
 }
 
-/**
- * 절차 플로우를 순수 SVG로 렌더링합니다.
- */
-function renderProcedureFlowCard(chapter) {
-    const flow = detectProcedureFlow(chapter);
-    if (!flow) return '';
-
-    const steps = flow.steps;
-    const stepH = 50;
-    const stepGap = 20;
-    const arrowH = 24;
-    const svgWidth = 320;
-    const svgHeight = steps.length * (stepH + arrowH) - arrowH + 20;
-    const centerX = svgWidth / 2;
-    const boxW = 260;
-    const boxX = centerX - boxW / 2;
-
-    let svg = `<svg viewBox="0 0 ${svgWidth} ${svgHeight}" class="procedure-flow-svg" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${esc(flow.title)} 절차 플로우">`;
-
-    steps.forEach((step, i) => {
-        const y = 10 + i * (stepH + arrowH);
-        const isKey = step.detail !== '';
-
-        // 박스
-        svg += `<rect x="${boxX}" y="${y}" width="${boxW}" height="${stepH}" rx="8" ry="8" fill="var(--bg-card)" stroke="${isKey ? 'var(--warning)' : 'var(--border-color)'}" stroke-width="1.5" class="procedure-step-rect"/>`;
-
-        // 스텝 번호 원
-        svg += `<circle cx="${boxX + 20}" cy="${y + stepH / 2}" r="14" fill="var(--color-primary)" class="procedure-step-circle"/>`;
-        svg += `<text x="${boxX + 20}" y="${y + stepH / 2 + 4}" text-anchor="middle" fill="var(--color-on-brand)" font-size="12" font-weight="700">${i + 1}</text>`;
-
-        // 라벨
-        const label = step.label.length > 28 ? step.label.substring(0, 27) + '…' : step.label;
-        svg += `<text x="${boxX + 42}" y="${y + stepH / 2 + 4}" fill="var(--color-text-main)" font-size="11" class="procedure-step-text">${esc(label)}</text>`;
-
-        // 기한 배지
-        if (step.detail) {
-            const badgeX = boxX + boxW - 50;
-            svg += `<rect x="${badgeX}" y="${y + 8}" width="42" height="18" rx="9" fill="var(--warning)" opacity="0.15"/>`;
-            svg += `<text x="${badgeX + 21}" y="${y + 20}" text-anchor="middle" fill="var(--warning)" font-size="9" font-weight="600">${esc(step.detail)}</text>`;
-        }
-
-        // 화살표 (다음 스텝이 있으면)
-        if (i < steps.length - 1) {
-            const arrowY = y + stepH + 4;
-            svg += `<path d="M ${centerX} ${arrowY} L ${centerX} ${arrowY + arrowH - 8}" stroke="var(--border-color)" stroke-width="2" fill="none"/>`;
-            svg += `<path d="M ${centerX - 5} ${arrowY + arrowH - 10} L ${centerX} ${arrowY + arrowH - 4} L ${centerX + 5} ${arrowY + arrowH - 10}" stroke="var(--border-color)" stroke-width="2" fill="none"/>`;
-        }
-    });
-
-    svg += `</svg>`;
-
-    return `
-        <div class="study-aid-card procedure-flow-card" id="procedure-flow-card">
-            <div class="study-aid-header">
-                <i class="fa-solid fa-route"></i>
-                <span>절차 플로우 — ${esc(flow.title)}</span>
-                <button class="study-aid-toggle" id="procedure-flow-toggle" title="펼치기/접기">
-                    <i class="fa-solid fa-chevron-down"></i>
-                </button>
-            </div>
-            <div class="study-aid-body expanded" id="procedure-flow-body">
-                ${svg}
-            </div>
-        </div>
-    `;
-}
 
 // --- ⑤ 비교·대조 시각화 ---
 
@@ -409,59 +342,6 @@ export function detectAdminPenalty(chapter) {
     return null;
 }
 
-/**
- * 행정처분 계단형 시각화 HTML을 생성합니다.
- */
-function renderAdminPenaltyCard(chapter) {
-    const penalty = detectAdminPenalty(chapter);
-    if (!penalty) return '';
-
-    const { headers, rows } = penalty;
-    const maxPenalties = Math.max(...rows.map(r => r.penalties.length));
-
-    let html = `
-        <div class="study-aid-card admin-penalty-card" id="admin-penalty-card">
-            <div class="study-aid-header">
-                <i class="fa-solid fa-stairs"></i>
-                <span>행정처분 계단 — ${esc(penalty.title)}</span>
-                <button class="study-aid-toggle" id="admin-penalty-toggle" title="펼치기/접기">
-                    <i class="fa-solid fa-chevron-down"></i>
-                </button>
-            </div>
-            <div class="study-aid-body expanded" id="admin-penalty-body">
-                <div class="admin-penalty-table-wrapper">
-                    <table class="admin-penalty-table">
-                        <thead>
-                            <tr>
-                                <th class="sticky-col">${esc(headers[0] || '위반내용')}</th>
-                                ${headers.slice(1).map(h => `<th>${esc(h)}</th>`).join('')}
-                            </tr>
-                        </thead>
-                        <tbody>
-    `;
-
-    rows.forEach((row, i) => {
-        const isKey = row.label.includes('🔖기출') || row.label.includes('📌중요');
-        const cleanLabel = row.label.replace(/🔖기출/g, '').replace(/📌중요/g, '').trim();
-        html += `<tr class="${isKey ? 'is-key' : ''} ${i % 2 === 0 ? 'zebra' : ''}">`;
-        html += `<td class="sticky-col">${esc(cleanLabel)}</td>`;
-        row.penalties.forEach(p => {
-            const cleanP = p.replace(/🔖기출/g, '').replace(/📌중요/g, '').trim();
-            html += `<td>${esc(cleanP)}</td>`;
-        });
-        html += `</tr>`;
-    });
-
-    html += `
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    `;
-
-    return html;
-}
 
 // --- ② 기출 필터 토글 ---
 

@@ -17,12 +17,12 @@ import {
     loadIndexHtml, el, isVisible, selectFile, flushAsync, lastToast, spyAnchorDownload,
 } from './helpers.js';
 import {
-    formulaNew, openFormulaCalc, openFormulaList, formulaCalcAddRow,
+    formulaNew, openFormulaList, formulaCalcAddRow,
     formulaCalcSave, formulaDelete, formulaCustLoad, formulaOpen,
     formulaExportJson, formulaImportJson,
 } from '../../src/views/formula.js';
 import { listFormulas, createFormula, serializeFormula } from '../../src/formula-store.js';
-import { createCustomer, listCustomers } from '../../src/customer-store.js';
+import { createCustomer } from '../../src/customer-store.js';
 
 // 원료 DB 스텁 — getIndex()가 모듈 싱글턴으로 1회 구축되므로 컨트롤러 호출 전 주입
 const INGREDIENTS_STUB = [
