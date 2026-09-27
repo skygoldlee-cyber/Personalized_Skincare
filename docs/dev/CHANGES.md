@@ -6,6 +6,28 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-14 테스트 갭 완전 소진 — 103→0, TEST_GAP_BASELINE 0
+
+- **신규 테스트 파일 12개 추가** (unit 9 + DOM 3):
+  - `tests/unit/study-tracker.test.js` — SC-03 활동 자동 기록 (당일 누적·반복 합산·월별 활동일·목표 진행률·기본값 병합)
+  - `tests/unit/build-pipeline.test.js` — BP-01~08 (manifest 스키마·안정 ID·subject/exam 검증·중복·누락 파일·마커 경고·파서 정합·용어집 인덱스·SW 스탬프·카드 감사)
+  - `tests/unit/content-structure.test.js` — CS-01~10 (manifest↔파일·교재 8종·문제은행·ref_md 폴더 소유+{doc}/{doc}.md·원료 메타·학습안내서·용어집·오디오북·ASCII 슬러그·참조 이미지)
+  - `tests/unit/audit-quality.test.js` — CQ-01~05 (카드 감사 실행·통계·참조 링크·심각도·콤보 감사·베이스라인 카운트, 경고 2건은 오류와 구분)
+  - `tests/unit/formula-os.test.js` — FO-03/04/07/09 (제조 단계 옵션·역할→상 매핑·고객 필드 정제·안전 필드·pH 정규화·단계 상한·import/export 라운드트립·형식 거부·무료 한도)
+  - `tests/unit/data-architecture.test.js` — DA-01/02/04/06/08 (멀티시험 레지스트리·활성 시험·경로 해석·기능 플래그·study_md 폴백·해시 번들 패턴·스코프 키 분리)
+  - `tests/unit/story-textbook.test.js` — ST-01~07 (이야기형 교재 구조·마커·섹션)
+  - `tests/unit/pwa-sw.test.js` — P-01~12 (SW 캐시 분기·프리캐시 관용·스큐 방지·skipWaiting·controllerchange·업데이트 토스트·CACHE_VERSION·프루닝·beforeinstallprompt·진단·인앱 감지·manifest Content-Type·app-fallback 단계 복구·verify:assets CI 연결)
+  - `tests/unit/security.test.js` — S-01/07/08 (CSP script-src·unsafe-inline 부재·인라인 핸들러 부재·보안 헤더·Permissions-Policy·위임 브리지)
+  - `tests/unit/perf-invariants.test.js` — PF-01~16 (런타임 MD 파싱·과목별 로딩·폴백 분할·24h 캐시·지연 하이라이트·normalize 일괄·카운트 캐시·검색 인덱스·디바운스·console.log 금지·ref_md·키워드 단축·Mermaid 지연·테이블 스크롤·법령 정본·공용 유틸)
+  - `tests/unit/ux-invariants.test.js` — UX-FB·FORM·PWA·SCR·SET (모바일 스크롤바·CSS 변수 색상·설정 패널 그룹·max-height·44px 타겟·버전 배치·닫기 동작·토스트 하단·커스텀 모달·펄스·로딩 오버레이·종료 2단·standalone 게이팅·SW 토스트·설치 버튼 게이팅·app-height·폼 16px·터치 피드백)
+  - `tests/dom/reader-audio.dom.test.js` — AO-01~05 (매니페스트 경로 해석·오디오 없음 토스트·Media Session 메타데이터·액션 핸들러·플레이어 UI·속도 순환·시크·정지)
+  - `tests/dom/charts.dom.test.js` — C-01~05 (성적 라인차트·합격/과락 진단·레이더 N축·과목 점수행·툴팁)
+  - `tests/dom/review-drills-formula.dom.test.js` — RV-01·ND-01·FO-10/11 (복습 통합 목록·과목 필터·숫자 드릴 fetch/캐시/렌더·계산기 상하 고정바·카드형 행·빈 상태·접이식·사전 연동·DB 버전 배지)
+- **check_spec_refs.js 개선**: SPEC ID 문법에 `a` 접미사 지원 (`P-04a`, `TR-16a`) — `ID_RE`/`PURE_ID_RE`를 `\d{2}[a-z]?`로 확장
+- **TEST_GAP_BASELINE 103→0**: 신규 요구사항이 tests/ @spec 없이 소스만 참조하면 즉시 실패
+- **단언 정정 사례**: PF-02는 존재하지 않는 subjects/ 파일 레이아웃 대신 실제 `loadSubject(key)`+`_loaded[key]` 캐시 불변식 검증; PF-04는 `FETCH_CACHE_TTL_MS` 객체 리터럴 파싱; 스토리지 키는 `scopedKey` 네임스페이스 경유 `safeSetItem`으로 시드
+- 결과: unit **681** · DOM **388** · lint 0 problems · check:types 0 · specrefs 통과(테스트 미연결 0) · trace 재생성
+
 ## 2026-10-14 ESLint 경고 완전 소진 — 211→0, 규칙 error 승격
 
 - **`eqeqeq` 96건**: 전부 `== null`/`!= null` 관용 패턴 — 규칙을 `{ null: 'ignore' }`로 설정해 의도된 null/undefined 동시 검사는 허용하고 실수성 `==`만 차단

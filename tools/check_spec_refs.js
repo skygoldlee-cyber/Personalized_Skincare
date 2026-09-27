@@ -35,11 +35,11 @@ const EXCLUDE_DIRS = [path.join('tools', '_archive'), path.join('tools', '__pyca
 const EXCLUDE_FILES = [path.join('tools', 'check_spec_refs.js')];
 
 // ID 패턴: AA-NN, AA-BB-NN (예: UX-NAV-07), AA-PN (예: ROAD-P0 로드맵)
-const ID_RE = /\b([A-Z]{1,4}(?:-[A-Z]{1,4})?-(?:\d{2}|P\d))\b/g;
+const ID_RE = /\b([A-Z]{1,4}(?:-[A-Z]{1,4})?-(?:\d{2}[a-z]?|P\d))\b/g;
 const SPEC_TAG_RE = /@spec\s+([^\n]*)/g;
 const RANGE_RE = /^([A-Z]{1,4}(?:-[A-Z]{1,4})?-P?)(\d{1,2})~P?(\d{1,2})$/
 ;const WILDCARD_ID_RE = /^([A-Z]{1,4}(?:-[A-Z]{1,4})?)-\*$/;
-const PURE_ID_RE = /^[A-Z]{1,4}(?:-[A-Z]{1,4})?-(?:\d{2}|P\d)$/;
+const PURE_ID_RE = /^[A-Z]{1,4}(?:-[A-Z]{1,4})?-(?:\d{2}[a-z]?|P\d)$/;
 const RELATED_RE = /^>\s*\*\*관련 SPEC ID\*\*:\s*(.+)$/m;
 
 // 문서 헤더 "관련 SPEC ID" 스캔 대상 (check_doc_ids.js와 동일 범위)
@@ -49,7 +49,7 @@ const DOC_SCAN_FILES = ['AGENTS.md', 'README.md'];
 // 테스트 갭 기준선 — 소스 참조는 있으나 tests/ @spec이 없는 요구사항의 허용 상한.
 // 기존 백로그(정책형·문서형 포함)를 승계하되, 신규 요구사항이 갭을 늘리면 실패한다.
 // 테스트 @spec을 추가해 갭을 줄였다면 이 수치를 함께 낮춘다.
-const TEST_GAP_BASELINE = 103;
+const TEST_GAP_BASELINE = 0;
 
 function* walk(dir) {
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
