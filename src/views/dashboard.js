@@ -248,7 +248,7 @@ function _renderSubjectHeatmap(subjects) {
         high: _c('--color-success'),
         mid: _c('--color-warning'),
         low: _c('--color-danger'),
-        vlow: _c('--color-danger-darkest')
+        vlow: _c('--color-danger-dark')
     };
 
     let html = '<div class="heatmap-grid">';

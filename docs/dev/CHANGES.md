@@ -6,6 +6,11 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-09-28 히트맵 40% 미만 색상 대비 개선
+
+- **`dashboard.js`**: `<40%` 셀 색상 `--color-danger-darkest`(#991b1b) → `--color-danger-dark`(#dc2626) — 명도가 너무 낮아 회색(미응시)으로 오인되던 문제 개선
+- **`user_manual.md`**: 범례 이모지 ⚫→🟥 — 색상과 일치
+
 ## 2026-09-28 학습 매뉴얼 PRO 배지 렌더링 수정
 
 - **`user_manual.md` §1.5**: `<span class="pro-badge">PRO</span>` 인라인 HTML이 마크다운 파서의 escapeHTML로 이스케이프되어 배지가 표시되지 않던 문제 — 매뉴얼 내 기존 표기인 `💎 PRO` 텍스트로 통일
