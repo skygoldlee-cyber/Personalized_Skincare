@@ -13,7 +13,7 @@ import { setupPWAInstall } from './pwa-install.js';
 import { setupThemeToggle } from './theme-toggle.js';
 import { maybeShowWhatsNew } from './whats-new.js';
 import { captureEntrySource, flushPendingFeedback, initFeedbackHint } from './feedback.js';
-import { loadFeaturePlan, refreshProBadges, proFeatureNotice } from './pro-upgrade.js';
+import { loadFeaturePlan, refreshProBadges, proFeatureNotice, showPlanCompare } from './pro-upgrade.js';
 
 // --- 뷰 컨트롤러 모듈 임포트 ---
 import {
@@ -988,6 +988,7 @@ const DELEGATED_HANDLERS = {
     },
     // 계정/로그인 (Supabase Auth)
     openAuthModal, closeAuthModal, authSignIn, authSignUp, authEmailLogin, authMagicLink, authSignOut, authSetPassword, authSendOtp, authVerifyOtp, authForgotPassword,
+    showPlanCompare,
     syncNow,
     /** 복수정답형 모의고사 문항 수 선택 행 토글 — 다른 과목의 열린 행은 닫는다 */
     toggleComboPicker(rowId) {

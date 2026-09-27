@@ -614,6 +614,20 @@
   line-height: 1.7;
 }
 
+/* ── 플랜 안내: 무료 제공 태그 (PRO 배지의 반대 표기) ── */
+.plan-free-tag {
+  display: inline-block;
+  padding: 0.1rem 0.4rem;
+  border-radius: 999px;
+  font-size: 0.6rem;
+  font-weight: var(--font-weight-bold, 700);
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted, #9ca3af);
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.2));
+  vertical-align: middle;
+  margin-left: 0.3rem;
+}
+
 /* ── Pro 기능 배지 ── */
 .pro-badge {
   display: inline-block;

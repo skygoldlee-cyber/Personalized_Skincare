@@ -6,6 +6,14 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-14 Free/Pro 플랜 비교 안내 신설 — 기능 차이 가시화
+
+- **`pro-upgrade.js` `showPlanCompare()`**: 설정 '💎 플랜 안내 (Free/Pro)'·계정 모달 'Free/Pro 차이' 버튼으로 여는 비교 모달 — `feature-plan.json`의 현재 값을 실시간 반영해 기능별 `PRO`/`무료 제공` 태그를 렌더링 (플랜 전환 시 문구 불일치 없음). Pro 전용 혜택(한도 무제한·멀티디바이스 동기화·오디오북) + 항상 무료 도구 안내
+- **`proFeatureNotice`·`showUpgradeNotice` 모달**: 'Free / Pro 비교' 보조 버튼 추가 — 안내에서 곧바로 비교 표로 이동
+- **리팩터**: 3개 모달의 오버레이 생성·표시·trapFocus·닫기 로직을 `_showDialog()`로 공통화
+- **CSS**: `.plan-free-tag` 추가 (PRO 배지 반대 표기 — 무료 제공)
+- **테스트**: `tests/dom/pro-plan.dom.test.js` 5개 — 플랜별 태그 렌더링·전환 반영·설정 진입점·동기화 안내·free 스킵 (DOM 388→393)
+
 ## 2026-10-14 Pro 안내에 멀티디바이스 동기화 안내 추가
 
 - **`pro-upgrade.js` `proFeatureNotice` 모달**: Pro 기능 진입 안내에 "Pro 가입 시 로그인 계정의 클라우드 동기화로 여러 디바이스 간 학습 상태가 공유됩니다" 문구 추가 (pro-upgrade-benefits 래퍼로 한도 모달과 동일 스타일)

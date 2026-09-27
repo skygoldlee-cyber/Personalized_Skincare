@@ -78,12 +78,7 @@ export function proFeatureNotice(featureKey, featureName) {
     seen[featureKey] = new Date().toISOString();
     safeSetItem(STORAGE_KEYS.PRO_NOTICE_SEEN, JSON.stringify(seen));
 
-    const existing = document.getElementById('pro-upgrade-overlay');
-    if (existing) existing.remove();
-
-    const overlay = document.createElement('div');
-    overlay.id = 'pro-upgrade-overlay';
-    overlay.innerHTML = `
+    const { overlay, close } = _showDialog(`
         <div class="app-confirm-dialog pro-upgrade-dialog" role="alertdialog" aria-modal="true" aria-labelledby="pro-notice-title">
             <h3 id="pro-notice-title">💎 Pro 기능 안내</h3>
             <p><strong>${esc(featureName)}</strong>은(는) Pro 버전에서 제공되는 기능입니다.<br>현재는 무료 체험 기간으로 누구나 이용할 수 있습니다.</p>
@@ -91,10 +86,25 @@ export function proFeatureNotice(featureKey, featureName) {
                 <p class="pro-upgrade-sub">Pro 가입 시 로그인 계정의 클라우드 동기화로 <strong>여러 디바이스 간 학습 상태가 공유</strong>됩니다.</p>
             </div>
             <div class="app-confirm-actions">
+                <button class="app-confirm-cancel app-confirm-compare">Free / Pro 비교</button>
                 <button class="app-confirm-ok">확인</button>
             </div>
         </div>
-    `;
+    `);
+    overlay.querySelector('.app-confirm-compare')?.addEventListener('click', () => { close(); showPlanCompare(); });
+}
+
+/** 모달 표시 공통부 — 오버레이 생성·표시 애니메이션·trapFocus·닫기 핸들러.
+ * @param {string} innerHtml 다이얼로그 내부 HTML (.app-confirm-dialog 루트 포함)
+ * @returns {{overlay: HTMLElement, close: function}} */
+function _showDialog(innerHtml) {
+    const existing = document.getElementById('pro-upgrade-overlay');
+    if (existing) existing.remove();
+
+    const overlay = document.createElement('div');
+    overlay.id = 'pro-upgrade-overlay';
+    overlay.className = 'app-confirm-overlay';
+    overlay.innerHTML = innerHtml;
     document.body.appendChild(overlay);
     const dialog = /** @type {HTMLElement} */ (overlay.querySelector('.app-confirm-dialog'));
     requestAnimationFrame(() => {
@@ -114,17 +124,54 @@ export function proFeatureNotice(featureKey, featureName) {
         if (e.key === 'Escape') { document.removeEventListener('keydown', onKey); close(); }
     };
     document.addEventListener('keydown', onKey);
+    return { overlay, close };
+}
+
+/** 플랜 비교에 노출하는 기능 목록 — feature-plan.json 키와 매핑 */
+const PLAN_FEATURES = [
+    { key: 'personal_analysis', label: '맞춤 학습 리포트 (오답 패턴·취약 진술·성적 예측)' },
+    { key: 'story_textbook', label: '이야기형 교재 본문 읽기' },
+    { key: 'mock_exam', label: '실전 모의고사' },
+    { key: 'combo_mock', label: '복수정답형 모의고사' },
+    { key: 'combo_set', label: '복수정답형 문제집' },
+    { key: 'combo_drill', label: '복수정답형 훈련' },
+];
+
+/** Free/Pro 기능 비교 안내 모달 — 설정의 '플랜 안내'·계정 모달에서 연다.
+ * feature-plan.json의 현재 값을 반영하므로 플랜 전환 시 문구가 어긋나지 않는다. */
+export function showPlanCompare() {
+    const featureRows = PLAN_FEATURES.map(f => {
+        const tag = isProFeature(f.key)
+            ? '<span class="pro-badge">PRO</span>'
+            : '<span class="plan-free-tag">무료 제공</span>';
+        return `<li>${esc(f.label)} ${tag}</li>`;
+    }).join('');
+
+    _showDialog(`
+        <div class="app-confirm-dialog pro-upgrade-dialog" role="alertdialog" aria-modal="true" aria-labelledby="plan-compare-title">
+            <h3 id="plan-compare-title">💎 Free / Pro 안내</h3>
+            <p>현재는 <strong>무료 체험 기간</strong>으로 Pro 표시 기능도 무료로 이용할 수 있습니다.</p>
+            <div class="pro-upgrade-benefits">
+                <p class="pro-upgrade-sub"><strong>기능별 제공 범위</strong> — 현재 플랜 설정 반영</p>
+                <ul>${featureRows}</ul>
+                <p class="pro-upgrade-sub"><strong>Pro 전용 혜택 (예정)</strong></p>
+                <ul>
+                    <li>저장 한도 무제한 — 무료 플랜: My 포뮬러 5 · 고객 20 · 원료 30 · 조제 기록 50</li>
+                    <li>클라우드 동기화 — 로그인 계정 기준 여러 디바이스 간 학습 상태 공유</li>
+                    <li>오디오북 등 신규 Pro 기능 우선 제공</li>
+                </ul>
+                <p class="pro-upgrade-sub">그 외 학습 도구(퀴즈·플래시카드·교재 표준형·검색·사전·캘린더·훈련소·백업)는 <strong>항상 무료</strong>입니다.</p>
+            </div>
+            <div class="app-confirm-actions">
+                <button class="app-confirm-ok">확인</button>
+            </div>
+        </div>
+    `);
 }
 
 /** Pro 업그레이드 안내 모달 (정보성 — 결제 경로 없음) */
 export function showUpgradeNotice(featureLabel, limitMessage) {
-    const existing = document.getElementById('pro-upgrade-overlay');
-    if (existing) existing.remove();
-
-    const overlay = document.createElement('div');
-    overlay.id = 'pro-upgrade-overlay';
-    overlay.className = 'app-confirm-overlay';
-    overlay.innerHTML = `
+    const { overlay, close } = _showDialog(`
         <div class="app-confirm-dialog pro-upgrade-dialog" role="alertdialog" aria-modal="true" aria-labelledby="pro-upgrade-title">
             <h3 id="pro-upgrade-title">💎 무료 한도 도달</h3>
             <p>${esc(limitMessage || `${featureLabel}의 무료 플랜 한도에 도달했습니다.`)}</p>
@@ -137,27 +184,10 @@ export function showUpgradeNotice(featureLabel, limitMessage) {
                 </ul>
             </div>
             <div class="app-confirm-actions">
+                <button class="app-confirm-cancel app-confirm-compare">Free / Pro 비교</button>
                 <button class="app-confirm-ok">확인</button>
             </div>
         </div>
-    `;
-    document.body.appendChild(overlay);
-    const dialog = /** @type {HTMLElement} */ (overlay.querySelector('.app-confirm-dialog'));
-    requestAnimationFrame(() => {
-        overlay.classList.add('is-visible');
-        dialog.classList.add('is-visible');
-    });
-
-    const untrapFocus = trapFocus(dialog);
-    const close = () => {
-        overlay.classList.remove('is-visible');
-        dialog.classList.remove('is-visible');
-        setTimeout(() => { untrapFocus(); overlay.remove(); }, 200);
-    };
-    overlay.querySelector('.app-confirm-ok')?.addEventListener('click', close);
-    overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
-    const onKey = (e) => {
-        if (e.key === 'Escape') { document.removeEventListener('keydown', onKey); close(); }
-    };
-    document.addEventListener('keydown', onKey);
+    `);
+    overlay.querySelector('.app-confirm-compare')?.addEventListener('click', () => { close(); showPlanCompare(); });
 }

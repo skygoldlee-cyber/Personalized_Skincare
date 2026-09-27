@@ -139,6 +139,9 @@
                             <button type="button" class="settings-item" data-click="openAuthModal">
                                 <i class="fa-solid fa-user" aria-hidden="true"></i> <span id="auth-menu-label">계정 / 로그인</span>
                             </button>
+                            <button type="button" class="settings-item" data-click="showPlanCompare" title="Free와 Pro의 기능 차이·혜택 비교 보기">
+                                <i class="fa-solid fa-gem" aria-hidden="true"></i> 플랜 안내 (Free/Pro)
+                            </button>
                             <div class="settings-divider"></div>
                             <p class="settings-group-label">데이터</p>
                             <button type="button" class="settings-item" data-click="exportData">
@@ -2139,7 +2142,7 @@
             <!-- 로그인 상태 -->
             <div id="auth-account-area" class="auth-modal-body is-hidden">
                 <p class="auth-account-line">로그인됨: <strong id="auth-account-email"></strong></p>
-                <p class="auth-account-line">플랜: <span id="auth-account-plan">Free</span></p>
+                <p class="auth-account-line">플랜: <span id="auth-account-plan">Free</span> <button type="button" class="btn btn-secondary btn-sm" data-click="showPlanCompare">Free/Pro 차이</button></p>
                 <p class="auth-account-line">동기화: <span id="auth-sync-status">대기 중</span></p>
                 <div class="auth-modal-actions">
                     <button type="button" class="btn btn-primary" data-click="syncNow">지금 동기화</button>

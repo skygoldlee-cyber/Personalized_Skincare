@@ -1,0 +1,80 @@
+// tests/dom/pro-plan.dom.test.js — 플랜 안내 모달 (Free/Pro 비교)
+// @spec ROAD-P0
+// feature-plan.json의 현재 값을 반영해 기능별 PRO/무료 태그를 렌더링한다 —
+// 플랜 전환 시 고객이 보는 비교 표가 설정과 어긋나지 않음을 고정한다.
+
+import { describe, it, beforeEach, expect, vi } from 'vitest';
+
+vi.mock('../../src/ui-utils.js', () => ({
+    showToast: vi.fn(),
+    showConfirm: vi.fn(() => Promise.resolve(true)),
+    showGlobalLoading: vi.fn(),
+    hideGlobalLoading: vi.fn(),
+    vibrate: vi.fn(),
+    trapFocus: vi.fn(),
+    HAPTIC: { correct: 30, wrong: [40, 30, 40], tap: 10 },
+}));
+
+import { loadIndexHtml } from './helpers.js';
+import { loadFeaturePlan, showPlanCompare, proFeatureNotice } from '../../src/pro-upgrade.js';
+
+function stubPlan(features) {
+    vi.stubGlobal('fetch', vi.fn(() => Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve({ version: 1, features }),
+    })));
+    return loadFeaturePlan();
+}
+
+function overlay() { return document.getElementById('pro-upgrade-overlay'); }
+
+beforeEach(async () => {
+    localStorage.clear();
+    loadIndexHtml();
+    overlay()?.remove();
+});
+
+describe('플랜 안내 모달 (showPlanCompare)', () => {
+    it('기능별 PRO/무료 태그를 feature-plan.json 값대로 렌더링한다', async () => {
+        await stubPlan({ personal_analysis: 'pro', story_textbook: 'pro', mock_exam: 'free' });
+        showPlanCompare();
+        const items = [...overlay().querySelectorAll('li')].map(li => li.textContent);
+        // 개인화 분석·이야기형은 PRO, 모의고사는 무료 제공
+        expect(items.some(t => t.includes('맞춤 학습 리포트') && t.includes('PRO'))).toBe(true);
+        expect(items.some(t => t.includes('이야기형') && t.includes('PRO'))).toBe(true);
+        expect(items.some(t => t.includes('실전 모의고사') && t.includes('무료 제공'))).toBe(true);
+        // Pro 전용 혜택 — 멀티디바이스 동기화·한도 무제한 안내
+        expect(overlay().textContent).toContain('여러 디바이스 간 학습 상태 공유');
+        expect(overlay().textContent).toContain('무제한');
+    });
+
+    it('플랜이 free로 바뀌면 해당 기능 태그가 무료 제공으로 전환된다', async () => {
+        await stubPlan({ personal_analysis: 'free', story_textbook: 'free' });
+        showPlanCompare();
+        const items = [...overlay().querySelectorAll('li')].map(li => li.textContent);
+        expect(items.some(t => t.includes('맞춤 학습 리포트') && t.includes('무료 제공'))).toBe(true);
+        expect(items.some(t => t.includes('이야기형') && t.includes('무료 제공'))).toBe(true);
+    });
+
+    it('설정 메뉴에 플랜 안내 진입점이 있다', () => {
+        const btn = document.querySelector('[data-click="showPlanCompare"]');
+        expect(btn).not.toBeNull();
+        expect(btn.textContent).toContain('플랜 안내');
+    });
+});
+
+describe('Pro 기능 안내 모달 (proFeatureNotice)', () => {
+    it('Pro 기능 진입 시 멀티디바이스 동기화 안내와 비교 버튼을 표시한다', async () => {
+        await stubPlan({ story_textbook: 'pro' });
+        proFeatureNotice('story_textbook', '이야기형 교재 본문 읽기');
+        expect(overlay()).not.toBeNull();
+        expect(overlay().textContent).toContain('여러 디바이스 간 학습 상태가 공유');
+        expect(overlay().querySelector('.app-confirm-compare')).not.toBeNull();
+    });
+
+    it('free 플랜 기능에는 안내를 표시하지 않는다', async () => {
+        await stubPlan({ mock_exam: 'free' });
+        proFeatureNotice('mock_exam', '실전 모의고사');
+        expect(overlay()).toBeNull();
+    });
+});

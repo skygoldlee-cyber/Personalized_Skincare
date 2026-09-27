@@ -27,9 +27,9 @@
 | 구분 | 프레임워크 | 환경 | 파일 위치 | 테스트 수 |
 |------|-----------|------|-----------|-----------|
 | **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 694 |
-| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 388 |
+| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 393 |
 | **E2E** | Playwright | 실브라우저 (Chromium + 모바일) | `tests/e2e/*.spec.js` | 16 |
-| **합계** | | | | **1098** |
+| **합계** | | | | **1103** |
 
 ### 설계 원칙
 
@@ -272,7 +272,8 @@ npm run hooks:install
 | 39 | `reader-audio.dom.test.js` | 6 | 오디오북 플레이어 (AO-01~05) | 매니페스트 경로 해석·오디오 없음 토스트·Media Session 메타/핸들러·속도 순환·시크·정지 | Audio·mediaSession 스텁, 2026-10-14 추가 |
 | 40 | `charts.dom.test.js` | 7 | 분석 차트 (C-01~05) | 성적 라인차트·합격/과락 진단·레이더 N축·과목 점수행·툴팁 | 성적 이력 시딩(safeSetItem scopedKey), 2026-10-14 추가 |
 | 41 | `review-drills-formula.dom.test.js` | 11 | 복습·숫자 드릴·계산기 (RV-01·ND-01·FO-10/11) | 복습 통합 목록·과목 필터·number-drills fetch/캐시/렌더·계산기 상하 고정바·사전 연동·DB 버전 배지 | fetch 스텁, 2026-10-14 추가 |
-| | **합계** | **388** | | |
+| 42 | `pro-plan.dom.test.js` | 5 | 플랜 안내 모달 (ROAD-P0) | showPlanCompare 플랜 반영 PRO/무료 태그·플랜 전환 반영·설정 진입점·proFeatureNotice 동기화 안내·free 스킵 | fetch 스텁, 2026-10-14 추가 |
+| | **합계** | **393** | | |
 
 ---
 
