@@ -31,7 +31,9 @@
     "src/data-loader.js",
     "src/pdf-registry.js",
     "src/reader-format.js",
-    "data/audio_manifest.js"
+    "data/audio_manifest.js",
+    "tools/supabase/functions/feedback-notify/deno.d.ts",
+    "tools/supabase/functions/feedback-notify/index.ts"
   ],
   "exclude": [
     "node_modules",
