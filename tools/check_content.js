@@ -56,6 +56,8 @@ const STEPS = [
     '문서', 'README·AGENTS·docs/*.md 경로 참조 존재 검증 (스테일 탐지)'],
   ['node', ['tools/check_spec_refs.js'], false,
     '추적', 'SPEC ID ↔ 코드 @spec 태그 양방향 정합성 (스테일 참조 탐지)'],
+  ['node', ['tools/build_trace_matrix.js', '--check'], false,
+    '추적', 'TRACE_MATRIX 입력 해시 신선도 (SPEC·@spec·문서 헤더 변경 시 재생성 강제)'],
   ['node', ['--test', 'tests/unit/*.test.js'], false,
     '테스트', '유닛 테스트 (node --test)'],
   ...(QUICK ? [] : [[

@@ -248,7 +248,8 @@ docs/                   # 개발 문서
 
 - 요구사양(SPEC ID) ↔ 문서(DOC ID) ↔ 소스·테스트(@spec) ↔ 보고서(report_archive 헤더)의 유기적 추적은 `docs/dev/TRACE_MATRIX.md`(DOC-DEV-04)가 담당 — `npm.cmd run build:trace`로 재생성하는 자동 산출물(직접 편집 금지).
 - 연결 규약: 각 문서 헤더의 `> **관련 SPEC ID**: XX-##` 행 + 코드의 `@spec` 태그가 원천. `check:specrefs`가 양쪽 모두 SPEC 존재 여부를 검증한다.
-- SPEC ID 변경·문서 추가·@spec 태그 변경 후에는 `npm.cmd run build:trace`로 매트릭스를 갱신한다.
+- SPEC ID 변경·문서 추가·@spec 태그 변경 후에는 `npm.cmd run build:trace`로 매트릭스를 갱신한다. `npm.cmd run check:trace`가 입력 해시로 신선도를 검증(check:content 포함) — 스테일이면 실패.
+- 활용 도구: `node tools/trace.js Q-05`(요구사항 도시어 — 문서·소스·테스트·보고서 즉시 조회), `node tools/impact_tests.js [파일…]`(변경 파일 → 영향 요구사항·권장 테스트 역산 — 인자 없으면 미커밋 변경 자동 분석).
 
 ## 코드 스타일 및 규칙
 

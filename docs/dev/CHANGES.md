@@ -6,6 +6,14 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-13 TRACE MATRIX 활용 도구 — 영향도·도시어·갭 리포트·신선도 체크
+
+- **`tools/lib/trace_scan.js`**: SPEC·@spec·문서 헤더 스캔 로직을 공용 모듈로 추출 — build_trace_matrix·impact_tests·trace가 동일 원천 공유
+- **`tools/trace.js`**: 요구사항 도시어 CLI — `node tools/trace.js Q-05`로 문서·소스·테스트·보고서 즉시 조회 (DOC-XX 조회도 지원)
+- **`tools/impact_tests.js`**: 변경 파일 → 영향 SPEC ID·권장 테스트 역산 — 인자 없으면 미커밋 변경 자동 분석, `--ref`로 브랜치 diff 지원
+- **테스트 갭 리포트**: TRACE_MATRIX 부록 B에 "소스 연결 있으나 테스트 미연결" 요구사항 자동 집계 (현재 103개 — 테스트 백로그 후보)
+- **신선도 체크**: TRACE_MATRIX에 입력 해시 스탬프 — `npm run check:trace`(build_trace_matrix --check)로 검증, `check:content`에 통합. SPEC·@spec·문서 헤더 변경 시 재생성 강제
+
 ## 2026-10-13 TRACE MATRIX 구축 — 문서·소스·테스트·보고서 유기 추적
 
 - **문서→요구사항 링크 완성**: 모든 문서(56개) 헤더에 `관련 SPEC ID` 부여 — dev 문서는 구체 ID(`FO-01~23` 등·범위·와일드카드 지원), 비해당 문서는 "해당 없음 (사유)" 명시

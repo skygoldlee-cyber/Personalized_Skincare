@@ -5,153 +5,51 @@
  * SPEC.md의 요구사양 ID를 축으로, 4계층 추적 링크를 수집해
  * docs/dev/TRACE_MATRIX.md를 생성한다 (생성물 — 직접 편집 금지).
  *
- *   요구사양 (SPEC.md) ─┬─ 문서   : 각 .md 헤더의 "관련 SPEC ID" 행
+ *   요구사항 (SPEC.md) ─┬─ 문서   : 각 .md 헤더의 "관련 SPEC ID" 행
  *                     ├─ 소스   : src/·css/·tools/·ref-pipeline/ 의 @spec 태그
  *                     ├─ 테스트 : tests/ 의 @spec 태그
  *                     └─ 보고서 : docs/report_archive/ 의 관련 SPEC ID
  *
  * 사용법:
- *   npm.cmd run build:trace            # TRACE_MATRIX.md 재생성
- *   node tools/build_trace_matrix.js   # 직접 실행
+ *   npm.cmd run build:trace                    # TRACE_MATRIX.md 재생성
+ *   npm.cmd run check:trace                    # 신선도 검증 — 입력 해시가 다르면 exit 1
+ *   node tools/build_trace_matrix.js --check   # 직접 검증
  *
- * @spec 태그 규격·스캔 범위는 check_spec_refs.js와 동일 — 양쪽이 같은 진실을 본다.
+ * 신선도: 생성 시 입력(SPEC + @spec 태그 + 문서 헤더)의 해시를 파일에 스탬프.
+ * --check는 재해시해 비교 — SPEC·@spec·문서 헤더가 바뀌면 재생성을 강제한다.
  */
 
 // @spec none (추적 매트릭스 생성 도구)
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
+const T = require('./lib/trace_scan');
 
-const ROOT = path.resolve(__dirname, '..');
-const SPEC_FILE = path.join(ROOT, 'docs', 'dev', 'SPEC.md');
-const OUT_FILE = path.join(ROOT, 'docs', 'dev', 'TRACE_MATRIX.md');
+const OUT_FILE = path.join(T.ROOT, 'docs', 'dev', 'TRACE_MATRIX.md');
+const HASH_RE = /> 입력 해시: ([0-9a-f]+)/;
 
-// ── @spec 스캔 범위 (check_spec_refs.js와 동일) ──────────────────
-const SCAN_DIRS = ['src', 'tests', 'tools', 'css', 'ref-pipeline'];
-const SCAN_FILES = ['sw.js', 'index.html', 'serve.js'];
-const SCAN_EXTS = new Set(['.js', '.css', '.html', '.ts', '.py']);
-const EXCLUDE_DIRS = [path.join('tools', '_archive'), path.join('tools', '__pycache__'), 'node_modules'];
-const EXCLUDE_FILES = [
-  path.join('tools', 'check_spec_refs.js'),
-  path.join('tools', 'build_trace_matrix.js'), // 자기 자신 제외
-];
-
-// 문서 스캔 범위 (check_doc_ids.js와 동일)
-const DOC_DIRS = ['docs', 'ref-pipeline'];
-const DOC_FILES = ['AGENTS.md', 'README.md'];
-const REPORT_DIR = path.join('docs', 'report_archive');
-
-const ID_RE = /\b([A-Z]{1,4}(?:-[A-Z]{1,4})?-(?:\d{2}|P\d))\b/g;
-const SPEC_TAG_RE = /@spec\s+([^\n]*)/g;
-const RANGE_RE = /^([A-Z]{1,4}(?:-[A-Z]{1,4})?-)(\d{2})~(\d{2})$/;
-const PURE_ID_RE = /^[A-Z]{1,4}(?:-[A-Z]{1,4})?-(?:\d{2}|P\d)$/;
-const DOC_ID_RE = /\*\*문서 ID\*\*:\s*(DOC-[A-Z]+-\d+)/;
-const RELATED_RE = /^>\s*\*\*관련 SPEC ID\*\*:\s*(.+)$/m;
-
-function* walk(dir, exts) {
-  if (!fs.existsSync(dir)) return;
-  for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
-    const p = path.join(dir, e.name);
-    if (e.isDirectory()) {
-      if (e.name.startsWith('.')) continue;
-      const rel = path.relative(ROOT, p);
-      if (EXCLUDE_DIRS.some(x => rel === x || rel.startsWith(x + path.sep))) continue;
-      yield* walk(p, exts);
-    } else if (exts.has(path.extname(e.name))) {
-      const rel = path.relative(ROOT, p);
-      if (!EXCLUDE_FILES.some(x => rel === x)) yield p;
+/** 입력 해시 — SPEC 전문 + 각 파일의 추적 관련 행(@spec·관련 SPEC ID·문서 ID) */
+function inputsHash(specIds) {
+  const h = crypto.createHash('sha256');
+  h.update(fs.readFileSync(T.SPEC_FILE, 'utf8'));
+  const files = new Set();
+  for (const f of T.SCAN_FILES.map(f => path.join(T.ROOT, f))) if (fs.existsSync(f)) files.add(f);
+  for (const d of T.SCAN_DIRS) for (const f of T.walk(path.join(T.ROOT, d), T.SCAN_EXTS)) files.add(f);
+  for (const d of T.DOC_DIRS) for (const f of T.walk(path.join(T.ROOT, d), new Set(['.md']))) files.add(f);
+  for (const f of T.DOC_FILES.map(f => path.join(T.ROOT, f))) if (fs.existsSync(f)) files.add(f);
+  for (const file of [...files].sort()) {
+    const rel = path.relative(T.ROOT, file).replace(/\\/g, '/');
+    h.update('\n@@ ' + rel);
+    if (file === OUT_FILE) continue; // 자기 자신의 해시 행은 제외
+    for (const l of fs.readFileSync(file, 'utf8').split('\n')) {
+      if (/@spec|관련 SPEC ID|문서 ID/.test(l)) h.update('\n' + l);
     }
   }
+  void specIds;
+  return h.digest('hex').slice(0, 16);
 }
 
-/** @spec 토큰 → ID 집합 (범위·나열 — check_spec_refs.js와 동일 규칙) */
-function expandIds(tagText) {
-  const ids = new Set();
-  for (const raw of tagText.split(/[,·]/)) {
-    const token = raw.trim()
-      .replace(/\*\/\s*$/, '')
-      .replace(/-->\s*$/, '')
-      .replace(/[)（(].*$/, '')
-      .replace(/[가-힣\s].*$/, '')
-      .replace(/[`'"]/g, '')           // 백틱·인용부호 제거 (`FO-01~23` 형태)
-      .trim();
-    if (!token || /^none\b/i.test(token) || /^해당/.test(raw.trim())) continue;
-    const range = token.match(RANGE_RE);
-    if (range) {
-      const [, prefix, from, to] = range;
-      for (let i = +from; i <= +to; i++) ids.add(prefix + String(i).padStart(2, '0'));
-      continue;
-    }
-    if (PURE_ID_RE.test(token)) ids.add(token);
-  }
-  return ids;
-}
-
-/** SPEC.md → 선언 ID + 절 위치 */
-function extractSpec() {
-  const lines = fs.readFileSync(SPEC_FILE, 'utf8').split('\n');
-  const ids = new Map(); // id → section
-  let sec = '';
-  for (const l of lines) {
-    if (/^#{2,3} /.test(l)) sec = l.replace(/^#+\s*/, '').replace(/\s*\(.*?\)\s*$/, '').trim();
-    for (const m of l.matchAll(ID_RE)) {
-      if (!m[1].startsWith('DOC-') && !ids.has(m[1])) ids.set(m[1], sec);
-    }
-  }
-  return ids;
-}
-
-/** 코드 @spec 스캔 → id → {src: Set, test: Set} */
-function collectCodeRefs() {
-  const src = new Map(), tst = new Map(); // id → Set(file)
-  const files = [...SCAN_FILES.map(f => path.join(ROOT, f)).filter(f => fs.existsSync(f))];
-  for (const d of SCAN_DIRS) files.push(...walk(path.join(ROOT, d), SCAN_EXTS));
-  for (const file of files) {
-    const rel = path.relative(ROOT, file).replace(/\\/g, '/');
-    const isTest = rel.startsWith('tests/');
-    fs.readFileSync(file, 'utf8').split('\n').forEach(text => {
-      for (const m of text.matchAll(SPEC_TAG_RE)) {
-        for (const id of expandIds(m[1])) {
-          const map = isTest ? tst : src;
-          if (!map.has(id)) map.set(id, new Set());
-          map.get(id).add(rel);
-        }
-      }
-    });
-  }
-  return { src, tst };
-}
-
-/** 문서 스캔 → id → {docs: Set(DOC-ID), reports: Set(DOC-ID)}, + 문서 메타 */
-function collectDocRefs() {
-  const docs = new Map(), reports = new Map(); // specId → Set(DOC-ID)
-  const meta = new Map(); // docId → {file, title}
-  const missingRef = [];
-  const files = DOC_FILES.map(f => path.join(ROOT, f)).filter(f => fs.existsSync(f));
-  for (const d of DOC_DIRS) files.push(...walk(path.join(ROOT, d), new Set(['.md'])));
-  for (const file of files) {
-    const rel = path.relative(ROOT, file).replace(/\\/g, '/');
-    const text = fs.readFileSync(file, 'utf8');
-    const docId = (text.match(DOC_ID_RE) || [])[1] || rel;
-    const title = (text.match(/^#\s+(.+)$/m) || [])[1] || rel;
-    meta.set(docId, { file: rel, title });
-    const m = text.match(RELATED_RE);
-    if (!m) { missingRef.push(rel); continue; }
-    const isReport = rel.startsWith(REPORT_DIR.replace(/\\/g, '/'));
-    const map = isReport ? reports : docs;
-    for (const id of expandIds(m[1])) {
-      if (!map.has(id)) map.set(id, new Set());
-      map.get(id).add(docId);
-    }
-  }
-  return { docs, reports, meta, missingRef };
-}
-
-function main() {
-  const specIds = extractSpec();
-  const { src, tst } = collectCodeRefs();
-  const { docs, reports, meta, missingRef } = collectDocRefs();
-
-  // 절별 그룹핑
+function build(specIds, src, tst, docs, reports, meta, missingRef) {
   const bySection = new Map();
   for (const [id, sec] of specIds) {
     if (!bySection.has(sec)) bySection.set(sec, []);
@@ -163,6 +61,7 @@ function main() {
   out.push('> **문서 ID**: DOC-DEV-04');
   out.push('> **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)');
   out.push('> ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.');
+  out.push(`> 입력 해시: ${inputsHash(specIds)}`);
   out.push(`> 생성: ${new Date().toISOString().slice(0, 10)} · 원천: SPEC.md(${specIds.size}개 ID) + @spec 태그 + 문서 헤더`, '');
   out.push('| 열 | 의미 | 원천 |');
   out.push('|----|------|------|');
@@ -172,18 +71,17 @@ function main() {
   out.push('| 보고서 | 분석·결과 보고서 | report_archive 헤더 |');
   out.push('');
 
-  // 요약 통계
   let nDoc = 0, nSrc = 0, nTst = 0, nRpt = 0;
+  const testGap = []; // 소스 연결 있으나 테스트 미연결
   for (const id of specIds.keys()) {
     if (docs.has(id)) nDoc++;
     if (src.has(id)) nSrc++;
     if (tst.has(id)) nTst++;
     if (reports.has(id)) nRpt++;
+    if (src.has(id) && !tst.has(id)) testGap.push(id);
   }
   out.push(`**커버리지 요약**: 요구사항 ${specIds.size}개 — 문서 연결 ${nDoc} · 소스 연결 ${nSrc} · 테스트 연결 ${nTst} · 보고서 연결 ${nRpt}`, '');
   out.push('---', '');
-
-  const fmt = set => set ? [...set].sort().join('<br>') : '—';
 
   for (const [sec, ids] of bySection) {
     out.push(`## ${sec || '기타 (SPEC 헤더·본문 언급)'}`, '');
@@ -201,7 +99,6 @@ function main() {
     out.push('');
   }
 
-  // 부록: 문서 ↔ SPEC 역방향 (문서 ID 기준)
   out.push('---', '', '## 부록 A — 문서 → 요구사양 역방향 매핑', '');
   out.push('| 문서 ID | 파일 | 관련 SPEC ID |');
   out.push('|---------|------|--------------|');
@@ -216,15 +113,55 @@ function main() {
     const ids = docToSpec.get(docId);
     out.push(`| ${docId} | ${info.file} | ${ids ? [...ids].sort().join(', ') : '—'} |`);
   }
+
+  out.push('', '## 부록 B — 테스트 갭 (소스 연결 있으나 테스트 @spec 미연결)', '');
+  if (testGap.length) {
+    out.push(`소스에 @spec이 있지만 tests/에서 참조가 없는 요구사항 ${testGap.length}개 — 테스트 백로그 후보.`, '');
+    out.push('| ID | 절 | 구현 소스 |');
+    out.push('|----|-----|-----------|');
+    for (const id of testGap.sort()) {
+      const files = [...(src.get(id) || [])].sort().slice(0, 3).join('<br>');
+      out.push(`| ${id} | ${specIds.get(id) || '—'} | ${files} |`);
+    }
+  } else {
+    out.push('없음 — 소스 연결된 모든 요구사항에 테스트 참조가 있음.');
+  }
+
   if (missingRef.length) {
-    out.push('', '## 부록 B — 관련 SPEC ID 헤더 누락 문서', '');
+    out.push('', '## 부록 C — 관련 SPEC ID 헤더 누락 문서', '');
     for (const f of missingRef) out.push(`- ${f}`);
   }
   out.push('');
+  return out.join('\n');
+}
 
-  fs.writeFileSync(OUT_FILE, out.join('\n'));
+function main() {
+  const checkOnly = process.argv.includes('--check');
+  const { specIds, src, tst, docs, reports, meta, missingRef } = T.scanAll();
+
+  if (checkOnly) {
+    const want = inputsHash(specIds);
+    const got = fs.existsSync(OUT_FILE) ? (fs.readFileSync(OUT_FILE, 'utf8').match(HASH_RE) || [])[1] : null;
+    if (got === want) {
+      console.log(`✅ TRACE_MATRIX 신선도 통과 — 입력 해시 ${want}`);
+      process.exit(0);
+    }
+    console.log(`⚠ TRACE_MATRIX.md가 입력과 다릅니다 (${got || '없음'} → ${want})`);
+    console.log(`  SPEC·@spec·문서 헤더 변경 후 재생성이 필요합니다: npm run build:trace`);
+    process.exit(1);
+  }
+
+  fs.writeFileSync(OUT_FILE, build(specIds, src, tst, docs, reports, meta, missingRef));
+  let nDoc = 0, nSrc = 0, nTst = 0, nRpt = 0, nGap = 0;
+  for (const id of specIds.keys()) {
+    if (docs.has(id)) nDoc++;
+    if (src.has(id)) nSrc++;
+    if (tst.has(id)) nTst++;
+    if (reports.has(id)) nRpt++;
+    if (src.has(id) && !tst.has(id)) nGap++;
+  }
   console.log(`✅ TRACE_MATRIX.md 생성 — 요구사항 ${specIds.size}개 · 문서 ${nDoc} · 소스 ${nSrc} · 테스트 ${nTst} · 보고서 ${nRpt} 연결`);
-  if (missingRef.length) console.log(`⚠ 관련 SPEC ID 헤더 누락 ${missingRef.length}개 문서 (부록 B 참조)`);
+  console.log(`   테스트 갭: ${nGap}개 요구사항 (부록 B)${missingRef.length ? ` · 헤더 누락 문서 ${missingRef.length}개` : ''}`);
 }
 
 main();

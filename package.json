@@ -30,6 +30,7 @@
     "check:docs": "node tools/check_docs_paths.js && node tools/check_doc_ids.js",
     "check:specrefs": "node tools/check_spec_refs.js",
     "build:trace": "node tools/build_trace_matrix.js",
+    "check:trace": "node tools/build_trace_matrix.js --check",
     "convert:refs": "python ref-pipeline/convert.py",
     "verify:refs": "python ref-pipeline/convert.py --verify",
     "build:drills": "node tools/build/build_ox_drills.js && node tools/build/build_combo_drills.js",

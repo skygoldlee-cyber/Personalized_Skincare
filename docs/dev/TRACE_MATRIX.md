@@ -3,6 +3,7 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
+> 입력 해시: 57e8969fb83d34d9
 > 생성: 2026-09-27 · 원천: SPEC.md(344개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
@@ -12,7 +13,7 @@
 | 테스트 | 검증 테스트 파일 | `// @spec` 태그 (tests/) |
 | 보고서 | 분석·결과 보고서 | report_archive 헤더 |
 
-**커버리지 요약**: 요구사항 344개 — 문서 연결 198 · 소스 연결 325 · 테스트 연결 232 · 보고서 연결 106
+**커버리지 요약**: 요구사항 344개 — 문서 연결 222 · 소스 연결 325 · 테스트 연결 232 · 보고서 연결 109
 
 ---
 
@@ -69,17 +70,17 @@
 
 | ID | 문서 | 소스 | 테스트 | 보고서 |
 |----|------|------|--------|--------|
-| Q-01 | — | src/views/quiz.js | tests/dom/study-quiz.dom.test.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 |
-| Q-02 | — | src/views/quiz.js | tests/dom/study-quiz.dom.test.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 |
-| Q-03 | — | src/views/quiz.js | tests/dom/study-quiz.dom.test.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 |
-| Q-04 | DOC-DSN-04 | src/views/quiz.js | tests/dom/study-quiz.dom.test.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 |
-| Q-05 | DOC-DSN-04 | src/utils.js<br>src/views/quiz.js | tests/dom/study-quiz.dom.test.js<br>tests/unit/utils.test.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 |
-| Q-06 | DOC-DSN-04 | src/views/daily-challenge.js<br>src/views/quiz.js | tests/dom/study-challenge.dom.test.js<br>tests/dom/study-quiz.dom.test.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 |
-| Q-07 | DOC-DSN-04 | src/views/quiz.js | tests/dom/study-quiz.dom.test.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 |
-| Q-08 | DOC-DSN-04 | src/views/quiz.js<br>src/weak-items.js | tests/dom/study-quiz.dom.test.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 |
-| Q-09 | DOC-DSN-04 | src/views/quiz.js | tests/dom/study-quiz.dom.test.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 |
-| Q-10 | DOC-DSN-04 | src/views/quiz.js | tests/dom/study-quiz.dom.test.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 |
-| Q-11 | DOC-DSN-04 | src/views/quiz.js | tests/dom/study-quiz.dom.test.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 |
+| Q-01 | DOC-REF-01 | src/views/quiz.js | tests/dom/study-quiz.dom.test.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 |
+| Q-02 | DOC-REF-01 | src/views/quiz.js | tests/dom/study-quiz.dom.test.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 |
+| Q-03 | DOC-REF-01 | src/views/quiz.js | tests/dom/study-quiz.dom.test.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 |
+| Q-04 | DOC-DSN-04<br>DOC-REF-01 | src/views/quiz.js | tests/dom/study-quiz.dom.test.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 |
+| Q-05 | DOC-DSN-04<br>DOC-REF-01 | src/utils.js<br>src/views/quiz.js | tests/dom/study-quiz.dom.test.js<br>tests/unit/utils.test.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 |
+| Q-06 | DOC-DSN-04<br>DOC-REF-01 | src/views/daily-challenge.js<br>src/views/quiz.js | tests/dom/study-challenge.dom.test.js<br>tests/dom/study-quiz.dom.test.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 |
+| Q-07 | DOC-DSN-04<br>DOC-REF-01 | src/views/quiz.js | tests/dom/study-quiz.dom.test.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 |
+| Q-08 | DOC-DSN-04<br>DOC-REF-01 | src/views/quiz.js<br>src/weak-items.js | tests/dom/study-quiz.dom.test.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 |
+| Q-09 | DOC-DSN-04<br>DOC-REF-01 | src/views/quiz.js | tests/dom/study-quiz.dom.test.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 |
+| Q-10 | DOC-DSN-04<br>DOC-REF-01 | src/views/quiz.js | tests/dom/study-quiz.dom.test.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 |
+| Q-11 | DOC-DSN-04<br>DOC-REF-01 | src/views/quiz.js | tests/dom/study-quiz.dom.test.js | DOC-ARC-05<br>DOC-ARC-09<br>DOC-ARC-11 |
 
 ## 3.4 모의고사
 
@@ -97,24 +98,24 @@
 
 | ID | 문서 | 소스 | 테스트 | 보고서 |
 |----|------|------|--------|--------|
-| TR-01 | DOC-REF-03<br>DOC-REF-04 | src/markdown-parser.js<br>src/reader-format.js<br>src/textbook-parser.js<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js<br>tests/unit/markdown-parser-general.test.js<br>tests/unit/reader-format-general.test.js<br>tests/unit/textbook-parser.test.js | — |
-| TR-02 | — | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — |
-| TR-03 | — | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — |
-| TR-04 | — | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — |
-| TR-05 | — | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — |
-| TR-06 | — | css/reader-mermaid.css<br>src/mermaid-render.js<br>src/mermaid-utils.js<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js<br>tests/unit/mermaid-parser.test.js<br>tests/unit/mermaid-pipeline.test.js<br>tests/unit/mermaid-reader-format.test.js<br>…외 3개 | — |
-| TR-07 | — | src/mermaid-render.js<br>src/mermaid-utils.js<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js<br>tests/unit/mermaid-parser.test.js<br>tests/unit/mermaid-pipeline.test.js<br>tests/unit/mermaid-reader-format.test.js<br>…외 3개 | — |
-| TR-08 | — | src/mermaid-render.js<br>src/mermaid-utils.js<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js<br>tests/unit/mermaid-parser.test.js<br>tests/unit/mermaid-pipeline.test.js<br>tests/unit/mermaid-reader-format.test.js<br>…외 3개 | — |
-| TR-09 | — | src/markdown-parser.js<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js<br>tests/unit/markdown-parser-general.test.js | — |
-| TR-10 | — | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — |
-| TR-11 | — | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — |
-| TR-12 | — | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — |
-| TR-13 | — | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — |
-| TR-14 | — | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — |
-| TR-15 | — | css/reader.css<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — |
-| TR-16 | — | css/reader.css<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — |
-| TR-17 | — | css/reader.css<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — |
-| TR-18 | — | css/reader.css<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — |
+| TR-01 | DOC-RBK-07<br>DOC-REF-03<br>DOC-REF-04<br>DOC-REF-05 | src/markdown-parser.js<br>src/reader-format.js<br>src/textbook-parser.js<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js<br>tests/unit/markdown-parser-general.test.js<br>tests/unit/reader-format-general.test.js<br>tests/unit/textbook-parser.test.js | — |
+| TR-02 | DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — |
+| TR-03 | DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — |
+| TR-04 | DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — |
+| TR-05 | DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — |
+| TR-06 | DOC-RBK-07<br>DOC-REF-05 | css/reader-mermaid.css<br>src/mermaid-render.js<br>src/mermaid-utils.js<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js<br>tests/unit/mermaid-parser.test.js<br>tests/unit/mermaid-pipeline.test.js<br>tests/unit/mermaid-reader-format.test.js<br>…외 3개 | — |
+| TR-07 | DOC-RBK-07<br>DOC-REF-05 | src/mermaid-render.js<br>src/mermaid-utils.js<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js<br>tests/unit/mermaid-parser.test.js<br>tests/unit/mermaid-pipeline.test.js<br>tests/unit/mermaid-reader-format.test.js<br>…외 3개 | — |
+| TR-08 | DOC-RBK-07<br>DOC-REF-05 | src/mermaid-render.js<br>src/mermaid-utils.js<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js<br>tests/unit/mermaid-parser.test.js<br>tests/unit/mermaid-pipeline.test.js<br>tests/unit/mermaid-reader-format.test.js<br>…외 3개 | — |
+| TR-09 | DOC-RBK-07<br>DOC-REF-05 | src/markdown-parser.js<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js<br>tests/unit/markdown-parser-general.test.js | — |
+| TR-10 | DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — |
+| TR-11 | DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — |
+| TR-12 | DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — |
+| TR-13 | DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — |
+| TR-14 | DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — |
+| TR-15 | DOC-RBK-07<br>DOC-REF-05 | css/reader.css<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — |
+| TR-16 | DOC-RBK-07<br>DOC-REF-05 | css/reader.css<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — |
+| TR-17 | DOC-RBK-07<br>DOC-REF-05 | css/reader.css<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — |
+| TR-18 | DOC-RBK-07<br>DOC-REF-05 | css/reader.css<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — |
 
 ## 3.6 교재 리더 — 학습 보조 도구
 
@@ -350,19 +351,19 @@
 
 | ID | 문서 | 소스 | 테스트 | 보고서 |
 |----|------|------|--------|--------|
-| P-01 | DOC-RBK-04 | sw.js | — | — |
-| P-02 | DOC-RBK-04 | src/config/cache.js<br>sw.js | — | — |
-| P-03 | DOC-RBK-04 | sw.js | — | — |
-| P-04 | DOC-RBK-04 | sw.js | — | — |
-| P-05 | DOC-RBK-04 | sw.js<br>tools/build/stamp_sw_version.js | — | — |
-| P-06 | DOC-RBK-04 | sw.js | tests/unit/sw-prune.test.js | — |
-| P-07 | DOC-RBK-04 | src/pwa-install-capture.js<br>src/pwa-install.js | — | — |
-| P-08 | DOC-RBK-04 | src/pwa-install.js | — | — |
-| P-09 | DOC-RBK-04 | src/pwa-install.js | — | — |
-| P-10 | DOC-RBK-04 | src/pwa-manifest.js | — | — |
-| P-11 | DOC-RBK-04 | src/app-fallback.js | — | — |
-| P-12 | DOC-RBK-04 | tools/verify_shell_assets.js | — | — |
-| P-13 | DOC-RBK-04 | src/whats-new.js<br>tools/build/stamp_release_notes.js | tests/dom/whats-new.dom.test.js<br>tests/unit/whats-new.test.js | — |
+| P-01 | DOC-RBK-01<br>DOC-RBK-04 | sw.js | — | — |
+| P-02 | DOC-RBK-01<br>DOC-RBK-04 | src/config/cache.js<br>sw.js | — | — |
+| P-03 | DOC-RBK-01<br>DOC-RBK-04 | sw.js | — | — |
+| P-04 | DOC-RBK-01<br>DOC-RBK-04 | sw.js | — | — |
+| P-05 | DOC-RBK-01<br>DOC-RBK-04 | sw.js<br>tools/build/stamp_sw_version.js | — | — |
+| P-06 | DOC-RBK-01<br>DOC-RBK-04 | sw.js | tests/unit/sw-prune.test.js | — |
+| P-07 | DOC-RBK-01<br>DOC-RBK-04 | src/pwa-install-capture.js<br>src/pwa-install.js | — | — |
+| P-08 | DOC-RBK-01<br>DOC-RBK-04 | src/pwa-install.js | — | — |
+| P-09 | DOC-RBK-01<br>DOC-RBK-04 | src/pwa-install.js | — | — |
+| P-10 | DOC-RBK-01<br>DOC-RBK-04 | src/pwa-manifest.js | — | — |
+| P-11 | DOC-RBK-01<br>DOC-RBK-04 | src/app-fallback.js | — | — |
+| P-12 | DOC-RBK-01<br>DOC-RBK-04 | tools/verify_shell_assets.js | — | — |
+| P-13 | DOC-RBK-01<br>DOC-RBK-04 | src/whats-new.js<br>tools/build/stamp_release_notes.js | tests/dom/whats-new.dom.test.js<br>tests/unit/whats-new.test.js | — |
 
 ## 4.2 오프라인 감지
 
@@ -504,29 +505,29 @@
 
 | ID | 문서 | 소스 | 테스트 | 보고서 |
 |----|------|------|--------|--------|
-| BP-01 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-08 | tools/build/build_all_data.js<br>tools/build/build_audio_manifest.js<br>tools/build/build_combo_drills.js<br>tools/build/build_doc_bundles.js<br>…외 19개 | — | — |
-| BP-02 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-08 | tools/build/index.js<br>tools/build/schema.js<br>tools/check_imports.js | — | — |
-| BP-03 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-08 | tools/build/index.js<br>tools/build/manifest_loader.js<br>tools/check_manifest.js | — | — |
-| BP-04 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-08 | tools/build/build_exam_bundles.js<br>tools/build/index.js | — | — |
-| BP-05 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-08 | tools/check_parser_parity.js | — | — |
-| BP-06 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-08 | tools/build/build_keyword_index.js | — | — |
-| BP-07 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-08 | tools/build/stamp_release_notes.js<br>tools/build/stamp_sw_version.js<br>tools/deploy.js | — | — |
-| BP-08 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-08 | tools/audit_card_quality.js | — | — |
+| BP-01 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08 | tools/build/build_all_data.js<br>tools/build/build_audio_manifest.js<br>tools/build/build_combo_drills.js<br>tools/build/build_doc_bundles.js<br>…외 19개 | — | — |
+| BP-02 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08 | tools/build/index.js<br>tools/build/schema.js<br>tools/check_imports.js | — | — |
+| BP-03 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08 | tools/build/index.js<br>tools/build/manifest_loader.js<br>tools/check_manifest.js | — | — |
+| BP-04 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08 | tools/build/build_exam_bundles.js<br>tools/build/index.js | — | — |
+| BP-05 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08 | tools/check_parser_parity.js | — | — |
+| BP-06 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08 | tools/build/build_keyword_index.js | — | — |
+| BP-07 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08 | tools/build/stamp_release_notes.js<br>tools/build/stamp_sw_version.js<br>tools/deploy.js | — | — |
+| BP-08 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08 | tools/audit_card_quality.js | — | — |
 
 ## 5.4 콘텐츠 구조
 
 | ID | 문서 | 소스 | 테스트 | 보고서 |
 |----|------|------|--------|--------|
-| CS-01 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-07<br>DOC-RBK-08<br>…외 1개 | ref-pipeline/MD_to_HTML.py<br>ref-pipeline/batch_convert.py<br>tools/build/build_study_md_bundle.js<br>tools/build/plugins/textbook.plugin.js<br>…외 1개 | — | DOC-ARC-08 |
-| CS-02 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-07<br>DOC-RBK-08<br>…외 1개 | tools/build/index.js<br>tools/build/plugins/exams.plugin.js | — | DOC-ARC-08 |
-| CS-03 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-07<br>DOC-RBK-08<br>…외 1개 | ref-pipeline/check_laws.py<br>ref-pipeline/convert.py<br>ref-pipeline/pdf2md.py<br>ref-pipeline/pdf2md_gui.py<br>…외 3개 | — | DOC-ARC-08 |
-| CS-04 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-07<br>DOC-RBK-08<br>…외 1개 | tools/build/index.js<br>tools/build/plugins/ingredients.plugin.js | — | DOC-ARC-08 |
-| CS-05 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-07<br>DOC-RBK-08<br>…외 1개 | ref-pipeline/MD_to_HTML.py<br>ref-pipeline/batch_convert.py | — | DOC-ARC-08 |
-| CS-06 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-07<br>DOC-RBK-08<br>…외 1개 | tools/build/build_keyword_index.js | — | DOC-ARC-08 |
-| CS-07 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-07<br>DOC-RBK-08<br>…외 1개 | ref-pipeline/audiobook/cleanup_empty_mp3.py<br>ref-pipeline/audiobook/generate_all_mp3.py<br>ref-pipeline/audiobook/md_chunker.py<br>ref-pipeline/audiobook/mp3_merger.py<br>…외 6개 | — | DOC-ARC-08 |
-| CS-08 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-07<br>DOC-RBK-08<br>…외 1개 | tools/build/build_study_md_bundle.js | — | DOC-ARC-08 |
-| CS-09 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-07<br>DOC-RBK-08<br>…외 1개 | ref-pipeline/convert.py<br>tools/check_ref_subjects.js<br>tools/check_reflayout.js<br>tools/check_refmerge.js | — | DOC-ARC-08 |
-| CS-10 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-07<br>DOC-RBK-08<br>…외 1개 | ref-pipeline/convert.py<br>ref-pipeline/pdf2md.py | — | DOC-ARC-08 |
+| CS-01 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-07<br>DOC-RBK-08<br>…외 2개 | ref-pipeline/MD_to_HTML.py<br>ref-pipeline/batch_convert.py<br>tools/build/build_study_md_bundle.js<br>tools/build/plugins/textbook.plugin.js<br>…외 1개 | — | DOC-ARC-08 |
+| CS-02 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-07<br>DOC-RBK-08<br>…외 2개 | tools/build/index.js<br>tools/build/plugins/exams.plugin.js | — | DOC-ARC-08 |
+| CS-03 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-07<br>DOC-RBK-08<br>…외 2개 | ref-pipeline/check_laws.py<br>ref-pipeline/convert.py<br>ref-pipeline/pdf2md.py<br>ref-pipeline/pdf2md_gui.py<br>…외 3개 | — | DOC-ARC-08 |
+| CS-04 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-07<br>DOC-RBK-08<br>…외 2개 | tools/build/index.js<br>tools/build/plugins/ingredients.plugin.js | — | DOC-ARC-08 |
+| CS-05 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-07<br>DOC-RBK-08<br>…외 2개 | ref-pipeline/MD_to_HTML.py<br>ref-pipeline/batch_convert.py | — | DOC-ARC-08 |
+| CS-06 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-07<br>DOC-RBK-08<br>…외 2개 | tools/build/build_keyword_index.js | — | DOC-ARC-08 |
+| CS-07 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-07<br>DOC-RBK-08<br>…외 2개 | ref-pipeline/audiobook/cleanup_empty_mp3.py<br>ref-pipeline/audiobook/generate_all_mp3.py<br>ref-pipeline/audiobook/md_chunker.py<br>ref-pipeline/audiobook/mp3_merger.py<br>…외 6개 | — | DOC-ARC-08 |
+| CS-08 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-07<br>DOC-RBK-08<br>…외 2개 | tools/build/build_study_md_bundle.js | — | DOC-ARC-08 |
+| CS-09 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-07<br>DOC-RBK-08<br>…외 2개 | ref-pipeline/convert.py<br>tools/check_ref_subjects.js<br>tools/check_reflayout.js<br>tools/check_refmerge.js | — | DOC-ARC-08 |
+| CS-10 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-07<br>DOC-RBK-08<br>…외 2개 | ref-pipeline/convert.py<br>ref-pipeline/pdf2md.py | — | DOC-ARC-08 |
 
 ## 5.5 교재 콘텐츠 학습 보조 요소
 
@@ -554,11 +555,11 @@
 
 | ID | 문서 | 소스 | 테스트 | 보고서 |
 |----|------|------|--------|--------|
-| ROAD-P0 | DOC-DSN-03<br>DOC-DSN-08 | src/pro-upgrade.js | tests/unit/learning-pro.test.js | — |
-| ROAD-P1 | — | — | — | — |
-| ROAD-P2 | — | — | — | — |
-| ROAD-P3 | — | — | — | DOC-ARC-02 |
-| ROAD-P4 | — | — | — | DOC-ARC-07 |
+| ROAD-P0 | DOC-BIZ-01<br>DOC-BIZ-02<br>DOC-BIZ-03<br>DOC-BIZ-04<br>…외 4개 | src/pro-upgrade.js | tests/unit/learning-pro.test.js | DOC-ARC-01<br>DOC-ARC-03<br>DOC-ARC-06 |
+| ROAD-P1 | DOC-BIZ-01<br>DOC-BIZ-02<br>DOC-BIZ-03<br>DOC-BIZ-04<br>…외 2개 | — | — | DOC-ARC-01<br>DOC-ARC-03<br>DOC-ARC-06 |
+| ROAD-P2 | DOC-BIZ-01<br>DOC-BIZ-02<br>DOC-BIZ-03<br>DOC-BIZ-04<br>…외 2개 | — | — | DOC-ARC-01<br>DOC-ARC-03<br>DOC-ARC-06 |
+| ROAD-P3 | DOC-BIZ-01<br>DOC-BIZ-02<br>DOC-BIZ-03<br>DOC-BIZ-04<br>…외 2개 | — | — | DOC-ARC-01<br>DOC-ARC-02<br>DOC-ARC-03<br>DOC-ARC-06 |
+| ROAD-P4 | DOC-BIZ-01<br>DOC-BIZ-02<br>DOC-BIZ-03<br>DOC-BIZ-04<br>…외 2개 | — | — | DOC-ARC-01<br>DOC-ARC-03<br>DOC-ARC-06<br>DOC-ARC-07 |
 
 ---
 
@@ -566,22 +567,22 @@
 
 | 문서 ID | 파일 | 관련 SPEC ID |
 |---------|------|--------------|
-| DOC-ARC-01 | docs/report_archive/Cosmetic Master Business Plan.md | FO-01, FO-02, FO-03, FO-04, FO-05, FO-06, FO-07, FO-08, FO-09, FO-10, FO-11, FO-12, FO-13, FO-14, FO-15, FO-16, FO-17, FO-18, FO-19, FO-20, FO-21, FO-22, FO-23 |
+| DOC-ARC-01 | docs/report_archive/Cosmetic Master Business Plan.md | FO-01, FO-02, FO-03, FO-04, FO-05, FO-06, FO-07, FO-08, FO-09, FO-10, FO-11, FO-12, FO-13, FO-14, FO-15, FO-16, FO-17, FO-18, FO-19, FO-20, FO-21, FO-22, FO-23, ROAD-P0, ROAD-P1, ROAD-P2, ROAD-P3, ROAD-P4 |
 | DOC-ARC-02 | docs/report_archive/EXTERNAL_REVIEW_LEARNING_PRO.md | ROAD-P3 |
-| DOC-ARC-03 | docs/report_archive/FEATURE_PROPOSALS.md | — |
+| DOC-ARC-03 | docs/report_archive/FEATURE_PROPOSALS.md | ROAD-P0, ROAD-P1, ROAD-P2, ROAD-P3, ROAD-P4 |
 | DOC-ARC-04 | docs/report_archive/FORMULA_OS_DESIGN.md | FO-01, FO-02, FO-03, FO-04, FO-05, FO-06, FO-07, FO-08, FO-09, FO-10, FO-11, FO-12, FO-13, FO-14, FO-15, FO-16, FO-17, FO-18, FO-19, FO-20, FO-21, FO-22, FO-23 |
 | DOC-ARC-05 | docs/report_archive/PASS_CORE_LOOP_REVIEW.md | D-01, D-02, D-03, D-04, D-05, D-06, D-07, D-08, D-09, D-10, D-11, D-12, D-13, D-14, D-15, DR-01, DR-02, DR-03, DR-04, DR-05, DR-06, DR-07, E-01, E-02, E-03, E-04, E-05, E-06, E-07, F-01, F-02, F-03, F-04, F-05, F-06, F-07, F-08, F-09, F-10, Q-01, Q-02, Q-03, Q-04, Q-05, Q-06, Q-07, Q-08, Q-09, Q-10, Q-11, SC-01, SC-02, SC-03, T-01, T-02, T-03, T-04, T-05 |
-| DOC-ARC-06 | docs/report_archive/PASS_TO_PRACTICE_STRATEGY.md | FO-01, FO-02, FO-03, FO-04, FO-05, FO-06, FO-07, FO-08, FO-09, FO-10, FO-11, FO-12, FO-13, FO-14, FO-15, FO-16, FO-17, FO-18, FO-19, FO-20, FO-21, FO-22, FO-23, UM-01, UM-02, UM-03, UM-04, UM-05 |
+| DOC-ARC-06 | docs/report_archive/PASS_TO_PRACTICE_STRATEGY.md | FO-01, FO-02, FO-03, FO-04, FO-05, FO-06, FO-07, FO-08, FO-09, FO-10, FO-11, FO-12, FO-13, FO-14, FO-15, FO-16, FO-17, FO-18, FO-19, FO-20, FO-21, FO-22, FO-23, ROAD-P0, ROAD-P1, ROAD-P2, ROAD-P3, ROAD-P4, UM-01, UM-02, UM-03, UM-04, UM-05 |
 | DOC-ARC-07 | docs/report_archive/PRO_MULTI_EXAM_EVALUATION.md | ES-01, ES-02, ES-03, ES-04, ES-05, ROAD-P4 |
 | DOC-ARC-08 | docs/report_archive/법령최신확인결과.md | CS-01, CS-02, CS-03, CS-04, CS-05, CS-06, CS-07, CS-08, CS-09, CS-10 |
 | DOC-ARC-09 | docs/report_archive/오답위험_분석보고서.md | AN-01, AN-02, AN-03, DR-01, DR-02, DR-03, DR-04, DR-05, DR-06, DR-07, Q-01, Q-02, Q-03, Q-04, Q-05, Q-06, Q-07, Q-08, Q-09, Q-10, Q-11 |
 | DOC-ARC-10 | docs/report_archive/출제비중기반학습방법.md | D-01, D-02, D-03, D-04, D-05, D-06, D-07, D-08, D-09, D-10, D-11, D-12, D-13, D-14, D-15, E-01, E-02, E-03, E-04, E-05, E-06, E-07 |
 | DOC-ARC-11 | docs/report_archive/출제비중분포조사결과.md | E-01, E-02, E-03, E-04, E-05, E-06, E-07, Q-01, Q-02, Q-03, Q-04, Q-05, Q-06, Q-07, Q-08, Q-09, Q-10, Q-11 |
-| DOC-BIZ-01 | docs/business/FORMULA_OS_경쟁전략.md | FO-01, FO-02, FO-03, FO-04, FO-05, FO-06, FO-07, FO-08, FO-09, FO-10, FO-11, FO-12, FO-13, FO-14, FO-15, FO-16, FO-17, FO-18, FO-19, FO-20, FO-21, FO-22, FO-23 |
-| DOC-BIZ-02 | docs/business/맞춤형화장품_조제관리사_자격증플랫폼_사업기획서.md | — |
-| DOC-BIZ-03 | docs/business/맞춤형화장품판매업소_조사_2026-09.md | — |
-| DOC-BIZ-04 | docs/business/유튜브_홍보동영상_제작의뢰서.md | — |
-| DOC-BIZ-05 | docs/business/판매업소_인터뷰_스크립트.md | FO-01, FO-02, FO-03, FO-04, FO-05, FO-06, FO-07, FO-08, FO-09, FO-10, FO-11, FO-12, FO-13, FO-14, FO-15, FO-16, FO-17, FO-18, FO-19, FO-20, FO-21, FO-22, FO-23 |
+| DOC-BIZ-01 | docs/business/FORMULA_OS_경쟁전략.md | FO-01, FO-02, FO-03, FO-04, FO-05, FO-06, FO-07, FO-08, FO-09, FO-10, FO-11, FO-12, FO-13, FO-14, FO-15, FO-16, FO-17, FO-18, FO-19, FO-20, FO-21, FO-22, FO-23, ROAD-P0, ROAD-P1, ROAD-P2, ROAD-P3, ROAD-P4 |
+| DOC-BIZ-02 | docs/business/맞춤형화장품_조제관리사_자격증플랫폼_사업기획서.md | ROAD-P0, ROAD-P1, ROAD-P2, ROAD-P3, ROAD-P4 |
+| DOC-BIZ-03 | docs/business/맞춤형화장품판매업소_조사_2026-09.md | ROAD-P0, ROAD-P1, ROAD-P2, ROAD-P3, ROAD-P4 |
+| DOC-BIZ-04 | docs/business/유튜브_홍보동영상_제작의뢰서.md | ROAD-P0, ROAD-P1, ROAD-P2, ROAD-P3, ROAD-P4 |
+| DOC-BIZ-05 | docs/business/판매업소_인터뷰_스크립트.md | FO-01, FO-02, FO-03, FO-04, FO-05, FO-06, FO-07, FO-08, FO-09, FO-10, FO-11, FO-12, FO-13, FO-14, FO-15, FO-16, FO-17, FO-18, FO-19, FO-20, FO-21, FO-22, FO-23, ROAD-P0, ROAD-P1, ROAD-P2, ROAD-P3, ROAD-P4 |
 | DOC-DEV-01 | docs/dev/SPEC.md | — |
 | DOC-DEV-02 | docs/dev/ARCHITECTURE.md | — |
 | DOC-DEV-03 | docs/dev/CHANGES.md | — |
@@ -592,28 +593,28 @@
 | DOC-DSN-04 | docs/dev/design/QUESTION_SCHEMA_DESIGN.md | DR-02, ID-01, ID-02, ID-03, ID-04, Q-04, Q-05, Q-06, Q-07, Q-08, Q-09, Q-10, Q-11 |
 | DOC-DSN-05 | docs/dev/design/READER_FEEDBACK_DESIGN.md | FB-01, FB-02, FB-03, FB-04, FB-05, FB-06, FB-07, FB-08 |
 | DOC-DSN-06 | docs/dev/design/STUDY_APP_DESIGN_GUIDE.md | — |
-| DOC-DSN-07 | docs/dev/design/SUBSCRIPTION_ROADMAP.md | — |
+| DOC-DSN-07 | docs/dev/design/SUBSCRIPTION_ROADMAP.md | ROAD-P0, ROAD-P1, ROAD-P2, ROAD-P3, ROAD-P4 |
 | DOC-DSN-08 | docs/dev/design/SUPABASE_DESIGN.md | AU-01, AU-02, AU-03, AU-04, AU-05, AU-06, AU-07, AU-08, DA-08, ROAD-P0, S-01 |
 | DOC-DSN-09 | docs/dev/design/USER_FEEDBACK_DESIGN.md | AU-01, AU-02, AU-03, AU-04, AU-05, AU-06, AU-07, AU-08, FB-01, FB-02, FB-03, FB-04, FB-05, FB-06, FB-07, FB-08, S-01 |
 | DOC-IDX-01 | docs/README.md | — |
 | DOC-PPL-01 | ref-pipeline/README.md | AO-01, AO-02, AO-03, AO-04, AO-05, BP-01, BP-02, BP-03, BP-04, BP-05, BP-06, BP-07, BP-08, CS-01, CS-02, CS-03, CS-04, CS-05, CS-06, CS-07, CS-08, CS-09, CS-10 |
 | DOC-PPL-02 | ref-pipeline/audiobook/README.md | AO-01, AO-02, AO-03, AO-04, AO-05 |
 | DOC-PPL-03 | ref-pipeline/audiobook/AUDIOBOOK_SUMMARY.md | AO-01, AO-02, AO-03, AO-04, AO-05 |
-| DOC-RBK-01 | docs/dev/runbooks/AUDIO_HOSTING_GUIDE.md | AO-01, AO-02, AO-03, AO-04, AO-05 |
-| DOC-RBK-02 | docs/dev/runbooks/COMBO_GENERATION_GUIDE.md | DR-02, DR-03, DR-04, DR-05, DR-06, DR-07 |
+| DOC-RBK-01 | docs/dev/runbooks/AUDIO_HOSTING_GUIDE.md | AO-01, AO-02, AO-03, AO-04, AO-05, P-01, P-02, P-03, P-04, P-05, P-06, P-07, P-08, P-09, P-10, P-11, P-12, P-13 |
+| DOC-RBK-02 | docs/dev/runbooks/COMBO_GENERATION_GUIDE.md | BP-01, BP-02, BP-03, BP-04, BP-05, BP-06, BP-07, BP-08, DR-02, DR-03, DR-04, DR-05, DR-06, DR-07 |
 | DOC-RBK-03 | docs/dev/runbooks/CONTENT_WORKFLOW.md | BP-01, BP-02, BP-03, BP-04, BP-05, BP-06, BP-07, BP-08, CS-01, CS-02, CS-03, CS-04, CS-05, CS-06, CS-07, CS-08, CS-09, CS-10, DA-01, DA-02, DA-03, DA-04, DA-05, DA-06, DA-07, DA-08, DA-09 |
 | DOC-RBK-04 | docs/dev/runbooks/DEPLOYMENT_GUIDE.md | C-01, C-02, C-03, C-04, C-05, P-01, P-02, P-03, P-04, P-05, P-06, P-07, P-08, P-09, P-10, P-11, P-12, P-13 |
 | DOC-RBK-05 | docs/dev/runbooks/MULTI_MACHINE_SETUP.md | — |
 | DOC-RBK-06 | docs/dev/runbooks/Supabase_Custom_SMTP_MagicLink_OTP_설정가이드.md | AU-02, AU-03, AU-04 |
-| DOC-RBK-07 | docs/dev/runbooks/TEXTBOOK_AUTHORING_GUIDE.md | CE-01, CE-02, CE-03, CE-04, CE-05, CS-01, CS-02, CS-03, CS-04, CS-05, CS-06, CS-07, CS-08, CS-09, CS-10, ST-01, ST-02, ST-03, ST-04, ST-05, ST-06, ST-07 |
+| DOC-RBK-07 | docs/dev/runbooks/TEXTBOOK_AUTHORING_GUIDE.md | CE-01, CE-02, CE-03, CE-04, CE-05, CS-01, CS-02, CS-03, CS-04, CS-05, CS-06, CS-07, CS-08, CS-09, CS-10, ST-01, ST-02, ST-03, ST-04, ST-05, ST-06, ST-07, TR-01, TR-02, TR-03, TR-04, TR-05, TR-06, TR-07, TR-08, TR-09, TR-10, TR-11, TR-12, TR-13, TR-14, TR-15, TR-16, TR-17, TR-18 |
 | DOC-RBK-08 | docs/dev/runbooks/TEXTBOOK_REPLACEMENT_RUNBOOK.md | BP-01, BP-02, BP-03, BP-04, BP-05, BP-06, BP-07, BP-08, CS-01, CS-02, CS-03, CS-04, CS-05, CS-06, CS-07, CS-08, CS-09, CS-10, DA-01, ID-01, ID-02, ID-03, ID-04 |
-| DOC-REF-01 | docs/dev/reference/COMBO_STUDY_STRATEGY.md | DR-02, DR-03, DR-04, DR-05, DR-06, DR-07 |
+| DOC-REF-01 | docs/dev/reference/COMBO_STUDY_STRATEGY.md | DR-02, DR-03, DR-04, DR-05, DR-06, DR-07, Q-01, Q-02, Q-03, Q-04, Q-05, Q-06, Q-07, Q-08, Q-09, Q-10, Q-11 |
 | DOC-REF-02 | docs/dev/reference/DEV_ENVIRONMENT.md | — |
 | DOC-REF-03 | docs/dev/reference/FLASHCARD_LOGIC.md | F-01, F-02, F-03, F-04, F-05, F-06, F-07, F-08, F-09, F-10, ID-01, ID-02, ID-03, ID-04, TR-01 |
 | DOC-REF-04 | docs/dev/reference/MD_TO_HTML_LOGIC.md | EV-01, EV-02, EV-03, EV-04, EV-05, EV-06, EV-07, EV-08, MV-01, MV-02, MV-03, MV-04, RR-01, RR-02, RR-03, RR-04, RR-05, RR-06, RR-07, RR-08, RR-09, RR-10, RR-11, RR-12, RR-13, RR-14, RR-15, RR-16, TR-01 |
-| DOC-REF-05 | docs/dev/reference/NUMBERING_SYSTEM.md | CS-01, CS-02, CS-03, CS-04, CS-05, CS-06, CS-07, CS-08, CS-09, CS-10, ID-01, ID-02, ID-03, ID-04 |
+| DOC-REF-05 | docs/dev/reference/NUMBERING_SYSTEM.md | CS-01, CS-02, CS-03, CS-04, CS-05, CS-06, CS-07, CS-08, CS-09, CS-10, ID-01, ID-02, ID-03, ID-04, TR-01, TR-02, TR-03, TR-04, TR-05, TR-06, TR-07, TR-08, TR-09, TR-10, TR-11, TR-12, TR-13, TR-14, TR-15, TR-16, TR-17, TR-18 |
 | DOC-REF-06 | docs/dev/reference/TESTING.md | — |
-| DOC-REF-07 | docs/dev/reference/TEXTBOOK_REFERENCE_MAPPING.md | RR-01, RR-02, RR-03, RR-04, RR-05, RR-06, RR-07, RR-08, RR-09, RR-10, RR-11, RR-12, RR-13, RR-14, RR-15, RR-16 |
+| DOC-REF-07 | docs/dev/reference/TEXTBOOK_REFERENCE_MAPPING.md | CS-01, CS-02, CS-03, CS-04, CS-05, CS-06, CS-07, CS-08, CS-09, CS-10, RR-01, RR-02, RR-03, RR-04, RR-05, RR-06, RR-07, RR-08, RR-09, RR-10, RR-11, RR-12, RR-13, RR-14, RR-15, RR-16 |
 | DOC-ROOT-01 | README.md | — |
 | DOC-ROOT-02 | AGENTS.md | — |
 | DOC-USR-01 | docs/user/exam_strategy.md | — |
@@ -623,3 +624,113 @@
 | DOC-USR-05 | docs/user/subject3_numbers.md | ND-01 |
 | DOC-USR-06 | docs/user/subject4_numbers.md | ND-01 |
 | DOC-USR-07 | docs/user/user_manual.md | MV-01, MV-02, MV-03, MV-04 |
+
+## 부록 B — 테스트 갭 (소스 연결 있으나 테스트 @spec 미연결)
+
+소스에 @spec이 있지만 tests/에서 참조가 없는 요구사항 103개 — 테스트 백로그 후보.
+
+| ID | 절 | 구현 소스 |
+|----|-----|-----------|
+| AO-01 | 3.12 오디오북 | ref-pipeline/audiobook/generate_all_mp3.py<br>ref-pipeline/audiobook/run_pipeline.py<br>ref-pipeline/audiobook/tts_elevenlabs.py |
+| AO-02 | 3.12 오디오북 | src/views/reader-audio.js |
+| AO-03 | 3.12 오디오북 | src/views/reader-audio.js |
+| AO-04 | 3.12 오디오북 | src/views/reader-audio.js |
+| AO-05 | 3.12 오디오북 | src/views/reader-audio.js |
+| BP-01 | 5.3 빌드 파이프라인 | tools/build/build_all_data.js<br>tools/build/build_audio_manifest.js<br>tools/build/build_combo_drills.js |
+| BP-02 | 5.3 빌드 파이프라인 | tools/build/index.js<br>tools/build/schema.js<br>tools/check_imports.js |
+| BP-03 | 5.3 빌드 파이프라인 | tools/build/index.js<br>tools/build/manifest_loader.js<br>tools/check_manifest.js |
+| BP-04 | 5.3 빌드 파이프라인 | tools/build/build_exam_bundles.js<br>tools/build/index.js |
+| BP-05 | 5.3 빌드 파이프라인 | tools/check_parser_parity.js |
+| BP-06 | 5.3 빌드 파이프라인 | tools/build/build_keyword_index.js |
+| BP-07 | 5.3 빌드 파이프라인 | tools/build/stamp_release_notes.js<br>tools/build/stamp_sw_version.js<br>tools/deploy.js |
+| BP-08 | 5.3 빌드 파이프라인 | tools/audit_card_quality.js |
+| C-01 | 3.16 차트 및 시각화 | src/charts.js |
+| C-02 | 3.16 차트 및 시각화 | src/charts.js |
+| C-03 | 3.16 차트 및 시각화 | src/charts.js |
+| C-04 | 3.16 차트 및 시각화 | src/charts.js |
+| C-05 | 3.16 차트 및 시각화 | src/charts.js |
+| CQ-01 | 3.17 콘텐츠 품질 감사 | tools/audit_card_quality.js |
+| CQ-02 | 3.17 콘텐츠 품질 감사 | tools/audit_card_quality.js |
+| CQ-03 | 3.17 콘텐츠 품질 감사 | tools/audit_card_quality.js |
+| CQ-04 | 3.17 콘텐츠 품질 감사 | tools/audit_card_quality.js |
+| CQ-05 | 3.17 콘텐츠 품질 감사 | tools/audit_combo.js<br>tools/check_combo_pilot.js |
+| CS-01 | 5.4 콘텐츠 구조 | ref-pipeline/MD_to_HTML.py<br>ref-pipeline/batch_convert.py<br>tools/build/build_study_md_bundle.js |
+| CS-02 | 5.4 콘텐츠 구조 | tools/build/index.js<br>tools/build/plugins/exams.plugin.js |
+| CS-03 | 5.4 콘텐츠 구조 | ref-pipeline/check_laws.py<br>ref-pipeline/convert.py<br>ref-pipeline/pdf2md.py |
+| CS-04 | 5.4 콘텐츠 구조 | tools/build/index.js<br>tools/build/plugins/ingredients.plugin.js |
+| CS-05 | 5.4 콘텐츠 구조 | ref-pipeline/MD_to_HTML.py<br>ref-pipeline/batch_convert.py |
+| CS-06 | 5.4 콘텐츠 구조 | tools/build/build_keyword_index.js |
+| CS-07 | 5.4 콘텐츠 구조 | ref-pipeline/audiobook/cleanup_empty_mp3.py<br>ref-pipeline/audiobook/generate_all_mp3.py<br>ref-pipeline/audiobook/md_chunker.py |
+| CS-08 | 5.4 콘텐츠 구조 | tools/build/build_study_md_bundle.js |
+| CS-09 | 5.4 콘텐츠 구조 | ref-pipeline/convert.py<br>tools/check_ref_subjects.js<br>tools/check_reflayout.js |
+| CS-10 | 5.4 콘텐츠 구조 | ref-pipeline/convert.py<br>ref-pipeline/pdf2md.py |
+| DA-01 | 5.1 데이터 아키텍처 | tools/build/index.js<br>tools/build/manifest_loader.js |
+| DA-02 | 5.1 데이터 아키텍처 | src/data-loader.js<br>tools/build/index.js |
+| DA-04 | 5.1 데이터 아키텍처 | tools/build/build_study_md_bundle.js |
+| DA-06 | 5.1 데이터 아키텍처 | src/exam-context.js<br>src/paths.js<br>src/pwa-manifest.js |
+| DA-08 | 5.1 데이터 아키텍처 | src/exam-context.js |
+| FO-03 | 3.18 Formula OS — 실전 배합 작업실 | src/views/formula.js |
+| FO-04 | 3.18 Formula OS — 실전 배합 작업실 | src/views/formula.js |
+| FO-07 | 3.18 Formula OS — 실전 배합 작업실 | src/views/formula.js |
+| FO-09 | 3.18 Formula OS — 실전 배합 작업실 | src/views/formula.js |
+| FO-10 | 3.18 Formula OS — 실전 배합 작업실 | css/formula.css<br>src/views/formula.js |
+| FO-11 | 3.18 Formula OS — 실전 배합 작업실 | src/views/formula.js |
+| ND-01 | 3.20 학습 캘린더·복습·드릴 | src/views/trainer-drills.js<br>src/views/trainer.js |
+| P-01 | 4.1 PWA & 오프라인 | sw.js |
+| P-02 | 4.1 PWA & 오프라인 | src/config/cache.js<br>sw.js |
+| P-03 | 4.1 PWA & 오프라인 | sw.js |
+| P-04 | 4.1 PWA & 오프라인 | sw.js |
+| P-05 | 4.1 PWA & 오프라인 | sw.js<br>tools/build/stamp_sw_version.js |
+| P-07 | 4.1 PWA & 오프라인 | src/pwa-install-capture.js<br>src/pwa-install.js |
+| P-08 | 4.1 PWA & 오프라인 | src/pwa-install.js |
+| P-09 | 4.1 PWA & 오프라인 | src/pwa-install.js |
+| P-10 | 4.1 PWA & 오프라인 | src/pwa-manifest.js |
+| P-11 | 4.1 PWA & 오프라인 | src/app-fallback.js |
+| P-12 | 4.1 PWA & 오프라인 | tools/verify_shell_assets.js |
+| PF-01 | 4.4 성능 | src/data-loader.js |
+| PF-02 | 4.4 성능 | src/data-loader.js |
+| PF-03 | 4.4 성능 | src/data-loader.js |
+| PF-04 | 4.4 성능 | src/html-viewer.js |
+| PF-05 | 4.4 성능 | src/html-viewer.js |
+| PF-06 | 4.4 성능 | src/html-viewer.js |
+| PF-07 | 4.4 성능 | src/data-loader.js<br>src/views/dashboard.js |
+| PF-08 | 4.4 성능 | src/views/textbook-search.js |
+| PF-09 | 4.4 성능 | src/views/dictionary.js |
+| PF-10 | 4.4 성능 | src/app.js |
+| PF-11 | 4.4 성능 | ref-pipeline/convert.py<br>ref-pipeline/pdf2md.py |
+| PF-12 | 4.4 성능 | src/keyword-index.js<br>tools/build/build_keyword_index.js |
+| PF-13 | 4.4 성능 | src/mermaid-render.js |
+| PF-14 | 4.4 성능 | css/base.css |
+| PF-15 | 4.4 성능 | ref-pipeline/convert.py |
+| PF-16 | 4.4 성능 | src/mermaid-render.js |
+| RV-01 | 3.20 학습 캘린더·복습·드릴 | src/views/quiz.js<br>src/views/trainer.js |
+| S-01 | 4.3 보안 | index.html |
+| S-07 | 4.3 보안 | index.html |
+| S-08 | 4.3 보안 | src/app.js |
+| SC-03 | 3.20 학습 캘린더·복습·드릴 | src/study-tracker.js |
+| ST-01 | 5.6 이야기형 교재 서사 구조 | src/views/textbook-reader.js |
+| ST-02 | 5.6 이야기형 교재 서사 구조 | src/views/textbook-reader.js |
+| ST-03 | 5.6 이야기형 교재 서사 구조 | src/views/textbook-reader.js |
+| ST-04 | 5.6 이야기형 교재 서사 구조 | src/views/textbook-reader.js |
+| ST-05 | 5.6 이야기형 교재 서사 구조 | src/views/textbook-reader.js |
+| ST-06 | 5.6 이야기형 교재 서사 구조 | src/views/textbook-reader.js |
+| ST-07 | 5.6 이야기형 교재 서사 구조 | src/views/textbook-reader.js |
+| UX-FB-01 | 4.8 UI/UX 설계 요구사양 | css/ui-overlay.css<br>src/ui-utils.js |
+| UX-FB-02 | 4.8 UI/UX 설계 요구사양 | css/ui-overlay.css<br>src/ui-utils.js |
+| UX-FB-03 | 4.8 UI/UX 설계 요구사양 | css/ui-overlay.css<br>src/ui-utils.js |
+| UX-FB-04 | 4.8 UI/UX 설계 요구사양 | css/ui-overlay.css<br>src/ui-utils.js |
+| UX-FORM-01 | 4.8 UI/UX 설계 요구사양 | css/reader.css |
+| UX-FORM-02 | 4.8 UI/UX 설계 요구사양 | css/base.css |
+| UX-PWA-01 | 4.8 UI/UX 설계 요구사양 | src/app.js |
+| UX-PWA-02 | 4.8 UI/UX 설계 요구사양 | src/pwa-install.js |
+| UX-PWA-03 | 4.8 UI/UX 설계 요구사양 | sw.js |
+| UX-PWA-04 | 4.8 UI/UX 설계 요구사양 | src/pwa-install.js |
+| UX-PWA-05 | 4.8 UI/UX 설계 요구사양 | src/app.js |
+| UX-SCR-01 | 4.8 UI/UX 설계 요구사양 | css/reader.css |
+| UX-SCR-02 | 4.8 UI/UX 설계 요구사양 | css/reader.css |
+| UX-SCR-03 | 4.8 UI/UX 설계 요구사양 | css/reader.css |
+| UX-SET-01 | 4.8 UI/UX 설계 요구사양 | css/ui-overlay.css |
+| UX-SET-02 | 4.8 UI/UX 설계 요구사양 | css/ui-overlay.css |
+| UX-SET-03 | 4.8 UI/UX 설계 요구사양 | css/ui-overlay.css |
+| UX-SET-04 | 4.8 UI/UX 설계 요구사양 | css/ui-overlay.css |
+| UX-SET-05 | 4.8 UI/UX 설계 요구사양 | css/ui-overlay.css |
