@@ -28,8 +28,10 @@ export function weakItemKey(quizId) {
    과목 객체의 참조 비교로 증분 무효화한다 (새 과목 로드·번들 교체 감지).
    호출마다 전 과목 선형 탐색하지 않도록 퀴즈·카드 ID 인덱스를 지연 구축. */
 const _subjectRef = new Map();   // subjId → 마지막으로 색인한 과목 객체
-let _quizIdx = null;             // quizId → { quiz, subjectId }
-let _cardIdx = null;             // cardId → subjectId
+/** @type {Map<string, {quiz: object, subjectId: string}>|null} quizId → { quiz, subjectId } */
+let _quizIdx = null;
+/** @type {Map<string, {card: object, subjectId: string}>|null} cardId → { card, subjectId } */
+let _cardIdx = null;
 
 function _studyData() {
     return (typeof window !== 'undefined' && window.STUDY_DATA) || null;
@@ -42,20 +44,21 @@ function _ensureIndexes() {
         _subjectRef.clear();
         return;
     }
-    if (!_quizIdx) { _quizIdx = new Map(); _cardIdx = new Map(); }
+    if (!_quizIdx || !_cardIdx) { _quizIdx = new Map(); _cardIdx = new Map(); }
+    const quizIdx = _quizIdx, cardIdx = _cardIdx;
     // 교체·제거된 과목의 인덱스 항목 정리
     for (const subjId of [..._subjectRef.keys()]) {
         if (data[subjId] === _subjectRef.get(subjId)) continue;
-        for (const [id, v] of _quizIdx) { if (v.subjectId === subjId) _quizIdx.delete(id); }
-        for (const [id, v] of _cardIdx) { if (v.subjectId === subjId) _cardIdx.delete(id); }
+        for (const [id, v] of quizIdx) { if (v.subjectId === subjId) quizIdx.delete(id); }
+        for (const [id, v] of cardIdx) { if (v.subjectId === subjId) cardIdx.delete(id); }
         _subjectRef.delete(subjId);
     }
     // 신규·교체 과목 색인
     for (const subjId of Object.keys(data)) {
         if (_subjectRef.get(subjId) === data[subjId]) continue;
         _subjectRef.set(subjId, data[subjId]);
-        (data[subjId].quizzes || []).forEach(q => _quizIdx.set(q.id, { quiz: q, subjectId: subjId }));
-        (data[subjId].cards || []).forEach(c => _cardIdx.set(c.id, { card: c, subjectId: subjId }));
+        (data[subjId].quizzes || []).forEach(q => quizIdx.set(q.id, { quiz: q, subjectId: subjId }));
+        (data[subjId].cards || []).forEach(c => cardIdx.set(c.id, { card: c, subjectId: subjId }));
     }
 }
 

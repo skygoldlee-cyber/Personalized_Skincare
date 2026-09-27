@@ -94,6 +94,22 @@ npm run coverage:all      # 둘 다 실행 후 coverage-merged/ 병합 리포트
 
 # Watch 모드 (Unit, 파일 변경 시 자동 재실행)
 npm run test:watch
+
+# 품질 게이트
+npm run lint              # ESLint — 에러만 차단 (기존 경고는 점진 정리 대상)
+npm run check:types       # tsc --noEmit (jsconfig.json의 checkJs, JSDoc 진단)
+npm run check:imports     # src/ import↔export 교차 검증
+npm run check:docs        # 문서 경로 참조 + DOC ID 정합
+npm run check:specrefs    # SPEC↔@spec 양방향 + 테스트 갭 기준선(103개 초과 시 실패)
+npm run check:trace       # TRACE_MATRIX 신선도 (입력 해시 — 미재생성 시 실패)
+
+# 영향도 분석 — 변경 파일 → 영향 요구사항·권장 테스트
+node tools/impact_tests.js                      # 미커밋 변경 분석
+node tools/impact_tests.js --ref origin/main    # 브랜치 diff 분석 (CI PR 단계와 동일)
+
+# pre-push 훅 (opt-in — 설치 시 push 전 check:trace/specrefs/docs/lint 자동 실행)
+npm run hooks:install
+SKIP_PREPUSH=1 git push   # 훅 우회
 ```
 
 ### `package.json` 스크립트 정의
@@ -108,6 +124,31 @@ npm run test:watch
 | `coverage:all` | 두 커버리지 실행 + `tools/coverage_merge.js` | 유닛+DOM 병합 리포트 (`coverage-merged/`) — 실질 커버리지는 이 수치 |
 | `test:all` | `node --test tests/unit/*.test.js && node tools/check_parser_parity.js && vitest run` | 전체 |
 | `test:watch` | `node --test --watch tests/unit/*.test.js` | Watch 모드 |
+| `lint` | `eslint src/ tools/ tests/ sw.js serve.js` | ESLint — 에러 0 필수, 경고는 점진 정리 백로그 |
+| `check:types` | `tsc -p jsconfig.json --noEmit` | JSDoc 타입 진단 (checkJs) |
+| `check:specrefs` | `node tools/check_spec_refs.js` | SPEC↔코드/문서 스테일 참조 + 테스트 갭 기준선 게이트 |
+| `check:trace` | `node tools/build_trace_matrix.js --check` | 매트릭스 입력 해시 신선도 |
+| `build:trace` | `node tools/build_trace_matrix.js` | TRACE_MATRIX.md 재생성 |
+| `hooks:install` | `git config core.hooksPath .githooks` | pre-push 훅 활성화 (opt-in) |
+
+### 커버리지 임계값
+
+`vitest.config.mjs`의 `coverage.thresholds`가 DOM 커버리지 하한선을 강제한다 — CI에서 미달 시 실패.
+
+| 지표 | 임계값 | 현재 베이스라인 |
+|------|--------|-----------------|
+| lines | 60% | ~63.6% |
+| statements | 57% | ~60% |
+| functions | 55% | ~58.6% |
+| branches | 45% | ~48.1% |
+
+테스트 추가 시 임계값을 점진 상향한다. 하향 수정이 필요하면 `CHANGES.md`에 사유를 기록한다.
+
+### 요구사항–테스트 연결 정책
+
+- **신규 SPEC ID = 테스트 추가 원칙**: `check:specrefs`의 테스트 갭 기준선(`TEST_GAP_BASELINE`)은 소스에 `@spec`이 있으나 `tests/`에 없는 요구사항 수의 상한. 신규 요구사항이 갭을 늘리면 검증 실패 → 해당 요구사항을 참조하는 테스트 `@spec`을 추가한다.
+- 정책형·문서형 요구사항(테스트로 검증 불가)은 예외 — 기준선 상향 시 `CHANGES.md`에 사유 기록.
+- 전체 갭 목록은 `TRACE_MATRIX.md` 부록 B 자동 집계와 동일하다.
 
 ---
 
@@ -622,18 +663,26 @@ function detectDiagramType(textContent) {
 
 ### GitHub Actions
 
-```yaml
-# .github/workflows/ci.yml (요약)
-- name: Unit tests
-  run: npm test
+`push`/`pull_request` → main 시 `.github/workflows/ci.yml`이 전 단계를 순차 실행한다 (하나라도 실패 시 머지 차단):
 
-- name: DOM tests
-  run: npm run test:dom
+```yaml
+# .github/workflows/ci.yml 실행 순서 (요약)
+- npm ci
+- npm run lint            # ESLint — 에러 0 필수 (경고는 통과)
+- npm run check:types     # tsc --noEmit — JSDoc 타입 진단
+- npm run check:imports   # import/export 교차 검증
+- npm run check:docs      # 문서 경로 + DOC ID
+- npm run check:specrefs  # 스테일 SPEC 참조 + 테스트 갭 기준선
+- npm run check:trace     # TRACE_MATRIX 신선도 (해시)
+- npm test                # Unit 테스트
+- npm run coverage        # DOM 테스트 + 커버리지 임계값 → 아티팩트 업로드
+- npm run verify:assets   # SW 프리캐시 자산
+- npm run check:parser    # 빌드↔런타임 파서 정합성
+- node tools/impact_tests.js --ref origin/main   # PR만 — 영향 요구사항 리포트
 ```
 
-- `push` 시 자동 실행
-- Unit 테스트 실패 시 CI 실패 → 머지 차단
-- DOM 테스트는 별도 step으로 실행 (Vitest 설치 필요)
+- PR에서는 `impact_tests.js --ref origin/main`이 변경 파일의 영향 요구사항·권장 테스트를 출력한다 — 리뷰어가 회귀 범위를 확인하는 용도.
+- 커버리지 리포트(`coverage/`)는 CI 아티팩트로 14일간 보관된다.
 
 ### 배포 전 체크리스트
 

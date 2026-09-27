@@ -22,6 +22,14 @@ export default defineConfig({
                 'src/web-vitals.js',          // PerformanceObserver
                 'src/views/reader-audio.js',  // Audio API
             ],
+            // 커버리지 하한선 — 현재 베이스라인(63.5/60/58.5/48) 대비 여유분.
+            // 테스트 추가 시 점진 상향 (하향 수정은 CHANGES.md에 사유 기록 필수).
+            thresholds: {
+                lines: 60,
+                statements: 57,
+                functions: 55,
+                branches: 45,
+            },
         },
     },
 });

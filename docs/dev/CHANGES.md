@@ -6,6 +6,17 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-14 코드 품질·테스트 자동화 체계 — ESLint·tsc·커버리지 게이트·CI 확장·pre-push·배포 영향 경고
+
+- **ESLint 도입** (`eslint.config.mjs` flat config): 브라우저·노드·앱 전역(DataLoader·updateGlobalStats·checkShortAnswer) 선언 + 최소 규칙(no-undef·no-unused-vars·eqeqeq·no-unreachable·no-empty·no-cond-assign). `npm run lint` — 에러 0 필수, 기존 경고 278개는 점진 정리 백로그
+- **실제 결함 4건 수정** (lint가 포착): `exam-simulator.js` 도달 불가 코드 제거, `textbook-parser.js`·`textbook.plugin.js` 빈 if→조건 반전, `html-viewer.js` while 할당→비교 명시, `stamp_release_notes.js` 최상위 return→cliMain() 함수화
+- **`check:types`** (`tsc -p jsconfig.json --noEmit`): 31개 JSDoc 진단 해소 — `types.js`에 `wrongCauses`·`diagnostic`·`integratedExam`·Quiz `type` 보강, `let x = null` 추론 지점에 `@type` 주석 (weak-items·storage·markdown-parser·state·pdf-registry), `study-tracker.js` Date 산술→getTime()
+- **커버리지 임계값** (`vitest.config.mjs` thresholds): lines 60 / statements 57 / functions 55 / branches 45 — 베이스라인(63.6/60/58.6/48.1) 대비 여유분, 테스트 추가 시 상향. CI에서 미달 시 실패 + coverage/ 아티팩트 업로드
+- **테스트 갭 기준선 게이트** (`check_spec_refs.js`): 소스 @spec은 있으나 tests/에 없는 요구사항 수가 `TEST_GAP_BASELINE`(103) 초과 시 실패 — "신규 요구사항 = 테스트 추가" 파이프라인 강제. 갭 목록은 TRACE_MATRIX 부록 B와 동일 집계
+- **CI 확장** (`.github/workflows/ci.yml`): npm ci → lint·check:types·check:imports·check:docs·check:specrefs·check:trace → test·coverage(아티팩트)·verify:assets·check:parser + PR 전용 `impact_tests.js --ref origin/main` 영향 리포트
+- **pre-push 훅** (`.githooks/pre-push`, opt-in): `npm run hooks:install`로 활성화 — push 전 check:trace/specrefs/docs/lint 자동 실행, `SKIP_PREPUSH=1` 우회
+- **배포 영향 경고** (`deploy.js`): 직전 배포(스탬프 커밋) 대비 변경 파일의 영향 요구사항 표시 — 코어 파일(app·state·storage·data-loader·sw.js) 변경 또는 영향 10개+ 시 스모크 확인 권고 (차단 아닌 경고)
+
 ## 2026-10-13 TRACE MATRIX 활용 도구 — 영향도·도시어·갭 리포트·신선도 체크
 
 - **`tools/lib/trace_scan.js`**: SPEC·@spec·문서 헤더 스캔 로직을 공용 모듈로 추출 — build_trace_matrix·impact_tests·trace가 동일 원천 공유

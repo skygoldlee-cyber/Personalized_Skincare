@@ -396,8 +396,7 @@ function parseMarkdownFile(content, subjectId, filename, chapterKey) {
                     const liCardType = classifyCardType(term, cleanDesc, currentSection);
                     const liImportance = scoreCard(term, cleanDesc, true, currentSection, liCardType);
                     const liDifficulty = determineDifficulty(cleanDesc, liCardType);
-                    if (liImportance < 40) {
-                    } else {
+                    if (liImportance >= 40) {
                     cards.push({
                         id: stableId(subjectId, chapterKey, 'card', term),
                         category: currentSection,

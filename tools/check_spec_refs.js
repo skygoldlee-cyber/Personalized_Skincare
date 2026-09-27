@@ -46,6 +46,11 @@ const RELATED_RE = /^>\s*\*\*관련 SPEC ID\*\*:\s*(.+)$/m;
 const DOC_SCAN_DIRS = ['docs', 'ref-pipeline'];
 const DOC_SCAN_FILES = ['AGENTS.md', 'README.md'];
 
+// 테스트 갭 기준선 — 소스 참조는 있으나 tests/ @spec이 없는 요구사항의 허용 상한.
+// 기존 백로그(정책형·문서형 포함)를 승계하되, 신규 요구사항이 갭을 늘리면 실패한다.
+// 테스트 @spec을 추가해 갭을 줄였다면 이 수치를 함께 낮춘다.
+const TEST_GAP_BASELINE = 103;
+
 function* walk(dir) {
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
     const p = path.join(dir, e.name);
@@ -104,7 +109,9 @@ function parseSpecTag(tagText, file, line, errors, specIds = new Set()) {
 }
 
 function collectCodeRefs(specIds) {
-  const refs = new Map(); // id → [{file, line}]
+  const refs = new Map();     // id → [{file, line}] (전체)
+  const testRefs = new Set(); // tests/ 하위 파일에서 참조된 ID
+  const srcRefs = new Set();  // tests/ 외부(소스·도구)에서 참조된 ID
   const errors = [];
   const files = [...SCAN_FILES.map((f) => path.join(ROOT, f)).filter((f) => fs.existsSync(f))];
   for (const d of SCAN_DIRS) {
@@ -113,17 +120,20 @@ function collectCodeRefs(specIds) {
   }
 
   for (const file of files) {
+    const rel = path.relative(ROOT, file).replace(/\\/g, '/');
+    const isTest = rel.startsWith('tests/');
     const lines = fs.readFileSync(file, 'utf8').split('\n');
     lines.forEach((text, i) => {
       for (const m of text.matchAll(SPEC_TAG_RE)) {
         for (const id of parseSpecTag(m[1], file, i + 1, errors, specIds)) {
           if (!refs.has(id)) refs.set(id, []);
-          refs.get(id).push({ file: path.relative(ROOT, file), line: i + 1 });
+          refs.get(id).push({ file: rel, line: i + 1 });
+          (isTest ? testRefs : srcRefs).add(id);
         }
       }
     });
   }
-  return { refs, errors };
+  return { refs, testRefs, srcRefs, errors };
 }
 
 function* walkDocs(dir) {
@@ -158,7 +168,7 @@ function collectDocRefs(specIds) {
 
 function main() {
   const specIds = extractSpecIds();
-  const { refs, errors } = collectCodeRefs(specIds);
+  const { refs, testRefs, srcRefs, errors } = collectCodeRefs(specIds);
   const { refs: docRefs, errors: docErrors, missing: missingHeaders } = collectDocRefs(specIds);
   errors.push(...docErrors);
 
@@ -200,8 +210,26 @@ function main() {
     for (const [p, ids] of Object.entries(byPrefix)) console.log(`  ${p}: ${ids.join(', ')}`);
   }
 
-  const fail = stale.length > 0 || errors.length > 0;
-  console.log(fail ? '\n실패 — 스테일 참조·파싱 오류를 수정하세요.' : '\n통과 — 스테일 참조 없음.');
+  // 테스트 갭 — 소스 @spec은 있으나 tests/ @spec이 없는 요구사항 (TRACE_MATRIX 부록 B와 동일 집계)
+  const testGap = [...srcRefs].filter((id) => !testRefs.has(id) && specIds.has(id)).sort();
+  if (testGap.length) {
+    console.log(`\n테스트 미연결 (소스 참조 있으나 tests/ @spec 없음 — ${testGap.length}개):`);
+    const byPrefix = {};
+    for (const id of testGap) {
+      const p = id.replace(/-\d+$/, '');
+      (byPrefix[p] ??= []).push(id);
+    }
+    for (const [p, ids] of Object.entries(byPrefix)) console.log(`  ${p}: ${ids.join(', ')}`);
+    console.log('  ※ 신규 요구사항은 테스트 @spec 추가 원칙 (정책형·문서형 요구사항은 예외 가능)');
+  }
+  const gapExceeded = testGap.length > TEST_GAP_BASELINE;
+
+  const fail = stale.length > 0 || errors.length > 0 || gapExceeded;
+  console.log(fail ? '\n실패 — 스테일 참조·파싱 오류·테스트 갭 증가를 수정하세요.' : '\n통과 — 스테일 참조 없음.');
+  if (gapExceeded) {
+    console.log(`  테스트 갭 ${testGap.length}개 > 기준선 ${TEST_GAP_BASELINE}개 — 신규 요구사항에 tests/ @spec을 추가하거나,`);
+    console.log(`  테스트 없이 유지할 정책형 요구사항이라면 TEST_GAP_BASELINE을 갱신하세요 (tools/check_spec_refs.js).`);
+  }
   if (!fail && uncovered.length) console.log('  (커버리지 공백은 경고 — 문서/정책형 요구사항은 코드 참조 없음이 정상일 수 있음)');
   process.exit(fail ? 1 : 0);
 }

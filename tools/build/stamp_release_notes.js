@@ -162,7 +162,7 @@ function draftNotes() {
 
 module.exports = { stampReleaseNotes, stampAppVersion, draftNotes, loadNotes };
 
-if (require.main === module) {
+function cliMain() {
   const dryRun = process.argv.includes('--dry-run');
   if (process.argv.includes('--draft')) {
     if (dryRun) { console.log(loadNotes()); return; }
@@ -173,3 +173,5 @@ if (require.main === module) {
     stampReleaseNotes({ version: process.argv[i + 1], dryRun });
   }
 }
+
+if (require.main === module) cliMain();

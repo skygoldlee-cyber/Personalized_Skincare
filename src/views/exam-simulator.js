@@ -802,7 +802,6 @@ function _startWeakExamImpl() {
                 const cardSubj = cardSubjectOf(cardId);
                 return cardSubj === state.reviewFilter;
             }
-            return false;
         });
         
         solvedQuizzes = solvedQuizzes.filter(quizId => {

@@ -186,7 +186,7 @@ export function getDDay() {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const exam = new Date(examStr + 'T00:00:00');
-    return Math.round((exam - today) / (1000 * 60 * 60 * 24));
+    return Math.round((exam.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
 }
 
 /**

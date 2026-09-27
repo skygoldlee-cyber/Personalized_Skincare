@@ -31,6 +31,9 @@
     "check:specrefs": "node tools/check_spec_refs.js",
     "build:trace": "node tools/build_trace_matrix.js",
     "check:trace": "node tools/build_trace_matrix.js --check",
+    "lint": "eslint src/ tools/ tests/ sw.js serve.js",
+    "check:types": "tsc -p jsconfig.json --noEmit",
+    "hooks:install": "git config core.hooksPath .githooks && echo 'pre-push 훅 활성화됨 (.githooks)'",
     "convert:refs": "python ref-pipeline/convert.py",
     "verify:refs": "python ref-pipeline/convert.py --verify",
     "build:drills": "node tools/build/build_ox_drills.js && node tools/build/build_combo_drills.js",
@@ -64,10 +67,13 @@
   "devDependencies": {
     "@vitest/coverage-v8": "^4.1.11",
     "c8": "^12.0.0",
+    "eslint": "^10.11.0",
+    "globals": "^17.12.0",
     "istanbul-lib-coverage": "^3.2.2",
     "istanbul-lib-report": "^3.0.1",
     "istanbul-reports": "^3.2.0",
     "jsdom": "^30.0.1",
+    "typescript": "^7.0.2",
     "vitest": "^4.1.11"
   }
 }

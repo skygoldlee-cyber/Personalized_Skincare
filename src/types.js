@@ -36,6 +36,7 @@
  * @property {number}   currentIndex 현재 문제 인덱스
  * @property {number}   correctCount 맞힌 개수
  * @property {Array<{quizId: string, selected: (number|string), correct: boolean}>} solvedList 이번 세션 제출 기록
+ * @property {boolean} [diagnostic]    진단 평가 모드 (전 과목 샘플링)
  */
 
 /**
@@ -109,6 +110,7 @@
  * @property {FlashcardsState}        flashcards
  * @property {QuizSessionState}       quiz
  * @property {TrainerState}           trainer
+ * @property {Object.<string, {cause: string, ts: number, subjectId: string}>} wrongCauses 오답 원인 맵 { itemId: 원인 기록 }
  * @property {boolean} [_storageUnavailable] localStorage 사용 불가 감지 플래그
  * @property {number}  [_prevMemCount]   이전 외운 카드 수 (변동 감지용)
  * @property {number}  [_prevQuizCount]  이전 퀴즈 결과 수 (변동 감지용)
@@ -147,6 +149,7 @@
  * @property {(number|string)} answer    정답(보기 인덱스 또는 단답 문자열)
  * @property {string}       [explanation] 해설
  * @property {string}       [chapter]    소속 단원명
+ * @property {string}       [type]       문항 유형 ('single'|'combo'|'short'|'ox')
  */
 
 /**
@@ -242,6 +245,7 @@
  * @property {ExamMeta[]}      exams
  * @property {IngredientsMeta} ingredients
  * @property {ResourcesMeta}   [resources]
+ * @property {Object}          [integratedExam] 통합 시험 규칙 (passAverage·subjectFailBelow 등)
  */
 
 /**

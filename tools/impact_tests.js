@@ -46,7 +46,7 @@ function main() {
     process.exit(0);
   }
 
-  const { specIds, src, tst, docs, reports } = T.scanAll();
+  const { specIds, tst, docs, reports } = T.scanAll();
   const impacted = new Map(); // specId → Set(변경 파일)
   const unscanned = [];
   for (const f of files) {

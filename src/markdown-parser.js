@@ -227,6 +227,7 @@ export function parseMarkdown(mdText, options = {}) {
     let codeLang = '';
     let listItems = [];
     /** @type {'ul'|'ol'|null} */
+    /** @type {string|null} */
     let listType = null;
 
     // 마크다운 표 셀 분리: 양끝 파이프 1개씩만 제거하고 내부 빈 셀은 보존한다.
@@ -324,13 +325,16 @@ export function parseMarkdown(mdText, options = {}) {
     }
 
     // 병합 판정용 직전 평문/리스트 항목 텍스트 (joinWraps 모드에서만 사용)
+    /** @type {string|null} */
     let _jwPrev = null;
 
     // joinWraps 전용: 페이지 러닝헤더 감지 — H1 제목의 '(' 앞부분과 정확히
     // 일치하는 반복 단독줄(예: "화장품법 시행규칙"×35)을 투명하게 건너뛴다.
     // _jwPrev를 리셋하지 않아 페이지 경계로 끊긴 문장 병합이 이어진다.
     // (소스 라인은 유지되므로 L#### 인용 라인번호에 영향 없음)
-    let _jwTitle = null, _jwTitleSeen = false;
+    /** @type {string|null} */
+    let _jwTitle = null;
+    let _jwTitleSeen = false;
     if (joinWraps) {
         const h1 = lines.map(l => l.trim()).find(t => /^#\s/.test(t));
         if (h1) {

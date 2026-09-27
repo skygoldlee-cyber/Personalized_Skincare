@@ -311,7 +311,9 @@ export function cleanOrphansForSubject(subjKey, subjData) {
    charts.js 성적 집계와 recommendations.js 추천이 공용으로 사용 —
    동일 원문이면 JSON.parse를 건너뛰어 대시보드 재렌더 시 중복 파싱 방지
    ======================================================= */
+/** @type {string|null} */
 let _simHistoryCacheRaw = null;
+/** @type {Array<{date: string, examId: string, rate: number, subjectRates: Object}>|null} */
 let _simHistoryCache = null;
 
 /**

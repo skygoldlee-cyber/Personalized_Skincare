@@ -11,20 +11,55 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # PR 영향 분석(diff)에 필요
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type check (tsc --noEmit)
+        run: npm run check:types
+
+      - name: Import/export cross-check
+        run: npm run check:imports
+
+      - name: Docs path + document ID check
+        run: npm run check:docs
+
+      - name: SPEC refs + test gap check
+        run: npm run check:specrefs
+
+      - name: TRACE MATRIX freshness
+        run: npm run check:trace
+
       - name: Run unit tests
         run: npm test
 
-      - name: Run DOM tests
-        run: npm run test:dom
+      - name: Run DOM tests with coverage
+        run: npm run coverage
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/
+          retention-days: 14
 
       - name: Verify SW precache assets
         run: npm run verify:assets
 
       - name: Run parser parity check
         run: npm run check:parser
+
+      - name: PR impact report
+        if: github.event_name == 'pull_request'
+        run: node tools/impact_tests.js --ref origin/main

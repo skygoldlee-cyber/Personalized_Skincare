@@ -54,6 +54,7 @@ export function setStorageBackend(backend) {
 export function getStorageBackend() { return _backend; }
 
 // 동기화용 쓰기 훅 — sync.js가 등록 (순환 import 방지용 콜백 패턴)
+/** @type {((logicalKey: string) => void)|null} */
 let _dataWriteHook = null;
 export function setDataWriteHook(fn) { _dataWriteHook = fn; }
 function _notifyWrite(logicalKey) {
@@ -61,6 +62,7 @@ function _notifyWrite(logicalKey) {
 }
 
 // 저장소 오류 훅 — state.js가 state._storageUnavailable 플래그 동기화용으로 등록
+/** @type {(() => void)|null} */
 let _errorHook = null;
 export function setStorageErrorHook(fn) { _errorHook = fn; }
 

@@ -82,6 +82,33 @@ function main() {
 
     console.log('✅ 배포 전 검사 통과 (main · clean · origin/main 동기화)');
 
+    // 영향도 경고 — 직전 배포(스탬프 커밋) 이후 변경 파일의 영향 요구사항 표시.
+    // 차단은 아니며, 고영향 코어 파일 변경 시 검증 스크린샷·스모크 확인을 권고한다.
+    try {
+        const lastDeploy = git('log -1 --format=%H --grep="CACHE_VERSION 스탬프"');
+        if (lastDeploy && lastDeploy !== git('rev-parse HEAD')) {
+            const impact = spawnSync('node', ['tools/impact_tests.js', '--ref', lastDeploy], { encoding: 'utf8' });
+            const out = (impact.stdout || '').trim();
+            if (impact.status === 0 && out && !out.includes('분석할 파일이 없습니다')) {
+                const m = out.match(/영향 요구사항 (\d+)개/);
+                const count = m ? parseInt(m[1], 10) : 0;
+                const HIGH_IMPACT = ['src/app.js', 'src/state.js', 'src/storage.js', 'src/data-loader.js', 'sw.js'];
+                const changed = git(`diff --name-only ${lastDeploy}..HEAD`).split('\n');
+                const hitCore = changed.filter(f => HIGH_IMPACT.includes(f));
+                if (hitCore.length || count >= 10) {
+                    console.log(`\n⚠️  배포 영향 경고 — 영향 요구사항 ${count}개` +
+                        (hitCore.length ? ` · 코어 파일 변경: ${hitCore.join(', ')}` : ''));
+                    console.log(out.split('\n').filter(l => l.startsWith('  ') || l.startsWith('■')).slice(0, 20).join('\n'));
+                    console.log('   → 배포 후 핵심 플로우 스모크 확인 권장 (학습 진행 저장·뷰 전환·데이터 로드)\n');
+                } else {
+                    console.log(`ℹ️  영향 분석: 요구사항 ${count}개 (경미 — 자세히: node tools/impact_tests.js --ref ${lastDeploy.slice(0, 8)})`);
+                }
+            }
+        }
+    } catch (e) {
+        console.warn(`⚠️  영향 분석 생략 (${e.message})`);
+    }
+
     // 콘텐츠 품질 게이트 — 콤보 감사 오류(무결성·회귀)가 있으면 배포 차단.
     // 경고는 통과시키되 리포트는 combo_audit_report.json에 남는다.
     const audit = spawnSync('node', ['tools/audit_combo.js'], { encoding: 'utf8' });

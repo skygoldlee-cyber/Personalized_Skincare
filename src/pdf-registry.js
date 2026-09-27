@@ -265,7 +265,7 @@ for (const [eid, t] of Object.entries(_EXAM_TABLES)) {
  * @returns {{contentRoot?: string, SUBJECT_DIR_MAP?: Object, REF_DIRS?: Object,
  *   SOURCE_REF_MAP?: Array, KEYWORD_REF_MAP?: Array, REFERENCE_FILES?: Object,
  *   REFERENCE_COMMON?: Array, REFERENCE_INGREDIENTS?: Array, REFERENCE_LAW?: Array,
- *   REF_FILE_TO_PATH?: Object, REF_REGISTRY?: Object}}
+ *   REF_FILE_TO_PATH?: Object, REF_REGISTRY?: Object, REF_MD_SUBJECTS?: Object}}
  */
 export function getRefTables() {
     const id = getActiveExamId();

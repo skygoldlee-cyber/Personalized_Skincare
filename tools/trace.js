@@ -15,7 +15,7 @@
 const T = require('./lib/trace_scan');
 
 function showSpec(id, data) {
-  const { specIds, src, tst, docs, reports, meta } = data;
+  const { specIds, src, tst, docs, reports } = data;
   console.log(`\n━━ ${id} ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
   if (!specIds.has(id)) {
     console.log('  ⚠ SPEC.md에 없는 ID입니다 (오타·삭제된 요구사항 가능)');

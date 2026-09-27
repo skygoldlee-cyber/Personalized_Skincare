@@ -403,7 +403,7 @@ async function _doSearch(keyword, skipScroll) {
     let firstMatch = null;
     let remainingNodes = [];
     let node;
-    while (node = walker.nextNode()) {
+    while ((node = walker.nextNode()) !== null) {
         if (firstMatch === null) {
             _highlightInTextNode(node, lowerKw, kw);
             if (_searchResults.length > 0) {
