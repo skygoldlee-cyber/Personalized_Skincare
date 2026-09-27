@@ -179,6 +179,11 @@ export function showPlanCompare() {
                     <li>클라우드 동기화 — 로그인 계정 기준 여러 디바이스 간 학습 상태 공유</li>
                     <li>오디오북 등 신규 Pro 기능 우선 제공</li>
                 </ul>
+                <p class="pro-upgrade-sub"><strong>로그인</strong></p>
+                <ul>
+                    <li>무료 플랜 — <strong>로그인 불필요</strong>, 모든 데이터는 이 기기에 저장</li>
+                    <li>Pro 플랜 — <strong>로그인 필요</strong> (클라우드 동기화·구독 관리 계정)</li>
+                </ul>
                 <p class="pro-upgrade-sub">그 외 학습 도구(퀴즈·플래시카드·교재 표준형·검색·사전·캘린더·훈련소·백업)는 <strong>항상 무료</strong>입니다.</p>
             </div>
             <div class="app-confirm-actions">

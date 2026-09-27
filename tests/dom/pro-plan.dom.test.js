@@ -46,6 +46,9 @@ describe('플랜 안내 모달 (showPlanCompare)', () => {
         // Pro 전용 혜택 — 멀티디바이스 동기화·한도 무제한 안내
         expect(overlay().textContent).toContain('여러 디바이스 간 학습 상태 공유');
         expect(overlay().textContent).toContain('무제한');
+        // 로그인 정책 — 무료 로그인 불필요 / Pro 로그인 필요
+        expect(overlay().textContent).toContain('로그인 불필요');
+        expect(overlay().textContent).toContain('로그인 필요');
     });
 
     it('플랜이 free로 바뀌면 해당 기능 태그가 무료 제공으로 전환된다', async () => {
