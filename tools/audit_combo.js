@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @spec CQ-05
 /**
  * audit_combo.js — 복수정답형 생성 번들 품질 감사
  *
