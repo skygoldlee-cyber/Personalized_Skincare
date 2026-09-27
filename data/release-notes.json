@@ -1,5 +1,12 @@
 [
   {
+    "version": "v369-20260928-ca28cf6",
+    "date": "2026-09-28",
+    "notes": [
+      "fix(docs): 학습 매뉴얼 §1.5 PRO 배지 렌더링 수정"
+    ]
+  },
+  {
     "version": "v369-20260928-4d7e540",
     "date": "2026-09-28",
     "notes": [
@@ -144,13 +151,6 @@
     "date": "2026-09-27",
     "notes": [
       "docs: 전 문서 DOC ID 부여 + TRACE MATRIX 구축 (문서·소스·테스트·보고서 추적)"
-    ]
-  },
-  {
-    "version": "v369-20260927-d49439d",
-    "date": "2026-09-27",
-    "notes": [
-      "docs: check:docs 스테일 경로 allowlist 등록 + 함수 레벨 @spec 태그 추가"
     ]
   }
 ]
