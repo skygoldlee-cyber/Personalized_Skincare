@@ -8,6 +8,8 @@
 //   DISCORD_WEBHOOK_URL  — Discord 채널 webhook URL
 //   WEBHOOK_SECRET       — Database Webhook 헤더에 넣은 임의 문자열 (무단 호출 차단)
 // ------------------------------------------------------------
+// Supabase functions new 템플릿과 동일 — Deno 전역 타입 로드 (IDE 해석용)
+import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 
 const DISCORD_WEBHOOK_URL = Deno.env.get('DISCORD_WEBHOOK_URL') ?? '';
 const WEBHOOK_SECRET = Deno.env.get('WEBHOOK_SECRET') ?? '';
