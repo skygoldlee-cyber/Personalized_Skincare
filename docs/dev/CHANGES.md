@@ -16,6 +16,15 @@
   표준형 전환 시 재생 정지. 단, 오디오 경로 해석은 정규 챕터 객체로 수행해야 함
   (이야기형 chapter는 신규 객체라 `chapters.indexOf` 실패 → 매니페스트 미스).
 
+## 2026-10-13 후속 — 모바일 탭 바 `analysis-view` 누락 수정 + 네비 parity 테스트
+
+- 모바일 탭 바는 사이드바와 별도 마크업이라 `analysis-view` 추가 시 탭 바 항목이 누락됐던 문제 수정
+  (대시보드·카드 사이에 🎯 리포트 탭 삽입).
+- `tests/dom/common-navigation.dom.test.js`에 parity 테스트 추가 — 사이드바 `.nav-item`과
+  모바일 `.mobile-tab-item`의 `data-target` 집합 일치 + 각 target의 `.view-section` 존재를 강제.
+- 학습안내서 "시험 직전 D-5 학습 플랜"의 과도한 `####` 헤딩 9개를 볼드 텍스트로 정리하고
+  맞춤 학습 리포트 기능 행 보완 (진단 요약 3카드 내역·진입 경로).
+
 ## 2026-09-27 ref-pipeline 버그 수정 — batch_convert 스테일 대상 + 오디오북 의존성
 
 - `batch_convert.py`: `BATCH_TARGETS`이 구형 파일명(`1과목_화장품법의이해.md`,

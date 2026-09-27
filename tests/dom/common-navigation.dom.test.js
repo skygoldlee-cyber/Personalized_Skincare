@@ -74,3 +74,30 @@ describe('navigation — 뷰 전환 + 스크롤 복원', () => {
         expect(window.stopReaderAudio).toHaveBeenCalled();
     });
 });
+
+describe('사이드바 ↔ 모바일 탭 바 메뉴 일치', () => {
+    beforeEach(() => {
+        localStorage.clear();
+        resetStudyState();
+        loadIndexHtml();
+    });
+
+    it('사이드바 .nav-item과 모바일 .mobile-tab-item의 data-target 집합이 동일하다', () => {
+        const sidebarTargets = [...document.querySelectorAll('.nav-item[data-target]')]
+            .map(n => n.getAttribute('data-target'));
+        const mobileTargets = [...document.querySelectorAll('.mobile-tab-item[data-target]')]
+            .map(n => n.getAttribute('data-target'));
+        expect([...sidebarTargets].sort()).toEqual([...mobileTargets].sort());
+    });
+
+    it('각 data-target은 대응하는 .view-section을 갖는다', () => {
+        const targets = new Set();
+        document.querySelectorAll('.nav-item[data-target], .mobile-tab-item[data-target]')
+            .forEach(n => targets.add(n.getAttribute('data-target')));
+        targets.forEach(t => {
+            const section = document.getElementById(t);
+            expect(section, `${t} 뷰 섹션 누락`).toBeTruthy();
+            expect(section.classList.contains('view-section'), `${t}은 view-section이 아님`).toBe(true);
+        });
+    });
+});

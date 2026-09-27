@@ -505,7 +505,7 @@ Personalized_Skincare/
 - 13개의 `<section class="view-section">`이 하나의 HTML에 공존
 - `router.js`의 `navigateToView(target, ctx)`가 `.active` 클래스를 토글하여 화면 전환 (페이지 리로드 없음). 타이틀/서브타이틀은 `getViewTitles(registry)`가 `DATA_REGISTRY.uiText`에서 동적 생성
 - 뷰 목록: dashboard / analysis / flashcard / quiz / review / trainer / exam / textbook / textbook-reader / dictionary / formula / exam-select / calendar
-- 내비게이션 동기화: `.nav-item`(사이드바)과 `.mobile-tab-item`(탭 바)에 동일 `data-target` 부여 → 뷰 전환 시 양쪽 활성 상태 자동 동기화
+- 내비게이션 동기화: `.nav-item`(사이드바)과 `.mobile-tab-item`(탭 바)에 동일 `data-target` 부여 → 뷰 전환 시 양쪽 활성 상태 자동 동기화. 양쪽 `data-target` 집합 일치는 `tests/dom/common-navigation.dom.test.js`의 parity 테스트가 강제 (한쪽 누락 시 실패)
 - 전환 부가 동작: 이전 뷰 스크롤 위치 저장·복원, 리더 집중 모드 해제, 오디오 정지, 뷰별 렌더 핸들러 호출 (`ctx.handlers`)
 
 ### 2. Application Layer (응용 계층)
@@ -1252,7 +1252,7 @@ app-fallback.js 폴링 시작 (400ms 간격, 15s 데드라인)
 | 화면 | 네비게이션 | 구현 |
 |------|-----------|------|
 | **데스크톱** (>768px) | 좌측 사이드바 | `.sidebar` 표시, `.mobile-tab-bar` 숨김 |
-| **모바일** (≤768px) | 하단 탭 바 | `.sidebar` 숨김, `.mobile-tab-bar` 표시 (10개 메뉴, 가로 스크롤) |
+| **모바일** (≤768px) | 하단 탭 바 | `.sidebar` 숨김, `.mobile-tab-bar` 표시 (12개 뷰 탭 + 테마·매뉴얼·시험전환 등 기능 탭, 가로 스크롤) |
 
 ### 모바일 최적화 기법
 
@@ -1529,7 +1529,7 @@ npm run deploy
 ### A. 새 뷰(화면) 추가
 
 1. `index.html`에 `<section id="xxx-view" class="view-section">` 추가
-2. 사이드바 `.nav-item` + 모바일 `.mobile-tab-item`에 `data-target="xxx-view"` 항목 추가
+2. 사이드바 `.nav-item` + 모바일 `.mobile-tab-item`에 `data-target="xxx-view"` 항목 추가 — 둘 중 하나라도 누락하면 `common-navigation.dom.test.js` parity 테스트 실패
 3. `src/router.js`의 `getViewTitles()`에 `'xxx-view': { title, subtitle }` 추가 (또는 `manifest.uiText` 활용)
 4. `src/views/xxx.js` 뷰 컨트롤러 작성 → `app.js`의 `ctx.handlers`에 렌더 함수 등록
 5. `sw.js` `SHELL_ASSETS`에 새 JS 파일 추가
