@@ -45,8 +45,8 @@ describe('router.js — DOM 테스트', () => {
             expect(titles['flashcard-view'].title).toBe('개념 플래시카드');
             expect(titles['quiz-view'].title).toBe('기출 및 핵심 퀴즈');
             expect(titles['trainer-view'].title).toBe('스마트 훈련소');
-            expect(titles['textbook-reader-view'].title).toBe('교재 본문 읽기');
-            expect(titles['dictionary-view'].title).toBe('성분 검색 사전');
+            expect(titles['textbook-reader-view'].title).toBe('교재리더');
+            expect(titles['dictionary-view'].title).toBe('성분검색');
         });
 
         it('registry uiText로 커스텀 타이틀 적용', () => {

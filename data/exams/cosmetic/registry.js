@@ -2,7 +2,7 @@
 var DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2026",
-  "generatedAt": "2026-09-27T12:37:17.690Z",
+  "generatedAt": "2026-09-27T16:41:48.768Z",
   "subjects": [
     {
       "key": "law",
@@ -284,16 +284,20 @@ var DATA_REGISTRY = {
       "title": "실전 모의고사",
       "subtitle": "교재 인용 1000제 문제은행으로 과목별 모의고사 및 학습안내서 열람"
     },
+    "analysis": {
+      "title": "맞춤학습",
+      "subtitle": "학습 기록을 바탕으로 약점을 분석하여 학습 우선순위를 진단합니다"
+    },
     "textbook": {
-      "title": "교재 본문 검색",
+      "title": "교재검색",
       "subtitle": "교재의 모든 본문 내용을 실시간 키워드로 검색"
     },
     "textbook-reader": {
-      "title": "교재 본문 읽기",
+      "title": "교재리더",
       "subtitle": "과목을 선택하여 교재 본문을 읽기"
     },
     "dictionary": {
-      "title": "성분 검색 사전",
+      "title": "성분검색",
       "subtitle": "화장품 성분별 배합한도 및 고시 기준 통합 검색기"
     }
   }
