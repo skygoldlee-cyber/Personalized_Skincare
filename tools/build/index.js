@@ -465,7 +465,7 @@ if (typeof window !== 'undefined') {
     let swContent = fs.readFileSync(swPath, 'utf-8');
 
     // 모든 시험의 자산을 집계 (프리캐시는 앱 셸 차원이므로 전 시험 포함)
-    const { getExamTargets } = require('./exam_targets');
+    const { getExamTargets, getPrecacheMdAssets } = require('./exam_targets');
     const allTargets = getExamTargets(WORKSPACE_DIR);
 
     const assetsToCache = [];
@@ -478,28 +478,16 @@ if (typeof window !== 'undefined') {
           assetsToCache.push(`./${t.dataRoot}/${rel}`);
         }
       }
-      const tm = t.manifest;
-      if (!tm) continue;
-      // MD_ASSETS: manifest 기반으로 교재/문제은행/학습안내서 MD 경로 생성 (디스크 존재 확인)
-      const pushMd = (rel) => {
-        if (fs.existsSync(path.join(WORKSPACE_DIR, rel))) mdAssets.push(`./${rel}`);
-      };
-      pushMd(`${t.contentRoot}/docs/학습안내서.md`);
-      for (const subj of tm.subjects || []) {
-        for (const ch of subj.chapters || []) {
-          pushMd(`${t.contentRoot}/${subj.dir}/${ch.file}`);
-          if (ch.storyFile) pushMd(`${t.contentRoot}/${subj.dir}/${ch.storyFile}`);
-        }
-      }
-      for (const exam of tm.exams || []) {
-        pushMd(`${t.contentRoot}/문제은행/${exam.file}`);
-      }
     }
+    // MD_ASSETS 목록은 exam_targets.getPrecacheMdAssets로 통합 생성
+    // (tools/sync_textbook_files.js --check가 같은 목록으로 drift를 감시)
+    mdAssets.push(...getPrecacheMdAssets(WORKSPACE_DIR));
     void generatedFiles; // 참고용 수집 — 프리캐시 목록에는 포함하지 않음
 
     const assetsBlock = 'const DATA_ASSETS = [\n' + assetsToCache.map(a => `  '${a}'`).join(',\n') + '\n];';
     swContent = swContent.replace(/const DATA_ASSETS = \[[^\]]*\];?/s, assetsBlock);
-    const mdBlock = 'const MD_ASSETS = [\n' + mdAssets.map(a => `  '${a}'`).join(',\n') + '\n];';
+    // BEGIN/END 마커를 블록에 포함 — 재생성해도 sync_textbook_files.js의 마커가 유지됨
+    const mdBlock = 'const MD_ASSETS = [\n  // MD_ASSETS:BEGIN\n' + mdAssets.map(a => `  '${a}',`).join('\n') + '\n  // MD_ASSETS:END\n];';
     swContent = swContent.replace(/const MD_ASSETS = \[[^\]]*\];?/s, mdBlock);
 
     fs.writeFileSync(swPath, swContent, 'utf-8');

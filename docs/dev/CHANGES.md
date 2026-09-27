@@ -6,6 +6,15 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-16 교재 파일 구조 동기화 도구 — sync_textbook_files.js
+
+- **`tools/sync_textbook_files.js` 신규**: 교재/문제은행 파일시스템을 진실로 `manifest.json`(chapters file/storyFile, exams 미등록 자동 등록)과 `sw.js` `MD_ASSETS`를 동기화. `--check`는 drift 보고+exit 1, `--rename <구> <신>`은 파일 이동+manifest+sw.js+인용 경로 원자 전파 (`#L` 프래그먼트·URL 인코딩 보존)
+- **manifest 포맷 보존**: 전체 재직렬화 대신 `"file": "old"` 텍스트 치환 — uiText 인라인 스타일 유지. 출현 횟수 모호 시에만 재직렬화 폴백+경고
+- **`sw.js` MD_ASSETS 마커화**: `MD_ASSETS:BEGIN/END` 주석 마커 사이만 도구가 재생성 — `docs/*.md`·교재·문제은행 선언 기준. 기존 누락 `두음법_암기_총정리.md`를 첫 실행으로 감지·복구
+- **`verify_shell_assets.js`**: 검사 대상에 `MD_ASSETS` 추가 — 프리캐시 md 파일 존재까지 감시
+- **`check_content.js` `[구조]` 단계**: `sync_textbook_files.js --check`를 콘텐츠 게이트에 통합 — `--content-only` CI에서도 drift 차단
+- **문서**: TEXTBOOK_REPLACEMENT_RUNBOOK에 ⓪ 자동 동기화 섹션 + 순서표/게이트 표 갱신, AGENTS 명령 표·주의사항, TESTING §7 갱신
+
 ## 2026-10-16 교재 변경 추적 체인 강화 — silent-skip·CI 게이트·역방향 검사·ID 이관 체크
 
 - **`sync_citation_lines.js`**: 인용 대상 교재 파일이 없으면(이름 변경/삭제) 인용을 스캔에서 제외하던 silent-skip 수정 — `missingTarget` 플래그로 미발견 집계에 포함, `(대상 파일 없음: 경로)` 메시지로 보고하고 exit 1

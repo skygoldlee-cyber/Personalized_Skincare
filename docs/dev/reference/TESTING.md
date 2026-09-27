@@ -732,7 +732,7 @@ function detectDiagramType(textContent) {
 - node tools/check_doc_sync.js --ref origin/main   # 소스 변경 시 문서 갱신 강제
 - npm run check:specrefs  # 스테일 SPEC 참조 + 테스트 갭 기준선(0)
 - npm run check:trace     # TRACE_MATRIX 신선도 (해시)
-- node tools/check_content.js --content-only --quick  # 콘텐츠 추적 게이트 (manifest·인용·참조라인·신선도·ID이관·카드)
+- node tools/check_content.js --content-only --quick  # 콘텐츠 추적 게이트 (manifest·구조·인용·참조라인·신선도·ID이관·카드)
 - npm test                # Unit 테스트
 - npm run coverage        # DOM 테스트 + 커버리지 임계값
 - npm run coverage:unit   # 유닛 커버리지 (c8)

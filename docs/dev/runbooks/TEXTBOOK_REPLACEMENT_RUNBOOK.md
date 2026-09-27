@@ -68,8 +68,8 @@ flowchart TD
 | # | 단계 | 명령/작업 | 통과 기준 (게이트) | 상세 |
 |---|---|---|---|---|
 | 0 | 사전 점검 | 0a `python ref-pipeline/check_laws.py` — 인용 법령 개정이 교체 원인인지 확인<br/>0b 새 교재 MD 작성 — `| 용어 \| 설명 |` 표, `🔖/📌/★` 마커, `## N.` 챕터, 참조 링크 `../참조자료/ref_md/과목N/…` | 법령 판정 확인 + 파서 계약 충족 | TEXTBOOK_AUTHORING_GUIDE |
-| 1 | 파일 교체 | `{EXAM}/교재/{과목}/` 에 `_표준형.md`·`_이야기형.md` 배치 | 파일명 규칙 일치 | CONTENT_WORKFLOW §3.1 |
-| 2 | 등록 정합 | `manifest.json`(subjects.dir·file/storyFile·exams·integratedExam) + `references.json`(subjectDirMap·refDirs·referenceFiles) | 선언↔파일 일치 | §3.1-1 ① |
+| 1 | 파일 교체 | `{EXAM}/교재/{과목}/` 에 `_표준형.md`·`_이야기형.md` 배치 (파일명 변경이면 `node tools/sync_textbook_files.js --rename <구> <신>`으로 교체 — manifest+sw.js+인용 경로 원자 전파) | 파일명 규칙 일치 | CONTENT_WORKFLOW §3.1 |
+| 2 | 등록 정합 | `node tools/sync_textbook_files.js` — manifest file/storyFile·exams·`sw.js MD_ASSETS` 자동 동기화 (`--check`로 사전 확인). 수동 잔여: `integratedExam`·`references.json`(subjectDirMap·refDirs·sourceRefMap) | `드리프트 없음` + 선언↔파일 일치 | §3.1-1 ① |
 | 3 | **백업** | `{dataRoot}/card_terms_snapshot.json` + `id_migration.js` 사본을 작업 브랜치 외 별도 위치에 보관 | 복원 가능한 사본 확보 | 롤백 절차 참조 |
 | 4 | 빌드+검증 | `npm.cmd run check:content -- --build` (수 분 소요) | 전 계층 통과 | §3.1-1 ④ |
 | 5 | 인용 동기화 | `node tools/sync_citation_lines.js --check` → 필요 시 실행 후 재--check | **미발견 0건** | §3.1-1 ⑤ |
@@ -81,50 +81,170 @@ flowchart TD
 
 ## 교재 변경 시 소스코드 수정 지점
 
-교재 변경으로 손봐야 하는 파일을 **직접 수정 / 자동 재생성 / 조건부 수정**으로 구분한다.
+교재 변경으로 손봐야 하는 파일을 **직접 수정 / 자동 동기화 / 자동 재생성 / 조건부 수정**으로 구분한다.
+`src/` 앱 코드는 과목·교재명 하드코딩이 없어 **대부분의 교재 변경은 `src/`를 건드리지 않는다** — 수정 대상은 `content/` 설정·원문과 `sw.js`의 프리캐시 목록뿐이다.
+
+### ⓪ 자동 동기화 도구 — `tools/sync_textbook_files.js`
+
+파일시스템을 진실(source of truth)로 선언 지점을 자동 동기화한다. **교재 변경 후 가장 먼저 실행**할 것.
+
+```powershell
+node tools/sync_textbook_files.js --check   # 불일치 보고만 (drift 시 exit 1)
+node tools/sync_textbook_files.js           # 동기화 실행
+node tools/sync_textbook_files.js --rename 교재/law/OLD.md 교재/law/NEW.md  # 파일명 변경 전파
+```
+
+| 대상 | 자동 처리 |
+|---|---|
+| `manifest.json` `chapters[].file`/`storyFile` | `*_표준형.md`/`_이야기형.md` 스캔으로 매칭 (후보 2개+면 수동 보고) |
+| `manifest.json` `exams[]` | `문제은행/과목N_*.md` 미등록 파일을 `subjects[].order`로 매칭해 자동 등록 |
+| `sw.js` `MD_ASSETS` | `MD_ASSETS:BEGIN/END` 마커 사이를 선언 기준으로 재생성 (`docs/*.md` 포함) |
+| 문제은행·교재 간 인용 경로 | `--rename` 시 상대경로+URL 인코딩 일괄 치환, `#L` 프래그먼트·라벨 보존 |
+| manifest 포맷 | 부분 텍스트 치환으로 uiText 인라인 스타일 보존 — 재직렬화는 모호할 때만 폴백+경고 |
+
+> 라인번호 재동기화는 이 도구가 아닌 `sync:citations` 담당. `[구조]` 단계가 `--check`를 `check:content`에 통합.
 
 ### ① 직접 수정 (수동)
 
-| 파일 | 수정 내용 | 언제 |
+#### 1. `content/exams/{id}/교재/{dir}/*.md` — 교재 본문
+
+파서 계약을 지켜야 카드/퀴즈/챕터 매핑이 정상 생성된다:
+
+| 요소 | 규칙 | 용도 |
 |---|---|---|
-| `content/exams/{id}/교재/{dir}/*.md` | 새 교재 본문 (파서 계약: `\| 용어 \| 설명 \|` 표·`## N.` 챕터·`🔖기출`/`📌중요`/`★필수` 마커) | 항상 |
-| `content/exams/{id}/manifest.json` | `subjects[].dir`·`chapters[].file`/`storyFile`·`exams[].file`·`integratedExam.questionsPerSubject` | 파일명/구조/과목 구성 변경 시 |
-| `sw.js` → `MD_ASSETS` | 프리캐시 대상 교재·문제은행 경로 목록 — **파일명 변경/추가/삭제 시 반드시 동기화** (`verify:assets`가 누락을 검증) | 파일명 변경·추가·삭제 시 |
-| `content/exams/{id}/문제은행/*.md` | `(<.../교재/파일.md#LNNN>)` 인용 링크 — 라인 밀림은 `sync:citations` 자동 갱신, **파일명 변경은 수동 경로 갱신** (대상 파일 없음 → 인용 단계 실패) | 라인 이동·파일명 변경 시 |
-| `content/exams/{id}/references.json` | `refDirs`·`subjectDirMap`·`docSubjectRules` — 참조자료 귀속 | 참조자료/과목 구성 변경 시 |
-| `content/exams/{id}/교재/glossary/subject{N}.json` | 큐레이션 용어집 (과목 order 기준) | 용어 추가·변경 시 |
-| `content/exams/{id}/number-drills/{key}.json` | 숫자 암기 드릴 데이터 | 수치·기한 변경 시 |
-| `content/exams/{id}/combo_blocklist.json` | 콤보 문항 차단 목록 | 콤보 품질 이슈 수정 시 |
+| 챕터 헤딩 | `## 📚 Chapter NN. 제목` 또는 `## N. 제목` (번호 있는 `##`만 인식) | 문항→챕터 매핑(`build_question_chapters`) |
+| 카드 표 | `\| 용어 \| 설명 \|` 2열 | 플래시카드 추출 |
+| 리스트 | `- **용어**: 설명` | 플래시카드 추출(보조) |
+| 퀴즈 마커 | `🔖기출`·`📌중요`·`🎯기출`·`🎯중요`·`★필수` + `**볼드**`/숫자+단위 빈칸 대상 | 퀴즈 생성 (헤더·라벨 라인의 마커는 미생성) |
+| 참조 링크 | `../참조자료/ref_md/과목N/{문서}/{문서}.md` 상대경로 | 참조자료 연결 (카드 감사가 존재 검증) |
+| `(LNN)` 마커 | `(L123)` 또는 `(L123\|파일.pdf)` — ref_md 라인 번호 | `check_ref_lines`가 범위+키워드 검증 |
 
-### ② 자동 재생성 — 직접 수정 금지 (`build:data`/`build:drills`가 생성)
+> 상세 작성 규칙: `docs/dev/runbooks/TEXTBOOK_AUTHORING_GUIDE.md`
 
-| 파일 | 생성 명령 |
+#### 2. `content/exams/{id}/manifest.json` — 과목·문제은행 선언 (SSOT)
+
+> `file`/`storyFile`/`exams[].file` 필드는 `sync_textbook_files.js`가 디스크 스캔으로 동기화 — **key·order·title·questionsPerSubject 등 의미 필드만 수동**.
+
+```jsonc
+{
+  "subjects": [{
+    "key": "law",                 // 과목 고유키 — ID·스냅샷·데이터 경로의 기준. 변경 시 전체 연쇄 영향
+    "order": 1,                   // 과목 번호 — glossary/subjectN.json·ref_md/과목N 폴더와 연동
+    "dir": "교재/law",            // 교재 디렉터리 (contentRoot 상대)
+    "chapters": [{
+      "file": "1과목_..._표준형.md",      // 표준형 파일명 (dir 안)
+      "storyFile": "1과목_..._이야기형.md" // 이야기형 (선택)
+    }]
+  }],
+  "exams": [{
+    "key": "subject1",
+    "subject": "law",                    // subjects[].key 참조
+    "file": "과목1_단일정답형.md"         // 문제은행/ 안의 파일명
+  }],
+  "integratedExam": {
+    "questionsPerSubject": { "law": 10, ... }  // 키는 subjects[].key — 없는 키는 선언 단계에서 실패
+  }
+}
+```
+
+- **파일명 변경**: `node tools/sync_textbook_files.js --rename <구경로> <신경로>`가 `chapters[].file`/`storyFile` + `sw.js MD_ASSETS` + `문제은행` 인용 경로 3곳을 원자 전파. 수동 시에는 3곳을 함께 갱신할 것
+- **과목 추가**: `subjects[]` + `exams[]` + `integratedExam.questionsPerSubject` + `교재/glossary/subject{N}.json` + `number-drills/{key}.json` 수동 선언 후 `sync_textbook_files.js`가 `MD_ASSETS` 갱신
+- **과목 삭제**: 위 역순 + `card_terms_snapshot.json`의 해당 과목이 다음 build에서 제거됨 (이관 대상 없음)
+
+#### 3. `sw.js` → `MD_ASSETS` — 오프라인 프리캐시
+
+```js
+const MD_ASSETS = [
+  // MD_ASSETS:BEGIN   ← sync_textbook_files.js가 이 마커 사이만 재생성
+  './content/exams/cosmetic/교재/law/1과목_화장품법의이해_표준형.md',
+  // ...
+  // MD_ASSETS:END
+];
+```
+
+- 교재/문제은행/`docs/` md가 **파일별 하드코딩** — 마커 안은 `sync_textbook_files.js` 소유. 파일명 변경·추가·삭제 시 도구 실행 또는 `--rename`으로 자동 동기화
+- 누락 시 `[구조]` 단계(sync --check)와 `verify:assets`가 실패 — 설치 시 프리캐시에 존재하지 않는 파일이 섞여도 `precacheResilient`가 개별 실패로 처리하므로 앱은 뜨지만 오프라인 대응이 깨짐
+- `DATA_ASSETS`(registry.js·id_migration.js)와 `SHELL_ASSETS`(src/css)는 구조 불변이라 보통 무수정
+
+#### 4. `content/exams/{id}/문제은행/*.md` — 인용 링크
+
+```markdown
+> **정답: ③** [교재: L328](<../교재/law/1과목_화장품법의이해_표준형.md#L328>)
+```
+
+| 변경 유형 | 처리 |
 |---|---|
-| `data/exams/{id}/` 번들 전체 (`registry.js`·`subjects/`·`exams/`·`study_md/`·`drills/` 등) | `npm.cmd run build:data` |
-| `src/pdf-registry.js` | `build:pdf-registry` (build:data 내 포함) — 원본은 `references.json` |
-| `src/keyword-index.js` | `build:keyword-index` (build:data 내 포함) |
-| `data/exams/{id}/id_migration.js`·`card_terms_snapshot.json` | `build:id-migration` (build:data 내 포함) — **커밋 대상** |
-| `문제은행/과목N_복수정답형.md` | `npm.cmd run build:drills` — `자동 생성` 마커로 식별 |
-| `content/exams/{id}/html/` | `python ref-pipeline/batch_convert.py` |
-| `audiobook/mp3/` | `ref-pipeline/audiobook/run_pipeline.py --tts` → CDN 업로드 |
+| 교재 라인 밀림(삽입·삭제·이동) | `sync:citations`가 인용문 지문으로 자동 재탐색·갱신 (±3 검증 → 쉥글 → 키프레이즈) |
+| 교재 파일명 변경 | `sync_textbook_files.js --rename`이 문제은행 인용 경로+manifest+sw.js를 일괄 치환 → 이후 `sync:citations`로 라인 재동기화 |
+| 교재 본문 재작성(문장 다름) | 인용문 지문 매칭 실패 → 미발견 → 수동으로 해당 라인·인용문 수정 |
+| `(LNN)` 마커 (ref_md 참조) | `check_ref_lines`가 범위+키워드 검증, 불일치 시 실제 라인 제안 — 수동 갱신 |
+
+#### 5. `content/exams/{id}/references.json` — 참조자료 귀속
+
+| 키 | 역할 | 변경 시점 |
+|---|---|---|
+| `subjectDirMap` | 과목키 → `과목N` 문자열 | 과목 구성 변경 |
+| `docSubjectRules` | `[regex, 과목번호, 근거]` — 문서명→과목 귀속 규칙 | 새 참조 문서·귀속 변경 |
+| `refDirs` | `과목N`/공통 폴더 → ref_md 파일 목록 | 참조자료 추가·삭제·재분류 |
+| `sourceRefMap` | `test` regex → 출처 PDF 파일명 — `(LNN)`/`📌출처`의 문서 해석 | 법령·고시 문서 변경 |
+| `keywordRefMap` | 키워드 인덱스용 참조 매핑 | 키워드-문서 연결 변경 |
+
+#### 6. 과목별 파생 자산
+
+| 파일 | 내용 | 수정 시점 |
+|---|---|---|
+| `교재/glossary/subject{N}.json` | `[{keyword, definition}]` — 큐레이션 용어집. `keyword-index.js` 자동 항목을 덮어씀 | 용어 설명 추가·정정 |
+| `number-drills/{key}.json` | 숫자·기한 암기 드릴 | 법령 수치(과태료 상한·기한 등) 변경 |
+| `combo_blocklist.json` | `ids`·`derivedFromPrefixes`(빌드 제외)·`approved`(검수 완료) | 콤보 문항 수동 검수 결과 반영 |
+| `audiobook/mp3/{key}/` | TTS 음원 — 교재 변경 시 `run_pipeline.py --subject {key} --tts` 재생성 → CDN 업로드 | 본문 변경 시 |
+
+### ② 자동 재생성 — 직접 수정 금지
+
+| 파일 | 생성 | 커밋 |
+|---|---|---|
+| `data/exams/{id}/` 전체 (`registry.js`·`subjects/`·`exams/`·`study_md/`·`drills/`·`question_chapters.js` 등) | `npm.cmd run build:data` | ✅ |
+| `src/pdf-registry.js` | `build:pdf-registry` — 원본 `references.json` | ✅ |
+| `src/keyword-index.js` | `build:keyword-index` | ✅ |
+| `data/exams/{id}/id_migration.js` + `card_terms_snapshot.json` | `build:id-migration` — 스냅샷이 이전 배포 진도의 진실 | ✅ 필수 |
+| `문제은행/과목N_복수정답형.md` | `npm.cmd run build:drills` (`자동 생성` 마커) | ✅ |
+| `content/exams/{id}/html/` | `python ref-pipeline/batch_convert.py` | ❌ (생성물) |
+| `audiobook/mp3/` | `run_pipeline.py --tts` → CDN | ❌ (CDN 호스팅) |
+| `docs/**/*.pdf` | `MD_to_PDF.py` 등 | ❌ (.gitignore) |
 
 ### ③ 조건부 수정
 
 | 파일 | 조건 |
 |---|---|
-| `content/exams/{id}/docs/학습안내서.md` | 챕터/과목 구성 변경 시 — `build_doc_bundles.js`로 앱 내 번들도 재생성 |
-| `참조자료/` PDF + `ref_md/` | 법령 개정 동반 시 — `convert:refs` → `verify:refs` → 승격 → `check:reffresh --update` |
-| `sw.js` `CACHE_VERSION` | `stamp:sw`가 커밋 해시로 자동 스탬프 — 수동 편집 불필요 |
+| `content/exams/{id}/docs/학습안내서.md` | 챕터·과목 구성 변경 시 — `node tools/build/build_doc_bundles.js`로 앱 내 번들 재생성 |
+| `참조자료/*.pdf` + `ref_md/` | 법령 개정 동반 — `convert:refs` → `verify:refs` → `ref_md_v2`→`ref_md` 승격 → `check:reffresh -- --update` |
+| `content/exams.json` | 시험 자체 추가·제거 시만 — 교재 변경에는 무관 |
+| `sw.js` `CACHE_VERSION` | `stamp:sw`가 커밋 해시로 자동 스탬프 — 수동 편집 금지 |
+
+### `src/`를 수정해야 하는 유일한 경우
+
+일반 교재 변경은 `src/` 불필요. 다음은 예외:
+
+| 경우 | 수정 파일 |
+|---|---|
+| 새 뷰·기능 추가 (교재 포맷이 아닌 기능) | 해당 view + `manifest.uiText` + `router.js` 폴백 |
+| 마크다운에 새 문법 도입 | `src/markdown-parser.js`·`textbook-parser.js` + `check:parser` 통과 확인 |
+| 시험 추가 | `content/exams.json` 엔트리 + `features` 플래그 (AGENTS.md "새 시험 추가 절차") |
 
 ### 검증 게이트 (변경 후 자동 차단)
 
-| 게이트 | 잡아내는 것 |
-|---|---|
-| `check:content -- --build` | 전 계층 일괄 (선언↔파일·인용 라인·참조라인·신선도·ID 이관·카드·파서·테스트) |
-| `[인용]` 단계 | 문제은행→교재 `#L` 링크 — **대상 파일 없음(이름 변경/삭제)도 미발견 실패** |
-| `[ID이관]` 단계 | 스냅샷↔콘텐츠 불일치 — build:data 누락 시 실패, 미이관(lost) 항목 상세 보고 |
-| `[선언]` 단계 | manifest 선언 파일 부재 + **미등록 .md 역방향 경고** (빌드에서 조용히 제외되는 파일) |
-| CI `check_content.js --content-only --quick` | 위 콘텐츠 단계를 push/PR마다 원격 강제 — 로컬 생략 불가 |
+| 게이트 | 잡아내는 것 | 실패 시 |
+|---|---|---|
+| `check:content -- --build` | 전 계층 일괄 | 실패 단계별 리포트 |
+| `[선언]` | manifest 선언 파일 부재 + **미등록 .md 역방향 경고** (빌드에서 조용히 제외) | 선언·파일 불일치 |
+| `[구조]` | 교재/문제은행 디스크 ↔ manifest·`sw.js MD_ASSETS` 구조 드리프트 | `node tools/sync_textbook_files.js` 실행 |
+| `[인용]` | 문제은행→교재 `#L` 링크 — 라인 밀림·**대상 파일 부재(이름 변경/삭제)**·재작성 | 미발견 항목 수동 수정 |
+| `[참조라인]` | `(LNN)`/`📌출처` 조문 ↔ ref_md 실제 내용 | 라인/조문 불일치 |
+| `[신선도]` | 참조자료 PDF 해시 ↔ ref_md — PDF 교체 감지 | `check:reffresh -- --update` |
+| `[드릴신선도]` | 드릴 번들 ↔ 문제은행 번들 | `npm.cmd run build:drills` |
+| `[ID이관]` | 스냅샷↔콘텐츠 불일치 + 미이관(lost) 항목 상세 — 진도 손실 가시화 | `build:data` 재실행 |
+| `[카드]` | 참조자료 링크 부재·카드 품질 | 깨진 `참조자료/` 링크 수정 |
+| `[자산]` | `sw.js` SHELL/DATA/MD_ASSETS 파일 존재 | MD_ASSETS 경로 동기화 |
+| CI `check_content --content-only --quick` | 위 콘텐츠 단계를 push/PR마다 원격 강제 | 로컬 생략 불가 |
 
 ## 순서의 이유 (의존성)
 

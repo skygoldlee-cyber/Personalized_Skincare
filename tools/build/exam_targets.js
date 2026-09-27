@@ -61,4 +61,36 @@ function getSubjectMaps(manifest) {
     return { SUBJECT_NUM, SUBJECT_KEY, SUBJECT_TITLE };
 }
 
-module.exports = { getExamTargets, getSubjectMaps, getDefaultExamRoots };
+/**
+ * 모든 시험의 프리캐시 MD 자산 목록 ('./' 접두, 존재하는 파일만).
+ * sw.js의 MD_ASSETS를 재생성하는 두 경로(build:index.js, sync_textbook_files.js)가
+ * 동일 목록을 만들도록 공통 함수로 둔다.
+ * 대상: {contentRoot}/docs/*.md 전체(정렬) + manifest 선언 교재(file/storyFile) + 문제은행(exams[].file)
+ */
+function getPrecacheMdAssets(workspaceDir) {
+    const list = [];
+    const push = rel => {
+        if (fs.existsSync(path.join(workspaceDir, rel))) list.push(`./${rel}`);
+    };
+    for (const t of getExamTargets(workspaceDir)) {
+        if (!t.manifest) continue;
+        const docsDir = path.join(workspaceDir, t.contentRoot, 'docs');
+        if (fs.existsSync(docsDir)) {
+            for (const f of fs.readdirSync(docsDir).filter(f => f.endsWith('.md')).sort()) {
+                push(`${t.contentRoot}/docs/${f}`);
+            }
+        }
+        for (const subj of t.manifest.subjects || []) {
+            for (const ch of subj.chapters || []) {
+                if (ch.file) push(`${t.contentRoot}/${subj.dir}/${ch.file}`);
+                if (ch.storyFile) push(`${t.contentRoot}/${subj.dir}/${ch.storyFile}`);
+            }
+        }
+        for (const exam of t.manifest.exams || []) {
+            if (exam.file) push(`${t.contentRoot}/문제은행/${exam.file}`);
+        }
+    }
+    return list;
+}
+
+module.exports = { getExamTargets, getSubjectMaps, getDefaultExamRoots, getPrecacheMdAssets };

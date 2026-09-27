@@ -21,7 +21,7 @@
 
 // @spec P-01~06,O-04,UX-PWA-03
 
-const CACHE_VERSION = 'v369-20260928-40c936e';   // 전과목 숫자암기 통합정리 고유 수치를 Part 2에 이식
+const CACHE_VERSION = 'v369-20260928-90a71e5';   // 전과목 숫자암기 통합정리 고유 수치를 Part 2에 이식
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
@@ -185,8 +185,12 @@ const DATA_ASSETS = [
   './data/exams/cosmetic/id_migration.js'
 ];
 
-/** 설치 시 프리캐시할 마크다운 문서 (매뉴얼·요약집 — 오프라인 보장) */
+/** 설치 시 프리캐시할 마크다운 문서 (매뉴얼·요약집 — 오프라인 보장)
+ *  MD_ASSETS:BEGIN/END 마커 안은 tools/sync_textbook_files.js가
+ *  manifest 선언 기준으로 재생성 — 마커 사이만 자동 갱신된다. */
 const MD_ASSETS = [
+  // MD_ASSETS:BEGIN
+  './content/exams/cosmetic/docs/두음법_암기_총정리.md',
   './content/exams/cosmetic/docs/학습안내서.md',
   './content/exams/cosmetic/교재/law/1과목_화장품법의이해_표준형.md',
   './content/exams/cosmetic/교재/law/1과목_화장품법의이해_이야기형.md',
@@ -199,7 +203,8 @@ const MD_ASSETS = [
   './content/exams/cosmetic/문제은행/과목1_단일정답형.md',
   './content/exams/cosmetic/문제은행/과목2_단일정답형.md',
   './content/exams/cosmetic/문제은행/과목3_단일정답형.md',
-  './content/exams/cosmetic/문제은행/과목4_단일정답형.md'
+  './content/exams/cosmetic/문제은행/과목4_단일정답형.md',
+  // MD_ASSETS:END
 ];
 
 /** 캐시하지 않을 요청 패턴 (오디오 등 대용량 미디어) */

@@ -32,6 +32,8 @@ const STEPS = [
   ]] : []),
   ['node', ['tools/check_manifest.js'], false,
     '선언', 'manifest 선언 ↔ 파일/과목 자산 정합성', true],
+  ['node', ['tools/sync_textbook_files.js', '--check'], false,
+    '구조', '교재/문제은행 파일 ↔ manifest·sw.js MD_ASSETS 구조 드리프트', true],
   ['node', ['tools/sync_citation_lines.js', '--check'], false,
     '인용', '문제은행 → 교재 #L라인번호 인용 동기화 상태', true],
   ['node', ['tools/check_ref_subjects.js'], false,

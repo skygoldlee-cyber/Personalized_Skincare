@@ -37,6 +37,7 @@ npm.cmd run verify:assets              # SHELL_ASSETS/DATA_ASSETS 파일 존재 
 # 콘텐츠 동기화 (build:data에 자동 통합됨)
 npm.cmd run sync:citations              # 문제은행 인용 라인번호 동기화
 node tools/sync_citation_lines.js --check  # 변경사항 확인만 (수정 안 함)
+node tools/sync_textbook_files.js       # 교재/문제은행 파일 ↔ manifest·sw.js MD_ASSETS 구조 동기화 (--check=보고만, --rename <구> <신>=파일명 변경 전파)
 
 # 로컬 서버 (vercel.json 헤더 미러링 — 프로덕션 CSP·캐시 정책 그대로 적용)
 npm.cmd run serve                      # http://localhost:3000
@@ -317,7 +318,7 @@ docs/                   # 개발 문서
 
 - **PowerShell 환경**: `&&` 연산자 사용 불가 → `;` 사용. `npm` → `npm.cmd`.
 - **Mermaid `!important`**: `css/reader.css`의 Mermaid 규칙 `!important`는 제거 금지 (Mermaid 라이브러리 인라인 스타일 덮어쓰기용)
-- **콘텐츠 편집 후**: `npm.cmd run build:data` 실행 후 `data/` 번들 커밋 필요. `check:content`(CI의 `--content-only` 단계 포함)가 스냅샷 drift·인용 대상 파일 부재·미등록 md를 차단 — 교재 파일 이름 변경/삭제 시 문제은행 링크가 미발견으로 실패하므로 링크 경로를 함께 갱신할 것
+- **콘텐츠 편집 후**: `npm.cmd run build:data` 실행 후 `data/` 번들 커밋 필요. `check:content`(CI의 `--content-only` 단계 포함)가 스냅샷 drift·인용 대상 파일 부재·미등록 md·구조 드리프트를 차단 — 교재 파일 추가/이름 변경/삭제 시 `node tools/sync_textbook_files.js`(`--rename` 포함)로 선언·프리캐시·인용 경로를 먼저 동기화할 것
 - **CSP**: `vercel.json`에 `script-src 'self'` (인라인 스크립트 금지)
 - **DOM 테스트**: `tests/dom/` — Phase 1~5 전 뷰 커버 (매트릭스·작성 규칙은 `docs/dev/design/DOM_TEST_DESIGN.md`, 파일별 목록·정책은 `docs/dev/reference/TESTING.md`)
 
