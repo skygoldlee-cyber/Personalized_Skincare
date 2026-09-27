@@ -554,6 +554,98 @@
 | 우측 가장자리 회색 띠 신고 | 앱이 아니라 삼성 엣지 패널(OS 핸들)이었음 | "모든 화면·고정·앱 스크롤 무관"이면 OS/타 앱 오버레이 의심 — 코드 수정 전 기기 기능 확인 |
 | `window.close()`가 모바일에서 무반응 | OS가 자체 종료 차단 — 스크립트로 연 창만 닫기 가능 | 종료 버튼은 확인 다이얼로그 + 안내 화면 폴백으로 설계 (UX-PWA-01) |
 
+### 4.9 디자인 토큰·상태 규약
+
+> 모든 토큰은 `css/base.css` `:root`에 정의. **하드코딩 색상·px·z-index 금지 — 토큰 우선.**
+
+#### 4.9.1 컬러 팔레트
+
+| 역할 | 토큰 | 다크 값 | 용도 |
+|------|------|---------|------|
+| Primary | `--color-primary` | `#06b6d4` (Cyan) | 주요 버튼·링크·강조 |
+| Secondary | `--color-secondary` | `#8b5cf6` (Violet) | 보조 강조·실무 모드 구분 |
+| Success | `--color-success` | `#10b981` (Emerald) | 정답·합격·완료 |
+| Danger | `--color-danger` | `#ef4444` (Red) | 오답·과락·삭제·오류 |
+| Warning | `--color-warning` | `#f59e0b` (Amber) | 주의·평균 미달·기한 임박 |
+| Text Main | `--color-text-main` | `#f3f4f6` | 본문·제목 |
+| Text Muted | `--color-text-muted` | `#9ca3af` | 보조 텍스트·아이콘 |
+| 배경 계층 | `--bg-app` → `--bg-elevated` | `#0b0f19` → 10% 화이트 | 앱 → 사이드바 → 카드 → 떠 있는 요소 (5단계) |
+| 브랜드 상 텍스트 | `--color-on-brand` | `#ffffff` | primary 배경 위 텍스트 (테마 공통) |
+| Tint | `--primary-tint-{3..40}` 등 | `rgba()` 단계 | 배경 틴트 — 각 상태색에 동일 체계(`-tint`) 존재 |
+
+- 라이트 테마는 `.light-theme`에서 동일 변수를 재정의 — 컴포넌트가 변수만 쓰면 테마 전환 무료
+- 폴백 규칙: `var(--x)`는 **반드시 정의된 변수만** 사용. `var(--x, #fff)` 같은 상시 폴백은 테마 파괴 사고의 원인 (§4.8.7)
+
+#### 4.9.2 타이포그래피 스케일
+
+| 계층 | 토큰 | 크기 | 용도 예시 |
+|------|------|------|-----------|
+| 본문 | `--text-base` | 0.95rem | 카드 설명·일반 텍스트 |
+| 본문 (1rem) | `--text-1rem` | 1rem | 폼 입력 (iOS 줌 방지 하한, UX-FORM-01) |
+| 소형 | `--text-sm`/`--text-sm-md` | 0.8~0.85rem | 메타·레이블·버튼 |
+| 캡션 | `--text-xs`/`--text-2xs`/`--text-xs-sm` | 0.7~0.78rem | 배지·각주·날짜 |
+| 제목 | `--text-md`~`--text-lg` | 1.05~1.25rem | 섹션 제목·카드 헤더 |
+| 대제목 | `--text-xl`/`--text-2xl` | 1.6~2rem | 페이지 타이틀 |
+| 히어로 | 인라인 3rem | 3rem | 로고·랜딩 수치 (예외 허용) |
+
+- 폰트 패밀리: `--font-app` = `'Noto Sans KR', 'Outfit', 'Noto Color Emoji'` (자체 호스팅)
+- 굵기: `--font-weight-{regular:400, medium:500, semibold:600, bold:700, extrabold:800}`
+- transition: `--transition-{instant:0.05s … bounce:0.6s}` — 임의 duration 금지
+
+#### 4.9.3 간격·반경 스케일
+
+| 토큰군 | 값 | 규칙 |
+|--------|-----|------|
+| `--space-1` ~ `--space-8` | 0.25rem → 3rem (비선형, `--space-1-5` 등 중간 단계 포함) | margin/padding/gap은 토큰 사용. 유틸리티 `.mt-*`·`.mb-*` 등 존재 |
+| `--radius-2xs` ~ `--radius-full` | 2px → 50% | 카드 `--radius-md`(16px), 칩·배지 `--radius-pill`, 서브 요소 `--radius-sm/xs` |
+
+#### 4.9.4 z-index 레이어 맵
+
+| 계층 | 토큰 | 값 | 대상 |
+|------|------|-----|------|
+| 기본 | `--z-base` / `--z-raised` | 1 / 5 | 카드·sticky 요소 |
+| 오버레이 | `--z-overlay` / `--z-dropdown` / `--z-popover` | 10 / 50 / 200 | 인뷰 오버레이·드롭다운 |
+| Sticky | `--z-sticky` | 100 | sticky 헤더 |
+| 탭 바·사이드바 | `--z-drawer` / `--z-drawer-overlay` | 1400 / 1500 | 모바일 하단 탭 바, 사이드바 배경 |
+| 모달 | `--z-modal` / `--z-modal-overlay` | 2000 / 9999 | 확인 모달·설정 패널 |
+| 토스트 | `--z-toast` / `--z-toast-top` | 9000 / 99998 | 알림 토스트 |
+| 최상위 | `--z-orientation-toast` / `--z-html-viewer` / `--z-banner` / `--z-loading` | 10000~99999 | 전체화면 뷰어·용량 배너·로딩 오버레이 |
+
+- **신규 오버레이는 기존 토큰 사이에 배치하거나 새 토큰 추가** — 매직 넘버 직접 지정 금지. 모달 위에 띄워야 하면 `--z-modal`(2000) 이상, 로딩은 항상 최상위
+- 팔레트 z-index 2500은 `--z-modal`(2000)과 `--z-toast`(9000) 사이 — 명시 토큰 없이 의도된 위치
+
+#### 4.9.5 컴포넌트 상태 규약
+
+| 상태 | 규약 | 구현 |
+|------|------|------|
+| Hover | `--bg-hover` 배경 + `transform` 또는 색상 변화 | 데스크톱만 (`pointer: fine` 미디어 쿼리 불필요 — 터치 `:hover`는 `:active`로 흡수) |
+| Active/Pressed | `transform: scale(0.92~0.98)` | 터치 피드백 (UX-FORM-02) |
+| Focus | `:focus-visible` 2px primary 링 | 키보드만 표시 (A-05) |
+| Disabled | `opacity: 0.65` + `cursor: not-allowed` | `trainer.css` `:disabled` 규칙 — `hover:not(:disabled)`로 hover 조합 차단 |
+| Loading | `showGlobalLoading()` 전체 오버레이 | 부분 스켈레톤 대신 통일 (UX-FB-04) |
+| Empty | `.empty-state` + `.empty-state-icon` (3rem muted 아이콘 + 안내 문구) | base.css 공용 클래스 — 목록·검색 결과 없음 통일 |
+| Error | `showToast(msg, 'error')` 토스트 또는 모달 내 `.auth-modal-msg-error` 인라인 메시지 | 전역 `--color-banner-error` 배너 변형도 존재 — 폼 검증은 제출 시점 토스트로 안내 |
+| Selected | `--border-color-active` + `--primary-tint-*` 배경 | 네비·탭·선택 카드 |
+
+#### 4.9.6 뷰포트·해상도
+
+| 항목 | 규약 |
+|------|------|
+| 최소 지원 폭 | **320px** (iPhone SE급 이상 보장) — 브레이크포인트 없이도 레이아웃 파괴 금지 |
+| 브레이크포인트 | `768px`(모바일/태블릿) · `900px`(태블릿/데스크톱·내비 전환점) · `769–900px` 중간 구간(상단 바). 사전 정의 4단계 `--bp-*` 주석 참조 — 실제 사용은 2개 구간에 집중 |
+| 뷰포트 높이 | `--app-height` JS 실측 → `100dvh` 폴백 (UX-PWA-05) |
+| Safe Area | `env(safe-area-inset-*)` — 하단 탭 바·고정 버튼 필수 |
+
+#### 4.9.7 아이콘 규약
+
+| 항목 | 규약 |
+|------|------|
+| 라이브러리 | FontAwesome 6.4 자체 호스팅 (`vendor/fontawesome/`) — CDN 금지 |
+| 크기 | `font-size`로 제어 — 텍스트와 동일 스케일. 의미 없는 장식 아이콘은 `aria-hidden="true"` |
+| 빈 상태 아이콘 | `.empty-state-icon` (3rem, `--color-text-muted`) |
+| 인터랙티브 아이콘 버튼 | 최소 44×44px 터치 타겟 + `aria-label` 필수 (시각적 라벨 없으므로) |
+| 색상 | `--color-text-muted` 기본, 의미 전달 시에만 상태색 사용 |
+
 ---
 
 ## 5. 데이터 요구사양

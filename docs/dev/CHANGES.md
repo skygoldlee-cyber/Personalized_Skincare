@@ -4,6 +4,16 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-10-13 SPEC §4.9 디자인 토큰·상태 규약 신설
+
+- 화면구성 사양 점검 결과, 토큰 체계(`--text-*`/`--space-*`/`--z-*`/`--radius-*`/`--transition-*`)는
+  `css/base.css`에 이미 체계적으로 존재하나 SPEC에 문서화가 없던 항목을 §4.9로 정리.
+- 7개 소절: 컬러 팔레트(역할·다크값·용도) / 타이포 스케일 / 간격·반경 / z-index 레이어 맵
+  / 컴포넌트 상태 규약(hover~error 8종) / 뷰포트·해상도(최소 320px) / 아이콘 규약.
+- 실제 코드값 기준 기술 — disabled `opacity:0.65`(trainer.css), 오류는 `showToast(msg,'error')`·
+  `.auth-modal-msg-error`, z-index는 `--z-*` 토큰 사다리 중앙화 사실 반영.
+- 원칙 명기: 하드코딩 색상·px·z-index 금지, `var(--x, #fff)` 상시 폴백 금지(테마 파괴 사고 §4.8.7).
+
 ## 2026-09-27 뷰 전환 딥링크가 저장된 스크롤 위치로 열리던 문제 — 전수 점검·수정
 
 - 원인: 메뉴 내 버튼이 `switchView`로 다른 뷰를 열 때 `restoreScrollPosition`이
