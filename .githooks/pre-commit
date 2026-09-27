@@ -1,0 +1,25 @@
+#!/bin/sh
+# pre-commit — IDE 오류 게이트 (opt-in: npm run hooks:install)
+#
+# IDE에 타입/린트 오류가 보이는 상태(= check:types·lint 실패)의 커밋을 차단한다.
+#   1. check:types — tsc(IDE와 동일 계열 TS 5.x) JSDoc 진단
+#   2. lint        — ESLint 에러 (경고는 통과)
+#
+# 우회: git commit --no-verify  또는  SKIP_PRECOMMIT=1 git commit
+
+if [ "$SKIP_PRECOMMIT" = "1" ]; then
+    exit 0
+fi
+
+if command -v npm.cmd >/dev/null 2>&1; then NPM="npm.cmd"; else NPM="npm"; fi
+
+echo "▶ pre-commit 오류 게이트 (check:types + lint)"
+
+for check in check:types lint; do
+    echo "  - npm run $check"
+    $NPM run "$check" --silent || {
+        echo "✗ 커밋 차단: $check 실패 — IDE에 표시되는 오류를 먼저 해소하세요"
+        echo "  우회: git commit --no-verify"
+        exit 1
+    }
+done

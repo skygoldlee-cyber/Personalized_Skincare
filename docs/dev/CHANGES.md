@@ -6,6 +6,14 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-14 IDE 오류 게이트 + TS5 정렬 — 커밋·푸시·배포 3중 차단
+
+- **typescript 7.0.2 → 5.9.3 고정**: IDE(번들 TS 5.x)와 `check:types`의 진단이 다르던 문제 해소 — 이제 IDE에 오류가 보이면 check:types도 동일하게 실패
+- **`.githooks/pre-commit` 신설**: `check:types` + `lint` 실행, 실패 시 커밋 차단 (`git commit --no-verify`/`SKIP_PRECOMMIT=1` 우회)
+- **`pre-push`에 `check:types` 추가**: IDE 오류 상태의 push 차단
+- **`deploy.js` 타입·린트 게이트**: `check:types`+`lint` 실패 시 배포 차단 — IDE에 오류가 보이는 상태에서는 커밋·푸시·배포 모두 불가
+- **이전 발견 수정**: 런타임 파서 기출 경고 블록 복원 (빌드 파서와의 발산), Card typedef 실형태 교정(`term`/`definition`/`isKey`), storage.js `@type` 보강, trace_scan 절 미할당 표시 버그(DA-09 등)
+
 ## 2026-10-14 코드 품질·테스트 자동화 체계 — ESLint·tsc·커버리지 게이트·CI 확장·pre-push·배포 영향 경고
 
 - **ESLint 도입** (`eslint.config.mjs` flat config): 브라우저·노드·앱 전역(DataLoader·updateGlobalStats·checkShortAnswer) 선언 + 최소 규칙(no-undef·no-unused-vars·eqeqeq·no-unreachable·no-empty·no-cond-assign). `npm run lint` — 에러 0 필수, 기존 경고 278개는 점진 정리 백로그

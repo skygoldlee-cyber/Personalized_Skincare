@@ -78,7 +78,7 @@ npm.cmd run check:content     # 콘텐츠 통합 검증 (대규모 콘텐츠 변
 
 CI(`.github/workflows/ci.yml`)가 push/PR마다 `npm ci` → `lint`·`check:types`·`check:imports`·`check:docs`·`check:specrefs`·`check:trace` → `test`·`coverage`·`verify:assets`·`check:parser`를 Node 20으로 실행합니다. PR에는 영향 요구사항 리포트(`tools/impact_tests.js --ref origin/main`)가 추가됩니다.
 
-**선택적 pre-push 훅**: `npm.cmd run hooks:install`로 `.githooks/pre-push` 활성화 — push 전 `check:trace`·`check:specrefs`·`check:docs`·`lint` 자동 실행 (`SKIP_PREPUSH=1 git push`로 우회).
+**선택적 Git 훅**: `npm.cmd run hooks:install`로 `.githooks/` 활성화 — `pre-commit`은 `check:types`+`lint`(IDE 오류 상태의 커밋 차단, `--no-verify` 우회), `pre-push`는 `check:trace`·`check:specrefs`·`check:docs` 추가 (`SKIP_PREPUSH=1 git push` 우회).
 
 ## 6. 빌드 명령어
 

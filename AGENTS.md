@@ -65,7 +65,7 @@ npm.cmd run check:types                 # tsc --noEmit (jsconfig checkJs — JSD
 npm.cmd run check:specrefs              # SPEC↔@spec 스테일 참조 + 테스트 갭 기준선(103개 초과 시 실패)
 npm.cmd run check:trace                 # TRACE_MATRIX 입력 해시 신선도
 node tools/impact_tests.js              # 변경 파일 → 영향 요구사항·권장 테스트 (미커밋 변경 자동 분석, --ref <ref>로 diff 분석)
-npm.cmd run hooks:install               # pre-push 훅 활성화 (opt-in — check:trace/specrefs/docs/lint 자동 실행)
+npm.cmd run hooks:install               # Git 훅 활성화 (opt-in) — pre-commit: check:types+lint (IDE 오류 시 커밋 차단) / pre-push: +check:trace/specrefs/docs
 
 # 참조자료 PDF → ref_md 변환 (Python 3 + pdfplumber, 이미지 추출 시 pymupdf 필요)
 npm.cmd run convert:refs                # 참조자료 PDF 전체 → ref_md_v2/ 스테이징 변환 (파일명 필터 인자 가능)

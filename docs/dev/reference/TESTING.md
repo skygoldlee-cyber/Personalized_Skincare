@@ -107,9 +107,11 @@ npm run check:trace       # TRACE_MATRIX 신선도 (입력 해시 — 미재생�
 node tools/impact_tests.js                      # 미커밋 변경 분석
 node tools/impact_tests.js --ref origin/main    # 브랜치 diff 분석 (CI PR 단계와 동일)
 
-# pre-push 훅 (opt-in — 설치 시 push 전 check:trace/specrefs/docs/lint 자동 실행)
+# Git 훅 (opt-in) — IDE 오류 상태에서 커밋·푸시 차단
 npm run hooks:install
-SKIP_PREPUSH=1 git push   # 훅 우회
+#   pre-commit: check:types + lint (실패 시 커밋 차단, --no-verify로 우회)
+#   pre-push:   + check:trace/specrefs/docs (SKIP_PREPUSH=1 git push로 우회)
+# ※ check:types는 IDE와 동일 계열(TS 5.x) — IDE에 오류가 보이면 훅도 실패한다
 ```
 
 ### `package.json` 스크립트 정의
@@ -129,7 +131,7 @@ SKIP_PREPUSH=1 git push   # 훅 우회
 | `check:specrefs` | `node tools/check_spec_refs.js` | SPEC↔코드/문서 스테일 참조 + 테스트 갭 기준선 게이트 |
 | `check:trace` | `node tools/build_trace_matrix.js --check` | 매트릭스 입력 해시 신선도 |
 | `build:trace` | `node tools/build_trace_matrix.js` | TRACE_MATRIX.md 재생성 |
-| `hooks:install` | `git config core.hooksPath .githooks` | pre-push 훅 활성화 (opt-in) |
+| `hooks:install` | `git config core.hooksPath .githooks` | pre-commit·pre-push 훅 활성화 (opt-in) |
 
 ### 커버리지 임계값
 

@@ -119,6 +119,18 @@ function main() {
     }
     console.log('✅ 콤보 품질 게이트 통과');
 
+    // IDE 오류 게이트 — 타입 진단·린트 에러가 있으면 배포 차단.
+    // check:types는 IDE와 동일 계열(TS 5.x)의 진단이므로 IDE에 오류가 보이는 상태 = 배포 불가.
+    for (const gate of ['check:types', 'lint']) {
+        const r = spawnSync(`npm run ${gate} --silent`, { encoding: 'utf8', shell: true });
+        if (r.status !== 0) {
+            process.stdout.write(r.stdout || '');
+            process.stderr.write(r.stderr || '');
+            fail(`${gate} 실패 — IDE에 오류가 표시되는 상태에서는 배포할 수 없습니다.`);
+        }
+    }
+    console.log('✅ 타입·린트 게이트 통과 (IDE 오류 없음)');
+
     // sw.js CACHE_VERSION + 앱 버전/릴리스 노트 스탬프 — 바뀌면 자동 커밋 + push
     const stamp = stampSwVersion();
     if (stamp.changed) {
