@@ -4,7 +4,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import checker from '../../tools/check_doc_sync.js';
 
-const { isTrigger, isDoc, analyze } = checker;
+const { isTrigger, isDoc, analyze, parseStatusLine } = checker;
 
 test('소스 경로는 문서 갱신 트리거다', () => {
     for (const f of [
@@ -53,4 +53,13 @@ test('analyze: 면제 경로만 변경 → 트리거 없음', () => {
     const r = analyze(['sw.js', 'data/version.js', 'content/exams/cosmetic/교재/x.md']);
     assert.equal(r.triggers.length, 0);
     assert.equal(r.violated, false);
+});
+
+test('parseStatusLine: porcelain 상태 열(1~2글자) 제거 — trim된 첫 줄 포함', () => {
+    assert.equal(parseStatusLine(' M docs/dev/CHANGES.md'), 'docs/dev/CHANGES.md');
+    assert.equal(parseStatusLine('M docs/dev/CHANGES.md'), 'docs/dev/CHANGES.md'); // 출력 trim으로 선행 공백 제거된 첫 줄
+    assert.equal(parseStatusLine('?? tools/new.js'), 'tools/new.js');
+    assert.equal(parseStatusLine('A  index.html'), 'index.html');
+    assert.equal(parseStatusLine('R  old.js -> src/new.js'), 'src/new.js');
+    assert.equal(parseStatusLine('M  "docs/한글 파일.md"'), 'docs/한글 파일.md');
 });

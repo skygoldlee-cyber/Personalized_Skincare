@@ -6,6 +6,11 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-14 맞춤 학습 리포트 본문에 PRO 배지 명기
+
+- **`index.html` analysis-view 안내 카드**: `🎯 맞춤 학습 리포트란?` 제목에 `<span class="pro-badge" data-pro-feature="personal_analysis">PRO</span>` 추가 — 사이드바·모바일 탭의 내비 배지와 동일한 `personal_analysis` 플랜 키를 쓰므로 `feature-plan.json`이 `free`로 바뀌면 `refreshProBadges`가 내비·본문 배지를 함께 숨긴다
+- **`check_doc_sync.js` porcelain 파서 수정** (게이트 자체 검증 중 발견): `git status --porcelain` 출력 trim으로 첫 줄 선행 공백이 제거돼 `slice(3)`가 경로 첫 글자를 먹던 버그 — 1~2글자 상태 열을 처리하는 `parseStatusLine`으로 교체 + 회귀 테스트 (doc-sync.test.js 7개)
+
 ## 2026-10-14 문서 동기화 게이트 신설 — 소스 변경 시 문서 갱신 강제
 
 - **`tools/check_doc_sync.js` 신규**: 소스(src/·tools/·tests/·css/·.github/·.githooks/·루트 설정)가 변경됐는데 문서(docs/·AGENTS.md·README.md 계열)가 동반 갱신되지 않으면 실패. 3모드 — 작업 트리(기본)·`--staged`·`--ref origin/main`. 위반 시 트리거 파일 목록 + 경로별 갱신 후보 문서(CHANGES·TESTING·AGENTS·DEV_ENVIRONMENT 등) 안내

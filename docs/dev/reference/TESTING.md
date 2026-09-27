@@ -26,10 +26,10 @@
 
 | 구분 | 프레임워크 | 환경 | 파일 위치 | 테스트 수 |
 |------|-----------|------|-----------|-----------|
-| **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 693 |
+| **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 694 |
 | **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 388 |
 | **E2E** | Playwright | 실브라우저 (Chromium + 모바일) | `tests/e2e/*.spec.js` | 16 |
-| **합계** | | | | **1097** |
+| **합계** | | | | **1098** |
 
 ### 설계 원칙
 
@@ -223,8 +223,8 @@ npm run hooks:install
 | 52 | `perf-invariants.test.js` | 16 | PF-01~16 — 런타임 MD 파싱·과목별 로딩·캐시 TTL·지연 하이라이트·normalize·디바운스·console.log 금지·ref_md·Mermaid 지연·법령 정본 | 소스 패턴 정적 검증, 2026-10-14 추가 |
 | 53 | `ux-invariants.test.js` | 20 | UX-FB/FORM/PWA/SCR/SET — 스크롤바·CSS 변수·설정 패널·44px·버전·토스트·모달·펄스·standalone·app-height·폼 16px·터치 피드백 | CSS·HTML·JS 정적 검증, 2026-10-14 추가 |
 | 54 | `content-engineering.test.js` | 6 | CE-01~05 + TR-16a — 학습 가이드·한 줄 요약·비교표·확인문제·용어 표·툴바 자동 숨김 | 콘텐츠·소스 정적 검증, 2026-10-14 추가 |
-| 55 | `doc-sync.test.js` | 6 | `tools/check_doc_sync.js` — 트리거/면제/문서 경로 분류, analyze 위반 판정 | 정적 패턴 검증, 2026-10-14 추가 |
-| | **합계** | **693** | | |
+| 55 | `doc-sync.test.js` | 7 | `tools/check_doc_sync.js` — 트리거/면제/문서 경로 분류, analyze 위반 판정, porcelain 파서 | 정적 패턴 검증, 2026-10-14 추가 |
+| | **합계** | **694** | | |
 
 ### DOM 테스트 (`tests/dom/`)
 
