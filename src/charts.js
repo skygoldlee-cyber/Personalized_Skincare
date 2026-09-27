@@ -277,7 +277,7 @@ export function renderPassFailDiagnosis() {
     // 합격/과락 기준은 매니페스트 선언값 사용 (시험별 규칙 차이 대응)
     const rules = getExamRules();
     let isGuarak = false;
-    let guarakSubjects = [];
+    const guarakSubjects = [];
 
     subjects.forEach(sub => {
         const rate = getLatestRate(sub.key);

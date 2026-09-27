@@ -31,7 +31,7 @@
     "check:specrefs": "node tools/check_spec_refs.js",
     "build:trace": "node tools/build_trace_matrix.js",
     "check:trace": "node tools/build_trace_matrix.js --check",
-    "lint": "eslint src/ tools/ tests/ sw.js serve.js",
+    "lint": "eslint src/ tools/ tests/ sw.js serve.js --max-warnings 213",
     "check:types": "tsc -p jsconfig.json --noEmit",
     "hooks:install": "git config core.hooksPath .githooks && echo 'pre-commit/pre-push 훅 활성화됨 (.githooks)'",
     "convert:refs": "python ref-pipeline/convert.py",

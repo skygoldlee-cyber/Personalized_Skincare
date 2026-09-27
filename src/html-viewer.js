@@ -295,7 +295,7 @@ async function openHtmlViewer(htmlPath, searchKeyword, anchorId, lineNum) {
 
         // 검색어 결정: searchKeyword(셀 텍스트에서 추출)를 우선 사용
         // L### 번호는 스크롤 위치 힌트로만 사용 (검색어 덮어쓰지 않음)
-        let effectiveSearch = searchKeyword;
+        const effectiveSearch = searchKeyword;
         if (effectiveSearch && effectiveSearch.length >= 2) {
             await _doSearch(effectiveSearch, true);
             // 검색 결과가 없고 키워드에 공백이 있으면 첫 단어로 재검색
@@ -401,7 +401,7 @@ async function _doSearch(keyword, skipScroll) {
 
     // 1단계: 첫 매치를 빠르게 찾아 스크롤 (나머지는 idle에서 처리)
     let firstMatch = null;
-    let remainingNodes = [];
+    const remainingNodes = [];
     let node;
     while ((node = walker.nextNode()) !== null) {
         if (firstMatch === null) {

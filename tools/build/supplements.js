@@ -23,7 +23,7 @@ function apportion(total, weights) {
   const sumW = weights.reduce((a, w) => a + w, 0);
   const exact = weights.map(w => (sumW > 0 ? (total * w) / sumW : 0));
   const base = exact.map(x => Math.floor(x));
-  let rem = total - base.reduce((a, b) => a + b, 0);
+  const rem = total - base.reduce((a, b) => a + b, 0);
   const order = exact.map((x, i) => ({ i, frac: x - base[i] })).sort((a, b) => b.frac - a.frac);
   for (let k = 0; k < rem && k < order.length; k++) base[order[k].i]++;
   return base;

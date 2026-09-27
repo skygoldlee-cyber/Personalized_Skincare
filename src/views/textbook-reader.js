@@ -43,7 +43,7 @@ import { PATHS } from '../paths.js';
 import { CACHE } from '../config/cache.js';
 
 // --- 교재 본문 읽기 (Textbook Reader) ---
-let textbookReaderState = {
+const textbookReaderState = {
     selectedSubject: '',
     selectedChapter: '',
     storyMode: false
@@ -93,7 +93,7 @@ function scheduleSaveReaderPosition() {
 // LRU 캐시: 최대 항목 수를 초과하면 가장 오래된 항목 제거 (메모리 누수 방지)
 const _storyChapterCache = {};
 const _STORY_CACHE_MAX_ENTRIES = CACHE.STORY_CACHE_MAX_ENTRIES;
-let _storyCacheKeyOrder = [];
+const _storyCacheKeyOrder = [];
 
 function _touchStoryCacheKey(key) {
     const idx = _storyCacheKeyOrder.indexOf(key);
@@ -461,7 +461,7 @@ function _extractSubHeadings(content) {
 }
 
 /** 하위 헤딩용 슬러그 ID 생성 */
-let _headingIdCounter = 0;
+const _headingIdCounter = 0;
 function _makeHeadingId(sectionIdx, headingIdx) {
     return `reader-h-${sectionIdx}-${headingIdx}`;
 }
@@ -940,7 +940,7 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
 }
 
 // --- Reader convenience feature state & logic ---
-let readerChapterContext = { subjId: '', chapterIdx: 0 };
+const readerChapterContext = { subjId: '', chapterIdx: 0 };
 let readerFontScale = (() => { try { return parseFloat(safeGetItem(STORAGE_KEYS.READER_FONT_SCALE)) || 1; } catch (e) { return 1; } })();
 let readerLineHeight = (() => { try { return parseFloat(safeGetItem(STORAGE_KEYS.READER_LINE_HEIGHT)) || 2.05; } catch (e) { return 2.05; } })();
 let readerScrollBound = false;
@@ -952,7 +952,7 @@ function getReaderBookmarks() {
 }
 
 function toggleReaderBookmark(key, btn) {
-    let bookmarks = getReaderBookmarks();
+    const bookmarks = getReaderBookmarks();
     const idx = bookmarks.indexOf(key);
     if (idx >= 0) {
         bookmarks.splice(idx, 1);

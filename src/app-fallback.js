@@ -15,11 +15,11 @@
 (function () {
   'use strict';
 
-  var RELOAD_KEY = '__app_fallback_reloads';
-  var MAX_RELOADS = 3;
-  var DEADLINE_MS = 15000;   // 느린 모바일 네트워크에서 대용량 모듈 로드 여유 (오탐 방지)
-  var POLL_MS = 400;         // 초기화 감지 폴링 간격
-  var SUCCESS_RESET_MS = 16000;
+  const RELOAD_KEY = '__app_fallback_reloads';
+  const MAX_RELOADS = 3;
+  const DEADLINE_MS = 15000;   // 느린 모바일 네트워크에서 대용량 모듈 로드 여유 (오탐 방지)
+  const POLL_MS = 400;         // 초기화 감지 폴링 간격
+  const SUCCESS_RESET_MS = 16000;
 
   function getReloadCount() {
     try { return parseInt(sessionStorage.getItem(RELOAD_KEY) || '0', 10); }
@@ -44,7 +44,7 @@
    * 모든 캐시 삭제 + SW 전부 해제 후 콜백(리로드). best-effort, 실패해도 리로드는 수행.
    */
   function hardReset(done) {
-    var tasks = [];
+    const tasks = [];
     try {
       if (window.caches && caches.keys) {
         tasks.push(
@@ -64,7 +64,7 @@
       }
     } catch (e) {}
 
-    var finished = false;
+    let finished = false;
     function finish() { if (finished) return; finished = true; done(); }
     // 안전장치: 정리가 오래 걸려도 4초 후엔 무조건 리로드
     setTimeout(finish, 4000);
@@ -86,7 +86,7 @@
   }
 
   function attemptRecovery() {
-    var count = getReloadCount();
+    const count = getReloadCount();
 
     if (count >= MAX_RELOADS) {
       showManualRecovery();
@@ -106,7 +106,7 @@
 
   // ── 폴링 감지: 정상 초기화되면 즉시 종료, 아니면 데드라인에 복구 ──
   console.debug('[fallback] 폴링 시작 — __APP_INITIALIZED 대기 (15s 데드라인)');
-  var elapsed = 0;
+  let elapsed = 0;
   var timer = setInterval(function () {
     if (window.__APP_INITIALIZED) {
       clearInterval(timer);
@@ -125,7 +125,7 @@
   function showManualRecovery() {
     if (document.getElementById('app-fallback-overlay')) return;
 
-    var overlay = document.createElement('div');
+    const overlay = document.createElement('div');
     overlay.id = 'app-fallback-overlay';
     overlay.style.cssText =
       'position:fixed;inset:0;z-index:99999;display:flex;' +
@@ -133,25 +133,25 @@
       'background:var(--bg-main,#0b0f19);color:var(--color-text-main,#e0e0e0);' +
       'font-family:inherit;text-align:center;padding:2rem;gap:1rem;';
 
-    var icon = document.createElement('i');
+    const icon = document.createElement('i');
     icon.className = 'fa-solid fa-triangle-exclamation';
     icon.style.cssText = 'font-size:3rem;color:var(--color-primary,#4f9eff);';
 
-    var title = document.createElement('h2');
+    const title = document.createElement('h2');
     title.textContent = '앱을 불러오지 못했습니다';
     title.style.cssText = 'margin:0;font-size:1.25rem;';
 
-    var desc = document.createElement('p');
+    const desc = document.createElement('p');
     desc.textContent = '앱 로드에 실패했습니다. 저장된 캐시 손상 또는 최근 업데이트 문제일 수 있습니다. 아래 버튼을 누르면 캐시를 정리하고 새로 불러옵니다. 반복 발생 시 네트워크 연결을 확인해주세요.';
     desc.style.cssText = 'margin:0;opacity:0.75;max-width:320px;line-height:1.6;';
 
-    var btn = document.createElement('button');
+    const btn = document.createElement('button');
     btn.textContent = '캐시 정리 후 다시 시도';
     btn.style.cssText =
       'margin-top:0.5rem;padding:0.85rem 2rem;font-size:1rem;font-weight:600;' +
       'border:none;border-radius:8px;cursor:pointer;' +
       'background:var(--color-primary,#4f9eff);color:#fff;';
-    var busy = false;
+    let busy = false;
     btn.onclick = function () {
       if (busy) return;
       busy = true;

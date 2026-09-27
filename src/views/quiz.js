@@ -81,7 +81,7 @@ export async function startDiagnosticQuiz() {
     await Promise.all(subjects.map(s => DataLoader.loadSubject(s.key).catch(() => null)));
 
     const perSubject = Math.max(3, Math.ceil(20 / subjects.length));
-    let data = [];
+    const data = [];
     subjects.forEach(s => {
         const qs = (window.STUDY_DATA && window.STUDY_DATA[s.key] && window.STUDY_DATA[s.key].quizzes) || [];
         data.push(...shuffle(qs).slice(0, perSubject));

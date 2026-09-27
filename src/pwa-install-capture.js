@@ -15,7 +15,7 @@
   // 1) SW 조기 등록 — Chrome이 PWA 설치 가능 여부를 판단하려면
   //    활성 SW(activate + clients.claim)가 필요. module 스크립트 대기 없이 즉시 등록.
   if ('serviceWorker' in navigator) {
-    var hadController = !!navigator.serviceWorker.controller;
+    const hadController = !!navigator.serviceWorker.controller;
     navigator.serviceWorker.register('./sw.js')
       .then(function (reg) {
         window.__swRegistered = true;
@@ -39,7 +39,7 @@
         }
 
         reg.addEventListener('updatefound', function () {
-          var newWorker = reg.installing;
+          const newWorker = reg.installing;
           if (!newWorker) return;
           showSWUpdateToast('새 버전 확인 중...');
           trackWorkerState(newWorker);
@@ -63,7 +63,7 @@
 
         // controllerchange: 기존 SW가 있던 상태에서 교체된 경우(=업데이트)만 리로드.
         // 최초 등록(controller가 null → 새 SW)이나 hardReset 후 재등록 시에는 리로드하지 않음.
-        var refreshing = false;
+        let refreshing = false;
         navigator.serviceWorker.addEventListener('controllerchange', function () {
           if (refreshing) return;
           if (!hadController) return;  // 최초 등록이면 리로드 불필요
@@ -71,7 +71,7 @@
           showSWUpdateToast('새 버전 적용 완료 — 페이지를 새로고침합니다.', true);
           // 열려 있는 알림/확인 모달(원료 DB 갱신 등)이 있으면 닫힐 때까지 무제한 유예.
           // 모달이 아직 안 떴을 수 있으므로 앱 초기화(__APP_INITIALIZED) 전에는 최대 ~30초 대기.
-          var attempts = 0;
+          let attempts = 0;
           function tryReload() {
             if (document.getElementById('app-confirm-overlay')) {
               setTimeout(tryReload, 500);
@@ -99,7 +99,7 @@
   var swToastTimer = null;
   function showSWUpdateToast(message, isFinal) {
     function renderToast() {
-      var toast = document.getElementById('sw-update-toast');
+      let toast = document.getElementById('sw-update-toast');
       if (!toast) {
         toast = document.createElement('div');
         toast.id = 'sw-update-toast';
@@ -138,7 +138,7 @@
   }
   // 토스트용 스피너 애니메이션 CSS 주입 (중복 방지)
   if (!document.getElementById('sw-toast-spin-style')) {
-    var s = document.createElement('style');
+    const s = document.createElement('style');
     s.id = 'sw-toast-spin-style';
     s.textContent = '@keyframes sw-spin{to{transform:rotate(360deg)}}';
     document.head.appendChild(s);

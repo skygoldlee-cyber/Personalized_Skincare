@@ -37,7 +37,7 @@ const parseExamFile = (filePath, examId, examTitle) => {
     }
 
     if (!isParsingAnswers) {
-      let match = line.match(qHeaderRegex) || line.match(qHeaderAltRegex);
+      const match = line.match(qHeaderRegex) || line.match(qHeaderAltRegex);
       if (match) {
         const qNum = parseInt(match[1]);
         const qText = match[2].trim();
@@ -65,7 +65,7 @@ const parseExamFile = (filePath, examId, examTitle) => {
       }
 
       if (currentQuestion) {
-        let optMatch = line.match(optionRegex);
+        const optMatch = line.match(optionRegex);
         if (optMatch) {
           currentQuestion.options.push(optMatch[2].trim());
           currentQuestion.type = 'choice';
@@ -112,10 +112,10 @@ const parseExamFile = (filePath, examId, examTitle) => {
         continue;
       }
 
-      let ansMatch = line.match(ansRegex1) || line.match(ansRegex2) || line.match(ansRegex3) || line.match(ansRegex4) || line.match(ansRegexAlt);
+      const ansMatch = line.match(ansRegex1) || line.match(ansRegex2) || line.match(ansRegex3) || line.match(ansRegex4) || line.match(ansRegexAlt);
       if (ansMatch) {
         const qNum = parseInt(ansMatch[1]);
-        let rawAnswer = ansMatch[2].trim().replace(/\*\*/g, '').replace(/[:：]/g, '').trim();
+        const rawAnswer = ansMatch[2].trim().replace(/\*\*/g, '').replace(/[:：]/g, '').trim();
         
         answersMap[qNum] = {
           answer: rawAnswer,
@@ -134,7 +134,7 @@ const parseExamFile = (filePath, examId, examTitle) => {
           }
           continue;
         }
-        let expMatch = line.match(explanationRegex);
+        const expMatch = line.match(explanationRegex);
         if (expMatch) {
           currentQuestion.explanation = expMatch[1].trim();
         } else if (line.startsWith('*') || line.startsWith('-') || (line.length > 0 && !line.includes('Q') && !line.startsWith('##') && !line.startsWith('---'))) {

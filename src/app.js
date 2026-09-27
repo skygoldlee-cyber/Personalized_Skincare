@@ -1172,7 +1172,7 @@ async function startAppInit() {
     // 진단: __APP_INITIALIZED가 설정되지 않았으면 화면에 표시
     setTimeout(() => {
         if (!window.__APP_INITIALIZED) {
-            var d = document.createElement('div');
+            const d = document.createElement('div');
             d.className = 'nav-init-fail-banner';
             d.textContent = '네비게이션 초기화 실패 — 캐시 정리 후 새로고침 중... (15초 대기)';
             document.body.appendChild(d);

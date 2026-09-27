@@ -136,7 +136,7 @@ export function renderSimResultBreakdown({ score, total, subjectScores, chapterS
         subjNames[sub.key] = `${idx + 1}과목: ${sub.name}`;
     });
 
-    let failedSubjects = [];
+    const failedSubjects = [];
     const rules = getExamRules();
 
     Object.keys(subjectScores).forEach(subj => {

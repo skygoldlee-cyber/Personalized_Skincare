@@ -1,0 +1,17 @@
+# EditorConfig — 모든 IDE(VS Code·Windsurf·WebStorm 등)가 자동 인식하는 서식 선언
+# PC·IDE가 달라도 들여쓰기/줄바꿈/인코딩이 일관되게 유지됩니다.
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 4
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{json,yml,yaml}]
+indent_size = 2
+
+[*.md]
+trim_trailing_whitespace = false

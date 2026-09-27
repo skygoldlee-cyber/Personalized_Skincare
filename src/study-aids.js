@@ -372,7 +372,7 @@ export function detectAdminPenalty(chapter) {
         const lines = content.split('\n');
         let inTable = false;
         let headers = [];
-        let rows = [];
+        const rows = [];
 
         lines.forEach(line => {
             const trimmed = line.trim();

@@ -85,7 +85,7 @@ function scoreCard(term, definition, isKey, category, cardType) {
   else if (/요건|조건|기준|필요|자격/.test(definition)) numericScore = 70;
   else if (['requirement', 'procedure'].includes(cardType)) numericScore = 50;
 
-  let examRel = isKey ? 100 : (category && /기출/.test(category) ? 30 : 0);
+  const examRel = isKey ? 100 : (category && /기출/.test(category) ? 30 : 0);
 
   let cardFit = 70;
   if (term.length >= 3 && term.length <= 15) cardFit += 20;

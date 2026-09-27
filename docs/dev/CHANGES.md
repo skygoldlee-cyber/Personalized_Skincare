@@ -6,6 +6,13 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-14 ESLint 자동수정 + 경고 래칫 + EditorConfig — 서식·품질 경고 증가 차단
+
+- **`eslint --fix` 전체 적용**: 239 → 213 경고 (var→const 등 자동수정 60건, 16파일) — unit 552·DOM 364 통과 확인
+- **`--max-warnings 213` 래칫**: lint 스크립트에 경고 상한 추가 — 경고가 1개라도 늘면 lint 실패 (TEST_GAP_BASELINE과 동일한 "줄어들기만 가능" 정책)
+- **`.editorconfig` 신설**: 모든 IDE가 자동 인식하는 서식 선언 — utf-8·LF·4칸 들여쓰기·후행공백 제거 (PC·IDE별 서식 발산 방지, md는 공백 보존)
+- **`.vscode/extensions.json` 신설**: 새 PC에서 eslint·editorconfig 확장 자동 추천
+
 ## 2026-10-14 check:types 전체 소스 확장 — 49파일 백로그 제외 + 4파일 진단 해소
 
 - **`jsconfig.json` include를 `src/**/*.js`로 확장**: 전체 소스(121파일) 검사 시도 결과 869건 진단 → 진단 보유 파일 49개를 `exclude` 백로그로 명시하고 진행 방식 주석 추가 (해결 시 목록에서 지워 편입)

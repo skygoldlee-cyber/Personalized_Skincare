@@ -101,7 +101,7 @@ function resolveRef(raw) {
 function exists(ref) {
   if (!WILDCARD_RE.test(ref)) return fs.existsSync(path.join(ROOT, ref));
   const parts = ref.split('/');
-  let concrete = [];
+  const concrete = [];
   for (const part of parts) {
     if (WILDCARD_RE.test(part) || part === '*') break;
     concrete.push(part);

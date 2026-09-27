@@ -7,8 +7,8 @@ import { safeGetItem, safeSetItem } from './state.js';
  * 헤더/모바일 테마 토글 버튼을 초기화하고 전역 테마 API를 노출합니다.
  */
 export function setupThemeToggle() {
-    var root = document.documentElement;
-    var meta = document.querySelector('meta[name="theme-color"]');
+    const root = document.documentElement;
+    const meta = document.querySelector('meta[name="theme-color"]');
     function isLight() { return root.classList.contains('light-theme'); }
     function apply(light) {
         root.classList.toggle('light-theme', light);
@@ -21,10 +21,10 @@ export function setupThemeToggle() {
     // 전역 테마 API 노출 (단일 소스 오브 트루스)
     window.AppTheme = { isLight: isLight, apply: apply, toggle: toggle };
 
-    var btn = document.getElementById('theme-toggle-btn');
+    const btn = document.getElementById('theme-toggle-btn');
     function syncHeaderBtn() {
         if (!btn) return;
-        var i = btn.querySelector('i');
+        const i = btn.querySelector('i');
         if (i) i.className = isLight() ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
         btn.title = isLight() ? '다크 모드로 전환' : '라이트 모드로 전환';
     }
@@ -33,10 +33,10 @@ export function setupThemeToggle() {
     if (btn) btn.addEventListener('click', toggle);
 
     // 모바일 하단 탭 바의 테마 토글
-    var mBtn = document.getElementById('mobile-theme-toggle');
+    const mBtn = document.getElementById('mobile-theme-toggle');
     function syncMobileBtn() {
         if (!mBtn) return;
-        var i = mBtn.querySelector('i');
+        const i = mBtn.querySelector('i');
         if (i) i.className = isLight() ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
     }
     syncMobileBtn();
@@ -45,8 +45,8 @@ export function setupThemeToggle() {
 
     // 사용자가 수동 선택하지 않았을 때만 시스템 테마 변경을 따라감
     if (window.matchMedia) {
-        var mq = window.matchMedia('(prefers-color-scheme: light)');
-        var onChange = function (e) {
+        const mq = window.matchMedia('(prefers-color-scheme: light)');
+        const onChange = function (e) {
             if (safeGetItem(STORAGE_KEYS.APP_THEME)) return;
             apply(e.matches);
         };
