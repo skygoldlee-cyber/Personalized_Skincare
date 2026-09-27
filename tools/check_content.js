@@ -9,6 +9,7 @@
  *   npm.cmd run check:content            # 검증만 (읽기 전용 단계)
  *   npm.cmd run check:content -- --build # build:data 선실행 후 검증 (교재 교체 시 권장)
  *   npm.cmd run check:content -- --quick # DOM 테스트 생략 (빠른 확인)
+ *   npm.cmd run check:content -- --content-only # 콘텐츠 추적 단계만 (CI용 — 파서·임포트·테스트 등 별도 게이트 제외)
  *
  * 종료코드: 실패 단계가 있으면 1
  */
@@ -21,57 +22,62 @@ const ROOT = path.resolve(__dirname, '..');
 const args = process.argv.slice(2);
 const WITH_BUILD = args.includes('--build');
 const QUICK = args.includes('--quick');
+const CONTENT_ONLY = args.includes('--content-only');
 
-// [명령, 인자, 셸 필요 여부]
+// [명령, 인자, 셸 필요 여부, 레이어, 설명, 콘텐츠 추적 단계 여부]
 const STEPS = [
   ...(WITH_BUILD ? [[
     'npm.cmd', ['run', 'build:data'], true,
-    '빌드', 'build:data — data/ 번들 전체 재생성 (+인용 라인 동기화)'
+    '빌드', 'build:data — data/ 번들 전체 재생성 (+인용 라인 동기화)', true
   ]] : []),
   ['node', ['tools/check_manifest.js'], false,
-    '선언', 'manifest 선언 ↔ 파일/과목 자산 정합성'],
+    '선언', 'manifest 선언 ↔ 파일/과목 자산 정합성', true],
   ['node', ['tools/sync_citation_lines.js', '--check'], false,
-    '인용', '문제은행 → 교재 #L라인번호 인용 동기화 상태'],
+    '인용', '문제은행 → 교재 #L라인번호 인용 동기화 상태', true],
   ['node', ['tools/check_ref_subjects.js'], false,
-    '귀속', 'ref_md 문서의 과목 귀속 vs 실제 인용 득표 (정보 단계 — 불일치는 참고 보고)'],
+    '귀속', 'ref_md 문서의 과목 귀속 vs 실제 인용 득표 (정보 단계 — 불일치는 참고 보고)', true],
   ['node', ['tools/check_reflayout.js'], false,
-    '레이아웃', '참조자료 폴더/레지스트리 정합성'],
+    '레이아웃', '참조자료 폴더/레지스트리 정합성', true],
   ['node', ['tools/check_ref_freshness.js'], false,
-    '신선도', '참조자료 PDF 해시 ↔ ref_md 변환본 (PDF 교체 감지)'],
+    '신선도', '참조자료 PDF 해시 ↔ ref_md 변환본 (PDF 교체 감지)', true],
   ['node', ['tools/check_ref_lines.js'], false,
-    '참조라인', '교재/문제은행 (LNN) 참조 라인 ↔ ref_md 실제 내용'],
+    '참조라인', '교재/문제은행 (LNN) 참조 라인 ↔ ref_md 실제 내용', true],
   ['node', ['tools/check_drill_freshness.js'], false,
-    '드릴신선도', '드릴 번들 ↔ 문제은행 번들 (build:drills 필요 감지)'],
+    '드릴신선도', '드릴 번들 ↔ 문제은행 번들 (build:drills 필요 감지)', true],
   ['node', ['tools/check_combo_pilot.js'], false,
-    '드릴', '복수정답형(combo) 드릴 데이터 정합성'],
+    '드릴', '복수정답형(combo) 드릴 데이터 정합성', true],
+  ['node', ['tools/build/build_id_migration.js', '--check'], false,
+    'ID이관', '카드/퀴즈 ID 스냅샷 ↔ 콘텐츠 (build:data 누락·진도 손실 감지)', true],
   ['node', ['tools/check_parser_parity.js'], false,
-    '파서', '빌드 파서 ↔ 런타임 파서 출력 등가성'],
+    '파서', '빌드 파서 ↔ 런타임 파서 출력 등가성', false],
   ['node', ['tools/check_imports.js'], false,
-    '임포트', 'src/ ES 모듈 import/export 교차 검증'],
+    '임포트', 'src/ ES 모듈 import/export 교차 검증', false],
   ['node', ['tools/verify_shell_assets.js'], false,
-    '자산', 'sw.js SHELL_ASSETS/DATA_ASSETS 파일 존재'],
+    '자산', 'sw.js SHELL_ASSETS/DATA_ASSETS 파일 존재', false],
   ['node', ['tools/audit_card_quality.js'], false,
-    '카드', '카드 품질 감사 (짧은 설명·중복·참조 링크)'],
+    '카드', '카드 품질 감사 (짧은 설명·중복·참조 링크)', true],
   ['node', ['tools/check_docs_paths.js'], false,
-    '문서', 'README·AGENTS·docs/*.md 경로 참조 존재 검증 (스테일 탐지)'],
+    '문서', 'README·AGENTS·docs/*.md 경로 참조 존재 검증 (스테일 탐지)', false],
   ['node', ['tools/check_spec_refs.js'], false,
-    '추적', 'SPEC ID ↔ 코드 @spec 태그 양방향 정합성 (스테일 참조 탐지)'],
+    '추적', 'SPEC ID ↔ 코드 @spec 태그 양방향 정합성 (스테일 참조 탐지)', false],
   ['node', ['tools/build_trace_matrix.js', '--check'], false,
-    '추적', 'TRACE_MATRIX 입력 해시 신선도 (SPEC·@spec·문서 헤더 변경 시 재생성 강제)'],
+    '추적', 'TRACE_MATRIX 입력 해시 신선도 (SPEC·@spec·문서 헤더 변경 시 재생성 강제)', false],
   ['node', ['--test', 'tests/unit/*.test.js'], false,
-    '테스트', '유닛 테스트 (node --test)'],
+    '테스트', '유닛 테스트 (node --test)', false],
   ...(QUICK ? [] : [[
     'node', ['node_modules/vitest/vitest.mjs', 'run'], false,
-    '테스트', 'DOM 테스트 (vitest + jsdom)'
+    '테스트', 'DOM 테스트 (vitest + jsdom)', false
   ]]),
 ];
 
+const ACTIVE_STEPS = CONTENT_ONLY ? STEPS.filter(s => s[5]) : STEPS;
+
 const results = [];
 console.log('═'.repeat(60));
-console.log(' 콘텐츠 의존성 통합 검증' + (WITH_BUILD ? ' (build:data 선실행)' : '') + (QUICK ? ' [quick]' : ''));
+console.log(' 콘텐츠 의존성 통합 검증' + (WITH_BUILD ? ' (build:data 선실행)' : '') + (QUICK ? ' [quick]' : '') + (CONTENT_ONLY ? ' [content-only]' : ''));
 console.log('═'.repeat(60));
 
-for (const [cmd, cmdArgs, shell, layer, desc] of STEPS) {
+for (const [cmd, cmdArgs, shell, layer, desc] of ACTIVE_STEPS) {
   const label = `[${layer}] ${desc}`;
   process.stdout.write(`\n▶ ${label}\n`);
   const r = spawnSync(cmd, cmdArgs, {

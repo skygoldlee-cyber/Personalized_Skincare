@@ -19,6 +19,10 @@
  * 매칭이 모호한 항목(동일 term의 신규 카드가 2개 이상)은 매핑하지 않는다.
  *
  * 실행: node tools/build/build_id_migration.js   (npm run build:id-migration / build:data 체인 말미)
+ *       node tools/build/build_id_migration.js --check
+ *         # 쓰기 없이 스냅샷↔콘텐츠 차이만 검증. 이관 필요/미이관 항목이
+ *         # 있으면 exit 1 — 콘텐츠 변경 후 build:data 누락을 게이트한다.
+ *         # 미이관(lost)은 사용자 진도 손실이므로 상세 항목을 보고한다.
  */
 
 // @spec BP-01,ID-04
@@ -30,6 +34,8 @@ const { getExamTargets } = require('./exam_targets.js');
 
 const ROOT = path.resolve(__dirname, '..', '..');
 const norm = s => String(s || '').replace(/\s+/g, ' ').trim();
+const CHECK_ONLY = process.argv.includes('--check');
+const LOST_DETAIL_LIMIT = 20;
 
 function buildForTarget(target) {
   const dataDir = path.join(ROOT, target.dataRoot);
@@ -68,7 +74,8 @@ function buildForTarget(target) {
 
   // 2) 구 스냅샷 대비 ID 이관 맵 생성 (같은 과목 내 유일 매칭만)
   const map = {};
-  let moved = 0, lost = 0;
+  const lostItems = [];   // {subjectKey, oldId, key} — 진도 손실 대상
+  let moved = 0;
   for (const [subjKey, prevBucket] of Object.entries(prev)) {
     const curBucket = cur[subjKey];
     if (!curBucket) continue; // 과목 자체가 사라짐 — 이관 대상 없음
@@ -77,14 +84,32 @@ function buildForTarget(target) {
         if (curIds[oldId]) continue;                    // ID 불변 — 이관 불필요
         const cands = (idx.get(key) || []).filter(id => id !== oldId);
         if (cands.length === 1) { map[oldId] = cands[0]; moved++; }
-        else lost++;
+        else lostItems.push({ subjectKey: subjKey, oldId, key });
       }
     };
     apply(prevBucket.cards || {}, newCardByTerm[subjKey], curBucket.cards);
     apply(prevBucket.quizzes || {}, newQuizByKey[subjKey], curBucket.quizzes);
   }
+  const lost = lostItems.length;
 
-  // 3) 산출: 이관 맵 번들 + 스냅샷 갱신
+  // 3) 산출 — --check는 쓰기 없이 차이만 보고
+  if (CHECK_ONLY) {
+    if (!fs.existsSync(snapPath)) {
+      console.log(`[id-migration] ${target.id}: 스냅샷 없음 — build:data 미실행 상태`);
+      return 1;
+    }
+    console.log(
+      `[id-migration] ${target.id}: 이관 필요 ${moved}건 · 미이관(진도 손실) ${lost}건`
+    );
+    for (const it of lostItems.slice(0, LOST_DETAIL_LIMIT)) {
+      console.log(`    ⚠ 미이관 ${it.subjectKey} ${it.oldId} — "${it.key.substring(0, 60)}"`);
+    }
+    if (lostItems.length > LOST_DETAIL_LIMIT) {
+      console.log(`    ... 외 ${lostItems.length - LOST_DETAIL_LIMIT}건`);
+    }
+    return moved + lost;
+  }
+
   fs.mkdirSync(dataDir, { recursive: true });
   fs.writeFileSync(
     path.join(dataDir, 'id_migration.js'),
@@ -98,8 +123,20 @@ function buildForTarget(target) {
     `[id-migration] ${target.id}: 이관 ${moved}건 · 미이관(삭제) ${lost}건 · ` +
     `스냅샷 갱신 ${Object.keys(cur).length}과목 → ${target.dataRoot}/id_migration.js`
   );
+  for (const it of lostItems.slice(0, LOST_DETAIL_LIMIT)) {
+    console.log(`    ⚠ 미이관 ${it.subjectKey} ${it.oldId} — "${it.key.substring(0, 60)}"`);
+  }
+  if (lostItems.length > LOST_DETAIL_LIMIT) {
+    console.log(`    ... 외 ${lostItems.length - LOST_DETAIL_LIMIT}건`);
+  }
+  return 0;
 }
 
+let drift = 0;
 for (const target of getExamTargets(ROOT)) {
-  if (target.manifest) buildForTarget(target);
+  if (target.manifest) drift += buildForTarget(target) || 0;
+}
+if (CHECK_ONLY && drift > 0) {
+  console.log(`\n❌ 스냅샷↔콘텐츠 불일치 ${drift}건 — build:data를 실행해 이관 맵·스냅샷을 갱신하세요.`);
+  process.exit(1);
 }

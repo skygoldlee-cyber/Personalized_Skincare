@@ -79,6 +79,53 @@ flowchart TD
 | 8' | 참조자료 (조건부 병행 트랙) | 법령 개정 동반 시: `convert:refs` → `verify:refs` → 수동 승격 → `check:reffresh --update` → **④부터 재수행** | verify 누락 0 | ref-pipeline README 시나리오 A |
 | 9 | 회귀·배포·안내 | `npm.cmd test` + `npm.cmd run test:dom` (+`test:e2e` 선택) → 커밋 → `npm.cmd run deploy` → 설치형 PWA 사용자에게 **완전 종료 후 1~2회 재실행** 안내 (sw 캐시 전파 지연) | 687+/388+ 통과, clean tree | AGENTS.md 배포 절차 |
 
+## 교재 변경 시 소스코드 수정 지점
+
+교재 변경으로 손봐야 하는 파일을 **직접 수정 / 자동 재생성 / 조건부 수정**으로 구분한다.
+
+### ① 직접 수정 (수동)
+
+| 파일 | 수정 내용 | 언제 |
+|---|---|---|
+| `content/exams/{id}/교재/{dir}/*.md` | 새 교재 본문 (파서 계약: `\| 용어 \| 설명 \|` 표·`## N.` 챕터·`🔖기출`/`📌중요`/`★필수` 마커) | 항상 |
+| `content/exams/{id}/manifest.json` | `subjects[].dir`·`chapters[].file`/`storyFile`·`exams[].file`·`integratedExam.questionsPerSubject` | 파일명/구조/과목 구성 변경 시 |
+| `sw.js` → `MD_ASSETS` | 프리캐시 대상 교재·문제은행 경로 목록 — **파일명 변경/추가/삭제 시 반드시 동기화** (`verify:assets`가 누락을 검증) | 파일명 변경·추가·삭제 시 |
+| `content/exams/{id}/문제은행/*.md` | `(<.../교재/파일.md#LNNN>)` 인용 링크 — 라인 밀림은 `sync:citations` 자동 갱신, **파일명 변경은 수동 경로 갱신** (대상 파일 없음 → 인용 단계 실패) | 라인 이동·파일명 변경 시 |
+| `content/exams/{id}/references.json` | `refDirs`·`subjectDirMap`·`docSubjectRules` — 참조자료 귀속 | 참조자료/과목 구성 변경 시 |
+| `content/exams/{id}/교재/glossary/subject{N}.json` | 큐레이션 용어집 (과목 order 기준) | 용어 추가·변경 시 |
+| `content/exams/{id}/number-drills/{key}.json` | 숫자 암기 드릴 데이터 | 수치·기한 변경 시 |
+| `content/exams/{id}/combo_blocklist.json` | 콤보 문항 차단 목록 | 콤보 품질 이슈 수정 시 |
+
+### ② 자동 재생성 — 직접 수정 금지 (`build:data`/`build:drills`가 생성)
+
+| 파일 | 생성 명령 |
+|---|---|
+| `data/exams/{id}/` 번들 전체 (`registry.js`·`subjects/`·`exams/`·`study_md/`·`drills/` 등) | `npm.cmd run build:data` |
+| `src/pdf-registry.js` | `build:pdf-registry` (build:data 내 포함) — 원본은 `references.json` |
+| `src/keyword-index.js` | `build:keyword-index` (build:data 내 포함) |
+| `data/exams/{id}/id_migration.js`·`card_terms_snapshot.json` | `build:id-migration` (build:data 내 포함) — **커밋 대상** |
+| `문제은행/과목N_복수정답형.md` | `npm.cmd run build:drills` — `자동 생성` 마커로 식별 |
+| `content/exams/{id}/html/` | `python ref-pipeline/batch_convert.py` |
+| `audiobook/mp3/` | `ref-pipeline/audiobook/run_pipeline.py --tts` → CDN 업로드 |
+
+### ③ 조건부 수정
+
+| 파일 | 조건 |
+|---|---|
+| `content/exams/{id}/docs/학습안내서.md` | 챕터/과목 구성 변경 시 — `build_doc_bundles.js`로 앱 내 번들도 재생성 |
+| `참조자료/` PDF + `ref_md/` | 법령 개정 동반 시 — `convert:refs` → `verify:refs` → 승격 → `check:reffresh --update` |
+| `sw.js` `CACHE_VERSION` | `stamp:sw`가 커밋 해시로 자동 스탬프 — 수동 편집 불필요 |
+
+### 검증 게이트 (변경 후 자동 차단)
+
+| 게이트 | 잡아내는 것 |
+|---|---|
+| `check:content -- --build` | 전 계층 일괄 (선언↔파일·인용 라인·참조라인·신선도·ID 이관·카드·파서·테스트) |
+| `[인용]` 단계 | 문제은행→교재 `#L` 링크 — **대상 파일 없음(이름 변경/삭제)도 미발견 실패** |
+| `[ID이관]` 단계 | 스냅샷↔콘텐츠 불일치 — build:data 누락 시 실패, 미이관(lost) 항목 상세 보고 |
+| `[선언]` 단계 | manifest 선언 파일 부재 + **미등록 .md 역방향 경고** (빌드에서 조용히 제외되는 파일) |
+| CI `check_content.js --content-only --quick` | 위 콘텐츠 단계를 push/PR마다 원격 강제 — 로컬 생략 불가 |
+
 ## 순서의 이유 (의존성)
 
 ```

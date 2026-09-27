@@ -51,10 +51,11 @@ npm.cmd run audit:cards                 # 카드 품질 자동 감사 (짧은 �
 npm.cmd run audit:combo                 # 복수정답형 품질 감사 (정답 유일성·중복 진술집합·모순쌍·위치편향·경로별 통계)
 
 # 콘텐츠 통합 검증 (교재 교체 등 대규모 콘텐츠 변경 후)
-npm.cmd run check:content               # 인용·귀속·레이아웃·드릴·파서·임포트·자산·카드·문서·테스트 일괄 검증
+npm.cmd run check:content               # 인용·귀속·레이아웃·드릴·ID이관·파서·임포트·자산·카드·문서·테스트 일괄 검증
 npm.cmd run check:content -- --build    # build:data 선실행 후 검증 (교재 교체 시 권장)
 npm.cmd run check:content -- --quick    # DOM 테스트 생략
-npm.cmd run check:manifest              # manifest 선언 ↔ 파일/과목 자산 정합성만 단독 검증
+npm.cmd run check:content -- --content-only  # 콘텐츠 추적 단계만 (CI용 — 파서·임포트·테스트 등 별도 게이트 제외)
+npm.cmd run check:manifest              # manifest 선언 ↔ 파일/과목 자산 정합성 + 미등록 .md 역방향 경고
 npm.cmd run check:reflayout             # 참조자료 4계층 정합성 (PDF 폴더↔ref_md↔references.json↔규칙, 링크 해석)
 npm.cmd run check:refsubjects           # ref_md 문서의 인용 득표↔과목 귀속 교차 검증
 npm.cmd run check:reffresh              # 참조자료 PDF 해시 ↔ ref_md 신선도 (PDF 교체 감지)
@@ -202,7 +203,7 @@ data/                   # 빌드 생성 번들
   exams/<id>/           # 추가 시험 데이터 루트 (동일 구조)
 tools/                  # 빌드 스크립트
   build/                # 데이터 파이프라인 (manifest → registry + 해시 번들)
-  sync_citation_lines.js # 문제은행 인용 링크 라인번호 동기화 (교재 변경 시)
+  sync_citation_lines.js # 문제은행 인용 링크 라인번호 동기화 (교재 변경 시 — 대상 파일 없으면 미발견으로 실패)
 ref-pipeline/           # 교재·참조자료 생성/변환 독립 도구함 (PDF→MD, MD→HTML, 오디오북 TTS, 법령 검증) — 사용 절차는 ref-pipeline/README.md 참조
 vendor/                 # 자체 호스팅 자산 (fonts/, fontawesome/)
 tests/                  # 테스트
@@ -316,7 +317,7 @@ docs/                   # 개발 문서
 
 - **PowerShell 환경**: `&&` 연산자 사용 불가 → `;` 사용. `npm` → `npm.cmd`.
 - **Mermaid `!important`**: `css/reader.css`의 Mermaid 규칙 `!important`는 제거 금지 (Mermaid 라이브러리 인라인 스타일 덮어쓰기용)
-- **콘텐츠 편집 후**: `npm.cmd run build:data` 실행 후 `data/` 번들 커밋 필요
+- **콘텐츠 편집 후**: `npm.cmd run build:data` 실행 후 `data/` 번들 커밋 필요. `check:content`(CI의 `--content-only` 단계 포함)가 스냅샷 drift·인용 대상 파일 부재·미등록 md를 차단 — 교재 파일 이름 변경/삭제 시 문제은행 링크가 미발견으로 실패하므로 링크 경로를 함께 갱신할 것
 - **CSP**: `vercel.json`에 `script-src 'self'` (인라인 스크립트 금지)
 - **DOM 테스트**: `tests/dom/` — Phase 1~5 전 뷰 커버 (매트릭스·작성 규칙은 `docs/dev/design/DOM_TEST_DESIGN.md`, 파일별 목록·정책은 `docs/dev/reference/TESTING.md`)
 

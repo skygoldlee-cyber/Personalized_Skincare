@@ -4,6 +4,7 @@
  *
  * 교재 교체·과목 추가 시 빌드 전에 깨진 선언을 표면화한다:
  *   - manifest가 선언한 교재/문제은행 파일의 실제 존재
+ *   - 역방향: 디스크에 있지만 manifest에 미등록된 교재/문제은행 .md (경고)
  *   - subjects[].key/order 유일성, exams[].subject → subjects 해석
  *   - 과목별 파생 자산 (glossary·number-drills·ref_md 폴더) 존재
  *   - 교재 파서 계약 (챕터 헤딩 · 기출/중요 마커)
@@ -128,6 +129,42 @@ function checkTarget(target) {
   const qps = (m.integratedExam || {}).questionsPerSubject || {};
   for (const k of Object.keys(qps)) {
     if (!subjectKeys.has(k)) err(scope, `integratedExam.questionsPerSubject의 "${k}"이 subjects에 없음`);
+  }
+
+  // 역방향: 디스크에는 있지만 manifest에 선언되지 않은 .md (빌드에서 조용히 제외됨)
+  // 자동 생성 파일(복수정답형 등)은 빌드 산출물이므로 제외
+  const sroot = path.join(ROOT, target.contentRoot);
+  const isAutogen = (abs) => {
+    try { return /자동 생성/.test(fs.readFileSync(abs, 'utf-8').slice(0, 600)); }
+    catch { return false; }
+  };
+  const declaredTextbooks = new Set();
+  for (const s of subjects) {
+    for (const ch of s.chapters || []) {
+      if (ch.file) declaredTextbooks.add(path.join(s.dir || '', ch.file));
+      if (ch.storyFile) declaredTextbooks.add(path.join(s.dir || '', ch.storyFile));
+    }
+  }
+  for (const s of subjects) {
+    if (!s.dir) continue;
+    const dirAbs = path.join(sroot, s.dir);
+    if (!fs.existsSync(dirAbs)) continue;
+    for (const f of fs.readdirSync(dirAbs)) {
+      if (!f.endsWith('.md')) continue;
+      if (!declaredTextbooks.has(path.join(s.dir, f)) && !isAutogen(path.join(dirAbs, f))) {
+        warn(scope, `manifest 미등록 교재 파일 — 빌드에서 제외됨: ${s.dir}/${f}`);
+      }
+    }
+  }
+  const declaredExams = new Set(exams.map(e => e.file).filter(Boolean));
+  const bankDir = path.join(sroot, '문제은행');
+  if (fs.existsSync(bankDir)) {
+    for (const f of fs.readdirSync(bankDir)) {
+      if (!f.endsWith('.md')) continue;
+      if (!declaredExams.has(f) && !isAutogen(path.join(bankDir, f))) {
+        warn(scope, `manifest 미등록 문제은행 파일 — 빌드에서 제외됨: 문제은행/${f}`);
+      }
+    }
   }
 }
 

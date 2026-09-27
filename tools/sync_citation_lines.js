@@ -263,7 +263,25 @@ function extractCitations(examFile, content) {
         seenUrls.add(urlKey);
 
         const resolved = path.resolve(ROOT, examDir, relPath);
-        if (!fs.existsSync(resolved)) return;
+        if (!fs.existsSync(resolved)) {
+            // 대상 파일이 없으면(교재 이름 변경/삭제) 미발견으로 보고 — 조용한 통과 방지
+            citations.push({
+                type,
+                examFile,
+                matchStart: match.index,
+                matchEnd: match.index + match[0].length,
+                fullMatch: match[0],
+                label,
+                textLineNum,
+                urlLineNum,
+                relPath,
+                fingerprint: null,
+                quoteLines: collectQuote(match.index + match[0].length),
+                outOfRange: false,
+                missingTarget: true,
+            });
+            return;
+        }
 
         const lines = getFileLines(resolved);
         const outOfRange = urlLineNum < 1 || urlLineNum > lines.length;
@@ -384,6 +402,20 @@ for (const examFile of EXAM_FILES) {
 
     for (const c of citations) {
         totalCitations++;
+        if (c.missingTarget) {
+            // 교재 파일 이름 변경/삭제 — 인용문 재탐색 불가, 미발견으로 보고
+            notFound++;
+            totalNotFound++;
+            notFoundList.push({
+                examFile,
+                relPath: c.relPath,
+                oldLineNum: c.urlLineNum,
+                fingerprint: `(대상 파일 없음: ${c.relPath})`,
+                label: c.label,
+                outOfRange: false,
+            });
+            continue;
+        }
         const resolved = path.resolve(ROOT, examDir, c.relPath);
         const lines = getFileLines(resolved);
 
