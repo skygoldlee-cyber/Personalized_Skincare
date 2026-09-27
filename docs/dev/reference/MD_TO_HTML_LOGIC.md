@@ -4,6 +4,7 @@
 > **대상**: `content/*.md`, `docs/user/*.md` 마크다운 문서를 HTML로 변환하는 두 가지 파이프라인
 > - **런타임 (JS)**: PWA 앱 내 `manual-viewer.js`가 실시간 MD → HTML 변환
 > - **빌드 타임 (Python)**: `ref-pipeline/MD_to_HTML.py`가 독립 HTML 파일 생성
+> **관련 SPEC ID**: `TR-01` (런타임 MD 파싱) · `MV-01~04` (매뉴얼 뷰어) · `RR-01~16` (참조자료 뷰어) · `EV-01~08` (문제집 뷰어)
 
 ---
 

@@ -4,6 +4,18 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-10-13 SPEC ID 추적 체계 전면 도입 — 매트릭스·문서 헤더·FB ID 신설
+
+- ARCHITECTURE.md에 "🔗 요구사양 추적 (SPEC ID 매트릭스)" 신설 — SPEC §3/§4/§5
+  전체 ID군 → 이 문서 섹션·구현 모듈 대응표.
+- `A-` 접두사 충돌 정정: 오디오북(§3.12) → `AO-` 재명명 (§4.5 접근성 `A-`와 중복).
+- SPEC §3.23 "사용자 의견 수신" 신설 — `FB-01~08` (feedback.js·Discord 알림).
+- design/·reference/·runbooks/ 12개 문서 헤더에 `관련 SPEC ID` 행 추가.
+- STUDY_APP_DESIGN_GUIDE에 "ID 체계는 SPEC과 접두사 공유" 명시.
+- AGENTS.md에 "요구사양 ID 체계" 운영 규칙 추가 — 신규 기능은 SPEC ID 선부여,
+  문서 헤더에 관련 ID 표기.
+- ARCHITECTURE 누락 `### 3. Data Layer` 헤딩 복원, `examIdToSubjectId` 귀속 정정.
+
 ## 2026-10-13 SPEC §4.9 디자인 토큰·상태 규약 신설
 
 - 화면구성 사양 점검 결과, 토큰 체계(`--text-*`/`--space-*`/`--z-*`/`--radius-*`/`--transition-*`)는

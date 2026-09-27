@@ -1963,6 +1963,7 @@ SPEC.md의 기능/비기능 ID와 이 문서의 설명 위치·구현 모듈 대
 | `DR-01~07` | §3.20 드릴 | `src/views/trainer-drills.js` |
 | `UM-01~05` | §3.21 UI 모드 | `src/ui-mode.js` — UI 모드 절 |
 | `ES-01~05` | §3.22 시험 선택 | `src/views/exam-select.js` — 멀티시험 플랫폼 절 |
+| `FB-01~08` | §3.23 의견 수신 | `src/feedback.js` + `tools/supabase/functions/feedback-notify` — USER_FEEDBACK_DESIGN.md |
 
 ### 비기능 요구사양 (SPEC §4)
 

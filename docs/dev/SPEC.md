@@ -379,6 +379,21 @@
 | ES-04 | 진도 격리 — `scopedKey`가 `<examId>:` 접두사 자동 부여, 시험 간 진행상황 독립 | ✅ |
 | ES-05 | 기능 플래그 — 시험별 `features`로 도메인 특화 기능(성분사전·오디오북·참조자료 등) 자동 숨김 (`data-feature` 속성 + `hasFeature()`) | ✅ |
 
+### 3.23 사용자 의견 수신 (User Feedback)
+
+| ID | 요구사양 | 구현 상태 |
+|----|---------|-----------|
+| FB-01 | 설정 메뉴 "의견 보내기" 모달 — 유형 4종(칭찬/개선/오류/제안)·별점(선택)·본문(4~2000자) | ✅ |
+| FB-02 | 익명 제출 — 로그인 불필요, Supabase `feedback` 테이블 insert-only RLS | ✅ |
+| FB-03 | 유입 채널 추적 — `?src=` 파라미터를 `entry_source`에 최초 1회 보존, 제출 시 `entry_src` 첨부 | ✅ |
+| FB-04 | 컨텍스트 자동 첨부 — 현재 뷰·`APP_VERSION`·시험 ID·UA | ✅ |
+| FB-05 | 오프라인 큐 — `pending_feedback`(최대 20건), `online` 이벤트·다음 제출 시 플러시 | ✅ |
+| FB-06 | 스팸 방어 — 허니팝 필드, 60초 쿨다운, PII 패턴 경고, 서버 `char_length` CHECK | ✅ |
+| FB-07 | 신기능 안내 — ⚙️ 버튼 점(`feedback_dot_seen`) + `NEW` 배지(`feedback_hint_seen`), 확인 후 소멸 | ✅ |
+| FB-08 | 관리자 알림 — Database Webhook → `feedback-notify` Edge Function → Discord 임베드 (USER_FEEDBACK_DESIGN §8-2) | ✅ (코드) / ⚙️ (대시보드 설정 필요) |
+
+> 상세 설계: [`design/USER_FEEDBACK_DESIGN.md`](design/USER_FEEDBACK_DESIGN.md)
+
 ---
 
 ## 4. 비기능 요구사양

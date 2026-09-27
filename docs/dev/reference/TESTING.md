@@ -3,6 +3,7 @@
 > **작성일**: 2026-09-03
 > **대상**: `tests/` 디렉토리의 자동화 테스트 (Unit + DOM)
 > **프레임워크**: Node.js 내장 `node:test` (Unit) + Vitest/jsdom (DOM)
+> **SPEC 추적**: 각 테스트의 검증 대상은 `SPEC.md`의 기능 ID와 대응 — 매핑은 `ARCHITECTURE.md` §"요구사양 추적 (SPEC ID 매트릭스)" 참조. 신규 테스트 추가 시 검증 대상 행에 관련 SPEC ID 기재 권장
 
 ---
 

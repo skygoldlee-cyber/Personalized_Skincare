@@ -2,6 +2,8 @@
 
 ## 1. 개요
 
+> **관련 SPEC ID**: `AU-02~04` (로그인 메일·쿨다운) — 설계 배경은 `../design/SUPABASE_DESIGN.md`
+
 Supabase에서 **Magic Link + OTP 로그인**을 함께 사용하려면 다음 두 가지 설정이 필요합니다.
 
 1. **Custom SMTP 설정**

@@ -226,6 +226,12 @@ docs/                   # 개발 문서
 - 갱신 후 `npm.cmd run check:docs` 통과 필수 — 문서 내 스테일 경로 참조를 자동 탐지 (`check:content`에도 통합돼 자동 실행)
 - 계획/미구현 경로·이력 서술 등 의도적 참조는 `tools/config/docs_paths_allowlist.json`에 `reason`과 함께 등록
 
+## 요구사양 ID 체계 (SPEC ID)
+
+- `docs/dev/SPEC.md`의 기능/비기능/데이터 요구사항은 **접두사+번호 ID**로 식별 (예: `Q-05`, `FB-01`, `UX-NAV-07`). 접두사는 절별 유일 — 신규 기능은 SPEC에 먼저 ID를 부여한다.
+- ID → 구현 매핑은 `docs/dev/ARCHITECTURE.md` "🔗 요구사양 추적 (SPEC ID 매트릭스)" 절 참조.
+- 다른 dev 문서는 헤더에 `> **관련 SPEC ID**: XX-##` 행으로 자신이 다루는 요구사항을 표기한다. CHANGES.md·커밋 메시지에서도 관련 ID 인용 권장.
+
 ## 코드 스타일 및 규칙
 
 ### JavaScript
