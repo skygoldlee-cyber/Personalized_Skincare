@@ -153,7 +153,7 @@
 | 파일 | 용도 | 제약 사유 |
 |------|------|-----------|
 | `index.html` | SPA App Shell 진입점 | Vercel/정적 호스팅 루트 요구 |
-| `style.css` | CSS 진입점 (`@import` 어그리게이터, `css/*.css` 6개 로드) | `index.html`에서 참조 |
+| `style.css` | CSS 진입점 (`@import` 어그리게이터, `css/*.css` 12개 로드) | `index.html`에서 참조 |
 | `sw.js` | Service Worker | SW 스코프이 루트(또는 명시적 `Scope`)에서만 전역 캐싱 |
 | `manifest.webmanifest` | PWA 웹 앱 매니페스트 | `index.html`에서 참조 |
 | `feature-plan.json` | 기능별 무료/Pro 전환 설정 (`pro`/`free`) | `src/pro-upgrade.js`가 런타임 fetch |
@@ -212,7 +212,7 @@ Personalized_Skincare/
 ├── icons/                      # PWA 아이콘 (192/512/maskable)
 │
 ├── css/                        # UI 모듈별 스타일시트 (style.css가 @import로 로드)
-│   ├── base.css                #   전역, 레이아웃, 네비게이션, 스크롤바, 테마 변수
+│   ├── base.css                #   디자인 토큰 전부 (`:root`/`light-theme`: 컬러·타이포·간격·반경·z-index·transition — SPEC §4.9), 전역, 레이아웃, 네비게이션, 스크롤바
 │   ├── dashboard.css           #   대시보드
 │   ├── study.css               #   플래시카드, 퀴즈
 │   ├── exam.css                #   모의고사, 배지
@@ -498,7 +498,7 @@ Personalized_Skincare/
 | 파일 | 역할 |
 |------|------|
 | [`index.html`](../../index.html) | 단일 HTML 페이지(SPA App Shell). 모든 뷰 섹션이 하나의 문서에 존재하며 JS로 표시 전환 |
-| [`style.css`](../../style.css) | 전역 디자인 시스템. CSS 변수 기반 테마, 반응형 미디어 쿼리, 애니메이션 |
+| [`style.css`](../../style.css) | CSS 진입점 (`@import`로 모듈 로드). 실제 디자인 토큰·테마 변수는 `css/base.css` `:root`에 정의 (SPEC §4.9) |
 | [`manifest.webmanifest`](../../manifest.webmanifest) | PWA 매니페스트 (앱 이름, 아이콘, 테마 색상) |
 
 **SPA 뷰 전환 방식**:
@@ -922,7 +922,7 @@ pullSync() (로그인 시 / "지금 동기화" 버튼)
 |-----------|------|------|
 | **FOUC 방지 스크립트** | [`index.html`](../../index.html) `<head>` 인라인 | 페인트 전에 `localStorage('appTheme')` 또는 `prefers-color-scheme`을 읽어 `<html>.light-theme` 클래스와 `<meta name="theme-color">`를 즉시 적용 → 테마 깜빡임(FOUC) 제거 |
 | **전역 테마 API** | [`index.html`](../../index.html) 하단 인라인 | `window.AppTheme = { isLight, apply, toggle }` 노출. 테마 변경 시 `localStorage` 저장 + `themechange` 커스텀 이벤트 브로드캐스트 |
-| **CSS 변수 오버라이드** | [`style.css`](../../style.css) `.light-theme` | `:root`(다크, 기본값)의 디자인 토큰을 라이트 팔레트로 재정의. `.light-theme` 하위 선택자에서만 라이트 전용 보정 규칙 추가 |
+| **CSS 변수 오버라이드** | [`css/base.css`](../../css/base.css) `.light-theme` | `:root`(다크, 기본값)의 디자인 토큰을 라이트 팔레트로 재정의. `.light-theme` 하위 선택자에서만 라이트 전용 보정 규칙 추가. 토큰 전체 카탈로그는 SPEC §4.9 참조 |
 | **헤더 토글 버튼** | `#theme-toggle-btn` | 데스크톱 헤더에서 테마 전환 (해/달 아이콘) |
 | **모바일 탭 토글** | `#mobile-theme-toggle` | 모바일 하단 탭 바의 "테마" 탭에서 전환 |
 
@@ -1272,7 +1272,8 @@ app-fallback.js 폴링 시작 (400ms 간격, 15s 데드라인)
 6. **그리드 종열 전환**: 데스크톱 다열 그리드(성적 분석 3열 등) → 모바일 세로보기에서 `1fr` 단일 열로 자동 전환
 
 ### CSS 설계 원칙
-- **CSS 변수 기반 디자인 토큰**: `--color-primary`, `--bg-card`, `--radius-md` 등으로 테마 일관성 유지
+- **CSS 변수 기반 디자인 토큰**: 컬러·타이포·간격·반경·z-index·transition 전 영역이 `css/base.css` `:root`의 `--*` 토큰으로 중앙화 — **하드코딩 색상·px·z-index 금지, 토큰 우선**. 토큰 카탈로그·z-index 레이어 맵·상태 규약은 **SPEC §4.9** 참조. `var(--x, #fff)` 같은 상시 폴백 금지 (테마 파괴 사고, SPEC §4.8.7)
+- **z-index는 `--z-*` 토큰만 사용**: `--z-base`(1) ~ `--z-loading`(99999) 사다리 — 매직 넘버 지정 금지, 신규 오버레이는 토큰 사이 배치 또는 신규 토큰 추가
 - **모바일 미디어 쿼리는 파일 후반부 배치**: CSS 캐시케이드 우선순위 확보 (동일 특이성 시 나중 선언이 승리)
 - **인라인 스타일 오버라이드 패턴**: HTML 인라인 `grid-template-columns` 등은 모바일에서 `[style*="..."]` 속성 선택자 + `!important`로 재정의
 
@@ -1571,7 +1572,7 @@ npm run deploy
 - 배열 인덱스 접근 후 `if (!item) return;` bounds 체크
 - `window.X` 접근 시 존재 체크, `parseInt` 결과 `isNaN` 체크
 - 접근성: 터치 타겟 ≥44px, `aria-label`/`aria-expanded`/`aria-live` 유지
-- UI/UX 규칙: SPEC.md §4.8 (재사용 가이드) 준수
+- UI/UX 규칙: SPEC.md §4.8 (재사용 가이드) + §4.9 (디자인 토큰·상태 규약) 준수
 
 ---
 
@@ -1935,7 +1936,7 @@ npm.cmd run deploy
 - [`MD_TO_HTML_LOGIC.md`](reference/MD_TO_HTML_LOGIC.md) — MD→HTML 변환·표시 로직 기술 문서
 - [`TESTING.md`](reference/TESTING.md) — 테스트 가이드·정책 (unit + DOM)
 - [`DOM_TEST_DESIGN.md`](design/DOM_TEST_DESIGN.md) — jsdom UI 시나리오 테스트 설계 (helpers·모킹 전략·Playwright 확장 경로)
-- [`SPEC.md`](SPEC.md) — 요구사양 명세서 (기능 ID별 구현 상태, UI/UX 재사용 가이드 §4.8)
+- [`SPEC.md`](SPEC.md) — 요구사양 명세서 (기능 ID별 구현 상태, UI/UX 재사용 가이드 §4.8, 디자인 토큰·상태 규약 §4.9)
 - [`FORMULA_OS_WORKFLOW_DESIGN.md`](design/FORMULA_OS_WORKFLOW_DESIGN.md) — 배치·고객·원료 장부 업무 플로우 설계 (Phase 5-A 기본 설계는 `docs/report_archive/FORMULA_OS_DESIGN.md`)
 - [`SUPABASE_DESIGN.md`](design/SUPABASE_DESIGN.md) — Supabase 계정·클라우드 동기화 설계안 (Phase 1~2 구현 완료 — §10)
 - [`Supabase_Custom_SMTP_MagicLink_OTP_설정가이드.md`](runbooks/Supabase_Custom_SMTP_MagicLink_OTP_설정가이드.md) — SMTP·매직링크·OTP 설정 가이드
