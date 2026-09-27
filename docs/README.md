@@ -19,7 +19,7 @@
 3. docs/dev/ARCHITECTURE.md  — Local-First·ESM·DataLoader·SW 캐시·동기화 등 설계 결정
 4. docs/dev/SPEC.md          — 구현 완료된 기능의 요구사양 명세
 5. docs/dev/runbooks/CONTENT_WORKFLOW.md — 콘텐츠=SSOT, 빌드 파이프라인 개요
-6. docs/dev/reference/TESTING.md       — 유닛 489 + DOM 332 테스트 구조
+6. docs/dev/reference/TESTING.md       — 유닛 687 + DOM 388 + E2E 16 테스트 구조
 7. docs/dev/CHANGES.md       — 변경 이력 (왜 바뀌었는지의 맥락)
 ```
 
@@ -133,7 +133,7 @@ docs/
 | 문서 | 설명 |
 |------|------|
 | [TESTING.md](dev/reference/TESTING.md) | 테스트 가이드 — 유닛(node:test) + DOM(Vitest/jsdom) 전체 목록·규칙 |
-| [DOM_TEST_DESIGN.md](dev/design/DOM_TEST_DESIGN.md) | DOM 시나리오 테스트 설계 — jsdom 경계, 케이스 유형 매트릭스, Phase 1~5 로드맵 |
+| [DOM_TEST_DESIGN.md](dev/design/DOM_TEST_DESIGN.md) | DOM 시나리오 테스트 설계 — jsdom 경계, 케이스 유형 매트릭스, Phase 1~6 로드맵 (E2E 포함) |
 
 ### 운영·환경
 

@@ -6,6 +6,14 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-14 관련 문서 갱신 — 테스트 수치·E2E 계층·게이트 현행화
+
+- **`docs/dev/reference/TESTING.md`**: 테스트 표 전면 갱신 — unit 552→687·DOM 364→388·E2E 16 추가(합계 1091), 신규 unit 12파일·DOM 3파일·§4.14 E2E 섹션 추가, 병합 커버리지 실측(stmts 70.9/branches 66.4/funcs 67.1/lines 78.4)으로 §6 갱신, §7 CI 순서를 실제 워크플로(audit·coverage:unit·병합 임계값·playwright 스텝)와 동기화
+- **`docs/dev/design/DOM_TEST_DESIGN.md`**: Phase 6 "보류"→완료 처리, §9를 구현된 E2E 계층 기준으로 재작성, 파일 트리에 신규 DOM 3파일 추가
+- **`docs/dev/reference/DEV_ENVIRONMENT.md`**: `test:e2e` 명령 추가, lint를 `--max-warnings 0` 현행 반영, CI 설명에 npm audit·병합 커버리지·E2E 스텝 추가
+- **`docs/dev/ARCHITECTURE.md`**: tests/ 트리에 `e2e/`·신규 DOM 파일, `playwright.config.js`, `test:e2e` 명령 행 추가
+- **`AGENTS.md`**: check:specrefs 기준선 설명 103→0 · **`docs/dev/runbooks/TEXTBOOK_REPLACEMENT_RUNBOOK.md`**: 검증 카운트 552+/358+ → 687+/388+ (+test:e2e 선택) · **`README.md`·`docs/README.md`**: 테스트 수치·E2E 행 갱신 · **사업기획서(md+html)**: 테스트 인프라 수치 489+332 → 687+388+16
+
 ## 2026-10-14 커버리지 공백 해소 + Playwright E2E 계층 신설
 
 - **`tests/unit/content-engineering.test.js` 신규** — CE-01~05 + TR-16a 커버: 표준형 교재 4과목의 학습 가이드(출제 빈도★·소요 시간·핵심 키워드), `> **한 줄 요약**` blockquote, 비교표(마크다운 표), 확인문제, 챕터별 용어 표를 검증. 용어 섹션은 과목별 제목 표기 차이("용어 정리"·"관련 용어"·"「법」 용어")를 허용하되 `| 용어 |` 표 존재를 고정. TR-16a는 툴바 자동 숨김(하향 6px·140px 임계, 상향 복귀) 구현 + CSS 규칙 정적 검증
@@ -120,7 +128,7 @@
 - **`tools/lib/trace_scan.js`**: SPEC·@spec·문서 헤더 스캔 로직을 공용 모듈로 추출 — build_trace_matrix·impact_tests·trace가 동일 원천 공유
 - **`tools/trace.js`**: 요구사항 도시어 CLI — `node tools/trace.js Q-05`로 문서·소스·테스트·보고서 즉시 조회 (DOC-XX 조회도 지원)
 - **`tools/impact_tests.js`**: 변경 파일 → 영향 SPEC ID·권장 테스트 역산 — 인자 없으면 미커밋 변경 자동 분석, `--ref`로 브랜치 diff 지원
-- **테스트 갭 리포트**: TRACE_MATRIX 부록 B에 "소스 연결 있으나 테스트 미연결" 요구사항 자동 집계 (현재 103개 — 테스트 백로그 후보)
+- **테스트 갭 리포트**: TRACE_MATRIX 부록 B에 "소스 연결 있으나 테스트 미연결" 요구사항 자동 집계 (도입 당시 103개 — 2026-10-14 전량 소진, 기준선 0)
 - **신선도 체크**: TRACE_MATRIX에 입력 해시 스탬프 — `npm run check:trace`(build_trace_matrix --check)로 검증, `check:content`에 통합. SPEC·@spec·문서 헤더 변경 시 재생성 강제
 
 ## 2026-10-13 TRACE MATRIX 구축 — 문서·소스·테스트·보고서 유기 추적

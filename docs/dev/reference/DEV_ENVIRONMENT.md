@@ -65,18 +65,19 @@ npm.cmd run serve
 npm.cmd test                  # 유닛 테스트 (node --test) — Node만으로 실행
 npm.cmd run test:dom          # DOM 테스트 (Vitest + jsdom) — npm install 필요
 npm.cmd run test:all          # unit + parser + dom 일괄
+npm.cmd run test:e2e          # E2E 테스트 (Playwright — 최초 1회 `npx playwright install chromium` 필요)
 npm.cmd run check:imports     # ES 모듈 import/export 교차 검증
 npm.cmd run verify:assets     # sw.js SHELL_ASSETS/DATA_ASSETS 파일 존재 검증
 npm.cmd run check:docs        # 문서 내 경로 참조 유효성 + 문서 ID 누락·중복 검증
 npm.cmd run check:specrefs    # SPEC ID ↔ 코드 @spec 태그 양방향 검증 + 테스트 갭 기준선
 npm.cmd run check:trace       # TRACE_MATRIX 신선도 (입력 해시 — 스테일 시 실패)
-npm.cmd run lint              # ESLint — 에러 0 필수 (기존 경고는 점진 정리 대상)
-npm.cmd run check:types       # tsc --noEmit — jsconfig checkJs JSDoc 타입 진단
+npm.cmd run lint              # ESLint — 0 problems 필수 (--max-warnings 0, 경고도 차단)
+npm.cmd run check:types       # tsc --noEmit — jsconfig checkJs JSDoc 타입 진단 (src 전체 검사)
 npm.cmd run coverage          # DOM 테스트 + 커버리지 임계값 (lines 60/stmts 57/funcs 55/branches 45)
 npm.cmd run check:content     # 콘텐츠 통합 검증 (대규모 콘텐츠 변경 후)
 ```
 
-CI(`.github/workflows/ci.yml`)가 push/PR마다 `npm ci` → `lint`·`check:types`·`check:imports`·`check:docs`·`check:specrefs`·`check:trace` → `test`·`coverage`·`verify:assets`·`check:parser`를 Node 20으로 실행합니다. PR에는 영향 요구사항 리포트(`tools/impact_tests.js --ref origin/main`)가 추가됩니다.
+CI(`.github/workflows/ci.yml`)가 push/PR마다 `npm ci` → `npm audit`(high+) → `lint`·`check:types`·`check:imports`·`check:docs`·`check:specrefs`·`check:trace` → `test`·`coverage`·`coverage:unit`·병합 임계값(`coverage_merge.js --check`)·`verify:assets`·`check:parser` → Playwright 설치 + `test:e2e`를 Node 20으로 실행합니다. PR에는 영향 요구사항 리포트(`tools/impact_tests.js --ref origin/main`)가 추가됩니다.
 
 **선택적 Git 훅**: `npm.cmd run hooks:install`로 `.githooks/` 활성화 — `pre-commit`은 `check:types`+`lint`(IDE 오류 상태의 커밋 차단, `--no-verify` 우회), `pre-push`는 `check:trace`·`check:specrefs`·`check:docs` 추가 (`SKIP_PREPUSH=1 git push` 우회).
 

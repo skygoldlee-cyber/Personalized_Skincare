@@ -1,6 +1,6 @@
 # DOM 시나리오 테스트 설계 (jsdom)
 
-> 상태: ✅ Phase 1~5 완료 (332개) · 작성일: 2026-09-23 · Phase 6(Playwright) 보류
+> 상태: ✅ Phase 1~6 완료 — Phase 6(Playwright E2E) 2026-10-14 도입 · 작성일: 2026-09-23
 > ※ 파일별 최신 테스트 수는 TESTING.md §3 표가 정본 — 이 문서의 Phase 수치는 설계 시점 스냅샷
 > **관련 SPEC ID**: `R-01~09` (반응형) · `A-01~07` (접근성) · `TH-01~06` (테마) · `UM-01~05` (UI 모드) · `UX-NAV-01~07` (내비)
 > **문서 ID**: DOC-DSN-01
@@ -72,6 +72,9 @@ tests/dom/
   common-navigation.dom.test.js   ✅ 사후 추가 — 뷰 전환 공용 유틸
   study-trainer-drills.dom.test.js ✅ 사후 추가 — O/X·복수정답 드릴 UI
   common-eventlisteners.dom.test.js ✅ 사후 추가 — data-click 위임·리스너 핸들러 본문
+  reader-audio.dom.test.js        ✅ 사후 추가 — 오디오 매니페스트·Media Session·속도/시크 (Audio 스텁)
+  charts.dom.test.js              ✅ 사후 추가 — 성적 차트·합격/과락 진단·레이더·툴팁
+  review-drills-formula.dom.test.js ✅ 사후 추가 — 복습 통합·숫자 드릴 fetch/캐시·계산기 UI·사전 연동
 ```
 
 ### 3.1 helpers.js API
@@ -322,7 +325,7 @@ P(영속성)를 필수**로, **입력 폼이 있는 뷰는 X(오류/거부)를 �
 | **3** | 학습 코어: 퀴즈·플래시카드·대시보드·복습 (helpers에 STUDY_DATA/진도 픽스처 추가) | 28개 | ✅ 완료 |
 | **4** | 학습 확장: 리더·검색·사전·시뮬레이터·캘린더·챌린지·훈련소·뽀모도로 (용어집은 리더 통합 커버) | 69개 | ✅ 완료 |
 | **5** | 공통: 테마·오프라인·스크래치패드·a11y·UI모드·매뉴얼/문제집/시험선택 뷰어·계정·동기화 | 76개 | ✅ 완료 |
-| **6** | Playwright E2E (별도 설계) — 레이아웃·SW·PWA·실제 다운로드/인쇄 | 스모크 5개 내외 | ⏸️ 보류 |
+| **6** | Playwright E2E — 부트스트랩·네비·PWA 자산 (`tests/e2e/app.spec.js`, chromium+Pixel 7) | 16개 | ✅ 완료 (2026-10-14) |
 
 Phase 3~5는 helpers 픽스처(§3.1 추가 예정 API)가 선행 과제다 — 학습 뷰는
 Formula OS와 달리 `window.STUDY_DATA`·`state`·`DataLoader`·차트·오디오
@@ -345,9 +348,14 @@ npm.cmd run test:dom      # Vitest + jsdom 전체
 npm.cmd run test:all      # unit + parser parity + imports + dom
 ```
 
-## 9. 한계 및 E2E 확장 (Playwright)
+## 9. 한계 및 E2E 계층 (Playwright — 구현 완료)
 
-jsdom이 커버 못 하는 영역 — 실제 레이아웃(사이드바 스크롤 잘림 같은 CSS 버그),
-SW·PWA 설치, 실제 다운로드/인쇄, 오디오 재생 — 은 `tests/e2e/`에 Playwright
-스모크(앱 로드→뷰 전환→CSV 업로드)로 분리. 브라우저 바이너리(~150MB) 필요로
-CI 기본 파이프라인과 분리해 `npm run test:e2e` 수동 실행을 권장한다.
+jsdom이 커버 못 하는 영역 — 앱 부트스트랩(`__APP_INITIALIZED`), SW 등록·
+PWA 자산 서빙, 실제 데스크톱/모바일 네비게이션 — 은 `tests/e2e/app.spec.js`의
+Playwright 계층이 커버한다 (16개 = 8 시나리오 × chromium + Pixel 7 프로젝트).
+`playwright.config.js`가 `serve.js`를 webServer로 자동 기동하며 CI 파이프라인에도
+연결돼 있다(`playwright install --with-deps chromium` + `npm run test:e2e`).
+
+로컬 실행: `npm run test:e2e` (최초 1회 `npx playwright install chromium`).
+미커버 잔여 — 실제 다운로드/인쇄·CSV 업로드·오프라인 차단 시나리오 — 는
+별도 spec 파일로 확장 가능하다.

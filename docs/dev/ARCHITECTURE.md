@@ -183,7 +183,7 @@
 | `content/` | 콘텐츠 SSOT — 전역(`exams.json` 시험 레지스트리) + 시험별 루트(`exams/<id>/`에 manifest/교재/문제은행/참조자료/오디오북) |
 | `docs/` | 프로젝트 문서 (`dev/` 개발 문서, `user/` 사용자 문서) |
 | `tools/` | 빌드 스크립트, 배포 가드(`deploy.js`), 검증 도구 |
-| `tests/` | 자동화 테스트 (`unit/` Node.js, `dom/` Vitest+jsdom) |
+| `tests/` | 자동화 테스트 (`unit/` Node.js, `dom/` Vitest+jsdom, `e2e/` Playwright) |
 | `vendor/` | 자체 호스팅 라이브러리 (FontAwesome, 웹폰트, Mermaid.js, Supabase UMD) |
 | `icons/` | PWA 아이콘 (192/512/maskable) |
 
@@ -203,7 +203,8 @@ Personalized_Skincare/
 ├── package.json
 ├── package-lock.json
 ├── jsconfig.json               # JSDoc 타입 검사 설정
-├── vitest.config.mjs           # 테스트 설정
+├── vitest.config.mjs           # DOM 테스트 설정
+├── playwright.config.js        # E2E 테스트 설정 (webServer=serve.js, chromium/mobile)
 ├── vercel.json                 # Vercel 배포 + CSP 헤더
 ├── .gitignore / .vercelignore
 ├── README.md
@@ -430,7 +431,10 @@ Personalized_Skincare/
 │       ├── common-*.dom.test.js    # 공통 시나리오 (a11y/auth/offline/theme/uimode/sync…)
 │       ├── formula-*.dom.test.js   # Formula OS 시나리오
 │       ├── study-*.dom.test.js     # 학습 뷰 시나리오
+│       ├── charts · reader-audio · review-drills-formula # 차트·오디오·복습/드릴 (2026-10-14 추가)
 │       └── backup · router.dom.test.js
+│   └── e2e/                    #   E2E 테스트 (Playwright 실브라우저)
+│       └── app.spec.js         #     부트스트랩·네비·manifest/sw·App Shell·설정 패널
 │
 ├── vendor/                     # 자체 호스팅 라이브러리
 │   ├── fontawesome/
@@ -1520,6 +1524,7 @@ npm run deploy
 |------|------|
 | `npm test` | 단위 테스트 (node --test) |
 | `npm run test:dom` | DOM 테스트 (Vitest + jsdom) |
+| `npm run test:e2e` | E2E 테스트 (Playwright — serve.js 자동 기동, chromium+mobile) |
 | `npm run test:all` | unit + parser + imports + dom 일괄 |
 | `npm run build:data` | 시험별 콘텐츠→데이터 번들 (모든 시험 순회) |
 | `npm run check:content -- --build` | 콘텐츠 통합 검증 (교재 교체 등 대규모 변경 후) |

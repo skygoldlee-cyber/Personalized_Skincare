@@ -70,9 +70,10 @@
 - **반응형 모바일 레이아웃**: 하단 탭 바 네비게이션, safe-area-inset 대응, 100dvh 동적 뷰포트
 
 **테스트**
-- Node.js 내장 테스트 러너 (`node --test`) — 489 unit tests (sanitize, state, parser, Formula OS 스토어·검증·CSV 등)
-- Vitest + jsdom — 332 DOM tests (backup, router, Formula OS·학습·공통·계정/동기화 시나리오)
-- GitHub Actions CI — push 시 `npm test` + parser parity 자동 실행
+- Node.js 내장 테스트 러너 (`node --test`) — 687 unit tests (sanitize, state, parser, Formula OS 스토어·검증·CSV, 빌드·콘텐츠·보안·성능 불변식 등)
+- Vitest + jsdom — 388 DOM tests (backup, router, Formula OS·학습·공통·계정/동기화·차트·오디오 시나리오)
+- Playwright — 16 E2E tests (부트스트랩·SW·PWA 자산·데스크톱/모바일 네비게이션)
+- GitHub Actions CI — push 시 lint·types·imports·specrefs·trace → unit·DOM·E2E + parser parity 자동 실행
 
 **데이터 파이프라인** (빌드 타임)
 - Node.js 모듈러 빌드 파이프라인으로 MD 교재/문제 → 해시드 JS 번들 생성
@@ -180,8 +181,9 @@ Personalized Skincare/
 │   └── README.md                    ← 사용 절차·시나리오 (교재 교체 시 재사용)
 │
 ├── 📂 tests/                        ← 자동화 테스트
-│   ├── unit/                        ← Node.js 내장 테스트 러너 (489 tests)
-│   └── dom/                         ← Vitest + jsdom DOM 테스트 (264 tests)
+│   ├── unit/                        ← Node.js 내장 테스트 러너 (687 tests)
+│   ├── dom/                         ← Vitest + jsdom DOM 테스트 (388 tests)
+│   └── e2e/                         ← Playwright 실브라우저 E2E (16 tests)
 ├── 📂 .github/workflows/            ← GitHub Actions CI (test + parser parity)
 │
 └── 📂 docs/                         ← 문서 (개발 + 사용자)

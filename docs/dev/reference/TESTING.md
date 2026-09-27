@@ -1,8 +1,8 @@
 # 🧪 단위 테스트 가이드 (Unit Testing Guide)
 
-> **작성일**: 2026-09-03
-> **대상**: `tests/` 디렉토리의 자동화 테스트 (Unit + DOM)
-> **프레임워크**: Node.js 내장 `node:test` (Unit) + Vitest/jsdom (DOM)
+> **작성일**: 2026-09-03 (2026-10-14 갱신: 테스트 수치·E2E 계층·게이트 현행화)
+> **대상**: `tests/` 디렉토리의 자동화 테스트 (Unit + DOM + E2E)
+> **프레임워크**: Node.js 내장 `node:test` (Unit) + Vitest/jsdom (DOM) + Playwright (E2E)
 > **SPEC 추적**: 각 테스트의 검증 대상은 `SPEC.md`의 기능 ID와 대응 — 매핑은 `ARCHITECTURE.md` §"요구사양 추적 (SPEC ID 매트릭스)" 참조. 신규 테스트 추가 시 검증 대상 행에 관련 SPEC ID 기재 권장
 > **문서 ID**: DOC-REF-06
 > **관련 SPEC ID**: 전 영역 (테스트 프레임워크·커버리지 규약 — 각 테스트는 @spec으로 개별 요구사항 연결)
@@ -26,14 +26,16 @@
 
 | 구분 | 프레임워크 | 환경 | 파일 위치 | 테스트 수 |
 |------|-----------|------|-----------|-----------|
-| **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 552 |
-| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 364 |
-| **합계** | | | | **873** |
+| **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 687 |
+| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 388 |
+| **E2E** | Playwright | 실브라우저 (Chromium + 모바일) | `tests/e2e/*.spec.js` | 16 |
+| **합계** | | | | **1091** |
 
 ### 설계 원칙
 
 - **순수 로직 우선**: DOM 의존성 없는 모듈(`sanitize.js`, `sha256.js`, `trainer-calc.js` 등)은 Node.js 내장 테스트로 검증 → 빠르고 가벼움
 - **DOM 테스트 분리**: `localStorage`, `document` 등 브라우저 API가 필요한 테스트는 Vitest + jsdom 환경에서 실행
+- **E2E 계층**: jsdom으로 검증 불가한 영역(앱 부트스트랩·`__APP_INITIALIZED`·SW 등록·PWA 자산·실제 네비게이션)은 Playwright 실브라우저로 커버 — `serve.js` 정적 서버를 webServer로 자동 기동
 - **회귀 가드**: CSP 위반(`delegation-guard`), Mermaid 렌더링 파이프라인 등 배포 후에만 발견되는 버그를 사전 차단
 - **실제 콘텐츠 검증**: 교재 MD 파일의 Mermaid 블록 들여쓰기, 문법 등 실제 콘텐츠를 대상으로 검증
 - **교재 무관 공통 테스트**: 합성 데이터(synthetic data)를 사용하여 교재 콘텐츠가 바뀌어도 로직 자체를 검증 (`study-aids`, `pdf-registry`, `glossary-query`, `markdown-parser-general`, `reader-format-general`)
@@ -84,6 +86,11 @@ npm run test:unit
 # DOM 테스트만 실행
 npm run test:dom
 
+# E2E 테스트 (Playwright — serve.js 자동 기동, chromium + mobile 프로젝트)
+npm run test:e2e
+# 최초 1회 브라우저 설치 필요:
+npx playwright install chromium
+
 # 전체 실행 (Unit + 파서 정합성 + DOM)
 npm run test:all
 
@@ -96,11 +103,11 @@ npm run coverage:all      # 둘 다 실행 후 coverage-merged/ 병합 리포트
 npm run test:watch
 
 # 품질 게이트
-npm run lint              # ESLint — 에러만 차단 (기존 경고는 점진 정리 대상)
-npm run check:types       # tsc --noEmit (jsconfig.json의 checkJs, JSDoc 진단)
-npm run check:imports     # src/ import↔export 교차 검증
+npm run lint              # ESLint — 0 problems 필수 (--max-warnings 0, 규칙은 error 승격)
+npm run check:types       # tsc --noEmit (jsconfig.json의 checkJs — src 전체 검사, JSDoc 진단)
+npm run check:imports     # src/ import↔export 교차 검증 (경고도 0)
 npm run check:docs        # 문서 경로 참조 + DOC ID 정합
-npm run check:specrefs    # SPEC↔@spec 양방향 + 테스트 갭 기준선(103개 초과 시 실패)
+npm run check:specrefs    # SPEC↔@spec 양방향 + 테스트 갭 기준선(기준선 0 — 신규 갭 즉시 실패)
 npm run check:trace       # TRACE_MATRIX 신선도 (입력 해시 — 미재생성 시 실패)
 
 # 영향도 분석 — 변경 파일 → 영향 요구사항·권장 테스트
@@ -126,7 +133,8 @@ npm run hooks:install
 | `coverage:all` | 두 커버리지 실행 + `tools/coverage_merge.js` | 유닛+DOM 병합 리포트 (`coverage-merged/`) — 실질 커버리지는 이 수치 |
 | `test:all` | `node --test tests/unit/*.test.js && node tools/check_parser_parity.js && vitest run` | 전체 |
 | `test:watch` | `node --test --watch tests/unit/*.test.js` | Watch 모드 |
-| `lint` | `eslint src/ tools/ tests/ sw.js serve.js` | ESLint — 에러 0 필수, 경고는 점진 정리 백로그 |
+| `test:e2e` | `playwright test` | E2E 테스트 (tests/e2e, serve.js webServer 자동 기동) |
+| `lint` | `eslint src/ tools/ tests/ sw.js serve.js --max-warnings 0` | ESLint — 0 problems 필수 (경고도 차단) |
 | `check:types` | `tsc -p jsconfig.json --noEmit` | JSDoc 타입 진단 (checkJs) |
 | `check:specrefs` | `node tools/check_spec_refs.js` | SPEC↔코드/문서 스테일 참조 + 테스트 갭 기준선 게이트 |
 | `check:trace` | `node tools/build_trace_matrix.js --check` | 매트릭스 입력 해시 신선도 |
@@ -202,7 +210,19 @@ npm run hooks:install
 | 40 | `storage.test.js` | 12 | `src/storage.js` — 스코프·JSON 헬퍼·쓰기 훅·백엔드 교체·`setMany` 롤백 | 저장소 추상화 |
 | 41 | `whats-new.test.js` | 7 | `src/whats-new.js` — `collectNewEntries` 버전 비교·집계·상한·폴백 | 순수 함수 |
 | 42 | `feedback.test.js` | 13 | `src/feedback.js` — `?src=` 캡처·sanitize, 페이로드 빌드/검증, 쿨다운, 큐·플러시 | window/localStorage 스텁 |
-| | **합계** | **552** | | |
+| 43 | `study-tracker.test.js` | 5 | `src/study-tracker.js` — SC-03 활동 기록·월별 학습일·목표 진행 | localStorage 모킹, 2026-10-14 추가 |
+| 44 | `build-pipeline.test.js` | 16 | BP-01~08 — manifest 스키마·안정 ID·빌드 검증·파서 정합·용어집 인덱스·SW 스탬프·카드 감사 | tools/build 모듈 + subprocess, 2026-10-14 추가 |
+| 45 | `content-structure.test.js` | 13 | CS-01~10 — manifest↔파일·교재 8종·문제은행·ref_md 레이아웃·원료 메타·오디오북·슬러그·참조 이미지 | 파일시스템 정적 검증, 2026-10-14 추가 |
+| 46 | `audit-quality.test.js` | 6 | CQ-01~05 — 카드 감사·참조 링크·심각도·콤보 감사·베이스라인 카운트 | subprocess 실행, 2026-10-14 추가 |
+| 47 | `formula-os.test.js` | 11 | FO-03/04/07/09 — 제조 단계·역할→상 매핑·고객 필드·pH·단계 상한·import/export·무료 한도 | 합성 데이터, 2026-10-14 추가 |
+| 48 | `data-architecture.test.js` | 11 | DA-01/02/04/06/08 — 멀티시험 레지스트리·경로·기능 플래그·폴백 번들·스코프 키 | 생성 번들 검증, 2026-10-14 추가 |
+| 49 | `story-textbook.test.js` | 10 | ST-01~07 — 이야기형 교재 구조·마커·섹션 | 콘텐츠 정적 검증, 2026-10-14 추가 |
+| 50 | `pwa-sw.test.js` | 15 | P-01~12 — SW 캐시 분기·프리캐시·스큐 방지·업데이트·CACHE_VERSION·설치 캡처·manifest Content-Type·app-fallback·verify:assets | 정적 검증 + subprocess, 2026-10-14 추가 |
+| 51 | `security.test.js` | 6 | S-01/07/08 — CSP·인라인 핸들러 부재·보안 헤더·Permissions-Policy·위임 브리지 | vercel.json·index.html 정적 검증, 2026-10-14 추가 |
+| 52 | `perf-invariants.test.js` | 16 | PF-01~16 — 런타임 MD 파싱·과목별 로딩·캐시 TTL·지연 하이라이트·normalize·디바운스·console.log 금지·ref_md·Mermaid 지연·법령 정본 | 소스 패턴 정적 검증, 2026-10-14 추가 |
+| 53 | `ux-invariants.test.js` | 20 | UX-FB/FORM/PWA/SCR/SET — 스크롤바·CSS 변수·설정 패널·44px·버전·토스트·모달·펄스·standalone·app-height·폼 16px·터치 피드백 | CSS·HTML·JS 정적 검증, 2026-10-14 추가 |
+| 54 | `content-engineering.test.js` | 6 | CE-01~05 + TR-16a — 학습 가이드·한 줄 요약·비교표·확인문제·용어 표·툴바 자동 숨김 | 콘텐츠·소스 정적 검증, 2026-10-14 추가 |
+| | **합계** | **687** | | |
 
 ### DOM 테스트 (`tests/dom/`)
 
@@ -247,7 +267,10 @@ npm run hooks:install
 | 36 | `study-commandpalette.dom.test.js` | 9 | 통합 검색 팔레트 | 팔레트 열기·검색·키보드 내비·실행 | 2026-09-26 추가 |
 | 37 | `whats-new.dom.test.js` | 7 | 새 버전 변경 이력 알림 | 최초 실행/업데이트/재부팅 분기, 복귀 사용자 판별, 확인→last_seen 기록, 설정 재열람 | 2026-09-26 추가 |
 | 38 | `feedback.dom.test.js` | 10 | 의견 보내기 모달 | 렌더링, 유형/별점 선택, 성공 제출, 오프라인 큐+플러시, 검증 거부, 허니팝, XSS 이스케이프, 신기능 힌트(점+배지) 표시·소멸 | 2026-09-26 추가 |
-| | **합계** | **364** | | |
+| 39 | `reader-audio.dom.test.js` | 6 | 오디오북 플레이어 (AO-01~05) | 매니페스트 경로 해석·오디오 없음 토스트·Media Session 메타/핸들러·속도 순환·시크·정지 | Audio·mediaSession 스텁, 2026-10-14 추가 |
+| 40 | `charts.dom.test.js` | 7 | 분석 차트 (C-01~05) | 성적 라인차트·합격/과락 진단·레이더 N축·과목 점수행·툴팁 | 성적 이력 시딩(safeSetItem scopedKey), 2026-10-14 추가 |
+| 41 | `review-drills-formula.dom.test.js` | 11 | 복습·숫자 드릴·계산기 (RV-01·ND-01·FO-10/11) | 복습 통합 목록·과목 필터·number-drills fetch/캐시/렌더·계산기 상하 고정바·사전 연동·DB 버전 배지 | fetch 스텁, 2026-10-14 추가 |
+| | **합계** | **388** | | |
 
 ---
 
@@ -526,6 +549,21 @@ export 함수를 직접 호출하고 DOM 반영을 검증한다. `data-click` �
 - `src/storage-keys.js`에 선언된 키 ↔ `src/`에서 실제 사용하는 `localStorage` 키 일치
 - 미등록 키 회귀 가드
 
+### 4.14 E2E (Playwright 실브라우저) — 2026-10-14 추가
+
+`tests/e2e/app.spec.js` (16개 = 8 시나리오 × chromium + Pixel 7 프로젝트).
+jsdom으로 불가한 영역을 커버한다 — `playwright.config.js`가 `serve.js`를
+webServer로 자동 기동(port 3000, CI에서는 재사용 안 함).
+
+- **부트스트랩**: `index.html` 로드 → 대시보드 렌더 + `window.__APP_INITIALIZED === true` 대기 (app-fallback의 정상 초기화 플래그), pageerror 부재
+- **폴백 미발화**: 정상 부팅에서 `#app-fallback-overlay`가 나타나지 않음
+- **네비게이션**: 데스크톱 사이드바 `.nav-item` / 모바일 하단 탭 바 `.mobile-tab-item`의 `data-target` 클릭 → 대상 뷰 가시화 (`:visible` 셀렉터로 숨겨진 쪽 방지)
+- **PWA 자산**: `manifest.webmanifest` Content-Type `application/manifest+json`, `sw.js` 서빙·등록 상태, App Shell 핵심 자산(style.css·data/version.js·아이콘) 200
+- **UI 골격**: 헤더 액션 버튼 렌더, 설정 패널 토글
+
+실행: `npm run test:e2e` (최초 1회 `npx playwright install chromium` 필요).
+확장 시 시나리오 단위로 `tests/e2e/*.spec.js`에 추가 — 인증·오프라인 경로는 별도 spec 권장.
+
 ---
 
 ## 5. 새 테스트 작성 가이드
@@ -627,37 +665,38 @@ function detectDiagramType(textContent) {
 
 ## 6. 커버리지 현황
 
-`npm run coverage:all` 기준 **병합 라인 79.7%** (`src/` 최상위 81.5%, `src/views` 77.2%).
+`npm run coverage:all` 기준 **병합 수치** (2026-10-14 측정): statements 70.9% · branches 66.4% · functions 67.1% · **lines 78.4%** — 병합 임계값(`coverage_merge.js --check`: stmts 68/branches 62/funcs 62/lines 74) 통과.
 
 - 병합 리포트(`coverage-merged/index.html`)가 실질 수치 — vitest 단독 리포트는 유닛 테스트가 커버하는 순수 로직을 0%로 표시하므로 과소평가된다.
 - jsdom으로 검증 불가한 환경 의존 모듈은 `vitest.config.mjs` `coverage.exclude`로 분모에서 제외 (`types.js`, `app-fallback`, `pwa-install*`, `theme-init`, `web-vitals`, `reader-audio`).
+- 제외 파일 중 `app-fallback`·`pwa-install*`·`reader-audio`의 동작은 **E2E 계층(§4.14)에서 실브라우저로 커버** — 부트스트랩 플래그·SW 등록·Media Session이 검증된다.
 
 ### 측정 제외 파일 (수동 검증 영역)
 
 | 파일 | 성격 | 사유 |
 |------|------|------|
 | `types.js` | JSDoc typedef 선언 | 런타임 코드 없음 — 측정 자체가 무의미 |
-| `app-fallback.js` | ESM 로드 실패 복구 부트스트랩 | `window.onerror` 경계 — 모듈 로드 실패 재현 불가 |
-| `pwa-install.js`, `pwa-install-capture.js`, `pwa-manifest.js` | 설치 프롬프트·매니페스트 | `beforeinstallprompt` 브라우저 이벤트 |
+| `app-fallback.js` | ESM 로드 실패 복구 부트스트랩 | `window.onerror` 경계 — 모듈 로드 실패 재현 불가 (E2E가 정상 부팅 시 미발화 검증) |
+| `pwa-install.js`, `pwa-install-capture.js`, `pwa-manifest.js` | 설치 프롬프트·매니페스트 | `beforeinstallprompt` 브라우저 이벤트 (pwa-sw 정적 테스트 + E2E 자산 검증으로 부분 커버) |
 | `theme-init.js` | DOM 이전 즉시 실행 스크립트 | FOUC 방지 초기화 — 부트스트랩 영역 |
 | `web-vitals.js` | 성능 모니터링 | `PerformanceObserver` |
-| `reader-audio.js` | 오디오북 플레이어 | `Audio` API |
+| `reader-audio.js` | 오디오북 플레이어 | `Audio` API — `reader-audio.dom.test.js`가 스텁으로 주요 경로 커버 (병합 19%) |
 
 ### 남은 저커버리지 영역
 
-| 파일 | 라인 | 성격 | 개선 방향 |
+| 파일 | 라인(병합) | 성격 | 개선 방향 |
 |------|------|------|-----------|
-| `app.js` | 0% | 메인 진입점 (1100+ 라인) — 모듈 로드 시 즉시 실행돼 DOM 테스트로는 임포트 불가 | 부분 함수를 별도 모듈로 분리해 테스트 가능하게 하거나, E2E 도구로 커버 |
-| `charts.js` | 17% | SVG 차트 렌더링 | 렌더 출력 DOM을 스냅샷/구조 검증하는 방식으로 가능 |
-| `event-listeners.js` | 68% | `data-click` 위임 바인딩 — 디스패치·키보드 접근성·핸들러 본문 커버 완료 | 잔여는 스와이프 제스처·일부 분기 |
-| `textbook-reader.js` | 53% | 대형 뷰 컨트롤러 (1650 라인) — 툴바·본문 검색·TOC 드로어·표 모달 커버 완료 | 스크롤 스파이·참조 미리보기·오디오 연동 경로 |
+| `app.js` | 0% | 메인 진입점 (1100+ 라인) — 모듈 로드 시 즉시 실행돼 DOM 테스트로는 임포트 불가 | E2E 스모크로 부팅 경로 커버 완료 — 세부 함수는 모듈 분리 후 테스트 |
+| `formula.js` | ~60% | Formula OS 계산기·포뮬러 (1400+ 라인) | 행 렌더·저장 경로 일부 커버 — 추천·규칙 UI 경로 보강 |
+| `textbook-reader.js` | ~56% | 대형 뷰 컨트롤러 (1650 라인) — 툴바·본문 검색·TOC 드로어·표 모달 커버 완료 | 스크롤 스파이·참조 미리보기·오디오 연동 경로 |
 | `exam-viewer.js` | ~54% | 문제집 뷰어 | 해설·인용 링크 경로 보강 |
-| `exam-simulator.js` | 69% | 시뮬레이터 | 오답 모의고사(startWeakExam) 커버 완료 — 잔여는 결과 리뷰 세부 경로 |
+| `exam-simulator.js` | ~67% | 시뮬레이터 | 오답 모의고사(startWeakExam) 커버 완료 — 잔여는 결과 리뷰 세부 경로 |
 | `data-loader.js` | ~73% | `_loadScript` 스크립트 로딩 경로 | jsdom의 script 로드 제약 — 스텁 분기 커버 가능 |
 | `manual-viewer.js` | ~67% | 학습안내서 뷰어 | 섹션 네비게이션 경로 보강 |
+| `event-listeners.js` | ~67% | `data-click` 위임 바인딩 | 잔여는 스와이프 제스처·일부 분기 |
 
 > 수치는 `coverage-merged` 기준. 특정 파일의 미커버 라인은 리포트의
-> `Uncovered Line #s` 컬럼 참조.
+> `Uncovered Line #s` 컬럼 참조. `charts.js`는 17%→**80.5%**로 상승 (2026-10-14 `charts.dom.test.js` 추가) — 저커버리지 표에서 제외.
 
 ---
 
@@ -670,21 +709,26 @@ function detectDiagramType(textContent) {
 ```yaml
 # .github/workflows/ci.yml 실행 순서 (요약)
 - npm ci
-- npm run lint            # ESLint — 에러 0 필수 (경고는 통과)
-- npm run check:types     # tsc --noEmit — JSDoc 타입 진단
+- npm audit --audit-level=high   # high+ 취약 의존성 차단
+- npm run lint            # ESLint — 0 problems 필수 (--max-warnings 0)
+- npm run check:types     # tsc --noEmit — JSDoc 타입 진단 (src 전체)
 - npm run check:imports   # import/export 교차 검증
 - npm run check:docs      # 문서 경로 + DOC ID
-- npm run check:specrefs  # 스테일 SPEC 참조 + 테스트 갭 기준선
+- npm run check:specrefs  # 스테일 SPEC 참조 + 테스트 갭 기준선(0)
 - npm run check:trace     # TRACE_MATRIX 신선도 (해시)
 - npm test                # Unit 테스트
-- npm run coverage        # DOM 테스트 + 커버리지 임계값 → 아티팩트 업로드
+- npm run coverage        # DOM 테스트 + 커버리지 임계값
+- npm run coverage:unit   # 유닛 커버리지 (c8)
+- node tools/coverage_merge.js --check   # 병합 커버리지 임계값 → 아티팩트 업로드
 - npm run verify:assets   # SW 프리캐시 자산
 - npm run check:parser    # 빌드↔런타임 파서 정합성
+- npx playwright install --with-deps chromium
+- npm run test:e2e        # Playwright E2E → 실패 시 test-results 아티팩트
 - node tools/impact_tests.js --ref origin/main   # PR만 — 영향 요구사항 리포트
 ```
 
 - PR에서는 `impact_tests.js --ref origin/main`이 변경 파일의 영향 요구사항·권장 테스트를 출력한다 — 리뷰어가 회귀 범위를 확인하는 용도.
-- 커버리지 리포트(`coverage/`)는 CI 아티팩트로 14일간 보관된다.
+- 커버리지 리포트(`coverage/`)는 CI 아티팩트로 14일간, E2E 실패 시 `test-results/`가 7일간 보관된다.
 
 ### 배포 전 체크리스트
 
@@ -736,6 +780,8 @@ npm run verify:assets
 |------|------|------|
 | Unit 테스트 | `tests/unit/*.test.js` | Node.js `node:test` |
 | DOM 테스트 | `tests/dom/*.test.js` | Vitest + jsdom |
+| E2E 테스트 | `tests/e2e/*.spec.js` | Playwright 실브라우저 |
+| Playwright 설정 | `playwright.config.js` | webServer(serve.js)·chromium/mobile 프로젝트 |
 | Vitest 설정 | `vitest.config.mjs` | `environment: 'jsdom'` |
 | 테스트용 package.json | `tests/unit/package.json` | (있을 경우) |
 | CI 워크플로우 | `.github/workflows/ci.yml` | GitHub Actions |
