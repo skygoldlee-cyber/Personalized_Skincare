@@ -274,6 +274,7 @@ Personalized_Skincare/
 │   ├── whats-new.js            #   새 버전 변경 이력 알림 (APP_VERSION 비교 → 모달, 전용 whats-new-overlay)
 │   ├── feedback.js             #   의견 수신 — 설정 "의견 보내기" 모달, ?src= 유입 추적, 익명 insert, 오프라인 큐(pending_feedback), 신기능 힌트(⚙️ 점+NEW 배지)
 │   ├── pro-upgrade.js          #   Pro 안내 — feature-plan.json 무료/Pro 로드, PRO 배지(data-pro-feature) 표시 제어, 진입 1회 안내·한도 초과 업그레이드 모달
+│   ├── usage-stats.js          #   로컬 사용 카운터 (ROAD-L5) — 뷰·액션 카운트를 시험 스코프 usage_stats 키에 로컬 전용 누적, '내 사용 통계' 모달
 │   ├── supabase-config.js      #   Supabase URL·Publishable key (공개 설계상 키)
 │   ├── supabase-client.js      #   Supabase lazy init — vendor UMD 동적 로드
 │   ├── auth-view.js            #   계정/로그인 모달 (이메일+PW·회원가입·매직링크 OTP)
@@ -538,6 +539,7 @@ Personalized_Skincare/
 | [`src/reader-format.js`](../../src/reader-format.js) | 교재 리더 본문 포맷터. `parseMarkdown()` + HTML 참조 링크 변환 (`data-ref-html`, `data-ref-search`) + 참조자료 인라인 렌더링. **참조자료 인라인 프리뷰 툴팁** (데스크톱 hover 400ms / 모바일 롱프레스 600ms, 200자 스니펫) |
 | [`src/exam-viewer.js`](../../src/exam-viewer.js) | 문제집(MD) 런타임 뷰어. `content/exams/cosmetic/문제은행/*.md` fetch → 자체 MD→HTML 변환 → 인앱 전체화면 오버레이 렌더링. TOC 생성·인쇄·sessionStorage 캐시(24h)·`file://` 번들 폴리백(`data/exams/cosmetic/exams_md/*.js`) 지원. **시험 제목은 registry에서 동적 조회** (하드코딩 없음) |
 | [`src/pro-upgrade.js`](../../src/pro-upgrade.js) | Pro 안내 계층. 루트 `feature-plan.json`을 `loadFeaturePlan()`으로 로드 → 기능별 `pro`/`free` 판정(`isProFeature`). `pro` 기능은 진입 시 1회 정보 모달(`proFeatureNotice`, 기능별 seen 플래그) + `.pro-badge[data-pro-feature]` 배지 표시, `free`는 배지·안내 제거. 스토어 한도 오류(`Free 플랜` 접두사)는 `showStoreError` → `showUpgradeNotice` 업그레이드 모달로 분기 |
+| [`src/usage-stats.js`](../../src/usage-stats.js) | 로컬 사용 카운터 (ROAD-L5 — 유료가치 판정 데이터). `switchView`의 `trackView(viewId)`로 화면별 진입·`trackAction(key)`로 유료가치 후보 액션(오답→교재/노트/유사문제·진단 평가·통합검색·플랜 비교·실제 결과 보고) 횟수를 시험 스코프 `usage_stats` 키에 누적 — `days` 맵은 90일 상한. **로컬 전용**: 백업·클라우드 동기화 제외(`RESET_KEYS`에는 포함 — 전체 초기화 시 삭제). 설정 '내 사용 통계'(`showUsageStats`)에서 첫/최근 사용일·활동 일수·화면별/기능별 횟수 표 + 초기화 버튼 |
 
 ### 3. Data Layer (데이터 계층)
 

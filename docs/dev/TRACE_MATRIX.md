@@ -3,7 +3,7 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: 036a8f31659d8481
+> 입력 해시: 72e4086ed6d3c3da
 > 생성: 2026-09-27 · 원천: SPEC.md(344개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
@@ -156,7 +156,7 @@
 | RR-01 | DOC-REF-04<br>DOC-REF-07 | src/html-viewer.js | tests/dom/common-htmlviewer.dom.test.js | — |
 | RR-02 | DOC-REF-04<br>DOC-REF-07 | src/views/textbook-reader.js | tests/dom/common-htmlviewer.dom.test.js | — |
 | RR-03 | DOC-REF-04<br>DOC-REF-07 | src/views/textbook-reader.js | tests/dom/common-htmlviewer.dom.test.js | — |
-| RR-04 | DOC-REF-04<br>DOC-REF-07 | src/views/textbook-reader.js | tests/dom/common-htmlviewer.dom.test.js | — |
+| RR-04 | DOC-REF-04<br>DOC-REF-07 | src/keyword-index.js<br>src/views/textbook-reader.js<br>tools/build/build_keyword_index.js | tests/dom/common-htmlviewer.dom.test.js | — |
 | RR-05 | DOC-REF-04<br>DOC-REF-07 | src/html-viewer.js<br>src/views/textbook-reader.js | tests/dom/common-htmlviewer.dom.test.js | — |
 | RR-06 | DOC-REF-04<br>DOC-REF-07 | src/html-viewer.js<br>src/views/textbook-reader.js | tests/dom/common-htmlviewer.dom.test.js | — |
 | RR-07 | DOC-REF-04<br>DOC-REF-07 | src/html-viewer.js | tests/dom/common-htmlviewer.dom.test.js | — |
@@ -165,7 +165,7 @@
 | RR-10 | DOC-REF-04<br>DOC-REF-07 | src/html-viewer.js | tests/dom/common-htmlviewer.dom.test.js | — |
 | RR-11 | DOC-REF-04<br>DOC-REF-07 | src/html-viewer.js | tests/dom/common-htmlviewer.dom.test.js | — |
 | RR-12 | DOC-REF-04<br>DOC-REF-07 | src/html-viewer.js | tests/dom/common-htmlviewer.dom.test.js | — |
-| RR-13 | DOC-REF-04<br>DOC-REF-07 | src/html-viewer.js<br>tools/build/build_pdf_registry.js | tests/dom/common-htmlviewer.dom.test.js<br>tests/unit/pdf-registry.test.js | — |
+| RR-13 | DOC-REF-04<br>DOC-REF-07 | src/html-viewer.js<br>src/pdf-registry.js<br>tools/build/build_pdf_registry.js | tests/dom/common-htmlviewer.dom.test.js<br>tests/unit/pdf-registry.test.js | — |
 | RR-14 | DOC-REF-04<br>DOC-REF-07 | css/print.css<br>src/html-viewer.js | tests/dom/common-htmlviewer.dom.test.js | — |
 | RR-15 | DOC-REF-04<br>DOC-REF-07 | css/html-viewer.css<br>src/html-viewer.js | tests/dom/common-htmlviewer.dom.test.js | — |
 | RR-16 | DOC-REF-04<br>DOC-REF-07 | src/html-viewer.js | tests/dom/common-htmlviewer.dom.test.js | — |
@@ -413,7 +413,7 @@
 | PF-09 | — | src/views/dictionary.js | tests/unit/perf-invariants.test.js | — |
 | PF-10 | — | src/app.js | tests/unit/perf-invariants.test.js | — |
 | PF-11 | — | ref-pipeline/convert.py<br>ref-pipeline/pdf2md.py | tests/unit/perf-invariants.test.js | — |
-| PF-12 | — | tools/build/build_keyword_index.js | tests/unit/perf-invariants.test.js | — |
+| PF-12 | — | src/keyword-index.js<br>tools/build/build_keyword_index.js | tests/unit/perf-invariants.test.js | — |
 | PF-13 | — | src/mermaid-render.js | tests/unit/perf-invariants.test.js | — |
 | PF-14 | — | css/base.css | tests/unit/perf-invariants.test.js | — |
 | PF-15 | — | ref-pipeline/convert.py | tests/unit/perf-invariants.test.js | — |

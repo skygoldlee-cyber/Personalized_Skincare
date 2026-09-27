@@ -34,12 +34,12 @@ const EXCLUDE_DIRS = [path.join('tools', '_archive'), path.join('tools', '__pyca
 // 자기 스캔 제외 — 이 파일의 독스트링이 @spec 예시를 포함
 const EXCLUDE_FILES = [path.join('tools', 'check_spec_refs.js')];
 
-// ID 패턴: AA-NN, AA-BB-NN (예: UX-NAV-07), AA-PN (예: ROAD-P0 로드맵)
-const ID_RE = /\b([A-Z]{1,4}(?:-[A-Z]{1,4})?-(?:\d{2}[a-z]?|P\d))\b/g;
+// ID 패턴: AA-NN, AA-BB-NN (예: UX-NAV-07), AA-PN·AA-LN (예: ROAD-P0·ROAD-L5 로드맵)
+const ID_RE = /\b([A-Z]{1,4}(?:-[A-Z]{1,4})?-(?:\d{2}[a-z]?|[PL]\d))\b/g;
 const SPEC_TAG_RE = /@spec\s+([^\n]*)/g;
-const RANGE_RE = /^([A-Z]{1,4}(?:-[A-Z]{1,4})?-P?)(\d{1,2})~P?(\d{1,2})$/
+const RANGE_RE = /^([A-Z]{1,4}(?:-[A-Z]{1,4})?-[PL]?)(\d{1,2})~[PL]?(\d{1,2})$/
 ;const WILDCARD_ID_RE = /^([A-Z]{1,4}(?:-[A-Z]{1,4})?)-\*$/;
-const PURE_ID_RE = /^[A-Z]{1,4}(?:-[A-Z]{1,4})?-(?:\d{2}[a-z]?|P\d)$/;
+const PURE_ID_RE = /^[A-Z]{1,4}(?:-[A-Z]{1,4})?-(?:\d{2}[a-z]?|[PL]\d)$/;
 const RELATED_RE = /^>\s*\*\*관련 SPEC ID\*\*:\s*(.+)$/m;
 
 // 문서 헤더 "관련 SPEC ID" 스캔 대상 (check_doc_ids.js와 동일 범위)
@@ -92,7 +92,7 @@ function parseSpecTag(tagText, file, line, errors, specIds = new Set()) {
     const range = token.match(RANGE_RE);
     if (range) {
       const [, prefix, from, to] = range;
-      const pad = prefix.endsWith('P') ? 1 : 2; // ROAD-P0~P4는 단자리
+      const pad = /[PL]$/.test(prefix) ? 1 : 2; // ROAD-P0~P4·ROAD-L1~L5는 단자리
       for (let i = +from; i <= +to; i++) ids.add(prefix + String(i).padStart(pad, '0'));
       continue;
     }

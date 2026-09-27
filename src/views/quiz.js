@@ -11,6 +11,7 @@ import {
     weakItemKey, resolveWrongQuiz, resolveCard, subjectForWeakItem, parseWeakSimId
 } from '../weak-items.js';
 import { checkShortAnswer } from './trainer.js';
+import { trackAction } from '../usage-stats.js';
 import { updateGlobalStats, startSubjectReader } from './dashboard.js';
 import { shuffle } from '../utils.js';
 import { showToast, vibrate, HAPTIC } from '../ui-utils.js';
@@ -93,6 +94,7 @@ export async function startDiagnosticQuiz() {
     state.quiz.subject = subjects[0].key;
     state.quiz.data = shuffle(data);
     state.quiz.diagnostic = true;
+    trackAction('diagnostic_quiz');
     switchView('quiz-view', { scrollTop: true });
     _beginQuizRun();
 }
@@ -859,6 +861,7 @@ export function tagWrongCauseAt(quizId, cause) {
  * 오답 항목을 복습 노트로 연다. (data-args: [itemId])
  */
 export function wrongActionCard(itemId) {
+    trackAction('weak_to_card');
     state.weakCards.add(itemId);
     state.reviewFilter = 'all';
     saveProgress();
@@ -869,6 +872,7 @@ export function wrongActionCard(itemId) {
  * 오답 항목의 과목 교재로 이동한다. (data-args: [subjectId])
  */
 export function wrongActionTextbook(subjId) {
+    trackAction('weak_to_textbook');
     startSubjectReader(subjId);
 }
 
@@ -876,6 +880,7 @@ export function wrongActionTextbook(subjId) {
  * 오답 문제와 같은 단원의 유사 문제로 퀴즈를 시작한다. (data-args: [quizId])
  */
 export function wrongActionSimilar(quizId) {
+    trackAction('weak_to_similar');
     const resolved = resolveWrongQuiz(quizId);
     if (!resolved) {
         showToast('원본 문제를 찾지 못했습니다.', 'warning');

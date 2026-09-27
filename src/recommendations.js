@@ -9,6 +9,7 @@ import { safeGetItem, safeSetItem, getSimResultsHistory } from './state.js';
 import { STORAGE_KEYS } from './storage-keys.js';
 import { getDueCards } from './spaced-repetition.js';
 import { getCurrentExamId, getExamRules, resolveLegacySubjectKey } from './exam-context.js';
+import { trackAction } from './usage-stats.js';
 
 /**
  * 모의고사 성적 이력 로드 (charts.js getSimResults와 같은 저장 키)
@@ -265,6 +266,7 @@ export function getActualResult() {
 export function saveActualResult(passed, score) {
     if (score !== null && (typeof score !== 'number' || score < 0 || score > 100)) return false;
     const examId = getCurrentExamId();
+    trackAction('actual_exam_report');
     safeSetItem(STORAGE_KEYS.ACTUAL_EXAM_RESULT, JSON.stringify({
         passed: !!passed,
         score,

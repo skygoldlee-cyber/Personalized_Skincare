@@ -12,6 +12,7 @@ import { esc } from './sanitize.js';
 import { trapFocus } from './ui-utils.js';
 import { safeGetItem, safeSetItem } from './state.js';
 import { STORAGE_KEYS } from './storage-keys.js';
+import { trackAction } from './usage-stats.js';
 
 /** 스토어 오류가 무료 한도 초과인지 판별 */
 function isFreeLimitError(error) {
@@ -140,6 +141,7 @@ const PLAN_FEATURES = [
 /** Free/Pro 기능 비교 안내 모달 — 설정의 '플랜 안내'·계정 모달에서 연다.
  * feature-plan.json의 현재 값을 반영하므로 플랜 전환 시 문구가 어긋나지 않는다. */
 export function showPlanCompare() {
+    trackAction('plan_compare');
     const featureRows = PLAN_FEATURES.map(f => {
         const tag = isProFeature(f.key)
             ? '<span class="pro-badge">PRO</span>'

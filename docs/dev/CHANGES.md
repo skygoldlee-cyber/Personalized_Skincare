@@ -6,6 +6,15 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-16 로컬 사용 카운터 구현 (ROAD-L5)
+
+- **`src/usage-stats.js` 신규** (`@spec ROAD-L5`): `trackView(viewId)`(switchView 자동 계측) + `trackAction(key)`로 시험 스코프 `usage_stats` localStorage 키에 `{v, firstUse, lastUse, days(90일 상한), views, actions}` 누적 — 외부 전송 없음
+- **액션 계측 7종**: `weak_to_textbook`·`weak_to_card`·`weak_to_similar`(오답 루프)·`diagnostic_quiz`·`command_palette`·`plan_compare`·`actual_exam_report` — 유료가치 후보 기능(LEARNING_PREMIUM_PLAN 표 대응)
+- **설정 '📊 내 사용 통계'** (`showUsageStats`): 첫/최근 사용일·활동 일수·기능 사용 합계 + 화면별/기능별 횟수 표(내림차순, 뷰 라벨은 `getViewTitles` 동적 해석 — 순환 참조 회피) + 초기화 버튼. "이 기기에만 저장" 고지
+- **저장 정책**: `RESET_KEYS`에 포함(전체 초기화 시 삭제)·`BACKUP_KEYS` 제외 → 백업·Supabase 동기화(`SYNC_STATIC` = BACKUP_KEYS 기반) 모두 제외 — 로컬 전용 원칙 고정
+- **스타일**: `css/ui-overlay.css`에 `.usage-stats-sub/-table/-num/-note` 추가
+- **테스트**: `tests/dom/usage-stats.dom.test.js` 7개 — scoped 키 누적·초기화·손상 복구·모달 라벨/합계·빈 상태·리셋·설정 진입점 (DOM 393→400)
+
 ## 2026-10-14 프로젝트 리뷰 후속 — CSP 강화·콤보 퇴화 해소·조문 체커 개선·E2E 플로우
 
 - **CSP `unsafe-eval` 제거** (`vercel.json`): src·vendor(mermaid·supabase) 전수 조사에서 eval/new Function 사용 0건 확인 후 `script-src`에서 제거 — `security.test.js` S-01에 금지 단언 추가로 회귀 잠금

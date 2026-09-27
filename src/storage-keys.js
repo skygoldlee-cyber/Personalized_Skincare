@@ -62,6 +62,9 @@ export const STORAGE_KEYS = {
   // Pro 기능 안내 표시 이력 — 기능별 1회 안내 (pro-upgrade.js)
   PRO_NOTICE_SEEN: 'pro_notice_seen',
 
+  // 기능 사용 카운터 (usage-stats.js — ROAD-L5 유료가치 측정, 로컬 전용·백업/동기화 제외)
+  USAGE_STATS: 'usage_stats',
+
   // 원료 DB 갱신 감지 — 마지막으로 본 ingredients contentHash (기기 로컬 마커, 백업 제외)
   INGREDIENTS_HASH: 'ingredients_hash',
   // 원료 DB 갱신 알림 — 마지막으로 알림을 본 contentHash (해시별 1회 고지용)
@@ -124,6 +127,7 @@ export const RESET_KEYS = [
   STORAGE_KEYS.POMO_SESSION_DATE,
   STORAGE_KEYS.FC_SPACED_REPETITION,
   STORAGE_KEYS.READER_LAST_POSITION,
+  STORAGE_KEYS.USAGE_STATS,
 ];
 
 // 동적 키 생성 헬퍼: daily_completed_YYYY-MM-DD

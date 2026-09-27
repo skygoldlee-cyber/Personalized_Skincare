@@ -641,3 +641,31 @@
   vertical-align: middle;
   margin-left: 0.3rem;
 }
+
+/* ── 내 사용 통계 (usage-stats.js) ── */
+.usage-stats-sub {
+  font-size: 0.85rem;
+  color: var(--color-text-muted, #9ca3af);
+  margin: 0.9rem 0 0.35rem;
+}
+.usage-stats-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+.usage-stats-table td {
+  padding: 0.3rem 0.2rem;
+  border-bottom: 1px solid var(--border-color, rgba(255, 255, 255, 0.12));
+}
+.usage-stats-table .usage-num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--color-accent, #60a5fa);
+  font-weight: var(--font-weight-bold, 700);
+}
+.usage-stats-note {
+  margin-top: 0.9rem;
+  font-size: 0.78rem;
+  color: var(--color-text-muted, #9ca3af);
+}

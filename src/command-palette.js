@@ -9,6 +9,7 @@ import { contentPath } from './exam-context.js';
 import { openSubjectSection } from './views/textbook-reader.js';
 import { setTextbookSearchQuery } from './views/textbook-search.js';
 import { dictState } from './views/dictionary.js';
+import { trackAction } from './usage-stats.js';
 
 const MAX_PER_GROUP = 5;
 const MAX_TOTAL = 24;
@@ -248,6 +249,7 @@ export function openCommandPalette() {
     const input = /** @type {HTMLInputElement|null} */ (document.getElementById('cmdk-input'));
     if (!input) return;
     input.value = '';
+    trackAction('command_palette');
     _renderResults('');
     input.focus();
 }

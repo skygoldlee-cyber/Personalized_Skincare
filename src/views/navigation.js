@@ -2,6 +2,7 @@
 // @spec UX-NAV-07,R-04
 // app.js ↔ quiz.js/dashboard.js 순환 의존성을 끊기 위해 별도 모듈로 추출.
 import { state } from '../state.js';
+import { trackView } from '../usage-stats.js';
 
 const scrollPositions = {};
 // 맨 위로 열어야 할 뷰 — restoreScrollPosition이 1회 소비한다
@@ -62,4 +63,5 @@ export function switchView(targetView, opts = {}) {
         state.currentView = targetView;
         restoreScrollPosition(targetView);
     }
+    trackView(targetView);
 }
