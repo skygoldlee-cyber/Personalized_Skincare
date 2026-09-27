@@ -21,7 +21,7 @@
 
 // @spec P-01~06,O-04,UX-PWA-03
 
-const CACHE_VERSION = 'v369-20260927-4292e80';   // 전과목 숫자암기 통합정리 고유 수치를 Part 2에 이식
+const CACHE_VERSION = 'v369-20260927-2eb784d';   // 전과목 숫자암기 통합정리 고유 수치를 Part 2에 이식
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
