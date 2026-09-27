@@ -1,5 +1,12 @@
 [
   {
+    "version": "v369-20260928-c0bde7e",
+    "date": "2026-09-28",
+    "notes": [
+      "docs(manual): 히트맵 범례 40% 미만 이모지 ⭕로 변경"
+    ]
+  },
+  {
     "version": "v369-20260928-e68665d",
     "date": "2026-09-28",
     "notes": [
@@ -144,13 +151,6 @@
     "notes": [
       "fix(parser): 런타임 파서 경고 블록 복원 + TS5 진단 해소",
       "feat(quality): 코드 품질·테스트 자동화 체계 — ESLint·tsc·커버리지 게이트·CI 확장"
-    ]
-  },
-  {
-    "version": "v369-20260927-d2de9de",
-    "date": "2026-09-27",
-    "notes": [
-      "feat(trace): TRACE MATRIX 활용 도구 — 영향도·도시어·갭 리포트·신선도"
     ]
   }
 ]
