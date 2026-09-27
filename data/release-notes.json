@@ -1,5 +1,12 @@
 [
   {
+    "version": "v369-20260928-791b754",
+    "date": "2026-09-28",
+    "notes": [
+      "feat(tools): 교재 파일 구조 동기화 도구 — sync_textbook_files.js"
+    ]
+  },
+  {
     "version": "v369-20260928-40c936e",
     "date": "2026-09-28",
     "notes": [
@@ -153,13 +160,6 @@
       "docs: ARCHITECTURE에 SPEC ID 추적 매트릭스 추가 + A- 접두사 충돌 정정",
       "docs: ARCHITECTURE를 SPEC §4.9와 정합 — 토큰 귀속·규칙 참조 정정",
       "docs: SPEC §4.9 디자인 토큰·상태 규약 신설 — 화면구성 사양 완결"
-    ]
-  },
-  {
-    "version": "v369-20260927-6f528eb",
-    "date": "2026-09-27",
-    "notes": [
-      "fix+docs: 뷰 전환 딥링크 스크롤 규칙 전수 적용 및 설계 원칙 명기"
     ]
   }
 ]
