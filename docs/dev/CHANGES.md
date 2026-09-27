@@ -4,6 +4,12 @@
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 
+## 2026-10-13 check:docs 스테일 경로 해소 + 함수 레벨 @spec 태깅
+
+- **check:docs 27건 해소**: 전부 빌드/파이프라인 생성 산출물 경로(gitignore 대상 — `audiobook/mp3/`·`{EXAM}/html/`·`{EXAM}/report/`·`ref_md_v2/`·`data/**/subjects/*.js` 등)로 판정 → `tools/config/docs_paths_allowlist.json`에 file+ref+reason 등록. 실제 스테일 문서 없음 확인.
+- **함수 레벨 `@spec` 태그 신설**: 비자명 로직 8지점 — `navigation.js` pendingTop/restoreScrollPosition·switchView(UX-NAV-07), `sync.js` SYNC_EXCLUDE(AU-07·DA-10), `feedback.js` validateFeedback·cooldownRemaining(FB-06)·flushPendingFeedback(FB-05), `spaced-repetition.js` updateCardSchedule(F-07~09), `exam-context.js` scopedKey(DA-06~08·ES-03).
+- 태그 규칙 명확화: `@spec` 줄에는 순수 ID/범위/나열만 — 설명문은 별도 주석 줄(파서가 대문자 시작 비-ID 토큰을 오류 처리).
+
 ## 2026-10-13 소스코드 `@spec` 태그 추적 체계 — check:specrefs 신설
 
 - **자동 검증 도구 `tools/check_spec_refs.js` 신설**: SPEC.md의 ID 전수 추출(344개) ↔ src/tests/tools/css/ref-pipeline의 `@spec` 주석 태그 수집 → 양방향 리포트. 스테일 참조(코드가 SPEC에 없는 ID 참조)는 exit 1, 커버리지 공백은 경고. `check:content` 체인 통합.

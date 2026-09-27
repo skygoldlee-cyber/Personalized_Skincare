@@ -10,6 +10,7 @@ import { STORAGE_KEYS, BACKUP_KEYS, isDailyCompletedKey } from './storage-keys.j
 import { unscopedKey, getActiveExamId } from './exam-context.js';
 import { showToast, showConfirm } from './ui-utils.js';
 
+// @spec AU-07,DA-10
 // 동기화 제외 — 고객 카드·상담 이력은 타인 개인정보라 로컬 전용 (SUPABASE_DESIGN §7)
 const SYNC_EXCLUDE = new Set([STORAGE_KEYS.CUSTOMER_ITEMS]);
 const SYNC_STATIC = new Set(BACKUP_KEYS.filter(k => !SYNC_EXCLUDE.has(k)));

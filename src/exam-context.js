@@ -117,7 +117,8 @@ const GLOBAL_KEYS = new Set([
     'feedback_dot_seen'        // 설정 버튼 점 확인 — 시험 무관
 ]);
 
-/** 진도 키에 시험 접두사 부여 (`fc_memorized` → `cosmetic:fc_memorized`) */
+// @spec DA-06~08,ES-03
+/** 시험별 진도 네임스페이스 — 진도 키에 시험 접두사 부여 (`fc_memorized` → `cosmetic:fc_memorized`, GLOBAL_KEYS 제외) */
 export function scopedKey(key) {
     if (GLOBAL_KEYS.has(key)) return key;
     return `${getActiveExamId()}:${key}`;

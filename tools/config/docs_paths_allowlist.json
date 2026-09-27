@@ -67,5 +67,125 @@
     "file": "ref-pipeline/audiobook/README.md",
     "ref": "content/exams/cosmetic/audiobook/scripts/",
     "reason": "파이프라인 실행 전에는 없는 산출물 디렉터리"
+  },
+  {
+    "file": "README.md",
+    "ref": "content/exams/cosmetic/audiobook/mp3/",
+    "reason": "TTS 생성 산출물 디렉터리 — .gitignore 대상 (로컬 생성물)"
+  },
+  {
+    "file": "docs/dev/ARCHITECTURE.md",
+    "ref": "data/exams/cosmetic/subjects/<key>.<hash>.js",
+    "reason": "빌드 산출물 경로 — build:data 실행 시 생성, 커밋 대상 아님"
+  },
+  {
+    "file": "docs/dev/reference/FLASHCARD_LOGIC.md",
+    "ref": "data/exams/cosmetic/subjects/<key>.<hash>.js",
+    "reason": "빌드 산출물 경로 — build:data 실행 시 생성, 커밋 대상 아님"
+  },
+  {
+    "file": "docs/dev/reference/MD_TO_HTML_LOGIC.md",
+    "ref": "{EXAM_CONTENT_ROOT}/html/",
+    "reason": "batch_convert.py 생성 산출물 — content/**/*.html 은 gitignore"
+  },
+  {
+    "file": "docs/dev/reference/MD_TO_HTML_LOGIC.md",
+    "ref": "content/exams/cosmetic/html/학습안내서.html",
+    "reason": "batch_convert.py 생성 산출물 예시 — gitignore"
+  },
+  {
+    "file": "docs/dev/reference/MD_TO_HTML_LOGIC.md",
+    "ref": "content/exams/cosmetic/html/1과목_화장품법의이해_표준형.html",
+    "reason": "batch_convert.py 생성 산출물 예시 — gitignore"
+  },
+  {
+    "file": "docs/dev/runbooks/AUDIO_HOSTING_GUIDE.md",
+    "ref": "content/exams/cosmetic/audiobook/mp3/{과목키}/",
+    "reason": "TTS 생성 산출물 디렉터리 — gitignore (로컬 생성물)"
+  },
+  {
+    "file": "docs/dev/runbooks/AUDIO_HOSTING_GUIDE.md",
+    "ref": "content/exams/cosmetic/audiobook/mp3/{과목키}/{파일명}.mp3",
+    "reason": "TTS 생성 산출물 예시 경로 — gitignore"
+  },
+  {
+    "file": "docs/dev/runbooks/AUDIO_HOSTING_GUIDE.md",
+    "ref": "content/exams/cosmetic/audiobook/mp3/...",
+    "reason": "TTS 산출물 디렉터리 구조 예시 — gitignore"
+  },
+  {
+    "file": "docs/dev/runbooks/CONTENT_WORKFLOW.md",
+    "ref": "content/exams/cosmetic/audiobook/mp3/{과목}/",
+    "reason": "TTS 생성 산출물 디렉터리 — gitignore"
+  },
+  {
+    "file": "docs/dev/runbooks/CONTENT_WORKFLOW.md",
+    "ref": "content/exams/cosmetic/audiobook/mp3/{과목키}/",
+    "reason": "TTS 생성 산출물 디렉터리 — gitignore"
+  },
+  {
+    "file": "docs/dev/runbooks/CONTENT_WORKFLOW.md",
+    "ref": "{EXAM}/html/",
+    "reason": "batch_convert.py 생성 산출물 — gitignore"
+  },
+  {
+    "file": "docs/dev/runbooks/CONTENT_WORKFLOW.md",
+    "ref": "{EXAM}/report/",
+    "reason": "check_laws.py 등 파이프라인 리포트 산출물 — gitignore"
+  },
+  {
+    "file": "docs/dev/runbooks/CONTENT_WORKFLOW.md",
+    "ref": "{contentRoot}/audiobook/mp3/",
+    "reason": "TTS 생성 산출물 디렉터리 — gitignore"
+  },
+  {
+    "file": "docs/dev/runbooks/CONTENT_WORKFLOW.md",
+    "ref": "{dataRoot}/subjects/*.js",
+    "reason": "빌드 산출물 — build:data 실행 시 생성, 커밋 대상 아님"
+  },
+  {
+    "file": "docs/dev/runbooks/CONTENT_WORKFLOW.md",
+    "ref": "{contentRoot}/참조자료/ref_md_v2/",
+    "reason": "PDF→MD 스테이징 산출물 — gitignore"
+  },
+  {
+    "file": "docs/dev/runbooks/CONTENT_WORKFLOW.md",
+    "ref": "{contentRoot}/html/*.html",
+    "reason": "batch_convert.py 생성 산출물 — gitignore"
+  },
+  {
+    "file": "docs/dev/runbooks/CONTENT_WORKFLOW.md",
+    "ref": "{contentRoot}/report/법령최신확인결과.md",
+    "reason": "check_laws.py 리포트 산출물 — gitignore"
+  },
+  {
+    "file": "docs/dev/runbooks/DEPLOYMENT_GUIDE.md",
+    "ref": "content/exams/cosmetic/audiobook/mp3/",
+    "reason": "TTS 생성 산출물 디렉터리 — gitignore (배포 제외 대상)"
+  },
+  {
+    "file": "ref-pipeline/audiobook/README.md",
+    "ref": "content/exams/cosmetic/audiobook/mp3/<과목>/ch01_chunks/ch01_001.mp3",
+    "reason": "TTS 생성 산출물 예시 경로 — gitignore"
+  },
+  {
+    "file": "ref-pipeline/audiobook/README.md",
+    "ref": "content/exams/cosmetic/audiobook/mp3/<과목>/ch01_화장품_원료의_종류와….mp3",
+    "reason": "TTS 생성 산출물 예시 경로 — gitignore"
+  },
+  {
+    "file": "ref-pipeline/README.md",
+    "ref": "{EXAM}/참조자료/ref_md_v2/",
+    "reason": "PDF→MD 스테이징 산출물 — gitignore"
+  },
+  {
+    "file": "ref-pipeline/README.md",
+    "ref": "{EXAM}/html/",
+    "reason": "batch_convert.py 생성 산출물 — gitignore"
+  },
+  {
+    "file": "ref-pipeline/README.md",
+    "ref": "{EXAM}/report/법령최신확인결과.md",
+    "reason": "check_laws.py 리포트 산출물 — gitignore"
   }
 ]

@@ -52,6 +52,8 @@ function _intervalForRep(rep, easiness) {
     return Math.max(prev, 1);
 }
 
+// @spec F-07~09
+// SM-2 스케줄 갱신 — repetition/easiness/nextReview 상태 전이
 /**
  * 카드의 복습 스케줄 업데이트
  * @param {string} cardId - 카드 ID

@@ -15,6 +15,8 @@ export function saveScrollPosition(viewId) {
     }
 }
 
+// @spec UX-NAV-07
+// pendingTop은 saveScrollPosition 덮어쓰기를 무시하는 1회 플래그
 export function restoreScrollPosition(viewId) {
     const mainContent = document.querySelector('.main-content');
     if (!mainContent) return;
@@ -34,6 +36,8 @@ export function restoreScrollPosition(viewId) {
  * 뷰 전환. opts.scrollTop=true이면 타겟 뷰를 저장된 스크롤이 아닌 맨 위에서 연다
  * (예: 대시보드 "맞춤 리포트 보기"처럼 문서형 화면으로의 딥링크).
  */
+// @spec UX-NAV-07
+// opts.scrollTop 딥링크 시 저장된 위치 대신 맨 위 오픈
 export function switchView(targetView, opts = {}) {
     // 리더 화면을 벗어나면 재생 중인 오디오 정지
     if (targetView !== 'textbook-reader-view' && typeof window.stopReaderAudio === 'function') {

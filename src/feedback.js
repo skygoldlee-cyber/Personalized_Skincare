@@ -121,6 +121,8 @@ export function buildFeedbackPayload({ kind, rating, body, view, honeypot, userI
     };
 }
 
+// @spec FB-06
+// 허니팟·길이·PII 검증 — 서버 없이 클라이언트 선차단
 export function validateFeedback(payload) {
     if (payload.meta?.honeypot) return 'spam';
     if (!payload.body || payload.body.length < BODY_MIN) return 'short';
@@ -129,6 +131,8 @@ export function validateFeedback(payload) {
     return null;
 }
 
+// @spec FB-06
+// 제출 쿨다운 — 연속 스팸 방지
 export function cooldownRemaining(now = Date.now(), lastTs = null) {
     const last = lastTs ?? (Number(getItem(COOLDOWN_KEY)) || 0);
     return Math.max(0, COOLDOWN_MS - (now - last));
@@ -156,7 +160,8 @@ async function insertRemote(items) {
     return { ok: !error };
 }
 
-/** 큐에 쌓인 의견을 전송한다 — 온라인 복귀·다음 제출 시 호출 */
+// @spec FB-05
+/** 오프라인 큐 적재분 재전송 — 온라인 복귀·다음 제출 시 호출 */
 export async function flushPendingFeedback() {
     const q = getJSON(QUEUE_KEY, []);
     if (!q.length) return 0;
