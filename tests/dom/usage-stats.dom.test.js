@@ -18,6 +18,7 @@ vi.mock('../../src/ui-utils.js', () => ({
 import { loadIndexHtml } from './helpers.js';
 import {
     trackView, trackAction, getUsageStats, resetUsageStats, showUsageStats,
+    isValueThresholdMet, PRO_VALUE_THRESHOLD,
 } from '../../src/usage-stats.js';
 import { STORAGE_KEYS } from '../../src/storage-keys.js';
 import { scopedKey } from '../../src/exam-context.js';
@@ -81,6 +82,18 @@ describe('내 사용 통계 모달 (showUsageStats)', () => {
         expect(el.textContent).toContain('기능 사용 합계');
         // 프라이버시 고지 — 로컬 전용
         expect(el.textContent).toContain('이 기기에만 저장');
+    });
+
+    it('유료가치 판정 기준(20회) 표시와 충족 판정을 반영한다', async () => {
+        await showUsageStats();
+        expect(overlay().textContent).toContain(`기준 ${PRO_VALUE_THRESHOLD}회 중`);
+        expect(overlay().textContent).not.toContain('충족');
+        overlay().querySelector('.app-confirm-ok').click();
+
+        for (let i = 0; i < PRO_VALUE_THRESHOLD; i++) trackAction('weak_to_textbook');
+        expect(isValueThresholdMet()).toBe(true);
+        await showUsageStats();
+        expect(overlay().textContent).toContain('충족');
     });
 
     it('사용 기록이 없으면 빈 상태 문구를 표시한다', async () => {

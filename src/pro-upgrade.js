@@ -41,6 +41,22 @@ function isProFeature(featureKey) {
     return v !== 'free';
 }
 
+/**
+ * Pro 이용 권한 여부 — ROAD-P1에서 Supabase entitlement 서버 검증으로 교체 예정.
+ * 현재는 로컬 플래그(pro_entitled)만 참조하며, 설정 경로는 결제 인프라와 함께 도입된다.
+ */
+export function hasProEntitlement() {
+    return safeGetItem(STORAGE_KEYS.PRO_ENTITLED) === '1';
+}
+
+/**
+ * 클라우드 동기화 사용 가능 여부 — 플랜이 free면 전원 허용, pro면 entitlement 필요.
+ * feature-plan.json의 cloud_sync를 free로 내리면 entitlement 없이 재활성화 가능 (무료 체험 프로모션용 레버).
+ */
+export function canCloudSync() {
+    return !isProFeature('cloud_sync') || hasProEntitlement();
+}
+
 /** data-pro-feature 속성을 가진 PRO 배지를 플랜에 맞춰 표시/숨긴다
  * @param {Document|HTMLElement} [root]
  */
@@ -136,6 +152,7 @@ const PLAN_FEATURES = [
     { key: 'combo_mock', label: '복수정답형 모의고사' },
     { key: 'combo_set', label: '복수정답형 문제집' },
     { key: 'combo_drill', label: '복수정답형 훈련' },
+    { key: 'cloud_sync', label: '클라우드 동기화 (여러 디바이스 상태 공유)' },
 ];
 
 /** Free/Pro 기능 비교 안내 모달 — 설정의 '플랜 안내'·계정 모달에서 연다.

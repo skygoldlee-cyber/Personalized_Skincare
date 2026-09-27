@@ -16,7 +16,7 @@ vi.mock('../../src/ui-utils.js', () => ({
 }));
 
 import { loadIndexHtml } from './helpers.js';
-import { loadFeaturePlan, showPlanCompare, proFeatureNotice } from '../../src/pro-upgrade.js';
+import { loadFeaturePlan, showPlanCompare, proFeatureNotice, canCloudSync, hasProEntitlement } from '../../src/pro-upgrade.js';
 
 function stubPlan(features) {
     vi.stubGlobal('fetch', vi.fn(() => Promise.resolve({
@@ -60,6 +60,33 @@ describe('플랜 안내 모달 (showPlanCompare)', () => {
         const btn = document.querySelector('[data-click="showPlanCompare"]');
         expect(btn).not.toBeNull();
         expect(btn.textContent).toContain('플랜 안내');
+    });
+
+    it('클라우드 동기화 행이 feature-plan.json의 cloud_sync 값을 반영한다', async () => {
+        await stubPlan({ cloud_sync: 'pro' });
+        showPlanCompare();
+        const items = [...overlay().querySelectorAll('li')].map(li => li.textContent);
+        expect(items.some(t => t.includes('클라우드 동기화') && t.includes('PRO'))).toBe(true);
+    });
+});
+
+describe('Pro entitlement 게이트 (canCloudSync)', () => {
+    it('cloud_sync가 pro이고 entitlement가 없으면 동기화 불가', async () => {
+        await stubPlan({ cloud_sync: 'pro' });
+        expect(hasProEntitlement()).toBe(false);
+        expect(canCloudSync()).toBe(false);
+    });
+
+    it('pro_entitled 플래그가 있으면 동기화 허용', async () => {
+        await stubPlan({ cloud_sync: 'pro' });
+        localStorage.setItem('pro_entitled', '1');
+        expect(hasProEntitlement()).toBe(true);
+        expect(canCloudSync()).toBe(true);
+    });
+
+    it('cloud_sync가 free로 전환되면 entitlement 없이 동기화 허용', async () => {
+        await stubPlan({ cloud_sync: 'free' });
+        expect(canCloudSync()).toBe(true);
     });
 });
 

@@ -144,7 +144,7 @@ src/                    # ES Modules
   supabase-config.js    # Supabase 프로젝트 URL·Publishable key (공개 설계상 키)
   supabase-client.js    # Supabase lazy init — vendor/supabase UMD 동적 로드
   auth-view.js          # 계정/로그인 모달 (이메일+PW·회원가입·매직링크)
-  sync.js               # 클라우드 스냅샷 동기화 (sync_snapshots push/pull, dirty 훅·디바운스·충돌 확인, 고객 키 제외)
+  sync.js               # 클라우드 스냅샷 동기화 (sync_snapshots push/pull, dirty 훅·디바운스·충돌 확인, 고객 키 제외, Pro entitlement 게이트)
   config/
     timing.js           # 타이밍 상수 (PWA 프로브, 스와이프 임계값 등)
     cache.js            # 캐시 설정 상수

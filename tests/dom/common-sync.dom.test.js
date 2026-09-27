@@ -53,6 +53,7 @@ describe('클라우드 동기화 (Phase 2)', () => {
     beforeEach(async () => {
         session = null; remoteRow = null; upsertError = null; confirmResult = true;
         localStorage.clear();
+        localStorage.setItem('pro_entitled', '1'); // 동기화 Pro 게이트 통과 (ROAD-P1 전 로컬 플래그)
         loadIndexHtml();
         vi.clearAllMocks();
         sb.auth.getSession.mockImplementation(async () => ({ data: { session } }));
@@ -164,5 +165,21 @@ describe('클라우드 동기화 (Phase 2)', () => {
         expect(await pullSync()).toBe('none');
         expect(await pushSync()).toBe(false);
         expect(sb.from).not.toHaveBeenCalled();
+    });
+
+    it('Pro entitlement 없음 — 로그인해도 pull/push 차단, 원격 호출 없음', async () => {
+        localStorage.removeItem('pro_entitled');
+        login(); await initSync();
+        markDirty();
+        expect(await pullSync()).toBe('none');
+        expect(await pushSync()).toBe(false);
+        expect(sb.from).not.toHaveBeenCalled();
+    });
+
+    it('Pro entitlement 없음 — syncNow는 Pro 안내 상태를 표시', async () => {
+        localStorage.removeItem('pro_entitled');
+        login(); await initSync();
+        await syncNow();
+        expect(el('auth-sync-status').textContent).toContain('Pro');
     });
 });

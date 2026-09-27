@@ -8,6 +8,7 @@ import { isSupabaseConfigured } from './supabase-config.js';
 import { safeGetItem, safeSetItem, listScopedKeys, setDataWriteHook } from './state.js';
 import { STORAGE_KEYS, BACKUP_KEYS, isDailyCompletedKey } from './storage-keys.js';
 import { unscopedKey, getActiveExamId } from './exam-context.js';
+import { canCloudSync } from './pro-upgrade.js';
 import { showToast, showConfirm } from './ui-utils.js';
 
 // @spec AU-07,DA-10
@@ -63,7 +64,7 @@ function onLocalWrite(logicalKey) {
 
 export function markDirty() {
     safeSetItem(STORAGE_KEYS.SYNC_DIRTY, '1');
-    if (!_signedIn) return;
+    if (!_signedIn || !canCloudSync()) return;
     clearTimeout(_pushTimer);
     _pushTimer = setTimeout(() => { pushSync().catch(() => {}); }, PUSH_DEBOUNCE_MS);
 }
@@ -71,7 +72,7 @@ export function markDirty() {
 // ── push: 현재 시험의 페이로드를 upsert ──────────────────────────
 export async function pushSync() {
     const sb = await getSupabase();
-    if (!sb || !_signedIn) return false;
+    if (!sb || !_signedIn || !canCloudSync()) return false;
     const session = await getAuthSession();
     if (!session) { _signedIn = false; return false; }
     const now = new Date().toISOString();
@@ -129,7 +130,7 @@ function preserveLoserSnapshot(payload, source) {
 // ── pull: 원격 조회 → 최신성 비교 → 적용/충돌 확인/push ──────────
 export async function pullSync() {
     const sb = await getSupabase();
-    if (!sb || !_signedIn) return 'none';
+    if (!sb || !_signedIn || !canCloudSync()) return 'none';
     const session = await getAuthSession();
     if (!session) { _signedIn = false; return 'none'; }
 
@@ -186,6 +187,11 @@ export async function pullSync() {
 
 /** 설정/계정 모달의 "지금 동기화" 버튼 */
 export async function syncNow() {
+    if (!canCloudSync()) {
+        updateSyncStatus('Pro 전용');
+        showToast('클라우드 동기화는 Pro 기능입니다. 로컬 데이터는 그대로 유지됩니다.', 'info');
+        return;
+    }
     updateSyncStatus('동기화 중...');
     const r = await pullSync();
     if (r === 'none') showToast('로그인이 필요하거나 동기화할 데이터가 없습니다.', 'info');
@@ -198,14 +204,19 @@ export async function initSync() {
     try {
         const session = await getAuthSession();
         _signedIn = !!session;
-        if (_signedIn) await pullSync();
+        if (_signedIn) {
+            if (canCloudSync()) await pullSync();
+            else updateSyncStatus('Pro 전용 — 이 기기의 데이터는 로컬에 유지됩니다');
+        }
     } catch (_) { /* 오프라인 등 — 로컬 전용으로 계속 동작 */ }
     try {
         const sb = await getSupabase();
         sb?.auth.onAuthStateChange((_event, session) => {
             const was = _signedIn;
             _signedIn = !!session;
-            if (_signedIn && !was) pullSync().catch(() => {});
+            if (!_signedIn || was) return;
+            if (canCloudSync()) pullSync().catch(() => {});
+            else updateSyncStatus('Pro 전용 — 이 기기의 데이터는 로컬에 유지됩니다');
         });
     } catch (_) {}
     // 온라인 복귀 시 미동기화 변경 재시도

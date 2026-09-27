@@ -108,6 +108,7 @@ const GLOBAL_KEYS = new Set([
     'ui_mode',
     'ui_study_tools_open',
     'device_id',                   // 동기화 기기 식별 — 시험 무관
+    'pro_entitled',                // Pro 이용 권한 — 사용자 수준, 시험 무관
     'passmula_auth_mail_cooldown_until', // 로그인 메일 재발송 쿨다운 — 시험 무관
     'last_seen_version',       // 새 버전 알림 마지막 확인 버전 — 시험 무관
     'entry_source',            // 최초 유입 채널 (?src= 파라미터) — 시험 무관

@@ -27,9 +27,9 @@
 | 구분 | 프레임워크 | 환경 | 파일 위치 | 테스트 수 |
 |------|-----------|------|-----------|-----------|
 | **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 694 |
-| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 400 |
+| **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 407 |
 | **E2E** | Playwright | 실브라우저 (Chromium + 모바일) | `tests/e2e/*.spec.js` | 22 |
-| **합계** | | | | **1116** |
+| **합계** | | | | **1123** |
 
 ### 설계 원칙
 
@@ -260,7 +260,7 @@ npm run hooks:install
 | 27 | `common-a11y.dom.test.js` | 7 | 접근성 | 토스트 role=status, 모달 trapFocus·aria-modal, 아이콘 버튼 aria-label 전수 | 2026-09-23 추가 |
 | 28 | `common-uimode.dom.test.js` | 7 | 학습/실무 UI 모드 | 모드 전환→학습 항목 CSS 숨김(실제 캐스케이드)·학습 도구 펼침·랜딩 리다이렉트·영속 복원·학습/실무 매뉴얼 가시성·토글 2곳(푸터·설정) 동기화 | 2026-09-23 추가 |
 | 29 | `common-auth.dom.test.js` | 24 | 계정/로그인 (Supabase) | 모달 열기·로그인 성공/실패 한글 매핑·회원가입·매직링크·OTP 코드 발송/검증·비밀번호 설정·로그아웃·세션 복원 (window.supabase 스텁) | 2026-09-23 추가 |
-| 30 | `common-sync.dom.test.js` | 11 | 클라우드 동기화 | 페이로드 수집(고객 제외)·쓰기 훅 dirty·디바운스 push·pull 적용·충돌 양방향·push 실패·비로그인 무시 | 2026-09-23 추가 |
+| 30 | `common-sync.dom.test.js` | 13 | 클라우드 동기화 | 페이로드 수집(고객 제외)·쓰기 훅 dirty·디바운스 push·pull 적용·충돌 양방향·push 실패·비로그인 무시·Pro 게이트 차단(pro_entitled 없으면 pull/push·syncNow 차단) | 2026-09-23 추가 |
 | 31 | `common-glossary.dom.test.js` | 5 | 용어집 공용 경로 | 용어집 인덱스·링크 렌더 | 2026-09-24 추가 |
 | 32 | `common-htmlviewer.dom.test.js` | 7 | HTML 뷰어 | 외부 HTML 콘텐츠 로드·렌더 경로 | 2026-09-24 추가 |
 | 33 | `common-navigation.dom.test.js` | 8 | 뷰 전환 공용 | navigation 유틸 경로, 스크롤 복원·scrollTop 옵션, 사이드바↔탭 바 parity | 2026-09-27 scrollTop 추가 |
@@ -272,9 +272,9 @@ npm run hooks:install
 | 39 | `reader-audio.dom.test.js` | 6 | 오디오북 플레이어 (AO-01~05) | 매니페스트 경로 해석·오디오 없음 토스트·Media Session 메타/핸들러·속도 순환·시크·정지 | Audio·mediaSession 스텁, 2026-10-14 추가 |
 | 40 | `charts.dom.test.js` | 7 | 분석 차트 (C-01~05) | 성적 라인차트·합격/과락 진단·레이더 N축·과목 점수행·툴팁 | 성적 이력 시딩(safeSetItem scopedKey), 2026-10-14 추가 |
 | 41 | `review-drills-formula.dom.test.js` | 11 | 복습·숫자 드릴·계산기 (RV-01·ND-01·FO-10/11) | 복습 통합 목록·과목 필터·number-drills fetch/캐시/렌더·계산기 상하 고정바·사전 연동·DB 버전 배지 | fetch 스텁, 2026-10-14 추가 |
-| 42 | `pro-plan.dom.test.js` | 5 | 플랜 안내 모달 (ROAD-P0) | showPlanCompare 플랜 반영 PRO/무료 태그·플랜 전환 반영·설정 진입점·proFeatureNotice 동기화 안내·free 스킵 | fetch 스텁, 2026-10-14 추가 |
-| 43 | `usage-stats.dom.test.js` | 7 | 로컬 사용 카운터 (ROAD-L5) | scoped usage_stats 누적·초기화·손상 복구·모달 라벨/합계 렌더·빈 상태·리셋 버튼·설정 진입점 | ui-utils 모킹, 2026-10-16 추가 |
-| | **합계** | **400** | | |
+| 42 | `pro-plan.dom.test.js` | 9 | 플랜 안내 모달 (ROAD-P0) | showPlanCompare 플랜 반영 PRO/무료 태그·플랜 전환 반영·설정 진입점·proFeatureNotice 동기화 안내·free 스킵·cloud_sync 행 반영·canCloudSync entitlement 게이트(3 상태) | fetch 스텁, 2026-10-14 추가 |
+| 43 | `usage-stats.dom.test.js` | 8 | 로컬 사용 카운터 (ROAD-L5) | scoped usage_stats 누적·초기화·손상 복구·모달 라벨/합계 렌더·유료가치 판정 기준(20회) 표시·빈 상태·리셋 버튼·설정 진입점 | ui-utils 모킹, 2026-10-16 추가 |
+| | **합계** | **407** | | |
 
 ---
 

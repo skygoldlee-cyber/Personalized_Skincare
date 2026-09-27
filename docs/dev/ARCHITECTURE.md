@@ -278,7 +278,7 @@ Personalized_Skincare/
 │   ├── supabase-config.js      #   Supabase URL·Publishable key (공개 설계상 키)
 │   ├── supabase-client.js      #   Supabase lazy init — vendor UMD 동적 로드
 │   ├── auth-view.js            #   계정/로그인 모달 (이메일+PW·회원가입·매직링크 OTP)
-│   ├── sync.js                 #   클라우드 스냅샷 동기화 (sync_snapshots push/pull)
+│   ├── sync.js                 #   클라우드 스냅샷 동기화 (sync_snapshots push/pull, Pro entitlement 게이트 — canCloudSync)
 │   ├── formula-store.js        #   Formula OS — 포뮬러 CRUD·한도(5)·스키마 정제·전성분 생성
 │   ├── formula-rules.js        #   Formula OS — 추천 규칙 (베이스·고민/피부 매핑·안전 필터)
 │   ├── formula-check.js        #   Formula OS — 고시 한도 검증 엔진 (4상태 판정)
@@ -538,8 +538,8 @@ Personalized_Skincare/
 | [`src/html-viewer.js`](../../src/html-viewer.js) | 앱 내 HTML/MD 참조자료 뷰어. `fetch()`+`DOMParser`(HTML) 또는 `parseMarkdown()`(MD)로 로드 후 DOM 직접 주입 (iframe 없음). **키워드 기반 스크롤**: `KEYWORD_INDEX`에서 추출한 셀 텍스트 키워드로 검색→첫 번째 하이라이트로 스크롤 (L###은 스크롤에 사용하지 않음). **성능 최적화**: sessionStorage 캐싱(24h TTL)으로 재방문 시 즉시 렌더링, span 일괄 제거(normalize 호출 최소화), 검색 조기 종료(첫 매치 즉시 스크롤 + 나머지 `requestIdleCallback` 지연 하이라이트). 텍스트 노드 순회 검색 + `<mark>` 하이라이트, 검색 결과 내비게이션(이전/다음), 인쇄 지원. **PDF 저장** (v210 도입): 인쇄 전용 CSS로 오버레이 제약 없이 전체 문서를 브라우저 인쇄 다이얼로그로 출력 → "PDF로 저장" 선택 가능 |
 | [`src/reader-format.js`](../../src/reader-format.js) | 교재 리더 본문 포맷터. `parseMarkdown()` + HTML 참조 링크 변환 (`data-ref-html`, `data-ref-search`) + 참조자료 인라인 렌더링. **참조자료 인라인 프리뷰 툴팁** (데스크톱 hover 400ms / 모바일 롱프레스 600ms, 200자 스니펫) |
 | [`src/exam-viewer.js`](../../src/exam-viewer.js) | 문제집(MD) 런타임 뷰어. `content/exams/cosmetic/문제은행/*.md` fetch → 자체 MD→HTML 변환 → 인앱 전체화면 오버레이 렌더링. TOC 생성·인쇄·sessionStorage 캐시(24h)·`file://` 번들 폴리백(`data/exams/cosmetic/exams_md/*.js`) 지원. **시험 제목은 registry에서 동적 조회** (하드코딩 없음) |
-| [`src/pro-upgrade.js`](../../src/pro-upgrade.js) | Pro 안내 계층. 루트 `feature-plan.json`을 `loadFeaturePlan()`으로 로드 → 기능별 `pro`/`free` 판정(`isProFeature`). `pro` 기능은 진입 시 1회 정보 모달(`proFeatureNotice`, 기능별 seen 플래그) + `.pro-badge[data-pro-feature]` 배지 표시, `free`는 배지·안내 제거. 스토어 한도 오류(`Free 플랜` 접두사)는 `showStoreError` → `showUpgradeNotice` 업그레이드 모달로 분기 |
-| [`src/usage-stats.js`](../../src/usage-stats.js) | 로컬 사용 카운터 (ROAD-L5 — 유료가치 판정 데이터). `switchView`의 `trackView(viewId)`로 화면별 진입·`trackAction(key)`로 유료가치 후보 액션(오답→교재/노트/유사문제·진단 평가·통합검색·플랜 비교·실제 결과 보고) 횟수를 시험 스코프 `usage_stats` 키에 누적 — `days` 맵은 90일 상한. **로컬 전용**: 백업·클라우드 동기화 제외(`RESET_KEYS`에는 포함 — 전체 초기화 시 삭제). 설정 '내 사용 통계'(`showUsageStats`)에서 첫/최근 사용일·활동 일수·화면별/기능별 횟수 표 + 초기화 버튼 |
+| [`src/pro-upgrade.js`](../../src/pro-upgrade.js) | Pro 안내·entitlement 계층. 루트 `feature-plan.json`을 `loadFeaturePlan()`으로 로드 → 기능별 `pro`/`free` 판정(`isProFeature`). `pro` 기능은 진입 시 1회 정보 모달(`proFeatureNotice`, 기능별 seen 플래그) + `.pro-badge[data-pro-feature]` 배지 표시, `free`는 배지·안내 제거. 스토어 한도 오류(`Free 플랜` 접두사)는 `showStoreError` → `showUpgradeNotice` 업그레이드 모달로 분기. **entitlement**: `hasProEntitlement()`는 `pro_entitled` 로컬 플래그 참조(ROAD-P1 서버 검증 전 임시 시임), `canCloudSync()` = 플랜 free면 전원·pro면 entitlement 필요 — sync.js가 호출 |
+| [`src/usage-stats.js`](../../src/usage-stats.js) | 로컬 사용 카운터 (ROAD-L5 — 유료가치 판정 데이터). `switchView`의 `trackView(viewId)`로 화면별 진입·`trackAction(key)`로 유료가치 후보 액션(오답→교재/노트/유사문제·진단 평가·통합검색·플랜 비교·실제 결과 보고) 횟수를 시험 스코프 `usage_stats` 키에 누적 — `days` 맵은 90일 상한. **로컬 전용**: 백업·클라우드 동기화 제외(`RESET_KEYS`에는 포함 — 전체 초기화 시 삭제). **유료가치 판정 기준 `PRO_VALUE_THRESHOLD=20`** — 액션 합계 도달 시 ROAD-P1 착수 근거(`isValueThresholdMet()`). 설정 '내 사용 통계'(`showUsageStats`)에서 첫/최근 사용일·활동 일수·화면별/기능별 횟수·판정 진행 표 + 초기화 버튼 |
 
 ### 3. Data Layer (데이터 계층)
 
@@ -797,7 +797,7 @@ const state = {
 | [`src/supabase-config.js`](../../src/supabase-config.js) | 프로젝트 URL·Publishable Key 상수 + `isSupabaseConfigured()` (플레이스홀더 감지) |
 | [`src/supabase-client.js`](../../src/supabase-client.js) | lazy 초기화 — `vendor/supabase/supabase.js`(UMD)를 첫 사용 시점에 `<script>` 동적 주입 → `window.supabase.createClient`. `flowType: 'implicit'`, `persistSession`, `autoRefreshToken` 고정 |
 | [`src/auth-view.js`](../../src/auth-view.js) | 계정 모달 — 이메일+PW 로그인/회원가입, `signInWithOtp` 로그인 메일(매직링크+OTP 코드 동봉), `verifyOtp`, 비밀번호 재설정(`updateUser`), 메일 재발송 60초 쿨다운 |
-| [`src/sync.js`](../../src/sync.js) | 스냅샷 동기화 — `sync_snapshots` 테이블 push/pull |
+| [`src/sync.js`](../../src/sync.js) | 스냅샷 동기화 — `sync_snapshots` 테이블 push/pull. **Pro 게이트**: `canCloudSync()`(`feature-plan.json` `cloud_sync`가 pro이면 `pro_entitled` 필요, free면 전원 허용)가 push·pull·markDirty 디바운스·syncNow를 차단 — 차단 시 상태 'Pro 전용', 로컬 데이터는 그대로 |
 
 ### 동기화 데이터 흐름
 

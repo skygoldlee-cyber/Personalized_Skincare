@@ -6,6 +6,16 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-16 클라우드 동기화 Pro 전용 게이트 + 유료가치 판정 기준 20회
+
+- **정책 결정 (ROAD-P4 해소)**: 클라우드 동기화를 Pro 전용으로 전환, 무료 티어 로그인은 비강제 유지 — 로드맵 문서의 "동기화 무료 유지 권장"과 현재 Pro 안내 문구의 충돌을 Pro 전용 방향으로 확정
+- **`feature-plan.json`**: `cloud_sync: "pro"` 키 추가 — 플랜 비교 표에 '클라우드 동기화' 행이 자동 반영, `free`로 내리면 entitlement 없이 전원 재활성화 가능(프로모션 레버)
+- **`pro-upgrade.js`**: `hasProEntitlement()`(`pro_entitled` GLOBAL 로컬 플래그 — ROAD-P1 서버 검증 전 임시 시임) + `canCloudSync()` = `!isProFeature('cloud_sync') || hasProEntitlement()`
+- **`sync.js`**: `canCloudSync()`로 `markDirty` 디바운스·`pushSync`·`pullSync`·`syncNow` 차단 — 로그인해도 게이트 시 push/pull·원격 호출 없음, 계정 모달 동기화 상태에 'Pro 전용' 표시. 로컬 데이터 무손실(로컬 퍼스트 유지)
+- **`auth-view.js`/`index.html`**: 계정 모달 '플랜: Free'를 `hasProEntitlement()` 연동으로 동적화, 로그인 전·후 힌트 문구를 "동기화는 Pro 기능"으로 정정
+- **`usage-stats.js`**: `PRO_VALUE_THRESHOLD = 20` + `isValueThresholdMet()` — '내 사용 통계'에 '유료가치 판정: 기준 20회 중 N회 (충족)' 표시, ROAD-P1 착수 판정 근거
+- **테스트**: pro-plan 5→9(cloud_sync 행·entitlement 3상태), usage-stats 7→8(판정 표시·isValueThresholdMet), common-sync 11→13(pro_entitled 세팅·게이트 차단 2건) — DOM 400→407
+
 ## 2026-10-16 로컬 사용 카운터 구현 (ROAD-L5)
 
 - **`src/usage-stats.js` 신규** (`@spec ROAD-L5`): `trackView(viewId)`(switchView 자동 계측) + `trackAction(key)`로 시험 스코프 `usage_stats` localStorage 키에 `{v, firstUse, lastUse, days(90일 상한), views, actions}` 누적 — 외부 전송 없음

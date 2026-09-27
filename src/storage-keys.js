@@ -87,6 +87,7 @@ export const STORAGE_KEYS = {
   SYNC_LAST_TS: 'sync_last_ts',    // 마지막으로 반영/푸시한 원격 updated_at
   SYNC_CONFLICT_BACKUP: 'sync_conflict_backup', // 충돌 시 미선택 쪽 스냅샷 보존
   DEVICE_ID: 'device_id',          // 기기 식별 UUID (GLOBAL_KEYS — 시험 무관)
+  PRO_ENTITLED: 'pro_entitled',    // Pro 이용 권한 플래그 (GLOBAL_KEYS — ROAD-P1 서버 검증 전 임시 시임)
 
   // 세션 (sessionStorage)
   INAPP_GUIDE_SHOWN: '__inappGuideShown',

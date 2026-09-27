@@ -13,6 +13,9 @@ import { trapFocus } from './ui-utils.js';
 
 const DAYS_KEEP = 90; // days 맵 상한 — 저장량 제한
 
+/** 유료가치 판정 기준 — 기능 액션 합계가 이 횟수에 도달하면 유료가치 인정 (ROAD-P1 착수 근거) */
+export const PRO_VALUE_THRESHOLD = 20;
+
 /** 액션 키 → 표시 라벨 (유료가치 후보 기능과 LEARNING_PREMIUM_PLAN 표 대응) */
 const ACTION_LABELS = {
     weak_to_textbook: '오답 → 교재 근거 보기',
@@ -60,6 +63,12 @@ export function trackAction(key) { _bump('actions', key); }
 
 export function getUsageStats() { return _load(); }
 
+/** 기능 액션 합계가 유료가치 판정 기준(PRO_VALUE_THRESHOLD)에 도달했는지 */
+export function isValueThresholdMet() {
+    const d = _load();
+    return Object.values(d.actions).reduce((s, n) => s + n, 0) >= PRO_VALUE_THRESHOLD;
+}
+
 export function resetUsageStats() {
     safeSetItem(STORAGE_KEYS.USAGE_STATS,
         JSON.stringify({ v: 1, firstUse: null, lastUse: null, days: {}, views: {}, actions: {} }));
@@ -101,6 +110,7 @@ export async function showUsageStats() {
                 <ul>
                     <li>첫 사용: <strong>${_fmtDate(d.firstUse)}</strong> · 최근 사용: <strong>${_fmtDate(d.lastUse)}</strong></li>
                     <li>학습 활동 일수: <strong>${activeDays}일</strong> · 기능 사용 합계: <strong>${totalActions}회</strong></li>
+                    <li>유료가치 판정: 기준 ${PRO_VALUE_THRESHOLD}회 중 <strong>${totalActions}회</strong>${totalActions >= PRO_VALUE_THRESHOLD ? ' — <strong>충족</strong>' : ''}</li>
                 </ul>
             </div>
             ${viewRows ? `<h4 class="usage-stats-sub">화면별 사용</h4><table class="usage-stats-table">${viewRows}</table>` : ''}

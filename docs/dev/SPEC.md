@@ -804,7 +804,7 @@
 | ROAD-P1 | **Pro entitlement 서버 검증**: 플랜 판정을 서버에서 검증 — 프론트엔드 게이팅은 UX일 뿐 보안 경계가 아님 | Supabase entitlement 테이블 + API | 미구현 (유일한 Phase 1~2 잔여) |
 | ROAD-P2 | **결제·구독 관리**: 토스/Stripe 연동, 웹훅 처리, 구독 상태 머신 | SUBSCRIPTION_ROADMAP §3 | 미구현 |
 | ROAD-P3 | **콘텐츠 게이팅 + CSP/SW 재작업**: 콘텐츠 접근 제어 시 Cache First SW와 인증 토큰의 충돌 해소, 해지·다운그레이드 시 캐시 purge, CSP `connect-src` 확장 | SUBSCRIPTION_ROADMAP §4~§6 | 미구현 |
-| ROAD-P4 | **무료 티어 축소·그랜드파더링 정책**: 클라우드 동기화는 유료 전환 대상에서 제외 (회수 반발 리스크) | 정책 결정 | 미결정 |
+| ROAD-P4 | **무료 티어 축소·그랜드파더링 정책**: 클라우드 동기화를 Pro 전용으로 전환, 무료 티어 로그인은 비강제 유지 | `feature-plan.json` `cloud_sync: "pro"` + `canCloudSync()`/`pro_entitled` 게이트 (sync.js push·pull·syncNow 차단) | ✅ 결정·게이트 구현 |
 | ROAD-P0 | **Pro 안내 계층**: `feature-plan.json` 기능별 `pro`/`free` 전환 + `src/pro-upgrade.js` (PRO 배지 `data-pro-feature` 제어, 진입 1회 안내 `proFeatureNotice`, Formula OS 한도 초과 업그레이드 모달 `showUpgradeNotice`) — 접근 차단 없이 유료 경계만 인지 | `SUBSCRIPTION_ROADMAP.md` §3.4 구현 상태 주석 | ✅ |
 
 ### 7.3 Learning Pro 잔여·차별화
@@ -815,7 +815,7 @@
 | ROAD-L2 | **AI 오답 원인 자동 분류**: 현재 자가 태깅(암기부족/개념오해/계산실수)을 누적 데이터 기반 자동 분류로 | 태깅 데이터 축적 후 | 미구현 |
 | ROAD-L3 | **오답 체인 잔여**: `핵심 문장(ref_md 조문 원문 인라인)` → 관련 카드 → 유사문제 → 재시험 추적 | A3 출처 근거의 후속 체인 | 미구현 |
 | ROAD-L4 | **Phase 2 차별화**: 출제 패턴 분석·코칭 리포트·지식 맵·요약 노트 | FEATURE_PROPOSALS Phase 2 (`docs/report_archive/`) | 미구현 |
-| ROAD-L5 | **기능 검증 측정**: 개발 완료 기능(오답 루프·합격 전략·진단 평가)의 사용률·만족도 로컬 측정 → 유료가치 판정 데이터 확보 | `usage-stats.js` 뷰·액션 카운터 + 설정 '내 사용 통계' (시험 스코프 로컬 전용, 백업·동기화 제외) | ✅ 카운터 구현 (판정 데이터 수집 중) |
+| ROAD-L5 | **기능 검증 측정**: 개발 완료 기능(오답 루프·합격 전략·진단 평가)의 사용률·만족도 로컬 측정 → 유료가치 판정 데이터 확보 | `usage-stats.js` 뷰·액션 카운터 + 설정 '내 사용 통계' (시험 스코프 로컬 전용, 백업·동기화 제외). **판정 기준: 기능 액션 합계 20회** (`PRO_VALUE_THRESHOLD`) — 도달 시 유료가치 인정, ROAD-P1 착수 근거 | ✅ 카운터 구현 (판정 데이터 수집 중) |
 
 ### 7.4 멀티시험·도메인 확장
 
