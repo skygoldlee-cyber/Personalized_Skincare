@@ -5,6 +5,7 @@
 import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, isSupabaseConfigured } from './supabase-config.js';
 
 let _client = null;
+/** @type {Promise<void>|null} */
 let _vendorPromise = null;
 
 function loadVendor() {

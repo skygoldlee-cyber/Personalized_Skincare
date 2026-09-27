@@ -6,6 +6,16 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-14 check:types 전체 소스 확장 — 49파일 백로그 제외 + 4파일 진단 해소
+
+- **`jsconfig.json` include를 `src/**/*.js`로 확장**: 전체 소스(121파일) 검사 시도 결과 869건 진단 → 진단 보유 파일 49개를 `exclude` 백로그로 명시하고 진행 방식 주석 추가 (해결 시 목록에서 지워 편입)
+- **잔여 22건 해소 — 4개 파일을 백로그에서 즉시 편입**:
+  - `batch-store.js`: `Object.values(s).some(v => v > 0)` → `typeof v === 'number' &&` 가드 (dbVersion 문자열 필드가 비교에 섞이던 문제)
+  - `supabase-client.js`: `_vendorPromise`에 `@type {Promise<void>|null}` + `globals.d.ts`에 `window.supabase` 선언
+  - `ui-utils.js`: querySelector 결과에 `HTMLElement` 캐스트 주석 + `.app-confirm-dialog`를 `dialog` 지역 변수로 추출, getElementById null 가드, 포커스 대상 `HTMLElement` 캐스트
+  - `navigation.js`: `navItem`에 `HTMLElement` 캐스트, `globals.d.ts`에 `stopReaderAudio` 선언
+- 결과: 활성 검사 대상 진단 0 — 백로그 49파일은 향후 JSDoc 보강 후 순차 편입
+
 ## 2026-10-14 IDE 오류 게이트 + TS5 정렬 — 커밋·푸시·배포 3중 차단
 
 - **typescript 7.0.2 → 5.9.3 고정**: IDE(번들 TS 5.x)와 `check:types`의 진단이 다르던 문제 해소 — 이제 IDE에 오류가 보이면 check:types도 동일하게 실패

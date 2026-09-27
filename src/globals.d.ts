@@ -44,6 +44,10 @@ declare global {
     __EXAM_MD__?: Record<string, string>;
     /** 안정 ID 마이그레이션 맵 (data/id_migration.js) */
     ID_MIGRATION_MAP?: Record<string, string>;
+    /** vendor/supabase UMD 번들 (지연 로드 — supabase-client.js) */
+    supabase?: any;
+    /** reader-audio.js 가 노출하는 재생 정지 함수 */
+    stopReaderAudio?: () => void;
   }
 
   /** data/id_migration.js 가 정의하는 전역(클래식 스크립트). state.js 가 typeof 가드로 참조. */

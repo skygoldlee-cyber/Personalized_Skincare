@@ -33,7 +33,8 @@ export function showGlobalLoading(message = '로딩 중...') {
         `;
         document.body.appendChild(overlay);
     }
-    document.getElementById('global-loading-message').textContent = message;
+    const msgEl = document.getElementById('global-loading-message');
+    if (msgEl) msgEl.textContent = message;
     overlay.classList.add('is-visible');
 }
 
@@ -110,14 +111,15 @@ export function showConfirm(message, title = '확인') {
         `;
         document.body.appendChild(overlay);
         // 애니메이션
+        const dialog = /** @type {HTMLElement} */ (overlay.querySelector('.app-confirm-dialog'));
         requestAnimationFrame(() => {
             overlay.classList.add('is-visible');
-            overlay.querySelector('.app-confirm-dialog').classList.add('is-visible');
+            dialog.classList.add('is-visible');
         });
 
         const close = (result) => {
             overlay.classList.remove('is-visible');
-            overlay.querySelector('.app-confirm-dialog').classList.remove('is-visible');
+            dialog.classList.remove('is-visible');
             setTimeout(() => {
                 untrapFocus();
                 overlay.remove();
@@ -125,8 +127,8 @@ export function showConfirm(message, title = '확인') {
             resolve(result);
         };
 
-        overlay.querySelector('.app-confirm-ok').addEventListener('click', () => close(true));
-        overlay.querySelector('.app-confirm-cancel').addEventListener('click', () => close(false));
+        overlay.querySelector('.app-confirm-ok')?.addEventListener('click', () => close(true));
+        overlay.querySelector('.app-confirm-cancel')?.addEventListener('click', () => close(false));
         overlay.addEventListener('click', (e) => { if (e.target === overlay) close(false); });
         // Escape 키로 취소
         const onKey = (e) => {
@@ -134,7 +136,7 @@ export function showConfirm(message, title = '확인') {
         };
         document.addEventListener('keydown', onKey);
         // 포커스 트랩 적용
-        const untrapFocus = trapFocus(overlay.querySelector('.app-confirm-dialog'));
+        const untrapFocus = trapFocus(dialog);
     });
 }
 
@@ -156,15 +158,16 @@ export function showAlert(message, title = '알림') {
             </div>
         `;
         document.body.appendChild(overlay);
+        const dialog = /** @type {HTMLElement} */ (overlay.querySelector('.app-confirm-dialog'));
         requestAnimationFrame(() => {
             overlay.classList.add('is-visible');
-            overlay.querySelector('.app-confirm-dialog').classList.add('is-visible');
+            dialog.classList.add('is-visible');
         });
 
-        const untrapFocus = trapFocus(overlay.querySelector('.app-confirm-dialog'));
+        const untrapFocus = trapFocus(dialog);
         const close = () => {
             overlay.classList.remove('is-visible');
-            overlay.querySelector('.app-confirm-dialog').classList.remove('is-visible');
+            dialog.classList.remove('is-visible');
             setTimeout(() => {
                 untrapFocus();
                 overlay.remove();
@@ -172,7 +175,7 @@ export function showAlert(message, title = '알림') {
             resolve(true);
         };
 
-        overlay.querySelector('.app-confirm-ok').addEventListener('click', close);
+        overlay.querySelector('.app-confirm-ok')?.addEventListener('click', close);
         overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
         const onKey = (e) => {
             if (e.key === 'Escape') { document.removeEventListener('keydown', onKey); close(); }
@@ -202,12 +205,13 @@ const FOCUSABLE_SELECTOR = 'a[href], button:not([disabled]), input:not([disabled
 export function trapFocus(modalEl, triggerEl) {
     if (!modalEl) return () => {};
 
-    const previouslyFocused = triggerEl || document.activeElement;
+    /** @type {HTMLElement|null} */
+    const previouslyFocused = triggerEl || /** @type {HTMLElement|null} */ (document.activeElement);
 
     // 첫 포커스 가능 요소로 초점 이동
     const focusables = modalEl.querySelectorAll(FOCUSABLE_SELECTOR);
     if (focusables.length > 0) {
-        focusables[0].focus();
+        /** @type {HTMLElement} */ (focusables[0]).focus();
     } else {
         modalEl.setAttribute('tabindex', '-1');
         modalEl.focus();
@@ -220,8 +224,8 @@ export function trapFocus(modalEl, triggerEl) {
             e.preventDefault();
             return;
         }
-        const first = currentFocusables[0];
-        const last = currentFocusables[currentFocusables.length - 1];
+        const first = /** @type {HTMLElement} */ (currentFocusables[0]);
+        const last = /** @type {HTMLElement} */ (currentFocusables[currentFocusables.length - 1]);
 
         if (e.shiftKey) {
             if (document.activeElement === first || !modalEl.contains(document.activeElement)) {

@@ -101,7 +101,7 @@ function sanitizeCheckSnapshot(snap) {
     // 검증에 쓰인 원료 DB 버전 — 고시 개정 후에도 "당시 기준"을 특정할 수 있게 보존
     dbVersion: clampStr(snap.dbVersion || '', 20).trim(),
   };
-  return Object.values(s).some(v => v > 0) || s.dbVersion ? s : null;
+  return Object.values(s).some(v => typeof v === 'number' && v > 0) || s.dbVersion ? s : null;
 }
 
 function sanitizeLots(lots) {

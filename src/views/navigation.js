@@ -50,7 +50,7 @@ export function switchView(targetView, opts = {}) {
     if (navItem) {
         // click() 핸들러가 saveScrollPosition/restoreScrollPosition을 포함하므로
         // 여기서는 중복 호출하지 않고 click만 트리거
-        navItem.click();
+        /** @type {HTMLElement} */ (navItem).click();
     } else {
         // nav-item이 없는 뷰(예: exam-simulator 내부 뷰)는 직접 처리
         saveScrollPosition(state.currentView);
