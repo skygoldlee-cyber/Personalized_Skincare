@@ -1,5 +1,12 @@
 [
   {
+    "version": "v369-20260927-f67d25c",
+    "date": "2026-09-27",
+    "notes": [
+      "docs: 전 문서 DOC ID 부여 + TRACE MATRIX 구축 (문서·소스·테스트·보고서 추적)"
+    ]
+  },
+  {
     "version": "v369-20260927-d49439d",
     "date": "2026-09-27",
     "notes": [
@@ -140,14 +147,6 @@
     "notes": [
       "docs: feature-plan.json/pro-upgrade.js를 상위 문서에 반영",
       "feat(pro): Pro 제공 예정 기능 안내 + feature-plan.json 무료/Pro 전환"
-    ]
-  },
-  {
-    "version": "v369-20260926-31a5368",
-    "date": "2026-09-26",
-    "notes": [
-      "chore(formula): 업그레이드 안내 문구 — 상세 학습 리포트 → 개인화된 맞춤형 리포트",
-      "feat(formula): 무료 한도 도달 시 Pro 업그레이드 안내 모달"
     ]
   }
 ]
