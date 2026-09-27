@@ -1,5 +1,12 @@
 [
   {
+    "version": "v369-20260927-d2de9de",
+    "date": "2026-09-27",
+    "notes": [
+      "feat(trace): TRACE MATRIX 활용 도구 — 영향도·도시어·갭 리포트·신선도"
+    ]
+  },
+  {
     "version": "v369-20260927-f67d25c",
     "date": "2026-09-27",
     "notes": [
@@ -139,14 +146,6 @@
     "date": "2026-09-26",
     "notes": [
       "chore(plan): 복수정답형·모의고사 기능을 free로 전환"
-    ]
-  },
-  {
-    "version": "v369-20260926-5993462",
-    "date": "2026-09-26",
-    "notes": [
-      "docs: feature-plan.json/pro-upgrade.js를 상위 문서에 반영",
-      "feat(pro): Pro 제공 예정 기능 안내 + feature-plan.json 무료/Pro 전환"
     ]
   }
 ]
