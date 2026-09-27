@@ -38,6 +38,25 @@ function send(res, status, headers, body) {
     res.end(body);
 }
 
+// vercel.json의 프로덕션 헤더(CSP·캐시 정책)를 로컬에 미러링 —
+// CSP 강화 등 헤더 변경을 배포 전 로컬/E2E에서 검증하기 위함
+const VERCEL_HEADERS = (() => {
+    try {
+        const cfg = JSON.parse(fs.readFileSync(path.join(ROOT, 'vercel.json'), 'utf8'));
+        return (cfg.headers || []).map(h => ({ re: new RegExp(`^${h.source}$`), headers: h.headers }));
+    } catch (e) {
+        return [];
+    }
+})();
+
+function vercelHeadersFor(pathname) {
+    const out = {};
+    for (const h of VERCEL_HEADERS) {
+        if (h.re.test(pathname)) for (const kv of h.headers) out[kv.key] = kv.value;
+    }
+    return out;
+}
+
 const server = http.createServer((req, res) => {
     let pathname;
     try {
@@ -91,6 +110,7 @@ const server = http.createServer((req, res) => {
                     'Accept-Ranges': 'bytes',
                     'Content-Length': end - start + 1,
                     'Cache-Control': 'no-cache',
+                    ...vercelHeadersFor(pathname),
                 });
                 fs.createReadStream(fp, { start, end }).pipe(res);
                 return;
@@ -103,6 +123,7 @@ const server = http.createServer((req, res) => {
             'Content-Length': size,
             'Accept-Ranges': 'bytes',
             'Cache-Control': 'no-cache',
+            ...vercelHeadersFor(pathname),
         });
         fs.createReadStream(fp).pipe(res);
     }

@@ -10,7 +10,11 @@
  *   - (LNN) 계열: 참조 ref_md 파일 존재, 라인 범위, 같은 셀의 키워드가
  *     해당 라인(±1)에 실제 존재 — 불일치 시 파일 전체 검색으로 실제 라인 제안
  *   - 출처 조문 계열: `📌 **출처**: … 제N조` + 같은 줄의 참조 링크(.md)가
- *     가리키는 문서에 해당 조문이 실제 존재하는지 (ref_md 재변환·법 개정 감지)
+ *     가리키는 문서에 해당 조문이 실제 존재하는지 (ref_md 재변환·법 개정 감지).
+ *     복수 출처(`A법 제N조 + B고시`)이면 링크에 없는 조문은 출처 세그먼트의
+ *     문서명으로 소유 ref_md를 찾아 재검증 — 소유 문서에 있으면 정상, 소유
+ *     문서가 있는데 조문이 없으면 오류(법 개정 누락 후보), 소유 문서 자체를
+ *     못 찾으면 경고 유지
  *   - (L?) 미해결 마커는 건수만 집계 (경고)
  *
  * 사용: node tools/check_ref_lines.js   (불일치 시 exit 1)
@@ -100,6 +104,17 @@ function getLines(absPath) {
   return lineCache[absPath];
 }
 
+// ref_md 전체 문서 인덱스 — 복수 출처 조문의 소유 문서 해석용 (contentRoot별 지연 생성)
+const refDocCache = {};
+function getRefDocs(contentRoot) {
+  if (!refDocCache[contentRoot]) {
+    const base = path.join(ROOT, contentRoot, '참조자료', 'ref_md');
+    refDocCache[contentRoot] = [...mdFiles(base)]
+      .map(p => ({ abs: p, key: norm(path.basename(p, '.md')) }));
+  }
+  return refDocCache[contentRoot];
+}
+
 console.log('='.repeat(70));
 console.log('교재 (LNN) 참조 라인 검증');
 console.log('='.repeat(70));
@@ -150,10 +165,28 @@ for (const t of getExamTargets(ROOT)) {
             } else {
               const refLines = getLines(abs);
               const refAll = norm(refLines.join('\n'));
-              const missing = articles.filter(a => !refAll.includes(norm(a)));
+              let missing = articles.filter(a => !refAll.includes(norm(a)));
               // 출처가 'A법 제N조 + B고시'처럼 복수 소스면 참조 링크는 대표 문서
-              // 하나만 가리키는 규약 — 미발견 조문이 다른 문서 소속일 수 있어 경고 처리
+              // 하나만 가리키는 규약 — 링크에 없는 조문은 세그먼트의 문서명으로
+              // 소유 ref_md를 해석해 직접 검증한다
               const multiSource = s1[1].includes('+');
+              if (multiSource && missing.length) {
+                const segments = s1[1].split('+');
+                const unowned = [];
+                for (const a of missing) {
+                  const seg = segments.find(sg => sg.includes(a)) || '';
+                  const owner = norm(seg.slice(0, seg.indexOf(a)));
+                  const cands = owner
+                    ? getRefDocs(t.contentRoot).filter(d => d.key.includes(owner))
+                    : [];
+                  if (!cands.length) { unowned.push(a); continue; }
+                  const hit = cands.some(d => norm(getLines(d.abs).join('\n')).includes(norm(a)));
+                  if (!hit) {
+                    errors.push(`${rel}:${i + 1} — 조문 미발견(소유 문서 "${owner}"에 실제 없음 — 법 개정 확인 필요): ${a}`);
+                  }
+                }
+                missing = unowned;
+              }
               if (missing.length === articles.length && !multiSource) {
                 errors.push(`${rel}:${i + 1} — 출처 "${s1[1].trim().slice(0, 40)}"의 조문이 링크 문서에 없음: ${missing.join(', ')} → ${path.basename(abs)}`);
               } else if (missing.length) {

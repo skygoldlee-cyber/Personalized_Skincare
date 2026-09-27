@@ -368,6 +368,7 @@ for (const target of targets) {
 }
 
 const output = `// src/keyword-index.js — 용어집 인덱스 (참조문서에서 추출한 키워드 + 설명)
+// @spec RR-04,PF-12
 // 자동 생성됨: node tools/build/build_keyword_index.js
 // 키: "파일명.md|L라인번호" 또는 "glossary:과목N:키워드" (큐레이션 전용)
 // → 값: { keyword, explanation, refDoc, subjectId, curated? }

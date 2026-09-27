@@ -59,6 +59,8 @@ npm.cmd run serve
 
 > 서버 없이 `index.html`을 직접 열면 **동작하지 않습니다** — ES Modules는 `file://`에서 CORS로 차단됩니다. 반드시 `npm run serve`(또는 임의 정적 서버)로 접속하세요.
 
+> `serve.js`는 `vercel.json`의 프로덕션 헤더(CSP·캐시 정책)를 응답에 미러링합니다 — CSP 변경 등 헤더 수정은 로컬과 `test:e2e`에서 배포 환경과 동일하게 검증됩니다.
+
 ## 5. 검증 명령어 (환경 정상 여부 확인)
 
 ```powershell

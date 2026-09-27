@@ -2,7 +2,7 @@
 var DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2026",
-  "generatedAt": "2026-09-26T11:34:43.737Z",
+  "generatedAt": "2026-09-27T12:37:17.690Z",
   "subjects": [
     {
       "key": "law",
@@ -106,9 +106,9 @@ var DATA_REGISTRY = {
       "part": 1,
       "title": "유통화장품 안전관리 (250제)",
       "file": "과목3_단일정답형.md",
-      "bundle": "./data/exams/cosmetic/exams/subject3.19f7b12f.js",
+      "bundle": "./data/exams/cosmetic/exams/subject3.f00d720e.js",
       "global": "EXAM_DATA_subject3",
-      "contentHash": "19f7b12f",
+      "contentHash": "f00d720e",
       "stats": {
         "questions": 250
       }

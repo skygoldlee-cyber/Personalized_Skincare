@@ -1,5 +1,5 @@
-// 자동 생성된 O/X 드릴 데이터입니다. 수정하지 마십시오. (tools/build_ox_drills.js)
-// 원본: data/exams/cosmetic/exams/subject3.19f7b12f.js — mode: fact(명제 판정) 22문 / answer(정답 판정) 226문
+// 자동 생성된 O/X 드릴 데이터입니다. 수정하지 마십시오. (tools/build/build_ox_drills.js)
+// 원본: data/exams/cosmetic/exams/subject3.f00d720e.js — mode: fact(명제 판정) 22문 / answer(정답 판정) 226문
 var OX_DRILLS_subject3 = [
  {
   "id": "ox-03-0001",
@@ -11165,12 +11165,12 @@ var OX_DRILLS_subject3 = [
   "type": "ox",
   "points": 2,
   "stem": "다음 보기가 발문의 정답인가? (O/X)",
-  "context": "화장품 제조 시 「설비의 세정」에 대한 기록으로 옳은 것은?",
+  "context": "화장품 제조 시 「설비의 세정」에 대한 기록으로 옳지 않은 것은?",
   "statement": "세정 방법",
   "truth": false,
   "mode": "answer",
-  "sid": "safety_st_423758",
-  "derivedFrom": "subject3_q121#2",
+  "sid": "safety_st_189f82",
+  "derivedFrom": "subject3_q121#1",
   "explain": "📖 교재 근거 (교재: L1724):\n| 게이지와 미터기 | - 온도, 압력, 흐름, 점도, pH, 속도, 부피 등 화장품의 특성을 측정 및 기록하기 위해 사용함<br>- 제품과 직접 접하는 게이지와 미터의 적절한 기능에 영향을 주지 않아야 하며, 대부분 원료와 직접 접하지 않도록 분리 장치를 제공함 |",
   "tags": [
    "정답판정"
@@ -11183,12 +11183,12 @@ var OX_DRILLS_subject3 = [
   "type": "ox",
   "points": 2,
   "stem": "다음 보기가 발문의 정답인가? (O/X)",
-  "context": "화장품 제조 시 「설비의 세정」에 대한 기록으로 옳은 것은?",
+  "context": "화장품 제조 시 「설비의 세정」에 대한 기록으로 옳지 않은 것은?",
   "statement": "세정 담당자",
   "truth": false,
   "mode": "answer",
-  "sid": "safety_st_548e76",
-  "derivedFrom": "subject3_q121#3",
+  "sid": "safety_st_e61709",
+  "derivedFrom": "subject3_q121#2",
   "explain": "📖 교재 근거 (교재: L1724):\n| 게이지와 미터기 | - 온도, 압력, 흐름, 점도, pH, 속도, 부피 등 화장품의 특성을 측정 및 기록하기 위해 사용함<br>- 제품과 직접 접하는 게이지와 미터의 적절한 기능에 영향을 주지 않아야 하며, 대부분 원료와 직접 접하지 않도록 분리 장치를 제공함 |",
   "tags": [
    "정답판정"
@@ -11201,12 +11201,12 @@ var OX_DRILLS_subject3 = [
   "type": "ox",
   "points": 2,
   "stem": "다음 보기가 발문의 정답인가? (O/X)",
-  "context": "화장품 제조 시 「설비의 세정」에 대한 기록으로 옳은 것은?",
-  "statement": "세전 후 확인 결과",
+  "context": "화장품 제조 시 「설비의 세정」에 대한 기록으로 옳지 않은 것은?",
+  "statement": "세정 후 확인 결과",
   "truth": false,
   "mode": "answer",
-  "sid": "safety_st_6a4fa9",
-  "derivedFrom": "subject3_q121#4",
+  "sid": "safety_st_83094c",
+  "derivedFrom": "subject3_q121#3",
   "explain": "📖 교재 근거 (교재: L1724):\n| 게이지와 미터기 | - 온도, 압력, 흐름, 점도, pH, 속도, 부피 등 화장품의 특성을 측정 및 기록하기 위해 사용함<br>- 제품과 직접 접하는 게이지와 미터의 적절한 기능에 영향을 주지 않아야 하며, 대부분 원료와 직접 접하지 않도록 분리 장치를 제공함 |",
   "tags": [
    "정답판정"
@@ -11219,12 +11219,12 @@ var OX_DRILLS_subject3 = [
   "type": "ox",
   "points": 2,
   "stem": "다음 보기가 발문의 정답인가? (O/X)",
-  "context": "화장품 제조 시 「설비의 세정」에 대한 기록으로 옳은 것은?",
+  "context": "화장품 제조 시 「설비의 세정」에 대한 기록으로 옳지 않은 것은?",
   "statement": "세정 일자",
   "truth": false,
   "mode": "answer",
-  "sid": "safety_st_59ef4c",
-  "derivedFrom": "subject3_q121#5",
+  "sid": "safety_st_157a1d",
+  "derivedFrom": "subject3_q121#4",
   "explain": "📖 교재 근거 (교재: L1724):\n| 게이지와 미터기 | - 온도, 압력, 흐름, 점도, pH, 속도, 부피 등 화장품의 특성을 측정 및 기록하기 위해 사용함<br>- 제품과 직접 접하는 게이지와 미터의 적절한 기능에 영향을 주지 않아야 하며, 대부분 원료와 직접 접하지 않도록 분리 장치를 제공함 |",
   "tags": [
    "정답판정"
@@ -11233,6 +11233,24 @@ var OX_DRILLS_subject3 = [
  },
  {
   "id": "ox-03-0599",
+  "subject": 3,
+  "type": "ox",
+  "points": 2,
+  "stem": "다음 보기가 발문의 정답인가? (O/X)",
+  "context": "화장품 제조 시 「설비의 세정」에 대한 기록으로 옳지 않은 것은?",
+  "statement": "세정 비용 청구액",
+  "truth": true,
+  "mode": "answer",
+  "sid": "safety_st_603d8f",
+  "derivedFrom": "subject3_q121#5",
+  "explain": "📖 교재 근거 (교재: L1724):\n| 게이지와 미터기 | - 온도, 압력, 흐름, 점도, pH, 속도, 부피 등 화장품의 특성을 측정 및 기록하기 위해 사용함<br>- 제품과 직접 접하는 게이지와 미터의 적절한 기능에 영향을 주지 않아야 하며, 대부분 원료와 직접 접하지 않도록 분리 장치를 제공함 |",
+  "tags": [
+   "정답판정"
+  ],
+  "source": "유통화장품 안전관리 (250제)"
+ },
+ {
+  "id": "ox-03-0600",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11250,7 +11268,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0600",
+  "id": "ox-03-0601",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11268,7 +11286,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0601",
+  "id": "ox-03-0602",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11286,7 +11304,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0602",
+  "id": "ox-03-0603",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11304,7 +11322,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0603",
+  "id": "ox-03-0604",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11322,7 +11340,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0604",
+  "id": "ox-03-0605",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11340,7 +11358,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0605",
+  "id": "ox-03-0606",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11358,7 +11376,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0606",
+  "id": "ox-03-0607",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11376,7 +11394,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0607",
+  "id": "ox-03-0608",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11394,7 +11412,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0608",
+  "id": "ox-03-0609",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11412,7 +11430,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0609",
+  "id": "ox-03-0610",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11432,7 +11450,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0610",
+  "id": "ox-03-0611",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11451,7 +11469,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0611",
+  "id": "ox-03-0612",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11470,7 +11488,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0612",
+  "id": "ox-03-0613",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11489,7 +11507,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0613",
+  "id": "ox-03-0614",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11508,7 +11526,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0614",
+  "id": "ox-03-0615",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11526,7 +11544,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0615",
+  "id": "ox-03-0616",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11544,7 +11562,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0616",
+  "id": "ox-03-0617",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11562,7 +11580,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0617",
+  "id": "ox-03-0618",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11581,7 +11599,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0618",
+  "id": "ox-03-0619",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11599,7 +11617,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0619",
+  "id": "ox-03-0620",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11617,7 +11635,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0620",
+  "id": "ox-03-0621",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11635,7 +11653,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0621",
+  "id": "ox-03-0622",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11653,7 +11671,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0622",
+  "id": "ox-03-0623",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11671,7 +11689,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0623",
+  "id": "ox-03-0624",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11689,7 +11707,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0624",
+  "id": "ox-03-0625",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11709,7 +11727,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0625",
+  "id": "ox-03-0626",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11729,7 +11747,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0626",
+  "id": "ox-03-0627",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11748,7 +11766,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0627",
+  "id": "ox-03-0628",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11767,7 +11785,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0628",
+  "id": "ox-03-0629",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11786,7 +11804,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0629",
+  "id": "ox-03-0630",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11804,7 +11822,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0630",
+  "id": "ox-03-0631",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11822,7 +11840,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0631",
+  "id": "ox-03-0632",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11840,7 +11858,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0632",
+  "id": "ox-03-0633",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11858,7 +11876,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0633",
+  "id": "ox-03-0634",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11876,7 +11894,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0634",
+  "id": "ox-03-0635",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11894,7 +11912,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0635",
+  "id": "ox-03-0636",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11912,7 +11930,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0636",
+  "id": "ox-03-0637",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11930,7 +11948,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0637",
+  "id": "ox-03-0638",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11948,7 +11966,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0638",
+  "id": "ox-03-0639",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11966,7 +11984,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0639",
+  "id": "ox-03-0640",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -11984,7 +12002,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0640",
+  "id": "ox-03-0641",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12002,7 +12020,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0641",
+  "id": "ox-03-0642",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12020,7 +12038,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0642",
+  "id": "ox-03-0643",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12038,7 +12056,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0643",
+  "id": "ox-03-0644",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12056,7 +12074,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0644",
+  "id": "ox-03-0645",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12074,7 +12092,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0645",
+  "id": "ox-03-0646",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12092,7 +12110,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0646",
+  "id": "ox-03-0647",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12110,7 +12128,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0647",
+  "id": "ox-03-0648",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12128,7 +12146,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0648",
+  "id": "ox-03-0649",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12146,7 +12164,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0649",
+  "id": "ox-03-0650",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12164,7 +12182,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0650",
+  "id": "ox-03-0651",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12182,7 +12200,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0651",
+  "id": "ox-03-0652",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12200,7 +12218,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0652",
+  "id": "ox-03-0653",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12218,7 +12236,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0653",
+  "id": "ox-03-0654",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12236,7 +12254,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0654",
+  "id": "ox-03-0655",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12254,7 +12272,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0655",
+  "id": "ox-03-0656",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12272,7 +12290,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0656",
+  "id": "ox-03-0657",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12290,7 +12308,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0657",
+  "id": "ox-03-0658",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12308,7 +12326,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0658",
+  "id": "ox-03-0659",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12326,7 +12344,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0659",
+  "id": "ox-03-0660",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12346,7 +12364,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0660",
+  "id": "ox-03-0661",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12365,7 +12383,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0661",
+  "id": "ox-03-0662",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12384,7 +12402,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0662",
+  "id": "ox-03-0663",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12403,7 +12421,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0663",
+  "id": "ox-03-0664",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12422,7 +12440,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0664",
+  "id": "ox-03-0665",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12441,7 +12459,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0665",
+  "id": "ox-03-0666",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12459,7 +12477,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0666",
+  "id": "ox-03-0667",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12477,7 +12495,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0667",
+  "id": "ox-03-0668",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12495,7 +12513,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0668",
+  "id": "ox-03-0669",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12513,7 +12531,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0669",
+  "id": "ox-03-0670",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12531,7 +12549,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0670",
+  "id": "ox-03-0671",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12549,7 +12567,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0671",
+  "id": "ox-03-0672",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12567,7 +12585,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0672",
+  "id": "ox-03-0673",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12585,7 +12603,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0673",
+  "id": "ox-03-0674",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12603,7 +12621,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0674",
+  "id": "ox-03-0675",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12621,7 +12639,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0675",
+  "id": "ox-03-0676",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12639,7 +12657,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0676",
+  "id": "ox-03-0677",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12657,7 +12675,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0677",
+  "id": "ox-03-0678",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12675,7 +12693,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0678",
+  "id": "ox-03-0679",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12694,7 +12712,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0679",
+  "id": "ox-03-0680",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12713,7 +12731,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0680",
+  "id": "ox-03-0681",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12732,7 +12750,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0681",
+  "id": "ox-03-0682",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12751,7 +12769,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0682",
+  "id": "ox-03-0683",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12770,7 +12788,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0683",
+  "id": "ox-03-0684",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12790,7 +12808,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0684",
+  "id": "ox-03-0685",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12810,7 +12828,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0685",
+  "id": "ox-03-0686",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12830,7 +12848,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0686",
+  "id": "ox-03-0687",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12850,7 +12868,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0687",
+  "id": "ox-03-0688",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12870,7 +12888,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0688",
+  "id": "ox-03-0689",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12890,7 +12908,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0689",
+  "id": "ox-03-0690",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12910,7 +12928,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0690",
+  "id": "ox-03-0691",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12929,7 +12947,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0691",
+  "id": "ox-03-0692",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12948,7 +12966,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0692",
+  "id": "ox-03-0693",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12967,7 +12985,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0693",
+  "id": "ox-03-0694",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -12985,7 +13003,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0694",
+  "id": "ox-03-0695",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13004,7 +13022,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0695",
+  "id": "ox-03-0696",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13022,7 +13040,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0696",
+  "id": "ox-03-0697",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13040,7 +13058,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0697",
+  "id": "ox-03-0698",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13058,7 +13076,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0698",
+  "id": "ox-03-0699",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13076,7 +13094,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0699",
+  "id": "ox-03-0700",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13094,7 +13112,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0700",
+  "id": "ox-03-0701",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13112,7 +13130,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0701",
+  "id": "ox-03-0702",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13130,7 +13148,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0702",
+  "id": "ox-03-0703",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13148,7 +13166,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0703",
+  "id": "ox-03-0704",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13166,7 +13184,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0704",
+  "id": "ox-03-0705",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13184,7 +13202,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0705",
+  "id": "ox-03-0706",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13202,7 +13220,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0706",
+  "id": "ox-03-0707",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13220,7 +13238,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0707",
+  "id": "ox-03-0708",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13238,7 +13256,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0708",
+  "id": "ox-03-0709",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13256,7 +13274,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0709",
+  "id": "ox-03-0710",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13274,7 +13292,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0710",
+  "id": "ox-03-0711",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13292,7 +13310,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0711",
+  "id": "ox-03-0712",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13310,7 +13328,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0712",
+  "id": "ox-03-0713",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13328,7 +13346,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0713",
+  "id": "ox-03-0714",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13346,7 +13364,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0714",
+  "id": "ox-03-0715",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13364,7 +13382,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0715",
+  "id": "ox-03-0716",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13382,7 +13400,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0716",
+  "id": "ox-03-0717",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13400,7 +13418,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0717",
+  "id": "ox-03-0718",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13418,7 +13436,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0718",
+  "id": "ox-03-0719",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13436,7 +13454,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0719",
+  "id": "ox-03-0720",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13454,7 +13472,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0720",
+  "id": "ox-03-0721",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13472,7 +13490,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0721",
+  "id": "ox-03-0722",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13491,7 +13509,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0722",
+  "id": "ox-03-0723",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13510,7 +13528,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0723",
+  "id": "ox-03-0724",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13528,7 +13546,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0724",
+  "id": "ox-03-0725",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13547,7 +13565,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0725",
+  "id": "ox-03-0726",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13565,7 +13583,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0726",
+  "id": "ox-03-0727",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13583,7 +13601,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0727",
+  "id": "ox-03-0728",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13601,7 +13619,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0728",
+  "id": "ox-03-0729",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13619,7 +13637,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0729",
+  "id": "ox-03-0730",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13637,7 +13655,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0730",
+  "id": "ox-03-0731",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13655,7 +13673,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0731",
+  "id": "ox-03-0732",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13673,7 +13691,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0732",
+  "id": "ox-03-0733",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13691,12 +13709,12 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0733",
+  "id": "ox-03-0734",
   "subject": 3,
   "type": "ox",
   "points": 2,
   "stem": "다음 보기가 발문의 정답인가? (O/X)",
-  "context": "다음 중 화장품 제조 시 「충전 설비」의 관리 기준으로 가장 적절한 것은?",
+  "context": "다음 중 화장품 제조 시 「충전 설비」의 관리 기준으로 옳지 않은 것은?",
   "statement": "충전 설비의 세정·소독",
   "truth": false,
   "mode": "answer",
@@ -13709,35 +13727,17 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0734",
-  "subject": 3,
-  "type": "ox",
-  "points": 2,
-  "stem": "다음 보기가 발문의 정답인가? (O/X)",
-  "context": "다음 중 화장품 제조 시 「충전 설비」의 관리 기준으로 가장 적절한 것은?",
-  "statement": "충전 설비의 교정",
-  "truth": false,
-  "mode": "answer",
-  "sid": "safety_st_d4a6bf",
-  "derivedFrom": "subject3_q149#3",
-  "explain": "📖 법령 근거 (교재: L451):\n4. 제조시설이나 설비는 적절한 방법으로 청소하여야 하며, 필요한 경우 위생관리 프로그램을 운영해야 한다.",
-  "tags": [
-   "정답판정"
-  ],
-  "source": "유통화장품 안전관리 (250제)"
- },
- {
   "id": "ox-03-0735",
   "subject": 3,
   "type": "ox",
   "points": 2,
   "stem": "다음 보기가 발문의 정답인가? (O/X)",
-  "context": "다음 중 화장품 제조 시 「충전 설비」의 관리 기준으로 가장 적절한 것은?",
-  "statement": "충전 시 이물질 혼입 방지",
+  "context": "다음 중 화장품 제조 시 「충전 설비」의 관리 기준으로 옳지 않은 것은?",
+  "statement": "충전 설비의 교정",
   "truth": false,
   "mode": "answer",
-  "sid": "safety_st_9289b1",
-  "derivedFrom": "subject3_q149#4",
+  "sid": "safety_st_5a8f32",
+  "derivedFrom": "subject3_q149#2",
   "explain": "📖 법령 근거 (교재: L451):\n4. 제조시설이나 설비는 적절한 방법으로 청소하여야 하며, 필요한 경우 위생관리 프로그램을 운영해야 한다.",
   "tags": [
    "정답판정"
@@ -13750,12 +13750,12 @@ var OX_DRILLS_subject3 = [
   "type": "ox",
   "points": 2,
   "stem": "다음 보기가 발문의 정답인가? (O/X)",
-  "context": "다음 중 화장품 제조 시 「충전 설비」의 관리 기준으로 가장 적절한 것은?",
-  "statement": "충전량의 정확성 확인",
+  "context": "다음 중 화장품 제조 시 「충전 설비」의 관리 기준으로 옳지 않은 것은?",
+  "statement": "충전 시 이물질 혼입 방지",
   "truth": false,
   "mode": "answer",
-  "sid": "safety_st_89390c",
-  "derivedFrom": "subject3_q149#5",
+  "sid": "safety_st_f3acfb",
+  "derivedFrom": "subject3_q149#3",
   "explain": "📖 법령 근거 (교재: L451):\n4. 제조시설이나 설비는 적절한 방법으로 청소하여야 하며, 필요한 경우 위생관리 프로그램을 운영해야 한다.",
   "tags": [
    "정답판정"
@@ -13764,6 +13764,42 @@ var OX_DRILLS_subject3 = [
  },
  {
   "id": "ox-03-0737",
+  "subject": 3,
+  "type": "ox",
+  "points": 2,
+  "stem": "다음 보기가 발문의 정답인가? (O/X)",
+  "context": "다음 중 화장품 제조 시 「충전 설비」의 관리 기준으로 옳지 않은 것은?",
+  "statement": "충전량의 정확성 확인",
+  "truth": false,
+  "mode": "answer",
+  "sid": "safety_st_c7629e",
+  "derivedFrom": "subject3_q149#4",
+  "explain": "📖 법령 근거 (교재: L451):\n4. 제조시설이나 설비는 적절한 방법으로 청소하여야 하며, 필요한 경우 위생관리 프로그램을 운영해야 한다.",
+  "tags": [
+   "정답판정"
+  ],
+  "source": "유통화장품 안전관리 (250제)"
+ },
+ {
+  "id": "ox-03-0738",
+  "subject": 3,
+  "type": "ox",
+  "points": 2,
+  "stem": "다음 보기가 발문의 정답인가? (O/X)",
+  "context": "다음 중 화장품 제조 시 「충전 설비」의 관리 기준으로 옳지 않은 것은?",
+  "statement": "충전 설비의 외관 도장 색상",
+  "truth": true,
+  "mode": "answer",
+  "sid": "safety_st_7ecf38",
+  "derivedFrom": "subject3_q149#5",
+  "explain": "📖 법령 근거 (교재: L451):\n4. 제조시설이나 설비는 적절한 방법으로 청소하여야 하며, 필요한 경우 위생관리 프로그램을 운영해야 한다.",
+  "tags": [
+   "정답판정"
+  ],
+  "source": "유통화장품 안전관리 (250제)"
+ },
+ {
+  "id": "ox-03-0739",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13782,7 +13818,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0738",
+  "id": "ox-03-0740",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13801,7 +13837,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0739",
+  "id": "ox-03-0741",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13820,7 +13856,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0740",
+  "id": "ox-03-0742",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13839,7 +13875,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0741",
+  "id": "ox-03-0743",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13858,7 +13894,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0742",
+  "id": "ox-03-0744",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13877,7 +13913,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0743",
+  "id": "ox-03-0745",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13896,7 +13932,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0744",
+  "id": "ox-03-0746",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13915,7 +13951,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0745",
+  "id": "ox-03-0747",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13934,7 +13970,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0746",
+  "id": "ox-03-0748",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13953,7 +13989,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0747",
+  "id": "ox-03-0749",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13972,7 +14008,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0748",
+  "id": "ox-03-0750",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -13992,7 +14028,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0749",
+  "id": "ox-03-0751",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14011,7 +14047,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0750",
+  "id": "ox-03-0752",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14030,7 +14066,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0751",
+  "id": "ox-03-0753",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14049,7 +14085,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0752",
+  "id": "ox-03-0754",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14068,7 +14104,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0753",
+  "id": "ox-03-0755",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14087,7 +14123,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0754",
+  "id": "ox-03-0756",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14106,7 +14142,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0755",
+  "id": "ox-03-0757",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14125,7 +14161,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0756",
+  "id": "ox-03-0758",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14144,7 +14180,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0757",
+  "id": "ox-03-0759",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14164,7 +14200,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0758",
+  "id": "ox-03-0760",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14183,7 +14219,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0759",
+  "id": "ox-03-0761",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14203,7 +14239,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0760",
+  "id": "ox-03-0762",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14222,7 +14258,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0761",
+  "id": "ox-03-0763",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14242,7 +14278,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0762",
+  "id": "ox-03-0764",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14261,7 +14297,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0763",
+  "id": "ox-03-0765",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14280,7 +14316,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0764",
+  "id": "ox-03-0766",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14299,7 +14335,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0765",
+  "id": "ox-03-0767",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14318,7 +14354,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0766",
+  "id": "ox-03-0768",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14337,7 +14373,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0767",
+  "id": "ox-03-0769",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14356,7 +14392,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0768",
+  "id": "ox-03-0770",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14375,7 +14411,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0769",
+  "id": "ox-03-0771",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14394,7 +14430,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0770",
+  "id": "ox-03-0772",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14413,7 +14449,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0771",
+  "id": "ox-03-0773",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14432,7 +14468,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0772",
+  "id": "ox-03-0774",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14451,7 +14487,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0773",
+  "id": "ox-03-0775",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14470,7 +14506,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0774",
+  "id": "ox-03-0776",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14489,7 +14525,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0775",
+  "id": "ox-03-0777",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14508,7 +14544,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0776",
+  "id": "ox-03-0778",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14527,7 +14563,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0777",
+  "id": "ox-03-0779",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14545,7 +14581,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0778",
+  "id": "ox-03-0780",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14563,7 +14599,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0779",
+  "id": "ox-03-0781",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14581,7 +14617,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0780",
+  "id": "ox-03-0782",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14599,7 +14635,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0781",
+  "id": "ox-03-0783",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14617,7 +14653,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0782",
+  "id": "ox-03-0784",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14635,7 +14671,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0783",
+  "id": "ox-03-0785",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14655,7 +14691,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0784",
+  "id": "ox-03-0786",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14674,7 +14710,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0785",
+  "id": "ox-03-0787",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14692,7 +14728,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0786",
+  "id": "ox-03-0788",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14711,7 +14747,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0787",
+  "id": "ox-03-0789",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14730,7 +14766,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0788",
+  "id": "ox-03-0790",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14750,7 +14786,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0789",
+  "id": "ox-03-0791",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14769,7 +14805,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0790",
+  "id": "ox-03-0792",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14788,7 +14824,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0791",
+  "id": "ox-03-0793",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14807,7 +14843,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0792",
+  "id": "ox-03-0794",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14826,7 +14862,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0793",
+  "id": "ox-03-0795",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14845,7 +14881,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0794",
+  "id": "ox-03-0796",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14864,7 +14900,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0795",
+  "id": "ox-03-0797",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14883,7 +14919,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0796",
+  "id": "ox-03-0798",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14902,7 +14938,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0797",
+  "id": "ox-03-0799",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14921,7 +14957,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0798",
+  "id": "ox-03-0800",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14940,7 +14976,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0799",
+  "id": "ox-03-0801",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14959,7 +14995,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0800",
+  "id": "ox-03-0802",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14978,7 +15014,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0801",
+  "id": "ox-03-0803",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -14997,7 +15033,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0802",
+  "id": "ox-03-0804",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15016,7 +15052,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0803",
+  "id": "ox-03-0805",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15035,7 +15071,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0804",
+  "id": "ox-03-0806",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15054,7 +15090,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0805",
+  "id": "ox-03-0807",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15073,7 +15109,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0806",
+  "id": "ox-03-0808",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15092,7 +15128,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0807",
+  "id": "ox-03-0809",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15111,7 +15147,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0808",
+  "id": "ox-03-0810",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15130,7 +15166,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0809",
+  "id": "ox-03-0811",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15149,7 +15185,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0810",
+  "id": "ox-03-0812",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15168,7 +15204,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0811",
+  "id": "ox-03-0813",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15187,7 +15223,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0812",
+  "id": "ox-03-0814",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15206,7 +15242,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0813",
+  "id": "ox-03-0815",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15225,7 +15261,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0814",
+  "id": "ox-03-0816",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15244,7 +15280,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0815",
+  "id": "ox-03-0817",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15263,7 +15299,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0816",
+  "id": "ox-03-0818",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15282,7 +15318,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0817",
+  "id": "ox-03-0819",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15301,7 +15337,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0818",
+  "id": "ox-03-0820",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15320,7 +15356,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0819",
+  "id": "ox-03-0821",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15339,7 +15375,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0820",
+  "id": "ox-03-0822",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15358,7 +15394,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0821",
+  "id": "ox-03-0823",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15377,7 +15413,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0822",
+  "id": "ox-03-0824",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15396,7 +15432,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0823",
+  "id": "ox-03-0825",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15415,7 +15451,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0824",
+  "id": "ox-03-0826",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15434,7 +15470,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0825",
+  "id": "ox-03-0827",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15453,7 +15489,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0826",
+  "id": "ox-03-0828",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15472,7 +15508,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0827",
+  "id": "ox-03-0829",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15491,7 +15527,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0828",
+  "id": "ox-03-0830",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15509,7 +15545,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0829",
+  "id": "ox-03-0831",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15528,7 +15564,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0830",
+  "id": "ox-03-0832",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15546,7 +15582,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0831",
+  "id": "ox-03-0833",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15564,7 +15600,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0832",
+  "id": "ox-03-0834",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15583,7 +15619,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0833",
+  "id": "ox-03-0835",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15602,7 +15638,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0834",
+  "id": "ox-03-0836",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15620,7 +15656,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0835",
+  "id": "ox-03-0837",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15638,7 +15674,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0836",
+  "id": "ox-03-0838",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15656,7 +15692,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0837",
+  "id": "ox-03-0839",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15676,7 +15712,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0838",
+  "id": "ox-03-0840",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15696,7 +15732,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0839",
+  "id": "ox-03-0841",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15716,7 +15752,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0840",
+  "id": "ox-03-0842",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15736,7 +15772,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0841",
+  "id": "ox-03-0843",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15756,7 +15792,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0842",
+  "id": "ox-03-0844",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15774,7 +15810,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0843",
+  "id": "ox-03-0845",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15792,7 +15828,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0844",
+  "id": "ox-03-0846",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15810,7 +15846,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0845",
+  "id": "ox-03-0847",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15829,7 +15865,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0846",
+  "id": "ox-03-0848",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15847,7 +15883,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0847",
+  "id": "ox-03-0849",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15865,7 +15901,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0848",
+  "id": "ox-03-0850",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15883,7 +15919,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0849",
+  "id": "ox-03-0851",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15901,7 +15937,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0850",
+  "id": "ox-03-0852",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15919,7 +15955,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0851",
+  "id": "ox-03-0853",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15937,7 +15973,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0852",
+  "id": "ox-03-0854",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15957,7 +15993,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0853",
+  "id": "ox-03-0855",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15977,7 +16013,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0854",
+  "id": "ox-03-0856",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -15997,7 +16033,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0855",
+  "id": "ox-03-0857",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16017,7 +16053,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0856",
+  "id": "ox-03-0858",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16037,7 +16073,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0857",
+  "id": "ox-03-0859",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16055,7 +16091,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0858",
+  "id": "ox-03-0860",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16073,7 +16109,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0859",
+  "id": "ox-03-0861",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16091,7 +16127,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0860",
+  "id": "ox-03-0862",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16109,7 +16145,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0861",
+  "id": "ox-03-0863",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16127,7 +16163,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0862",
+  "id": "ox-03-0864",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16147,7 +16183,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0863",
+  "id": "ox-03-0865",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16167,7 +16203,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0864",
+  "id": "ox-03-0866",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16187,7 +16223,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0865",
+  "id": "ox-03-0867",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16207,7 +16243,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0866",
+  "id": "ox-03-0868",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16227,7 +16263,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0867",
+  "id": "ox-03-0869",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16247,7 +16283,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0868",
+  "id": "ox-03-0870",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16267,7 +16303,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0869",
+  "id": "ox-03-0871",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16287,7 +16323,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0870",
+  "id": "ox-03-0872",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16307,7 +16343,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0871",
+  "id": "ox-03-0873",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16327,7 +16363,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0872",
+  "id": "ox-03-0874",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16345,7 +16381,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0873",
+  "id": "ox-03-0875",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16363,7 +16399,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0874",
+  "id": "ox-03-0876",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16381,7 +16417,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0875",
+  "id": "ox-03-0877",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16399,7 +16435,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0876",
+  "id": "ox-03-0878",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16418,7 +16454,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0877",
+  "id": "ox-03-0879",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16437,7 +16473,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0878",
+  "id": "ox-03-0880",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16456,7 +16492,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0879",
+  "id": "ox-03-0881",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16475,7 +16511,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0880",
+  "id": "ox-03-0882",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16494,7 +16530,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0881",
+  "id": "ox-03-0883",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16513,7 +16549,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0882",
+  "id": "ox-03-0884",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16531,7 +16567,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0883",
+  "id": "ox-03-0885",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16549,7 +16585,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0884",
+  "id": "ox-03-0886",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16567,7 +16603,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0885",
+  "id": "ox-03-0887",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16585,7 +16621,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0886",
+  "id": "ox-03-0888",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16603,7 +16639,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0887",
+  "id": "ox-03-0889",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16621,7 +16657,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0888",
+  "id": "ox-03-0890",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16639,7 +16675,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0889",
+  "id": "ox-03-0891",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16657,7 +16693,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0890",
+  "id": "ox-03-0892",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16675,7 +16711,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0891",
+  "id": "ox-03-0893",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16693,7 +16729,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0892",
+  "id": "ox-03-0894",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16711,7 +16747,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0893",
+  "id": "ox-03-0895",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16729,7 +16765,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0894",
+  "id": "ox-03-0896",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16747,7 +16783,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0895",
+  "id": "ox-03-0897",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16765,7 +16801,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0896",
+  "id": "ox-03-0898",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16783,7 +16819,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0897",
+  "id": "ox-03-0899",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16801,7 +16837,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0898",
+  "id": "ox-03-0900",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16819,7 +16855,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0899",
+  "id": "ox-03-0901",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16837,7 +16873,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0900",
+  "id": "ox-03-0902",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16855,7 +16891,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0901",
+  "id": "ox-03-0903",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16873,7 +16909,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0902",
+  "id": "ox-03-0904",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16893,7 +16929,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0903",
+  "id": "ox-03-0905",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16913,7 +16949,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0904",
+  "id": "ox-03-0906",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16933,7 +16969,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0905",
+  "id": "ox-03-0907",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16953,7 +16989,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0906",
+  "id": "ox-03-0908",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16973,7 +17009,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0907",
+  "id": "ox-03-0909",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -16992,7 +17028,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0908",
+  "id": "ox-03-0910",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17011,7 +17047,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0909",
+  "id": "ox-03-0911",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17030,7 +17066,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0910",
+  "id": "ox-03-0912",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17049,7 +17085,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0911",
+  "id": "ox-03-0913",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17068,7 +17104,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0912",
+  "id": "ox-03-0914",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17086,7 +17122,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0913",
+  "id": "ox-03-0915",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17104,7 +17140,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0914",
+  "id": "ox-03-0916",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17122,7 +17158,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0915",
+  "id": "ox-03-0917",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17140,7 +17176,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0916",
+  "id": "ox-03-0918",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17158,7 +17194,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0917",
+  "id": "ox-03-0919",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17178,7 +17214,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0918",
+  "id": "ox-03-0920",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17198,7 +17234,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0919",
+  "id": "ox-03-0921",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17218,7 +17254,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0920",
+  "id": "ox-03-0922",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17238,7 +17274,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0921",
+  "id": "ox-03-0923",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17258,7 +17294,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0922",
+  "id": "ox-03-0924",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17278,7 +17314,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0923",
+  "id": "ox-03-0925",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17298,7 +17334,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0924",
+  "id": "ox-03-0926",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17318,7 +17354,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0925",
+  "id": "ox-03-0927",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17338,7 +17374,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0926",
+  "id": "ox-03-0928",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17358,7 +17394,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0927",
+  "id": "ox-03-0929",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17377,7 +17413,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0928",
+  "id": "ox-03-0930",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17396,7 +17432,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0929",
+  "id": "ox-03-0931",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17415,7 +17451,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0930",
+  "id": "ox-03-0932",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17434,7 +17470,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0931",
+  "id": "ox-03-0933",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17453,7 +17489,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0932",
+  "id": "ox-03-0934",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17473,7 +17509,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0933",
+  "id": "ox-03-0935",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17493,7 +17529,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0934",
+  "id": "ox-03-0936",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17513,7 +17549,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0935",
+  "id": "ox-03-0937",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17533,7 +17569,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0936",
+  "id": "ox-03-0938",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17553,7 +17589,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0937",
+  "id": "ox-03-0939",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17573,7 +17609,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0938",
+  "id": "ox-03-0940",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17593,7 +17629,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0939",
+  "id": "ox-03-0941",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17613,7 +17649,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0940",
+  "id": "ox-03-0942",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17633,7 +17669,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0941",
+  "id": "ox-03-0943",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17653,7 +17689,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0942",
+  "id": "ox-03-0944",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17671,7 +17707,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0943",
+  "id": "ox-03-0945",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17689,7 +17725,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0944",
+  "id": "ox-03-0946",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17707,7 +17743,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0945",
+  "id": "ox-03-0947",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17725,7 +17761,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0946",
+  "id": "ox-03-0948",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17743,7 +17779,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0947",
+  "id": "ox-03-0949",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17762,7 +17798,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0948",
+  "id": "ox-03-0950",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17781,7 +17817,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0949",
+  "id": "ox-03-0951",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17800,7 +17836,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0950",
+  "id": "ox-03-0952",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17819,7 +17855,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0951",
+  "id": "ox-03-0953",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17838,7 +17874,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0952",
+  "id": "ox-03-0954",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17856,7 +17892,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0953",
+  "id": "ox-03-0955",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17874,7 +17910,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0954",
+  "id": "ox-03-0956",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17892,7 +17928,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0955",
+  "id": "ox-03-0957",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17910,7 +17946,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0956",
+  "id": "ox-03-0958",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17928,7 +17964,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0957",
+  "id": "ox-03-0959",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17947,7 +17983,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0958",
+  "id": "ox-03-0960",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17966,7 +18002,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0959",
+  "id": "ox-03-0961",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -17985,7 +18021,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0960",
+  "id": "ox-03-0962",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18004,7 +18040,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0961",
+  "id": "ox-03-0963",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18023,7 +18059,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0962",
+  "id": "ox-03-0964",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18041,7 +18077,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0963",
+  "id": "ox-03-0965",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18059,7 +18095,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0964",
+  "id": "ox-03-0966",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18077,7 +18113,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0965",
+  "id": "ox-03-0967",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18095,7 +18131,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0966",
+  "id": "ox-03-0968",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18113,7 +18149,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0967",
+  "id": "ox-03-0969",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18133,7 +18169,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0968",
+  "id": "ox-03-0970",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18152,7 +18188,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0969",
+  "id": "ox-03-0971",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18171,7 +18207,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0970",
+  "id": "ox-03-0972",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18190,7 +18226,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0971",
+  "id": "ox-03-0973",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18209,7 +18245,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0972",
+  "id": "ox-03-0974",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18227,7 +18263,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0973",
+  "id": "ox-03-0975",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18245,7 +18281,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0974",
+  "id": "ox-03-0976",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18263,7 +18299,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0975",
+  "id": "ox-03-0977",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18281,7 +18317,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0976",
+  "id": "ox-03-0978",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18299,7 +18335,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0977",
+  "id": "ox-03-0979",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18319,7 +18355,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0978",
+  "id": "ox-03-0980",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18339,7 +18375,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0979",
+  "id": "ox-03-0981",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18359,7 +18395,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0980",
+  "id": "ox-03-0982",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18379,7 +18415,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0981",
+  "id": "ox-03-0983",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18399,7 +18435,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0982",
+  "id": "ox-03-0984",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18417,7 +18453,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0983",
+  "id": "ox-03-0985",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18435,7 +18471,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0984",
+  "id": "ox-03-0986",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18453,7 +18489,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0985",
+  "id": "ox-03-0987",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18471,7 +18507,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0986",
+  "id": "ox-03-0988",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18489,7 +18525,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0987",
+  "id": "ox-03-0989",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18509,7 +18545,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0988",
+  "id": "ox-03-0990",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18529,7 +18565,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0989",
+  "id": "ox-03-0991",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18549,7 +18585,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0990",
+  "id": "ox-03-0992",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18569,7 +18605,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0991",
+  "id": "ox-03-0993",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18589,7 +18625,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0992",
+  "id": "ox-03-0994",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18607,7 +18643,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0993",
+  "id": "ox-03-0995",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18625,7 +18661,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0994",
+  "id": "ox-03-0996",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18643,7 +18679,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0995",
+  "id": "ox-03-0997",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18661,7 +18697,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0996",
+  "id": "ox-03-0998",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18679,7 +18715,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0997",
+  "id": "ox-03-0999",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18697,7 +18733,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0998",
+  "id": "ox-03-1000",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18715,7 +18751,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-0999",
+  "id": "ox-03-1001",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18733,7 +18769,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1000",
+  "id": "ox-03-1002",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18751,7 +18787,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1001",
+  "id": "ox-03-1003",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18769,7 +18805,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1002",
+  "id": "ox-03-1004",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18787,7 +18823,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1003",
+  "id": "ox-03-1005",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18805,7 +18841,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1004",
+  "id": "ox-03-1006",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18823,7 +18859,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1005",
+  "id": "ox-03-1007",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18841,7 +18877,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1006",
+  "id": "ox-03-1008",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18859,7 +18895,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1007",
+  "id": "ox-03-1009",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18879,7 +18915,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1008",
+  "id": "ox-03-1010",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18899,7 +18935,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1009",
+  "id": "ox-03-1011",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18919,7 +18955,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1010",
+  "id": "ox-03-1012",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18939,7 +18975,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1011",
+  "id": "ox-03-1013",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18959,7 +18995,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1012",
+  "id": "ox-03-1014",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18977,7 +19013,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1013",
+  "id": "ox-03-1015",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -18995,7 +19031,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1014",
+  "id": "ox-03-1016",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19013,7 +19049,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1015",
+  "id": "ox-03-1017",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19031,7 +19067,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1016",
+  "id": "ox-03-1018",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19049,7 +19085,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1017",
+  "id": "ox-03-1019",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19069,7 +19105,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1018",
+  "id": "ox-03-1020",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19089,7 +19125,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1019",
+  "id": "ox-03-1021",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19109,7 +19145,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1020",
+  "id": "ox-03-1022",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19129,7 +19165,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1021",
+  "id": "ox-03-1023",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19149,7 +19185,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1022",
+  "id": "ox-03-1024",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19167,7 +19203,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1023",
+  "id": "ox-03-1025",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19185,7 +19221,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1024",
+  "id": "ox-03-1026",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19203,7 +19239,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1025",
+  "id": "ox-03-1027",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19221,7 +19257,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1026",
+  "id": "ox-03-1028",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19239,7 +19275,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1027",
+  "id": "ox-03-1029",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19258,7 +19294,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1028",
+  "id": "ox-03-1030",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19277,7 +19313,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1029",
+  "id": "ox-03-1031",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19296,7 +19332,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1030",
+  "id": "ox-03-1032",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19315,7 +19351,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1031",
+  "id": "ox-03-1033",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19334,7 +19370,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1032",
+  "id": "ox-03-1034",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19352,7 +19388,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1033",
+  "id": "ox-03-1035",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19372,7 +19408,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1034",
+  "id": "ox-03-1036",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19392,7 +19428,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1035",
+  "id": "ox-03-1037",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19410,7 +19446,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1036",
+  "id": "ox-03-1038",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19428,7 +19464,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1037",
+  "id": "ox-03-1039",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19448,7 +19484,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1038",
+  "id": "ox-03-1040",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19468,7 +19504,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1039",
+  "id": "ox-03-1041",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19488,7 +19524,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1040",
+  "id": "ox-03-1042",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19508,7 +19544,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1041",
+  "id": "ox-03-1043",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19528,7 +19564,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1042",
+  "id": "ox-03-1044",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19548,7 +19584,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1043",
+  "id": "ox-03-1045",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19568,7 +19604,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1044",
+  "id": "ox-03-1046",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19588,7 +19624,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1045",
+  "id": "ox-03-1047",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19608,7 +19644,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1046",
+  "id": "ox-03-1048",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19628,7 +19664,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1047",
+  "id": "ox-03-1049",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19646,7 +19682,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1048",
+  "id": "ox-03-1050",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19664,7 +19700,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1049",
+  "id": "ox-03-1051",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19682,7 +19718,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1050",
+  "id": "ox-03-1052",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19700,7 +19736,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1051",
+  "id": "ox-03-1053",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19718,7 +19754,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1052",
+  "id": "ox-03-1054",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19739,7 +19775,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1053",
+  "id": "ox-03-1055",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19760,7 +19796,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1054",
+  "id": "ox-03-1056",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19781,7 +19817,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1055",
+  "id": "ox-03-1057",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19802,7 +19838,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1056",
+  "id": "ox-03-1058",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19823,7 +19859,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1057",
+  "id": "ox-03-1059",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19842,7 +19878,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1058",
+  "id": "ox-03-1060",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19861,7 +19897,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1059",
+  "id": "ox-03-1061",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19880,7 +19916,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1060",
+  "id": "ox-03-1062",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19899,7 +19935,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1061",
+  "id": "ox-03-1063",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19918,7 +19954,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1062",
+  "id": "ox-03-1064",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19937,7 +19973,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1063",
+  "id": "ox-03-1065",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19956,7 +19992,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1064",
+  "id": "ox-03-1066",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19975,7 +20011,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1065",
+  "id": "ox-03-1067",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -19994,7 +20030,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1066",
+  "id": "ox-03-1068",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20013,7 +20049,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1067",
+  "id": "ox-03-1069",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20031,7 +20067,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1068",
+  "id": "ox-03-1070",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20049,7 +20085,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1069",
+  "id": "ox-03-1071",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20067,7 +20103,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1070",
+  "id": "ox-03-1072",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20085,7 +20121,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1071",
+  "id": "ox-03-1073",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20103,7 +20139,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1072",
+  "id": "ox-03-1074",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20123,7 +20159,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1073",
+  "id": "ox-03-1075",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20143,7 +20179,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1074",
+  "id": "ox-03-1076",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20163,7 +20199,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1075",
+  "id": "ox-03-1077",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20183,7 +20219,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1076",
+  "id": "ox-03-1078",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20203,7 +20239,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1077",
+  "id": "ox-03-1079",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20221,7 +20257,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1078",
+  "id": "ox-03-1080",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20239,7 +20275,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1079",
+  "id": "ox-03-1081",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20257,7 +20293,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1080",
+  "id": "ox-03-1082",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20275,7 +20311,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1081",
+  "id": "ox-03-1083",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20293,7 +20329,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1082",
+  "id": "ox-03-1084",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20311,7 +20347,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1083",
+  "id": "ox-03-1085",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20329,7 +20365,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1084",
+  "id": "ox-03-1086",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20347,7 +20383,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1085",
+  "id": "ox-03-1087",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20365,7 +20401,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1086",
+  "id": "ox-03-1088",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20383,7 +20419,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1087",
+  "id": "ox-03-1089",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20403,7 +20439,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1088",
+  "id": "ox-03-1090",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20423,7 +20459,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1089",
+  "id": "ox-03-1091",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20443,7 +20479,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1090",
+  "id": "ox-03-1092",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20463,7 +20499,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1091",
+  "id": "ox-03-1093",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20483,7 +20519,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1092",
+  "id": "ox-03-1094",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20503,7 +20539,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1093",
+  "id": "ox-03-1095",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20523,7 +20559,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1094",
+  "id": "ox-03-1096",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20543,7 +20579,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1095",
+  "id": "ox-03-1097",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20563,7 +20599,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1096",
+  "id": "ox-03-1098",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20583,7 +20619,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1097",
+  "id": "ox-03-1099",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20602,7 +20638,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1098",
+  "id": "ox-03-1100",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20621,7 +20657,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1099",
+  "id": "ox-03-1101",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20640,7 +20676,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1100",
+  "id": "ox-03-1102",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20659,7 +20695,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1101",
+  "id": "ox-03-1103",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20678,7 +20714,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1102",
+  "id": "ox-03-1104",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20698,7 +20734,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1103",
+  "id": "ox-03-1105",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20718,7 +20754,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1104",
+  "id": "ox-03-1106",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20738,7 +20774,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1105",
+  "id": "ox-03-1107",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20758,7 +20794,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1106",
+  "id": "ox-03-1108",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20778,7 +20814,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1107",
+  "id": "ox-03-1109",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20798,7 +20834,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1108",
+  "id": "ox-03-1110",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20818,7 +20854,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1109",
+  "id": "ox-03-1111",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20838,7 +20874,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1110",
+  "id": "ox-03-1112",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20858,7 +20894,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1111",
+  "id": "ox-03-1113",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20878,7 +20914,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1112",
+  "id": "ox-03-1114",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20897,7 +20933,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1113",
+  "id": "ox-03-1115",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20916,7 +20952,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1114",
+  "id": "ox-03-1116",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20935,7 +20971,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1115",
+  "id": "ox-03-1117",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20954,7 +20990,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1116",
+  "id": "ox-03-1118",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20973,7 +21009,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1117",
+  "id": "ox-03-1119",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -20991,7 +21027,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1118",
+  "id": "ox-03-1120",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21009,7 +21045,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1119",
+  "id": "ox-03-1121",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21027,7 +21063,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1120",
+  "id": "ox-03-1122",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21045,7 +21081,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1121",
+  "id": "ox-03-1123",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21063,7 +21099,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1122",
+  "id": "ox-03-1124",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21081,7 +21117,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1123",
+  "id": "ox-03-1125",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21099,7 +21135,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1124",
+  "id": "ox-03-1126",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21117,7 +21153,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1125",
+  "id": "ox-03-1127",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21135,7 +21171,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1126",
+  "id": "ox-03-1128",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21153,7 +21189,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1127",
+  "id": "ox-03-1129",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21172,7 +21208,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1128",
+  "id": "ox-03-1130",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21191,7 +21227,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1129",
+  "id": "ox-03-1131",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21210,7 +21246,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1130",
+  "id": "ox-03-1132",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21229,7 +21265,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1131",
+  "id": "ox-03-1133",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21248,7 +21284,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1132",
+  "id": "ox-03-1134",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21266,7 +21302,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1133",
+  "id": "ox-03-1135",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21284,7 +21320,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1134",
+  "id": "ox-03-1136",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21302,7 +21338,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1135",
+  "id": "ox-03-1137",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21320,7 +21356,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1136",
+  "id": "ox-03-1138",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21338,7 +21374,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1137",
+  "id": "ox-03-1139",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21356,7 +21392,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1138",
+  "id": "ox-03-1140",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21374,7 +21410,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1139",
+  "id": "ox-03-1141",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21392,7 +21428,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1140",
+  "id": "ox-03-1142",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21410,7 +21446,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1141",
+  "id": "ox-03-1143",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21428,7 +21464,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1142",
+  "id": "ox-03-1144",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21446,7 +21482,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1143",
+  "id": "ox-03-1145",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21464,7 +21500,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1144",
+  "id": "ox-03-1146",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21482,7 +21518,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1145",
+  "id": "ox-03-1147",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21500,7 +21536,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1146",
+  "id": "ox-03-1148",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21518,7 +21554,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1147",
+  "id": "ox-03-1149",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21536,7 +21572,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1148",
+  "id": "ox-03-1150",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21554,7 +21590,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1149",
+  "id": "ox-03-1151",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21572,7 +21608,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1150",
+  "id": "ox-03-1152",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21590,7 +21626,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1151",
+  "id": "ox-03-1153",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21608,7 +21644,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1152",
+  "id": "ox-03-1154",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21627,7 +21663,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1153",
+  "id": "ox-03-1155",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21646,7 +21682,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1154",
+  "id": "ox-03-1156",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21665,7 +21701,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1155",
+  "id": "ox-03-1157",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21684,7 +21720,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1156",
+  "id": "ox-03-1158",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21703,7 +21739,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1157",
+  "id": "ox-03-1159",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21721,7 +21757,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1158",
+  "id": "ox-03-1160",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21739,7 +21775,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1159",
+  "id": "ox-03-1161",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21757,7 +21793,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1160",
+  "id": "ox-03-1162",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21775,7 +21811,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1161",
+  "id": "ox-03-1163",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21793,7 +21829,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1162",
+  "id": "ox-03-1164",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21811,7 +21847,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1163",
+  "id": "ox-03-1165",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21829,7 +21865,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1164",
+  "id": "ox-03-1166",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21847,7 +21883,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1165",
+  "id": "ox-03-1167",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21865,7 +21901,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1166",
+  "id": "ox-03-1168",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21883,7 +21919,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1167",
+  "id": "ox-03-1169",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21902,7 +21938,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1168",
+  "id": "ox-03-1170",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21921,7 +21957,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1169",
+  "id": "ox-03-1171",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21940,7 +21976,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1170",
+  "id": "ox-03-1172",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21959,7 +21995,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1171",
+  "id": "ox-03-1173",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21978,7 +22014,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1172",
+  "id": "ox-03-1174",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -21996,7 +22032,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1173",
+  "id": "ox-03-1175",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22014,7 +22050,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1174",
+  "id": "ox-03-1176",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22032,7 +22068,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1175",
+  "id": "ox-03-1177",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22050,7 +22086,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1176",
+  "id": "ox-03-1178",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22068,7 +22104,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1177",
+  "id": "ox-03-1179",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22086,7 +22122,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1178",
+  "id": "ox-03-1180",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22104,7 +22140,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1179",
+  "id": "ox-03-1181",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22122,7 +22158,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1180",
+  "id": "ox-03-1182",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22140,7 +22176,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1181",
+  "id": "ox-03-1183",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22158,7 +22194,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1182",
+  "id": "ox-03-1184",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22176,7 +22212,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1183",
+  "id": "ox-03-1185",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22194,7 +22230,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1184",
+  "id": "ox-03-1186",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22212,7 +22248,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1185",
+  "id": "ox-03-1187",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22230,7 +22266,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1186",
+  "id": "ox-03-1188",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22248,7 +22284,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1187",
+  "id": "ox-03-1189",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22266,7 +22302,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1188",
+  "id": "ox-03-1190",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22284,7 +22320,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1189",
+  "id": "ox-03-1191",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22302,7 +22338,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1190",
+  "id": "ox-03-1192",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22320,7 +22356,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1191",
+  "id": "ox-03-1193",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22338,7 +22374,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1192",
+  "id": "ox-03-1194",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22356,7 +22392,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1193",
+  "id": "ox-03-1195",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22374,7 +22410,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1194",
+  "id": "ox-03-1196",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22392,7 +22428,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1195",
+  "id": "ox-03-1197",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22410,7 +22446,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1196",
+  "id": "ox-03-1198",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22428,7 +22464,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1197",
+  "id": "ox-03-1199",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22446,7 +22482,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1198",
+  "id": "ox-03-1200",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22464,7 +22500,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1199",
+  "id": "ox-03-1201",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22482,7 +22518,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1200",
+  "id": "ox-03-1202",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22500,7 +22536,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1201",
+  "id": "ox-03-1203",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22518,7 +22554,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1202",
+  "id": "ox-03-1204",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22536,7 +22572,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1203",
+  "id": "ox-03-1205",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22554,7 +22590,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1204",
+  "id": "ox-03-1206",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22572,7 +22608,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1205",
+  "id": "ox-03-1207",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22590,7 +22626,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1206",
+  "id": "ox-03-1208",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22608,7 +22644,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1207",
+  "id": "ox-03-1209",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22627,7 +22663,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1208",
+  "id": "ox-03-1210",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22646,7 +22682,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1209",
+  "id": "ox-03-1211",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22665,7 +22701,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1210",
+  "id": "ox-03-1212",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22684,7 +22720,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1211",
+  "id": "ox-03-1213",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22703,7 +22739,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1212",
+  "id": "ox-03-1214",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22721,7 +22757,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1213",
+  "id": "ox-03-1215",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22739,7 +22775,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1214",
+  "id": "ox-03-1216",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22757,7 +22793,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1215",
+  "id": "ox-03-1217",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22775,7 +22811,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1216",
+  "id": "ox-03-1218",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22793,7 +22829,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1217",
+  "id": "ox-03-1219",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22812,7 +22848,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1218",
+  "id": "ox-03-1220",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22831,7 +22867,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1219",
+  "id": "ox-03-1221",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22850,7 +22886,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1220",
+  "id": "ox-03-1222",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22869,7 +22905,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1221",
+  "id": "ox-03-1223",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22888,7 +22924,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1222",
+  "id": "ox-03-1224",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22906,7 +22942,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1223",
+  "id": "ox-03-1225",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22924,7 +22960,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1224",
+  "id": "ox-03-1226",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22943,7 +22979,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1225",
+  "id": "ox-03-1227",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22961,7 +22997,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1226",
+  "id": "ox-03-1228",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22979,7 +23015,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1227",
+  "id": "ox-03-1229",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -22997,7 +23033,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1228",
+  "id": "ox-03-1230",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -23015,7 +23051,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1229",
+  "id": "ox-03-1231",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -23033,7 +23069,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1230",
+  "id": "ox-03-1232",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -23051,7 +23087,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1231",
+  "id": "ox-03-1233",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -23069,7 +23105,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1232",
+  "id": "ox-03-1234",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -23088,7 +23124,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1233",
+  "id": "ox-03-1235",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -23107,7 +23143,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1234",
+  "id": "ox-03-1236",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -23126,7 +23162,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1235",
+  "id": "ox-03-1237",
   "subject": 3,
   "type": "ox",
   "points": 2,
@@ -23145,7 +23181,7 @@ var OX_DRILLS_subject3 = [
   "source": "유통화장품 안전관리 (250제)"
  },
  {
-  "id": "ox-03-1236",
+  "id": "ox-03-1238",
   "subject": 3,
   "type": "ox",
   "points": 2,

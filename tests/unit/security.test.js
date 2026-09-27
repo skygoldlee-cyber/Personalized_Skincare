@@ -31,6 +31,7 @@ test('S-01: CSP에 script-src 정책이 있고 unsafe-inline을 허용하지 않
   assert.ok(m, 'script-src 지시문');
   assert.ok(m[1].includes("'self'"), "script-src에 'self'");
   assert.ok(!m[1].includes('unsafe-inline'), 'script-src unsafe-inline 금지');
+  assert.ok(!m[1].includes('unsafe-eval'), 'script-src unsafe-eval 금지 — eval()·new Function() 차단');
   assert.ok(!indexHtml.match(/<script(?![^>]*src=)[^>]*>[^<\s]/), '인라인 스크립트 실행 없음');
 });
 

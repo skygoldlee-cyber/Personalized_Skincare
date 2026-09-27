@@ -28,8 +28,8 @@
 |------|-----------|------|-----------|-----------|
 | **Unit** | `node:test` | Node.js (DOM 없음) | `tests/unit/*.test.js` | 694 |
 | **DOM** | Vitest + jsdom | 브라우저 DOM 시뮬레이션 | `tests/dom/*.test.js` | 393 |
-| **E2E** | Playwright | 실브라우저 (Chromium + 모바일) | `tests/e2e/*.spec.js` | 16 |
-| **합계** | | | | **1103** |
+| **E2E** | Playwright | 실브라우저 (Chromium + 모바일) | `tests/e2e/*.spec.js` | 22 |
+| **합계** | | | | **1109** |
 
 ### 설계 원칙
 
@@ -554,9 +554,14 @@ export 함수를 직접 호출하고 DOM 반영을 검증한다. `data-click` �
 
 ### 4.14 E2E (Playwright 실브라우저) — 2026-10-14 추가
 
-`tests/e2e/app.spec.js` (16개 = 8 시나리오 × chromium + Pixel 7 프로젝트).
+`tests/e2e/app.spec.js` (스모크 8 시나리오) + `tests/e2e/flows.spec.js` (플로우 3 시나리오)
+= 11 시나리오 × chromium + Pixel 7 프로젝트 = **22 실행**.
 jsdom으로 불가한 영역을 커버한다 — `playwright.config.js`가 `serve.js`를
 webServer로 자동 기동(port 3000, CI에서는 재사용 안 함).
+`serve.js`는 vercel.json의 프로덕션 헤더(CSP 포함)를 미러링하므로 E2E는
+배포 환경과 동일한 보안 헤더 하에서 실행된다.
+
+**app.spec.js — 스모크**
 
 - **부트스트랩**: `index.html` 로드 → 대시보드 렌더 + `window.__APP_INITIALIZED === true` 대기 (app-fallback의 정상 초기화 플래그), pageerror 부재
 - **폴백 미발화**: 정상 부팅에서 `#app-fallback-overlay`가 나타나지 않음
@@ -564,8 +569,14 @@ webServer로 자동 기동(port 3000, CI에서는 재사용 안 함).
 - **PWA 자산**: `manifest.webmanifest` Content-Type `application/manifest+json`, `sw.js` 서빙·등록 상태, App Shell 핵심 자산(style.css·data/version.js·아이콘) 200
 - **UI 골격**: 헤더 액션 버튼 렌더, 설정 패널 토글
 
+**flows.spec.js — 핵심 플로우**
+
+- **퀴즈 완주**: 과목 선택 → 10문 응답(객관식/OX/단답 유형 자동 분기) → 결과 패널 + `cosmetic:quiz_results` localStorage 저장 검증
+- **오프라인 배너**: `context.setOffline(true)` → 유예(15s)·연속 실패 3회 후 `#offline-banner.show` (보수적 판정 자체를 검증)
+- **프로덕션 CSP**: 응답 헤더에 `script-src 'self'`·`unsafe-eval` 부재 확인 + 학습안내서 매뉴얼에서 Mermaid 지연 로딩 → SVG 렌더 검증 (eval 의존 시 즉시 실패)
+
 실행: `npm run test:e2e` (최초 1회 `npx playwright install chromium` 필요).
-확장 시 시나리오 단위로 `tests/e2e/*.spec.js`에 추가 — 인증·오프라인 경로는 별도 spec 권장.
+확장 시 시나리오 단위로 `tests/e2e/*.spec.js`에 추가 — 인증 경로는 별도 spec 권장.
 
 ---
 

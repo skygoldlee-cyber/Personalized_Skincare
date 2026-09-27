@@ -129,6 +129,7 @@ function build() {
   }
 
   const output = `// src/pdf-registry.js — 참조자료 중앙 설정 모듈 (MD 변환본 기반)
+// @spec RR-13
 // ================================================================
 // ⚠️ 이 파일은 {contentRoot}/references.json에서 빌드 시 자동 생성됩니다.
 // 직접 수정하지 마시고 해당 시험의 references.json을 수정 후 npm run build:pdf-registry 실행.
@@ -182,7 +183,7 @@ for (const [eid, t] of Object.entries(_EXAM_TABLES)) {
  * @returns {{contentRoot?: string, SUBJECT_DIR_MAP?: Object, REF_DIRS?: Object,
  *   SOURCE_REF_MAP?: Array, KEYWORD_REF_MAP?: Array, REFERENCE_FILES?: Object,
  *   REFERENCE_COMMON?: Array, REFERENCE_INGREDIENTS?: Array, REFERENCE_LAW?: Array,
- *   REF_FILE_TO_PATH?: Object, REF_REGISTRY?: Object}}
+ *   REF_FILE_TO_PATH?: Object, REF_REGISTRY?: Object, REF_MD_SUBJECTS?: Object}}
  */
 export function getRefTables() {
     const id = getActiveExamId();

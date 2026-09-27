@@ -6,6 +6,14 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-14 프로젝트 리뷰 후속 — CSP 강화·콤보 퇴화 해소·조문 체커 개선·E2E 플로우
+
+- **CSP `unsafe-eval` 제거** (`vercel.json`): src·vendor(mermaid·supabase) 전수 조사에서 eval/new Function 사용 0건 확인 후 `script-src`에서 제거 — `security.test.js` S-01에 금지 단언 추가로 회귀 잠금
+- **`serve.js` vercel.json 헤더 미러링**: source 패턴을 정규식으로 해석해 응답에 프로덕션 헤더(CSP·캐시 정책) 적용 — 헤더 변경을 배포 전 로컬·E2E에서 검증 가능
+- **`check_ref_lines.js` 복수 출처 조문 해석**: `A법 제N조 + B고시` 출처에서 링크 문서에 없는 조문을 세그먼트 문서명으로 소유 ref_md를 찾아 재검증 — 소유 문서에 있으면 정상(기존 오탐 3건 해소), 소유 문서가 있는데 조문이 없으면 오류(법 개정 누락 후보)로 승격, 소유 문서 미존재 시 경고 유지
+- **콤보 전원참 퇴화 2건 해소** (`과목3_단일정답형.md` Q121·Q149): `위 ①②③④ 모두` 메타 선지가 정답이라 파생 콤보가 전원참으로 퇴화 — "옳지 않은 것은?" + 명백한 오답 선지로 전환(정답 ⑤), 재빌드 후 audit:combo 경고 0·검수 큐 0. 스테일 ID 2건을 `combo_blocklist.json` approved에서 제거
+- **`tests/e2e/flows.spec.js` 신규** (3 시나리오): 퀴즈 완주→`cosmetic:quiz_results` 저장, `setOffline`→오프라인 배너(유예·연속 실패 판정 검증), 프로덕션 CSP 하 학습안내서 Mermaid SVG 렌더 — E2E 16→**22 실행** (11 시나리오 × 2 프로젝트)
+
 ## 2026-10-14 Free/Pro 플랜 비교 안내 신설 — 기능 차이 가시화
 
 - **`pro-upgrade.js` `showPlanCompare()`**: 설정 '💎 플랜 안내 (Free/Pro)'·계정 모달 'Free/Pro 차이' 버튼으로 여는 비교 모달 — `feature-plan.json`의 현재 값을 실시간 반영해 기능별 `PRO`/`무료 제공` 태그를 렌더링 (플랜 전환 시 문구 불일치 없음). Pro 전용 혜택(한도 무제한·멀티디바이스 동기화·오디오북) + 항상 무료 도구 안내

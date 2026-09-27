@@ -199,7 +199,7 @@ Personalized_Skincare/
 ├── manifest.webmanifest        # PWA 매니페스트
 ├── feature-plan.json           # 기능별 무료/Pro 전환 설정
 ├── ping.txt                    # 오프라인 감지 프로브
-├── serve.js                    # 로컬 개발 서버
+├── serve.js                    # 로컬 개발 서버 (vercel.json 헤더 미러링 — 프로덕션 CSP 로컬 검증)
 ├── package.json
 ├── package-lock.json
 ├── jsconfig.json               # JSDoc 타입 검사 설정

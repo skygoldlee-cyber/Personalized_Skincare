@@ -38,7 +38,7 @@ npm.cmd run verify:assets              # SHELL_ASSETS/DATA_ASSETS 파일 존재 
 npm.cmd run sync:citations              # 문제은행 인용 라인번호 동기화
 node tools/sync_citation_lines.js --check  # 변경사항 확인만 (수정 안 함)
 
-# 로컬 서버
+# 로컬 서버 (vercel.json 헤더 미러링 — 프로덕션 CSP·캐시 정책 그대로 적용)
 npm.cmd run serve                      # http://localhost:3000
 
 # 배포

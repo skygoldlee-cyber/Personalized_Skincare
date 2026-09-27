@@ -1,5 +1,5 @@
-// 자동 생성된 복수정답형 드릴 데이터입니다. 수정하지 마십시오. (tools/build_combo_drills.js)
-// 원본: data/exams/cosmetic/exams/subject3.19f7b12f.js — mode: fact(명제 조합) 23문 / answer(정답 조합) 226문
+// 자동 생성된 복수정답형 드릴 데이터입니다. 수정하지 마십시오. (tools/build/build_combo_drills.js)
+// 원본: data/exams/cosmetic/exams/subject3.f00d720e.js — mode: fact(명제 조합) 23문 / answer(정답 조합) 226문
 var COMBO_DRILLS_subject3 = [
  {
   "id": "safety_combo_86b500",
@@ -11154,34 +11154,41 @@ var COMBO_DRILLS_subject3 = [
   "type": "combo",
   "points": 4,
   "citation": "📖 교재: L1724 (출처: 과목3 문제은행 Q121)",
-  "stem": "화장품 제조 시 「설비의 세정」에 대한 기록으로 옳은 것을 모두 고른 것은?",
+  "stem": "화장품 제조 시 「설비의 세정」에 대한 기록으로 옳지 않은 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "safety_st_423758",
+    "sid": "safety_st_189f82",
     "conceptId": "L1724",
     "text": "세정 방법",
-    "truth": true
+    "truth": false
    },
    {
     "id": "ㄴ",
-    "sid": "safety_st_548e76",
+    "sid": "safety_st_e61709",
     "conceptId": "L1724",
     "text": "세정 담당자",
-    "truth": true
+    "truth": false
    },
    {
     "id": "ㄷ",
-    "sid": "safety_st_6a4fa9",
+    "sid": "safety_st_83094c",
     "conceptId": "L1724",
-    "text": "세전 후 확인 결과",
-    "truth": true
+    "text": "세정 후 확인 결과",
+    "truth": false
    },
    {
     "id": "ㄹ",
-    "sid": "safety_st_59ef4c",
+    "sid": "safety_st_157a1d",
     "conceptId": "L1724",
     "text": "세정 일자",
+    "truth": false
+   },
+   {
+    "id": "ㅁ",
+    "sid": "safety_st_603d8f",
+    "conceptId": "L1724",
+    "text": "세정 비용 청구액",
     "truth": true
    }
   ],
@@ -11189,37 +11196,37 @@ var COMBO_DRILLS_subject3 = [
    {
     "id": "1",
     "members": [
-     "ㄴ",
-     "ㄹ"
+     "ㄷ",
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "2",
     "members": [
-     "ㄱ",
-     "ㄴ",
-     "ㄷ",
      "ㄹ"
     ]
    },
    {
     "id": "3",
     "members": [
-     "ㄷ",
-     "ㄹ"
+     "ㅁ"
     ]
    },
    {
     "id": "4",
     "members": [
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "5",
     "members": [
      "ㄱ",
-     "ㄴ"
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
     ]
    }
   ],
@@ -11230,7 +11237,7 @@ var COMBO_DRILLS_subject3 = [
   "derivedFrom": "subject3_q121",
   "explain": "📖 교재 근거 (교재: L1724):\n| 게이지와 미터기 | - 온도, 압력, 흐름, 점도, pH, 속도, 부피 등 화장품의 특성을 측정 및 기록하기 위해 사용함<br>- 제품과 직접 접하는 게이지와 미터의 적절한 기능에 영향을 주지 않아야 하며, 대부분 원료와 직접 접하지 않도록 분리 장치를 제공함 |",
   "source": "유통화장품 안전관리 (250제)",
-  "answer": "2"
+  "answer": "3"
  },
  {
   "id": "safety_combo_5f8efc",
@@ -13715,34 +13722,41 @@ var COMBO_DRILLS_subject3 = [
   "type": "combo",
   "points": 4,
   "citation": "📖 교재: L451 (출처: 과목3 문제은행 Q149)",
-  "stem": "다음 중 화장품 제조 시 「충전 설비」의 관리 기준으로 옳은 것을 모두 고른 것은?",
+  "stem": "다음 중 화장품 제조 시 「충전 설비」의 관리 기준으로 옳지 않은 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "safety_st_596147",
     "conceptId": "L451",
     "text": "충전 설비의 세정·소독",
-    "truth": true
+    "truth": false
    },
    {
     "id": "ㄴ",
-    "sid": "safety_st_d4a6bf",
+    "sid": "safety_st_5a8f32",
     "conceptId": "L451",
     "text": "충전 설비의 교정",
-    "truth": true
+    "truth": false
    },
    {
     "id": "ㄷ",
-    "sid": "safety_st_9289b1",
+    "sid": "safety_st_f3acfb",
     "conceptId": "L451",
     "text": "충전 시 이물질 혼입 방지",
-    "truth": true
+    "truth": false
    },
    {
     "id": "ㄹ",
-    "sid": "safety_st_89390c",
+    "sid": "safety_st_c7629e",
     "conceptId": "L451",
     "text": "충전량의 정확성 확인",
+    "truth": false
+   },
+   {
+    "id": "ㅁ",
+    "sid": "safety_st_7ecf38",
+    "conceptId": "L451",
+    "text": "충전 설비의 외관 도장 색상",
     "truth": true
    }
   ],
@@ -13750,7 +13764,7 @@ var COMBO_DRILLS_subject3 = [
    {
     "id": "1",
     "members": [
-     "ㄱ"
+     "ㅁ"
     ]
    },
    {
@@ -13758,28 +13772,29 @@ var COMBO_DRILLS_subject3 = [
     "members": [
      "ㄴ",
      "ㄷ",
-     "ㄹ"
+     "ㄹ",
+     "ㅁ"
     ]
    },
    {
     "id": "3",
     "members": [
      "ㄱ",
-     "ㄴ"
+     "ㄴ",
+     "ㄷ"
     ]
    },
    {
     "id": "4",
     "members": [
      "ㄱ",
+     "ㄴ",
      "ㄹ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㄱ",
-     "ㄴ",
      "ㄷ",
      "ㄹ"
     ]
@@ -13792,7 +13807,7 @@ var COMBO_DRILLS_subject3 = [
   "derivedFrom": "subject3_q149",
   "explain": "📖 법령 근거 (교재: L451):\n4. 제조시설이나 설비는 적절한 방법으로 청소하여야 하며, 필요한 경우 위생관리 프로그램을 운영해야 한다.",
   "source": "유통화장품 안전관리 (250제)",
-  "answer": "5"
+  "answer": "1"
  },
  {
   "id": "safety_combo_56ef31",

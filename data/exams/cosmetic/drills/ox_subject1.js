@@ -1,4 +1,4 @@
-// 자동 생성된 O/X 드릴 데이터입니다. 수정하지 마십시오. (tools/build_ox_drills.js)
+// 자동 생성된 O/X 드릴 데이터입니다. 수정하지 마십시오. (tools/build/build_ox_drills.js)
 // 원본: data/exams/cosmetic/exams/subject1.23de1552.js — mode: fact(명제 판정) 8문 / answer(정답 판정) 57문
 var OX_DRILLS_subject1 = [
  {
