@@ -244,11 +244,11 @@
 
 | ID | 요구사양 | 구현 상태 |
 |----|---------|-----------|
-| A-01 | 단원별 MP3 오디오 재생 (외부 CDN, SW 캐시 제외) | ✅ |
-| A-02 | Media Session API 연동 (잠금화면/알림바 미디어 제어) | ✅ |
-| A-03 | play/pause/seekto/previoustrack/nexttrack 액션 핸들러 | ✅ |
-| A-04 | `navigator.mediaSession.metadata`: 단원 제목, 과목명, 앨범 아트 | ✅ |
-| A-05 | 오디오 컨트롤 UI (재생/일시정지, 진행바, 속도 조절) | ✅ |
+| AO-01 | 단원별 MP3 오디오 재생 (외부 CDN, SW 캐시 제외) | ✅ |
+| AO-02 | Media Session API 연동 (잠금화면/알림바 미디어 제어) | ✅ |
+| AO-03 | play/pause/seekto/previoustrack/nexttrack 액션 핸들러 | ✅ |
+| AO-04 | `navigator.mediaSession.metadata`: 단원 제목, 과목명, 앨범 아트 | ✅ |
+| AO-05 | 오디오 컨트롤 UI (재생/일시정지, 진행바, 속도 조절) | ✅ |
 
 ### 3.13 데이터 백업/복원 (Backup)
 

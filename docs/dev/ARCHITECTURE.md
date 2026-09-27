@@ -34,6 +34,7 @@
 24. [향후 확장 방향](#-향후-확장-방향)
 25. [`content/` 내용 변경 시 수정 파일 및 절차 가이드](#content-내용-변경-시-수정-파일-및-절차-가이드)
 26. [교재 변경 시 소스 수정 필요성 검토](#-교재-변경-시-소스-수정-필요성-검토)
+27. [요구사양 추적 (SPEC ID 매트릭스)](#-요구사양-추적-spec-id-매트릭스)
 
 ---
 
@@ -532,6 +533,8 @@ Personalized_Skincare/
 | [`src/exam-viewer.js`](../../src/exam-viewer.js) | 문제집(MD) 런타임 뷰어. `content/exams/cosmetic/문제은행/*.md` fetch → 자체 MD→HTML 변환 → 인앱 전체화면 오버레이 렌더링. TOC 생성·인쇄·sessionStorage 캐시(24h)·`file://` 번들 폴리백(`data/exams/cosmetic/exams_md/*.js`) 지원. **시험 제목은 registry에서 동적 조회** (하드코딩 없음) |
 | [`src/pro-upgrade.js`](../../src/pro-upgrade.js) | Pro 안내 계층. 루트 `feature-plan.json`을 `loadFeaturePlan()`으로 로드 → 기능별 `pro`/`free` 판정(`isProFeature`). `pro` 기능은 진입 시 1회 정보 모달(`proFeatureNotice`, 기능별 seen 플래그) + `.pro-badge[data-pro-feature]` 배지 표시, `free`는 배지·안내 제거. 스토어 한도 오류(`Free 플랜` 접두사)는 `showStoreError` → `showUpgradeNotice` 업그레이드 모달로 분기 |
 
+### 3. Data Layer (데이터 계층)
+
 | 파일 | 내용 | 생성 주체 |
 |------|------|-----------|
 | [`data/exams/cosmetic/registry.js`](../../data/exams/cosmetic/registry.js) | 시험/성분 번들 목록·메타 + 과목 목록/통계 + 추천 링크. **과목 `shortName`**, 시험 **`file`**, **`resources`** 필드 포함 → 소스 코드 하드코딩 제거 | `tools/build/index.js` |
@@ -645,7 +648,7 @@ backup.js (백업/복원)               offline-detection.js (오프라인 감�
 event-listeners.js (이벤트 바인딩)
 ```
 
-> `app.js`에 남은 함수: `startFocusSubjectStudy`(뷰 간 브릿지), 초기화/이벤트 바인딩. 라우팅은 `router.js`의 `navigateToView()`로 위임. `examIdToSubjectId`는 `exam-simulator.js`에서 정의 후 `app.js`를 통해 re-export되어 `quiz.js`가 import.
+> `app.js`에 남은 함수: `startFocusSubjectStudy`(뷰 간 브릿지), 초기화/이벤트 바인딩. 라우팅은 `router.js`의 `navigateToView()`로 위임. `examIdToSubjectId`는 `exam-context.js`에 정의되어 `quiz.js`·`exam-simulator.js`가 직접 import.
 
 ---
 
@@ -1923,6 +1926,75 @@ npm.cmd run deploy
 | `keyword-index.js` | 불필요 | ✅ 재빌드만 | ✅ 재빌드만 |
 
 > **결론**: `pdf-registry.js`가 유일한 필수 수정 파일이며, 같은 화장품 분야 내에서 교재 버전이 바뀌는 경우에는 이 파일만 수정하면 된다. 완전히 다른 분야로 교재가 바뀌는 경우에만 추가 수정이 발생한다.
+
+---
+
+## 🔗 요구사양 추적 (SPEC ID 매트릭스)
+
+SPEC.md의 기능/비기능 ID와 이 문서의 설명 위치·구현 모듈 대응표. SPEC에서 ID로 검색하면 이 표를 통해 구현 위치까지 추적할 수 있다.
+
+### 기능 요구사양 (SPEC §3)
+
+| SPEC ID | SPEC 절 | 대응 위치 (이 문서 / 구현) |
+|---------|---------|---------------------------|
+| `D-01~15` | §3.1 대시보드 | `src/views/dashboard.js` — Application Layer |
+| `AN-01~03` | §3.1.5 맞춤 학습 리포트 | `analysis-view` — 대시보드에서 분리된 분석 뷰 |
+| `F-01~10` | §3.2 플래시카드 | `src/views/flashcard.js` |
+| `Q-01~11` | §3.3 퀴즈 | `src/views/quiz.js` |
+| `E-01~07` | §3.4 모의고사 | `src/views/exam-simulator*.js` |
+| `TR-01~18` | §3.5 교재 리더 | `src/views/textbook-reader.js` — 별도 스크롤 복원 |
+| `SA-01~05` | §3.6 학습 보조 도구 | `src/study-aids.js` |
+| `G-01~09` | §3.7 용어집 | `src/glossary-query.js` + `views/glossary-renderer.js` |
+| `RR-01~16` | §3.8 참조자료 연결 | `src/html-viewer.js` + `reader-format.js` + `pdf-registry.js` |
+| `TS-01~09` | §3.9 교재 검색 | `src/views/textbook-search.js` |
+| `DI-01~03` | §3.10 성분 사전 | `src/views/dictionary.js` |
+| `T-01~05` | §3.11 훈련소 | `src/views/trainer*.js` |
+| `AO-01~05` | §3.12 오디오북 | `src/views/reader-audio.js` — Media Session |
+| `B-01~04` | §3.13 백업/복원 | `src/views/backup.js` — ALLOWED_KEYS 화이트리스트 |
+| `EV-01~08` | §3.14 문제집 뷰어 | `src/exam-viewer.js` |
+| `MV-01~04` | §3.15 매뉴얼 뷰어 | `src/manual-viewer.js` |
+| `C-01~05` | §3.16 차트 | `src/charts.js` |
+| `CQ-01~05` | §3.17 콘텐츠 감사 | `tools/` audit 스크립트 (`audit:cards`/`audit:combo`) |
+| `FO-01~23` | §3.18 Formula OS | `src/formula-*.js` + `views/formula*.js` — 도메인 아키텍처 절 |
+| `AU-01~08` | §3.19 계정·동기화 | `src/supabase-*.js` + `sync.js` — 계정·클라우드 절 |
+| `SC-01~03` | §3.20 학습 캘린더 | `src/views/study-calendar.js` + `study-tracker.js` |
+| `RV-01` | §3.20 복습 뷰 | `review-view` (quiz.js 렌더) |
+| `ND-01` | §3.20 숫자 드릴 | `content/…/number-drills/` + 훈련소 수치 훈련 |
+| `DR-01~07` | §3.20 드릴 | `src/views/trainer-drills.js` |
+| `UM-01~05` | §3.21 UI 모드 | `src/ui-mode.js` — UI 모드 절 |
+| `ES-01~05` | §3.22 시험 선택 | `src/views/exam-select.js` — 멀티시험 플랫폼 절 |
+
+### 비기능 요구사양 (SPEC §4)
+
+| SPEC ID | SPEC 절 | 대응 위치 |
+|---------|---------|-----------|
+| `P-01~13` | §4.1 PWA & 오프라인 | 📴 PWA & 오프라인 전략 · ⚙️ Service Worker 동작 메커니즘 |
+| `O-01~07` | §4.2 오프라인 감지 | `src/views/offline-detection.js` — 오프라인 감지 설계 |
+| `S-01~08` | §4.3 보안 | 🔒 보안 설계 — CSP·이벤트 위임·sanitize |
+| `PF-01~16` | §4.4 성능 | 데이터 파이프라인 · 모듈 설계 (온디맨드 로드) |
+| `A-01~07` | §4.5 접근성 | 📱 반응형 & 모바일 설계 (터치 타겟·포커스·모션 감소) |
+| `R-01~09` | §4.6 반응형 | 📱 반응형 & 모바일 설계 |
+| `TH-01~06` | §4.7 테마 | 🌗 테마 시스템 |
+| `UX-NAV-01~07` | §4.8.1 내비 | Presentation Layer 뷰 전환 · 반응형 설계 |
+| `UX-SCR-01~03` | §4.8.2 스크롤바 | `css/base.css` 스크롤바 규칙 |
+| `UX-SET-01~05` | §4.8.3 설정 메뉴 | 설정 패널 (index.html) |
+| `UX-FB-01~04` | §4.8.4 피드백·알림 | `src/ui-utils.js` (토스트·모달·로딩) |
+| `UX-PWA-01~05` | §4.8.5 PWA 고유 UX | PWA & 오프라인 전략 · `app-fallback.js` |
+| `UX-FORM-01~02` | §4.8.6 폼·입력 | 반응형 설계 · 입력 규약 |
+| `§4.9` 토큰 | 디자인 토큰·상태 규약 | `css/base.css` `:root` — CSS 설계 원칙 |
+
+### 데이터 요구사양 (SPEC §5)
+
+| SPEC ID | SPEC 절 | 대응 위치 |
+|---------|---------|-----------|
+| `DA-01~09` | §5.1 데이터 아키텍처 | Data Layer 표 · 데이터 흐름 · 멀티시험 플랫폼 |
+| `ID-01~04` | §5.2 안정적 ID | `src/sha256.js` · `data/…/id_migration.js` |
+| `BP-01~08` | §5.3 빌드 파이프라인 | ⚙️ 데이터 파이프라인 절 (`tools/build/`) |
+| `CS-01~10` | §5.4 콘텐츠 구조 | Data Layer · `content/exams/<id>/` 대칭 구조 |
+| `CE-01~05` | §5.5 학습 보조 요소 | 교재 MD front matter → `reader-format.js` |
+| `ST-01~07` | §5.6 이야기형 서사 | `content/…/교재/*이야기형*.md` · reader 렌더링 |
+
+> ID 접두사는 SPEC.md 절별로 유일하다. 오디오북은 `AO-`(구 `A-` — §4.5 접근성 `A-`와 충돌하여 2026-10-13 재명명). 신규 기능 추가 시 SPEC에 먼저 ID를 부여하고 이 표에 행을 추가한다.
 
 ---
 
