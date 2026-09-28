@@ -21,6 +21,8 @@
 - **스냅샷 배지 범위 제한**: 본문 📌출처 인라인 링크는 배지 생략, 📚 참조 자료 섹션 목록에만 표시(렌더링 단계 스코핑)
 - **네거티브 리스트 원칙 명기**: Formula OS 허브 설명 하단과 법규 준수 패널에 정보성 안내(`.formula-principle-note`, primary 톤) — "조제의 기본 원칙은 네거티브 리스트(별표1·2 목록에 없는 원료는 사용 가능), 기능성화장품 원료만 지정 목록(포지티브)". 패널 쪽에는 근거 고시 law.go.kr 링크 포함
 - **스냅샷↔최신본 구분**: 내부 ref_md 링크 표시명 축약(파일명 꼬리 제거) + `(제N호·시행일)` 스냅샷 배지 병기 — law.go.kr 링크는 항상 최신 통합본이므로 버전 차이를 명시. `📚 참조 자료` 섹션의 동일 링크 중복은 렌더링 단계에서 제거(dedupeRefListSection). 원료 DB 링크는 '근거 고시' 라벨. 오프라인에서 원문 링크 클릭 시 토스트 안내. 전수 검증 테스트 추가 — references.json 공식 문서(pdf) 전부 매칭 + 법령/행정규칙 도메인 오매칭 방지. 테스트 `tests/unit/law-links.test.js` 8건 + reader-format-general 3건
+- **성분 사전 네거티브 리스트 설명**: 사전 소개 문구 아래에 판정 원칙 보조 설명 추가 — banned(별표1)=배합 불가 · restricted(별표2)=한도·조건 내 허용 · 목록에 없는 원료=approved, 기능성 원료·색소·보존제·자외선차단은 지정 목록 예외 명기(`.dict-neglist-note`)
+- **html/views 파셜 드리프트 정리**: index.html에만 있던 최신 마크업(Formula OS 고시 확인 UI·원칙 안내·처방 작업대/보관함 부제, 분석 뷰 취약 단원·합격 갭 카드, "2027" 표기)을 `html/views/{formula,analysis}.html`·`index.template.html` 소스에 역반영 — build:html 재생성 시 소실 방지
 - **원료 수 상시 표시**: 성분 사전 상단 배지가 `원료 DB v{version} · N종`으로 수록 총수 표시 (registry.ingredients.stats.count — 기존엔 버전 이력 모달 안에서만 확인 가능)
 - **현행본 직결(currentUrl)**: 한글주소가 시행 예정 개정본으로 연결되는 사례 대응 — 체커가 `시행일자 ≤ 오늘` 최신 버전의 일련번호를 `currentUrl`(법령=`lsInfoP.do?lsiSeq&efYd`, 고시=`admRulInfoP.do?admRulSeq`)로 기록. `markStaleRefLinks`가 상태 로드 후 ↗원문 href를 현행본 URL로 보정하고, 공포됐지만 미시행인 개정본이 있으면 `⏳ 시행 예정 개정본` 배지(pending) 표시 — docs[]에 `currentSerial`/`currentDate`/`currentUrl`/`pending` 필드 추가. API 응답 지연 대비 `api_get`에 재시도(3회·백오프) 추가
 

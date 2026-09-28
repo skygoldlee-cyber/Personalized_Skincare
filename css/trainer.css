@@ -689,6 +689,14 @@
 .dict-db-version:hover { color: var(--color-text-main); border-color: var(--color-primary); }
 .dict-db-version:empty { display: none; }
 
+/* 성분 사전 — 네거티브 리스트 판정 원칙 보조 설명 */
+.dict-neglist-note {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    margin-top: var(--space-1);
+    line-height: 1.55;
+}
+
 /* Category Active Filter Button */
 .dict-filter-buttons .btn.active-filter {
     background: var(--color-primary);

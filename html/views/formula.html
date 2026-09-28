@@ -2,10 +2,26 @@
             <section id="formula-view" class="view-section" data-feature="formula">
                 <!-- 1. 허브 메뉴 -->
                 <div id="formula-menu-panel">
+                    <div id="formula-notice-banner" class="notice-banner" hidden></div>
+                    <div class="notice-check-row">
+                        <button type="button" class="btn btn-secondary btn-sm" data-click="checkMfdsNoticeNow">
+                            <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i> 식약처 고시 확인
+                        </button>
+                        <button type="button" class="btn btn-secondary btn-sm" data-click="viewMfdsNoticeStatus">
+                            <i class="fa-solid fa-file-lines" aria-hidden="true"></i> 고시 정보 보기
+                        </button>
+                        <span id="notice-check-result" class="notice-check-result" aria-live="polite"></span>
+                    </div>
+                    <div id="notice-status-view" class="notice-status-view" hidden></div>
                     <div class="section-title-area">
                         <h3>🧪 Formula OS — 실전 배합 작업실</h3>
-                        <p>실제 업무 흐름 순서입니다. ① 상담(고객) → ② 설계(계산기) → ③ 레시피 확정(My 포뮬러) → ④ 재료 확인(원료 장부) → ⑤ 조제·기록 순으로 진행하고, 법규 준수는 전 단계에서 상시 점검합니다.
+                        <p>실제 업무 흐름 순서입니다. ① 상담(고객) → ② 설계(계산기·작업대) → ③ 레시피 확정(My 포뮬러·보관함) → ④ 재료 확인(원료 장부) → ⑤ 조제·기록 순으로 진행하고, 법규 준수는 전 단계에서 상시 점검합니다.
                             <a href="#" data-click="ManualViewer.openFormulaManual" class="comp-ref-link"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> 실무 매뉴얼</a>
+                        </p>
+                        <p class="formula-principle-note">
+                            <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
+                            <span>원료의 사용 가능 여부는 <a href="https://www.law.go.kr/행정규칙/화장품안전기준등에관한규정" target="_blank" rel="noopener" class="comp-law-ext" title="안전기준 고시 별표1(사용불가)·별표2(사용제한) — law.go.kr 최신 통합본"><strong>네거티브 리스트</strong></a> 방식이 원칙입니다 — 「화장품 안전기준 등에 관한 규정」 별표1(사용불가)·별표2(사용제한) 등 고시 목록에 없는 원료는 사용 가능합니다.
+                            단, <a href="https://www.law.go.kr/행정규칙/기능성화장품기준및시험방법" target="_blank" rel="noopener" class="comp-law-ext" title="기능성화장품 기준 및 시험방법 — 지정 원료 목록 · law.go.kr 최신 통합본">기능성 원료</a>·<a href="https://www.law.go.kr/행정규칙/화장품의색소종류및기준" target="_blank" rel="noopener" class="comp-law-ext" title="화장품의 색소 종류 및 기준 — 지정 색소 목록 · law.go.kr 최신 통합본">색소</a>·보존제·자외선차단 성분은 지정 목록(포지티브 리스트)을 따릅니다.</span>
                         </p>
                     </div>
                     <div class="trainer-menu-grid">
@@ -24,7 +40,7 @@
                                 <i class="fa-solid fa-calculator" aria-hidden="true"></i>
                             </div>
                             <h4>배합 계산기</h4>
-                            <p>총 제조량과 원료별 배합률(%)로 실제 투입량을 계산하고 법정 한도를 즉시 검증합니다.</p>
+                            <p><strong>처방 작업대</strong> — 총 제조량과 원료별 배합률(%)로 실제 투입량을 계산하고 법정 한도를 즉시 검증합니다. 저장 전까지는 임시 작업입니다.</p>
                             <span class="trainer-card-btn">계산 시작 <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
                         </div>
                         <div class="trainer-menu-card" data-click="openFormulaList">
@@ -33,7 +49,7 @@
                                 <i class="fa-solid fa-book" aria-hidden="true"></i>
                             </div>
                             <h4>My 포뮬러</h4>
-                            <p>저장한 배합 레시피를 열고, 복제하고, 규정 검증 결과를 확인합니다.</p>
+                            <p><strong>처방전 보관함</strong> — 계산기에서 저장한 레시피를 보관하고, 다시 열고, 복제하고, 조제 기록으로 연결합니다.</p>
                             <span class="trainer-card-btn">목록 열기 <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
                         </div>
                         <div class="trainer-menu-card" data-click="openMaterialPanel">
@@ -616,6 +632,12 @@
                         <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
                         이 체크리스트는 자가점검용 참고 자료이며 법률 자문이 아닙니다.
                         실제 의무·기준의 판단은 법령 원문과 관할 지방식약청 안내를 따르세요.
+                    </div>
+                    <div class="formula-principle-note">
+                        <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
+                        <span>원료 적격성은 <a href="https://www.law.go.kr/행정규칙/화장품안전기준등에관한규정" target="_blank" rel="noopener" class="comp-law-ext" title="안전기준 고시 별표1(사용불가)·별표2(사용제한) — law.go.kr 최신 통합본"><strong>네거티브 리스트</strong></a>로 판단합니다 — 사용불가(별표1)·사용제한(별표2) 목록에 없는 원료는 사용 가능합니다.
+                        기능성 원료·색소·보존제·자외선차단 성분은 <a href="https://www.law.go.kr/행정규칙/기능성화장품기준및시험방법" target="_blank" rel="noopener" class="comp-law-ext" title="기능성화장품 기준 및 시험방법 — 지정 원료 목록 · law.go.kr 최신 통합본">지정 목록(포지티브 리스트)</a>을 따릅니다.
+                        <a href="https://www.law.go.kr/행정규칙/화장품안전기준등에관한규정" target="_blank" rel="noopener" class="comp-law-ext" title="law.go.kr — 화장품 안전기준 등에 관한 규정 (최신 통합본)"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>근거 고시</a></span>
                     </div>
                     <div id="comp-list"></div>
                     <section class="comp-section">
