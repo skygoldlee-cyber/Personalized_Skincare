@@ -1,5 +1,16 @@
 [
   {
+    "version": "v369-20260928-25b0355",
+    "date": "2026-09-28",
+    "notes": [
+      "refactor: split index.html view markup into html/views partials",
+      "refactor: split oversized view modules — app.js, formula, textbook-reader",
+      "P1 리팩토링: tools/check/ 검증 계열 분리 + reader.css 3-way 분할",
+      "설계 원칙에 Spec-Traceable(요구사양 추적성) 추가",
+      "TRACE MATRIX에 요구사항 출처(source) 추적 추가 — ISO 29148 잔여 갭 해소"
+    ]
+  },
+  {
     "version": "v369-20260928-c0bde7e",
     "date": "2026-09-28",
     "notes": [
@@ -143,14 +154,6 @@
     "notes": [
       "feat(quality): IDE 오류 게이트 — 커밋·푸시·배포 3중 차단",
       "fix(trace): 절 이전 언급 ID가 빈 절로 등록되던 표시 버그 수정"
-    ]
-  },
-  {
-    "version": "v369-20260927-9422d83",
-    "date": "2026-09-27",
-    "notes": [
-      "fix(parser): 런타임 파서 경고 블록 복원 + TS5 진단 해소",
-      "feat(quality): 코드 품질·테스트 자동화 체계 — ESLint·tsc·커버리지 게이트·CI 확장"
     ]
   }
 ]
