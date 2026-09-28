@@ -155,12 +155,12 @@ var INGREDIENTS_DATA = [
   },
   {
     "name": "사이클로펜타실록세인",
-    "engName": "Cyclopentasiloxane",
-    "type": "approved",
-    "category": "실리콘 오일",
-    "description": "사이클로펜타실록세인은 휘발성 실리콘 오일로, 끈적임 없이 가벼운 사용감을 부여하고 도포성을 개선하는 성분입니다.",
-    "limit": "",
-    "tip": "D5, 휘발 후 실키한 마무리"
+    "engName": "Cyclopentasiloxane (D5)",
+    "type": "restricted",
+    "category": "기타",
+    "description": "휘발성 실록산으로, 제2026-19호에서 사용 한도 19.7%가 신설된 사용 제한 원료입니다. 개정 규정은 고시 후 3년이 경과한 날부터 적용됩니다.",
+    "limit": "19.7%",
+    "tip": "제2026-19호로 개정 — 고시 후 3년이 경과한 날(2029.3월경)부터 적용"
   },
   {
     "name": "디메치콘올",
@@ -446,8 +446,8 @@ var INGREDIENTS_DATA = [
     "engName": "Ethylhexyl Salicylate",
     "type": "restricted",
     "category": "자외선 차단제",
-    "description": "유상층에 용해되어 자외선 차단에 활용되며, 최대 7.5%까지 배합이 허용되는 사용 제한 성분입니다.",
-    "limit": "7.5%",
+    "description": "유상층에 용해되어 자외선 차단에 활용되며, 최대 5%까지 배합이 허용되는 사용 제한 성분입니다.",
+    "limit": "5%",
     "tip": "자외선 차단제"
   },
   {
@@ -1028,21 +1028,21 @@ var INGREDIENTS_DATA = [
   },
   {
     "name": "염산 p-페닐렌디아민",
-    "engName": "p-Phenylenediamine HCl",
-    "type": "restricted",
-    "category": "염모제",
-    "description": "염모제로 사용되는 성분으로 모발에 색상을 부여하며, 화장품 사용 제한 원료에 해당하는 성분입니다.",
-    "limit": "산화염모제에 3.3%",
-    "tip": "산화염모제 전용, 염산염 형태"
+    "engName": "p-Phenylenediamine hydrochloride",
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 3.3% 이하 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
     "name": "p-아미노페놀",
     "engName": "p-Aminophenol",
-    "type": "restricted",
-    "category": "염모제",
-    "description": "모발 염색에 사용되는 p-아미노페놀은 0.9%의 최대 함량 제한이 있는 사용 제한 원료 성분입니다.",
-    "limit": "산화염모제에 0.9%",
-    "tip": "산화염모제 전용"
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.9% 이하 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
     "name": "레조시놀",
@@ -1252,7 +1252,7 @@ var INGREDIENTS_DATA = [
     "tip": "방부제"
   },
   {
-    "name": "벤질헤미포름일",
+    "name": "벤질헤미포름알",
     "engName": "Benzylhemiformal",
     "type": "restricted",
     "category": "방부제",
@@ -1369,7 +1369,7 @@ var INGREDIENTS_DATA = [
     "tip": "4급 암모늄염"
   },
   {
-    "name": "에칠라우로알지네이트 하이드로클로라이드",
+    "name": "에칠라우로일알지네이트 하이드로클로라이드",
     "engName": "Ethyl Lauroyl Arginate HCl",
     "type": "restricted",
     "category": "기타",
@@ -1378,7 +1378,7 @@ var INGREDIENTS_DATA = [
     "tip": "기타 제품에는 사용금지"
   },
   {
-    "name": "염디엠하이단토인",
+    "name": "엠디엠하이단토인",
     "engName": "Chloromethyl DMDM Hydantoin",
     "type": "restricted",
     "category": "방부제",
@@ -1486,7 +1486,7 @@ var INGREDIENTS_DATA = [
     "tip": "방부제"
   },
   {
-    "name": "클렉시딘, 그 디글루코네이트, 디아세테이트 및 디하이드로클로라이드",
+    "name": "클로헥시딘, 그 디글루코네이트, 디아세테이트 및 디하이드로클로라이드",
     "engName": "Chlorhexidine, its Digluconate, Diacetate and Dihydrochloride",
     "type": "restricted",
     "category": "방부제",
@@ -1639,7 +1639,7 @@ var INGREDIENTS_DATA = [
     "tip": "자외선 차단제"
   },
   {
-    "name": "디갈로일트리올레이트",
+    "name": "디갈로일트리올리에이트",
     "engName": "Digalloyl Trioleate",
     "type": "restricted",
     "category": "자외선 차단제",
@@ -1666,7 +1666,7 @@ var INGREDIENTS_DATA = [
     "tip": "자외선 차단제"
   },
   {
-    "name": "다에칠아미노하이드록시벤조일헥실벤조에이트",
+    "name": "디에칠아미노하이드록시벤조일헥실벤조에이트",
     "engName": "Diethylamino Hydroxybenzoyl Hexyl Benzoate",
     "type": "restricted",
     "category": "자외선 차단제",
@@ -1738,7 +1738,7 @@ var INGREDIENTS_DATA = [
     "tip": "자외선 차단제"
   },
   {
-    "name": "에칠다하이드록시프로필파바",
+    "name": "에칠디하이드록시프로필파바",
     "engName": "Ethyl Dihydroxypropyl PABA",
     "type": "restricted",
     "category": "자외선 차단제",
@@ -1756,7 +1756,7 @@ var INGREDIENTS_DATA = [
     "tip": "자외선 차단제"
   },
   {
-    "name": "이소아밀-p-메톡시사이나메이트",
+    "name": "이소아밀-p-메톡시신나메이트",
     "engName": "Isoamyl p-Methoxycinnamate",
     "type": "restricted",
     "category": "자외선 차단제",
@@ -1774,7 +1774,7 @@ var INGREDIENTS_DATA = [
     "tip": "폴리머"
   },
   {
-    "name": "테레무탈말리덴캠파설포닉애씨드 및 그 염류",
+    "name": "테레프탈릴리덴디캠퍼설포닉애씨드 및 그 염류",
     "engName": "Terephthalylidene Dicamphor Sulfonic Acid and its salts",
     "type": "restricted",
     "category": "자외선 차단제",
@@ -1819,22 +1819,31 @@ var INGREDIENTS_DATA = [
     "tip": "2026년 신규 지정 UV필터. 흡입 노출 제품 사용금지 주의사항 적용."
   },
   {
-    "name": "황산 p-페닐렌디아민",
-    "engName": "p-Phenylenediamine Sulfate",
+    "name": "에칠헥실메톡시신나메이트",
+    "engName": "Ethylhexyl Methoxycinnamate (Octinoxate)",
     "type": "restricted",
-    "category": "염모제",
-    "description": "모발의 색을 염색하는 데 사용되는 염모제 성분이며, 화장품 안전기준 등에 관한 규정 별표2에 따라 사용이 제한되는 원료입니다.",
-    "limit": "산화염모제에 3.8%",
-    "tip": "산화염모제 전용, 황산염 형태"
+    "category": "자외선 차단제",
+    "description": "유상층에 용해되어 UVB를 차단하는 대표적 자외선 차단 성분으로, 최대 7.5%까지 배합이 허용되는 사용 제한 원료입니다.",
+    "limit": "7.5%",
+    "tip": "자외선 차단제"
+  },
+  {
+    "name": "황산 p-페닐렌디아민",
+    "engName": "p-Phenylenediamine sulfate",
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 3.8% 이하 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
     "name": "황산 p-아미노페놀",
-    "engName": "p-Aminophenol Sulfate",
-    "type": "restricted",
-    "category": "염모제",
-    "description": "황산 p-아미노페놀은 염모제로 사용되며, 사용 제한 원료로 최대 함량 1.3%까지 허용되는 성분입니다.",
-    "limit": "산화염모제에 1.3%",
-    "tip": "산화염모제 전용, 황산염 형태"
+    "engName": "p-Aminophenol sulfate",
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.3% 이하 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
     "name": "염산 p-아미노페놀",
@@ -1857,20 +1866,20 @@ var INGREDIENTS_DATA = [
   {
     "name": "m-아미노페놀",
     "engName": "m-Aminophenol",
-    "type": "restricted",
-    "category": "염모제",
-    "description": "모발의 색상을 염색하는 데 도움을 주는 염모제 성분으로, 사용 제한이 있는 원료입니다.",
-    "limit": "산화염모제에 2.0%",
-    "tip": "산화염모제 전용"
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 2.0% 이하 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
     "name": "황산 m-아미노페놀",
-    "engName": "m-Aminophenol Sulfate",
-    "type": "restricted",
-    "category": "염모제",
-    "description": "황산 m-아미노페놀은 모발의 색상을 변화시키는 염모제로 사용되며, 사용이 제한된 성분입니다.",
-    "limit": "산화염모제에 2.0%",
-    "tip": "산화염모제 전용, 황산염 형태"
+    "engName": "m-Aminophenol sulfate",
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 2.0% 이하 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
     "name": "톨루엔-2,5-디아민",
@@ -1883,48 +1892,48 @@ var INGREDIENTS_DATA = [
   },
   {
     "name": "염산 톨루엔-2,5-디아민",
-    "engName": "Toluene-2,5-Diamine HCl",
-    "type": "restricted",
-    "category": "염모제",
-    "description": "모발에 색을 입히는 염모제로 사용되며, 사용 제한 원료로 관리되는 성분입니다.",
-    "limit": "산화염모제에 3.2%",
-    "tip": "산화염모제 전용, 염산염 형태"
+    "engName": "Toluene-2,5-diamine hydrochloride",
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 3.2% 이하 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
     "name": "황산 톨루엔-2,5-디아민",
-    "engName": "Toluene-2,5-Diamine Sulfate",
-    "type": "restricted",
-    "category": "염모제",
-    "description": "모발의 색을 염색하는 염모제로 사용되며, 화장품 사용에 제한이 있는 성분입니다.",
-    "limit": "산화염모제에 3.6%",
-    "tip": "산화염모제 전용, 황산염 형태"
+    "engName": "Toluene-2,5-diamine sulfate",
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 3.6% 이하 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
     "name": "p-니트로-o-페닐렌디아민",
-    "engName": "p-Nitro-o-Phenylenediamine",
-    "type": "restricted",
-    "category": "염모제",
-    "description": "모발에 색소를 부여하는 염모제로 사용되며, 화장품 안전 기준에 따라 사용이 제한되는 성분입니다.",
-    "limit": "산화염모제에 1.5%",
-    "tip": "기타 제품에는 사용금지"
+    "engName": "p-Nitro-o-phenylenediamine",
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.5% 이하 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
     "name": "2-메칠-5-히드록시에칠아미노페놀",
-    "engName": "2-Methyl-5-Hydroxyethylaminophenol",
+    "engName": "2-Methyl-5-hydroxyethylaminophenol",
     "type": "restricted",
     "category": "염모제",
-    "description": "모발에 색을 부여하는 염모제로 사용되며, 사용 제한 원료인 별표2에 해당하는 성분입니다.",
+    "description": "모발의 색을 변화시키는 염모제 성분으로, 산화염모제에만 사용이 제한된 원료입니다.",
     "limit": "산화염모제에 0.5%",
-    "tip": "기타 제품에는 사용금지"
+    "tip": "페놀류 · 별표1 수록 원료(5-[(2-하이드록시에칠)아미노]-o-크레졸)의 염모제 예외"
   },
   {
     "name": "2-아미노-3-히드록시피리딘",
-    "engName": "2-Amino-3-Hydroxypyridine",
-    "type": "restricted",
-    "category": "염모제",
-    "description": "모발 염색에 사용되는 염모제 성분이며, 사용 제한 원료로 지정된 성분입니다.",
-    "limit": "산화염모제에 1.0%",
-    "tip": "기타 제품에는 사용금지"
+    "engName": "2-Amino-3-hydroxypyridine",
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.0% 이하 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
     "name": "4-아미노-m-크레솔",
@@ -1937,21 +1946,21 @@ var INGREDIENTS_DATA = [
   },
   {
     "name": "5-아미노-o-크레솔",
-    "engName": "5-Amino-o-Cresol",
-    "type": "restricted",
-    "category": "염모제",
-    "description": "염모 및 착색에 도움을 주며, 사용 제한 원료로 최대 1.0%까지 배합 가능한 성분입니다.",
-    "limit": "산화염모제에 1.0%",
-    "tip": "기타 제품에는 사용금지"
+    "engName": "5-Amino-o-cresol",
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.0% 이하 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
     "name": "5-아미노-6-클로로-o-크레솔",
-    "engName": "5-Amino-6-Chloro-o-Cresol",
-    "type": "restricted",
-    "category": "염모제",
-    "description": "염모제로 사용되며, 염모·색소 목적으로 최대 0.5%까지 배합 가능한 사용 제한 원료 성분입니다.",
-    "limit": "• 산화염모제에 1.0%\n• 비산화염모제에 0.5%",
-    "tip": "기타 제품에는 사용금지"
+    "engName": "5-Amino-6-chloro-o-cresol",
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.0% 이하, 비산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.5% 이하 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
     "name": "염산 2,4-디아미노페녹시에탄올",
@@ -1973,105 +1982,105 @@ var INGREDIENTS_DATA = [
   },
   {
     "name": "N-페닐-p-페닐렌디아민 및 그 염류",
-    "engName": "N-Phenyl-p-Phenylenediamine and its salts",
-    "type": "restricted",
-    "category": "염모제",
-    "description": "염모 및 색소 부여에 사용되는 성분으로, 사용 제한 원료이며 최대 2.0%까지 배합 가능한 성분입니다.",
-    "limit": "산화염모제에 N-페닐-p-페닐렌디아민으로서 2.0%",
-    "tip": "기타 제품에는 사용금지"
+    "engName": "N-Phenyl-p-phenylenediamine and its salts",
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 N-페닐-p-페닐렌디아민으로서 2.0% 이하 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
     "name": "피크라민산",
-    "engName": "Picramic Acid",
-    "type": "restricted",
-    "category": "염모제",
-    "description": "피크라민산은 모발에 색을 부여하는 염모 및 색소 성분으로, 사용 제한 원료이며 최대 0.6%까지 배합 가능한 성분입니다.",
-    "limit": "산화염모제에 0.6%",
-    "tip": "기타 제품에는 사용금지"
+    "engName": "Picramic acid",
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.6% 이하 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
     "name": "황산 p-니트로-o-페닐렌디아민",
-    "engName": "p-Nitro-o-Phenylenediamine Sulfate",
-    "type": "restricted",
-    "category": "염모제",
-    "description": "모발의 색을 염색하는 데 사용되는 염모제이며, 사용이 제한되는 성분입니다.",
-    "limit": "산화염모제에 2.0%",
-    "tip": "기타 제품에는 사용금지"
+    "engName": "p-Nitro-o-phenylenediamine sulfate",
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 2.0% 이하 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
     "name": "황산 p-메칠아미노페놀",
-    "engName": "p-Methylaminophenol Sulfate",
-    "type": "restricted",
-    "category": "염모제",
-    "description": "모발에 색을 부여하는 염모제 성분으로, 사용 제한 원료로 지정된 성분입니다.",
-    "limit": "산화염모제에 0.68%",
-    "tip": "기타 제품에는 사용금지"
+    "engName": "p-Methylaminophenol sulfate",
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.68% 이하 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
     "name": "황산 5-아미노-o-크레솔",
-    "engName": "5-Amino-o-Cresol Sulfate",
-    "type": "restricted",
-    "category": "염모제",
-    "description": "염모제로 모발에 색을 부여하는 데 사용되는 성분이며, 사용 제한 원료에 해당합니다.",
-    "limit": "산화염모제에 4.5%",
-    "tip": "기타 제품에는 사용금지"
+    "engName": "5-Amino-o-cresol sulfate",
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 4.5% 이하 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
     "name": "황산 N,N-비스(2-히드록시에칠)-p-페닐렌디아민",
-    "engName": "N,N-Bis(2-Hydroxyethyl)-p-Phenylenediamine Sulfate",
-    "type": "restricted",
-    "category": "염모제",
-    "description": "염모제로 사용되는 성분으로, 모발에 색상을 부여하며 사용 제한이 있는 성분입니다.",
-    "limit": "산화염모제에 2.9%",
-    "tip": "기타 제품에는 사용금지"
+    "engName": "N,N-Bis(2-hydroxyethyl)-p-phenylenediamine sulfate",
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 2.9% 이하 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
     "name": "2,6-디아미노피리딘",
     "engName": "2,6-Diaminopyridine",
-    "type": "restricted",
-    "category": "염모제",
-    "description": ",6-디아미노피리딘은 모발의 색상 변화에 도움을 주는 염모제로, 사용 제한 원료이며 최대 0.15%까지 배합 가능한 성분입니다.",
-    "limit": "산화염모제에 0.15%",
-    "tip": "기타 제품에는 사용금지"
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.15% 이하 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
     "name": "염산 2,4-디아미노페놀",
-    "engName": "2,4-Diaminophenol HCl",
-    "type": "restricted",
-    "category": "염모제",
-    "description": "산화염모제에 0.02%까지 배합 가능한 사용 제한 염모제 성분입니다. (2023-73호로 0.5%→0.02% 강화)",
-    "limit": "산화염모제에 0.02%",
-    "tip": "기타 제품에는 사용금지"
+    "engName": "2,4-Diaminophenol dihydrochloride",
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.02% 이하 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
     "name": "1,5-디히드록시나프탈렌",
     "engName": "1,5-Dihydroxynaphthalene",
-    "type": "restricted",
-    "category": "염모제",
-    "description": "염모제로 사용되어 모발에 색을 부여하는 성분이며, 화장품 사용에 제한이 있는 원료입니다.",
-    "limit": "산화염모제에 0.5%",
-    "tip": "기타 제품에는 사용금지"
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.5% 이하 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
     "name": "피크라민산 나트륨",
-    "engName": "Sodium Picramate",
-    "type": "restricted",
-    "category": "염모제",
-    "description": "모발에 색을 부여하는 염모제로, 사용이 제한되며 최대 0.6%까지 배합 가능한 성분입니다.",
-    "limit": "산화염모제에 0.6%",
-    "tip": "기타 제품에는 사용금지"
+    "engName": "Sodium picramate",
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.6% 이하 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
     "name": "황산 1-히드록시에칠-4,5-디아미노피라졸",
-    "engName": "1-Hydroxyethyl-4,5-Diaminopyrazole Sulfate",
-    "type": "restricted",
-    "category": "염모제",
-    "description": "모발 염색에 사용되는 염모제로, 사용 제한 원료에 해당하는 성분입니다.",
-    "limit": "산화염모제에 3.0%",
-    "tip": "기타 제품에는 사용금지"
+    "engName": "1-Hydroxyethyl-4,5-diaminopyrazole sulfate",
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 3.0% 이하 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "히드록시벤조모르포린",
+    "name": "2,3-디하이드로-2H-1,4-벤족사진-6-올(히드록시벤조모르포린)",
     "engName": "Hydroxybenzomorpholine",
     "type": "restricted",
     "category": "염모제",
@@ -2082,11 +2091,11 @@ var INGREDIENTS_DATA = [
   {
     "name": "6-히드록시인돌",
     "engName": "6-Hydroxyindole",
-    "type": "restricted",
-    "category": "염모제",
-    "description": "염모 및 착색에 사용되는 성분으로, 사용 제한이 필요한 염모제 성분입니다.",
-    "limit": "산화염모제에 0.5%",
-    "tip": "기타 제품에는 사용금지"
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.5% 이하 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
     "name": "1-나프톨(α-나프톨)",
@@ -2152,7 +2161,7 @@ var INGREDIENTS_DATA = [
     "tip": "염모제(탈염·탈색 포함)에서 산화보조제로서 사용"
   },
   {
-    "name": "인디고페라(Indigolera tinctoria) 엽가루",
+    "name": "인디고페라(Indigofera tinctoria) 엽가루",
     "engName": "Indigofera Tinctoria Leaf Powder",
     "type": "restricted",
     "category": "염모제",
@@ -2188,12 +2197,273 @@ var INGREDIENTS_DATA = [
     "tip": "산화염모제에 사용금지"
   },
   {
+    "name": "1,5-디-(베타-하이드록시에칠)아미노-2-니트로-4-클로로벤젠 및 그 염류",
+    "engName": "1,5-Di-(beta-hydroxyethyl)amino-2-nitro-4-chlorobenzene and its salts",
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 비산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.1% 이하는 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
+  },
+  {
+    "name": "2,6-디메톡시-3,5-피리딘디아민 하이드로클로라이드",
+    "engName": "2,6-Dimethoxy-3,5-pyridinediamine hydrochloride",
+    "type": "restricted",
+    "category": "염모제",
+    "description": "고시 제2026-19호 대조에서 확인된 별표2 수록 원료입니다.",
+    "limit": "산화염모제에 0.25%",
+    "tip": "기타 제품에는 사용금지"
+  },
+  {
+    "name": "2,3-디하이드로-1H-인돌-5,6-디올(디하이드록시인돌린) 및 그 하이드로브로마이드염",
+    "engName": "2,3-Dihydro-1H-indole-5,6-diol (Dihydroxyindoline) and its hydrobromide salt",
+    "type": "restricted",
+    "category": "염모제",
+    "description": "고시 제2026-19호 대조에서 확인된 별표2 수록 원료입니다.",
+    "limit": "비산화염모제에 2.0%",
+    "tip": "기타 제품에는 사용금지"
+  },
+  {
+    "name": "하이드록시에칠-2-니트로-p-톨루이딘",
+    "engName": "Hydroxyethyl-2-nitro-p-toluidine",
+    "type": "restricted",
+    "category": "염모제",
+    "description": "고시 제2026-19호 대조에서 확인된 별표2 수록 원료입니다.",
+    "limit": "1.0%",
+    "tip": "기타 제품에는 사용금지"
+  },
+  {
+    "name": "2-[3-(메칠아미노)-4-니트로페녹시]에탄올 및 그 염류",
+    "engName": "2-[3-(Methylamino)-4-nitrophenoxy]ethanol and its salts",
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 비산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.15% 이하는 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
+  },
+  {
+    "name": "페닐메칠피라졸론",
+    "engName": "Phenyl methyl pyrazolone",
+    "type": "restricted",
+    "category": "염모제",
+    "description": "고시 제2026-19호 대조에서 확인된 별표2 수록 원료입니다.",
+    "limit": "산화염모제에 0.25%",
+    "tip": "기타 제품에는 사용금지"
+  },
+  {
+    "name": "메칠페닐렌디아민류, 그 N-치환 유도체류 및 그 염류(2,6-디하이드록시에칠아미노톨루엔은 제외)",
+    "engName": "Methylphenylenediamines, their N-substituted derivatives and their salts",
+    "type": "restricted",
+    "category": "염모제",
+    "description": "고시 제2026-19호 대조에서 확인된 별표2 수록 원료입니다.",
+    "limit": "염모 성분으로서 사용, 기타 제품에는 사용금지",
+    "tip": "별표1에도 수록 — 염모제 목적으로만 허용"
+  },
+  {
+    "name": "2,6-디하이드록시에칠아미노톨루엔",
+    "engName": "2,6-Dihydroxyethylaminotoluene",
+    "type": "restricted",
+    "category": "염모제",
+    "description": "고시 제2026-19호 대조에서 확인된 별표2 수록 원료입니다.",
+    "limit": "1.0%",
+    "tip": "니트로화제를 함유하고 있는 제품에는 사용할 수 없으며 총 니트로사민은 50ppb를 넘지 않아야 함"
+  },
+  {
+    "name": "2-[(2-메톡시-4-니트로페닐)아미노]에탄올 및 그 염류",
+    "engName": "2-[(2-Methoxy-4-nitrophenyl)amino]ethanol and its salts",
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 비산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.2% 이하는 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
+  },
+  {
+    "name": "6-메톡시-N2-메칠-2,3-피리딘디아민 하이드로클로라이드 및 디하이드로클로라이드염",
+    "engName": "6-Methoxy-N2-methyl-2,3-pyridinediamine hydrochloride and dihydrochloride",
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 염모제에서 용법·용량에 따른 혼합물의 염모 성분으로 산으로서 0.68% 이하, 디하이드로클로라이드염으로서 1.0% 이하는 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
+  },
+  {
+    "name": "4-니트로페닐아미노에칠우레아",
+    "engName": "4-Nitrophenyl aminoethylurea",
+    "type": "restricted",
+    "category": "염모제",
+    "description": "고시 제2026-19호 대조에서 확인된 별표2 수록 원료입니다.",
+    "limit": "• 산화염모제에 0.25%\n• 비산화염모제에 0.5%",
+    "tip": "기타 제품에는 사용금지"
+  },
+  {
+    "name": "1-아미노-2-니트로-4-(2',3'-디하이드록시프로필)아미노-5-클로로벤젠과 1,4-비스-(2',3'-디하이드록시프로필)아미노-2-니트로-5-클로로벤젠 및 그 염류",
+    "engName": "1-Amino-2-nitro-4-(2',3'-dihydroxypropyl)amino-5-chlorobenzene and 1,4-bis-(2',3'-dihydroxypropyl)amino-2-nitro-5-chlorobenzene and their salts (HC Red No. 10 + HC Red No. 11)",
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.0% 이하, 비산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 2.0% 이하는 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
+  },
+  {
+    "name": "4-아미노-3-니트로페놀",
+    "engName": "4-Amino-3-nitrophenol",
+    "type": "restricted",
+    "category": "염모제",
+    "description": "고시 제2026-19호 대조에서 확인된 별표2 수록 원료입니다.",
+    "limit": "• 산화염모제에 1.5%\n• 비산화염모제에 1.0%",
+    "tip": "기타 제품에는 사용금지"
+  },
+  {
+    "name": "2,2'-[(4-아미노-3-니트로페닐)이미노]비스에탄올 하이드로클로라이드 및 그 염류",
+    "engName": "2,2'-[(4-Amino-3-nitrophenyl)imino]bisethanol hydrochloride and its salts (HC Red No. 13)",
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 하이드로클로라이드염으로서 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.5% 이하, 비산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.0% 이하는 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
+  },
+  {
+    "name": "3-아미노-2,4-디클로로페놀 및 그 염산염",
+    "engName": "3-Amino-2,4-dichlorophenol and its hydrochloride",
+    "type": "restricted",
+    "category": "염모제",
+    "description": "고시 제2026-19호 대조에서 확인된 별표2 수록 원료입니다.",
+    "limit": "염산염으로서 1.5%",
+    "tip": "기타 제품에는 사용금지"
+  },
+  {
+    "name": "2-[(4-아미노-2-메칠-5-니트로페닐)아미노]에탄올 및 그 염류",
+    "engName": "2-[(4-Amino-2-methyl-5-nitrophenyl)amino]ethanol and its salts (HC Violet No. 1)",
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.25% 이하, 비산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.28% 이하는 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
+  },
+  {
+    "name": "2-[(3-아미노-4-메톡시페닐)아미노]에탄올 및 그 염류",
+    "engName": "2-[(3-Amino-4-methoxyphenyl)amino]ethanol and its salts",
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.5% 이하는 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
+  },
+  {
+    "name": "1-(2-아미노에칠)아미노-4-(2-하이드록시에칠)옥시-2-니트로벤젠 및 그 염류",
+    "engName": "1-(2-Aminoethyl)amino-4-(2-hydroxyethyl)oxy-2-nitrobenzene and its salts (HC Orange No. 2)",
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 비산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.0% 이하는 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
+  },
+  {
+    "name": "2-아미노-6-클로로-4-니트로페놀",
+    "engName": "2-Amino-6-chloro-4-nitrophenol",
+    "type": "restricted",
+    "category": "염모제",
+    "description": "고시 제2026-19호 대조에서 확인된 별표2 수록 원료입니다.",
+    "limit": "2.0%",
+    "tip": "기타 제품에는 사용금지"
+  },
+  {
+    "name": "2-클로로-6-에칠아미노-4-니트로페놀 및 그 염류",
+    "engName": "2-Chloro-6-ethylamino-4-nitrophenol and its salts",
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.5% 이하, 비산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 3% 이하는 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
+  },
+  {
+    "name": "4,4'-[1,3-프로판디일비스(옥시)]비스벤젠-1,3-디아민 및 그 테트라하이드로클로라이드염",
+    "engName": "4,4'-[1,3-Propanediylbis(oxy)]bisbenzene-1,3-diamine and its tetrahydrochloride",
+    "type": "restricted",
+    "category": "염모제",
+    "description": "고시 제2026-19호 대조에서 확인된 별표2 수록 원료입니다.",
+    "limit": "산화염모제에 산으로서 1.2%",
+    "tip": "1,3-비스-(2,4-디아미노페녹시)프로판"
+  },
+  {
+    "name": "1-하이드록시-3-니트로-4-(3-하이드록시프로필아미노)벤젠 및 그 염류",
+    "engName": "1-Hydroxy-3-nitro-4-(3-hydroxypropylamino)benzene and its salts (HC Red No. 16)",
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 2.6% 이하는 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
+  },
+  {
+    "name": "2-하이드록시에칠피크라믹애씨드",
+    "engName": "2-Hydroxyethylpicramic acid",
+    "type": "restricted",
+    "category": "염모제",
+    "description": "고시 제2026-19호 대조에서 확인된 별표2 수록 원료입니다.",
+    "limit": "• 산화염모제에 1.5%\n• 비산화염모제에 2.0%",
+    "tip": "기타 제품에는 사용금지"
+  },
+  {
+    "name": "하이드록시에칠-3,4-메칠렌디옥시아닐린 하이드로클로라이드 및 그 염류",
+    "engName": "Hydroxyethyl-3,4-methylenedioxyaniline hydrochloride and its salts",
+    "type": "restricted",
+    "category": "염모제",
+    "description": "고시 제2026-19호 대조에서 확인된 별표2 수록 원료입니다.",
+    "limit": "산화염모제에 1.5%",
+    "tip": "기타 제품에는 사용금지"
+  },
+  {
+    "name": "3-니트로-p-하이드록시에칠아미노페놀",
+    "engName": "3-Nitro-p-hydroxyethylaminophenol",
+    "type": "restricted",
+    "category": "염모제",
+    "description": "고시 제2026-19호 대조에서 확인된 별표2 수록 원료입니다.",
+    "limit": "• 산화염모제에 3.0%\n• 비산화염모제에 1.85%",
+    "tip": "기타 제품에는 사용금지"
+  },
+  {
+    "name": "2,2'-[[4-[(2-하이드록시에칠)아미노]-3-니트로페닐]이미노]비스에탄올 및 그 염류",
+    "engName": "2,2'-[[4-[(2-Hydroxyethyl)amino]-3-nitrophenyl]imino]bisethanol and its salts",
+    "type": "restricted",
+    "category": "염모제",
+    "description": "고시 제2026-19호 대조에서 확인된 별표2 수록 원료입니다.",
+    "limit": "비산화염모제에 2.8%",
+    "tip": "에이치시 청색 No. 2"
+  },
+  {
+    "name": "1-(3-하이드록시프로필아미노)-2-니트로-4-비스(2-하이드록시에칠)아미노벤젠 및 그 염류",
+    "engName": "1-(3-Hydroxypropylamino)-2-nitro-4-bis(2-hydroxyethyl)aminobenzene and its salts",
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 비산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 2.0% 이하는 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
+  },
+  {
+    "name": "헨나(Lawsonia inermis)엽가루",
+    "engName": "Henna (Lawsonia inermis) leaf powder",
+    "type": "restricted",
+    "category": "염모제",
+    "description": "고시 제2026-19호 대조에서 확인된 별표2 수록 원료입니다.",
+    "limit": "염모제에 한해 사용(한도 없음)",
+    "tip": "기타 제품에는 사용금지"
+  },
+  {
+    "name": "2,7-나프탈렌디올",
+    "engName": "2,7-Naphthalenediol",
+    "type": "restricted",
+    "category": "염모제",
+    "description": "고시 제2026-19호 대조에서 확인된 별표2 수록 원료입니다.",
+    "limit": "1.0%",
+    "tip": "기타 제품에는 사용금지"
+  },
+  {
     "name": "치오글라이콜릭애씨드, 그 염류 및 에스텔류",
     "engName": "Thioglycolic Acid, its salts and esters",
     "type": "restricted",
     "category": "염모제",
     "description": "사용 제한 필요한 원료",
-    "limit": "• 퍼머넌트 웨이브용 및 헤어 스트레이트너 제품에 치오글라이콜릭애씨드로서 11%\n• 염모제에 치오글라이콜릭애씨드로서 1%\n• 사용 후 씻어내는 두발용 제품류에 2%",
+    "limit": "• 퍼머넌트 웨이브용 및 헤어 스트레이트너 제품에 치오글라이콜릭애씨드로서 11% (다만, 가온 2욕식 헤어스트레이트너 제품은 5%, 제1제 사용 시 조제하는 발열 2욕식 퍼머넌트웨이브용 제품은 19%에 해당하는 양)\n• 제모용 제품에 치오글라이콜릭애씨드로서 5%\n• 염모제에 치오글라이콜릭애씨드로서 1%\n• 사용 후 씻어내는 두발용 제품류에 2%",
     "tip": "퍼머넌트 웨이브 제1제 환원제"
   },
   {
@@ -2206,12 +2476,12 @@ var INGREDIENTS_DATA = [
     "tip": "기타 제품에는 사용금지"
   },
   {
-    "name": "시스테인 아세틸시스테인 및 그 염류",
+    "name": "시스테인, 아세틸시스테인 및 그 염류",
     "engName": "Cysteine, Acetylcysteine and their salts",
     "type": "restricted",
     "category": "염모제",
     "description": "염모제에 사용되는 성분으로, 사용 제한 원료로 지정된 성분입니다.",
-    "limit": "퍼머넌트 웨이브용 제품에 시스테인으로서 3.0~7.5%",
+    "limit": "퍼머넌트 웨이브용 제품에 시스테인으로서 3.0~7.5% (다만, 가온 2욕식 퍼머넌트웨이브용 제품의 경우에는 시스테인으로서 1.5~5.5%, 안정제로서 치오글라이콜릭애씨드 1.0%를 배합할 수 있으며 첨가하는 치오글라이콜릭애씨드의 양을 최대한 1.0%로 했을 때 주성분인 시스테인의 양은 6.5%를 초과할 수 없다)",
     "tip": "퍼머넌트 웨이브 환원제"
   },
   {
@@ -2503,7 +2773,7 @@ var INGREDIENTS_DATA = [
     "tip": "향료"
   },
   {
-    "name": "3-메칠논-2-에니트릴",
+    "name": "3-메칠논-2-엔니트릴",
     "engName": "3-Methylnon-2-enenitrile",
     "type": "restricted",
     "category": "향료",
@@ -2512,7 +2782,7 @@ var INGREDIENTS_DATA = [
     "tip": "니트릴"
   },
   {
-    "name": "메칠 2-옥티노에이트(에칠켑틴카보네이트)",
+    "name": "메칠 2-옥티노에이트(메칠헵틴카보네이트)",
     "engName": "Methyl 2-Octynoate",
     "type": "restricted",
     "category": "향료",
@@ -2530,25 +2800,25 @@ var INGREDIENTS_DATA = [
     "tip": "니트릴"
   },
   {
-    "name": "p-메칠하이드로시나막알데하이드",
+    "name": "p-메칠하이드로신나믹알데하이드",
     "engName": "p-Methylhydrocinnamaldehyde",
     "type": "restricted",
     "category": "향료",
-    "description": "피-메칠하이드록시나막알데하이드는 화장품에 향을 부여하는 향료 성분으로, 최대 0.2%까지 사용이 제한되는 원료입니다.",
+    "description": "p-메칠하이드로신나믹알데하이드는 화장품에 향을 부여하는 향료 성분으로, 최대 0.2%까지 사용이 제한되는 원료입니다.",
     "limit": "0.2%",
     "tip": "알콜류"
   },
   {
-    "name": "메칠엔다이엔",
-    "engName": "Methylenedioxyphenyl Methylpropanal",
+    "name": "메칠헵타디에논",
+    "engName": "Methylheptadienone",
     "type": "restricted",
     "category": "향료",
-    "description": "메칠엔다이엔은 화장품에 향을 부여하는 향료 성분으로, 사용이 제한되어 최대 0.002%까지만 배합 가능한 원료입니다.",
+    "description": "메칠헵타디에논은 화장품에 향을 부여하는 향료 성분으로, 사용이 제한되어 최대 0.002%까지만 배합 가능한 원료입니다.",
     "limit": "0.002%",
     "tip": "디엔"
   },
   {
-    "name": "메톡시디시클로펜타디엔카복스알데하이드",
+    "name": "메톡시디시클로펜타디엔카르복스알데하이드",
     "engName": "Methoxy Dicyclopentadiene Carboxaldehyde",
     "type": "restricted",
     "category": "향료",
@@ -2620,11 +2890,11 @@ var INGREDIENTS_DATA = [
     "tip": "수용성"
   },
   {
-    "name": "아이바놀카르비닐아세테이트",
-    "engName": "Isobornyl Cyclohexanol Acetate",
+    "name": "아밀비닐카르비닐아세테이트",
+    "engName": "Amyl Vinylcarbinyl Acetate",
     "type": "restricted",
     "category": "향료",
-    "description": "아이바놀카르비닐아세테이트는 화장품에 향을 부여하는 향료 성분으로, 사용 제한이 있으며 최대 0.3%까지 배합 가능한 성분입니다.",
+    "description": "아밀비닐카르비닐아세테이트는 화장품에 향을 부여하는 향료 성분으로, 사용 제한이 있으며 최대 0.3%까지 배합 가능한 성분입니다.",
     "limit": "0.3%",
     "tip": "비타민류"
   },
@@ -2671,14 +2941,14 @@ var INGREDIENTS_DATA = [
     "category": "기능성 성분",
     "description": "피부 컨디셔닝에 도움을 주는 성분으로, 사용 제한이 있는 기능성 원료로 분류되는 성분입니다.",
     "limit": "1.0%",
-    "tip": "2-알키노익애씨드 에스텔(예 에칠켑틴카보네이트)을 함유하고 있는 제품에는 사용금지"
+    "tip": "2-알키노익애씨드 에스텔(예 메칠헵틴카보네이트)을 함유하고 있는 제품에는 사용금지"
   },
   {
-    "name": "알킬켑틴카보네이트",
+    "name": "알릴헵틴카보네이트",
     "engName": "Alkyl Heptine Carbonate",
     "type": "restricted",
     "category": "향료",
-    "description": "알킬켑틴카보네이트는 화장품에 향을 부여하는 성분으로, 최대 0.002%까지 사용이 제한된 원료입니다.",
+    "description": "알릴헵틴카보네이트는 화장품에 향을 부여하는 성분으로, 최대 0.002%까지 사용이 제한된 원료입니다.",
     "limit": "0.002%",
     "tip": "알킬화합물"
   },
@@ -2701,7 +2971,7 @@ var INGREDIENTS_DATA = [
     "tip": "기타 제품에는 사용금지"
   },
   {
-    "name": "오로파낙스",
+    "name": "오포파낙스",
     "engName": "Opopanax",
     "type": "restricted",
     "category": "향료",
@@ -2710,11 +2980,11 @@ var INGREDIENTS_DATA = [
     "tip": "식물성 원료"
   },
   {
-    "name": "옥살락애씨드, 그 에스텔류 및 알칼리 염류",
+    "name": "옥살릭애씨드, 그 에스텔류 및 알칼리 염류",
     "engName": "Oxalic Acid, its esters and alkali salts",
     "type": "restricted",
     "category": "기타",
-    "description": "옥살락애씨드, 그 에스텔류 및 알칼리 염류는 화장품 사용에 특별한 제한이 있는 성분입니다.",
+    "description": "옥살릭애씨드, 그 에스텔류 및 알칼리 염류는 화장품 사용에 특별한 제한이 있는 성분입니다.",
     "limit": "두발용 제품류에 5%",
     "tip": "기타 제품에는 사용금지"
   },
@@ -2728,7 +2998,7 @@ var INGREDIENTS_DATA = [
     "tip": "에스테르류"
   },
   {
-    "name": "이소사이클로게라니올",
+    "name": "이소사이클로제라니올",
     "engName": "Isocyclogeraniol",
     "type": "restricted",
     "category": "향료",
@@ -2818,20 +3088,20 @@ var INGREDIENTS_DATA = [
     "tip": "식물성 원료"
   },
   {
-    "name": "프로필리엔프탈라이드",
+    "name": "프로필리덴프탈라이드",
     "engName": "Propylidene Phthalide",
     "type": "restricted",
     "category": "향료",
-    "description": "프로필리엔프탈라이드는 화장품에 향을 부여하는 성분으로, 식약처 고시 사용 제한 원료이며 최대 0.0 성분입니다.",
+    "description": "프로필리덴프탈라이드는 화장품에 향을 부여하는 성분으로, 식약처 고시 사용 제한 원료이며 최대 0.0 성분입니다.",
     "limit": "0.01%",
     "tip": "원료 중 펩타이드의 최대 평균분자량은 3.5 kDa 이하이어야 함"
   },
   {
-    "name": "하이드롤라이즈드일단백질",
+    "name": "하이드롤라이즈드밀단백질",
     "engName": "Hydrolyzed Wheat Protein",
     "type": "restricted",
     "category": "기타",
-    "description": "하이드롤라이즈드일단백질은 피부와 모발의 보습 및 유연에 도움을 주는 첨가제로, 사용 제한 원료에 해당하는 성분입니다.",
+    "description": "하이드롤라이즈드밀단백질은 피부와 모발의 보습 및 유연에 도움을 주는 첨가제로, 사용 제한 원료에 해당하는 성분입니다.",
     "limit": "",
     "tip": "가수분해"
   },
@@ -2849,8 +3119,17 @@ var INGREDIENTS_DATA = [
     "engName": "2-Hexylidene Cyclopentanone",
     "type": "restricted",
     "category": "향료",
-    "description": "화장품에 향을 부여하는 향료 성분으로, 사용 제한 원료에 해당하여 최대 0.006%까지만 사용 가능한 성분입니다.",
-    "limit": "0.006%",
+    "description": "화장품에 향을 부여하는 향료 성분으로, 사용 제한 원료에 해당하여 최대 0.06%까지만 사용 가능한 성분입니다.",
+    "limit": "0.06%",
+    "tip": "알킬화합물"
+  },
+  {
+    "name": "아밀시클로펜테논",
+    "engName": "Amylcyclopentenone",
+    "type": "restricted",
+    "category": "향료",
+    "description": "화장품에 향을 부여하는 향료 성분으로, 최대 0.1%까지 사용이 제한되는 원료입니다.",
+    "limit": "0.1%",
     "tip": "알킬화합물"
   },
   {
@@ -3003,15 +3282,6 @@ var INGREDIENTS_DATA = [
     "type": "banned",
     "category": "염모제 중간체",
     "description": "(다만, 1-나프톨은 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 2.0% 이하는 제외)",
-    "limit": "사용 불가 (0%)",
-    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
-  },
-  {
-    "name": "1,5-디-(베타-하이드록시에칠)아미노-2-니트로-4-클로로벤젠 및 그 염류",
-    "engName": "1,5-Di-(beta-hydroxyethyl)amino-2-nitro-4-chlorobenzene and its salts",
-    "type": "banned",
-    "category": "염모제 중간체",
-    "description": "(다만, 비산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.1% 이하는 제외)",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
@@ -3520,7 +3790,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "니트로스아민류비스에탄올, 니트로소디프로필아민, 디메칠니트로소아민)",
+    "name": "니트로스아민류(예 : 2,2'-(니트로소이미노)비스에탄올, 니트로소디프로필아민, 디메칠니트로소아민)",
     "engName": "Nitrosamines (e.g. 2,2'-(Nitrosoimino)bisethanol, Nitrosodipropylamine, Dimethylnitrosamine)",
     "type": "banned",
     "category": "기타 화학물질",
@@ -3727,7 +3997,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "데쿠알리늄 클로라이드",
+    "name": "데쿠알리니움 클로라이드",
     "engName": "Dequalinium chloride",
     "type": "banned",
     "category": "기타 화학물질",
@@ -3799,7 +4069,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "디노셀, 그 염류 및 에스텔류",
+    "name": "디노셉, 그 염류 및 에스텔류",
     "engName": "Dinoseb, its salts and esters",
     "type": "banned",
     "category": "기타 화학물질",
@@ -3925,7 +4195,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "4,6-디메칠-8-tert-부틸코우마린",
+    "name": "4,6-디메칠-8-tert-부틸쿠마린",
     "engName": "4,6-Dimethyl-8-tert-butylcoumarin",
     "type": "banned",
     "category": "기타 화학물질",
@@ -3961,7 +4231,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "디메칠서트라코네이트",
+    "name": "디메칠시트라코네이트",
     "engName": "Dimethyl citraconate",
     "type": "banned",
     "category": "기타 화학물질",
@@ -4258,7 +4528,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "디아놀아세글루에이트",
+    "name": "디아놀아세글루메이트",
     "engName": "Deanol aceglumate",
     "type": "banned",
     "category": "농약류",
@@ -4285,7 +4555,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "3,7-디아미노-2,8-디메칠-5-페닐-페나지늄 및 그 염류",
+    "name": "3,7-디아미노-2,8-디메칠-5-페닐-페나지니움 및 그 염류",
     "engName": "3,7-Diamino-2,8-dimethyl-5-phenylphenazinium and its salts",
     "type": "banned",
     "category": "기타 화학물질",
@@ -4447,7 +4717,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "O,O'-디에칠-O-4-니트로페닐포스포치오에이트(파라치온-ISO)",
+    "name": "O,O'-디에칠-O-4-니트로페닐포스포로치오에이트(파라치온-ISO)",
     "engName": "O,O'-Diethyl O-4-nitrophenyl phosphorothioate (Parathion-ISO)",
     "type": "banned",
     "category": "농약류",
@@ -4483,7 +4753,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "N-[4-[[4-(디에칠아미노)페닐][4-(에칠아미노)-1-나프탈레닐메칠렌]-2,5-사이클로헥사디엔-1-일리딘]-N-에칠-에탄아미늄 및 그 염류",
+    "name": "N-[4-[[4-(디에칠아미노)페닐][4-(에칠아미노)-1-나프탈렌일]메칠렌]-2,5-사이클로헥사디엔-1-일리덴]-N-에칠-에타나미늄 및 그 염류",
     "engName": "N-[4-[[4-(Diethylamino)phenyl][4-(ethylamino)-1-naphthalenyl]methylene]-2,5-cyclohexadien-1-ylidene]-N-ethylethanaminium and its salts",
     "type": "banned",
     "category": "기타 화학물질",
@@ -4654,7 +4924,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "2,2'-[(3,3'-디클로로[1,1'-비페닐]-4,4'-디일)비스(아조)]비스3-옥소-N-페닐부탄아마이드(피그먼트엘로우 12) 및 그 염류",
+    "name": "2,2'-[(3,3'-디클로로[1,1'-비페닐]-4,4'-디일)비스(아조)]비스[3-옥소-N-페닐부탄아마이드](피그먼트옐로우 12) 및 그 염류",
     "engName": "2,2'-[(3,3'-Dichloro[1,1'-biphenyl]-4,4'-diyl)bis(azo)]bis[3-oxo-N-phenylbutanamide] (Pigment Yellow 12) and its salts",
     "type": "banned",
     "category": "색소·타르색소",
@@ -4888,7 +5158,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "디하이드로코우마린",
+    "name": "디하이드로쿠마린",
     "engName": "Dihydrocoumarin",
     "type": "banned",
     "category": "기타 화학물질",
@@ -4924,7 +5194,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "라가식애씨드(CI 내추럴레드 25) 및 그 염류",
+    "name": "라카익애씨드(CI 내츄럴레드 25) 및 그 염류",
     "engName": "Laccaic acid (CI Natural Red 25) and its salts",
     "type": "banned",
     "category": "색소·타르색소",
@@ -4933,7 +5203,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "래출시놀 디글리시딜 에텔",
+    "name": "레졸시놀 디글리시딜 에텔",
     "engName": "Resorcinol diglycidyl ether",
     "type": "banned",
     "category": "기타 화학물질",
@@ -4969,7 +5239,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "리누본",
+    "name": "리누론",
     "engName": "Linuron",
     "type": "banned",
     "category": "농약류",
@@ -5104,11 +5374,11 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "메칠레소르신",
-    "engName": "Methylresorcinol",
+    "name": "메칠레소르신(2-메칠레조시놀)",
+    "engName": "Methylresorcinol (2-Methylresorcinol)",
     "type": "banned",
     "category": "기타 화학물질",
-    "description": "알킬화합물",
+    "description": "(다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.5% 이하는 제외)",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
@@ -5208,15 +5478,6 @@ var INGREDIENTS_DATA = [
     "type": "banned",
     "category": "기타 화학물질",
     "description": "알킬화합물",
-    "limit": "사용 불가 (0%)",
-    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
-  },
-  {
-    "name": "2-[3-(메칠아미노)-4-니트로페녹시]에탄올 및 그 염류",
-    "engName": "2-[3-(Methylamino)-4-nitrophenoxy]ethanol and its salts",
-    "type": "banned",
-    "category": "염모제 중간체",
-    "description": "(다만, 비산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.15% 이하는 제외)",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
@@ -5374,7 +5635,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "4,4'-[(4-메칠-1,3-페닐렌)비스(아조)]비스6-메칠-1,3-벤젠디아민(베이직브라운 4) 및 그 염류",
+    "name": "4,4'-[(4-메칠-1,3-페닐렌)비스(아조)]비스[6-메칠-1,3-벤젠디아민](베이직브라운 4) 및 그 염류",
     "engName": "4,4'-[(4-Methyl-1,3-phenylene)bis(azo)]bis[6-methyl-1,3-benzenediamine] (Basic Brown 4) and its salts",
     "type": "banned",
     "category": "색소·타르색소",
@@ -5428,7 +5689,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "메타닐엘로우",
+    "name": "메타닐옐로우",
     "engName": "Metanil Yellow",
     "type": "banned",
     "category": "의약품 성분",
@@ -5482,15 +5743,6 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "2-[(2-메톡시-4-니트로페닐)아미노]에탄올 및 그 염류",
-    "engName": "2-[(2-Methoxy-4-nitrophenyl)amino]ethanol and its salts",
-    "type": "banned",
-    "category": "염모제 중간체",
-    "description": "(다만, 비산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.2% 이하는 제외)",
-    "limit": "사용 불가 (0%)",
-    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
-  },
-  {
     "name": "1-메톡시-2,4-디아미노벤젠(2,4-디아미노아니솔 또는 4-메톡시-m-페닐렌디아민 또는 CI76050) 및 그 염류",
     "engName": "1-Methoxy-2,4-diaminobenzene (2,4-Diaminoanisole or 4-Methoxy-m-phenylenediamine or CI 76050) and its salts",
     "type": "banned",
@@ -5514,15 +5766,6 @@ var INGREDIENTS_DATA = [
     "type": "banned",
     "category": "기타 화학물질",
     "description": "아민류 화합물",
-    "limit": "사용 불가 (0%)",
-    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
-  },
-  {
-    "name": "6-메톡시-N2-메칠-2,3-피리딘디아민 하이드로클로라이드 및 디하이드로클로라이드염",
-    "engName": "6-Methoxy-N2-methyl-2,3-pyridinediamine hydrochloride and dihydrochloride",
-    "type": "banned",
-    "category": "염모제 중간체",
-    "description": "(다만, 염모제에서 용법·용량에 따른 혼합물의 염모 성분으로 산으로서 0.68% 이하, 디하이드로클로라이드염으로서 1.0% 이하는 제외)",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
@@ -5653,7 +5896,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "2-메톡시프로핌아세테이트",
+    "name": "2-메톡시프로필아세테이트",
     "engName": "2-Methoxypropyl acetate",
     "type": "banned",
     "category": "기타 화학물질",
@@ -5680,7 +5923,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "메트암페라몬 및 그 염류",
+    "name": "메트암페프라몬 및 그 염류",
     "engName": "Metamfepramone and its salts",
     "type": "banned",
     "category": "기타 화학물질",
@@ -5716,7 +5959,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "메티프릴론 및 그 염류",
+    "name": "메티프릴온 및 그 염류",
     "engName": "Methyprylon and its salts",
     "type": "banned",
     "category": "기타 화학물질",
@@ -5797,7 +6040,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "모폐부타존",
+    "name": "모페부타존",
     "engName": "Mofebutazone",
     "type": "banned",
     "category": "기타 화학물질",
@@ -5833,7 +6076,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "무화과나무(Ficus carica)잎엔솔루트(피그잎엔솔루트)",
+    "name": "무화과나무(Ficus carica)잎엡솔루트(피그잎엡솔루트)",
     "engName": "Fig leaf absolute (Ficus carica)",
     "type": "banned",
     "category": "식물성 원료·생약",
@@ -5860,7 +6103,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "바륨염(바륨설페이트 및 색소레이크회석제로 사용한 바륨염은 제외)",
+    "name": "바륨염(바륨설페이트 및 색소레이크희석제로 사용한 바륨염은 제외)",
     "engName": "Barium salts (except Barium sulfate and Barium salts used as diluents for colour lakes)",
     "type": "banned",
     "category": "중금속",
@@ -5869,7 +6112,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "바비큐레이트",
+    "name": "바비츄레이트",
     "engName": "Barbiturates",
     "type": "banned",
     "category": "기타 화학물질",
@@ -6022,7 +6265,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "벤드로클루메치아자이드 및 그 유도체",
+    "name": "벤드로플루메치아자이드 및 그 유도체",
     "engName": "Bendroflumethiazide and its derivatives",
     "type": "banned",
     "category": "의약품 성분",
@@ -6094,7 +6337,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "벤조[e]아세페난트릴렌",
+    "name": "벤즈[e]아세페난트릴렌",
     "engName": "Benzo[e]acephenanthrylene",
     "type": "banned",
     "category": "발암성 물질",
@@ -6103,7 +6346,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "벤즈아제피린류와 벤즈디아제핀류",
+    "name": "벤즈아제핀류와 벤조디아제핀류",
     "engName": "Benzazepines and benzodiazepines",
     "type": "banned",
     "category": "의약품 성분",
@@ -6121,7 +6364,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "벤즈이미다즐-2(3H)-온",
+    "name": "벤즈이미다졸-2(3H)-온",
     "engName": "Benzimidazol-2(3H)-one",
     "type": "banned",
     "category": "기타 화학물질",
@@ -6130,7 +6373,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "벤지단",
+    "name": "벤지딘",
     "engName": "Benzidine",
     "type": "banned",
     "category": "기타 화학물질",
@@ -6139,7 +6382,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "벤지단계 아조 색소류",
+    "name": "벤지딘계 아조 색소류",
     "engName": "Benzidine-based azo dyes",
     "type": "banned",
     "category": "색소·타르색소",
@@ -6148,7 +6391,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "벤지단디하이드로클로라이드",
+    "name": "벤지딘디하이드로클로라이드",
     "engName": "Benzidine dihydrochloride",
     "type": "banned",
     "category": "기타 화학물질",
@@ -6157,7 +6400,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "벤지단설페이트",
+    "name": "벤지딘설페이트",
     "engName": "Benzidine sulfate",
     "type": "banned",
     "category": "기타 화학물질",
@@ -6166,7 +6409,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "벤지단아세테이트",
+    "name": "벤지딘아세테이트",
     "engName": "Benzidine acetate",
     "type": "banned",
     "category": "기타 화학물질",
@@ -6202,7 +6445,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "벤질바이올렛[4-[[4-[(디메칠아미노)페닐][4-[에칠(3-설포네이토벤질)아미노]페닐]메칠렌]사이클로헥사-2,5-디엔-1-일리덴(메칠)(3-설포네이토벤질)아미노]페닐]메칠렌]사이클로헥사-2,5-디엔-1-일리덴(메칠)사이클로헥사-2,5-디엔-1-일리덴]암모늄 및 소듐염)",
+    "name": "벤질바이올렛([4-[[4-(디메칠아미노)페닐][4-[에칠(3-설포네이토벤질)아미노]페닐]메칠렌]사이클로헥사-2,5-디엔-1-일리덴](에칠)(3-설포네이토벤질)암모늄염 및 소듐염)",
     "engName": "Benzyl Violet (CI 42640) and its sodium salt",
     "type": "banned",
     "category": "색소·타르색소",
@@ -6211,7 +6454,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "벤질시아나이트",
+    "name": "벤질시아나이드",
     "engName": "Benzyl cyanide",
     "type": "banned",
     "category": "기타 화학물질",
@@ -6256,7 +6499,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "부토피프런 및 그 염류",
+    "name": "부토피프린 및 그 염류",
     "engName": "Butopiprine and its salts",
     "type": "banned",
     "category": "기타 화학물질",
@@ -6355,7 +6598,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "부펙사마",
+    "name": "부펙사막",
     "engName": "Bufexamac",
     "type": "banned",
     "category": "의약품 성분",
@@ -6715,7 +6958,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "[1,1'-비페닐-4,4'-디일]디암모늄설페이트",
+    "name": "[1,1'-비페닐-4,4'-디일]디암모니움설페이트",
     "engName": "[1,1'-Biphenyl-4,4'-diyl]diammonium sulfate",
     "type": "banned",
     "category": "기타 화학물질",
@@ -6787,7 +7030,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "N-사이클로렌틸-m-아미노페놀",
+    "name": "N-사이클로펜틸-m-아미노페놀",
     "engName": "N-Cyclopentyl-m-aminophenol",
     "type": "banned",
     "category": "기타 화학물질",
@@ -6832,7 +7075,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "α-산토닌(3S, 5aR, 9bS)-3, 3a,4,5,5a,9b-헥사히드로-3,5a,9-트리메칠나프토(1,2-b))퓨란-2,8-디온",
+    "name": "α-산토닌(3S, 5aR, 9bS)-3,5a,9-트리메칠-3a,4,5,5a,9b-헥사하이드로나프토[1,2-b]푸란-2,8-디온",
     "engName": "alpha-Santonin ((3S,5aR,9bS)-3,3a,4,5,5a,9b-hexahydro-3,5a,9-trimethylnaphtho[1,2-b]furan-2,8-dione)",
     "type": "banned",
     "category": "기타 화학물질",
@@ -6850,11 +7093,11 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "석유 경제 과정에서 얻어지는 부산물(증류물, 가스 오일류, 나프타, 윤활그리스, 슬랙 왁스, 탄화수소류, 알칸류, 백색 페트롤라롬을 제외한 페트롤라롬, 연료 오일, 잔류물), 다만, 정제 과정이 완전히 알려져 있고 발암 물질을 함유하지 않음을 보여 줄 수 있으면 예외로 한다.",
+    "name": "석유 정제과정에서 얻어지는 부산물(증류물, 가스 오일류, 나프타, 윤활그리스, 슬랙 왁스, 탄화수소류, 알칸류, 백색 페트롤라툼을 제외한 페트롤라툼, 연료 오일, 잔류물)(다만, 정제 과정이 완전히 알려져 있고 발암 물질을 함유하지 않음을 보여 줄 수 있는 경우는 제외)",
     "engName": "By-products from petroleum refining (distillates, gas oils, naphtha, lubricating grease, slack wax, hydrocarbons, alkanes, petrolatum except white petrolatum, fuel oil, residues), except where the refining process is fully known and shown to contain no carcinogens",
     "type": "banned",
     "category": "유기용제·석유계",
-    "description": "동물성 원료",
+    "description": "석유 정제 부산물",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
@@ -6886,7 +7129,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "석탄추출 제트기용 연료 및 디겔연료",
+    "name": "석탄추출 젯트기용 연료 및 디젤연료",
     "engName": "Coal-derived jet fuels and diesel fuels",
     "type": "banned",
     "category": "기타 화학물질",
@@ -7192,7 +7435,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "석시노니트릴",
+    "name": "썩시노니트릴",
     "engName": "Succinonitrile",
     "type": "banned",
     "category": "기타 화학물질",
@@ -7273,20 +7516,11 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "아리스토로직 애씨드 및 그 염류",
+    "name": "아리스토로킥 애씨드 및 그 염류",
     "engName": "Aristolochic acid and its salts",
     "type": "banned",
     "category": "기타 화학물질",
     "description": "카르복실산류",
-    "limit": "사용 불가 (0%)",
-    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
-  },
-  {
-    "name": "1-아미노-2-니트로-4-(2',3'-디하이드록시프로필)아미노-5-클로로벤젠과 1,4-비스-(2',3'-디하이드록시프로필)아미노-2-니트로-5-클로로벤젠 및 그 염류",
-    "engName": "1-Amino-2-nitro-4-(2',3'-dihydroxypropyl)amino-5-chlorobenzene and 1,4-bis-(2',3'-dihydroxypropyl)amino-2-nitro-5-chlorobenzene and their salts (HC Red No. 10 + HC Red No. 11)",
-    "type": "banned",
-    "category": "염모제 중간체",
-    "description": "(다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.0% 이하, 비산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 2.0% 이하는 제외)",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
@@ -7345,15 +7579,6 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "2,2'-[(4-아미노-3-니트로페닐)이미노]바이세타놀 하이드로클로라이드 및 그 염류",
-    "engName": "2,2'-[(4-Amino-3-nitrophenyl)imino]bisethanol hydrochloride and its salts (HC Red No. 13)",
-    "type": "banned",
-    "category": "염모제 중간체",
-    "description": "(다만, 하이드로클로라이드염으로서 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.5% 이하, 비산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.0% 이하는 제외)",
-    "limit": "사용 불가 (0%)",
-    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
-  },
-  {
     "name": "(8-[(4-아미노-2-니트로페닐)아조]-7-하이드록시-2-나프틸)트리메칠암모늄 및 그 염류(베이직브라운 17의 불순물로 있는 베이직레드 118 제외)",
     "engName": "(8-[(4-Amino-2-nitrophenyl)azo]-7-hydroxy-2-naphthyl)trimethylammonium and its salts (except Basic Red 118 present as an impurity in Basic Brown 17)",
     "type": "banned",
@@ -7363,7 +7588,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "1-아미노-4-[(디메칠아미노)메칠]페닐)아미노]안트라퀴논 및 그 염류",
+    "name": "1-아미노-4-[[4-[(디메칠아미노)메칠]페닐]아미노]안트라퀴논 및 그 염류",
     "engName": "1-Amino-4-[[4-[(dimethylamino)methyl]phenyl]amino]anthraquinone and its salts",
     "type": "banned",
     "category": "기타 화학물질",
@@ -7404,24 +7629,6 @@ var INGREDIENTS_DATA = [
     "type": "banned",
     "category": "기타 화학물질",
     "description": "아민류 화합물",
-    "limit": "사용 불가 (0%)",
-    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
-  },
-  {
-    "name": "2-[(4-아미노-2-메칠-5-니트로페닐)아미노]에탄올 및 그 염류",
-    "engName": "2-[(4-Amino-2-methyl-5-nitrophenyl)amino]ethanol and its salts (HC Violet No. 1)",
-    "type": "banned",
-    "category": "염모제 중간체",
-    "description": "(다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.25% 이하, 비산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.28% 이하는 제외)",
-    "limit": "사용 불가 (0%)",
-    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
-  },
-  {
-    "name": "2-[(3-(아미노-4-메톡시페닐)아미노]에탄올 및 그 염류",
-    "engName": "2-[(3-Amino-4-methoxyphenyl)amino]ethanol and its salts",
-    "type": "banned",
-    "category": "염모제 중간체",
-    "description": "(다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.5% 이하는 제외)",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
@@ -7467,15 +7674,6 @@ var INGREDIENTS_DATA = [
     "type": "banned",
     "category": "유기용제·석유계",
     "description": "발암성 용매",
-    "limit": "사용 불가 (0%)",
-    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
-  },
-  {
-    "name": "1-(2-아미노에칠)아미노-4-(2-하이드록시에칠)옥시-2-니트로벤젠 및 그 염류",
-    "engName": "1-(2-Aminoethyl)amino-4-(2-hydroxyethyl)oxy-2-nitrobenzene and its salts (HC Orange No. 2)",
-    "type": "banned",
-    "category": "염모제 중간체",
-    "description": "(다만, 비산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.0% 이하는 제외)",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
@@ -7687,7 +7885,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "아세토페논, 포름알데히드, 사이클로헥실아민, 메탄올 및 초산의 반응물",
+    "name": "아세토페논, 포름알데하이드, 사이클로헥실아민, 메탄올 및 초산의 반응물",
     "engName": "Reaction product of acetophenone, formaldehyde, cyclohexylamine, methanol and acetic acid",
     "type": "banned",
     "category": "유기용제·석유계",
@@ -7903,7 +8101,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "알로클아마이드 및 그 염류",
+    "name": "알로클아미드 및 그 염류",
     "engName": "Alloclamide and its salts",
     "type": "banned",
     "category": "기타 화학물질",
@@ -7921,7 +8119,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "2-(4-알릴-2-메톡시페녹시)-N,N-디에칠아세트아마이드 및 그 염류",
+    "name": "2-(4-알릴-2-메톡시페녹시)-N,N-디에칠아세트아미드 및 그 염류",
     "engName": "2-(4-Allyl-2-methoxyphenoxy)-N,N-diethylacetamide and its salts",
     "type": "banned",
     "category": "기타 화학물질",
@@ -8002,7 +8200,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "ω-알킬디치오카르보닉애씨드의 염",
+    "name": "o-알킬디치오카르보닉애씨드의 염",
     "engName": "Salts of omega-alkyldithiocarbonic acid",
     "type": "banned",
     "category": "기타 화학물질",
@@ -8029,7 +8227,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "암모늄플루오로노나노에이트",
+    "name": "암모늄퍼플루오로노나노에이트",
     "engName": "Ammonium heptadecafluorononanoate",
     "type": "banned",
     "category": "기타 화학물질",
@@ -8038,7 +8236,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "2-[4-(2-암모니오프로필아미노)-6-[4-하이드록시-3-(5-메칠-2-메톡시-4-설파모일페닐아조)-2-설포네이토나프트-7-일아미노]-1,3,5-트리아진-2-일아미노]-2-아미노프로필포르메이트",
+    "name": "2-[4-(2-암모니오프로필아미노)-6-[4-하이드록시-3-(5-메칠-2-메톡시-4-설파모일페닐아조)-2-설포네이토나프트-7-일아미노]-1,3,5-트리아진-2-일아미노]-2-아미노프로필포메이트",
     "engName": "2-[4-(2-Ammoniopropylamino)-6-[4-hydroxy-3-(5-methyl-2-methoxy-4-sulfamoylphenylazo)-2-sulfonatonaphth-7-ylamino]-1,3,5-triazin-2-ylamino]-2-aminopropyl formate",
     "type": "banned",
     "category": "기타 화학물질",
@@ -8164,7 +8362,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "에지온아미드",
+    "name": "에치온아미드",
     "engName": "Ethionamide",
     "type": "banned",
     "category": "기타 화학물질",
@@ -8200,7 +8398,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "3-에칠-2-메칠-2-(3-메칠부틸)-1,3-옥사졸리다",
+    "name": "3-에칠-2-메칠-2-(3-메칠부틸)-1,3-옥사졸리딘",
     "engName": "3-Ethyl-2-methyl-2-(3-methylbutyl)-1,3-oxazolidine",
     "type": "banned",
     "category": "기타 화학물질",
@@ -8209,7 +8407,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "1-에칠-1-메칠포리늄 브로마이드",
+    "name": "1-에칠-1-메칠몰포리늄 브로마이드",
     "engName": "1-Ethyl-1-methylmorpholinium bromide",
     "type": "banned",
     "category": "기타 화학물질",
@@ -8218,7 +8416,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "1-에칠-1-메칠피리디늄 브로마이드",
+    "name": "1-에칠-1-메칠피롤리디늄 브로마이드",
     "engName": "1-Ethyl-1-methylpyrrolidinium bromide",
     "type": "banned",
     "category": "기타 화학물질",
@@ -8524,7 +8722,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "옥타톡신 및 그 염류",
+    "name": "옥타목신 및 그 염류",
     "engName": "Octamoxin and its salts",
     "type": "banned",
     "category": "기타 화학물질",
@@ -8632,7 +8830,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "2,2'-이미노비스-에탄올, 에피클로히드린 및 2-니트로-1,4-벤젠디아민의 반응생성물(에이치시 청색 No. 5) 및 그 염류",
+    "name": "2,2'-이미노비스-에탄올, 에피클로로히드린 및 2-니트로-1,4-벤젠디아민의 반응생성물(에이치시 청색 No. 5) 및 그 염류",
     "engName": "Reaction product of 2,2'-iminobisethanol, epichlorohydrin and 2-nitro-1,4-benzenediamine (HC Blue No. 5) and its salts",
     "type": "banned",
     "category": "유기용제·석유계",
@@ -8704,7 +8902,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "이소소르비디나이트레이트",
+    "name": "이소소르비드디나이트레이트",
     "engName": "Isosorbide dinitrate",
     "type": "banned",
     "category": "기타 화학물질",
@@ -8767,7 +8965,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "이속사플루롤",
+    "name": "이속사풀루톨",
     "engName": "Isoxaflutole",
     "type": "banned",
     "category": "식물성 원료·생약",
@@ -8861,7 +9059,7 @@ var INGREDIENTS_DATA = [
     "engName": "Xylene",
     "type": "banned",
     "category": "기타 화학물질",
-    "description": "(다만, 화장품 원료의 제조공정에서 용매로 사용되었으나 완전히 제거할 수 없는 잔류용매로서 화장품법 시행규칙 [별표 3] 2), 3), 5)에 해당하는 제품 중 0.01% 이하, 기타 제품 중 0.002% 이하인 경우 제외)",
+    "description": "(다만, 화장품 원료의 제조공정에서 용매로 사용되었으나 완전히 제거할 수 없는 잔류용매로서 화장품법 시행규칙 [별표 3] 자. 손발톱용 제품류 중 1), 2), 3), 5)에 해당하는 제품 중 0.01% 이하, 기타 제품 중 0.002% 이하인 경우 제외)",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
@@ -9082,7 +9280,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "카본블랙안트라센이 각각 5ppb 이하이고 총 다환방향족탄화수소류(PAHs)가 0.5ppm 이하인 경우에는 제외)",
+    "name": "카본블랙(다만, 불순물 중 벤조피렌과 디벤즈(a,h)안트라센이 각각 5ppb 이하이고 총 다환방향족탄화수소류(PAHs)가 0.5ppm 이하인 경우에는 제외)",
     "engName": "Carbon black (except where benzo[a]pyrene and dibenz[a,h]anthracene impurities are each 5 ppb or less and total PAHs are 0.5 ppm or less)",
     "type": "banned",
     "category": "기타 화학물질",
@@ -9118,7 +9316,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "카탈라제",
+    "name": "카탈라아제",
     "engName": "Catalase",
     "type": "banned",
     "category": "의약품 성분",
@@ -9253,7 +9451,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "콜기코시드 및 그 유도체",
+    "name": "콜키코시드 및 그 유도체",
     "engName": "Colchicoside and its derivatives",
     "type": "banned",
     "category": "의약품 성분",
@@ -9478,7 +9676,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "N-5-클로로벤족사졸-2-일아세트아마이드",
+    "name": "N-5-클로로벤족사졸-2-일아세트아미드",
     "engName": "N-5-Chlorobenzoxazol-2-ylacetamide",
     "type": "banned",
     "category": "기타 화학물질",
@@ -9528,15 +9726,6 @@ var INGREDIENTS_DATA = [
     "type": "banned",
     "category": "기타 화학물질",
     "description": "알킬화합물",
-    "limit": "사용 불가 (0%)",
-    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
-  },
-  {
-    "name": "2-클로로-6-에칠아미노-4-니트로페놀 및 그 염류",
-    "engName": "2-Chloro-6-ethylamino-4-nitrophenol and its salts",
-    "type": "banned",
-    "category": "염모제 중간체",
-    "description": "(다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.5% 이하, 비산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 3% 이하는 제외)",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
@@ -9658,7 +9847,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "2-클로로-N-(히드록시메칠)아세트아마이드",
+    "name": "2-클로로-N-(히드록시메칠)아세트아미드",
     "engName": "2-Chloro-N-(hydroxymethyl)acetamide",
     "type": "banned",
     "category": "기타 화학물질",
@@ -9685,7 +9874,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "클로르디메품",
+    "name": "클로르디메폼",
     "engName": "Chlordimeform",
     "type": "banned",
     "category": "농약류",
@@ -9775,7 +9964,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "클로벤아미드",
+    "name": "클로펜아미드",
     "engName": "Clofenamide (INN)",
     "type": "banned",
     "category": "기타 화학물질",
@@ -9937,7 +10126,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "테트라소듐 3,3'-[[1,1'-비페닐]-4,4'-다일비스(아조)]비스5-아미노-4-하이드록시나프탈렌-2,7-디설포네이트(다이렉트블루 6)",
+    "name": "테트라소듐 3,3'-[[1,1'-비페닐]-4,4'-디일비스(아조)]비스[5-아미노-4-하이드록시나프탈렌-2,7-디설포네이트](다이렉트블루 6)",
     "engName": "Tetrasodium 3,3'-[[1,1'-biphenyl]-4,4'-diylbis(azo)]bis[5-amino-4-hydroxynaphthalene-2,7-disulfonate] (Direct Blue 6)",
     "type": "banned",
     "category": "기타 화학물질",
@@ -10351,7 +10540,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "2,2,6-트리메칠-4-피메리딘벤조에이트(유카인) 및 그 염류",
+    "name": "2,2,6-트리메칠-4-피페리딜벤조에이트(유카인) 및 그 염류",
     "engName": "2,2,6-Trimethyl-4-piperidinyl benzoate (Eucaine) and its salts",
     "type": "banned",
     "category": "기타 화학물질",
@@ -10360,7 +10549,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "3,4,5-트리메톡시페네칠아민 및 그 염류",
+    "name": "3,4,5-트리메톡시펜에칠아민 및 그 염류",
     "engName": "3,4,5-Trimethoxyphenethylamine (Mescaline) and its salts",
     "type": "banned",
     "category": "기타 화학물질",
@@ -10639,7 +10828,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "1,1,4-트리하이드록시벤젠",
+    "name": "1,2,4-트리하이드록시벤젠",
     "engName": "1,2,4-Trihydroxybenzene",
     "type": "banned",
     "category": "유기용제·석유계",
@@ -10981,7 +11170,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "펜테트라진 및 그 유도체 및 그 염류",
+    "name": "펜메트라진 및 그 유도체 및 그 염류",
     "engName": "Pentetrazol, its derivatives and salts",
     "type": "banned",
     "category": "기타 화학물질",
@@ -11062,7 +11251,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "펜프로파메이트",
+    "name": "펜프로바메이트",
     "engName": "Fenprobamate",
     "type": "banned",
     "category": "의약품 성분",
@@ -11089,7 +11278,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "펠라티에린 및 그 염류",
+    "name": "펠레티에린 및 그 염류",
     "engName": "Pelletierine and its salts",
     "type": "banned",
     "category": "기타 화학물질",
@@ -11143,7 +11332,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "풀단메릴설페이드",
+    "name": "폴딘메틸설페이드",
     "engName": "Poldine metilsulfate",
     "type": "banned",
     "category": "의약품 성분",
@@ -11170,7 +11359,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "풀라지포프-부틸",
+    "name": "풀루아지포프-부틸",
     "engName": "Fluazifop-butyl",
     "type": "banned",
     "category": "기타 화학물질",
@@ -11242,7 +11431,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "프로카인아마이드, 그 염류 및 유도체",
+    "name": "프로카인아미드, 그 염류 및 유도체",
     "engName": "Procainamide, its salts and derivatives",
     "type": "banned",
     "category": "기타 화학물질",
@@ -11278,7 +11467,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "4,4'-[1,3-프로판디일비스(옥시)]비스벤젠-1,3-디아민 및 그 테트라하이드로클로라이드염프로판, 염산 1,3-비스-(2,4-디아미노페녹시)프로판 하이드로클로라이드)",
+    "name": "4,4'-[1,3-프로판디일비스(옥시)]비스벤젠-1,3-디아민 및 그 테트라하이드로클로라이드염(예 : 1,3-비스-(2,4-디아미노페녹시)프로판, 염산 1,3-비스-(2,4-디아미노페녹시)프로판 하이드로클로라이드)",
     "engName": "4,4'-[1,3-Propanediylbis(oxy)]bisbenzene-1,3-diamine and its tetrahydrochloride salt (1,3-Bis-(2,4-diaminophenoxy)propane hydrochloride)",
     "type": "banned",
     "category": "염모제 중간체",
@@ -11314,7 +11503,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "프로피자마이드",
+    "name": "프로피자미드",
     "engName": "Propyzamide",
     "type": "banned",
     "category": "농약류",
@@ -11692,7 +11881,7 @@ var INGREDIENTS_DATA = [
     "tip": "발모(의약품 성분)"
   },
   {
-    "name": "α-피페리딘-2-일벤질아세테이트 좌회전성의 트레오폼(레보파세토페란) 및 그 염류",
+    "name": "α-피페리딘-2-일벤질아세테이트 좌회전성의 트레오포름(레보파세토페란) 및 그 염류",
     "engName": "alpha-Piperidin-2-yl benzyl acetate, levorotatory threo form (Levophacetoperane) and its salts",
     "type": "banned",
     "category": "기타 화학물질",
@@ -11773,7 +11962,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "히드로겐시아나이드 및 그 염류",
+    "name": "히드로겐시아니드 및 그 염류",
     "engName": "Hydrogen cyanide and its salts",
     "type": "banned",
     "category": "기타 화학물질",
@@ -11823,15 +12012,6 @@ var INGREDIENTS_DATA = [
     "type": "banned",
     "category": "기타 화학물질",
     "description": "아민류 화합물",
-    "limit": "사용 불가 (0%)",
-    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
-  },
-  {
-    "name": "1-하이드록시-3-니트로-4-(3-하이드록시프로필아미노)벤젠 및 그 염류",
-    "engName": "1-Hydroxy-3-nitro-4-(3-hydroxypropylamino)benzene and its salts (HC Red No. 16)",
-    "type": "banned",
-    "category": "염모제 중간체",
-    "description": "(다만, 염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 2.6% 이하는 제외)",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
@@ -12003,15 +12183,6 @@ var INGREDIENTS_DATA = [
     "type": "banned",
     "category": "기타 화학물질",
     "description": "케톤류 화합물",
-    "limit": "사용 불가 (0%)",
-    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
-  },
-  {
-    "name": "1-(3-하이드록시프로필아미노)-2-니트로-4-비스(2-하이드록시에칠)아미노벤젠 및 그 염류",
-    "engName": "1-(3-Hydroxypropylamino)-2-nitro-4-bis(2-hydroxyethyl)aminobenzene and its salts",
-    "type": "banned",
-    "category": "염모제 중간체",
-    "description": "(다만, 비산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 2.0% 이하는 제외)",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
@@ -12232,7 +12403,7 @@ var INGREDIENTS_DATA = [
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   },
   {
-    "name": "헨나(Lawsonia Inermis)잎가루",
+    "name": "헨나(Lawsonia Inermis)엽가루",
     "engName": "Henna (Lawsonia inermis) leaf powder (except use as a hair dye ingredient)",
     "type": "banned",
     "category": "염모제 중간체",
@@ -12381,6 +12552,69 @@ var INGREDIENTS_DATA = [
     "type": "banned",
     "category": "기타 화학물질",
     "description": "법률 관련",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
+  },
+  {
+    "name": "2-(2-(4-클로로페닐)-2-페닐아세틸)인단 1,3-디온(클로로파시논-ISO)",
+    "engName": "Chlorophacinone (ISO)",
+    "type": "banned",
+    "category": "기타 화학물질",
+    "description": "배합 금지 성분",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
+  },
+  {
+    "name": "「잔류성오염물질 관리법」제2조제1호에 따라 지정하고 있는 잔류성오염물질",
+    "engName": "Persistent organic pollutants designated under Article 2(1) of the Persistent Organic Pollutants Control Act",
+    "type": "banned",
+    "category": "기타 화학물질",
+    "description": "배합 금지 성분",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
+  },
+  {
+    "name": "인디고페라(Indigofera tinctoria)엽가루",
+    "engName": "Indigofera tinctoria leaf powder",
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 비산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 25% 이하 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
+  },
+  {
+    "name": "5-[(2-하이드록시에칠)아미노]-o-크레졸 및 그 염류(예 : 2-메칠-5-하이드록시에칠아미노페놀)",
+    "engName": "5-[(2-Hydroxyethyl)amino]-o-cresol and its salts (2-Methyl-5-hydroxyethylaminophenol)",
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.5% 이하 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
+  },
+  {
+    "name": "4-(2-하이드록시에칠)아미노-3-니트로페놀 및 그 염류(예 : 3-니트로-p-하이드록시에칠아미노페놀)",
+    "engName": "4-(2-Hydroxyethyl)amino-3-nitrophenol and its salts (3-Nitro-p-hydroxyethylaminophenol)",
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 3.0% 이하, 비산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.85% 이하 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
+  },
+  {
+    "name": "1-메칠-3-니트로-4-(베타-하이드록시에칠)아미노벤젠 및 그 염류(예 : 하이드록시에칠-2-니트로-p-톨루이딘)",
+    "engName": "1-Methyl-3-nitro-4-(beta-hydroxyethyl)aminobenzene and its salts (Hydroxyethyl-2-nitro-p-toluidine)",
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.0% 이하 제외)",
+    "limit": "사용 불가 (0%)",
+    "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
+  },
+  {
+    "name": "1-아미노-2-니트로-4-(2',3'-디하이드록시프로필)아미노-5-클로로벤젠과 1,4-비스-(2',3'-디하이드록시프로필)아미노-2-니트로-5-클로로벤젠 및 그 염류(예 : 에이치시 적색 No. 10과 에이치시 적색 No. 11)",
+    "engName": "HC Red No. 10 and HC Red No. 11",
+    "type": "banned",
+    "category": "염모제 중간체",
+    "description": "(다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.0% 이하, 비산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 2.0% 이하 제외)",
     "limit": "사용 불가 (0%)",
     "tip": "화장품 제조/조제에 사용이 금지되는 원료입니다."
   }

@@ -5,8 +5,9 @@
 > 1. 메칠페닐렌디아민류(2,6-디하이드록시에칠아미노톨루엔) 조건부 허용 문구 갱신 (2025.9월 개정고시, 대한화장품협회 2025.9.3 통지 확인)
 > 2. 황산 o-클로로-p-페닐렌디아민 추가 (2023년말 개정으로 염모제 관련 금지 성분 7종에 포함되었으나 원본에 누락되어 있었음)
 > 3. **[2026.9 염모제 대조]** 별표1 사용금지 염모제 12종 수록 확인 — 2023-17호 5종(o-아미노페놀·염산 m-페닐렌디아민·m-페닐렌디아민·카테콜·피로갈롤) + 2023-73호 7종(2-아미노-4-니트로페놀·2-아미노-5-니트로페놀·황산 o-아미노페놀·황산 m-페닐렌디아민·(2-)니트로-p-페닐렌디아민·황산 o-클로로-p-페닐렌디아민·황산 2-아미노-5-니트로페놀). 고시 제2026-16호(2026.3월)의 염모제 별표1↔별표2 정비도 이 12종 기준으로 정합하며, 이들 행에 잘못된 제외 예외조건 없음. (별표2측 강화 미반영분 염산 2,4-디아미노페놀 0.02%는 restricted_ingredients.md에서 교정)
+> 4. **[2026.9 전수 대조 완료 — 고시 제2026-19호(2026.3.18 시행)]** 별표1 전체 1,070개 항목을 고시 원문과 1:1 대조(`ref-pipeline/compare_ingredients_official.py`, 리포트 `docs/dev/ingredients_audit_제2026-19호.md`). 반영 내역: ① 한글명 오기·OCR 손상 약 80건을 고시 표기로 교정(벤지단→벤지딘, 디노셀→디노셉, 바비큐레이트→바비츄레이트, 유카인의 '피메리딘'→피페리딜 등) ② 손상 행 복구(카본블랙·니트로스아민류·벤질바이올렛·4,4'-프로판디일비스 행의 이름 셀 파편 제거) ③ 누락 31종 추가(클로로파시논, 「잔류성오염물질 관리법」 지정 물질, 각주1) 염모제 예외 27종 등 — 예외조건은 별표2 한도와 연동) ④ 자일렌·2-메칠레조시놀 등의 예외조건을 고시 원문 표기로 정규화.
 >
-> 다만 이 목록은 최소 1,000개 이상의 원료를 다루고 있어 모든 항목을 식약처 최신 고시 원문과 1:1 대조하지는 못했습니다. 시험 직전에는 국가법령정보센터(law.go.kr) 또는 식약처(mfds.go.kr) 최신 고시로 최종 확인을 권장합니다.
+> 다만 학습용 편집 파일이므로, 시험 직전에는 국가법령정보센터(law.go.kr) 또는 식약처(mfds.go.kr) 최신 고시로 최종 확인을 권장합니다.
 
 > **[증상 효과 컬럼 안내]** 이 목록은 화장품에 **사용할 수 없는 원료(별표1)** 입니다. 중금속·발암성물질·유기용제·의약품/마약류·염모제 중간체·동물조직 등은 화장품에서의 유익한 피부 효과가 없으므로 '증상 효과'는 원칙적으로 **해당없음(-)** 이 정답입니다. 다만 **유익 효과가 뚜렷해 과거 사용되었거나 불법 첨가되어 금지된 시험 빈출 성분**(예: 히드로퀴논=미백, 수은=미백, 트레티노인=주름/여드름, 글루코코르티코이드=항염, 미녹시딜=발모)에 한해 `효과 (사용금지 사유)` 형태로 표기했습니다. → 시험 포인트는 '**효과가 있어도 사용금지**'라는 점입니다.
 
@@ -169,7 +170,7 @@
 | 4-니트로비페닐 | 4-Nitrobiphenyl | 기타 화학물질 | - | 방향족 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 4-니트로소페놀 | 4-Nitrosophenol | 기타 화학물질 | - | 페놀류 | - | 사용 불가 (0%) | - | - | - | - |
 | 3-니트로-4-아미노페녹시에탄올 및 그 염류 | 3-Nitro-4-aminophenoxyethanol and its salts | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
-| 니트로스아민류비스에탄올, 니트로소디프로필아민, 디메칠니트로소아민) | Nitrosamines (e.g. 2,2'-(Nitrosoimino)bisethanol, Nitrosodipropylamine, Dimethylnitrosamine) | 기타 화학물질 | - | (예 2,2'-(니트로소이미노) | - | 사용 불가 (0%) | - | - | - | - |
+| 니트로스아민류(예 : 2,2'-(니트로소이미노)비스에탄올, 니트로소디프로필아민, 디메칠니트로소아민) | Nitrosamines (e.g. 2,2'-(Nitrosoimino)bisethanol, Nitrosodipropylamine, Dimethylnitrosamine) | 기타 화학물질 | - | (예 2,2'-(니트로소이미노) | - | 사용 불가 (0%) | - | - | - | - |
 | 니트로스틸벤, 그 동족체 및 유도체 | Nitrostilbenes, their homologues and derivatives | 기타 화학물질 | - | 질산화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 2-니트로아니솔 | 2-Nitroanisole | 기타 화학물질 | - | 질산화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 5-니트로아세나프텐 | 5-Nitroacenaphthene | 기타 화학물질 | - | 질산화합물 | - | 사용 불가 (0%) | - | - | - | - |
@@ -192,7 +193,7 @@
 | 다이우론 | Diuron | 농약류 | - | 농약류 | - | 사용 불가 (0%) | - | - | - | - |
 | 다투라(Datura)속 및 그 생약제제 | Datura species and their galenical preparations | 식물성 원료·생약 | - | 식물 속 | - | 사용 불가 (0%) | - | - | - | - |
 | 데카메칠렌비스(트리메칠암모늄)염 | Decamethylenebis(trimethylammonium) salts (e.g. Decamethonium bromide) | 기타 화학물질 | - | (예 데카메토늄브로마이드) | - | 사용 불가 (0%) | - | - | - | - |
-| 데쿠알리늄 클로라이드 | Dequalinium chloride | 기타 화학물질 | - | 할로겐화합물 | - | 사용 불가 (0%) | - | - | - | - |
+| 데쿠알리니움 클로라이드 | Dequalinium chloride | 기타 화학물질 | - | 할로겐화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 덱스트로메토르판 및 그 염류 | Dextromethorphan and its salts | 의약품 성분 | - | 진해제 | - | 사용 불가 (0%) | - | - | - | - |
 | 덱스트로프로폭시펜 | Dextropropoxyphene | 의약품 성분 | - | 진통제 | - | 사용 불가 (0%) | - | - | - | - |
 | 도데카클로로펜타사이클로[5,2,1,02,6,03,9,05,8]데칸 | Dodecachloropentacyclo[5.2.1.0(2,6).0(3,9).0(5,8)]decane (Mirex) | 기타 화학물질 | - | 할로겐화합물 | - | 사용 불가 (0%) | - | - | - | - |
@@ -202,7 +203,7 @@
 | 1,5-디-(베타-하이드록시에칠)아미노-2-니트로-4-클로로벤젠 및 그 염류 | 1,5-Di-(beta-hydroxyethyl)amino-2-nitro-4-chlorobenzene and its salts | 염모제 중간체 | - | (다만, 비산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.1% 이하는 제외) | - | 사용 불가 (0%) | - | - | - | - |
 | 5,5'-디-이소프로필-2,2'-디메칠비페닐-4,4'디일 디히포아이오다이트 | 5,5'-Di-isopropyl-2,2'-dimethylbiphenyl-4,4'-diyl dihypoiodite | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 디기탈리스(Digitalis)속 및 그 생약제제 | Digitalis species and their galenical preparations | 식물성 원료·생약 | - | 강심제 | - | 사용 불가 (0%) | - | - | - | - |
-| 디노셀, 그 염류 및 에스텔류 | Dinoseb, its salts and esters | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
+| 디노셉, 그 염류 및 에스텔류 | Dinoseb, its salts and esters | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | 디노터브, 그 염류 및 에스텔류 | Dinoterb, its salts and esters | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | 디니켈트리옥사이드 | Dinickel trioxide | 기타 화학물질 | - | 알레르기 유발 | - | 사용 불가 (0%) | - | - | - | - |
 | 디니트로톨루엔, 테크니컬등급 | Dinitrotoluene, technical grade | 기타 화학물질 | - | 니트로계 화합물 | - | 사용 불가 (0%) | - | - | - | - |
@@ -216,12 +217,12 @@
 | 디메바미드 및 그 염류 | Dimevamide and its salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | 7,11-디메칠-4,6,10-도데카트리엔-3-온 | 7,11-Dimethyl-4,6,10-dodecatrien-3-one | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 2,6-디메칠-1,3-디옥산-4-일아세테이트(디메톡산, o-아세톡시-2,4-디메칠-m-디옥산) | 2,6-Dimethyl-1,3-dioxan-4-yl acetate (Dimethoxane) | 유기용제·석유계 | - | 발암성 용매 | - | 사용 불가 (0%) | - | - | - | - |
-| 4,6-디메칠-8-tert-부틸코우마린 | 4,6-Dimethyl-8-tert-butylcoumarin | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
+| 4,6-디메칠-8-tert-부틸쿠마린 | 4,6-Dimethyl-8-tert-butylcoumarin | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | [3,3'-디메칠[1,1'-비페닐]-4,4'-디일]디암모늄비스(하이드로젠설페이트) | [3,3'-Dimethyl[1,1'-biphenyl]-4,4'-diyl]diammonium bis(hydrogen sulfate) | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 디메칠설파모일클로라이드 | Dimethylsulfamoyl chloride | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 디메칠설페이트 | Dimethyl sulfate | 유기용제·석유계 | - | 유기 용매 | - | 사용 불가 (0%) | - | - | - | - |
 | 디메칠설폭사이드 | Dimethyl sulfoxide | 유기용제·석유계 | - | 유기 용매 | - | 사용 불가 (0%) | - | - | - | - |
-| 디메칠서트라코네이트 | Dimethyl citraconate | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
+| 디메칠시트라코네이트 | Dimethyl citraconate | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | N,N-디메칠아닐리늄테트라키스(펜타플루오로페닐)보레이트 | N,N-Dimethylanilinium tetrakis(pentafluorophenyl)borate | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | N,N-디메칠아닐린 | N,N-Dimethylaniline | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 1-디메칠아미노메칠-1-메칠프로필벤조에이트(아밀로카인) 및 그 염류 | 1-Dimethylaminomethyl-1-methylpropyl benzoate (Amylocaine) and its salts | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
@@ -257,10 +258,10 @@
 | 디소듐 4-(3-에톡시카르보닐-4-(5-(3-에톡시카르보닐-5-하이드록시-1-(4-설포네이토페닐)피라졸-4-일)펜타-2,4-디에닐리덴)-4,5-디하이드로-5-옥소피라졸-1-일)벤젠설포네이트 및 트리소듐 4-(3-에톡시카르보닐-4-(5-(3-에톡시카르보닐-5-하이드록시-1-(4-설포네이토페닐)피라졸-4-일) 펜타-2,4-디에닐리덴)-4,5-디하이드로-5-옥소피라졸-1-일) 펜타-2,4-디에닐리덴)-4,5-디하이드로-5-옥소피라졸-1-일)벤젠설포네이트 | Disodium 4-(3-ethoxycarbonyl-4-(5-(3-ethoxycarbonyl-5-hydroxy-1-(4-sulfonatophenyl)pyrazol-4-yl)penta-2,4-dienylidene)-4,5-dihydro-5-oxopyrazol-1-yl)benzenesulfonate and its trisodium analogue | 유기용제·석유계 | - | 발암성 용매 | - | 사용 불가 (0%) | - | - | - | - |
 | 디스퍼스레드 15 | Disperse Red 15 | 색소·타르색소 | - | 아조 염료 | - | 사용 불가 (0%) | - | - | - | - |
 | 디스퍼스옐로우 3 | Disperse Yellow 3 | 색소·타르색소 | - | 아조 염료 | - | 사용 불가 (0%) | - | - | - | - |
-| 디아놀아세글루에이트 | Deanol aceglumate | 농약류 | - | 농약류 | - | 사용 불가 (0%) | - | - | - | - |
+| 디아놀아세글루메이트 | Deanol aceglumate | 농약류 | - | 농약류 | - | 사용 불가 (0%) | - | - | - | - |
 | o-디아니시딘계 아조 염료류 | o-Dianisidine-based azo dyes | 색소·타르색소 | - | 아조 염료 | - | 사용 불가 (0%) | - | - | - | - |
 | o-디아니시딘의 염(3,3'-디메톡시벤지딘의 염) | Salts of o-Dianisidine (salts of 3,3'-Dimethoxybenzidine) | 기타 화학물질 | - | 에테르류 | - | 사용 불가 (0%) | - | - | - | - |
-| 3,7-디아미노-2,8-디메칠-5-페닐-페나지늄 및 그 염류 | 3,7-Diamino-2,8-dimethyl-5-phenylphenazinium and its salts | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
+| 3,7-디아미노-2,8-디메칠-5-페닐-페나지니움 및 그 염류 | 3,7-Diamino-2,8-dimethyl-5-phenylphenazinium and its salts | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 3,5-디아미노-2,6-디메톡시피리딘 및 그 염류 | 3,5-Diamino-2,6-dimethoxypyridine and its salts | 염모제 중간체 | - | (다만, 2,6-디메톡시-3,5-피리딘디아민 하이드로클롤로라이드는 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.25% 이하는 제외) | - | 사용 불가 (0%) | - | - | - | - |
 | 2,4-디아미노디페닐아민 | 2,4-Diaminodiphenylamine | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 4,4'-디아미노디페닐아민 및 그 염류 | 4,4'-Diaminodiphenylamine and its salts | 기타 화학물질 | - | (예 4,4'-디아미노디페닐아민 설페이트) | - | 사용 불가 (0%) | - | - | - | - |
@@ -278,13 +279,13 @@
 | 디아조메탄 | Diazomethane | 색소·타르색소 | - | 아조 염료 | - | 사용 불가 (0%) | - | - | - | - |
 | 디알레이트 | Diallate | 기타 화학물질 | - | 에스테르류 | - | 사용 불가 (0%) | - | - | - | - |
 | 디에칠-4-니트로페닐포스페이트 | Diethyl-4-nitrophenyl phosphate | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
-| O,O'-디에칠-O-4-니트로페닐포스포치오에이트(파라치온-ISO) | O,O'-Diethyl O-4-nitrophenyl phosphorothioate (Parathion-ISO) | 농약류 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
+| O,O'-디에칠-O-4-니트로페닐포스포로치오에이트(파라치온-ISO) | O,O'-Diethyl O-4-nitrophenyl phosphorothioate (Parathion-ISO) | 농약류 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 디에칠렌글라이콜 | Diethylene Glycol (except as a non-intentional residue at 0.1% or less) | 기타 화학물질 | - | (다만, 비의도적 잔류물로서 0.1% 이하인 경우는 제외) | - | 사용 불가 (0%) | - | - | - | - |
 | 디에칠말리에이트 | Diethyl maleate | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 디에칠설페이트 | Diethyl sulfate | 유기용제·석유계 | - | 유기 용매 | - | 사용 불가 (0%) | - | - | - | - |
 | 2-디에칠아미노에칠-3-히드록시-4-페닐벤조에이트 및 그 염류 | 2-Diethylaminoethyl-3-hydroxy-4-phenylbenzoate and its salts | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 4-디에칠아미노-o-톨루이딘 및 그 염류 | 4-Diethylamino-o-toluidine and its salts | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
-| N-[4-[[4-(디에칠아미노)페닐][4-(에칠아미노)-1-나프탈레닐메칠렌]-2,5-사이클로헥사디엔-1-일리딘]-N-에칠-에탄아미늄 및 그 염류 | N-[4-[[4-(Diethylamino)phenyl][4-(ethylamino)-1-naphthalenyl]methylene]-2,5-cyclohexadien-1-ylidene]-N-ethylethanaminium and its salts | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
+| N-[4-[[4-(디에칠아미노)페닐][4-(에칠아미노)-1-나프탈렌일]메칠렌]-2,5-사이클로헥사디엔-1-일리덴]-N-에칠-에타나미늄 및 그 염류 | N-[4-[[4-(Diethylamino)phenyl][4-(ethylamino)-1-naphthalenyl]methylene]-2,5-cyclohexadien-1-ylidene]-N-ethylethanaminium and its salts | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | N-(4-[(4-(디에칠아미노)페닐)페닐메칠렌]-2,5-사이클로헥사디엔-1-일리덴)-N-에칠 에탄아미니움 및 그 염류 | N-(4-[(4-(Diethylamino)phenyl)phenylmethylene]-2,5-cyclohexadien-1-ylidene)-N-ethylethanaminium and its salts | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | N,N-디에칠-m-아미노페놀 | N,N-Diethyl-m-aminophenol | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 3-디에칠아미노프로필신나메이트 | 3-Diethylaminopropyl cinnamate | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
@@ -304,7 +305,7 @@
 | 3,3'-디클로로벤지딘디하이드로클로라이드 | 3,3'-Dichlorobenzidine dihydrochloride | 기타 화학물질 | - | 니트로계 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 3,3'-디클로로벤지딘설페이트 | 3,3'-Dichlorobenzidine sulfate | 기타 화학물질 | - | 니트로계 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 1,4-디클로로부트-2-엔 | 1,4-Dichlorobut-2-ene | 기타 화학물질 | - | 할로겐화합물 | - | 사용 불가 (0%) | - | - | - | - |
-| 2,2'-[(3,3'-디클로로[1,1'-비페닐]-4,4'-디일)비스(아조)]비스3-옥소-N-페닐부탄아마이드(피그먼트엘로우 12) 및 그 염류 | 2,2'-[(3,3'-Dichloro[1,1'-biphenyl]-4,4'-diyl)bis(azo)]bis[3-oxo-N-phenylbutanamide] (Pigment Yellow 12) and its salts | 색소·타르색소 | - | 할로겐화합물 | - | 사용 불가 (0%) | - | - | - | - |
+| 2,2'-[(3,3'-디클로로[1,1'-비페닐]-4,4'-디일)비스(아조)]비스[3-옥소-N-페닐부탄아마이드](피그먼트옐로우 12) 및 그 염류 | 2,2'-[(3,3'-Dichloro[1,1'-biphenyl]-4,4'-diyl)bis(azo)]bis[3-oxo-N-phenylbutanamide] (Pigment Yellow 12) and its salts | 색소·타르색소 | - | 할로겐화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 디클로로살리실아닐리드 | Dichlorosalicylanilide | 기타 화학물질 | - | 할로겐화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 디클로로에칠렌(아세틸렌클로라이드) | Dichloroethylene (Acetylene chloride) (e.g. Vinylidene chloride) | 기타 화학물질 | - | (예 비닐리덴클로라이드) | - | 사용 불가 (0%) | - | - | - | - |
 | 디클로로에탄(에칠렌클로라이드) | Dichloroethane (Ethylene chloride) | 유기용제·석유계 | - | 발암성 용매 | - | 사용 불가 (0%) | - | - | - | - |
@@ -332,16 +333,16 @@
 | 1,4-디하이드록시-5,8-비스[(2-하이드록시에칠)아미노]안트라퀴논(디스퍼스블루 7) 및 그 염류 | 1,4-Dihydroxy-5,8-bis[(2-hydroxyethyl)amino]anthraquinone (Disperse Blue 7) and its salts | 색소·타르색소 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 4-[4-(1,3-디하이드록시프로프-2-일)페닐아미노-1,8-디하이드록시-5-니트로안트라퀴논 | 4-[4-(1,3-Dihydroxyprop-2-yl)phenylamino]-1,8-dihydroxy-5-nitroanthraquinone | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 2,2'-디히드록시-3,3'5,5',6,6'-헥사클로로디페닐메탄(헥사클로로펜) | 2,2'-Dihydroxy-3,3',5,5',6,6'-hexachlorodiphenylmethane (Hexachlorophene) | 기타 화학물질 | - | 할로겐화합물 | - | 사용 불가 (0%) | - | - | - | - |
-| 디하이드로코우마린 | Dihydrocoumarin | 기타 화학물질 | - | 쿠마린류 | - | 사용 불가 (0%) | - | - | - | - |
+| 디하이드로쿠마린 | Dihydrocoumarin | 기타 화학물질 | - | 쿠마린류 | - | 사용 불가 (0%) | - | - | - | - |
 | N,N'-디헥사데실-N,N'-비스(2-하이드록시에칠)프로판디아마이드; 비스하이드록시에칠비스세틸말론아마이드 | N,N'-Dihexadecyl-N,N'-bis(2-hydroxyethyl)propanediamide; Bishydroxyethyl biscetyl malonamide | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | Laurus nobilis L.의 씨로부터 나온 오일 | Oil from the seeds of Laurus nobilis L. | 기타 화학물질 | - | 케톤류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | Rauwolfia serpentina 알칼로이드 및 그 염류 | Rauwolfia serpentina alkaloids and their salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
-| 라가식애씨드(CI 내추럴레드 25) 및 그 염류 | Laccaic acid (CI Natural Red 25) and its salts | 색소·타르색소 | - | 카르복실산류 | - | 사용 불가 (0%) | - | - | - | - |
-| 래출시놀 디글리시딜 에텔 | Resorcinol diglycidyl ether | 기타 화학물질 | - | 에테르류 | - | 사용 불가 (0%) | - | - | - | - |
+| 라카익애씨드(CI 내츄럴레드 25) 및 그 염류 | Laccaic acid (CI Natural Red 25) and its salts | 색소·타르색소 | - | 카르복실산류 | - | 사용 불가 (0%) | - | - | - | - |
+| 레졸시놀 디글리시딜 에텔 | Resorcinol diglycidyl ether | 기타 화학물질 | - | 에테르류 | - | 사용 불가 (0%) | - | - | - | - |
 | 로다민 B 및 그 염류 | Rhodamine B and its salts | 색소·타르색소 | - | 아조 염료 | - | 사용 불가 (0%) | - | - | - | - |
 | 로벨리아(Lobelia)속 및 그 생약제제 | Lobelia species and their galenical preparations | 식물성 원료·생약 | - | 식물 속 | - | 사용 불가 (0%) | - | - | - | - |
 | 로벨린 및 그 염류 | Lobeline and its salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
-| 리누본 | Linuron | 농약류 | - | 농약류 | - | 사용 불가 (0%) | - | - | - | - |
+| 리누론 | Linuron | 농약류 | - | 농약류 | - | 사용 불가 (0%) | - | - | - | - |
 | 리도카인 | Lidocaine | 의약품 성분 | - | 마취제 | - | 사용 불가 (0%) | - | - | - | - |
 | 과산화물가가 20mmol/L을 초과하는 d-리모넨 | d-Limonene with a peroxide value exceeding 20 mmol/L | 산화 정유·향료 | - | 산화안정성 관련 | - | 사용 불가 (0%) | - | - | - | - |
 | 과산화물가가 20mmol/L을 초과하는 dl-리모넨 | dl-Limonene with a peroxide value exceeding 20 mmol/L | 산화 정유·향료 | - | 산화안정성 관련 | - | 사용 불가 (0%) | - | - | - | - |
@@ -358,7 +359,7 @@
 | N-메칠-3-니트로-p-페닐렌디아민 및 그 염류 | N-Methyl-3-nitro-p-phenylenediamine and its salts | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | N-메칠-1,4-디아미노안트라퀴논, 에피클로히드린 및 모노에탄올아민의 반응생성물(에이치시 청색 No. 4) 및 그 염류 | Reaction product of N-Methyl-1,4-diaminoanthraquinone, epichlorohydrin and monoethanolamine (HC Blue No. 4) and its salts | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 3,4-메칠렌디옥시페놀 및 그 염류 | 3,4-Methylenedioxyphenol and its salts | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
-| 메칠레소르신 | Methylresorcinol | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
+| 메칠레소르신(2-메칠레조시놀) | Methylresorcinol (2-Methylresorcinol) | 기타 화학물질 | - | (다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.5% 이하는 제외) | - | 사용 불가 (0%) | - | - | - | - |
 | 메칠렌글라이콜 | Methylene glycol | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 4,4'-메칠렌디아닐린 | 4,4'-Methylenedianiline | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 3,4-메칠렌디옥시아닐린 및 그 염류 | 3,4-Methylenedioxyaniline and its salts | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
@@ -388,13 +389,13 @@
 | 황산 o-클로로-p-페닐렌디아민 | o-Chloro-p-phenylenediamine sulfate | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 2-메칠-m-페닐렌 디이소시아네이트 | 2-Methyl-m-phenylene diisocyanate | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 4-메칠-m-페닐렌 디이소시아네이트 | 4-Methyl-m-phenylene diisocyanate | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
-| 4,4'-[(4-메칠-1,3-페닐렌)비스(아조)]비스6-메칠-1,3-벤젠디아민(베이직브라운 4) 및 그 염류 | 4,4'-[(4-Methyl-1,3-phenylene)bis(azo)]bis[6-methyl-1,3-benzenediamine] (Basic Brown 4) and its salts | 색소·타르색소 | - | 발암성 용매 | - | 사용 불가 (0%) | - | - | - | - |
+| 4,4'-[(4-메칠-1,3-페닐렌)비스(아조)]비스[6-메칠-1,3-벤젠디아민](베이직브라운 4) 및 그 염류 | 4,4'-[(4-Methyl-1,3-phenylene)bis(azo)]bis[6-methyl-1,3-benzenediamine] (Basic Brown 4) and its salts | 색소·타르색소 | - | 발암성 용매 | - | 사용 불가 (0%) | - | - | - | - |
 | 4-메칠-6-(페닐아조)-1,3-벤젠디아민 및 그 염류 | 4-Methyl-6-(phenylazo)-1,3-benzenediamine and its salts | 유기용제·석유계 | - | 발암성 용매 | - | 사용 불가 (0%) | - | - | - | - |
 | N-메칠포름아마이드 | N-Methylformamide | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 5-메칠-2,3-헥산디온 | 5-Methyl-2,3-hexanedione | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 2-메칠헵틸아민 및 그 염류 | 2-Methylheptylamine and its salts | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 메카밀아민 | Mecamylamine | 기타 화학물질 | - | 교감신경 차단제 | - | 사용 불가 (0%) | - | - | - | - |
-| 메타닐엘로우 | Metanil Yellow | 의약품 성분 | - | 항생제 | - | 사용 불가 (0%) | - | - | - | - |
+| 메타닐옐로우 | Metanil Yellow | 의약품 성분 | - | 항생제 | - | 사용 불가 (0%) | - | - | - | - |
 | 메탄올(에탄올 및 이소프로필알콜의 변성제로서만 알콜 중 5%까지 사용) | Methanol (used only as a denaturant for ethanol and isopropyl alcohol, up to 5% in the alcohol) | 유기용제·석유계 | - | 유기 용매 | - | 사용 불가 (0%) | - | - | - | - |
 | 메테토헵타진 및 그 염류 | Metethoheptazine and its salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | 메토카바몰 | Methocarbamol | 의약품 성분 | - | 근육이완제 | - | 사용 불가 (0%) | - | - | - | - |
@@ -419,14 +420,14 @@
 | 4-(4-메톡시페닐)-3-부텐-2-온(4-아니실리덴아세톤) | 4-(4-Methoxyphenyl)-3-buten-2-one (4-Anisylideneacetone) | 기타 화학물질 | - | 방향족 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 1-(4-메톡시페닐)-1-펜텐-3-온(α-메칠아니살아세톤) | 1-(4-Methoxyphenyl)-1-penten-3-one (alpha-Methylanisalacetone) | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 2-메톡시프로판올 | 2-Methoxypropanol | 기타 화학물질 | - | 에테르류 | - | 사용 불가 (0%) | - | - | - | - |
-| 2-메톡시프로핌아세테이트 | 2-Methoxypropyl acetate | 기타 화학물질 | - | 아세트산염 | - | 사용 불가 (0%) | - | - | - | - |
+| 2-메톡시프로필아세테이트 | 2-Methoxypropyl acetate | 기타 화학물질 | - | 아세트산염 | - | 사용 불가 (0%) | - | - | - | - |
 | 6-메톡시-2,3-피리딘디아민 및 그 염산염 | 6-Methoxy-2,3-pyridinediamine and its hydrochloride | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 메트알데히드 | Metaldehyde | 농약류 | - | 농약류 | - | 사용 불가 (0%) | - | - | - | - |
-| 메트암페라몬 및 그 염류 | Metamfepramone and its salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
+| 메트암페프라몬 및 그 염류 | Metamfepramone and its salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | 메트포르민 및 그 염류 | Metformin and its salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | 메트헵타진 및 그 염류 | Metheptazine and its salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | 메티라폰 | Metyrapone | 기타 화학물질 | - | 부신 피질 억제제 | - | 사용 불가 (0%) | - | - | - | - |
-| 메티프릴론 및 그 염류 | Methyprylon and its salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
+| 메티프릴온 및 그 염류 | Methyprylon and its salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | 메페네신 및 그 에스텔 | Mephenesin and its esters | 의약품 성분 | - | 근육이완제 | - | 사용 불가 (0%) | - | - | - | - |
 | 메페클로라진 및 그 염류 | Mefeclorazine and its salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | 메프로바메이트 | Meprobamate | 의약품 성분 | - | 진정제 | - | 사용 불가 (0%) | - | - | - | - |
@@ -435,15 +436,15 @@
 | 모누론 | Monuron | 기타 화학물질 | - | 제초제 | - | 사용 불가 (0%) | - | - | - | - |
 | 모르포린 및 그 염류 | Morpholine and its salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | 모스켄(1,1,3,3,5-펜타메칠-4,6-디니트로인단) | Musk moskene (1,1,3,3,5-Pentamethyl-4,6-dinitroindane) | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
-| 모폐부타존 | Mofebutazone | 기타 화학물질 | - | 소염제 | - | 사용 불가 (0%) | - | - | - | - |
+| 모페부타존 | Mofebutazone | 기타 화학물질 | - | 소염제 | - | 사용 불가 (0%) | - | - | - | - |
 | 목향(Saussurea lappa Clarke = Saussurea costus (Falc.) Lipsch. = Aucklandia lappa Decne) 뿌리 오일 | Costus root oil (Saussurea lappa Clarke = Saussurea costus (Falc.) Lipsch. = Aucklandia lappa Decne) | 식물성 원료·생약 | - | 식물성 원료 | - | 사용 불가 (0%) | - | - | - | - |
 | 몰리네이트 | Molinate | 농약류 | - | 농약류 | - | 사용 불가 (0%) | - | - | - | - |
 | 몰포린-4-카르보닐클로라이드 | Morpholine-4-carbonyl chloride | 기타 화학물질 | - | 헤테로고리화합물 | - | 사용 불가 (0%) | - | - | - | - |
-| 무화과나무(Ficus carica)잎엔솔루트(피그잎엔솔루트) | Fig leaf absolute (Ficus carica) | 식물성 원료·생약 | - | 식물성 원료 | - | 사용 불가 (0%) | - | - | - | - |
+| 무화과나무(Ficus carica)잎엡솔루트(피그잎엡솔루트) | Fig leaf absolute (Ficus carica) | 식물성 원료·생약 | - | 식물성 원료 | - | 사용 불가 (0%) | - | - | - | - |
 | 미네랄 울 | Mineral wool | 기타 화학물질 | - | 광유 | - | 사용 불가 (0%) | - | - | - | - |
 | 미세플라스틱(세정, 각질제거 등의 제품에 남아있는 5mm 크기 이하의 고체플라스틱) | Microplastics (solid plastic particles 5 mm or smaller remaining in rinse-off, exfoliating and similar products) | 내분비계 교란·환경오염 | - | 환경오염물질 | - | 사용 불가 (0%) | - | - | - | - |
-| 바륨염(바륨설페이트 및 색소레이크회석제로 사용한 바륨염은 제외) | Barium salts (except Barium sulfate and Barium salts used as diluents for colour lakes) | 중금속 | - | 중금속 | - | 사용 불가 (0%) | - | - | - | - |
-| 바비큐레이트 | Barbiturates | 기타 화학물질 | - | 바르비투레이트류 | - | 사용 불가 (0%) | - | - | - | - |
+| 바륨염(바륨설페이트 및 색소레이크희석제로 사용한 바륨염은 제외) | Barium salts (except Barium sulfate and Barium salts used as diluents for colour lakes) | 중금속 | - | 중금속 | - | 사용 불가 (0%) | - | - | - | - |
+| 바비츄레이트 | Barbiturates | 기타 화학물질 | - | 바르비투레이트류 | - | 사용 불가 (0%) | - | - | - | - |
 | 2,2'-바이옥시란 | 2,2'-Bioxirane | 기타 화학물질 | - | 에테르류 | - | 사용 불가 (0%) | - | - | - | - |
 | 발녹트아미드 | Valnoctamide | 기타 화학물질 | - | 아미드류 | - | 사용 불가 (0%) | - | - | - | - |
 | 발린아미드 | Valinamide | 기타 화학물질 | - | 아미드류 | - | 사용 불가 (0%) | - | - | - | - |
@@ -461,7 +462,7 @@
 | 베이직바이올렛 3(크리스탈바이올렛) | Basic Violet 3 (Crystal Violet) | 색소·타르색소 | - | 아조 염료 | - | 사용 불가 (0%) | - | - | - | - |
 | 1-(베타-우레이도에칠)아미노-4-니트로벤젠 및 그 염류 | 1-(beta-Ureidoethyl)amino-4-nitrobenzene and its salts (4-Nitrophenyl aminoethylurea) | 염모제 중간체 | - | (다만, 4-니트로페닐 아미노에칠우레아는 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.25% 이하, 비산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.5% 이하는 제외) | - | 사용 불가 (0%) | - | - | - | - |
 | 1-(베타-하이드록시)아미노-2-니트로-4-N-에칠-N-(베타-하이드록시에칠)아미노벤젠 및 그 염류 | 1-(beta-Hydroxy)amino-2-nitro-4-N-ethyl-N-(beta-hydroxyethyl)aminobenzene and its salts (HC Blue No. 13) | 기타 화학물질 | - | (예 에이치시 청색 No. 13) | - | 사용 불가 (0%) | - | - | - | - |
-| 벤드로클루메치아자이드 및 그 유도체 | Bendroflumethiazide and its derivatives | 의약품 성분 | - | 이뇨제 | - | 사용 불가 (0%) | - | - | - | - |
+| 벤드로플루메치아자이드 및 그 유도체 | Bendroflumethiazide and its derivatives | 의약품 성분 | - | 이뇨제 | - | 사용 불가 (0%) | - | - | - | - |
 | 벤젠 | Benzene | 유기용제·석유계 | - | 발암성 용매 | - | 사용 불가 (0%) | - | - | - | - |
 | 1,2-벤젠디카르복실릭애씨드 디펜틸에스터(가지형과 직선형); n-펜틸-이소펜틸 프탈레이트; 디-n-펜틸프탈레이트; 디이소펜틸프탈레이트 | 1,2-Benzenedicarboxylic acid dipentyl ester (branched and linear); n-Pentyl-isopentyl phthalate; Di-n-pentyl phthalate; Diisopentyl phthalate | 유기용제·석유계 | - | 발암성 용매 | - | 사용 불가 (0%) | - | - | - | - |
 | 1,2,4-벤젠트리아세테이트 및 그 염류 | 1,2,4-Benzenetriacetate and its salts | 유기용제·석유계 | - | 발암성 용매 | - | 사용 불가 (0%) | - | - | - | - |
@@ -471,26 +472,26 @@
 | 벤조[e]피렌 | Benzo[e]pyrene | 발암성 물질 | - | 발암성 물질 | - | 사용 불가 (0%) | - | - | - | - |
 | 벤조[j]플루오란텐 | Benzo[j]fluoranthene | 발암성 물질 | - | 발암성 물질 | - | 사용 불가 (0%) | - | - | - | - |
 | 벤조[k]플루오란텐 | Benzo[k]fluoranthene | 발암성 물질 | - | 발암성 물질 | - | 사용 불가 (0%) | - | - | - | - |
-| 벤조[e]아세페난트릴렌 | Benzo[e]acephenanthrylene | 발암성 물질 | - | 발암성 물질 | - | 사용 불가 (0%) | - | - | - | - |
-| 벤즈아제피린류와 벤즈디아제핀류 | Benzazepines and benzodiazepines | 의약품 성분 | - | 진정제 | - | 사용 불가 (0%) | - | - | - | - |
+| 벤즈[e]아세페난트릴렌 | Benzo[e]acephenanthrylene | 발암성 물질 | - | 발암성 물질 | - | 사용 불가 (0%) | - | - | - | - |
+| 벤즈아제핀류와 벤조디아제핀류 | Benzazepines and benzodiazepines | 의약품 성분 | - | 진정제 | - | 사용 불가 (0%) | - | - | - | - |
 | 벤즈아트로핀 및 그 염류 | Benzatropine and its salts | 마약·향정신성물질 | - | 마약류 | - | 사용 불가 (0%) | - | - | - | - |
 | 벤즈[a]안트라센 | Benz[a]anthracene | 발암성 물질 | - | 발암성 물질 | - | 사용 불가 (0%) | - | - | - | - |
-| 벤즈이미다즐-2(3H)-온 | Benzimidazol-2(3H)-one | 기타 화학물질 | - | 케톤류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
-| 벤지단 | Benzidine | 기타 화학물질 | - | 발암성 아민 | - | 사용 불가 (0%) | - | - | - | - |
-| 벤지단계 아조 색소류 | Benzidine-based azo dyes | 색소·타르색소 | - | 아조 염료 | - | 사용 불가 (0%) | - | - | - | - |
-| 벤지단디하이드로클로라이드 | Benzidine dihydrochloride | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
-| 벤지단설페이트 | Benzidine sulfate | 기타 화학물질 | - | 황산염 | - | 사용 불가 (0%) | - | - | - | - |
-| 벤지단아세테이트 | Benzidine acetate | 기타 화학물질 | - | 아세트산염 | - | 사용 불가 (0%) | - | - | - | - |
+| 벤즈이미다졸-2(3H)-온 | Benzimidazol-2(3H)-one | 기타 화학물질 | - | 케톤류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
+| 벤지딘 | Benzidine | 기타 화학물질 | - | 발암성 아민 | - | 사용 불가 (0%) | - | - | - | - |
+| 벤지딘계 아조 색소류 | Benzidine-based azo dyes | 색소·타르색소 | - | 아조 염료 | - | 사용 불가 (0%) | - | - | - | - |
+| 벤지딘디하이드로클로라이드 | Benzidine dihydrochloride | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
+| 벤지딘설페이트 | Benzidine sulfate | 기타 화학물질 | - | 황산염 | - | 사용 불가 (0%) | - | - | - | - |
+| 벤지딘아세테이트 | Benzidine acetate | 기타 화학물질 | - | 아세트산염 | - | 사용 불가 (0%) | - | - | - | - |
 | 벤지로늄브로마이드 | Benzilonium bromide | 기타 화학물질 | - | 할로겐화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 벤질 2,4-디브로모부타노에이트 | Benzyl 2,4-dibromobutanoate | 기타 화학물질 | - | 할로겐화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 3(또는 5)-[[4-(벤질메칠아미노)페닐]아조]-1,2-(또는 1,4)-디메칠-1H-1,2,4-트리아졸리움 및 그 염류 | 3(or 5)-[[4-(Benzylmethylamino)phenyl]azo]-1,2-(or 1,4-)dimethyl-1H-1,2,4-triazolium and its salts | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
-| 벤질바이올렛[4-[[4-[(디메칠아미노)페닐][4-[에칠(3-설포네이토벤질)아미노]페닐]메칠렌]사이클로헥사-2,5-디엔-1-일리덴(메칠)(3-설포네이토벤질)아미노]페닐]메칠렌]사이클로헥사-2,5-디엔-1-일리덴(메칠)사이클로헥사-2,5-디엔-1-일리덴]암모늄 및 소듐염) | Benzyl Violet (CI 42640) and its sodium salt | 색소·타르색소 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
-| 벤질시아나이트 | Benzyl cyanide | 기타 화학물질 | - | 방향족 화합물 | - | 사용 불가 (0%) | - | - | - | - |
+| 벤질바이올렛([4-[[4-(디메칠아미노)페닐][4-[에칠(3-설포네이토벤질)아미노]페닐]메칠렌]사이클로헥사-2,5-디엔-1-일리덴](에칠)(3-설포네이토벤질)암모늄염 및 소듐염) | Benzyl Violet (CI 42640) and its sodium salt | 색소·타르색소 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
+| 벤질시아나이드 | Benzyl cyanide | 기타 화학물질 | - | 방향족 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 4-벤질옥시페놀(히드로퀴논모노벤질에텔) | 4-Benzyloxyphenol (Hydroquinone Monobenzyl Ether) | 기타 화학물질 | - | 방향족 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 2-부타논 옥심 | 2-Butanone oxime (Methyl ethyl ketoxime) | 기타 화학물질 | - | 케톤류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 부타닐리카인 및 그 염류 | Butanilicaine and its salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | 1,3-부타디엔 | 1,3-Butadiene | 발암성 물질 | - | 발암성 물질 | - | 사용 불가 (0%) | - | - | - | - |
-| 부토피프런 및 그 염류 | Butopiprine and its salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
+| 부토피프린 및 그 염류 | Butopiprine and its salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | 부톡시디글리세롤 | Butoxydiglycol | 기타 화학물질 | - | 에테르류 | - | 사용 불가 (0%) | - | - | - | - |
 | 부톡시에탄올 | Butoxyethanol | 기타 화학물질 | - | 에테르류 | - | 사용 불가 (0%) | - | - | - | - |
 | 5-(3-부티릴-2,4,6-트리메칠페닐)-2-[1-(에톡시이미노)프로필]-3-하이드록시사이클로헥스-2-엔-1-온 | 5-(3-Butyryl-2,4,6-trimethylphenyl)-2-[1-(ethoxyimino)propyl]-3-hydroxycyclohex-2-en-1-one (Tepraloxydim) | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
@@ -501,7 +502,7 @@
 | 4-tert-부틸페놀 | 4-tert-Butylphenol | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 2-(4-tert-부틸페닐)에탄올 | 2-(4-tert-Butylphenyl)ethanol | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 4-tert-부틸피로카테콜 | 4-tert-Butylpyrocatechol | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
-| 부펙사마 | Bufexamac | 의약품 성분 | - | 진정제 | - | 사용 불가 (0%) | - | - | - | - |
+| 부펙사막 | Bufexamac | 의약품 성분 | - | 진정제 | - | 사용 불가 (0%) | - | - | - | - |
 | 붕산 | Boric acid | 기타 화학물질 | - | 살균제 | - | 사용 불가 (0%) | - | - | - | - |
 | 브레티륨토실레이트 | Bretylium tosilate | 기타 화학물질 | - | 고혈압 치료제 | - | 사용 불가 (0%) | - | - | - | - |
 | (R)-5-브로모-3-(1-메칠-2-피롤리딘일메칠)-1H-인돌 | (R)-5-Bromo-3-(1-methyl-2-pyrrolidinylmethyl)-1H-indole | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
@@ -542,7 +543,7 @@
 | 비에타미베린 | Bietamiverine | 식물성 원료·생약 | - | 식물성 원료 | - | 사용 불가 (0%) | - | - | - | - |
 | 비치오놀 | Bithionol | 의약품 성분 | - | 비타민류 | - | 사용 불가 (0%) | - | - | - | - |
 | 비타민 L₁, L₂ | Vitamin L1, L2 | 의약품 성분 | - | 비타민류 | - | 사용 불가 (0%) | - | - | - | - |
-| [1,1'-비페닐-4,4'-디일]디암모늄설페이트 | [1,1'-Biphenyl-4,4'-diyl]diammonium sulfate | 기타 화학물질 | - | 방향족 화합물 | - | 사용 불가 (0%) | - | - | - | - |
+| [1,1'-비페닐-4,4'-디일]디암모니움설페이트 | [1,1'-Biphenyl-4,4'-diyl]diammonium sulfate | 기타 화학물질 | - | 방향족 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 비페닐-2-일아민 | Biphenyl-2-ylamine | 기타 화학물질 | - | 방향족 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 비페닐-4-일아민 및 그 염류 | Biphenyl-4-ylamine and its salts | 기타 화학물질 | - | 방향족 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 4,4'-비-o-톨루이딘 | 4,4'-Bi-o-toluidine (o-Tolidine) | 기타 화학물질 | - | 톨루엔류 | - | 사용 불가 (0%) | - | - | - | - |
@@ -550,19 +551,19 @@
 | 4,4'-비-o-톨루이딘설페이트 | 4,4'-Bi-o-toluidine sulfate | 기타 화학물질 | - | 황산염 | - | 사용 불가 (0%) | - | - | - | - |
 | 빈클로졸린 | Vinclozolin | 농약류 | - | 농약류 | - | 사용 불가 (0%) | - | - | - | - |
 | 사이클라멘알코올 | Cyclamen alcohol | 기타 화학물질 | - | 고리형 화합물 | - | 사용 불가 (0%) | - | - | - | - |
-| N-사이클로렌틸-m-아미노페놀 | N-Cyclopentyl-m-aminophenol | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
+| N-사이클로펜틸-m-아미노페놀 | N-Cyclopentyl-m-aminophenol | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 사이클로헥시미드 | Cycloheximide | 기타 화학물질 | - | 고리형 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | N-사이클로헥실-N-메톡시-2,5-디메칠-3-퓨라마이드 | N-Cyclohexyl-N-methoxy-2,5-dimethyl-3-furamide (Furmecyclox) | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 트랜스-4-사이클로헥실-L-프롤린 모노하이드로클로라이드 | trans-4-Cyclohexyl-L-proline monohydrochloride | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 사프롤(천연에센스에 자연적으로 함유되어 그 양이 최종 제품에서 100ppm을 넘지 않는 경우는 제외) | Safrole (except naturally present in essences, not exceeding 100 ppm in the final product) | 기타 화학물질 | - | 향료 | - | 사용 불가 (0%) | - | - | - | - |
-| α-산토닌(3S, 5aR, 9bS)-3, 3a,4,5,5a,9b-헥사히드로-3,5a,9-트리메칠나프토(1,2-b))퓨란-2,8-디온 | alpha-Santonin ((3S,5aR,9bS)-3,3a,4,5,5a,9b-hexahydro-3,5a,9-trimethylnaphtho[1,2-b]furan-2,8-dione) | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
+| α-산토닌(3S, 5aR, 9bS)-3,5a,9-트리메칠-3a,4,5,5a,9b-헥사하이드로나프토[1,2-b]푸란-2,8-디온 | alpha-Santonin ((3S,5aR,9bS)-3,3a,4,5,5a,9b-hexahydro-3,5a,9-trimethylnaphtho[1,2-b]furan-2,8-dione) | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 석면 | Asbestos | 발암성 물질 | - | 발암성 물질 | - | 사용 불가 (0%) | - | - | - | - |
 | 석유 | Petroleum | 기타 화학물질 | - | 석유류 | - | 사용 불가 (0%) | - | - | - | - |
-| 석유 경제 과정에서 얻어지는 부산물(증류물, 가스 오일류, 나프타, 윤활그리스, 슬랙 왁스, 탄화수소류, 알칸류, 백색 페트롤라롬을 제외한 페트롤라롬, 연료 오일, 잔류물), 다만, 정제 과정이 완전히 알려져 있고 발암 물질을 함유하지 않음을 보여 줄 수 있으면 예외로 한다. | By-products from petroleum refining (distillates, gas oils, naphtha, lubricating grease, slack wax, hydrocarbons, alkanes, petrolatum except white petrolatum, fuel oil, residues), except where the refining process is fully known and shown to contain no carcinogens | 유기용제·석유계 | - | 동물성 원료 | - | 사용 불가 (0%) | - | - | - | - |
+| 석유 정제과정에서 얻어지는 부산물(증류물, 가스 오일류, 나프타, 윤활그리스, 슬랙 왁스, 탄화수소류, 알칸류, 백색 페트롤라툼을 제외한 페트롤라툼, 연료 오일, 잔류물)(다만, 정제 과정이 완전히 알려져 있고 발암 물질을 함유하지 않음을 보여 줄 수 있는 경우는 제외) | By-products from petroleum refining (distillates, gas oils, naphtha, lubricating grease, slack wax, hydrocarbons, alkanes, petrolatum except white petrolatum, fuel oil, residues), except where the refining process is fully known and shown to contain no carcinogens | 유기용제·석유계 | - | 석유 정제 부산물 | - | 사용 불가 (0%) | - | - | - | - |
 | 부타디엔 0.1%를 초과하여 함유하는 석유정제물(가스류, 탄화수소류, 알칸류, 증류물, 라피네이트) | Petroleum refinery products containing more than 0.1% butadiene (gases, hydrocarbons, alkanes, distillates, raffinates) | 유기용제·석유계 | - | 동물성 원료 | - | 사용 불가 (0%) | - | - | - | - |
 | 디메칠설폭사이드(DMSO)로 추출한 성분을 3% 초과하여 함유하고 있는 석유 유래 물질 | Petroleum-derived substances containing more than 3% of dimethyl sulfoxide (DMSO)-extractable components | 유기용제·석유계 | - | 유기 용매 | - | 사용 불가 (0%) | - | - | - | - |
 | 벤조[a]피렌 0.005%를 초과하여 함유하고 있는 석유화학 유래 물질, 석탄 및 목타르 유래 물질 | Petrochemical-, coal- and wood tar-derived substances containing more than 0.005% benzo[a]pyrene | 발암성 물질 | - | 발암성 물질 대표 | - | 사용 불가 (0%) | - | - | - | - |
-| 석탄추출 제트기용 연료 및 디겔연료 | Coal-derived jet fuels and diesel fuels | 기타 화학물질 | - | 석탄류 | - | 사용 불가 (0%) | - | - | - | - |
+| 석탄추출 젯트기용 연료 및 디젤연료 | Coal-derived jet fuels and diesel fuels | 기타 화학물질 | - | 석탄류 | - | 사용 불가 (0%) | - | - | - | - |
 | 설티암 | Sultiame | 의약품 성분 | - | 항갑상선제 | - | 사용 불가 (0%) | - | - | - | - |
 | 설팔레이트 | Sulfallate | 기타 화학물질 | - | 설페이트류 | - | 사용 불가 (0%) | - | - | - | - |
 | 3,3'-(설포닐비스(2-니트로-4,1-페닐렌)이미노)비스(6-(페닐아미노))벤젠설포닉애씨드 및 그 염류 | 3,3'-(Sulfonylbis(2-nitro-4,1-phenylene)imino)bis(6-(phenylamino))benzenesulfonic acid and its salts | 유기용제·석유계 | - | 발암성 용매 | - | 사용 불가 (0%) | - | - | - | - |
@@ -597,7 +598,7 @@
 | 2-α-시클로헥실벤질(N,N,N',N'테트라에칠)트리메칠렌디아민(페네타민) | 2-alpha-Cyclohexylbenzyl(N,N,N',N'-tetraethyl)trimethylenediamine (Phenetamine) | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 신코카인 및 그 염류 | Cinchocaine and its salts | 마약·향정신성물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | 신코펜 및 그 염류(유도체 포함) | Cinchophen and its salts (including derivatives) | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
-| 석시노니트릴 | Succinonitrile | 기타 화학물질 | - | 시아네이트류 | - | 사용 불가 (0%) | - | - | - | - |
+| 썩시노니트릴 | Succinonitrile | 기타 화학물질 | - | 시아네이트류 | - | 사용 불가 (0%) | - | - | - | - |
 | Anamirta cocculus L.(과실) | Anamirta cocculus L. (fruit) | 식물성 원료·생약 | - | 식물성 원료 | - | 사용 불가 (0%) | - | - | - | - |
 | o-아니시딘 | o-Anisidine | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 아닐린, 그 염류 및 그 할로겐화 유도체 및 설폰화 유도체 | Aniline, its salts and its halogenated and sulfonated derivatives | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
@@ -606,7 +607,7 @@
 | Areca catechu 및 그 생약제제 | Areca catechu and its galenical preparations | 식물성 원료·생약 | - | 생약제제 | - | 사용 불가 (0%) | - | - | - | - |
 | 아레콜린 | Arecoline | 마약·향정신성물질 | - | 마약류 | - | 사용 불가 (0%) | - | - | - | - |
 | 아리스톨로키아(Aristolochia)속 및 그 생약제제 | Aristolochia species and their galenical preparations | 식물성 원료·생약 | - | 식물 속 | - | 사용 불가 (0%) | - | - | - | - |
-| 아리스토로직 애씨드 및 그 염류 | Aristolochic acid and its salts | 기타 화학물질 | - | 카르복실산류 | - | 사용 불가 (0%) | - | - | - | - |
+| 아리스토로킥 애씨드 및 그 염류 | Aristolochic acid and its salts | 기타 화학물질 | - | 카르복실산류 | - | 사용 불가 (0%) | - | - | - | - |
 | 1-아미노-2-니트로-4-(2',3'-디하이드록시프로필)아미노-5-클로로벤젠과 1,4-비스-(2',3'-디하이드록시프로필)아미노-2-니트로-5-클로로벤젠 및 그 염류 | 1-Amino-2-nitro-4-(2',3'-dihydroxypropyl)amino-5-chlorobenzene and 1,4-bis-(2',3'-dihydroxypropyl)amino-2-nitro-5-chlorobenzene and their salts (HC Red No. 10 + HC Red No. 11) | 염모제 중간체 | - | (다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.0% 이하, 비산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 2.0% 이하는 제외) | - | 사용 불가 (0%) | - | - | - | - |
 | 2-아미노-3-니트로페놀 및 그 염류 | 2-Amino-3-nitrophenol and its salts | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | p-아미노-o-니트로페놀(4-아미노-2-니트로페놀) | p-Amino-o-nitrophenol (4-Amino-2-nitrophenol) | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
@@ -614,15 +615,15 @@
 | 2-아미노-5-니트로페놀 | 2-Amino-5-nitrophenol | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 4-아미노-3-니트로페놀 및 그 염류 | 4-Amino-3-nitrophenol and its salts | 염모제 중간체 | - | (다만, 4-아미노-3-니트로페놀은 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.5% 이하, 비산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.0% 이하는 제외) | - | 사용 불가 (0%) | - | - | - | - |
 | 황산 2-아미노-5-니트로페놀 | 2-Amino-5-nitrophenol sulfate | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
-| 2,2'-[(4-아미노-3-니트로페닐)이미노]바이세타놀 하이드로클로라이드 및 그 염류 | 2,2'-[(4-Amino-3-nitrophenyl)imino]bisethanol hydrochloride and its salts (HC Red No. 13) | 염모제 중간체 | - | (다만, 하이드로클로라이드염으로서 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.5% 이하, 비산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.0% 이하는 제외) | - | 사용 불가 (0%) | - | - | - | - |
+| 2,2'-[(4-아미노-3-니트로페닐)이미노]비스에탄올 하이드로클로라이드 및 그 염류 | 2,2'-[(4-Amino-3-nitrophenyl)imino]bisethanol hydrochloride and its salts (HC Red No. 13) | 염모제 중간체 | - | (다만, 하이드로클로라이드염으로서 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.5% 이하, 비산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.0% 이하는 제외) | - | 사용 불가 (0%) | - | - | - | - |
 | (8-[(4-아미노-2-니트로페닐)아조]-7-하이드록시-2-나프틸)트리메칠암모늄 및 그 염류(베이직브라운 17의 불순물로 있는 베이직레드 118 제외) | (8-[(4-Amino-2-nitrophenyl)azo]-7-hydroxy-2-naphthyl)trimethylammonium and its salts (except Basic Red 118 present as an impurity in Basic Brown 17) | 색소·타르색소 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
-| 1-아미노-4-[(디메칠아미노)메칠]페닐)아미노]안트라퀴논 및 그 염류 | 1-Amino-4-[[4-[(dimethylamino)methyl]phenyl]amino]anthraquinone and its salts | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
+| 1-아미노-4-[[4-[(디메칠아미노)메칠]페닐]아미노]안트라퀴논 및 그 염류 | 1-Amino-4-[[4-[(dimethylamino)methyl]phenyl]amino]anthraquinone and its salts | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 6-아미노-2-((2,4-디메칠페닐)-1H-벤즈[de]이소퀴놀린-1,3-(2H)-디온(솔벤트옐로우 44) 및 그 염류 | 6-Amino-2-(2,4-dimethylphenyl)-1H-benz[de]isoquinoline-1,3(2H)-dione (Solvent Yellow 44) and its salts | 색소·타르색소 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 5-아미노-2,6-디메톡시-3-하이드록시피리딘 및 그 염류 | 5-Amino-2,6-dimethoxy-3-hydroxypyridine and its salts | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 3-아미노-2,4-디클로로페놀 및 그 염류 | 3-Amino-2,4-dichlorophenol and its salts | 염모제 중간체 | - | (다만, 3-아미노-2,4-디클로로페놀 및 그 염산염은 염모제에서 용법·용량에 따른 혼합물의 염모 성분으로 염산염으로서 1.5% 이하는 제외) | - | 사용 불가 (0%) | - | - | - | - |
 | 2-아미노메칠-p-아미노페놀 및 그 염산염 | 2-Aminomethyl-p-aminophenol and its hydrochloride | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 2-[(4-아미노-2-메칠-5-니트로페닐)아미노]에탄올 및 그 염류 | 2-[(4-Amino-2-methyl-5-nitrophenyl)amino]ethanol and its salts (HC Violet No. 1) | 염모제 중간체 | - | (다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.25% 이하, 비산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.28% 이하는 제외) | - | 사용 불가 (0%) | - | - | - | - |
-| 2-[(3-(아미노-4-메톡시페닐)아미노]에탄올 및 그 염류 | 2-[(3-Amino-4-methoxyphenyl)amino]ethanol and its salts | 염모제 중간체 | - | (다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.5% 이하는 제외) | - | 사용 불가 (0%) | - | - | - | - |
+| 2-[(3-아미노-4-메톡시페닐)아미노]에탄올 및 그 염류 | 2-[(3-Amino-4-methoxyphenyl)amino]ethanol and its salts | 염모제 중간체 | - | (다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.5% 이하는 제외) | - | 사용 불가 (0%) | - | - | - | - |
 | 4-아미노벤젠설포닉애씨드 및 그 염류 | 4-Aminobenzenesulfonic acid and its salts | 유기용제·석유계 | - | 발암성 용매 | - | 사용 불가 (0%) | - | - | - | - |
 | 4-아미노벤조익애씨드 및 아미노기(-NH₂)를 가진 그 에스텔 | 4-Aminobenzoic acid and its esters with a free amino group (-NH2) | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 2-아미노-1,2-비스(4-메톡시페닐)에탄올 및 그 염류 | 2-Amino-1,2-bis(4-methoxyphenyl)ethanol and its salts | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
@@ -652,7 +653,7 @@
 | 아세노코우마롤 | Acenocoumarol | 의약품 성분 | - | 항응고제 | - | 사용 불가 (0%) | - | - | - | - |
 | 아세타마이드 | Acetamide | 기타 화학물질 | - | 아미드류 | - | 사용 불가 (0%) | - | - | - | - |
 | 아세토나이트릴 | Acetonitrile | 유기용제·석유계 | - | 유기 용매 | - | 사용 불가 (0%) | - | - | - | - |
-| 아세토페논, 포름알데히드, 사이클로헥실아민, 메탄올 및 초산의 반응물 | Reaction product of acetophenone, formaldehyde, cyclohexylamine, methanol and acetic acid | 유기용제·석유계 | - | 유기 용매 | - | 사용 불가 (0%) | - | - | - | - |
+| 아세토페논, 포름알데하이드, 사이클로헥실아민, 메탄올 및 초산의 반응물 | Reaction product of acetophenone, formaldehyde, cyclohexylamine, methanol and acetic acid | 유기용제·석유계 | - | 유기 용매 | - | 사용 불가 (0%) | - | - | - | - |
 | (2-아세톡시에칠)트리메칠암모늄히드록사이드(아세틸콜린 및 그 염류) | (2-Acetoxyethyl)trimethylammonium hydroxide (Acetylcholine and its salts) | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | N-[2-(3-아세틸-5-니트로치오펜-2-일아조)-5-디에칠아미노페닐]아세타마이드 | N-[2-(3-Acetyl-5-nitrothiophen-2-ylazo)-5-diethylaminophenyl]acetamide | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 3-[(4-(아세틸아미노)페닐)아조]-4-하이드록시-7-[[[5-하이드록시-6-(페닐아조)-7-설포-2-나프탈레닐]아미노]카보닐아미노]-2-나프탈렌설포닉애씨드 및 그 염류 | 3-[(4-(Acetylamino)phenyl)azo]-4-hydroxy-7-[[[5-hydroxy-6-(phenylazo)-7-sulfo-2-naphthalenyl]amino]carbonylamino]-2-naphthalenesulfonic acid and its salts | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
@@ -676,9 +677,9 @@
 | 안티몬 및 그 화합물 | Antimony and its compounds | 중금속 | - | 중금속 | - | 사용 불가 (0%) | - | - | - | - |
 | 알드린 | Aldrin | 농약류 | - | 농약류 | - | 사용 불가 (0%) | - | - | - | - |
 | 알라클로르 | Alachlor | 농약류 | - | 농약류 | - | 사용 불가 (0%) | - | - | - | - |
-| 알로클아마이드 및 그 염류 | Alloclamide and its salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
+| 알로클아미드 및 그 염류 | Alloclamide and its salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | 알릴글리시딜에텔 | Allyl glycidyl ether | 기타 화학물질 | - | 에테르류 | - | 사용 불가 (0%) | - | - | - | - |
-| 2-(4-알릴-2-메톡시페녹시)-N,N-디에칠아세트아마이드 및 그 염류 | 2-(4-Allyl-2-methoxyphenoxy)-N,N-diethylacetamide and its salts | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
+| 2-(4-알릴-2-메톡시페녹시)-N,N-디에칠아세트아미드 및 그 염류 | 2-(4-Allyl-2-methoxyphenoxy)-N,N-diethylacetamide and its salts | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 4-알릴-2,6-비스(2,3-에폭시프로필)페놀, 4-알릴-6-[3-[6-[3-(4-알릴-2,6-비스(2,3-에폭시프로필)페녹시]-2-하이드록시프로필]-4-알릴-2-(2,3-에폭시프로필)페녹시]-2-하이드록시프로필]-4-알릴-2,6-비스(2,3-에폭시프로필)페녹시]-2-하이드록시프로필]-4-알릴-6-[3-[6-[3-(4-알릴-2,6-비스(2,3-에폭시프로필)페녹시]-2-하이드록시프로필]-4-알릴-2-(2,3-에폭시프로필)페녹시]-2-하이드록시프로필]-4-알릴-2,6-비스(2,3-에폭시프로필)페녹시]-2-하이드록시프로필]-4-알릴-2-(2,3-에폭시프로필)페놀의 혼합물이드록시프로필]-2-(2,3-에폭시프로필)페녹시]-2-하이드록시프로필]-2-(2,3-에폭시프로필)페놀의 혼합물 | Mixture of 4-allyl-2,6-bis(2,3-epoxypropyl)phenol and its epoxypropyl-substituted oligomers | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 알릴이소치오시아네이트 | Allyl isothiocyanate | 기타 화학물질 | - | 시아네이트류 | - | 사용 불가 (0%) | - | - | - | - |
 | 에스텔의 유리알릴알코올농도가 0.1%를 초과하는 알릴에스텔류 | Allyl esters containing more than 0.1% free allyl alcohol in the ester | 기타 화학물질 | - | 에스테르류 | - | 사용 불가 (0%) | - | - | - | - |
@@ -687,11 +688,11 @@
 | 알칼리 설파이드류 및 알칼리토 설파이드류 | Alkali sulfides and alkaline-earth sulfides | 의약품 성분 | - | 설폰아미드류 | - | 사용 불가 (0%) | - | - | - | - |
 | 2-알칼리펜타시아노니트로실페레이트 | Alkali pentacyanonitrosylferrates | 기타 화학물질 | - | 질산화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 알킨알코올 그 에스텔, 에텔 및 염류 | Alkyne alcohols, their esters, ethers and salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
-| ω-알킬디치오카르보닉애씨드의 염 | Salts of omega-alkyldithiocarbonic acid | 기타 화학물질 | - | 카르복실산류 | - | 사용 불가 (0%) | - | - | - | - |
+| o-알킬디치오카르보닉애씨드의 염 | Salts of omega-alkyldithiocarbonic acid | 기타 화학물질 | - | 카르복실산류 | - | 사용 불가 (0%) | - | - | - | - |
 | 2급 알킬아민 및 그 염류 | Secondary alkylamines and their salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | 암모늄노나데카플루오로데카노에이트 | Ammonium nonadecafluorodecanoate | 기타 화학물질 | - | 할로겐화합물 | - | 사용 불가 (0%) | - | - | - | - |
-| 암모늄플루오로노나노에이트 | Ammonium heptadecafluorononanoate | 기타 화학물질 | - | 할로겐화합물 | - | 사용 불가 (0%) | - | - | - | - |
-| 2-[4-(2-암모니오프로필아미노)-6-[4-하이드록시-3-(5-메칠-2-메톡시-4-설파모일페닐아조)-2-설포네이토나프트-7-일아미노]-1,3,5-트리아진-2-일아미노]-2-아미노프로필포르메이트 | 2-[4-(2-Ammoniopropylamino)-6-[4-hydroxy-3-(5-methyl-2-methoxy-4-sulfamoylphenylazo)-2-sulfonatonaphth-7-ylamino]-1,3,5-triazin-2-ylamino]-2-aminopropyl formate | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
+| 암모늄퍼플루오로노나노에이트 | Ammonium heptadecafluorononanoate | 기타 화학물질 | - | 할로겐화합물 | - | 사용 불가 (0%) | - | - | - | - |
+| 2-[4-(2-암모니오프로필아미노)-6-[4-하이드록시-3-(5-메칠-2-메톡시-4-설파모일페닐아조)-2-설포네이토나프트-7-일아미노]-1,3,5-트리아진-2-일아미노]-2-아미노프로필포메이트 | 2-[4-(2-Ammoniopropylamino)-6-[4-hydroxy-3-(5-methyl-2-methoxy-4-sulfamoylphenylazo)-2-sulfonatonaphth-7-ylamino]-1,3,5-triazin-2-ylamino]-2-aminopropyl formate | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 애씨드오렌지24(CI 20170) | Acid Orange 24 (CI 20170) | 색소·타르색소 | - | 카르복실산류 | - | 사용 불가 (0%) | - | - | - | - |
 | 애씨드레드73(CI 27290) | Acid Red 73 (CI 27290) | 색소·타르색소 | - | 카르복실산류 | - | 사용 불가 (0%) | - | - | - | - |
 | 애씨드블랙 131 및 그 염류 | Acid Black 131 and its salts | 색소·타르색소 | - | 카르복실산류 | - | 사용 불가 (0%) | - | - | - | - |
@@ -705,13 +706,13 @@
 | 에이치시 청색 No. 11 | HC Blue No. 11 | 색소·타르색소 | - | 색소 | - | 사용 불가 (0%) | - | - | - | - |
 | 에이치시 황색 No. 11 | HC Yellow No. 11 | 색소·타르색소 | - | 색소 | - | 사용 불가 (0%) | - | - | - | - |
 | 에이치시 등색 No. 3 | HC Orange No. 3 | 색소·타르색소 | - | 색소 | - | 사용 불가 (0%) | - | - | - | - |
-| 에지온아미드 | Ethionamide | 기타 화학물질 | - | 케톤류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
+| 에치온아미드 | Ethionamide | 기타 화학물질 | - | 케톤류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 에칠렌글리콜 디메칠 에텔(EGDME) | Ethylene glycol dimethyl ether (EGDME) | 유기용제·석유계 | - | 유기 용매 | - | 사용 불가 (0%) | - | - | - | - |
 | 2,2'-[(1,2'-에칠렌디일)비스[5-((4-에톡시페닐)아조)벤젠설포닉애씨드)] 및 그 염류 | 2,2'-[(1,2-Ethylenediyl)bis[5-((4-ethoxyphenyl)azo)benzenesulfonic acid]] and its salts | 유기용제·석유계 | - | 발암성 용매 | - | 사용 불가 (0%) | - | - | - | - |
 | 에칠렌옥사이드 | Ethylene oxide | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
-| 3-에칠-2-메칠-2-(3-메칠부틸)-1,3-옥사졸리다 | 3-Ethyl-2-methyl-2-(3-methylbutyl)-1,3-oxazolidine | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
-| 1-에칠-1-메칠포리늄 브로마이드 | 1-Ethyl-1-methylmorpholinium bromide | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
-| 1-에칠-1-메칠피리디늄 브로마이드 | 1-Ethyl-1-methylpyrrolidinium bromide | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
+| 3-에칠-2-메칠-2-(3-메칠부틸)-1,3-옥사졸리딘 | 3-Ethyl-2-methyl-2-(3-methylbutyl)-1,3-oxazolidine | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
+| 1-에칠-1-메칠몰포리늄 브로마이드 | 1-Ethyl-1-methylmorpholinium bromide | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
+| 1-에칠-1-메칠피롤리디늄 브로마이드 | 1-Ethyl-1-methylpyrrolidinium bromide | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 에칠비스(4-히드록시-2-옥소-1-벤조피란-3-일)아세테이트 및 그 산의 염류 | Ethyl bis(4-hydroxy-2-oxo-1-benzopyran-3-yl)acetate and salts of the acid (Ethyl biscoumacetate) | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 4-에칠아미노-3-니트로벤조익애씨드(N-에칠-3-니트로 파바) 및 그 염류 | 4-Ethylamino-3-nitrobenzoic acid (N-Ethyl-3-nitro PABA) and its salts | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 에칠아크릴레이트 | Ethyl acrylate | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
@@ -745,7 +746,7 @@
 | (s)-옥시란메탄올 4-메칠벤젠설포네이트 | (S)-Oxiranemethanol 4-methylbenzenesulfonate | 유기용제·석유계 | - | 발암성 용매 | - | 사용 불가 (0%) | - | - | - | - |
 | 옥시염화비스머스 이외의 비스머스화합물 | Bismuth compounds other than Bismuth oxychloride | 기타 화학물질 | - | 할로겐화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 옥시퀴놀린(히드록시-8-퀴놀린 또는 퀴놀린-8-올) 및 그 황산염 | Oxyquinoline (8-Hydroxyquinoline or Quinolin-8-ol) and its sulfate | 기타 화학물질 | - | 헤테로고리화합물 | - | 사용 불가 (0%) | - | - | - | - |
-| 옥타톡신 및 그 염류 | Octamoxin and its salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
+| 옥타목신 및 그 염류 | Octamoxin and its salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | 옥타밀아민 및 그 염류 | Octamylamine and its salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | 옥토드린 및 그 염류 | Octodrine and its salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | 올레안드린 | Oleandrin | 의약품 성분 | - | 강심제 | - | 사용 불가 (0%) | - | - | - | - |
@@ -757,7 +758,7 @@
 | 우로카닌산, 우로카닌산에칠 | Urocanic acid, Ethyl urocanate | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | Urginea scilla Stern. 및 그 생약제제 | Urginea scilla Stern. and its galenical preparations | 식물성 원료·생약 | - | 생약제제 | - | 사용 불가 (0%) | - | - | - | - |
 | 우스닉산 및 그 염류(구리염 포함) | Usnic acid and its salts (including copper salt) | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
-| 2,2'-이미노비스-에탄올, 에피클로히드린 및 2-니트로-1,4-벤젠디아민의 반응생성물(에이치시 청색 No. 5) 및 그 염류 | Reaction product of 2,2'-iminobisethanol, epichlorohydrin and 2-nitro-1,4-benzenediamine (HC Blue No. 5) and its salts | 유기용제·석유계 | - | 발암성 용매 | - | 사용 불가 (0%) | - | - | - | - |
+| 2,2'-이미노비스-에탄올, 에피클로로히드린 및 2-니트로-1,4-벤젠디아민의 반응생성물(에이치시 청색 No. 5) 및 그 염류 | Reaction product of 2,2'-iminobisethanol, epichlorohydrin and 2-nitro-1,4-benzenediamine (HC Blue No. 5) and its salts | 유기용제·석유계 | - | 발암성 용매 | - | 사용 불가 (0%) | - | - | - | - |
 | (마이크로-((7,7'-이미노비스(4-하이드록시-3-((2-하이드록시-5-(N-메칠설파모일)페닐)아조)나프탈렌-2-설포네이토))(6-)))디쿠프레이트 및 그 염류 | (mu-((7,7'-Iminobis(4-hydroxy-3-((2-hydroxy-5-(N-methylsulfamoyl)phenyl)azo)naphthalene-2-sulfonato))(6-)))dicuprate and its salts | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 4,4'-(4-이미노사이클로헥사-2,5-디에닐리덴메칠렌)디아닐린 하이드로클로라이드 | 4,4'-(4-Iminocyclohexa-2,5-dienylidenemethylene)dianiline hydrochloride | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 이미다졸리딘-2-치온 | Imidazolidine-2-thione (Ethylene thiourea) | 기타 화학물질 | - | 케톤류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
@@ -765,14 +766,14 @@
 | 이소메트헵텐 및 그 염류 | Isometheptene and its salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | 이소부틸나이트라이트 | Isobutyl nitrite | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 4,4'-이소부틸에칠리덴디페놀 | 4,4'-Isobutylethylidenediphenol | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
-| 이소소르비디나이트레이트 | Isosorbide dinitrate | 기타 화학물질 | - | 질산화합물 | - | 사용 불가 (0%) | - | - | - | - |
+| 이소소르비드디나이트레이트 | Isosorbide dinitrate | 기타 화학물질 | - | 질산화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 이소카르복사지드 | Isocarboxazid | 의약품 성분 | - | 동물성 원료 | - | 사용 불가 (0%) | - | - | - | - |
 | 이소프레나린 | Isoprenaline | 의약품 성분 | - | 동물성 원료 | - | 사용 불가 (0%) | - | - | - | - |
 | 이소프렌(2-메칠-1,3-부타디엔) | Isoprene (2-Methyl-1,3-butadiene) | 발암성 물질 | - | 발암성 물질 | - | 사용 불가 (0%) | - | - | - | - |
 | 6-이소프로필-2-데카하이드로나프탈렌올(6-이소프로필-2-데카롤) | 6-Isopropyl-2-decahydronaphthalenol (6-Isopropyl-2-decalol) | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 3-(4-이소프로필페닐)-1,1-디메칠우레아(이소프로투론) | 3-(4-Isopropylphenyl)-1,1-dimethylurea (Isoproturon) | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | (2-이소프로필펜트-4-에노일)우레아(아프로날리드) | (2-Isopropylpent-4-enoyl)urea (Apronalide) | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
-| 이속사플루롤 | Isoxaflutole | 식물성 원료·생약 | - | 식물 속 | - | 사용 불가 (0%) | - | - | - | - |
+| 이속사풀루톨 | Isoxaflutole | 식물성 원료·생약 | - | 식물 속 | - | 사용 불가 (0%) | - | - | - | - |
 | 이속시닐 및 그 염류 | Ioxynil and its salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | 이부프로펜피코놀, 그 염류 및 유도체 | Ibuprofen piconol, its salts and derivatives | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | Ipecacuanha(Cephaelis ipecacuaha Brot. 및 관련된 종)(뿌리, 가루 및 생약제제) | Ipecacuanha (Cephaelis ipecacuanha Brot. and related species) (root, powder and galenical preparations) | 식물성 원료·생약 | - | 생약제제 | - | 사용 불가 (0%) | - | - | - | - |
@@ -782,7 +783,7 @@
 | 인프로쿠온 | Improquone | 기타 화학물질 | - | 케톤류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 임페라토린(9-(3-메칠부트-2-에녹시)퓨로(3,2-g)크로멘-7-온) | Imperatorin (9-(3-Methylbut-2-enoxy)furo[3,2-g]chromen-7-one) | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 자이람 | Ziram | 농약류 | - | 농약류 | - | 사용 불가 (0%) | - | - | - | - |
-| 자일렌 | Xylene | 기타 화학물질 | - | (다만, 화장품 원료의 제조공정에서 용매로 사용되었으나 완전히 제거할 수 없는 잔류용매로서 화장품법 시행규칙 [별표 3] 2), 3), 5)에 해당하는 제품 중 0.01% 이하, 기타 제품 중 0.002% 이하인 경우 제외) | - | 사용 불가 (0%) | - | - | - | - |
+| 자일렌 | Xylene | 기타 화학물질 | - | (다만, 화장품 원료의 제조공정에서 용매로 사용되었으나 완전히 제거할 수 없는 잔류용매로서 화장품법 시행규칙 [별표 3] 자. 손발톱용 제품류 중 1), 2), 3), 5)에 해당하는 제품 중 0.01% 이하, 기타 제품 중 0.002% 이하인 경우 제외) | - | 사용 불가 (0%) | - | - | - | - |
 | 자일로메타졸린 및 그 염류 | Xylometazoline and its salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | 자일리딘, 그 이성체, 염류, 할로겐화 유도체 및 설폰화 유도체 | Xylidine, its isomers, salts, halogenated and sulfonated derivatives | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | 족사졸아민 | Zoxazolamine | 기타 화학물질 | - | 헤테로고리화합물 | - | 사용 불가 (0%) | - | - | - | - |
@@ -808,11 +809,11 @@
 | 7,7'-(카보닐디이미노)비스(4-하이드록시-3-[[2-설포-4-[(4-설포페닐)아조]페닐]아조-2-나프탈렌설포닉애씨드 및 그 염류 | 7,7'-(Carbonyldiimino)bis(4-hydroxy-3-[[2-sulfo-4-[(4-sulfophenyl)azo]phenyl]azo]-2-naphthalenesulfonic acid and its salts | 기타 화학물질 | - | 방향족 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 카본디설파이드 | Carbon disulfide | 의약품 성분 | - | 설폰아미드류 | - | 사용 불가 (0%) | - | - | - | - |
 | 카본모노옥사이드(일산화탄소) | Carbon monoxide | 기타 화학물질 | - | 산화물 | - | 사용 불가 (0%) | - | - | - | - |
-| 카본블랙안트라센이 각각 5ppb 이하이고 총 다환방향족탄화수소류(PAHs)가 0.5ppm 이하인 경우에는 제외) | Carbon black (except where benzo[a]pyrene and dibenz[a,h]anthracene impurities are each 5 ppb or less and total PAHs are 0.5 ppm or less) | 기타 화학물질 | - | (다만, 불순물 중 벤조피렌과 디벤즈(a,h) | - | 사용 불가 (0%) | - | - | - | - |
+| 카본블랙(다만, 불순물 중 벤조피렌과 디벤즈(a,h)안트라센이 각각 5ppb 이하이고 총 다환방향족탄화수소류(PAHs)가 0.5ppm 이하인 경우에는 제외) | Carbon black (except where benzo[a]pyrene and dibenz[a,h]anthracene impurities are each 5 ppb or less and total PAHs are 0.5 ppm or less) | 기타 화학물질 | - | (다만, 불순물 중 벤조피렌과 디벤즈(a,h) | - | 사용 불가 (0%) | - | - | - | - |
 | 카본테트라클로라이드 | Carbon tetrachloride | 유기용제·석유계 | - | 유기 용매 | - | 사용 불가 (0%) | - | - | - | - |
 | 카부트아미드 | Carbutamide | 기타 화학물질 | - | 아미드류 | - | 사용 불가 (0%) | - | - | - | - |
 | 카브로말 | Carbromal | 의약품 성분 | - | 동물성 원료 | - | 사용 불가 (0%) | - | - | - | - |
-| 카탈라제 | Catalase | 의약품 성분 | - | 효소 | - | 사용 불가 (0%) | - | - | - | - |
+| 카탈라아제 | Catalase | 의약품 성분 | - | 효소 | - | 사용 불가 (0%) | - | - | - | - |
 | 카테콜(피로카테콜) | Catechol (Pyrocatechol) | 기타 화학물질 | - | 페놀류 | - | 사용 불가 (0%) | - | - | - | - |
 | 칸타리스, Cantharis vesicatoria | Cantharides, Cantharis vesicatoria | 식물성 원료·생약 | - | 식물성 원료 | - | 사용 불가 (0%) | - | - | - | - |
 | 캡타폴 | Captafol | 의약품 성분 | - | 해독제 | - | 사용 불가 (0%) | - | - | - | - |
@@ -827,7 +828,7 @@
 | 콘발라톡신 | Convallatoxin | 의약품 성분 | - | 강심제 | - | 사용 불가 (0%) | - | - | - | - |
 | 콜린염 및 에스텔 | Choline salts and their esters (e.g. Choline chloride) | 기타 화학물질 | - | (예 콜린클로라이드) | - | 사용 불가 (0%) | - | - | - | - |
 | 콜키신, 그 염류 및 유도체 | Colchicine, its salts and derivatives | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
-| 콜기코시드 및 그 유도체 | Colchicoside and its derivatives | 의약품 성분 | - | 강심제 | - | 사용 불가 (0%) | - | - | - | - |
+| 콜키코시드 및 그 유도체 | Colchicoside and its derivatives | 의약품 성분 | - | 강심제 | - | 사용 불가 (0%) | - | - | - | - |
 | Colchicum autumnale L. 및 그 생약제제 | Colchicum autumnale L. and its galenical preparations | 식물성 원료·생약 | - | 생약제제 | - | 사용 불가 (0%) | - | - | - | - |
 | 콜타르 및 정제콜타르 | Coal tar and refined coal tar | 색소·타르색소 | - | 타르류 | - | 사용 불가 (0%) | - | - | - | - |
 | 쿠라레와 쿠라린 | Curare and curarine | 의약품 성분 | - | 근육이완제 | - | 사용 불가 (0%) | - | - | - | - |
@@ -852,7 +853,7 @@
 | 2-클로로-6-메칠피리미딘-4-일디메칠아민(크리미딘-ISO) | 2-Chloro-6-methylpyrimidin-4-yldimethylamine (Crimidine-ISO) | 농약류 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 클로로메탄 | Chloromethane | 기타 화학물질 | - | 할로겐화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | p-클로로벤조트리클로라이드 | p-Chlorobenzotrichloride | 기타 화학물질 | - | 할로겐화합물 | - | 사용 불가 (0%) | - | - | - | - |
-| N-5-클로로벤족사졸-2-일아세트아마이드 | N-5-Chlorobenzoxazol-2-ylacetamide | 기타 화학물질 | - | 할로겐화합물 | - | 사용 불가 (0%) | - | - | - | - |
+| N-5-클로로벤족사졸-2-일아세트아미드 | N-5-Chlorobenzoxazol-2-ylacetamide | 기타 화학물질 | - | 할로겐화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 4-클로로-2-아미노페놀 | 4-Chloro-2-aminophenol | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 클로로아세타마이드 | Chloroacetamide | 기타 화학물질 | - | 할로겐화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 클로로아세트알데히드 | Chloroacetaldehyde | 기타 화학물질 | - | 할로겐화합물 | - | 사용 불가 (0%) | - | - | - | - |
@@ -872,10 +873,10 @@
 | 클로로포름 | Chloroform | 기타 화학물질 | - | 할로겐화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 클로로프렌(2-클로로부타-1,3-디엔) | Chloroprene (2-Chlorobuta-1,3-diene) | 기타 화학물질 | - | 할로겐화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 클로로플루오로카본 추진제(완전하게 할로겐화 된 클로로플루오로알칸) | Chlorofluorocarbon propellants (fully halogenated chlorofluoroalkanes) | 기타 화학물질 | - | 할로겐화합물 | - | 사용 불가 (0%) | - | - | - | - |
-| 2-클로로-N-(히드록시메칠)아세트아마이드 | 2-Chloro-N-(hydroxymethyl)acetamide | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
+| 2-클로로-N-(히드록시메칠)아세트아미드 | 2-Chloro-N-(hydroxymethyl)acetamide | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | N-[(6-[(2-클로로-4-하이드록시페닐)이미노]-4-메톡시-3-옥소-1,4-사이클로헥사디엔-1-일]아세타마이드(에이치시 황색 No. 8) 및 그 염류 | N-[6-[(2-Chloro-4-hydroxyphenyl)imino]-4-methoxy-3-oxo-1,4-cyclohexadien-1-yl]acetamide (HC Yellow No. 8) and its salts | 기타 화학물질 | - | 할로겐화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 클로르단 | Chlordane | 농약류 | - | 농약류 | - | 사용 불가 (0%) | - | - | - | - |
-| 클로르디메품 | Chlordimeform | 농약류 | - | 농약류 | - | 사용 불가 (0%) | - | - | - | - |
+| 클로르디메폼 | Chlordimeform | 농약류 | - | 농약류 | - | 사용 불가 (0%) | - | - | - | - |
 | 클로르메자논 | Chlormezanone | 의약품 성분 | - | 진정제 | - | 사용 불가 (0%) | - | - | - | - |
 | 클로르메틴 및 그 염류 | Chlormethine and its salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | 클로르족사존 | Chlorzoxazone | 의약품 성분 | - | 항염증제 | - | 사용 불가 (0%) | - | - | - | - |
@@ -885,7 +886,7 @@
 | 클로린 | Chlorine | 기타 화학물질 | - | 할로겐 | - | 사용 불가 (0%) | - | - | - | - |
 | 클로졸리네이트 | Chlozolinate | 농약류 | - | 농약류 | - | 사용 불가 (0%) | - | - | - | - |
 | 클로페노탄; DDT(ISO) | Clofenotane; DDT (ISO) | 농약류 | - | 농약류 | - | 사용 불가 (0%) | - | - | - | - |
-| 클로벤아미드 | Clofenamide (INN) | 기타 화학물질 | - | 아미드류 | - | 사용 불가 (0%) | - | - | - | - |
+| 클로펜아미드 | Clofenamide (INN) | 기타 화학물질 | - | 아미드류 | - | 사용 불가 (0%) | - | - | - | - |
 | 키노메치오네이트 | Chinomethionat (Oxythioquinox) | 의약품 성분 | - | 항진균제 | - | 사용 불가 (0%) | - | - | - | - |
 | 타크로리무스(tacrolimus), 그 염류 및 유도체 | Tacrolimus, its salts and derivatives | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | 탈륨 및 그 화합물 | Thallium and its compounds | 중금속 | - | 중금속 | - | 사용 불가 (0%) | - | - | - | - |
@@ -903,7 +904,7 @@
 | N,N,N',N-테트라메칠-4,4'-메칠렌디아닐린 | N,N,N',N'-Tetramethyl-4,4'-methylenedianiline | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 테트라베나진 및 그 염류 | Tetrabenazine and its salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | 테트라브로모살리실아닐리드 | Tetrabromosalicylanilide | 기타 화학물질 | - | 할로겐화합물 | - | 사용 불가 (0%) | - | - | - | - |
-| 테트라소듐 3,3'-[[1,1'-비페닐]-4,4'-다일비스(아조)]비스5-아미노-4-하이드록시나프탈렌-2,7-디설포네이트(다이렉트블루 6) | Tetrasodium 3,3'-[[1,1'-biphenyl]-4,4'-diylbis(azo)]bis[5-amino-4-hydroxynaphthalene-2,7-disulfonate] (Direct Blue 6) | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
+| 테트라소듐 3,3'-[[1,1'-비페닐]-4,4'-디일비스(아조)]비스[5-아미노-4-하이드록시나프탈렌-2,7-디설포네이트](다이렉트블루 6) | Tetrasodium 3,3'-[[1,1'-biphenyl]-4,4'-diylbis(azo)]bis[5-amino-4-hydroxynaphthalene-2,7-disulfonate] (Direct Blue 6) | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 1,4,5,8-테트라아미노안트라퀴논(디스퍼스블루 1) | 1,4,5,8-Tetraaminoanthraquinone (Disperse Blue 1) | 색소·타르색소 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 테트라에칠피로포스페이트; TEPP(ISO) | Tetraethyl pyrophosphate; TEPP (ISO) | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 테트라카보닐니켈 | Tetracarbonylnickel (Nickel carbonyl) | 기타 화학물질 | - | 알레르기 유발 | - | 사용 불가 (0%) | - | - | - | - |
@@ -949,8 +950,8 @@
 | 3,5,5-트리메칠사이클로헥스-2-에논 | 3,5,5-Trimethylcyclohex-2-enone (Isophorone) | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 2,4,5-트리메칠아닐린[1]; 2,4,5-트리메칠아닐린 하이드로클로라이드[2] | 2,4,5-Trimethylaniline [1]; 2,4,5-Trimethylaniline hydrochloride [2] | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 3,6,10-트리메칠-3,5,9-운데카트리엔-2-온(메칠이소슈도이오논) | 3,6,10-Trimethyl-3,5,9-undecatrien-2-one (Methyl isopseudoionone) | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
-| 2,2,6-트리메칠-4-피메리딘벤조에이트(유카인) 및 그 염류 | 2,2,6-Trimethyl-4-piperidinyl benzoate (Eucaine) and its salts | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
-| 3,4,5-트리메톡시페네칠아민 및 그 염류 | 3,4,5-Trimethoxyphenethylamine (Mescaline) and its salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
+| 2,2,6-트리메칠-4-피페리딜벤조에이트(유카인) 및 그 염류 | 2,2,6-Trimethyl-4-piperidinyl benzoate (Eucaine) and its salts | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
+| 3,4,5-트리메톡시펜에칠아민 및 그 염류 | 3,4,5-Trimethoxyphenethylamine (Mescaline) and its salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | 트리부틸포스페이트 | Tributyl phosphate | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 3,4',5-트리브로모살리실아닐리드(트리브롬살란) | 3,4',5-Tribromosalicylanilide (Tribromsalan) | 기타 화학물질 | - | 할로겐화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 2,2,2-트리브로모에탄올(트리브로모에칠알코올) | 2,2,2-Tribromoethanol (Tribromoethyl alcohol) | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
@@ -981,7 +982,7 @@
 | 트리파라놀 | Triparanol | 농약류 | - | 농약류 | - | 사용 불가 (0%) | - | - | - | - |
 | 트리플루오로요도메탄 | Trifluoroiodomethane | 기타 화학물질 | - | 할로겐화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 트리플루페리돌 | Trifluperidol | 의약품 성분 | - | 항정신병제 | - | 사용 불가 (0%) | - | - | - | - |
-| 1,1,4-트리하이드록시벤젠 | 1,2,4-Trihydroxybenzene | 유기용제·석유계 | - | 발암성 용매 | - | 사용 불가 (0%) | - | - | - | - |
+| 1,2,4-트리하이드록시벤젠 | 1,2,4-Trihydroxybenzene | 유기용제·석유계 | - | 발암성 용매 | - | 사용 불가 (0%) | - | - | - | - |
 | 1,3,5-트리하이드록시벤젠(플로로글루시놀) 및 그 염류 | 1,3,5-Trihydroxybenzene (Phloroglucinol) and its salts | 유기용제·석유계 | - | 발암성 용매 | - | 사용 불가 (0%) | - | - | - | - |
 | 티로트리신 | Tyrothricin | 기타 화학물질 | - | 갑상선 호르몬 | - | 사용 불가 (0%) | - | - | - | - |
 | 티로프로픽애씨드 및 그 염류 | Tyropropic acid and its salts | 기타 화학물질 | - | 카르복실산류 | - | 사용 불가 (0%) | - | - | - | - |
@@ -1019,7 +1020,7 @@
 | 페루발삼(Myroxylon pereirae의 수지)[다만, 추출물(extracts) 또는 증류물(distillates)로서 0.4% 이하인 경우는 제외] | Peru balsam (resin of Myroxylon pereirae) (except extracts or distillates at 0.4% or less) | 식물성 원료·생약 | - | 식물 추출물 | - | 사용 불가 (0%) | - | - | - | - |
 | 페몰린 및 그 염류 | Pemoline and its salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | 페트리클로랄 | Petrichloral | 의약품 성분 | - | 진정제 | - | 사용 불가 (0%) | - | - | - | - |
-| 펜테트라진 및 그 유도체 및 그 염류 | Pentetrazol, its derivatives and salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
+| 펜메트라진 및 그 유도체 및 그 염류 | Pentetrazol, its derivatives and salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | 펜치온 | Fenthion | 기타 화학물질 | - | 케톤류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | N,N'-펜타메칠렌비스(트리메칠암모늄)염류 | N,N'-Pentamethylenebis(trimethylammonium) salts (e.g. Pentamethonium bromide) | 기타 화학물질 | - | (예 펜타메토늄브로마이드) | - | 사용 불가 (0%) | - | - | - | - |
 | 펜타에리트리틸테트라나이트레이트 | Pentaerythrityl tetranitrate | 기타 화학물질 | - | 질산화합물 | - | 사용 불가 (0%) | - | - | - | - |
@@ -1028,19 +1029,19 @@
 | 펜틴 아세테이트 | Fentin acetate | 기타 화학물질 | - | 아세트산염 | - | 사용 불가 (0%) | - | - | - | - |
 | 펜틴 하이드록사이드 | Fentin hydroxide | 기타 화학물질 | - | 수산화물 | - | 사용 불가 (0%) | - | - | - | - |
 | 2-펜틸리덴사이클로헥사논 | 2-Pentylidenecyclohexanone | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
-| 펜프로파메이트 | Fenprobamate | 의약품 성분 | - | 진정제 | - | 사용 불가 (0%) | - | - | - | - |
+| 펜프로바메이트 | Fenprobamate | 의약품 성분 | - | 진정제 | - | 사용 불가 (0%) | - | - | - | - |
 | 펜프로코우몬 | Phenprocoumon | 의약품 성분 | - | 항응고제 | - | 사용 불가 (0%) | - | - | - | - |
 | 펜프로피모르프 | Fenpropimorph | 의약품 성분 | - | 진정제 | - | 사용 불가 (0%) | - | - | - | - |
-| 펠라티에린 및 그 염류 | Pelletierine and its salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
+| 펠레티에린 및 그 염류 | Pelletierine and its salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | 포름아마이드 | Formamide | 기타 화학물질 | - | 아미드류 | - | 사용 불가 (0%) | - | - | - | - |
 | 포름알데하이드 및 p-포름알데하이드 | Formaldehyde and p-Formaldehyde (Paraformaldehyde) | 기타 화학물질 | - | 알데하이드류 | - | 사용 불가 (0%) | - | - | - | - |
 | 포스파미돈 | Phosphamidon | 농약류 | - | 농약류 | - | 사용 불가 (0%) | - | - | - | - |
 | 포스포러스 및 메탈포스피드류 | Phosphorus and metal phosphides | 기타 화학물질 | - | 인산화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 포타슘브로메이트 | Potassium bromate | 기타 화학물질 | - | 칼륨염 | - | 사용 불가 (0%) | - | - | - | - |
-| 풀단메릴설페이드 | Poldine metilsulfate | 의약품 성분 | - | 항콜린제 | - | 사용 불가 (0%) | - | - | - | - |
+| 폴딘메틸설페이드 | Poldine metilsulfate | 의약품 성분 | - | 항콜린제 | - | 사용 불가 (0%) | - | - | - | - |
 | 푸로쿠마린류(천연에센스에 자연적으로 함유된 경우는 제외, 다만, 자외선 차단 제품 및 인공 선탠 제품에서는 1ppm 이하이어야 한다.) | Furocoumarins (except naturally present in essences; must be 1 ppm or less in sunscreen and artificial tanning products) (e.g. Trioxysalen, 8-Methoxypsoralen, 5-Methoxypsoralen) | 기타 화학물질 | - | (예 트리옥시살렌, 8-메톡시소랄렌, 5-메톡시소랄렌) | - | 사용 불가 (0%) | - | - | - | - |
 | 푸르푸릴트리메칠암모늄염 | Furfuryltrimethylammonium salts (e.g. Furtrethonium iodide) | 기타 화학물질 | - | (예 푸르트레토늄아이오다이드) | - | 사용 불가 (0%) | - | - | - | - |
-| 풀라지포프-부틸 | Fluazifop-butyl | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
+| 풀루아지포프-부틸 | Fluazifop-butyl | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 풀미옥사진 | Flumioxazin | 식물성 원료·생약 | - | 식물성 원료 | - | 사용 불가 (0%) | - | - | - | - |
 | 퓨란 | Furan | 기타 화학물질 | - | 헤테로고리화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 프라모카인 및 그 염류 | Pramocaine and its salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
@@ -1048,15 +1049,15 @@
 | 프로게스토젠 | Progestogens | 의약품 성분 | - | 동물성 원료 | - | 사용 불가 (0%) | - | - | - | - |
 | 프로그레놀론아세테이트 | Pregnenolone acetate | 기타 화학물질 | - | 아세트산염 | - | 사용 불가 (0%) | - | - | - | - |
 | 프로베네시드 | Probenecid | 의약품 성분 | - | 통풍 치료제 | - | 사용 불가 (0%) | - | - | - | - |
-| 프로카인아마이드, 그 염류 및 유도체 | Procainamide, its salts and derivatives | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
+| 프로카인아미드, 그 염류 및 유도체 | Procainamide, its salts and derivatives | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | 프로파지트 | Propargite | 농약류 | - | 농약류 | - | 사용 불가 (0%) | - | - | - | - |
 | 프로파진 | Propazine | 의약품 성분 | - | 항정신병제 | - | 사용 불가 (0%) | - | - | - | - |
 | 프로파틸나이트레이트 | Propatyl nitrate | 기타 화학물질 | - | 질산화합물 | - | 사용 불가 (0%) | - | - | - | - |
-| 4,4'-[1,3-프로판디일비스(옥시)]비스벤젠-1,3-디아민 및 그 테트라하이드로클로라이드염프로판, 염산 1,3-비스-(2,4-디아미노페녹시)프로판 하이드로클로라이드) | 4,4'-[1,3-Propanediylbis(oxy)]bisbenzene-1,3-diamine and its tetrahydrochloride salt (1,3-Bis-(2,4-diaminophenoxy)propane hydrochloride) | 염모제 중간체 | - | (다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 산으로서 1.2% 이하는 제외) | - | 사용 불가 (0%) | - | - | - | - |
+| 4,4'-[1,3-프로판디일비스(옥시)]비스벤젠-1,3-디아민 및 그 테트라하이드로클로라이드염(예 : 1,3-비스-(2,4-디아미노페녹시)프로판, 염산 1,3-비스-(2,4-디아미노페녹시)프로판 하이드로클로라이드) | 4,4'-[1,3-Propanediylbis(oxy)]bisbenzene-1,3-diamine and its tetrahydrochloride salt (1,3-Bis-(2,4-diaminophenoxy)propane hydrochloride) | 염모제 중간체 | - | (다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 산으로서 1.2% 이하는 제외) | - | 사용 불가 (0%) | - | - | - | - |
 | 1,3-프로판설톤 | 1,3-Propanesultone | 기타 화학물질 | - | 설폰화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 프로판-1,2,3-트리일트리나이트레이트 | Propane-1,2,3-triyl trinitrate (Nitroglycerin) | 기타 화학물질 | - | 질산화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 프로피오락톤 | Propiolactone (beta-Propiolactone) | 기타 화학물질 | - | 락톤류 | - | 사용 불가 (0%) | - | - | - | - |
-| 프로피자마이드 | Propyzamide | 농약류 | - | 농약류 | - | 사용 불가 (0%) | - | - | - | - |
+| 프로피자미드 | Propyzamide | 농약류 | - | 농약류 | - | 사용 불가 (0%) | - | - | - | - |
 | 프로피페나존 | Propyphenazone | 의약품 성분 | - | 진통제 | - | 사용 불가 (0%) | - | - | - | - |
 | Prunus laurocerasus L. | Prunus laurocerasus L. | 식물성 원료·생약 | - | 식물성 원료 | - | 사용 불가 (0%) | - | - | - | - |
 | 프시로시빈 | Psilocybine | 의약품 성분 | - | 환각제 | - | 사용 불가 (0%) | - | - | - | - |
@@ -1098,7 +1099,7 @@
 | 피톨라카(Phytolacca)속 및 그 제제 | Phytolacca species and their preparations | 식물성 원료·생약 | - | 식물 속 | - | 사용 불가 (0%) | - | - | - | - |
 | 피파제테이트 및 그 염류 | Pipazetate and its salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | 6-(피페리딘일)-2,4-피리미딘디아민-3-옥사이드(미녹시딜), 그 염류 및 유도체 | 6-(Piperidinyl)-2,4-pyrimidinediamine 3-oxide (Minoxidil), its salts and derivatives | 기타 화학물질 | - | 아민류 화합물 / 발모 의약품 성분, 화장품 사용금지 | - | 사용 불가 (0%) | 발모(의약품 성분) | - | - | - |
-| α-피페리딘-2-일벤질아세테이트 좌회전성의 트레오폼(레보파세토페란) 및 그 염류 | alpha-Piperidin-2-yl benzyl acetate, levorotatory threo form (Levophacetoperane) and its salts | 기타 화학물질 | - | 방향족 화합물 | - | 사용 불가 (0%) | - | - | - | - |
+| α-피페리딘-2-일벤질아세테이트 좌회전성의 트레오포름(레보파세토페란) 및 그 염류 | alpha-Piperidin-2-yl benzyl acetate, levorotatory threo form (Levophacetoperane) and its salts | 기타 화학물질 | - | 방향족 화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 피프라드롤 및 그 염류 | Pipradrol and its salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | 피프로쿠라륨 및 그 염류 | Piprocurarium and its salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | 형광증백제 | Fluorescent brighteners (except Fluorescent Brightener 367 in nail products - base coat, undercoat, nail polish, nail enamel, top coat - at 0.12% or less) | 기타 화학물질 | - | (다만, Fluorescent Brightener 367은 손발톱용 제품류 중 베이스코트, 언더코트, 네일 폴리시, 네일 에나멜, 탑코트에 0.12% 이하일 경우는 제외) | - | 사용 불가 (0%) | - | - | - | - |
@@ -1107,7 +1108,7 @@
 | 히드라지드 및 그 염류 | Hydrazides and their salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | 히드라진, 그 유도체 및 그 염류 | Hydrazine, its derivatives and their salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | 하이드로아비에틸 알코올 | Hydroabietyl alcohol | 기타 화학물질 | - | 알콜류 | - | 사용 불가 (0%) | - | - | - | - |
-| 히드로겐시아나이드 및 그 염류 | Hydrogen cyanide and its salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
+| 히드로겐시아니드 및 그 염류 | Hydrogen cyanide and its salts | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | 히드로퀴논 | Hydroquinone | 기타 화학물질 | - | 페놀류 / 미백효과 뚜렷하나 백반증·알레르기로 화장품 사용금지 | - | 사용 불가 (0%) | 미백(의약품 성분) | - | - | - |
 | 히드로플루오릭애씨드, 그 노르말 염, 그 착화합물 및 히드로플루오라이드 | Hydrofluoric acid, its normal salts, its complexes and hydrofluorides | 기타 화학물질 | - | 할로겐화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | N-[3-하이드록시-2-(2-메칠아크릴로일아미노메톡시)프록시메칠]-2-메칠아크릴아마이드, N-[2,3-비스-(2-메칠아크릴로일아미노메톡시)프록시메칠]-2-메칠아크릴아마이드, 메타크릴아마이드 및 2-메칠-N-(2-메칠아크릴로일아미노메칠)-아크릴아마이드 | N-[3-Hydroxy-2-(2-methylacryloylaminomethoxy)propoxymethyl]-2-methylacrylamide, N-[2,3-bis-(2-methylacryloylaminomethoxy)propoxymethyl]-2-methylacrylamide, methacrylamide and 2-methyl-N-(2-methylacryloylaminomethyl)acrylamide | 기타 화학물질 | - | 아민류 화합물 | - | 사용 불가 (0%) | - | - | - | - |
@@ -1158,7 +1159,7 @@
 | 1,7-헵탄디카르복실산(아젤라산), 그 염류 및 유도체 | 1,7-Heptanedicarboxylic acid (Azelaic acid), its salts and derivatives | 기타 화학물질 | - | 염류 | - | 사용 불가 (0%) | - | - | - | - |
 | 트랜스-2-헥세날디메칠아세탈 | trans-2-Hexenal dimethyl acetal | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 트랜스-2-헥세날디에칠아세탈 | trans-2-Hexenal diethyl acetal | 기타 화학물질 | - | 알킬화합물 | - | 사용 불가 (0%) | - | - | - | - |
-| 헨나(Lawsonia Inermis)잎가루 | Henna (Lawsonia inermis) leaf powder (except use as a hair dye ingredient) | 염모제 중간체 | - | (다만, 염모제에서 염모 성분으로 사용하는 것은 제외) | - | 사용 불가 (0%) | - | - | - | - |
+| 헨나(Lawsonia Inermis)엽가루 | Henna (Lawsonia inermis) leaf powder (except use as a hair dye ingredient) | 염모제 중간체 | - | (다만, 염모제에서 염모 성분으로 사용하는 것은 제외) | - | 사용 불가 (0%) | - | - | - | - |
 | 트랜스-2-헵테날 | trans-2-Heptenal | 기타 화학물질 | - | 트랜스화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 헵타클로로에폭사이드 | Heptachlor epoxide | 기타 화학물질 | - | 할로겐화합물 | - | 사용 불가 (0%) | - | - | - | - |
 | 헵타클로르 | Heptachlor | 농약류 | - | 농약류 | - | 사용 불가 (0%) | - | - | - | - |
@@ -1190,15 +1191,50 @@
 | 흉선(thymus) | Thymus | 동물성 원료 | - | 동물성 원료 | - | 사용 불가 (0%) | - | - | - | - |
 | 태반(placenta) | Placenta | 동물성 원료 | - | 동물성 원료 | - | 사용 불가 (0%) | - | - | - | - |
 | 「화학물질의 등록 및 평가 등에 관한 법률」제2조제9호 및 제27조에 따라 지정하고 있는 금지 물질 | Substances prohibited under Articles 2(9) and 27 of the Act on the Registration and Evaluation of Chemical Substances | 기타 화학물질 | - | 법률 관련 | - | 사용 불가 (0%) | - | - | - | - |
+| 2-(2-(4-클로로페닐)-2-페닐아세틸)인단 1,3-디온(클로로파시논-ISO) | Chlorophacinone (ISO) | 기타 화학물질 | - | - | - | 사용 불가 (0%) | - | - | - | - |
+| 「잔류성오염물질 관리법」제2조제1호에 따라 지정하고 있는 잔류성오염물질 | Persistent organic pollutants designated under Article 2(1) of the Persistent Organic Pollutants Control Act | 기타 화학물질 | - | - | - | 사용 불가 (0%) | - | - | - | - |
+| 1,5-디히드록시나프탈렌 | 1,5-Dihydroxynaphthalene | 염모제 중간체 | - | (다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.5% 이하 제외) | - | 사용 불가 (0%) | - | - | - | - |
+| 2,6-디아미노피리딘 | 2,6-Diaminopyridine | 염모제 중간체 | - | (다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.15% 이하 제외) | - | 사용 불가 (0%) | - | - | - | - |
+| 2-아미노-3-히드록시피리딘 | 2-Amino-3-hydroxypyridine | 염모제 중간체 | - | (다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.0% 이하 제외) | - | 사용 불가 (0%) | - | - | - | - |
+| 5-아미노-6-클로로-o-크레솔 | 5-Amino-6-chloro-o-cresol | 염모제 중간체 | - | (다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.0% 이하, 비산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.5% 이하 제외) | - | 사용 불가 (0%) | - | - | - | - |
+| 5-아미노-o-크레솔 | 5-Amino-o-cresol | 염모제 중간체 | - | (다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.0% 이하 제외) | - | 사용 불가 (0%) | - | - | - | - |
+| 6-히드록시인돌 | 6-Hydroxyindole | 염모제 중간체 | - | (다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.5% 이하 제외) | - | 사용 불가 (0%) | - | - | - | - |
+| N-페닐-p-페닐렌디아민 및 그 염류 | N-Phenyl-p-phenylenediamine and its salts | 염모제 중간체 | - | (다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 N-페닐-p-페닐렌디아민으로서 2.0% 이하 제외) | - | 사용 불가 (0%) | - | - | - | - |
+| p-니트로-o-페닐렌디아민 | p-Nitro-o-phenylenediamine | 염모제 중간체 | - | (다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.5% 이하 제외) | - | 사용 불가 (0%) | - | - | - | - |
+| 염산 2,4-디아미노페놀 | 2,4-Diaminophenol dihydrochloride | 염모제 중간체 | - | (다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.02% 이하 제외) | - | 사용 불가 (0%) | - | - | - | - |
+| 염산 p-페닐렌디아민 | p-Phenylenediamine hydrochloride | 염모제 중간체 | - | (다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 3.3% 이하 제외) | - | 사용 불가 (0%) | - | - | - | - |
+| 염산 톨루엔-2,5-디아민 | Toluene-2,5-diamine hydrochloride | 염모제 중간체 | - | (다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 3.2% 이하 제외) | - | 사용 불가 (0%) | - | - | - | - |
+| 황산 1-히드록시에칠-4,5-디아미노피라졸 | 1-Hydroxyethyl-4,5-diaminopyrazole sulfate | 염모제 중간체 | - | (다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 3.0% 이하 제외) | - | 사용 불가 (0%) | - | - | - | - |
+| 황산 5-아미노-o-크레솔 | 5-Amino-o-cresol sulfate | 염모제 중간체 | - | (다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 4.5% 이하 제외) | - | 사용 불가 (0%) | - | - | - | - |
+| 황산 N,N-비스(2-히드록시에칠)-p-페닐렌디아민 | N,N-Bis(2-hydroxyethyl)-p-phenylenediamine sulfate | 염모제 중간체 | - | (다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 2.9% 이하 제외) | - | 사용 불가 (0%) | - | - | - | - |
+| 황산 m-아미노페놀 | m-Aminophenol sulfate | 염모제 중간체 | - | (다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 2.0% 이하 제외) | - | 사용 불가 (0%) | - | - | - | - |
+| 황산 p-니트로-o-페닐렌디아민 | p-Nitro-o-phenylenediamine sulfate | 염모제 중간체 | - | (다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 2.0% 이하 제외) | - | 사용 불가 (0%) | - | - | - | - |
+| 황산 p-메칠아미노페놀 | p-Methylaminophenol sulfate | 염모제 중간체 | - | (다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.68% 이하 제외) | - | 사용 불가 (0%) | - | - | - | - |
+| 황산 p-아미노페놀 | p-Aminophenol sulfate | 염모제 중간체 | - | (다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.3% 이하 제외) | - | 사용 불가 (0%) | - | - | - | - |
+| 황산 p-페닐렌디아민 | p-Phenylenediamine sulfate | 염모제 중간체 | - | (다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 3.8% 이하 제외) | - | 사용 불가 (0%) | - | - | - | - |
+| 황산 톨루엔-2,5-디아민 | Toluene-2,5-diamine sulfate | 염모제 중간체 | - | (다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 3.6% 이하 제외) | - | 사용 불가 (0%) | - | - | - | - |
+| m-아미노페놀 | m-Aminophenol | 염모제 중간체 | - | (다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 2.0% 이하 제외) | - | 사용 불가 (0%) | - | - | - | - |
+| p-아미노페놀 | p-Aminophenol | 염모제 중간체 | - | (다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.9% 이하 제외) | - | 사용 불가 (0%) | - | - | - | - |
+| 피크라민산 | Picramic acid | 염모제 중간체 | - | (다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.6% 이하 제외) | - | 사용 불가 (0%) | - | - | - | - |
+| 피크라민산 나트륨 | Sodium picramate | 염모제 중간체 | - | (다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.6% 이하 제외) | - | 사용 불가 (0%) | - | - | - | - |
+| 인디고페라(Indigofera tinctoria)엽가루 | Indigofera tinctoria leaf powder | 염모제 중간체 | - | (다만, 비산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 25% 이하 제외) | - | 사용 불가 (0%) | - | - | - | - |
+| 5-[(2-하이드록시에칠)아미노]-o-크레졸 및 그 염류(예 : 2-메칠-5-하이드록시에칠아미노페놀) | 5-[(2-Hydroxyethyl)amino]-o-cresol and its salts (2-Methyl-5-hydroxyethylaminophenol) | 염모제 중간체 | - | (다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 0.5% 이하 제외) | - | 사용 불가 (0%) | - | - | - | - |
+| 4-(2-하이드록시에칠)아미노-3-니트로페놀 및 그 염류(예 : 3-니트로-p-하이드록시에칠아미노페놀) | 4-(2-Hydroxyethyl)amino-3-nitrophenol and its salts (3-Nitro-p-hydroxyethylaminophenol) | 염모제 중간체 | - | (다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 3.0% 이하, 비산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.85% 이하 제외) | - | 사용 불가 (0%) | - | - | - | - |
+| 1-메칠-3-니트로-4-(베타-하이드록시에칠)아미노벤젠 및 그 염류(예 : 하이드록시에칠-2-니트로-p-톨루이딘) | 1-Methyl-3-nitro-4-(beta-hydroxyethyl)aminobenzene and its salts (Hydroxyethyl-2-nitro-p-toluidine) | 염모제 중간체 | - | (다만, 염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.0% 이하 제외) | - | 사용 불가 (0%) | - | - | - | - |
+| 1-아미노-2-니트로-4-(2',3'-디하이드록시프로필)아미노-5-클로로벤젠과 1,4-비스-(2',3'-디하이드록시프로필)아미노-2-니트로-5-클로로벤젠 및 그 염류(예 : 에이치시 적색 No. 10과 에이치시 적색 No. 11) | HC Red No. 10 and HC Red No. 11 | 염모제 중간체 | - | (다만, 산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 1.0% 이하, 비산화염모제에서 용법·용량에 따른 혼합물의 염모 성분으로서 2.0% 이하 제외) | - | 사용 불가 (0%) | - | - | - | - |
 
 ---
 • 황산 o-클로로-p-페닐렌디아민 추가 (2023년말 개정으로 염모제 관련 금지 성분 7종에 포함되었으나 원본에 누락되어 있었음)
 
-### 확인했지만 반영하지 못한 사항 (원문 미확보)
+### 확인 후 반영한 사항 (고시 제2026-19호 전수 대조, 2026.9)
 • 2025.9월 개정(고시 제2025-63호, 2026.3.3 시행)에서 "6개 성분 사용기준 강화" 대상으로 언급된 성분 처리 현황:
   - 벤조페논-3(옥시벤존), 노녹시놀-9(17.2%), 부틸페닐메칠프로피오날(릴리알, 0.14%), 사이클로테트라실록세인(D4, 8.7%) → **별표2 파일(restricted_ingredients.md)에 수치까지 반영 완료**
   - 2,6-디하이드록시에칠아미노톨루엔(별표1) → 이 파일에 이미 반영
-  - 사이클로펜타실록세인(D5) → 정확한 신규 수치 미확보로 보류 중
+  - 사이클로펜타실록세인(D5, 19.7%) → **제2026-19호 원문에서 수치를 확보하여 restricted_ingredients.md에 반영 완료** (고시 후 3년 경과일부터 적용)
+• 제2026-19호 전수 대조 반영(상세: `docs/dev/ingredients_audit_제2026-19호.md`):
+  - 한글명 고시 표기 동기화 약 80건, 손상 행 복구 4건
+  - 누락 추가: 클로로파시논-ISO, 「잔류성오염물질 관리법」 제2조제1호 지정 물질, 별표1 각주1) 염모제 예외 원료 27종(1,5-디히드록시나프탈렌·황산 톨루엔-2,5-디아민·피크라민산 등 — 별표2 한도 내 염모 성분 사용 시 제외 조건 명기), 인디고페라 엽가루 등 31건
+  - 자일렌 잔류용매 예외([별표 3] 자. 손발톱용 제품류 0.01%/기타 0.002%), 카본블랙 불순물 예외(벤조피렌·디벤즈(a,h)안트라센 각 5ppb, 총 PAHs 0.5ppm)를 고시 원문 표기로 정규화
 
 ### 권고
 **시험이 임박했다면, 마지막에는 반드시 식약처(mfds.go.kr) 또는 법제처(law.go.kr)에서 최신 고시 원문(전문 PDF/HWP)을 직접 내려받아 별표1·별표2 전체를 확인하세요.** 이 문서는 학습용 요약·정리 자료이며, 법적 효력이 있는 원문을 대체할 수 없습니다.
@@ -1207,7 +1243,7 @@
 
 ## 📋 영문명 보완 및 조제관리사 기준 검토 메모 (2026.7 작업)
 
-**보완 결과:** 전체 데이터행 1,135건 중 **1,135건에 영문명 기재 완료**. 2026.7 작업에서 식별된 데이터 품질 이슈는 아래와 같이 모두 해결되었습니다.
+**보완 결과:** 전체 데이터행 1,097건 중 **1,097건에 영문명 기재 완료**. 2026.7 작업에서 식별된 데이터 품질 이슈는 아래와 같이 모두 해결되었으며, 2026.9 제2026-19호 전수 대조에서 추가된 31건도 영문명을 함께 기재했습니다.
 
 **기재 기준:** 별표1(사용할 수 없는 원료)은 사실상 EU 화장품규정 Annex II의 한글 음역본입니다. 영문명은 ① 체계적 화학명(IUPAC), ② 의약품 INN, ③ 농약 ISO 공통명, ④ 색소명(CI / Solvent / Basic / Disperse / Pigment), ⑤ 식물 라틴 학명으로 복원했습니다.
 

@@ -121,6 +121,7 @@ docs/
 | [COMBO_GENERATION_GUIDE.md](dev/runbooks/COMBO_GENERATION_GUIDE.md) | 복수정답형 드릴 생성 도구 — `build_combo_drills.js` + `ref_statements.js` |
 | [TEXTBOOK_REFERENCE_MAPPING.md](dev/reference/TEXTBOOK_REFERENCE_MAPPING.md) | 교재 챕터/섹션 ↔ 참조자료 파일 매핑 정의 |
 | [COMBO_STUDY_STRATEGY.md](dev/reference/COMBO_STUDY_STRATEGY.md) | 복수정답형 학습 전략 — 진술 원자 단위 학습법, 전략→기능 매핑 (코드 주석에서 참조) |
+| [ingredients_audit_제2026-19호.md](dev/ingredients_audit_제2026-19호.md) | 원료 DB ↔ 고시 제2026-19호 별표1·별표2 전수 대조 리포트 — 오류 정정·누락 추가·반영 결과 (`ref-pipeline/compare_ingredients_official.py`) |
 
 ### Formula OS (실무)
 
@@ -250,6 +251,7 @@ docs/
 | DOC-DEV-02 | `docs/dev/ARCHITECTURE.md` |
 | DOC-DEV-03 | `docs/dev/CHANGES.md` |
 | DOC-DEV-04 | `docs/dev/TRACE_MATRIX.md` (자동 생성 — npm run build:trace) |
+| DOC-DEV-05 | `docs/dev/ingredients_audit_제2026-19호.md` |
 | DOC-DSN-01 | `docs/dev/design/DOM_TEST_DESIGN.md` |
 | DOC-DSN-02 | `docs/dev/design/FORMULA_OS_WORKFLOW_DESIGN.md` |
 | DOC-DSN-03 | `docs/dev/design/LEARNING_PREMIUM_PLAN.md` |

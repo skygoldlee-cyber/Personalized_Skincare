@@ -2,7 +2,7 @@
 var DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2027",
-  "generatedAt": "2026-09-28T08:47:09.310Z",
+  "generatedAt": "2026-09-28T12:18:36.015Z",
   "subjects": [
     {
       "key": "law",
@@ -128,13 +128,18 @@ var DATA_REGISTRY = {
     }
   ],
   "ingredients": {
-    "bundle": "./data/exams/cosmetic/ingredients_data.35731e31.js",
+    "bundle": "./data/exams/cosmetic/ingredients_data.c7ea7fa0.js",
     "global": "INGREDIENTS_DATA",
-    "contentHash": "35731e31",
-    "version": "2026.09.6",
-    "updatedAt": "2026-09-22",
-    "notice": "금지 원료 1,073종 전체에 분류 체계 적용 — 기타 화학물질·의약품 성분·유기용제·색소·생약·농약·염모제 중간체·중금속 등 13개 카테고리로 세분화",
+    "contentHash": "c7ea7fa0",
+    "version": "2026.09.7",
+    "updatedAt": "2026-09-28",
+    "notice": "식약처 고시 제2026-19호(화장품 안전기준 등에 관한 규정, 2026.3.18 시행) 별표1·별표2 전수 대조 반영 — 한도 오류 2건 정정(에칠헥실살리실레이트 5%·2-헥실리덴사이클로펜타논 0.06%), 한글명 고시 표기 동기화 약 100건, 누락 추가 65종(D5 19.7%·옥티녹세이트 7.5%·염모제·클로로파시논·잔류성오염물질 등), 손상 행 복구. 대조 리포트: docs/dev/ingredients_audit_제2026-19호.md",
     "history": [
+      {
+        "version": "2026.09.6",
+        "updatedAt": "2026-09-22",
+        "notice": "금지 원료 1,073종 전체에 분류 체계 적용 — 기타 화학물질·의약품 성분·유기용제·색소·생약·농약·염모제 중간체·중금속 등 13개 카테고리로 세분화"
+      },
       {
         "version": "2026.09.5",
         "updatedAt": "2026-09-22",
@@ -162,7 +167,7 @@ var DATA_REGISTRY = {
       }
     ],
     "stats": {
-      "count": 1376
+      "count": 1402
     }
   },
   "resources": {
