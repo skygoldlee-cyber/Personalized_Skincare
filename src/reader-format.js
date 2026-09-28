@@ -11,13 +11,50 @@ import { getGlossaryEntry } from './glossary-query.js';
 import { lawUrlFor } from './law-links.js';
 
 // 참조자료 문서명 → law.go.kr 공식 원문(최신 통합본) 링크 조각 (매칭 없으면 빈 문자열)
-function lawExtLink(name, anchorCls = 'ref-law-ext') {
+// label/title은 호출부가 문맥에 맞게 지정 (원료 DB는 '근거 고시')
+function lawExtLink(name, anchorCls = 'ref-law-ext', label = '원문', titleSuffix = '공식 최신 통합본') {
     const url = lawUrlFor(name);
     if (!url) return '';
-    return ` <a href="${url}" target="_blank" rel="noopener" class="${anchorCls}" title="${escapeHTML(name)} — law.go.kr 공식 최신 통합본" aria-label="law.go.kr 공식 원문 (새 탭)"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>원문</a>`;
+    return ` <a href="${url}" target="_blank" rel="noopener" class="${anchorCls}" title="${escapeHTML(name)} — law.go.kr ${titleSuffix} (새 탭)" aria-label="${escapeHTML(label)} — law.go.kr (새 탭)"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>${escapeHTML(label)}</a>`;
+}
+
+// 파일명 → 읽기용 표시명: 확장자·(발령기관)(제N호)(시행일) 꼬리 제거, 언더스코어→공백
+// 예: '화장품법(법률)(제20901호)(20260402).md' → '화장품법'
+function prettyRefName(fileName) {
+    const pretty = decodeURIComponent(String(fileName || ''))
+        .replace(/\.(md|pdf|html?)$/i, '')
+        .replace(/\([^)]*\)/g, '')
+        .replace(/_/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+    return pretty || String(fileName || '');
+}
+
+// 파일명의 (제N호)(YYYYMMDD) 꼬리 → 내부 스냅샷 버전 배지 (없으면 빈 문자열)
+// law.go.kr 링크는 항상 최신 통합본이므로 버전 차이를 명시한다
+function refSnapshotBadge(fileName) {
+    const m = String(fileName || '').match(/\(제?([\d-]+호)\)\s*\((\d{4})(\d{2})(\d{2})\)/);
+    if (!m) return '';
+    const ver = `제${m[1]} · ${m[2]}-${m[3]}-${m[4]}`;
+    return ` <span class="ref-snapshot" title="앱 내 문서는 이 고시 기준으로 변환된 스냅샷입니다">스냅샷 ${escapeHTML(ver)}</span>`;
+}
+
+// '📚 참조 자료' 섹션 내 동일 링크 라인 중복 제거 (원본 MD의 중복 항목을 렌더링 단계에서 정리)
+function dedupeRefListSection(mdText) {
+    return String(mdText).replace(/(##[^\n]*참조\s*자료[^\n]*\n[\s\S]*?)(?=\n##|\n---\s*\n+##|$)/g, (section) => {
+        const seen = new Set();
+        return section.split('\n').filter(line => {
+            const t = line.trim();
+            if (!/^[-•*]?\s*\[/.test(t)) return true;
+            if (seen.has(t)) return false;
+            seen.add(t);
+            return true;
+        }).join('\n');
+    });
 }
 
 export function formatSectionContentForReader(rawContent, filePath, refPath, refFiles, refDir, glossaryKeywords, sectionTitle) {
+    rawContent = dedupeRefListSection(rawContent);
     let html = parseMarkdown(rawContent, {
         useCustomListDiv: true,
         useReaderStyles: true,
@@ -101,8 +138,9 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
         /<a href="((?:\.\.\/)?참조자료\/ref_md\/[^"]+\.md)">([^<]+)<\/a>/g,
         (match, rawPath, linkText) => {
             const absPath = normalizeRefPath(rawPath);
-            const fileName = decodeURIComponent(rawPath.split('/').pop() || '').replace(/\.md$/i, '');
-            return `<a href="#" data-ref-html="${escapeHTML(absPath)}" class="source-link"><i class="fa-solid fa-file-lines"></i> ${escapeHTML(linkText)}</a>${lawExtLink(fileName)}`;
+            const fileName = decodeURIComponent(rawPath.split('/').pop() || '');
+            const displayName = prettyRefName(fileName || linkText);
+            return `<a href="#" data-ref-html="${escapeHTML(absPath)}" class="source-link"><i class="fa-solid fa-file-lines"></i> ${escapeHTML(displayName)}</a>${refSnapshotBadge(fileName)}${lawExtLink(fileName)}`;
         }
     );
 
@@ -112,7 +150,8 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
         /<a href="((?:\.\.\/)?참조자료\/원료\/[^"]+\.md)">([^<]+)<\/a>/g,
         (match, rawPath, linkText) => {
             const absPath = normalizeRefPath(rawPath);
-            return `<a href="#" data-ref-html="${escapeHTML(absPath)}" class="source-link"><i class="fa-solid fa-file-lines"></i> ${escapeHTML(linkText)}</a>`;
+            const fileName = decodeURIComponent(rawPath.split('/').pop() || '');
+            return `<a href="#" data-ref-html="${escapeHTML(absPath)}" class="source-link"><i class="fa-solid fa-file-lines"></i> ${escapeHTML(linkText)}</a>${lawExtLink(fileName, 'ref-law-ext', '근거 고시', '근거 고시 원문')}`;
         }
     );
 

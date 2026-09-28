@@ -27,6 +27,10 @@ const LAW_DOC_URLS = [
   ['안전기준', `${LAW_ADM}/화장품안전기준등에관한규정`],
   ['우수화장품', `${LAW_ADM}/우수화장품제조및품질관리기준`],
   ['CGMP', `${LAW_ADM}/우수화장품제조및품질관리기준`],
+  // ——— 내부 원료 DB → 근거 고시 (원문이 아니라 근거 문서) ———
+  ['banned_ingredients', `${LAW_ADM}/화장품안전기준등에관한규정`],      // 안전기준 별표1
+  ['restricted_ingredients', `${LAW_ADM}/화장품안전기준등에관한규정`],  // 안전기준 별표2
+  ['colorants_ingredients', `${LAW_ADM}/화장품의색소종류및기준`],       // 색소 고시
 ];
 
 /**

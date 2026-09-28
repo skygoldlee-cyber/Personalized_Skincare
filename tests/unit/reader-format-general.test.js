@@ -65,6 +65,13 @@ test('참조자료 ref_md 링크 — 매칭 없는 문서는 원문 링크 없�
     assert.ok(!html.includes('ref-law-ext'), '원문 링크 없음');
 });
 
+test('참조 자료 섹션 내 동일 링크 중복 제거 (다른 섹션은 유지)', () => {
+    const md = '## 📚 참조 자료 (법령 원문)\n• [a.md](../참조자료/ref_md/과목1/a/a.md)\n• [a.md](../참조자료/ref_md/과목1/a/a.md)\n\n## ⚡ 다음 섹션\n• [a.md](../참조자료/ref_md/과목1/a/a.md)';
+    const html = formatSectionContentForReader(md);
+    const count = (html.match(/data-ref-html/g) || []).length;
+    assert.equal(count, 2, '섹션 내 중복 1개 제거 + 타 섹션 1개 유지');
+});
+
 test('참조자료 링크: [file.pdf](../참조자료/...) → source-link', () => {
     // URL에 괄호가 있으면 markdown parser의 link regex가 끊기므로
     // 괄호 없는 파일명으로 테스트

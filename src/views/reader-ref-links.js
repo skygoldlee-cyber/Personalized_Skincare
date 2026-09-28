@@ -3,6 +3,7 @@
 // 역할: 단원별 참조자료 링크 HTML 생성(buildReferenceLinks), 호버/롱프레스 프리뷰 툴팁,
 //       data-ref-*/data-exam-md/data-glossary 클릭 위임(document 단일 리스너).
 import { esc } from '../sanitize.js';
+import { showToast } from '../ui-utils.js';
 import { openHtmlViewer } from '../html-viewer.js';
 import { scrollToGlossary } from './glossary-renderer.js';
 import { getRefTables, resolveRefPath } from '../pdf-registry.js';
@@ -13,9 +14,9 @@ import { openSubjectChapter } from './textbook-reader.js';
 
 // 참조자료 항목 + law.go.kr 원문 링크(있으면) — 식약처/법제처 공식 문서는 전부 매칭됨
 // 표시명·파일명 모두 매칭 시도 (어느 쪽이든 공식 문서명이 들어있음)
-function refItemRow(inner, name, file) {
+function refItemRow(inner, name, file, extLabel = '원문') {
     const url = lawUrlFor(file) || lawUrlFor(name);
-    const ext = url ? `<a href="${url}" target="_blank" rel="noopener" class="ref-law-ext" title="law.go.kr 공식 원문 (최신 통합본)" aria-label="${esc(name)} — law.go.kr 원문"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i><span class="ref-law-ext-txt">원문</span></a>` : '';
+    const ext = url ? `<a href="${url}" target="_blank" rel="noopener" class="ref-law-ext" title="law.go.kr ${extLabel === '원문' ? '공식 원문 (최신 통합본)' : extLabel + ' 문서'} (새 탭)" aria-label="${esc(name)} — law.go.kr ${esc(extLabel)}"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i><span class="ref-law-ext-txt">${esc(extLabel)}</span></a>` : '';
     return `<span class="ref-link-row">${inner}${ext}</span>`;
 }
 
@@ -68,13 +69,13 @@ export function buildReferenceLinks(subjId, contextRefPath) {
         });
     }
     
-    // 원료 참조자료
+    // 원료 참조자료 (내부 DB → 근거 고시 링크)
     links += `<div class="ref-group-label">원료 참조자료</div>`;
     REFERENCE_INGREDIENTS.forEach(f => {
         const inner = f.type === 'md'
             ? `<a class="ref-link-item" data-ref-md="${esc(PATHS.REFERENCE_FILE(f.dir, f.file))}"><i class="fa-solid fa-file-lines"></i> ${esc(f.name)}</a>`
             : `<a href="#" data-ref-html="${esc(resolveRefPath(f.file))}" class="ref-link-item"><i class="fa-solid fa-file-lines"></i> ${esc(f.name)}</a>`;
-        links += refItemRow(inner, f.name, f.file);
+        links += refItemRow(inner, f.name, f.file, '근거 고시');
     });
     
     // 법령·고시 원문
@@ -183,6 +184,13 @@ function _initRefLinkDelegation() {
     _refLinksDelegationInitialized = true;
     // click 이벤트 위임: document에서 단일 리스너로 처리
     document.addEventListener('click', (e) => {
+        // law.go.kr 원문 링크는 온라인 전용 — 오프라인이면 안내 후 차단
+        const ext = /** @type {Element|null} */ (e.target)?.closest('a.ref-law-ext, a.comp-law-ext');
+        if (ext && navigator.onLine === false) {
+            e.preventDefault();
+            showToast('공식 원문 보기는 온라인 연결이 필요합니다');
+            return;
+        }
         const a = /** @type {HTMLElement|null} */ ((/** @type {Element|null} */ (e.target))?.closest('[data-exam-md], [data-ref-md], [data-ref-html], [data-ref-subject], [data-glossary]'));
         if (!a) return;
         if (a.hasAttribute('data-exam-md')) {
