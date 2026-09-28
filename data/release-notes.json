@@ -1,5 +1,12 @@
 [
   {
+    "version": "v20260928-a2a6156",
+    "date": "2026-09-28",
+    "notes": [
+      "[수정·notice] CSP connect-src에 raw.githubusercontent.com 허용"
+    ]
+  },
+  {
     "version": "v20260928-4873aec",
     "date": "2026-09-28",
     "notes": [
@@ -145,13 +152,6 @@
     "date": "2026-09-28",
     "notes": [
       "feat(tools): 교재 변경 추적 체인 강화 — silent-skip·CI 게이트·역방향 검사·ID 이관 체크"
-    ]
-  },
-  {
-    "version": "v369-20260928-02ca895",
-    "date": "2026-09-28",
-    "notes": [
-      "fix: 모바일 탭 레이블 통일 — 교재읽기 → 교재리더"
     ]
   }
 ]
