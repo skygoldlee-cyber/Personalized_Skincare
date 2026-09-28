@@ -6,6 +6,18 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-09-28 맞춤학습 심층 분석 — analysis-engine.js 신설 + 진단 카드 5종
+
+- **`src/analysis-engine.js` 신규** — 맞춤학습 뷰의 분석 로직을 DOM 비의존 순수 함수로 분리 (과목 키·단원명은 전부 데이터 주입형이라 과목 구성 변경에 무수정):
+  - `computeChapterWeakness` — 퀴즈 오답(category)·모의고사 오답(questionChapters)·진술 오판(cid→CHAPTER_RANGES)을 교재 단원으로 집계
+  - `computeWeeklyGrowth` — 최근 7일 vs 이전 7일 정답률·학습량 델타 (study_calendar 활용)
+  - `computePassGap` — 예상 점수↔합격선 갭 + 최우선 보강 과목 (모의고사 subjectRates 우선, 퀴즈 정답률 폴백, 레거시 subjectN 키 환산)
+  - `computeWeakConceptClusters` — 같은 교재 구간(cid)의 반복 오판 묶음 탐지
+  - `computePaceProjection` — 최근 14일 페이스로 D-day까지 예상 커버율 (ahead/ontrack/behind)
+  - `estimateUntaggedCauses` — 미태깅 오답의 원인 자동 추정 (숫자 정답→계산, 부정형 문항→개념, 나머지→암기)
+- **맞춤학습 뷰 확장** — 진단 카드 3종 → 5종: 취약 진술에 실제 텍스트+참/거짓 배지 표시(sid 대신), 신규 "📖 단원별 취약 분석"·"🎓 합격 갭 분석" 카드, 학습 리듬에 주간 정답률 델타·페이스 판정 추가, 오답 패턴에 미태깅 추정치 보완
+- **테스트**: `tests/unit/analysis-engine.test.js` 13건 (임의 과목 키로 모듈화 검증 포함)
+
 ## 2026-09-28 시험 연도 SSOT — exams.json.year에서 전체 전파
 
 - **`build_exams_list.js` `syncYearToDerivedFiles()` 추가**: `content/exams.json[].year`를 유일한 진실 소스로 하위 연도 표기에 자동 전파 — ① 각 시험 `manifest.json`의 `contentYear`(→ registry `{year}` 템플릿 → 대시보드 부제목) ② 기본 시험 기준 `index.html` meta description·`#view-subtitle` 폴백 ③ `manifest.webmanifest` description. 빌드 체인 첫 단계(`build:exams-list`)에서 실행되므로 이후 `index.js`가 갱신된 `contentYear`를 읽어 registry에 반영 — 연도 변경은 `exams.json` 수정 + `build:data`만으로 완결

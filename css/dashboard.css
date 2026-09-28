@@ -198,6 +198,29 @@
     color: var(--color-text-secondary);
 }
 
+/* 진술 참/거짓 배지 — 취약 진술 카드 */
+.analysis-truth {
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-muted);
+    padding: 0.1rem 0.35rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+}
+
+/* 주간 정답률 델타 — 학습 리듬 카드 */
+.growth-delta {
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-semibold);
+}
+.growth-up { color: var(--color-success); }
+.growth-down { color: var(--color-danger); }
+
+/* 합격 갭 — 최우선 과목 강조 */
+.gap-weakest {
+    color: var(--color-danger);
+}
+
 .analysis-empty {
     font-size: var(--text-sm);
     color: var(--color-text-muted);

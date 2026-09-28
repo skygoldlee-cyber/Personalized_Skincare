@@ -3,7 +3,7 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: 11fc0dba33930f46
+> 입력 해시: a0b455de267b45d9
 > 생성: 2026-09-28 · 원천: SPEC.md(351개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
@@ -44,8 +44,8 @@
 
 | ID | 상태 | 검증 수단 | 문서 | 소스 | 테스트 | 보고서 | 출처 |
 |----|------|-----------|------|------|--------|--------|------|
-| AN-01 | ✅ | 테스트 | DOC-DSN-03 | html/views/analysis.html<br>index.html<br>src/views/dashboard.js | tests/dom/study-dashboard.dom.test.js | DOC-ARC-09 | — |
-| AN-02 | ✅ | 테스트 | DOC-DSN-03 | src/views/dashboard.js<br>src/views/quiz-wrong-cause.js | tests/dom/study-dashboard.dom.test.js | DOC-ARC-09 | — |
+| AN-01 | ✅ | 테스트 | DOC-DSN-03 | html/views/analysis.html<br>index.html<br>src/analysis-engine.js<br>src/views/dashboard.js | tests/dom/study-dashboard.dom.test.js<br>tests/unit/analysis-engine.test.js | DOC-ARC-09 | — |
+| AN-02 | ✅ | 테스트 | DOC-DSN-03 | src/analysis-engine.js<br>src/views/dashboard.js<br>src/views/quiz-wrong-cause.js | tests/dom/study-dashboard.dom.test.js<br>tests/unit/analysis-engine.test.js | DOC-ARC-09 | — |
 | AN-03 | ✅ | 테스트 | DOC-DSN-03 | src/views/dashboard.js | tests/dom/study-dashboard.dom.test.js | DOC-ARC-09 | — |
 
 ## 3.2 플래시카드
