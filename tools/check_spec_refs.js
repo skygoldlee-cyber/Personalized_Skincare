@@ -55,6 +55,7 @@ function* walk(dir) {
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
     const p = path.join(dir, e.name);
     if (e.isDirectory()) {
+      if (e.name.startsWith('.') || e.name === 'node_modules') continue; // 중첩 node_modules·숨김 디렉터리 제외
       const rel = path.relative(ROOT, p);
       if (!EXCLUDE_DIRS.some((x) => rel === x || rel.startsWith(x + path.sep))) yield* walk(p);
     } else if (SCAN_EXTS.has(path.extname(e.name))) {

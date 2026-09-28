@@ -17,9 +17,12 @@ const path = require('path');
 const { execSync } = require('child_process');
 const T = require('./lib/trace_scan');
 
+const REF_RE = /^(?!-)[A-Za-z0-9][A-Za-z0-9._/-]*$/; // git ref 형식 — 플래그·셸 인젝션 차단
+
 function gitChanged(ref) {
   try {
     if (ref) {
+      if (!REF_RE.test(ref)) { console.error(`유효하지 않은 ref: ${ref}`); process.exit(2); }
       return execSync(`git diff --name-only ${ref}...HEAD`, { cwd: T.ROOT, encoding: 'utf8' })
         .split('\n').map(s => s.trim()).filter(Boolean);
     }

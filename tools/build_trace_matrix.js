@@ -137,7 +137,7 @@ function build(specIds, src, tst, docs, reports, meta, missingRef) {
 
 function main() {
   const checkOnly = process.argv.includes('--check');
-  const { specIds, src, tst, docs, reports, meta, missingRef } = T.scanAll();
+  const { specIds, src, tst, docs, reports, meta, missingRef, docErrors } = T.scanAll();
 
   if (checkOnly) {
     const want = inputsHash(specIds);
@@ -149,6 +149,11 @@ function main() {
     console.log(`⚠ TRACE_MATRIX.md가 입력과 다릅니다 (${got || '없음'} → ${want})`);
     console.log(`  SPEC·@spec·문서 헤더 변경 후 재생성이 필요합니다: npm run build:trace`);
     process.exit(1);
+  }
+
+  if (docErrors?.length) {
+    console.log(`⚠ "관련 SPEC ID" 헤더 파싱 경고 ${docErrors.length}건:`);
+    for (const e of docErrors) console.log(`  - ${e}`);
   }
 
   fs.writeFileSync(OUT_FILE, build(specIds, src, tst, docs, reports, meta, missingRef));

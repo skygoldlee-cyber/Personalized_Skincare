@@ -252,6 +252,14 @@
 - 목적: SPEC ID(요구사항 추적)와 별개로 **문서 자체의 참조·인용 가능 ID** 확보 — CHANGES·커밋·문서 상호참조에서 `DOC-XXX-NN`으로 지칭 가능
 - `combo_review_queue.md`는 자동 생성물이라 예외(gitignore). ref-pipeline `.pytest_cache` 등 숨김 디렉터리는 검사 제외
 
+## 2026-09-28 추적 도구 리뷰 수정 — 정규식 동기화·walk 제외·오류 표면화
+
+- **trace_scan.js 정규식 분기 수정**: `check_spec_refs.js`보다 오래된 ID_RE/RANGE_RE로 `TR-16a`·`P-04a`·`ROAD-L1~L5`를 누락하던 버그 → 두 도구 동일 규격으로 동기화. `extractSpec`은 선언 형태(`| ID |`·`**ID**`) 절을 우선 기록.
+- **중첩 `node_modules`·숨김 디렉터리 제외**: `trace_scan`·`check_spec_refs`·`check_doc_ids`의 walk가 루트 레벨만 걸러내던 것을 어느 깊이든 제외로 통일.
+- **`trace.js`**: 인자 대문자 변환을 `DOC-` 판별 전으로 이동 — `doc-dsn-03` 소문자 인자 오분류 수정.
+- **`impact_tests.js`**: `--ref` 인자에 git ref 형식 검증(`REF_RE`) 추가 — 플래그·셸 인젝션 차단.
+- **`trace_scan.expandIds`**: 해석 불가 토큰의 오류 수집 경로 추가 — 문서 헤더 `관련 SPEC ID` 형식 오류가 TRACE_MATRIX 생성 시 무소음 드롭되던 문제를 경고 출력으로 표면화 (`build:trace` 시 표시).
+
 ## 2026-10-13 check:docs 스테일 경로 해소 + 함수 레벨 @spec 태깅
 
 - **check:docs 27건 해소**: 전부 빌드/파이프라인 생성 산출물 경로(gitignore 대상 — `audiobook/mp3/`·`{EXAM}/html/`·`{EXAM}/report/`·`ref_md_v2/`·`data/**/subjects/*.js` 등)로 판정 → `tools/config/docs_paths_allowlist.json`에 file+ref+reason 등록. 실제 스테일 문서 없음 확인.

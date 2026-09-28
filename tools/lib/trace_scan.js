@@ -54,8 +54,8 @@ function* walk(dir, exts) {
   }
 }
 
-/** @spec·관련 SPEC ID 토큰 → ID 집합 (범위·나열·접두사 와일드카드) */
-function expandIds(tagText, specIds = new Set()) {
+/** @spec·관련 SPEC ID 토큰 → ID 집합 (범위·나열·접두사 와일드카드). errors 배열을 넘기면 해석 불가 토큰을 수집 */
+function expandIds(tagText, specIds = new Set(), errors = null, src = '') {
   const ids = new Set();
   if (/^(none\b|해당|전 영역)/.test(tagText.trim())) return ids;
   for (const raw of tagText.split(/[,·]/)) {
@@ -81,7 +81,9 @@ function expandIds(tagText, specIds = new Set()) {
       for (const id of keys) if (id.startsWith(wild[1] + '-')) ids.add(id);
       continue;
     }
-    if (PURE_ID_RE.test(token)) ids.add(token);
+    if (PURE_ID_RE.test(token)) { ids.add(token); continue; }
+    // 대문자 시작 토큰은 ID 의도로 간주 — 해석 불가를 오류로 수집 (무소음 드롭 방지)
+    if (errors && /^[A-Z0-9]/.test(token)) errors.push(`${src} — ID 토큰 해석 불가: "${token}"`);
   }
   return ids;
 }
@@ -128,11 +130,12 @@ function collectCodeRefs(specIds) {
   return { src, tst };
 }
 
-/** 문서 스캔 → { docs, reports: Map(specId→Set(docId)), meta: Map(docId→{file,title}), missingRef: [file] } */
+/** 문서 스캔 → { docs, reports: Map(specId→Set(docId)), meta: Map(docId→{file,title}), missingRef: [file], docErrors: [msg] } */
 function collectDocRefs(specIds) {
   const docs = new Map(), reports = new Map();
   const meta = new Map();
   const missingRef = [];
+  const docErrors = [];
   const files = DOC_FILES.map(f => path.join(ROOT, f)).filter(f => fs.existsSync(f));
   for (const d of DOC_DIRS) files.push(...walk(path.join(ROOT, d), new Set(['.md'])));
   for (const file of files) {
@@ -144,12 +147,12 @@ function collectDocRefs(specIds) {
     const m = text.match(RELATED_RE);
     if (!m) { missingRef.push(rel); continue; }
     const map = rel.startsWith(REPORT_DIR) ? reports : docs;
-    for (const id of expandIds(m[1], specIds)) {
+    for (const id of expandIds(m[1], specIds, docErrors, rel)) {
       if (!map.has(id)) map.set(id, new Set());
       map.get(id).add(docId);
     }
   }
-  return { docs, reports, meta, missingRef };
+  return { docs, reports, meta, missingRef, docErrors };
 }
 
 /** 단일 파일의 관련 ID 직접 추출 (@spec 또는 문서 헤더) */
@@ -172,8 +175,8 @@ function idsInFile(absPath, specIds) {
 function scanAll() {
   const specIds = extractSpec();
   const { src, tst } = collectCodeRefs(specIds);
-  const { docs, reports, meta, missingRef } = collectDocRefs(specIds);
-  return { specIds, src, tst, docs, reports, meta, missingRef };
+  const { docs, reports, meta, missingRef, docErrors } = collectDocRefs(specIds);
+  return { specIds, src, tst, docs, reports, meta, missingRef, docErrors };
 }
 
 module.exports = {

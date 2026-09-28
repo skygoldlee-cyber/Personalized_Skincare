@@ -54,8 +54,9 @@ function main() {
   }
   const data = T.scanAll();
   for (const a of args) {
-    if (a.startsWith('DOC-')) showDoc(a, data);
-    else showSpec(a.toUpperCase(), data);
+    const id = a.toUpperCase();
+    if (id.startsWith('DOC-')) showDoc(id, data);
+    else showSpec(id, data);
   }
 }
 

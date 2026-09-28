@@ -27,7 +27,7 @@ function* walk(dir) {
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
     const p = path.join(dir, e.name);
     if (e.isDirectory()) {
-      if (e.name.startsWith('.')) continue; // .pytest_cache 등 생성물 제외
+      if (e.name.startsWith('.') || e.name === 'node_modules') continue; // .pytest_cache·node_modules 등 제외
       yield* walk(p);
     } else if (e.name.endsWith('.md')) yield p;
   }
