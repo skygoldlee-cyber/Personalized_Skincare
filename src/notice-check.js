@@ -214,22 +214,6 @@ async function fetchLatestFor(doc) {
   };
 }
 
-/** law.go.kr에서 대상 규정의 최신 시행 고시 조회 (레거시 단일 문서 — 테스트 호환) */
-async function fetchLatestNotice() {
-  return fetchLatestFor(parseRefDoc('화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318).pdf'));
-}
-
-/** 번들 기준 고시 — 같은 출처 스냅샷 우선(배포 DB와 일치), 실패 시 원격 상태 파일 */
-async function fetchBaseline(examId) {
-  for (const url of [`content/exams/${examId}/notice_status.json`, statusUrl(examId)]) {
-    try {
-      const r = await fetch(url, { cache: 'no-store' });
-      if (r.ok) return (await r.json()).baseline || null;
-    } catch (_) { /* 다음 후보 */ }
-  }
-  return null;
-}
-
 /** '식약처 고시 확인' 버튼 (data-click 위임) — 참조 법령·고시 전체를 law.go.kr에서 병렬 조회 */
 export async function checkMfdsNoticeNow() {
   const out = document.getElementById('notice-check-result');
