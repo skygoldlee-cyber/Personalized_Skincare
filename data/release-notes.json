@@ -1,5 +1,12 @@
 [
   {
+    "version": "v20260928-be87ef1",
+    "date": "2026-09-28",
+    "notes": [
+      "[기능·formula] 법규 준수 체크리스트 항목별 참조 링크에도 law.go.kr 원문 추가"
+    ]
+  },
+  {
     "version": "v20260928-10522aa",
     "date": "2026-09-28",
     "notes": [
@@ -143,13 +150,6 @@
       "fix(deploy): stamp commit bypasses both doc-sync modes [no-docs]",
       "fix(deploy): skip doc-sync gate for automated stamp commit",
       "refactor: 3-tier version scheme — machine id, display format, content CalVer"
-    ]
-  },
-  {
-    "version": "v369-20260928-fd06122",
-    "date": "2026-09-28",
-    "notes": [
-      "feat(formula): hub cards numbered by actual compounding workflow"
     ]
   }
 ]
