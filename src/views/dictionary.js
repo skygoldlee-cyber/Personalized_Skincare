@@ -41,7 +41,12 @@ export function renderDictionary() {
     
     const meta = (typeof DataLoader !== 'undefined' && DataLoader.registry && DataLoader.registry.ingredients) || null;
     const verEl = document.getElementById('dict-db-version');
-    if (verEl) verEl.textContent = meta && meta.version ? `원료 DB v${meta.version}` : '';
+    if (verEl) {
+        const cnt = meta && meta.stats && meta.stats.count;
+        verEl.textContent = meta && meta.version
+            ? `원료 DB v${meta.version}${cnt ? ` · ${Number(cnt).toLocaleString('ko-KR')}종` : ''}`
+            : '';
+    }
 
     const db = typeof window.INGREDIENTS_DATA !== 'undefined' ? window.INGREDIENTS_DATA : [];
     if (db.length === 0) {

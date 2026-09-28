@@ -182,9 +182,9 @@ describe('FO-10/11: 배합 계산기 UI·성분 사전 연동', () => {
         document.body.innerHTML += '<div id="dict-results-container"></div>';
         window.INGREDIENTS_DATA = [{ name: '테스트원료', eng: 'test', category: '보습제' }];
         // dictionary.js는 전역 DataLoader.registry.ingredients를 읽는다
-        vi.stubGlobal('DataLoader', { registry: { ingredients: { version: '1.2.3' } } });
+        vi.stubGlobal('DataLoader', { registry: { ingredients: { version: '1.2.3', stats: { count: 1402 } } } });
         renderDictionary();
-        expect(el('dict-db-version').textContent).toBe('원료 DB v1.2.3');
+        expect(el('dict-db-version').textContent).toBe('원료 DB v1.2.3 · 1,402종');
         vi.unstubAllGlobals();
     });
 });
