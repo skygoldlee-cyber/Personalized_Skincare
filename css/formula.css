@@ -34,6 +34,14 @@
 }
 .formula-principle-note i { color: var(--color-primary); }
 .formula-principle-note strong { color: var(--color-text); }
+/* 용어 바로가기(네거티브/포지티브 리스트) — 인라인 링크임이 보이도록 */
+.formula-principle-note a.comp-law-ext {
+    color: var(--color-primary);
+    text-decoration: underline dotted;
+    padding: 0 0.1rem;
+    font-size: inherit;
+}
+.formula-principle-note a.comp-law-ext:hover { text-decoration-style: solid; }
 
 /* ── 포뮬러 목록 ─────────────────────────────── */
 .formula-list {
