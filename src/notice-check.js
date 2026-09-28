@@ -55,10 +55,10 @@ export async function checkMfdsNotice() {
   try {
     const last = parseInt(getItem(STORAGE_KEYS.NOTICE_CHECKED_AT) || '0', 10);
     if (Date.now() - last < CHECK_INTERVAL_MS) return;
-    setItem(STORAGE_KEYS.NOTICE_CHECKED_AT, String(Date.now()));
 
     const res = await fetch(statusUrl(getActiveExamId() || 'cosmetic'), { cache: 'no-store' });
-    if (!res.ok) return;
+    if (!res.ok) return; // 실패 시 스탬프 안 찍음 — 다음 진입에 재시도
+    setItem(STORAGE_KEYS.NOTICE_CHECKED_AT, String(Date.now()));
     const status = await res.json();
     if (isNewerNotice(status)) renderBanner(status.latest);
   } catch (_) { /* 네트워크/파싱 실패 — 배너 생략 */ }
