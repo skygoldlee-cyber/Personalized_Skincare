@@ -6,6 +6,9 @@
  * src/, tests/, tools/, css/, sw.js, index.html 에 기록된 `@spec` 주석 태그를
  * 수집해 양방향 정합성을 검사한다.
  *
+ * 스캔 범위·토큰 규격·정규식은 tools/lib/trace_scan.js(공용)를 사용한다 —
+ * 이 파일만 따로 파서를 두지 않는다 (drift 방지).
+ *
  * 사용법:
  *   npm.cmd run check:specrefs      # 전체 검증 (스테일 참조 시 exit 1)
  *   node tools/check_spec_refs.js   # 직접 실행
@@ -14,7 +17,9 @@
  *   // @spec FB-01~08          ← 범위 (FB-01..FB-08로 확장)
  *   // @spec Q-04,Q-05         ← 나열
  *   // @spec none (인프라)     ← 의도적 미커버 표기
+ *   // @spec FB-06 — 이유      ← ID 뒤 공백·한글 이후 텍스트는 파서가 절단 (설명 부기 허용)
  *   <!-- @spec S-02 -->        ← HTML도 동일 규격
+ *   ※ 대문자/숫자로 시작하는 비-ID 토큰은 파싱 오류로 실패 — 설명은 공백·한글 뒤에 둘 것
  *
  * 검증 결과:
  *   - 코드가 참조하지만 SPEC에 없는 ID → 스테일 참조 (exit 1)
@@ -22,102 +27,24 @@
  */
 const fs = require('fs');
 const path = require('path');
+const T = require('./lib/trace_scan');
 
-const ROOT = path.resolve(__dirname, '..');
-const SPEC_FILE = path.join(ROOT, 'docs', 'dev', 'SPEC.md');
-
-// @spec 태그 스캔 대상
-const SCAN_DIRS = ['src', 'tests', 'tools', 'css', 'ref-pipeline'];
-const SCAN_FILES = ['sw.js', 'index.html', 'serve.js'];
-const SCAN_EXTS = new Set(['.js', '.css', '.html', '.ts', '.py']);
-const EXCLUDE_DIRS = [path.join('tools', '_archive'), path.join('tools', '__pycache__'), 'node_modules'];
-// 자기 스캔 제외 — 이 파일의 독스트링이 @spec 예시를 포함
-const EXCLUDE_FILES = [path.join('tools', 'check_spec_refs.js')];
-
-// ID 패턴: AA-NN, AA-BB-NN (예: UX-NAV-07), AA-PN·AA-LN (예: ROAD-P0·ROAD-L5 로드맵)
-const ID_RE = /\b([A-Z]{1,4}(?:-[A-Z]{1,4})?-(?:\d{2}[a-z]?|[PL]\d))\b/g;
-const SPEC_TAG_RE = /@spec\s+([^\n]*)/g;
-const RANGE_RE = /^([A-Z]{1,4}(?:-[A-Z]{1,4})?-[PL]?)(\d{1,2})~[PL]?(\d{1,2})$/
-;const WILDCARD_ID_RE = /^([A-Z]{1,4}(?:-[A-Z]{1,4})?)-\*$/;
-const PURE_ID_RE = /^[A-Z]{1,4}(?:-[A-Z]{1,4})?-(?:\d{2}[a-z]?|[PL]\d)$/;
-const RELATED_RE = /^>\s*\*\*관련 SPEC ID\*\*:\s*(.+)$/m;
-
-// 문서 헤더 "관련 SPEC ID" 스캔 대상 (check_doc_ids.js와 동일 범위)
-const DOC_SCAN_DIRS = ['docs', 'ref-pipeline'];
-const DOC_SCAN_FILES = ['AGENTS.md', 'README.md'];
+const ROOT = T.ROOT;
 
 // 테스트 갭 기준선 — 소스 참조는 있으나 tests/ @spec이 없는 요구사항의 허용 상한.
 // 기존 백로그(정책형·문서형 포함)를 승계하되, 신규 요구사항이 갭을 늘리면 실패한다.
 // 테스트 @spec을 추가해 갭을 줄였다면 이 수치를 함께 낮춘다.
 const TEST_GAP_BASELINE = 0;
 
-function* walk(dir) {
-  for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
-    const p = path.join(dir, e.name);
-    if (e.isDirectory()) {
-      if (e.name.startsWith('.') || e.name === 'node_modules') continue; // 중첩 node_modules·숨김 디렉터리 제외
-      const rel = path.relative(ROOT, p);
-      if (!EXCLUDE_DIRS.some((x) => rel === x || rel.startsWith(x + path.sep))) yield* walk(p);
-    } else if (SCAN_EXTS.has(path.extname(e.name))) {
-      const rel = path.relative(ROOT, p);
-      if (!EXCLUDE_FILES.some((x) => rel === x)) yield p;
-    }
-  }
-}
-
-/** SPEC.md에서 ID 전수 추출 — 테이블 셀·굵은 글씨·본문 언급 모두 포함 */
-function extractSpecIds() {
-  const text = fs.readFileSync(SPEC_FILE, 'utf8');
-  const ids = new Set();
-  for (const m of text.matchAll(ID_RE)) {
-    if (m[1].startsWith('DOC-')) continue; // 문서 ID는 요구사양 ID가 아님
-    ids.add(m[1]);
-  }
-  return ids;
-}
-
-/** @spec 토큰 문자열 → ID 집합 확장 (범위·나열·접두사 와일드카드 지원) */
-function parseSpecTag(tagText, file, line, errors, specIds = new Set()) {
-  const ids = new Set();
-  if (/^(none\b|해당|전 영역)/.test(tagText.trim())) return ids; // 의도적 미커버 표기
-  for (const raw of tagText.split(/[,·]/)) {
-    const token = raw.trim()
-      .replace(/\*\/\s*$/, '')       // 블록 주석 종결자 */ 제거
-      .replace(/-->\s*$/, '')        // HTML 주석 종결자 --> 제거
-      .replace(/[)）(].*$/, '')      // 뒤 주석 제거
-      .replace(/[가-힣\s].*$/, '')   // 한글 설명 제거
-      .replace(/[`'"]/g, '')         // 백틱·인용부호 제거 (`FO-01~23` 형태)
-      .trim();
-    if (!token) continue;
-    if (/^none\b/i.test(token)) return ids; // 의도적 미커버 표기
-    const range = token.match(RANGE_RE);
-    if (range) {
-      const [, prefix, from, to] = range;
-      const pad = /[PL]$/.test(prefix) ? 1 : 2; // ROAD-P0~P4·ROAD-L1~L5는 단자리
-      for (let i = +from; i <= +to; i++) ids.add(prefix + String(i).padStart(pad, '0'));
-      continue;
-    }
-    const wild = token.match(WILDCARD_ID_RE);
-    if (wild) {
-      for (const id of specIds) if (id.startsWith(wild[1] + '-')) ids.add(id);
-      continue;
-    }
-    if (PURE_ID_RE.test(token)) { ids.add(token); continue; }
-    // 대문자 시작 토큰만 ID 의도로 간주 — 문장 중 "@spec 태그" 같은 언급은 무시
-    if (/^[A-Z0-9]/.test(token)) errors.push(`${path.relative(ROOT, file)}:${line} — @spec 토큰 해석 불가: "${token}"`);
-  }
-  return ids;
-}
-
+/** 라인 번호가 필요해 직접 순회 — ID 확장·오류 규격은 lib/expandIds 공용 */
 function collectCodeRefs(specIds) {
   const refs = new Map();     // id → [{file, line}] (전체)
   const testRefs = new Set(); // tests/ 하위 파일에서 참조된 ID
   const srcRefs = new Set();  // tests/ 외부(소스·도구)에서 참조된 ID
   const errors = [];
-  const files = [...SCAN_FILES.map((f) => path.join(ROOT, f)).filter((f) => fs.existsSync(f))];
-  for (const d of SCAN_DIRS) {
-    const abs = path.join(ROOT, d);
-    if (fs.existsSync(abs)) for (const f of walk(abs)) files.push(f);
+  const files = [...T.SCAN_FILES.map((f) => path.join(ROOT, f)).filter((f) => fs.existsSync(f))];
+  for (const d of T.SCAN_DIRS) {
+    for (const f of T.walk(path.join(ROOT, d), T.SCAN_EXTS)) files.push(f);
   }
 
   for (const file of files) {
@@ -125,8 +52,8 @@ function collectCodeRefs(specIds) {
     const isTest = rel.startsWith('tests/');
     const lines = fs.readFileSync(file, 'utf8').split('\n');
     lines.forEach((text, i) => {
-      for (const m of text.matchAll(SPEC_TAG_RE)) {
-        for (const id of parseSpecTag(m[1], file, i + 1, errors, specIds)) {
+      for (const m of text.matchAll(T.SPEC_TAG_RE)) {
+        for (const id of T.expandIds(m[1], specIds, errors, `${rel}:${i + 1}`)) {
           if (!refs.has(id)) refs.set(id, []);
           refs.get(id).push({ file: rel, line: i + 1 });
           (isTest ? testRefs : srcRefs).add(id);
@@ -137,38 +64,19 @@ function collectCodeRefs(specIds) {
   return { refs, testRefs, srcRefs, errors };
 }
 
-function* walkDocs(dir) {
-  if (!fs.existsSync(dir)) return;
-  for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
-    const p = path.join(dir, e.name);
-    if (e.isDirectory()) {
-      if (!e.name.startsWith('.')) yield* walkDocs(p);
-    } else if (e.name.endsWith('.md')) yield p;
-  }
-}
-
-/** 문서 헤더 "관련 SPEC ID" 수집 — id → [{file}] */
+/** 문서 헤더 "관련 SPEC ID" 수집 → id → [{file}] (docId는 meta로 파일명에 환원) */
 function collectDocRefs(specIds) {
+  const { docs, reports, meta, missingRef: missing, docErrors } = T.collectDocRefs(specIds);
   const refs = new Map();
-  const errors = [];
-  const missing = [];
-  const files = DOC_SCAN_FILES.map(f => path.join(ROOT, f)).filter(f => fs.existsSync(f));
-  for (const d of DOC_SCAN_DIRS) files.push(...walkDocs(path.join(ROOT, d)));
-  for (const file of files) {
-    const rel = path.relative(ROOT, file).replace(/\\/g, '/');
-    const text = fs.readFileSync(file, 'utf8');
-    const m = text.match(RELATED_RE);
-    if (!m) { missing.push(rel); continue; }
-    for (const id of parseSpecTag(m[1], file, 0, errors, specIds)) {
-      if (!refs.has(id)) refs.set(id, []);
-      refs.get(id).push({ file: rel });
-    }
+  for (const [id, docIds] of [...docs, ...reports]) {
+    if (!refs.has(id)) refs.set(id, []);
+    for (const docId of docIds) refs.get(id).push({ file: meta.get(docId)?.file || docId });
   }
-  return { refs, errors, missing };
+  return { refs, errors: docErrors, missing };
 }
 
 function main() {
-  const specIds = extractSpecIds();
+  const specIds = new Set(T.extractSpec().keys());
   const { refs, testRefs, srcRefs, errors } = collectCodeRefs(specIds);
   const { refs: docRefs, errors: docErrors, missing: missingHeaders } = collectDocRefs(specIds);
   errors.push(...docErrors);

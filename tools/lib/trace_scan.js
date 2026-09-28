@@ -1,8 +1,9 @@
 /**
- * trace_scan.js — SPEC ID 추적 스캔 공용 모듈
+ * trace_scan.js — SPEC ID 추적 스캔 공용 모듈 (단일 진실 소스)
  *
- * build_trace_matrix.js·impact_tests.js·trace.js가 공유하는 스캔 원천.
- * 스캔 범위·토큰 규격은 check_spec_refs.js와 동일하게 유지한다.
+ * check_spec_refs.js·build_trace_matrix.js·impact_tests.js·trace.js가 공유하는
+ * 스캔 원천 — ID 정규식·@spec 토큰 규격·스캔 범위·문서 헤더 파서는 이 파일에만 둔다.
+ * 새 도구를 만들 때 이 모듈을 require할 것 (개별 파서 복제 = drift 재발).
  */
 
 const fs = require('fs');
@@ -180,7 +181,8 @@ function scanAll() {
 }
 
 module.exports = {
-  ROOT, SPEC_FILE, SCAN_DIRS, SCAN_FILES, SCAN_EXTS, DOC_DIRS, DOC_FILES, REPORT_DIR,
-  ID_RE, DOC_ID_RE, RELATED_RE,
+  ROOT, SPEC_FILE, SCAN_DIRS, SCAN_FILES, SCAN_EXTS, EXCLUDE_DIRS, EXCLUDE_FILES,
+  DOC_DIRS, DOC_FILES, REPORT_DIR,
+  ID_RE, SPEC_TAG_RE, RANGE_RE, WILDCARD_ID_RE, PURE_ID_RE, DOC_ID_RE, RELATED_RE,
   walk, expandIds, extractSpec, collectCodeRefs, collectDocRefs, idsInFile, scanAll,
 };
