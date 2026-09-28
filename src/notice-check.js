@@ -11,7 +11,11 @@ import { getActiveExamId } from './exam-context.js';
 import { escapeHTML } from './sanitize.js';
 
 const CHECK_INTERVAL_MS = 24 * 60 * 60 * 1000;
-const LAW_SEARCH_URL = 'https://www.law.go.kr/법령/화장품안전기준등에관한규정';
+// 한글주소(행정규칙) — 일련번호를 알면 admRulInfoP.do 상세 페이지가 더 정확
+const LAW_SEARCH_URL = 'https://www.law.go.kr/행정규칙/화장품안전기준등에관한규정';
+function ruleInfoUrl(serial) {
+  return serial ? `https://www.law.go.kr/admRulInfoP.do?admRulSeq=${encodeURIComponent(serial)}` : LAW_SEARCH_URL;
+}
 const RULE_NAME = '화장품 안전기준 등에 관한 규정';
 const LAW_API = 'https://www.law.go.kr/DRF';
 // law.go.kr 오픈API 운영자 코드 — 공개 계정 식별자(비밀키 아님). 호출량 제한은 계정별 적용
@@ -78,7 +82,7 @@ function renderBanner(latest) {
       <span class="notice-banner-icon" aria-hidden="true">⚠</span>
       <div class="notice-banner-text">
         <strong>식약처 고시 ${escapeHTML(notice)} ${escapeHTML(eff)} 확인됨</strong><br>
-        원료 DB는 이전 고시 기준입니다. 배합 전 <a href="${LAW_SEARCH_URL}" target="_blank" rel="noopener">고시 원문(law.go.kr)</a>을 확인하세요.
+        원료 DB는 이전 고시 기준입니다. 배합 전 <a href="${ruleInfoUrl(latest.serialNo)}" target="_blank" rel="noopener">고시 원문(law.go.kr)</a>을 확인하세요.
       </div>
       <button type="button" class="notice-banner-close" data-click="dismissMfdsNotice" data-arg="${escapeHTML(latest.effectiveDate || '')}" aria-label="닫기">×</button>
     </div>`;
@@ -205,7 +209,7 @@ export async function viewMfdsNoticeStatus() {
     ${rows}
     <div class="notice-status-links">
       <a href="${statusUrl(examId)}" target="_blank" rel="noopener">상태 파일 원문</a>
-      <a href="${LAW_SEARCH_URL}" target="_blank" rel="noopener">고시 원문(law.go.kr)</a>
+      <a href="${ruleInfoUrl(status.latest?.serialNo)}" target="_blank" rel="noopener">고시 원문(law.go.kr)</a>
       <span class="notice-status-src">출처: ${source}</span>
     </div>`;
 }
