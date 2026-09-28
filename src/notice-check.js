@@ -1,4 +1,5 @@
 // notice-check.js — 식약처 고시 감지 배너 (Formula OS 최초 진입 시)
+// @spec FO-24,RR-19
 //
 // 구조: GitHub Actions(주1회)가 law.go.kr 오픈API로 최신 고시를 조회해
 // content/exams/<id>/notice_status.json에 기록 → 앱은 raw.githubusercontent.com에서
@@ -193,7 +194,7 @@ export function parseRefDoc(file) {
 }
 
 /** 감시 문서 목록 — references.json referenceLaw에서 유도 (pdf-registry 경유) */
-export function watchDocs() {
+function watchDocs() {
   const laws = getRefTables().REFERENCE_LAW || [];
   return laws.filter(f => f.file).map(f => parseRefDoc(f.file));
 }

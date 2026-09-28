@@ -93,7 +93,7 @@ export function comboToSimQuestion(q, subjKey) {
  * 시뮬 복수정답형 응답 → 진술별 판정 도출 (선택 선지의 members = "참으로 판정한 집합")
  * @returns {Array<{sid, judgedCorrect, text, truth, conceptId}>|null}
  */
-export function deriveComboJudgments(q, userAns) {
+function deriveComboJudgments(q, userAns) {
     if (!userAns || !Array.isArray(q.statements) || !Array.isArray(q.comboOptions)) return null;
     const idx = SIM_OPTION_INDICATORS.indexOf(userAns);
     const opt = idx >= 0 ? q.comboOptions[idx] : null;

@@ -1,4 +1,5 @@
 // law-links.js — 참조자료 문서 → law.go.kr 원문(최신 통합본) 링크 매퍼
+// @spec RR-17
 // 참조자료 PDF는 전부 식약처/법제처 공식 문서라 한글주소로 원문 페이지를 열 수 있다.
 // 한글주소 규약: 공백·특수문자 제거 명칭 — 법령은 /법령/, 고시·규정·기준은 /행정규칙/
 // 파일명에 (발령기관)(제XXXX-N호)(시행일) 꼬리가 붙으므로 접두 매칭으로 판별.
@@ -9,7 +10,7 @@ const LAW_RULE = `${LAW_BASE}/법령`;      // 법률·시행령·시행규칙(�
 const LAW_ADM = `${LAW_BASE}/행정규칙`;   // 식약처 고시 등 행정규칙
 
 // [매칭 문자열(공백 제거 후 contains), URL]
-// export — tools/check/check_law_urls.js가 한글주소 유효성을 전수 검증한다
+// keep-export — tools/check/check_law_urls.js가 한글주소 유효성을 전수 검증한다 (src/ 외부 소비자라 check:imports 미집계)
 export const LAW_DOC_URLS = [
   // ——— 법령 ———
   ['화장품법시행령', `${LAW_RULE}/화장품법시행령`],

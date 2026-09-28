@@ -1,5 +1,5 @@
 // tests/dom/formula-nav.dom.test.js — Formula OS 패널 전환·서브내비 시나리오
-// @spec FO-15
+// @spec FO-15,FO-24,FO-25
 // 설계: docs/dev/design/DOM_TEST_DESIGN.md §4
 // 검증: 허브→서브패널 전환(is-hidden), 서브내비 칩 6개·활성 상태, 나가기 복귀
 
@@ -79,5 +79,20 @@ describe('Formula OS — 패널 전환·서브내비', () => {
         openCustomerPanel();
         exitFormulaSubView();
         onlyVisible('formula-menu-panel');
+    });
+
+    it('FO-24: 고시 감시 UI — 배너·확인 버튼·상태 패널이 허브에 존재', () => {
+        initFormulaView();
+        expect(el('formula-notice-banner')).toBeTruthy();
+        expect(document.querySelector('[data-click="checkMfdsNoticeNow"]')).toBeTruthy();
+        expect(document.querySelector('[data-click="viewMfdsNoticeStatus"]')).toBeTruthy();
+        expect(el('notice-status-view')).toBeTruthy();
+    });
+
+    it('FO-25: 네거티브 리스트 원칙 안내가 허브에 표시', () => {
+        const note = document.querySelector('#formula-menu-panel .formula-principle-note');
+        expect(note).toBeTruthy();
+        expect(note.textContent).toContain('네거티브 리스트');
+        expect(note.textContent).toContain('별표1');
     });
 });

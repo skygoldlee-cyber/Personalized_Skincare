@@ -25,6 +25,8 @@
 - **html/views 파셜 드리프트 정리**: index.html에만 있던 최신 마크업(Formula OS 고시 확인 UI·원칙 안내·처방 작업대/보관함 부제, 분석 뷰 취약 단원·합격 갭 카드, "2027" 표기)을 `html/views/{formula,analysis}.html`·`index.template.html` 소스에 역반영 — build:html 재생성 시 소실 방지
 - **원료 수 상시 표시**: 성분 사전 상단 배지가 `원료 DB v{version} · N종`으로 수록 총수 표시 (registry.ingredients.stats.count — 기존엔 버전 이력 모달 안에서만 확인 가능)
 - **현행본 직결(currentUrl)**: 한글주소가 시행 예정 개정본으로 연결되는 사례 대응 — 체커가 `시행일자 ≤ 오늘` 최신 버전의 일련번호를 `currentUrl`(법령=`lsInfoP.do?lsiSeq&efYd`, 고시=`admRulInfoP.do?admRulSeq`)로 기록. `markStaleRefLinks`가 상태 로드 후 ↗원문 href를 현행본 URL로 보정하고, 공포됐지만 미시행인 개정본이 있으면 `⏳ 시행 예정 개정본` 배지(pending) 표시 — docs[]에 `currentSerial`/`currentDate`/`currentUrl`/`pending` 필드 추가. API 응답 지연 대비 `api_get`에 재시도(3회·백오프) 추가
+- **상위문서 추적성 갱신**: SPEC.md 신규 ID — RR-17(law.go.kr 원문 링크 공용화)·RR-18(스냅샷 표기·중복 제거)·RR-19(갱신 감지+현행본 보정)·DI-04(DB 버전·총수 배지)·DI-05(사전 네거티브 원칙)·FO-24(다문서 고시 감시)·FO-25(원칙 명기) + 부록 출처 표 외부 근거 4건. @spec 태그 소스·테스트 연결(테스트 갭 0). AGENTS.md(명령어·모듈 목록·감시 설명)·ARCHITECTURE.md(모듈 표 law-links/notice-check/reader-format)·사용자 매뉴얼 2종(원문 링크·배지·네거티브 원칙·고시 감시) 갱신, 문서 번들 재생성
+- **check:imports 경고 22→0 정리**: ① `export { A } from './x'` 재수출을 소비로 집계하지 않던 체커 사각지대 수정(formula-recommend 8·quiz-wrong-cause 5·trainer-drill-combo 4·exam-sim-weak 1 = 18건 — 실제로는 app.js 디스패치용 정상 재수출) ② 내부 전용 함수의 불필요 export 제거(`watchDocs`·`getValueActionTotal`·`deriveComboJudgments`) ③ `LAW_DOC_URLS`는 tools/check_law_urls.js 소비자라 `keep-export` 주석으로 의도 명시
 
 ## 2026-09-28 원료 DB — 고시 제2026-19호 별표1·별표2 전수 대조 전체 반영 (db_version 2026.09.7)
 

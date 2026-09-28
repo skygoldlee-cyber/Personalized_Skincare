@@ -1,4 +1,5 @@
 // tests/unit/law-links.test.js — 참조자료 → law.go.kr 원문 링크 매핑
+// @spec RR-17
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

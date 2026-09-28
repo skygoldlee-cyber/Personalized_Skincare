@@ -97,7 +97,7 @@ export function resetUsageStats() {
 }
 
 /** 유료가치 판정 대상 액션 합계 — Pro 후보 기능(VALUE_ACTIONS) 사용 횟수만 집계 */
-export function getValueActionTotal() {
+function getValueActionTotal() {
     const d = _load();
     return Object.entries(d.actions)
         .filter(([k]) => VALUE_ACTIONS.has(k))

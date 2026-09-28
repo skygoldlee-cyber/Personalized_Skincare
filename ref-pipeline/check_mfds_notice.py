@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# @spec FO-24
 """참조 법령·고시 전체의 최신 고시 감지기 (다문서).
 
 references.json의 referenceLaw에서 감시 대상을 자동 유도한다 —

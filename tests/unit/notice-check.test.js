@@ -1,4 +1,5 @@
 // tests/unit/notice-check.test.js — 식약처 고시 감지 배너 판정 로직
+// @spec FO-24,RR-19
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import { isNewerNotice, normalizeNotice, findNoticeNumber, statusRows, parseRefDoc } from '../../src/notice-check.js';

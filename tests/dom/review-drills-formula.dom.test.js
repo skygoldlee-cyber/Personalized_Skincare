@@ -1,5 +1,5 @@
 // tests/dom/review-drills-formula.dom.test.js — 복습 뷰·숫자 드릴·배합 계산기 UI
-// @spec RV-01,ND-01,FO-10,FO-11
+// @spec RV-01,ND-01,FO-10,FO-11,DI-04,DI-05
 // 오답/헷갈림 통합 복습 목록, number-drills JSON 기반 수치 암기표,
 // 계산기 상하 고정바·카드형 행, 성분 사전 연동을 고정한다.
 
@@ -186,5 +186,14 @@ describe('FO-10/11: 배합 계산기 UI·성분 사전 연동', () => {
         renderDictionary();
         expect(el('dict-db-version').textContent).toBe('원료 DB v1.2.3 · 1,402종');
         vi.unstubAllGlobals();
+    });
+
+    it('DI-05: 사전 뷰에 네거티브 리스트 판정 원칙 안내가 표시된다', () => {
+        const note = document.querySelector('#dictionary-view .dict-neglist-note');
+        expect(note).toBeTruthy();
+        expect(note.textContent).toContain('네거티브 리스트');
+        expect(note.textContent).toContain('banned');
+        expect(note.textContent).toContain('restricted');
+        expect(note.textContent).toContain('approved');
     });
 });

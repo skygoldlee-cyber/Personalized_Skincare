@@ -143,12 +143,14 @@ const EXPORT_STAR_RE = /^\s*export\s*\*\s*(?:as\s+(\w+)\s+)?from\s+['"]([^'"]+)[
 function parseExports(src) {
     const clean = stripComments(src);
     const exports = new Set();
+    const namedReExports = []; // export { A } from './x' — './x'에서 A를 소비
     let m;
 
     // named exports: export { A, B as C }
     while ((m = EXPORT_NAMED_RE.exec(clean)) !== null) {
         const names = m[1];
         const reExportFrom = m[2];
+        const reExported = [];
         for (let part of names.split(',')) {
             part = part.trim();
             if (!part) continue;
@@ -159,10 +161,15 @@ function parseExports(src) {
                 // if re-export, also track the original for validation
                 if (reExportFrom) {
                     exports.add(asMatch[1]); // original name for re-export validation
+                    reExported.push(asMatch[1]);
                 }
             } else {
                 exports.add(part);
+                if (reExportFrom) reExported.push(part);
             }
+        }
+        if (reExportFrom && reExported.length > 0) {
+            namedReExports.push({ modulePath: reExportFrom, names: reExported });
         }
     }
 
@@ -185,7 +192,7 @@ function parseExports(src) {
         starReExports.push(m[2]);
     }
 
-    return { exports, starReExports };
+    return { exports, starReExports, namedReExports };
 }
 
 // --- 모듈 경로 해결 ---
@@ -213,12 +220,14 @@ function main() {
     // 각 파일의 exports를 미리 수집
     const moduleExports = new Map(); // filepath → Set of export names
     const moduleStarReExports = new Map(); // filepath → array of star re-export targets
+    const moduleNamedReExports = new Map(); // filepath → export { A } from './x' 소비 목록
 
     for (const file of files) {
         const src = fs.readFileSync(file, 'utf8');
-        const { exports, starReExports } = parseExports(src);
+        const { exports, starReExports, namedReExports } = parseExports(src);
         moduleExports.set(file, exports);
         moduleStarReExports.set(file, starReExports);
+        moduleNamedReExports.set(file, namedReExports);
     }
 
     // 각 파일의 imports를 검증
@@ -304,6 +313,14 @@ function main() {
             if (!resolved) continue;
             for (const name of imp.names) {
                 if (name === '*' || name === 'default') continue;
+                allImports.add(resolved + '::' + name);
+            }
+        }
+        // export { A } from './x' 재수출도 './x'의 A를 소비한 것으로 집계
+        for (const rex of moduleNamedReExports.get(file) || []) {
+            const resolved = resolveModule(importerDir, rex.modulePath);
+            if (!resolved) continue;
+            for (const name of rex.names) {
                 allImports.add(resolved + '::' + name);
             }
         }

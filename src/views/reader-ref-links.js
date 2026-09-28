@@ -1,5 +1,5 @@
 // views/reader-ref-links.js — 참조자료 링크 생성·프리뷰·클릭 위임 (textbook-reader.js에서 분리)
-// @spec TR-10,G-03,RR-02~06
+// @spec TR-10,G-03,RR-02~06,RR-17,RR-19
 // 역할: 단원별 참조자료 링크 HTML 생성(buildReferenceLinks), 호버/롱프레스 프리뷰 툴팁,
 //       data-ref-*/data-exam-md/data-glossary 클릭 위임(document 단일 리스너).
 import { esc } from '../sanitize.js';

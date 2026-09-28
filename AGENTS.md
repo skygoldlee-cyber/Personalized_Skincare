@@ -74,6 +74,7 @@ npm.cmd run check:types                 # tsc --noEmit (jsconfig checkJs — JSD
 npm.cmd run check:specrefs              # SPEC↔@spec 스테일 참조 + 테스트 갭 기준선(기준선 0 — 신규 갭 즉시 실패)
 npm.cmd run check:docsync               # 소스 변경 시 문서 갱신 강제 — src/tools/tests/설정 변경에 docs/·AGENTS·README 갱신 동반 필수 (우회: 커밋 메시지 [no-docs] 또는 SKIP_DOCSYNC=1)
 npm.cmd run check:trace                 # TRACE_MATRIX 입력 해시 신선도
+npm.cmd run check:lawurls               # law.go.kr 한글주소 유효성 전수 검증 (law-links.js 매핑 실호출, 오류 페이지 본문 판별)
 node tools/impact_tests.js              # 변경 파일 → 영향 요구사항·권장 테스트 (미커밋 변경 자동 분석, --ref <ref>로 diff 분석)
 npm.cmd run hooks:install               # Git 훅 활성화 (opt-in) — pre-commit: check:types+lint (IDE 오류 시 커밋 차단) / pre-push: +check:trace/specrefs/docs
 
@@ -84,10 +85,13 @@ npm.cmd run check:reffresh -- --update  # 승격 완료 후 PDF 해시 매니페
 # ※ PDF 교체/재변환 절차: ① PDF 교체 ② convert:refs ③ verify:refs ④ ref_md_v2 → ref_md/과목N/{문서}/ 수동 승격 ⑤ check:reffresh -- --update
 # ※ ref_md는 `#L####` 라인 인용이 의존하므로 항상 시각적 줄 그대로(segment=False) 변환 — 엔진의 --no-segment 상당
 
-# 식약처 고시 감지 (원료 DB 기준 고시 추적)
+# 식약처 고시 감지 (참조 법령·고시 다문서 추적 — references.json referenceLaw에서 8종 자동 유도)
 python ref-pipeline/check_mfds_notice.py --update   # 키: LAW_OC_KEY 환경변수 또는 ref-pipeline/.env.local.json (gitignore됨)
-# ※ baseline↔latest 비교 결과를 content/exams/cosmetic/notice_status.json에 기록 — 신규 고시 감지 시 Actions가 이슈 생성,
-#   앱은 Formula OS 진입 시 배너 표시 + 허브 '식약처 고시 확인' 버튼으로 law.go.kr 실시간 조회(src/notice-check.js)
+# ※ baseline(파일명의 제N호·시행일)↔latest(법령=target:law / 고시=target:admrul) 비교를 notice_status.json docs[]에 기록
+#   — 신규 고시 감지 시 Actions가 이슈 생성 + check_law_urls.js로 한글주소 유효성도 함께 검증
+# ※ docs[].currentUrl = 시행일자≤오늘 최신본(현행본)의 시리얼 URL — 한글주소가 시행 예정 개정본으로 연결될 때 앱이
+#   ↗원문 링크를 현행본(lsInfoP/admRulInfoP)으로 보정하고 '⏳ 시행 예정 개정본' 배지 표시 (notice-check.js markStaleRefLinks)
+# ※ 앱은 Formula OS 진입 시 배너 표시 + 허브 '식약처 고시 확인' 버튼으로 law.go.kr 8종 병렬 실시간 조회(src/notice-check.js)
 # ※ Actions 크론(주1회 자동)은 선택사항 — 저장소 Settings → Secrets에 LAW_OC_KEY 등록 시 활성화.
 #   미등록이면 수동 실행만 가능. 앱 내 실시간 버튼이 확인을 커버하나, 크론은 이슈 자동 생성 안전망 역할
 # ※ 대조 절차: docs/dev/ingredients_audit_제2026-19호.md
@@ -128,6 +132,8 @@ src/                    # ES Modules
   manual-viewer.js      # 학습안내서/매뉴얼 MD 뷰어
   charts.js             # SVG 레이더/꺾은선 차트
   pdf-registry.js       # 참조자료 경로 매핑 (시험별 테이블 — getRefTables())
+  law-links.js          # 참조 문서 → law.go.kr 원문 링크 매퍼 (한글주소 규약, 별표→모법, 원료 DB→근거 고시)
+  notice-check.js       # 식약처 고시 감시 — 다문서 배너·실시간 확인 버튼·상태 패널·참조 링크 현행본 보정
   glossary-query.js     # 용어집 인덱스 쿼리 API (getGlossaryIndex())
   html-viewer.js        # 외부 HTML 콘텐츠 뷰어
   reader-format.js      # 교재 본문 포맷터

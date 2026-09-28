@@ -3,8 +3,8 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: bb9fa48396d39151
-> 생성: 2026-09-28 · 원천: SPEC.md(351개 ID) + @spec 태그 + 문서 헤더
+> 입력 해시: ea9ad13543a79947
+> 생성: 2026-09-28 · 원천: SPEC.md(358개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
 |----|------|------|
@@ -16,7 +16,7 @@
 | 보고서 | 분석·결과 보고서 | report_archive 헤더 |
 | 출처 | 요구사항의 기원 (법령·시험 규정·사업 문서) | SPEC 부록 "요구사항 출처" 표 |
 
-**커버리지 요약**: 요구사항 351개 — 문서 연결 224 · 소스 연결 330 · 테스트 연결 344 · 보고서 연결 109
+**커버리지 요약**: 요구사항 358개 — 문서 연결 224 · 소스 연결 337 · 테스트 연결 351 · 보고서 연결 109
 
 ---
 
@@ -159,6 +159,9 @@
 | RR-14 | ✅ | 테스트 | DOC-REF-04<br>DOC-REF-07 | css/print.css<br>src/html-viewer.js | tests/dom/common-htmlviewer.dom.test.js | — | — |
 | RR-15 | ✅ | 테스트 | DOC-REF-04<br>DOC-REF-07 | css/html-viewer.css<br>src/html-viewer.js | tests/dom/common-htmlviewer.dom.test.js | — | — |
 | RR-16 | ✅ | 테스트 | DOC-REF-04<br>DOC-REF-07 | src/html-viewer.js | tests/dom/common-htmlviewer.dom.test.js | — | — |
+| RR-17 | ✅ | 테스트 | — | src/law-links.js<br>src/views/reader-ref-links.js<br>tools/check/check_law_urls.js | tests/unit/law-links.test.js | — | 국가법령정보센터(law.go.kr) 한글주소 — 공식 최신 통합본 링크 규약 |
+| RR-18 | ✅ | 테스트 | — | src/reader-format.js | tests/unit/reader-format-general.test.js | — | — |
+| RR-19 | ✅ | 테스트 | — | src/notice-check.js<br>src/views/reader-ref-links.js | tests/unit/notice-check.test.js | — | 식약처 고시 개정 감지 — 시행 예정본(현행 아님) 구분, `notice_status.json` |
 
 ## 3.9 교재 검색
 
@@ -181,6 +184,8 @@
 | DI-01 | ✅ | 테스트 | — | html/views/dictionary.html<br>index.html<br>src/views/dictionary.js | tests/dom/study-dictionary.dom.test.js | — | — |
 | DI-02 | ✅ | 테스트 | — | src/views/dictionary.js | tests/dom/study-dictionary.dom.test.js | — | — |
 | DI-03 | ✅ | 테스트 | — | src/views/dictionary.js | tests/dom/study-dictionary.dom.test.js | — | — |
+| DI-04 | ✅ | 테스트 | — | html/views/dictionary.html<br>index.html<br>src/views/dictionary.js | tests/dom/review-drills-formula.dom.test.js | — | — |
+| DI-05 | ✅ | 테스트 | — | html/views/dictionary.html<br>index.html<br>src/views/dictionary.js | tests/dom/review-drills-formula.dom.test.js | — | — |
 
 ## 3.11 훈련소
 
@@ -280,6 +285,8 @@
 | FO-21 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-USR-02 | css/print.css<br>src/views/formula-print.js | tests/dom/formula-print.dom.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | 화장품법 표시 규정 — 용기 라벨 기재사항·조제 기록지 |
 | FO-22 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-USR-02 | src/csv-utils.js | tests/unit/csv-import.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
 | FO-23 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-USR-02 | src/batch-store.js<br>src/formula-store.js | tests/unit/batch-store.test.js<br>tests/unit/formula-store.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | 사업 판단 — docs/dev/design/SUBSCRIPTION_ROADMAP.md |
+| FO-24 | ✅ | 테스트 | — | html/views/formula.html<br>index.html<br>ref-pipeline/check_mfds_notice.py<br>src/notice-check.js | tests/dom/formula-nav.dom.test.js<br>tests/unit/notice-check.test.js | — | 식약처 고시 개정 추적 — law.go.kr 오픈API(법제처) + `content/exams/cosmetic/참조자료/법령고시/` PDF 기준본 |
+| FO-25 | ✅ | 테스트 | — | html/views/formula.html<br>index.html | tests/dom/formula-nav.dom.test.js | — | 화장품 안전기준 등에 관한 규정(별표1·2) — 네거티브 리스트 판정 원칙 · 색소/기능성 고시 — 지정 목록 예외 |
 
 ## 3.19 계정·클라우드 동기화
 

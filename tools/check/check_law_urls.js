@@ -1,4 +1,5 @@
 // tools/check/check_law_urls.js — law.go.kr 한글주소 유효성 전수 검증
+// @spec RR-17
 //
 // law-links.js의 매핑 URL을 실제 호출해 ① HTTP 200 ② '한글주소명을 찾을 수 없습니다'
 // 오류 페이지(200을 반환하므로 본문 검사 필수) ③ 문서명 키워드 포함을 확인한다.
