@@ -5,11 +5,11 @@
     "effectiveDate": "2026-03-18"
   },
   "latest": {
-    "notice": "제2026-19호",
+    "notice": "제2026-99호",
     "ruleName": "화장품 안전기준 등에 관한 규정",
-    "effectiveDate": "2026-03-18",
+    "effectiveDate": "2026-12-31",
     "serialNo": "2100000276068"
   },
-  "checkedAt": "2026-09-28T13:01:05+00:00",
-  "newerFound": false
+  "checkedAt": "2026-09-28T13:30:00+00:00",
+  "newerFound": true
 }
