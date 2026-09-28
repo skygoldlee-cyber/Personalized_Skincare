@@ -128,6 +128,20 @@ function writeNotes(entries) {
     `window.RELEASE_NOTES = ${JSON.stringify(trimmed)};\n`);
 }
 
+// conventional commit 타입 → 사용자용 한글 라벨 (자동 초안 가독성)
+const TYPE_KO = {
+  feat: '기능', fix: '수정', refactor: '리팩터링', docs: '문서', style: '스타일',
+  test: '테스트', perf: '성능', chore: '정리', build: '빌드', ci: 'CI', revert: '되돌림',
+};
+
+/** 'feat(formula): hub cards…' → '[기능·formula] hub cards…' — 일반 subject는 그대로 */
+function humanizeSubject(s) {
+  const m = /^([a-z]+)(\(([^)]*)\))?(!)?:\s*(.+)$/i.exec(s || '');
+  if (!m) return s;
+  const label = TYPE_KO[m[1].toLowerCase()] || m[1];
+  return `[${label}${m[3] ? '·' + m[3] : ''}] ${m[5]}`;
+}
+
 /** 기준 버전 이후 커밋 subject 목록 (릴리스 노트 초안용) */
 function commitsSince(version) {
   const hash = versionCommit(version);
@@ -137,6 +151,7 @@ function commitsSince(version) {
   return out.split('\n')
     .map(s => s.trim())
     .filter(s => s && !/^chore\(sw\)|Merge /.test(s)) // 자동 스탬프·머지 커밋 제외
+    .map(humanizeSubject)
     .slice(0, 10);
 }
 
@@ -189,7 +204,7 @@ function draftNotes() {
   console.log(`[release-notes] pending 초안 ${draft.notes.length}건 생성 — data/release-notes.json을 편집 후 배포하세요.`);
 }
 
-module.exports = { stampReleaseNotes, stampAppVersion, draftNotes, loadNotes };
+module.exports = { stampReleaseNotes, stampAppVersion, draftNotes, loadNotes, humanizeSubject };
 
 function cliMain() {
   const dryRun = process.argv.includes('--dry-run');

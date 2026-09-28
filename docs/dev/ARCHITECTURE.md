@@ -115,9 +115,10 @@
 │ │  │ supabase-client(lazy) · supabase-config             │   │ │
 │ │  └──────────────────────────────────────────────────┘   │ │
 │ │  ┌──────────────────────────────────────────────────┐   │ │
-│ │  │ views/ (28개 뷰 컨트롤러): dashboard · flashcard     │   │ │
-│ │  │ quiz · daily-challenge · trainer(+calc/ingredients/ │   │ │
-│ │  │ drills) · pomodoro · exam-simulator(+state/review)  │   │ │
+│ │  │ views/ (35개 뷰 컨트롤러): dashboard · flashcard     │   │ │
+│ │  │ quiz(+wrong-cause) · daily-challenge · trainer      │   │ │
+│ │  │ (+calc/ingredients/drills+combo) · pomodoro        │   │ │
+│ │  │ exam-simulator(+state/review/weak)                 │   │ │
 │ │  │ textbook-reader · reader-audio · textbook-search    │   │ │
 │ │  │ dictionary · study-calendar · backup · navigation   │   │ │
 │ │  │ glossary-renderer · event-listeners · exam-select   │   │ │
@@ -309,15 +310,18 @@ Personalized_Skincare/
 │       ├── dashboard.js        #     대시보드 통계 + 맞춤학습 뷰(analysis-view) 렌더
 │       ├── flashcard.js        #     3D 플래시카드
 │       ├── quiz.js             #     퀴즈 + 복습
+│       ├── quiz-wrong-cause.js #     오답 원인 태깅·재학습 액션 (quiz.js에서 분리)
 │       ├── daily-challenge.js  #     데일리 챌린지 (quiz.js에서 분리)
 │       ├── trainer.js          #     훈련소 허브 (재수출)
 │       ├── trainer-calc-practice.js  # 계산 연습기
 │       ├── trainer-ingredients.js    # 원료 배합 챌린지
-│       ├── trainer-drills.js   #     O/X·복수정답형 드릴 UI
+│       ├── trainer-drills.js   #     O/X 드릴 + 드릴 공통 오케스트레이션
+│       ├── trainer-drill-combo.js #  복수정답형(combo) 드릴 (trainer-drills.js에서 분리)
 │       ├── pomodoro.js         #     뽀모도로 타이머 (trainer.js에서 분리)
 │       ├── exam-simulator.js   #     모의고사 시뮬레이터
 │       ├── exam-sim-state.js   #     시뮬레이터 상태
 │       ├── exam-sim-review.js  #     시뮬레이터 결과 리뷰
+│       ├── exam-sim-weak.js    #     오답 모의고사 (exam-simulator.js에서 분리)
 │       ├── exam-select.js      #     시험 선택/전환 뷰
 │       ├── textbook-reader.js  #     교재 리더 코어 (렌더링·TOC·포지션)
 │       ├── reader-toolbar.js   #     리더 툴바·폰트/줄간격·스크롤스파이·표 모달
@@ -613,7 +617,7 @@ Personalized_Skincare/
 
 ### 모듈화 전략: "점진적 모듈화 (Progressive Modularization)"
 
-거대한 단일 `app.js`(원래 약 4,900줄)를 한 번에 ES Modules로 전환하는 대신, **부수효과 없는 순수 로직부터 글로벌 스코프 스크립트로 점진 분리**하는 전략을 채택했습니다. `app.js`는 초기화·이벤트 위임 중심으로 축소되었고, 라우팅은 `router.js`, **32개 뷰 컨트롤러 모듈**이 `src/views/`에 분리되었습니다.
+거대한 단일 `app.js`(원래 약 4,900줄)를 한 번에 ES Modules로 전환하는 대신, **부수효과 없는 순수 로직부터 글로벌 스코프 스크립트로 점진 분리**하는 전략을 채택했습니다. `app.js`는 초기화·이벤트 위임 중심으로 축소되었고, 라우팅은 `router.js`, **35개 뷰 컨트롤러 모듈**이 `src/views/`에 분리되었습니다.
 
 **분리 원칙**:
 1. **DOM 의존성 없는 순수 로직 우선 분리** → `trainer-calc.js`(문제 생성), `utils.js`(초성 추출), `reader-format.js`(리더 포맷터)

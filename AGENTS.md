@@ -156,23 +156,26 @@ src/                    # ES Modules
   config/
     timing.js           # 타이밍 상수 (PWA 프로브, 스와이프 임계값 등)
     cache.js            # 캐시 설정 상수
-  views/                # 뷰 컨트롤러 (32개)
+  views/                # 뷰 컨트롤러 (35개)
     navigation.js       # 뷰 전환 유틸 (switchView)
     textbook-reader.js  # 교재 리더 (본문 + 참조자료)
     reader-audio.js     # 오디오북 플레이어
     textbook-search.js # 교재 검색 (역색인)
     quiz.js             # 기출 퀴즈
+    quiz-wrong-cause.js # 오답 원인 태깅·재학습 액션 (quiz.js에서 분리)
     flashcard.js        # 3D 플래시카드
     daily-challenge.js  # 데일리 챌린지
     dashboard.js        # 대시보드 + 맞춤학습 뷰 (통계·히트맵·개인화 진단 카드)
     trainer.js          # 스마트 훈련소 허브 (재수출)
     trainer-calc-practice.js  # 계산 연습기
     trainer-ingredients.js    # 원료 배합 챌린지
-    trainer-drills.js   # O/X·복수정답형 드릴 UI
+    trainer-drills.js   # O/X 드릴 + 드릴 공통 오케스트레이션
+    trainer-drill-combo.js # 복수정답형(combo) 드릴 (trainer-drills.js에서 분리)
     pomodoro.js         # 뽀모도로 타이머
     exam-simulator.js   # 실전 모의고사 시뮬레이터
     exam-sim-state.js   # 시뮬레이터 상태
     exam-sim-review.js  # 시뮬레이터 결과 리뷰
+    exam-sim-weak.js    # 오답 모의고사 (exam-simulator.js에서 분리)
     exam-select.js      # 시험 선택/전환 뷰
     dictionary.js       # 용어집
     study-calendar.js    # 학습 캘린더/목표 뷰

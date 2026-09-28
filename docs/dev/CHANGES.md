@@ -6,6 +6,18 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-09-28 후속 정리 — 추적 스캔 확장 · 릴리스 노트 한글화 · CHANGES 날짜 정정 · 중간 파일 분할
+
+- **B3 `html/` trace 스캔 추가**: `trace_scan.js` SCAN_DIRS에 `html` 포함 — 뷰 파셜 13개 전부에 `@spec` 태그 부여(뷰별 대표 ID: dashboard→D-*·formula→FO-15·trainer→TR-01 등). 스캔 위치 994→1,025
+- **C1 릴리스 노트 한글화**: `stamp_release_notes.js` `humanizeSubject()` 추가 — conventional prefix 11종(feat/fix/refactor/docs/style/test/perf/chore/build/ci/revert)을 `[기능·formula]` 형태 한글 라벨로 변환, `chore(sw)`·머지 커밋 자동 제외. `notes:draft` 초안이 사용자-facing 한국어로 생성됨
+- **C2 CHANGES 과거 날짜 소급 정정**: `2026-10-14/16` 등 미래 날짜 27개 헤더를 각 항목이 최초 커밋된 날짜로 교정(범위 2026-09-14~28). 이력 재작성 없이 문서 내용만 정정 — 날짜 정정 스크립트는 항목 식별 텍스트의 최초 출현 커밋 날짜를 `git log`로 역산
+- **D 중간 파일 3-way 분할** (공개 API·data-click 디스패치 불변, re-export 패턴):
+  - `exam-simulator.js` 956→774줄 → `exam-sim-weak.js`(195줄 — 오답 모의고사 `startWeakExam`+구현부, `@spec E-04`)
+  - `quiz.js` 901→777줄 → `quiz-wrong-cause.js`(141줄 — 오답 원인 태깅·재학습 액션 5종, `@spec AN-02`)
+  - `trainer-drills.js` 841→582줄 → `trainer-drill-combo.js`(274줄 — 복수정답형 드릴 전체, `@spec DR-02`)
+  - 분리 모듈이 원본을 역참조하는 ESM 순환(호출 시점 해결) — `comboSubjOrder`/`comboToSimQuestion`·`_beginQuizRun`/`renderQuizResult`·`openDrillSetup`/`startDrill`/`nextDrill`/`renderDrillResult`/`OPTION_INDICATORS`에 export 부여
+- **수동 작업**: `npx playwright install chromium` 로컬 설치 완료. `supabase functions deploy feedback-notify`는 액세스 토큰 부재로 차단 — `supabase login` 후 재시도 필요(수동)
+
 ## 2026-09-28 P1 리팩토링 — tools/check/ 분리 + reader.css 분할
 
 - **`tools/check/` 신설**: 검증·감사 계열 19개 이동 (check_* 15 + audit_* 2 + verify_shell_assets + coverage_merge). 이동 파일의 `ROOT`(‘..’→‘../..’)·`./build/`·`./lib/`·`../src/` 상대 경로 전수 교정 — 특히 check_combo_pilot의 ESM 동적 import(`pathToFileURL`)와 check_parser_parity의 `import('../src/…')`는 sed 패턴에 안 잡혀 수동 수정
@@ -58,7 +70,7 @@
 
 ---
 
-## 2026-10-16 버전 표시 3계층 정리
+## 2026-09-28 버전 표시 3계층 정리
 
 버전 체계를 **기계 ID / 표시용 / 콘텐츠** 3계층으로 분리 정리했다.
 
@@ -72,7 +84,7 @@
 
 ---
 
-## 2026-10-16 Formula OS 허브 — 업무 순서 스텝 배지
+## 2026-09-28 Formula OS 허브 — 업무 순서 스텝 배지
 
 허브 6개 카드를 실제 조제관리사 업무 흐름 순으로 재배열하고 스텝 배지를 부여했다 (FO-15).
 
@@ -83,7 +95,7 @@
 
 ---
 
-## 2026-10-16 index.html 뷰 마크업 분리 (P3 리팩토링) — 빌드 조립 방식
+## 2026-09-28 index.html 뷰 마크업 분리 (P3 리팩토링) — 빌드 조립 방식
 
 **배경**: `index.html`이 2,311줄 단일 파일로 13개 뷰 섹션(~1,830줄)을 인라인 보유. 런타임 fetch 방식은 init 순서·오프라인 콜드스타트 경로 변경 리스크가 있어 **빌드 조립** 채택 — 배포 산출물·테스트·SW·CSP 전부 불변.
 
@@ -100,7 +112,7 @@
 
 ---
 
-## 2026-10-16 대형 뷰 분할 (P2 리팩토링) — app.js·formula·textbook-reader
+## 2026-09-28 대형 뷰 분할 (P2 리팩토링) — app.js·formula·textbook-reader
 
 **배경**: `src/` 대형 파일 3종(app.js 1,156 · textbook-reader 1,698 · formula 1,443줄)에 상호 독립적인 관심사가 혼재해 유지보수 비용이 커짐.
 
@@ -118,7 +130,7 @@
 
 ---
 
-## 2026-10-16 교재 파일 구조 동기화 도구 — sync_textbook_files.js
+## 2026-09-28 교재 파일 구조 동기화 도구 — sync_textbook_files.js
 
 - **`tools/sync_textbook_files.js` 신규**: 교재/문제은행 파일시스템을 진실로 `manifest.json`(chapters file/storyFile, exams 미등록 자동 등록)과 `sw.js` `MD_ASSETS`를 동기화. `--check`는 drift 보고+exit 1, `--rename <구> <신>`은 파일 이동+manifest+sw.js+인용 경로 원자 전파 (`#L` 프래그먼트·URL 인코딩 보존)
 - **manifest 포맷 보존**: 전체 재직렬화 대신 `"file": "old"` 텍스트 치환 — uiText 인라인 스타일 유지. 출현 횟수 모호 시에만 재직렬화 폴백+경고
@@ -127,7 +139,7 @@
 - **`check_content.js` `[구조]` 단계**: `sync_textbook_files.js --check`를 콘텐츠 게이트에 통합 — `--content-only` CI에서도 drift 차단
 - **문서**: TEXTBOOK_REPLACEMENT_RUNBOOK에 ⓪ 자동 동기화 섹션 + 순서표/게이트 표 갱신, AGENTS 명령 표·주의사항, TESTING §7 갱신
 
-## 2026-10-16 교재 변경 추적 체인 강화 — silent-skip·CI 게이트·역방향 검사·ID 이관 체크
+## 2026-09-28 교재 변경 추적 체인 강화 — silent-skip·CI 게이트·역방향 검사·ID 이관 체크
 
 - **`sync_citation_lines.js`**: 인용 대상 교재 파일이 없으면(이름 변경/삭제) 인용을 스캔에서 제외하던 silent-skip 수정 — `missingTarget` 플래그로 미발견 집계에 포함, `(대상 파일 없음: 경로)` 메시지로 보고하고 exit 1
 - **`check_content.js` `--content-only`**: 콘텐츠 추적 단계(manifest·인용·귀속·레이아웃·신선도·참조라인·드릴신선도·콤보·ID이관·카드)만 실행하는 플래그 추가 — 파서·임포트·테스트 등 별도 게이트 제외
@@ -144,16 +156,16 @@
 - **문서 동기화**: README 기능 표·브라우저 호환성 안내, `user_manual.md` 메뉴 구성·§1.5 헤딩(앵커 링크 갱신)·§9 헤딩, `formula_manual.md` 성분검색 언급
 - **테스트**: router.dom 기대값 2건 갱신 — DOM 407 통과
 
-## 2026-10-16 Free/Pro 안내에 로그인 정책 명기
+## 2026-09-27 Free/Pro 안내에 로그인 정책 명기
 
 - **`pro-upgrade.js` `showPlanCompare`**: 비교 모달에 '로그인' 섹션 추가 — 무료 플랜은 로그인 불필요(기기 로컬 저장), Pro는 로그인 필요(클라우드 동기화·구독 관리 계정). 무료 티어 로그인 비강제 정책(ROAD-P4)을 고객에게 명시
 - **테스트**: pro-plan 첫 케이스에 '로그인 불필요'/'로그인 필요' 단언 추가
 
-## 2026-10-16 내 사용 통계 모달 위치 수정
+## 2026-09-27 내 사용 통계 모달 위치 수정
 
 - **`css/ui-overlay.css`**: 오버레이 중앙 정렬 규칙이 ID 선택자(`#app-confirm-overlay` 등)에만 적용되는데 `#usage-stats-overlay`가 누락 — 모달이 백드롭 없이 인플로우로 렌더되던 문제 수정. 표 길이 대비 `max-height: 85vh` 스크롤 추가
 
-## 2026-10-16 클라우드 동기화 Pro 전용 게이트 + 유료가치 판정 기준 20회
+## 2026-09-27 클라우드 동기화 Pro 전용 게이트 + 유료가치 판정 기준 20회
 
 - **정책 결정 (ROAD-P4 해소)**: 클라우드 동기화를 Pro 전용으로 전환, 무료 티어 로그인은 비강제 유지 — 로드맵 문서의 "동기화 무료 유지 권장"과 현재 Pro 안내 문구의 충돌을 Pro 전용 방향으로 확정
 - **`feature-plan.json`**: `cloud_sync: "pro"` 키 추가 — 플랜 비교 표에 '클라우드 동기화' 행이 자동 반영, `free`로 내리면 entitlement 없이 전원 재활성화 가능(프로모션 레버)
@@ -164,7 +176,7 @@
 - **유저 단위·판정 대상 정밀화**: `usage_stats`를 GLOBAL 키로 전환 + 레코드에 `owner`(익명 `device_id`) 기록 — 로그인 없는 프로모션 기간에 기기=유저 단위로 근사, 시험 전환해도 누적 유지. 판정 합산은 `VALUE_ACTIONS`(오답 루프 3종·진단 평가·이야기형·맞춤 리포트·실제 결과 보고)만 — `command_palette`·`plan_compare` 등 편의/UI 액션 제외. 이야기형 토글 ON(`story_textbook`)·리포트 뷰 진입(`personal_analysis`) 계측 추가
 - **테스트**: pro-plan 5→9(cloud_sync 행·entitlement 3상태), usage-stats 7→8(판정 표시·isValueThresholdMet), common-sync 11→13(pro_entitled 세팅·게이트 차단 2건) — DOM 400→407
 
-## 2026-10-16 로컬 사용 카운터 구현 (ROAD-L5)
+## 2026-09-27 로컬 사용 카운터 구현 (ROAD-L5)
 
 - **`src/usage-stats.js` 신규** (`@spec ROAD-L5`): `trackView(viewId)`(switchView 자동 계측) + `trackAction(key)`로 시험 스코프 `usage_stats` localStorage 키에 `{v, firstUse, lastUse, days(90일 상한), views, actions}` 누적 — 외부 전송 없음
 - **액션 계측 7종**: `weak_to_textbook`·`weak_to_card`·`weak_to_similar`(오답 루프)·`diagnostic_quiz`·`command_palette`·`plan_compare`·`actual_exam_report` — 유료가치 후보 기능(LEARNING_PREMIUM_PLAN 표 대응)
@@ -173,7 +185,7 @@
 - **스타일**: `css/ui-overlay.css`에 `.usage-stats-sub/-table/-num/-note` 추가
 - **테스트**: `tests/dom/usage-stats.dom.test.js` 7개 — scoped 키 누적·초기화·손상 복구·모달 라벨/합계·빈 상태·리셋·설정 진입점 (DOM 393→400)
 
-## 2026-10-14 프로젝트 리뷰 후속 — CSP 강화·콤보 퇴화 해소·조문 체커 개선·E2E 플로우
+## 2026-09-27 프로젝트 리뷰 후속 — CSP 강화·콤보 퇴화 해소·조문 체커 개선·E2E 플로우
 
 - **CSP `unsafe-eval` 제거** (`vercel.json`): src·vendor(mermaid·supabase) 전수 조사에서 eval/new Function 사용 0건 확인 후 `script-src`에서 제거 — `security.test.js` S-01에 금지 단언 추가로 회귀 잠금
 - **`serve.js` vercel.json 헤더 미러링**: source 패턴을 정규식으로 해석해 응답에 프로덕션 헤더(CSP·캐시 정책) 적용 — 헤더 변경을 배포 전 로컬·E2E에서 검증 가능
@@ -181,7 +193,7 @@
 - **콤보 전원참 퇴화 2건 해소** (`과목3_단일정답형.md` Q121·Q149): `위 ①②③④ 모두` 메타 선지가 정답이라 파생 콤보가 전원참으로 퇴화 — "옳지 않은 것은?" + 명백한 오답 선지로 전환(정답 ⑤), 재빌드 후 audit:combo 경고 0·검수 큐 0. 스테일 ID 2건을 `combo_blocklist.json` approved에서 제거
 - **`tests/e2e/flows.spec.js` 신규** (3 시나리오): 퀴즈 완주→`cosmetic:quiz_results` 저장, `setOffline`→오프라인 배너(유예·연속 실패 판정 검증), 프로덕션 CSP 하 학습안내서 Mermaid SVG 렌더 — E2E 16→**22 실행** (11 시나리오 × 2 프로젝트)
 
-## 2026-10-14 Free/Pro 플랜 비교 안내 신설 — 기능 차이 가시화
+## 2026-09-27 Free/Pro 플랜 비교 안내 신설 — 기능 차이 가시화
 
 - **`pro-upgrade.js` `showPlanCompare()`**: 설정 '💎 플랜 안내 (Free/Pro)'·계정 모달 'Free/Pro 차이' 버튼으로 여는 비교 모달 — `feature-plan.json`의 현재 값을 실시간 반영해 기능별 `PRO`/`무료 제공` 태그를 렌더링 (플랜 전환 시 문구 불일치 없음). Pro 전용 혜택(한도 무제한·멀티디바이스 동기화·오디오북) + 항상 무료 도구 안내
 - **`proFeatureNotice`·`showUpgradeNotice` 모달**: 'Free / Pro 비교' 보조 버튼 추가 — 안내에서 곧바로 비교 표로 이동
@@ -189,18 +201,18 @@
 - **CSS**: `.plan-free-tag` 추가 (PRO 배지 반대 표기 — 무료 제공)
 - **테스트**: `tests/dom/pro-plan.dom.test.js` 5개 — 플랜별 태그 렌더링·전환 반영·설정 진입점·동기화 안내·free 스킵 (DOM 388→393)
 
-## 2026-10-14 Pro 안내에 멀티디바이스 동기화 안내 추가
+## 2026-09-27 Pro 안내에 멀티디바이스 동기화 안내 추가
 
 - **`pro-upgrade.js` `proFeatureNotice` 모달**: Pro 기능 진입 안내에 "Pro 가입 시 로그인 계정의 클라우드 동기화로 여러 디바이스 간 학습 상태가 공유됩니다" 문구 추가 (pro-upgrade-benefits 래퍼로 한도 모달과 동일 스타일)
 - **`pro-upgrade.js` `showUpgradeNotice`**: 혜택 목록의 "클라우드 동기화 · 멀티기기 이어쓰기"를 "클라우드 동기화 — 여러 디바이스 간 학습 상태 공유"로 명확화
 - **`index.html` 계정 모달 힌트**: "클라우드에 동기화됩니다" → "클라우드에 동기화되어 여러 디바이스 간 상태가 공유됩니다" — 로그인 동기화 혜택을 디바이스 관점으로 명시
 
-## 2026-10-14 맞춤 학습 리포트 본문에 PRO 배지 명기
+## 2026-09-27 맞춤 학습 리포트 본문에 PRO 배지 명기
 
 - **`index.html` analysis-view 안내 카드**: `🎯 맞춤 학습 리포트란?` 제목에 `<span class="pro-badge" data-pro-feature="personal_analysis">PRO</span>` 추가 — 사이드바·모바일 탭의 내비 배지와 동일한 `personal_analysis` 플랜 키를 쓰므로 `feature-plan.json`이 `free`로 바뀌면 `refreshProBadges`가 내비·본문 배지를 함께 숨긴다
 - **`check_doc_sync.js` porcelain 파서 수정** (게이트 자체 검증 중 발견): `git status --porcelain` 출력 trim으로 첫 줄 선행 공백이 제거돼 `slice(3)`가 경로 첫 글자를 먹던 버그 — 1~2글자 상태 열을 처리하는 `parseStatusLine`으로 교체 + 회귀 테스트 (doc-sync.test.js 7개)
 
-## 2026-10-14 문서 동기화 게이트 신설 — 소스 변경 시 문서 갱신 강제
+## 2026-09-27 문서 동기화 게이트 신설 — 소스 변경 시 문서 갱신 강제
 
 - **`tools/check_doc_sync.js` 신규**: 소스(src/·tools/·tests/·css/·.github/·.githooks/·루트 설정)가 변경됐는데 문서(docs/·AGENTS.md·README.md 계열)가 동반 갱신되지 않으면 실패. 3모드 — 작업 트리(기본)·`--staged`·`--ref origin/main`. 위반 시 트리거 파일 목록 + 경로별 갱신 후보 문서(CHANGES·TESTING·AGENTS·DEV_ENVIRONMENT 등) 안내
 - **면제 경로**: `sw.js`·`data/`(deploy 스탬프 자동 커밋이 게이트에 걸리지 않도록), `content/`(check:content 파이프라인 별도), `ref-pipeline/`·`vendor/`(독립 도구함·서드파티)
@@ -209,7 +221,7 @@
 - **`tests/unit/doc-sync.test.js`**: 트리거/면제/문서 경로 분류 + analyze 위반 판정 6개 — unit 687→**693**
 - 스크립트 `check:docsync` 추가. AGENTS·DEV_ENVIRONMENT(훅·CI 설명)·TESTING(§3·§7)·ARCHITECTURE 갱신
 
-## 2026-10-14 관련 문서 갱신 — 테스트 수치·E2E 계층·게이트 현행화
+## 2026-09-27 관련 문서 갱신 — 테스트 수치·E2E 계층·게이트 현행화
 
 - **`docs/dev/reference/TESTING.md`**: 테스트 표 전면 갱신 — unit 552→687·DOM 364→388·E2E 16 추가(합계 1091), 신규 unit 12파일·DOM 3파일·§4.14 E2E 섹션 추가, 병합 커버리지 실측(stmts 70.9/branches 66.4/funcs 67.1/lines 78.4)으로 §6 갱신, §7 CI 순서를 실제 워크플로(audit·coverage:unit·병합 임계값·playwright 스텝)와 동기화
 - **`docs/dev/design/DOM_TEST_DESIGN.md`**: Phase 6 "보류"→완료 처리, §9를 구현된 E2E 계층 기준으로 재작성, 파일 트리에 신규 DOM 3파일 추가
@@ -217,7 +229,7 @@
 - **`docs/dev/ARCHITECTURE.md`**: tests/ 트리에 `e2e/`·신규 DOM 파일, `playwright.config.js`, `test:e2e` 명령 행 추가
 - **`AGENTS.md`**: check:specrefs 기준선 설명 103→0 · **`docs/dev/runbooks/TEXTBOOK_REPLACEMENT_RUNBOOK.md`**: 검증 카운트 552+/358+ → 687+/388+ (+test:e2e 선택) · **`README.md`·`docs/README.md`**: 테스트 수치·E2E 행 갱신 · **사업기획서(md+html)**: 테스트 인프라 수치 489+332 → 687+388+16
 
-## 2026-10-14 커버리지 공백 해소 + Playwright E2E 계층 신설
+## 2026-09-27 커버리지 공백 해소 + Playwright E2E 계층 신설
 
 - **`tests/unit/content-engineering.test.js` 신규** — CE-01~05 + TR-16a 커버: 표준형 교재 4과목의 학습 가이드(출제 빈도★·소요 시간·핵심 키워드), `> **한 줄 요약**` blockquote, 비교표(마크다운 표), 확인문제, 챕터별 용어 표를 검증. 용어 섹션은 과목별 제목 표기 차이("용어 정리"·"관련 용어"·"「법」 용어")를 허용하되 `| 용어 |` 표 존재를 고정. TR-16a는 툴바 자동 숨김(하향 6px·140px 임계, 상향 복귀) 구현 + CSS 규칙 정적 검증
 - **Playwright E2E 계층 신설** (`tests/e2e/app.spec.js` + `playwright.config.js`) — jsdom 불가 영역 커버: `__APP_INITIALIZED` 부트스트랩, pageerror 부재, 폴백 오버레이 미표시, 네비게이션 뷰 전환(데스크톱 사이드바 + 모바일 하단 탭 바), manifest.webmanifest Content-Type, sw.js 서빙·등록, App Shell 자산 200, 헤더 액션·설정 패널 토글 — chromium + Pixel 7 프로젝트 16개 통과
@@ -225,7 +237,7 @@
 - **설정**: `test:e2e` npm 스크립트, `.gitignore`에 `/test-results/`·`/playwright-report/` 추가, `@playwright/test@1.63.0` devDependency
 - 결과: 커버리지 공백 10→**4개** (ROAD-P1~P4 미구현 결제 로드맵만 — 코드 참조 없음이 정상) · unit 687 · DOM 388 · E2E 16 · lint 0 · check:types 0
 
-## 2026-10-14 테스트 갭 완전 소진 — 103→0, TEST_GAP_BASELINE 0
+## 2026-09-27 테스트 갭 완전 소진 — 103→0, TEST_GAP_BASELINE 0
 
 - **신규 테스트 파일 12개 추가** (unit 9 + DOM 3):
   - `tests/unit/study-tracker.test.js` — SC-03 활동 자동 기록 (당일 누적·반복 합산·월별 활동일·목표 진행률·기본값 병합)
@@ -247,7 +259,7 @@
 - **단언 정정 사례**: PF-02는 존재하지 않는 subjects/ 파일 레이아웃 대신 실제 `loadSubject(key)`+`_loaded[key]` 캐시 불변식 검증; PF-04는 `FETCH_CACHE_TTL_MS` 객체 리터럴 파싱; 스토리지 키는 `scopedKey` 네임스페이스 경유 `safeSetItem`으로 시드
 - 결과: unit **681** · DOM **388** · lint 0 problems · check:types 0 · specrefs 통과(테스트 미연결 0) · trace 재생성
 
-## 2026-10-14 ESLint 경고 완전 소진 — 211→0, 규칙 error 승격
+## 2026-09-27 ESLint 경고 완전 소진 — 211→0, 규칙 error 승격
 
 - **`eqeqeq` 96건**: 전부 `== null`/`!= null` 관용 패턴 — 규칙을 `{ null: 'ignore' }`로 설정해 의도된 null/undefined 동시 검사는 허용하고 실수성 `==`만 차단
 - **`no-unused-vars` 113건**: app.js 미사용 import 38개 제거(data-click 위임은 DELEGATED_HANDLERS 경유라 직접 import 불필요 — 사용처 0 검증 후 제거), 데드 함수 삭제(renderProcedureFlowCard·renderAdminPenaltyCard·getCardSchedule·removeCardSchedule·clearAllSchedules·showLoading·hideLoading·bindGlossaryEvents·getWebVitals·clearReaderPosition — 호출처 0 확인), 데드 변수·미사용 인자는 `_` 접두사 또는 삭제
@@ -256,7 +268,7 @@
 - **규칙 승격**: `no-unused-vars`·`eqeqeq`·`no-var`·`prefer-const`를 warn→error로 격상, lint 스크립트 `--max-warnings 0` — 경고·오류 0 유지가 필수 조건이 됨
 - 결과: ESLint **0 problems** · check:types 0 · check:imports 오류·경고 0 · unit 552 · DOM 364 통과
 
-## 2026-10-14 checkJs 백로그 완전 소진 — src 전체 0 에러
+## 2026-09-27 checkJs 백로그 완전 소진 — src 전체 0 에러
 
 - **백로그 0 달성**: jsconfig exclude의 남은 34파일 전부 진단 해소 후 편입 — 869→0. `exclude`에 파일 목록이 더 이상 없으며 신규 파일은 기본으로 검사 대상
 - **대형 파일 해소**: `event-listeners`(84건)·`app.js`(55건)·`formula-batch`(45건)·`quiz`(40건)·`exam-simulator`(33건)·`daily-challenge`(31건)·`reader-audio`(28건)·`trainer-drills`(26건) 등 — `getEl()` 헬퍼·DOM 캐스트·null 가드로 대량 해소
@@ -266,7 +278,7 @@
 - **린트 래칫 조임**: 212→211 (`--max-warnings` 211로 갱신)
 - 결과: `check:types` 0 에러(전체 src 포함) · lint 0 errors/211 warnings · unit 552 · DOM 364 · imports/docs/specrefs/trace 통과
 
-## 2026-10-14 checkJs 백로그 2차 편입 — 15파일 진단 해소 (869→611)
+## 2026-09-27 checkJs 백로그 2차 편입 — 15파일 진단 해소 (869→611)
 
 - **백로그 편입**: jsconfig exclude에서 15파일 제거 — `formula-rules`·`scratchpad`·`views/formula`·`whats-new` 외 1차 배치(exam-viewer·flashcard·formula-customer·trainer-calc·trainer-calc-practice·trainer-ingredients·pro-upgrade·pwa-install-capture 등)
 - **formula.js(67건) 해소**: `getEl()` 헬퍼(HTMLInputElement 캐스트)로 `document.getElementById` 72곳 일괄 좁힘 — `.value`·`.checked` 오류 대량 해소. `calc` 상태 객체에 rows/steps/editingId/stabRecordedAt 타입 주석(never[]·null 추론 해소). details 요소는 `HTMLDetailsElement`로 별도 캐스트
@@ -276,7 +288,7 @@
 - **미사용 변수 정리**: check_imports.js `dynImportFiles` 제거로 lint 213→212 — `--max-warnings` 래칫 212로 갱신
 - 결과: 활성 그래프 **0 에러** 유지, 백로그 49→34파일(전체 진단 869→611), unit 552·DOM 364 통과
 
-## 2026-10-14 check:imports 경고 0 + npm audit CI 스텝 — 데드 코드·취약 의존성 차단
+## 2026-09-27 check:imports 경고 0 + npm audit CI 스텝 — 데드 코드·취약 의존성 차단
 
 - **check_imports.js 보강**: 테스트의 동적 import(`await import()`, 백틱 템플릿 + 캐시버스터 쿼리, `pathToFileURL` 계산 경로) 인식 — 오탐 7건 해소. `keep-export` 주석 규약 추가 — 의도된 공개 API는 선언부 주석에 `keep-export` 표기로 억제
 - **미사용 import 2건 제거**: app.js `examIdToSubjectId`, formula-customer.js `clampDate`
@@ -285,19 +297,19 @@
 - **CI `npm audit --audit-level=high` 스텝 추가**: high+ 취약점 발견 시 빌드 차단 (현재 0 취약점)
 - 결과: check:imports **오류·경고 0** — 테스트 전용 export(searchAll·submitFeedback·LAW_DOCS 등)는 동적 import 인식으로 정상 유지
 
-## 2026-10-14 병합 커버리지 임계값 게이트 — 유닛+DOM 실질 커버리지 강제
+## 2026-09-27 병합 커버리지 임계값 게이트 — 유닛+DOM 실질 커버리지 강제
 
 - **`coverage_merge.js --check` 추가**: vitest(DOM) 단독 임계값과 별개로 유닛+DOM 병합 리포트에 임계값 적용 — stmts 68 / branches 62 / funcs 62 / lines 74 (기준선 70.74/66.3/64.92/77.58 대비 여유분, TEST_GAP·lint 래칫과 동일 정책)
 - **`coverage:all`에 --check 통합** + **CI에 `coverage:unit`·병합 게이트 스텝 추가**: 지금까지 CI는 DOM 커버리지만 검사했고 유닛 커버리지는 수집되지 않았음 — 이제 실질 커버리지 하락을 CI가 차단. 아티팩트에 coverage-unit/·coverage-merged/ 포함
 
-## 2026-10-14 ESLint 자동수정 + 경고 래칫 + EditorConfig — 서식·품질 경고 증가 차단
+## 2026-09-27 ESLint 자동수정 + 경고 래칫 + EditorConfig — 서식·품질 경고 증가 차단
 
 - **`eslint --fix` 전체 적용**: 239 → 213 경고 (var→const 등 자동수정 60건, 16파일) — unit 552·DOM 364 통과 확인
 - **`--max-warnings 213` 래칫**: lint 스크립트에 경고 상한 추가 — 경고가 1개라도 늘면 lint 실패 (TEST_GAP_BASELINE과 동일한 "줄어들기만 가능" 정책)
 - **`.editorconfig` 신설**: 모든 IDE가 자동 인식하는 서식 선언 — utf-8·LF·4칸 들여쓰기·후행공백 제거 (PC·IDE별 서식 발산 방지, md는 공백 보존)
 - **`.vscode/extensions.json` 신설**: 새 PC에서 eslint·editorconfig 확장 자동 추천
 
-## 2026-10-14 check:types 전체 소스 확장 — 49파일 백로그 제외 + 4파일 진단 해소
+## 2026-09-27 check:types 전체 소스 확장 — 49파일 백로그 제외 + 4파일 진단 해소
 
 - **`jsconfig.json` include를 `src/**/*.js`로 확장**: 전체 소스(121파일) 검사 시도 결과 869건 진단 → 진단 보유 파일 49개를 `exclude` 백로그로 명시하고 진행 방식 주석 추가 (해결 시 목록에서 지워 편입)
 - **잔여 22건 해소 — 4개 파일을 백로그에서 즉시 편입**:
@@ -307,7 +319,7 @@
   - `navigation.js`: `navItem`에 `HTMLElement` 캐스트, `globals.d.ts`에 `stopReaderAudio` 선언
 - 결과: 활성 검사 대상 진단 0 — 백로그 49파일은 향후 JSDoc 보강 후 순차 편입
 
-## 2026-10-14 IDE 오류 게이트 + TS5 정렬 — 커밋·푸시·배포 3중 차단
+## 2026-09-27 IDE 오류 게이트 + TS5 정렬 — 커밋·푸시·배포 3중 차단
 
 - **typescript 7.0.2 → 5.9.3 고정**: IDE(번들 TS 5.x)와 `check:types`의 진단이 다르던 문제 해소 — 이제 IDE에 오류가 보이면 check:types도 동일하게 실패
 - **`.githooks/pre-commit` 신설**: `check:types` + `lint` 실행, 실패 시 커밋 차단 (`git commit --no-verify`/`SKIP_PRECOMMIT=1` 우회)
@@ -315,7 +327,7 @@
 - **`deploy.js` 타입·린트 게이트**: `check:types`+`lint` 실패 시 배포 차단 — IDE에 오류가 보이는 상태에서는 커밋·푸시·배포 모두 불가
 - **이전 발견 수정**: 런타임 파서 기출 경고 블록 복원 (빌드 파서와의 발산), Card typedef 실형태 교정(`term`/`definition`/`isKey`), storage.js `@type` 보강, trace_scan 절 미할당 표시 버그(DA-09 등)
 
-## 2026-10-14 코드 품질·테스트 자동화 체계 — ESLint·tsc·커버리지 게이트·CI 확장·pre-push·배포 영향 경고
+## 2026-09-27 코드 품질·테스트 자동화 체계 — ESLint·tsc·커버리지 게이트·CI 확장·pre-push·배포 영향 경고
 
 - **ESLint 도입** (`eslint.config.mjs` flat config): 브라우저·노드·앱 전역(DataLoader·updateGlobalStats·checkShortAnswer) 선언 + 최소 규칙(no-undef·no-unused-vars·eqeqeq·no-unreachable·no-empty·no-cond-assign). `npm run lint` — 에러 0 필수, 기존 경고 278개는 점진 정리 백로그
 - **실제 결함 4건 수정** (lint가 포착): `exam-simulator.js` 도달 불가 코드 제거, `textbook-parser.js`·`textbook.plugin.js` 빈 if→조건 반전, `html-viewer.js` while 할당→비교 명시, `stamp_release_notes.js` 최상위 return→cliMain() 함수화

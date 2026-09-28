@@ -13,7 +13,7 @@ const ROOT = path.resolve(__dirname, '..', '..');
 const SPEC_FILE = path.join(ROOT, 'docs', 'dev', 'SPEC.md');
 
 // @spec 스캔 범위 (check_spec_refs.js와 동일)
-const SCAN_DIRS = ['src', 'tests', 'tools', 'css', 'ref-pipeline'];
+const SCAN_DIRS = ['src', 'tests', 'tools', 'css', 'html', 'ref-pipeline'];
 const SCAN_FILES = ['sw.js', 'index.html', 'serve.js'];
 const SCAN_EXTS = new Set(['.js', '.css', '.html', '.ts', '.py']);
 const EXCLUDE_DIRS = [path.join('tools', '_archive'), path.join('tools', '__pycache__'), 'node_modules'];
