@@ -1,6 +1,6 @@
 # Passmula — 맞춤형화장품 조제관리사 학습 매뉴얼 (시험 대비)
 
-> **최종 업데이트**: 2026-09-26 · **버전**: v369 · [변경 이력](/docs/dev/CHANGES.md)
+> **최종 업데이트**: 2026-09-26 · 앱 버전은 설정 메뉴 하단에 `vYYYY.MM.DD` 형식으로 표시됩니다 · [변경 이력](/docs/dev/CHANGES.md)
 > 실무 배합 기능(Formula OS)은 별도 문서로 분리되었습니다 → [실무 매뉴얼](doc:formula_manual)
 > **문서 ID**: DOC-USR-07
 > **관련 SPEC ID**: MV-01~04 (기능 전반은 SPEC §3 전 영역 대응)

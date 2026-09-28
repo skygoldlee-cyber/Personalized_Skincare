@@ -613,7 +613,7 @@ Personalized_Skincare/
 
 ### 모듈화 전략: "점진적 모듈화 (Progressive Modularization)"
 
-거대한 단일 `app.js`(원래 약 4,900줄)를 한 번에 ES Modules로 전환하는 대신, **부수효과 없는 순수 로직부터 글로벌 스코프 스크립트로 점진 분리**하는 전략을 채택했습니다. `app.js`는 초기화·이벤트 위임 중심으로 축소되었고, 라우팅은 `router.js`, **29개 뷰 컨트롤러 모듈**이 `src/views/`에 분리되었습니다.
+거대한 단일 `app.js`(원래 약 4,900줄)를 한 번에 ES Modules로 전환하는 대신, **부수효과 없는 순수 로직부터 글로벌 스코프 스크립트로 점진 분리**하는 전략을 채택했습니다. `app.js`는 초기화·이벤트 위임 중심으로 축소되었고, 라우팅은 `router.js`, **32개 뷰 컨트롤러 모듈**이 `src/views/`에 분리되었습니다.
 
 **분리 원칙**:
 1. **DOM 의존성 없는 순수 로직 우선 분리** → `trainer-calc.js`(문제 생성), `utils.js`(초성 추출), `reader-format.js`(리더 포맷터)
@@ -654,7 +654,7 @@ pwa-install.js (설치 프롬프트)        theme-init.js + theme-toggle.js
 pwa-manifest.js (동적 매니페스트)     pwa-install-capture.js (SW 등록 캡처)
 config/timing.js + cache.js          app-fallback.js (ESM 실패 복구)
 
-[분리 완료 — src/views/ (29개)]
+[분리 완료 — src/views/ (32개)]
 navigation.js (뷰 전환 유틸)         dashboard.js (대시보드)
 flashcard.js (플래시카드)            quiz.js (퀴즈+복습)
 daily-challenge.js (데일리 챌린지)    study-calendar.js (학습 캘린더)

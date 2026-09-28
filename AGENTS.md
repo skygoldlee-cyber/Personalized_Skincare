@@ -156,7 +156,7 @@ src/                    # ES Modules
   config/
     timing.js           # 타이밍 상수 (PWA 프로브, 스와이프 임계값 등)
     cache.js            # 캐시 설정 상수
-  views/                # 뷰 컨트롤러 (29개)
+  views/                # 뷰 컨트롤러 (32개)
     navigation.js       # 뷰 전환 유틸 (switchView)
     textbook-reader.js  # 교재 리더 (본문 + 참조자료)
     reader-audio.js     # 오디오북 플레이어

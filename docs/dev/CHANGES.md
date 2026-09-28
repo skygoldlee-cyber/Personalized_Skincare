@@ -38,6 +38,16 @@
 - **`index.html`**: 설정 드롭다운의 `학습 매뉴얼`·`실무 매뉴얼` 항목 제거 — 사이드바·모바일 하단 탭에 이미 있어 중복
 - **`user_manual.md`**: 설정 메뉴 설명에서 매뉴얼 항목 제외 + 매뉴얼 진입 경로(사이드바/하단 탭) 안내 추가 → docs_md 번들 재생성
 
+## 2026-09-28 보완 패치 — 스테일 주석·버전 표기·조립 게이트
+
+- `sw.js` CACHE_VERSION 꼬리 주석을 과거 커밋 제목에서 역할 설명으로 교정 (스탬프가 주석을 보존하므로 1회 수동 교정)
+- `user_manual.md`의 `버전: v369` 표기 제거 — 설정 메뉴 버전 표기 안내로 통일 (formula_manual과 동일), docs_md 번들 재생성
+- 뷰 컨트롤러 개수 표기 정정: 29개 → 32개 (`AGENTS.md`, `ARCHITECTURE.md`)
+- `check:html`을 pre-commit에 추가 — 파셜 편집 후 `build:html` 누락이 커밋 시점에 차단됨 (기존: pre-push·CI)
+- `index.template.html` 상단에 생성물 경고 배너 추가 — 생성된 index.html에도 동일 표시
+
+---
+
 ## 2026-09-28 버전 스탬프 날짜 기준을 HEAD 커밋 날짜로 변경
 
 `stamp_sw_version.js`의 날짜 성분이 배포 머신 로컬 시각(`new Date()`)을 쓰던 것을
