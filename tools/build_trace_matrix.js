@@ -49,7 +49,17 @@ function inputsHash(specIds) {
   return h.digest('hex').slice(0, 16);
 }
 
-function build(specIds, src, tst, docs, reports, meta, missingRef) {
+/** 검증 수단 파생 — 연결된 산출물 유형으로 분류 (29148의 검증 방법 식별에 대응) */
+function verMeans(id, src, tst, docs) {
+  const s = src.get(id);
+  if (tst.has(id)) return '테스트';
+  if (s?.size && [...s].every(f => f.startsWith('tools/') || f.startsWith('ref-pipeline/'))) return '도구 검증';
+  if (s?.size) return '구현 (테스트 갭)';
+  if (docs.has(id)) return '문서 검토';
+  return '—';
+}
+
+function build(specIds, src, tst, docs, reports, meta, missingRef, status) {
   const bySection = new Map();
   for (const [id, sec] of specIds) {
     if (!bySection.has(sec)) bySection.set(sec, []);
@@ -65,6 +75,8 @@ function build(specIds, src, tst, docs, reports, meta, missingRef) {
   out.push(`> 생성: ${new Date().toISOString().slice(0, 10)} · 원천: SPEC.md(${specIds.size}개 ID) + @spec 태그 + 문서 헤더`, '');
   out.push('| 열 | 의미 | 원천 |');
   out.push('|----|------|------|');
+  out.push('| 상태 | SPEC의 구현 상태 (✅·🟡·미구현 등) | SPEC.md 표 마지막 셀 |');
+  out.push('| 검증 수단 | 파생 분류 — 테스트/도구 검증/구현(테스트 갭)/문서 검토 | 연결된 산출물 유형 |');
   out.push('| 문서 | 해당 요구사항을 다루는 문서 (DOC-ID) | 각 문서 헤더 "관련 SPEC ID" |');
   out.push('| 소스 | 구현 코드 파일 | `// @spec` 태그 |');
   out.push('| 테스트 | 검증 테스트 파일 | `// @spec` 태그 (tests/) |');
@@ -85,8 +97,8 @@ function build(specIds, src, tst, docs, reports, meta, missingRef) {
 
   for (const [sec, ids] of bySection) {
     out.push(`## ${sec || '기타 (SPEC 헤더·본문 언급)'}`, '');
-    out.push('| ID | 문서 | 소스 | 테스트 | 보고서 |');
-    out.push('|----|------|------|--------|--------|');
+    out.push('| ID | 상태 | 검증 수단 | 문서 | 소스 | 테스트 | 보고서 |');
+    out.push('|----|------|-----------|------|------|--------|--------|');
     for (const id of ids.sort()) {
       const cell = (m) => {
         const s = m.get(id);
@@ -94,7 +106,7 @@ function build(specIds, src, tst, docs, reports, meta, missingRef) {
         const arr = [...s].sort();
         return arr.length > 4 ? arr.slice(0, 4).join('<br>') + `<br>…외 ${arr.length - 4}개` : arr.join('<br>');
       };
-      out.push(`| ${id} | ${cell(docs)} | ${cell(src)} | ${cell(tst)} | ${cell(reports)} |`);
+      out.push(`| ${id} | ${status.get(id) || '—'} | ${verMeans(id, src, tst, docs)} | ${cell(docs)} | ${cell(src)} | ${cell(tst)} | ${cell(reports)} |`);
     }
     out.push('');
   }
@@ -138,6 +150,7 @@ function build(specIds, src, tst, docs, reports, meta, missingRef) {
 function main() {
   const checkOnly = process.argv.includes('--check');
   const { specIds, src, tst, docs, reports, meta, missingRef, docErrors } = T.scanAll();
+  const status = T.extractSpecStatus();
 
   if (checkOnly) {
     const want = inputsHash(specIds);
@@ -156,7 +169,7 @@ function main() {
     for (const e of docErrors) console.log(`  - ${e}`);
   }
 
-  fs.writeFileSync(OUT_FILE, build(specIds, src, tst, docs, reports, meta, missingRef));
+  fs.writeFileSync(OUT_FILE, build(specIds, src, tst, docs, reports, meta, missingRef, status));
   let nDoc = 0, nSrc = 0, nTst = 0, nRpt = 0, nGap = 0;
   for (const id of specIds.keys()) {
     if (docs.has(id)) nDoc++;

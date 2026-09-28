@@ -110,6 +110,19 @@ function extractSpec() {
   return ids;
 }
 
+/** SPEC.md → Map(id → 구현 상태 문자열) — 표 행 `| ID | … | 상태 |`의 마지막 셀 */
+function extractSpecStatus() {
+  const map = new Map();
+  const ROW_RE = /^\s*\|\s*([A-Z]{1,4}(?:-[A-Z]{1,4})?-(?:\d{2}[a-z]?|[PL]\d))\s*\|/;
+  for (const l of fs.readFileSync(SPEC_FILE, 'utf8').split('\n')) {
+    const m = l.match(ROW_RE);
+    if (!m) continue;
+    const cells = l.split('|').map(c => c.trim()).filter(Boolean);
+    if (cells.length >= 3) map.set(m[1], cells[cells.length - 1]);
+  }
+  return map;
+}
+
 /** 코드 @spec 스캔 → { src: Map(id→Set(file)), tst: Map(id→Set(file)) } */
 function collectCodeRefs(specIds) {
   const src = new Map(), tst = new Map();
@@ -184,5 +197,5 @@ module.exports = {
   ROOT, SPEC_FILE, SCAN_DIRS, SCAN_FILES, SCAN_EXTS, EXCLUDE_DIRS, EXCLUDE_FILES,
   DOC_DIRS, DOC_FILES, REPORT_DIR,
   ID_RE, SPEC_TAG_RE, RANGE_RE, WILDCARD_ID_RE, PURE_ID_RE, DOC_ID_RE, RELATED_RE,
-  walk, expandIds, extractSpec, collectCodeRefs, collectDocRefs, idsInFile, scanAll,
+  walk, expandIds, extractSpec, extractSpecStatus, collectCodeRefs, collectDocRefs, idsInFile, scanAll,
 };
