@@ -8,14 +8,14 @@
  *
  * 사용법:
  *   npm.cmd run check:docs          # 경로 검증 + 문서 ID 검증 (연쇄 실행)
- *   node tools/check_doc_ids.js     # 문서 ID만 검증
+ *   node tools/check/check_doc_ids.js     # 문서 ID만 검증
  */
 
 // @spec none (문서 ID 검증)
 const fs = require('fs');
 const path = require('path');
 
-const ROOT = path.resolve(__dirname, '..');
+const ROOT = path.resolve(__dirname, '..', '..');
 
 const DOC_DIRS = ['docs', 'ref-pipeline'];
 const DOC_FILES = ['AGENTS.md', 'README.md'];

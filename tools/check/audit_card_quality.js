@@ -1,7 +1,7 @@
-// tools/audit_card_quality.js — 콘텐츠 품질 자동 감사 도구
+// tools/check/audit_card_quality.js — 콘텐츠 품질 자동 감사 도구
 // @spec CQ-01~04,BP-08
 //
-// 실행: node tools/audit_card_quality.js
+// 실행: node tools/check/audit_card_quality.js
 //
 // 점검 항목:
 // 1. 너무 짧은 설명 (definition length <= 10)
@@ -20,10 +20,10 @@ import { createRequire } from 'module';
 
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ROOT = path.join(__dirname, '..');
-const plugin = require('./build/plugins/textbook.plugin.js');
-const idFactory = require('./build/id_factory.js');
-const { getExamTargets } = require('./build/exam_targets.js');
+const ROOT = path.join(__dirname, '..', '..');
+const plugin = require('../build/plugins/textbook.plugin.js');
+const idFactory = require('../build/id_factory.js');
+const { getExamTargets } = require('../build/exam_targets.js');
 
 function loadStudyData() {
     // data/subjects/*.js 번들은 폐지됨 — 앱과 동일하게 content/*.md를

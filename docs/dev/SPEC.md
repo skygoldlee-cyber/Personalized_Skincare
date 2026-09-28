@@ -303,7 +303,7 @@
 |----|---------|-----------|
 | CQ-01 | 카드 품질 자동 감사 (짧은 설명, 중복, 의미 없음, 긴/짧은 term, 빈 definition, 저품질) | ✅ |
 | CQ-02 | 참조자료 링크 유효성 감사 (`data-ref-html` 파일 존재 여부) | ✅ |
-| CQ-03 | `npm run audit:cards` 스크립트 (`tools/audit_card_quality.js`) | ✅ |
+| CQ-03 | `npm run audit:cards` 스크립트 (`tools/check/audit_card_quality.js`) | ✅ |
 | CQ-04 | 심각도 분류 (ERROR/WARN) 및 요약 리포트 출력 | ✅ |
 | CQ-05 | 복수정답형 품질 감사 (`npm run audit:combo` — 정답 유일성·중복 진술집합·모순쌍·위치편향, 배포 게이트 연동) | ✅ |
 
@@ -881,7 +881,7 @@
 | 학습 추적 | `src/study-tracker.js` | 캘린더 활동 기록·목표 달성률 (`recordStudyActivity`, `getStudyGoals`) |
 | 동적 매니페스트 | `src/pwa-manifest.js` | 활성 시험 기준 PWA manifest 링크 교체 (클래식 스크립트) |
 | 설정 상수 | `src/config/timing.js` · `cache.js` | 타이밍·캐시 상수 중앙 관리 |
-| 콘텐츠 감사 | `tools/audit_card_quality.js` | 카드 품질 자동 감사, 참조자료 링크 유효성 검사 |
+| 콘텐츠 감사 | `tools/check/audit_card_quality.js` | 카드 품질 자동 감사, 참조자료 링크 유효성 검사 |
 
 ### 뷰 컨트롤러 (`src/views/`)
 

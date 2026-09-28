@@ -7,9 +7,9 @@
  * "코드가 바뀌면 문서도 바뀐다"를 커밋·push·CI 3층에서 구조적으로 강제한다.
  *
  * 사용법:
- *   node tools/check_doc_sync.js            # 작업 트리(HEAD 대비) 검사
- *   node tools/check_doc_sync.js --staged   # 스테이징된 변경 검사 (pre-commit)
- *   node tools/check_doc_sync.js --ref origin/main  # ref 대비 브랜치 변경 검사 (pre-push/CI)
+ *   node tools/check/check_doc_sync.js            # 작업 트리(HEAD 대비) 검사
+ *   node tools/check/check_doc_sync.js --staged   # 스테이징된 변경 검사 (pre-commit)
+ *   node tools/check/check_doc_sync.js --ref origin/main  # ref 대비 브랜치 변경 검사 (pre-push/CI)
  *
  * 우회:
  *   - 커밋 메시지에 [no-docs] 포함 (--ref 모드에서 인식)

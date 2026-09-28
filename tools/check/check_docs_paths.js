@@ -8,7 +8,7 @@
  *
  * 사용법:
  *   npm.cmd run check:docs          # 전체 검증 (실패 시 exit 1)
- *   node tools/check_docs_paths.js  # 직접 실행
+ *   node tools/check/check_docs_paths.js  # 직접 실행
  *
  * 범위/예외:
  *   - 인라인 코드 `path/to/x` 토큰 (저장소 루트 접두사로 시작하는 것만)
@@ -22,7 +22,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const ROOT = path.resolve(__dirname, '..');
+const ROOT = path.resolve(__dirname, '..', '..');
 
 // 검사 대상 문서
 const DOC_DIRS = ['docs', 'ref-pipeline'];

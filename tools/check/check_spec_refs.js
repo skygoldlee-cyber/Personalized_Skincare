@@ -11,7 +11,7 @@
  *
  * 사용법:
  *   npm.cmd run check:specrefs      # 전체 검증 (스테일 참조 시 exit 1)
- *   node tools/check_spec_refs.js   # 직접 실행
+ *   node tools/check/check_spec_refs.js   # 직접 실행
  *
  * 태그 형식 (모듈 헤더 또는 함수 직상단 주석):
  *   // @spec FB-01~08          ← 범위 (FB-01..FB-08로 확장)
@@ -27,7 +27,7 @@
  */
 const fs = require('fs');
 const path = require('path');
-const T = require('./lib/trace_scan');
+const T = require('../lib/trace_scan');
 
 const ROOT = T.ROOT;
 
@@ -137,7 +137,7 @@ function main() {
   console.log(fail ? '\n실패 — 스테일 참조·파싱 오류·테스트 갭 증가를 수정하세요.' : '\n통과 — 스테일 참조 없음.');
   if (gapExceeded) {
     console.log(`  테스트 갭 ${testGap.length}개 > 기준선 ${TEST_GAP_BASELINE}개 — 신규 요구사항에 tests/ @spec을 추가하거나,`);
-    console.log(`  테스트 없이 유지할 정책형 요구사항이라면 TEST_GAP_BASELINE을 갱신하세요 (tools/check_spec_refs.js).`);
+    console.log(`  테스트 없이 유지할 정책형 요구사항이라면 TEST_GAP_BASELINE을 갱신하세요 (tools/check/check_spec_refs.js).`);
   }
   if (!fail && uncovered.length) console.log('  (커버리지 공백은 경고 — 문서/정책형 요구사항은 코드 참조 없음이 정상일 수 있음)');
   process.exit(fail ? 1 : 0);

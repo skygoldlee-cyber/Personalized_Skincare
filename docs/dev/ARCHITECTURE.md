@@ -225,7 +225,9 @@ Personalized_Skincare/
 │   ├── dashboard.css           #   대시보드
 │   ├── study.css               #   플래시카드, 퀴즈
 │   ├── exam.css                #   모의고사, 배지
-│   ├── reader.css              #   교재 리더, 용어집, 학습보조, Mermaid
+│   ├── reader.css              #   교재 리더 코어 (TOC·툴바·타이포·Mermaid 라이트)
+│   ├── app-responsive.css      #   태블릿/모바일 앱 레이아웃·오프라인 배너·PWA·가로보기
+│   ├── reader-extras.css       #   라이트 테마 보정·학습보조·이야기 모드·용어집·리더 상태
 │   ├── reader-mermaid.css      #   Mermaid 다이어그램 전용 스타일
 │   ├── trainer.css             #   훈련소, 계산기, 손글씨
 │   ├── html-viewer.css         #   참조자료 HTML 뷰어
@@ -1216,7 +1218,7 @@ app-fallback.js 폴링 시작 (400ms 간격, 15s 데드라인)
 
 - `SHELL_ASSETS` / `DATA_ASSETS`에 나열된 모든 파일이 저장소에 존재하는지 확인
 - 누락 발견 시 `exit code 1`로 CI 실패 → 배포 차단
-- `npm run verify:assets` 또는 `node tools/verify_shell_assets.js`로 실행
+- `npm run verify:assets` 또는 `node tools/check/verify_shell_assets.js`로 실행
 
 ### 7. 문제은행 인용 링크 시스템 (exam-viewer.js)
 
@@ -1828,7 +1830,7 @@ npm.cmd run deploy
 | `tools/build/plugins/exams.plugin.js` | `manifest.exams` 참조 | 문제은행 MD 처리 |
 | `tools/build/build_doc_bundles.js` | `DOC_FILES` 배열 | 학습안내서, 사용자/포뮬러 매뉴얼 번들 |
 | `tools/build/build_study_md_bundle.js` | `manifest.subjects[].dir` 동적 참조 | 교재 MD 폴백 번들 |
-| `tools/check_parser_parity.js` | `manifest.subjects[].dir` 동적 참조 | 파서 정합성 검증 |
+| `tools/check/check_parser_parity.js` | `manifest.subjects[].dir` 동적 참조 | 파서 정합성 검증 |
 | `tools/deploy.js` | `npm run deploy` | 배포 가드 (clean tree + origin 동기화 + 콤보 게이트 + SW 스탬프) |
 | `ref-pipeline/batch_convert.py` | `load_target_groups()` — manifest `subjects[].dir` 기준 glob | 배치 HTML 변환 대상 (과목 추가 시 자동) |
 | `ref-pipeline/MD_to_HTML.py` | `--cli --in` 인자 (미지정 시 GUI) | 단일 HTML 변환 |

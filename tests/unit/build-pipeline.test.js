@@ -137,7 +137,7 @@ test('BP-04: 실제 교재 빌드에서 마커 감시 warnings 채널이 동작�
 
 test('BP-05: check_parser_parity.js가 빌드↔런타임 파서 불일치를 검출 가능하다', () => {
   // 스크립트가 존재하고 실제 불일치 감지 함수를 포함하는지 정적 검증
-  const src = readFileSync(join(ROOT, 'tools', 'check_parser_parity.js'), 'utf-8');
+  const src = readFileSync(join(ROOT, 'tools', 'check', 'check_parser_parity.js'), 'utf-8');
   assert.ok(src.includes('buildSubjectData'), '런타임 파서를 동적 import해야 함');
   assert.ok(src.includes('firstDiff'), '비교 함수가 있어야 함');
 });
@@ -184,7 +184,7 @@ test('BP-07: 동일 버전 재스탬프는 no-op이다', () => {
 // ---------- BP-08: 콘텐츠 품질 감사 스크립트 ----------
 
 test('BP-08: audit:cards 스크립트가 존재하고 오류 없이 실행된다', () => {
-  const out = execFileSync('node', ['tools/audit_card_quality.js'], {
+  const out = execFileSync('node', ['tools/check/audit_card_quality.js'], {
     cwd: ROOT, encoding: 'utf-8', timeout: 60000,
   });
   assert.ok(/감사|audit|ERROR|WARN/i.test(out), '요약 리포트를 출력해야 함');

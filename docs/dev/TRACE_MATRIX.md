@@ -3,7 +3,7 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: 78a239f57c2af7b6
+> 입력 해시: a0e7dea669403fe9
 > 생성: 2026-09-28 · 원천: SPEC.md(351개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
@@ -16,7 +16,7 @@
 | 보고서 | 분석·결과 보고서 | report_archive 헤더 |
 | 출처 | 요구사항의 기원 (법령·시험 규정·사업 문서) | SPEC 부록 "요구사항 출처" 표 |
 
-**커버리지 요약**: 요구사항 351개 — 문서 연결 224 · 소스 연결 327 · 테스트 연결 344 · 보고서 연결 109
+**커버리지 요약**: 요구사항 351개 — 문서 연결 224 · 소스 연결 328 · 테스트 연결 344 · 보고서 연결 109
 
 ---
 
@@ -109,11 +109,11 @@
 | TR-12 | ✅ | 테스트 | DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
 | TR-13 | ✅ | 테스트 | DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
 | TR-14 | ✅ | 테스트 | DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
-| TR-15 | ✅ | 테스트 | DOC-RBK-07<br>DOC-REF-05 | css/reader.css<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
-| TR-16 | ✅ | 테스트 | DOC-RBK-07<br>DOC-REF-05 | css/reader.css<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
+| TR-15 | ✅ | 테스트 | DOC-RBK-07<br>DOC-REF-05 | css/reader-extras.css<br>css/reader.css<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
+| TR-16 | ✅ | 테스트 | DOC-RBK-07<br>DOC-REF-05 | css/reader-extras.css<br>css/reader.css<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
 | TR-16a | ✅ | 테스트 | DOC-RBK-07<br>DOC-REF-05 | — | tests/unit/content-engineering.test.js | — | — |
-| TR-17 | ✅ | 테스트 | DOC-RBK-07<br>DOC-REF-05 | css/reader.css<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
-| TR-18 | ✅ | 테스트 | DOC-RBK-07<br>DOC-REF-05 | css/reader.css<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
+| TR-17 | ✅ | 테스트 | DOC-RBK-07<br>DOC-REF-05 | css/reader-extras.css<br>css/reader.css<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
+| TR-18 | ✅ | 테스트 | DOC-RBK-07<br>DOC-REF-05 | css/reader-extras.css<br>css/reader.css<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
 
 ## 3.6 교재 리더 — 학습 보조 도구
 
@@ -247,11 +247,11 @@
 
 | ID | 상태 | 검증 수단 | 문서 | 소스 | 테스트 | 보고서 | 출처 |
 |----|------|-----------|------|------|--------|--------|------|
-| CQ-01 | ✅ | 테스트 | — | tools/audit_card_quality.js | tests/unit/audit-quality.test.js | — | — |
-| CQ-02 | ✅ | 테스트 | — | tools/audit_card_quality.js | tests/unit/audit-quality.test.js | — | — |
-| CQ-03 | ✅ | 테스트 | — | tools/audit_card_quality.js | tests/unit/audit-quality.test.js | — | — |
-| CQ-04 | ✅ | 테스트 | — | tools/audit_card_quality.js | tests/unit/audit-quality.test.js | — | — |
-| CQ-05 | ✅ | 테스트 | — | tools/audit_combo.js<br>tools/check_combo_pilot.js | tests/unit/audit-quality.test.js | — | — |
+| CQ-01 | ✅ | 테스트 | — | tools/check/audit_card_quality.js | tests/unit/audit-quality.test.js | — | — |
+| CQ-02 | ✅ | 테스트 | — | tools/check/audit_card_quality.js | tests/unit/audit-quality.test.js | — | — |
+| CQ-03 | ✅ | 테스트 | — | tools/check/audit_card_quality.js | tests/unit/audit-quality.test.js | — | — |
+| CQ-04 | ✅ | 테스트 | — | tools/check/audit_card_quality.js | tests/unit/audit-quality.test.js | — | — |
+| CQ-05 | ✅ | 테스트 | — | tools/check/audit_combo.js<br>tools/check/check_combo_pilot.js | tests/unit/audit-quality.test.js | — | — |
 
 ## 3.18 Formula OS — 실전 배합 작업실
 
@@ -352,22 +352,22 @@
 | P-02 | ✅ | 테스트 | DOC-RBK-01<br>DOC-RBK-04 | src/config/cache.js<br>sw.js | tests/unit/pwa-sw.test.js | — | — |
 | P-03 | ✅ | 테스트 | DOC-RBK-01<br>DOC-RBK-04 | sw.js | tests/unit/pwa-sw.test.js | — | — |
 | P-04 | ✅ | 테스트 | DOC-RBK-01<br>DOC-RBK-04 | sw.js | tests/unit/pwa-sw.test.js | — | — |
-| P-04a | ✅ | 테스트 | DOC-RBK-01 | — | tests/unit/pwa-sw.test.js | — | — |
+| P-04a | ✅ | 테스트 | DOC-RBK-01 | css/app-responsive.css | tests/unit/pwa-sw.test.js | — | — |
 | P-05 | ✅ | 테스트 | DOC-RBK-01<br>DOC-RBK-04 | sw.js<br>tools/build/stamp_sw_version.js | tests/unit/pwa-sw.test.js | — | — |
 | P-06 | ✅ | 테스트 | DOC-RBK-01<br>DOC-RBK-04 | sw.js | tests/unit/pwa-sw.test.js<br>tests/unit/sw-prune.test.js | — | — |
-| P-07 | ✅ | 테스트 | DOC-RBK-01<br>DOC-RBK-04 | src/pwa-install-capture.js<br>src/pwa-install.js | tests/unit/pwa-sw.test.js | — | — |
+| P-07 | ✅ | 테스트 | DOC-RBK-01<br>DOC-RBK-04 | css/app-responsive.css<br>src/pwa-install-capture.js<br>src/pwa-install.js | tests/unit/pwa-sw.test.js | — | — |
 | P-08 | ✅ | 테스트 | DOC-RBK-01<br>DOC-RBK-04 | src/pwa-install.js | tests/unit/pwa-sw.test.js | — | — |
 | P-09 | ✅ | 테스트 | DOC-RBK-01<br>DOC-RBK-04 | src/pwa-install.js | tests/unit/pwa-sw.test.js | — | — |
 | P-10 | ✅ | 테스트 | DOC-RBK-01<br>DOC-RBK-04 | src/pwa-manifest.js | tests/unit/pwa-sw.test.js | — | — |
 | P-11 | ✅ | 테스트 | DOC-RBK-01<br>DOC-RBK-04 | src/app-fallback.js | tests/unit/pwa-sw.test.js | — | — |
-| P-12 | ✅ | 테스트 | DOC-RBK-01<br>DOC-RBK-04 | tools/verify_shell_assets.js | tests/unit/pwa-sw.test.js | — | — |
+| P-12 | ✅ | 테스트 | DOC-RBK-01<br>DOC-RBK-04 | tools/check/verify_shell_assets.js | tests/unit/pwa-sw.test.js | — | — |
 | P-13 | ✅ | 테스트 | DOC-RBK-01<br>DOC-RBK-04 | src/whats-new.js<br>tools/build/stamp_release_notes.js | tests/dom/whats-new.dom.test.js<br>tests/unit/whats-new.test.js | — | — |
 
 ## 4.2 오프라인 감지
 
 | ID | 상태 | 검증 수단 | 문서 | 소스 | 테스트 | 보고서 | 출처 |
 |----|------|-----------|------|------|--------|--------|------|
-| O-01 | ✅ | 테스트 | — | src/views/offline-detection.js | tests/dom/common-offline.dom.test.js | — | — |
+| O-01 | ✅ | 테스트 | — | css/app-responsive.css<br>src/views/offline-detection.js | tests/dom/common-offline.dom.test.js | — | — |
 | O-02 | ✅ | 테스트 | — | src/views/offline-detection.js | tests/dom/common-offline.dom.test.js | — | — |
 | O-03 | ✅ | 테스트 | — | src/views/offline-detection.js | tests/dom/common-offline.dom.test.js | — | — |
 | O-04 | ✅ | 테스트 | — | sw.js | tests/dom/common-offline.dom.test.js | — | — |
@@ -439,11 +439,11 @@
 
 | ID | 상태 | 검증 수단 | 문서 | 소스 | 테스트 | 보고서 | 출처 |
 |----|------|-----------|------|------|--------|--------|------|
-| TH-01 | ✅ | 테스트 | DOC-DSN-01 | css/base.css<br>src/theme-toggle.js | tests/dom/common-theme.dom.test.js | — | — |
+| TH-01 | ✅ | 테스트 | DOC-DSN-01 | css/base.css<br>css/reader-extras.css<br>src/theme-toggle.js | tests/dom/common-theme.dom.test.js | — | — |
 | TH-02 | ✅ | 테스트 | DOC-DSN-01 | css/base.css<br>index.html<br>src/theme-init.js<br>src/theme-toggle.js | tests/dom/common-theme.dom.test.js | — | — |
 | TH-03 | ✅ | 테스트 | DOC-DSN-01 | css/base.css<br>src/theme-init.js<br>src/theme-toggle.js | tests/dom/common-theme.dom.test.js | — | — |
 | TH-04 | ✅ | 테스트 | DOC-DSN-01 | css/base.css<br>src/theme-toggle.js | tests/dom/common-theme.dom.test.js | — | — |
-| TH-05 | ✅ | 테스트 | DOC-DSN-01 | css/base.css<br>src/theme-toggle.js | tests/dom/common-theme.dom.test.js | — | — |
+| TH-05 | ✅ | 테스트 | DOC-DSN-01 | css/base.css<br>css/reader-extras.css<br>src/theme-toggle.js | tests/dom/common-theme.dom.test.js | — | — |
 | TH-06 | ✅ | 테스트 | DOC-DSN-01 | css/base.css<br>css/reader-mermaid.css<br>src/mermaid-utils.js | tests/dom/common-theme.dom.test.js<br>tests/unit/mermaid-utils.test.js | — | — |
 
 ## 4.8 UI/UX 설계 요구사양
@@ -456,7 +456,7 @@
 | UX-FB-04 | 부분 스켈레톤보다 구현 비용이 낮고 일관됨 | 테스트 | — | css/ui-overlay.css<br>src/ui-utils.js | tests/unit/ux-invariants.test.js | — | — |
 | UX-FORM-01 | 16px 미만이면 iOS Safari가 포커스 시 자동 확대 | 테스트 | — | css/reader.css | tests/unit/ux-invariants.test.js | — | — |
 | UX-FORM-02 | 모바일에서 물리적 눌림감 제공 | 테스트 | — | css/base.css | tests/unit/ux-invariants.test.js | — | — |
-| UX-NAV-01 | 한 번에 하나의 네비게이션만 노출 — 중복 방지. 하단 탭 바는 엄지 도달권, 가로 스크롤 + 양끝 그림자 힌트(`background-attachment: local, local, scroll, scroll` 기법)로 더 있음을 표시 | 테스트 | DOC-DSN-01 | src/app.js<br>src/router.js | tests/dom/common-navigation.dom.test.js<br>tests/dom/router.dom.test.js | — | — |
+| UX-NAV-01 | 한 번에 하나의 네비게이션만 노출 — 중복 방지. 하단 탭 바는 엄지 도달권, 가로 스크롤 + 양끝 그림자 힌트(`background-attachment: local, local, scroll, scroll` 기법)로 더 있음을 표시 | 테스트 | DOC-DSN-01 | css/app-responsive.css<br>src/app.js<br>src/router.js | tests/dom/common-navigation.dom.test.js<br>tests/dom/router.dom.test.js | — | — |
 | UX-NAV-02 | 스크롤 중에도 설정·테마에 접근 가능. 단, 부모가 스크롤 컨테이너(`overflow-y: auto`)일 때만 작동 — `body` 스크롤 구조면 의도대로 동작하는지 확인할 것 | 테스트 | DOC-DSN-01 | — | tests/dom/common-navigation.dom.test.js | — | — |
 | UX-NAV-03 | 드롭다운은 절대위치로 헤더 경계를 넘어야 함. 넘침 제어는 `min-width:0`+말줄임과 `flex-shrink:0`으로 처리 | 테스트 | DOC-DSN-01 | — | tests/dom/common-navigation.dom.test.js | — | — |
 | UX-NAV-04 | `.app-container { width: 100% }`. 특히 클래식 스크롤바가 상시 표시되는 데스크톱에서 차이 발생 | 테스트 | DOC-DSN-01 | — | tests/dom/common-navigation.dom.test.js | — | — |
@@ -506,13 +506,13 @@
 | ID | 상태 | 검증 수단 | 문서 | 소스 | 테스트 | 보고서 | 출처 |
 |----|------|-----------|------|------|--------|--------|------|
 | BP-01 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08 | tools/build/build_all_data.js<br>tools/build/build_audio_manifest.js<br>tools/build/build_combo_drills.js<br>tools/build/build_doc_bundles.js<br>…외 19개 | tests/unit/build-pipeline.test.js | — | — |
-| BP-02 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08 | tools/build/index.js<br>tools/build/schema.js<br>tools/check_imports.js | tests/unit/build-pipeline.test.js | — | — |
-| BP-03 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08 | tools/build/index.js<br>tools/build/manifest_loader.js<br>tools/check_manifest.js | tests/unit/build-pipeline.test.js | — | — |
+| BP-02 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08 | tools/build/index.js<br>tools/build/schema.js<br>tools/check/check_imports.js | tests/unit/build-pipeline.test.js | — | — |
+| BP-03 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08 | tools/build/index.js<br>tools/build/manifest_loader.js<br>tools/check/check_manifest.js | tests/unit/build-pipeline.test.js | — | — |
 | BP-04 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08 | tools/build/build_exam_bundles.js<br>tools/build/index.js | tests/unit/build-pipeline.test.js | — | — |
-| BP-05 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08 | tools/check_parser_parity.js | tests/unit/build-pipeline.test.js | — | — |
+| BP-05 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08 | tools/check/check_parser_parity.js | tests/unit/build-pipeline.test.js | — | — |
 | BP-06 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08 | tools/build/build_keyword_index.js | tests/unit/build-pipeline.test.js | — | — |
 | BP-07 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08 | tools/build/stamp_release_notes.js<br>tools/build/stamp_sw_version.js<br>tools/deploy.js | tests/unit/build-pipeline.test.js | — | — |
-| BP-08 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08 | tools/audit_card_quality.js | tests/unit/build-pipeline.test.js | — | — |
+| BP-08 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08 | tools/check/audit_card_quality.js | tests/unit/build-pipeline.test.js | — | — |
 
 ## 5.4 콘텐츠 구조
 
@@ -526,7 +526,7 @@
 | CS-06 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-07<br>DOC-RBK-08<br>…외 2개 | tools/build/build_keyword_index.js | tests/unit/content-structure.test.js | DOC-ARC-08 | — |
 | CS-07 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-07<br>DOC-RBK-08<br>…외 2개 | ref-pipeline/audiobook/cleanup_empty_mp3.py<br>ref-pipeline/audiobook/generate_all_mp3.py<br>ref-pipeline/audiobook/md_chunker.py<br>ref-pipeline/audiobook/mp3_merger.py<br>…외 6개 | tests/unit/content-structure.test.js | DOC-ARC-08 | — |
 | CS-08 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-07<br>DOC-RBK-08<br>…외 2개 | tools/build/build_study_md_bundle.js | tests/unit/content-structure.test.js | DOC-ARC-08 | — |
-| CS-09 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-07<br>DOC-RBK-08<br>…외 2개 | ref-pipeline/convert.py<br>tools/check_ref_subjects.js<br>tools/check_reflayout.js<br>tools/check_refmerge.js | tests/unit/content-structure.test.js | DOC-ARC-08 | — |
+| CS-09 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-07<br>DOC-RBK-08<br>…외 2개 | ref-pipeline/convert.py<br>tools/check/check_ref_subjects.js<br>tools/check/check_reflayout.js<br>tools/check/check_refmerge.js | tests/unit/content-structure.test.js | DOC-ARC-08 | — |
 | CS-10 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-07<br>DOC-RBK-08<br>…외 2개 | ref-pipeline/convert.py<br>ref-pipeline/pdf2md.py | tests/unit/content-structure.test.js | DOC-ARC-08 | — |
 
 ## 5.5 교재 콘텐츠 학습 보조 요소

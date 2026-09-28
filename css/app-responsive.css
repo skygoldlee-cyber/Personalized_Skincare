@@ -1,0 +1,985 @@
+/* @spec UX-NAV-01,O-01,P-04a,P-07
+ * app-responsive.css — reader.css에서 분리: 태블릿·모바일 앱 레이아웃, 오프라인 배너,
+ * PWA 설치 모달, 강제 가로보기, 대시보드 모바일 보정.
+ * 캐스케이드 순서 보존을 위해 reader.css 다음에 import된다 (style.css 참조).
+ */
+/* ============================================================
+   📱 태블릿 최적화 (769px ~ 900px)
+   - 사이드바를 상단 바 형태로 전환하되 하단 탭 바는 미사용
+   ============================================================ */
+@media (min-width: 769px) and (max-width: 900px) and (min-height: 501px) {
+    .app-container {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+
+    html, body {
+        overflow-x: hidden;
+        min-height: 100%;
+    }
+
+    /* 사이드바: 상단 바 형태 */
+    .sidebar {
+        position: sticky;
+        top: 0;
+        max-height: none;
+        padding: 0.9rem 1rem;
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+    }
+    .logo-area {
+        margin-bottom: var(--space-3);
+    }
+    .logo-text h1 {
+        font-size: var(--text-lg-1);
+    }
+    .nav-menu {
+        flex-direction: row;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        gap: 0.4rem;
+        padding-bottom: var(--space-1);
+    }
+    .nav-menu::-webkit-scrollbar {
+        height: 6px;
+    }
+    .nav-item {
+        padding: 0.55rem 0.85rem;
+        font-size: var(--text-sm-md);
+        flex: 0 0 auto;
+    }
+    .nav-item.active {
+        border-left: none;
+        border-bottom: 3px solid var(--color-primary);
+    }
+    .sidebar-footer {
+        display: none;
+    }
+
+    /* 본문 여백 축소 */
+    .app-header {
+        padding: 1rem 1.1rem;
+    }
+    .view-section {
+        padding: 1rem 1.1rem;
+    }
+
+    /* 헤더 타이틀 크기 */
+    .app-header h2,
+    .app-header .page-title {
+        font-size: var(--text-lg-sm);
+        line-height: 1.25;
+    }
+
+    /* 카드·그리드 1열화 */
+    .dashboard-grid,
+    .analytics-grid,
+    .grid,
+    .cards-grid,
+    .dashboard-widgets-row,
+    .stats-grid,
+    [style*="grid-template-columns"],
+    div.analytics-grid[style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+        display: grid !important;
+    }
+    
+    /* 실전 모의고사 성적 분석 그리드 모바일 1열 강제 */
+    .analytics-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* 인라인 display:flex 가로 배치도 세로로 */
+    [style*="display: flex"],
+    [style*="display:flex"] {
+        flex-wrap: wrap !important;
+    }
+
+    /* 데일리 챌린지 카드 모바일 최적화 */
+    .daily-challenge-card {
+        padding: 1.25rem !important;
+    }
+
+    .daily-challenge-card > div:first-child {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.75rem !important;
+        margin-bottom: 1rem !important;
+    }
+
+    .daily-challenge-card .streak-badge {
+        align-self: flex-start !important;
+        font-size: 0.85rem !important;
+        padding: 0.4rem 0.8rem !important;
+    }
+
+    .daily-challenge-card > div:last-child {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 0.75rem !important;
+    }
+
+    .daily-challenge-card #daily-challenge-status {
+        text-align: center !important;
+        width: 100% !important;
+    }
+
+    .daily-challenge-card #start-daily-btn {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+
+    /* 테이블 가로 스크롤 — display:block 대신 wrapper 기반 스크롤 유지 */
+    .reader-table-wrapper,
+    .admin-penalty-table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        max-width: 100%;
+    }
+
+    img, canvas, svg, video {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .btn, button, input, select, textarea {
+        font-size: var(--text-1rem);
+    }
+
+    .modal-content,
+    .modal-body {
+        max-width: 94vw;
+        margin: 1rem auto;
+    }
+}
+
+/* ============================================================
+   📱 모바일 앱 스타일 레이아웃 (≤768px, 하단 탭 바)
+   - 스마트폰에서 사이드바를 숨기고 하단 네비게이션 바로 전환
+   - 네이티브 앱과 유사한 UX 제공
+   ============================================================ */
+@media (max-width: 768px), (orientation: landscape) and (max-height: 500px) {
+    /* 기존 상단 사이드바 완전히 숨김 */
+    .sidebar {
+        display: none !important;
+    }
+
+    /* 앱 컨테이너를 세로 플렉스로 변경하여 하단 바 공간 확보 */
+    .app-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100vh;
+        height: 100dvh; /* 동적 뷰포트 높이 사용 */
+        height: var(--app-height, 100dvh); /* JS 실측 뷰포트 — PWA 콜드 스타트 dvh 과대측정 대응 */
+        overflow: hidden;
+    }
+
+    /* 메인 콘텐츠가 남은 공간을 모두 차지 */
+    .main-content {
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+        /* 탭 바 높이(70px) + 여유 10px — 서브픽셀/전이 상태에서 마지막 위젯이 탭 바에 붙지 않도록 */
+        padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+        /* 포커스/scrollIntoView로 요소가 하단 탭 바 밑으로 들어가지 않도록 */
+        scroll-padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* 헤더 간소화 + sticky */
+    .app-header {
+        padding: 1rem 1.25rem;
+        position: sticky;
+        top: 0;
+        z-index: var(--z-sticky);
+        background: var(--drawer-bg);
+        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
+        /* 모바일에서 헤더가 넘치지 않도록 (h2 min-width:0 말줄임 + header-actions flex-shrink:0으로 제어)
+           ※ overflow:hidden 금지 — 설정 드롭다운이 헤더 아래로 펼쳐질 때 잘려서 보이지 않음 */
+        flex-wrap: nowrap;
+    }
+
+    .app-header h2 {
+        font-size: var(--text-lg);
+        /* 타이틀이 너무 길면 말줄임 */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        flex-shrink: 1;
+        min-width: 0;
+    }
+
+    .app-header p {
+        font-size: var(--text-sm);
+        display: none; /* 부제목 숨김으로 공간 확보 */
+    }
+
+    /* 헤더 액션 버튼 터치 영역 확대 */
+    .header-actions .btn,
+    .header-actions button {
+        min-width: 44px;
+        min-height: 44px;
+        padding: 0.5rem !important;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* 헤더 액션 영역 확보 - 모바일에서 버튼이 잘리지 않도록 */
+    .header-actions {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        flex-shrink: 0;
+        /* 헤더 타이틀이 길어져도 버튼 영역 유지 */
+        margin-left: auto;
+    }
+
+    /* PWA 설치 버튼 모바일 최적화 */
+    #pwa-install-btn {
+        margin-right: var(--space-1);
+        font-size: var(--text-sm-md);
+        white-space: nowrap;
+        /* 모바일에서 확실히 보이도록 z-index 및 위치 조정 */
+        position: relative;
+        z-index: var(--z-overlay);
+    }
+
+    #pwa-install-btn i {
+        margin-right: var(--space-1);
+    }
+
+    /* 소형 화면에서 버튼 텍스트 숨기고 아이콘만 표시 — 480px 이하 */
+    /* (외부 768px 미디어 쿼리에서 분리 — 480px 이하만 적용) */
+
+    /* 뷰 섹션 패딩 조정 */
+    .view-section {
+        padding: 1rem 1.25rem;
+    }
+
+    /* 하단 탭 바 - safe-area 대응 (스크롤 가능하도록 수정) */
+    .mobile-tab-bar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: calc(70px + env(safe-area-inset-bottom, 0px));
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+        /* 가로 스크롤 힌트 — 양 끝에 더 있음을 나타내는 섀도 (background-attachment: scroll/local) */
+        background:
+            linear-gradient(to right, var(--bg-sidebar) 30%, rgba(0,0,0,0)),
+            linear-gradient(to left, var(--bg-sidebar) 30%, rgba(0,0,0,0)),
+            radial-gradient(farthest-side at 0% 50%, rgba(0,0,0,0.25), rgba(0,0,0,0)),
+            radial-gradient(farthest-side at 100% 50%, rgba(0,0,0,0.25), rgba(0,0,0,0));
+        background-color: var(--bg-sidebar);
+        background-attachment: local, local, scroll, scroll;
+        background-repeat: no-repeat;
+        background-size: 32px 100%, 32px 100%, 12px 100%, 12px 100%;
+        border-top: 1px solid var(--border-color);
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding-top: var(--space-2);
+        padding-left: var(--space-2);
+        padding-right: var(--space-2);
+        z-index: var(--z-drawer);
+        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    .mobile-tab-bar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .mobile-tab-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.2rem;
+        padding: 0.4rem 0.5rem;
+        position: relative;
+        color: var(--color-text-muted);
+        font-size: var(--text-2xs);
+        font-weight: var(--font-weight-medium);
+        text-decoration: none;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        transition: color var(--transition-base), transform var(--transition-fast);
+        flex: 0 0 auto;
+        min-width: 60px;
+        max-width: 72px;
+        min-height: 48px;
+    }
+
+    .mobile-tab-item i {
+        font-size: var(--text-lg-1);
+    }
+
+    /* PRO 배지 — 세로형 탭 레이아웃을 해치지 않도록 탭 우상단 코너에 고정 */
+    .mobile-tab-item .pro-badge {
+        position: absolute;
+        top: 1px;
+        right: 2px;
+        padding: 0.02rem 0.22rem;
+        font-size: 0.45rem;
+        margin-left: 0;
+    }
+
+    .mobile-tab-item.active {
+        color: var(--color-primary);
+    }
+
+    .mobile-tab-item:active {
+        transform: scale(0.92);
+    }
+
+    /* Formula OS — 실무 도메인 구분 (사이드바와 동일한 violet 아이덴티티) */
+    .mobile-tab-item.mobile-tab-formula {
+        color: var(--color-secondary);
+        background: var(--secondary-tint-12);
+        border-radius: var(--radius-md);
+    }
+
+    .mobile-tab-item.mobile-tab-formula.active {
+        color: var(--color-secondary);
+        background: var(--secondary-tint-15);
+    }
+
+    /* 통계 카드 그리드 2열로 변경 */
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.75rem !important;
+    }
+
+    .stat-card {
+        padding: 1rem !important;
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem !important;
+        min-width: 0; /* 그리드 오버플로우 방지 */
+    }
+
+    .stat-icon {
+        width: 40px;
+        height: 40px;
+        font-size: var(--text-lg-1);
+    }
+
+    .stat-info h3 {
+        font-size: 0.7rem !important;
+        margin-bottom: 0.25rem !important;
+    }
+
+    .stat-value {
+        font-size: 1.25rem !important;
+        margin-bottom: 0.25rem !important;
+    }
+
+    .stat-info p {
+        font-size: 0.7rem !important;
+    }
+
+    /* 대시보드 위젯 간격 축소 */
+    .dashboard-widgets-row {
+        margin-top: 1rem !important;
+        margin-bottom: 1rem !important;
+        gap: 1rem !important;
+    }
+
+    /* 유리 카드 패딩 축소 */
+    .glass-card {
+        padding: 1.25rem !important;
+    }
+
+    /* 필터 바 세로 스택 */
+    .filter-bar {
+        flex-direction: column;
+        align-items: stretch !important;
+        gap: 0.75rem !important;
+    }
+
+    .filter-group {
+        width: 100%;
+    }
+
+    .form-select {
+        width: 100%;
+    }
+
+    /* 플래시카드 높이 동적 조정 */
+    .flashcard-wrapper {
+        height: auto !important;
+        min-height: 320px;
+        max-height: 60vh;
+        aspect-ratio: 3/4;
+    }
+
+    .flashcard-controls {
+        flex-wrap: wrap;
+        gap: var(--space-2);
+    }
+
+    .flashcard-controls .btn {
+        flex: 1;
+        min-width: calc(50% - 0.25rem);
+    }
+
+    /* 퀴즈/트레이너 카드 패딩 축소 */
+    .quiz-card,
+    .trainer-menu-card {
+        padding: 1.25rem !important;
+    }
+
+    /* 모달 전체 화면에 가깝게 */
+    .modal-content {
+        max-width: 96vw !important;
+        max-height: 90vh;
+        margin: 0.5rem auto !important;
+    }
+
+    /* 텍스트 크기 조정 */
+    h3 {
+        font-size: 1.1rem !important;
+    }
+
+    /* 버튼 터치 영역 확대 */
+    .btn {
+        padding: 0.75rem 1rem !important;
+        min-height: 44px;
+    }
+
+    /* 입력 필드 터치 영역 확대 */
+    input, select, textarea {
+        min-height: 44px;
+        font-size: 16px !important; /* iOS 줌 방지 */
+    }
+
+    /* 테이블 셀 패딩 축소 */
+    td, th {
+        padding: 0.5rem !important;
+        font-size: 0.85rem !important;
+    }
+
+    /* 배지/라벨 크기 조정 */
+    .badge {
+        font-size: 0.7rem !important;
+        padding: 0.2rem 0.5rem !important;
+    }
+
+    /* 스켈레톤 로딩 애니메이션 */
+    .skeleton {
+        background: linear-gradient(90deg, var(--bg-card) 25%, var(--bg-muted) 50%, var(--bg-card) 75%);
+        background-size: 200% 100%;
+        animation: skeleton-loading 1.5s infinite;
+        border-radius: var(--radius-sm);
+    }
+
+    @keyframes skeleton-loading {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+    }
+
+}
+
+/* ============================================================
+   오프라인 배너 (전체 화면 크기 공통 적용)
+   - 기본 상태는 숨김(transform: translateY(-100%))
+   - JS에서 .show 클래스를 추가할 때만 표시
+   ============================================================ */
+.offline-banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: var(--color-danger);
+    color: white;
+    text-align: center;
+    padding: var(--space-2);
+    font-size: var(--text-sm);
+    z-index: var(--z-toast);
+    transform: translateY(-100%);
+    transition: transform var(--transition-slow);
+}
+
+.offline-banner.show {
+    transform: translateY(0);
+}
+
+/* 소형 스마트폰 (≤480px) 추가 미세 조정 */
+@media (max-width: 480px) {
+    /* PWA 설치 버튼 — 소형 화면에서 텍스트 숨기고 아이콘만 */
+    #pwa-install-btn .btn-text {
+        display: none;
+    }
+    #pwa-install-btn i {
+        margin-right: 0;
+    }
+
+    .app-header h2,
+    .app-header .page-title {
+        font-size: var(--text-lg-sm);
+    }
+
+    .flashcard-wrapper {
+        min-height: 280px;
+    }
+
+    .nav-item {
+        font-size: var(--text-sm);
+        padding: 0.5rem 0.7rem;
+    }
+
+    body {
+        font-size: var(--text-base);
+    }
+}
+
+/* 매우 작은 화면 (≤375px, iPhone SE 등) */
+@media (max-width: 375px) {
+    .stats-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .mobile-tab-item span {
+        display: none; /* 아이콘만 표시 */
+    }
+
+    .mobile-tab-item .pro-badge {
+        display: inline-block; /* 라벨은 숨겨도 PRO 배지는 유지 */
+    }
+
+    .mobile-tab-item i {
+        font-size: var(--text-lg-sm);
+    }
+
+    .mobile-tab-item {
+        min-height: 44px;
+        padding: 0.3rem;
+    }
+}
+
+/* ============================================================
+   📲 PWA 설치 안내 모달 (iOS/Android 분기 가이드)
+   ============================================================ */
+.pwa-install-modal {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-modal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-4);
+}
+
+.pwa-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: var(--overlay-bg-modal);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+}
+
+.pwa-modal-card {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    max-height: 86vh;
+    overflow-y: auto;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-modal);
+    animation: pwaModalIn 0.25s ease;
+}
+
+@keyframes pwaModalIn {
+    from { opacity: 0; transform: translateY(16px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.pwa-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.1rem 1.25rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.pwa-modal-header h3 {
+    margin: 0;
+    font-size: var(--text-md);
+    color: var(--color-text-main);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.pwa-modal-close {
+    background: transparent;
+    border: none;
+    color: var(--color-text-muted);
+    font-size: var(--text-lg-1);
+    cursor: pointer;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.pwa-modal-close:hover {
+    background: var(--bg-hover);
+    color: var(--color-text-main);
+}
+
+.pwa-modal-body {
+    padding: 1.25rem;
+}
+
+.pwa-modal-lead {
+    margin: 0 0 1rem;
+    color: var(--color-text-main);
+    font-size: var(--text-base);
+}
+
+.pwa-steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+}
+
+.pwa-steps li {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    grid-template-areas:
+        "num text"
+        "num illust";
+    gap: 0.25rem 0.75rem;
+    align-items: start;
+}
+
+.pwa-step-num {
+    grid-area: num;
+    width: 26px;
+    height: 26px;
+    border-radius: var(--radius-full);
+    background: var(--color-primary);
+    color: var(--color-on-brand);
+    font-size: var(--text-sm-md);
+    font-weight: var(--font-weight-bold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pwa-step-text {
+    grid-area: text;
+    color: var(--color-text-main);
+    font-size: var(--text-md-sm);
+    line-height: 1.45;
+}
+
+.pwa-step-text strong {
+    color: var(--color-primary-light, var(--color-primary));
+}
+
+.pwa-step-illust {
+    grid-area: illust;
+    width: 100%;
+    max-width: 260px;
+    height: auto;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+    margin-top: 0.4rem;
+}
+
+.pwa-tip {
+    margin: 1.1rem 0 0;
+    padding: 0.75rem 0.9rem;
+    background: var(--primary-tint-8);
+    border: 1px solid var(--primary-tint-20);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm-2);
+    line-height: 1.5;
+}
+
+.pwa-tip i {
+    color: var(--color-primary);
+    margin-right: var(--space-1);
+}
+
+@media (max-width: 480px) {
+    .pwa-modal-card {
+        max-width: 94vw;
+    }
+    .pwa-modal-body {
+        padding: var(--space-4);
+    }
+}
+
+/* ============================================================
+   📱 가로/세로 보기 토글 버튼 및 강제 가로보기 모드
+   - 사용자가 버튼으로 가로/세로 모드를 전환할 수 있음
+   ============================================================ */
+
+/* 가로보기 토글 버튼 스타일 */
+#orientation-toggle-btn {
+    display: none; /* 기본적으로 숨김 (데스크톱) */
+    padding: 0.5rem !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    border-radius: 8px !important;
+    transition: transform 0.3s ease !important;
+    position: relative !important;
+    z-index: var(--z-sticky) !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+}
+
+#orientation-toggle-btn:hover {
+    transform: rotate(90deg) !important;
+}
+
+#orientation-toggle-btn i {
+    transition: transform 0.3s ease !important;
+}
+
+/* 토스트 애니메이션 */
+@keyframes orientationToastIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes orientationToastOut {
+    from {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.9);
+    }
+}
+
+/* 가로/세로 토글 버튼 비활성화 — 실제 화면 회전으로 대체되어 숨김 */
+#orientation-toggle-btn {
+    display: none !important;
+}
+
+/* ============================================================
+   📱 강제 가로보기 모드 (body.landscape-mode 클래스)
+   - 사용자가 토글 버튼으로 가로 모드를 활성화할 때 적용
+   - 파일 맨 끝에 위치하여 CSS 우선순위 확보
+   ============================================================ */
+body.landscape-mode .app-header {
+    padding: 0.5rem 1rem !important;
+    position: relative !important;
+}
+
+body.landscape-mode .app-header h2 {
+    font-size: 1rem !important;
+}
+
+body.landscape-mode .app-header p {
+    display: none !important;
+}
+
+body.landscape-mode .header-actions .btn,
+body.landscape-mode .header-actions button {
+    min-width: 36px !important;
+    min-height: 36px !important;
+    padding: 0.25rem 0.5rem !important;
+    font-size: 0.8rem !important;
+}
+
+body.landscape-mode .view-section {
+    padding: 0.75rem 1rem !important;
+}
+
+body.landscape-mode .stats-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 0.5rem !important;
+}
+
+body.landscape-mode .stat-card {
+    padding: 0.75rem !important;
+    flex-direction: row !important;
+    text-align: left !important;
+}
+
+body.landscape-mode .stat-icon {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 1rem !important;
+}
+
+body.landscape-mode .stat-info h3 {
+    font-size: 0.65rem !important;
+}
+
+body.landscape-mode .stat-value {
+    font-size: 1rem !important;
+}
+
+body.landscape-mode .stat-info p {
+    font-size: 0.6rem !important;
+}
+
+body.landscape-mode .dashboard-widgets-row {
+    grid-template-columns: 2fr 1fr !important;
+    gap: 1rem !important;
+    margin-top: 0.75rem !important;
+    margin-bottom: 0.75rem !important;
+}
+
+body.landscape-mode .daily-challenge-card {
+    padding: 1rem !important;
+}
+
+body.landscape-mode .daily-challenge-card > div:first-child {
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    margin-bottom: 0.75rem !important;
+}
+
+body.landscape-mode .daily-challenge-card .streak-badge {
+    font-size: 0.8rem !important;
+    padding: 0.35rem 0.7rem !important;
+}
+
+body.landscape-mode .daily-challenge-card p {
+    font-size: 0.85rem !important;
+    margin-bottom: 0.75rem !important;
+    line-height: 1.4 !important;
+}
+
+body.landscape-mode .daily-challenge-card > div:last-child {
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+}
+
+body.landscape-mode .daily-challenge-card #daily-challenge-status {
+    width: auto !important;
+    padding: 0.4rem 0.8rem !important;
+}
+
+body.landscape-mode .daily-challenge-card #start-daily-btn {
+    width: auto !important;
+    padding: 0.4rem 1rem !important;
+}
+
+body.landscape-mode .mobile-tab-bar {
+    display: none !important;
+}
+
+body.landscape-mode .main-content {
+    padding-bottom: 0 !important;
+}
+
+body.landscape-mode .flashcard-wrapper {
+    min-height: 200px !important;
+    max-height: 50vh !important;
+}
+
+body.landscape-mode .modal-content {
+    max-height: 85vh !important;
+    margin: 0.5rem auto !important;
+}
+
+body.landscape-mode .btn {
+    padding: 0.5rem 0.75rem !important;
+    min-height: 36px !important;
+    font-size: 0.85rem !important;
+}
+
+body.landscape-mode input,
+body.landscape-mode select,
+body.landscape-mode textarea {
+    min-height: 36px !important;
+    font-size: 16px !important; /* iOS 자동 확대 방지 (16px 이상) */
+}
+
+body.landscape-mode h3 {
+    font-size: 1rem !important;
+}
+
+body.landscape-mode .glass-card {
+    padding: 1rem !important;
+}
+
+/* ============================================================
+   ð± ëìë³´ë ìì ¯í ëª¨ë°ì¼ 1ì´í + ë°ì¼ë¦¬ ì±ë¦°ì§ í¤ë ì ë ¬ êµì 
+   - ëª¨ë°ì¼ìì 2ì´ ê·¸ë¦¬ëê° ì ë¬´ëì ¸ ì ëª©ì´ ê¸ì ë¨ìë¡ ìª¼ê°ì§ë ë¬¸ì  í´ê²°
+   ============================================================ */
+@media (max-width: 768px), (orientation: landscape) and (max-height: 500px) {
+    /* ìì ¯ íì 1ì´ë¡ (ì¸ë¼ì¸ 2fr 1fr ë®ì´ì°ê¸°) */
+    .dashboard-widgets-row {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* ë°ì¼ë¦¬ ì±ë¦°ì§ ì¹´ë: í¤ëë¥¼ ì¸ë¡ë¡ ìì ì ëª©/ë±ì§ ì¶©ë ë°©ì§ */
+    .daily-challenge-card {
+        padding: 1.25rem !important;
+    }
+    .daily-challenge-card > div:first-child {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.75rem !important;
+    }
+    /* ìì´ì½+ì ëª© ë¬¶ìì ê°ë¡ ì ì§ */
+    .daily-challenge-card > div:first-child > div:first-child {
+        min-width: 0 !important;
+        flex-wrap: nowrap !important;
+    }
+    /* ì ëª© í ì¤ ì ì§ â "5ë¶" ë¶ë¦¬ ë°©ì§ */
+    .daily-challenge-card h4 {
+        font-size: 1.1rem !important;
+        white-space: nowrap !important;
+    }
+    .daily-challenge-card .streak-badge {
+        align-self: flex-start !important;
+        white-space: nowrap !important;
+        flex-shrink: 0 !important;
+    }
+    /* íë¨ ìí/ë²í¼ë ì¸ë¡ë¡ */
+    .daily-challenge-card > div:last-child {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 0.75rem !important;
+    }
+    .daily-challenge-card #daily-challenge-status {
+        text-align: center !important;
+        width: 100% !important;
+    }
+    .daily-challenge-card #start-daily-btn {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+}
+

@@ -22,7 +22,7 @@ const libReport = require('istanbul-lib-report');
 const SummarizerFactory = require('istanbul-lib-report/lib/summarizer-factory');
 const reports = require('istanbul-reports');
 
-const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const SOURCES = [
     { name: 'DOM (vitest)', file: 'coverage/coverage-final.json' },
     { name: '유닛 (c8)', file: 'coverage-unit/coverage-final.json' },

@@ -22,7 +22,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const ROOT = path.resolve(__dirname, '..');
+const ROOT = path.resolve(__dirname, '..', '..');
 const SRC_DIR = path.join(ROOT, 'src');
 
 // --- 파일 수집 ---

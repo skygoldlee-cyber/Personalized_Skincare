@@ -12,8 +12,8 @@
  *   (ref_md* 산출물 폴더와 _archive/ 는 해시 대상이 아니다)
  *
  * 사용:
- *   node tools/check_ref_freshness.js            # 검증 (불일치 시 exit 1)
- *   node tools/check_ref_freshness.js --update   # 현재 PDF 해시로 매니페스트 갱신
+ *   node tools/check/check_ref_freshness.js            # 검증 (불일치 시 exit 1)
+ *   node tools/check/check_ref_freshness.js --update   # 현재 PDF 해시로 매니페스트 갱신
  *
  * PDF 교체 워크플로:
  *   ① PDF 교체 ② npm run convert:refs (ref_md_v2 스테이징)
@@ -25,9 +25,9 @@
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
-const { getExamTargets } = require('./build/exam_targets.js');
+const { getExamTargets } = require('../build/exam_targets.js');
 
-const ROOT = path.resolve(__dirname, '..');
+const ROOT = path.resolve(__dirname, '..', '..');
 const UPDATE = process.argv.includes('--update');
 
 const SKIP_DIR = /^ref_md|^_archive$/;

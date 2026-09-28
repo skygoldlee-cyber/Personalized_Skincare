@@ -26,7 +26,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const ROOT = path.resolve(__dirname, '..');
+const ROOT = path.resolve(__dirname, '..', '..');
 const SW_PATH = path.join(ROOT, 'sw.js');
 
 /** sw.js 에서 `const NAME = [ ... ];` 배열의 문자열 리터럴만 수집 */

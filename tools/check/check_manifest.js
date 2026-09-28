@@ -9,16 +9,16 @@
  *   - 과목별 파생 자산 (glossary·number-drills·ref_md 폴더) 존재
  *   - 교재 파서 계약 (챕터 헤딩 · 기출/중요 마커)
  *
- * 사용: node tools/check_manifest.js   (npm run check:manifest / check:content 첫 단계)
+ * 사용: node tools/check/check_manifest.js   (npm run check:manifest / check:content 첫 단계)
  * 종료코드: ERROR 1건 이상이면 1
  */
 
 // @spec BP-03
 const fs = require('fs');
 const path = require('path');
-const { getExamTargets } = require('./build/exam_targets.js');
+const { getExamTargets } = require('../build/exam_targets.js');
 
-const ROOT = path.resolve(__dirname, '..');
+const ROOT = path.resolve(__dirname, '..', '..');
 
 // 교재 챕터 경계 헤딩 — build_question_chapters.js와 동일 규칙
 const CHAPTER_HEADING_RE = /^##\s+(?:📚\s*)?((?:Chapter\s+)?\d+\..+?)\s*$/m;

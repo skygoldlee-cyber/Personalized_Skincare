@@ -36,10 +36,10 @@
  *   오판율 극단(j≥5·w/j≥0.8) 진술을 추출해 포함 문항을 검수 큐에 추가.
  *   (앱 내 '이상 의심' 배지와 동일 기준 — 콘텐츠 오류 후보의 검수 반영 경로)
  *
- * 사용: node tools/audit_combo.js                    (오류 시 exit 1)
- *       node tools/audit_combo.js --strict           (경고도 exit 1)
- *       node tools/audit_combo.js --update-baseline  (회귀 기준선 갱신)
- *       node tools/audit_combo.js --anomalies backup.json
+ * 사용: node tools/check/audit_combo.js                    (오류 시 exit 1)
+ *       node tools/check/audit_combo.js --strict           (경고도 exit 1)
+ *       node tools/check/audit_combo.js --update-baseline  (회귀 기준선 갱신)
+ *       node tools/check/audit_combo.js --anomalies backup.json
  */
 
 // @spec CQ-05
@@ -48,8 +48,8 @@ const path = require('path');
 const vm = require('vm');
 const { pathToFileURL } = require('url');
 
-const ROOT = path.join(__dirname, '..');
-const { getExamTargets } = require('./build/exam_targets.js');
+const ROOT = path.join(__dirname, '..', '..');
+const { getExamTargets } = require('../build/exam_targets.js');
 const STRICT = process.argv.includes('--strict');
 const UPDATE_BASELINE = process.argv.includes('--update-baseline');
 const ANOM_IDX = process.argv.indexOf('--anomalies');

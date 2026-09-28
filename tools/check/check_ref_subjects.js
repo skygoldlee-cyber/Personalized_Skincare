@@ -1,4 +1,4 @@
-// tools/check_ref_subjects.js — ref_md 문서의 실제 인용 과목 vs DOC_SUBJECT_RULES 귀속 교차 검증
+// tools/check/check_ref_subjects.js — ref_md 문서의 실제 인용 과목 vs DOC_SUBJECT_RULES 귀속 교차 검증
 // @spec CS-09
 //
 // 신호: 문제은행·교재·참조노트 본문의 ref_md 링크를 과목별로 집계(인용 득표).
@@ -10,14 +10,14 @@
 //   다과목  — 둘째 과목이 최다 득표의 ≥40% (단일 귀속의 근사 오차, 참고 정보)
 //   무인용  — 인용 0 (파일명 규칙 외 검증 수단 없음)
 //
-// 사용: node tools/check_ref_subjects.js [--strict]
+// 사용: node tools/check/check_ref_subjects.js [--strict]
 //   --strict: '불일치' 문서가 있으면 종료코드 1 (CI 연동용)
 const fs = require('fs');
 const path = require('path');
-const { docSubject } = require('./build/ref_statements.js');
-const { getExamTargets, getDefaultExamRoots } = require('./build/exam_targets.js');
+const { docSubject } = require('../build/ref_statements.js');
+const { getExamTargets, getDefaultExamRoots } = require('../build/exam_targets.js');
 
-const ROOT = path.resolve(__dirname, '..');
+const ROOT = path.resolve(__dirname, '..', '..');
 const CONTENT = path.join(ROOT, getDefaultExamRoots(ROOT).contentRoot);
 const REF_MD = path.join(CONTENT, '참조자료', 'ref_md');
 

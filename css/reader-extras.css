@@ -1,0 +1,869 @@
+/* @spec TH-01,TH-05,TR-15~18
+ * reader-extras.css — reader.css에서 분리: 전역 라이트 테마 보정, 학습 보조 카드
+ * (기출 요약·숫자 암기표·절차 플로우·행정처분 계단), 참조자료 드롭다운, 이야기 모드,
+ * 용어집 표, 리더 상태/토스트/툴팁.
+ * 캐스케이드 순서 보존을 위해 app-responsive.css 다음에 import된다 (style.css 참조).
+ */
+/* ============================================================
+   🌗 전역 라이트 테마 — 추가 보정
+   - 다크 테마 규칙은 그대로 두고, .light-theme 하위 선택자에서만 교정
+   - 카드/패널 위에 하드코딩된 흰색 텍스트 및 어두운 배경을 라이트에 맞게 조정
+   ============================================================ */
+
+/* 1) 카드·패널 위의 고정 흰색 텍스트 → 테마 변수로 교정 */
+.light-theme .stat-value,
+.light-theme .subj-header h4,
+.light-theme #card-back-definition,
+.light-theme .quiz-question-text,
+.light-theme .result-score-summary span,
+.light-theme .review-card-item h5,
+.light-theme .sim-title-group h4,
+.light-theme .sim-q-text,
+.light-theme .sim-option-item .opt-text,
+.light-theme .omr-header h5,
+.light-theme .sim-review-header h4,
+.light-theme .review-item-q-text,
+.light-theme .textbook-card-title {
+    color: var(--color-text-main);
+}
+
+/* 입력 요소 텍스트 (배경은 기존 .light-theme 규칙에서 흰색으로 지정됨) */
+.light-theme .form-select,
+.light-theme .form-select option,
+.light-theme .form-input {
+    color: var(--color-text-main);
+}
+
+/* 2) 하드코딩된 어두운 패널 배경 → 라이트 카드 배경 */
+.light-theme .app-header {
+    background: var(--overlay-bg);
+}
+.light-theme #sim-arena-panel,
+.light-theme #sim-result-panel,
+.light-theme #sim-review-panel,
+.light-theme .full-width-card {
+    background-color: var(--bg-card);
+}
+.light-theme .highlight-card {
+    background: linear-gradient(135deg, var(--primary-tint-6), var(--secondary-tint-4));
+}
+
+/* 3) 반투명 흰색 인터랙티브 배경 → 라이트에서 대비 확보 */
+.light-theme .sim-option-item,
+.light-theme .omr-bubble {
+    background-color: var(--bg-subtle);
+}
+.light-theme .sim-option-item:hover {
+    background-color: var(--bg-hover);
+    border-color: var(--border-strong);
+}
+.light-theme .omr-bubble:hover {
+    background-color: var(--bg-hover);
+    border-color: var(--border-strong);
+    color: var(--color-text-main);
+}
+.light-theme .omr-bubble.active,
+.light-theme .sim-option-item.active .opt-num {
+    color: var(--color-secondary);
+    text-shadow: none;
+}
+
+/* 4) 기타 아주 옅은 흰색 배경 */
+.light-theme .filter-bar,
+.light-theme .review-answer-panel,
+.light-theme .empty-state {
+    background-color: var(--bg-subtle);
+}
+
+/* 5) 교재 카드 접힘 페이드: 어두운 색 → 라이트 배경색으로 페이드 */
+.light-theme .textbook-card-body.collapsed::after {
+    background: linear-gradient(to top, rgba(245, 247, 250, 0.98), rgba(245, 247, 250, 0));
+}
+
+/* 6) 테마 토글 버튼 아이콘 미세 정렬 */
+#theme-toggle-btn,
+#settings-toggle-btn {
+    padding: var(--space-2);
+    min-width: 40px;
+    justify-content: center;
+}
+
+
+
+/* ===== 학습 보조 카드 공통 ===== */
+
+.study-aid-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    margin-bottom: var(--space-5);
+    position: relative;
+}
+
+.study-aid-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+    font-size: var(--text-sm-md);
+    color: var(--color-text-muted);
+    cursor: pointer;
+}
+
+.study-aid-header i {
+    color: var(--color-primary);
+    font-size: var(--text-md-sm);
+}
+
+.study-aid-header span {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-main);
+}
+
+.study-aid-toggle {
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-xs);
+    transition: background var(--transition-fast), transform var(--transition-base);
+}
+
+.study-aid-toggle:hover {
+    background: var(--bg-hover);
+}
+
+.study-aid-toggle.collapsed {
+    transform: rotate(-90deg);
+}
+
+.study-aid-body {
+    transition: max-height var(--transition-slow), opacity var(--transition-base);
+    overflow: hidden;
+}
+
+.study-aid-body.collapsed {
+    max-height: 0;
+    opacity: 0;
+}
+
+.study-aid-body.expanded {
+    max-height: 1200px;
+    opacity: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* ===== ② 기출 핵심 요약 ===== */
+
+.exam-highlight-card {
+    border-left: 3px solid var(--warning);
+}
+
+.exam-highlight-section {
+    margin-bottom: var(--space-3);
+}
+
+.exam-highlight-section:last-child {
+    margin-bottom: 0;
+}
+
+.exam-highlight-section-title {
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+    margin-bottom: 0.4rem;
+    padding-bottom: var(--space-1);
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.exam-highlight-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.exam-highlight-list li {
+    font-size: var(--text-sm-2);
+    line-height: 1.5;
+    color: var(--color-text-main);
+    padding: 0.2rem 0 0.2rem 1rem;
+    position: relative;
+}
+
+.exam-highlight-list li::before {
+    content: '🔖';
+    position: absolute;
+    left: 0;
+    top: 0.15rem;
+    font-size: var(--text-xs);
+}
+
+/* 기출 필터 토글 버튼 */
+.exam-filter-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: var(--text-2xs);
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radius-xs);
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.exam-filter-btn:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.exam-filter-btn.active {
+    background: var(--warning);
+    color: var(--color-on-brand);
+    border-color: var(--warning);
+}
+
+/* 기출 필터 dimmed 섹션 */
+.reader-section-card.exam-filter-dimmed {
+    opacity: 0.25;
+    transition: opacity var(--transition-slow);
+    pointer-events: none;
+}
+
+.reader-section-card.exam-filter-dimmed:hover {
+    opacity: 0.25;
+}
+
+/* ===== ③ 중요 숫자 암기표 ===== */
+
+.number-drill-card {
+    border-left: 3px solid var(--color-primary);
+}
+
+.number-drill-section {
+    margin-bottom: var(--space-3);
+}
+
+.number-drill-section:last-child {
+    margin-bottom: 0;
+}
+
+.number-drill-key-section {
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: var(--space-3);
+}
+
+.number-drill-normal-toggle {
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+    border-radius: var(--radius-xs);
+    padding: 0.3rem 0.4rem;
+}
+
+.number-drill-normal-toggle:hover {
+    background: var(--bg-hover);
+}
+
+.number-drill-subsection {
+    margin-bottom: 0.6rem;
+}
+
+.number-drill-subsection:last-child {
+    margin-bottom: 0;
+}
+
+.number-drill-subsection-title {
+    font-size: var(--text-2xs);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-muted);
+    margin-bottom: 0.3rem;
+    padding-left: 0.2rem;
+}
+
+.number-drill-subsection-title small {
+    font-weight: var(--font-weight-regular);
+    opacity: 0.7;
+}
+
+.number-drill-section-title {
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+    margin-bottom: 0.4rem;
+    padding-bottom: var(--space-1);
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.number-drill-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: var(--space-2);
+}
+
+.number-drill-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 0.4rem 0.6rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xs);
+    font-size: var(--text-2xs);
+    background: var(--bg-main);
+}
+
+.number-drill-item.is-key {
+    border-color: var(--warning);
+    background: var(--highlight-amber-faint);
+}
+
+.number-drill-value {
+    font-size: var(--text-md-lg);
+    font-weight: var(--font-weight-extrabold);
+    color: var(--color-primary);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+.number-drill-values {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+}
+
+.number-drill-item.is-key .number-drill-value {
+    color: var(--warning);
+}
+
+.number-drill-value small {
+    font-size: var(--text-2xs);
+    font-weight: var(--font-weight-semibold);
+    margin-left: 2px;
+}
+
+.number-drill-context {
+    color: var(--color-text-muted);
+    line-height: 1.35;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* ===== ④ 절차 플로우 ===== */
+
+.procedure-flow-card {
+    border-left: 3px solid var(--color-secondary);
+}
+
+.procedure-flow-svg {
+    width: 100%;
+    max-width: 360px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.procedure-step-rect {
+    transition: filter 0.15s;
+}
+
+.procedure-step-text {
+    pointer-events: none;
+    user-select: none;
+}
+
+/* ===== ⑤ 행정처분 계단 ===== */
+
+.admin-penalty-card {
+    border-left: 3px solid var(--color-danger);
+}
+
+.admin-penalty-table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.admin-penalty-table {
+    border-collapse: collapse;
+    font-size: var(--text-2xs);
+}
+
+.admin-penalty-table th {
+    background: var(--bg-hover);
+    padding: 0.5rem 0.6rem;
+    text-align: left;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-main);
+    border-bottom: 2px solid var(--border-color);
+    white-space: nowrap;
+}
+
+.admin-penalty-table td {
+    padding: 0.5rem 0.6rem;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--color-text-main);
+    line-height: 1.4;
+}
+
+.admin-penalty-table tr.is-key td {
+    background: var(--highlight-amber-bg);
+    font-weight: var(--font-weight-semibold);
+}
+
+.admin-penalty-table tr.zebra td {
+    background: var(--bg-subtle);
+}
+
+.admin-penalty-table .sticky-col {
+    position: sticky;
+    left: 0;
+    background: var(--bg-card);
+    z-index: var(--z-base);
+    min-width: 120px;
+    max-width: 200px;
+}
+
+.admin-penalty-table tr.is-key .sticky-col {
+    background: var(--highlight-amber-bg);
+}
+
+.admin-penalty-table tr.zebra .sticky-col {
+    background: var(--bg-muted);
+}
+
+/* ===== 학습 보조 모바일 ===== */
+
+@media (max-width: 768px) {
+    .study-aid-body.expanded {
+        max-height: 500px;
+    }
+
+    .number-drill-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-penalty-table {
+        font-size: var(--text-2xs);
+    }
+
+    .admin-penalty-table .sticky-col {
+        min-width: 100px;
+        max-width: 140px;
+    }
+}
+
+/* --- 참조자료 드롭다운 --- */
+.reader-ref-dropdown summary::-webkit-details-marker { display: none; }
+.reader-ref-dropdown summary::marker { display: none; }
+.ref-group-label {
+    font-size: var(--text-2xs);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+    margin: 0.5rem 0 0.25rem;
+    padding-bottom: 0.2rem;
+    border-bottom: 1px solid var(--border-color);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+.ref-group-label:first-child { margin-top: 0; }
+.ref-link-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: 0.4rem 0.5rem;
+    font-size: var(--text-sm-2);
+    color: var(--color-text-main);
+    text-decoration: none;
+    border-radius: var(--radius-xs);
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+.ref-link-item:hover {
+    background: var(--primary-tint-10);
+    color: var(--color-primary);
+}
+/* U1: 모바일 터치 피드백 */
+.ref-link-item:active {
+    background: var(--primary-tint-18);
+    transition: background 0.05s ease;
+}
+.ref-link-item i {
+    flex-shrink: 0;
+    width: 1.1rem;
+    text-align: center;
+    font-size: var(--text-sm-md);
+    color: var(--color-text-muted);
+}
+.ref-link-item:hover i {
+    color: var(--color-primary);
+}
+
+/* --- Story Mode: 등장인물 이야기 색상 구분 --- */
+
+/* 출처 하이퍼링크 스타일 */
+.source-link {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-size: var(--text-sm-md);
+    font-family: monospace;
+    word-break: break-all;
+}
+.source-link:hover {
+    text-decoration: underline;
+}
+.source-link i {
+    margin-right: 0.2rem;
+}
+
+/* 모바일 롱프레스 시각적 힌트: 600ms 대기 중 링크를 활성화 상태로 표시 */
+.source-link.ref-longpress-active,
+.keyword-ref-link.ref-longpress-active,
+.ref-link-item.ref-longpress-active {
+    background: var(--info-tint-15);
+    box-shadow: 0 0 0 2px var(--color-primary);
+    border-radius: var(--radius-xs);
+    opacity: 0.85;
+    transition: background var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+/* 3. 이야기형 배지 */
+.badge-story {
+    background: var(--story-badge-gradient);
+    color: var(--color-on-brand);
+    font-size: var(--text-2xs);
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-pill);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+/* 6. 이야기모드 줄간격 확대 */
+.story-mode .textbook-reader-section-content {
+    line-height: 2.0;
+}
+
+/* 1. 이야기 서브헤딩 (### 📖) — 범위 제한: md-quote 전까지만 */
+.story-mode .textbook-reader-section-content h3.md-h3 {
+    color: var(--story-heading);
+    font-weight: var(--font-weight-bold);
+    border-left: 3px solid var(--story-heading);
+    padding-left: 0.6rem;
+    margin-top: 1.2rem;
+}
+
+/* 이야기 본문 문단 — h5 이후 형제 중 md-quote가 아닌 것만 */
+.story-mode .textbook-reader-section-content h3.md-h3 ~ p,
+.story-mode .textbook-reader-section-content h3.md-h3 ~ div.md-para {
+    color: var(--story-text);
+}
+
+/* 1. 범위 제한: 한 줄 요약(md-quote)은 이야기 색상 제외 */
+.story-mode .textbook-reader-section-content h3.md-h3 ~ div.md-quote {
+    color: var(--color-text-main);
+}
+
+/* 5. 프롤로그/등장인물 소개 — 첫 섹션의 개요 배경색 */
+.story-mode .reader-section-card:first-child .textbook-reader-section-content {
+    background: var(--story-prologue-bg);
+    border-radius: var(--radius-sm);
+    padding: var(--space-4);
+}
+
+/* 7. 대사(인용구) 스타일 — > "..." 형태 */
+.story-mode .textbook-reader-section-content h3.md-h3 ~ div.md-quote {
+    border-left: 3px solid var(--story-quote-border);
+    background: var(--story-quote-bg);
+    padding: 0.6rem 0.9rem;
+    border-radius: 0 6px 6px 0;
+    font-style: italic;
+    color: var(--story-quote-text);
+}
+
+/* === Glossary table (중요 용어 해설) === */
+.reader-glossary {
+    margin: 2rem 0 1rem 0;
+    padding: var(--space-4);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md, 8px);
+    background: var(--primary-tint-3);
+}
+.reader-glossary .glossary-title {
+    margin: 0 0 0.75rem 0;
+    font-size: var(--text-1rem);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+}
+.reader-glossary .glossary-table {
+    font-size: var(--text-sm-md);
+    table-layout: fixed;
+    width: 100% !important;
+    min-width: unset !important;
+}
+.reader-glossary .glossary-table .glossary-term {
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+    white-space: nowrap;
+    width: 120px;
+}
+.reader-glossary .glossary-table .glossary-explanation {
+    color: var(--color-text-main);
+    line-height: 1.6;
+    word-break: break-word;
+    width: auto;
+}
+.reader-glossary .glossary-table .glossary-ref {
+    font-size: var(--text-2xs);
+    color: var(--color-text-muted);
+    word-break: break-word;
+    width: 120px;
+}
+.reader-glossary .glossary-table tr:target {
+    background: var(--highlight-yellow-bg) !important;
+    animation: glossary-flash 2s ease;
+}
+@keyframes glossary-flash {
+    0%, 100% { background: var(--highlight-yellow-bg); }
+    50% { background: var(--highlight-yellow-strong); }
+}
+
+/* Glossary link (LNN) in table cells */
+a.glossary-link {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+}
+a.glossary-link:hover {
+    text-decoration: underline;
+}
+
+/* Glossary term auto-link in body text */
+a.glossary-term-link {
+    color: var(--color-primary);
+    text-decoration: underline dotted;
+    text-underline-offset: 2px;
+    cursor: pointer;
+    font-weight: var(--font-weight-medium);
+}
+a.glossary-term-link:hover {
+    text-decoration: underline;
+    background: var(--primary-tint-8);
+    border-radius: var(--radius-2xs);
+}
+
+/* Glossary ref link (출처 하이퍼링크) */
+a.glossary-ref-link {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-size: var(--text-2xs);
+    cursor: pointer;
+}
+a.glossary-ref-link:hover {
+    text-decoration: underline;
+}
+a.glossary-ref-link i {
+    margin-right: 0.2em;
+}
+
+/* Light theme overrides for glossary */
+.reader-light-theme .reader-glossary {
+    background: var(--primary-tint-4);
+}
+.reader-light-theme .reader-glossary .glossary-explanation {
+    color: var(--reader-text, #2b2b2b) !important;
+}
+
+/* === Glossary back-to-position floating button === */
+.glossary-back-btn {
+    position: fixed;
+    bottom: 5rem;
+    right: 1.5rem;
+    z-index: var(--z-toast);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem 1.1rem;
+    font-size: var(--text-sm-md);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-on-brand);
+    background: var(--color-primary);
+    border: none;
+    border-radius: 2rem;
+    cursor: pointer;
+    box-shadow: var(--shadow-popover);
+    transition: opacity var(--transition-slow), transform var(--transition-slow);
+    opacity: 0.95;
+    animation: glossary-back-in 0.3s ease;
+}
+.glossary-back-btn:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-popover-lg);
+}
+.glossary-back-btn:active {
+    transform: translateY(0);
+}
+.glossary-back-btn i {
+    font-size: var(--text-sm);
+}
+@keyframes glossary-back-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 0.95; transform: translateY(0); }
+}
+
+/* === ������Ʈ Ŭ���� ? �ζ��� ��Ÿ�� ���ſ� === */
+
+/* Reader Empty States */
+.reader-empty-state {
+    text-align: center;
+    padding: var(--space-8) var(--space-5);
+}
+.reader-empty-icon-lg {
+    font-size: 4rem;
+    color: var(--color-secondary);
+    margin-bottom: var(--space-5);
+    display: inline-block;
+}
+.reader-empty-title {
+    font-size: var(--text-lg-sm);
+    margin: var(--space-4) 0;
+}
+.reader-empty-desc {
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-4);
+}
+.reader-empty-notice {
+    max-width: 480px;
+    margin: var(--space-5) auto;
+    text-align: left;
+    background: var(--bg-subtle);
+    border: 1px solid var(--bg-active);
+    border-radius: var(--radius-sm);
+    padding: var(--space-4);
+    font-size: var(--text-sm-md);
+    line-height: var(--lh-body);
+    color: var(--color-text-muted);
+}
+.reader-empty-actions {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-4);
+}
+
+/* Reader Control Panel */
+.reader-control-panel {
+    margin-bottom: var(--space-5);
+    color: var(--color-text-muted);
+    font-size: var(--text-base);
+}
+.reader-mode-buttons {
+    display: flex;
+    gap: var(--space-5);
+    align-items: center;
+    flex-wrap: wrap;
+}
+.reader-mode-btn {
+    min-width: 220px;
+}
+.reader-mode-checkbox {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    cursor: pointer;
+    font-size: var(--text-md-sm);
+    user-select: none;
+    white-space: nowrap;
+}
+.reader-mode-checkbox input {
+    width: 1.1rem;
+    height: 1.1rem;
+    accent-color: var(--color-primary);
+    cursor: pointer;
+}
+
+/* Reader Question Text */
+.reader-q-text-lg {
+    font-size: var(--text-lg-1);
+    line-height: var(--lh-loose);
+    margin-bottom: var(--space-6);
+}
+.reader-q-text-md {
+    font-size: var(--text-lg);
+    line-height: var(--lh-loose);
+    margin-bottom: var(--space-5);
+}
+
+/* PWA Modal */
+.pwa-modal-footer {
+    border-top: 1px solid var(--border-color);
+    padding-top: var(--space-4);
+    margin-top: var(--space-2);
+}
+.pwa-modal-footer-label {
+    font-size: var(--text-sm-md);
+    opacity: 0.7;
+}
+.pwa-modal-footer-url {
+    font-size: var(--text-sm);
+    line-height: var(--lh-body);
+    color: var(--color-text-muted);
+    font-family: monospace;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.pwa-diag-content {
+    white-space: pre-wrap;
+}
+
+/* 오디오 재생 상태 토스트 (textbook-reader.js에서 동적 생성) */
+#reader-audio-toast {
+    position: fixed;
+    left: 50%;
+    bottom: 2rem;
+    transform: translateX(-50%);
+    background: rgba(15, 23, 42, 0.95);
+    color: var(--color-on-brand, #fff);
+    padding: 0.6rem 1.1rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    z-index: var(--z-modal-overlay);
+    border: 1px solid rgba(6, 182, 212, 0.4);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    transition: opacity 0.25s;
+    pointer-events: none;
+    max-width: 90%;
+}
+#reader-audio-toast.is-visible {
+    opacity: 1;
+}
+
+/* 참조 링크 프리뷰 툴팁 (textbook-reader.js에서 동적 생성) */
+#ref-preview-tooltip {
+    position: fixed;
+    z-index: var(--z-html-viewer);
+    max-width: 420px;
+    max-height: 280px;
+    overflow-y: auto;
+    background: var(--bg-card, #161b22);
+    border: 1px solid var(--border-color, #30363d);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    padding: 12px 14px;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--color-text, #e6edf3);
+    pointer-events: none;
+}

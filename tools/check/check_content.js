@@ -18,7 +18,7 @@
 const { spawnSync } = require('child_process');
 const path = require('path');
 
-const ROOT = path.resolve(__dirname, '..');
+const ROOT = path.resolve(__dirname, '..', '..');
 const args = process.argv.slice(2);
 const WITH_BUILD = args.includes('--build');
 const QUICK = args.includes('--quick');
@@ -30,37 +30,37 @@ const STEPS = [
     'npm.cmd', ['run', 'build:data'], true,
     '빌드', 'build:data — data/ 번들 전체 재생성 (+인용 라인 동기화)', true
   ]] : []),
-  ['node', ['tools/check_manifest.js'], false,
+  ['node', ['tools/check/check_manifest.js'], false,
     '선언', 'manifest 선언 ↔ 파일/과목 자산 정합성', true],
   ['node', ['tools/sync_textbook_files.js', '--check'], false,
     '구조', '교재/문제은행 파일 ↔ manifest·sw.js MD_ASSETS 구조 드리프트', true],
   ['node', ['tools/sync_citation_lines.js', '--check'], false,
     '인용', '문제은행 → 교재 #L라인번호 인용 동기화 상태', true],
-  ['node', ['tools/check_ref_subjects.js'], false,
+  ['node', ['tools/check/check_ref_subjects.js'], false,
     '귀속', 'ref_md 문서의 과목 귀속 vs 실제 인용 득표 (정보 단계 — 불일치는 참고 보고)', true],
-  ['node', ['tools/check_reflayout.js'], false,
+  ['node', ['tools/check/check_reflayout.js'], false,
     '레이아웃', '참조자료 폴더/레지스트리 정합성', true],
-  ['node', ['tools/check_ref_freshness.js'], false,
+  ['node', ['tools/check/check_ref_freshness.js'], false,
     '신선도', '참조자료 PDF 해시 ↔ ref_md 변환본 (PDF 교체 감지)', true],
-  ['node', ['tools/check_ref_lines.js'], false,
+  ['node', ['tools/check/check_ref_lines.js'], false,
     '참조라인', '교재/문제은행 (LNN) 참조 라인 ↔ ref_md 실제 내용', true],
-  ['node', ['tools/check_drill_freshness.js'], false,
+  ['node', ['tools/check/check_drill_freshness.js'], false,
     '드릴신선도', '드릴 번들 ↔ 문제은행 번들 (build:drills 필요 감지)', true],
-  ['node', ['tools/check_combo_pilot.js'], false,
+  ['node', ['tools/check/check_combo_pilot.js'], false,
     '드릴', '복수정답형(combo) 드릴 데이터 정합성', true],
   ['node', ['tools/build/build_id_migration.js', '--check'], false,
     'ID이관', '카드/퀴즈 ID 스냅샷 ↔ 콘텐츠 (build:data 누락·진도 손실 감지)', true],
-  ['node', ['tools/check_parser_parity.js'], false,
+  ['node', ['tools/check/check_parser_parity.js'], false,
     '파서', '빌드 파서 ↔ 런타임 파서 출력 등가성', false],
-  ['node', ['tools/check_imports.js'], false,
+  ['node', ['tools/check/check_imports.js'], false,
     '임포트', 'src/ ES 모듈 import/export 교차 검증', false],
-  ['node', ['tools/verify_shell_assets.js'], false,
+  ['node', ['tools/check/verify_shell_assets.js'], false,
     '자산', 'sw.js SHELL_ASSETS/DATA_ASSETS 파일 존재', false],
-  ['node', ['tools/audit_card_quality.js'], false,
+  ['node', ['tools/check/audit_card_quality.js'], false,
     '카드', '카드 품질 감사 (짧은 설명·중복·참조 링크)', true],
-  ['node', ['tools/check_docs_paths.js'], false,
+  ['node', ['tools/check/check_docs_paths.js'], false,
     '문서', 'README·AGENTS·docs/*.md 경로 참조 존재 검증 (스테일 탐지)', false],
-  ['node', ['tools/check_spec_refs.js'], false,
+  ['node', ['tools/check/check_spec_refs.js'], false,
     '추적', 'SPEC ID ↔ 코드 @spec 태그 양방향 정합성 (스테일 참조 탐지)', false],
   ['node', ['tools/build_trace_matrix.js', '--check'], false,
     '추적', 'TRACE_MATRIX 입력 해시 신선도 (SPEC·@spec·문서 헤더 변경 시 재생성 강제)', false],
@@ -103,7 +103,7 @@ for (const r of results) {
   // 귀속 단계는 정보 보고: 불일치 건수를 별도 표시 (교재 교체 후 증가하면 재검토)
   if (r.label.startsWith('[귀속]')) {
     const m = r.output.match(/불일치 (\d+)건/);
-    if (m) console.log(`    ℹ 규칙↔인용 불일치 ${m[1]}건 — 상세: node tools/check_ref_subjects.js`);
+    if (m) console.log(`    ℹ 규칙↔인용 불일치 ${m[1]}건 — 상세: node tools/check/check_ref_subjects.js`);
   }
 }
 

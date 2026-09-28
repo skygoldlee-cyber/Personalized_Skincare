@@ -32,7 +32,7 @@
 ```powershell
 node tools/build/build_combo_drills.js            # 생성 + 파일 쓰기
 node tools/build/build_combo_drills.js --dry-run  # 검증만 (파일 미생성)
-node tools/check_combo_pilot.js             # 생성 번들 무결성 감사
+node tools/check/check_combo_pilot.js             # 생성 번들 무결성 감사
 ```
 
 > **주의**: 생성물(`combo_*.js`, `과목N_복수정답형.md`)은 자동 생성 파일 — 직접 수정
@@ -231,8 +231,8 @@ ref_md는 `ref_md/과목N/{문서}/{문서}.md` 과목 폴더 구조이며, `ext
 
 재생성 후 확인할 것:
 
-1. `node tools/check_combo_pilot.js` — 정답 분포·스키마 무결성
-2. `npm.cmd run audit:combo` — 생성 번들 품질 감사 (`tools/audit_combo.js`):
+1. `node tools/check/check_combo_pilot.js` — 정답 분포·스키마 무결성
+2. `npm.cmd run audit:combo` — 생성 번들 품질 감사 (`tools/check/audit_combo.js`):
    스키마·정답 유일성 재검증, 동일 진술집합 중복 문항, 모순 의심 쌍(동일 텍스트·상반 truth),
    진술 절단 의심(조사·연결어미 종결), '모두' 퇴화/위반 옵션, 정답 위치 편향(>30%),
    과목별·생성 경로별(bank/cluster/ref:*) 통계. 오류 시 exit 1, `--strict`는 경고도 실패 처리.

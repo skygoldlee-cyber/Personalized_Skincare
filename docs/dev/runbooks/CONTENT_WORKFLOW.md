@@ -230,7 +230,7 @@ flowchart TD
 - [ ] `content/exams/cosmetic/교재/glossary/subject{N}.json` — 큐레이션 용어집 (과목 order 번호 기준)
 - [ ] `content/exams/cosmetic/number-drills/{과목키}.json`
 - [ ] `content/exams/cosmetic/audiobook/mp3/{과목키}/` — 교재 교체 시 TTS 재생성(`ref-pipeline/audiobook/generate_all_mp3.py`)
-- [ ] `tools/check_ref_subjects.js`는 manifest의 `dir`↔`order`에서 과목 매핑을 자동 파생 — 별도 상수 없음
+- [ ] `tools/check/check_ref_subjects.js`는 manifest의 `dir`↔`order`에서 과목 매핑을 자동 파생 — 별도 상수 없음
 
 **4. 빌드 재생성**
 
@@ -246,8 +246,8 @@ npm.cmd run check:content -- --build   # build:data + 전 계층 검증을 한 �
 - [ ] `tools/config/citation_fingerprints.json` 지문 재생성 필요 시 `--fingerprint`
 
 **6. 참조자료(ref_md) 귀속**
-- [ ] `node tools/check_ref_subjects.js` — 불일치 건수가 교체 전 기준선보다 늘었는지 확인
-- [ ] `node tools/check_reflayout.js` — 폴더/레지스트리 정합성
+- [ ] `node tools/check/check_ref_subjects.js` — 불일치 건수가 교체 전 기준선보다 늘었는지 확인
+- [ ] `node tools/check/check_reflayout.js` — 폴더/레지스트리 정합성
 - [ ] 문서→과목 귀속 규칙은 `content/exams/cosmetic/references.json`의 `docSubjectRules`가 진실 (폴더 이동보다 규칙이 우선인 평탄 잔존 문서용)
 
 **7. 사용자 진행 데이터 (localStorage)**

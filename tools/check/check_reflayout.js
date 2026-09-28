@@ -16,19 +16,19 @@
  *   - referenceFiles/referenceCommon/referenceLaw 항목 → dir·file 실존
  *   - content/** 의 ref_md/ 링크 → 실제 파일 해석
  *
- * 사용: node tools/check_reflayout.js   (불일치 시 exit 1)
+ * 사용: node tools/check/check_reflayout.js   (불일치 시 exit 1)
  */
 
 // @spec CS-03,CS-09
 const fs = require('fs');
 const path = require('path');
 
-const ROOT = path.join(__dirname, '..');
-const { getDefaultExamRoots } = require('./build/exam_targets.js');
+const ROOT = path.join(__dirname, '..', '..');
+const { getDefaultExamRoots } = require('../build/exam_targets.js');
 const CONTENT = path.join(ROOT, getDefaultExamRoots(ROOT).contentRoot);
 const REF_BASE = path.join(CONTENT, '참조자료');
 const REF_MD = path.join(REF_BASE, 'ref_md');
-const { docSubject } = require('./build/ref_statements.js');
+const { docSubject } = require('../build/ref_statements.js');
 
 const refs = JSON.parse(fs.readFileSync(path.join(CONTENT, 'references.json'), 'utf8'));
 const subjectDirMap = refs.subjectDirMap || {};

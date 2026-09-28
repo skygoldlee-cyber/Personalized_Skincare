@@ -1,8 +1,8 @@
-// tests/unit/doc-sync.test.js — 문서 동기화 게이트(tools/check_doc_sync.js) 분류 로직 검증
+// tests/unit/doc-sync.test.js — 문서 동기화 게이트(tools/check/check_doc_sync.js) 분류 로직 검증
 // @spec none (게이트 도구 — 정적 검증)
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import checker from '../../tools/check_doc_sync.js';
+import checker from '../../tools/check/check_doc_sync.js';
 
 const { isTrigger, isDoc, analyze, parseStatusLine } = checker;
 

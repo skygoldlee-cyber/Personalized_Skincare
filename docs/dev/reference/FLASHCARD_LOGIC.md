@@ -422,7 +422,7 @@ getDueCount()       // 오늘 복습 대상 카드 수
 
 ```bash
 npm run check:parser
-# → tools/check_parser_parity.js가 두 파서의 출력을 직접 대조
+# → tools/check/check_parser_parity.js가 두 파서의 출력을 직접 대조
 ```
 
 ### 알려진 패리티 함정

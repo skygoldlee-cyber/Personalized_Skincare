@@ -38,6 +38,8 @@ const SHELL_ASSETS = [
   './css/exam.css',
   './css/trainer.css',
   './css/reader.css',
+  './css/app-responsive.css',
+  './css/reader-extras.css',
   './css/reader-mermaid.css',
   './css/html-viewer.css',
   './css/ui-overlay.css',

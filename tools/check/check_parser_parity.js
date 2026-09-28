@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/* tools/check_parser_parity.js
+/* tools/check/check_parser_parity.js
  * 빌드 파서(tools/build/plugins/textbook.plugin.js)와
  * 런타임 파서(src/textbook-parser.js)가 동일한 content/*.md 에 대해
  * 바이트 단위로 동일한 {name, cards, quizzes, chapters}를 만드는지 검증한다.
@@ -7,7 +7,7 @@
  * 두 파서 중 하나만 규칙이 바뀌면 이 검사가 실패하여 조용한 분기(진도 ID 어긋남 등)를 막는다.
  * 별도 정답 파일에 의존하지 않고 두 구현을 직접 대조하므로 콘텐츠가 바뀌어도 유효하다.
  *
- * 사용:  node tools/check_parser_parity.js   (npm run check:parser)
+ * 사용:  node tools/check/check_parser_parity.js   (npm run check:parser)
  * 종료코드: 일치 0 / 불일치 1
  */
 
@@ -15,10 +15,10 @@
 const fs = require('fs');
 const path = require('path');
 
-const ROOT = path.resolve(__dirname, '..');
-const plugin = require('./build/plugins/textbook.plugin.js');
-const idFactory = require('./build/id_factory.js');
-const { getExamTargets } = require('./build/exam_targets.js');
+const ROOT = path.resolve(__dirname, '..', '..');
+const plugin = require('../build/plugins/textbook.plugin.js');
+const idFactory = require('../build/id_factory.js');
+const { getExamTargets } = require('../build/exam_targets.js');
 
 function firstDiff(aArr, bArr, label) {
     const n = Math.max(aArr.length, bArr.length);
@@ -37,7 +37,7 @@ function firstDiff(aArr, bArr, label) {
 
 async function main() {
     // 런타임 파서는 ESM (src/package.json: type=module) → 동적 import 로 로드
-    const { buildSubjectData } = await import('../src/textbook-parser.js');
+    const { buildSubjectData } = await import('../../src/textbook-parser.js');
 
     // [멀티시험] content/exams.json의 모든 시험 manifest를 순회 검증한다.
     const targets = getExamTargets(ROOT).filter(t => t.manifest);

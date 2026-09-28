@@ -1,13 +1,13 @@
 #!/usr/bin/env node
-// tools/check_refmerge.js — ref_md joinWraps 병합 품질 감사
+// tools/check/check_refmerge.js — ref_md joinWraps 병합 품질 감사
 // @spec CS-09
 //
 // ref_md는 인용 라인번호 보존을 위해 시각적 줄 유지로 변환되고(segment=False),
 // 표시 시 parseMarkdown(joinWraps)가 연속줄을 병합한다. 이 스크립트는 전체
 // ref_md 문서에 병합을 적용해 의심 패턴을 리포트한다.
 //
-//   node tools/check_refmerge.js           전체 감사 (HIGH 0이면 종료코드 0)
-//   node tools/check_refmerge.js --verbose 의심 항목 전체 출력
+//   node tools/check/check_refmerge.js           전체 감사 (HIGH 0이면 종료코드 0)
+//   node tools/check/check_refmerge.js --verbose 의심 항목 전체 출력
 //
 // 감사 항목:
 //   HIGH  struct-merge   병합 연속줄(span)이 구조 마커(제N조·가.·① 등)로 시작
@@ -22,7 +22,7 @@ const path = require('path');
 const { pathToFileURL } = require('url');
 
 const VERBOSE = process.argv.includes('--verbose');
-const ROOT = path.resolve(__dirname, '..');
+const ROOT = path.resolve(__dirname, '..', '..');
 const REF_MD = path.join(ROOT, 'content/exams/cosmetic/참조자료/ref_md');
 
 function* walk(dir) {

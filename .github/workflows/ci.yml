@@ -38,7 +38,7 @@ jobs:
         run: npm run check:docs
 
       - name: Doc sync gate (소스 변경 시 문서 갱신 강제)
-        run: node tools/check_doc_sync.js --ref origin/main
+        run: node tools/check/check_doc_sync.js --ref origin/main
 
       - name: SPEC refs + test gap check
         run: npm run check:specrefs
@@ -47,7 +47,7 @@ jobs:
         run: npm run check:trace
 
       - name: Content traceability (교재/문제은행 변경 게이트)
-        run: node tools/check_content.js --content-only --quick
+        run: node tools/check/check_content.js --content-only --quick
 
       - name: Run unit tests
         run: npm test
@@ -59,7 +59,7 @@ jobs:
         run: npm run coverage:unit
 
       - name: Merged coverage threshold gate
-        run: node tools/coverage_merge.js --check
+        run: node tools/check/coverage_merge.js --check
 
       - name: Upload coverage report
         if: always()

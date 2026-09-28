@@ -6,6 +6,12 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-09-28 P1 리팩토링 — tools/check/ 분리 + reader.css 분할
+
+- **`tools/check/` 신설**: 검증·감사 계열 19개 이동 (check_* 15 + audit_* 2 + verify_shell_assets + coverage_merge). 이동 파일의 `ROOT`(‘..’→‘../..’)·`./build/`·`./lib/`·`../src/` 상대 경로 전수 교정 — 특히 check_combo_pilot의 ESM 동적 import(`pathToFileURL`)와 check_parser_parity의 `import('../src/…')`는 sed 패턴에 안 잡혀 수동 수정
+- **참조 갱신**: package.json 스크립트, ci.yml, .githooks(pre-commit·pre-push), `check_content.js` spawn 테이블, `trace_scan.js` EXCLUDE_FILES, 테스트 4개(doc-sync·build-pipeline·audit-quality·pwa-sw), AGENTS/SPEC/ARCHITECTURE/TESTING/런북 문서 — CHANGES 과거 항목의 구 경로는 이력 기록으로 유지(check_docs 통과 확인)
+- **`reader.css` 3,148줄 → 3-way 분할**(캐스케이드 순서 보존): `reader.css`(1,305 — 리더 코어: TOC·툴바·타이포·Mermaid 라이트) + `app-responsive.css`(985 — 태블릿/모바일 앱 레이아웃·오프라인 배너·PWA 모달·가로보기·대시보드 모바일) + `reader-extras.css`(869 — 라이트 테마 보정·학습보조 카드·이야기 모드·용어집·리더 상태). `style.css` @import 2개 추가·`sw.js` SHELL_ASSETS 등록 — 원본 @import 위치 그대로라 우선순위 무결
+
 ## 2026-09-28 설계 원칙에 Spec-Traceable 추가
 
 - **`SPEC.md` §1.3**: 6번째 원칙 `Spec-Traceable` 추가 — SPEC ID 선언 + `@spec` 태그 연결 + TRACE_MATRIX 진실 소스 + 게이트 자동 강제

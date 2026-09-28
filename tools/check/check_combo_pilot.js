@@ -1,7 +1,7 @@
 /**
  * 복수정답형(combo) 번들 검증 — 스키마 검증 + 정답 유일성 + perStatement 채점 경로 확인
  * 대상: data/drills/combo_pilot.js (수작업) + data/drills/combo_subject*.js (자동 생성)
- * 실행: node tools/check_combo_pilot.js
+ * 실행: node tools/check/check_combo_pilot.js
  */
 
 // @spec CQ-05
@@ -11,7 +11,7 @@ import path from 'node:path';
 import vm from 'node:vm';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
-const src = path.join(root, '..');
+const src = path.join(root, '..', '..');
 const { validateQuestion, deriveComboAnswer, gradeAnswer } = await import(
   pathToFileURL(path.join(src, 'src', 'questions.js')).href
 );

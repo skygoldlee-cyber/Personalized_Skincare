@@ -17,16 +17,16 @@
  *     못 찾으면 경고 유지
  *   - (L?) 미해결 마커는 건수만 집계 (경고)
  *
- * 사용: node tools/check_ref_lines.js   (불일치 시 exit 1)
+ * 사용: node tools/check/check_ref_lines.js   (불일치 시 exit 1)
  */
 
 // @spec CS-03
 const fs = require('fs');
 const path = require('path');
-const { getExamTargets } = require('./build/exam_targets.js');
-const { docSubject } = require('./build/ref_statements.js');
+const { getExamTargets } = require('../build/exam_targets.js');
+const { docSubject } = require('../build/ref_statements.js');
 
-const ROOT = path.resolve(__dirname, '..');
+const ROOT = path.resolve(__dirname, '..', '..');
 
 // (LNN|file.pdf) / (LNN) / (L?) 패턴 — build_keyword_index.js와 동일 규칙
 const LINK_FILE_RE = /\(L(\d+)\\?\|(.+?\.pdf)\)/g;

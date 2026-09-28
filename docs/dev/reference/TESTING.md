@@ -131,13 +131,13 @@ npm run hooks:install
 | `test:dom` | `vitest run` | DOM 테스트 (jsdom) |
 | `coverage` | `vitest run --coverage` | DOM 테스트 + V8 커버리지 (src/ 대상, `coverage/` 출력) |
 | `coverage:unit` | `c8 ... node --test tests/unit/*.test.js` | 유닛 테스트 커버리지 (src/ 대상, `coverage-unit/` 출력) |
-| `coverage:all` | 두 커버리지 실행 + `tools/coverage_merge.js` | 유닛+DOM 병합 리포트 (`coverage-merged/`) — 실질 커버리지는 이 수치 |
-| `test:all` | `node --test tests/unit/*.test.js && node tools/check_parser_parity.js && vitest run` | 전체 |
+| `coverage:all` | 두 커버리지 실행 + `tools/check/coverage_merge.js` | 유닛+DOM 병합 리포트 (`coverage-merged/`) — 실질 커버리지는 이 수치 |
+| `test:all` | `node --test tests/unit/*.test.js && node tools/check/check_parser_parity.js && vitest run` | 전체 |
 | `test:watch` | `node --test --watch tests/unit/*.test.js` | Watch 모드 |
 | `test:e2e` | `playwright test` | E2E 테스트 (tests/e2e, serve.js webServer 자동 기동) |
 | `lint` | `eslint src/ tools/ tests/ sw.js serve.js --max-warnings 0` | ESLint — 0 problems 필수 (경고도 차단) |
 | `check:types` | `tsc -p jsconfig.json --noEmit` | JSDoc 타입 진단 (checkJs) |
-| `check:specrefs` | `node tools/check_spec_refs.js` | SPEC↔코드/문서 스테일 참조 + 테스트 갭 기준선 게이트 |
+| `check:specrefs` | `node tools/check/check_spec_refs.js` | SPEC↔코드/문서 스테일 참조 + 테스트 갭 기준선 게이트 |
 | `check:trace` | `node tools/build_trace_matrix.js --check` | 매트릭스 입력 해시 신선도 |
 | `build:trace` | `node tools/build_trace_matrix.js` | TRACE_MATRIX.md 재생성 |
 | `hooks:install` | `git config core.hooksPath .githooks` | pre-commit·pre-push 훅 활성화 (opt-in) |
@@ -223,7 +223,7 @@ npm run hooks:install
 | 52 | `perf-invariants.test.js` | 16 | PF-01~16 — 런타임 MD 파싱·과목별 로딩·캐시 TTL·지연 하이라이트·normalize·디바운스·console.log 금지·ref_md·Mermaid 지연·법령 정본 | 소스 패턴 정적 검증, 2026-10-14 추가 |
 | 53 | `ux-invariants.test.js` | 20 | UX-FB/FORM/PWA/SCR/SET — 스크롤바·CSS 변수·설정 패널·44px·버전·토스트·모달·펄스·standalone·app-height·폼 16px·터치 피드백 | CSS·HTML·JS 정적 검증, 2026-10-14 추가 |
 | 54 | `content-engineering.test.js` | 6 | CE-01~05 + TR-16a — 학습 가이드·한 줄 요약·비교표·확인문제·용어 표·툴바 자동 숨김 | 콘텐츠·소스 정적 검증, 2026-10-14 추가 |
-| 55 | `doc-sync.test.js` | 7 | `tools/check_doc_sync.js` — 트리거/면제/문서 경로 분류, analyze 위반 판정, porcelain 파서 | 정적 패턴 검증, 2026-10-14 추가 |
+| 55 | `doc-sync.test.js` | 7 | `tools/check/check_doc_sync.js` — 트리거/면제/문서 경로 분류, analyze 위반 판정, porcelain 파서 | 정적 패턴 검증, 2026-10-14 추가 |
 | | **합계** | **694** | | |
 
 ### DOM 테스트 (`tests/dom/`)
@@ -729,14 +729,14 @@ function detectDiagramType(textContent) {
 - npm run check:types     # tsc --noEmit — JSDoc 타입 진단 (src 전체)
 - npm run check:imports   # import/export 교차 검증
 - npm run check:docs      # 문서 경로 + DOC ID
-- node tools/check_doc_sync.js --ref origin/main   # 소스 변경 시 문서 갱신 강제
+- node tools/check/check_doc_sync.js --ref origin/main   # 소스 변경 시 문서 갱신 강제
 - npm run check:specrefs  # 스테일 SPEC 참조 + 테스트 갭 기준선(0)
 - npm run check:trace     # TRACE_MATRIX 신선도 (해시)
-- node tools/check_content.js --content-only --quick  # 콘텐츠 추적 게이트 (manifest·구조·인용·참조라인·신선도·ID이관·카드)
+- node tools/check/check_content.js --content-only --quick  # 콘텐츠 추적 게이트 (manifest·구조·인용·참조라인·신선도·ID이관·카드)
 - npm test                # Unit 테스트
 - npm run coverage        # DOM 테스트 + 커버리지 임계값
 - npm run coverage:unit   # 유닛 커버리지 (c8)
-- node tools/coverage_merge.js --check   # 병합 커버리지 임계값 → 아티팩트 업로드
+- node tools/check/coverage_merge.js --check   # 병합 커버리지 임계값 → 아티팩트 업로드
 - npm run verify:assets   # SW 프리캐시 자산
 - npm run check:parser    # 빌드↔런타임 파서 정합성
 - npx playwright install --with-deps chromium
@@ -802,5 +802,5 @@ npm run verify:assets
 | Vitest 설정 | `vitest.config.mjs` | `environment: 'jsdom'` |
 | 테스트용 package.json | `tests/unit/package.json` | (있을 경우) |
 | CI 워크플로우 | `.github/workflows/ci.yml` | GitHub Actions |
-| 파서 정합성 검증 | `tools/check_parser_parity.js` | 빌드 파서 ↔ 런타임 파서 |
-| 쉘 자산 검증 | `tools/verify_shell_assets.js` | 프리캐시 파일 존재 확인 |
+| 파서 정합성 검증 | `tools/check/check_parser_parity.js` | 빌드 파서 ↔ 런타임 파서 |
+| 쉘 자산 검증 | `tools/check/verify_shell_assets.js` | 프리캐시 파일 존재 확인 |

@@ -11,15 +11,15 @@
  *   - exams 번들에 대응하는 드릴 없음 → WARN (문항 부재로 미생성일 수 있음)
  *   - 원본 헤더 없는 번들(combo_pilot.js 등 수작업) → 검사 제외
  *
- * 사용: node tools/check_drill_freshness.js   (불일치 시 exit 1)
+ * 사용: node tools/check/check_drill_freshness.js   (불일치 시 exit 1)
  */
 
 // @spec BP-01
 const fs = require('fs');
 const path = require('path');
-const { getExamTargets } = require('./build/exam_targets.js');
+const { getExamTargets } = require('../build/exam_targets.js');
 
-const ROOT = path.resolve(__dirname, '..');
+const ROOT = path.resolve(__dirname, '..', '..');
 const SOURCE_RE = /^\/\/ 원본:\s*(\S+)/m;
 
 const errors = [];

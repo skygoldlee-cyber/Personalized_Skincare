@@ -180,7 +180,7 @@ src/                    # ES Modules
     formula-print.js    # Formula OS — 인쇄 빌더 (조제 기록지·라벨·안내문)
     backup.js           # 백업/복원
     offline-detection.js # 오프라인 감지 (app.js에서 분리)
-css/                    # 스타일시트 모듈 (base.css, reader.css, reader-mermaid.css, trainer.css, exam.css, dashboard.css, study.css, study-calendar.css, formula.css, print.css, ui-overlay.css, html-viewer.css)
+css/                    # 스타일시트 모듈 (base.css, reader.css, app-responsive.css, reader-extras.css, reader-mermaid.css, trainer.css, exam.css, dashboard.css, study.css, study-calendar.css, formula.css, print.css, ui-overlay.css, html-viewer.css — @import 순서가 캐스케이드, style.css 참조)
 content/                # 시험 콘텐츠 컨테이너 (시험 소유 파일 없음 — 순수 네임스페이스)
   exams.json            # 시험 레지스트리 (멀티시험 엔트리 — 멀티시험 구조 섹션 참조)
   exams/cosmetic/       # 기본 시험 콘텐츠 루트 (contentRoot)
@@ -202,8 +202,11 @@ data/                   # 빌드 생성 번들
   docs_md/              # 앱 공용 문서 번들 (user_manual·formula_manual — 시험 무관)
   exams/cosmetic/       # 기본 시험 데이터 루트 (dataRoot: registry.js, subjects/, exams/, drills/, study_md/, docs_md/, id_migration.js 등)
   exams/<id>/           # 추가 시험 데이터 루트 (동일 구조)
-tools/                  # 빌드 스크립트
+tools/                  # 빌드·검증 스크립트
   build/                # 데이터 파이프라인 (manifest → registry + 해시 번들)
+  check/                # 검증·감사 스크립트 (check_*·audit_*·verify_shell_assets·coverage_merge)
+  lib/                  # 공용 스캔·파싱 라이브러리 (trace_scan.js)
+  _archive/             # 일회성·이력 스크립트 보관
   sync_citation_lines.js # 문제은행 인용 링크 라인번호 동기화 (교재 변경 시 — 대상 파일 없으면 미발견으로 실패)
 ref-pipeline/           # 교재·참조자료 생성/변환 독립 도구함 (PDF→MD, MD→HTML, 오디오북 TTS, 법령 검증) — 사용 절차는 ref-pipeline/README.md 참조
 vendor/                 # 자체 호스팅 자산 (fonts/, fontawesome/)

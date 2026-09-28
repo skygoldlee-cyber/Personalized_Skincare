@@ -154,6 +154,6 @@ test('P-12: verify_shell_assets.js가 존재하고 CI·npm 스크립트에 연�
   const pkg = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf-8'));
   assert.ok(/verify_shell_assets/.test(pkg.scripts['verify:assets']), 'npm 스크립트 연결');
   // 실제 실행 — 프리캐시 목록과 파일이 일치해야 함
-  const out = execFileSync(process.execPath, [join(ROOT, 'tools', 'verify_shell_assets.js')], { encoding: 'utf-8' });
+  const out = execFileSync(process.execPath, [join(ROOT, 'tools', 'check', 'verify_shell_assets.js')], { encoding: 'utf-8' });
   assert.ok(!/누락|missing|FAIL/i.test(out), `자산 검증 출력: ${out}`);
 });
