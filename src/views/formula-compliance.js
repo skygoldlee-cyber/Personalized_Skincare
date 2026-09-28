@@ -176,7 +176,9 @@ function refLinks(refs) {
   return `<span class="comp-refs">${refs.map(key => {
     const doc = LAW_DOCS[key];
     if (!doc) return '';
-    return `<a href="#" class="comp-ref-link" data-click="compOpenLaw" data-arg="${esc(key)}"><i class="fa-solid fa-book-open" aria-hidden="true"></i> ${esc(doc.label)}</a>`;
+    const lawUrl = lawUrlFor(doc.path) || lawUrlFor(doc.label);
+    const ext = lawUrl ? `<a href="${lawUrl}" target="_blank" rel="noopener" class="comp-law-ext comp-law-ext-inline" title="${esc(doc.label)} — law.go.kr 공식 원문" aria-label="${esc(doc.label)} — law.go.kr 원문"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>` : '';
+    return `<a href="#" class="comp-ref-link" data-click="compOpenLaw" data-arg="${esc(key)}"><i class="fa-solid fa-book-open" aria-hidden="true"></i> ${esc(doc.label)}</a>${ext}`;
   }).join('')}</span>`;
 }
 
