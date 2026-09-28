@@ -681,8 +681,8 @@
     background: var(--bg-subtle);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-full);
-    padding: 1px 8px;
-    margin-left: var(--space-1);
+    padding: 2px 10px;
+    margin: var(--space-1) 0 var(--space-1) var(--space-1);
     vertical-align: middle;
     cursor: pointer;
 }
