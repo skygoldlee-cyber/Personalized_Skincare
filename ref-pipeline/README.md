@@ -40,9 +40,8 @@ flowchart LR
 
 | 파일 | 용도 | 언제 쓰나 |
 |---|---|---|
-| `pdf2md.py` | PDF→MD 변환 엔진 (공백 복원·표 구조화·무선 표 재구성·마진 잡행 제거) | 참조자료 PDF를 MD로 바꿀 때의 엔진. 직접 단일 파일 변환도 가능 |
+| `pdf2md.py` | PDF→MD 변환 엔진 + `--gui` PySide6 프런트엔드 통합 (공백 복원·표 구조화·무선 표 재구성·마진 잡행 제거) | 참조자료 PDF를 MD로 바꿀 때의 엔진. `python pdf2md.py --gui`로 화면 변환 |
 | `convert.py` | 스테이징 워크플로 래퍼 — `pdf_root → ref_md_v2 → ref_md` | **참조자료 PDF 교체/추가 시** (시나리오 A) |
-| `pdf2md_gui.py` | pdf2md의 PySide6 GUI 프런트엔드 | CLI 대신 화면으로 변환할 때 |
 | `MD_to_HTML.py` | MD→독립 HTML 변환기 — 모바일 `file://` 대응·Mermaid 프리렌더·콜아웃 규칙, `--gui` 지원 | 개별 MD를 공유용 HTML로 만들 때 |
 | `callout_rules.json` | MD_to_HTML 콜아웃 패턴 규칙 (스크립트 옆 자동 인식) | 자동 |
 | `batch_convert.py` | 시험 교재·안내서·문제은행 MD → `html/` 일괄 변환 | **교재 MD 교체 후 HTML 재생성 시** (시나리오 B) |

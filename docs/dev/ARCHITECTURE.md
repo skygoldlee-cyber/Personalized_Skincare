@@ -435,7 +435,7 @@ Personalized_Skincare/
 │       #    verify_citation_lines·verify_citations·convert_ref_md 등 — 참조용, 현행 파이프라인 아님)
 │
 ├── ref-pipeline/               # 교재·참조자료 생성/변환 독립 도구함 (Python — 저장소와 무관하게 실행)
-│   ├── pdf2md.py · convert.py · pdf2md_gui.py    #   참조자료 PDF → ref_md 변환 (절차: README.md)
+│   ├── pdf2md.py · convert.py    #   참조자료 PDF → ref_md 변환 (--gui 지원, 절차: README.md)
 │   ├── MD_to_HTML.py · callout_rules.json · batch_convert.py  # MD → 독립 HTML
 │   ├── check_laws.py           #   법령 현행성 검증 → {EXAM}/report/ (LAW_OC)
 │   ├── audiobook/              #   교재 MD → TTS MP3 파이프라인 → {EXAM}/audiobook/mp3/

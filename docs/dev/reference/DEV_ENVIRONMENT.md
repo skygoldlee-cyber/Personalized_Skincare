@@ -36,7 +36,7 @@
 | pip 패키지 | `pdfplumber>=0.11`, `PyMuPDF>=1.24`, `markdown>=3.5` | `pip install -r ref-pipeline/requirements.txt` — PDF→MD·MD→HTML 필수 |
 | pip 패키지 (오디오북) | `gtts`, `pyttsx3`, `pydub`, `elevenlabs` | `pip install -r ref-pipeline/audiobook/requirements.txt` — MP3 TTS 생성 시에만 |
 | **ffmpeg** | 최신 | 오디오북 MP3 병합 (`winget install ffmpeg`) — 선택 |
-| **PySide6** | ≥6.6 | ref-pipeline GUI 사용 시에만 (`pdf2md_gui.py`) |
+| **PySide6** | ≥6.6 | ref-pipeline GUI 사용 시에만 (`python ref-pipeline/pdf2md.py --gui`) |
 | **Vercel CLI** | 최신 | 프로덕션 배포 — `npm run deploy`가 내부 호출 (전역 설치 `npm i -g vercel` 또는 npx) |
 | **GitHub CLI (`gh`)** | 최신 | 새 머신 인증 간소화 (SSH 키 대체) — [MULTI_MACHINE_SETUP](../runbooks/MULTI_MACHINE_SETUP.md) |
 | **Supabase 계정** | — | 계정·동기화·피드백 기능을 실제 서비스로 운영할 때만. 미설정이어도 앱 정상 동작 |
