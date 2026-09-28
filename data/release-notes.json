@@ -1,5 +1,13 @@
 [
   {
+    "version": "v20260928-8153247",
+    "date": "2026-09-28",
+    "notes": [
+      "[리팩터링] trace 스캔 html 확장 + 릴리스 노트 한글화 + CHANGES 날짜 정정 + 중간 뷰 모듈 분할",
+      "[정리] cleanup patch — stale comments, version refs, html gate"
+    ]
+  },
+  {
     "version": "v20260928-fbe2449",
     "date": "2026-09-28",
     "notes": [
@@ -141,17 +149,6 @@
     "notes": [
       "문서 동기화 게이트 신설 — 소스 변경 시 문서 갱신 강제",
       "관련 문서 갱신 — 테스트 수치·E2E 계층·게이트 현행화"
-    ]
-  },
-  {
-    "version": "v369-20260927-8adc4d5",
-    "date": "2026-09-27",
-    "notes": [
-      "커버리지 공백 해소 + Playwright E2E 계층 신설",
-      "테스트 갭 완전 소진 — 103→0, TEST_GAP_BASELINE 0으로 래칫",
-      "ESLint 경고 완전 소진 — 211→0, 규칙 error 승격",
-      "checkJs 백로그 완전 소진 — src 전체 0 에러 (869→0)",
-      "checkJs 백로그 2차 편입 — 15파일 진단 해소, 활성 그래프 0 에러 유지"
     ]
   }
 ]
