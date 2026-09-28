@@ -1,5 +1,12 @@
 [
   {
+    "version": "v20260929-ed3ad71",
+    "date": "2026-09-29",
+    "notes": [
+      "[기능·dict] 네거티브 리스트 판정 원칙 설명 추가 + html 파셜 드리프트 정리"
+    ]
+  },
+  {
     "version": "v20260929-e29b1f6",
     "date": "2026-09-29",
     "notes": [
@@ -133,13 +140,6 @@
     "date": "2026-09-28",
     "notes": [
       "[정리·csp] connect-src에 law.go.kr 허용 — 고시 확인 버튼 검토용"
-    ]
-  },
-  {
-    "version": "v20260928-a2a6156",
-    "date": "2026-09-28",
-    "notes": [
-      "[수정·notice] CSP connect-src에 raw.githubusercontent.com 허용"
     ]
   }
 ]
