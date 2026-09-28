@@ -36,9 +36,10 @@ const LAW_DOC_URLS = [
  */
 export function lawUrlFor(name) {
   if (!name) return null;
-  const key = String(name).replace(/[\s()]/g, '').replace(/\.(pdf|md|html?)$/i, '');
+  // 표시명('시행규칙 별표7 …')과 파일명('시행규칙_별표7_….pdf') 모두 대응 — 공백·괄호·언더스코어 제거
+  const key = String(name).replace(/[\s()_]/g, '').replace(/\.(pdf|md|html?)$/i, '');
   for (const [pat, url] of LAW_DOC_URLS) {
-    if (key.includes(pat.replace(/[\s()]/g, ''))) return url;
+    if (key.includes(pat.replace(/[\s()_]/g, ''))) return url;
   }
   return null;
 }

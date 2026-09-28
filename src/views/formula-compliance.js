@@ -205,7 +205,7 @@ function renderDocList() {
   return Object.keys(LAW_DOCS).map(key => {
     const doc = LAW_DOCS[key];
     const lawUrl = lawUrlFor(doc.path) || lawUrlFor(doc.label);
-    const ext = lawUrl ? `<a href="${lawUrl}" target="_blank" rel="noopener" class="comp-law-ext" title="law.go.kr 공식 원문 (최신 통합본)" aria-label="${esc(doc.label)} — law.go.kr 원문"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>` : '';
+    const ext = lawUrl ? `<a href="${lawUrl}" target="_blank" rel="noopener" class="comp-law-ext" title="law.go.kr 공식 원문 (최신 통합본)" aria-label="${esc(doc.label)} — law.go.kr 원문"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>원문</a>` : '';
     return `<span class="comp-doc-row"><a href="#" class="comp-doc-link" data-click="compOpenLaw" data-arg="${esc(key)}">
       <i class="fa-solid fa-file-lines" aria-hidden="true"></i>
       <span class="comp-doc-label">${esc(doc.label)}</span>

@@ -28,6 +28,12 @@ describe('lawUrlFor', () => {
         assert.equal(lawUrlFor('색소종류및기준_전체.pdf'),
             'https://www.law.go.kr/행정규칙/화장품의색소종류및기준');
     });
+    it('표시명(공백 구분)도 매칭 — 파일명과 표시명 혼용', () => {
+        assert.equal(lawUrlFor('시행규칙 별표7 행정처분기준'),
+            'https://www.law.go.kr/법령/화장품법시행규칙');
+        assert.equal(lawUrlFor('화장품 안전기준 등에 관한 규정'),
+            'https://www.law.go.kr/행정규칙/화장품안전기준등에관한규정');
+    });
     it('내부 정리 문서·원료 DB는 null (원문 아님)', () => {
         assert.equal(lawUrlFor('1.cosmetic-law.md'), null);
         assert.equal(lawUrlFor('banned_ingredients.md'), null);
