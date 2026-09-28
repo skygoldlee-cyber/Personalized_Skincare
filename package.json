@@ -27,6 +27,7 @@
     "check:reffresh": "node tools/check/check_ref_freshness.js",
     "check:reflines": "node tools/check/check_ref_lines.js",
     "check:drillfresh": "node tools/check/check_drill_freshness.js",
+    "check:lawurls": "node tools/check/check_law_urls.js",
     "check:docs": "node tools/check/check_docs_paths.js && node tools/check/check_doc_ids.js",
     "build:html": "node tools/build/build_html.js",
     "check:html": "node tools/build/build_html.js --check",

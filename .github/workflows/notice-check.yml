@@ -24,6 +24,11 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
       - name: 최신 고시 조회 + 상태 파일 갱신
         id: check
         env:
@@ -35,6 +40,15 @@ jobs:
           set -e
           echo "newer=$code" >> "$GITHUB_OUTPUT"
           if [ "$code" -eq 1 ]; then exit 1; fi
+
+      - name: law.go.kr 한글주소 유효성 검증
+        id: urls
+        run: |
+          set +e
+          node tools/check/check_law_urls.js
+          code=$?
+          set -e
+          echo "broken=$code" >> "$GITHUB_OUTPUT"
 
       - name: 결과 커밋 (notice_status.json 변경 시)
         run: |
@@ -48,23 +62,43 @@ jobs:
             git push
           fi
 
+      - name: 끊어진 한글주소 이슈 생성
+        if: steps.urls.outputs.broken != '0'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue create \
+            --title "🔗 law.go.kr 한글주소 링크 깨짐 — law-links.js 매핑 갱신 필요" \
+            --label "bug" \
+            --body "$(cat <<'ISSUE'
+          주간 체크에서 `tools/check/check_law_urls.js`가 law.go.kr 한글주소 오류를 감지했습니다.
+          법령·고시 폐지 또는 명칭 변경이 원인일 수 있습니다.
+
+          ## 확인 절차
+          1. 워크플로 로그에서 ✗ 표시된 URL 확인
+          2. `src/law-links.js`의 매칭 패턴/한글주소 갱신
+          3. `npm.cmd run check:lawurls` 로컬 검증
+          ISSUE
+          )"
+
       - name: 신규 고시 이슈 생성
         if: steps.check.outputs.newer == '2'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          LATEST=$(python -c "import json;d=json.load(open('content/exams/cosmetic/notice_status.json'));print(d['latest'].get('notice') or '', d['latest'].get('effectiveDate') or '')")
+          CHANGED=$(python -c "import json;d=json.load(open('content/exams/cosmetic/notice_status.json'));print(', '.join(f\"{x['name']} {x.get('latestNotice') or ''}({x.get('latestDate') or ''})\" for x in d.get('docs',[]) if x.get('newer')) or '상세는 notice_status.json 참조')")
           gh issue create \
-            --title "🔔 식약처 고시 감지: $LATEST — 원료 DB 대조 필요" \
+            --title "🔔 법령·고시 개정 감지: $CHANGED — 참조 문서 갱신 필요" \
             --label "ingredients" \
             --body "$(cat <<'ISSUE'
-          law.go.kr 오픈API 주간 체크에서 **화장품 안전기준 등에 관한 규정**의 신규 고시를 감지했습니다.
+          law.go.kr 오픈API 주간 체크에서 참조 법령·고시의 개정을 감지했습니다.
 
           ## 갱신 절차
-          1. 식약처/법령정보센터에서 고시 전문 PDF 확보 → `content/exams/cosmetic/참조자료/법령고시/` 추가
-          2. `npm.cmd run convert:refs` → ref_md 변환 후 과목2 폴더에 승격
-          3. `python ref-pipeline/compare_ingredients_official.py` → 대조 리포트
-          4. 확인된 오류/누락 반영 → `db_version.json` 범프 + `notice_status.json` baseline 갱신
-          5. 선례: `docs/dev/ingredients_audit_제2026-19호.md` (DOC-DEV-05)
+          1. `notice_status.json`의 `docs[]`에서 `newer: true` 문서 확인
+          2. 식약처/법령정보센터에서 최신 문서 PDF 확보 → `content/exams/cosmetic/참조자료/` 해당 폴더에 교체
+          3. `npm.cmd run convert:refs` → ref_md 변환 후 해당 과목 폴더에 승격
+          4. 안전기준 규정 변경이면 `python ref-pipeline/compare_ingredients_official.py` → 원료 DB 대조
+          5. 파일명의 (제N호)(시행일)을 새 고시로 바꾸면 baseline이 자동 갱신됨
+          6. 선례: `docs/dev/ingredients_audit_제2026-19호.md` (DOC-DEV-05)
           ISSUE
           )"

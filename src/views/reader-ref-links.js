@@ -8,6 +8,7 @@ import { openHtmlViewer } from '../html-viewer.js';
 import { scrollToGlossary } from './glossary-renderer.js';
 import { getRefTables, resolveRefPath } from '../pdf-registry.js';
 import { lawUrlFor } from '../law-links.js';
+import { ensureNoticeStatus, markStaleRefLinks } from '../notice-check.js';
 import { TIMING } from '../config/timing.js';
 import { PATHS } from '../paths.js';
 import { openSubjectChapter } from './textbook-reader.js';
@@ -17,10 +18,12 @@ import { openSubjectChapter } from './textbook-reader.js';
 function refItemRow(inner, name, file, extLabel = '원문') {
     const url = lawUrlFor(file) || lawUrlFor(name);
     const ext = url ? `<a href="${url}" target="_blank" rel="noopener" class="ref-law-ext" title="law.go.kr ${extLabel === '원문' ? '공식 원문 (최신 통합본)' : extLabel + ' 문서'} (새 탭)" aria-label="${esc(name)} — law.go.kr ${esc(extLabel)}"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i><span class="ref-law-ext-txt">${esc(extLabel)}</span></a>` : '';
-    return `<span class="ref-link-row">${inner}${ext}</span>`;
+    return `<span class="ref-link-row"${url ? ` data-law-url="${url}"` : ''}>${inner}${ext}</span>`;
 }
 
 export function buildReferenceLinks(subjId, contextRefPath) {
+    // 상태 파일 로드 후 원문 개정 문서에 '갱신 필요' 배지 삽입 (비동기 — 캐시됨)
+    ensureNoticeStatus().then(() => markStaleRefLinks());
     const _rt = getRefTables();
     const SUBJECT_DIR_MAP = _rt.SUBJECT_DIR_MAP || {};
     const REFERENCE_FILES = _rt.REFERENCE_FILES || {};

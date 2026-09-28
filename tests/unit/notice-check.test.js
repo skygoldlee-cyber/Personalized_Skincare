@@ -1,7 +1,7 @@
 // tests/unit/notice-check.test.js — 식약처 고시 감지 배너 판정 로직
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { isNewerNotice, normalizeNotice, findNoticeNumber, statusRows } from '../../src/notice-check.js';
+import { isNewerNotice, normalizeNotice, findNoticeNumber, statusRows, parseRefDoc } from '../../src/notice-check.js';
 
 const base = { notice: '제2026-19호', effectiveDate: '2026-03-18' };
 const status = (latest, baseline = base) => ({ baseline, latest });
@@ -84,8 +84,33 @@ describe('statusRows', () => {
         const rows = statusRows({ baseline: {}, latest: {}, newerFound: true });
         assert.match(rows[3][1], /있음/);
     });
+    it('parseRefDoc — 파일명에서 공식명·기준 고시·API 유형 추출', () => {
+        const law = parseRefDoc('화장품법(법률)(제20901호)(20260402).pdf');
+        assert.equal(law.name, '화장품법');
+        assert.equal(law.target, 'law');
+        assert.equal(law.baselineNotice, '제20901호');
+        assert.equal(law.baselineDate, '2026-04-02');
+        const adm = parseRefDoc('화장품 안전기준 등에 관한 규정(식품의약품안전처고시)(제2026-19호)(20260318).pdf');
+        assert.equal(adm.target, 'admrul');
+        assert.equal(adm.baselineNotice, '제2026-19호');
+    });
     it('status 누락 시 빈 배열', () => {
         assert.deepEqual(statusRows(null), []);
         assert.deepEqual(statusRows(undefined), []);
+    });
+    it('docs[]가 있으면 문서별 비교 행 + 갱신 필요 표시', () => {
+        const rows = statusRows({
+            baseline: {}, latest: {}, checkedAt: 'x', newerFound: false,
+            docs: [
+                { name: '화장품법', baselineNotice: '제20901호', baselineDate: '2026-04-02',
+                  latestNotice: '제21000호', latestDate: '2026-10-01', newer: true },
+                { name: '안전기준', baselineNotice: '제2026-19호', baselineDate: '2026-03-18',
+                  latestNotice: '제2026-19호', latestDate: '2026-03-18', newer: false },
+            ],
+        });
+        assert.equal(rows.length, 4 + 1 + 2);
+        assert.match(rows[4][1], /3종/);
+        assert.match(rows[5][1], /갱신 필요/);
+        assert.ok(!/갱신 필요/.test(rows[6][1]));
     });
 });

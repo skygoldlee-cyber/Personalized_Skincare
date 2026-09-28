@@ -140,8 +140,20 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
             const absPath = normalizeRefPath(rawPath);
             const fileName = decodeURIComponent(rawPath.split('/').pop() || '');
             const displayName = prettyRefName(fileName || linkText);
-            return `<a href="#" data-ref-html="${escapeHTML(absPath)}" class="source-link"><i class="fa-solid fa-file-lines"></i> ${escapeHTML(displayName)}</a>${refSnapshotBadge(fileName)}${lawExtLink(fileName)}`;
+            const lawUrl = lawUrlFor(fileName);
+            // 스냅샷 배지는 📚 참조 자료 섹션에서만 병기 (본문 📌출처 인라인은 노이즈 방지로 생략)
+            return `<span class="ref-md-row"${lawUrl ? ` data-law-url="${lawUrl}"` : ''}><a href="#" data-ref-html="${escapeHTML(absPath)}" class="source-link"><i class="fa-solid fa-file-lines"></i> ${escapeHTML(displayName)}</a>${lawExtLink(fileName)}</span>`;
         }
+    );
+
+    // 📚 참조 자료 섹션의 ref_md 링크에만 스냅샷 버전 배지 삽입 — 인라인 인용은 제외
+    // 리더 모드에서 ## 는 <p class="md-para">로 렌더되므로 두 형태 모두 커버
+    html = html.replace(
+        /(<(?:h[1-6]|p)[^>]*>\s*(?:#+\s*)?[^<]*참조\s*자료[\s\S]*?)(?=<h[1-6]|<p[^>]*>\s*#|$)/g,
+        (section) => section.replace(
+            /(<a href="#" data-ref-html="([^"]+)" class="source-link">[\s\S]*?<\/a>)/g,
+            (m, a, p) => a + refSnapshotBadge(decodeURIComponent(p.split('/').pop() || '')),
+        ),
     );
 
     // 원료 DB MD 파일 링크 → 앱 내 HTML 뷰어로 열기

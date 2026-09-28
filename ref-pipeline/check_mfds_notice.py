@@ -1,13 +1,21 @@
 # -*- coding: utf-8 -*-
-"""식약처 「화장품 안전기준 등에 관한 규정」 최신 고시 감지기.
+"""참조 법령·고시 전체의 최신 고시 감지기 (다문서).
 
-law.go.kr 오픈API(행정규칙 검색)로 최신 고시를 조회해 원료 DB가 반영한
-기준 고시(baseline)와 비교하고, notice_status.json을 갱신한다.
+references.json의 referenceLaw에서 감시 대상을 자동 유도한다 —
+파일명이 곧 공식 문서명+(발령기관)(제N호)(시행일)이므로
+별도 감시 목록을 유지할 필요가 없다.
+
+- 법령(법률·대통령령·총리령) → lawSearch.do?target=law (검색 응답에 공포번호 포함)
+- 행정규칙(식약처 고시 등) → lawSearch.do?target=admrul + lawService.do 상세(공포번호)
+
+notice_status.json 스키마:
+    baseline / latest / newerFound  — 안전기준 규정 전용(기존 JS 호환)
+    docs[]                          — 감시 문서 전체 {name,target,baseline*,latest*,url,newer}
 
 사용:
     LAW_OC_KEY=<발급키> python ref-pipeline/check_mfds_notice.py [--update]
 
-- --update 없이: 조회 결과만 출력 (종료코드 0=최신 일치, 2=신규 고시 발견)
+- --update 없이: 조회 결과만 출력 (종료코드 0=전부 최신, 2=신규 고시 발견)
 - --update: content/exams/cosmetic/notice_status.json 갱신
 - 종료코드 2는 GitHub Actions가 이슈를 여는 신호로 사용
 """
@@ -25,10 +33,10 @@ from pathlib import Path
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 ROOT = Path(__file__).resolve().parent.parent
 STATUS_FILE = ROOT / 'content/exams/cosmetic/notice_status.json'
+REFS_FILE = ROOT / 'content/exams/cosmetic/references.json'
 
-# 행정규칙(고시) 검색 대상 — 「화장품 안전기준 등에 관한 규정」
+# 레거시 top-level baseline/latest의 기준 문서 — 원료 DB 대조의 기준
 RULE_NAME = '화장품 안전기준 등에 관한 규정'
-API_BASE = 'https://www.law.go.kr/DRF'
 
 
 def load_oc_key():
@@ -45,14 +53,14 @@ def load_oc_key():
     return ''
 
 
-def api_get(path, params):
+def api_get(path, params, target='admrul'):
     oc = load_oc_key()
     if not oc:
         print('!! LAW_OC_KEY가 없습니다. 둘 중 하나로 설정하세요:')
         print('   ① 환경변수   PowerShell: $env:LAW_OC_KEY = "<키>"')
         print('   ② 로컬 파일  ref-pipeline/.env.local.json → {"LAW_OC_KEY": "<키>"} (gitignore됨, 커밋 불가)')
         sys.exit(1)
-    q = urllib.parse.urlencode({'OC': oc, 'target': 'admrul', 'type': 'JSON', **params})
+    q = urllib.parse.urlencode({'OC': oc, 'target': target, 'type': 'JSON', **params})
     last_err = None
     for scheme in ('https', 'http'):  # DRF 엔드포인트는 환경에 따라 http만 받기도 함
         url = f'{scheme}://www.law.go.kr/DRF/{path}?{q}'
@@ -72,47 +80,73 @@ def api_get(path, params):
         try:
             return json.loads(body)
         except ValueError:
-            # XML/텍스트 오류 응답 — 내용 앞부분 출력
             print(f'!! JSON 파싱 실패 — 응답 앞부분: {body[:200]}')
             last_err = ValueError('non-JSON response')
             continue
     raise SystemExit(f'law.go.kr 호출 실패: {last_err}')
 
 
-def search_rule():
-    """행정규칙 검색 → 대상 규정의 최신 시행 항목 반환."""
-    res = api_get('lawSearch.do', {'query': RULE_NAME, 'display': 50, 'sort': 'efdes'})
-    # OC 무효 등 API 레벨 오류 — 응답 구조 전체를 찍어 진단 가능하게
-    body = res.get('AdmRulSearch', {})
-    if isinstance(body, dict) and ('error' in body or 'message' in body):
-        print('!! API 오류 응답:', json.dumps(body, ensure_ascii=False)[:300])
-        sys.exit(1)
-    items = body.get('admrul', [])
+def normalize_notice(s):
+    """'제2026-19호' / '2026-19' → '제2026-19호', 법령 공포번호 '20901' → '제20901호'."""
+    s = str(s).strip()
+    m = re.fullmatch(r'제?\s*(20\d{2})\s*-\s*(\d+)\s*호?', s)  # 하이픈 있는 고시번호만 연도-번호 해석
+    if m:
+        return f'제{m.group(1)}-{m.group(2)}호'
+    m = re.fullmatch(r'제?\s*(\d+)\s*호?', s)  # 하이픈 없는 번호(법령 공포번호)는 그대로
+    return f'제{m.group(1)}호' if m else None
+
+
+def fmt_date(d):
+    d = str(d or '').strip()
+    return f'{d[:4]}-{d[4:6]}-{d[6:8]}' if len(d) == 8 and d.isdigit() else d
+
+
+def parse_ref_filename(file_name):
+    """'화장품법(법률)(제20901호)(20260402).pdf' → 감시 대상 메타."""
+    name = re.split(r'\(', file_name)[0].strip()
+    m = re.search(r'\(제([\d]+(?:-\d+)?)호\)\s*\((\d{8})\)', file_name)
+    target = 'law' if re.search(r'\((법률|대통령령|총리령|부령)\)', file_name) else 'admrul'
+    url = 'https://www.law.go.kr/' + ('법령' if target == 'law' else '행정규칙') + '/' + re.sub(r'\s+', '', name)
+    return {
+        'name': name,
+        'target': target,
+        'file': file_name,
+        'url': url,
+        'baselineNotice': f'제{m.group(1)}호' if m else None,
+        'baselineDate': fmt_date(m.group(2)) if m else None,
+    }
+
+
+def watch_docs():
+    """references.json referenceLaw → 감시 대상 목록 (파일 추가 시 자동 반영)."""
+    refs = json.loads(REFS_FILE.read_text(encoding='utf-8'))
+    return [parse_ref_filename(f['file']) for f in refs.get('referenceLaw', []) if f.get('file')]
+
+
+def search_law(name):
+    """법령 검색 → 정확 일치 항목 중 최신 시행본. 공포번호가 검색 응답에 포함됨."""
+    res = api_get('lawSearch.do', {'query': name, 'display': 50, 'sort': 'efdes'}, target='law')
+    body = res.get('LawSearch', {})
+    items = body.get('law', [])
     if isinstance(items, dict):
         items = [items]
-    exact = [i for i in items if i.get('행정규칙명', '').strip() == RULE_NAME]
+    exact = [i for i in items if i.get('법령명한글', '').strip() == name]
     if not exact:
-        print(f'!! "{RULE_NAME}" 정확 일치 항목 없음 — 검색 결과 {len(items)}건')
-        for i in items[:5]:
-            print('   ·', i.get('행정규칙명'), i.get('시행일자'))
+        print(f'!! 법령 "{name}" 정확 일치 없음 — {len(items)}건')
         return None
     exact.sort(key=lambda i: str(i.get('시행일자', '')), reverse=True)
-    return exact[0]
-
-
-def normalize_notice(s):
-    """'제2026-19호' / '2026-19' 등 → '제2026-19호' 정규화."""
-    m = re.fullmatch(r'제?\s*(20\d{2})\s*-?\s*(\d+)\s*호?', str(s).strip())
-    return f'제{m.group(1)}-{m.group(2)}호' if m else None
+    i = exact[0]
+    return {'notice': normalize_notice(i.get('공포번호')),
+            'effectiveDate': fmt_date(i.get('시행일자')),
+            'serial': str(i.get('법령일련번호', ''))}
 
 
 def fetch_notice_number(serial_no):
-    """행정규칙 상세(admrulService)의 발령/개정고시 공포번호에서 최신 고시번호 추출."""
+    """행정규칙 상세(lawService)의 발령/개정고시 공포번호에서 최신 고시번호 추출."""
     try:
         detail = api_get('lawService.do', {'ID': serial_no})
     except (urllib.error.URLError, ValueError):
         return None
-    # ① 공포번호 필드 우선 (발령고시·개정고시 구조에 있음)
     candidates = []
     def walk(node):
         if isinstance(node, dict):
@@ -127,7 +161,6 @@ def fetch_notice_number(serial_no):
             for i in node:
                 walk(i)
     walk(detail)
-    # ② 폴백 — 본문 텍스트의 '제YYYY-N호' 패턴
     if not candidates:
         candidates = [n for n in (normalize_notice(m) for m in
                                   re.findall(r'제\s*20\d{2}\s*-\s*\d+\s*호',
@@ -135,16 +168,46 @@ def fetch_notice_number(serial_no):
                       if n]
     if not candidates:
         return None
-    # (제개정)이력에 여러 번호가 나올 수 있음 → 연도·번호가 가장 큰 것
     def key(s):
         m = re.search(r'20(\d{2})\s*-\s*(\d+)', s)
         return (int(m.group(1)), int(m.group(2))) if m else (0, 0)
     return max(set(candidates), key=key)
 
 
-def fmt_date(d):
-    d = str(d or '').strip()
-    return f'{d[:4]}-{d[4:6]}-{d[6:8]}' if len(d) == 8 and d.isdigit() else d
+def search_admrul(name):
+    """행정규칙 검색 → 최신 시행 항목 + 상세에서 공포번호."""
+    res = api_get('lawSearch.do', {'query': name, 'display': 50, 'sort': 'efdes'})
+    body = res.get('AdmRulSearch', {})
+    if isinstance(body, dict) and ('error' in body or 'message' in body):
+        print('!! API 오류 응답:', json.dumps(body, ensure_ascii=False)[:300])
+        sys.exit(1)
+    items = body.get('admrul', [])
+    if isinstance(items, dict):
+        items = [items]
+    exact = [i for i in items if i.get('행정규칙명', '').strip() == name]
+    if not exact:
+        print(f'!! 행정규칙 "{name}" 정확 일치 없음 — {len(items)}건')
+        return None
+    exact.sort(key=lambda i: str(i.get('시행일자', '')), reverse=True)
+    i = exact[0]
+    serial = str(i.get('행정규칙일련번호', ''))
+    return {'notice': fetch_notice_number(serial),
+            'effectiveDate': fmt_date(i.get('시행일자')),
+            'serial': serial}
+
+
+def check_doc(doc):
+    """문서 1종의 최신 고시 조회 → docs[] 항목."""
+    latest = search_law(doc['name']) if doc['target'] == 'law' else search_admrul(doc['name'])
+    if latest is None:
+        return {**doc, 'error': 'not-found', 'newer': False}
+    base = doc.get('baselineDate') or ''
+    newer = bool(latest['effectiveDate']) and latest['effectiveDate'] > base
+    return {**doc,
+            'latestNotice': latest['notice'],
+            'latestDate': latest['effectiveDate'],
+            'serial': latest['serial'],
+            'newer': newer}
 
 
 def main():
@@ -152,38 +215,43 @@ def main():
     status = {}
     if STATUS_FILE.exists():
         status = json.loads(STATUS_FILE.read_text(encoding='utf-8'))
-    baseline = status.get('baseline', {})
 
-    print(f'기준(번들) 고시: {baseline.get("notice")} · 시행 {baseline.get("effectiveDate")}')
-
-    latest = search_rule()
-    if latest is None:
+    docs = watch_docs()
+    if not docs:
+        print('!! 감시 대상이 없습니다 — referenceLaw 확인')
         sys.exit(1)
-    eff = fmt_date(latest.get('시행일자'))
-    serial = str(latest.get('행정규칙일련번호', ''))
-    notice_no = fetch_notice_number(serial)
-    print(f'law.go.kr 최신: {notice_no or "(고시번호 미확인)"} · 시행 {eff} · 일련번호 {serial}')
+    print(f'감시 문서 {len(docs)}종 — law.go.kr 조회 중…')
 
-    base_eff = str(baseline.get('effectiveDate', ''))
-    newer = bool(eff) and eff > base_eff
-    print('신규 고시 여부:', 'YES — 기준 고시보다 최신' if newer else '아니오')
+    results = [check_doc(d) for d in docs]
+    any_newer = False
+    for r in results:
+        if r.get('error'):
+            print(f'  ✗ {r["name"]} — 조회 실패')
+            continue
+        mark = '⚠ 신규' if r['newer'] else '  최신'
+        print(f'  {mark} {r["name"]}: 기준 {r.get("baselineNotice")}({r.get("baselineDate")}) '
+              f'→ 최신 {r.get("latestNotice")}({r.get("latestDate")})')
+        any_newer = any_newer or r['newer']
 
     if update:
+        # 레거시 필드 — 안전기준 규정 문서로 유지 (기존 JS/테스트 호환)
+        core = next((r for r in results if r['name'] == RULE_NAME), None)
         status = {
-            'baseline': baseline,
+            'baseline': status.get('baseline', {}),
             'latest': {
-                'notice': notice_no,
+                'notice': (core or {}).get('latestNotice'),
                 'ruleName': RULE_NAME,
-                'effectiveDate': eff,
-                'serialNo': serial,
+                'effectiveDate': (core or {}).get('latestDate'),
+                'serialNo': (core or {}).get('serial'),
             },
+            'docs': results,
             'checkedAt': datetime.now(timezone.utc).isoformat(timespec='seconds'),
-            'newerFound': newer,
+            'newerFound': bool(core and core['newer']),
         }
         STATUS_FILE.write_text(json.dumps(status, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
         print('갱신:', STATUS_FILE.relative_to(ROOT))
 
-    sys.exit(2 if newer else 0)
+    sys.exit(2 if any_newer else 0)
 
 
 if __name__ == '__main__':

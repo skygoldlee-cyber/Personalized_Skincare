@@ -9,7 +9,8 @@ const LAW_RULE = `${LAW_BASE}/법령`;      // 법률·시행령·시행규칙(�
 const LAW_ADM = `${LAW_BASE}/행정규칙`;   // 식약처 고시 등 행정규칙
 
 // [매칭 문자열(공백 제거 후 contains), URL]
-const LAW_DOC_URLS = [
+// export — tools/check/check_law_urls.js가 한글주소 유효성을 전수 검증한다
+export const LAW_DOC_URLS = [
   // ——— 법령 ———
   ['화장품법시행령', `${LAW_RULE}/화장품법시행령`],
   ['화장품법시행규칙', `${LAW_RULE}/화장품법시행규칙`],

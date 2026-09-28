@@ -15,6 +15,10 @@
 - **수동 확인 버튼**: Formula OS 허브 "식약처 고시 확인" — law.go.kr 오픈API를 브라우저에서 직접 호출(실측 CORS 허용 확인). `checkMfdsNoticeNow()`가 검색(lawSearch.do) → 상세(lawService.do, 공포번호 추출) 2단 조회 후 baseline과 비교해 즉시 결과 표시. OC는 공개 계정 식별자로 코드 내 상수. CSP `connect-src`에 `raw.githubusercontent.com`·`www.law.go.kr` 허용 (vercel.json). 실패한 조회는 스로틀 스탬프를 찍지 않아 재시도 가능
 - **고시 정보 보기**: 같은 줄 토글 버튼 — `notice_status.json` 내용(기준/최신/확인시각/신규 여부)을 패널로 표시, 원격 파일 우선·번들 폴백, 상태 원문·law.go.kr 원문 링크 포함
 - **law.go.kr 원문 링크 공용화**: `src/law-links.js` — 참조자료 파일명 → 한글주소 매핑(법령=/법령/, 고시=/행정규칙/, 별표 파편→모법, 원료 DB→근거 고시). 참조자료 패널 전 섹션(reader-ref-links)과 법규 준수 문서 목록·체크 항목 근거(formula-compliance)에 ↗ 원문 링크 추가. 교재 본문 내 `[문서](../참조자료/ref_md/…)` 링크(reader-format)에도 `↗원문` 병기 — 문서명은 내부 뷰어, 원문 배지는 law.go.kr 새 탭
+- **다문서 고시 감시**: `check_mfds_notice.py`가 references.json의 referenceLaw 8종(법령=target:law, 고시=target:admrul)을 감시 — 파일명의 (제N호)(시행일)이 baseline이 되어 문서 추가·갱신 시 자동 반영. `notice_status.json`에 `docs[]` 추가(문서별 기준↔최신). Formula OS "식약처 고시 확인" 버튼도 8종 병렬 실시간 조회로 확장
+- **스냅샷 갱신 필요 표시**: 참조 링크 행에 `data-law-url` 부착, 상태 로드 후 개정 문서에 `⚠ 갱신 필요` 배지(markStaleRefLinks). '고시 정보 보기' 패널에 문서별 비교 행 추가
+- **한글주소 유효성 검증**: `tools/check/check_law_urls.js`(npm run check:lawurls) — LAW_DOC_URLS 전수 호출, 한글주소 오류 페이지 본문 검사. notice-check 크론에 통합, 실패 시 이슈 자동 생성
+- **스냅샷 배지 범위 제한**: 본문 📌출처 인라인 링크는 배지 생략, 📚 참조 자료 섹션 목록에만 표시(렌더링 단계 스코핑)
 - **네거티브 리스트 원칙 명기**: Formula OS 허브 설명 하단과 법규 준수 패널에 정보성 안내(`.formula-principle-note`, primary 톤) — "조제의 기본 원칙은 네거티브 리스트(별표1·2 목록에 없는 원료는 사용 가능), 기능성화장품 원료만 지정 목록(포지티브)". 패널 쪽에는 근거 고시 law.go.kr 링크 포함
 - **스냅샷↔최신본 구분**: 내부 ref_md 링크 표시명 축약(파일명 꼬리 제거) + `(제N호·시행일)` 스냅샷 배지 병기 — law.go.kr 링크는 항상 최신 통합본이므로 버전 차이를 명시. `📚 참조 자료` 섹션의 동일 링크 중복은 렌더링 단계에서 제거(dedupeRefListSection). 원료 DB 링크는 '근거 고시' 라벨. 오프라인에서 원문 링크 클릭 시 토스트 안내. 전수 검증 테스트 추가 — references.json 공식 문서(pdf) 전부 매칭 + 법령/행정규칙 도메인 오매칭 방지. 테스트 `tests/unit/law-links.test.js` 8건 + reader-format-general 3건
 

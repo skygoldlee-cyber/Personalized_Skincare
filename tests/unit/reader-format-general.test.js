@@ -58,6 +58,17 @@ test('참조자료 ref_md 링크 → source-link + law.go.kr 원문 병기', () 
     assert.ok(html.includes('target="_blank"'), '새 탭');
 });
 
+test('스냅샷 배지는 📚 참조 자료 섹션에만 — 본문 인라인 출처는 배지 없음', () => {
+    const file = '화장품법(법률)(제20901호)(20260402).md';
+    const path = '../참조자료/ref_md/과목1/화장품법%28법률%29%28제20901호%29%2820260402%29/화장품법%28법률%29%28제20901호%29%2820260402%29.md';
+    const inline = formatSectionContentForReader(`본문 📌 출처: [${file}](${path})`);
+    assert.ok(!inline.includes('ref-snapshot'), '인라인 출처는 배지 없음');
+    const section = formatSectionContentForReader(`## 📚 참조 자료 (법령 원문)\n• [${file}](${path})`);
+    assert.ok(section.includes('ref-snapshot'), '참조 자료 섹션은 배지 있음');
+    assert.ok(section.includes('제20901호'), '배지에 고시 번호');
+    assert.ok(section.includes('2026-04-02'), '배지에 시행일');
+});
+
 test('참조자료 ref_md 링크 — 매칭 없는 문서는 원문 링크 없음', () => {
     const md = '[내부문서.md](../참조자료/ref_md/과목1/내부정리노트/내부정리노트.md)';
     const html = formatSectionContentForReader(md);
