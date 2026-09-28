@@ -3,8 +3,8 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: ea7d2e4d547d79ca
-> 생성: 2026-09-27 · 원천: SPEC.md(344개 ID) + @spec 태그 + 문서 헤더
+> 입력 해시: 289e58fe61c11dc0
+> 생성: 2026-09-28 · 원천: SPEC.md(351개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
 |----|------|------|
@@ -13,23 +13,9 @@
 | 테스트 | 검증 테스트 파일 | `// @spec` 태그 (tests/) |
 | 보고서 | 분석·결과 보고서 | report_archive 헤더 |
 
-**커버리지 요약**: 요구사항 344개 — 문서 연결 222 · 소스 연결 326 · 테스트 연결 341 · 보고서 연결 109
+**커버리지 요약**: 요구사항 351개 — 문서 연결 224 · 소스 연결 327 · 테스트 연결 344 · 보고서 연결 109
 
 ---
-
-## 5.1 데이터 아키텍처
-
-| ID | 문서 | 소스 | 테스트 | 보고서 |
-|----|------|------|--------|--------|
-| DA-01 | DOC-RBK-03<br>DOC-RBK-08 | tools/build/index.js<br>tools/build/manifest_loader.js | tests/unit/data-architecture.test.js | — |
-| DA-02 | DOC-RBK-03 | src/data-loader.js<br>tools/build/index.js | tests/unit/data-architecture.test.js | — |
-| DA-03 | DOC-RBK-03 | src/data-loader.js | tests/unit/data-loader.test.js | — |
-| DA-04 | DOC-RBK-03 | tools/build/build_study_md_bundle.js | tests/unit/data-architecture.test.js | — |
-| DA-05 | DOC-RBK-03 | src/state.js<br>src/storage.js | tests/unit/state.test.js | — |
-| DA-06 | DOC-RBK-03 | src/exam-context.js<br>src/paths.js<br>src/pwa-manifest.js<br>tools/build/exam_targets.js | tests/unit/data-architecture.test.js | — |
-| DA-07 | DOC-RBK-03 | src/exam-context.js<br>src/storage-keys.js<br>src/storage.js | tests/unit/storage-key-sync.test.js | — |
-| DA-08 | DOC-DSN-08<br>DOC-RBK-03 | src/exam-context.js | tests/unit/data-architecture.test.js | — |
-| DA-09 | DOC-RBK-03 | src/storage.js | tests/unit/storage.test.js | — |
 
 ## 3.1 대시보드
 
@@ -122,6 +108,7 @@
 | TR-14 | DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — |
 | TR-15 | DOC-RBK-07<br>DOC-REF-05 | css/reader.css<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — |
 | TR-16 | DOC-RBK-07<br>DOC-REF-05 | css/reader.css<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — |
+| TR-16a | DOC-RBK-07<br>DOC-REF-05 | — | tests/unit/content-engineering.test.js | — |
 | TR-17 | DOC-RBK-07<br>DOC-REF-05 | css/reader.css<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — |
 | TR-18 | DOC-RBK-07<br>DOC-REF-05 | css/reader.css<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — |
 
@@ -303,7 +290,6 @@
 | AU-06 | DOC-DSN-08<br>DOC-DSN-09 | src/sync.js | tests/dom/common-sync.dom.test.js | — |
 | AU-07 | DOC-DSN-08<br>DOC-DSN-09 | src/sync.js | tests/dom/common-sync.dom.test.js<br>tests/unit/storage-key-sync.test.js | — |
 | AU-08 | DOC-DSN-08<br>DOC-DSN-09 | src/auth-view.js<br>src/supabase-client.js<br>src/supabase-config.js<br>src/sync.js | tests/dom/common-auth.dom.test.js<br>tests/dom/common-sync.dom.test.js<br>tests/unit/supabase-client.test.js | — |
-| DA-10 | — | src/customer-store.js<br>src/sync.js | tests/unit/customer-store.test.js | — |
 
 ## 3.20 학습 캘린더·복습·드릴
 
@@ -363,6 +349,7 @@
 | P-02 | DOC-RBK-01<br>DOC-RBK-04 | src/config/cache.js<br>sw.js | tests/unit/pwa-sw.test.js | — |
 | P-03 | DOC-RBK-01<br>DOC-RBK-04 | sw.js | tests/unit/pwa-sw.test.js | — |
 | P-04 | DOC-RBK-01<br>DOC-RBK-04 | sw.js | tests/unit/pwa-sw.test.js | — |
+| P-04a | DOC-RBK-01 | — | tests/unit/pwa-sw.test.js | — |
 | P-05 | DOC-RBK-01<br>DOC-RBK-04 | sw.js<br>tools/build/stamp_sw_version.js | tests/unit/pwa-sw.test.js | — |
 | P-06 | DOC-RBK-01<br>DOC-RBK-04 | sw.js | tests/unit/pwa-sw.test.js<br>tests/unit/sw-prune.test.js | — |
 | P-07 | DOC-RBK-01<br>DOC-RBK-04 | src/pwa-install-capture.js<br>src/pwa-install.js | tests/unit/pwa-sw.test.js | — |
@@ -444,7 +431,6 @@
 | R-07 | DOC-DSN-01 | — | tests/dom/common-navigation.dom.test.js | — |
 | R-08 | DOC-DSN-01 | — | tests/dom/common-navigation.dom.test.js | — |
 | R-09 | DOC-DSN-01 | — | tests/dom/common-navigation.dom.test.js | — |
-| UX-NAV-07 | DOC-DSN-01 | src/views/navigation.js | tests/dom/common-navigation.dom.test.js | — |
 
 ## 4.7 테마 시스템
 
@@ -473,6 +459,7 @@
 | UX-NAV-04 | DOC-DSN-01 | — | tests/dom/common-navigation.dom.test.js | — |
 | UX-NAV-05 | DOC-DSN-01 | — | tests/dom/common-navigation.dom.test.js | — |
 | UX-NAV-06 | DOC-DSN-01 | src/command-palette.js | tests/dom/common-navigation.dom.test.js<br>tests/dom/study-commandpalette.dom.test.js<br>tests/unit/command-palette.test.js | — |
+| UX-NAV-07 | DOC-DSN-01 | src/views/navigation.js | tests/dom/common-navigation.dom.test.js | — |
 | UX-PWA-01 | — | src/app.js | tests/unit/ux-invariants.test.js | — |
 | UX-PWA-02 | — | src/pwa-install.js | tests/unit/ux-invariants.test.js | — |
 | UX-PWA-03 | — | sw.js | tests/unit/ux-invariants.test.js | — |
@@ -486,6 +473,21 @@
 | UX-SET-03 | — | css/ui-overlay.css | tests/unit/ux-invariants.test.js | — |
 | UX-SET-04 | — | css/ui-overlay.css | tests/unit/ux-invariants.test.js | — |
 | UX-SET-05 | — | css/ui-overlay.css | tests/unit/ux-invariants.test.js | — |
+
+## 5.1 데이터 아키텍처
+
+| ID | 문서 | 소스 | 테스트 | 보고서 |
+|----|------|------|--------|--------|
+| DA-01 | DOC-RBK-03<br>DOC-RBK-08 | tools/build/index.js<br>tools/build/manifest_loader.js | tests/unit/data-architecture.test.js | — |
+| DA-02 | DOC-RBK-03 | src/data-loader.js<br>tools/build/index.js | tests/unit/data-architecture.test.js | — |
+| DA-03 | DOC-RBK-03 | src/data-loader.js | tests/unit/data-loader.test.js | — |
+| DA-04 | DOC-RBK-03 | tools/build/build_study_md_bundle.js | tests/unit/data-architecture.test.js | — |
+| DA-05 | DOC-RBK-03 | src/state.js<br>src/storage.js | tests/unit/state.test.js | — |
+| DA-06 | DOC-RBK-03 | src/exam-context.js<br>src/paths.js<br>src/pwa-manifest.js<br>tools/build/exam_targets.js | tests/unit/data-architecture.test.js | — |
+| DA-07 | DOC-RBK-03 | src/exam-context.js<br>src/storage-keys.js<br>src/storage.js | tests/unit/storage-key-sync.test.js | — |
+| DA-08 | DOC-DSN-08<br>DOC-RBK-03 | src/exam-context.js | tests/unit/data-architecture.test.js | — |
+| DA-09 | DOC-RBK-03 | src/storage.js | tests/unit/storage.test.js | — |
+| DA-10 | — | src/customer-store.js<br>src/sync.js | tests/unit/customer-store.test.js | — |
 
 ## 5.2 안정적 ID 체계
 
@@ -556,6 +558,16 @@
 | ROAD-P3 | DOC-BIZ-01<br>DOC-BIZ-02<br>DOC-BIZ-03<br>DOC-BIZ-04<br>…외 2개 | — | — | DOC-ARC-01<br>DOC-ARC-02<br>DOC-ARC-03<br>DOC-ARC-06 |
 | ROAD-P4 | DOC-BIZ-01<br>DOC-BIZ-02<br>DOC-BIZ-03<br>DOC-BIZ-04<br>…외 2개 | src/sync.js | tests/dom/common-sync.dom.test.js | DOC-ARC-01<br>DOC-ARC-03<br>DOC-ARC-06<br>DOC-ARC-07 |
 
+## 7.3 Learning Pro 잔여·차별화
+
+| ID | 문서 | 소스 | 테스트 | 보고서 |
+|----|------|------|--------|--------|
+| ROAD-L1 | — | — | — | — |
+| ROAD-L2 | — | — | — | — |
+| ROAD-L3 | — | — | — | — |
+| ROAD-L4 | — | — | — | — |
+| ROAD-L5 | — | src/usage-stats.js | tests/dom/usage-stats.dom.test.js | — |
+
 ---
 
 ## 부록 A — 문서 → 요구사양 역방향 매핑
@@ -595,19 +607,19 @@
 | DOC-PPL-01 | ref-pipeline/README.md | AO-01, AO-02, AO-03, AO-04, AO-05, BP-01, BP-02, BP-03, BP-04, BP-05, BP-06, BP-07, BP-08, CS-01, CS-02, CS-03, CS-04, CS-05, CS-06, CS-07, CS-08, CS-09, CS-10 |
 | DOC-PPL-02 | ref-pipeline/audiobook/README.md | AO-01, AO-02, AO-03, AO-04, AO-05 |
 | DOC-PPL-03 | ref-pipeline/audiobook/AUDIOBOOK_SUMMARY.md | AO-01, AO-02, AO-03, AO-04, AO-05 |
-| DOC-RBK-01 | docs/dev/runbooks/AUDIO_HOSTING_GUIDE.md | AO-01, AO-02, AO-03, AO-04, AO-05, P-01, P-02, P-03, P-04, P-05, P-06, P-07, P-08, P-09, P-10, P-11, P-12, P-13 |
+| DOC-RBK-01 | docs/dev/runbooks/AUDIO_HOSTING_GUIDE.md | AO-01, AO-02, AO-03, AO-04, AO-05, P-01, P-02, P-03, P-04, P-04a, P-05, P-06, P-07, P-08, P-09, P-10, P-11, P-12, P-13 |
 | DOC-RBK-02 | docs/dev/runbooks/COMBO_GENERATION_GUIDE.md | BP-01, BP-02, BP-03, BP-04, BP-05, BP-06, BP-07, BP-08, DR-02, DR-03, DR-04, DR-05, DR-06, DR-07 |
 | DOC-RBK-03 | docs/dev/runbooks/CONTENT_WORKFLOW.md | BP-01, BP-02, BP-03, BP-04, BP-05, BP-06, BP-07, BP-08, CS-01, CS-02, CS-03, CS-04, CS-05, CS-06, CS-07, CS-08, CS-09, CS-10, DA-01, DA-02, DA-03, DA-04, DA-05, DA-06, DA-07, DA-08, DA-09 |
 | DOC-RBK-04 | docs/dev/runbooks/DEPLOYMENT_GUIDE.md | C-01, C-02, C-03, C-04, C-05, P-01, P-02, P-03, P-04, P-05, P-06, P-07, P-08, P-09, P-10, P-11, P-12, P-13 |
 | DOC-RBK-05 | docs/dev/runbooks/MULTI_MACHINE_SETUP.md | — |
 | DOC-RBK-06 | docs/dev/runbooks/Supabase_Custom_SMTP_MagicLink_OTP_설정가이드.md | AU-02, AU-03, AU-04 |
-| DOC-RBK-07 | docs/dev/runbooks/TEXTBOOK_AUTHORING_GUIDE.md | CE-01, CE-02, CE-03, CE-04, CE-05, CS-01, CS-02, CS-03, CS-04, CS-05, CS-06, CS-07, CS-08, CS-09, CS-10, ST-01, ST-02, ST-03, ST-04, ST-05, ST-06, ST-07, TR-01, TR-02, TR-03, TR-04, TR-05, TR-06, TR-07, TR-08, TR-09, TR-10, TR-11, TR-12, TR-13, TR-14, TR-15, TR-16, TR-17, TR-18 |
+| DOC-RBK-07 | docs/dev/runbooks/TEXTBOOK_AUTHORING_GUIDE.md | CE-01, CE-02, CE-03, CE-04, CE-05, CS-01, CS-02, CS-03, CS-04, CS-05, CS-06, CS-07, CS-08, CS-09, CS-10, ST-01, ST-02, ST-03, ST-04, ST-05, ST-06, ST-07, TR-01, TR-02, TR-03, TR-04, TR-05, TR-06, TR-07, TR-08, TR-09, TR-10, TR-11, TR-12, TR-13, TR-14, TR-15, TR-16, TR-16a, TR-17, TR-18 |
 | DOC-RBK-08 | docs/dev/runbooks/TEXTBOOK_REPLACEMENT_RUNBOOK.md | BP-01, BP-02, BP-03, BP-04, BP-05, BP-06, BP-07, BP-08, CS-01, CS-02, CS-03, CS-04, CS-05, CS-06, CS-07, CS-08, CS-09, CS-10, DA-01, ID-01, ID-02, ID-03, ID-04 |
 | DOC-REF-01 | docs/dev/reference/COMBO_STUDY_STRATEGY.md | DR-02, DR-03, DR-04, DR-05, DR-06, DR-07, Q-01, Q-02, Q-03, Q-04, Q-05, Q-06, Q-07, Q-08, Q-09, Q-10, Q-11 |
 | DOC-REF-02 | docs/dev/reference/DEV_ENVIRONMENT.md | — |
 | DOC-REF-03 | docs/dev/reference/FLASHCARD_LOGIC.md | F-01, F-02, F-03, F-04, F-05, F-06, F-07, F-08, F-09, F-10, ID-01, ID-02, ID-03, ID-04, TR-01 |
 | DOC-REF-04 | docs/dev/reference/MD_TO_HTML_LOGIC.md | EV-01, EV-02, EV-03, EV-04, EV-05, EV-06, EV-07, EV-08, MV-01, MV-02, MV-03, MV-04, RR-01, RR-02, RR-03, RR-04, RR-05, RR-06, RR-07, RR-08, RR-09, RR-10, RR-11, RR-12, RR-13, RR-14, RR-15, RR-16, TR-01 |
-| DOC-REF-05 | docs/dev/reference/NUMBERING_SYSTEM.md | CS-01, CS-02, CS-03, CS-04, CS-05, CS-06, CS-07, CS-08, CS-09, CS-10, ID-01, ID-02, ID-03, ID-04, TR-01, TR-02, TR-03, TR-04, TR-05, TR-06, TR-07, TR-08, TR-09, TR-10, TR-11, TR-12, TR-13, TR-14, TR-15, TR-16, TR-17, TR-18 |
+| DOC-REF-05 | docs/dev/reference/NUMBERING_SYSTEM.md | CS-01, CS-02, CS-03, CS-04, CS-05, CS-06, CS-07, CS-08, CS-09, CS-10, ID-01, ID-02, ID-03, ID-04, TR-01, TR-02, TR-03, TR-04, TR-05, TR-06, TR-07, TR-08, TR-09, TR-10, TR-11, TR-12, TR-13, TR-14, TR-15, TR-16, TR-16a, TR-17, TR-18 |
 | DOC-REF-06 | docs/dev/reference/TESTING.md | — |
 | DOC-REF-07 | docs/dev/reference/TEXTBOOK_REFERENCE_MAPPING.md | CS-01, CS-02, CS-03, CS-04, CS-05, CS-06, CS-07, CS-08, CS-09, CS-10, RR-01, RR-02, RR-03, RR-04, RR-05, RR-06, RR-07, RR-08, RR-09, RR-10, RR-11, RR-12, RR-13, RR-14, RR-15, RR-16 |
 | DOC-ROOT-01 | README.md | — |

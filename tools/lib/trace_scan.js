@@ -29,11 +29,12 @@ const DOC_DIRS = ['docs', 'ref-pipeline'];
 const DOC_FILES = ['AGENTS.md', 'README.md'];
 const REPORT_DIR = 'docs/report_archive';
 
-const ID_RE = /\b([A-Z]{1,4}(?:-[A-Z]{1,4})?-(?:\d{2}|P\d))\b/g;
+// check_spec_refs.js와 동일 규격 — 문자 접미사(TR-16a)·로드맵(ROAD-P/L) 모두 지원
+const ID_RE = /\b([A-Z]{1,4}(?:-[A-Z]{1,4})?-(?:\d{2}[a-z]?|[PL]\d))\b/g;
 const SPEC_TAG_RE = /@spec\s+([^\n]*)/g;
-const RANGE_RE = /^([A-Z]{1,4}(?:-[A-Z]{1,4})?-P?)(\d{1,2})~P?(\d{1,2})$/;
+const RANGE_RE = /^([A-Z]{1,4}(?:-[A-Z]{1,4})?-[PL]?)(\d{1,2})~[PL]?(\d{1,2})$/;
 const WILDCARD_ID_RE = /^([A-Z]{1,4}(?:-[A-Z]{1,4})?)-\*$/;
-const PURE_ID_RE = /^[A-Z]{1,4}(?:-[A-Z]{1,4})?-(?:\d{2}|P\d)$/;
+const PURE_ID_RE = /^[A-Z]{1,4}(?:-[A-Z]{1,4})?-(?:\d{2}[a-z]?|[PL]\d)$/;
 const DOC_ID_RE = /\*\*문서 ID\*\*:\s*(DOC-[A-Z]+-\d+)/;
 const RELATED_RE = /^>\s*\*\*관련 SPEC ID\*\*:\s*(.+)$/m;
 
@@ -42,7 +43,7 @@ function* walk(dir, exts) {
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
     const p = path.join(dir, e.name);
     if (e.isDirectory()) {
-      if (e.name.startsWith('.')) continue;
+      if (e.name.startsWith('.') || e.name === 'node_modules') continue;
       const rel = path.relative(ROOT, p);
       if (EXCLUDE_DIRS.some(x => rel === x || rel.startsWith(x + path.sep))) continue;
       yield* walk(p, exts);
@@ -70,7 +71,7 @@ function expandIds(tagText, specIds = new Set()) {
     const range = token.match(RANGE_RE);
     if (range) {
       const [, prefix, from, to] = range;
-      const pad = prefix.endsWith('P') ? 1 : 2; // ROAD-P0~P4는 단자리
+      const pad = /[PL]$/.test(prefix) ? 1 : 2; // ROAD-P/L 계열은 단자리
       for (let i = +from; i <= +to; i++) ids.add(prefix + String(i).padStart(pad, '0'));
       continue;
     }
@@ -85,19 +86,24 @@ function expandIds(tagText, specIds = new Set()) {
   return ids;
 }
 
-/** SPEC.md → Map(id → 절 제목) */
+/** SPEC.md → Map(id → 절 제목) — 선언 형태(표 첫 셀·굵은 글씨)를 우선, 일반 언급은 폴백 */
 function extractSpec() {
   const lines = fs.readFileSync(SPEC_FILE, 'utf8').split('\n');
   const ids = new Map();
+  const firstMention = new Map();
   let sec = '';
   for (const l of lines) {
     if (/^#{2,3} /.test(l)) sec = l.replace(/^#+\s*/, '').replace(/\s*\(.*?\)\s*$/, '').trim();
     for (const m of l.matchAll(ID_RE)) {
-      if (m[1].startsWith('DOC-')) continue;
-      // 절 이전(버전 헤더 등) 언급은 빈 절로 등록 — 실제 선언 절을 만나면 갱신
-      if (!ids.has(m[1]) || (!ids.get(m[1]) && sec)) ids.set(m[1], sec);
+      const id = m[1];
+      if (id.startsWith('DOC-')) continue;
+      if (!firstMention.has(id) || (!firstMention.get(id) && sec)) firstMention.set(id, sec);
+      // 선언 형태 우선: 표 첫 셀(| ID |) 또는 굵은 선언(**ID**) — 교차 참조 언급 절보다 우선
+      const declared = new RegExp(`^\\s*\\|\\s*${id}\\s*\\||\\*\\*${id}\\*\\*`).test(l);
+      if (declared && sec) ids.set(id, sec);
     }
   }
+  for (const [id, s] of firstMention) if (!ids.has(id)) ids.set(id, s);
   return ids;
 }
 
