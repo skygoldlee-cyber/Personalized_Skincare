@@ -1,5 +1,14 @@
 [
   {
+    "version": "v20260928-66382cc",
+    "date": "2026-09-28",
+    "notes": [
+      "fix(deploy): stamp commit bypasses both doc-sync modes [no-docs]",
+      "fix(deploy): skip doc-sync gate for automated stamp commit",
+      "refactor: 3-tier version scheme — machine id, display format, content CalVer"
+    ]
+  },
+  {
     "version": "v369-20260928-fd06122",
     "date": "2026-09-28",
     "notes": [
@@ -143,16 +152,6 @@
     "date": "2026-09-27",
     "notes": [
       "check:imports 경고 0 + npm audit CI 스텝 — 데드 코드·취약 의존성 차단"
-    ]
-  },
-  {
-    "version": "v369-20260927-41fc47c",
-    "date": "2026-09-27",
-    "notes": [
-      "병합 커버리지 임계값 게이트 — 유닛+DOM 실질 커버리지를 CI에서 강제",
-      "ESLint 자동수정 + 경고 래칫 + EditorConfig — 품질·서식 경고 증가 차단",
-      "check:types 전체 소스 확장 — 49파일 백로그 제외 후 잔여 22건 해소",
-      "chore(ide): 워크스페이스 TS 공유 설정 — PC·IDE별 진단 불일치 대응"
     ]
   }
 ]
