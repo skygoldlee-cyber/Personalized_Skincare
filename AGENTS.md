@@ -53,6 +53,10 @@ npm.cmd run deploy                     # 배포 가드(clean tree + origin/main 
 npm.cmd run audit:cards                 # 카드 품질 자동 감사 (짧은 설명, 중복, 참조 링크 유효성)
 npm.cmd run audit:combo                 # 복수정답형 품질 감사 (정답 유일성·중복 진술집합·모순쌍·위치편향·경로별 통계)
 
+# 전체 점검 (단일 진입점 — lint·types·html·docs + check:content 전 단계)
+npm.cmd run check:all                    # 저장소 전체 검증 일괄 실행
+npm.cmd run check:all -- --quick         # DOM 테스트 생략 빠른 점검
+
 # 콘텐츠 통합 검증 (교재 교체 등 대규모 콘텐츠 변경 후)
 npm.cmd run check:content               # 인용·귀속·레이아웃·드릴·ID이관·파서·임포트·자산·카드·문서·테스트 일괄 검증
 npm.cmd run check:content -- --build    # build:data 선실행 후 검증 (교재 교체 시 권장)

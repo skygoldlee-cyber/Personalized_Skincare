@@ -57,6 +57,7 @@
     "audit:cards": "node tools/check/audit_card_quality.js",
     "check:manifest": "node tools/check/check_manifest.js",
     "check:content": "node tools/check/check_content.js",
+    "check:all": "npm run lint && npm run check:types && npm run check:html && npm run check:docs && npm run check:content",
     "deploy": "node tools/deploy.js",
     "audit:combo": "node tools/check/audit_combo.js"
   },
