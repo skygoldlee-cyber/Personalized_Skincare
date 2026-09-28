@@ -44,6 +44,7 @@
 | **Offline-Capable PWA** | Service Worker로 App Shell + 학습 데이터 캐시. 설치 가능 |
 | **Mobile-First** | 모바일 하단 탭 바 ↔ 데스크톱 사이드바 적응형 네비게이션 |
 | **Content-Agnostic** | `content/exams/cosmetic/manifest.json`을 SSOT로 사용. 교재 전체 교체 시 소스 수정 불필요 |
+| **Spec-Traceable** | 모든 요구사항은 SPEC ID로 선언하고 코드·테스트·문서는 `@spec` 태그로 연결 — `TRACE_MATRIX.md`(생성물)가 양방향 추적의 진실 소스, `check:specrefs`·`check:trace`·git 훅으로 자동 강제 |
 
 ---
 
