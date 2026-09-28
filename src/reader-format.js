@@ -8,6 +8,14 @@ import { PATHS, normalizeRefPath } from './paths.js';
 import { escapeHTML } from './sanitize.js';
 import { resolveRefPath, getRefTables } from './pdf-registry.js';
 import { getGlossaryEntry } from './glossary-query.js';
+import { lawUrlFor } from './law-links.js';
+
+// 참조자료 문서명 → law.go.kr 공식 원문(최신 통합본) 링크 조각 (매칭 없으면 빈 문자열)
+function lawExtLink(name, anchorCls = 'ref-law-ext') {
+    const url = lawUrlFor(name);
+    if (!url) return '';
+    return ` <a href="${url}" target="_blank" rel="noopener" class="${anchorCls}" title="${escapeHTML(name)} — law.go.kr 공식 최신 통합본" aria-label="law.go.kr 공식 원문 (새 탭)"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>원문</a>`;
+}
 
 export function formatSectionContentForReader(rawContent, filePath, refPath, refFiles, refDir, glossaryKeywords, sectionTitle) {
     let html = parseMarkdown(rawContent, {
@@ -93,7 +101,8 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
         /<a href="((?:\.\.\/)?참조자료\/ref_md\/[^"]+\.md)">([^<]+)<\/a>/g,
         (match, rawPath, linkText) => {
             const absPath = normalizeRefPath(rawPath);
-            return `<a href="#" data-ref-html="${escapeHTML(absPath)}" class="source-link"><i class="fa-solid fa-file-lines"></i> ${escapeHTML(linkText)}</a>`;
+            const fileName = decodeURIComponent(rawPath.split('/').pop() || '').replace(/\.md$/i, '');
+            return `<a href="#" data-ref-html="${escapeHTML(absPath)}" class="source-link"><i class="fa-solid fa-file-lines"></i> ${escapeHTML(linkText)}</a>${lawExtLink(fileName)}`;
         }
     );
 

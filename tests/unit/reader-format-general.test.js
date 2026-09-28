@@ -49,6 +49,22 @@ test('기출문제 링크: [text](기출문제/과목N_...) → exam-link-btn', 
 
 // ==================== 참조자료 PDF 링크 변환 ====================
 
+test('참조자료 ref_md 링크 → source-link + law.go.kr 원문 병기', () => {
+    const md = '[시행규칙_별표1_품질관리기준.md](../참조자료/ref_md/과목2/시행규칙_별표1_품질관리기준/시행규칙_별표1_품질관리기준.md)';
+    const html = formatSectionContentForReader(md);
+    assert.ok(html.includes('data-ref-html'), '내부 뷰어 링크 유지');
+    assert.ok(html.includes('ref-law-ext'), '원문 링크 클래스');
+    assert.ok(html.includes('law.go.kr/법령/화장품법시행규칙'), 'law.go.kr URL');
+    assert.ok(html.includes('target="_blank"'), '새 탭');
+});
+
+test('참조자료 ref_md 링크 — 매칭 없는 문서는 원문 링크 없음', () => {
+    const md = '[내부문서.md](../참조자료/ref_md/과목1/내부정리노트/내부정리노트.md)';
+    const html = formatSectionContentForReader(md);
+    assert.ok(html.includes('data-ref-html'), '내부 뷰어 링크');
+    assert.ok(!html.includes('ref-law-ext'), '원문 링크 없음');
+});
+
 test('참조자료 링크: [file.pdf](../참조자료/...) → source-link', () => {
     // URL에 괄호가 있으면 markdown parser의 link regex가 끊기므로
     // 괄호 없는 파일명으로 테스트
