@@ -1,5 +1,12 @@
 [
   {
+    "version": "v20260928-10522aa",
+    "date": "2026-09-28",
+    "notes": [
+      "[수정·refs] 원문 링크 매칭 보강 + 가시성 개선"
+    ]
+  },
+  {
     "version": "v20260928-9fcdad4",
     "date": "2026-09-28",
     "notes": [
@@ -143,17 +150,6 @@
     "date": "2026-09-28",
     "notes": [
       "feat(formula): hub cards numbered by actual compounding workflow"
-    ]
-  },
-  {
-    "version": "v369-20260928-25b0355",
-    "date": "2026-09-28",
-    "notes": [
-      "refactor: split index.html view markup into html/views partials",
-      "refactor: split oversized view modules — app.js, formula, textbook-reader",
-      "P1 리팩토링: tools/check/ 검증 계열 분리 + reader.css 3-way 분할",
-      "설계 원칙에 Spec-Traceable(요구사양 추적성) 추가",
-      "TRACE MATRIX에 요구사항 출처(source) 추적 추가 — ISO 29148 잔여 갭 해소"
     ]
   }
 ]
