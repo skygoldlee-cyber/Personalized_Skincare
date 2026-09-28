@@ -1,5 +1,12 @@
 [
   {
+    "version": "v20260929-e29b1f6",
+    "date": "2026-09-29",
+    "notes": [
+      "[스타일·dict] 원료 DB 배지 수직 여백 확보 [no-docs]"
+    ]
+  },
+  {
     "version": "v20260929-589a5bb",
     "date": "2026-09-29",
     "notes": [
@@ -133,17 +140,6 @@
     "date": "2026-09-28",
     "notes": [
       "[수정·notice] CSP connect-src에 raw.githubusercontent.com 허용"
-    ]
-  },
-  {
-    "version": "v20260928-4873aec",
-    "date": "2026-09-28",
-    "notes": [
-      "[정리·notice] 배너 시연용 임시 latest — 제2026-99호",
-      "[기능·notice] 로컬 OC 키 파일 지원 — ref-pipeline/.env.local.json",
-      "[수정·notice] 행정규칙 상세 엔드포인트 정정 — 공포번호 추출 + 오류 진단 강화",
-      "식약처 고시 자동 감지 — Formula OS 진입 시 신규 고시 배너",
-      "원료 DB: 고시 제2026-19호 별표1·별표2 전수 대조 전체 반영 (2026.09.7)"
     ]
   }
 ]
