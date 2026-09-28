@@ -42,7 +42,7 @@ flowchart LR
 |---|---|---|
 | `pdf2md.py` | PDF→MD 변환 엔진 + PySide6 GUI 통합 (공백 복원·표 구조화·무선 표 재구성·마진 잡행 제거) | **기본 실행은 GUI** (`python pdf2md.py`). CLI는 `--cli` 플래그로 |
 | `convert.py` | 스테이징 워크플로 래퍼 — `pdf_root → ref_md_v2 → ref_md` | **참조자료 PDF 교체/추가 시** (시나리오 A) |
-| `MD_to_HTML.py` | MD→독립 HTML 변환기 — 모바일 `file://` 대응·Mermaid 프리렌더·콜아웃 규칙, `--gui` 지원 | 개별 MD를 공유용 HTML로 만들 때 |
+| `MD_to_HTML.py` | MD→독립 HTML **+ PDF** 변환기 (구 MD_to_PDF.py 통합 — `--pdf`) — 모바일 `file://` 대응·Mermaid 프리렌더·콜아웃 규칙·헤드리스 Chrome 인쇄 | 개별 MD를 공유용 HTML/PDF로 만들 때 |
 | `callout_rules.json` | MD_to_HTML 콜아웃 패턴 규칙 (스크립트 옆 자동 인식) | 자동 |
 | `batch_convert.py` | 시험 교재·안내서·문제은행 MD → `html/` 일괄 변환 | **교재 MD 교체 후 HTML 재생성 시** (시나리오 B) |
 | `check_laws.py` | 국가법령정보센터 OPEN API로 시험 대상 법령 현행성 확인 → `report/` | **법령 개정 점검 시** (시나리오 C, `LAW_OC` 키 필요) |
@@ -184,7 +184,10 @@ python ref-pipeline/check_laws.py your_oc_id      # 인자로 전달해도 됨
 # MD 1개 → 독립 HTML (공유용, 모바일 file:// 대응)
 python ref-pipeline/MD_to_HTML.py --cli --in doc.md --out doc.html
 python ref-pipeline/MD_to_HTML.py --cli --in "교재/**/*.md"   # glob 일괄
-python ref-pipeline/MD_to_HTML.py --gui                       # GUI 모드
+python ref-pipeline/MD_to_HTML.py                             # GUI 모드 (기본)
+python ref-pipeline/MD_to_HTML.py --pdf                       # PDF 변환 GUI
+python ref-pipeline/MD_to_HTML.py --cli --pdf --in doc.md     # doc.pdf 생성
+python ref-pipeline/MD_to_HTML.py --cli --pdf --in a.md b.md --out-dir out/
 
 # ⚠️ --cli 미지정 시 GUI로 진입한다 (스크립트만 실행하면 GUI)
 ```

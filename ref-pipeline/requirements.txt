@@ -3,5 +3,5 @@
 
 pdfplumber>=0.11.0        # PDF 텍스트·표 추출 (convert.py/pdf2md.py — 필수)
 PyMuPDF>=1.24.0           # 이미지 추출 (선택 — 없으면 텍스트만 변환)
-markdown>=3.5             # MD → HTML 변환 (MD_to_HTML.py, MD_to_PDF.py — 필수)
-# PySide6>=6.6.0          # GUI(pdf2md.py --gui, MD_to_HTML.py --gui, MD_to_PDF.py 기본 모드) 사용 시에만 필요
+markdown>=3.5             # MD → HTML/PDF 변환 (MD_to_HTML.py — 필수)
+# PySide6>=6.6.0          # GUI(pdf2md.py, MD_to_HTML.py 기본 모드) 사용 시에만 필요
