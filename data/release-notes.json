@@ -1,5 +1,12 @@
 [
   {
+    "version": "v20260928-fbe2449",
+    "date": "2026-09-28",
+    "notes": [
+      "fix(deploy): stamp version date from HEAD commit date, not machine clock"
+    ]
+  },
+  {
     "version": "v20260928-66382cc",
     "date": "2026-09-28",
     "notes": [
@@ -145,13 +152,6 @@
       "ESLint 경고 완전 소진 — 211→0, 규칙 error 승격",
       "checkJs 백로그 완전 소진 — src 전체 0 에러 (869→0)",
       "checkJs 백로그 2차 편입 — 15파일 진단 해소, 활성 그래프 0 에러 유지"
-    ]
-  },
-  {
-    "version": "v369-20260927-405c9d6",
-    "date": "2026-09-27",
-    "notes": [
-      "check:imports 경고 0 + npm audit CI 스텝 — 데드 코드·취약 의존성 차단"
     ]
   }
 ]
