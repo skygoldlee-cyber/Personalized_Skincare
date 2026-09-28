@@ -11,7 +11,9 @@
  *     - v        : 고정 프리픽스. 과거의 채널 토큰(v369 등) 보존 방식은 폐기 —
  *                  의미 없는 숫자가 영구 잔존하는 것을 막기 위함.
  *                  (SW_CACHE_PREFIX / --prefix 로 덮어쓰기 가능)
- *     - YYYYMMDD : 빌드 시각(로컬)
+ *     - YYYYMMDD : HEAD 커밋 날짜(`git show -s --format=%cd`) — 배포 머신
+ *                  로컬 시각이 아니라 커밋 이력 기준이라 문서 날짜와 일치.
+ *                  git 미가용 시 빌드 시각(로컬)으로 폴백.
  *     - gitShort : `git rev-parse --short` (7자)
  *   git 을 못 쓰는 환경(비-git/CI 캐시아웃 등)에서는 해시 대신
  *   타임스탬프(HHmmss)로 대체해 항상 고유성을 보장한다.
@@ -71,9 +73,14 @@ function git(args) {
 
 function pad2(n) { return String(n).padStart(2, '0'); }
 
-/** 로컬 시각 기준 YYYYMMDD */
+/** 로컬 시각 기준 YYYYMMDD (git 폴백용) */
 function dateStamp(d = new Date()) {
   return `${d.getFullYear()}${pad2(d.getMonth() + 1)}${pad2(d.getDate())}`;
+}
+
+/** HEAD 커밋 날짜 기준 YYYYMMDD — 배포 머신 시각이 아닌 커밋 이력 기준. git 실패 시 null. */
+function commitDateStamp() {
+  return git(['show', '-s', '--format=%cd', '--date=format:%Y%m%d', 'HEAD']);
 }
 
 /** 로컬 시각 기준 HHmmss (git 폴백용) */
@@ -92,7 +99,7 @@ function timeStamp(d = new Date()) {
 function computeVersion(opts = {}) {
   const now = opts.now || new Date();
   const prefix = opts.prefix || process.env.SW_CACHE_PREFIX || 'v';
-  const date = dateStamp(now);
+  const date = commitDateStamp() || dateStamp(now);
 
   if (!opts.fullTimestamp) {
     const short = git(['rev-parse', '--short=7', 'HEAD']);

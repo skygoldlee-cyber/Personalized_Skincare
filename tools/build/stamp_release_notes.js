@@ -55,6 +55,13 @@ function today(d = new Date()) {
   return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
 }
 
+/** 버전 문자열의 날짜 성분 추출 (v20261016-x → '2026-10-16') — 노트 date를
+ *  배포 머신 시각이 아니라 버전(커밋 날짜) 기준으로 정렬하기 위함. 실패 시 null. */
+function versionDate(version) {
+  const m = /^v?\d*-?(\d{4})(\d{2})(\d{2})-/.exec(version || '');
+  return m ? `${m[1]}-${m[2]}-${m[3]}` : null;
+}
+
 /** 버전 문자열 끝의 git 해시 토큰 추출 (v369-20260926-346691b → 346691b) */
 function versionCommit(version) {
   const m = /-([0-9a-f]{7,})$/i.exec(version || '');
@@ -143,19 +150,20 @@ function stampReleaseNotes({ version, prevVersion, dryRun = false } = {}) {
   const entries = loadNotes();
   if (entries.length && entries[0].version === version) return { stamped: false };
 
+  const relDate = versionDate(version) || today();
   const pendingIdx = entries.findIndex(e => e.pending === true);
   if (pendingIdx >= 0) {
     entries[pendingIdx].pending = undefined;
     delete entries[pendingIdx].pending;
     entries[pendingIdx].version = version;
-    entries[pendingIdx].date = today();
+    entries[pendingIdx].date = relDate;
     // pending이 최상단이 아니면 맨 앞으로
     if (pendingIdx > 0) entries.unshift(entries.splice(pendingIdx, 1)[0]);
   } else {
     const notes = commitsSince(prevVersion);
     entries.unshift({
       version,
-      date: today(),
+      date: relDate,
       notes: notes.length ? notes : ['내부 개선 및 안정성 향상'],
     });
     console.log(`[release-notes] ⚠️ pending 노트 없음 — 커밋 subject ${notes.length}건으로 자동 초안 생성. 다음 배포부터 'npm run notes:draft'로 미리 편집하세요.`);

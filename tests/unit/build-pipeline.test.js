@@ -159,6 +159,14 @@ test('BP-07: computeVersion이 v날짜-해시 형식을 생성한다', () => {
   assert.match(v, /^v\d{8}-\d{6}$/);
 });
 
+test('BP-07: computeVersion 날짜는 로컬 시각이 아니라 HEAD 커밋 날짜를 사용한다', () => {
+  const headDate = execFileSync('git',
+    ['show', '-s', '--format=%cd', '--date=format:%Y%m%d', 'HEAD'],
+    { cwd: ROOT, encoding: 'utf-8' }).trim();
+  const v = computeVersion({ fullTimestamp: true });
+  assert.ok(v.startsWith(`v${headDate}-`), `커밋 날짜(${headDate})가 아닌 값: ${v}`);
+});
+
 test('BP-07: stampSwVersion이 CACHE_VERSION 라인만 치환하고 나머지를 보존한다', () => {
   const dir = mkdtempSync(join(tmpdir(), 'sw-'));
   const swPath = join(dir, 'sw.js');
