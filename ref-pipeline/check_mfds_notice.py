@@ -35,17 +35,46 @@ def api_get(path, params):
     oc = os.environ.get('LAW_OC_KEY', '').strip()
     if not oc:
         print('!! LAW_OC_KEY 환경변수가 없습니다. law.go.kr 오픈API 운영자 코드를 설정하세요.')
+        print('   PowerShell: $env:LAW_OC_KEY = "<발급키>"')
+        print('   CMD:        set LAW_OC_KEY=<발급키>')
+        print('   Git Bash:   LAW_OC_KEY=<발급키> python ...')
         sys.exit(1)
     q = urllib.parse.urlencode({'OC': oc, 'target': 'admrul', 'type': 'JSON', **params})
-    req = urllib.request.Request(f'{API_BASE}/{path}?{q}', headers={'User-Agent': 'PersonalizedSkincare/notice-check'})
-    with urllib.request.urlopen(req, timeout=15) as r:
-        return json.loads(r.read().decode('utf-8'))
+    last_err = None
+    for scheme in ('https', 'http'):  # DRF 엔드포인트는 환경에 따라 http만 받기도 함
+        url = f'{scheme}://www.law.go.kr/DRF/{path}?{q}'
+        try:
+            req = urllib.request.Request(url, headers={'User-Agent': 'PersonalizedSkincare/notice-check'})
+            with urllib.request.urlopen(req, timeout=15) as r:
+                body = r.read().decode('utf-8', errors='replace')
+        except urllib.error.HTTPError as e:
+            snippet = e.read().decode('utf-8', errors='replace')[:200]
+            print(f'!! HTTP {e.code} ({scheme}) — {snippet}')
+            last_err = e
+            continue
+        except urllib.error.URLError as e:
+            print(f'!! 연결 실패 ({scheme}) — {e.reason}')
+            last_err = e
+            continue
+        try:
+            return json.loads(body)
+        except ValueError:
+            # XML/텍스트 오류 응답 — 내용 앞부분 출력
+            print(f'!! JSON 파싱 실패 — 응답 앞부분: {body[:200]}')
+            last_err = ValueError('non-JSON response')
+            continue
+    raise SystemExit(f'law.go.kr 호출 실패: {last_err}')
 
 
 def search_rule():
     """행정규칙 검색 → 대상 규정의 최신 시행 항목 반환."""
     res = api_get('lawSearch.do', {'query': RULE_NAME, 'display': 50, 'sort': 'efdes'})
-    items = res.get('AdmRulSearch', {}).get('admrul', [])
+    # OC 무효 등 API 레벨 오류 — 응답 구조 전체를 찍어 진단 가능하게
+    body = res.get('AdmRulSearch', {})
+    if isinstance(body, dict) and ('error' in body or 'message' in body):
+        print('!! API 오류 응답:', json.dumps(body, ensure_ascii=False)[:300])
+        sys.exit(1)
+    items = body.get('admrul', [])
     if isinstance(items, dict):
         items = [items]
     exact = [i for i in items if i.get('행정규칙명', '').strip() == RULE_NAME]
@@ -58,22 +87,46 @@ def search_rule():
     return exact[0]
 
 
+def normalize_notice(s):
+    """'제2026-19호' / '2026-19' 등 → '제2026-19호' 정규화."""
+    m = re.fullmatch(r'제?\s*(20\d{2})\s*-?\s*(\d+)\s*호?', str(s).strip())
+    return f'제{m.group(1)}-{m.group(2)}호' if m else None
+
+
 def fetch_notice_number(serial_no):
-    """행정규칙 상세에서 발령 고시번호(제YYYY-N호) 추출."""
+    """행정규칙 상세(admrulService)의 발령/개정고시 공포번호에서 최신 고시번호 추출."""
     try:
-        detail = api_get('lawService.do', {'MST': serial_no})
+        detail = api_get('lawService.do', {'ID': serial_no})
     except (urllib.error.URLError, ValueError):
         return None
-    text = json.dumps(detail, ensure_ascii=False)
-    # 고시번호 패턴 — 제2026-19호 형태. 발령일자 순으로 최신 것 사용
-    found = re.findall(r'제\s*20\d{2}\s*-\s*\d+\s*호', text)
-    if not found:
+    # ① 공포번호 필드 우선 (발령고시·개정고시 구조에 있음)
+    candidates = []
+    def walk(node):
+        if isinstance(node, dict):
+            for k, v in node.items():
+                if '공포번호' in k or '고시번호' in k:
+                    n = normalize_notice(v)
+                    if n:
+                        candidates.append(n)
+                else:
+                    walk(v)
+        elif isinstance(node, list):
+            for i in node:
+                walk(i)
+    walk(detail)
+    # ② 폴백 — 본문 텍스트의 '제YYYY-N호' 패턴
+    if not candidates:
+        candidates = [n for n in (normalize_notice(m) for m in
+                                  re.findall(r'제\s*20\d{2}\s*-\s*\d+\s*호',
+                                             json.dumps(detail, ensure_ascii=False)))
+                      if n]
+    if not candidates:
         return None
     # (제개정)이력에 여러 번호가 나올 수 있음 → 연도·번호가 가장 큰 것
     def key(s):
         m = re.search(r'20(\d{2})\s*-\s*(\d+)', s)
         return (int(m.group(1)), int(m.group(2))) if m else (0, 0)
-    return re.sub(r'\s+', '', max(found, key=key))
+    return max(set(candidates), key=key)
 
 
 def fmt_date(d):
