@@ -21,6 +21,10 @@
       "latestNotice": "제20901호",
       "latestDate": "2026-04-02",
       "serial": "270323",
+      "currentSerial": "270323",
+      "currentDate": "2026-04-02",
+      "currentUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=270323&efYd=20260402",
+      "pending": false,
       "newer": false
     },
     {
@@ -33,6 +37,10 @@
       "latestNotice": "제02109호",
       "latestDate": "2026-04-02",
       "serial": "285249",
+      "currentSerial": "285249",
+      "currentDate": "2026-04-02",
+      "currentUrl": "https://www.law.go.kr/lsInfoP.do?lsiSeq=285249&efYd=20260402",
+      "pending": false,
       "newer": false
     },
     {
@@ -45,6 +53,10 @@
       "latestNotice": "제2026-19호",
       "latestDate": "2026-03-18",
       "serial": "2100000276068",
+      "currentSerial": "2100000276068",
+      "currentDate": "2026-03-18",
+      "currentUrl": "https://www.law.go.kr/admRulInfoP.do?admRulSeq=2100000276068",
+      "pending": false,
       "newer": false
     },
     {
@@ -57,6 +69,10 @@
       "latestNotice": "제2024-46호",
       "latestDate": "2024-08-22",
       "serial": "2100000246206",
+      "currentSerial": "2100000246206",
+      "currentDate": "2024-08-22",
+      "currentUrl": "https://www.law.go.kr/admRulInfoP.do?admRulSeq=2100000246206",
+      "pending": false,
       "newer": false
     },
     {
@@ -69,6 +85,10 @@
       "latestNotice": "제2025-89호",
       "latestDate": "2025-12-16",
       "serial": "2100000269816",
+      "currentSerial": "2100000269816",
+      "currentDate": "2025-12-16",
+      "currentUrl": "https://www.law.go.kr/admRulInfoP.do?admRulSeq=2100000269816",
+      "pending": false,
       "newer": false
     },
     {
@@ -81,6 +101,10 @@
       "latestNotice": "제2025-88호",
       "latestDate": "2025-12-16",
       "serial": "2100000269812",
+      "currentSerial": "2100000269812",
+      "currentDate": "2025-12-16",
+      "currentUrl": "https://www.law.go.kr/admRulInfoP.do?admRulSeq=2100000269812",
+      "pending": false,
       "newer": false
     },
     {
@@ -93,6 +117,10 @@
       "latestNotice": "제2026-56호",
       "latestDate": "2026-08-05",
       "serial": "2100000283642",
+      "currentSerial": "2100000283642",
+      "currentDate": "2026-08-05",
+      "currentUrl": "https://www.law.go.kr/admRulInfoP.do?admRulSeq=2100000283642",
+      "pending": false,
       "newer": false
     },
     {
@@ -105,9 +133,13 @@
       "latestNotice": "제2023-61호",
       "latestDate": "2023-09-21",
       "serial": "2100000229664",
+      "currentSerial": "2100000229664",
+      "currentDate": "2023-09-21",
+      "currentUrl": "https://www.law.go.kr/admRulInfoP.do?admRulSeq=2100000229664",
+      "pending": false,
       "newer": false
     }
   ],
-  "checkedAt": "2026-09-28T15:41:33+00:00",
+  "checkedAt": "2026-09-28T16:04:59+00:00",
   "newerFound": false
 }

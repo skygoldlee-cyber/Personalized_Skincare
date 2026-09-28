@@ -109,8 +109,19 @@ describe('statusRows', () => {
             ],
         });
         assert.equal(rows.length, 4 + 1 + 2);
-        assert.match(rows[4][1], /3종/);
+        assert.match(rows[4][1], /2종/);
         assert.match(rows[5][1], /갱신 필요/);
         assert.ok(!/갱신 필요/.test(rows[6][1]));
+    });
+    it('pending 문서는 시행 예정 개정본으로 표기', () => {
+        const rows = statusRows({
+            baseline: {}, latest: {}, checkedAt: 'x', newerFound: false,
+            docs: [
+                { name: '화장품법', baselineNotice: '제20901호', baselineDate: '2026-04-02',
+                  latestNotice: '제21050호', latestDate: '2027-01-01', newer: true, pending: true },
+            ],
+        });
+        const docRow = rows.find(r => r[0].includes('화장품법'));
+        assert.match(docRow[1], /시행 예정 개정본/);
     });
 });

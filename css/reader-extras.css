@@ -545,6 +545,26 @@
     margin-left: 0.3rem;
     white-space: nowrap;
 }
+/* 원문 개정 감지 배지 — 공식 원문이 개정돼 앱 스냅샷 갱신이 필요할 때 */
+.ref-stale-badge {
+    font-size: var(--text-2xs);
+    color: var(--color-warning, #b45309);
+    background: var(--warning-tint-10, rgba(245, 158, 11, 0.12));
+    border-radius: var(--radius-xs);
+    padding: 0.1rem 0.4rem;
+    margin-left: 0.3rem;
+    white-space: nowrap;
+}
+/* 시행 예정 개정본 공포 — 원문 링크는 현행본으로 열림 */
+.ref-pending-badge {
+    font-size: var(--text-2xs);
+    color: var(--color-info, var(--color-primary));
+    background: var(--primary-tint-10);
+    border-radius: var(--radius-xs);
+    padding: 0.1rem 0.4rem;
+    margin-left: 0.3rem;
+    white-space: nowrap;
+}
 
 /* --- Story Mode: 등장인물 이야기 색상 구분 --- */
 

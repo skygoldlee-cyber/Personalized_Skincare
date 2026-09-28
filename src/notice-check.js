@@ -115,14 +115,28 @@ export function ensureNoticeStatus() {
   return _statusPromise;
 }
 
-/** 렌더된 참조 링크(data-law-url)를 스캔해 원문 개정 문서에 '갱신 필요' 배지 삽입 */
+/** 렌더된 참조 링크(data-law-url)를 스캔해 원문 링크를 현행본 URL로 보정하고 개정 배지 삽입.
+ *  한글주소는 시행 예정 개정본으로도 연결되므로(currentUrl=현행본 일련번호 URL) href를 갱신한다. */
 export function markStaleRefLinks(root = document) {
-  const stale = new Set((_lastStatus?.docs || []).filter(d => d.newer && d.url).map(d => d.url));
-  if (!stale.size) return;
+  const docs = _lastStatus?.docs || [];
+  const byUrl = new Map(docs.filter(d => d.url).map(d => [d.url, d]));
+  if (!byUrl.size) return;
   root.querySelectorAll('[data-law-url]').forEach(el => {
-    if (!stale.has(/** @type {HTMLElement} */ (el).dataset.lawUrl) || el.querySelector('.ref-stale-badge')) return;
-    el.insertAdjacentHTML('beforeend',
-      ' <span class="ref-stale-badge" title="공식 원문이 개정됐습니다 — 앱 내 문서는 이전 기준 스냅샷일 수 있습니다">⚠ 갱신 필요</span>');
+    const el2 = /** @type {HTMLElement} */ (el);
+    const doc = byUrl.get(el2.dataset.lawUrl);
+    if (!doc) return;
+    // 원문 링크를 현행본 시리얼 URL로 보정 (시행 예정본 방지)
+    const ext = /** @type {HTMLAnchorElement|null} */ (
+      el.matches('a[href*="law.go.kr"]') ? el : el.querySelector('a[href*="law.go.kr"]'));
+    if (doc.currentUrl && ext && ext.href !== doc.currentUrl) ext.href = doc.currentUrl;
+    if (doc.newer && !el.querySelector('.ref-stale-badge')) {
+      el.insertAdjacentHTML('beforeend',
+        ' <span class="ref-stale-badge" title="공식 원문이 개정됐습니다 — 앱 내 문서는 이전 기준 스냅샷일 수 있습니다">⚠ 갱신 필요</span>');
+    }
+    if (doc.pending && !el.querySelector('.ref-pending-badge')) {
+      el.insertAdjacentHTML('beforeend',
+        ' <span class="ref-pending-badge" title="개정본이 공포됐지만 아직 시행일 전입니다 — 원문 링크는 현행본으로 열립니다">⏳ 시행 예정 개정본</span>');
+    }
   });
 }
 
@@ -265,7 +279,7 @@ export function statusRows(status) {
   if (Array.isArray(status.docs) && status.docs.length) {
     rows.push(['감시 문서', `${status.docs.length}종 — 기준 고시 ↔ law.go.kr 최신`]);
     for (const d of status.docs) {
-      const mark = d.newer ? ' ⚠ 갱신 필요' : (d.error ? ' (조회 실패)' : '');
+      const mark = (d.newer ? ' ⚠ 갱신 필요' : (d.error ? ' (조회 실패)' : '')) + (d.pending ? ' ⏳ 시행 예정 개정본' : '');
       rows.push([`· ${d.name}`, `${d.baselineNotice || '—'}(${d.baselineDate || '—'}) → ${d.latestNotice || '—'}(${d.latestDate || '—'})${mark}`]);
     }
   }

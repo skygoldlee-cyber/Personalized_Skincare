@@ -24,6 +24,7 @@ import json
 import os
 import re
 import sys
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -64,19 +65,28 @@ def api_get(path, params, target='admrul'):
     last_err = None
     for scheme in ('https', 'http'):  # DRF 엔드포인트는 환경에 따라 http만 받기도 함
         url = f'{scheme}://www.law.go.kr/DRF/{path}?{q}'
-        try:
-            req = urllib.request.Request(url, headers={'User-Agent': 'PersonalizedSkincare/notice-check'})
-            with urllib.request.urlopen(req, timeout=15) as r:
-                body = r.read().decode('utf-8', errors='replace')
-        except urllib.error.HTTPError as e:
-            snippet = e.read().decode('utf-8', errors='replace')[:200]
-            print(f'!! HTTP {e.code} ({scheme}) — {snippet}')
-            last_err = e
-            continue
-        except urllib.error.URLError as e:
-            print(f'!! 연결 실패 ({scheme}) — {e.reason}')
-            last_err = e
-            continue
+        body = None
+        for attempt in range(3):  # law.go.kr 응답 지연 빈도가 높아 재시도
+            try:
+                req = urllib.request.Request(url, headers={'User-Agent': 'PersonalizedSkincare/notice-check'})
+                with urllib.request.urlopen(req, timeout=30) as r:
+                    body = r.read().decode('utf-8', errors='replace')
+                break
+            except urllib.error.HTTPError as e:
+                snippet = e.read().decode('utf-8', errors='replace')[:200]
+                print(f'!! HTTP {e.code} ({scheme}) — {snippet}')
+                last_err = e
+                break
+            except (TimeoutError, urllib.error.URLError) as e:
+                reason = getattr(e, 'reason', e) or e
+                if attempt < 2:
+                    print(f'.. 응답 지연 — 재시도 {attempt + 1}/3 ({scheme})')
+                    time.sleep(2)
+                    continue
+                print(f'!! 연결 실패 ({scheme}) — {reason}')
+                last_err = e
+        if body is None:
+            continue  # 다음 scheme
         try:
             return json.loads(body)
         except ValueError:
@@ -124,7 +134,10 @@ def watch_docs():
 
 
 def search_law(name):
-    """법령 검색 → 정확 일치 항목 중 최신 시행본. 공포번호가 검색 응답에 포함됨."""
+    """법령 검색 → 정확 일치 항목. 공포번호가 검색 응답에 포함됨.
+
+    반환: latest=시행일자 최신(미래 개정본 포함) / current=시행일자≤오늘 최신(현행본).
+    한글주소는 시행 예정 개정본으로도 연결되므로 현행본 일련번호를 별도로 기록한다."""
     res = api_get('lawSearch.do', {'query': name, 'display': 50, 'sort': 'efdes'}, target='law')
     body = res.get('LawSearch', {})
     items = body.get('law', [])
@@ -135,10 +148,13 @@ def search_law(name):
         print(f'!! 법령 "{name}" 정확 일치 없음 — {len(items)}건')
         return None
     exact.sort(key=lambda i: str(i.get('시행일자', '')), reverse=True)
-    i = exact[0]
-    return {'notice': normalize_notice(i.get('공포번호')),
-            'effectiveDate': fmt_date(i.get('시행일자')),
-            'serial': str(i.get('법령일련번호', ''))}
+    today = datetime.now(timezone.utc).strftime('%Y%m%d')
+    current = next((i for i in exact if str(i.get('시행일자', '99999999')) <= today), None)
+    def meta(i):
+        return {'notice': normalize_notice(i.get('공포번호')) if i else None,
+                'effectiveDate': fmt_date(i.get('시행일자')) if i else None,
+                'serial': str(i.get('법령일련번호', '')) if i else ''}
+    return {'latest': meta(exact[0]), 'current': meta(current)}
 
 
 def fetch_notice_number(serial_no):
@@ -175,7 +191,10 @@ def fetch_notice_number(serial_no):
 
 
 def search_admrul(name):
-    """행정규칙 검색 → 최신 시행 항목 + 상세에서 공포번호."""
+    """행정규칙 검색 → 최신 시행 항목 + 상세에서 공포번호.
+
+    반환: latest=시행일자 최신 / current=시행일자≤오늘 최신(현행본).
+    한글주소는 시행 예정 개정본으로도 연결되므로 현행본 일련번호를 별도로 기록한다."""
     res = api_get('lawSearch.do', {'query': name, 'display': 50, 'sort': 'efdes'})
     body = res.get('AdmRulSearch', {})
     if isinstance(body, dict) and ('error' in body or 'message' in body):
@@ -189,25 +208,44 @@ def search_admrul(name):
         print(f'!! 행정규칙 "{name}" 정확 일치 없음 — {len(items)}건')
         return None
     exact.sort(key=lambda i: str(i.get('시행일자', '')), reverse=True)
-    i = exact[0]
-    serial = str(i.get('행정규칙일련번호', ''))
-    return {'notice': fetch_notice_number(serial),
-            'effectiveDate': fmt_date(i.get('시행일자')),
-            'serial': serial}
+    today = datetime.now(timezone.utc).strftime('%Y%m%d')
+    cur_item = next((i for i in exact if str(i.get('시행일자', '99999999')) <= today), exact[0])
+    latest = {'notice': fetch_notice_number(str(exact[0].get('행정규칙일련번호', ''))),
+              'effectiveDate': fmt_date(exact[0].get('시행일자')),
+              'serial': str(exact[0].get('행정규칙일련번호', ''))}
+    current = {'notice': None, 'effectiveDate': fmt_date(cur_item.get('시행일자')),
+               'serial': str(cur_item.get('행정규칙일련번호', ''))}
+    return {'latest': latest, 'current': current}
 
 
 def check_doc(doc):
     """문서 1종의 최신 고시 조회 → docs[] 항목."""
-    latest = search_law(doc['name']) if doc['target'] == 'law' else search_admrul(doc['name'])
-    if latest is None:
+    res = search_law(doc['name']) if doc['target'] == 'law' else search_admrul(doc['name'])
+    if res is None:
         return {**doc, 'error': 'not-found', 'newer': False}
+    latest, current = res['latest'], res['current'] or res['latest']
     base = doc.get('baselineDate') or ''
     newer = bool(latest['effectiveDate']) and latest['effectiveDate'] > base
+    serial_url = current_url(doc['target'], current['serial'], current['effectiveDate'])
     return {**doc,
             'latestNotice': latest['notice'],
             'latestDate': latest['effectiveDate'],
             'serial': latest['serial'],
+            'currentSerial': current['serial'],
+            'currentDate': current['effectiveDate'],
+            'currentUrl': serial_url,
+            'pending': bool(current['serial'] and current['serial'] != latest['serial']),
             'newer': newer}
+
+
+def current_url(target, serial, effective_date):
+    """현행본 직결 URL — 한글주소가 시행 예정본으로 연결될 때의 대체 경로."""
+    if not serial:
+        return ''
+    if target == 'law':
+        efyd = (effective_date or '').replace('-', '')
+        return f'https://www.law.go.kr/lsInfoP.do?lsiSeq={serial}&efYd={efyd or "99991231"}'
+    return f'https://www.law.go.kr/admRulInfoP.do?admRulSeq={serial}'
 
 
 def main():
