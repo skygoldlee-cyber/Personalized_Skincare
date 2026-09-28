@@ -6,9 +6,18 @@ import { esc } from '../sanitize.js';
 import { openHtmlViewer } from '../html-viewer.js';
 import { scrollToGlossary } from './glossary-renderer.js';
 import { getRefTables, resolveRefPath } from '../pdf-registry.js';
+import { lawUrlFor } from '../law-links.js';
 import { TIMING } from '../config/timing.js';
 import { PATHS } from '../paths.js';
 import { openSubjectChapter } from './textbook-reader.js';
+
+// 참조자료 항목 + law.go.kr 원문 링크(있으면) — 식약처/법제처 공식 문서는 전부 매칭됨
+function refItemRow(inner, name) {
+    const url = lawUrlFor(name);
+    const ext = url ? `<a href="${url}" target="_blank" rel="noopener" class="ref-law-ext" title="law.go.kr 공식 원문 (최신 통합본)" aria-label="${esc(name)} — law.go.kr 원문"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>` : '';
+    return `<span class="ref-link-row">${inner}${ext}</span>`;
+}
+
 export function buildReferenceLinks(subjId, contextRefPath) {
     const _rt = getRefTables();
     const SUBJECT_DIR_MAP = _rt.SUBJECT_DIR_MAP || {};
@@ -37,11 +46,10 @@ export function buildReferenceLinks(subjId, contextRefPath) {
             links += `<div class="ref-group-label" style="color: var(--color-primary, #1f6feb);"><i class="fa-solid fa-bookmark"></i> 이 단원의 참조자료 (${contextRefs.length})</div>`;
             contextRefs.forEach(f => {
                 const icon = 'fa-file-lines';
-                if (f.type === 'md') {
-                    links += `<a class="ref-link-item" data-ref-md="${esc(f.path)}" style="background:rgba(31,111,235,0.08);"><i class="fa-solid ${icon}"></i> ${esc(f.name)}</a>`;
-                } else {
-                    links += `<a href="#" data-ref-html="${esc(f.path)}" class="ref-link-item" style="background:rgba(31,111,235,0.08);"><i class="fa-solid ${icon}"></i> ${esc(f.name)}</a>`;
-                }
+                const inner = f.type === 'md'
+                    ? `<a class="ref-link-item" data-ref-md="${esc(f.path)}" style="background:rgba(31,111,235,0.08);"><i class="fa-solid ${icon}"></i> ${esc(f.name)}</a>`
+                    : `<a href="#" data-ref-html="${esc(f.path)}" class="ref-link-item" style="background:rgba(31,111,235,0.08);"><i class="fa-solid ${icon}"></i> ${esc(f.name)}</a>`;
+                links += refItemRow(inner, f.name || f.file);
             });
             links += `<div style="border-top:1px solid var(--border-color,#30363d);margin:0.4rem 0;"></div>`;
         }
@@ -52,40 +60,36 @@ export function buildReferenceLinks(subjId, contextRefPath) {
         links += `<div class="ref-group-label">과목별 참조자료</div>`;
         subjectFiles.forEach(f => {
             const icon = 'fa-file-lines';
-            if (f.type === 'md') {
-                const path = PATHS.REFERENCE_FILE(dirName, f.file);
-                links += `<a class="ref-link-item" data-ref-md="${esc(path)}"><i class="fa-solid ${icon}"></i> ${esc(f.name)}</a>`;
-            } else {
-                const path = resolveRefPath(f.file);
-                links += `<a href="#" data-ref-html="${esc(path)}" class="ref-link-item"><i class="fa-solid ${icon}"></i> ${esc(f.name)}</a>`;
-            }
+            const inner = f.type === 'md'
+                ? `<a class="ref-link-item" data-ref-md="${esc(PATHS.REFERENCE_FILE(dirName, f.file))}"><i class="fa-solid ${icon}"></i> ${esc(f.name)}</a>`
+                : `<a href="#" data-ref-html="${esc(resolveRefPath(f.file))}" class="ref-link-item"><i class="fa-solid ${icon}"></i> ${esc(f.name)}</a>`;
+            links += refItemRow(inner, f.name || f.file);
         });
     }
     
     // 원료 참조자료
     links += `<div class="ref-group-label">원료 참조자료</div>`;
     REFERENCE_INGREDIENTS.forEach(f => {
-        if (f.type === 'md') {
-            const path = PATHS.REFERENCE_FILE(f.dir, f.file);
-            links += `<a class="ref-link-item" data-ref-md="${esc(path)}"><i class="fa-solid fa-file-lines"></i> ${esc(f.name)}</a>`;
-        } else {
-            const path = resolveRefPath(f.file);
-            links += `<a href="#" data-ref-html="${esc(path)}" class="ref-link-item"><i class="fa-solid fa-file-lines"></i> ${esc(f.name)}</a>`;
-        }
+        const inner = f.type === 'md'
+            ? `<a class="ref-link-item" data-ref-md="${esc(PATHS.REFERENCE_FILE(f.dir, f.file))}"><i class="fa-solid fa-file-lines"></i> ${esc(f.name)}</a>`
+            : `<a href="#" data-ref-html="${esc(resolveRefPath(f.file))}" class="ref-link-item"><i class="fa-solid fa-file-lines"></i> ${esc(f.name)}</a>`;
+        links += refItemRow(inner, f.name || f.file);
     });
     
     // 법령·고시 원문
     links += `<div class="ref-group-label">법령·고시 원문</div>`;
     REFERENCE_LAW.forEach(f => {
         const path = resolveRefPath(f.file);
-        links += `<a href="#" data-ref-html="${esc(path)}" class="ref-link-item"><i class="fa-solid fa-file-lines"></i> ${esc(f.name)}</a>`;
+        const inner = `<a href="#" data-ref-html="${esc(path)}" class="ref-link-item"><i class="fa-solid fa-file-lines"></i> ${esc(f.name)}</a>`;
+        links += refItemRow(inner, f.name || f.file);
     });
     
     // 공통 참조자료
     links += `<div class="ref-group-label">공통 참조자료</div>`;
     REFERENCE_COMMON.forEach(f => {
         const path = resolveRefPath(f.file);
-        links += `<a href="#" data-ref-html="${esc(path)}" class="ref-link-item"><i class="fa-solid fa-file-lines"></i> ${esc(f.name)}</a>`;
+        const inner = `<a href="#" data-ref-html="${esc(path)}" class="ref-link-item"><i class="fa-solid fa-file-lines"></i> ${esc(f.name)}</a>`;
+        links += refItemRow(inner, f.name || f.file);
     });
     
     return links;

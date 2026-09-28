@@ -14,6 +14,7 @@
 - **테스트**: `tests/unit/notice-check.test.js` 6건 — 시행일/고시번호 비교, 누락·판정불가 안전 처리
 - **수동 확인 버튼**: Formula OS 허브 "식약처 고시 확인" — law.go.kr 오픈API를 브라우저에서 직접 호출(실측 CORS 허용 확인). `checkMfdsNoticeNow()`가 검색(lawSearch.do) → 상세(lawService.do, 공포번호 추출) 2단 조회 후 baseline과 비교해 즉시 결과 표시. OC는 공개 계정 식별자로 코드 내 상수. CSP `connect-src`에 `raw.githubusercontent.com`·`www.law.go.kr` 허용 (vercel.json). 실패한 조회는 스로틀 스탬프를 찍지 않아 재시도 가능
 - **고시 정보 보기**: 같은 줄 토글 버튼 — `notice_status.json` 내용(기준/최신/확인시각/신규 여부)을 패널로 표시, 원격 파일 우선·번들 폴백, 상태 원문·law.go.kr 원문 링크 포함
+- **law.go.kr 원문 링크 공용화**: `src/law-links.js` — 참조자료 파일명 → 한글주소 매핑(법령=/법령/, 고시=/행정규칙/, 별표 파편→모법). 참조자료 패널 전 섹션(reader-ref-links)과 법규 준수 문서 목록(formula-compliance)에 ↗ 원문 링크 추가. 테스트 `tests/unit/law-links.test.js` 5건
 
 ## 2026-09-28 원료 DB — 고시 제2026-19호 별표1·별표2 전수 대조 전체 반영 (db_version 2026.09.7)
 

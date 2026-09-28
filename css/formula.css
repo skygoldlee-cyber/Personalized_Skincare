@@ -942,6 +942,25 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
     font-size: 0.74rem;
     color: var(--color-text-muted);
 }
+/* 법규 문서 행 + law.go.kr 원문 링크 */
+.comp-doc-row {
+    display: flex;
+    align-items: center;
+}
+.comp-doc-row .comp-doc-link {
+    flex: 1;
+    min-width: 0;
+}
+.comp-law-ext {
+    flex-shrink: 0;
+    padding: 0.35rem 0.5rem;
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+    text-decoration: none;
+}
+.comp-law-ext:hover {
+    color: var(--color-primary, #1f6feb);
+}
 
 /* 식약처 고시 감지 배너 (notice-check.js) */
 .notice-banner {

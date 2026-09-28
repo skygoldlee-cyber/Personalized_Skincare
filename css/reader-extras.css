@@ -507,6 +507,28 @@
 .ref-link-item:hover i {
     color: var(--color-primary);
 }
+/* 참조자료 행 + law.go.kr 원문 링크 (law-links.js) */
+.ref-link-row {
+    display: flex;
+    align-items: center;
+}
+.ref-link-row .ref-link-item {
+    flex: 1;
+    min-width: 0;
+}
+.ref-law-ext {
+    flex-shrink: 0;
+    padding: 0.3rem 0.45rem;
+    margin-right: 0.15rem;
+    color: var(--color-text-muted);
+    font-size: var(--text-sm-2);
+    border-radius: var(--radius-xs);
+    text-decoration: none;
+}
+.ref-law-ext:hover {
+    color: var(--color-primary);
+    background: var(--primary-tint-10);
+}
 
 /* --- Story Mode: 등장인물 이야기 색상 구분 --- */
 
