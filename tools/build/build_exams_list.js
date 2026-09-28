@@ -14,6 +14,46 @@ const ROOT = path.resolve(__dirname, '..', '..');
 const SRC = path.join(ROOT, 'content', 'exams.json');
 const OUT = path.join(ROOT, 'data', 'exams.js');
 const MANIFEST_TEMPLATE = path.join(ROOT, 'manifest.webmanifest');
+const INDEX_HTML = path.join(ROOT, 'index.html');
+
+/**
+ * exams.json의 year를 SSOT로 하위 파일에 전파한다.
+ *   - {contentRoot}/manifest.json의 contentYear (registry→{year} 템플릿 경로)
+ *   - index.html meta description + #view-subtitle 폴백 (기본 시험 기준)
+ *   - manifest.webmanifest description (기본 시험 기준)
+ * 빌드 체인 첫 단계이므로 이후 index.js가 갱신된 contentYear를 읽는다.
+ */
+function syncYearToDerivedFiles(exams) {
+    const touched = [];
+    for (const e of exams) {
+        if (!e.year || !e.contentRoot) continue;
+        const mp = path.join(ROOT, e.contentRoot, 'manifest.json');
+        if (!fs.existsSync(mp)) continue;
+        const raw = fs.readFileSync(mp, 'utf-8');
+        if (/"contentYear"\s*:\s*"[^"]*"/.test(raw)) {
+            const next = raw.replace(/"contentYear"\s*:\s*"[^"]*"/, `"contentYear": "${e.year}"`);
+            if (next !== raw) { fs.writeFileSync(mp, next, 'utf-8'); touched.push(`${e.id}:manifest`); }
+        } else {
+            const m = JSON.parse(raw);
+            m.contentYear = e.year;
+            fs.writeFileSync(mp, JSON.stringify(m, null, 2) + '\n', 'utf-8');
+            touched.push(`${e.id}:manifest(필드추가)`);
+        }
+    }
+    const defaultExam = exams.find(e => e.default) || exams[0];
+    const year = defaultExam && defaultExam.year;
+    if (year) {
+        const html = fs.readFileSync(INDEX_HTML, 'utf-8');
+        const nextHtml = html
+            .replace(/(<meta name="description" content="[^"]*— )\d{4}( )/, `$1${year}$2`)
+            .replace(/(<p id="view-subtitle">)\d{4}( )/, `$1${year}$2`);
+        if (nextHtml !== html) { fs.writeFileSync(INDEX_HTML, nextHtml, 'utf-8'); touched.push('index.html'); }
+        const wm = fs.readFileSync(MANIFEST_TEMPLATE, 'utf-8');
+        const nextWm = wm.replace(/("description"\s*:\s*"[^"]*— )\d{4}( )/, `$1${year}$2`);
+        if (nextWm !== wm) { fs.writeFileSync(MANIFEST_TEMPLATE, nextWm, 'utf-8'); touched.push('manifest.webmanifest'); }
+    }
+    if (touched.length) console.log(`✅ 연도 전파 (exams.json.year → ${defaultExam ? defaultExam.year : '?'}): ${touched.join(', ')}`);
+}
 
 function main() {
     const exams = JSON.parse(fs.readFileSync(SRC, 'utf-8'));
@@ -37,6 +77,9 @@ function main() {
     fs.mkdirSync(path.dirname(OUT), { recursive: true });
     fs.writeFileSync(OUT, js, 'utf-8');
     console.log(`✅ data/exams.js 생성 — 시험 ${exams.exams.length}개 (${[...ids].join(', ')})`);
+
+    // exams.json의 year → manifest contentYear/index.html/webmanifest 전파
+    syncYearToDerivedFiles(exams.exams);
 
     // 시험별 정적 PWA 매니페스트 생성 (manifest.<id>.webmanifest)
     // pwa-manifest.js가 활성 시험에 맞춰 링크를 이 실제 파일로 교체한다.

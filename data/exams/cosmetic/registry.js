@@ -1,8 +1,8 @@
 // 자동 생성된 데이터 레지스트리 파일입니다. 수정하지 마십시오.
 var DATA_REGISTRY = {
   "schemaVersion": 1,
-  "contentYear": "2026",
-  "generatedAt": "2026-09-27T18:11:51.809Z",
+  "contentYear": "2027",
+  "generatedAt": "2026-09-28T08:47:09.310Z",
   "subjects": [
     {
       "key": "law",
@@ -262,7 +262,7 @@ var DATA_REGISTRY = {
   "uiText": {
     "dashboard": {
       "title": "학습 대시보드",
-      "subtitle": "2026 시험 합격을 위한 분석 및 스마트 툴"
+      "subtitle": "2027 시험 합격을 위한 분석 및 스마트 툴"
     },
     "flashcard": {
       "title": "개념 플래시카드",

@@ -242,7 +242,7 @@ docs/                   # 개발 문서
 
 ## 멀티시험 구조
 
-- **시험 레지스트리**: `content/exams.json` → `data/exams.js` 번들(`window.EXAMS_LIST`, `npm run build:data`에 포함). 각 시험 엔트리: `id`, `name`, `title`/`logoMain`/`logoSub`(브랜딩), `desc`, `icon`, `year`, `default`, `contentRoot`, `dataRoot`, `registryBundle`, `registryGlobal`, `features`(기능 플래그)
+- **시험 레지스트리**: `content/exams.json` → `data/exams.js` 번들(`window.EXAMS_LIST`, `npm run build:data`에 포함). 각 시험 엔트리: `id`, `name`, `title`/`logoMain`/`logoSub`(브랜딩), `desc`, `icon`, `year`, `default`, `contentRoot`, `dataRoot`, `registryBundle`, `registryGlobal`, `features`(기능 플래그). **`year`가 시험 연도의 유일한 진실 소스(SSOT)** — `build:exams-list`가 각 시험의 `manifest.json` `contentYear`와 `index.html`·`manifest.webmanifest`의 연도 텍스트(기본 시험 기준)로 자동 전파하므로, 연도 변경은 `exams.json`만 수정 후 `build:data` 재실행
 - **시험별 루트 (대칭)**: 모든 시험이 `content/exams/<id>/`(manifest.json + references.json + 교재/문제은행/참조자료/audiobook 등)와 `data/exams/<id>/`(registry.js, subjects/, exams/, drills/, study_md/, docs_md/, supplements/, id_migration.js 등) 구조 — 기본 시험(cosmetic)도 예외 없음. `content/`·`data/` 루트에는 전역 파일만: `exams.json`/`exams.js`, `audio_manifest.js`(시험 id 키 분리), `docs_md/`(앱 공용 문서)
 - **시험 컨텍스트**: `src/exam-context.js` — `contentPath()`/`dataPath()`(경로 해석), `hasFeature()`(기능 게이팅), `selectExam()`(전환 = `location.reload()`로 모듈 상태 리셋), `scopedKey()`(진도 네임스페이스 `<examId>:key`)
 - **진도 격리**: `safeGetItem`/`safeSetItem` 등이 자동으로 시험 접두사 적용. 테마·리더 설정 등 `GLOBAL_KEYS`만 비네임스페이스. 백업 파일은 비접두사 논리 키(시험 간 호환)

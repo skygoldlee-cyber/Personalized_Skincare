@@ -6,6 +6,11 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-09-28 시험 연도 SSOT — exams.json.year에서 전체 전파
+
+- **`build_exams_list.js` `syncYearToDerivedFiles()` 추가**: `content/exams.json[].year`를 유일한 진실 소스로 하위 연도 표기에 자동 전파 — ① 각 시험 `manifest.json`의 `contentYear`(→ registry `{year}` 템플릿 → 대시보드 부제목) ② 기본 시험 기준 `index.html` meta description·`#view-subtitle` 폴백 ③ `manifest.webmanifest` description. 빌드 체인 첫 단계(`build:exams-list`)에서 실행되므로 이후 `index.js`가 갱신된 `contentYear`를 읽어 registry에 반영 — 연도 변경은 `exams.json` 수정 + `build:data`만으로 완결
+- **시험 연도 2026 → 2027**: `content/exams.json` `year` 변경으로 4곳 전파 확인 (manifest.json·index.html·manifest.webmanifest·registry.js)
+
 ## 2026-09-28 후속 정리 — 추적 스캔 확장 · 릴리스 노트 한글화 · CHANGES 날짜 정정 · 중간 파일 분할
 
 - **B3 `html/` trace 스캔 추가**: `trace_scan.js` SCAN_DIRS에 `html` 포함 — 뷰 파셜 13개 전부에 `@spec` 태그 부여(뷰별 대표 ID: dashboard→D-*·formula→FO-15·trainer→TR-01 등). 스캔 위치 994→1,025

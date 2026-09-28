@@ -13,7 +13,7 @@ var EXAMS_LIST = {
       "logoSub": "mula",
       "desc": "화장품법·제조·품질관리·안전관리·맞춤형화장품 4과목 · 문제은행 1,000문",
       "icon": "fa-solid fa-wand-magic-sparkles",
-      "year": "2026",
+      "year": "2027",
       "default": true,
       "contentRoot": "content/exams/cosmetic",
       "dataRoot": "data/exams/cosmetic",
