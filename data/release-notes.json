@@ -1,5 +1,12 @@
 [
   {
+    "version": "v20260929-36605e5",
+    "date": "2026-09-29",
+    "notes": [
+      "[기능·formula] 네거티브/포지티브 리스트 용어에 고시 바로가기 링크"
+    ]
+  },
+  {
     "version": "v20260929-822ad06",
     "date": "2026-09-29",
     "notes": [
@@ -136,13 +143,6 @@
     "date": "2026-09-28",
     "notes": [
       "맞춤학습 심층 분석 — analysis-engine.js 신설 + 진단 카드 5종"
-    ]
-  },
-  {
-    "version": "v20260928-cb7cb23",
-    "date": "2026-09-28",
-    "notes": [
-      "연도 SSOT: exams.json.year에서 manifest·index.html·webmanifest로 자동 전파"
     ]
   }
 ]
