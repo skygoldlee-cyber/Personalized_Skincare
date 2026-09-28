@@ -192,6 +192,23 @@
     color: var(--color-text-secondary);
 }
 
+/* 과목별 취약 단원 — 과목 헤더행 + 단원 서브행 */
+.wc-subj-row {
+    font-weight: var(--font-weight-semibold);
+    margin-top: var(--space-2);
+    border-bottom: none;
+}
+
+.wc-subrow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: 0.2rem 0 0.2rem var(--space-4);
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+}
+
 .analysis-advice {
     margin-top: var(--space-3);
     font-size: var(--text-sm);

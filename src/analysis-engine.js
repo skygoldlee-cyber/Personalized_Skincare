@@ -53,23 +53,13 @@ export function chapterFromCid(cid, subjKey, chapterRanges) {
    ======================================================= */
 
 /**
- * 오답/오판 항목을 교재 단원별로 집계한다.
+ * 오답/오판 항목을 교재 단원별로 집계한다 (내부 버킷).
  * 해석 경로 (모두 실패 시 '기타' 묶음 없이 버림):
  *   - weak_sim_<exam>_q<N>  → questionChapters["<exam>_q<N>"]
  *   - weak_quiz_<id>·일반 퀴즈 id → resolveQuiz(id).quiz.category (로드된 과목만)
  *   - 진술 sid → cid(L####) → chapterRanges[과목] → 단원명
- * @param {Object} p
- * @param {Object} p.quizResults state.quizResults (오답만 집계)
- * @param {Set<string>} p.weakCards state.weakCards
- * @param {Object} p.statementStats getAllStatementStats() 결과
- * @param {Object} p.questionChapters QUESTION_CHAPTERS 맵
- * @param {Object} p.chapterRanges CHAPTER_RANGES 맵
- * @param {(id:string)=>{quiz:object,subjectId:string}|null} p.resolveQuiz weak-items.resolveWrongQuiz
- * @param {(key:string)=>string} [p.subjectName] 과목키→표시명 (없으면 키 그대로)
- * @param {number} [p.limit] 상위 N개 (기본 5)
- * @returns {Array<{subject:string, chapter:string, wrongs:number}>} 오답 건수 내림차순
  */
-export function computeChapterWeakness(p) {
+function _aggregateChapterWrongs(p) {
     const buckets = new Map(); // `${subj}|${chapter}` → {subject, chapter, wrongs}
     const bump = (subj, chapter) => {
         if (!chapter) return;
@@ -104,11 +94,52 @@ export function computeChapterWeakness(p) {
         const subj = subjectFromSid(sid);
         bump(subj, chapterFromCid(v.cid, subj, p.chapterRanges));
     });
+    return buckets;
+}
 
+/** 공통 파라미터 — computeChapterWeakness/computeSubjectWeakChapters 공용
+ * @param {Object} p
+ * @param {Object} p.quizResults state.quizResults (오답만 집계)
+ * @param {Set<string>} p.weakCards state.weakCards
+ * @param {Object} p.statementStats getAllStatementStats() 결과
+ * @param {Object} p.questionChapters QUESTION_CHAPTERS 맵
+ * @param {Object} p.chapterRanges CHAPTER_RANGES 맵
+ * @param {(id:string)=>{quiz:object,subjectId:string}|null} p.resolveQuiz weak-items.resolveWrongQuiz
+ * @param {(key:string)=>string} [p.subjectName] 과목키→표시명 (없으면 키 그대로)
+ */
+
+/**
+ * 오답 집계를 단원별 단일 랭킹으로 반환 (전 과목 혼합).
+ * @param {Object} p 공통 파라미터 + p.limit
+ * @returns {Array<{subject:string, chapter:string, wrongs:number}>} 오답 건수 내림차순
+ */
+export function computeChapterWeakness(p) {
     const name = p.subjectName || ((k) => k);
-    const out = [...buckets.values()].sort((a, b) => b.wrongs - a.wrongs);
+    const out = [..._aggregateChapterWrongs(p).values()].sort((a, b) => b.wrongs - a.wrongs);
     out.forEach(b => { b.subject = name(b.subject); });
     return typeof p.limit === 'number' ? out.slice(0, p.limit) : out;
+}
+
+/**
+ * 오답 집계를 **과목별로 그룹화**해 반환 — 과락 평가가 과목 단위이므로
+ * 각 과목의 최약 단원을 과목별로 보여준다 (어떤 과목이든 같은 구조).
+ * @param {Object} p 공통 파라미터 + p.chaptersPerSubject(기본 2)
+ * @returns {Array<{subject:string, subjectKey:string, totalWrongs:number,
+ *   chapters:Array<{chapter:string, wrongs:number}>}>} 과목 총 오답 내림차순
+ */
+export function computeSubjectWeakChapters(p) {
+    const name = p.subjectName || ((k) => k);
+    const perSubj = p.chaptersPerSubject || 2;
+    const bySubj = new Map(); // subjKey → {subject, subjectKey, totalWrongs, chapters}
+    for (const b of _aggregateChapterWrongs(p).values()) {
+        const cur = bySubj.get(b.subject) || { subject: name(b.subject), subjectKey: b.subject, totalWrongs: 0, chapters: [] };
+        cur.totalWrongs += b.wrongs;
+        cur.chapters.push({ chapter: b.chapter, wrongs: b.wrongs });
+        bySubj.set(b.subject, cur);
+    }
+    const out = [...bySubj.values()];
+    out.forEach(g => g.chapters.sort((a, b) => b.wrongs - a.wrongs).length = Math.min(g.chapters.length, perSubj));
+    return out.sort((a, b) => b.totalWrongs - a.totalWrongs);
 }
 
 /* =======================================================

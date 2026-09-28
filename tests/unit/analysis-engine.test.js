@@ -57,6 +57,40 @@ test('computeChapterWeakness: 퀴즈 오답 + 진술 오판을 단원별로 집�
     assert.equal(out[1].wrongs, 1);
 });
 
+test('computeSubjectWeakChapters: 과목별 그룹화 — 과락 평가 단위와 일치', async () => {
+    const { computeSubjectWeakChapters } = await import(ENGINE);
+    const quizResults = {
+        'subjA_quiz_01': { solved: true, correct: false },
+        'subjB_quiz_01': { solved: true, correct: false },
+        'subjB_quiz_02': { solved: true, correct: false },
+    };
+    const resolveQuiz = (id) => ({
+        'subjA_quiz_01': { quiz: { category: '2. 분류' }, subjectId: 'subjA' },
+        'subjB_quiz_01': { quiz: { category: '1. 개요' }, subjectId: 'subjB' },
+        'subjB_quiz_02': { quiz: { category: '3. 절차' }, subjectId: 'subjB' },
+    })[id] || null;
+    const statementStats = {
+        'subjB_st_bbb222': { j: 3, w: 2, cid: 'L050', t: '텍스트', truth: false, streak: 0 },
+    };
+    const ranges = { subjB: [[1, '1. 개요']] };
+    const out = computeSubjectWeakChapters({
+        quizResults, weakCards: new Set(), statementStats,
+        questionChapters: {}, chapterRanges: ranges,
+        resolveQuiz, subjectName: (k) => ({ subjA: '과목A', subjB: '과목B' })[k] || k,
+        chaptersPerSubject: 2
+    });
+    // subjB: 퀴즈 2건 + 진술 1건(L050→1.개요) → '1. 개요' 2건 + '3. 절차' 1건 = 총 3건
+    assert.equal(out.length, 2);
+    assert.equal(out[0].subjectKey, 'subjB');
+    assert.equal(out[0].subject, '과목B');
+    assert.equal(out[0].totalWrongs, 3);
+    assert.equal(out[0].chapters[0].chapter, '1. 개요');
+    assert.equal(out[0].chapters[0].wrongs, 2);
+    assert.equal(out[0].chapters[1].chapter, '3. 절차');
+    assert.equal(out[1].subjectKey, 'subjA');
+    assert.equal(out[1].totalWrongs, 1);
+});
+
 test('computeChapterWeakness: 졸업 진술(streak>=3)은 집계 제외', async () => {
     const { computeChapterWeakness } = await import(ENGINE);
     const statementStats = {

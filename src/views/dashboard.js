@@ -16,7 +16,7 @@ import {
 import { getDDay, getSuggestedDailyCount, getTodayGoalProgress, getWeeklyGoalProgress, getStudyCalendar } from '../study-tracker.js';
 import { getWeakStatements, getDueStatementSids, getAnomalousStatements, getAllStatementStats } from '../statement-tracker.js';
 import {
-    computeChapterWeakness, computeWeeklyGrowth, computePassGap,
+    computeSubjectWeakChapters, computeWeeklyGrowth, computePassGap,
     computeWeakConceptClusters, computePaceProjection, estimateUntaggedCauses
 } from '../analysis-engine.js';
 import { resolveWrongQuiz } from '../weak-items.js';
@@ -425,7 +425,7 @@ function _renderStudyRhythmInsight() {
         <button class="btn btn-secondary btn-sm analysis-card-btn" data-click="switchView" data-arg="calendar-view"><i class="fa-solid fa-calendar-check" aria-hidden="true"></i> 캘린더 보기</button>`;
 }
 
-/** 단원별 취약 분석 카드 — 오답을 교재 단원으로 매핑해 집중 구간 표시 */
+/** 단원별 취약 분석 카드 — 과목별 그룹화 (과락이 과목 단위 평가이므로) */
 function _renderChapterWeakness() {
     const el = document.getElementById('analysis-chapter-weak');
     if (!el) return;
@@ -433,7 +433,7 @@ function _renderChapterWeakness() {
     const subjectsMeta = (typeof DataLoader !== 'undefined' && DataLoader.registry)
         ? DataLoader.getSubjectList() : [];
     const nameOf = (key) => { const s = subjectsMeta.find(x => x.key === key); return s ? s.name : key; };
-    const rows = computeChapterWeakness({
+    const groups = computeSubjectWeakChapters({
         quizResults: state.quizResults,
         weakCards: state.weakCards,
         statementStats: getAllStatementStats(),
@@ -441,19 +441,22 @@ function _renderChapterWeakness() {
         chapterRanges: qc.ranges,
         resolveQuiz: resolveWrongQuiz,
         subjectName: nameOf,
-        limit: 4
+        chaptersPerSubject: 2
     });
-    if (rows.length === 0) {
+    if (groups.length === 0) {
         el.innerHTML = `<h4>📖 단원별 취약 분석</h4>
-            <p class="analysis-empty">퀴즈·모의고사·드릴에서 오답이 쌓이면 어떤 단원이 약한지 보여줍니다.</p>`;
+            <p class="analysis-empty">퀴즈·모의고사·드릴에서 오답이 쌓이면 과목별로 어떤 단원이 약한지 보여줍니다.</p>`;
         return;
     }
-    const html = rows.map(r =>
-        `<div class="wc-row"><span class="analysis-sid">${esc(r.chapter)}${r.subject ? ` <span class="analysis-meta">· ${esc(r.subject)}</span>` : ''}</span><strong>${r.wrongs}건</strong></div>`
-    ).join('');
-    el.innerHTML = `<h4>📖 단원별 취약 분석 <span class="analysis-meta">오답 집중 단원</span></h4>
+    const html = groups.slice(0, 4).map(g => {
+        const chRows = g.chapters.map(c =>
+            `<div class="wc-subrow"><span class="analysis-sid">${esc(c.chapter)}</span><span>${c.wrongs}건</span></div>`
+        ).join('');
+        return `<div class="wc-row wc-subj-row"><span>${esc(g.subject)}</span><strong>${g.totalWrongs}건</strong></div>${chRows}`;
+    }).join('');
+    el.innerHTML = `<h4>📖 단원별 취약 분석 <span class="analysis-meta">과목별 오답 집중 단원</span></h4>
         ${html}
-        <p class="analysis-advice">붉은 단원의 교재 섹션을 우선 재학습하면 점수 회복이 빠릅니다.</p>`;
+        <p class="analysis-advice">과락은 과목 단위 평가 — 각 과목의 최약 단원부터 재학습하면 과락 방어에 효과적입니다.</p>`;
 }
 
 /** 합격 갭 분석 카드 — 합격선까지 점수 갭 + 최우선 보강 과목 */
