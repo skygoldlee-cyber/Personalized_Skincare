@@ -1,5 +1,12 @@
 [
   {
+    "version": "v20260929-822ad06",
+    "date": "2026-09-29",
+    "notes": [
+      "[스타일·formula] 원칙 안내 상단 마진 확보 — 허브 설명 문단과 분리"
+    ]
+  },
+  {
     "version": "v20260929-c61e1ed",
     "date": "2026-09-29",
     "notes": [
@@ -136,13 +143,6 @@
     "date": "2026-09-28",
     "notes": [
       "연도 SSOT: exams.json.year에서 manifest·index.html·webmanifest로 자동 전파"
-    ]
-  },
-  {
-    "version": "v20260928-bf76642",
-    "date": "2026-09-28",
-    "notes": [
-      "[정리·tools] check:all 전체 점검 단일 진입점 추가"
     ]
   }
 ]
