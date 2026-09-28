@@ -1,5 +1,12 @@
 [
   {
+    "version": "v20260929-c61e1ed",
+    "date": "2026-09-29",
+    "notes": [
+      "[수정·formula] 원칙 안내 텍스트를 span으로 감싸 좁은 폭 줄바꿈 수정"
+    ]
+  },
+  {
     "version": "v20260929-b651893",
     "date": "2026-09-29",
     "notes": [
@@ -136,17 +143,6 @@
     "date": "2026-09-28",
     "notes": [
       "[정리·tools] check:all 전체 점검 단일 진입점 추가"
-    ]
-  },
-  {
-    "version": "v20260928-7fe0369",
-    "date": "2026-09-28",
-    "notes": [
-      "[리팩터링·ref-pipeline] md2doc 잔여 참조 갱신 + GUI PDF 체크박스",
-      "[리팩터링·ref-pipeline] MD_to_HTML+MD_to_PDF → md2doc.py 통합 + GUI PDF 체크박스",
-      "[리팩터링·ref-pipeline] pdf2md 기본 모드를 GUI로 전환 — CLI는 --cli 명시",
-      "[리팩터링·ref-pipeline] pdf2md_gui.py를 pdf2md.py --gui로 통합",
-      "[정리] ref_md/_report.json 제거 — 변환 진단 리포트 잔여물 정리"
     ]
   }
 ]
