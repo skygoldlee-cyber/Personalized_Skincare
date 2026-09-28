@@ -1,5 +1,12 @@
 [
   {
+    "version": "v20260929-c7d18f6",
+    "date": "2026-09-29",
+    "notes": [
+      "[기능·refs] 스냅샷 버전 배지·중복 제거·원료 근거 고시·오프라인 안내"
+    ]
+  },
+  {
     "version": "v20260928-4fdeb4c",
     "date": "2026-09-28",
     "notes": [
@@ -141,13 +148,6 @@
     "notes": [
       "[리팩터링] trace 스캔 html 확장 + 릴리스 노트 한글화 + CHANGES 날짜 정정 + 중간 뷰 모듈 분할",
       "[정리] cleanup patch — stale comments, version refs, html gate"
-    ]
-  },
-  {
-    "version": "v20260928-fbe2449",
-    "date": "2026-09-28",
-    "notes": [
-      "fix(deploy): stamp version date from HEAD commit date, not machine clock"
     ]
   }
 ]
