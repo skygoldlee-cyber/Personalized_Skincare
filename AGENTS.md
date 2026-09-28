@@ -90,6 +90,8 @@ feature-plan.json       # 기능별 무료/Pro 전환 설정 (pro = 배지+안�
 serve.js                # 로컬 개발 서버
 src/                    # ES Modules
   app.js                # 메인 애플리케이션 로직 (초기화, 이벤트 위임, 라우팅)
+  app-dashboard.js      # 대시보드 셀렉트·시험/리소스 카드·스토리지 경고 (app.js 분리)
+  app-shell.js          # 뷰포트·가로세로·data-click 접근성·브랜딩·기능 플래그 (app.js 분리)
   app-fallback.js       # ESM 로드 실패 시 자동 복구 (모바일 PWA 대응)
   router.js             # 뷰 라우터 (navigateToView, getViewTitles)
   state.js              # 전역 상태 + 진행 영속성 (saveProgress — 저장은 storage.js 위임)

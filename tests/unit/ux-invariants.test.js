@@ -16,11 +16,11 @@ const overlayCss = read('css/ui-overlay.css');
 const allCss = readdirSync(join(ROOT, 'css'))
   .filter(f => f.endsWith('.css'))
   .map(f => read(`css/${f}`)).join('\n');
-const appJs = read('src/app.js');
+const appJs = ['src/app.js', 'src/app-shell.js', 'src/app-dashboard.js'].map(read).join('\n');
 const uiUtils = read('src/ui-utils.js');
 const pwaInstall = read('src/pwa-install.js');
 const capture = read('src/pwa-install-capture.js');
-const readerJs = read('src/views/textbook-reader.js');
+const readerJs = ['src/views/textbook-reader.js', 'src/views/reader-toolbar.js', 'src/views/reader-ref-links.js'].map(read).join('\n');
 const listeners = read('src/views/event-listeners.js');
 
 // ---------- UX-SCR: 스크롤바 전략 ----------

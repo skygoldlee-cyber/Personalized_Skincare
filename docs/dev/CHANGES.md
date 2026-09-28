@@ -38,6 +38,24 @@
 - **`index.html`**: 설정 드롭다운의 `학습 매뉴얼`·`실무 매뉴얼` 항목 제거 — 사이드바·모바일 하단 탭에 이미 있어 중복
 - **`user_manual.md`**: 설정 메뉴 설명에서 매뉴얼 항목 제외 + 매뉴얼 진입 경로(사이드바/하단 탭) 안내 추가 → docs_md 번들 재생성
 
+## 2026-10-16 대형 뷰 분할 (P2 리팩토링) — app.js·formula·textbook-reader
+
+**배경**: `src/` 대형 파일 3종(app.js 1,156 · textbook-reader 1,698 · formula 1,443줄)에 상호 독립적인 관심사가 혼재해 유지보수 비용이 커짐.
+
+**분할 내역**:
+
+| 원본 | 분리 모듈 | 결과 |
+|---|---|---|
+| `app.js` (1,156→728줄) | `app-dashboard.js` (대시보드 셀렉트·시험/리소스 카드·스토리지 경고, 246줄) · `app-shell.js` (뷰포트--app-height·가로세로·data-click 접근성·업데이트 배너·기능플래그·브랜딩, 207줄) | 오케스트레이터는 초기화·이벤트 위임·브릿지만 유지 |
+| `textbook-reader.js` (1,698→942줄) | `reader-toolbar.js` (툴바·폰트/줄간격·스크롤스파이·표 모달, 509줄) · `reader-ref-links.js` (참조자료 링크 생성·프리뷰·클릭 위임, 268줄) | 리더 코어는 렌더링·TOC·포지션만 |
+| `formula.js` (1,443→1,158줄) | `formula-recommend.js` (추천 패널·맞춤 규칙 UI·규칙보내기/가져오기, 304줄) | 계산기·My 포뮬러는 원본 유지 |
+
+**분리 원칙**: 역방향 의존은 런타임 호출 + 명시적 `import`로 유지(순환 없음), `formula.js`는 기존 공개 API를 재수출로 보존해 `app.js` 인터페이스 불변. 정적 패턴 검증 테스트(`TR-16a`·`UX-FB-03`·`UX-PWA-05` 등)는 분리 모듈을 포함해 읽도록 갱신 — 코드 스캔 테스트가 단일 파일명에 결합되지 않게 수정.
+
+**검증**: unit 693 · DOM 407 · lint · check:imports · check:types · check:specrefs · TRACE_MATRIX 재생성 전부 통과.
+
+---
+
 ## 2026-10-16 교재 파일 구조 동기화 도구 — sync_textbook_files.js
 
 - **`tools/sync_textbook_files.js` 신규**: 교재/문제은행 파일시스템을 진실로 `manifest.json`(chapters file/storyFile, exams 미등록 자동 등록)과 `sw.js` `MD_ASSETS`를 동기화. `--check`는 drift 보고+exit 1, `--rename <구> <신>`은 파일 이동+manifest+sw.js+인용 경로 원자 전파 (`#L` 프래그먼트·URL 인코딩 보존)

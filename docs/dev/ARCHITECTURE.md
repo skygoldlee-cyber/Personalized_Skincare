@@ -238,6 +238,8 @@ Personalized_Skincare/
 │
 ├── src/                        # 애플리케이션 소스 (ESM)
 │   ├── app.js                  #   오케스트레이터 (초기화, 이벤트 위임, 라우터 연결)
+│   ├── app-dashboard.js        #   대시보드 셀렉트·시험/리소스 카드·스토리지 경고 (app.js 분리)
+│   ├── app-shell.js            #   뷰포트·가로세로·data-click 접근성·브랜딩·기능 플래그
 │   ├── router.js               #   SPA 라우터 (뷰 타이틀 맵, 네비게이션 디스패치)
 │   ├── app-fallback.js         #   ESM 로드 실패 시 자가 복구
 │   ├── pwa-install-capture.js  #   beforeinstallprompt 조기 캡처 + SW 등록
@@ -313,14 +315,17 @@ Personalized_Skincare/
 │       ├── exam-sim-state.js   #     시뮬레이터 상태
 │       ├── exam-sim-review.js  #     시뮬레이터 결과 리뷰
 │       ├── exam-select.js      #     시험 선택/전환 뷰
-│       ├── textbook-reader.js  #     교재 리더 + 오디오 + Media Session
+│       ├── textbook-reader.js  #     교재 리더 코어 (렌더링·TOC·포지션)
+│       ├── reader-toolbar.js   #     리더 툴바·폰트/줄간격·스크롤스파이·표 모달
+│       ├── reader-ref-links.js #     참조자료 링크 생성·프리뷰·클릭 위임
 │       ├── reader-audio.js    #     오디오북 플레이어
 │       ├── textbook-search.js  #     교재 본문 검색
 │       ├── dictionary.js       #     성분 사전
 │       ├── study-calendar.js   #     학습 캘린더/목표 뷰
 │       ├── backup.js           #     데이터 백업/복원
 │       ├── glossary-renderer.js #    용어집 렌더링 + scrollToGlossary()
-│       ├── formula.js          #     Formula OS 허브 — 계산기·추천·My 포뮬러·서브내비
+│       ├── formula.js          #     Formula OS 허브 — 계산기·My 포뮬러·서브내비
+│       ├── formula-recommend.js #    추천 베이스/원료 패널·맞춤 규칙 UI (formula.js 분리)
 │       ├── formula-batch.js    #     조제 기록(배치) 목록·폼·상세
 │       ├── formula-customer.js #     고객 관리 패널
 │       ├── formula-material.js #     원료 장부 패널
@@ -528,7 +533,7 @@ Personalized_Skincare/
 
 | 모듈 | 책임 |
 |------|------|
-| [`src/app.js`](../../src/app.js) | **메인 오케스트레이터**. 초기화(`initApp`), **이벤트 위임 바인딩**(`data-click`/`data-input`/`data-args` + `resolveDelegatedHandler`/`parseDelegatedArgs`), `startFocusSubjectStudy` 등 뷰 간 브릿지 함수. `populateExamCards()`로 registry 기반 시험 카드 동적 생성. 라우팅은 `router.js`에 위임 |
+| [`src/app.js`](../../src/app.js) | **메인 오케스트레이터**. 초기화(`initApp`/`initExamContext`), **이벤트 위임 바인딩**(`data-click`/`data-input`/`data-args` + `resolveDelegatedHandler`/`parseDelegatedArgs`), `startFocusSubjectStudy` 등 뷰 간 브릿지 함수. 라우팅은 `router.js`에 위임. 대시보드 카드 생성은 `app-dashboard.js`, 뷰포트·가로세로·브랜딩·기능플래그는 `app-shell.js`로 분리됨 |
 | [`src/router.js`](../../src/router.js) | **SPA 라우터**. `getViewTitles()`로 뷰 타이틀/서브타이틀 맵 생성, `navigateToView()`로 뷰 전환 디스패치 (active 클래스 토글, 헤더 갱신, 뷰 렌더러 호출, 오디오 정지, 포커스 모드 해제) |
 | [`src/charts.js`](../../src/charts.js) | SVG 기반 차트 생성 (레이더 차트, 성적 꺾은선 그래프). **인터랙티브 툴팁**(hover/touch) 지원. 외부 차트 라이브러리 미사용 |
 | [`src/scratchpad.js`](../../src/scratchpad.js) | HTML5 Canvas 손글씨 연습장 (계산 문제 풀이용) |

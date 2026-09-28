@@ -1,7 +1,6 @@
 // app.js - Passmula (맞춤형화장품 조제관리사) 애플리케이션 로직
 // @spec S-02,S-03,S-08,UX-NAV-01,UX-PWA-01,UX-PWA-05,PF-10
-import { state, loadProgress, safeGetItem, safeSetItem, safeRemoveItem } from './state.js';
-import { esc } from './sanitize.js';
+import { state, loadProgress } from './state.js';
 import { shuffle } from './utils.js';
 import { clearScratchpad, toggleCalcScratchpad, toggleScratchpadEraser } from './scratchpad.js';
 import { DataLoader } from './data-loader.js';
@@ -13,7 +12,7 @@ import { setupPWAInstall } from './pwa-install.js';
 import { setupThemeToggle } from './theme-toggle.js';
 import { maybeShowWhatsNew } from './whats-new.js';
 import { captureEntrySource, flushPendingFeedback, initFeedbackHint } from './feedback.js';
-import { loadFeaturePlan, refreshProBadges, proFeatureNotice, showPlanCompare } from './pro-upgrade.js';
+import { loadFeaturePlan, proFeatureNotice, showPlanCompare } from './pro-upgrade.js';
 import { showUsageStats, trackAction } from './usage-stats.js';
 
 // --- 뷰 컨트롤러 모듈 임포트 ---
@@ -199,8 +198,7 @@ import {
     showGlobalLoading,
     hideGlobalLoading,
     showToast,
-    showConfirm,
-    showAlert
+    showConfirm
 } from './ui-utils.js';
 import {
     startMockExamSim,
@@ -221,11 +219,18 @@ import { switchView } from './views/navigation.js';
 import { setupOfflineDetection } from './views/offline-detection.js';
 import { setupEventListeners } from './views/event-listeners.js';
 import { getViewTitles, navigateToView } from './router.js';
-import { contentPath, getActiveExam, getCurrentExamId, getExamList, purgeLegacyStorage, hasFeature } from './exam-context.js';
+import { getCurrentExamId, getExamList, purgeLegacyStorage } from './exam-context.js';
 import { renderExamSelect, showExamSelect, selectExamAction } from './views/exam-select.js';
 import { initUiMode, toggleUiMode, toggleStudyTools } from './ui-mode.js';
 import { initAuthView, openAuthModal, closeAuthModal, authSignIn, authSignUp, authEmailLogin, authMagicLink, authSignOut, authSetPassword, authSendOtp, authVerifyOtp, authForgotPassword } from './auth-view.js';
 import { initSync, syncNow } from './sync.js';
+import {
+    populateSubjectSelects, populateExamCards, populateResourceCards, checkStorageWarning
+} from './app-dashboard.js';
+import {
+    initViewportHeight, setupOrientationToggle, enhanceDataClickAccessibility,
+    applyExamBranding, checkIngredientsUpdate, showIngredientsChangelog, applyFeatureFlags
+} from './app-shell.js';
 import {
     initCommandPalette, openCommandPalette, closeCommandPalette,
     executePaletteResult
@@ -245,258 +250,6 @@ window.addEventListener('unhandledrejection', function (event) {
         showToast('처리 중 오류가 발생했습니다.', 'error');
     }
 });
-
-// --- 초기화 및 로컬스토리지 로드 ---
-function populateSubjectSelects() {
-    const subjects = (typeof DataLoader !== 'undefined' && DataLoader.registry)
-        ? DataLoader.getSubjectList()
-        : [];
-    
-    // 1. Flashcard subject select
-    const fcSelect = /** @type {HTMLSelectElement|null} */ (document.getElementById('fc-subject-select'));
-    if (fcSelect) {
-        const prevVal = fcSelect.value || state.flashcards.subject;
-        fcSelect.innerHTML = '';
-        subjects.forEach(subj => {
-            const option = document.createElement('option');
-            option.value = subj.key;
-            option.textContent = subj.name;
-            fcSelect.appendChild(option);
-        });
-        if (prevVal && fcSelect.querySelector(`option[value="${prevVal}"]`)) {
-            fcSelect.value = prevVal;
-            state.flashcards.subject = prevVal;
-        } else if (subjects.length > 0) {
-            fcSelect.value = subjects[0].key;
-            state.flashcards.subject = subjects[0].key;
-        }
-    }
-    
-    // 2. Quiz subject select
-    const quizSelect = /** @type {HTMLSelectElement|null} */ (document.getElementById('quiz-subject-select'));
-    if (quizSelect) {
-        const prevVal = quizSelect.value || state.quiz.subject;
-        quizSelect.innerHTML = '';
-        subjects.forEach(subj => {
-            const option = document.createElement('option');
-            option.value = subj.key;
-            option.textContent = subj.name;
-            quizSelect.appendChild(option);
-        });
-        if (prevVal && quizSelect.querySelector(`option[value="${prevVal}"]`)) {
-            quizSelect.value = prevVal;
-            state.quiz.subject = prevVal;
-        } else if (subjects.length > 0) {
-            quizSelect.value = subjects[0].key;
-            state.quiz.subject = subjects[0].key;
-        }
-    }
-
-    // 3. Review view filter buttons
-    const reviewFilterGroup = document.getElementById('review-filter-group');
-    if (reviewFilterGroup) {
-        reviewFilterGroup.innerHTML = `
-            <button class="btn btn-secondary filter-btn active" data-filter="all" data-click="setReviewFilter" data-arg="all" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; border-radius: 4px; background: var(--color-primary); border-color: var(--color-primary); color: var(--color-on-brand);">전체</button>
-        `;
-        subjects.forEach((subj, idx) => {
-            const shortName = subj.shortName || subj.name;
-            const btn = document.createElement('button');
-            btn.className = 'btn btn-secondary filter-btn';
-            btn.setAttribute('data-filter', subj.key);
-            btn.setAttribute('data-click', 'setReviewFilter');
-            btn.setAttribute('data-arg', subj.key);
-            btn.textContent = `${idx + 1}과목 (${shortName})`;
-            reviewFilterGroup.appendChild(btn);
-        });
-    }
-
-    // 4. Textbook filter buttons
-    const tbFilterGroup = document.getElementById('textbook-filter-buttons');
-    if (tbFilterGroup) {
-        tbFilterGroup.innerHTML = `
-            <button class="btn btn-secondary active-filter" data-filter="all" data-click="setTextbookFilter" data-arg="all">전체 과목</button>
-        `;
-        subjects.forEach((subj, idx) => {
-            const shortName = subj.shortName || subj.name;
-            const btn = document.createElement('button');
-            btn.className = 'btn btn-secondary';
-            btn.setAttribute('data-filter', subj.key);
-            btn.setAttribute('data-click', 'setTextbookFilter');
-            btn.setAttribute('data-arg', subj.key);
-            btn.textContent = `${idx + 1}과목 (${shortName})`;
-            tbFilterGroup.appendChild(btn);
-        });
-    }
-}
-
-const EXAM_BADGE_COLORS = ['badge-cyan', 'badge-violet', 'badge-emerald', 'badge-amber', 'badge-rose', 'badge-indigo'];
-
-function populateExamCards() {
-    const container = document.getElementById('exam-cards-dynamic');
-    if (!container) return;
-    const registry = (typeof DataLoader !== 'undefined' && DataLoader.registry) ? DataLoader.registry : null;
-    if (!registry || !registry.subjects || !registry.exams) return;
-
-    const subjects = registry.subjects;
-    const exams = registry.exams;
-    const badgeColors = {};
-    subjects.forEach((sub, idx) => {
-        badgeColors[sub.key] = EXAM_BADGE_COLORS[idx % EXAM_BADGE_COLORS.length];
-    });
-
-    container.innerHTML = '';
-    subjects.forEach((subj, idx) => {
-        const subjExams = exams.filter(e => e.subject === subj.key);
-        if (subjExams.length === 0) return;
-
-        const totalQuestions = subjExams.reduce((sum, e) => sum + (e.stats && e.stats.questions || 0), 0);
-        const badgeColor = badgeColors[subj.key] || 'badge-gray';
-
-        const btnsHtml = subjExams.map((exam, partIdx) => {
-            const partLabel = subjExams.length > 1 ? `${partIdx + 1}부` : '';
-            const pdfLabel = subjExams.length > 1
-                ? `${partLabel} PDF`
-                : '문제집 열기';
-            const simLabel = subjExams.length > 1
-                ? `${partLabel} 풀기`
-                : '시뮬레이터 시작';
-            const btnClass = subjExams.length > 1 ? '' : ' btn-cyan';
-            return `                                <div class="exam-btn-pair">
-                                    <button data-click="ExamViewer.openExam" data-arg="${contentPath(`문제은행/${exam.file}`)}" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> ${pdfLabel}</button>
-                                    <button class="exam-btn-sim${btnClass}" data-click="startMockExamSim" data-arg="${exam.key}"><i class="fa-solid fa-circle-play"></i> ${simLabel} <span class="pro-badge" data-pro-feature="mock_exam">PRO</span></button>
-                                    <small class="exam-btn-caption">선다형 + 단답형 혼합 · 수작업 원본</small>
-                                </div>`;
-        }).join('\n');
-
-        // ㄱㄴㄷ 복수정답형: 문제집 MD 열람 + 복수정답형 모의고사 (버튼 클릭 시 문항 수 선택 행 펼침)
-        // comboFile이 manifest에 선언되면 우선 사용, 없으면 과목{order}_복수정답형.md 규약
-        const comboFile = (subjExams.find(e => e.comboFile) || {}).comboFile || `과목${subj.order}_복수정답형.md`;
-        // 프리셋은 실제 풀보다 작을 때만 표시, "전체"는 실제 문항 수 표기
-        const comboTotal = DataLoader.getComboCount(subj.order);
-        const comboChips = [20, 40, 60]
-            .filter(n => !comboTotal || n < comboTotal)
-            .map(n => `<button class="exam-btn-sim combo-count-chip" data-click="startComboMockExam" data-arg="${idx + 1}:${n}">${n}문</button>`)
-            .concat(`<button class="exam-btn-sim combo-count-chip" data-click="startComboMockExam" data-arg="${idx + 1}">${comboTotal ? `전체 ${comboTotal}문` : '전체'}</button>`)
-            .join('\n                                            ');
-        const comboPair = `                                <div class="exam-btn-pair">
-                                    <button data-click="ExamViewer.openExam" data-arg="${contentPath(`문제은행/${comboFile}`)}" class="exam-btn-link"><i class="fa-solid fa-file-lines"></i> 복수정답형 문제집 <span class="pro-badge" data-pro-feature="combo_set">PRO</span></button>
-                                    <button class="exam-btn-sim" data-click="toggleComboPicker" data-arg="combo-picker-${idx + 1}"><i class="fa-solid fa-circle-play"></i> 복수정답형 모의고사 <span class="pro-badge" data-pro-feature="combo_mock">PRO</span></button>
-                                    <small class="exam-btn-caption">ㄱㄴㄷㄹ 조합형 · 원본 문항 자동 변환</small>
-                                    <div class="combo-count-row is-hidden" id="combo-picker-${idx + 1}">
-                                            ${comboChips}
-                                    </div>
-                                </div>`;
-        const allBtnsHtml = `${btnsHtml}\n${comboPair}`;
-
-        const btnsClass = subjExams.length > 2 ? 'grid-btns-3' : subjExams.length > 1 ? 'grid-btns-2' : 'flex-btns';
-
-        const cardHtml = `                        <div class="exam-card-item">
-                            <div class="exam-card-badge ${badgeColor}">${idx + 1}과목</div>
-                            <h4 class="exam-card-title">${subj.name} ${totalQuestions}제</h4>
-                            <div class="exam-card-btns ${btnsClass}">
-${allBtnsHtml}
-                            </div>
-                        </div>`;
-
-        container.insertAdjacentHTML('beforeend', cardHtml);
-    });
-
-    // 플랜이 이미 로드됐다면 새로 그린 배지에도 무료/Pro 표시 반영
-    refreshProBadges(container);
-
-    // 정적 텍스트 동적 치환 (manifest 기반)
-    const totalAllQuestions = exams.reduce((sum, e) => sum + (e.stats && e.stats.questions || 0), 0);
-    const subjCounts = subjects.map((s) => {
-        const subjExams = exams.filter(e => e.subject === s.key);
-        const count = subjExams.reduce((sum, e) => sum + (e.stats && e.stats.questions || 0), 0);
-        return count;
-    });
-    const subtitleEl = document.getElementById('exam-view-subtitle');
-    if (subtitleEl && totalAllQuestions > 0) {
-        const countStr = subjCounts.join('·');
-        subtitleEl.textContent = `교재 인용 기반 ${totalAllQuestions}제 문제은행(과목별 ${countStr}제)으로 과목별 모의고사를 보고, 학습안내서로 핵심을 요약할 수 있습니다.`;
-    }
-
-    // 통합 모의고사 제목/버튼 동적 치환
-    const integratedConfig = registry.integratedExam ? registry.integratedExam.questionsPerSubject : null;
-    if (integratedConfig) {
-        const integratedTotal = Object.values(integratedConfig).reduce((a, b) => a + b, 0);
-        const examTimeMin = (registry.integratedExam && registry.integratedExam.examTimeMin) || integratedTotal;
-        const titleEl = document.getElementById('integrated-exam-title');
-        if (titleEl) titleEl.textContent = `통합 실전 모의고사 (${integratedTotal}제)`;
-        const btnEl = document.getElementById('integrated-exam-btn');
-        if (btnEl) btnEl.innerHTML = `<i class="fa-solid fa-clock" aria-hidden="true"></i> 통합 모의고사 시작 (${examTimeMin}분)`;
-    }
-}
-
-function populateResourceCards() {
-    const container = document.getElementById('resources-section');
-    if (!container) return;
-    const registry = (typeof DataLoader !== 'undefined' && DataLoader.registry) ? DataLoader.registry : null;
-    if (!registry || !registry.resources) return;
-
-    const res = registry.resources;
-    const summaryCardsHtml = (res.summaries || []).map(s => `
-                            <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 1rem;">
-                                <strong style="color: var(--color-text-main); display: block; margin-bottom: 0.5rem; font-size: 0.9rem;">${s.icon} ${esc(s.name)}</strong>
-                                <span style="color: var(--color-text-muted); line-height: 1.5; display: block;">${esc(s.desc)}</span>
-                            </div>`).join('\n');
-
-    const linkCardsHtml = (res.links || []).map(l => `
-                        <div class="exam-card-item">
-                            <div class="exam-card-badge ${l.badgeColor}"><i class="${l.badgeIcon}"></i> ${esc(l.badgeText)}</div>
-                            <h4 class="exam-card-title">${esc(l.title)}</h4>
-                            <p class="exam-card-desc">${esc(l.desc)}</p>
-                            <div class="exam-card-btns">
-                                <a href="${l.url}" target="_blank" class="exam-btn-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> ${esc(l.linkText)}</a>
-                            </div>
-                        </div>`).join('\n');
-
-    container.innerHTML = `
-                    <div class="section-title-area" style="margin-top: 3rem;">
-                        <h3>${esc(res.sectionTitle)}</h3>
-                        <p>${esc(res.sectionDesc)}</p>
-                    </div>
-
-                    <div style="background: rgba(6, 182, 212, 0.05); border: 1px solid rgba(6, 182, 212, 0.15); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.15);">
-                        <h4 style="color: var(--color-primary); font-size: 1.1rem; margin-bottom: 1rem; font-weight: 700; display: flex; align-items: center; gap: 8px;">
-                            <i class="fa-solid fa-graduation-cap"></i> ${esc(res.summaryTitle)}
-                        </h4>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; font-size: 0.85rem;">
-${summaryCardsHtml}
-                        </div>
-                    </div>
-
-                    <div class="exam-list-grid">
-${linkCardsHtml}
-                    </div>`;
-    container.classList.remove('is-hidden');
-}
-
-function checkStorageWarning() {
-    if (!state._storageUnavailable) return;
-    const existing = document.getElementById('storage-warning-banner');
-    if (existing) return;
-    const banner = document.createElement('div');
-    banner.id = 'storage-warning-banner';
-    banner.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> 저장 공간이 부족하여 학습 진행상황이 저장되지 않습니다. 브라우저 데이터를 정리하거나 백업 후 진행 상황을 내보내세요.';
-    document.body.appendChild(banner);
-    banner.addEventListener('click', () => { banner.remove(); });
-}
-
-// 설치형 PWA 콜드 스타트에서 dvh가 실제 화면보다 크게 측정되는 경우가 있어
-// (스플래시 직후 시스템 바 확정 전) — visualViewport 기준으로 재측정해 자정시킨다.
-// 과대 측정 시 .main-content 끝이 화면 밖으로 나가 스크롤 끝 콘텐츠가 탭 바에 가려짐.
-function initViewportHeight() {
-    const sync = () => {
-        const h = window.visualViewport ? window.visualViewport.height : window.innerHeight;
-        document.documentElement.style.setProperty('--app-height', `${h}px`);
-    };
-    sync();
-    window.addEventListener('resize', sync);
-    window.addEventListener('orientationchange', sync);
-    window.visualViewport?.addEventListener('resize', sync);
-}
 
 function initApp() {
     // 한 단계가 실패해도 나머지 버튼 연결/렌더가 죽지 않도록 각 단계를 격리한다.
@@ -562,63 +315,6 @@ function initApp() {
 
     // 오프라인 큐에 쌓인 의견은 온라인 복귀 시 플러시
     window.addEventListener('online', () => { flushPendingFeedback(); });
-}
-
-// --- 가로/세로 보기 ---
-// 실제 기기 회전 + 반응형 CSS가 가로/세로를 직접 처리하므로
-// 가로/세로 보기 토글 — landscape-mode 클래스를 토글하고 상태를 저장
-function setupOrientationToggle() {
-    const btn = document.getElementById('orientation-toggle-btn');
-    if (!btn) return;
-
-    // 초기 상태 복원
-    if (safeGetItem(STORAGE_KEYS.PREFERRED_ORIENTATION) === 'landscape') {
-        document.body.classList.add('landscape-mode');
-        const icon = btn.querySelector('i');
-        if (icon) icon.className = 'fa-solid fa-mobile-screen';
-    }
-
-    btn.addEventListener('click', () => {
-        const isLandscape = document.body.classList.toggle('landscape-mode');
-        if (isLandscape) {
-            safeSetItem(STORAGE_KEYS.PREFERRED_ORIENTATION, 'landscape');
-        } else {
-            safeRemoveItem(STORAGE_KEYS.PREFERRED_ORIENTATION);
-        }
-        // 아이콘 업데이트
-        const icon = btn.querySelector('i');
-        if (icon) {
-            icon.className = isLandscape ? 'fa-solid fa-mobile-screen' : 'fa-solid fa-mobile-screen-button';
-        }
-        showOrientationToast(isLandscape);
-    });
-}
-
-// 방향 전환 알림 표시
-function showOrientationToast(isLandscape) {
-    // 기존 토스트 제거
-    const existingToast = document.querySelector('.orientation-toast');
-    if (existingToast) existingToast.remove();
-    
-    const toast = document.createElement('div');
-    toast.className = 'orientation-toast';
-
-    const icon = document.createElement('i');
-    icon.className = `${isLandscape ? 'fa-solid fa-mobile-screen' : 'fa-solid fa-mobile-screen-button'} orientation-toast-icon`;
-
-    const text = document.createElement('span');
-    text.className = 'orientation-toast-text';
-    text.textContent = isLandscape ? '가로 보기 모드' : '세로 보기 모드';
-
-    toast.appendChild(icon);
-    toast.appendChild(text);
-    document.body.appendChild(toast);
-
-    // 2초 후 자동 제거
-    setTimeout(() => {
-        toast.style.animation = 'orientationToastOut 0.3s ease';
-        setTimeout(() => toast.remove(), 300);
-    }, 2000);
 }
 
 // --- 네비게이션 제어 (SPA) ---
@@ -817,41 +513,6 @@ initApp = function() {
 };
 
 
-function enhanceDataClickAccessibility() {
-    document.querySelectorAll('[data-click]').forEach(el => {
-        if (el.tagName === 'BUTTON' || el.tagName === 'A' || el.tagName === 'INPUT' || el.tagName === 'SELECT' || el.tagName === 'TEXTAREA') return;
-        if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
-        if (!el.hasAttribute('role')) el.setAttribute('role', 'button');
-    });
-}
-
-// 동적 콘텐츠에도 접근성 속성 자동 부여
-const _dataClickObserver = new MutationObserver((mutations) => {
-    for (const mutation of mutations) {
-        for (const node of mutation.addedNodes) {
-            if (node.nodeType !== Node.ELEMENT_NODE) continue;
-            const el = /** @type {Element} */ (node);
-            if (el.matches('[data-click]')) {
-                if (el.tagName !== 'BUTTON' && el.tagName !== 'A' && el.tagName !== 'INPUT' && el.tagName !== 'SELECT' && el.tagName !== 'TEXTAREA') {
-                    if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
-                    if (!el.hasAttribute('role')) el.setAttribute('role', 'button');
-                }
-            }
-            if (el.querySelectorAll) {
-                el.querySelectorAll('[data-click]').forEach(el => {
-                    if (el.tagName === 'BUTTON' || el.tagName === 'A' || el.tagName === 'INPUT' || el.tagName === 'SELECT' || el.tagName === 'TEXTAREA') return;
-                    if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
-                    if (!el.hasAttribute('role')) el.setAttribute('role', 'button');
-                });
-            }
-        }
-    }
-});
-if (document.body) {
-    _dataClickObserver.observe(document.body, { childList: true, subtree: true });
-}
-
-
 /* =======================================================
    🖨️ 오답노트 인쇄 (Print Handler)
    ======================================================= */
@@ -1011,95 +672,6 @@ Object.assign(window, DELEGATED_HANDLERS);
 // =======================================================
 // 멀티시험 컨텍스트 초기화
 // =======================================================
-
-/** 활성 시험의 브랜딩을 DOM에 반영 (문서 제목 + 사이드바 로고) */
-function applyExamBranding() {
-    const exam = getActiveExam();
-    if (!exam) return;
-    if (exam.title) document.title = exam.title;
-    const logoMain = document.querySelector('.logo-text h1');
-    const logoSub = document.querySelector('.logo-text span');
-    if (logoMain && exam.logoMain) logoMain.textContent = exam.logoMain;
-    if (logoSub && exam.logoSub) logoSub.textContent = exam.logoSub;
-}
-
-/**
- * 원료 DB 갱신 감지 — 레지스트리의 ingredients.contentHash를 마지막 확인 값과 비교해
- * 정정/개정 배포로 바뀐 경우 1회 알림을 띄운다. 최초 방문(저장값 없음)은 조용히 기록만 한다.
- * contentHash는 원료 파일 내용의 해시라 배포 시점이 아니라 실제 데이터 변경 때만 발화한다.
- */
-// 기존 사용자 식별용 — 실제 사용으로만 생성되는 진행 데이터 키들 (알림 기능 도입 전 사용자 구분)
-const RETURNING_USER_KEYS = [
-    STORAGE_KEYS.QUIZ_RESULTS, STORAGE_KEYS.STUDY_CALENDAR, STORAGE_KEYS.STUDY_STREAK,
-    STORAGE_KEYS.FC_MEMORIZED, STORAGE_KEYS.FC_SPACED_REPETITION,
-    STORAGE_KEYS.SIM_RESULTS_HISTORY, STORAGE_KEYS.FORMULA_ITEMS, STORAGE_KEYS.READER_LAST_POSITION
-];
-
-function checkIngredientsUpdate() {
-    const meta = (DataLoader.registry && DataLoader.registry.ingredients) || null;
-    const hash = meta && meta.contentHash;
-    if (!hash) return;
-    try {
-        const prev = safeGetItem(STORAGE_KEYS.INGREDIENTS_HASH);
-        // 알림 키는 '버전:해시' — 데이터 해시가 같아도 db_version 범프(표시 전용 개정)는 발화한다.
-        const notifyKey = `${meta.version || 'data'}:${hash}`;
-        const notifiedHash = safeGetItem(STORAGE_KEYS.INGREDIENTS_DB_NOTIFIED);
-        // 진행 데이터 존재 = 알림 기능 도입 전부터 쓰던 기존 사용자 → 이 버전 알림을 아직 못 봤다면 1회 고지
-        const isReturningUser = RETURNING_USER_KEYS.some(k => safeGetItem(k) !== null);
-        const hashChanged = prev !== null && prev !== hash;
-        const missedNotice = isReturningUser && notifiedHash !== notifyKey;
-        if (hashChanged || missedNotice) {
-            const version = meta.version ? ` v${meta.version}` : '';
-            const notice = meta.notice ? `\n\n갱신 내역: ${meta.notice}` : '';
-            const count = meta.stats && meta.stats.count ? `\n수록 원료 ${meta.stats.count}종 · 성분 사전과 Formula OS 규정 검증이 최신 기준으로 적용됩니다.` : '';
-            const history = Array.isArray(meta.history) ? meta.history : [];
-            const prevNote = history.length
-                ? `\n\n이전 개정:\n${history.slice(0, 3).map(h => `· v${h.version} (${h.updatedAt || '—'}) ${h.notice || ''}`).join('\n')}`
-                : '';
-            // 확인 플래그는 사용자가 모달을 실제로 닫은 뒤에만 기록한다.
-            // (SW 업데이트 리로드 등으로 모달이 조기 소실되면 다음 방문에 다시 고지)
-            showAlert(`원료 데이터베이스가${version}로 갱신되었습니다.${notice}${count}${prevNote}`, '원료 DB 갱신')
-                .then(() => {
-                    safeSetItem(STORAGE_KEYS.INGREDIENTS_DB_NOTIFIED, notifyKey);
-                    safeSetItem(STORAGE_KEYS.INGREDIENTS_HASH, hash);
-                })
-                .catch(() => {});
-        } else if (prev === null) {
-            // 신규 사용자: 현재 버전을 '이미 확인한 것'으로 기록해 향후 오발화 방지
-            safeSetItem(STORAGE_KEYS.INGREDIENTS_DB_NOTIFIED, notifyKey);
-        } else if (prev !== hash) {
-            safeSetItem(STORAGE_KEYS.INGREDIENTS_HASH, hash);
-        }
-    } catch (e) { /* 알림 실패가 초기화를 막지 않도록 무시 */ }
-}
-
-/** 성분 사전 버전 배지 탭 → 원료 DB 버전 이력 모달 (현재 버전 + 누적 개정 내역) */
-function showIngredientsChangelog() {
-    const meta = (DataLoader.registry && DataLoader.registry.ingredients) || null;
-    if (!meta || !meta.version) { showToast('원료 DB 버전 정보가 없습니다.', 'info'); return; }
-    const lines = [`현재: v${meta.version} (${meta.updatedAt || '—'})`];
-    if (meta.notice) lines.push(`  ${meta.notice}`);
-    const history = Array.isArray(meta.history) ? meta.history : [];
-    if (history.length) {
-        lines.push('', '이전 개정:');
-        history.forEach(h => lines.push(`· v${h.version} (${h.updatedAt || '—'}) ${h.notice || ''}`));
-    }
-    if (meta.stats && meta.stats.count) lines.push('', `수록 원료 ${meta.stats.count}종`);
-    showAlert(lines.join('\n'), '원료 DB 버전 이력');
-}
-
-/** 활성 시험의 features 플래그에 따라 도메인 특화 UI 숨김 (data-feature 속성 기반) */
-function applyFeatureFlags() {
-    const multiExam = getExamList().length > 1;
-    document.querySelectorAll('[data-feature]').forEach(node => {
-        const el = /** @type {HTMLElement} */ (node);
-        // 시험 전환 버튼은 플래그가 아닌 실제 시험 수로 결정 — 1개면 무의미
-        const on = el.dataset.feature === 'examSwitch'
-            ? multiExam
-            : hasFeature(el.dataset.feature);
-        if (!on) el.classList.add('is-hidden');
-    });
-}
 
 /**
  * 시험 컨텍스트 초기화 — initApp보다 먼저 실행된다.
