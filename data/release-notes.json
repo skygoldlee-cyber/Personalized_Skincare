@@ -1,5 +1,12 @@
 [
   {
+    "version": "v20260928-9fcdad4",
+    "date": "2026-09-28",
+    "notes": [
+      "[기능·refs] 참조자료·법규 문서에 law.go.kr 원문 링크 — 한글주소 매퍼"
+    ]
+  },
+  {
     "version": "v20260928-db636f1",
     "date": "2026-09-28",
     "notes": [
@@ -147,13 +154,6 @@
       "P1 리팩토링: tools/check/ 검증 계열 분리 + reader.css 3-way 분할",
       "설계 원칙에 Spec-Traceable(요구사양 추적성) 추가",
       "TRACE MATRIX에 요구사항 출처(source) 추적 추가 — ISO 29148 잔여 갭 해소"
-    ]
-  },
-  {
-    "version": "v369-20260928-c0bde7e",
-    "date": "2026-09-28",
-    "notes": [
-      "docs(manual): 히트맵 범례 40% 미만 이모지 ⭕로 변경"
     ]
   }
 ]
