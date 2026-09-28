@@ -1,5 +1,12 @@
 [
   {
+    "version": "v20260929-870ea76",
+    "date": "2026-09-29",
+    "notes": [
+      "[문서·trace] 고시 감시·원문 링크·네거티브 원칙 상위문서 반영 + check:imports 경고 22→0"
+    ]
+  },
+  {
     "version": "v20260929-ed3ad71",
     "date": "2026-09-29",
     "notes": [
@@ -133,13 +140,6 @@
     "notes": [
       "[수정·notice] 버튼 요소 타입 캐스팅 — tsc 통과",
       "[기능·formula] '식약처 고시 확인' 버튼 — law.go.kr 실시간 조회"
-    ]
-  },
-  {
-    "version": "v20260928-7fc3d57",
-    "date": "2026-09-28",
-    "notes": [
-      "[정리·csp] connect-src에 law.go.kr 허용 — 고시 확인 버튼 검토용"
     ]
   }
 ]
