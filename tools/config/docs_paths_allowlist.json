@@ -50,6 +50,11 @@
     "reason": "로드맵상 신규 뷰 (미구현)"
   },
   {
+    "file": "docs/dev/runbooks/TEXTBOOK_REPLACEMENT_RUNBOOK.md",
+    "ref": "content/exams/{id}/html/",
+    "reason": "batch_convert.py 생성 산출물 디렉터리 — gitignore (로컬 생성물)"
+  },
+  {
     "file": "docs/dev/runbooks/TEXTBOOK_AUTHORING_GUIDE.md",
     "reason": "인용 문법 예시 링크 — 문서 상대경로가 아닌 콘텐츠 상대경로 표기"
   },
