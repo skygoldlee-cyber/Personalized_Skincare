@@ -101,8 +101,12 @@ function extractSpec() {
       const id = m[1];
       if (id.startsWith('DOC-')) continue;
       if (!firstMention.has(id) || (!firstMention.get(id) && sec)) firstMention.set(id, sec);
-      // 선언 형태 우선: 표 첫 셀(| ID |) 또는 굵은 선언(**ID**) — 교차 참조 언급 절보다 우선
-      const declared = new RegExp(`^\\s*\\|\\s*${id}\\s*\\||\\*\\*${id}\\*\\*`).test(l);
+      // 선언 형태 우선: 표 첫 셀(| ID |, 3열 이상 = 요구사항 표) 또는 굵은 선언(**ID**)
+      // 부록·출처 절의 2열 매핑표(| ID | 출처 |)는 선언으로 오인하지 않는다
+      const inDeclSection = !/부록|출처/.test(sec);
+      const tableDecl = /^\s*\|/.test(l) && l.split('|').map(c => c.trim()).filter(Boolean).length >= 3;
+      const declared = inDeclSection &&
+        (new RegExp(`^\\s*\\|\\s*${id}\\s*\\|`).test(l) && tableDecl || new RegExp(`\\*\\*${id}\\*\\*`).test(l));
       if (declared && sec) ids.set(id, sec);
     }
   }
@@ -119,6 +123,21 @@ function extractSpecStatus() {
     if (!m) continue;
     const cells = l.split('|').map(c => c.trim()).filter(Boolean);
     if (cells.length >= 3) map.set(m[1], cells[cells.length - 1]);
+  }
+  return map;
+}
+
+/** SPEC.md "부록: 요구사항 출처" 표 → Map(id → 출처 문자열). ID 셀은 범위·나열 지원 */
+function extractSpecSources(specIds = new Set()) {
+  const map = new Map();
+  let inSrc = false;
+  for (const l of fs.readFileSync(SPEC_FILE, 'utf8').split('\n')) {
+    if (/^#{2,3} /.test(l)) { inSrc = /출처/.test(l); continue; }
+    if (!inSrc) continue;
+    const cells = l.split('|').map(c => c.trim()).filter(Boolean);
+    if (cells.length !== 2) continue;
+    if (/^[-:]*$/.test(cells[0]) || cells[0] === 'ID') continue; // 헤더·구분선
+    for (const id of expandIds(cells[0], specIds)) map.set(id, cells[1]);
   }
   return map;
 }
@@ -197,5 +216,6 @@ module.exports = {
   ROOT, SPEC_FILE, SCAN_DIRS, SCAN_FILES, SCAN_EXTS, EXCLUDE_DIRS, EXCLUDE_FILES,
   DOC_DIRS, DOC_FILES, REPORT_DIR,
   ID_RE, SPEC_TAG_RE, RANGE_RE, WILDCARD_ID_RE, PURE_ID_RE, DOC_ID_RE, RELATED_RE,
-  walk, expandIds, extractSpec, extractSpecStatus, collectCodeRefs, collectDocRefs, idsInFile, scanAll,
+  walk, expandIds, extractSpec, extractSpecStatus, extractSpecSources,
+  collectCodeRefs, collectDocRefs, idsInFile, scanAll,
 };

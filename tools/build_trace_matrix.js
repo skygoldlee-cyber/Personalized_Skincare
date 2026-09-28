@@ -59,7 +59,7 @@ function verMeans(id, src, tst, docs) {
   return '—';
 }
 
-function build(specIds, src, tst, docs, reports, meta, missingRef, status) {
+function build(specIds, src, tst, docs, reports, meta, missingRef, status, sources) {
   const bySection = new Map();
   for (const [id, sec] of specIds) {
     if (!bySection.has(sec)) bySection.set(sec, []);
@@ -81,6 +81,7 @@ function build(specIds, src, tst, docs, reports, meta, missingRef, status) {
   out.push('| 소스 | 구현 코드 파일 | `// @spec` 태그 |');
   out.push('| 테스트 | 검증 테스트 파일 | `// @spec` 태그 (tests/) |');
   out.push('| 보고서 | 분석·결과 보고서 | report_archive 헤더 |');
+  out.push('| 출처 | 요구사항의 기원 (법령·시험 규정·사업 문서) | SPEC 부록 "요구사항 출처" 표 |');
   out.push('');
 
   let nDoc = 0, nSrc = 0, nTst = 0, nRpt = 0;
@@ -97,8 +98,8 @@ function build(specIds, src, tst, docs, reports, meta, missingRef, status) {
 
   for (const [sec, ids] of bySection) {
     out.push(`## ${sec || '기타 (SPEC 헤더·본문 언급)'}`, '');
-    out.push('| ID | 상태 | 검증 수단 | 문서 | 소스 | 테스트 | 보고서 |');
-    out.push('|----|------|-----------|------|------|--------|--------|');
+    out.push('| ID | 상태 | 검증 수단 | 문서 | 소스 | 테스트 | 보고서 | 출처 |');
+    out.push('|----|------|-----------|------|------|--------|--------|------|');
     for (const id of ids.sort()) {
       const cell = (m) => {
         const s = m.get(id);
@@ -106,7 +107,7 @@ function build(specIds, src, tst, docs, reports, meta, missingRef, status) {
         const arr = [...s].sort();
         return arr.length > 4 ? arr.slice(0, 4).join('<br>') + `<br>…외 ${arr.length - 4}개` : arr.join('<br>');
       };
-      out.push(`| ${id} | ${status.get(id) || '—'} | ${verMeans(id, src, tst, docs)} | ${cell(docs)} | ${cell(src)} | ${cell(tst)} | ${cell(reports)} |`);
+      out.push(`| ${id} | ${status.get(id) || '—'} | ${verMeans(id, src, tst, docs)} | ${cell(docs)} | ${cell(src)} | ${cell(tst)} | ${cell(reports)} | ${sources.get(id) || '—'} |`);
     }
     out.push('');
   }
@@ -151,6 +152,7 @@ function main() {
   const checkOnly = process.argv.includes('--check');
   const { specIds, src, tst, docs, reports, meta, missingRef, docErrors } = T.scanAll();
   const status = T.extractSpecStatus();
+  const sources = T.extractSpecSources(specIds);
 
   if (checkOnly) {
     const want = inputsHash(specIds);
@@ -169,7 +171,7 @@ function main() {
     for (const e of docErrors) console.log(`  - ${e}`);
   }
 
-  fs.writeFileSync(OUT_FILE, build(specIds, src, tst, docs, reports, meta, missingRef, status));
+  fs.writeFileSync(OUT_FILE, build(specIds, src, tst, docs, reports, meta, missingRef, status, sources));
   let nDoc = 0, nSrc = 0, nTst = 0, nRpt = 0, nGap = 0;
   for (const id of specIds.keys()) {
     if (docs.has(id)) nDoc++;
