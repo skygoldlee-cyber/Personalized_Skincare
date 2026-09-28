@@ -139,9 +139,9 @@ function main() {
         stampReleaseNotes({ version: stamp.newValue, prevVersion: stamp.oldValue });
         try {
             git('add sw.js data/version.js data/release-notes.js data/release-notes.json package.json');
-            // SKIP_DOCSYNC: 자동 스탬프 산출물 커밋은 문서 갱신 대상이 아님
-            // ([no-docs] 마커는 --ref 모드 전용이라 pre-commit에는 환경변수 사용)
-            git('commit -m "chore(sw): CACHE_VERSION 스탬프" --quiet',
+            // 자동 스탬프 산출물 커밋은 문서 갱신 대상이 아님 — 게이트 우회 이중 적용:
+            // pre-commit(--staged)은 SKIP_DOCSYNC=1, pre-push(--ref)는 [no-docs] 마커를 인식
+            git('commit -m "chore(sw): CACHE_VERSION 스탬프 [no-docs]" --quiet',
                 { env: { ...process.env, SKIP_DOCSYNC: '1' } });
             git('push origin main --quiet');
         } catch (e) {
