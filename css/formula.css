@@ -992,3 +992,41 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
     font-size: 0.8rem;
     color: var(--color-text-muted);
 }
+.notice-status-view {
+    margin: 0 0 12px;
+    padding: 10px 14px;
+    border: 1px solid var(--color-border, #30363d);
+    border-radius: var(--radius-md, 8px);
+    background: var(--color-surface-alt, rgba(128, 128, 128, 0.06));
+    font-size: 0.82rem;
+}
+.notice-status-row {
+    display: flex;
+    gap: 10px;
+    padding: 3px 0;
+    line-height: 1.5;
+}
+.notice-status-key {
+    flex: 0 0 7.5em;
+    color: var(--color-text-muted);
+}
+.notice-status-links {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--color-border, #30363d);
+}
+.notice-status-links a {
+    color: var(--color-primary, #1f6feb);
+    font-size: 0.78rem;
+}
+.notice-status-src {
+    margin-left: auto;
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+}
+.notice-status-loading {
+    color: var(--color-text-muted);
+}

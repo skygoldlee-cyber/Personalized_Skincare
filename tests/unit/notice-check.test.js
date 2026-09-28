@@ -1,7 +1,7 @@
 // tests/unit/notice-check.test.js — 식약처 고시 감지 배너 판정 로직
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { isNewerNotice, normalizeNotice, findNoticeNumber } from '../../src/notice-check.js';
+import { isNewerNotice, normalizeNotice, findNoticeNumber, statusRows } from '../../src/notice-check.js';
 
 const base = { notice: '제2026-19호', effectiveDate: '2026-03-18' };
 const status = (latest, baseline = base) => ({ baseline, latest });
@@ -64,5 +64,28 @@ describe('findNoticeNumber', () => {
     });
     it('고시번호를 찾지 못하면 null', () => {
         assert.equal(findNoticeNumber({ 행정규칙일련번호: '2100000276068' }), null);
+    });
+});
+
+describe('statusRows', () => {
+    it('상태 파일을 표시용 4행으로 변환', () => {
+        const rows = statusRows({
+            baseline: { notice: '제2026-19호', effectiveDate: '2026-03-18' },
+            latest: { notice: '제2026-19호', effectiveDate: '2026-03-18', serialNo: '2100000276068' },
+            checkedAt: '2026-09-28T14:00:00+00:00',
+            newerFound: false,
+        });
+        assert.equal(rows.length, 4);
+        assert.match(rows[0][1], /제2026-19호/);
+        assert.match(rows[1][1], /일련번호 2100000276068/);
+        assert.equal(rows[3][1], '없음');
+    });
+    it('newerFound면 신규 고시 경고 표기', () => {
+        const rows = statusRows({ baseline: {}, latest: {}, newerFound: true });
+        assert.match(rows[3][1], /있음/);
+    });
+    it('status 누락 시 빈 배열', () => {
+        assert.deepEqual(statusRows(null), []);
+        assert.deepEqual(statusRows(undefined), []);
     });
 });

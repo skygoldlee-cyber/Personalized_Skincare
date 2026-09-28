@@ -94,7 +94,7 @@ import {
     closeGoalSettings,
     saveGoalSettings
 } from './views/study-calendar.js';
-import { checkMfdsNotice, checkMfdsNoticeNow, dismissMfdsNotice } from './notice-check.js';
+import { checkMfdsNotice, checkMfdsNoticeNow, dismissMfdsNotice, viewMfdsNoticeStatus } from './notice-check.js';
 import {
     initFormulaView,
     exitFormulaSubView,
@@ -603,7 +603,7 @@ const DELEGATED_HANDLERS = {
     // 사전/시험 전환
     clearDictSearch, setDictFilter, dictExportCsv, showExamSelect, selectExamAction,
     // Formula OS (배합 계산·My 포뮬러)
-    dismissMfdsNotice, checkMfdsNoticeNow,
+    dismissMfdsNotice, checkMfdsNoticeNow, viewMfdsNoticeStatus,
     openFormulaList, openFormulaCalc, openIngredientDict, exitFormulaSubView,
     formulaNew, formulaOpen, formulaDuplicate, formulaDelete,
     formulaCalcAddRow, formulaCalcRemoveRow, formulaCalcSave, formulaAddIngredient,

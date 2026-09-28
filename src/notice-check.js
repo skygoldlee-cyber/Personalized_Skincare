@@ -164,6 +164,52 @@ export async function checkMfdsNoticeNow() {
   }
 }
 
+/** 상태 파일 → 표시용 행 목록 (순수 함수 — 테스트용) */
+export function statusRows(status) {
+  if (!status) return [];
+  const b = status.baseline || {};
+  const l = status.latest || {};
+  return [
+    ['기준(번들 DB)', `${b.notice || '—'} · 시행 ${b.effectiveDate || '—'}`],
+    ['최신 확인', `${l.notice || '—'} · 시행 ${l.effectiveDate || '—'}${l.serialNo ? ` · 일련번호 ${l.serialNo}` : ''}`],
+    ['마지막 자동 확인', status.checkedAt || '—'],
+    ['신규 고시', status.newerFound ? '있음 — 원문 확인 필요' : '없음'],
+  ];
+}
+
+/** '고시 정보 보기' 버튼 (data-click 위임) — notice_status.json 내용을 패널로 표시/숨김 */
+export async function viewMfdsNoticeStatus() {
+  const panel = document.getElementById('notice-status-view');
+  if (!panel) return;
+  if (!panel.hidden) { panel.hidden = true; return; }
+  panel.innerHTML = '<div class="notice-status-loading">상태 파일 불러오는 중…</div>';
+  panel.hidden = false;
+
+  const examId = getActiveExamId() || 'cosmetic';
+  let status = null;
+  let source = '';
+  // Actions가 갱신한 원격 파일 우선, 실패 시 번들 스냅샷
+  for (const [url, tag] of [[statusUrl(examId), '원격'], [`content/exams/${examId}/notice_status.json`, '번들']]) {
+    try {
+      const r = await fetch(url, { cache: 'no-store' });
+      if (r.ok) { status = await r.json(); source = tag; break; }
+    } catch (_) { /* 다음 후보 */ }
+  }
+  if (!status) {
+    panel.innerHTML = '<div class="notice-status-loading">상태 파일을 불러오지 못했습니다 — 네트워크를 확인하세요.</div>';
+    return;
+  }
+  const rows = statusRows(status).map(([k, v]) =>
+    `<div class="notice-status-row"><span class="notice-status-key">${escapeHTML(k)}</span><span>${escapeHTML(v)}</span></div>`).join('');
+  panel.innerHTML = `
+    ${rows}
+    <div class="notice-status-links">
+      <a href="${statusUrl(examId)}" target="_blank" rel="noopener">상태 파일 원문</a>
+      <a href="${LAW_SEARCH_URL}" target="_blank" rel="noopener">고시 원문(law.go.kr)</a>
+      <span class="notice-status-src">출처: ${source}</span>
+    </div>`;
+}
+
 /** 배너 닫기 (data-click 위임) — 같은 시행일의 고시는 다시 표시하지 않음 */
 export function dismissMfdsNotice(effectiveDate) {
   if (effectiveDate) setItem(STORAGE_KEYS.NOTICE_DISMISSED_DATE, effectiveDate);
