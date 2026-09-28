@@ -26,6 +26,7 @@ export const STORAGE_KEYS = {
   // 학습 스트릭 / 데일리 챌린지
   STUDY_STREAK: 'study_streak',
   STUDY_STREAK_LAST_DATE: 'study_streak_last_date',
+  STREAK_FREEZES: 'streak_freezes',   // 스트릭 복구권 보유 수 (SC-04)
   DAILY_COMPLETED_PREFIX: 'daily_completed_',
 
   // 학습 캘린더 (날짜별 학습 여부)
@@ -110,6 +111,7 @@ export const BACKUP_KEYS = [
   STORAGE_KEYS.POMO_TOTAL_TIME_DATE,
   STORAGE_KEYS.STUDY_STREAK,
   STORAGE_KEYS.STUDY_STREAK_LAST_DATE,
+  STORAGE_KEYS.STREAK_FREEZES,
   STORAGE_KEYS.STUDY_CALENDAR,
   STORAGE_KEYS.STUDY_GOALS,
   STORAGE_KEYS.EXAM_DATE,

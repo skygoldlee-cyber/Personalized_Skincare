@@ -195,7 +195,7 @@
             </header>
 
             <!-- Dashboard View -->
-            <!-- @spec D-01 -->
+            <!-- @spec D-01,D-16,SC-04 -->
             <section id="dashboard-view" class="view-section active">
                 <!-- Draft Resume Banner (New Feature 1) -->
                 <div id="draft-resume-banner" class="is-hidden draft-banner">
@@ -277,6 +277,7 @@
                             </div>
                             <div class="streak-badge">
                                 <i class="fa-solid fa-fire streak-fire-icon" aria-hidden="true"></i> 연속 학습 <span id="streak-days">0</span>일
+                                <span id="streak-freezes" class="streak-freeze-badge" style="display:none"></span>
                             </div>
                         </div>
                         <p class="daily-challenge-desc">
@@ -284,6 +285,7 @@
                         </p>
                         <div class="flex-between">
                             <span id="daily-challenge-status" class="badge daily-challenge-badge">오늘 미션 미완료</span>
+                            <span id="weekly-goal-chip" class="badge weekly-goal-chip" title="이번 주 학습 일수 / 주간 목표"></span>
                             <button id="start-daily-btn" class="btn btn-success" data-click="startDailyChallenge">
                                 <i class="fa-solid fa-play" aria-hidden="true"></i> 챌린지 시작
                             </button>

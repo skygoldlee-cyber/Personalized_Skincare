@@ -1,5 +1,5 @@
 // src/views/daily-challenge.js - 일일 5분 데일리 챌린지 & Streak 로직 (quiz.js에서 분리)
-// @spec D-07,Q-06
+// @spec D-07,Q-06,SC-04
 import { state, saveProgress, safeGetItem, safeSetItem } from '../state.js';
 import { safeTextWithBreaks, esc } from '../sanitize.js';
 import { DataLoader } from '../data-loader.js';
@@ -7,6 +7,7 @@ import { checkShortAnswer } from './trainer.js';
 import { shuffle } from '../utils.js';
 import { showToast, showConfirm } from '../ui-utils.js';
 import { STORAGE_KEYS, dailyCompletedKey } from '../storage-keys.js';
+import { getWeeklyGoalProgress } from '../study-tracker.js';
 
 /* =======================================================
    🧩 일일 5분 데일리 챌린지 (Daily 5-Min Challenge) & Streak
@@ -18,6 +19,15 @@ const dailyState = {
     questions: []
 };
 
+// 스트릭 복구권 (SC-04) — STREAK_FREEZE_EARN_EVERY일 연속 학습마다 1장 획득,
+// 어제 하루만 결손이면 자동 소비해 스트릭을 유지한다. 보유 상한은 한 번에 MAX장.
+const STREAK_FREEZE_MAX = 2;
+const STREAK_FREEZE_EARN_EVERY = 7;
+
+function _getFreezeCount() {
+    return parseInt(safeGetItem(STORAGE_KEYS.STREAK_FREEZES) || '0') || 0;
+}
+
 /**
  * 연속 학습일 Streak 정보 및 데일리 챌린지 미션 상태 UI 업데이트
  */
@@ -25,9 +35,9 @@ export function updateStreakAndDailyUI() {
     const streakDaysEl = document.getElementById('streak-days');
     const challengeStatusEl = document.getElementById('daily-challenge-status');
     const startBtn = /** @type {HTMLButtonElement|null} */ (document.getElementById('start-daily-btn'));
-    
+
     if (!streakDaysEl) return;
-    
+
     let streak = parseInt(safeGetItem(STORAGE_KEYS.STUDY_STREAK) || '0') || 0;
     const lastDate = safeGetItem(STORAGE_KEYS.STUDY_STREAK_LAST_DATE);
     const todayStr = new Date().toISOString().split('T')[0];
@@ -37,16 +47,39 @@ export function updateStreakAndDailyUI() {
         const today = new Date(todayStr);
         const diffTime = Math.abs(today.getTime() - last.getTime());
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        
-        if (diffDays > 1) {
+
+        if (diffDays === 2 && _getFreezeCount() > 0) {
+            // 어제 하루만 결손 — 복구권 자동 소비. lastDate를 어제로 보정해
+            // 재진입 시 중복 소비를 막고 오늘 학습이 스트릭을 잇게 한다.
+            const freezes = _getFreezeCount() - 1;
+            safeSetItem(STORAGE_KEYS.STREAK_FREEZES, freezes);
+            const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+            safeSetItem(STORAGE_KEYS.STUDY_STREAK_LAST_DATE, yesterday);
+            showToast(`🧊 스트릭 복구권을 사용해 연속 학습을 지켰습니다 (잔여 ${freezes}장)`, 'info', 4000);
+        } else if (diffDays > 1) {
             streak = 0;
             safeSetItem(STORAGE_KEYS.STUDY_STREAK, 0);
         }
     } else {
         streak = 0;
     }
-    
+
     streakDaysEl.textContent = String(streak);
+
+    // 복구권 보유 수 + 이번 주 학습일 칩 (SC-04 / SC-01 확장)
+    const freezeEl = document.getElementById('streak-freezes');
+    if (freezeEl) {
+        const freezes = _getFreezeCount();
+        freezeEl.textContent = freezes > 0 ? `🧊 ${freezes}` : '';
+        freezeEl.style.display = freezes > 0 ? '' : 'none';
+        freezeEl.title = `스트릭 복구권 ${freezes}장 — 어제 학습을 놓치면 자동으로 스트릭을 지켜줍니다 (7일 연속마다 1장, 최대 ${STREAK_FREEZE_MAX}장)`;
+    }
+    const weeklyEl = document.getElementById('weekly-goal-chip');
+    if (weeklyEl) {
+        const w = getWeeklyGoalProgress();
+        weeklyEl.textContent = `이번 주 ${w.studyDays}/${w.goalDays}일`;
+        weeklyEl.classList.toggle('weekly-goal-done', w.percent >= 100);
+    }
     
     const todayCompleted = safeGetItem(dailyCompletedKey(todayStr));
     if (todayCompleted) {
@@ -414,7 +447,15 @@ function finishDailyChallenge() {
         streak++;
         safeSetItem(STORAGE_KEYS.STUDY_STREAK, streak);
         safeSetItem(STORAGE_KEYS.STUDY_STREAK_LAST_DATE, todayStr);
+        // 스트릭 복구권 획득 — 7일 연속 마일스톤마다 1장 (SC-04)
+        if (streak % STREAK_FREEZE_EARN_EVERY === 0) {
+            const freezes = _getFreezeCount();
+            if (freezes < STREAK_FREEZE_MAX) {
+                safeSetItem(STORAGE_KEYS.STREAK_FREEZES, freezes + 1);
+                showToast(`🧊 ${streak}일 연속 학습! 스트릭 복구권을 받았습니다 (${freezes + 1}/${STREAK_FREEZE_MAX}장)`, 'success', 4000);
+            }
+        }
     }
-    
+
     updateStreakAndDailyUI();
 }

@@ -1,5 +1,5 @@
 // src/analysis-engine.js — 맞춤학습(analysis-view) 심층 분석 순수 로직
-// @spec AN-01,AN-02
+// @spec AN-01,AN-02,D-16
 //
 // 모든 함수는 DOM 비의존·과목 무관 — 데이터를 주입받아 계산만 한다.
 // 과목 키/단원명은 manifest·question_chapters·statement_stats에서 동적으로 해석하므로
@@ -15,6 +15,7 @@
 
 import { parseWeakSimId, subjectKeyFromItemId, WEAK_QUIZ_PREFIX } from './weak-items.js';
 import { resolveLegacySubjectKey } from './exam-context.js';
+import { WEAK_GRADUATE_STREAK } from './statement-tracker.js';
 
 /**
  * sid("law_st_ab12cd") → 과목 키 ("law").
@@ -338,4 +339,30 @@ export function estimateUntaggedCauses(p) {
         else counts.memorize++;
     });
     return { counts, estimated };
+}
+
+/**
+ * 과목별 마스터리 레벨 (D-16) — 판정된 진술 중 졸업(연속 정답
+ * WEAK_GRADUATE_STREAK회) 비율을 과목별로 집계해 Lv.1~5(20% 단위)로 환산한다.
+ * "본 적 있는 진술 중 얼마나 확실히 정답을 유지하는가"의 지표.
+ * @param {Object} statementStats getAllStatementStats() 결과
+ * @returns {Object<string, {total: number, graduated: number, percent: number, level: number}>} 과목키 → 마스터리
+ */
+export function computeMasteryLevels(statementStats) {
+    /** @type {Object<string, {total: number, graduated: number}>} */
+    const acc = {};
+    Object.entries(statementStats || {}).forEach(([sid, v]) => {
+        const subj = subjectFromSid(sid);
+        if (!subj || !v || !(v.j > 0)) return;
+        const m = acc[subj] || (acc[subj] = { total: 0, graduated: 0 });
+        m.total++;
+        if ((v.streak || 0) >= WEAK_GRADUATE_STREAK) m.graduated++;
+    });
+    /** @type {Object<string, {total: number, graduated: number, percent: number, level: number}>} */
+    const map = {};
+    Object.entries(acc).forEach(([subj, m]) => {
+        const percent = Math.round((m.graduated / m.total) * 100);
+        map[subj] = { ...m, percent, level: Math.min(5, Math.floor(percent / 20) + 1) };
+    });
+    return map;
 }

@@ -1,5 +1,5 @@
 // tests/dom/study-challenge.dom.test.js — 데일리 챌린지·스트릭 시나리오
-// @spec D-07,Q-06
+// @spec D-07,Q-06,SC-04
 // 설계: docs/dev/design/DOM_TEST_DESIGN.md §5.2 (Phase 4)
 // 검증: 오늘 문항 생성(H) · 모달 진행·피드백(H) · 완료 후 재진입 시 완료 상태(R/P)
 //       · 스트릭 갱신·경과일 리셋(B) · 나가기 confirm(X)
@@ -21,7 +21,7 @@ import {
     loadIndexHtml, el, isVisible, flushAsync,
     stubRegistry, resetStudyState, storedJson,
 } from './helpers.js';
-import { state, safeSetItem } from '../../src/state.js';
+import { state, safeSetItem, safeGetItem } from '../../src/state.js';
 import {
     updateStreakAndDailyUI, startDailyChallenge, submitDailyCardAnswer,
     submitDailyShortAnswer, nextDailyStep, closeDailyModal,
@@ -89,6 +89,43 @@ describe('데일리 챌린지 — 생성·진행·완료·스트릭', () => {
         updateStreakAndDailyUI();
 
         expect(el('streak-days').textContent).toBe('4');
+    });
+
+    it('SC-04: 1일 결손 + 복구권 보유 → 자동 소비로 스트릭 유지', () => {
+        const twoDaysAgo = new Date(Date.now() - 2 * 86400000).toISOString().split('T')[0];
+        safeSetItem(STORAGE_KEYS.STUDY_STREAK, '5');
+        safeSetItem(STORAGE_KEYS.STUDY_STREAK_LAST_DATE, twoDaysAgo);
+        safeSetItem(STORAGE_KEYS.STREAK_FREEZES, '1');
+        updateStreakAndDailyUI();
+
+        expect(el('streak-days').textContent).toBe('5');
+        expect(storedJson(STORAGE_KEYS.STREAK_FREEZES)).toBe(0);
+        // lastDate가 어제로 보정돼 중복 소비 방지
+        const expected = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+        expect(safeGetItem(STORAGE_KEYS.STUDY_STREAK_LAST_DATE)).toBe(expected);
+        // 재호출해도 추가 소비 없음
+        updateStreakAndDailyUI();
+        expect(storedJson(STORAGE_KEYS.STREAK_FREEZES)).toBe(0);
+        expect(el('streak-days').textContent).toBe('5');
+    });
+
+    it('SC-04: 1일 결손이지만 복구권 없음 → 리셋', () => {
+        const twoDaysAgo = new Date(Date.now() - 2 * 86400000).toISOString().split('T')[0];
+        safeSetItem(STORAGE_KEYS.STUDY_STREAK, '5');
+        safeSetItem(STORAGE_KEYS.STUDY_STREAK_LAST_DATE, twoDaysAgo);
+        updateStreakAndDailyUI();
+
+        expect(el('streak-days').textContent).toBe('0');
+    });
+
+    it('SC-04: 복구권 보유 시 🧊 배지 + 주간 학습 칩 표시', () => {
+        safeSetItem(STORAGE_KEYS.STREAK_FREEZES, '2');
+        updateStreakAndDailyUI();
+
+        const freezeEl = el('streak-freezes');
+        expect(freezeEl.textContent).toContain('🧊 2');
+        expect(freezeEl.style.display).not.toBe('none');
+        expect(el('weekly-goal-chip').textContent).toMatch(/이번 주 \d+\/\d+일/);
     });
 
     it('챌린지 시작 → 모달 생성 + 8문항 + 진행 표시', async () => {

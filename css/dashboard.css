@@ -576,6 +576,28 @@
     font-size: var(--text-base);
 }
 
+/* 스트릭 복구권 배지 + 주간 목표 칩 (SC-04) */
+.streak-freeze-badge {
+    margin-left: var(--space-1);
+    padding: 0 var(--space-2);
+    border-radius: var(--radius-md);
+    background: var(--primary-tint-15);
+    color: var(--color-primary);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-semibold);
+    cursor: help;
+}
+.weekly-goal-chip {
+    background: var(--bg-active);
+    color: var(--color-text-muted);
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--text-sm);
+}
+.weekly-goal-chip.weekly-goal-done {
+    background: var(--success-tint-15, rgba(34, 197, 94, 0.15));
+    color: var(--color-success);
+}
+
 .form-checkbox {
     width: 16px;
     height: 16px;

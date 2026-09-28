@@ -1,5 +1,5 @@
 // src/views/dashboard.js - 대시보드 뷰 로직 및 전역 통계 관리
-// @spec D-01~15,AN-01~03,PF-07
+// @spec D-01~16,AN-01~03,PF-07,SC-04
 import { state } from '../state.js';
 import { esc } from '../sanitize.js';
 import { DataLoader } from '../data-loader.js';
@@ -17,7 +17,8 @@ import { getDDay, getSuggestedDailyCount, getTodayGoalProgress, getWeeklyGoalPro
 import { getWeakStatements, getDueStatementSids, getAnomalousStatements, getAllStatementStats } from '../statement-tracker.js';
 import {
     computeSubjectWeakChapters, computeWeeklyGrowth, computePassGap,
-    computeWeakConceptClusters, computePaceProjection, estimateUntaggedCauses
+    computeWeakConceptClusters, computePaceProjection, estimateUntaggedCauses,
+    computeMasteryLevels
 } from '../analysis-engine.js';
 import { resolveWrongQuiz } from '../weak-items.js';
 import { showToast } from '../ui-utils.js';
@@ -166,6 +167,9 @@ export function renderDashboard() {
         ? DataLoader.getSubjectList()
         : Object.keys(window.STUDY_DATA || {}).map(key => { const d = (window.STUDY_DATA || {})[key]; return { key, name: d.name, stats: { cards: d.cards.length, quizzes: d.quizzes.length } }; });
     
+    // D-16 과목별 마스터리 — 진술 졸업 비율을 카드 표시 전 한 번만 집계
+    const masteryMap = computeMasteryLevels(getAllStatementStats());
+
     subjects.forEach(subjMeta => {
         const subjId = subjMeta.key;
         const disp = _displayCounts(subjMeta);
@@ -205,6 +209,11 @@ export function renderDashboard() {
                         <span>퀴즈 정답률</span>
                         <strong>${solvedSubjCount > 0 ? quizRate + '%' : '-'}${solvedSubjCount > 0 ? ' <span style=\"font-size:0.75rem; color:var(--color-text-muted);\">(' + solvedSubjCount + '문)</span>' : ''}</strong>
                     </div>
+                    ${masteryMap[subjId] ? `
+                    <div class="subj-stat-item">
+                        <span>마스터리</span>
+                        <strong>Lv.${masteryMap[subjId].level} <span style="font-size:0.75rem; color:var(--color-text-muted);">(졸업 ${masteryMap[subjId].graduated}/${masteryMap[subjId].total})</span></strong>
+                    </div>` : ''}
                 </div>
                 <div class="subj-progress-group">
                     <div class="subj-progress-label">

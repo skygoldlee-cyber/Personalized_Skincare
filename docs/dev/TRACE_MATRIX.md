@@ -3,8 +3,8 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: ea9ad13543a79947
-> 생성: 2026-09-28 · 원천: SPEC.md(358개 ID) + @spec 태그 + 문서 헤더
+> 입력 해시: c02cb3c83e6a6401
+> 생성: 2026-09-28 · 원천: SPEC.md(360개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
 |----|------|------|
@@ -16,7 +16,7 @@
 | 보고서 | 분석·결과 보고서 | report_archive 헤더 |
 | 출처 | 요구사항의 기원 (법령·시험 규정·사업 문서) | SPEC 부록 "요구사항 출처" 표 |
 
-**커버리지 요약**: 요구사항 358개 — 문서 연결 224 · 소스 연결 337 · 테스트 연결 351 · 보고서 연결 109
+**커버리지 요약**: 요구사항 360개 — 문서 연결 224 · 소스 연결 339 · 테스트 연결 353 · 보고서 연결 109
 
 ---
 
@@ -39,6 +39,7 @@
 | D-13 | ✅ | 테스트 | — | src/recommendations.js<br>src/views/dashboard.js | tests/dom/study-dashboard.dom.test.js | DOC-ARC-05<br>DOC-ARC-10 | — |
 | D-14 | ✅ | 테스트 | — | src/views/dashboard.js | tests/dom/study-dashboard.dom.test.js | DOC-ARC-05<br>DOC-ARC-10 | — |
 | D-15 | ✅ | 테스트 | — | src/views/dashboard.js | tests/dom/study-dashboard.dom.test.js | DOC-ARC-05<br>DOC-ARC-10 | — |
+| D-16 | ✅ | 테스트 | — | html/views/dashboard.html<br>index.html<br>src/analysis-engine.js<br>src/views/dashboard.js | tests/unit/analysis-engine.test.js | — | — |
 
 ## 3.1.5 맞춤학습
 
@@ -317,6 +318,7 @@
 | SC-01 | ✅ | 테스트 | — | css/study-calendar.css<br>html/views/calendar.html<br>index.html<br>src/views/study-calendar.js | tests/dom/study-calendar.dom.test.js | DOC-ARC-05 | — |
 | SC-02 | ✅ | 테스트 | — | src/views/study-calendar.js | tests/dom/study-calendar.dom.test.js | DOC-ARC-05 | — |
 | SC-03 | ✅ | 테스트 | — | src/study-tracker.js | tests/unit/study-tracker.test.js | DOC-ARC-05 | — |
+| SC-04 | ✅ | 테스트 | — | html/views/dashboard.html<br>index.html<br>src/views/daily-challenge.js<br>src/views/dashboard.js | tests/dom/study-challenge.dom.test.js | — | — |
 
 ## 3.21 UI 모드 전환
 

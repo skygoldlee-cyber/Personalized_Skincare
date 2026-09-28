@@ -1,5 +1,5 @@
 // tests/unit/analysis-engine.test.js — 맞춤학습 분석 엔진 순수 로직
-// @spec AN-01,AN-02
+// @spec AN-01,AN-02,D-16
 // 과목 무관 데이터 주입형 — 임의 과목 키로 검증 (모듈화 요구: 과목 변경 시 코드 수정 불필요)
 
 import { test } from 'node:test';
@@ -225,4 +225,34 @@ test('estimateUntaggedCauses: 태깅된 항목은 추정에서 제외', async ()
     const wrongCauses = { 'weak_quiz_q1': { cause: 'concept', ts: Date.now() } };
     const out = estimateUntaggedCauses({ quizResults, wrongCauses, resolveQuiz: () => null });
     assert.equal(out.estimated, 0);
+});
+
+test('D-16 computeMasteryLevels: 과목별 졸업 비율 → Lv 환산', async () => {
+    const { computeMasteryLevels } = await import(ENGINE);
+    const stats = {
+        'law_st_aaa111': { j: 4, w: 0, streak: 5 },   // 졸업 (streak>=3)
+        'law_st_bbb222': { j: 3, w: 1, streak: 3 },   // 졸업
+        'law_st_ccc333': { j: 2, w: 1, streak: 0 },   // 미졸업
+        'law_st_ddd444': { j: 0, w: 0, streak: 0 },   // j=0 → 집계 제외
+        'chem_st_eee555': { j: 2, w: 0, streak: 4 },  // 졸업
+        'chem_st_fff666': { j: 5, w: 2, streak: 0 },
+        'chem_st_ccc777': { j: 1, w: 0, streak: 0 },
+        'chem_st_ddd888': { j: 2, w: 1, streak: 0 },
+        'chem_st_eaa999': { j: 3, w: 0, streak: 1 },
+        'broken_sid': { j: 9, w: 0, streak: 9 },      // 과목 해석 불가 → 제외
+    };
+    const out = computeMasteryLevels(stats);
+    // law: 3개 중 2개 졸업 = 67% → Lv.4
+    assert.equal(out.law.total, 3);
+    assert.equal(out.law.graduated, 2);
+    assert.equal(out.law.percent, 67);
+    assert.equal(out.law.level, 4);
+    // chem: 5개 중 1개 졸업 = 20% → Lv.2
+    assert.equal(out.chem.total, 5);
+    assert.equal(out.chem.graduated, 1);
+    assert.equal(out.chem.percent, 20);
+    assert.equal(out.chem.level, 2);
+    // 데이터 없음 → 빈 맵
+    assert.deepEqual(computeMasteryLevels({}), {});
+    assert.deepEqual(computeMasteryLevels(null), {});
 });

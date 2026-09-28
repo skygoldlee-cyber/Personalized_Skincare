@@ -6,6 +6,12 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-09-29 게임화 요소 — 스트릭 복구권·주간 칩·마스터리 레벨
+
+- **SC-04 스트릭 복구권**: 데일리 챌린지 완료로 스트릭 7일 연속 마일스톤마다 복구권 1장 획득(최대 2장, `streak_freezes` 키). 어제 하루만 결손(diffDays===2)이면 자동 소비해 스트릭 유지 + `lastDate`를 어제로 보정해 중복 소비 방지, 소비·획득 시 토스트 안내. 스트릭 배지에 `🧊 N` 표시 + `weekly-goal-chip`에 "이번 주 N/M일" 칩 추가 (`updateStreakAndDailyUI`, 기존 `getWeeklyGoalProgress` 재사용)
+- **D-16 과목별 마스터리 레벨**: `computeMasteryLevels`(analysis-engine) — 판정된 진술 중 졸업(연속 정답 ≥3, DR-03) 비율을 과목별 집계 → 과목 카드에 `마스터리 Lv.N (졸업 X/Y)` 표시(20% 단위 Lv.1~5, 데이터 없으면 미표시)
+- **테스트**: 유닛 `computeMasteryLevels` 1건(과목 해석·레벨 환산·빈 데이터) + DOM 스트릭 복구권 3건(자동 소비·중복 방지·리셋 경계·배지 표시) — `study-challenge.dom.test.js` 15건
+
 ## 2026-09-28 식약처 고시 자동 감지 — notice-check 파이프라인
 
 - **감지**: `.github/workflows/notice-check.yml` — 매주 월요일 09:00 KST, `ref-pipeline/check_mfds_notice.py`가 law.go.kr 오픈API(`target=admrul`, LAW_OC_KEY 시크릿)로 「화장품 안전기준 등에 관한 규정」 최신 고시 조회 → `content/exams/cosmetic/notice_status.json` 갱신 커밋 + 신규 고시 발견 시 이슈 자동 생성(갱신 절차 체크리스트 포함)
