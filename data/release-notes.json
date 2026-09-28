@@ -1,5 +1,12 @@
 [
   {
+    "version": "v20260929-b651893",
+    "date": "2026-09-29",
+    "notes": [
+      "[문서·formula] 네거티브 리스트 조제 원칙을 Formula OS에 명기"
+    ]
+  },
+  {
     "version": "v20260929-c7d18f6",
     "date": "2026-09-29",
     "notes": [
@@ -140,14 +147,6 @@
       "[리팩터링·ref-pipeline] pdf2md 기본 모드를 GUI로 전환 — CLI는 --cli 명시",
       "[리팩터링·ref-pipeline] pdf2md_gui.py를 pdf2md.py --gui로 통합",
       "[정리] ref_md/_report.json 제거 — 변환 진단 리포트 잔여물 정리"
-    ]
-  },
-  {
-    "version": "v20260928-8153247",
-    "date": "2026-09-28",
-    "notes": [
-      "[리팩터링] trace 스캔 html 확장 + 릴리스 노트 한글화 + CHANGES 날짜 정정 + 중간 뷰 모듈 분할",
-      "[정리] cleanup patch — stale comments, version refs, html gate"
     ]
   }
 ]
