@@ -84,10 +84,13 @@ npm.cmd run check:reffresh -- --update  # 승격 완료 후 PDF 해시 매니페
 # ※ PDF 교체/재변환 절차: ① PDF 교체 ② convert:refs ③ verify:refs ④ ref_md_v2 → ref_md/과목N/{문서}/ 수동 승격 ⑤ check:reffresh -- --update
 # ※ ref_md는 `#L####` 라인 인용이 의존하므로 항상 시각적 줄 그대로(segment=False) 변환 — 엔진의 --no-segment 상당
 
-# 식약처 고시 감지 (원료 DB 기준 고시 추적 — GitHub Actions 주1회 자동 실행)
-set LAW_OC_KEY=<law.go.kr 오픈API 키> && python ref-pipeline/check_mfds_notice.py --update
+# 식약처 고시 감지 (원료 DB 기준 고시 추적)
+python ref-pipeline/check_mfds_notice.py --update   # 키: LAW_OC_KEY 환경변수 또는 ref-pipeline/.env.local.json (gitignore됨)
 # ※ baseline↔latest 비교 결과를 content/exams/cosmetic/notice_status.json에 기록 — 신규 고시 감지 시 Actions가 이슈 생성,
-#   앱은 Formula OS 진입 시 배너 표시(src/notice-check.js). 대조 절차: docs/dev/ingredients_audit_제2026-19호.md
+#   앱은 Formula OS 진입 시 배너 표시 + 허브 '식약처 고시 확인' 버튼으로 law.go.kr 실시간 조회(src/notice-check.js)
+# ※ Actions 크론(주1회 자동)은 선택사항 — 저장소 Settings → Secrets에 LAW_OC_KEY 등록 시 활성화.
+#   미등록이면 수동 실행만 가능. 앱 내 실시간 버튼이 확인을 커버하나, 크론은 이슈 자동 생성 안전망 역할
+# ※ 대조 절차: docs/dev/ingredients_audit_제2026-19호.md
 ```
 
 ## 디렉토리 구조
