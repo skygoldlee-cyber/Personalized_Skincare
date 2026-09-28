@@ -85,6 +85,31 @@
     gap: var(--space-3);
 }
 
+/* @spec FO-15 — 허브 카드의 업무 순서 스텝 배지 (1~5 순차, '상시'는 순서 없는 준수사항) */
+.trainer-step-badge {
+    position: absolute;
+    top: var(--space-4);
+    right: var(--space-4);
+    min-width: 24px;
+    height: 24px;
+    padding: 0 var(--space-2);
+    border-radius: var(--radius-full);
+    background: var(--color-primary);
+    color: #fff;
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-bold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.trainer-step-badge.is-continuous {
+    background: var(--bg-subtle);
+    color: var(--color-text-muted);
+    border: 1px solid var(--border-color);
+}
+
 /* Limits Trainer Styles */
 .limits-options-grid {
     display: grid;
