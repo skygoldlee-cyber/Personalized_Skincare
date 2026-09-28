@@ -31,13 +31,26 @@ RULE_NAME = '화장품 안전기준 등에 관한 규정'
 API_BASE = 'https://www.law.go.kr/DRF'
 
 
-def api_get(path, params):
+def load_oc_key():
+    """OC 키 해석 — ① LAW_OC_KEY 환경변수 → ② ref-pipeline/.env.local.json (gitignore됨)."""
     oc = os.environ.get('LAW_OC_KEY', '').strip()
+    if oc:
+        return oc
+    f = Path(__file__).resolve().parent / '.env.local.json'
+    if f.exists():
+        try:
+            return str(json.loads(f.read_text(encoding='utf-8')).get('LAW_OC_KEY', '')).strip()
+        except ValueError:
+            return ''
+    return ''
+
+
+def api_get(path, params):
+    oc = load_oc_key()
     if not oc:
-        print('!! LAW_OC_KEY 환경변수가 없습니다. law.go.kr 오픈API 운영자 코드를 설정하세요.')
-        print('   PowerShell: $env:LAW_OC_KEY = "<발급키>"')
-        print('   CMD:        set LAW_OC_KEY=<발급키>')
-        print('   Git Bash:   LAW_OC_KEY=<발급키> python ...')
+        print('!! LAW_OC_KEY가 없습니다. 둘 중 하나로 설정하세요:')
+        print('   ① 환경변수   PowerShell: $env:LAW_OC_KEY = "<키>"')
+        print('   ② 로컬 파일  ref-pipeline/.env.local.json → {"LAW_OC_KEY": "<키>"} (gitignore됨, 커밋 불가)')
         sys.exit(1)
     q = urllib.parse.urlencode({'OC': oc, 'target': 'admrul', 'type': 'JSON', **params})
     last_err = None
