@@ -1,5 +1,12 @@
 [
   {
+    "version": "v20260928-cb7cb23",
+    "date": "2026-09-28",
+    "notes": [
+      "연도 SSOT: exams.json.year에서 manifest·index.html·webmanifest로 자동 전파"
+    ]
+  },
+  {
     "version": "v20260928-bf76642",
     "date": "2026-09-28",
     "notes": [
@@ -145,13 +152,6 @@
     "date": "2026-09-27",
     "notes": [
       "Free/Pro 플랜 비교 안내 신설 — 기능 차이 가시화"
-    ]
-  },
-  {
-    "version": "v369-20260927-72f4357",
-    "date": "2026-09-27",
-    "notes": [
-      "Pro 안내에 멀티디바이스 동기화 혜택 명시"
     ]
   }
 ]
