@@ -1,5 +1,12 @@
 [
   {
+    "version": "v20260928-4fdeb4c",
+    "date": "2026-09-28",
+    "notes": [
+      "[기능·reader] 교재 본문 참조자료 링크에 law.go.kr 원문 병기"
+    ]
+  },
+  {
     "version": "v20260928-be87ef1",
     "date": "2026-09-28",
     "notes": [
@@ -141,15 +148,6 @@
     "date": "2026-09-28",
     "notes": [
       "fix(deploy): stamp version date from HEAD commit date, not machine clock"
-    ]
-  },
-  {
-    "version": "v20260928-66382cc",
-    "date": "2026-09-28",
-    "notes": [
-      "fix(deploy): stamp commit bypasses both doc-sync modes [no-docs]",
-      "fix(deploy): skip doc-sync gate for automated stamp commit",
-      "refactor: 3-tier version scheme — machine id, display format, content CalVer"
     ]
   }
 ]
