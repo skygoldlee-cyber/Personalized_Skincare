@@ -146,7 +146,7 @@ function _showDialog(innerHtml) {
 
 /** 플랜 비교에 노출하는 기능 목록 — feature-plan.json 키와 매핑 */
 const PLAN_FEATURES = [
-    { key: 'personal_analysis', label: '맞춤 학습 리포트 (오답 패턴·취약 진술·성적 예측)' },
+    { key: 'personal_analysis', label: '맞춤학습 (오답 패턴·취약 진술·성적 예측)' },
     { key: 'story_textbook', label: '이야기형 교재 본문 읽기' },
     { key: 'mock_exam', label: '실전 모의고사' },
     { key: 'combo_mock', label: '복수정답형 모의고사' },

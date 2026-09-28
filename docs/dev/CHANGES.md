@@ -252,6 +252,12 @@
 - 목적: SPEC ID(요구사항 추적)와 별개로 **문서 자체의 참조·인용 가능 ID** 확보 — CHANGES·커밋·문서 상호참조에서 `DOC-XXX-NN`으로 지칭 가능
 - `combo_review_queue.md`는 자동 생성물이라 예외(gitignore). ref-pipeline `.pytest_cache` 등 숨김 디렉터리는 검사 제외
 
+## 2026-09-28 "맞춤 학습 리포트" → "맞춤학습" 명칭 전면 통일
+
+- **UI**: analysis-view 헤더 `🎯 맞춤 학습`→`맞춤학습`, 대시보드 버튼 `맞춤 리포트 보기`→`맞춤학습 보기`, Pro 안내 문구·사용 통계 액션 라벨(`pro-upgrade.js`·`usage-stats.js`·`app.js`) 통일. 내비(사이드바·모바일 탭)는 선행 변경분.
+- **코드 주석·테스트**: dashboard.js·trainer-drills.js·navigation.js·dashboard.css 주석, pro-plan·study-dashboard DOM 테스트 명칭 갱신.
+- **문서**: SPEC §3.1.5 절명 `맞춤학습`으로 개명 + D-15 버튼명, ARCHITECTURE 매트릭스·디렉터리 도면, AGENTS.md, SUBSCRIPTION_ROADMAP, 유튜브 의뢰서, 학습안내서(+ docs_md 번들 재생성), TRACE_MATRIX 재생성. CHANGES 과거 항목은 이력 기록이라 원문 유지.
+
 ## 2026-09-28 추적 도구 리뷰 수정 — 정규식 동기화·walk 제외·오류 표면화
 
 - **trace_scan.js 정규식 분기 수정**: `check_spec_refs.js`보다 오래된 ID_RE/RANGE_RE로 `TR-16a`·`P-04a`·`ROAD-L1~L5`를 누락하던 버그 → 두 도구 동일 규격으로 동기화. `extractSpec`은 선언 형태(`| ID |`·`**ID**`) 절을 우선 기록.

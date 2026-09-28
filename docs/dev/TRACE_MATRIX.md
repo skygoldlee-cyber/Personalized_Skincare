@@ -3,7 +3,7 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: e5b87cd0b1a229b2
+> 입력 해시: a160481e31e7fa4f
 > 생성: 2026-09-28 · 원천: SPEC.md(351개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
@@ -37,7 +37,7 @@
 | D-14 | — | src/views/dashboard.js | tests/dom/study-dashboard.dom.test.js | DOC-ARC-05<br>DOC-ARC-10 |
 | D-15 | — | src/views/dashboard.js | tests/dom/study-dashboard.dom.test.js | DOC-ARC-05<br>DOC-ARC-10 |
 
-## 3.1.5 맞춤 학습 리포트
+## 3.1.5 맞춤학습
 
 | ID | 문서 | 소스 | 테스트 | 보고서 |
 |----|------|------|--------|--------|

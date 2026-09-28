@@ -2,7 +2,7 @@
 // @spec ROAD-L5
 //
 // 외부 전송 없이 이 기기의 localStorage에만 누적한다. 뷰 전환과 유료가치
-// 후보 기능(오답→교재 근거·진단 평가·이야기형·맞춤 리포트 등)의 사용 횟수를
+// 후보 기능(오답→교재 근거·진단 평가·이야기형·맞춤학습 등)의 사용 횟수를
 // 측정해 설정의 '내 사용 통계'에서 확인 — Pro 전환 의향 판단의 정량 근거.
 // GLOBAL 키(기기 단위)로 저장 — 로그인 없는 프로모션 기간에는 owner의
 // 익명 device_id가 "유저" 단위이며, 시험 전환해도 누적이 유지된다.
@@ -24,7 +24,7 @@ const ACTION_LABELS = {
     weak_to_similar: '오답 → 유사 문제',
     diagnostic_quiz: '진단 평가',
     story_textbook: '이야기형 교재 읽기',
-    personal_analysis: '맞춤 학습 리포트 보기',
+    personal_analysis: '맞춤학습 보기',
     actual_exam_report: '실제 시험 결과 보고',
     command_palette: '통합 검색 (Ctrl+K)',
     plan_compare: 'Free/Pro 플랜 비교',

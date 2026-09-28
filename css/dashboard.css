@@ -135,7 +135,7 @@
     gap: var(--space-4);
 }
 
-/* 맞춤 학습 리포트 상단 안내 카드 */
+/* 맞춤학습 상단 안내 카드 */
 .analysis-intro {
     border-left: 3px solid var(--color-primary);
 }

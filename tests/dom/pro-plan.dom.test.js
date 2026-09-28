@@ -40,7 +40,7 @@ describe('플랜 안내 모달 (showPlanCompare)', () => {
         showPlanCompare();
         const items = [...overlay().querySelectorAll('li')].map(li => li.textContent);
         // 개인화 분석·이야기형은 PRO, 모의고사는 무료 제공
-        expect(items.some(t => t.includes('맞춤 학습 리포트') && t.includes('PRO'))).toBe(true);
+        expect(items.some(t => t.includes('맞춤학습') && t.includes('PRO'))).toBe(true);
         expect(items.some(t => t.includes('이야기형') && t.includes('PRO'))).toBe(true);
         expect(items.some(t => t.includes('실전 모의고사') && t.includes('무료 제공'))).toBe(true);
         // Pro 전용 혜택 — 멀티디바이스 동기화·한도 무제한 안내
@@ -55,7 +55,7 @@ describe('플랜 안내 모달 (showPlanCompare)', () => {
         await stubPlan({ personal_analysis: 'free', story_textbook: 'free' });
         showPlanCompare();
         const items = [...overlay().querySelectorAll('li')].map(li => li.textContent);
-        expect(items.some(t => t.includes('맞춤 학습 리포트') && t.includes('무료 제공'))).toBe(true);
+        expect(items.some(t => t.includes('맞춤학습') && t.includes('무료 제공'))).toBe(true);
         expect(items.some(t => t.includes('이야기형') && t.includes('무료 제공'))).toBe(true);
     });
 
