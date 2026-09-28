@@ -40,7 +40,7 @@ flowchart LR
 
 | 파일 | 용도 | 언제 쓰나 |
 |---|---|---|
-| `pdf2md.py` | PDF→MD 변환 엔진 + `--gui` PySide6 프런트엔드 통합 (공백 복원·표 구조화·무선 표 재구성·마진 잡행 제거) | 참조자료 PDF를 MD로 바꿀 때의 엔진. `python pdf2md.py --gui`로 화면 변환 |
+| `pdf2md.py` | PDF→MD 변환 엔진 + PySide6 GUI 통합 (공백 복원·표 구조화·무선 표 재구성·마진 잡행 제거) | **기본 실행은 GUI** (`python pdf2md.py`). CLI는 `--cli` 플래그로 |
 | `convert.py` | 스테이징 워크플로 래퍼 — `pdf_root → ref_md_v2 → ref_md` | **참조자료 PDF 교체/추가 시** (시나리오 A) |
 | `MD_to_HTML.py` | MD→독립 HTML 변환기 — 모바일 `file://` 대응·Mermaid 프리렌더·콜아웃 규칙, `--gui` 지원 | 개별 MD를 공유용 HTML로 만들 때 |
 | `callout_rules.json` | MD_to_HTML 콜아웃 패턴 규칙 (스크립트 옆 자동 인식) | 자동 |
@@ -131,11 +131,12 @@ python ref-pipeline/convert.py --pdf-root "D:\PDFs" --staging "D:\out\ref_md_v2"
 python ref-pipeline/convert.py --verify --staging "D:\out\ref_md_v2" --prod "D:\out\ref_md"
 ```
 
-단일 PDF 직접 변환 (엔진 CLI):
+단일 PDF 직접 변환 (엔진 CLI — 묵인자 실행은 GUI이므로 `--cli` 필수):
 
 ```powershell
-python ref-pipeline/pdf2md.py "file.pdf" -o out.md --doctor
-python ref-pipeline/pdf2md.py --pdf-root "D:\PDFs" -o out_dir --flat
+python ref-pipeline/pdf2md.py                     # GUI (PySide6 필요)
+python ref-pipeline/pdf2md.py --cli "file.pdf" -o out.md --doctor
+python ref-pipeline/pdf2md.py --cli --pdf-root "D:\PDFs" -o out_dir --flat
 ```
 
 ### 시나리오 B — 교재 MD 교체/개정 → 파생물 재생성

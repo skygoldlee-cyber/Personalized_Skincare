@@ -15,14 +15,14 @@ convert_ref_pdfs_v2.py의 변환 엔진(좌표 공백 복원 + 표 구조화 + �
   · 표 건강 점검 — 변환된 표의 빈 셀 비율/행 수를 --doctor로 리포트한다.
 
 사용:
-  python pdf2md.py <입력...>            # 파일/디렉토리/glob (없으면 --pdf-root 스캔)
-  python pdf2md.py ./refs -o ./out      # ./refs 아래 모든 PDF → ./out/{name}/{name}.md
-  python pdf2md.py 화장품법               # 경로가 아니면 파일명 필터로 동작 (구버전 호환)
-  python pdf2md.py --no-segment ...      # 문장 병합 없이 시각적 줄 그대로
-  python pdf2md.py --doctor ...          # 변환 후 표 건강도 출력
-  python pdf2md.py --verify [-o OUT --gold GOLD]  # 골든 비교 (내용 누락 감지)
-  python pdf2md.py --profile p.json ...  # 도메인 패턴(잡행/워터마크/마커) 오버라이드
-  python pdf2md.py --gui                 # PySide6 GUI 모드 (pip install PySide6)
+  python pdf2md.py                       # GUI 모드 (기본, PySide6 필요)
+  python pdf2md.py --cli <입력...>        # CLI — 파일/디렉토리/glob (없으면 --pdf-root 스캔)
+  python pdf2md.py --cli ./refs -o ./out # ./refs 아래 모든 PDF → ./out/{name}/{name}.md
+  python pdf2md.py --cli 화장품법          # 경로가 아니면 파일명 필터로 동작 (구버전 호환)
+  python pdf2md.py --cli --no-segment ... # 문장 병합 없이 시각적 줄 그대로
+  python pdf2md.py --cli --doctor ...     # 변환 후 표 건강도 출력
+  python pdf2md.py --cli --verify [-o OUT --gold GOLD]  # 골든 비교 (내용 누락 감지)
+  python pdf2md.py --cli --profile p.json ...           # 도메인 패턴 오버라이드
 
 셀 내 줄바꿈은 렌더링 wrap이므로 ''로 병합한다(공백 병합 시 화학명이 중간에
 끊기는 것보다 wrap 경계 공백 유실이 피해가 적음 — 줄 내 공백은 좌표로 복원됨).
@@ -923,13 +923,22 @@ def main():
     ap.add_argument('--doctor', action='store_true', help='변환 후 표 건강도 점검')
     ap.add_argument('--verify', action='store_true',
                     help='변환 없이 골든 비교(내용 누락 감지)만 수행')
-    ap.add_argument('--gui', action='store_true',
-                    help='PySide6 GUI 모드로 실행 (pip install PySide6)')
-    args = ap.parse_args()
-
-    if args.gui:
+    ap.add_argument('--cli', action='store_true',
+                    help='CLI 모드로 실행 (기본은 GUI)')
+    # ── 모드 분기: 기본은 GUI, --cli 명시 시에만 CLI 경로 ──────────────
+    argv = sys.argv[1:]
+    if '--cli' not in argv:
+        if argv and argv not in (['--gui'], ['-h'], ['--help']):
+            print('CLI 사용에는 --cli 플래그가 필요합니다 '
+                  f'(예: pdf2md.py --cli {" ".join(argv)})', file=sys.stderr)
+            sys.exit(2)
+        if argv in (['-h'], ['--help']):
+            ap.print_help()
+            return
         run_gui()
         return
+    argv.remove('--cli')
+    args = ap.parse_args(argv)
 
     if args.profile:
         load_profile(args.profile)
