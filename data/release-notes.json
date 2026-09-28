@@ -1,5 +1,12 @@
 [
   {
+    "version": "v369-20260928-fd06122",
+    "date": "2026-09-28",
+    "notes": [
+      "feat(formula): hub cards numbered by actual compounding workflow"
+    ]
+  },
+  {
     "version": "v369-20260928-25b0355",
     "date": "2026-09-28",
     "notes": [
@@ -146,14 +153,6 @@
       "ESLint 자동수정 + 경고 래칫 + EditorConfig — 품질·서식 경고 증가 차단",
       "check:types 전체 소스 확장 — 49파일 백로그 제외 후 잔여 22건 해소",
       "chore(ide): 워크스페이스 TS 공유 설정 — PC·IDE별 진단 불일치 대응"
-    ]
-  },
-  {
-    "version": "v369-20260927-7a85e00",
-    "date": "2026-09-27",
-    "notes": [
-      "feat(quality): IDE 오류 게이트 — 커밋·푸시·배포 3중 차단",
-      "fix(trace): 절 이전 언급 ID가 빈 절로 등록되던 표시 버그 수정"
     ]
   }
 ]
