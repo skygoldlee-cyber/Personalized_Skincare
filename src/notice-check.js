@@ -144,7 +144,7 @@ async function fetchBaseline(examId) {
 /** '식약처 고시 확인' 버튼 (data-click 위임) — law.go.kr 실시간 조회 후 결과 표시 */
 export async function checkMfdsNoticeNow() {
   const out = document.getElementById('notice-check-result');
-  const btn = document.querySelector('[data-click="checkMfdsNoticeNow"]');
+  const btn = /** @type {HTMLButtonElement|null} */ (document.querySelector('[data-click="checkMfdsNoticeNow"]'));
   if (out) out.textContent = 'law.go.kr 확인 중…';
   if (btn) btn.disabled = true;
   try {
