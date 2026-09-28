@@ -209,7 +209,7 @@ const MD_ASSETS = [
 | `문제은행/과목N_복수정답형.md` | `npm.cmd run build:drills` (`자동 생성` 마커) | ✅ |
 | `content/exams/{id}/html/` | `python ref-pipeline/batch_convert.py` | ❌ (생성물) |
 | `audiobook/mp3/` | `run_pipeline.py --tts` → CDN | ❌ (CDN 호스팅) |
-| `docs/**/*.pdf` | `MD_to_PDF.py` 등 | ❌ (.gitignore) |
+| `docs/**/*.pdf` | `md2doc.py --pdf` 등 | ❌ (.gitignore) |
 
 ### ③ 조건부 수정
 

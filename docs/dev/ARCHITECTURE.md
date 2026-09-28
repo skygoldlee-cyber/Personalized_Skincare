@@ -436,7 +436,7 @@ Personalized_Skincare/
 │
 ├── ref-pipeline/               # 교재·참조자료 생성/변환 독립 도구함 (Python — 저장소와 무관하게 실행)
 │   ├── pdf2md.py · convert.py    #   참조자료 PDF → ref_md 변환 (기본 GUI·--cli, 절차: README.md)
-│   ├── MD_to_HTML.py · callout_rules.json · batch_convert.py  # MD → 독립 HTML/PDF (--pdf)
+│   ├── md2doc.py · callout_rules.json · batch_convert.py  # MD → 독립 HTML/PDF (--pdf)
 │   ├── check_laws.py           #   법령 현행성 검증 → {EXAM}/report/ (LAW_OC)
 │   ├── audiobook/              #   교재 MD → TTS MP3 파이프라인 → {EXAM}/audiobook/mp3/
 │   └── requirements.txt        #   Python 의존성 (공통 계약: EXAM_CONTENT_ROOT)
@@ -1847,7 +1847,7 @@ npm.cmd run deploy
 | `tools/check/check_parser_parity.js` | `manifest.subjects[].dir` 동적 참조 | 파서 정합성 검증 |
 | `tools/deploy.js` | `npm run deploy` | 배포 가드 (clean tree + origin 동기화 + 콤보 게이트 + SW 스탬프) |
 | `ref-pipeline/batch_convert.py` | `load_target_groups()` — manifest `subjects[].dir` 기준 glob | 배치 HTML 변환 대상 (과목 추가 시 자동) |
-| `ref-pipeline/MD_to_HTML.py` | `--cli --in` 인자 (미지정 시 GUI) | 단일 HTML 변환 |
+| `ref-pipeline/md2doc.py` | `--cli --in` 인자 (미지정 시 GUI) | 단일 HTML 변환 |
 | `tools/_archive/convert_ref_md.py` | (아카이브 — 임무 완료) | 구 ref_md HTML→MD 일회성 변환 |
 | `ref-pipeline/audiobook/generate_all_mp3.py` | 과목 키 참조 (`--subject`) | 오디오북 생성 |
 | `ref-pipeline/check_laws.py` | `LAWS` 리스트 (cosmetic 전용 8법령) | 법령 현행성 검증 — 외부화 계획: `law_watch.json` |

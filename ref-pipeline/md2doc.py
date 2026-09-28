@@ -21,6 +21,12 @@ import zlib
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 
+# Windows cp949 콘솔 대응 — 한글/유니코드 안내 메시지가 깨지지 않게 UTF-8 고정
+try:
+    sys.stdout.reconfigure(encoding='utf-8')
+except Exception:
+    pass
+
 
 # =============================================================================
 # 모바일 file:// 디버깅 및 해결 이력 (2025-01)
@@ -4335,10 +4341,10 @@ def run_gui() -> int:
                     self._on_drop(path)
 
     w = _DropWidget()
-    w.setWindowTitle("MD \u2192 HTML Converter")
+    w.setWindowTitle("md2doc — MD → HTML/PDF Converter")
     w.setMinimumWidth(620)
 
-    settings = QSettings("Transformer", "MD_to_HTML")
+    settings = QSettings("Transformer", "md2doc")
 
     root = QVBoxLayout(w)
     root.setContentsMargins(12, 12, 12, 12)
@@ -4386,7 +4392,14 @@ def run_gui() -> int:
         "해제: CDN 스크립트로 클라이언트 사이드 렌더링 (가벼운 HTML, PC 권장)"
     )
 
+    chk_pdf = QCheckBox("PDF도 함께 생성")
+    chk_pdf.setToolTip(
+        "HTML 생성 후 같은 내용을 헤드리스 Chrome/Edge 인쇄로 PDF도 만듦\n"
+        "(브라우저 자동 탐색 — 없으면 실패 안내만 표시되고 HTML은 정상 생성됨)"
+    )
+
     r4.addWidget(chk_mobile)
+    r4.addWidget(chk_pdf)
     r4.addStretch(1)
     root.addLayout(r4)
 
@@ -4532,14 +4545,16 @@ def run_gui() -> int:
         from PySide6.QtCore import QThread, Signal
 
         class _Worker(QThread):
-            finished_signal = Signal(object, object)  # (result_html, error)
+            finished_signal = Signal(object, object, object)  # (result_html, pdf_result, error)
             progress_signal = Signal(int, int, str)   # (current, total, status)
 
-            def __init__(self, md_text, title, config):
+            def __init__(self, md_text, title, config, want_pdf, in_path):
                 super().__init__()
                 self._md_text = md_text
                 self._title = title
                 self._config = config
+                self._want_pdf = want_pdf
+                self._in_path = in_path
 
             def run(self):
                 try:
@@ -4549,11 +4564,20 @@ def run_gui() -> int:
                         config=self._config,
                         progress_cb=lambda cur, tot, st: self.progress_signal.emit(cur, tot, st),
                     )
-                    self.finished_signal.emit(out_html, None)
+                    pdf_res = None
+                    if self._want_pdf:
+                        try:
+                            pdf_res = convert_markdown_to_pdf(
+                                self._in_path, title=self._title,
+                                progress_cb=lambda cur, tot, st: self.progress_signal.emit(cur, tot, st),
+                            )
+                        except Exception as pe:
+                            pdf_res = pe  # HTML은 정상 — PDF 실패만 별도 보고
+                    self.finished_signal.emit(out_html, pdf_res, None)
                 except Exception as e:
-                    self.finished_signal.emit(None, e)
+                    self.finished_signal.emit(None, None, e)
 
-        worker = _Worker(md_text, title, render_config)
+        worker = _Worker(md_text, title, render_config, chk_pdf.isChecked(), in_path)
         w._active_worker = worker  # prevent GC while running
 
         def _on_progress(cur, tot, st):
@@ -4565,7 +4589,7 @@ def run_gui() -> int:
 
         worker.progress_signal.connect(_on_progress)
 
-        def _on_done(result_html, error):
+        def _on_done(result_html, pdf_res, error):
             worker.deleteLater()
             w._active_worker = None
             status_label.deleteLater()
@@ -4588,6 +4612,7 @@ def run_gui() -> int:
                 settings.setValue("out_path", str(out_path))
                 settings.setValue("title", str(title_edit.text()))
                 settings.setValue("prerender_mermaid", 1 if chk_mobile.isChecked() else 0)
+                settings.setValue("also_pdf", 1 if chk_pdf.isChecked() else 0)
             except Exception:
                 pass
 
@@ -4595,7 +4620,13 @@ def run_gui() -> int:
             btn_open.setEnabled(True)
             btn_folder.setEnabled(True)
 
-            QMessageBox.information(w, "Done", f"Generated:\n{out_path}")
+            msg = f"Generated:\n{out_path}"
+            if isinstance(pdf_res, Path):
+                msg += f"\n{pdf_res}"
+            elif isinstance(pdf_res, Exception):
+                QMessageBox.warning(w, "PDF 실패",
+                                    f"HTML은 생성됐지만 PDF 변환에 실패했습니다:\n{pdf_res}")
+            QMessageBox.information(w, "Done", msg)
 
         worker.finished_signal.connect(_on_done)
         worker.start()
@@ -4638,6 +4669,7 @@ def run_gui() -> int:
         except Exception:
             pass
         chk_mobile.setChecked(bool(prev_prerender))
+        chk_pdf.setChecked(bool(int(settings.value("also_pdf", 0) or 0)))
     except Exception:
         pass
 
@@ -4759,7 +4791,7 @@ def md_to_html_body(
     progress_cb=None,
 ) -> str:
     # codehilite가 토큰화하기 전에 ```mermaid 펜스를 raw HTML 블록으로 변환
-    # (MD_to_HTML.py와 동일한 전처리 — 변환 후 정규식은 codehilite 마크업과 불일치)
+    # (md2doc.py와 동일한 전처리 — 변환 후 정규식은 codehilite 마크업과 불일치)
     if render_mermaid:
         md_text = _inline_mermaid_fences(md_text)
     md = markdown.Markdown(

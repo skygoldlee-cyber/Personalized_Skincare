@@ -24,9 +24,9 @@ import sys
 import time
 from pathlib import Path
 
-# MD_to_HTML.py의 변환 함수를 임포트 (같은 폴더)
+# md2doc.py의 변환 함수를 임포트 (같은 폴더)
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from MD_to_HTML import markdown_to_tailwind_html, RenderConfig
+from md2doc import markdown_to_tailwind_html, RenderConfig
 
 ROOT = Path(os.environ.get(
     "EXAM_CONTENT_ROOT",

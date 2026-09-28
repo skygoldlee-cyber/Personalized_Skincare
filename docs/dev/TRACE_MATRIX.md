@@ -3,7 +3,7 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: 5a5b144e7b9cde4a
+> 입력 해시: 75f67e7b424230ce
 > 생성: 2026-09-28 · 원천: SPEC.md(351개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
@@ -518,11 +518,11 @@
 
 | ID | 상태 | 검증 수단 | 문서 | 소스 | 테스트 | 보고서 | 출처 |
 |----|------|-----------|------|------|--------|--------|------|
-| CS-01 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-07<br>DOC-RBK-08<br>…외 2개 | ref-pipeline/MD_to_HTML.py<br>ref-pipeline/batch_convert.py<br>tools/build/build_study_md_bundle.js<br>tools/build/plugins/textbook.plugin.js<br>…외 1개 | tests/unit/content-structure.test.js | DOC-ARC-08 | — |
+| CS-01 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-07<br>DOC-RBK-08<br>…외 2개 | ref-pipeline/batch_convert.py<br>ref-pipeline/md2doc.py<br>tools/build/build_study_md_bundle.js<br>tools/build/plugins/textbook.plugin.js<br>…외 1개 | tests/unit/content-structure.test.js | DOC-ARC-08 | — |
 | CS-02 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-07<br>DOC-RBK-08<br>…외 2개 | tools/build/index.js<br>tools/build/plugins/exams.plugin.js | tests/unit/content-structure.test.js | DOC-ARC-08 | — |
 | CS-03 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-07<br>DOC-RBK-08<br>…외 2개 | ref-pipeline/check_laws.py<br>ref-pipeline/convert.py<br>ref-pipeline/pdf2md.py<br>tools/check/check_ref_freshness.js<br>…외 2개 | tests/unit/content-structure.test.js | DOC-ARC-08 | — |
 | CS-04 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-07<br>DOC-RBK-08<br>…외 2개 | tools/build/index.js<br>tools/build/plugins/ingredients.plugin.js | tests/unit/content-structure.test.js | DOC-ARC-08 | — |
-| CS-05 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-07<br>DOC-RBK-08<br>…외 2개 | ref-pipeline/MD_to_HTML.py<br>ref-pipeline/batch_convert.py | tests/unit/content-structure.test.js | DOC-ARC-08 | — |
+| CS-05 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-07<br>DOC-RBK-08<br>…외 2개 | ref-pipeline/batch_convert.py<br>ref-pipeline/md2doc.py | tests/unit/content-structure.test.js | DOC-ARC-08 | — |
 | CS-06 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-07<br>DOC-RBK-08<br>…외 2개 | tools/build/build_keyword_index.js | tests/unit/content-structure.test.js | DOC-ARC-08 | — |
 | CS-07 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-07<br>DOC-RBK-08<br>…외 2개 | ref-pipeline/audiobook/cleanup_empty_mp3.py<br>ref-pipeline/audiobook/generate_all_mp3.py<br>ref-pipeline/audiobook/md_chunker.py<br>ref-pipeline/audiobook/mp3_merger.py<br>…외 6개 | tests/unit/content-structure.test.js | DOC-ARC-08 | — |
 | CS-08 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-03<br>DOC-RBK-07<br>DOC-RBK-08<br>…외 2개 | tools/build/build_study_md_bundle.js | tests/unit/content-structure.test.js | DOC-ARC-08 | — |
