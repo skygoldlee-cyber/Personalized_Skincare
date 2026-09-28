@@ -982,3 +982,13 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 .notice-banner-close:hover {
     color: var(--color-text-main);
 }
+.notice-check-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 12px;
+}
+.notice-check-result {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+}

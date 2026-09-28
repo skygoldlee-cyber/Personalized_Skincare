@@ -12,6 +12,7 @@
 - **표시**: `src/notice-check.js` — Formula OS 뷰 진입 시 raw.githubusercontent.com에서 상태 파일을 읽어 `latest.effectiveDate > baseline.effectiveDate`이면 허브 상단 배너 표시. 24h 스로틀 + 닫은 고시는 같은 시행일까지 억제, 오프라인/실패 시 무시
 - **스키마**: `notice_status.json` = baseline(번들 DB 기준 고시, 수동 갱신) + latest(Actions 갱신) + checkedAt + newerFound
 - **테스트**: `tests/unit/notice-check.test.js` 6건 — 시행일/고시번호 비교, 누락·판정불가 안전 처리
+- **수동 확인 버튼**: Formula OS 허브 "식약처 고시 확인" — law.go.kr 오픈API를 브라우저에서 직접 호출(실측 CORS 허용 확인). `checkMfdsNoticeNow()`가 검색(lawSearch.do) → 상세(lawService.do, 공포번호 추출) 2단 조회 후 baseline과 비교해 즉시 결과 표시. OC는 공개 계정 식별자로 코드 내 상수. CSP `connect-src`에 `raw.githubusercontent.com`·`www.law.go.kr` 허용 (vercel.json). 실패한 조회는 스로틀 스탬프를 찍지 않아 재시도 가능
 
 ## 2026-09-28 원료 DB — 고시 제2026-19호 별표1·별표2 전수 대조 전체 반영 (db_version 2026.09.7)
 
