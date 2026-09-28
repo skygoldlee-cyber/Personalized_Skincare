@@ -1,0 +1,70 @@
+name: MFDS Notice Check
+
+# 매주 월요일 09:00 KST(UTC 00:00) — 식약처 「화장품 안전기준 등에 관한 규정」
+# 최신 고시를 law.go.kr 오픈API로 조회해 notice_status.json을 갱신하고,
+# 신규 고시 발견 시 이슈를 자동 생성한다. 앱(Formula OS)은 raw JSON을 읽어 배너로 표시.
+
+on:
+  schedule:
+    - cron: '0 0 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 최신 고시 조회 + 상태 파일 갱신
+        id: check
+        env:
+          LAW_OC_KEY: ${{ secrets.LAW_OC_KEY }}
+        run: |
+          set +e
+          python ref-pipeline/check_mfds_notice.py --update
+          code=$?
+          set -e
+          echo "newer=$code" >> "$GITHUB_OUTPUT"
+          if [ "$code" -eq 1 ]; then exit 1; fi
+
+      - name: 결과 커밋 (notice_status.json 변경 시)
+        run: |
+          if git diff --quiet content/exams/cosmetic/notice_status.json; then
+            echo "상태 변경 없음"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add content/exams/cosmetic/notice_status.json
+            git commit -m "chore(notice): 식약처 고시 상태 갱신 $(date -u +%F)"
+            git push
+          fi
+
+      - name: 신규 고시 이슈 생성
+        if: steps.check.outputs.newer == '2'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          LATEST=$(python -c "import json;d=json.load(open('content/exams/cosmetic/notice_status.json'));print(d['latest'].get('notice') or '', d['latest'].get('effectiveDate') or '')")
+          gh issue create \
+            --title "🔔 식약처 고시 감지: $LATEST — 원료 DB 대조 필요" \
+            --label "ingredients" \
+            --body "$(cat <<'ISSUE'
+          law.go.kr 오픈API 주간 체크에서 **화장품 안전기준 등에 관한 규정**의 신규 고시를 감지했습니다.
+
+          ## 갱신 절차
+          1. 식약처/법령정보센터에서 고시 전문 PDF 확보 → `content/exams/cosmetic/참조자료/법령고시/` 추가
+          2. `npm.cmd run convert:refs` → ref_md 변환 후 과목2 폴더에 승격
+          3. `python ref-pipeline/compare_ingredients_official.py` → 대조 리포트
+          4. 확인된 오류/누락 반영 → `db_version.json` 범프 + `notice_status.json` baseline 갱신
+          5. 선례: `docs/dev/ingredients_audit_제2026-19호.md` (DOC-DEV-05)
+          ISSUE
+          )"

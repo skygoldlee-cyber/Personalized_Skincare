@@ -6,6 +6,13 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-09-28 식약처 고시 자동 감지 — notice-check 파이프라인
+
+- **감지**: `.github/workflows/notice-check.yml` — 매주 월요일 09:00 KST, `ref-pipeline/check_mfds_notice.py`가 law.go.kr 오픈API(`target=admrul`, LAW_OC_KEY 시크릿)로 「화장품 안전기준 등에 관한 규정」 최신 고시 조회 → `content/exams/cosmetic/notice_status.json` 갱신 커밋 + 신규 고시 발견 시 이슈 자동 생성(갱신 절차 체크리스트 포함)
+- **표시**: `src/notice-check.js` — Formula OS 뷰 진입 시 raw.githubusercontent.com에서 상태 파일을 읽어 `latest.effectiveDate > baseline.effectiveDate`이면 허브 상단 배너 표시. 24h 스로틀 + 닫은 고시는 같은 시행일까지 억제, 오프라인/실패 시 무시
+- **스키마**: `notice_status.json` = baseline(번들 DB 기준 고시, 수동 갱신) + latest(Actions 갱신) + checkedAt + newerFound
+- **테스트**: `tests/unit/notice-check.test.js` 6건 — 시행일/고시번호 비교, 누락·판정불가 안전 처리
+
 ## 2026-09-28 원료 DB — 고시 제2026-19호 별표1·별표2 전수 대조 전체 반영 (db_version 2026.09.7)
 
 - **대조 기준**: 「화장품 안전기준 등에 관한 규정」식약처고시 제2026-19호(2026.3.18 시행) 통합본 — `ref-pipeline/compare_ingredients_official.py` + 수동 검증, 리포트 `docs/dev/ingredients_audit_제2026-19호.md`

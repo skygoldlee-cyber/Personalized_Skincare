@@ -94,6 +94,7 @@ import {
     closeGoalSettings,
     saveGoalSettings
 } from './views/study-calendar.js';
+import { checkMfdsNotice, dismissMfdsNotice } from './notice-check.js';
 import {
     initFormulaView,
     exitFormulaSubView,
@@ -407,6 +408,7 @@ function setupNavigation() {
             });
         },
         'formula-view': () => {
+            checkMfdsNotice(); // 식약처 신규 고시 감지 배너 (비차단, 실패 무시)
             showGlobalLoading('Formula OS 데이터를 불러오는 중입니다...');
             DataLoader.loadIngredients().then(() => {
                 hideGlobalLoading();
@@ -601,6 +603,7 @@ const DELEGATED_HANDLERS = {
     // 사전/시험 전환
     clearDictSearch, setDictFilter, dictExportCsv, showExamSelect, selectExamAction,
     // Formula OS (배합 계산·My 포뮬러)
+    dismissMfdsNotice,
     openFormulaList, openFormulaCalc, openIngredientDict, exitFormulaSubView,
     formulaNew, formulaOpen, formulaDuplicate, formulaDelete,
     formulaCalcAddRow, formulaCalcRemoveRow, formulaCalcSave, formulaAddIngredient,

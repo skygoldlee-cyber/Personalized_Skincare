@@ -70,6 +70,10 @@ export const STORAGE_KEYS = {
   // 원료 DB 갱신 알림 — 마지막으로 알림을 본 contentHash (해시별 1회 고지용)
   INGREDIENTS_DB_NOTIFIED: 'ingredients_db_notified',
 
+  // 식약처 고시 감지 배너 (notice-check.js) — 로컬 전용, 백업 제외
+  NOTICE_CHECKED_AT: 'notice_checked_at',        // 마지막 원격 조회 시각 (24h 스로틀)
+  NOTICE_DISMISSED_DATE: 'notice_dismissed_date',// 닫은 고시의 시행일 — 그 고시는 억제
+
   // 교재 리더
   READER_LAST_POSITION: 'readerLastPosition',
   READER_FONT_SCALE: 'readerFontScale',

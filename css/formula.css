@@ -942,3 +942,43 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
     font-size: 0.74rem;
     color: var(--color-text-muted);
 }
+
+/* 식약처 고시 감지 배너 (notice-check.js) */
+.notice-banner {
+    margin: 0 0 12px;
+}
+.notice-banner-body {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 1px solid var(--color-warning, #d29922);
+    border-left-width: 4px;
+    border-radius: var(--radius-md, 8px);
+    background: color-mix(in srgb, var(--color-warning, #d29922) 10%, transparent);
+    font-size: 0.85rem;
+}
+.notice-banner-icon {
+    color: var(--color-warning, #d29922);
+    font-size: 1rem;
+    line-height: 1.4;
+}
+.notice-banner-text {
+    flex: 1;
+    line-height: 1.5;
+}
+.notice-banner-text a {
+    color: var(--color-primary, #1f6feb);
+}
+.notice-banner-close {
+    border: none;
+    background: none;
+    color: var(--color-text-muted);
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 0 4px;
+    line-height: 1.2;
+}
+.notice-banner-close:hover {
+    color: var(--color-text-main);
+}
