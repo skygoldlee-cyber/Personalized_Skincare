@@ -1,5 +1,13 @@
 [
   {
+    "version": "v20260928-d1e4bf4",
+    "date": "2026-09-28",
+    "notes": [
+      "[수정·notice] 버튼 요소 타입 캐스팅 — tsc 통과",
+      "[기능·formula] '식약처 고시 확인' 버튼 — law.go.kr 실시간 조회"
+    ]
+  },
+  {
     "version": "v20260928-7fc3d57",
     "date": "2026-09-28",
     "notes": [
@@ -145,13 +153,6 @@
     "date": "2026-09-28",
     "notes": [
       "refactor(ui): 설정 메뉴에서 매뉴얼 항목 제거 — 사이드바·모바일 탭과 중복"
-    ]
-  },
-  {
-    "version": "v369-20260928-791b754",
-    "date": "2026-09-28",
-    "notes": [
-      "feat(tools): 교재 파일 구조 동기화 도구 — sync_textbook_files.js"
     ]
   }
 ]
