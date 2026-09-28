@@ -1,0 +1,40 @@
+            <section id="review-view" class="view-section">
+                <!-- Print-only Header -->
+                <div class="print-only-header is-hidden" >
+                    <h2  aria-hidden="true">맞춤형화장품 조제관리사 오답 복습노트</h2>
+                    <p >Passmula — 맞춤형화장품 조제관리사</p>
+                </div>
+
+                <div class="review-header">
+                    <div class="review-stats">
+                        <span class="badge"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> 헷갈린 카드: <strong id="review-card-count">0</strong></span>
+                    </div>
+                    <div class="review-actions-group flex-row gap-4">
+                        <button id="start-weak-quiz-btn" class="btn btn-warning is-hidden" >
+                            <i class="fa-solid fa-bolt" aria-hidden="true"></i> 헷갈린 카드 집중 퀴즈 시작
+                        </button>
+                        <button id="start-weak-exam-btn" class="btn btn-primary is-hidden" data-click="startWeakExam" >
+                            <i class="fa-solid fa-file-signature" aria-hidden="true"></i> 헷갈린 문제 집중 모의고사 <span class="pro-badge" data-pro-feature="mock_exam">PRO</span>
+                        </button>
+                        <button id="print-review-btn" class="btn btn-secondary is-hidden" data-click="printReviewNotes" title="틀린 문제와 정답을 모아 인쇄합니다">
+                            <i class="fa-solid fa-print" aria-hidden="true"></i> 오답노트 인쇄
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 과목별 필터 버튼 그룹 (신규 Feature 3) -->
+                <div class="review-filter-group textbook-filter-btns" id="review-filter-group">
+                    <button class="btn btn-secondary filter-btn active textbook-filter-btn" data-filter="all" data-click="setReviewFilter" data-arg="all">전체</button>
+                </div>
+
+                <div class="empty-state" id="review-empty-state">
+                    <i class="fa-solid fa-shield-heart" aria-hidden="true"></i>
+                    <h3>복습할 카드가 없습니다!</h3>
+                    <p>플래시카드 학습 중에 "아직 헷갈림"으로 분류한 카드가 여기에 수집됩니다.</p>
+                    <button class="btn btn-primary mt-3" data-click="startSubjectStudy" data-arg="law"><i class="fa-solid fa-layer-group" aria-hidden="true"></i> 플래시카드 학습하러 가기</button>
+                </div>
+
+                <div class="review-card-list" id="review-cards-list-container">
+                    <!-- Dynamic injection of weak cards -->
+                </div>
+            </section>

@@ -6,7 +6,8 @@
 #   2. check:trace    — TRACE_MATRIX 신선도 (SPEC/@spec 변경 후 재생성 누락 차단)
 #   3. check:specrefs — 스테일 SPEC 참조 + 테스트 갭 기준선
 #   4. check:docs     — 문서 경로 + DOC ID
-#   5. lint           — ESLint 에러 (경고는 통과)
+#   5. check:html     — index.html이 파셜(html/views/) 조립 결과와 일치하는지
+#   6. lint           — ESLint 에러 (경고는 통과)
 #
 # 건너뛰기: SKIP_PREPUSH=1 git push
 
@@ -19,7 +20,7 @@ if command -v npm.cmd >/dev/null 2>&1; then NPM="npm.cmd"; else NPM="npm"; fi
 
 echo "▶ pre-push 품질 게이트"
 
-for check in check:types check:trace check:specrefs check:docs lint; do
+for check in check:types check:trace check:specrefs check:docs check:html lint; do
     echo "  - npm run $check"
     $NPM run "$check" --silent || {
         echo "✗ pre-push 차단: $check 실패"

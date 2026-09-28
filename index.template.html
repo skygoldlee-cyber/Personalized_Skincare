@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<!-- @spec S-01,S-07,TH-02,A-01 -->
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Passmula — 맞춤형화장품 조제관리사</title>
+    <!-- PWA: Web App Manifest & Theme -->
+    <meta name="description" content="Passmula — 2026 맞춤형화장품 조제관리사 시험 대비 · Formula OS 실무 통합 플랫폼">
+    <meta name="theme-color" content="#0b0f19">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+    <!-- PWA: iOS Safari 홈 화면 추가 지원 -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Passmula">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <!-- FontAwesome Icons (자체 호스팅: CDN/CSP/오프라인 의존성 제거) -->
+    <!-- 6.4.0 을 vendor/fontawesome/ 에 포함. 버전 갱신 시 css/all.min.css + webfonts/* 함께 교체. -->
+    <link rel="stylesheet" href="vendor/fontawesome/css/all.min.css">
+    <!-- CSS Style Link -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Theme (Light/Dark): 페인트 전에 테마 클래스를 적용하여 깜빡임(FOUC) 방지 -->
+    <!-- 페인트 전 테마 적용(FOUC 방지). 프로덕션 CSP(script-src 'self')가 인라인 스크립트를
+         차단하므로 외부 self-호스팅 파일로 로드한다. (동일 코드가 src/theme-init.js에 있음) -->
+    <script src="src/theme-init.js"></script>
+    <!-- PWA: beforeinstallprompt 조기 캡처 (module 스크립트보다 먼저 실행) -->
+    <script src="src/pwa-install-capture.js"></script>
+</head>
+<body class="dark-theme">
+    <!-- Offline Banner (오프라인 상태 표시) -->
+    <div class="offline-banner" id="offline-banner" role="status" aria-live="polite">
+        <i class="fa-solid fa-wifi" aria-hidden="true"></i> 인터넷 연결이 끊어졌습니다. 일부 기능이 제한될 수 있습니다.
+    </div>
+
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <i class="fa-solid fa-wand-magic-sparkles logo-icon" aria-hidden="true"></i>
+                <div class="logo-text">
+                    <h1>Pass</h1>
+                    <span>mula</span>
+                </div>
+            </div>
+            <nav class="nav-menu">
+                <button type="button" data-click="ManualViewer.openManual" class="manual-nav-link nav-study-only">
+                    <i class="fa-solid fa-circle-info" aria-hidden="true"></i> 학습 매뉴얼
+                </button>
+                <button type="button" data-click="ManualViewer.openFormulaManual" class="manual-nav-link">
+                    <i class="fa-solid fa-flask" aria-hidden="true"></i> 실무 매뉴얼
+                </button>
+                <!-- 실무 모드에서만 표시되는 접이식 라벨 — 클릭 시 학습 항목 펼침/접힘 -->
+                <button type="button" class="nav-group-label nav-study-tools-label" data-click="toggleStudyTools" aria-expanded="false">
+                    학습 도구 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                </button>
+                <div class="nav-group-label nav-study-only">학습</div>
+                <button class="nav-item nav-study-only active" data-target="dashboard-view">
+                    <i class="fa-solid fa-chart-pie" aria-hidden="true"></i> 대시보드
+                </button>
+                <button class="nav-item nav-study-only" data-target="analysis-view">
+                    <i class="fa-solid fa-bullseye" aria-hidden="true"></i> 맞춤학습 <span class="pro-badge" data-pro-feature="personal_analysis">PRO</span>
+                </button>
+                <button class="nav-item nav-study-only" data-target="flashcard-view">
+                    <i class="fa-solid fa-layer-group" aria-hidden="true"></i> 플래시카드
+                </button>
+                <button class="nav-item nav-study-only" data-target="quiz-view">
+                    <i class="fa-solid fa-circle-question" aria-hidden="true"></i> 기출 퀴즈
+                </button>
+                <div class="nav-group-label nav-study-only">훈련 · 평가</div>
+                <button class="nav-item nav-study-only" data-target="trainer-view">
+                    <i class="fa-solid fa-dumbbell" aria-hidden="true"></i> 스마트 훈련소
+                </button>
+                <button class="nav-item nav-study-only" data-target="review-view">
+                    <i class="fa-solid fa-star" aria-hidden="true"></i> 오답/중요 복습
+                </button>
+                <button class="nav-item nav-study-only" data-target="exam-view">
+                    <i class="fa-solid fa-file-lines" aria-hidden="true"></i> 실전 모의고사 <span class="pro-badge" data-pro-feature="mock_exam">PRO</span>
+                </button>
+                <div class="nav-group-label nav-group-label-formula">실무</div>
+                <button class="nav-item nav-item-formula" data-target="formula-view" data-feature="formula">
+                    <i class="fa-solid fa-flask-vial" aria-hidden="true"></i> 실무 작업실
+                </button>
+                <div class="nav-group-label">자료 · 도구</div>
+                <button class="nav-item nav-study-only" data-target="textbook-reader-view">
+                    <i class="fa-solid fa-book-open" aria-hidden="true"></i> 교재리더
+                </button>
+                <button class="nav-item nav-study-only" data-target="textbook-view">
+                    <i class="fa-solid fa-book" aria-hidden="true"></i> 교재검색
+                </button>
+                <button class="nav-item" data-target="dictionary-view" data-feature="dictionary">
+                    <i class="fa-solid fa-search" aria-hidden="true"></i> 성분검색
+                </button>
+                <button class="nav-item nav-study-only" data-target="calendar-view">
+                    <i class="fa-solid fa-calendar-check" aria-hidden="true"></i> 학습 캘린더
+                </button>
+            </nav>
+            <div class="sidebar-footer">
+                <button type="button" id="ui-mode-toggle" class="ui-mode-toggle" data-click="toggleUiMode" aria-pressed="false" title="학습/실무 모드 전환 — 합격 후 실무 중심 사용자는 실무 모드를 추천합니다">
+                    <i class="fa-solid fa-repeat" aria-hidden="true"></i> <span id="ui-mode-label" class="ui-mode-label">학습 모드</span>
+                </button>
+                <div class="sidebar-footer-meta">
+                    <p>© Passmula</p>
+                    <span id="sidebar-version">v1.0.0</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="app-header">
+                <div class="header-title">
+                    <h2 id="view-title">학습 대시보드</h2>
+                    <p id="view-subtitle">2026 시험 합격을 위한 분석 및 스마트 툴</p>
+                </div>
+                <div class="header-actions">
+                    <!-- 통합 검색 팔레트 (Ctrl+K) -->
+                    <button type="button" class="btn btn-secondary" data-click="openCommandPalette"
+                        title="통합 검색 (Ctrl+K)" aria-label="통합 검색">
+                        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                    </button>
+                    <!-- 라이트/다크 테마 토글 버튼 -->
+                    <button id="theme-toggle-btn" class="btn btn-secondary" title="라이트/다크 모드 전환" aria-label="테마 전환">
+                        <i class="fa-solid fa-moon" aria-hidden="true"></i>
+                    </button>
+                    <!-- PWA 설치 버튼 (beforeinstallprompt 이벤트 발생 시 표시) -->
+                    <button id="pwa-install-btn" class="btn btn-primary">
+                        <i class="fa-solid fa-download" aria-hidden="true"></i> <span class="btn-text">앱 설치</span>
+                    </button>
+                    <!-- 설정 메뉴: 백업/복원·초기화·시험 전환 등 관리 기능 통합 -->
+                    <div class="settings-menu">
+                        <button id="settings-toggle-btn" class="btn btn-secondary" title="설정 및 데이터 관리" aria-label="설정" aria-expanded="false">
+                            <i class="fa-solid fa-gear" aria-hidden="true"></i>
+                        </button>
+                        <div id="settings-panel" class="settings-panel is-hidden">
+                            <p class="settings-group-label">계정</p>
+                            <!-- 계정: 로그인/로그아웃·동기화 (Supabase) — 미설정 환경에서는 안내 문구로 표시 -->
+                            <button type="button" class="settings-item" data-click="openAuthModal">
+                                <i class="fa-solid fa-user" aria-hidden="true"></i> <span id="auth-menu-label">계정 / 로그인</span>
+                            </button>
+                            <button type="button" class="settings-item" data-click="showUsageStats" title="이 기기의 기능 사용 횟수·학습 활동 요약 보기">
+                                <i class="fa-solid fa-chart-simple" aria-hidden="true"></i> 내 사용 통계
+                            </button>
+                            <button type="button" class="settings-item" data-click="showPlanCompare" title="Free와 Pro의 기능 차이·혜택 비교 보기">
+                                <i class="fa-solid fa-gem" aria-hidden="true"></i> 플랜 안내 (Free/Pro)
+                            </button>
+                            <div class="settings-divider"></div>
+                            <p class="settings-group-label">데이터</p>
+                            <button type="button" class="settings-item" data-click="exportData">
+                                <i class="fa-solid fa-download" aria-hidden="true"></i> 데이터 백업
+                            </button>
+                            <button type="button" class="settings-item" data-click="triggerImport">
+                                <i class="fa-solid fa-upload" aria-hidden="true"></i> 백업 가져오기
+                            </button>
+                            <div class="settings-divider"></div>
+                            <p class="settings-group-label">보기 · 도구</p>
+                            <!-- 시험 전환: 등록 시험이 2개 이상일 때만 표시 (exams.json) -->
+                            <button type="button" class="settings-item" data-click="showExamSelect" data-feature="examSwitch">
+                                <i class="fa-solid fa-arrow-right-arrow-left" aria-hidden="true"></i> 시험 전환
+                            </button>
+                            <!-- 모바일 등 사이드바가 숨겨진 환경에서도 모드 전환 가능하도록 설정 메뉴에도 배치 -->
+                            <button type="button" class="settings-item" data-click="toggleUiMode" aria-pressed="false" title="학습/실무 모드 전환 — 합격 후 실무 중심 사용자는 실무 모드를 추천합니다">
+                                <i class="fa-solid fa-repeat" aria-hidden="true"></i> 모드: <span class="ui-mode-label">학습 모드</span>
+                            </button>
+                            <button type="button" id="orientation-toggle-btn" class="settings-item" title="가로/세로 보기 전환">
+                                <i class="fa-solid fa-rotate" aria-hidden="true"></i> 가로/세로 보기
+                            </button>
+                            <div class="settings-divider"></div>
+                            <p class="settings-group-label">앱</p>
+                            <!-- 앱 종료: 설치형 PWA(standalone)에서만 표시 — 모바일은 OS가 종료를 막아 안내 다이얼로그 표시 -->
+                            <button type="button" id="app-quit-btn" class="settings-item is-hidden" data-click="quitApp" title="앱 종료 방법 안내 — 모바일에서는 최근 앱 목록에서 닫아야 완전히 종료됩니다">
+                                <i class="fa-solid fa-power-off" aria-hidden="true"></i> 앱 종료
+                            </button>
+                            <button id="reset-progress-btn" class="settings-item settings-item-danger" title="학습 진도·통계를 모두 삭제 (복구 불가)">
+                                <i class="fa-solid fa-rotate-left" aria-hidden="true"></i> 진도 초기화
+                            </button>
+                            <button id="whats-new-btn" class="settings-item" title="최근 업데이트 변경 내용 보기">
+                                <i class="fa-solid fa-sparkles" aria-hidden="true"></i> 변경 이력
+                            </button>
+                            <button id="feedback-btn" class="settings-item" title="칭찬·개선·오류·기능 제안 보내기">
+                                <i class="fa-solid fa-comment-dots" aria-hidden="true"></i> 의견 보내기
+                            </button>
+                            <div class="settings-divider"></div>
+                            <p class="settings-meta">© Passmula · <span id="settings-version">v1.0.0</span></p>
+                        </div>
+                        <input type="file" id="import-file-input" class="is-hidden" accept=".json">
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard View -->
+            <!-- @include html/views/dashboard.html -->
+
+            <!-- 맞춤학습 뷰 — 개인화 학습 허브 (Pro 후보: personal_analysis) -->
+            <!-- @include html/views/analysis.html -->
+
+            <!-- Flashcard View -->
+            <!-- @include html/views/flashcard.html -->
+
+            <!-- Quiz View -->
+            <!-- @include html/views/quiz.html -->
+
+            <!-- Review View (Weak concepts) -->
+            <!-- @include html/views/review.html -->
+
+            <!-- Trainer View (Limits & Calculation Practice) -->
+            <!-- @include html/views/trainer.html -->
+
+            <!-- Exam View (Mock exams & Summaries) -->
+            <!-- @include html/views/exam.html -->
+
+            <!-- Textbook Search View -->
+            <!-- @include html/views/textbook.html -->
+
+            <!-- Textbook Reader View -->
+            <!-- @include html/views/textbook-reader.html -->
+
+            <!-- Ingredient Dictionary View -->
+            <!-- @include html/views/dictionary.html -->
+
+            <!-- Formula OS — 실전 배합 작업실 -->
+            <!-- @include html/views/formula.html -->
+
+            <!-- 시험 선택 (멀티시험 플랫폼 홈) -->
+            <!-- @include html/views/exam-select.html -->
+
+            <!-- 학습 캘린더 -->
+            <!-- @include html/views/calendar.html -->
+        </main>
+
+        <!-- Mobile Bottom Tab Bar (모바일 하단 네비게이션) -->
+        <nav class="mobile-tab-bar" id="mobile-tab-bar">
+            <button class="mobile-tab-item mobile-tab-action" id="mobile-theme-toggle" type="button" title="라이트/다크 모드 전환">
+                <i class="fa-solid fa-moon" aria-hidden="true"></i>
+                <span>테마</span>
+            </button>
+            <button class="mobile-tab-item nav-study-only active" data-target="dashboard-view">
+                <i class="fa-solid fa-chart-pie" aria-hidden="true"></i>
+                <span>대시보드</span>
+            </button>
+            <button class="mobile-tab-item nav-study-only" data-target="analysis-view">
+                <i class="fa-solid fa-bullseye" aria-hidden="true"></i>
+                <span>맞춤학습</span>
+                <span class="pro-badge" data-pro-feature="personal_analysis">PRO</span>
+            </button>
+            <button class="mobile-tab-item nav-study-only" data-target="flashcard-view">
+                <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
+                <span>카드</span>
+            </button>
+            <button class="mobile-tab-item nav-study-only" data-target="quiz-view">
+                <i class="fa-solid fa-circle-question" aria-hidden="true"></i>
+                <span>퀴즈</span>
+            </button>
+            <button class="mobile-tab-item nav-study-only" data-target="trainer-view">
+                <i class="fa-solid fa-dumbbell" aria-hidden="true"></i>
+                <span>훈련소</span>
+            </button>
+            <button class="mobile-tab-item nav-study-only" data-target="review-view">
+                <i class="fa-solid fa-star" aria-hidden="true"></i>
+                <span>복습</span>
+            </button>
+            <button class="mobile-tab-item nav-study-only" data-target="exam-view">
+                <i class="fa-solid fa-file-lines" aria-hidden="true"></i>
+                <span>모의고사</span>
+                <span class="pro-badge" data-pro-feature="mock_exam">PRO</span>
+            </button>
+            <button class="mobile-tab-item mobile-tab-formula" data-target="formula-view" data-feature="formula">
+                <i class="fa-solid fa-flask-vial" aria-hidden="true"></i>
+                <span>실무</span>
+            </button>
+            <button class="mobile-tab-item nav-study-only" data-target="textbook-reader-view">
+                <i class="fa-solid fa-book-open" aria-hidden="true"></i>
+                <span>교재리더</span>
+            </button>
+            <button class="mobile-tab-item nav-study-only" data-target="textbook-view">
+                <i class="fa-solid fa-book" aria-hidden="true"></i>
+                <span>교재검색</span>
+            </button>
+            <button class="mobile-tab-item" data-target="dictionary-view" data-feature="dictionary">
+                <i class="fa-solid fa-search" aria-hidden="true"></i>
+                <span>성분검색</span>
+            </button>
+            <button class="mobile-tab-item nav-study-only" data-target="calendar-view">
+                <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
+                <span>캘린더</span>
+            </button>
+            <button type="button" data-click="ManualViewer.openManual" class="mobile-tab-item nav-study-only">
+                <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+                <span>매뉴얼</span>
+            </button>
+            <!-- 실무 모드 전용 탭 — 학습 매뉴얼 탭 자리에 실무 매뉴얼 표시 -->
+            <button type="button" data-click="ManualViewer.openFormulaManual" class="mobile-tab-item nav-practice-only">
+                <i class="fa-solid fa-flask" aria-hidden="true"></i>
+                <span>실무매뉴얼</span>
+            </button>
+            <!-- 실무 모드 전용 탭 — 숨겨진 학습 탭 펼침 (사이드바 '학습 도구' 라벨의 모바일 대응) -->
+            <button type="button" data-click="toggleStudyTools" class="mobile-tab-item nav-practice-only" aria-expanded="false" title="숨겨진 학습 메뉴 펼치기/접기">
+                <i class="fa-solid fa-graduation-cap" aria-hidden="true"></i>
+                <span>학습도구</span>
+            </button>
+            <!-- 시험 전환: 등록 시험이 2개 이상일 때만 표시 (exams.json) -->
+            <button type="button" data-click="showExamSelect" class="mobile-tab-item" title="다른 시험으로 전환" data-feature="examSwitch">
+                <i class="fa-solid fa-arrow-right-arrow-left" aria-hidden="true"></i>
+                <span>시험전환</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- 계정/로그인 모달 (Supabase Auth — Phase 1: 인증만, 동기화는 Phase 2) -->
+    <div id="auth-modal" class="auth-modal is-hidden" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title">
+        <div class="auth-modal-backdrop" data-click="closeAuthModal"></div>
+        <div class="auth-modal-card">
+            <div class="auth-modal-header">
+                <h3 id="auth-modal-title"><i class="fa-solid fa-user" aria-hidden="true"></i> 계정</h3>
+                <button type="button" class="auth-modal-close" data-click="closeAuthModal" aria-label="닫기">
+                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div id="auth-modal-msg" class="auth-modal-msg is-hidden" role="status" aria-live="polite"></div>
+            <!-- 로그인 폼 -->
+            <div id="auth-form-area" class="auth-modal-body">
+                <label class="auth-field-label" for="auth-email">이메일</label>
+                <input id="auth-email" class="auth-field" type="email" autocomplete="email" placeholder="you@example.com">
+                <label class="auth-field-label" for="auth-password">비밀번호</label>
+                <input id="auth-password" class="auth-field" type="password" autocomplete="current-password" placeholder="6자 이상">
+                <div class="auth-modal-actions">
+                    <button type="button" class="btn btn-primary" data-click="authSignIn">로그인</button>
+                    <button type="button" class="btn btn-secondary" data-click="authSignUp">회원가입</button>
+                    <button type="button" class="btn btn-secondary" data-click="authEmailLogin">로그인 메일 보내기</button>
+                    <button type="button" class="btn btn-secondary" data-click="authForgotPassword" title="비밀번호를 잊은 경우 사용 — 클릭하면 로그인 메일이 발송되고, 메일의 코드로 로그인한 뒤 계정 화면에서 새 비밀번호를 설정합니다. 메일 로그인만 쓰는 경우 필요 없습니다">비밀번호 찾기</button>
+                </div>
+                <div id="auth-otp-area" class="auth-otp-area is-hidden">
+                    <label class="auth-field-label" for="auth-otp-code">이메일 인증 코드</label>
+                    <div class="auth-pw-row">
+                        <input id="auth-otp-code" class="auth-field" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="10" placeholder="메일의 숫자 코드">
+                        <button type="button" class="btn btn-primary" data-click="authVerifyOtp">확인</button>
+                    </div>
+                </div>
+                <p class="auth-modal-hint"><strong>처음이신가요?</strong> 별도 회원가입 없이 <strong>로그인 메일 보내기</strong>를 누르세요 — 메일의 링크(브라우저) 또는 숫자 코드(설치된 앱)로 처음 로그인하면 계정이 자동으로 만들어집니다. 회원가입 버튼은 이메일+비밀번호로 로그인하려는 경우에만 사용합니다. 로그인해도 이 기기의 데이터는 그대로 유지됩니다. 클라우드 동기화(<strong>여러 디바이스 간 상태 공유</strong>)는 Pro 기능입니다.</p>
+            </div>
+            <!-- 로그인 상태 -->
+            <div id="auth-account-area" class="auth-modal-body is-hidden">
+                <p class="auth-account-line">로그인됨: <strong id="auth-account-email"></strong></p>
+                <p class="auth-account-line">플랜: <span id="auth-account-plan">Free</span> <button type="button" class="btn btn-secondary btn-sm" data-click="showPlanCompare">Free/Pro 차이</button></p>
+                <p class="auth-account-line">동기화: <span id="auth-sync-status">대기 중</span></p>
+                <div class="auth-modal-actions">
+                    <button type="button" class="btn btn-primary" data-click="syncNow">지금 동기화</button>
+                    <button type="button" class="btn btn-secondary" data-click="authSignOut">로그아웃</button>
+                </div>
+                <div class="auth-pw-set">
+                    <label class="auth-field-label" for="auth-new-password">비밀번호 설정</label>
+                    <div class="auth-pw-row">
+                        <input id="auth-new-password" class="auth-field" type="password" autocomplete="new-password" placeholder="6자 이상 — PWA 로그인용">
+                        <button type="button" class="btn btn-secondary" data-click="authSetPassword">설정</button>
+                    </div>
+                </div>
+                <p class="auth-modal-hint">Pro 가입 시 학습 진도 또는 포뮬러·조제 기록이 클라우드와 동기화되어 여러 디바이스 간 상태가 공유됩니다. 고객 카드는 개인정보 보호를 위해 이 기기에만 저장됩니다. 로그아웃해도 이 기기의 데이터는 유지됩니다.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PWA 설치 안내 모달 (iOS/Android 분기) -->
+    <div id="pwa-install-modal" class="pwa-install-modal is-hidden"  role="dialog" aria-modal="true" aria-labelledby="pwa-modal-title">
+        <div class="pwa-modal-backdrop" id="pwa-modal-backdrop"></div>
+        <div class="pwa-modal-card">
+            <div class="pwa-modal-header">
+                <h3 id="pwa-modal-title"><i class="fa-solid fa-download" aria-hidden="true"></i> 앱 설치하기</h3>
+                <button type="button" class="pwa-modal-close" id="pwa-modal-close" aria-label="닫기">
+                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                </button>
+            </div>
+
+            <!-- Android Chrome 안내 -->
+            <div class="pwa-modal-body is-hidden" id="pwa-guide-android" >
+                <p class="pwa-modal-lead">사용 중인 브라우저에서 아래 순서로 설치하세요.</p>
+                <ol class="pwa-steps">
+                    <li>
+                        <span class="pwa-step-num">1</span>
+                        <span class="pwa-step-text">브라우저의 <strong>메뉴 버튼(⋮ 또는 ≡)</strong>을 누르세요. (보통 주소창 오른쪽 또는 화면 하단에 있습니다)</span>
+                        <svg class="pwa-step-illust" viewBox="0 0 200 60" aria-hidden="true">
+                            <rect x="0" y="0" width="200" height="60" rx="8" fill="#1e2433"/>
+                            <rect x="8" y="18" width="140" height="24" rx="12" fill="#2a3247"/>
+                            <circle cx="24" cy="30" r="5" fill="#8ab4f8"/>
+                            <text x="40" y="35" fill="#c7d0e0" font-size="11">personalized-skincare...</text>
+                            <circle cx="180" cy="22" r="2.5" fill="#e8eaed"/>
+                            <circle cx="180" cy="30" r="2.5" fill="#e8eaed"/>
+                            <circle cx="180" cy="38" r="2.5" fill="#e8eaed"/>
+                        </svg>
+                    </li>
+                    <li>
+                        <span class="pwa-step-num">2</span>
+                        <span class="pwa-step-text">메뉴에서 <strong>"앱 설치"</strong> 또는 <strong>"홈 화면에 추가"</strong>를 선택하세요.</span>
+                        <svg class="pwa-step-illust" viewBox="0 0 200 90" aria-hidden="true">
+                            <rect x="40" y="0" width="160" height="90" rx="10" fill="#1e2433"/>
+                            <rect x="52" y="14" width="136" height="22" rx="4" fill="#2a3247"/>
+                            <text x="60" y="29" fill="#e8eaed" font-size="11">페이지 정보</text>
+                            <rect x="52" y="42" width="136" height="30" rx="4" fill="#0f6b3a"/>
+                            <path d="M64 57 l4 4 8 -9" stroke="#fff" stroke-width="2" fill="none"/>
+                            <text x="82" y="61" fill="#fff" font-size="12" font-weight="bold">앱 설치</text>
+                        </svg>
+                    </li>
+                    <li>
+                        <span class="pwa-step-num">3</span>
+                        <span class="pwa-step-text">확인 팝업에서 <strong>"설치"</strong>를 누륮면 홈 화면에 추가됩니다.</span>
+                    </li>
+                </ol>
+                <p class="pwa-tip"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> <strong>브라우저별 메뉴 위치:</strong><br>
+                · Chrome: 주소창 오른쪽 ⋮<br>
+                · Samsung Internet: 화면 하단 ≡ → "페이지를 홈 화면에 추가"<br>
+                · Whale/기타: 주소창 주변 메뉴 버튼<br>
+                주소창에 <i class="fa-solid fa-download" aria-hidden="true"></i> 아이콘이 보이면 바로 눌러도 됩니다.</p>
+            </div>
+
+            <!-- iOS Safari 안내 -->
+            <div class="pwa-modal-body is-hidden" id="pwa-guide-ios" >
+                <p class="pwa-modal-lead">Safari에서 아래 순서로 설치하세요.</p>
+                <ol class="pwa-steps">
+                    <li>
+                        <span class="pwa-step-num">1</span>
+                        <span class="pwa-step-text">화면 하단의 <strong>공유</strong> 버튼을 누르세요.</span>
+                        <svg class="pwa-step-illust" viewBox="0 0 200 60" aria-hidden="true">
+                            <rect x="0" y="0" width="200" height="60" rx="8" fill="#1e2433"/>
+                            <rect x="70" y="12" width="60" height="36" rx="6" fill="#0a84ff"/>
+                            <path d="M100 20 v14 M94 26 l6 -7 6 7 M92 38 h16" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                            <text x="138" y="34" fill="#c7d0e0" font-size="11">공유</text>
+                        </svg>
+                    </li>
+                    <li>
+                        <span class="pwa-step-num">2</span>
+                        <span class="pwa-step-text">메뉴를 아래로 스크롤해 <strong>"홈 화면에 추가"</strong>를 선택하세요.</span>
+                        <svg class="pwa-step-illust" viewBox="0 0 200 90" aria-hidden="true">
+                            <rect x="40" y="0" width="160" height="90" rx="10" fill="#1e2433"/>
+                            <rect x="52" y="14" width="136" height="26" rx="6" fill="#2a3247"/>
+                            <text x="60" y="31" fill="#e8eaed" font-size="11">즐겨찾기에 추가</text>
+                            <rect x="52" y="48" width="136" height="30" rx="6" fill="#2f6fed"/>
+                            <rect x="60" y="55" width="16" height="16" rx="3" fill="#fff" opacity="0.9"/>
+                            <path d="M64 63 h8 M68 59 v8" stroke="#2f6fed" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+                            <text x="84" y="68" fill="#fff" font-size="12" font-weight="bold">홈 화면에 추가</text>
+                        </svg>
+                    </li>
+                    <li>
+                        <span class="pwa-step-num">3</span>
+                        <span class="pwa-step-text">오른쪽 상단의 <strong>"추가"</strong>를 누륮면 완료됩니다.</span>
+                    </li>
+                </ol>
+                <p class="pwa-tip"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> iOS는 Safari에서만 홈 화면 추가가 가능합니다.</p>
+            </div>
+
+            <!-- 일반/데스크톱 안내 -->
+            <div class="pwa-modal-body is-hidden" id="pwa-guide-generic" >
+                <p class="pwa-modal-lead">브라우저 메뉴에서 설치 옵션을 찾아주세요.</p>
+                <p class="pwa-tip"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Chrome: 메뉴(⋮) → "앱 설치" / Safari(Mac): 파일 → "홈 화면에 추가"</p>
+            </div>
+
+            <!-- 인앱 브라우저(WebView) 안내 — Chrome으로 열기 -->
+            <div class="pwa-modal-body is-hidden" id="pwa-guide-inapp" >
+                <p class="pwa-modal-lead text-primary"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> 현재 인앱 브라우저에서 열려 있습니다</p>
+                <p class="pwa-step-text mb-4">카카오톡·Instagram·Facebook 등 인앱 브라우저에서는 앱 설치가 지원되지 않습니다. <strong>Chrome 브라우저</strong>에서 열어주세요.</p>
+                <ol class="pwa-steps">
+                    <li>
+                        <span class="pwa-step-num">1</span>
+                        <span class="pwa-step-text">현재 화면 <strong>우측 상단 메뉴(⋮ 또는 ≡)</strong>를 누르세요.</span>
+                    </li>
+                    <li>
+                        <span class="pwa-step-num">2</span>
+                        <span class="pwa-step-text"><strong>"다른 브라우저로 열기"</strong> 또는 <strong>"Chrome으로 열기"</strong>를 선택하세요.</span>
+                    </li>
+                    <li>
+                        <span class="pwa-step-num">3</span>
+                        <span class="pwa-step-text">Chrome에서 다시 이 페이지를 열고, 주소창 옆 <strong>설치 아이콘</strong> 또는 메뉴(⋮) → <strong>"앱 설치"</strong>를 누르세요.</span>
+                    </li>
+                </ol>
+                <p class="pwa-tip"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> 주소창에 직접 입력해도 됩니다: <strong>personalized-skincare-study.vercel.app</strong></p>
+            </div>
+
+            <!-- PWA 진단 정보 (디버그용) -->
+            <div class="pwa-modal-body is-hidden pwa-modal-footer" id="pwa-diagnostics">
+                <p class="pwa-modal-lead pwa-modal-footer-label">설치 프롬프트가 자동으로 뜨지 않는 원인 진단:</p>
+                <div id="pwa-diag-content" class="pwa-modal-footer-url pwa-diag-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 정적 전역 데이터 및 라이브러리 로드 (클래식 스크립트 및 ESM) -->
+    <!-- Formula OS 조제 기록지 인쇄 영역 — 화면에서는 숨기고 인쇄 시에만 표시 -->
+    <div id="formula-print-area" aria-hidden="true"></div>
+
+    <!-- 시험 레지스트리 (멀티시험): 클래식 번들 — file://에서도 동기 로드됨 -->
+    <script src="data/exams.js"></script>
+    <!-- 앱 버전 + 변경 이력 (배포 시 stamp_release_notes.js가 갱신 — whats-new.js가 소비) -->
+    <script src="data/version.js"></script>
+    <script src="data/release-notes.js"></script>
+    <!-- 카드/퀴즈 ID 이관 맵 (콘텐츠 갱신 시 진도 보존 — build_id_migration.js 생성) -->
+    <script src="data/exams/cosmetic/id_migration.js"></script>
+    <!-- 활성 시험 기준 동적 PWA 매니페스트 (실패 시 정적 manifest.webmanifest 폴백) -->
+    <script src="src/pwa-manifest.js"></script>
+    <script type="module" src="data/exams/cosmetic/registry.js"></script>
+    <script type="module" src="data/audio_manifest.js"></script>
+    <!-- mermaid(3.3MB)는 매뉴얼/문서 뷰에서만 쓰이므로 즉시 로드하지 않는다.
+         src/manual-viewer.js 가 실제 다이어그램이 있을 때만 온디맨드로 주입한다.
+         (크리티컬 패스에서 3.3MB 파싱/실행 제거 + CSP unsafe-eval 실행을 매뉴얼 열람 시로 국한) -->
+
+    <!-- Main ES Module Entry Point (모든 src/ 모듈들을 내부에서 import하여 통합 실행) -->
+    <script type="module" src="src/app.js"></script>
+    <!-- ESM 로드 실패 시 자동 복구 (모바일 PWA: 의존성 모듈 캐시 미스로 app.js 미실행 방지) -->
+    <script src="src/app-fallback.js" defer></script>
+    <!-- PWA: Service Worker 등록 및 설치 프롬프트 -->
+    
+    <!-- Theme (Light/Dark) 토글 로직 -->
+    
+</body>
+</html>

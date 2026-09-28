@@ -46,6 +46,9 @@ jobs:
       - name: TRACE MATRIX freshness
         run: npm run check:trace
 
+      - name: index.html 조립 신선도
+        run: npm run check:html
+
       - name: Content traceability (교재/문제은행 변경 게이트)
         run: node tools/check/check_content.js --content-only --quick
 

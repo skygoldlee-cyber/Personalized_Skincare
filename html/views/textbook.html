@@ -1,0 +1,36 @@
+            <section id="textbook-view" class="view-section">
+                <div class="section-title-area">
+                    <h3>📖 교재 본문 통합 검색</h3>
+                    <p>교재 본문(화장품법, 제조/품질관리, 안전관리, 맞춤형화장품 이해) 전체 내용을 키워드로 검색하여 관련 내용을 빠르게 확인하세요.</p>
+                </div>
+
+                <div class="textbook-control-panel mb-6">
+                    <!-- Search Bar -->
+                    <div class="flex-center gap-4 mb-5">
+                        <div class="search-input-wrapper relative flex-1">
+                            <i class="fa-solid fa-magnifying-glass search-input-icon" aria-hidden="true"></i>
+                            <input type="text" id="textbook-search-input" class="form-input search-input" placeholder="검색할 키워드를 입력하세요 (예: 안전용기, 페녹시에탄올, 미생물)" aria-label="교재 검색어 입력">
+                        </div>
+                        <button class="btn btn-secondary flex-center gap-2" data-click="clearTextbookSearch"><i class="fa-solid fa-xmark" aria-hidden="true"></i> 초기화</button>
+                    </div>
+
+                    <!-- Subject Filter Buttons -->
+                    <div class="textbook-filter-buttons flex-row gap-3 flex-wrap" id="textbook-filter-buttons">
+                        <button class="btn btn-secondary active-filter" data-filter="all" data-click="setTextbookFilter" data-arg="all">전체 과목</button>
+                    </div>
+                </div>
+
+                <!-- Search Results Summary -->
+                <div id="textbook-search-summary" class="reader-control-panel">
+                    키워드를 입력하면 검색 결과가 여기에 표시됩니다.
+                </div>
+
+                <!-- Search Results Container -->
+                <div class="textbook-results-list" id="textbook-results-container">
+                    <div class="empty-state">
+                        <i class="fa-solid fa-book-open empty-state-icon" aria-hidden="true"></i>
+                        <h3>검색어를 입력하세요</h3>
+                        <p>위 검색창에 궁금한 교재 키워드를 입력하고 검색 결과를 확인하세요.</p>
+                    </div>
+                </div>
+            </section>

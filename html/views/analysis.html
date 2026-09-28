@@ -1,0 +1,95 @@
+            <section id="analysis-view" class="view-section">
+
+                <!-- 페이지 안내 — Pro 기능 소개와 활용법 -->
+                <div class="analytics-card analysis-intro mb-7">
+                    <h4>🎯 맞춤학습 <span class="pro-badge" data-pro-feature="personal_analysis">PRO</span></h4>
+                    <p class="section-subtitle">
+                        내 학습 기록(퀴즈 정답률·오답 원인·드릴 오판·모의고사 성적)을 모아
+                        <strong>지금 약한 곳</strong>과 <strong>먼저 할 일</strong>을 보여주는 개인화 분석 화면입니다.
+                        각 카드의 버튼을 누르면 해당 학습 화면으로 바로 이동합니다.
+                    </p>
+                    <ul class="analysis-intro-list">
+                        <li><strong>🧩 오답 패턴 분석</strong> — 최근 7일의 틀린 이유(암기 부족·개념 오해·계산 실수)를 집계해 어떤 공부법이 필요한지 알려줍니다.</li>
+                        <li><strong>🎯 취약 진술 추적</strong> — O/X·복수정답형 드릴에서 반복해서 오판한 진술을 자동 수집하고, 복습 시기(SM-2)가 되면 알려줍니다.</li>
+                        <li><strong>📅 학습 리듬</strong> — 오늘 목표 달성률·주간 학습일·시험 D-day를 추적해 꾸준한 학습 습관을 돕습니다.</li>
+                        <li><strong>📊 과목별 상태·히트맵</strong> — 과목별 진도와 정답률을 색으로 비교해 취약 과목을 한눈에 찾습니다.</li>
+                        <li><strong>📈 성적 추이·합격 예측</strong> — 모의고사 이력으로 점수 추세·과락 위험·예상 점수를 진단합니다.</li>
+                    </ul>
+                    <p class="section-subtitle mt-3">
+                        💡 기록이 쌓일수록 정확해집니다 — 퀴즈·오답 복습·드릴·모의고사를 진행하면
+                        분포·히트맵·예측이 자동으로 채워집니다.
+                    </p>
+                </div>
+
+                <!-- 학습 진단 요약 — 오답 원인 · 취약 진술 · 학습 리듬 -->
+                <div class="section-title">
+                    <h3>🧭 학습 진단 요약</h3>
+                    <p class="section-subtitle">왜 틀렸는지(오답 원인), 무엇을 자주 틀리는지(취약 진술), 얼마나 꾸준한지(학습 리듬)를 요약합니다</p>
+                </div>
+                <div class="analysis-insight-grid mb-7">
+                    <div class="analytics-card" id="analysis-wrong-cause"><!-- 오답 패턴 (dashboard.js) --></div>
+                    <div class="analytics-card" id="analysis-weak-statements"><!-- 취약 진술 (dashboard.js) --></div>
+                    <div class="analytics-card" id="analysis-study-rhythm"><!-- 학습 리듬 (dashboard.js) --></div>
+                </div>
+
+                <!-- Subject Progress Cards -->
+                <div class="section-title">
+                    <h3>과목별 학습 상태</h3>
+                    <p class="section-subtitle">과목별 진도·카드 암기·정답률 현황 — 바로 학습·퀴즈로 이동할 수 있습니다</p>
+                </div>
+                <div class="subject-grid" id="subject-cards-container">
+                    <!-- Dynamic injection via dashboard.js -->
+                </div>
+
+                <!-- 과목별 정답률 히트맵 -->
+                <div class="section-title mt-7">
+                    <h3>과목별 정답률 히트맵</h3>
+                    <p class="section-subtitle">어느 과목이 강하고 약한지 색으로 한눈에 — 붉은 과목이 보강 우선순위입니다</p>
+                </div>
+                <div id="subject-heatmap" class="heatmap-container mb-6">
+                    <!-- 과목별 정답률 히트맵 (dashboard.js에서 렌더링) -->
+                </div>
+
+                <!-- Mock Exam Analytics Section -->
+                <div class="section-title mt-7">
+                    <h3>실전 모의고사 성적 분석 및 합격 예측</h3>
+                    <p class="section-subtitle">응시 이력의 추이·과목별 균형(레이더)·과락 위험과 예상 점수를 진단합니다</p>
+                </div>
+                <div class="analytics-grid grid-2fr-1fr gap-5 mt-5 mb-7">
+                    <!-- SVG Chart Card -->
+                    <div class="analytics-card chart-card">
+                        <h4>모의고사 성적 추이 (최근 5회)</h4>
+                        <div id="analytics-chart-wrapper" class="chart-wrapper">
+                            <div class="empty-chart-state" id="empty-chart-msg">
+                                <i class="fa-solid fa-chart-line" aria-hidden="true"></i>
+                                <p>모의고사를 풀면 성적 추이 그래프가 나타납니다.</p>
+                                <button class="btn btn-primary mt-3" data-click="startIntegratedMockExam"><i class="fa-solid fa-clock" aria-hidden="true"></i> 지금 모의고사 시작</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- SVG Radar Chart Card -->
+                    <div class="analytics-card radar-card">
+                        <h4>과목별 역량 진단 (Radar Chart)</h4>
+                        <div id="radar-chart-wrapper" class="chart-wrapper">
+                            <div class="empty-chart-state" id="empty-radar-msg">
+                                <i class="fa-solid fa-chart-pie" aria-hidden="true"></i>
+                                <p>모의고사를 풀면 역량 차트가 나타납니다.</p>
+                                <button class="btn btn-primary mt-3" data-click="startIntegratedMockExam"><i class="fa-solid fa-clock" aria-hidden="true"></i> 지금 모의고사 시작</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Pass/Fail prediction card -->
+                    <div class="analytics-card prediction-card">
+                        <h4>합격 가능성 진단</h4>
+                        <div id="prediction-result-area" class="prediction-body">
+                            <div class="prediction-placeholder">
+                                <i class="fa-solid fa-user-doctor" aria-hidden="true"></i>
+                                <p>모의고사 점수를 토대로 과락 및 평균 통과 여부를 진단합니다.</p>
+                                <button class="btn btn-primary mt-3" data-click="startIntegratedMockExam"><i class="fa-solid fa-clock" aria-hidden="true"></i> 지금 모의고사 시작</button>
+                            </div>
+                        </div>
+                        <!-- 예상 점수 추정 + 실제 시험 결과 자가 보고 (Learning Pro C1) -->
+                        <div id="prediction-estimate-area"></div>
+                    </div>
+                </div>
+            </section>

@@ -1,0 +1,416 @@
+            <section id="trainer-view" class="view-section">
+                <!-- 1. Menu Selection Panel -->
+                <div id="trainer-menu-panel">
+                    <div class="section-title-area">
+                        <h3>스마트 훈련소</h3>
+                        <p>법령 수치 암기·배합 계산·O/X 판정·복수정답형 훈련과 취약 진술 리뷰로 시험 합격의 당락을 정복하세요.</p>
+                    </div>
+                    <div class="trainer-menu-grid">
+                        <div class="trainer-menu-card" data-click="startLimitsTrainer">
+                            <div class="trainer-card-icon icon-orange">
+                                <i class="fa-solid fa-hashtag" aria-hidden="true"></i>
+                            </div>
+                            <h4>핵심 수치 암기 마스터</h4>
+                            <p>배합 한도, 안전관리 허용 한도, 천연/유기농 비율 등 중요 법령 수치를 빈칸 채우기 4지선다형으로 훈련합니다.</p>
+                            <span class="trainer-card-btn">훈련 시작 <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
+                        </div>
+
+                        <div class="trainer-menu-card" data-click="startCalcPractice" data-feature="calcPractice">
+                            <div class="trainer-card-icon icon-blue">
+                                <i class="fa-solid fa-calculator" aria-hidden="true"></i>
+                            </div>
+                            <h4>원료 배합 계산 연습기</h4>
+                            <p>기본 배합 비율, 희석 농도, 한도 내 최대 추가량 등 다양한 난수형 계산 문제를 무한 생성하여 풀이 공식을 마스터합니다.</p>
+                            <span class="trainer-card-btn">연습 시작 <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
+                        </div>
+
+                        <div class="trainer-menu-card" data-click="startIngredientsChallenge" data-feature="ingredients">
+                            <div class="trainer-card-icon icon-green">
+                                <i class="fa-solid fa-flask" aria-hidden="true"></i>
+                            </div>
+                            <h4>원료 안전성 챌린지</h4>
+                            <p>사용 가능(approved), 제한(restricted), 금지(banned) 성분을 구분하고 배합한도 및 조제 적합성 문항을 정복합니다.</p>
+                            <span class="trainer-card-btn">도전 시작 <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
+                        </div>
+
+                        <div class="trainer-menu-card" data-click="openOxDrillSetup">
+                            <div class="trainer-card-icon icon-purple">
+                                <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
+                            </div>
+                            <h4>O/X 판정 드릴</h4>
+                            <p>기출 선지를 참/거짓 진술로 분해한 3,700+ 문항으로 판정 속도와 정확도를 훈련합니다. 오판 진술은 자동으로 재출제됩니다.</p>
+                            <span class="trainer-due-badge is-hidden" id="oxdrill-due-badge"></span>
+                            <span class="trainer-card-btn">드릴 시작 <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
+                        </div>
+
+                        <div class="trainer-menu-card" data-click="openComboDrillSetup">
+                            <div class="trainer-card-icon icon-blue">
+                                <i class="fa-solid fa-list-check" aria-hidden="true"></i>
+                            </div>
+                            <h4>복수정답형 훈련 <span class="pro-badge" data-pro-feature="combo_drill">PRO</span></h4>
+                            <p>기출 문항을 ㄱㄴㄷㄹ 진술 조합으로 변환한 1,000 문항으로 옳은 조합을 고르는 실전 훈련입니다. 진술별 오판이 자동 추적됩니다.</p>
+                            <span class="trainer-due-badge is-hidden" id="combo-due-badge"></span>
+                            <span class="trainer-card-btn">훈련 시작 <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
+                        </div>
+
+                        <div class="trainer-menu-card" data-click="openWeakReview">
+                            <div class="trainer-card-icon icon-orange">
+                                <i class="fa-solid fa-crosshairs" aria-hidden="true"></i>
+                            </div>
+                            <h4>취약 진술 리뷰</h4>
+                            <p>O/X·복수정답형에서 오판한 진술을 개념별로 모아봅니다. 같은 교재 구간의 취약 진술은 혼동쌍으로 묶어 표시합니다.</p>
+                            <span class="trainer-due-badge is-hidden" id="weak-due-badge"></span>
+                            <span class="trainer-card-btn">리뷰 열기 <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Limits Trainer Panel -->
+                <div id="trainer-limits-panel" class="is-hidden">
+                    <div class="sim-arena-header mb-6">
+                        <button class="btn btn-secondary" data-click="exitTrainerSubView" title="훈련소 메뉴로 돌아가기"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
+                        <div class="sim-title-group">
+                            <h4>핵심 수치 암기 마스터</h4>
+                            <span class="badge badge-quiz-cat">수치 암기 훈련</span>
+                        </div>
+                    </div>
+
+                    <div class="quiz-progress-header mb-5">
+                        <div class="quiz-progress-bar-bg"><div class="quiz-progress-bar-fill progress-bar-fill" id="limits-progress-bar"></div></div>
+                    </div>
+
+                    <div class="trainer-arena">
+                        <div class="quiz-card">
+                            <div class="quiz-card-header">
+                                <span class="badge" id="limits-progress-indicator">문제 1</span>
+                                <span class="quiz-context" id="limits-q-category">보존제 한도</span>
+                            </div>
+                            <div class="quiz-body">
+                                <h2 class="quiz-question-text reader-q-text-lg" id="limits-question-text">
+                                    질문이 들어갑니다.
+                                </h2>
+                                
+                                <!-- Multiple Choice Options Grid -->
+                                <div class="limits-options-grid mb-6" id="limits-options-container">
+                                    <!-- 4 buttons populated by JS -->
+                                </div>
+
+                                <!-- Feedback Panel -->
+                                <div class="quiz-feedback is-hidden" id="limits-feedback-panel" role="status" aria-live="polite">
+                                    <div class="feedback-icon" id="limits-feedback-icon">
+                                        <i class="fa-solid fa-check" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="feedback-content">
+                                        <h4 id="limits-feedback-title">정답입니다!</h4>
+                                        <p id="limits-feedback-desc">설명문</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="quiz-card-footer justify-end">
+                                <button id="next-limits-btn" class="btn btn-success is-hidden"  data-click="nextLimitsQuestion">다음 문제 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. O/X 판정 드릴 Panel -->
+                <div id="trainer-oxdrill-panel" class="is-hidden">
+                    <div class="sim-arena-header mb-6">
+                        <button class="btn btn-secondary" data-click="exitTrainerSubView" title="훈련소 메뉴로 돌아가기"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
+                        <div class="sim-title-group">
+                            <h4>O/X 판정 드릴</h4>
+                            <span class="badge badge-quiz-cat">진위 판정 훈련</span>
+                        </div>
+                    </div>
+
+                    <!-- 과목 선택 -->
+                    <div id="oxdrill-setup">
+                        <div class="trainer-arena">
+                            <div class="quiz-card">
+                                <div class="quiz-body" style="text-align:center;">
+                                    <h2 class="quiz-question-text reader-q-text-lg">과목을 선택하세요</h2>
+                                    <p style="color:var(--color-text-muted); margin-bottom:0.75rem;">복습 기한이 도래한 진술과 오판 진술이 우선 출제됩니다</p>
+                                    <p id="oxdrill-due-count" class="trainer-due-count"></p>
+                                    <div style="display:flex; gap:0.5rem; justify-content:center; margin-bottom:1.5rem;">
+                                        <button class="btn btn-secondary drill-count-chip active" data-click="setDrillCount" data-arg="10" style="padding:0.3rem 0.9rem; font-size:0.85rem;">10문</button>
+                                        <button class="btn btn-secondary drill-count-chip" data-click="setDrillCount" data-arg="20" style="padding:0.3rem 0.9rem; font-size:0.85rem;">20문</button>
+                                        <button class="btn btn-secondary drill-count-chip" data-click="setDrillCount" data-arg="all" style="padding:0.3rem 0.9rem; font-size:0.85rem;">전체</button>
+                                    </div>
+                                    <div id="oxdrill-subject-grid" style="display:grid; grid-template-columns:repeat(2,1fr); gap:0.75rem; max-width:480px; margin:0 auto;">
+                                        <!-- 과목 버튼은 registry 기반으로 동적 생성됩니다 -->
+                                    </div>
+                                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; max-width:480px; margin:0.75rem auto 0;">
+                                        <button class="btn btn-warning" data-click="startOxDrill" data-arg="weak" style="padding:0.75rem;"><i class="fa-solid fa-crosshairs"></i> 취약·복습 진술만<br><small>전 과목</small></button>
+                                        <button class="btn btn-secondary" data-click="startOxDrill" data-arg="num" style="padding:0.75rem;"><i class="fa-solid fa-hashtag"></i> 수치·한도·기한 집중<br><small>전 과목</small></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 드릴 아레나 -->
+                    <div id="oxdrill-arena" class="is-hidden">
+                        <div class="quiz-progress-header mb-5">
+                            <div class="quiz-progress-bar-bg"><div class="quiz-progress-bar-fill progress-bar-fill" id="oxdrill-progress-bar"></div></div>
+                        </div>
+                        <div class="trainer-arena">
+                            <div class="quiz-card">
+                                <div class="quiz-card-header">
+                                    <span class="badge" id="oxdrill-progress-indicator">문제 1</span>
+                                    <span class="quiz-context" id="oxdrill-context"></span>
+                                </div>
+                                <div class="quiz-body">
+                                    <p style="font-size:0.85rem; color:var(--color-text-muted); margin-bottom:0.5rem;" id="oxdrill-stem"></p>
+                                    <h2 class="quiz-question-text reader-q-text-lg" id="oxdrill-statement"></h2>
+                                    <div class="limits-options-grid mb-6" id="oxdrill-ox-container"></div>
+                                    <div class="quiz-feedback is-hidden" id="oxdrill-feedback-panel" role="status" aria-live="polite">
+                                        <div class="feedback-icon" id="oxdrill-feedback-icon">
+                                            <i class="fa-solid fa-check" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="feedback-content">
+                                            <h4 id="oxdrill-feedback-title"></h4>
+                                            <p id="oxdrill-feedback-desc"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="quiz-card-footer justify-end">
+                                    <button id="next-oxdrill-btn" class="btn btn-success is-hidden" data-click="nextOxDrill">다음 문제 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 결과 -->
+                    <div id="oxdrill-result" class="is-hidden"></div>
+                </div>
+
+                <!-- 4. 복수정답형(combo) 드릴 Panel -->
+                <div id="trainer-combo-panel" class="is-hidden">
+                    <div class="sim-arena-header mb-6">
+                        <button class="btn btn-secondary" data-click="exitTrainerSubView" title="훈련소 메뉴로 돌아가기"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
+                        <div class="sim-title-group">
+                            <h4>복수정답형 훈련 <span class="pro-badge" data-pro-feature="combo_drill">PRO</span></h4>
+                            <span class="badge badge-quiz-cat">진술 조합 판정</span>
+                        </div>
+                    </div>
+
+                    <!-- 과목 선택 -->
+                    <div id="combo-setup">
+                        <div class="trainer-arena">
+                            <div class="quiz-card">
+                                <div class="quiz-body" style="text-align:center;">
+                                    <h2 class="quiz-question-text reader-q-text-lg">과목을 선택하세요</h2>
+                                    <p style="color:var(--color-text-muted); margin-bottom:0.75rem;">복습 기한 도래·오판 진술을 포함한 문항이 우선 출제됩니다</p>
+                                    <p id="combo-due-count" class="trainer-due-count"></p>
+                                    <div style="display:flex; gap:0.5rem; justify-content:center; margin-bottom:1.5rem;">
+                                        <button class="btn btn-secondary drill-count-chip active" data-click="setDrillCount" data-arg="10" style="padding:0.3rem 0.9rem; font-size:0.85rem;">10문</button>
+                                        <button class="btn btn-secondary drill-count-chip" data-click="setDrillCount" data-arg="20" style="padding:0.3rem 0.9rem; font-size:0.85rem;">20문</button>
+                                        <button class="btn btn-secondary drill-count-chip" data-click="setDrillCount" data-arg="all" style="padding:0.3rem 0.9rem; font-size:0.85rem;">전체</button>
+                                    </div>
+                                    <div id="combo-subject-grid" style="display:grid; grid-template-columns:repeat(2,1fr); gap:0.75rem; max-width:480px; margin:0 auto;">
+                                        <!-- 과목 버튼은 registry 기반으로 동적 생성됩니다 -->
+                                    </div>
+                                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; max-width:480px; margin:0.75rem auto 0;">
+                                        <button class="btn btn-warning" data-click="startComboDrill" data-arg="weak" style="padding:0.75rem;"><i class="fa-solid fa-crosshairs"></i> 취약·복습 진술 문항<br><small>전 과목</small></button>
+                                        <button class="btn btn-secondary" data-click="startComboDrill" data-arg="num" style="padding:0.75rem;"><i class="fa-solid fa-hashtag"></i> 수치·한도·기한 집중<br><small>전 과목</small></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="combo-arena" class="is-hidden">
+                        <div class="quiz-progress-header mb-5">
+                            <div class="quiz-progress-bar-bg"><div class="quiz-progress-bar-fill progress-bar-fill" id="combo-progress-bar"></div></div>
+                        </div>
+                        <div class="trainer-arena">
+                            <div class="quiz-card">
+                                <div class="quiz-card-header">
+                                    <span class="badge" id="combo-progress-indicator">문제 1</span>
+                                    <span class="quiz-context" id="combo-q-category"></span>
+                                </div>
+                                <div class="quiz-body">
+                                    <p id="combo-citation" style="font-size:0.8rem; color:var(--color-text-muted); margin-bottom:0.5rem;"></p>
+                                    <h2 class="quiz-question-text reader-q-text-lg" id="combo-stem" style="margin-bottom:1rem;"></h2>
+                                    <div id="combo-statements" style="margin-bottom:0.5rem;"></div>
+                                    <p id="combo-judge-hint" style="font-size:0.8rem; color:var(--color-text-muted); margin:0 0 1rem;"></p>
+                                    <div class="limits-options-grid mb-6" id="combo-options-container"></div>
+                                    <div class="quiz-feedback is-hidden" id="combo-feedback-panel" role="status" aria-live="polite">
+                                        <div class="feedback-icon" id="combo-feedback-icon">
+                                            <i class="fa-solid fa-check" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="feedback-content">
+                                            <h4 id="combo-feedback-title"></h4>
+                                            <div id="combo-feedback-statements"></div>
+                                            <p id="combo-feedback-desc" style="margin-top:0.5rem;"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="quiz-card-footer justify-end">
+                                    <button id="combo-judge-submit" class="btn btn-primary" data-click="submitComboJudgments" disabled style="margin-right:auto;"><i class="fa-solid fa-check-double" aria-hidden="true"></i> 진술 판정 제출</button>
+                                    <button id="next-combo-btn" class="btn btn-success is-hidden" data-click="nextComboDrill">다음 문제 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 결과 -->
+                    <div id="combo-result" class="is-hidden"></div>
+                </div>
+
+                <!-- 4-2. 취약 진술 리뷰 Panel -->
+                <div id="trainer-weak-panel" class="is-hidden">
+                    <div class="sim-arena-header mb-6">
+                        <button class="btn btn-secondary" data-click="exitTrainerSubView" title="훈련소 메뉴로 돌아가기"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
+                        <div class="sim-title-group">
+                            <h4>취약 진술 리뷰</h4>
+                            <span class="badge badge-quiz-cat">진술 단위 약점</span>
+                        </div>
+                    </div>
+                    <div class="trainer-arena">
+                        <div class="quiz-card">
+                            <div class="quiz-body">
+                                <p id="weak-summary" style="color:var(--color-text-muted); margin-bottom:1rem;"></p>
+                                <div id="weak-mastery"></div>
+                                <div id="weak-list"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. Blending Calculator Panel -->
+                <div id="trainer-calc-panel" class="is-hidden">
+                    <div class="sim-arena-header mb-6">
+                        <button class="btn btn-secondary" data-click="exitTrainerSubView" title="훈련소 메뉴로 돌아가기"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
+                        <div class="sim-title-group">
+                            <h4>원료 배합 계산 연습기</h4>
+                            <span class="badge badge-quiz-cat">실전 계산 훈련</span>
+                        </div>
+                    </div>
+
+                    <div class="trainer-arena">
+                        <div class="quiz-card">
+                            <div class="quiz-card-header">
+                                <span class="badge" id="calc-type-badge">배합 추가량</span>
+                                <span class="quiz-context">[무한 생성 연습 문제]</span>
+                            </div>
+                            <div class="quiz-body">
+                                <h2 class="quiz-question-text reader-q-text-md" id="calc-question-text">
+                                    계산 문제가 들어갑니다.
+                                </h2>
+
+                                <div class="calc-input-group calc-input-row">
+                                    <input type="number" step="any" id="calc-answer-input" class="form-input" placeholder="정답을 입력하세요 (예: 12.34)" autocomplete="off" aria-label="계산 정답 입력">
+                                    <span class="calc-unit" id="calc-unit-text">g</span>
+                                    <button id="submit-calc-btn" class="btn btn-primary" data-click="submitCalcAnswer">정답 제출</button>
+                                </div>
+
+                                <!-- Scratchpad Toggle & Canvas (New Feature 4) -->
+                                <div class="mb-5">
+                                    <button class="btn btn-secondary calc-action-btn" id="calc-scratchpad-toggle" data-click="toggleCalcScratchpad">
+                                        <i class="fa-solid fa-pencil" aria-hidden="true"></i> ✏️ 계산 연습장 열기
+                                    </button>
+                                    
+                                    <div id="calc-scratchpad-container" class="is-hidden calc-scratchpad">
+                                        <div class="calc-scratchpad-header">
+                                            <span class="calc-scratchpad-label"><i class="fa-solid fa-palette" aria-hidden="true"></i> 계산 연습장</span>
+                                            <div class="flex-row gap-2">
+                                                <button class="btn calc-scratchpad-btn" data-click="clearScratchpad">모두 지우기</button>
+                                                <button class="btn calc-scratchpad-btn calc-scratchpad-btn-clear" id="scratchpad-eraser-btn" data-click="toggleScratchpadEraser">지우개</button>
+                                            </div>
+                                        </div>
+                                        <canvas id="scratchpad-canvas" width="480" height="200" class="calc-scratchpad-canvas"></canvas>
+                                    </div>
+                                </div>
+
+                                <!-- Feedback Panel -->
+                                <div class="quiz-feedback is-hidden mb-5" id="calc-feedback-panel" role="status" aria-live="polite">
+                                    <div class="feedback-icon" id="calc-feedback-icon">
+                                        <i class="fa-solid fa-check" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="feedback-content">
+                                        <h4 id="calc-feedback-title">정답입니다!</h4>
+                                        <p id="calc-feedback-desc">설명</p>
+                                    </div>
+                                </div>
+
+                                <!-- Accordion Solution -->
+                                <div class="solution-accordion is-hidden mb-5" id="calc-solution-panel">
+                                    <div class="solution-header" data-click="toggleSolutionAccordion">
+                                        <span><i class="fa-solid fa-square-root-variable" aria-hidden="true"></i> 단계별 풀이 공식 보기</span>
+                                        <i class="fa-solid fa-chevron-down" aria-hidden="true" id="solution-chevron"></i>
+                                    </div>
+                                    <div class="solution-body is-hidden calc-solution-body" id="calc-solution-body">
+                                        풀이 공식 설명...
+                                    </div>
+                                </div>
+
+                                <!-- 계산 기록 히스토리 (신규 Feature 4) -->
+                                <div class="calc-history-panel calc-formula-section" id="calc-history-panel">
+                                    <h4 class="calc-formula-label"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i> 최근 계산 문제 풀이 기록 (최대 5회)</h4>
+                                    <div id="calc-history-list" class="flex-col gap-3">
+                                        <!-- Dynamic list of previous calculations -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="quiz-card-footer justify-end">
+                                <button id="next-calc-btn" class="btn btn-success is-hidden"  data-click="generateCalcQuestion">다음 문제 생성 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Ingredients Challenge Panel -->
+                <div id="trainer-ingredients-panel" class="is-hidden">
+                    <div class="sim-arena-header mb-6">
+                        <button class="btn btn-secondary" data-click="exitTrainerSubView" title="훈련소 메뉴로 돌아가기"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
+                        <div class="sim-title-group">
+                            <h4>원료 안전성 챌린지</h4>
+                            <span class="badge badge-quiz-cat">원료 규격 & 안전성</span>
+                        </div>
+                    </div>
+
+                    <div class="quiz-progress-header mb-5">
+                        <div class="quiz-progress-bar-bg"><div class="quiz-progress-bar-fill progress-bar-fill" id="ing-progress-bar"></div></div>
+                    </div>
+
+                    <div class="trainer-arena">
+                        <div class="quiz-card">
+                            <div class="quiz-card-header">
+                                <span class="badge" id="ing-progress-indicator">문제 1 / 10</span>
+                                <span class="quiz-context" id="ing-q-type-label">안전성 판별</span>
+                            </div>
+                            <div class="quiz-body">
+                                <h2 class="quiz-question-text reader-q-text-lg" id="ing-question-text">
+                                    성분 질문이 들어갑니다.
+                                </h2>
+                                
+                                <!-- Multiple Choice Options Grid -->
+                                <div class="limits-options-grid ing-options-grid mb-6" id="ing-options-container">
+                                    <!-- Populated by JS -->
+                                </div>
+
+                                <!-- Text Input Wrapper -->
+                                <div class="calc-input-group is-hidden ing-input-row" id="ing-input-container">
+                                    <input type="text" id="ing-answer-input" class="form-input" placeholder="정답 입력 (예: 1.0% 또는 기재해야 한다)" autocomplete="off" aria-label="원료 정답 입력">
+                                    <button id="submit-ing-btn" class="btn btn-primary" data-click="submitIngAnswer">정답 제출</button>
+                                </div>
+
+                                <!-- Feedback Panel -->
+                                <div class="quiz-feedback is-hidden" id="ing-feedback-panel" role="status" aria-live="polite">
+                                    <div class="feedback-icon" id="ing-feedback-icon">
+                                        <i class="fa-solid fa-check" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="feedback-content">
+                                        <h4 id="ing-feedback-title">정답입니다!</h4>
+                                        <p id="ing-feedback-desc">설명문</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="quiz-card-footer justify-end">
+                                <button id="next-ing-btn" class="btn btn-success is-hidden"  data-click="nextIngQuestion">다음 문제 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>

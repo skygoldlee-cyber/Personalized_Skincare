@@ -1,0 +1,125 @@
+            <section id="textbook-reader-view" class="view-section">
+                <!-- Reading Progress Bar (fixed at top of view) -->
+                <div id="reader-progress-bar" class="reader-progress-bar is-hidden">
+                    <div id="reader-progress-fill" class="reader-progress-fill"></div>
+                    <span id="reader-section-progress" class="reader-section-progress"></span>
+                </div>
+                <!-- Sticky current section heading -->
+                <div id="reader-sticky-heading" class="reader-sticky-heading is-hidden">
+                    <i class="fa-solid fa-bookmark text-primary" aria-hidden="true"></i>
+                    <span id="reader-sticky-heading-text"></span>
+                </div>
+
+                <div class="textbook-reader-controls mb-5">
+                    <div class="reader-mode-buttons">
+                        <div class="filter-group">
+                            <label for="reader-subject-select">과목 선택</label>
+                            <select id="reader-subject-select" class="form-select reader-mode-btn">
+                                <option value="">과목을 선택하세요</option>
+                            </select>
+                        </div>
+                        <label class="reader-mode-checkbox" title="이야기형 교재 + 🎧 오디오 제공">
+                            <input type="checkbox" id="reader-story-mode-toggle" >
+                            <i class="fa-solid fa-book-open-reader text-primary" aria-hidden="true"></i> 이야기형 <span class="pro-badge" data-pro-feature="story_textbook">PRO</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Reading Convenience Toolbar -->
+                <div id="reader-toolbar" class="reader-toolbar is-hidden">
+                    <button class="reader-toolbar-toggle" id="reader-toolbar-toggle" title="툴바 접기/펼치기" aria-label="툴바 접기/펼치기" aria-expanded="true">
+                        <i class="fa-solid fa-chevron-up" aria-hidden="true"></i>
+                    </button>
+                    <div class="reader-toolbar-inner" id="reader-toolbar-inner">
+                    <div class="reader-toolbar-group">
+                        <span class="reader-toolbar-label"><i class="fa-solid fa-text-height" aria-hidden="true"></i> 글자 크기</span>
+                        <button class="reader-tool-btn" id="reader-font-decrease" title="글자 작게">A-</button>
+                        <span id="reader-font-size-display" class="reader-font-size-display">100%</span>
+                        <button class="reader-tool-btn" id="reader-font-increase" title="글자 크게">A+</button>
+                        <button class="reader-tool-btn" id="reader-font-reset" title="기본 크기로" aria-label="글자 크기 기본값"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="reader-toolbar-divider"></div>
+                    <div class="reader-toolbar-group">
+                        <span class="reader-toolbar-label"><i class="fa-solid fa-arrows-up-down" aria-hidden="true"></i> 줄 간격</span>
+                        <button class="reader-tool-btn" id="reader-line-height-decrease" title="줄 간격 좁게" aria-label="줄 간격 좁게"><i class="fa-solid fa-minus" aria-hidden="true"></i></button>
+                        <span id="reader-line-height-display" class="reader-font-size-display">2.0</span>
+                        <button class="reader-tool-btn" id="reader-line-height-increase" title="줄 간격 넓게" aria-label="줄 간격 넓게"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+                        <button class="reader-tool-btn" id="reader-line-height-reset" title="줄 간격 기본값" aria-label="줄 간격 기본값"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="reader-toolbar-divider"></div>
+                    <div class="reader-toolbar-group">
+                        <button class="reader-tool-btn" id="reader-focus-toggle" title="집중 모드 (주변 UI 숨기기)">
+                            <i class="fa-solid fa-expand" aria-hidden="true"></i> <span>집중 모드</span>
+                        </button>
+                        <button class="reader-tool-btn reader-toc-mobile-toggle" id="reader-toc-mobile-btn" title="목차 열기">
+                            <i class="fa-solid fa-list" aria-hidden="true"></i> <span>목차</span>
+                        </button>
+                    </div>
+                    <div class="reader-toolbar-divider"></div>
+                    <div class="reader-toolbar-group">
+                        <div class="reader-search-box">
+                            <input type="text" id="reader-in-content-search" placeholder="본문 검색..." aria-label="본문 내 검색">
+                            <span id="reader-search-count" class="reader-search-count"></span>
+                            <button class="reader-tool-btn reader-search-nav-btn" id="reader-search-prev" title="이전 검색 결과" aria-label="이전 검색 결과"><i class="fa-solid fa-chevron-up" aria-hidden="true"></i></button>
+                            <button class="reader-tool-btn reader-search-nav-btn" id="reader-search-next" title="다음 검색 결과" aria-label="다음 검색 결과"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                            <button class="reader-tool-btn reader-search-nav-btn" id="reader-search-clear" title="검색 닫기" aria-label="검색 닫기"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+                        </div>
+                    </div>
+                    <div class="reader-toolbar-divider"></div>
+                    <div class="reader-toolbar-group">
+                        <button class="reader-tool-btn" id="reader-expand-all" title="모든 섹션 펼치기">
+                            <i class="fa-solid fa-angles-down" aria-hidden="true"></i> 모두 펼치기
+                        </button>
+                        <button class="reader-tool-btn" id="reader-collapse-all" title="모든 섹션 접기 (개요만 보기)">
+                            <i class="fa-solid fa-angles-up" aria-hidden="true"></i> 모두 접기
+                        </button>
+                    </div>
+                    <div class="reader-toolbar-divider"></div>
+                    <div class="reader-toolbar-group" id="reader-chapter-actions-group">
+                        <!-- 챕터 액션: 동적 생성 (기출 필터, 원본 MD, 참조자료, 오디오) -->
+                    </div>
+                    </div><!-- /.reader-toolbar-inner -->
+                </div>
+
+                <!-- 오디오 플레이어 영역 (툴바 아래, 동적 생성) -->
+                <div id="reader-audio-player-area" class="reader-audio-player-area is-hidden"></div>
+
+                <!-- Reader Layout: TOC sidebar + Content -->
+                <div id="reader-layout" class="reader-layout">
+                    <!-- TOC Sidebar (sections of current chapter) -->
+                    <aside id="reader-toc" class="reader-toc is-hidden">
+                        <div class="reader-toc-header">
+                            <i class="fa-solid fa-list" aria-hidden="true"></i> 목차
+                        </div>
+                        <nav id="reader-toc-list" class="reader-toc-list">
+                            <!-- Populated dynamically -->
+                        </nav>
+                    </aside>
+                    <div id="reader-toc-backdrop" class="reader-toc-backdrop is-hidden"></div>
+                    <!-- 왼쪽 가장자리 스와이프 힌트 탭 — TOC 로드 시에만 표시 (모바일) -->
+                    <button id="reader-toc-edge-hint" class="reader-toc-edge-hint" type="button"
+                            aria-label="목차 열기" title="왼쪽 끝을 오른쪽으로 밀면 목차"></button>
+
+                    <div id="textbook-reader-container" class="textbook-reader-content">
+                        <div class="empty-state">
+                            <i class="fa-solid fa-book-open empty-state-icon" aria-hidden="true"></i>
+                            <h3>읽을 교재를 선택하세요</h3>
+                            <p>위에서 과목을 선택하면 해당 교재의 본문 내용이 표시됩니다.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Back to top button -->
+                <button id="reader-back-to-top" class="reader-back-to-top is-hidden" title="맨 위로" aria-label="맨 위로">
+                    <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+                </button>
+
+                <!-- Table fullscreen modal -->
+                <div id="reader-table-modal" class="reader-table-modal is-hidden">
+                    <div class="reader-table-modal-backdrop"></div>
+                    <div class="reader-table-modal-content">
+                        <button class="reader-table-modal-close" id="reader-table-modal-close" aria-label="표 모달 닫기"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+                        <div id="reader-table-modal-body" class="reader-table-modal-body"></div>
+                    </div>
+                </div>
+            </section>

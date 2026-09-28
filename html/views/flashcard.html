@@ -1,0 +1,79 @@
+            <section id="flashcard-view" class="view-section">
+                <div class="filter-bar">
+                    <div class="filter-group">
+                        <label for="fc-subject-select">과목 선택</label>
+                        <select id="fc-subject-select" class="form-select">
+                            <option value="">과목을 선택하세요</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="fc-difficulty-select">난이도</label>
+                        <select id="fc-difficulty-select" class="form-select">
+                            <option value="all">전체</option>
+                            <option value="easy">쉬움</option>
+                            <option value="medium">보통</option>
+                            <option value="hard">어려움</option>
+                        </select>
+                    </div>
+                    <div class="filter-group-checkbox">
+                        <input type="checkbox" id="fc-key-only" class="form-checkbox">
+                        <label for="fc-key-only"><i class="fa-solid fa-star text-warning" aria-hidden="true"></i> 기출/중요 개념만</label>
+                    </div>
+                    <div class="filter-group-checkbox">
+                        <input type="checkbox" id="fc-shuffle" class="form-checkbox">
+                        <label for="fc-shuffle"><i class="fa-solid fa-shuffle" aria-hidden="true"></i> 랜덤 셔플</label>
+                    </div>
+                </div>
+
+                <div class="flashcard-arena">
+                    <!-- Flashcard 3D Wrapper -->
+                    <div class="flashcard-wrapper" id="flashcard-item">
+                        <div class="flashcard-inner">
+                            <!-- Card Front -->
+                            <div class="flashcard-face flashcard-front">
+                                <div class="card-header">
+                                    <div class="card-header-left">
+                                        <span class="card-badge" id="card-front-category">카테고리</span>
+                                        <span class="card-type-badge" id="card-front-type"></span>
+                                    </div>
+                                    <span class="card-key-icon" id="card-front-star"><i class="fa-solid fa-star" aria-hidden="true"></i></span>
+                                </div>
+                                <div class="card-body">
+                                    <h2 id="card-front-term">개념 용어</h2>
+                                    <p class="flip-hint"><i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i> 클릭 또는 스페이스바로 뒤집기</p>
+                                </div>
+                            </div>
+                            <!-- Card Back -->
+                            <div class="flashcard-face flashcard-back">
+                                <div class="card-header">
+                                    <div class="card-header-left">
+                                        <span class="card-badge" id="card-back-category">카테고리</span>
+                                        <span class="card-type-badge" id="card-back-type"></span>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="card-definition-container">
+                                        <p id="card-back-definition">여기에 상세한 정의나 설명글이 나타납니다. 여러 줄이 들어와도 가독성 있게 잘 정렬됩니다.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Controls -->
+                <div class="flashcard-controls">
+                    <button id="fc-prev-btn" class="btn btn-secondary"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 이전</button>
+                    <div class="fc-status-indicator">
+                        <span id="fc-current-index">0</span> / <span id="fc-total-count">0</span>
+                        <span class="fc-progress-badge is-hidden quiz-feedback-correct" id="fc-memorized-badge"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> <span id="fc-memorized-count">0</span></span>
+                        <span class="fc-progress-badge is-hidden quiz-feedback-wrong" id="fc-weak-badge"><i class="fa-solid fa-circle-xmark" aria-hidden="true"></i> <span id="fc-weak-count">0</span></span>
+                    </div>
+                    <button id="fc-next-btn" class="btn btn-secondary">다음 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+                </div>
+
+                <div class="flashcard-actions">
+                    <button id="fc-easy-btn" class="btn btn-success" title="다음 복습까지 간격이 길어집니다"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> 완벽히 외움 (쉽다)</button>
+                    <button id="fc-hard-btn" class="btn btn-danger" title="가까운 시점에 다시 복습합니다"><i class="fa-solid fa-circle-xmark" aria-hidden="true"></i> 아직 헷갈림 (어렵다)</button>
+                </div>
+            </section>

@@ -1,0 +1,83 @@
+            <section id="quiz-view" class="view-section">
+                <div class="filter-bar">
+                    <div class="filter-group">
+                        <label for="quiz-subject-select">과목 선택</label>
+                        <select id="quiz-subject-select" class="form-select">
+                            <option value="">과목을 선택하세요</option>
+                        </select>
+                    </div>
+                    <button id="start-quiz-btn" class="btn btn-primary">퀴즈 시작</button>
+                    <button id="start-diagnostic-btn" class="btn btn-secondary" data-click="startDiagnosticQuiz" title="전 과목에서 골고루 출제해 약점 프로파일 생성"><i class="fa-solid fa-stethoscope"></i> 진단 평가</button>
+                </div>
+
+                <!-- Quiz Progress Area -->
+                <div class="quiz-progress-header is-hidden" >
+                    <div class="progress-bar-container">
+                        <div class="progress-bar progress-bar-fill" id="quiz-run-progress"></div>
+                    </div>
+                    <div class="quiz-score-indicator">
+                        진행: <span id="quiz-curr-idx">1</span>/<span id="quiz-total-idx">10</span> | 
+                        맞춘 문제: <span id="quiz-correct-count">0</span>
+                    </div>
+                </div>
+
+                <!-- Quiz Question Card -->
+                <div class="quiz-arena is-hidden" id="quiz-arena-panel" >
+                    <div class="quiz-card">
+                        <div class="quiz-card-header">
+                            <span class="badge badge-quiz-cat" id="quiz-category">카테고리</span>
+                            <span class="quiz-context" id="quiz-context-title">[기출 지문]</span>
+                        </div>
+                        <div class="quiz-body">
+                            <h2 class="quiz-question-text" id="quiz-question">여기는 [ 빈칸 ] 입니다.</h2>
+                            
+                            <!-- 객관식 선택지 컨테이너 -->
+                            <div id="quiz-options-container" class="is-hidden mb-4"></div>
+
+                            <!-- OX 선택 컨테이너 -->
+                            <div id="quiz-ox-container" class="is-hidden gap-4 mb-4">
+                                <button class="btn btn-secondary quiz-ox-btn icon-stat" data-ox="O" title="진술이 맞다">O</button>
+                                <button class="btn btn-secondary quiz-ox-btn icon-stat" data-ox="X" title="진술이 틀리다">X</button>
+                            </div>
+
+                            <div class="quiz-input-group" id="quiz-input-group">
+                                <input type="text" id="quiz-answer-input" class="form-input" placeholder="정답을 입력하세요 (띄어쓰기 유의)" autocomplete="off" aria-label="정답 입력">
+                                <button id="submit-quiz-btn" class="btn btn-primary">정답 제출</button>
+                            </div>
+
+                            <!-- Feedback Panel -->
+                            <div class="quiz-feedback is-hidden" id="quiz-feedback-panel"  role="status" aria-live="polite">
+                                <div class="feedback-icon" id="feedback-icon-indicator">
+                                    <i class="fa-solid fa-check" aria-hidden="true"></i>
+                                </div>
+                                <div class="feedback-content">
+                                    <h4 id="feedback-result-title">정답입니다!</h4>
+                                    <p>해답: <strong id="feedback-correct-answer">10%</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="quiz-card-footer">
+                            <button id="next-quiz-btn" class="btn btn-success is-hidden" >다음 문제 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quiz Results Panel -->
+                <div class="quiz-results-card is-hidden" id="quiz-result-panel"  role="status" aria-live="polite">
+                    <i class="fa-solid fa-trophy trophy-icon" aria-hidden="true"></i>
+                    <h2>퀴즈 학습 완료!</h2>
+                    <p class="result-score-summary">정답수: <span id="result-correct-num">0</span> / <span id="result-total-num">10</span> (<span id="result-percent">0%</span>)</p>
+                    <div id="quiz-review-list" class="text-left mb-5"></div>
+                    <div class="result-actions">
+                        <button id="retry-quiz-btn" class="btn btn-primary"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> 다시 풀기</button>
+                        <button id="back-to-dashboard-btn" class="btn btn-secondary"><i class="fa-solid fa-house" aria-hidden="true"></i> 대시보드로</button>
+                    </div>
+                </div>
+
+                <!-- Empty State before Quiz Start -->
+                <div class="empty-state" id="quiz-empty-state">
+                    <i class="fa-solid fa-clipboard-question" aria-hidden="true"></i>
+                    <h3>맞춤형화장품 조제관리사 모의 퀴즈</h3>
+                    <p>과목을 선택한 후 "퀴즈 시작" 버튼을 누르시면 중요 빈칸 및 용어 퀴즈가 시작됩니다.</p>
+                </div>
+            </section>

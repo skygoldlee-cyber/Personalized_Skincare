@@ -31,9 +31,10 @@ const TRIGGERS = [
     /^tools\//,
     /^tests\//,
     /^css\//,
+    /^html\//,
     /^\.github\//,
     /^\.githooks\//,
-    /^(index\.html|style\.css|manifest\.webmanifest|vercel\.json|package(-lock)?\.json|jsconfig\.json|eslint\.config\.mjs|vitest\.config\.mjs|playwright\.config\.js|serve\.js|feature-plan\.json)$/,
+    /^(index\.html|index\.template\.html|style\.css|manifest\.webmanifest|vercel\.json|package(-lock)?\.json|jsconfig\.json|eslint\.config\.mjs|vitest\.config\.mjs|playwright\.config\.js|serve\.js|feature-plan\.json)$/,
 ];
 
 // 트리거보다 우선 평가되는 제외 경로 — 자동 스탬프·생성물·독립 파이프라인·문서 자체
@@ -64,7 +65,7 @@ const DOC_HINTS = [
     { re: /^\.githooks\//, hint: 'docs/dev/reference/DEV_ENVIRONMENT.md (훅 설명)' },
     { re: /^package\.json$|^tools\//, hint: 'AGENTS.md · docs/dev/reference/DEV_ENVIRONMENT.md (명령 표)' },
     { re: /^src\/views\//, hint: 'docs/dev/ARCHITECTURE.md (뷰 목록) · DOM_TEST_DESIGN.md' },
-    { re: /^src\/|^css\/|^index\.html/, hint: 'docs/dev/ARCHITECTURE.md · AGENTS.md (구조·규칙)' },
+    { re: /^src\/|^css\/|^index\.html|^index\.template\.html|^html\//, hint: 'docs/dev/ARCHITECTURE.md · AGENTS.md (구조·규칙)' },
     { re: /vercel\.json|manifest\.webmanifest/, hint: 'docs/dev/ARCHITECTURE.md (배포·보안·PWA)' },
 ];
 

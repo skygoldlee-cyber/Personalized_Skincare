@@ -198,7 +198,11 @@
 
 ```
 Personalized_Skincare/
-├── index.html                  # SPA 엔트리 포인트
+├── index.template.html         # SPA 템플릿 — <!-- @include html/views/*.html --> 마커
+├── index.html                  # SPA 엔트리 포인트 (생성물 — build:html 산출, 직접 편집 금지)
+├── html/
+│   └── views/                  # 뷰 마크업 파셜 13개 (dashboard·trainer·formula·…)
+├── tools/build/build_html.js   # index.html 조립기 — --check로 드리프트 검증 (CI·pre-push)
 ├── style.css                   # 메인 스타일 (base.css import)
 ├── sw.js                       # Service Worker
 ├── manifest.webmanifest        # PWA 매니페스트
@@ -517,7 +521,7 @@ Personalized_Skincare/
 
 | 파일 | 역할 |
 |------|------|
-| [`index.html`](../../index.html) | 단일 HTML 페이지(SPA App Shell). 모든 뷰 섹션이 하나의 문서에 존재하며 JS로 표시 전환 |
+| [`index.html`](../../index.html) | 단일 HTML 페이지(SPA App Shell). 모든 뷰 섹션이 하나의 문서에 존재하며 JS로 표시 전환. **생성물** — `index.template.html` + `html/views/*.html`을 `build:html`로 조립. 뷰 마크업 편집은 파셜에서 수행, `check:html`이 드리프트를 차단 |
 | [`style.css`](../../style.css) | CSS 진입점 (`@import`로 모듈 로드). 실제 디자인 토큰·테마 변수는 `css/base.css` `:root`에 정의 (SPEC §4.9) |
 | [`manifest.webmanifest`](../../manifest.webmanifest) | PWA 매니페스트 (앱 이름, 아이콘, 테마 색상) |
 

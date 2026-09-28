@@ -38,6 +38,23 @@
 - **`index.html`**: 설정 드롭다운의 `학습 매뉴얼`·`실무 매뉴얼` 항목 제거 — 사이드바·모바일 하단 탭에 이미 있어 중복
 - **`user_manual.md`**: 설정 메뉴 설명에서 매뉴얼 항목 제외 + 매뉴얼 진입 경로(사이드바/하단 탭) 안내 추가 → docs_md 번들 재생성
 
+## 2026-10-16 index.html 뷰 마크업 분리 (P3 리팩토링) — 빌드 조립 방식
+
+**배경**: `index.html`이 2,311줄 단일 파일로 13개 뷰 섹션(~1,830줄)을 인라인 보유. 런타임 fetch 방식은 init 순서·오프라인 콜드스타트 경로 변경 리스크가 있어 **빌드 조립** 채택 — 배포 산출물·테스트·SW·CSP 전부 불변.
+
+**구조**:
+
+| 파일 | 역할 |
+|---|---|
+| `index.template.html` | 템플릿 — 뷰 위치에 `<!-- @include html/views/<name>.html -->` 마커 (라인 단위 치환, 들여쓰기는 파셜 보유) |
+| `html/views/*.html` | 뷰 마크업 파셜 13개 (dashboard·analysis·flashcard·quiz·review·trainer·exam·textbook·textbook-reader·dictionary·formula·exam-select·calendar) |
+| `tools/build/build_html.js` | 조립기 — 기본: index.html 생성, `--check`: 바이트 비교로 드리프트 탐지, 고아 파셜·누락 include 경고 |
+| `npm run build:html` / `check:html` | 재생성 / 신선도 게이트 (pre-push·CI 연결) |
+
+**편집 규칙**: 뷰 마크업은 `html/views/*`에서 편집 후 `build:html` — index.html 직접 편집은 `check:html`이 차단. 첫 조립 결과가 기존 index.html과 바이트 동일함을 검증(순수 추출 증명). `check_doc_sync`에 `html/`·`index.template.html` 트리거 추가.
+
+---
+
 ## 2026-10-16 대형 뷰 분할 (P2 리팩토링) — app.js·formula·textbook-reader
 
 **배경**: `src/` 대형 파일 3종(app.js 1,156 · textbook-reader 1,698 · formula 1,443줄)에 상호 독립적인 관심사가 혼재해 유지보수 비용이 커짐.

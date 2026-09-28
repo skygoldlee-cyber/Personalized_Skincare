@@ -1,0 +1,116 @@
+            <section id="exam-view" class="view-section">
+                <!-- 1. Exam List Panel -->
+                <div id="exam-list-panel">
+                    <div class="section-title-area">
+                        <h3>실전 모의고사 및 요약본</h3>
+                        <p id="exam-view-subtitle">교재 인용 기반 문제은행으로 과목별 모의고사를 보고, 학습안내서로 핵심을 요약할 수 있습니다.</p>
+                    </div>
+                    
+                    <div class="exam-list-grid">
+                        <!-- 1~4과목 통합 실전 모의고사 (신규) -->
+                        <div class="exam-card-item highlight-card">
+                            <div class="exam-card-badge highlight-card-badge">종합 평가</div>
+                            <span class="highlight-card-icon"><i class="fa-solid fa-star" aria-hidden="true"></i> 추천</span>
+                            <h4 class="exam-card-title highlight-card-title" id="integrated-exam-title">통합 실전 모의고사 <span class="pro-badge" data-pro-feature="mock_exam">PRO</span></h4>
+                            <p class="exam-card-desc highlight-card-desc">전 과목 문항을 무작위로 구성하여 푸는 종합 실전 모의고사입니다. 시험 타이머, OMR 답안지 마킹 및 자동 과락/합격 판정을 완벽히 지원합니다.</p>
+                            <label class="integrated-mix-option">
+                                <input type="checkbox" id="integrated-mix-combo">
+                                <span>과목별 문항의 약 20%를 ㄱㄴㄷ 복수정답형으로 혼합</span>
+                            </label>
+                            <div class="exam-card-btns flex-btns highlight-card-btns">
+                                <button class="exam-btn-sim btn-cyan highlight-card-btn" data-click="startIntegratedMockExam" id="integrated-exam-btn">통합 모의고사 시작</button>
+                            </div>
+                        </div>
+
+                        <!-- 과목별 시험 카드 (JS에서 registry 기반 동적 생성) -->
+                        <div id="exam-cards-dynamic" class="display-contents"></div>
+
+                        <!-- 부록 요약본 -->
+                        <div class="exam-card-item full-width-card" data-feature="appendixDocs">
+                            <div class="exam-card-badge badge-gray">학습 부록</div>
+                            <div class="exam-card-btns flex-row gap-4">
+                                <a href="#" data-click="ManualViewer.openMnemonicGuide" class="exam-btn-link"><i class="fa-solid fa-brain" aria-hidden="true"></i> 두음법·숫자 총정리</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 추천 외부 링크 (JS에서 registry 기반 동적 생성) -->
+                    <div id="resources-section" class="is-hidden"></div>
+                </div>
+
+                <!-- 2. Simulation Arena Panel -->
+                <div id="sim-arena-panel" class="is-hidden">
+                    <div class="sim-arena-header">
+                        <button class="btn btn-secondary" data-click="exitSimArena" title="모의고사 목록으로 돌아가기"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 나가기</button>
+                        <div class="sim-title-group">
+                            <h4 id="sim-exam-title">모의고사 타이틀</h4>
+                            <div class="sim-timer"><i class="fa-regular fa-clock" aria-hidden="true"></i> 남은 시간: <span id="sim-time-left">120:00</span></div>
+                        </div>
+                    </div>
+
+                    <div class="sim-content-layout">
+                        <!-- Left: Question Area -->
+                        <div class="sim-main-panel">
+                            <div class="sim-question-card">
+                                <div class="sim-card-header">
+                                    <span class="badge" id="sim-q-num">Q 1 / 100</span>
+                                    <span class="badge badge-quiz-cat" id="sim-q-type">객관식</span>
+                                </div>
+                                <div class="sim-card-body">
+                                    <p id="sim-q-text" class="sim-q-text">여기에 모의고사 질문이 렌더링됩니다.</p>
+                                    
+                                    <!-- Dynamic Options Area -->
+                                    <div id="sim-options-container" class="sim-options-list">
+                                        <!-- Choice or OX or Blank input -->
+                                    </div>
+                                </div>
+                                <div class="sim-card-footer">
+                                    <button class="btn btn-secondary" id="sim-prev-btn"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i> 이전</button>
+                                    <button class="btn btn-primary" id="sim-next-btn">다음 <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+                                    <button class="btn btn-success is-hidden" id="sim-submit-exam-btn" ><i class="fa-solid fa-circle-check" aria-hidden="true"></i> 답안지 제출</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right: OMR Sheet -->
+                        <aside class="sim-omr-panel">
+                            <div class="omr-header">
+                                <h4>OMR 답안지</h4>
+                                <span class="omr-progress">푼 문제: <strong id="omr-solved-count">0</strong> / <strong id="omr-total-count">100</strong></span>
+                            </div>
+                            <div class="omr-grid-container" id="omr-grid">
+                                <!-- Dynamic OMR bubbles -->
+                            </div>
+                        </aside>
+                    </div>
+                </div>
+
+                <!-- 3. Simulation Results Panel -->
+                <div id="sim-result-panel" class="is-hidden reader-empty-state">
+                    <i class="fa-solid fa-square-poll-vertical trophy-icon reader-empty-icon-lg" aria-hidden="true"></i>
+                    <h2 id="sim-result-title">모의고사 종료</h2>
+                    <p class="result-score-summary reader-empty-title">점수: <span id="sim-result-score">0 / 100</span> (<span id="sim-result-rate">0%</span>)</p>
+                    <p class="result-desc reader-empty-desc">틀린 문제들은 복습 및 오답 분석 탭에 즉시 연동됩니다.</p>
+                    
+                    <!-- 과목별 성적 상세 분석 (신규 Feature 2) -->
+                    <div id="sim-result-breakdown" class="is-hidden reader-empty-notice">
+                        <!-- Dynamic injection of subject scores & failure diagnostic -->
+                    </div>
+                    
+                    <div class="reader-empty-actions">
+                        <button class="btn btn-primary" data-click="showSimAnswerReview"><i class="fa-solid fa-book-open" aria-hidden="true"></i> 오답 해설 풀이 보기</button>
+                        <button class="btn btn-secondary" data-click="exitSimArena"><i class="fa-solid fa-house" aria-hidden="true"></i> 목차로 돌아가기</button>
+                    </div>
+                </div>
+
+                <!-- 4. Simulation Answer Review Panel -->
+                <div id="sim-review-panel" class="is-hidden">
+                    <div class="sim-review-header">
+                        <button class="btn btn-secondary" data-click="showSimResultsSummary"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> 결과 요약으로</button>
+                        <h4>틀린 문제 & 정답 해설 보기</h4>
+                    </div>
+                    <div class="sim-review-list" id="sim-review-list-container">
+                        <!-- Dynamic list of reviewed questions -->
+                    </div>
+                </div>
+            </section>

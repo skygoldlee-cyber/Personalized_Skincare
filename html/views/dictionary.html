@@ -1,0 +1,31 @@
+            <section id="dictionary-view" class="view-section">
+                <div class="section-title-area">
+                    <h3>🔍 화장품 성분 검색 사전</h3>
+                    <p>사용가능(approved), 사용제한(restricted), 사용금지(banned) 성분들의 배합 한도 및 시험 중요 팁을 실시간 검색해 확인하세요. <button type="button" id="dict-db-version" class="dict-db-version" data-click="showIngredientsChangelog" title="원료 DB 버전 이력 보기"></button></p>
+                </div>
+
+                <div class="dictionary-control-panel mb-6">
+                    <!-- Search Bar -->
+                    <div class="flex-center gap-4 mb-5">
+                        <div class="search-input-wrapper relative flex-1">
+                            <i class="fa-solid fa-magnifying-glass search-input-icon" aria-hidden="true"></i>
+                            <input type="text" id="dict-search-input" class="form-input search-input" placeholder="성분명, 영문명 또는 초성을 입력하여 실시간 검색 (예: 페녹시, glycerin, ㄱㄹㅅㄹ)" aria-label="성분 검색어 입력">
+                        </div>
+                        <button class="btn btn-secondary flex-center gap-2" data-click="clearDictSearch"><i class="fa-solid fa-xmark" aria-hidden="true"></i> 초기화</button>
+                        <button class="btn btn-secondary flex-center gap-2" data-click="dictExportCsv" title="현재 검색·필터 결과를 CSV로 저장"><i class="fa-solid fa-file-csv" aria-hidden="true"></i> CSV</button>
+                    </div>
+
+                    <!-- Category Filter Buttons -->
+                    <div class="dict-filter-buttons flex-row gap-3 flex-wrap">
+                        <button class="btn btn-secondary active-filter" data-filter="all" data-click="setDictFilter" data-arg="all">전체 성분</button>
+                        <button class="btn btn-secondary" data-filter="approved" data-click="setDictFilter" data-arg="approved">🟢 사용 가능 원료</button>
+                        <button class="btn btn-secondary" data-filter="restricted" data-click="setDictFilter" data-arg="restricted">🟡 사용 제한 원료</button>
+                        <button class="btn btn-secondary" data-filter="banned" data-click="setDictFilter" data-arg="banned">🔴 사용 금지 원료</button>
+                    </div>
+                </div>
+
+                <!-- Dictionary Results Container -->
+                <div class="dictionary-grid" id="dict-results-container">
+                    <!-- Populated dynamically via JS -->
+                </div>
+            </section>

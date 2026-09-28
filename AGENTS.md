@@ -28,6 +28,8 @@ npm.cmd run test:all                   # 전체 테스트 (unit + parser + dom)
 # 빌드
 npm.cmd run build:data                 # content/exams/<id>/*.md → data/exams/<id>/ 번들 생성 (모든 시험 순회)
 node tools/build/build_doc_bundles.js        # docs/user/{user_manual,formula_manual}.md, content/exams/cosmetic/docs/학습안내서.md → data/docs_md/ + {dataRoot}/docs_md/ 번들 (앱 내 문서 갱신 시 필수)
+npm.cmd run build:html                # index.template.html + html/views/*.html → index.html 조립 (뷰 마크업 변경 시 필수)
+npm.cmd run check:html                # index.html이 파셜 조립 결과와 일치하는지 바이트 비교 (pre-push·CI 게이트)
 npm.cmd run check:parser               # 빌드 파서 ↔ 런타임 파서 등가성 검증
 npm.cmd run check:imports              # src/ 내 ES 모듈 import/export 교차 검증
 npm.cmd run stamp:sw                   # sw.js CACHE_VERSION을 커밋 해시로 스탬프
@@ -82,7 +84,9 @@ npm.cmd run check:reffresh -- --update  # 승격 완료 후 PDF 해시 매니페
 ## 디렉토리 구조
 
 ```
-index.html              # App Shell (단일 HTML)
+index.template.html     # App Shell 템플릿 — <!-- @include --> 마커로 뷰 파셜 조립
+index.html              # App Shell (생성물 — npm run build:html 산출, 직접 편집 금지)
+html/views/             # 뷰 마크업 파셜 13개 — 뷰 HTML 편집은 여기서, build:html로 재생성
 style.css               # CSS 진입점 (@import로 모듈 로드)
 sw.js                   # Service Worker
 manifest.webmanifest    # PWA 매니페스트

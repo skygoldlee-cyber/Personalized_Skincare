@@ -3,7 +3,7 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: aa3110aef7677389
+> 입력 해시: c6fcfa4bc45e1581
 > 생성: 2026-09-28 · 원천: SPEC.md(351개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
@@ -379,7 +379,7 @@
 
 | ID | 상태 | 검증 수단 | 문서 | 소스 | 테스트 | 보고서 | 출처 |
 |----|------|-----------|------|------|--------|--------|------|
-| S-01 | ✅ | 테스트 | DOC-DSN-08<br>DOC-DSN-09 | index.html | tests/unit/security.test.js | — | — |
+| S-01 | ✅ | 테스트 | DOC-DSN-08<br>DOC-DSN-09 | index.html<br>tools/build/build_html.js | tests/unit/security.test.js | — | — |
 | S-02 | ✅ | 테스트 | — | src/app.js<br>src/views/event-listeners.js | tests/dom/common-eventlisteners.dom.test.js | — | — |
 | S-03 | ✅ | 테스트 | — | src/app.js<br>src/views/event-listeners.js | tests/dom/common-eventlisteners.dom.test.js | — | — |
 | S-04 | ✅ | 테스트 | — | — | tests/unit/delegation-guard.test.js | — | — |
