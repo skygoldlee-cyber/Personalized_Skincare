@@ -11,6 +11,7 @@ import { STORAGE_KEYS } from './storage-keys.js';
 import { setupPWAInstall } from './pwa-install.js';
 import { setupThemeToggle } from './theme-toggle.js';
 import { maybeShowWhatsNew } from './whats-new.js';
+import { appVersion, formatAppVersion } from './app-version.js';
 import { captureEntrySource, flushPendingFeedback, initFeedbackHint } from './feedback.js';
 import { loadFeaturePlan, proFeatureNotice, showPlanCompare } from './pro-upgrade.js';
 import { showUsageStats, trackAction } from './usage-stats.js';
@@ -297,11 +298,12 @@ function initApp() {
         console.error('[init] setupNavigation 실패 — __APP_INITIALIZED 미설정, 폴백 대기');
     }
 
-    // 사이드바·설정 메뉴 버전 표시 (data/version.js의 APP_VERSION — 배포 스탬프와 동일 값)
-    if (window.APP_VERSION) {
+    // 사이드바·설정 메뉴 버전 표시 (APP_VERSION 기계 ID → formatAppVersion 표시용 변환)
+    const dispVer = formatAppVersion(appVersion());
+    if (dispVer) {
         ['sidebar-version', 'settings-version']
             .map(id => document.getElementById(id)).filter(Boolean)
-            .forEach(node => { /** @type {HTMLElement} */ (node).textContent = window.APP_VERSION || ''; });
+            .forEach(node => { /** @type {HTMLElement} */ (node).textContent = dispVer; });
     }
 
     // 유입 채널(?src=) 캡처 — 피드백의 entry_src로 첨부 (최초 1회 보존)

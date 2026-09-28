@@ -7,13 +7,17 @@
  * (개선안 2-2: 서비스 워커 버전 관리 자동화)
  *
  * 버전 규칙(기본값):
- *   ${prefix}-${YYYYMMDD}-${gitShort}
- *     - prefix   : 기존 CACHE_VERSION 의 선두 채널 토큰(예: v28)을 보존.
- *                  없으면 'v'. (SW_CACHE_PREFIX 로 덮어쓰기 가능)
+ *   v${YYYYMMDD}-${gitShort}
+ *     - v        : 고정 프리픽스. 과거의 채널 토큰(v369 등) 보존 방식은 폐기 —
+ *                  의미 없는 숫자가 영구 잔존하는 것을 막기 위함.
+ *                  (SW_CACHE_PREFIX / --prefix 로 덮어쓰기 가능)
  *     - YYYYMMDD : 빌드 시각(로컬)
  *     - gitShort : `git rev-parse --short` (7자)
  *   git 을 못 쓰는 환경(비-git/CI 캐시아웃 등)에서는 해시 대신
  *   타임스탬프(HHmmss)로 대체해 항상 고유성을 보장한다.
+ *
+ * 표시용 변환은 src/app-version.js 의 formatAppVersion()이 담당한다 —
+ * 이 파일의 문자열은 캐시 키·버전 비교에 쓰이는 기계 ID다.
  *
  * 왜 이렇게?
  *   - HEAD 커밋으로 값이 결정된다 → 같은 커밋이면 같은 버전(멱등).
@@ -77,32 +81,25 @@ function timeStamp(d = new Date()) {
   return `${pad2(d.getHours())}${pad2(d.getMinutes())}${pad2(d.getSeconds())}`;
 }
 
-/** 기존 값에서 선두 채널 토큰(v28 등)을 뽑아낸다. 없으면 'v'. */
-function derivePrefix(currentValue) {
-  const m = /^([A-Za-z]+\d*)/.exec(currentValue || '');
-  return m ? m[1] : 'v';
-}
-
 /**
  * 새 CACHE_VERSION 문자열을 계산한다.
  * @param {object}  [opts]
- * @param {string}  [opts.currentValue]   기존 값(프리픽스 보존용)
- * @param {string}  [opts.prefix]         프리픽스 강제 지정
+ * @param {string}  [opts.prefix]         프리픽스 강제 지정 (기본 'v' → v20261016-abc1234)
  * @param {boolean} [opts.fullTimestamp]  git 을 무시하고 항상 타임스탬프 사용
  * @param {Date}    [opts.now]
  * @returns {string}
  */
 function computeVersion(opts = {}) {
   const now = opts.now || new Date();
-  const prefix = opts.prefix || process.env.SW_CACHE_PREFIX || derivePrefix(opts.currentValue);
+  const prefix = opts.prefix || process.env.SW_CACHE_PREFIX || 'v';
   const date = dateStamp(now);
 
   if (!opts.fullTimestamp) {
     const short = git(['rev-parse', '--short=7', 'HEAD']);
-    if (short) return `${prefix}-${date}-${short}`;
+    if (short) return `${prefix}${date}-${short}`;
   }
   // git 미가용 또는 --full-timestamp: 타임스탬프로 고유성 보장
-  return `${prefix}-${date}-${timeStamp(now)}`;
+  return `${prefix}${date}-${timeStamp(now)}`;
 }
 
 /**
@@ -141,7 +138,6 @@ function stampSwVersion(opts = {}) {
 
   const [, head, quote, oldValue, tail = ''] = match;
   const newValue = opts.version || computeVersion({
-    currentValue: oldValue,
     prefix: opts.prefix,
     fullTimestamp: opts.fullTimestamp,
   });

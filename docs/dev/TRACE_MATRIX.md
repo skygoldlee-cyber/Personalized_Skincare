@@ -3,7 +3,7 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: 3ebac9efaf518f13
+> 입력 해시: 77c92b1b08d5628e
 > 생성: 2026-09-28 · 원천: SPEC.md(351개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
@@ -361,7 +361,7 @@
 | P-10 | ✅ | 테스트 | DOC-RBK-01<br>DOC-RBK-04 | src/pwa-manifest.js | tests/unit/pwa-sw.test.js | — | — |
 | P-11 | ✅ | 테스트 | DOC-RBK-01<br>DOC-RBK-04 | src/app-fallback.js | tests/unit/pwa-sw.test.js | — | — |
 | P-12 | ✅ | 테스트 | DOC-RBK-01<br>DOC-RBK-04 | tools/check/verify_shell_assets.js | tests/unit/pwa-sw.test.js | — | — |
-| P-13 | ✅ | 테스트 | DOC-RBK-01<br>DOC-RBK-04 | src/whats-new.js<br>tools/build/stamp_release_notes.js | tests/dom/whats-new.dom.test.js<br>tests/unit/whats-new.test.js | — | — |
+| P-13 | ✅ | 테스트 | DOC-RBK-01<br>DOC-RBK-04 | src/app-version.js<br>src/whats-new.js<br>tools/build/stamp_release_notes.js | tests/dom/whats-new.dom.test.js<br>tests/unit/whats-new.test.js | — | — |
 
 ## 4.2 오프라인 감지
 

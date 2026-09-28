@@ -10,6 +10,7 @@
 import { safeGetItem, safeSetItem } from './state.js';
 import { esc } from './sanitize.js';
 import { trapFocus } from './ui-utils.js';
+import { formatAppVersion } from './app-version.js';
 
 const SEEN_KEY = 'last_seen_version';
 const MAX_VERSIONS = 3;    // 건너뛴 버전이 많아도 최근 3개까지만
@@ -50,7 +51,7 @@ export function showReleaseNotesModal(entries, title = '새로운 소식') {
 
     const sections = entries.map(e => `
         <div class="whats-new-entry">
-            <p class="whats-new-version">${esc(e.version)} <span class="whats-new-date">${esc(e.date || '')}</span></p>
+            <p class="whats-new-version">${esc(formatAppVersion(e.version))} <span class="whats-new-date">${esc(e.date || '')}</span></p>
             <ul>${e.notes.map(n => `<li>${esc(n)}</li>`).join('')}</ul>
         </div>`).join('');
 

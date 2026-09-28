@@ -35,6 +35,7 @@ const ROOT = path.resolve(__dirname, '..', '..');
 const VERSION_PATH = path.join(ROOT, 'data', 'version.js');
 const NOTES_JSON_PATH = path.join(ROOT, 'data', 'release-notes.json');
 const NOTES_JS_PATH = path.join(ROOT, 'data', 'release-notes.js');
+const PKG_PATH = path.join(ROOT, 'package.json');
 const MAX_ENTRIES = 20; // 최근 20개 버전만 유지
 
 function git(args) {
@@ -79,6 +80,25 @@ function stampAppVersion(version, { dryRun = false, silent = false } = {}) {
   return { changed: true, oldValue, newValue: version };
 }
 
+/** package.json version을 앱 빌드 버전의 CalVer(v20261016-x → 2026.10.16)로 동기화.
+ *  사장값(1.0.0 고정) 방지용 — semver 유효 형식이라 안전. 형식이 맞지 않으면 건너뜀. */
+function stampPackageVersion(version, { dryRun = false, silent = false } = {}) {
+  const m = /^v?\d*-?(\d{4})(\d{2})(\d{2})-/.exec(version || '');
+  if (!m) return;
+  const calver = `${Number(m[1])}.${Number(m[2])}.${Number(m[3])}`;
+  try {
+    const pkg = JSON.parse(fs.readFileSync(PKG_PATH, 'utf8'));
+    if (pkg.version === calver) return;
+    if (!dryRun) {
+      pkg.version = calver;
+      fs.writeFileSync(PKG_PATH, JSON.stringify(pkg, null, 2) + '\n');
+    }
+    if (!silent) console.log(`[release-notes] package.json version → ${calver}`);
+  } catch (e) {
+    if (!silent) console.warn(`[release-notes] package.json 버전 동기화 건너뜀: ${e.message}`);
+  }
+}
+
 /** JSON 소스 로드 — 문법 오류는 배포를 차단하는 명시적 실패로 던진다 */
 function loadNotes() {
   if (!fs.existsSync(NOTES_JSON_PATH)) return [];
@@ -119,6 +139,7 @@ function commitsSince(version) {
  */
 function stampReleaseNotes({ version, prevVersion, dryRun = false } = {}) {
   stampAppVersion(version, { dryRun });
+  stampPackageVersion(version, { dryRun });
   const entries = loadNotes();
   if (entries.length && entries[0].version === version) return { stamped: false };
 

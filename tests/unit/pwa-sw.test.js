@@ -79,7 +79,7 @@ test('P-04a: SW 업데이트 토스트가 다운로드→설치→완료 단계�
 test('P-05: CACHE_VERSION이 스탬프 형식으로 선언되고 데이터 캐시와 분리된다', () => {
   const m = sw.match(/const CACHE_VERSION = '([^']+)'/);
   assert.ok(m, 'CACHE_VERSION 선언');
-  assert.match(m[1], /^v\d+-\d{8}-[0-9a-f]{7}$/, `스탬프 형식 아님: ${m[1]}`);
+  assert.match(m[1], /^v\d*-?\d{8}-[0-9a-f]{7}$/, `스탬프 형식 아님: ${m[1]}`);
   const d = sw.match(/const DATA_CACHE_VERSION = '([^']+)'/);
   assert.ok(d, 'DATA_CACHE_VERSION 선언');
   assert.notEqual(d[1], m[1], '쉘/데이터 캐시 세대 분리');

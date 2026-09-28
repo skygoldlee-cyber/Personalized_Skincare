@@ -154,9 +154,9 @@ test('BP-06: GLOSSARY_INDEX 생성 산출물이 시험별 용어 인덱스를 �
 
 // ---------- BP-07: SW 캐시 버전 스탬프 ----------
 
-test('BP-07: computeVersion이 prefix-날짜-해시 형식을 생성한다', () => {
-  const v = computeVersion({ currentValue: 'v28-20250101-abcdef0', fullTimestamp: true });
-  assert.match(v, /^v28-\d{8}-\d{6}$/);
+test('BP-07: computeVersion이 v날짜-해시 형식을 생성한다', () => {
+  const v = computeVersion({ fullTimestamp: true });
+  assert.match(v, /^v\d{8}-\d{6}$/);
 });
 
 test('BP-07: stampSwVersion이 CACHE_VERSION 라인만 치환하고 나머지를 보존한다', () => {
