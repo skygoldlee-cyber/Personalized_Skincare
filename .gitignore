@@ -58,6 +58,8 @@ Thumbs.db
 # 복수정답형 감사 리포트·검수 큐 (audit:combo 산출물 — 로컬 전용)
 combo_audit_report.json
 combo_review_queue.md
+# ref_md 변환 진단 리포트 (ref-pipeline 산출물 — 런타임 미사용)
+_report.json
 
 # ---------- � 테스트 커버리지 ----------
 coverage/
