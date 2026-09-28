@@ -1,5 +1,12 @@
 [
   {
+    "version": "v20260928-d7debad",
+    "date": "2026-09-28",
+    "notes": [
+      "[기능·formula] '고시 정보 보기' 토글 — notice_status.json 패널 표시"
+    ]
+  },
+  {
     "version": "v20260928-0aeea42",
     "date": "2026-09-28",
     "notes": [
@@ -147,13 +154,6 @@
     "date": "2026-09-28",
     "notes": [
       "fix(dashboard): 히트맵 40% 미만 색상 대비 개선 — #991b1b → #dc2626"
-    ]
-  },
-  {
-    "version": "v369-20260928-ca28cf6",
-    "date": "2026-09-28",
-    "notes": [
-      "fix(docs): 학습 매뉴얼 §1.5 PRO 배지 렌더링 수정"
     ]
   }
 ]
