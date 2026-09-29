@@ -614,6 +614,20 @@
     display: none;
 }
 
+/* 시각 숨김(스크린리더 전용) — 서사 구간 시작/끝 라벨 등 */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+}
+
 /* 이야기 접기/펼치기 칩 — 서사 범위 시작부에 삽입되는 토글 */
 .story-mode .story-toggle {
     display: inline-flex;

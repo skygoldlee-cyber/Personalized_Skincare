@@ -535,6 +535,11 @@ export function markStoryNarrative(contentEl) {
             });
             if (g.start) g.start.insertAdjacentElement('afterend', toggle);
             else g.members[0].insertAdjacentElement('beforebegin', toggle);
+            // 경계 마커는 display:none이라 스크린리더가 읽지 못한다 —
+            // 서사 구간 시작/끝을 시각 숨김 라벨로 알린다 (접기 칩이 멤버를
+            // 숨겨도 라벨은 멤버 밖에 있어 구조를 전달)
+            _insertStorySrLabel(g.members[0], 'beforebegin', '이야기 구간 시작');
+            _insertStorySrLabel(g.members[g.members.length - 1], 'afterend', '이야기 구간 끝');
         }
         return;
     }
@@ -571,4 +576,28 @@ export function markStoryNarrative(contentEl) {
         if (el.classList.contains('md-quote') && !_isNarrativeQuote(el)) continue;
         el.classList.add('story-narrative');
     }
+
+    // 폴백 경로도 동일하게 스크린리더 라벨 부여 — 연속 .story-narrative 런의 양 끝
+    let prevNarrative = false;
+    for (const el of [...contentEl.children]) {
+        if (el.classList && el.classList.contains('story-sr-label')) continue;
+        const isNarrative = el.classList && el.classList.contains('story-narrative');
+        if (isNarrative && !prevNarrative) _insertStorySrLabel(el, 'beforebegin', '이야기 구간 시작');
+        if (!isNarrative && prevNarrative) _insertStorySrLabel(el, 'beforebegin', '이야기 구간 끝');
+        prevNarrative = isNarrative;
+    }
+    if (prevNarrative && contentEl.lastElementChild) {
+        _insertStorySrLabel(contentEl.lastElementChild, 'afterend', '이야기 구간 끝');
+    }
+}
+
+/** 시각 숨김(sr-only) 라벨을 삽입한다 — story-sr-label 클래스로 중복 삽입 방지. */
+function _insertStorySrLabel(el, position, text) {
+    if (!el || !el.insertAdjacentElement) return;
+    const sibling = position === 'beforebegin' ? el.previousElementSibling : el.nextElementSibling;
+    if (sibling && sibling.classList && sibling.classList.contains('story-sr-label')) return;
+    const span = document.createElement('span');
+    span.className = 'sr-only story-sr-label';
+    span.textContent = text;
+    el.insertAdjacentElement(position, span);
 }

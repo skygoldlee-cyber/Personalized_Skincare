@@ -493,6 +493,24 @@ describe('이야기형 서사 태깅 — markStoryNarrative', () => {
         expect(content.querySelectorAll('.story-toggle').length).toBe(1);
     });
 
+    it('서사 구간 양끝에 스크린리더 라벨이 삽입되고 중복 호출에도 1쌍만 유지된다', () => {
+        const content = buildCard('📚 Chapter 01', `
+            <p class="md-para">본문</p>
+            <p class="md-para">📖 ┈┈┈┈ 이야기 ┈┈┈┈</p>
+            <p class="md-para">서사 문단</p>
+            <p class="md-para">┈┈┈┈ 본문 ┈┈┈┈ 📘</p>
+            <p class="md-para">다시 본문</p>`);
+        markStoryNarrative(content);
+        markStoryNarrative(content); // 중복 호출
+        const labels = content.querySelectorAll('.story-sr-label');
+        expect(labels.length).toBe(2);
+        expect(labels[0].textContent).toBe('이야기 구간 시작');
+        expect(labels[1].textContent).toBe('이야기 구간 끝');
+        // 라벨은 접기 대상 멤버 밖에 있어 접혀도 구조 전달 유지
+        expect(labels[0].classList.contains('story-narrative')).toBe(false);
+        expect(labels[0].classList.contains('sr-only')).toBe(true);
+    });
+
     it('프롤로그·등장인물 카드는 전체 서사', () => {
         const content = buildCard('프롤로그 — 민수의 첫 번째 화장품', `
             <p class="md-para">서사 문단</p>

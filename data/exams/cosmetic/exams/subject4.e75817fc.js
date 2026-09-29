@@ -2131,7 +2131,7 @@ var EXAM_DATA_subject4 = {
         "10배"
       ],
       "answer": "④",
-      "explanation": "📖 교재 근거 (2과목 L4212):\n히알루론산(Hyaluronic Acid) — \"1g이 6L의 물을 보유할 수 있는 강력한 보습제\" (1g ≈ 1mL, 6L = 6,000mL → 약 1,000~6,000배 수분 보유력)"
+      "explanation": "📖 교재 근거 (2과목 L4214):\n히알루론산(Hyaluronic Acid) — \"1g이 6L의 물을 보유할 수 있는 강력한 보습제\" (1g ≈ 1mL, 6L = 6,000mL → 약 1,000~6,000배 수분 보유력)"
     },
     {
       "id": "subject4_q143",

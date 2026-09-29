@@ -21,7 +21,7 @@
 
 // @spec P-01~06,O-04,UX-PWA-03
 
-const CACHE_VERSION = 'v20260929-2f00225';   // 배포 시 stamp_sw_version.js가 자동 갱신 (v<커밋날짜>-<해시>)
+const CACHE_VERSION = 'v20260929-d9b9e25';   // 배포 시 stamp_sw_version.js가 자동 갱신 (v<커밋날짜>-<해시>)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
@@ -130,8 +130,13 @@ const SHELL_ASSETS = [
   './src/recommendations.js',
   './src/command-palette.js',
   './src/views/dictionary.js',
-  './content/exams/cosmetic/교재/understanding/images/피부의 구조 단면도 보완_인포그래픽.png',
-  './content/exams/cosmetic/교재/understanding/images/모발의 구조 단면도 보완_인포그래픽.png',
+  './content/exams/cosmetic/교재/understanding/images/피부의 구조 단면도 보완_인포그래픽.webp',
+  './content/exams/cosmetic/교재/understanding/images/모발의 구조 단면도 보완_인포그래픽.webp',
+  './content/exams/cosmetic/교재/manufacturing/images/바코드의 종류 및 구성체계.webp',
+  './content/exams/cosmetic/교재/law/images/1과목_삽화.webp',
+  './content/exams/cosmetic/교재/manufacturing/images/2과목_삽화.webp',
+  './content/exams/cosmetic/교재/safety/images/3과목_삽화.webp',
+  './content/exams/cosmetic/교재/understanding/images/4과목_삽화.webp',
   './src/views/backup.js',
   './src/views/textbook-search.js',
   './src/views/textbook-reader.js',
