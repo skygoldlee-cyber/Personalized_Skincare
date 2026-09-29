@@ -11,6 +11,7 @@
 - **`.gitattributes` 신설**: `* text=auto eol=lf` + 바이너리(png·jpg·webp·ico·pdf·ttf·woff·woff2) 명시 — 커밋 blob뿐 아니라 체크아웃 작업트리까지 LF로 고정해 개행 기반 오탐 부류의 근본 원인 제거. 기존 blob은 전부 LF라 renormalize 무충돌
 - **`build_doc_bundles.js --check` 신설** (`npm run check:docbundles`): 재생성 결과와 디스크 번들 비교 — `docs/user/`·시험 docs 수정 후 번들 재생성 누락을 `check:content`의 [문서번들] 단계에서 감지 (content-only 플래그 포함 → CI 커버). 기존에는 신선도 게이트 없이 수동 절차에만 의존
 - **번들 생성 시 원본 개행 정규화**: `readFileSync` 후 `CRLF → LF` 정규화하고 JSON 임베드 — CRLF 원본으로 구우면 `\r\n` 이스케이프가 번들에 번지던 문제 해소. 기존 4개 번들 재생성(이스케이프 정규화만, 내용 동일)
+- **`check:all:quick` 스크립트 신설**: `check:all -- --quick`은 npm이 인자를 마지막 `npm run check:content --quick` 형태로 붙여 안쪽 npm이 플래그를 삼켜 DOM 테스트 생략이 무력하던 문제 — 전용 스크립트로 `-- --quick` 전달 보장. AGENTS.md 명령 정정
 - **문서**: AGENTS.md에 check:docbundles 명령 추가
 
 ## 2026-09-29 check:html·check:trace 개행 정규화 — Windows autocrlf 오탐 해소

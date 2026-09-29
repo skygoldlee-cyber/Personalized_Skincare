@@ -56,7 +56,7 @@ npm.cmd run audit:combo                 # 복수정답형 품질 감사 (정답 
 
 # 전체 점검 (단일 진입점 — lint·types·html·docs + check:content 전 단계)
 npm.cmd run check:all                    # 저장소 전체 검증 일괄 실행
-npm.cmd run check:all -- --quick         # DOM 테스트 생략 빠른 점검
+npm.cmd run check:all:quick              # DOM 테스트 생략 빠른 점검 (check:all -- --quick 은 플래그 미전달로 동작 안 함)
 
 # 콘텐츠 통합 검증 (교재 교체 등 대규모 콘텐츠 변경 후)
 npm.cmd run check:content               # 인용·귀속·레이아웃·드릴·ID이관·파서·임포트·자산·카드·문서·테스트 일괄 검증
