@@ -1,5 +1,12 @@
 [
   {
+    "version": "v20260929-7e90960",
+    "date": "2026-09-29",
+    "notes": [
+      "교재 삽화 배너 타이틀을 'N과목 — 섹션명' 형식으로 통일"
+    ]
+  },
+  {
     "version": "v20260929-ad26950",
     "date": "2026-09-29",
     "notes": [
@@ -133,13 +140,6 @@
     "notes": [
       "[정리·trace] TRACE_MATRIX 재스탬프 [no-docs]",
       "[리팩터링·ref-pipeline] md2doc·pdf2md 개선 — 로컬 Mermaid·렌더 캐시·템플릿 분리·pytest·logging·동명 충돌 방지"
-    ]
-  },
-  {
-    "version": "v20260929-ebebcd3",
-    "date": "2026-09-29",
-    "notes": [
-      "[기능·reader] Mermaid 다이어그램 확대 모달 + 홍보영상 의뢰서 정리"
     ]
   }
 ]
