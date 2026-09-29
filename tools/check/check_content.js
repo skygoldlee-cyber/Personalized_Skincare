@@ -58,6 +58,8 @@ const STEPS = [
     '자산', 'sw.js SHELL_ASSETS/DATA_ASSETS 파일 존재', false],
   ['node', ['tools/check/audit_card_quality.js'], false,
     '카드', '카드 품질 감사 (짧은 설명·중복·참조 링크)', true],
+  ['node', ['tools/build/build_doc_bundles.js', '--check'], false,
+    '문서번들', 'docs_md 번들 ↔ 원본 문서 신선도 (build_doc_bundles 필요 감지)', true],
   ['node', ['tools/check/check_docs_paths.js'], false,
     '문서', 'README·AGENTS·docs/*.md 경로 참조 존재 검증 (스테일 탐지)', false],
   ['node', ['tools/check/check_spec_refs.js'], false,

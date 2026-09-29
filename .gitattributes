@@ -1,0 +1,16 @@
+# 개행·바이너리 고정
+# - 텍스트는 항상 LF로 정규화 (커밋 blob + 체크아웃 작업트리 모두)
+#   → Windows autocrlf 환경에서도 바이트 비교·해시 기반 신선도 게이트
+#     (check:html·check:trace·check:docbundles)가 플랫폼 비의존으로 동작
+* text=auto eol=lf
+
+# 바이너리 — auto 감지에 의존하지 않고 명시
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.ico binary
+*.pdf binary
+*.ttf binary
+*.woff binary
+*.woff2 binary
