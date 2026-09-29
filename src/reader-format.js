@@ -424,3 +424,70 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
 
     return html;
 }
+
+/* =======================================================
+   이야기형 서사 범위 태깅 (markStoryNarrative)
+   - 📖 장면 헤딩 ~ 다음 동급/상위 헤딩 전까지
+   - 💭 에필로그 인용구 ~ 섹션 끝
+   - '프롤로그'/'등장인물' 섹션 카드 전체
+   표·코드·머메이드·콜아웃 인용(🔖/📋/📌 등)은 서사 범위에서 제외한다.
+   ======================================================= */
+
+const _STORY_SCENE_MARK = '📖';
+const _STORY_CARD_TITLE_RE = /프롤로그|등장인물/;
+const _STORY_EPILOGUE_RE = /에필로그/;
+const _STORY_HEADING_SEL = '.md-h3, .md-h4, .md-h5';
+
+/** 인용구가 대사/서사인지 판별 — 따옴표로 시작하거나 에필로그 본문이면 서사 */
+function _isNarrativeQuote(el) {
+    const t = (el.textContent || '').trim();
+    return /^["“‘']/.test(t) || _STORY_EPILOGUE_RE.test(t);
+}
+
+function _mdHeadingLevel(el) {
+    const m = (el.className || '').match(/md-h(\d)/);
+    return m ? parseInt(m[1], 10) : 5;
+}
+
+/**
+ * 섹션 콘텐츠의 서사 블록 요소에 .story-narrative 클래스를 부여한다.
+ * @param {Element} contentEl .textbook-reader-section-content (또는 .reader-subsection-content)
+ */
+export function markStoryNarrative(contentEl) {
+    if (!contentEl || !contentEl.children) return;
+    const card = contentEl.closest('.reader-section-card');
+    const cardTitleEl = card ? card.querySelector('.reader-section-title') : null;
+    const cardTitle = cardTitleEl ? cardTitleEl.textContent || '' : '';
+
+    let inScene = _STORY_CARD_TITLE_RE.test(cardTitle);
+    let sceneLevel = 0; // 서사가 진행 중인 헤딩 레벨 (이보다 작거나 같은 레벨의 헤딩이 오면 종료)
+
+    for (const el of contentEl.children) {
+        const isHeading = el.matches && el.matches(_STORY_HEADING_SEL);
+        const isSubTitle = el.classList && el.classList.contains('reader-subsection-title');
+
+        if (isHeading || isSubTitle) {
+            const lvl = isSubTitle ? 5 : _mdHeadingLevel(el);
+            if (isHeading && (el.textContent || '').includes(_STORY_SCENE_MARK)) {
+                inScene = true;
+                sceneLevel = lvl;
+                el.classList.add('story-narrative');
+                continue;
+            }
+            // 서사 안에서 더 하위 헤딩이 오면 서사 소제목으로 유지, 동급/상위면 서사 종료
+            if (inScene && (isSubTitle || lvl <= sceneLevel)) {
+                inScene = false;
+            }
+        } else if (!inScene && el.classList && el.classList.contains('md-quote')
+            && _STORY_EPILOGUE_RE.test(el.textContent || '')) {
+            // 에필로그 인용구 — 이후 콘텐츠 끝까지 서사
+            inScene = true;
+            sceneLevel = 6;
+        }
+
+        if (!inScene) continue;
+        // 서사 범위 안의 콜아웃 인용(🔖 기억 태그, 📋 가이드, 📌 출처 등)은 본문 스타일 유지
+        if (el.classList.contains('md-quote') && !_isNarrativeQuote(el)) continue;
+        el.classList.add('story-narrative');
+    }
+}

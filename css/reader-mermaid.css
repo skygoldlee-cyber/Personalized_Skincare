@@ -26,6 +26,7 @@
     --mermaid-other-text: #ffffff;
 
     /* Story 모드 — 라이트/기본 */
+    --font-story: 'Nanum Myeongjo', 'AppleMyungjo', 'Batang', 'Gungsuh', Georgia, serif;
     --story-heading: #b8860b;
     --story-text: #8b6914;
     --story-quote-border: #d4a017;

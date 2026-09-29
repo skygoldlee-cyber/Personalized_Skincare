@@ -4,7 +4,7 @@
 import { esc } from '../sanitize.js';
 import { proFeatureNotice } from '../pro-upgrade.js';
 import { trackAction } from '../usage-stats.js';
-import { formatSectionContentForReader } from '../reader-format.js';
+import { formatSectionContentForReader, markStoryNarrative } from '../reader-format.js';
 import { parseTextbookContent } from '../textbook-parser.js';
 import { renderStudyAids, bindStudyAidToggles, renderExamFilterToggle, applyExamFilter } from '../study-aids.js';
 import { renderMermaidIn } from '../mermaid-render.js';
@@ -788,6 +788,12 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
     `;
 
     container.innerHTML = html;
+
+    // 이야기형: 📖 장면·💭 에필로그·프롤로그 범위에 서사 스타일 태깅 (명조체+색상 구분)
+    if (isStoryMode) {
+        container.querySelectorAll('.textbook-reader-section-content, .reader-subsection-content')
+            .forEach(el => markStoryNarrative(el));
+    }
 
     // Study aid toggles (기출 핵심, 숫자 암기표)
     bindStudyAidToggles(container);

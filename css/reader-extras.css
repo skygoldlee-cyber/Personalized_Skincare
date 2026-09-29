@@ -611,24 +611,23 @@
     line-height: 2.0;
 }
 
-/* 1. 이야기 서브헤딩 (### 📖) — 범위 제한: md-quote 전까지만 */
-.story-mode .textbook-reader-section-content h3.md-h3 {
+/* 1. 이야기 서사 헤딩 — markStoryNarrative()가 📖 헤딩에 부여 */
+.story-mode .textbook-reader-section-content h3.md-h3.story-narrative,
+.story-mode .textbook-reader-section-content h4.md-h4.story-narrative,
+.story-mode .textbook-reader-section-content h5.md-h5.story-narrative {
     color: var(--story-heading);
+    font-family: var(--font-story);
     font-weight: var(--font-weight-bold);
     border-left: 3px solid var(--story-heading);
     padding-left: 0.6rem;
     margin-top: 1.2rem;
 }
 
-/* 이야기 본문 문단 — h5 이후 형제 중 md-quote가 아닌 것만 */
-.story-mode .textbook-reader-section-content h3.md-h3 ~ p,
-.story-mode .textbook-reader-section-content h3.md-h3 ~ div.md-para {
+/* 이야기 서사 본문 — 📖 장면/💭 에필로그/프롤로그 범위 (markStoryNarrative 태깅) */
+.story-mode .textbook-reader-section-content p.md-para.story-narrative,
+.story-mode .textbook-reader-section-content div.md-list-item.story-narrative {
+    font-family: var(--font-story);
     color: var(--story-text);
-}
-
-/* 1. 범위 제한: 한 줄 요약(md-quote)은 이야기 색상 제외 */
-.story-mode .textbook-reader-section-content h3.md-h3 ~ div.md-quote {
-    color: var(--color-text-main);
 }
 
 /* 5. 프롤로그/등장인물 소개 — 첫 섹션의 개요 배경색 */
@@ -638,12 +637,13 @@
     padding: var(--space-4);
 }
 
-/* 7. 대사(인용구) 스타일 — > "..." 형태 */
-.story-mode .textbook-reader-section-content h3.md-h3 ~ div.md-quote {
+/* 7. 서사 인용구 스타일 — 대사(> "...")·에필로그(> 💭) */
+.story-mode .textbook-reader-section-content div.md-quote.story-narrative {
     border-left: 3px solid var(--story-quote-border);
     background: var(--story-quote-bg);
     padding: 0.6rem 0.9rem;
     border-radius: 0 6px 6px 0;
+    font-family: var(--font-story);
     font-style: italic;
     color: var(--story-quote-text);
 }

@@ -314,3 +314,66 @@ describe('교재 리더 — 툴바·검색·드로어·표 모달', () => {
         document.documentElement.classList.remove('light-theme');
     });
 });
+
+import { markStoryNarrative } from '../../src/reader-format.js';
+
+describe('이야기형 서사 태깅 — markStoryNarrative', () => {
+    function buildCard(title, innerHtml) {
+        document.body.innerHTML = `
+            <div class="reader-section-card">
+                <div class="reader-section-header"><h4 class="reader-section-title">${title}</h4></div>
+                <div class="textbook-reader-section-content">${innerHtml}</div>
+            </div>`;
+        return document.querySelector('.textbook-reader-section-content');
+    }
+
+    it('📖 장면 헤딩 ~ 동급 본문 헤딩 전까지 서사 태깅', () => {
+        const content = buildCard('📚 Chapter 01', `
+            <h4 class="md-h4">1.1 본문 소제목</h4>
+            <p class="md-para">본문 설명</p>
+            <h4 class="md-h4">📖 민수의 상황</h4>
+            <p class="md-para">서사 문단</p>
+            <div class="md-quote">"대사입니다"</div>
+            <div class="md-quote">🔖 기억 태그: 콜아웃</div>
+            <h4 class="md-h4">2.1 다음 본문</h4>
+            <p class="md-para">다시 본문</p>`);
+        markStoryNarrative(content);
+
+        const paras = content.querySelectorAll('p.md-para');
+        expect(paras[0].classList.contains('story-narrative')).toBe(false); // 장면 이전 본문
+        expect(paras[1].classList.contains('story-narrative')).toBe(true);  // 장면 서사
+        expect(paras[2].classList.contains('story-narrative')).toBe(false); // 장면 종료 후 본문
+        const heads = content.querySelectorAll('.md-h4');
+        expect(heads[1].classList.contains('story-narrative')).toBe(true);  // 📖 헤딩
+        expect(heads[2].classList.contains('story-narrative')).toBe(false);
+        const quotes = content.querySelectorAll('.md-quote');
+        expect(quotes[0].classList.contains('story-narrative')).toBe(true);  // 대사
+        expect(quotes[1].classList.contains('story-narrative')).toBe(false); // 🔖 콜아웃 제외
+    });
+
+    it('💭 에필로그 인용구부터 섹션 끝까지 서사 태깅', () => {
+        const content = buildCard('📚 Chapter 01', `
+            <p class="md-para">본문</p>
+            <div class="md-quote">💭 에필로그 — Chapter 01을 마치며</div>
+            <p class="md-para">에필로그 서사</p>`);
+        markStoryNarrative(content);
+
+        const paras = content.querySelectorAll('p.md-para');
+        expect(paras[0].classList.contains('story-narrative')).toBe(false);
+        expect(paras[1].classList.contains('story-narrative')).toBe(true);
+        expect(content.querySelector('.md-quote').classList.contains('story-narrative')).toBe(true);
+    });
+
+    it('프롤로그·등장인물 카드는 전체 서사', () => {
+        const content = buildCard('프롤로그 — 민수의 첫 번째 화장품', `
+            <p class="md-para">서사 문단</p>
+            <div class="md-quote">"혼자 질문하는 대사"</div>
+            <div class="md-quote">📌 출처: 화장품법</div>`);
+        markStoryNarrative(content);
+
+        expect(content.querySelector('p.md-para').classList.contains('story-narrative')).toBe(true);
+        const quotes = content.querySelectorAll('.md-quote');
+        expect(quotes[0].classList.contains('story-narrative')).toBe(true);
+        expect(quotes[1].classList.contains('story-narrative')).toBe(false);
+    });
+});
