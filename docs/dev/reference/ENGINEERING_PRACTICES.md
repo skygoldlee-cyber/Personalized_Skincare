@@ -127,8 +127,14 @@ flowchart LR
 - **Node 버전 정합** — `package.json` `engines: ">=20"` + `.nvmrc`=20 추가 — 로컬(24.x)·CI(20) 스큐를 명시적 선언으로 정렬
 - **의존성 상시 감시** — `.github/dependabot.yml`로 npm·github-actions 주간 업데이트 PR 자동 생성 (npm audit의 push 시점 종속 보완)
 
-**잔여 (보류)**:
+**잔여 (보류)** — 각 항목은 "필요 시점이 올 때 적용" 원칙으로 의도적 보류이며 부채가 아니다:
 
-- **커밋 규약 비공식** — `type(scope):` 형식은 Conventional Commits와 일치하나 `commit-msg` 훅 등 강제 장치는 미적용(선택 사항으로 보류)
-- **공급망 증명** — SLSA provenance·서명 없음 (SBOM 생성으로 SSDF 기본 수준 충족, 이 단계는 과도)
+- **커밋 규약 비공식** — `type(scope):` 형식은 Conventional Commits와 일치하나 `commit-msg` 훅 등 강제 장치는 미적용. 현재 커밋 메시지가 이미 규약을 따르므로 실익 없음 — **외부 기여자가 생기거나 규약 이탈이 관찰될 때** 도입 (적용 비용 ~30분)
+- **공급망 증명** — SLSA provenance·서명 없음. SBOM 생성으로 SSDF 기본 수준 충족 — 배포 형태가 정적 PWA라 이 단계는 과도
+- **check:datafresh dirty-tree 지원** — 생성물 dirty 시 실행 거부는 안전 장치이며 커밋 단위 작업 흐름에서는 거의 걸리지 않음 — **생성물을 장기간 dirty로 두는 작업 패턴 발생 시** git worktree 임시 복사본 방식으로 개선
+- **check:ci 풀버전** — coverage·E2E·audit는 CI 전용으로 유지 (로컬 실행 시간 절약이 장점) — **CI에서만 재현되는 실패가 실제 발생할 때** 선택형 풀버전 추가 검토
+
+**저장소 설정 (코드 외, 수동 필요)**:
+
+- **브랜치 보호** — GitHub Settings → Branches → `main` 규칙에 "Require status checks"(`test` 잡) 지정. 설정 전까지 CI 미통과 머지·`push --force`가 기술적으로 가능한 유일한 우회 경로 — 절차는 `runbooks/VERIFY_DEPLOY_PIPELINE.md` §6 참조
 
