@@ -50,6 +50,8 @@ const STEPS = [
     '드릴', '복수정답형(combo) 드릴 데이터 정합성', true],
   ['node', ['tools/build/build_id_migration.js', '--check'], false,
     'ID이관', '카드/퀴즈 ID 스냅샷 ↔ 콘텐츠 (build:data 누락·진도 손실 감지)', true],
+  ['node', ['tools/check/check_data_freshness.js'], false,
+    '데이터신선도', 'data/·생성물 ↔ 원본 (빌드 체인 실행 후 git diff — build:data 누락 감지)', true],
   ['node', ['tools/check/check_parser_parity.js'], false,
     '파서', '빌드 파서 ↔ 런타임 파서 출력 등가성', false],
   ['node', ['tools/check/check_imports.js'], false,

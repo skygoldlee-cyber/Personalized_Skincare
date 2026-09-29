@@ -6,6 +6,14 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-09-29 생성물 신선도 통합 게이트 + CI 로컬 재현
+
+- **`tools/check/check_data_freshness.js` 신설** (`npm run check:datafresh`, check:content [데이터신선도] 단계): 빌드 체인(build:data 생성 단계 — sync:citations 제외)을 실제 실행 후 `git diff`로 생성물 범위(data/·src/keyword-index.js·sw.js·index.html·manifest·last-stats) 변경을 감지하고 HEAD로 자동 원복 — 생성기마다 별도 --check를 구현하지 않아도 전 생성물을 커버. `generatedAt`·생성 헤더 타임스탬프·CACHE_VERSION 스탬프 라인 변경은 노이즈로 필터링. 실행 전 생성물 경로가 clean이어야 동작 (dirty면 사용자 변경 유실 방지로 중단)
+- **원본 임베드 개행 정규화 확장**: `build_study_md_bundle.js`·`build_exam_bundles.js`도 원본 md를 `CRLF → LF` 정규화 후 임베드 (doc 번들과 동일 조치) — 기존 커밋 번들의 `\r\n` 이스케이프 잔존을 재생성으로 정리. 파서 기반 번들은 `split(/\r?\n/)` 정규화라 원래 무관
+- **`npm run check:ci` 신설**: CI 게이트의 로컬 재현 (lint·types·imports·docs·docsync·specrefs·trace·html·content-only·unit·verify:assets·parser). coverage·E2E·npm audit·lawurls는 CI 전용 유지
+- **`tools/check/check_hooks.js` 신설** (`npm run check:hooks`): `core.hooksPath` 미설정 시 권고 출력 — 훅 opt-in 특성상 미설치 환경의 로컬 게이트 우회를 조기 가시화 (비차단, exit 0). check:ci 첫 단계로 포함
+- **문서**: AGENTS.md에 check:datafresh·check:ci·check:hooks 명령 추가
+
 ## 2026-09-29 EOL 구조 정리 — .gitattributes 도입 + docs_md 번들 신선도 게이트
 
 - **`.gitattributes` 신설**: `* text=auto eol=lf` + 바이너리(png·jpg·webp·ico·pdf·ttf·woff·woff2) 명시 — 커밋 blob뿐 아니라 체크아웃 작업트리까지 LF로 고정해 개행 기반 오탐 부류의 근본 원인 제거. 기존 blob은 전부 LF라 renormalize 무충돌

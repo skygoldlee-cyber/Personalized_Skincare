@@ -55,7 +55,8 @@ window.__STUDY_MD_MANIFEST__ = ${JSON.stringify(manifest)};
                 if (files[rel]) continue;
                 const abs = path.join(ROOT, rel);
                 if (!fs.existsSync(abs)) throw new Error(`Missing MD file: ${rel}`);
-                files[rel] = fs.readFileSync(abs, 'utf-8');
+                // 원본 개행을 LF로 정규화 — 작업트리 개행 상태(autocrlf 등)가 번들 콘텐츠로 번지는 것을 방지
+                files[rel] = fs.readFileSync(abs, 'utf-8').replace(/\r\n/g, '\n');
                 count++;
             }
         }

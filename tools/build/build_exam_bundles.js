@@ -57,7 +57,8 @@ function buildForExam(target) {
 
     for (const file of mdFiles) {
         const srcPath = path.join(SRC_DIR, file);
-        const md = fs.readFileSync(srcPath, 'utf8');
+        // 원본 개행을 LF로 정규화 — 작업트리 개행 상태(autocrlf 등)가 번들 콘텐츠로 번지는 것을 방지
+        const md = fs.readFileSync(srcPath, 'utf8').replace(/\r\n/g, '\n');
 
         // openExam()에 넘어오는 경로와 정확히 동일한 키 (항상 POSIX 슬래시, contentRoot 포함)
         const key = `${target.contentRoot}/문제은행/${file}`;

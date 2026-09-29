@@ -28,6 +28,8 @@
     "check:reflines": "node tools/check/check_ref_lines.js",
     "check:drillfresh": "node tools/check/check_drill_freshness.js",
     "check:docbundles": "node tools/build/build_doc_bundles.js --check",
+    "check:datafresh": "node tools/check/check_data_freshness.js",
+    "check:hooks": "node tools/check/check_hooks.js",
     "check:lawurls": "node tools/check/check_law_urls.js",
     "check:docs": "node tools/check/check_docs_paths.js && node tools/check/check_doc_ids.js",
     "build:html": "node tools/build/build_html.js",
@@ -61,6 +63,7 @@
     "check:content": "node tools/check/check_content.js",
     "check:all": "npm run lint && npm run check:types && npm run check:html && npm run check:docs && npm run check:content",
     "check:all:quick": "npm run lint && npm run check:types && npm run check:html && npm run check:docs && npm run check:content -- --quick",
+    "check:ci": "npm run check:hooks && npm run lint && npm run check:types && npm run check:imports && npm run check:docs && node tools/check/check_doc_sync.js --ref origin/main && npm run check:specrefs && npm run check:trace && npm run check:html && node tools/check/check_content.js --content-only --quick && npm test && npm run verify:assets && npm run check:parser",
     "deploy": "node tools/deploy.js",
     "audit:combo": "node tools/check/audit_combo.js"
   },

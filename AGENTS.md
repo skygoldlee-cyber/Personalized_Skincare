@@ -28,7 +28,6 @@ npm.cmd run test:all                   # 전체 테스트 (unit + parser + dom)
 # 빌드
 npm.cmd run build:data                 # content/exams/<id>/*.md → data/exams/<id>/ 번들 생성 (모든 시험 순회)
 node tools/build/build_doc_bundles.js        # docs/user/{user_manual,formula_manual}.md, content/exams/cosmetic/docs/학습안내서.md → data/docs_md/ + {dataRoot}/docs_md/ 번들 (앱 내 문서 갱신 시 필수)
-npm.cmd run check:docbundles           # docs_md 번들 ↔ 원본 문서 신선도 (check:content에 포함)
 npm.cmd run build:html                # index.template.html + html/views/*.html → index.html 조립 (뷰 마크업 변경 시 필수)
 npm.cmd run check:html                # index.html이 파셜 조립 결과와 일치하는지 비교 (개행 정규화 — pre-push·CI 게이트)
 npm.cmd run check:parser               # 빌드 파서 ↔ 런타임 파서 등가성 검증
@@ -57,6 +56,7 @@ npm.cmd run audit:combo                 # 복수정답형 품질 감사 (정답 
 # 전체 점검 (단일 진입점 — lint·types·html·docs + check:content 전 단계)
 npm.cmd run check:all                    # 저장소 전체 검증 일괄 실행
 npm.cmd run check:all:quick              # DOM 테스트 생략 빠른 점검 (check:all -- --quick 은 플래그 미전달로 동작 안 함)
+npm.cmd run check:ci                     # CI 게이트 로컬 재현 — lint·types·imports·docs·docsync·specrefs·trace·html·content-only·unit·assets·parser (coverage·E2E·audit는 CI 전용)
 
 # 콘텐츠 통합 검증 (교재 교체 등 대규모 콘텐츠 변경 후)
 npm.cmd run check:content               # 인용·귀속·레이아웃·드릴·ID이관·파서·임포트·자산·카드·문서·테스트 일괄 검증
@@ -69,6 +69,8 @@ npm.cmd run check:refsubjects           # ref_md 문서의 인용 득표↔과�
 npm.cmd run check:reffresh              # 참조자료 PDF 해시 ↔ ref_md 신선도 (PDF 교체 감지)
 npm.cmd run check:reflines              # 교재 (LNN)/📌출처 조문 ↔ ref_md 실제 내용 검증
 npm.cmd run check:drillfresh            # 드릴 번들 ↔ 문제은행 번들 신선도 (stale 시 npm run build:drills)
+npm.cmd run check:docbundles           # docs_md 번들 ↔ 원본 문서 신선도 (check:content에 포함)
+npm.cmd run check:datafresh            # data/·생성물 ↔ 원본 신선도 — 빌드 체인 실행 후 git diff 비교·자동 원복 (생성물 경로가 clean이어야 실행 가능)
 npm.cmd run check:docs                  # README·AGENTS·docs/*.md 내 경로 참조 존재 검증 + 문서 ID 누락·중복 검증
 npm.cmd run lint                        # ESLint — 에러 0 필수 (기존 경고는 점진 정리 대상)
 npm.cmd run check:types                 # tsc --noEmit (jsconfig checkJs — JSDoc 타입 진단)
@@ -78,6 +80,7 @@ npm.cmd run check:trace                 # TRACE_MATRIX 입력 해시 신선도
 npm.cmd run check:lawurls               # law.go.kr 한글주소 유효성 전수 검증 (law-links.js 매핑 실호출, 오류 페이지 본문 판별)
 node tools/impact_tests.js              # 변경 파일 → 영향 요구사항·권장 테스트 (미커밋 변경 자동 분석, --ref <ref>로 diff 분석)
 npm.cmd run hooks:install               # Git 훅 활성화 (opt-in) — pre-commit: check:types+lint (IDE 오류 시 커밋 차단) / pre-push: +check:trace/specrefs/docs
+npm.cmd run check:hooks                 # 훅 설치 여부 확인 (권고 — 미설치 시 로컬 게이트 우회됨, check:ci 첫 단계)
 
 # 참조자료 PDF → ref_md 변환 (Python 3 + pdfplumber, 이미지 추출 시 pymupdf 필요)
 npm.cmd run convert:refs                # 참조자료 PDF 전체 → ref_md_v2/ 스테이징 변환 (파일명 필터 인자 가능)
