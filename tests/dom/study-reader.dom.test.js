@@ -406,6 +406,35 @@ describe('이야기형 서사 태깅 — markStoryNarrative', () => {
         expect(content.querySelector('.md-quote').classList.contains('story-narrative')).toBe(true);
     });
 
+    it('컨테이너 div는 textContent가 마커 패턴이어도 경계로 오인하지 않음', () => {
+        // .reader-subsection-content가 마커 문단으로 시작/끝나면 div 전체가
+        // .story-boundary로 태깅되어 내부 전체가 중앙정렬되는 회귀 방지
+        const content = buildCard('📚 Chapter 01', `
+            <p class="md-para">본문 문단</p>
+            <div class="reader-subsection-content">
+                <p class="md-para">📖 ┈┈┈┈ 이야기 ┈┈┈┈</p>
+                <p class="md-para">서사 문단</p>
+                <p class="md-para">┈┈┈┈ 본문 ┈┈┈┈ 📘</p>
+                <p class="md-para">다시 본문</p>
+            </div>
+            <p class="md-para">뒤따르는 본문</p>`);
+        markStoryNarrative(content);
+
+        const sub = content.querySelector('.reader-subsection-content');
+        expect(sub.classList.contains('story-boundary')).toBe(false);
+        // 바깥 컨테이너에 리프 마커가 없으므로 서사 범위는 열리지 않는다
+        expect(content.querySelectorAll('.story-boundary').length).toBe(0);
+        expect(content.querySelectorAll(':scope > .story-narrative').length).toBe(0);
+
+        // 서브섹션 자체에 대해 호출하면 내부 리프 마커로 정상 태깅
+        markStoryNarrative(sub);
+        const paras = sub.querySelectorAll('p.md-para');
+        expect(paras[0].classList.contains('story-boundary-start')).toBe(true);
+        expect(paras[1].classList.contains('story-narrative')).toBe(true);
+        expect(paras[2].classList.contains('story-boundary-end')).toBe(true);
+        expect(paras[3].classList.contains('story-narrative')).toBe(false);
+    });
+
     it('프롤로그·등장인물 카드는 전체 서사', () => {
         const content = buildCard('프롤로그 — 민수의 첫 번째 화장품', `
             <p class="md-para">서사 문단</p>

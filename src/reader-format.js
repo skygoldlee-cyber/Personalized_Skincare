@@ -455,8 +455,10 @@ function _isNarrativeQuote(el) {
 export function markStoryNarrative(contentEl) {
     if (!contentEl || !contentEl.children) return;
     const children = Array.from(contentEl.children);
-    const isBoundaryStart = (el) => _STORY_BOUNDARY_START_RE.test((el.textContent || '').trim());
-    const isBoundaryEnd = (el) => _STORY_BOUNDARY_END_RE.test((el.textContent || '').trim()) && /┈/.test(el.textContent || '');
+    // 경계는 리프 문단만 인정 — .reader-subsection-content 같은 컨테이너가
+    // textContent로 오인되면 내부 전체가 중앙정렬되는 문제 방지
+    const isBoundaryStart = (el) => el.tagName === 'P' && _STORY_BOUNDARY_START_RE.test((el.textContent || '').trim());
+    const isBoundaryEnd = (el) => el.tagName === 'P' && _STORY_BOUNDARY_END_RE.test((el.textContent || '').trim()) && /┈/.test(el.textContent || '');
     const hasMarkers = children.some(isBoundaryStart);
 
     // 명시 마커 모드 — '📖 ┈ 이야기 ┈' ~ '┈ 본문 ┈ 📘' 사이를 전부 서사로 태깅.
