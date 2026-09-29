@@ -1,5 +1,13 @@
 [
   {
+    "version": "v20260929-5add11d",
+    "date": "2026-09-29",
+    "notes": [
+      "[정리·trace] TRACE_MATRIX 재스탬프 [no-docs]",
+      "[리팩터링·ref-pipeline] md2doc·pdf2md 개선 — 로컬 Mermaid·렌더 캐시·템플릿 분리·pytest·logging·동명 충돌 방지"
+    ]
+  },
+  {
     "version": "v20260929-ebebcd3",
     "date": "2026-09-29",
     "notes": [
@@ -142,13 +150,6 @@
     "date": "2026-09-28",
     "notes": [
       "[기능·reader] 교재 본문 참조자료 링크에 law.go.kr 원문 병기"
-    ]
-  },
-  {
-    "version": "v20260928-be87ef1",
-    "date": "2026-09-28",
-    "notes": [
-      "[기능·formula] 법규 준수 체크리스트 항목별 참조 링크에도 law.go.kr 원문 추가"
     ]
   }
 ]
