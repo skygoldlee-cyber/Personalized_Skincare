@@ -2,7 +2,7 @@
 var DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2027",
-  "generatedAt": "2026-09-29T09:59:22.020Z",
+  "generatedAt": "2026-09-29T11:37:22.400Z",
   "subjects": [
     {
       "key": "law",
@@ -25,7 +25,7 @@ var DATA_REGISTRY = {
       "order": 2,
       "name": "화장품 제조 및 품질관리",
       "shortName": "제조·품질",
-      "contentHash": "82507143",
+      "contentHash": "a4801530",
       "stats": {
         "cards": 270,
         "quizzes": 103,
@@ -59,7 +59,7 @@ var DATA_REGISTRY = {
       "order": 4,
       "name": "맞춤형화장품의 이해",
       "shortName": "맞춤형화장품",
-      "contentHash": "11ae676f",
+      "contentHash": "12ce5a66",
       "stats": {
         "cards": 433,
         "quizzes": 165,

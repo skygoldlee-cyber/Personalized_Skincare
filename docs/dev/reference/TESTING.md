@@ -217,7 +217,7 @@ npm run hooks:install
 | 46 | `audit-quality.test.js` | 6 | CQ-01~05 — 카드 감사·참조 링크·심각도·콤보 감사·베이스라인 카운트 | subprocess 실행, 2026-10-14 추가 |
 | 47 | `formula-os.test.js` | 11 | FO-03/04/07/09 — 제조 단계·역할→상 매핑·고객 필드·pH·단계 상한·import/export·무료 한도 | 합성 데이터, 2026-10-14 추가 |
 | 48 | `data-architecture.test.js` | 11 | DA-01/02/04/06/08 — 멀티시험 레지스트리·경로·기능 플래그·폴백 번들·스코프 키 | 생성 번들 검증, 2026-10-14 추가 |
-| 49 | `story-textbook.test.js` | 10 | ST-01~07 — 이야기형 교재 구조·마커·섹션 | 콘텐츠 정적 검증, 2026-10-14 추가 |
+| 49 | `story-textbook.test.js` | 14 | ST-01~08 — 이야기형 교재 구조·마커 쌍·이미지 참조·섹션 | 콘텐츠 정적 검증, 2026-10-14 추가 |
 | 50 | `pwa-sw.test.js` | 15 | P-01~12 — SW 캐시 분기·프리캐시·스큐 방지·업데이트·CACHE_VERSION·설치 캡처·manifest Content-Type·app-fallback·verify:assets | 정적 검증 + subprocess, 2026-10-14 추가 |
 | 51 | `security.test.js` | 6 | S-01/07/08 — CSP·인라인 핸들러 부재·보안 헤더·Permissions-Policy·위임 브리지 | vercel.json·index.html 정적 검증, 2026-10-14 추가 |
 | 52 | `perf-invariants.test.js` | 16 | PF-01~16 — 런타임 MD 파싱·과목별 로딩·캐시 TTL·지연 하이라이트·normalize·디바운스·console.log 금지·ref_md·Mermaid 지연·법령 정본 | 소스 패턴 정적 검증, 2026-10-14 추가 |

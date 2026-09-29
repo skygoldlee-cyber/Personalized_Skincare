@@ -5,7 +5,7 @@
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, readdirSync } from 'node:fs';
+import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -141,6 +141,19 @@ test('ST-08: 주석 마커마다 대응하는 가시 경계 문단이 있다', (
     const visEnds = lines.filter(l => /^┈+\s*\*\*본문\*\*\s*┈+\s*📘$/.test(l.trim())).length;
     assert.equal(visStarts, starts, `${dir}: 시작 가시마커 ${visStarts} != 주석 ${starts}`);
     assert.equal(visEnds, ends, `${dir}: 끝 가시마커 ${visEnds} != 주석 ${ends}`);
+  }
+});
+
+test('ST-08: 이야기형 교재의 이미지 참조가 실제 파일과 대응한다', () => {
+  for (const dir of SUBJECT_DIRS) {
+    const { path: mdPath, content } = storyFiles[dir];
+    const refs = content.match(/!\[[^\]]*\]\(([^)]+)\)/g) || [];
+    assert.ok(refs.length >= 1, `${dir}: 이미지 참조 없음`);
+    for (const r of refs) {
+      const src = decodeURIComponent(r.match(/\(([^)]+)\)/)[1]);
+      assert.ok(!src.startsWith('/'), `${dir}: 절대 경로 이미지 src (${src})`);
+      assert.ok(existsSync(join(dirname(mdPath), src)), `${dir}: 이미지 없음 ${src}`);
+    }
   }
 });
 

@@ -4,6 +4,7 @@
 // (n=HTML 길이, k=정규식 수). 단일 패스 파서 또는 DOM 기반 후처리로 통합하면 성능 개선
 // 가능하나, 현재 측정된 병목이 아니므로 장기 개선으로 보류.
 import { parseMarkdown } from './markdown-parser.js';
+import { contentPath } from './exam-context.js';
 import { PATHS, normalizeRefPath } from './paths.js';
 import { escapeHTML } from './sanitize.js';
 import { resolveRefPath, getRefTables } from './pdf-registry.js';
@@ -63,6 +64,22 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
         allowInlineCode: false,
         allowMermaid: true
     });
+
+    // 이미지 src 해석 — 상대 경로(images/x.png)는 교재 md 디렉터리 기준으로,
+    // 구형 '/content/교재/...' 절대 경로는 활성 시험 루트 기준으로 보정한다.
+    // (md 원문의 상대 경로는 GitHub 등 일반 뷰어에서도 그대로 보인다)
+    {
+        const mdDir = String(filePath || '').replace(/^\.\//, '').replace(/\/[^/]*$/, '');
+        html = html.replace(/<img src="([^"]+)"/g, (m, src) => {
+            let resolved = src;
+            if (src.startsWith('/content/교재/')) {
+                resolved = `./${contentPath(src.slice('/content/'.length))}`;
+            } else if (mdDir && !/^(https?:|data:|\/|\.)/.test(src)) {
+                resolved = `./${mdDir}/${src}`;
+            }
+            return resolved === src ? m : m.replace(`src="${src}"`, `src="${resolved}"`);
+        });
+    }
 
     // 본문 목차(## 📋 목차) 섹션의 리스트 항목 → 대응 섹션으로 스크롤되는 하이퍼링크 변환
     // 마크다운 파서가 - **Chapter 01.** xxx를 <div class="md-list-item">...<span>...</span></div>로 변환
