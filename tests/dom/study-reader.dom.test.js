@@ -450,6 +450,34 @@ describe('이야기형 서사 태깅 — markStoryNarrative', () => {
         expect(paras[2].classList.contains('story-narrative')).toBe(false);
     });
 
+    it('이야기 접기 칩이 서사 멤버를 토글한다', () => {
+        const content = buildCard('📚 Chapter 01', `
+            <p class="md-para">📖 ┈┈┈┈ 이야기 ┈┈┈┈</p>
+            <p class="md-para">서사 문단1</p>
+            <div class="md-quote">"대사"</div>
+            <p class="md-para">서사 문단2</p>
+            <p class="md-para">┈┈┈┈ 본문 ┈┈┈┈ 📘</p>
+            <p class="md-para">본문</p>`);
+        markStoryNarrative(content);
+
+        const toggle = content.querySelector('.story-toggle');
+        expect(toggle).not.toBeNull();
+        expect(toggle.getAttribute('aria-expanded')).toBe('true');
+        const members = [...content.querySelectorAll('.story-narrative')];
+        expect(members.length).toBe(3);
+        expect(members.every(m => !m.hidden)).toBe(true);
+
+        toggle.click();
+        expect(toggle.getAttribute('aria-expanded')).toBe('false');
+        expect(toggle.classList.contains('is-collapsed')).toBe(true);
+        expect(members.every(m => m.hidden)).toBe(true);
+        expect(toggle.textContent).toContain('펼치기');
+
+        toggle.click();
+        expect(toggle.getAttribute('aria-expanded')).toBe('true');
+        expect(members.every(m => !m.hidden)).toBe(true);
+    });
+
     it('프롤로그·등장인물 카드는 전체 서사', () => {
         const content = buildCard('프롤로그 — 민수의 첫 번째 화장품', `
             <p class="md-para">서사 문단</p>

@@ -494,6 +494,19 @@ export function parseMarkdown(mdText, options = {}) {
             return;
         }
 
+        // 6-7-2. 이야기 경계 마커 — '📖 ┈ **이야기** ┈' / '┈ **본문** ┈ 📘'
+        // story-boundary 클래스를 파서가 직접 부여해 모든 렌더 경로(리더·검색 등)에서
+        // 동일하게 숨김되고, markStoryNarrative는 이 클래스를 서사 범위 앵커로 쓴다.
+        const _storyBoundaryCls = /^📖\s*┈+\s*<strong>이야기<\/strong>\s*┈+$/.test(trimmed)
+            ? 'story-boundary story-boundary-start'
+            : /^┈+\s*<strong>본문<\/strong>\s*┈+\s*📘$/.test(trimmed)
+                ? 'story-boundary story-boundary-end' : null;
+        if (_storyBoundaryCls) {
+            output.push(_wrapWithLine(`<p class="${useReaderStyles ? 'md-para ' : ''}${_storyBoundaryCls}">${line}</p>`, _lineNo));
+            _jwPrev = null;
+            return;
+        }
+
         // 6-8. 일반 문단 파싱
         // joinWraps: 이전 평문/항목이 미종결 + 현재 줄이 구조 마커가 아니면 병합
         if (joinWraps && _jwPrev != null

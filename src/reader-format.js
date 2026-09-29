@@ -437,10 +437,11 @@ const _STORY_SCENE_MARK = '📖';
 const _STORY_CARD_TITLE_RE = /프롤로그|등장인물/;
 const _STORY_EPILOGUE_RE = /에필로그/;
 const _STORY_HEADING_SEL = '.md-h3, .md-h4, .md-h5';
-// 명시적 서사 경계 마커 — 원문 '─' 대신 '┈'(U+2508) 사용. HTML 주석
-// <!-- story:start/end -->는 파서가 제거하므로 이 눈에 보이는 마커를 기준으로 한다.
-const _STORY_BOUNDARY_START_RE = /^📖\s*┈+/;
-const _STORY_BOUNDARY_END_RE = /📘\s*$/;
+// 명시적 서사 경계 마커 — 원문 '─' 대신 '┈'(U+2508) 사용. 파서가 마커 문단에
+// .story-boundary-start/.story-boundary-end를 직접 부여하며, 아래 정규식은
+// 클래스가 없는 구형 출력 대비 라벨 포함 폴백이다.
+const _STORY_BOUNDARY_START_RE = /^📖\s*┈+\s*이야기\s*┈+/;
+const _STORY_BOUNDARY_END_RE = /^┈+\s*본문\s*┈+\s*📘\s*$/;
 
 /** 인용구가 대사/서사인지 판별 — 따옴표로 시작하거나 에필로그 본문이면 서사 */
 function _isNarrativeQuote(el) {
@@ -454,10 +455,14 @@ function _isNarrativeQuote(el) {
  */
 export function markStoryNarrative(contentEl) {
     if (!contentEl || !contentEl.children) return;
-    // 경계는 리프 문단만 인정 — .reader-subsection-content 같은 컨테이너가
-    // textContent로 오인되면 내부 전체가 중앙정렬되는 문제 방지
-    const isBoundaryStart = (el) => el.tagName === 'P' && _STORY_BOUNDARY_START_RE.test((el.textContent || '').trim());
-    const isBoundaryEnd = (el) => el.tagName === 'P' && _STORY_BOUNDARY_END_RE.test((el.textContent || '').trim()) && /┈/.test(el.textContent || '');
+    // 경계는 리프 문단만 인정 — 파서 부여 클래스 우선, 없으면 라벨 포함 텍스트 폴백.
+    // (.reader-subsection-content 같은 컨테이너 오인 방지로 tagName 제한 유지)
+    const isBoundaryStart = (el) => el.tagName === 'P'
+        && (el.classList.contains('story-boundary-start')
+            || _STORY_BOUNDARY_START_RE.test((el.textContent || '').trim()));
+    const isBoundaryEnd = (el) => el.tagName === 'P'
+        && (el.classList.contains('story-boundary-end')
+            || _STORY_BOUNDARY_END_RE.test((el.textContent || '').trim()));
 
     // 명시 마커 탐색은 컨테이너 직계 자식이 아니라 문서 순서 전체 리프 블록 —
     // 서사 범위가 서브섹션 경계를 넘나들 수 있으므로 단독 시작/끝 마커도 처리한다.
@@ -469,18 +474,45 @@ export function markStoryNarrative(contentEl) {
     if (hasStart || hasEnd) {
         // 끝 마커만 있으면 이전 컨테이너에서 시작된 범위의 연속으로 간주
         let inScene = !hasStart && hasEnd;
+        let group = inScene ? { start: null, members: [] } : null;
+        const groups = inScene ? [group] : [];
         for (const el of leaves) {
             if (isBoundaryStart(el)) {
                 el.classList.add('story-boundary', 'story-boundary-start');
                 inScene = true;
+                group = { start: el, members: [] };
+                groups.push(group);
                 continue;
             }
             if (isBoundaryEnd(el)) {
                 el.classList.add('story-boundary', 'story-boundary-end');
                 inScene = false;
+                group = null;
                 continue;
             }
-            if (inScene) el.classList.add('story-narrative');
+            if (inScene) {
+                el.classList.add('story-narrative');
+                if (group) group.members.push(el);
+            }
+        }
+        // 이야기 접기/펼치기 칩 — story-boundary 앵커에 삽입, 멤버 전체를 토글.
+        // aria-expanded로 서사↔본문 전환을 스크린리더에도 전달한다.
+        for (const g of groups) {
+            if (!g.members.length) continue;
+            const toggle = document.createElement('button');
+            toggle.type = 'button';
+            toggle.className = 'story-toggle';
+            toggle.setAttribute('aria-expanded', 'true');
+            toggle.textContent = '📖 이야기 접기';
+            toggle.addEventListener('click', () => {
+                const collapsed = toggle.getAttribute('aria-expanded') === 'false';
+                g.members.forEach(m => { m.hidden = !collapsed; });
+                toggle.setAttribute('aria-expanded', String(collapsed));
+                toggle.textContent = collapsed ? '📖 이야기 접기' : '📖 이야기 펼치기';
+                toggle.classList.toggle('is-collapsed', !collapsed);
+            });
+            if (g.start) g.start.insertAdjacentElement('afterend', toggle);
+            else g.members[0].insertAdjacentElement('beforebegin', toggle);
         }
         return;
     }

@@ -331,3 +331,8 @@
         color: var(--print-warning);
     }
 }
+
+/* 이야기 경계 마커·접기 칩은 인쇄에서 숨김 (md 원문에만 존재하는 구조 주석) */
+@media print {
+    .story-toggle { display: none; }
+}

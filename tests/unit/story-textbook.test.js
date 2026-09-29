@@ -116,3 +116,44 @@ test('ST-07: 4과목 이야기형 교재가 마무리 에필로그로 닫힌다'
     assert.ok(/마치며|여정|끝|완성|시작/.test(content.slice(lastEp, lastEp + 800)), `${dir}: 마무리 서사 부족`);
   }
 });
+
+// ---------- ST-08: story:start/end 마커 쌍 ----------
+
+test('ST-08: story:start/end 주석이 짝을 이루고 순서가 교대한다', () => {
+  for (const dir of SUBJECT_DIRS) {
+    const { content } = storyFiles[dir];
+    const markers = content.match(/<!--\s*story:(start|end)\s*-->/g) || [];
+    assert.ok(markers.length >= 20, `${dir}: 마커 부족 (${markers.length})`);
+    assert.equal(markers.length % 2, 0, `${dir}: start/end 개수 불일치`);
+    for (let i = 0; i < markers.length; i++) {
+      const want = i % 2 === 0 ? 'start' : 'end';
+      assert.ok(markers[i].includes(`:${want}`), `${dir}: ${i}번째 마커가 ${want} 아님 (${markers[i]})`);
+    }
+  }
+});
+
+test('ST-08: 주석 마커마다 대응하는 가시 경계 문단이 있다', () => {
+  for (const dir of SUBJECT_DIRS) {
+    const lines = storyFiles[dir].content.split('\n');
+    const starts = lines.filter(l => /<!--\s*story:start\s*-->/.test(l)).length;
+    const ends = lines.filter(l => /<!--\s*story:end\s*-->/.test(l)).length;
+    const visStarts = lines.filter(l => /^📖\s*┈+\s*\*\*이야기\*\*\s*┈+$/.test(l.trim())).length;
+    const visEnds = lines.filter(l => /^┈+\s*\*\*본문\*\*\s*┈+\s*📘$/.test(l.trim())).length;
+    assert.equal(visStarts, starts, `${dir}: 시작 가시마커 ${visStarts} != 주석 ${starts}`);
+    assert.equal(visEnds, ends, `${dir}: 끝 가시마커 ${visEnds} != 주석 ${ends}`);
+  }
+});
+
+test('ST-08: 가시 경계 마커는 빈 줄·주석으로 격리된 독립 문단이다', () => {
+  // 격리되지 않은 마커는 파서가 앞뒤 텍스트와 병합해 숨김·태깅이 깨진다
+  for (const dir of SUBJECT_DIRS) {
+    const lines = storyFiles[dir].content.split('\n');
+    const isSep = (l) => { const t = (l || '').trim(); return t === '' || /^<!--/.test(t); };
+    lines.forEach((l, i) => {
+      const t = l.trim();
+      if (!/^📖\s*┈/.test(t) && !(/📘\s*$/.test(t) && t.includes('┈'))) return;
+      assert.ok(isSep(lines[i - 1]), `${dir} L${i + 1}: 마커 앞 격리 없음`);
+      assert.ok(isSep(lines[i + 1]), `${dir} L${i + 1}: 마커 뒤 격리 없음`);
+    });
+  }
+});

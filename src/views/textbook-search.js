@@ -36,6 +36,12 @@ function _getSearchIndex() {
                         fullContent += '\n' + (sub.title || '') + '\n' + (sub.content || '');
                     });
                 }
+                // story:start/end 주석·가시 경계 마커(┈ 라인)는 검색 인덱스에서 제외
+                fullContent = fullContent
+                    .replace(/<!--[^\n]*?-->/g, '')
+                    .split('\n')
+                    .filter(l => !l.includes('┈'))
+                    .join('\n');
                 _searchIndex.push({
                     subjId,
                     subjName: subj.name,
