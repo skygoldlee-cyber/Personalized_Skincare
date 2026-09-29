@@ -1,5 +1,12 @@
 [
   {
+    "version": "v20260929-2f00225",
+    "date": "2026-09-29",
+    "notes": [
+      "[기능·router] 뒤로가기 종료 가드 — 루트에서 더블-백 시 종료"
+    ]
+  },
+  {
     "version": "v20260929-10c671f",
     "date": "2026-09-29",
     "notes": [
@@ -133,19 +140,6 @@
     "date": "2026-09-29",
     "notes": [
       "[기능·ui] UI/UX 피로도 개선 — 탭 바 5+N·해시 라우팅·대시보드 재구성·a11y 보강"
-    ]
-  },
-  {
-    "version": "v20260929-b533e0c",
-    "date": "2026-09-29",
-    "notes": [
-      "[문서·reference] 보류 항목의 판단 근거·필요 시점 명기",
-      "[정리·infra] Node 버전 정합 + Dependabot 의존성 상시 감시",
-      "[기능·check] 잔여 표준 갭 적용 — SBOM·specrefs 로드맵 제외·추적성 정합",
-      "[문서·reference] 표준 대응 매핑 부록 추가 (ENGINEERING_PRACTICES)",
-      "[문서·reference] 소프트웨어 공학 요소 정리 문서 추가 (DOC-REF-08)",
-      "[문서·runbooks] 파이프라인 다이어그램을 Mermaid로 교체",
-      "[문서·runbooks] 점검→배포 게이트 파이프라인 가이드 추가 (DOC-RBK-09)"
     ]
   }
 ]
