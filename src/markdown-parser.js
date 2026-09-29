@@ -381,6 +381,15 @@ export function parseMarkdown(mdText, options = {}) {
             return;
         }
 
+        // HTML 주석 라인 (<!-- story:start --> 같은 구조 마커) — 이스케이프되어
+        // 텍스트로 노출되므로 렌더하지 않는다. 코드블록 내부는 위에서 이미 소비됨.
+        // 빈 줄과 동일하게 진행 중 블록(표·인용·목록)은 플러시한다.
+        if (/^&lt;!--[\s\S]*?--&gt;$/.test(trimmed)) {
+            flushTable(); flushQuote(); flushList();
+            _jwPrev = null;
+            return;
+        }
+
         // joinWraps: 러닝헤더 스킵 — 문서 제목과 동일한 반복 단독줄.
         // 첫 등장(문서 표제)은 유지하고 이후 반복만 투명하게 건너뛴다.
         if (_jwTitle && trimmed === _jwTitle) {

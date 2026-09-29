@@ -379,6 +379,33 @@ describe('이야기형 서사 태깅 — markStoryNarrative', () => {
         expect(content.querySelector('.md-h4').classList.contains('story-narrative')).toBe(false);
     });
 
+    it('명시 마커 모드 — 📖┈이야기┈ ~ ┈본문┈📘 사이만 서사 태깅', () => {
+        const content = buildCard('📚 Chapter 01', `
+            <p class="md-para">본문 문단</p>
+            <p class="md-para">📖 ┈┈┈┈ 이야기 ┈┈┈┈</p>
+            <h4 class="md-h4">📖 민수의 상황</h4>
+            <p class="md-para">서사 문단</p>
+            <div class="md-quote">🔖 기억 태그도 마커 안이면 서사</div>
+            <p class="md-para">┈┈┈┈ 본문 ┈┈┈┈ 📘</p>
+            <p class="md-para">다시 본문</p>
+            <h4 class="md-h4">📖 마커 밖 📖 헤딩은 무시</h4>
+            <p class="md-para">본문</p>`);
+        markStoryNarrative(content);
+
+        const paras = content.querySelectorAll('p.md-para');
+        expect(paras[0].classList.contains('story-narrative')).toBe(false);
+        expect(paras[1].classList.contains('story-boundary-start')).toBe(true);
+        expect(paras[2].classList.contains('story-narrative')).toBe(true);
+        expect(paras[3].classList.contains('story-boundary-end')).toBe(true);
+        expect(paras[4].classList.contains('story-narrative')).toBe(false);
+        expect(paras[5].classList.contains('story-narrative')).toBe(false);
+        // 마커 모드에서는 헤딩 휴리스틱이 개입하지 않는다
+        expect(content.querySelectorAll('.md-h4')[0].classList.contains('story-narrative')).toBe(true);
+        expect(content.querySelectorAll('.md-h4')[1].classList.contains('story-narrative')).toBe(false);
+        // 마커 안 콜아웃은 명시 범위라 서사로 태깅된다
+        expect(content.querySelector('.md-quote').classList.contains('story-narrative')).toBe(true);
+    });
+
     it('프롤로그·등장인물 카드는 전체 서사', () => {
         const content = buildCard('프롤로그 — 민수의 첫 번째 화장품', `
             <p class="md-para">서사 문단</p>

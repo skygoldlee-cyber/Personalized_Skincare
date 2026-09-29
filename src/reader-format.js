@@ -437,6 +437,10 @@ const _STORY_SCENE_MARK = '📖';
 const _STORY_CARD_TITLE_RE = /프롤로그|등장인물/;
 const _STORY_EPILOGUE_RE = /에필로그/;
 const _STORY_HEADING_SEL = '.md-h3, .md-h4, .md-h5';
+// 명시적 서사 경계 마커 — 원문 '─' 대신 '┈'(U+2508) 사용. HTML 주석
+// <!-- story:start/end -->는 파서가 제거하므로 이 눈에 보이는 마커를 기준으로 한다.
+const _STORY_BOUNDARY_START_RE = /^📖\s*┈+/;
+const _STORY_BOUNDARY_END_RE = /📘\s*$/;
 
 /** 인용구가 대사/서사인지 판별 — 따옴표로 시작하거나 에필로그 본문이면 서사 */
 function _isNarrativeQuote(el) {
@@ -450,6 +454,32 @@ function _isNarrativeQuote(el) {
  */
 export function markStoryNarrative(contentEl) {
     if (!contentEl || !contentEl.children) return;
+    const children = Array.from(contentEl.children);
+    const isBoundaryStart = (el) => _STORY_BOUNDARY_START_RE.test((el.textContent || '').trim());
+    const isBoundaryEnd = (el) => _STORY_BOUNDARY_END_RE.test((el.textContent || '').trim()) && /┈/.test(el.textContent || '');
+    const hasMarkers = children.some(isBoundaryStart);
+
+    // 명시 마커 모드 — '📖 ┈ 이야기 ┈' ~ '┈ 본문 ┈ 📘' 사이를 전부 서사로 태깅.
+    // 마커 문단 자체는 story-boundary로 태깅해 경계 표시 스타일을 준다.
+    if (hasMarkers) {
+        let inScene = false;
+        for (const el of children) {
+            if (isBoundaryStart(el)) {
+                el.classList.add('story-boundary', 'story-boundary-start');
+                inScene = true;
+                continue;
+            }
+            if (isBoundaryEnd(el)) {
+                el.classList.add('story-boundary', 'story-boundary-end');
+                inScene = false;
+                continue;
+            }
+            if (inScene) el.classList.add('story-narrative');
+        }
+        return;
+    }
+
+    // 폴백(마커 없는 문서): 📖 헤딩 리프 블록 + 💭 에필로그 + 프롤로그/등장인물 카드
     const card = contentEl.closest('.reader-section-card');
     const cardTitleEl = card ? card.querySelector('.reader-section-title') : null;
     // 프롤로그/등장인물 카드는 전체가 서사 — 헤딩이 와도 범위가 끊기지 않는다

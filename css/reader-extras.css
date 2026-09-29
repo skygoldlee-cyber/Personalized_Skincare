@@ -606,6 +606,18 @@
     gap: 0.3rem;
 }
 
+/* 0. 이야기 경계 마커 — 📖 ┈ 이야기 ┈ / ┈ 본문 ┈ 📘 (markStoryNarrative 태깅) */
+.story-mode .textbook-reader-section-content .story-boundary {
+    text-align: center;
+    color: var(--story-heading);
+    font-size: 0.8rem;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.08em;
+    opacity: 0.75;
+    margin: 1.4rem 0;
+    user-select: none;
+}
+
 /* 6. 이야기모드 줄간격 확대 */
 .story-mode .textbook-reader-section-content {
     line-height: 2.0;
