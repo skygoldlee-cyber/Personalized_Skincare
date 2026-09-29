@@ -8,6 +8,7 @@ import { formatSectionContentForReader, markStoryNarrative } from '../reader-for
 import { parseTextbookContent } from '../textbook-parser.js';
 import { renderStudyAids, bindStudyAidToggles, renderExamFilterToggle, applyExamFilter } from '../study-aids.js';
 import { renderMermaidIn } from '../mermaid-render.js';
+import { attachImageZoomIn } from '../image-zoom.js';
 import {
     getRefTables, mapSourceToRef
 } from '../pdf-registry.js';
@@ -942,6 +943,7 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
 
     // Mermaid 다이어그램 렌더링 (pre.mermaid 노드가 있을 때만 온디맨드 로드)
     renderMermaidIn(container, '[reader]');
+    attachImageZoomIn(container);
 
     // 참조자료 링크 이벤트 바인딩
     bindReferenceLinks();

@@ -3,6 +3,7 @@
 import { escapeHTML, esc } from '../sanitize.js';
 import { parseMarkdown } from '../markdown-parser.js';
 import { renderMermaidIn } from '../mermaid-render.js';
+import { attachImageZoomIn } from '../image-zoom.js';
 import { TIMING } from '../config/timing.js';
 // [모바일 PWA 견고성] 레지스트리는 window 전역(가드)에서 읽는다(정적 import 하드 의존 지양).
 
@@ -269,6 +270,7 @@ function performTextbookSearch() {
 
     // Mermaid 다이어그램 렌더링 (pre.mermaid 노드가 있을 때만 온디맨드 로드)
     renderMermaidIn(container, '[search]');
+    attachImageZoomIn(container);
 }
 
 export function toggleTextbookCard(cardId) {

@@ -160,6 +160,18 @@ html.light-theme {
     border-radius: var(--radius-md);
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow-card-lift);
+    cursor: zoom-in;
+}
+
+/* 이미지 확대 모달 — reader-table-modal/mermaid-zoom 셸 재사용.
+   모달 내 이미지는 본문 .reader-img 스코프 밖이므로 전용 클래스로 스크롤 확대 */
+.img-zoom-target {
+    display: block;
+    margin: 0 auto;
+    height: auto;
+}
+.img-zoom-body {
+    padding-bottom: var(--space-3);
 }
 
 /* Reader table styles */
