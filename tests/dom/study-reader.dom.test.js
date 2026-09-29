@@ -364,6 +364,21 @@ describe('이야기형 서사 태깅 — markStoryNarrative', () => {
         expect(content.querySelector('.md-quote').classList.contains('story-narrative')).toBe(true);
     });
 
+    it('h3 장면 이후의 h4 본문 소제목은 서사로 물들지 않는다 (리프 블록 종료)', () => {
+        const content = buildCard('📚 Chapter 01', `
+            <h3 class="md-h3">📖 수진, 조제대 앞에서 얼어붙다</h3>
+            <p class="md-para">서사 문단</p>
+            <h4 class="md-h4">1.1 「화장품법」</h4>
+            <p class="md-para">본문 설명</p>`);
+        markStoryNarrative(content);
+
+        const paras = content.querySelectorAll('p.md-para');
+        expect(paras[0].classList.contains('story-narrative')).toBe(true);
+        expect(paras[1].classList.contains('story-narrative')).toBe(false);
+        expect(content.querySelector('.md-h3').classList.contains('story-narrative')).toBe(true);
+        expect(content.querySelector('.md-h4').classList.contains('story-narrative')).toBe(false);
+    });
+
     it('프롤로그·등장인물 카드는 전체 서사', () => {
         const content = buildCard('프롤로그 — 민수의 첫 번째 화장품', `
             <p class="md-para">서사 문단</p>

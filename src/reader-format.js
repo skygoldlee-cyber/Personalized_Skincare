@@ -427,8 +427,8 @@ export function formatSectionContentForReader(rawContent, filePath, refPath, ref
 
 /* =======================================================
    이야기형 서사 범위 태깅 (markStoryNarrative)
-   - 📖 장면 헤딩 ~ 다음 동급/상위 헤딩 전까지
-   - 💭 에필로그 인용구 ~ 섹션 끝
+   - 📖 장면 헤딩 ~ 다음 헤딩 전까지 (장면은 리프 블록 — 레벨 무관하게 종료)
+   - 💭 에필로그 인용구 ~ 다음 헤딩 전까지
    - '프롤로그'/'등장인물' 섹션 카드 전체
    표·코드·머메이드·콜아웃 인용(🔖/📋/📌 등)은 서사 범위에서 제외한다.
    ======================================================= */
@@ -444,11 +444,6 @@ function _isNarrativeQuote(el) {
     return /^["“‘']/.test(t) || _STORY_EPILOGUE_RE.test(t);
 }
 
-function _mdHeadingLevel(el) {
-    const m = (el.className || '').match(/md-h(\d)/);
-    return m ? parseInt(m[1], 10) : 5;
-}
-
 /**
  * 섹션 콘텐츠의 서사 블록 요소에 .story-narrative 클래스를 부여한다.
  * @param {Element} contentEl .textbook-reader-section-content (또는 .reader-subsection-content)
@@ -457,32 +452,28 @@ export function markStoryNarrative(contentEl) {
     if (!contentEl || !contentEl.children) return;
     const card = contentEl.closest('.reader-section-card');
     const cardTitleEl = card ? card.querySelector('.reader-section-title') : null;
-    const cardTitle = cardTitleEl ? cardTitleEl.textContent || '' : '';
+    // 프롤로그/등장인물 카드는 전체가 서사 — 헤딩이 와도 범위가 끊기지 않는다
+    const wholeCard = _STORY_CARD_TITLE_RE.test(cardTitleEl ? cardTitleEl.textContent : '');
 
-    let inScene = _STORY_CARD_TITLE_RE.test(cardTitle);
-    let sceneLevel = 0; // 서사가 진행 중인 헤딩 레벨 (이보다 작거나 같은 레벨의 헤딩이 오면 종료)
+    let inScene = wholeCard;
 
     for (const el of contentEl.children) {
         const isHeading = el.matches && el.matches(_STORY_HEADING_SEL);
         const isSubTitle = el.classList && el.classList.contains('reader-subsection-title');
 
         if (isHeading || isSubTitle) {
-            const lvl = isSubTitle ? 5 : _mdHeadingLevel(el);
             if (isHeading && (el.textContent || '').includes(_STORY_SCENE_MARK)) {
                 inScene = true;
-                sceneLevel = lvl;
                 el.classList.add('story-narrative');
                 continue;
             }
-            // 서사 안에서 더 하위 헤딩이 오면 서사 소제목으로 유지, 동급/상위면 서사 종료
-            if (inScene && (isSubTitle || lvl <= sceneLevel)) {
-                inScene = false;
-            }
+            // 장면은 리프 블록 — 📖 아닌 헤딩이 오면 무조건 종료 (하위 레벨 헤딩도 본문)
+            if (!wholeCard) inScene = false;
+            if (!inScene) continue;
         } else if (!inScene && el.classList && el.classList.contains('md-quote')
             && _STORY_EPILOGUE_RE.test(el.textContent || '')) {
-            // 에필로그 인용구 — 이후 콘텐츠 끝까지 서사
+            // 에필로그 인용구 — 다음 헤딩 전까지 서사
             inScene = true;
-            sceneLevel = 6;
         }
 
         if (!inScene) continue;
