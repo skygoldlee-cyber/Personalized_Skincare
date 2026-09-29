@@ -1,5 +1,12 @@
 [
   {
+    "version": "v20260929-10c671f",
+    "date": "2026-09-29",
+    "notes": [
+      "[기능·교재] 본문 이미지 라이트박스 확대 보기"
+    ]
+  },
+  {
     "version": "v20260929-1f2e3c0",
     "date": "2026-09-29",
     "notes": [
@@ -139,18 +146,6 @@
       "[문서·reference] 소프트웨어 공학 요소 정리 문서 추가 (DOC-REF-08)",
       "[문서·runbooks] 파이프라인 다이어그램을 Mermaid로 교체",
       "[문서·runbooks] 점검→배포 게이트 파이프라인 가이드 추가 (DOC-RBK-09)"
-    ]
-  },
-  {
-    "version": "v20260929-0bb35c3",
-    "date": "2026-09-29",
-    "notes": [
-      "[기능·check] 생성물 신선도 통합 게이트 + CI 로컬 재현",
-      "[수정·scripts] check:all:quick 스크립트 추가 — --quick 플래그 미전달 수정",
-      "[기능·check] docs_md 번들 신선도 게이트 + .gitattributes 개행 고정",
-      "[수정·trace] 입력 해시 개행 정규화 — 플랫폼별 신선도 오탐 해소",
-      "[수정·tools] check:html 개행 정규화 — Windows autocrlf 드리프트 오탐 해소",
-      "[문서·trace] TRACE_MATRIX 입력 해시 갱신"
     ]
   }
 ]
