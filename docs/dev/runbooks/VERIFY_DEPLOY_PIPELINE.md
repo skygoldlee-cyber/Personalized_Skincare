@@ -10,34 +10,38 @@
 
 ## 1. 전체 그림
 
-```
-로컬 작업
-   │
-   ├─ (opt-in) Git 훅 ──────────────────────────────┐
-   │   pre-commit: check:types + lint               │
-   │               + check:html + docsync --staged  │
-   │   pre-push:   + check:trace + check:specrefs   │
-   │               + check:docs + docsync           │
-   │                                                │
-   ├─ 수동 점검                                     │
-   │   check:all / check:all:quick ─ 빠른 전수 검사  │
-   │   check:ci  ─ CI와 동일 게이트 로컬 재현        │
-   │                                                │
-   ▼                                                │
-git push ──► GitHub Actions CI (ubuntu, Node 20)     │
-               npm ci → audit → lint → types →       │
-               imports → docs → docsync → specrefs → │
-               trace → html → content-only → test →  │
-               coverage → verify:assets → parser →   │
-               E2E (Playwright)                      │
-   │                                                 │
-   ▼                                                 │
-npm run deploy                                       │
-   배포 가드(clean tree + origin/main 동기화)         │
-   → 콤보 품질·타입·린트 게이트                      │
-   → stamp:sw (CACHE_VERSION·APP_VERSION 커밋 해시)  │
-   → 스탬프 커밋 + push                              │
-   → vercel --prod → 프로덕션 alias                  │
+```mermaid
+flowchart TD
+    subgraph LOCAL["로컬 작업"]
+        EDIT["코드·콘텐츠 편집"]
+        MANUAL["수동 점검<br/>check:all · check:all:quick · check:ci"]
+    end
+
+    subgraph HOOKS["Git 훅 (opt-in)"]
+        PRECOMMIT["pre-commit<br/>check:types + lint<br/>+ check:html + docsync --staged"]
+        PREPUSH["pre-push<br/>+ check:trace + check:specrefs<br/>+ check:docs + docsync"]
+    end
+
+    subgraph CI["GitHub Actions (ubuntu · Node 20)"]
+        CIFLOW["npm ci → audit → lint → types →<br/>imports → docs → docsync → specrefs →<br/>trace → html → content-only → test →<br/>coverage → verify:assets → parser →<br/>E2E (Playwright)"]
+    end
+
+    subgraph DEPLOY["npm run deploy"]
+        GUARD["배포 가드<br/>clean tree + origin/main 동기화"]
+        QUALITY["콤보 품질 · 타입 · 린트 게이트"]
+        STAMP["stamp:sw<br/>CACHE_VERSION · APP_VERSION = 커밋 해시"]
+        STAMPCOMMIT["스탬프 커밋 + push"]
+        VERCEL["vercel --prod<br/>→ 프로덕션 alias"]
+    end
+
+    EDIT --> MANUAL
+    EDIT --> PRECOMMIT
+    MANUAL --> PUSH["git push"]
+    PRECOMMIT -->|"commit"| PREPUSH
+    PREPUSH -->|"push"| PUSH
+    PUSH --> CIFLOW
+    CIFLOW -->|"main 통과"| GUARD
+    GUARD --> QUALITY --> STAMP --> STAMPCOMMIT --> VERCEL
 ```
 
 같은 게이트가 3중으로 존재한다 — **로컬 훅(옵션) → 수동 점검 → CI(필수) → 배포 가드**. 훅은 설치 안 된 환경에서 우회될 수 있지만 CI가 동일 게이트를 재실행하므로 최종 방어선은 항상 있다.
