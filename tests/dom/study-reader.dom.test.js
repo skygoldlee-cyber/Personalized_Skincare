@@ -421,18 +421,33 @@ describe('이야기형 서사 태깅 — markStoryNarrative', () => {
         markStoryNarrative(content);
 
         const sub = content.querySelector('.reader-subsection-content');
+        // 컨테이너 div 자체는 경계가 아니지만, 바깥 호출은 하위 리프 마커를 정상 태깅한다
         expect(sub.classList.contains('story-boundary')).toBe(false);
-        // 바깥 컨테이너에 리프 마커가 없으므로 서사 범위는 열리지 않는다
-        expect(content.querySelectorAll('.story-boundary').length).toBe(0);
-        expect(content.querySelectorAll(':scope > .story-narrative').length).toBe(0);
-
-        // 서브섹션 자체에 대해 호출하면 내부 리프 마커로 정상 태깅
-        markStoryNarrative(sub);
+        expect(sub.classList.contains('story-narrative')).toBe(false);
         const paras = sub.querySelectorAll('p.md-para');
         expect(paras[0].classList.contains('story-boundary-start')).toBe(true);
         expect(paras[1].classList.contains('story-narrative')).toBe(true);
         expect(paras[2].classList.contains('story-boundary-end')).toBe(true);
         expect(paras[3].classList.contains('story-narrative')).toBe(false);
+        // 마커 범위 밖의 본문은 태깅되지 않는다
+        expect(content.querySelectorAll(':scope > p.md-para.story-narrative').length).toBe(0);
+    });
+
+    it('끝 마커만 단독으로 있는 컨테이너 — 이어지는 서사 범위로 처리', () => {
+        // 서사 범위가 서브섹션 경계를 넘나들어 끝 마커만 남은 경우:
+        // 마커 앞 요소는 서사, 끝 마커는 숨김 태깅되어야 한다
+        const content = buildCard('📚 Chapter 01', `
+            <p class="md-para">서사 문단</p>
+            <div class="md-quote">"대사"</div>
+            <p class="md-para">┈┈┈┈ 본문 ┈┈┈┈ 📘</p>
+            <p class="md-para">이후 본문</p>`);
+        markStoryNarrative(content);
+
+        const paras = content.querySelectorAll('p.md-para');
+        expect(paras[0].classList.contains('story-narrative')).toBe(true);
+        expect(content.querySelector('.md-quote').classList.contains('story-narrative')).toBe(true);
+        expect(paras[1].classList.contains('story-boundary-end')).toBe(true);
+        expect(paras[2].classList.contains('story-narrative')).toBe(false);
     });
 
     it('프롤로그·등장인물 카드는 전체 서사', () => {

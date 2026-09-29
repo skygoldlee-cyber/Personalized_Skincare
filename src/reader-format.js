@@ -454,18 +454,22 @@ function _isNarrativeQuote(el) {
  */
 export function markStoryNarrative(contentEl) {
     if (!contentEl || !contentEl.children) return;
-    const children = Array.from(contentEl.children);
     // 경계는 리프 문단만 인정 — .reader-subsection-content 같은 컨테이너가
     // textContent로 오인되면 내부 전체가 중앙정렬되는 문제 방지
     const isBoundaryStart = (el) => el.tagName === 'P' && _STORY_BOUNDARY_START_RE.test((el.textContent || '').trim());
     const isBoundaryEnd = (el) => el.tagName === 'P' && _STORY_BOUNDARY_END_RE.test((el.textContent || '').trim()) && /┈/.test(el.textContent || '');
-    const hasMarkers = children.some(isBoundaryStart);
 
-    // 명시 마커 모드 — '📖 ┈ 이야기 ┈' ~ '┈ 본문 ┈ 📘' 사이를 전부 서사로 태깅.
-    // 마커 문단 자체는 story-boundary로 태깅해 경계 표시 스타일을 준다.
-    if (hasMarkers) {
-        let inScene = false;
-        for (const el of children) {
+    // 명시 마커 탐색은 컨테이너 직계 자식이 아니라 문서 순서 전체 리프 블록 —
+    // 서사 범위가 서브섹션 경계를 넘나들 수 있으므로 단독 시작/끝 마커도 처리한다.
+    const _LEAF_SEL = 'p, h1, h2, h3, h4, h5, h6, div.md-quote, div.md-list-item, pre, table, hr';
+    const leaves = Array.from(contentEl.querySelectorAll(_LEAF_SEL));
+    const hasStart = leaves.some(isBoundaryStart);
+    const hasEnd = leaves.some(isBoundaryEnd);
+
+    if (hasStart || hasEnd) {
+        // 끝 마커만 있으면 이전 컨테이너에서 시작된 범위의 연속으로 간주
+        let inScene = !hasStart && hasEnd;
+        for (const el of leaves) {
             if (isBoundaryStart(el)) {
                 el.classList.add('story-boundary', 'story-boundary-start');
                 inScene = true;
