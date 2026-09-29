@@ -47,6 +47,7 @@
     "stamp:sw": "node tools/build/stamp_sw_version.js",
     "notes:draft": "node tools/build/stamp_release_notes.js --draft",
     "verify:assets": "node tools/check/verify_shell_assets.js",
+    "sbom": "npm sbom --sbom-format spdx > sbom.spdx.json",
     "build:study-md": "node tools/build/build_study_md_bundle.js",
     "test": "node --test tests/unit/*.test.js",
     "test:unit": "node --test tests/unit/*.test.js",

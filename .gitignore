@@ -36,7 +36,10 @@ dist/
 /build/
 *.egg-info/
 
-# ---------- 💻 OS/에디터 ----------
+# ---------- � SBOM (npm sbom 산출물 — CI 아티팩트·재생성 가능) ----------
+sbom.spdx.json
+
+# ---------- �💻 OS/에디터 ----------
 .DS_Store
 Thumbs.db
 *.log

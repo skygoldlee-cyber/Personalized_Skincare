@@ -24,6 +24,8 @@
  * 검증 결과:
  *   - 코드가 참조하지만 SPEC에 없는 ID → 스테일 참조 (exit 1)
  *   - SPEC에 있지만 어떤 코드도 참조하지 않는 ID → 커버리지 공백 (경고)
+ *     ※ SPEC 상태가 '미구현'/'보류'인 ID는 로드맵 항목으로 공백에서 제외 —
+ *        구현 시작 시 상태를 바꾸면 자동으로 커버리지 추적 대상이 된다
  */
 const fs = require('fs');
 const path = require('path');
@@ -89,7 +91,12 @@ function main() {
     if (!specIds.has(id)) for (const l of locs) stale.push(`${l.file} — 헤더 "관련 SPEC ID"가 SPEC에 없는 ID: ${id}`);
   }
 
-  const uncovered = [...specIds].filter((id) => !refs.has(id)).sort();
+  // 로드맵 항목(SPEC 상태 미구현·보류)은 코드 참조가 없는 것이 정상 — 공백에서 제외
+  const specStatus = T.extractSpecStatus();
+  const PLANNED_RE = /미구현|보류/;
+  const unreferenced = [...specIds].filter((id) => !refs.has(id));
+  const planned = unreferenced.filter((id) => PLANNED_RE.test(specStatus.get(id) || '')).sort();
+  const uncovered = unreferenced.filter((id) => !PLANNED_RE.test(specStatus.get(id) || '')).sort();
 
   console.log('SPEC ID 추적 검증');
   console.log(`  SPEC.md 선언 ID: ${specIds.size}개`);
@@ -108,6 +115,9 @@ function main() {
     console.log(`\n"관련 SPEC ID" 헤더 누락 문서 ${missingHeaders.length}개 (경고):`);
     for (const f of missingHeaders.slice(0, 15)) console.log(`  - ${f}`);
     if (missingHeaders.length > 15) console.log(`  …외 ${missingHeaders.length - 15}개`);
+  }
+  if (planned.length) {
+    console.log(`\n로드맵 항목 (미구현·보류 — 공백 제외, ${planned.length}개): ${planned.join(', ')}`);
   }
   if (uncovered.length) {
     console.log(`\n커버리지 공백 (코드 미참조 ID ${uncovered.length}개):`);

@@ -110,17 +110,23 @@ flowchart LR
 | 4 | 다층 검증 | IEEE 1012 (독립적 V&V) · NIST SSDF 방어 계층 | ✅ 훅 우회 가능성을 CI가 재검사 — 독립 검증 개념 부합 |
 | 5 | 요구사항 추적성 | **ISO/IEC/IEEE 29148** (추적성 필수 요건) · DO-178C·IEC 61508 계열 | ✅✅ 안전 산업이 강제하는 수준의 양방향 매트릭스를 자발적 구현 |
 | 6 | 파서 등가성 | IEEE 1012 대조 검증 · back-to-back/N-version 테스팅 | ✅ 이중 구현 출력 대조 — 인정된 검증 기법 |
-| 7 | 테스트 피라미드 | ISO/IEC/IEEE 29119 테스트 레벨 | ⚠️ 부합 — 피라미드는 업계 관행(Fowler). 커버리지 임계값 명문화 여지 |
+| 7 | 테스트 피라미드 | ISO/IEC/IEEE 29119 테스트 레벨 | ✅ 임계값 코드 내 명문화 — `tools/check/coverage_merge.js` 기준선(stmts 70.74/branches 66.3/funcs 64.92/lines 77.58, 2026-10-14) 대비 임계값 {68/62/62/74}, 하향 시 사유 기록 정책 |
 | 8 | 문서-코드 동기화 | ISO/IEC/IEEE 15289 문서 산출물 요구 · Docs-as-Code | ✅ CI에 문서 검증 편입 — living documentation 모범 사례 |
 | 9 | 안전한 도구 설계 | Fail-safe·방어적 설계 원칙 | ✅ dirty 가드·자동 원복·읽기 전용 --check |
 | 10 | 배포·버저닝 | **CalVer** (`2026.9.29`) · ISO 8601 날짜 | ⚠️ SemVer 아님 — API 소비자 없는 앱이라 문제없음, 규약 필요 시 재검토 |
 | 11 | 프론트엔드 패턴 | OWASP ASVS · W3C CSP/Service Worker/Manifest · WCAG 터치 타깃 · SOLID 추상화 | ✅ CSP `'self'`·Mermaid strict·escapeHTML 부합 |
 | 12 | 점진적 품질 | 기준선(ratchet) 관행 · Keep a Changelog 유사 이력 | ✅ 레거시 품질 개선의 인정 기법 |
 
-### 잔여 갭 (개선 후보)
+### 잔여 갭 — 2026-09-29 적용 결과
 
-- **SBOM 부재** — CycloneDX/SPDX 자산 명세 미생성. `package-lock.json`(v3) + `npm ci` + `npm audit`으로 NIST SSDF 기본 수준은 충족하나 공급망 증명(SLSA provenance)은 없음
-- **커밋 규약 비공식** — `type(scope):` 형식은 Conventional Commits와 일치하나 명시적 강제(commitlint 등) 없음
-- **커버리지 임계값 불명** — `coverage_merge --check` 게이트는 존재하나 임계 수치 문서화 필요
-- **역방향 추적성 경고 처리** — 코드 미참조 ID(ROAD-L1~L4·P1~P3, 7건)는 `check:specrefs`에서 경고로 허용 — 기준선이 신규 갭은 차단하지만 기존 갭 해소는 수동
+**해소됨**:
+
+- **SBOM** — `npm run sbom`(npm 내장, SPDX 형식)으로 `sbom.spdx.json` 생성, CI에서 아티팩트로 업로드(30일 보관). 커밋 대상 아님(재생성 가능·신선도 관리 불필요)
+- **역방향 추적성** — `check:specrefs`가 SPEC 상태 컬럼의 `미구현`·`보류`를 읽어 로드맵 항목(ROAD-P1~P3·L2~L4 등)을 공백 판정에서 제외. `🟡 부분` 상태의 ROAD-L1은 부분 구현체 `estimateExpectedScore`에 `@spec` 태그를 부여해 정당하게 닫음 — 경고 목록 0건화, 신규 갭만 노출
+- **커버리지 임계값** — 코드에 이미 명문화되어 있었음(`coverage_merge.js` 기준선 주석 + 임계값 표). 본 문서 §7 평가에 반영
+
+**잔여 (보류)**:
+
+- **커밋 규약 비공식** — `type(scope):` 형식은 Conventional Commits와 일치하나 `commit-msg` 훅 등 강제 장치는 미적용(선택 사항으로 보류)
+- **공급망 증명** — SLSA provenance·서명 없음 (SBOM 생성으로 SSDF 기본 수준 충족, 이 단계는 과도)
 

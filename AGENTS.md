@@ -51,6 +51,7 @@ npm.cmd run deploy                     # 배포 가드(clean tree + origin/main 
 
 # 감사
 npm.cmd run audit:cards                 # 카드 품질 자동 감사 (짧은 설명, 중복, 참조 링크 유효성)
+npm.cmd run sbom                        # SPDX 형식 SBOM 생성 → sbom.spdx.json (CI 아티팩트, gitignore 대상)
 npm.cmd run audit:combo                 # 복수정답형 품질 감사 (정답 유일성·중복 진술집합·모순쌍·위치편향·경로별 통계)
 
 # 전체 점검 (단일 진입점 — lint·types·html·docs + check:content 전 단계)

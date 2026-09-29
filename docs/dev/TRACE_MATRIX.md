@@ -3,7 +3,7 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: 55f9ca24a6227560
+> 입력 해시: f9eeaffe714d98a6
 > 생성: 2026-09-29 · 원천: SPEC.md(360개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
@@ -16,7 +16,7 @@
 | 보고서 | 분석·결과 보고서 | report_archive 헤더 |
 | 출처 | 요구사항의 기원 (법령·시험 규정·사업 문서) | SPEC 부록 "요구사항 출처" 표 |
 
-**커버리지 요약**: 요구사항 360개 — 문서 연결 224 · 소스 연결 339 · 테스트 연결 353 · 보고서 연결 109
+**커버리지 요약**: 요구사항 360개 — 문서 연결 224 · 소스 연결 340 · 테스트 연결 354 · 보고서 연결 109
 
 ---
 
@@ -574,7 +574,7 @@
 
 | ID | 상태 | 검증 수단 | 문서 | 소스 | 테스트 | 보고서 | 출처 |
 |----|------|-----------|------|------|--------|--------|------|
-| ROAD-L1 | 🟡 부분 (예상 점수만) | — | — | — | — | — | 사업 문서 — docs/report_archive/PRO_MULTI_EXAM_EVALUATION.md · FEATURE_PROPOSALS.md |
+| ROAD-L1 | 🟡 부분 (예상 점수만) | 테스트 | — | src/recommendations.js | tests/unit/learning-pro.test.js | — | 사업 문서 — docs/report_archive/PRO_MULTI_EXAM_EVALUATION.md · FEATURE_PROPOSALS.md |
 | ROAD-L2 | 미구현 | — | — | — | — | — | 사업 문서 — docs/report_archive/PRO_MULTI_EXAM_EVALUATION.md · FEATURE_PROPOSALS.md |
 | ROAD-L3 | 미구현 | — | — | — | — | — | 사업 문서 — docs/report_archive/PRO_MULTI_EXAM_EVALUATION.md · FEATURE_PROPOSALS.md |
 | ROAD-L4 | 미구현 | — | — | — | — | — | 사업 문서 — docs/report_archive/PRO_MULTI_EXAM_EVALUATION.md · FEATURE_PROPOSALS.md |

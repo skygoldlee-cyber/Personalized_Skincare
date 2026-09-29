@@ -208,6 +208,7 @@ export function computeWrongCauseSummary(wrongCauses, { days = 7, now = Date.now
 // "합격 확률"이 아니라 모의고사 이력 기반의 점수 추정치만 제시한다.
 // 보정된 합격 확률은 실제 결과 데이터가 축적된 후에야 의미가 있다.
 
+// @spec ROAD-L1 — 부분 구현 (예상 점수 추정; 실제 결과 보정 기반 합격 확률 격상은 데이터 축적 후)
 /**
  * 모의고사 이력에서 예상 점수 대·추세를 추정한다.
  * @param {Array<{rate:number}>} history sim_results_history 레코드

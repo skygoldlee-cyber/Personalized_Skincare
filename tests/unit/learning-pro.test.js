@@ -1,4 +1,4 @@
-// @spec ROAD-P0
+// @spec ROAD-P0, ROAD-L1
 import { test, beforeEach, afterEach } from 'node:test';
 import assert from 'node:assert/strict';
 import { scopedKey } from '../../src/exam-context.js';

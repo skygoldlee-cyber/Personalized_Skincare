@@ -25,6 +25,17 @@ jobs:
       - name: Dependency audit (high+ 취약점 차단)
         run: npm audit --audit-level=high
 
+      - name: Generate SBOM (SPDX)
+        run: npm run sbom
+
+      - name: Upload SBOM
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom
+          path: sbom.spdx.json
+          retention-days: 30
+
       - name: Lint
         run: npm run lint
 
