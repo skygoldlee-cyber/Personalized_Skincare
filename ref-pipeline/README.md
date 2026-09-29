@@ -43,6 +43,8 @@ flowchart LR
 | `pdf2md.py` | PDF→MD 변환 엔진 + PySide6 GUI 통합 (공백 복원·표 구조화·무선 표 재구성·마진 잡행 제거) | **기본 실행은 GUI** (`python pdf2md.py`). CLI는 `--cli` 플래그로 |
 | `convert.py` | 스테이징 워크플로 래퍼 — `pdf_root → ref_md_v2 → ref_md` | **참조자료 PDF 교체/추가 시** (시나리오 A) |
 | `md2doc.py` | MD→독립 HTML **+ PDF** 변환기 (구 MD_to_PDF.py 통합 — `--pdf`) — 모바일 `file://` 대응·Mermaid 프리렌더·콜아웃 규칙·헤드리스 Chrome 인쇄 | 개별 MD를 공유용 HTML/PDF로 만들 때 |
+| `template/` | md2doc 출력 템플릿 — `doc.html`(독립 HTML), `print.html`(인쇄용) | 템플릿 수정 시 (부재 시 변환 실패) |
+| `tests/` | md2doc·pdf2md 순수 함수 pytest (`python -m pytest`) | 변환 로직·템플릿·캐시·출력 계획 변경 시 |
 | `callout_rules.json` | md2doc 콜아웃 패턴 규칙 (스크립트 옆 자동 인식) | 자동 |
 | `batch_convert.py` | 시험 교재·안내서·문제은행 MD → `html/` 일괄 변환 | **교재 MD 교체 후 HTML 재생성 시** (시나리오 B) |
 | `check_laws.py` | 국가법령정보센터 OPEN API로 시험 대상 법령 현행성 확인 → `report/` | **법령 개정 점검 시** (시나리오 C, `LAW_OC` 키 필요) |
@@ -135,9 +137,18 @@ python ref-pipeline/convert.py --verify --staging "D:\out\ref_md_v2" --prod "D:\
 
 ```powershell
 python ref-pipeline/pdf2md.py                     # GUI (PySide6 필요)
-python ref-pipeline/pdf2md.py --cli "file.pdf" -o out.md --doctor
+python ref-pipeline/pdf2md.py --cli "file.pdf" -o out_dir --doctor
 python ref-pipeline/pdf2md.py --cli --pdf-root "D:\PDFs" -o out_dir --flat
+python ref-pipeline/pdf2md.py --cli -j 4          # 병렬 변환 (프로세스 풀)
+python ref-pipeline/pdf2md.py --cli -v / -q       # 로그 레벨 (기본 INFO)
 ```
+
+#### pdf2md 동작 참고
+
+- **동명 PDF 충돌**: 같은 basename의 PDF가 2개 이상이면 subdir 라벨로 출력을 구분 — `{out}/{subdir}/{name}/{name}.md` (골드 `ref_md/과목N/` 구조와 정합, `--flat`은 `{subdir}__{name}.md`). 충돌 시 경고 로그 출력
+- **verify**: `--verify`가 충돌 구분 산출물도 재귀 탐색해 골드와 비교 (필터 복수 지정 가능)
+- **의존성**: pdfplumber 필수 / pymupdf는 이미지 추출 시에만 (없으면 텍스트·표만 변환)
+- **테스트**: `python -m pytest` — 표 구조화·무선 표 재구성·문장 병합·출력 계획·verify 등 순수 로직 40+건
 
 ### 시나리오 B — 교재 MD 교체/개정 → 파생물 재생성
 
@@ -190,7 +201,18 @@ python ref-pipeline/md2doc.py --cli --pdf --in doc.md     # doc.pdf 생성
 python ref-pipeline/md2doc.py --cli --pdf --in a.md b.md --out-dir out/
 
 # ⚠️ --cli 미지정 시 GUI로 진입한다 (스크립트만 실행하면 GUI)
+
+# 로그 레벨 (진단 출력은 logging 모듈 — 기본 INFO)
+python ref-pipeline/md2doc.py --cli --in doc.md -v   # DEBUG 상세
+python ref-pipeline/md2doc.py --cli --in doc.md -q   # 경고 이상만
 ```
+
+#### md2doc 동작 참고
+
+- **Mermaid 런타임**: 저장소 `vendor/mermaid/mermaid.min.js`를 1순위로 임베드(오프라인·버전 확정). 부재 시 고정 버전(`MERMAID_VERSION`) CDN 폴백 + SHA-384 SRI 검증
+- **Mermaid 사전렌더 캐시**: 다이어그램 소스 해시 키로 `ref-pipeline/.mermaid_cache/`에 SVG 저장 — 재빌드 시 네트워크 요청 생략, 동일 다이어그램 중복 요청 방지. 렌더러 출력을 무효화하려면 코드의 `_MERMAID_CACHE_SALT`를 올리고 캐시 폴더를 비운다 (gitignore 대상)
+- **입력 인코딩**: `utf-8-sig` — BOM 있는 MD도 헤딩이 깨지지 않음
+- **테스트**: `python -m pytest` — 순수 변환 함수·Mermaid 에셋 선택·SVG 캐시·템플릿 치환 39건 (pytest는 개발 의존성, requirements 미포함)
 
 ---
 

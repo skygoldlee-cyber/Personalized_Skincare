@@ -6,6 +6,24 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-09-29 pdf2md.py 개선 — 동명 충돌 방지·pytest·logging·병렬화
+
+- **동명 PDF 출력 충돌 방지**: `plan_doc_jobs()` 신설 — 같은 basename PDF가 2개 이상이면 subdir 라벨로 출력 구분(`{out}/{subdir}/{name}/{name}.md`, 골드 `ref_md/과목N/` 정합; `--flat`은 `{subdir}__{name}.md`). main·GUI 워커·`convert.py`가 공용 계획 사용. verify도 재귀 탐색으로 2단계 중첩·충돌 산출물 인식 + 골드 동일 상대경로 우선 조회
+- **테스트**: `ref-pipeline/tests/test_pdf2md.py` 신설 47건 — cell_text/table_to_md/열 병합/헤더 승격/표 이어붙이기/문장 병합/doctor/입력 해석/출력 계획/verify/무선 표 재구성(edges 밖 단어 제외)
+- **견고성**: `mudoc` close를 try/finally로 이동(예외 시 리소스 누수 해소) · `sys.stdout.reconfigure` 가드(pdf2md·convert.py)
+- **logging**: 진단 print → `logging`(logger `pdf2md`) + `-v`/`-q`. verify 리포트 표는 stdout 유지. doctor 규칙 `_table_flag_reasons`/`table_flag_strings`로 공용화(CLI·GUI 이중 구현 제거) — convert.py도 동일 logger 사용
+- **정확성**: `reconstruct_borderless`의 `band_of`가 edges 밖 15pt 초과 단어를 열 배정에서 제외 — 우측 마진 잡행/쪽 주석이 마지막 셀에 붙는 오염 방지
+- **기타**: verify `with open` 정리·dead code 제거·only 다중 필터 지원, `--cli` 디스패치 정리, `--jobs N` 프로세스 풀 병렬 변환(워커에 PROFILE/segment 복제)
+
+## 2026-09-29 md2doc.py 개선 — 로컬 Mermaid 우선·렌더 캐시·pytest·템플릿 분리·logging
+
+- **Mermaid 에셋**: `vendor/mermaid/mermaid.min.js`를 1순위로 임베드(오프라인·재현성) + CDN을 `MERMAID_VERSION` 고정 버전으로 핀 + 실제 SHA-384 SRI 검증(기존 `dict.fromkeys`로 전부 None이던 무력화 결함 해소)
+- **사전렌더 캐시**: 다이어그램 소스 SHA-256 키로 `ref-pipeline/.mermaid_cache/`에 SVG 저장 — 재빌드·동일 다이어그램 중복 요청 시 네트워크 생략 (gitignore, 무효화는 `_MERMAID_CACHE_SALT` 인상)
+- **테스트**: `ref-pipeline/tests/test_md2doc.py` 신설 39건 — ASCII 펜스·mermaid 펜스 인라인·코드블록 정규화·스마트 페이지네이션·Mermaid 에셋 선택(로컬 우선/SRI)/SVG 캐시·템플릿 치환. `pytest.ini`에 Windows Temp 정리 권한 이슈 회피용 basetemp 지정
+- **템플릿 분리**: `HTML_TEMPLATE`(3,187줄)·`PRINT_TEMPLATE` 인라인 리터럴 → `ref-pipeline/template/doc.html`·`print.html` + `_load_template()`(부재 시 명시적 오류). md2doc.py 5,374→2,199줄
+- **정확성**: MD 입력 `utf-8-sig`(BOM 대응, 3곳) · 임시 인쇄 HTML `NamedTemporaryFile+수동 unlink` → `TemporaryDirectory` · 미사용 `--gui` 플래그 제거
+- **로깅**: 진단 print → `logging`(logger `md2doc`) + CLI `--verbose`/`-v`·`--quiet`/`-q`. 결과 출력(stdout 경로)은 print 유지
+
 ## 2026-09-29 교재리더 Mermaid 다이어그램 확대 모달
 
 - **문제**: 과목별 본문의 Mermaid 다이어그램에 확대 수단이 없어, 넓은 다이어그램이 `pre.mermaid`(`overflow-x:auto`) 컨테이너에서 일부만 보이거나 핀치 줌 시 고정된 영역만 보이는 문제

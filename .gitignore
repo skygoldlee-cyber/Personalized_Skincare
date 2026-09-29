@@ -63,6 +63,8 @@ combo_audit_report.json
 combo_review_queue.md
 # ref_md 변환 진단 리포트 (ref-pipeline 산출물 — 런타임 미사용)
 _report.json
+# Mermaid 사전렌더 SVG 캐시 (md2doc.py — 재생성 가능)
+ref-pipeline/.mermaid_cache/
 
 # ---------- � 테스트 커버리지 ----------
 coverage/
@@ -93,3 +95,6 @@ content/**/report/
 /test-results/
 /playwright-report/
 /playwright/.cache/
+
+# pytest 임시 디렉터리
+ref-pipeline/tests/.pytest-tmp/

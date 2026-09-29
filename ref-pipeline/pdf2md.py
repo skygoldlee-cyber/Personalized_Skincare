@@ -39,11 +39,22 @@ import os
 import sys
 import glob
 import json
+import logging
 import re
 import argparse
 import traceback
+from concurrent.futures import ProcessPoolExecutor, as_completed
 
-sys.stdout.reconfigure(encoding='utf-8')
+# Windows cp949 콘솔 대응 — 한글/유니코드 안내 메시지가 깨지지 않게 UTF-8 고정.
+# pythonw/캡처 래퍼처럼 stdout가 없거나 reconfigure 미지원 환경에서는 건너뜀.
+try:
+    sys.stdout.reconfigure(encoding='utf-8')
+except Exception:
+    pass
+
+# 진단 로그 — CLI는 main()에서 basicConfig, GUI는 자체 로그 위젯 경로 별도 유지.
+# 라이브러리로 임포트될 때는 핸들러 없이 조용히 동작한다.
+logger = logging.getLogger('pdf2md')
 
 # ── 경로 기본값 (모두 CLI로 오버라이드 가능) ──────────────────────────────
 BASE = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -65,8 +76,7 @@ def _default_content_root():
         if eid:
             target = next((e for e in exams if e.get('id') == eid), None)
             if target is None:
-                print(f'경고: EXAM_ID={eid} 미등록 — 기본 시험 사용',
-                      file=sys.stderr)
+                logger.warning('EXAM_ID=%s 미등록 — 기본 시험 사용', eid)
         if target is None:
             target = next((e for e in exams if e.get('default')),
                           exams[0] if exams else None)
@@ -123,7 +133,7 @@ def load_profile(path):
         prof = json.load(f)
     unknown = [k for k in prof if k not in PROFILE]
     if unknown:
-        print(f'경고: 알 수 없는 프로파일 키 무시 — {", ".join(unknown)}')
+        logger.warning('알 수 없는 프로파일 키 무시 — %s', ', '.join(unknown))
     PROFILE.update({k: v for k, v in prof.items() if k in PROFILE})
     _compile_globals()
 
@@ -328,14 +338,19 @@ def reconstruct_borderless(page, edges, y_min, exclude_bboxes,
     ncols = len(edges) - 1
 
     def band_of(w):
+        """단어의 중심 x가 속한 열 밴드. edges 밖 15pt 초과 단어는 None —
+        우측 마진 잡행/쪽 주석이 마지막 셀에 붙는 것을 막는다."""
         cx = (w['x0'] + w['x1']) / 2
         for i in range(ncols):
             if edges[i] - 2 <= cx < edges[i + 1]:
                 return i
-        return 0 if cx < edges[0] else ncols - 1
+        if cx < edges[0]:
+            return 0 if cx >= edges[0] - 15 else None
+        return ncols - 1 if cx <= edges[-1] + 15 else None
 
     aligned = sum(1 for _, _, ws in line_objs
-                  if len({band_of(w) for w in ws}) >= 2)
+                  if len({b for b in (band_of(w) for w in ws)
+                          if b is not None}) >= 2)
     if aligned < 5:
         return None, [], None
 
@@ -343,7 +358,8 @@ def reconstruct_borderless(page, edges, y_min, exclude_bboxes,
     groups = []
     for top, bottom, ws in line_objs:
         txt = ' '.join(w['text'] for w in ws)
-        if not groups or (band_of(ws[0]) == 0 and ROW_MARKER_RE.match(txt)):
+        first_band = band_of(ws[0])
+        if not groups or (first_band == 0 and ROW_MARKER_RE.match(txt)):
             groups.append([])
         groups[-1].append(ws)
 
@@ -354,7 +370,9 @@ def reconstruct_borderless(page, edges, y_min, exclude_bboxes,
         for ws in g:
             frags = {}
             for w in ws:
-                frags.setdefault(band_of(w), []).append(w)
+                b = band_of(w)
+                if b is not None:
+                    frags.setdefault(b, []).append(w)
             for b, wl in frags.items():
                 frag = ' '.join(x['text'] for x in wl)
                 fx1 = max(x['x1'] for x in wl)
@@ -640,20 +658,22 @@ def convert(pdf_path, images_dir=None, image_prefix=''):
     segments = []
     state = {}  # 페이지 간 열 밴드/헤더 유지 (무선 표 연속 페이지용)
     if images_dir and pymupdf is None:
-        print('경고: pymupdf 미설치 — 이미지 추출을 건너뜁니다 '
-              '(pip install pymupdf)', file=sys.stderr)
+        logger.warning('pymupdf 미설치 — 이미지 추출을 건너뜁니다 '
+                       '(pip install pymupdf)')
     mudoc = pymupdf.open(pdf_path) if (images_dir and pymupdf) else None
-    with pdfplumber.open(pdf_path) as pdf:
-        margin_junk = collect_margin_junk(pdf)
-        for pi, page in enumerate(pdf.pages):
-            image_names = []
-            if mudoc is not None and pi < len(mudoc):
-                image_names = extract_page_images(
-                    mudoc[pi], pi, images_dir, image_prefix)
-            segments.extend(page_to_md(page, image_names, state,
-                                       margin_junk))
-    if mudoc is not None:
-        mudoc.close()
+    try:
+        with pdfplumber.open(pdf_path) as pdf:
+            margin_junk = collect_margin_junk(pdf)
+            for pi, page in enumerate(pdf.pages):
+                image_names = []
+                if mudoc is not None and pi < len(mudoc):
+                    image_names = extract_page_images(
+                        mudoc[pi], pi, images_dir, image_prefix)
+                segments.extend(page_to_md(page, image_names, state,
+                                           margin_junk))
+    finally:
+        if mudoc is not None:
+            mudoc.close()
     segments = promote_text_header(segments)
     segments = merge_continuation_tables(segments)
     segments = segment_sentences(segments)   # 문장 단위 병합 (표/이미지 경계에서 리셋)
@@ -745,25 +765,43 @@ def table_health(block):
     }
 
 
+def _table_flag_reasons(h):
+    """table_health 결과 → 점검 사유 목록 (CLI doctor·GUI 경고 공용 규칙)."""
+    why = []
+    if h['cols'] < 2:
+        why.append('열<2')
+    if h['rows'] < 1:
+        why.append('데이터행 없음')
+    if h['empty_pct'] > 40:
+        why.append(f"빈셀 {h['empty_pct']}%")
+    if h['ragged']:
+        why.append('열수 불균일')
+    return why
+
+
+def table_flag_strings(md):
+    """MD 본문의 점검 필요 표 → '표#i (CxR) 사유' 문자열 리스트 (GUI 공용)."""
+    out = []
+    for idx, blk in enumerate(_md_table_blocks(md), 1):
+        h = table_health(blk)
+        why = _table_flag_reasons(h)
+        if why:
+            out.append(f"표#{idx} ({h['cols']}열×{h['rows']}행) {', '.join(why)}")
+    return out
+
+
 def doctor_report(basename, md):
     flags = []
     for i, blk in enumerate(_md_table_blocks(md), 1):
         h = table_health(blk)
-        why = []
-        if h['cols'] < 2:
-            why.append('열<2')
-        if h['rows'] < 1:
-            why.append('데이터행 없음')
-        if h['empty_pct'] > 40:
-            why.append(f"빈셀 {h['empty_pct']}%")
-        if h['ragged']:
-            why.append('열수 불균일')
+        why = _table_flag_reasons(h)
         if why:
             flags.append((i, h, why, blk.split('\n')[0][:70]))
     if flags:
-        print(f'  ⚠ {basename}: 표 {len(flags)}개 점검 필요')
+        logger.warning('  ⚠ %s: 표 %d개 점검 필요', basename, len(flags))
         for i, h, why, head in flags:
-            print(f'    표#{i} ({h["cols"]}열×{h["rows"]}행) {", ".join(why)} — {head}')
+            logger.warning('    표#%d (%d열×%d행) %s — %s',
+                           i, h['cols'], h['rows'], ', '.join(why), head)
     return len(flags)
 
 
@@ -821,44 +859,98 @@ def collect_pdfs(tokens, pdf_root):
     return sorted(uniq, key=lambda x: os.path.basename(x[1]))
 
 
+def plan_doc_jobs(pdfs, out_dir, flat=False):
+    """PDF 목록 → 문서별 출력 작업 계획.
+
+    같은 basename의 PDF가 2개 이상이면 subdir 라벨로 출력을 구분해
+    무음 덮어쓰기를 막는다:
+      중첩(기본): {out}/{subdir}/{name}/{name}.md — ref_md/과목N/ 골드 구조와 정합
+      평면(--flat): {out}/{subdir}__{name}.md + 이미지 접두 {subdir}__{name}_
+
+    반환 항목: doc(표시명), src(subdir), pdf, dir(doc_dir), md(출력 경로),
+    images, img_prefix, collided(충돌 여부).
+    """
+    counts = {}
+    for _, p in pdfs:
+        b = os.path.splitext(os.path.basename(p))[0]
+        counts[b] = counts.get(b, 0) + 1
+
+    jobs = []
+    for subdir, pdf_path in pdfs:
+        base = os.path.splitext(os.path.basename(pdf_path))[0]
+        collided = counts[base] > 1
+        if flat:
+            stem = f'{subdir}__{base}' if collided else base
+            jobs.append({
+                'doc': stem, 'src': subdir, 'pdf': pdf_path,
+                'dir': out_dir,
+                'md': os.path.join(out_dir, stem + '.md'),
+                'images': os.path.join(out_dir, 'images'),
+                'img_prefix': stem + '_',
+                'collided': collided, 'basename': base,
+            })
+        else:
+            rel = os.path.join(subdir, base) if collided else base
+            doc_dir = os.path.join(out_dir, rel)
+            jobs.append({
+                'doc': rel.replace(os.sep, '/'), 'src': subdir, 'pdf': pdf_path,
+                'dir': doc_dir,
+                'md': os.path.join(doc_dir, base + '.md'),
+                'images': os.path.join(doc_dir, 'images'),
+                'img_prefix': '',
+                'collided': collided, 'basename': base,
+            })
+    return jobs
+
+
 # ── 골든 비교 (내용 누락 감지) ────────────────────────────────────────────
 def verify(out_dir, gold_dir, only=None):
-    """{out}/{doc}/{doc}.md(중첩) 또는 {out}/{doc}.md(--flat) 출력을
-    gold 디렉터리(항상 중첩 구조)와 비교한다."""
+    """{out}/{doc}/{doc}.md(중첩, 충돌 시 {out}/{subdir}/{doc}/{doc}.md)
+    또는 {out}/{doc}.md(--flat) 출력을 gold 디렉터리(중첩 구조)와 비교한다."""
     if not os.path.isdir(out_dir):
-        print(f'출력 없음: {out_dir} — 먼저 변환을 실행하세요.')
+        logger.error('출력 없음: %s — 먼저 변환을 실행하세요.', out_dir)
         return 1
     if only:
-        # 경로가 넘어와도 문서명 기준으로 비교
-        only = os.path.splitext(os.path.basename(only))[0]
-    # 중첩 구조 우선, 없으면 flat .md를 탐색
-    pairs = []  # (문서명, 신규 md 경로)
-    for d in sorted(os.listdir(out_dir)):
-        p = os.path.join(out_dir, d)
-        if os.path.isdir(p):
-            md = os.path.join(p, d + '.md')
-            if os.path.exists(md):
-                pairs.append((d, md))
+        # 경로가 넘어와도 문서명 기준으로 비교. 문자열 또는 문자열 리스트.
+        if isinstance(only, str):
+            only = [only]
+        only = [os.path.splitext(os.path.basename(f))[0] for f in only]
+    # 중첩 구조 우선 — {out}/{d}/{d}.md 와 충돌 구분용 {out}/{s}/{d}/{d}.md
+    # 모두 탐색 (부모 디렉터리명이 파일 stem과 일치하는 .md만 문서로 인식).
+    # 없으면 flat .md를 탐색한다.
+    pairs = []  # (문서명: out_dir 상대경로, 신규 md 경로)
+    for dirpath, _dirnames, filenames in os.walk(out_dir):
+        for fn in filenames:
+            if not fn.lower().endswith('.md'):
+                continue
+            stem = os.path.splitext(fn)[0]
+            if os.path.basename(dirpath) == stem:
+                rel = os.path.relpath(dirpath, out_dir).replace(os.sep, '/')
+                pairs.append((rel, os.path.join(dirpath, fn)))
     if not pairs:
         for fn in sorted(os.listdir(out_dir)):
-            if fn.lower().endswith('.md') and fn != '_report.json':
+            if fn.lower().endswith('.md'):
                 pairs.append((os.path.splitext(fn)[0],
                               os.path.join(out_dir, fn)))
+    pairs.sort(key=lambda x: x[0])
     bad_docs = []
     compared = 0
     print(f'{"문서":<44} {"기존":>6} {"신규":>6} {"누락":>4}')
     print('-' * 70)
     for d, new_p in pairs:
-        if only and only not in d:
+        if only and not any(f in d for f in only):
             continue
         compared += 1
-        # gold는 ref_md/과목N/{d}/{d}.md (과목 서브디렉터리) 또는 평탄 {d}/{d}.md
-        old_p = os.path.join(gold_dir, d, d + '.md')
+        stem = os.path.basename(d)
+        # gold는 ref_md/과목N/{d}/{d}.md (과목 서브디렉터리) 또는 평탄 {d}/{d}.md.
+        # 충돌 구분된 산출물(과목1/법)은 동일 상대경로를 먼저 시도한다.
+        old_p = os.path.join(gold_dir, *d.split('/'), stem + '.md')
         if not os.path.exists(old_p):
-            hits = glob.glob(os.path.join(gold_dir, '*', d, d + '.md'))
+            hits = glob.glob(os.path.join(gold_dir, '*', stem, stem + '.md'))
             if hits:
                 old_p = hits[0]
-        new_text = open(new_p, encoding='utf-8').read()
+        with open(new_p, encoding='utf-8') as f:
+            new_text = f.read()
         new_lines = new_text.split('\n')
         new_count = {}
         for l in new_lines:
@@ -870,7 +962,8 @@ def verify(out_dir, gold_dir, only=None):
         if not os.path.exists(old_p):
             print(f'{d[:44]:<44} {"(신규)":>6} {new_n:>6} {"-":>4}')
             continue
-        old_text = open(old_p, encoding='utf-8').read()
+        with open(old_p, encoding='utf-8') as f:
+            old_text = f.read()
         missing = []
         old_n = 0
         for l in old_text.split('\n'):
@@ -900,8 +993,23 @@ def verify(out_dir, gold_dir, only=None):
     return len(bad_docs)
 
 
+def _pool_init(segment, profile_path):
+    """ProcessPool 워커 초기화 — 부모의 프로파일/세그먼트 설정을 복제한다."""
+    PROFILE['segment'] = segment
+    if profile_path:
+        load_profile(profile_path)
+
+
+def _convert_one(job, use_images):
+    """워커용 단일 문서 변환 (top-level이어야 ProcessPool이 피클 가능)."""
+    images = job['images'] if use_images else None
+    return convert(job['pdf'], images, job['img_prefix'])
+
+
 # ── CLI ───────────────────────────────────────────────────────────────────
 def main():
+    # 진단 로그는 stderr, 리포트·verify 표는 stdout(print) 계약 유지
+    logging.basicConfig(level=logging.INFO, format='%(message)s')
     ap = argparse.ArgumentParser(
         description='한국어 법령·참조 PDF → Markdown 변환기',
         formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -925,20 +1033,29 @@ def main():
                     help='변환 없이 골든 비교(내용 누락 감지)만 수행')
     ap.add_argument('--cli', action='store_true',
                     help='CLI 모드로 실행 (기본은 GUI)')
+    ap.add_argument('--verbose', '-v', action='store_true',
+                    help='진단 로그를 DEBUG 수준까지 출력')
+    ap.add_argument('--quiet', '-q', action='store_true',
+                    help='경고 이상의 로그만 출력')
+    ap.add_argument('--jobs', '-j', type=int, default=1, metavar='N',
+                    help='병렬 변환 워커 수 (기본 1=직렬). 프로세스 풀 사용')
     # ── 모드 분기: 기본은 GUI, --cli 명시 시에만 CLI 경로 ──────────────
     argv = sys.argv[1:]
     if '--cli' not in argv:
         if argv and argv not in (['--gui'], ['-h'], ['--help']):
-            print('CLI 사용에는 --cli 플래그가 필요합니다 '
-                  f'(예: pdf2md.py --cli {" ".join(argv)})', file=sys.stderr)
+            logger.error('CLI 사용에는 --cli 플래그가 필요합니다 '
+                         '(예: pdf2md.py --cli %s)', ' '.join(argv))
             sys.exit(2)
         if argv in (['-h'], ['--help']):
             ap.print_help()
             return
         run_gui()
         return
-    argv.remove('--cli')
+    argv = [a for a in argv if a != '--cli']
     args = ap.parse_args(argv)
+    logger.setLevel(logging.DEBUG if args.verbose
+                    else logging.ERROR if args.quiet
+                    else logging.INFO)
 
     if args.profile:
         load_profile(args.profile)
@@ -949,51 +1066,76 @@ def main():
     gold_dir = args.gold or os.path.join(args.pdf_root, 'ref_md')
 
     if args.verify:
-        only = args.inputs[0] if args.inputs else None
-        sys.exit(1 if verify(out_dir, gold_dir, only) else 0)
+        sys.exit(1 if verify(out_dir, gold_dir, args.inputs or None) else 0)
 
     pdfs = collect_pdfs(args.inputs, args.pdf_root)
     if not pdfs:
-        print('변환할 PDF가 없습니다. 경로나 필터를 확인하세요.')
+        logger.error('변환할 PDF가 없습니다. 경로나 필터를 확인하세요.')
         sys.exit(1)
 
     report, flagged = [], 0
-    for subdir, pdf_path in pdfs:
-        basename = os.path.splitext(os.path.basename(pdf_path))[0]
-        doc_dir = out_dir if args.flat else os.path.join(out_dir, basename)
-        os.makedirs(doc_dir, exist_ok=True)
-        out_path = os.path.join(doc_dir, basename + '.md')
-        images_dir = None if args.no_images else os.path.join(doc_dir, 'images')
-        # --flat은 모든 문서가 out/images/를 공유 → 파일명에 문서명 접두
-        img_prefix = (basename + '_') if args.flat else ''
-        try:
-            body = convert(pdf_path, images_dir, img_prefix)
-        except Exception as e:
-            print(f'FAIL {basename}: {e}')
-            report.append({'doc': basename, 'error': str(e)})
+    jobs = plan_doc_jobs(pdfs, out_dir, flat=args.flat)
+    if any(j['collided'] for j in jobs):
+        logger.warning('동일 파일명 PDF 감지 — subdir로 출력을 구분합니다')
+
+    # 변환 본문 생성 — --jobs>1이면 프로세스 풀로 병렬 처리
+    bodies: dict[int, object] = {}
+    if args.jobs > 1 and len(jobs) > 1:
+        with ProcessPoolExecutor(
+                max_workers=args.jobs,
+                initializer=_pool_init,
+                initargs=(PROFILE['segment'], args.profile)) as pool:
+            fut_map = {
+                pool.submit(_convert_one, j, not args.no_images): i
+                for i, j in enumerate(jobs)
+            }
+            for fut in as_completed(fut_map):
+                i = fut_map[fut]
+                try:
+                    bodies[i] = fut.result()
+                except Exception as e:
+                    bodies[i] = e
+    else:
+        for i, job in enumerate(jobs):
+            try:
+                bodies[i] = _convert_one(job, not args.no_images)
+            except Exception as e:
+                bodies[i] = e
+
+    # 결과는 원래 순서대로 기록·출력
+    for i, job in enumerate(jobs):
+        res = bodies[i]
+        if isinstance(res, Exception):
+            logger.error('FAIL %s: %s', job['doc'], res)
+            report.append({'doc': job['doc'], 'error': str(res)})
             continue
-        md = f'# {basename}\n\n{body}\n'
-        with open(out_path, 'w', encoding='utf-8') as f:
+        body = res
+        os.makedirs(job['dir'], exist_ok=True)
+        md = f'# {job["basename"]}\n\n{body}\n'
+        with open(job['md'], 'w', encoding='utf-8') as f:
             f.write(md)
         n_tables = md.count('|---') + md.count('| ---')
         report.append({
-            'doc': basename, 'src': subdir,
+            'doc': job['doc'], 'src': job['src'],
             'chars': len(body), 'lines': body.count('\n') + 1,
             'ws': round(whitespace_ratio(body), 1), 'tables': n_tables,
         })
-        print(f'OK {basename}: {len(body):,}자, 공백 {report[-1]["ws"]}%, 표 {n_tables}')
+        logger.info('OK %s: %s자, 공백 %s%%, 표 %d',
+                    job['doc'], f'{len(body):,}', report[-1]['ws'], n_tables)
         if args.doctor:
-            flagged += doctor_report(basename, md)
+            flagged += doctor_report(job['doc'], md)
 
     os.makedirs(out_dir, exist_ok=True)
     with open(os.path.join(out_dir, '_report.json'), 'w', encoding='utf-8') as f:
         json.dump(report, f, ensure_ascii=False, indent=2)
     fails = [r for r in report if 'error' in r]
-    print(f'\n총 {len(report)}개 → {out_dir}'
-          + (f'  ⚠ 실패 {len(fails)}건' if fails else ''))
+    logger.info('총 %d개 → %s%s', len(report), out_dir,
+                f'  ⚠ 실패 {len(fails)}건' if fails else '')
     if args.doctor:
-        print(f'표 점검 필요 문항: {flagged}건'
-              if flagged else '표 점검: 이상 없음')
+        if flagged:
+            logger.info('표 점검 필요 문항: %d건', flagged)
+        else:
+            logger.info('표 점검: 이상 없음')
 
 
 # ── GUI (PySide6 — 선택 의존. --gui 실행 시에만 import한다) ──────────────
@@ -1014,8 +1156,8 @@ def run_gui():
             QHeaderView, QMessageBox, QSplitter, QStatusBar,
         )
     except ImportError as e:
-        print(f'GUI 실행에는 PySide6가 필요합니다: pip install PySide6\n'
-              f'    ({type(e).__name__}: {e})', file=sys.stderr)
+        logger.error('GUI 실행에는 PySide6가 필요합니다: pip install PySide6\n'
+                     '    (%s: %s)', type(e).__name__, e)
         sys.exit(1)
 
     ENGINE_ERR = (None if pdfplumber is not None
@@ -1062,28 +1204,27 @@ def run_gui():
             report = []
             self.progress.emit(0, total)
 
-            for i, (subdir, pdf_path) in enumerate(pdfs, 1):
+            jobs = plan_doc_jobs(pdfs, self.out_dir, flat=o['flat'])
+            for i, job in enumerate(jobs, 1):
                 if self._cancel:
                     self.log.emit('⏹ 사용자 취소 — 남은 문서 중단')
                     break
-                base = os.path.splitext(os.path.basename(pdf_path))[0]
-                doc_dir = self.out_dir if o['flat'] else os.path.join(self.out_dir, base)
-                out_path = os.path.join(doc_dir, base + '.md')
-                images_dir = None if o['no_images'] else os.path.join(doc_dir, 'images')
-                prefix = (base + '_') if o['flat'] else ''
+                base = job['basename']
+                doc_name = job['doc']
+                images_dir = None if o['no_images'] else job['images']
                 try:
-                    os.makedirs(doc_dir, exist_ok=True)
-                    body = convert(pdf_path, images_dir, prefix)
+                    os.makedirs(job['dir'], exist_ok=True)
+                    body = convert(job['pdf'], images_dir, job['img_prefix'])
                 except Exception as e:
                     fail += 1
-                    self.log.emit(f'✗ FAIL  {base}: {e}')
-                    self.doc_done.emit({'doc': base, 'status': 'FAIL', 'error': str(e)})
-                    report.append({'doc': base, 'error': str(e)})
+                    self.log.emit(f'✗ FAIL  {doc_name}: {e}')
+                    self.doc_done.emit({'doc': doc_name, 'status': 'FAIL', 'error': str(e)})
+                    report.append({'doc': doc_name, 'error': str(e)})
                     self.progress.emit(i, total)
                     continue
 
                 md = f'# {base}\n\n{body}\n'
-                with open(out_path, 'w', encoding='utf-8') as f:
+                with open(job['md'], 'w', encoding='utf-8') as f:
                     f.write(md)
                 n_tables = md.count('|---') + md.count('| ---')
                 flags = self._doctor(md) if o['doctor'] else []
@@ -1092,17 +1233,17 @@ def run_gui():
                 ok += 1
 
                 self.doc_done.emit({
-                    'doc': base, 'status': 'OK', 'chars': len(body),
+                    'doc': doc_name, 'status': 'OK', 'chars': len(body),
                     'lines': body.count('\n') + 1, 'ws': ws, 'tables': n_tables,
-                    'flags': len(flags), 'path': out_path,
+                    'flags': len(flags), 'path': job['md'],
                 })
                 self.log.emit(
-                    f'✓ {base}: {len(body):,}자 · 표 {n_tables}'
+                    f'✓ {doc_name}: {len(body):,}자 · 표 {n_tables}'
                     + (f' · ⚠ 표 {len(flags)}건' if flags else ''))
                 for fl in flags:
                     self.log.emit('      ' + fl)
                 report.append({
-                    'doc': base, 'src': subdir, 'chars': len(body),
+                    'doc': doc_name, 'src': job['src'], 'chars': len(body),
                     'lines': body.count('\n') + 1, 'ws': ws, 'tables': n_tables,
                 })
                 self.progress.emit(i, total)
@@ -1119,22 +1260,8 @@ def run_gui():
 
         @staticmethod
         def _doctor(md):
-            """표 건강 점검을 재사용해 경고 문자열 리스트 반환"""
-            out = []
-            for idx, blk in enumerate(_md_table_blocks(md), 1):
-                h = table_health(blk)
-                why = []
-                if h['cols'] < 2:
-                    why.append('열<2')
-                if h['rows'] < 1:
-                    why.append('데이터행 없음')
-                if h['empty_pct'] > 40:
-                    why.append(f"빈셀 {h['empty_pct']}%")
-                if h['ragged']:
-                    why.append('열수 불균일')
-                if why:
-                    out.append(f"표#{idx} ({h['cols']}열×{h['rows']}행) {', '.join(why)}")
-            return out
+            """표 건강 점검 — 공용 규칙으로 경고 문자열 리스트 반환"""
+            return table_flag_strings(md)
 
     class MainWindow(QMainWindow):
         def __init__(self):

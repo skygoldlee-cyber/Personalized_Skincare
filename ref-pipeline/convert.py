@@ -25,12 +25,18 @@ ref-pipeline/pdf2md.py가 소유한다. 이 파일은 스테이징 워크플로�
 import os
 import sys
 import json
+import logging
 import argparse
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import pdf2md
 
-sys.stdout.reconfigure(encoding='utf-8')
+logger = logging.getLogger('pdf2md')
+
+try:
+    sys.stdout.reconfigure(encoding='utf-8')
+except Exception:
+    pass
 
 # ref_md 산출물은 라인 인용 호환을 위해 문장 병합을 끈다
 pdf2md.PROFILE['segment'] = False
@@ -47,6 +53,7 @@ def resolve_paths(args):
 
 
 def main():
+    logging.basicConfig(level=logging.INFO, format='%(message)s')
     ap = argparse.ArgumentParser(description='참조자료 PDF → ref_md 스테이징 변환')
     ap.add_argument('only', nargs='?', help='파일명 필터 (부분 문자열)')
     ap.add_argument('--verify', action='store_true',
@@ -68,38 +75,37 @@ def main():
     if args.only:
         pdfs = [(l, p) for l, p in pdfs if args.only in os.path.basename(p)]
     if not pdfs:
-        print('변환할 PDF가 없습니다.')
+        logger.error('변환할 PDF가 없습니다.')
         sys.exit(1)
 
     report = []
-    for subdir, pdf_path in pdfs:
-        basename = os.path.splitext(os.path.basename(pdf_path))[0]
-        out_dir = os.path.join(paths['staging'], basename)
-        os.makedirs(out_dir, exist_ok=True)
-        out_path = os.path.join(out_dir, basename + '.md')
+    jobs = pdf2md.plan_doc_jobs(pdfs, paths['staging'])
+    for job in jobs:
+        os.makedirs(job['dir'], exist_ok=True)
         try:
-            body = pdf2md.convert(pdf_path, os.path.join(out_dir, 'images'))
+            body = pdf2md.convert(job['pdf'], job['images'])
         except Exception as e:
-            print(f'FAIL {basename}: {e}')
-            report.append({'doc': basename, 'error': str(e)})
+            logger.error('FAIL %s: %s', job['doc'], e)
+            report.append({'doc': job['doc'], 'error': str(e)})
             continue
-        md = f'# {basename}\n\n{body}\n'
-        with open(out_path, 'w', encoding='utf-8') as f:
+        md = f'# {job["basename"]}\n\n{body}\n'
+        with open(job['md'], 'w', encoding='utf-8') as f:
             f.write(md)
         n_tables = md.count('|---') + md.count('| ---')
         report.append({
-            'doc': basename, 'src': subdir,
+            'doc': job['doc'], 'src': job['src'],
             'chars': len(body), 'lines': body.count('\n') + 1,
             'ws': round(pdf2md.whitespace_ratio(body), 1),
             'tables': n_tables,
         })
-        print(f'OK {basename}: {len(body):,}자, 공백 {report[-1]["ws"]}%, 표 {n_tables}')
+        logger.info('OK %s: %s자, 공백 %s%%, 표 %d',
+                    job['doc'], f'{len(body):,}', report[-1]['ws'], n_tables)
     os.makedirs(paths['staging'], exist_ok=True)
     with open(os.path.join(paths['staging'], '_report.json'), 'w', encoding='utf-8') as f:
         json.dump(report, f, ensure_ascii=False, indent=2)
     fails = [r for r in report if 'error' in r]
-    print(f'\n총 {len(report)}개 → {paths["staging"]}'
-          + (f'  ⚠ 실패 {len(fails)}건' if fails else ''))
+    logger.info('총 %d개 → %s%s', len(report), paths['staging'],
+                f'  ⚠ 실패 {len(fails)}건' if fails else '')
 
 
 if __name__ == '__main__':
