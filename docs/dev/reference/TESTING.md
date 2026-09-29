@@ -231,7 +231,7 @@ npm run hooks:install
 | # | 파일 | 테스트 수 | 검증 대상 | 비고 |
 |---|------|-----------|-----------|------|
 | 1 | `backup.dom.test.js` | 10 | `getBackupKeys()`, `exportData()`, `triggerImport()`, `importData()` | localStorage + DOM 조작 |
-| 2 | `router.dom.test.js` | 11 | `getViewTitles()`, `navigateToView()` | 뷰 타이틀 맵, active 클래스 동기화, 렌더러 호출, 오디오 정지, 포커스 모드 | 2026-09-03 추가 |
+| 2 | `router.dom.test.js` | 20 | `getViewTitles()`, `navigateToView()`, `initViewHashRouting()` | 뷰 타이틀 맵, active 클래스 동기화, 렌더러 호출, 오디오 정지, 포커스 모드, 해시 라우팅, 뒤로가기 종료 가드 | 2026-09-03 추가 |
 | — | `helpers.js` | — | 공통 픽스처 | `loadIndexHtml()`(실제 index.html 주입), `selectFile`, `flushAsync`, `lastToast`, `spyAnchorDownload` | 2026-09-23 추가 |
 | 3 | `formula-nav.dom.test.js` | 6 | 패널 전환·서브내비 | 허브↔서브패널 is-hidden 전환, 서브내비 6칩·활성 칩 | 2026-09-23 추가 |
 | 4 | `formula-customer.dom.test.js` | 9 | 고객 CRUD + CSV | 빈 상태→등록→목록, CSV UTF-8/EUC-KR·중복·confirm 거부·보내기·양식 | 2026-09-23 추가 |
@@ -424,7 +424,7 @@ npm run hooks:install
 - `importData()`: JSON 복원, 화이트리스트 검증, localStorage 복원
 - `beforeEach`로 `localStorage.clear()` + `document.body.innerHTML = ''` 초기화
 
-#### `router.dom.test.js` (11개) — 2026-09-03 추가
+#### `router.dom.test.js` (20개) — 2026-09-03 추가
 - `getViewTitles()`: 뷰 ID → 타이틀/서브타이틀 맵 생성, `null` 입력 시 기본값
 - `navigateToView()`: 
   - active 클래스 토글 (이전 뷰 비활성, 새 뷰 활성)

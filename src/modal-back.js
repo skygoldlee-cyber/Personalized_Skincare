@@ -85,6 +85,11 @@ function _closeTopModal() {
     top.classList.remove('open');
 }
 
+/** 표시 중인 모달이 있는지 — 라우터 종료 가드 등이 뒤로가기 중복 처리를 막기 위해 사용 */
+export function isAnyModalOpen() {
+    return _openModals().length > 0;
+}
+
 /** 앱 초기화 시 1회 호출 — 속성 감시 + popstate 구독을 설치한다. */
 export function setupModalBackHandler() {
     if (!_observer) {

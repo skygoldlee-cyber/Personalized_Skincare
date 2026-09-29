@@ -2,6 +2,8 @@
 // @spec UX-NAV-01,UX-NAV-08,UM-04
 import { state } from './state.js';
 import { saveScrollPosition, restoreScrollPosition, registerViewNavigator } from './views/navigation.js';
+import { showToast } from './ui-utils.js';
+import { isAnyModalOpen } from './modal-back.js';
 
 /**
  * 레지스트리 기반 뷰 타이틀 맵 생성
@@ -174,6 +176,40 @@ function syncViewHash(target) {
     }
 }
 
+/* =========================================================
+   뒤로가기 종료 가드 — 루트 뷰에서의 뒤로가기가 PWA/탭을 즉시
+   종료시키지 않도록 동일 URL의 보초 엔트리를 쌓는다.
+   보초 소비(= 루트에서의 뒤로가기) 시 종료 안내 토스트를 띄우고
+   보초를 다시 쌓으며, 짧은 창 안에 반복되면 실제 종료를 허용한다.
+   모달이 열려 있으면 modal-back.js가 소비하므로 여기선 건드리지 않는다.
+   ========================================================= */
+const EXIT_GUARD_WINDOW_MS = 2500;
+let _exitGuardArmedAt = 0;
+let _exitGuardBound = false;
+
+function _pushExitGuard() {
+    try { history.pushState({ exitGuard: true }, ''); } catch (_) { /* 제한 환경 */ }
+}
+
+/** popstate 핸들러 — 히스토리 기저(초기 뷰 엔트리 또는 보초) 착륙 감지. */
+function _handleExitGuardPopstate() {
+    if (isAnyModalOpen()) return;
+    const s = history.state;
+    // 기저 엔트리 판정 — 뷰 스탬프·보초 마커·(딥링크 직접 진입의) 무스탬프 모두 커버
+    const isBase = s ? (s.view === state.currentView || s.exitGuard === true) : true;
+    // 해시가 바뀐 경우(뷰 간 이동)는 hashchange가 처리 — 종료 가드와 무관
+    if (!isBase || _viewFromLocation() !== state.currentView) return;
+    const now = Date.now();
+    if (now - _exitGuardArmedAt <= EXIT_GUARD_WINDOW_MS) {
+        _exitGuardArmedAt = 0;
+        try { history.go(-2); } catch (_) { /* 제한 환경 무시 */ }
+        return;
+    }
+    _exitGuardArmedAt = now;
+    _pushExitGuard();
+    showToast('뒤로가기를 한 번 더 누르면 종료됩니다', 'info', EXIT_GUARD_WINDOW_MS);
+}
+
 /**
  * 해시 라우팅 초기화 — 초기 딥링크 적용 + 뒤로가기/해시 변경 감지.
  * setupNavigation의 routerCtx를 그대로 받아 navigateToView로 디스패치한다.
@@ -196,6 +232,11 @@ export function initViewHashRouting(ctx) {
     if (slug && !location.hash) {
         try { history.replaceState({ view: state.currentView }, '', '#/' + slug); }
         catch (_) { /* 제한 환경 무시 */ }
+    }
+    _pushExitGuard();
+    if (!_exitGuardBound) {
+        _exitGuardBound = true;
+        window.addEventListener('popstate', _handleExitGuardPopstate);
     }
     window.addEventListener('hashchange', () => {
         const view = _viewFromLocation();

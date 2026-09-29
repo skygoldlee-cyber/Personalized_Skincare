@@ -272,4 +272,32 @@ describe('router.js — DOM 테스트', () => {
             expect(state.currentView).toBe('dashboard-view');
         });
     });
+
+    describe('뒤로가기 종료 가드', () => {
+        const ctx = () => ({
+            titlesMap: getViewTitles(null),
+            handlers: { viewRenderers: {}, stopReaderAudio: vi.fn() }
+        });
+
+        it('루트 뷰 뒤로가기 → 종료 안내 토스트 + 보초 엔트리 재삽입', () => {
+            initViewHashRouting(ctx());
+            // 루트에서의 뒤로가기 착륙 시뮬레이션 — 기저 뷰 엔트리로 상태 교체 후 popstate
+            history.replaceState({ view: 'dashboard-view' }, '', '#/dashboard');
+            window.dispatchEvent(new Event('popstate'));
+            const toast = document.getElementById('app-toast');
+            expect(toast).toBeTruthy();
+            expect(toast.textContent).toContain('종료');
+            // 보초가 재삽입되어 현재 엔트리가 sentinel 상태
+            expect(history.state && history.state.exitGuard).toBe(true);
+        });
+
+        it('모달이 열려 있으면 종료 가드가 개입하지 않는다 (modal-back 우선)', () => {
+            initViewHashRouting(ctx());
+            document.body.insertAdjacentHTML('beforeend', '<div id="test-modal"></div>');
+            history.replaceState({ view: 'dashboard-view' }, '', '#/dashboard');
+            window.dispatchEvent(new Event('popstate'));
+            expect(document.getElementById('app-toast')).toBeFalsy();
+            document.getElementById('test-modal').remove();
+        });
+    });
 });
