@@ -6,10 +6,11 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
-## 2026-09-29 check:html 개행 정규화 — Windows autocrlf 오탐 해소
+## 2026-09-29 check:html·check:trace 개행 정규화 — Windows autocrlf 오탐 해소
 
 - **`tools/build/build_html.js --check`**: 재생성 결과와 index.html 비교 전 양쪽을 `CRLF → LF` 정규화 — `core.autocrlf=true` 환경에서 파셜 작업트리 개행 혼용(w/mixed)으로 내용이 동일한 파일이 드리프트 오탐되던 문제 해소. 조립 출력·마커 규약은 불변
-- **TRACE_MATRIX 재생성**: SPEC·문서 헤더 변경 후 갱신 누락분 반영 (입력 해시 c02cb3c8 → 6f515909)
+- **`tools/build_trace_matrix.js inputsHash`**: SPEC 전문·추적 행 해시 입력을 개행 정규화 — 작업트리 개행 상태(autocrlf·`git checkout` 재스머지)에 해시가 종속되어 동일 내용이 불일치 판정되던 문제 해소. CRLF 기준 해시는 Linux CI와 불일치하므로 크로스플랫폼 게이트로서 필수 수정
+- **TRACE_MATRIX 재생성**: SPEC·문서 헤더 변경 후 갱신 누락분 + 정규화 해시 반영 (입력 해시 c02cb3c8 → fe0f511a)
 - **문서**: AGENTS.md check:html 설명 갱신
 
 ## 2026-09-29 게임화 요소 — 스트릭 복구권·주간 칩·마스터리 레벨

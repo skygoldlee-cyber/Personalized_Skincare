@@ -17,6 +17,8 @@
  *
  * 신선도: 생성 시 입력(SPEC + @spec 태그 + 문서 헤더)의 해시를 파일에 스탬프.
  * --check는 재해시해 비교 — SPEC·@spec·문서 헤더가 바뀌면 재생성을 강제한다.
+ * 해시 입력은 CRLF/LF 개행을 정규화한다 — 작업트리 개행 상태(autocrlf 등)에
+ * 해시가 종속되면 Windows↔Linux 간 오탐이 발생한다.
  */
 
 // @spec none (추적 매트릭스 생성 도구)
@@ -28,10 +30,12 @@ const T = require('./lib/trace_scan');
 const OUT_FILE = path.join(T.ROOT, 'docs', 'dev', 'TRACE_MATRIX.md');
 const HASH_RE = /> 입력 해시: ([0-9a-f]+)/;
 
+const normEol = (s) => s.replace(/\r\n/g, '\n');
+
 /** 입력 해시 — SPEC 전문 + 각 파일의 추적 관련 행(@spec·관련 SPEC ID·문서 ID) */
 function inputsHash(specIds) {
   const h = crypto.createHash('sha256');
-  h.update(fs.readFileSync(T.SPEC_FILE, 'utf8'));
+  h.update(normEol(fs.readFileSync(T.SPEC_FILE, 'utf8')));
   const files = new Set();
   for (const f of T.SCAN_FILES.map(f => path.join(T.ROOT, f))) if (fs.existsSync(f)) files.add(f);
   for (const d of T.SCAN_DIRS) for (const f of T.walk(path.join(T.ROOT, d), T.SCAN_EXTS)) files.add(f);
@@ -41,7 +45,7 @@ function inputsHash(specIds) {
     const rel = path.relative(T.ROOT, file).replace(/\\/g, '/');
     h.update('\n@@ ' + rel);
     if (file === OUT_FILE) continue; // 자기 자신의 해시 행은 제외
-    for (const l of fs.readFileSync(file, 'utf8').split('\n')) {
+    for (const l of normEol(fs.readFileSync(file, 'utf8')).split('\n')) {
       if (/@spec|관련 SPEC ID|문서 ID/.test(l)) h.update('\n' + l);
     }
   }
