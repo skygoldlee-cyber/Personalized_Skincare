@@ -95,3 +95,32 @@ flowchart LR
 - `eslint --max-warnings 0`: 기존 경고도 신규 유입을 허용하지 않아 잡음 누적을 방지
 - **기준선(baseline) 패턴**: specrefs의 테스트 갭처럼 "현재 값을 기준선으로 박아두고 악화만 차단"하는 방식으로 레거시 개선을 점진적으로 수행
 - CHANGES.md의 날짜별 이력은 각 변경의 **이유**를 기록해 나중에 "왜 이 코드인가"를 추적 가능하게 한다
+
+---
+
+## 부록 A. 국제 표준·프레임워크 대응 (2026-09-29 점검)
+
+이 프로젝트는 인증이 요구되는 규제 산업 소프트웨어가 아니지만, 각 요소가 인정된 표준·공인 프레임워크의 원칙에 어떻게 대응하는지를 대조한 결과다. 위반 항목 없음 — 일부는 형식 표준이 아닌 업계 표준 관행(de facto) 영역.
+
+| § | 요소 | 대응 표준·프레임워크 | 평가 |
+|---|---|---|---|
+| 1 | SSOT + 생성물 관리 | ISO/IEC/IEEE 12207 구성관리(CM) 프로세스 · ISO 10007 | ✅ 원본-파생물 분리 충실 — 생성물 커밋은 관례와 다르지만 신선도 게이트로 정합성을 기계 보장 |
+| 2 | 신선도 게이트 | Reproducible Builds · SLSA | ✅ "동일 입력→동일 출력" 검증 = 재현 가능 빌드 핵심 요건 |
+| 3 | 결정성 빌드 | SLSA L2+ (hermetic·deterministic build) | ✅ EOL 정규화·노이즈 필터로 플랫폼 비의존 산출 |
+| 4 | 다층 검증 | IEEE 1012 (독립적 V&V) · NIST SSDF 방어 계층 | ✅ 훅 우회 가능성을 CI가 재검사 — 독립 검증 개념 부합 |
+| 5 | 요구사항 추적성 | **ISO/IEC/IEEE 29148** (추적성 필수 요건) · DO-178C·IEC 61508 계열 | ✅✅ 안전 산업이 강제하는 수준의 양방향 매트릭스를 자발적 구현 |
+| 6 | 파서 등가성 | IEEE 1012 대조 검증 · back-to-back/N-version 테스팅 | ✅ 이중 구현 출력 대조 — 인정된 검증 기법 |
+| 7 | 테스트 피라미드 | ISO/IEC/IEEE 29119 테스트 레벨 | ⚠️ 부합 — 피라미드는 업계 관행(Fowler). 커버리지 임계값 명문화 여지 |
+| 8 | 문서-코드 동기화 | ISO/IEC/IEEE 15289 문서 산출물 요구 · Docs-as-Code | ✅ CI에 문서 검증 편입 — living documentation 모범 사례 |
+| 9 | 안전한 도구 설계 | Fail-safe·방어적 설계 원칙 | ✅ dirty 가드·자동 원복·읽기 전용 --check |
+| 10 | 배포·버저닝 | **CalVer** (`2026.9.29`) · ISO 8601 날짜 | ⚠️ SemVer 아님 — API 소비자 없는 앱이라 문제없음, 규약 필요 시 재검토 |
+| 11 | 프론트엔드 패턴 | OWASP ASVS · W3C CSP/Service Worker/Manifest · WCAG 터치 타깃 · SOLID 추상화 | ✅ CSP `'self'`·Mermaid strict·escapeHTML 부합 |
+| 12 | 점진적 품질 | 기준선(ratchet) 관행 · Keep a Changelog 유사 이력 | ✅ 레거시 품질 개선의 인정 기법 |
+
+### 잔여 갭 (개선 후보)
+
+- **SBOM 부재** — CycloneDX/SPDX 자산 명세 미생성. `package-lock.json`(v3) + `npm ci` + `npm audit`으로 NIST SSDF 기본 수준은 충족하나 공급망 증명(SLSA provenance)은 없음
+- **커밋 규약 비공식** — `type(scope):` 형식은 Conventional Commits와 일치하나 명시적 강제(commitlint 등) 없음
+- **커버리지 임계값 불명** — `coverage_merge --check` 게이트는 존재하나 임계 수치 문서화 필요
+- **역방향 추적성 경고 처리** — 코드 미참조 ID(ROAD-L1~L4·P1~P3, 7건)는 `check:specrefs`에서 경고로 허용 — 기준선이 신규 갭은 차단하지만 기존 갭 해소는 수동
+
