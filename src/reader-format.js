@@ -474,8 +474,10 @@ export function markStoryNarrative(contentEl) {
     if (hasStart || hasEnd) {
         // 끝 마커만 있으면 이전 컨테이너에서 시작된 범위의 연속으로 간주
         let inScene = !hasStart && hasEnd;
+        /** @type {{start: (Element|null), members: Element[]}|null} */
         let group = inScene ? { start: null, members: [] } : null;
-        const groups = inScene ? [group] : [];
+        /** @type {{start: (Element|null), members: Element[]}[]} */
+        const groups = group ? [group] : [];
         for (const el of leaves) {
             if (isBoundaryStart(el)) {
                 el.classList.add('story-boundary', 'story-boundary-start');
@@ -506,7 +508,7 @@ export function markStoryNarrative(contentEl) {
             toggle.textContent = '📖 이야기 접기';
             toggle.addEventListener('click', () => {
                 const collapsed = toggle.getAttribute('aria-expanded') === 'false';
-                g.members.forEach(m => { m.hidden = !collapsed; });
+                g.members.forEach(m => { /** @type {HTMLElement} */ (m).hidden = !collapsed; });
                 toggle.setAttribute('aria-expanded', String(collapsed));
                 toggle.textContent = collapsed ? '📖 이야기 접기' : '📖 이야기 펼치기';
                 toggle.classList.toggle('is-collapsed', !collapsed);
