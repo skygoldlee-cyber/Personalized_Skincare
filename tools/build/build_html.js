@@ -11,7 +11,8 @@
  * 편집 규칙: 뷰 마크업은 html/views/*.html을 편집하고
  * `npm run build:html`로 index.html을 재생성한다. index.html 직접 편집 금지.
  *
- * --check: index.html을 재생성 결과와 바이트 비교 (조립 누락/드리프트 탐지)
+ * --check: index.html을 재생성 결과와 비교 — 개행(CRLF/LF) 정규화 후 내용 비교
+ *   (Windows autocrlf 등에서 작업트리 개행 혼용으로 인한 드리프트 오탐 방지)
  * @spec S-01
  * ============================================================ */
 const fs = require('fs');
@@ -59,7 +60,8 @@ const generated = build();
 
 if (isCheck) {
   const current = fs.existsSync(OUTPUT) ? fs.readFileSync(OUTPUT, 'utf8') : null;
-  if (current === generated) {
+  const normEol = (s) => s.replace(/\r\n/g, '\n');
+  if (current !== null && normEol(current) === normEol(generated)) {
     console.log('✅ index.html이 최신 조립 상태입니다');
   } else {
     console.error('❌ index.html이 파셜/템플릿과 불일치 — npm run build:html 실행 필요');

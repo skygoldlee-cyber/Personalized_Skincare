@@ -6,6 +6,12 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-09-29 check:html 개행 정규화 — Windows autocrlf 오탐 해소
+
+- **`tools/build/build_html.js --check`**: 재생성 결과와 index.html 비교 전 양쪽을 `CRLF → LF` 정규화 — `core.autocrlf=true` 환경에서 파셜 작업트리 개행 혼용(w/mixed)으로 내용이 동일한 파일이 드리프트 오탐되던 문제 해소. 조립 출력·마커 규약은 불변
+- **TRACE_MATRIX 재생성**: SPEC·문서 헤더 변경 후 갱신 누락분 반영 (입력 해시 c02cb3c8 → 6f515909)
+- **문서**: AGENTS.md check:html 설명 갱신
+
 ## 2026-09-29 게임화 요소 — 스트릭 복구권·주간 칩·마스터리 레벨
 
 - **SC-04 스트릭 복구권**: 데일리 챌린지 완료로 스트릭 7일 연속 마일스톤마다 복구권 1장 획득(최대 2장, `streak_freezes` 키). 어제 하루만 결손(diffDays===2)이면 자동 소비해 스트릭 유지 + `lastDate`를 어제로 보정해 중복 소비 방지, 소비·획득 시 토스트 안내. 스트릭 배지에 `🧊 N` 표시 + `weekly-goal-chip`에 "이번 주 N/M일" 칩 추가 (`updateStreakAndDailyUI`, 기존 `getWeeklyGoalProgress` 재사용)
