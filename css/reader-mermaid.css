@@ -261,10 +261,110 @@ pre.mermaid {
     margin: 1rem 0 1.5rem 0;
     text-align: center;
     overflow-x: auto;
+    position: relative;
 }
 pre.mermaid svg {
     max-width: 100%;
     height: auto;
+}
+
+/* 다이어그램 확대 버튼 — .reader-table-expand-btn과 동일 패턴 */
+.mermaid-expand-btn {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    z-index: var(--z-raised);
+    background: var(--drawer-bg);
+    border: 1px solid var(--border-color);
+    color: var(--color-text-muted);
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-xs);
+    cursor: pointer;
+    font-size: var(--text-xs-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-base);
+}
+.mermaid-expand-btn:hover {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+.mermaid-expand-btn:active {
+    transform: scale(0.92);
+    transition: transform 0.05s ease;
+}
+.reader-light-theme .mermaid-expand-btn {
+    background: var(--bg-card);
+}
+
+/* 다이어그램 확대 모달 — reader-table-modal 셸 재사용 + 본문만 양방향 스크롤.
+   매뉴얼/HTML 뷰어 오버레이(z-index 9999~10001) 위에서도 동작해야 하므로 최상위 부여 */
+.mermaid-zoom-modal {
+    z-index: calc(var(--z-html-viewer) + 1);
+}
+.mermaid-zoom-content {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.mermaid-zoom-content .reader-table-modal-close {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    float: none;
+}
+.mermaid-zoom-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 3rem 0.75rem 0;
+}
+.mermaid-zoom-btn {
+    min-width: 34px;
+    min-height: 34px;
+    padding: 0.3rem 0.6rem;
+    background: var(--drawer-bg);
+    border: 1px solid var(--border-color);
+    color: var(--color-text-muted);
+    border-radius: var(--radius-xs);
+    cursor: pointer;
+    font-size: var(--text-sm-md);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    transition: var(--transition-base);
+}
+.mermaid-zoom-btn:hover {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+.mermaid-zoom-level {
+    min-width: 3.2rem;
+    text-align: center;
+    font-size: var(--text-sm-md);
+    color: var(--color-text-main);
+    font-variant-numeric: tabular-nums;
+}
+.mermaid-zoom-body {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    text-align: center;
+}
+/* 모달 내 pre 복제본 — 인라인 스크롤 대신 모달 본문이 스크롤하도록 */
+.mermaid-zoom-stage {
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    display: inline-block;
+    text-align: left;
+}
+.mermaid-zoom-stage svg {
+    display: block;
 }
 
 /* === Flowchart 전용 스타일 === */
@@ -463,6 +563,17 @@ pre.mermaid-other .labelBkg {
     
     .textbook-reader-controls select {
         width: 100%;
+    }
+
+    /* 모바일 터치 영역 — 표 확장 버튼과 동일 기준 */
+    .mermaid-expand-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 0.9rem;
+    }
+    .mermaid-zoom-btn {
+        min-width: 44px;
+        min-height: 44px;
     }
 }
 
