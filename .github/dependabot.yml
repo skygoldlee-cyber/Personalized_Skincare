@@ -1,0 +1,22 @@
+# Dependabot — 의존성·Actions 업데이트 PR 자동 생성
+# npm audit은 CI 실행 시점만 검사하므로, 주기적 제안으로 취약점 대응을 상시화
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: chore
+      include: scope
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: chore
+      include: scope

@@ -124,6 +124,8 @@ flowchart LR
 - **SBOM** — `npm run sbom`(npm 내장, SPDX 형식)으로 `sbom.spdx.json` 생성, CI에서 아티팩트로 업로드(30일 보관). 커밋 대상 아님(재생성 가능·신선도 관리 불필요)
 - **역방향 추적성** — `check:specrefs`가 SPEC 상태 컬럼의 `미구현`·`보류`를 읽어 로드맵 항목(ROAD-P1~P3·L2~L4 등)을 공백 판정에서 제외. `🟡 부분` 상태의 ROAD-L1은 부분 구현체 `estimateExpectedScore`에 `@spec` 태그를 부여해 정당하게 닫음 — 경고 목록 0건화, 신규 갭만 노출
 - **커버리지 임계값** — 코드에 이미 명문화되어 있었음(`coverage_merge.js` 기준선 주석 + 임계값 표). 본 문서 §7 평가에 반영
+- **Node 버전 정합** — `package.json` `engines: ">=20"` + `.nvmrc`=20 추가 — 로컬(24.x)·CI(20) 스큐를 명시적 선언으로 정렬
+- **의존성 상시 감시** — `.github/dependabot.yml`로 npm·github-actions 주간 업데이트 PR 자동 생성 (npm audit의 push 시점 종속 보완)
 
 **잔여 (보류)**:
 

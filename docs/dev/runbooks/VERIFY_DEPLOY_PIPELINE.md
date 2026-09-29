@@ -100,12 +100,15 @@ npm.cmd run check:hooks     # 설치 여부 확인 — 미설치 시 권고 출�
 
 ubuntu + Node 20에서 순서대로 실행 — 로컬 `check:ci`와 대응 관계:
 
-1. `npm ci` · `npm audit --audit-level=high` · `npm run sbom` → SPDX SBOM 아티팩트 업로드 *(CI 전용)*
+1. `npm ci` · `npm audit --audit-level=high` · `npm run sbom` → SPDX SBOM 아티팩트 업로드 *(CI 전용)*  
+   + Dependabot(`.github/dependabot.yml`)이 npm·github-actions 생태계 주간 업데이트 PR을 자동 생성 *(저장소 설정)*
 2. `lint` → `check:types` → `check:imports` → `check:docs` → `doc_sync --ref origin/main` → `check:specrefs` → `check:trace` → `check:html`
 3. `check_content.js --content-only --quick` — 콘텐츠 추적 단계 전체 (**check:datafresh·check:docbundles 포함**)
 4. `npm test` → `coverage` → `coverage:unit` → `coverage_merge --check` *(커버리지는 CI 전용)*
 5. `verify:assets` → `check:parser`
 6. `playwright install` → `test:e2e` *(CI 전용)*
+
+> **저장소 설정 권장 (코드 밖)**: GitHub Settings → Branches → `main` 보호 규칙에 "Require status checks"(`test` 잡)를 지정하면 CI 미통과 머지가 원천 차단된다. 코드 게이트만으로는 우회 불가이지만, 저장소 설정 없이는 `git push --force`·직접 머지가 가능하므로 마지막 방어선으로 권장.
 
 ## 7. 배포 (`npm run deploy`)
 

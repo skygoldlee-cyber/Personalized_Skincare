@@ -22,7 +22,7 @@
 
 | 도구 | 최소 버전 | 확인 명령 | 용도 |
 |------|-----------|-----------|------|
-| **Node.js** | 20.x 이상 | `node --version` | 앱·빌드·테스트 런타임 전체 (CI는 20 고정, 로컬 24.x 동작 확인) |
+| **Node.js** | 20.x 이상 (`.nvmrc`·`engines` = 20 계열 권장) | `node --version` | 앱·빌드·테스트 런타임 전체 — CI는 Node 20 고정이므로 버전 관리자(nvm/fnm) 사용 시 `.nvmrc`가 20으로 정렬 |
 | **npm** | Node 동반 | `npm --version` | devDependencies 설치 (`npm install`) |
 | **Git** | 최신 | `git --version` | 소스 관리 — `deploy` 가드가 clean tree + origin/main 동기화 요구 |
 
