@@ -1,5 +1,12 @@
 [
   {
+    "version": "v20260929-b055a62",
+    "date": "2026-09-29",
+    "notes": [
+      "교재 삽화 선명도 개선 — 원본 PNG 재인코딩 + 언샤프 마스크"
+    ]
+  },
+  {
     "version": "v20260929-7e90960",
     "date": "2026-09-29",
     "notes": [
@@ -132,14 +139,6 @@
     "date": "2026-09-29",
     "notes": [
       "[수정·ui] UI/UX 구조 점검 수정 — 모달 뒤로가기 복구·이중 네비 통합·훈련소 해시·구조 테스트"
-    ]
-  },
-  {
-    "version": "v20260929-5add11d",
-    "date": "2026-09-29",
-    "notes": [
-      "[정리·trace] TRACE_MATRIX 재스탬프 [no-docs]",
-      "[리팩터링·ref-pipeline] md2doc·pdf2md 개선 — 로컬 Mermaid·렌더 캐시·템플릿 분리·pytest·logging·동명 충돌 방지"
     ]
   }
 ]
