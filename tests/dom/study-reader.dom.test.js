@@ -478,6 +478,21 @@ describe('이야기형 서사 태깅 — markStoryNarrative', () => {
         expect(members.every(m => !m.hidden)).toBe(true);
     });
 
+    it('중첩 컨테이너 중복 호출 시 접기 칩은 1개만 생성된다', () => {
+        // textbook-reader는 .textbook-reader-section-content와 .reader-subsection-content
+        // 각각에 markStoryNarrative를 호출한다 — 같은 그룹에 칩이 두 번 삽입되면 안 된다
+        const content = buildCard('📚 Chapter 01', `
+            <div class="reader-subsection-content">
+                <p class="md-para">📖 ┈┈┈┈ 이야기 ┈┈┈┈</p>
+                <p class="md-para">서사 문단</p>
+                <p class="md-para">┈┈┈┈ 본문 ┈┈┈┈ 📘</p>
+            </div>`);
+        markStoryNarrative(content);
+        markStoryNarrative(content.querySelector('.reader-subsection-content'));
+        markStoryNarrative(content); // 재렌더 중복 호출
+        expect(content.querySelectorAll('.story-toggle').length).toBe(1);
+    });
+
     it('프롤로그·등장인물 카드는 전체 서사', () => {
         const content = buildCard('프롤로그 — 민수의 첫 번째 화장품', `
             <p class="md-para">서사 문단</p>

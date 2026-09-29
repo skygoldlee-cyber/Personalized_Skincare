@@ -501,6 +501,9 @@ export function markStoryNarrative(contentEl) {
         // aria-expanded로 서사↔본문 전환을 스크린리더에도 전달한다.
         for (const g of groups) {
             if (!g.members.length) continue;
+            // 중복 호출(바깥 컨테이너 + 서브섹션 개별 호출, 재렌더) 시 칩 중복 방지
+            const anchor = g.start ? g.start.nextElementSibling : g.members[0].previousElementSibling;
+            if (anchor && anchor.classList && anchor.classList.contains('story-toggle')) continue;
             const toggle = document.createElement('button');
             toggle.type = 'button';
             toggle.className = 'story-toggle';
