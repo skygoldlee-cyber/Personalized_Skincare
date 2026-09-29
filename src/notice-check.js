@@ -93,7 +93,7 @@ function renderBanner(latest, extraDocs) {
       </div>
       <button type="button" class="notice-banner-close" data-click="dismissMfdsNotice" data-arg="${escapeHTML(latest.effectiveDate || '')}" aria-label="닫기">×</button>
     </div>`;
-  el.hidden = false;
+  el.classList.remove('is-hidden');
 }
 
 // ——— 상태 파일 캐시 (다문서 docs[] — 참조 링크 '갱신 필요' 배지에 사용) ———
@@ -291,9 +291,9 @@ export function statusRows(status) {
 export async function viewMfdsNoticeStatus() {
   const panel = document.getElementById('notice-status-view');
   if (!panel) return;
-  if (!panel.hidden) { panel.hidden = true; return; }
+  if (!panel.classList.contains('is-hidden')) { panel.classList.add('is-hidden'); return; }
   panel.innerHTML = '<div class="notice-status-loading">상태 파일 불러오는 중…</div>';
-  panel.hidden = false;
+  panel.classList.remove('is-hidden');
 
   const examId = getActiveExamId() || 'cosmetic';
   let status = null;
@@ -324,5 +324,5 @@ export async function viewMfdsNoticeStatus() {
 export function dismissMfdsNotice(effectiveDate) {
   if (effectiveDate) setItem(STORAGE_KEYS.NOTICE_DISMISSED_DATE, effectiveDate);
   const el = document.getElementById('formula-notice-banner');
-  if (el) el.hidden = true;
+  if (el) el.classList.add('is-hidden');
 }

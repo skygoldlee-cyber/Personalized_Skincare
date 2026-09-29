@@ -9,6 +9,16 @@ const scrollPositions = {};
 // (navigateToView의 saveScrollPosition이 scrollPositions를 덮어써도 유지되도록 별도 플래그)
 const pendingTop = new Set();
 
+// router.js가 initViewHashRouting에서 navigateToView(ctx 바인딩)를 주입한다 —
+// nav-item이 없는 뷰(exam-select-view 등)도 제목·해시·렌더 디스패치를
+// 동일하게 받을 수 있도록 switchView 폴백을 정식 라우터 경로로 보낸다.
+// 순환 import를 피하기 위해 router → navigation 방향의 등록 패턴을 사용.
+let _navigateToView = null;
+/** @param {function(string): void} fn - navigateToView를 ctx와 바인딩한 함수 */
+export function registerViewNavigator(fn) {
+    _navigateToView = fn;
+}
+
 export function saveScrollPosition(viewId) {
     const mainContent = document.querySelector('.main-content');
     if (mainContent) {
@@ -52,8 +62,12 @@ export function switchView(targetView, opts = {}) {
         // click() 핸들러가 saveScrollPosition/restoreScrollPosition을 포함하므로
         // 여기서는 중복 호출하지 않고 click만 트리거
         /** @type {HTMLElement} */ (navItem).click();
+    } else if (_navigateToView) {
+        // nav-item이 없는 뷰(exam-select-view) — 라우터 경로로 위임해
+        // 제목·해시·렌더 디스패치·aria 동기화를 navigateToView와 동일하게 적용
+        _navigateToView(targetView);
     } else {
-        // nav-item이 없는 뷰(예: exam-simulator 내부 뷰)는 직접 처리
+        // 라우터 미초기화 환경(단위 테스트 등) — 최소 토글만 수행
         saveScrollPosition(state.currentView);
         const target = document.getElementById(targetView);
         if (target) {

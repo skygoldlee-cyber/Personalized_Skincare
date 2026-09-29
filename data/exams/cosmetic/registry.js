@@ -2,7 +2,7 @@
 var DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2027",
-  "generatedAt": "2026-09-29T01:56:21.087Z",
+  "generatedAt": "2026-09-29T05:11:33.959Z",
   "subjects": [
     {
       "key": "law",
@@ -302,8 +302,8 @@ var DATA_REGISTRY = {
       "subtitle": "과목을 선택하여 교재 본문을 읽기"
     },
     "dictionary": {
-      "title": "성분검색",
-      "subtitle": "화장품 성분별 배합한도 및 고시 기준 통합 검색기"
+      "title": "성분 사전",
+      "subtitle": "화장품 성분별 배합한도 및 고시 기준 조회"
     }
   }
 };

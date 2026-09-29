@@ -1,7 +1,7 @@
 // src/router.js - 뷰 라우터: 타이틀 맵 및 뷰 렌더링 디스패치 (app.js에서 분리)
 // @spec UX-NAV-01,UX-NAV-08,UM-04
 import { state } from './state.js';
-import { saveScrollPosition, restoreScrollPosition } from './views/navigation.js';
+import { saveScrollPosition, restoreScrollPosition, registerViewNavigator } from './views/navigation.js';
 
 /**
  * 레지스트리 기반 뷰 타이틀 맵 생성
@@ -20,7 +20,7 @@ export function getViewTitles(registry) {
         'exam-view': uiText.exam || { title: '실전 모의고사', subtitle: '문제은행으로 과목별 모의고사 및 학습안내서 열람' },
         'textbook-view': uiText.textbook || { title: '교재검색', subtitle: '교재의 모든 본문 내용을 실시간 키워드로 검색' },
         'textbook-reader-view': uiText['textbook-reader'] || { title: '교재리더', subtitle: '과목을 선택하여 교재 본문을 읽기' },
-        'dictionary-view': uiText.dictionary || { title: '성분검색', subtitle: '화장품 성분별 배합한도 및 고시 기준 통합 검색기' },
+        'dictionary-view': uiText.dictionary || { title: '성분 사전', subtitle: '화장품 성분별 배합한도 및 고시 기준 조회' },
         'formula-view': { title: 'Formula OS', subtitle: '원료 조회 · 배합 계산 · My 포뮬러 저장·검증' },
         'calendar-view': { title: '학습 캘린더', subtitle: '날짜별 학습 기록 및 목표 달성률 추적' },
         'exam-select-view': { title: '시험 선택', subtitle: '학습할 시험을 선택하세요 — 진도는 시험별로 독립 관리됩니다' }
@@ -102,6 +102,13 @@ export function navigateToView(target, ctx) {
     const targetEl = document.getElementById(target);
     if (targetEl) targetEl.classList.add('active');
 
+    // SPA 뷰 전환 = 페이지 전환 — 키보드·스크린리더 포커스를 본문 영역으로 이동.
+    // main-content는 tabindex="-1" 보유. preventScroll로 스크롤 복원과 충돌 방지.
+    const mainContent = /** @type {HTMLElement|null} */ (document.querySelector('.main-content'));
+    if (mainContent) {
+        mainContent.focus({ preventScroll: true });
+    }
+
     // 헤더 텍스트 변경
     const viewTitle = document.getElementById('view-title');
     const viewSubtitle = document.getElementById('view-subtitle');
@@ -129,7 +136,7 @@ export function navigateToView(target, ctx) {
    뷰 해시 라우팅 — 현재 뷰를 #/슬러그로 URL에 반영해
    뒤로가기 복귀·딥링크 공유를 지원한다 (UX-NAV 확장)
    ========================================================= */
-const VIEW_HASH_SLUGS = {
+export const VIEW_HASH_SLUGS = {
     'dashboard-view': 'dashboard',
     'analysis-view': 'analysis',
     'flashcard-view': 'cards',
@@ -173,6 +180,10 @@ function syncViewHash(target) {
  * @param {object} ctx - navigateToView와 동일한 렌더링 컨텍스트
  */
 export function initViewHashRouting(ctx) {
+    // switchView(nav-item 없는 뷰 폴백 포함)가 항상 정식 라우터 경로를
+    // 타도록 navigateToView를 ctx와 바인딩해 등록
+    registerViewNavigator((target) => navigateToView(target, ctx));
+
     // 딥링크: #/quiz 등 해시로 진입 시 해당 뷰로 바로 이동
     const initial = _viewFromLocation();
     if (initial && initial !== state.currentView) {

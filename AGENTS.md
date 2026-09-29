@@ -135,6 +135,7 @@ src/                    # ES Modules
   questions.js          # 문항 스키마 (single/combo/short/ox), deriveComboAnswer, validateQuestion
   exam-viewer.js        # 문제집/참조자료 MD 뷰어
   manual-viewer.js      # 학습안내서/매뉴얼 MD 뷰어
+  modal-back.js         # 모달/오버레이 뒤로가기 닫기 — is-hidden 토글 감시 + 동일 URL 마커 pushState/popstate
   charts.js             # SVG 레이더/꺾은선 차트
   pdf-registry.js       # 참조자료 경로 매핑 (시험별 테이블 — getRefTables())
   law-links.js          # 참조 문서 → law.go.kr 원문 링크 매퍼 (한글주소 규약, 별표→모법, 원료 DB→근거 고시)

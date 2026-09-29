@@ -97,7 +97,7 @@
                     <i class="fa-solid fa-book" aria-hidden="true"></i> 교재검색
                 </button>
                 <button class="nav-item" data-target="dictionary-view" data-feature="dictionary">
-                    <i class="fa-solid fa-search" aria-hidden="true"></i> 성분검색
+                    <i class="fa-solid fa-book-open" aria-hidden="true"></i> 성분 사전
                 </button>
                 <button class="nav-item nav-study-only" data-target="calendar-view">
                     <i class="fa-solid fa-calendar-check" aria-hidden="true"></i> 학습 캘린더
@@ -1435,7 +1435,7 @@
             <section id="formula-view" class="view-section" data-feature="formula">
                 <!-- 1. 허브 메뉴 -->
                 <div id="formula-menu-panel">
-                    <div id="formula-notice-banner" class="notice-banner" hidden></div>
+                    <div id="formula-notice-banner" class="notice-banner is-hidden"></div>
                     <div class="notice-check-row">
                         <button type="button" class="btn btn-secondary btn-sm" data-click="checkMfdsNoticeNow">
                             <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i> 식약처 고시 확인
@@ -1445,7 +1445,7 @@
                         </button>
                         <span id="notice-check-result" class="notice-check-result" aria-live="polite"></span>
                     </div>
-                    <div id="notice-status-view" class="notice-status-view" hidden></div>
+                    <div id="notice-status-view" class="notice-status-view is-hidden"></div>
                     <div class="section-title-area">
                         <h3><i class="fa-solid fa-flask-vial" aria-hidden="true"></i> Formula OS — 실전 배합 작업실</h3>
                         <p>실제 업무 흐름 순서입니다. ① 상담(고객) → ② 설계(계산기·작업대) → ③ 레시피 확정(My 포뮬러·보관함) → ④ 재료 확인(원료 장부) → ⑤ 조제·기록 순으로 진행하고, 법규 준수는 전 단계에서 상시 점검합니다.
@@ -2120,8 +2120,8 @@
                 <span>실무</span>
             </button>
             <button class="mobile-tab-item" data-target="dictionary-view" data-feature="dictionary">
-                <i class="fa-solid fa-search" aria-hidden="true"></i>
-                <span>성분검색</span>
+                <i class="fa-solid fa-book-open" aria-hidden="true"></i>
+                <span>성분 사전</span>
             </button>
             <!-- 실무 모드 전용 탭 — 실무 매뉴얼 바로가기 -->
             <button type="button" data-click="ManualViewer.openFormulaManual" class="mobile-tab-item nav-practice-only">

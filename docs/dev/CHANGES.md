@@ -6,6 +6,16 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-09-29 UI/UX 구조 점검 수정 — 모달 뒤로가기 복구·이중 네비 통합·훈련소 해시·구조 테스트
+
+- **모달 뒤로가기 복구 (P1)**: `setupModalBackHandler`를 `src/modal-back.js`로 분리·재작성 — `style` 속성만 감시해 `is-hidden` 클래스 토글 모달 전체를 놓치던 사장 코드를 body 서브트리 class/style/hidden 감시로 전환. 모달 열림 시 동일 URL `{modalBack}` 마커 pushState(해시 불변→라우터 무변징), popstate 시 최상위 모달 닫기(Escape→닫기 버튼→is-hidden 순). 매뉴얼·문제집 뷰어의 자체 마커(`manualOverlay`/`examOverlay`)는 history.state로 구분해 이중 개입 방지, 중첩 모달은 깊이 카운터, UI 닫기 시 사장 마커는 1회 소비
+- **이중 네비게이션 통합 (P2)**: `registerViewNavigator` — router가 ctx 바인딩된 navigateToView를 navigation.js에 주입. nav-item 없는 뷰(`exam-select-view`)로의 `switchView` 폴백이 정식 라우트를 타 제목·해시·렌더 디스패치 동기화 (헤더 불일치·새로고침 상태 손실 해소). `showExamSelect`의 중복 수동 렌더 제거
+- **뷰 전환 포커스 (P3)**: `navigateToView`가 `.main-content`(tabindex="-1")로 `focus({preventScroll:true})` — 스크린리더 뷰 전환 인지·키보드 탭 시작점 확보
+- **훈련소 서브뷰 해시 (P4)**: `#/trainer/<slug>` 깊이 해시 — 서브패널 열림 시 push, `#/trainer` 복귀 hashchange 시 메뉴 복귀, 사장 슬러그는 replaceState로 정규화 (드릴 중 뒤로가기 → 뷰 이탈 대신 메뉴 복귀)
+- **네이밍 (P5)**: dictionary 라벨 "성분검색"→"성분 사전"(SPEC FO-11 용어와 통일) — 사이드바/모바일 탭/manifest uiText/타이틀 맵/문서 일괄
+- **CSS (P6)**: `--z-palette: 2500` 토큰 추가(`.cmdk-overlay` 하드코딩 제거), formula.html `hidden` 속성→`is-hidden` 클래스 통일(notice-check.js 3곳 대응)
+- **구조 테스트**: `tests/dom/ui-structure.dom.test.js` 19건 신설 — id 유일성·view-section↔해시 슬러그·타이틀 커버리지·5+N 탭 구조·dead 버튼·dialog 시맨틱·skip-link·exam-select 라우트·모달 뒤로가기·훈련소 해시 회귀
+
 ## 2026-09-29 pdf2md.py 개선 — 동명 충돌 방지·pytest·logging·병렬화
 
 - **동명 PDF 출력 충돌 방지**: `plan_doc_jobs()` 신설 — 같은 basename PDF가 2개 이상이면 subdir 라벨로 출력 구분(`{out}/{subdir}/{name}/{name}.md`, 골드 `ref_md/과목N/` 정합; `--flat`은 `{subdir}__{name}.md`). main·GUI 워커·`convert.py`가 공용 계획 사용. verify도 재귀 탐색으로 2단계 중첩·충돌 산출물 인식 + 골드 동일 상대경로 우선 조회

@@ -33,9 +33,8 @@ export function renderExamSelect() {
     }).join('');
 }
 
-/** 시험 전환 버튼 → 피커 뷰 표시 */
+/** 시험 전환 버튼 → 피커 뷰 표시 (렌더링은 라우터의 viewRenderers 디스패치에 위임) */
 export function showExamSelect() {
-    renderExamSelect();
     switchView('exam-select-view', { scrollTop: true });
 }
 

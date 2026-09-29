@@ -15,6 +15,7 @@ import { appVersion, formatAppVersion } from './app-version.js';
 import { captureEntrySource, flushPendingFeedback, initFeedbackHint } from './feedback.js';
 import { loadFeaturePlan, proFeatureNotice, showPlanCompare } from './pro-upgrade.js';
 import { showUsageStats, trackAction } from './usage-stats.js';
+import { setupModalBackHandler } from './modal-back.js';
 
 // --- 뷰 컨트롤러 모듈 임포트 ---
 import {
@@ -504,54 +505,7 @@ function setupMoreSheet() {
 // ./views/navigation.js로 추출됨 (app.js ↔ quiz.js/dashboard.js 순환 import 해결).
 
 // ============================================================
-// 모바일 UX 개선: 모달 뒤로가기 버튼 대응
-// ============================================================
-let modalOpenState = false;
-
-function setupModalBackHandler() {
-    // 모달이 열릴 때 history 상태 추가
-    const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-            if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-                const target = /** @type {HTMLElement} */ (mutation.target);
-                if (target.classList.contains('modal') ||
-                    target.classList.contains('modal-content') ||
-                    target.id === 'reader-table-modal') {
-                    const isVisible = !target.classList.contains('is-hidden') &&
-                                     getComputedStyle(target).display !== 'none';
-                    
-                    if (isVisible && !modalOpenState) {
-                        modalOpenState = true;
-                        history.pushState({ modalOpen: true }, '');
-                    } else if (!isVisible && modalOpenState) {
-                        modalOpenState = false;
-                    }
-                }
-            }
-        });
-    });
-
-    // 주요 모달 요소들 관찰
-    document.querySelectorAll('.modal, .modal-content, [id$="-modal"]').forEach(el => {
-        observer.observe(el, { attributes: true });
-    });
-
-    // 뒤로가기 버튼 처리
-    window.addEventListener('popstate', () => {
-        if (modalOpenState) {
-            // 열린 모달 찾아서 닫기
-            const openModals = document.querySelectorAll('.modal, .modal-content, [id$="-modal"]');
-            openModals.forEach(modal => {
-                if (!modal.classList.contains('is-hidden') && getComputedStyle(modal).display !== 'none') {
-                    modal.classList.add('is-hidden');
-                }
-            });
-            modalOpenState = false;
-        }
-    });
-}
-
-
+// 초기화 확장
 // ============================================================
 // 초기화 확장
 // ============================================================

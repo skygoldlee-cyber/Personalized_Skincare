@@ -357,7 +357,68 @@ function renderLimitsResult() {
 /* =======================================================
    🏛️ 스마트 훈련소 상태 관리 (Trainer View Controller)
    ======================================================= */
+
+// 서브패널 ↔ 해시 슬러그 — 열리면 #/trainer/<slug> push,
+// 뒤로가기(#/trainer 복귀) 시 메뉴로 돌린다 (UX-NAV 확장)
+const TRAINER_SUB_SLUGS = {
+    'trainer-limits-panel': 'limits',
+    'trainer-oxdrill-panel': 'oxdrill',
+    'trainer-combo-panel': 'combo',
+    'trainer-weak-panel': 'weak',
+    'trainer-calc-panel': 'calc',
+    'trainer-ingredients-panel': 'ingredients',
+};
+let _subnavReady = false;
+let _observedView = null;
+let _subObserver = null;
+let _openSubPanel = null;
+
+function _currentOpenSubPanel() {
+    for (const id of Object.keys(TRAINER_SUB_SLUGS)) {
+        const el = document.getElementById(id);
+        if (el && !el.classList.contains('is-hidden')) return id;
+    }
+    return null;
+}
+
+/** 훈련소 서브패널 해시 동기화 — 1회 설치 (옵저버 + hashchange 구독). */
+function initTrainerSubnav() {
+    const view = document.getElementById('trainer-view');
+    if (!view) return;
+
+    // 서브패널이 열리면 깊이 해시를 push — 뒤로가기가 뷰 이탈 대신 메뉴 복귀가 되게
+    if (view !== _observedView) {
+        if (_subObserver) _subObserver.disconnect();
+        _observedView = view;
+        _openSubPanel = _currentOpenSubPanel();
+        _subObserver = new MutationObserver(() => {
+            const open = _currentOpenSubPanel();
+            if (open === _openSubPanel) return;
+            _openSubPanel = open;
+            if (open && state.currentView === 'trainer-view' && location.hash === '#/trainer') {
+                try {
+                    history.pushState({ view: 'trainer-view' }, '', '#/trainer/' + TRAINER_SUB_SLUGS[open]);
+                } catch (_) { /* 제한 환경 무시 */ }
+            }
+        });
+        _subObserver.observe(view, { subtree: true, attributes: true, attributeFilter: ['class'] });
+    }
+
+    if (_subnavReady) return;
+    _subnavReady = true;
+
+    // 뒤로가기로 #/trainer에 도달했는데 서브패널이 열려 있으면 메뉴로 복귀
+    window.addEventListener('hashchange', () => {
+        if (state.currentView === 'trainer-view'
+            && location.hash === '#/trainer'
+            && _currentOpenSubPanel()) {
+            initTrainer();
+        }
+    });
+}
+
 export function initTrainer() {
+    initTrainerSubnav();
     state.trainer.activeSubView = 'menu';
     const menuPanel = document.getElementById('trainer-menu-panel');
     const limitsPanel = document.getElementById('trainer-limits-panel');
@@ -374,6 +435,13 @@ export function initTrainer() {
     if (oxPanel) oxPanel.classList.add('is-hidden');
     if (comboPanel) comboPanel.classList.add('is-hidden');
     if (weakPanel) weakPanel.classList.add('is-hidden');
+
+    // 사장된 서브패널 해시 정규화 — 나가기 버튼·딥링크 잔여 해시를 #/trainer로 복원.
+    // 뒤로가기 경유(hashchange → initTrainer)는 이미 #/trainer라 이 분기를 타지 않는다.
+    if (location.hash.startsWith('#/trainer/')) {
+        try { history.replaceState({ view: 'trainer-view' }, '', '#/trainer'); }
+        catch (_) { /* 제한 환경 무시 */ }
+    }
     updateDueBadges(); // 트레이너 카드의 "오늘 복습 대상" 배지 갱신
 }
 
