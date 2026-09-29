@@ -24,6 +24,7 @@ function getExamTargets(workspaceDir) {
         return {
             id: e.id,
             isDefault: !!e.default,
+            features: e.features || {},
             contentRoot,
             dataRoot,
             manifestPath,

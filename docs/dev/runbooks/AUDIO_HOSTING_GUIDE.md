@@ -39,6 +39,10 @@
 
 ### 2-1. 오디오 매니페스트 ([`data/audio_manifest.js`](../../../data/audio_manifest.js))
 
+> **선택 기능**: `content/exams.json`의 `features.audiobook`가 선택 스위치입니다.
+> `false`로 빌드하면 매니페스트에 해당 시험 항목이 완전히 제외되고(빈 `{}`),
+> 리더 UI도 `hasFeature('audiobook')` 게이트로 오디오 버튼·플레이어를 표시하지 않습니다.
+
 ```js
 export const AUDIO_BASE_URL = null; // null = 로컬 개발 모드, 문자열 = 외부 CDN URL
 

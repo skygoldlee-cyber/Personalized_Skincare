@@ -402,7 +402,7 @@ Personalized_Skincare/
 │   │   ├── schema.js           #   스키마 검증
 │   │   ├── id_factory.js       #   안정적 ID 생성
 │   │   ├── build_keyword_index.js # GLOSSARY_INDEX + 큐레이션 병합
-│   │   ├── build_audio_manifest.js # 오디오 챕터 매니페스트 생성
+│   │   ├── build_audio_manifest.js # 오디오 챕터 매니페스트 생성 (exams.json features.audiobook 선택 시만 항목 발행 — false면 완전 제외)
 │   │   ├── build_pdf_registry.js # PDF 레지스트리 생성
 │   │   ├── report.js           #   빌드 통계
 │   │   ├── stamp_sw_version.js #   SW 캐시 버전 자동 스탬프

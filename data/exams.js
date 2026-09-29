@@ -24,7 +24,7 @@ var EXAMS_LIST = {
         "dictionary": true,
         "calcPractice": true,
         "ingredients": true,
-        "audiobook": true,
+        "audiobook": false,
         "refDocs": true,
         "appendixDocs": true,
         "pomodoro": true,

@@ -4,6 +4,9 @@
 // [멀티시험] content/exams.json의 모든 시험을 순회해 시험 id 키로 분리된 매니페스트를
 //           단일 파일(data/audio_manifest.js — 항상 앱 공용 data 루트)로 발행한다.
 //           런타임(reader-audio.js)은 활성 시험 id로 자신의 매니페스트를 선택한다.
+// [선택사항] exams.json의 features.audiobook가 선택 플래그다. false/미지정 시
+//           스캔·기존 매니페스트 보존 모두 건너뛰어 항목을 완전히 제외한다
+//           (UI는 hasFeature('audiobook')로 이미 게이트되어 있음).
 // 실행: node tools/build/build_audio_manifest.js
 const fs = require('fs');
 const path = require('path');
@@ -54,6 +57,11 @@ function build() {
 
   const manifest = {};
   for (const target of getExamTargets(WORKSPACE_DIR)) {
+    if (!target.features || target.features.audiobook !== true) {
+      // 오디오 지원 미선택 — 스캔/보존 모두 건너뛰고 항목을 비운다
+      console.log(`  [${target.id}] features.audiobook 비활성 — 매니페스트 제외`);
+      continue;
+    }
     const scanned = scanExamAudio(target);
     if (Object.keys(scanned).length > 0) {
       manifest[target.id] = scanned;

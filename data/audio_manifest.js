@@ -18,22 +18,7 @@
 export const AUDIO_BASE_URL = null;
 
 /** @type {Object<string, import('../src/types.js').AudioManifest>} */
-export const AUDIO_MANIFEST = {
-  "cosmetic": {
-    "law": {
-      "0": "content/exams/cosmetic/audiobook/mp3/law/ch01_1과목_화장품법의이해_이야기형.mp3"
-    },
-    "manufacturing": {
-      "0": "content/exams/cosmetic/audiobook/mp3/manufacturing/ch02_2과목_제조및품질관리_이야기형.mp3"
-    },
-    "safety": {
-      "0": "content/exams/cosmetic/audiobook/mp3/safety/ch03_3과목_유통화장품안전관리_이야기형.mp3"
-    },
-    "understanding": {
-      "0": "content/exams/cosmetic/audiobook/mp3/understanding/ch04_4과목_맞춤형화장품의이해_이야기형.mp3"
-    }
-  }
-};
+export const AUDIO_MANIFEST = {};
 
 /**
  * 활성 시험의 오디오 매니페스트를 반환한다.
