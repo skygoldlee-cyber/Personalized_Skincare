@@ -3,7 +3,7 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: ff97ee3a46352267
+> 입력 해시: 55f9ca24a6227560
 > 생성: 2026-09-29 · 원천: SPEC.md(360개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
@@ -490,15 +490,15 @@
 
 | ID | 상태 | 검증 수단 | 문서 | 소스 | 테스트 | 보고서 | 출처 |
 |----|------|-----------|------|------|--------|--------|------|
-| DA-01 | ✅ | 테스트 | DOC-RBK-03<br>DOC-RBK-08 | tools/build/index.js<br>tools/build/manifest_loader.js | tests/unit/data-architecture.test.js | — | — |
-| DA-02 | ✅ | 테스트 | DOC-RBK-03 | src/data-loader.js<br>tools/build/index.js | tests/unit/data-architecture.test.js | — | — |
-| DA-03 | ✅ | 테스트 | DOC-RBK-03 | src/data-loader.js | tests/unit/data-loader.test.js | — | — |
-| DA-04 | ✅ | 테스트 | DOC-RBK-03 | tools/build/build_study_md_bundle.js | tests/unit/data-architecture.test.js | — | — |
-| DA-05 | ✅ | 테스트 | DOC-RBK-03 | src/state.js<br>src/storage.js | tests/unit/state.test.js | — | — |
-| DA-06 | ✅ | 테스트 | DOC-RBK-03 | src/exam-context.js<br>src/paths.js<br>src/pwa-manifest.js<br>tools/build/exam_targets.js | tests/unit/data-architecture.test.js | — | — |
-| DA-07 | ✅ | 테스트 | DOC-RBK-03 | src/exam-context.js<br>src/storage-keys.js<br>src/storage.js | tests/unit/storage-key-sync.test.js | — | — |
-| DA-08 | ✅ | 테스트 | DOC-DSN-08<br>DOC-RBK-03 | src/exam-context.js | tests/unit/data-architecture.test.js | — | — |
-| DA-09 | ✅ | 테스트 | DOC-RBK-03 | src/storage.js | tests/unit/storage.test.js | — | — |
+| DA-01 | ✅ | 테스트 | DOC-RBK-03<br>DOC-RBK-08<br>DOC-REF-08 | tools/build/index.js<br>tools/build/manifest_loader.js | tests/unit/data-architecture.test.js | — | — |
+| DA-02 | ✅ | 테스트 | DOC-RBK-03<br>DOC-REF-08 | src/data-loader.js<br>tools/build/index.js | tests/unit/data-architecture.test.js | — | — |
+| DA-03 | ✅ | 테스트 | DOC-RBK-03<br>DOC-REF-08 | src/data-loader.js | tests/unit/data-loader.test.js | — | — |
+| DA-04 | ✅ | 테스트 | DOC-RBK-03<br>DOC-REF-08 | tools/build/build_study_md_bundle.js | tests/unit/data-architecture.test.js | — | — |
+| DA-05 | ✅ | 테스트 | DOC-RBK-03<br>DOC-REF-08 | src/state.js<br>src/storage.js | tests/unit/state.test.js | — | — |
+| DA-06 | ✅ | 테스트 | DOC-RBK-03<br>DOC-REF-08 | src/exam-context.js<br>src/paths.js<br>src/pwa-manifest.js<br>tools/build/exam_targets.js | tests/unit/data-architecture.test.js | — | — |
+| DA-07 | ✅ | 테스트 | DOC-RBK-03<br>DOC-REF-08 | src/exam-context.js<br>src/storage-keys.js<br>src/storage.js | tests/unit/storage-key-sync.test.js | — | — |
+| DA-08 | ✅ | 테스트 | DOC-DSN-08<br>DOC-RBK-03<br>DOC-REF-08 | src/exam-context.js | tests/unit/data-architecture.test.js | — | — |
+| DA-09 | ✅ | 테스트 | DOC-RBK-03<br>DOC-REF-08 | src/storage.js | tests/unit/storage.test.js | — | — |
 | DA-10 | ✅ | 테스트 | — | src/customer-store.js<br>src/sync.js | tests/unit/customer-store.test.js | — | 개인정보보호법 — 상동 (조제관리사가 고객 개인정보를 클라우드에 올리지 않는 설계) |
 
 ## 5.2 안정적 ID 체계
@@ -514,14 +514,14 @@
 
 | ID | 상태 | 검증 수단 | 문서 | 소스 | 테스트 | 보고서 | 출처 |
 |----|------|-----------|------|------|--------|--------|------|
-| BP-01 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 1개 | tools/build/build_all_data.js<br>tools/build/build_audio_manifest.js<br>tools/build/build_combo_drills.js<br>tools/build/build_doc_bundles.js<br>…외 19개 | tests/unit/build-pipeline.test.js | — | — |
-| BP-02 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 1개 | tools/build/index.js<br>tools/build/schema.js<br>tools/check/check_imports.js | tests/unit/build-pipeline.test.js | — | — |
-| BP-03 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 1개 | tools/build/index.js<br>tools/build/manifest_loader.js<br>tools/check/check_manifest.js | tests/unit/build-pipeline.test.js | — | — |
-| BP-04 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 1개 | tools/build/build_exam_bundles.js<br>tools/build/index.js | tests/unit/build-pipeline.test.js | — | — |
-| BP-05 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 1개 | tools/check/check_parser_parity.js | tests/unit/build-pipeline.test.js | — | — |
-| BP-06 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 1개 | tools/build/build_keyword_index.js | tests/unit/build-pipeline.test.js | — | — |
-| BP-07 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 1개 | tools/build/stamp_release_notes.js<br>tools/build/stamp_sw_version.js<br>tools/deploy.js | tests/unit/build-pipeline.test.js | — | — |
-| BP-08 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 1개 | tools/check/audit_card_quality.js | tests/unit/build-pipeline.test.js | — | — |
+| BP-01 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 2개 | tools/build/build_all_data.js<br>tools/build/build_audio_manifest.js<br>tools/build/build_combo_drills.js<br>tools/build/build_doc_bundles.js<br>…외 19개 | tests/unit/build-pipeline.test.js | — | — |
+| BP-02 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 2개 | tools/build/index.js<br>tools/build/schema.js<br>tools/check/check_imports.js | tests/unit/build-pipeline.test.js | — | — |
+| BP-03 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 2개 | tools/build/index.js<br>tools/build/manifest_loader.js<br>tools/check/check_manifest.js | tests/unit/build-pipeline.test.js | — | — |
+| BP-04 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 2개 | tools/build/build_exam_bundles.js<br>tools/build/index.js | tests/unit/build-pipeline.test.js | — | — |
+| BP-05 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 2개 | tools/check/check_parser_parity.js | tests/unit/build-pipeline.test.js | — | — |
+| BP-06 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 2개 | tools/build/build_keyword_index.js | tests/unit/build-pipeline.test.js | — | — |
+| BP-07 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 2개 | tools/build/stamp_release_notes.js<br>tools/build/stamp_sw_version.js<br>tools/deploy.js | tests/unit/build-pipeline.test.js | — | — |
+| BP-08 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 2개 | tools/check/audit_card_quality.js | tests/unit/build-pipeline.test.js | — | — |
 
 ## 5.4 콘텐츠 구조
 
@@ -636,6 +636,7 @@
 | DOC-REF-05 | docs/dev/reference/NUMBERING_SYSTEM.md | CS-01, CS-02, CS-03, CS-04, CS-05, CS-06, CS-07, CS-08, CS-09, CS-10, ID-01, ID-02, ID-03, ID-04, TR-01, TR-02, TR-03, TR-04, TR-05, TR-06, TR-07, TR-08, TR-09, TR-10, TR-11, TR-12, TR-13, TR-14, TR-15, TR-16, TR-16a, TR-17, TR-18 |
 | DOC-REF-06 | docs/dev/reference/TESTING.md | — |
 | DOC-REF-07 | docs/dev/reference/TEXTBOOK_REFERENCE_MAPPING.md | CS-01, CS-02, CS-03, CS-04, CS-05, CS-06, CS-07, CS-08, CS-09, CS-10, RR-01, RR-02, RR-03, RR-04, RR-05, RR-06, RR-07, RR-08, RR-09, RR-10, RR-11, RR-12, RR-13, RR-14, RR-15, RR-16 |
+| DOC-REF-08 | docs/dev/reference/ENGINEERING_PRACTICES.md | BP-01, BP-02, BP-03, BP-04, BP-05, BP-06, BP-07, BP-08, DA-01, DA-02, DA-03, DA-04, DA-05, DA-06, DA-07, DA-08, DA-09 |
 | DOC-ROOT-01 | README.md | — |
 | DOC-ROOT-02 | AGENTS.md | — |
 | DOC-USR-01 | docs/user/exam_strategy.md | — |

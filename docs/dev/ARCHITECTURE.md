@@ -503,7 +503,8 @@ Personalized_Skincare/
     │       ├── FLASHCARD_LOGIC.md         #  플래시카드·SM-2 로직
     │       ├── MD_TO_HTML_LOGIC.md        #  MD→HTML 변환 로직
     │       ├── COMBO_STUDY_STRATEGY.md    #  복수정답형 학습전략
-    │       └── TEXTBOOK_REFERENCE_MAPPING.md # 교재↔참조자료 매핑
+    │       ├── TEXTBOOK_REFERENCE_MAPPING.md # 교재↔참조자료 매핑
+    │       └── ENGINEERING_PRACTICES.md   #  소프트웨어 공학 요소 정리
     ├── report_archive/         #   분석 보고서·대체된 전략 문서 아카이브 (앱 미참조)
     │   #   — Cosmetic Master Business Plan·FEATURE_PROPOSALS·PASS_TO_PRACTICE_STRATEGY·
     │   #     PASS_CORE_LOOP_REVIEW·FORMULA_OS_DESIGN·PRO_MULTI_EXAM_EVALUATION·
@@ -2053,6 +2054,7 @@ SPEC.md의 기능/비기능 ID와 이 문서의 설명 위치·구현 모듈 대
 - [`CHANGES.md`](CHANGES.md) — 코드 리뷰 및 아키텍처 개편 수정 이력 (Changelog)
 - [`MD_TO_HTML_LOGIC.md`](reference/MD_TO_HTML_LOGIC.md) — MD→HTML 변환·표시 로직 기술 문서
 - [`TESTING.md`](reference/TESTING.md) — 테스트 가이드·정책 (unit + DOM)
+- [`ENGINEERING_PRACTICES.md`](reference/ENGINEERING_PRACTICES.md) — 소프트웨어 공학 요소 정리 (SSOT·신선도 게이트·추적성)
 - [`DOM_TEST_DESIGN.md`](design/DOM_TEST_DESIGN.md) — jsdom UI 시나리오 테스트 설계 (helpers·모킹 전략·Playwright 확장 경로)
 - [`SPEC.md`](SPEC.md) — 요구사양 명세서 (기능 ID별 구현 상태, UI/UX 재사용 가이드 §4.8, 디자인 토큰·상태 규약 §4.9)
 - [`FORMULA_OS_WORKFLOW_DESIGN.md`](design/FORMULA_OS_WORKFLOW_DESIGN.md) — 배치·고객·원료 장부 업무 플로우 설계 (Phase 5-A 기본 설계는 `docs/report_archive/FORMULA_OS_DESIGN.md`)

@@ -364,6 +364,7 @@ docs/                   # 개발 문서
 - `docs/dev/runbooks/CONTENT_WORKFLOW.md` — content 변경 시 작업 절차 가이드
 - `docs/dev/CHANGES.md` — 변경 이력
 - `docs/dev/reference/TESTING.md` — 테스트 가이드
+- `docs/dev/reference/ENGINEERING_PRACTICES.md` — 소프트웨어 공학 요소 정리 (SSOT·신선도 게이트·추적성)
 - `docs/dev/design/DOM_TEST_DESIGN.md` — jsdom UI 시나리오 테스트 설계
 - `docs/dev/design/SUPABASE_DESIGN.md` — 계정·클라우드 동기화 설계안 (Phase 1~2 구현 완료, Pro entitlement는 미구현)
 - `docs/dev/runbooks/TEXTBOOK_AUTHORING_GUIDE.md` — 교재 작성 가이드

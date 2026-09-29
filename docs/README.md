@@ -88,7 +88,7 @@ docs/
 │   ├── ARCHITECTURE.md·SPEC.md·CHANGES.md  ← 수위 문서 (아키텍처·명세·이력)
 │   ├── runbooks/              ← 실행 절차·운영 런북 (9개)
 │   ├── design/                ← 설계·계획·평가 문서 (9개)
-│   └── reference/             ← 명세·로직·참조 문서 (7개)
+│   └── reference/             ← 명세·로직·참조 문서 (8개)
 ├── user/                        ← 사용자/학습자 문서 (7개)
 └── report_archive/              ← 분석 보고서 + 대체된 전략 문서 아카이브 (11개)
 ```
@@ -121,6 +121,7 @@ docs/
 | [COMBO_GENERATION_GUIDE.md](dev/runbooks/COMBO_GENERATION_GUIDE.md) | 복수정답형 드릴 생성 도구 — `build_combo_drills.js` + `ref_statements.js` |
 | [TEXTBOOK_REFERENCE_MAPPING.md](dev/reference/TEXTBOOK_REFERENCE_MAPPING.md) | 교재 챕터/섹션 ↔ 참조자료 파일 매핑 정의 |
 | [COMBO_STUDY_STRATEGY.md](dev/reference/COMBO_STUDY_STRATEGY.md) | 복수정답형 학습 전략 — 진술 원자 단위 학습법, 전략→기능 매핑 (코드 주석에서 참조) |
+| [ENGINEERING_PRACTICES.md](dev/reference/ENGINEERING_PRACTICES.md) | 소프트웨어 공학 요소 — SSOT, 신선도 게이트, 추적성, 다층 검증, 결정성 빌드 등 |
 | [ingredients_audit_제2026-19호.md](dev/ingredients_audit_제2026-19호.md) | 원료 DB ↔ 고시 제2026-19호 별표1·별표2 전수 대조 리포트 — 오류 정정·누락 추가·반영 결과 (`ref-pipeline/compare_ingredients_official.py`) |
 
 ### Formula OS (실무)
@@ -269,6 +270,7 @@ docs/
 | DOC-REF-05 | `docs/dev/reference/NUMBERING_SYSTEM.md` |
 | DOC-REF-06 | `docs/dev/reference/TESTING.md` |
 | DOC-REF-07 | `docs/dev/reference/TEXTBOOK_REFERENCE_MAPPING.md` |
+| DOC-REF-08 | `docs/dev/reference/ENGINEERING_PRACTICES.md` |
 | DOC-RBK-01 | `docs/dev/runbooks/AUDIO_HOSTING_GUIDE.md` |
 | DOC-RBK-02 | `docs/dev/runbooks/COMBO_GENERATION_GUIDE.md` |
 | DOC-RBK-03 | `docs/dev/runbooks/CONTENT_WORKFLOW.md` |
