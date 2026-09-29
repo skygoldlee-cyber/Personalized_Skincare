@@ -86,7 +86,7 @@ docs/
 ├── business/                    ← 사업 기획·시장 조사·마케팅 문서 (5개)
 ├── dev/                         ← 개발 문서 (26개)
 │   ├── ARCHITECTURE.md·SPEC.md·CHANGES.md  ← 수위 문서 (아키텍처·명세·이력)
-│   ├── runbooks/              ← 실행 절차·운영 런북 (8개)
+│   ├── runbooks/              ← 실행 절차·운영 런북 (9개)
 │   ├── design/                ← 설계·계획·평가 문서 (9개)
 │   └── reference/             ← 명세·로직·참조 문서 (7개)
 ├── user/                        ← 사용자/학습자 문서 (7개)
@@ -141,6 +141,7 @@ docs/
 | 문서 | 설명 |
 |------|------|
 | [DEPLOYMENT_GUIDE.md](dev/runbooks/DEPLOYMENT_GUIDE.md) | Vercel 배포·오디오 호스팅 — 용량 최적화, CSP/캐시 정책, 체크리스트, 트러블슈팅 |
+| [VERIFY_DEPLOY_PIPELINE.md](dev/runbooks/VERIFY_DEPLOY_PIPELINE.md) | 전체구조 점검→배포 게이트 파이프라인 — check:all/ci 구성, 생성물 신선도 게이트, 실패 복구 표 |
 | [MULTI_MACHINE_SETUP.md](dev/runbooks/MULTI_MACHINE_SETUP.md) | 다중 머신 개발 환경 — GitHub SSH, Vercel CLI 인증, Actions 자동 배포 |
 | [AUDIO_HOSTING_GUIDE.md](dev/runbooks/AUDIO_HOSTING_GUIDE.md) | 오디오북 호스팅·청취 아키텍처 — GitHub Releases 연동, 모바일 청취 동작 |
 | [Supabase_Custom_SMTP_MagicLink_OTP_설정가이드.md](dev/runbooks/Supabase_Custom_SMTP_MagicLink_OTP_설정가이드.md) | Supabase 운영 런북 — Custom SMTP(Gmail 앱 비밀번호)·Magic Link/OTP 템플릿·체크리스트 |
@@ -276,6 +277,7 @@ docs/
 | DOC-RBK-06 | `docs/dev/runbooks/Supabase_Custom_SMTP_MagicLink_OTP_설정가이드.md` |
 | DOC-RBK-07 | `docs/dev/runbooks/TEXTBOOK_AUTHORING_GUIDE.md` |
 | DOC-RBK-08 | `docs/dev/runbooks/TEXTBOOK_REPLACEMENT_RUNBOOK.md` |
+| DOC-RBK-09 | `docs/dev/runbooks/VERIFY_DEPLOY_PIPELINE.md` |
 | DOC-USR-01 | `docs/user/exam_strategy.md` |
 | DOC-USR-02 | `docs/user/formula_manual.md` |
 | DOC-USR-03 | `docs/user/subject1_numbers.md` |

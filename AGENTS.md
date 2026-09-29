@@ -360,6 +360,7 @@ docs/                   # 개발 문서
 
 - `docs/dev/ARCHITECTURE.md` — 시스템 아키텍처 상세
 - `docs/dev/runbooks/DEPLOYMENT_GUIDE.md` — 배포 가이드
+- `docs/dev/runbooks/VERIFY_DEPLOY_PIPELINE.md` — 전체구조 점검→배포 게이트 파이프라인 (신선도 게이트·실패 복구 표)
 - `docs/dev/runbooks/CONTENT_WORKFLOW.md` — content 변경 시 작업 절차 가이드
 - `docs/dev/CHANGES.md` — 변경 이력
 - `docs/dev/reference/TESTING.md` — 테스트 가이드

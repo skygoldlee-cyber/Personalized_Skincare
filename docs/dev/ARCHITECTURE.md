@@ -481,6 +481,7 @@ Personalized_Skincare/
     │   │   ├── CONTENT_WORKFLOW.md        #  콘텐츠 변경 표준 절차
     │   │   ├── TEXTBOOK_REPLACEMENT_RUNBOOK.md # 교재 교체 작업 순서도
     │   │   ├── DEPLOYMENT_GUIDE.md        #  배포 가이드
+    │   │   ├── VERIFY_DEPLOY_PIPELINE.md  #  점검→배포 게이트 파이프라인
     │   │   ├── AUDIO_HOSTING_GUIDE.md     #  오디오 호스팅 구조
     │   │   ├── TEXTBOOK_AUTHORING_GUIDE.md #  교재 작성 지침
     │   │   ├── COMBO_GENERATION_GUIDE.md  #  복수정답형 드릴 생성 절차
@@ -2046,6 +2047,7 @@ SPEC.md의 기능/비기능 ID와 이 문서의 설명 위치·구현 모듈 대
 
 - [`README.md`](../../README.md) — 프로젝트 소개 및 시작 가이드 (폴더 구조 포함)
 - [`DEPLOYMENT_GUIDE.md`](runbooks/DEPLOYMENT_GUIDE.md) — Vercel 배포 및 오디오 호스팅 가이드
+- [`VERIFY_DEPLOY_PIPELINE.md`](runbooks/VERIFY_DEPLOY_PIPELINE.md) — 전체구조 점검→배포 게이트 파이프라인 (신선도 게이트·실패 복구 표)
 - [`AUDIO_HOSTING_GUIDE.md`](runbooks/AUDIO_HOSTING_GUIDE.md) — 오디오북 호스팅 및 청취 가이드
 - [`MULTI_MACHINE_SETUP.md`](runbooks/MULTI_MACHINE_SETUP.md) — 다중 머신 개발 환경 설정
 - [`CHANGES.md`](CHANGES.md) — 코드 리뷰 및 아키텍처 개편 수정 이력 (Changelog)
