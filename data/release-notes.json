@@ -1,5 +1,18 @@
 [
   {
+    "version": "v20260929-b533e0c",
+    "date": "2026-09-29",
+    "notes": [
+      "[문서·reference] 보류 항목의 판단 근거·필요 시점 명기",
+      "[정리·infra] Node 버전 정합 + Dependabot 의존성 상시 감시",
+      "[기능·check] 잔여 표준 갭 적용 — SBOM·specrefs 로드맵 제외·추적성 정합",
+      "[문서·reference] 표준 대응 매핑 부록 추가 (ENGINEERING_PRACTICES)",
+      "[문서·reference] 소프트웨어 공학 요소 정리 문서 추가 (DOC-REF-08)",
+      "[문서·runbooks] 파이프라인 다이어그램을 Mermaid로 교체",
+      "[문서·runbooks] 점검→배포 게이트 파이프라인 가이드 추가 (DOC-RBK-09)"
+    ]
+  },
+  {
     "version": "v20260929-0bb35c3",
     "date": "2026-09-29",
     "notes": [
@@ -136,13 +149,6 @@
     "date": "2026-09-28",
     "notes": [
       "[기능·refs] 참조자료·법규 문서에 law.go.kr 원문 링크 — 한글주소 매퍼"
-    ]
-  },
-  {
-    "version": "v20260928-db636f1",
-    "date": "2026-09-28",
-    "notes": [
-      "[수정·notice] 고시 원문 링크 정정 — 행정규칙 한글주소 + 일련번호 상세"
     ]
   }
 ]
