@@ -113,7 +113,7 @@ describe('배합 계산기 — 입력·검증·저장 시나리오', () => {
         expect(summary.textContent).toContain('확인 1');
     });
 
-    it('고객 카드 불러오기 → 고객 필드 반영 + 토스트', () => {
+    it('고객 카드 불러오기 → 고객 필드 반영', () => {
         const { customer } = createCustomer({ name: '김OO', skinType: '건성', concerns: ['건조'], pregnancy: '임신 중' });
         formulaNew();
 
@@ -125,8 +125,8 @@ describe('배합 계산기 — 입력·검증·저장 시나리오', () => {
         expect(el('formula-cust-pregnancy').value).toBe('임신 중');
         expect(el('formula-cust-id').value).toBe(customer.id);
         expect(el('formula-cust-concerns').querySelector('input[value="건조"]').checked).toBe(true);
-        expect(lastToast()[0]).toContain('김OO');
-        expect(lastToast()[1]).toBe('success');
+        // 필드가 화면에 즉시 반영되므로 별도 확인 토스트는 띄우지 않는다 (알림 피로 완화)
+        expect(showToast).not.toHaveBeenCalledWith(expect.stringContaining('불러왔습니다'), expect.anything());
     });
 
     it('포뮬러 저장 → 목록 카드·검증 배지 반영', () => {

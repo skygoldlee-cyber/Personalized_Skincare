@@ -6,6 +6,27 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-09-29 UI/UX 피로도 개선 — 대시보드 재구성·접이식 안내·토스트 위생·이모지 통일
+
+- **대시보드 재구성**: "오늘 할 일"(데일리 챌린지+안내서) CTA를 최상단으로 이동. 스탯은 상시 3개(진척도·오늘 복습·시험 D-day) + `dashboard-stats-fold` 접이식(외운 카드·정답률·헷갈린 카드, `ui_stats_open` 상태 유지). 스탯 아이콘 색을 primary 단일 톤으로 통일 — 주의 의미(헷갈린 카드)만 주황 유지
+- **맞춤학습 인트로 접이식**: 7불릿 안내 카드를 `analysis-intro-fold`(`role=details`)로 — 첫 방문 열림, 접으면 `ui_analysis_intro_open`에 상태 기억 (재방문 텍스트 벽 해소)
+- **게이미피션 톤다운**: `streak-wiggle` 무한 애니메이션+글로 제거(조용한 카운터). 데일리 챌린지 토스트·UI의 🎉🧊🟢 이모지 제거, 완료 문구 간결화
+- **토스트 위생**: `showToast`의 success 기본 지속시간 3000→2000ms (화면 변화와 확인 중복 완화). 고객 카드 불러오기 등 UI 반영이 즉시 보이는 중복 확인 토스트 제거
+- **PRO 배지 톤다운**: 채움 보라 그라디언트 → 아웃라인형. 맞춤학습 인트로 카드의 중복 배지 제거(내비 배지 + 1회 안내 모달로 신호 충분)
+- **이모지→FA 통일**: 뷰 제목·버튼·필터의 이모지(🎯⏱️🧪🔍📚📅🧭🟢🟡🔴💡✏️ 등)를 FontAwesome 아이콘 또는 텍스트로 치환 — OS별 렌더링 차이·시각 잡음 해소
+- **문서**: user_manual §대시보드/맞춤학습 진입 경로·화면 구성 갱신 + docs_md 번들 재생성
+
+## 2026-09-29 UI/UX 개선 일괄 — 탭 바 5+N 재구성·해시 라우팅·토스트 스택·a11y 보강
+
+- **모바일 탭 바 5+N 재구성**: 14개 가로 스크롤 탭 → 핵심 5탭(대시보드/카드/퀴즈/실무/성분검색) + **[더보기]** 버튼 → `#mobile-more-sheet` 하단 시트(`role="dialog"`)에 나머지 메뉴를 학습/훈련·평가/자료·도구/기타 그룹으로 정리. 활성 탭 `scrollIntoView({inline:'center'})` + `aria-current="page"`, 시트 소속 뷰는 더보기 탭이 활성 표시 (SPEC UX-NAV-01 갱신)
+- **뷰 해시 라우팅**: `navigateToView`가 `#/슬러그`를 pushState → 브라우저/PWA 뒤로가기·딥링크 지원. `initViewHashRouting(ctx)` 초기 해시 해석 + `hashchange` 구독, `_hashNavigating` 플래그로 재진입 pushState 방지 (SPEC UX-NAV-08 신설, router.dom.test.js 7건 추가)
+- **토스트 스택화**: `#app-toast`가 최대 3개 아이템을 쌓아 연속 알림 유실 방지 — `role="status"`/`aria-live` 계약·아이콘·타입은 기존 유지
+- **접근성 보강**: skip link(본문 바로가기), `.nav-menu`/`mobile-tab-bar` `aria-label`, `#settings-toggle-btn` `aria-controls="settings-panel"`, `href="#"` 액션 링크 → `<button>` 시맨틱 전환(exam/formula)
+- **OMR 모바일 접이식**: 900px 이하에서 답안지 패널이 토글 가능 — 고정 520px 높이 점유 해소 + `#omr-toggle-btn`/`aria-expanded`
+- **빈 상태 통일**: 퀴즈·복습·교재·리더·모의고사 결과·Formula의 empty-state 마크업/클래스 일관화
+- **SW 업데이트 토스트 비차단**: `#sw-update-toast`에 `pointer-events:none` — 정보성 오버레이가 투명해진 뒤에도 하단 탭 바 클릭을 가로채던 실제 결함 수정 (모바일 E2E 타임아웃 2건의 근본 원인)
+- **문서**: SPEC UX-NAV-01/08, TRACE_MATRIX, ARCHITECTURE(네비 동기화·반응형 표), user_manual §13(탭 바·뒤로가기), README 탭 바 목록 갱신 + docs_md 번들 재생성
+
 ## 2026-09-29 생성물 신선도 통합 게이트 + CI 로컬 재현
 
 - **`tools/check/check_data_freshness.js` 신설** (`npm run check:datafresh`, check:content [데이터신선도] 단계): 빌드 체인(build:data 생성 단계 — sync:citations 제외)을 실제 실행 후 `git diff`로 생성물 범위(data/·src/keyword-index.js·sw.js·index.html·manifest·last-stats) 변경을 감지하고 HEAD로 자동 원복 — 생성기마다 별도 --check를 구현하지 않아도 전 생성물을 커버. `generatedAt`·생성 헤더 타임스탬프·CACHE_VERSION 스탬프 라인 변경은 노이즈로 필터링. 실행 전 생성물 경로가 clean이어야 동작 (dirty면 사용자 변경 유실 방지로 중단)

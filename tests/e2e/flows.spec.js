@@ -74,7 +74,14 @@ test.describe('프로덕션 CSP 하 콘텐츠 렌더', () => {
         expect(csp).not.toContain('unsafe-eval');
 
         // 학습안내서(user_manual)에 mermaid 블록 포함 — 지연 로딩 후 렌더
-        await page.locator('[data-click="ManualViewer.openManual"]:visible').first().click();
+        // 데스크톱은 사이드바 매뉴얼 버튼, 모바일은 '더보기' 시트 안에 있다
+        const manualBtn = page.locator('[data-click="ManualViewer.openManual"]:visible').first();
+        if (await manualBtn.count() > 0) {
+            await manualBtn.click();
+        } else {
+            await page.locator('#mobile-more-btn').click();
+            await page.locator('#mobile-more-sheet [data-click="ManualViewer.openManual"]').click();
+        }
         const article = page.locator('#manual-article');
         await expect(article).toBeVisible({ timeout: 15_000 });
         await expect(article.locator('pre.mermaid svg').first()).toBeVisible({ timeout: 30_000 });

@@ -110,6 +110,8 @@
           'z-index:2147483647', 'box-shadow:0 4px 20px rgba(0,0,0,0.3)',
           'backdrop-filter:blur(8px)', '-webkit-backdrop-filter:blur(8px)',
           'display:flex', 'align-items:center', 'gap:10px',
+          // 정보용 토스트 — 인터랙션 없으므로 탭 바 등 하단 요소 클릭을 막지 않도록
+          'pointer-events:none',
           'opacity:0', 'transition:opacity 0.3s ease',
           'max-width:90vw', 'text-align:center',
           'font-family:system-ui,-apple-system,sans-serif'

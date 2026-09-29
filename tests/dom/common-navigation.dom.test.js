@@ -110,12 +110,21 @@ describe('사이드바 ↔ 모바일 탭 바 메뉴 일치', () => {
         loadIndexHtml();
     });
 
-    it('사이드바 .nav-item과 모바일 .mobile-tab-item의 data-target 집합·순서가 동일하다', () => {
+    it('사이드바 .nav-item과 모바일 탭(탭 바+더보기 시트)의 data-target 집합이 동일하다', () => {
         const sidebarTargets = [...document.querySelectorAll('.nav-item[data-target]')]
             .map(n => n.getAttribute('data-target'));
+        // 모바일은 핵심 탭 바(#mobile-tab-bar)와 '더보기' 시트(#mobile-more-sheet)로 분리됨 —
+        // 양쪽 합집합이 사이드바와 동일해야 한다
         const mobileTargets = [...document.querySelectorAll('.mobile-tab-item[data-target]')]
             .map(n => n.getAttribute('data-target'));
-        expect(sidebarTargets).toEqual(mobileTargets);
+        expect([...mobileTargets].sort()).toEqual([...sidebarTargets].sort());
+        // 같은 뷰가 탭 바와 시트에 중복 등장하면 안 됨
+        expect(new Set(mobileTargets).size).toBe(mobileTargets.length);
+        // 탭 바 내부 순서는 사이드바 순서의 부분열이어야 함
+        const barTargets = [...document.querySelectorAll('#mobile-tab-bar .mobile-tab-item[data-target]')]
+            .map(n => n.getAttribute('data-target'));
+        const orderIdx = barTargets.map(t => sidebarTargets.indexOf(t));
+        expect(orderIdx).toEqual([...orderIdx].sort((a, b) => a - b));
     });
 
     it('각 data-target은 대응하는 .view-section을 갖는다', () => {

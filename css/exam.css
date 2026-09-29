@@ -147,6 +147,7 @@
     gap: var(--space-2);
     padding: 0.75rem 1rem;
     border-radius: var(--radius-sm);
+    font-family: inherit;
     font-size: var(--text-md-sm);
     font-weight: var(--font-weight-semibold);
     text-decoration: none;
@@ -486,6 +487,43 @@
     gap: var(--space-1);
     border-bottom: 1px solid var(--border-subtle);
     padding-bottom: var(--space-3);
+}
+
+/* OMR 답안지 접이식 토글 — 모바일 공간 확보 */
+.omr-toggle {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 0;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    text-align: left;
+}
+.omr-toggle .omr-title {
+    font-size: var(--text-1rem);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-on-brand);
+}
+.omr-toggle .omr-progress {
+    margin-left: auto;
+    margin-right: var(--space-2);
+}
+.omr-chevron {
+    color: var(--color-text-muted);
+    transition: transform var(--transition-base);
+}
+.sim-omr-panel.omr-collapsed {
+    height: auto;
+}
+.sim-omr-panel.omr-collapsed .omr-chevron {
+    transform: rotate(-90deg);
+}
+.sim-omr-panel.omr-collapsed .omr-grid-container {
+    display: none;
 }
 
 .omr-header h5 {

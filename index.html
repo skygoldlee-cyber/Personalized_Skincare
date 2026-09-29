@@ -33,6 +33,9 @@
     <script src="src/pwa-install-capture.js"></script>
 </head>
 <body class="dark-theme">
+    <!-- 본문 바로가기 (키보드·스크린리더 접근성 — 첫 Tab 정지점) -->
+    <a href="#main-content" class="skip-link">본문으로 바로가기</a>
+
     <!-- Offline Banner (오프라인 상태 표시) -->
     <div class="offline-banner" id="offline-banner" role="status" aria-live="polite">
         <i class="fa-solid fa-wifi" aria-hidden="true"></i> 인터넷 연결이 끊어졌습니다. 일부 기능이 제한될 수 있습니다.
@@ -48,7 +51,7 @@
                     <span>mula</span>
                 </div>
             </div>
-            <nav class="nav-menu">
+            <nav class="nav-menu" aria-label="주 메뉴">
                 <button type="button" data-click="ManualViewer.openManual" class="manual-nav-link nav-study-only">
                     <i class="fa-solid fa-circle-info" aria-hidden="true"></i> 학습 매뉴얼
                 </button>
@@ -112,7 +115,7 @@
         </aside>
 
         <!-- Main Content Area -->
-        <main class="main-content">
+        <main class="main-content" id="main-content" tabindex="-1">
             <!-- Header -->
             <header class="app-header">
                 <div class="header-title">
@@ -135,7 +138,7 @@
                     </button>
                     <!-- 설정 메뉴: 백업/복원·초기화·시험 전환 등 관리 기능 통합 -->
                     <div class="settings-menu">
-                        <button id="settings-toggle-btn" class="btn btn-secondary" title="설정 및 데이터 관리" aria-label="설정" aria-expanded="false">
+                        <button id="settings-toggle-btn" class="btn btn-secondary" title="설정 및 데이터 관리" aria-label="설정" aria-expanded="false" aria-haspopup="true" aria-controls="settings-panel">
                             <i class="fa-solid fa-gear" aria-hidden="true"></i>
                         </button>
                         <div id="settings-panel" class="settings-panel is-hidden">
@@ -212,61 +215,7 @@
                     </div>
                 </div>
 
-                <!-- Status Stats Grid -->
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-icon icon-blue"><i class="fa-solid fa-book-open" aria-hidden="true"></i></div>
-                        <div class="stat-info">
-                            <h3>총 학습 진척도</h3>
-                            <div class="stat-value" id="total-progress-val">0%</div>
-                            <div class="progress-bar-container">
-                                <div class="progress-bar progress-bar-fill" id="total-progress-bar"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon icon-purple"><i class="fa-solid fa-id-card" aria-hidden="true"></i></div>
-                        <div class="stat-info">
-                            <h3>외운 카드 수</h3>
-                            <div class="stat-value"><span id="memorized-cards-count">0</span> / <span id="total-cards-count">0</span></div>
-                            <p class="stat-desc">학습 완료 상태 카드</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon icon-green"><i class="fa-solid fa-circle-check" aria-hidden="true"></i></div>
-                        <div class="stat-info">
-                            <h3>퀴즈 정답률</h3>
-                            <div class="stat-value" id="quiz-success-rate">0%</div>
-                            <p class="stat-desc">푼 문제 <span id="solved-quizzes-count">0</span>개 기준</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon icon-orange"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i></div>
-                        <div class="stat-info">
-                            <h3>헷갈린 카드</h3>
-                            <div class="stat-value" id="weak-cards-count">0</div>
-                            <p class="stat-desc">집중 복습이 필요함</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon icon-blue"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i></div>
-                        <div class="stat-info">
-                            <h3>오늘 복습</h3>
-                            <div class="stat-value" id="due-review-count">0</div>
-                            <p class="stat-desc">간격 반복 대기 카드</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon icon-orange"><i class="fa-solid fa-calendar-day" aria-hidden="true"></i></div>
-                        <div class="stat-info">
-                            <h3>시험까지</h3>
-                            <div class="stat-value" id="exam-dday-count">미설정</div>
-                            <p class="stat-desc"><button type="button" class="dday-set-btn" data-click="openGoalSettings"><i class="fa-solid fa-gear"></i> 시험일·목표 설정</button></p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Daily Challenge & Streak and Data Management Row -->
+                <!-- Daily Challenge & Streak and Data Management Row — 오늘 할 일 CTA가 최상단 -->
                 <div class="dashboard-widgets-row daily-challenge-grid">
                     <!-- 1. Daily 5-Min Challenge Card -->
                     <div class="glass-card daily-challenge-card glass-card-base">
@@ -311,7 +260,7 @@
                 <!-- 개인화 추천 — 내 학습 데이터 기반 오늘의 우선순위 (항상 표시) -->
                 <div class="section-title mt-6 section-title-row">
                     <div>
-                        <h3>🎯 오늘의 맞춤 학습 추천</h3>
+                        <h3><i class="fa-solid fa-bullseye" aria-hidden="true"></i> 오늘의 맞춤 학습 추천</h3>
                         <p class="section-subtitle">내 복습 대기·정답률·모의고사 결과를 분석해 우선순위를 제안합니다</p>
                     </div>
                     <button class="btn btn-secondary btn-sm analysis-link-btn" data-click="switchView" data-args='["analysis-view", {"scrollTop": true}]'>
@@ -321,6 +270,69 @@
                 <div id="weak-subject-recommendation" class="recommendation-container mb-7">
                     <!-- 개인화 추천 (dashboard.js computeRecommendations에서 렌더링) -->
                 </div>
+
+                <!-- 학습 통계 — 핵심 3개 상시 + 보조 지표는 접이식 (아이콘 색은 의미 부여용만: 주의=주황) -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon icon-blue"><i class="fa-solid fa-book-open" aria-hidden="true"></i></div>
+                        <div class="stat-info">
+                            <h3>총 학습 진척도</h3>
+                            <div class="stat-value" id="total-progress-val">0%</div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar progress-bar-fill" id="total-progress-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon icon-blue"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i></div>
+                        <div class="stat-info">
+                            <h3>오늘 복습</h3>
+                            <div class="stat-value" id="due-review-count">0</div>
+                            <p class="stat-desc">간격 반복 대기 카드</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon icon-blue"><i class="fa-solid fa-calendar-day" aria-hidden="true"></i></div>
+                        <div class="stat-info">
+                            <h3>시험까지</h3>
+                            <div class="stat-value" id="exam-dday-count">미설정</div>
+                            <p class="stat-desc"><button type="button" class="dday-set-btn" data-click="openGoalSettings"><i class="fa-solid fa-gear"></i> 시험일·목표 설정</button></p>
+                        </div>
+                    </div>
+                </div>
+                <details class="analysis-fold stats-fold" id="dashboard-stats-fold">
+                    <summary class="analysis-fold-summary">
+                        <span class="analysis-fold-title"><i class="fa-solid fa-chart-column" aria-hidden="true"></i> 학습 통계 더 보기</span>
+                        <span class="analysis-fold-hint">외운 카드 · 정답률 · 헷갈린 카드</span>
+                        <i class="fa-solid fa-chevron-down analysis-fold-chevron" aria-hidden="true"></i>
+                    </summary>
+                    <div class="stats-grid stats-grid-secondary">
+                        <div class="stat-card">
+                            <div class="stat-icon icon-blue"><i class="fa-solid fa-id-card" aria-hidden="true"></i></div>
+                            <div class="stat-info">
+                                <h3>외운 카드 수</h3>
+                                <div class="stat-value"><span id="memorized-cards-count">0</span> / <span id="total-cards-count">0</span></div>
+                                <p class="stat-desc">학습 완료 상태 카드</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon icon-blue"><i class="fa-solid fa-circle-check" aria-hidden="true"></i></div>
+                            <div class="stat-info">
+                                <h3>퀴즈 정답률</h3>
+                                <div class="stat-value" id="quiz-success-rate">0%</div>
+                                <p class="stat-desc">푼 문제 <span id="solved-quizzes-count">0</span>개 기준</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon icon-orange"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i></div>
+                            <div class="stat-info">
+                                <h3>헷갈린 카드</h3>
+                                <div class="stat-value" id="weak-cards-count">0</div>
+                                <p class="stat-desc">집중 복습이 필요함</p>
+                            </div>
+                        </div>
+                    </div>
+                </details>
 
                 <!-- 집중 도구 — 기본 접힘, 필요 시 펼침 (상세 분석은 '맞춤학습' 뷰로 분리) -->
                 <details class="analysis-fold" id="dashboard-analysis-fold">
@@ -335,7 +347,7 @@
                     <div class="pomodoro-card">
                         <div class="pomodoro-header">
                             <div class="pomo-title-group">
-                                <h4>⏱️ 집중 뽀모도로 타이머</h4>
+                                <h4><i class="fa-solid fa-stopwatch" aria-hidden="true"></i> 집중 뽀모도로 타이머</h4>
                                 <span class="pomodoro-status" id="pomo-status">대기 중</span>
                             </div>
                             <div class="pomo-total-time-group">
@@ -359,32 +371,39 @@
             <!-- @spec AN-01 -->
             <section id="analysis-view" class="view-section">
 
-                <!-- 페이지 안내 — Pro 기능 소개와 활용법 -->
-                <div class="analytics-card analysis-intro mb-7">
-                    <h4>🎯 맞춤학습 <span class="pro-badge" data-pro-feature="personal_analysis">PRO</span></h4>
+                <!-- 페이지 안내 — Pro 기능 소개와 활용법. 첫 방문은 열림, 접으면 상태 기억 -->
+                <details class="analysis-fold analysis-intro-fold mb-7" id="analysis-intro-fold" open>
+                    <summary class="analysis-fold-summary">
+                        <span class="analysis-fold-title"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> 맞춤학습 안내</span>
+                        <span class="analysis-fold-hint">기능 소개와 활용법 보기</span>
+                        <i class="fa-solid fa-chevron-down analysis-fold-chevron" aria-hidden="true"></i>
+                    </summary>
+                <div class="analytics-card analysis-intro">
+                    <h4><i class="fa-solid fa-bullseye" aria-hidden="true"></i> 맞춤학습</h4>
                     <p class="section-subtitle">
                         내 학습 기록(퀴즈 정답률·오답 원인·드릴 오판·모의고사 성적)을 모아
                         <strong>지금 약한 곳</strong>과 <strong>먼저 할 일</strong>을 보여주는 개인화 분석 화면입니다.
                         각 카드의 버튼을 누르면 해당 학습 화면으로 바로 이동합니다.
                     </p>
                     <ul class="analysis-intro-list">
-                        <li><strong>🧩 오답 패턴 분석</strong> — 최근 7일의 틀린 이유(암기 부족·개념 오해·계산 실수)를 집계해 어떤 공부법이 필요한지 알려줍니다. 태그하지 않은 오답도 자동 추정으로 보완합니다.</li>
-                        <li><strong>🎯 취약 진술 추적</strong> — O/X·복수정답형 드릴에서 반복해서 오판한 진술을 텍스트로 보여주고, 같은 개념 구간의 연쇄 오판도 감지합니다.</li>
-                        <li><strong>📅 학습 리듬</strong> — 오늘 목표 달성률·주간 학습일·시험 D-day를 추적하고, 주간 정답률 변화와 시험일까지의 페이스를 판정합니다.</li>
-                        <li><strong>📖 단원별 취약 분석</strong> — 오답을 교재 단원으로 매핑해 과목별로 "어느 단원이 약한지" 보여줍니다 (과락은 과목 단위 평가이므로).</li>
-                        <li><strong>🎓 합격 갭 분석</strong> — 예상 점수와 합격선의 거리, 최우선 보강 과목을 진단해 다음 행동으로 바로 연결합니다.</li>
-                        <li><strong>📊 과목별 상태·히트맵</strong> — 과목별 진도와 정답률을 색으로 비교해 취약 과목을 한눈에 찾습니다.</li>
-                        <li><strong>📈 성적 추이·합격 예측</strong> — 모의고사 이력으로 점수 추세·과락 위험·예상 점수를 진단합니다.</li>
+                        <li><strong>오답 패턴 분석</strong> — 최근 7일의 틀린 이유(암기 부족·개념 오해·계산 실수)를 집계해 어떤 공부법이 필요한지 알려줍니다. 태그하지 않은 오답도 자동 추정으로 보완합니다.</li>
+                        <li><strong>취약 진술 추적</strong> — O/X·복수정답형 드릴에서 반복해서 오판한 진술을 텍스트로 보여주고, 같은 개념 구간의 연쇄 오판도 감지합니다.</li>
+                        <li><strong>학습 리듬</strong> — 오늘 목표 달성률·주간 학습일·시험 D-day를 추적하고, 주간 정답률 변화와 시험일까지의 페이스를 판정합니다.</li>
+                        <li><strong>단원별 취약 분석</strong> — 오답을 교재 단원으로 매핑해 과목별로 "어느 단원이 약한지" 보여줍니다 (과락은 과목 단위 평가이므로).</li>
+                        <li><strong>합격 갭 분석</strong> — 예상 점수와 합격선의 거리, 최우선 보강 과목을 진단해 다음 행동으로 바로 연결합니다.</li>
+                        <li><strong>과목별 상태·히트맵</strong> — 과목별 진도와 정답률을 색으로 비교해 취약 과목을 한눈에 찾습니다.</li>
+                        <li><strong>성적 추이·합격 예측</strong> — 모의고사 이력으로 점수 추세·과락 위험·예상 점수를 진단합니다.</li>
                     </ul>
                     <p class="section-subtitle mt-3">
-                        💡 기록이 쌓일수록 정확해집니다 — 퀴즈·오답 복습·드릴·모의고사를 진행하면
+                        기록이 쌓일수록 정확해집니다 — 퀴즈·오답 복습·드릴·모의고사를 진행하면
                         분포·히트맵·예측이 자동으로 채워집니다.
                     </p>
                 </div>
+                </details>
 
                 <!-- 학습 진단 요약 — 오답 원인 · 취약 진술 · 학습 리듬 · 단원별 취약 · 합격 갭 -->
                 <div class="section-title">
-                    <h3>🧭 학습 진단 요약</h3>
+                    <h3><i class="fa-solid fa-compass" aria-hidden="true"></i> 학습 진단 요약</h3>
                     <p class="section-subtitle">왜 틀렸는지(오답 원인), 무엇을 자주 틀리는지(취약 진술·취약 단원), 얼마나 꾸준한지(학습 리듬), 합격까지 얼마나 남았는지(합격 갭)를 요약합니다</p>
                 </div>
                 <div class="analysis-insight-grid mb-7">
@@ -618,7 +637,7 @@
                 </div>
 
                 <!-- Empty State before Quiz Start -->
-                <div class="empty-state" id="quiz-empty-state">
+                <div class="empty-state" id="quiz-empty-state" role="status">
                     <i class="fa-solid fa-clipboard-question" aria-hidden="true"></i>
                     <h3>맞춤형화장품 조제관리사 모의 퀴즈</h3>
                     <p>과목을 선택한 후 "퀴즈 시작" 버튼을 누르시면 중요 빈칸 및 용어 퀴즈가 시작됩니다.</p>
@@ -656,7 +675,7 @@
                     <button class="btn btn-secondary filter-btn active textbook-filter-btn" data-filter="all" data-click="setReviewFilter" data-arg="all">전체</button>
                 </div>
 
-                <div class="empty-state" id="review-empty-state">
+                <div class="empty-state" id="review-empty-state" role="status">
                     <i class="fa-solid fa-shield-heart" aria-hidden="true"></i>
                     <h3>복습할 카드가 없습니다!</h3>
                     <p>플래시카드 학습 중에 "아직 헷갈림"으로 분류한 카드가 여기에 수집됩니다.</p>
@@ -980,7 +999,7 @@
                                 <!-- Scratchpad Toggle & Canvas (New Feature 4) -->
                                 <div class="mb-5">
                                     <button class="btn btn-secondary calc-action-btn" id="calc-scratchpad-toggle" data-click="toggleCalcScratchpad">
-                                        <i class="fa-solid fa-pencil" aria-hidden="true"></i> ✏️ 계산 연습장 열기
+                                        <i class="fa-solid fa-pencil" aria-hidden="true"></i> 계산 연습장 열기
                                     </button>
                                     
                                     <div id="calc-scratchpad-container" class="is-hidden calc-scratchpad">
@@ -1120,7 +1139,7 @@
                         <div class="exam-card-item full-width-card" data-feature="appendixDocs">
                             <div class="exam-card-badge badge-gray">학습 부록</div>
                             <div class="exam-card-btns flex-row gap-4">
-                                <a href="#" data-click="ManualViewer.openMnemonicGuide" class="exam-btn-link"><i class="fa-solid fa-brain" aria-hidden="true"></i> 두음법·숫자 총정리</a>
+                                <button type="button" data-click="ManualViewer.openMnemonicGuide" class="exam-btn-link"><i class="fa-solid fa-brain" aria-hidden="true"></i> 두음법·숫자 총정리</button>
                             </div>
                         </div>
                     </div>
@@ -1163,11 +1182,14 @@
                             </div>
                         </div>
 
-                        <!-- Right: OMR Sheet -->
+                        <!-- Right: OMR Sheet (모바일에서는 접이식 — 문제 영역 우선) -->
                         <aside class="sim-omr-panel">
                             <div class="omr-header">
-                                <h4>OMR 답안지</h4>
-                                <span class="omr-progress">푼 문제: <strong id="omr-solved-count">0</strong> / <strong id="omr-total-count">100</strong></span>
+                                <button type="button" class="omr-toggle" id="omr-toggle" aria-expanded="true" aria-controls="omr-grid">
+                                    <span class="omr-title">OMR 답안지</span>
+                                    <span class="omr-progress">푼 문제: <strong id="omr-solved-count">0</strong> / <strong id="omr-total-count">100</strong></span>
+                                    <i class="fa-solid fa-chevron-down omr-chevron" aria-hidden="true"></i>
+                                </button>
                             </div>
                             <div class="omr-grid-container" id="omr-grid">
                                 <!-- Dynamic OMR bubbles -->
@@ -1177,7 +1199,7 @@
                 </div>
 
                 <!-- 3. Simulation Results Panel -->
-                <div id="sim-result-panel" class="is-hidden reader-empty-state">
+                <div id="sim-result-panel" class="is-hidden empty-state reader-empty-state" role="status">
                     <i class="fa-solid fa-square-poll-vertical trophy-icon reader-empty-icon-lg" aria-hidden="true"></i>
                     <h2 id="sim-result-title">모의고사 종료</h2>
                     <p class="result-score-summary reader-empty-title">점수: <span id="sim-result-score">0 / 100</span> (<span id="sim-result-rate">0%</span>)</p>
@@ -1210,7 +1232,7 @@
             <!-- @spec TS-01 -->
             <section id="textbook-view" class="view-section">
                 <div class="section-title-area">
-                    <h3>📖 교재 본문 통합 검색</h3>
+                    <h3><i class="fa-solid fa-book" aria-hidden="true"></i> 교재 본문 통합 검색</h3>
                     <p>교재 본문(화장품법, 제조/품질관리, 안전관리, 맞춤형화장품 이해) 전체 내용을 키워드로 검색하여 관련 내용을 빠르게 확인하세요.</p>
                 </div>
 
@@ -1237,7 +1259,7 @@
 
                 <!-- Search Results Container -->
                 <div class="textbook-results-list" id="textbook-results-container">
-                    <div class="empty-state">
+                    <div class="empty-state" role="status">
                         <i class="fa-solid fa-book-open empty-state-icon" aria-hidden="true"></i>
                         <h3>검색어를 입력하세요</h3>
                         <p>위 검색창에 궁금한 교재 키워드를 입력하고 검색 결과를 확인하세요.</p>
@@ -1267,7 +1289,7 @@
                                 <option value="">과목을 선택하세요</option>
                             </select>
                         </div>
-                        <label class="reader-mode-checkbox" title="이야기형 교재 + 🎧 오디오 제공">
+                        <label class="reader-mode-checkbox" title="이야기형 교재 + 오디오 제공">
                             <input type="checkbox" id="reader-story-mode-toggle" >
                             <i class="fa-solid fa-book-open-reader text-primary" aria-hidden="true"></i> 이야기형 <span class="pro-badge" data-pro-feature="story_textbook">PRO</span>
                         </label>
@@ -1350,7 +1372,7 @@
                             aria-label="목차 열기" title="왼쪽 끝을 오른쪽으로 밀면 목차"></button>
 
                     <div id="textbook-reader-container" class="textbook-reader-content">
-                        <div class="empty-state">
+                        <div class="empty-state" role="status">
                             <i class="fa-solid fa-book-open empty-state-icon" aria-hidden="true"></i>
                             <h3>읽을 교재를 선택하세요</h3>
                             <p>위에서 과목을 선택하면 해당 교재의 본문 내용이 표시됩니다.</p>
@@ -1377,7 +1399,7 @@
             <!-- @spec DI-01,DI-04,DI-05 -->
             <section id="dictionary-view" class="view-section">
                 <div class="section-title-area">
-                    <h3>🔍 화장품 성분 검색 사전</h3>
+                    <h3><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> 화장품 성분 검색 사전</h3>
                     <p>사용가능(approved), 사용제한(restricted), 사용금지(banned) 성분들의 배합 한도 및 시험 중요 팁을 실시간 검색해 확인하세요. <button type="button" id="dict-db-version" class="dict-db-version" data-click="showIngredientsChangelog" title="원료 DB 버전 이력 보기"></button></p>
                     <p class="dict-neglist-note">판정은 <strong>네거티브 리스트</strong> 방식입니다 — 사용금지(banned, 별표1) 원료는 배합 불가, 사용제한(restricted, 별표2) 원료는 고시 한도·조건 내에서만 허용, 이 목록들에 없는 원료가 사용가능(approved)입니다. 단, 기능성 원료·색소·보존제·자외선차단 성분은 지정 목록을 따릅니다.</p>
                 </div>
@@ -1396,9 +1418,9 @@
                     <!-- Category Filter Buttons -->
                     <div class="dict-filter-buttons flex-row gap-3 flex-wrap">
                         <button class="btn btn-secondary active-filter" data-filter="all" data-click="setDictFilter" data-arg="all">전체 성분</button>
-                        <button class="btn btn-secondary" data-filter="approved" data-click="setDictFilter" data-arg="approved">🟢 사용 가능 원료</button>
-                        <button class="btn btn-secondary" data-filter="restricted" data-click="setDictFilter" data-arg="restricted">🟡 사용 제한 원료</button>
-                        <button class="btn btn-secondary" data-filter="banned" data-click="setDictFilter" data-arg="banned">🔴 사용 금지 원료</button>
+                        <button class="btn btn-secondary" data-filter="approved" data-click="setDictFilter" data-arg="approved"><i class="fa-solid fa-circle-check" style="color:var(--color-success)" aria-hidden="true"></i> 사용 가능 원료</button>
+                        <button class="btn btn-secondary" data-filter="restricted" data-click="setDictFilter" data-arg="restricted"><i class="fa-solid fa-triangle-exclamation" style="color:var(--color-warning)" aria-hidden="true"></i> 사용 제한 원료</button>
+                        <button class="btn btn-secondary" data-filter="banned" data-click="setDictFilter" data-arg="banned"><i class="fa-solid fa-ban" style="color:var(--color-danger)" aria-hidden="true"></i> 사용 금지 원료</button>
                     </div>
                 </div>
 
@@ -1425,9 +1447,9 @@
                     </div>
                     <div id="notice-status-view" class="notice-status-view" hidden></div>
                     <div class="section-title-area">
-                        <h3>🧪 Formula OS — 실전 배합 작업실</h3>
+                        <h3><i class="fa-solid fa-flask-vial" aria-hidden="true"></i> Formula OS — 실전 배합 작업실</h3>
                         <p>실제 업무 흐름 순서입니다. ① 상담(고객) → ② 설계(계산기·작업대) → ③ 레시피 확정(My 포뮬러·보관함) → ④ 재료 확인(원료 장부) → ⑤ 조제·기록 순으로 진행하고, 법규 준수는 전 단계에서 상시 점검합니다.
-                            <a href="#" data-click="ManualViewer.openFormulaManual" class="comp-ref-link"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> 실무 매뉴얼</a>
+                            <button type="button" data-click="ManualViewer.openFormulaManual" class="comp-ref-link"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> 실무 매뉴얼</button>
                         </p>
                         <p class="formula-principle-note">
                             <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
@@ -2062,7 +2084,7 @@
             <!-- @spec ES-01 -->
             <section id="exam-select-view" class="view-section">
                 <div class="section-title-area">
-                    <h3>📚 시험 선택</h3>
+                    <h3><i class="fa-solid fa-clipboard-list" aria-hidden="true"></i> 시험 선택</h3>
                     <p>학습할 시험을 선택하세요. 진도·캘린더·통계는 시험별로 독립 관리됩니다.</p>
                 </div>
                 <div id="exam-select-list" class="exam-select-grid"></div>
@@ -2072,27 +2094,18 @@
             <!-- @spec SC-01 -->
             <section id="calendar-view" class="view-section">
                 <div class="section-title-area">
-                    <h3>📅 학습 캘린더</h3>
+                    <h3><i class="fa-solid fa-calendar-check" aria-hidden="true"></i> 학습 캘린더</h3>
                     <p>날짜별 학습 기록과 목표 달성률을 한눈에 확인하세요. 매일 꾸준히 학습하여 streak를 유지하세요.</p>
                 </div>
                 <div id="study-calendar-content"></div>
             </section>
         </main>
 
-        <!-- Mobile Bottom Tab Bar (모바일 하단 네비게이션) -->
-        <nav class="mobile-tab-bar" id="mobile-tab-bar">
-            <button class="mobile-tab-item mobile-tab-action" id="mobile-theme-toggle" type="button" title="라이트/다크 모드 전환">
-                <i class="fa-solid fa-moon" aria-hidden="true"></i>
-                <span>테마</span>
-            </button>
+        <!-- Mobile Bottom Tab Bar (모바일 하단 네비게이션 — 핵심 탭 + 더보기 시트) -->
+        <nav class="mobile-tab-bar" id="mobile-tab-bar" aria-label="하단 탭 메뉴">
             <button class="mobile-tab-item nav-study-only active" data-target="dashboard-view">
                 <i class="fa-solid fa-chart-pie" aria-hidden="true"></i>
                 <span>대시보드</span>
-            </button>
-            <button class="mobile-tab-item nav-study-only" data-target="analysis-view">
-                <i class="fa-solid fa-bullseye" aria-hidden="true"></i>
-                <span>맞춤학습</span>
-                <span class="pro-badge" data-pro-feature="personal_analysis">PRO</span>
             </button>
             <button class="mobile-tab-item nav-study-only" data-target="flashcard-view">
                 <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
@@ -2102,59 +2115,99 @@
                 <i class="fa-solid fa-circle-question" aria-hidden="true"></i>
                 <span>퀴즈</span>
             </button>
-            <button class="mobile-tab-item nav-study-only" data-target="trainer-view">
-                <i class="fa-solid fa-dumbbell" aria-hidden="true"></i>
-                <span>훈련소</span>
-            </button>
-            <button class="mobile-tab-item nav-study-only" data-target="review-view">
-                <i class="fa-solid fa-star" aria-hidden="true"></i>
-                <span>복습</span>
-            </button>
-            <button class="mobile-tab-item nav-study-only" data-target="exam-view">
-                <i class="fa-solid fa-file-lines" aria-hidden="true"></i>
-                <span>모의고사</span>
-                <span class="pro-badge" data-pro-feature="mock_exam">PRO</span>
-            </button>
             <button class="mobile-tab-item mobile-tab-formula" data-target="formula-view" data-feature="formula">
                 <i class="fa-solid fa-flask-vial" aria-hidden="true"></i>
                 <span>실무</span>
-            </button>
-            <button class="mobile-tab-item nav-study-only" data-target="textbook-reader-view">
-                <i class="fa-solid fa-book-open" aria-hidden="true"></i>
-                <span>교재리더</span>
-            </button>
-            <button class="mobile-tab-item nav-study-only" data-target="textbook-view">
-                <i class="fa-solid fa-book" aria-hidden="true"></i>
-                <span>교재검색</span>
             </button>
             <button class="mobile-tab-item" data-target="dictionary-view" data-feature="dictionary">
                 <i class="fa-solid fa-search" aria-hidden="true"></i>
                 <span>성분검색</span>
             </button>
-            <button class="mobile-tab-item nav-study-only" data-target="calendar-view">
-                <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
-                <span>캘린더</span>
-            </button>
-            <button type="button" data-click="ManualViewer.openManual" class="mobile-tab-item nav-study-only">
-                <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
-                <span>매뉴얼</span>
-            </button>
-            <!-- 실무 모드 전용 탭 — 학습 매뉴얼 탭 자리에 실무 매뉴얼 표시 -->
+            <!-- 실무 모드 전용 탭 — 실무 매뉴얼 바로가기 -->
             <button type="button" data-click="ManualViewer.openFormulaManual" class="mobile-tab-item nav-practice-only">
                 <i class="fa-solid fa-flask" aria-hidden="true"></i>
                 <span>실무매뉴얼</span>
             </button>
-            <!-- 실무 모드 전용 탭 — 숨겨진 학습 탭 펼침 (사이드바 '학습 도구' 라벨의 모바일 대응) -->
-            <button type="button" data-click="toggleStudyTools" class="mobile-tab-item nav-practice-only" aria-expanded="false" title="숨겨진 학습 메뉴 펼치기/접기">
-                <i class="fa-solid fa-graduation-cap" aria-hidden="true"></i>
-                <span>학습도구</span>
-            </button>
-            <!-- 시험 전환: 등록 시험이 2개 이상일 때만 표시 (exams.json) -->
-            <button type="button" data-click="showExamSelect" class="mobile-tab-item" title="다른 시험으로 전환" data-feature="examSwitch">
-                <i class="fa-solid fa-arrow-right-arrow-left" aria-hidden="true"></i>
-                <span>시험전환</span>
+            <button class="mobile-tab-item mobile-tab-more" id="mobile-more-btn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="mobile-more-sheet" title="전체 메뉴 보기">
+                <i class="fa-solid fa-ellipsis" aria-hidden="true"></i>
+                <span>더보기</span>
             </button>
         </nav>
+
+        <!-- 더보기 시트 — 탭 바에 들어가지 않는 전체 메뉴 (모바일 전용) -->
+        <div id="mobile-more-sheet" class="more-sheet is-hidden" role="dialog" aria-modal="true" aria-label="전체 메뉴">
+            <div class="more-sheet-backdrop" id="more-sheet-backdrop"></div>
+            <div class="more-sheet-panel">
+                <div class="more-sheet-head">
+                    <h3 class="more-sheet-title">전체 메뉴</h3>
+                    <button type="button" class="more-sheet-close" id="more-sheet-close" aria-label="닫기">
+                        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="more-sheet-scroll">
+                    <p class="more-sheet-label nav-study-only">학습</p>
+                    <div class="more-sheet-grid">
+                        <button class="mobile-tab-item nav-study-only" data-target="analysis-view">
+                            <i class="fa-solid fa-bullseye" aria-hidden="true"></i>
+                            <span>맞춤학습</span>
+                            <span class="pro-badge" data-pro-feature="personal_analysis">PRO</span>
+                        </button>
+                        <button class="mobile-tab-item nav-study-only" data-target="calendar-view">
+                            <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
+                            <span>캘린더</span>
+                        </button>
+                        <button type="button" data-click="ManualViewer.openManual" class="mobile-tab-item nav-study-only">
+                            <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+                            <span>매뉴얼</span>
+                        </button>
+                    </div>
+                    <p class="more-sheet-label nav-study-only">훈련 · 평가</p>
+                    <div class="more-sheet-grid">
+                        <button class="mobile-tab-item nav-study-only" data-target="trainer-view">
+                            <i class="fa-solid fa-dumbbell" aria-hidden="true"></i>
+                            <span>훈련소</span>
+                        </button>
+                        <button class="mobile-tab-item nav-study-only" data-target="review-view">
+                            <i class="fa-solid fa-star" aria-hidden="true"></i>
+                            <span>복습</span>
+                        </button>
+                        <button class="mobile-tab-item nav-study-only" data-target="exam-view">
+                            <i class="fa-solid fa-file-lines" aria-hidden="true"></i>
+                            <span>모의고사</span>
+                            <span class="pro-badge" data-pro-feature="mock_exam">PRO</span>
+                        </button>
+                    </div>
+                    <p class="more-sheet-label nav-study-only">자료 · 도구</p>
+                    <div class="more-sheet-grid">
+                        <button class="mobile-tab-item nav-study-only" data-target="textbook-reader-view">
+                            <i class="fa-solid fa-book-open" aria-hidden="true"></i>
+                            <span>교재리더</span>
+                        </button>
+                        <button class="mobile-tab-item nav-study-only" data-target="textbook-view">
+                            <i class="fa-solid fa-book" aria-hidden="true"></i>
+                            <span>교재검색</span>
+                        </button>
+                    </div>
+                    <p class="more-sheet-label">기타</p>
+                    <div class="more-sheet-grid">
+                        <button class="mobile-tab-item mobile-tab-action" id="mobile-theme-toggle" type="button" title="라이트/다크 모드 전환">
+                            <i class="fa-solid fa-moon" aria-hidden="true"></i>
+                            <span>테마</span>
+                        </button>
+                        <!-- 실무 모드 전용 — 숨겨진 학습 항목 펼침 (사이드바 '학습 도구' 라벨의 모바일 대응) -->
+                        <button type="button" data-click="toggleStudyTools" class="mobile-tab-item nav-practice-only" aria-expanded="false" title="숨겨진 학습 메뉴 펼치기/접기">
+                            <i class="fa-solid fa-graduation-cap" aria-hidden="true"></i>
+                            <span>학습도구</span>
+                        </button>
+                        <!-- 시험 전환: 등록 시험이 2개 이상일 때만 표시 (exams.json) -->
+                        <button type="button" data-click="showExamSelect" class="mobile-tab-item" title="다른 시험으로 전환" data-feature="examSwitch">
+                            <i class="fa-solid fa-arrow-right-arrow-left" aria-hidden="true"></i>
+                            <span>시험전환</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- 계정/로그인 모달 (Supabase Auth — Phase 1: 인증만, 동기화는 Phase 2) -->

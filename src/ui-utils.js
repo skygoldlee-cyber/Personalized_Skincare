@@ -43,9 +43,11 @@ export const HAPTIC = { correct: 30, wrong: [40, 30, 40], tap: 10 };
    B1: 커스텀 토스트 및 컨펌 모달 — alert/confirm 대체
    ========================================================= */
 
-// 토스트 알림 (alert 대체)
-let _toastTimer = null;
-export function showToast(message, type = 'info', duration = 3000) {
+// 토스트 알림 (alert 대체) — #app-toast 스택에 최대 3개까지 쌓아 연속 알림 유실 방지
+const MAX_TOASTS = 3;
+export function showToast(message, type = 'info', duration, iconClass = '') {
+    // 성공 토스트는 화면 변화와 확인이 중복되므로 기본 노출을 짧게 — 알림 피로 완화
+    if (duration === undefined) duration = type === 'success' ? 2000 : 3000;
     let toast = document.getElementById('app-toast');
     if (!toast) {
         toast = document.createElement('div');
@@ -54,18 +56,28 @@ export function showToast(message, type = 'info', duration = 3000) {
         toast.setAttribute('aria-live', 'polite');
         document.body.appendChild(toast);
     }
+    // 스택 상한 — 초과 시 가장 오래된 항목부터 제거
+    while (toast.children.length >= MAX_TOASTS) {
+        toast.firstElementChild?.remove();
+    }
     // 타입별 아이콘/색상 (CSS 변수에서 읽기)
     const icons = { info: 'fa-circle-info', success: 'fa-circle-check', warning: 'fa-triangle-exclamation', error: 'fa-circle-xmark' };
     const cssVars = { info: '--color-primary', success: '--color-success', warning: '--color-warning', error: '--color-danger' };
-    const icon = icons[type] || icons.info;
+    const icon = iconClass || icons[type] || icons.info;
     const colorVar = cssVars[type] || cssVars.info;
     const style = getComputedStyle(document.documentElement);
     const color = style.getPropertyValue(colorVar).trim();
-    toast.innerHTML = `<i class="fa-solid ${icon}" style="color:${color}; margin-right:0.5rem;"></i>${escapeHtml(message)}`;
+    const item = document.createElement('div');
+    item.className = 'app-toast-item is-visible';
+    item.innerHTML = `<i class="fa-solid ${escapeHtml(icon)}" style="color:${color}; margin-right:0.5rem;"></i>${escapeHtml(message)}`;
+    toast.appendChild(item);
     toast.classList.add('is-visible');
-    if (_toastTimer) clearTimeout(_toastTimer);
-    _toastTimer = setTimeout(() => {
-        toast.classList.remove('is-visible');
+    setTimeout(() => {
+        item.classList.remove('is-visible');
+        setTimeout(() => {
+            item.remove();
+            if (!toast.children.length) toast.classList.remove('is-visible');
+        }, 250);
     }, duration);
 }
 

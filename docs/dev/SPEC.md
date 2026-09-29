@@ -523,13 +523,14 @@
 
 | ID | 요구사양 | 근거·구현 포인트 |
 |----|---------|------------------|
-| UX-NAV-01 | **3단계 적응형 네비게이션**: `>900px` 사이드바 / `769–900px` 상단 바(가로 스크롤 네비) / `≤768px` 사이드바 완전 숨김 + 하단 탭 바 | 한 번에 하나의 네비게이션만 노출 — 중복 방지. 하단 탭 바는 엄지 도달권, 가로 스크롤 + 양끝 그림자 힌트(`background-attachment: local, local, scroll, scroll` 기법)로 더 있음을 표시 |
+| UX-NAV-01 | **3단계 적응형 네비게이션**: `>900px` 사이드바 / `769–900px` 상단 바(가로 스크롤 네비) / `≤768px` 사이드바 완전 숨김 + 하단 탭 바 (핵심 5탭 + [더보기] 하단 시트) | 한 번에 하나의 네비게이션만 노출 — 중복 방지. 하단 탭 바는 엄지 도달권, 탭 수가 늘어나면 가로 스크롤보다 핵심 5탭 + `role="dialog"` 시트(`#mobile-more-sheet`)가 발견성·터치 안정성에 유리. 활성 탭은 `scrollIntoView({inline:'center'})`로 가시화 + `aria-current="page"`, 시트 소속 뷰 활성 시 더보기 탭에 활성 표시 |
 | UX-NAV-02 | **헤더는 sticky**: `position: sticky; top: 0` + 반투명 배경(`--drawer-bg`) + `backdrop-filter: blur()` | 스크롤 중에도 설정·테마에 접근 가능. 단, 부모가 스크롤 컨테이너(`overflow-y: auto`)일 때만 작동 — `body` 스크롤 구조면 의도대로 동작하는지 확인할 것 |
 | UX-NAV-03 | **`overflow: hidden` 금지 on 헤더**: sticky 헤더에 `overflow:hidden`을 주면 헤더 아래로 펼쳐지는 드롭다운이 잘림 | 드롭다운은 절대위치로 헤더 경계를 넘어야 함. 넘침 제어는 `min-width:0`+말줄임과 `flex-shrink:0`으로 처리 |
 | UX-NAV-04 | **`100vw` 대신 `100%`**: 뷰포트 기준 너비는 수직 스크롤바 폭을 포함해 가로 오버플로를 유발할 수 있음 | `.app-container { width: 100% }`. 특히 클래식 스크롤바가 상시 표시되는 데스크톱에서 차이 발생 |
 | UX-NAV-05 | **하단 `position:fixed` 요소는 탭 바 위로**: 모바일에서 `bottom` 고정 요소는 `calc(70px + safe-area)` 이상으로 배치 | back-to-top(`bottom:1.25rem`)이 탭 바(z 1400)에 완전히 가려진 실제 사례. 배너·토스트·플로팅 버튼 신규 추가 시에도 동일 규칙 적용. `.main-content`는 `padding-bottom: calc(80px + safe)` + `scroll-padding-bottom`으로 콘텐츠·포커스 요소 보호 |
 | UX-NAV-06 | **통합 검색 팔레트 (Ctrl/Cmd+K)**: `src/command-palette.js` — 뷰/교재 섹션/카드/퀴즈/성분/문제집을 한 검색창에서 찾아 실행. `↑↓` 이동·`Enter` 실행·`ESC`/배경 클릭 닫기, 헤더 돋보기 버튼(모바일 진입점) | `searchAll()`은 소스 주입 가능한 순수 함수로 분리해 테스트 가능. 실행은 기존 경로 재사용(nav 클릭 시뮬레이션, `startSubjectStudy/Quiz`, `openSubjectChapter`, `ExamViewer.openExam`) — 네비게이션 분기 신설 금지. 뷰 목록은 nav-item DOM 스캔이라 feature 게이팅(`is-hidden`)을 자동 반영. z-index 2500 (탭 바·모달 위). 전 소스 로컬 데이터로 오프라인 동작 |
 | UX-NAV-07 | **뷰 전환 스크롤 규칙**: 내비/복귀는 `scrollTop` 복원, **액션 딥링크는 맨 위 오픈** — `switchView(target, { scrollTop: true })` | 내비게이션(사이드바·탭 바·뒤로가기)은 사용자의 이전 위치를 보존하는 게 기대 동작이지만, "맞춤 리포트 보기"·"퀴즈 풀기" 같은 액션 버튼이 이전 스크롤을 복원하면 중간에서 열려 맥락을 잃는다. `restoreScrollPosition`의 `pendingTop` 플래그가 복원 시점에 소비되어 `saveScrollPosition` 덮어쓰기와 무관하게 동작. 새 액션 딥링크 추가 시 `scrollTop: true` 필수 — `data-args='["view-id", {"scrollTop": true}]'` 또는 직접 호출 모두 지원 |
+| UX-NAV-08 | **뷰 해시 라우팅**: 뷰 전환 시 `#/슬러그`를 `pushState`, `initViewHashRouting()`이 초기 해시 딥링크 해석 + `hashchange` 구독 | SPA에서 뒤로가기가 없으면 Android/PWA 뒤로가기 시 앱이 종료됨. 해시는 공유 가능한 딥링크도 제공. `navigateToView` 재진입은 `_hashNavigating` 플래그로 pushState를 생략해 무한 루프 방지, 모달 전용 `pushState`/`popstate` 흐름(매뉴얼·문제집 뷰어)과는 별개 상태라 공존 |
 
 #### 4.8.2 스크롤바 전략
 

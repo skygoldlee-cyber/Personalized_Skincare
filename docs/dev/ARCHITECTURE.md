@@ -535,7 +535,8 @@ Personalized_Skincare/
 - 13개의 `<section class="view-section">`이 하나의 HTML에 공존
 - `router.js`의 `navigateToView(target, ctx)`가 `.active` 클래스를 토글하여 화면 전환 (페이지 리로드 없음). 타이틀/서브타이틀은 `getViewTitles(registry)`가 `DATA_REGISTRY.uiText`에서 동적 생성
 - 뷰 목록: dashboard / analysis / flashcard / quiz / review / trainer / exam / textbook / textbook-reader / dictionary / formula / exam-select / calendar
-- 내비게이션 동기화: `.nav-item`(사이드바)과 `.mobile-tab-item`(탭 바)에 동일 `data-target` 부여 → 뷰 전환 시 양쪽 활성 상태 자동 동기화. 양쪽 `data-target` 집합·뷰별 PRO 배지(`data-pro-feature`) 일치는 `tests/dom/common-navigation.dom.test.js`의 parity 테스트가 강제 (한쪽 누락 시 실패)
+- 내비게이션 동기화: `.nav-item`(사이드바)과 `.mobile-tab-item`(핵심 탭 바 + `#mobile-more-sheet`)에 동일 `data-target` 부여 → 뷰 전환 시 양쪽 활성 상태 자동 동기화 (`aria-current="page"` 부여, 탭 바 안 활성 탭은 `scrollIntoView({inline:'center'})`로 가시화, 시트 소속 뷰는 `#mobile-more-btn`이 활성 표시). 양쪽 `data-target` 집합·뷰별 PRO 배지(`data-pro-feature`) 일치는 `tests/dom/common-navigation.dom.test.js`의 parity 테스트가 강제 (한쪽 누락 시 실패)
+- **뷰 해시 라우팅**: `navigateToView`가 현재 뷰를 `#/슬러그`로 `pushState` — 브라우저/PWA 뒤로가기로 이전 뷰 복귀 + 딥링크 공유. `initViewHashRouting(ctx)`이 초기 해시를 딥링크로 해석하고 `hashchange`를 구독 (재진입 시 `_hashNavigating` 플래그로 pushState 생략 — 모달 전용 `pushState`/`popstate` 흐름과 충돌 없이 공존)
 - 전환 부가 동작: 이전 뷰 스크롤 위치 저장·복원, 리더 집중 모드 해제, 오디오 정지, 뷰별 렌더 핸들러 호출 (`ctx.handlers`)
 - **스크롤 규칙**: 내비 전환은 이전 `scrollTop` 복원, **액션 딥링크(다른 화면을 여는 버튼)는 `switchView(target, { scrollTop: true })`로 맨 위 오픈** — `restoreScrollPosition`의 `pendingTop` 플래그가 복원 시점에 1회 소비되어 `saveScrollPosition` 덮어쓰기와 무관 (SPEC §4.8.1 UX-NAV-07)
 
@@ -789,7 +790,7 @@ const state = {
 
 ### 시험 선택/전환
 - `src/views/exam-select.js` — 시험 선택 카드 뷰(`exam-select-view`). `current_exam` 미설정 **+ 등록 시험 2개 이상**일 때만 홈으로 표시 — 단일 시험 레지스트리에서는 기본 시험으로 바로 진입해 피커 생략
-- 데스크톱 사이드바 푸터 + 모바일 탭 바의 "시험 전환" 버튼 → `showExamSelect()` → 카드 선택 시 `selectExam()` → 리로드. 버튼도 등록 시험 2개 이상일 때만 노출
+- 데스크톱 사이드바 푸터 + 모바일 더보기 시트의 "시험 전환" 버튼 → `showExamSelect()` → 카드 선택 시 `selectExam()` → 리로드. 버튼도 등록 시험 2개 이상일 때만 노출
 
 ### 레지스트리 로딩
 - 기본 시험: `data/exams/cosmetic/registry.js` 정적 로드 (`window.DATA_REGISTRY`)
@@ -1289,7 +1290,7 @@ app-fallback.js 폴링 시작 (400ms 간격, 15s 데드라인)
 | 화면 | 네비게이션 | 구현 |
 |------|-----------|------|
 | **데스크톱** (>768px) | 좌측 사이드바 | `.sidebar` 표시, `.mobile-tab-bar` 숨김 |
-| **모바일** (≤768px) | 하단 탭 바 | `.sidebar` 숨김, `.mobile-tab-bar` 표시 (12개 뷰 탭 + 테마·매뉴얼·시험전환 등 기능 탭, 가로 스크롤) |
+| **모바일** (≤768px) | 하단 탭 바 + 더보기 시트 | `.sidebar` 숨김, `.mobile-tab-bar` 표시 (핵심 5탭 + [더보기] → `#mobile-more-sheet`에 나머지 메뉴 그룹화) |
 
 ### 모바일 최적화 기법
 

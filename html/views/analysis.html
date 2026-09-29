@@ -1,32 +1,39 @@
             <!-- @spec AN-01 -->
             <section id="analysis-view" class="view-section">
 
-                <!-- 페이지 안내 — Pro 기능 소개와 활용법 -->
-                <div class="analytics-card analysis-intro mb-7">
-                    <h4>🎯 맞춤학습 <span class="pro-badge" data-pro-feature="personal_analysis">PRO</span></h4>
+                <!-- 페이지 안내 — Pro 기능 소개와 활용법. 첫 방문은 열림, 접으면 상태 기억 -->
+                <details class="analysis-fold analysis-intro-fold mb-7" id="analysis-intro-fold" open>
+                    <summary class="analysis-fold-summary">
+                        <span class="analysis-fold-title"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> 맞춤학습 안내</span>
+                        <span class="analysis-fold-hint">기능 소개와 활용법 보기</span>
+                        <i class="fa-solid fa-chevron-down analysis-fold-chevron" aria-hidden="true"></i>
+                    </summary>
+                <div class="analytics-card analysis-intro">
+                    <h4><i class="fa-solid fa-bullseye" aria-hidden="true"></i> 맞춤학습</h4>
                     <p class="section-subtitle">
                         내 학습 기록(퀴즈 정답률·오답 원인·드릴 오판·모의고사 성적)을 모아
                         <strong>지금 약한 곳</strong>과 <strong>먼저 할 일</strong>을 보여주는 개인화 분석 화면입니다.
                         각 카드의 버튼을 누르면 해당 학습 화면으로 바로 이동합니다.
                     </p>
                     <ul class="analysis-intro-list">
-                        <li><strong>🧩 오답 패턴 분석</strong> — 최근 7일의 틀린 이유(암기 부족·개념 오해·계산 실수)를 집계해 어떤 공부법이 필요한지 알려줍니다. 태그하지 않은 오답도 자동 추정으로 보완합니다.</li>
-                        <li><strong>🎯 취약 진술 추적</strong> — O/X·복수정답형 드릴에서 반복해서 오판한 진술을 텍스트로 보여주고, 같은 개념 구간의 연쇄 오판도 감지합니다.</li>
-                        <li><strong>📅 학습 리듬</strong> — 오늘 목표 달성률·주간 학습일·시험 D-day를 추적하고, 주간 정답률 변화와 시험일까지의 페이스를 판정합니다.</li>
-                        <li><strong>📖 단원별 취약 분석</strong> — 오답을 교재 단원으로 매핑해 과목별로 "어느 단원이 약한지" 보여줍니다 (과락은 과목 단위 평가이므로).</li>
-                        <li><strong>🎓 합격 갭 분석</strong> — 예상 점수와 합격선의 거리, 최우선 보강 과목을 진단해 다음 행동으로 바로 연결합니다.</li>
-                        <li><strong>📊 과목별 상태·히트맵</strong> — 과목별 진도와 정답률을 색으로 비교해 취약 과목을 한눈에 찾습니다.</li>
-                        <li><strong>📈 성적 추이·합격 예측</strong> — 모의고사 이력으로 점수 추세·과락 위험·예상 점수를 진단합니다.</li>
+                        <li><strong>오답 패턴 분석</strong> — 최근 7일의 틀린 이유(암기 부족·개념 오해·계산 실수)를 집계해 어떤 공부법이 필요한지 알려줍니다. 태그하지 않은 오답도 자동 추정으로 보완합니다.</li>
+                        <li><strong>취약 진술 추적</strong> — O/X·복수정답형 드릴에서 반복해서 오판한 진술을 텍스트로 보여주고, 같은 개념 구간의 연쇄 오판도 감지합니다.</li>
+                        <li><strong>학습 리듬</strong> — 오늘 목표 달성률·주간 학습일·시험 D-day를 추적하고, 주간 정답률 변화와 시험일까지의 페이스를 판정합니다.</li>
+                        <li><strong>단원별 취약 분석</strong> — 오답을 교재 단원으로 매핑해 과목별로 "어느 단원이 약한지" 보여줍니다 (과락은 과목 단위 평가이므로).</li>
+                        <li><strong>합격 갭 분석</strong> — 예상 점수와 합격선의 거리, 최우선 보강 과목을 진단해 다음 행동으로 바로 연결합니다.</li>
+                        <li><strong>과목별 상태·히트맵</strong> — 과목별 진도와 정답률을 색으로 비교해 취약 과목을 한눈에 찾습니다.</li>
+                        <li><strong>성적 추이·합격 예측</strong> — 모의고사 이력으로 점수 추세·과락 위험·예상 점수를 진단합니다.</li>
                     </ul>
                     <p class="section-subtitle mt-3">
-                        💡 기록이 쌓일수록 정확해집니다 — 퀴즈·오답 복습·드릴·모의고사를 진행하면
+                        기록이 쌓일수록 정확해집니다 — 퀴즈·오답 복습·드릴·모의고사를 진행하면
                         분포·히트맵·예측이 자동으로 채워집니다.
                     </p>
                 </div>
+                </details>
 
                 <!-- 학습 진단 요약 — 오답 원인 · 취약 진술 · 학습 리듬 · 단원별 취약 · 합격 갭 -->
                 <div class="section-title">
-                    <h3>🧭 학습 진단 요약</h3>
+                    <h3><i class="fa-solid fa-compass" aria-hidden="true"></i> 학습 진단 요약</h3>
                     <p class="section-subtitle">왜 틀렸는지(오답 원인), 무엇을 자주 틀리는지(취약 진술·취약 단원), 얼마나 꾸준한지(학습 리듬), 합격까지 얼마나 남았는지(합격 갭)를 요약합니다</p>
                 </div>
                 <div class="analysis-insight-grid mb-7">

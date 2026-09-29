@@ -746,19 +746,9 @@
     r: 4;
 }
 
-/* =======================================================
-   🔥 Streak Flame Wiggle Animation
-   ======================================================= */
+/* 스트릭 아이콘 — 무한 애니메이션은 시선을 강제로 뺏어 제거 (조용한 카운터 원칙) */
 .streak-fire-icon {
-    animation: streak-wiggle 1.5s infinite ease-in-out alternate;
-    transform-origin: center bottom;
     color: var(--color-warning);
-    filter: drop-shadow(var(--glow-warning));
-}
-
-@keyframes streak-wiggle {
-    0% { transform: scale(1) rotate(-3deg); }
-    100% { transform: scale(1.1) rotate(3deg); }
 }
 
 /* =======================================================

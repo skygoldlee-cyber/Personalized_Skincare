@@ -725,6 +725,19 @@
     border-bottom-color: var(--border-subtle);
 }
 
+/* 학습 통계 접이식 — 보조 지표는 기본 접힘 */
+.stats-fold .stats-grid {
+    margin-top: var(--space-3);
+}
+
+/* 맞춤학습 인트로 접이식 — 열림 시 카드가 요약줄 아래에 붙음 */
+.analysis-intro-fold .analysis-intro {
+    margin-top: 0;
+    border-top: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
 /* ===== 예상 점수 추정 + 실제 결과 자가 보고 (C1) ===== */
 .estimate-row {
   display: flex;

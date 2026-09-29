@@ -55,7 +55,7 @@ export function updateStreakAndDailyUI() {
             safeSetItem(STORAGE_KEYS.STREAK_FREEZES, freezes);
             const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
             safeSetItem(STORAGE_KEYS.STUDY_STREAK_LAST_DATE, yesterday);
-            showToast(`🧊 스트릭 복구권을 사용해 연속 학습을 지켰습니다 (잔여 ${freezes}장)`, 'info', 4000);
+            showToast(`스트릭 복구권을 사용해 연속 학습을 지켰습니다 (잔여 ${freezes}장)`, 'info', 4000);
         } else if (diffDays > 1) {
             streak = 0;
             safeSetItem(STORAGE_KEYS.STUDY_STREAK, 0);
@@ -70,7 +70,7 @@ export function updateStreakAndDailyUI() {
     const freezeEl = document.getElementById('streak-freezes');
     if (freezeEl) {
         const freezes = _getFreezeCount();
-        freezeEl.textContent = freezes > 0 ? `🧊 ${freezes}` : '';
+        freezeEl.textContent = freezes > 0 ? `복구권 ${freezes}` : '';
         freezeEl.style.display = freezes > 0 ? '' : 'none';
         freezeEl.title = `스트릭 복구권 ${freezes}장 — 어제 학습을 놓치면 자동으로 스트릭을 지켜줍니다 (7일 연속마다 1장, 최대 ${STREAK_FREEZE_MAX}장)`;
     }
@@ -84,7 +84,7 @@ export function updateStreakAndDailyUI() {
     const todayCompleted = safeGetItem(dailyCompletedKey(todayStr));
     if (todayCompleted) {
         if (challengeStatusEl) {
-            challengeStatusEl.textContent = '🟢 오늘 미션 완료!';
+            challengeStatusEl.textContent = '오늘 미션 완료';
             challengeStatusEl.style.color = 'var(--color-success)';
         }
         if (startBtn) {
@@ -435,7 +435,7 @@ function finishDailyChallenge() {
     const modal = document.getElementById('daily-challenge-modal');
     if (modal) modal.remove();
     
-    showToast(`🎉 일일 데일리 챌린지를 완수하셨습니다!\n획득 점수: ${dailyState.correctCount} / ${dailyState.questions.length} 개`, 'success', 4000);
+    showToast(`일일 챌린지 완료 — 점수 ${dailyState.correctCount} / ${dailyState.questions.length}`, 'success');
     
     const todayStr = new Date().toISOString().split('T')[0];
     safeSetItem(dailyCompletedKey(todayStr), "true");
@@ -452,7 +452,7 @@ function finishDailyChallenge() {
             const freezes = _getFreezeCount();
             if (freezes < STREAK_FREEZE_MAX) {
                 safeSetItem(STORAGE_KEYS.STREAK_FREEZES, freezes + 1);
-                showToast(`🧊 ${streak}일 연속 학습! 스트릭 복구권을 받았습니다 (${freezes + 1}/${STREAK_FREEZE_MAX}장)`, 'success', 4000);
+                showToast(`${streak}일 연속 학습 — 스트릭 복구권을 받았습니다 (${freezes + 1}/${STREAK_FREEZE_MAX}장)`, 'success', 4000);
             }
         }
     }

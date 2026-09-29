@@ -603,7 +603,6 @@ export function formulaCustLoad() {
   writeCustomerInputs(c, c.id);
   updateFoldSummaries();
   renderRecommend();
-  showToast(`"${c.name}" 고객 정보를 불러왔습니다.`, 'success');
 }
 
 /** 현재 고객 정보 입력값을 고객 카드로 저장 + 이 포뮬러에 참조 연결 */

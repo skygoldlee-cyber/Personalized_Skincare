@@ -519,6 +519,27 @@ body {
     border-radius: var(--radius-2xs);
 }
 
+/* 본문 바로가기 — 키보드/스크린리더 사용자의 첫 Tab 정지점 (포커스 시에만 표시) */
+.skip-link {
+    position: fixed;
+    top: var(--space-3);
+    left: var(--space-3);
+    z-index: var(--z-toast-top);
+    padding: var(--space-3) var(--space-5);
+    background: var(--bg-elevated);
+    color: var(--color-text-main);
+    border: 1px solid var(--color-primary);
+    border-radius: var(--radius-sm);
+    font-size: var(--text-sm-md);
+    font-weight: var(--font-weight-semibold);
+    text-decoration: none;
+    transform: translateY(-300%);
+    transition: transform 0.2s ease;
+}
+.skip-link:focus-visible {
+    transform: translateY(0);
+}
+
 /* Scrollbar Style — 다크/라이트 모두 thumb 대비를 높여 발견이 쉽게 */
 html {
     scrollbar-width: thin;

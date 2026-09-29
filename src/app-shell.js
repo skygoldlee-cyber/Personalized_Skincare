@@ -52,31 +52,10 @@ export function setupOrientationToggle() {
     });
 }
 
-// 방향 전환 알림 표시
+// 방향 전환 알림 표시 — 공용 토스트 스택 사용 (커스텀 아이콘 지정)
 function showOrientationToast(isLandscape) {
-    // 기존 토스트 제거
-    const existingToast = document.querySelector('.orientation-toast');
-    if (existingToast) existingToast.remove();
-    
-    const toast = document.createElement('div');
-    toast.className = 'orientation-toast';
-
-    const icon = document.createElement('i');
-    icon.className = `${isLandscape ? 'fa-solid fa-mobile-screen' : 'fa-solid fa-mobile-screen-button'} orientation-toast-icon`;
-
-    const text = document.createElement('span');
-    text.className = 'orientation-toast-text';
-    text.textContent = isLandscape ? '가로 보기 모드' : '세로 보기 모드';
-
-    toast.appendChild(icon);
-    toast.appendChild(text);
-    document.body.appendChild(toast);
-
-    // 2초 후 자동 제거
-    setTimeout(() => {
-        toast.style.animation = 'orientationToastOut 0.3s ease';
-        setTimeout(() => toast.remove(), 300);
-    }, 2000);
+    const icon = isLandscape ? 'fa-solid fa-mobile-screen' : 'fa-solid fa-mobile-screen-button';
+    showToast(isLandscape ? '가로 보기 모드' : '세로 보기 모드', 'info', 2000, icon);
 }
 
 

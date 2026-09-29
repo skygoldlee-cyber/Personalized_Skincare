@@ -30,7 +30,7 @@
                         <div class="exam-card-item full-width-card" data-feature="appendixDocs">
                             <div class="exam-card-badge badge-gray">학습 부록</div>
                             <div class="exam-card-btns flex-row gap-4">
-                                <a href="#" data-click="ManualViewer.openMnemonicGuide" class="exam-btn-link"><i class="fa-solid fa-brain" aria-hidden="true"></i> 두음법·숫자 총정리</a>
+                                <button type="button" data-click="ManualViewer.openMnemonicGuide" class="exam-btn-link"><i class="fa-solid fa-brain" aria-hidden="true"></i> 두음법·숫자 총정리</button>
                             </div>
                         </div>
                     </div>
@@ -73,11 +73,14 @@
                             </div>
                         </div>
 
-                        <!-- Right: OMR Sheet -->
+                        <!-- Right: OMR Sheet (모바일에서는 접이식 — 문제 영역 우선) -->
                         <aside class="sim-omr-panel">
                             <div class="omr-header">
-                                <h4>OMR 답안지</h4>
-                                <span class="omr-progress">푼 문제: <strong id="omr-solved-count">0</strong> / <strong id="omr-total-count">100</strong></span>
+                                <button type="button" class="omr-toggle" id="omr-toggle" aria-expanded="true" aria-controls="omr-grid">
+                                    <span class="omr-title">OMR 답안지</span>
+                                    <span class="omr-progress">푼 문제: <strong id="omr-solved-count">0</strong> / <strong id="omr-total-count">100</strong></span>
+                                    <i class="fa-solid fa-chevron-down omr-chevron" aria-hidden="true"></i>
+                                </button>
                             </div>
                             <div class="omr-grid-container" id="omr-grid">
                                 <!-- Dynamic OMR bubbles -->
@@ -87,7 +90,7 @@
                 </div>
 
                 <!-- 3. Simulation Results Panel -->
-                <div id="sim-result-panel" class="is-hidden reader-empty-state">
+                <div id="sim-result-panel" class="is-hidden empty-state reader-empty-state" role="status">
                     <i class="fa-solid fa-square-poll-vertical trophy-icon reader-empty-icon-lg" aria-hidden="true"></i>
                     <h2 id="sim-result-title">모의고사 종료</h2>
                     <p class="result-score-summary reader-empty-title">점수: <span id="sim-result-score">0 / 100</span> (<span id="sim-result-rate">0%</span>)</p>

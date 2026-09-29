@@ -69,7 +69,7 @@ describe('데일리 챌린지 — 생성·진행·완료·스트릭', () => {
         safeSetItem(dailyCompletedKey(todayStr()), 'true');
         updateStreakAndDailyUI();
 
-        expect(el('daily-challenge-status').textContent).toBe('🟢 오늘 미션 완료!');
+        expect(el('daily-challenge-status').textContent).toBe('오늘 미션 완료');
         expect(el('start-daily-btn').disabled).toBe(true);
     });
 
@@ -118,12 +118,12 @@ describe('데일리 챌린지 — 생성·진행·완료·스트릭', () => {
         expect(el('streak-days').textContent).toBe('0');
     });
 
-    it('SC-04: 복구권 보유 시 🧊 배지 + 주간 학습 칩 표시', () => {
+    it('SC-04: 복구권 보유 시 배지 + 주간 학습 칩 표시', () => {
         safeSetItem(STORAGE_KEYS.STREAK_FREEZES, '2');
         updateStreakAndDailyUI();
 
         const freezeEl = el('streak-freezes');
-        expect(freezeEl.textContent).toContain('🧊 2');
+        expect(freezeEl.textContent).toContain('복구권 2');
         expect(freezeEl.style.display).not.toBe('none');
         expect(el('weekly-goal-chip').textContent).toMatch(/이번 주 \d+\/\d+일/);
     });
@@ -201,7 +201,7 @@ describe('데일리 챌린지 — 생성·진행·완료·스트릭', () => {
         expect(storedJson(dailyCompletedKey(todayStr()))).toBe(true); // 'true' → JSON 파싱된 boolean
         expect(storedJson(STORAGE_KEYS.STUDY_STREAK)).toBe(1);
         expect(storedJson(STORAGE_KEYS.STUDY_STREAK_LAST_DATE)).toBe(todayStr());
-        expect(showToast).toHaveBeenCalledWith(expect.stringContaining('완수'), 'success', 4000);
+        expect(showToast).toHaveBeenCalledWith(expect.stringContaining('완료'), 'success');
     });
 
     it('완료 후 재시작 → 안내 토스트 + 모달 미생성', async () => {

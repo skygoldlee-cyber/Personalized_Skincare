@@ -200,7 +200,8 @@ import {
     showGlobalLoading,
     hideGlobalLoading,
     showToast,
-    showConfirm
+    showConfirm,
+    trapFocus
 } from './ui-utils.js';
 import {
     startMockExamSim,
@@ -220,7 +221,7 @@ import {
 import { switchView } from './views/navigation.js';
 import { setupOfflineDetection } from './views/offline-detection.js';
 import { setupEventListeners } from './views/event-listeners.js';
-import { getViewTitles, navigateToView } from './router.js';
+import { getViewTitles, navigateToView, initViewHashRouting } from './router.js';
 import { getCurrentExamId, getExamList, purgeLegacyStorage } from './exam-context.js';
 import { renderExamSelect, showExamSelect, selectExamAction } from './views/exam-select.js';
 import { initUiMode, toggleUiMode, toggleStudyTools } from './ui-mode.js';
@@ -269,6 +270,8 @@ function initApp() {
     const navOk = step('setupNavigation', setupNavigation);
     // 학습/실무 모드 반영 — setupNavigation 이후에 실행해야 switchView가 라우터로 디스패치됨
     step('initUiMode', initUiMode);
+    // 뷰 해시 라우팅 — 딥링크 적용 + 뒤로가기 (모드 랜딩 이후에 실행해 해시가 최종 뷰와 일치하도록)
+    step('initViewHashRouting', () => { if (_routerCtx) initViewHashRouting(_routerCtx); });
     step('setupEventListeners', () => setupEventListeners(enhanceDataClickAccessibility));
     step('setupPWAInstall', setupPWAInstall);
     // 앱 종료 버튼은 설치형 PWA(standalone)에서만 노출 — 브라우저 탭에서는 무의미
@@ -322,6 +325,8 @@ function initApp() {
 
 // --- 네비게이션 제어 (SPA) ---
 // 라우터 로직은 ./router.js로 분리, app.js는 이벤트 바인딩만 담당
+// setupNavigation이 만든 렌더 컨텍스트 — initViewHashRouting이 재사용
+let _routerCtx = null;
 function setupNavigation() {
     const navItems = document.querySelectorAll('.nav-item');
     const sections = document.querySelectorAll('.view-section');
@@ -434,6 +439,7 @@ function setupNavigation() {
             stopReaderAudio
         }
     };
+    _routerCtx = routerCtx;
 
     navItems.forEach(item => {
         item.addEventListener('click', () => {
@@ -442,14 +448,55 @@ function setupNavigation() {
         });
     });
 
-    // 모바일 하단 탭 바 클릭 이벤트 설정
+    // 모바일 하단 탭 바·더보기 시트 클릭 이벤트 설정
     const mobileTabItems = document.querySelectorAll('.mobile-tab-item');
     mobileTabItems.forEach(tab => {
         tab.addEventListener('click', () => {
             const target = tab.getAttribute('data-target');
-            if (!target) return; // 외부 링크(매뉴얼)는 제외
+            if (!target) return; // 액션 버튼(매뉴얼·테마·더보기)은 제외
             switchView(target);
         });
+    });
+
+    setupMoreSheet();
+}
+
+// ============================================================
+// 모바일 '더보기' 시트 — 탭 바에 들어가지 않는 전체 메뉴
+// ============================================================
+let _untrapMoreSheet = null;
+function closeMoreSheet() {
+    const sheet = document.getElementById('mobile-more-sheet');
+    const moreBtn = document.getElementById('mobile-more-btn');
+    if (!sheet || sheet.classList.contains('is-hidden')) return;
+    sheet.classList.add('is-hidden');
+    if (moreBtn) moreBtn.setAttribute('aria-expanded', 'false');
+    if (_untrapMoreSheet) { _untrapMoreSheet(); _untrapMoreSheet = null; }
+}
+
+function setupMoreSheet() {
+    const moreBtn = document.getElementById('mobile-more-btn');
+    const sheet = document.getElementById('mobile-more-sheet');
+    const panel = sheet ? /** @type {HTMLElement|null} */ (sheet.querySelector('.more-sheet-panel')) : null;
+    if (!moreBtn || !sheet || !panel) return;
+
+    moreBtn.addEventListener('click', () => {
+        if (sheet.classList.contains('is-hidden')) {
+            sheet.classList.remove('is-hidden');
+            moreBtn.setAttribute('aria-expanded', 'true');
+            _untrapMoreSheet = trapFocus(panel, moreBtn);
+        } else {
+            closeMoreSheet();
+        }
+    });
+    document.getElementById('more-sheet-backdrop')?.addEventListener('click', closeMoreSheet);
+    document.getElementById('more-sheet-close')?.addEventListener('click', closeMoreSheet);
+    // 시트 내 버튼 선택 시(뷰 전환·액션 모두) 시트 닫기 — 액션 자체는 위임 핸들러가 처리
+    panel.addEventListener('click', (e) => {
+        if ((/** @type {Element|null} */ (e.target))?.closest('button')) closeMoreSheet();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeMoreSheet();
     });
 }
 

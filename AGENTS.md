@@ -118,7 +118,7 @@ src/                    # ES Modules
   app-dashboard.js      # 대시보드 셀렉트·시험/리소스 카드·스토리지 경고 (app.js 분리)
   app-shell.js          # 뷰포트·가로세로·data-click 접근성·브랜딩·기능 플래그 (app.js 분리)
   app-fallback.js       # ESM 로드 실패 시 자동 복구 (모바일 PWA 대응)
-  router.js             # 뷰 라우터 (navigateToView, getViewTitles)
+  router.js             # 뷰 라우터 (navigateToView, getViewTitles, initViewHashRouting — #/슬러그 딥링크·뒤로가기)
   state.js              # 전역 상태 + 진행 영속성 (saveProgress — 저장은 storage.js 위임)
   storage.js            # 저장소 추상화 계층 — 백엔드 교체 가능(getItem/setItem 동기·Async 이중 API), 스코프·쓰기훅·쿼터 감지 중앙화
   ui-utils.js           # showToast, showConfirm, showGlobalLoading, trapFocus

@@ -1,5 +1,5 @@
 // src/router.js - 뷰 라우터: 타이틀 맵 및 뷰 렌더링 디스패치 (app.js에서 분리)
-// @spec UX-NAV-01,UM-04
+// @spec UX-NAV-01,UX-NAV-08,UM-04
 import { state } from './state.js';
 import { saveScrollPosition, restoreScrollPosition } from './views/navigation.js';
 
@@ -45,17 +45,42 @@ export function navigateToView(target, ctx) {
     saveScrollPosition(state.currentView);
 
     // 네비게이션 활성화 클래스 변경 (사이드바 + 모바일 탭 바 모두 동기화)
-    document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(nav => {
+        nav.classList.remove('active');
+        nav.removeAttribute('aria-current');
+    });
     const navItem = document.querySelector(`.nav-item[data-target="${target}"]`);
-    if (navItem) navItem.classList.add('active');
+    if (navItem) {
+        navItem.classList.add('active');
+        navItem.setAttribute('aria-current', 'page');
+    }
 
-    // 모바일 탭 바 활성화 상태 동기화
+    // 모바일 탭 바·더보기 시트 활성화 상태 동기화
+    let tabBarHit = false;
     document.querySelectorAll('.mobile-tab-item').forEach(tab => {
         tab.classList.remove('active');
+        tab.removeAttribute('aria-current');
         if (tab.getAttribute('data-target') === target) {
             tab.classList.add('active');
+            tab.setAttribute('aria-current', 'page');
+            if (tab.closest('#mobile-tab-bar')) {
+                tabBarHit = true;
+                // 활성 탭이 탭 바 화면 밖에 있으면 중앙으로 스크롤
+                if (typeof tab.scrollIntoView === 'function') {
+                    tab.scrollIntoView({ block: 'nearest', inline: 'center' });
+                }
+            }
         }
     });
+    // 활성 뷰가 '더보기' 시트에만 있으면 더보기 탭을 활성 표시
+    const moreBtn = document.getElementById('mobile-more-btn');
+    if (moreBtn) {
+        const inSheet = !tabBarHit
+            && !!document.querySelector(`#mobile-more-sheet .mobile-tab-item[data-target="${target}"]`);
+        moreBtn.classList.toggle('active', inSheet);
+        if (inSheet) moreBtn.setAttribute('aria-current', 'page');
+        else moreBtn.removeAttribute('aria-current');
+    }
 
     // 교재 읽기 집중 모드 해제 (다른 뷰로 이동 시)
     if (target !== 'textbook-reader-view' && document.body.classList.contains('reader-focus-mode')) {
@@ -95,4 +120,77 @@ export function navigateToView(target, ctx) {
 
     // 새 뷰 스크롤 위치 복원
     restoreScrollPosition(target);
+
+    // URL 해시 동기화 — OS/브라우저 뒤로가기로 이전 뷰 복귀 + 딥링크 공유
+    syncViewHash(target);
+}
+
+/* =========================================================
+   뷰 해시 라우팅 — 현재 뷰를 #/슬러그로 URL에 반영해
+   뒤로가기 복귀·딥링크 공유를 지원한다 (UX-NAV 확장)
+   ========================================================= */
+const VIEW_HASH_SLUGS = {
+    'dashboard-view': 'dashboard',
+    'analysis-view': 'analysis',
+    'flashcard-view': 'cards',
+    'quiz-view': 'quiz',
+    'review-view': 'review',
+    'trainer-view': 'trainer',
+    'exam-view': 'exam',
+    'textbook-view': 'textbook',
+    'textbook-reader-view': 'reader',
+    'dictionary-view': 'ingredients',
+    'formula-view': 'formula',
+    'calendar-view': 'calendar',
+    'exam-select-view': 'exams',
+};
+const HASH_SLUG_VIEWS = Object.fromEntries(
+    Object.entries(VIEW_HASH_SLUGS).map(([view, slug]) => [slug, view])
+);
+// hashchange → navigateToView 재진입 시 pushState를 건너뛰기 위한 플래그
+let _hashNavigating = false;
+
+function _viewFromLocation() {
+    const slug = String(location.hash || '').replace(/^#\/?/, '').split('/')[0];
+    return HASH_SLUG_VIEWS[slug] || null;
+}
+
+function syncViewHash(target) {
+    if (_hashNavigating) return;
+    const slug = VIEW_HASH_SLUGS[target];
+    if (!slug || location.hash === '#/' + slug) return;
+    try {
+        history.pushState({ view: target }, '', '#/' + slug);
+    } catch (_) {
+        // file:// 등 pushState 제한 환경 — 해시 직접 할당으로 폴백
+        location.hash = '/' + slug;
+    }
+}
+
+/**
+ * 해시 라우팅 초기화 — 초기 딥링크 적용 + 뒤로가기/해시 변경 감지.
+ * setupNavigation의 routerCtx를 그대로 받아 navigateToView로 디스패치한다.
+ * @param {object} ctx - navigateToView와 동일한 렌더링 컨텍스트
+ */
+export function initViewHashRouting(ctx) {
+    // 딥링크: #/quiz 등 해시로 진입 시 해당 뷰로 바로 이동
+    const initial = _viewFromLocation();
+    if (initial && initial !== state.currentView) {
+        _hashNavigating = true;
+        navigateToView(initial, ctx);
+        _hashNavigating = false;
+    }
+    // 뒤로가기 기저 지점 — 현재 뷰를 히스토리 첫 엔트리로 기록
+    const slug = VIEW_HASH_SLUGS[state.currentView];
+    if (slug && !location.hash) {
+        try { history.replaceState({ view: state.currentView }, '', '#/' + slug); }
+        catch (_) { /* 제한 환경 무시 */ }
+    }
+    window.addEventListener('hashchange', () => {
+        const view = _viewFromLocation();
+        if (!view || view === state.currentView) return;
+        _hashNavigating = true;
+        navigateToView(view, ctx);
+        _hashNavigating = false;
+    });
 }

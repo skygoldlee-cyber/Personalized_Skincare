@@ -46,43 +46,48 @@
   margin: 0;
 }
 
-/* ── 토스트 알림 ── */
+/* ── 토스트 알림 (스택 — 연속 알림 유실 방지) ── */
 #app-toast {
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(0.9);
+  transform: translate(-50%, -50%);
+  z-index: var(--z-toast-top);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  pointer-events: none;
+  max-width: 90vw;
+}
+.app-toast-item {
   background: rgba(15, 23, 42, 0.95);
   color: var(--color-on-brand);
   padding: 1rem 1.5rem;
   border-radius: 12px;
   font-size: 0.95rem;
   font-weight: var(--font-weight-medium);
-  z-index: var(--z-toast-top);
   border: 1px solid var(--white-tint-10);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
   opacity: 0;
+  transform: scale(0.9);
   transition: opacity 0.25s ease, transform 0.25s ease;
-  pointer-events: none;
   max-width: 90vw;
   text-align: center;
   line-height: 1.5;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
-#app-toast.is-visible {
+.app-toast-item.is-visible {
   opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
+  transform: scale(1);
 }
 /* 모바일: 중앙 토스트가 콘텐츠를 가리므로 하단 탭 바 위로 이동 */
 @media (max-width: 768px), (orientation: landscape) and (max-height: 500px) {
   #app-toast {
     top: auto;
     bottom: calc(80px + env(safe-area-inset-bottom, 0px));
-    transform: translate(-50%, 0) scale(0.9);
-  }
-  #app-toast.is-visible {
-    transform: translate(-50%, 0) scale(1);
+    transform: translate(-50%, 0);
   }
   /* 하단 고정 배너들도 탭 바(70px + safe-area)를 덮지 않도록 위로 이동 */
   #storage-warning-banner,
@@ -223,32 +228,6 @@
   font-size: 0.85rem;
   text-align: center;
   box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.3);
-}
-
-/* ── 방향 전환 토스트 ── */
-.orientation-toast {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 1rem 1.5rem;
-  z-index: var(--z-orientation-toast);
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-  animation: orientationToastIn 0.3s ease;
-}
-.orientation-toast .orientation-toast-icon {
-  font-size: 1.5rem;
-  color: var(--color-primary);
-}
-.orientation-toast .orientation-toast-text {
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-text-main);
 }
 
 /* ── PWA 직접 설치 버튼 ── */
@@ -630,7 +609,7 @@
   margin-left: 0.3rem;
 }
 
-/* ── Pro 기능 배지 ── */
+/* ── Pro 기능 배지 — 아웃라인형 (무료 체험 중 상시 노출이라 채움 배경은 시각 소음) ── */
 .pro-badge {
   display: inline-block;
   padding: 0.1rem 0.4rem;
@@ -638,8 +617,9 @@
   font-size: 0.6rem;
   font-weight: var(--font-weight-bold, 700);
   letter-spacing: 0.05em;
-  color: #fff;
-  background: linear-gradient(135deg, #8b5cf6, #6366f1);
+  color: var(--color-secondary, #8b5cf6);
+  border: 1px solid var(--secondary-tint-30, rgba(139, 92, 246, 0.3));
+  background: transparent;
   vertical-align: middle;
   margin-left: 0.3rem;
 }

@@ -15,61 +15,7 @@
                     </div>
                 </div>
 
-                <!-- Status Stats Grid -->
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-icon icon-blue"><i class="fa-solid fa-book-open" aria-hidden="true"></i></div>
-                        <div class="stat-info">
-                            <h3>총 학습 진척도</h3>
-                            <div class="stat-value" id="total-progress-val">0%</div>
-                            <div class="progress-bar-container">
-                                <div class="progress-bar progress-bar-fill" id="total-progress-bar"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon icon-purple"><i class="fa-solid fa-id-card" aria-hidden="true"></i></div>
-                        <div class="stat-info">
-                            <h3>외운 카드 수</h3>
-                            <div class="stat-value"><span id="memorized-cards-count">0</span> / <span id="total-cards-count">0</span></div>
-                            <p class="stat-desc">학습 완료 상태 카드</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon icon-green"><i class="fa-solid fa-circle-check" aria-hidden="true"></i></div>
-                        <div class="stat-info">
-                            <h3>퀴즈 정답률</h3>
-                            <div class="stat-value" id="quiz-success-rate">0%</div>
-                            <p class="stat-desc">푼 문제 <span id="solved-quizzes-count">0</span>개 기준</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon icon-orange"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i></div>
-                        <div class="stat-info">
-                            <h3>헷갈린 카드</h3>
-                            <div class="stat-value" id="weak-cards-count">0</div>
-                            <p class="stat-desc">집중 복습이 필요함</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon icon-blue"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i></div>
-                        <div class="stat-info">
-                            <h3>오늘 복습</h3>
-                            <div class="stat-value" id="due-review-count">0</div>
-                            <p class="stat-desc">간격 반복 대기 카드</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon icon-orange"><i class="fa-solid fa-calendar-day" aria-hidden="true"></i></div>
-                        <div class="stat-info">
-                            <h3>시험까지</h3>
-                            <div class="stat-value" id="exam-dday-count">미설정</div>
-                            <p class="stat-desc"><button type="button" class="dday-set-btn" data-click="openGoalSettings"><i class="fa-solid fa-gear"></i> 시험일·목표 설정</button></p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Daily Challenge & Streak and Data Management Row -->
+                <!-- Daily Challenge & Streak and Data Management Row — 오늘 할 일 CTA가 최상단 -->
                 <div class="dashboard-widgets-row daily-challenge-grid">
                     <!-- 1. Daily 5-Min Challenge Card -->
                     <div class="glass-card daily-challenge-card glass-card-base">
@@ -114,7 +60,7 @@
                 <!-- 개인화 추천 — 내 학습 데이터 기반 오늘의 우선순위 (항상 표시) -->
                 <div class="section-title mt-6 section-title-row">
                     <div>
-                        <h3>🎯 오늘의 맞춤 학습 추천</h3>
+                        <h3><i class="fa-solid fa-bullseye" aria-hidden="true"></i> 오늘의 맞춤 학습 추천</h3>
                         <p class="section-subtitle">내 복습 대기·정답률·모의고사 결과를 분석해 우선순위를 제안합니다</p>
                     </div>
                     <button class="btn btn-secondary btn-sm analysis-link-btn" data-click="switchView" data-args='["analysis-view", {"scrollTop": true}]'>
@@ -124,6 +70,69 @@
                 <div id="weak-subject-recommendation" class="recommendation-container mb-7">
                     <!-- 개인화 추천 (dashboard.js computeRecommendations에서 렌더링) -->
                 </div>
+
+                <!-- 학습 통계 — 핵심 3개 상시 + 보조 지표는 접이식 (아이콘 색은 의미 부여용만: 주의=주황) -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon icon-blue"><i class="fa-solid fa-book-open" aria-hidden="true"></i></div>
+                        <div class="stat-info">
+                            <h3>총 학습 진척도</h3>
+                            <div class="stat-value" id="total-progress-val">0%</div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar progress-bar-fill" id="total-progress-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon icon-blue"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i></div>
+                        <div class="stat-info">
+                            <h3>오늘 복습</h3>
+                            <div class="stat-value" id="due-review-count">0</div>
+                            <p class="stat-desc">간격 반복 대기 카드</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon icon-blue"><i class="fa-solid fa-calendar-day" aria-hidden="true"></i></div>
+                        <div class="stat-info">
+                            <h3>시험까지</h3>
+                            <div class="stat-value" id="exam-dday-count">미설정</div>
+                            <p class="stat-desc"><button type="button" class="dday-set-btn" data-click="openGoalSettings"><i class="fa-solid fa-gear"></i> 시험일·목표 설정</button></p>
+                        </div>
+                    </div>
+                </div>
+                <details class="analysis-fold stats-fold" id="dashboard-stats-fold">
+                    <summary class="analysis-fold-summary">
+                        <span class="analysis-fold-title"><i class="fa-solid fa-chart-column" aria-hidden="true"></i> 학습 통계 더 보기</span>
+                        <span class="analysis-fold-hint">외운 카드 · 정답률 · 헷갈린 카드</span>
+                        <i class="fa-solid fa-chevron-down analysis-fold-chevron" aria-hidden="true"></i>
+                    </summary>
+                    <div class="stats-grid stats-grid-secondary">
+                        <div class="stat-card">
+                            <div class="stat-icon icon-blue"><i class="fa-solid fa-id-card" aria-hidden="true"></i></div>
+                            <div class="stat-info">
+                                <h3>외운 카드 수</h3>
+                                <div class="stat-value"><span id="memorized-cards-count">0</span> / <span id="total-cards-count">0</span></div>
+                                <p class="stat-desc">학습 완료 상태 카드</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon icon-blue"><i class="fa-solid fa-circle-check" aria-hidden="true"></i></div>
+                            <div class="stat-info">
+                                <h3>퀴즈 정답률</h3>
+                                <div class="stat-value" id="quiz-success-rate">0%</div>
+                                <p class="stat-desc">푼 문제 <span id="solved-quizzes-count">0</span>개 기준</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon icon-orange"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i></div>
+                            <div class="stat-info">
+                                <h3>헷갈린 카드</h3>
+                                <div class="stat-value" id="weak-cards-count">0</div>
+                                <p class="stat-desc">집중 복습이 필요함</p>
+                            </div>
+                        </div>
+                    </div>
+                </details>
 
                 <!-- 집중 도구 — 기본 접힘, 필요 시 펼침 (상세 분석은 '맞춤학습' 뷰로 분리) -->
                 <details class="analysis-fold" id="dashboard-analysis-fold">
@@ -138,7 +147,7 @@
                     <div class="pomodoro-card">
                         <div class="pomodoro-header">
                             <div class="pomo-title-group">
-                                <h4>⏱️ 집중 뽀모도로 타이머</h4>
+                                <h4><i class="fa-solid fa-stopwatch" aria-hidden="true"></i> 집중 뽀모도로 타이머</h4>
                                 <span class="pomodoro-status" id="pomo-status">대기 중</span>
                             </div>
                             <div class="pomo-total-time-group">

@@ -1,6 +1,7 @@
-// @spec UX-NAV-01,UM-04
+// @spec UX-NAV-01,UX-NAV-08,UM-04
 import { describe, it, beforeEach, expect, vi } from 'vitest';
-import { getViewTitles, navigateToView } from '../../src/router.js';
+import { getViewTitles, navigateToView, initViewHashRouting } from '../../src/router.js';
+import { state } from '../../src/state.js';
 
 // navigation.js의 DOM 의존성 모킹
 vi.mock('../../src/state.js', () => ({
@@ -14,6 +15,8 @@ vi.mock('../../src/views/navigation.js', () => ({
 
 describe('router.js — DOM 테스트', () => {
     beforeEach(() => {
+        state.currentView = 'dashboard-view';
+        history.replaceState(null, '', location.pathname);
         document.body.innerHTML = `
             <div id="view-title"></div>
             <div id="view-subtitle"></div>
@@ -171,6 +174,101 @@ describe('router.js — DOM 테스트', () => {
 
             expect(document.body.classList.contains('reader-focus-mode')).toBe(false);
             expect(focusBtn.classList.contains('active')).toBe(false);
+        });
+    });
+
+    describe('접근성 — aria-current + 활성 탭 가시성', () => {
+        const ctx = () => ({
+            titlesMap: getViewTitles(null),
+            handlers: { viewRenderers: {}, stopReaderAudio: vi.fn() }
+        });
+
+        it('활성 nav-item/mobile-tab-item에 aria-current="page" 부여, 나머지는 제거', () => {
+            navigateToView('flashcard-view', ctx());
+
+            const activeNav = document.querySelector('.nav-item[data-target="flashcard-view"]');
+            expect(activeNav.getAttribute('aria-current')).toBe('page');
+            const activeTab = document.querySelector('.mobile-tab-item[data-target="flashcard-view"]');
+            expect(activeTab.getAttribute('aria-current')).toBe('page');
+            document.querySelectorAll('.nav-item:not([data-target="flashcard-view"]), ' +
+                '.mobile-tab-item:not([data-target="flashcard-view"])').forEach(el => {
+                expect(el.hasAttribute('aria-current')).toBe(false);
+            });
+        });
+
+        it('탭 바 안 활성 탭에 scrollIntoView(inline:center) 호출', () => {
+            const bar = document.createElement('nav');
+            bar.id = 'mobile-tab-bar';
+            const tab = document.createElement('button');
+            tab.className = 'mobile-tab-item';
+            tab.setAttribute('data-target', 'quiz-view');
+            tab.scrollIntoView = vi.fn();
+            bar.appendChild(tab);
+            document.body.appendChild(bar);
+
+            navigateToView('quiz-view', ctx());
+
+            expect(tab.scrollIntoView).toHaveBeenCalledWith({ block: 'nearest', inline: 'center' });
+        });
+
+        it('더보기 시트 소속 뷰 활성 시 more-btn이 active + aria-current를 가짐', () => {
+            const bar = document.createElement('nav');
+            bar.id = 'mobile-tab-bar';
+            const moreBtn = document.createElement('button');
+            moreBtn.id = 'mobile-more-btn';
+            moreBtn.className = 'mobile-tab-item';
+            bar.appendChild(moreBtn);
+            document.body.appendChild(bar);
+
+            const sheet = document.createElement('div');
+            sheet.id = 'mobile-more-sheet';
+            const sheetTab = document.createElement('button');
+            sheetTab.className = 'mobile-tab-item';
+            sheetTab.setAttribute('data-target', 'exam-view');
+            sheet.appendChild(sheetTab);
+            document.body.appendChild(sheet);
+
+            navigateToView('exam-view', ctx());
+
+            expect(sheetTab.getAttribute('aria-current')).toBe('page');
+            expect(moreBtn.classList.contains('active')).toBe(true);
+            expect(moreBtn.getAttribute('aria-current')).toBe('page');
+        });
+    });
+
+    describe('뷰 해시 라우팅', () => {
+        const ctx = () => ({
+            titlesMap: getViewTitles(null),
+            handlers: { viewRenderers: {}, stopReaderAudio: vi.fn() }
+        });
+
+        it('navigateToView 시 URL 해시가 #/slug로 동기화', () => {
+            navigateToView('quiz-view', ctx());
+            expect(location.hash).toBe('#/quiz');
+            navigateToView('dashboard-view', ctx());
+            expect(location.hash).toBe('#/dashboard');
+        });
+
+        it('initViewHashRouting — 초기 딥링크 해시로 뷰 전환', () => {
+            history.replaceState(null, '', '#/quiz');
+            initViewHashRouting(ctx());
+            expect(state.currentView).toBe('quiz-view');
+            expect(document.getElementById('quiz-view').classList.contains('active')).toBe(true);
+        });
+
+        it('hashchange 이벤트로 뷰 전환 (뒤로가기 경로)', () => {
+            initViewHashRouting(ctx());
+            history.pushState({ view: 'flashcard-view' }, '', '#/cards');
+            window.dispatchEvent(new Event('hashchange'));
+            expect(state.currentView).toBe('flashcard-view');
+            expect(document.getElementById('flashcard-view').classList.contains('active')).toBe(true);
+        });
+
+        it('알 수 없는 해시는 무시', () => {
+            initViewHashRouting(ctx());
+            history.pushState(null, '', '#/nope');
+            window.dispatchEvent(new Event('hashchange'));
+            expect(state.currentView).toBe('dashboard-view');
         });
     });
 });

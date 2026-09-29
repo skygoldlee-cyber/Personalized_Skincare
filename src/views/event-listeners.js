@@ -94,12 +94,44 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
         });
     }
 
+    // 1-1b. OMR 답안지 접이식 — 모바일(≤900px)에서는 기본 접힘, 문제 영역 우선
+    const omrToggle = document.getElementById('omr-toggle');
+    const omrPanel = document.querySelector('.sim-omr-panel');
+    if (omrToggle && omrPanel) {
+        if (window.matchMedia && window.matchMedia('(max-width: 900px)').matches) {
+            omrPanel.classList.add('omr-collapsed');
+            omrToggle.setAttribute('aria-expanded', 'false');
+        }
+        omrToggle.addEventListener('click', () => {
+            const collapsed = omrPanel.classList.toggle('omr-collapsed');
+            omrToggle.setAttribute('aria-expanded', String(!collapsed));
+        });
+    }
+
     // 1-2. 대시보드 분석 접이식 — 열림 상태를 세션 간 유지
     const analysisFold = /** @type {HTMLDetailsElement|null} */ (document.getElementById('dashboard-analysis-fold'));
     if (analysisFold) {
         if (safeGetItem('ui_analysis_open') === '1') analysisFold.open = true;
         analysisFold.addEventListener('toggle', () => {
             safeSetItem('ui_analysis_open', analysisFold.open ? '1' : '0');
+        });
+    }
+
+    // 1-3. 맞춤학습 인트로 접이식 — 첫 방문은 열림, 접으면 상태 기억
+    const introFold = /** @type {HTMLDetailsElement|null} */ (document.getElementById('analysis-intro-fold'));
+    if (introFold) {
+        introFold.open = safeGetItem('ui_analysis_intro_open') !== '0';
+        introFold.addEventListener('toggle', () => {
+            safeSetItem('ui_analysis_intro_open', introFold.open ? '1' : '0');
+        });
+    }
+
+    // 1-4. 대시보드 보조 통계 접이식 — 열림 상태를 세션 간 유지
+    const statsFold = /** @type {HTMLDetailsElement|null} */ (document.getElementById('dashboard-stats-fold'));
+    if (statsFold) {
+        if (safeGetItem('ui_stats_open') === '1') statsFold.open = true;
+        statsFold.addEventListener('toggle', () => {
+            safeSetItem('ui_stats_open', statsFold.open ? '1' : '0');
         });
     }
 
