@@ -2,7 +2,7 @@
 var DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2027",
-  "generatedAt": "2026-09-29T05:11:33.959Z",
+  "generatedAt": "2026-09-29T06:55:48.710Z",
   "subjects": [
     {
       "key": "law",
@@ -41,7 +41,7 @@ var DATA_REGISTRY = {
       "order": 3,
       "name": "유통화장품 안전관리",
       "shortName": "안전관리",
-      "contentHash": "235105c6",
+      "contentHash": "4b15234f",
       "stats": {
         "cards": 270,
         "quizzes": 103,
@@ -80,9 +80,9 @@ var DATA_REGISTRY = {
       "part": 1,
       "title": "화장품법의 이해 (100제)",
       "file": "과목1_단일정답형.md",
-      "bundle": "./data/exams/cosmetic/exams/subject1.23de1552.js",
+      "bundle": "./data/exams/cosmetic/exams/subject1.83400f58.js",
       "global": "EXAM_DATA_subject1",
-      "contentHash": "23de1552",
+      "contentHash": "83400f58",
       "stats": {
         "questions": 100
       }
@@ -93,9 +93,9 @@ var DATA_REGISTRY = {
       "part": 1,
       "title": "화장품 제조 및 품질관리 (250제)",
       "file": "과목2_단일정답형.md",
-      "bundle": "./data/exams/cosmetic/exams/subject2.f37459f0.js",
+      "bundle": "./data/exams/cosmetic/exams/subject2.71bc1013.js",
       "global": "EXAM_DATA_subject2",
-      "contentHash": "f37459f0",
+      "contentHash": "71bc1013",
       "stats": {
         "questions": 250
       }
@@ -106,9 +106,9 @@ var DATA_REGISTRY = {
       "part": 1,
       "title": "유통화장품 안전관리 (250제)",
       "file": "과목3_단일정답형.md",
-      "bundle": "./data/exams/cosmetic/exams/subject3.f00d720e.js",
+      "bundle": "./data/exams/cosmetic/exams/subject3.60bd5692.js",
       "global": "EXAM_DATA_subject3",
-      "contentHash": "f00d720e",
+      "contentHash": "60bd5692",
       "stats": {
         "questions": 250
       }
@@ -119,9 +119,9 @@ var DATA_REGISTRY = {
       "part": 1,
       "title": "맞춤형화장품의 이해 (400제)",
       "file": "과목4_단일정답형.md",
-      "bundle": "./data/exams/cosmetic/exams/subject4.dce4fb33.js",
+      "bundle": "./data/exams/cosmetic/exams/subject4.6efa9144.js",
       "global": "EXAM_DATA_subject4",
-      "contentHash": "dce4fb33",
+      "contentHash": "6efa9144",
       "stats": {
         "questions": 400
       }
