@@ -92,6 +92,19 @@ describe('문제집 뷰어 — 열기·TOC·인쇄·캐시', () => {
         expect(span.textContent).toContain('적으로');
     });
 
+    it('mermaid 코드블록 → pre.mermaid 출력 (텍스트 코드블록이 아님) (H)', async () => {
+        const MER_PATH = 'content/exams/cosmetic/참조자료/과목1/ref_doc.md';
+        window.__EXAM_MD__[MER_PATH] =
+            '# 참조 문서\n\n```mermaid\nflowchart LR\nA-->B\n```\n\n본문 끝.\n';
+
+        await ExamViewer.openExam(MER_PATH);
+        await flushAsync(30);
+
+        const pre = el('exam-article').querySelector('pre.mermaid');
+        expect(pre).not.toBeNull();
+        expect(pre.textContent).toContain('flowchart LR');
+    });
+
     it('비 ref_md 문서 → joinWraps 미적용 (줄 단위 문단 유지) (H)', async () => {
         await ExamViewer.openExam(EXAM_PATH);
         await flushAsync(30);

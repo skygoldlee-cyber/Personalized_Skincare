@@ -25,10 +25,11 @@ import { resolveRefPath } from './pdf-registry.js';
 import { contentPath, dataPath } from './exam-context.js';
 import { CACHE } from './config/cache.js';
 import { proFeatureNotice } from './pro-upgrade.js';
+import { renderMermaidIn } from './mermaid-render.js';
 
 export const ExamViewer = (() => {
-    // 캐시 포맷 변경: v6 — joinWraps 병합 렌더링 (연속줄 span data-md-line 포함)
-    const CACHE_PREFIX = 'exam_md_cache_v6_';
+    // 캐시 포맷 변경: v7 — allowMermaid 활성화 (참조자료 md의 ```mermaid 블록 렌더링)
+    const CACHE_PREFIX = 'exam_md_cache_v7_';
     const CACHE_TTL = CACHE.EXAM_CACHE_TTL_MS; // 24시간
 
     // 네비게이션 히스토리 스택 (인용 링크 이동 후 뒤로가기용)
@@ -75,7 +76,7 @@ export const ExamViewer = (() => {
         // ref_md는 #L#### 인용 라인번호 보존을 위해 시각적 줄 그대로 변환된 산출물이라
         // 문장 중간 절단이 많다 — joinWraps로 연속줄을 병합한다 (라인번호는 유지됨)
         const joinWraps = typeof mdPath === 'string' && mdPath.indexOf('ref_md') !== -1;
-        return parseMarkdown(mdText, { allowMermaid: false, addLineNumbers: true, joinWraps: joinWraps });
+        return parseMarkdown(mdText, { allowMermaid: true, addLineNumbers: true, joinWraps: joinWraps });
     }
 
     /* =========================================================
@@ -470,6 +471,8 @@ body.exam-open{overflow:hidden;}
         if (cached) {
             _renderBody(title, cached.html, mdPath);
             _open();
+            // 오버레이 표시 후 렌더 — mermaid 측정이 display:none 상태에서 부정확할 수 있음
+            renderMermaidIn(_overlayEl.querySelector('#exam-article'), '[exam]');
             _updateBackButton();
             if (lineNum) {
                 _scrollToLine(lineNum, cached.mdText);
@@ -487,6 +490,7 @@ body.exam-open{overflow:hidden;}
             const bodyHtml = _mdToHtml(mdText, mdPath);
             _setCached(mdPath, bodyHtml, mdText);
             _renderBody(title, bodyHtml, mdPath);
+            renderMermaidIn(_overlayEl.querySelector('#exam-article'), '[exam]');
             _updateBackButton();
             if (lineNum) {
                 _scrollToLine(lineNum, mdText);

@@ -251,7 +251,7 @@ if (MD_PATTERN.test(url.pathname)) {
 
 | 옵션 | 기본값 | 사용처 |
 |------|--------|--------|
-| `allowMermaid` | `false` | `manual-viewer.js` (`true`), `exam-viewer.js` (`false`) |
+| `allowMermaid` | `false` | `manual-viewer.js`/`exam-viewer.js`/`html-viewer.js` (`true`) — 각 뷰어가 `renderMermaidIn`으로 실제 렌더 수행 |
 | `useCustomListDiv` | `false` | `reader-format.js` (`true`) |
 | `useReaderStyles` | `false` | `reader-format.js` (`true`) |
 | `customSpacing` | `false` | `reader-format.js` (`true`) |

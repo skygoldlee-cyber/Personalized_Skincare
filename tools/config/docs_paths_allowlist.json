@@ -192,5 +192,10 @@
     "file": "ref-pipeline/README.md",
     "ref": "{EXAM}/report/법령최신확인결과.md",
     "reason": "check_laws.py 리포트 산출물 — gitignore"
+  },
+  {
+    "file": "ref-pipeline/README.md",
+    "ref": "ref-pipeline/.mermaid_cache/",
+    "reason": "md2doc.py Mermaid 사전렌더 캐시 디렉터리 — gitignore (런타임 생성물)"
   }
 ]

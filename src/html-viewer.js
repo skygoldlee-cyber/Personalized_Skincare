@@ -4,12 +4,13 @@
 import { parseMarkdown } from './markdown-parser.js';
 import { esc } from './sanitize.js';
 import { CACHE } from './config/cache.js';
+import { renderMermaidIn } from './mermaid-render.js';
 
 let _overlayEl = null;
 let _contentEl = null;
 let _searchResults = [];
 let _searchIdx = -1;
-const _FETCH_CACHE_PREFIX = 'ref_doc_v2_';
+const _FETCH_CACHE_PREFIX = 'ref_doc_v3_';
 const _FETCH_CACHE_TTL = CACHE.FETCH_CACHE_TTL_MS; // 24시간
 // LRU 캐시 제한: sessionStorage 용량(5-10MB) 초과 방지를 위해 최대 항목 수 제한
 const _FETCH_CACHE_MAX_ENTRIES = CACHE.FETCH_CACHE_MAX_ENTRIES;
@@ -218,6 +219,7 @@ async function openHtmlViewer(htmlPath, searchKeyword, anchorId, lineNum) {
                 // ref_md는 문장 중간 절단이 있는 PDF 추출 산출물 — 연속줄 병합 적용
                 innerHTML = parseMarkdown(rawText, {
                     allowInlineCode: false,
+                    allowMermaid: true,
                     joinWraps: htmlPath.indexOf('ref_md') !== -1
                 });
             } else {
@@ -264,6 +266,7 @@ async function openHtmlViewer(htmlPath, searchKeyword, anchorId, lineNum) {
         content.innerHTML = innerHTML;
         scroll.appendChild(content);
         _contentEl = content;
+        renderMermaidIn(content, '[ref]');
 
         // PDF→HTML 변환시 폰트별 <span> 분할 제거 (한글 키워드 검색을 위해)
         // 예: <span>알</span><span>코올</span> → 알코올 (단일 텍스트 노드)
