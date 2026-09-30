@@ -28,6 +28,25 @@
         "pomodoro": true,
         "formula": true
       }
+    },
+    {
+      "id": "food",
+      "name": "식품기사",
+      "shortName": "식품기사",
+      "title": "Passmula — 식품기사",
+      "logoMain": "Pass",
+      "logoSub": "mula",
+      "desc": "식품위생학(법령 암기형) Phase C 파일럿 — 식품위생법·식품공전·표시기준 인용 체인 검증",
+      "icon": "fa-solid fa-bowl-food",
+      "year": "2027",
+      "contentRoot": "content/exams/food",
+      "dataRoot": "data/exams/food",
+      "manifestPath": "content/exams/food/manifest.json",
+      "registryBundle": "data/exams/food/registry.js",
+      "registryGlobal": "DATA_REGISTRY_FOOD",
+      "features": {
+        "refDocs": true
+      }
     }
   ]
 }

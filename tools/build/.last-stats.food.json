@@ -1,0 +1,19 @@
+{
+  "subjects": {
+    "sanitation": {
+      "cards": 6,
+      "quizzes": 1,
+      "files": {
+        "교재/sanitation/1과목_식품위생법의이해.md": {
+          "cards": 6,
+          "quizzes": 1
+        }
+      }
+    }
+  },
+  "exams": {
+    "subject1": {
+      "questions": 8
+    }
+  }
+}

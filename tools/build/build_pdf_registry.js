@@ -74,7 +74,7 @@ function examTablesJs(refs, contentRoot) {
   const refMdSubjects = {};
   for (const files of Object.values(obj(refs.refDirs))) {
     for (const f of files) {
-      const s = docSubject(f.replace(/\.pdf$/i, ''));
+      const s = docSubject(f.replace(/\.pdf$/i, ''), contentRoot);
       if (s) refMdSubjects[f] = `과목${s}`;
     }
   }

@@ -3,7 +3,7 @@
 > 상위 문서: [`../ARCHITECTURE.md`](../ARCHITECTURE.md) §9 멀티시험 플랫폼 구조 · [`LEARNING_PREMIUM_PLAN.md`](LEARNING_PREMIUM_PLAN.md) "두 번째 시험 추가 전 선결 과제" · [`../../report_archive/PRO_MULTI_EXAM_EVALUATION.md`](../../report_archive/PRO_MULTI_EXAM_EVALUATION.md) (시험 후보 평가)
 > **관련 SPEC ID**: `ES-01~05` (시험 선택·전환) · `DA-06~08` (멀티시험 대칭 구조·경로) · `RR-13` (참조자료 레지스트리) · `RR-17` (law.go.kr 링크) · `RR-19`, `FO-24` (고시 감시) — 로드맵 항목 ROAD-M1(타 시험 등록)의 실행 설계
 > **문서 ID**: DOC-DSN-10
-> **상태**: Phase A 구현 완료 (A1~A7, 2026-09-30) — A1·A2는 기존 코드가 이미 시험별 테이블 구조라 확인으로 종결, A3~A7 본 문서대로 구현. Phase B(스캐폴더)·C(파일럿)는 미착수
+> **상태**: Phase A·B·C 구현 완료 (2026-09-30) — A1·A2는 기존 코드가 이미 시험별 테이블 구조라 확인으로 종결, A3~A7 본 문서대로 구현. B는 스캐폴더 라운드트립 검증, C는 식품기사(food) 파일럿으로 전 체인 검증 (§9 표 하단 주석 참조)
 > **목적**: 다른 자격시험을 "콘텐츠 팩"으로 온보딩할 수 있도록, 현재 cosmetic에 결합된 법령·지식 데이터 계층을 시험 비종속으로 일반화한다.
 
 ---
@@ -260,11 +260,18 @@ const _EXAM_LAW_URLS = {
 | Phase | 내용 | 완료 조건 |
 |-------|------|----------|
 | A — 결합도 해소 | §6 표의 A1~A7 — ✅ 완료 (2026-09-30) | `check:all` 통과 + cosmetic 회귀 0 |
-| B — 스캐폴더 | `tools/scaffold_exam.js` + 온보딩 런북 문서 | 더미 시험 1개로 scaffold→build→피커 표시 확인 후 제거 |
-| C — 파일럿 | 법령 암기형 시험 1개 실제 온보딩 (후보는 PRO_MULTI_EXAM_EVALUATION §4 참조) | 전 체인 동작: 교재→문항→인용→법령 링크→고시 감시 |
+| B — 스캐폴더 | `tools/scaffold_exam.js` — ✅ 완료 (2026-09-30) | 더미 시험(dummytest)으로 scaffold→build→피커 표시→제거→잔재 0 라운드트립 통과 |
+| C — 파일럿 | 식품기사(`food`) — 법령 암기형, 식약처 고시 체계 공유로 재사용성 최대 — ✅ 완료 (2026-09-30) | 전 체인 동작: 교재→문항→인용→법령 링크→고시 감시 (아래 "Phase C 파일럿 결과" 참조) |
 | D — 지식DB 일반화 | `dictionary` 스키마 드리븐화 + 두 번째 엔티티 타입 적용 | 엔티티 역참조(§5.3) 포함 시 별도 스펙 |
 
 **의존 관계**: A→C는 순차 (B는 A 이후 언제든). D는 C와 독립 진행 가능 — 다만 지식DB가 있는 시험을 파일럿으로 고르면 D의 검증 경로가 확보된다.
+
+### Phase C 파일럿 결과 (food, 2026-09-30)
+
+- **스코프**: 식품기사 필기의 1과목(식품위생학) 축소본 — 교재 1챕터 + 문항 8제 + ref_md 발췌본 3종(식품위생법 제21065호 / 식품공전 제2026-55호 / 표시기준 제2026-37호). `manifest._pilot` 주석으로 부분 콘텐츠임을 명시.
+- **검증된 체인**: lawdb 5종 추가 → `law-links.js`의 `_EXAM_LAW_URLS.food` 생성 · `check:lawurls` 실검증 15종 통과 · `pdf-registry`/`keyword-index` 시험별 테이블 생성 · 인용 동기화(8개 링크, 미발견 0) · `check_mfds_notice.py`가 `EXAM_ID=food`로 감시 대상 3종(law/admrul target 구분 + baseline 제호·시행일)을 references.json에서 자동 유도.
+- **파일럿에서 발견·수정된 버그**: ① `build_pdf_registry.js`의 `docSubject()` 호출이 `contentRoot`를 전달하지 않아 비기본 시험의 `REF_MD_SUBJECTS`가 기본 시험 규칙으로 계산되던 문제 수정 ② 스캐폴드 `references.json`의 결손 키는 빈 값으로 관대 처리, `lawRefs: []`는 "법령 없음"으로 구분.
+- **남은 파일럿 갭**: 물리 PDF 미확보(ref_md 수기 발췌로 대체 — PDF 확보 시 ref-pipeline 변환 절차로 전환), 지식DB 미탑재(`features.dictionary` 미활성 → Phase D), `notice_status.json`은 첫 `--update` 실행 시 생성(현재 시드 없음 — 앱은 미존재 파일을 정상 처리), 문제은행 챕터 매핑 4건 미해석(단일 챕터 구조상 무해).
 
 ---
 

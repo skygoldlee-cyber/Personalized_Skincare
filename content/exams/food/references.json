@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "comment": "참조자료 중앙 설정 (Phase C 파일럿). pdf-registry.js는 이 파일에서 빌드 시 자동 생성됨.",
+  "lawRefsComment": "이 시험이 사용하는 content/lawdb.json 법령 id 목록 — src/law-links.js의 _EXAM_LAW_URLS.food로 생성. 나열 순서가 매칭 우선순위(구체적 법령을 모법보다 먼저).",
+  "lawRefs": [
+    "food-sanitation-act-enforcement-rule",
+    "food-sanitation-act-enforcement-decree",
+    "food-sanitation-act",
+    "food-standards-code",
+    "food-labeling-standards"
+  ],
+  "noticeCoreComment": "고시 감시 배너의 기준 문서명 (notice_status.json의 레거시 baseline/latest 필드에 기록되는 문서).",
+  "noticeCore": "식품의 기준 및 규격",
+  "subjectDefaultRefdoc": {
+    "과목1": "식품위생법(법률)(제21065호)(20251001)"
+  },
+  "subjectDirMap": {
+    "sanitation": "과목1"
+  },
+  "docSubjectRulesComment": "ref_md 문서 디렉터리명 → 과목 번호 귀속 규칙. 첫 매칭이 우선. ref_statements.js 내장 폴백 대신 이 목록이 해당 시험에 적용됨.",
+  "docSubjectRules": [
+    ["식품위생법", 1, "법률 본문 → 식품위생학"],
+    ["식품의 기준 및 규격|표시기준", 1, "식약처 고시 → 식품위생학"]
+  ],
+  "multiSubjectDocs": [],
+  "refDirs": {
+    "법령고시": [
+      "식품위생법(법률)(제21065호)(20251001).pdf",
+      "식품의 기준 및 규격(식품의약품안전처고시)(제2026-55호)(20260731).pdf",
+      "식품등의 표시기준(식품의약품안전처고시)(제2026-37호)(20260512).pdf"
+    ]
+  },
+  "refDirsComment": "파일럿: 물리 PDF 미확보 — ref_md 발췌본만 존재. PDF 확보 시 ref-pipeline 변환 절차로 전환.",
+  "sourceRefMap": [
+    {
+      "test": "식품공전|식품의\\s*기준\\s*및\\s*규격|기준·규격",
+      "file": "식품의 기준 및 규격(식품의약품안전처고시)(제2026-55호)(20260731).pdf"
+    },
+    {
+      "test": "표시기준|표시ㆍ광고",
+      "file": "식품등의 표시기준(식품의약품안전처고시)(제2026-37호)(20260512).pdf"
+    },
+    {
+      "test": "식품위생법\\s*제?\\d+조|식품위생법",
+      "file": "식품위생법(법률)(제21065호)(20251001).pdf",
+      "exclude": "시행령|시행규칙|고시"
+    }
+  ],
+  "keywordRefMap": [],
+  "referenceFiles": {},
+  "referenceCommon": [],
+  "referenceIngredients": [],
+  "referenceLaw": [
+    {
+      "name": "식품위생법",
+      "file": "식품위생법(법률)(제21065호)(20251001).pdf",
+      "type": "pdf",
+      "dir": "법령고시"
+    },
+    {
+      "name": "식품의 기준 및 규격 (식품공전)",
+      "file": "식품의 기준 및 규격(식품의약품안전처고시)(제2026-55호)(20260731).pdf",
+      "type": "pdf",
+      "dir": "법령고시"
+    },
+    {
+      "name": "식품등의 표시기준",
+      "file": "식품등의 표시기준(식품의약품안전처고시)(제2026-37호)(20260512).pdf",
+      "type": "pdf",
+      "dir": "법령고시"
+    }
+  ]
+}

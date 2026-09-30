@@ -87,6 +87,46 @@
       "slug": "우수화장품제조및품질관리기준",
       "matchKeys": ["우수화장품", "CGMP"],
       "watch": { "target": "admrul" }
+    },
+    {
+      "id": "food-sanitation-act",
+      "name": "식품위생법",
+      "type": "law",
+      "slug": "식품위생법",
+      "matchKeys": ["식품위생법(법률)", "식품위생법"],
+      "watch": { "target": "law" }
+    },
+    {
+      "id": "food-sanitation-act-enforcement-decree",
+      "name": "식품위생법 시행령",
+      "type": "law",
+      "slug": "식품위생법시행령",
+      "matchKeys": ["식품위생법시행령"],
+      "watch": { "target": "law" }
+    },
+    {
+      "id": "food-sanitation-act-enforcement-rule",
+      "name": "식품위생법 시행규칙",
+      "type": "law",
+      "slug": "식품위생법시행규칙",
+      "matchKeys": ["식품위생법시행규칙"],
+      "watch": { "target": "law" }
+    },
+    {
+      "id": "food-standards-code",
+      "name": "식품의 기준 및 규격",
+      "type": "admrul",
+      "slug": "식품의기준및규격",
+      "matchKeys": ["식품의기준및규격", "식품공전"],
+      "watch": { "target": "admrul" }
+    },
+    {
+      "id": "food-labeling-standards",
+      "name": "식품등의 표시기준",
+      "type": "admrul",
+      "slug": "식품등의표시기준",
+      "matchKeys": ["식품등의표시기준", "식품등의 표시기준"],
+      "watch": { "target": "admrul" }
     }
   ]
 }

@@ -1,0 +1,15 @@
+{
+ "sanitation": {
+  "cards": {
+   "sanitation_card_af5328": "제1호",
+   "sanitation_card_48f04a": "제2호",
+   "sanitation_card_263c64": "제3호",
+   "sanitation_card_c259ab": "제4호",
+   "sanitation_card_3cdcd6": "제97조",
+   "sanitation_card_5bbaf3": "제98조"
+  },
+  "quizzes": {
+   "sanitation_quiz_d2c4ff": "제7조제2항(기준규격 위반)·제9조제4항·**제37조제1항(무허가영업)**|제98조"
+  }
+ }
+}
