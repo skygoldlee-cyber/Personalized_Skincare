@@ -1,3 +1,3 @@
 // 자동 생성된 file:// 폴백 manifest입니다. 수정하지 마십시오.
-// 생성: tools/build/build_study_md_bundle.js  |  2026-09-30T01:06:14.817Z
+// 생성: tools/build/build_study_md_bundle.js  |  2026-09-30T01:14:29.222Z
 window.__STUDY_MD_MANIFEST__ = {"schemaVersion":1,"contentYear":"2027","_pilot":"Phase C 파일럿 — 1과목(식품위생학) 축소본. 나머지 과목(식품화학/가공/미생물/분석)은 후속 콘텐츠 확보 시 subjects에 추가.","subjects":[{"key":"sanitation","order":1,"name":"식품위생학","shortName":"위생학","dir":"교재/sanitation","chapters":[{"key":"full","title":"식품위생법의 이해","file":"1과목_식품위생법의이해.md"}]}],"exams":[{"key":"subject1","subject":"sanitation","part":1,"title":"식품위생법의 이해 (8제)","file":"과목1_단일정답형.md"}],"integratedExam":{"questionsPerSubject":{"sanitation":8},"examTimeMin":15,"passAverage":60,"subjectFailBelow":40},"uiText":{"dictionary":{"title":"지식DB 사전","subtitle":"엔티티 검색 (파일럿 — 지식DB 미탑재)"}}};

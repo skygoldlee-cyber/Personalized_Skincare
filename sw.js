@@ -21,7 +21,7 @@
 
 // @spec P-01~06,O-04,UX-PWA-03
 
-const CACHE_VERSION = 'v20260930-0a23d37';   // 배포 시 stamp_sw_version.js가 자동 갱신 (v<커밋날짜>-<해시>)
+const CACHE_VERSION = 'v20260930-3e8290a';   // 배포 시 stamp_sw_version.js가 자동 갱신 (v<커밋날짜>-<해시>)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
@@ -189,7 +189,9 @@ const SHELL_ASSETS = [
  */
 const DATA_ASSETS = [
   './data/exams/cosmetic/registry.js',
-  './data/exams/cosmetic/id_migration.js'
+  './data/exams/cosmetic/id_migration.js',
+  './data/exams/food/registry.js',
+  './data/exams/food/id_migration.js'
 ];
 
 /** 설치 시 프리캐시할 마크다운 문서 (매뉴얼·요약집 — 오프라인 보장)
