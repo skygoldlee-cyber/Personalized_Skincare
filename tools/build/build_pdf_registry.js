@@ -131,7 +131,11 @@ function examLawPairs(refs, lawdb, examId) {
   const laws = (lawdb && lawdb.laws) || [];
   const byId = new Map(laws.map(l => [l.id, l]));
   // lawRefs 키가 아예 없으면(레거시) 전체 포함, 명시되면(빈 배열 포함) 그대로 사용
-  const ids = ('lawRefs' in refs) ? (refs.lawRefs || []) : laws.map(l => l.id);
+  const hasLawRefs = 'lawRefs' in refs;
+  const ids = hasLawRefs ? (refs.lawRefs || []) : laws.map(l => l.id);
+  if (!hasLawRefs && laws.length) {
+    console.warn(`[${examId}] references.json에 lawRefs 키 없음 — lawdb 전체(${laws.length}종)가 이 시험 매칭에 주입됩니다. 의도된 경우 "lawRefs": []를 명시하세요.`);
+  }
   const pairs = [];
   for (const id of ids) {
     const law = byId.get(id);
@@ -144,16 +148,54 @@ function examLawPairs(refs, lawdb, examId) {
   return pairs;
 }
 
+/**
+ * notice-check.js markStaleRefLinks 조인 계약 검증.
+ * DOM의 data-law-url은 lawdb slug 기반(lawUrlFor), notice_status.json의
+ * docs[].url은 ref-pipeline이 파일명에서 유도(첫 '(' 앞 문서명의 공백 제거 —
+ * _exam_root.py parse_ref_filename과 동일 규칙). 둘이 어긋나면 현행본
+ * 보정/개정 배지가 조용히 miss하므로 빌드 시점에 경고한다.
+ */
+function checkLawUrlJoin(refs, pairs, examId) {
+  const lawFiles = ((refs || {}).referenceLaw || []).map(it => it && it.file).filter(Boolean);
+  const normKey = s => String(s).replace(/[\s()_]/g, '');
+  for (const f of lawFiles) {
+    const docName = String(f).split('(')[0].trim();
+    // 런타임 lawUrlFor와 동일 정규화(확장자 제거 후 공백·괄호·언더스코어 제거)
+    const norm = normKey(String(f).replace(/\.(pdf|md|html?)$/i, ''));
+    const hit = pairs.find(([k]) => norm.includes(normKey(k)));
+    if (!hit) {
+      console.warn(`[${examId}] referenceLaw 파일이 어떤 lawdb matchKeys에도 매칭되지 않습니다: ${f} — data-law-url 없음으로 고시 배지/현행본 보정 미적용`);
+      continue;
+    }
+    // 파이프라인 유도 URL: (법률|대통령령|총리령|부령) 꼬리 → 법령, 그 외 → 행정규칙
+    const targetSeg = /\((법률|대통령령|총리령|부령)\)/.test(f) ? '법령' : '행정규칙';
+    const derivedUrl = `https://www.law.go.kr/${targetSeg}/${docName.replace(/\s+/g, '')}`;
+    if (hit[1] !== derivedUrl) {
+      console.warn(`[${examId}] markStaleRefLinks 조인 불일치 — "${f}"은(는) ${hit[1]}로 매칭되지만 ref-pipeline은 ${derivedUrl}를 기록합니다 (lawdb slug 또는 파일명 확인)`);
+    }
+  }
+}
+
 function buildLawLinks(targets, refsByExam, defaultId) {
   const lawdb = loadLawDb();
   if (!lawdb) {
     console.warn('content/lawdb.json not found — law-links.js는 빈 매핑으로 생성됩니다');
+  }
+  // lawdb 내부 정합성 — slug는 통상 "명칭의 공백 제거" 형태이며,
+  // 어긋나면 파일명 유도 URL(ref-pipeline)과 slug URL(런타임 링크)이 갈라져
+  // markStaleRefLinks 조인이 조용히 실패할 수 있다 (특수문자 정규화는 예외 허용 — 경고만).
+  for (const law of ((lawdb && lawdb.laws) || [])) {
+    const expectSlug = String(law.name || '').replace(/\s+/g, '');
+    if (law.slug && law.slug !== expectSlug) {
+      console.warn(`lawdb "${law.id}": slug "${law.slug}" ≠ name 공백제거 "${expectSlug}" — 파일명 유도 URL과의 조인이 깨질 수 있습니다`);
+    }
   }
   const entries = [];
   for (const target of targets) {
     const refs = refsByExam.get(target.id);
     if (!refs) continue;
     const pairs = examLawPairs(refs, lawdb, target.id);
+    checkLawUrlJoin(refs, pairs, target.id);
     const pairsJs = pairs.map(([k, u]) =>
       `    [${JSON.stringify(k)}, ${JSON.stringify(u)}]`).join(',\n');
     entries.push(`    ${JSON.stringify(target.id)}: [\n${pairsJs}\n    ]`);
@@ -185,10 +227,10 @@ function activeLawUrls() {
   return _EXAM_LAW_URLS[id] || _EXAM_LAW_URLS[_DEFAULT_EXAM_ID] || [];
 }
 
-// 전 시험 매칭 합집합 (URL 기준 중복 제거 — 순서 보존)
+// 전 시험 매칭 합집합 (URL 기준 중복 제거 — 같은 문서의 matchKey는 첫 것만 유지, 순서 보존)
 // keep-export — tools/check/check_law_urls.js가 한글주소 유효성을 전수 검증한다 (src/ 외부 소비자라 check:imports 미집계)
 export const LAW_DOC_URLS = [...new Map(
-  Object.values(_EXAM_LAW_URLS).flat().map(p => [JSON.stringify(p), p])
+  Object.values(_EXAM_LAW_URLS).flat().map(p => [p[1], p])
 ).values()];
 
 /**

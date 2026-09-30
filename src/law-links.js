@@ -55,10 +55,10 @@ function activeLawUrls() {
   return _EXAM_LAW_URLS[id] || _EXAM_LAW_URLS[_DEFAULT_EXAM_ID] || [];
 }
 
-// 전 시험 매칭 합집합 (URL 기준 중복 제거 — 순서 보존)
+// 전 시험 매칭 합집합 (URL 기준 중복 제거 — 같은 문서의 matchKey는 첫 것만 유지, 순서 보존)
 // keep-export — tools/check/check_law_urls.js가 한글주소 유효성을 전수 검증한다 (src/ 외부 소비자라 check:imports 미집계)
 export const LAW_DOC_URLS = [...new Map(
-  Object.values(_EXAM_LAW_URLS).flat().map(p => [JSON.stringify(p), p])
+  Object.values(_EXAM_LAW_URLS).flat().map(p => [p[1], p])
 ).values()];
 
 /**

@@ -16,6 +16,15 @@
 const fs = require('fs');
 const path = require('path');
 
+// registry 최상위 키 — knowledge registryKey가 이 목록과 겹치면
+// registry[kKey] 메타가 registry 자체 키를 덮어쓴다
+// (예: registryKey 'knowledge' → 스키마가 메타를 덮어 로더 실패)
+const RESERVED_REGISTRY_KEYS = [
+    'schemaVersion', 'contentYear', 'generatedAt',
+    'subjects', 'exams', 'resources', 'knowledge',
+    'integratedExam', 'uiText'
+];
+
 /**
  * knowledge 디렉터리의 데이터셋 파일 경로를 해석한다.
  * @param {string} contentRootAbs contentRoot 절대 경로
@@ -118,7 +127,10 @@ function emitRefDocs(doc, items, contentAbs) {
     targetFiles.forEach(file => {
         const filePath = path.join(dirAbs, file);
         if (!fs.existsSync(filePath)) return;
-        const lines = fs.readFileSync(filePath, 'utf-8').split(/\r?\n/);
+        const content = fs.readFileSync(filePath, 'utf-8');
+        // 기존 개행 스타일 유지 — 마커 외 영역까지 LF로 재기록해 CRLF 체크아웃에서 diff churn이 생기는 것을 방지
+        const eol = content.includes('\r\n') ? '\r\n' : '\n';
+        const lines = content.split(/\r?\n/);
         const out = [];
         let changed = false;
         for (let i = 0; i < lines.length; i++) {
@@ -142,7 +154,7 @@ function emitRefDocs(doc, items, contentAbs) {
             if (!rows.length) console.warn(`- Warning: ${file} 표 "${tableId}"에 해당하는 아이템이 없습니다.`);
         }
         if (changed) {
-            fs.writeFileSync(filePath, out.join('\n'), 'utf-8');
+            fs.writeFileSync(filePath, out.join(eol), 'utf-8');
             written.push(filePath);
         }
     });
@@ -150,7 +162,9 @@ function emitRefDocs(doc, items, contentAbs) {
     // 정본 표가 문서에 없는 아이템 경고 (section/table 탈락 감지)
     items.forEach(it => {
         const canon = typeFile[it.type] && it.table ? `${typeFile[it.type]}#${it.table}` : null;
-        if (canon && !usedTables.has(canon) && !(it.tables || []).length) {
+        if (!canon && !(it.tables || []).length) {
+            console.warn(`- Warning: 지식DB 아이템 "${it.name}"의 정본 표를 결정할 수 없습니다 (type "${it.type ?? '(없음)'}"이 emitMd.typeFile에 없거나 table/tables 미지정) — 모든 참조 문서에서 제외됩니다.`);
+        } else if (canon && !usedTables.has(canon) && !(it.tables || []).length) {
             console.warn(`- Warning: 지식DB 아이템 "${it.name}"의 정본 표(${canon})가 문서에 없습니다.`);
         }
     });
@@ -171,4 +185,4 @@ function loadItems(kSchema, ctx) {
     return loadDataset(srcFile, kSchema.registryKey);
 }
 
-module.exports = { resolveDatasetPath, loadDataset, loadItems, projectItems, renderTable, emitRefDocs };
+module.exports = { resolveDatasetPath, loadDataset, loadItems, projectItems, renderTable, emitRefDocs, RESERVED_REGISTRY_KEYS };

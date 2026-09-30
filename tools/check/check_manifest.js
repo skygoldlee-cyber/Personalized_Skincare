@@ -17,6 +17,7 @@
 const fs = require('fs');
 const path = require('path');
 const { getExamTargets } = require('../build/exam_targets.js');
+const { RESERVED_REGISTRY_KEYS } = require('../build/plugins/knowledge.plugin.js');
 
 const ROOT = path.resolve(__dirname, '..', '..');
 
@@ -129,6 +130,12 @@ function checkTarget(target) {
   const qps = (m.integratedExam || {}).questionsPerSubject || {};
   for (const k of Object.keys(qps)) {
     if (!subjectKeys.has(k)) err(scope, `integratedExam.questionsPerSubject의 "${k}"이 subjects에 없음`);
+  }
+
+  // 지식DB registryKey가 registry 최상위 키와 충돌하면 메타가 registry를 덮어씀
+  const kKey = (m.knowledge || {}).registryKey;
+  if (kKey && RESERVED_REGISTRY_KEYS.includes(kKey)) {
+    err(scope, `knowledge.registryKey "${kKey}"는 registry 예약 키(${RESERVED_REGISTRY_KEYS.join(', ')})와 충돌`);
   }
 
   // 역방향: 디스크에는 있지만 manifest에 선언되지 않은 .md (빌드에서 조용히 제외됨)

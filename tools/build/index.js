@@ -369,9 +369,13 @@ function main() {
   const kSchema = manifest.knowledge;
   const kKey = kSchema && kSchema.registryKey;
   if (kKey) {
+    const knowledgePlugin = require('./plugins/knowledge.plugin');
+    if (knowledgePlugin.RESERVED_REGISTRY_KEYS.includes(kKey)) {
+      console.error(`manifest.knowledge.registryKey "${kKey}"는 registry 최상위 키(${knowledgePlugin.RESERVED_REGISTRY_KEYS.join(', ')})와 충돌합니다 — registry["${kKey}"] 메타가 registry 자체를 덮어씁니다. 다른 이름을 사용하세요.`);
+      process.exit(1);
+    }
     if (!isPartial || !priorRegistry[kKey] || !priorRegistry[kKey].bundle) {
       console.log(`Building Knowledge DB "${kKey}"...`);
-      const knowledgePlugin = require('./plugins/knowledge.plugin');
       try {
         const loaded = knowledgePlugin.loadItems(kSchema, ctx);
         if (!loaded) {

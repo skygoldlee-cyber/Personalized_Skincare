@@ -100,16 +100,19 @@ function parseImports(src) {
             continue;
         }
         const names = [];
+        const localNames = []; // 이 파일에 바인딩되는 로컬 식별자 (typeof 오용 검출용)
         const aliases = new Map(); // imported name → local alias (for unused detection)
         const starMatch = clause.match(/^\*\s+as\s+(\w+)$/);
 
         if (starMatch) {
             names.push('*');
+            localNames.push(starMatch[1]);
         } else {
             // default import: 식별자가 { 앞에 오는 경우만
-            const defaultPart = clause.replace(/\{[\s\S]*\}/, '').trim();
+            const defaultPart = clause.replace(/\{[\s\S]*\}/, '').replace(/,\s*$/, '').trim();
             if (defaultPart && !defaultPart.startsWith('*')) {
                 names.push('default');
+                localNames.push(defaultPart);
             }
             // named imports (multiline-safe)
             const braceContent = clause.match(/\{([\s\S]+?)\}/);
@@ -121,14 +124,16 @@ function parseImports(src) {
                     const asMatch = part.match(/^(\w+)\s+as\s+(\w+)$/);
                     if (asMatch) {
                         names.push(asMatch[1]);
+                        localNames.push(asMatch[2]);
                         aliases.set(asMatch[1], asMatch[2]);
                     } else {
                         names.push(part);
+                        localNames.push(part);
                     }
                 }
             }
         }
-        imports.push({ modulePath, names, aliases, isSideEffect: false });
+        imports.push({ modulePath, names, localNames, aliases, isSideEffect: false });
     }
     return imports;
 }
@@ -294,6 +299,111 @@ function main() {
                     }
                 }
             }
+        }
+    }
+
+    // --- import 없는 `typeof <모듈>` 가드 검출 ---
+    // `typeof DataLoader !== 'undefined'`처럼 src 모듈의 export 이름을 대상으로
+    // import 없이 "있으면 쓰고 없으면 무시" 가드를 쓰면, ES 모듈 바인딩은 전역이
+    // 아니므로 프로덕션에서 항상 undefined → 기능이 조용히 죽는다
+    // (테스트가 window.X 스텁을 주입해 가려지는 경우가 많다).
+    // 식별자가 ① 어느 src 모듈의 export 이름이고 ② 이 파일에 바인딩이 없으며
+    // ③ 환경 전역(window/process 등)이 아니고 ④ window에 발행되지 않으면 오류.
+    // ④의 정당한 예: app.js가 DELEGATED_HANDLERS를 window에 assign해
+    //    `typeof updateGlobalStats === 'function'` 같은 콜백 조회를 지원.
+
+    // window/globalThis에 발행된 이름 수집
+    const windowPublished = new Set();
+    const braceMatch = (src, openIdx) => {
+        let depth = 0, inStr = null, esc = false, inLine = false, inBlock = false;
+        for (let i = openIdx; i < src.length; i++) {
+            const c = src[i], n = src[i + 1];
+            if (inLine) { if (c === '\n') inLine = false; continue; }
+            if (inBlock) { if (c === '*' && n === '/') { inBlock = false; i++; } continue; }
+            if (inStr) {
+                if (esc) esc = false;
+                else if (c === '\\') esc = true;
+                else if (c === inStr) inStr = null;
+                continue;
+            }
+            if (c === '/' && n === '/') { inLine = true; continue; }
+            if (c === '/' && n === '*') { inBlock = true; continue; }
+            if (c === '"' || c === "'" || c === '`') { inStr = c; continue; }
+            if (c === '{') depth++;
+            else if (c === '}') { depth--; if (depth === 0) return i; }
+        }
+        return -1;
+    };
+    const collectKeys = (literal) => {
+        // 1레벨 키 추출: 'key:', "key":, key:, key,(shorthand), key((메서드)
+        for (const km of literal.matchAll(/(?:async\s+|get\s+|set\s+)*["']?([A-Za-z_$][\w$]*)["']?\s*[(:,]/g)) {
+            windowPublished.add(km[1]);
+        }
+    };
+    for (const file of files) {
+        const clean = stripComments(fs.readFileSync(file, 'utf8'));
+        for (const m of clean.matchAll(/\b(?:window|globalThis)\.([A-Za-z_$][\w$]*)\s*=/g)) {
+            windowPublished.add(m[1]);
+        }
+        for (const m of clean.matchAll(/Object\.assign\(\s*(?:window|globalThis)\s*,\s*([A-Za-z_$][\w$]*|\{)/g)) {
+            const arg = m[1];
+            let openIdx = -1;
+            if (arg === '{') {
+                openIdx = m.index + m[0].length - 1;
+            } else {
+                const dm = new RegExp(`(?:const|let|var)\\s+${arg}\\s*=\\s*\\{`).exec(clean);
+                if (dm) openIdx = dm.index + dm[0].length - 1;
+            }
+            if (openIdx === -1) continue;
+            const closeIdx = braceMatch(clean, openIdx);
+            if (closeIdx !== -1) collectKeys(clean.slice(openIdx + 1, closeIdx));
+        }
+    }
+
+    const ENV_GLOBALS = new Set([
+        'window', 'document', 'navigator', 'location', 'process', 'globalThis',
+        'self', 'isSecureContext', 'indexedDB', 'caches', 'localStorage',
+        'sessionStorage', 'customElements', 'module', 'require', 'exports',
+        'global', 'Buffer', 'fetch', 'crypto', 'performance', 'console',
+        'Worker', 'importScripts', 'queueMicrotask', 'requestAnimationFrame',
+        'cancelAnimationFrame', 'setTimeout', 'setInterval', 'clearTimeout',
+        'clearInterval', 'btoa', 'atob', 'structuredClone', 'Node',
+        'HTMLElement', 'Element', 'MutationObserver', 'IntersectionObserver',
+        'ResizeObserver', 'DOMParser', 'FileReader', 'AudioContext',
+        'XMLHttpRequest', 'FormData', 'URL', 'URLSearchParams', 'matchMedia',
+        'getComputedStyle', 'Event', 'CustomEvent', 'AbortController',
+        'CSS', 'undefined',
+    ]);
+    const allExportNames = new Set();
+    for (const exps of moduleExports.values()) {
+        for (const n of exps) { if (n !== 'default') allExportNames.add(n); }
+    }
+    const TYPEOF_RE = /\btypeof\s+([A-Za-z_$][\w$]*)/g;
+    const LOCAL_DECL_RE = /\b(?:function\*?|const|let|var|class)\s+([A-Za-z_$][\w$]*)/g;
+    for (const file of files) {
+        const src = fs.readFileSync(file, 'utf8');
+        const clean = stripComments(src);
+        const bound = new Set();
+        for (const imp of parseImports(src)) {
+            for (const ln of imp.localNames || []) bound.add(ln);
+        }
+        let dm;
+        LOCAL_DECL_RE.lastIndex = 0;
+        while ((dm = LOCAL_DECL_RE.exec(clean)) !== null) bound.add(dm[1]);
+        const relFile = path.relative(ROOT, file).replace(/\\/g, '/');
+        TYPEOF_RE.lastIndex = 0;
+        let tm;
+        const seen = new Set();
+        while ((tm = TYPEOF_RE.exec(clean)) !== null) {
+            const ident = tm[1];
+            if (seen.has(ident)) continue;
+            seen.add(ident);
+            if (ENV_GLOBALS.has(ident) || bound.has(ident) || windowPublished.has(ident)) continue;
+            if (!allExportNames.has(ident)) continue;
+            errors.push(
+                `${relFile}: 'typeof ${ident}' — ${ident}은(는) src 모듈 export이지만 ` +
+                `이 파일에 import/선언이 없어 런타임에 항상 undefined입니다. import로 교체하세요`
+            );
         }
     }
 
