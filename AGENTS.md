@@ -227,7 +227,8 @@ content/                # 시험 콘텐츠 컨테이너
     교재/                # 4과목 MD 파일 (표준형 4 + 이야기형 4 = 8파일, 총 19챕터 — 과목별 2·5·5·7)
     문제은행/            # 과목별 문제은행 MD
     참조자료/            # 법령고시/별표/참조자료 — PDF는 공통·과목1~4 폴더, MD 변환본은 ref_md/과목N/{문서}/{문서}.md (과목 폴더가 귀속의 진실)
-      원료/              # 원료 DB — approved/restricted/banned/colorants_ingredients.md + db_version.json (버전·이력)
+      원료/              # 원료 참조자료 MD — GENERATED-TABLE 표는 knowledge/ingredients.json에서 빌드 재생성 (마커 밖 서술만 수기)
+    knowledge/          # 지식DB SSOT — ingredients.json (원료 1,402종 items + meta 버전·이력, db_version.json 계승)
     audiobook/          # 오디오북 MP3 산출물 (생성 스크립트는 ref-pipeline/audiobook/)
     number-drills/      # 숫자 암기 드릴 JSON
   exams/<id>/           # 추가 시험도 동일한 내부 구조 (대칭)

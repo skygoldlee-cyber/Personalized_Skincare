@@ -78,13 +78,14 @@ test('CS-03: ref_md가 과목N 폴더 계층으로 구성되고 문서별 {문�
 
 // ---------- CS-04: 성분 원본 ----------
 
-test('CS-04: 원료 DB 원본 4종과 버전 메타가 존재한다', () => {
+test('CS-04: 원료 DB 원본 4종과 지식DB SSOT 메타가 존재한다', () => {
   const dir = join(CONTENT, '참조자료', '원료');
   for (const f of ['approved_ingredients.md', 'restricted_ingredients.md', 'banned_ingredients.md', 'colorants_ingredients.md']) {
     assert.ok(existsSync(join(dir, f)), `원료 원본 없음: ${f}`);
   }
-  const meta = JSON.parse(readFileSync(join(dir, 'db_version.json'), 'utf-8'));
-  assert.ok(meta.version, 'db_version.json에 version 필드가 있어야 함');
+  const kb = JSON.parse(readFileSync(join(CONTENT, 'knowledge', 'ingredients.json'), 'utf-8'));
+  assert.ok(kb.meta && kb.meta.version, 'knowledge/ingredients.json의 meta.version이 있어야 함');
+  assert.ok(Array.isArray(kb.items) && kb.items.length > 1000, 'knowledge/ingredients.json의 items가 있어야 함');
 });
 
 // ---------- CS-05: 학습안내서 ----------

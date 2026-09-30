@@ -103,7 +103,7 @@ flowchart LR
 | **통합 모의고사 문제 수 변경** | `content/exams/cosmetic/manifest.json` | `integratedExam.questionsPerSubject` 수정 |
 | **UI 텍스트 변경** | `content/exams/cosmetic/manifest.json` | `uiText` 객체 수정 |
 | **추천 링크 변경** | `content/exams/cosmetic/manifest.json` | `resources` 객체 수정 |
-| **원료 데이터 변경** | `content/exams/cosmetic/참조자료/원료/` | 원료 MD 수정 (`approved`/`restricted`/`banned`/`colorants`) + `db_version.json` 버전 범프 (아래 §원료 DB 버전 절차) |
+| **원료 데이터 변경** | `content/exams/cosmetic/knowledge/ingredients.json` | 지식DB SSOT의 `items` 수정 + `meta` 버전 범프 (아래 §원료 DB 버전 절차) — 참조자료 `원료/*.md` 표는 빌드가 재생성 |
 
 ---
 
@@ -129,7 +129,7 @@ flowchart TD
     D --> D1["manifest.json<br/>→ dataRoot/registry.js"]
     D --> D2["contentRoot/교재/*.md<br/>→ dataRoot/subjects/*.js"]
     D --> D3["contentRoot/문제은행/*.md<br/>→ dataRoot/exams/*.js"]
-    D --> D4["contentRoot/참조자료/원료/<br/>→ dataRoot/ingredients_data.<hash>.js<br/>(+ registry.js의 version/history/contentHash)"]
+    D --> D4["contentRoot/knowledge/ingredients.json<br/>→ dataRoot/ingredients_data.<hash>.js<br/>(+ 참조자료/원료/*.md 표 재생성 + registry.js의 version/history/contentHash)"]
     D --> D5["sw.js DATA_ASSETS<br/>+ MD_ASSETS 자동 갱신"]
     D5 --> E["build:study-md"]
     E --> E1["contentRoot/교재/*.md<br/>→ dataRoot/study_md/*.js"]
@@ -377,22 +377,22 @@ python ref-pipeline/audiobook/run_pipeline.py --subject {과목키} --tts       
 
 ### 3.6 원료 데이터 변경 + DB 버전 절차
 
-원료 파일 위치: `content/exams/cosmetic/참조자료/원료/`
+원료 데이터 SSOT: `content/exams/cosmetic/knowledge/ingredients.json` — `{ "meta": {version·updatedAt·notice·history}, "bundleFields": [...7필드], "emitMd": {...}, "items": [...] }`
 
 | 파일 | 용도 |
 |------|------|
-| `approved_ingredients.md` | 배합가능원료(별표2) + 마스터 스키마·공통 안내 헤더 |
-| `restricted_ingredients.md` | 사용제한 원료 (한도·조건) |
-| `banned_ingredients.md` | 사용금지 원료 (별표1) |
-| `colorants_ingredients.md` | 색소 DB — 별도 고시(「화장품의 색소 종류와 기준 및 시험방법」) 소관, **사전·규정검증 파싱 대상 아님** (참조 문서) |
-| `db_version.json` | 원료 DB 버전 메타 — `version`·`updatedAt`·`notice`·`history` |
+| `knowledge/ingredients.json` | 원료 데이터 SSOT — `items` 행(11컬럼 필드) + `meta`(버전·이력). 사전·Formula OS·CSV·참조 표 모두 여기서 생성 |
+| `참조자료/원료/approved_ingredients.md` | 배합가능원료(별표2) + 마스터 스키마·공통 안내 헤더. `<!-- GENERATED-TABLE -->` 마커 안의 표는 빌드가 JSON에서 재생성 — **마커 밖 서술만 직접 편집** |
+| `참조자료/원료/restricted_ingredients.md` | 사용제한 원료 (한도·조건) — 동일하게 표는 생성물 |
+| `참조자료/원료/banned_ingredients.md` | 사용금지 원료 (별표1) — 동일하게 표는 생성물 |
+| `참조자료/원료/colorants_ingredients.md` | 색소 DB — 별도 고시(「화장품의 색소 종류와 기준 및 시험방법」) 소관, **사전·규정검증 파싱 대상 아님** (참조 문서, 마커 없음 — 전체 수기 편집) |
 
-**통일 테이블 스키마:** `approved`/`restricted`/`banned` 세 파일의 모든 원료 데이터 표는 동일한 11컬럼을 사용한다 — `원료명 | 영문명 | 카테고리 | 베이스 | 특성 및 설명 | 일반 함량 범위 | 최대 함량 | 증상 효과 | 시험 출제 빈도 | 고득점 TIP | 비고`. 값이 없는 컬럼은 `-`로 채우고, 헤더명 변경·컬럼 생략 금지. 원료 데이터가 아닌 표(통계·감사용)는 첫 컬럼 헤더에 `원료명`/`성분명`을 쓰지 않는다(파서가 원료로 인식해 실제 데이터를 덮어쓰는 것 방지).
+**아이템 필드 ↔ 표 컬럼:** `name | engName | category | base | description | typicalRange | limit | effect | frequency | tip | note` (11컬럼). `emitMd.columns` 매핑으로 생성. 아이템의 `table`은 정본 표(어느 파일의 어느 섹션인지), `tables`는 중복 게재 표 목록 `"파일#표"` — 같은 원료가 여러 표에 나올 때 표시값은 정본값으로 통일된다.
 
 **절차:**
 
-1. 원료 MD 정정
-2. `db_version.json` 갱신 — 현재 버전 객체를 `history` 배열 **앞쪽**에 넣고, 최상위 `version`/`updatedAt`/`notice`를 새 값으로:
+1. `knowledge/ingredients.json`의 `items` 행 정정 (신규 원료는 `table`에 표 이름 지정 — 파일은 `emitMd.typeFile`의 type 키로 결정)
+2. 같은 파일의 `meta` 갱신 — 현재 버전 객체를 `history` 배열 **앞쪽**에 넣고, `version`/`updatedAt`/`notice`를 새 값으로:
    ```json
    {
      "version": "2026.10.1",
@@ -404,10 +404,10 @@ python ref-pipeline/audiobook/run_pipeline.py --subject {과목키} --tts       
    }
    ```
    버전 규칙: `연도.월.차수` (예: `2026.09.1` = 2026년 9월 첫 개정분)
-3. `npm.cmd run build:data` → `registry.js`의 `ingredients`에 `version`·`history`·`contentHash`·`stats.count`가 병합됨
+3. `npm.cmd run build:data` → `registry.js`의 `ingredients`에 `version`·`history`·`contentHash`·`stats.count`가 병합되고 `참조자료/원료/*.md` 표가 재생성됨 (인용 라인이 밀리면 `sync:citations`가 자동 반영)
 4. 검증 + 커밋 + 배포
 
-**동작**: `contentHash`가 실제 데이터 내용의 해시라, 배포 후 접속한 기존 사용자에게 `원료 DB 갱신` 모달이 1회 표시되고(이전 개정 최근 3건 포함), 성분 사전 버전 배지 탭으로 전체 이력을 조회할 수 있다. MD 비고·헤더 주석처럼 데이터 행이 아닌 변경은 contentHash가 그대로라 알림이 발화하지 않는다.
+**동작**: `contentHash`가 `bundleFields` 투영 데이터의 해시라, 배포 후 접속한 기존 사용자에게 `원료 DB 갱신` 모달이 1회 표시되고(이전 개정 최근 3건 포함), 성분 사전 버전 배지 탭으로 전체 이력을 조회할 수 있다. 표시 전용 컬럼(`base`·`typicalRange`·`effect`·`frequency`·`note`)·MD 서술 변경은 번들에 미포함이라 contentHash가 그대로다.
 
 ---
 
@@ -571,7 +571,7 @@ flowchart LR
 통합 모의고사 설정     → content/exams/cosmetic/manifest.json (integratedExam)
 UI 텍스트             → content/exams/cosmetic/manifest.json (uiText)
 추천 링크             → content/exams/cosmetic/manifest.json (resources)
-원료 데이터           → content/exams/cosmetic/참조자료/원료/ (approved/restricted/banned/colorants_ingredients.md + db_version.json)
+원료 데이터           → content/exams/cosmetic/knowledge/ingredients.json (items + meta — 참조자료/원료/*.md 표는 빌드 재생성)
 
 공통: npm.cmd run build:data → 검증 → 커밋 → 배포
 ```

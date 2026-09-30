@@ -2,7 +2,7 @@
 var DATA_REGISTRY_FOOD = {
   "schemaVersion": 1,
   "contentYear": "2027",
-  "generatedAt": "2026-09-30T01:36:48.744Z",
+  "generatedAt": "2026-09-30T02:32:29.809Z",
   "subjects": [
     {
       "key": "sanitation",

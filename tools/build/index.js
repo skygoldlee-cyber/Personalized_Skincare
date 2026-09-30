@@ -377,8 +377,9 @@ function main() {
         if (!loaded) {
           console.warn(`- knowledge "${kKey}" 소스 없음 — 지식DB 번들 건너뜀 (schema만 registry에 기록)`);
         } else {
-          const { items, meta: kMeta } = loaded;
-          if (kSchema.source && kSchema.source.type === 'ingredients-md') {
+          const { meta: kMeta } = loaded;
+          const items = knowledgePlugin.projectItems(loaded.items, loaded.bundleFields);
+          if (kSchema.source && kSchema.source.validate === 'ingredients') {
             validateIngredientsData(items);
           }
 
@@ -392,6 +393,14 @@ function main() {
             `// 자동 생성된 지식DB 데이터 파일입니다. 수정하지 마십시오.\nvar ${kGlobal} = ${JSON.stringify(items, null, 2)};\n`,
             'utf-8'
           );
+
+          // emitMd 선언 시 참조자료 MD의 GENERATED-TABLE 마커 영역을 재생성한다
+          // (서술은 저작 유지, 표 데이터만 JSON SSOT에서 주입 — sync:citations와 같은 패턴)
+          if (loaded.emitMd) {
+            const contentAbs = path.join(ctx.workspaceDir, ctx.contentRoot || 'content');
+            knowledgePlugin.emitRefDocs(loaded, loaded.items, contentAbs)
+              .forEach(f => console.log(`- 지식DB 참조 표 갱신: ${path.relative(ctx.workspaceDir, f)}`));
+          }
 
           registry[kKey] = {
             bundle: `./${EXAM_DATA_ROOT}/${kFilename}`,

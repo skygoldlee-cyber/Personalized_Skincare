@@ -1,5 +1,5 @@
 // 자동 생성된 O/X 드릴 데이터입니다. 수정하지 마십시오. (tools/build/build_ox_drills.js)
-// 원본: data/exams/cosmetic/exams/subject2.0bdee3f8.js — mode: fact(명제 판정) 19문 / answer(정답 판정) 137문
+// 원본: data/exams/cosmetic/exams/subject2.4485dea2.js — mode: fact(명제 판정) 19문 / answer(정답 판정) 137문
 var OX_DRILLS_subject2 = [
  {
   "id": "ox-02-0001",
@@ -1136,7 +1136,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_0a2e4d",
   "derivedFrom": "subject2_q13#1",
-  "explain": "📖 교재 근거 (교재: L73):\n| 카보머 | Carbomer | 점증제 | 수상층 | 수상층에 용해되어 화장품의 점도를 높이고 제형을 안정화하는 데 도움을 주는 점증 성분입니다. | 0.1~1.0 | - | 점증·안정화 | 중빈도 | pH 조절 필요, 중화 후 젤 형성 | - |",
+  "explain": "📖 교재 근거 (교재: L78):\n| 카보머 | Carbomer | 점증제 | 수상층 | 수상층에 용해되어 화장품의 점도를 높이고 제형을 안정화하는 데 도움을 주는 점증 성분입니다. | 0.1~1.0 | - | 점증·안정화 | 중빈도 | pH 조절 필요, 중화 후 젤 형성 | - |",
   "tags": [
    "정답판정"
   ],
@@ -1154,7 +1154,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_e2961a",
   "derivedFrom": "subject2_q13#2",
-  "explain": "📖 교재 근거 (교재: L73):\n| 카보머 | Carbomer | 점증제 | 수상층 | 수상층에 용해되어 화장품의 점도를 높이고 제형을 안정화하는 데 도움을 주는 점증 성분입니다. | 0.1~1.0 | - | 점증·안정화 | 중빈도 | pH 조절 필요, 중화 후 젤 형성 | - |",
+  "explain": "📖 교재 근거 (교재: L78):\n| 카보머 | Carbomer | 점증제 | 수상층 | 수상층에 용해되어 화장품의 점도를 높이고 제형을 안정화하는 데 도움을 주는 점증 성분입니다. | 0.1~1.0 | - | 점증·안정화 | 중빈도 | pH 조절 필요, 중화 후 젤 형성 | - |",
   "tags": [
    "정답판정"
   ],
@@ -1172,7 +1172,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_44d864",
   "derivedFrom": "subject2_q13#3",
-  "explain": "📖 교재 근거 (교재: L73):\n| 카보머 | Carbomer | 점증제 | 수상층 | 수상층에 용해되어 화장품의 점도를 높이고 제형을 안정화하는 데 도움을 주는 점증 성분입니다. | 0.1~1.0 | - | 점증·안정화 | 중빈도 | pH 조절 필요, 중화 후 젤 형성 | - |",
+  "explain": "📖 교재 근거 (교재: L78):\n| 카보머 | Carbomer | 점증제 | 수상층 | 수상층에 용해되어 화장품의 점도를 높이고 제형을 안정화하는 데 도움을 주는 점증 성분입니다. | 0.1~1.0 | - | 점증·안정화 | 중빈도 | pH 조절 필요, 중화 후 젤 형성 | - |",
   "tags": [
    "정답판정"
   ],
@@ -1190,7 +1190,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_98629b",
   "derivedFrom": "subject2_q13#4",
-  "explain": "📖 교재 근거 (교재: L73):\n| 카보머 | Carbomer | 점증제 | 수상층 | 수상층에 용해되어 화장품의 점도를 높이고 제형을 안정화하는 데 도움을 주는 점증 성분입니다. | 0.1~1.0 | - | 점증·안정화 | 중빈도 | pH 조절 필요, 중화 후 젤 형성 | - |",
+  "explain": "📖 교재 근거 (교재: L78):\n| 카보머 | Carbomer | 점증제 | 수상층 | 수상층에 용해되어 화장품의 점도를 높이고 제형을 안정화하는 데 도움을 주는 점증 성분입니다. | 0.1~1.0 | - | 점증·안정화 | 중빈도 | pH 조절 필요, 중화 후 젤 형성 | - |",
   "tags": [
    "정답판정"
   ],
@@ -1208,7 +1208,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_6734d2",
   "derivedFrom": "subject2_q13#5",
-  "explain": "📖 교재 근거 (교재: L73):\n| 카보머 | Carbomer | 점증제 | 수상층 | 수상층에 용해되어 화장품의 점도를 높이고 제형을 안정화하는 데 도움을 주는 점증 성분입니다. | 0.1~1.0 | - | 점증·안정화 | 중빈도 | pH 조절 필요, 중화 후 젤 형성 | - |",
+  "explain": "📖 교재 근거 (교재: L78):\n| 카보머 | Carbomer | 점증제 | 수상층 | 수상층에 용해되어 화장품의 점도를 높이고 제형을 안정화하는 데 도움을 주는 점증 성분입니다. | 0.1~1.0 | - | 점증·안정화 | 중빈도 | pH 조절 필요, 중화 후 젤 형성 | - |",
   "tags": [
    "정답판정"
   ],
@@ -2382,7 +2382,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_f63b31",
   "derivedFrom": "subject2_q27#1",
-  "explain": "📖 교재 근거 (교재: L135):\n| 세라마이드 | Ceramide | 기능성 성분 | 유상층 | 피부 장벽을 구성하는 주요 성분으로, 보습과 피부 유연성 유지에 도움을 주는 성분입니다. | 0.1~1.0 | - | 보습, 탄력, 민감성 | 고빈도 | 세포간지질 성분, 피부장벽 기능 회복 | - |",
+  "explain": "📖 교재 근거 (교재: L150):\n| 세라마이드 | Ceramide | 기능성 성분 | 유상층 | 피부 장벽을 구성하는 주요 성분으로, 보습과 피부 유연성 유지에 도움을 주는 성분입니다. | 0.1~1.0 | - | 보습, 탄력, 민감성 | 고빈도 | 세포간지질 성분, 피부장벽 기능 회복 | - |",
   "tags": [
    "정답판정",
    "수치"
@@ -2401,7 +2401,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_7f5414",
   "derivedFrom": "subject2_q27#2",
-  "explain": "📖 교재 근거 (교재: L135):\n| 세라마이드 | Ceramide | 기능성 성분 | 유상층 | 피부 장벽을 구성하는 주요 성분으로, 보습과 피부 유연성 유지에 도움을 주는 성분입니다. | 0.1~1.0 | - | 보습, 탄력, 민감성 | 고빈도 | 세포간지질 성분, 피부장벽 기능 회복 | - |",
+  "explain": "📖 교재 근거 (교재: L150):\n| 세라마이드 | Ceramide | 기능성 성분 | 유상층 | 피부 장벽을 구성하는 주요 성분으로, 보습과 피부 유연성 유지에 도움을 주는 성분입니다. | 0.1~1.0 | - | 보습, 탄력, 민감성 | 고빈도 | 세포간지질 성분, 피부장벽 기능 회복 | - |",
   "tags": [
    "정답판정",
    "수치"
@@ -2420,7 +2420,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_54cabd",
   "derivedFrom": "subject2_q27#3",
-  "explain": "📖 교재 근거 (교재: L135):\n| 세라마이드 | Ceramide | 기능성 성분 | 유상층 | 피부 장벽을 구성하는 주요 성분으로, 보습과 피부 유연성 유지에 도움을 주는 성분입니다. | 0.1~1.0 | - | 보습, 탄력, 민감성 | 고빈도 | 세포간지질 성분, 피부장벽 기능 회복 | - |",
+  "explain": "📖 교재 근거 (교재: L150):\n| 세라마이드 | Ceramide | 기능성 성분 | 유상층 | 피부 장벽을 구성하는 주요 성분으로, 보습과 피부 유연성 유지에 도움을 주는 성분입니다. | 0.1~1.0 | - | 보습, 탄력, 민감성 | 고빈도 | 세포간지질 성분, 피부장벽 기능 회복 | - |",
   "tags": [
    "정답판정",
    "수치"
@@ -2439,7 +2439,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_296af5",
   "derivedFrom": "subject2_q27#4",
-  "explain": "📖 교재 근거 (교재: L135):\n| 세라마이드 | Ceramide | 기능성 성분 | 유상층 | 피부 장벽을 구성하는 주요 성분으로, 보습과 피부 유연성 유지에 도움을 주는 성분입니다. | 0.1~1.0 | - | 보습, 탄력, 민감성 | 고빈도 | 세포간지질 성분, 피부장벽 기능 회복 | - |",
+  "explain": "📖 교재 근거 (교재: L150):\n| 세라마이드 | Ceramide | 기능성 성분 | 유상층 | 피부 장벽을 구성하는 주요 성분으로, 보습과 피부 유연성 유지에 도움을 주는 성분입니다. | 0.1~1.0 | - | 보습, 탄력, 민감성 | 고빈도 | 세포간지질 성분, 피부장벽 기능 회복 | - |",
   "tags": [
    "정답판정",
    "수치"
@@ -2458,7 +2458,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_3b04a5",
   "derivedFrom": "subject2_q27#5",
-  "explain": "📖 교재 근거 (교재: L135):\n| 세라마이드 | Ceramide | 기능성 성분 | 유상층 | 피부 장벽을 구성하는 주요 성분으로, 보습과 피부 유연성 유지에 도움을 주는 성분입니다. | 0.1~1.0 | - | 보습, 탄력, 민감성 | 고빈도 | 세포간지질 성분, 피부장벽 기능 회복 | - |",
+  "explain": "📖 교재 근거 (교재: L150):\n| 세라마이드 | Ceramide | 기능성 성분 | 유상층 | 피부 장벽을 구성하는 주요 성분으로, 보습과 피부 유연성 유지에 도움을 주는 성분입니다. | 0.1~1.0 | - | 보습, 탄력, 민감성 | 고빈도 | 세포간지질 성분, 피부장벽 기능 회복 | - |",
   "tags": [
    "정답판정",
    "수치"
@@ -4557,7 +4557,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_e78cca",
   "derivedFrom": "subject2_q50#1",
-  "explain": "📖 교재 근거 (restricted_ingredients: L87):\n| 징크피리치온 | Zinc Pyrithione | 방부제 | - | 화장품의 변질을 방지하는 방부 및 보존제로 사용되며, 사용에 제한이 있는 성분입니다. | - | 사용 후 씻어내는 제품에 0.5% | 방부·보존 | 중빈도 | 기타 제품에는 사용금지 | - |",
+  "explain": "📖 교재 근거 (restricted_ingredients: L90):\n| 징크피리치온 | Zinc Pyrithione | 기타 | - | 화장품의 변질을 방지하는 방부 및 보존제로 사용되며, 사용에 제한이 있는 성분입니다. | - | 비듬 및 가려움을 덜어주고 씻어내는 제품(샴푸, 린스) 및 탈모 증상의 완화에 도움을 주는 화장품에 총 징크피리치온으로서 1.0% | 특수 제한 | 중빈도 | 기타 제품에는 사용금지 | - |",
   "tags": [
    "정답판정"
   ],
@@ -4575,7 +4575,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_c6d0a6",
   "derivedFrom": "subject2_q50#2",
-  "explain": "📖 교재 근거 (restricted_ingredients: L87):\n| 징크피리치온 | Zinc Pyrithione | 방부제 | - | 화장품의 변질을 방지하는 방부 및 보존제로 사용되며, 사용에 제한이 있는 성분입니다. | - | 사용 후 씻어내는 제품에 0.5% | 방부·보존 | 중빈도 | 기타 제품에는 사용금지 | - |",
+  "explain": "📖 교재 근거 (restricted_ingredients: L90):\n| 징크피리치온 | Zinc Pyrithione | 기타 | - | 화장품의 변질을 방지하는 방부 및 보존제로 사용되며, 사용에 제한이 있는 성분입니다. | - | 비듬 및 가려움을 덜어주고 씻어내는 제품(샴푸, 린스) 및 탈모 증상의 완화에 도움을 주는 화장품에 총 징크피리치온으로서 1.0% | 특수 제한 | 중빈도 | 기타 제품에는 사용금지 | - |",
   "tags": [
    "정답판정",
    "수치"
@@ -4594,7 +4594,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_55b702",
   "derivedFrom": "subject2_q50#3",
-  "explain": "📖 교재 근거 (restricted_ingredients: L87):\n| 징크피리치온 | Zinc Pyrithione | 방부제 | - | 화장품의 변질을 방지하는 방부 및 보존제로 사용되며, 사용에 제한이 있는 성분입니다. | - | 사용 후 씻어내는 제품에 0.5% | 방부·보존 | 중빈도 | 기타 제품에는 사용금지 | - |",
+  "explain": "📖 교재 근거 (restricted_ingredients: L90):\n| 징크피리치온 | Zinc Pyrithione | 기타 | - | 화장품의 변질을 방지하는 방부 및 보존제로 사용되며, 사용에 제한이 있는 성분입니다. | - | 비듬 및 가려움을 덜어주고 씻어내는 제품(샴푸, 린스) 및 탈모 증상의 완화에 도움을 주는 화장품에 총 징크피리치온으로서 1.0% | 특수 제한 | 중빈도 | 기타 제품에는 사용금지 | - |",
   "tags": [
    "정답판정"
   ],
@@ -4612,7 +4612,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_07c8d1",
   "derivedFrom": "subject2_q50#4",
-  "explain": "📖 교재 근거 (restricted_ingredients: L87):\n| 징크피리치온 | Zinc Pyrithione | 방부제 | - | 화장품의 변질을 방지하는 방부 및 보존제로 사용되며, 사용에 제한이 있는 성분입니다. | - | 사용 후 씻어내는 제품에 0.5% | 방부·보존 | 중빈도 | 기타 제품에는 사용금지 | - |",
+  "explain": "📖 교재 근거 (restricted_ingredients: L90):\n| 징크피리치온 | Zinc Pyrithione | 기타 | - | 화장품의 변질을 방지하는 방부 및 보존제로 사용되며, 사용에 제한이 있는 성분입니다. | - | 비듬 및 가려움을 덜어주고 씻어내는 제품(샴푸, 린스) 및 탈모 증상의 완화에 도움을 주는 화장품에 총 징크피리치온으로서 1.0% | 특수 제한 | 중빈도 | 기타 제품에는 사용금지 | - |",
   "tags": [
    "정답판정"
   ],
@@ -4630,7 +4630,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_2e4469",
   "derivedFrom": "subject2_q50#5",
-  "explain": "📖 교재 근거 (restricted_ingredients: L87):\n| 징크피리치온 | Zinc Pyrithione | 방부제 | - | 화장품의 변질을 방지하는 방부 및 보존제로 사용되며, 사용에 제한이 있는 성분입니다. | - | 사용 후 씻어내는 제품에 0.5% | 방부·보존 | 중빈도 | 기타 제품에는 사용금지 | - |",
+  "explain": "📖 교재 근거 (restricted_ingredients: L90):\n| 징크피리치온 | Zinc Pyrithione | 기타 | - | 화장품의 변질을 방지하는 방부 및 보존제로 사용되며, 사용에 제한이 있는 성분입니다. | - | 비듬 및 가려움을 덜어주고 씻어내는 제품(샴푸, 린스) 및 탈모 증상의 완화에 도움을 주는 화장품에 총 징크피리치온으로서 1.0% | 특수 제한 | 중빈도 | 기타 제품에는 사용금지 | - |",
   "tags": [
    "정답판정"
   ],
@@ -4648,7 +4648,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_1ce7a3",
   "derivedFrom": "subject2_q51#1",
-  "explain": "📖 교재 근거 (교재: L119):\n| 부틸메톡시디벤조일메탄 | Butyl Methoxydibenzoylmethane | 자외선 차단제 | - | 유상층에 용해되어 자외선 흡수에 관여하며, 사용 제한이 있는 자외선 차단 관련 성분입니다. | - | 5.0% | 홍조, 색소침착 | 고빈도 | UVA 차단 | - |",
+  "explain": "📖 교재 근거 (교재: L123):\n| 부틸메톡시디벤조일메탄 | Butyl Methoxydibenzoylmethane | 자외선 차단제 | - | 유상층에 용해되어 자외선 흡수에 관여하며, 사용 제한이 있는 자외선 차단 관련 성분입니다. | - | 5.0% | 홍조, 색소침착 | 고빈도 | UVA 차단 | - |",
   "tags": [
    "정답판정"
   ],
@@ -4666,7 +4666,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_32bc6a",
   "derivedFrom": "subject2_q51#2",
-  "explain": "📖 교재 근거 (교재: L119):\n| 부틸메톡시디벤조일메탄 | Butyl Methoxydibenzoylmethane | 자외선 차단제 | - | 유상층에 용해되어 자외선 흡수에 관여하며, 사용 제한이 있는 자외선 차단 관련 성분입니다. | - | 5.0% | 홍조, 색소침착 | 고빈도 | UVA 차단 | - |",
+  "explain": "📖 교재 근거 (교재: L123):\n| 부틸메톡시디벤조일메탄 | Butyl Methoxydibenzoylmethane | 자외선 차단제 | - | 유상층에 용해되어 자외선 흡수에 관여하며, 사용 제한이 있는 자외선 차단 관련 성분입니다. | - | 5.0% | 홍조, 색소침착 | 고빈도 | UVA 차단 | - |",
   "tags": [
    "정답판정"
   ],
@@ -4684,7 +4684,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_6e1d8a",
   "derivedFrom": "subject2_q51#3",
-  "explain": "📖 교재 근거 (교재: L119):\n| 부틸메톡시디벤조일메탄 | Butyl Methoxydibenzoylmethane | 자외선 차단제 | - | 유상층에 용해되어 자외선 흡수에 관여하며, 사용 제한이 있는 자외선 차단 관련 성분입니다. | - | 5.0% | 홍조, 색소침착 | 고빈도 | UVA 차단 | - |",
+  "explain": "📖 교재 근거 (교재: L123):\n| 부틸메톡시디벤조일메탄 | Butyl Methoxydibenzoylmethane | 자외선 차단제 | - | 유상층에 용해되어 자외선 흡수에 관여하며, 사용 제한이 있는 자외선 차단 관련 성분입니다. | - | 5.0% | 홍조, 색소침착 | 고빈도 | UVA 차단 | - |",
   "tags": [
    "정답판정"
   ],
@@ -4702,7 +4702,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_a2554d",
   "derivedFrom": "subject2_q51#4",
-  "explain": "📖 교재 근거 (교재: L119):\n| 부틸메톡시디벤조일메탄 | Butyl Methoxydibenzoylmethane | 자외선 차단제 | - | 유상층에 용해되어 자외선 흡수에 관여하며, 사용 제한이 있는 자외선 차단 관련 성분입니다. | - | 5.0% | 홍조, 색소침착 | 고빈도 | UVA 차단 | - |",
+  "explain": "📖 교재 근거 (교재: L123):\n| 부틸메톡시디벤조일메탄 | Butyl Methoxydibenzoylmethane | 자외선 차단제 | - | 유상층에 용해되어 자외선 흡수에 관여하며, 사용 제한이 있는 자외선 차단 관련 성분입니다. | - | 5.0% | 홍조, 색소침착 | 고빈도 | UVA 차단 | - |",
   "tags": [
    "정답판정"
   ],
@@ -4720,7 +4720,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_9fc118",
   "derivedFrom": "subject2_q51#5",
-  "explain": "📖 교재 근거 (교재: L119):\n| 부틸메톡시디벤조일메탄 | Butyl Methoxydibenzoylmethane | 자외선 차단제 | - | 유상층에 용해되어 자외선 흡수에 관여하며, 사용 제한이 있는 자외선 차단 관련 성분입니다. | - | 5.0% | 홍조, 색소침착 | 고빈도 | UVA 차단 | - |",
+  "explain": "📖 교재 근거 (교재: L123):\n| 부틸메톡시디벤조일메탄 | Butyl Methoxydibenzoylmethane | 자외선 차단제 | - | 유상층에 용해되어 자외선 흡수에 관여하며, 사용 제한이 있는 자외선 차단 관련 성분입니다. | - | 5.0% | 홍조, 색소침착 | 고빈도 | UVA 차단 | - |",
   "tags": [
    "정답판정"
   ],
@@ -4738,7 +4738,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_ac5052",
   "derivedFrom": "subject2_q52#1",
-  "explain": "📖 교재 근거 (교재: L130):\n| 비타민C(아스코르브산) | Vitamin C (Ascorbic Acid) | 기능성 성분 | 수상층 | 활성 성분으로 피부에 생기와 활력을 부여하여 맑고 건강한 피부 유지에 도움을 주는 성분입니다. | 0.5~5.0 | - | 미백, 색소침착, 주름 | 고빈도 | 불안정하여 유도체 형태로 사용 | - |",
+  "explain": "📖 교재 근거 (교재: L145):\n| 비타민C(아스코르브산) | Vitamin C (Ascorbic Acid) | 기능성 성분 | 수상층 | 활성 성분으로 피부에 생기와 활력을 부여하여 맑고 건강한 피부 유지에 도움을 주는 성분입니다. | 0.5~5.0 | - | 미백, 색소침착, 주름 | 고빈도 | 불안정하여 유도체 형태로 사용 | - |",
   "tags": [
    "정답판정"
   ],
@@ -4756,7 +4756,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_828c6d",
   "derivedFrom": "subject2_q52#2",
-  "explain": "📖 교재 근거 (교재: L130):\n| 비타민C(아스코르브산) | Vitamin C (Ascorbic Acid) | 기능성 성분 | 수상층 | 활성 성분으로 피부에 생기와 활력을 부여하여 맑고 건강한 피부 유지에 도움을 주는 성분입니다. | 0.5~5.0 | - | 미백, 색소침착, 주름 | 고빈도 | 불안정하여 유도체 형태로 사용 | - |",
+  "explain": "📖 교재 근거 (교재: L145):\n| 비타민C(아스코르브산) | Vitamin C (Ascorbic Acid) | 기능성 성분 | 수상층 | 활성 성분으로 피부에 생기와 활력을 부여하여 맑고 건강한 피부 유지에 도움을 주는 성분입니다. | 0.5~5.0 | - | 미백, 색소침착, 주름 | 고빈도 | 불안정하여 유도체 형태로 사용 | - |",
   "tags": [
    "정답판정"
   ],
@@ -4774,7 +4774,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_798b6c",
   "derivedFrom": "subject2_q52#3",
-  "explain": "📖 교재 근거 (교재: L130):\n| 비타민C(아스코르브산) | Vitamin C (Ascorbic Acid) | 기능성 성분 | 수상층 | 활성 성분으로 피부에 생기와 활력을 부여하여 맑고 건강한 피부 유지에 도움을 주는 성분입니다. | 0.5~5.0 | - | 미백, 색소침착, 주름 | 고빈도 | 불안정하여 유도체 형태로 사용 | - |",
+  "explain": "📖 교재 근거 (교재: L145):\n| 비타민C(아스코르브산) | Vitamin C (Ascorbic Acid) | 기능성 성분 | 수상층 | 활성 성분으로 피부에 생기와 활력을 부여하여 맑고 건강한 피부 유지에 도움을 주는 성분입니다. | 0.5~5.0 | - | 미백, 색소침착, 주름 | 고빈도 | 불안정하여 유도체 형태로 사용 | - |",
   "tags": [
    "정답판정"
   ],
@@ -4792,7 +4792,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_952ece",
   "derivedFrom": "subject2_q52#4",
-  "explain": "📖 교재 근거 (교재: L130):\n| 비타민C(아스코르브산) | Vitamin C (Ascorbic Acid) | 기능성 성분 | 수상층 | 활성 성분으로 피부에 생기와 활력을 부여하여 맑고 건강한 피부 유지에 도움을 주는 성분입니다. | 0.5~5.0 | - | 미백, 색소침착, 주름 | 고빈도 | 불안정하여 유도체 형태로 사용 | - |",
+  "explain": "📖 교재 근거 (교재: L145):\n| 비타민C(아스코르브산) | Vitamin C (Ascorbic Acid) | 기능성 성분 | 수상층 | 활성 성분으로 피부에 생기와 활력을 부여하여 맑고 건강한 피부 유지에 도움을 주는 성분입니다. | 0.5~5.0 | - | 미백, 색소침착, 주름 | 고빈도 | 불안정하여 유도체 형태로 사용 | - |",
   "tags": [
    "정답판정"
   ],
@@ -4810,7 +4810,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_46d691",
   "derivedFrom": "subject2_q52#5",
-  "explain": "📖 교재 근거 (교재: L130):\n| 비타민C(아스코르브산) | Vitamin C (Ascorbic Acid) | 기능성 성분 | 수상층 | 활성 성분으로 피부에 생기와 활력을 부여하여 맑고 건강한 피부 유지에 도움을 주는 성분입니다. | 0.5~5.0 | - | 미백, 색소침착, 주름 | 고빈도 | 불안정하여 유도체 형태로 사용 | - |",
+  "explain": "📖 교재 근거 (교재: L145):\n| 비타민C(아스코르브산) | Vitamin C (Ascorbic Acid) | 기능성 성분 | 수상층 | 활성 성분으로 피부에 생기와 활력을 부여하여 맑고 건강한 피부 유지에 도움을 주는 성분입니다. | 0.5~5.0 | - | 미백, 색소침착, 주름 | 고빈도 | 불안정하여 유도체 형태로 사용 | - |",
   "tags": [
    "정답판정"
   ],
@@ -4828,7 +4828,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_e70882",
   "derivedFrom": "subject2_q53#1",
-  "explain": "📖 교재 근거 (restricted_ingredients: L114):\n| 징크옥사이드 | Zinc Oxide | 자외선 차단제 | - | 자외선 차단제로 유상층에 용해되어 활용되며, 최대 25%까지 사용 가능한 사용 제한 원료입니다. | - | 25% | 홍조, 색소침착 | 고빈도 | 무기 자외선 차단제, 최대 함량 25% | - |",
+  "explain": "📖 교재 근거 (restricted_ingredients: L118):\n| 징크옥사이드 | Zinc Oxide | 자외선 차단제 | - | 자외선 차단제로 유상층에 용해되어 활용되며, 최대 25%까지 사용 가능한 사용 제한 원료입니다. | - | 25% | 홍조, 색소침착 | 고빈도 | 무기 자외선 차단제, 최대 함량 25% | - |",
   "tags": [
    "정답판정",
    "한도",
@@ -4848,7 +4848,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_221a4e",
   "derivedFrom": "subject2_q53#2",
-  "explain": "📖 교재 근거 (restricted_ingredients: L114):\n| 징크옥사이드 | Zinc Oxide | 자외선 차단제 | - | 자외선 차단제로 유상층에 용해되어 활용되며, 최대 25%까지 사용 가능한 사용 제한 원료입니다. | - | 25% | 홍조, 색소침착 | 고빈도 | 무기 자외선 차단제, 최대 함량 25% | - |",
+  "explain": "📖 교재 근거 (restricted_ingredients: L118):\n| 징크옥사이드 | Zinc Oxide | 자외선 차단제 | - | 자외선 차단제로 유상층에 용해되어 활용되며, 최대 25%까지 사용 가능한 사용 제한 원료입니다. | - | 25% | 홍조, 색소침착 | 고빈도 | 무기 자외선 차단제, 최대 함량 25% | - |",
   "tags": [
    "정답판정",
    "한도",
@@ -4868,7 +4868,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_1e972f",
   "derivedFrom": "subject2_q53#3",
-  "explain": "📖 교재 근거 (restricted_ingredients: L114):\n| 징크옥사이드 | Zinc Oxide | 자외선 차단제 | - | 자외선 차단제로 유상층에 용해되어 활용되며, 최대 25%까지 사용 가능한 사용 제한 원료입니다. | - | 25% | 홍조, 색소침착 | 고빈도 | 무기 자외선 차단제, 최대 함량 25% | - |",
+  "explain": "📖 교재 근거 (restricted_ingredients: L118):\n| 징크옥사이드 | Zinc Oxide | 자외선 차단제 | - | 자외선 차단제로 유상층에 용해되어 활용되며, 최대 25%까지 사용 가능한 사용 제한 원료입니다. | - | 25% | 홍조, 색소침착 | 고빈도 | 무기 자외선 차단제, 최대 함량 25% | - |",
   "tags": [
    "정답판정",
    "한도",
@@ -4888,7 +4888,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_f83e05",
   "derivedFrom": "subject2_q53#4",
-  "explain": "📖 교재 근거 (restricted_ingredients: L114):\n| 징크옥사이드 | Zinc Oxide | 자외선 차단제 | - | 자외선 차단제로 유상층에 용해되어 활용되며, 최대 25%까지 사용 가능한 사용 제한 원료입니다. | - | 25% | 홍조, 색소침착 | 고빈도 | 무기 자외선 차단제, 최대 함량 25% | - |",
+  "explain": "📖 교재 근거 (restricted_ingredients: L118):\n| 징크옥사이드 | Zinc Oxide | 자외선 차단제 | - | 자외선 차단제로 유상층에 용해되어 활용되며, 최대 25%까지 사용 가능한 사용 제한 원료입니다. | - | 25% | 홍조, 색소침착 | 고빈도 | 무기 자외선 차단제, 최대 함량 25% | - |",
   "tags": [
    "정답판정",
    "한도",
@@ -4908,7 +4908,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_6fb2b1",
   "derivedFrom": "subject2_q53#5",
-  "explain": "📖 교재 근거 (restricted_ingredients: L114):\n| 징크옥사이드 | Zinc Oxide | 자외선 차단제 | - | 자외선 차단제로 유상층에 용해되어 활용되며, 최대 25%까지 사용 가능한 사용 제한 원료입니다. | - | 25% | 홍조, 색소침착 | 고빈도 | 무기 자외선 차단제, 최대 함량 25% | - |",
+  "explain": "📖 교재 근거 (restricted_ingredients: L118):\n| 징크옥사이드 | Zinc Oxide | 자외선 차단제 | - | 자외선 차단제로 유상층에 용해되어 활용되며, 최대 25%까지 사용 가능한 사용 제한 원료입니다. | - | 25% | 홍조, 색소침착 | 고빈도 | 무기 자외선 차단제, 최대 함량 25% | - |",
   "tags": [
    "정답판정",
    "한도",
@@ -5400,7 +5400,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_df4d89",
   "derivedFrom": "subject2_q59#1",
-  "explain": "📖 교재 근거 (교재: L73):\n| 카보머 | Carbomer | 점증제 | 수상층 | 수상층에 용해되어 화장품의 점도를 높이고 제형을 안정화하는 데 도움을 주는 점증 성분입니다. | 0.1~1.0 | - | 점증·안정화 | 중빈도 | pH 조절 필요, 중화 후 젤 형성 | - |",
+  "explain": "📖 교재 근거 (교재: L78):\n| 카보머 | Carbomer | 점증제 | 수상층 | 수상층에 용해되어 화장품의 점도를 높이고 제형을 안정화하는 데 도움을 주는 점증 성분입니다. | 0.1~1.0 | - | 점증·안정화 | 중빈도 | pH 조절 필요, 중화 후 젤 형성 | - |",
   "tags": [
    "정답판정"
   ],
@@ -5418,7 +5418,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_21ca3d",
   "derivedFrom": "subject2_q59#2",
-  "explain": "📖 교재 근거 (교재: L73):\n| 카보머 | Carbomer | 점증제 | 수상층 | 수상층에 용해되어 화장품의 점도를 높이고 제형을 안정화하는 데 도움을 주는 점증 성분입니다. | 0.1~1.0 | - | 점증·안정화 | 중빈도 | pH 조절 필요, 중화 후 젤 형성 | - |",
+  "explain": "📖 교재 근거 (교재: L78):\n| 카보머 | Carbomer | 점증제 | 수상층 | 수상층에 용해되어 화장품의 점도를 높이고 제형을 안정화하는 데 도움을 주는 점증 성분입니다. | 0.1~1.0 | - | 점증·안정화 | 중빈도 | pH 조절 필요, 중화 후 젤 형성 | - |",
   "tags": [
    "정답판정"
   ],
@@ -5436,7 +5436,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_e72d52",
   "derivedFrom": "subject2_q59#3",
-  "explain": "📖 교재 근거 (교재: L73):\n| 카보머 | Carbomer | 점증제 | 수상층 | 수상층에 용해되어 화장품의 점도를 높이고 제형을 안정화하는 데 도움을 주는 점증 성분입니다. | 0.1~1.0 | - | 점증·안정화 | 중빈도 | pH 조절 필요, 중화 후 젤 형성 | - |",
+  "explain": "📖 교재 근거 (교재: L78):\n| 카보머 | Carbomer | 점증제 | 수상층 | 수상층에 용해되어 화장품의 점도를 높이고 제형을 안정화하는 데 도움을 주는 점증 성분입니다. | 0.1~1.0 | - | 점증·안정화 | 중빈도 | pH 조절 필요, 중화 후 젤 형성 | - |",
   "tags": [
    "정답판정"
   ],
@@ -5454,7 +5454,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_f675f7",
   "derivedFrom": "subject2_q59#4",
-  "explain": "📖 교재 근거 (교재: L73):\n| 카보머 | Carbomer | 점증제 | 수상층 | 수상층에 용해되어 화장품의 점도를 높이고 제형을 안정화하는 데 도움을 주는 점증 성분입니다. | 0.1~1.0 | - | 점증·안정화 | 중빈도 | pH 조절 필요, 중화 후 젤 형성 | - |",
+  "explain": "📖 교재 근거 (교재: L78):\n| 카보머 | Carbomer | 점증제 | 수상층 | 수상층에 용해되어 화장품의 점도를 높이고 제형을 안정화하는 데 도움을 주는 점증 성분입니다. | 0.1~1.0 | - | 점증·안정화 | 중빈도 | pH 조절 필요, 중화 후 젤 형성 | - |",
   "tags": [
    "정답판정"
   ],
@@ -5472,7 +5472,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_000761",
   "derivedFrom": "subject2_q59#5",
-  "explain": "📖 교재 근거 (교재: L73):\n| 카보머 | Carbomer | 점증제 | 수상층 | 수상층에 용해되어 화장품의 점도를 높이고 제형을 안정화하는 데 도움을 주는 점증 성분입니다. | 0.1~1.0 | - | 점증·안정화 | 중빈도 | pH 조절 필요, 중화 후 젤 형성 | - |",
+  "explain": "📖 교재 근거 (교재: L78):\n| 카보머 | Carbomer | 점증제 | 수상층 | 수상층에 용해되어 화장품의 점도를 높이고 제형을 안정화하는 데 도움을 주는 점증 성분입니다. | 0.1~1.0 | - | 점증·안정화 | 중빈도 | pH 조절 필요, 중화 후 젤 형성 | - |",
   "tags": [
    "정답판정"
   ],
@@ -6621,7 +6621,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_fe7146",
   "derivedFrom": "subject2_q73#1",
-  "explain": "📖 교재 근거 (교재: L239):\n| 트리클로산 | Triclosan | - | - | 화장품의 변질을 방지하는 방부제이며, 0.3%의 최대 함량 제한이 있는 사용 제한 성분입니다. | - | 0.3% (기능성화장품 유효성분으로 사용 시) | 특수 제한 | 고빈도 | 원칙은 배합제한 원료이나, 기능성화장품 유효성분 예외 조건을 반드시 함께 암기 (별표1 관련) | 원칙: 별표1 배합제한 원료 / 예외: 기능성화장품 유효성분으로 사용하는 경우에 한해 0.3% 허용 (씻어내는 제품) |",
+  "explain": "📖 교재 근거 (교재: L266):\n| 트리클로산 | Triclosan | 방부제 | - | 화장품의 변질을 방지하는 방부제이며, 0.3%의 최대 함량 제한이 있는 사용 제한 성분입니다. | - | 사용 후 씻어내는 제품류에 0.3% | 특수 제한 | 고빈도 | 기능성화장품 유효성분으로 사용 시 | - |",
   "tags": [
    "정답판정",
    "금지원료",
@@ -6642,7 +6642,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_723b14",
   "derivedFrom": "subject2_q73#2",
-  "explain": "📖 교재 근거 (교재: L239):\n| 트리클로산 | Triclosan | - | - | 화장품의 변질을 방지하는 방부제이며, 0.3%의 최대 함량 제한이 있는 사용 제한 성분입니다. | - | 0.3% (기능성화장품 유효성분으로 사용 시) | 특수 제한 | 고빈도 | 원칙은 배합제한 원료이나, 기능성화장품 유효성분 예외 조건을 반드시 함께 암기 (별표1 관련) | 원칙: 별표1 배합제한 원료 / 예외: 기능성화장품 유효성분으로 사용하는 경우에 한해 0.3% 허용 (씻어내는 제품) |",
+  "explain": "📖 교재 근거 (교재: L266):\n| 트리클로산 | Triclosan | 방부제 | - | 화장품의 변질을 방지하는 방부제이며, 0.3%의 최대 함량 제한이 있는 사용 제한 성분입니다. | - | 사용 후 씻어내는 제품류에 0.3% | 특수 제한 | 고빈도 | 기능성화장품 유효성분으로 사용 시 | - |",
   "tags": [
    "정답판정",
    "금지원료",
@@ -6663,7 +6663,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_d23ff0",
   "derivedFrom": "subject2_q73#3",
-  "explain": "📖 교재 근거 (교재: L239):\n| 트리클로산 | Triclosan | - | - | 화장품의 변질을 방지하는 방부제이며, 0.3%의 최대 함량 제한이 있는 사용 제한 성분입니다. | - | 0.3% (기능성화장품 유효성분으로 사용 시) | 특수 제한 | 고빈도 | 원칙은 배합제한 원료이나, 기능성화장품 유효성분 예외 조건을 반드시 함께 암기 (별표1 관련) | 원칙: 별표1 배합제한 원료 / 예외: 기능성화장품 유효성분으로 사용하는 경우에 한해 0.3% 허용 (씻어내는 제품) |",
+  "explain": "📖 교재 근거 (교재: L266):\n| 트리클로산 | Triclosan | 방부제 | - | 화장품의 변질을 방지하는 방부제이며, 0.3%의 최대 함량 제한이 있는 사용 제한 성분입니다. | - | 사용 후 씻어내는 제품류에 0.3% | 특수 제한 | 고빈도 | 기능성화장품 유효성분으로 사용 시 | - |",
   "tags": [
    "정답판정",
    "금지원료",
@@ -6684,7 +6684,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_98ce38",
   "derivedFrom": "subject2_q73#4",
-  "explain": "📖 교재 근거 (교재: L239):\n| 트리클로산 | Triclosan | - | - | 화장품의 변질을 방지하는 방부제이며, 0.3%의 최대 함량 제한이 있는 사용 제한 성분입니다. | - | 0.3% (기능성화장품 유효성분으로 사용 시) | 특수 제한 | 고빈도 | 원칙은 배합제한 원료이나, 기능성화장품 유효성분 예외 조건을 반드시 함께 암기 (별표1 관련) | 원칙: 별표1 배합제한 원료 / 예외: 기능성화장품 유효성분으로 사용하는 경우에 한해 0.3% 허용 (씻어내는 제품) |",
+  "explain": "📖 교재 근거 (교재: L266):\n| 트리클로산 | Triclosan | 방부제 | - | 화장품의 변질을 방지하는 방부제이며, 0.3%의 최대 함량 제한이 있는 사용 제한 성분입니다. | - | 사용 후 씻어내는 제품류에 0.3% | 특수 제한 | 고빈도 | 기능성화장품 유효성분으로 사용 시 | - |",
   "tags": [
    "정답판정",
    "금지원료",
@@ -6705,7 +6705,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_6e6fc1",
   "derivedFrom": "subject2_q73#5",
-  "explain": "📖 교재 근거 (교재: L239):\n| 트리클로산 | Triclosan | - | - | 화장품의 변질을 방지하는 방부제이며, 0.3%의 최대 함량 제한이 있는 사용 제한 성분입니다. | - | 0.3% (기능성화장품 유효성분으로 사용 시) | 특수 제한 | 고빈도 | 원칙은 배합제한 원료이나, 기능성화장품 유효성분 예외 조건을 반드시 함께 암기 (별표1 관련) | 원칙: 별표1 배합제한 원료 / 예외: 기능성화장품 유효성분으로 사용하는 경우에 한해 0.3% 허용 (씻어내는 제품) |",
+  "explain": "📖 교재 근거 (교재: L266):\n| 트리클로산 | Triclosan | 방부제 | - | 화장품의 변질을 방지하는 방부제이며, 0.3%의 최대 함량 제한이 있는 사용 제한 성분입니다. | - | 사용 후 씻어내는 제품류에 0.3% | 특수 제한 | 고빈도 | 기능성화장품 유효성분으로 사용 시 | - |",
   "tags": [
    "정답판정",
    "금지원료",
@@ -7022,7 +7022,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_da541f",
   "derivedFrom": "subject2_q77#1",
-  "explain": "📖 교재 근거 (restricted_ingredients: L114):\n| 징크옥사이드 | Zinc Oxide | 자외선 차단제 | - | 자외선 차단제로 유상층에 용해되어 활용되며, 최대 25%까지 사용 가능한 사용 제한 원료입니다. | - | 25% | 홍조, 색소침착 | 고빈도 | 무기 자외선 차단제, 최대 함량 25% | - |",
+  "explain": "📖 교재 근거 (restricted_ingredients: L119):\n| 징크옥사이드 | Zinc Oxide | 자외선 차단제 | - | 자외선 차단제로 유상층에 용해되어 활용되며, 최대 25%까지 사용 가능한 사용 제한 원료입니다. | - | 25% | 홍조, 색소침착 | 고빈도 | 무기 자외선 차단제, 최대 함량 25% | - |",
   "tags": [
    "정답판정"
   ],
@@ -7040,7 +7040,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_fcdc97",
   "derivedFrom": "subject2_q77#2",
-  "explain": "📖 교재 근거 (restricted_ingredients: L114):\n| 징크옥사이드 | Zinc Oxide | 자외선 차단제 | - | 자외선 차단제로 유상층에 용해되어 활용되며, 최대 25%까지 사용 가능한 사용 제한 원료입니다. | - | 25% | 홍조, 색소침착 | 고빈도 | 무기 자외선 차단제, 최대 함량 25% | - |",
+  "explain": "📖 교재 근거 (restricted_ingredients: L119):\n| 징크옥사이드 | Zinc Oxide | 자외선 차단제 | - | 자외선 차단제로 유상층에 용해되어 활용되며, 최대 25%까지 사용 가능한 사용 제한 원료입니다. | - | 25% | 홍조, 색소침착 | 고빈도 | 무기 자외선 차단제, 최대 함량 25% | - |",
   "tags": [
    "정답판정"
   ],
@@ -7058,7 +7058,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_955657",
   "derivedFrom": "subject2_q77#3",
-  "explain": "📖 교재 근거 (restricted_ingredients: L114):\n| 징크옥사이드 | Zinc Oxide | 자외선 차단제 | - | 자외선 차단제로 유상층에 용해되어 활용되며, 최대 25%까지 사용 가능한 사용 제한 원료입니다. | - | 25% | 홍조, 색소침착 | 고빈도 | 무기 자외선 차단제, 최대 함량 25% | - |",
+  "explain": "📖 교재 근거 (restricted_ingredients: L119):\n| 징크옥사이드 | Zinc Oxide | 자외선 차단제 | - | 자외선 차단제로 유상층에 용해되어 활용되며, 최대 25%까지 사용 가능한 사용 제한 원료입니다. | - | 25% | 홍조, 색소침착 | 고빈도 | 무기 자외선 차단제, 최대 함량 25% | - |",
   "tags": [
    "정답판정"
   ],
@@ -7076,7 +7076,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_230408",
   "derivedFrom": "subject2_q77#4",
-  "explain": "📖 교재 근거 (restricted_ingredients: L114):\n| 징크옥사이드 | Zinc Oxide | 자외선 차단제 | - | 자외선 차단제로 유상층에 용해되어 활용되며, 최대 25%까지 사용 가능한 사용 제한 원료입니다. | - | 25% | 홍조, 색소침착 | 고빈도 | 무기 자외선 차단제, 최대 함량 25% | - |",
+  "explain": "📖 교재 근거 (restricted_ingredients: L119):\n| 징크옥사이드 | Zinc Oxide | 자외선 차단제 | - | 자외선 차단제로 유상층에 용해되어 활용되며, 최대 25%까지 사용 가능한 사용 제한 원료입니다. | - | 25% | 홍조, 색소침착 | 고빈도 | 무기 자외선 차단제, 최대 함량 25% | - |",
   "tags": [
    "정답판정"
   ],
@@ -7094,7 +7094,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_d2bc04",
   "derivedFrom": "subject2_q77#5",
-  "explain": "📖 교재 근거 (restricted_ingredients: L114):\n| 징크옥사이드 | Zinc Oxide | 자외선 차단제 | - | 자외선 차단제로 유상층에 용해되어 활용되며, 최대 25%까지 사용 가능한 사용 제한 원료입니다. | - | 25% | 홍조, 색소침착 | 고빈도 | 무기 자외선 차단제, 최대 함량 25% | - |",
+  "explain": "📖 교재 근거 (restricted_ingredients: L119):\n| 징크옥사이드 | Zinc Oxide | 자외선 차단제 | - | 자외선 차단제로 유상층에 용해되어 활용되며, 최대 25%까지 사용 가능한 사용 제한 원료입니다. | - | 25% | 홍조, 색소침착 | 고빈도 | 무기 자외선 차단제, 최대 함량 25% | - |",
   "tags": [
    "정답판정"
   ],
@@ -7976,7 +7976,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_bc4d05",
   "derivedFrom": "subject2_q87#1",
-  "explain": "📖 교재 근거 (교재: L119):\n| 부틸메톡시디벤조일메탄 | Butyl Methoxydibenzoylmethane | 자외선 차단제 | - | 유상층에 용해되어 자외선 흡수에 관여하며, 사용 제한이 있는 자외선 차단 관련 성분입니다. | - | 5.0% | 홍조, 색소침착 | 고빈도 | UVA 차단 | - |",
+  "explain": "📖 교재 근거 (교재: L124):\n| 부틸메톡시디벤조일메탄 | Butyl Methoxydibenzoylmethane | 자외선 차단제 | - | 유상층에 용해되어 자외선 흡수에 관여하며, 사용 제한이 있는 자외선 차단 관련 성분입니다. | - | 5.0% | 홍조, 색소침착 | 고빈도 | UVA 차단 | - |",
   "tags": [
    "정답판정"
   ],
@@ -7994,7 +7994,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_6d6b64",
   "derivedFrom": "subject2_q87#2",
-  "explain": "📖 교재 근거 (교재: L119):\n| 부틸메톡시디벤조일메탄 | Butyl Methoxydibenzoylmethane | 자외선 차단제 | - | 유상층에 용해되어 자외선 흡수에 관여하며, 사용 제한이 있는 자외선 차단 관련 성분입니다. | - | 5.0% | 홍조, 색소침착 | 고빈도 | UVA 차단 | - |",
+  "explain": "📖 교재 근거 (교재: L124):\n| 부틸메톡시디벤조일메탄 | Butyl Methoxydibenzoylmethane | 자외선 차단제 | - | 유상층에 용해되어 자외선 흡수에 관여하며, 사용 제한이 있는 자외선 차단 관련 성분입니다. | - | 5.0% | 홍조, 색소침착 | 고빈도 | UVA 차단 | - |",
   "tags": [
    "정답판정"
   ],
@@ -8012,7 +8012,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_396c78",
   "derivedFrom": "subject2_q87#3",
-  "explain": "📖 교재 근거 (교재: L119):\n| 부틸메톡시디벤조일메탄 | Butyl Methoxydibenzoylmethane | 자외선 차단제 | - | 유상층에 용해되어 자외선 흡수에 관여하며, 사용 제한이 있는 자외선 차단 관련 성분입니다. | - | 5.0% | 홍조, 색소침착 | 고빈도 | UVA 차단 | - |",
+  "explain": "📖 교재 근거 (교재: L124):\n| 부틸메톡시디벤조일메탄 | Butyl Methoxydibenzoylmethane | 자외선 차단제 | - | 유상층에 용해되어 자외선 흡수에 관여하며, 사용 제한이 있는 자외선 차단 관련 성분입니다. | - | 5.0% | 홍조, 색소침착 | 고빈도 | UVA 차단 | - |",
   "tags": [
    "정답판정"
   ],
@@ -8030,7 +8030,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_a1ad11",
   "derivedFrom": "subject2_q87#4",
-  "explain": "📖 교재 근거 (교재: L119):\n| 부틸메톡시디벤조일메탄 | Butyl Methoxydibenzoylmethane | 자외선 차단제 | - | 유상층에 용해되어 자외선 흡수에 관여하며, 사용 제한이 있는 자외선 차단 관련 성분입니다. | - | 5.0% | 홍조, 색소침착 | 고빈도 | UVA 차단 | - |",
+  "explain": "📖 교재 근거 (교재: L124):\n| 부틸메톡시디벤조일메탄 | Butyl Methoxydibenzoylmethane | 자외선 차단제 | - | 유상층에 용해되어 자외선 흡수에 관여하며, 사용 제한이 있는 자외선 차단 관련 성분입니다. | - | 5.0% | 홍조, 색소침착 | 고빈도 | UVA 차단 | - |",
   "tags": [
    "정답판정"
   ],
@@ -8048,7 +8048,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_f2d1fe",
   "derivedFrom": "subject2_q87#5",
-  "explain": "📖 교재 근거 (교재: L119):\n| 부틸메톡시디벤조일메탄 | Butyl Methoxydibenzoylmethane | 자외선 차단제 | - | 유상층에 용해되어 자외선 흡수에 관여하며, 사용 제한이 있는 자외선 차단 관련 성분입니다. | - | 5.0% | 홍조, 색소침착 | 고빈도 | UVA 차단 | - |",
+  "explain": "📖 교재 근거 (교재: L124):\n| 부틸메톡시디벤조일메탄 | Butyl Methoxydibenzoylmethane | 자외선 차단제 | - | 유상층에 용해되어 자외선 흡수에 관여하며, 사용 제한이 있는 자외선 차단 관련 성분입니다. | - | 5.0% | 홍조, 색소침착 | 고빈도 | UVA 차단 | - |",
   "tags": [
    "정답판정"
   ],
@@ -8539,7 +8539,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_655aa4",
   "derivedFrom": "subject2_q93#1",
-  "explain": "📖 교재 근거 (approved_ingredients: L202):\n| 비소 및 그 화합물 | Arsenic and its compounds | 중금속 | - | 발암성·독성으로 화장품 사용이 금지된 중금속입니다. | - | - | 중금속, 사용 금지 | - | - | - |",
+  "explain": "📖 교재 근거 (approved_ingredients: L225):\n| 비소 및 그 화합물 | Arsenic and its compounds | 중금속 | - | 중금속 대표 | - | 사용 불가 (0%) | - | - | 화장품 제조/조제에 사용이 금지되는 원료입니다. | - |",
   "tags": [
    "정답판정",
    "한도",
@@ -8559,7 +8559,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_231d7f",
   "derivedFrom": "subject2_q93#2",
-  "explain": "📖 교재 근거 (approved_ingredients: L202):\n| 비소 및 그 화합물 | Arsenic and its compounds | 중금속 | - | 발암성·독성으로 화장품 사용이 금지된 중금속입니다. | - | - | 중금속, 사용 금지 | - | - | - |",
+  "explain": "📖 교재 근거 (approved_ingredients: L225):\n| 비소 및 그 화합물 | Arsenic and its compounds | 중금속 | - | 중금속 대표 | - | 사용 불가 (0%) | - | - | 화장품 제조/조제에 사용이 금지되는 원료입니다. | - |",
   "tags": [
    "정답판정",
    "한도",
@@ -8579,7 +8579,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_455a9b",
   "derivedFrom": "subject2_q93#3",
-  "explain": "📖 교재 근거 (approved_ingredients: L202):\n| 비소 및 그 화합물 | Arsenic and its compounds | 중금속 | - | 발암성·독성으로 화장품 사용이 금지된 중금속입니다. | - | - | 중금속, 사용 금지 | - | - | - |",
+  "explain": "📖 교재 근거 (approved_ingredients: L225):\n| 비소 및 그 화합물 | Arsenic and its compounds | 중금속 | - | 중금속 대표 | - | 사용 불가 (0%) | - | - | 화장품 제조/조제에 사용이 금지되는 원료입니다. | - |",
   "tags": [
    "정답판정",
    "한도",
@@ -8599,7 +8599,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_94129f",
   "derivedFrom": "subject2_q93#4",
-  "explain": "📖 교재 근거 (approved_ingredients: L202):\n| 비소 및 그 화합물 | Arsenic and its compounds | 중금속 | - | 발암성·독성으로 화장품 사용이 금지된 중금속입니다. | - | - | 중금속, 사용 금지 | - | - | - |",
+  "explain": "📖 교재 근거 (approved_ingredients: L225):\n| 비소 및 그 화합물 | Arsenic and its compounds | 중금속 | - | 중금속 대표 | - | 사용 불가 (0%) | - | - | 화장품 제조/조제에 사용이 금지되는 원료입니다. | - |",
   "tags": [
    "정답판정",
    "한도",
@@ -8619,7 +8619,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_73b240",
   "derivedFrom": "subject2_q93#5",
-  "explain": "📖 교재 근거 (approved_ingredients: L202):\n| 비소 및 그 화합물 | Arsenic and its compounds | 중금속 | - | 발암성·독성으로 화장품 사용이 금지된 중금속입니다. | - | - | 중금속, 사용 금지 | - | - | - |",
+  "explain": "📖 교재 근거 (approved_ingredients: L225):\n| 비소 및 그 화합물 | Arsenic and its compounds | 중금속 | - | 중금속 대표 | - | 사용 불가 (0%) | - | - | 화장품 제조/조제에 사용이 금지되는 원료입니다. | - |",
   "tags": [
    "정답판정",
    "한도",
@@ -9587,7 +9587,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_3d2e41",
   "derivedFrom": "subject2_q104#1",
-  "explain": "📖 교재 근거 (교재: L117):\n| 티타늄디옥사이드 | Titanium Dioxide | 자외선 차단제 | 유상층 | 유상층에 분산되며 최대 25.0%까지 사용 가능한 무기계 자외선 차단제 카테고리의 사용 제한 성분입니다. | 2.0~25.0 | 25% | 홍조, 색소침착 | 고빈도 | 물리적 차단제, 25% 최대 함량 중요 | - |",
+  "explain": "📖 교재 근거 (교재: L130):\n| 티타늄디옥사이드 | Titanium Dioxide | 자외선 차단제 | - | 유상층에 분산되며 최대 25.0%까지 사용 가능한 무기계 자외선 차단제 카테고리의 사용 제한 성분입니다. | - | 25% | 홍조, 색소침착 | 고빈도 | 무기 자외선 차단제, 최대 함량 25% | - |",
   "tags": [
    "정답판정",
    "한도",
@@ -9607,7 +9607,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_a0fcc5",
   "derivedFrom": "subject2_q104#2",
-  "explain": "📖 교재 근거 (교재: L117):\n| 티타늄디옥사이드 | Titanium Dioxide | 자외선 차단제 | 유상층 | 유상층에 분산되며 최대 25.0%까지 사용 가능한 무기계 자외선 차단제 카테고리의 사용 제한 성분입니다. | 2.0~25.0 | 25% | 홍조, 색소침착 | 고빈도 | 물리적 차단제, 25% 최대 함량 중요 | - |",
+  "explain": "📖 교재 근거 (교재: L130):\n| 티타늄디옥사이드 | Titanium Dioxide | 자외선 차단제 | - | 유상층에 분산되며 최대 25.0%까지 사용 가능한 무기계 자외선 차단제 카테고리의 사용 제한 성분입니다. | - | 25% | 홍조, 색소침착 | 고빈도 | 무기 자외선 차단제, 최대 함량 25% | - |",
   "tags": [
    "정답판정",
    "한도",
@@ -9627,7 +9627,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_71dbf5",
   "derivedFrom": "subject2_q104#3",
-  "explain": "📖 교재 근거 (교재: L117):\n| 티타늄디옥사이드 | Titanium Dioxide | 자외선 차단제 | 유상층 | 유상층에 분산되며 최대 25.0%까지 사용 가능한 무기계 자외선 차단제 카테고리의 사용 제한 성분입니다. | 2.0~25.0 | 25% | 홍조, 색소침착 | 고빈도 | 물리적 차단제, 25% 최대 함량 중요 | - |",
+  "explain": "📖 교재 근거 (교재: L130):\n| 티타늄디옥사이드 | Titanium Dioxide | 자외선 차단제 | - | 유상층에 분산되며 최대 25.0%까지 사용 가능한 무기계 자외선 차단제 카테고리의 사용 제한 성분입니다. | - | 25% | 홍조, 색소침착 | 고빈도 | 무기 자외선 차단제, 최대 함량 25% | - |",
   "tags": [
    "정답판정",
    "한도",
@@ -9647,7 +9647,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_3477d7",
   "derivedFrom": "subject2_q104#4",
-  "explain": "📖 교재 근거 (교재: L117):\n| 티타늄디옥사이드 | Titanium Dioxide | 자외선 차단제 | 유상층 | 유상층에 분산되며 최대 25.0%까지 사용 가능한 무기계 자외선 차단제 카테고리의 사용 제한 성분입니다. | 2.0~25.0 | 25% | 홍조, 색소침착 | 고빈도 | 물리적 차단제, 25% 최대 함량 중요 | - |",
+  "explain": "📖 교재 근거 (교재: L130):\n| 티타늄디옥사이드 | Titanium Dioxide | 자외선 차단제 | - | 유상층에 분산되며 최대 25.0%까지 사용 가능한 무기계 자외선 차단제 카테고리의 사용 제한 성분입니다. | - | 25% | 홍조, 색소침착 | 고빈도 | 무기 자외선 차단제, 최대 함량 25% | - |",
   "tags": [
    "정답판정",
    "한도",
@@ -9667,7 +9667,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_c91477",
   "derivedFrom": "subject2_q104#5",
-  "explain": "📖 교재 근거 (교재: L117):\n| 티타늄디옥사이드 | Titanium Dioxide | 자외선 차단제 | 유상층 | 유상층에 분산되며 최대 25.0%까지 사용 가능한 무기계 자외선 차단제 카테고리의 사용 제한 성분입니다. | 2.0~25.0 | 25% | 홍조, 색소침착 | 고빈도 | 물리적 차단제, 25% 최대 함량 중요 | - |",
+  "explain": "📖 교재 근거 (교재: L130):\n| 티타늄디옥사이드 | Titanium Dioxide | 자외선 차단제 | - | 유상층에 분산되며 최대 25.0%까지 사용 가능한 무기계 자외선 차단제 카테고리의 사용 제한 성분입니다. | - | 25% | 홍조, 색소침착 | 고빈도 | 무기 자외선 차단제, 최대 함량 25% | - |",
   "tags": [
    "정답판정",
    "한도",
@@ -9958,7 +9958,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_ed3fb8",
   "derivedFrom": "subject2_q108#1",
-  "explain": "📖 교재 근거 (교재: L111):\n| 벤조익애씨드 | Benzoic Acid | 보존제 | 수상층 | 화장품의 미생물 번식을 억제하여 제품의 안정성을 높이는 최대 0.5% 사용 가능한 방부제 성분입니다. | 0.1~0.5 | 0.5% (기타), 2.5% (씻어내는) | 방부·보존 | 고빈도 | 산으로서 계산, 씻어내는 제품에 2.5% 허용 | - |",
+  "explain": "📖 교재 근거 (교재: L120):\n| 벤조익애씨드 | Benzoic Acid | 보존제 | 수상층 | 화장품의 미생물 번식을 억제하여 제품의 안정성을 높이는 최대 0.5% 사용 가능한 방부제 성분입니다. | 0.1~0.5 | 0.5% (기타), 2.5% (씻어내는) | 방부·보존 | 고빈도 | 산으로서 계산, 씻어내는 제품에 2.5% 허용 | - |",
   "tags": [
    "정답판정",
    "금지원료",
@@ -9979,7 +9979,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_a736c9",
   "derivedFrom": "subject2_q108#2",
-  "explain": "📖 교재 근거 (교재: L111):\n| 벤조익애씨드 | Benzoic Acid | 보존제 | 수상층 | 화장품의 미생물 번식을 억제하여 제품의 안정성을 높이는 최대 0.5% 사용 가능한 방부제 성분입니다. | 0.1~0.5 | 0.5% (기타), 2.5% (씻어내는) | 방부·보존 | 고빈도 | 산으로서 계산, 씻어내는 제품에 2.5% 허용 | - |",
+  "explain": "📖 교재 근거 (교재: L120):\n| 벤조익애씨드 | Benzoic Acid | 보존제 | 수상층 | 화장품의 미생물 번식을 억제하여 제품의 안정성을 높이는 최대 0.5% 사용 가능한 방부제 성분입니다. | 0.1~0.5 | 0.5% (기타), 2.5% (씻어내는) | 방부·보존 | 고빈도 | 산으로서 계산, 씻어내는 제품에 2.5% 허용 | - |",
   "tags": [
    "정답판정",
    "금지원료",
@@ -10000,7 +10000,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_b664b6",
   "derivedFrom": "subject2_q108#3",
-  "explain": "📖 교재 근거 (교재: L111):\n| 벤조익애씨드 | Benzoic Acid | 보존제 | 수상층 | 화장품의 미생물 번식을 억제하여 제품의 안정성을 높이는 최대 0.5% 사용 가능한 방부제 성분입니다. | 0.1~0.5 | 0.5% (기타), 2.5% (씻어내는) | 방부·보존 | 고빈도 | 산으로서 계산, 씻어내는 제품에 2.5% 허용 | - |",
+  "explain": "📖 교재 근거 (교재: L120):\n| 벤조익애씨드 | Benzoic Acid | 보존제 | 수상층 | 화장품의 미생물 번식을 억제하여 제품의 안정성을 높이는 최대 0.5% 사용 가능한 방부제 성분입니다. | 0.1~0.5 | 0.5% (기타), 2.5% (씻어내는) | 방부·보존 | 고빈도 | 산으로서 계산, 씻어내는 제품에 2.5% 허용 | - |",
   "tags": [
    "정답판정",
    "금지원료",
@@ -10021,7 +10021,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_1ee7fe",
   "derivedFrom": "subject2_q108#4",
-  "explain": "📖 교재 근거 (교재: L111):\n| 벤조익애씨드 | Benzoic Acid | 보존제 | 수상층 | 화장품의 미생물 번식을 억제하여 제품의 안정성을 높이는 최대 0.5% 사용 가능한 방부제 성분입니다. | 0.1~0.5 | 0.5% (기타), 2.5% (씻어내는) | 방부·보존 | 고빈도 | 산으로서 계산, 씻어내는 제품에 2.5% 허용 | - |",
+  "explain": "📖 교재 근거 (교재: L120):\n| 벤조익애씨드 | Benzoic Acid | 보존제 | 수상층 | 화장품의 미생물 번식을 억제하여 제품의 안정성을 높이는 최대 0.5% 사용 가능한 방부제 성분입니다. | 0.1~0.5 | 0.5% (기타), 2.5% (씻어내는) | 방부·보존 | 고빈도 | 산으로서 계산, 씻어내는 제품에 2.5% 허용 | - |",
   "tags": [
    "정답판정",
    "금지원료",
@@ -10042,7 +10042,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_ee2101",
   "derivedFrom": "subject2_q108#5",
-  "explain": "📖 교재 근거 (교재: L111):\n| 벤조익애씨드 | Benzoic Acid | 보존제 | 수상층 | 화장품의 미생물 번식을 억제하여 제품의 안정성을 높이는 최대 0.5% 사용 가능한 방부제 성분입니다. | 0.1~0.5 | 0.5% (기타), 2.5% (씻어내는) | 방부·보존 | 고빈도 | 산으로서 계산, 씻어내는 제품에 2.5% 허용 | - |",
+  "explain": "📖 교재 근거 (교재: L120):\n| 벤조익애씨드 | Benzoic Acid | 보존제 | 수상층 | 화장품의 미생물 번식을 억제하여 제품의 안정성을 높이는 최대 0.5% 사용 가능한 방부제 성분입니다. | 0.1~0.5 | 0.5% (기타), 2.5% (씻어내는) | 방부·보존 | 고빈도 | 산으로서 계산, 씻어내는 제품에 2.5% 허용 | - |",
   "tags": [
    "정답판정",
    "금지원료",
@@ -11668,7 +11668,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_720b1c",
   "derivedFrom": "subject2_q127#1",
-  "explain": "📖 교재 근거 (교재: L73):\n| 카보머 | Carbomer | 점증제 | 수상층 | 수상층에 용해되어 화장품의 점도를 높이고 제형을 안정화하는 데 도움을 주는 점증 성분입니다. | 0.1~1.0 | - | 점증·안정화 | 중빈도 | pH 조절 필요, 중화 후 젤 형성 | - |",
+  "explain": "📖 교재 근거 (교재: L78):\n| 카보머 | Carbomer | 점증제 | 수상층 | 수상층에 용해되어 화장품의 점도를 높이고 제형을 안정화하는 데 도움을 주는 점증 성분입니다. | 0.1~1.0 | - | 점증·안정화 | 중빈도 | pH 조절 필요, 중화 후 젤 형성 | - |",
   "tags": [
    "정답판정"
   ],
@@ -11686,7 +11686,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_df2fdd",
   "derivedFrom": "subject2_q127#2",
-  "explain": "📖 교재 근거 (교재: L73):\n| 카보머 | Carbomer | 점증제 | 수상층 | 수상층에 용해되어 화장품의 점도를 높이고 제형을 안정화하는 데 도움을 주는 점증 성분입니다. | 0.1~1.0 | - | 점증·안정화 | 중빈도 | pH 조절 필요, 중화 후 젤 형성 | - |",
+  "explain": "📖 교재 근거 (교재: L78):\n| 카보머 | Carbomer | 점증제 | 수상층 | 수상층에 용해되어 화장품의 점도를 높이고 제형을 안정화하는 데 도움을 주는 점증 성분입니다. | 0.1~1.0 | - | 점증·안정화 | 중빈도 | pH 조절 필요, 중화 후 젤 형성 | - |",
   "tags": [
    "정답판정"
   ],
@@ -11704,7 +11704,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_6e0f44",
   "derivedFrom": "subject2_q127#3",
-  "explain": "📖 교재 근거 (교재: L73):\n| 카보머 | Carbomer | 점증제 | 수상층 | 수상층에 용해되어 화장품의 점도를 높이고 제형을 안정화하는 데 도움을 주는 점증 성분입니다. | 0.1~1.0 | - | 점증·안정화 | 중빈도 | pH 조절 필요, 중화 후 젤 형성 | - |",
+  "explain": "📖 교재 근거 (교재: L78):\n| 카보머 | Carbomer | 점증제 | 수상층 | 수상층에 용해되어 화장품의 점도를 높이고 제형을 안정화하는 데 도움을 주는 점증 성분입니다. | 0.1~1.0 | - | 점증·안정화 | 중빈도 | pH 조절 필요, 중화 후 젤 형성 | - |",
   "tags": [
    "정답판정"
   ],
@@ -11722,7 +11722,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_b0e645",
   "derivedFrom": "subject2_q127#4",
-  "explain": "📖 교재 근거 (교재: L73):\n| 카보머 | Carbomer | 점증제 | 수상층 | 수상층에 용해되어 화장품의 점도를 높이고 제형을 안정화하는 데 도움을 주는 점증 성분입니다. | 0.1~1.0 | - | 점증·안정화 | 중빈도 | pH 조절 필요, 중화 후 젤 형성 | - |",
+  "explain": "📖 교재 근거 (교재: L78):\n| 카보머 | Carbomer | 점증제 | 수상층 | 수상층에 용해되어 화장품의 점도를 높이고 제형을 안정화하는 데 도움을 주는 점증 성분입니다. | 0.1~1.0 | - | 점증·안정화 | 중빈도 | pH 조절 필요, 중화 후 젤 형성 | - |",
   "tags": [
    "정답판정"
   ],
@@ -11740,7 +11740,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_33e925",
   "derivedFrom": "subject2_q127#5",
-  "explain": "📖 교재 근거 (교재: L73):\n| 카보머 | Carbomer | 점증제 | 수상층 | 수상층에 용해되어 화장품의 점도를 높이고 제형을 안정화하는 데 도움을 주는 점증 성분입니다. | 0.1~1.0 | - | 점증·안정화 | 중빈도 | pH 조절 필요, 중화 후 젤 형성 | - |",
+  "explain": "📖 교재 근거 (교재: L78):\n| 카보머 | Carbomer | 점증제 | 수상층 | 수상층에 용해되어 화장품의 점도를 높이고 제형을 안정화하는 데 도움을 주는 점증 성분입니다. | 0.1~1.0 | - | 점증·안정화 | 중빈도 | pH 조절 필요, 중화 후 젤 형성 | - |",
   "tags": [
    "정답판정"
   ],
@@ -13237,7 +13237,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_9f51a9",
   "derivedFrom": "subject2_q144#1",
-  "explain": "📖 교재 근거 (교재: L128):\n| 나이아신아마이드 | Niacinamide | 기능성 성분 | 수상층 | 나이아신아마이드는 피부 보습과 피부결 관리에 도움을 주며, 최대 5%까지 사용되는 기능성 성분입니다. | 2.0~5.0 | 5.0% | 미백, 주름, 탄력, 보습, 모공, 피부결 | 고빈도 | 비타민 B3, 5% 최대 함량 중요 | - |",
+  "explain": "📖 교재 근거 (교재: L143):\n| 나이아신아마이드 | Niacinamide | 기능성 성분 | 수상층 | 나이아신아마이드는 피부 보습과 피부결 관리에 도움을 주며, 최대 5%까지 사용되는 기능성 성분입니다. | 2.0~5.0 | 5.0% | 미백, 주름, 탄력, 보습, 모공, 피부결 | 고빈도 | 비타민 B3, 5% 최대 함량 중요 | - |",
   "tags": [
    "정답판정"
   ],
@@ -13255,7 +13255,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_cdf38d",
   "derivedFrom": "subject2_q144#2",
-  "explain": "📖 교재 근거 (교재: L128):\n| 나이아신아마이드 | Niacinamide | 기능성 성분 | 수상층 | 나이아신아마이드는 피부 보습과 피부결 관리에 도움을 주며, 최대 5%까지 사용되는 기능성 성분입니다. | 2.0~5.0 | 5.0% | 미백, 주름, 탄력, 보습, 모공, 피부결 | 고빈도 | 비타민 B3, 5% 최대 함량 중요 | - |",
+  "explain": "📖 교재 근거 (교재: L143):\n| 나이아신아마이드 | Niacinamide | 기능성 성분 | 수상층 | 나이아신아마이드는 피부 보습과 피부결 관리에 도움을 주며, 최대 5%까지 사용되는 기능성 성분입니다. | 2.0~5.0 | 5.0% | 미백, 주름, 탄력, 보습, 모공, 피부결 | 고빈도 | 비타민 B3, 5% 최대 함량 중요 | - |",
   "tags": [
    "정답판정"
   ],
@@ -13273,7 +13273,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_84d872",
   "derivedFrom": "subject2_q144#3",
-  "explain": "📖 교재 근거 (교재: L128):\n| 나이아신아마이드 | Niacinamide | 기능성 성분 | 수상층 | 나이아신아마이드는 피부 보습과 피부결 관리에 도움을 주며, 최대 5%까지 사용되는 기능성 성분입니다. | 2.0~5.0 | 5.0% | 미백, 주름, 탄력, 보습, 모공, 피부결 | 고빈도 | 비타민 B3, 5% 최대 함량 중요 | - |",
+  "explain": "📖 교재 근거 (교재: L143):\n| 나이아신아마이드 | Niacinamide | 기능성 성분 | 수상층 | 나이아신아마이드는 피부 보습과 피부결 관리에 도움을 주며, 최대 5%까지 사용되는 기능성 성분입니다. | 2.0~5.0 | 5.0% | 미백, 주름, 탄력, 보습, 모공, 피부결 | 고빈도 | 비타민 B3, 5% 최대 함량 중요 | - |",
   "tags": [
    "정답판정"
   ],
@@ -13291,7 +13291,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_4316b7",
   "derivedFrom": "subject2_q144#4",
-  "explain": "📖 교재 근거 (교재: L128):\n| 나이아신아마이드 | Niacinamide | 기능성 성분 | 수상층 | 나이아신아마이드는 피부 보습과 피부결 관리에 도움을 주며, 최대 5%까지 사용되는 기능성 성분입니다. | 2.0~5.0 | 5.0% | 미백, 주름, 탄력, 보습, 모공, 피부결 | 고빈도 | 비타민 B3, 5% 최대 함량 중요 | - |",
+  "explain": "📖 교재 근거 (교재: L143):\n| 나이아신아마이드 | Niacinamide | 기능성 성분 | 수상층 | 나이아신아마이드는 피부 보습과 피부결 관리에 도움을 주며, 최대 5%까지 사용되는 기능성 성분입니다. | 2.0~5.0 | 5.0% | 미백, 주름, 탄력, 보습, 모공, 피부결 | 고빈도 | 비타민 B3, 5% 최대 함량 중요 | - |",
   "tags": [
    "정답판정"
   ],
@@ -13309,7 +13309,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_ab432d",
   "derivedFrom": "subject2_q144#5",
-  "explain": "📖 교재 근거 (교재: L128):\n| 나이아신아마이드 | Niacinamide | 기능성 성분 | 수상층 | 나이아신아마이드는 피부 보습과 피부결 관리에 도움을 주며, 최대 5%까지 사용되는 기능성 성분입니다. | 2.0~5.0 | 5.0% | 미백, 주름, 탄력, 보습, 모공, 피부결 | 고빈도 | 비타민 B3, 5% 최대 함량 중요 | - |",
+  "explain": "📖 교재 근거 (교재: L143):\n| 나이아신아마이드 | Niacinamide | 기능성 성분 | 수상층 | 나이아신아마이드는 피부 보습과 피부결 관리에 도움을 주며, 최대 5%까지 사용되는 기능성 성분입니다. | 2.0~5.0 | 5.0% | 미백, 주름, 탄력, 보습, 모공, 피부결 | 고빈도 | 비타민 B3, 5% 최대 함량 중요 | - |",
   "tags": [
    "정답판정"
   ],
@@ -13608,7 +13608,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_76cf85",
   "derivedFrom": "subject2_q148#1",
-  "explain": "📖 교재 근거 (restricted_ingredients: L123):\n| 드로메트리졸트리실록산 | Drometrizole Trisiloxane | 자외선 차단제 | - | 유상층에 용해되어 화장품의 자외선 흡수력을 부여하는 데 사용되는 사용 제한 원료 성분입니다. | - | 15% | 홍조, 색소침착 | 중빈도 | 자외선 차단제 | - |",
+  "explain": "📖 교재 근거 (restricted_ingredients: L127):\n| 드로메트리졸트리실록산 | Drometrizole Trisiloxane | 자외선 차단제 | - | 유상층에 용해되어 화장품의 자외선 흡수력을 부여하는 데 사용되는 사용 제한 원료 성분입니다. | - | 15% | 홍조, 색소침착 | 중빈도 | 자외선 차단제 | - |",
   "tags": [
    "정답판정"
   ],
@@ -13626,7 +13626,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_29a898",
   "derivedFrom": "subject2_q148#2",
-  "explain": "📖 교재 근거 (restricted_ingredients: L123):\n| 드로메트리졸트리실록산 | Drometrizole Trisiloxane | 자외선 차단제 | - | 유상층에 용해되어 화장품의 자외선 흡수력을 부여하는 데 사용되는 사용 제한 원료 성분입니다. | - | 15% | 홍조, 색소침착 | 중빈도 | 자외선 차단제 | - |",
+  "explain": "📖 교재 근거 (restricted_ingredients: L127):\n| 드로메트리졸트리실록산 | Drometrizole Trisiloxane | 자외선 차단제 | - | 유상층에 용해되어 화장품의 자외선 흡수력을 부여하는 데 사용되는 사용 제한 원료 성분입니다. | - | 15% | 홍조, 색소침착 | 중빈도 | 자외선 차단제 | - |",
   "tags": [
    "정답판정",
    "수치"
@@ -13645,7 +13645,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_7ca2b2",
   "derivedFrom": "subject2_q148#3",
-  "explain": "📖 교재 근거 (restricted_ingredients: L123):\n| 드로메트리졸트리실록산 | Drometrizole Trisiloxane | 자외선 차단제 | - | 유상층에 용해되어 화장품의 자외선 흡수력을 부여하는 데 사용되는 사용 제한 원료 성분입니다. | - | 15% | 홍조, 색소침착 | 중빈도 | 자외선 차단제 | - |",
+  "explain": "📖 교재 근거 (restricted_ingredients: L127):\n| 드로메트리졸트리실록산 | Drometrizole Trisiloxane | 자외선 차단제 | - | 유상층에 용해되어 화장품의 자외선 흡수력을 부여하는 데 사용되는 사용 제한 원료 성분입니다. | - | 15% | 홍조, 색소침착 | 중빈도 | 자외선 차단제 | - |",
   "tags": [
    "정답판정"
   ],
@@ -13663,7 +13663,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_b00690",
   "derivedFrom": "subject2_q148#4",
-  "explain": "📖 교재 근거 (restricted_ingredients: L123):\n| 드로메트리졸트리실록산 | Drometrizole Trisiloxane | 자외선 차단제 | - | 유상층에 용해되어 화장품의 자외선 흡수력을 부여하는 데 사용되는 사용 제한 원료 성분입니다. | - | 15% | 홍조, 색소침착 | 중빈도 | 자외선 차단제 | - |",
+  "explain": "📖 교재 근거 (restricted_ingredients: L127):\n| 드로메트리졸트리실록산 | Drometrizole Trisiloxane | 자외선 차단제 | - | 유상층에 용해되어 화장품의 자외선 흡수력을 부여하는 데 사용되는 사용 제한 원료 성분입니다. | - | 15% | 홍조, 색소침착 | 중빈도 | 자외선 차단제 | - |",
   "tags": [
    "정답판정"
   ],
@@ -13681,7 +13681,7 @@ var OX_DRILLS_subject2 = [
   "mode": "answer",
   "sid": "manufacturing_st_d191ad",
   "derivedFrom": "subject2_q148#5",
-  "explain": "📖 교재 근거 (restricted_ingredients: L123):\n| 드로메트리졸트리실록산 | Drometrizole Trisiloxane | 자외선 차단제 | - | 유상층에 용해되어 화장품의 자외선 흡수력을 부여하는 데 사용되는 사용 제한 원료 성분입니다. | - | 15% | 홍조, 색소침착 | 중빈도 | 자외선 차단제 | - |",
+  "explain": "📖 교재 근거 (restricted_ingredients: L127):\n| 드로메트리졸트리실록산 | Drometrizole Trisiloxane | 자외선 차단제 | - | 유상층에 용해되어 화장품의 자외선 흡수력을 부여하는 데 사용되는 사용 제한 원료 성분입니다. | - | 15% | 홍조, 색소침착 | 중빈도 | 자외선 차단제 | - |",
   "tags": [
    "정답판정"
   ],

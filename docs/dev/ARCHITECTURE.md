@@ -366,7 +366,8 @@ Personalized_Skincare/
 │           │   ├── 공통/       #     공통 참조자료 PDF
 │           │   ├── 과목1~4/    #     과목별 참조자료 PDF (+ 과목 노트 N.*.md)
 │           │   ├── 법령고시/   #     법령 원문
-│           │   └── 원료/       #     성분 원본 MD + db_version.json (버전·이력)
+│           │   └── 원료/       #     성분 참조자료 MD — GENERATED-TABLE 표 영역은 knowledge/ingredients.json에서 빌드 재생성
+│           ├── knowledge/      #     지식DB SSOT — ingredients.json (원료 1,402종 + meta 버전·이력)
 │           ├── audiobook/      #     MP3 산출물만 (생성 스크립트는 ref-pipeline/audiobook/)
 │           │   └── mp3/        #     생성된 MP3 (gitignore)
 │           └── html/           #     공유용 HTML 산출물 (gitignore, ref-pipeline/batch_convert.py)
@@ -422,8 +423,7 @@ Personalized_Skincare/
 │   │   └── plugins/
 │   │       ├── textbook.plugin.js
 │   │       ├── exams.plugin.js
-│   │       ├── ingredients.plugin.js   #   원료 MD 표 파서 (knowledge source.type "ingredients-md")
-│   │       └── knowledge.plugin.js     #   범용 지식DB 소스 로딩 (json/ingredients-md → <key>_data.<hash>.js)
+│   │       └── knowledge.plugin.js     #   범용 지식DB 소스 로딩 (knowledge/<key>.json → <key>_data.<hash>.js + emitMd 표 재생성)
 │   ├── config/                 #   도구 설정 데이터 (citation_fingerprints·docs_paths_allowlist)
 │   ├── check_combo_pilot.js    #   복수정답형 파일럿 검증 (check:combo)
 │   ├── check_parser_parity.js  #   빌드 파서 ↔ 런타임 파서 등가성 검증
@@ -577,9 +577,9 @@ Personalized_Skincare/
 | [`content/**/*.md`](../../content) + [`content/exams/cosmetic/manifest.json`](../../content/exams/cosmetic/manifest.json) | **교재/카드/퀴즈/시험/추천링크의 원본 (SSOT).** `manifest.json`에 과목 `shortName`, 시험 `file`, `resources`(추천 링크·채널 요약) 등 메타 포함 → 소스 코드 하드코딩 없이 전체 콘텐츠 교체 가능 | 저자 직접 작성 |
 | [`data/exams/cosmetic/study_md/`](../../data/exams/cosmetic/study_md) | 교재 MD `file://` 폴백 번들 (**과목별 분할**: manifest.js + 과목별 `.js`). http에선 미사용. 과목 로드 시 해당 파일만 온디맨드 로드 | `tools/build/build_study_md_bundle.js` |
 | [`data/exams/<key>.<hash>.js`](../../data/exams) | 시험별 문항 번들 | `tools/build/index.js` (exams plugin) |
-| [`data/exams/cosmetic/ingredients_data.<hash>.js`](../../data) | 화장품 성분 사전 (가용/금지/제한) — 지식DB 번들의 `ingredients-md` 소스 인스턴스 (`manifest.knowledge.source` 선언) | `tools/build/index.js` (knowledge plugin → ingredients plugin 파서) |
+| [`data/exams/cosmetic/ingredients_data.<hash>.js`](../../data) | 화장품 성분 사전 (가용/금지/제한) — `content/exams/cosmetic/knowledge/ingredients.json` SSOT의 `bundleFields` 투영 결과. 참조자료 `참조자료/원료/*.md`의 GENERATED-TABLE 표도 같은 빌드가 재생성 | `tools/build/index.js` (knowledge plugin) |
 | `data/exams/<id>/<key>_data.<hash>.js` | 범용 지식DB 번들 (food 예: `additives_data` — 식품첨가물 사전). `content/exams/food/knowledge/additives.json`처럼 시험 콘텐츠 루트의 `knowledge/` 원본 → `<KEY>_DATA` 전역 + `registry[key]` 메타(version·updatedAt·stats) — `DataLoader.loadDictionary()`가 `registry.knowledge.registryKey`로 온디맨드 로드 | `tools/build/index.js` (knowledge plugin) |
-| `registry.js` → `ingredients` 메타 | 원료 DB `version`·`updatedAt`·`notice`·`history`(개정 이력 누적)·`contentHash`(내용 지문) — `content/…/원료/db_version.json`에서 병합. 사전 버전 배지·갱신 알림·Formula OS 검증 기준이 여기서 나옴 | `tools/build/index.js` |
+| `registry.js` → `ingredients` 메타 | 원료 DB `version`·`updatedAt`·`notice`·`history`(개정 이력 누적)·`contentHash`(내용 지문) — `content/…/knowledge/ingredients.json`의 `meta`에서 병합. 사전 버전 배지·갱신 알림·Formula OS 검증 기준이 여기서 나옴 | `tools/build/index.js` |
 | `src/formula-store.js` · `src/formula-rules.js` · `src/formula-check.js` · `src/formula-stability.js` | Formula OS 도메인 레이어 — 포뮬러 CRUD/한도(5개)·고객·안정성 스키마·전성분 표시 순서, 추천 규칙(BASE_TEMPLATES·고민/피부 매핑·맞춤 규칙 병합), 고시 한도 검증 엔진, 제형 안정성 체크(상 비율·상호작용·투입 단계·pH) | 수동 관리 |
 | `src/batch-store.js` · `src/customer-store.js` · `src/material-ledger.js` · `src/usage-guide.js` · `src/store-utils.js` · `src/csv-utils.js` | Formula OS 업무 레이어 — 배치(조제 기록) 채번·QC·위생·스냅샷, 고객 카드·상담 이력, 원료 입고·기한·재고, 사용 안내문 생성기, 스토어 공통 헬퍼, CSV 파서·인코딩(EUC-KR 폴백)·직렬화 (FORMULA_OS_WORKFLOW_DESIGN.md) | 수동 관리 |
 | `src/views/formula.js` | Formula OS 뷰 — 배합 계산기(sticky 요약·액션바, 카드형 원료 행, 접이식 고객/제조 정보), My 포뮬러, 추천 패널, 서브내비 칩, 인쇄·JSON 공유 | 수동 관리 |
@@ -820,8 +820,8 @@ const state = {
 | 항목 | 성격 | 비고 |
 |------|------|------|
 | `manifest.json`, `references.json`, `교재/`, `문제은행/` | 필수 | 과목·챕터·문항 SSOT |
-| `참조자료/` | 참조 문서 | `ref_md/과목N/` 변환본 + 실물 PDF 폴더(과목N·공통·법령고시 등) + `pdf_hashes.json` + `_archive/` |
-| `knowledge/` | 지식DB 원본 | `manifest.knowledge` 선언 시 `<key>.json` — cosmetic은 `source:"ingredients-md"`로 `참조자료/원료` MD를 겸용 소스로 사용해 knowledge/가 없음 |
+| `참조자료/` | 참조 문서 | `ref_md/과목N/` 변환본 + 실물 PDF 폴더(과목N·공통·법령고시 등) + PDF 해시 매니페스트(pdf_hashes.json) + `_archive/` |
+| `knowledge/` | 지식DB SSOT | `manifest.knowledge` 선언 시 `<key>.json` (`{meta, items, bundleFields?, emitMd?}`) — cosmetic `ingredients.json`은 참조자료 `원료/*.md` 표의 GENERATED-TABLE 영역까지 재생성 |
 | `docs/` | 앱 내 문서 | 학습안내서 등 MD → docs_md 번들 대상 |
 | `number-drills/`, `교재/glossary/`, `audiobook/` | 기능 콘텐츠 | 해당 `features` 플래그 시험만 보유 |
 | `notice_status.json`, `law_verified.json`, `combo_blocklist.json`, `report/` | 도구 산출물 | 고시 감시·법령 검증·combo 감사가 루트에 기록 — 스캐폴드가 미리 만들지 않음(첫 실행 시 생성) |
@@ -1421,8 +1421,8 @@ app-fallback.js 폴링 시작 (400ms 간격, 15s 데드라인)
 [원본 콘텐츠]                [변환]                              [산출/소비]
 content/exams/cosmetic/manifest.json ──► tools/build/index.js        ──► data/exams/cosmetic/registry.js (과목목록·시험·성분 메타)
 content/exams/**/*.md       ──► (exams plugin)             ──► data/exams/<key>.<hash>.js
-content/exams/cosmetic/참조자료/원료/*.md ──► (ingredients plugin)       ──► data/exams/cosmetic/ingredients_data.<hash>.js
-content/exams/cosmetic/참조자료/원료/db_version.json ──► (ingredients plugin) ──► registry.js의 ingredients 메타 (version·history·contentHash)
+content/exams/cosmetic/knowledge/ingredients.json ──► (knowledge plugin) ──► data/exams/cosmetic/ingredients_data.<hash>.js (bundleFields 투영)
+                                                            └──► 참조자료/원료/*.md의 GENERATED-TABLE 표 재생성 + registry.js의 ingredients 메타 (meta → version·history·contentHash)
 
 content/**/*.md ───(런타임 fetch)──► src/data-loader.js + src/textbook-parser.js ──► STUDY_DATA (카드/퀴즈/챕터)
 content/**/*.md ───(file:// 폴백)──► tools/build/build_study_md_bundle.js ──► data/exams/cosmetic/study_md/ (과목별 분할)
@@ -1795,7 +1795,7 @@ npm run deploy
 | | `sw.js` | `MD_ASSETS` 배열의 경로 갱신 + `CACHE_VERSION` 버전업 |
 | **문제은행 MD 변경** | `<root>/manifest.json` | `exams` 섹션의 파일 경로 갱신 |
 | **참조자료 MD/HTML 변경** | `<root>/references.json` + `src/pdf-registry.js` | 참조자료 파일 목록·경로 매핑 (`references.json` → `build_pdf_registry.js`가 `pdf-registry.js` 자동 생성) |
-| | `tools/build/plugins/ingredients.plugin.js` | `INGREDIENTS_DIR` 경로 (원료 하위 폴더 변경 시) |
+| | `content/exams/cosmetic/knowledge/ingredients.json` | `emitMd.dir`/`typeFile` 매핑 (원료 참조자료 파일 위치 변경 시) |
 | **학습안내서 MD 변경** | (파일명 동일 시 수정 불필요) | `manual-viewer.js`, `build_doc_bundles.js`, `sw.js`가 `<root>/docs/학습안내서.md` 경로 참조 |
 | **새 과목 추가** | `<root>/manifest.json` | `subjects[]`에 새 과목 항목 추가 (`key`, `name`, `dir`, `chapters`) |
 | | `src/pdf-registry.js` | `SUBJECT_DIR_MAP`, `REF_DIRS`, `REFERENCE_FILES`에 새 과목 항목 추가 |
@@ -1844,7 +1844,7 @@ npm.cmd run deploy
 | `<droot>/exams_md/*.js` | `tools/build/build_exam_bundles.js` |
 | `<droot>/study_md/*.js` | `tools/build/build_study_md_bundle.js` |
 | `data/docs_md/*.js` + `<droot>/docs_md/*.js` | `tools/build/build_doc_bundles.js` |
-| `<droot>/ingredients_data.*.js` | `tools/build/index.js` (ingredients.plugin.js) |
+| `<droot>/ingredients_data.*.js` | `tools/build/index.js` (knowledge.plugin.js) |
 | `<droot>/id_migration.js` | `tools/build/build_id_migration.js` |
 | `<droot>/question_chapters.js` | `tools/build/build_question_chapters.js` |
 | `src/pdf-registry.js` | `tools/build/build_pdf_registry.js` (references.json → 자동 생성) |
@@ -1864,7 +1864,7 @@ npm.cmd run deploy
 | `src/textbook-parser.js` | `manifest.subjects[].dir` 동적 참조 | 런타임 MD 파싱 |
 | `tools/build/manifest_loader.js` | `manifest.json` 검증 | 빌드 시 파일 존재 확인 |
 | `tools/build/plugins/textbook.plugin.js` | `subject.dir` 동적 참조 | 빌드 시 MD 파싱 |
-| `tools/build/plugins/ingredients.plugin.js` | `INGREDIENTS_DIR` 하드코딩 | `<root>/참조자료/원료/` |
+| `tools/build/plugins/knowledge.plugin.js` | `knowledge/<key>.json` 해석 + `emitMd` 표 재생성 | `<root>/knowledge/`, emit 대상은 데이터셋의 `emitMd.dir` |
 | `tools/build/plugins/exams.plugin.js` | `manifest.exams` 참조 | 문제은행 MD 처리 |
 | `tools/build/build_doc_bundles.js` | `DOC_FILES` 배열 | 학습안내서, 사용자/포뮬러 매뉴얼 번들 |
 | `tools/build/build_study_md_bundle.js` | `manifest.subjects[].dir` 동적 참조 | 교재 MD 폴백 번들 |

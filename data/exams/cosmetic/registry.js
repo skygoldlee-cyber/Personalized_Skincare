@@ -2,7 +2,7 @@
 var DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2027",
-  "generatedAt": "2026-09-30T01:36:48.526Z",
+  "generatedAt": "2026-09-30T02:32:29.583Z",
   "subjects": [
     {
       "key": "law",
@@ -93,9 +93,9 @@ var DATA_REGISTRY = {
       "part": 1,
       "title": "화장품 제조 및 품질관리 (250제)",
       "file": "과목2_단일정답형.md",
-      "bundle": "./data/exams/cosmetic/exams/subject2.0bdee3f8.js",
+      "bundle": "./data/exams/cosmetic/exams/subject2.4485dea2.js",
       "global": "EXAM_DATA_subject2",
-      "contentHash": "0bdee3f8",
+      "contentHash": "4485dea2",
       "stats": {
         "questions": 250
       }
@@ -257,9 +257,8 @@ var DATA_REGISTRY = {
     "registryKey": "ingredients",
     "global": "INGREDIENTS_DATA",
     "source": {
-      "type": "ingredients-md",
-      "dir": "참조자료/원료",
-      "metaFile": "db_version.json"
+      "type": "json",
+      "validate": "ingredients"
     },
     "entityUnit": "원료",
     "filterField": "type",
