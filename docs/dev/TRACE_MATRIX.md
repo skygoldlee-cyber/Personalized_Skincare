@@ -3,8 +3,8 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: 06807dd3571acaf8
-> 생성: 2026-09-29 · 원천: SPEC.md(361개 ID) + @spec 태그 + 문서 헤더
+> 입력 해시: 38ec270aa9c75d40
+> 생성: 2026-09-30 · 원천: SPEC.md(361개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
 |----|------|------|
@@ -16,7 +16,7 @@
 | 보고서 | 분석·결과 보고서 | report_archive 헤더 |
 | 출처 | 요구사항의 기원 (법령·시험 규정·사업 문서) | SPEC 부록 "요구사항 출처" 표 |
 
-**커버리지 요약**: 요구사항 361개 — 문서 연결 224 · 소스 연결 341 · 테스트 연결 355 · 보고서 연결 109
+**커버리지 요약**: 요구사항 361개 — 문서 연결 232 · 소스 연결 341 · 테스트 연결 355 · 보고서 연결 109
 
 ---
 
@@ -156,13 +156,13 @@
 | RR-10 | ✅ | 테스트 | DOC-REF-04<br>DOC-REF-07 | src/html-viewer.js | tests/dom/common-htmlviewer.dom.test.js | — | — |
 | RR-11 | ✅ | 테스트 | DOC-REF-04<br>DOC-REF-07 | src/html-viewer.js | tests/dom/common-htmlviewer.dom.test.js | — | — |
 | RR-12 | ✅ | 테스트 | DOC-REF-04<br>DOC-REF-07 | src/html-viewer.js | tests/dom/common-htmlviewer.dom.test.js | — | — |
-| RR-13 | ✅ | 테스트 | DOC-REF-04<br>DOC-REF-07 | src/html-viewer.js<br>src/pdf-registry.js<br>tools/build/build_pdf_registry.js | tests/dom/common-htmlviewer.dom.test.js<br>tests/unit/pdf-registry.test.js | — | — |
+| RR-13 | ✅ | 테스트 | DOC-DSN-10<br>DOC-REF-04<br>DOC-REF-07 | src/html-viewer.js<br>src/pdf-registry.js<br>tools/build/build_pdf_registry.js | tests/dom/common-htmlviewer.dom.test.js<br>tests/unit/pdf-registry.test.js | — | — |
 | RR-14 | ✅ | 테스트 | DOC-REF-04<br>DOC-REF-07 | css/print.css<br>src/html-viewer.js | tests/dom/common-htmlviewer.dom.test.js | — | — |
 | RR-15 | ✅ | 테스트 | DOC-REF-04<br>DOC-REF-07 | css/html-viewer.css<br>src/html-viewer.js | tests/dom/common-htmlviewer.dom.test.js | — | — |
 | RR-16 | ✅ | 테스트 | DOC-REF-04<br>DOC-REF-07 | src/html-viewer.js | tests/dom/common-htmlviewer.dom.test.js | — | — |
-| RR-17 | ✅ | 테스트 | — | src/law-links.js<br>src/views/reader-ref-links.js<br>tools/check/check_law_urls.js | tests/unit/law-links.test.js | — | 국가법령정보센터(law.go.kr) 한글주소 — 공식 최신 통합본 링크 규약 |
+| RR-17 | ✅ | 테스트 | DOC-DSN-10 | src/law-links.js<br>src/views/reader-ref-links.js<br>tools/build/build_pdf_registry.js<br>tools/check/check_law_urls.js | tests/unit/law-links.test.js | — | 국가법령정보센터(law.go.kr) 한글주소 — 공식 최신 통합본 링크 규약 |
 | RR-18 | ✅ | 테스트 | — | src/reader-format.js | tests/unit/reader-format-general.test.js | — | — |
-| RR-19 | ✅ | 테스트 | — | src/notice-check.js<br>src/views/reader-ref-links.js | tests/unit/notice-check.test.js | — | 식약처 고시 개정 감지 — 시행 예정본(현행 아님) 구분, `notice_status.json` |
+| RR-19 | ✅ | 테스트 | DOC-DSN-10 | src/notice-check.js<br>src/views/reader-ref-links.js | tests/unit/notice-check.test.js | — | 식약처 고시 개정 감지 — 시행 예정본(현행 아님) 구분, `notice_status.json` |
 
 ## 3.9 교재 검색
 
@@ -286,7 +286,7 @@
 | FO-21 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-USR-02 | css/print.css<br>src/views/formula-print.js | tests/dom/formula-print.dom.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | 화장품법 표시 규정 — 용기 라벨 기재사항·조제 기록지 |
 | FO-22 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-USR-02 | src/csv-utils.js | tests/unit/csv-import.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
 | FO-23 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-USR-02 | src/batch-store.js<br>src/formula-store.js | tests/unit/batch-store.test.js<br>tests/unit/formula-store.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | 사업 판단 — docs/dev/design/SUBSCRIPTION_ROADMAP.md |
-| FO-24 | ✅ | 테스트 | — | html/views/formula.html<br>index.html<br>ref-pipeline/check_mfds_notice.py<br>src/notice-check.js | tests/dom/formula-nav.dom.test.js<br>tests/unit/notice-check.test.js | — | 식약처 고시 개정 추적 — law.go.kr 오픈API(법제처) + `content/exams/cosmetic/참조자료/법령고시/` PDF 기준본 |
+| FO-24 | ✅ | 테스트 | DOC-DSN-10 | html/views/formula.html<br>index.html<br>ref-pipeline/check_mfds_notice.py<br>src/notice-check.js | tests/dom/formula-nav.dom.test.js<br>tests/unit/notice-check.test.js | — | 식약처 고시 개정 추적 — law.go.kr 오픈API(법제처) + `content/exams/cosmetic/참조자료/법령고시/` PDF 기준본 |
 | FO-25 | ✅ | 테스트 | — | html/views/formula.html<br>index.html | tests/dom/formula-nav.dom.test.js | — | 화장품 안전기준 등에 관한 규정(별표1·2) — 네거티브 리스트 판정 원칙 · 색소/기능성 고시 — 지정 목록 예외 |
 
 ## 3.19 계정·클라우드 동기화
@@ -334,11 +334,11 @@
 
 | ID | 상태 | 검증 수단 | 문서 | 소스 | 테스트 | 보고서 | 출처 |
 |----|------|-----------|------|------|--------|--------|------|
-| ES-01 | ✅ | 테스트 | — | html/views/exam-select.html<br>index.html<br>src/app-dashboard.js<br>src/exam-context.js<br>…외 1개 | tests/dom/study-examselect.dom.test.js<br>tests/unit/exam-context.test.js | DOC-ARC-07 | — |
-| ES-02 | ✅ | 테스트 | — | src/app-shell.js<br>src/exam-context.js<br>src/views/exam-select.js | tests/dom/study-examselect.dom.test.js<br>tests/unit/exam-context.test.js | DOC-ARC-07 | — |
-| ES-03 | ✅ | 테스트 | — | src/app-shell.js<br>src/exam-context.js<br>src/views/exam-select.js | tests/dom/study-examselect.dom.test.js<br>tests/unit/exam-context.test.js | DOC-ARC-07 | — |
-| ES-04 | ✅ | 테스트 | — | src/exam-context.js | tests/unit/exam-context.test.js | DOC-ARC-07 | — |
-| ES-05 | ✅ | 테스트 | — | src/exam-context.js | tests/unit/exam-context.test.js | DOC-ARC-07 | — |
+| ES-01 | ✅ | 테스트 | DOC-DSN-10 | html/views/exam-select.html<br>index.html<br>src/app-dashboard.js<br>src/exam-context.js<br>…외 2개 | tests/dom/study-examselect.dom.test.js<br>tests/unit/exam-context.test.js | DOC-ARC-07 | — |
+| ES-02 | ✅ | 테스트 | DOC-DSN-10 | src/app-shell.js<br>src/exam-context.js<br>src/views/exam-select.js | tests/dom/study-examselect.dom.test.js<br>tests/unit/exam-context.test.js | DOC-ARC-07 | — |
+| ES-03 | ✅ | 테스트 | DOC-DSN-10 | src/app-shell.js<br>src/exam-context.js<br>src/views/exam-select.js | tests/dom/study-examselect.dom.test.js<br>tests/unit/exam-context.test.js | DOC-ARC-07 | — |
+| ES-04 | ✅ | 테스트 | DOC-DSN-10 | src/exam-context.js | tests/unit/exam-context.test.js | DOC-ARC-07 | — |
+| ES-05 | ✅ | 테스트 | DOC-DSN-10 | src/exam-context.js | tests/unit/exam-context.test.js | DOC-ARC-07 | — |
 
 ## 3.23 사용자 의견 수신
 
@@ -496,9 +496,9 @@
 | DA-03 | ✅ | 테스트 | DOC-RBK-03<br>DOC-REF-08 | src/data-loader.js | tests/unit/data-loader.test.js | — | — |
 | DA-04 | ✅ | 테스트 | DOC-RBK-03<br>DOC-REF-08 | tools/build/build_study_md_bundle.js | tests/unit/data-architecture.test.js | — | — |
 | DA-05 | ✅ | 테스트 | DOC-RBK-03<br>DOC-REF-08 | src/state.js<br>src/storage.js | tests/unit/state.test.js | — | — |
-| DA-06 | ✅ | 테스트 | DOC-RBK-03<br>DOC-REF-08 | src/exam-context.js<br>src/paths.js<br>src/pwa-manifest.js<br>tools/build/exam_targets.js | tests/unit/data-architecture.test.js | — | — |
-| DA-07 | ✅ | 테스트 | DOC-RBK-03<br>DOC-REF-08 | src/exam-context.js<br>src/storage-keys.js<br>src/storage.js | tests/unit/storage-key-sync.test.js | — | — |
-| DA-08 | ✅ | 테스트 | DOC-DSN-08<br>DOC-RBK-03<br>DOC-REF-08 | src/exam-context.js | tests/unit/data-architecture.test.js | — | — |
+| DA-06 | ✅ | 테스트 | DOC-DSN-10<br>DOC-RBK-03<br>DOC-REF-08 | src/exam-context.js<br>src/paths.js<br>src/pwa-manifest.js<br>tools/build/exam_targets.js<br>…외 1개 | tests/unit/data-architecture.test.js | — | — |
+| DA-07 | ✅ | 테스트 | DOC-DSN-10<br>DOC-RBK-03<br>DOC-REF-08 | src/exam-context.js<br>src/storage-keys.js<br>src/storage.js | tests/unit/storage-key-sync.test.js | — | — |
+| DA-08 | ✅ | 테스트 | DOC-DSN-08<br>DOC-DSN-10<br>DOC-RBK-03<br>DOC-REF-08 | src/exam-context.js | tests/unit/data-architecture.test.js | — | — |
 | DA-09 | ✅ | 테스트 | DOC-RBK-03<br>DOC-REF-08 | src/storage.js | tests/unit/storage.test.js | — | — |
 | DA-10 | ✅ | 테스트 | — | src/customer-store.js<br>src/sync.js | tests/unit/customer-store.test.js | — | 개인정보보호법 — 상동 (조제관리사가 고객 개인정보를 클라우드에 올리지 않는 설계) |
 
@@ -617,6 +617,7 @@
 | DOC-DSN-07 | docs/dev/design/SUBSCRIPTION_ROADMAP.md | ROAD-P0, ROAD-P1, ROAD-P2, ROAD-P3, ROAD-P4 |
 | DOC-DSN-08 | docs/dev/design/SUPABASE_DESIGN.md | AU-01, AU-02, AU-03, AU-04, AU-05, AU-06, AU-07, AU-08, DA-08, ROAD-P0, S-01 |
 | DOC-DSN-09 | docs/dev/design/USER_FEEDBACK_DESIGN.md | AU-01, AU-02, AU-03, AU-04, AU-05, AU-06, AU-07, AU-08, FB-01, FB-02, FB-03, FB-04, FB-05, FB-06, FB-07, FB-08, S-01 |
+| DOC-DSN-10 | docs/dev/design/MULTI_EXAM_DB_DESIGN.md | DA-06, DA-07, DA-08, ES-01, ES-02, ES-03, ES-04, ES-05, FO-24, RR-13, RR-17, RR-19 |
 | DOC-IDX-01 | docs/README.md | — |
 | DOC-PPL-01 | ref-pipeline/README.md | AO-01, AO-02, AO-03, AO-04, AO-05, BP-01, BP-02, BP-03, BP-04, BP-05, BP-06, BP-07, BP-08, CS-01, CS-02, CS-03, CS-04, CS-05, CS-06, CS-07, CS-08, CS-09, CS-10 |
 | DOC-PPL-02 | ref-pipeline/audiobook/README.md | AO-01, AO-02, AO-03, AO-04, AO-05 |
