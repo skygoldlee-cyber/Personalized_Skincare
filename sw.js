@@ -21,7 +21,7 @@
 
 // @spec P-01~06,O-04,UX-PWA-03
 
-const CACHE_VERSION = 'v20260930-6198bfd';   // 배포 시 stamp_sw_version.js가 자동 갱신 (v<커밋날짜>-<해시>)
+const CACHE_VERSION = 'v20260930-e122e97';   // 배포 시 stamp_sw_version.js가 자동 갱신 (v<커밋날짜>-<해시>)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
