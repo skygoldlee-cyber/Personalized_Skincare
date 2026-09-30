@@ -414,6 +414,39 @@ function main() {
     console.log('Skipping Ingredients Database (기존 번들 유지)');
   }
 
+  // 4b. Knowledge sets — manifest.knowledge.registryKey + {contentRoot}/knowledge/<key>.json
+  //     'ingredients' 키는 전용 파서(4번 블록)가 소유하므로 여기서 제외.
+  const kSchema = manifest.knowledge;
+  const kKey = kSchema && kSchema.registryKey;
+  if (kKey && kKey !== 'ingredients') {
+    const knowledgePlugin = require('./plugins/knowledge.plugin');
+    const contentAbs = path.join(ctx.workspaceDir, ctx.contentRoot || 'content');
+    const srcFile = knowledgePlugin.resolveDatasetPath(contentAbs, kKey);
+    if (srcFile) {
+      const { items, meta: kMeta } = knowledgePlugin.loadDataset(srcFile, kKey);
+      const kHash = getContentHash(items);
+      const kFilename = `${kKey}_data.${kHash}.js`;
+      const kGlobal = kSchema.global || 'KNOWLEDGE_DATA';
+      clearOldBundles(DATA_DIR, `${kKey}_data.`);
+      fs.writeFileSync(
+        path.join(DATA_DIR, kFilename),
+        `// 자동 생성된 지식DB 데이터 파일입니다. 수정하지 마십시오.\nvar ${kGlobal} = ${JSON.stringify(items, null, 2)};\n`,
+        'utf-8'
+      );
+      registry[kKey] = {
+        bundle: `./${EXAM_DATA_ROOT}/${kFilename}`,
+        global: kGlobal,
+        contentHash: kHash,
+        ...(kMeta.version ? { version: kMeta.version, updatedAt: kMeta.updatedAt || null, notice: kMeta.notice || '' } : {}),
+        stats: { count: items.length }
+      };
+      generatedFiles.push(`./${EXAM_DATA_ROOT}/${kFilename}`);
+      console.log(`- Knowledge DB "${kKey}": ${items.length} items`);
+    } else {
+      console.warn(`- knowledge/${kKey}.json 없음 — 지식DB 번들 건너뜀 (schema만 registry에 기록)`);
+    }
+  }
+
   // 5. Resources (추천 링크 — manifest에서 registry로 전달)
   if (manifest.resources) {
     registry.resources = manifest.resources;

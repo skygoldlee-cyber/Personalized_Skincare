@@ -7,7 +7,8 @@
     "food-sanitation-act-enforcement-decree",
     "food-sanitation-act",
     "food-standards-code",
-    "food-labeling-standards"
+    "food-labeling-standards",
+    "food-additive-standards"
   ],
   "noticeCoreComment": "고시 감시 배너의 기준 문서명 (notice_status.json의 레거시 baseline/latest 필드에 기록되는 문서).",
   "noticeCore": "식품의 기준 및 규격",

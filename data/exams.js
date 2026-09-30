@@ -47,7 +47,8 @@ var EXAMS_LIST = {
       "registryBundle": "data/exams/food/registry.js",
       "registryGlobal": "DATA_REGISTRY_FOOD",
       "features": {
-        "refDocs": true
+        "refDocs": true,
+        "dictionary": true
       }
     }
   ]

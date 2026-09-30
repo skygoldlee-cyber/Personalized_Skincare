@@ -403,13 +403,13 @@ function setupNavigation() {
             }
         },
         'dictionary-view': () => {
-            showGlobalLoading('성분 사전을 불러오는 중입니다...');
-            DataLoader.loadIngredients().then(() => {
+            showGlobalLoading('사전 데이터를 불러오는 중입니다...');
+            DataLoader.loadDictionary().then(() => {
                 hideGlobalLoading();
                 renderDictionary();
             }).catch(() => {
                 hideGlobalLoading();
-                showToast('성분 사전 데이터를 불러오지 못했습니다.', 'error');
+                showToast('사전 데이터를 불러오지 못했습니다.', 'error');
                 renderDictionary();
             });
         },

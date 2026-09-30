@@ -427,6 +427,27 @@ export const DataLoader = {
         this._ingredients = data;
         window[meta.global || 'INGREDIENTS_DATA'] = data;
         return data;
+    },
+
+    /**
+     * 지식DB 사전 데이터를 로드한다 — registry.knowledge 스키마의 registryKey/global 사용.
+     * 기본(스키마 부재 또는 'ingredients')은 기존 원료 번들 경로와 동일하다.
+     * @returns {Promise<Array>}
+     */
+    async loadDictionary() {
+        const reg = /** @type {any} */ (this.registry) || {};
+        const k = (reg.knowledge && typeof reg.knowledge === 'object') ? reg.knowledge : {};
+        const key = k.registryKey || 'ingredients';
+        this._knowledge = this._knowledge || {};
+        if (this._knowledge[key]) return this._knowledge[key];
+        if (key === 'ingredients') return this.loadIngredients();
+        const meta = reg[key];
+        if (!meta || !meta.bundle) throw new Error(`Knowledge metadata not found: ${key}`);
+        await this._loadScript(meta.bundle);
+        const data = /** @type {Array|undefined} */ (/** @type {any} */ (window)[meta.global]);
+        if (!data || !data.length) throw new Error(`Knowledge data is empty or invalid: ${meta.global}`);
+        this._knowledge[key] = data;
+        return data;
     }
 };
 

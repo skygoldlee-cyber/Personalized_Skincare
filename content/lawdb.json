@@ -127,6 +127,14 @@
       "slug": "식품등의표시기준",
       "matchKeys": ["식품등의표시기준", "식품등의 표시기준"],
       "watch": { "target": "admrul" }
+    },
+    {
+      "id": "food-additive-standards",
+      "name": "식품첨가물의 기준 및 규격",
+      "type": "admrul",
+      "slug": "식품첨가물의기준및규격",
+      "matchKeys": ["식품첨가물의기준및규격", "식품첨가물공전"],
+      "watch": { "target": "admrul" }
     }
   ]
 }

@@ -2,7 +2,7 @@
 var DATA_REGISTRY_FOOD = {
   "schemaVersion": 1,
   "contentYear": "2027",
-  "generatedAt": "2026-09-30T01:14:28.881Z",
+  "generatedAt": "2026-09-30T01:26:22.325Z",
   "subjects": [
     {
       "key": "sanitation",
@@ -44,6 +44,135 @@ var DATA_REGISTRY_FOOD = {
       "count": 0
     }
   },
+  "additives": {
+    "bundle": "./data/exams/food/additives_data.5274f63a.js",
+    "global": "ADDITIVES_DATA",
+    "contentHash": "5274f63a",
+    "version": "0.1.0",
+    "updatedAt": "2026-09-30",
+    "notice": "Phase D 파일럿 — 식품첨가물공전 기준 발췌 데이터. 정확한 사용기준 수치는 공전 원문을 확인하세요.",
+    "stats": {
+      "count": 12
+    }
+  },
+  "knowledge": {
+    "registryKey": "additives",
+    "global": "ADDITIVES_DATA",
+    "entityUnit": "첨가물",
+    "filterField": "useCategory",
+    "fields": {
+      "title": "name",
+      "subtitle": "engName",
+      "subtitleEmpty": "영문명 없음",
+      "search": [
+        "name",
+        "engName",
+        "purpose",
+        "useLimit"
+      ],
+      "chosungField": "name"
+    },
+    "badge": {
+      "field": "useCategory",
+      "defaultLabel": "기타",
+      "labels": {
+        "preservative": "보존료",
+        "sweetener": "감미료",
+        "colorant": "착색료",
+        "colorFixative": "발색제",
+        "antioxidant": "산화방지제",
+        "flavorEnhancer": "향미증진제"
+      }
+    },
+    "filters": [
+      {
+        "key": "all",
+        "label": "전체 첨가물"
+      },
+      {
+        "key": "preservative",
+        "label": "보존료",
+        "icon": "fa-shield-halved",
+        "color": "var(--color-success)"
+      },
+      {
+        "key": "sweetener",
+        "label": "감미료",
+        "icon": "fa-cubes",
+        "color": "var(--color-warning)"
+      },
+      {
+        "key": "colorant",
+        "label": "착색료",
+        "icon": "fa-palette",
+        "color": "var(--color-danger)"
+      },
+      {
+        "key": "colorFixative",
+        "label": "발색제"
+      },
+      {
+        "key": "antioxidant",
+        "label": "산화방지제"
+      },
+      {
+        "key": "flavorEnhancer",
+        "label": "향미증진제"
+      }
+    ],
+    "details": [
+      {
+        "key": "purpose",
+        "label": "용도",
+        "empty": "-"
+      },
+      {
+        "key": "useLimit",
+        "label": "사용기준",
+        "empty": "공전 사용기준표 참조",
+        "wide": true
+      },
+      {
+        "key": "lawRef",
+        "label": "근거",
+        "empty": "식품첨가물공전",
+        "wide": true
+      },
+      {
+        "key": "note",
+        "label": "TIP",
+        "tip": true
+      }
+    ],
+    "csv": {
+      "filename": "additives",
+      "headers": [
+        "첨가물명",
+        "영문명",
+        "용도",
+        "분류",
+        "사용기준",
+        "근거",
+        "비고"
+      ],
+      "fields": [
+        "name",
+        "engName",
+        "purpose",
+        {
+          "badgeLabel": "useCategory"
+        },
+        "useLimit",
+        "lawRef",
+        "note"
+      ]
+    },
+    "header": {
+      "title": "식품첨가물 사전",
+      "subtitle": "지정 식품첨가물 검색 — 식품첨가물공전 기준 (파일럿 12종)",
+      "searchPlaceholder": "첨가물명·영문명·용도 검색 (예: 소르빈, sorbic, 보존료)"
+    }
+  },
   "integratedExam": {
     "questionsPerSubject": {
       "sanitation": 8
@@ -54,8 +183,8 @@ var DATA_REGISTRY_FOOD = {
   },
   "uiText": {
     "dictionary": {
-      "title": "지식DB 사전",
-      "subtitle": "엔티티 검색 (파일럿 — 지식DB 미탑재)"
+      "title": "식품첨가물 사전",
+      "subtitle": "지정 식품첨가물 검색 — 식품첨가물공전 기준 (파일럿 12종)"
     }
   }
 };

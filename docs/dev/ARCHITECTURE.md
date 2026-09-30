@@ -382,6 +382,7 @@ Personalized_Skincare/
 │       └── <examId>/           #   시험별 데이터 루트 (dataRoot — 모든 시험 대칭)
 │           ├── registry.js     #     과목/시험/성분 메타 (shortName·file·resources·uiText)
 │           ├── ingredients_data.<hash>.js  # 성분 사전 (해시 파일명)
+│           ├── <key>_data.<hash>.js   #     범용 지식DB 번들 (manifest.knowledge.registryKey — food 예: additives_data)
 │           ├── id_migration.js #     레거시 ID → 안정 ID 매핑
 │           ├── card_terms_snapshot.json    # 카드 ID 추적 스냅샷
 │           ├── question_chapters.js        # 문항id→단원 매핑 (취약 분석용)
@@ -421,7 +422,8 @@ Personalized_Skincare/
 │   │   └── plugins/
 │   │       ├── textbook.plugin.js
 │   │       ├── exams.plugin.js
-│   │       └── ingredients.plugin.js
+│   │       ├── ingredients.plugin.js
+│   │       └── knowledge.plugin.js     #   범용 지식DB (knowledge/<key>.json → <key>_data.<hash>.js)
 │   ├── config/                 #   도구 설정 데이터 (citation_fingerprints·docs_paths_allowlist)
 │   ├── check_combo_pilot.js    #   복수정답형 파일럿 검증 (check:combo)
 │   ├── check_parser_parity.js  #   빌드 파서 ↔ 런타임 파서 등가성 검증
@@ -576,6 +578,7 @@ Personalized_Skincare/
 | [`data/exams/cosmetic/study_md/`](../../data/exams/cosmetic/study_md) | 교재 MD `file://` 폴백 번들 (**과목별 분할**: manifest.js + 과목별 `.js`). http에선 미사용. 과목 로드 시 해당 파일만 온디맨드 로드 | `tools/build/build_study_md_bundle.js` |
 | [`data/exams/<key>.<hash>.js`](../../data/exams) | 시험별 문항 번들 | `tools/build/index.js` (exams plugin) |
 | [`data/exams/cosmetic/ingredients_data.<hash>.js`](../../data) | 화장품 성분 사전 (가용/금지/제한) | `tools/build/index.js` (ingredients plugin) |
+| `data/exams/<id>/<key>_data.<hash>.js` | 범용 지식DB 번들 (food 예: `additives_data` — 식품첨가물 사전). `content/exams/food/knowledge/additives.json`처럼 시험 콘텐츠 루트의 `knowledge/` 원본 → `<KEY>_DATA` 전역 + `registry[key]` 메타(version·updatedAt·stats) — `DataLoader.loadDictionary()`가 `registry.knowledge.registryKey`로 온디맨드 로드 | `tools/build/index.js` (knowledge plugin) |
 | `registry.js` → `ingredients` 메타 | 원료 DB `version`·`updatedAt`·`notice`·`history`(개정 이력 누적)·`contentHash`(내용 지문) — `content/…/원료/db_version.json`에서 병합. 사전 버전 배지·갱신 알림·Formula OS 검증 기준이 여기서 나옴 | `tools/build/index.js` |
 | `src/formula-store.js` · `src/formula-rules.js` · `src/formula-check.js` · `src/formula-stability.js` | Formula OS 도메인 레이어 — 포뮬러 CRUD/한도(5개)·고객·안정성 스키마·전성분 표시 순서, 추천 규칙(BASE_TEMPLATES·고민/피부 매핑·맞춤 규칙 병합), 고시 한도 검증 엔진, 제형 안정성 체크(상 비율·상호작용·투입 단계·pH) | 수동 관리 |
 | `src/batch-store.js` · `src/customer-store.js` · `src/material-ledger.js` · `src/usage-guide.js` · `src/store-utils.js` · `src/csv-utils.js` | Formula OS 업무 레이어 — 배치(조제 기록) 채번·QC·위생·스냅샷, 고객 카드·상담 이력, 원료 입고·기한·재고, 사용 안내문 생성기, 스토어 공통 헬퍼, CSV 파서·인코딩(EUC-KR 폴백)·직렬화 (FORMULA_OS_WORKFLOW_DESIGN.md) | 수동 관리 |
@@ -807,7 +810,7 @@ const state = {
 0. `node tools/scaffold_exam.js <id> --name "시험명"` — exams.json 엔트리 + manifest/references 골격 + 샘플 교재·문제은행·디렉터리 트리 1커맨드 생성 (Phase B; 실 사용 예는 `food` 시험 — Phase C 파일럿, MULTI_EXAM_DB_DESIGN §9 "Phase C 파일럿 결과" 참조)
 1. `content/exams/<id>/`에 `manifest.json` + `references.json` + `교재/` + `문제은행/` 배치
    - 참조 법령이 있으면: `content/lawdb.json`에 법령 엔트리 추가(공유 법령 재사용) + `references.json`의 `lawRefs`(링크 대상·우선순위)와 `noticeCore`(고시 감시 기준 문서) 설정 → `build:pdf-registry`가 `src/law-links.js` 재생성
-   - 지식DB(사전)가 있으면: `manifest.knowledge`에 엔티티 스키마 선언 + `features.dictionary` 활성화 — `dictionary.js`가 스키마 드리븐 렌더
+   - 지식DB(사전)가 있으면: `knowledge/<key>.json` 데이터셋(예: `content/exams/food/knowledge/additives.json`) + `manifest.knowledge`에 엔티티 스키마·`registryKey` 선언 + `features.dictionary` 활성화 — 빌드가 `<key>_data.<hash>.js` 번들 생성, `DataLoader.loadDictionary()`가 온디맨드 로드, `dictionary.js`가 스키마 드리븐 렌더
 2. `content/exams.json`에 엔트리 추가 (`contentRoot`/`dataRoot`/`registryBundle`/`registryGlobal` + 기능 플래그)
 3. `npm.cmd run check:content -- --build` — 빌드 + 통합 검증 일괄. **앱 로직 변경 불필요**
    - 상세 설계: `design/MULTI_EXAM_DB_DESIGN.md` (법령DB·지식DB 3계층 구조)

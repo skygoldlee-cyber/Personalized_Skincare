@@ -43,7 +43,9 @@ const _EXAM_LAW_URLS = {
     ["식품의기준및규격", "https://www.law.go.kr/행정규칙/식품의기준및규격"],
     ["식품공전", "https://www.law.go.kr/행정규칙/식품의기준및규격"],
     ["식품등의표시기준", "https://www.law.go.kr/행정규칙/식품등의표시기준"],
-    ["식품등의 표시기준", "https://www.law.go.kr/행정규칙/식품등의표시기준"]
+    ["식품등의 표시기준", "https://www.law.go.kr/행정규칙/식품등의표시기준"],
+    ["식품첨가물의기준및규격", "https://www.law.go.kr/행정규칙/식품첨가물의기준및규격"],
+    ["식품첨가물공전", "https://www.law.go.kr/행정규칙/식품첨가물의기준및규격"]
     ]
 };
 

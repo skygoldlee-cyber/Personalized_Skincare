@@ -3,7 +3,7 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: 38ec270aa9c75d40
+> 입력 해시: 9d675447dd6b2e48
 > 생성: 2026-09-30 · 원천: SPEC.md(361개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
@@ -182,9 +182,9 @@
 
 | ID | 상태 | 검증 수단 | 문서 | 소스 | 테스트 | 보고서 | 출처 |
 |----|------|-----------|------|------|--------|--------|------|
-| DI-01 | ✅ | 테스트 | — | html/views/dictionary.html<br>index.html<br>src/views/dictionary.js | tests/dom/study-dictionary.dom.test.js | — | — |
-| DI-02 | ✅ | 테스트 | — | src/views/dictionary.js | tests/dom/study-dictionary.dom.test.js | — | — |
-| DI-03 | ✅ | 테스트 | — | src/views/dictionary.js | tests/dom/study-dictionary.dom.test.js | — | — |
+| DI-01 | ✅ | 테스트 | — | html/views/dictionary.html<br>index.html<br>src/views/dictionary.js<br>tools/build/plugins/knowledge.plugin.js | tests/dom/dictionary-schema.dom.test.js<br>tests/dom/study-dictionary.dom.test.js | — | — |
+| DI-02 | ✅ | 테스트 | — | src/views/dictionary.js | tests/dom/dictionary-schema.dom.test.js<br>tests/dom/study-dictionary.dom.test.js | — | — |
+| DI-03 | ✅ | 테스트 | — | src/views/dictionary.js | tests/dom/dictionary-schema.dom.test.js<br>tests/dom/study-dictionary.dom.test.js | — | — |
 | DI-04 | ✅ | 테스트 | — | html/views/dictionary.html<br>index.html<br>src/views/dictionary.js | tests/dom/review-drills-formula.dom.test.js | — | — |
 | DI-05 | ✅ | 테스트 | — | html/views/dictionary.html<br>index.html<br>src/views/dictionary.js | tests/dom/review-drills-formula.dom.test.js | — | — |
 
@@ -515,7 +515,7 @@
 
 | ID | 상태 | 검증 수단 | 문서 | 소스 | 테스트 | 보고서 | 출처 |
 |----|------|-----------|------|------|--------|--------|------|
-| BP-01 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 2개 | tools/build/build_all_data.js<br>tools/build/build_audio_manifest.js<br>tools/build/build_combo_drills.js<br>tools/build/build_doc_bundles.js<br>…외 19개 | tests/unit/build-pipeline.test.js | — | — |
+| BP-01 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 2개 | tools/build/build_all_data.js<br>tools/build/build_audio_manifest.js<br>tools/build/build_combo_drills.js<br>tools/build/build_doc_bundles.js<br>…외 20개 | tests/unit/build-pipeline.test.js | — | — |
 | BP-02 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 2개 | tools/build/index.js<br>tools/build/schema.js<br>tools/check/check_imports.js | tests/unit/build-pipeline.test.js | — | — |
 | BP-03 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 2개 | tools/build/index.js<br>tools/build/manifest_loader.js<br>tools/check/check_manifest.js | tests/unit/build-pipeline.test.js | — | — |
 | BP-04 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 2개 | tools/build/build_exam_bundles.js<br>tools/build/index.js | tests/unit/build-pipeline.test.js | — | — |

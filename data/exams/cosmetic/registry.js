@@ -2,7 +2,7 @@
 var DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2027",
-  "generatedAt": "2026-09-30T01:14:28.655Z",
+  "generatedAt": "2026-09-30T01:26:22.090Z",
   "subjects": [
     {
       "key": "law",
