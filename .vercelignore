@@ -92,9 +92,6 @@ __pycache__/
 dist/
 build/
 
-# ---------- 📝 문서 (선택적) ----------
-# docs/는 필요시 주석 해제
-# docs/
 
 # ---------- 💻 OS/에디터 ----------
 .DS_Store
@@ -109,3 +106,27 @@ Thumbs.db
 .git/
 .gitignore
 .gitattributes
+
+# ---------- 📝 개발 문서·테스트·CI (배포 불필요) ----------
+# docs/user/는 manual-viewer가 런타임 fetch하므로 배포에 포함 (제외하지 않음).
+# ping.txt는 offline-detection 연결 프로브 — 제외 금지.
+docs/dev/
+docs/business/
+tests/
+ref-pipeline/
+.github/
+.githooks/
+
+# ---------- ⚙️ 개발 전용 설정·도구 (앱 미참조) ----------
+serve.js
+pytest.ini
+playwright.config.js
+vitest.config.mjs
+eslint.config.mjs
+jsconfig.json
+package.json
+package-lock.json
+index.template.html
+combo_baseline.json
+.nvmrc
+.editorconfig
