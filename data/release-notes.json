@@ -1,5 +1,12 @@
 [
   {
+    "version": "v20260930-84cf9b8",
+    "date": "2026-09-30",
+    "notes": [
+      "[정리·deploy] 교재 삽화 PNG 원본을 Vercel 업로드에서 제외 [no-docs]"
+    ]
+  },
+  {
     "version": "v20260930-2b7a85c",
     "date": "2026-09-30",
     "notes": [
@@ -132,13 +139,6 @@
     "date": "2026-09-29",
     "notes": [
       "[기능·reader] 이야기형 서사와 본문을 명조체+색상으로 구분"
-    ]
-  },
-  {
-    "version": "v20260929-9c08f8e",
-    "date": "2026-09-29",
-    "notes": [
-      "[기능·build] 오디오북을 exams.json features 플래그 기반 선택 기능으로 전환"
     ]
   }
 ]
