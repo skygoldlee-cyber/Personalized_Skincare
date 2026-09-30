@@ -1,5 +1,13 @@
 [
   {
+    "version": "v20260930-2b7a85c",
+    "date": "2026-09-30",
+    "notes": [
+      "[정리·textbook] 과목별 표지 삽화 신규 버전 교체 — PNG 원본 추가 + webp 재인코딩",
+      "[정리·tools] 지식DB·법령DB 빌드 경로 silent failure 6종 차단 [no-docs]"
+    ]
+  },
+  {
     "version": "v20260930-f7460c8",
     "date": "2026-09-30",
     "notes": [
@@ -131,13 +139,6 @@
     "date": "2026-09-29",
     "notes": [
       "[기능·build] 오디오북을 exams.json features 플래그 기반 선택 기능으로 전환"
-    ]
-  },
-  {
-    "version": "v20260929-d47147d",
-    "date": "2026-09-29",
-    "notes": [
-      "[수정·content] 2과목 이야기형 장 체계를 5장으로 통일"
     ]
   }
 ]
