@@ -38,6 +38,7 @@
   "knowledge": {
     "registryKey": "additives",
     "global": "ADDITIVES_DATA",
+    "source": { "type": "json" },
     "entityUnit": "첨가물",
     "filterField": "useCategory",
     "fields": {

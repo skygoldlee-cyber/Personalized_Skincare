@@ -119,6 +119,11 @@
   "knowledge": {
     "registryKey": "ingredients",
     "global": "INGREDIENTS_DATA",
+    "source": {
+      "type": "ingredients-md",
+      "dir": "참조자료/원료",
+      "metaFile": "db_version.json"
+    },
     "entityUnit": "원료",
     "filterField": "type",
     "header": {

@@ -1,13 +1,14 @@
-// tools/build/plugins/knowledge.plugin.js — 범용 지식DB(엔티티 사전) 번들 빌드
+// tools/build/plugins/knowledge.plugin.js — 범용 지식DB(엔티티 사전) 소스 로딩
 // @spec BP-01,DI-01
 // ============================================================
-// 입력 : {contentRoot}/knowledge/<registryKey>.json
-//        { "meta": { "version", "updatedAt", "notice" }, "items": [...] }
-// 출력 : {dataRoot}/<registryKey>_data.<hash>.js  — var <schema.global> = [...items]
-//        registry[<registryKey>] = { bundle, global, contentHash, version?, stats }
-//
-// 화장품 원료 사전(ingredients)은 전용 파서(ingredients.plugin)가 담당하므로
-// registryKey === 'ingredients' 는 여기서 처리하지 않는다.
+// manifest.knowledge.source.type 으로 소스 형식을 선택한다:
+//   "json" (기본) : {contentRoot}/knowledge/<registryKey>.json
+//                   { "meta": { "version", "updatedAt", "notice" }, "items": [...] }
+//   "ingredients-md" : source.dir 아래 원료 MD 표(참조자료 뷰어 겸용 원본)를
+//                   ingredients.plugin 파서로 해석. source.metaFile(기본
+//                   db_version.json)에서 version/updatedAt/notice/history 메타를 읽는다.
+// 출력 계약(emit은 tools/build/index.js): {dataRoot}/<key>_data.<hash>.js
+//   — var <schema.global> = [...items], registry[<key>] = { bundle, global, ... }
 // ============================================================
 'use strict';
 
@@ -50,4 +51,33 @@ function loadDataset(filePath, registryKey) {
     return { items, meta: (doc && doc.meta) || {} };
 }
 
-module.exports = { resolveDatasetPath, loadDataset };
+/**
+ * manifest.knowledge 스키마 기준으로 지식DB 아이템과 메타를 로드한다.
+ * 소스가 없으면 null을 반환한다 (schema만 registry에 기록하는 경우).
+ * @param {Object} kSchema manifest.knowledge
+ * @param {Object} ctx 빌드 컨텍스트 (workspaceDir/contentRoot 포함)
+ * @returns {{items: Array, meta: Object}|null}
+ */
+function loadItems(kSchema, ctx) {
+    const source = (kSchema && kSchema.source) || {};
+    const contentAbs = path.join(ctx.workspaceDir, ctx.contentRoot || 'content');
+
+    if (source.type === 'ingredients-md') {
+        const dir = source.dir || '참조자료/원료';
+        const items = require('./ingredients.plugin').build(null, ctx, dir);
+        const metaPath = path.join(contentAbs, ...dir.split('/'), source.metaFile || 'db_version.json');
+        let meta = {};
+        try {
+            if (fs.existsSync(metaPath)) meta = JSON.parse(fs.readFileSync(metaPath, 'utf-8'));
+        } catch (e) {
+            console.warn(`- Warning: ${source.metaFile || 'db_version.json'} 파싱 실패:`, e.message);
+        }
+        return { items, meta };
+    }
+
+    const srcFile = resolveDatasetPath(contentAbs, kSchema && kSchema.registryKey);
+    if (!srcFile) return null;
+    return loadDataset(srcFile, kSchema.registryKey);
+}
+
+module.exports = { resolveDatasetPath, loadDataset, loadItems };

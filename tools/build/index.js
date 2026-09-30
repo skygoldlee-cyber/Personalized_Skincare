@@ -192,8 +192,7 @@ function main() {
     contentYear: manifest.contentYear,
     generatedAt: new Date().toISOString(),
     subjects: [],
-    exams: [],
-    ingredients: {}
+    exams: []
   };
 
   // 부분 빌드면 이전 통계를 기반으로 시작(미재빌드 항목의 baseline 보존)
@@ -364,86 +363,59 @@ function main() {
     }
   }
 
-  // 4. Ingredients (전체 빌드 또는 이전 항목이 없을 때만 재빌드)
-  const ingredientsPlugin = require('./plugins/ingredients.plugin');
-  if (!isPartial || !priorRegistry.ingredients || !priorRegistry.ingredients.bundle) {
-    console.log('Building Ingredients Database...');
-    try {
-      const data = ingredientsPlugin.build(manifest, ctx);
-      validateIngredientsData(data);
-
-      const hash = getContentHash(data);
-      const outputFilename = `ingredients_data.${hash}.js`;
-      const outputPath = path.join(DATA_DIR, outputFilename);
-
-      clearOldBundles(DATA_DIR, 'ingredients_data.');
-
-      const jsContent = `// 자동 생성된 화장품 원료 데이터 파일입니다. 수정하지 마십시오.\nvar INGREDIENTS_DATA = ${JSON.stringify(data, null, 2)};\n`;
-      fs.writeFileSync(outputPath, jsContent, 'utf-8');
-
-      // 원료 DB 버전 메타데이터 (db_version.json — 원료 파일 정정 시 수동 범프)
-      const dbVersionPath = path.join(ctx.workspaceDir, ctx.contentRoot || 'content', '참조자료', '원료', 'db_version.json');
-      let dbMeta = {};
-      try {
-        if (fs.existsSync(dbVersionPath)) dbMeta = JSON.parse(fs.readFileSync(dbVersionPath, 'utf-8'));
-      } catch (e) {
-        console.warn('- Warning: db_version.json 파싱 실패:', e.message);
-      }
-
-      registry.ingredients = {
-        bundle: `./${EXAM_DATA_ROOT}/${outputFilename}`,
-        global: 'INGREDIENTS_DATA',
-        contentHash: hash,
-        ...(dbMeta.version ? {
-          version: dbMeta.version,
-          updatedAt: dbMeta.updatedAt || null,
-          notice: dbMeta.notice || '',
-          history: Array.isArray(dbMeta.history) ? dbMeta.history : []
-        } : {}),
-        stats: { count: data.length }
-      };
-
-      generatedFiles.push(`./${EXAM_DATA_ROOT}/${outputFilename}`);
-      console.log(`- Success: Total ingredients parsed: ${data.length}`);
-    } catch (e) {
-      console.error('Build failed for ingredients database:', e.message);
-      process.exit(1);
-    }
-  } else {
-    registry.ingredients = priorRegistry.ingredients;
-    console.log('Skipping Ingredients Database (기존 번들 유지)');
-  }
-
-  // 4b. Knowledge sets — manifest.knowledge.registryKey + {contentRoot}/knowledge/<key>.json
-  //     'ingredients' 키는 전용 파서(4번 블록)가 소유하므로 여기서 제외.
+  // 4. Knowledge DB — manifest.knowledge.registryKey 선언 시에만 빌드
+  //    소스 형식은 manifest.knowledge.source.type으로 선택
+  //    (cosmetic: "ingredients-md" → 참조자료/원료 MD 표, food 등: "json" → knowledge/<key>.json)
   const kSchema = manifest.knowledge;
   const kKey = kSchema && kSchema.registryKey;
-  if (kKey && kKey !== 'ingredients') {
-    const knowledgePlugin = require('./plugins/knowledge.plugin');
-    const contentAbs = path.join(ctx.workspaceDir, ctx.contentRoot || 'content');
-    const srcFile = knowledgePlugin.resolveDatasetPath(contentAbs, kKey);
-    if (srcFile) {
-      const { items, meta: kMeta } = knowledgePlugin.loadDataset(srcFile, kKey);
-      const kHash = getContentHash(items);
-      const kFilename = `${kKey}_data.${kHash}.js`;
-      const kGlobal = kSchema.global || 'KNOWLEDGE_DATA';
-      clearOldBundles(DATA_DIR, `${kKey}_data.`);
-      fs.writeFileSync(
-        path.join(DATA_DIR, kFilename),
-        `// 자동 생성된 지식DB 데이터 파일입니다. 수정하지 마십시오.\nvar ${kGlobal} = ${JSON.stringify(items, null, 2)};\n`,
-        'utf-8'
-      );
-      registry[kKey] = {
-        bundle: `./${EXAM_DATA_ROOT}/${kFilename}`,
-        global: kGlobal,
-        contentHash: kHash,
-        ...(kMeta.version ? { version: kMeta.version, updatedAt: kMeta.updatedAt || null, notice: kMeta.notice || '' } : {}),
-        stats: { count: items.length }
-      };
-      generatedFiles.push(`./${EXAM_DATA_ROOT}/${kFilename}`);
-      console.log(`- Knowledge DB "${kKey}": ${items.length} items`);
+  if (kKey) {
+    if (!isPartial || !priorRegistry[kKey] || !priorRegistry[kKey].bundle) {
+      console.log(`Building Knowledge DB "${kKey}"...`);
+      const knowledgePlugin = require('./plugins/knowledge.plugin');
+      try {
+        const loaded = knowledgePlugin.loadItems(kSchema, ctx);
+        if (!loaded) {
+          console.warn(`- knowledge "${kKey}" 소스 없음 — 지식DB 번들 건너뜀 (schema만 registry에 기록)`);
+        } else {
+          const { items, meta: kMeta } = loaded;
+          if (kSchema.source && kSchema.source.type === 'ingredients-md') {
+            validateIngredientsData(items);
+          }
+
+          const kHash = getContentHash(items);
+          const kFilename = `${kKey}_data.${kHash}.js`;
+          const kGlobal = kSchema.global || 'KNOWLEDGE_DATA';
+
+          clearOldBundles(DATA_DIR, `${kKey}_data.`);
+          fs.writeFileSync(
+            path.join(DATA_DIR, kFilename),
+            `// 자동 생성된 지식DB 데이터 파일입니다. 수정하지 마십시오.\nvar ${kGlobal} = ${JSON.stringify(items, null, 2)};\n`,
+            'utf-8'
+          );
+
+          registry[kKey] = {
+            bundle: `./${EXAM_DATA_ROOT}/${kFilename}`,
+            global: kGlobal,
+            contentHash: kHash,
+            ...(kMeta.version ? {
+              version: kMeta.version,
+              updatedAt: kMeta.updatedAt || null,
+              notice: kMeta.notice || '',
+              history: Array.isArray(kMeta.history) ? kMeta.history : []
+            } : {}),
+            stats: { count: items.length }
+          };
+
+          generatedFiles.push(`./${EXAM_DATA_ROOT}/${kFilename}`);
+          console.log(`- Success: Knowledge DB "${kKey}" — ${items.length} items`);
+        }
+      } catch (e) {
+        console.error(`Build failed for knowledge database "${kKey}":`, e.message);
+        process.exit(1);
+      }
     } else {
-      console.warn(`- knowledge/${kKey}.json 없음 — 지식DB 번들 건너뜀 (schema만 registry에 기록)`);
+      registry[kKey] = priorRegistry[kKey];
+      console.log(`Skipping Knowledge DB "${kKey}" (기존 번들 유지)`);
     }
   }
 

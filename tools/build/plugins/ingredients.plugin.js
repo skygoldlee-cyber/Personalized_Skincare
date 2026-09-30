@@ -93,11 +93,13 @@ const SOURCES = [
   },
 ];
 
+// 화장품 원료 MD 표 파서 — knowledge 파이프라인의 `source.type: "ingredients-md"`
+// 소스로 호출된다 (참조자료 뷰어에도 노출되는 MD 원본이 SSOT).
 module.exports = {
   name: 'ingredients',
-  build(manifest, ctx) {
+  build(manifest, ctx, sourceDir) {
     const list = [];
-    const INGREDIENTS_DIR = path.join(ctx.workspaceDir, ctx.contentRoot || 'content', '참조자료', '원료');
+    const INGREDIENTS_DIR = path.join(ctx.workspaceDir, ctx.contentRoot || 'content', ...(sourceDir || '참조자료/원료').split('/'));
 
     SOURCES.forEach(src => {
       const filePath = path.join(INGREDIENTS_DIR, src.file);

@@ -422,8 +422,8 @@ Personalized_Skincare/
 │   │   └── plugins/
 │   │       ├── textbook.plugin.js
 │   │       ├── exams.plugin.js
-│   │       ├── ingredients.plugin.js
-│   │       └── knowledge.plugin.js     #   범용 지식DB (knowledge/<key>.json → <key>_data.<hash>.js)
+│   │       ├── ingredients.plugin.js   #   원료 MD 표 파서 (knowledge source.type "ingredients-md")
+│   │       └── knowledge.plugin.js     #   범용 지식DB 소스 로딩 (json/ingredients-md → <key>_data.<hash>.js)
 │   ├── config/                 #   도구 설정 데이터 (citation_fingerprints·docs_paths_allowlist)
 │   ├── check_combo_pilot.js    #   복수정답형 파일럿 검증 (check:combo)
 │   ├── check_parser_parity.js  #   빌드 파서 ↔ 런타임 파서 등가성 검증
@@ -577,7 +577,7 @@ Personalized_Skincare/
 | [`content/**/*.md`](../../content) + [`content/exams/cosmetic/manifest.json`](../../content/exams/cosmetic/manifest.json) | **교재/카드/퀴즈/시험/추천링크의 원본 (SSOT).** `manifest.json`에 과목 `shortName`, 시험 `file`, `resources`(추천 링크·채널 요약) 등 메타 포함 → 소스 코드 하드코딩 없이 전체 콘텐츠 교체 가능 | 저자 직접 작성 |
 | [`data/exams/cosmetic/study_md/`](../../data/exams/cosmetic/study_md) | 교재 MD `file://` 폴백 번들 (**과목별 분할**: manifest.js + 과목별 `.js`). http에선 미사용. 과목 로드 시 해당 파일만 온디맨드 로드 | `tools/build/build_study_md_bundle.js` |
 | [`data/exams/<key>.<hash>.js`](../../data/exams) | 시험별 문항 번들 | `tools/build/index.js` (exams plugin) |
-| [`data/exams/cosmetic/ingredients_data.<hash>.js`](../../data) | 화장품 성분 사전 (가용/금지/제한) | `tools/build/index.js` (ingredients plugin) |
+| [`data/exams/cosmetic/ingredients_data.<hash>.js`](../../data) | 화장품 성분 사전 (가용/금지/제한) — 지식DB 번들의 `ingredients-md` 소스 인스턴스 (`manifest.knowledge.source` 선언) | `tools/build/index.js` (knowledge plugin → ingredients plugin 파서) |
 | `data/exams/<id>/<key>_data.<hash>.js` | 범용 지식DB 번들 (food 예: `additives_data` — 식품첨가물 사전). `content/exams/food/knowledge/additives.json`처럼 시험 콘텐츠 루트의 `knowledge/` 원본 → `<KEY>_DATA` 전역 + `registry[key]` 메타(version·updatedAt·stats) — `DataLoader.loadDictionary()`가 `registry.knowledge.registryKey`로 온디맨드 로드 | `tools/build/index.js` (knowledge plugin) |
 | `registry.js` → `ingredients` 메타 | 원료 DB `version`·`updatedAt`·`notice`·`history`(개정 이력 누적)·`contentHash`(내용 지문) — `content/…/원료/db_version.json`에서 병합. 사전 버전 배지·갱신 알림·Formula OS 검증 기준이 여기서 나옴 | `tools/build/index.js` |
 | `src/formula-store.js` · `src/formula-rules.js` · `src/formula-check.js` · `src/formula-stability.js` | Formula OS 도메인 레이어 — 포뮬러 CRUD/한도(5개)·고객·안정성 스키마·전성분 표시 순서, 추천 규칙(BASE_TEMPLATES·고민/피부 매핑·맞춤 규칙 병합), 고시 한도 검증 엔진, 제형 안정성 체크(상 비율·상호작용·투입 단계·pH) | 수동 관리 |

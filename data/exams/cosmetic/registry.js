@@ -2,7 +2,7 @@
 var DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2027",
-  "generatedAt": "2026-09-30T01:26:22.090Z",
+  "generatedAt": "2026-09-30T01:36:48.526Z",
   "subjects": [
     {
       "key": "law",
@@ -256,6 +256,11 @@ var DATA_REGISTRY = {
   "knowledge": {
     "registryKey": "ingredients",
     "global": "INGREDIENTS_DATA",
+    "source": {
+      "type": "ingredients-md",
+      "dir": "참조자료/원료",
+      "metaFile": "db_version.json"
+    },
     "entityUnit": "원료",
     "filterField": "type",
     "header": {

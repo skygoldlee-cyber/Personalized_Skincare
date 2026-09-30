@@ -2,7 +2,7 @@
 var DATA_REGISTRY_FOOD = {
   "schemaVersion": 1,
   "contentYear": "2027",
-  "generatedAt": "2026-09-30T01:26:22.325Z",
+  "generatedAt": "2026-09-30T01:36:48.744Z",
   "subjects": [
     {
       "key": "sanitation",
@@ -36,14 +36,6 @@ var DATA_REGISTRY_FOOD = {
       }
     }
   ],
-  "ingredients": {
-    "bundle": "./data/exams/food/ingredients_data.4f53cda1.js",
-    "global": "INGREDIENTS_DATA",
-    "contentHash": "4f53cda1",
-    "stats": {
-      "count": 0
-    }
-  },
   "additives": {
     "bundle": "./data/exams/food/additives_data.5274f63a.js",
     "global": "ADDITIVES_DATA",
@@ -51,6 +43,7 @@ var DATA_REGISTRY_FOOD = {
     "version": "0.1.0",
     "updatedAt": "2026-09-30",
     "notice": "Phase D 파일럿 — 식품첨가물공전 기준 발췌 데이터. 정확한 사용기준 수치는 공전 원문을 확인하세요.",
+    "history": [],
     "stats": {
       "count": 12
     }
@@ -58,6 +51,9 @@ var DATA_REGISTRY_FOOD = {
   "knowledge": {
     "registryKey": "additives",
     "global": "ADDITIVES_DATA",
+    "source": {
+      "type": "json"
+    },
     "entityUnit": "첨가물",
     "filterField": "useCategory",
     "fields": {
