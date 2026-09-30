@@ -1,5 +1,5 @@
 // 자동 생성된 복수정답형 드릴 데이터입니다. 수정하지 마십시오. (tools/build/build_combo_drills.js)
-// 원본: data/exams/cosmetic/exams/subject4.dce4fb33.js — mode: fact(명제 조합) 18문 / answer(정답 조합) 257문
+// 원본: data/exams/cosmetic/exams/subject4.e75817fc.js — mode: fact(명제 조합) 18문 / answer(정답 조합) 257문
 var COMBO_DRILLS_subject4 = [
  {
   "id": "understanding_combo_8317ff",
@@ -13031,35 +13031,35 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "ㄱ",
     "sid": "understanding_st_1b5090",
-    "conceptId": "L3879",
+    "conceptId": "L4214",
     "text": "1배",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_42a255",
-    "conceptId": "L3879",
+    "conceptId": "L4214",
     "text": "10000배",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_ce2326",
-    "conceptId": "L3879",
+    "conceptId": "L4214",
     "text": "100배",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_7be298",
-    "conceptId": "L3879",
+    "conceptId": "L4214",
     "text": "1000배",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_264c64",
-    "conceptId": "L3879",
+    "conceptId": "L4214",
     "text": "10배",
     "truth": false
    }
@@ -13106,7 +13106,7 @@ var COMBO_DRILLS_subject4 = [
    "수치"
   ],
   "derivedFrom": "subject4_q142",
-  "explain": "📖 교재 근거 (2과목 L3879):\n히알루론산(Hyaluronic Acid) — \"1g이 6L의 물을 보유할 수 있는 강력한 보습제\" (1g ≈ 1mL, 6L = 6,000mL → 약 1,000~6,000배 수분 보유력)",
+  "explain": "📖 교재 근거 (2과목 L4214):\n히알루론산(Hyaluronic Acid) — \"1g이 6L의 물을 보유할 수 있는 강력한 보습제\" (1g ≈ 1mL, 6L = 6,000mL → 약 1,000~6,000배 수분 보유력)",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "1"
  },

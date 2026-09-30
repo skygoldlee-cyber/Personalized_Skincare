@@ -27,11 +27,9 @@ from pathlib import Path
 # md2doc.py의 변환 함수를 임포트 (같은 폴더)
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from md2doc import markdown_to_tailwind_html, RenderConfig
+from _exam_root import exam_root
 
-ROOT = Path(os.environ.get(
-    "EXAM_CONTENT_ROOT",
-    Path(__file__).resolve().parents[1] / "content" / "exams" / "cosmetic",
-))
+ROOT = exam_root()
 HTML_DIR = ROOT / "html"
 
 

@@ -35,6 +35,26 @@
     "reason": "선결 과제: ref-pipeline 회귀 테스트 디렉터리 (계획)"
   },
   {
+    "file": "docs/dev/design/MULTI_EXAM_DB_DESIGN.md",
+    "ref": "content/lawdb.json",
+    "reason": "설계안 제안 경로 — 공용 법령DB SSOT (미구현)"
+  },
+  {
+    "file": "docs/dev/design/MULTI_EXAM_DB_DESIGN.md",
+    "ref": "{contentRoot}/knowledge/",
+    "reason": "설계안 제안 경로 — 시험별 지식DB 원본 디렉터리 (미구현)"
+  },
+  {
+    "file": "docs/dev/design/MULTI_EXAM_DB_DESIGN.md",
+    "ref": "ref-pipeline/_exam_root.py",
+    "reason": "설계안 제안 경로 — 시험 루트 해석 공유 헬퍼 (미구현)"
+  },
+  {
+    "file": "docs/dev/design/MULTI_EXAM_DB_DESIGN.md",
+    "ref": "tools/scaffold_exam.js",
+    "reason": "설계안 제안 경로 — 신규 시험 팩 스캐폴더 (미구현)"
+  },
+  {
     "file": "docs/dev/design/READER_FEEDBACK_DESIGN.md",
     "ref": "content/피드백/*.md",
     "reason": "설계안 제안 경로 — 실제 저장은 Supabase 테이블"

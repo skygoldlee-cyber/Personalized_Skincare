@@ -62,29 +62,13 @@ BASE = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 def _default_content_root():
     """대상 시험의 contentRoot 해석 — Node 도구(tools/build/exam_targets.js)와
-    같은 env 계약: EXAM_CONTENT_ROOT(절대/프로젝트 상대 경로) > EXAM_ID
-    > content/exams.json의 default 시험 > 'content'"""
-    root = os.environ.get('EXAM_CONTENT_ROOT')
-    if root:
-        return root if os.path.isabs(root) else os.path.join(BASE, root)
+    같은 env 계약. 실제 해석은 _exam_root.exam_root()로 위임한다."""
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     try:
-        with open(os.path.join(BASE, 'content', 'exams.json'),
-                  encoding='utf-8') as f:
-            exams = json.load(f).get('exams', [])
-        eid = os.environ.get('EXAM_ID')
-        target = None
-        if eid:
-            target = next((e for e in exams if e.get('id') == eid), None)
-            if target is None:
-                logger.warning('EXAM_ID=%s 미등록 — 기본 시험 사용', eid)
-        if target is None:
-            target = next((e for e in exams if e.get('default')),
-                          exams[0] if exams else None)
-        if target:
-            return os.path.join(BASE, target.get('contentRoot', 'content'))
+        from _exam_root import exam_root
+        return str(exam_root())
     except Exception:
-        pass
-    return os.path.join(BASE, 'content')
+        return os.path.join(BASE, 'content')
 
 
 DEFAULT_PDF_ROOT = os.path.join(_default_content_root(), '참조자료')

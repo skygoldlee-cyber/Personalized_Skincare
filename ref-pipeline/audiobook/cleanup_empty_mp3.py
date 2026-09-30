@@ -12,13 +12,13 @@ gTTS 생성 중 중단되어 빈 파일이 남은 경우 정리용.
 """
 
 import argparse
-import os
+import sys
 from pathlib import Path
 
-EXAM_ROOT = Path(os.environ.get(
-    "EXAM_CONTENT_ROOT",
-    Path(__file__).resolve().parents[2] / "content" / "exams" / "cosmetic",
-))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # ref-pipeline/
+from _exam_root import exam_root  # noqa: E402
+
+EXAM_ROOT = exam_root()
 
 
 def find_empty_mp3s(root: Path) -> list[Path]:

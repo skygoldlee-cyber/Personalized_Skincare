@@ -116,6 +116,55 @@
     "textbook-reader": { "title": "교재리더", "subtitle": "과목을 선택하여 교재 본문을 읽기" },
     "dictionary": { "title": "성분 사전", "subtitle": "화장품 성분별 배합한도 및 고시 기준 조회" }
   },
+  "knowledge": {
+    "registryKey": "ingredients",
+    "global": "INGREDIENTS_DATA",
+    "entityUnit": "원료",
+    "filterField": "type",
+    "header": {
+      "title": "화장품 성분 검색 사전",
+      "subtitle": "사용가능(approved), 사용제한(restricted), 사용금지(banned) 성분들의 배합 한도 및 시험 중요 팁을 실시간 검색해 확인하세요.",
+      "note": "판정은 <strong>네거티브 리스트</strong> 방식입니다 — 사용금지(banned, 별표1) 원료는 배합 불가, 사용제한(restricted, 별표2) 원료는 고시 한도·조건 내에서만 허용, 이 목록들에 없는 원료가 사용가능(approved)입니다. 단, 기능성 원료·색소·보존제·자외선차단 성분은 지정 목록을 따릅니다.",
+      "searchPlaceholder": "성분명, 영문명 또는 초성을 입력하여 실시간 검색 (예: 페녹시, glycerin, ㄱㄹㅅㄹ)"
+    },
+    "fields": {
+      "title": "name",
+      "subtitle": "engName",
+      "subtitleEmpty": "영문명 없음",
+      "search": ["name", "engName", "category"],
+      "chosungField": "name"
+    },
+    "badge": {
+      "field": "type",
+      "defaultLabel": "사용 가능",
+      "labels": { "approved": "사용 가능", "restricted": "사용 제한", "banned": "사용 금지" }
+    },
+    "filters": [
+      { "key": "all", "label": "전체 성분" },
+      { "key": "approved", "label": "사용 가능 원료", "icon": "fa-circle-check", "color": "var(--color-success)" },
+      { "key": "restricted", "label": "사용 제한 원료", "icon": "fa-triangle-exclamation", "color": "var(--color-warning)" },
+      { "key": "banned", "label": "사용 금지 원료", "icon": "fa-ban", "color": "var(--color-danger)" }
+    ],
+    "details": [
+      { "key": "category", "label": "카테고리", "empty": "기타" },
+      { "key": "description", "label": "설명/특성", "empty": "-", "wide": true },
+      { "key": "limit", "label": "배합 한도", "empty": "제한 없음", "wide": true },
+      { "key": "tip", "tip": true }
+    ],
+    "action": {
+      "feature": "formula",
+      "click": "formulaAddIngredient",
+      "arg": "name",
+      "label": "포뮬러에 추가",
+      "title": "배합 계산기 처방에 이 원료 추가",
+      "icon": "fa-plus"
+    },
+    "csv": {
+      "filename": "ingredients",
+      "headers": ["원료명", "영문명", "유형", "유형코드", "카테고리", "배합한도", "설명", "TIP"],
+      "fields": ["name", "engName", { "badgeLabel": "type" }, "type", "category", "limit", "description", "tip"]
+    }
+  },
   "resources": {
     "sectionTitle": "추천 학습 유튜브 및 공식 레퍼런스",
     "sectionDesc": "시험 대비에 큰 도움이 되는 합격자 추천 유튜브 강의 및 공식 자격 정보를 확인하세요.",

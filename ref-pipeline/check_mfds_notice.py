@@ -10,17 +10,17 @@ references.json의 referenceLaw에서 감시 대상을 자동 유도한다 —
 - 행정규칙(식약처 고시 등) → lawSearch.do?target=admrul + lawService.do 상세(공포번호)
 
 notice_status.json 스키마:
-    baseline / latest / newerFound  — 안전기준 규정 전용(기존 JS 호환)
+    baseline / latest / newerFound  — noticeCore 문서 전용(기존 JS 호환)
     docs[]                          — 감시 문서 전체 {name,target,baseline*,latest*,url,newer}
 
 사용:
-    LAW_OC_KEY=<발급키> python ref-pipeline/check_mfds_notice.py [--update]
+    LAW_OC_KEY=<발급키> python ref-pipeline/check_mfds_notice.py [--exam <id>] [--update]
 
+- --exam: 시험 id 또는 콘텐츠 루트 경로 (기본: EXAM_CONTENT_ROOT env > EXAM_ID env > exams.json default)
 - --update 없이: 조회 결과만 출력 (종료코드 0=전부 최신, 2=신규 고시 발견)
-- --update: content/exams/cosmetic/notice_status.json 갱신
+- --update: {시험 루트}/notice_status.json 갱신
 - 종료코드 2는 GitHub Actions가 이슈를 여는 신호로 사용
 """
-import io
 import json
 import os
 import re
@@ -32,13 +32,34 @@ import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
-ROOT = Path(__file__).resolve().parent.parent
-STATUS_FILE = ROOT / 'content/exams/cosmetic/notice_status.json'
-REFS_FILE = ROOT / 'content/exams/cosmetic/references.json'
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from _exam_root import exam_root, load_refs_cfg, parse_ref_filename, utf8_stdio  # noqa: E402
 
-# 레거시 top-level baseline/latest의 기준 문서 — 원료 DB 대조의 기준
-RULE_NAME = '화장품 안전기준 등에 관한 규정'
+utf8_stdio()
+ROOT = Path(__file__).resolve().parent.parent
+
+
+def exam_arg():
+    """--exam <id|경로> 인자 추출 (없으면 None → env/default 해석)."""
+    for i, a in enumerate(sys.argv):
+        if a == '--exam' and i + 1 < len(sys.argv):
+            return sys.argv[i + 1]
+        if a.startswith('--exam='):
+            return a.split('=', 1)[1]
+    return None
+
+
+EXAM_DIR = exam_root(exam_arg())
+STATUS_FILE = EXAM_DIR / 'notice_status.json'
+REFS_FILE = EXAM_DIR / 'references.json'
+
+# 레거시 top-level baseline/latest의 기준 문서 — references.json noticeCore 우선,
+# 없으면 아래 기본값. 원료 DB 대조의 기준 문서다.
+_DEFAULT_CORE = '화장품 안전기준 등에 관한 규정'
+
+
+def rule_name():
+    return load_refs_cfg(EXAM_DIR).get('noticeCore') or _DEFAULT_CORE
 
 
 def load_oc_key():
@@ -112,25 +133,9 @@ def fmt_date(d):
     return f'{d[:4]}-{d[4:6]}-{d[6:8]}' if len(d) == 8 and d.isdigit() else d
 
 
-def parse_ref_filename(file_name):
-    """'화장품법(법률)(제20901호)(20260402).pdf' → 감시 대상 메타."""
-    name = re.split(r'\(', file_name)[0].strip()
-    m = re.search(r'\(제([\d]+(?:-\d+)?)호\)\s*\((\d{8})\)', file_name)
-    target = 'law' if re.search(r'\((법률|대통령령|총리령|부령)\)', file_name) else 'admrul'
-    url = 'https://www.law.go.kr/' + ('법령' if target == 'law' else '행정규칙') + '/' + re.sub(r'\s+', '', name)
-    return {
-        'name': name,
-        'target': target,
-        'file': file_name,
-        'url': url,
-        'baselineNotice': f'제{m.group(1)}호' if m else None,
-        'baselineDate': fmt_date(m.group(2)) if m else None,
-    }
-
-
 def watch_docs():
     """references.json referenceLaw → 감시 대상 목록 (파일 추가 시 자동 반영)."""
-    refs = json.loads(REFS_FILE.read_text(encoding='utf-8'))
+    refs = load_refs_cfg(EXAM_DIR)
     return [parse_ref_filename(f['file']) for f in refs.get('referenceLaw', []) if f.get('file')]
 
 
@@ -273,13 +278,14 @@ def main():
         any_newer = any_newer or r['newer']
 
     if update:
-        # 레거시 필드 — 안전기준 규정 문서로 유지 (기존 JS/테스트 호환)
-        core = next((r for r in results if r['name'] == RULE_NAME), None)
+        # 레거시 필드 — noticeCore 문서로 유지 (기존 JS/테스트 호환)
+        core_name = rule_name()
+        core = next((r for r in results if r['name'] == core_name), None)
         status = {
             'baseline': status.get('baseline', {}),
             'latest': {
                 'notice': (core or {}).get('latestNotice'),
-                'ruleName': RULE_NAME,
+                'ruleName': core_name,
                 'effectiveDate': (core or {}).get('latestDate'),
                 'serialNo': (core or {}).get('serial'),
             },

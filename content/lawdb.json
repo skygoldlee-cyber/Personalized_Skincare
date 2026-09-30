@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "comment": "공용 법령DB — 법령·고시 메타데이터 SSOT. src/law-links.js는 이 파일 + 각 시험 references.json(lawRefs)에서 빌드 시 생성됨 (npm run build:pdf-registry). 시험 간 공유 법령(개인정보보호법 등)은 여기 한 곳에만 등록.",
+  "fieldNotes": {
+    "type": "law = 법률·대통령령·총리령·부령 (law.go.kr/법령/<slug>) / admrul = 고시·규정 등 행정규칙 (/행정규칙/<slug>)",
+    "slug": "law.go.kr 한글주소 — 공백·특수문자 제거 명칭",
+    "matchKeys": "파일명·표시명 매칭용 접두 문자열(공백·괄호·언더스코어 제거 후 contains). 구체적인 것을 먼저 배치 — 별표 파편(KFCC_별표 등)·내부 원료 파일명(banned_ingredients 등)도 모법 근거 링크용으로 여기 포함",
+    "watch": "check_mfds_notice.py 감시 시 사용할 DRF target (law/admrul). 감시 대상 문서 목록 자체는 시험의 references.json referenceLaw에서 유도"
+  },
+  "laws": [
+    {
+      "id": "cosmetic-act-enforcement-decree",
+      "name": "화장품법 시행령",
+      "type": "law",
+      "slug": "화장품법시행령",
+      "matchKeys": ["화장품법시행령"],
+      "watch": { "target": "law" }
+    },
+    {
+      "id": "cosmetic-act-enforcement-rule",
+      "name": "화장품법 시행규칙",
+      "type": "law",
+      "slug": "화장품법시행규칙",
+      "matchKeys": ["화장품법시행규칙", "시행규칙_별표"],
+      "watch": { "target": "law" }
+    },
+    {
+      "id": "cosmetic-act",
+      "name": "화장품법",
+      "type": "law",
+      "slug": "화장품법",
+      "matchKeys": ["화장품법(법률)", "화장품법"],
+      "watch": { "target": "law" }
+    },
+    {
+      "id": "privacy-act",
+      "name": "개인정보보호법",
+      "type": "law",
+      "slug": "개인정보보호법",
+      "matchKeys": ["개인정보"],
+      "watch": { "target": "law" }
+    },
+    {
+      "id": "functional-cosmetic-review",
+      "name": "기능성화장품 심사에 관한 규정",
+      "type": "admrul",
+      "slug": "기능성화장품심사에관한규정",
+      "matchKeys": ["기능성화장품심사"],
+      "watch": { "target": "admrul" }
+    },
+    {
+      "id": "functional-cosmetic-std",
+      "name": "기능성화장품 기준 및 시험방법",
+      "type": "admrul",
+      "slug": "기능성화장품기준및시험방법",
+      "matchKeys": ["기능성화장품기준", "KFCC"],
+      "watch": { "target": "admrul" }
+    },
+    {
+      "id": "cosmetic-caution-allergy",
+      "name": "화장품 사용할 때의 주의사항 및 알레르기 유발성분 표시에 관한 규정",
+      "type": "admrul",
+      "slug": "화장품사용할때의주의사항및알레르기유발성분표시에관한규정",
+      "matchKeys": ["주의사항", "알레르기"],
+      "watch": { "target": "admrul" }
+    },
+    {
+      "id": "cosmetic-colorant-std",
+      "name": "화장품의 색소 종류 및 기준",
+      "type": "admrul",
+      "slug": "화장품의색소종류및기준",
+      "matchKeys": ["색소", "colorants_ingredients"],
+      "watch": { "target": "admrul" }
+    },
+    {
+      "id": "cosmetic-safety-std",
+      "name": "화장품 안전기준 등에 관한 규정",
+      "type": "admrul",
+      "slug": "화장품안전기준등에관한규정",
+      "matchKeys": ["안전기준", "banned_ingredients", "restricted_ingredients"],
+      "watch": { "target": "admrul" }
+    },
+    {
+      "id": "cosmetic-cgmp",
+      "name": "우수화장품 제조 및 품질관리기준",
+      "type": "admrul",
+      "slug": "우수화장품제조및품질관리기준",
+      "matchKeys": ["우수화장품", "CGMP"],
+      "watch": { "target": "admrul" }
+    }
+  ]
+}

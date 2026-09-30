@@ -425,7 +425,7 @@ export const DataLoader = {
             throw new Error(`Ingredients data is empty or invalid: ${meta.global}`);
         }
         this._ingredients = data;
-        window.INGREDIENTS_DATA = data;
+        window[meta.global || 'INGREDIENTS_DATA'] = data;
         return data;
     }
 };

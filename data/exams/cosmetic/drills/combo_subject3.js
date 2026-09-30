@@ -1,5 +1,5 @@
 // 자동 생성된 복수정답형 드릴 데이터입니다. 수정하지 마십시오. (tools/build/build_combo_drills.js)
-// 원본: data/exams/cosmetic/exams/subject3.f00d720e.js — mode: fact(명제 조합) 23문 / answer(정답 조합) 226문
+// 원본: data/exams/cosmetic/exams/subject3.31fdc2e4.js — mode: fact(명제 조합) 23문 / answer(정답 조합) 226문
 var COMBO_DRILLS_subject3 = [
  {
   "id": "safety_combo_86b500",
@@ -3394,41 +3394,41 @@ var COMBO_DRILLS_subject3 = [
   "subject": 3,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L1288 (출처: 과목3 문제은행 Q37)",
+  "citation": "📖 교재: L1415 (출처: 과목3 문제은행 Q37)",
   "stem": "다음 중 작업자의 머리카락이나 비듬이 화장품 내용물에 탈락하는 것을 방지하기 위해 착용하는 위생 보호구에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "safety_st_928825",
-    "conceptId": "L1288",
+    "conceptId": "L1415",
     "text": "방진 장갑",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_e983fb",
-    "conceptId": "L1288",
+    "conceptId": "L1415",
     "text": "마스크",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_68a5bc",
-    "conceptId": "L1288",
+    "conceptId": "L1415",
     "text": "방진 안경",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_e723c9",
-    "conceptId": "L1288",
+    "conceptId": "L1415",
     "text": "위생화",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_11ae94",
-    "conceptId": "L1288",
+    "conceptId": "L1415",
     "text": "위생모 (머리덮개)",
     "truth": true
    }
@@ -3472,7 +3472,7 @@ var COMBO_DRILLS_subject3 = [
    "정답판정"
   ],
   "derivedFrom": "subject3_q37",
-  "explain": "📖 교재 근거 (교재: L1288):\n② 작업소 및 보관소 내의 모든 직원들은 화장품의 오염을 방지하기 위해 규정된 작업복을 착용하고 있는가?",
+  "explain": "📖 교재 근거 (교재: L1415):\n② 작업소 및 보관소 내의 모든 직원들은 화장품의 오염을 방지하기 위해 규정된 작업복을 착용하고 있는가?",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "5"
  },
@@ -21595,41 +21595,41 @@ var COMBO_DRILLS_subject3 = [
   "subject": 3,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L3105 (출처: 과목3 문제은행 Q235)",
+  "citation": "📖 교재: L3523 (출처: 과목3 문제은행 Q235)",
   "stem": "화장품 위해사례 중 사망, 중증 질환 등 중대한 위해가 발생한 경우 이를 ________ 유해사례라고 한다. 위 빈 칸에 들어갈 옳은 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "safety_st_68e561",
-    "conceptId": "L3105",
+    "conceptId": "L3523",
     "text": "중대한",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_7501c4",
-    "conceptId": "L3105",
+    "conceptId": "L3523",
     "text": "경미한",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_234ac5",
-    "conceptId": "L3105",
+    "conceptId": "L3523",
     "text": "일반적인",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_69b25d",
-    "conceptId": "L3105",
+    "conceptId": "L3523",
     "text": "특수한",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_62764e",
-    "conceptId": "L3105",
+    "conceptId": "L3523",
     "text": "가벼운",
     "truth": false
    }
@@ -21677,7 +21677,7 @@ var COMBO_DRILLS_subject3 = [
    "정답판정"
   ],
   "derivedFrom": "subject3_q235",
-  "explain": "📖 교재 근거 (교재: L3105):\n① 포장재는 정기적으로 재고조사를 실시하여야 하며, 중대한 위반품이 발견되었을 경우에는 일탈처리를 한다.",
+  "explain": "📖 교재 근거 (교재: L3523):\n① 포장재는 정기적으로 재고조사를 실시하여야 하며, 중대한 위반품이 발견되었을 경우에는 일탈처리를 한다.",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "2"
  },
@@ -22148,41 +22148,41 @@ var COMBO_DRILLS_subject3 = [
   "subject": 3,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L1259 (출처: 과목3 문제은행 Q241)",
+  "citation": "📖 교재: L1366 (출처: 과목3 문제은행 Q241)",
   "stem": "화장품 제조 시 교차 오염을 방지하기 위해 작업 구역을 ________해야 한다. 위 빈 칸에 들어갈 옳은 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "safety_st_678610",
-    "conceptId": "L1259",
+    "conceptId": "L1366",
     "text": "통합",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_b8bf05",
-    "conceptId": "L1259",
+    "conceptId": "L1366",
     "text": "분리",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_5e279c",
-    "conceptId": "L1259",
+    "conceptId": "L1366",
     "text": "혼합",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_f823a7",
-    "conceptId": "L1259",
+    "conceptId": "L1366",
     "text": "인접",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_106817",
-    "conceptId": "L1259",
+    "conceptId": "L1366",
     "text": "공유",
     "truth": false
    }
@@ -22230,7 +22230,7 @@ var COMBO_DRILLS_subject3 = [
    "정답판정"
   ],
   "derivedFrom": "subject3_q241",
-  "explain": "📖 교재 근거 (교재: L1259):\n② 작업소 및 보관소 내의 직원은 화장품의 오염 방지를 위해 작업소 및 보관소 내의 규정된 작업복을 착용해야 하며, 음식물 등을 반입해서는 안 된다",
+  "explain": "📖 교재 근거 (교재: L1366):\n② 작업소 및 보관소 내의 직원은 화장품의 오염 방지를 위해 작업소 및 보관소 내의 규정된 작업복을 착용해야 하며, 음식물 등을 반입해서는 안 된다",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "1"
  },

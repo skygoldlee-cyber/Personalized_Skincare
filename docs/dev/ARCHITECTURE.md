@@ -329,7 +329,7 @@ Personalized_Skincare/
 │       ├── reader-ref-links.js #     참조자료 링크 생성·프리뷰·클릭 위임
 │       ├── reader-audio.js    #     오디오북 플레이어
 │       ├── textbook-search.js  #     교재 본문 검색
-│       ├── dictionary.js       #     성분 사전
+│       ├── dictionary.js       #     지식DB 사전 (스키마 드리븐 — manifest.knowledge)
 │       ├── study-calendar.js   #     학습 캘린더/목표 뷰
 │       ├── backup.js           #     데이터 백업/복원
 │       ├── glossary-renderer.js #    용어집 렌더링 + scrollToGlossary()
@@ -561,8 +561,8 @@ Personalized_Skincare/
 | [`src/pdf-registry.js`](../../src/pdf-registry.js) | 참조자료 중앙 설정 모듈. 과목별 참조자료 매핑, 출처→PDF 파일명 매핑, MD 변환본 경로 자동 생성 (`REF_DIRS`, `resolveRefPath`, `mapSourceToRef`). 원본 PDF는 `.vercelignore`로 배포 제외, `ref_md/과목N/*/*.md` 변환본(3.7MB)으로 인앱 뷰어+PDF 저장 지원 |
 | [`src/html-viewer.js`](../../src/html-viewer.js) | 앱 내 HTML/MD 참조자료 뷰어. `fetch()`+`DOMParser`(HTML) 또는 `parseMarkdown()`(MD)로 로드 후 DOM 직접 주입 (iframe 없음). **키워드 기반 스크롤**: `KEYWORD_INDEX`에서 추출한 셀 텍스트 키워드로 검색→첫 번째 하이라이트로 스크롤 (L###은 스크롤에 사용하지 않음). **성능 최적화**: sessionStorage 캐싱(24h TTL)으로 재방문 시 즉시 렌더링, span 일괄 제거(normalize 호출 최소화), 검색 조기 종료(첫 매치 즉시 스크롤 + 나머지 `requestIdleCallback` 지연 하이라이트). 텍스트 노드 순회 검색 + `<mark>` 하이라이트, 검색 결과 내비게이션(이전/다음), 인쇄 지원. **PDF 저장** (v210 도입): 인쇄 전용 CSS로 오버레이 제약 없이 전체 문서를 브라우저 인쇄 다이얼로그로 출력 → "PDF로 저장" 선택 가능 |
 | [`src/reader-format.js`](../../src/reader-format.js) | 교재 리더 본문 포맷터. `parseMarkdown()` + HTML 참조 링크 변환 (`data-ref-html`, `data-ref-search`) + 참조자료 인라인 렌더링. **참조자료 인라인 프리뷰 툴팁** (데스크톱 hover 400ms / 모바일 롱프레스 600ms, 200자 스니펫). 본문 "📚 참조 자료" 섹션의 `ref_md` 링크는 내부 뷰어 + `↗원문`(law.go.kr) 병기 + 스냅샷 배지(제N호·시행일) + 동일 링크 중복 제거. 이야기형 서사 범위 태깅(`markStoryNarrative` — `📖 ┈ 이야기 ┈`/`┈ 본문 ┈ 📘` 명시 마커 우선. 마커 문단은 파서가 `.story-boundary`(+start/end) 부여 → 모든 뷰어 경로에서 숨김, 범위 내 요소에 `.story-narrative` + 서사 시작부 `.story-toggle` 접기 칩 + 구간 양끝 `.sr-only` 라벨(스크린리더) 삽입, 미표시 문서는 📖 장면·💭 에필로그·프롤로그/등장인물 카드 휴리스틱 폴백 → 명조체+골드 색상 구분. `<!-- story:start/end -->` 주석은 `markdown-parser.js`가 렌더에서 제거). **이미지 src 해석** — `images/x.png` 상대 경로는 `filePath` 디렉터리 기준으로, 구형 절대 경로(시험 루트 누락본)는 `contentPath()` 기준으로 재작성 (교재 `images/` 자산) |
-| [`src/law-links.js`](../../src/law-links.js) | 참조 문서 → law.go.kr 공식 원문 매퍼 (`lawUrlFor`, `LAW_DOC_URLS`). 한글주소 규약: 법령=`/법령/`, 고시·기준·규정=`/행정규칙/`, 별표 파편→모법, 원료 DB→근거 고시('근거 고시' 라벨), 내부 정리 문서→null. `tools/check/check_law_urls.js`(check:lawurls)가 매핑 전수를 실호출 검증(한글주소 오류 페이지 본문 판별), notice-check 크론에 통합 |
-| [`src/notice-check.js`](../../src/notice-check.js) | 식약처 고시 다문서 감시 — references.json referenceLaw 8종의 baseline↔latest 비교(`notice_status.json` docs[]). Formula OS 진입 배너(24h 스로틀·시행일 억제) + '식약처 고시 확인' 버튼(law.go.kr 병렬 실시간) + '고시 정보 보기' 패널(문서별 기준→최신 행). `markStaleRefLinks`는 `[data-law-url]` 링크의 href를 현행본 시리얼 URL(`currentUrl`)로 보정 — 한글주소가 시행 예정 개정본으로 연결되는 사례 방지 — '⚠ 갱신 필요'/'⏳ 시행 예정' 배지 삽입 |
+| [`src/law-links.js`](../../src/law-links.js) | 참조 문서 → law.go.kr 공식 원문 매퍼 (`lawUrlFor`, `LAW_DOC_URLS`). **생성물** — `build_pdf_registry.js`가 `content/lawdb.json`(법령 메타 SSOT) + 각 시험 `references.json.lawRefs`에서 시험별 `_EXAM_LAW_URLS` 테이블을 합성, 활성 시험 해석은 `getActiveExamId()`. 한글주소 규약: 법령=`/법령/`, 고시·기준·규정=`/행정규칙/`, 별표 파편→모법, 원료 DB→근거 고시('근거 고시' 라벨), 내부 정리 문서→null. `tools/check/check_law_urls.js`(check:lawurls)가 매핑 전수를 실호출 검증(한글주소 오류 페이지 본문 판별), notice-check 크론에 통합 |
+| [`src/notice-check.js`](../../src/notice-check.js) | 시험별 법령·고시 다문서 감시 — references.json referenceLaw 자동 유도 문서의 baseline↔latest 비교(`notice_status.json` docs[]), 기준 문서는 `references.json.noticeCore`/`latest.ruleName`로 해석(시험 비종속). 원격 상태 위치는 `STATUS_REPO` 상수 + `statusUrl(examId)`. Formula OS 진입 배너(24h 스로틀·시행일 억제) + '식약처 고시 확인' 버튼(law.go.kr 병렬 실시간) + '고시 정보 보기' 패널(문서별 기준→최신 행). `markStaleRefLinks`는 `[data-law-url]` 링크의 href를 현행본 시리얼 URL(`currentUrl`)로 보정 — 한글주소가 시행 예정 개정본으로 연결되는 사례 방지 — '⚠ 갱신 필요'/'⏳ 시행 예정' 배지 삽입 |
 | [`src/exam-viewer.js`](../../src/exam-viewer.js) | 문제집(MD) 런타임 뷰어. `content/exams/cosmetic/문제은행/*.md` fetch → 자체 MD→HTML 변환 → 인앱 전체화면 오버레이 렌더링. TOC 생성·인쇄·sessionStorage 캐시(24h)·`file://` 번들 폴리백(`data/exams/cosmetic/exams_md/*.js`) 지원. **시험 제목은 registry에서 동적 조회** (하드코딩 없음) |
 | [`src/pro-upgrade.js`](../../src/pro-upgrade.js) | Pro 안내·entitlement 계층. 루트 `feature-plan.json`을 `loadFeaturePlan()`으로 로드 → 기능별 `pro`/`free` 판정(`isProFeature`). `pro` 기능은 진입 시 1회 정보 모달(`proFeatureNotice`, 기능별 seen 플래그) + `.pro-badge[data-pro-feature]` 배지 표시, `free`는 배지·안내 제거. 스토어 한도 오류(`Free 플랜` 접두사)는 `showStoreError` → `showUpgradeNotice` 업그레이드 모달로 분기. **entitlement**: `hasProEntitlement()`는 `pro_entitled` 로컬 플래그 참조(ROAD-P1 서버 검증 전 임시 시임), `canCloudSync()` = 플랜 free면 전원·pro면 entitlement 필요 — sync.js가 호출 |
 | [`src/usage-stats.js`](../../src/usage-stats.js) | 로컬 사용 카운터 (ROAD-L5 — 유료가치 판정 데이터). `switchView`의 `trackView(viewId)`로 화면별 진입·`trackAction(key)`로 기능 액션 횟수를 `usage_stats` **GLOBAL 키**에 누적 — `days` 맵은 90일 상한. **유저 단위**: `owner`에 익명 `device_id` 기록 — 로그인 없는 프로모션 기간에는 기기=유저로 근사, 시험 전환해도 누적 유지. **로컬 전용**: 백업·클라우드 동기화 제외(`RESET_KEYS`에는 포함 — 전체 초기화 시 삭제). **판정**: `VALUE_ACTIONS`(오답→교재/노트/유사문제·진단 평가·이야기형·맞춤 리포트·실제 결과 보고) 합계 ≥ `PRO_VALUE_THRESHOLD=20`이면 `isValueThresholdMet()` — ROAD-P1 착수 근거. `command_palette`·`plan_compare` 등 편의 액션은 표시만 하고 판정 제외. 설정 '내 사용 통계'(`showUsageStats`)에서 첫/최근 사용일·활동 일수·화면별/기능별 횟수·판정 진행 표 + 초기화 버튼 |
@@ -801,12 +801,15 @@ const state = {
 - `tools/build/exam_targets.js` — `getExamTargets()`가 exams.json을 순회해 시험별 contentRoot/dataRoot/manifest 해석, `getSubjectMaps()`가 manifest에서 과목 매핑 파생(기존 `subject1~4` 하드코딩 테이블 대체)
 - `tools/build/build_all_data.js` — `build:data`가 모든 시험을 `EXAM_ID`로 순회 빌드. ox/combo 드릴, exam/study_md/doc 번들, audio_manifest, citations, parser parity, question_chapters(문항→단원 매핑) 모두 시험 순회형
 - 인덱스 번들: `{dataRoot}/drills/combo_index.js`(과목별 복수정답형 문항 수), `{dataRoot}/question_chapters.js`(문항id→단원 + 과목별 라인 경계) — 결과 화면 라벨/단원별 취약 분석용, `DataLoader.loadComboIndex`/`loadQuestionChapters`로 로드
-- **공유 모듈 예외**: `src/pdf-registry.js`, `keyword-index.js`는 단일 공유 출력이라 기본 시험 바인딩 유지 — 비기본 시험에 참조자료 기능이 필요하면 시험별 파일 분리가 후속 과제
+- **공유 모듈은 시험별 테이블로 분리됨**: `src/pdf-registry.js`, `keyword-index.js`, `law-links.js`는 단일 파일이지만 내부가 `_EXAM_TABLES`/`_EXAM_LAW_URLS` 시험별 맵 + `getActiveExamId()` 해석으로 동작 — 생성기(`build_pdf_registry.js`)가 exams.json을 순회해 시험별 엔트리를 합성한다 (MULTI_EXAM_DB_DESIGN §4.2, Phase A)
 
 ### 새 시험 추가 절차
 1. `content/exams/<id>/`에 `manifest.json` + `references.json` + `교재/` + `문제은행/` 배치
+   - 참조 법령이 있으면: `content/lawdb.json`에 법령 엔트리 추가(공유 법령 재사용) + `references.json`의 `lawRefs`(링크 대상·우선순위)와 `noticeCore`(고시 감시 기준 문서) 설정 → `build:pdf-registry`가 `src/law-links.js` 재생성
+   - 지식DB(사전)가 있으면: `manifest.knowledge`에 엔티티 스키마 선언 + `features.dictionary` 활성화 — `dictionary.js`가 스키마 드리븐 렌더
 2. `content/exams.json`에 엔트리 추가 (`contentRoot`/`dataRoot`/`registryBundle`/`registryGlobal` + 기능 플래그)
 3. `npm.cmd run check:content -- --build` — 빌드 + 통합 검증 일괄. **앱 로직 변경 불필요**
+   - 상세 설계: `design/MULTI_EXAM_DB_DESIGN.md` (법령DB·지식DB 3계층 구조)
 
 ---
 

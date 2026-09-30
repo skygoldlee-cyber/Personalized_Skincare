@@ -14,18 +14,30 @@ import { lawUrlFor } from './law-links.js';
 import { getRefTables } from './pdf-registry.js';
 
 const CHECK_INTERVAL_MS = 24 * 60 * 60 * 1000;
-// 한글주소(행정규칙) — 일련번호를 알면 admRulInfoP.do 상세 페이지가 더 정확
-const LAW_SEARCH_URL = 'https://www.law.go.kr/행정규칙/화장품안전기준등에관한규정';
-function ruleInfoUrl(serial) {
-  return serial ? `https://www.law.go.kr/admRulInfoP.do?admRulSeq=${encodeURIComponent(serial)}` : LAW_SEARCH_URL;
-}
-const RULE_NAME = '화장품 안전기준 등에 관한 규정';
-const LAW_API = 'https://www.law.go.kr/DRF';
+const LAW_BASE = 'https://www.law.go.kr';
+const LAW_API = `${LAW_BASE}/DRF`;
 // law.go.kr 오픈API 운영자 코드 — 공개 계정 식별자(비밀키 아님). 호출량 제한은 계정별 적용
 const LAW_OC = 'goldrune1125';
+// notice_status.json의 원격 위치 — 저장소를 포크·이전하면 이 값만 변경
+const STATUS_REPO = 'skygoldlee-cyber/Personalized_Skincare';
+
+/**
+ * 현행본 직결 URL — 일련번호가 있으면 한글주소보다 정확한 시리얼 페이지로 연다.
+ * target: 'law' → lsInfoP.do / 'admrul' → admRulInfoP.do
+ */
+function ruleInfoUrl(serial, target, effectiveDate, fallback) {
+  if (serial) {
+    if (target === 'law') {
+      const efyd = String(effectiveDate || '').replace(/\D/g, '') || '99991231';
+      return `${LAW_BASE}/lsInfoP.do?lsiSeq=${encodeURIComponent(serial)}&efYd=${efyd}`;
+    }
+    return `${LAW_BASE}/admRulInfoP.do?admRulSeq=${encodeURIComponent(serial)}`;
+  }
+  return fallback || LAW_BASE;
+}
 
 function statusUrl(examId) {
-  return `https://raw.githubusercontent.com/skygoldlee-cyber/Personalized_Skincare/main/content/exams/${examId}/notice_status.json`;
+  return `https://raw.githubusercontent.com/${STATUS_REPO}/main/content/exams/${examId}/notice_status.json`;
 }
 
 /** '제2026-19호' / '2026-19' 등 → '제2026-19호' 정규화 (순수 함수 — 테스트용) */
@@ -84,12 +96,13 @@ function renderBanner(latest, extraDocs) {
   const extra = extraDocs?.length
     ? `<br><small>함께 갱신된 문서: ${extraDocs.map(d => escapeHTML(d)).join(', ')} — '고시 정보 보기'에서 문서별 비교를 확인하세요.</small>`
     : '';
+  const link = ruleInfoUrl(latest.serialNo, latest.target, latest.effectiveDate, latest.url);
   el.innerHTML = `
     <div class="notice-banner-body">
       <span class="notice-banner-icon" aria-hidden="true">⚠</span>
       <div class="notice-banner-text">
         <strong>${escapeHTML(label)} ${escapeHTML(notice)} ${escapeHTML(eff)} 확인됨</strong><br>
-        앱 문서는 이전 기준의 스냅샷입니다. 배합 전 <a href="${ruleInfoUrl(latest.serialNo)}" target="_blank" rel="noopener">공식 원문(law.go.kr)</a>을 확인하세요.${extra}
+        앱 문서는 이전 기준의 스냅샷입니다. 배합 전 <a href="${link}" target="_blank" rel="noopener">공식 원문(law.go.kr)</a>을 확인하세요.${extra}
       </div>
       <button type="button" class="notice-banner-close" data-click="dismissMfdsNotice" data-arg="${escapeHTML(latest.effectiveDate || '')}" aria-label="닫기">×</button>
     </div>`;
@@ -152,15 +165,19 @@ export async function checkMfdsNotice() {
     setItem(STORAGE_KEYS.NOTICE_CHECKED_AT, String(Date.now()));
     const status = await res.json();
     _lastStatus = status;
+    // 기준 문서는 상태 파일이 지정 (references.json.noticeCore → latest.ruleName)
+    const coreName = status.latest?.ruleName;
+    const coreDoc = (status.docs || []).find(d => d.name === coreName) || {};
     if (isNewerNotice(status)) {
-      const extra = (status.docs || []).filter(d => d.newer && d.name !== RULE_NAME).map(d => d.name);
-      renderBanner(status.latest, extra);
+      const extra = (status.docs || []).filter(d => d.newer && d.name !== coreName).map(d => d.name);
+      renderBanner({ ...status.latest, target: coreDoc.target, url: coreDoc.url }, extra);
     } else if (status.docs?.some(d => d.newer)) {
-      // 안전기준 외 문서만 개정된 경우 — 참조 문서 갱신 안내 배너
+      // 기준 문서 외 문서만 개정된 경우 — 참조 문서 갱신 안내 배너
       const changed = status.docs.filter(d => d.newer);
       renderBanner(
         { notice: changed[0].latestNotice || '개정 확인', effectiveDate: changed[0].latestDate,
-          serialNo: '', ruleName: changed[0].name },
+          serialNo: changed[0].currentSerial || '', ruleName: changed[0].name,
+          target: changed[0].target, url: changed[0].currentUrl || changed[0].url },
         changed.slice(1).map(d => d.name),
       );
     }
@@ -251,7 +268,8 @@ export async function checkMfdsNoticeNow() {
     if (changed.length) {
       const first = changed[0];
       renderBanner({ notice: first.latestNotice, effectiveDate: first.latestDate,
-                     serialNo: first.target === 'admrul' ? first.serial : '', ruleName: first.name },
+                     serialNo: first.serial, ruleName: first.name,
+                     target: first.target, url: first.url },
                    changed.slice(1).map(d => d.name));
       const names = changed.map(d => `${d.name} ${d.latestNotice || ''}`).join(' · ');
       if (out) out.textContent = `⚠ 개정 감지 ${changed.length}종 — ${names}. 참조 문서 스냅샷 갱신 필요${failed.length ? ` (${failed.length}종 조회 실패)` : ''}`;
@@ -311,11 +329,13 @@ export async function viewMfdsNoticeStatus() {
   }
   const rows = statusRows(status).map(([k, v]) =>
     `<div class="notice-status-row"><span class="notice-status-key">${escapeHTML(k)}</span><span>${escapeHTML(v)}</span></div>`).join('');
+  const coreDoc = (status.docs || []).find(d => d.name === status.latest?.ruleName) || {};
+  const lawLink = ruleInfoUrl(status.latest?.serialNo, coreDoc.target, null, coreDoc.url);
   panel.innerHTML = `
     ${rows}
     <div class="notice-status-links">
       <a href="${statusUrl(examId)}" target="_blank" rel="noopener">상태 파일 원문</a>
-      <a href="${ruleInfoUrl(status.latest?.serialNo)}" target="_blank" rel="noopener">고시 원문(law.go.kr)</a>
+      <a href="${lawLink}" target="_blank" rel="noopener">고시 원문(law.go.kr)</a>
       <span class="notice-status-src">출처: ${source}</span>
     </div>`;
 }

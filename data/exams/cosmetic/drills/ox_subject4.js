@@ -1,5 +1,5 @@
 // 자동 생성된 O/X 드릴 데이터입니다. 수정하지 마십시오. (tools/build/build_ox_drills.js)
-// 원본: data/exams/cosmetic/exams/subject4.dce4fb33.js — mode: fact(명제 판정) 17문 / answer(정답 판정) 255문
+// 원본: data/exams/cosmetic/exams/subject4.e75817fc.js — mode: fact(명제 판정) 17문 / answer(정답 판정) 255문
 var OX_DRILLS_subject4 = [
  {
   "id": "ox-04-0001",
@@ -12930,7 +12930,7 @@ var OX_DRILLS_subject4 = [
   "mode": "answer",
   "sid": "understanding_st_1b5090",
   "derivedFrom": "subject4_q142#1",
-  "explain": "📖 교재 근거 (2과목 L3879):\n히알루론산(Hyaluronic Acid) — \"1g이 6L의 물을 보유할 수 있는 강력한 보습제\" (1g ≈ 1mL, 6L = 6,000mL → 약 1,000~6,000배 수분 보유력)",
+  "explain": "📖 교재 근거 (2과목 L4214):\n히알루론산(Hyaluronic Acid) — \"1g이 6L의 물을 보유할 수 있는 강력한 보습제\" (1g ≈ 1mL, 6L = 6,000mL → 약 1,000~6,000배 수분 보유력)",
   "tags": [
    "정답판정",
    "수치"
@@ -12949,7 +12949,7 @@ var OX_DRILLS_subject4 = [
   "mode": "answer",
   "sid": "understanding_st_42a255",
   "derivedFrom": "subject4_q142#2",
-  "explain": "📖 교재 근거 (2과목 L3879):\n히알루론산(Hyaluronic Acid) — \"1g이 6L의 물을 보유할 수 있는 강력한 보습제\" (1g ≈ 1mL, 6L = 6,000mL → 약 1,000~6,000배 수분 보유력)",
+  "explain": "📖 교재 근거 (2과목 L4214):\n히알루론산(Hyaluronic Acid) — \"1g이 6L의 물을 보유할 수 있는 강력한 보습제\" (1g ≈ 1mL, 6L = 6,000mL → 약 1,000~6,000배 수분 보유력)",
   "tags": [
    "정답판정",
    "수치"
@@ -12968,7 +12968,7 @@ var OX_DRILLS_subject4 = [
   "mode": "answer",
   "sid": "understanding_st_ce2326",
   "derivedFrom": "subject4_q142#3",
-  "explain": "📖 교재 근거 (2과목 L3879):\n히알루론산(Hyaluronic Acid) — \"1g이 6L의 물을 보유할 수 있는 강력한 보습제\" (1g ≈ 1mL, 6L = 6,000mL → 약 1,000~6,000배 수분 보유력)",
+  "explain": "📖 교재 근거 (2과목 L4214):\n히알루론산(Hyaluronic Acid) — \"1g이 6L의 물을 보유할 수 있는 강력한 보습제\" (1g ≈ 1mL, 6L = 6,000mL → 약 1,000~6,000배 수분 보유력)",
   "tags": [
    "정답판정",
    "수치"
@@ -12987,7 +12987,7 @@ var OX_DRILLS_subject4 = [
   "mode": "answer",
   "sid": "understanding_st_7be298",
   "derivedFrom": "subject4_q142#4",
-  "explain": "📖 교재 근거 (2과목 L3879):\n히알루론산(Hyaluronic Acid) — \"1g이 6L의 물을 보유할 수 있는 강력한 보습제\" (1g ≈ 1mL, 6L = 6,000mL → 약 1,000~6,000배 수분 보유력)",
+  "explain": "📖 교재 근거 (2과목 L4214):\n히알루론산(Hyaluronic Acid) — \"1g이 6L의 물을 보유할 수 있는 강력한 보습제\" (1g ≈ 1mL, 6L = 6,000mL → 약 1,000~6,000배 수분 보유력)",
   "tags": [
    "정답판정",
    "수치"
@@ -13006,7 +13006,7 @@ var OX_DRILLS_subject4 = [
   "mode": "answer",
   "sid": "understanding_st_264c64",
   "derivedFrom": "subject4_q142#5",
-  "explain": "📖 교재 근거 (2과목 L3879):\n히알루론산(Hyaluronic Acid) — \"1g이 6L의 물을 보유할 수 있는 강력한 보습제\" (1g ≈ 1mL, 6L = 6,000mL → 약 1,000~6,000배 수분 보유력)",
+  "explain": "📖 교재 근거 (2과목 L4214):\n히알루론산(Hyaluronic Acid) — \"1g이 6L의 물을 보유할 수 있는 강력한 보습제\" (1g ≈ 1mL, 6L = 6,000mL → 약 1,000~6,000배 수분 보유력)",
   "tags": [
    "정답판정",
    "수치"

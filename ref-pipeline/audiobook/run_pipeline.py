@@ -49,11 +49,13 @@ from md_chunker import (  # noqa: E402
 from script_polisher import polish_chapter  # noqa: E402
 
 
-# 시험 콘텐츠 루트 (기본: 저장소 내 cosmetic 시험, EXAM_CONTENT_ROOT로 재지정 가능)
+# 시험 콘텐츠 루트 (기본: exams.json의 default 시험 — env/CLI 해석은 _exam_root에 위임)
 import os
-REPO_ROOT = Path(__file__).resolve().parents[2]          # ref-pipeline/audiobook/ 기준 저장소 루트
-EXAM_ROOT = Path(os.environ.get("EXAM_CONTENT_ROOT",
-                               REPO_ROOT / "content" / "exams" / "cosmetic"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from _exam_root import exam_root, repo_root  # noqa: E402
+
+REPO_ROOT = repo_root()                                   # ref-pipeline/audiobook/ 기준 저장소 루트
+EXAM_ROOT = exam_root()
 
 # manifest.json에서 과목 정보 동적 로드
 MANIFEST_PATH = EXAM_ROOT / "manifest.json"

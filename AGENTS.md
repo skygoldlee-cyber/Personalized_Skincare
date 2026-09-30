@@ -90,8 +90,11 @@ npm.cmd run check:reffresh -- --update  # 승격 완료 후 PDF 해시 매니페
 # ※ PDF 교체/재변환 절차: ① PDF 교체 ② convert:refs ③ verify:refs ④ ref_md_v2 → ref_md/과목N/{문서}/ 수동 승격 ⑤ check:reffresh -- --update
 # ※ ref_md는 `#L####` 라인 인용이 의존하므로 항상 시각적 줄 그대로(segment=False) 변환 — 엔진의 --no-segment 상당
 
-# 식약처 고시 감지 (참조 법령·고시 다문서 추적 — references.json referenceLaw에서 8종 자동 유도)
+# 식약처 고시 감지 (참조 법령·고시 다문서 추적 — references.json referenceLaw에서 자동 유도)
 python ref-pipeline/check_mfds_notice.py --update   # 키: LAW_OC_KEY 환경변수 또는 ref-pipeline/.env.local.json (gitignore됨)
+# ※ 대상 시험: --exam <id|경로> 인자 > EXAM_CONTENT_ROOT env > EXAM_ID env > exams.json default
+#   (모든 ref-pipeline 스크립트가 공용 헬퍼 _exam_root.py로 같은 순서 해석)
+# ※ 배너 기준 문서는 references.json.noticeCore, 수동검증값은 law_verified.json — 시험별 설정으로 분리됨
 # ※ baseline(파일명의 제N호·시행일)↔latest(법령=target:law / 고시=target:admrul) 비교를 notice_status.json docs[]에 기록
 #   — 신규 고시 감지 시 Actions가 이슈 생성 + check_law_urls.js로 한글주소 유효성도 함께 검증
 # ※ docs[].currentUrl = 시행일자≤오늘 최신본(현행본)의 시리얼 URL — 한글주소가 시행 예정 개정본으로 연결될 때 앱이
@@ -137,8 +140,8 @@ src/                    # ES Modules
   manual-viewer.js      # 학습안내서/매뉴얼 MD 뷰어
   modal-back.js         # 모달/오버레이 뒤로가기 닫기 — is-hidden 토글 감시 + 동일 URL 마커 pushState/popstate
   charts.js             # SVG 레이더/꺾은선 차트
-  pdf-registry.js       # 참조자료 경로 매핑 (시험별 테이블 — getRefTables())
-  law-links.js          # 참조 문서 → law.go.kr 원문 링크 매퍼 (한글주소 규약, 별표→모법, 원료 DB→근거 고시)
+  pdf-registry.js       # 참조자료 경로 매핑 (생성물 — 시험별 테이블, getRefTables())
+  law-links.js          # 참조 문서 → law.go.kr 원문 링크 매퍼 (생성물 — content/lawdb.json + references.json lawRefs → build:pdf-registry)
   notice-check.js       # 식약처 고시 감시 — 다문서 배너·실시간 확인 버튼·상태 패널·참조 링크 현행본 보정
   glossary-query.js     # 용어집 인덱스 쿼리 API (getGlossaryIndex())
   html-viewer.js        # 외부 HTML 콘텐츠 뷰어
@@ -201,7 +204,7 @@ src/                    # ES Modules
     exam-sim-review.js  # 시뮬레이터 결과 리뷰
     exam-sim-weak.js    # 오답 모의고사 (exam-simulator.js에서 분리)
     exam-select.js      # 시험 선택/전환 뷰
-    dictionary.js       # 용어집
+    dictionary.js       # 지식DB 사전 (스키마 드리븐 — manifest.knowledge → registry.knowledge)
     study-calendar.js    # 학습 캘린더/목표 뷰
     glossary-renderer.js # 용어집 렌더링
     event-listeners.js  # 이벤트 리스너 일괄 바인딩
@@ -214,11 +217,13 @@ src/                    # ES Modules
     backup.js           # 백업/복원
     offline-detection.js # 오프라인 감지 (app.js에서 분리)
 css/                    # 스타일시트 모듈 (base.css, reader.css, app-responsive.css, reader-extras.css, reader-mermaid.css, trainer.css, exam.css, dashboard.css, study.css, study-calendar.css, formula.css, print.css, ui-overlay.css, html-viewer.css — @import 순서가 캐스케이드, style.css 참조)
-content/                # 시험 콘텐츠 컨테이너 (시험 소유 파일 없음 — 순수 네임스페이스)
+content/                # 시험 콘텐츠 컨테이너
   exams.json            # 시험 레지스트리 (멀티시험 엔트리 — 멀티시험 구조 섹션 참조)
+  lawdb.json            # 공용 법령DB — law.go.kr 메타데이터 SSOT (id·slug·type·matchKeys·watch). 시험별 사용 목록은 references.json.lawRefs가 지정 → build:pdf-registry가 src/law-links.js 생성
   exams/cosmetic/       # 기본 시험 콘텐츠 루트 (contentRoot)
-    manifest.json       # 과목/교재/문제은행 선언
-    references.json     # 참조자료 매핑 설정
+    manifest.json       # 과목/교재/문제은행 선언 + knowledge(사전 뷰 엔티티 스키마)
+    references.json     # 참조자료 매핑 설정 + lawRefs(법령 링크 대상) + noticeCore(고시 감시 기준 문서)
+    law_verified.json   # check_laws.py 수동 검증값 {"문서명": ["번호","시행일","판정"]}
     교재/                # 4과목 MD 파일 (표준형 4 + 이야기형 4 = 8파일, 총 19챕터 — 과목별 2·5·5·7)
     문제은행/            # 과목별 문제은행 MD
     참조자료/            # 법령고시/별표/참조자료 — PDF는 공통·과목1~4 폴더, MD 변환본은 ref_md/과목N/{문서}/{문서}.md (과목 폴더가 귀속의 진실)
@@ -266,9 +271,10 @@ docs/                   # 개발 문서
 - **시험별 루트 (대칭)**: 모든 시험이 `content/exams/<id>/`(manifest.json + references.json + 교재/문제은행/참조자료/audiobook 등)와 `data/exams/<id>/`(registry.js, subjects/, exams/, drills/, study_md/, docs_md/, supplements/, id_migration.js 등) 구조 — 기본 시험(cosmetic)도 예외 없음. `content/`·`data/` 루트에는 전역 파일만: `exams.json`/`exams.js`, `audio_manifest.js`(시험 id 키 분리), `docs_md/`(앱 공용 문서)
 - **시험 컨텍스트**: `src/exam-context.js` — `contentPath()`/`dataPath()`(경로 해석), `hasFeature()`(기능 게이팅), `selectExam()`(전환 = `location.reload()`로 모듈 상태 리셋), `scopedKey()`(진도 네임스페이스 `<examId>:key`)
 - **진도 격리**: `safeGetItem`/`safeSetItem` 등이 자동으로 시험 접두사 적용. 테마·리더 설정 등 `GLOBAL_KEYS`만 비네임스페이스. 백업 파일은 비접두사 논리 키(시험 간 호환)
-- **새 시험 추가 절차**: ① `content/exams/<id>/`에 manifest.json + references.json + 교재/문제은행 배치 ② `content/exams.json`에 엔트리 추가 (`contentRoot`/`dataRoot`/`registryBundle`/`registryGlobal` 지정 — 비기본 시험은 `registryGlobal: "DATA_REGISTRY_<id>"`) ③ `npm.cmd run check:content -- --build` → 끝 (앱 로직 변경 불필요)
+- **새 시험 추가 절차**: ① `content/exams/<id>/`에 manifest.json + references.json + 교재/문제은행 배치 — 법령 참조가 있으면 `content/lawdb.json`에 엔트리 + `references.json.lawRefs`·`noticeCore` 설정, 사전이 있으면 `manifest.knowledge` 스키마 선언 ② `content/exams.json`에 엔트리 추가 (`contentRoot`/`dataRoot`/`registryBundle`/`registryGlobal` 지정 — 비기본 시험은 `registryGlobal: "DATA_REGISTRY_<id>"`) ③ `npm.cmd run check:content -- --build` → 끝 (앱 로직 변경 불필요). 상세: `docs/dev/design/MULTI_EXAM_DB_DESIGN.md`
 - **기능 플래그**: `features`에 없는 기능은 `data-feature` 속성/`hasFeature()`로 자동 숨김 — 성분사전·원료배합·계산연습·오디오북·참조자료 등 도메인 특화 기능
 - **Node 도구**: `EXAM_ID`/`EXAM_CONTENT_ROOT`/`EXAM_DATA_ROOT` env로 대상 시험 지정 (예: `EXAM_ID=<id> node tools/build/index.js`)
+- **Python 도구**: ref-pipeline 전 스크립트가 `ref-pipeline/_exam_root.py`로 동일 순서 해석 — `--exam` 인자 > `EXAM_CONTENT_ROOT` > `EXAM_ID` > exams.json default (예: `python ref-pipeline/check_laws.py --exam <id>`)
 
 ## 구조 변경 시 문서 갱신 규칙
 

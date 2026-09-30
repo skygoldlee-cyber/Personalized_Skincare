@@ -1,5 +1,5 @@
 // 자동 생성된 복수정답형 드릴 데이터입니다. 수정하지 마십시오. (tools/build/build_combo_drills.js)
-// 원본: data/exams/cosmetic/exams/subject1.23de1552.js — mode: fact(명제 조합) 8문 / answer(정답 조합) 57문
+// 원본: data/exams/cosmetic/exams/subject1.7154a436.js — mode: fact(명제 조합) 8문 / answer(정답 조합) 57문
 var COMBO_DRILLS_subject1 = [
  {
   "id": "law_combo_f9a972",
@@ -4940,35 +4940,35 @@ var COMBO_DRILLS_subject1 = [
    {
     "id": "ㄱ",
     "sid": "law_st_0e02ad",
-    "conceptId": "L689",
+    "conceptId": "L768",
     "text": "보건환경연구원",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_ab4977",
-    "conceptId": "L689",
+    "conceptId": "L768",
     "text": "시험실을 갖춘 제조업자",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_bda22b",
-    "conceptId": "L689",
+    "conceptId": "L768",
     "text": "「식품·의약품 분야 시험·검사 등에 관한 법률」에 따른 화장품시험·검사기관",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_4cf692",
-    "conceptId": "L689",
+    "conceptId": "L768",
     "text": "한국의약품수출입협회",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_f1afe1",
-    "conceptId": "L689",
+    "conceptId": "L768",
     "text": "한국화장품협회",
     "truth": true
    }
@@ -5017,7 +5017,7 @@ var COMBO_DRILLS_subject1 = [
    "정답판정"
   ],
   "derivedFrom": "subject1_q54",
-  "explain": "📖 교재 근거 (L689):\n> 참고: 품질검사 위탁 기관 🎯 기출 - 보건환경연구원 - 시험실을 갖춘 제조업자 - 「식품·의약품 분야 시험·검사 등에 관한 법률」에 따른 화장품시험·검사기관 - 한국의약품수출입협회\n해설: 한국화장품협회는 품질검사 위탁 기관에 해당하지 않는다.",
+  "explain": "📖 교재 근거 (L768):\n> 참고: 품질검사 위탁 기관 🎯 기출 - 보건환경연구원 - 시험실을 갖춘 제조업자 - 「식품·의약품 분야 시험·검사 등에 관한 법률」에 따른 화장품시험·검사기관 - 한국의약품수출입협회\n해설: 한국화장품협회는 품질검사 위탁 기관에 해당하지 않는다.",
   "source": "화장품법의 이해 (100제)",
   "answer": "5"
  },

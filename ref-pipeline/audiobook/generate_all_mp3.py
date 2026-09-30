@@ -29,10 +29,10 @@ from pathlib import Path
 
 import os
 AUDIOBOOK_DIR = Path(__file__).resolve().parent          # ref-pipeline/audiobook/
-EXAM_ROOT = Path(os.environ.get(
-    "EXAM_CONTENT_ROOT",
-    AUDIOBOOK_DIR.parents[1] / "content" / "exams" / "cosmetic",
-))
+sys.path.insert(0, str(AUDIOBOOK_DIR.parent))            # ref-pipeline/
+from _exam_root import exam_root  # noqa: E402
+
+EXAM_ROOT = exam_root()
 OUT_AUDIOBOOK_DIR = EXAM_ROOT / "audiobook"              # mp3 산출물 루트 (콘텐츠 측)
 sys.path.insert(0, str(AUDIOBOOK_DIR))
 

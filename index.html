@@ -1399,9 +1399,9 @@
             <!-- @spec DI-01,DI-04,DI-05 -->
             <section id="dictionary-view" class="view-section">
                 <div class="section-title-area">
-                    <h3><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> 화장품 성분 검색 사전</h3>
-                    <p>사용가능(approved), 사용제한(restricted), 사용금지(banned) 성분들의 배합 한도 및 시험 중요 팁을 실시간 검색해 확인하세요. <button type="button" id="dict-db-version" class="dict-db-version" data-click="showIngredientsChangelog" title="원료 DB 버전 이력 보기"></button></p>
-                    <p class="dict-neglist-note">판정은 <strong>네거티브 리스트</strong> 방식입니다 — 사용금지(banned, 별표1) 원료는 배합 불가, 사용제한(restricted, 별표2) 원료는 고시 한도·조건 내에서만 허용, 이 목록들에 없는 원료가 사용가능(approved)입니다. 단, 기능성 원료·색소·보존제·자외선차단 성분은 지정 목록을 따릅니다.</p>
+                    <h3><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> <span id="dict-title">화장품 성분 검색 사전</span></h3>
+                    <p><span id="dict-subtitle">사용가능(approved), 사용제한(restricted), 사용금지(banned) 성분들의 배합 한도 및 시험 중요 팁을 실시간 검색해 확인하세요.</span> <button type="button" id="dict-db-version" class="dict-db-version" data-click="showIngredientsChangelog" title="원료 DB 버전 이력 보기"></button></p>
+                    <p class="dict-neglist-note" id="dict-note">판정은 <strong>네거티브 리스트</strong> 방식입니다 — 사용금지(banned, 별표1) 원료는 배합 불가, 사용제한(restricted, 별표2) 원료는 고시 한도·조건 내에서만 허용, 이 목록들에 없는 원료가 사용가능(approved)입니다. 단, 기능성 원료·색소·보존제·자외선차단 성분은 지정 목록을 따릅니다.</p>
                 </div>
 
                 <div class="dictionary-control-panel mb-6">
@@ -1415,12 +1415,8 @@
                         <button class="btn btn-secondary flex-center gap-2" data-click="dictExportCsv" title="현재 검색·필터 결과를 CSV로 저장"><i class="fa-solid fa-file-csv" aria-hidden="true"></i> CSV</button>
                     </div>
 
-                    <!-- Category Filter Buttons -->
+                    <!-- Category Filter Buttons — knowledge 스키마(manifest.knowledge.filters)에서 JS가 렌더 -->
                     <div class="dict-filter-buttons flex-row gap-3 flex-wrap">
-                        <button class="btn btn-secondary active-filter" data-filter="all" data-click="setDictFilter" data-arg="all">전체 성분</button>
-                        <button class="btn btn-secondary" data-filter="approved" data-click="setDictFilter" data-arg="approved"><i class="fa-solid fa-circle-check" style="color:var(--color-success)" aria-hidden="true"></i> 사용 가능 원료</button>
-                        <button class="btn btn-secondary" data-filter="restricted" data-click="setDictFilter" data-arg="restricted"><i class="fa-solid fa-triangle-exclamation" style="color:var(--color-warning)" aria-hidden="true"></i> 사용 제한 원료</button>
-                        <button class="btn btn-secondary" data-filter="banned" data-click="setDictFilter" data-arg="banned"><i class="fa-solid fa-ban" style="color:var(--color-danger)" aria-hidden="true"></i> 사용 금지 원료</button>
                     </div>
                 </div>
 
