@@ -257,6 +257,9 @@
  * @property {SubjectMeta[]}   subjects
  * @property {ExamMeta[]}      exams
  * @property {IngredientsMeta} ingredients
+ * @property {Object}          [knowledge]    지식DB 사전 엔티티 스키마 (manifest.knowledge 패스스루 — registryKey/global/필드·필터·CSV 선언)
+ *                                            ※ 지식 세트 메타(registry[registryKey] = {bundle, global, version, stats})는
+ *                                              registryKey가 가변이라 typedef에 고정 키로 선언하지 않음
  * @property {ResourcesMeta}   [resources]
  * @property {Object}          [integratedExam] 통합 시험 규칙 (passAverage·subjectFailBelow 등)
  */

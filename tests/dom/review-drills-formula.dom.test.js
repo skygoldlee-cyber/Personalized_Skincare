@@ -21,6 +21,7 @@ import { renderReviewList } from '../../src/views/quiz.js';
 import { renderStudyAids, loadNumberDrills } from '../../src/study-aids.js';
 import { formulaAddIngredient } from '../../src/views/formula.js';
 import { renderDictionary } from '../../src/views/dictionary.js';
+import { DataLoader } from '../../src/data-loader.js';
 
 /* ---------------- RV-01: 복습 뷰 ---------------- */
 
@@ -181,11 +182,10 @@ describe('FO-10/11: 배합 계산기 UI·성분 사전 연동', () => {
     it('FO-11: 원료 DB 버전 배지가 registry 메타를 표시한다', () => {
         document.body.innerHTML += '<div id="dict-results-container"></div>';
         window.INGREDIENTS_DATA = [{ name: '테스트원료', eng: 'test', category: '보습제' }];
-        // dictionary.js는 전역 DataLoader.registry.ingredients를 읽는다
-        vi.stubGlobal('DataLoader', { registry: { ingredients: { version: '1.2.3', stats: { count: 1402 } } } });
+        // dictionary.js는 DataLoader.registry.ingredients를 읽는다
+        DataLoader.registry = { ingredients: { version: '1.2.3', stats: { count: 1402 } } };
         renderDictionary();
         expect(el('dict-db-version').textContent).toBe('원료 DB v1.2.3 · 1,402종');
-        vi.unstubAllGlobals();
     });
 
     it('DI-05: 사전 뷰에 네거티브 리스트 판정 원칙 안내가 표시된다', () => {

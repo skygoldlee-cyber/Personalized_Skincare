@@ -4,6 +4,7 @@ import { describe, it, beforeEach, expect, vi } from 'vitest';
 import {
     initCommandPalette, openCommandPalette, executePaletteResult
 } from '../../src/command-palette.js';
+import { DataLoader } from '../../src/data-loader.js';
 
 function seedDom() {
     document.body.innerHTML = `
@@ -19,7 +20,7 @@ function seedDom() {
         }
     };
     window.INGREDIENTS_DATA = [{ name: '글리세린', engName: 'Glycerin', category: '보습' }];
-    window.DataLoader = { registry: { exams: [{ title: '화장품법의 이해 (100문)', file: '과목1.md', subject: 'law' }] } };
+    DataLoader.registry = { exams: [{ title: '화장품법의 이해 (100문)', file: '과목1.md', subject: 'law' }] };
 }
 
 function type(query) {

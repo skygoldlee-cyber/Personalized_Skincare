@@ -15,6 +15,7 @@ vi.mock('../../src/ui-utils.js', () => ({
 }));
 
 import { loadIndexHtml, el, resetStudyState, spyAnchorDownload, lastToast } from './helpers.js';
+import { DataLoader } from '../../src/data-loader.js';
 import {
     renderDictionary, filterDictionary, setDictFilter, dictState,
     dictExportCsv,
@@ -74,12 +75,10 @@ describe('지식DB 사전 — 비기본 스키마(식품첨가물)', () => {
         dictState.query = '';
         dictState.filter = 'all';
         loadIndexHtml();
-        // dictionary.js는 window.DataLoader 전역의 registry를 읽는다 (모듈 임포트 아님)
-        window.DataLoader = {
-            registry: {
-                knowledge: FOOD_SCHEMA,
-                additives: { version: '0.1.0', stats: { count: DB.length } },
-            },
+        // dictionary.js는 DataLoader.registry를 읽는다 — resetStudyState가 null로 리셋하므로 여기서 주입
+        DataLoader.registry = {
+            knowledge: FOOD_SCHEMA,
+            additives: { version: '0.1.0', stats: { count: DB.length } },
         };
         window.ADDITIVES_DATA = DB;
         delete window.INGREDIENTS_DATA; // 기본 스키마 전역과 오염 방지

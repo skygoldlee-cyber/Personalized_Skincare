@@ -8,6 +8,7 @@ import { getChosung } from '../utils.js';
 import { hasFeature } from '../exam-context.js';
 import { toCsv, downloadCsv } from '../csv-utils.js';
 import { showToast } from '../ui-utils.js';
+import { DataLoader } from '../data-loader.js';
 
 /**
  * 지식DB 엔티티 스키마 기본값 — 화장품 원료 사전과 동일한 동작.
@@ -59,7 +60,7 @@ const DEFAULT_KNOWLEDGE = {
 
 /** 활성 시험의 지식DB 스키마 — registry.knowledge 우선, 없으면 기본값. */
 function dictSchema() {
-    const reg = (typeof DataLoader !== 'undefined' && DataLoader.registry) || {};
+    const reg = /** @type {any} */ (DataLoader.registry) || {};
     const k = reg.knowledge;
     return (k && typeof k === 'object') ? { ...DEFAULT_KNOWLEDGE, ...k } : DEFAULT_KNOWLEDGE;
 }
@@ -142,7 +143,7 @@ export function renderDictionary() {
     applyDictHeader(schema);
     renderFilterButtons(schema);
 
-    const reg = (typeof DataLoader !== 'undefined' && DataLoader.registry) || {};
+    const reg = /** @type {any} */ (DataLoader.registry) || {};
     const meta = reg[(schema.registryKey)] || reg.ingredients || null;
     const verEl = document.getElementById('dict-db-version');
     if (verEl) {
@@ -365,7 +366,7 @@ export function dictExportCsv() {
     const rows = filterItems(db, dictState.query, dictState.filter, schema);
     const unit = schema.entityUnit || '항목';
     if (!rows.length) { showToast(`보낼 ${unit} 데이터가 없습니다.`, 'warning'); return; }
-    const reg = (typeof DataLoader !== 'undefined' && DataLoader.registry) || {};
+    const reg = /** @type {any} */ (DataLoader.registry) || {};
     const meta = reg[schema.registryKey] || reg.ingredients || null;
     const ver = meta && meta.version ? `_v${meta.version}` : '';
     const csv = schema.csv || {};

@@ -6,6 +6,7 @@
 import { esc } from './sanitize.js';
 import { getChosung } from './utils.js';
 import { contentPath } from './exam-context.js';
+import { DataLoader } from './data-loader.js';
 import { openSubjectSection } from './views/textbook-reader.js';
 import { setTextbookSearchQuery } from './views/textbook-search.js';
 import { dictState } from './views/dictionary.js';
@@ -62,7 +63,7 @@ export function searchAll(query, sources) {
     const src = sources || {};
     const studyData = src.studyData || ((typeof window !== 'undefined' && window.STUDY_DATA) || {});
     const ingredients = src.ingredients || ((typeof window !== 'undefined' && window.INGREDIENTS_DATA) || []);
-    const registry = src.registry || ((typeof DataLoader !== 'undefined' && DataLoader.registry) || {});
+    const registry = src.registry || DataLoader.registry || {};
     const views = src.views || (typeof document !== 'undefined' ? getViewItems() : []);
     const groups = { view: [], card: [], quiz: [], section: [], ingredient: [], exam: [] };
     const push = (type, item) => { if (groups[type].length < MAX_PER_GROUP) groups[type].push(item); };

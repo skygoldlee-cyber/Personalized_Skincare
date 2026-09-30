@@ -81,7 +81,8 @@ test('DA-06: exams.json의 각 시험이 contentRoot/dataRoot 대칭 구조를 �
     const dRoot = join(ROOT, ex.dataRoot);
     assert.ok(existsSync(join(cRoot, 'manifest.json')), `${ex.id}: content manifest 없음`);
     assert.ok(existsSync(join(dRoot, 'registry.js')), `${ex.id}: data registry.js 없음`);
-    assert.ok(existsSync(join(dRoot, 'subjects')), `${ex.id}: subjects 번들 디렉터리 없음`);
+    // subjects/ 디렉터리는 검증하지 않는다 — 교재 번들은 런타임 MD 파싱으로 대체되어
+    // 빌드가 mkdir만 하고 파일을 쓰지 않으므로(git은 빈 디렉터리를 추적하지 않음) fresh clone에 없다
     assert.ok(existsSync(join(dRoot, 'exams')), `${ex.id}: exams 번들 디렉터리 없음`);
   }
 });
