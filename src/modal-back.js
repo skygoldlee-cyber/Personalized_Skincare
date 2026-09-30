@@ -22,8 +22,14 @@ let _observer = null;
 let _popstateBound = false;
 
 function _isOpen(el) {
-    if (el.classList.contains('is-hidden') || el.hasAttribute('hidden')) return false;
-    return getComputedStyle(el).display !== 'none';
+    // 자신뿐 아니라 상위 체인까지 검사 — cmdk-panel처럼 role="dialog"를 가진
+    // 자식이 is-hidden/display:none 상위에 중첩돼 있으면 화면에 없다.
+    // getComputedStyle().display는 자기 지정값이므로 상위 은폐를 반영하지 않는다.
+    for (let p = el; p && p.nodeType === 1; p = p.parentElement) {
+        if (p.hasAttribute('hidden') || p.classList.contains('is-hidden')) return false;
+        if (getComputedStyle(p).display === 'none') return false;
+    }
+    return true;
 }
 
 /** 표시 중인 모달 요소 목록. 자체 히스토리 관리 오버레이는 제외. */
@@ -53,9 +59,22 @@ function _syncState() {
         // UI 버튼으로 닫힌 경우 우리 마커가 사장 엔트리로 남는다 —
         // 현재 엔트리가 우리 마커면 안전하게 소비해 "죽은 뒤로가기"를 방지.
         // 한 번에 하나만 소비: 연속 back()은 중간의 뷰 엔트리까지 팝할 위험이 있다.
+        //
+        // ⚠️ 이 콜백은 MutationObserver 마이크로태스크다 — 같은 클릭 안의 뒤따르는
+        //    위임 핸들러(더보기 시트의 data-click 네비게이션 등)보다 먼저 실행된다.
+        //    그 위임이 pushState로 뷰를 전환하면 큐잉된 back()가 새 엔트리를 팝해
+        //    사용자를 이전 뷰로 되돌린다. → 실제 back()는 태스크 경계 뒤로 지연하고
+        //    실행 시점에도 현재 엔트리가 우리 마커인지 재검증한다. 뷰 전환이
+        //    끼어들었으면 마커를 사장 엔트리로 두고 스킵(hashchange가 복귀 처리).
         if (history.state && history.state.modalBack) {
             _consuming++;
-            try { history.back(); } catch (_) { _consuming--; }
+            setTimeout(() => {
+                if (!history.state || !history.state.modalBack) {
+                    _consuming--;
+                    return;
+                }
+                try { history.back(); } catch (_) { _consuming--; }
+            }, 0);
             break;
         }
     }
