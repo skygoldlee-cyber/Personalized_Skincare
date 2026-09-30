@@ -48,7 +48,12 @@ archive/
 # ---------- 📊 분석 보고서 (앱 미참조, docs/로 이관) ----------
 docs/report_archive/
 
-# ---------- 📖 참조자료 PDF (배포 제외 — HTML 변환본으로 대체) ----------
+# ---------- �️ 교재 삽화 PNG 원본 마스터 (배포 제외 — webp만 서빙) ----------
+# 교재/*/images/ 아래의 .png는 webp 재인코딩용 원본 마스터 — MD 본문·SW 프리캐시는
+# .webp만 참조하므로 배포에서 제외한다 (ref_md 페이지 이미지 png는 서빙 대상이라 제외 안 함).
+content/exams/*/교재/**/images/*.png
+
+# ---------- �📖 참조자료 PDF (배포 제외 — HTML 변환본으로 대체) ----------
 # {contentRoot}/참조자료/ 하위 PDF 파일들은 ref_md의 HTML 변환본으로 대체되어 배포에서 제외.
 # HTML 변환본(~35MB)만 배포에 포함.
 content/exams/*/참조자료/**/*.pdf
