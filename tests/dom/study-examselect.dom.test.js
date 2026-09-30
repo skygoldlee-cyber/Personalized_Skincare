@@ -13,6 +13,7 @@ const EXAMS = {
     exams: [
         { id: 'cosmetic', name: '맞춤형화장품 조제관리사', desc: '기본 시험', icon: 'fa-solid fa-flask', year: '2026', default: true },
         { id: 'other', name: '다른 시험', desc: '보조 시험', icon: 'fa-solid fa-book', year: '2026' },
+        { id: 'soon', name: '준비중 시험', desc: '아직 미개방', icon: 'fa-solid fa-hourglass', year: '2027', comingSoon: true },
     ],
 };
 
@@ -24,11 +25,11 @@ describe('시험 선택 — 목록·전환·복귀', () => {
         vi.clearAllMocks();
     });
 
-    it('목록 렌더 → 시험 카드 2장 + 현재(기본) 시험 표시', () => {
+    it('목록 렌더 → 시험 카드 3장 + 현재(기본) 시험 표시', () => {
         renderExamSelect();
 
         const cards = el('exam-select-list').querySelectorAll('.exam-select-card');
-        expect(cards.length).toBe(2);
+        expect(cards.length).toBe(3);
         expect(cards[0].textContent).toContain('맞춤형화장품 조제관리사');
         expect(cards[0].classList.contains('current')).toBe(true);
         expect(cards[0].textContent).toContain('현재 시험');
@@ -54,6 +55,28 @@ describe('시험 선택 — 목록·전환·복귀', () => {
         selectExamAction('cosmetic');
 
         expect(el('dashboard-view').classList.contains('active')).toBe(true);
+    });
+
+    it('준비중 시험 선택 → 알림 모달 표시, 전환·저장 없음 (H)', () => {
+        renderExamSelect();
+
+        // 카드에 준비중 배지 + 비활성 표시
+        const cards = el('exam-select-list').querySelectorAll('.exam-select-card');
+        const soonCard = cards[2];
+        expect(soonCard.classList.contains('coming-soon')).toBe(true);
+        expect(soonCard.textContent).toContain('준비중');
+        expect(soonCard.getAttribute('aria-disabled')).toBe('true');
+
+        el('dashboard-view').classList.remove('active');
+        selectExamAction('soon');
+
+        // 저장·전환 없이 알림 모달만 표시
+        expect(localStorage.getItem('current_exam')).toBeNull();
+        expect(el('dashboard-view').classList.contains('active')).toBe(false);
+        const overlay = document.getElementById('app-confirm-overlay');
+        expect(overlay).toBeTruthy();
+        expect(overlay.textContent).toContain('준비 중');
+        overlay.remove();
     });
 
     it('목록 없음 → 안내 문구 (E)', () => {

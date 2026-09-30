@@ -277,6 +277,7 @@
  * @property {string}   [icon]
  * @property {string}   [year]
  * @property {boolean}  [default]
+ * @property {boolean}  [comingSoon]     준비 중인 시험 — 카드에 '준비중' 배지 표시 + 선택 시 알림만 띄우고 전환하지 않음
  * @property {string}   [contentRoot]
  * @property {string}   [dataRoot]
  * @property {string}   [manifestPath]

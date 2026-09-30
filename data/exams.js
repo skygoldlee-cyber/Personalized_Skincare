@@ -41,6 +41,7 @@ var EXAMS_LIST = {
       "desc": "식품위생학(법령 암기형) Phase C 파일럿 — 식품위생법·식품공전·표시기준 인용 체인 검증",
       "icon": "fa-solid fa-bowl-food",
       "year": "2027",
+      "comingSoon": true,
       "contentRoot": "content/exams/food",
       "dataRoot": "data/exams/food",
       "manifestPath": "content/exams/food/manifest.json",

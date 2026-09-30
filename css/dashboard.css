@@ -663,6 +663,14 @@
     font-size: var(--text-sm, 0.8rem);
     font-weight: var(--font-weight-bold, 600);
 }
+.exam-select-card.coming-soon {
+    opacity: 0.62;
+}
+.exam-select-coming-soon {
+    color: var(--color-warning, #f59e0b);
+    font-size: var(--text-sm, 0.8rem);
+    font-weight: var(--font-weight-bold, 600);
+}
 
 /* 대시보드 상세 분석 접이식 — 기본 접힘으로 첫 화면 복잡도 완화 */
 .analysis-fold {

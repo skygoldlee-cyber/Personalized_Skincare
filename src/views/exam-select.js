@@ -4,6 +4,7 @@
 import { getExamList, getActiveExamId, selectExam } from '../exam-context.js';
 import { esc } from '../sanitize.js';
 import { switchView } from './navigation.js';
+import { showAlert } from '../ui-utils.js';
 
 /** 시험 선택 카드 목록 렌더링 */
 export function renderExamSelect() {
@@ -19,14 +20,16 @@ export function renderExamSelect() {
 
     container.innerHTML = exams.map(e => {
         const isCurrent = e.id === currentId;
+        const isSoon = !!e.comingSoon;
         return `
-            <div class="exam-select-card${isCurrent ? ' current' : ''}" data-click="selectExamAction" data-arg="${esc(e.id)}" role="button" tabindex="0">
+            <div class="exam-select-card${isCurrent ? ' current' : ''}${isSoon ? ' coming-soon' : ''}" data-click="selectExamAction" data-arg="${esc(e.id)}" role="button" tabindex="0" aria-disabled="${isSoon}">
                 <div class="exam-select-icon"><i class="${esc(e.icon || 'fa-solid fa-book')}" aria-hidden="true"></i></div>
                 <h4>${esc(e.name)}</h4>
                 <p>${esc(e.desc || '')}</p>
                 <div class="exam-select-meta">
                     ${e.year ? `<span class="exam-select-year">${esc(e.year)}</span>` : ''}
                     ${isCurrent ? '<span class="exam-select-current">현재 시험</span>' : ''}
+                    ${isSoon ? '<span class="exam-select-coming-soon">준비중</span>' : ''}
                 </div>
             </div>
         `;
@@ -38,8 +41,13 @@ export function showExamSelect() {
     switchView('exam-select-view', { scrollTop: true });
 }
 
-/** 시험 카드 선택 — 다른 시험이면 selectExam이 리로드, 같으면 대시보드로 복귀 */
+/** 시험 카드 선택 — 준비중 시험은 알림만, 다른 시험이면 selectExam이 리로드, 같으면 대시보드로 복귀 */
 export function selectExamAction(id) {
+    const def = getExamList().find(e => e.id === id);
+    if (def && def.comingSoon) {
+        showAlert(`'${def.name || id}' 시험은 현재 준비 중입니다. 업데이트되면 이용하실 수 있습니다.`, '준비 중');
+        return;
+    }
     if (selectExam(id)) return; // 다른 시험: 페이지 리로드 발생
     switchView('dashboard-view');
 }
