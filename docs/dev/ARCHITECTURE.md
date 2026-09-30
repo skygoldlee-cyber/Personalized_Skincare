@@ -815,6 +815,17 @@ const state = {
 3. `npm.cmd run check:content -- --build` — 빌드 + 통합 검증 일괄. **앱 로직 변경 불필요**
    - 상세 설계: `design/MULTI_EXAM_DB_DESIGN.md` (법령DB·지식DB 3계층 구조)
 
+**시험 팩 디렉터리 규약** (`content/exams/<id>/`):
+
+| 항목 | 성격 | 비고 |
+|------|------|------|
+| `manifest.json`, `references.json`, `교재/`, `문제은행/` | 필수 | 과목·챕터·문항 SSOT |
+| `참조자료/` | 참조 문서 | `ref_md/과목N/` 변환본 + 실물 PDF 폴더(과목N·공통·법령고시 등) + `pdf_hashes.json` + `_archive/` |
+| `knowledge/` | 지식DB 원본 | `manifest.knowledge` 선언 시 `<key>.json` — cosmetic은 `source:"ingredients-md"`로 `참조자료/원료` MD를 겸용 소스로 사용해 knowledge/가 없음 |
+| `docs/` | 앱 내 문서 | 학습안내서 등 MD → docs_md 번들 대상 |
+| `number-drills/`, `교재/glossary/`, `audiobook/` | 기능 콘텐츠 | 해당 `features` 플래그 시험만 보유 |
+| `notice_status.json`, `law_verified.json`, `combo_blocklist.json`, `report/` | 도구 산출물 | 고시 감시·법령 검증·combo 감사가 루트에 기록 — 스캐폴드가 미리 만들지 않음(첫 실행 시 생성) |
+
 ---
 
 ## 🔐 계정·클라우드 동기화 (Supabase, 선택적)

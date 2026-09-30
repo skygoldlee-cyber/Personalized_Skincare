@@ -209,8 +209,9 @@ function scaffold(id, opts) {
         [path.join(contentDir, '교재', 'subject1', '1과목_개요.md'), textbookSample(name)],
         [path.join(contentDir, '문제은행', '과목1_단일정답형.md'), examSample()],
     ];
+    // notice_status.json은 고시 감시 첫 --update 실행 시 루트에 생성되므로 디렉터리 불요
     const dirs = [
-        'docs', '참조자료', 'knowledge', 'notice',
+        'docs', '참조자료', 'knowledge',
     ].map(d => path.join(contentDir, d));
 
     if (opts.dry_run) {
