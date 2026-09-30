@@ -32,6 +32,47 @@ const warns = [];
 const err = (scope, msg) => errors.push(`[${scope}] ${msg}`);
 const warn = (scope, msg) => warns.push(`[${scope}] ${msg}`);
 
+const LAWDB_PATH = path.join(ROOT, 'content', 'lawdb.json');
+let _lawdb = undefined;
+function loadLawDb() {
+  if (_lawdb === undefined) {
+    _lawdb = fs.existsSync(LAWDB_PATH) ? JSON.parse(fs.readFileSync(LAWDB_PATH, 'utf-8')) : null;
+  }
+  return _lawdb;
+}
+
+/**
+ * 지식DB 아이템의 lawRef는 사전 "근거" 표시용 문자열이지만,
+ * 표기가 이 시험이 참조하는 법령(lawRefs의 matchKeys)과 어긋나면
+ * 존재하지 않는 근거를 가리키게 되므로 매칭 여부를 경고한다.
+ */
+function checkKnowledgeLawRefs(target, registryKey) {
+  const scope = `${target.id}:knowledge`;
+  const kPath = path.join(ROOT, target.contentRoot, 'knowledge', `${registryKey}.json`);
+  const refsPath = path.join(ROOT, target.contentRoot, 'references.json');
+  const lawdb = loadLawDb();
+  if (!fs.existsSync(kPath) || !fs.existsSync(refsPath) || !lawdb) return;
+
+  const refs = JSON.parse(fs.readFileSync(refsPath, 'utf-8'));
+  const laws = lawdb.laws || [];
+  const refIds = new Set(('lawRefs' in refs) ? (refs.lawRefs || []) : laws.map(l => l.id));
+  const keys = [];
+  for (const l of laws) {
+    if (refIds.has(l.id)) for (const k of l.matchKeys || []) keys.push(k);
+  }
+  const norm = s => String(s).replace(/[\s()_]/g, '');
+  const items = ((JSON.parse(fs.readFileSync(kPath, 'utf-8')) || {}).items) || [];
+  const seen = new Set();
+  for (const it of items) {
+    if (!it || !it.lawRef || seen.has(it.lawRef)) continue;
+    seen.add(it.lawRef);
+    const n = norm(it.lawRef);
+    if (!keys.some(k => n.includes(norm(k)))) {
+      warn(scope, `지식DB lawRef "${it.lawRef}"가 이 시험 lawRefs 범위의 matchKeys와 매칭되지 않음 — 근거 표기 또는 lawRefs 확인 (${registryKey}.json)`);
+    }
+  }
+}
+
 function fileExists(root, ...segs) {
   return fs.existsSync(path.join(root, ...segs));
 }
@@ -137,6 +178,7 @@ function checkTarget(target) {
   if (kKey && RESERVED_REGISTRY_KEYS.includes(kKey)) {
     err(scope, `knowledge.registryKey "${kKey}"는 registry 예약 키(${RESERVED_REGISTRY_KEYS.join(', ')})와 충돌`);
   }
+  if (kKey) checkKnowledgeLawRefs(target, kKey);
 
   // 역방향: 디스크에는 있지만 manifest에 선언되지 않은 .md (빌드에서 조용히 제외됨)
   // 자동 생성 파일(복수정답형 등)은 빌드 산출물이므로 제외

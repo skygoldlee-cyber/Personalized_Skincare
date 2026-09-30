@@ -154,24 +154,64 @@ function examLawPairs(refs, lawdb, examId) {
  * docs[].url은 ref-pipeline이 파일명에서 유도(첫 '(' 앞 문서명의 공백 제거 —
  * _exam_root.py parse_ref_filename과 동일 규칙). 둘이 어긋나면 현행본
  * 보정/개정 배지가 조용히 miss하므로 빌드 시점에 경고한다.
+ * 추가로 matchKeys 교차 오염도 검증한다 — contains 매칭이라 한 파일명이
+ * 복수 lawdb 항목에 걸릴 수 있으며, lawRefs 밖 법령에 걸리는 matchKey는
+ * 시험 추가·lawRefs 변경 시 오링크로 이어질 수 있다.
  */
-function checkLawUrlJoin(refs, pairs, examId) {
+function checkLawUrlJoin(refs, lawdb, examId) {
+  const laws = (lawdb && lawdb.laws) || [];
+  const hasLawRefs = refs && 'lawRefs' in refs;
+  const refIds = hasLawRefs ? (refs.lawRefs || []) : laws.map(l => l.id);
+  const refOrder = new Map(refIds.map((id, i) => [id, i]));
   const lawFiles = ((refs || {}).referenceLaw || []).map(it => it && it.file).filter(Boolean);
   const normKey = s => String(s).replace(/[\s()_]/g, '');
   for (const f of lawFiles) {
     const docName = String(f).split('(')[0].trim();
     // 런타임 lawUrlFor와 동일 정규화(확장자 제거 후 공백·괄호·언더스코어 제거)
     const norm = normKey(String(f).replace(/\.(pdf|md|html?)$/i, ''));
-    const hit = pairs.find(([k]) => norm.includes(normKey(k)));
-    if (!hit) {
+    const matched = laws.filter(l => (l.matchKeys || []).some(k => norm.includes(normKey(k))));
+    if (!matched.length) {
       console.warn(`[${examId}] referenceLaw 파일이 어떤 lawdb matchKeys에도 매칭되지 않습니다: ${f} — data-law-url 없음으로 고시 배지/현행본 보정 미적용`);
+      continue;
+    }
+    const inside = matched.filter(l => refOrder.has(l.id)).sort((a, b) => refOrder.get(a.id) - refOrder.get(b.id));
+    const chosen = inside[0];
+    if (!chosen) {
+      console.warn(`[${examId}] "${f}"이(가) lawdb(${matched.map(l => l.id).join(', ')})와 매칭되지만 이 시험 lawRefs에 없습니다 — data-law-url 미적용`);
       continue;
     }
     // 파이프라인 유도 URL: (법률|대통령령|총리령|부령) 꼬리 → 법령, 그 외 → 행정규칙
     const targetSeg = /\((법률|대통령령|총리령|부령)\)/.test(f) ? '법령' : '행정규칙';
     const derivedUrl = `https://www.law.go.kr/${targetSeg}/${docName.replace(/\s+/g, '')}`;
-    if (hit[1] !== derivedUrl) {
-      console.warn(`[${examId}] markStaleRefLinks 조인 불일치 — "${f}"은(는) ${hit[1]}로 매칭되지만 ref-pipeline은 ${derivedUrl}를 기록합니다 (lawdb slug 또는 파일명 확인)`);
+    if (lawUrl(chosen) !== derivedUrl) {
+      console.warn(`[${examId}] markStaleRefLinks 조인 불일치 — "${f}"은(는) ${lawUrl(chosen)}로 매칭되지만 ref-pipeline은 ${derivedUrl}를 기록합니다 (lawdb slug 또는 파일명 확인)`);
+    }
+    if (matched.length > 1) {
+      const outside = matched.filter(l => !refOrder.has(l.id)).map(l => l.id);
+      if (outside.length) {
+        console.warn(`[${examId}] "${f}"의 파일명이 lawRefs 밖 법령(${outside.join(', ')})에도 매칭됩니다 — matchKey 범위가 넓은지 확인 (선택: ${chosen.id})`);
+      } else {
+        console.warn(`[${examId}] "${f}"이(가) 복수 법령(${inside.map(l => l.id).join(', ')})에 매칭됩니다 — lawRefs 순서로 "${chosen.id}" 선택됨`);
+      }
+    }
+  }
+}
+
+/**
+ * 이름 기반 참조 검증 — noticeCore·subjectDefaultRefdoc는 문자열 이름으로
+ * referenceLaw를 가리키므로 문서명/파일명이 바뀌면 조용히 어긋난다.
+ */
+function checkNamedRefs(refs, examId) {
+  const lawFiles = ((refs || {}).referenceLaw || []).map(it => it && it.file).filter(Boolean);
+  const basenames = new Set(lawFiles.map(f => String(f).replace(/\.pdf$/i, '')));
+  const docNames = new Set(lawFiles.map(f => String(f).split('(')[0].trim()));
+  const nc = refs && refs.noticeCore;
+  if (nc && lawFiles.length && !docNames.has(nc)) {
+    console.warn(`[${examId}] noticeCore "${nc}"이(가) referenceLaw 문서명과 일치하지 않습니다 — 고시 감시 기준 문서 확인`);
+  }
+  for (const [k, v] of Object.entries((refs && refs.subjectDefaultRefdoc) || {})) {
+    if (v && !basenames.has(v)) {
+      console.warn(`[${examId}] subjectDefaultRefdoc["${k}"]="${v}"이(가) referenceLaw 파일에 없습니다 — 파일명 변경 시 함께 갱신 필요`);
     }
   }
 }
@@ -195,7 +235,8 @@ function buildLawLinks(targets, refsByExam, defaultId) {
     const refs = refsByExam.get(target.id);
     if (!refs) continue;
     const pairs = examLawPairs(refs, lawdb, target.id);
-    checkLawUrlJoin(refs, pairs, target.id);
+    checkLawUrlJoin(refs, lawdb, target.id);
+    checkNamedRefs(refs, target.id);
     const pairsJs = pairs.map(([k, u]) =>
       `    [${JSON.stringify(k)}, ${JSON.stringify(u)}]`).join(',\n');
     entries.push(`    ${JSON.stringify(target.id)}: [\n${pairsJs}\n    ]`);
