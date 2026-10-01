@@ -30,7 +30,8 @@ var EXAMS_LIST = {
         "appendixDocs": true,
         "pomodoro": true,
         "formula": true,
-        "limitsTrainer": true
+        "limitsTrainer": true,
+        "studyGuide": true
       }
     },
     {

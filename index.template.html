@@ -55,7 +55,7 @@
                 <button type="button" data-click="ManualViewer.openManual" class="manual-nav-link nav-study-only">
                     <i class="fa-solid fa-circle-info" aria-hidden="true"></i> 학습 매뉴얼
                 </button>
-                <button type="button" data-click="ManualViewer.openFormulaManual" class="manual-nav-link">
+                <button type="button" data-click="ManualViewer.openFormulaManual" class="manual-nav-link" data-feature="formula">
                     <i class="fa-solid fa-flask" aria-hidden="true"></i> 실무 매뉴얼
                 </button>
                 <!-- 실무 모드에서만 표시되는 접이식 라벨 — 클릭 시 학습 항목 펼침/접힘 -->
@@ -263,7 +263,7 @@
                 <span data-uitext="dictionary">성분 사전</span>
             </button>
             <!-- 실무 모드 전용 탭 — 실무 매뉴얼 바로가기 -->
-            <button type="button" data-click="ManualViewer.openFormulaManual" class="mobile-tab-item nav-practice-only">
+            <button type="button" data-click="ManualViewer.openFormulaManual" class="mobile-tab-item nav-practice-only" data-feature="formula">
                 <i class="fa-solid fa-flask" aria-hidden="true"></i>
                 <span>실무매뉴얼</span>
             </button>

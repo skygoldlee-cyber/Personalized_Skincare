@@ -788,7 +788,7 @@ const state = {
 - `getActiveExam()`/`getExamList()` — `current_exam` localStorage 키 + `EXAMS_LIST`로 활성 시험 해석
 - `contentPath(rel)`/`dataPath(rel)` — 모든 콘텐츠·데이터 경로는 활성 시험의 루트 기준으로 해석 (`src/paths.js`, `data-loader.js` 전 경로가 이를 사용)
 - `selectExam(id)` — 시험 전환은 `location.reload()`로 수행해 모듈 상태·전역 캐시를 완전 리셋
-- `hasFeature(name)` — 도메인 특화 기능(성분사전/계산연습/원료배합/오디오북/참조자료/뽀모도로/부록문서/핵심수치훈련 `limitsTrainer`)을 시험별 `features` 플래그로 게이팅. HTML은 `data-feature` 속성, 동적 버튼은 `hasFeature()` 분기
+- `hasFeature(name)` — 도메인 특화 기능(성분사전/계산연습/원료배합/오디오북/참조자료/뽀모도로/부록문서/핵심수치훈련 `limitsTrainer`/학습안내서 `studyGuide`)을 시험별 `features` 플래그로 게이팅. HTML은 `data-feature` 속성, 동적 버튼은 `hasFeature()` 분기. 시험 전용 매뉴얼 링크(실무 매뉴얼 → `formula`, 학습 안내서 카드 → `studyGuide`)도 같은 속성으로 게이트 — 문서 부재 시험에선 카드 자체가 비노출
 - `data-uitext` 속성 — 내비·탭 등 정적 라벨을 `applyExamBranding()`이 `DATA_REGISTRY.uiText[key].title`로 덮어씀 (예: 사이드바 "성분 사전" → food는 "식품첨가물 사전"). 커맨드 팔레트 그룹 라벨도 동일 소스 사용
 - `scopedKey(key)` — 진도 localStorage 키를 `<examId>:key`로 네임스페이스. 앱 전역 키(테마·리더 설정 등 `GLOBAL_KEYS`)는 비네임스페이스 유지. `purgeLegacyStorage()`가 마이그레이션 1회에 레거시 비네임스페이스 진도 키 정리
 - `examIdToSubjectId(examId)` — 모의고사/기출 시험지 id → 소유 과목 키 매핑 (약점 항목의 과목 귀속에 사용)

@@ -164,8 +164,11 @@
     },
     {
       "layer": "domain:cosmetic",
-      "note": "화장품 시험 콘텐츠 원본",
-      "patterns": ["content/exams/cosmetic/**"]
+      "note": "화장품 시험 콘텐츠 원본 + 화장품 문항을 담은 테스트 픽스처",
+      "patterns": [
+        "content/exams/cosmetic/**",
+        "tests/fixtures/sample-questions.js"
+      ]
     },
     {
       "layer": "domain:cosmetic",

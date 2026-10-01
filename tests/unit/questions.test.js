@@ -12,8 +12,8 @@ import {
   validateQuestion,
   gradeAnswer,
   scoreExam,
-  SAMPLE_QUESTIONS,
 } from '../../src/questions.js';
+import { SAMPLE_QUESTIONS } from '../fixtures/sample-questions.js';
 
 const combo = {
   id: 'q-t-1', subject: 4, type: 'combo', points: 10,

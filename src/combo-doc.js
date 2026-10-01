@@ -7,6 +7,8 @@
 // 문항을 런타임에 직렬화해 동일 포맷으로 렌더링한다.
 // → 생성물 이중 관리(원본 md + exams_md 번들) 제거, 파일럿 문항도 문서에 포함.
 
+import { getActiveExam } from './exam-context.js';
+
 const STMT_LABELS = ['ㄱ', 'ㄴ', 'ㄷ', 'ㄹ', 'ㅁ', 'ㅂ'];
 const OPT_INDICATORS = ['①', '②', '③', '④', '⑤', '⑥'];
 
@@ -20,10 +22,11 @@ const OPT_INDICATORS = ['①', '②', '③', '④', '⑤', '⑥'];
  * @returns {string} 마크다운 문서
  */
 export function buildComboSubjectMd(subject, subjectName, questions) {
+    const examName = (getActiveExam() || {}).name;
     const lines = [
         `# ${subject ? `제${subject}과목: ` : ''}${subjectName || '조합형'} ㄱㄴㄷ 조합형`,
         '',
-        '> **화장품조제관리사 필기시험 대비** (ㄱㄴㄷ 조합형)',
+        `> **${examName ? examName + ' ' : ''}필기시험 대비** (ㄱㄴㄷ 조합형)`,
         '> 문제에 집중할 수 있도록 정답과 교재 근거는 파일 끝에 모아 제공합니다.',
         '> 자동 변환 문항 + 수작업 파일럿 문항이 섞여 있습니다 (런타임 생성 문서).',
         '',
