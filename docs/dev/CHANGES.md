@@ -6,6 +6,11 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-01 배포 제외 패턴 보강 + food 서사 골격
+
+- **`.vercelignore`**: `교재/**/images/*.png`의 중첩 `**` 패턴이 Vercel 업로드를 막지 못한 것으로 추정(83.5MB 배포 발생) — 실제 1단계 구조 `교재/*/images/*.png` + 과목별 명시 경로 4개로 보강. 런타임은 .webp만 참조
+- **food 서사 골격**: `build:story -- --scaffold sanitation`으로 `교재/sanitation/story/1과목_식품위생법의이해_서사.md` 생성 — 서사 작성 후 manifest `storyFile` 선언 시 이야기형 활성화 (check:manifest가 미선언 경고로 상기)
+
 ## 2026-10-01 이야기형 파이프라인 보완 6종 (배너·정합성·슬롯·스캐폴드·가이드)
 
 - **생성물 배너**: `build:story` 산출물 첫 줄에 `<!-- ⚠️ 자동 생성 파일 … 직접 편집 금지 -->` 주석 자동 삽입 — 수동 편집 실수 방지 (`story_merge.js`의 `GEN_BANNER`)

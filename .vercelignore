@@ -51,7 +51,13 @@ docs/report_archive/
 # ---------- �️ 교재 삽화 PNG 원본 마스터 (배포 제외 — webp만 서빙) ----------
 # 교재/*/images/ 아래의 .png는 webp 재인코딩용 원본 마스터 — MD 본문·SW 프리캐시는
 # .webp만 참조하므로 배포에서 제외한다 (ref_md 페이지 이미지 png는 서빙 대상이라 제외 안 함).
-content/exams/*/교재/**/images/*.png
+content/exams/*/교재/*/images/*.png
+# (Vercel ignore 매처는 중첩 `**`을 무시하는 경우가 있어 실제 1단계 구조로 명시 —
+#  과목별 명시 경로도 병행)
+content/exams/cosmetic/교재/law/images/*.png
+content/exams/cosmetic/교재/manufacturing/images/*.png
+content/exams/cosmetic/교재/safety/images/*.png
+content/exams/cosmetic/교재/understanding/images/*.png
 
 # ---------- �📖 참조자료 PDF (배포 제외 — HTML 변환본으로 대체) ----------
 # {contentRoot}/참조자료/ 하위 PDF 파일들은 ref_md의 HTML 변환본으로 대체되어 배포에서 제외.
