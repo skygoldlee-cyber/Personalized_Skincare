@@ -775,8 +775,17 @@
     gap: var(--space-1);
 }
 
-/* 복수정답형 모의고사 문항 수 선택 칩 */
+/* 모의고사 문항 수 선택 칩 — 실전/ㄱㄴㄷ 조합 그룹으로 세로 적층 */
 .combo-count-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+.mock-picker-label {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+}
+.mock-chip-line {
     display: flex;
     gap: 0.35rem;
 }

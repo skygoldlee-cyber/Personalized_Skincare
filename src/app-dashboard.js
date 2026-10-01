@@ -112,41 +112,50 @@ export function populateExamCards() {
         const totalQuestions = subjExams.reduce((sum, e) => sum + (e.stats && e.stats.questions || 0), 0);
         const badgeColor = badgeColors[subj.key] || 'badge-gray';
 
-        const btnsHtml = subjExams.map((exam, partIdx) => {
-            const partLabel = subjExams.length > 1 ? `${partIdx + 1}부` : '';
-            const pdfLabel = subjExams.length > 1
-                ? `${partLabel} PDF`
-                : `예상 문제집${totalQuestions ? ` (${totalQuestions}제)` : ''}`;
-            const simLabel = subjExams.length > 1
-                ? `${partLabel} 풀기`
-                : '시뮬레이터 시작';
-            const btnClass = subjExams.length > 1 ? '' : ' btn-cyan';
-            return `                                <div class="exam-btn-pair">
-                                    <button data-click="ExamViewer.openExam" data-arg="${contentPath(`문제은행/${exam.file}`)}" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> ${pdfLabel}</button>
-                                    <button class="exam-btn-sim${btnClass}" data-click="startMockExamSim" data-arg="${exam.key}"><i class="fa-solid fa-circle-play"></i> ${simLabel} <span class="pro-badge" data-pro-feature="mock_exam">PRO</span></button>
-                                    <small class="exam-btn-caption">선다형 + 단답형 · 실전 예상문제</small>
-                                </div>`;
-        }).join('\n');
-
-        // ㄱㄴㄷ 복수정답형: 문제집 열람(드릴 번들 런타임 렌더링) + 복수정답형 모의고사 (버튼 클릭 시 문항 수 선택 행 펼침)
-        // 프리셋은 실제 풀보다 작을 때만 표시, "전체"는 실제 문항 수 표기
+        // 문제집 버튼: 예상 문제집(선다형+단답형 원본) + ㄱㄴㄷ 조합 문제집(드릴 번들 런타임 렌더링)
         const comboTotal = DataLoader.getComboCount(subj.order);
+        const bookBtnsHtml = subjExams.map((exam, partIdx) => {
+            const pdfLabel = subjExams.length > 1
+                ? `${partIdx + 1}부 PDF`
+                : `예상 문제집${totalQuestions ? ` (${totalQuestions}제)` : ''}`;
+            return `                                    <button data-click="ExamViewer.openExam" data-arg="${contentPath(`문제은행/${exam.file}`)}" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> ${pdfLabel}</button>`;
+        }).join('\n');
+        const comboBookBtn = `                                    <button data-click="ExamViewer.openCombo" data-arg="${subj.order}" class="exam-btn-link"><i class="fa-solid fa-file-lines"></i> ㄱㄴㄷ 조합 문제집${comboTotal ? ` (${comboTotal}제)` : ''} <span class="pro-badge" data-pro-feature="combo_set">PRO</span></button>`;
+
+        // 모의고사 피커 — 실전(선다형+단답형) / ㄱㄴㄷ 조합 두 그룹의 문항 수 칩
+        // 프리셋은 실제 풀보다 작을 때만 표시, "전체"는 실제 문항 수 표기
+        const realChipsHtml = subjExams.map((exam, partIdx) => {
+            const label = subjExams.length > 1 ? `${partIdx + 1}부 ` : '';
+            const count = (exam.stats && exam.stats.questions) || 0;
+            return [20, 40]
+                .filter(n => n < count)
+                .map(n => `<button class="exam-btn-sim combo-count-chip" data-click="startMockExamSim" data-arg="${exam.key}:${n}">${label}${n}문</button>`)
+                .concat(`<button class="exam-btn-sim combo-count-chip" data-click="startMockExamSim" data-arg="${exam.key}">${label}전체 ${count}문</button>`)
+                .join('');
+        }).join('');
         const comboChips = [20, 40, 60]
             .filter(n => !comboTotal || n < comboTotal)
             .map(n => `<button class="exam-btn-sim combo-count-chip" data-click="startComboMockExam" data-arg="${idx + 1}:${n}">${n}문</button>`)
             .concat(`<button class="exam-btn-sim combo-count-chip" data-click="startComboMockExam" data-arg="${idx + 1}">${comboTotal ? `전체 ${comboTotal}문` : '전체'}</button>`)
-            .join('\n                                            ');
-        const comboPair = `                                <div class="exam-btn-pair">
-                                    <button data-click="ExamViewer.openCombo" data-arg="${subj.order}" class="exam-btn-link"><i class="fa-solid fa-file-lines"></i> ㄱㄴㄷ 조합 문제집${comboTotal ? ` (${comboTotal}제)` : ''} <span class="pro-badge" data-pro-feature="combo_set">PRO</span></button>
-                                    <button class="exam-btn-sim" data-click="toggleComboPicker" data-arg="combo-picker-${idx + 1}"><i class="fa-solid fa-circle-play"></i> ㄱㄴㄷ 조합 모의고사 <span class="pro-badge" data-pro-feature="combo_mock">PRO</span></button>
-                                    <small class="exam-btn-caption">ㄱㄴㄷ 진술 조합 · 예상문제 자동 변환</small>
-                                    <div class="combo-count-row is-hidden" id="combo-picker-${idx + 1}">
-                                            ${comboChips}
+            .join('');
+
+        const allBtnsHtml = `                                <div class="exam-btn-pair">
+${bookBtnsHtml}
+${comboBookBtn}
+                                    <small class="exam-btn-caption">선다형+단답형 예상문제 · ㄱㄴㄷ 조합 자동 변환</small>
+                                </div>
+                                <div class="exam-btn-pair">
+                                    <button class="exam-btn-sim btn-cyan" data-click="toggleComboPicker" data-arg="mock-picker-${idx + 1}"><i class="fa-solid fa-circle-play"></i> 모의고사 시작 <span class="pro-badge" data-pro-feature="mock_exam">PRO</span></button>
+                                    <small class="exam-btn-caption">실전 또는 ㄱㄴㄷ 조합 · 문항 수 선택</small>
+                                    <div class="combo-count-row is-hidden" id="mock-picker-${idx + 1}">
+                                        <span class="mock-picker-label">실전 · 선다형+단답형</span>
+                                        <div class="mock-chip-line">${realChipsHtml}</div>
+                                        <span class="mock-picker-label">ㄱㄴㄷ 조합 · 진술 조합형</span>
+                                        <div class="mock-chip-line">${comboChips}</div>
                                     </div>
                                 </div>`;
-        const allBtnsHtml = `${btnsHtml}\n${comboPair}`;
 
-        const btnsClass = subjExams.length > 2 ? 'grid-btns-3' : subjExams.length > 1 ? 'grid-btns-2' : 'flex-btns';
+        const btnsClass = 'grid-btns-2'; // 문제집 쌍 + 모의고사 피커 쌍 — 항상 2열
 
         const cardHtml = `                        <div class="exam-card-item">
                             <div class="exam-card-badge ${badgeColor}">${idx + 1}과목</div>

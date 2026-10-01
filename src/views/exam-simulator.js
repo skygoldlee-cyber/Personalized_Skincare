@@ -51,11 +51,25 @@ export function startSimSession(examData) {
     startSimTimer();
 }
 
-export function startMockExamSim(examId) {
+/**
+ * 과목별 실전 모의고사 시작 — data-arg 'examKey' 또는 'examKey:count' (count = 출제 수, 생략 시 전체)
+ * 부분 출제 시 문항을 무작위 추출하고 제한시간도 문항 수 비례로 축소
+ */
+export function startMockExamSim(arg) {
+    const [examId, countStr] = String(arg).split(':');
+    const want = countStr ? parseInt(countStr, 10) : NaN;
     proFeatureNotice('mock_exam', '실전 모의고사');
     showGlobalLoading('모의고사 데이터를 불러오는 중입니다...');
     DataLoader.loadExam(examId).then((examData) => {
         hideGlobalLoading();
+        const total = examData.questions.length;
+        if (!isNaN(want) && want > 0 && want < total) {
+            examData = {
+                ...examData,
+                questions: shuffle(examData.questions).slice(0, want),
+                timeLimitSec: examData.timeLimitSec ? Math.round(examData.timeLimitSec * want / total) : undefined
+            };
+        }
         startSimSession(examData);
     }).catch(err => {
         hideGlobalLoading();

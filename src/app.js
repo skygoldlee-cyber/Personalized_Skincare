@@ -529,16 +529,16 @@ function startFocusSubjectStudy(subKey) {
             state.quiz.currentIndex = 0;
             state.quiz.correctCount = 0;
             state.quiz.solvedList = [];
-            
+
             // 퀴즈 화면 초기화 및 활성화
             document.getElementById('quiz-setup-panel')?.classList.add('is-hidden');
             document.getElementById('quiz-result-panel')?.classList.add('is-hidden');
             document.getElementById('quiz-arena-panel')?.classList.remove('is-hidden');
             const qCat = document.getElementById('quiz-q-category');
             if (qCat) qCat.textContent = subj.name;
-            
+
             renderQuizQuestion();
-            
+
             // 퀴즈 탭 활성화
             switchView('quiz-view', { scrollTop: true });
         }
@@ -660,7 +660,7 @@ const DELEGATED_HANDLERS = {
     showPlanCompare,
     showUsageStats,
     syncNow,
-    /** 복수정답형 모의고사 문항 수 선택 행 토글 — 다른 과목의 열린 행은 닫는다 */
+    /** 모의고사 문항 수 선택 행 토글 — 다른 과목의 열린 행은 닫는다 */
     toggleComboPicker(rowId) {
         const row = document.getElementById(rowId);
         if (!row) return;
