@@ -1,5 +1,14 @@
 [
   {
+    "version": "v20261001-caaf813",
+    "date": "2026-10-01",
+    "notes": [
+      "[정리·trace] 슬롯 마이그레이션·스캐폴드·가이드 반영 TRACE_MATRIX 갱신",
+      "[정리·deploy] 교재 삽화 PNG 배포 제외 패턴 보강 + food 서사 패치 골격",
+      "[기능·content] 이야기형 파이프라인 보완 6종 — 배너·정합성·슬롯 앵커·스캐폴드·가이드"
+    ]
+  },
+  {
     "version": "v20261001-ba4cef1",
     "date": "2026-10-01",
     "notes": [
@@ -134,14 +143,6 @@
     "date": "2026-09-30",
     "notes": [
       "[정리·deploy] 교재 삽화 PNG 원본을 Vercel 업로드에서 제외 [no-docs]"
-    ]
-  },
-  {
-    "version": "v20260930-2b7a85c",
-    "date": "2026-09-30",
-    "notes": [
-      "[정리·textbook] 과목별 표지 삽화 신규 버전 교체 — PNG 원본 추가 + webp 재인코딩",
-      "[정리·tools] 지식DB·법령DB 빌드 경로 silent failure 6종 차단 [no-docs]"
     ]
   }
 ]
