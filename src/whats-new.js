@@ -7,12 +7,15 @@
 // 이력 소스: window.RELEASE_NOTES (data/release-notes.js — 배포 시 커밋
 // subject로 자동 초안 생성, 수동 편집 권장).
 // ------------------------------------------------------------
-import { safeGetItem, safeSetItem } from './state.js';
+import { safeGetItem, safeSetItem, safeRemoveItem } from './state.js';
 import { esc } from './sanitize.js';
 import { trapFocus } from './ui-utils.js';
 import { formatAppVersion } from './app-version.js';
 
 const SEEN_KEY = 'last_seen_version';
+// 모달이 구버전 페이지에서 표시된 직후 SW 업데이트 리로드가 일어나면
+// 신버전이 같은 모달을 다시 띄운다 — controllerchange가 세우는 1회 스킵 플래그.
+const SKIP_ONCE_KEY = 'whats_new_skip_once';
 const MAX_VERSIONS = 3;    // 건너뛴 버전이 많아도 최근 3개까지만
 const MAX_ITEMS = 10;      // 표시 항목 상한
 const FALLBACK_NOTE = '내부 개선 및 안정성이 향상되었습니다.';
@@ -55,6 +58,7 @@ export function showReleaseNotesModal(entries, title = '새로운 소식') {
             <ul>${e.notes.map(n => `<li>${esc(n)}</li>`).join('')}</ul>
         </div>`).join('');
 
+    window.__WHATS_NEW_SHOWN = true; // SW 리로드 시 스킵 판정용 (pwa-install-capture.js)
     const overlay = document.createElement('div');
     overlay.id = 'whats-new-overlay';
     overlay.innerHTML = `
@@ -95,6 +99,16 @@ const RETURNING_USER_HINTS = ['quiz_results', 'fc_memorized', 'study_streak', 's
 export function maybeShowWhatsNew() {
     const current = appVersion();
     if (!current) return;
+    // SW 업데이트가 진행 중이면 이 페이지는 구버전 스냅샷 — 여기서 모달을 띄우면
+    // controllerchange 리로드 후 신버전이 같은 모달을 다시 띄워 이중 표시가 된다.
+    // seen은 기록하지 않는다 — 리로드된 신버전 페이지에서 1회 표시하면 된다.
+    if (window.__SW_UPDATE_INBOUND) return;
+    // 구버전 페이지에서 이미 모달을 봤는데 SW 리로드로 넘어온 경우 — 재표시 생략.
+    if (safeGetItem(SKIP_ONCE_KEY)) {
+        safeRemoveItem(SKIP_ONCE_KEY);
+        safeSetItem(SEEN_KEY, current);
+        return;
+    }
     const lastSeen = safeGetItem(SEEN_KEY);
     if (lastSeen === current) return;
     if (!lastSeen) {

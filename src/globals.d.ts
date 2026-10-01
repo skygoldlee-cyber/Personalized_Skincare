@@ -43,6 +43,10 @@ declare global {
     __deferredPrompt?: any;
     __pwaInstallReady?: boolean;
     __swRegistered?: boolean;
+    /** SW 업데이트가 진행 중(설치/대기/활성화 예정) — whats-new 자동 모달 억제용 (pwa-install-capture.js 설정) */
+    __SW_UPDATE_INBOUND?: boolean;
+    /** 이번 세션에서 새로운 소식 모달이 표시됐는지 — SW 리로드 시 1회 스킵 판정용 (whats-new.js 설정) */
+    __WHATS_NEW_SHOWN?: boolean;
     /** window.APP_VERSION — data/version.js 배포 스탬프 */
     APP_VERSION?: string;
     /** window.RELEASE_NOTES — data/release-notes.js 번들 */

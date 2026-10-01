@@ -6,10 +6,13 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
-## 2026-10-01 새로운 소식 모달 재표시 수정 (SW 리로드 가드)
+## 2026-10-01 새로운 소식 모달 이중 표시 수정 (SW 업데이트 경합)
 
-- **원인**: 배포 후 첫 방문에서 `whats-new-overlay`가 뜬 상태로 SW `controllerchange` 자동 리로드가 발생하면 모달이 소실 — `last_seen_version`은 닫기 시점에만 기록되므로 리로드 후 같은 모달이 재표시됨
-- **수정**: `pwa-install-capture.js`의 `tryReload` 모달 유예 조건에 `whats-new-overlay` 추가 — `app-confirm-overlay`와 동일하게 사용자가 닫을 때까지 리로드 유예
+- **원인**: 배포 후 첫 방문은 구버전 SW 캐시의 구 `index.html`로 부팅 → 구버전 기준 `maybeShowWhatsNew`가 모달 표시 → 새 SW `skipWaiting`+`controllerchange` 리로드 → 신버전 페이지가 같은 모달을 재표시 (버전마다 1회씩 총 2회)
+- **수정** (`pwa-install-capture.js` + `whats-new.js`):
+  - `updatefound`/`reg.waiting`/`reg.installing`/`controllerchange` 시 `window.__SW_UPDATE_INBOUND` 설정 → 진행 중 업데이트가 있으면 구버전 페이지의 자동 모달 억제 (리로드된 신버전에서 1회 표시)
+  - 리로드 유예 조건에 `whats-new-overlay` 추가 — `last_seen_version`은 닫기 시점 기록이므로 열린 모달 소실 방지
+  - 엣지: `updatefound`가 앱 초기화보다 늦게 도착해 구버전에서 모달이 이미 표시된 경우 `whats_new_skip_once` 키를 남겨 리로드 후 재표시 생략 (`__WHATS_NEW_SHOWN`으로 표시 여부 판정)
 
 ## 2026-10-01 food 1과목 이야기형 활성화 (LLM 서사 초안)
 

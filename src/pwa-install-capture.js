@@ -41,6 +41,7 @@
         reg.addEventListener('updatefound', function () {
           const newWorker = reg.installing;
           if (!newWorker) return;
+          window.__SW_UPDATE_INBOUND = true;
           showSWUpdateToast('새 버전 확인 중...');
           trackWorkerState(newWorker);
         });
@@ -49,8 +50,10 @@
         // reg.waiting = 설치 완료·대기 중 (skipWaiting으로 곧 activate)
         // reg.installing = 다운로드/설치 진행 중
         if (reg.waiting) {
+          window.__SW_UPDATE_INBOUND = true;
           showSWUpdateToast('새 버전 적용 준비 중...');
         } else if (reg.installing) {
+          window.__SW_UPDATE_INBOUND = true;
           showSWUpdateToast('새 버전 확인 중...');
           trackWorkerState(reg.installing);
         }
@@ -68,6 +71,12 @@
           if (refreshing) return;
           if (!hadController) return;  // 최초 등록이면 리로드 불필요
           refreshing = true;
+          window.__SW_UPDATE_INBOUND = true;
+          // 새로운 소식 모달이 이 구버전 페이지에서 이미 표시됐으면 리로드 후
+          // 신버전이 같은 모달을 재표시하지 않도록 1회 스킵 플래그를 남긴다.
+          if (window.__WHATS_NEW_SHOWN) {
+            try { localStorage.setItem('whats_new_skip_once', '1'); } catch (e) { /* 무시 */ }
+          }
           showSWUpdateToast('새 버전 적용 완료 — 페이지를 새로고침합니다.', true);
           // 열려 있는 알림/확인 모달(원료 DB 갱신·새로운 소식 등)이 있으면 닫힐 때까지 무제한 유예.
           // whats-new-overlay는 last_seen_version을 닫기 시점에 기록하므로 리로드로 소실되면
