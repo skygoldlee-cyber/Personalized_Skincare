@@ -855,6 +855,36 @@ const state = {
 - **미분류 신규 파일·중복 매칭·스테일 패턴은 오류** — 파일 추가/이동/삭제 시 맵 갱신이 강제되어 분류 드리프트를 차단
 - `tests/**`는 `catchAll` 규칙으로 기본 `platform` — 피처/도메인 전용 테스트만 패턴으로 선분류
 - `domain` 분류인데 코드에 내장된 시험별 콘텐츠는 점진적으로 `content/exams/<id>/`로 이관하는 것이 목표 방향 (예: `synonyms`, `limits-trainer.json` 이관 패턴)
+- **도메인 규칙 자동 주입**: exams.json 등록 시험의 `contentRoot`/`dataRoot`는 `check_domain_map.js`가 `domain:<id>` 규칙으로 자동 생성 — 새 시험 추가 시 domain-map 편집 불필요. `content/exams/`·`data/exams/` 아래 미등록 id 디렉터리는 오류
+
+### 새 시험 추가 (스캐폴딩)
+
+`npm run scaffold:exam -- <id> --name "시험명" [--short-name X] [--year N] [--dry-run|--force]` — `tools/scaffold_exam.js`가 exams.json 엔트리 + manifest/references 골격 + 샘플 교재·문제은행·`docs/` 디렉터리를 생성하고 다음 단계(콘텐츠 교체→`build:data`→기능 플래그)를 출력한다. `<id> --remove`로 골격 전체 제거.
+
+### 시험별 문서 규약
+
+`{contentRoot}/docs/*.md`는 **존재 자체가 선언** — `build_doc_bundles.js`가 디렉터리를 스캔해 발견된 파일만 번들(`{dataRoot}/docs_md/`). 단, 기능 플래그로 링크 노출이 약속된 문서는 반드시 존재해야 한다:
+
+| features 플래그 | 필수 문서 (`docs/`) |
+|---|---|
+| `studyGuide` | `학습안내서.md` |
+| `appendixDocs` | `두음법_암기_총정리.md` |
+| `userManual` | `user_manual.md` |
+| `formula` | `formula_manual.md` |
+
+위반 시 `check:docbundles`(--check)가 오류로 실패. 문서 없는 시험은 해당 파일을 두지 않으면 된다(경고 없이 스킵).
+
+### UI 텍스트 커버리지
+
+`check:uitext`(`check:all`·`check:ci` 편입)가 두 축을 감사: ① `data-uitext` 키 ↔ 각 시험 `manifest.uiText` 양방향 — 미사용 키·미정의 키·형식(title/subtitle) 오류, ② `platform` 분류 HTML에 시험명(`name`/`shortName`) 잔존 금지 — 정적 마크업의 도메인 라벨은 `data-uitext` 치환, `data-feature` 게이트, 또는 중립 문구로 처리한다.
+
+### 공용 채널 정책
+
+`release-notes`(변경 이력)·의견 수신(`feedback` 테이블)은 **앱 공용** — 시험별 분리 없이 운영한다. 시험별 공지가 필요해지면 별도 채널 정책을 수립한다(현재는 공용으로 충분).
+
+### 저하 환경 폴백
+
+`exam-context.js`의 `DEFAULT_EXAM_ID` 끝단 리터럴(`'cosmetic'`)은 `EXAMS_LIST` 번들마저 로드 실패한 저하 상태의 최후 폴백 — 시드 시험 id로 의도된 값이다. Node/테스트 환경은 `EXAM_ID`·`EXAM_CONTENT_ROOT` 환경변수로 우선 해석된다.
 
 ---
 

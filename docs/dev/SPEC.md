@@ -158,7 +158,7 @@
 | TR-06 | Mermaid 다이어그램 렌더링 (mindmap + flowchart + sequence + gantt + pie + timeline + state + gitGraph + quadrant + class + er + sankey, 온디맨드 로드) + 확대 모달(탭/확대 버튼 → 전체화면·줌 컨트롤) | ✅ |
 | TR-07 | 다이어그램 타입별 개별 렌더링 (`mermaid-utils.js` 타입 감지, 하나 실패해도 나머지 정상) | ✅ |
 | TR-08 | 키워드 자동 링크 보호 (Mermaid 블록 내 용어집 링크 치환 방지) | ✅ |
-| TR-09 | 마크다운 링크 파싱 (`[text](url)` → `<a>` 변환) | ✅ |
+| TR-09 | 마크다운 링크 파싱 (`[text](url)` → `<a>` 변환) — URL 형태 필터: 스킴/`#`·`/`·`./`·`../` 시작, 경로 구분자 또는 파일 확장자가 있는 대상만 링크화 (IUPAC 화학명 등 우연한 `[]()` 패턴은 원문 유지) | ✅ |
 | TR-10 | 기출문제 링크 클릭 → 문제집 HTML 뷰어 오버레이 (ExamViewer 연동) | ✅ |
 | TR-11 | 교재 읽기 이어하기: 과목/챕터/스크롤 위치 localStorage 저장 (1초 디바운스, 30일 만료) | ✅ |
 | TR-12 | 앱 재시작 시 마지막 읽던 위치 자동 복원 | ✅ |
@@ -291,7 +291,7 @@
 | MV-01 | 마크다운 문서 런타임 뷰어 (`docs/*.md` 직접 fetch + 렌더링) | ✅ |
 | MV-02 | Mermaid 다이어그램 렌더링 (온디맨드, 테마별 dark/default) | ✅ |
 | MV-03 | `popstate` 타이밍 가드 (open 후 300ms 이내 이벤트 무시) | ✅ |
-| MV-04 | `file://` 폴백 번들 (`data/docs_md/*.js`) | ✅ |
+| MV-04 | `file://` 폴백 번들 — 시험별 `{dataRoot}/docs_md/*.js` (앱 공용 문서는 `data/docs_md/`) | ✅ |
 
 ### 3.16 차트 및 시각화 (Charts)
 
@@ -695,6 +695,8 @@
 | DA-09 | **저장소 추상화 계층** (`src/storage.js`): 모든 영속 읽기·쓰기의 단일 퍼널 — `setStorageBackend()`로 백엔드 교체 가능, 동기·Async 이중 API로 IndexedDB/SQLite 이행 경로 확보. 다중 키 쓰기 `setMany`/`setJSONMany`는 중간 실패 시 이전 값으로 롤백 (다중 엔티티 갱신의 중간 상태 방지) | ✅ |
 | DA-08 | **기능 플래그 게이팅**: exams.json `features` + `hasFeature()` + `data-feature` 속성 — 시험별 도메인 특화 기능(성분사전·오디오북 등) 자동 숨김 | ✅ |
 | DA-10 | **고객 PII 로컬 전용**: `customer_items`는 동기화(`SYNC_EXCLUDE`)·Supabase 테이블 모두에서 제외 — 백업/초기화에는 포함. 조제관리사가 타인 개인정보를 서버에 올리지 않는 설계 | ✅ |
+| DA-11 | **파일 계층 분류 강제**: `tools/check/domain-map.json` + `check:domainmap` — src/css/html/data/content/tests 전 파일이 platform/feature:<플래그>/domain:<시험id> 중 하나로 분류 필수(미분류·중복·스테일 = 오류). exams.json 등록 시험의 `contentRoot`/`dataRoot`는 `domain:<id>` 규칙으로 자동 주입, 미등록 시험 디렉터리 감지 | ✅ |
+| DA-12 | **UI 텍스트 커버리지 감사**: `check:uitext` — `data-uitext` 속성 ↔ 시험 `manifest.uiText` 양방향 검증(dead 키·형식 오류) + platform 분류 마크업에 시험명(name/shortName) 잔존 금지 | ✅ |
 
 ### 5.2 안정적 ID 체계
 
@@ -717,6 +719,7 @@
 | BP-06 | `GLOSSARY_INDEX` 자동 생성 + 큐레이션 JSON 병합 (`build_keyword_index.js`) | ✅ |
 | BP-07 | SW 캐시 버전 자동 스탬프 (`stamp_sw_version.js`) | ✅ |
 | BP-08 | 콘텐츠 품질 감사 (`audit_card_quality.js`, `npm run audit:cards`) | ✅ |
+| BP-09 | **시험별 문서 번들 + 기능↔문서 불변식**: `build_doc_bundles.js`가 `{contentRoot}/docs/*.md`를 스캔해 자동 번들(문서 존재 = 선언). `features` 플래그 활성 시 필수 문서 규약(studyGuide→학습안내서.md 등)을 `check:docbundles`가 강제 | ✅ |
 
 ### 5.4 콘텐츠 구조
 

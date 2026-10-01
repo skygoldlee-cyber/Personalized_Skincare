@@ -7,6 +7,11 @@
 //   ② content/exams.json 엔트리 삽입
 //   ③ 검증 안내 출력 (check:content -- --build 실행 방법)
 //
+// 생성 후 자동 연동: check:domainmap이 exams.json 등록 시험의
+// contentRoot/dataRoot를 domain:<id> 규칙으로 자동 분류 (맵 편집 불필요).
+// build_doc_bundles는 {contentRoot}/docs/*.md를 스캔해 자동 번들하고,
+// features 플래그 ↔ 필수 문서 불변식을 check:docbundles --check로 검증한다.
+//
 // 사용:
 //   node tools/scaffold_exam.js <id> --name "시험명" [--short-name X] [--year 2027]
 //   node tools/scaffold_exam.js <id> --remove      # 골격 제거 (exams.json 엔트리 + 디렉터리)
@@ -236,8 +241,13 @@ function scaffold(id, opts) {
     console.log('다음 단계:');
     console.log('  1. 샘플 MD를 실제 교재·문제은행으로 교체하고 manifest.json 수정');
     console.log('  2. (법령 시험이면) content/lawdb.json에 법령 추가 + references.json.lawRefs 나열 → npm.cmd run build:pdf-registry');
-    console.log('  3. npm.cmd run check:content -- --build  (빌드 + 통합 검증)');
-    console.log(`  4. 되돌리려면: node tools/scaffold_exam.js ${id} --remove`);
+    console.log('  3. exams.json의 features 플래그 설정 — 활성 시 필수 문서 (docs/):');
+    console.log('       studyGuide→학습안내서.md · appendixDocs→두음법_암기_총정리.md');
+    console.log('       userManual→user_manual.md · formula→formula_manual.md');
+    console.log('     (check:docbundles가 플래그↔문서 불변식을 강제)');
+    console.log('  4. npm.cmd run check:content -- --build  (빌드 + 통합 검증)');
+    console.log('  5. npm.cmd run check:domainmap — content/data/exams/<id>는 자동으로 domain 분류됨');
+    console.log(`  6. 되돌리려면: node tools/scaffold_exam.js ${id} --remove`);
 }
 
 function remove(id) {

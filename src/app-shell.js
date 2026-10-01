@@ -1,6 +1,6 @@
 // src/app-shell.js — 앱 셸 크롬: 뷰포트 높이·가로세로 토글·data-click 접근성·
 // 시험 브랜딩·기능 플래그·지식DB 버전 알림 (app.js에서 분리)
-// @spec R-08,P-08,O-04,ES-02,ES-03
+// @spec R-08,P-08,O-04,ES-02,ES-03,ES-05
 import { safeGetItem, safeSetItem, safeRemoveItem } from "./state.js";
 import { STORAGE_KEYS } from "./storage-keys.js";
 import { DataLoader } from "./data-loader.js";

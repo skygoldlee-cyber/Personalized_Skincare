@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @spec DA-11
 /* ============================================================
  * tools/check/check_domain_map.js
  * ------------------------------------------------------------
@@ -16,6 +17,12 @@
  *   - feature 규칙의 flag는 content/exams.json 의 features 에 존재해야 함
  *   - domain:<id> 의 id는 exams.json 에 등록된 시험이어야 함
  *   - 매칭 결과가 없는(=삭제·이동된 파일의) 스테일 패턴은 오류
+ *
+ * 자동 도메인 규칙:
+ *   exams.json에 등록된 각 시험의 contentRoot/dataRoot는 자동으로
+ *   domain:<id> 규칙으로 주입된다 — 새 시험 추가 시 맵 편집 불필요.
+ *   같은 경로를 수동 규칙으로 선언하면 중복 매칭 오류가 난다.
+ *   content/exams/·data/exams/ 아래에 미등록 id 디렉터리가 있으면 오류.
  *
  * 사용:
  *   node tools/check/check_domain_map.js
@@ -128,6 +135,32 @@ function main() {
         return { rule, label, regexes: (rule.patterns || []).map(globToRegExp) };
     });
 
+    // --- 시험별 도메인 규칙 자동 주입 ---
+    // exams.json 등록 시험의 contentRoot/dataRoot를 domain:<id>로 자동 분류.
+    // 파일이 아직 없는 신규 시험은 스테일 오류 대신 경고만 낸다.
+    for (const e of examsData.exams || []) {
+        for (const key of ['contentRoot', 'dataRoot']) {
+            const root = (e[key] || '').replace(/\\/g, '/').replace(/\/$/, '');
+            if (!root) continue;
+            compiled.push({
+                rule: { layer: `domain:${e.id}`, implicit: true, patterns: [`${root}/**`] },
+                label: `implicit(domain:${e.id} ${key})`,
+                regexes: [globToRegExp(`${root}/**`)],
+            });
+        }
+    }
+
+    // --- 미등록 시험 디렉터리 감지 ---
+    for (const base of ['content/exams', 'data/exams']) {
+        const abs = path.join(ROOT, base);
+        if (!fs.existsSync(abs)) continue;
+        for (const d of fs.readdirSync(abs, { withFileTypes: true })) {
+            if (d.isDirectory() && !examIds.has(d.name)) {
+                errors.push(`미등록 시험 디렉터리: ${base}/${d.name} — content/exams.json 등록 또는 삭제 필요`);
+            }
+        }
+    }
+
     // --- 파일 수집 ---
     const files = [];
     for (const d of watchedDirs) {
@@ -167,7 +200,12 @@ function main() {
     for (const c of compiled) {
         const n = matchedCount.get(c.label) || 0;
         if (n === 0) {
-            errors.push(`${c.label}: 어떤 파일에도 매칭되지 않는 스테일 규칙`);
+            // 자동 주입 규칙은 파일이 아직 없는 신규 시험에서 0건이 정상 — 경고만
+            if (c.rule.implicit) {
+                warnings.push(`${c.label}: 매칭 파일 없음 (신규 시험이면 정상)`);
+            } else {
+                errors.push(`${c.label}: 어떤 파일에도 매칭되지 않는 스테일 규칙`);
+            }
         } else {
             c.rule.patterns.forEach((p, i) => {
                 if (!files.some((f) => c.regexes[i].test(f))) {

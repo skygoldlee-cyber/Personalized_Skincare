@@ -3,8 +3,8 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: 27cf53c3c42fa8b5
-> 생성: 2026-10-01 · 원천: SPEC.md(361개 ID) + @spec 태그 + 문서 헤더
+> 입력 해시: 907c3160491789e4
+> 생성: 2026-10-01 · 원천: SPEC.md(364개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
 |----|------|------|
@@ -16,7 +16,7 @@
 | 보고서 | 분석·결과 보고서 | report_archive 헤더 |
 | 출처 | 요구사항의 기원 (법령·시험 규정·사업 문서) | SPEC 부록 "요구사항 출처" 표 |
 
-**커버리지 요약**: 요구사항 361개 — 문서 연결 232 · 소스 연결 341 · 테스트 연결 355 · 보고서 연결 109
+**커버리지 요약**: 요구사항 364개 — 문서 연결 233 · 소스 연결 344 · 테스트 연결 358 · 보고서 연결 109
 
 ---
 
@@ -334,11 +334,11 @@
 
 | ID | 상태 | 검증 수단 | 문서 | 소스 | 테스트 | 보고서 | 출처 |
 |----|------|-----------|------|------|--------|--------|------|
-| ES-01 | ✅ | 테스트 | DOC-DSN-10 | html/views/exam-select.html<br>index.html<br>src/app-dashboard.js<br>src/exam-context.js<br>…외 2개 | tests/dom/study-examselect.dom.test.js<br>tests/unit/exam-context.test.js | DOC-ARC-07 | — |
-| ES-02 | ✅ | 테스트 | DOC-DSN-10 | src/app-shell.js<br>src/exam-context.js<br>src/views/exam-select.js | tests/dom/study-examselect.dom.test.js<br>tests/unit/exam-context.test.js | DOC-ARC-07 | — |
-| ES-03 | ✅ | 테스트 | DOC-DSN-10 | src/app-shell.js<br>src/exam-context.js<br>src/views/exam-select.js | tests/dom/study-examselect.dom.test.js<br>tests/unit/exam-context.test.js | DOC-ARC-07 | — |
-| ES-04 | ✅ | 테스트 | DOC-DSN-10 | src/exam-context.js | tests/unit/exam-context.test.js | DOC-ARC-07 | — |
-| ES-05 | ✅ | 테스트 | DOC-DSN-10 | src/exam-context.js | tests/unit/exam-context.test.js | DOC-ARC-07 | — |
+| ES-01 | ✅ | 테스트 | DOC-DSN-10 | html/views/exam-select.html<br>index.html<br>src/app-dashboard.js<br>src/exam-context.js<br>…외 2개 | tests/dom/exam-switching.dom.test.js<br>tests/dom/study-examselect.dom.test.js<br>tests/unit/exam-context.test.js | DOC-ARC-07 | — |
+| ES-02 | ✅ | 테스트 | DOC-DSN-10 | src/app-shell.js<br>src/exam-context.js<br>src/views/exam-select.js | tests/dom/exam-switching.dom.test.js<br>tests/dom/study-examselect.dom.test.js<br>tests/unit/exam-context.test.js | DOC-ARC-07 | — |
+| ES-03 | ✅ | 테스트 | DOC-DSN-10 | src/app-shell.js<br>src/exam-context.js<br>src/views/exam-select.js | tests/dom/exam-switching.dom.test.js<br>tests/dom/study-examselect.dom.test.js<br>tests/unit/exam-context.test.js | DOC-ARC-07 | — |
+| ES-04 | ✅ | 테스트 | DOC-DSN-10 | src/exam-context.js | tests/dom/exam-switching.dom.test.js<br>tests/unit/exam-context.test.js | DOC-ARC-07 | — |
+| ES-05 | ✅ | 테스트 | DOC-DSN-10 | src/app-shell.js<br>src/exam-context.js | tests/dom/exam-switching.dom.test.js<br>tests/unit/exam-context.test.js | DOC-ARC-07 | — |
 
 ## 3.23 사용자 의견 수신
 
@@ -501,6 +501,8 @@
 | DA-08 | ✅ | 테스트 | DOC-DSN-08<br>DOC-DSN-10<br>DOC-RBK-03<br>DOC-REF-08 | src/exam-context.js | tests/unit/data-architecture.test.js | — | — |
 | DA-09 | ✅ | 테스트 | DOC-RBK-03<br>DOC-REF-08 | src/storage.js | tests/unit/storage.test.js | — | — |
 | DA-10 | ✅ | 테스트 | — | src/customer-store.js<br>src/sync.js | tests/unit/customer-store.test.js | — | 개인정보보호법 — 상동 (조제관리사가 고객 개인정보를 클라우드에 올리지 않는 설계) |
+| DA-11 | ✅ | 테스트 | — | tools/check/check_domain_map.js | tests/unit/multi-exam-gates.test.js | — | — |
+| DA-12 | ✅ | 테스트 | — | tools/check/check_uitext.js | tests/unit/multi-exam-gates.test.js | — | — |
 
 ## 5.2 안정적 ID 체계
 
@@ -523,6 +525,7 @@
 | BP-06 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 2개 | tools/build/build_keyword_index.js | tests/unit/build-pipeline.test.js | — | — |
 | BP-07 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 2개 | tools/build/stamp_release_notes.js<br>tools/build/stamp_sw_version.js<br>tools/deploy.js | tests/unit/build-pipeline.test.js | — | — |
 | BP-08 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 2개 | tools/check/audit_card_quality.js | tests/unit/build-pipeline.test.js | — | — |
+| BP-09 | ✅ | 테스트 | DOC-RBK-02 | tools/build/build_doc_bundles.js | tests/unit/multi-exam-gates.test.js | — | — |
 
 ## 5.4 콘텐츠 구조
 
@@ -624,7 +627,7 @@
 | DOC-PPL-02 | ref-pipeline/audiobook/README.md | AO-01, AO-02, AO-03, AO-04, AO-05 |
 | DOC-PPL-03 | ref-pipeline/audiobook/AUDIOBOOK_SUMMARY.md | AO-01, AO-02, AO-03, AO-04, AO-05 |
 | DOC-RBK-01 | docs/dev/runbooks/AUDIO_HOSTING_GUIDE.md | AO-01, AO-02, AO-03, AO-04, AO-05, P-01, P-02, P-03, P-04, P-04a, P-05, P-06, P-07, P-08, P-09, P-10, P-11, P-12, P-13 |
-| DOC-RBK-02 | docs/dev/runbooks/COMBO_GENERATION_GUIDE.md | BP-01, BP-02, BP-03, BP-04, BP-05, BP-06, BP-07, BP-08, DR-02, DR-03, DR-04, DR-05, DR-06, DR-07 |
+| DOC-RBK-02 | docs/dev/runbooks/COMBO_GENERATION_GUIDE.md | BP-01, BP-02, BP-03, BP-04, BP-05, BP-06, BP-07, BP-08, BP-09, DR-02, DR-03, DR-04, DR-05, DR-06, DR-07 |
 | DOC-RBK-03 | docs/dev/runbooks/CONTENT_WORKFLOW.md | BP-01, BP-02, BP-03, BP-04, BP-05, BP-06, BP-07, BP-08, CS-01, CS-02, CS-03, CS-04, CS-05, CS-06, CS-07, CS-08, CS-09, CS-10, DA-01, DA-02, DA-03, DA-04, DA-05, DA-06, DA-07, DA-08, DA-09 |
 | DOC-RBK-04 | docs/dev/runbooks/DEPLOYMENT_GUIDE.md | C-01, C-02, C-03, C-04, C-05, P-01, P-02, P-03, P-04, P-05, P-06, P-07, P-08, P-09, P-10, P-11, P-12, P-13 |
 | DOC-RBK-05 | docs/dev/runbooks/MULTI_MACHINE_SETUP.md | — |

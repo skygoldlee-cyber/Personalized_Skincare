@@ -67,11 +67,13 @@
     "audit:cards": "node tools/check/audit_card_quality.js",
     "check:manifest": "node tools/check/check_manifest.js",
     "check:content": "node tools/check/check_content.js",
-    "check:all": "npm run lint && npm run check:types && npm run check:html && npm run check:docs && npm run check:domainmap && npm run check:content",
-    "check:all:quick": "npm run lint && npm run check:types && npm run check:html && npm run check:docs && npm run check:domainmap && npm run check:content -- --quick",
-    "check:ci": "npm run check:hooks && npm run lint && npm run check:types && npm run check:imports && npm run check:docs && npm run check:domainmap && node tools/check/check_doc_sync.js --ref origin/main && npm run check:specrefs && npm run check:trace && npm run check:html && node tools/check/check_content.js --content-only --quick && npm test && npm run verify:assets && npm run check:parser",
+    "check:all": "npm run lint && npm run check:types && npm run check:html && npm run check:docs && npm run check:domainmap && npm run check:uitext && npm run check:content",
+    "check:all:quick": "npm run lint && npm run check:types && npm run check:html && npm run check:docs && npm run check:domainmap && npm run check:uitext && npm run check:content -- --quick",
+    "check:ci": "npm run check:hooks && npm run lint && npm run check:types && npm run check:imports && npm run check:docs && npm run check:domainmap && npm run check:uitext && node tools/check/check_doc_sync.js --ref origin/main && npm run check:specrefs && npm run check:trace && npm run check:html && node tools/check/check_content.js --content-only --quick && npm test && npm run verify:assets && npm run check:parser",
     "deploy": "node tools/deploy.js",
-    "audit:combo": "node tools/check/audit_combo.js"
+    "audit:combo": "node tools/check/audit_combo.js",
+    "check:uitext": "node tools/check/check_uitext.js",
+    "scaffold:exam": "node tools/scaffold_exam.js"
   },
   "keywords": [
     "cosmetics",
