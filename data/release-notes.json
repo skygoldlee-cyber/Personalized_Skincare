@@ -1,5 +1,12 @@
 [
   {
+    "version": "v20261001-f585bdf",
+    "date": "2026-10-01",
+    "notes": [
+      "[문서·repo] 로컬 절대 경로·폴더명 하드코딩 제거 — 리네임/멀티머신 스테일 방지"
+    ]
+  },
+  {
     "version": "v20261001-b2b4924",
     "date": "2026-10-01",
     "notes": [
@@ -138,13 +145,6 @@
     "date": "2026-09-30",
     "notes": [
       "[수정·pwa] 더보기 시트의 data-click 네비게이션이 modal-back 마커 소비와 레이스하여 이전 뷰로 되돌아가던 문제 수정"
-    ]
-  },
-  {
-    "version": "v20260930-b2eff89",
-    "date": "2026-09-30",
-    "notes": [
-      "[기능·check] 법령·지식DB 이름 참조 검증 추가 — lawRef·noticeCore·matchKeys 교차 오염 [no-docs]"
     ]
   }
 ]
