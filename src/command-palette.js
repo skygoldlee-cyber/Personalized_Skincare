@@ -112,7 +112,8 @@ export function searchAll(query, sources) {
         });
     });
 
-    // 3) 성분 사전 (초성 검색 지원 — 자모 쿼리는 getChosung 통과 후 substring 매칭)
+    // 3) 지식DB 사전 (초성 검색 지원 — 자모 쿼리는 getChosung 통과 후 substring 매칭)
+    const dictLabel = (registry.uiText && registry.uiText.dictionary && registry.uiText.dictionary.title) || '사전';
     ingredients.forEach(ing => {
         const name = (ing.name || '').toLowerCase();
         const eng = (ing.engName || '').toLowerCase();
@@ -120,7 +121,7 @@ export function searchAll(query, sources) {
         const hit = terms.every(t => name.includes(t) || eng.includes(t) || chosung.includes(getChosung(t)));
         if (hit) push('ingredient', {
             type: 'ingredient', icon: 'fa-flask', title: ing.name,
-            sub: ing.category ? `성분 사전 · ${ing.category}` : '성분 사전',
+            sub: ing.category ? `${dictLabel} · ${ing.category}` : dictLabel,
             action: { kind: 'ingredient', name: ing.name }, score: name.startsWith(terms[0]) ? 2 : 1
         });
     });
@@ -158,9 +159,19 @@ export function searchAll(query, sources) {
 
 const TYPE_LABELS = {
     view: '화면', section: '교재', card: '플래시카드',
-    quiz: '기출 퀴즈', ingredient: '성분 사전', exam: '문제집',
+    quiz: '기출 퀴즈', ingredient: '사전', exam: '문제집',
     fulltext: '본문 검색'
 };
+
+/** 그룹 라벨 — ingredient는 활성 시험의 사전명(uiText.dictionary.title)으로 해석 */
+function _typeLabel(type) {
+    if (type === 'ingredient') {
+        const reg = /** @type {any} */ ((typeof DataLoader !== 'undefined' && DataLoader.registry) || {});
+        const t = reg.uiText && reg.uiText.dictionary;
+        return (t && t.title) || TYPE_LABELS.ingredient;
+    }
+    return TYPE_LABELS[type] || type;
+}
 
 function _buildDom() {
     if (typeof document === 'undefined' || document.getElementById('cmdk-overlay')) return;
@@ -218,7 +229,7 @@ function _renderResults(query) {
     let lastType = '';
     box.innerHTML = _results.map((r, i) => {
         const header = r.type !== lastType
-            ? `<div class="cmdk-group-label">${TYPE_LABELS[r.type] || r.type}</div>` : '';
+            ? `<div class="cmdk-group-label">${_typeLabel(r.type)}</div>` : '';
         lastType = r.type;
         return `${header}
             <button type="button" class="cmdk-item${i === 0 ? ' is-active' : ''}" role="option"

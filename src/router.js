@@ -22,7 +22,7 @@ export function getViewTitles(registry) {
         'exam-view': uiText.exam || { title: '실전 모의고사', subtitle: '문제은행으로 과목별 모의고사 및 학습안내서 열람' },
         'textbook-view': uiText.textbook || { title: '교재검색', subtitle: '교재의 모든 본문 내용을 실시간 키워드로 검색' },
         'textbook-reader-view': uiText['textbook-reader'] || { title: '교재리더', subtitle: '과목을 선택하여 교재 본문을 읽기' },
-        'dictionary-view': uiText.dictionary || { title: '성분 사전', subtitle: '화장품 성분별 배합한도 및 고시 기준 조회' },
+        'dictionary-view': uiText.dictionary || { title: '사전', subtitle: '지식DB 항목 검색' },
         'formula-view': { title: 'Formula OS', subtitle: '원료 조회 · 배합 계산 · My 포뮬러 저장·검증' },
         'calendar-view': { title: '학습 캘린더', subtitle: '날짜별 학습 기록 및 목표 달성률 추적' },
         'exam-select-view': { title: '시험 선택', subtitle: '학습할 시험을 선택하세요 — 진도는 시험별로 독립 관리됩니다' }

@@ -126,8 +126,12 @@ function applyDictHeader(schema) {
     if (titleEl && h.title) titleEl.textContent = h.title;
     if (subEl && h.subtitle) subEl.textContent = h.subtitle;
     if (noteEl) {
-        if (h.note) noteEl.innerHTML = h.note;   // 작성자 신뢰 설정 — <strong> 등 인라인 마크업 허용
-        else noteEl.classList.add('is-hidden');
+        if (h.note) {
+            noteEl.innerHTML = h.note;   // 작성자 신뢰 설정 — <strong> 등 인라인 마크업 허용
+            noteEl.classList.remove('is-hidden');
+        } else {
+            noteEl.classList.add('is-hidden');
+        }
     }
     if (input && h.searchPlaceholder) input.placeholder = h.searchPlaceholder;
 }

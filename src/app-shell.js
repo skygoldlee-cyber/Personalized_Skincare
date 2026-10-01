@@ -119,6 +119,14 @@ export function applyExamBranding() {
     if (printSub && exam.title) printSub.textContent = exam.title;
     const quizEmpty = document.getElementById('quiz-empty-title');
     if (quizEmpty && exam.name) quizEmpty.textContent = `${exam.name} 모의 퀴즈`;
+
+    // 도메인 특화 뷰 라벨 — manifest uiText가 있으면 정적 라벨을 덮어쓴다 (data-uitext 속성)
+    const uiText = (DataLoader.registry && DataLoader.registry.uiText) || {};
+    document.querySelectorAll('[data-uitext]').forEach(node => {
+        const el = /** @type {HTMLElement} */ (node);
+        const t = el.dataset.uitext ? uiText[el.dataset.uitext] : null;
+        if (t && t.title) el.textContent = t.title;
+    });
 }
 
 /**

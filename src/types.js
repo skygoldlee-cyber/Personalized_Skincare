@@ -262,6 +262,7 @@
  *                                              registryKey가 가변이라 typedef에 고정 키로 선언하지 않음
  * @property {ResourcesMeta}   [resources]
  * @property {Object}          [integratedExam] 통합 시험 규칙 (passAverage·subjectFailBelow 등)
+ * @property {Object.<string, {title?: string, subtitle?: string}>} [uiText] 뷰별 UI 텍스트 오버라이드 (manifest.uiText 패스스루)
  */
 
 /**
