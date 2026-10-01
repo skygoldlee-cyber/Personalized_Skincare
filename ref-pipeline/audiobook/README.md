@@ -24,10 +24,10 @@ MD 교재 → 청킹(≤2,500자) → 청취용 원고 정제 → ElevenLabs TTS
 
 ## 사전 준비
 
-1. **Python**: WinPython 3.12.4 (`c:\Python\WPy64-31241\python-3.12.4.amd64\python.exe`)
+1. **Python**: 3.10+ (PATH 등록된 `python` — 아래 예시의 `python`을 환경의 인터프리터로 읽음)
 2. **패키지 설치** (TTS 사용 시에만 필요):
    ```powershell
-   c:\Python\WPy64-31241\python-3.12.4.amd64\python.exe -m pip install -r ref-pipeline\audiobook\requirements.txt
+   python -m pip install -r ref-pipeline\audiobook\requirements.txt
    ```
 3. **API 키** (TTS 사용 시에만 필요): `{EXAM_CONTENT_ROOT}/audiobook/.env.example` 참고 → `ELEVENLABS_API_KEY` 환경변수 설정
 4. **ffmpeg** (선택, MP3 병합 품질 향상): `winget install ffmpeg`
@@ -38,13 +38,13 @@ MD 교재 → 청킹(≤2,500자) → 청취용 원고 정제 → ElevenLabs TTS
 
 ```powershell
 # 전체 과목 원고 생성
-c:\Python\WPy64-31241\python-3.12.4.amd64\python.exe ref-pipeline\audiobook\run_pipeline.py --polish-only
+python ref-pipeline\audiobook\run_pipeline.py --polish-only
 
 # 처리 대상만 미리 보기
-c:\Python\WPy64-31241\python-3.12.4.amd64\python.exe ref-pipeline\audiobook\run_pipeline.py --list
+python ref-pipeline\audiobook\run_pipeline.py --list
 
 # 특정 과목/챕터만
-c:\Python\WPy64-31241\python-3.12.4.amd64\python.exe ref-pipeline\audiobook\run_pipeline.py --subject manufacturing --chapter 1 --polish-only
+python ref-pipeline\audiobook\run_pipeline.py --subject manufacturing --chapter 1 --polish-only
 ```
 
 결과물:
@@ -61,13 +61,13 @@ c:\Python\WPy64-31241\python-3.12.4.amd64\python.exe ref-pipeline\audiobook\run_
 $env:ELEVENLABS_API_KEY="여기에_키"
 
 # 전체 챕터 TTS + 병합
-c:\Python\WPy64-31241\python-3.12.4.amd64\python.exe ref-pipeline\audiobook\run_pipeline.py --tts
+python ref-pipeline\audiobook\run_pipeline.py --tts
 
 # 중단됐다면 이어서 (이미 만든 청크 MP3는 건너뜀)
-c:\Python\WPy64-31241\python-3.12.4.amd64\python.exe ref-pipeline\audiobook\run_pipeline.py --tts --resume
+python ref-pipeline\audiobook\run_pipeline.py --tts --resume
 
 # 음성 변경 (ElevenLabs 웹에서 한국어 음성 테스트 후 이름/ID 지정)
-c:\Python\WPy64-31241\python-3.12.4.amd64\python.exe ref-pipeline\audiobook\run_pipeline.py --tts --voice "음성이름"
+python ref-pipeline\audiobook\run_pipeline.py --tts --voice "음성이름"
 ```
 
 결과물:

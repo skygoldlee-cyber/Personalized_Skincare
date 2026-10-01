@@ -61,7 +61,6 @@ try:
     import os as _os
     _ffmpeg_candidates = [
         _os.path.expandvars(r"%LOCALAPPDATA%\Microsoft\WinGet\Links\ffmpeg.exe"),
-        r"C:\Users\sky\AppData\Local\Microsoft\WinGet\Links\ffmpeg.exe",
         r"C:\ffmpeg\bin\ffmpeg.exe",
         r"C:\Program Files\ffmpeg\bin\ffmpeg.exe",
     ]

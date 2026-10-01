@@ -29,7 +29,6 @@ def _ensure_ffmpeg_on_path() -> None:
         return
     candidates = [
         os.path.expandvars(r"%LOCALAPPDATA%\Microsoft\WinGet\Links"),
-        r"C:\Users\sky\AppData\Local\Microsoft\WinGet\Links",
         r"C:\ffmpeg\bin",
         r"C:\Program Files\ffmpeg\bin",
     ]
