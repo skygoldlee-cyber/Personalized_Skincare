@@ -145,6 +145,30 @@ test('extractPatch — 기존 이야기형에서 서사·부제·추가섹션을
     assert.deepEqual(blocksOf(text), blocksOf(story));
 });
 
+test('slot — 마커 뒤에 서사가 삽입되고 표준형 문구 편집에 견고하다', () => {
+    const withSlot = STD.replace('피부는 세 층이다.', '<!-- story:slot:ch01-s1 -->\n\n피부는 세 층이다.');
+    const patch = '<!-- @insert slot="ch01-s1" story -->\n\n서사 한 줄\n\n<!-- /@ -->';
+    const { text, errors } = M.applyPatch(withSlot, M.parsePatch(patch));
+    assert.equal(errors.length, 0);
+    const i = text.indexOf('<!-- story:slot:ch01-s1 -->');
+    const j = text.indexOf('<!-- story:start -->');
+    const k = text.indexOf('피부는 세 층이다.');
+    assert.ok(i >= 0 && i < j && j < k, '마커 뒤·본문 앞에 서사가 와야 함');
+    // 주변 문구가 바뀌어도 마커가 살아 있으면 적용됨
+    const edited = withSlot.replace('피부는 세 층이다.', '피부는 표피·진피·피하조직 세 층이다.');
+    const r2 = M.applyPatch(edited, M.parsePatch(patch));
+    assert.equal(r2.errors.length, 0);
+});
+
+test('slot — 중복/미등록 마커는 에러로 보고된다', () => {
+    const dup = ['a', '<!-- story:slot:x -->', '', '<!-- story:slot:x -->'].join('\n');
+    const p = '<!-- @insert slot="x" -->\nINS\n<!-- /@ -->';
+    assert.ok(M.applyPatch(dup, M.parsePatch(p)).errors.length > 0);
+    const missing = M.applyPatch(STD, M.parsePatch('<!-- @insert slot="없음" -->\nINS\n<!-- /@ -->'));
+    assert.ok(missing.errors.length > 0);
+    assert.equal(missing.text, null);
+});
+
 test('실제 cosmetic 4과목 — 패치↔생성물 왕복 정합성', () => {
     const manifest = JSON.parse(readFileSync(join(ROOT, 'content/exams/cosmetic/manifest.json'), 'utf8'));
     for (const subj of manifest.subjects) {
@@ -161,7 +185,7 @@ test('실제 cosmetic 4과목 — 패치↔생성물 왕복 정합성', () => {
             const std = readFileSync(join(dir, ch.file), 'utf8');
             const { text, errors } = M.applyPatch(std, M.parsePatch(patch));
             assert.deepEqual(errors, [], `${subj.dir}: ${errors.join('; ')}`);
-            assert.equal(M.norm(readFileSync(storyPath, 'utf8')), M.norm(text),
+            assert.equal(M.norm(readFileSync(storyPath, 'utf8')), M.norm(M.GEN_BANNER + '\n' + text),
                 `${subj.dir}: 생성물 불일치 — npm run build:story 필요`);
         }
     }

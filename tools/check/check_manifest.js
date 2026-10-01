@@ -111,6 +111,35 @@ function checkSubject(target, subject) {
   }
   if (!(subject.chapters || []).length) warn(scope, 'chapters[] 비어 있음');
 
+  // 이야기형 패치 정합성 — storyFile ↔ story/<base>_서사.md
+  const baseOf = f => (f || '').replace(/(_표준형)?\.md$/i, '');
+  for (const ch of subject.chapters || []) {
+    if (!ch.storyFile) continue;
+    const patchRel = path.join(subject.dir, 'story', `${baseOf(ch.file)}_서사.md`);
+    if (!fileExists(sroot, patchRel)) {
+      warn(scope, `storyFile 선언됐지만 서사 패치 없음 — build:story가 건너뜀: ${patchRel}`);
+    }
+  }
+  const storyDir = path.join(sroot, subject.dir, 'story');
+  if (fs.existsSync(storyDir)) {
+    const declaredPatches = new Set((subject.chapters || [])
+      .filter(c => c.storyFile)
+      .map(c => `${baseOf(c.file)}_서사.md`));
+    for (const f of fs.readdirSync(storyDir)) {
+      if (!f.endsWith('_서사.md')) continue;
+      if (!declaredPatches.has(f)) {
+        warn(scope, `서사 패치 있지만 storyFile 미선언 — 이야기형이 생성되지 않음: ${subject.dir}/story/${f}`);
+      }
+    }
+  }
+
+  // 사전 녹음 오디오북이 있으면 본문 정규화 후 음성↔표시 텍스트 불일치 가능 — 존재할 때만 경고
+  const audioDir = path.join(sroot, 'audiobook', 'mp3');
+  if ((subject.chapters || []).some(c => c.storyFile) && fs.existsSync(audioDir)
+    && fs.readdirSync(audioDir).some(f => f.endsWith('.mp3') && f.includes(subject.key))) {
+    warn(scope, `사전 녹음 오디오(mp3) 존재 — 이야기형 본문 변경 시 음성 재녹음 필요 여부 확인: audiobook/mp3/*${subject.key}*`);
+  }
+
   // 과목별 파생 자산 (order 번호 / key 기준 — 없으면 경고)
   const n = subject.order;
   if (Number.isFinite(n)) {

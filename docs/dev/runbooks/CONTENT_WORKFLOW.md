@@ -170,7 +170,7 @@ npm.cmd run build:audio-manifest     # 오디오 매니페스트만
 
 ### 3.1 교재 내용 수정
 
-1. `content/exams/cosmetic/교재/{과목}/{파일명}_표준형.md` 편집 — `_이야기형.md`는 **생성물**(직접 편집 금지). 서사·전면 섹션은 `교재/{과목}/story/{base}_서사.md` 패치를 편집하고 `npm.cmd run build:story`로 재생성 (`build:data`에 포함). 패치 지시어: `@insert before/after="앵커 줄"`(+`story` 플래그) · `@insert at="start/end"` · `@suffix line="…"` · `@replace line="…"` · 중복 앵커는 `n="k"`. 표준형 편집으로 패치 앵커가 깨지면 build가 에러로 보고 — 앵커 줄을 새 표준형 라인으로 갱신
+1. `content/exams/cosmetic/교재/{과목}/{파일명}_표준형.md` 편집 — `_이야기형.md`는 **생성물**(직접 편집 금지, 첫 줄 배너 참조). 서사·전면 섹션은 `교재/{과목}/story/{base}_서사.md` 패치를 편집하고 `npm.cmd run build:story`로 재생성 (`build:data`에 포함). 패치 지시어 상세: `docs/dev/runbooks/STORY_PATCH_GUIDE.md` — 삽입은 표준형의 `<!-- story:slot:id -->` 마커(`@insert slot="id"`, 권장) 또는 `before/after="앵커 줄"`·`at="start/end"` · `story` 플래그로 서사 마커 자동 · `@suffix`/`@replace line="…"` · 중복 앵커 `n="k"`. 신규 과목: `build:story -- --scaffold <subjectKey>`로 패치 골격 생성 후 manifest `storyFile` 선언 (`check:manifest`가 선언↔패치 불일치 경고). 표준형 편집으로 패치 앵커가 깨지면 build가 에러로 보고 — 앵커·슬롯을 갱신
 2. `npm.cmd run build:data` 실행 (build:story 자동 포함 — 이야기형 재생성 후 인용 동기화 필요 시 `sync:citations`)
 3. **인용 라인 동기화** (교재 라인 변경 시):
    ```powershell

@@ -337,6 +337,9 @@ const parseMarkdownFile = (filePath, subjectId, filename, chapterKey, stableId) 
 
     if (skipSection) continue;
 
+    // HTML 주석(story:slot 마커·생성 배너 등)은 렌더링 무관 — 표·문맥을 끊지 않고 건너뜀
+    if (line.startsWith('<!--')) continue;
+
     if (line.startsWith('|')) {
       if (!inTable) {
         inTable = true;
@@ -486,19 +489,19 @@ const parseMarkdownFile = (filePath, subjectId, filename, chapterKey, stableId) 
 const parseTextbookContent = (filePath, filename, subjectDir) => {
   const content = fs.readFileSync(filePath, 'utf-8');
   const lines = content.split(/\r?\n/);
-  
+
   let chapterTitle = path.basename(filename, '.md');
   let chapterTitleSet = false;
   const sections = [];
-  
+
   let currentSectionTitle = '개요';
   let currentSectionLines = [];
   let currentSubsections = [];
-  
+
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
     const trimmed = line.trim();
-    
+
     if (trimmed.startsWith('# ')) {
       if (!chapterTitleSet) {
         chapterTitle = trimmed.substring(2).trim();
@@ -506,7 +509,7 @@ const parseTextbookContent = (filePath, filename, subjectDir) => {
       }
       continue;
     }
-    
+
     if (trimmed.startsWith('## ')) {
       if (currentSectionLines.length > 0 || currentSubsections.length > 0) {
         sections.push({
@@ -520,7 +523,7 @@ const parseTextbookContent = (filePath, filename, subjectDir) => {
       currentSubsections = [];
       continue;
     }
-    
+
     if (trimmed.startsWith('### ')) {
       const subTitle = trimmed.substring(4).trim();
       const subLines = [];
@@ -545,10 +548,10 @@ const parseTextbookContent = (filePath, filename, subjectDir) => {
       });
       continue;
     }
-    
+
     currentSectionLines.push(line);
   }
-  
+
   if (currentSectionLines.length > 0 || currentSubsections.length > 0) {
     sections.push({
       title: currentSectionTitle,
@@ -556,10 +559,10 @@ const parseTextbookContent = (filePath, filename, subjectDir) => {
       subsections: currentSubsections
     });
   }
-  
+
   const htmlFilename = filename.replace('.md', '.html');
   const filePathUrl = `./${subjectDir}/${htmlFilename}`;
-  
+
   return {
     chapterTitle,
     fileName: filename,

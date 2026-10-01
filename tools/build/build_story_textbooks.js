@@ -15,17 +15,86 @@
 const fs = require('fs');
 const path = require('path');
 const { getExamTargets } = require('./exam_targets');
-const { parsePatch, applyPatch, norm } = require('./story_merge');
+const { parsePatch, applyPatch, norm, GEN_BANNER } = require('./story_merge');
 
 const ROOT = path.resolve(__dirname, '..', '..');
 const CHECK = process.argv.includes('--check');
+const SCAFFOLD_IDX = process.argv.indexOf('--scaffold');
+const SCAFFOLD = SCAFFOLD_IDX >= 0 ? process.argv[SCAFFOLD_IDX + 1] : null;
 
 function patchPathFor(dirAbs, stdFile) {
-    const base = stdFile.replace(/_표준형\.md$/i, '');
+    const base = stdFile.replace(/(_표준형)?\.md$/i, '');
     return path.join(dirAbs, 'story', `${base}_서사.md`);
 }
 
+/** 신규 과목 서사 패치 골격 생성 — 표준형의 헤딩을 앵커 후보로 주석 목록 제공 */
+function scaffoldPatch(dirAbs, stdFile) {
+    const std = norm(fs.readFileSync(path.join(dirAbs, stdFile), 'utf8'));
+    const headings = std.split('\n').filter(l => /^#{1,2} /.test(l));
+    const base = stdFile.replace(/(_표준형)?\.md$/i, '');
+    return [
+        `# ${base} — 이야기형 서사 패치`,
+        '',
+        `> 이 파일은 \`${stdFile}\`에 삽입할 서사·추가 섹션·제목 부제를 정의합니다.`,
+        `> \`${base}_이야기형.md\`는 \`npm run build:story\`로 생성되는 산출물입니다 — 직접 편집 금지.`,
+        `> 삽입 지점 지시어: @insert before/after="앵커 줄" · @insert slot="id" · at="start/end" ·`,
+        '> story 플래그로 story:start/end 자동 부여 · @suffix/@replace line="…" · 중복 앵커는 n="k"',
+        '',
+        '<!-- 표준형 헤딩 (앵커 후보)',
+        ...headings.map(h => `  ${h}`),
+        '-->',
+        '',
+        '<!-- @insert at="start" story -->',
+        '',
+        '📖 ┈┈┈┈ **이야기** ┈┈┈┈',
+        '',
+        '## 프롤로그 — (장면 제목)',
+        '',
+        '(서사를 작성하세요)',
+        '',
+        '┈┈┈┈ **본문** ┈┈┈┈ 📘',
+        '',
+        '<!-- /@ -->',
+        '',
+    ].join('\n');
+}
+
+function runScaffold(subjectKey) {
+    let done = 0;
+    for (const t of getExamTargets(ROOT)) {
+        if (!t.manifest) continue;
+        for (const subj of t.manifest.subjects || []) {
+            if (subj.key !== subjectKey) continue;
+            const dirAbs = path.join(ROOT, t.contentRoot, subj.dir);
+            for (const ch of subj.chapters || []) {
+                const patchAbs = patchPathFor(dirAbs, ch.file);
+                if (fs.existsSync(patchAbs)) {
+                    console.log(`  - 이미 존재, 건너뜀: ${path.relative(ROOT, patchAbs)}`);
+                    continue;
+                }
+                fs.mkdirSync(path.dirname(patchAbs), { recursive: true });
+                fs.writeFileSync(patchAbs, scaffoldPatch(dirAbs, ch.file), 'utf8');
+                console.log(`  + ${path.relative(ROOT, patchAbs)}`);
+                done++;
+            }
+        }
+    }
+    if (!done) {
+        console.log('생성된 패치 없음 (과목 키 확인 또는 이미 존재)');
+        return;
+    }
+    console.log(`\n다음 단계: manifest.json subjects[].chapters[]에 storyFile을 선언하면 build:story가 생성합니다`);
+}
+
 function main() {
+    if (SCAFFOLD_IDX >= 0) {
+        if (!SCAFFOLD || SCAFFOLD.startsWith('-')) {
+            console.error('사용법: --scaffold <subjectKey> (예: --scaffold sanitation)');
+            process.exit(1);
+        }
+        runScaffold(SCAFFOLD);
+        return;
+    }
     const generated = [];
     const skipped = [];
     const failed = [];
@@ -48,11 +117,12 @@ function main() {
                 }
                 const std = norm(fs.readFileSync(stdAbs, 'utf8'));
                 const ops = parsePatch(fs.readFileSync(patchAbs, 'utf8'));
-                const { text, errors } = applyPatch(std, ops);
-                if (errors.length) {
-                    failed.push(`${rel}:\n    ${errors.join('\n    ')}`);
+                const merged = applyPatch(std, ops);
+                if (merged.errors.length) {
+                    failed.push(`${rel}:\n    ${merged.errors.join('\n    ')}`);
                     continue;
                 }
+                const text = GEN_BANNER + '\n' + merged.text;
                 if (CHECK) {
                     const cur = fs.existsSync(outAbs) ? norm(fs.readFileSync(outAbs, 'utf8')) : '';
                     if (cur !== text) { drifted++; console.log(`  ✗ 드리프트: ${rel}`); }

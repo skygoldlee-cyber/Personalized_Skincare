@@ -20,6 +20,12 @@
 const STORY_START = '<!-- story:start -->';
 const STORY_END = '<!-- story:end -->';
 
+// 생성된 이야기형 파일 최상단에 붙는 배너 — 수동 편집 방지
+const GEN_BANNER = '<!-- ⚠️ 자동 생성 파일 — 직접 편집 금지. 본문은 *_표준형.md, 서사는 story/*_서사.md 패치를 편집하고 npm run build:story로 재생성하세요. -->';
+
+// 표준형에 삽입되는 슬롯 마커 — 텍스트 앵커 대신 안정 ID로 서사 삽입 지점을 고정한다
+const SLOT_RE = /^<!-- story:slot:([\w-]+) -->$/;
+
 function norm(s) { return s.replace(/\r\n/g, '\n'); }
 
 /** 라인 기반 LCS diff — ops: {t:'eq'|'del'|'ins', ai?, bi?} (a=표준, b=비교본) */
@@ -231,8 +237,9 @@ function finalizeOp(b) {
     if (b.kind === 'insert') {
         const story = a.flags.has('story');
         if (a.at) return { kind: 'insert', where: a.at, story, lines: b.lines };
+        if (a.slot != null) return { kind: 'insert', where: 'slot', slot: a.slot, story, lines: b.lines };
         const where = a.before != null ? 'before' : a.after != null ? 'after' : null;
-        if (!where) throw new Error('@insert에 before/after/at 지정 필요');
+        if (!where) throw new Error('@insert에 before/after/at/slot 지정 필요');
         return { kind: 'insert', where, anchor: where === 'before' ? a.before : a.after, n: a.n ? +a.n : 1, story, lines: b.lines };
     }
     if (b.kind === 'suffix' || b.kind === 'replace') {
@@ -258,10 +265,25 @@ function applyPatch(stdText, ops) {
     const lineEdits = new Map();
     const errors = [];
 
+    const slotIdx = new Map();
+    lines.forEach((l, i) => {
+        const m = l.match(SLOT_RE);
+        if (!m) return;
+        if (slotIdx.has(m[1])) errors.push(`슬롯 마커 중복: story:slot:${m[1]} — 슬롯 ID는 표준형 내 유일해야 함`);
+        else slotIdx.set(m[1], i);
+    });
+
     for (const op of ops) {
         if (op.kind === 'insert') {
             if (op.where === 'start') { atStart.push(op); continue; }
             if (op.where === 'end') { atEnd.push(op); continue; }
+            if (op.where === 'slot') {
+                const idx = slotIdx.get(op.slot);
+                if (idx == null) { errors.push(`슬롯 없음: slot="${op.slot}" (표준형에 <!-- story:slot:${op.slot} --> 필요)`); continue; }
+                if (!after.has(idx)) after.set(idx, []);
+                after.get(idx).push(op);
+                continue;
+            }
             const idx = findAnchor(lines, op.anchor, op.n || 1);
             if (idx < 0) { errors.push(`앵커 없음: ${op.where}="${op.anchor}"`); continue; }
             const map = op.where === 'before' ? before : after;
@@ -303,6 +325,6 @@ function applyPatch(stdText, ops) {
 }
 
 module.exports = {
-    STORY_START, STORY_END,
+    STORY_START, STORY_END, GEN_BANNER, SLOT_RE,
     norm, diffLines, splitStoryBlocks, extractPatch, formatPatch, parsePatch, applyPatch,
 };

@@ -36,7 +36,8 @@ npm.cmd run stamp:sw                   # sw.js CACHE_VERSION을 커밋 해시로
 npm.cmd run notes:draft                # 릴리스 노트 pending 초안 생성 (커밋 subject 기반 → data/release-notes.json 수동 편집 후 배포)
 npm.cmd run verify:assets              # SHELL_ASSETS/DATA_ASSETS 파일 존재 검증
 
-npm.cmd run build:story                 # 표준형 + story/*_서사.md 패치 → _이야기형.md 생성 (build:data에 포함, --check=일치 검증)
+npm.cmd run build:story                 # 표준형 + story/*_서사.md 패치 → _이야기형.md 생성 (build:data에 포함, --check=일치 검증, -- --scaffold <subjectKey>=신규 과목 패치 골격)
+#   이야기형 패치 작성법(슬롯 마커·지시어 문법): docs/dev/runbooks/STORY_PATCH_GUIDE.md
 # 콘텐츠 동기화 (build:data에 자동 통합됨)
 npm.cmd run sync:citations              # 문제은행 인용 라인번호 동기화
 node tools/sync_citation_lines.js --check  # 변경사항 확인만 (수정 안 함)

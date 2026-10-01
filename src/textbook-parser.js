@@ -355,6 +355,9 @@ function parseMarkdownFile(content, subjectId, filename, chapterKey) {
 
         if (skipSection) continue;
 
+        // HTML 주석(story:slot 마커·생성 배너 등)은 렌더링 무관 — 표·문맥을 끊지 않고 건너뜀
+        if (line.startsWith('<!--')) continue;
+
         if (line.startsWith('|')) {
             if (!inTable) {
                 inTable = true;
