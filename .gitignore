@@ -98,3 +98,6 @@ content/**/report/
 
 # pytest 임시 디렉터리
 ref-pipeline/tests/.pytest-tmp/
+
+# 이야기형 정규화 드리프트 검토 리포트 (1회성 산출물)
+tools/build/.story_drift_review.md
