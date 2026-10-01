@@ -48,7 +48,7 @@
 
 ```powershell
 # 1. 클론
-git clone <repo-url> && cd Personalized_Skincare
+git clone <repo-url> && cd passory
 
 # 2. 테스트 도구 설치
 npm.cmd install

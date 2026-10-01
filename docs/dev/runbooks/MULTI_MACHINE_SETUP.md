@@ -1,6 +1,6 @@
 # 💻 다른 머신에서 GitHub / Vercel 접근 설정 가이드
 
-> **대상 프로젝트**: 맞춤형화장품 조제관리사 스마트 학습 플랫폼 (Personalized_Skincare)
+> **대상 프로젝트**: 맞춤형화장품 조제관리사 스마트 학습 플랫폼 (passory)
 > **최종 업데이트**: 2026-08-26
 > **목적**: 새로운 PC·노트북에서 GitHub 푸시와 Vercel 배포를 최소 설정으로 재현하기 위한 표준 절차
 > **문서 ID**: DOC-RBK-05
@@ -12,7 +12,7 @@
 
 | 항목 | 현재 상태 | 비고 |
 |------|-----------|------|
-| Git remote | `git@github-skygold:skygoldlee-cyber/Personalized_Skincare.git` | SSH 별칭 방식 (개인 키 필요) |
+| Git remote | `https://github.com/skygoldlee-cyber/passory.git` | HTTPS (gh credential helper) — SSH 별칭 병행 가능 |
 | GitHub CLI (`gh`) | 미설치 | 설치 권장 |
 | Vercel 링크 | `.vercel/project.json` Git 추적됨 (`810de57`부터) | projectId/orgId 자동 인식 |
 | Vercel CLI | 설치됨 | `npm run deploy` 경유 (deploy.js 가드) |
@@ -40,8 +40,8 @@ gh auth login
 #   선택지: GitHub.com → HTTPS → Login with a web browser
 
 # 3. 클론 (gh가 인증을 자동 처리)
-gh repo clone skygoldlee-cyber/Personalized_Skincare
-cd Personalized_Skincare
+gh repo clone skygoldlee-cyber/passory
+cd passory
 ```
 
 > ✅ 이후 `git push` / `git pull` 도 추가 인증 없이 동작합니다.
@@ -51,7 +51,7 @@ cd Personalized_Skincare
 이미 SSH로 클론한 경우 아래 명령으로 HTTPS 방식으로 바꿀 수 있습니다.
 
 ```bash
-git remote set-url origin https://github.com/skygoldlee-cyber/Personalized_Skincare.git
+git remote set-url origin https://github.com/skygoldlee-cyber/passory.git
 gh auth setup-git   # git이 gh 인증을 사용하도록 설정
 ```
 

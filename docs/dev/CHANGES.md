@@ -1,6 +1,6 @@
 # 코드 리뷰 수정 내역 (1~12 순차수정)
 
-> 대상: Personalized_Skincare (Cosmetic Pass Master) 배포판
+> 대상: passory (구 Personalized_Skincare / Cosmetic Pass Master) 배포판
 > 작업일: 2026-08-23
 > 검증: 모든 `src/*.js` `node --check` 통과 · `node tools/build/index.js` 재빌드 성공 ·
 > **문서 ID**: DOC-DEV-03

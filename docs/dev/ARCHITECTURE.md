@@ -198,7 +198,7 @@
 ## 🌳 계층적 디렉토리 구조
 
 ```
-Personalized_Skincare/
+passory/
 ├── index.template.html         # SPA 템플릿 — <!-- @include html/views/*.html --> 마커
 ├── index.html                  # SPA 엔트리 포인트 (생성물 — build:html 산출, 직접 편집 금지)
 ├── html/

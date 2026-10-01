@@ -19,7 +19,7 @@ const LAW_API = `${LAW_BASE}/DRF`;
 // law.go.kr 오픈API 운영자 코드 — 공개 계정 식별자(비밀키 아님). 호출량 제한은 계정별 적용
 const LAW_OC = 'goldrune1125';
 // notice_status.json의 원격 위치 — 저장소를 포크·이전하면 이 값만 변경
-const STATUS_REPO = 'skygoldlee-cyber/Personalized_Skincare';
+const STATUS_REPO = 'skygoldlee-cyber/passory';
 
 /**
  * 현행본 직결 URL — 일련번호가 있으면 한글주소보다 정확한 시리얼 페이지로 연다.

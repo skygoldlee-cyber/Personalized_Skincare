@@ -104,7 +104,7 @@
 
 ### 2.1 소스 정의
 
-`@/c:\Project\Personalized_Skincare\src\manual-viewer.js:15-18`
+`@/c:\Project\passory\src\manual-viewer.js:15-18`
 
 ```javascript
 const MD_SOURCES = {
@@ -115,7 +115,7 @@ const MD_SOURCES = {
 
 ### 2.2 프로토콜별 로드 전략
 
-`@/c:\Project\Personalized_Skincare\src\manual-viewer.js:421-438`
+`@/c:\Project\passory\src\manual-viewer.js:421-438`
 
 ```javascript
 async function _loadMd(sourceKey) {
@@ -139,7 +139,7 @@ async function _loadMd(sourceKey) {
 
 ### 2.3 번들 폴백 메커니즘
 
-`@/c:\Project\Personalized_Skincare\src\manual-viewer.js:403-418`
+`@/c:\Project\passory\src\manual-viewer.js:403-418`
 
 - `tools/build/build_doc_bundles.js`가 `.md` 원문을 JS 파일로 번들링
 - 번들 파일은 전역 `window.__DOC_MD__` 객체에 경로별 마크다운 원문 저장
@@ -156,7 +156,7 @@ content/exams/cosmetic/학습안내서.md      →  data/exams/cosmetic/docs_md/
 
 ### 3.1 프리캐시 (설치 시)
 
-`@/c:\Project\Personalized_Skincare\sw.js:110-114`
+`@/c:\Project\passory\sw.js:110-114`
 
 ```javascript
 const MD_ASSETS = [
@@ -169,7 +169,7 @@ const MD_ASSETS = [
 ];
 ```
 
-`@/c:\Project\Personalized_Skincare\sw.js:162-171`
+`@/c:\Project\passory\sw.js:162-171`
 
 ```javascript
 self.addEventListener('install', (event) => {
@@ -189,7 +189,7 @@ self.addEventListener('install', (event) => {
 
 ### 3.2 fetch 이벤트 — `.md` 파일
 
-`@/c:\Project\Personalized_Skincare\sw.js:282-286`
+`@/c:\Project\passory\sw.js:282-286`
 
 ```javascript
 // 마크다운 원본 파일 → Cache First (정적 원본, 배포 시 갱신)
@@ -214,7 +214,7 @@ if (MD_PATTERN.test(url.pathname)) {
 
 ## 4. 마크다운 파서 (`markdown-parser.js`)
 
-`@/c:\Project\Personalized_Skincare\src\markdown-parser.js:16-266`
+`@/c:\Project\passory\src\markdown-parser.js:16-266`
 
 ### 4.1 설계 원칙
 
@@ -249,7 +249,7 @@ if (MD_PATTERN.test(url.pathname)) {
 
 ### 4.3 옵션
 
-`@/c:\Project\Personalized_Skincare\src\markdown-parser.js:16-24`
+`@/c:\Project\passory\src\markdown-parser.js:16-24`
 
 | 옵션 | 기본값 | 사용처 |
 |------|--------|--------|
@@ -264,7 +264,7 @@ if (MD_PATTERN.test(url.pathname)) {
 
 ### 4.4 테이블 파싱 상세
 
-`@/c:\Project\Personalized_Skincare\src\markdown-parser.js:87-117`
+`@/c:\Project\passory\src\markdown-parser.js:87-117`
 
 - 양끝 파이프 `|` 제거 후 내부 `|`로 셀 분리
 - 이스케이프된 파이프 `\|`는 `PIPE_ESC_TOKEN`으로 보호 후 복원
@@ -274,7 +274,7 @@ if (MD_PATTERN.test(url.pathname)) {
 
 ### 4.5 Mermaid 코드블록 처리
 
-`@/c:\Project\Personalized_Skincare\src\markdown-parser.js:131-132`
+`@/c:\Project\passory\src\markdown-parser.js:131-132`
 
 ```javascript
 if (allowMermaid && codeLang === 'mermaid') {
@@ -292,7 +292,7 @@ if (allowMermaid && codeLang === 'mermaid') {
 
 ### 5.1 엔트리 포인트
 
-`@/c:\Project\Personalized_Skincare\src\manual-viewer.js:443-465`
+`@/c:\Project\passory\src\manual-viewer.js:443-465`
 
 ```javascript
 async function openDocument(sourceKey) {
@@ -313,7 +313,7 @@ async function openDocument(sourceKey) {
 
 ### 5.2 캐시 (sessionStorage)
 
-`@/c:\Project\Personalized_Skincare\src\manual-viewer.js:19-61`
+`@/c:\Project\passory\src\manual-viewer.js:19-61`
 
 - **키**: `manual_md_cache_v3_<정규화된_경로>`
 - **값**: `{ timestamp, html }` JSON 문자열
@@ -322,7 +322,7 @@ async function openDocument(sourceKey) {
 
 ### 5.3 오버레이 UI
 
-`@/c:\Project\Personalized_Skincare\src\manual-viewer.js:77-198`
+`@/c:\Project\passory\src\manual-viewer.js:77-198`
 
 - **전체화면 오버레이**: `position: fixed; inset: 0; z-index: 9999`
 - **상단 바**: 닫기 버튼, 제목, 인쇄/PDF 버튼
@@ -332,7 +332,7 @@ async function openDocument(sourceKey) {
 
 ### 5.4 목차 자동 생성
 
-`@/c:\Project\Personalized_Skincare\src\manual-viewer.js:200-211`
+`@/c:\Project\passory\src\manual-viewer.js:200-211`
 
 - 본문 내 `h2`, `h3` 요소를 스캔하여 `<details>` 목차 생성
 - 각 헤딩에 자동으로 `id` 부여
@@ -350,7 +350,7 @@ async function openDocument(sourceKey) {
 
 ### 6.1 온디맨드 로드
 
-`@/c:\Project\Personalized_Skincare\src\manual-viewer.js:215-256`
+`@/c:\Project\passory\src\manual-viewer.js:215-256`
 
 ```javascript
 let _mermaidLoadPromise = null;
@@ -375,7 +375,7 @@ function _ensureMermaid() {
 
 ### 6.2 렌더링 실행
 
-`@/c:\Project\Personalized_Skincare\src\manual-viewer.js:233-256`
+`@/c:\Project\passory\src\manual-viewer.js:233-256`
 
 ```javascript
 function _renderMermaid() {
@@ -400,7 +400,7 @@ function _renderMermaid() {
 
 ### 6.3 테마 변경 시 재렌더링
 
-`@/c:\Project\Personalized_Skincare\src\manual-viewer.js:472-479`
+`@/c:\Project\passory\src\manual-viewer.js:472-479`
 
 ```javascript
 document.addEventListener('themechange', () => {
@@ -435,7 +435,7 @@ document.addEventListener('themechange', () => {
 
 ### 7.3 안드로이드 Chrome Text 노드 대응
 
-`@/c:\Project\Personalized_Skincare\src\app.js:948-954`
+`@/c:\Project\passory\src\app.js:948-954`
 
 ```javascript
 document.body.addEventListener('click', (e) => {
@@ -522,7 +522,7 @@ flowchart TD
 
 ## 9. Python MD→HTML 변환기 (`md_to_html.py`)
 
-`@/c:\Project\Personalized_Skincare\content\utils\md_to_html.py`
+`@/c:\Project\passory\content\utils\md_to_html.py`
 
 ### 9.1 개요
 
@@ -582,7 +582,7 @@ CLI 옵션:
 
 ### 9.4 `RenderConfig` 데이터클래스
 
-`@/c:\Project\Personalized_Skincare\content\utils\md_to_html.py:39-44`
+`@/c:\Project\passory\content\utils\md_to_html.py:39-44`
 
 ```python
 @dataclass(frozen=True)
@@ -615,7 +615,7 @@ class RenderConfig:
 
 ### 9.6 Mermaid 사전 렌더링 상세
 
-`@/c:\Project\Personalized_Skincare\content\utils\md_to_html.py:3167-3233`
+`@/c:\Project\passory\content\utils\md_to_html.py:3167-3233`
 
 - `<div class="mermaid">` 블록을 mermaid.ink API(`https://mermaid.ink/svg/{base64}?theme=default`)로 SVG 변환
 - 변환 성공 시 SVG를 base64 인코딩하여 `<img src="data:image/svg+xml;base64,...">`로 임베드
@@ -625,7 +625,7 @@ class RenderConfig:
 
 ### 9.7 Mermaid 라이브러리 임베드
 
-`@/c:\Project\Personalized_Skincare\content\utils\md_to_html.py:71-114`
+`@/c:\Project\passory\content\utils\md_to_html.py:71-114`
 
 - `_ensure_mermaid_js()`: CDN 3개 순차 시도 (jsdelivr → unpkg → cdnjs), 200KB 미만 응답은 에러 페이지로 간주하고 스킵
 - `_embed_mermaid_js()`: `<script src="...mermaid.min.js">` 태그를 인라인 `<script>`로 교체
@@ -652,7 +652,7 @@ class RenderConfig:
 
 ## 10. 배치 변환 스크립트 (`batch_convert.py`)
 
-`@/c:\Project\Personalized_Skincare\content\utils\batch_convert.py`
+`@/c:\Project\passory\content\utils\batch_convert.py`
 
 ### 10.1 개요
 

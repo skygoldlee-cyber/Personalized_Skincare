@@ -37,15 +37,15 @@
 
 | 항목 | 값 |
 |------|-----|
-| **remote origin** | `git@github-skygold:skygoldlee-cyber/Personalized_Skincare.git` (SSH 별칭) |
+| **remote origin** | `https://github.com/skygoldlee-cyber/passory.git` (HTTPS — gh credential helper) |
 | **브랜치** | `main` |
-| **GitHub URL** | `https://github.com/skygoldlee-cyber/Personalized_Skincare` |
+| **GitHub URL** | `https://github.com/skygoldlee-cyber/passory` |
 
 ### 1-3. 인증 방식
 
 | 서비스 | 방식 | 비고 |
 |--------|------|------|
-| **GitHub** | SSH 키 (`github-skygold` 별칭) | `~/.ssh/config`에 별칭 정의 필요 |
+| **GitHub** | `gh auth login` (HTTPS + credential helper) | SSH 별칭 `git@github-skygold:...`도 병행 가능 |
 | **Vercel CLI** | 글로벌 로그인 (브라우저 OAuth) | `vercel login` 1회 수행 → 토큰 자동 저장 |
 
 > 새 머신 설정이 필요한 경우 [`MULTI_MACHINE_SETUP.md`](MULTI_MACHINE_SETUP.md) 참조.
@@ -87,7 +87,7 @@ npm.cmd run deploy
 
 ## 3. Vercel 배포 최적화 (.vercelignore 설정)
 
-정적 자원만 Vercel에 업로드되도록 하기 위해 프로젝트 루트의 [`.vercelignore`](file:///c:/Project/Personalized_Skincare/.vercelignore) 파일에 다음과 같은 규칙을 설정합니다.
+정적 자원만 Vercel에 업로드되도록 하기 위해 프로젝트 루트의 [`.vercelignore`](file:///c:/Project/passory/.vercelignore) 파일에 다음과 같은 규칙을 설정합니다.
 
 ```
 # .vercelignore

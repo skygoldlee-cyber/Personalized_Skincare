@@ -179,7 +179,7 @@ gh release upload audio-v1 flattened_chunks/*.mp3
 ### 4-2. `data/audio_manifest.js` 수정
 
 ```js
-export const AUDIO_BASE_URL = 'https://github.com/skygoldlee-cyber/Personalized_Skincare/releases/download/audio-v1';
+export const AUDIO_BASE_URL = 'https://github.com/skygoldlee-cyber/passory/releases/download/audio-v1';
 ```
 
 - `getAudioUrl()`이 `${AUDIO_BASE_URL}/${subjDir}/${fileName}` 형태로 조합
