@@ -125,8 +125,8 @@ export function startComboMockExam(arg) {
     const orders = DataLoader.getSubjectOrders();
     if (isNaN(num) || !orders.includes(num)) return;
     const want = countStr ? parseInt(countStr, 10) : NaN;
-    proFeatureNotice('combo_mock', '복수정답형 모의고사');
-    showGlobalLoading('복수정답형 모의고사 데이터를 불러오는 중입니다...');
+    proFeatureNotice('combo_mock', 'ㄱㄴㄷ 조합 모의고사');
+    showGlobalLoading('ㄱㄴㄷ 조합 모의고사 데이터를 불러오는 중입니다...');
     DataLoader.loadComboDrills(num).then(questions => {
         hideGlobalLoading();
         const subjects = (window.DATA_REGISTRY && window.DATA_REGISTRY.subjects) || [];
@@ -138,18 +138,18 @@ export function startComboMockExam(arg) {
             : questions;
         const simQuestions = picked.map(q => comboToSimQuestion(q, subjKey));
         if (simQuestions.length === 0) {
-            showToast('이 과목의 복수정답형 문항이 없습니다.', 'warning');
+            showToast('이 과목의 ㄱㄴㄷ 조합 문항이 없습니다.', 'warning');
             return;
         }
         startSimSession({
             id: `combo_subject${num}`,
-            title: `${subjName} 복수정답형 모의고사 (${simQuestions.length}제)`,
+            title: `${subjName} ㄱㄴㄷ 조합 모의고사 (${simQuestions.length}제)`,
             questions: simQuestions
         });
     }).catch(err => {
         hideGlobalLoading();
         console.error(err);
-        showToast('복수정답형 데이터를 불러오지 못했습니다.', 'error');
+        showToast('ㄱㄴㄷ 조합 데이터를 불러오지 못했습니다.', 'error');
     });
 }
 
@@ -310,20 +310,20 @@ export function clearSimDraft() {
 export function checkExamDraft() {
     const banner = document.getElementById('draft-resume-banner');
     if (!banner) return;
-    
+
     const saved = safeGetItem(STORAGE_KEYS.SIM_DRAFT_SESSION);
     if (saved) {
         try {
             const draft = JSON.parse(saved);
             const minutes = Math.floor(draft.timeLeft / 60);
             const seconds = draft.timeLeft % 60;
-            
+
             const titleEl = document.getElementById('draft-banner-title');
             const descEl = document.getElementById('draft-banner-desc');
-            
+
             if (titleEl) titleEl.textContent = `📝 진행 중인 모의고사: ${draft.examTitle}`;
             if (descEl) descEl.textContent = `이전 진행 상태 복구 가능 (남은 시간: ${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}, 풀이한 문항: ${Object.keys(draft.userAnswers).length}/${draft.questions.length})`;
-            
+
             banner.classList.remove('is-hidden');
         } catch(e) {
             banner.classList.add('is-hidden');
@@ -336,10 +336,10 @@ export function checkExamDraft() {
 export function resumeSimDraft() {
     const saved = safeGetItem(STORAGE_KEYS.SIM_DRAFT_SESSION);
     if (!saved) return;
-    
+
     try {
         const draft = JSON.parse(saved);
-        
+
         simState.examId = draft.examId;
         simState.data = {
             id: draft.examId,
@@ -350,7 +350,7 @@ export function resumeSimDraft() {
         simState.userAnswers = draft.userAnswers;
         simState.timeLeft = draft.timeLeft;
         simState.wrongQuestions = [];
-        
+
         const _examListPanel = document.getElementById('exam-list-panel');
         const _simResultPanel = document.getElementById('sim-result-panel');
         const _simReviewPanel = document.getElementById('sim-review-panel');
@@ -366,7 +366,7 @@ export function resumeSimDraft() {
         renderSimQuestion();
 
         startSimTimer();
-        
+
         // 메인 뷰 전환 강제 처리
         state.currentView = 'exam-view';
         const navItems = document.querySelectorAll('.nav-item');
@@ -385,10 +385,10 @@ export function resumeSimDraft() {
                 sec.classList.remove('active');
             }
         });
-        
+
         const banner = document.getElementById('draft-resume-banner');
         if (banner) banner.classList.add('is-hidden');
-        
+
     } catch(e) {
         console.error("Failed to resume draft: ", e);
         showToast("저장된 모의고사 세션을 불러오지 못했습니다.", "error");
@@ -397,7 +397,7 @@ export function resumeSimDraft() {
 
 export function exitSimArena() {
     if (simState.timerInterval) clearInterval(simState.timerInterval);
-    
+
     // UI 전환
     const _arena = document.getElementById('sim-arena-panel');
     const _result = document.getElementById('sim-result-panel');
@@ -407,7 +407,7 @@ export function exitSimArena() {
     if (_result) _result.classList.add('is-hidden');
     if (_review) _review.classList.add('is-hidden');
     if (_list) _list.classList.remove('is-hidden');
-    
+
     // 대시보드 갱신하여 배너 확인
     checkExamDraft();
 }
@@ -430,7 +430,7 @@ function tickSimTimer() {
     // 절대 시각 기반 남은 시간 계산 (백그라운드 스로틀링 극복 핵심)
     const remaining = Math.max(0, Math.round(((simState.endTime || 0) - Date.now()) / 1000));
     simState.timeLeft = remaining;
-    
+
     if (simState.timeLeft <= 0) {
         clearInterval(simState.timerInterval);
         const timeEl = document.getElementById('sim-time-left');
@@ -439,13 +439,13 @@ function tickSimTimer() {
         submitExam();
         return;
     }
-    
+
     const minutes = Math.floor(simState.timeLeft / 60);
     const seconds = simState.timeLeft % 60;
     const timeEl = document.getElementById('sim-time-left');
     if (timeEl) timeEl.textContent =
         `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-        
+
     // 매 5초마다 타이머 임시 저장
     if (simState.timeLeft % 5 === 0) {
         saveSimDraft();
@@ -460,7 +460,7 @@ function renderOMRSheet() {
     const total = simState.data.questions.length;
     const totalEl = document.getElementById('omr-total-count');
     if (totalEl) totalEl.textContent = String(total);
-    
+
     for (let i = 0; i < total; i++) {
         const bubble = document.createElement('div');
         bubble.className = 'omr-bubble';
@@ -486,11 +486,11 @@ function renderOMRSheet() {
 function updateOMRProgress() {
     let solvedCount = 0;
     const total = simState.data.questions.length;
-    
+
     for (let i = 0; i < total; i++) {
         const qId = simState.data.questions[i].id;
         const bubble = document.getElementById(`omr-b-${i}`);
-        
+
         if (bubble) {
             // 풀었는지 여부 확인
             if (simState.userAnswers[qId] && String(simState.userAnswers[qId]).trim() !== '') {
@@ -499,7 +499,7 @@ function updateOMRProgress() {
             } else {
                 bubble.classList.remove('solved');
             }
-            
+
             // 현재 문제 활성화
             if (i === simState.currentIndex) {
                 bubble.classList.add('active');
@@ -508,7 +508,7 @@ function updateOMRProgress() {
             }
         }
     }
-    
+
     const solvedEl = document.getElementById('omr-solved-count');
     if (solvedEl) solvedEl.textContent = String(solvedCount);
 }
@@ -521,35 +521,35 @@ export function jumpToSimQuestion(index) {
 export function renderSimQuestion() {
     const q = simState.data.questions[simState.currentIndex];
     if (!q) return;
-    
+
     // 문제 정보 주입
     const qNumEl = document.getElementById('sim-q-num');
     if (qNumEl) qNumEl.textContent = `Q ${simState.currentIndex + 1} / ${simState.data.questions.length}`;
-    
+
     let typeName = '단답형';
     if (q.type === 'choice') typeName = '객관식 5지선다';
     else if (q.type === 'ox') typeName = '진위형 OX';
-    else if (q.type === 'combo') typeName = '복수정답형 ㄱㄴㄷ';
+    else if (q.type === 'combo') typeName = 'ㄱㄴㄷ 조합형';
     const qTypeEl = document.getElementById('sim-q-type');
     if (qTypeEl) qTypeEl.textContent = typeName;
-    
+
     // 개행 문자를 BR 태그로 치환해 질문 가독성 보장
     const qTextEl = document.getElementById('sim-q-text');
     if (qTextEl) qTextEl.innerHTML = safeTextWithBreaks(q.question);
-    
+
     // 옵션 컨테이너 채우기
     const container = document.getElementById('sim-options-container');
     if (!container) return;
     container.innerHTML = '';
-    
+
     const savedAns = simState.userAnswers[q.id] || '';
-    
+
     if (q.type === 'choice' || q.type === 'combo') {
         const optionIndicators = ['①', '②', '③', '④', '⑤'];
         q.options.forEach((optText, idx) => {
             const ind = optionIndicators[idx] || String(idx + 1);
             const isSelected = (savedAns === ind);
-            
+
             const btn = document.createElement('div');
             btn.className = `sim-option-item ${isSelected ? 'active' : ''}`;
             btn.setAttribute('role', 'button');
@@ -595,7 +595,7 @@ export function renderSimQuestion() {
             <input type="text" id="sim-text-input" class="form-input" placeholder="정답을 입력하세요 (예: (A) 5, (B) 10)" value="${esc(savedAns)}" autocomplete="off">
         `;
         container.appendChild(inputDiv);
-        
+
         const textInput = /** @type {HTMLInputElement|null} */ (document.getElementById('sim-text-input'));
         if (!textInput) return;
         textInput.focus();
@@ -613,19 +613,19 @@ export function renderSimQuestion() {
             }
         });
     }
-    
+
     // 이전/다음 버튼 보이기 여부 및 제어
     const prevBtn = document.getElementById('sim-prev-btn');
     const nextBtn = document.getElementById('sim-next-btn');
     const submitBtn = document.getElementById('sim-submit-exam-btn');
     if (!prevBtn || !nextBtn || !submitBtn) return;
-    
+
     if (simState.currentIndex === 0) {
         prevBtn.classList.add('is-hidden');
     } else {
         prevBtn.classList.remove('is-hidden');
     }
-    
+
     if (simState.currentIndex === simState.data.questions.length - 1) {
         nextBtn.classList.add('is-hidden');
         submitBtn.classList.remove('is-hidden');
@@ -633,7 +633,7 @@ export function renderSimQuestion() {
         nextBtn.classList.remove('is-hidden');
         submitBtn.classList.add('is-hidden');
     }
-    
+
     updateOMRProgress();
 }
 
@@ -653,12 +653,12 @@ export function saveSimAnswer(qId, value, triggerRender = true) {
  */
 export function submitExam() {
     if (simState.timerInterval) clearInterval(simState.timerInterval);
-    
+
     // 점수 채점 및 틀린 문항 수집
     let score = 0;
     const total = simState.data.questions.length;
     simState.wrongQuestions = [];
-    
+
     // 과목별 정답 및 총 문제수 집계용 (레지스트리 기반 동적 초기화)
     /** @type {Object<string,{score:number,total:number}>} */
     const subjectScores = {};
@@ -666,7 +666,7 @@ export function submitExam() {
     subjects.forEach(sub => {
         subjectScores[sub.key] = { score: 0, total: 0 };
     });
-    
+
     // 단원(챕터)별 집계용 — question_chapters.js 인덱스 (미로드 시 빈 객체)
     const qc = (DataLoader._questionChapters) || {
         questions: window.QUESTION_CHAPTERS || {},
@@ -674,11 +674,11 @@ export function submitExam() {
     };
     /** @type {Object<string,Object<string,{score:number,total:number}>>} */
     const chapterStats = {};
-    
+
     for (let i = 0; i < total; i++) {
         const q = simState.data.questions[i];
         const userAns = simState.userAnswers[q.id] || '';
-        
+
         // 객관식/OX는 선택지 기호(①~⑤, O/X)를 직접 비교, 단답형만 텍스트 정규화 채점
         const isCorrect = (q.type === 'choice' || q.type === 'ox' || q.type === 'combo')
             ? (userAns === q.answer)
@@ -690,7 +690,7 @@ export function submitExam() {
             const perStatement = deriveComboJudgments(q, userAns);
             if (perStatement) recordStatementJudgments(perStatement);
         }
-        
+
         if (isCorrect) {
             score++;
         } else {
@@ -698,12 +698,12 @@ export function submitExam() {
                 ...q,
                 userAnswer: userAns
             });
-            
+
             // 틀린 문제는 복습용 오답 카드로 자동으로 등록! (중요 기능 요구사항 구현)
             const fakeCardId = `${WEAK_SIM_PREFIX}${q.id}`;
             state.weakCards.add(fakeCardId);
         }
-        
+
         // 과목 판별 및 집계 (동적 변환 적용)
         let subj = q.subject;
         if (!subj) {
@@ -712,7 +712,7 @@ export function submitExam() {
         } else if (subj.startsWith('subject')) {
             subj = examIdToSubjectId(subj);
         }
-        
+
         if (subj && subjectScores[subj]) {
             subjectScores[subj].total++;
             if (isCorrect) {
@@ -726,10 +726,10 @@ export function submitExam() {
             if (isCorrect) c.score++;
         }
     }
-    
+
     saveProgress();
     clearSimDraft(); // 제출 시 임시 세션 제거
-    
+
     // 과목별 정답률 계산
     const subjectRates = {};
     let hasSubjectData = false;
@@ -741,12 +741,12 @@ export function submitExam() {
             subjectRates[subj] = null;
         }
     });
-    
+
     // 모의고사 결과 성적 이력 저장 및 성적 분석 연동
     if (typeof window !== 'undefined' && typeof window.saveExamResultToHistory === 'function') {
         window.saveExamResultToHistory(simState.data.id, score, total, hasSubjectData ? subjectRates : null);
     }
-    
+
     // 결과 패널 렌더링 (exam-sim-review.js)
     renderSimResultBreakdown({ score, total, subjectScores, chapterStats, subjects });
 }

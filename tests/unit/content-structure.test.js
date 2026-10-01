@@ -49,7 +49,7 @@ test('CS-02: manifest의 exams 파일이 문제은행 폴더에 존재한다', (
   }
 });
 
-test('CS-02: 과목별 단일정답형 원본 + 복수정답형 드릴 번들이 4과목 모두 존재한다', () => {
+test('CS-02: 과목별 문제은행 원본 + ㄱㄴㄷ 조합 드릴 번들이 4과목 모두 존재한다', () => {
   const bank = list(join(CONTENT, '문제은행'));
   const drills = list(join(ROOT, 'data', 'exams', 'cosmetic', 'drills'));
   for (const n of [1, 2, 3, 4]) {

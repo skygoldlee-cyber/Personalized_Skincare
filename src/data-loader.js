@@ -359,7 +359,7 @@ export const DataLoader = {
         const pilot = this._loadedDrills.comboPilot.filter(q => q.subject === num);
 
         const questions = [...pilot, ...auto];
-        if (!questions.length) throw new Error(`복수정답형 드릴 데이터를 찾을 수 없습니다: ${key}`);
+        if (!questions.length) throw new Error(`ㄱㄴㄷ 조합 드릴 데이터를 찾을 수 없습니다: ${key}`);
         this._loadedDrills[key] = questions;
         return questions;
     },
@@ -374,7 +374,7 @@ export const DataLoader = {
         try {
             await this._loadScript(`./${dataPath('drills/combo_index.js')}`);
         } catch (e) {
-            console.warn('[DataLoader] combo_index.js 로드 실패 — 복수정답형 문항 수 표시 생략', e);
+            console.warn('[DataLoader] combo_index.js 로드 실패 — ㄱㄴㄷ 조합 문항 수 표시 생략', e);
         }
         this._comboIndex = window.COMBO_INDEX || {};
         return this._comboIndex;

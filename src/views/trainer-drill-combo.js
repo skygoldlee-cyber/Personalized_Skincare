@@ -15,7 +15,7 @@ import { OPTION_INDICATORS, openDrillSetup, startDrill, nextDrill, renderDrillRe
 
 /** 패널 열기 (과목 선택 화면) */
 export function openComboDrillSetup() {
-  proFeatureNotice('combo_drill', '복수정답형 훈련');
+  proFeatureNotice('combo_drill', 'ㄱㄴㄷ 조합 훈련');
   openDrillSetup('combo');
 }
 
@@ -43,7 +43,7 @@ export function renderComboQuestion() {
 
     if (bar) bar.style.width = `${Math.round((st.currentIndex / st.data.length) * 100)}%`;
     if (ind) ind.textContent = `문제 ${st.currentIndex + 1} / ${st.data.length}`;
-    if (catEl) catEl.textContent = `과목${q.subject} · 복수정답형`;
+    if (catEl) catEl.textContent = `과목${q.subject} · ㄱㄴㄷ 조합형`;
     // 복수정답형 규칙: 출처·인용은 문제 서두에 명기 (stem 앞 표시)
     if (citEl) citEl.textContent = q.citation || '';
     if (stemEl) stemEl.innerHTML = safeTextWithBreaks(q.stem || '');

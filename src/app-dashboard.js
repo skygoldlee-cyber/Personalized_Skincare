@@ -116,7 +116,7 @@ export function populateExamCards() {
             const partLabel = subjExams.length > 1 ? `${partIdx + 1}부` : '';
             const pdfLabel = subjExams.length > 1
                 ? `${partLabel} PDF`
-                : '문제집 열기';
+                : '예상 문제집';
             const simLabel = subjExams.length > 1
                 ? `${partLabel} 풀기`
                 : '시뮬레이터 시작';
@@ -124,7 +124,7 @@ export function populateExamCards() {
             return `                                <div class="exam-btn-pair">
                                     <button data-click="ExamViewer.openExam" data-arg="${contentPath(`문제은행/${exam.file}`)}" class="exam-btn-link"><i class="fa-solid fa-file-pdf"></i> ${pdfLabel}</button>
                                     <button class="exam-btn-sim${btnClass}" data-click="startMockExamSim" data-arg="${exam.key}"><i class="fa-solid fa-circle-play"></i> ${simLabel} <span class="pro-badge" data-pro-feature="mock_exam">PRO</span></button>
-                                    <small class="exam-btn-caption">선다형 + 단답형 혼합 · 수작업 원본</small>
+                                    <small class="exam-btn-caption">선다형 + 단답형 · 실전 예상문제</small>
                                 </div>`;
         }).join('\n');
 
@@ -137,9 +137,9 @@ export function populateExamCards() {
             .concat(`<button class="exam-btn-sim combo-count-chip" data-click="startComboMockExam" data-arg="${idx + 1}">${comboTotal ? `전체 ${comboTotal}문` : '전체'}</button>`)
             .join('\n                                            ');
         const comboPair = `                                <div class="exam-btn-pair">
-                                    <button data-click="ExamViewer.openCombo" data-arg="${subj.order}" class="exam-btn-link"><i class="fa-solid fa-file-lines"></i> 복수정답형 문제집 <span class="pro-badge" data-pro-feature="combo_set">PRO</span></button>
-                                    <button class="exam-btn-sim" data-click="toggleComboPicker" data-arg="combo-picker-${idx + 1}"><i class="fa-solid fa-circle-play"></i> 복수정답형 모의고사 <span class="pro-badge" data-pro-feature="combo_mock">PRO</span></button>
-                                    <small class="exam-btn-caption">ㄱㄴㄷㄹ 조합형 · 원본 문항 자동 변환</small>
+                                    <button data-click="ExamViewer.openCombo" data-arg="${subj.order}" class="exam-btn-link"><i class="fa-solid fa-file-lines"></i> ㄱㄴㄷ 조합 문제집 <span class="pro-badge" data-pro-feature="combo_set">PRO</span></button>
+                                    <button class="exam-btn-sim" data-click="toggleComboPicker" data-arg="combo-picker-${idx + 1}"><i class="fa-solid fa-circle-play"></i> ㄱㄴㄷ 조합 모의고사 <span class="pro-badge" data-pro-feature="combo_mock">PRO</span></button>
+                                    <small class="exam-btn-caption">ㄱㄴㄷ 진술 조합 · 예상문제 자동 변환</small>
                                     <div class="combo-count-row is-hidden" id="combo-picker-${idx + 1}">
                                             ${comboChips}
                                     </div>

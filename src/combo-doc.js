@@ -21,9 +21,9 @@ const OPT_INDICATORS = ['①', '②', '③', '④', '⑤', '⑥'];
  */
 export function buildComboSubjectMd(subject, subjectName, questions) {
     const lines = [
-        `# ${subject ? `제${subject}과목: ` : ''}${subjectName || '복수정답형'} 복수정답형 (ㄱㄴㄷㄹ 조합)`,
+        `# ${subject ? `제${subject}과목: ` : ''}${subjectName || '조합형'} ㄱㄴㄷ 조합형`,
         '',
-        '> **화장품조제관리사 필기시험 대비** (복수정답형)',
+        '> **화장품조제관리사 필기시험 대비** (ㄱㄴㄷ 조합형)',
         '> 문제에 집중할 수 있도록 정답과 교재 근거는 파일 끝에 모아 제공합니다.',
         '> 자동 변환 문항 + 수작업 파일럿 문항이 섞여 있습니다 (런타임 생성 문서).',
         '',
@@ -31,7 +31,7 @@ export function buildComboSubjectMd(subject, subjectName, questions) {
         '',
         '---',
         '',
-        `## 📝 [복수정답형: 옳은 것을 모두 고르시오]`,
+        `## 📝 [ㄱㄴㄷ 조합형: 옳은 것을 모두 고르시오]`,
         '',
     ];
 

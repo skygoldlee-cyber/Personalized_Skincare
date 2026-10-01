@@ -232,7 +232,7 @@ describe('트레이너 드릴 — O/X·복수정답형·취약 리뷰', () => {
 
         nextComboDrill(); // 마지막 문항 → 결과 화면
         expect(isVisible('combo-result')).toBe(true);
-        expect(el('combo-result').textContent).toContain('복수정답형 드릴 완료');
+        expect(el('combo-result').textContent).toContain('ㄱㄴㄷ 조합 드릴 완료');
     });
 
     it('복수정답형 — 선지 직접 선택 경로 + 오답 피드백', async () => {

@@ -126,8 +126,8 @@ const DRILL_TYPES = {
     },
     combo: {
         subView: 'combo',
-        label: '복수정답형',
-        title: '복수정답형 드릴',
+        label: 'ㄱㄴㄷ 조합',
+        title: 'ㄱㄴㄷ 조합 드릴',
         ids: { panel: 'trainer-combo-panel', grid: 'combo-subject-grid', setup: 'combo-setup', arena: 'combo-arena', result: 'combo-result' },
         otherPanels: ['trainer-menu-panel', 'trainer-weak-panel', 'trainer-oxdrill-panel'],
         startAction: 'startComboDrill',
@@ -498,7 +498,7 @@ function renderWeakReview() {
 
     if (summaryEl) {
         summaryEl.innerHTML = weak.length === 0
-            ? (graduated > 0 ? '모든 취약 진술을 졸업했습니다.' : '아직 오판 이력이 없습니다. O/X·복수정답형 드릴을 풀면 진술 단위로 추적됩니다.')
+            ? (graduated > 0 ? '모든 취약 진술을 졸업했습니다.' : '아직 오판 이력이 없습니다. O/X·ㄱㄴㄷ 조합 드릴을 풀면 진술 단위로 추적됩니다.')
             : `취약 진술 ${weak.length}개 · 오늘 복습 대상 ${dueCount}개${graduated ? ` · 졸업 ${graduated}개` : ''}${anomalyList.length ? ` · <span class="weak-anomaly">이상 의심 ${anomalyList.length}개</span>` : ''}
                <span class="weak-toolbar">
                    <button class="btn btn-primary weak-drill-btn" data-click="startOxDrill" data-arg="weak"><i class="fa-solid fa-crosshairs"></i> 취약·복습 드릴</button>
@@ -543,7 +543,7 @@ function renderWeakReview() {
 
 /* =======================================================
    ⌨️ 드릴 키보드 단축키
-   O/X 드릴: O·X 키로 판정 / 복수정답형: 1~5 키로 선지 선택 / Enter: 다음 문제
+   O/X 드릴: O·X 키로 판정 / ㄱㄴㄷ 조합: 1~5 키로 선지 선택 / Enter: 다음 문제
    ======================================================= */
 if (typeof document !== 'undefined') {
     document.addEventListener('keydown', (e) => {

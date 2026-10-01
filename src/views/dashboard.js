@@ -85,7 +85,7 @@ export function updateGlobalStats() {
             totalCards += sd[subj].cards.length;
         });
     }
-    
+
     const totalCardsEl = document.getElementById('total-cards-count');
     const memorizedCardsEl = document.getElementById('memorized-cards-count');
     const weakCardsEl = document.getElementById('weak-cards-count');
@@ -124,18 +124,18 @@ export function updateGlobalStats() {
                 : `<button type="button" class="dday-set-btn" data-click="openGoalSettings"><i class="fa-solid fa-gear"></i> 시험일·목표 설정</button>`;
         }
     }
-    
+
     // 전체 진척도 퍼센트 계산
     const totalProgress = totalCards > 0 ? Math.round((state.memorizedCards.size / totalCards) * 100) : 0;
     if (totalProgressValEl) totalProgressValEl.textContent = `${totalProgress}%`;
     if (totalProgressBarEl) totalProgressBarEl.style.width = `${totalProgress}%`;
-    
+
     // 2. 퀴즈 통계
     const quizKeys = Object.keys(state.quizResults);
     const solvedCount = quizKeys.length;
     const correctCount = quizKeys.filter(k => state.quizResults[k].correct).length;
     const successRate = solvedCount > 0 ? Math.round((correctCount / solvedCount) * 100) : 0;
-    
+
     if (solvedQuizzesEl) solvedQuizzesEl.textContent = String(solvedCount);
     if (successRateEl) successRateEl.textContent = `${successRate}%`;
 }
@@ -162,11 +162,11 @@ export function renderDashboard() {
     const container = document.getElementById('subject-cards-container');
     if (!container) return;
     container.innerHTML = '';
-    
+
     const subjects = (typeof DataLoader !== 'undefined' && DataLoader.registry)
         ? DataLoader.getSubjectList()
         : Object.keys(window.STUDY_DATA || {}).map(key => { const d = (window.STUDY_DATA || {})[key]; return { key, name: d.name, stats: { cards: d.cards.length, quizzes: d.quizzes.length } }; });
-    
+
     // D-16 과목별 마스터리 — 진술 졸업 비율을 카드 표시 전 한 번만 집계
     const masteryMap = computeMasteryLevels(getAllStatementStats());
 
@@ -175,21 +175,21 @@ export function renderDashboard() {
         const disp = _displayCounts(subjMeta);
         const totalSubjCards = disp.cards;
         const totalSubjQuizzes = disp.quizzes;
-        
+
         // 과목별 완료된 카드 수 (캐시된 카운트 맵 사용, 표시 목표치 상한)
         const subjCounts = _getSubjCounts();
         const sc = subjCounts[subjId] || { mem: 0, weak: 0, quizSolved: 0, quizCorrect: 0 };
         const memorizedSubjCards = Math.min(sc.mem, totalSubjCards);
         const progressPercent = totalSubjCards > 0 ? Math.min(100, Math.round((memorizedSubjCards / totalSubjCards) * 100)) : 0;
-        
+
         // 과목별 퀴즈 정답률 (캐시된 카운트 맵 사용)
         const solvedSubjCount = sc.quizSolved;
         const correctSubjCount = sc.quizCorrect;
         const quizRate = solvedSubjCount > 0 ? Math.round((correctSubjCount / solvedSubjCount) * 100) : 0;
-        
+
         // 과목별 헷갈린 카드 수
         const weakSubjCards = sc.weak;
-        
+
         const cardHTML = `
             <div class="subject-card">
                 <div class="subj-header">
@@ -236,14 +236,14 @@ export function renderDashboard() {
         `;
         container.insertAdjacentHTML('beforeend', cardHTML);
     });
-    
+
     renderPerformanceChart();
     renderPassFailDiagnosis();
     renderExpectedScore();
     renderRadarChart();
     updateStreakAndDailyUI();
     updatePomodoroUI();
-    
+
     // 4. 학습 통계/분석 강화 — 과목별 정답률 히트맵 + 약점 과목 추천
     _renderSubjectHeatmap(subjects);
     _renderWeakSubjectRecommendation(subjects);
@@ -254,7 +254,7 @@ function _renderSubjectHeatmap(subjects) {
     const heatmapEl = document.getElementById('subject-heatmap');
     if (!heatmapEl) return;
     const subjCounts = _getSubjCounts();
-    
+
     // 색상 (CSS 변수에서 읽기)
     const _style = getComputedStyle(document.documentElement);
     const _c = (v) => _style.getPropertyValue(v).trim();
@@ -276,7 +276,7 @@ function _renderSubjectHeatmap(subjects) {
         else if (rate >= 60) { color = colors.mid; label = rate + '%'; }
         else if (rate >= 40) { color = colors.low; label = rate + '%'; }
         else { color = colors.vlow; label = rate + '%'; }
-        
+
         html += `
             <div class="heatmap-cell" title="${esc(subj.name)}: ${rate < 0 ? '미응시' : rate + '% 정답률 (' + sc.quizSolved + '문)'}" style="background:${color};">
                 <span class="heatmap-label">${esc(subj.name.substring(0, 6))}</span>
@@ -374,7 +374,7 @@ function _renderWeakStatementInsight() {
     const anomalous = getAnomalousStatements();
     if (weak.length === 0) {
         el.innerHTML = `<h4>🎯 취약 진술 추적</h4>
-            <p class="analysis-empty">O/X·복수정답형 드릴을 풀면 반복 오판 진술을 추적해 보여줍니다.</p>
+            <p class="analysis-empty">O/X·ㄱㄴㄷ 조합 드릴을 풀면 반복 오판 진술을 추적해 보여줍니다.</p>
             <button class="btn btn-secondary btn-sm analysis-card-btn" data-click="switchView" data-arg="trainer-view"><i class="fa-solid fa-dumbbell" aria-hidden="true"></i> 훈련소로</button>`;
         return;
     }
@@ -504,7 +504,7 @@ function _renderPassGapInsight() {
 
 /**
  * 특정 과목의 카드 학습을 시작합니다.
- * @param {string} subjId 
+ * @param {string} subjId
  */
 export function startSubjectStudy(subjId) {
     state.flashcards.subject = subjId;
@@ -516,7 +516,7 @@ export function startSubjectStudy(subjId) {
 
 /**
  * 특정 과목의 퀴즈 풀기를 시작합니다.
- * @param {string} subjId 
+ * @param {string} subjId
  */
 export function startSubjectQuiz(subjId) {
     state.quiz.subject = subjId;

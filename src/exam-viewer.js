@@ -89,7 +89,7 @@ export const ExamViewer = (() => {
         if (typeof mdPath === 'string' && mdPath.startsWith('combo:')) {
             const num = parseInt(mdPath.slice(6), 10);
             const subj = ((DataLoader.registry || {}).subjects || []).find(s => s.order === num);
-            return `${subj ? subj.name : `과목${num}`} 복수정답형`;
+            return `${subj ? subj.name : `과목${num}`} ㄱㄴㄷ 조합형`;
         }
         const filename = mdPath.split('/').pop();
         const registry = (typeof window !== 'undefined' && window.DATA_REGISTRY) || null;
@@ -444,7 +444,7 @@ body.exam-open{overflow:hidden;}
             const num = parseInt(mdPath.slice(6), 10);
             const questions = await DataLoader.loadComboDrills(num);
             if (!questions || !questions.length) {
-                throw new Error('이 과목의 복수정답형 문항이 없습니다.');
+                throw new Error('이 과목의 ㄱㄴㄷ 조합 문항이 없습니다.');
             }
             const subj = ((DataLoader.registry || {}).subjects || []).find(s => s.order === num);
             return buildComboSubjectMd(num, subj && subj.name, questions);
@@ -541,7 +541,7 @@ body.exam-open{overflow:hidden;}
     // 복수정답형 문제집 — Pro 제공 예정 기능.
     // combo:N 가상 경로로 열어 _loadMd가 드릴 번들을 문서로 직렬화하게 한다.
     async function openCombo(subjectNum) {
-        proFeatureNotice('combo_set', '복수정답형 문제집');
+        proFeatureNotice('combo_set', 'ㄱㄴㄷ 조합 문제집');
         const num = parseInt(subjectNum, 10);
         if (!Number.isFinite(num)) return;
         await openExam(`combo:${num}`);

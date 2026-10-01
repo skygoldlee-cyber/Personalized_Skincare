@@ -149,9 +149,9 @@ const PLAN_FEATURES = [
     { key: 'personal_analysis', label: '맞춤학습 (오답 패턴·취약 진술·성적 예측)' },
     { key: 'story_textbook', label: '이야기형 교재 본문 읽기' },
     { key: 'mock_exam', label: '실전 모의고사' },
-    { key: 'combo_mock', label: '복수정답형 모의고사' },
-    { key: 'combo_set', label: '복수정답형 문제집' },
-    { key: 'combo_drill', label: '복수정답형 훈련' },
+    { key: 'combo_mock', label: 'ㄱㄴㄷ 조합 모의고사' },
+    { key: 'combo_set', label: 'ㄱㄴㄷ 조합 문제집' },
+    { key: 'combo_drill', label: 'ㄱㄴㄷ 조합 훈련' },
     { key: 'cloud_sync', label: '클라우드 동기화 (여러 디바이스 상태 공유)' },
 ];
 

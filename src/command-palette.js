@@ -130,7 +130,7 @@ export function searchAll(query, sources) {
         const s = _matchScore(`${exam.title} ${exam.file}`, exam.title, terms);
         if (s >= 0) push('exam', {
             type: 'exam', icon: 'fa-file-lines', title: exam.title,
-            sub: '문제집 열기',
+            sub: '예상 문제집 열기',
             action: { kind: 'exam', path: `문제은행/${exam.file}` }, score: s
         });
     });

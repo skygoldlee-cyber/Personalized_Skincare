@@ -35,12 +35,12 @@ export function showSimAnswerReview() {
     const container = document.getElementById('sim-review-list-container');
     if (!container) return;
     container.innerHTML = '';
-    
+
     if (simState.wrongQuestions.length === 0) {
         container.innerHTML = '<p style="text-align:center; padding: 2rem; color: var(--color-success);"><i class="fa-solid fa-circle-check"></i> 만점입니다! 틀린 문제가 하나도 없습니다.</p>';
         return;
     }
-    
+
     simState.wrongQuestions.forEach((q) => {
         let optionsHTML = '';
         if (q.options && q.options.length > 0) {
@@ -49,12 +49,12 @@ export function showSimAnswerReview() {
             </ul>`;
         }
         if (q.type === 'combo') optionsHTML += comboTruthTableHTML(q);
-        
+
         const itemHTML = `
             <div class="sim-review-item">
                 <div class="review-item-header">
                     <span class="badge badge-quiz-cat">Q ${q.num}</span>
-                    <span class="badge badge-quiz-type">${q.type === 'choice' ? '객관식' : q.type === 'ox' ? '진위형' : q.type === 'combo' ? '복수정답형' : '단답형'}</span>
+                    <span class="badge badge-quiz-type">${q.type === 'choice' ? '객관식' : q.type === 'ox' ? '진위형' : q.type === 'combo' ? 'ㄱㄴㄷ 조합형' : '단답형'}</span>
                 </div>
                 <p class="review-item-q-text">${safeTextWithBreaks(q.question)}</p>
                 ${optionsHTML}
