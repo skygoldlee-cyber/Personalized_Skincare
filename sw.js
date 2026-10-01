@@ -21,7 +21,7 @@
 
 // @spec P-01~06,O-04,UX-PWA-03
 
-const CACHE_VERSION = 'v20261001-caaf813';   // 배포 시 stamp_sw_version.js가 자동 갱신 (v<커밋날짜>-<해시>)
+const CACHE_VERSION = 'v20261001-f38506d';   // 배포 시 stamp_sw_version.js가 자동 갱신 (v<커밋날짜>-<해시>)
 const DATA_CACHE_VERSION = 'v1';           // 데이터: 안정(해시 파일명이 변경 감지 담당) — 캐시 포맷이 바뀔 때만 수동 증가
 const SHELL_CACHE = `cosmetic-pass-shell-${CACHE_VERSION}`;
 const DATA_CACHE = `cosmetic-pass-data-${DATA_CACHE_VERSION}`;
@@ -214,6 +214,7 @@ const MD_ASSETS = [
   './content/exams/cosmetic/문제은행/과목3_문제은행.md',
   './content/exams/cosmetic/문제은행/과목4_문제은행.md',
   './content/exams/food/교재/sanitation/1과목_식품위생법의이해.md',
+  './content/exams/food/교재/sanitation/1과목_식품위생법의이해_이야기형.md',
   './content/exams/food/문제은행/과목1_문제은행.md',
   // MD_ASSETS:END
 ];

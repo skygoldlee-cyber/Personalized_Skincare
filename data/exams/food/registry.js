@@ -2,14 +2,14 @@
 var DATA_REGISTRY_FOOD = {
   "schemaVersion": 1,
   "contentYear": "2027",
-  "generatedAt": "2026-10-01T06:29:55.175Z",
+  "generatedAt": "2026-10-01T06:46:10.957Z",
   "subjects": [
     {
       "key": "sanitation",
       "order": 1,
       "name": "식품위생학",
       "shortName": "위생학",
-      "contentHash": "ec07ad90",
+      "contentHash": "2d3edc96",
       "stats": {
         "cards": 6,
         "quizzes": 1,
