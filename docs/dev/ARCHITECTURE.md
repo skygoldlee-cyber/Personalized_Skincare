@@ -842,6 +842,22 @@ const state = {
 | `number-drills/`, `limits-trainer.json`, `교재/glossary/`, `audiobook/` | 기능 콘텐츠 | 해당 `features` 플래그 시험만 보유 (`limits-trainer.json` = 수치 훈련 문항 배열, `limitsTrainer` 플래그와 쌍) |
 | `notice_status.json`, `law_verified.json`, `combo_blocklist.json`, `report/` | 도구 산출물 | 고시 감시·법령 검증·combo 감사가 루트에 기록 — 스캐폴드가 미리 만들지 않음(첫 실행 시 생성) |
 
+### 파일 계층 분류 (도메인 맵)
+
+`src/`·`css/`·`html/`·`data/`·`content/`·`tests/` 내 **모든 파일**은 계층이 선언되어야 한다 — 선언은 `tools/check/domain-map.json`, 강제는 `npm run check:domainmap`(`check:all`·`check:ci`에 편입).
+
+| 계층 | 판별 기준 | 예시 |
+|------|-----------|------|
+| `platform` | 시험·도메인 무관, 어느 시험에서도 재사용 | `storage.js`, `router.js`, `views/trainer.js` |
+| `feature:<이름>` | `features` 플래그(`flag` 필드) 또는 콘텐츠 게이트(`gate` 필드)로만 발화 | `views/formula*.js` → `feature:formula`, `notice-check.js` → `feature:regulatory`(references.json 게이트) |
+| `domain:<examId>` | 특정 시험 전용 콘텐츠·데이터 — `content/exams/<id>/`, `data/exams/<id>/` | `domain:cosmetic`, `domain:food` |
+
+- **분류 결정 순서**: ① 코드에 시험별 문구/데이터 내장? → `domain` (가능하면 `content/`로 이관) ② 플래그·콘텐츠 없으면 비발화? → `feature` ③ 둘 다 아니면 → `platform`
+- `generatedBy` 속성은 생성물의 원본 빌드 명령을 기록 (스크립트 존재 여부도 검증됨)
+- **미분류 신규 파일·중복 매칭·스테일 패턴은 오류** — 파일 추가/이동/삭제 시 맵 갱신이 강제되어 분류 드리프트를 차단
+- `tests/**`는 `catchAll` 규칙으로 기본 `platform` — 피처/도메인 전용 테스트만 패턴으로 선분류
+- `domain` 분류인데 코드에 내장된 시험별 콘텐츠는 점진적으로 `content/exams/<id>/`로 이관하는 것이 목표 방향 (예: `synonyms`, `limits-trainer.json` 이관 패턴)
+
 ---
 
 ## 🔐 계정·클라우드 동기화 (Supabase, 선택적)

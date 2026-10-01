@@ -1,0 +1,194 @@
+{
+  "$comment": "파일 계층 분류 맵 — check:domainmap (tools/check/check_domain_map.js) 이 강제. watchedDirs 내 모든 파일이 정확히 하나의 layer에 분류되어야 하며, 미분류·중복 분류·사라진 패턴은 오류. layer: platform(시험 무관 코어) / feature:<이름>(플래그·콘텐츠 게이트) / domain:<examId>(시험 전용). generatedBy: 생성물의 원본 빌드 명령/스크립트. catchAll: 다른 규칙에 매칭 안 된 파일만 흡수.",
+  "version": 1,
+  "watchedDirs": ["src", "css", "html", "data", "content", "tests"],
+  "rules": [
+    {
+      "layer": "platform",
+      "note": "시험·도메인 무관 앱 코어",
+      "patterns": [
+        "src/analysis-engine.js", "src/app-dashboard.js", "src/app-fallback.js",
+        "src/app-shell.js", "src/app-version.js", "src/app.js", "src/auth-view.js",
+        "src/charts.js", "src/combo-doc.js", "src/command-palette.js",
+        "src/config/**", "src/data-loader.js", "src/exam-context.js",
+        "src/exam-viewer.js", "src/feedback.js", "src/globals.d.ts",
+        "src/glossary-query.js", "src/html-viewer.js", "src/image-zoom.js",
+        "src/manual-viewer.js", "src/markdown-parser.js", "src/mermaid-render.js",
+        "src/mermaid-utils.js", "src/modal-back.js", "src/onboarding.js",
+        "src/package.json", "src/paths.js", "src/pro-upgrade.js",
+        "src/pwa-install-capture.js", "src/pwa-install.js", "src/pwa-manifest.js",
+        "src/questions.js", "src/reader-format.js", "src/recommendations.js",
+        "src/router.js", "src/sanitize.js", "src/sha256.js",
+        "src/spaced-repetition.js", "src/state.js", "src/statement-tracker.js",
+        "src/storage-keys.js", "src/storage.js", "src/study-aids.js",
+        "src/study-tracker.js", "src/supabase-client.js", "src/supabase-config.js",
+        "src/sync.js", "src/textbook-parser.js", "src/theme-init.js",
+        "src/theme-toggle.js", "src/types.js", "src/ui-mode.js", "src/ui-utils.js",
+        "src/usage-stats.js", "src/utils.js", "src/weak-items.js",
+        "src/web-vitals.js", "src/whats-new.js",
+        "src/views/backup.js", "src/views/daily-challenge.js",
+        "src/views/dashboard.js", "src/views/event-listeners.js",
+        "src/views/exam-select.js", "src/views/exam-sim-review.js",
+        "src/views/exam-sim-state.js", "src/views/exam-sim-weak.js",
+        "src/views/exam-simulator.js", "src/views/flashcard.js",
+        "src/views/glossary-renderer.js", "src/views/navigation.js",
+        "src/views/offline-detection.js", "src/views/quiz-wrong-cause.js",
+        "src/views/quiz.js", "src/views/reader-toolbar.js",
+        "src/views/study-calendar.js", "src/views/textbook-reader.js",
+        "src/views/textbook-search.js", "src/views/trainer-drill-combo.js",
+        "src/views/trainer-drills.js", "src/views/trainer.js",
+        "css/app-responsive.css", "css/base.css", "css/dashboard.css",
+        "css/exam.css", "css/html-viewer.css", "css/print.css",
+        "css/reader-extras.css", "css/reader-mermaid.css", "css/reader.css",
+        "css/study-calendar.css", "css/study.css", "css/trainer.css",
+        "css/ui-overlay.css",
+        "html/views/analysis.html", "html/views/calendar.html",
+        "html/views/dashboard.html", "html/views/exam-select.html",
+        "html/views/exam.html", "html/views/flashcard.html",
+        "html/views/quiz.html", "html/views/review.html",
+        "html/views/textbook-reader.html", "html/views/textbook.html",
+        "html/views/trainer.html",
+        "content/exams.json", "content/lawdb.json",
+        "data/release-notes.json"
+      ]
+    },
+    {
+      "layer": "platform",
+      "generatedBy": "npm run build:exams-list",
+      "note": "exams.json 레지스트리 번들",
+      "patterns": ["data/exams.js"]
+    },
+    {
+      "layer": "platform",
+      "generatedBy": "node tools/build/build_doc_bundles.js",
+      "note": "인앱 문서 번들 (시험 공통)",
+      "patterns": ["data/docs_md/**"]
+    },
+    {
+      "layer": "platform",
+      "generatedBy": "node tools/build/stamp_release_notes.js",
+      "note": "릴리스 노트·버전 배포 산출물",
+      "patterns": ["data/release-notes.js", "data/version.js"]
+    },
+    {
+      "layer": "feature:dictionary",
+      "flag": "dictionary",
+      "note": "용어/원료 사전 — manifest.knowledge 스키마 구동",
+      "patterns": [
+        "src/views/dictionary.js", "html/views/dictionary.html",
+        "tests/dom/dictionary-schema.dom.test.js",
+        "tests/dom/study-dictionary.dom.test.js"
+      ]
+    },
+    {
+      "layer": "feature:audiobook",
+      "flag": "audiobook",
+      "note": "이야기형 오디오북 재생",
+      "patterns": ["src/views/reader-audio.js"]
+    },
+    {
+      "layer": "feature:audiobook",
+      "flag": "audiobook",
+      "generatedBy": "npm run build:audio-manifest",
+      "patterns": ["data/audio_manifest.js"]
+    },
+    {
+      "layer": "feature:refDocs",
+      "flag": "refDocs",
+      "note": "참조자료 뷰어·레지스트리",
+      "patterns": ["src/views/reader-ref-links.js"]
+    },
+    {
+      "layer": "feature:refDocs",
+      "flag": "refDocs",
+      "generatedBy": "npm run build:pdf-registry",
+      "patterns": ["src/pdf-registry.js", "src/law-links.js"]
+    },
+    {
+      "layer": "feature:refDocs",
+      "flag": "refDocs",
+      "generatedBy": "npm run build:keyword-index",
+      "patterns": ["src/keyword-index.js"]
+    },
+    {
+      "layer": "feature:pomodoro",
+      "flag": "pomodoro",
+      "patterns": ["src/views/pomodoro.js", "tests/dom/study-pomodoro.dom.test.js"]
+    },
+    {
+      "layer": "feature:calcPractice",
+      "flag": "calcPractice",
+      "note": "배합 계산 연습 + 스크래치패드 캔버스",
+      "patterns": [
+        "src/trainer-calc.js", "src/scratchpad.js",
+        "src/views/trainer-calc-practice.js",
+        "tests/unit/trainer-calc.test.js",
+        "tests/dom/common-scratchpad.dom.test.js"
+      ]
+    },
+    {
+      "layer": "feature:ingredients",
+      "flag": "ingredients",
+      "note": "원료 안전성 챌린지 — knowledge 스키마의 badge/global로 데이터셋 해석",
+      "patterns": ["src/views/trainer-ingredients.js"]
+    },
+    {
+      "layer": "feature:regulatory",
+      "gate": "references.json.referenceLaw 존재 시 발화 (플래그 아닌 콘텐츠 게이트)",
+      "note": "규제 고시 감시 — 라벨·문서 목록은 시험별 references.json에서 유도",
+      "patterns": ["src/notice-check.js", "tests/unit/notice-check.test.js"]
+    },
+    {
+      "layer": "feature:refDocs",
+      "flag": "refDocs",
+      "note": "참조자료 링크/레지스트리 테스트",
+      "patterns": [
+        "tests/unit/pdf-registry.test.js", "tests/unit/law-links.test.js"
+      ]
+    },
+    {
+      "layer": "feature:formula",
+      "flag": "formula",
+      "note": "Formula OS — 포뮬러·고객·원료·조제기록 스토어, 규정 검증, CSV, 뷰",
+      "patterns": [
+        "src/formula-*.js", "src/batch-store.js", "src/customer-store.js",
+        "src/material-ledger.js", "src/usage-guide.js", "src/csv-utils.js",
+        "src/store-utils.js", "src/views/formula*.js",
+        "css/formula.css", "html/views/formula.html",
+        "tests/dom/formula-*.dom.test.js",
+        "tests/dom/review-drills-formula.dom.test.js",
+        "tests/unit/formula-*.test.js", "tests/unit/batch-store.test.js",
+        "tests/unit/customer-store.test.js", "tests/unit/material-ledger.test.js",
+        "tests/unit/usage-guide.test.js", "tests/unit/csv-import.test.js"
+      ]
+    },
+    {
+      "layer": "domain:cosmetic",
+      "note": "화장품 시험 콘텐츠 원본",
+      "patterns": ["content/exams/cosmetic/**"]
+    },
+    {
+      "layer": "domain:cosmetic",
+      "generatedBy": "npm run build:data",
+      "note": "화장품 시험 런타임 번들",
+      "patterns": ["data/exams/cosmetic/**"]
+    },
+    {
+      "layer": "domain:food",
+      "note": "식품 시험 콘텐츠 원본",
+      "patterns": ["content/exams/food/**"]
+    },
+    {
+      "layer": "domain:food",
+      "generatedBy": "npm run build:data",
+      "note": "식품 시험 런타임 번들",
+      "patterns": ["data/exams/food/**"]
+    },
+    {
+      "layer": "platform",
+      "catchAll": true,
+      "note": "테스트 기본 계층 — 피처/도메인 테스트는 위 규칙 패턴으로 선분류",
+      "patterns": ["tests/**"]
+    }
+  ]
+}
