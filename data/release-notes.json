@@ -1,5 +1,13 @@
 [
   {
+    "version": "v20261001-b2b4924",
+    "date": "2026-10-01",
+    "notes": [
+      "[정리·repo] 로컬 폴더명 passory 변경 후속 — 잔여 구 경로 참조 정리",
+      "[정리·repo] 저장소 명 passory로 변경 — 리포 참조 전반 갱신"
+    ]
+  },
+  {
     "version": "v20261001-c2a0a8d",
     "date": "2026-10-01",
     "notes": [
@@ -137,13 +145,6 @@
     "date": "2026-09-30",
     "notes": [
       "[기능·check] 법령·지식DB 이름 참조 검증 추가 — lawRef·noticeCore·matchKeys 교차 오염 [no-docs]"
-    ]
-  },
-  {
-    "version": "v20260930-90f2542",
-    "date": "2026-09-30",
-    "notes": [
-      "[문서·content] 4과목 교재에 맞춤형화장품 실질 허용 원료 집합 기억 태그 추가 [no-docs]"
     ]
   }
 ]
