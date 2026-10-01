@@ -150,7 +150,7 @@ export function populateExamCards() {
 
         const cardHtml = `                        <div class="exam-card-item">
                             <div class="exam-card-badge ${badgeColor}">${idx + 1}과목</div>
-                            <h4 class="exam-card-title">${subj.name} ${totalQuestions}제</h4>
+                            <h4 class="exam-card-title">${subj.name}</h4>
                             <div class="exam-card-btns ${btnsClass}">
 ${allBtnsHtml}
                             </div>
