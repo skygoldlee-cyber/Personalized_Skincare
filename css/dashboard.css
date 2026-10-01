@@ -215,6 +215,21 @@
     color: var(--color-text-secondary);
 }
 
+/* 진단 온보딩 진행률 미터 */
+.analysis-meter {
+    height: 6px;
+    margin: 0.15rem 0 0.4rem var(--space-4);
+    background: var(--bg-muted, rgba(128, 128, 128, 0.15));
+    border-radius: 3px;
+    overflow: hidden;
+}
+.analysis-meter-fill {
+    height: 100%;
+    background: var(--color-primary);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
 /* 진술 참/거짓 배지 — 취약 진술 카드 */
 .analysis-truth {
     font-size: var(--text-xs);

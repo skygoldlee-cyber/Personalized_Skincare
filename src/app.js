@@ -168,7 +168,8 @@ import {
     toggleReaderPlayPause,
     seekReaderAudio,
     cycleReaderAudioRate,
-    toggleReaderAutoScroll
+    toggleReaderAutoScroll,
+    openSubjectSection
 } from './views/textbook-reader.js';
 import {
     showGlobalLoading,
@@ -565,6 +566,7 @@ const DELEGATED_HANDLERS = {
     togglePomodoro, resetPomodoro,
     // 대시보드/리뷰/백업 (과거 브리지 누락으로 배포판에서 죽어 있던 핸들러 포함)
     startSubjectStudy, startSubjectQuiz, startSubjectReader, startDueReview,
+    openSubjectSection,
     removeWeakCard, setReviewFilter, printReviewNotes,
     tagWrongCause, tagWrongCauseAt, wrongActionCard, wrongActionTextbook, wrongActionSimilar,
     startDiagnosticQuiz,

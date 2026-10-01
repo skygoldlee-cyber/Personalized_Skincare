@@ -1,5 +1,5 @@
 // views/textbook-reader.js - 교재 본문 읽기 및 오디오북 플레이어 (Textbook Reader + Audio)
-// @spec TR-01~18,SA-01~05,G-01~09,ST-01~07
+// @spec TR-01~19,SA-01~05,G-01~09,ST-01~07
 //   (참조 링크 프리뷰/위임 → reader-ref-links.js, 툴바·스크롤스파이·표 모달 → reader-toolbar.js)
 import { esc } from '../sanitize.js';
 import { proFeatureNotice } from '../pro-upgrade.js';
@@ -315,10 +315,32 @@ export function renderTextbookReader() {
                 stopReaderAudio();
                 showAudioToast('표준형 모드로 전환되어 오디오 재생이 중지되었습니다.');
             }
+            // 읽던 섹션 위치 보존 — 서사 블록이 본문 사이에 삽입돼 scrollTop 절대값이 어긋나므로
+            // 현재 보이는 섹션 앵커(reader-section-N)를 기억하고 같은 섹션으로 복원한다.
+            const container = document.getElementById('textbook-reader-container');
+            let anchorIdx = -1, anchorOffset = 0;
+            if (container) {
+                const cTop = container.getBoundingClientRect().top;
+                const secs = container.querySelectorAll('[id^="reader-section-"]');
+                for (const s of secs) {
+                    const relTop = s.getBoundingClientRect().top - cTop;
+                    if (relTop <= 40) {
+                        anchorIdx = parseInt(s.id.replace('reader-section-', ''), 10);
+                        anchorOffset = -relTop; // 섹션 상단이 뷰포트 위로 얼마나 지났는지
+                    } else break;
+                }
+            }
             textbookReaderState.storyMode = (/** @type {HTMLInputElement} */ (e.target)).checked;
             // Re-render current chapter if one is selected
             if (textbookReaderState.selectedSubject && textbookReaderState.selectedChapter) {
-                renderChapterContent(textbookReaderState.selectedSubject, parseInt(textbookReaderState.selectedChapter));
+                Promise.resolve(renderChapterContent(textbookReaderState.selectedSubject, parseInt(textbookReaderState.selectedChapter))).then(() => {
+                    const cont = document.getElementById('textbook-reader-container');
+                    const target = anchorIdx >= 0 ? document.getElementById(`reader-section-${anchorIdx}`) : null;
+                    if (cont && target) {
+                        const absTop = target.getBoundingClientRect().top - cont.getBoundingClientRect().top + cont.scrollTop;
+                        cont.scrollTop = Math.max(0, absTop + anchorOffset);
+                    }
+                });
             }
         });
     }

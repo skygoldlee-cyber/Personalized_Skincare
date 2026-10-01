@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // tools/build/build_story_textbooks.js — 표준형 + 서사 패치 → _이야기형.md 생성
-// @spec none (콘텐츠 빌드 도구)
+// @spec BP-10 (서사 커버리지 게이트 — 챕터별 story 블록 수 리포트 + 0블록 패치 오류)
 //
 // manifest의 각 chapter가 storyFile을 선언하면, 같은 디렉터리의
 //   story/<표준형 파일명 - _표준형.md>_서사.md
@@ -10,6 +10,10 @@
 // 사용:
 //   node tools/build/build_story_textbooks.js           # 생성
 //   node tools/build/build_story_textbooks.js --check   # 생성물 ↔ 디스크 비교만
+//
+// 서사 커버리지 게이트: 패치가 존재하는데 story 플래그 블록이 0개면 오류
+// (이야기형이 표준형과 동일 — storyFile 선언이 무의미). 수작업 이야기형은
+// story:start 마커를 스캔해 서사 블록 수를 보고하고, 없으면 경고만 한다.
 'use strict';
 
 const fs = require('fs');
@@ -21,6 +25,16 @@ const ROOT = path.resolve(__dirname, '..', '..');
 const CHECK = process.argv.includes('--check');
 const SCAFFOLD_IDX = process.argv.indexOf('--scaffold');
 const SCAFFOLD = SCAFFOLD_IDX >= 0 ? process.argv[SCAFFOLD_IDX + 1] : null;
+
+/** 서사 커버리지 리포트 — 챕터별 서사 블록 수 (생성·--check 공통) */
+function printCoverage(coverage) {
+    if (!coverage.length) return;
+    console.log('서사 커버리지:');
+    coverage.forEach(c => {
+        const tag = c.manual ? '수작업' : '패치';
+        console.log(`  ${c.blocks === 0 ? '⚠' : '·'} ${c.rel} — 서사 ${c.blocks}블록 (${tag})${c.blocks === 0 ? ' — 이야기형이 표준형과 동일할 수 있음' : ''}`);
+    });
+}
 
 function patchPathFor(dirAbs, stdFile) {
     const base = stdFile.replace(/(_표준형)?\.md$/i, '');
@@ -98,6 +112,7 @@ function main() {
     const generated = [];
     const skipped = [];
     const failed = [];
+    const coverage = [];
     let drifted = 0;
 
     for (const t of getExamTargets(ROOT)) {
@@ -113,6 +128,12 @@ function main() {
 
                 if (!fs.existsSync(patchAbs)) {
                     skipped.push(`${rel} (패치 없음 — 수작업 파일 유지)`);
+                    // 수작업 이야기형의 서사 커버리지 — story:start 마커 스캔 (없으면 경고만)
+                    if (fs.existsSync(outAbs)) {
+                        const txt = norm(fs.readFileSync(outAbs, 'utf8'));
+                        const n = (txt.match(/<!-- story:start -->/g) || []).length;
+                        coverage.push({ rel, blocks: n, manual: true });
+                    }
                     continue;
                 }
                 const std = norm(fs.readFileSync(stdAbs, 'utf8'));
@@ -120,6 +141,12 @@ function main() {
                 const merged = applyPatch(std, ops);
                 if (merged.errors.length) {
                     failed.push(`${rel}:\n    ${merged.errors.join('\n    ')}`);
+                    continue;
+                }
+                const storyBlocks = ops.filter(o => o.kind === 'insert' && o.story);
+                coverage.push({ rel, blocks: storyBlocks.length, manual: false });
+                if (storyBlocks.length === 0) {
+                    failed.push(`${rel}: 패치에 story 플래그 블록 없음 — 이야기형이 표준형과 동일합니다 (storyFile 선언이 무의미)`);
                     continue;
                 }
                 const text = GEN_BANNER + '\n' + merged.text;
@@ -145,10 +172,12 @@ function main() {
             if (drifted) console.error(`\n❌ 이야기형 ${drifted}개 파일이 패치/표준형과 불일치 — npm run build:story 후 커밋 필요`);
             process.exit(1);
         }
+        printCoverage(coverage);
         console.log('\n✅ 모든 이야기형이 패치와 일치합니다');
         return;
     }
 
+    printCoverage(coverage);
     if (generated.length) {
         console.log('생성된 이야기형:');
         generated.forEach(g => console.log(`  + ${g}`));

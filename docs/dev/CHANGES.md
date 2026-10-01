@@ -6,6 +6,15 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-01 맞춤학습·이야기형 보완 5종 (커버리지 게이트·위치 보존·딥링크·온보딩·Pro 정책)
+
+- **서사 커버리지 게이트** (`build_story_textbooks.js`, BP-10): 빌드 시 챕터별 서사 블록 수 리포트. storyFile 선언 패치에 `story` 플래그 insert 0개이면 빌드 오류 — 이야기형이 표준형과 동일한 사일런트 저하 차단. 수작업 이야기형(패치 없음)은 `story:start` 마커 스캔으로 커버리지만 리포트
+- **모드 전환 읽기 위치 보존** (`textbook-reader.js`, TR-19): 표준형↔이야기형 토글 시 재렌더 전 보이는 `reader-section-N` 앵커+오프셋을 `getBoundingClientRect` 기준으로 기억 → 재렌더 후 같은 섹션으로 스크롤 복원 (offsetTop은 offsetParent 미스매치로 부정확)
+- **취약 단원 딥링크** (`dashboard.js`, AN-04): 단원별 취약 행(`wc-subrow`) 클릭 → `openSubjectSection(과목, 단원)`으로 교재 해당 섹션 직행 — `data-click` 위임, app.js 핸들러 등록
+- **진단 준비 온보딩** (`dashboard.js`, AN-04): 퀴즈 10문·모의고사 1회 미만이면 `analysis-onboarding-hint` 진행률 카드(미터 2종 + 퀴즈/모의고사 CTA)를 분석 그리드 최상단에 표시 — 표본 충족 시 자동 제거. `css/dashboard.css`에 `analysis-meter` 스타일
+- **Pro 전환 정책** (`SUBSCRIPTION_ROADMAP.md` §3.7): soft gate(배지·안내) → hard gate(`hasProEntitlement` 서버 검증) 전환 원칙 + 기존 사용자 grandfathering·로컬 데이터 보존·캐시 정책 확정 — ROAD-P0/P4 참조 갱신
+- 테스트: `tests/unit/reader-analysis-gates.test.js` 신규 6건 — 위치 보존 구조·온보딩 임계값·딥링크 위임·커버리지 게이트 + 패치 실물 story 블록 검증
+
 ## 2026-10-01 새로운 소식 모달 이중 표시 수정 (SW 업데이트 경합)
 
 - **원인**: 배포 후 첫 방문은 구버전 SW 캐시의 구 `index.html`로 부팅 → 구버전 기준 `maybeShowWhatsNew`가 모달 표시 → 새 SW `skipWaiting`+`controllerchange` 리로드 → 신버전 페이지가 같은 모달을 재표시 (버전마다 1회씩 총 2회)

@@ -1,5 +1,5 @@
 // src/views/dashboard.js - 대시보드 뷰 로직 및 전역 통계 관리
-// @spec D-01~16,AN-01~03,PF-07,SC-04
+// @spec D-01~16,AN-01~04,PF-07,SC-04
 import { state } from '../state.js';
 import { esc } from '../sanitize.js';
 import { DataLoader } from '../data-loader.js';
@@ -331,11 +331,51 @@ function _renderWeakSubjectRecommendation(subjects) {
  */
 export function renderAnalysisView() {
     renderDashboard();
+    _renderAnalysisOnboarding();
     _renderWrongCauseInsight();
     _renderWeakStatementInsight();
     _renderStudyRhythmInsight();
     _renderChapterWeakness();
     _renderPassGapInsight();
+}
+
+/**
+ * 진단 온보딩 — 데이터가 최소 표본에 못 미칠 때 진행률 카드를 최상단에 표시.
+ * 의미 있는 진단에는 최소 퀴즈 10문 또는 모의고사 1회가 필요하다.
+ * 표본이 충분해지면 카드는 자동으로 사라진다.
+ */
+const ANALYSIS_MIN_QUIZ = 10;
+const ANALYSIS_MIN_SIM = 1;
+function _renderAnalysisOnboarding() {
+    const grid = document.querySelector('#analysis-view .analysis-insight-grid');
+    if (!grid) return;
+    let hint = document.getElementById('analysis-onboarding-hint');
+    const counts = _getSubjCounts();
+    const quizSolved = Object.values(counts).reduce((s, c) => s + (c ? c.quizSolved || 0 : 0), 0);
+    const simDone = getSimHistory().length;
+    const ready = quizSolved >= ANALYSIS_MIN_QUIZ || simDone >= ANALYSIS_MIN_SIM;
+    if (ready) {
+        if (hint) hint.remove();
+        return;
+    }
+    const quizPct = Math.min(100, Math.round((quizSolved / ANALYSIS_MIN_QUIZ) * 100));
+    const simPct = Math.min(100, Math.round((simDone / ANALYSIS_MIN_SIM) * 100));
+    const meter = (label, cur, min, pct) =>
+        `<div class="wc-subrow"><span>${label}</span><strong>${cur}/${min}</strong></div>
+         <div class="analysis-meter"><div class="analysis-meter-fill" style="width:${pct}%"></div></div>`;
+    const html = `<h4>🌱 진단 준비 중</h4>
+        <p class="analysis-empty">맞춤학습은 푼 문제가 쌓일수록 정확해집니다 — 아래 중 하나만 채우면 진단이 시작됩니다.</p>
+        ${meter(`퀴즈 풀이 (최소 ${ANALYSIS_MIN_QUIZ}문)`, quizSolved, ANALYSIS_MIN_QUIZ, quizPct)}
+        ${meter(`모의고사 (최소 ${ANALYSIS_MIN_SIM}회)`, simDone, ANALYSIS_MIN_SIM, simPct)}
+        <button class="btn btn-primary btn-sm analysis-card-btn" data-click="startSubjectQuiz"><i class="fa-solid fa-play" aria-hidden="true"></i> 지금 퀴즈 풀기</button>
+        <button class="btn btn-secondary btn-sm analysis-card-btn" data-click="startIntegratedMockExam"><i class="fa-solid fa-clock" aria-hidden="true"></i> 모의고사 시작</button>`;
+    if (!hint) {
+        hint = document.createElement('div');
+        hint.id = 'analysis-onboarding-hint';
+        hint.className = 'analytics-card';
+        grid.prepend(hint);
+    }
+    hint.innerHTML = html;
 }
 
 /** 오답 패턴 분석 카드 — 최근 7일 원인 분포 + 권장 학습법 */
@@ -461,11 +501,11 @@ function _renderChapterWeakness() {
     }
     const html = groups.slice(0, 4).map(g => {
         const chRows = g.chapters.map(c =>
-            `<div class="wc-subrow"><span class="analysis-sid">${esc(c.chapter)}</span><span>${c.wrongs}건</span></div>`
+            `<div class="wc-subrow" role="button" tabindex="0" style="cursor:pointer" title="교재에서 이 단원 보기" data-click="openSubjectSection" data-args='${esc(JSON.stringify([g.subjectKey, c.chapter]))}'><span class="analysis-sid">${esc(c.chapter)}</span><span>${c.wrongs}건 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span></div>`
         ).join('');
         return `<div class="wc-row wc-subj-row"><span>${esc(g.subject)}</span><strong>${g.totalWrongs}건</strong></div>${chRows}`;
     }).join('');
-    el.innerHTML = `<h4>📖 단원별 취약 분석 <span class="analysis-meta">과목별 오답 집중 단원</span></h4>
+    el.innerHTML = `<h4>📖 단원별 취약 분석 <span class="analysis-meta">과목별 오답 집중 단원 — 클릭 시 해당 교재 단원으로 이동</span></h4>
         ${html}
         <p class="analysis-advice">과락은 과목 단위 평가 — 각 과목의 최약 단원부터 재학습하면 과락 방어에 효과적입니다.</p>`;
 }
@@ -547,6 +587,10 @@ export function startSubjectStudy(subjId) {
  * @param {string} subjId
  */
 export function startSubjectQuiz(subjId) {
+    if (!subjId) {
+        const subs = DataLoader.getSubjectList();
+        subjId = (subs[0] && subs[0].key) || '';
+    }
     state.quiz.subject = subjId;
     const select = /** @type {HTMLSelectElement|null} */ (document.getElementById('quiz-subject-select'));
     if (select) select.value = subjId;

@@ -102,6 +102,7 @@
 | AN-01 | 개인화 분석 전용 뷰 — 사이드바 "학습" 그룹 2번째, `personal_analysis` Pro 키로 배지·진입 안내 제어 | ✅ |
 | AN-02 | 학습 진단 요약 3카드 — 오답 패턴(7일 원인 분포·권장 학습법) / 취약 진술(오판 수·복습 대기·훈련소 딥링크 `gotoWeakReview`) / 학습 리듬(오늘 목표·주간 학습일·D-day·캘린더 링크) | ✅ |
 | AN-03 | 과목별 학습 상태 카드·정답률 히트맵·모의고사 분석(성적 추이·레이더·합격 진단·예상 점수) — 대시보드에서 이동, ID 기반 렌더 재사용 (`renderAnalysisView` → `renderDashboard` 위임) | ✅ |
+| AN-04 | 진단 준비 온보딩 + 취약 단원 딥링크 — 최소 표본(퀴즈 10문 또는 모의고사 1회) 미충족 시 진행률 카드를 분석 그리드 최상단에 표시하고 충족 시 자동 제거 (`_renderAnalysisOnboarding`, `analysis-onboarding-hint`). 단원별 취약 행 클릭 → `openSubjectSection(과목, 단원)`으로 교재 해당 섹션 직행 (`data-click` 위임, `wc-subrow`) | ✅ |
 
 ### 3.2 플래시카드 (Flashcard)
 
@@ -169,6 +170,7 @@
 | TR-16a | 모바일 툴바 자동 숨김 (아래로 스크롤 시 숨김, 위로 올리면 복귀) | ✅ |
 | TR-17 | 브레드크럼 (과목 > 단원 > 현재 섹션, 스크롤 스파이 연동) | ✅ |
 | TR-18 | 스크롤 스파이 (현재 섹션 TOC/브레드크럼 자동 하이라이트, `requestAnimationFrame` 스로틀링) | ✅ |
+| TR-19 | 이야기형 모드 전환 시 읽기 위치 보존 — 재렌더 전 현재 보이는 `reader-section-N` 앵커와 섹션 내 오프셋을 `getBoundingClientRect()` 기준으로 기억, 재렌더 후 같은 섹션 인덱스로 복원 (`offsetTop`은 offsetParent 기준이라 컨테이너 미스매치로 어긋남) | ✅ |
 
 ### 3.6 교재 리더 — 학습 보조 도구
 
@@ -720,6 +722,7 @@
 | BP-07 | SW 캐시 버전 자동 스탬프 (`stamp_sw_version.js`) | ✅ |
 | BP-08 | 콘텐츠 품질 감사 (`audit_card_quality.js`, `npm run audit:cards`) | ✅ |
 | BP-09 | **시험별 문서 번들 + 기능↔문서 불변식**: `build_doc_bundles.js`가 `{contentRoot}/docs/*.md`를 스캔해 자동 번들(문서 존재 = 선언). `features` 플래그 활성 시 필수 문서 규약(studyGuide→학습안내서.md 등)을 `check:docbundles`가 강제 | ✅ |
+| BP-10 | **이야기형 서사 커버리지 게이트**: `build_story_textbooks.js`가 챕터별 서사(`story` 플래그) 블록 수를 리포트하고, storyFile 선언 패치에 서사 블록 0개이면 빌드 오류 (이야기형이 표준형과 동일한 사일런트 저하 방지) | ✅ |
 
 ### 5.4 콘텐츠 구조
 
@@ -822,7 +825,7 @@
 | ROAD-P2 | **결제·구독 관리**: 토스/Stripe 연동, 웹훅 처리, 구독 상태 머신 | SUBSCRIPTION_ROADMAP §3 | 미구현 |
 | ROAD-P3 | **콘텐츠 게이팅 + CSP/SW 재작업**: 콘텐츠 접근 제어 시 Cache First SW와 인증 토큰의 충돌 해소, 해지·다운그레이드 시 캐시 purge, CSP `connect-src` 확장 | SUBSCRIPTION_ROADMAP §4~§6 | 미구현 |
 | ROAD-P4 | **무료 티어 축소·그랜드파더링 정책**: 클라우드 동기화를 Pro 전용으로 전환, 무료 티어 로그인은 비강제 유지 | `feature-plan.json` `cloud_sync: "pro"` + `canCloudSync()`/`pro_entitled` 게이트 (sync.js push·pull·syncNow 차단) | ✅ 결정·게이트 구현 |
-| ROAD-P0 | **Pro 안내 계층**: `feature-plan.json` 기능별 `pro`/`free` 전환 + `src/pro-upgrade.js` (PRO 배지 `data-pro-feature` 제어, 진입 1회 안내 `proFeatureNotice`, Formula OS 한도 초과 업그레이드 모달 `showUpgradeNotice`) — 접근 차단 없이 유료 경계만 인지 | `SUBSCRIPTION_ROADMAP.md` §3.4 구현 상태 주석 | ✅ |
+| ROAD-P0 | **Pro 안내 계층**: `feature-plan.json` 기능별 `pro`/`free` 전환 + `src/pro-upgrade.js` (PRO 배지 `data-pro-feature` 제어, 진입 1회 안내 `proFeatureNotice`, Formula OS 한도 초과 업그레이드 모달 `showUpgradeNotice`) — 접근 차단 없이 유료 경계만 인지. soft→hard 전환·grandfathering 정책은 §3.7에 확정 | `SUBSCRIPTION_ROADMAP.md` §3.4 구현 상태 주석·§3.7 전환 정책 | ✅ |
 
 ### 7.3 Learning Pro 잔여·차별화
 

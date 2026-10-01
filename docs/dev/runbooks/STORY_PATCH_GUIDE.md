@@ -138,13 +138,14 @@ npm.cmd run build:story -- --scaffold <subjectKey>
 - [ ] 서사 내 조문·수치가 표준형과 일치 (예: 10년/1억 vs 5년/5천만 혼동 없는지)
 - [ ] 등장인물·서사 톤이 기존 과목과 조화
 - [ ] 각 장면이 올바른 챕터에 배치됐는지 (슬롯 매핑)
+- [ ] 패치에 `story` 플래그 블록이 1개 이상 있는지 — 0개면 `build:story`가 오류로 실패 (이야기형이 표준형과 동일해지므로)
 - [ ] `check:parser` 통과 — 서사 블록이 표·카드 추출을 깨지 않는지
 - [ ] 생성물 직접 편집하지 않고 패치만 수정했는지
 
 ### 7.3 검증 명령
 
 ```powershell
-npm.cmd run build:story -- --check   # 패치 적용 검증
+npm.cmd run build:story -- --check   # 패치 적용 검증 + 챕터별 서사 블록 수(커버리지) 리포트 — 0블록 패치는 오류
 npm.cmd run check:manifest           # storyFile↔패치 정합성
 npm.cmd test && npm.cmd run check:parser
 ```
