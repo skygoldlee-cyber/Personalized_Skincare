@@ -206,7 +206,7 @@ const MD_ASSETS = [
 | `src/pdf-registry.js` | `build:pdf-registry` — 원본 `references.json` | ✅ |
 | `src/keyword-index.js` | `build:keyword-index` | ✅ |
 | `data/exams/{id}/id_migration.js` + `card_terms_snapshot.json` | `build:id-migration` — 스냅샷이 이전 배포 진도의 진실 | ✅ 필수 |
-| `문제은행/과목N_복수정답형.md` | `npm.cmd run build:drills` (`자동 생성` 마커) | ✅ |
+| `data/exams/{id}/drills/combo_subject*.js` | `npm.cmd run build:drills` (복수정답형 문제집은 런타임 직렬화 — MD 산출물 없음) | ✅ |
 | `content/exams/{id}/html/` | `python ref-pipeline/batch_convert.py` | ❌ (생성물) |
 | `audiobook/mp3/` | `run_pipeline.py --tts` → CDN | ❌ (CDN 호스팅) |
 | `docs/**/*.pdf` | `md2doc.py --pdf` 등 | ❌ (.gitignore) |

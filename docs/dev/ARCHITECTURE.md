@@ -261,6 +261,7 @@ Personalized_Skincare/
 │   ├── pwa-manifest.js         #   시험별 동적 PWA 매니페스트 (클래식 스크립트)
 │   ├── html-viewer.js          #   참조자료 fetch+DOM 뷰어, 검색, 하이라이트
 │   ├── exam-viewer.js          #   문제은행 MD 런타임 뷰어 (인용 링크 네비게이션, 라인 하이라이트)
+│   ├── combo-doc.js            #   복수정답형 드릴 번들 → 문제집 MD 런타임 직렬화 (openCombo 경유)
 │   ├── manual-viewer.js        #   학습안내서/매뉴얼 뷰어
 │   ├── glossary-query.js       #   용어집 조회 API
 │   ├── keyword-index.js        #   교재 셀→참조자료 키워드 매핑 (자동 생성)
@@ -360,7 +361,7 @@ Personalized_Skincare/
 │           │   ├── manufacturing/  # 2과목
 │           │   ├── safety/     #     3과목
 │           │   └── understanding/  # 4과목
-│           ├── 문제은행/        #    과목N_단일정답형.md (manifest 등록) + 과목N_복수정답형.md (생성 산출물)
+│           ├── 문제은행/        #    과목N_단일정답형.md (manifest 등록) — 복수정답형은 드릴 번들 런타임 렌더링(combo-doc.js)
 │           ├── 참조자료/
 │           │   ├── ref_md/과목N/{문서}/  # PDF→MD 변환본 (41개, ~26MB) — 과목 폴더가 귀속의 진실
 │           │   ├── 공통/       #     공통 참조자료 PDF
@@ -1429,7 +1430,7 @@ content/**/*.md ───(file:// 폴백)──► tools/build/build_study_md_bu
 
 data/exams/<id>/exams/*.js ──► tools/build/build_ox_drills.js    ──► data/exams/<id>/drills/ox_subject*.js   (O/X 3,700+문)
 data/exams/<id>/exams/*.js ──► tools/build/build_combo_drills.js ──► data/exams/<id>/drills/combo_subject*.js (복수정답형 755문)
-                └──────────────────────────────► content/exams/cosmetic/문제은행/과목N_복수정답형.md (검토용 MD)
+                                                                                └──(src/combo-doc.js 런타임 직렬화)──► 뷰어 "복수정답형 문제집" 문서
 ```
 
 **특징**:

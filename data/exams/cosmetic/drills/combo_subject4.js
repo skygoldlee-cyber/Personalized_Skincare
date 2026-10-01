@@ -1,5 +1,5 @@
 // 자동 생성된 복수정답형 드릴 데이터입니다. 수정하지 마십시오. (tools/build/build_combo_drills.js)
-// 원본: data/exams/cosmetic/exams/subject4.e75817fc.js — mode: fact(명제 조합) 18문 / answer(정답 조합) 257문
+// 원본: data/exams/cosmetic/exams/subject4.331f1760.js — mode: fact(명제 조합) 18문 / answer(정답 조합) 257문
 var COMBO_DRILLS_subject4 = [
  {
   "id": "understanding_combo_8317ff",
@@ -197,41 +197,41 @@ var COMBO_DRILLS_subject4 = [
   "subject": 4,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L1158 (출처: 과목4 문제은행 Q3)",
+  "citation": "📖 교재: L1160 (출처: 과목4 문제은행 Q3)",
   "stem": "피부의 표피층 중 '천연보습인자(NMF)'가 주로 생성되고 세라마이드 등 지질 성분이 분비되어 세포간지질막을 형성하기 시작하는 층에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "understanding_st_f816a0",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "각질층",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_ed0704",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "기저층",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_14d8b0",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "투명층",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_a9713e",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "가시층",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_c404a5",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "과립층",
     "truth": true
    }
@@ -281,7 +281,7 @@ var COMBO_DRILLS_subject4 = [
    "정답판정"
   ],
   "derivedFrom": "subject4_q3",
-  "explain": "📖 교재 근거 (교재: L1158):\n| 각질층<br>(Horny Layer) 🎯 기출 | • 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5 정도의 약산성<br>• 피부의 가장 바깥에 위치하여 수분 손실을 막고, 피부장벽 역할을 하여 피부 보호 및 세균 침입 방어<br>• 각질과 세포간지질이 벽돌 구조인 라멜라 구조<br>• 케라틴 약 58%, 천연보습인자(NMF) 약 31%, 세포간지질 약 11%로 구성<br>• 각질층은 천연보습인자(NMF)를 통해 10~20%의 수분 함유<br>&nbsp;&nbsp;* 필라그린(Fillaggrin): 각질층 형성에 중요한 역할을 하는 단백질로, 각질층에서 단백질 분해 효소에 의해 분해되어 천연보습인자(NMF)를 구성하는 아미노산을 이룸<br>&nbsp;&nbsp;* 세라마이드*...",
+  "explain": "📖 교재 근거 (교재: L1160):\n| 각질층<br>(Horny Layer) 🎯 기출 | • 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5 정도의 약산성<br>• 피부의 가장 바깥에 위치하여 수분 손실을 막고, 피부장벽 역할을 하여 피부 보호 및 세균 침입 방어<br>• 각질과 세포간지질이 벽돌 구조인 라멜라 구조<br>• 케라틴 약 58%, 천연보습인자(NMF) 약 31%, 세포간지질 약 11%로 구성<br>• 각질층은 천연보습인자(NMF)를 통해 10~20%의 수분 함유<br>&nbsp;&nbsp;* 필라그린(Fillaggrin): 각질층 형성에 중요한 역할을 하는 단백질로, 각질층에서 단백질 분해 효소에 의해 분해되어 천연보습인자(NMF)를 구성하는 아미노산을 이룸<br>&nbsp;&nbsp;* 세라마이드*...",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "1"
  },
@@ -472,41 +472,41 @@ var COMBO_DRILLS_subject4 = [
   "subject": 4,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L1158 (출처: 과목4 문제은행 Q6)",
+  "citation": "📖 교재: L1160 (출처: 과목4 문제은행 Q6)",
   "stem": "피부의 진피층을 이루는 주요 구성 물질 중 수분을 당겨 안아 피부의 부피감과 보습을 유지하는 강한 친수성 기질 성분에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "understanding_st_4f139d",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "콜라겐",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_a64a7e",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "히알루론산 (뮤코다당류)",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_78e6a9",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "엘라스틴",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_f52462",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "피지",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_e8d967",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "세라마이드",
     "truth": false
    }
@@ -552,7 +552,7 @@ var COMBO_DRILLS_subject4 = [
    "정답판정"
   ],
   "derivedFrom": "subject4_q6",
-  "explain": "📖 교재 근거 (교재: L1158):\n| 각질층<br>(Horny Layer) 🎯 기출 | • 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5 정도의 약산성<br>• 피부의 가장 바깥에 위치하여 수분 손실을 막고, 피부장벽 역할을 하여 피부 보호 및 세균 침입 방어<br>• 각질과 세포간지질이 벽돌 구조인 라멜라 구조<br>• 케라틴 약 58%, 천연보습인자(NMF) 약 31%, 세포간지질 약 11%로 구성<br>• 각질층은 천연보습인자(NMF)를 통해 10~20%의 수분 함유<br>&nbsp;&nbsp;* 필라그린(Fillaggrin): 각질층 형성에 중요한 역할을 하는 단백질로, 각질층에서 단백질 분해 효소에 의해 분해되어 천연보습인자(NMF)를 구성하는 아미노산을 이룸<br>&nbsp;&nbsp;* 세라마이드*...",
+  "explain": "📖 교재 근거 (교재: L1160):\n| 각질층<br>(Horny Layer) 🎯 기출 | • 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5 정도의 약산성<br>• 피부의 가장 바깥에 위치하여 수분 손실을 막고, 피부장벽 역할을 하여 피부 보호 및 세균 침입 방어<br>• 각질과 세포간지질이 벽돌 구조인 라멜라 구조<br>• 케라틴 약 58%, 천연보습인자(NMF) 약 31%, 세포간지질 약 11%로 구성<br>• 각질층은 천연보습인자(NMF)를 통해 10~20%의 수분 함유<br>&nbsp;&nbsp;* 필라그린(Fillaggrin): 각질층 형성에 중요한 역할을 하는 단백질로, 각질층에서 단백질 분해 효소에 의해 분해되어 천연보습인자(NMF)를 구성하는 아미노산을 이룸<br>&nbsp;&nbsp;* 세라마이드*...",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "1"
  },
@@ -561,41 +561,41 @@ var COMBO_DRILLS_subject4 = [
   "subject": 4,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L1158 (출처: 과목4 문제은행 Q7)",
+  "citation": "📖 교재: L1160 (출처: 과목4 문제은행 Q7)",
   "stem": "다음 중 피부 장벽의 지질 구조를 나타내는 모델로 각질세포와 세포간지질의 결합 상태를 설명하는 가장 대표적인 물리적 비유에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "understanding_st_8cd37d",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "수문장과 장벽 모델",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_a6ff30",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "벽돌과 시멘트 모델 (Brick and Mortar Model)",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_9585c5",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "스펀지 구조 모델",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_dee143",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "모자이크 모델",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_0aac71",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "샌드위치 모델",
     "truth": false
    }
@@ -644,7 +644,7 @@ var COMBO_DRILLS_subject4 = [
    "정답판정"
   ],
   "derivedFrom": "subject4_q7",
-  "explain": "📖 교재 근거 (교재: L1158):\n| 각질층<br>(Horny Layer) 🎯 기출 | • 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5 정도의 약산성<br>• 피부의 가장 바깥에 위치하여 수분 손실을 막고, 피부장벽 역할을 하여 피부 보호 및 세균 침입 방어<br>• 각질과 세포간지질이 벽돌 구조인 라멜라 구조<br>• 케라틴 약 58%, 천연보습인자(NMF) 약 31%, 세포간지질 약 11%로 구성<br>• 각질층은 천연보습인자(NMF)를 통해 10~20%의 수분 함유<br>&nbsp;&nbsp;* 필라그린(Fillaggrin): 각질층 형성에 중요한 역할을 하는 단백질로, 각질층에서 단백질 분해 효소에 의해 분해되어 천연보습인자(NMF)를 구성하는 아미노산을 이룸<br>&nbsp;&nbsp;* 세라마이드*...",
+  "explain": "📖 교재 근거 (교재: L1160):\n| 각질층<br>(Horny Layer) 🎯 기출 | • 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5 정도의 약산성<br>• 피부의 가장 바깥에 위치하여 수분 손실을 막고, 피부장벽 역할을 하여 피부 보호 및 세균 침입 방어<br>• 각질과 세포간지질이 벽돌 구조인 라멜라 구조<br>• 케라틴 약 58%, 천연보습인자(NMF) 약 31%, 세포간지질 약 11%로 구성<br>• 각질층은 천연보습인자(NMF)를 통해 10~20%의 수분 함유<br>&nbsp;&nbsp;* 필라그린(Fillaggrin): 각질층 형성에 중요한 역할을 하는 단백질로, 각질층에서 단백질 분해 효소에 의해 분해되어 천연보습인자(NMF)를 구성하는 아미노산을 이룸<br>&nbsp;&nbsp;* 세라마이드*...",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "3"
  },
@@ -653,41 +653,41 @@ var COMBO_DRILLS_subject4 = [
   "subject": 4,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L1158 (출처: 과목4 문제은행 Q8)",
+  "citation": "📖 교재: L1160 (출처: 과목4 문제은행 Q8)",
   "stem": "다음 중 모발의 구조 중 모발의 가장 바깥층에 위치하며 물고기 비늘 모양의 판상 세포가 겹쳐져 내부를 보호하는 역할을 하는 부위에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "understanding_st_48819a",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "모표피 (Cuticle)",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_73f302",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "모피질 (Cortex)",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_c2fc42",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "모수질 (Medulla)",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_e0fcac",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "모유두 (Papilla)",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_42887e",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "모낭 (Follicle)",
     "truth": false
    }
@@ -736,7 +736,7 @@ var COMBO_DRILLS_subject4 = [
    "정답판정"
   ],
   "derivedFrom": "subject4_q8",
-  "explain": "📖 교재 근거 (교재: L1158):\n| 각질층<br>(Horny Layer) 🎯 기출 | • 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5 정도의 약산성<br>• 피부의 가장 바깥에 위치하여 수분 손실을 막고, 피부장벽 역할을 하여 피부 보호 및 세균 침입 방어<br>• 각질과 세포간지질이 벽돌 구조인 라멜라 구조<br>• 케라틴 약 58%, 천연보습인자(NMF) 약 31%, 세포간지질 약 11%로 구성<br>• 각질층은 천연보습인자(NMF)를 통해 10~20%의 수분 함유<br>&nbsp;&nbsp;* 필라그린(Fillaggrin): 각질층 형성에 중요한 역할을 하는 단백질로, 각질층에서 단백질 분해 효소에 의해 분해되어 천연보습인자(NMF)를 구성하는 아미노산을 이룸<br>&nbsp;&nbsp;* 세라마이드*...",
+  "explain": "📖 교재 근거 (교재: L1160):\n| 각질층<br>(Horny Layer) 🎯 기출 | • 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5 정도의 약산성<br>• 피부의 가장 바깥에 위치하여 수분 손실을 막고, 피부장벽 역할을 하여 피부 보호 및 세균 침입 방어<br>• 각질과 세포간지질이 벽돌 구조인 라멜라 구조<br>• 케라틴 약 58%, 천연보습인자(NMF) 약 31%, 세포간지질 약 11%로 구성<br>• 각질층은 천연보습인자(NMF)를 통해 10~20%의 수분 함유<br>&nbsp;&nbsp;* 필라그린(Fillaggrin): 각질층 형성에 중요한 역할을 하는 단백질로, 각질층에서 단백질 분해 효소에 의해 분해되어 천연보습인자(NMF)를 구성하는 아미노산을 이룸<br>&nbsp;&nbsp;* 세라마이드*...",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "4"
  },
@@ -751,35 +751,35 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "ㄱ",
     "sid": "understanding_st_0ed49f",
-    "conceptId": "L1568",
+    "conceptId": "L1572",
     "text": "모피질",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_6715da",
-    "conceptId": "L1568",
+    "conceptId": "L1572",
     "text": "모표피",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_f49403",
-    "conceptId": "L1568",
+    "conceptId": "L1572",
     "text": "모수질",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_c53716",
-    "conceptId": "L1568",
+    "conceptId": "L1572",
     "text": "모근",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_1cb51a",
-    "conceptId": "L1568",
+    "conceptId": "L1572",
     "text": "모유두",
     "truth": false
    }
@@ -828,7 +828,7 @@ var COMBO_DRILLS_subject4 = [
    "정답판정"
   ],
   "derivedFrom": "subject4_q9",
-  "explain": "📖 교재 근거 (L1568):\n| 모피질 | 중간, 80~90% | 멜라닌 함유(모발색), 친수성, 케라틴 |",
+  "explain": "📖 교재 근거 (L1572):\n| 모피질 | 중간, 80~90% | 멜라닌 함유(모발색), 친수성, 케라틴 |",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "5"
  },
@@ -935,41 +935,41 @@ var COMBO_DRILLS_subject4 = [
   "subject": 4,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L1158 (출처: 과목4 문제은행 Q11)",
+  "citation": "📖 교재: L1160 (출처: 과목4 문제은행 Q11)",
   "stem": "피부의 땀샘(한선) 중 향선이라고도 불리며 주로 겨드랑이, 음부 등에 분포하여 땀 배출 시 지질, 단백질 성분이 섞여 체취(액취증)를 유발하는 땀샘에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "understanding_st_17491d",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "에크린 한선 (소한선)",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_f72efe",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "에크린 지선",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_914862",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "피지선",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_37e30e",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "아포크린 지선",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_a901b6",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "아포크린 한선 (대한선)",
     "truth": true
    }
@@ -1017,7 +1017,7 @@ var COMBO_DRILLS_subject4 = [
    "구성비"
   ],
   "derivedFrom": "subject4_q11",
-  "explain": "📖 교재 근거 (교재: L1158):\n| 각질층<br>(Horny Layer) 🎯 기출 | • 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5 정도의 약산성<br>• 피부의 가장 바깥에 위치하여 수분 손실을 막고, 피부장벽 역할을 하여 피부 보호 및 세균 침입 방어<br>• 각질과 세포간지질이 벽돌 구조인 라멜라 구조<br>• 케라틴 약 58%, 천연보습인자(NMF) 약 31%, 세포간지질 약 11%로 구성<br>• 각질층은 천연보습인자(NMF)를 통해 10~20%의 수분 함유<br>&nbsp;&nbsp;* 필라그린(Fillaggrin): 각질층 형성에 중요한 역할을 하는 단백질로, 각질층에서 단백질 분해 효소에 의해 분해되어 천연보습인자(NMF)를 구성하는 아미노산을 이룸<br>&nbsp;&nbsp;* 세라마이드*...",
+  "explain": "📖 교재 근거 (교재: L1160):\n| 각질층<br>(Horny Layer) 🎯 기출 | • 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5 정도의 약산성<br>• 피부의 가장 바깥에 위치하여 수분 손실을 막고, 피부장벽 역할을 하여 피부 보호 및 세균 침입 방어<br>• 각질과 세포간지질이 벽돌 구조인 라멜라 구조<br>• 케라틴 약 58%, 천연보습인자(NMF) 약 31%, 세포간지질 약 11%로 구성<br>• 각질층은 천연보습인자(NMF)를 통해 10~20%의 수분 함유<br>&nbsp;&nbsp;* 필라그린(Fillaggrin): 각질층 형성에 중요한 역할을 하는 단백질로, 각질층에서 단백질 분해 효소에 의해 분해되어 천연보습인자(NMF)를 구성하는 아미노산을 이룸<br>&nbsp;&nbsp;* 세라마이드*...",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "4"
  },
@@ -1309,41 +1309,41 @@ var COMBO_DRILLS_subject4 = [
   "subject": 4,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L630 (출처: 과목4 문제은행 Q15)",
+  "citation": "📖 교재: L632 (출처: 과목4 문제은행 Q15)",
   "stem": "다음 중 안전성시험 중 안(眼)점막 자극시험에 대한 설명으로 옳은 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "understanding_st_8ce7e1",
-    "conceptId": "L630",
+    "conceptId": "L632",
     "text": "사람의 눈에 직접 시험 물질을 투여하여 위험성을 예측한다",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_015c2a",
-    "conceptId": "L630",
+    "conceptId": "L632",
     "text": "동물이나 대체시험(단백질 구조 변화)을 통해 눈에 들어갔을 때의 위험성을 예측한다",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_bff0ee",
-    "conceptId": "L630",
+    "conceptId": "L632",
     "text": "UV램프를 조사하여 자외선에 의해 생기는 자극성을 평가한다",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_8b5c6e",
-    "conceptId": "L630",
+    "conceptId": "L632",
     "text": "피부에 반복적으로 투여했을 때 나타나는 자극성을 평가한다",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_04b1dc",
-    "conceptId": "L630",
+    "conceptId": "L632",
     "text": "박테리아를 이용한 돌연변이시험이다",
     "truth": false
    }
@@ -1392,7 +1392,7 @@ var COMBO_DRILLS_subject4 = [
    "명제판정"
   ],
   "derivedFrom": "subject4_q15",
-  "explain": "📖 교재 근거 (교재: L630):\n| 안(眼)점막 자극시험 🎯 기출 | 동물이나 대체시험(단백질 구조 변화)을 통해 눈에 들어갔을 때의 위험성을 예측함 |",
+  "explain": "📖 교재 근거 (교재: L632):\n| 안(眼)점막 자극시험 🎯 기출 | 동물이나 대체시험(단백질 구조 변화)을 통해 눈에 들어갔을 때의 위험성을 예측함 |",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "1"
  },
@@ -1677,41 +1677,41 @@ var COMBO_DRILLS_subject4 = [
   "subject": 4,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L1158 (출처: 과목4 문제은행 Q19)",
+  "citation": "📖 교재: L1160 (출처: 과목4 문제은행 Q19)",
   "stem": "다음 중 피부 장벽이 손상되었을 때 피부 외부로 유실되는 수분의 양을 뜻하는 지표의 명칭과 영문 약어 매칭이 옳은 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "understanding_st_ba4436",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "각질층수분보유도 - SCW",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_cadbaf",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "경피지질손실도 - TELL",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_4d3f2f",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "경피수분손실도 - TEWL (Transepidermal Water Loss)",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_d8fcbb",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "피부탄력도 - SE",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_d50a01",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "유수분밸런스 - OWB",
     "truth": false
    }
@@ -1757,7 +1757,7 @@ var COMBO_DRILLS_subject4 = [
    "정의"
   ],
   "derivedFrom": "subject4_q19",
-  "explain": "📖 교재 근거 (교재: L1158):\n| 각질층<br>(Horny Layer) 🎯 기출 | • 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5 정도의 약산성<br>• 피부의 가장 바깥에 위치하여 수분 손실을 막고, 피부장벽 역할을 하여 피부 보호 및 세균 침입 방어<br>• 각질과 세포간지질이 벽돌 구조인 라멜라 구조<br>• 케라틴 약 58%, 천연보습인자(NMF) 약 31%, 세포간지질 약 11%로 구성<br>• 각질층은 천연보습인자(NMF)를 통해 10~20%의 수분 함유<br>&nbsp;&nbsp;* 필라그린(Fillaggrin): 각질층 형성에 중요한 역할을 하는 단백질로, 각질층에서 단백질 분해 효소에 의해 분해되어 천연보습인자(NMF)를 구성하는 아미노산을 이룸<br>&nbsp;&nbsp;* 세라마이드*...",
+  "explain": "📖 교재 근거 (교재: L1160):\n| 각질층<br>(Horny Layer) 🎯 기출 | • 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5 정도의 약산성<br>• 피부의 가장 바깥에 위치하여 수분 손실을 막고, 피부장벽 역할을 하여 피부 보호 및 세균 침입 방어<br>• 각질과 세포간지질이 벽돌 구조인 라멜라 구조<br>• 케라틴 약 58%, 천연보습인자(NMF) 약 31%, 세포간지질 약 11%로 구성<br>• 각질층은 천연보습인자(NMF)를 통해 10~20%의 수분 함유<br>&nbsp;&nbsp;* 필라그린(Fillaggrin): 각질층 형성에 중요한 역할을 하는 단백질로, 각질층에서 단백질 분해 효소에 의해 분해되어 천연보습인자(NMF)를 구성하는 아미노산을 이룸<br>&nbsp;&nbsp;* 세라마이드*...",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "5"
  },
@@ -2134,41 +2134,41 @@ var COMBO_DRILLS_subject4 = [
   "subject": 4,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L1158 (출처: 과목4 문제은행 Q24)",
+  "citation": "📖 교재: L1160 (출처: 과목4 문제은행 Q24)",
   "stem": "다음 중 아토피 피부나 건성 피부에 특히 부족한 성분으로, 세포간지질의 절반(약 50%)을 차지하며 피부의 수분 보유 장벽 역할을 하는 핵심 성분에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "understanding_st_0a70e3",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "세라마이드",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_c26e6d",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "히알루론산",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_a36f44",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "콜라겐",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_a35397",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "피토스핑고신",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_f8db63",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "레시틴",
     "truth": false
    }
@@ -2220,7 +2220,7 @@ var COMBO_DRILLS_subject4 = [
    "수치"
   ],
   "derivedFrom": "subject4_q24",
-  "explain": "📖 교재 근거 (교재: L1158):\n| 각질층<br>(Horny Layer) 🎯 기출 | • 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5 정도의 약산성<br>• 피부의 가장 바깥에 위치하여 수분 손실을 막고, 피부장벽 역할을 하여 피부 보호 및 세균 침입 방어<br>• 각질과 세포간지질이 벽돌 구조인 라멜라 구조<br>• 케라틴 약 58%, 천연보습인자(NMF) 약 31%, 세포간지질 약 11%로 구성<br>• 각질층은 천연보습인자(NMF)를 통해 10~20%의 수분 함유<br>&nbsp;&nbsp;* 필라그린(Fillaggrin): 각질층 형성에 중요한 역할을 하는 단백질로, 각질층에서 단백질 분해 효소에 의해 분해되어 천연보습인자(NMF)를 구성하는 아미노산을 이룸<br>&nbsp;&nbsp;* 세라마이드*...",
+  "explain": "📖 교재 근거 (교재: L1160):\n| 각질층<br>(Horny Layer) 🎯 기출 | • 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5 정도의 약산성<br>• 피부의 가장 바깥에 위치하여 수분 손실을 막고, 피부장벽 역할을 하여 피부 보호 및 세균 침입 방어<br>• 각질과 세포간지질이 벽돌 구조인 라멜라 구조<br>• 케라틴 약 58%, 천연보습인자(NMF) 약 31%, 세포간지질 약 11%로 구성<br>• 각질층은 천연보습인자(NMF)를 통해 10~20%의 수분 함유<br>&nbsp;&nbsp;* 필라그린(Fillaggrin): 각질층 형성에 중요한 역할을 하는 단백질로, 각질층에서 단백질 분해 효소에 의해 분해되어 천연보습인자(NMF)를 구성하는 아미노산을 이룸<br>&nbsp;&nbsp;* 세라마이드*...",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "4"
  },
@@ -3515,41 +3515,41 @@ var COMBO_DRILLS_subject4 = [
   "subject": 4,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L1158 (출처: 과목4 문제은행 Q39)",
+  "citation": "📖 교재: L1160 (출처: 과목4 문제은행 Q39)",
   "stem": "다음 중 각질 세포가 기저층에서 분열하여 각질층으로 이동하고, 최종적으로 피부 표면에서 비듬이나 때의 형태로 탈락하기까지 소요되는 일반적인 각화 주기(Turnover Cycle)의 기간에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "understanding_st_44cbe2",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "약 28일",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_3ee2c5",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "약 7일",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_45cb11",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "약 14일",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_4c7fb5",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "약 3일",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_410803",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "약 90일",
     "truth": false
    }
@@ -3599,7 +3599,7 @@ var COMBO_DRILLS_subject4 = [
    "수치"
   ],
   "derivedFrom": "subject4_q39",
-  "explain": "📖 교재 근거 (교재: L1158):\n| 각질층<br>(Horny Layer) 🎯 기출 | • 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5 정도의 약산성<br>• 피부의 가장 바깥에 위치하여 수분 손실을 막고, 피부장벽 역할을 하여 피부 보호 및 세균 침입 방어<br>• 각질과 세포간지질이 벽돌 구조인 라멜라 구조<br>• 케라틴 약 58%, 천연보습인자(NMF) 약 31%, 세포간지질 약 11%로 구성<br>• 각질층은 천연보습인자(NMF)를 통해 10~20%의 수분 함유<br>&nbsp;&nbsp;* 필라그린(Fillaggrin): 각질층 형성에 중요한 역할을 하는 단백질로, 각질층에서 단백질 분해 효소에 의해 분해되어 천연보습인자(NMF)를 구성하는 아미노산을 이룸<br>&nbsp;&nbsp;* 세라마이드*...",
+  "explain": "📖 교재 근거 (교재: L1160):\n| 각질층<br>(Horny Layer) 🎯 기출 | • 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5 정도의 약산성<br>• 피부의 가장 바깥에 위치하여 수분 손실을 막고, 피부장벽 역할을 하여 피부 보호 및 세균 침입 방어<br>• 각질과 세포간지질이 벽돌 구조인 라멜라 구조<br>• 케라틴 약 58%, 천연보습인자(NMF) 약 31%, 세포간지질 약 11%로 구성<br>• 각질층은 천연보습인자(NMF)를 통해 10~20%의 수분 함유<br>&nbsp;&nbsp;* 필라그린(Fillaggrin): 각질층 형성에 중요한 역할을 하는 단백질로, 각질층에서 단백질 분해 효소에 의해 분해되어 천연보습인자(NMF)를 구성하는 아미노산을 이룸<br>&nbsp;&nbsp;* 세라마이드*...",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "5"
  },
@@ -3707,35 +3707,35 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "ㄱ",
     "sid": "understanding_st_2b48ff",
-    "conceptId": "L634",
+    "conceptId": "L636",
     "text": "등, 팔 안쪽에 폐쇄 첩포하여 피부 자극성이나 감작성(알레르기)을 평가한다",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_b3a034",
-    "conceptId": "L634",
+    "conceptId": "L636",
     "text": "국내외 대학 또는 전문 연구기관에서 실시한다",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_dd275c",
-    "conceptId": "L634",
+    "conceptId": "L636",
     "text": "관련 분야 전문의사, 연구소, 병원 등 관련 기관에서 5년 이상 경력을 가진 자의 지도 및 감독하에 수행된다",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_1f0703",
-    "conceptId": "L634",
+    "conceptId": "L636",
     "text": "동물을 대상으로 실시하는 시험이다",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_b4d8bd",
-    "conceptId": "L634",
+    "conceptId": "L636",
     "text": "접촉 피부염의 원인을 파악하기 위해 원인 추정 물질을 몸에 붙여 반응을 조사하는 시험이다",
     "truth": true
    }
@@ -3788,7 +3788,7 @@ var COMBO_DRILLS_subject4 = [
    "수치"
   ],
   "derivedFrom": "subject4_q41",
-  "explain": "📖 교재 근거 (L634):\n| 인체 첩포시험(인체 패치테스트) 🎯 기출 | 등, 팔 안쪽에 폐쇄 첩포하여 피부 자극성이나 감작성(알레르기)을 평가함. 국내외 대학 또는 전문 연구기관에서 실시하며, 관련 분야 전문의사, 연구소, 병원 등 관련 기관에서 5년 이상 경력을 가진 자의 지도 및 감독하에 수행·평가되어야 함. |\n> 해설: 인체 첩포시험은 사람을 대상으로 실시하는 시험이며, 동물을 대상으로 하는 것이 아니다.",
+  "explain": "📖 교재 근거 (L636):\n| 인체 첩포시험(인체 패치테스트) 🎯 기출 | 등, 팔 안쪽에 폐쇄 첩포하여 피부 자극성이나 감작성(알레르기)을 평가함. 국내외 대학 또는 전문 연구기관에서 실시하며, 관련 분야 전문의사, 연구소, 병원 등 관련 기관에서 5년 이상 경력을 가진 자의 지도 및 감독하에 수행·평가되어야 함. |\n> 해설: 인체 첩포시험은 사람을 대상으로 실시하는 시험이며, 동물을 대상으로 하는 것이 아니다.",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "5"
  },
@@ -6023,35 +6023,35 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "ㄱ",
     "sid": "understanding_st_70876b",
-    "conceptId": "L710",
+    "conceptId": "L712",
     "text": "관련 분야 전문의·병원·국내외 대학·전문연구기관에서 5년 이상 인체적용시험 경력자의 지도·감독하에 수행한다",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_2aa905",
-    "conceptId": "L710",
+    "conceptId": "L712",
     "text": "헬싱키 선언에 근거한 윤리적 원칙에 따라 수행한다",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_9df00c",
-    "conceptId": "L710",
+    "conceptId": "L712",
     "text": "피험자에 대한 의학적 처치나 결정은 의사 또는 한의사의 책임하에 이루어져야 한다",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_e68df6",
-    "conceptId": "L710",
+    "conceptId": "L712",
     "text": "모든 피험자로부터 자발적인 시험 참가 동의(문서 동의서)를 받은 후 실시한다",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_5769f9",
-    "conceptId": "L710",
+    "conceptId": "L712",
     "text": "시험 자료는 생략하거나 요약만 기술해도 된다",
     "truth": false
    }
@@ -6098,7 +6098,7 @@ var COMBO_DRILLS_subject4 = [
    "수치"
   ],
   "derivedFrom": "subject4_q66",
-  "explain": "📖 교재 근거 (L710):\n| ② 인체적용시험 자료 🎯 기출 | 지도·감독: 5년 이상 경력자의 지도·감독 / 윤리 원칙: 헬싱키 선언에 근거 / 과학적 타당성: 과학적으로 타당해야 하며, 시험 자료는 명확하고 상세히 기술 / 의학적 처치: 의사 또는 한의사의 책임 / 동의서: 모든 피험자로부터 자발적인 문서 동의서 |\n> 해설: 시험 자료는 명확하고 상세히 기술해야 하며, 생략하거나 요약만 기술할 수 없다.",
+  "explain": "📖 교재 근거 (L712):\n| ② 인체적용시험 자료 🎯 기출 | 지도·감독: 5년 이상 경력자의 지도·감독 / 윤리 원칙: 헬싱키 선언에 근거 / 과학적 타당성: 과학적으로 타당해야 하며, 시험 자료는 명확하고 상세히 기술 / 의학적 처치: 의사 또는 한의사의 책임 / 동의서: 모든 피험자로부터 자발적인 문서 동의서 |\n> 해설: 시험 자료는 명확하고 상세히 기술해야 하며, 생략하거나 요약만 기술할 수 없다.",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "1"
  },
@@ -8334,35 +8334,35 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "ㄱ",
     "sid": "understanding_st_900003",
-    "conceptId": "L1128",
+    "conceptId": "L1130",
     "text": "모세혈관의 확장으로 열을 차단하여 체온을 상승시킨다",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_81d113",
-    "conceptId": "L1128",
+    "conceptId": "L1130",
     "text": "모세혈관의 수축으로 열을 확산하여 체온을 하강시킨다",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_724d83",
-    "conceptId": "L1128",
+    "conceptId": "L1130",
     "text": "모세혈관의 확장으로 열을 확산하여 체온을 하강시킨다",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_73ff5f",
-    "conceptId": "L1128",
+    "conceptId": "L1130",
     "text": "땀샘의 분비를 중지하여 체온을 조절한다",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_fa6dd6",
-    "conceptId": "L1128",
+    "conceptId": "L1130",
     "text": "피지선의 분비를 통해 체온을 조절한다",
     "truth": false
    }
@@ -8412,7 +8412,7 @@ var COMBO_DRILLS_subject4 = [
    "명제판정"
   ],
   "derivedFrom": "subject4_q91",
-  "explain": "📖 교재 근거 (L1128):\n| 체온조절 기능 🎯 기출 | 모세혈관의 확장과 수축작용을 통해 열을 차단하거나 확산하여 체온을 조절함. 모세혈관 확장 → 열 확산 → 체온 하강. 모세혈관 수축 → 열 차단 → 체온 상승. |",
+  "explain": "📖 교재 근거 (L1130):\n| 체온조절 기능 🎯 기출 | 모세혈관의 확장과 수축작용을 통해 열을 차단하거나 확산하여 체온을 조절함. 모세혈관 확장 → 열 확산 → 체온 하강. 모세혈관 수축 → 열 차단 → 체온 상승. |",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "1"
  },
@@ -8611,35 +8611,35 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "ㄱ",
     "sid": "understanding_st_3d223d",
-    "conceptId": "L1392",
+    "conceptId": "L1394",
     "text": "시스틴 결합 (Cystine/Disulfide Bond)",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_3fabfc",
-    "conceptId": "L1392",
+    "conceptId": "L1394",
     "text": "수소 결합 (Hydrogen Bond)",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_5ce8f1",
-    "conceptId": "L1392",
+    "conceptId": "L1394",
     "text": "이온 결합 (Ionic/Salt Bond)",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_9c8dfe",
-    "conceptId": "L1392",
+    "conceptId": "L1394",
     "text": "펩타이드 결합 (Peptide Bond)",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_1eba72",
-    "conceptId": "L1392",
+    "conceptId": "L1394",
     "text": "에스테르 결합 (Ester Bond)",
     "truth": false
    }
@@ -8686,7 +8686,7 @@ var COMBO_DRILLS_subject4 = [
    "수치"
   ],
   "derivedFrom": "subject4_q94",
-  "explain": "📖 교재 근거 (L1392):\n### (4) 모발의 성장주기 🎯 기출",
+  "explain": "📖 교재 근거 (L1394):\n#### 4.4 모발의 성장주기 🎯 기출",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "4"
  },
@@ -9165,35 +9165,35 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "ㄱ",
     "sid": "understanding_st_565089",
-    "conceptId": "L998",
+    "conceptId": "L1002",
     "text": "콜라게나아제 (Collagenase)",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_7cafce",
-    "conceptId": "L998",
+    "conceptId": "L1002",
     "text": "티로시나아제 (Tyrosinase)",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_1cb379",
-    "conceptId": "L998",
+    "conceptId": "L1002",
     "text": "아밀라아제 (Amylase)",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_47bed0",
-    "conceptId": "L998",
+    "conceptId": "L1002",
     "text": "프로테아제 (Protease)",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_d756a5",
-    "conceptId": "L998",
+    "conceptId": "L1002",
     "text": "리파아제 (Lipase)",
     "truth": false
    }
@@ -9240,7 +9240,7 @@ var COMBO_DRILLS_subject4 = [
    "정답판정"
   ],
   "derivedFrom": "subject4_q100",
-  "explain": "📖 교재 근거 (L998):\n> - 핵심 키워드: 각질층(케라틴 58%·NMF 31%·지질 11%, pH 4.5~5.5), 멜라닌 형성(티로신→도파→도파퀴논), 진피(콜라겐 90%·엘라스틴 1.5~4.7%), 모표피(에피·엑소·엔도큐티클), 모발 성장주기(성장기 3~6년·퇴행기 3주·휴지기 3~4개월), 남성형 탈모(DHT), UV(UVA 광노화·UVB 홍반·UVC 피부암)",
+  "explain": "📖 교재 근거 (L1002):\n> - 핵심 키워드: 각질층(케라틴 58%·NMF 31%·지질 11%, pH 4.5~5.5), 멜라닌 형성(티로신→도파→도파퀴논), 진피(콜라겐 90%·엘라스틴 1.5~4.7%), 모표피(에피·엑소·엔도큐티클), 모발 성장주기(성장기 3~6년·퇴행기 3주·휴지기 3~4개월), 남성형 탈모(DHT), UV(UVA 광노화·UVB 홍반·UVC 피부암)",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "1"
  },
@@ -9622,41 +9622,41 @@ var COMBO_DRILLS_subject4 = [
   "subject": 4,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L630 (출처: 과목4 문제은행 Q105)",
+  "citation": "📖 교재: L632 (출처: 과목4 문제은행 Q105)",
   "stem": "피부의 표피층 구조 중 각질세포 외막(Cornified Envelope) 단백질 결합을 촉진하여 피부 장벽을 튼튼하게 유지하는 칼슘 의존성 효소에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "understanding_st_2223c9",
-    "conceptId": "L630",
+    "conceptId": "L632",
     "text": "트랜스글루타미나아제 (Transglutaminase)",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_b17b09",
-    "conceptId": "L630",
+    "conceptId": "L632",
     "text": "에스테라아제 (Esterase)",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_b9beda",
-    "conceptId": "L630",
+    "conceptId": "L632",
     "text": "리파아제 (Lipase)",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_f652f1",
-    "conceptId": "L630",
+    "conceptId": "L632",
     "text": "키나아제 (Kinase)",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_0fd5be",
-    "conceptId": "L630",
+    "conceptId": "L632",
     "text": "옥시다아제 (Oxidase)",
     "truth": false
    }
@@ -9707,7 +9707,7 @@ var COMBO_DRILLS_subject4 = [
    "정답판정"
   ],
   "derivedFrom": "subject4_q105",
-  "explain": "📖 교재 근거 (교재: L630):\n| 안(眼)점막 자극시험 🎯 기출 | 동물이나 대체시험(단백질 구조 변화)을 통해 눈에 들어갔을 때의 위험성을 예측함 |",
+  "explain": "📖 교재 근거 (교재: L632):\n| 안(眼)점막 자극시험 🎯 기출 | 동물이나 대체시험(단백질 구조 변화)을 통해 눈에 들어갔을 때의 위험성을 예측함 |",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "4"
  },
@@ -9908,35 +9908,35 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "ㄱ",
     "sid": "understanding_st_08b2af",
-    "conceptId": "L1535",
+    "conceptId": "L1539",
     "text": "액포 (Vacuole)",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_cb64d6",
-    "conceptId": "L1535",
+    "conceptId": "L1539",
     "text": "리소좀 (Lysosome)",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_6f3e77",
-    "conceptId": "L1535",
+    "conceptId": "L1539",
     "text": "리보좀 (Ribosome)",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_c3c73b",
-    "conceptId": "L1535",
+    "conceptId": "L1539",
     "text": "중심체 (Centrosome)",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_9f4f6f",
-    "conceptId": "L1535",
+    "conceptId": "L1539",
     "text": "층판소체 (층판과립 / Odland Body)",
     "truth": true
    }
@@ -9982,7 +9982,7 @@ var COMBO_DRILLS_subject4 = [
    "정답판정"
   ],
   "derivedFrom": "subject4_q108",
-  "explain": "📖 교재 근거 (L1535):\n| 각질층 | 10~20층 | 피부장벽, pH 4.5~5.5, 수분 10~20% | 케라틴 58%, NMF 31%, 세포간지질 11% |",
+  "explain": "📖 교재 근거 (L1539):\n| 각질층 | 10~20층 | 피부장벽, pH 4.5~5.5, 수분 10~20% | 케라틴 58%, NMF 31%, 세포간지질 11% |",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "4"
  },
@@ -10182,35 +10182,35 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "ㄱ",
     "sid": "understanding_st_846a98",
-    "conceptId": "L1535",
+    "conceptId": "L1539",
     "text": "3M KCl 용액 또는 전극 전용 세정액",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_75b4d8",
-    "conceptId": "L1535",
+    "conceptId": "L1539",
     "text": "원액 메탄올",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_65c343",
-    "conceptId": "L1535",
+    "conceptId": "L1539",
     "text": "100% 아세톤",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_825231",
-    "conceptId": "L1535",
+    "conceptId": "L1539",
     "text": "끓는 수산화나트륨 용액",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_001986",
-    "conceptId": "L1535",
+    "conceptId": "L1539",
     "text": "수돗물 그대로 건조",
     "truth": false
    }
@@ -10261,7 +10261,7 @@ var COMBO_DRILLS_subject4 = [
    "수치"
   ],
   "derivedFrom": "subject4_q111",
-  "explain": "📖 교재 근거 (L1535):\n| 각질층 | 10~20층 | 피부장벽, pH 4.5~5.5, 수분 10~20% | 케라틴 58%, NMF 31%, 세포간지질 11% |",
+  "explain": "📖 교재 근거 (L1539):\n| 각질층 | 10~20층 | 피부장벽, pH 4.5~5.5, 수분 10~20% | 케라틴 58%, NMF 31%, 세포간지질 11% |",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "2"
  },
@@ -11469,35 +11469,35 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "ㄱ",
     "sid": "understanding_st_beb950",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5 정도의 약산성이다",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_c81957",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "피부의 가장 바깥에 위치하여 수분 손실을 막고 피부장벽 역할을 한다",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_1ab721",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "케라틴 약 58%, 천연보습인자(NMF) 약 31%, 세포간지질 약 11%로 구성된다",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_4af174",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "각질층은 천연보습인자(NMF)를 통해 10~20%의 수분을 함유한다",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_f35da9",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "각화주기(각질형성주기)는 약 60일이다",
     "truth": false
    }
@@ -11548,7 +11548,7 @@ var COMBO_DRILLS_subject4 = [
    "수치"
   ],
   "derivedFrom": "subject4_q125",
-  "explain": "📖 교재 근거 (L1158):\n| 각질층 🎯 기출 | 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5. 케라틴 58%, NMF 31%, 세포간지질 11%. 각질층은 NMF를 통해 10~20% 수분 함유. 각화주기(각질형성주기)는 28±3일 |\n> 해설: 각화주기는 28±3일이지 60일이 아니다.",
+  "explain": "📖 교재 근거 (L1160):\n| 각질층 🎯 기출 | 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5. 케라틴 58%, NMF 31%, 세포간지질 11%. 각질층은 NMF를 통해 10~20% 수분 함유. 각화주기(각질형성주기)는 28±3일 |\n> 해설: 각화주기는 28±3일이지 60일이 아니다.",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "4"
  },
@@ -12022,35 +12022,35 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "ㄱ",
     "sid": "understanding_st_014136",
-    "conceptId": "L1178",
+    "conceptId": "L1180",
     "text": "콜레스테롤",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_75acf2",
-    "conceptId": "L1178",
+    "conceptId": "L1180",
     "text": "세라마이드",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_36737f",
-    "conceptId": "L1178",
+    "conceptId": "L1180",
     "text": "지방산",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_787990",
-    "conceptId": "L1178",
+    "conceptId": "L1180",
     "text": "콜레스테롤에스터",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_26b054",
-    "conceptId": "L1178",
+    "conceptId": "L1180",
     "text": "인지질",
     "truth": false
    }
@@ -12099,7 +12099,7 @@ var COMBO_DRILLS_subject4 = [
    "구성비"
   ],
   "derivedFrom": "subject4_q131",
-  "explain": "📖 교재 근거 (L1178):\n| 세포간지질 구성 성분 🎯 기출 | 세라마이드(50% 이상), 콜레스테롤, 콜레스테롤에스터, 지방산, 그 외 |",
+  "explain": "📖 교재 근거 (L1180):\n> 참고 - 세포간지질 구성 성분 🎯 기출",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "1"
  },
@@ -12845,35 +12845,35 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "ㄱ",
     "sid": "understanding_st_2d8e94",
-    "conceptId": "L1392",
+    "conceptId": "L1394",
     "text": "7일",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_20ce30",
-    "conceptId": "L1392",
+    "conceptId": "L1394",
     "text": "14일",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_3a6995",
-    "conceptId": "L1392",
+    "conceptId": "L1394",
     "text": "90일",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_30745f",
-    "conceptId": "L1392",
+    "conceptId": "L1394",
     "text": "60일",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_e49cf3",
-    "conceptId": "L1392",
+    "conceptId": "L1394",
     "text": "28일",
     "truth": true
    }
@@ -12924,7 +12924,7 @@ var COMBO_DRILLS_subject4 = [
    "수치"
   ],
   "derivedFrom": "subject4_q140",
-  "explain": "📖 교재 근거 (L1392):\n### (4) 모발의 성장주기 🎯 기출",
+  "explain": "📖 교재 근거 (L1394):\n#### 4.4 모발의 성장주기 🎯 기출",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "5"
  },
@@ -13392,35 +13392,35 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "ㄱ",
     "sid": "understanding_st_655f97",
-    "conceptId": "L1568",
+    "conceptId": "L1572",
     "text": "모발의 가장 바깥층",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_25f0b3",
-    "conceptId": "L1568",
+    "conceptId": "L1572",
     "text": "모발의 뿌리 부분",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_24d06e",
-    "conceptId": "L1568",
+    "conceptId": "L1572",
     "text": "모발의 주요 구성 성분으로 멜라닌 색소 포함",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_74b852",
-    "conceptId": "L1568",
+    "conceptId": "L1572",
     "text": "모낭 내부의 구조",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_155d66",
-    "conceptId": "L1568",
+    "conceptId": "L1572",
     "text": "모발의 영양 공급 담당",
     "truth": false
    }
@@ -13470,7 +13470,7 @@ var COMBO_DRILLS_subject4 = [
    "구성비"
   ],
   "derivedFrom": "subject4_q146",
-  "explain": "📖 교재 근거 (L1568):\n| 모피질 | 중간, 80~90% | 멜라닌 함유(모발색), 친수성, 케라틴 |",
+  "explain": "📖 교재 근거 (L1572):\n| 모피질 | 중간, 80~90% | 멜라닌 함유(모발색), 친수성, 케라틴 |",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "2"
  },
@@ -15414,35 +15414,35 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "ㄱ",
     "sid": "understanding_st_324deb",
-    "conceptId": "L1354",
+    "conceptId": "L1352",
     "text": "모발 가장 바깥쪽 5~15층의 비늘 모양이다",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_6b2302",
-    "conceptId": "L1354",
+    "conceptId": "L1352",
     "text": "멜라닌이 없어 무색투명한 케라틴 단백질로 구성된다",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_2d30f2",
-    "conceptId": "L1354",
+    "conceptId": "L1352",
     "text": "두발 내부의 모피질을 감싸고 있는 화학적 저항성이 강한 층이다",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_d86a0b",
-    "conceptId": "L1354",
+    "conceptId": "L1352",
     "text": "모발의 중간에 위치하며 대부분을 차지한다",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_767bc5",
-    "conceptId": "L1354",
+    "conceptId": "L1352",
     "text": "에피큐티클, 엑소큐티클, 엔도큐티클로 구성된다",
     "truth": true
    }
@@ -15497,7 +15497,7 @@ var COMBO_DRILLS_subject4 = [
    "수치"
   ],
   "derivedFrom": "subject4_q168",
-  "explain": "📖 교재 근거 (L1354):\n| (2) 모발의 구조 🎯 기출 | 모표피: 모발 가장 바깥쪽 5~15층의 비늘 모양, 멜라닌이 없어 무색투명한 케라틴 단백질, 화학적 저항성이 강한 층. 모피질: 모발의 중간에 위치하며 대부분을 차지(80~90%). |\n> 해설: 모발의 중간에 위치하며 대부분을 차지하는 것은 모피질(Cortex)이다.",
+  "explain": "📖 교재 근거 (L1352):\n| (2) 모발의 구조 🎯 기출 | 모표피: 모발 가장 바깥쪽 5~15층의 비늘 모양, 멜라닌이 없어 무색투명한 케라틴 단백질, 화학적 저항성이 강한 층. 모피질: 모발의 중간에 위치하며 대부분을 차지(80~90%). |\n> 해설: 모발의 중간에 위치하며 대부분을 차지하는 것은 모피질(Cortex)이다.",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "2"
  },
@@ -16144,41 +16144,41 @@ var COMBO_DRILLS_subject4 = [
   "subject": 4,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L1158 (출처: 과목4 문제은행 Q176)",
+  "citation": "📖 교재: L1160 (출처: 과목4 문제은행 Q176)",
   "stem": "피부의 pH가 알칼리성으로 변하면 발생하는 현상이 아닌 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "understanding_st_44b91c",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "각질층의 장벽 기능 저하",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_6c5bd9",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "피부 건조",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_270181",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "피부 미백",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_d41df8",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "유해균 증식",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_7ea8d6",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "피부 자극 증가",
     "truth": false
    }
@@ -16225,7 +16225,7 @@ var COMBO_DRILLS_subject4 = [
    "정답판정"
   ],
   "derivedFrom": "subject4_q176",
-  "explain": "📖 교재 근거 (교재: L1158):\n| 각질층<br>(Horny Layer) 🎯 기출 | • 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5 정도의 약산성<br>• 피부의 가장 바깥에 위치하여 수분 손실을 막고, 피부장벽 역할을 하여 피부 보호 및 세균 침입 방어<br>• 각질과 세포간지질이 벽돌 구조인 라멜라 구조<br>• 케라틴 약 58%, 천연보습인자(NMF) 약 31%, 세포간지질 약 11%로 구성<br>• 각질층은 천연보습인자(NMF)를 통해 10~20%의 수분 함유<br>&nbsp;&nbsp;* 필라그린(Fillaggrin): 각질층 형성에 중요한 역할을 하는 단백질로, 각질층에서 단백질 분해 효소에 의해 분해되어 천연보습인자(NMF)를 구성하는 아미노산을 이룸<br>&nbsp;&nbsp;* 세라마이드*...",
+  "explain": "📖 교재 근거 (교재: L1160):\n| 각질층<br>(Horny Layer) 🎯 기출 | • 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5 정도의 약산성<br>• 피부의 가장 바깥에 위치하여 수분 손실을 막고, 피부장벽 역할을 하여 피부 보호 및 세균 침입 방어<br>• 각질과 세포간지질이 벽돌 구조인 라멜라 구조<br>• 케라틴 약 58%, 천연보습인자(NMF) 약 31%, 세포간지질 약 11%로 구성<br>• 각질층은 천연보습인자(NMF)를 통해 10~20%의 수분 함유<br>&nbsp;&nbsp;* 필라그린(Fillaggrin): 각질층 형성에 중요한 역할을 하는 단백질로, 각질층에서 단백질 분해 효소에 의해 분해되어 천연보습인자(NMF)를 구성하는 아미노산을 이룸<br>&nbsp;&nbsp;* 세라마이드*...",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "5"
  },
@@ -18155,41 +18155,41 @@ var COMBO_DRILLS_subject4 = [
   "subject": 4,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L1158 (출처: 과목4 문제은행 Q198)",
+  "citation": "📖 교재: L1160 (출처: 과목4 문제은행 Q198)",
   "stem": "피부의 표피층 중 기저층의 역할이 아닌 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "understanding_st_682961",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "세포 분열",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_f187c2",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "각질 탈락",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_2aa244",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "표피의 재생",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_d009ca",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "멜라닌 생성",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_3c65a6",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "표피와 진피의 연결",
     "truth": false
    }
@@ -18235,7 +18235,7 @@ var COMBO_DRILLS_subject4 = [
    "정답판정"
   ],
   "derivedFrom": "subject4_q198",
-  "explain": "📖 교재 근거 (교재: L1158):\n| 각질층<br>(Horny Layer) 🎯 기출 | • 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5 정도의 약산성<br>• 피부의 가장 바깥에 위치하여 수분 손실을 막고, 피부장벽 역할을 하여 피부 보호 및 세균 침입 방어<br>• 각질과 세포간지질이 벽돌 구조인 라멜라 구조<br>• 케라틴 약 58%, 천연보습인자(NMF) 약 31%, 세포간지질 약 11%로 구성<br>• 각질층은 천연보습인자(NMF)를 통해 10~20%의 수분 함유<br>&nbsp;&nbsp;* 필라그린(Fillaggrin): 각질층 형성에 중요한 역할을 하는 단백질로, 각질층에서 단백질 분해 효소에 의해 분해되어 천연보습인자(NMF)를 구성하는 아미노산을 이룸<br>&nbsp;&nbsp;* 세라마이드*...",
+  "explain": "📖 교재 근거 (교재: L1160):\n| 각질층<br>(Horny Layer) 🎯 기출 | • 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5 정도의 약산성<br>• 피부의 가장 바깥에 위치하여 수분 손실을 막고, 피부장벽 역할을 하여 피부 보호 및 세균 침입 방어<br>• 각질과 세포간지질이 벽돌 구조인 라멜라 구조<br>• 케라틴 약 58%, 천연보습인자(NMF) 약 31%, 세포간지질 약 11%로 구성<br>• 각질층은 천연보습인자(NMF)를 통해 10~20%의 수분 함유<br>&nbsp;&nbsp;* 필라그린(Fillaggrin): 각질층 형성에 중요한 역할을 하는 단백질로, 각질층에서 단백질 분해 효소에 의해 분해되어 천연보습인자(NMF)를 구성하는 아미노산을 이룸<br>&nbsp;&nbsp;* 세라마이드*...",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "2"
  },
@@ -18529,35 +18529,35 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "ㄱ",
     "sid": "understanding_st_72a0c0",
-    "conceptId": "L1465",
+    "conceptId": "L1469",
     "text": "피부의 강도 담당",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_4af1f1",
-    "conceptId": "L1465",
+    "conceptId": "L1469",
     "text": "피부의 자외선 차단",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_644795",
-    "conceptId": "L1465",
+    "conceptId": "L1469",
     "text": "피부의 색 결정",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_d8dc54",
-    "conceptId": "L1465",
+    "conceptId": "L1469",
     "text": "피부의 보습",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_bb2dd4",
-    "conceptId": "L1465",
+    "conceptId": "L1469",
     "text": "피부의 탄력(신축성) 담당",
     "truth": true
    }
@@ -18606,7 +18606,7 @@ var COMBO_DRILLS_subject4 = [
    "정답판정"
   ],
   "derivedFrom": "subject4_q202",
-  "explain": "📖 교재 근거 (L1465):\n| 노화 피부 | • 광노화, 자연노화로 나뉘며 보습과 탄력이 저하된 피부<br>• 콜라겐(교원섬유) 감소 / 엘라스틴(탄력섬유) 변성<br>• 기질 탄수화물 감소 / 피부혈관의 면적 감소 |",
+  "explain": "📖 교재 근거 (L1469):\n| 노화 피부 | • 광노화, 자연노화로 나뉘며 보습과 탄력이 저하된 피부<br>• 콜라겐(교원섬유) 감소 / 엘라스틴(탄력섬유) 변성<br>• 기질 탄수화물 감소 / 피부혈관의 면적 감소 |",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "2"
  },
@@ -20261,41 +20261,41 @@ var COMBO_DRILLS_subject4 = [
   "subject": 4,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L2042 (출처: 과목4 문제은행 Q221)",
+  "citation": "📖 교재: L2043 (출처: 과목4 문제은행 Q221)",
   "stem": "피부의 각질층의 장벽 기능을 평가하는 방법에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "understanding_st_026835",
-    "conceptId": "L2042",
+    "conceptId": "L2043",
     "text": "TEWL(경피수분손실량) 측정",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_64a8ad",
-    "conceptId": "L2042",
+    "conceptId": "L2043",
     "text": "혈액 검사",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_e5b6fd",
-    "conceptId": "L2042",
+    "conceptId": "L2043",
     "text": "소변 검사",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_1d525e",
-    "conceptId": "L2042",
+    "conceptId": "L2043",
     "text": "체온 측정",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_17b2cf",
-    "conceptId": "L2042",
+    "conceptId": "L2043",
     "text": "혈압 측정",
     "truth": false
    }
@@ -20341,7 +20341,7 @@ var COMBO_DRILLS_subject4 = [
    "정답판정"
   ],
   "derivedFrom": "subject4_q221",
-  "explain": "📖 교재 근거 (교재: L2042):\n> 해설: Cutometer는 피부의 유연성을 측정하여 탄력을 평가하는 기기이다. Rheometer는 점탄성(마찰감, 보송보송함 등)을, Glossmeter는 광택(번들거림 등)을, Turbidity meter는 탁도를 측정한다.",
+  "explain": "📖 교재 근거 (교재: L2043):\n> 해설: Cutometer는 피부의 유연성을 측정하여 탄력을 평가하는 기기이다. Rheometer는 점탄성(마찰감, 보송보송함 등)을, Glossmeter는 광택(번들거림 등)을, Turbidity meter는 탁도를 측정한다.",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "5"
  },
@@ -21269,41 +21269,41 @@ var COMBO_DRILLS_subject4 = [
   "subject": 4,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L1158 (출처: 과목4 문제은행 Q232)",
+  "citation": "📖 교재: L1160 (출처: 과목4 문제은행 Q232)",
   "stem": "피부의 표피층 중 세포가 편평해지고 핵이 퇴화하기 시작하는 층에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "understanding_st_2e7bc7",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "기저층",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_26706a",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "유극층",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_564d72",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "투명층",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_04a3b1",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "각질층",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_0d1b3d",
-    "conceptId": "L1158",
+    "conceptId": "L1160",
     "text": "과립층",
     "truth": true
    }
@@ -21350,7 +21350,7 @@ var COMBO_DRILLS_subject4 = [
    "정답판정"
   ],
   "derivedFrom": "subject4_q232",
-  "explain": "📖 교재 근거 (교재: L1158):\n| 각질층<br>(Horny Layer) 🎯 기출 | • 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5 정도의 약산성<br>• 피부의 가장 바깥에 위치하여 수분 손실을 막고, 피부장벽 역할을 하여 피부 보호 및 세균 침입 방어<br>• 각질과 세포간지질이 벽돌 구조인 라멜라 구조<br>• 케라틴 약 58%, 천연보습인자(NMF) 약 31%, 세포간지질 약 11%로 구성<br>• 각질층은 천연보습인자(NMF)를 통해 10~20%의 수분 함유<br>&nbsp;&nbsp;* 필라그린(Fillaggrin): 각질층 형성에 중요한 역할을 하는 단백질로, 각질층에서 단백질 분해 효소에 의해 분해되어 천연보습인자(NMF)를 구성하는 아미노산을 이룸<br>&nbsp;&nbsp;* 세라마이드*...",
+  "explain": "📖 교재 근거 (교재: L1160):\n| 각질층<br>(Horny Layer) 🎯 기출 | • 약 10~20층의 납작한 무핵세포층으로 pH 4.5~5.5 정도의 약산성<br>• 피부의 가장 바깥에 위치하여 수분 손실을 막고, 피부장벽 역할을 하여 피부 보호 및 세균 침입 방어<br>• 각질과 세포간지질이 벽돌 구조인 라멜라 구조<br>• 케라틴 약 58%, 천연보습인자(NMF) 약 31%, 세포간지질 약 11%로 구성<br>• 각질층은 천연보습인자(NMF)를 통해 10~20%의 수분 함유<br>&nbsp;&nbsp;* 필라그린(Fillaggrin): 각질층 형성에 중요한 역할을 하는 단백질로, 각질층에서 단백질 분해 효소에 의해 분해되어 천연보습인자(NMF)를 구성하는 아미노산을 이룸<br>&nbsp;&nbsp;* 세라마이드*...",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "2"
  },
@@ -22564,35 +22564,35 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "ㄱ",
     "sid": "understanding_st_f55e18",
-    "conceptId": "L1465",
+    "conceptId": "L1469",
     "text": "주름 증가",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_b24757",
-    "conceptId": "L1465",
+    "conceptId": "L1469",
     "text": "피부 미백",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_bfc36d",
-    "conceptId": "L1465",
+    "conceptId": "L1469",
     "text": "피부 건조",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_28af4b",
-    "conceptId": "L1465",
+    "conceptId": "L1469",
     "text": "모발 성장",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_9c734a",
-    "conceptId": "L1465",
+    "conceptId": "L1469",
     "text": "발한 증가",
     "truth": false
    }
@@ -22641,7 +22641,7 @@ var COMBO_DRILLS_subject4 = [
    "정답판정"
   ],
   "derivedFrom": "subject4_q246",
-  "explain": "📖 교재 근거 (L1465):\n| 노화 피부 | • 광노화, 자연노화로 나뉘며 보습과 탄력이 저하된 피부<br>• 콜라겐(교원섬유) 감소 / 엘라스틴(탄력섬유) 변성<br>• 기질 탄수화물 감소 / 피부혈관의 면적 감소 |",
+  "explain": "📖 교재 근거 (L1469):\n| 노화 피부 | • 광노화, 자연노화로 나뉘며 보습과 탄력이 저하된 피부<br>• 콜라겐(교원섬유) 감소 / 엘라스틴(탄력섬유) 변성<br>• 기질 탄수화물 감소 / 피부혈관의 면적 감소 |",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "1"
  },
@@ -22840,35 +22840,35 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "ㄱ",
     "sid": "understanding_st_516aff",
-    "conceptId": "L1568",
+    "conceptId": "L1572",
     "text": "멜라닌",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_dd62e3",
-    "conceptId": "L1568",
+    "conceptId": "L1572",
     "text": "카로틴",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_08c2f3",
-    "conceptId": "L1568",
+    "conceptId": "L1572",
     "text": "헤모글로빈",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_3d9ce2",
-    "conceptId": "L1568",
+    "conceptId": "L1572",
     "text": "엽록소",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_67980f",
-    "conceptId": "L1568",
+    "conceptId": "L1572",
     "text": "리코펜",
     "truth": false
    }
@@ -22917,7 +22917,7 @@ var COMBO_DRILLS_subject4 = [
    "정답판정"
   ],
   "derivedFrom": "subject4_q249",
-  "explain": "📖 교재 근거 (L1568):\n| 모피질 | 중간, 80~90% | 멜라닌 함유(모발색), 친수성, 케라틴 |",
+  "explain": "📖 교재 근거 (L1572):\n| 모피질 | 중간, 80~90% | 멜라닌 함유(모발색), 친수성, 케라틴 |",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "5"
  },
@@ -23209,35 +23209,35 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "ㄱ",
     "sid": "understanding_st_26ce88",
-    "conceptId": "L1465",
+    "conceptId": "L1469",
     "text": "피부 미백",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_99d7f8",
-    "conceptId": "L1465",
+    "conceptId": "L1469",
     "text": "피부 건조",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_e84d88",
-    "conceptId": "L1465",
+    "conceptId": "L1469",
     "text": "피부 탄력 저하",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_4c2d65",
-    "conceptId": "L1465",
+    "conceptId": "L1469",
     "text": "모발 성장",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_0dc52a",
-    "conceptId": "L1465",
+    "conceptId": "L1469",
     "text": "각질 탈락",
     "truth": false
    }
@@ -23287,7 +23287,7 @@ var COMBO_DRILLS_subject4 = [
    "정답판정"
   ],
   "derivedFrom": "subject4_q253",
-  "explain": "📖 교재 근거 (L1465):\n| 노화 피부 | • 광노화, 자연노화로 나뉘며 보습과 탄력이 저하된 피부<br>• 콜라겐(교원섬유) 감소 / 엘라스틴(탄력섬유) 변성<br>• 기질 탄수화물 감소 / 피부혈관의 면적 감소 |",
+  "explain": "📖 교재 근거 (L1469):\n| 노화 피부 | • 광노화, 자연노화로 나뉘며 보습과 탄력이 저하된 피부<br>• 콜라겐(교원섬유) 감소 / 엘라스틴(탄력섬유) 변성<br>• 기질 탄수화물 감소 / 피부혈관의 면적 감소 |",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "3"
  },
@@ -24778,35 +24778,35 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "ㄱ",
     "sid": "understanding_st_791e46",
-    "conceptId": "L1395",
+    "conceptId": "L1399",
     "text": "성장기(Anagen)",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_ac804b",
-    "conceptId": "L1395",
+    "conceptId": "L1399",
     "text": "휴지기(Telogen)",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_ea2bac",
-    "conceptId": "L1395",
+    "conceptId": "L1399",
     "text": "퇴행기(Catagen)",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_fb2e68",
-    "conceptId": "L1395",
+    "conceptId": "L1399",
     "text": "탈락기(Exogen)",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_d656c6",
-    "conceptId": "L1395",
+    "conceptId": "L1399",
     "text": "휴면기",
     "truth": false
    }
@@ -24858,7 +24858,7 @@ var COMBO_DRILLS_subject4 = [
    "수치"
   ],
   "derivedFrom": "subject4_q270",
-  "explain": "📖 교재 근거 (L1395):\n| 퇴행기(Catagen) | 약 3주 | • 전체 모발의 1~2%가 이 시기에 해당함<br>• 모모세포의 분열이 감소하는 시기<br>• 모발의 성장이 멈춘 시기 |",
+  "explain": "📖 교재 근거 (L1399):\n| 퇴행기(Catagen) | 약 3주 | • 전체 모발의 1~2%가 이 시기에 해당함<br>• 모모세포의 분열이 감소하는 시기<br>• 모발의 성장이 멈춘 시기 |",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "4"
  },
@@ -25052,35 +25052,35 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "ㄱ",
     "sid": "understanding_st_6510cf",
-    "conceptId": "L1392",
+    "conceptId": "L1398",
     "text": "성장기는 약 3주이며 전체 모발의 1~2%가 해당한다",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_ec8587",
-    "conceptId": "L1392",
+    "conceptId": "L1398",
     "text": "퇴행기는 3~6년이며 전체 모발의 80~90%가 해당한다",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_2ec521",
-    "conceptId": "L1392",
+    "conceptId": "L1398",
     "text": "휴지기는 3~4개월이며 전체 모발의 10~15%가 해당한다",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_3d0da4",
-    "conceptId": "L1392",
+    "conceptId": "L1398",
     "text": "성장기에는 모낭과 모유두가 완전히 분리된다",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_226b26",
-    "conceptId": "L1392",
+    "conceptId": "L1398",
     "text": "휴지기에는 모모세포의 활발한 활동이 이루어진다",
     "truth": false
    }
@@ -25131,7 +25131,7 @@ var COMBO_DRILLS_subject4 = [
    "수치"
   ],
   "derivedFrom": "subject4_q279",
-  "explain": "📖 교재 근거 (L1392):\n| (4) 모발의 성장주기 🎯 기출 | 성장기(Anagen): 3~6년, 전체 모발의 80~90%, 모모세포의 활발한 활동 / 퇴행기(Catagen): 약 3주, 전체의 1~2%, 모모세포 분열 감소 / 휴지기(Telogen): 3~4개월, 전체의 10~15%, 모낭과 모유두 완전 분리, 탈락 시작 |",
+  "explain": "📖 교재 근거 (L1398):\n| 성장기(Anagen) | 3~6년 | • 전체 모발의 80~90%가 이 시기에 해당함<br>• 모모세포의 활발한 활동 시기<br>• 여자가 남자에 비해 성장주기가 긺 |\n| 퇴행기(Catagen) | 약 3주 | • 전체 모발의 1~2%가 이 시기에 해당함<br>• 모모세포의 분열이 감소하는 시기<br>• 모발의 성장이 멈춘 시기 |\n| 휴지기(Telogen) | 3~4개월 | • 전체 모발의 10~15%가 이 시기에 해당함<br>• 모낭과 모유두의 완전한 분리<br>• 모발의 탈락 시작 |",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "5"
  },
@@ -25140,41 +25140,41 @@ var COMBO_DRILLS_subject4 = [
   "subject": 4,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L1454 (출처: 과목4 문제은행 Q362)",
+  "citation": "📖 교재: L1456 (출처: 과목4 문제은행 Q362)",
   "stem": "다음 중 경피수분손실량(TEWL)에 대한 설명으로 옳은 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "understanding_st_0388ab",
-    "conceptId": "L1454",
+    "conceptId": "L1456",
     "text": "피부 표면에서 흡수되는 수분량을 측정하는 것이다",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_eaee34",
-    "conceptId": "L1454",
+    "conceptId": "L1456",
     "text": "건성 피부와 손상 피부는 값이 높으며, 피부 장벽기능 이상과 관련 있다",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_18ae9d",
-    "conceptId": "L1454",
+    "conceptId": "L1456",
     "text": "정상 피부에서 가장 높은 값을 보인다",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_48b3e7",
-    "conceptId": "L1454",
+    "conceptId": "L1456",
     "text": "피부의 유분량을 측정하는 것이다",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_ed9d97",
-    "conceptId": "L1454",
+    "conceptId": "L1456",
     "text": "피부색을 측정하는 것이다",
     "truth": false
    }
@@ -25222,7 +25222,7 @@ var COMBO_DRILLS_subject4 = [
    "명제판정"
   ],
   "derivedFrom": "subject4_q362",
-  "explain": "📖 교재 근거 (교재: L1454):\n| 경피수분손실량(TEWL) 🎯 기출 | 피부 표면에서 증발되는 수분량(TEWL: Transepidermal Water Loss)으로 건성 피부와 손상 피부는 값이 높으며, 피부 장벽기능 이상과 관련 있음 |",
+  "explain": "📖 교재 근거 (교재: L1456):\n| 경피수분손실량(TEWL) 🎯 기출 | 피부 표면에서 증발되는 수분량(TEWL: Transepidermal Water Loss)으로 건성 피부와 손상 피부는 값이 높으며, 피부 장벽기능 이상과 관련 있음 |",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "1"
  },
@@ -25237,35 +25237,35 @@ var COMBO_DRILLS_subject4 = [
    {
     "id": "ㄱ",
     "sid": "understanding_st_11304e",
-    "conceptId": "L3964",
+    "conceptId": "L3966",
     "text": "10% 이하, 1차 이내",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "understanding_st_58a1e0",
-    "conceptId": "L3964",
+    "conceptId": "L3966",
     "text": "15% 이하, 2차 이내",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "understanding_st_3e5ae7",
-    "conceptId": "L3964",
+    "conceptId": "L3966",
     "text": "25% 이하, 2차 이내",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "understanding_st_f5d6f6",
-    "conceptId": "L3964",
+    "conceptId": "L3966",
     "text": "10% 이하, 2차 이내",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "understanding_st_9b3d84",
-    "conceptId": "L3964",
+    "conceptId": "L3966",
     "text": "15% 이하, 3차 이내",
     "truth": false
    }
@@ -25314,7 +25314,7 @@ var COMBO_DRILLS_subject4 = [
    "구성비"
   ],
   "derivedFrom": "subject4_q400",
-  "explain": "📖 교재 근거 (L3964):\n| (4) 제품별 포장 방법에 관한 기준 🎯 기출 | 단위제품 - 인체 및 두발 세정용 제품류: 포장공간 비율 15% 이하, 포장횟수 2차 이내 / 그 밖의 화장품류: 10% 이하(향수 제외), 2차 이내 |",
+  "explain": "📖 교재 근거 (L3966):\n| (4) 제품별 포장 방법에 관한 기준 🎯 기출 | 단위제품 - 인체 및 두발 세정용 제품류: 포장공간 비율 15% 이하, 포장횟수 2차 이내 / 그 밖의 화장품류: 10% 이하(향수 제외), 2차 이내 |",
   "source": "맞춤형화장품의 이해 (400제)",
   "answer": "4"
  },
@@ -25506,6 +25506,106 @@ var COMBO_DRILLS_subject4 = [
   "explain": "ㄱ. 원본: 과목4 문제은행 Q30 · 교재 L581\nㄴ. 원본: 과목4 문제은행 Q30 · 교재 L581\nㄷ. 원본: 과목4 문제은행 Q12 · 교재 L581\nㄹ. 원본: 과목4 문제은행 Q12 · 교재 L581",
   "source": "과목4 개념 재조합",
   "answer": "2"
+ },
+ {
+  "id": "understanding_combo-cluster_9a86b1",
+  "subject": 4,
+  "type": "combo",
+  "points": 4,
+  "citation": "📖 교재: L1130 (출처: 과목4 문제은행 진술 재조합)",
+  "stem": "다음 설명 중 옳은 것을 모두 고른 것은?",
+  "statements": [
+   {
+    "id": "ㄱ",
+    "sid": "understanding_st_73ff5f",
+    "conceptId": "L1130",
+    "text": "땀샘의 분비를 중지하여 체온을 조절한다",
+    "truth": false,
+    "explain": "원본: 과목4 문제은행 Q91 · 교재 L1130"
+   },
+   {
+    "id": "ㄴ",
+    "sid": "understanding_st_1bc1bb",
+    "conceptId": "L1130",
+    "text": "자외선을 일정하게 받으면 비타민 D를 합성하며, 콜레스테롤이 합성에 중요한 역할을 한다",
+    "truth": true,
+    "explain": "원본: 과목4 문제은행 Q92 · 교재 L1130"
+   },
+   {
+    "id": "ㄷ",
+    "sid": "understanding_st_724d83",
+    "conceptId": "L1130",
+    "text": "모세혈관의 확장으로 열을 확산하여 체온을 하강시킨다",
+    "truth": true,
+    "explain": "원본: 과목4 문제은행 Q91 · 교재 L1130"
+   },
+   {
+    "id": "ㄹ",
+    "sid": "understanding_st_912a42",
+    "conceptId": "L1130",
+    "text": "비타민 C를 합성하며, 멜라닌이 중요한 역할을 한다",
+    "truth": false,
+    "explain": "원본: 과목4 문제은행 Q92 · 교재 L1130"
+   },
+   {
+    "id": "ㅁ",
+    "sid": "understanding_st_900003",
+    "conceptId": "L1130",
+    "text": "모세혈관의 확장으로 열을 차단하여 체온을 상승시킨다",
+    "truth": false,
+    "explain": "원본: 과목4 문제은행 Q91 · 교재 L1130"
+   }
+  ],
+  "options": [
+   {
+    "id": "1",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㄷ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "2",
+    "members": [
+     "ㄱ",
+     "ㄴ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "3",
+    "members": [
+     "ㄱ",
+     "ㅁ"
+    ]
+   },
+   {
+    "id": "4",
+    "members": [
+     "ㄴ",
+     "ㄷ",
+     "ㄹ"
+    ]
+   },
+   {
+    "id": "5",
+    "members": [
+     "ㄴ",
+     "ㄷ"
+    ]
+   }
+  ],
+  "tags": [
+   "자동변환",
+   "명제판정",
+   "개념재조합"
+  ],
+  "derivedFrom": "cluster:4|L1130",
+  "explain": "ㄱ. 원본: 과목4 문제은행 Q91 · 교재 L1130\nㄴ. 원본: 과목4 문제은행 Q92 · 교재 L1130\nㄷ. 원본: 과목4 문제은행 Q91 · 교재 L1130\nㄹ. 원본: 과목4 문제은행 Q92 · 교재 L1130\nㅁ. 원본: 과목4 문제은행 Q91 · 교재 L1130",
+  "source": "과목4 개념 재조합",
+  "answer": "5"
  },
  {
   "id": "understanding_combo-ref_afd5e7",

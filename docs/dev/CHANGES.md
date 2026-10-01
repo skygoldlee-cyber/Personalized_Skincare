@@ -6,6 +6,15 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-01 복수정답형 문제집 런타임 렌더링 전환 — MD 산출물 제거
+
+- **배경**: `과목N_복수정답형.md`는 `build_combo_drills.js`가 단일정답형 원본에서 자동 생성하던 파생물 — 저작 폴더(`문제은행/`)에 산출물이 섞이고, 동일 내용이 `combo_subjectN.js` 드릴 번들과 `exams_md` 번들로 이중 관리됐음
+- **런타임 직렬화**: `src/combo-doc.js` 신설 — `toSubjectMd` 직렬화 로직을 포팅해 `DataLoader.loadComboDrills()` 결과(자동 변환 + 수작업 파일럿 병합)를 문제집 MD로 변환. 파일럿(cb-*) 문항도 문서에 포함되어 기존 산출물보다 범위 확대
+- **뷰어**: `ExamViewer.openCombo(N)` 추가 — `combo:N` 가상 경로로 `_loadMd`가 런타임 직렬화, 타이틀은 registry `subjects[].name`에서 동적 조회(기존 `openExam`과 동일 오버레이·히스토리·캐시 경로 재사용)
+- **빌드 정리**: `build_combo_drills.js`의 MD 산출(`toSubjectMd`·`OPT_INDICATORS`·`MD_DIR`) 제거, `build_exam_bundles.js`의 `*_복수정답형.md` 특수케이스 제거, `types.js`의 `comboFile` 필드 제거, `app-dashboard.js`의 comboFile 규약 폴백 제거
+- **산출물 삭제**: `문제은행/과목N_복수정답형.md` 5개(cosmetic 4 + food 1) + `exams_md/과목N_복수정답형.js` 5개 — 저작 단위는 단일정답형 원본으로 단일화
+- **테스트/문서**: `content-structure.test.js` CS-02가 드릴 번들(`combo_subjectN.js`) 존재를 검증. COMBO_GENERATION_GUIDE·QUESTION_SCHEMA_DESIGN·CONTENT_WORKFLOW·TEXTBOOK_REPLACEMENT_RUNBOOK·ARCHITECTURE·학습안내서의 스테일 경로 참조 정리
+
 ## 2026-10-01 인용 동기화 수렴성 수정 — 중복 링크 스킵 제거·빌드 순서 변경
 
 - **중복 링크 스킵 제거**: `sync_citation_lines.js`의 `seenUrls` dedup이 동일 `path#L####` 링크의 2번째 이후 출현을 검사·갱신 대상에서 제외해, 정답 링크+근거 링크가 같은 라인을 가리키는 흔한 패턴에서 실행당 1건만 갱신되고 수렴하지 않던 문제 수정. 미검사 영역에 숨어 있던 스테일 인용도 노출됨 — 과목4에서 교재 개정(표→참고 블록인용, `### (4)`→`#### 4.4` 제목 변경)으로 깨진 인용문 3건(Q94·Q131·Q279)을 현재 교재 형식으로 갱신해 미발견 0건 수렴

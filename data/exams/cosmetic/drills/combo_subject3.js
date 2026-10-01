@@ -1,5 +1,5 @@
 // 자동 생성된 복수정답형 드릴 데이터입니다. 수정하지 마십시오. (tools/build/build_combo_drills.js)
-// 원본: data/exams/cosmetic/exams/subject3.31fdc2e4.js — mode: fact(명제 조합) 23문 / answer(정답 조합) 226문
+// 원본: data/exams/cosmetic/exams/subject3.44f97abc.js — mode: fact(명제 조합) 23문 / answer(정답 조합) 226문
 var COMBO_DRILLS_subject3 = [
  {
   "id": "safety_combo_86b500",
@@ -9304,41 +9304,41 @@ var COMBO_DRILLS_subject3 = [
   "subject": 3,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L2730 (출처: 과목3 문제은행 Q101)",
+  "citation": "📖 교재: L2731 (출처: 과목3 문제은행 Q101)",
   "stem": "다음 중 화장품 제조 시 「물」의 관리 기준으로 옳은 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "safety_st_a8c3c9",
-    "conceptId": "L2730",
+    "conceptId": "L2731",
     "text": "정제수 제조 설비를 통해 생산된 물을 사용",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_ed77d2",
-    "conceptId": "L2730",
+    "conceptId": "L2731",
     "text": "수돗물을 그대로 사용 가능",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_22ee7e",
-    "conceptId": "L2730",
+    "conceptId": "L2731",
     "text": "지하수를 여과 후 사용",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_d1f323",
-    "conceptId": "L2730",
+    "conceptId": "L2731",
     "text": "증류수만 사용 가능",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_099da6",
-    "conceptId": "L2730",
+    "conceptId": "L2731",
     "text": "물의 관리 기준은 별도로 없다",
     "truth": false
    }
@@ -9385,7 +9385,7 @@ var COMBO_DRILLS_subject3 = [
    "정답판정"
   ],
   "derivedFrom": "subject3_q101",
-  "explain": "📖 법령 근거 (교재: L2730):\n1. 화장품의1차 포장에 사용기한을 표시하는 경우: 영유아 또는 어린이가 사용할 수 있는 화장품임을 표시ㆍ광고한 날부터 마지막으로 제조ㆍ수입된 제품의 사용기한 만료일 이후 1년까지의 기간. 이 경우 제조는 화장품의 제조번호에 따른 제조일자를 기준으로 하며, 수입은 통관일자를 기준으로 한다.",
+  "explain": "📖 법령 근거 (교재: L2731):\n1. 화장품의1차 포장에 사용기한을 표시하는 경우: 영유아 또는 어린이가 사용할 수 있는 화장품임을 표시ㆍ광고한 날부터 마지막으로 제조ㆍ수입된 제품의 사용기한 만료일 이후 1년까지의 기간. 이 경우 제조는 화장품의 제조번호에 따른 제조일자를 기준으로 하며, 수입은 통관일자를 기준으로 한다.",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "3"
  },
@@ -10038,41 +10038,41 @@ var COMBO_DRILLS_subject3 = [
   "subject": 3,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L2730 (출처: 과목3 문제은행 Q109)",
+  "citation": "📖 교재: L2731 (출처: 과목3 문제은행 Q109)",
   "stem": "화장품 제조 시 「유효기간(사용기한)」 설정의 근거에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "safety_st_8869fa",
-    "conceptId": "L2730",
+    "conceptId": "L2731",
     "text": "마케팅 부서의 결정",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_323c9c",
-    "conceptId": "L2730",
+    "conceptId": "L2731",
     "text": "원료 공급자의 권장",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_60700c",
-    "conceptId": "L2730",
+    "conceptId": "L2731",
     "text": "소비자 설문 조사",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_522c27",
-    "conceptId": "L2730",
+    "conceptId": "L2731",
     "text": "경쟁사 제품과의 비교",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_e89468",
-    "conceptId": "L2730",
+    "conceptId": "L2731",
     "text": "안정성 시험 결과",
     "truth": true
    }
@@ -10120,7 +10120,7 @@ var COMBO_DRILLS_subject3 = [
    "정의"
   ],
   "derivedFrom": "subject3_q109",
-  "explain": "📖 법령 근거 (교재: L2730):\n1. 화장품의1차 포장에 사용기한을 표시하는 경우: 영유아 또는 어린이가 사용할 수 있는 화장품임을 표시ㆍ광고한 날부터 마지막으로 제조ㆍ수입된 제품의 사용기한 만료일 이후 1년까지의 기간. 이 경우 제조는 화장품의 제조번호에 따른 제조일자를 기준으로 하며, 수입은 통관일자를 기준으로 한다.",
+  "explain": "📖 법령 근거 (교재: L2731):\n1. 화장품의1차 포장에 사용기한을 표시하는 경우: 영유아 또는 어린이가 사용할 수 있는 화장품임을 표시ㆍ광고한 날부터 마지막으로 제조ㆍ수입된 제품의 사용기한 만료일 이후 1년까지의 기간. 이 경우 제조는 화장품의 제조번호에 따른 제조일자를 기준으로 하며, 수입은 통관일자를 기준으로 한다.",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "4"
  },
@@ -10135,35 +10135,35 @@ var COMBO_DRILLS_subject3 = [
    {
     "id": "ㄱ",
     "sid": "safety_st_39f868",
-    "conceptId": "L414",
+    "conceptId": "L1004",
     "text": "충전량의 정확성",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_051fcf",
-    "conceptId": "L414",
+    "conceptId": "L1004",
     "text": "충전 온도",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_2911c2",
-    "conceptId": "L414",
+    "conceptId": "L1004",
     "text": "충전 작업자의 영업 실적",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_da0379",
-    "conceptId": "L414",
+    "conceptId": "L1004",
     "text": "충전 설비의 세정 상태",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_b62929",
-    "conceptId": "L414",
+    "conceptId": "L1004",
     "text": "충전 시 이물질 혼입 방지",
     "truth": false
    }
@@ -10212,7 +10212,7 @@ var COMBO_DRILLS_subject3 = [
    "정의"
   ],
   "derivedFrom": "subject3_q110",
-  "explain": "📖 교재 근거 (L414):\nroot((CGMP<br/>우수화장품 제조 및<br/>품질관리 기준<br/>제2024-46호))",
+  "explain": "📖 교재 근거 (L1004):\nroot((CGMP<br/>우수화장품 제조 및<br/>품질관리 기준<br/>제2024-46호))",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "3"
  },
@@ -12520,35 +12520,35 @@ var COMBO_DRILLS_subject3 = [
    {
     "id": "ㄱ",
     "sid": "safety_st_8d345f",
-    "conceptId": "L414",
+    "conceptId": "L1004",
     "text": "작업자 개인",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_472e0e",
-    "conceptId": "L414",
+    "conceptId": "L1004",
     "text": "제조 담당자",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_87275c",
-    "conceptId": "L414",
+    "conceptId": "L1004",
     "text": "전 직원 공동 (최고경영자의 책임)",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_ff47fe",
-    "conceptId": "L414",
+    "conceptId": "L1004",
     "text": "대표이사",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_ac3f32",
-    "conceptId": "L414",
+    "conceptId": "L1004",
     "text": "품질관리책임자",
     "truth": false
    }
@@ -12596,7 +12596,7 @@ var COMBO_DRILLS_subject3 = [
    "정답판정"
   ],
   "derivedFrom": "subject3_q136",
-  "explain": "📖 교재 근거 (L414):\nroot((CGMP<br/>우수화장품 제조 및<br/>품질관리 기준<br/>제2024-46호))",
+  "explain": "📖 교재 근거 (L1004):\nroot((CGMP<br/>우수화장품 제조 및<br/>품질관리 기준<br/>제2024-46호))",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "1"
  },
@@ -12798,35 +12798,35 @@ var COMBO_DRILLS_subject3 = [
    {
     "id": "ㄱ",
     "sid": "safety_st_fe03e3",
-    "conceptId": "L446",
+    "conceptId": "L436",
     "text": "불만의 접수 및 기록",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_4ac13f",
-    "conceptId": "L446",
+    "conceptId": "L436",
     "text": "불만 원인의 조사",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_52a4ef",
-    "conceptId": "L446",
+    "conceptId": "L436",
     "text": "시정조치의 실시",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_15c4d7",
-    "conceptId": "L446",
+    "conceptId": "L436",
     "text": "조치 결과의 기록 및 보존",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_e55900",
-    "conceptId": "L446",
+    "conceptId": "L436",
     "text": "불만 접수자의 인사 평가",
     "truth": true
    }
@@ -12876,7 +12876,7 @@ var COMBO_DRILLS_subject3 = [
    "구성비"
   ],
   "derivedFrom": "subject3_q139",
-  "explain": "📖 법령 근거 (L446(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L446>)):\n② 실태조사에는 다음 각 호의 사항이 포함되어야 한다.",
+  "explain": "📖 법령 근거 (L436(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L436>)):\n② 실태조사에는 다음 각 호의 사항이 포함되어야 한다.",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "4"
  },
@@ -14753,35 +14753,35 @@ var COMBO_DRILLS_subject3 = [
    {
     "id": "ㄱ",
     "sid": "safety_st_dbada7",
-    "conceptId": "L446",
+    "conceptId": "L436",
     "text": "소비자의 신상 정보",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_3dbac0",
-    "conceptId": "L446",
+    "conceptId": "L436",
     "text": "제품명, 제조번호 및 제조일자",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_403d33",
-    "conceptId": "L446",
+    "conceptId": "L436",
     "text": "폐기 사유, 폐기 일자, 폐기 장소, 폐기 방법",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_f6c6fe",
-    "conceptId": "L446",
+    "conceptId": "L436",
     "text": "폐기량 및 포장단위",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_d948a7",
-    "conceptId": "L446",
+    "conceptId": "L436",
     "text": "폐기 의뢰자의 상호 및 대표자",
     "truth": false
    }
@@ -14829,7 +14829,7 @@ var COMBO_DRILLS_subject3 = [
    "구성비"
   ],
   "derivedFrom": "subject3_q160",
-  "explain": "📖 법령 근거 (L446(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L446>)):\n② 실태조사에는 다음 각 호의 사항이 포함되어야 한다.",
+  "explain": "📖 법령 근거 (L436(제02109호)(20260402)/화장품법 시행규칙(총리령)(제02109호)(20260402).md#L436>)):\n② 실태조사에는 다음 각 호의 사항이 포함되어야 한다.",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "4"
  },
@@ -22695,41 +22695,41 @@ var COMBO_DRILLS_subject3 = [
   "subject": 3,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L2730 (출처: 과목3 문제은행 Q247)",
+  "citation": "📖 교재: L2731 (출처: 과목3 문제은행 Q247)",
   "stem": "화장품 제조 시 제품의 사용기한을 설정하기 위해 실시하는 시험을 ________ 시험이라고 한다. 위 빈 칸에 들어갈 옳은 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "safety_st_0b5d89",
-    "conceptId": "L2730",
+    "conceptId": "L2731",
     "text": "안전성",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "safety_st_0cfd81",
-    "conceptId": "L2730",
+    "conceptId": "L2731",
     "text": "유효성",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "safety_st_f3b4c0",
-    "conceptId": "L2730",
+    "conceptId": "L2731",
     "text": "안정성",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "safety_st_5d0518",
-    "conceptId": "L2730",
+    "conceptId": "L2731",
     "text": "품질",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "safety_st_b27735",
-    "conceptId": "L2730",
+    "conceptId": "L2731",
     "text": "순도",
     "truth": false
    }
@@ -22781,7 +22781,7 @@ var COMBO_DRILLS_subject3 = [
    "기한"
   ],
   "derivedFrom": "subject3_q247",
-  "explain": "📖 법령 근거 (교재: L2730):\n1. 화장품의1차 포장에 사용기한을 표시하는 경우: 영유아 또는 어린이가 사용할 수 있는 화장품임을 표시ㆍ광고한 날부터 마지막으로 제조ㆍ수입된 제품의 사용기한 만료일 이후 1년까지의 기간. 이 경우 제조는 화장품의 제조번호에 따른 제조일자를 기준으로 하며, 수입은 통관일자를 기준으로 한다.",
+  "explain": "📖 법령 근거 (교재: L2731):\n1. 화장품의1차 포장에 사용기한을 표시하는 경우: 영유아 또는 어린이가 사용할 수 있는 화장품임을 표시ㆍ광고한 날부터 마지막으로 제조ㆍ수입된 제품의 사용기한 만료일 이후 1년까지의 기간. 이 경우 제조는 화장품의 제조번호에 따른 제조일자를 기준으로 하며, 수입은 통관일자를 기준으로 한다.",
   "source": "유통화장품 안전관리 (250제)",
   "answer": "4"
  },

@@ -383,7 +383,7 @@ python ref-pipeline/convert.py 별표1          # 이름 필터 부분 변환
 | 산출물 | 경로 | 용도 |
 |---|---|---|
 | 런타임 번들 | `data/exams/cosmetic/drills/combo_subjectN.js` → `var COMBO_DRILLS_subjectN` | `DataLoader.loadComboDrills(N)`이 로드 — 파일럿(`combo_pilot.js`, cb- 접두)과 병합 |
-| 검토용 MD | `content/exams/cosmetic/문제은행/과목N_복수정답형.md` | 문제은행 MD와 동일 구조(문제부/정답부 분리). 자동 변환분만 수록해 과목당 100/250/250/400 정합 |
+| 문제집 문서 | 런타임 직렬화 (`src/combo-doc.js` → `ExamViewer.openCombo(N)`) | 대시보드 "복수정답형 문제집" — 번들을 문제은행 MD와 동일 구조(문제부/정답부 분리)로 런타임 렌더링. 별도 MD 산출물 없음 |
 
 재생성: `npm run build:drills` (O/X + 복수정답형 번들 일괄).
 

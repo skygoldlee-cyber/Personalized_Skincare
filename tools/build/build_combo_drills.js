@@ -52,10 +52,8 @@ const DRY_RUN = process.argv.includes('--dry-run');
 // 과목 매핑은 시험별 manifest에서 파생된다 (main 루프에서 설정).
 let SUBJECT_NUM = {};
 let SUBJECT_KEY = {};
-let SUBJECT_TITLE = {};
 const _defRoots = getDefaultExamRoots(ROOT);
 let OUT_DIR = path.join(ROOT, _defRoots.dataRoot, 'drills');
-let MD_DIR = path.join(ROOT, _defRoots.contentRoot, '문제은행');
 
 const AUTOGEN_HEADER = '// 자동 생성된 복수정답형 드릴 데이터입니다. 수정하지 마십시오. (tools/build/build_combo_drills.js)';
 
@@ -664,82 +662,17 @@ function buildRefCombos(refPool, examKey, subject, subjKey, genOpts, stats) {
   return out;
 }
 
-/* ---------- Markdown 내보내기 (content/문제은행/ 형식과 동일) ---------- */
-
-const OPT_INDICATORS = ['①', '②', '③', '④', '⑤', '⑥'];
-
-/**
- * 과목별 combo 문항을 문제은행 MD 형식으로 직렬화.
- * 문제부: ### Qn. 발문 / citation / ㄱ~ㅁ 진술 / ①~⑤ 조합 선지
- * 정답부: **Qn.** / 정답 조합 / 진술별 O·X 판정표 / 해설(교재 근거)
- */
-function toSubjectMd(subject, questions) {
-  const lines = [
-    `# ${subject ? `제${subject}과목: ` : ''}${SUBJECT_TITLE[subject] || '복수정답형'} 복수정답형 (ㄱㄴㄷㄹ 조합)`,
-    '',
-    '> **화장품조제관리사 필기시험 대비** (복수정답형)',
-    '> 문제에 집중할 수 있도록 정답과 교재 근거는 파일 끝에 모아 제공합니다.',
-    `> ⚠ 자동 생성 파일 (tools/build/build_combo_drills.js) — 직접 수정하지 마십시오.`,
-    '',
-    `총 ${questions.length}제`,
-    '',
-    '---',
-    '',
-    `## 📝 [복수정답형: 옳은 것을 모두 고르시오]`,
-    '',
-  ];
-
-  const answers = [];
-  questions.forEach((q, i) => {
-    const num = i + 1;
-    const isPilot = String(q.id).startsWith('cb-');
-    lines.push(`### Q${num}. ${q.stem}${isPilot ? ' *(수작업 파일럿)*' : ''}`);
-    lines.push(`${q.citation}`);
-    lines.push('');
-    q.statements.forEach(s => lines.push(`${s.id}. ${s.text}`));
-    lines.push('');
-    // 멤버는 라벨(ㄱㄴㄷ…) 순으로 표기 — generateComboOptions가 이미 정렬하지만
-    // 파일럿(cb-*)처럼 수작업 members도 동일한 관례로 보여주기 위해 출력 단계에서 재정렬
-    const labelOrder = m => STMT_LABELS.indexOf(m);
-    q.options.forEach((o, idx) => lines.push(
-      `${OPT_INDICATORS[idx]} ${[...o.members].sort((a, b) => labelOrder(a) - labelOrder(b)).join(', ')}`));
-    lines.push('', '---', '');
-    answers.push({ num, q });
-  });
-
-  lines.push('## 🔑 정답 및 교재 근거', '');
-  for (const { num, q } of answers) {
-    const trueIds = q.statements.filter(s => s.truth).map(s => s.id);
-    // 파일럿은 answer 미보유 — truth 집합과 일치하는 옵션으로 도출
-    const trueSet = new Set(trueIds);
-    const eq = o => (o.members || []).length === trueSet.size && o.members.every(m => trueSet.has(m));
-    const ansIdx = q.options.findIndex(o => (q.answer && o.id === q.answer) || (!q.answer && eq(o)));
-    const ansLabel = OPT_INDICATORS[ansIdx] || q.answer || '?';
-    lines.push(`**Q${num}.**`);
-    lines.push(`> **정답: ${ansLabel} (${trueIds.join(', ')})**`);
-    lines.push(`> 진술 판정: ${q.statements.map(s => `${s.id} ${s.truth ? 'O' : 'X'}`).join(' · ')}`);
-    lines.push(`> ${q.citation.replace(/^📖\s*/, '📖 ')}`);
-    const exp = String(q.explain || '').trim();
-    // 원본 해설에 박힌 '정답: ② …' 라인이 그대로 새어나가면 복수정답형 정답과 혼동 → 필터
-    if (exp) exp.split('\n')
-      .filter(l => !/^\s*정답\s*[:：]/.test(l.trim()))
-      .forEach(l => lines.push(`> ${l.trim()}`));
-    lines.push('');
-  }
-  return lines.join('\n');
-}
 
 /* ---------- 메인 ---------- */
 
 async function buildForExam(target) {
   const EXAMS_DIR = path.join(ROOT, target.dataRoot, 'exams');
   OUT_DIR = path.join(ROOT, target.dataRoot, 'drills');
-  MD_DIR = path.join(ROOT, target.contentRoot, '문제은행');
   if (!target.manifest) {
     console.warn(`[combo-drills] ${target.id}: manifest 없음 — 건너뜀`);
     return;
   }
-  ({ SUBJECT_NUM, SUBJECT_KEY, SUBJECT_TITLE } = getSubjectMaps(target.manifest));
+  ({ SUBJECT_NUM, SUBJECT_KEY } = getSubjectMaps(target.manifest));
   if (!fs.existsSync(EXAMS_DIR)) {
     console.warn(`[combo-drills] ${target.id}: 입력 폴더 없음(${EXAMS_DIR}) — 건너뜀`);
     return;
@@ -815,13 +748,8 @@ async function buildForExam(target) {
         `// 원본: ${target.dataRoot}/exams/${file} — mode: fact(명제 조합) ${stats.fact}문 / answer(정답 조합) ${stats.answer}문\n` +
         `var COMBO_DRILLS_${key} = ` + JSON.stringify(valid, null, 1) + ';\n';
       fs.writeFileSync(path.join(OUT_DIR, `combo_${key}.js`), body, 'utf8');
-
-      // 문제은행 MD 형식 산출물 — 자동 변환분만 (과목당 100/250/250/400 구성)
-      const subjectNum = SUBJECT_NUM[key];
-      if (subjectNum && fs.existsSync(MD_DIR)) {
-        const mdPath = path.join(MD_DIR, `과목${subjectNum}_복수정답형.md`);
-        fs.writeFileSync(mdPath, toSubjectMd(subjectNum, valid), 'utf8');
-      }
+      // 뷰어용 문제집 문서는 src/combo-doc.js가 이 번들(COMBO_DRILLS_*)을 런타임 직렬화 —
+      // 별도 과목N_복수정답형.md 산출물은 두지 않는다.
     }
 
     comboCounts[key] = valid.length;
@@ -877,5 +805,5 @@ if (require.main === module) {
 // 테스트용 export — buildComboItems는 SUBJECT_NUM/SUBJECT_KEY 설정이 필요
 module.exports = {
   buildComboItems, buildClusterCombos, nearDup, normKey, comboStem, topicContext,
-  _setSubjectMaps: m => ({ SUBJECT_NUM, SUBJECT_KEY, SUBJECT_TITLE } = m),
+  _setSubjectMaps: m => ({ SUBJECT_NUM, SUBJECT_KEY } = m),
 };

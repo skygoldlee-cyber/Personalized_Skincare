@@ -24,7 +24,9 @@
 
 출력  →  data/exams/cosmetic/drills/combo_subjectN.js   (var COMBO_DRILLS_subjectN)
         data/exams/cosmetic/drills/combo_index.js       (var COMBO_INDEX — 과목별 문항 수)
-        content/exams/cosmetic/문제은행/과목N_복수정답형.md   (사람이 읽는 문제집 형식)
+
+        ※ 문제집 문서는 더 이상 MD 산출물이 아니다 — 앱의 "복수정답형 문제집"이
+          src/combo-doc.js로 드릴 번들을 런타임 직렬화해 렌더링한다.
 ```
 
 실행:
@@ -35,7 +37,7 @@ node tools/build/build_combo_drills.js --dry-run  # 검증만 (파일 미생성)
 node tools/check/check_combo_pilot.js             # 생성 번들 무결성 감사
 ```
 
-> **주의**: 생성물(`combo_*.js`, `과목N_복수정답형.md`)은 자동 생성 파일 — 직접 수정
+> **주의**: 생성물(`combo_*.js`)은 자동 생성 파일 — 직접 수정
 > 금지. 소스(문제은행 MD, ref_md, 원료 DB)를 수정하고 재생성합니다.
 
 ## 2. 소스 ① — 문제은행 객관식 변환
@@ -203,8 +205,9 @@ ref_md는 `ref_md/과목N/{문서}/{문서}.md` 과목 폴더 구조이며, `ext
 
 - `data/exams/cosmetic/drills/combo_subjectN.js` — `var COMBO_DRILLS_subjectN = [...]`
 - `data/exams/cosmetic/drills/combo_index.js` — 과목별 문항 수(`combo_pilot.js` 수작업 문항 합산)
-- `content/exams/cosmetic/문제은행/과목N_복수정답형.md` — 문제부(### Qn. 발문/인용/진술/조합 선지) +
-  정답부(정답 조합·진술별 O/X 판정표·해설)
+- 문제집 문서(뷰어 "복수정답형 문제집")는 산출물이 아니라 `src/combo-doc.js`가
+  `loadComboDrills` 결과(자동 변환 + 파일럿 병합)를 런타임 직렬화 —
+  문제부(### Qn. 발문/인용/진술/조합 선지) + 정답부(정답 조합·진술별 O/X 판정표·해설) 형식.
 
 ### 5-3. 빌드 로그 읽기
 

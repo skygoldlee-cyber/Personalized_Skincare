@@ -218,7 +218,6 @@
  * @property {number}      [part]      파트 번호
  * @property {string}      title
  * @property {string}      file        원본 MD 파일명 ({contentRoot}/문제은행/ 기준)
- * @property {string}      [comboFile] 복수정답형 MD 파일명 (manifest 선언 시 규약 파일명 대신 사용)
  * @property {string}      bundle
  * @property {string}      global      전역 변수명(예: 'EXAM_DATA_subject4_p3')
  * @property {string}      contentHash

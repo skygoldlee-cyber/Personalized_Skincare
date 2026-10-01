@@ -528,8 +528,7 @@ flowchart LR
 | `{dataRoot}/exams_md/*.js` | `tools/build/build_exam_bundles.js` | `{contentRoot}/문제은행/*.md` (manifest `exams` 등록분만) |
 | `{dataRoot}/docs_md/*.js` | `tools/build/build_doc_bundles.js` | `{contentRoot}/docs/학습안내서.md` 등 (앱 공용 `data/docs_md/`는 `docs/user/` 소스) |
 | `{dataRoot}/drills/ox_subject*.js` | `tools/build/build_ox_drills.js` | `{dataRoot}/exams/*.js` (객관식) |
-| `{dataRoot}/drills/combo_subject*.js` | `tools/build/build_combo_drills.js` | `{dataRoot}/exams/*.js` (객관식+단답형) |
-| `{contentRoot}/문제은행/과목N_복수정답형.md` | `tools/build/build_combo_drills.js` | `{dataRoot}/exams/*.js` (검토용 산출물) |
+| `{dataRoot}/drills/combo_subject*.js` | `tools/build/build_combo_drills.js` | `{dataRoot}/exams/*.js` (객관식+단답형) — 복수정답형 문제집 문서는 `src/combo-doc.js`가 런타임 직렬화 |
 | `{dataRoot}/id_migration.js` + `{dataRoot}/card_terms_snapshot.json` | `tools/build/build_id_migration.js` | 이전 스냅샷 ↔ 현재 파싱 비교 |
 | `sw.js` (DATA_ASSETS, MD_ASSETS) | `tools/build/index.js` | `{contentRoot}/manifest.json` |
 

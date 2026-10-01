@@ -3,7 +3,7 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: 1d6c2fa5aedc4608
+> 입력 해시: 00d65b9bd1e6dd6a
 > 생성: 2026-10-01 · 원천: SPEC.md(361개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
@@ -221,7 +221,7 @@
 
 | ID | 상태 | 검증 수단 | 문서 | 소스 | 테스트 | 보고서 | 출처 |
 |----|------|-----------|------|------|--------|--------|------|
-| EV-01 | ✅ | 테스트 | DOC-REF-04 | src/exam-viewer.js | tests/dom/study-examviewer.dom.test.js | — | — |
+| EV-01 | ✅ | 테스트 | DOC-REF-04 | src/combo-doc.js<br>src/exam-viewer.js | tests/dom/study-examviewer.dom.test.js | — | — |
 | EV-02 | ✅ | 테스트 | DOC-REF-04 | src/exam-viewer.js | tests/dom/study-examviewer.dom.test.js | — | — |
 | EV-03 | ✅ | 테스트 | DOC-REF-04 | src/exam-viewer.js | tests/dom/study-examviewer.dom.test.js | — | — |
 | EV-04 | ✅ | 테스트 | DOC-REF-04 | src/exam-viewer.js | tests/dom/study-examviewer.dom.test.js | — | — |

@@ -11,7 +11,7 @@ export function populateSubjectSelects() {
     const subjects = (typeof DataLoader !== 'undefined' && DataLoader.registry)
         ? DataLoader.getSubjectList()
         : [];
-    
+
     // 1. Flashcard subject select
     const fcSelect = /** @type {HTMLSelectElement|null} */ (document.getElementById('fc-subject-select'));
     if (fcSelect) {
@@ -31,7 +31,7 @@ export function populateSubjectSelects() {
             state.flashcards.subject = subjects[0].key;
         }
     }
-    
+
     // 2. Quiz subject select
     const quizSelect = /** @type {HTMLSelectElement|null} */ (document.getElementById('quiz-subject-select'));
     if (quizSelect) {
@@ -128,9 +128,7 @@ export function populateExamCards() {
                                 </div>`;
         }).join('\n');
 
-        // ㄱㄴㄷ 복수정답형: 문제집 MD 열람 + 복수정답형 모의고사 (버튼 클릭 시 문항 수 선택 행 펼침)
-        // comboFile이 manifest에 선언되면 우선 사용, 없으면 과목{order}_복수정답형.md 규약
-        const comboFile = (subjExams.find(e => e.comboFile) || {}).comboFile || `과목${subj.order}_복수정답형.md`;
+        // ㄱㄴㄷ 복수정답형: 문제집 열람(드릴 번들 런타임 렌더링) + 복수정답형 모의고사 (버튼 클릭 시 문항 수 선택 행 펼침)
         // 프리셋은 실제 풀보다 작을 때만 표시, "전체"는 실제 문항 수 표기
         const comboTotal = DataLoader.getComboCount(subj.order);
         const comboChips = [20, 40, 60]
@@ -139,7 +137,7 @@ export function populateExamCards() {
             .concat(`<button class="exam-btn-sim combo-count-chip" data-click="startComboMockExam" data-arg="${idx + 1}">${comboTotal ? `전체 ${comboTotal}문` : '전체'}</button>`)
             .join('\n                                            ');
         const comboPair = `                                <div class="exam-btn-pair">
-                                    <button data-click="ExamViewer.openExam" data-arg="${contentPath(`문제은행/${comboFile}`)}" class="exam-btn-link"><i class="fa-solid fa-file-lines"></i> 복수정답형 문제집 <span class="pro-badge" data-pro-feature="combo_set">PRO</span></button>
+                                    <button data-click="ExamViewer.openCombo" data-arg="${subj.order}" class="exam-btn-link"><i class="fa-solid fa-file-lines"></i> 복수정답형 문제집 <span class="pro-badge" data-pro-feature="combo_set">PRO</span></button>
                                     <button class="exam-btn-sim" data-click="toggleComboPicker" data-arg="combo-picker-${idx + 1}"><i class="fa-solid fa-circle-play"></i> 복수정답형 모의고사 <span class="pro-badge" data-pro-feature="combo_mock">PRO</span></button>
                                     <small class="exam-btn-caption">ㄱㄴㄷㄹ 조합형 · 원본 문항 자동 변환</small>
                                     <div class="combo-count-row is-hidden" id="combo-picker-${idx + 1}">

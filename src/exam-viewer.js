@@ -26,6 +26,8 @@ import { contentPath, dataPath } from './exam-context.js';
 import { CACHE } from './config/cache.js';
 import { proFeatureNotice } from './pro-upgrade.js';
 import { renderMermaidIn } from './mermaid-render.js';
+import { DataLoader } from './data-loader.js';
+import { buildComboSubjectMd } from './combo-doc.js';
 
 export const ExamViewer = (() => {
     // 캐시 포맷 변경: v7 — allowMermaid 활성화 (참조자료 md의 ```mermaid 블록 렌더링)
@@ -83,6 +85,12 @@ export const ExamViewer = (() => {
        파일 경로 → 제목
        ========================================================= */
     function _titleFromPath(mdPath) {
+        // 가상 경로 'combo:N' — 복수정답형 문제집 (런타임 직렬화 문서)
+        if (typeof mdPath === 'string' && mdPath.startsWith('combo:')) {
+            const num = parseInt(mdPath.slice(6), 10);
+            const subj = ((DataLoader.registry || {}).subjects || []).find(s => s.order === num);
+            return `${subj ? subj.name : `과목${num}`} 복수정답형`;
+        }
         const filename = mdPath.split('/').pop();
         const registry = (typeof window !== 'undefined' && window.DATA_REGISTRY) || null;
         if (registry && Array.isArray(registry.exams)) {
@@ -430,6 +438,17 @@ body.exam-open{overflow:hidden;}
 
     // 프로토콜에 맞춰 마크다운 원문 확보
     async function _loadMd(mdPath) {
+        // 'combo:N' — 복수정답형 드릴 데이터(자동 변환 + 수작업 파일럿)를
+        // 문제집 MD로 런타임 직렬화. 별도 .md 산출물은 더 이상 없다.
+        if (typeof mdPath === 'string' && mdPath.startsWith('combo:')) {
+            const num = parseInt(mdPath.slice(6), 10);
+            const questions = await DataLoader.loadComboDrills(num);
+            if (!questions || !questions.length) {
+                throw new Error('이 과목의 복수정답형 문항이 없습니다.');
+            }
+            const subj = ((DataLoader.registry || {}).subjects || []).find(s => s.order === num);
+            return buildComboSubjectMd(num, subj && subj.name, questions);
+        }
         // file:// 은 fetch가 원천 차단되므로 곧장 번들 사용
         if (location.protocol === 'file:') {
             return _loadFromBundle(mdPath);
@@ -505,10 +524,6 @@ body.exam-open{overflow:hidden;}
     }
 
     async function openExam(mdPath, lineNum) {
-        // 복수정답형 문제집(과목N_복수정답형.md 규약)은 Pro 제공 예정 기능
-        if (typeof mdPath === 'string' && mdPath.includes('복수정답형')) {
-            proFeatureNotice('combo_set', '복수정답형 문제집');
-        }
         // 이미 열려있는 상태에서 다른 파일을 여는 경우 (인용 링크 클릭)
         // 현재 문서를 히스토리에 저장
         if (isOpen() && _currentMdPath && _currentMdPath !== mdPath) {
@@ -521,6 +536,15 @@ body.exam-open{overflow:hidden;}
         }
         _currentMdPath = mdPath;
         await _openExamInternal(mdPath, lineNum);
+    }
+
+    // 복수정답형 문제집 — Pro 제공 예정 기능.
+    // combo:N 가상 경로로 열어 _loadMd가 드릴 번들을 문서로 직렬화하게 한다.
+    async function openCombo(subjectNum) {
+        proFeatureNotice('combo_set', '복수정답형 문제집');
+        const num = parseInt(subjectNum, 10);
+        if (!Number.isFinite(num)) return;
+        await openExam(`combo:${num}`);
     }
 
     /* =========================================================
@@ -609,6 +633,7 @@ body.exam-open{overflow:hidden;}
 
     return {
         openExam,
+        openCombo,
         close,
         isOpen,
         _mdToHtml,  // 테스트용 노출

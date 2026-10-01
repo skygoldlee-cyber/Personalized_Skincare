@@ -1,5 +1,5 @@
 // 자동 생성된 복수정답형 드릴 데이터입니다. 수정하지 마십시오. (tools/build/build_combo_drills.js)
-// 원본: data/exams/cosmetic/exams/subject2.4485dea2.js — mode: fact(명제 조합) 19문 / answer(정답 조합) 138문
+// 원본: data/exams/cosmetic/exams/subject2.3792922b.js — mode: fact(명제 조합) 19문 / answer(정답 조합) 138문
 var COMBO_DRILLS_subject2 = [
  {
   "id": "manufacturing_combo_f62cd4",
@@ -14144,35 +14144,35 @@ var COMBO_DRILLS_subject2 = [
    {
     "id": "ㄱ",
     "sid": "manufacturing_st_5d1cb4",
-    "conceptId": "L3031",
+    "conceptId": "L3033",
     "text": "햇빛에 대한 피부의 감수성을 증가시킬 수 있으므로 자외선 차단제를 함께 사용할 것",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "manufacturing_st_f08894",
-    "conceptId": "L3031",
+    "conceptId": "L3033",
     "text": "일부에 시험 사용하여 피부 이상을 확인할 것",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "manufacturing_st_153426",
-    "conceptId": "L3031",
+    "conceptId": "L3033",
     "text": "고농도의 AHA는 부작용 발생 우려가 있으므로 전문의 등에게 상담할 것",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "manufacturing_st_27b111",
-    "conceptId": "L3031",
+    "conceptId": "L3033",
     "text": "3세 이하 영유아에게는 사용하지 말 것",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "manufacturing_st_ea6ba5",
-    "conceptId": "L3031",
+    "conceptId": "L3033",
     "text": "AHA 성분이 10% 초과하거나 산도가 3.5 미만인 제품만 표시함",
     "truth": false
    }
@@ -14220,7 +14220,7 @@ var COMBO_DRILLS_subject2 = [
    "수치"
   ],
   "derivedFrom": "subject2_q209",
-  "explain": "📖 교재 근거 (L3031):\n| 알파-하이드록시애씨드(AHA) 함유 제품 🎯 기출 | • 햇빛에 대한 피부의 감수성을 증가시킬 수 있으므로 자외선 차단제를 함께 사용할 것(씻어내는 제품 및 두발용 제품은 제외) • 일부에 시험 사용하여 피부 이상을 확인할 것 • 고농도의 AHA는 부작용 발생 우려가 있으므로 전문의 등에게 상담할 것(AHA 성분이 10% 초과하여 함유되어 있거나 산도가 3.5 미만인 제품만 표시함) |\n> 해설: \"3세 이하 영유아에게는 사용하지 말 것\"은 살리실릭애씨드 및 IPBC 함유 제품의 주의사항이다.",
+  "explain": "📖 교재 근거 (L3033):\n| 알파-하이드록시애씨드(AHA) 함유 제품 🎯 기출 | • 햇빛에 대한 피부의 감수성을 증가시킬 수 있으므로 자외선 차단제를 함께 사용할 것(씻어내는 제품 및 두발용 제품은 제외) • 일부에 시험 사용하여 피부 이상을 확인할 것 • 고농도의 AHA는 부작용 발생 우려가 있으므로 전문의 등에게 상담할 것(AHA 성분이 10% 초과하여 함유되어 있거나 산도가 3.5 미만인 제품만 표시함) |\n> 해설: \"3세 이하 영유아에게는 사용하지 말 것\"은 살리실릭애씨드 및 IPBC 함유 제품의 주의사항이다.",
   "source": "화장품 제조 및 품질관리 (250제)",
   "answer": "1"
  },

@@ -137,6 +137,7 @@ src/                    # ES Modules
   weak-items.js         # 약점(오답) 항목 ID 문법·해석 공용 모듈 (weak_quiz_/weak_sim_ 접두사, 퀴즈·카드 인덱스 캐시, DOM 비의존)
   questions.js          # 문항 스키마 (single/combo/short/ox), deriveComboAnswer, validateQuestion
   exam-viewer.js        # 문제집/참조자료 MD 뷰어
+  combo-doc.js          # 복수정답형 드릴 → 문제집 MD 런타임 직렬화 (과목N_복수정답형.md 산출물 대체)
   manual-viewer.js      # 학습안내서/매뉴얼 MD 뷰어
   modal-back.js         # 모달/오버레이 뒤로가기 닫기 — is-hidden 토글 감시 + 동일 URL 마커 pushState/popstate
   charts.js             # SVG 레이더/꺾은선 차트
