@@ -36,20 +36,20 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
         state.quizResults = {};
         state.trainer.pomodoro.totalTimeToday = 0;
         state.trainer.pomodoro.sessionCount = 0;
-        
+
         // 로컬스토리지에 남아있는 현재 시험의 학습 데이터 키 제거 (시험별 네임스페이스)
         RESET_KEYS.forEach(k => safeRemoveItem(k));
 
         // 날짜 기반 동적 키(daily_completed_*) 일괄 제거
         listScopedKeys(isDailyCompletedKey).forEach(k => removeItemRaw(k));
-        
+
         saveProgress();
-        
+
         // 현재 활성화 뷰 새로고침
         if (state.currentView === 'dashboard-view') renderDashboard();
         else if (state.currentView === 'flashcard-view') loadFlashcards();
         else if (state.currentView === 'review-view') renderReviewList();
-        
+
         showToast("학습 진도가 모두 초기화되었습니다.", "success");
     });
 
@@ -198,7 +198,7 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
             // 스와이프가 아닌 단순 탭은 click 이벤트가 자동 발생하므로 뒤집기 처리 위임
         }, { passive: false });
     }
-    
+
     document.getElementById('fc-subject-select')?.addEventListener('change', (e) => {
         const subj = (/** @type {HTMLSelectElement|null} */ (e.target) || { value: '' }).value;
         state.flashcards.subject = subj;
@@ -207,13 +207,13 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
             loadFlashcards();
         }).catch(() => loadFlashcards());
     });
-    
+
     document.getElementById('fc-key-only')?.addEventListener('change', (e) => {
         state.flashcards.keyOnly = (/** @type {HTMLInputElement} */ (e.target)).checked;
         state.flashcards.currentIndex = 0;
         loadFlashcards();
     });
-    
+
     const fcShuffleCheckbox = document.getElementById('fc-shuffle');
     if (fcShuffleCheckbox) {
         fcShuffleCheckbox.addEventListener('change', (e) => {
@@ -222,7 +222,7 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
             loadFlashcards();
         });
     }
-    
+
     const fcDifficultySelect = document.getElementById('fc-difficulty-select');
     if (fcDifficultySelect) {
         fcDifficultySelect.addEventListener('change', (e) => {
@@ -231,7 +231,7 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
             loadFlashcards();
         });
     }
-    
+
     document.getElementById('fc-prev-btn')?.addEventListener('click', (e) => {
         e.stopPropagation();
         if (state.flashcards.data.length === 0) return;
@@ -241,7 +241,7 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
         }
         renderFlashcard();
     });
-    
+
     document.getElementById('fc-next-btn')?.addEventListener('click', (e) => {
         e.stopPropagation();
         if (state.flashcards.data.length === 0) return;
@@ -251,17 +251,17 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
         }
         renderFlashcard();
     });
-    
+
     document.getElementById('fc-easy-btn')?.addEventListener('click', () => {
         const fc = state.flashcards;
         if (fc.data.length === 0) return;
         const currentCard = fc.data[fc.currentIndex];
-        
+
         state.memorizedCards.add(currentCard.id);
         state.weakCards.delete(currentCard.id);
         updateCardSchedule(currentCard.id, true); // 2. 간격 반복 (SM-2)
         saveProgress();
-        
+
         // 시각 효과 피드백 후 다음 카드로
         /** @type {HTMLElement} */ (document.getElementById('fc-easy-btn')).style.transform = 'scale(1.05)';
         setTimeout(() => {
@@ -269,17 +269,17 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
             /** @type {HTMLElement} */ (document.getElementById('fc-next-btn')).click();
         }, 150);
     });
-    
+
     document.getElementById('fc-hard-btn')?.addEventListener('click', () => {
         const fc = state.flashcards;
         if (fc.data.length === 0) return;
         const currentCard = fc.data[fc.currentIndex];
-        
+
         state.weakCards.add(currentCard.id);
         state.memorizedCards.delete(currentCard.id);
         updateCardSchedule(currentCard.id, false); // 2. 간격 반복 (SM-2)
         saveProgress();
-        
+
         // 시각 효과 피드백 후 다음 카드로
         /** @type {HTMLElement} */ (document.getElementById('fc-hard-btn')).style.transform = 'scale(1.05)';
         setTimeout(() => {
@@ -323,12 +323,12 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
                 break;
         }
     });
-    
+
     // 3. 퀴즈 이벤트
     document.getElementById('quiz-subject-select')?.addEventListener('change', (e) => {
         state.quiz.subject = (/** @type {HTMLSelectElement} */ (e.target)).value;
     });
-    
+
     document.getElementById('start-quiz-btn')?.addEventListener('click', () => {
         showGlobalLoading('퀴즈 데이터를 불러오는 중입니다...');
         DataLoader.loadSubject(state.quiz.subject).then(() => {
@@ -340,17 +340,17 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
             startQuiz();
         });
     });
-    
+
     document.getElementById('submit-quiz-btn')?.addEventListener('click', () => {
         submitQuizAnswer();
     });
-    
+
     // 엔터키 정답 제출 대응
     document.getElementById('quiz-answer-input')?.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
             const submitBtn = document.getElementById('submit-quiz-btn');
             const nextBtn = document.getElementById('next-quiz-btn');
-            
+
             if (submitBtn && !submitBtn.classList.contains('is-hidden')) {
                 submitQuizAnswer();
             } else if (nextBtn && !nextBtn.classList.contains('is-hidden')) {
@@ -358,11 +358,11 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
             }
         }
     });
-    
+
     document.getElementById('next-quiz-btn')?.addEventListener('click', () => {
         nextQuizQuestion();
     });
-    
+
     document.getElementById('retry-quiz-btn')?.addEventListener('click', () => {
         startQuiz();
     });
@@ -392,11 +392,11 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
             }
         });
     }
-    
+
     document.getElementById('back-to-dashboard-btn')?.addEventListener('click', () => {
         switchView('dashboard-view');
     });
-    
+
     // 4. 오답 퀴즈 이벤트 바인딩
     document.getElementById('start-weak-quiz-btn')?.addEventListener('click', () => {
         startWeakFocusQuiz();
@@ -409,19 +409,50 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
             renderSimQuestion();
         }
     });
-    
+
     document.getElementById('sim-next-btn')?.addEventListener('click', () => {
         if (simState.currentIndex < simState.data.questions.length - 1) {
             simState.currentIndex++;
             renderSimQuestion();
         }
     });
-    
+
     document.getElementById('sim-submit-exam-btn')?.addEventListener('click', async () => {
-        const ok = await showConfirm("정말로 답안지를 제출하고 시험을 종료하시겠습니까?", "시험 제출");
+        const questions = (simState.data && simState.data.questions) || [];
+        const answered = questions.filter(q => String(simState.userAnswers[q.id] || '').trim() !== '').length;
+        const unanswered = questions.length - answered;
+        const msg = unanswered > 0
+            ? `아직 풀지 않은 문항이 ${unanswered}개 있습니다. 그래도 답안지를 제출하고 시험을 종료하시겠습니까?`
+            : "정말로 답안지를 제출하고 시험을 종료하시겠습니까?";
+        const ok = await showConfirm(msg, "시험 제출");
         if (ok) submitExam();
     });
-    
+
+    // 모의고사 키보드 단축키 — 아레나 표시 중에만 동작.
+    // 입력 필드·버튼·확인 모달에 포커스가 있을 때는 비활성(단답형 입력·Enter 기본동작 보호)
+    document.addEventListener('keydown', (e) => {
+        const arena = document.getElementById('sim-arena-panel');
+        if (!arena || arena.classList.contains('is-hidden')) return;
+        if (document.getElementById('app-confirm-overlay')) return;
+        const target = /** @type {HTMLElement|null} */ (e.target);
+        if (target && typeof target.closest === 'function' &&
+            target.closest('input, textarea, select, button, a[href], [role="button"], [contenteditable]')) return;
+
+        if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            document.getElementById('sim-prev-btn')?.click();
+        } else if (e.key === 'ArrowRight' || e.key === 'Enter') {
+            e.preventDefault();
+            document.getElementById('sim-next-btn')?.click();
+        } else if (/^[1-5]$/.test(e.key)) {
+            const opt = document.querySelectorAll('#sim-options-container .sim-option-item')[parseInt(e.key, 10) - 1];
+            if (opt) {
+                e.preventDefault();
+                /** @type {HTMLElement} */ (opt).click();
+            }
+        }
+    });
+
     // 6. 성분 검색 사전 실시간 검색 이벤트 디바운스 바인딩
     const dictSearchInput = document.getElementById('dict-search-input');
     if (dictSearchInput) {

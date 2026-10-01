@@ -4,7 +4,7 @@ import { esc } from "./sanitize.js";
 import { DataLoader } from "./data-loader.js";
 import { contentPath } from "./exam-context.js";
 import { refreshProBadges } from "./pro-upgrade.js";
-import { state } from "./state.js";
+import { state, getSimResultsHistory } from "./state.js";
 
 // --- 초기화 및 로컬스토리지 로드 ---
 export function populateSubjectSelects() {
@@ -99,6 +99,7 @@ export function populateExamCards() {
 
     const subjects = registry.subjects;
     const exams = registry.exams;
+    const simHistory = getSimResultsHistory();
     const badgeColors = {};
     subjects.forEach((sub, idx) => {
         badgeColors[sub.key] = EXAM_BADGE_COLORS[idx % EXAM_BADGE_COLORS.length];
@@ -157,9 +158,17 @@ ${comboBookBtn}
 
         const btnsClass = 'grid-btns-2'; // 문제집 쌍 + 모의고사 피커 쌍 — 항상 2열
 
+        // 과목별 모의고사 응시 요약 — 실전 시험(subjectN)만 집계 (통합·조합 응시 제외)
+        const examKeys = new Set(subjExams.map(e => e.key));
+        const attempts = simHistory.filter(h => examKeys.has(h.examId));
+        const progressHtml = attempts.length
+            ? `                            <div class="exam-card-progress"><i class="fa-solid fa-chart-line" aria-hidden="true"></i> 모의고사 ${attempts.length}회 · 최근 ${attempts[attempts.length - 1].rate}% · 최고 ${Math.max(...attempts.map(a => a.rate))}%</div>\n`
+            : '';
+
         const cardHtml = `                        <div class="exam-card-item">
                             <div class="exam-card-badge ${badgeColor}">${idx + 1}과목</div>
                             <h4 class="exam-card-title">${subj.name}</h4>
+${progressHtml}
                             <div class="exam-card-btns ${btnsClass}">
 ${allBtnsHtml}
                             </div>

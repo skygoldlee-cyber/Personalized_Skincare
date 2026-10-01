@@ -460,6 +460,13 @@ function tickSimTimer() {
     if (timeEl) timeEl.textContent =
         `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 
+    // 임박 단계 시각화 — 잔여 10분 이하 경고(주황), 5분 이하 위험(빨강+펄스)
+    const timerBox = timeEl ? timeEl.closest('.sim-timer') : null;
+    if (timerBox) {
+        timerBox.classList.toggle('sim-time-warning', remaining <= 600 && remaining > 300);
+        timerBox.classList.toggle('sim-time-danger', remaining <= 300);
+    }
+
     // 매 5초마다 타이머 임시 저장
     if (simState.timeLeft % 5 === 0) {
         saveSimDraft();
