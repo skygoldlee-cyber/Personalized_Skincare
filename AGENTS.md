@@ -310,6 +310,9 @@ docs/                   # 개발 문서
 
 ## 코드 스타일 및 규칙
 
+### 공통
+- **로컬 폴더명·절대 경로 하드코딩 금지** — `C:\Project\...` 같은 로컬 절대 경로는 폴더 리네임·멀티 머신에서 깨짐. 코드는 `__file__`/`import.meta` 기준 상대 경로로 해석하고, 문서의 파일 참조는 저장소 루트 상대(`@/src/...`)로 표기. GitHub 리포 slug(`skygoldlee-cyber/passory`)·Vercel 프로젝트명 같은 원격 식별자는 예외.
+
 ### JavaScript
 - ES Modules (`import`/`export`), 클래식 스크립트는 데이터 파일/외부 라이브러리만
 - 2-space 들여쓰기

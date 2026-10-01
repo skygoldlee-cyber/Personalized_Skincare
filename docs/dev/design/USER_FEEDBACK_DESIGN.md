@@ -183,7 +183,7 @@ select * from public.feedback where entry_src like 'yt-%' order by created_at de
 ```powershell
 npm.cmd install -g supabase      # 또는: scoop install supabase
 supabase login                   # 브라우저가 열리며 계정 인증
-cd C:\Project\passory
+cd <프로젝트 루트>
 supabase link --project-ref hunpzznyiaddekuggupu   # supabase-config.js의 URL과 같은 프로젝트
 ```
 

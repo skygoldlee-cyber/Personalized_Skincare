@@ -87,7 +87,7 @@ npm.cmd run deploy
 
 ## 3. Vercel 배포 최적화 (.vercelignore 설정)
 
-정적 자원만 Vercel에 업로드되도록 하기 위해 프로젝트 루트의 [`.vercelignore`](file:///c:/Project/passory/.vercelignore) 파일에 다음과 같은 규칙을 설정합니다.
+정적 자원만 Vercel에 업로드되도록 하기 위해 프로젝트 루트의 [`.vercelignore`](../../../.vercelignore) 파일에 다음과 같은 규칙을 설정합니다.
 
 ```
 # .vercelignore
