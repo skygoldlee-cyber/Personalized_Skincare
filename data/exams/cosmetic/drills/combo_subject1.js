@@ -1,46 +1,46 @@
 // 자동 생성된 복수정답형 드릴 데이터입니다. 수정하지 마십시오. (tools/build/build_combo_drills.js)
-// 원본: data/exams/cosmetic/exams/subject1.7154a436.js — mode: fact(명제 조합) 8문 / answer(정답 조합) 57문
+// 원본: data/exams/cosmetic/exams/subject1.64cbff92.js — mode: fact(명제 조합) 8문 / answer(정답 조합) 57문
 var COMBO_DRILLS_subject1 = [
  {
   "id": "law_combo_f9a972",
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L328 (출처: 과목1 문제은행 Q1)",
+  "citation": "📖 교재: L338 (출처: 과목1 문제은행 Q1)",
   "stem": "화장품법 제1조에서 명시한 이 법의 궁극적인 입법 목적으로 옳은 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_5fd43a",
-    "conceptId": "L328",
+    "conceptId": "L338",
     "text": "화장품의 수출 증진과 국가 경제 발전 기여",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_672b3e",
-    "conceptId": "L328",
+    "conceptId": "L338",
     "text": "화장품의 안전성 확보를 통한 수입 대체 효과 극대화",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_d83178",
-    "conceptId": "L328",
+    "conceptId": "L338",
     "text": "국민 보건 향상과 화장품 산업의 발전 기여",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "law_st_669c29",
-    "conceptId": "L328",
+    "conceptId": "L338",
     "text": "화장품 제조업자의 권익 보호 및 경쟁력 강화",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_232b27",
-    "conceptId": "L328",
+    "conceptId": "L338",
     "text": "화장품 허위 및 과대광고의 전면 차단",
     "truth": false
    }
@@ -87,7 +87,7 @@ var COMBO_DRILLS_subject1 = [
    "수치"
   ],
   "derivedFrom": "subject1_q1",
-  "explain": "📖 법령 근거 (교재: L328):\n| 「화장품법」(법률) 🎯 기출 | 화장품의 제조·수입·판매 및 수출 등에 관한 사항을 규정함으로써 국민 보건 향상과 화장품 산업의 발전에 기여함을 목적으로 함 |",
+  "explain": "📖 법령 근거 (교재: L338):\n| 「화장품법」(법률) 🎯 기출 | 화장품의 제조·수입·판매 및 수출 등에 관한 사항을 규정함으로써 국민 보건 향상과 화장품 산업의 발전에 기여함을 목적으로 함 |",
   "source": "화장품법의 이해 (100제)",
   "answer": "2"
  },
@@ -96,41 +96,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L969 (출처: 과목1 문제은행 Q2)",
+  "citation": "📖 교재: L1021 (출처: 과목1 문제은행 Q2)",
   "stem": "다음 중 화장품법상 영업의 등록 또는 신고에 관한 설명으로 옳은 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_6ce097",
-    "conceptId": "L969",
+    "conceptId": "L1021",
     "text": "화장품제조업을 하려는 자는 식품의약품안전처장에게 신고해야 한다.",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_4a075d",
-    "conceptId": "L969",
+    "conceptId": "L1021",
     "text": "맞춤형화장품판매업을 하려는 자는 지방식품의약품안전청장에게 신고해야 한다.",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "law_st_e37722",
-    "conceptId": "L969",
+    "conceptId": "L1021",
     "text": "화장품책임판매업을 하려는 자는 식품의약품안전처장에게 신고해야 한다.",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_c25259",
-    "conceptId": "L969",
+    "conceptId": "L1021",
     "text": "화장품제조업과 책임판매업은 모두 허가제이다.",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_b0f949",
-    "conceptId": "L969",
+    "conceptId": "L1021",
     "text": "맞춤형화장품판매업은 시·군·구청장에게 등록해야 한다.",
     "truth": false
    }
@@ -177,7 +177,7 @@ var COMBO_DRILLS_subject1 = [
    "절차"
   ],
   "derivedFrom": "subject1_q2",
-  "explain": "📖 교재 근거 (교재: L969):\n| 3년 이하 징역 또는 3천만 원 이하 벌금 (징역형과 벌금형 함께 부과 가능) | • 화장품제조업 또는 화장품책임판매업에 필요한 등록과 변경사항 등록을 위반한 자<br>• 맞춤형화장품판매업에 필요한 신고와 변경사항 신고를 위반한 자<br>• 맞춤형화장품조제관리사를 두지 않은 맞춤형화장품판매업자<br>• 기능성화장품에 대한 심사나 보고서 제출, 이에 대한 변경을 위반한 자<br>• 영업금지 조항을 위반한 자<br>• 등록하지 않은 자가 제조한 화장품 또는 제조·수입하여 유통·판매한 자<br>• 화장품 포장 및 기재·표시사항을 훼손(맞춤형화장품 판매를 위하여 필요한 경우 제외), 위·변조한 자 |",
+  "explain": "📖 교재 근거 (교재: L1021):\n| 3년 이하 징역 또는 3천만 원 이하 벌금 (징역형과 벌금형 함께 부과 가능) | • 화장품제조업 또는 화장품책임판매업에 필요한 등록과 변경사항 등록을 위반한 자<br>• 맞춤형화장품판매업에 필요한 신고와 변경사항 신고를 위반한 자<br>• 맞춤형화장품조제관리사를 두지 않은 맞춤형화장품판매업자<br>• 기능성화장품에 대한 심사나 보고서 제출, 이에 대한 변경을 위반한 자<br>• 영업금지 조항을 위반한 자<br>• 등록하지 않은 자가 제조한 화장품 또는 제조·수입하여 유통·판매한 자<br>• 화장품 포장 및 기재·표시사항을 훼손(맞춤형화장품 판매를 위하여 필요한 경우 제외), 위·변조한 자 |",
   "source": "화장품법의 이해 (100제)",
   "answer": "3"
  },
@@ -186,41 +186,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L508 (출처: 과목1 문제은행 Q3)",
+  "citation": "📖 교재: L529 (출처: 과목1 문제은행 Q3)",
   "stem": "다음 중 화장품제조업의 등록 결격사유에 해당하지 않는 자에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_e8288b",
-    "conceptId": "L508",
+    "conceptId": "L529",
     "text": "정신질환자 (다만, 전문의가 적합하다고 인정하는 사람은 제외)",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_a7ff65",
-    "conceptId": "L508",
+    "conceptId": "L529",
     "text": "피성년후견인 또는 파산선고를 받고 복권되지 아니한 자",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_5f4b08",
-    "conceptId": "L508",
+    "conceptId": "L529",
     "text": "화장품법을 위반하여 금고 이상의 형을 선고받고 집행이 끝나지 아니한 자",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_1e2453",
-    "conceptId": "L508",
+    "conceptId": "L529",
     "text": "식약처장의 사전 승인을 받지 아니한 자",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "law_st_952ff3",
-    "conceptId": "L508",
+    "conceptId": "L529",
     "text": "영업 등록이 취소된 날부터 1년이 지나지 아니한 자",
     "truth": false
    }
@@ -271,7 +271,7 @@ var COMBO_DRILLS_subject1 = [
    "수치"
   ],
   "derivedFrom": "subject1_q3",
-  "explain": "📖 교재 근거 (교재: L508):\n| 화장품 제조업 등록 | 등록 | • 등록신청서<br>• 대표자의 건강진단서(정신질환자, 마약류의 중독자가 아님을 증명)<br>• 등기사항증명서(법인의 경우)<br>• 시설명세서 |",
+  "explain": "📖 교재 근거 (교재: L529):\n| 화장품 제조업 등록 | 등록 | • 등록신청서<br>• 대표자의 건강진단서(정신질환자, 마약류의 중독자가 아님을 증명)<br>• 등기사항증명서(법인의 경우)<br>• 시설명세서 |",
   "source": "화장품법의 이해 (100제)",
   "answer": "4"
  },
@@ -370,41 +370,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L1505 (출처: 과목1 문제은행 Q5)",
+  "citation": "📖 교재: L1578 (출처: 과목1 문제은행 Q5)",
   "stem": "다음 중 화장품법에 따른 '기능성화장품'의 범위에 해당하는 효능이 아닌 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_d6851b",
-    "conceptId": "L1505",
+    "conceptId": "L1578",
     "text": "피부의 미백에 도움을 주는 기능",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_d61fc5",
-    "conceptId": "L1505",
+    "conceptId": "L1578",
     "text": "여드름을 항생제로 치료하는 기능",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "law_st_b48558",
-    "conceptId": "L1505",
+    "conceptId": "L1578",
     "text": "피부의 주름 개선에 도움을 주는 기능",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_c478ed",
-    "conceptId": "L1505",
+    "conceptId": "L1578",
     "text": "자외선으로부터 피부를 보호하는 데 도움을 주는 기능",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_a25876",
-    "conceptId": "L1505",
+    "conceptId": "L1578",
     "text": "탈모 증상의 완화에 도움을 주는 기능",
     "truth": false
    }
@@ -453,7 +453,7 @@ var COMBO_DRILLS_subject1 = [
    "정답판정"
   ],
   "derivedFrom": "subject1_q5",
-  "explain": "📖 교재 근거 (교재: L1505):\n| 기능성화장품 | 총리령으로 정하는 11가지 효능·효과 --- 심사 또는 보고서 제출 필수 |\n※ ② \"여드름을 항생제로 치료하는 기능\"은 의약품 효능으로 화장품 범위에 명백히 부합하지 않음 |",
+  "explain": "📖 교재 근거 (교재: L1578):\n| 기능성화장품 | 총리령으로 정하는 11가지 효능·효과 --- 심사 또는 보고서 제출 필수 |\n※ ② \"여드름을 항생제로 치료하는 기능\"은 의약품 효능으로 화장품 범위에 명백히 부합하지 않음 |",
   "source": "화장품법의 이해 (100제)",
   "answer": "2"
  },
@@ -555,41 +555,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L371 (출처: 과목1 문제은행 Q7)",
+  "citation": "📖 교재: L385 (출처: 과목1 문제은행 Q7)",
   "stem": "다음 중 천연화장품의 정의로 옳은 것을 모두 고른 것은? (단, 중량 기준 함량 기준임)",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_06e627",
-    "conceptId": "L371",
+    "conceptId": "L385",
     "text": "천연 원료 함량이 전체 제품에서 50% 이상 구성된 화장품",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_716ce0",
-    "conceptId": "L371",
+    "conceptId": "L385",
     "text": "천연 원료 함량이 전체 제품에서 70% 이상 구성된 화장품",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_6e69cf",
-    "conceptId": "L371",
+    "conceptId": "L385",
     "text": "천연 원료 함량이 전체 제품에서 90% 이상 구성된 화장품",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_353744",
-    "conceptId": "L371",
+    "conceptId": "L385",
     "text": "유기농 원료 함량이 전체 제품에서 10% 이상 구성된 화장품",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_d86c83",
-    "conceptId": "L371",
+    "conceptId": "L385",
     "text": "천연 원료 함량이 전체 제품에서 95% 이상 구성된 화장품",
     "truth": true
    }
@@ -639,7 +639,7 @@ var COMBO_DRILLS_subject1 = [
    "정의"
   ],
   "derivedFrom": "subject1_q7",
-  "explain": "📖 교재 근거 (교재: L371):\n| 천연화장품 | 동식물, 미네랄, 미생물 및 그 유래 원료 등을 함유한 화장품으로, ISO 16128-1 가이드라인에 따라 정의된 천연(유래) 원료를 사용하고, ISO 16128-2 가이드라인에 따라 계산하였을 때 중량 기준으로 천연(유래) 원료 함량이 전체 제품에서 95% 이상으로 구성된 화장품 |",
+  "explain": "📖 교재 근거 (교재: L385):\n| 천연화장품 | 동식물, 미네랄, 미생물 및 그 유래 원료 등을 함유한 화장품으로, ISO 16128-1 가이드라인에 따라 정의된 천연(유래) 원료를 사용하고, ISO 16128-2 가이드라인에 따라 계산하였을 때 중량 기준으로 천연(유래) 원료 함량이 전체 제품에서 95% 이상으로 구성된 화장품 |",
   "source": "화장품법의 이해 (100제)",
   "answer": "5"
  },
@@ -648,41 +648,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L372 (출처: 과목1 문제은행 Q8)",
+  "citation": "📖 교재: L386 (출처: 과목1 문제은행 Q8)",
   "stem": "다음 중 '유기농화장품'의 표시를 하기 위한 최소한의 유기농 원료 중량 함량 기준으로 옳은 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_a5df86",
-    "conceptId": "L372",
+    "conceptId": "L386",
     "text": "전체 제품에서 5% 이상",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_0ee7ec",
-    "conceptId": "L372",
+    "conceptId": "L386",
     "text": "전체 제품에서 95% 이상",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_bd56ac",
-    "conceptId": "L372",
+    "conceptId": "L386",
     "text": "전체 제품에서 20% 이상",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_5d12f1",
-    "conceptId": "L372",
+    "conceptId": "L386",
     "text": "전체 제품에서 50% 이상",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_47c527",
-    "conceptId": "L372",
+    "conceptId": "L386",
     "text": "전체 제품에서 10% 이상",
     "truth": true
    }
@@ -734,7 +734,7 @@ var COMBO_DRILLS_subject1 = [
    "수치"
   ],
   "derivedFrom": "subject1_q8",
-  "explain": "📖 교재 근거 (교재: L372):\n| 유기농화장품 🎯 기출 | 유기농 원료, 동식물, 미네랄, 미생물 및 그 유래 원료 등을 함유한 화장품으로, ISO 16128-1 가이드라인에 따라 정의된 천연(유래) 및 유기농(유래) 원료를 사용하고, ISO 16128-2 가이드라인에 따라 계산하였을 때 중량 기준으로 유기농(유래) 함량이 전체 제품에서 10% 이상이어야 하며, 유기농(유래) 함량을 포함한 천연(유래) 함량이 전체 제품에서 95% 이상으로 구성된 화장품 |",
+  "explain": "📖 교재 근거 (교재: L386):\n| 유기농화장품 🎯 기출 | 유기농 원료, 동식물, 미네랄, 미생물 및 그 유래 원료 등을 함유한 화장품으로, ISO 16128-1 가이드라인에 따라 정의된 천연(유래) 및 유기농(유래) 원료를 사용하고, ISO 16128-2 가이드라인에 따라 계산하였을 때 중량 기준으로 유기농(유래) 함량이 전체 제품에서 10% 이상이어야 하며, 유기농(유래) 함량을 포함한 천연(유래) 함량이 전체 제품에서 95% 이상으로 구성된 화장품 |",
   "source": "화장품법의 이해 (100제)",
   "answer": "1"
  },
@@ -743,41 +743,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L535 (출처: 과목1 문제은행 Q9)",
+  "citation": "📖 교재: L556 (출처: 과목1 문제은행 Q9)",
   "stem": "다음 중 맞춤형화장품 조제관리사 자격시험의 출제 및 운영을 담당하는 수탁 기관에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_0bf89d",
-    "conceptId": "L535",
+    "conceptId": "L556",
     "text": "한국산업인력공단",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_f2ee0f",
-    "conceptId": "L535",
+    "conceptId": "L556",
     "text": "대한화장품협회",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_b2154e",
-    "conceptId": "L535",
+    "conceptId": "L556",
     "text": "식품의약품안전평가원",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_d56d09",
-    "conceptId": "L535",
+    "conceptId": "L556",
     "text": "대한상공회의소",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "law_st_51bcba",
-    "conceptId": "L535",
+    "conceptId": "L556",
     "text": "한국화장품산업연구원",
     "truth": false
    }
@@ -828,7 +828,7 @@ var COMBO_DRILLS_subject1 = [
    "정답판정"
   ],
   "derivedFrom": "subject1_q9",
-  "explain": "📖 교재 근거 (교재: L535):\n> 참고: 맞춤형화장품판매업자가 맞춤형화장품조제관리사 자격시험에",
+  "explain": "📖 교재 근거 (교재: L556):\n> 참고: 맞춤형화장품판매업자가 맞춤형화장품조제관리사 자격시험에",
   "source": "화장품법의 이해 (100제)",
   "answer": "3"
  },
@@ -837,41 +837,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L719 (출처: 과목1 문제은행 Q10)",
+  "citation": "📖 교재: L755 (출처: 과목1 문제은행 Q10)",
   "stem": "화장품 책임판매업자는 품질관리 및 안전관리에 관한 업무를 담당하는 '이 사람'을 의무적으로 두어야 한다. '이 사람'의 법적 명칭에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_282bf7",
-    "conceptId": "L719",
+    "conceptId": "L755",
     "text": "제조관리사",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_d64529",
-    "conceptId": "L719",
+    "conceptId": "L755",
     "text": "품질관리원",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_8de2fc",
-    "conceptId": "L719",
+    "conceptId": "L755",
     "text": "책임판매관리자",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "law_st_e39333",
-    "conceptId": "L719",
+    "conceptId": "L755",
     "text": "맞춤형화장품 조제관리사",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_bdb85f",
-    "conceptId": "L719",
+    "conceptId": "L755",
     "text": "안전성 평가자",
     "truth": false
    }
@@ -918,7 +918,7 @@ var COMBO_DRILLS_subject1 = [
    "정답판정"
   ],
   "derivedFrom": "subject1_q10",
-  "explain": "📖 교재 근거 (교재: L719):\n| 화장품책임판매업자 | • 품질관리 기준, 책임판매 후 안전관리 기준, 품질검사 방법 및 실시 의무, 안전성·유효성 관련 정보사항 등의 보고 및 안전대책 마련 의무에 관한 사항 준수<br>• 지난해의 생산실적 또는 수입실적, 화장품의 제조 과정에 사용된 원료의 목록 등을 유통·판매 전에 식품의약품안전처장에게 보고<br>• 책임판매관리자는 화장품 안전성 확보 및 품질관리 교육 매년 이수 의무 |",
+  "explain": "📖 교재 근거 (교재: L755):\n| 화장품책임판매업자 | • 품질관리 기준, 책임판매 후 안전관리 기준, 품질검사 방법 및 실시 의무, 안전성·유효성 관련 정보사항 등의 보고 및 안전대책 마련 의무에 관한 사항 준수<br>• 지난해의 생산실적 또는 수입실적, 화장품의 제조 과정에 사용된 원료의 목록 등을 유통·판매 전에 식품의약품안전처장에게 보고<br>• 책임판매관리자는 화장품 안전성 확보 및 품질관리 교육 매년 이수 의무 |",
   "source": "화장품법의 이해 (100제)",
   "answer": "2"
  },
@@ -927,41 +927,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L1450 (출처: 과목1 문제은행 Q11)",
+  "citation": "📖 교재: L1521 (출처: 과목1 문제은행 Q11)",
   "stem": "다음 중 책임판매관리자가 될 수 있는 자격 요건으로 가장 거리가 먼 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_444c24",
-    "conceptId": "L1450",
+    "conceptId": "L1521",
     "text": "약사 또는 한약사 자격을 가진 자",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_2608eb",
-    "conceptId": "L1450",
+    "conceptId": "L1521",
     "text": "이공계 학과 학사학위 이상을 취득한 자",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_bda959",
-    "conceptId": "L1450",
+    "conceptId": "L1521",
     "text": "화장품 관련 분야 학사학위를 취득한 자",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_8eb8b1",
-    "conceptId": "L1450",
+    "conceptId": "L1521",
     "text": "의학, 간호학, 보건학 등의 학과를 졸업하고 관련 경력이 있는 자",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_118ff0",
-    "conceptId": "L1450",
+    "conceptId": "L1521",
     "text": "화장품제조 또는 품질관리 업무 경력이 2년 이상인 자 (전문대학 졸의 경우 1년 이상)",
     "truth": true
    }
@@ -1008,7 +1008,7 @@ var COMBO_DRILLS_subject1 = [
    "수치"
   ],
   "derivedFrom": "subject1_q11",
-  "explain": "📖 교재 근거 (교재: L1450):\n| 필수 서류 | 등록신청서, 건강진단서, 등기사항증명서, 시설명세서 | 등록신청서, 등기사항증명서, 책임판매관리자 자격서류 | 신고서, 조제관리사 자격증 사본, 시설명세서 |",
+  "explain": "📖 교재 근거 (교재: L1521):\n| 필수 서류 | 등록신청서, 건강진단서, 등기사항증명서, 시설명세서 | 등록신청서, 등기사항증명서, 책임판매관리자 자격서류 | 신고서, 조제관리사 자격증 사본, 시설명세서 |",
   "source": "화장품법의 이해 (100제)",
   "answer": "1"
  },
@@ -1017,41 +1017,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L510 (출처: 과목1 문제은행 Q12)",
+  "citation": "📖 교재: L531 (출처: 과목1 문제은행 Q12)",
   "stem": "다음 중 맞춤형화장품 조제관리사의 자격이 취소되는 결격 사유에 해당하는 자에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_cbb32b",
-    "conceptId": "L510",
+    "conceptId": "L531",
     "text": "고등학교 졸업 학력을 가진 사람",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_a805a4",
-    "conceptId": "L510",
+    "conceptId": "L531",
     "text": "화장품책임판매업을 폐업한 지 1년이 경과하지 아니한 사람",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_105814",
-    "conceptId": "L510",
+    "conceptId": "L531",
     "text": "금고 이상의 형을 선고받고 형의 집행유예 기간에 있는 사람",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "law_st_752bb0",
-    "conceptId": "L510",
+    "conceptId": "L531",
     "text": "시험 부정행위로 적발된 지 1년이 경과한 사람",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_09b22e",
-    "conceptId": "L510",
+    "conceptId": "L531",
     "text": "이공계 학위가 없는 일반 인문계 졸업자",
     "truth": false
    }
@@ -1102,7 +1102,7 @@ var COMBO_DRILLS_subject1 = [
    "수치"
   ],
   "derivedFrom": "subject1_q12",
-  "explain": "📖 교재 근거 (교재: L510):\n| 맞춤형화장품 판매업 신고 | 신고 | • 신고서<br>• 맞춤형화장품조제관리사 자격증 사본과 시설명세서<br>• 등기사항증명서(법인의 경우)<br>\\* 맞춤형화장품조제관리사가 2명 이상의 경우: 대표 1명만 제출 가능하며 매년 교육 이수 필수<br>\\* 맞춤형화장품판매업을 신고하려는 자는 총리령으로 정하는 시설기준을 갖추어야 하며, 맞춤형화장품의 혼합·소분 등 품질·안전 관리 업무에 종사하는 자(맞춤형화장품조제관리사)를 두어야 함 |",
+  "explain": "📖 교재 근거 (교재: L531):\n| 맞춤형화장품 판매업 신고 | 신고 | • 신고서<br>• 맞춤형화장품조제관리사 자격증 사본과 시설명세서<br>• 등기사항증명서(법인의 경우)<br>\\* 맞춤형화장품조제관리사가 2명 이상의 경우: 대표 1명만 제출 가능하며 매년 교육 이수 필수<br>\\* 맞춤형화장품판매업을 신고하려는 자는 총리령으로 정하는 시설기준을 갖추어야 하며, 맞춤형화장품의 혼합·소분 등 품질·안전 관리 업무에 종사하는 자(맞춤형화장품조제관리사)를 두어야 함 |",
   "source": "화장품법의 이해 (100제)",
   "answer": "4"
  },
@@ -1111,41 +1111,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L916 (출처: 과목1 문제은행 Q13)",
+  "citation": "📖 교재: L965 (출처: 과목1 문제은행 Q13)",
   "stem": "다음 중 화장품의 1차 포장에 반드시 기재·표시해야 하는 사항이 아닌 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_aac094",
-    "conceptId": "L916",
+    "conceptId": "L965",
     "text": "화장품의 명칭",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_e312bf",
-    "conceptId": "L916",
+    "conceptId": "L965",
     "text": "화장품에 사용된 모든 성분",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "law_st_a79b64",
-    "conceptId": "L916",
+    "conceptId": "L965",
     "text": "제조번호",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_9ec254",
-    "conceptId": "L916",
+    "conceptId": "L965",
     "text": "사용기한 또는 개봉 후 사용기간",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_938aca",
-    "conceptId": "L916",
+    "conceptId": "L965",
     "text": "영업자의 상호",
     "truth": false
    }
@@ -1197,7 +1197,7 @@ var COMBO_DRILLS_subject1 = [
    "수치"
   ],
   "derivedFrom": "subject1_q13",
-  "explain": "📖 교재 근거 (교재: L916):\n| 표시 훼손·위조 | 화장품의 포장 및 기재·표시사항을 훼손 또는 위조·변조한 화장품 | 맞춤형화장품 판매를 위해 필요한 경우 제외 |",
+  "explain": "📖 교재 근거 (교재: L965):\n| 표시 훼손·위조 | 화장품의 포장 및 기재·표시사항을 훼손 또는 위조·변조한 화장품 | 맞춤형화장품 판매를 위해 필요한 경우 제외 |",
   "source": "화장품법의 이해 (100제)",
   "answer": "3"
  },
@@ -1206,41 +1206,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L971 (출처: 과목1 문제은행 Q14)",
+  "citation": "📖 교재: L1023 (출처: 과목1 문제은행 Q14)",
   "stem": "다음 중 영업자의 상호 및 주소를 포장에 기재할 때 표시해야 하는 영업자가 아닌 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_9a8226",
-    "conceptId": "L971",
+    "conceptId": "L1023",
     "text": "화장품제조업자",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_1851d9",
-    "conceptId": "L971",
+    "conceptId": "L1023",
     "text": "원료공급업자",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "law_st_bbf003",
-    "conceptId": "L971",
+    "conceptId": "L1023",
     "text": "맞춤형화장품판매업자",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_d503ce",
-    "conceptId": "L971",
+    "conceptId": "L1023",
     "text": "화장품책임판매업자",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_b3d683",
-    "conceptId": "L971",
+    "conceptId": "L1023",
     "text": "수입 화장품의 경우 수입업자 (책임판매업자 상호로 기재)",
     "truth": false
    }
@@ -1290,7 +1290,7 @@ var COMBO_DRILLS_subject1 = [
    "정답판정"
   ],
   "derivedFrom": "subject1_q14",
-  "explain": "📖 교재 근거 (교재: L971):\n| 200만 원 이하 벌금 | • 영업자의 의무사항을 위반한 자<br>• 위해화장품의 회수 및 회수 계획 보고를 위반한 자<br>• 1, 2차 포장에 기재해야 되는 사항을 위반한 자(가격표시는 제외)<br>• 식품의약품안전처장이 인정한 보고와 검사, 시정명령, 검사명령, 개수명령, 회수·폐기명령을 위반하거나 관계 공무원의 검사·수거 또는 처분을 거부·방해하거나 기피한 자 |",
+  "explain": "📖 교재 근거 (교재: L1023):\n| 200만 원 이하 벌금 | • 영업자의 의무사항을 위반한 자<br>• 위해화장품의 회수 및 회수 계획 보고를 위반한 자<br>• 1, 2차 포장에 기재해야 되는 사항을 위반한 자(가격표시는 제외)<br>• 식품의약품안전처장이 인정한 보고와 검사, 시정명령, 검사명령, 개수명령, 회수·폐기명령을 위반하거나 관계 공무원의 검사·수거 또는 처분을 거부·방해하거나 기피한 자 |",
   "source": "화장품법의 이해 (100제)",
   "answer": "5"
  },
@@ -1299,41 +1299,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L970 (출처: 과목1 문제은행 Q15)",
+  "citation": "📖 교재: L964 (출처: 과목1 문제은행 Q15)",
   "stem": "다음 중 화장품 광고 시 소비자를 속이거나 잘못 알게 할 우려가 있는 부당한 표시·광고 행위에 해당하지 않는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_ccf871",
-    "conceptId": "L970",
+    "conceptId": "L964",
     "text": "식약처장이 고시한 기능성 유효성분의 함량을 사실 그대로 광고하는 행위",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "law_st_c51e34",
-    "conceptId": "L970",
+    "conceptId": "L964",
     "text": "기능성화장품이 아님에도 기능성화장품으로 오인하게 할 우려가 있는 표시·광고",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_e09e7c",
-    "conceptId": "L970",
+    "conceptId": "L964",
     "text": "천연화장품 또는 유기농화장품이 아님에도 이를 오인하게 할 우려가 있는 표시·광고",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_cad9c6",
-    "conceptId": "L970",
+    "conceptId": "L964",
     "text": "의약품으로 잘못 인식할 우려가 있는 표시·광고",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_174035",
-    "conceptId": "L970",
+    "conceptId": "L964",
     "text": "경쟁 업체의 제품을 비방하거나 객관적 근거 없이 자사 제품이 우월하다고 광고하는 행위",
     "truth": false
    }
@@ -1382,7 +1382,7 @@ var COMBO_DRILLS_subject1 = [
    "한도"
   ],
   "derivedFrom": "subject1_q15",
-  "explain": "📖 교재 근거 (교재: L970):\n| 1년 이하 징역 또는 1천만 원 이하 벌금 (징역형과 벌금형 함께 부과 가능) | • 영유아 또는 어린이 사용 화장품임을 표시·광고하기 위한 안전과 품질 입증 자료 작성·보관을 위반한 자<br>• 안전용기·포장의 기준을 위반한 자<br>• 의약품으로 잘못 인식할 수 있게 표시 또는 광고를 한 자<br>• 기능성화장품으로 잘못 인식할 수 있거나 안전성·유효성 심사 결과와 다른 내용의 표시·광고를 한 자<br>• 소비자를 속이거나 소비자가 잘못 인식하도록 할 우려가 있는 표시·광고를 하거나 판매한 자<br>• 화장품의 기재사항, 가격표시, 기재·표시상의 주의를 위반한 화장품 또는 의약품으로 잘못 인식할 수 있게 기재·표시된 화장품을 판매한 자<br>• 판매 목적이 아닌 제품의 홍보·판매 촉진 등을 위해 미리...",
+  "explain": "📖 교재 근거 (교재: L964):\n| 1년 이하 징역 또는 1천만 원 이하 벌금 (징역형과 벌금형 함께 부과 가능) | • 영유아 또는 어린이 사용 화장품임을 표시·광고하기 위한 안전과 품질 입증 자료 작성·보관을 위반한 자<br>• 안전용기·포장의 기준을 위반한 자<br>• 의약품으로 잘못 인식할 수 있게 표시 또는 광고를 한 자<br>• 기능성화장품으로 잘못 인식할 수 있거나 안전성·유효성 심사 결과와 다른 내용의 표시·광고를 한 자<br>• 소비자를 속이거나 소비자가 잘못 인식하도록 할 우려가 있는 표시·광고를 하거나 판매한 자<br>• 화장품의 기재사항, 가격표시, 기재·표시상의 주의를 위반한 화장품 또는 의약품으로 잘못 인식할 수 있게 기재·표시된 화장품을 판매한 자<br>• 판매 목적이 아닌 제품의 홍보·판매 촉진 등을 위해 미리...",
   "source": "화장품법의 이해 (100제)",
   "answer": "2"
  },
@@ -1391,41 +1391,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L970 (출처: 과목1 문제은행 Q16)",
+  "citation": "📖 교재: L964 (출처: 과목1 문제은행 Q16)",
   "stem": "화장품 표시·광고 내용 중 실증(Proof)이 필요한 항목에 대해 식약처장으로부터 실증자료 제출을 요구받은 경우, 영업자는 요구받은 날부터 며칠 이내에 해당 자료를 제출해야 하는가? — 해당하는 것을 모두 고르시오.",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_9e29ca",
-    "conceptId": "L970",
+    "conceptId": "L964",
     "text": "7일 이내",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_1bfbc0",
-    "conceptId": "L970",
+    "conceptId": "L964",
     "text": "15일 이내",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "law_st_66cef1",
-    "conceptId": "L970",
+    "conceptId": "L964",
     "text": "30일 이내",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_617816",
-    "conceptId": "L970",
+    "conceptId": "L964",
     "text": "60일 이내",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_5e93f1",
-    "conceptId": "L970",
+    "conceptId": "L964",
     "text": "90일 이내",
     "truth": false
    }
@@ -1477,7 +1477,7 @@ var COMBO_DRILLS_subject1 = [
    "수치"
   ],
   "derivedFrom": "subject1_q16",
-  "explain": "📖 교재 근거 (교재: L970):\n| 1년 이하 징역 또는 1천만 원 이하 벌금 (징역형과 벌금형 함께 부과 가능) | • 영유아 또는 어린이 사용 화장품임을 표시·광고하기 위한 안전과 품질 입증 자료 작성·보관을 위반한 자<br>• 안전용기·포장의 기준을 위반한 자<br>• 의약품으로 잘못 인식할 수 있게 표시 또는 광고를 한 자<br>• 기능성화장품으로 잘못 인식할 수 있거나 안전성·유효성 심사 결과와 다른 내용의 표시·광고를 한 자<br>• 소비자를 속이거나 소비자가 잘못 인식하도록 할 우려가 있는 표시·광고를 하거나 판매한 자<br>• 화장품의 기재사항, 가격표시, 기재·표시상의 주의를 위반한 화장품 또는 의약품으로 잘못 인식할 수 있게 기재·표시된 화장품을 판매한 자<br>• 판매 목적이 아닌 제품의 홍보·판매 촉진 등을 위해 미리...",
+  "explain": "📖 교재 근거 (교재: L964):\n| 1년 이하 징역 또는 1천만 원 이하 벌금 (징역형과 벌금형 함께 부과 가능) | • 영유아 또는 어린이 사용 화장품임을 표시·광고하기 위한 안전과 품질 입증 자료 작성·보관을 위반한 자<br>• 안전용기·포장의 기준을 위반한 자<br>• 의약품으로 잘못 인식할 수 있게 표시 또는 광고를 한 자<br>• 기능성화장품으로 잘못 인식할 수 있거나 안전성·유효성 심사 결과와 다른 내용의 표시·광고를 한 자<br>• 소비자를 속이거나 소비자가 잘못 인식하도록 할 우려가 있는 표시·광고를 하거나 판매한 자<br>• 화장품의 기재사항, 가격표시, 기재·표시상의 주의를 위반한 화장품 또는 의약품으로 잘못 인식할 수 있게 기재·표시된 화장품을 판매한 자<br>• 판매 목적이 아닌 제품의 홍보·판매 촉진 등을 위해 미리...",
   "source": "화장품법의 이해 (100제)",
   "answer": "1"
  },
@@ -1486,41 +1486,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L719 (출처: 과목1 문제은행 Q17)",
+  "citation": "📖 교재: L755 (출처: 과목1 문제은행 Q17)",
   "stem": "다음 중 화장품책임판매업자가 안전성 정보(부작용 등)를 알게 된 경우, 신속보고(부작용 보고) 기한으로 옳은 것은? (단, 사망 등 중대한 사례 기준) 정보를 알게 된 날부터: — 해당하는 것을 모두 고르시오.",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_bb77f5",
-    "conceptId": "L719",
+    "conceptId": "L755",
     "text": "15일 이내",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "law_st_b7272c",
-    "conceptId": "L719",
+    "conceptId": "L755",
     "text": "3일 이내",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_01474b",
-    "conceptId": "L719",
+    "conceptId": "L755",
     "text": "7일 이내",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_aee256",
-    "conceptId": "L719",
+    "conceptId": "L755",
     "text": "24시간 이내",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_829458",
-    "conceptId": "L719",
+    "conceptId": "L755",
     "text": "30일 이내",
     "truth": false
    }
@@ -1575,7 +1575,7 @@ var COMBO_DRILLS_subject1 = [
    "수치"
   ],
   "derivedFrom": "subject1_q17",
-  "explain": "📖 교재 근거 (교재: L719):\n| 화장품책임판매업자 | • 품질관리 기준, 책임판매 후 안전관리 기준, 품질검사 방법 및 실시 의무, 안전성·유효성 관련 정보사항 등의 보고 및 안전대책 마련 의무에 관한 사항 준수<br>• 지난해의 생산실적 또는 수입실적, 화장품의 제조 과정에 사용된 원료의 목록 등을 유통·판매 전에 식품의약품안전처장에게 보고<br>• 책임판매관리자는 화장품 안전성 확보 및 품질관리 교육 매년 이수 의무 |",
+  "explain": "📖 교재 근거 (교재: L755):\n| 화장품책임판매업자 | • 품질관리 기준, 책임판매 후 안전관리 기준, 품질검사 방법 및 실시 의무, 안전성·유효성 관련 정보사항 등의 보고 및 안전대책 마련 의무에 관한 사항 준수<br>• 지난해의 생산실적 또는 수입실적, 화장품의 제조 과정에 사용된 원료의 목록 등을 유통·판매 전에 식품의약품안전처장에게 보고<br>• 책임판매관리자는 화장품 안전성 확보 및 품질관리 교육 매년 이수 의무 |",
   "source": "화장품법의 이해 (100제)",
   "answer": "4"
  },
@@ -1584,41 +1584,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L328 (출처: 과목1 문제은행 Q18)",
+  "citation": "📖 교재: L338 (출처: 과목1 문제은행 Q18)",
   "stem": "화장품법(법률)의 입법 목적으로 옳은 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_fa2031",
-    "conceptId": "L328",
+    "conceptId": "L338",
     "text": "국민 보건 향상과 화장품 산업의 발전에 기여",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "law_st_d2c58d",
-    "conceptId": "L328",
+    "conceptId": "L338",
     "text": "화장품의 수출 촉진과 수입 규제",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_b67fac",
-    "conceptId": "L328",
+    "conceptId": "L338",
     "text": "화장품 원료의 안전성 확보와 환경 보호",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_e256cb",
-    "conceptId": "L328",
+    "conceptId": "L338",
     "text": "화장품 가격 안정과 소비자 권익 보호",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_dd57a0",
-    "conceptId": "L328",
+    "conceptId": "L338",
     "text": "화장품 기술 개발과 국제 표준화",
     "truth": false
    }
@@ -1665,7 +1665,7 @@ var COMBO_DRILLS_subject1 = [
    "정답판정"
   ],
   "derivedFrom": "subject1_q18",
-  "explain": "📖 교재 근거 (교재: L328):\n| 「화장품법」(법률) 🎯 기출 | 화장품의 제조·수입·판매 및 수출 등에 관한 사항을 규정함으로써 국민 보건 향상과 화장품 산업의 발전에 기여함을 목적으로 함 |",
+  "explain": "📖 교재 근거 (교재: L338):\n| 「화장품법」(법률) 🎯 기출 | 화장품의 제조·수입·판매 및 수출 등에 관한 사항을 규정함으로써 국민 보건 향상과 화장품 산업의 발전에 기여함을 목적으로 함 |",
   "source": "화장품법의 이해 (100제)",
   "answer": "4"
  },
@@ -1674,41 +1674,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L510 (출처: 과목1 문제은행 Q19)",
+  "citation": "📖 교재: L531 (출처: 과목1 문제은행 Q19)",
   "stem": "다음 중 맞춤형화장품판매업 신고를 변경해야 하는 사유(변경신고 대상)가 아닌 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_e5c82d",
-    "conceptId": "L510",
+    "conceptId": "L531",
     "text": "맞춤형화장품판매업소의 상호 변경",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_2f4400",
-    "conceptId": "L510",
+    "conceptId": "L531",
     "text": "맞춤형화장품판매업소의 소재지 변경",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_d0910b",
-    "conceptId": "L510",
+    "conceptId": "L531",
     "text": "맞춤형화장품 조제관리사의 변경",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_70aeb3",
-    "conceptId": "L510",
+    "conceptId": "L531",
     "text": "판매업소의 단순 종업원의 변경",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "law_st_77a994",
-    "conceptId": "L510",
+    "conceptId": "L531",
     "text": "맞춤형화장품판매업자의 변경 (대표자 변경)",
     "truth": false
    }
@@ -1758,7 +1758,7 @@ var COMBO_DRILLS_subject1 = [
    "절차"
   ],
   "derivedFrom": "subject1_q19",
-  "explain": "📖 교재 근거 (교재: L510):\n| 맞춤형화장품 판매업 신고 | 신고 | • 신고서<br>• 맞춤형화장품조제관리사 자격증 사본과 시설명세서<br>• 등기사항증명서(법인의 경우)<br>\\* 맞춤형화장품조제관리사가 2명 이상의 경우: 대표 1명만 제출 가능하며 매년 교육 이수 필수<br>\\* 맞춤형화장품판매업을 신고하려는 자는 총리령으로 정하는 시설기준을 갖추어야 하며, 맞춤형화장품의 혼합·소분 등 품질·안전 관리 업무에 종사하는 자(맞춤형화장품조제관리사)를 두어야 함 |",
+  "explain": "📖 교재 근거 (교재: L531):\n| 맞춤형화장품 판매업 신고 | 신고 | • 신고서<br>• 맞춤형화장품조제관리사 자격증 사본과 시설명세서<br>• 등기사항증명서(법인의 경우)<br>\\* 맞춤형화장품조제관리사가 2명 이상의 경우: 대표 1명만 제출 가능하며 매년 교육 이수 필수<br>\\* 맞춤형화장품판매업을 신고하려는 자는 총리령으로 정하는 시설기준을 갖추어야 하며, 맞춤형화장품의 혼합·소분 등 품질·안전 관리 업무에 종사하는 자(맞춤형화장품조제관리사)를 두어야 함 |",
   "source": "화장품법의 이해 (100제)",
   "answer": "3"
  },
@@ -1767,41 +1767,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L969 (출처: 과목1 문제은행 Q20)",
+  "citation": "📖 교재: L1021 (출처: 과목1 문제은행 Q20)",
   "stem": "다음 중 화장품책임판매업 등록을 변경하려는 경우, 변경 사항이 발생한 날부터 몇 일 이내에 변경등록을 신청해야 하는가? (단, 대표자 성명 변경 기준) — 해당하는 것을 모두 고르시오.",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_341e12",
-    "conceptId": "L969",
+    "conceptId": "L1021",
     "text": "7일 이내",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_71cd41",
-    "conceptId": "L969",
+    "conceptId": "L1021",
     "text": "15일 이내",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_66ae6a",
-    "conceptId": "L969",
+    "conceptId": "L1021",
     "text": "60일 이내",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_017984",
-    "conceptId": "L969",
+    "conceptId": "L1021",
     "text": "30일 이내",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "law_st_5be459",
-    "conceptId": "L969",
+    "conceptId": "L1021",
     "text": "90일 이내",
     "truth": false
    }
@@ -1851,7 +1851,7 @@ var COMBO_DRILLS_subject1 = [
    "수치"
   ],
   "derivedFrom": "subject1_q20",
-  "explain": "📖 교재 근거 (교재: L969):\n| 3년 이하 징역 또는 3천만 원 이하 벌금 (징역형과 벌금형 함께 부과 가능) | • 화장품제조업 또는 화장품책임판매업에 필요한 등록과 변경사항 등록을 위반한 자<br>• 맞춤형화장품판매업에 필요한 신고와 변경사항 신고를 위반한 자<br>• 맞춤형화장품조제관리사를 두지 않은 맞춤형화장품판매업자<br>• 기능성화장품에 대한 심사나 보고서 제출, 이에 대한 변경을 위반한 자<br>• 영업금지 조항을 위반한 자<br>• 등록하지 않은 자가 제조한 화장품 또는 제조·수입하여 유통·판매한 자<br>• 화장품 포장 및 기재·표시사항을 훼손(맞춤형화장품 판매를 위하여 필요한 경우 제외), 위·변조한 자 |",
+  "explain": "📖 교재 근거 (교재: L1021):\n| 3년 이하 징역 또는 3천만 원 이하 벌금 (징역형과 벌금형 함께 부과 가능) | • 화장품제조업 또는 화장품책임판매업에 필요한 등록과 변경사항 등록을 위반한 자<br>• 맞춤형화장품판매업에 필요한 신고와 변경사항 신고를 위반한 자<br>• 맞춤형화장품조제관리사를 두지 않은 맞춤형화장품판매업자<br>• 기능성화장품에 대한 심사나 보고서 제출, 이에 대한 변경을 위반한 자<br>• 영업금지 조항을 위반한 자<br>• 등록하지 않은 자가 제조한 화장품 또는 제조·수입하여 유통·판매한 자<br>• 화장품 포장 및 기재·표시사항을 훼손(맞춤형화장품 판매를 위하여 필요한 경우 제외), 위·변조한 자 |",
   "source": "화장품법의 이해 (100제)",
   "answer": "2"
  },
@@ -2051,41 +2051,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L432 (출처: 과목1 문제은행 Q23)",
+  "citation": "📖 교재: L451 (출처: 과목1 문제은행 Q23)",
   "stem": "다음 중 화장품 포장에 표시할 수 없는 문구에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_9438d9",
-    "conceptId": "L432",
+    "conceptId": "L451",
     "text": "'피부 무자극 테스트 완료' (실증자료 보유 시)",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_d0ffa6",
-    "conceptId": "L432",
+    "conceptId": "L451",
     "text": "'환경 친화적 용기 사용'",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_59e98b",
-    "conceptId": "L432",
+    "conceptId": "L451",
     "text": "'피부 장벽 개선 도움' (기능성화장품 심사 완료 시)",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_62d3de",
-    "conceptId": "L432",
+    "conceptId": "L451",
     "text": "'유기농 원료 10% 함유' (기준 준수 시)",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_3ac633",
-    "conceptId": "L432",
+    "conceptId": "L451",
     "text": "'아토피 피부염 치료제'",
     "truth": true
    }
@@ -2135,7 +2135,7 @@ var COMBO_DRILLS_subject1 = [
    "수치"
   ],
   "derivedFrom": "subject1_q23",
-  "explain": "📖 교재 근거 (교재: L432):\n| 화장품 제조업 | 화장품의 전부 또는 일부를 제조(2차 포장 또는 표시만의 공정은 제외)하는 영업<br>• 화장품을 직접 제조하는 영업<br>• 화장품 제조를 위탁받아 제조하는 영업<br>• 화장품을 포장(1차 포장만 해당)하는 영업 |",
+  "explain": "📖 교재 근거 (교재: L451):\n| 화장품 제조업 | 화장품의 전부 또는 일부를 제조(2차 포장 또는 표시만의 공정은 제외)하는 영업<br>• 화장품을 직접 제조하는 영업<br>• 화장품 제조를 위탁받아 제조하는 영업<br>• 화장품을 포장(1차 포장만 해당)하는 영업 |",
   "source": "화장품법의 이해 (100제)",
   "answer": "2"
  },
@@ -2144,41 +2144,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L508 (출처: 과목1 문제은행 Q24)",
+  "citation": "📖 교재: L529 (출처: 과목1 문제은행 Q24)",
   "stem": "다음 중 화장품 제조업 등록을 할 수 있는 결격 사유 중 '정신질환자'에 해당하는 사람에 대한 처리 규정으로 올바른 것은?으로 옳은 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_f15a6d",
-    "conceptId": "L508",
+    "conceptId": "L529",
     "text": "전문의가 제조업자로서 적합하다고 인정하는 사람은 제외한다.",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "law_st_c7278d",
-    "conceptId": "L508",
+    "conceptId": "L529",
     "text": "어떠한 경우에도 등록이 불가하다.",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_176e49",
-    "conceptId": "L508",
+    "conceptId": "L529",
     "text": "3년 동안만 등록이 유예된다.",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_3558da",
-    "conceptId": "L508",
+    "conceptId": "L529",
     "text": "보호자의 동의서를 제출하면 허용된다.",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_688651",
-    "conceptId": "L508",
+    "conceptId": "L529",
     "text": "법원의 성년후견 개시 심판이 있으면 예외로 한다.",
     "truth": false
    }
@@ -2225,7 +2225,7 @@ var COMBO_DRILLS_subject1 = [
    "수치"
   ],
   "derivedFrom": "subject1_q24",
-  "explain": "📖 교재 근거 (교재: L508):\n| 화장품 제조업 등록 | 등록 | • 등록신청서<br>• 대표자의 건강진단서(정신질환자, 마약류의 중독자가 아님을 증명)<br>• 등기사항증명서(법인의 경우)<br>• 시설명세서 |",
+  "explain": "📖 교재 근거 (교재: L529):\n| 화장품 제조업 등록 | 등록 | • 등록신청서<br>• 대표자의 건강진단서(정신질환자, 마약류의 중독자가 아님을 증명)<br>• 등기사항증명서(법인의 경우)<br>• 시설명세서 |",
   "source": "화장품법의 이해 (100제)",
   "answer": "3"
  },
@@ -2234,41 +2234,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L741 (출처: 과목1 문제은행 Q25)",
+  "citation": "📖 교재: L779 (출처: 과목1 문제은행 Q25)",
   "stem": "다음 중 맞춤형화장품판매업소에서 소분하여 판매할 수 없는 화장품 유형에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_bc6b1d",
-    "conceptId": "L741",
+    "conceptId": "L779",
     "text": "스킨, 로션 등 기초화장용 제품류",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_728645",
-    "conceptId": "L741",
+    "conceptId": "L779",
     "text": "샴푸, 린스 등 두발용 제품류",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_460b74",
-    "conceptId": "L741",
+    "conceptId": "L779",
     "text": "수입 화장품 중 수입 신고가 완료된 내용물",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_f1c409",
-    "conceptId": "L741",
+    "conceptId": "L779",
     "text": "기능성화장품 (자외선 차단제 등 완제품 형태로 판매업소에 입고된 경우)",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_22dcd9",
-    "conceptId": "L741",
+    "conceptId": "L779",
     "text": "고형 비누 등 단순 세정용 제품류 (단, 화장품법상 맞춤형화장품 소분 대상에서 단순 고형비누 소분은 제외됨)",
     "truth": true
    }
@@ -2318,7 +2318,7 @@ var COMBO_DRILLS_subject1 = [
    "절차"
   ],
   "derivedFrom": "subject1_q25",
-  "explain": "📖 교재 근거 (교재: L741):\n| 맞춤형화장품판매업 | 신고 | • 맞춤형화장품판매업자의 변경(법인은 대표자 변경)<br>• 맞춤형화장품판매업소의 상호 변경(법인은 법인 명칭 변경)<br>• 맞춤형화장품판매업소의 소재지 변경<br>• 맞춤형화장품조제관리사의 변경 |",
+  "explain": "📖 교재 근거 (교재: L779):\n| 맞춤형화장품판매업 | 신고 | • 맞춤형화장품판매업자의 변경(법인은 대표자 변경)<br>• 맞춤형화장품판매업소의 상호 변경(법인은 법인 명칭 변경)<br>• 맞춤형화장품판매업소의 소재지 변경<br>• 맞춤형화장품조제관리사의 변경 |",
   "source": "화장품법의 이해 (100제)",
   "answer": "5"
  },
@@ -2420,41 +2420,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L970 (출처: 과목1 문제은행 Q27)",
+  "citation": "📖 교재: L964 (출처: 과목1 문제은행 Q27)",
   "stem": "다음 중 전성분 표시 생략 용기(10g 또는 10mL 이하)라 하더라도 소비자의 안전을 위해 반드시 표시해야 하는 성분이 아닌 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_4083c0",
-    "conceptId": "L970",
+    "conceptId": "L964",
     "text": "타르색소",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_651ebb",
-    "conceptId": "L970",
+    "conceptId": "L964",
     "text": "금박",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_f71ccc",
-    "conceptId": "L970",
+    "conceptId": "L964",
     "text": "보존제 성분",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_111a9d",
-    "conceptId": "L970",
+    "conceptId": "L964",
     "text": "향료 중 알레르기 유발 성분 (식약처 지정 25종)",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_44c923",
-    "conceptId": "L970",
+    "conceptId": "L964",
     "text": "정제수",
     "truth": true
    }
@@ -2505,7 +2505,7 @@ var COMBO_DRILLS_subject1 = [
    "수치"
   ],
   "derivedFrom": "subject1_q27",
-  "explain": "📖 교재 근거 (교재: L970):\n| 1년 이하 징역 또는 1천만 원 이하 벌금 (징역형과 벌금형 함께 부과 가능) | • 영유아 또는 어린이 사용 화장품임을 표시·광고하기 위한 안전과 품질 입증 자료 작성·보관을 위반한 자<br>• 안전용기·포장의 기준을 위반한 자<br>• 의약품으로 잘못 인식할 수 있게 표시 또는 광고를 한 자<br>• 기능성화장품으로 잘못 인식할 수 있거나 안전성·유효성 심사 결과와 다른 내용의 표시·광고를 한 자<br>• 소비자를 속이거나 소비자가 잘못 인식하도록 할 우려가 있는 표시·광고를 하거나 판매한 자<br>• 화장품의 기재사항, 가격표시, 기재·표시상의 주의를 위반한 화장품 또는 의약품으로 잘못 인식할 수 있게 기재·표시된 화장품을 판매한 자<br>• 판매 목적이 아닌 제품의 홍보·판매 촉진 등을 위해 미리...",
+  "explain": "📖 교재 근거 (교재: L964):\n| 1년 이하 징역 또는 1천만 원 이하 벌금 (징역형과 벌금형 함께 부과 가능) | • 영유아 또는 어린이 사용 화장품임을 표시·광고하기 위한 안전과 품질 입증 자료 작성·보관을 위반한 자<br>• 안전용기·포장의 기준을 위반한 자<br>• 의약품으로 잘못 인식할 수 있게 표시 또는 광고를 한 자<br>• 기능성화장품으로 잘못 인식할 수 있거나 안전성·유효성 심사 결과와 다른 내용의 표시·광고를 한 자<br>• 소비자를 속이거나 소비자가 잘못 인식하도록 할 우려가 있는 표시·광고를 하거나 판매한 자<br>• 화장품의 기재사항, 가격표시, 기재·표시상의 주의를 위반한 화장품 또는 의약품으로 잘못 인식할 수 있게 기재·표시된 화장품을 판매한 자<br>• 판매 목적이 아닌 제품의 홍보·판매 촉진 등을 위해 미리...",
   "source": "화장품법의 이해 (100제)",
   "answer": "2"
  },
@@ -2514,41 +2514,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L971 (출처: 과목1 문제은행 Q28)",
+  "citation": "📖 교재: L1023 (출처: 과목1 문제은행 Q28)",
   "stem": "다음 중 화장품 가격 표시제(판매가격 표시)의 의무 수행 주체로 옳은 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_87bcf0",
-    "conceptId": "L971",
+    "conceptId": "L1023",
     "text": "화장품제조업자",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_9abec3",
-    "conceptId": "L971",
+    "conceptId": "L1023",
     "text": "소비자에게 화장품을 직접 판매하는 판매업자 (소매업자, 맞춤형화장품판매업자 등)",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "law_st_90d3ae",
-    "conceptId": "L971",
+    "conceptId": "L1023",
     "text": "화장품책임판매업자",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_6f5d0c",
-    "conceptId": "L971",
+    "conceptId": "L1023",
     "text": "대한화장품협회",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_1f8ab5",
-    "conceptId": "L971",
+    "conceptId": "L1023",
     "text": "식품의약품안전처",
     "truth": false
    }
@@ -2597,7 +2597,7 @@ var COMBO_DRILLS_subject1 = [
    "정답판정"
   ],
   "derivedFrom": "subject1_q28",
-  "explain": "📖 교재 근거 (교재: L971):\n| 200만 원 이하 벌금 | • 영업자의 의무사항을 위반한 자<br>• 위해화장품의 회수 및 회수 계획 보고를 위반한 자<br>• 1, 2차 포장에 기재해야 되는 사항을 위반한 자(가격표시는 제외)<br>• 식품의약품안전처장이 인정한 보고와 검사, 시정명령, 검사명령, 개수명령, 회수·폐기명령을 위반하거나 관계 공무원의 검사·수거 또는 처분을 거부·방해하거나 기피한 자 |",
+  "explain": "📖 교재 근거 (교재: L1023):\n| 200만 원 이하 벌금 | • 영업자의 의무사항을 위반한 자<br>• 위해화장품의 회수 및 회수 계획 보고를 위반한 자<br>• 1, 2차 포장에 기재해야 되는 사항을 위반한 자(가격표시는 제외)<br>• 식품의약품안전처장이 인정한 보고와 검사, 시정명령, 검사명령, 개수명령, 회수·폐기명령을 위반하거나 관계 공무원의 검사·수거 또는 처분을 거부·방해하거나 기피한 자 |",
   "source": "화장품법의 이해 (100제)",
   "answer": "3"
  },
@@ -2703,41 +2703,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L594 (출처: 과목1 문제은행 Q30)",
+  "citation": "📖 교재: L623 (출처: 과목1 문제은행 Q30)",
   "stem": "다음 중 화장품책임판매업자가 폐업 또는 휴업을 하려는 경우, 폐업/휴업 신고 기한으로 옳은 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_175fd0",
-    "conceptId": "L594",
+    "conceptId": "L623",
     "text": "폐업 또는 휴업을 한 날부터 7일 이내",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_470cb1",
-    "conceptId": "L594",
+    "conceptId": "L623",
     "text": "폐업 또는 휴업을 한 날부터 30일 이내",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "law_st_e1cd6a",
-    "conceptId": "L594",
+    "conceptId": "L623",
     "text": "폐업 또는 휴업을 한 날부터 15일 이내",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_12fccb",
-    "conceptId": "L594",
+    "conceptId": "L623",
     "text": "폐업 또는 휴업을 하기 1개월 전",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_0839a3",
-    "conceptId": "L594",
+    "conceptId": "L623",
     "text": "폐업 또는 휴업을 한 날로부터 즉시",
     "truth": false
    }
@@ -2788,7 +2788,7 @@ var COMBO_DRILLS_subject1 = [
    "수치"
   ],
   "derivedFrom": "subject1_q30",
-  "explain": "📖 교재 근거 (교재: L594):\n| 시장출하 | 화장품책임판매업자가 제조(타인에게 위탁 제조 또는 검사하는 경우 포함, 타인으로부터 수탁 제조 또는 검사하는 것은 비포함)하거나 수입한 화장품의 판매를 위해 출하하는 것 |",
+  "explain": "📖 교재 근거 (교재: L623):\n| 시장출하 | 화장품책임판매업자가 제조(타인에게 위탁 제조 또는 검사하는 경우 포함, 타인으로부터 수탁 제조 또는 검사하는 것은 비포함)하거나 수입한 화장품의 판매를 위해 출하하는 것 |",
   "source": "화장품법의 이해 (100제)",
   "answer": "5"
  },
@@ -2803,35 +2803,35 @@ var COMBO_DRILLS_subject1 = [
    {
     "id": "ㄱ",
     "sid": "law_st_6885cc",
-    "conceptId": "L458",
+    "conceptId": "L477",
     "text": "등록신청서",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_3c9b4e",
-    "conceptId": "L458",
+    "conceptId": "L477",
     "text": "등기사항증명서(법인의 경우)",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_89eafe",
-    "conceptId": "L458",
+    "conceptId": "L477",
     "text": "책임판매관리자의 자격 확인 서류",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_4848df",
-    "conceptId": "L458",
+    "conceptId": "L477",
     "text": "화장품의 품질관리 및 책임판매 후 안전관리에 적합한 기준에 관한 규정",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_75c507",
-    "conceptId": "L458",
+    "conceptId": "L477",
     "text": "대표자의 건강진단서",
     "truth": true
    }
@@ -2878,7 +2878,7 @@ var COMBO_DRILLS_subject1 = [
    "절차"
   ],
   "derivedFrom": "subject1_q31",
-  "explain": "📖 교재 근거 (L458):\n### 2. 영업 등록 및 신고 🎯 기출\n> 해설: 대표자의 건강진단서는 화장품제조업 등록 시에만 필요한 서류이다.",
+  "explain": "📖 교재 근거 (L477):\n### 2. 영업 등록 및 신고 🎯 기출\n> 해설: 대표자의 건강진단서는 화장품제조업 등록 시에만 필요한 서류이다.",
   "source": "화장품법의 이해 (100제)",
   "answer": "3"
  },
@@ -2887,41 +2887,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L720 (출처: 과목1 문제은행 Q32)",
+  "citation": "📖 교재: L756 (출처: 과목1 문제은행 Q32)",
   "stem": "다음 중 화장품 유통 시 한글로 표시된 라벨을 덮어씌우는 등의 방법으로 기재사항을 훼손하여 판매한 자에 대한 행정처분 기준으로 옳은 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_e03165",
-    "conceptId": "L720",
+    "conceptId": "L756",
     "text": "1차 위반 시: 판매업무정지 1개월",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "law_st_b64bdc",
-    "conceptId": "L720",
+    "conceptId": "L756",
     "text": "1차 위반 시: 판매업무정지 15일",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_5743c1",
-    "conceptId": "L720",
+    "conceptId": "L756",
     "text": "1차 위반 시: 시정명령",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_b8c64d",
-    "conceptId": "L720",
+    "conceptId": "L756",
     "text": "1차 위반 시: 판매업무정지 3개월",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_1f40c1",
-    "conceptId": "L720",
+    "conceptId": "L756",
     "text": "1차 위반 시: 등록 취소",
     "truth": false
    }
@@ -2973,7 +2973,7 @@ var COMBO_DRILLS_subject1 = [
    "수치"
   ],
   "derivedFrom": "subject1_q32",
-  "explain": "📖 교재 근거 (교재: L720):\n| 맞춤형화장품판매업자 | • 소비자에게 유통·판매되는 화장품을 임의로 혼합·소분하여서는 안 됨<br>• 맞춤형화장품에 사용된 모든 원료의 목록을 매년 1회 식품의약품안전처장에게 보고해야 함<br>• 판매장 시설·기구의 관리 방법, 혼합·소분 안전관리 기준의 준수 의무, 혼합·소분되는 내용물 및 원료에 대한 설명 의무, 안전성 관련 사항 보고 의무에 관한 사항 준수<br>• 맞춤형화장품조제관리사는 화장품 안전성 확보 및 품질관리 교육 매년 이수 의무 |",
+  "explain": "📖 교재 근거 (교재: L756):\n| 맞춤형화장품판매업자 | • 소비자에게 유통·판매되는 화장품을 임의로 혼합·소분하여서는 안 됨<br>• 맞춤형화장품에 사용된 모든 원료의 목록을 매년 1회 식품의약품안전처장에게 보고해야 함<br>• 판매장 시설·기구의 관리 방법, 혼합·소분 안전관리 기준의 준수 의무, 혼합·소분되는 내용물 및 원료에 대한 설명 의무, 안전성 관련 사항 보고 의무에 관한 사항 준수<br>• 맞춤형화장품조제관리사는 화장품 안전성 확보 및 품질관리 교육 매년 이수 의무 |",
   "source": "화장품법의 이해 (100제)",
   "answer": "4"
  },
@@ -2988,35 +2988,35 @@ var COMBO_DRILLS_subject1 = [
    {
     "id": "ㄱ",
     "sid": "law_st_2d48cc",
-    "conceptId": "L3380",
+    "conceptId": "L3470",
     "text": "1년 이하의 징역 또는 1천만 원 이하의 벌금",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_c7cc71",
-    "conceptId": "L3380",
+    "conceptId": "L3470",
     "text": "500만 원 이하의 과태료",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_b580a1",
-    "conceptId": "L3380",
+    "conceptId": "L3470",
     "text": "5년 이하의 징역 또는 5천만 원 이하의 벌금",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_7b84f0",
-    "conceptId": "L3380",
+    "conceptId": "L3470",
     "text": "300만 원 이하의 벌금",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_41a077",
-    "conceptId": "L3380",
+    "conceptId": "L3470",
     "text": "3년 이하의 징역 또는 3천만 원 이하의 벌금",
     "truth": true
    }
@@ -3067,7 +3067,7 @@ var COMBO_DRILLS_subject1 = [
    "수치"
   ],
   "derivedFrom": "subject1_q33",
-  "explain": "📖 교재 근거 (L3380):\n| 위해화장품 회수 미이행 처벌 | 위해화장품의 회수 등 필요한 조치를 하지 아니한 자는 3년 이하의 징역 또는 3천만 원 이하의 벌금에 처한다. |",
+  "explain": "📖 교재 근거 (L3470):\n| 위해화장품 회수 미이행 처벌 | 위해화장품의 회수 등 필요한 조치를 하지 아니한 자는 3년 이하의 징역 또는 3천만 원 이하의 벌금에 처한다. |",
   "source": "화장품법의 이해 (100제)",
   "answer": "2"
  },
@@ -3263,41 +3263,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L719 (출처: 과목1 문제은행 Q36)",
+  "citation": "📖 교재: L755 (출처: 과목1 문제은행 Q36)",
   "stem": "다음 중 화장품책임판매업자가 생산실적 또는 수입실적을 보고해야 하는 보고 주기 및 제출 처로 옳은 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_c91e15",
-    "conceptId": "L719",
+    "conceptId": "L755",
     "text": "매 분기 종료 후 15일 이내, 지방식약청장에게 제출",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_72d465",
-    "conceptId": "L719",
+    "conceptId": "L755",
     "text": "매 반기 종료 후 30일 이내, 한국의약품수출입협회에 제출",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_f4fcb8",
-    "conceptId": "L719",
+    "conceptId": "L755",
     "text": "매년 2월 말까지 전년도 실적을 대한화장품협회에 보고",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "law_st_bf3a4a",
-    "conceptId": "L719",
+    "conceptId": "L755",
     "text": "매년 1월 말까지 전년도 실적을 대한화장품협회에 보고",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_f597c8",
-    "conceptId": "L719",
+    "conceptId": "L755",
     "text": "매월 말일까지 전월 실적을 지방식약청장에게 보고",
     "truth": false
    }
@@ -3344,7 +3344,7 @@ var COMBO_DRILLS_subject1 = [
    "수치"
   ],
   "derivedFrom": "subject1_q36",
-  "explain": "📖 교재 근거 (교재: L719):\n| 화장품책임판매업자 | • 품질관리 기준, 책임판매 후 안전관리 기준, 품질검사 방법 및 실시 의무, 안전성·유효성 관련 정보사항 등의 보고 및 안전대책 마련 의무에 관한 사항 준수<br>• 지난해의 생산실적 또는 수입실적, 화장품의 제조 과정에 사용된 원료의 목록 등을 유통·판매 전에 식품의약품안전처장에게 보고<br>• 책임판매관리자는 화장품 안전성 확보 및 품질관리 교육 매년 이수 의무 |",
+  "explain": "📖 교재 근거 (교재: L755):\n| 화장품책임판매업자 | • 품질관리 기준, 책임판매 후 안전관리 기준, 품질검사 방법 및 실시 의무, 안전성·유효성 관련 정보사항 등의 보고 및 안전대책 마련 의무에 관한 사항 준수<br>• 지난해의 생산실적 또는 수입실적, 화장품의 제조 과정에 사용된 원료의 목록 등을 유통·판매 전에 식품의약품안전처장에게 보고<br>• 책임판매관리자는 화장품 안전성 확보 및 품질관리 교육 매년 이수 의무 |",
   "source": "화장품법의 이해 (100제)",
   "answer": "1"
  },
@@ -3353,41 +3353,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L238 (출처: 과목1 문제은행 Q37)",
+  "citation": "📖 교재: L244 (출처: 과목1 문제은행 Q37)",
   "stem": "다음 중 화장품 포장 기재사항 중 '성분 명칭'을 표기할 때의 표준 지침으로 옳은 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_8db0ea",
-    "conceptId": "L238",
+    "conceptId": "L244",
     "text": "제조업자가 자체 개발한 임의의 영문 약어로 표기한다.",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_83d4d2",
-    "conceptId": "L238",
+    "conceptId": "L244",
     "text": "화학 결합 기호(H2O 등)로 기재한다.",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_231598",
-    "conceptId": "L238",
+    "conceptId": "L244",
     "text": "한자나 라틴어로만 기재해야 한다.",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_3264e8",
-    "conceptId": "L238",
+    "conceptId": "L244",
     "text": "식약처장이 고시하거나 대한화장품협회에서 발행한 화장품 성분 사전에 등록된 표준화된 한글 명칭으로 표기한다.",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "law_st_87e7c0",
-    "conceptId": "L238",
+    "conceptId": "L244",
     "text": "성분 표시를 생략하고 번호로 대체한다.",
     "truth": false
    }
@@ -3440,7 +3440,7 @@ var COMBO_DRILLS_subject1 = [
    "수치"
   ],
   "derivedFrom": "subject1_q37",
-  "explain": "📖 교재 근거 (교재: L238):\n> 안내\" --- 표시·기재사항, 기능성화장품 표시 의무",
+  "explain": "📖 교재 근거 (교재: L244):\n> 안내\" --- 표시·기재사항, 기능성화장품 표시 의무",
   "source": "화장품법의 이해 (100제)",
   "answer": "2"
  },
@@ -3449,41 +3449,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L720 (출처: 과목1 문제은행 Q38)",
+  "citation": "📖 교재: L756 (출처: 과목1 문제은행 Q38)",
   "stem": "다음 중 소비자의 피해 구제 및 분쟁 해결을 위한 화장품 반품/환불 기준의 기본 근거가 되는 법률에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_1897d6",
-    "conceptId": "L720",
+    "conceptId": "L756",
     "text": "소비자기본법 (및 소비자분쟁해결기준)",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "law_st_eeeca6",
-    "conceptId": "L720",
+    "conceptId": "L756",
     "text": "약사법",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_8b0376",
-    "conceptId": "L720",
+    "conceptId": "L756",
     "text": "화장품법",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_6d6438",
-    "conceptId": "L720",
+    "conceptId": "L756",
     "text": "민법",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_d50d21",
-    "conceptId": "L720",
+    "conceptId": "L756",
     "text": "독점규제 및 공정거래에 관한 법률",
     "truth": false
    }
@@ -3530,7 +3530,7 @@ var COMBO_DRILLS_subject1 = [
    "정답판정"
   ],
   "derivedFrom": "subject1_q38",
-  "explain": "📖 교재 근거 (교재: L720):\n| 맞춤형화장품판매업자 | • 소비자에게 유통·판매되는 화장품을 임의로 혼합·소분하여서는 안 됨<br>• 맞춤형화장품에 사용된 모든 원료의 목록을 매년 1회 식품의약품안전처장에게 보고해야 함<br>• 판매장 시설·기구의 관리 방법, 혼합·소분 안전관리 기준의 준수 의무, 혼합·소분되는 내용물 및 원료에 대한 설명 의무, 안전성 관련 사항 보고 의무에 관한 사항 준수<br>• 맞춤형화장품조제관리사는 화장품 안전성 확보 및 품질관리 교육 매년 이수 의무 |",
+  "explain": "📖 교재 근거 (교재: L756):\n| 맞춤형화장품판매업자 | • 소비자에게 유통·판매되는 화장품을 임의로 혼합·소분하여서는 안 됨<br>• 맞춤형화장품에 사용된 모든 원료의 목록을 매년 1회 식품의약품안전처장에게 보고해야 함<br>• 판매장 시설·기구의 관리 방법, 혼합·소분 안전관리 기준의 준수 의무, 혼합·소분되는 내용물 및 원료에 대한 설명 의무, 안전성 관련 사항 보고 의무에 관한 사항 준수<br>• 맞춤형화장품조제관리사는 화장품 안전성 확보 및 품질관리 교육 매년 이수 의무 |",
   "source": "화장품법의 이해 (100제)",
   "answer": "1"
  },
@@ -3634,35 +3634,35 @@ var COMBO_DRILLS_subject1 = [
    {
     "id": "ㄱ",
     "sid": "law_st_6a400a",
-    "conceptId": "L558",
+    "conceptId": "L572",
     "text": "제조 작업을 하는 시설을 갖춘 작업소",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_2d2185",
-    "conceptId": "L558",
+    "conceptId": "L572",
     "text": "원료·자재 및 제품을 보관하는 보관소",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_d72e67",
-    "conceptId": "L558",
+    "conceptId": "L572",
     "text": "원료·자재 및 제품의 품질검사를 위해 필요한 시험실",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_c66ff9",
-    "conceptId": "L558",
+    "conceptId": "L572",
     "text": "품질검사에 필요한 시설 및 기구",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_40b1d7",
-    "conceptId": "L558",
+    "conceptId": "L572",
     "text": "완제품을 직접 판매하는 매장",
     "truth": true
    }
@@ -3714,7 +3714,7 @@ var COMBO_DRILLS_subject1 = [
    "절차"
   ],
   "derivedFrom": "subject1_q40",
-  "explain": "📖 교재 근거 (L558):\n| (3) 화장품제조업의 등록을 위한 시설 기준 등 🎯 기출 | 제조 작업을 하는 시설을 갖춘 작업소(쥐·해충 및 먼지 등을 막을 수 있는 시설, 작업대 등 제조에 필요한 시설 및 기구, 가루 제거 시설) + 원료·자재 및 제품을 보관하는 보관소 + 품질검사를 위해 필요한 시험실 + 품질검사에 필요한 시설 및 기구 |\n> 해설: 화장품제조업 시설 기준에는 작업소, 보관소, 시험실이 포함되며, 완제품 매장은 포함되지 않는다.",
+  "explain": "📖 교재 근거 (L572):\n| (3) 화장품제조업의 등록을 위한 시설 기준 등 🎯 기출 | 제조 작업을 하는 시설을 갖춘 작업소(쥐·해충 및 먼지 등을 막을 수 있는 시설, 작업대 등 제조에 필요한 시설 및 기구, 가루 제거 시설) + 원료·자재 및 제품을 보관하는 보관소 + 품질검사를 위해 필요한 시험실 + 품질검사에 필요한 시설 및 기구 |\n> 해설: 화장품제조업 시설 기준에는 작업소, 보관소, 시험실이 포함되며, 완제품 매장은 포함되지 않는다.",
   "source": "화장품법의 이해 (100제)",
   "answer": "1"
  },
@@ -3723,41 +3723,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L1505 (출처: 과목1 문제은행 Q41)",
+  "citation": "📖 교재: L1578 (출처: 과목1 문제은행 Q41)",
   "stem": "화장품법상 기능성화장품의 심사를 받아야 하는 품목이 아닌 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_ca7c7a",
-    "conceptId": "L1505",
+    "conceptId": "L1578",
     "text": "미백 효과를 목적으로 하는 화장품",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_e19be4",
-    "conceptId": "L1505",
+    "conceptId": "L1578",
     "text": "주름개선 효과를 목적으로 하는 화장품",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_6704e4",
-    "conceptId": "L1505",
+    "conceptId": "L1578",
     "text": "색소 침착 완화 효과를 목적으로 하는 화장품",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "law_st_44f4f8",
-    "conceptId": "L1505",
+    "conceptId": "L1578",
     "text": "자외선 차단 효과를 목적으로 하는 화장품",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_12c682",
-    "conceptId": "L1505",
+    "conceptId": "L1578",
     "text": "염모 효과를 목적으로 하는 화장품",
     "truth": false
    }
@@ -3809,7 +3809,7 @@ var COMBO_DRILLS_subject1 = [
    "절차"
   ],
   "derivedFrom": "subject1_q41",
-  "explain": "📖 교재 근거 (교재: L1505):\n| 기능성화장품 | 총리령으로 정하는 11가지 효능·효과 --- 심사 또는 보고서 제출 필수 |",
+  "explain": "📖 교재 근거 (교재: L1578):\n| 기능성화장품 | 총리령으로 정하는 11가지 효능·효과 --- 심사 또는 보고서 제출 필수 |",
   "source": "화장품법의 이해 (100제)",
   "answer": "4"
  },
@@ -3908,41 +3908,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L627 (출처: 과목1 문제은행 Q43)",
+  "citation": "📖 교재: L656 (출처: 과목1 문제은행 Q43)",
   "stem": "다음 중 화장품 제조업·책임판매업·맞춤형화장품판매업 3종 영업 모두에 공통으로 적용되는 결격사유에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_24cc61",
-    "conceptId": "L627",
+    "conceptId": "L656",
     "text": "정신질환자",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_fb26af",
-    "conceptId": "L627",
+    "conceptId": "L656",
     "text": "마약류의 중독자",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_d827f1",
-    "conceptId": "L627",
+    "conceptId": "L656",
     "text": "피성년후견인 또는 파산선고를 받고 복권되지 않은 자",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "law_st_d7e688",
-    "conceptId": "L627",
+    "conceptId": "L656",
     "text": "제조업 등록취소 후 6개월이 지나지 않은 자",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_caef06",
-    "conceptId": "L627",
+    "conceptId": "L656",
     "text": "식품위생법 위반으로 벌금형을 받은 자",
     "truth": false
    }
@@ -3994,7 +3994,7 @@ var COMBO_DRILLS_subject1 = [
    "수치"
   ],
   "derivedFrom": "subject1_q43",
-  "explain": "📖 교재 근거 (교재: L627):\n### 5. 영업 등록 및 신고의 결격사유 🎯 기출\n> 해설: 정신질환자와 마약류 중독자는 화장품 제조업에만 적용되는 결격사유이며, 등록취소 후 재등록 제한 기간은 1년이다.",
+  "explain": "📖 교재 근거 (교재: L656):\n### 5. 영업 등록 및 신고의 결격사유 🎯 기출\n> 해설: 정신질환자와 마약류 중독자는 화장품 제조업에만 적용되는 결격사유이며, 등록취소 후 재등록 제한 기간은 1년이다.",
   "source": "화장품법의 이해 (100제)",
   "answer": "4"
  },
@@ -4003,41 +4003,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L980 (출처: 과목1 문제은행 Q44)",
+  "citation": "📖 교재: L1033 (출처: 과목1 문제은행 Q44)",
   "stem": "다음 중 화장품법상 영업자가 화장품을 회수해야 하는 사유로 옳지 않은 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_7c0259",
-    "conceptId": "L980",
+    "conceptId": "L1033",
     "text": "위해화장품으로 판명된 경우",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_a50197",
-    "conceptId": "L980",
+    "conceptId": "L1033",
     "text": "소비자의 기호 변화로 수요가 감소한 경우",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "law_st_1b4e4a",
-    "conceptId": "L980",
+    "conceptId": "L1033",
     "text": "유통기한이 경과한 경우",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_b9ca53",
-    "conceptId": "L980",
+    "conceptId": "L1033",
     "text": "표시·광고 기준에 위반하여 표시된 경우",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_321e69",
-    "conceptId": "L980",
+    "conceptId": "L1033",
     "text": "품질관리기준에 적합하지 아니한 경우",
     "truth": false
    }
@@ -4084,7 +4084,7 @@ var COMBO_DRILLS_subject1 = [
    "기한"
   ],
   "derivedFrom": "subject1_q44",
-  "explain": "📖 교재 근거 (교재: L980):\n| 50만 원 | • 화장품의 생산실적 또는 수입실적 또는 화장품 원료의 목록 등을 보고하지 않은 자<br>• 맞춤형화장품 원료의 목록을 보고하지 않은 자<br>• 책임판매관리자 및 맞춤형화장품조제관리사가 매년 화장품의 안전성 확보 및 품질관리에 관한 교육을 받지 않는 경우<br>• 식품의약품안전처장이 필요 시 영업자에게 화장품 관련 법령 및 제도에 관한 교육을 명할 시 그 명령을 위반한 자<br>• 폐업신고를 하지 않은 자<br>• 화장품의 판매가격을 표시하지 않은 자 |",
+  "explain": "📖 교재 근거 (교재: L1033):\n| 50만 원 | • 화장품의 생산실적 또는 수입실적 또는 화장품 원료의 목록 등을 보고하지 않은 자<br>• 맞춤형화장품 원료의 목록을 보고하지 않은 자<br>• 책임판매관리자 및 맞춤형화장품조제관리사가 매년 화장품의 안전성 확보 및 품질관리에 관한 교육을 받지 않는 경우<br>• 식품의약품안전처장이 필요 시 영업자에게 화장품 관련 법령 및 제도에 관한 교육을 명할 시 그 명령을 위반한 자<br>• 폐업신고를 하지 않은 자<br>• 화장품의 판매가격을 표시하지 않은 자 |",
   "source": "화장품법의 이해 (100제)",
   "answer": "2"
  },
@@ -4093,41 +4093,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L372 (출처: 과목1 문제은행 Q45)",
+  "citation": "📖 교재: L386 (출처: 과목1 문제은행 Q45)",
   "stem": "화장품법상 유기농화장품의 정의로 옳은 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_838008",
-    "conceptId": "L372",
+    "conceptId": "L386",
     "text": "유기농 원료를 50% 이상 함유한 화장품",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_ded206",
-    "conceptId": "L372",
+    "conceptId": "L386",
     "text": "천연(유래) 및 유기농(유래) 원료를 사용하고, 유기농(유래) 함량이 전체 제품에서 10% 이상이며, 천연(유래) 함량이 95% 이상으로 구성된 화장품",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "law_st_4a7837",
-    "conceptId": "L372",
+    "conceptId": "L386",
     "text": "모든 원료가 유기농 인증을 받은 화장품",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_78217b",
-    "conceptId": "L372",
+    "conceptId": "L386",
     "text": "유기농 원료를 사용하지 않은 화장품",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_beb4e2",
-    "conceptId": "L372",
+    "conceptId": "L386",
     "text": "ISO 22716 인증을 받은 유기농 화장품",
     "truth": false
    }
@@ -4178,7 +4178,7 @@ var COMBO_DRILLS_subject1 = [
    "정의"
   ],
   "derivedFrom": "subject1_q45",
-  "explain": "📖 교재 근거 (교재: L372):\n| 유기농화장품 🎯 기출 | 유기농 원료, 동식물, 미네랄, 미생물 및 그 유래 원료 등을 함유한 화장품으로, ISO 16128-1 가이드라인에 따라 정의된 천연(유래) 및 유기농(유래) 원료를 사용하고, ISO 16128-2 가이드라인에 따라 계산하였을 때 중량 기준으로 유기농(유래) 함량이 전체 제품에서 10% 이상이어야 하며, 유기농(유래) 함량을 포함한 천연(유래) 함량이 전체 제품에서 95% 이상으로 구성된 화장품 |",
+  "explain": "📖 교재 근거 (교재: L386):\n| 유기농화장품 🎯 기출 | 유기농 원료, 동식물, 미네랄, 미생물 및 그 유래 원료 등을 함유한 화장품으로, ISO 16128-1 가이드라인에 따라 정의된 천연(유래) 및 유기농(유래) 원료를 사용하고, ISO 16128-2 가이드라인에 따라 계산하였을 때 중량 기준으로 유기농(유래) 함량이 전체 제품에서 10% 이상이어야 하며, 유기농(유래) 함량을 포함한 천연(유래) 함량이 전체 제품에서 95% 이상으로 구성된 화장품 |",
   "source": "화장품법의 이해 (100제)",
   "answer": "3"
  },
@@ -4187,41 +4187,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L345 (출처: 과목1 문제은행 Q46)",
+  "citation": "📖 교재: L359 (출처: 과목1 문제은행 Q46)",
   "stem": "다음 중 화장품법상 「기능성화장품」에 대한 설명으로 옳은 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_0ded67",
-    "conceptId": "L345",
+    "conceptId": "L359",
     "text": "기능성화장품은 일반화장품과 동일한 기준으로 관리된다",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_19c118",
-    "conceptId": "L345",
+    "conceptId": "L359",
     "text": "기능성화장품은 총리령으로 정하는 화장품을 말한다",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "law_st_fb8630",
-    "conceptId": "L345",
+    "conceptId": "L359",
     "text": "기능성화장품은 의약품으로 분류된다",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_24dfc1",
-    "conceptId": "L345",
+    "conceptId": "L359",
     "text": "기능성화장품은 인체에 대한 작용이 경미하지 않아도 된다",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_33988a",
-    "conceptId": "L345",
+    "conceptId": "L359",
     "text": "기능성화장품은 모든 화장품을 포함한다",
     "truth": false
    }
@@ -4267,7 +4267,7 @@ var COMBO_DRILLS_subject1 = [
    "구성비"
   ],
   "derivedFrom": "subject1_q46",
-  "explain": "📖 교재 근거 (교재: L345):\n| 기능성화장품 🎯 기출 | 화장품 중에서 다음 어느 하나에 해당되는 것으로서 총리령으로 정하는 화장품을 말함 |\n해설: 기능성화장품은 화장품 중에서 총리령으로 정하는 특정 효능·효과를 가진 화장품을 말한다.",
+  "explain": "📖 교재 근거 (교재: L359):\n| 기능성화장품 🎯 기출 | 화장품 중에서 다음 어느 하나에 해당되는 것으로서 총리령으로 정하는 화장품을 말함 |\n해설: 기능성화장품은 화장품 중에서 총리령으로 정하는 특정 효능·효과를 가진 화장품을 말한다.",
   "source": "화장품법의 이해 (100제)",
   "answer": "3"
  },
@@ -4282,35 +4282,35 @@ var COMBO_DRILLS_subject1 = [
    {
     "id": "ㄱ",
     "sid": "law_st_6f532a",
-    "conceptId": "L610",
+    "conceptId": "L639",
     "text": "책임판매관리자를 두어야 한다",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "law_st_ed23e5",
-    "conceptId": "L610",
+    "conceptId": "L639",
     "text": "안전관리 정보를 수집·기록해야 한다",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "law_st_ad2521",
-    "conceptId": "L610",
+    "conceptId": "L639",
     "text": "안전확보 조치계획을 화장품책임판매업자에게 문서로 보고해야 한다",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "law_st_85553e",
-    "conceptId": "L610",
+    "conceptId": "L639",
     "text": "안전관리 정보의 검토 결과 조치가 필요한 경우 회수, 폐기 등의 조치를 취해야 한다",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "law_st_0357e4",
-    "conceptId": "L610",
+    "conceptId": "L639",
     "text": "안전관리 기준은 자율적으로 설정하므로 보고 의무가 없다",
     "truth": false
    }
@@ -4360,7 +4360,7 @@ var COMBO_DRILLS_subject1 = [
    "절차"
   ],
   "derivedFrom": "subject1_q47",
-  "explain": "📖 교재 근거 (L610):\n#### 안전관리 기준 🎯 기출\n해설: 화장품책임판매업자는 책임판매관리자를 두어 안전관리 정보를 수집·기록하고, 안전확보 조치를 문서로 보고해야 한다. 보고 의무가 없다는 것은 옳지 않다.",
+  "explain": "📖 교재 근거 (L639):\n#### 안전관리 기준 🎯 기출\n해설: 화장품책임판매업자는 책임판매관리자를 두어 안전관리 정보를 수집·기록하고, 안전확보 조치를 문서로 보고해야 한다. 보고 의무가 없다는 것은 옳지 않다.",
   "source": "화장품법의 이해 (100제)",
   "answer": "3"
  },
@@ -4369,41 +4369,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L535 (출처: 과목1 문제은행 Q48)",
+  "citation": "📖 교재: L556 (출처: 과목1 문제은행 Q48)",
   "stem": "화장품법상 맞춤형화장품판매업자가 준수해야 할 사항이 아닌 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_4515c3",
-    "conceptId": "L535",
+    "conceptId": "L556",
     "text": "맞춤형화장품 조제관리사를 판매업소마다 1명 이상 배치할 것",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_c0efd0",
-    "conceptId": "L535",
+    "conceptId": "L556",
     "text": "조제에 사용하는 원료의 품질관리를 실시할 것",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_606a73",
-    "conceptId": "L535",
+    "conceptId": "L556",
     "text": "조제 완료된 제품의 품질검사를 매 회 실시할 것",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "law_st_c6a691",
-    "conceptId": "L535",
+    "conceptId": "L556",
     "text": "조제에 사용하는 기구의 위생관리를 실시할 것",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_1d472f",
-    "conceptId": "L535",
+    "conceptId": "L556",
     "text": "조제 기록을 작성하여 보존할 것",
     "truth": false
    }
@@ -4452,7 +4452,7 @@ var COMBO_DRILLS_subject1 = [
    "수치"
   ],
   "derivedFrom": "subject1_q48",
-  "explain": "📖 교재 근거 (교재: L535):\n> 참고: 맞춤형화장품판매업자가 맞춤형화장품조제관리사 자격시험에",
+  "explain": "📖 교재 근거 (교재: L556):\n> 참고: 맞춤형화장품판매업자가 맞춤형화장품조제관리사 자격시험에",
   "source": "화장품법의 이해 (100제)",
   "answer": "1"
  },
@@ -4461,41 +4461,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L980 (출처: 과목1 문제은행 Q49)",
+  "citation": "📖 교재: L1033 (출처: 과목1 문제은행 Q49)",
   "stem": "화장품법상 조제관리사의 직무에 해당하지 않는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_30768a",
-    "conceptId": "L980",
+    "conceptId": "L1033",
     "text": "맞춤형화장품의 혼합·소분 업무",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_aaf041",
-    "conceptId": "L980",
+    "conceptId": "L1033",
     "text": "맞춤형화장품의 품질관리 업무",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_97e6b3",
-    "conceptId": "L980",
+    "conceptId": "L1033",
     "text": "일반 화장품의 제조 관리 업무",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "law_st_4b3c63",
-    "conceptId": "L980",
+    "conceptId": "L1033",
     "text": "맞춤형화장품 판매업소의 위생관리 업무",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_c5c250",
-    "conceptId": "L980",
+    "conceptId": "L1033",
     "text": "맞춤형화장품의 안전성 평가 업무",
     "truth": false
    }
@@ -4547,7 +4547,7 @@ var COMBO_DRILLS_subject1 = [
    "정답판정"
   ],
   "derivedFrom": "subject1_q49",
-  "explain": "📖 교재 근거 (교재: L980):\n| 50만 원 | • 화장품의 생산실적 또는 수입실적 또는 화장품 원료의 목록 등을 보고하지 않은 자<br>• 맞춤형화장품 원료의 목록을 보고하지 않은 자<br>• 책임판매관리자 및 맞춤형화장품조제관리사가 매년 화장품의 안전성 확보 및 품질관리에 관한 교육을 받지 않는 경우<br>• 식품의약품안전처장이 필요 시 영업자에게 화장품 관련 법령 및 제도에 관한 교육을 명할 시 그 명령을 위반한 자<br>• 폐업신고를 하지 않은 자<br>• 화장품의 판매가격을 표시하지 않은 자 |",
+  "explain": "📖 교재 근거 (교재: L1033):\n| 50만 원 | • 화장품의 생산실적 또는 수입실적 또는 화장품 원료의 목록 등을 보고하지 않은 자<br>• 맞춤형화장품 원료의 목록을 보고하지 않은 자<br>• 책임판매관리자 및 맞춤형화장품조제관리사가 매년 화장품의 안전성 확보 및 품질관리에 관한 교육을 받지 않는 경우<br>• 식품의약품안전처장이 필요 시 영업자에게 화장품 관련 법령 및 제도에 관한 교육을 명할 시 그 명령을 위반한 자<br>• 폐업신고를 하지 않은 자<br>• 화장품의 판매가격을 표시하지 않은 자 |",
   "source": "화장품법의 이해 (100제)",
   "answer": "4"
  },
@@ -4556,41 +4556,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L1438 (출처: 과목1 문제은행 Q50)",
+  "citation": "📖 교재: L1509 (출처: 과목1 문제은행 Q50)",
   "stem": "화장품법상 표시·광고의 제한 규정에 따라 금지되는 행위가 아닌 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_d7524f",
-    "conceptId": "L1438",
+    "conceptId": "L1509",
     "text": "경쟁사 제품과의 비교 광고",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "law_st_cc764b",
-    "conceptId": "L1438",
+    "conceptId": "L1509",
     "text": "과대 표시·광고",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_bc1118",
-    "conceptId": "L1438",
+    "conceptId": "L1509",
     "text": "사실과 다르게 소비자를 기만하는 표시·광고",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_01db67",
-    "conceptId": "L1438",
+    "conceptId": "L1509",
     "text": "의약품으로 오인하게 할 우려가 있는 표시·광고",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_c7865a",
-    "conceptId": "L1438",
+    "conceptId": "L1509",
     "text": "허위 표시·광고",
     "truth": false
    }
@@ -4641,7 +4641,7 @@ var COMBO_DRILLS_subject1 = [
    "금지원료"
   ],
   "derivedFrom": "subject1_q50",
-  "explain": "📖 교재 근거 (교재: L1438):\n참고 --- 「화장품법」 제13조(부당한 표시·광고 행위 등의 금지) 1)",
+  "explain": "📖 교재 근거 (교재: L1509):\n참고 --- 「화장품법」 제13조(부당한 표시·광고 행위 등의 금지) 1)",
   "source": "화장품법의 이해 (100제)",
   "answer": "5"
  },
@@ -4748,41 +4748,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L328 (출처: 과목1 문제은행 Q52)",
+  "citation": "📖 교재: L338 (출처: 과목1 문제은행 Q52)",
   "stem": "화장품법 시행규칙상 화장품의 표시사항이 아닌 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_630937",
-    "conceptId": "L328",
+    "conceptId": "L338",
     "text": "제품의 명칭",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_3af03d",
-    "conceptId": "L328",
+    "conceptId": "L338",
     "text": "제조업자의 상호 및 주소",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_25a8ad",
-    "conceptId": "L328",
+    "conceptId": "L338",
     "text": "전성분",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_4fd11d",
-    "conceptId": "L328",
+    "conceptId": "L338",
     "text": "제조번호 및 사용기한",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_b688cf",
-    "conceptId": "L328",
+    "conceptId": "L338",
     "text": "제품의 원가",
     "truth": true
    }
@@ -4833,7 +4833,7 @@ var COMBO_DRILLS_subject1 = [
    "기한"
   ],
   "derivedFrom": "subject1_q52",
-  "explain": "📖 법령 근거 (교재: L328):\n| 「화장품법」(법률) 🎯 기출 | 화장품의 제조·수입·판매 및 수출 등에 관한 사항을 규정함으로써 국민 보건 향상과 화장품 산업의 발전에 기여함을 목적으로 함 |",
+  "explain": "📖 법령 근거 (교재: L338):\n| 「화장품법」(법률) 🎯 기출 | 화장품의 제조·수입·판매 및 수출 등에 관한 사항을 규정함으로써 국민 보건 향상과 화장품 산업의 발전에 기여함을 목적으로 함 |",
   "source": "화장품법의 이해 (100제)",
   "answer": "1"
  },
@@ -4940,35 +4940,35 @@ var COMBO_DRILLS_subject1 = [
    {
     "id": "ㄱ",
     "sid": "law_st_0e02ad",
-    "conceptId": "L768",
+    "conceptId": "L813",
     "text": "보건환경연구원",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_ab4977",
-    "conceptId": "L768",
+    "conceptId": "L813",
     "text": "시험실을 갖춘 제조업자",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_bda22b",
-    "conceptId": "L768",
+    "conceptId": "L813",
     "text": "「식품·의약품 분야 시험·검사 등에 관한 법률」에 따른 화장품시험·검사기관",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_4cf692",
-    "conceptId": "L768",
+    "conceptId": "L813",
     "text": "한국의약품수출입협회",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_f1afe1",
-    "conceptId": "L768",
+    "conceptId": "L813",
     "text": "한국화장품협회",
     "truth": true
    }
@@ -5017,7 +5017,7 @@ var COMBO_DRILLS_subject1 = [
    "정답판정"
   ],
   "derivedFrom": "subject1_q54",
-  "explain": "📖 교재 근거 (L768):\n> 참고: 품질검사 위탁 기관 🎯 기출 - 보건환경연구원 - 시험실을 갖춘 제조업자 - 「식품·의약품 분야 시험·검사 등에 관한 법률」에 따른 화장품시험·검사기관 - 한국의약품수출입협회\n해설: 한국화장품협회는 품질검사 위탁 기관에 해당하지 않는다.",
+  "explain": "📖 교재 근거 (L813):\n> 참고: 품질검사 위탁 기관 🎯 기출 - 보건환경연구원 - 시험실을 갖춘 제조업자 - 「식품·의약품 분야 시험·검사 등에 관한 법률」에 따른 화장품시험·검사기관 - 한국의약품수출입협회\n해설: 한국화장품협회는 품질검사 위탁 기관에 해당하지 않는다.",
   "source": "화장품법의 이해 (100제)",
   "answer": "5"
  },
@@ -5118,41 +5118,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L869 (출처: 과목1 문제은행 Q56)",
+  "citation": "📖 교재: L916 (출처: 과목1 문제은행 Q56)",
   "stem": "화장품법상 화장품의 안전기준 등에 관한 규정을 위반하여 사용할 수 없는 원료를 화장품에 사용한 자의 벌칙에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_a5e621",
-    "conceptId": "L869",
+    "conceptId": "L916",
     "text": "3년 이하의 징역 또는 3천만 원 이하의 벌금",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "law_st_8cffd3",
-    "conceptId": "L869",
+    "conceptId": "L916",
     "text": "1년 이하의 징역 또는 1천만 원 이하의 벌금",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_fa0860",
-    "conceptId": "L869",
+    "conceptId": "L916",
     "text": "5년 이하의 징역 또는 5천만 원 이하의 벌금",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_69f9fb",
-    "conceptId": "L869",
+    "conceptId": "L916",
     "text": "7년 이하의 징역 또는 1억 원 이하의 벌금",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_c9a920",
-    "conceptId": "L869",
+    "conceptId": "L916",
     "text": "과태료 3천만 원",
     "truth": false
    }
@@ -5206,7 +5206,7 @@ var COMBO_DRILLS_subject1 = [
    "수치"
   ],
   "derivedFrom": "subject1_q56",
-  "explain": "📖 교재 근거 (교재: L869):\n| 4차 위반 시 등록취소 | • 제조소 및 화장품책임판매업소의 소재지 변경<br>• 국민보건에 위해를 끼쳤거나 끼칠 우려가 있는 화장품을 제조·수입한 경우<br>• 품질관리 업무 절차서를 작성하지 않거나 거짓으로 작성한 경우<br>• 회수 대상 화장품을 회수하지 않거나 회수하는 데 필요한 조치를 하지 않은 경우<br>• 회수계획을 보고하지 않거나 거짓으로 보고한 경우<br>• 식품의약품안전처장이 고시한 화장품의 제조 등에 사용할 수 없는 원료를 사용한 화장품<br>• 검사·질문·수거 등을 거부하거나 방해한 경우<br>• 시정명령·검사명령·개수명령·회수명령·폐기명령 또는 공표명령 등을 이행하지 않은 경우 |",
+  "explain": "📖 교재 근거 (교재: L916):\n| 4차 위반 시 등록취소 | • 제조소 및 화장품책임판매업소의 소재지 변경<br>• 국민보건에 위해를 끼쳤거나 끼칠 우려가 있는 화장품을 제조·수입한 경우<br>• 품질관리 업무 절차서를 작성하지 않거나 거짓으로 작성한 경우<br>• 회수 대상 화장품을 회수하지 않거나 회수하는 데 필요한 조치를 하지 않은 경우<br>• 회수계획을 보고하지 않거나 거짓으로 보고한 경우<br>• 식품의약품안전처장이 고시한 화장품의 제조 등에 사용할 수 없는 원료를 사용한 화장품<br>• 검사·질문·수거 등을 거부하거나 방해한 경우<br>• 시정명령·검사명령·개수명령·회수명령·폐기명령 또는 공표명령 등을 이행하지 않은 경우 |",
   "source": "화장품법의 이해 (100제)",
   "answer": "4"
  },
@@ -5308,41 +5308,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L603 (출처: 과목1 문제은행 Q58)",
+  "citation": "📖 교재: L632 (출처: 과목1 문제은행 Q58)",
   "stem": "화장품법 시행규칙상 화장품제조업자가 품질관리기준에 따라 실시해야 하는 품질검사 항목이 아닌 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_d7de4e",
-    "conceptId": "L603",
+    "conceptId": "L632",
     "text": "관능 시험",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_d15c3b",
-    "conceptId": "L603",
+    "conceptId": "L632",
     "text": "마케팅 효과 시험",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "law_st_34c5b8",
-    "conceptId": "L603",
+    "conceptId": "L632",
     "text": "미생물 시험",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_9f63ed",
-    "conceptId": "L603",
+    "conceptId": "L632",
     "text": "유효성분 함량 시험",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_48acef",
-    "conceptId": "L603",
+    "conceptId": "L632",
     "text": "중량 시험",
     "truth": false
    }
@@ -5390,7 +5390,7 @@ var COMBO_DRILLS_subject1 = [
    "한도"
   ],
   "derivedFrom": "subject1_q58",
-  "explain": "📖 교재 근거 (교재: L603):\n| 화장품책임판매업자 - 수행업무 | 절차서에 따른 수행업무 | 적정한 제조였음을 확인하고 기록 / 품질에 대한 정보가 인체에 영향을 미치는 경우 원인을 밝히고, 개선이 필요할 시 개선 조치하고 기록 / 제품의 품질이 불량하거나 불량할 우려가 있는 경우 회수 등 신속한 조치를 하고 기록 / 시장출하에 관하여 기록 / 제조별 품질검사 후 기록(단, 화장품제조업자와 화장품책임판매업자가 같은 경우, 화장품제조업자 또는 식품의약품안전처장이 지시한 위탁검사기관의 품질검사 결과가 있는 경우 제외) / 그 밖에 품질관리에 관한 업무를 수행 |",
+  "explain": "📖 교재 근거 (교재: L632):\n| 화장품책임판매업자 - 수행업무 | 절차서에 따른 수행업무 | 적정한 제조였음을 확인하고 기록 / 품질에 대한 정보가 인체에 영향을 미치는 경우 원인을 밝히고, 개선이 필요할 시 개선 조치하고 기록 / 제품의 품질이 불량하거나 불량할 우려가 있는 경우 회수 등 신속한 조치를 하고 기록 / 시장출하에 관하여 기록 / 제조별 품질검사 후 기록(단, 화장품제조업자와 화장품책임판매업자가 같은 경우, 화장품제조업자 또는 식품의약품안전처장이 지시한 위탁검사기관의 품질검사 결과가 있는 경우 제외) / 그 밖에 품질관리에 관한 업무를 수행 |",
   "source": "화장품법의 이해 (100제)",
   "answer": "2"
  },
@@ -5399,41 +5399,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L344 (출처: 과목1 문제은행 Q59)",
+  "citation": "📖 교재: L358 (출처: 과목1 문제은행 Q59)",
   "stem": "다음 중 화장품법상 「화장품」의 정의에 대한 설명으로 옳은 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_4f4659",
-    "conceptId": "L344",
+    "conceptId": "L358",
     "text": "인체를 청결·미화하여 매력을 더하고 용모를 밝게 변화시키는 목적의 물품이다",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "law_st_73298c",
-    "conceptId": "L344",
+    "conceptId": "L358",
     "text": "피부·모발의 건강을 유지 또는 증진하기 위해 사용되는 물품이다",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "law_st_8833aa",
-    "conceptId": "L344",
+    "conceptId": "L358",
     "text": "인체에 바르고 문지르거나 뿌리는 등의 방법으로 사용된다",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "law_st_efe2bd",
-    "conceptId": "L344",
+    "conceptId": "L358",
     "text": "인체에 대한 작용이 경미한 것을 말한다",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "law_st_d5ba31",
-    "conceptId": "L344",
+    "conceptId": "L358",
     "text": "의약품 및 의약외품을 포함한다",
     "truth": false
    }
@@ -5485,7 +5485,7 @@ var COMBO_DRILLS_subject1 = [
    "정의"
   ],
   "derivedFrom": "subject1_q59",
-  "explain": "📖 교재 근거 (교재: L344):\n| 화장품 🎯 기출 | 인체를 청결·미화하여 매력을 더하고 용모를 밝게 변화시키거나 피부·모발의 건강을 유지 또는 증진하기 위해 인체에 바르고 문지르거나 뿌리는 등 이와 유사한 방법으로 사용되는 물품으로서 인체에 대한 작용이 경미한 것을 말함 (단, 의약품, 의약외품 제외) |\n해설: 화장품의 정의에서 의약품과 의약외품은 명시적으로 제외된다.",
+  "explain": "📖 교재 근거 (교재: L358):\n| 화장품 🎯 기출 | 인체를 청결·미화하여 매력을 더하고 용모를 밝게 변화시키거나 피부·모발의 건강을 유지 또는 증진하기 위해 인체에 바르고 문지르거나 뿌리는 등 이와 유사한 방법으로 사용되는 물품으로서 인체에 대한 작용이 경미한 것을 말함 (단, 의약품, 의약외품 제외) |\n해설: 화장품의 정의에서 의약품과 의약외품은 명시적으로 제외된다.",
   "source": "화장품법의 이해 (100제)",
   "answer": "5"
  },
@@ -5494,41 +5494,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L328 (출처: 과목1 문제은행 Q60)",
+  "citation": "📖 교재: L338 (출처: 과목1 문제은행 Q60)",
   "stem": "화장품법 시행규칙상 화장품의 제조번호 부여 방법으로 옳은 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_22a890",
-    "conceptId": "L328",
+    "conceptId": "L338",
     "text": "제조일자를 연·월·일 순으로 표시",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_9b12a8",
-    "conceptId": "L328",
+    "conceptId": "L338",
     "text": "제조순서에 따라 일련번호 부여",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_89afa0",
-    "conceptId": "L328",
+    "conceptId": "L338",
     "text": "제조연도와 제조순서를 조합하여 부여",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_1d5110",
-    "conceptId": "L328",
+    "conceptId": "L338",
     "text": "제조업자가 임의로 부여하되 품질추적이 가능한 방식",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "law_st_b58638",
-    "conceptId": "L328",
+    "conceptId": "L338",
     "text": "식약처가 지정한 번호 체계에 따라 부여",
     "truth": false
    }
@@ -5580,7 +5580,7 @@ var COMBO_DRILLS_subject1 = [
    "절차"
   ],
   "derivedFrom": "subject1_q60",
-  "explain": "📖 법령 근거 (교재: L328):\n| 「화장품법」(법률) 🎯 기출 | 화장품의 제조·수입·판매 및 수출 등에 관한 사항을 규정함으로써 국민 보건 향상과 화장품 산업의 발전에 기여함을 목적으로 함 |",
+  "explain": "📖 법령 근거 (교재: L338):\n| 「화장품법」(법률) 🎯 기출 | 화장품의 제조·수입·판매 및 수출 등에 관한 사항을 규정함으로써 국민 보건 향상과 화장품 산업의 발전에 기여함을 목적으로 함 |",
   "source": "화장품법의 이해 (100제)",
   "answer": "4"
  },
@@ -5681,41 +5681,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L432 (출처: 과목1 문제은행 Q62)",
+  "citation": "📖 교재: L451 (출처: 과목1 문제은행 Q62)",
   "stem": "다음 중 화장품법상 영업의 종류가 바르게 연결된 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_3ecf08",
-    "conceptId": "L432",
+    "conceptId": "L451",
     "text": "화장품제조업 - 등록, 화장품책임판매업 - 등록, 맞춤형화장품판매업 - 신고",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "law_st_b5c4f3",
-    "conceptId": "L432",
+    "conceptId": "L451",
     "text": "화장품제조업 - 신고, 화장품책임판매업 - 등록, 맞춤형화장품판매업 - 신고",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_442d75",
-    "conceptId": "L432",
+    "conceptId": "L451",
     "text": "화장품제조업 - 등록, 화장품책임판매업 - 신고, 맞춤형화장품판매업 - 등록",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_b3898a",
-    "conceptId": "L432",
+    "conceptId": "L451",
     "text": "화장품제조업 - 허가, 화장품책임판매업 - 등록, 맞춤형화장품판매업 - 신고",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_ea97e1",
-    "conceptId": "L432",
+    "conceptId": "L451",
     "text": "화장품제조업 - 등록, 화장품책임판매업 - 허가, 맞춤형화장품판매업 - 등록",
     "truth": false
    }
@@ -5766,7 +5766,7 @@ var COMBO_DRILLS_subject1 = [
    "절차"
   ],
   "derivedFrom": "subject1_q62",
-  "explain": "📖 교재 근거 (교재: L432):\n| 화장품 제조업 | 화장품의 전부 또는 일부를 제조(2차 포장 또는 표시만의 공정은 제외)하는 영업<br>• 화장품을 직접 제조하는 영업<br>• 화장품 제조를 위탁받아 제조하는 영업<br>• 화장품을 포장(1차 포장만 해당)하는 영업 |",
+  "explain": "📖 교재 근거 (교재: L451):\n| 화장품 제조업 | 화장품의 전부 또는 일부를 제조(2차 포장 또는 표시만의 공정은 제외)하는 영업<br>• 화장품을 직접 제조하는 영업<br>• 화장품 제조를 위탁받아 제조하는 영업<br>• 화장품을 포장(1차 포장만 해당)하는 영업 |",
   "source": "화장품법의 이해 (100제)",
   "answer": "3"
  },
@@ -5775,41 +5775,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L344 (출처: 과목1 문제은행 Q63)",
+  "citation": "📖 교재: L358 (출처: 과목1 문제은행 Q63)",
   "stem": "다음 중 화장품법상 「화장품」의 범위에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_4a3eb3",
-    "conceptId": "L344",
+    "conceptId": "L358",
     "text": "비누(화장비누)은 화장품에서 제외된다.",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_8c99df",
-    "conceptId": "L344",
+    "conceptId": "L358",
     "text": "제모왁스는 공산품으로 분류된다.",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "law_st_e31ea5",
-    "conceptId": "L344",
+    "conceptId": "L358",
     "text": "물티슈는 모든 경우 화장품으로 분류된다.",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_1988bb",
-    "conceptId": "L344",
+    "conceptId": "L358",
     "text": "의약품과 의약외품은 화장품 범위에서 제외된다.",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "law_st_ad3c73",
-    "conceptId": "L344",
+    "conceptId": "L358",
     "text": "흑채는 의약외품으로 분류된다.",
     "truth": false
    }
@@ -5860,7 +5860,7 @@ var COMBO_DRILLS_subject1 = [
    "정답판정"
   ],
   "derivedFrom": "subject1_q63",
-  "explain": "📖 교재 근거 (교재: L344):\n| 화장품 🎯 기출 | 인체를 청결·미화하여 매력을 더하고 용모를 밝게 변화시키거나 피부·모발의 건강을 유지 또는 증진하기 위해 인체에 바르고 문지르거나 뿌리는 등 이와 유사한 방법으로 사용되는 물품으로서 인체에 대한 작용이 경미한 것을 말함 (단, 의약품, 의약외품 제외) |",
+  "explain": "📖 교재 근거 (교재: L358):\n| 화장품 🎯 기출 | 인체를 청결·미화하여 매력을 더하고 용모를 밝게 변화시키거나 피부·모발의 건강을 유지 또는 증진하기 위해 인체에 바르고 문지르거나 뿌리는 등 이와 유사한 방법으로 사용되는 물품으로서 인체에 대한 작용이 경미한 것을 말함 (단, 의약품, 의약외품 제외) |",
   "source": "화장품법의 이해 (100제)",
   "answer": "2"
  },
@@ -5869,41 +5869,41 @@ var COMBO_DRILLS_subject1 = [
   "subject": 1,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L398 (출처: 과목1 문제은행 Q75)",
+  "citation": "📖 교재: L413 (출처: 과목1 문제은행 Q75)",
   "stem": "화장품법 시행규칙상 「체모제거용 제품류」에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "law_st_38b59e",
-    "conceptId": "L398",
+    "conceptId": "L413",
     "text": "샴푸·린스",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "law_st_20aa41",
-    "conceptId": "L398",
+    "conceptId": "L413",
     "text": "제모제·제모왁스",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "law_st_7fb9d7",
-    "conceptId": "L398",
+    "conceptId": "L413",
     "text": "데오도런트",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "law_st_fab76d",
-    "conceptId": "L398",
+    "conceptId": "L413",
     "text": "향수·콜로뉴",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "law_st_c2d77d",
-    "conceptId": "L398",
+    "conceptId": "L413",
     "text": "로션·크림",
     "truth": false
    }
@@ -5953,7 +5953,7 @@ var COMBO_DRILLS_subject1 = [
    "정답판정"
   ],
   "derivedFrom": "subject1_q75",
-  "explain": "📖 교재 근거 (교재: L398):\n| 체모제거용 제품류 🎯 기출 | 몸에 난 털을 제거할 때 사용하는 제품<br>• 제모제(기능성화장품) • 제모왁스 • 그 밖의 체모제거용 제품류 |\n해설: 체모제거용 제품류에는 제모제(기능성화장품)와 제모왁스 등이 포함된다.",
+  "explain": "📖 교재 근거 (교재: L413):\n| 체모제거용 제품류 🎯 기출 | 몸에 난 털을 제거할 때 사용하는 제품<br>• 제모제(기능성화장품) • 제모왁스 • 그 밖의 체모제거용 제품류 |\n해설: 체모제거용 제품류에는 제모제(기능성화장품)와 제모왁스 등이 포함된다.",
   "source": "화장품법의 이해 (100제)",
   "answer": "2"
  },
