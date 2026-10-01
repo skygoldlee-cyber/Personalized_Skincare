@@ -512,6 +512,12 @@ if (notFoundList.length > 0) {
     }
 }
 
+// --check: 갱신 대기(스테일 #L)도 실패로 처리해 check:content 게이트가 드리프트를 통과시키지 않게 한다
+if (isCheckOnly && totalUpdated > 0) {
+    console.log(`\n❌ 인용 라인 드리프트 ${totalUpdated}건 — npm run sync:citations 실행 후 커밋하세요.`);
+    process.exit(1);
+}
+
 if (totalNotFound > 0) {
     process.exit(1);
 }
