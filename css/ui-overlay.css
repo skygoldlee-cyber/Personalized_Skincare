@@ -666,17 +666,15 @@
   font-size: 0.55rem;
   font-weight: var(--font-weight-bold, 700);
   letter-spacing: 0.05em;
-  color: var(--color-text-muted, #9ca3af);
-  border: 1px solid var(--border-color, rgba(139, 92, 246, 0.3));
-  background: transparent;
-  opacity: 0.75;
+  color: var(--color-secondary, #8b5cf6);
+  border: 1px solid var(--secondary-tint-40, rgba(139, 92, 246, 0.4));
+  background: var(--secondary-tint-10, rgba(139, 92, 246, 0.1));
   vertical-align: middle;
   margin-left: 0.3rem;
 }
 .pro-badge:hover {
-  color: var(--color-secondary, #8b5cf6);
-  border-color: var(--secondary-tint-30, rgba(139, 92, 246, 0.3));
-  opacity: 1;
+  border-color: var(--color-secondary, #8b5cf6);
+  background: var(--secondary-tint-20, rgba(139, 92, 246, 0.2));
 }
 
 /* ── 내 사용 통계 (usage-stats.js) ── */
