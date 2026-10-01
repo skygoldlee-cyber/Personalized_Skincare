@@ -230,6 +230,25 @@
     transition: width 0.3s ease;
 }
 
+/* 주간 리포트보내기 버튼 — 진단 요약 섹션 제목 하단 */
+.analysis-report-btn {
+    margin-top: var(--space-2);
+    white-space: nowrap;
+}
+
+/* 추천 효과 추적 — 지난 추천 이후 정답률 변화 라인 */
+.rec-effect {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    margin: 0 0 var(--space-3);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+.rec-effect i {
+    color: var(--color-primary);
+}
+
 /* 진술 참/거짓 배지 — 취약 진술 카드 */
 .analysis-truth {
     font-size: var(--text-xs);

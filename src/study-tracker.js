@@ -26,7 +26,8 @@ export function getTodayStr() {
 
 /**
  * 학습 캘린더 전체 데이터 조회
- * @returns {Object} { "2026-09-12": { cards: 5, quizzes: 3, correct: 2 }, ... }
+ * @returns {Object} { "2026-09-12": { cards: 5, quizzes: 3, correct: 2, h: {"21": 2} }, ... }
+ *   `h`는 시간대 버킷(시 → 활동 횟수) — 학습 패턴 분석용, 레거시 엔트리는 없을 수 있음
  */
 export function getStudyCalendar() {
     try {
@@ -47,6 +48,12 @@ export function recordStudyActivity(activity = {}) {
     if (activity.cards) entry.cards += activity.cards;
     if (activity.quizzes) entry.quizzes += activity.quizzes;
     if (activity.correct) entry.correct += activity.correct;
+    if (activity.cards || activity.quizzes) {
+        // 시간대 버킷 — 학습 패턴 분석(computeStudyPattern)용, 활동 호출당 1회
+        const hr = new Date().getHours();
+        entry.h = entry.h || {};
+        entry.h[hr] = (entry.h[hr] || 0) + 1;
+    }
     cal[today] = entry;
     safeSetItem(STORAGE_KEYS.STUDY_CALENDAR, JSON.stringify(cal));
 }

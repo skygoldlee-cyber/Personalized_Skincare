@@ -1,5 +1,5 @@
 // recommendations.js — "오늘의 합격 전략" 추천 엔진 (docs/report_archive/FEATURE_PROPOSALS.md §4.1)
-// @spec D-11,D-13
+// @spec D-11,D-13,AN-05,AN-06,AN-07
 //
 // 학습 데이터(SM-2 복습 대기·과락 과목·정답률·헷갈린 카드·미학습)를 종합해
 // 우선순위가 정해진 추천 항목을 생성한다.
@@ -157,17 +157,47 @@ export function computeRecommendations(subjects, counts) {
    📈 오답 패턴 분석 (원인 자가 태깅 집계 — docs/report_archive/FEATURE_PROPOSALS.md §4.2)
    ======================================================= */
 
-export const WRONG_CAUSE_LABELS = {
-    memorize: '암기 부족',
-    concept: '개념 오해',
-    calc: '계산 실수'
-};
+/**
+ * 기본 오답 원인 분류 — 시험별 확장은 manifest `analysis.wrongCauses`가 담당한다
+ * (예: {"key":"lawConfusion","label":"법령·조문 혼동","advice":"..."}).
+ * 레지스트리(registry.analysis)를 통해 런타임에 병합되므로 도메인 원인이
+ * 플랫폼 코드에 하드코딩되지 않는다.
+ */
+const BASE_WRONG_CAUSES = [
+    { key: 'memorize', label: '암기 부족', advice: '플래시카드 반복 암기가 효과적입니다 — 복습 노트의 카드를 우선 순회하세요.' },
+    { key: 'concept', label: '개념 오해', advice: '교재 재학습 후 유사 문제로 확인하는 흐름을 권장합니다.' },
+    { key: 'calc', label: '계산 실수', advice: '같은 유형의 문제를 반복해서 풀어 실수 패턴을 줄이세요.' }
+];
 
-const WRONG_CAUSE_ADVICE = {
-    memorize: '플래시카드 반복 암기가 효과적입니다 — 복습 노트의 카드를 우선 순회하세요.',
-    concept: '교재 재학습 후 유사 문제로 확인하는 흐름을 권장합니다.',
-    calc: '같은 유형의 문제를 반복해서 풀어 실수 패턴을 줄이세요.'
-};
+/**
+ * 활성 시험의 오답 원인 분류표 — 기본 3종 + manifest analysis.wrongCauses 병합.
+ * @returns {Array<{key:string, label:string, advice:string}>}
+ */
+export function getWrongCauseTaxonomy() {
+    const merged = new Map(BASE_WRONG_CAUSES.map(c => [c.key, { ...c }]));
+    const extra = (typeof window !== 'undefined' && window.DATA_REGISTRY
+        && window.DATA_REGISTRY.analysis && window.DATA_REGISTRY.analysis.wrongCauses) || [];
+    extra.forEach(e => {
+        if (e && typeof e.key === 'string' && typeof e.label === 'string') {
+            const base = merged.get(e.key) || { key: e.key, label: e.label, advice: '' };
+            merged.set(e.key, { key: e.key, label: e.label, advice: e.advice || base.advice });
+        }
+    });
+    return [...merged.values()];
+}
+
+/** 분류표의 key→label 맵 (태깅 버튼·집계 표 렌더용) */
+export function getWrongCauseLabels() {
+    const m = {};
+    getWrongCauseTaxonomy().forEach(c => { m[c.key] = c.label; });
+    return m;
+}
+
+/** 원인 키의 권장 학습법 (미등록 키면 빈 문자열) */
+export function getWrongCauseAdvice(key) {
+    const t = getWrongCauseTaxonomy().find(c => c.key === key);
+    return t ? t.advice : '';
+}
 
 /**
  * 오답 원인 태그 집계 — 최근 N일 분포 + 최다 원인/과목 + 권장 학습법.
@@ -177,12 +207,14 @@ const WRONG_CAUSE_ADVICE = {
  */
 export function computeWrongCauseSummary(wrongCauses, { days = 7, now = Date.now() } = {}) {
     const cutoff = now - days * 86400000;
-    const counts = { memorize: 0, concept: 0, calc: 0 };
+    const labels = getWrongCauseLabels();
+    const counts = {};
+    Object.keys(labels).forEach(k => { counts[k] = 0; });
     const bySubj = {};
     let total = 0;
 
     Object.entries(wrongCauses || {}).forEach(([id, info]) => {
-        if (!info || !(info.cause in counts)) return;
+        if (!info || !info.cause || !(info.cause in counts)) return;
         if (info.ts && info.ts < cutoff) return;
         counts[info.cause]++;
         total++;
@@ -200,7 +232,7 @@ export function computeWrongCauseSummary(wrongCauses, { days = 7, now = Date.now
         total,
         topCause,
         topSubject,
-        advice: topCause ? WRONG_CAUSE_ADVICE[topCause] : ''
+        advice: topCause ? getWrongCauseAdvice(topCause) : ''
     };
 }
 
@@ -208,7 +240,7 @@ export function computeWrongCauseSummary(wrongCauses, { days = 7, now = Date.now
 // "합격 확률"이 아니라 모의고사 이력 기반의 점수 추정치만 제시한다.
 // 보정된 합격 확률은 실제 결과 데이터가 축적된 후에야 의미가 있다.
 
-// @spec ROAD-L1 — 부분 구현 (예상 점수 추정; 실제 결과 보정 기반 합격 확률 격상은 데이터 축적 후)
+// @spec ROAD-L1 — 부분 구현 (복합 추정 + 개인 편향 보정 완료; 통계적 합격 확률 격상은 다수 사용자 데이터 축적 후)
 /**
  * 모의고사 이력에서 예상 점수 대·추세를 추정한다.
  * @param {Array<{rate:number}>} history sim_results_history 레코드
@@ -263,14 +295,16 @@ export function getActualResult() {
  * 실제 시험 결과 저장 — 예측 정확도 보정 데이터 축적용.
  * @param {boolean} passed
  * @param {number|null} score 0~100 또는 null(미기입)
+ * @param {number|null} [expectedAtReport] 보고 시점의 무 보정 예상 점수 — 개인 편향 산출용
  */
-export function saveActualResult(passed, score) {
+export function saveActualResult(passed, score, expectedAtReport) {
     if (score !== null && (typeof score !== 'number' || score < 0 || score > 100)) return false;
     const examId = getCurrentExamId();
     trackAction('actual_exam_report');
     safeSetItem(STORAGE_KEYS.ACTUAL_EXAM_RESULT, JSON.stringify({
         passed: !!passed,
         score,
+        expectedAtReport: typeof expectedAtReport === 'number' ? expectedAtReport : null,
         reportedAt: new Date().toISOString(),
         examId
     }));
@@ -279,4 +313,132 @@ export function saveActualResult(passed, score) {
 
 export function clearActualResult() {
     safeSetItem(STORAGE_KEYS.ACTUAL_EXAM_RESULT, 'null');
+}
+
+/**
+ * 개인 보정 편향 — 실제 점수와 보고 시점 예상 점수의 차이 (±15점 절단).
+ * 모의고사보다 실제 시험에서 체계적으로 높게/낮게 나오는 사용자 경향을 흡수한다.
+ * @param {Object|null} actual getActualResult() 결과
+ * @returns {number} 보정치 (없으면 0)
+ */
+export function computeCalibrationBias(actual) {
+    if (!actual || typeof actual.score !== 'number' || typeof actual.expectedAtReport !== 'number') return 0;
+    return Math.max(-15, Math.min(15, Math.round(actual.score - actual.expectedAtReport)));
+}
+
+/**
+ * 복합 예상 점수 — 모의고사 이력이 주 지표이고, 표본 부족(cold start) 시
+ * 마스터리 졸업률·퀴즈 정답률을 가중 병합한다. 이력 3회부터 이력 100%.
+ * @param {Array<{rate:number}>} history sim_results_history 레코드
+ * @param {{masteryPercent?:number, quizRate?:number, quizSolved?:number}} [aux] 보조 지표
+ * @param {number} [bias] 개인 보정치 (computeCalibrationBias)
+ * @returns {{n:number, expected:number, lo:number, hi:number,
+ *   trend:string, slope:number, source:'sim'|'blend'|'aux', biasApplied?:number}|null}
+ */
+export function estimateCompositeScore(history, aux = {}, bias = 0) {
+    aux = aux || {};
+    const base = estimateExpectedScore(history);
+
+    // 보조 추정 — 마스터리(고정 가중 0.6) + 퀴즈 정답률(표본 가중, 50문에서 만점)
+    const parts = [];
+    if (typeof aux.masteryPercent === 'number') parts.push({ v: aux.masteryPercent, w: 0.6 });
+    const solved = aux.quizSolved || 0;
+    if (typeof aux.quizRate === 'number' && solved >= 5) {
+        parts.push({ v: aux.quizRate, w: Math.min(1, solved / 50) });
+    }
+    const wSum = parts.reduce((s, p) => s + p.w, 0);
+    const auxEst = wSum > 0 ? parts.reduce((s, p) => s + p.v * p.w, 0) / wSum : null;
+
+    /** @type {{n:number, expected:number, lo:number, hi:number, trend:string, slope:number, source:'sim'|'blend'|'aux', biasApplied?:number}} */
+    let out;
+    if (!base && auxEst === null) return null;
+    if (!base) {
+        const e = Math.round(/** @type {number} */ (auxEst));
+        out = { n: 0, expected: e, lo: Math.max(0, e - 10), hi: Math.min(100, e + 10), trend: 'flat', slope: 0, source: 'aux' };
+    } else if (auxEst === null || base.n >= 3) {
+        out = { ...base, source: 'sim' };
+    } else {
+        const w = base.n / 3;
+        const e = Math.round(base.expected * w + auxEst * (1 - w));
+        const width = Math.round((base.expected - base.lo) * w + 10 * (1 - w));
+        out = { n: base.n, expected: e, lo: Math.max(0, e - width), hi: Math.min(100, e + width), trend: base.trend, slope: base.slope, source: 'blend' };
+    }
+
+    const b = Math.max(-15, Math.min(15, bias || 0));
+    if (b) {
+        out.expected = Math.max(0, Math.min(100, out.expected + b));
+        out.lo = Math.max(0, out.lo + b);
+        out.hi = Math.min(100, out.hi + b);
+        out.biasApplied = b;
+    }
+    return out;
+}
+
+/* =======================================================
+   추천 효과 추적 — 추천 발행 시점의 과목별 정답률을 스냅샷하고
+   다음 방문에서 개선 여부를 비교한다 (피드백 루프).
+   ======================================================= */
+
+const REC_SNAPSHOT_MIN_AGE = 6 * 3600000;   // 동일 추천 재기록 방지 (6시간)
+const REC_EFFECT_MIN_AGE = 12 * 3600000;    // 효과 판정 최소 관찰 시간
+const REC_EFFECT_MIN_SOLVED = 5;            // 효과 판정에 필요한 신규 표본
+
+function _loadRecSnapshot() {
+    try {
+        const v = JSON.parse(safeGetItem(STORAGE_KEYS.REC_SNAPSHOT) || 'null');
+        return v && typeof v === 'object' ? v : null;
+    } catch (e) {
+        return null;
+    }
+}
+
+/**
+ * 추천 발행 스냅샷 저장 — 대상 과목의 현재 정답률을 기준선으로 기록한다.
+ * 동일 대상 추천이 6시간 내 재발행되면 기준선을 보존한다(관찰 창 유지).
+ * @param {Array<{actions:Array<{arg:string}>}>} recs computeRecommendations 결과
+ * @param {Object} counts 과목별 학습 카운트
+ */
+export function snapshotRecommendations(recs, counts) {
+    const targets = [...new Set((recs || [])
+        .flatMap(r => r.actions.map(a => a.arg))
+        .filter(a => typeof a === 'string' && counts && counts[a]))];
+    if (!targets.length) return;
+    const prev = _loadRecSnapshot();
+    const sameTargets = prev && JSON.stringify([...prev.targets].sort()) === JSON.stringify([...targets].sort());
+    if (prev && sameTargets && Date.now() - prev.ts < REC_SNAPSHOT_MIN_AGE) return;
+    const baseline = {};
+    targets.forEach(k => {
+        const c = counts[k];
+        baseline[k] = { solved: c.quizSolved || 0, correct: c.quizCorrect || 0 };
+    });
+    safeSetItem(STORAGE_KEYS.REC_SNAPSHOT, JSON.stringify({
+        ts: Date.now(), examId: getCurrentExamId(), targets, baseline
+    }));
+}
+
+/**
+ * 추천 효과 평가 — 기준선 대비 대상 과목의 정답률 변화.
+ * 관찰 12시간 미만이거나 과목당 신규 표본 5문 미만이면 null (판정 보류).
+ * @param {Object} counts 과목별 학습 카운트
+ * @param {(key:string)=>string} [subjectName] 표시명 해석기
+ * @returns {{sinceTs:number, items:Array<{key:string,name:string,fromRate:number,toRate:number,delta:number,added:number}>}|null}
+ */
+export function evaluateRecommendationEffect(counts, subjectName) {
+    const snap = _loadRecSnapshot();
+    if (!snap || !snap.baseline || snap.examId !== getCurrentExamId()) return null;
+    if (Date.now() - snap.ts < REC_EFFECT_MIN_AGE) return null;
+    const name = subjectName || (k => k);
+    const items = [];
+    (snap.targets || []).forEach(k => {
+        const b = snap.baseline[k];
+        const c = counts && counts[k];
+        if (!b || !c) return;
+        const added = (c.quizSolved || 0) - b.solved;
+        if (added < REC_EFFECT_MIN_SOLVED) return;
+        const fromRate = b.solved > 0 ? Math.round((b.correct / b.solved) * 100) : null;
+        const toRate = c.quizSolved > 0 ? Math.round((c.quizCorrect / c.quizSolved) * 100) : null;
+        if (fromRate === null || toRate === null) return;
+        items.push({ key: k, name: name(k), fromRate, toRate, delta: toRate - fromRate, added });
+    });
+    return items.length ? { sinceTs: snap.ts, items } : null;
 }

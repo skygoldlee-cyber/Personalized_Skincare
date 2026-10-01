@@ -827,6 +827,7 @@ const state = {
    - 참조 법령이 있으면: `content/lawdb.json`에 법령 엔트리 추가(공유 법령 재사용) + `references.json`의 `lawRefs`(링크 대상·우선순위)와 `noticeCore`(고시 감시 기준 문서) 설정 → `build:pdf-registry`가 `src/law-links.js` 재생성
    - 지식DB(사전)가 있으면: `knowledge/<key>.json` 데이터셋(예: `content/exams/food/knowledge/additives.json`) + `manifest.knowledge`에 엔티티 스키마·`registryKey` 선언 + `features.dictionary` 활성화 — 빌드가 `<key>_data.<hash>.js` 번들 생성, `DataLoader.loadDictionary()`가 온디맨드 로드, `dictionary.js`가 스키마 드리븐 렌더
    - 주관식 채점 유사어가 있으면: `manifest.synonyms`에 `{정답: [동의어…]}` 선언 → 생성 `registry.synonyms`를 `checkShortAnswer()`가 조회 (코드 내장 사전 없음 — 시험별 용어 집합)
+   - 오답 원인 분류를 확장하려면: `manifest.analysis.wrongCauses`에 `[{key,label,advice}]` 선언 → 생성 `registry.analysis`를 `getWrongCauseTaxonomy()`가 기본 3종(암기/개념/계산)에 병합 — 태깅 버튼·집계·자동 추정이 분류표를 따름 (미선언 시 기본 3종만; 예: cosmetic은 법령·조문 혼동·수치 착각 추가)
 2. `content/exams.json`에 엔트리 추가 (`contentRoot`/`dataRoot`/`registryBundle`/`registryGlobal` + 기능 플래그)
 3. `npm.cmd run check:content -- --build` — 빌드 + 통합 검증 일괄. **앱 로직 변경 불필요**
    - 상세 설계: `design/MULTI_EXAM_DB_DESIGN.md` (법령DB·지식DB 3계층 구조)
@@ -2069,7 +2070,7 @@ SPEC.md의 기능/비기능 ID와 이 문서의 설명 위치·구현 모듈 대
 | SPEC ID | SPEC 절 | 대응 위치 (이 문서 / 구현) |
 |---------|---------|---------------------------|
 | `D-01~15` | §3.1 대시보드 | `src/views/dashboard.js` — Application Layer |
-| `AN-01~03` | §3.1.5 맞춤학습 | `analysis-view` — 대시보드에서 분리된 분석 뷰 |
+| `AN-01~09` | §3.1.5 맞춤학습 | `analysis-view` — 분석 뷰: 진단 카드·온보딩·단원 딥링크·복합 추정·추천 효과·패턴 분석·리포트 공유 |
 | `F-01~10` | §3.2 플래시카드 | `src/views/flashcard.js` |
 | `Q-01~11` | §3.3 퀴즈 | `src/views/quiz.js` |
 | `E-01~07` | §3.4 모의고사 | `src/views/exam-simulator*.js` |

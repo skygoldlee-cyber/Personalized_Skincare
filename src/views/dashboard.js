@@ -1,5 +1,5 @@
 // src/views/dashboard.js - 대시보드 뷰 로직 및 전역 통계 관리
-// @spec D-01~16,AN-01~04,PF-07,SC-04
+// @spec D-01~16,AN-01~09,PF-07,SC-04
 import { state } from '../state.js';
 import { esc } from '../sanitize.js';
 import { DataLoader } from '../data-loader.js';
@@ -9,20 +9,22 @@ import { updateStreakAndDailyUI } from './daily-challenge.js';
 import { updatePomodoroUI } from './pomodoro.js';
 import { getDueCount } from '../spaced-repetition.js';
 import {
-    computeRecommendations, estimateExpectedScore, getActualResult,
-    saveActualResult, clearActualResult, getSimHistory,
-    computeWrongCauseSummary, WRONG_CAUSE_LABELS
+    computeRecommendations, estimateCompositeScore,
+    computeCalibrationBias, getActualResult, saveActualResult, clearActualResult,
+    getSimHistory, computeWrongCauseSummary, getWrongCauseLabels,
+    snapshotRecommendations, evaluateRecommendationEffect
 } from '../recommendations.js';
 import { getDDay, getSuggestedDailyCount, getTodayGoalProgress, getWeeklyGoalProgress, getStudyCalendar } from '../study-tracker.js';
 import { getWeakStatements, getDueStatementSids, getAnomalousStatements, getAllStatementStats } from '../statement-tracker.js';
 import {
     computeSubjectWeakChapters, computeWeeklyGrowth, computePassGap,
     computeWeakConceptClusters, computePaceProjection, estimateUntaggedCauses,
-    computeMasteryLevels
+    computeMasteryLevels, computeStudyPattern, buildWeeklyReportText
 } from '../analysis-engine.js';
 import { resolveWrongQuiz } from '../weak-items.js';
 import { showToast, showGlobalLoading, hideGlobalLoading } from '../ui-utils.js';
-import { getExamRules } from '../exam-context.js';
+import { getExamRules, getExamAppName } from '../exam-context.js';
+import { trackAction } from '../usage-stats.js';
 
 /**
  * @type {boolean}
@@ -295,14 +297,26 @@ function _renderWeakSubjectRecommendation(subjects) {
     const recEl = document.getElementById('weak-subject-recommendation');
     if (!recEl) return;
 
-    const recs = computeRecommendations(subjects, _getSubjCounts());
+    const counts = _getSubjCounts();
+    const recs = computeRecommendations(subjects, counts);
 
     if (recs.length === 0) {
         recEl.innerHTML = '<p class="rec-empty">아직 충분한 학습 데이터가 없습니다. 퀴즈를 풀어보세요!</p>';
         return;
     }
 
-    let html = '<div class="rec-list">';
+    // 추천 효과 추적 — 발행 기준선 기록 + 직전 추천의 개선 평가
+    const nameOf = (k) => { const s = subjects.find(x => x.key === k); return s ? s.name : k; };
+    const effect = evaluateRecommendationEffect(counts, nameOf);
+    snapshotRecommendations(recs, counts);
+
+    let html = '';
+    if (effect) {
+        const parts = effect.items.map(i =>
+            `${esc(i.name)} ${i.fromRate}%→${i.toRate}% (${i.delta >= 0 ? '▲' : '▼'}${Math.abs(i.delta)}%p)`);
+        html += `<p class="rec-effect"><i class="fa-solid fa-chart-line" aria-hidden="true"></i> 지난 추천 이후 ${parts.join(' · ')}</p>`;
+    }
+    html += '<div class="rec-list">';
     recs.forEach(rec => {
         const actions = rec.actions.map(a =>
             `<button class="btn btn-sm ${a.cls}" data-click="${a.click}" data-arg="${esc(a.arg)}"><i class="fa-solid ${a.icon}"></i> ${esc(a.label)}</button>`
@@ -389,7 +403,7 @@ function _renderWrongCauseInsight() {
             <p class="analysis-empty">오답 복습에서 "틀린 이유"를 태그하면 최근 7일의 실수 패턴을 분석합니다.</p>${goBtn}`;
         return;
     }
-    const rows = Object.entries(WRONG_CAUSE_LABELS)
+    const rows = Object.entries(getWrongCauseLabels())
         .map(([k, label]) => `<div class="wc-row"><span>${label}</span><strong>${sum.counts[k] || 0}건</strong></div>`).join('');
 
     // 미태깅 오답 자동 추정 (태깅 데이터가 희소할 때 보완)
@@ -452,6 +466,13 @@ function _renderStudyRhythmInsight() {
         ? `<div class="wc-row"><span>주간 정답률</span><strong>${growth.thisWeek.rate}%${growth.rateDelta !== null ? ` <span class="growth-delta ${growth.rateDelta >= 0 ? 'growth-up' : 'growth-down'}">${growth.rateDelta >= 0 ? '▲' : '▼'}${Math.abs(growth.rateDelta)}%p</span>` : ''}</strong></div>`
         : '';
 
+    // 학습 패턴 — 최다 활동 시간대·요일 (캘린더 시간대 버킷 집계, 표본 부족 시 미표시)
+    const pattern = computeStudyPattern(getStudyCalendar());
+    const patternRow = pattern
+        ? `<div class="wc-row"><span>집중 패턴</span><strong>${pattern.topBand ? esc(pattern.topBand.label) : ''}${pattern.topBand && pattern.topDow ? ' · ' : ''}${pattern.topDow ? esc(pattern.topDow.label) : ''}</strong></div>
+           <div class="wc-row"><span>주말 학습 비중</span><strong>${pattern.weekendShare}%</strong></div>`
+        : '';
+
     // D-day 페이스 판정 — 현재 속도로 커버 가능한지
     const subjectsMeta = (typeof DataLoader !== 'undefined' && DataLoader.registry)
         ? DataLoader.getSubjectList() : [];
@@ -472,7 +493,7 @@ function _renderStudyRhythmInsight() {
         <div class="wc-row"><span>오늘 목표 달성</span><strong>${today.overallPercent}%</strong></div>
         <div class="wc-row"><span>이번 주 학습일</span><strong>${week.studyDays}/${week.goalDays}일</strong></div>
         <div class="wc-row"><span>시험일</span><strong>${ddayLabel}</strong></div>
-        ${growthRow}${paceNote}
+        ${growthRow}${patternRow}${paceNote}
         <button class="btn btn-secondary btn-sm analysis-card-btn" data-click="switchView" data-arg="calendar-view"><i class="fa-solid fa-calendar-check" aria-hidden="true"></i> 캘린더 보기</button>`;
 }
 
@@ -517,7 +538,7 @@ function _renderPassGapInsight() {
     const subjects = (typeof DataLoader !== 'undefined' && DataLoader.registry)
         ? DataLoader.getSubjectList() : [];
     const gap = computePassGap({
-        estimate: estimateExpectedScore(getSimHistory()),
+        estimate: _compositeEstimate(),
         simHistory: getSimHistory(),
         subjects,
         counts: _getSubjCounts(),
@@ -612,6 +633,25 @@ export function startSubjectReader(subjId) {
 // ===== C1 — 예상 점수 추정 + 실제 결과 자가 보고 =====
 // 점수 "추정치"만 제시한다 — 보정된 합격 확률은 실제 결과 데이터 축적 후 가능.
 
+/**
+ * 복합 예상 점수 — 모의고사 이력 + (cold start 시) 마스터리·퀴즈 정답률 병합.
+ * @param {number} [biasOverride] 보정치 강제 지정 — 생략 시 실제 결과에서 유도
+ *   (0 전달 시 무 보정 — 보고 시점 기준값 산출용)
+ */
+function _compositeEstimate(biasOverride) {
+    const mastery = computeMasteryLevels(getAllStatementStats());
+    const mv = Object.values(mastery);
+    const counts = _getSubjCounts();
+    let solved = 0, correct = 0;
+    Object.values(counts).forEach(c => { solved += c.quizSolved || 0; correct += c.quizCorrect || 0; });
+    const bias = biasOverride !== undefined ? biasOverride : computeCalibrationBias(getActualResult());
+    return estimateCompositeScore(getSimHistory(), {
+        masteryPercent: mv.length ? Math.round(mv.reduce((s, m) => s + m.percent, 0) / mv.length) : undefined,
+        quizRate: solved > 0 ? Math.round((correct / solved) * 100) : undefined,
+        quizSolved: solved
+    }, bias);
+}
+
 const TREND_META = {
     up:   { icon: 'fa-arrow-trend-up',   label: '상승 추세', cls: 'est-up' },
     flat: { icon: 'fa-minus',            label: '보합',     cls: 'est-flat' },
@@ -622,14 +662,20 @@ const TREND_META = {
 function renderExpectedScore() {
     const area = document.getElementById('prediction-estimate-area');
     if (!area) return;
-    const history = getSimHistory();
-    const est = estimateExpectedScore(history);
+    const est = _compositeEstimate();
     const actual = getActualResult();
     const dday = getDDay();
 
     let html = '';
-    if (est && est.n >= 2) {
+    if (est && (est.n >= 2 || est.source !== 'sim')) {
         const t = TREND_META[est.trend];
+        const srcNote = est.source === 'sim'
+            ? `최근 모의고사 ${est.n}회 기준`
+            : est.source === 'blend'
+                ? `모의고사 ${est.n}회 + 학습 지표 복합 추정`
+                : '마스터리·퀴즈 정답률 기반 추정';
+        const biasNote = est.biasApplied
+            ? ` · 실제 결과 보정 ${est.biasApplied >= 0 ? '+' : ''}${est.biasApplied}점 적용` : '';
         html += `
             <div class="estimate-row">
                 <span class="estimate-label">예상 점수</span>
@@ -638,7 +684,7 @@ function renderExpectedScore() {
                     <i class="fa-solid ${t.icon}" aria-hidden="true"></i> ${t.label}
                 </span>
             </div>
-            <div class="estimate-note">최근 모의고사 ${est.n}회 기준 (합격선 평균 ${getExamRules().passAverage}점) — 실제 합격 여부가 아닌 점수 추정치입니다.</div>`;
+            <div class="estimate-note">${srcNote} (합격선 평균 ${getExamRules().passAverage}점)${biasNote} — 실제 합격 여부가 아닌 점수 추정치입니다.</div>`;
     }
 
     // 실제 결과: 기록됨 → 요약 표시 / 시험일 경과 → 입력 폼
@@ -683,7 +729,9 @@ export function saveActualExamResult() {
         showToast('점수는 0~100 사이로 입력해주세요.', 'error');
         return;
     }
-    saveActualResult(sel.value === 'pass', score);
+    // 무 보정 추정치를 함께 저장 — 다음 추정의 개인 편향(computeCalibrationBias) 산출 기준
+    const unbiased = _compositeEstimate(0);
+    saveActualResult(sel.value === 'pass', score, unbiased ? unbiased.expected : null);
     renderExpectedScore();
 }
 
@@ -691,4 +739,48 @@ export function saveActualExamResult() {
 export function editActualExamResult() {
     clearActualResult();
     renderExpectedScore();
+}
+
+/**
+ * 주간 학습 리포트 공유 — 진단 요약을 평문으로 생성해
+ * Web Share API(모바일) 또는 클립보드로보낸다. (data-click)
+ */
+export function exportAnalysisReport() {
+    trackAction('analysis_report');
+    const subjects = (typeof DataLoader !== 'undefined' && DataLoader.registry)
+        ? DataLoader.getSubjectList() : [];
+    const nameOf = (k) => { const s = subjects.find(x => x.key === k); return s ? s.name : k; };
+    const dday = getDDay();
+    const qc = (DataLoader._questionChapters) || { questions: {}, ranges: {} };
+    const est = _compositeEstimate();
+    const text = buildWeeklyReportText({
+        appName: getExamAppName(),
+        growth: computeWeeklyGrowth(getStudyCalendar()),
+        estimate: est,
+        gap: computePassGap({
+            estimate: est, simHistory: getSimHistory(), subjects,
+            counts: _getSubjCounts(), rules: getExamRules()
+        }),
+        weakChapters: computeSubjectWeakChapters({
+            quizResults: state.quizResults, weakCards: state.weakCards,
+            statementStats: getAllStatementStats(),
+            questionChapters: qc.questions, chapterRanges: qc.ranges,
+            resolveQuiz: resolveWrongQuiz, subjectName: nameOf, chaptersPerSubject: 1
+        }),
+        pattern: computeStudyPattern(getStudyCalendar()),
+        ddayLabel: dday === null ? null : (dday < 0 ? `D+${-dday}` : (dday === 0 ? 'D-Day' : `D-${dday}`))
+    });
+    if (navigator.share) {
+        navigator.share({ title: `${getExamAppName()} 주간 학습 리포트`, text })
+            .then(() => {})
+            .catch(() => {});
+        return;
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text)
+            .then(() => showToast('주간 리포트를 클립보드에 복사했습니다.', 'success'))
+            .catch(() => showToast('리포트 복사에 실패했습니다.', 'error'));
+        return;
+    }
+    showToast('이 환경에서는 리포트보내기를 지원하지 않습니다.', 'warning');
 }

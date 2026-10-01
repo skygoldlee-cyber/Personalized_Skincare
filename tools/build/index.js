@@ -454,6 +454,12 @@ function main() {
     registry.integratedExam = manifest.integratedExam;
   }
 
+  // 5a-4. 분석 설정 (맞춤학습 도메인 분류 — 오답 원인 분류표 등.
+  //       시험별 확장: analysis.wrongCauses 배열 → getWrongCauseTaxonomy 병합)
+  if (manifest.analysis) {
+    registry.analysis = manifest.analysis;
+  }
+
   // 5b. UI Text (뷰 제목/부제 — manifest에서 registry로 전달, 플레이스홀더 치환)
   if (manifest.uiText) {
     const totalQuestions = registry.exams.reduce((sum, e) =>

@@ -6,7 +6,7 @@ import { state, saveProgress } from '../state.js';
 import { safeTextWithBreaks, esc } from '../sanitize.js';
 import { switchView } from './navigation.js';
 import { DataLoader } from '../data-loader.js';
-import { computeWrongCauseSummary, WRONG_CAUSE_LABELS } from '../recommendations.js';
+import { computeWrongCauseSummary, getWrongCauseLabels } from '../recommendations.js';
 import { examIdToSubjectId } from '../exam-context.js';
 import {
     WEAK_QUIZ_PREFIX, WEAK_SIM_PREFIX,
@@ -30,8 +30,8 @@ function renderWrongCausePicker() {
     row.innerHTML = `
         <p class="wrong-cause-label">틀린 이유를 선택해 보세요:</p>
         <div class="wrong-cause-btns">
-            ${Object.entries(WRONG_CAUSE_LABELS).map(([k, label]) =>
-                `<button type="button" class="wrong-cause-btn" data-click="tagWrongCause" data-args='["${k}"]'>${label}</button>`).join('')}
+            ${Object.entries(getWrongCauseLabels()).map(([k, label]) =>
+                `<button type="button" class="wrong-cause-btn" data-click="tagWrongCause" data-args='["${k}"]'>${esc(label)}</button>`).join('')}
         </div>
         <div class="wrong-cause-reco is-hidden"></div>
     `;
@@ -451,10 +451,10 @@ export function renderQuizResult() {
                     ${cite ? `<p class="quiz-cite"><i class="fa-solid fa-book" aria-hidden="true"></i> 교재 근거: <strong>${esc(cite.source || cite.section)}</strong>${cite.source ? ` <span class="quiz-cite-sec">(${esc(cite.section)})</span>` : ''}</p>` : ''}
                     <div class="wrong-cause-inline">
                         ${causeInfo
-                            ? `<span class="wrong-cause-chip"><i class="fa-solid fa-tag"></i> ${WRONG_CAUSE_LABELS[causeInfo.cause] || ''}</span>`
+                            ? `<span class="wrong-cause-chip"><i class="fa-solid fa-tag"></i> ${esc(getWrongCauseLabels()[causeInfo.cause] || causeInfo.cause)}</span>`
                             : `<span class="wrong-cause-label">틀린 이유:</span>
-                               ${Object.entries(WRONG_CAUSE_LABELS).map(([k, label]) =>
-                                   `<button type="button" class="wrong-cause-btn" data-click="tagWrongCauseAt" data-args='["${esc(s.quizId)}", "${k}"]'>${label}</button>`).join('')}`
+                               ${Object.entries(getWrongCauseLabels()).map(([k, label]) =>
+                                   `<button type="button" class="wrong-cause-btn" data-click="tagWrongCauseAt" data-args='["${esc(s.quizId)}", "${k}"]'>${esc(label)}</button>`).join('')}`
                         }
                     </div>
                     <div class="wrong-relearn-row">
@@ -636,7 +636,7 @@ export function renderReviewList() {
     // 오답 패턴 분석 요약 — 최근 7일 원인 분포 + 권장 학습법
     const causeSummary = computeWrongCauseSummary(state.wrongCauses);
     if (causeSummary.total > 0) {
-        const dist = Object.entries(WRONG_CAUSE_LABELS)
+        const dist = Object.entries(getWrongCauseLabels())
             .filter(([k]) => causeSummary.counts[k] > 0)
             .map(([k, label]) => `${label} ${causeSummary.counts[k]}`)
             .join(' · ');

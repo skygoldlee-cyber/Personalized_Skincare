@@ -103,6 +103,11 @@
 | AN-02 | 학습 진단 요약 3카드 — 오답 패턴(7일 원인 분포·권장 학습법) / 취약 진술(오판 수·복습 대기·훈련소 딥링크 `gotoWeakReview`) / 학습 리듬(오늘 목표·주간 학습일·D-day·캘린더 링크) | ✅ |
 | AN-03 | 과목별 학습 상태 카드·정답률 히트맵·모의고사 분석(성적 추이·레이더·합격 진단·예상 점수) — 대시보드에서 이동, ID 기반 렌더 재사용 (`renderAnalysisView` → `renderDashboard` 위임) | ✅ |
 | AN-04 | 진단 준비 온보딩 + 취약 단원 딥링크 — 최소 표본(퀴즈 10문 또는 모의고사 1회) 미충족 시 진행률 카드를 분석 그리드 최상단에 표시하고 충족 시 자동 제거 (`_renderAnalysisOnboarding`, `analysis-onboarding-hint`). 단원별 취약 행 클릭 → `openSubjectSection(과목, 단원)`으로 교재 해당 섹션 직행 (`data-click` 위임, `wc-subrow`) | ✅ |
+| AN-05 | 복합 예상 점수 + 개인 보정 — 모의고사 이력이 주 지표, 표본 부족(cold start) 시 마스터리 졸업률·퀴즈 정답률을 가중 병합(이력 3회부터 이력 100%). 실제 결과 자가 보고 시 보고 시점 예상값을 함께 저장하고, 차이를 ±15점 절단해 다음 추정에 개인 편향으로 적용 (`estimateCompositeScore`, `computeCalibrationBias`, `saveActualResult`의 `expectedAtReport`) | ✅ |
+| AN-06 | 추천 효과 추적 — "오늘의 합격 전략" 발행 시 대상 과목 정답률을 `rec_snapshot` 기준선으로 저장(동일 대상 6시간 내 재기록 방지). 12시간 경과·과목당 신규 표본 5문 이상이면 다음 방문에서 정답률 변화(▲▼%p)를 추천 카드 상단에 표시 (`snapshotRecommendations`/`evaluateRecommendationEffect`) | ✅ |
+| AN-07 | 오답 원인 분류 확장 — 기본 3종(암기/개념/계산)에 manifest `analysis.wrongCauses`(key·label·advice)가 레지스트리 경유로 병합되는 시험별 분류표 (`getWrongCauseTaxonomy`). 자동 추정(`estimateUntaggedCauses`)은 선언된 키만 사용 — 조문 참조 문항→법령 혼동, 비산술 수치→수치 착각 등. 미선언 시험은 기본 3종만 노출 | ✅ |
+| AN-08 | 학습 패턴 분석 — `recordStudyActivity`가 활동별 시간대 버킷(캘린더 엔트리 `h`)을 기록하고 `computeStudyPattern`이 최다 시간대·요일·주말 비중을 집계해 학습 리듬 카드에 표시 (활동 4일·8회 미만이면 미표시) | ✅ |
+| AN-09 | 주간 리포트보내기 — 진단 요약 섹션의 "주간 리포트" 버튼이 `buildWeeklyReportText`로 평문 리포트(학습량·정답률 추이·예상 점수·합격 갭·취약 단원·패턴)를 생성, Web Share API 또는 클립보드로 출력 (`exportAnalysisReport`, `analysis_report` 액션 카운터) | ✅ |
 
 ### 3.2 플래시카드 (Flashcard)
 

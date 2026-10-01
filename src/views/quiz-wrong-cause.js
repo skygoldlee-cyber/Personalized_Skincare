@@ -3,7 +3,7 @@
 import { state, saveProgress } from '../state.js';
 import { esc } from '../sanitize.js';
 import { switchView } from './navigation.js';
-import { WRONG_CAUSE_LABELS } from '../recommendations.js';
+import { getWrongCauseLabels, getWrongCauseAdvice } from '../recommendations.js';
 import { weakItemKey, resolveWrongQuiz, subjectForWeakItem } from '../weak-items.js';
 import { trackAction } from '../usage-stats.js';
 import { startSubjectReader } from './dashboard.js';
@@ -20,7 +20,7 @@ import { _beginQuizRun, renderQuizResult } from './quiz.js';
  * memorize는 관련 플래시카드를 weakCards에 추가한다.
  */
 function _storeCause(quizId, cause) {
-    if (!(cause in WRONG_CAUSE_LABELS)) return;
+    if (!(cause in getWrongCauseLabels())) return;
     const itemId = weakItemKey(quizId);
     state.wrongCauses[itemId] = {
         cause: cause,
@@ -60,8 +60,14 @@ function _causeRecoHtml(cause, quizId) {
         case 'calc':
             return `<i class="fa-solid fa-calculator"></i> 같은 유형의 문제로 다시 연습해 보세요.
                 <button type="button" class="wrong-relearn-btn" data-click="wrongActionSimilar" data-args='["${esc(quizId)}"]'>유사 문제 풀기</button>`;
-        default:
-            return '';
+        default: {
+            // 시험별 확장 원인 (manifest analysis.wrongCauses) — 선언된 조언이 있으면 표시
+            const advice = getWrongCauseAdvice(cause);
+            if (!advice) return '';
+            return `<i class="fa-solid fa-lightbulb"></i> ${esc(advice)}
+                <button type="button" class="wrong-relearn-btn" data-click="wrongActionTextbook" data-args='["${esc(subjId)}"]'>교재 보기</button>
+                <button type="button" class="wrong-relearn-btn" data-click="wrongActionSimilar" data-args='["${esc(quizId)}"]'>유사 문제</button>`;
+        }
     }
 }
 
@@ -76,7 +82,7 @@ export function tagWrongCause(cause) {
 
     const feedbackPanel = document.getElementById('quiz-feedback-panel');
     if (!feedbackPanel) return;
-    const causeKeys = Object.keys(WRONG_CAUSE_LABELS);
+    const causeKeys = Object.keys(getWrongCauseLabels());
     feedbackPanel.querySelectorAll('.wrong-cause-btn').forEach((btn, i) => {
         btn.classList.toggle('active', causeKeys[i] === cause);
     });

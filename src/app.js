@@ -29,7 +29,8 @@ import {
     startSubjectReader,
     startDueReview,
     saveActualExamResult,
-    editActualExamResult
+    editActualExamResult,
+    exportAnalysisReport
 } from './views/dashboard.js';
 import {
     loadFlashcards,
@@ -571,7 +572,7 @@ const DELEGATED_HANDLERS = {
     tagWrongCause, tagWrongCauseAt, wrongActionCard, wrongActionTextbook, wrongActionSimilar,
     startDiagnosticQuiz,
     // 실제 시험 결과 자가 보고 (C1)
-    saveActualExamResult, editActualExamResult,
+    saveActualExamResult, editActualExamResult, exportAnalysisReport,
     // 통합 검색 팔레트
     openCommandPalette, closeCommandPalette, executePaletteResult,
     exportData, triggerImport, checkStorageWarning,

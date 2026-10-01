@@ -25,6 +25,7 @@ const ACTION_LABELS = {
     diagnostic_quiz: '진단 평가',
     story_textbook: '이야기형 교재 읽기',
     personal_analysis: '맞춤학습 보기',
+    analysis_report: '주간 리포트 공유',
     actual_exam_report: '실제 시험 결과 보고',
     command_palette: '통합 검색 (Ctrl+K)',
     plan_compare: 'Free/Pro 플랜 비교',
@@ -36,7 +37,7 @@ const ACTION_LABELS = {
  */
 const VALUE_ACTIONS = new Set([
     'weak_to_textbook', 'weak_to_card', 'weak_to_similar',
-    'diagnostic_quiz', 'story_textbook', 'personal_analysis', 'actual_exam_report',
+    'diagnostic_quiz', 'story_textbook', 'personal_analysis', 'analysis_report', 'actual_exam_report',
 ]);
 
 function _todayStr() { return new Date().toISOString().slice(0, 10); }

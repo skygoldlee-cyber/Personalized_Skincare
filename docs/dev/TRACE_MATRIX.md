@@ -3,8 +3,8 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: 309eae408b257923
-> 생성: 2026-10-01 · 원천: SPEC.md(367개 ID) + @spec 태그 + 문서 헤더
+> 입력 해시: 6df608c76fac0cf3
+> 생성: 2026-10-01 · 원천: SPEC.md(372개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
 |----|------|------|
@@ -16,7 +16,7 @@
 | 보고서 | 분석·결과 보고서 | report_archive 헤더 |
 | 출처 | 요구사항의 기원 (법령·시험 규정·사업 문서) | SPEC 부록 "요구사항 출처" 표 |
 
-**커버리지 요약**: 요구사항 367개 — 문서 연결 237 · 소스 연결 347 · 테스트 연결 361 · 보고서 연결 109
+**커버리지 요약**: 요구사항 372개 — 문서 연결 237 · 소스 연결 352 · 테스트 연결 366 · 보고서 연결 109
 
 ---
 
@@ -49,6 +49,11 @@
 | AN-02 | ✅ | 테스트 | DOC-DSN-03 | src/analysis-engine.js<br>src/views/dashboard.js<br>src/views/quiz-wrong-cause.js | tests/dom/study-dashboard.dom.test.js<br>tests/unit/analysis-engine.test.js | DOC-ARC-09 | — |
 | AN-03 | ✅ | 테스트 | DOC-DSN-03 | src/views/dashboard.js | tests/dom/study-dashboard.dom.test.js | DOC-ARC-09 | — |
 | AN-04 | ✅ | 테스트 | — | src/views/dashboard.js | tests/unit/reader-analysis-gates.test.js | — | — |
+| AN-05 | ✅ | 테스트 | — | src/recommendations.js<br>src/views/dashboard.js | tests/unit/analysis-deepening.test.js | — | — |
+| AN-06 | ✅ | 테스트 | — | src/recommendations.js<br>src/views/dashboard.js | tests/unit/analysis-deepening.test.js | — | — |
+| AN-07 | ✅ | 테스트 | — | src/analysis-engine.js<br>src/recommendations.js<br>src/views/dashboard.js | tests/unit/analysis-deepening.test.js | — | — |
+| AN-08 | ✅ | 테스트 | — | src/analysis-engine.js<br>src/views/dashboard.js | tests/unit/analysis-deepening.test.js | — | — |
+| AN-09 | ✅ | 테스트 | — | html/views/analysis.html<br>index.html<br>src/analysis-engine.js<br>src/views/dashboard.js | tests/unit/analysis-deepening.test.js | — | — |
 
 ## 3.2 플래시카드
 

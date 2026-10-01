@@ -15,7 +15,8 @@ export const STORAGE_KEYS = {
   QUIZ_WRONG_CAUSES: 'quiz_wrong_causes',  // { itemId: { cause, ts, subjectId } } — 오답 원인 자가 태깅
   SIM_RESULTS_HISTORY: 'sim_results_history',
   SIM_DRAFT_SESSION: 'sim_draft_session',
-  ACTUAL_EXAM_RESULT: 'actual_exam_result', // { passed, score|null, reportedAt, examId } — 실제 시험 결과 자가 보고
+  ACTUAL_EXAM_RESULT: 'actual_exam_result', // { passed, score|null, expectedAtReport, reportedAt, examId } — 실제 시험 결과 자가 보고
+  REC_SNAPSHOT: 'rec_snapshot',        // 추천 발행 시점 과목별 정답률 기준선 — 추천 효과 추적 (recommendations.js)
 
   // 뽀모도로
   POMO_TOTAL_TIME: 'pomo_total_time',
@@ -134,6 +135,7 @@ export const RESET_KEYS = [
   STORAGE_KEYS.POMO_SESSION_COUNT,
   STORAGE_KEYS.POMO_SESSION_DATE,
   STORAGE_KEYS.FC_SPACED_REPETITION,
+  STORAGE_KEYS.REC_SNAPSHOT,
   STORAGE_KEYS.READER_LAST_POSITION,
   STORAGE_KEYS.EXAM_VIEW_POS,
   STORAGE_KEYS.USAGE_STATS,

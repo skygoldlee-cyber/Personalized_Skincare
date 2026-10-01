@@ -59,7 +59,7 @@ content/exams/<id>/
 
 ### 필수 콘텐츠 교체
 
-- `manifest.json` — `subjects`·`exams`·`integratedExam`을 실제 과목 구성으로
+- `manifest.json` — `subjects`·`exams`·`integratedExam`을 실제 과목 구성으로. 선택 선언: `uiText`(뷰 라벨)·`synonyms`(주관식 유사어)·`analysis.wrongCauses`(오답 원인 분류 확장 — `key`·`label`·`advice` 배열, 미선언 시 기본 3종)
 - `교재/`·`문제은행/` — 샘플 파일을 실제 MD로 교체
 - `references.json` — 참조자료 메타데이터. 법령 추적이 필요하면 `content/lawdb.json` + `lawRefs`·`noticeCore` 설정
 

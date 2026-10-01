@@ -6,6 +6,16 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-01 맞춤학습 심화 6종 (복합 추정·개인 보정·추천 효과·분류 확장·패턴·리포트)
+
+- **복합 예상 점수** (`recommendations.js`, AN-05): `estimateCompositeScore` — 모의고사 이력이 주 지표, 표본 부족 시 마스터리 졸업률(가중 0.6)·퀴즈 정답률(5문+, 50문 만점 가중) 병합. 이력 3회부터 이력 100%. source: `sim`/`blend`/`aux`로 표시 문구 분기
+- **개인 편향 보정** (AN-05): `saveActualResult(…, expectedAtReport)`가 보고 시점 무 보정 예상을 함께 저장 → `computeCalibrationBias`가 실제-예상 차이를 ±15점 절단해 다음 추정에 적용 ("실제 결과 보정 ±N점 적용" 표기)
+- **추천 효과 추적** (AN-06): 추천 발행 시 대상 과목 정답률을 `rec_snapshot`에 기록(동일 대상 6h 내 재기록 방지) → 12h 경과·과목당 신규 표본 5문+ 시 추천 카드 상단에 "지난 추천 이후 과목 N%→M%" 표시
+- **오답 원인 분류 manifest-driven** (AN-07): `manifest.analysis.wrongCauses` → `registry.analysis` 패스스루(build:index.js) → `getWrongCauseTaxonomy()`가 기본 3종에 병합. 태깅 버튼·요약·자동 추정 전부 분류표 기준으로 전환 — cosmetic에 `lawConfusion`(조문 참조 문항)·`numeric`(비산술 수치) 추가, 미선언 시험은 기본 3종만
+- **학습 패턴 분석** (AN-08): `recordStudyActivity`가 캘린더 엔트리에 시간대 버킷 `h` 기록 → `computeStudyPattern`이 최다 시간대(새벽/오전/오후/저녁/밤)·요일·주말 비중 집계 (활동 4일·8회 미만 시 미표시) — 학습 리듬 카드에 표시
+- **주간 리포트보내기** (AN-09): `buildWeeklyReportText` 평문 리포트(주간 학습량·정답률 추이·예상 점수·합격 갭·취약 단원·패턴) → `exportAnalysisReport`가 Web Share API/클립보드로 출력. 분석 뷰 진단 요약 섹션에 버튼, `analysis_report` 액션 카운터(VALUE_ACTIONS) 등록
+- 테스트: `tests/unit/analysis-deepening.test.js` 신규 17건 — 전 함수 직접 실행 검증
+
 ## 2026-10-01 맞춤학습·이야기형 보완 5종 (커버리지 게이트·위치 보존·딥링크·온보딩·Pro 정책)
 
 - **서사 커버리지 게이트** (`build_story_textbooks.js`, BP-10): 빌드 시 챕터별 서사 블록 수 리포트. storyFile 선언 패치에 `story` 플래그 insert 0개이면 빌드 오류 — 이야기형이 표준형과 동일한 사일런트 저하 차단. 수작업 이야기형(패치 없음)은 `story:start` 마커 스캔으로 커버리지만 리포트

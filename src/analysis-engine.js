@@ -1,5 +1,5 @@
 // src/analysis-engine.js — 맞춤학습(analysis-view) 심층 분석 순수 로직
-// @spec AN-01,AN-02,D-16
+// @spec AN-01,AN-02,AN-07,AN-08,AN-09,D-16
 //
 // 모든 함수는 DOM 비의존·과목 무관 — 데이터를 주입받아 계산만 한다.
 // 과목 키/단원명은 manifest·question_chapters·statement_stats에서 동적으로 해석하므로
@@ -16,6 +16,7 @@
 import { parseWeakSimId, subjectKeyFromItemId, WEAK_QUIZ_PREFIX } from './weak-items.js';
 import { resolveLegacySubjectKey } from './exam-context.js';
 import { WEAK_GRADUATE_STREAK } from './statement-tracker.js';
+import { getWrongCauseLabels } from './recommendations.js';
 
 /**
  * sid("law_st_ab12cd") → 과목 키 ("law").
@@ -318,10 +319,12 @@ export function computePaceProjection(p) {
  * @param {Object} p.quizResults state.quizResults
  * @param {Object} p.wrongCauses state.wrongCauses (태깅된 항목 제외용)
  * @param {(id:string)=>{quiz:object,subjectId:string}|null} p.resolveQuiz
- * @returns {{counts:Object, estimated:number}} 추정 건수 (WRONG_CAUSE_LABELS 키 기준)
+ * @returns {{counts:Object, estimated:number}} 추정 건수 (활성 분류표 키 기준)
  */
 export function estimateUntaggedCauses(p) {
-    const counts = { memorize: 0, concept: 0, calc: 0 };
+    const labels = getWrongCauseLabels();
+    const counts = {};
+    Object.keys(labels).forEach(k => { counts[k] = 0; });
     let estimated = 0;
     const tagged = new Set(Object.keys(p.wrongCauses || {}));
     Object.entries(p.quizResults || {}).forEach(([id, r]) => {
@@ -332,9 +335,13 @@ export function estimateUntaggedCauses(p) {
         const q = resolved && resolved.quiz;
         if (!q) return;
         estimated++;
-        const ans = String(q.answer ?? '');
+        const ans = String(q.answer ?? '').trim();
         const text = String(q.question || '') + String(q.context || '');
-        if (/^\d+(\.\d+)?\s*(%|ml|g|mg|배|회|일|개월|년|도|만원|원)?$/.test(ans.trim())) counts.calc++;
+        const numeric = /^\d+(\.\d+)?\s*(%|ml|g|mg|배|회|일|개월|년|도|만원|원)?$/.test(ans);
+        // 시험별 확장 분류 — 분류표에 선언된 키만 사용 (미선언 시 기본 키로 귀속)
+        if (counts.lawConfusion !== undefined && /제\s*\d+\s*조|조문|법률|고시|규정|기준\s*및\s*규격/.test(text)) counts.lawConfusion++;
+        else if (numeric && counts.numeric !== undefined && !/(계산|구하|얼마|몇)/.test(text)) counts.numeric++;
+        else if (numeric) counts.calc++;
         else if (/(아닌|않는|틀린|잘못된|옳지)\s*(것|항목|설명)?/.test(text)) counts.concept++;
         else counts.memorize++;
     });
@@ -365,4 +372,117 @@ export function computeMasteryLevels(statementStats) {
         map[subj] = { ...m, percent, level: Math.min(5, Math.floor(percent / 20) + 1) };
     });
     return map;
+}
+
+/* =======================================================
+   7) 학습 패턴 분석 — 시간대·요일별 집중도
+   캘린더 엔트리의 시간대 버킷(h) + 날짜의 요일로 집계한다.
+   ======================================================= */
+
+const _DOW_LABELS = ['일', '월', '화', '수', '목', '금', '토'];
+const _HOUR_BANDS = [
+    { key: 'dawn', label: '새벽 (0~4시)', test: (h) => h >= 0 && h < 5 },
+    { key: 'morning', label: '오전 (5~11시)', test: (h) => h >= 5 && h < 12 },
+    { key: 'afternoon', label: '오후 (12~17시)', test: (h) => h >= 12 && h < 18 },
+    { key: 'evening', label: '저녁 (18~22시)', test: (h) => h >= 18 && h < 23 },
+    { key: 'night', label: '밤 (23시~)', test: (h) => h >= 23 }
+];
+
+/**
+ * 학습 패턴 인사이트 — 최다 활동 시간대·요일·주말 비중.
+ * @param {Object} calendar getStudyCalendar() 결과
+ * @returns {{activeDays:number, events:number,
+ *   topBand:{key:string,label:string,count:number,pct:number}|null,
+ *   topDow:{dow:number,label:string,count:number,pct:number}|null,
+ *   weekendShare:number}|null} 표본 부족(활동 4일·8회 미만)이면 null
+ */
+export function computeStudyPattern(calendar) {
+    const bandCnt = new Array(_HOUR_BANDS.length).fill(0);
+    const dowCnt = new Array(7).fill(0);
+    let activeDays = 0, actEvents = 0, hourEvents = 0, weekendEvents = 0;
+    Object.entries(calendar || {}).forEach(([dateStr, e]) => {
+        if (!e || !(e.cards > 0 || e.quizzes > 0)) return;
+        activeDays++;
+        const d = new Date(dateStr + 'T00:00:00');
+        if (isNaN(d.getTime())) return;
+        const dow = d.getDay();
+        const dayEvents = (e.cards || 0) + (e.quizzes || 0);
+        dowCnt[dow] += dayEvents;
+        actEvents += dayEvents;
+        if (dow === 0 || dow === 6) weekendEvents += dayEvents;
+        if (e.h) {
+            Object.entries(e.h).forEach(([h, c]) => {
+                const bi = _HOUR_BANDS.findIndex(b => b.test(parseInt(h, 10)));
+                if (bi >= 0) { bandCnt[bi] += c; hourEvents += c; }
+            });
+        }
+    });
+    if (actEvents < 8 || activeDays < 4) return null;
+    const topBandIdx = bandCnt.indexOf(Math.max(...bandCnt));
+    const topDowIdx = dowCnt.indexOf(Math.max(...dowCnt));
+    return {
+        activeDays,
+        events: actEvents,
+        topBand: bandCnt[topBandIdx] > 0
+            ? { key: _HOUR_BANDS[topBandIdx].key, label: _HOUR_BANDS[topBandIdx].label, count: bandCnt[topBandIdx], pct: Math.round((bandCnt[topBandIdx] / hourEvents) * 100) }
+            : null,
+        topDow: dowCnt[topDowIdx] > 0
+            ? { dow: topDowIdx, label: _DOW_LABELS[topDowIdx] + '요일', count: dowCnt[topDowIdx], pct: Math.round((dowCnt[topDowIdx] / actEvents) * 100) }
+            : null,
+        weekendShare: Math.round((weekendEvents / actEvents) * 100)
+    };
+}
+
+/* =======================================================
+   8) 주간 리포트 — 공유용 텍스트 생성
+   ======================================================= */
+
+/**
+ * 주간 학습 리포트 텍스트 생성 (공유/클립보드용 — 마크다운 없는 평문).
+ * @param {Object} p
+ * @param {string} [p.appName] 앱명 (getExamAppName())
+ * @param {Object} [p.growth] computeWeeklyGrowth 결과
+ * @param {Object} [p.estimate] estimateCompositeScore 결과
+ * @param {Object} [p.gap] computePassGap 결과
+ * @param {Array} [p.weakChapters] computeSubjectWeakChapters 결과
+ * @param {Object} [p.pattern] computeStudyPattern 결과
+ * @param {string|null} [p.ddayLabel] D-day 표기
+ * @returns {string}
+ */
+export function buildWeeklyReportText(p) {
+    const now = new Date();
+    const weekAgo = new Date(now); weekAgo.setDate(now.getDate() - 6);
+    const fmt = (d) => `${d.getMonth() + 1}/${d.getDate()}`;
+    const lines = [`📋 ${p.appName || 'Passmula'} 주간 학습 리포트 (${fmt(weekAgo)}~${fmt(now)})`, ''];
+
+    const g = p.growth;
+    if (g) {
+        lines.push(`■ 이번 주: 퀴즈 ${g.thisWeek.quizzes}문 · 정답률 ${g.thisWeek.rate !== null ? g.thisWeek.rate + '%' : '—'} · 카드 ${g.thisWeek.cards}장 · 학습 ${g.thisWeek.days}일`);
+        if (g.rateDelta !== null) lines.push(`  정답률 전주 대비 ${g.rateDelta >= 0 ? '▲' : '▼'}${Math.abs(g.rateDelta)}%p`);
+    }
+    if (p.estimate) {
+        const src = p.estimate.source === 'sim' ? `모의고사 ${p.estimate.n}회 기준` : '학습 지표 복합 추정';
+        lines.push(`■ 예상 점수: ${p.estimate.lo}~${p.estimate.hi}점 (${src})`);
+    }
+    if (p.gap) {
+        if (p.gap.gap !== null) lines.push(`■ 합격선(평균 ${p.gap.passLine}점)까지: ${p.gap.gap === 0 ? '도달' : '+' + p.gap.gap + '점'}`);
+        if (p.gap.weakest) lines.push(`■ 최우선 보강: ${p.gap.weakest.name} ${p.gap.weakest.rate}%`);
+    }
+    const wc = (p.weakChapters || []).slice(0, 3);
+    if (wc.length) {
+        lines.push('■ 취약 단원:');
+        wc.forEach(w => {
+            const ch = (w.chapters || [])[0];
+            lines.push(`  - ${w.subject}${ch ? ' > ' + ch.chapter : ''} (오답 ${w.totalWrongs}건)`);
+        });
+    }
+    if (p.pattern) {
+        const bits = [];
+        if (p.pattern.topBand) bits.push(`집중 시간대 ${p.pattern.topBand.label}`);
+        if (p.pattern.topDow) bits.push(`최다 요일 ${p.pattern.topDow.label}`);
+        if (bits.length) lines.push(`■ 학습 패턴: ${bits.join(' · ')}`);
+    }
+    if (p.ddayLabel) lines.push(`■ 시험일: ${p.ddayLabel}`);
+    lines.push('', '— Passmula 맞춤학습 리포트');
+    return lines.join('\n');
 }

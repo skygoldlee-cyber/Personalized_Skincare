@@ -371,7 +371,7 @@
             </section>
 
             <!-- 맞춤학습 뷰 — 개인화 학습 허브 (Pro 후보: personal_analysis) -->
-            <!-- @spec AN-01 -->
+            <!-- @spec AN-01,AN-09 -->
             <section id="analysis-view" class="view-section">
 
                 <!-- 페이지 안내 — Pro 기능 소개와 활용법. 첫 방문은 열림, 접으면 상태 기억 -->
@@ -389,7 +389,7 @@
                         각 카드의 버튼을 누르면 해당 학습 화면으로 바로 이동합니다.
                     </p>
                     <ul class="analysis-intro-list">
-                        <li><strong>오답 패턴 분석</strong> — 최근 7일의 틀린 이유(암기 부족·개념 오해·계산 실수)를 집계해 어떤 공부법이 필요한지 알려줍니다. 태그하지 않은 오답도 자동 추정으로 보완합니다.</li>
+                        <li><strong>오답 패턴 분석</strong> — 최근 7일의 틀린 이유(암기 부족·개념 오해·계산 실수 등 시험별 분류)를 집계해 어떤 공부법이 필요한지 알려줍니다. 태그하지 않은 오답도 자동 추정으로 보완합니다.</li>
                         <li><strong>취약 진술 추적</strong> — O/X·ㄱㄴㄷ 조합 드릴에서 반복해서 오판한 진술을 텍스트로 보여주고, 같은 개념 구간의 연쇄 오판도 감지합니다.</li>
                         <li><strong>학습 리듬</strong> — 오늘 목표 달성률·주간 학습일·시험 D-day를 추적하고, 주간 정답률 변화와 시험일까지의 페이스를 판정합니다.</li>
                         <li><strong>단원별 취약 분석</strong> — 오답을 교재 단원으로 매핑해 과목별로 "어느 단원이 약한지" 보여줍니다 (과락은 과목 단위 평가이므로).</li>
@@ -408,6 +408,7 @@
                 <div class="section-title">
                     <h3><i class="fa-solid fa-compass" aria-hidden="true"></i> 학습 진단 요약</h3>
                     <p class="section-subtitle">왜 틀렸는지(오답 원인), 무엇을 자주 틀리는지(취약 진술·취약 단원), 얼마나 꾸준한지(학습 리듬), 합격까지 얼마나 남았는지(합격 갭)를 요약합니다</p>
+                    <button class="btn btn-secondary btn-sm analysis-report-btn" data-click="exportAnalysisReport" title="주간 진단 요약을 공유하거나 클립보드에 복사합니다"><i class="fa-solid fa-share-nodes" aria-hidden="true"></i> 주간 리포트</button>
                 </div>
                 <div class="analysis-insight-grid mb-7">
                     <div class="analytics-card" id="analysis-wrong-cause"><!-- 오답 패턴 (dashboard.js) --></div>
