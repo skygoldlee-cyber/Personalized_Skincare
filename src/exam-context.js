@@ -198,9 +198,10 @@ export function getExamRules() {
  * 과목 키(law 등)로 환산할 때 이 함수를 거친다.
  * (charts.js 성적 집계와 recommendations.js 과락 추천이 같은 규칙을 쓴다).
  * @param {string} subj
- * @returns {string} 매핑된 과목 키 (매핑 실패 시 입력 그대로)
+ * @returns {string} 매핑된 과목 키 (subjectN이 아니거나 매핑 실패 시 입력 그대로)
  */
 export function resolveLegacySubjectKey(subj) {
+    if (!subj || !subj.startsWith('subject')) return subj;
     const exams = (typeof window !== 'undefined' && window.DATA_REGISTRY && window.DATA_REGISTRY.exams) || [];
     const exam = exams.find(e => e.key === subj || e.key.startsWith(subj));
     return exam ? exam.subject : subj;

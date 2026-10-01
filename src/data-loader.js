@@ -448,6 +448,22 @@ export const DataLoader = {
         if (!data || !data.length) throw new Error(`Knowledge data is empty or invalid: ${meta.global}`);
         this._knowledge[key] = data;
         return data;
+    },
+
+    /**
+     * 이미 로드된 지식DB 엔티티 배열 (동기 조회) — registry.knowledge 스키마의
+     * registryKey/global 해석 + 캐시 → window[global] 순. 미로드 시 빈 배열.
+     * @returns {Array}
+     */
+    getKnowledgeItems() {
+        const reg = /** @type {any} */ (this.registry) || {};
+        const k = (reg.knowledge && typeof reg.knowledge === 'object') ? reg.knowledge : {};
+        const key = k.registryKey || 'ingredients';
+        const cached = (this._knowledge && this._knowledge[key]) || this._ingredients;
+        if (Array.isArray(cached) && cached.length) return cached;
+        const g = k.global || 'INGREDIENTS_DATA';
+        const w = /** @type {any} */ (typeof window !== 'undefined' ? window : {});
+        return Array.isArray(w[g]) ? w[g] : [];
     }
 };
 

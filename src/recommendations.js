@@ -64,7 +64,7 @@ export function computeRecommendations(subjects, counts) {
         if (last && last.subjectRates) {
             Object.entries(last.subjectRates).forEach(([subj, rate]) => {
                 if (rate === null || rate === undefined || rate >= failBelow) return;
-                const key = subj.startsWith('subject') ? resolveLegacySubjectKey(subj) : subj;
+                const key = resolveLegacySubjectKey(subj);
                 if (!subjects.some(s => s.key === key)) return;
                 recs.push({
                     icon: 'fa-triangle-exclamation', color: 'var(--color-danger)',

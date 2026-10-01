@@ -5,6 +5,7 @@
 // 기한 상태는 저장하지 않고 표시 시 계산한다 — materialStatus/daysUntilExpiry.
 
 import { esc } from '../sanitize.js';
+import { todayKey } from '../utils.js';
 import { showToast, showConfirm } from '../ui-utils.js';
 import { showStoreError, showUpgradeNotice } from '../pro-upgrade.js';
 import { showPanel, formulaSubNav } from './formula.js';
@@ -282,7 +283,7 @@ async function matImportFile(event) {
 export function matExportCsv() {
   const list = listMaterials();
   if (!list.length) { showToast('보낼 원료가 없습니다.', 'info'); return; }
-  downloadCsv(toCsv([...MAT_CSV_HEADERS], list, matToCsvRow), `materials_${new Date().toISOString().split('T')[0]}.csv`);
+  downloadCsv(toCsv([...MAT_CSV_HEADERS], list, matToCsvRow), `materials_${todayKey()}.csv`);
   showToast(`${list.length}종의 원료를 CSV로보냈습니다.`, 'success');
 }
 

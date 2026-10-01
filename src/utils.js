@@ -13,6 +13,11 @@ export function shuffle(arr) {
     return a;
 }
 
+/** 오늘 날짜를 'YYYY-MM-DD' 키로 반환 (진도/스트릭/백업 파일명 공용) */
+export function todayKey(date) {
+    return (date || new Date()).toISOString().split('T')[0];
+}
+
 export function getChosung(str) {
     const chosungs = ['ㄱ','ㄲ','ㄴ','ㄷ','ㄸ','ㄹ','ㅁ','ㅂ','ㅃ','ㅅ','ㅆ','ㅇ','ㅈ','ㅉ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
     let result = '';

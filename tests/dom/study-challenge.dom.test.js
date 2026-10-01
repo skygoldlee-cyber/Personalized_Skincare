@@ -7,7 +7,8 @@
 
 import { describe, it, beforeEach, expect, vi } from 'vitest';
 
-vi.mock('../../src/ui-utils.js', () => ({
+vi.mock('../../src/ui-utils.js', async (importOriginal) => ({
+    ...await importOriginal(),
     showToast: vi.fn(),
     showConfirm: vi.fn(() => Promise.resolve(true)),
     showGlobalLoading: vi.fn(),

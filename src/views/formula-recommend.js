@@ -15,6 +15,8 @@ import {
   calc, getEl, getIndex,
   renderCalcRows, renderStability, updateFoldSummaries, readCustomerInputs,
 } from './formula.js';
+import { DataLoader } from '../data-loader.js';
+import { todayKey } from '../utils.js';
 /* =======================================================
    추천 베이스 · 원료 패널 (규칙 기반 — 이름만 제안, 농도 미제안)
    ======================================================= */
@@ -250,7 +252,7 @@ export async function formulaRuleReset() {
 
 /** 맞춤 규칙 JSON 내보내기 — 외부 공유·편집용 파일 다운로드 */
 export function formulaRuleExport() {
-  downloadJson(serializeCustomRules(), `formula_rules_${new Date().toISOString().split('T')[0]}.json`);
+  downloadJson(serializeCustomRules(), `formula_rules_${todayKey()}.json`);
   showToast('맞춤 추천 규칙 파일을 다운로드했습니다.', 'success');
 }
 
@@ -290,7 +292,7 @@ function formulaRuleImportFile(event) {
 export function populateDatalist() {
   const dl = getEl('formula-ing-datalist');
   if (!dl || dl.childElementCount) return;
-  const db = typeof window.INGREDIENTS_DATA !== 'undefined' ? window.INGREDIENTS_DATA : [];
+  const db = DataLoader.getKnowledgeItems();
   // 금지 원료도 검색은 되되, 배합 검증에서 banned으로 표시된다.
   const frag = document.createDocumentFragment();
   db.forEach(ing => {

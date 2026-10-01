@@ -10,7 +10,7 @@
 import { esc } from '../sanitize.js';
 import { showToast, showConfirm } from '../ui-utils.js';
 import { showStoreError, showUpgradeNotice } from '../pro-upgrade.js';
-import { showPanel, formulaSubNav } from './formula.js';
+import { showPanel, formulaSubNav, getEl } from './formula.js';
 import { listFormulas, getFormula } from '../formula-store.js';
 import { listCustomers, getCustomer } from '../customer-store.js';
 import { buildIngredientIndex, checkFormulaItems } from '../formula-check.js';
@@ -29,9 +29,8 @@ import {
   buildBatchRecordHtml, buildLabelHtml, buildGuideHtml, printHtml, batchQcSummary,
 } from './formula-print.js';
 
-/** id → 폼 요소 (배치 폼 필드는 템플릿에서 모두 input/select/textarea) */
-const getEl = (id) => /** @type {HTMLInputElement} */ (document.getElementById(id));
 import { toCsv, downloadCsv } from '../csv-utils.js';
+import { todayKey } from '../utils.js';
 
 // 폼 상태 — editingId가 있으면 보정 모드(identity 필드 읽기 전용)
 const draft = { editingId: null };
@@ -39,8 +38,7 @@ const draft = { editingId: null };
 let ingredientIndex = null;
 function getIndex() {
   if (!ingredientIndex) {
-    const db = typeof window.INGREDIENTS_DATA !== 'undefined' ? window.INGREDIENTS_DATA : [];
-    ingredientIndex = buildIngredientIndex(db);
+    ingredientIndex = buildIngredientIndex(DataLoader.getKnowledgeItems());
   }
   return ingredientIndex;
 }
@@ -244,7 +242,7 @@ export function batchExportCsv() {
   if (!rows.length) { showToast('보낼 조제 기록이 없습니다.', 'warning'); return; }
   downloadCsv(
     toCsv([...BATCH_CSV_HEADERS], rows, batchToCsvRow),
-    `batches_${new Date().toISOString().split('T')[0]}.csv`
+    `batches_${todayKey()}.csv`
   );
   showToast(`조제 기록 ${rows.length}건을 CSV로 저장했습니다.`, 'success');
 }

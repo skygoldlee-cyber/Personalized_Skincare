@@ -5,15 +5,18 @@
 
 import { describe, it, beforeEach, expect, vi } from 'vitest';
 
-vi.mock('../../src/ui-utils.js', () => ({
-    showToast: vi.fn(),
-    showConfirm: vi.fn(() => Promise.resolve(true)),
-    showGlobalLoading: vi.fn(),
-    hideGlobalLoading: vi.fn(),
-    vibrate: vi.fn(),
-    trapFocus: vi.fn(() => () => {}),
-    HAPTIC: { correct: 30, wrong: [40, 30, 40], tap: 10 },
-}));
+vi.mock('../../src/ui-utils.js', async (importOriginal) => {
+    const actual = await importOriginal();
+    return {
+        ...actual,
+        showToast: vi.fn(),
+        showConfirm: vi.fn(() => Promise.resolve(true)),
+        showGlobalLoading: vi.fn(),
+        hideGlobalLoading: vi.fn(),
+        vibrate: vi.fn(),
+        trapFocus: vi.fn(() => () => {}),
+    };
+});
 vi.mock('../../src/scratchpad.js', () => ({
     clearScratchpad: vi.fn(),
     initScratchpad: vi.fn(),

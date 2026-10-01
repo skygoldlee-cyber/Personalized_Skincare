@@ -211,7 +211,7 @@ export function computePassGap(p) {
         let worst = null;
         for (const [k, rate] of Object.entries(last.subjectRates)) {
             if (rate === null || rate === undefined) continue;
-            const key = k.startsWith('subject') ? resolveLegacySubjectKey(k) : k;
+            const key = resolveLegacySubjectKey(k);
             const subj = (p.subjects || []).find(s => s.key === key);
             const name = subj ? subj.name : key;
             if (!worst || rate < worst.rate) worst = { key, name, rate };

@@ -8,7 +8,7 @@ import { checkShortAnswer } from './trainer.js';
 // [모바일 PWA 견고성] 레지스트리는 window 전역(가드)에서 읽는다(정적 import 하드 의존 지양).
 import { DataLoader } from '../data-loader.js';
 import { showGlobalLoading, hideGlobalLoading, showToast, vibrate, HAPTIC } from '../ui-utils.js';
-import { shuffle } from '../utils.js';
+import { shuffle, todayKey } from '../utils.js';
 import { STORAGE_KEYS } from '../storage-keys.js';
 import { TIMING } from '../config/timing.js';
 import { simState } from './exam-sim-state.js';
@@ -790,7 +790,7 @@ export function saveExamResultToHistory(examId, score, total, subjectRates) {
         if (Array.isArray(parsed)) history = parsed;
     } catch (e) { history = []; }
     history.push({
-        date: new Date().toISOString().split('T')[0],
+        date: todayKey(),
         examId: examId,
         rate: Math.round((score / total) * 100),
         subjectRates: subjectRates || null

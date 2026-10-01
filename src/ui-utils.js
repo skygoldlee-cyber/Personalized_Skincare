@@ -1,6 +1,8 @@
 // ui-utils.js - 로딩 오버레이 및 스피너 UI 유틸리티 (공통 모듈)
 // @spec A-07,UX-FB-01~04
 
+import { escapeHTML, safeTextWithBreaks } from './sanitize.js';
+
 export function showGlobalLoading(message = '로딩 중...') {
     let overlay = document.getElementById('global-loading-overlay');
     if (!overlay) {
@@ -39,6 +41,115 @@ export function vibrate(pattern) {
 }
 export const HAPTIC = { correct: 30, wrong: [40, 30, 40], tap: 10 };
 
+/**
+ * 객관식(.limits-opt-btn) 채점 표시 — 전 버튼 비활성 + 정답 버튼 강조 + 오답 선택 표시.
+ * 버튼은 dataset.value에 비교값을 보유해야 한다 — 표시 텍스트 부분일치는
+ * '5'가 '50'에도 걸리는 오매칭 버그가 있어 값 비교로 통일한다.
+ * @param {ParentNode|null} container - 선택지 버튼 컨테이너
+ * @param {HTMLButtonElement} selectedBtn - 사용자가 선택한 버튼
+ * @param {string} correctValue - 정답 값
+ */
+export function markChoiceButtons(container, selectedBtn, correctValue) {
+    if (!container) return;
+    container.querySelectorAll('.limits-opt-btn').forEach(node => {
+        const btn = /** @type {HTMLButtonElement} */ (node);
+        btn.disabled = true;
+        if (btn.dataset.value === correctValue) btn.classList.add('correct');
+    });
+    if (selectedBtn && selectedBtn.dataset.value !== correctValue) {
+        selectedBtn.classList.add('incorrect');
+    }
+}
+
+/**
+ * 오답 리뷰 목록 HTML — 전부 정답이면 완료 문구, 아니면 문항별 카드 목록.
+ * 항목은 {question, selected, correctAnswer} 형태 (훈련소·퀴즈 결과 공용).
+ * @param {Array<{question:string, selected:string, correctAnswer:string}>} wrongAnswers
+ * @param {(item:object, idx:number)=>string} [renderItem] 문항별 카드 HTML 커스텀 렌더러
+ * @returns {string}
+ */
+export function wrongReviewHtml(wrongAnswers, renderItem) {
+    if (!wrongAnswers.length) {
+        return '<p style="text-align:center; color:var(--color-success); font-weight:600;"><i class="fa-solid fa-circle-check"></i> 모든 문제를 맞혔습니다!</p>';
+    }
+    const item = renderItem || ((s, idx) => `
+        <div style="padding:0.75rem; margin-bottom:0.5rem; border:1px solid var(--border-color); border-radius:8px; background:var(--bg-card);">
+            <div style="font-size:0.85rem; color:var(--color-text-muted); margin-bottom:0.3rem;">Q${idx + 1}</div>
+            <p style="font-size:0.9rem; margin-bottom:0.4rem;">${safeTextWithBreaks(s.question)}</p>
+            <p style="font-size:0.85rem; color:var(--color-danger);">내 답: ${escapeHTML(s.selected)}</p>
+            <p style="font-size:0.85rem; color:var(--color-success);">정답: <strong>${escapeHTML(s.correctAnswer)}</strong></p>
+        </div>`);
+    return `<h3 style="margin-bottom:0.75rem; font-size:1.1rem;"><i class="fa-solid fa-triangle-exclamation"></i> 오답 리뷰 (${wrongAnswers.length}문제)</h3>`
+        + wrongAnswers.map((s, idx) => item(s, idx)).join('');
+}
+
+/**
+ * 훈련소 세션 결과 패널 HTML — 헤더(제목+배지) + 트로피 + 점수 요약 + 오답 리뷰 + 액션.
+ * @param {object} o
+ * @param {string} [o.headerTitle] 헤더 제목 (header 생략 시 필수)
+ * @param {string} [o.badge] 헤더 배지 라벨 (header 생략 시 필수)
+ * @param {string} o.doneTitle 완료 제목 (예: "훈련 완료!")
+ * @param {number} o.correct 정답 수
+ * @param {number} o.total 총 문항 수
+ * @param {string} o.reviewHTML 오답 리뷰 HTML (wrongReviewHtml 결과)
+ * @param {string} o.retryClick 다시 풀기 data-click 핸들러명
+ * @param {string} [o.retryArg] 다시 풀기 버튼 data-arg 값
+ * @param {string} [o.retryLabel] 다시 풀기 버튼 라벨 (기본 "다시 풀기")
+ * @param {string} [o.extraActions] 추가 액션 버튼 HTML (메뉴 버튼 앞)
+ * @param {string} [o.statLine] 점수 아래 보조 통계 문구
+ * @param {string} [o.header] 헤더 블록 HTML (생략 시 sim-arena-header + 제목/배지)
+ * @returns {string}
+ */
+export function trainerResultHtml({ headerTitle, badge, doneTitle, correct, total, reviewHTML, retryClick, retryArg = '', retryLabel = '다시 풀기', extraActions = '', statLine = '', header }) {
+    const rate = total > 0 ? Math.round((correct / total) * 100) : 0;
+    const headerBlock = header !== undefined ? header : `
+        <div class="sim-arena-header" style="margin-bottom: 2rem;">
+            <button class="btn btn-secondary" data-click="exitTrainerSubView" title="훈련소 메뉴로 돌아가기"><i class="fa-solid fa-arrow-left"></i> 나가기</button>
+            <div class="sim-title-group">
+                <h4>${headerTitle}</h4>
+                <span class="badge badge-quiz-cat">${badge}</span>
+            </div>
+        </div>`;
+    return `${headerBlock}
+        <div class="trainer-arena" style="text-align:center;">
+            <i class="fa-solid fa-trophy trophy-icon"></i>
+            <h2>${doneTitle}</h2>
+            <p class="result-score-summary">정답수: <strong>${correct}</strong> / ${total} (${rate}%)</p>
+            ${statLine ? `<p style="color:var(--color-text-muted); font-size:0.85rem;">${statLine}</p>` : ''}
+            <div style="text-align:left; margin:1.5rem 0; max-width:600px; margin-left:auto; margin-right:auto;">${reviewHTML}</div>
+            <div class="result-actions" style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+                <button class="btn btn-primary" data-click="${retryClick}"${retryArg ? ` data-arg="${retryArg}"` : ''}><i class="fa-solid fa-rotate-left"></i> ${retryLabel}</button>
+                ${extraActions}
+                <button class="btn btn-secondary" data-click="exitTrainerSubView"><i class="fa-solid fa-house"></i> 메뉴로</button>
+            </div>
+        </div>`;
+}
+
+/**
+ * 채점 피드백 패널 표시 — 패널 노출 + incorrect 클래스 + 제목/설명 + 다음 버튼.
+ * (훈련소·데일리 챌린지 공용; titleHtml/descHtml은 호출부에서 esc 처리된 HTML)
+ * @param {object} o
+ * @param {string} o.panelId 피드백 패널 요소 id
+ * @param {string} o.titleId 피드백 제목 요소 id
+ * @param {string} [o.descId] 피드백 설명 요소 id
+ * @param {string} [o.nextBtnId] 다음 버튼 요소 id (표시 대상)
+ * @param {boolean} o.isCorrect 정답 여부
+ * @param {string} o.titleHtml 제목 HTML
+ * @param {string} [o.descHtml] 설명 HTML
+ */
+export function showAnswerFeedback({ panelId, titleId, descId, nextBtnId, isCorrect, titleHtml, descHtml = '' }) {
+    const panel = document.getElementById(panelId);
+    if (!panel) return;
+    panel.classList.remove('is-hidden');
+    panel.classList.toggle('incorrect', !isCorrect);
+    const title = document.getElementById(titleId);
+    if (title) title.innerHTML = titleHtml;
+    const desc = descId ? document.getElementById(descId) : null;
+    if (desc) desc.innerHTML = descHtml;
+    const nextBtn = nextBtnId ? document.getElementById(nextBtnId) : null;
+    if (nextBtn) nextBtn.classList.remove('is-hidden');
+}
+
 /* =========================================================
    B1: 커스텀 토스트 및 컨펌 모달 — alert/confirm 대체
    ========================================================= */
@@ -69,7 +180,7 @@ export function showToast(message, type = 'info', duration, iconClass = '') {
     const color = style.getPropertyValue(colorVar).trim();
     const item = document.createElement('div');
     item.className = 'app-toast-item is-visible';
-    item.innerHTML = `<i class="fa-solid ${escapeHtml(icon)}" style="color:${color}; margin-right:0.5rem;"></i>${escapeHtml(message)}`;
+    item.innerHTML = `<i class="fa-solid ${escapeHTML(icon)}" style="color:${color}; margin-right:0.5rem;"></i>${escapeHTML(message)}`;
     toast.appendChild(item);
     toast.classList.add('is-visible');
     setTimeout(() => {
@@ -92,8 +203,8 @@ export function showConfirm(message, title = '확인') {
         overlay.id = 'app-confirm-overlay';
         overlay.innerHTML = `
             <div class="app-confirm-dialog">
-                <h3>${escapeHtml(title)}</h3>
-                <p>${escapeHtml(message)}</p>
+                <h3>${escapeHTML(title)}</h3>
+                <p>${escapeHTML(message)}</p>
                 <div class="app-confirm-actions">
                     <button class="app-confirm-cancel">취소</button>
                     <button class="app-confirm-ok">확인</button>
@@ -141,8 +252,8 @@ export function showAlert(message, title = '알림') {
         overlay.id = 'app-confirm-overlay';
         overlay.innerHTML = `
             <div class="app-confirm-dialog">
-                <h3>${escapeHtml(title)}</h3>
-                <p>${escapeHtml(message)}</p>
+                <h3>${escapeHTML(title)}</h3>
+                <p>${escapeHTML(message)}</p>
                 <div class="app-confirm-actions">
                     <button class="app-confirm-ok">확인</button>
                 </div>
@@ -173,12 +284,6 @@ export function showAlert(message, title = '알림') {
         };
         document.addEventListener('keydown', onKey);
     });
-}
-
-function escapeHtml(str) {
-    const div = document.createElement('div');
-    div.textContent = String(str);
-    return div.innerHTML;
 }
 
 /* =========================================================

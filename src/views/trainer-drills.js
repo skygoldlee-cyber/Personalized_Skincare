@@ -13,7 +13,7 @@ import { renderComboQuestion, renderComboResult } from './trainer-drill-combo.js
 import { state } from '../state.js';
 import { esc, safeTextWithBreaks } from '../sanitize.js';
 import { shuffle } from '../utils.js';
-import { vibrate, showToast, HAPTIC } from '../ui-utils.js';
+import { vibrate, showToast, HAPTIC, wrongReviewHtml, trainerResultHtml } from '../ui-utils.js';
 import { DataLoader } from '../data-loader.js';
 import { gradeAnswer } from '../questions.js';
 import { recordStatementJudgments, getWeakStatements, getDueStatementSids, getAllStatementStats, getAnomalousStatements, WEAK_GRADUATE_STREAK } from '../statement-tracker.js';
@@ -249,24 +249,13 @@ export function renderDrillResult(type, statLine, reviewInnerHTML, hasReviewItem
     if (!result) return;
     result.classList.remove('is-hidden');
 
-    const total = st.data.length;
-    const rate = total > 0 ? Math.round((st.correctCount / total) * 100) : 0;
-
-    result.innerHTML = `
-        <div class="trainer-arena" style="text-align:center;">
-            <i class="fa-solid fa-trophy trophy-icon"></i>
-            <h2>${cfg.title} 완료!</h2>
-            <p class="result-score-summary">정답수: <strong>${st.correctCount}</strong> / ${total} (${rate}%)</p>
-            <p style="color:var(--color-text-muted); font-size:0.85rem;">${statLine}</p>
-            <div style="text-align:left; margin:1.5rem 0; max-width:600px; margin-left:auto; margin-right:auto;">
-                ${reviewInnerHTML}
-            </div>
-            <div class="result-actions" style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
-                <button class="btn btn-primary" data-click="${cfg.startAction}" data-arg="${st.mode || st.subject}"><i class="fa-solid fa-rotate-left"></i> 다시 풀기</button>
-                ${hasReviewItems ? '<button class="btn btn-warning" data-click="openWeakReview"><i class="fa-solid fa-crosshairs"></i> 취약 진술 리뷰</button>' : ''}
-                <button class="btn btn-secondary" data-click="exitTrainerSubView"><i class="fa-solid fa-house"></i> 메뉴로</button>
-            </div>
-        </div>`;
+    result.innerHTML = trainerResultHtml({
+        header: '', doneTitle: `${cfg.title} 완료!`,
+        correct: st.correctCount, total: st.data.length,
+        reviewHTML: reviewInnerHTML, statLine,
+        retryClick: cfg.startAction, retryArg: esc(st.mode || st.subject || ''),
+        extraActions: hasReviewItems ? '<button class="btn btn-warning" data-click="openWeakReview"><i class="fa-solid fa-crosshairs"></i> 취약 진술 리뷰</button>' : '',
+    });
 }
 
 /**
@@ -382,16 +371,7 @@ function renderOxDrillResult() {
     const st = state.trainer.oxdrill;
     const wrong = st.solvedList.filter(s => !s.correct);
     const weakCount = getWeakStatements().length;
-    const reviewHTML = wrong.length === 0
-        ? '<p style="text-align:center; color:var(--color-success); font-weight:600;"><i class="fa-solid fa-circle-check"></i> 모든 문제를 맞혔습니다!</p>'
-        : `<h3 style="margin-bottom:0.75rem; font-size:1.1rem;"><i class="fa-solid fa-triangle-exclamation"></i> 오답 리뷰 (${wrong.length}문제)</h3>` +
-          wrong.map((s, i) => `
-            <div style="padding:0.75rem; margin-bottom:0.5rem; border:1px solid var(--border-color); border-radius:8px; background:var(--bg-card);">
-                <div style="font-size:0.85rem; color:var(--color-text-muted); margin-bottom:0.3rem;">Q${i + 1}</div>
-                <p style="font-size:0.9rem; margin-bottom:0.4rem;">${safeTextWithBreaks(s.question)}</p>
-                <p style="font-size:0.85rem; color:var(--color-danger);">내 답: ${esc(s.selected)}</p>
-                <p style="font-size:0.85rem; color:var(--color-success);">정답: <strong>${esc(s.correctAnswer)}</strong></p>
-            </div>`).join('');
+    const reviewHTML = wrongReviewHtml(wrong);
     renderDrillResult('ox',
         `누적 취약 진술: ${weakCount}개 (오판 진술은 다음 세션에 우선 출제됩니다)`,
         reviewHTML, wrong.length > 0);

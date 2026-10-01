@@ -4,9 +4,9 @@
 // 문항 생성은 엔티티의 분류 필드(badge.field, 예: type=approved/restricted/banned)를
 // 요구하므로, 해당 필드를 가진 도메인 데이터셋이 있는 시험에서만 발화한다.
 import { state } from '../state.js';
-import { esc, safeTextWithBreaks } from '../sanitize.js';
+import { esc, safeTextWithBreaks, stripTags } from '../sanitize.js';
 import { shuffle } from '../utils.js';
-import { showToast, vibrate, HAPTIC } from '../ui-utils.js';
+import { showToast, vibrate, HAPTIC, markChoiceButtons, wrongReviewHtml, trainerResultHtml, showAnswerFeedback } from '../ui-utils.js';
 import { DataLoader } from '../data-loader.js';
 import { checkShortAnswer } from './trainer.js';
 
@@ -191,6 +191,7 @@ function renderIngQuestion() {
         currentQ.options.forEach((optValue, idx) => {
             const btn = document.createElement('button');
             btn.className = 'limits-opt-btn';
+            btn.dataset.value = optValue;
             btn.innerHTML = `<span class="limits-opt-num">${optionIndicators[idx]}</span> <span class="limits-opt-text">${esc(optValue)}</span>`;
             btn.addEventListener('click', () => {
                 submitIngChoiceAnswer(btn, optValue, currentQ.correct);
@@ -212,28 +213,15 @@ function submitIngChoiceAnswer(selectedBtn, selectedValue, correctValue) {
     const isCorrect = (selectedValue === correctValue);
     vibrate(isCorrect ? HAPTIC.correct : HAPTIC.wrong);
     const container = document.getElementById('ing-options-container');
-    if (!container) return;
-    const buttons = container.querySelectorAll('.limits-opt-btn');
-    
-    buttons.forEach(el => {
-        const btn = /** @type {HTMLButtonElement} */ (el);
-        btn.disabled = true;
-        const textSpan = btn.querySelector('.limits-opt-text');
-        if (textSpan && textSpan.textContent === correctValue) {
-            btn.classList.add('correct');
-        }
-    });
-    
-    if (!isCorrect) {
-        selectedBtn.classList.add('incorrect');
-    } else {
+    markChoiceButtons(container, selectedBtn, correctValue);
+    if (isCorrect) {
         state.trainer.ingredients.correctCount++;
     }
     
     // solvedList에 기록
     const currentQ = state.trainer.ingredients.shuffledQuestions[state.trainer.ingredients.currentIndex];
     state.trainer.ingredients.solvedList.push({
-        question: currentQ.question.replace(/<[^>]*>/g, ''),
+        question: stripTags(currentQ.question),
         selected: selectedValue,
         correctAnswer: correctValue,
         correct: isCorrect
@@ -262,7 +250,7 @@ export function submitIngAnswer() {
     
     // solvedList에 기록
     ingState.solvedList.push({
-        question: currentQ.question.replace(/<[^>]*>/g, ''),
+        question: stripTags(currentQ.question),
         selected: userInput,
         correctAnswer: currentQ.correct,
         correct: isCorrect
@@ -275,25 +263,14 @@ function showIngFeedback(isCorrect, correctValue) {
     const ingState = state.trainer.ingredients;
     const currentQ = ingState.shuffledQuestions[ingState.currentIndex];
     
-    const feedbackPanel = /** @type {HTMLElement} */ (document.getElementById('ing-feedback-panel'));
-    const feedbackTitle = document.getElementById('ing-feedback-title');
-    const feedbackDesc = document.getElementById('ing-feedback-desc');
-    
-    if (feedbackPanel) feedbackPanel.classList.remove('is-hidden');
-    if (feedbackTitle) {
-        if (isCorrect) {
-            feedbackPanel.classList.remove('incorrect');
-            feedbackTitle.innerHTML = '🟢 정답입니다!';
-        } else {
-            feedbackPanel.classList.add('incorrect');
-            feedbackTitle.innerHTML = `🔴 오답입니다! (정답: <strong>${esc(correctValue)}</strong>)`;
-        }
-    }
-    if (feedbackDesc) feedbackDesc.innerHTML = safeTextWithBreaks(currentQ.explanation);
-    
-    const nextBtn = document.getElementById('next-ing-btn');
-    if (nextBtn) nextBtn.classList.remove('is-hidden');
-    
+    showAnswerFeedback({
+        panelId: 'ing-feedback-panel', titleId: 'ing-feedback-title',
+        descId: 'ing-feedback-desc', nextBtnId: 'next-ing-btn',
+        isCorrect,
+        titleHtml: isCorrect ? '🟢 정답입니다!' : `🔴 오답입니다! (정답: <strong>${esc(correctValue)}</strong>)`,
+        descHtml: safeTextWithBreaks(currentQ.explanation),
+    });
+
     const submitBtn = /** @type {HTMLButtonElement|null} */ (document.getElementById('submit-ing-btn'));
     if (submitBtn) {
         submitBtn.disabled = true;
@@ -331,41 +308,11 @@ function renderIngredientsResult() {
 
     const total = ingState.shuffledQuestions.length;
     const correct = ingState.correctCount;
-    const rate = Math.round((correct / total) * 100);
-    const wrongAnswers = ingState.solvedList.filter(s => !s.correct);
+    const reviewHTML = wrongReviewHtml(ingState.solvedList.filter(s => !s.correct));
 
-    let reviewHTML = '';
-    if (wrongAnswers.length === 0) {
-        reviewHTML = '<p style="text-align:center; color:var(--color-success); font-weight:600;"><i class="fa-solid fa-circle-check"></i> 모든 문제를 맞혔습니다!</p>';
-    } else {
-        reviewHTML = `<h3 style="margin-bottom:0.75rem; font-size:1.1rem;"><i class="fa-solid fa-triangle-exclamation"></i> 오답 리뷰 (${wrongAnswers.length}문제)</h3>`;
-        wrongAnswers.forEach((s, idx) => {
-            reviewHTML += `
-                <div style="padding:0.75rem; margin-bottom:0.5rem; border:1px solid var(--border-color); border-radius:8px; background:var(--bg-card);">
-                    <div style="font-size:0.85rem; color:var(--color-text-muted); margin-bottom:0.3rem;">Q${idx + 1}</div>
-                    <p style="font-size:0.9rem; margin-bottom:0.4rem;">${safeTextWithBreaks(s.question)}</p>
-                    <p style="font-size:0.85rem; color:var(--color-danger);">내 답: ${esc(s.selected)}</p>
-                    <p style="font-size:0.85rem; color:var(--color-success);">정답: <strong>${esc(s.correctAnswer)}</strong></p>
-                </div>`;
-        });
-    }
-
-    panel.innerHTML = `
-        <div class="sim-arena-header" style="margin-bottom: 2rem;">
-            <button class="btn btn-secondary" data-click="exitTrainerSubView" title="훈련소 메뉴로 돌아가기"><i class="fa-solid fa-arrow-left"></i> 나가기</button>
-            <div class="sim-title-group">
-                <h4>원료 안전성 챌린지 결과</h4>
-                <span class="badge badge-quiz-cat">원료 규격 & 안전성</span>
-            </div>
-        </div>
-        <div class="trainer-arena" style="text-align:center;">
-            <i class="fa-solid fa-trophy trophy-icon"></i>
-            <h2>챌린지 완료!</h2>
-            <p class="result-score-summary">정답수: <strong>${correct}</strong> / ${total} (${rate}%)</p>
-            <div style="text-align:left; margin:1.5rem 0; max-width:600px; margin-left:auto; margin-right:auto;">${reviewHTML}</div>
-            <div class="result-actions" style="display:flex; gap:1rem; justify-content:center;">
-                <button class="btn btn-primary" data-click="startIngredientsChallenge"><i class="fa-solid fa-rotate-left"></i> 다시 도전</button>
-                <button class="btn btn-secondary" data-click="exitTrainerSubView"><i class="fa-solid fa-house"></i> 메뉴로</button>
-            </div>
-        </div>`;
+    panel.innerHTML = trainerResultHtml({
+        headerTitle: '원료 안전성 챌린지 결과', badge: '원료 규격 & 안전성',
+        doneTitle: '챌린지 완료!', correct, total, reviewHTML,
+        retryClick: 'startIngredientsChallenge', retryLabel: '다시 도전',
+    });
 }

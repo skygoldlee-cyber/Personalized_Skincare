@@ -62,7 +62,7 @@ export function searchAll(query, sources) {
     if (!terms.length) return [];
     const src = sources || {};
     const studyData = src.studyData || ((typeof window !== 'undefined' && window.STUDY_DATA) || {});
-    const ingredients = src.ingredients || ((typeof window !== 'undefined' && window.INGREDIENTS_DATA) || []);
+    const ingredients = src.ingredients || DataLoader.getKnowledgeItems();
     const registry = src.registry || DataLoader.registry || {};
     const views = src.views || (typeof document !== 'undefined' ? getViewItems() : []);
     const groups = { view: [], card: [], quiz: [], section: [], ingredient: [], exam: [] };

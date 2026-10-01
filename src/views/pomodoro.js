@@ -2,6 +2,7 @@
 // @spec T-03
 import { state, safeSetItem } from '../state.js';
 import { showToast } from '../ui-utils.js';
+import { todayKey } from '../utils.js';
 import { STORAGE_KEYS } from '../storage-keys.js';
 import { TIMING } from '../config/timing.js';
 
@@ -82,7 +83,7 @@ function tickPomodoro() {
             pomoState.totalTimeToday += 25;
             pomoState.sessionCount++;
             safeSetItem(STORAGE_KEYS.POMO_TOTAL_TIME, pomoState.totalTimeToday);
-            safeSetItem(STORAGE_KEYS.POMO_TOTAL_TIME_DATE, new Date().toISOString().split('T')[0]);
+            safeSetItem(STORAGE_KEYS.POMO_TOTAL_TIME_DATE, todayKey());
             safeSetItem(STORAGE_KEYS.POMO_SESSION_COUNT, pomoState.sessionCount);
 
             showToast("집중 25분이 끝났습니다! 5분간 휴식하세요.", "success");

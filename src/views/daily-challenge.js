@@ -4,8 +4,8 @@ import { state, saveProgress, safeGetItem, safeSetItem } from '../state.js';
 import { safeTextWithBreaks, esc } from '../sanitize.js';
 import { DataLoader } from '../data-loader.js';
 import { checkShortAnswer } from './trainer.js';
-import { shuffle } from '../utils.js';
-import { showToast, showConfirm } from '../ui-utils.js';
+import { shuffle, todayKey } from '../utils.js';
+import { showToast, showConfirm, markChoiceButtons, showAnswerFeedback } from '../ui-utils.js';
 import { STORAGE_KEYS, dailyCompletedKey } from '../storage-keys.js';
 import { getWeeklyGoalProgress } from '../study-tracker.js';
 import { hasFeature } from '../exam-context.js';
@@ -41,7 +41,7 @@ export function updateStreakAndDailyUI() {
 
     let streak = parseInt(safeGetItem(STORAGE_KEYS.STUDY_STREAK) || '0') || 0;
     const lastDate = safeGetItem(STORAGE_KEYS.STUDY_STREAK_LAST_DATE);
-    const todayStr = new Date().toISOString().split('T')[0];
+    const todayStr = todayKey();
 
     if (lastDate) {
         const last = new Date(lastDate);
@@ -54,7 +54,7 @@ export function updateStreakAndDailyUI() {
             // 재진입 시 중복 소비를 막고 오늘 학습이 스트릭을 잇게 한다.
             const freezes = _getFreezeCount() - 1;
             safeSetItem(STORAGE_KEYS.STREAK_FREEZES, freezes);
-            const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+            const yesterday = todayKey(new Date(Date.now() - 86400000));
             safeSetItem(STORAGE_KEYS.STUDY_STREAK_LAST_DATE, yesterday);
             showToast(`스트릭 복구권을 사용해 연속 학습을 지켰습니다 (잔여 ${freezes}장)`, 'info', 4000);
         } else if (diffDays > 1) {
@@ -108,7 +108,7 @@ export function updateStreakAndDailyUI() {
  * 데일리 챌린지 시작
  */
 export function startDailyChallenge() {
-    const todayStr = new Date().toISOString().split('T')[0];
+    const todayStr = todayKey();
     const todayCompleted = safeGetItem(dailyCompletedKey(todayStr));
     if (todayCompleted) {
         showToast('오늘의 데일리 챌린지를 이미 달성하셨습니다! 내일 다시 도전해 주세요.', 'info');
@@ -179,9 +179,8 @@ function _startDailyChallengeImpl() {
         });
     }
     
-    // 4. 지식DB 분류 판별 1개 — registry.knowledge 스키마의 global로 데이터셋 해석
-    const kGlobal = (DataLoader.registry && DataLoader.registry.knowledge && DataLoader.registry.knowledge.global) || 'INGREDIENTS_DATA';
-    const db = /** @type {any[]} */ (/** @type {any} */ (window)[kGlobal]) || [];
+    // 4. 지식DB 분류 판별 1개 — registry.knowledge 스키마로 데이터셋 해석
+    const db = DataLoader.getKnowledgeItems();
     const kSchema = (DataLoader.registry && DataLoader.registry.knowledge) || {};
     const badgeField = (kSchema.badge && kSchema.badge.field) || 'type';
     const badgeLabels = (kSchema.badge && kSchema.badge.labels) || {};
@@ -216,7 +215,7 @@ function showDailyModal() {
             <div class="glass-card" style="width: 90%; max-width: 600px; padding: 2.5rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); position: relative; box-shadow: var(--shadow-lg);">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
                     <h3 style="font-weight: 700; color: var(--color-primary); margin: 0; font-size: 1.4rem;"><i class="fa-solid fa-fire"></i> 데일리 챌린지</h3>
-                    <span id="daily-modal-progress" style="font-size: 0.9rem; color: var(--color-text-muted);">진행: 1 / 8</span>
+                    <span id="daily-modal-progress" style="font-size: 0.9rem; color: var(--color-text-muted);"></span>
                 </div>
                 
                 <div class="progress-bar-container" style="height: 6px; margin-bottom: 2rem;">
@@ -314,6 +313,7 @@ function renderDailyStep() {
         q.options.forEach((opt, idx) => {
             const btn = document.createElement('button');
             btn.className = 'limits-opt-btn';
+            btn.dataset.value = opt;
             btn.style.width = '100%';
             btn.style.marginBottom = '0.75rem';
             btn.innerHTML = `<span class="limits-opt-num">${esc(optionIndicators[idx])}</span> <span class="limits-opt-text">${esc(opt)}</span>`;
@@ -361,21 +361,8 @@ export function submitDailyCardAnswer(isMemorized) {
 
 function submitDailyChoiceAnswer(selectedBtn, selectedValue, correctValue) {
     const isCorrect = (selectedValue === correctValue);
-    const answerArea = document.getElementById('daily-modal-answer-area');
-    const buttons = answerArea ? answerArea.querySelectorAll('.limits-opt-btn') : [];
-
-    buttons.forEach(node => {
-        const btn = /** @type {HTMLButtonElement} */ (node);
-        btn.disabled = true;
-        const textSpan = btn.querySelector('.limits-opt-text');
-        if (textSpan && textSpan.textContent === correctValue) {
-            btn.classList.add('correct');
-        }
-    });
-    
-    if (!isCorrect) {
-        selectedBtn.classList.add('incorrect');
-    } else {
+    markChoiceButtons(document.getElementById('daily-modal-answer-area'), selectedBtn, correctValue);
+    if (isCorrect) {
         dailyState.correctCount++;
     }
     
@@ -407,25 +394,13 @@ export function submitDailyShortAnswer() {
 
 function showDailyFeedback(isCorrect, correctValue) {
     const q = dailyState.questions[dailyState.currentIndex];
-    const feedback = document.getElementById('daily-modal-feedback');
-    const title = document.getElementById('daily-modal-feedback-title');
-    const desc = document.getElementById('daily-modal-feedback-desc');
-
-    if (!feedback) return;
-    feedback.classList.remove('is-hidden');
-    if (title) {
-        if (isCorrect) {
-            feedback.classList.remove('incorrect');
-            title.innerHTML = '🟢 정답입니다!';
-        } else {
-            feedback.classList.add('incorrect');
-            title.innerHTML = `🔴 오답입니다! (정답: <strong>${esc(correctValue)}</strong>)`;
-        }
-    }
-    if (desc) desc.innerHTML = safeTextWithBreaks(q.explanation || '안전 기준 고시 해설을 확인하세요.');
-    
-    const nextBtn = document.getElementById('daily-modal-next-btn');
-    if (nextBtn) nextBtn.classList.remove('is-hidden');
+    showAnswerFeedback({
+        panelId: 'daily-modal-feedback', titleId: 'daily-modal-feedback-title',
+        descId: 'daily-modal-feedback-desc', nextBtnId: 'daily-modal-next-btn',
+        isCorrect,
+        titleHtml: isCorrect ? '🟢 정답입니다!' : `🔴 오답입니다! (정답: <strong>${esc(correctValue)}</strong>)`,
+        descHtml: safeTextWithBreaks(q.explanation || '해설은 교재·참조자료에서 확인하세요.'),
+    });
 }
 
 export function nextDailyStep() {
@@ -443,7 +418,7 @@ function finishDailyChallenge() {
     
     showToast(`일일 챌린지 완료 — 점수 ${dailyState.correctCount} / ${dailyState.questions.length}`, 'success');
     
-    const todayStr = new Date().toISOString().split('T')[0];
+    const todayStr = todayKey();
     safeSetItem(dailyCompletedKey(todayStr), "true");
 
     let streak = parseInt(safeGetItem(STORAGE_KEYS.STUDY_STREAK) || '0') || 0;

@@ -11,6 +11,7 @@
 
 import { STORAGE_KEYS } from './storage-keys.js';
 import { WEAK_QUIZ_PREFIX } from './weak-items.js';
+import { todayKey } from './utils.js';
 import {
     getItem as storageGetItem,
     setItem as storageSetItem,
@@ -177,7 +178,7 @@ export function loadProgress() {
 
     // 뽀모도로 누적 시간은 "오늘" 기준이므로, 날짜가 바뀌었으면 0으로 리셋
     const pomoDate = safeGetItem(STORAGE_KEYS.POMO_TOTAL_TIME_DATE);
-    const todayStr = new Date().toISOString().split('T')[0];
+    const todayStr = todayKey();
     if (pomoDate !== todayStr) {
         state.trainer.pomodoro.totalTimeToday = 0;
         safeSetItem(STORAGE_KEYS.POMO_TOTAL_TIME, '0');

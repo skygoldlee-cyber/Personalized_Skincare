@@ -1,10 +1,10 @@
 // views/trainer-calc-practice.js — 원료 배합 계산 연습기 (trainer.js에서 추출)
 // @spec T-01,T-05
 import { state, safeGetItem, safeSetItem } from '../state.js';
-import { esc, safeTextWithBreaks } from '../sanitize.js';
+import { esc, safeTextWithBreaks, stripTags } from '../sanitize.js';
 import { buildCalcQuestion } from '../trainer-calc.js';
 import { clearScratchpad } from '../scratchpad.js';
-import { showToast, vibrate, HAPTIC } from '../ui-utils.js';
+import { showToast, vibrate, HAPTIC, showAnswerFeedback } from '../ui-utils.js';
 import { STORAGE_KEYS } from '../storage-keys.js';
 
 /* =======================================================
@@ -98,27 +98,20 @@ export function submitCalcAnswer() {
     
     addCalcHistoryItem(currentQ.question, currentQ.type, userVal, currentQ.answer, isCorrect, currentQ.unit);
     
-    const feedbackPanel = document.getElementById('calc-feedback-panel');
-    const feedbackTitle = document.getElementById('calc-feedback-title');
-    const feedbackDesc = document.getElementById('calc-feedback-desc');
     const solutionBody = document.getElementById('calc-solution-body');
     const solutionPanel = document.getElementById('calc-solution-panel');
-    const nextBtn = document.getElementById('next-calc-btn');
 
-    if (feedbackPanel) feedbackPanel.classList.remove('is-hidden');
-    if (isCorrect) {
-        if (feedbackPanel) feedbackPanel.classList.remove('incorrect');
-        if (feedbackTitle) feedbackTitle.textContent = '정답입니다!';
-        if (feedbackDesc) feedbackDesc.textContent = `훌륭합니다! 올바른 배합 계산 결과입니다.`;
-    } else {
-        if (feedbackPanel) feedbackPanel.classList.add('incorrect');
-        if (feedbackTitle) feedbackTitle.textContent = `오답입니다! (내가 쓴 답: ${userVal}${currentQ.unit})`;
-        if (feedbackDesc) feedbackDesc.textContent = `정답은 약 ${currentQ.answer}${currentQ.unit} 입니다. 아래의 공식을 활용하여 풀이법을 다시 체크해 보세요.`;
-    }
-    
+    showAnswerFeedback({
+        panelId: 'calc-feedback-panel', titleId: 'calc-feedback-title',
+        descId: 'calc-feedback-desc', nextBtnId: 'next-calc-btn',
+        isCorrect,
+        titleHtml: isCorrect ? '정답입니다!' : `오답입니다! (내가 쓴 답: ${esc(String(userVal) + currentQ.unit)})`,
+        descHtml: isCorrect ? '훌륭합니다! 올바른 배합 계산 결과입니다.'
+            : `정답은 약 ${esc(String(currentQ.answer) + currentQ.unit)} 입니다. 아래의 공식을 활용하여 풀이법을 다시 체크해 보세요.`,
+    });
+
     if (solutionBody) solutionBody.innerHTML = currentQ.solution || '';
     if (solutionPanel) solutionPanel.classList.remove('is-hidden');
-    if (nextBtn) nextBtn.classList.remove('is-hidden');
 }
 
 export function toggleSolutionAccordion() {
@@ -193,7 +186,7 @@ function addCalcHistoryItem(questionText, type, userVal, correctAns, isCorrect, 
     
     const newItem = {
         date: new Date().toISOString(),
-        question: questionText.replace(/<[^>]*>/g, '').substring(0, 80) + (questionText.length > 80 ? '...' : ''),
+        question: stripTags(questionText).substring(0, 80) + (questionText.length > 80 ? '...' : ''),
         type: type,
         userVal: userVal,
         correctAns: correctAns,

@@ -6,6 +6,7 @@
 //   - 가져오기: 논리 키를 현재 시험 네임스페이스에 기록
 //   → 시험이 달라도 같은 백업 포맷이며, 복원은 항상 "현재 활성 시험"에 귀속된다.
 import { showToast } from '../ui-utils.js';
+import { todayKey } from '../utils.js';
 import { BACKUP_KEYS, isDailyCompletedKey } from '../storage-keys.js';
 import { safeGetItem, safeSetItem, listScopedKeys } from '../state.js';
 import { unscopedKey, getActiveExamId } from '../exam-context.js';
@@ -30,7 +31,7 @@ export function exportData() {
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backupObj));
     const downloadAnchor = document.createElement('a');
     downloadAnchor.setAttribute("href", dataStr);
-    downloadAnchor.setAttribute("download", `${getActiveExamId()}_backup_${new Date().toISOString().split('T')[0]}.json`);
+    downloadAnchor.setAttribute("download", `${getActiveExamId()}_backup_${todayKey()}.json`);
     document.body.appendChild(downloadAnchor);
     downloadAnchor.click();
     downloadAnchor.remove();

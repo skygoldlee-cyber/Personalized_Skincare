@@ -8,6 +8,7 @@
 // 보존한다. 상담 이력은 append-only — 수정·삭제 대신 신규 기록을 권장.
 
 import { esc } from '../sanitize.js';
+import { todayKey } from '../utils.js';
 import { showToast, showConfirm } from '../ui-utils.js';
 import { showStoreError, showUpgradeNotice } from '../pro-upgrade.js';
 import { showPanel, formulaSubNav } from './formula.js';
@@ -437,7 +438,7 @@ async function custImportFile(event) {
 export function custExportCsv() {
   const list = listCustomers();
   if (!list.length) { showToast('보낼 고객이 없습니다.', 'info'); return; }
-  downloadCsv(toCsv([...CUST_CSV_HEADERS], list, custToCsvRow), `customers_${new Date().toISOString().split('T')[0]}.csv`);
+  downloadCsv(toCsv([...CUST_CSV_HEADERS], list, custToCsvRow), `customers_${todayKey()}.csv`);
   showToast(`${list.length}명의 고객을 CSV로보냈습니다.`, 'success');
 }
 

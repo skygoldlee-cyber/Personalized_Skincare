@@ -4,7 +4,7 @@
 // registry.knowledge 미선언 시험은 사전 뷰가 "데이터셋 미설정" 안내로 처리된다 (화장품 폴백 없음).
 import { state } from '../state.js';
 import { esc } from '../sanitize.js';
-import { getChosung } from '../utils.js';
+import { getChosung, todayKey } from '../utils.js';
 import { hasFeature } from '../exam-context.js';
 import { toCsv, downloadCsv } from '../csv-utils.js';
 import { showToast } from '../ui-utils.js';
@@ -69,10 +69,9 @@ function dictSchema() {
     return (k && typeof k === 'object') ? { ...DEFAULT_KNOWLEDGE, ...k } : null;
 }
 
-/** 엔티티 배열 — 스키마의 global 이름으로 window에서 조회. */
+/** 엔티티 배열 — 스키마의 global 해석 (DataLoader 동기 접근자 위임). */
 function dictDb(schema) {
-    const g = (schema && schema.global) || 'INGREDIENTS_DATA';
-    return typeof window[g] !== 'undefined' ? window[g] : [];
+    return schema ? DataLoader.getKnowledgeItems() : [];
 }
 
 /** 배지 필드값 → 표시 라벨 */
@@ -392,7 +391,7 @@ export function dictExportCsv() {
             typeof spec === 'string'
                 ? (item[spec] || '')
                 : (spec && spec.badgeLabel ? badgeLabel(schema, item[spec.badgeLabel]) : ''))),
-        `${csv.filename || 'knowledge'}${ver}_${new Date().toISOString().split('T')[0]}.csv`
+        `${csv.filename || 'knowledge'}${ver}_${todayKey()}.csv`
     );
     showToast(`${unit} ${rows.length}종을 CSV로 저장했습니다.`, 'success');
 }

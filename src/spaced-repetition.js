@@ -9,6 +9,7 @@
 
 import { safeGetItem, safeSetItem } from './state.js';
 import { STORAGE_KEYS } from './storage-keys.js';
+import { todayKey } from './utils.js';
 
 const SR_KEY = STORAGE_KEYS.FC_SPACED_REPETITION;
 
@@ -62,7 +63,7 @@ function _intervalForRep(rep, easiness) {
 export function updateCardSchedule(cardId, knew) {
     const schedules = loadSchedules();
     const today = new Date();
-    const todayStr = today.toISOString().split('T')[0];
+    const todayStr = todayKey(today);
 
     const current = schedules[cardId] || { repetition: 0, easiness: 2.5, nextReview: todayStr, lastReview: null };
 
@@ -74,7 +75,7 @@ export function updateCardSchedule(cardId, knew) {
     // 다음 복습 날짜 계산
     const nextDate = new Date(today);
     nextDate.setDate(nextDate.getDate() + result.interval);
-    const nextReview = nextDate.toISOString().split('T')[0];
+    const nextReview = todayKey(nextDate);
 
     schedules[cardId] = {
         repetition: result.repetition,
@@ -93,7 +94,7 @@ export function updateCardSchedule(cardId, knew) {
  */
 export function getDueCards() {
     const schedules = loadSchedules();
-    const todayStr = new Date().toISOString().split('T')[0];
+    const todayStr = todayKey();
     return Object.keys(schedules).filter(id => schedules[id].nextReview <= todayStr);
 }
 

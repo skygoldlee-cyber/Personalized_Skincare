@@ -9,6 +9,8 @@
 
 import { esc } from '../sanitize.js';
 import { showToast, showConfirm } from '../ui-utils.js';
+import { DataLoader } from '../data-loader.js';
+import { todayKey } from '../utils.js';
 import { showStoreError } from '../pro-upgrade.js';
 import { switchView } from './navigation.js';
 import {
@@ -57,8 +59,7 @@ let ingredientIndex = null;
 
 export function getIndex() {
   if (!ingredientIndex) {
-    const db = typeof window.INGREDIENTS_DATA !== 'undefined' ? window.INGREDIENTS_DATA : [];
-    ingredientIndex = buildIngredientIndex(db);
+    ingredientIndex = buildIngredientIndex(DataLoader.getKnowledgeItems());
   }
   return ingredientIndex;
 }
@@ -1113,7 +1114,7 @@ export function formulaExportJson() {
     return;
   }
   const safeName = (draft.name || 'formula').replace(/[\\/:*?"<>|]/g, '_').slice(0, 40);
-  downloadJson(serializeFormula(draft), `formula_${safeName}_${new Date().toISOString().split('T')[0]}.json`);
+  downloadJson(serializeFormula(draft), `formula_${safeName}_${todayKey()}.json`);
   showToast('포뮬러 JSON 파일을 다운로드했습니다.', 'success');
 }
 
@@ -1122,7 +1123,7 @@ export function formulaCardExport(id) {
   const f = getFormula(id);
   if (!f) { showToast('포뮬러를 찾을 수 없습니다.', 'error'); return; }
   const safeName = (f.name || 'formula').replace(/[\\/:*?"<>|]/g, '_').slice(0, 40);
-  downloadJson(serializeFormula(f), `formula_${safeName}_${new Date().toISOString().split('T')[0]}.json`);
+  downloadJson(serializeFormula(f), `formula_${safeName}_${todayKey()}.json`);
   showToast(`"${f.name}" 포뮬러를 다운로드했습니다.`, 'success');
 }
 

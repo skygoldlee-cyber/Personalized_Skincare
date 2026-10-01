@@ -3,7 +3,7 @@
 import { state } from '../state.js';
 import { esc } from '../sanitize.js';
 import { shuffle } from '../utils.js';
-import { vibrate, HAPTIC, showToast } from '../ui-utils.js';
+import { vibrate, HAPTIC, showToast, markChoiceButtons, wrongReviewHtml, trainerResultHtml, showAnswerFeedback } from '../ui-utils.js';
 import { PATHS } from '../paths.js';
 import { DataLoader } from '../data-loader.js';
 import { updateDueBadges } from './trainer-drills.js';
@@ -222,22 +222,9 @@ function submitLimitsAnswer(selectedBtn, selectedValue, correctValue) {
     const isCorrect = (selectedValue === correctValue);
     vibrate(isCorrect ? HAPTIC.correct : HAPTIC.wrong);
     const container = document.getElementById('limits-options-container');
-    if (!container) return;
-    const buttons = container.querySelectorAll('.limits-opt-btn');
-    
-    buttons.forEach(el => {
-        const btn = /** @type {HTMLButtonElement} */ (el);
-        btn.disabled = true;
-        // 표시 텍스트 부분문자열이 아닌 데이터값으로 정답 버튼 판정
-        // ('5'가 '50'·'0.5' 오답지에도 매칭되던 문제)
-        if (btn.dataset.value === correctValue) {
-            btn.classList.add('correct');
-        }
-    });
-    
-    if (!isCorrect) {
-        selectedBtn.classList.add('incorrect');
-    } else {
+    // 정답 판정은 dataset.value 비교 — 표시 텍스트 부분일치('5'↔'50') 오매칭 방지
+    markChoiceButtons(container, selectedBtn, correctValue);
+    if (isCorrect) {
         state.trainer.limits.correctCount++;
     }
     
@@ -251,22 +238,13 @@ function submitLimitsAnswer(selectedBtn, selectedValue, correctValue) {
         correct: isCorrect
     });
     
-    const feedbackPanel = document.getElementById('limits-feedback-panel');
-    const feedbackTitle = document.getElementById('limits-feedback-title');
-    const feedbackDesc = document.getElementById('limits-feedback-desc');
-    
-    if (feedbackPanel) feedbackPanel.classList.remove('is-hidden');
-    if (isCorrect) {
-        if (feedbackPanel) feedbackPanel.classList.remove('incorrect');
-        if (feedbackTitle) feedbackTitle.textContent = '정답입니다!';
-    } else {
-        if (feedbackPanel) feedbackPanel.classList.add('incorrect');
-        if (feedbackTitle) feedbackTitle.textContent = `오답입니다! (정답: ${correctValue}${currentQ.unit})`;
-    }
-    if (feedbackDesc) feedbackDesc.textContent = currentQ.explanation;
-    
-    const nextBtn = document.getElementById('next-limits-btn');
-    if (nextBtn) nextBtn.classList.remove('is-hidden');
+    showAnswerFeedback({
+        panelId: 'limits-feedback-panel', titleId: 'limits-feedback-title',
+        descId: 'limits-feedback-desc', nextBtnId: 'next-limits-btn',
+        isCorrect,
+        titleHtml: isCorrect ? '정답입니다!' : `오답입니다! (정답: ${esc(correctValue + currentQ.unit)})`,
+        descHtml: esc(currentQ.explanation),
+    });
 }
 
 export function nextLimitsQuestion() {
@@ -287,43 +265,13 @@ function renderLimitsResult() {
 
     const total = limitsState.shuffledData.length;
     const correct = limitsState.correctCount;
-    const rate = Math.round((correct / total) * 100);
-    const wrongAnswers = limitsState.solvedList.filter(s => !s.correct);
+    const reviewHTML = wrongReviewHtml(limitsState.solvedList.filter(s => !s.correct));
 
-    let reviewHTML = '';
-    if (wrongAnswers.length === 0) {
-        reviewHTML = '<p style="text-align:center; color:var(--color-success); font-weight:600;"><i class="fa-solid fa-circle-check"></i> 모든 문제를 맞혔습니다!</p>';
-    } else {
-        reviewHTML = `<h3 style="margin-bottom:0.75rem; font-size:1.1rem;"><i class="fa-solid fa-triangle-exclamation"></i> 오답 리뷰 (${wrongAnswers.length}문제)</h3>`;
-        wrongAnswers.forEach((s, idx) => {
-            reviewHTML += `
-                <div style="padding:0.75rem; margin-bottom:0.5rem; border:1px solid var(--border-color); border-radius:8px; background:var(--bg-card);">
-                    <div style="font-size:0.85rem; color:var(--color-text-muted); margin-bottom:0.3rem;">Q${idx + 1}</div>
-                    <p style="font-size:0.9rem; margin-bottom:0.4rem;">${esc(s.question)}</p>
-                    <p style="font-size:0.85rem; color:var(--color-danger);">내 답: ${esc(s.selected)}</p>
-                    <p style="font-size:0.85rem; color:var(--color-success);">정답: <strong>${esc(s.correctAnswer)}</strong></p>
-                </div>`;
-        });
-    }
-
-    panel.innerHTML = `
-        <div class="sim-arena-header" style="margin-bottom: 2rem;">
-            <button class="btn btn-secondary" data-click="exitTrainerSubView" title="훈련소 메뉴로 돌아가기"><i class="fa-solid fa-arrow-left"></i> 나가기</button>
-            <div class="sim-title-group">
-                <h4>핵심 수치 암기 마스터 결과</h4>
-                <span class="badge badge-quiz-cat">수치 암기 훈련</span>
-            </div>
-        </div>
-        <div class="trainer-arena" style="text-align:center;">
-            <i class="fa-solid fa-trophy trophy-icon"></i>
-            <h2>훈련 완료!</h2>
-            <p class="result-score-summary">정답수: <strong>${correct}</strong> / ${total} (${rate}%)</p>
-            <div style="text-align:left; margin:1.5rem 0; max-width:600px; margin-left:auto; margin-right:auto;">${reviewHTML}</div>
-            <div class="result-actions" style="display:flex; gap:1rem; justify-content:center;">
-                <button class="btn btn-primary" data-click="startLimitsTrainer"><i class="fa-solid fa-rotate-left"></i> 다시 풀기</button>
-                <button class="btn btn-secondary" data-click="exitTrainerSubView"><i class="fa-solid fa-house"></i> 메뉴로</button>
-            </div>
-        </div>`;
+    panel.innerHTML = trainerResultHtml({
+        headerTitle: '핵심 수치 암기 마스터 결과', badge: '수치 암기 훈련',
+        doneTitle: '훈련 완료!', correct, total, reviewHTML,
+        retryClick: 'startLimitsTrainer',
+    });
 }
 
 

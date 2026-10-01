@@ -126,8 +126,8 @@ src/                    # ES Modules
   router.js             # 뷰 라우터 (navigateToView, getViewTitles, initViewHashRouting — #/슬러그 딥링크·뒤로가기)
   state.js              # 전역 상태 + 진행 영속성 (saveProgress — 저장은 storage.js 위임)
   storage.js            # 저장소 추상화 계층 — 백엔드 교체 가능(getItem/setItem 동기·Async 이중 API), 스코프·쓰기훅·쿼터 감지 중앙화
-  ui-utils.js           # showToast, showConfirm, showGlobalLoading, trapFocus
-  sanitize.js           # XSS 방어 (escapeHTML, safeTextWithBreaks)
+  ui-utils.js           # showToast, showConfirm, trapFocus + 훈련 공용 마크업(markChoiceButtons·wrongReviewHtml·trainerResultHtml·showAnswerFeedback)
+  sanitize.js           # XSS 방어 (escapeHTML, safeTextWithBreaks, esc, stripTags)
   data-loader.js        # 온디맨드 콘텐츠 로더 (DataLoader)
   scratchpad.js          # 스크래치패드 캔버스 (계산 연습용)
   spaced-repetition.js  # SM-2 간격 반복 알고리즘
@@ -157,7 +157,7 @@ src/                    # ES Modules
   keyword-index.js      # 교재 셀→참조자료 키워드 매핑 (시험별 — 자동 생성)
   web-vitals.js         # Core Web Vitals 모니터링
   sha256.js             # 안정적 ID 해시
-  utils.js              # 공통 유틸리티 (shuffle 등)
+  utils.js              # 공통 유틸리티 (shuffle·todayKey·getChosung 등)
   storage-keys.js       # localStorage 키 중앙 관리
   paths.js              # 파일 경로 상수 중앙 관리 (시험 루트 인지형)
   exam-context.js       # 활성 시험 해석/전환, scopedKey 네임스페이스, hasFeature, getExamAppName(시험별 앱 이름 — exams.json appName)

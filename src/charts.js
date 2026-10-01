@@ -216,8 +216,8 @@ function aggregateSubjectRates(history) {
             Object.keys(r.subjectRates).forEach(subj => {
                 const rate = r.subjectRates[subj];
                 if (rate !== null && rate !== undefined) {
-                    // legacy subjectN 형식 → registry 매핑 (공용 규칙: exam-context.js)
-                    const key = subj.startsWith('subject') ? resolveLegacySubjectKey(subj) : subj;
+                    // subjectN 형식 → registry 과목 키 매핑 (공용 규칙: exam-context.js)
+                    const key = resolveLegacySubjectKey(subj);
                     if (subjectRates[key]) {
                         subjectRates[key].push(rate);
                     }

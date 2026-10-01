@@ -58,3 +58,13 @@ export function safeTextWithBreaks(value) {
 export function esc(value) {
     return escapeHTML(value);
 }
+
+/**
+ * HTML 태그를 제거해 순수 텍스트만 남깁니다 (오답 리뷰·로그용 요약 텍스트).
+ * @param {*} value 태그를 포함할 수 있는 문자열
+ * @returns {string} 태그가 제거된 텍스트
+ */
+export function stripTags(value) {
+    if (value === null || value === undefined) return '';
+    return String(value).replace(/<[^>]*>/g, '');
+}

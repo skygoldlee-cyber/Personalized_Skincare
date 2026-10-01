@@ -11,6 +11,7 @@
 import { safeGetItem, safeSetItem } from './state.js';
 import { STORAGE_KEYS } from './storage-keys.js';
 import { updateCardSchedule } from './spaced-repetition.js';
+import { todayKey } from './utils.js';
 
 const STATS_KEY = STORAGE_KEYS.STATEMENT_STATS;
 
@@ -25,7 +26,7 @@ export const WEAK_GRADUATE_STREAK = 3;
 export function recordStatementJudgments(perStatement) {
     if (!Array.isArray(perStatement)) return 0;
     const stats = loadStats();
-    const today = new Date().toISOString().split('T')[0];
+    const today = todayKey();
     let recorded = 0;
     for (const s of perStatement) {
         if (!s || !s.sid || typeof s.judgedCorrect !== 'boolean') continue;
@@ -103,7 +104,7 @@ export function getAllStatementStats() {
 export function getDueStatementSids() {
     const stats = loadStats();
     const schedules = loadSrSchedules();
-    const todayStr = new Date().toISOString().split('T')[0];
+    const todayStr = todayKey();
     return Object.keys(stats).filter(sid =>
         schedules[sid] && schedules[sid].nextReview <= todayStr);
 }
