@@ -84,9 +84,9 @@ user/user_manual.md → 학습안내서(앱 내) → user/exam_strategy.md → u
 docs/
 ├── README.md                    ← 본 파일 (문서 인덱스 + 읽기 순서)
 ├── business/                    ← 사업 기획·시장 조사·마케팅 문서 (5개)
-├── dev/                         ← 개발 문서 (26개)
+├── dev/                         ← 개발 문서 (27개)
 │   ├── ARCHITECTURE.md·SPEC.md·CHANGES.md  ← 수위 문서 (아키텍처·명세·이력)
-│   ├── runbooks/              ← 실행 절차·운영 런북 (9개)
+│   ├── runbooks/              ← 실행 절차·운영 런북 (10개)
 │   ├── design/                ← 설계·계획·평가 문서 (9개)
 │   └── reference/             ← 명세·로직·참조 문서 (8개)
 ├── user/                        ← 사용자/학습자 문서 (7개)
@@ -112,6 +112,7 @@ docs/
 
 | 문서 | 설명 |
 |------|------|
+| [NEW_EXAM_RUNBOOK.md](dev/runbooks/NEW_EXAM_RUNBOOK.md) | 새 시험 추가 런북 — scaffold:exam 스캐폴딩 → 콘텐츠·기능 플래그 선언 → 빌드·검증 → 배포, 체크리스트 |
 | [CONTENT_WORKFLOW.md](dev/runbooks/CONTENT_WORKFLOW.md) | 콘텐츠 변경 표준 절차 — `content/`=SSOT, `build:data` 파이프라인, 검증 명령 |
 | [TEXTBOOK_REPLACEMENT_RUNBOOK.md](dev/runbooks/TEXTBOOK_REPLACEMENT_RUNBOOK.md) | 교재 교체 작업 순서도 — 준비→교체→빌드→인용→이관→파생물→배포·롤백 단일 런북 |
 | [ref-pipeline/README.md](../ref-pipeline/README.md) | 교재·참조자료 변환 도구 — PDF→MD, MD→HTML, 오디오북 TTS, 법령 검증 (독립 실행) |
@@ -280,6 +281,7 @@ docs/
 | DOC-RBK-07 | `docs/dev/runbooks/TEXTBOOK_AUTHORING_GUIDE.md` |
 | DOC-RBK-08 | `docs/dev/runbooks/TEXTBOOK_REPLACEMENT_RUNBOOK.md` |
 | DOC-RBK-09 | `docs/dev/runbooks/VERIFY_DEPLOY_PIPELINE.md` |
+| DOC-RBK-10 | `docs/dev/runbooks/NEW_EXAM_RUNBOOK.md` |
 | DOC-USR-01 | `docs/user/exam_strategy.md` |
 | DOC-USR-02 | `content/exams/cosmetic/docs/formula_manual.md` |
 | DOC-USR-03 | `docs/user/subject1_numbers.md` |

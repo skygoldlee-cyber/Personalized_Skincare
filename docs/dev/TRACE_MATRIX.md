@@ -3,7 +3,7 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: 907c3160491789e4
+> 입력 해시: e0901a28b4805a32
 > 생성: 2026-10-01 · 원천: SPEC.md(364개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
@@ -16,7 +16,7 @@
 | 보고서 | 분석·결과 보고서 | report_archive 헤더 |
 | 출처 | 요구사항의 기원 (법령·시험 규정·사업 문서) | SPEC 부록 "요구사항 출처" 표 |
 
-**커버리지 요약**: 요구사항 364개 — 문서 연결 233 · 소스 연결 344 · 테스트 연결 358 · 보고서 연결 109
+**커버리지 요약**: 요구사항 364개 — 문서 연결 235 · 소스 연결 344 · 테스트 연결 358 · 보고서 연결 109
 
 ---
 
@@ -334,7 +334,7 @@
 
 | ID | 상태 | 검증 수단 | 문서 | 소스 | 테스트 | 보고서 | 출처 |
 |----|------|-----------|------|------|--------|--------|------|
-| ES-01 | ✅ | 테스트 | DOC-DSN-10 | html/views/exam-select.html<br>index.html<br>src/app-dashboard.js<br>src/exam-context.js<br>…외 2개 | tests/dom/exam-switching.dom.test.js<br>tests/dom/study-examselect.dom.test.js<br>tests/unit/exam-context.test.js | DOC-ARC-07 | — |
+| ES-01 | ✅ | 테스트 | DOC-DSN-10<br>DOC-RBK-10 | html/views/exam-select.html<br>index.html<br>src/app-dashboard.js<br>src/exam-context.js<br>…외 2개 | tests/dom/exam-switching.dom.test.js<br>tests/dom/study-examselect.dom.test.js<br>tests/unit/exam-context.test.js | DOC-ARC-07 | — |
 | ES-02 | ✅ | 테스트 | DOC-DSN-10 | src/app-shell.js<br>src/exam-context.js<br>src/views/exam-select.js | tests/dom/exam-switching.dom.test.js<br>tests/dom/study-examselect.dom.test.js<br>tests/unit/exam-context.test.js | DOC-ARC-07 | — |
 | ES-03 | ✅ | 테스트 | DOC-DSN-10 | src/app-shell.js<br>src/exam-context.js<br>src/views/exam-select.js | tests/dom/exam-switching.dom.test.js<br>tests/dom/study-examselect.dom.test.js<br>tests/unit/exam-context.test.js | DOC-ARC-07 | — |
 | ES-04 | ✅ | 테스트 | DOC-DSN-10 | src/exam-context.js | tests/dom/exam-switching.dom.test.js<br>tests/unit/exam-context.test.js | DOC-ARC-07 | — |
@@ -501,8 +501,8 @@
 | DA-08 | ✅ | 테스트 | DOC-DSN-08<br>DOC-DSN-10<br>DOC-RBK-03<br>DOC-REF-08 | src/exam-context.js | tests/unit/data-architecture.test.js | — | — |
 | DA-09 | ✅ | 테스트 | DOC-RBK-03<br>DOC-REF-08 | src/storage.js | tests/unit/storage.test.js | — | — |
 | DA-10 | ✅ | 테스트 | — | src/customer-store.js<br>src/sync.js | tests/unit/customer-store.test.js | — | 개인정보보호법 — 상동 (조제관리사가 고객 개인정보를 클라우드에 올리지 않는 설계) |
-| DA-11 | ✅ | 테스트 | — | tools/check/check_domain_map.js | tests/unit/multi-exam-gates.test.js | — | — |
-| DA-12 | ✅ | 테스트 | — | tools/check/check_uitext.js | tests/unit/multi-exam-gates.test.js | — | — |
+| DA-11 | ✅ | 테스트 | DOC-RBK-10 | tools/check/check_domain_map.js | tests/unit/multi-exam-gates.test.js | — | — |
+| DA-12 | ✅ | 테스트 | DOC-RBK-10 | tools/check/check_uitext.js | tests/unit/multi-exam-gates.test.js | — | — |
 
 ## 5.2 안정적 ID 체계
 
@@ -525,7 +525,7 @@
 | BP-06 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 2개 | tools/build/build_keyword_index.js | tests/unit/build-pipeline.test.js | — | — |
 | BP-07 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 2개 | tools/build/stamp_release_notes.js<br>tools/build/stamp_sw_version.js<br>tools/deploy.js | tests/unit/build-pipeline.test.js | — | — |
 | BP-08 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 2개 | tools/check/audit_card_quality.js | tests/unit/build-pipeline.test.js | — | — |
-| BP-09 | ✅ | 테스트 | DOC-RBK-02 | tools/build/build_doc_bundles.js | tests/unit/multi-exam-gates.test.js | — | — |
+| BP-09 | ✅ | 테스트 | DOC-RBK-02<br>DOC-RBK-10 | tools/build/build_doc_bundles.js | tests/unit/multi-exam-gates.test.js | — | — |
 
 ## 5.4 콘텐츠 구조
 
@@ -635,6 +635,7 @@
 | DOC-RBK-07 | docs/dev/runbooks/TEXTBOOK_AUTHORING_GUIDE.md | CE-01, CE-02, CE-03, CE-04, CE-05, CS-01, CS-02, CS-03, CS-04, CS-05, CS-06, CS-07, CS-08, CS-09, CS-10, ST-01, ST-02, ST-03, ST-04, ST-05, ST-06, ST-07, TR-01, TR-02, TR-03, TR-04, TR-05, TR-06, TR-07, TR-08, TR-09, TR-10, TR-11, TR-12, TR-13, TR-14, TR-15, TR-16, TR-16a, TR-17, TR-18 |
 | DOC-RBK-08 | docs/dev/runbooks/TEXTBOOK_REPLACEMENT_RUNBOOK.md | BP-01, BP-02, BP-03, BP-04, BP-05, BP-06, BP-07, BP-08, CS-01, CS-02, CS-03, CS-04, CS-05, CS-06, CS-07, CS-08, CS-09, CS-10, DA-01, ID-01, ID-02, ID-03, ID-04 |
 | DOC-RBK-09 | docs/dev/runbooks/VERIFY_DEPLOY_PIPELINE.md | BP-01, BP-02, BP-03, BP-04, BP-05, BP-06, BP-07, BP-08, P-13 |
+| DOC-RBK-10 | docs/dev/runbooks/NEW_EXAM_RUNBOOK.md | BP-09, DA-11, DA-12, ES-01 |
 | DOC-REF-01 | docs/dev/reference/COMBO_STUDY_STRATEGY.md | DR-02, DR-03, DR-04, DR-05, DR-06, DR-07, Q-01, Q-02, Q-03, Q-04, Q-05, Q-06, Q-07, Q-08, Q-09, Q-10, Q-11 |
 | DOC-REF-02 | docs/dev/reference/DEV_ENVIRONMENT.md | — |
 | DOC-REF-03 | docs/dev/reference/FLASHCARD_LOGIC.md | F-01, F-02, F-03, F-04, F-05, F-06, F-07, F-08, F-09, F-10, ID-01, ID-02, ID-03, ID-04, TR-01 |

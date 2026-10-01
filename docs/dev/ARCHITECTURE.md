@@ -820,6 +820,8 @@ const state = {
 - **공유 모듈은 시험별 테이블로 분리됨**: `src/pdf-registry.js`, `keyword-index.js`, `law-links.js`는 단일 파일이지만 내부가 `_EXAM_TABLES`/`_EXAM_LAW_URLS` 시험별 맵 + `getActiveExamId()` 해석으로 동작 — 생성기(`build_pdf_registry.js`)가 exams.json을 순회해 시험별 엔트리를 합성한다 (MULTI_EXAM_DB_DESIGN §4.2, Phase A)
 
 ### 새 시험 추가 절차
+> **전체 런북**: `runbooks/NEW_EXAM_RUNBOOK.md` (스캐폴딩→콘텐츠 선언→검증→배포 4단계 + 체크리스트)
+
 0. `node tools/scaffold_exam.js <id> --name "시험명"` — exams.json 엔트리 + manifest/references 골격 + 샘플 교재·문제은행·디렉터리 트리 1커맨드 생성 (Phase B; 실 사용 예는 `food` 시험 — Phase C 파일럿, MULTI_EXAM_DB_DESIGN §9 "Phase C 파일럿 결과" 참조)
 1. `content/exams/<id>/`에 `manifest.json` + `references.json` + `교재/` + `문제은행/` 배치
    - 참조 법령이 있으면: `content/lawdb.json`에 법령 엔트리 추가(공유 법령 재사용) + `references.json`의 `lawRefs`(링크 대상·우선순위)와 `noticeCore`(고시 감시 기준 문서) 설정 → `build:pdf-registry`가 `src/law-links.js` 재생성
