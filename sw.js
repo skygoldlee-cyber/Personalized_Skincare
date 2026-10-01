@@ -381,13 +381,18 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 4) 학습 데이터 파일 → Cache First (단, registry.js는 최신 변경사항 확인을 위해 Network First 적용)
-  // (루트/서브디렉터리 배포 모두 대응: 경로 어디에 있든 /data/ 세그먼트 매칭)
+  // 4) 학습 데이터 파일 → 파일명에 콘텐츠 해시가 있는 번들만 Cache First.
+  //    해시 번들(exams/subject4.<hash>.js 등)은 URL이 곧 버전이라 불변이지만,
+  //    해시 없는 번들(drills/combo_index.js, exams_md·docs_md·study_md 등)은 같은
+  //    경로로 내용이 갱신되므로 cacheFirst로 서빙하면 DATA_CACHE가 배포 간 유지되는
+  //    특성상 구버전이 영구 서빙된다 → Network First (오프라인 시 캐시 폴백).
   if (url.pathname.includes('/data/')) {
-    if (url.pathname.endsWith('registry.js') || url.pathname.endsWith('/data/exams.js')) {
-      event.respondWith(networkFirst(request, DATA_CACHE));
-    } else {
+    const basename = url.pathname.split('/').pop() || '';
+    const isImmutable = /\.[0-9a-f]{8,}\.[a-z0-9]+$/i.test(basename);
+    if (isImmutable) {
       event.respondWith(cacheFirst(request, DATA_CACHE));
+    } else {
+      event.respondWith(networkFirst(request, DATA_CACHE));
     }
     return;
   }
