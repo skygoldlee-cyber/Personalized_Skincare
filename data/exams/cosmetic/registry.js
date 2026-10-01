@@ -2,7 +2,7 @@
 var DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2027",
-  "generatedAt": "2026-10-01T05:44:18.261Z",
+  "generatedAt": "2026-10-01T05:57:11.662Z",
   "subjects": [
     {
       "key": "law",
@@ -80,9 +80,9 @@ var DATA_REGISTRY = {
       "part": 1,
       "title": "화장품법의 이해 (100제)",
       "file": "과목1_문제은행.md",
-      "bundle": "./data/exams/cosmetic/exams/subject1.b401a8bb.js",
+      "bundle": "./data/exams/cosmetic/exams/subject1.7efa0b16.js",
       "global": "EXAM_DATA_subject1",
-      "contentHash": "b401a8bb",
+      "contentHash": "7efa0b16",
       "stats": {
         "questions": 100
       }
@@ -93,9 +93,9 @@ var DATA_REGISTRY = {
       "part": 1,
       "title": "화장품 제조 및 품질관리 (250제)",
       "file": "과목2_문제은행.md",
-      "bundle": "./data/exams/cosmetic/exams/subject2.3639390f.js",
+      "bundle": "./data/exams/cosmetic/exams/subject2.75449536.js",
       "global": "EXAM_DATA_subject2",
-      "contentHash": "3639390f",
+      "contentHash": "75449536",
       "stats": {
         "questions": 250
       }

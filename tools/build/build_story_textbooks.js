@@ -67,8 +67,12 @@ function main() {
     }
 
     if (CHECK) {
-        if (drifted) {
-            console.error(`\n❌ 이야기형 ${drifted}개 파일이 패치/표준형과 불일치 — npm run build:story 후 커밋 필요`);
+        if (failed.length) {
+            console.error('실패:');
+            failed.forEach(f => console.error(`  ✗ ${f}`));
+        }
+        if (drifted || failed.length) {
+            if (drifted) console.error(`\n❌ 이야기형 ${drifted}개 파일이 패치/표준형과 불일치 — npm run build:story 후 커밋 필요`);
             process.exit(1);
         }
         console.log('\n✅ 모든 이야기형이 패치와 일치합니다');

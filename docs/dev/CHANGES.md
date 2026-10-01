@@ -12,7 +12,8 @@
 - **구조**: 표준형이 본문의 유일한 원본. `교재/<dir>/story/<base>_서사.md` 패치 파일이 서사 블록·추가 섹션·제목 부제만 정의하고 `npm run build:story`가 병합해 `_이야기형.md`를 생성 (생성물 — 직접 편집 금지)
 - **도구**: `tools/build/story_merge.js` (LCS diff + 패치 파서/적용 엔진) · `build_story_textbooks.js` (`build:data` 체인에 통합, `--check`로 생성물↔패치 일치 검증) · `extract_story_patches.js` (기존 이야기형에서 패치 1회 추출)
 - **패치 문법**: HTML 주석 지시어 — `@insert before/after="앵커 줄"`(`story` 플래그로 `story:start/end` 자동 부여) · `@insert at="start/end"` · `@suffix line="…"` (제목 부제) · `@replace line="…"` (헤딩 교체) · 중복 앵커는 `n="k"`
-- **정규화**: 이야기형만의 본문 미세 편집 397 hunk는 패치로 이관하지 않고 표준형으로 복원 (추출 시 drift 리포트 출력 — 표준형에 반영할 수정인지 검토용)
+- **정규화**: 이야기형만의 본문 미세 편집 397 hunk는 패치로 이관하지 않고 표준형으로 복원 (추출 시 drift 리포트 출력 — 표준형에 반영할 수정인지 검토용). 정규화 검토 결과 대부분은 이야기형이 구버전 표준형 스냅샷에서 작성된 스테일 잔재(구 참조자료 경로·구 출처 형식·구 섹션 구조) — 유일한 의도된 고유 콘텐츠인 1과목 `🔖 기억 태그` 콜아웃 5건은 패치 insert로 보존
+- **버그 수정**: `build:story --check`가 패치 적용 실패(앵커 미해석)를 무시하고 통과하던 문제 — failed도 exit 1로 보고
 - **인용 영향**: 문제은행의 `…_이야기형.md#L####` 인용은 라인 시프트로 `sync:citations`가 자동 재동기화됨
 - **신선도 게이트**: `check:datafresh`의 `inScope`에 `content/**_이야기형.md` 추가 + `BUILD_STEPS`에 `build_story_textbooks.js` — 표준형·패치 변경 후 이야기형 미생성 시 검출
 - 테스트: `tests/unit/story-merge.test.js` 8건 — suffix/insert-story/start·end/중복 앵커·왕복·실제 4과목 패치↔생성물 정합성
