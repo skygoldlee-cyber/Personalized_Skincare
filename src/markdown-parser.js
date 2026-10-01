@@ -203,6 +203,11 @@ export function parseMarkdown(mdText, options = {}) {
         if (/^&lt;.+&gt;$/.test(url)) {
             url = url.replace(/^&lt;/, '').replace(/&gt;$/, '');
         }
+        // URL 형태가 아닌 대상(IUPAC 화학명 등 우연한 []() 패턴)은 링크화하지 않고 원문 유지
+        const isUrl = /^(?:[a-z][a-z0-9+.-]*:|#|\/|\.\.?\/)/i.test(url)
+            || /[\/\\?%#]/.test(url)
+            || /\.[a-z0-9]{1,8}(?:[#?].*)?$/i.test(url);
+        if (!isUrl) return m;
         return '<a href="' + url + '">' + text + '</a>';
     });
 

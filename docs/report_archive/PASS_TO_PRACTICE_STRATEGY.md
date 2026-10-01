@@ -1229,5 +1229,5 @@ flowchart LR
 - [PASS_CORE_LOOP_REVIEW.md](PASS_CORE_LOOP_REVIEW.md) — 합격 핵심 루프 코드 반영도 리뷰
 - [SUBSCRIPTION_ROADMAP.md](../dev/design/SUBSCRIPTION_ROADMAP.md) — 구독 서비스 전환 로드맵 (본 전략이 2단계 LTV 모델로 확장)
 - [READER_FEEDBACK_DESIGN.md](../dev/design/READER_FEEDBACK_DESIGN.md) — 독자 피드백 공유 기능 설계 (Phase 3~4 커뮤니티 연동)
-- [SPEC.md](SPEC.md) — 기존 요구사양 명세서
-- [ARCHITECTURE.md](ARCHITECTURE.md) — 시스템 아키텍처
+- [SPEC.md](../dev/SPEC.md) — 기존 요구사양 명세서
+- [ARCHITECTURE.md](../dev/ARCHITECTURE.md) — 시스템 아키텍처

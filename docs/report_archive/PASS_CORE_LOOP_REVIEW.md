@@ -2,7 +2,7 @@
 
 > **작성일**: 2026-09-11
 > **목적**: FEATURE_PROPOSALS.md에 정의된 합격 핵심 루프 11단계가 현재 코드에 얼마나 구현되어 있는지, 단계 간 파이프라인이 얼마나 연결되어 있는지 실제 코드 기반으로 진단
-> **관련 문서**: [FEATURE_PROPOSALS.md](FEATURE_PROPOSALS.md), [SPEC.md](SPEC.md), [ARCHITECTURE.md](ARCHITECTURE.md)
+> **관련 문서**: [FEATURE_PROPOSALS.md](FEATURE_PROPOSALS.md), [SPEC.md](../dev/SPEC.md), [ARCHITECTURE.md](../dev/ARCHITECTURE.md)
 > **문서 ID**: DOC-ARC-05
 > **관련 SPEC ID**: F-01~10, Q-01~11, E-01~07, D-01~15, T-01~05, SC-01~03, DR-01~07
 > **성격**: 1회 분석·원전 | **결과**: 아카이브 (진단 스냅샷 — 2026-09-11 기준)
@@ -479,7 +479,7 @@ D-Day, 학습 목표, 요약 노트가 없습니다.
 ## 📎 관련 문서
 
 - [FEATURE_PROPOSALS.md](FEATURE_PROPOSALS.md) — 추천 기능 제안 (합격 핵심 루프 정의)
-- [SPEC.md](SPEC.md) — 기존 요구사양 명세서 (16개 영역)
-- [ARCHITECTURE.md](ARCHITECTURE.md) — 시스템 아키텍처
+- [SPEC.md](../dev/SPEC.md) — 기존 요구사양 명세서 (16개 영역)
+- [ARCHITECTURE.md](../dev/ARCHITECTURE.md) — 시스템 아키텍처
 - [SUBSCRIPTION_ROADMAP.md](../dev/design/SUBSCRIPTION_ROADMAP.md) — 구독 서비스 전환 로드맵
 - [READER_FEEDBACK_DESIGN.md](../dev/design/READER_FEEDBACK_DESIGN.md) — 독자 피드백 공유 기능 설계
