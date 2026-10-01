@@ -1,5 +1,13 @@
 [
   {
+    "version": "v20261001-db26ab9",
+    "date": "2026-10-01",
+    "notes": [
+      "[문서·dev] LLM 서사 초안 생성 절차를 STORY_PATCH_GUIDE에 추가",
+      "[기능·content] food 1과목 이야기형 활성화 — LLM 서사 초안"
+    ]
+  },
+  {
     "version": "v20261001-caaf813",
     "date": "2026-10-01",
     "notes": [
@@ -136,13 +144,6 @@
     "date": "2026-09-30",
     "notes": [
       "[정리·deploy] 개발 문서·테스트·CI·설정 파일을 Vercel 업로드에서 제외 [no-docs]"
-    ]
-  },
-  {
-    "version": "v20260930-84cf9b8",
-    "date": "2026-09-30",
-    "notes": [
-      "[정리·deploy] 교재 삽화 PNG 원본을 Vercel 업로드에서 제외 [no-docs]"
     ]
   }
 ]
