@@ -222,7 +222,6 @@ function findLineByFingerprint(lines, fingerprint, originalLineNum) {
 function extractCitations(examFile, content) {
     const citations = [];
     const examDir = path.dirname(examFile);
-    const seenUrls = new Set();
     const contentLines = content.split('\n');
     // 각 라인의 시작 오프셋
     const offsets = [];
@@ -257,10 +256,6 @@ function extractCitations(examFile, content) {
         const textLineNum = parseInt(match[2]);
         const relPath = match[3];
         const urlLineNum = parseInt(match[4]);
-
-        const urlKey = `${relPath}#L${urlLineNum}`;
-        if (seenUrls.has(urlKey)) return;
-        seenUrls.add(urlKey);
 
         const resolved = path.resolve(ROOT, examDir, relPath);
         if (!fs.existsSync(resolved)) {
