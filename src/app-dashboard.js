@@ -116,7 +116,7 @@ export function populateExamCards() {
             const partLabel = subjExams.length > 1 ? `${partIdx + 1}부` : '';
             const pdfLabel = subjExams.length > 1
                 ? `${partLabel} PDF`
-                : '예상 문제집';
+                : `예상 문제집${totalQuestions ? ` (${totalQuestions}제)` : ''}`;
             const simLabel = subjExams.length > 1
                 ? `${partLabel} 풀기`
                 : '시뮬레이터 시작';
@@ -137,7 +137,7 @@ export function populateExamCards() {
             .concat(`<button class="exam-btn-sim combo-count-chip" data-click="startComboMockExam" data-arg="${idx + 1}">${comboTotal ? `전체 ${comboTotal}문` : '전체'}</button>`)
             .join('\n                                            ');
         const comboPair = `                                <div class="exam-btn-pair">
-                                    <button data-click="ExamViewer.openCombo" data-arg="${subj.order}" class="exam-btn-link"><i class="fa-solid fa-file-lines"></i> ㄱㄴㄷ 조합 문제집 <span class="pro-badge" data-pro-feature="combo_set">PRO</span></button>
+                                    <button data-click="ExamViewer.openCombo" data-arg="${subj.order}" class="exam-btn-link"><i class="fa-solid fa-file-lines"></i> ㄱㄴㄷ 조합 문제집${comboTotal ? ` (${comboTotal}제)` : ''} <span class="pro-badge" data-pro-feature="combo_set">PRO</span></button>
                                     <button class="exam-btn-sim" data-click="toggleComboPicker" data-arg="combo-picker-${idx + 1}"><i class="fa-solid fa-circle-play"></i> ㄱㄴㄷ 조합 모의고사 <span class="pro-badge" data-pro-feature="combo_mock">PRO</span></button>
                                     <small class="exam-btn-caption">ㄱㄴㄷ 진술 조합 · 예상문제 자동 변환</small>
                                     <div class="combo-count-row is-hidden" id="combo-picker-${idx + 1}">
