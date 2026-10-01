@@ -7,7 +7,7 @@
   },
   "main": "serve.js",
   "scripts": {
-    "build:data": "npm run sync:citations && npm run build:exams-list && npm run build:pdf-registry && npm run build:keyword-index && node tools/build/build_all_data.js && npm run build:study-md && npm run build:exam-bundles && npm run build:audio-manifest && npm run build:question-chapters && npm run build:id-migration",
+    "build:data": "npm run sync:citations && npm run build:exams-list && npm run build:pdf-registry && npm run build:keyword-index && node tools/build/build_all_data.js && npm run build:story && npm run build:study-md && npm run build:exam-bundles && npm run build:audio-manifest && npm run build:question-chapters && npm run build:id-migration",
     "build:question-chapters": "node tools/build/build_question_chapters.js",
     "build:id-migration": "node tools/build/build_id_migration.js",
     "build:exams-list": "node tools/build/build_exams_list.js",
@@ -52,6 +52,7 @@
     "verify:assets": "node tools/check/verify_shell_assets.js",
     "sbom": "npm sbom --sbom-format spdx > sbom.spdx.json",
     "build:study-md": "node tools/build/build_study_md_bundle.js",
+    "build:story": "node tools/build/build_story_textbooks.js",
     "test": "node --test tests/unit/*.test.js",
     "test:unit": "node --test tests/unit/*.test.js",
     "test:dom": "vitest run",

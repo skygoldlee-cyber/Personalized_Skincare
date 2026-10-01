@@ -6,6 +6,17 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-01 이야기형 교재 생성 파이프라인 (표준형 + 서사 패치 → 이야기형)
+
+- **배경**: `_이야기형.md`가 `_표준형.md`의 수동 복제본이라 표준형 갱신 시 본문이 드리프트 — 실측 약 6%(최대 517라인)가 양방향 발산 상태였음
+- **구조**: 표준형이 본문의 유일한 원본. `교재/<dir>/story/<base>_서사.md` 패치 파일이 서사 블록·추가 섹션·제목 부제만 정의하고 `npm run build:story`가 병합해 `_이야기형.md`를 생성 (생성물 — 직접 편집 금지)
+- **도구**: `tools/build/story_merge.js` (LCS diff + 패치 파서/적용 엔진) · `build_story_textbooks.js` (`build:data` 체인에 통합, `--check`로 생성물↔패치 일치 검증) · `extract_story_patches.js` (기존 이야기형에서 패치 1회 추출)
+- **패치 문법**: HTML 주석 지시어 — `@insert before/after="앵커 줄"`(`story` 플래그로 `story:start/end` 자동 부여) · `@insert at="start/end"` · `@suffix line="…"` (제목 부제) · `@replace line="…"` (헤딩 교체) · 중복 앵커는 `n="k"`
+- **정규화**: 이야기형만의 본문 미세 편집 397 hunk는 패치로 이관하지 않고 표준형으로 복원 (추출 시 drift 리포트 출력 — 표준형에 반영할 수정인지 검토용)
+- **인용 영향**: 문제은행의 `…_이야기형.md#L####` 인용은 라인 시프트로 `sync:citations`가 자동 재동기화됨
+- **신선도 게이트**: `check:datafresh`의 `inScope`에 `content/**_이야기형.md` 추가 + `BUILD_STEPS`에 `build_story_textbooks.js` — 표준형·패치 변경 후 이야기형 미생성 시 검출
+- 테스트: `tests/unit/story-merge.test.js` 8건 — suffix/insert-story/start·end/중복 앵커·왕복·실제 4과목 패치↔생성물 정합성
+
 ## 2026-10-01 PC 뒤로가기 종료 경고 오발화 수정
 
 - **증상**: PC PWA 교재리더에서 삽화 이미지 확대 후 뒤로가기로 닫으면 "뒤로가기를 한 번 더 누르면 종료됩니다" 토스트가 표시됨

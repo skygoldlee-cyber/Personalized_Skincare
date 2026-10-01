@@ -94,7 +94,7 @@ flowchart LR
 
 | 변경 유형 | 수정할 파일 | 비고 |
 |----------|------------|------|
-| **교재 내용 수정** | `content/exams/cosmetic/교재/{과목}/*.md` | 표준형/이야기형 모두 수정 |
+| **교재 내용 수정** | `content/exams/cosmetic/교재/{과목}/*_표준형.md` | 표준형만 수정 — `_이야기형.md`는 `npm run build:story` 생성물 (서사는 `교재/{과목}/story/*_서사.md` 패치) |
 | **문제은행 수정** | `content/exams/cosmetic/문제은행/과목N_문제은행.md` | 문제 추가/삭제/수정 |
 | **과목 추가/삭제** | `content/exams/cosmetic/manifest.json` | `subjects` 배열 수정 |
 | **시험 추가/삭제** | `content/exams/cosmetic/manifest.json` | `exams` 배열 수정 |
@@ -170,8 +170,8 @@ npm.cmd run build:audio-manifest     # 오디오 매니페스트만
 
 ### 3.1 교재 내용 수정
 
-1. `content/exams/cosmetic/교재/{과목}/{파일명}.md` 편집 (표준형, 이야기형 모두)
-2. `npm.cmd run build:data` 실행
+1. `content/exams/cosmetic/교재/{과목}/{파일명}_표준형.md` 편집 — `_이야기형.md`는 **생성물**(직접 편집 금지). 서사·전면 섹션은 `교재/{과목}/story/{base}_서사.md` 패치를 편집하고 `npm.cmd run build:story`로 재생성 (`build:data`에 포함). 패치 지시어: `@insert before/after="앵커 줄"`(+`story` 플래그) · `@insert at="start/end"` · `@suffix line="…"` · `@replace line="…"` · 중복 앵커는 `n="k"`. 표준형 편집으로 패치 앵커가 깨지면 build가 에러로 보고 — 앵커 줄을 새 표준형 라인으로 갱신
+2. `npm.cmd run build:data` 실행 (build:story 자동 포함 — 이야기형 재생성 후 인용 동기화 필요 시 `sync:citations`)
 3. **인용 라인 동기화** (교재 라인 변경 시):
    ```powershell
    node tools/sync_citation_lines.js --check   # 변경사항 확인만

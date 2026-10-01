@@ -32,6 +32,7 @@ const BUILD_STEPS = [
     'build_pdf_registry.js',
     'build_keyword_index.js',
     'build_all_data.js',
+    'build_story_textbooks.js',
     'build_study_md_bundle.js',
     'build_exam_bundles.js',
     'build_audio_manifest.js',
@@ -52,6 +53,7 @@ function inScope(p) {
         || p === 'manifest.webmanifest'
         || /^manifest\.[^/]*\.webmanifest$/.test(p)
         || (p.startsWith('content/') && p.endsWith('/manifest.json'))
+        || (p.startsWith('content/') && p.endsWith('_이야기형.md'))
         || /^tools\/build\/\.last-stats[^/]*\.json$/.test(p);
 }
 
