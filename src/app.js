@@ -11,6 +11,7 @@ import { STORAGE_KEYS } from './storage-keys.js';
 import { setupPWAInstall } from './pwa-install.js';
 import { setupThemeToggle } from './theme-toggle.js';
 import { maybeShowWhatsNew } from './whats-new.js';
+import { maybeShowOnboarding } from './onboarding.js';
 import { appVersion, formatAppVersion } from './app-version.js';
 import { captureEntrySource, flushPendingFeedback, initFeedbackHint } from './feedback.js';
 import { loadFeaturePlan, proFeatureNotice, showPlanCompare } from './pro-upgrade.js';
@@ -26,6 +27,7 @@ import {
     startSubjectStudy,
     startSubjectQuiz,
     startSubjectReader,
+    startDueReview,
     saveActualExamResult,
     editActualExamResult
 } from './views/dashboard.js';
@@ -320,6 +322,9 @@ function initApp() {
     // 새 버전 적용 후 첫 부팅이면 변경 이력 모달 (최초 설치는 기록만)
     step('maybeShowWhatsNew', maybeShowWhatsNew);
 
+    // 학습 데이터가 없는 최초 방문이면 시작 안내 모달 (1회)
+    step('maybeShowOnboarding', maybeShowOnboarding);
+
     // 오프라인 큐에 쌓인 의견은 온라인 복귀 시 플러시
     window.addEventListener('online', () => { flushPendingFeedback(); });
 }
@@ -589,7 +594,7 @@ const DELEGATED_HANDLERS = {
     startIngredientsChallenge, nextIngQuestion, submitIngAnswer,
     toggleSolutionAccordion, togglePomodoro, resetPomodoro,
     // 대시보드/리뷰/백업 (과거 브리지 누락으로 배포판에서 죽어 있던 핸들러 포함)
-    startSubjectStudy, startSubjectQuiz, startSubjectReader,
+    startSubjectStudy, startSubjectQuiz, startSubjectReader, startDueReview,
     removeWeakCard, setReviewFilter, printReviewNotes,
     tagWrongCause, tagWrongCauseAt, wrongActionCard, wrongActionTextbook, wrongActionSimilar,
     startDiagnosticQuiz,

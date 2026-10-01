@@ -186,6 +186,9 @@
                             <button id="whats-new-btn" class="settings-item" title="최근 업데이트 변경 내용 보기">
                                 <i class="fa-solid fa-sparkles" aria-hidden="true"></i> 변경 이력
                             </button>
+                            <button id="onboarding-btn" class="settings-item" title="앱 사용법 3단계 안내 다시 보기">
+                                <i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> 시작 안내
+                            </button>
                             <button id="feedback-btn" class="settings-item" title="칭찬·개선·오류·기능 제안 보내기">
                                 <i class="fa-solid fa-comment-dots" aria-hidden="true"></i> 의견 보내기
                             </button>
@@ -288,7 +291,7 @@
                         <div class="stat-info">
                             <h3>오늘 복습</h3>
                             <div class="stat-value" id="due-review-count">0</div>
-                            <p class="stat-desc">간격 반복 대기 카드</p>
+                            <p class="stat-desc">간격 반복 대기 카드 <button type="button" id="due-review-cta" class="dday-set-btn is-hidden" data-click="startDueReview"><i class="fa-solid fa-play" aria-hidden="true"></i> 지금 복습</button></p>
                         </div>
                     </div>
                     <div class="stat-card">
@@ -1123,6 +1126,7 @@
                             <span class="highlight-card-icon"><i class="fa-solid fa-star" aria-hidden="true"></i> 추천</span>
                             <h4 class="exam-card-title highlight-card-title" id="integrated-exam-title">통합 실전 모의고사 <span class="pro-badge" data-pro-feature="mock_exam">PRO</span></h4>
                             <p class="exam-card-desc highlight-card-desc">전 과목 문항을 무작위로 구성하여 푸는 종합 실전 모의고사입니다. 시험 타이머, OMR 답안지 마킹 및 자동 과락/합격 판정을 완벽히 지원합니다.</p>
+                            <p id="integrated-exam-stats" class="exam-card-progress is-hidden"></p>
                             <label class="integrated-mix-option">
                                 <input type="checkbox" id="integrated-mix-combo">
                                 <span>과목별 문항의 약 20%를 ㄱㄴㄷ 조합형으로 혼합</span>
@@ -1187,7 +1191,7 @@
                             <div class="omr-header">
                                 <button type="button" class="omr-toggle" id="omr-toggle" aria-expanded="true" aria-controls="omr-grid">
                                     <span class="omr-title">OMR 답안지</span>
-                                    <span class="omr-progress">푼 문제: <strong id="omr-solved-count">0</strong> / <strong id="omr-total-count">100</strong></span>
+                                    <span class="omr-progress">푼 문제: <strong id="omr-solved-count">0</strong> / <strong id="omr-total-count">100</strong> · 미답 <strong id="omr-unsolved-count" class="omr-unsolved">100</strong></span>
                                     <i class="fa-solid fa-chevron-down omr-chevron" aria-hidden="true"></i>
                                 </button>
                             </div>
@@ -1212,6 +1216,7 @@
 
                     <div class="reader-empty-actions">
                         <button class="btn btn-primary" data-click="showSimAnswerReview"><i class="fa-solid fa-book-open" aria-hidden="true"></i> 오답 해설 풀이 보기</button>
+                        <button class="btn btn-warning" data-click="switchView" data-args='["review-view", {"scrollTop": true}]'><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> 오답 복습노트로 이동</button>
                         <button class="btn btn-secondary" data-click="exitSimArena"><i class="fa-solid fa-house" aria-hidden="true"></i> 목차로 돌아가기</button>
                     </div>
                 </div>
@@ -2405,8 +2410,8 @@
     <!-- ESM 로드 실패 시 자동 복구 (모바일 PWA: 의존성 모듈 캐시 미스로 app.js 미실행 방지) -->
     <script src="src/app-fallback.js" defer></script>
     <!-- PWA: Service Worker 등록 및 설치 프롬프트 -->
-    
+
     <!-- Theme (Light/Dark) 토글 로직 -->
-    
+
 </body>
 </html>

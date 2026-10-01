@@ -571,6 +571,10 @@
 .omr-progress strong {
     color: var(--color-secondary);
 }
+/* 미답 카운터 — 남은 문항이 있으면 주황으로 강조 */
+.omr-unsolved.omr-unsolved-warn {
+    color: var(--color-warning-dark);
+}
 
 .omr-grid-container {
     display: grid;

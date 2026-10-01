@@ -64,6 +64,7 @@ export function refreshProBadges(root = document) {
     if (!_featurePlan) return;
     root.querySelectorAll('[data-pro-feature]').forEach(el => {
         el.classList.toggle('is-hidden', !isProFeature(/** @type {HTMLElement} */ (el).dataset.proFeature));
+        if (!el.getAttribute('title')) el.setAttribute('title', 'Pro 제공 예정 기능 — 현재 무료로 이용할 수 있습니다');
     });
 }
 

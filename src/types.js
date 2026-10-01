@@ -22,6 +22,7 @@
  * @property {string|null} subject      현재 과목 키 (초기값 null, initApp에서 registry 기반 설정)
  * @property {number}   currentIndex 현재 카드 인덱스
  * @property {boolean}  keyOnly      키워드(암기면)만 표시 여부
+ * @property {boolean}  dueOnly      SM-2 복습 대상만 전 과목 합산 출제 (1회 적용 후 자동 해제)
  * @property {boolean}  shuffle      랜덤 셔플 모드
  * @property {string}   difficultyFilter 난이도 필터 ('all'|'easy'|'medium'|'hard')
  * @property {string}   sortBy       정렬 기준 ('importance'|'default')

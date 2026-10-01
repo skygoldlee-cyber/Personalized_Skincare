@@ -532,6 +532,12 @@ function updateOMRProgress() {
 
     const solvedEl = document.getElementById('omr-solved-count');
     if (solvedEl) solvedEl.textContent = String(solvedCount);
+    // 미답 수 — OMR 접힘(모바일) 상태에서도 헤더에 항상 노출
+    const unsolvedEl = document.getElementById('omr-unsolved-count');
+    if (unsolvedEl) {
+        unsolvedEl.textContent = String(total - solvedCount);
+        unsolvedEl.classList.toggle('omr-unsolved-warn', total - solvedCount > 0);
+    }
 }
 
 export function jumpToSimQuestion(index) {

@@ -21,7 +21,7 @@ import {
     computeMasteryLevels
 } from '../analysis-engine.js';
 import { resolveWrongQuiz } from '../weak-items.js';
-import { showToast } from '../ui-utils.js';
+import { showToast, showGlobalLoading, hideGlobalLoading } from '../ui-utils.js';
 import { getExamRules } from '../exam-context.js';
 
 /**
@@ -100,9 +100,11 @@ export function updateGlobalStats() {
     if (weakCardsEl) weakCardsEl.textContent = String(state.weakCards.size);
     if (reviewCardEl) reviewCardEl.textContent = String(state.weakCards.size);
 
-    // 2. 간격 반복 — 오늘 복습 대기 카드 수
+    // 2. 간격 반복 — 오늘 복습 대기 카드 수 + 대기 중일 때 '지금 복습' CTA
+    const dueCount = getDueCount();
     const dueReviewEl = document.getElementById('due-review-count');
-    if (dueReviewEl) dueReviewEl.textContent = String(getDueCount());
+    if (dueReviewEl) dueReviewEl.textContent = String(dueCount);
+    document.getElementById('due-review-cta')?.classList.toggle('is-hidden', dueCount === 0);
 
     // 2-b. 시험일 D-day + 역산 권장량 표시
     const ddayEl = document.getElementById('exam-dday-count');
@@ -500,6 +502,28 @@ function _renderPassGapInsight() {
         ${gapRow}${weakRow}
         ${gap.weakest ? `<p class="analysis-advice">${esc(gap.weakest.reason)} — 이 과목이 점수 상승 여력이 가장 큽니다.</p>` : ''}
         ${weakBtn}`;
+}
+
+/**
+ * 오늘 복습 대상(SM-2 due) 카드만 모아 전 과목 합산 플래시카드 세션을 시작합니다.
+ * 대시보드 '오늘 복습' 카드의 '지금 복습' 버튼에서 호출.
+ */
+export function startDueReview() {
+    const n = getDueCount();
+    if (n === 0) {
+        showToast('오늘 복습할 카드가 없습니다.', 'info');
+        return;
+    }
+    showGlobalLoading('복습 대상 카드를 불러오는 중입니다...');
+    Promise.all(DataLoader.getSubjectList().map(s => DataLoader.loadSubject(s.key)))
+        .catch(() => {})
+        .finally(() => {
+            hideGlobalLoading();
+            state.flashcards.dueOnly = true;
+            state.flashcards.currentIndex = 0;
+            switchView('flashcard-view', { scrollTop: true });
+            showToast(`오늘 복습 대상 ${n}장 — 간격 반복 세션을 시작합니다`, 'success');
+        });
 }
 
 /**

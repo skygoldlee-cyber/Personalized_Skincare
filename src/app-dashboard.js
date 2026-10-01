@@ -4,7 +4,8 @@ import { esc } from "./sanitize.js";
 import { DataLoader } from "./data-loader.js";
 import { contentPath } from "./exam-context.js";
 import { refreshProBadges } from "./pro-upgrade.js";
-import { state, getSimResultsHistory } from "./state.js";
+import { state, getSimResultsHistory, safeGetItem } from "./state.js";
+import { STORAGE_KEYS } from "./storage-keys.js";
 
 // --- 초기화 및 로컬스토리지 로드 ---
 export function populateSubjectSelects() {
@@ -202,6 +203,22 @@ ${allBtnsHtml}
         if (titleEl) titleEl.textContent = `통합 실전 모의고사 (${integratedTotal}제)`;
         const btnEl = document.getElementById('integrated-exam-btn');
         if (btnEl) btnEl.innerHTML = `<i class="fa-solid fa-clock" aria-hidden="true"></i> 통합 모의고사 시작 (${examTimeMin}분)`;
+        // 응시 요약 — 최근/최고 정답률 + 이어풀기 가능 여부 표시
+        const statsEl = document.getElementById('integrated-exam-stats');
+        if (statsEl) {
+            const attempts = simHistory.filter(h => h.examId === 'integrated');
+            const parts = [];
+            if (attempts.length) {
+                const best = Math.max(...attempts.map(a => a.rate));
+                parts.push(`응시 ${attempts.length}회 · 최근 ${attempts[attempts.length - 1].rate}% · 최고 ${best}%`);
+            }
+            try {
+                const draft = JSON.parse(safeGetItem(STORAGE_KEYS.SIM_DRAFT_SESSION) || 'null');
+                if (draft && draft.examId === 'integrated') parts.push('진행 중인 응시 있음 — 대시보드에서 이어풀기');
+            } catch (e) { /* draft 파싱 실패는 무시 */ }
+            statsEl.textContent = parts.join(' · ');
+            statsEl.classList.toggle('is-hidden', parts.length === 0);
+        }
     }
 }
 

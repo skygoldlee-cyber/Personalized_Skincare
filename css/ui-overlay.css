@@ -101,7 +101,8 @@
 #whats-new-overlay,
 #feedback-overlay,
 #pro-upgrade-overlay,
-#usage-stats-overlay {
+#usage-stats-overlay,
+#onboarding-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
@@ -118,7 +119,8 @@
 #whats-new-overlay.is-visible,
 #feedback-overlay.is-visible,
 #pro-upgrade-overlay.is-visible,
-#usage-stats-overlay.is-visible {
+#usage-stats-overlay.is-visible,
+#onboarding-overlay.is-visible {
   opacity: 1;
 }
 .app-confirm-dialog {
@@ -204,6 +206,52 @@
   color: var(--color-text-main, #fff);
   line-height: 1.6;
   margin-bottom: 0.25rem;
+}
+
+/* ── 첫 방문 시작 안내 모달 (onboarding.js) ── */
+.onboarding-dialog {
+  max-width: 440px;
+}
+.onboarding-steps {
+  list-style: none;
+  margin: 0 0 0.75rem;
+  padding: 0;
+}
+.onboarding-step {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 0.9rem;
+  align-items: flex-start;
+}
+.onboarding-step-num {
+  flex: 0 0 auto;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: var(--font-weight-bold);
+  background: linear-gradient(135deg, var(--color-primary, #06b6d4), var(--color-secondary, #8b5cf6));
+  color: var(--color-on-brand);
+}
+.onboarding-step-title {
+  margin: 0 0 0.15rem;
+  font-size: 0.92rem;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-main, #fff);
+}
+.onboarding-step-body {
+  margin: 0;
+  font-size: 0.84rem;
+  color: var(--color-text-muted, #9ca3af);
+  line-height: 1.55;
+}
+.onboarding-foot {
+  margin: 0 0 1.25rem;
+  font-size: 0.8rem;
+  color: var(--color-text-muted, #9ca3af);
 }
 
 /* ── 필터 버튼 (리뷰/교재 과목 필터) ── */
@@ -609,19 +657,26 @@
   margin-left: 0.3rem;
 }
 
-/* ── Pro 기능 배지 — 아웃라인형 (무료 체험 중 상시 노출이라 채움 배경은 시각 소음) ── */
+/* ── Pro 기능 배지 — 아웃라인형 (무료 체험 중 상시 노출이라 채움 배경은 시각 소음)
+   반복 노출되는 카드 UI에서 주의를 끌지 않도록 더 축소·저채도로 유지한다 ── */
 .pro-badge {
   display: inline-block;
-  padding: 0.1rem 0.4rem;
+  padding: 0.06rem 0.32rem;
   border-radius: 999px;
-  font-size: 0.6rem;
+  font-size: 0.55rem;
   font-weight: var(--font-weight-bold, 700);
   letter-spacing: 0.05em;
-  color: var(--color-secondary, #8b5cf6);
-  border: 1px solid var(--secondary-tint-30, rgba(139, 92, 246, 0.3));
+  color: var(--color-text-muted, #9ca3af);
+  border: 1px solid var(--border-color, rgba(139, 92, 246, 0.3));
   background: transparent;
+  opacity: 0.75;
   vertical-align: middle;
   margin-left: 0.3rem;
+}
+.pro-badge:hover {
+  color: var(--color-secondary, #8b5cf6);
+  border-color: var(--secondary-tint-30, rgba(139, 92, 246, 0.3));
+  opacity: 1;
 }
 
 /* ── 내 사용 통계 (usage-stats.js) ── */

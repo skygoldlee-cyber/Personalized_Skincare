@@ -14,6 +14,7 @@
                             <span class="highlight-card-icon"><i class="fa-solid fa-star" aria-hidden="true"></i> 추천</span>
                             <h4 class="exam-card-title highlight-card-title" id="integrated-exam-title">통합 실전 모의고사 <span class="pro-badge" data-pro-feature="mock_exam">PRO</span></h4>
                             <p class="exam-card-desc highlight-card-desc">전 과목 문항을 무작위로 구성하여 푸는 종합 실전 모의고사입니다. 시험 타이머, OMR 답안지 마킹 및 자동 과락/합격 판정을 완벽히 지원합니다.</p>
+                            <p id="integrated-exam-stats" class="exam-card-progress is-hidden"></p>
                             <label class="integrated-mix-option">
                                 <input type="checkbox" id="integrated-mix-combo">
                                 <span>과목별 문항의 약 20%를 ㄱㄴㄷ 조합형으로 혼합</span>
@@ -78,7 +79,7 @@
                             <div class="omr-header">
                                 <button type="button" class="omr-toggle" id="omr-toggle" aria-expanded="true" aria-controls="omr-grid">
                                     <span class="omr-title">OMR 답안지</span>
-                                    <span class="omr-progress">푼 문제: <strong id="omr-solved-count">0</strong> / <strong id="omr-total-count">100</strong></span>
+                                    <span class="omr-progress">푼 문제: <strong id="omr-solved-count">0</strong> / <strong id="omr-total-count">100</strong> · 미답 <strong id="omr-unsolved-count" class="omr-unsolved">100</strong></span>
                                     <i class="fa-solid fa-chevron-down omr-chevron" aria-hidden="true"></i>
                                 </button>
                             </div>
@@ -103,6 +104,7 @@
 
                     <div class="reader-empty-actions">
                         <button class="btn btn-primary" data-click="showSimAnswerReview"><i class="fa-solid fa-book-open" aria-hidden="true"></i> 오답 해설 풀이 보기</button>
+                        <button class="btn btn-warning" data-click="switchView" data-args='["review-view", {"scrollTop": true}]'><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> 오답 복습노트로 이동</button>
                         <button class="btn btn-secondary" data-click="exitSimArena"><i class="fa-solid fa-house" aria-hidden="true"></i> 목차로 돌아가기</button>
                     </div>
                 </div>

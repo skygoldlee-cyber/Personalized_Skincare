@@ -38,6 +38,7 @@ export const state = {
         subject: null,           // 초기값 null — initApp()에서 registry 첫 번째 과목으로 설정
         currentIndex: 0,
         keyOnly: false,
+        dueOnly: false,          // true면 오늘 복습 대상(SM-2 due)만 전 과목 합산 출제 — 1회 적용 후 자동 해제
         shuffle: false,          // 랜덤 셔플 모드
         difficultyFilter: 'all', // 'all', 'easy', 'medium', 'hard'
         sortBy: 'importance',    // 'importance' or 'default'
@@ -242,10 +243,10 @@ export function saveProgress() {
 // 특정 과목 데이터가 동적 로드되었을 때 해당 과목의 고아 ID를 청소하는 함수 (지연 로딩 대응)
 export function cleanOrphansForSubject(subjKey, subjData) {
     if (!subjData) return;
-    
+
     const validCardIds = new Set();
     const validQuizIds = new Set();
-    
+
     if (subjData.cards) subjData.cards.forEach(c => validCardIds.add(c.id));
     if (subjData.quizzes) subjData.quizzes.forEach(q => validQuizIds.add(q.id));
 
@@ -290,7 +291,7 @@ export function cleanOrphansForSubject(subjKey, subjData) {
     weakQuizToClean.forEach(id => state.weakCards.delete(id));
     // 청소된 항목의 오답 원인 태그도 함께 정리
     weakQuizToClean.forEach(id => { delete state.wrongCauses[id]; });
-    
+
     // 퀴즈 결과 청소
     let quizzesCleaned = false;
     Object.keys(state.quizResults).forEach(id => {
@@ -299,7 +300,7 @@ export function cleanOrphansForSubject(subjKey, subjData) {
             quizzesCleaned = true;
         }
     });
-    
+
     if (cardsToClean.length > 0 || weakToClean.length > 0 || quizzesCleaned) {
         console.debug(`[Orphan Cleanup] Cleaned orphans for ${subjKey}:`, {
             memorized: cardsToClean.length,

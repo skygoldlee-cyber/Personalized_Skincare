@@ -183,10 +183,20 @@ body.exam-open{overflow:hidden;}
   padding:2px 4px;margin:-2px -4px;
   animation:exam-line-pulse 1.5s ease-in-out 2;}
 @keyframes exam-line-pulse{0%,100%{background:rgba(250,204,21,.35);}50%{background:rgba(250,204,21,.6);}}
+#exam-overlay .exam-resume-chip{position:absolute;right:18px;bottom:22px;z-index:5;
+  display:inline-flex;align-items:center;gap:2px;
+  background:var(--bg-card);border:1px solid var(--border-color);border-radius:999px;
+  box-shadow:0 6px 18px rgba(0,0,0,.28);padding:4px 6px 4px 14px;font-size:.82rem;}
+#exam-overlay .exam-resume-chip.is-hidden{display:none;}
+#exam-overlay .exam-resume-go{background:none;border:none;color:var(--color-primary);
+  font:inherit;font-weight:700;cursor:pointer;padding:4px 6px;}
+#exam-overlay .exam-resume-x{background:none;border:none;color:var(--color-text-muted);
+  cursor:pointer;padding:4px 8px;font-size:.85rem;border-radius:50%;}
+#exam-overlay .exam-resume-x:hover{color:var(--color-text-main);}
 @media print{
   body.exam-open>*:not(#exam-overlay){display:none !important;}
   #exam-overlay{position:static !important;display:block !important;}
-  #exam-overlay .exam-ov-bar,#exam-overlay .exam-ov-toc{display:none !important;}
+  #exam-overlay .exam-ov-bar,#exam-overlay .exam-ov-toc,#exam-overlay .exam-resume-chip{display:none !important;}
   #exam-overlay .exam-ov-scroll{overflow:visible !important;padding:0 !important;}
 }`;
         document.head.appendChild(style);
@@ -215,14 +225,68 @@ body.exam-open{overflow:hidden;}
             </div>
             <div class="exam-ov-scroll" role="document" tabindex="0">
                 <article id="exam-article" class="study-section"></article>
+            </div>
+            <div id="exam-resume-chip" class="exam-resume-chip is-hidden">
+                <button type="button" id="exam-resume-go" class="exam-resume-go"></button>
+                <button type="button" id="exam-resume-dismiss" class="exam-resume-x" aria-label="이어보기 닫기"><i class="fa-solid fa-xmark"></i></button>
             </div>`;
         document.body.appendChild(el);
 
         el.querySelector('[data-exam-close]')?.addEventListener('click', () => close());
         el.querySelector('[data-exam-back]')?.addEventListener('click', () => _goBack());
         el.querySelector('[data-exam-print]')?.addEventListener('click', () => window.print());
+        el.querySelector('#exam-resume-go')?.addEventListener('click', () => {
+            const chip = el.querySelector('#exam-resume-chip');
+            const scroll = el.querySelector('.exam-ov-scroll');
+            const pos = parseInt((chip && /** @type {HTMLElement} */ (chip).dataset.pos) || '0', 10);
+            if (scroll && pos > 0) scroll.scrollTo({ top: pos, behavior: 'smooth' });
+            if (chip) chip.classList.add('is-hidden');
+        });
+        el.querySelector('#exam-resume-dismiss')?.addEventListener('click', () => {
+            el.querySelector('#exam-resume-chip')?.classList.add('is-hidden');
+        });
         _overlayEl = el;
         return el;
+    }
+
+    /* ---- 이어보기: 문서별 마지막 스크롤 위치 (localStorage, 세션 간 유지) ---- */
+    const POS_KEY = 'exam_view_pos_v1';
+    const POS_MIN = 300; // 상단 근처(300px 미만)는 이어보기 대상이 아님
+    let _resumeTimer = null;
+
+    function _readPosMap() {
+        try { return JSON.parse(localStorage.getItem(POS_KEY) || '{}') || {}; }
+        catch (e) { return {}; }
+    }
+
+    function _savePos(mdPath, pos) {
+        try {
+            const map = _readPosMap();
+            if (pos > POS_MIN) map[mdPath] = pos;
+            else delete map[mdPath];
+            localStorage.setItem(POS_KEY, JSON.stringify(map));
+        } catch (e) { /* 저장 실패는 무시 */ }
+    }
+
+    function _hideResumeChip() {
+        if (_resumeTimer) { clearTimeout(_resumeTimer); _resumeTimer = null; }
+        _overlayEl?.querySelector('#exam-resume-chip')?.classList.add('is-hidden');
+    }
+
+    // 저장된 위치가 있으면 우하단 '이어보기' 칩 표시 — 클릭 시 해당 지점으로 스크롤
+    function _maybeShowResumeChip(mdPath) {
+        const chip = _overlayEl && _overlayEl.querySelector('#exam-resume-chip');
+        const scroll = _overlayEl && _overlayEl.querySelector('.exam-ov-scroll');
+        const go = _overlayEl && _overlayEl.querySelector('#exam-resume-go');
+        if (!chip || !scroll || !go) return;
+        const pos = _readPosMap()[mdPath] || 0;
+        const denom = scroll.scrollHeight - scroll.clientHeight;
+        if (pos < POS_MIN || denom <= 0) { _hideResumeChip(); return; }
+        const pct = Math.min(99, Math.round((pos / denom) * 100));
+        chip.dataset.pos = String(pos);
+        go.innerHTML = `<i class="fa-solid fa-bookmark"></i> 이어보기 · ${pct}% 지점`;
+        chip.classList.remove('is-hidden');
+        _resumeTimer = setTimeout(() => chip.classList.add('is-hidden'), 8000);
     }
 
     function _buildToc(article) {
@@ -367,6 +431,10 @@ body.exam-open{overflow:hidden;}
 
     function close(fromPopstate) {
         if (!_overlayEl) return;
+        // 이어보기 위치 저장 — 300px 이상 읽은 문서만 기록 (상단이면 기록 삭제)
+        const scroll = _overlayEl.querySelector('.exam-ov-scroll');
+        if (_currentMdPath && scroll) _savePos(_currentMdPath, scroll.scrollTop);
+        _hideResumeChip();
         _overlayEl.classList.remove('open');
         document.body.classList.remove('exam-open');
         document.removeEventListener('keydown', _onKeydown);
@@ -495,9 +563,13 @@ body.exam-open{overflow:hidden;}
             _updateBackButton();
             if (lineNum) {
                 _scrollToLine(lineNum, cached.mdText);
+                _hideResumeChip();
             } else if (restoreScrollPos != null) {
                 const scroll = _overlayEl.querySelector('.exam-ov-scroll');
                 if (scroll) scroll.scrollTop = restoreScrollPos;
+                _hideResumeChip();
+            } else {
+                _maybeShowResumeChip(mdPath);
             }
             return;
         }
@@ -513,9 +585,13 @@ body.exam-open{overflow:hidden;}
             _updateBackButton();
             if (lineNum) {
                 _scrollToLine(lineNum, mdText);
+                _hideResumeChip();
             } else if (restoreScrollPos != null) {
                 const scroll = _overlayEl.querySelector('.exam-ov-scroll');
                 if (scroll) scroll.scrollTop = restoreScrollPos;
+                _hideResumeChip();
+            } else {
+                _maybeShowResumeChip(mdPath);
             }
         } catch (err) {
             console.error('Exam load failed:', err);
@@ -528,10 +604,12 @@ body.exam-open{overflow:hidden;}
         // 현재 문서를 히스토리에 저장
         if (isOpen() && _currentMdPath && _currentMdPath !== mdPath) {
             const scroll = _overlayEl.querySelector('.exam-ov-scroll');
+            const pos = scroll ? scroll.scrollTop : 0;
+            _savePos(_currentMdPath, pos); // 나가는 문서도 이어보기 위치 기록
             _navStack.push({
                 mdPath: _currentMdPath,
                 lineNum: null,
-                scrollPos: scroll ? scroll.scrollTop : 0
+                scrollPos: pos
             });
         }
         _currentMdPath = mdPath;

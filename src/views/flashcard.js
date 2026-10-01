@@ -3,6 +3,7 @@
 import { state } from '../state.js';
 import { safeTextWithBreaks } from '../sanitize.js';
 import { shuffle } from '../utils.js';
+import { getDueCards } from '../spaced-repetition.js';
 
 const CARD_TYPE_LABELS = {
     penalty: '처벌',
@@ -20,9 +21,25 @@ const CARD_TYPE_LABELS = {
  */
 export function loadFlashcards() {
     const fcConfig = state.flashcards;
+
+    // 오늘 복습 모드 — SM-2 due 카드를 전 과목에서 합산 출제 (1회 적용 후 해제)
+    if (fcConfig.dueOnly) {
+        fcConfig.dueOnly = false;
+        const dueSet = new Set(getDueCards());
+        const dueCards = Object.values(window.STUDY_DATA || {})
+            .flatMap(d => (d && d.cards) || [])
+            .filter(c => dueSet.has(c.id));
+        if (dueCards.length) {
+            fcConfig.data = shuffle(dueCards);
+            fcConfig.currentIndex = 0;
+            renderFlashcard();
+            return;
+        }
+    }
+
     const subjData = (window.STUDY_DATA && fcConfig.subject != null ? window.STUDY_DATA[fcConfig.subject] : undefined);
     if (!subjData) return;
-    
+
     // 카드 필터링
     let cards = subjData.cards;
     if (fcConfig.keyOnly) {
@@ -31,21 +48,21 @@ export function loadFlashcards() {
     if (fcConfig.difficultyFilter && fcConfig.difficultyFilter !== 'all') {
         cards = cards.filter(c => c.difficulty === fcConfig.difficultyFilter);
     }
-    
+
     // 중요도 내림차순 정렬 (기본) 또는 랜덤 셔플
     if (fcConfig.shuffle) {
         cards = shuffle(cards);
     } else if (fcConfig.sortBy === 'importance') {
         cards = [...cards].sort((a, b) => (b.importance || 0) - (a.importance || 0));
     }
-    
+
     fcConfig.data = cards;
-    
+
     // 인덱스 범위 초과 방지
     if (fcConfig.currentIndex >= cards.length) {
         fcConfig.currentIndex = Math.max(0, cards.length - 1);
     }
-    
+
     renderFlashcard();
 }
 
@@ -56,10 +73,10 @@ export function renderFlashcard() {
     const fcConfig = state.flashcards;
     const cardEl = document.getElementById('flashcard-item');
     if (!cardEl) return;
-    
+
     // 카드 뒤집힌 상태 원복
     cardEl.classList.remove('flipped');
-    
+
     const termEl = document.getElementById('card-front-term');
     const defEl = document.getElementById('card-back-definition');
     const frontCatEl = document.getElementById('card-front-category');
@@ -69,7 +86,7 @@ export function renderFlashcard() {
     const starEl = document.getElementById('card-front-star');
     const curIdxEl = document.getElementById('fc-current-index');
     const totalEl = document.getElementById('fc-total-count');
-    
+
     if (fcConfig.data.length === 0) {
         if (termEl) termEl.textContent = "조건에 맞는 카드가 없습니다.";
         if (defEl) defEl.textContent = "과목을 바꾸거나 필터를 조정해 보세요.";
@@ -82,15 +99,15 @@ export function renderFlashcard() {
         if (totalEl) totalEl.textContent = '0';
         return;
     }
-    
+
     const card = fcConfig.data[fcConfig.currentIndex];
-    
+
     // 마크업 데이터 주입
     if (termEl) termEl.textContent = card.term;
     if (defEl) defEl.innerHTML = safeTextWithBreaks(card.definition);
     if (frontCatEl) frontCatEl.textContent = card.category || '';
     if (backCatEl) backCatEl.textContent = card.category || '';
-    
+
     // 카드 타입 배지 표시
     const typeLabel = card.cardType ? (CARD_TYPE_LABELS[card.cardType] || card.cardType) : '';
     if (frontTypeEl) {
@@ -103,7 +120,7 @@ export function renderFlashcard() {
         backTypeEl.setAttribute('data-type', card.cardType || 'definition');
         backTypeEl.classList.toggle('is-hidden', !typeLabel);
     }
-    
+
     // 기출 표시 제어
     if (starEl) {
         if (card.isKey) {
@@ -114,11 +131,11 @@ export function renderFlashcard() {
             starEl.classList.add('is-hidden');
         }
     }
-    
+
     // 인덱스 상태 갱신
     if (curIdxEl) curIdxEl.textContent = String(fcConfig.currentIndex + 1);
     if (totalEl) totalEl.textContent = String(fcConfig.data.length);
-    
+
     // 외움/헷갈림 카드 카운트 표시 (현재 필터된 카드 기준)
     const memorizedCount = fcConfig.data.filter(c => state.memorizedCards.has(c.id)).length;
     const weakCount = fcConfig.data.filter(c => state.weakCards.has(c.id)).length;
@@ -130,11 +147,11 @@ export function renderFlashcard() {
     if (memCountEl) memCountEl.textContent = String(memorizedCount);
     if (weakBadge) { weakBadge.classList.toggle('is-hidden', weakCount === 0); }
     if (weakCountEl) weakCountEl.textContent = String(weakCount);
-    
+
     // 진도 버튼들 스타일 동적 제어
     const easyBtn = document.getElementById('fc-easy-btn');
     const hardBtn = document.getElementById('fc-hard-btn');
-    
+
     if (easyBtn) {
         if (state.memorizedCards.has(card.id)) {
             easyBtn.style.opacity = '1';
@@ -144,7 +161,7 @@ export function renderFlashcard() {
             easyBtn.style.boxShadow = 'none';
         }
     }
-    
+
     if (hardBtn) {
         if (state.weakCards.has(card.id)) {
             hardBtn.style.opacity = '1';

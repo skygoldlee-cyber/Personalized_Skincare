@@ -15,6 +15,7 @@ import { showGlobalLoading, hideGlobalLoading, showToast, showConfirm } from '..
 import { simState, renderSimQuestion, submitExam } from './exam-simulator.js';
 import { switchView } from './navigation.js';
 import { showReleaseNotesModal, releaseNotes } from '../whats-new.js';
+import { showOnboardingModal } from '../onboarding.js';
 import { showFeedbackModal, dismissFeedbackHint, dismissFeedbackDot } from '../feedback.js';
 
 function debounce(func, delay = 150) {
@@ -58,6 +59,11 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
         const entries = releaseNotes().filter(e => e && e.version);
         if (entries.length) showReleaseNotesModal(entries, '변경 이력');
         else showToast('표시할 변경 이력이 없습니다.', 'info');
+    });
+
+    // 1-0b. 시작 안내 버튼 — 첫 방문 온보딩 모달 재열람
+    document.getElementById('onboarding-btn')?.addEventListener('click', () => {
+        showOnboardingModal();
     });
 
     // 1-0a. 의견 보내기 버튼 — 피드백 모달 (현재 뷰 컨텍스트 첨부)
