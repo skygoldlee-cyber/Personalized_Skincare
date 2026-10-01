@@ -528,9 +528,13 @@ export function startDueReview() {
 
 /**
  * 특정 과목의 카드 학습을 시작합니다.
- * @param {string} subjId
+ * @param {string} [subjId] 생략 시 활성 시험의 첫 과목
  */
 export function startSubjectStudy(subjId) {
+    if (!subjId) {
+        const subs = DataLoader.getSubjectList();
+        subjId = (subs[0] && subs[0].key) || '';
+    }
     state.flashcards.subject = subjId;
     state.flashcards.currentIndex = 0;
     const select = /** @type {HTMLSelectElement|null} */ (document.getElementById('fc-subject-select'));

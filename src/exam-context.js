@@ -7,7 +7,15 @@
 // 의존성 없는 리프 모듈 — 다른 모듈이 import해도 순환 참조가 생기지 않는다.
 
 const CURRENT_EXAM_KEY = 'current_exam';
-const DEFAULT_EXAM_ID = 'cosmetic';
+
+// 레지스트리 부재 시 최후 폴백 — 모듈 평가 시점의 EXAMS_LIST(data/exams.js 클래식
+// 스크립트가 모듈보다 먼저 실행됨)에서 default/첫 시험을 읽는다.
+// 번들 자체가 로드 실패한 Node·테스트·저하 상태에서는 마지막 리터럴이 남는다.
+const DEFAULT_EXAM_ID = (() => {
+    const list = (globalThis.EXAMS_LIST && globalThis.EXAMS_LIST.exams) || [];
+    const def = Array.isArray(list) && (list.find(e => e && e.default) || list[0]);
+    return (def && def.id) || 'cosmetic';
+})();
 
 /** 시험 목록 (exams.json → data/exams.js 번들) */
 export function getExamList() {

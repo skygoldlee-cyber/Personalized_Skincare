@@ -98,7 +98,7 @@ const NUMBER_DRILL_CACHE = {};
 
 /**
  * 과목별 JSON 파일에서 숫자 암기표 데이터를 로드합니다.
- * @param {string} subjId - 과목 키 (law, manufacturing, safety, understanding)
+ * @param {string} subjId - 과목 키 (manifest.subjects[].key — 시험마다 상이)
  * @returns {Promise<{ numbers: {number: string, unit: string}[], context: string, isKey: boolean, category?: string }[]>}
  */
 export async function loadNumberDrills(subjId) {

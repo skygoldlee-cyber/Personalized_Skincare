@@ -8,6 +8,10 @@
  *   <!-- @include html/views/<name>.html -->
  * 해당 라인이 파셜 파일 내용으로 통째로 치환된다 (들여쓰기는 파셜이 보유).
  *
+ * 토큰 규약:
+ *   __EXAM_DATA_ROOT__ — content/exams.json의 default(또는 첫) 시험의
+ *   dataRoot로 치환된다 (기본 시험 프리로드 번들 경로용).
+ *
  * 편집 규칙: 뷰 마크업은 html/views/*.html을 편집하고
  * `npm run build:html`로 index.html을 재생성한다. index.html 직접 편집 금지.
  *
@@ -22,8 +26,20 @@ const ROOT = path.resolve(__dirname, '..', '..');
 const TEMPLATE = path.join(ROOT, 'index.template.html');
 const OUTPUT = path.join(ROOT, 'index.html');
 const PARTIAL_DIR = path.join(ROOT, 'html', 'views');
+const EXAMS_JSON = path.join(ROOT, 'content', 'exams.json');
 
 const MARKER_RE = /^([ \t]*)<!--\s*@include\s+(\S+)\s*-->[ \t]*(\r?\n)/gm;
+
+/** content/exams.json의 기본 시험 dataRoot (default 플래그 → 첫 항목) */
+function defaultExamDataRoot() {
+  const exams = (JSON.parse(fs.readFileSync(EXAMS_JSON, 'utf-8')).exams) || [];
+  const def = exams.find(e => e.default) || exams[0];
+  if (!def || !def.dataRoot) {
+    console.error('❌ exams.json에서 기본 시험 dataRoot를 해석할 수 없습니다');
+    process.exit(1);
+  }
+  return def.dataRoot;
+}
 
 function build() {
   const tpl = fs.readFileSync(TEMPLATE, 'utf8');
@@ -38,6 +54,10 @@ function build() {
     }
     return fs.readFileSync(file, 'utf8');
   });
+  let resolved = out;
+  if (resolved.includes('__EXAM_DATA_ROOT__')) {
+    resolved = resolved.split('__EXAM_DATA_ROOT__').join(defaultExamDataRoot());
+  }
   if (missing.length) {
     console.error(`❌ include 대상 없음: ${missing.join(', ')}`);
     process.exit(1);
@@ -52,7 +72,7 @@ function build() {
       console.warn(`⚠️  템플릿에 include되지 않은 파셜: ${orphans.join(', ')}`);
     }
   }
-  return out;
+  return resolved;
 }
 
 const isCheck = process.argv.includes('--check');

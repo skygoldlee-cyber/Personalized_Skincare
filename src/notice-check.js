@@ -116,7 +116,7 @@ let _statusPromise = null;
 /** notice_status.json 캐시 반환 — 원격 우선, 번들 폴백. 최초 1회만 fetch */
 export function ensureNoticeStatus() {
   if (_statusPromise) return _statusPromise;
-  const examId = getActiveExamId() || 'cosmetic';
+  const examId = getActiveExamId();
   _statusPromise = (async () => {
     for (const url of [statusUrl(examId), `content/exams/${examId}/notice_status.json`]) {
       try {
@@ -160,7 +160,7 @@ export async function checkMfdsNotice() {
     const last = parseInt(getItem(STORAGE_KEYS.NOTICE_CHECKED_AT) || '0', 10);
     if (Date.now() - last < CHECK_INTERVAL_MS) { ensureNoticeStatus(); return; }
 
-    const res = await fetch(statusUrl(getActiveExamId() || 'cosmetic'), { cache: 'no-store' });
+    const res = await fetch(statusUrl(getActiveExamId()), { cache: 'no-store' });
     if (!res.ok) return; // 실패 시 스탬프 안 찍음 — 다음 진입에 재시도
     setItem(STORAGE_KEYS.NOTICE_CHECKED_AT, String(Date.now()));
     const status = await res.json();
@@ -313,7 +313,7 @@ export async function viewMfdsNoticeStatus() {
   panel.innerHTML = '<div class="notice-status-loading">상태 파일 불러오는 중…</div>';
   panel.classList.remove('is-hidden');
 
-  const examId = getActiveExamId() || 'cosmetic';
+  const examId = getActiveExamId();
   let status = null;
   let source = '';
   // Actions가 갱신한 원격 파일 우선, 실패 시 번들 스냅샷

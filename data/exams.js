@@ -29,7 +29,8 @@ var EXAMS_LIST = {
         "refDocs": true,
         "appendixDocs": true,
         "pomodoro": true,
-        "formula": true
+        "formula": true,
+        "limitsTrainer": true
       }
     },
     {
