@@ -4,7 +4,7 @@
 import { safeGetItem, safeSetItem, safeRemoveItem } from "./state.js";
 import { STORAGE_KEYS } from "./storage-keys.js";
 import { DataLoader } from "./data-loader.js";
-import { getActiveExam, getExamList, hasFeature } from "./exam-context.js";
+import { getActiveExam, getExamAppName, getExamList, hasFeature } from "./exam-context.js";
 import { showToast, showAlert } from "./ui-utils.js";
 
 // 설치형 PWA 콜드 스타트에서 dvh가 실제 화면보다 크게 측정되는 경우가 있어
@@ -95,15 +95,30 @@ if (document.body) {
 
 
 
-/** 활성 시험의 브랜딩을 DOM에 반영 (문서 제목 + 사이드바 로고) */
+/** 활성 시험의 브랜딩을 DOM에 반영 (문서 제목 + 사이드바 로고·아이콘 + 앱 이름 표기면) */
 export function applyExamBranding() {
     const exam = getActiveExam();
     if (!exam) return;
     if (exam.title) document.title = exam.title;
     const logoMain = document.querySelector('.logo-text h1');
     const logoSub = document.querySelector('.logo-text span');
-    if (logoMain && exam.logoMain) logoMain.textContent = exam.logoMain;
-    if (logoSub && exam.logoSub) logoSub.textContent = exam.logoSub;
+    const logoIcon = document.querySelector('.logo-icon');
+    if (logoMain && typeof exam.logoMain === 'string') logoMain.textContent = exam.logoMain;
+    if (logoSub && typeof exam.logoSub === 'string') logoSub.textContent = exam.logoSub;
+    if (logoIcon && exam.icon) logoIcon.className = `${exam.icon} logo-icon`;
+
+    const appName = getExamAppName();
+    const appleTitle = document.querySelector('meta[name="apple-mobile-web-app-title"]');
+    if (appleTitle) appleTitle.setAttribute('content', appName);
+    document.querySelectorAll('[data-app-name]').forEach(el => { el.textContent = appName; });
+
+    // 인쇄 전용 헤더·퀴즈 빈 상태 등 시험명이 들어가는 정적 영역
+    const printTitle = document.getElementById('review-print-title');
+    if (printTitle && exam.name) printTitle.textContent = `${exam.name} 오답 복습노트`;
+    const printSub = document.getElementById('review-print-sub');
+    if (printSub && exam.title) printSub.textContent = exam.title;
+    const quizEmpty = document.getElementById('quiz-empty-title');
+    if (quizEmpty && exam.name) quizEmpty.textContent = `${exam.name} 모의 퀴즈`;
 }
 
 /**

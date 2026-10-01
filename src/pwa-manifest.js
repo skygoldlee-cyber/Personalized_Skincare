@@ -37,5 +37,13 @@
         if (exam.title) document.title = exam.title;
         const metaDesc = document.querySelector('meta[name="description"]');
         if (metaDesc && exam.desc) metaDesc.setAttribute('content', exam.desc);
+
+        // iOS '홈 화면에 추가' 시 사용되는 앱 이름 — 시험별 앱 이름으로 교체
+        // (iOS는 추가 시점의 메타 값을 읽으므로 설치 전에 반영되어야 한다)
+        const appName = exam.appName
+            || (((exam.logoMain || '') + (exam.logoSub || '')).trim())
+            || exam.name;
+        const appleTitle = document.querySelector('meta[name="apple-mobile-web-app-title"]');
+        if (appleTitle && appName) appleTitle.setAttribute('content', appName);
     } catch (e) { /* 정적 매니페스트 폴백 유지 */ }
 })();

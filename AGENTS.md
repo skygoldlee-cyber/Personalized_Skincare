@@ -121,7 +121,7 @@ serve.js                # 로컬 개발 서버
 src/                    # ES Modules
   app.js                # 메인 애플리케이션 로직 (초기화, 이벤트 위임, 라우팅)
   app-dashboard.js      # 대시보드 셀렉트·시험/리소스 카드·스토리지 경고 (app.js 분리)
-  app-shell.js          # 뷰포트·가로세로·data-click 접근성·브랜딩·기능 플래그 (app.js 분리)
+  app-shell.js          # 뷰포트·가로세로·data-click 접근성·시험 브랜딩(타이틀·로고·아이콘·앱명)·기능 플래그 (app.js 분리)
   app-fallback.js       # ESM 로드 실패 시 자동 복구 (모바일 PWA 대응)
   router.js             # 뷰 라우터 (navigateToView, getViewTitles, initViewHashRouting — #/슬러그 딥링크·뒤로가기)
   state.js              # 전역 상태 + 진행 영속성 (saveProgress — 저장은 storage.js 위임)
@@ -153,14 +153,14 @@ src/                    # ES Modules
   markdown-parser.js    # 공통 MD 파서
   mermaid-utils.js       # Mermaid 다이어그램 설정
   mermaid-render.js      # Mermaid 지연 로딩 + 컨테이너 렌더링 + 다이어그램 확대 모달 (reader/search/manual 공용)
-  pwa-manifest.js        # 시험별 동적 PWA 매니페스트 (클래식 스크립트 — 빌드 산출물 manifest.<id>.webmanifest 실제 파일로 링크 교체, blob: 금지)
+  pwa-manifest.js        # 시험별 동적 PWA 매니페스트 (클래식 스크립트 — 빌드 산출물 manifest.<id>.webmanifest 실제 파일로 링크 교체 + 문서 제목·설명·apple-mobile-web-app-title 갱신, blob: 금지)
   keyword-index.js      # 교재 셀→참조자료 키워드 매핑 (시험별 — 자동 생성)
   web-vitals.js         # Core Web Vitals 모니터링
   sha256.js             # 안정적 ID 해시
   utils.js              # 공통 유틸리티 (shuffle 등)
   storage-keys.js       # localStorage 키 중앙 관리
   paths.js              # 파일 경로 상수 중앙 관리 (시험 루트 인지형)
-  exam-context.js       # 활성 시험 해석/전환, scopedKey 네임스페이스, hasFeature
+  exam-context.js       # 활성 시험 해석/전환, scopedKey 네임스페이스, hasFeature, getExamAppName(시험별 앱 이름 — exams.json appName)
   formula-store.js      # Formula OS — 포뮬러 CRUD·저장 한도(5개), 고객·원료 스키마 정제
   formula-rules.js      # Formula OS — 추천 규칙 (베이스·고민/피부 매핑, 안전 필터, 맞춤 규칙)
   formula-check.js      # Formula OS — 고시 한도 규정 검증 엔진 (원료 인덱스, 4상태 판정)
@@ -271,7 +271,7 @@ docs/                   # 개발 문서
 
 ## 멀티시험 구조
 
-- **시험 레지스트리**: `content/exams.json` → `data/exams.js` 번들(`window.EXAMS_LIST`, `npm run build:data`에 포함). 각 시험 엔트리: `id`, `name`, `title`/`logoMain`/`logoSub`(브랜딩), `desc`, `icon`, `year`, `default`, `contentRoot`, `dataRoot`, `registryBundle`, `registryGlobal`, `features`(기능 플래그). **`year`가 시험 연도의 유일한 진실 소스(SSOT)** — `build:exams-list`가 각 시험의 `manifest.json` `contentYear`와 `index.html`·`manifest.webmanifest`의 연도 텍스트(기본 시험 기준)로 자동 전파하므로, 연도 변경은 `exams.json`만 수정 후 `build:data` 재실행
+- **시험 레지스트리**: `content/exams.json` → `data/exams.js` 번들(`window.EXAMS_LIST`, `npm run build:data`에 포함). 각 시험 엔트리: `id`, `name`, `appName`(시험별 앱 이름 — 브랜드면 표기), `title`/`logoMain`/`logoSub`(브랜딩), `desc`, `icon`, `year`, `default`, `contentRoot`, `dataRoot`, `registryBundle`, `registryGlobal`, `features`(기능 플래그). **`year`가 시험 연도의 유일한 진실 소스(SSOT)** — `build:exams-list`가 각 시험의 `manifest.json` `contentYear`와 `index.html`·`manifest.webmanifest`의 연도 텍스트(기본 시험 기준)로 자동 전파하므로, 연도 변경은 `exams.json`만 수정 후 `build:data` 재실행
 - **시험별 루트 (대칭)**: 모든 시험이 `content/exams/<id>/`(manifest.json + references.json + 교재/문제은행/참조자료/audiobook 등)와 `data/exams/<id>/`(registry.js, subjects/, exams/, drills/, study_md/, docs_md/, supplements/, id_migration.js 등) 구조 — 기본 시험(cosmetic)도 예외 없음. `content/`·`data/` 루트에는 전역 파일만: `exams.json`/`exams.js`, `audio_manifest.js`(시험 id 키 분리), `docs_md/`(앱 공용 문서)
 - **시험 컨텍스트**: `src/exam-context.js` — `contentPath()`/`dataPath()`(경로 해석), `hasFeature()`(기능 게이팅), `selectExam()`(전환 = `location.reload()`로 모듈 상태 리셋), `scopedKey()`(진도 네임스페이스 `<examId>:key`)
 - **진도 격리**: `safeGetItem`/`safeSetItem` 등이 자동으로 시험 접두사 적용. 테마·리더 설정 등 `GLOBAL_KEYS`만 비네임스페이스. 백업 파일은 비접두사 논리 키(시험 간 호환)

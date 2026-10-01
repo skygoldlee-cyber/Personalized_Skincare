@@ -64,6 +64,20 @@ export function selectExam(id) {
     return true;
 }
 
+/**
+ * 활성 시험의 앱 이름 — 브랜드면(iOS 홈화면 타이틀·푸터·온보딩·미디어 세션)에 쓰는 단일 이름.
+ * 우선순위: exam.appName → logoMain+logoSub → exam.name → 'Passmula'(레지스트리 부재 폴백).
+ * @returns {string}
+ */
+export function getExamAppName() {
+    const exam = getActiveExam();
+    if (!exam) return 'Passmula';
+    return exam.appName
+        || ((exam.logoMain || '') + (exam.logoSub || '')).trim()
+        || exam.name
+        || 'Passmula';
+}
+
 /** 시험 기능 플래그 (exams.json의 features — 미지정 시 false) */
 export function hasFeature(name) {
     const exam = getActiveExam();

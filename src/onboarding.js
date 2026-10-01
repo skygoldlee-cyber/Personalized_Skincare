@@ -6,6 +6,8 @@
 // ------------------------------------------------------------
 import { safeGetItem, safeSetItem } from './state.js';
 import { trapFocus } from './ui-utils.js';
+import { getExamAppName } from './exam-context.js';
+import { esc } from './sanitize.js';
 
 const SEEN_KEY = 'onboarding_seen_v1';
 // whats-new.js와 동일 기준 — 이 중 하나라도 있으면 신규 사용자가 아님
@@ -47,7 +49,7 @@ export function showOnboardingModal() {
     overlay.id = 'onboarding-overlay';
     overlay.innerHTML = `
         <div class="app-confirm-dialog onboarding-dialog" role="dialog" aria-modal="true" aria-label="시작 안내">
-            <h3><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> Passmula 시작 안내</h3>
+            <h3><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> ${esc(getExamAppName())} 시작 안내</h3>
             <ol class="onboarding-steps">${items}</ol>
             <p class="onboarding-foot">진도는 이 기기에 자동 저장되며 오프라인에서도 학습할 수 있습니다.</p>
             <div class="app-confirm-actions">

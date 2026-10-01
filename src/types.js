@@ -270,6 +270,7 @@
  * @property {string}   id
  * @property {string}   [name]
  * @property {string}   [shortName]
+ * @property {string}   [appName]       시험별 앱 이름 — 브랜드면 표기 (미지정 시 logoMain+logoSub → name 폴백)
  * @property {string}   [title]
  * @property {string}   [logoMain]
  * @property {string}   [logoSub]

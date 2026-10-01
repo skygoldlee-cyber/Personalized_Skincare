@@ -4,7 +4,7 @@ import { showToast } from '../ui-utils.js';
 import { safeGetItem, safeSetItem, safeRemoveItem } from '../state.js';
 import { TIMING } from '../config/timing.js';
 import { PATHS } from '../paths.js';
-import { getActiveExamId } from '../exam-context.js';
+import { getActiveExamId, getExamAppName } from '../exam-context.js';
 
 // --- 오디오북 플레이어 상태 ---
 /** @type {{audio: HTMLAudioElement|null, currentSrc: string, subjId: string, chapterIdx: number, chapterTitle: string, wasPlayingBeforeHidden: boolean, sectionBoundaries: {start:number,end:number}[], lastSectionIdx: number, autoScroll: boolean}} */
@@ -135,7 +135,7 @@ function setupMediaSession(audio, subjId, chapterIdx, chapterTitle) {
 
     navigator.mediaSession.metadata = new MediaMetadata({
         title: chapterTitle,
-        artist: 'Passmula',
+        artist: getExamAppName(),
         album: subjTitle,
         artwork: [
             { src: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
