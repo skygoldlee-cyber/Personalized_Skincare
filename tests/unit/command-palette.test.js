@@ -42,7 +42,7 @@ const sources = {
         { name: '글리세린', engName: 'Glycerin', category: '보습' }
     ],
     registry: {
-        exams: [{ key: 'subject1', subject: 'law', title: '화장품법의 이해 (100문)', file: '과목1_단일정답형.md' }]
+        exams: [{ key: 'subject1', subject: 'law', title: '화장품법의 이해 (100문)', file: '과목1_문제은행.md' }]
     }
 };
 
@@ -94,10 +94,10 @@ test('성분 사전 — 한글·영문·초성 매칭', () => {
 });
 
 test('문제집 파일 매칭 → exam 결과 (문제은행 경로)', () => {
-    const r = searchAll('단일정답형', sources);
+    const r = searchAll('문제은행', sources);
     const e = r.find(x => x.type === 'exam');
     assert.ok(e);
-    assert.equal(e.action.path, '문제은행/과목1_단일정답형.md');
+    assert.equal(e.action.path, '문제은행/과목1_문제은행.md');
 });
 
 test('멀티토큰 AND 매칭 — 모든 토큰 포함 항목만', () => {

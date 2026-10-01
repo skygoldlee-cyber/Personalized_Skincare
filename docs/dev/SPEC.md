@@ -723,7 +723,7 @@
 | ID | 요구사양 | 구현 상태 |
 |----|---------|-----------|
 | CS-01 | 교재: `content/exams/cosmetic/교재/{과목키}/*.md` (본문 + 이야기형) | ✅ |
-| CS-02 | 문제은행: `content/exams/cosmetic/문제은행/과목N_단일정답형.md` | ✅ |
+| CS-02 | 문제은행: `content/exams/cosmetic/문제은행/과목N_문제은행.md` | ✅ |
 | CS-03 | 참조자료: `content/exams/cosmetic/참조자료/ref_md/과목N/` (MD 변환본 41종, 원본 PDF는 배포 제외) | ✅ |
 | CS-04 | 성분 원본: `content/exams/cosmetic/참조자료/원료/` | ✅ |
 | CS-05 | 학습안내서: `content/exams/cosmetic/docs/학습안내서.md` | ✅ |

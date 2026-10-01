@@ -76,7 +76,7 @@ function manifestTemplate(id, name, year) {
             subject: 'subject1',
             part: 1,
             title: `${name} 1과목 (예시 3제)`,
-            file: '과목1_단일정답형.md'
+            file: '과목1_문제은행.md'
         }],
         integratedExam: {
             questionsPerSubject: { subject1: 3 },
@@ -207,7 +207,7 @@ function scaffold(id, opts) {
         [path.join(contentDir, 'manifest.json'), JSON.stringify(manifestTemplate(id, name, year), null, 2) + '\n'],
         [path.join(contentDir, 'references.json'), JSON.stringify(referencesTemplate(), null, 2) + '\n'],
         [path.join(contentDir, '교재', 'subject1', '1과목_개요.md'), textbookSample(name)],
-        [path.join(contentDir, '문제은행', '과목1_단일정답형.md'), examSample()],
+        [path.join(contentDir, '문제은행', '과목1_문제은행.md'), examSample()],
     ];
     // notice_status.json은 고시 감시 첫 --update 실행 시 루트에 생성되므로 디렉터리 불요
     const dirs = [

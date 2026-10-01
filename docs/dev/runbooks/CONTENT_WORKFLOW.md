@@ -95,7 +95,7 @@ flowchart LR
 | 변경 유형 | 수정할 파일 | 비고 |
 |----------|------------|------|
 | **교재 내용 수정** | `content/exams/cosmetic/교재/{과목}/*.md` | 표준형/이야기형 모두 수정 |
-| **문제은행 수정** | `content/exams/cosmetic/문제은행/과목N_단일정답형.md` | 문제 추가/삭제/수정 |
+| **문제은행 수정** | `content/exams/cosmetic/문제은행/과목N_문제은행.md` | 문제 추가/삭제/수정 |
 | **과목 추가/삭제** | `content/exams/cosmetic/manifest.json` | `subjects` 배열 수정 |
 | **시험 추가/삭제** | `content/exams/cosmetic/manifest.json` | `exams` 배열 수정 |
 | **참조자료 추가/삭제** | `content/exams/cosmetic/references.json` | 참조자료 매핑 수정 |
@@ -283,7 +283,7 @@ npm.cmd run check:content -- --build   # build:data + 전 계층 검증을 한 �
    ```
 4. `content/exams/cosmetic/references.json`의 `referenceFiles`에 과목별 참조자료 추가
 5. `content/exams/cosmetic/references.json`의 `refDirs`에 `과목5` 배열 추가
-6. `content/exams/cosmetic/문제은행/과목5_단일정답형.md` 생성 후 `manifest.json`의 `exams`에 추가
+6. `content/exams/cosmetic/문제은행/과목5_문제은행.md` 생성 후 `manifest.json`의 `exams`에 추가
 7. `npm.cmd run build:data` 실행
 8. 검증 + 커밋 + 배포
 

@@ -139,7 +139,7 @@ node tools/sync_textbook_files.js --rename 교재/law/OLD.md 교재/law/NEW.md  
   "exams": [{
     "key": "subject1",
     "subject": "law",                    // subjects[].key 참조
-    "file": "과목1_단일정답형.md"         // 문제은행/ 안의 파일명
+    "file": "과목1_문제은행.md"         // 문제은행/ 안의 파일명
   }],
   "integratedExam": {
     "questionsPerSubject": { "law": 10, ... }  // 키는 subjects[].key — 없는 키는 선언 단계에서 실패

@@ -2,7 +2,7 @@
 var DATA_REGISTRY_FOOD = {
   "schemaVersion": 1,
   "contentYear": "2027",
-  "generatedAt": "2026-10-01T02:54:24.358Z",
+  "generatedAt": "2026-10-01T03:07:04.116Z",
   "subjects": [
     {
       "key": "sanitation",
@@ -27,7 +27,7 @@ var DATA_REGISTRY_FOOD = {
       "subject": "sanitation",
       "part": 1,
       "title": "식품위생법의 이해 (8제)",
-      "file": "과목1_단일정답형.md",
+      "file": "과목1_문제은행.md",
       "bundle": "./data/exams/food/exams/subject1.df1fe251.js",
       "global": "EXAM_DATA_subject1",
       "contentHash": "df1fe251",

@@ -84,7 +84,7 @@ test('prune: drills/supplements/exams 경로는 항상 보존한다', async () =
     cacheEntries: [
       'https://example.test/data/drills/ch1.js',
       'https://example.test/data/supplements/safety.js',
-      'https://example.test/data/exams/cosmetic/exams_md/과목1_단일정답형.js'.replace('과목1_단일정답형', encodeURIComponent('과목1_단일정답형')),
+      'https://example.test/data/exams/cosmetic/exams_md/과목1_문제은행.js'.replace('과목1_문제은행', encodeURIComponent('과목1_문제은행')),
     ],
   });
   await sandbox.pruneStaleDataBundles();

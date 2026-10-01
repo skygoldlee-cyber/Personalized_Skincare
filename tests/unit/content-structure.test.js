@@ -53,7 +53,7 @@ test('CS-02: 과목별 단일정답형 원본 + 복수정답형 드릴 번들이
   const bank = list(join(CONTENT, '문제은행'));
   const drills = list(join(ROOT, 'data', 'exams', 'cosmetic', 'drills'));
   for (const n of [1, 2, 3, 4]) {
-    assert.ok(bank.includes(`과목${n}_단일정답형.md`), `과목${n}_단일정답형.md 없음`);
+    assert.ok(bank.includes(`과목${n}_문제은행.md`), `과목${n}_문제은행.md 없음`);
     // 복수정답형은 MD 산출물 없이 combo 드릴 번들이 데이터 소스 (뷰어는 런타임 직렬화)
     assert.ok(drills.includes(`combo_subject${n}.js`), `combo_subject${n}.js 없음 — npm run build:drills`);
   }

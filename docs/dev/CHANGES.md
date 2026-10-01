@@ -6,6 +6,12 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-01 문제은행 파일명 개선 — `과목N_단일정답형.md` → `과목N_문제은행.md`
+
+- **배경**: 실제 내용이 선다형+단답형 혼합인데 "단일정답형"은 유형 오기재 + 복수정답형 산출물 제거 후 구분 접미사 필요성 소멸
+- **전파**: `tools/sync_textbook_files.js --rename`으로 파일 이동·manifest·sw.js·콘텐츠 인용 경로 일괄 전파 (cosmetic 4 + food 1)
+- **후속**: `citation_fingerprints.json` examFile 키 593건 치환, `reader-format.js` 폴백 경로·`scaffold_exam.js` 템플릿·테스트 4종·문서 10종 경로 갱신, `exams_md` 번들 재생성
+
 ## 2026-10-01 복수정답형 문제집 런타임 렌더링 전환 — MD 산출물 제거
 
 - **배경**: `과목N_복수정답형.md`는 `build_combo_drills.js`가 단일정답형 원본에서 자동 생성하던 파생물 — 저작 폴더(`문제은행/`)에 산출물이 섞이고, 동일 내용이 `combo_subjectN.js` 드릴 번들과 `exams_md` 번들로 이중 관리됐음

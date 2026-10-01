@@ -12,7 +12,7 @@
     교재/<과목 dir>/*.md   — manifest subjects[].dir 기준 (표준형·이야기형 모두)
     학습안내서.md
     report/*.md            — report/ 존재 시에만
-    문제은행/*.md          — 단일정답형·복수정답형 모두
+    문제은행/*.md          — 과목N_문제은행.md (복수정답형은 런타임 렌더링으로 파일 없음)
 
 출력: {EXAM_CONTENT_ROOT}/html/ (각 파일명과 동일한 .html)
 """

@@ -361,7 +361,7 @@ Personalized_Skincare/
 │           │   ├── manufacturing/  # 2과목
 │           │   ├── safety/     #     3과목
 │           │   └── understanding/  # 4과목
-│           ├── 문제은행/        #    과목N_단일정답형.md (manifest 등록) — 복수정답형은 드릴 번들 런타임 렌더링(combo-doc.js)
+│           ├── 문제은행/        #    과목N_문제은행.md (manifest 등록) — 복수정답형은 드릴 번들 런타임 렌더링(combo-doc.js)
 │           ├── 참조자료/
 │           │   ├── ref_md/과목N/{문서}/  # PDF→MD 변환본 (41개, ~26MB) — 과목 폴더가 귀속의 진실
 │           │   ├── 공통/       #     공통 참조자료 PDF
@@ -1923,7 +1923,7 @@ npm.cmd run deploy
 | 하드코딩 대상 | 위치 | 수정 조건 |
 |---------------|------|----------|
 | 기출문제 링크 패턴 `기출문제/과목N_...` | `reader-format.js:21` | 기출문제 파일명 규칙 변경 시 |
-| ~~문제은행 경로 `content/exams/cosmetic/문제은행/과목${N}_단일정답형.md`~~ | ~~`reader-format.js:23`~~ | ✅ **제거됨** — `DATA_REGISTRY.exams[].file`에서 동적 조회 (2026-09-03) |
+| ~~문제은행 경로 `content/exams/cosmetic/문제은행/과목${N}_문제은행.md`~~ | ~~`reader-format.js:23`~~ | ✅ **제거됨** — `DATA_REGISTRY.exams[].file`에서 동적 조회 (2026-09-03) |
 | 참조자료 폴더명 `참조자료`, `공통참조자료`, `N과목_참조자료` | `reader-format.js:31` | 참조자료 폴더 구조 변경 시 |
 | 출처 경로 패턴 `../참조자료/...md`, `N과목_참조자료/...md` | `reader-format.js:48` | 참조자료 경로 규칙 변경 시 |
 
