@@ -1,5 +1,13 @@
 [
   {
+    "version": "v20261001-ba4cef1",
+    "date": "2026-10-01",
+    "notes": [
+      "[정리·trace] 이야기형 파이프라인 반영 TRACE_MATRIX 갱신 + 드리프트 리포트 gitignore",
+      "[수정·content] 이야기형 기억 태그 콜아웃 5건 보존 + build:story --check 실패 보고"
+    ]
+  },
+  {
     "version": "v20261001-5d8f34a",
     "date": "2026-10-01",
     "notes": [
@@ -134,13 +142,6 @@
     "notes": [
       "[정리·textbook] 과목별 표지 삽화 신규 버전 교체 — PNG 원본 추가 + webp 재인코딩",
       "[정리·tools] 지식DB·법령DB 빌드 경로 silent failure 6종 차단 [no-docs]"
-    ]
-  },
-  {
-    "version": "v20260930-f7460c8",
-    "date": "2026-09-30",
-    "notes": [
-      "[수정·dict] DataLoader import 누락으로 지식DB 스키마가 런타임에 도달하지 않던 문제 수정 [no-docs]"
     ]
   }
 ]
