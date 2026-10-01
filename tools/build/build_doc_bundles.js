@@ -32,16 +32,16 @@ const { getExamTargets } = require('./exam_targets');
 
 const ROOT = path.resolve(__dirname, '..', '..');
 
-// 앱 공용 문서 — 시험과 무관, 항상 data/docs_md/ 에 출력
+// 앱 공용 문서 — 현재 없음. 시험 무관 문서가 생기면 여기에 등록
 // (src/manual-viewer.js 의 MD_SOURCES 와 동기화 유지)
-const GLOBAL_DOCS = [
-    { file: 'user_manual.md', dir: path.join(ROOT, 'docs', 'user'), key: 'docs/user/user_manual.md' },
-    { file: 'formula_manual.md', dir: path.join(ROOT, 'docs', 'user'), key: 'docs/user/formula_manual.md' }
-];
+const GLOBAL_DOCS = [];
 
 // 시험별 문서 — 각 시험의 {contentRoot}/ 아래 파일을 {dataRoot}/docs_md/ 에 출력.
 // key는 contentPath() 결과와 동일해야 한다 ('{contentRoot}/docs/학습안내서.md').
-const EXAM_DOC_FILES = ['docs/학습안내서.md', 'docs/두음법_암기_총정리.md'];
+const EXAM_DOC_FILES = [
+    'docs/학습안내서.md', 'docs/두음법_암기_총정리.md',
+    'docs/user_manual.md', 'docs/formula_manual.md'
+];
 
 const AUTOGEN_HEADER = '// 자동 생성된 문서 번들입니다. 수정하지 마십시오. (tools/build/build_doc_bundles.js)';
 

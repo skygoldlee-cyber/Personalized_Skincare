@@ -199,6 +199,8 @@ const DATA_ASSETS = [
  *  manifest 선언 기준으로 재생성 — 마커 사이만 자동 갱신된다. */
 const MD_ASSETS = [
   // MD_ASSETS:BEGIN
+  './content/exams/cosmetic/docs/formula_manual.md',
+  './content/exams/cosmetic/docs/user_manual.md',
   './content/exams/cosmetic/docs/두음법_암기_총정리.md',
   './content/exams/cosmetic/docs/학습안내서.md',
   './content/exams/cosmetic/교재/law/1과목_화장품법의이해_표준형.md',

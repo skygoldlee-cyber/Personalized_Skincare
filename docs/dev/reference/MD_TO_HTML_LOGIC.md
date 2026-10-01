@@ -108,9 +108,10 @@
 
 ```javascript
 const MD_SOURCES = {
-    'user_manual': { path: 'docs/user/user_manual.md', title: '사용자 매뉴얼' },
-    'study_summary': { path: 'content/exams/cosmetic/학습안내서.md', title: '학습 안내서' }
+    'user_manual': { path: PATHS.USER_MANUAL, title: '학습 매뉴얼' },
+    'study_summary': { path: PATHS.STUDY_GUIDE, title: '학습 안내서' }
 };
+// PATHS.* 는 contentPath() 기반 — 시험별 {contentRoot}/docs/ 로 해석됨
 ```
 
 ### 2.2 프로토콜별 로드 전략
@@ -146,9 +147,12 @@ async function _loadMd(sourceKey) {
 - 클래식 `<script>` 동적 주입으로 로드 (ESM `import` 불필요 → `file://`에서도 동작)
 
 ```
-docs/user/user_manual.md  →  data/docs_md/user_manual.js
-content/exams/cosmetic/학습안내서.md      →  data/exams/cosmetic/docs_md/학습안내서.js
+content/exams/cosmetic/docs/user_manual.md  →  data/exams/cosmetic/docs_md/user_manual.js
+content/exams/cosmetic/docs/학습안내서.md   →  data/exams/cosmetic/docs_md/학습안내서.js
 ```
+
+> 모든 인앱 문서는 시험별 `{contentRoot}/docs/` → `{dataRoot}/docs_md/` 규약을 따른다
+> (앱 공용 문서 슬롯 `GLOBAL_DOCS`는 현재 비어 있음 — build_doc_bundles.js 참조).
 
 ---
 
@@ -160,8 +164,8 @@ content/exams/cosmetic/학습안내서.md      →  data/exams/cosmetic/docs_md/
 
 ```javascript
 const MD_ASSETS = [
-  './docs/user/user_manual.md',
-  './content/exams/cosmetic/학습안내서.md',
+  './content/exams/cosmetic/docs/user_manual.md',
+  './content/exams/cosmetic/docs/학습안내서.md',
   './content/exams/cosmetic/교재/law/1과목_화장품법의이해_표준형.md',
   './content/exams/cosmetic/교재/manufacturing/2과목_제조및품질관리_표준형.md',
   './content/exams/cosmetic/교재/safety/3과목_유통화장품안전관리_표준형.md',

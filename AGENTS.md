@@ -27,7 +27,7 @@ npm.cmd run test:all                   # 전체 테스트 (unit + parser + dom)
 
 # 빌드
 npm.cmd run build:data                 # content/exams/<id>/*.md → data/exams/<id>/ 번들 생성 (모든 시험 순회)
-node tools/build/build_doc_bundles.js        # docs/user/{user_manual,formula_manual}.md, content/exams/cosmetic/docs/학습안내서.md → data/docs_md/ + {dataRoot}/docs_md/ 번들 (앱 내 문서 갱신 시 필수)
+node tools/build/build_doc_bundles.js        # content/exams/<id>/docs/*.md → {dataRoot}/docs_md/ 번들 (앱 내 문서 갱신 시 필수 — 매뉴얼·학습안내서 모두 시험별 문서)
 npm.cmd run build:html                # index.template.html + html/views/*.html → index.html 조립 (뷰 마크업 변경 시 필수)
 npm.cmd run check:html                # index.html이 파셜 조립 결과와 일치하는지 비교 (개행 정규화 — pre-push·CI 게이트)
 npm.cmd run check:parser               # 빌드 파서 ↔ 런타임 파서 등가성 검증
@@ -389,5 +389,5 @@ docs/                   # 개발 문서
 - `docs/dev/design/FORMULA_OS_WORKFLOW_DESIGN.md` — 조제관리사 9개 업무 전체 커버리지 확장 설계안 (고객·배치·원료장부·안내문)
 - `docs/dev/runbooks/COMBO_GENERATION_GUIDE.md` — 복수정답형 문항 생성 절차·품질 게이트·수치 조정 가이드
 - `docs/dev/reference/COMBO_STUDY_STRATEGY.md` — 복수정답형 학습 전략 (전략→기능 매핑 포함)
-- `docs/user/user_manual.md` — 학습 매뉴얼 (시험 대비)
-- `docs/user/formula_manual.md` — 실무 매뉴얼 (Formula OS)
+- `content/exams/cosmetic/docs/user_manual.md` — 학습 매뉴얼 (시험 대비 — 시험별 문서)
+- `content/exams/cosmetic/docs/formula_manual.md` — 실무 매뉴얼 (Formula OS — 시험별 문서)

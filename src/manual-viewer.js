@@ -364,8 +364,8 @@ body.manual-open{overflow:hidden;}
        data/docs_md/<stem>.js 를 클래식 <script>로 주입 — file:// 에서도 동작)
        --------------------------------------------------------- */
 
-    // 'docs/user_manual.md' → 'data/docs_md/user_manual.js' (앱 공용 문서)
-    // 'content/.../docs/학습안내서.md' → '{dataRoot}/docs_md/학습안내서.js' (시험별 문서 — 멀티시험)
+    // 'content/exams/<id>/docs/학습안내서.md' → '{dataRoot}/docs_md/학습안내서.js' (시험별 문서)
+    // 'docs/<stem>.md' → 'data/docs_md/<stem>.js' (앱 공용 문서 — 현재 미사용 슬롯)
     function _bundlePathFor(sourceKey) {
         const src = MD_SOURCES[sourceKey];
         if (!src) return null;

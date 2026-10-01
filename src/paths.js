@@ -51,9 +51,9 @@ export const PATHS = {
   // 벤더 (앱 공용)
   VENDOR_MERMAID: './vendor/mermaid/mermaid.min.js',
 
-  // 문서 (앱 공용)
-  USER_MANUAL: 'docs/user/user_manual.md',
-  FORMULA_MANUAL: 'docs/user/formula_manual.md',
+  // 문서 (시험별 — {contentRoot}/docs/ 아래)
+  get USER_MANUAL() { return contentPath('docs/user_manual.md'); },
+  get FORMULA_MANUAL() { return contentPath('docs/formula_manual.md'); },
 };
 
 // 참조자료 경로 상대 경로를 절대 경로로 정규화

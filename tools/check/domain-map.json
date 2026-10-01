@@ -58,12 +58,7 @@
       "note": "exams.json 레지스트리 번들",
       "patterns": ["data/exams.js"]
     },
-    {
-      "layer": "platform",
-      "generatedBy": "node tools/build/build_doc_bundles.js",
-      "note": "인앱 문서 번들 (시험 공통)",
-      "patterns": ["data/docs_md/**"]
-    },
+
     {
       "layer": "platform",
       "generatedBy": "node tools/build/stamp_release_notes.js",

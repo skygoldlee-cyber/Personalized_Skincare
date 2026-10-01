@@ -29,7 +29,8 @@
         "pomodoro": true,
         "formula": true,
         "limitsTrainer": true,
-        "studyGuide": true
+        "studyGuide": true,
+        "userManual": true
       }
     },
     {

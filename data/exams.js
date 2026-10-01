@@ -31,7 +31,8 @@ var EXAMS_LIST = {
         "pomodoro": true,
         "formula": true,
         "limitsTrainer": true,
-        "studyGuide": true
+        "studyGuide": true,
+        "userManual": true
       }
     },
     {

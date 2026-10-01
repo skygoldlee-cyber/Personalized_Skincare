@@ -178,8 +178,8 @@ docs/
 
 | 문서 | 설명 | 접근 방법 |
 |------|------|-----------|
-| [user_manual.md](user/user_manual.md) | 사용자 매뉴얼 | 앱 내 "매뉴얼" 메뉴 (manual-viewer 렌더) |
-| [formula_manual.md](user/formula_manual.md) | Formula OS 실무 매뉴얼 | 앱 내 실무 매뉴얼 (doc: 링크 연동) |
+| [user_manual.md](../content/exams/cosmetic/docs/user_manual.md) | 사용자 매뉴얼 | 앱 내 "매뉴얼" 메뉴 (manual-viewer 렌더, 시험별 문서) |
+| [formula_manual.md](../content/exams/cosmetic/docs/formula_manual.md) | Formula OS 실무 매뉴얼 | 앱 내 실무 매뉴얼 (doc: 링크 연동, 시험별 문서) |
 | [exam_strategy.md](user/exam_strategy.md) | 시험 합격 공략법 — 4과목·100문항·과락 기준 전략 | 직접 열기 |
 | [subject1~4_numbers.md](user/subject1_numbers.md) | 과목별 숫자 암기 요약정리 (4파일) | 직접 열기 |
 | [학습안내서.md](../content/exams/cosmetic/docs/학습안내서.md) | 학습 안내서 | 앱 내 "요약집" 메뉴 (`content/exams/cosmetic/docs/`) |
@@ -281,12 +281,12 @@ docs/
 | DOC-RBK-08 | `docs/dev/runbooks/TEXTBOOK_REPLACEMENT_RUNBOOK.md` |
 | DOC-RBK-09 | `docs/dev/runbooks/VERIFY_DEPLOY_PIPELINE.md` |
 | DOC-USR-01 | `docs/user/exam_strategy.md` |
-| DOC-USR-02 | `docs/user/formula_manual.md` |
+| DOC-USR-02 | `content/exams/cosmetic/docs/formula_manual.md` |
 | DOC-USR-03 | `docs/user/subject1_numbers.md` |
 | DOC-USR-04 | `docs/user/subject2_numbers.md` |
 | DOC-USR-05 | `docs/user/subject3_numbers.md` |
 | DOC-USR-06 | `docs/user/subject4_numbers.md` |
-| DOC-USR-07 | `docs/user/user_manual.md` |
+| DOC-USR-07 | `content/exams/cosmetic/docs/user_manual.md` |
 | DOC-BIZ-01 | `docs/business/FORMULA_OS_경쟁전략.md` |
 | DOC-BIZ-02 | `docs/business/맞춤형화장품_조제관리사_자격증플랫폼_사업기획서.md` |
 | DOC-BIZ-03 | `docs/business/맞춤형화장품판매업소_조사_2026-09.md` |

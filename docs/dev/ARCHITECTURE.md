@@ -379,7 +379,7 @@ passory/
 │   ├── version.js              #   window.APP_VERSION — 배포 스탬프와 동기화 (stamp_release_notes.js)
 │   ├── release-notes.json      #   사용자용 변경 이력 진실 소스 (수동 편집 대상 — 파싱 오류는 배포 차단)
 │   ├── release-notes.js        #   window.RELEASE_NOTES — JSON에서 생성되는 래퍼 (직접 편집 금지)
-│   ├── docs_md/                #   앱 공용 문서 폴백 번들 (user_manual·formula_manual — 시험 무관)
+│   ├── docs_md/                #   앱 공용 문서 폴백 번들 (현재 비어 있음 — 인앱 문서는 전부 시험별)
 │   └── exams/
 │       └── <examId>/           #   시험별 데이터 루트 (dataRoot — 모든 시험 대칭)
 │           ├── registry.js     #     과목/시험/성분 메타 (shortName·file·resources·uiText)
@@ -514,8 +514,6 @@ passory/
     │   #     PASS_CORE_LOOP_REVIEW·FORMULA_OS_DESIGN·PRO_MULTI_EXAM_EVALUATION·
     │   #     EXTERNAL_REVIEW_LEARNING_PRO 등 (현행 기준서는 SPEC.md·사업기획서 v3.5)
     └── user/
-        ├── user_manual.md      #   사용자 매뉴얼
-        ├── formula_manual.md   #   Formula OS 실무 매뉴얼
         ├── exam_strategy.md    #   시험 전략
         ├── subject1_numbers.md #   1과목 핵심 숫자
         ├── subject2_numbers.md #   2과목 핵심 숫자
@@ -928,7 +926,7 @@ pullSync() (로그인 시 / "지금 동기화" 버튼)
 
 ## 🧪 Formula OS 도메인 아키텍처
 
-> 설계안: [`FORMULA_OS_DESIGN.md`](../report_archive/FORMULA_OS_DESIGN.md) (Phase 5-A, 아카이브) · 업무 플로우: [`FORMULA_OS_WORKFLOW_DESIGN.md`](design/FORMULA_OS_WORKFLOW_DESIGN.md) · 사용자 매뉴얼: `docs/user/formula_manual.md`
+> 설계안: [`FORMULA_OS_DESIGN.md`](../report_archive/FORMULA_OS_DESIGN.md) (Phase 5-A, 아카이브) · 업무 플로우: [`FORMULA_OS_WORKFLOW_DESIGN.md`](design/FORMULA_OS_WORKFLOW_DESIGN.md) · 사용자 매뉴얼: `content/exams/cosmetic/docs/formula_manual.md`
 
 학습 앱 안에 내장된 실무 작업실. 9개 조제관리 업무 영역을 6개 패널로 묶어 `formula-view` 하나의 뷰 안에서 서브내비 칩으로 전환한다.
 

@@ -237,5 +237,5 @@
 - **교재**: `content/exams/cosmetic/교재/{law,manufacturing,safety,understanding}/*.md`
 - **문제은행**: `content/exams/cosmetic/문제은행/과목N_문제은행.md`
 - **참조자료**: 법령원문, 별표, KFCC 고시 (앱 내 참조자료 뷰어)
-- **사용자 매뉴얼**: `docs/user/user_manual.md`
+- **사용자 매뉴얼**: `content/exams/cosmetic/docs/user_manual.md`
 - **모의고사**: 앱 내 "실전 모의고사" 메뉴
