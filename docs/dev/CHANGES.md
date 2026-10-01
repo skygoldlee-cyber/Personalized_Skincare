@@ -6,6 +6,15 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-04 이야기형·Pro 보완 5종 (정합 검증·오디오 커버리지·서사 검색·이야기 회상·혜택 실체화)
+
+- **서사-본문 정합 검증** (`story_merge.js`+`build_story_textbooks.js`, BP-11): `findStoryInconsistencies`가 서사 인용 조문·수치(`제N조/항/호/목`, `%`·`ppm`·`점`·`배`·`종`)를 표준형과 대조 — 본문에 없는 인용을 `⚠` 경고로 출력 (내러티브 숫자는 패턴에서 제외해 오탐 억제). 패치·수작업 이야기형 모두 적용, 빌드는 통과
+- **오디오 커버리지 검증** (`build_audio_manifest.js`, AO-06): `features.audiobook` 활성 시험의 manifest 챕터 수 ↔ 스캔 MP3 수를 과목별 대조 — 불일치·manifest 미등록 과목 디렉터리 경고. MP3 미스캔(미커밋)은 기존 매니페스트 보존 로직이 처리하므로 경고 아님. `checkAudioCoverage`를 export + `require.main` 가드로 단위 테스트 가능화
+- **이야기형 서사 검색** (`textbook-search.js`, TS-10): `hasFeature('story_textbook')` 시 첫 검색에서 storyFile을 지연 로드(`_ensureStoryIndex`) → `story:start/end` 블록만 추출해 검색 인덱스 병합, 로드 완료 시 동일 검색어 재실행. 서사 결과는 `서사` 배지 + storyFile 링크로 구분
+- **이야기 회상 자동 생성** (`story_merge.js` `extractRecallItems`/`buildRecallSection`, BP-12): 본문과 일치하는 서사 속 사실 토큰을 빈칸형 회상 항목(최대 3개, 토큰당 1개)으로 생성물 말미 `<!-- recall:start/end -->`에 부착. `extractPatch`는 `stripGenerated`로 GEN_BANNER·회상 구간을 먼저 제거 — 자동 생성물이 패치로 되돌아오는 오염 차단
+- **Pro 혜택 문구 실체화** (`pro-upgrade.js`, ROAD-P0): `showPlanCompare`의 "Pro 전용 혜택 (예정)" 플레이스홀더를 플래그·플랜 유도 실제 목록으로 교체 — 맞춤학습 리포트·이야기형·오디오북(`hasFeature`)·클라우드 동기화·한도 무제한(`isProFeature`·스토어 상수) + 우선 제공
+- 테스트: `story-merge.test.js` +4건(BP-11/12), `audio-manifest.test.js` 신규 4건(AO-06), `story-search.dom.test.js` 신규 2건(TS-10)
+
 ## 2026-10-01 맞춤학습 심화 6종 (복합 추정·개인 보정·추천 효과·분류 확장·패턴·리포트)
 
 - **복합 예상 점수** (`recommendations.js`, AN-05): `estimateCompositeScore` — 모의고사 이력이 주 지표, 표본 부족 시 마스터리 졸업률(가중 0.6)·퀴즈 정답률(5문+, 50문 만점 가중) 병합. 이력 3회부터 이력 100%. source: `sim`/`blend`/`aux`로 표시 문구 분기

@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 // tools/build/build_story_textbooks.js — 표준형 + 서사 패치 → _이야기형.md 생성
 // @spec BP-10 (서사 커버리지 게이트 — 챕터별 story 블록 수 리포트 + 0블록 패치 오류)
+// @spec BP-11 (서사-본문 정합 검증 — 서사 인용 조문·수치가 표준형에 없으면 경고)
+// @spec BP-12 (이야기 회상 — 본문 일치 사실 토큰으로 챕터 말미 빈칸형 항목 자동 생성)
 //
 // manifest의 각 chapter가 storyFile을 선언하면, 같은 디렉터리의
 //   story/<표준형 파일명 - _표준형.md>_서사.md
@@ -19,7 +21,10 @@
 const fs = require('fs');
 const path = require('path');
 const { getExamTargets } = require('./exam_targets');
-const { parsePatch, applyPatch, norm, GEN_BANNER } = require('./story_merge');
+const {
+    parsePatch, applyPatch, norm, GEN_BANNER, splitStoryBlocks,
+    findStoryInconsistencies, extractRecallItems, buildRecallSection,
+} = require('./story_merge');
 
 const ROOT = path.resolve(__dirname, '..', '..');
 const CHECK = process.argv.includes('--check');
@@ -34,6 +39,13 @@ function printCoverage(coverage) {
         const tag = c.manual ? '수작업' : '패치';
         console.log(`  ${c.blocks === 0 ? '⚠' : '·'} ${c.rel} — 서사 ${c.blocks}블록 (${tag})${c.blocks === 0 ? ' — 이야기형이 표준형과 동일할 수 있음' : ''}`);
     });
+}
+
+/** 서사-본문 정합 경고 — 서사가 인용한 조문·수치가 표준형에 없으면 오탈자/모순 가능성 */
+function printConsistency(warnings) {
+    if (!warnings.length) return;
+    console.log('서사-본문 정합 경고:');
+    warnings.forEach(w => console.log(`  ⚠ ${w}`));
 }
 
 function patchPathFor(dirAbs, stdFile) {
@@ -113,6 +125,7 @@ function main() {
     const skipped = [];
     const failed = [];
     const coverage = [];
+    const consistency = [];
     let drifted = 0;
 
     for (const t of getExamTargets(ROOT)) {
@@ -133,6 +146,13 @@ function main() {
                         const txt = norm(fs.readFileSync(outAbs, 'utf8'));
                         const n = (txt.match(/<!-- story:start -->/g) || []).length;
                         coverage.push({ rel, blocks: n, manual: true });
+                        // 수작업 파일도 서사 인용 정합 검증은 수행 (생성물 표식은 비교에서 제외)
+                        if (fs.existsSync(stdAbs)) {
+                            const stdTxt = norm(fs.readFileSync(stdAbs, 'utf8'));
+                            const { blocks } = splitStoryBlocks(txt);
+                            findStoryInconsistencies(stdTxt, blocks.flatMap(b => b.lines))
+                                .forEach(w => consistency.push(`${rel}: 서사 인용 '${w}' — 표준형 본문에 없음`));
+                        }
                     }
                     continue;
                 }
@@ -149,7 +169,13 @@ function main() {
                     failed.push(`${rel}: 패치에 story 플래그 블록 없음 — 이야기형이 표준형과 동일합니다 (storyFile 선언이 무의미)`);
                     continue;
                 }
-                const text = GEN_BANNER + '\n' + merged.text;
+                // 서사-본문 정합: 서사가 인용한 조문·수치가 본문에 없으면 경고 (BP-11)
+                const storyLines = storyBlocks.flatMap(o => o.lines);
+                findStoryInconsistencies(std, storyLines)
+                    .forEach(w => consistency.push(`${rel}: 서사 인용 '${w}' — 표준형 본문에 없음`));
+                // 이야기 회상: 본문과 일치하는 서사 속 사실 토큰 → 챕터 말미 빈칸형 항목 (BP-12)
+                const recall = buildRecallSection(extractRecallItems(storyLines, std));
+                const text = GEN_BANNER + '\n' + merged.text + recall;
                 if (CHECK) {
                     const cur = fs.existsSync(outAbs) ? norm(fs.readFileSync(outAbs, 'utf8')) : '';
                     if (cur !== text) { drifted++; console.log(`  ✗ 드리프트: ${rel}`); }
@@ -173,11 +199,13 @@ function main() {
             process.exit(1);
         }
         printCoverage(coverage);
+        printConsistency(consistency);
         console.log('\n✅ 모든 이야기형이 패치와 일치합니다');
         return;
     }
 
     printCoverage(coverage);
+    printConsistency(consistency);
     if (generated.length) {
         console.log('생성된 이야기형:');
         generated.forEach(g => console.log(`  + ${g}`));

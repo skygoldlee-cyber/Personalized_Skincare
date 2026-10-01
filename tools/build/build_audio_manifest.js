@@ -1,5 +1,6 @@
 // tools/build/build_audio_manifest.js
 // @spec BP-01
+// @spec AO-06 (오디오 커버리지 — manifest 챕터 수 ↔ 스캔 MP3 수 대조, 불일치 경고)
 // 각 시험의 {contentRoot}/audiobook/mp3/ 디렉토리 스캔 → data/audio_manifest.js 자동 생성
 // [멀티시험] content/exams.json의 모든 시험을 순회해 시험 id 키로 분리된 매니페스트를
 //           단일 파일(data/audio_manifest.js — 항상 앱 공용 data 루트)로 발행한다.
@@ -40,7 +41,34 @@ function scanExamAudio(target) {
   return manifest;
 }
 
-function build() {
+/**
+ * 오디오 커버리지 검증 (AO-06) — features.audiobook 활성 시험의 manifest 챕터 수와
+ * 스캔된 MP3 수를 과목별로 대조한다. MP3는 용량상 git 미추적(외부 호스팅)이므로
+ * 디렉터리가 아예 없는 경우는 정보 메모, 있는데 수가 어긋나면 경고를 출력한다.
+ * @returns {string[]} 경고 메시지 목록
+ */
+function checkAudioCoverage(target, scanned) {
+  const warnings = [];
+  if (!target.manifest) return warnings;
+  const declared = new Set();
+  for (const subj of target.manifest.subjects || []) {
+    declared.add(subj.key);
+    const expected = (subj.chapters || []).filter(c => c.file).length;
+    const got = scanned[subj.key] ? Object.keys(scanned[subj.key]).length : 0;
+    if (got === 0) continue; // MP3 미스캔(미커밋)은 보존 로직이 처리 — 경고 대상 아님
+    if (got !== expected) {
+      warnings.push(`  ⚠ [${target.id}] ${subj.key} — manifest 챕터 ${expected}개 vs MP3 ${got}개`);
+    }
+  }
+  for (const key of Object.keys(scanned)) {
+    if (!declared.has(key)) {
+      warnings.push(`  ⚠ [${target.id}] audiobook/mp3/${key} — manifest에 없는 과목`);
+    }
+  }
+  return warnings;
+}
+
+function buildAudioManifest() {
   // 기존 파일에서 AUDIO_BASE_URL과 AUDIO_MANIFEST 보존
   let audioBaseUrl = 'null';
   let existingManifest = null;
@@ -56,6 +84,7 @@ function build() {
   }
 
   const manifest = {};
+  const coverageWarnings = [];
   for (const target of getExamTargets(WORKSPACE_DIR)) {
     if (!target.features || target.features.audiobook !== true) {
       // 오디오 지원 미선택 — 스캔/보존 모두 건너뛰고 항목을 비운다
@@ -63,6 +92,7 @@ function build() {
       continue;
     }
     const scanned = scanExamAudio(target);
+    coverageWarnings.push(...checkAudioCoverage(target, scanned));
     if (Object.keys(scanned).length > 0) {
       manifest[target.id] = scanned;
     } else if (existingManifest && existingManifest[target.id]) {
@@ -150,6 +180,13 @@ if (typeof window !== "undefined") {
   for (const [examId, m] of Object.entries(manifest)) {
     console.log(`  [${examId}] subjects: ${Object.keys(m).join(', ')}`);
   }
+  if (coverageWarnings.length) {
+    console.log('오디오 커버리지 경고:');
+    coverageWarnings.forEach(w => console.log(w));
+  }
 }
 
-build();
+// 직접 실행 시에만 빌드 — require 시 순수 함수만 노출 (단위 테스트용)
+if (require.main === module) buildAudioManifest();
+
+module.exports = { scanExamAudio, checkAudioCoverage, buildAudioManifest };

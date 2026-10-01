@@ -238,6 +238,7 @@
 | TS-07 | 검색 결과 Mermaid 다이어그램 온디맨드 렌더링 (`_renderSearchMermaid`) | ✅ |
 | TS-08 | 역색인(inverted index) 기반 검색: 공백 토큰화 + 2-gram 보조 인덱스, 후보 교집합 계산 | ✅ |
 | TS-09 | 역색인 자동 캐싱 (과목 키 변경 시에만 재구축, 반복 검색 성능 향상) | ✅ |
+| TS-10 | **이야기형 서사 검색**: `features.story_textbook` 활성 시 첫 검색에서 storyFile을 지연 로드해 `story:start/end` 블록만 인덱스에 병합 (로드 완료 시 동일 검색어 재실행). 서사 결과는 '서사' 배지 + storyFile 링크로 구분 (`_ensureStoryIndex`, `_extractStoryBlocks`) | ✅ |
 
 ### 3.10 성분 사전 (Dictionary)
 
@@ -268,6 +269,7 @@
 | AO-03 | play/pause/seekto/previoustrack/nexttrack 액션 핸들러 | ✅ |
 | AO-04 | `navigator.mediaSession.metadata`: 단원 제목, 과목명, 앨범 아트 | ✅ |
 | AO-05 | 오디오 컨트롤 UI (재생/일시정지, 진행바, 속도 조절) | ✅ |
+| AO-06 | **오디오 커버리지 검증**: `build_audio_manifest.js`가 `features.audiobook` 활성 시험의 manifest 챕터 수와 스캔된 MP3 수를 과목별 대조 — 불일치·미등록 과목 디렉터리 경고 (MP3 미커밋 시 보존 로직 우선, 경고 아님) | ✅ |
 
 ### 3.13 데이터 백업/복원 (Backup)
 
@@ -728,6 +730,8 @@
 | BP-08 | 콘텐츠 품질 감사 (`audit_card_quality.js`, `npm run audit:cards`) | ✅ |
 | BP-09 | **시험별 문서 번들 + 기능↔문서 불변식**: `build_doc_bundles.js`가 `{contentRoot}/docs/*.md`를 스캔해 자동 번들(문서 존재 = 선언). `features` 플래그 활성 시 필수 문서 규약(studyGuide→학습안내서.md 등)을 `check:docbundles`가 강제 | ✅ |
 | BP-10 | **이야기형 서사 커버리지 게이트**: `build_story_textbooks.js`가 챕터별 서사(`story` 플래그) 블록 수를 리포트하고, storyFile 선언 패치에 서사 블록 0개이면 빌드 오류 (이야기형이 표준형과 동일한 사일런트 저하 방지) | ✅ |
+| BP-11 | **서사-본문 정합 검증**: 서사가 인용한 조문·수치 토큰(`제N조/항/호/목`, `%·ppm·점·배·종`)이 표준형 본문에 없으면 경고 — 이야기 속 사실 오탈자·모순 조기 감지 (`findStoryInconsistencies`, 패치·수작업 파일 모두 적용) | ✅ |
+| BP-12 | **이야기 회상 자동 생성**: 본문과 일치하는 서사 속 사실 토큰을 마스킹한 빈칸형 회상 항목을 챕터 말미에 자동 부착 (`extractRecallItems`→`buildRecallSection`, `<!-- recall:start/end -->` 구간 — `extractPatch`는 `stripGenerated`로 제외해 패치 오염 방지) | ✅ |
 
 ### 5.4 콘텐츠 구조
 
@@ -830,7 +834,7 @@
 | ROAD-P2 | **결제·구독 관리**: 토스/Stripe 연동, 웹훅 처리, 구독 상태 머신 | SUBSCRIPTION_ROADMAP §3 | 미구현 |
 | ROAD-P3 | **콘텐츠 게이팅 + CSP/SW 재작업**: 콘텐츠 접근 제어 시 Cache First SW와 인증 토큰의 충돌 해소, 해지·다운그레이드 시 캐시 purge, CSP `connect-src` 확장 | SUBSCRIPTION_ROADMAP §4~§6 | 미구현 |
 | ROAD-P4 | **무료 티어 축소·그랜드파더링 정책**: 클라우드 동기화를 Pro 전용으로 전환, 무료 티어 로그인은 비강제 유지 | `feature-plan.json` `cloud_sync: "pro"` + `canCloudSync()`/`pro_entitled` 게이트 (sync.js push·pull·syncNow 차단) | ✅ 결정·게이트 구현 |
-| ROAD-P0 | **Pro 안내 계층**: `feature-plan.json` 기능별 `pro`/`free` 전환 + `src/pro-upgrade.js` (PRO 배지 `data-pro-feature` 제어, 진입 1회 안내 `proFeatureNotice`, Formula OS 한도 초과 업그레이드 모달 `showUpgradeNotice`) — 접근 차단 없이 유료 경계만 인지. soft→hard 전환·grandfathering 정책은 §3.7에 확정 | `SUBSCRIPTION_ROADMAP.md` §3.4 구현 상태 주석·§3.7 전환 정책 | ✅ |
+| ROAD-P0 | **Pro 안내 계층**: `feature-plan.json` 기능별 `pro`/`free` 전환 + `src/pro-upgrade.js` (PRO 배지 `data-pro-feature` 제어, 진입 1회 안내 `proFeatureNotice`, Formula OS 한도 초과 업그레이드 모달 `showUpgradeNotice`) — 접근 차단 없이 유료 경계만 인지. soft→hard 전환·grandfathering 정책은 §3.7에 확정. 플랜 비교 모달의 "Pro 전용 혜택"은 플래그·플랜에서 유도한 실제 기능 목록(맞춤학습 리포트·이야기형·오디오북·클라우드 동기화·한도 무제한)으로 렌더링 | `SUBSCRIPTION_ROADMAP.md` §3.4 구현 상태 주석·§3.7 전환 정책 | ✅ |
 
 ### 7.3 Learning Pro 잔여·차별화
 

@@ -1,10 +1,13 @@
 // views/textbook-search.js - 교재 검색 통합 로직 (Textbook Search Integration)
-// @spec TS-01~09,PF-08
+// @spec TS-01~09,PF-08,TS-10
 import { escapeHTML, esc } from '../sanitize.js';
 import { parseMarkdown } from '../markdown-parser.js';
 import { renderMermaidIn } from '../mermaid-render.js';
 import { attachImageZoomIn } from '../image-zoom.js';
 import { TIMING } from '../config/timing.js';
+import { DataLoader } from '../data-loader.js';
+import { hasFeature } from '../exam-context.js';
+import { PATHS } from '../paths.js';
 // [모바일 PWA 견고성] 레지스트리는 window 전역(가드)에서 읽는다(정적 import 하드 의존 지양).
 
 const textbookState = {
@@ -17,6 +20,97 @@ let _searchIndex = null;
 let _searchIndexKeys = null;
 let _invertedIndex = null; // 3. 역색인: 단어 → Set<entryIndex>
 let _invertedIndexKeys = null;
+
+// --- TS-10: 이야기형 서사 지연 인덱싱 ---
+// 표준형만 번들되므로 서사 텍스트(비유·예시)는 별도 fetch가 필요하다.
+// 첫 검색 실행 시 storyFile을 지연 로드해 '서사' 항목으로 인덱스에 병합한다.
+/** @type {Array<object>|null} */
+let _storyEntries = null;
+/** @type {Promise<number>|null} */
+let _storyIndexPromise = null;
+
+/** 이야기형 MD에서 story:start/end 블록을 {title, text} 목록으로 추출 */
+function _extractStoryBlocks(md) {
+    const lines = md.split(/\r?\n/);
+    /** @type {Array<{title:string, innerTitle:string, lines:string[]}>} */
+    const blocks = [];
+    /** @type {{title:string, innerTitle:string, lines:string[]}|null} */
+    let cur = null;
+    let lastHeading = '';
+    for (const l of lines) {
+        const t = l.trim();
+        const heading = t.match(/^#{1,6}\s+(.*)/);
+        if (cur) {
+            if (t === '<!-- story:end -->') { blocks.push(cur); cur = null; continue; }
+            // 블록 내부 첫 헤딩을 서사 제목으로 우선 사용 (예: '## 프롤로그 — …')
+            if (heading && !cur.innerTitle) cur.innerTitle = heading[1].trim();
+            cur.lines.push(l);
+            continue;
+        }
+        if (t === '<!-- story:start -->') { cur = { title: lastHeading, innerTitle: '', lines: [] }; continue; }
+        if (heading) lastHeading = heading[1].trim();
+    }
+    return blocks
+        .map(b => ({
+            title: b.innerTitle || b.title,
+            text: b.lines.join('\n')
+                .replace(/<!--[^\n]*?-->/g, '')
+                .split('\n')
+                .filter(l => !l.includes('┈') && !l.trim().startsWith('!['))
+                .join('\n')
+                .trim()
+        }))
+        .filter(b => b.text.length > 0);
+}
+
+/**
+ * 활성 시험의 storyFile을 지연 로드해 서사 블록을 검색 인덱스에 병합한다.
+ * @returns {Promise<number>} 추가된 인덱스 항목 수
+ */
+function _ensureStoryIndex() {
+    if (_storyIndexPromise) return _storyIndexPromise;
+    _storyIndexPromise = (async () => {
+        if (!hasFeature('story_textbook')) return 0;
+        const manifest = await DataLoader._getManifest();
+        const STUDY_DATA = (typeof window !== 'undefined' && window.STUDY_DATA) ? window.STUDY_DATA : {};
+        /** @type {Array<object>} */
+        const entries = [];
+        for (const subjMeta of manifest.subjects || []) {
+            const subj = STUDY_DATA[subjMeta.key];
+            for (const chMeta of subjMeta.chapters || []) {
+                if (!chMeta.storyFile) continue;
+                try {
+                    const md = await DataLoader._getMd(PATHS.TEXTBOOK_FILE(subjMeta.dir, chMeta.storyFile), subjMeta.key);
+                    const chapter = (subj && subj.chapters || []).find(c => c.chapterKey === chMeta.key);
+                    const chapterTitle = (chapter && chapter.chapterTitle) || chMeta.title || '';
+                    for (const block of _extractStoryBlocks(md)) {
+                        const sectionTitle = `📖 ${block.title || '서사'}`;
+                        entries.push({
+                            subjId: subjMeta.key,
+                            subjName: (subj && subj.name) || subjMeta.name || subjMeta.key,
+                            chapterTitle,
+                            filePath: PATHS.TEXTBOOK_FILE_REL(subjMeta.dir, chMeta.storyFile),
+                            sectionTitle,
+                            content: block.text,
+                            fromStory: true,
+                            _searchText: (sectionTitle + ' ' + block.text).toLowerCase()
+                        });
+                    }
+                } catch (e) {
+                    console.warn('[Search] 서사 인덱스 로드 실패:', chMeta.storyFile, e);
+                }
+            }
+        }
+        _storyEntries = entries;
+        // 이미 구축된 인덱스가 있으면 서사 항목을 뒤에 붙이고 역색인을 재구축한다
+        if (_searchIndex && entries.length) {
+            _searchIndex.push(...entries);
+            _buildInvertedIndex();
+        }
+        return entries.length;
+    })().catch(() => { _storyIndexPromise = null; return 0; });
+    return _storyIndexPromise;
+}
 
 function _getSearchIndex() {
     const STUDY_DATA = (typeof window !== 'undefined' && window.STUDY_DATA) ? window.STUDY_DATA : {};
@@ -55,6 +149,8 @@ function _getSearchIndex() {
             });
         });
     });
+    // 서사 인덱스가 이미 로드돼 있으면 병합 (지연 로드 시에도 인덱스 재구축 없이 유지)
+    if (_storyEntries && _storyEntries.length) _searchIndex.push(..._storyEntries);
     // 3. 역색인 구축 — 각 섹션의 텍스트를 토큰화하여 단어→섹션 인덱스 생성
     _buildInvertedIndex();
     return _searchIndex;
@@ -163,6 +259,15 @@ function performTextbookSearch() {
     }
     
     const terms = query.split(/\s+/).filter(t => t.length > 0);
+    // TS-10 — 서사 인덱스 최초 1회 지연 로드; 완료 시 같은 검색어로 재실행
+    // (resolved promise 재사용 시 재실행 루프가 되므로 트리거는 로드 시작 1회에 한정)
+    if (!_storyIndexPromise) {
+        _ensureStoryIndex().then(added => {
+            if (added && textbookState.searchQuery.toLowerCase().trim() === query) {
+                performTextbookSearch();
+            }
+        });
+    }
     const index = _getSearchIndex();
     const results = [];
     
@@ -205,7 +310,8 @@ function performTextbookSearch() {
                 chapterTitle: entry.chapterTitle,
                 filePath: entry.filePath,
                 sectionTitle: entry.sectionTitle,
-                content: entry.content
+                content: entry.content,
+                fromStory: !!entry.fromStory
             });
         }
     }
@@ -238,13 +344,15 @@ function performTextbookSearch() {
         const isLong = item.content.length > 300;
         const bodyClass = isLong ? 'textbook-card-body collapsed' : 'textbook-card-body';
         const formattedContent = formatSectionContent(item.content, terms);
-        
+        const storyBadge = item.fromStory ? '<span class="badge badge-gray">서사</span>' : '';
+
         const cardId = `textbook-card-${idx}`;
         const cardHTML = `
             <div class="textbook-result-card">
                 <div class="textbook-card-header">
                     <span class="textbook-card-path">
                         <span class="badge ${badgeColor}">${esc(item.subjName)}</span>
+                        ${storyBadge}
                         <i class="fa-solid fa-chevron-right"></i>
                         <span>${esc(item.chapterTitle)}</span>
                     </span>

@@ -1,5 +1,5 @@
 // tests/unit/story-merge.test.js — 이야기형 병합 엔진 검증
-// @spec none (콘텐츠 빌드 도구 — story_merge.js 단위 검증)
+// @spec BP-11,BP-12 (정합 검증·이야기 회상 — 그 외 병합 로직은 도구 내부 규약)
 // 표준형 본문 보존, 서사 삽입, suffix/replace, 앵커 해석, 추출↔적용 왕복을 고정한다.
 
 import { test } from 'node:test';
@@ -185,8 +185,53 @@ test('실제 cosmetic 4과목 — 패치↔생성물 왕복 정합성', () => {
             const std = readFileSync(join(dir, ch.file), 'utf8');
             const { text, errors } = M.applyPatch(std, M.parsePatch(patch));
             assert.deepEqual(errors, [], `${subj.dir}: ${errors.join('; ')}`);
-            assert.equal(M.norm(readFileSync(storyPath, 'utf8')), M.norm(M.GEN_BANNER + '\n' + text),
+            // 디스크 생성물은 GEN_BANNER + 병합본 + 자동 회상 섹션 — 생성물 표식을 떼고 비교
+            assert.equal(M.stripGenerated(readFileSync(storyPath, 'utf8')), M.norm(text),
                 `${subj.dir}: 생성물 불일치 — npm run build:story 필요`);
         }
     }
+});
+
+test('BP-11 findStoryInconsistencies — 서사 인용 조문·수치가 본문에 없으면 보고', () => {
+    const story = ['민수는 제3조의 정의를 봤다.', '함량은 0.5%라 했다.', '서사만의 제99조는 위험하다.'];
+    const std = '## 본문\n제3조 화장품 정의. 함량 0.5% 기준.';
+    assert.deepEqual(M.findStoryInconsistencies(std, story), ['제99조']);
+    // 공백 표기 차이는 정규화로 흡수
+    assert.deepEqual(M.findStoryInconsistencies('제 3 조 정의', ['민수는 제3조를 봤다.']), []);
+});
+
+test('BP-11 내러티브 숫자(시간·감정)는 추출 대상이 아니다', () => {
+    const story = ['민수는 3일을 고민했고 2명의 동료와 상의했다.'];
+    assert.deepEqual(M.extractFactTokens(story), []);
+});
+
+test('BP-12 extractRecallItems — 본문 일치 토큰만 빈칸형 항목으로', () => {
+    const story = [
+        '## 프롤로그 — 첫 날',
+        '민수는 제3조의 화장품 정의를 읽었다. 그제야 감이 왔다.',
+        '서사 전용 수치 99%는 본문에 없으므로 제외된다.',
+        '!["삽화"](images/x.webp)',
+        '📖 ┈┈ 이야기 ┈┈',
+    ];
+    const std = '제3조 화장품 정의. 나머지 본문.';
+    const items = M.extractRecallItems(story, std);
+    assert.equal(items.length, 1);
+    assert.equal(items[0].token, '제3조');
+    assert.ok(items[0].sentence.includes('제3조'));
+    // 최대 개수 제한
+    const many = ['제1조', '제2조', '제3조', '제4조'].map(t => `본문의 ${t} 내용.`).join('\n');
+    assert.equal(M.extractRecallItems(many, many, 3).length, 3);
+});
+
+test('BP-12 buildRecallSection + stripGenerated — 생성 구간은 추출에서 제외', () => {
+    const items = [{ sentence: '민수는 제3조를 봤다.', token: '제3조' }];
+    const sec = M.buildRecallSection(items);
+    assert.ok(sec.includes('## 📝 이야기 회상'));
+    assert.ok(sec.includes('(____)') && sec.includes('정답: **제3조**'));
+    assert.equal(M.buildRecallSection([]), '');
+    // recall 섹션이 포함된 이야기형에서 패치 추출 시 회상은 authored로 오인되지 않는다
+    const story = M.GEN_BANNER + '\n' + STD + '\n\n' + M.STORY_START + '\n수진 서사\n' + M.STORY_END + '\n' + sec;
+    const { ops } = M.extractPatch(story, STD);
+    assert.ok(!ops.some(o => o.lines && o.lines.join('\n').includes('이야기 회상')),
+        '회상 섹션이 패치 ops로 새어 나감');
 });

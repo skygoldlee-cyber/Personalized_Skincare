@@ -406,7 +406,7 @@ passory/
 │   │   ├── schema.js           #   스키마 검증
 │   │   ├── id_factory.js       #   안정적 ID 생성
 │   │   ├── build_keyword_index.js # GLOSSARY_INDEX + 큐레이션 병합
-│   │   ├── build_audio_manifest.js # 오디오 챕터 매니페스트 생성 (exams.json features.audiobook 선택 시만 항목 발행 — false면 완전 제외)
+│   │   ├── build_audio_manifest.js # 오디오 챕터 매니페스트 생성 (exams.json features.audiobook 선택 시만 항목 발행 — false면 완전 제외). AO-06 커버리지: manifest 챕터 수 ↔ 스캔 MP3 수 과목별 대조 경고
 │   │   ├── build_pdf_registry.js # PDF 레지스트리 생성
 │   │   ├── report.js           #   빌드 통계
 │   │   ├── stamp_sw_version.js #   SW 캐시 버전 자동 스탬프
@@ -1817,6 +1817,8 @@ npm run deploy
    - `_이야기형.md` 파일 로드 실패 시 기본 모드로 자동 폴백 + 토스트 안내
    - 모드 전환 시 **읽기 위치 보존** — 재렌더 전 현재 보이는 `reader-section-N` 앵커와 섹션 내 오프셋을 기억해 같은 섹션으로 복원 (2026-10-01)
    - 서사 커버리지 게이트 — `build:story`가 챕터별 서사 블록 수를 리포트하고, storyFile 선언 패치에 `story` 블록 0개이면 빌드 오류 (2026-10-01)
+   - 서사-본문 정합 경고 (BP-11) — 서사가 인용한 조문·수치(`제N조`, `%`·`ppm`·`점`·`배`·`종`)가 표준형 본문에 없으면 `build:story`가 경고 출력. 패치·수작업 파일 모두 적용, 오류가 아닌 경고 (내러티브 허용 범위 보존)
+   - 이야기 회상 자동 생성 (BP-12) — 본문과 일치하는 서사 속 사실 토큰을 마스킹한 빈칸형 항목 최대 3개를 챕터 말미 `<!-- recall:start/end -->` 구간으로 부착. `extractPatch`는 `stripGenerated`로 GEN_BANNER·회상 구간을 먼저 제거하므로 패치 추출이 오염되지 않음 (2026-10-04)
 
 20. **교재 리더 TOC/브레드크럼/스크롤 스파이** ✅ (2026-09-10)
    - 계층형 TOC (챕터/섹션 접기·펼치기, 하위 헤딩 표시)
@@ -1830,6 +1832,7 @@ npm run deploy
 22. **교재 검색 역색인 (Inverted Index)** ✅ (2026-09-10)
    - `textbook-search.js`: 공백 토큰화 + 2-gram 보조 인덱스 구축, 후보 섹션 교집합 계산
    - 자동 캐싱 (과목 키 변경 시에만 재구축, 반복 검색 성능 향상)
+   - 이야기형 서사 검색 (TS-10, 2026-10-04) — `features.story_textbook` 활성 시 첫 검색 실행에서 storyFile을 지연 로드, `story:start/end` 블록만 추출해 인덱스에 병합. 서사 결과는 '서사' 배지·storyFile 링크로 구분. 트리거는 최초 1회 — 완료 후 동일 검색어 재실행 (resolved promise 재사용 루프 방지)
 
 23. **대시보드 학습 통계/약점 분석** ✅ (2026-09-10)
    - `dashboard.js`: 과목별 정답률 히트맵 (색상 코딩: 80%+ 초록, 60-79% 주황, 40-59% 빨강, <40% 진빨강, 미응시 회색)

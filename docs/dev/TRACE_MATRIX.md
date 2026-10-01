@@ -3,8 +3,8 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: 6df608c76fac0cf3
-> 생성: 2026-10-01 · 원천: SPEC.md(372개 ID) + @spec 태그 + 문서 헤더
+> 입력 해시: fd5efefbe531f4ac
+> 생성: 2026-10-01 · 원천: SPEC.md(376개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
 |----|------|------|
@@ -16,7 +16,7 @@
 | 보고서 | 분석·결과 보고서 | report_archive 헤더 |
 | 출처 | 요구사항의 기원 (법령·시험 규정·사업 문서) | SPEC 부록 "요구사항 출처" 표 |
 
-**커버리지 요약**: 요구사항 372개 — 문서 연결 237 · 소스 연결 352 · 테스트 연결 366 · 보고서 연결 109
+**커버리지 요약**: 요구사항 376개 — 문서 연결 239 · 소스 연결 356 · 테스트 연결 370 · 보고서 연결 109
 
 ---
 
@@ -184,6 +184,7 @@
 | TS-07 | ✅ | 테스트 | — | src/mermaid-render.js<br>src/views/textbook-search.js | tests/dom/study-search.dom.test.js | — | — |
 | TS-08 | ✅ | 테스트 | — | src/views/textbook-search.js | tests/dom/study-search.dom.test.js | — | — |
 | TS-09 | ✅ | 테스트 | — | src/views/textbook-search.js | tests/dom/study-search.dom.test.js | — | — |
+| TS-10 | ✅ | 테스트 | — | src/views/textbook-search.js | tests/dom/story-search.dom.test.js | — | — |
 
 ## 3.10 성분 사전
 
@@ -214,6 +215,7 @@
 | AO-03 | ✅ | 테스트 | DOC-PPL-01<br>DOC-PPL-02<br>DOC-PPL-03<br>DOC-RBK-01 | src/views/reader-audio.js | tests/dom/reader-audio.dom.test.js | — | — |
 | AO-04 | ✅ | 테스트 | DOC-PPL-01<br>DOC-PPL-02<br>DOC-PPL-03<br>DOC-RBK-01 | src/views/reader-audio.js | tests/dom/reader-audio.dom.test.js | — | — |
 | AO-05 | ✅ | 테스트 | DOC-PPL-01<br>DOC-PPL-02<br>DOC-PPL-03<br>DOC-RBK-01 | src/views/reader-audio.js | tests/dom/reader-audio.dom.test.js | — | — |
+| AO-06 | ✅ | 테스트 | — | tools/build/build_audio_manifest.js | tests/unit/audio-manifest.test.js | — | — |
 
 ## 3.13 데이터 백업/복원
 
@@ -534,6 +536,8 @@
 | BP-08 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 2개 | tools/check/audit_card_quality.js | tests/unit/build-pipeline.test.js | — | — |
 | BP-09 | ✅ | 테스트 | DOC-RBK-02<br>DOC-RBK-10 | tools/build/build_doc_bundles.js | tests/unit/multi-exam-gates.test.js | — | — |
 | BP-10 | ✅ | 테스트 | DOC-RBK-02 | tools/build/build_story_textbooks.js | tests/unit/reader-analysis-gates.test.js | — | — |
+| BP-11 | ✅ | 테스트 | DOC-RBK-02 | tools/build/build_story_textbooks.js | tests/unit/story-merge.test.js | — | — |
+| BP-12 | ✅ | 테스트 | DOC-RBK-02 | tools/build/build_story_textbooks.js | tests/unit/story-merge.test.js | — | — |
 
 ## 5.4 콘텐츠 구조
 
@@ -635,7 +639,7 @@
 | DOC-PPL-02 | ref-pipeline/audiobook/README.md | AO-01, AO-02, AO-03, AO-04, AO-05 |
 | DOC-PPL-03 | ref-pipeline/audiobook/AUDIOBOOK_SUMMARY.md | AO-01, AO-02, AO-03, AO-04, AO-05 |
 | DOC-RBK-01 | docs/dev/runbooks/AUDIO_HOSTING_GUIDE.md | AO-01, AO-02, AO-03, AO-04, AO-05, P-01, P-02, P-03, P-04, P-04a, P-05, P-06, P-07, P-08, P-09, P-10, P-11, P-12, P-13 |
-| DOC-RBK-02 | docs/dev/runbooks/COMBO_GENERATION_GUIDE.md | BP-01, BP-02, BP-03, BP-04, BP-05, BP-06, BP-07, BP-08, BP-09, BP-10, DR-02, DR-03, DR-04, DR-05, DR-06, DR-07 |
+| DOC-RBK-02 | docs/dev/runbooks/COMBO_GENERATION_GUIDE.md | BP-01, BP-02, BP-03, BP-04, BP-05, BP-06, BP-07, BP-08, BP-09, BP-10, BP-11, BP-12, DR-02, DR-03, DR-04, DR-05, DR-06, DR-07 |
 | DOC-RBK-03 | docs/dev/runbooks/CONTENT_WORKFLOW.md | BP-01, BP-02, BP-03, BP-04, BP-05, BP-06, BP-07, BP-08, CS-01, CS-02, CS-03, CS-04, CS-05, CS-06, CS-07, CS-08, CS-09, CS-10, DA-01, DA-02, DA-03, DA-04, DA-05, DA-06, DA-07, DA-08, DA-09 |
 | DOC-RBK-04 | docs/dev/runbooks/DEPLOYMENT_GUIDE.md | C-01, C-02, C-03, C-04, C-05, P-01, P-02, P-03, P-04, P-05, P-06, P-07, P-08, P-09, P-10, P-11, P-12, P-13 |
 | DOC-RBK-05 | docs/dev/runbooks/MULTI_MACHINE_SETUP.md | — |

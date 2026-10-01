@@ -26,6 +26,118 @@ const GEN_BANNER = '<!-- ⚠️ 자동 생성 파일 — 직접 편집 금지. �
 // 표준형에 삽입되는 슬롯 마커 — 텍스트 앵커 대신 안정 ID로 서사 삽입 지점을 고정한다
 const SLOT_RE = /^<!-- story:slot:([\w-]+) -->$/;
 
+// 자동 생성 "이야기 회상" 섹션 마커 — 서사 속 시험 사실(수치·조문)의 클로즈 확인 목록.
+// extractPatch가 이 구간을 authored 콘텐츠로 오인해 패치로 되돌리지 않도록 구분한다.
+const RECALL_START = '<!-- recall:start -->';
+const RECALL_END = '<!-- recall:end -->';
+
+// 서사 인용 사실 토큰 — 조문 참조와 수치 단위가 붙은 숫자만 추출한다
+// (내러티브의 시간·감정 숫자는 오탐이 잦아 대상에서 제외).
+const FACT_TOKEN_RE = /제\s?\d+조(?:의\s?\d+)?|제\s?\d+항|제\s?\d+호|제\s?\d+목|\d+(?:\.\d+)?\s?%|\d+(?:\.\d+)?\s?ppm|\d+\s?점|\d+\s?배|\d+\s?종/g;
+
+/** 공백을 제거한 정규화 — '제 3 조'/'제3조' 같은 표기 차이를 흡수한다 */
+const normToken = s => String(s).replace(/\s+/g, '');
+
+/**
+ * 서사 블록 라인들에서 사실 토큰(조문·수치)을 추출한다.
+ * @param {string[]|string} storyLines 서사 블록 라인 배열 또는 텍스트
+ * @returns {string[]} 중복 제거된 토큰 목록 (원문 표기 유지)
+ */
+function extractFactTokens(storyLines) {
+    const text = Array.isArray(storyLines) ? storyLines.join('\n') : String(storyLines);
+    const out = new Set();
+    for (const m of text.matchAll(FACT_TOKEN_RE)) out.add(m[0].trim());
+    return [...out];
+}
+
+/**
+ * 서사-본문 정합 검증 — 서사가 인용한 조문·수치가 표준형 본문에 없으면 경고 목록 반환.
+ * 이야기의 허구적 묘사는 통과시키고, "시험 사실"을 표명한 토큰만 대조한다.
+ * @param {string} stdText 표준형 본문
+ * @param {string[]|string} storyLines 서사 블록 라인 배열 또는 텍스트
+ * @returns {string[]} 본문에 없는 인용 토큰 목록
+ */
+function findStoryInconsistencies(stdText, storyLines) {
+    const body = normToken(stdText);
+    return extractFactTokens(storyLines).filter(t => !body.includes(normToken(t)));
+}
+
+/** 회상 문항 대상이 아닌 서사 줄 판별 (헤딩·경계·주석·이미지·빈 줄) */
+function isRecallSkippableLine(line) {
+    const t = line.trim();
+    return !t || /^#{1,6} /.test(t) || t.includes('┈') || t.startsWith('<!--')
+        || t.startsWith('![') || t.startsWith('|') || t.startsWith('>');
+}
+
+/** 문장을 토큰 주변 ±CTX 글자로 압축한다 */
+function clipAroundToken(sentence, token) {
+    const CTX = 45;
+    const i = sentence.indexOf(token);
+    if (i < 0 || sentence.length <= CTX * 2 + token.length) return sentence.trim();
+    const head = i > CTX ? '…' + sentence.slice(i - CTX, i) : sentence.slice(0, i);
+    const tailEnd = Math.min(sentence.length, i + token.length + CTX);
+    const tail = sentence.slice(i + token.length, tailEnd) + (tailEnd < sentence.length ? '…' : '');
+    return (head + token + tail).trim();
+}
+
+/**
+ * 이야기 회상 문항 추출 — 서사 문장 중 본문과 일치하는 사실 토큰(조문·수치)을
+ * 가진 것만 골라 빈칸형 회상 항목으로 만든다. 토큰당 1개, 최대 maxItems개.
+ * @param {string[]|string} storyLines 서사 블록 라인 배열 또는 텍스트
+ * @param {string} stdText 표준형 본문 (사실 토큰 검증용)
+ * @param {number} [maxItems]
+ * @returns {Array<{sentence:string, token:string}>}
+ */
+function extractRecallItems(storyLines, stdText, maxItems = 3) {
+    const lines = Array.isArray(storyLines) ? storyLines : String(storyLines).split('\n');
+    const body = normToken(stdText);
+    const items = [];
+    const seen = new Set();
+    for (const line of lines) {
+        if (isRecallSkippableLine(line)) continue;
+        const clean = line.replace(/\*\*/g, '').replace(/^\s*[-•]\s*/, '').trim();
+        for (const sentence of clean.split(/(?<=[.!?])\s+/)) {
+            for (const m of sentence.matchAll(FACT_TOKEN_RE)) {
+                const token = m[0].trim();
+                const key = normToken(token);
+                if (seen.has(key) || !body.includes(key)) continue;
+                seen.add(key);
+                items.push({ sentence: clipAroundToken(sentence, token), token });
+                if (items.length >= maxItems) return items;
+            }
+        }
+    }
+    return items;
+}
+
+/** 회상 항목 → 이야기형 파일 말미에 붙는 자동 생성 섹션 (없으면 빈 문자열) */
+function buildRecallSection(items) {
+    if (!items || !items.length) return '';
+    const rows = items.map((it, i) => {
+        const q = it.sentence.replace(it.token, `(____)`);
+        return `- ${i + 1}. "${q}" — 정답: **${it.token}**`;
+    });
+    return [
+        '',
+        RECALL_START,
+        '## 📝 이야기 회상',
+        '',
+        '이 장의 이야기 속 장면으로 시험 핵심을 떠올려 보세요 — 빈칸을 채운 뒤 정답을 확인합니다.',
+        '',
+        ...rows,
+        RECALL_END,
+        '',
+    ].join('\n');
+}
+
+/** 생성물 표식 제거 — GEN_BANNER와 자동 회상 섹션을 떼어내 추출/비교가 authored 부분만 본다 */
+function stripGenerated(text) {
+    const esc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return norm(text)
+        .replace(/[^\n]*<!-- ⚠️ 자동 생성 파일[^\n]*\n?/g, '')
+        .replace(new RegExp(`\\n?${esc(RECALL_START)}[\\s\\S]*?${esc(RECALL_END)}\\n?`, 'g'), '');
+}
+
 function norm(s) { return s.replace(/\r\n/g, '\n'); }
 
 /** 라인 기반 LCS diff — ops: {t:'eq'|'del'|'ins', ai?, bi?} (a=표준, b=비교본) */
@@ -109,7 +221,8 @@ function anchorNeedsN(lines, line) {
  */
 function extractPatch(storyText, stdText) {
     const std = norm(stdText).split('\n');
-    const { body, blocks } = splitStoryBlocks(storyText);
+    // 자동 생성 구간(GEN_BANNER·이야기 회상)은 authored 콘텐츠가 아니므로 비교 전 제거
+    const { body, blocks } = splitStoryBlocks(stripGenerated(storyText));
     const ops = diffLines(std, body);
     const hunks = groupHunks(ops);
 
@@ -325,6 +438,7 @@ function applyPatch(stdText, ops) {
 }
 
 module.exports = {
-    STORY_START, STORY_END, GEN_BANNER, SLOT_RE,
+    STORY_START, STORY_END, GEN_BANNER, SLOT_RE, RECALL_START, RECALL_END, FACT_TOKEN_RE,
     norm, diffLines, splitStoryBlocks, extractPatch, formatPatch, parsePatch, applyPatch,
+    stripGenerated, extractFactTokens, findStoryInconsistencies, extractRecallItems, buildRecallSection,
 };

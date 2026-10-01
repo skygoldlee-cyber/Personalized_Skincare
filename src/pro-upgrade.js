@@ -148,8 +148,8 @@ function _showDialog(innerHtml) {
 
 /** 플랜 비교에 노출하는 기능 목록 — feature-plan.json 키와 매핑 */
 const PLAN_FEATURES = [
-    { key: 'personal_analysis', label: '맞춤학습 (오답 패턴·취약 진술·성적 예측)' },
-    { key: 'story_textbook', label: '이야기형 교재 본문 읽기' },
+    { key: 'personal_analysis', label: '맞춤학습 (예상 점수·취약 분석·주간 리포트)' },
+    { key: 'story_textbook', label: '이야기형 교재 (서사 본문·이야기 회상)' },
     { key: 'mock_exam', label: '실전 모의고사' },
     { key: 'combo_mock', label: 'ㄱㄴㄷ 조합 모의고사' },
     { key: 'combo_set', label: 'ㄱㄴㄷ 조합 문제집' },
@@ -182,6 +182,26 @@ export async function showPlanCompare() {
         return `<li>${esc(f.label)} ${tag}</li>`;
     }).join('');
 
+    // Pro 전용 혜택 — 실제 플래그/플랜에서 유도한 구체 기능 목록 (플레이스홀더 아님)
+    const proBenefits = [];
+    if (isProFeature('personal_analysis')) {
+        proBenefits.push('<li>맞춤학습 리포트 — 복합 예상 점수·실제 결과 보정·취약 단원 추적·주간 리포트 공유</li>');
+    }
+    if (isProFeature('story_textbook')) {
+        proBenefits.push('<li>이야기형 교재 — 서사 삽입 본문·서사 검색·이야기 회상</li>');
+    }
+    if (hasFeature('audiobook')) {
+        proBenefits.push('<li>오디오북 — 과목별 챕터 MP3 청취</li>');
+    }
+    if (isProFeature('cloud_sync')) {
+        proBenefits.push('<li>클라우드 동기화 — 로그인 계정 기준 여러 디바이스 간 학습 상태 공유</li>');
+    }
+    if (limitsRow) proBenefits.push(limitsRow);
+    proBenefits.push('<li>신규 Pro 기능 우선 제공</li>');
+    const benefitsBlock = `
+                <p class="pro-upgrade-sub"><strong>Pro 전용 혜택</strong> — 결제 도입 시 적용</p>
+                <ul>${proBenefits.join('')}</ul>`;
+
     _showDialog(`
         <div class="app-confirm-dialog pro-upgrade-dialog" role="alertdialog" aria-modal="true" aria-labelledby="plan-compare-title">
             <h3 id="plan-compare-title">💎 Free / Pro 안내</h3>
@@ -189,12 +209,7 @@ export async function showPlanCompare() {
             <div class="pro-upgrade-benefits">
                 <p class="pro-upgrade-sub"><strong>기능별 제공 범위</strong> — 현재 플랜 설정 반영</p>
                 <ul>${featureRows}</ul>
-                <p class="pro-upgrade-sub"><strong>Pro 전용 혜택 (예정)</strong></p>
-                <ul>
-                    ${limitsRow}
-                    <li>클라우드 동기화 — 로그인 계정 기준 여러 디바이스 간 학습 상태 공유</li>
-                    <li>오디오북 등 신규 Pro 기능 우선 제공</li>
-                </ul>
+                ${benefitsBlock}
                 <p class="pro-upgrade-sub"><strong>로그인</strong></p>
                 <ul>
                     <li>무료 플랜 — <strong>로그인 불필요</strong>, 모든 데이터는 이 기기에 저장</li>
