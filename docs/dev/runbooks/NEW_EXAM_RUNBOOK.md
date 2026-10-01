@@ -77,7 +77,7 @@ cosmetic의 모든 파일을 복사할 필요는 없다 — food가 최소 구�
 
 ### 기능 플래그 (`exams.json` 엔트리의 `features`)
 
-켜둔 플래그만 UI에 노출된다 (`data-feature` 게이팅). **플래그 ↔ 필수 문서 불변식**이 강제된다 — 플래그를 켰는데 `docs/`에 문서가 없으면 `check:docbundles --check`가 실패한다:
+켜둔 플래그만 UI에 노출된다 (`data-feature` 게이팅). **플래그 ↔ 필수 문서 불변식**이 강제된다 — 플래그를 켰는데 `docs/`에 문서가 없으면 `check:docbundles --check`가 실패한다 (불변식 SSOT: `docs/dev/ARCHITECTURE.md` "시험별 문서 규약" 절):
 
 | 플래그 | 필수 문서 | 기능 |
 |---|---|---|

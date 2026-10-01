@@ -490,6 +490,8 @@ content/
 
 ## 9. 새 교재 적용 체크리스트
 
+> **범위**: 기존 시험에 새 교재를 적용하는 경우. **신규 시험 추가**는 `docs/dev/runbooks/NEW_EXAM_RUNBOOK.md`, **교재 작성 규칙 전체**는 `docs/dev/runbooks/TEXTBOOK_AUTHORING_GUIDE.md`(완결 체크리스트 보유)가 SSOT이다.
+
 ### 9.1 콘텐츠 준비
 
 - [ ] `manifest.json`의 `subjects[].key`/`dir`/`file` 경로가 실제 파일 위치와 일치하는가?
@@ -497,16 +499,14 @@ content/
 - [ ] `manifest.json`의 `uiText`가 새 자격증명/과목명에 맞게 수정되었는가?
 - [ ] 교재 MD 파일의 `#` 헤더가 파일당 1개인가?
 - [ ] 카드 추출을 원하지 않는 `##` 섹션에 제외 마커(`🧭`, `📊` 등)가 있는가?
-- [ ] 표의 첫 번째 열이 용어(term), 두 번째 열이 정의(definition)인가?
-- [ ] 중요 카드에 `🎯 기출` 또는 `📌 중요` 마커가 있는가?
-- [ ] 문제은행 정답 섹션이 `## 🔑 정답 및 교재 근거` 아래에 있는가?
+- [ ] 교재 마크다운 작성 규칙(표 구조·마커·정답 섹션 위치 등)은 TEXTBOOK_AUTHORING_GUIDE의 최종 체크리스트를 따르는가?
 
 ### 9.2 분야 특화
 
-- [ ] `pdf-registry.js`의 참조자료 매핑이 새 교재의 법령/자료에 맞는가?
+- [ ] `references.json`의 참조자료 매핑이 새 교재의 법령/자료에 맞는가? (`pdf-registry.js`·`law-links.js`는 `build:pdf-registry` 생성물 — 직접 편집 금지)
 - [ ] `study-aids.js`의 단위 목록(`%`, `g`, `ml` 등)이 새 분야에 적합한가?
-- [ ] `trainer-calc.js`의 계산 유형이 새 시험의 계산 문제에 맞는가? (해당 시험에 계산 문제가 있는 경우)
-- [ ] `index.html`의 `<title>`과 자격증명이 수정되었는가?
+- [ ] 계산 연습 기능(`features.calcPractice`)이 이 시험에 필요한가? 필요하면 플래그 선언
+- [ ] 브랜딩이 exams.json `title`/`appName`·`manifest.uiText` 선언만으로 해소되는가? (`index.html`·템플릿 `<title>`은 런타임 치환되므로 편집 대상 아님)
 
 ### 9.3 빌드 및 검증
 

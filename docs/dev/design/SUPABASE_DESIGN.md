@@ -503,17 +503,7 @@ select polname, polrelid::regclass from pg_policy;
 3. 저장 + **Enable Custom SMTP** ON → 이후 Templates 편집 가능
 
 1. 대시보드 → **Authentication → Emails** (또는 Email Templates — 대시보드 버전에 따라 SMTP 설정이 이 안의 탭에 있기도 함) → **`Magic link or OTP`** 템플릿 선택
-2. **Content → Body** 영역 클릭 후 아래 권장안 적용. **Body는 HTML**이므로 줄바꿈만 쓰면 한 문단으로 뭉치고 URL도 링크가 안 될 수 있음 — `<a>` 태그 포함 HTML로 작성:
-
-   ```html
-   <h2>Passmula 로그인</h2>
-   <p>앱에 아래 인증 코드를 입력하세요.</p>
-   <p style="font-size:28px;font-weight:700;letter-spacing:6px">{{ .Token }}</p>
-   <p>브라우저에서 이용 중이라면 아래 버튼으로도 로그인할 수 있습니다.<br>
-   (홈 화면 앱에서 로그인 중이면 버튼 대신 코드를 입력하세요)</p>
-   <p><a href="{{ .SiteURL }}/?token_hash={{ .TokenHash }}&type=email">브라우저에서 로그인</a></p>
-   <p>코드와 링크 중 하나만 사용할 수 있으며, 잠시 후 만료됩니다.</p>
-   ```
+2. **Content → Body** 영역 클릭 후 권장안 적용. **Body는 HTML**이므로 줄바꿈만 쓰면 한 문단으로 뭉치고 URL도 링크가 안 될 수 있음 — `<a>` 태그 포함 HTML로 작성. 권장 HTML SSOT: `docs/dev/runbooks/Supabase_Custom_SMTP_MagicLink_OTP_설정가이드.md` §16 "최종 템플릿"
 
    - `{{ .Token }}`·`{{ .TokenHash }}`·`{{ .SiteURL }}`는 발송 시점에 자동 치환 — 실제 값을 가져올 필요 없음
    - 링크 끝 `type=`은 토큰 종류 — `Magic link or OTP`는 `email`, `Confirm signup`은 `signup`. 앱이 이 값을 `verifyOtp`에 전달한다

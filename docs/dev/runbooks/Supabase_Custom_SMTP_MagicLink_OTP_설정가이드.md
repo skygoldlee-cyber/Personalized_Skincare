@@ -156,17 +156,7 @@ Custom SMTP를 활성화한 다음 Supabase에서:
 
 **Content → Body** 영역을 수정합니다.
 
-> ⚠️ **Body는 HTML입니다** — 줄바꿈만 쓴 텍스트는 한 문단으로 뭉쳐 보이고, `<a>` 태그 없는 URL은 클릭이 안 될 수 있습니다. 아래 HTML 권장안을 사용하세요.
-
-```html
-<h2>Passmula 로그인</h2>
-<p>앱에 아래 인증 코드를 입력하세요.</p>
-<p style="font-size:28px;font-weight:700;letter-spacing:6px">{{ .Token }}</p>
-<p>브라우저에서 이용 중이라면 아래 버튼으로도 로그인할 수 있습니다.<br>
-(홈 화면 앱에서 로그인 중이면 버튼 대신 코드를 입력하세요)</p>
-<p><a href="{{ .SiteURL }}/?token_hash={{ .TokenHash }}&type=email">브라우저에서 로그인</a></p>
-<p>코드와 링크 중 하나만 사용할 수 있으며, 잠시 후 만료됩니다.</p>
-```
+> ⚠️ **Body는 HTML입니다** — 줄바꿈만 쓴 텍스트는 한 문단으로 뭉쳐 보이고, `<a>` 태그 없는 URL은 클릭이 안 될 수 있습니다. 권장 HTML은 **§16 최종 템플릿**(SSOT)을 사용하세요.
 
 핵심 변수는 세 가지입니다.
 
