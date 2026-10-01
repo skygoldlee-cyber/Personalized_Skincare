@@ -1,5 +1,5 @@
 // @spec UX-NAV-01,UX-NAV-08,UM-04
-import { describe, it, beforeEach, expect, vi } from 'vitest';
+import { describe, it, beforeEach, afterEach, expect, vi } from 'vitest';
 import { getViewTitles, navigateToView, initViewHashRouting } from '../../src/router.js';
 import { state } from '../../src/state.js';
 
@@ -278,8 +278,14 @@ describe('router.js — DOM 테스트', () => {
             titlesMap: getViewTitles(null),
             handlers: { viewRenderers: {}, stopReaderAudio: vi.fn() }
         });
+        // 종료 가드는 모바일(터치 우선) 환경에서만 동작 — 테스트는 터치 장치로 시뮬레이션
+        const setMobile = (on) => Object.defineProperty(
+            navigator, 'maxTouchPoints', { value: on ? 5 : 0, configurable: true }
+        );
+        beforeEach(() => setMobile(true));
+        afterEach(() => setMobile(false));
 
-        it('루트 뷰 뒤로가기 → 종료 안내 토스트 + 보초 엔트리 재삽입', () => {
+        it('모바일: 루트 뷰 뒤로가기 → 종료 안내 토스트 + 보초 엔트리 재삽입', () => {
             initViewHashRouting(ctx());
             // 루트에서의 뒤로가기 착륙 시뮬레이션 — 기저 뷰 엔트리로 상태 교체 후 popstate
             history.replaceState({ view: 'dashboard-view' }, '', '#/dashboard');
@@ -291,6 +297,15 @@ describe('router.js — DOM 테스트', () => {
             expect(history.state && history.state.exitGuard).toBe(true);
         });
 
+        it('PC(비터치)에서는 종료 가드가 발동하지 않는다 — 토스트·보초 없음', () => {
+            setMobile(false);
+            initViewHashRouting(ctx());
+            expect(history.state && history.state.exitGuard).not.toBe(true);
+            history.replaceState({ view: 'dashboard-view' }, '', '#/dashboard');
+            window.dispatchEvent(new Event('popstate'));
+            expect(document.getElementById('app-toast')).toBeFalsy();
+        });
+
         it('모달이 열려 있으면 종료 가드가 개입하지 않는다 (modal-back 우선)', () => {
             initViewHashRouting(ctx());
             document.body.insertAdjacentHTML('beforeend', '<div id="test-modal"></div>');
@@ -298,6 +313,22 @@ describe('router.js — DOM 테스트', () => {
             window.dispatchEvent(new Event('popstate'));
             expect(document.getElementById('app-toast')).toBeFalsy();
             document.getElementById('test-modal').remove();
+        });
+
+        it('모달 마커가 소비한 popstate는 종료 가드를 발동시키지 않는다 (이미지 확대 닫기 회귀)', async () => {
+            const { setupModalBackHandler, resetModalBackState } = await import('../../src/modal-back.js');
+            setupModalBackHandler();
+            initViewHashRouting(ctx());
+            // 모달 표시 → MutationObserver → modalBack 마커 push (속성 변경만 감시하므로 class 토글로 트리거)
+            document.body.insertAdjacentHTML('beforeend', '<div id="test-zoom-modal" class="is-hidden"></div>');
+            document.getElementById('test-zoom-modal').classList.remove('is-hidden');
+            await new Promise(r => setTimeout(r, 0)); // observer 마이크로태스크 → 마커 삽입
+            history.replaceState({ view: 'dashboard-view' }, '', '#/dashboard');
+            window.dispatchEvent(new Event('popstate')); // 뒤로가기로 모달 닫기
+            expect(document.getElementById('app-toast')).toBeFalsy();
+            expect(document.getElementById('test-zoom-modal').classList.contains('is-hidden')).toBe(true);
+            document.getElementById('test-zoom-modal').remove();
+            resetModalBackState();
         });
     });
 });

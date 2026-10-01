@@ -3,7 +3,7 @@
 import { state } from './state.js';
 import { saveScrollPosition, restoreScrollPosition, registerViewNavigator } from './views/navigation.js';
 import { showToast } from './ui-utils.js';
-import { isAnyModalOpen } from './modal-back.js';
+import { isAnyModalOpen, consumedModalPop } from './modal-back.js';
 
 /**
  * 레지스트리 기반 뷰 타이틀 맵 생성
@@ -181,11 +181,20 @@ function syncViewHash(target) {
    종료시키지 않도록 동일 URL의 보초 엔트리를 쌓는다.
    보초 소비(= 루트에서의 뒤로가기) 시 종료 안내 토스트를 띄우고
    보초를 다시 쌓으며, 짧은 창 안에 반복되면 실제 종료를 허용한다.
-   모달이 열려 있으면 modal-back.js가 소비하므로 여기선 건드리지 않는다.
+   모달이 열려 있거나 방금 모달 마커가 popstate를 소비했으면 건드리지 않는다.
+   데스크톱/PC에서는 동작하지 않는다 — 뒤로가기 종료 경고는
+   OS 제스처로 앱이 바로 닫히는 모바일 PWA에서만 의미가 있다.
    ========================================================= */
 const EXIT_GUARD_WINDOW_MS = 2500;
 let _exitGuardArmedAt = 0;
 let _exitGuardBound = false;
+
+// 종료 가드는 터치 우선(모바일) 환경에서만 활성 — PC 뒤로가기는
+// 앱 종료가 아니라 일반 탐색이므로 경고 토스트가 소음이 된다.
+function _isMobileLike() {
+    return !!((window.matchMedia && window.matchMedia('(pointer: coarse)').matches)
+        || navigator.maxTouchPoints > 1);
+}
 
 function _pushExitGuard() {
     try { history.pushState({ exitGuard: true }, ''); } catch (_) { /* 제한 환경 */ }
@@ -193,7 +202,9 @@ function _pushExitGuard() {
 
 /** popstate 핸들러 — 히스토리 기저(초기 뷰 엔트리 또는 보초) 착륙 감지. */
 function _handleExitGuardPopstate() {
-    if (isAnyModalOpen()) return;
+    // 모달이 떠 있거나, 직전 popstate를 모달 마커가 소비한 경우는
+    // 사용자가 루트를 벗어나려 한 게 아니므로 가드를 발동하지 않는다.
+    if (!_isMobileLike() || isAnyModalOpen() || consumedModalPop()) return;
     const s = history.state;
     // 기저 엔트리 판정 — 뷰 스탬프·보초 마커·(딥링크 직접 진입의) 무스탬프 모두 커버
     const isBase = s ? (s.view === state.currentView || s.exitGuard === true) : true;
@@ -233,7 +244,7 @@ export function initViewHashRouting(ctx) {
         try { history.replaceState({ view: state.currentView }, '', '#/' + slug); }
         catch (_) { /* 제한 환경 무시 */ }
     }
-    _pushExitGuard();
+    if (_isMobileLike()) _pushExitGuard(); // PC에서는 보초 자체를 쌓지 않음
     if (!_exitGuardBound) {
         _exitGuardBound = true;
         window.addEventListener('popstate', _handleExitGuardPopstate);

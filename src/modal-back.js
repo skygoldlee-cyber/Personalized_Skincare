@@ -18,6 +18,7 @@ const SELF_MANAGED_MARKERS = ['manualOverlay', 'examOverlay'];
 
 let _depth = 0;          // 현재 쌓아둔 우리 마커 수 (표시 중인 모달 수와 동기화)
 let _consuming = 0;      // 우리가 스스로 소비한 back()의 popstate 구분 카운터
+let _modalPopAt = 0;     // 모달 마커가 popstate를 소비한 최근 시각 — 종료 가드 오인 방지
 let _observer = null;
 let _popstateBound = false;
 
@@ -109,6 +110,15 @@ export function isAnyModalOpen() {
     return _openModals().length > 0;
 }
 
+/**
+ * 직전 popstate를 모달 마커가 소비했는지 — router.js 종료 가드가
+ * "모달 닫기용 뒤로가기"를 루트 종료 제스처로 오인하지 않게 한다.
+ * (닫기가 동기라도 리스너 순서와 무관하게 판별 가능하도록 타임스탬프 사용)
+ */
+export function consumedModalPop() {
+    return Date.now() - _modalPopAt < 150;
+}
+
 /** 앱 초기화 시 1회 호출 — 속성 감시 + popstate 구독을 설치한다. */
 export function setupModalBackHandler() {
     if (!_observer) {
@@ -132,9 +142,10 @@ export function setupModalBackHandler() {
     if (!_popstateBound) {
         _popstateBound = true;
         window.addEventListener('popstate', () => {
-            if (_consuming > 0) { _consuming--; return; }
+            if (_consuming > 0) { _consuming--; _modalPopAt = Date.now(); return; }
             if (_depth > 0) {
                 _depth--;
+                _modalPopAt = Date.now();
                 _closeTopModal();
             }
         });
@@ -145,4 +156,5 @@ export function setupModalBackHandler() {
 export function resetModalBackState() {
     _depth = 0;
     _consuming = 0;
+    _modalPopAt = 0;
 }

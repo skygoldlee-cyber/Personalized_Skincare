@@ -6,6 +6,13 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-01 PC 뒤로가기 종료 경고 오발화 수정
+
+- **증상**: PC PWA 교재리더에서 삽화 이미지 확대 후 뒤로가기로 닫으면 "뒤로가기를 한 번 더 누르면 종료됩니다" 토스트가 표시됨
+- **원인**: `modal-back.js`가 모달용 `pushState` 마커를 소비하는 popstate를 라우터 종료 가드(`router.js`)가 기저 착륙으로 오인 — `image-zoom` 등 동기 닫기(`is-hidden` 즉시 토글) 모달은 `isAnyModalOpen()` 체크 시점에 이미 닫혀 있어 가드를 통과
+- **수정**: ① modal-back이 모달 마커 소비 시각을 기록(`_modalPopAt` → `consumedModalPop()`)해 라우터가 건너뜀 — 리스너 순서·비동기 닫기와 무관하게 안전 ② 종료 가드를 모바일(터치 우선, `pointer: coarse`/`maxTouchPoints>1`)로 제한 — PC에서는 보초 엔트리도 쌓지 않고 토스트도 표시 안 함
+- 테스트: `router.dom.test.js`에 PC 억제·모달 소비 회귀 케이스 추가, 기존 가드 테스트는 `maxTouchPoints` 시뮬레이션으로 모바일 환경 재현
+
 ## 2026-10-01 UI/UX 개선 7종 (제안 6~12)
 
 - **결과 화면 복습 CTA**: 모의고사 결과 화면에 `오답 복습노트로 이동` 버튼 추가 — `data-args` 딥링크로 `review-view` 직행 (오답은 weak 카드 자동 등록)
