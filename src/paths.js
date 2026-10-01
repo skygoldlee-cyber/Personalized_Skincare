@@ -32,6 +32,9 @@ export const PATHS = {
   // 숫자 연습
   NUMBER_DRILLS: (subjId) => contentPath(`number-drills/${subjId}.json`),
 
+  // 수치 암기 훈련 (핵심 수치 마스터 — features.limitsTrainer)
+  LIMITS_TRAINER: () => contentPath('limits-trainer.json'),
+
   // 학습 안내서
   get STUDY_GUIDE() { return contentPath('docs/학습안내서.md'); },
 

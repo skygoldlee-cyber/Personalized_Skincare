@@ -31,9 +31,10 @@ import { state } from '../../src/state.js';
 import {
     initTrainer, exitTrainerSubView,
     startLimitsTrainer, nextLimitsQuestion,
-    startCalcPractice, submitCalcAnswer,
-    startIngredientsChallenge,
 } from '../../src/views/trainer.js';
+import { startCalcPractice, submitCalcAnswer } from '../../src/views/trainer-calc-practice.js';
+import { startIngredientsChallenge } from '../../src/views/trainer-ingredients.js';
+import { DataLoader } from '../../src/data-loader.js';
 import { openWeakReview } from '../../src/views/trainer-drills.js';
 import { recordStatementJudgments } from '../../src/statement-tracker.js';
 import { STORAGE_KEYS } from '../../src/storage-keys.js';
@@ -46,16 +47,28 @@ describe('스마트 훈련소 — 수치·계산·원료·취약 리뷰', () => 
         return t.replace(/\s*(이하|이상)\s*$/, '').split(unit).join('').trim();
     }
 
+    // 수치 훈련 데이터는 limits-trainer.json 콘텐츠 파일 — fetch 스텁으로 주입
+    const LIMITS_FIXTURE = [
+        { category: '보존제 사용한도', key: '테스트성분A', value: '1.0', unit: '%', condition: '최대 한도', explanation: '설명A' },
+        { category: '안전성 기준', key: '테스트성분B', value: '20', unit: '㎍/g', condition: '허용 한도', explanation: '설명B' },
+    ];
+
     beforeEach(() => {
         localStorage.clear();
         resetStudyState();
         loadIndexHtml();
         vi.clearAllMocks();
+        vi.stubGlobal('fetch', vi.fn((url) => {
+            if (String(url).includes('limits-trainer.json')) {
+                return Promise.resolve({ ok: true, json: () => Promise.resolve(LIMITS_FIXTURE) });
+            }
+            return Promise.resolve({ ok: false, status: 404 });
+        }));
     });
 
-    it('initTrainer → 메뉴 표시 + 서브 패널 전부 숨김 (재진입 초기화)', () => {
+    it('initTrainer → 메뉴 표시 + 서브 패널 전부 숨김 (재진입 초기화)', async () => {
         // 먼저 서브뷰를 연 뒤 초기화
-        startLimitsTrainer();
+        await startLimitsTrainer();
         expect(isVisible('trainer-limits-panel')).toBe(true);
 
         initTrainer();
@@ -65,8 +78,8 @@ describe('스마트 훈련소 — 수치·계산·원료·취약 리뷰', () => 
             .forEach(id => expect(el(id).classList.contains('is-hidden')).toBe(true));
     });
 
-    it('수치 훈련 → 문제·4지선다 렌더, 정답 클릭 → 정답 피드백', () => {
-        startLimitsTrainer();
+    it('수치 훈련 → 문제·4지선다 렌더, 정답 클릭 → 정답 피드백', async () => {
+        await startLimitsTrainer();
 
         const cur = state.trainer.limits.shuffledData[0];
         expect(el('limits-progress-indicator').textContent).toContain('1 /');
@@ -87,8 +100,8 @@ describe('스마트 훈련소 — 수치·계산·원료·취약 리뷰', () => 
         opts.forEach(b => expect(b.disabled).toBe(true));
     });
 
-    it('수치 훈련 오답 → incorrect 표시 + 정답 하이라이트 + solvedList 기록', () => {
-        startLimitsTrainer();
+    it('수치 훈련 오답 → incorrect 표시 + 정답 하이라이트 + solvedList 기록', async () => {
+        await startLimitsTrainer();
         const cur = state.trainer.limits.shuffledData[0];
         const opts = el('limits-options-container').querySelectorAll('.limits-opt-btn');
         const wrongBtn = [...opts].find(b => limitsOptValue(b, cur.unit) !== cur.value);
@@ -102,8 +115,8 @@ describe('스마트 훈련소 — 수치·계산·원료·취약 리뷰', () => 
         expect(state.trainer.limits.solvedList[0].correct).toBe(false);
     });
 
-    it('수치 훈련 완주 → 결과 화면(훈련 완료·정답률)', () => {
-        startLimitsTrainer();
+    it('수치 훈련 완주 → 결과 화면(훈련 완료·정답률)', async () => {
+        await startLimitsTrainer();
         const total = state.trainer.limits.shuffledData.length;
         for (let i = 0; i < total; i++) nextLimitsQuestion();
 
@@ -155,12 +168,13 @@ describe('스마트 훈련소 — 수치·계산·원료·취약 리뷰', () => 
         expect(state.trainer.calc.totalSolved).toBe(0);
     });
 
-    it('원료 챌린지 → 안전성 판별 객관식 렌더 + 정답 채점 (approved/banned만 시딩해 choice 확정)', () => {
-        window.INGREDIENTS_DATA = [
+    it('원료 챌린지 → 안전성 판별 객관식 렌더 + 정답 채점 (approved/banned만 시딩해 choice 확정)', async () => {
+        // 지식DB 데이터셋은 registry.knowledge 스키마로 해석 — DataLoader 캐시에 직접 주입
+        DataLoader._knowledge = { ingredients: [
             { name: '글리세린', engName: 'Glycerin', type: 'approved', category: '보습제' },
             { name: '금지원료X', engName: 'Banned X', type: 'banned', category: '금지' },
-        ];
-        startIngredientsChallenge();
+        ] };
+        await startIngredientsChallenge();
 
         expect(isVisible('trainer-ingredients-panel')).toBe(true);
         const qs = state.trainer.ingredients.shuffledQuestions;
@@ -177,9 +191,10 @@ describe('스마트 훈련소 — 수치·계산·원료·취약 리뷰', () => 
         expect(el('ing-feedback-title').textContent).toContain('정답');
     });
 
-    it('원료 DB 없음 → 경고 토스트 + 메뉴 유지, 크래시 없음 (E/X)', () => {
-        startIngredientsChallenge();
-        expect(showToast).toHaveBeenCalledWith(expect.stringContaining('원료 데이터'), 'warning');
+    it('지식DB 없음 → 경고 토스트 + 메뉴 유지, 크래시 없음 (E/X)', async () => {
+        DataLoader._knowledge = {}; // loadDictionary가 빈 결과 반환하도록 캐시만 비움
+        await startIngredientsChallenge();
+        expect(showToast).toHaveBeenCalledWith(expect.stringContaining('지식 데이터'), 'warning');
         expect(state.trainer.ingredients.shuffledQuestions.length).toBe(0);
         expect(el('trainer-menu-panel').classList.contains('is-hidden')).toBe(false);
     });

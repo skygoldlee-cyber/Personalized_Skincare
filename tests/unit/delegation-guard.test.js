@@ -67,6 +67,9 @@ const WINDOW_BRIDGE_RE = /window\.([A-Za-z_$][\w$]*)\s*=/g;
 const REGISTRY_BLOCK_RE = /const DELEGATED_HANDLERS = \{([\s\S]*?)\};/;
 // 블록 내 // 주석을 제거한 뒤, `키,` `키:` `메서드(` 형태의 식별자를 모두 수집
 const REGISTRY_KEY_RE = /([A-Za-z_$][\w$]*)\s*(?:,|:|\()/g;
+// LAZY_MODULE_HANDLERS 테이블(지연 로딩 모듈의 네임드 export)의 '이름' 문자열도 브리지로 인정
+const LAZY_BLOCK_RE = /const LAZY_MODULE_HANDLERS = \[([\s\S]*?)\];/;
+const LAZY_NAME_RE = /'([A-Za-z_$][\w$]*)'/g;
 
 test('shipped HTML에 인라인 on*= 이벤트 핸들러가 없다 (CSP 차단 방지)', () => {
     const offenders = [];
@@ -117,6 +120,12 @@ test('모든 data-click / data-input 핸들러는 window에 브리지되어 있�
         REGISTRY_KEY_RE.lastIndex = 0;
         let k;
         while ((k = REGISTRY_KEY_RE.exec(block))) bridged.add(k[1]);
+    }
+    const lazyMatch = appText.match(LAZY_BLOCK_RE);
+    if (lazyMatch) {
+        LAZY_NAME_RE.lastIndex = 0;
+        let n;
+        while ((n = LAZY_NAME_RE.exec(lazyMatch[1]))) bridged.add(n[1]);
     }
 
     // 3) 교차 검증

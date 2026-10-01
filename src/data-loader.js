@@ -56,7 +56,7 @@ export const DataLoader = {
 
     /**
      * 활성 시험의 레지스트리 확보 (비기본 시험은 번들을 동적 로드).
-     * 기본 시험은 index.html의 정적 <script src="data/exams/cosmetic/registry.js">가 이미 제공한다.
+     * 기본 시험은 index.html의 정적 <script src="{dataRoot}/registry.js">가 이미 제공한다.
      */
     async ensureRegistry() {
         const exam = this.exam || getActiveExam();

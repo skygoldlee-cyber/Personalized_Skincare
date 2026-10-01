@@ -13,6 +13,7 @@ import { trapFocus } from './ui-utils.js';
 import { safeGetItem, safeSetItem } from './state.js';
 import { STORAGE_KEYS } from './storage-keys.js';
 import { trackAction } from './usage-stats.js';
+import { hasFeature } from './exam-context.js';
 
 /** 스토어 오류가 무료 한도 초과인지 판별 */
 function isFreeLimitError(error) {
@@ -158,8 +159,22 @@ const PLAN_FEATURES = [
 
 /** Free/Pro 기능 비교 안내 모달 — 설정의 '플랜 안내'·계정 모달에서 연다.
  * feature-plan.json의 현재 값을 반영하므로 플랜 전환 시 문구가 어긋나지 않는다. */
-export function showPlanCompare() {
+export async function showPlanCompare() {
     trackAction('plan_compare');
+    // 저장 한도 혜택은 Formula OS 기능 보유 시험에서만 노출 — 한도 수치는
+    // 각 스토어의 상수에서 유도 (도메인 모듈은 지연 로딩으로 초기 번들 미포함)
+    let limitsRow = '';
+    if (hasFeature('formula')) {
+        try {
+            const [fs, cs, ml, bs] = await Promise.all([
+                import('./formula-store.js'),
+                import('./customer-store.js'),
+                import('./material-ledger.js'),
+                import('./batch-store.js'),
+            ]);
+            limitsRow = `<li>저장 한도 무제한 — 무료 플랜: My 포뮬러 ${fs.FORMULA_LIMIT_FREE} · 고객 ${cs.CUSTOMER_LIMIT_FREE} · 원료 ${ml.MATERIAL_LIMIT_FREE} · 조제 기록 ${bs.BATCH_LIMIT_FREE}</li>`;
+        } catch (e) { /* 한도 표기 생략 — 모달 자체는 표시 */ }
+    }
     const featureRows = PLAN_FEATURES.map(f => {
         const tag = isProFeature(f.key)
             ? '<span class="pro-badge">PRO</span>'
@@ -176,7 +191,7 @@ export function showPlanCompare() {
                 <ul>${featureRows}</ul>
                 <p class="pro-upgrade-sub"><strong>Pro 전용 혜택 (예정)</strong></p>
                 <ul>
-                    <li>저장 한도 무제한 — 무료 플랜: My 포뮬러 5 · 고객 20 · 원료 30 · 조제 기록 50</li>
+                    ${limitsRow}
                     <li>클라우드 동기화 — 로그인 계정 기준 여러 디바이스 간 학습 상태 공유</li>
                     <li>오디오북 등 신규 Pro 기능 우선 제공</li>
                 </ul>

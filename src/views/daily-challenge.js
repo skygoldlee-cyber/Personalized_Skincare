@@ -8,6 +8,7 @@ import { shuffle } from '../utils.js';
 import { showToast, showConfirm } from '../ui-utils.js';
 import { STORAGE_KEYS, dailyCompletedKey } from '../storage-keys.js';
 import { getWeeklyGoalProgress } from '../study-tracker.js';
+import { hasFeature } from '../exam-context.js';
 
 /* =======================================================
    🧩 일일 5분 데일리 챌린지 (Daily 5-Min Challenge) & Streak
@@ -115,6 +116,10 @@ export function startDailyChallenge() {
     }
     
     const loaderPromises = DataLoader.getSubjectList().map(s => DataLoader.loadSubject(s.key));
+    // 지식DB 분류 문항용 데이터셋도 함께 로드 (스키마 미선언 시험은 무시)
+    if (hasFeature('dictionary')) {
+        loaderPromises.push(DataLoader.loadDictionary().catch(() => []));
+    }
     Promise.all(loaderPromises).then(() => {
         _startDailyChallengeImpl();
     }).catch(err => {
@@ -161,36 +166,37 @@ function _startDailyChallengeImpl() {
         });
     });
     
-    // 3. 배합 계산 문제 1개
-    const w = [100, 200, 300][Math.floor(Math.random() * 3)];
-    const cVal = [1, 2, 3, 5][Math.floor(Math.random() * 4)];
-    const formulaWeight = (w * cVal) / 100;
-    qPack.push({
-        type: 'short',
-        question: `[실전 계산] 베이스 오일 ${w}g에 보존 성분 ${cVal}%를 배합하여 제품을 조제하려고 합니다. 첨가해야 할 성분의 중량은 몇 g인가요? (소수점 둘째자리까지 정답 인정)`,
-        correct: String(formulaWeight.toFixed(2)),
-        explanation: `계산 공식: 중량 = (전체 중량 * 배합 %) / 100 = (${w} * ${cVal}) / 100 = ${formulaWeight}g`
-    });
+    // 3. 농도 계산 문제 1개 — calcPractice 기능 시험만 (도메인 시나리오 문구)
+    if (hasFeature('calcPractice')) {
+        const w = [100, 200, 300][Math.floor(Math.random() * 3)];
+        const cVal = [1, 2, 3, 5][Math.floor(Math.random() * 4)];
+        const formulaWeight = (w * cVal) / 100;
+        qPack.push({
+            type: 'short',
+            question: `[실전 계산] 베이스 용액 ${w}g에 활성 성분 ${cVal}%를 배합하여 제품을 만들려고 합니다. 첨가해야 할 성분의 중량은 몇 g인가요? (소수점 둘째자리까지 정답 인정)`,
+            correct: String(formulaWeight.toFixed(2)),
+            explanation: `계산 공식: 중량 = (전체 중량 * 배합 %) / 100 = (${w} * ${cVal}) / 100 = ${formulaWeight}g`
+        });
+    }
     
-    // 4. 원료 안전성 판별 1개
-    const db = typeof window.INGREDIENTS_DATA !== 'undefined' ? window.INGREDIENTS_DATA : [];
-    if (db.length > 0) {
+    // 4. 지식DB 분류 판별 1개 — registry.knowledge 스키마의 global로 데이터셋 해석
+    const kGlobal = (DataLoader.registry && DataLoader.registry.knowledge && DataLoader.registry.knowledge.global) || 'INGREDIENTS_DATA';
+    const db = /** @type {any[]} */ (/** @type {any} */ (window)[kGlobal]) || [];
+    const kSchema = (DataLoader.registry && DataLoader.registry.knowledge) || {};
+    const badgeField = (kSchema.badge && kSchema.badge.field) || 'type';
+    const badgeLabels = (kSchema.badge && kSchema.badge.labels) || {};
+    const unit = kSchema.entityUnit || '항목';
+    // 분류 판별 문항은 badge 필드와 라벨 맵이 있는 데이터셋에서만 생성한다
+    if (db.length > 0 && Object.keys(badgeLabels).length > 1 && db.some(i => i && i[badgeField] !== undefined)) {
         const ing = db[Math.floor(Math.random() * db.length)];
-        let correctText = '';
-        if (ing.type === 'approved') correctText = '🟢 사용 가능 원료';
-        else if (ing.type === 'restricted') correctText = '🟡 사용상의 제한이 필요한 원료 (보존제/자외선차단제 등)';
-        else correctText = '🔴 사용할 수 없는 원료 (배합 금지)';
-        
+        const correctText = badgeLabels[ing[badgeField]] || (kSchema.badge && kSchema.badge.defaultLabel) || String(ing[badgeField]);
+        const options = Object.values(badgeLabels);
         qPack.push({
             type: 'choice',
-            question: `[원료 안전성] 다음 성분명 "${ing.name}"은(는) 화장품 원료 고시 기준상 어느 그룹에 속하나요?`,
+            question: `[${unit} 분류] 다음 항목 "${ing.name}"은(는) 기준상 어느 그룹에 속하나요?`,
             correct: correctText,
-            options: [
-                '🟢 사용 가능 원료',
-                '🟡 사용상의 제한이 필요한 원료 (보존제/자외선차단제 등)',
-                '🔴 사용할 수 없는 원료 (배합 금지)'
-            ],
-            explanation: `성분 "${ing.name}"은(는) ${correctText} 입니다. 한도: ${ing.limit || '제한 없음'}`
+            options,
+            explanation: `"${ing.name}" — 분류: ${correctText}${ing.limit ? ` · 기준: ${ing.limit}` : ''}`
         });
     }
     

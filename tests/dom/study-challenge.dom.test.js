@@ -22,6 +22,7 @@ import {
     stubRegistry, resetStudyState, storedJson,
 } from './helpers.js';
 import { state, safeSetItem, safeGetItem } from '../../src/state.js';
+import { DataLoader } from '../../src/data-loader.js';
 import {
     updateStreakAndDailyUI, startDailyChallenge, submitDailyCardAnswer,
     submitDailyShortAnswer, nextDailyStep, closeDailyModal,
@@ -46,6 +47,15 @@ function setupDailyData() {
         ],
     };
     stubRegistry([subject]);
+    // 계산·지식DB 문항은 calcPractice/dictionary 플래그 + knowledge 스키마로 게이트된다
+    window.EXAMS_LIST = { exams: [{
+        id: 'cosmetic', default: true,
+        features: { calcPractice: true, ingredients: true, dictionary: true },
+    }] };
+    DataLoader.registry.knowledge = {
+        global: 'INGREDIENTS_DATA', registryKey: 'ingredients', entityUnit: '원료',
+        badge: { field: 'type', labels: { approved: '사용가능 원료', restricted: '한도 원료', banned: '사용불가 원료' } },
+    };
     window.INGREDIENTS_DATA = [{ name: '페녹시에탄올', type: 'restricted', limit: '1%' }];
 }
 

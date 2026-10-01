@@ -9,7 +9,6 @@ import { TIMING } from '../config/timing.js';
 import { renderDashboard } from './dashboard.js';
 import { loadFlashcards, renderFlashcard } from './flashcard.js';
 import { startQuiz, submitQuizAnswer, nextQuizQuestion, renderReviewList, startWeakFocusQuiz } from './quiz.js';
-import { submitCalcAnswer, submitIngAnswer } from './trainer.js';
 import { filterDictionary } from './dictionary.js';
 import { showGlobalLoading, hideGlobalLoading, showToast, showConfirm } from '../ui-utils.js';
 import { simState, renderSimQuestion, submitExam } from './exam-simulator.js';
@@ -373,27 +372,27 @@ export function setupEventListeners(enhanceDataClickAccessibility) {
         startQuiz();
     });
 
-    // 계산 연습기 엔터키 제출
+    // 계산 연습기 엔터키 제출 — 도메인 모듈은 지연 로딩이므로 window 브리지 경유
     const calcInput = document.getElementById('calc-answer-input');
     if (calcInput) {
         calcInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 const submitBtn = /** @type {HTMLButtonElement|null} */ (document.getElementById('submit-calc-btn'));
                 if (submitBtn && !submitBtn.disabled) {
-                    submitCalcAnswer();
+                    /** @type {any} */ (window).submitCalcAnswer?.();
                 }
             }
         });
     }
 
-    // 원료 챌린지 주관식 엔터키 제출
+    // 지식DB 챌린지 주관식 엔터키 제출 — 동일하게 지연 브리지 경유
     const ingInput = document.getElementById('ing-answer-input');
     if (ingInput) {
         ingInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 const submitBtn = /** @type {HTMLButtonElement|null} */ (document.getElementById('submit-ing-btn'));
                 if (submitBtn && !submitBtn.disabled) {
-                    submitIngAnswer();
+                    /** @type {any} */ (window).submitIngAnswer?.();
                 }
             }
         });

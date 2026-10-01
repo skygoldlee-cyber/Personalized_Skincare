@@ -32,18 +32,23 @@ beforeEach(async () => {
     localStorage.clear();
     loadIndexHtml();
     overlay()?.remove();
+    // 저장 한도 혜택 행은 hasFeature('formula') 게이트 — Formula OS 보유 시험 컨텍스트 주입
+    window.EXAMS_LIST = { exams: [{
+        id: 'cosmetic', default: true, name: '테스트 시험',
+        features: { formula: true },
+    }] };
 });
 
 describe('플랜 안내 모달 (showPlanCompare)', () => {
     it('기능별 PRO/무료 태그를 feature-plan.json 값대로 렌더링한다', async () => {
         await stubPlan({ personal_analysis: 'pro', story_textbook: 'pro', mock_exam: 'free' });
-        showPlanCompare();
+        await showPlanCompare();
         const items = [...overlay().querySelectorAll('li')].map(li => li.textContent);
         // 개인화 분석·이야기형은 PRO, 모의고사는 무료 제공
         expect(items.some(t => t.includes('맞춤학습') && t.includes('PRO'))).toBe(true);
         expect(items.some(t => t.includes('이야기형') && t.includes('PRO'))).toBe(true);
         expect(items.some(t => t.includes('실전 모의고사') && t.includes('무료 제공'))).toBe(true);
-        // Pro 전용 혜택 — 멀티디바이스 동기화·한도 무제한 안내
+        // Pro 전용 혜택 — 멀티디바이스 동기화·한도 무제한 안내 (formula 시험에서 스토어 상수 유도)
         expect(overlay().textContent).toContain('여러 디바이스 간 학습 상태 공유');
         expect(overlay().textContent).toContain('무제한');
         // 로그인 정책 — 무료 로그인 불필요 / Pro 로그인 필요
@@ -53,7 +58,7 @@ describe('플랜 안내 모달 (showPlanCompare)', () => {
 
     it('플랜이 free로 바뀌면 해당 기능 태그가 무료 제공으로 전환된다', async () => {
         await stubPlan({ personal_analysis: 'free', story_textbook: 'free' });
-        showPlanCompare();
+        await showPlanCompare();
         const items = [...overlay().querySelectorAll('li')].map(li => li.textContent);
         expect(items.some(t => t.includes('맞춤학습') && t.includes('무료 제공'))).toBe(true);
         expect(items.some(t => t.includes('이야기형') && t.includes('무료 제공'))).toBe(true);
@@ -67,7 +72,7 @@ describe('플랜 안내 모달 (showPlanCompare)', () => {
 
     it('클라우드 동기화 행이 feature-plan.json의 cloud_sync 값을 반영한다', async () => {
         await stubPlan({ cloud_sync: 'pro' });
-        showPlanCompare();
+        await showPlanCompare();
         const items = [...overlay().querySelectorAll('li')].map(li => li.textContent);
         expect(items.some(t => t.includes('클라우드 동기화') && t.includes('PRO'))).toBe(true);
     });

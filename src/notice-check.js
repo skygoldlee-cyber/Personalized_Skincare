@@ -1,9 +1,10 @@
-// notice-check.js — 식약처 고시 감지 배너 (Formula OS 최초 진입 시)
+// notice-check.js — 참조 법령·고시 감지 배너 (Formula OS 최초 진입 시)
 // @spec FO-24,RR-19
 //
-// 구조: GitHub Actions(주1회)가 law.go.kr 오픈API로 최신 고시를 조회해
-// content/exams/<id>/notice_status.json에 기록 → 앱은 raw.githubusercontent.com에서
-// 읽어 baseline(번들 원료 DB 기준)보다 최신이면 배너로 알림.
+// 감시 대상은 시험별 references.json의 referenceLaw/noticeCore에서 유도된다
+// (cosmetic은 식약처 고시). GitHub Actions(주1회)가 law.go.kr 오픈API로
+// 최신본을 조회해 content/exams/<id>/notice_status.json에 기록 → 앱은
+// raw.githubusercontent.com에서 읽어 baseline보다 최신이면 배너로 알림.
 // 하루 1회 스로틀 + 닫은 고시는 같은 시행일까지 억제. 오프라인/실패 시 무시.
 
 import { getItem, setItem } from './storage.js';
@@ -91,7 +92,7 @@ function renderBanner(latest, extraDocs) {
   const dismissed = getItem(STORAGE_KEYS.NOTICE_DISMISSED_DATE) || '';
   if (dismissed && latest.effectiveDate && dismissed >= latest.effectiveDate) return;
   const notice = latest.notice || '신규 고시';
-  const label = latest.ruleName || '식약처 고시';
+  const label = latest.ruleName || '참조 법령·고시';
   const eff = latest.effectiveDate ? `(${latest.effectiveDate} 시행)` : '';
   const extra = extraDocs?.length
     ? `<br><small>함께 갱신된 문서: ${extraDocs.map(d => escapeHTML(d)).join(', ')} — '고시 정보 보기'에서 문서별 비교를 확인하세요.</small>`

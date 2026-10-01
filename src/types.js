@@ -263,6 +263,7 @@
  * @property {ResourcesMeta}   [resources]
  * @property {Object}          [integratedExam] 통합 시험 규칙 (passAverage·subjectFailBelow 등)
  * @property {Object.<string, {title?: string, subtitle?: string}>} [uiText] 뷰별 UI 텍스트 오버라이드 (manifest.uiText 패스스루)
+ * @property {Object.<string, string[]>} [synonyms] 주관식 채점 유사어 사전 (manifest.synonyms 패스스루 — checkShortAnswer)
  */
 
 /**

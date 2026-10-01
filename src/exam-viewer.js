@@ -23,6 +23,8 @@ import { escapeHTML } from './sanitize.js';
 import { parseMarkdown } from './markdown-parser.js';
 import { resolveRefPath } from './pdf-registry.js';
 import { contentPath, dataPath } from './exam-context.js';
+import { getJSON, setJSON } from './storage.js';
+import { STORAGE_KEYS } from './storage-keys.js';
 import { CACHE } from './config/cache.js';
 import { proFeatureNotice } from './pro-upgrade.js';
 import { renderMermaidIn } from './mermaid-render.js';
@@ -249,23 +251,20 @@ body.exam-open{overflow:hidden;}
         return el;
     }
 
-    /* ---- 이어보기: 문서별 마지막 스크롤 위치 (localStorage, 세션 간 유지) ---- */
-    const POS_KEY = 'exam_view_pos_v1';
+    /* ---- 이어보기: 문서별 마지막 스크롤 위치 (시험 스코프 진도 키, 세션 간 유지) ---- */
     const POS_MIN = 300; // 상단 근처(300px 미만)는 이어보기 대상이 아님
     let _resumeTimer = null;
 
     function _readPosMap() {
-        try { return JSON.parse(localStorage.getItem(POS_KEY) || '{}') || {}; }
-        catch (e) { return {}; }
+        const map = getJSON(STORAGE_KEYS.EXAM_VIEW_POS, {});
+        return (map && typeof map === 'object') ? map : {};
     }
 
     function _savePos(mdPath, pos) {
-        try {
-            const map = _readPosMap();
-            if (pos > POS_MIN) map[mdPath] = pos;
-            else delete map[mdPath];
-            localStorage.setItem(POS_KEY, JSON.stringify(map));
-        } catch (e) { /* 저장 실패는 무시 */ }
+        const map = _readPosMap();
+        if (pos > POS_MIN) map[mdPath] = pos;
+        else delete map[mdPath];
+        setJSON(STORAGE_KEYS.EXAM_VIEW_POS, map);
     }
 
     function _hideResumeChip() {

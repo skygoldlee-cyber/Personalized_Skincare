@@ -1,4 +1,4 @@
-// app.js - Passmula (맞춤형화장품 조제관리사) 애플리케이션 로직
+// app.js - Passmula 멀티시험 학습 플랫폼 애플리케이션 로직
 // @spec S-02,S-03,S-08,UX-NAV-01,UX-PWA-01,UX-PWA-05,PF-10
 import { state, loadProgress } from './state.js';
 import { shuffle } from './utils.js';
@@ -58,13 +58,6 @@ import {
     exitTrainerSubView,
     startLimitsTrainer,
     nextLimitsQuestion,
-    startCalcPractice,
-    generateCalcQuestion,
-    submitCalcAnswer,
-    toggleSolutionAccordion,
-    startIngredientsChallenge,
-    submitIngAnswer,
-    nextIngQuestion,
 } from './views/trainer.js';
 import {
     openOxDrillSetup,
@@ -98,85 +91,63 @@ import {
     saveGoalSettings
 } from './views/study-calendar.js';
 import { checkMfdsNotice, checkMfdsNoticeNow, dismissMfdsNotice, viewMfdsNoticeStatus } from './notice-check.js';
-import {
-    initFormulaView,
-    exitFormulaSubView,
-    openFormulaList,
-    openFormulaCalc,
-    openIngredientDict,
-    formulaNew,
-    formulaOpen,
-    formulaDuplicate,
-    formulaDelete,
-    formulaCalcAddRow,
-    formulaCalcRemoveRow,
-    formulaCalcSave,
-    formulaAddIngredient,
-    formulaRecAdd,
-    formulaRecAddBase,
-    formulaLoadBase,
-    formulaRuleAdd,
-    formulaRuleRemove,
-    formulaRuleReset,
-    formulaRuleExport,
-    formulaRuleImport,
-    formulaSortPhase,
-    formulaStepAdd,
-    formulaStepRemove,
-    formulaPrint,
-    formulaExportJson,
-    formulaCardExport,
-    formulaImportJson,
-    formulaAllergyAdd,
-    formulaAllergyRemove,
-    formulaCustLoad,
-    formulaCustSaveAs
-} from './views/formula.js';
-import {
-    openBatchPanel,
-    batchNew,
-    batchEdit,
-    batchSave,
-    batchOpen,
-    batchDelete,
-    batchFormulaChanged,
-    batchCustChanged,
-    batchPrintRecord,
-    batchPrintLabel,
-    batchPrintGuide,
-    batchFilterReset,
-    batchExportCsv,
-} from './views/formula-batch.js';
-import {
-    openCustomerPanel,
-    custNew,
-    custEdit,
-    custSave,
-    custOpen,
-    custDelete,
-    custLogAdd,
-    custAllergyAdd,
-    custAllergyRemove,
-    custImportCsv,
-    custExportCsv,
-    custCsvTemplate,
-} from './views/formula-customer.js';
-import {
-    openMaterialPanel,
-    matNew,
-    matEdit,
-    matSave,
-    matDelete,
-    matImportCsv,
-    matExportCsv,
-    matCsvTemplate,
-} from './views/formula-material.js';
-import {
-    openCompliancePanel,
-    compToggle,
-    compReset,
-    compOpenLaw,
-} from './views/formula-compliance.js';
+
+/* Formula OS 도메인 클러스터 — 지연 로딩 (features.formula 미보유 시험은 이 번들을 다운로드하지 않는다).
+   첫 핸들러 호출 시에만 import() 되며 캐시된다. data-click 디스패치는 window를 조회하므로
+   아래 LAZY_MODULE_HANDLERS가 DELEGATED_HANDLERS에 이름을 등록해 브리지한다. */
+const _lazyImport = (load) => { let p = null; return () => (p ??= load()); };
+const loadFormulaModule = _lazyImport(() => import('./views/formula.js'));
+const loadFormulaBatchModule = _lazyImport(() => import('./views/formula-batch.js'));
+const loadFormulaCustomerModule = _lazyImport(() => import('./views/formula-customer.js'));
+const loadFormulaMaterialModule = _lazyImport(() => import('./views/formula-material.js'));
+const loadFormulaComplianceModule = _lazyImport(() => import('./views/formula-compliance.js'));
+const loadCalcPracticeModule = _lazyImport(() => import('./views/trainer-calc-practice.js'));
+const loadIngredientsChallengeModule = _lazyImport(() => import('./views/trainer-ingredients.js'));
+
+/** 지연 모듈의 네임드 export를 data-click 핸들러로 변환 */
+const _lazyFn = (load, name) => async (...args) => {
+    const m = /** @type {any} */ (await load());
+    return m[name](...args);
+};
+
+/** @type {Array<[() => Promise<any>, string[]]>} */
+const LAZY_MODULE_HANDLERS = [
+    [loadFormulaModule, [
+        'exitFormulaSubView', 'openFormulaList', 'openFormulaCalc', 'openIngredientDict',
+        'formulaNew', 'formulaOpen', 'formulaDuplicate', 'formulaDelete',
+        'formulaCalcAddRow', 'formulaCalcRemoveRow', 'formulaCalcSave', 'formulaAddIngredient',
+        'formulaRecAdd', 'formulaRecAddBase', 'formulaLoadBase',
+        'formulaRuleAdd', 'formulaRuleRemove', 'formulaRuleReset',
+        'formulaRuleExport', 'formulaRuleImport',
+        'formulaSortPhase', 'formulaStepAdd', 'formulaStepRemove',
+        'formulaPrint', 'formulaExportJson', 'formulaCardExport', 'formulaImportJson',
+        'formulaAllergyAdd', 'formulaAllergyRemove', 'formulaCustLoad', 'formulaCustSaveAs',
+    ]],
+    [loadFormulaBatchModule, [
+        'openBatchPanel', 'batchNew', 'batchEdit', 'batchSave', 'batchOpen', 'batchDelete',
+        'batchFormulaChanged', 'batchCustChanged', 'batchPrintRecord', 'batchPrintLabel',
+        'batchPrintGuide', 'batchFilterReset', 'batchExportCsv',
+    ]],
+    [loadFormulaCustomerModule, [
+        'openCustomerPanel', 'custNew', 'custEdit', 'custSave', 'custOpen', 'custDelete',
+        'custLogAdd', 'custAllergyAdd', 'custAllergyRemove',
+        'custImportCsv', 'custExportCsv', 'custCsvTemplate',
+    ]],
+    [loadFormulaMaterialModule, [
+        'openMaterialPanel', 'matNew', 'matEdit', 'matSave', 'matDelete',
+        'matImportCsv', 'matExportCsv', 'matCsvTemplate',
+    ]],
+    [loadFormulaComplianceModule, [
+        'openCompliancePanel', 'compToggle', 'compReset', 'compOpenLaw',
+    ]],
+    // 도메인 특화 훈련 모듈 — features.calcPractice / features.ingredients 게이트
+    [loadCalcPracticeModule, [
+        'startCalcPractice', 'generateCalcQuestion', 'submitCalcAnswer', 'toggleSolutionAccordion',
+    ]],
+    [loadIngredientsChallengeModule, [
+        'startIngredientsChallenge', 'submitIngAnswer', 'nextIngQuestion',
+    ]],
+];
 import { recordStudyActivity } from './study-tracker.js';
 import {
     exportData,
@@ -421,13 +392,13 @@ function setupNavigation() {
         'formula-view': () => {
             checkMfdsNotice(); // 식약처 신규 고시 감지 배너 (비차단, 실패 무시)
             showGlobalLoading('Formula OS 데이터를 불러오는 중입니다...');
-            DataLoader.loadIngredients().then(() => {
-                hideGlobalLoading();
-                initFormulaView();
+            loadFormulaModule().then(m => {
+                DataLoader.loadIngredients()
+                    .catch(() => showToast('원료 데이터를 불러오지 못했습니다.', 'error'))
+                    .finally(() => { hideGlobalLoading(); m.initFormulaView(); });
             }).catch(() => {
                 hideGlobalLoading();
-                showToast('원료 데이터를 불러오지 못했습니다.', 'error');
-                initFormulaView();
+                showToast('Formula OS를 불러오지 못했습니다.', 'error');
             });
         },
         'calendar-view': () => {
@@ -589,10 +560,9 @@ const DELEGATED_HANDLERS = {
     // 뷰 전환 (data-click="switchView" data-arg="<view-id>") — 딥링크 공용
     switchView, gotoWeakReview,
     // 훈련소 (제한값·계산·원료·뽀모도로)
+    // 계산 연습·지식DB 챌린지 핸들러는 LAZY_MODULE_HANDLERS에 등록 (도메인 모듈 지연 로딩)
     exitTrainerSubView, startLimitsTrainer, nextLimitsQuestion,
-    startCalcPractice, generateCalcQuestion, submitCalcAnswer,
-    startIngredientsChallenge, nextIngQuestion, submitIngAnswer,
-    toggleSolutionAccordion, togglePomodoro, resetPomodoro,
+    togglePomodoro, resetPomodoro,
     // 대시보드/리뷰/백업 (과거 브리지 누락으로 배포판에서 죽어 있던 핸들러 포함)
     startSubjectStudy, startSubjectQuiz, startSubjectReader, startDueReview,
     removeWeakCard, setReviewFilter, printReviewNotes,
@@ -608,30 +578,8 @@ const DELEGATED_HANDLERS = {
     submitDailyCardAnswer, submitDailyShortAnswer,
     // 사전/시험 전환
     clearDictSearch, setDictFilter, dictExportCsv, showExamSelect, selectExamAction,
-    // Formula OS (배합 계산·My 포뮬러)
+    // Formula OS (배합 계산·My 포뮬러) — 모듈은 지연 로딩, 핸들러명만 등록 (LAZY_MODULE_HANDLERS)
     dismissMfdsNotice, checkMfdsNoticeNow, viewMfdsNoticeStatus,
-    openFormulaList, openFormulaCalc, openIngredientDict, exitFormulaSubView,
-    formulaNew, formulaOpen, formulaDuplicate, formulaDelete,
-    formulaCalcAddRow, formulaCalcRemoveRow, formulaCalcSave, formulaAddIngredient,
-    formulaRecAdd, formulaRecAddBase, formulaLoadBase,
-    formulaRuleAdd, formulaRuleRemove, formulaRuleReset,
-    formulaRuleExport, formulaRuleImport,
-    formulaSortPhase, formulaStepAdd, formulaStepRemove,
-    formulaPrint, formulaExportJson, formulaCardExport, formulaImportJson,
-    formulaAllergyAdd, formulaAllergyRemove, formulaCustLoad, formulaCustSaveAs,
-    // Formula OS — 조제 기록(배치)
-    openBatchPanel, batchNew, batchEdit, batchSave, batchOpen, batchDelete,
-    batchFormulaChanged, batchCustChanged, batchPrintRecord, batchPrintLabel, batchPrintGuide,
-    batchFilterReset, batchExportCsv,
-    // Formula OS — 고객 관리
-    openCustomerPanel, custNew, custEdit, custSave, custOpen, custDelete,
-    custLogAdd, custAllergyAdd, custAllergyRemove,
-    custImportCsv, custExportCsv, custCsvTemplate,
-    // Formula OS — 원료 장부
-    openMaterialPanel, matNew, matEdit, matSave, matDelete,
-    matImportCsv, matExportCsv, matCsvTemplate,
-    // Formula OS — 법규 준수 체크리스트
-    openCompliancePanel, compToggle, compReset, compOpenLaw,
     showIngredientsChangelog,
     // 학습/실무 UI 모드
     toggleUiMode, toggleStudyTools,
@@ -677,6 +625,12 @@ const DELEGATED_HANDLERS = {
     // (모듈-대-모듈이라 window에 걸어야 bare typeof가 해석됨)
     updateGlobalStats,
 };
+// 지연 로딩 도메인 모듈의 핸들러 등록 — 첫 호출 시 모듈을 import() 한다
+LAZY_MODULE_HANDLERS.forEach(([load, names]) => {
+    names.forEach(name => {
+        /** @type {any} */ (DELEGATED_HANDLERS)[name] = _lazyFn(load, name);
+    });
+});
 Object.assign(window, DELEGATED_HANDLERS);
 
 

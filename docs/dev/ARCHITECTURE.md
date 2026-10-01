@@ -794,6 +794,19 @@ const state = {
 - `examIdToSubjectId(examId)` — 모의고사/기출 시험지 id → 소유 과목 키 매핑 (약점 항목의 과목 귀속에 사용)
 - `resolveLegacySubjectKey(key)` — 레거시 진도 키(`subject1` 등) → 현재 과목 키 정규화. charts.js·recommendations.js 공용 — 규칙 변경 시 이 함수만 수정
 
+### 기능 게이팅의 이원 구조 (도메인 가용성 vs 플랜 권한)
+
+기능 노출은 **직교하는 두 축**으로 결정된다 — 혼동 금지:
+
+| 축 | 소스 | 판정 | 질문 |
+|----|------|------|------|
+| **도메인 가용성** | `content/exams.json`의 `features` | `hasFeature(key)` + `data-feature` 속성 → `applyFeatureFlags()` | "이 **시험**이 이 기능을 제공하는가?" (시험별 on/off) |
+| **플랜 권한** | 루트 `feature-plan.json`의 `features` | `isProFeature(key)` + `data-pro-feature` 배지 → `loadFeaturePlan()`/`refreshProBadges()` | "이 기능이 **무료/Pro** 중 어디인가?" (전역 과금 정책) |
+
+- `features`(exams.json) 키 예: `dictionary`, `formula`, `limitsTrainer`, `audiobook` — 도메인 존재 여부. 시험 전환 시 레이아웃 자체가 달라진다
+- `feature-plan.json` 키 예: `mock_exam`, `story_textbook`, `cloud_sync` — 과금/번들 정책. 배지·안내 모달만 달라지고 기능은 체험 기간 중 모두 동작 (`proFeatureNotice`, `hasProEntitlement()`)
+- 두 키 네임스페이스는 독립 — 같은 기능이라도 양쪽에 둘 다 등록 가능(시험별 off + 플랜상 pro 조합). 신규 기능 추가 시: 도메인 특화면 `exams.json.features`에, 과금 대상이면 `feature-plan.json`에 — 목적이 다르므로 양쪽을 같은 키로 묶지 않는다
+
 ### 시험 선택/전환
 - `src/views/exam-select.js` — 시험 선택 카드 뷰(`exam-select-view`). `current_exam` 미설정 **+ 등록 시험 2개 이상**일 때만 홈으로 표시 — 단일 시험 레지스트리에서는 기본 시험으로 바로 진입해 피커 생략
 - 데스크톱 사이드바 푸터 + 모바일 더보기 시트의 "시험 전환" 버튼 → `showExamSelect()` → 카드 선택 시 `selectExam()` → 리로드. 버튼도 등록 시험 2개 이상일 때만 노출
@@ -813,6 +826,7 @@ const state = {
 1. `content/exams/<id>/`에 `manifest.json` + `references.json` + `교재/` + `문제은행/` 배치
    - 참조 법령이 있으면: `content/lawdb.json`에 법령 엔트리 추가(공유 법령 재사용) + `references.json`의 `lawRefs`(링크 대상·우선순위)와 `noticeCore`(고시 감시 기준 문서) 설정 → `build:pdf-registry`가 `src/law-links.js` 재생성
    - 지식DB(사전)가 있으면: `knowledge/<key>.json` 데이터셋(예: `content/exams/food/knowledge/additives.json`) + `manifest.knowledge`에 엔티티 스키마·`registryKey` 선언 + `features.dictionary` 활성화 — 빌드가 `<key>_data.<hash>.js` 번들 생성, `DataLoader.loadDictionary()`가 온디맨드 로드, `dictionary.js`가 스키마 드리븐 렌더
+   - 주관식 채점 유사어가 있으면: `manifest.synonyms`에 `{정답: [동의어…]}` 선언 → 생성 `registry.synonyms`를 `checkShortAnswer()`가 조회 (코드 내장 사전 없음 — 시험별 용어 집합)
 2. `content/exams.json`에 엔트리 추가 (`contentRoot`/`dataRoot`/`registryBundle`/`registryGlobal` + 기능 플래그)
 3. `npm.cmd run check:content -- --build` — 빌드 + 통합 검증 일괄. **앱 로직 변경 불필요**
    - 상세 설계: `design/MULTI_EXAM_DB_DESIGN.md` (법령DB·지식DB 3계층 구조)
@@ -825,7 +839,7 @@ const state = {
 | `참조자료/` | 참조 문서 | `ref_md/과목N/` 변환본 + 실물 PDF 폴더(과목N·공통·법령고시 등) + PDF 해시 매니페스트(pdf_hashes.json) + `_archive/` |
 | `knowledge/` | 지식DB SSOT | `manifest.knowledge` 선언 시 `<key>.json` (`{meta, items, bundleFields?, emitMd?}`) — cosmetic `ingredients.json`은 참조자료 `원료/*.md` 표의 GENERATED-TABLE 영역까지 재생성 |
 | `docs/` | 앱 내 문서 | 학습안내서 등 MD → docs_md 번들 대상 |
-| `number-drills/`, `교재/glossary/`, `audiobook/` | 기능 콘텐츠 | 해당 `features` 플래그 시험만 보유 |
+| `number-drills/`, `limits-trainer.json`, `교재/glossary/`, `audiobook/` | 기능 콘텐츠 | 해당 `features` 플래그 시험만 보유 (`limits-trainer.json` = 수치 훈련 문항 배열, `limitsTrainer` 플래그와 쌍) |
 | `notice_status.json`, `law_verified.json`, `combo_blocklist.json`, `report/` | 도구 산출물 | 고시 감시·법령 검증·combo 감사가 루트에 기록 — 스캐폴드가 미리 만들지 않음(첫 실행 시 생성) |
 
 ---
@@ -1376,7 +1390,8 @@ app-fallback.js 폴링 시작 (400ms 간격, 15s 데드라인)
   - `data-input="핸들러명"` (range 슬라이더 등 input 이벤트용, `el.value`를 인자로 전달)
   - [`src/app.js`](../../src/app.js)의 `resolveDelegatedHandler()`가 `window`에서 점 표기 네임스페이스(`ManualViewer.openManual` 등)로 함수를 찾아 실행
   - 위임 참조되는 모든 핸들러는 `app.js` 하단에서 `window.<name> = <name>;`로 브리지 노출 필수 (ESM 모듈 스코프 격리 해결)
-  - **회귀 가드**: [`tests/unit/delegation-guard.test.js`](../../tests/unit/delegation-guard.test.js)가 인라인 `on*=` 속성 잔존 및 `window` 브리지 누락을 자동 검출
+  - **도메인 모듈 지연 로딩**: `features` 게이트 대상 기능(Formula OS 뷰·계산/원료 챌린지 등)은 `app.js`의 `LAZY_MODULE_HANDLERS`에 `핸들러명: ['./모듈.js', 'export명']`으로 등록 — 첫 `data-click` 호출 시점에만 `import()`되므로 미보유 시험은 모듈을 파싱·평가하지 않음. 이때 `window.<name>` 브리지는 프록시 함수(`_lazyFn`)가 대신한다
+  - **회귀 가드**: [`tests/unit/delegation-guard.test.js`](../../tests/unit/delegation-guard.test.js)가 인라인 `on*=` 속성 잔존 및 `window` 브리지 누락을 자동 검출 (지연 테이블은 문자열 항목까지 스캔)
 
 ---
 

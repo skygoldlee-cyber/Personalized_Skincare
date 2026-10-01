@@ -434,6 +434,32 @@ function main() {
                 allImports.add(resolved + '::' + name);
             }
         }
+        // LAZY_MODULE_HANDLERS 지연 로딩 테이블 — const loadX = _lazyImport(() => import('경로'))
+        // 로더를 찾아 테이블 [로더, ['이름'...]] 쌍의 이름을 해당 모듈의 사용으로 집계
+        const lazyLoaders = new Map();
+        const LAZY_LOADER_RE = /const\s+([A-Za-z_$][\w$]*)\s*=\s*_lazyImport\(\(\)\s*=>\s*import\(\s*'([^']+)'\s*\)\)/g;
+        let lm;
+        while ((lm = LAZY_LOADER_RE.exec(src)) !== null) {
+            const resolved = resolveModule(importerDir, lm[2]);
+            if (resolved) lazyLoaders.set(lm[1], resolved);
+        }
+        if (lazyLoaders.size > 0) {
+            const lazyMatch = /LAZY_MODULE_HANDLERS\s*=\s*\[([\s\S]*?)\];/.exec(src);
+            if (lazyMatch) {
+                const PAIR_RE = /([A-Za-z_$][\w$]*),\s*\[([^\]]*)\]/g;
+                const NAME_RE = /'([A-Za-z_$][\w$]*)'/g;
+                let pm;
+                while ((pm = PAIR_RE.exec(lazyMatch[1])) !== null) {
+                    const lazyResolved = lazyLoaders.get(pm[1]);
+                    if (!lazyResolved) continue;
+                    let nm;
+                    NAME_RE.lastIndex = 0;
+                    while ((nm = NAME_RE.exec(pm[2])) !== null) {
+                        allImports.add(lazyResolved + '::' + nm[1]);
+                    }
+                }
+            }
+        }
     }
 
     // 의도된 공개 API 억제: 선언부 바로 위 주석에 'keep-export' 가 있으면 경고 제외

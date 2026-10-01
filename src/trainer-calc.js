@@ -27,7 +27,7 @@ export function buildCalcQuestion() {
         
         qData = {
             type: '원료 배합량',
-            question: `농도 <strong>${C1}%</strong>인 특정 성분의 원료액을 사용하여 최종 혼합제품 <strong>${W}g</strong> 내에 해당 성분 농도가 <strong>${C2}%</strong>가 되도록 배합하고자 한다. 이때 투입해야 하는 원료액의 양은 몇 <strong>g</strong>인가? (소수점 둘째 자리까지 구하시오)`,
+            question: `농도 <strong>${C1}%</strong>인 특정 성분의 원료액을 사용하여 최종 혼합물 <strong>${W}g</strong> 내에 해당 성분 농도가 <strong>${C2}%</strong>가 되도록 배합하고자 한다. 이때 투입해야 하는 원료액의 양은 몇 <strong>g</strong>인가? (소수점 둘째 자리까지 구하시오)`,
             answer: answer.toFixed(2),
             unit: 'g',
             solution: `■ 공식: 추가 원료량(g) = (목표 성분량 / 원료 농도)<br>
@@ -50,7 +50,7 @@ export function buildCalcQuestion() {
         
         qData = {
             type: '혼합 평균 농도',
-            question: `농도가 <strong>${C1}%</strong>인 세럼 내용물 <strong>${W1}g</strong>과 농도가 <strong>${C2}%</strong>인 크림 내용물 <strong>${W2}g</strong>을 한 용기에 담고 균일하게 혼합하였다. 혼합된 화장품의 최종 성분 농도는 몇 <strong>%</strong>인가? (소수점 셋째 자리에서 반올림하여 둘째 자리까지 구하시오)`,
+            question: `농도가 <strong>${C1}%</strong>인 용액 A <strong>${W1}g</strong>과 농도가 <strong>${C2}%</strong>인 용액 B <strong>${W2}g</strong>을 한 용기에 담고 균일하게 혼합하였다. 혼합된 용액의 최종 성분 농도는 몇 <strong>%</strong>인가? (소수점 셋째 자리에서 반올림하여 둘째 자리까지 구하시오)`,
             answer: totalC.toFixed(2),
             unit: '%',
             solution: `■ 공식: 최종 농도(%) = (총 성분 중량 / 총 내용물 중량) * 100<br>
@@ -70,7 +70,7 @@ export function buildCalcQuestion() {
         
         qData = {
             type: '한도 내 최대 추가량',
-            question: `기본 화장품 내용물 <strong>${W}g</strong>에 법적 사용 제한 성분(최대 배합 한도 <strong>${L}%</strong>, 순도 100%)을 배합 한도를 꽉 채워 맞춤형화장품을 조제하고자 한다. 이때 추가할 수 있는 사용 제한 성분의 최대 중량은 몇 <strong>g</strong>인가? (소수점 셋째 자리에서 반올림하여 둘째 자리까지 구하시오)`,
+            question: `기본 용액 <strong>${W}g</strong>에 사용 제한 성분(최대 배합 한도 <strong>${L}%</strong>, 순도 100%)을 배합 한도를 꽉 채워 혼합물을 제조하고자 한다. 이때 추가할 수 있는 사용 제한 성분의 최대 중량은 몇 <strong>g</strong>인가? (소수점 셋째 자리에서 반올림하여 둘째 자리까지 구하시오)`,
             answer: answer.toFixed(2),
             unit: 'g',
             solution: `■ 공식: 추가 원료 중량을 x로 둘 때, x / (기존내용물중량 + x) = 한도비율 / 100<br>
@@ -91,11 +91,11 @@ export function buildCalcQuestion() {
         
         qData = {
             type: '희석 농도',
-            question: `베이스 에센스 내용물 <strong>${W1}g</strong>에 보습 활성 원료 <strong>${W2}g</strong>을 추가하여 혼합하였다. 이때 최종 조제된 에센스 내의 보습 활성 원료의 성분 농도(%)는 얼마인가? (소수점 셋째 자리에서 반올림하여 둘째 자리까지 구하시오)`,
+            question: `베이스 용액 <strong>${W1}g</strong>에 활성 성분 <strong>${W2}g</strong>을 추가하여 혼합하였다. 이때 최종 혼합물 내의 활성 성분 농도(%)는 얼마인가? (소수점 셋째 자리에서 반올림하여 둘째 자리까지 구하시오)`,
             answer: conc.toFixed(2),
             unit: '%',
-            solution: `■ 공식: 최종 농도(%) = (추가 원료 중량 / 총 내용물 중량) * 100<br>
-1. 총 내용물 중량 = 베이스 중량(${W1}g) + 원료 중량(${W2}g) = ${totalW}g<br>
+            solution: `■ 공식: 최종 농도(%) = (추가 성분 중량 / 총 혼합물 중량) * 100<br>
+1. 총 혼합물 중량 = 베이스 중량(${W1}g) + 성분 중량(${W2}g) = ${totalW}g<br>
 2. 대입 식 = (${W2}g / ${totalW}g) * 100 = <strong>${conc.toFixed(2)}%</strong>`
         };
     }

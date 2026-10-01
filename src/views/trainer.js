@@ -3,46 +3,20 @@
 import { state } from '../state.js';
 import { esc } from '../sanitize.js';
 import { shuffle } from '../utils.js';
-import { vibrate, HAPTIC } from '../ui-utils.js';
-import {
-    startCalcPractice,
-    generateCalcQuestion,
-    submitCalcAnswer,
-    toggleSolutionAccordion
-} from './trainer-calc-practice.js';
-import {
-    startIngredientsChallenge,
-    submitIngAnswer,
-    nextIngQuestion
-} from './trainer-ingredients.js';
+import { vibrate, HAPTIC, showToast } from '../ui-utils.js';
+import { PATHS } from '../paths.js';
+import { DataLoader } from '../data-loader.js';
 import { updateDueBadges } from './trainer-drills.js';
-
-// 추출된 모듈의 함수 재수출 (app.js 호환성 유지)
-export {
-    startCalcPractice,
-    generateCalcQuestion,
-    submitCalcAnswer,
-    toggleSolutionAccordion,
-    startIngredientsChallenge,
-    submitIngAnswer,
-    nextIngQuestion
-};
 
 /* =======================================================
    🧠 주관식 유사어 채점 엔진 (Smart Synonym Matcher)
+   유사어 사전은 시험별 도메인 용어라 manifest.synonyms → registry.synonyms로
+   주입된다 (미선언 시험은 빈 사전 — 정확 일치·조사 제거만 적용).
    ======================================================= */
-const SYNONYMS_DICTIONARY = {
-    '식품의약품안전처장': ['식약처장', '식품의약품안전처', '식약처'],
-    '식약처장': ['식품의약품안전처장', '식품의약품안전처', '식약처'],
-    '우수화장품제조및품질관리기준': ['cgmp', '씨지에이치피', '씨지엠피', '우수화장품제조기준'],
-    'cgmp': ['우수화장품제조및품질관리기준', '우수화장품제조기준', '씨지에이치피', '씨지엠피'],
-    '피부장벽': ['장벽', '피부 장벽'],
-    '천연원료': ['천연 원료'],
-    '유기농원료': ['유기농 원료'],
-    '자외선차단제': ['자차', '자외선차단'],
-    '기능성화장품': ['기능성'],
-    '맞춤형화장품': ['맞춤형']
-};
+function _getSynonyms() {
+    const reg = DataLoader.registry;
+    return (reg && reg.synonyms && typeof reg.synonyms === 'object') ? reg.synonyms : {};
+}
 
 const cleanForCompare = (str) => {
     if (!str) return '';
@@ -89,8 +63,8 @@ export function checkShortAnswer(userInput, correctAnswer) {
         if (splitCorrects.some(val => removeJosa(cleanUser) === removeJosa(val))) return true;
     }
     
-    // 유사어 사전 대조
-    for (const [key, synonyms] of Object.entries(SYNONYMS_DICTIONARY)) {
+    // 유사어 사전 대조 (registry.synonyms — 시험별 manifest 선언)
+    for (const [key, synonyms] of Object.entries(_getSynonyms())) {
         const cleanKey = cleanForCompare(key);
         if (cleanCorrect === cleanKey || splitCorrects.includes(cleanKey)) {
             if (synonyms.map(s => cleanForCompare(s)).includes(cleanUser)) {
@@ -103,40 +77,39 @@ export function checkShortAnswer(userInput, correctAnswer) {
 }
 
 /* =======================================================
-   ⚖️ 화장품 법령 수치 훈련소 (Limits Trainer)
+   ⚖️ 핵심 수치 훈련소 (Limits Trainer)
+   데이터: {contentRoot}/limits-trainer.json — 시험별 콘텐츠, features.limitsTrainer 플래그로 게이트
    ======================================================= */
-const LIMITS_DB = [
-    { category: '보존제 사용한도', key: '페녹시에탄올', value: '1.0', unit: '%', condition: '최대 한도', explanation: '페녹시에탄올의 사용 한도는 최종 화장품 제품에서 1.0% 이하입니다.' },
-    { category: '보존제 사용한도', key: '벤조익애씨드 및 그 염류', value: '0.5', unit: '%', condition: '씻어내지 않는 제품 기준', explanation: '벤조익애씨드 및 그 염류의 사용 한도는 씻어내지 않는 제품 기준 0.5% 이하입니다. (씻어내는 제품은 2.5% 이하)' },
-    { category: '보존제 사용한도', key: '살리실릭애씨드(살리실산)', value: '0.5', unit: '%', condition: '기본 화장품 기준', explanation: '살리실릭애씨드 및 그 염류의 기본 사용 한도는 0.5% 이하이며, 영유아용 및 만 13세 이하 어린이 제품에는 사용이 제한됩니다. (샴푸 등 씻어내는 제품은 제외)' },
-    { category: '자외선차단제 사용한도', key: '티타늄디옥사이드', value: '25.0', unit: '%', condition: '배합 한도', explanation: '자외선 차단 성분인 티타늄디옥사이드의 최종 제품 내 사용 한도는 25.0% 이하입니다.' },
-    { category: '자외선차단제 사용한도', key: '징크옥사이드', value: '25.0', unit: '%', condition: '배합 한도', explanation: '자외선 차단 성분인 징크옥사이드의 최종 제품 내 사용 한도는 25.0% 이하입니다.' },
-    { category: '유통화장품 안전성 기준', key: '납(일반 제품)', value: '20', unit: '㎍/g', condition: '허용 한도', explanation: '유통화장품 안전관리 기준에서 일반 화장품의 납 검출 한도는 20 ㎍/g 이하입니다.' },
-    { category: '유통화장품 안전성 기준', key: '납(점토 원료 분말 제품)', value: '50', unit: '㎍/g', condition: '허용 한도', explanation: '점토(Clay)를 원료로 사용한 분말 제품의 경우 납 검출 허용 한도는 50 ㎍/g 이하입니다.' },
-    { category: '유통화장품 안전성 기준', key: '비소', value: '10', unit: '㎍/g', condition: '허용 한도', explanation: '유통화장품 안전관리 기준에서 비소의 검출 허용 한도는 10 ㎍/g 이하입니다.' },
-    { category: '유통화장품 안전성 기준', key: '수은', value: '1', unit: '㎍/g', condition: '허용 한도', explanation: '유통화장품 안전관리 기준에서 수은의 검출 허용 한도는 1 ㎍/g 이하입니다.' },
-    { category: '유통화장품 안전성 기준', key: '안티몬', value: '10', unit: '㎍/g', condition: '허용 한도', explanation: '유통화장품 안전관리 기준에서 안티몬의 검출 허용 한도는 10 ㎍/g 이하입니다.' },
-    { category: '유통화장품 안전성 기준', key: '카드뮴', value: '5', unit: '㎍/g', condition: '허용 한도', explanation: '유통화장품 안전관리 기준에서 카드뮴의 검출 허용 한도는 5 ㎍/g 이하입니다.' },
-    { category: '유통화장품 안전성 기준', key: '디옥산', value: '100', unit: '㎍/g', condition: '허용 한도', explanation: '유통화장품 안전관리 기준에서 제조 공정상 생성되는 디옥산의 허용 한도는 100 ㎍/g 이하입니다.' },
-    { category: '유통화장품 안전성 기준', key: '메탄올(일반 제품)', value: '0.2', unit: '%', condition: 'v/v 기준', explanation: '일반 유통화장품의 메탄올 허용 한도는 0.2% (v/v) 이하입니다.' },
-    { category: '유통화장품 안전성 기준', key: '메탄올(물휴지)', value: '0.002', unit: '%', condition: 'v/v 기준', explanation: '물휴지의 메탄올 허용 한도는 0.002% (v/v) 이하로 훨씬 엄격합니다.' },
-    { category: '유통화장품 안전성 기준', key: '포름알데히드(일반 제품)', value: '2000', unit: '㎍/g', condition: '허용 한도', explanation: '유통화장품 안전관리 기준에서 포름알데히드의 검출 허용 한도는 2,000 ㎍/g 이하입니다.' },
-    { category: '유통화장품 안전성 기준', key: '프탈레이트류(합계)', value: '100', unit: '㎍/g', condition: '허용 한도', explanation: '디부틸프탈레이트(DBP), 디에틸헥실프탈레이트(DEHP) 등 프탈레이트류 합계의 허용 한도는 100 ㎍/g 이하입니다.' },
-    { category: '미생물 한도 기준', key: '총호기성생균수(일반 제품)', value: '1000', unit: '개/g(mL)', condition: '허용 한도', explanation: '일반 화장품에서 세균 및 진균수의 합(총호기성생균수)은 1,000개/g(mL) 이하이어야 합니다.' },
-    { category: '미생물 한도 기준', key: '총호기성생균수(영유아 및 눈화장용)', value: '500', unit: '개/g(mL)', condition: '허용 한도', explanation: '영유아용 및 눈화장용 제품류의 총호기성생균수 기준은 500개/g(mL) 이하로 엄격합니다.' },
-    { category: '천연 및 유기농 기준', key: '천연화장품 천연 유래 원료 함량', value: '95', unit: '%', condition: '중량 기준', explanation: '천연화장품은 전체 중량 기준 천연 및 천연 유래 원료 함량이 95% 이상이어야 합니다.' },
-    { category: '천연 및 유기농 기준', key: '유기농화장품 유기농 원료 함량', value: '10', unit: '%', condition: '중량 기준', explanation: '유기농화장품은 천연/천연유래 원료 95% 이상 조건과 더불어 유기농 원료가 전체 중량 기준 10% 이상 포함되어야 합니다.' },
-    { category: '기능성화장품 고시 기준', key: '나이아신아마이드(미백)', value: '2.0 ~ 5.0', unit: '%', condition: '고시 함량', explanation: '식약처 미백 고시 성분인 나이아신아마이드의 사용 함량 기준은 2.0% ~ 5.0% 입니다.' },
-    { category: '기능성화장품 고시 기준', key: '알부틴(미백)', value: '2.0 ~ 5.0', unit: '%', condition: '고시 함량', explanation: '식약처 미백 고시 성분인 알부틴의 사용 함량 기준은 2.0% ~ 5.0% 입니다.' },
-    { category: '기능성화장품 고시 기준', key: '아데노신(주름개선)', value: '0.04', unit: '%', condition: '고시 함량', explanation: '식약처 주름개선 고시 성분인 아데노신의 사용 함량 기준은 0.04% 입니다.' }
-];
+let _limitsDbCache = null;
 
-export function startLimitsTrainer() {
+/**
+ * 수치 훈련 데이터 로드 — 활성 시험의 limits-trainer.json.
+ * 시험별 콘텐츠 (features.limitsTrainer). 파일이 없으면 빈 배열.
+ * @returns {Promise<Array<{category:string,key:string,value:string,unit:string,condition:string,explanation:string}>>}
+ */
+async function loadLimitsDb() {
+    if (_limitsDbCache) return _limitsDbCache;
+    try {
+        const resp = await fetch(PATHS.LIMITS_TRAINER());
+        const data = resp.ok ? await resp.json() : [];
+        _limitsDbCache = Array.isArray(data) ? data : [];
+    } catch (e) {
+        _limitsDbCache = [];
+    }
+    return _limitsDbCache;
+}
+
+export async function startLimitsTrainer() {
+    const db = await loadLimitsDb();
+    if (db.length === 0) {
+        showToast('이 시험에는 수치 훈련 데이터가 없습니다.', 'info');
+        return;
+    }
     state.trainer.activeSubView = 'limits';
     state.trainer.limits.currentIndex = 0;
     state.trainer.limits.correctCount = 0;
     state.trainer.limits.solvedList = [];
-    state.trainer.limits.shuffledData = shuffle(LIMITS_DB);
+    state.trainer.limits.shuffledData = shuffle(db);
     
     document.getElementById('trainer-menu-panel')?.classList.add('is-hidden');
     document.getElementById('trainer-limits-panel')?.classList.remove('is-hidden');

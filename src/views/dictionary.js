@@ -1,7 +1,7 @@
 // src/views/dictionary.js - 지식DB(엔티티) 검색 사전 뷰 로직 및 그리드 스페이서 가상 스크롤 구현
 // @spec DI-01~05,PF-09
 // 스키마 드리븐 — manifest.knowledge → registry.knowledge가 엔티티 필드·필터·CSV를 선언한다.
-// registry.knowledge가 없으면 DEFAULT_KNOWLEDGE(화장품 원료 스키마)로 폴백한다.
+// registry.knowledge 미선언 시험은 사전 뷰가 "데이터셋 미설정" 안내로 처리된다 (화장품 폴백 없음).
 import { state } from '../state.js';
 import { esc } from '../sanitize.js';
 import { getChosung } from '../utils.js';
@@ -58,11 +58,15 @@ const DEFAULT_KNOWLEDGE = {
     }
 };
 
-/** 활성 시험의 지식DB 스키마 — registry.knowledge 우선, 없으면 기본값. */
+/**
+ * 활성 시험의 지식DB 스키마 — registry.knowledge 선언에 DEFAULT_KNOWLEDGE 기본값 병합.
+ * knowledge 미선언 시험은 null 반환 → 사전 뷰가 "데이터셋 미설정" 안내로 처리한다.
+ * @returns {Object|null}
+ */
 function dictSchema() {
     const reg = /** @type {any} */ (DataLoader.registry) || {};
     const k = reg.knowledge;
-    return (k && typeof k === 'object') ? { ...DEFAULT_KNOWLEDGE, ...k } : DEFAULT_KNOWLEDGE;
+    return (k && typeof k === 'object') ? { ...DEFAULT_KNOWLEDGE, ...k } : null;
 }
 
 /** 엔티티 배열 — 스키마의 global 이름으로 window에서 조회. */
@@ -144,6 +148,12 @@ export function renderDictionary() {
     if (!container) return;
 
     const schema = dictSchema();
+    if (!schema) {
+        const verEl = document.getElementById('dict-db-version');
+        if (verEl) verEl.textContent = '';
+        container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--color-text-muted);">이 시험에는 사전 데이터셋이 설정되어 있지 않습니다.</div>';
+        return;
+    }
     applyDictHeader(schema);
     renderFilterButtons(schema);
 
@@ -186,6 +196,7 @@ function renderDictionaryVirtual() {
     if (!container || !scrollEl) return;
 
     const schema = dictSchema();
+    if (!schema) return;
 
     // 결과 수가 100개 미만이면 일반 렌더링
     if (currentFilteredList.length < 100) {
@@ -365,6 +376,7 @@ export function clearDictSearch() {
  */
 export function dictExportCsv() {
     const schema = dictSchema();
+    if (!schema) { showToast('사전 데이터가 없습니다.', 'warning'); return; }
     const db = dictDb(schema);
     // 렌더된 목록 대신 현재 검색어·필터로 재계산 — 렌더 순서와 무관하게 정확
     const rows = filterItems(db, dictState.query, dictState.filter, schema);

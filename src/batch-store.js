@@ -34,7 +34,8 @@ import {
 } from './store-utils.js';
 
 // Free 플랜 저장 한도 (기록 보존 업무 특성상 포뮬러보다 넉넉하게)
-const BATCH_LIMIT_FREE = 50;
+// keep-export — pro-upgrade.js가 플랜 비교 모달에서 지연 import로 참조
+export const BATCH_LIMIT_FREE = 50;
 
 // 회차별 품질 확인(QC) 항목 — 외관·색상·향·점도·이물
 export const QC_FIELDS = Object.freeze([

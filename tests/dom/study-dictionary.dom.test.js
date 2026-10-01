@@ -16,11 +16,49 @@ vi.mock('../../src/ui-utils.js', () => ({
 }));
 
 import { loadIndexHtml, el, resetStudyState, spyAnchorDownload, lastToast } from './helpers.js';
+import { DataLoader } from '../../src/data-loader.js';
 import {
     renderDictionary, filterDictionary, setDictFilter, clearDictSearch, dictState,
     dictExportCsv,
 } from '../../src/views/dictionary.js';
 import { showToast } from '../../src/ui-utils.js';
+
+// cosmetic/manifest.json의 knowledge 스키마를 반영한 축소본
+const COSMETIC_SCHEMA = {
+    registryKey: 'ingredients',
+    global: 'INGREDIENTS_DATA',
+    entityUnit: '원료',
+    filterField: 'type',
+    fields: {
+        title: 'name',
+        subtitle: 'engName',
+        subtitleEmpty: '영문명 없음',
+        search: ['name', 'engName', 'category'],
+        chosungField: 'name',
+    },
+    badge: {
+        field: 'type',
+        defaultLabel: '사용 가능',
+        labels: { approved: '사용 가능', restricted: '사용 제한', banned: '사용 금지' },
+    },
+    filters: [
+        { key: 'all', label: '전체 성분' },
+        { key: 'approved', label: '사용 가능 원료' },
+        { key: 'restricted', label: '사용 제한 원료' },
+        { key: 'banned', label: '사용 금지 원료' },
+    ],
+    details: [
+        { key: 'category', label: '카테고리', empty: '기타' },
+        { key: 'description', label: '설명/특성', empty: '-', wide: true },
+        { key: 'limit', label: '배합 한도', empty: '제한 없음', wide: true },
+        { key: 'tip', tip: true },
+    ],
+    csv: {
+        filename: 'ingredients',
+        headers: ['원료명', '영문명', '유형', '유형코드', '카테고리', '배합한도', '설명', 'TIP'],
+        fields: ['name', 'engName', { badgeLabel: 'type' }, 'type', 'category', 'limit', 'description', 'tip'],
+    },
+};
 
 const DB = [
     { name: '글리세린', engName: 'Glycerin', type: 'approved', category: '보습제', description: '습윤제', limit: '제한 없음', tip: '보습 핵심' },
@@ -39,6 +77,8 @@ describe('성분 사전 — 검색·필터·카드', () => {
         dictState.query = '';
         dictState.filter = 'all';
         loadIndexHtml();
+        // dictionary.js는 DataLoader.registry.knowledge를 읽는다 — resetStudyState가 리셋하므로 주입
+        DataLoader.registry = { knowledge: COSMETIC_SCHEMA };
         window.INGREDIENTS_DATA = DB;
         vi.clearAllMocks();
     });

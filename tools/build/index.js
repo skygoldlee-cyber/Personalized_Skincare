@@ -438,9 +438,15 @@ function main() {
   }
 
   // 5a-2. Knowledge schema (사전 뷰 엔티티 스키마 — manifest에서 registry로 전달.
-  //       생략 시 dictionary.js의 내장 기본값이 화장품 원료 스키마로 동작)
+  //       생략 시 dictionary.js는 "데이터셋 미설정" 안내를 표시한다)
   if (manifest.knowledge) {
     registry.knowledge = manifest.knowledge;
+  }
+
+  // 5a-3. 주관식 채점 유사어 사전 (manifest에서 registry로 전달 — 시험별 용어 유사어.
+  //       trainer.js checkShortAnswer가 registry.synonyms를 참조; 미선언 시 빈 사전)
+  if (manifest.synonyms) {
+    registry.synonyms = manifest.synonyms;
   }
 
   // 5a. Integrated Exam config (통합 모의고사 과목별 문제 수)

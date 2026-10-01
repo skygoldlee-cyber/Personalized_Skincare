@@ -76,6 +76,7 @@ export const STORAGE_KEYS = {
   NOTICE_DISMISSED_DATE: 'notice_dismissed_date',// 닫은 고시의 시행일 — 그 고시는 억제
 
   // 교재 리더
+  EXAM_VIEW_POS: 'exam_view_pos_v1',   // 문제집 뷰어 이어보기 — 문서별 마지막 스크롤 위치 (exam-viewer.js)
   READER_LAST_POSITION: 'readerLastPosition',
   READER_FONT_SCALE: 'readerFontScale',
   READER_LINE_HEIGHT: 'readerLineHeight',
@@ -134,6 +135,7 @@ export const RESET_KEYS = [
   STORAGE_KEYS.POMO_SESSION_DATE,
   STORAGE_KEYS.FC_SPACED_REPETITION,
   STORAGE_KEYS.READER_LAST_POSITION,
+  STORAGE_KEYS.EXAM_VIEW_POS,
   STORAGE_KEYS.USAGE_STATS,
 ];
 

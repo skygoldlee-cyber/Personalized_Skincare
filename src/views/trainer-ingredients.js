@@ -1,17 +1,24 @@
-// views/trainer-ingredients.js — 화장품 원료 안전성 챌린지 (trainer.js에서 추출)
+// views/trainer-ingredients.js — 지식DB 분류 안전성 챌린지 (trainer.js에서 추출)
 // @spec T-02
+// 데이터셋은 registry.knowledge 스키마로 해석한다 (registryKey/global).
+// 문항 생성은 엔티티의 분류 필드(badge.field, 예: type=approved/restricted/banned)를
+// 요구하므로, 해당 필드를 가진 도메인 데이터셋이 있는 시험에서만 발화한다.
 import { state } from '../state.js';
 import { esc, safeTextWithBreaks } from '../sanitize.js';
 import { shuffle } from '../utils.js';
 import { showToast, vibrate, HAPTIC } from '../ui-utils.js';
+import { DataLoader } from '../data-loader.js';
+import { checkShortAnswer } from './trainer.js';
 
 /* =======================================================
-   🧪 화장품 원료 안전성 챌린지 훈련 로직 (Ingredients Safety Trainer)
+   🧪 지식DB 분류 안전성 챌린지 훈련 로직 (Knowledge Safety Trainer)
    ======================================================= */
-export function startIngredientsChallenge() {
-    const questions = generateIngredientsQuestions();
+export async function startIngredientsChallenge() {
+    let db = [];
+    try { db = await DataLoader.loadDictionary(); } catch (e) { db = []; }
+    const questions = generateIngredientsQuestions(db);
     if (questions.length === 0) {
-        showToast('원료 데이터를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.', 'warning');
+        showToast('분류형 지식 데이터를 불러오지 못했습니다. 이 시험에서는 지원되지 않을 수 있습니다.', 'warning');
         return;
     }
     state.trainer.activeSubView = 'ingredients';
@@ -28,10 +35,11 @@ export function startIngredientsChallenge() {
     renderIngQuestion();
 }
 
-function generateIngredientsQuestions() {
+function generateIngredientsQuestions(db) {
     const list = [];
-    const db = typeof window.INGREDIENTS_DATA !== 'undefined' ? window.INGREDIENTS_DATA : [];
-    if (db.length === 0) return [];
+    if (!Array.isArray(db) || db.length === 0) return [];
+    // 분류형 문항은 엔티티의 분류 필드(type 등)를 요구한다 — 없는 데이터셋은 지원 안 함
+    if (!db.some(i => i && i.type !== undefined)) return [];
     
     const shuffledDb = shuffle(db);
     

@@ -1,5 +1,5 @@
 // src/app-shell.js — 앱 셸 크롬: 뷰포트 높이·가로세로 토글·data-click 접근성·
-// 시험 브랜딩·기능 플래그·원료 DB 버전 알림 (app.js에서 분리)
+// 시험 브랜딩·기능 플래그·지식DB 버전 알림 (app.js에서 분리)
 // @spec R-08,P-08,O-04,ES-02,ES-03
 import { safeGetItem, safeSetItem, safeRemoveItem } from "./state.js";
 import { STORAGE_KEYS } from "./storage-keys.js";
@@ -129,10 +129,22 @@ export function applyExamBranding() {
     });
 }
 
+/** 지식DB 메타 해석 — registry.knowledge 스키마의 registryKey로 메타를 찾고
+ *  표시용 엔티티 단위(entityUnit)·사전 타이틀(uiText.dictionary)을 함께 반환한다. */
+function _knowledgeMeta() {
+    const reg = DataLoader.registry;
+    if (!reg) return { meta: null, unit: '데이터', dictTitle: '사전' };
+    const k = (reg.knowledge && typeof reg.knowledge === 'object') ? reg.knowledge : {};
+    const meta = reg[k.registryKey || 'ingredients'] || null;
+    const unit = k.entityUnit || '항목';
+    const dictTitle = (reg.uiText && reg.uiText.dictionary && reg.uiText.dictionary.title) || '사전';
+    return { meta, unit, dictTitle };
+}
+
 /**
- * 원료 DB 갱신 감지 — 레지스트리의 ingredients.contentHash를 마지막 확인 값과 비교해
+ * 지식DB 갱신 감지 — 레지스트리의 지식DB contentHash를 마지막 확인 값과 비교해
  * 정정/개정 배포로 바뀐 경우 1회 알림을 띄운다. 최초 방문(저장값 없음)은 조용히 기록만 한다.
- * contentHash는 원료 파일 내용의 해시라 배포 시점이 아니라 실제 데이터 변경 때만 발화한다.
+ * contentHash는 데이터 파일 내용의 해시라 배포 시점이 아니라 실제 데이터 변경 때만 발화한다.
  */
 // 기존 사용자 식별용 — 실제 사용으로만 생성되는 진행 데이터 키들 (알림 기능 도입 전 사용자 구분)
 const RETURNING_USER_KEYS = [
@@ -142,7 +154,7 @@ const RETURNING_USER_KEYS = [
 ];
 
 export function checkIngredientsUpdate() {
-    const meta = (DataLoader.registry && DataLoader.registry.ingredients) || null;
+    const { meta, unit, dictTitle } = _knowledgeMeta();
     const hash = meta && meta.contentHash;
     if (!hash) return;
     try {
@@ -157,14 +169,15 @@ export function checkIngredientsUpdate() {
         if (hashChanged || missedNotice) {
             const version = meta.version ? ` v${meta.version}` : '';
             const notice = meta.notice ? `\n\n갱신 내역: ${meta.notice}` : '';
-            const count = meta.stats && meta.stats.count ? `\n수록 원료 ${meta.stats.count}종 · 성분 사전과 Formula OS 규정 검증이 최신 기준으로 적용됩니다.` : '';
+            const formulaNote = hasFeature('formula') ? '과 Formula OS 규정 검증' : '';
+            const count = meta.stats && meta.stats.count ? `\n수록 ${unit} ${meta.stats.count}종 · ${dictTitle}${formulaNote}이(가) 최신 기준으로 적용됩니다.` : '';
             const history = Array.isArray(meta.history) ? meta.history : [];
             const prevNote = history.length
                 ? `\n\n이전 개정:\n${history.slice(0, 3).map(h => `· v${h.version} (${h.updatedAt || '—'}) ${h.notice || ''}`).join('\n')}`
                 : '';
             // 확인 플래그는 사용자가 모달을 실제로 닫은 뒤에만 기록한다.
             // (SW 업데이트 리로드 등으로 모달이 조기 소실되면 다음 방문에 다시 고지)
-            showAlert(`원료 데이터베이스가${version}로 갱신되었습니다.${notice}${count}${prevNote}`, '원료 DB 갱신')
+            showAlert(`${unit} 데이터베이스가${version}로 갱신되었습니다.${notice}${count}${prevNote}`, `${unit} DB 갱신`)
                 .then(() => {
                     safeSetItem(STORAGE_KEYS.INGREDIENTS_DB_NOTIFIED, notifyKey);
                     safeSetItem(STORAGE_KEYS.INGREDIENTS_HASH, hash);
@@ -179,10 +192,10 @@ export function checkIngredientsUpdate() {
     } catch (e) { /* 알림 실패가 초기화를 막지 않도록 무시 */ }
 }
 
-/** 성분 사전 버전 배지 탭 → 원료 DB 버전 이력 모달 (현재 버전 + 누적 개정 내역) */
+/** 사전 버전 배지 탭 → 지식DB 버전 이력 모달 (현재 버전 + 누적 개정 내역) */
 export function showIngredientsChangelog() {
-    const meta = (DataLoader.registry && DataLoader.registry.ingredients) || null;
-    if (!meta || !meta.version) { showToast('원료 DB 버전 정보가 없습니다.', 'info'); return; }
+    const { meta, unit } = _knowledgeMeta();
+    if (!meta || !meta.version) { showToast(`${unit} DB 버전 정보가 없습니다.`, 'info'); return; }
     const lines = [`현재: v${meta.version} (${meta.updatedAt || '—'})`];
     if (meta.notice) lines.push(`  ${meta.notice}`);
     const history = Array.isArray(meta.history) ? meta.history : [];
@@ -190,8 +203,8 @@ export function showIngredientsChangelog() {
         lines.push('', '이전 개정:');
         history.forEach(h => lines.push(`· v${h.version} (${h.updatedAt || '—'}) ${h.notice || ''}`));
     }
-    if (meta.stats && meta.stats.count) lines.push('', `수록 원료 ${meta.stats.count}종`);
-    showAlert(lines.join('\n'), '원료 DB 버전 이력');
+    if (meta.stats && meta.stats.count) lines.push('', `수록 ${unit} ${meta.stats.count}종`);
+    showAlert(lines.join('\n'), `${unit} DB 버전 이력`);
 }
 
 /** 활성 시험의 features 플래그에 따라 도메인 특화 UI 숨김 (data-feature 속성 기반) */

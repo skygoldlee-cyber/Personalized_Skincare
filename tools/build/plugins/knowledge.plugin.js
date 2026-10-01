@@ -22,7 +22,7 @@ const path = require('path');
 const RESERVED_REGISTRY_KEYS = [
     'schemaVersion', 'contentYear', 'generatedAt',
     'subjects', 'exams', 'resources', 'knowledge',
-    'integratedExam', 'uiText'
+    'integratedExam', 'uiText', 'synonyms'
 ];
 
 /**

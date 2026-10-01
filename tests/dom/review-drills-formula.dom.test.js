@@ -182,15 +182,29 @@ describe('FO-10/11: 배합 계산기 UI·성분 사전 연동', () => {
     it('FO-11: 원료 DB 버전 배지가 registry 메타를 표시한다', () => {
         document.body.innerHTML += '<div id="dict-results-container"></div>';
         window.INGREDIENTS_DATA = [{ name: '테스트원료', eng: 'test', category: '보습제' }];
-        // dictionary.js는 DataLoader.registry.ingredients를 읽는다
-        DataLoader.registry = { ingredients: { version: '1.2.3', stats: { count: 1402 } } };
+        // dictionary.js는 DataLoader.registry.knowledge(스키마) + registry.ingredients(메타)를 읽는다
+        DataLoader.registry = {
+            knowledge: { registryKey: 'ingredients', global: 'INGREDIENTS_DATA', entityUnit: '원료' },
+            ingredients: { version: '1.2.3', stats: { count: 1402 } }
+        };
         renderDictionary();
         expect(el('dict-db-version').textContent).toBe('원료 DB v1.2.3 · 1,402종');
     });
 
     it('DI-05: 사전 뷰에 네거티브 리스트 판정 원칙 안내가 표시된다', () => {
+        // 안내 문구는 manifest knowledge.header.note 선언으로 주입된다 (화장품 도메인 콘텐츠)
+        document.body.innerHTML += '<div id="dict-results-container"></div>';
+        window.INGREDIENTS_DATA = [{ name: '테스트원료', eng: 'test', category: '보습제' }];
+        DataLoader.registry = {
+            knowledge: {
+                registryKey: 'ingredients', global: 'INGREDIENTS_DATA', entityUnit: '원료',
+                header: { note: '판정은 <strong>네거티브 리스트</strong> 방식입니다 — banned·restricted·approved' }
+            }
+        };
+        renderDictionary();
         const note = document.querySelector('#dictionary-view .dict-neglist-note');
         expect(note).toBeTruthy();
+        expect(note.classList.contains('is-hidden')).toBe(false);
         expect(note.textContent).toContain('네거티브 리스트');
         expect(note.textContent).toContain('banned');
         expect(note.textContent).toContain('restricted');

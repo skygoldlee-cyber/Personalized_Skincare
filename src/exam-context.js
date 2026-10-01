@@ -192,8 +192,10 @@ export function getExamRules() {
 }
 
 /**
- * 구버전 'subjectN' 형식 ID → 현재 레지스트리의 과목 키로 매핑.
- * 모의고사 이력의 구형 키를 현재 과목으로 환산하는 공용 규칙
+ * 'subjectN' 형식 키 → 레지스트리의 과목 키로 매핑.
+ * subjectN은 레거시가 아니라 문제은행(exams[])의 현행 키 규약이다 — 문항 id
+ * (subject1_q3 등)·문제은행 번들·구버전 진도 키가 모두 이 규약을 공유하므로
+ * 과목 키(law 등)로 환산할 때 이 함수를 거친다.
  * (charts.js 성적 집계와 recommendations.js 과락 추천이 같은 규칙을 쓴다).
  * @param {string} subj
  * @returns {string} 매핑된 과목 키 (매핑 실패 시 입력 그대로)
