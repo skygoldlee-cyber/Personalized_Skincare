@@ -5,7 +5,8 @@
 import pypdfium2 as pdfium
 import os
 
-BASE = r"C:\Project\Personalized_Skincare\content\exams\cosmetic\참조자료"
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+BASE = os.path.join(REPO_ROOT, "content", "exams", "cosmetic", "참조자료")
 REF_MD = os.path.join(BASE, "ref_md")
 
 old_pdfs = [

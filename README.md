@@ -95,7 +95,7 @@
 ## 📁 폴더 구조 상세
 
 ```
-Personalized Skincare/
+passory/
 │
 ├── 📄 index.html                    ← ✅ 배포 (앱 진입점, 테마 로직 내장)
 ├── 📄 style.css                     ← ✅ 배포 (전역 스타일, 라이트/다크)
