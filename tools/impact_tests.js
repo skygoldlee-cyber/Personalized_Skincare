@@ -36,6 +36,26 @@ function gitChanged(ref) {
   }
 }
 
+/** 변경된 검증 도구 자체를 1회 실행 — @spec none이라 테스트 역산이 안 되는 메타 갭 보완 */
+function runChangedCheckers(files) {
+  const targets = files
+    .filter((f) => /^tools\/check\/(check|audit|verify)_[\w-]+\.js$/.test(f))
+    .map((f) => path.join(T.ROOT, f))
+    .filter((f) => fs.existsSync(f));
+  // 공용 파서 변경은 모든 소비 체커에 전파 — 대표 소비자로 실증
+  if (files.includes('tools/lib/trace_scan.js')) {
+    targets.push(path.join(T.ROOT, 'tools/check/check_spec_refs.js'));
+  }
+  if (!targets.length) return false;
+  let failed = false;
+  for (const t of targets) {
+    console.log(`\n▶ 변경 체커 자기 검증: node ${path.relative(T.ROOT, t)}`);
+    const r = spawnSync(process.execPath, [t], { cwd: T.ROOT, stdio: 'inherit' });
+    if (r.status !== 0) failed = true;
+  }
+  return failed;
+}
+
 /** 권장 테스트 실제 실행 — unit은 node --test, dom은 vitest. 실패 시 exit 1 */
 function runTests(testFiles) {
   const units = [...testFiles].filter((f) => f.includes('/unit/')).sort();
@@ -133,15 +153,19 @@ function main() {
   }
 
   if (doRun) {
-    if (!testFiles.size) {
-      console.log('\n◇ 실행할 테스트 없음 — 통과');
-      process.exit(0);
+    let failed = false;
+    if (testFiles.size) {
+      if (runTests(testFiles)) {
+        console.log('\n✗ 영향 테스트 실패');
+        failed = true;
+      } else {
+        console.log('\n✓ 영향 테스트 전부 통과');
+      }
+    } else {
+      console.log('\n◇ 실행할 테스트 없음');
     }
-    if (runTests(testFiles)) {
-      console.log('\n✗ 영향 테스트 실패');
-      process.exit(1);
-    }
-    console.log('\n✓ 영향 테스트 전부 통과');
+    if (runChangedCheckers(files)) failed = true;
+    process.exit(failed ? 1 : 0);
   }
 }
 
