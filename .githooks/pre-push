@@ -8,6 +8,8 @@
 #   4. check:docs     — 문서 경로 + DOC ID
 #   5. check:html     — index.html이 파셜(html/views/) 조립 결과와 일치하는지
 #   6. lint           — ESLint 에러 (경고는 통과)
+#   7. impact tests   — origin/main 대비 변경 파일의 @spec 역산 → 해당 unit/DOM 테스트만 실행
+#   8. check:docsync  — 소스 변경에 문서 갱신 동반 여부
 #
 # 건너뛰기: SKIP_PREPUSH=1 git push
 
@@ -28,6 +30,15 @@ for check in check:types check:trace check:specrefs check:docs check:html lint; 
         exit 1
     }
 done
+
+# 영향 테스트 게이트 — push 대상 diff의 @spec을 역산해 관련 unit/DOM 테스트만 실행.
+# 변경 파일에 추적 태그가 없으면 권장 테스트 0개로 스킵(통과)된다.
+echo "  - node tools/impact_tests.js --ref origin/main --run"
+node tools/impact_tests.js --ref origin/main --run || {
+    echo "✗ pre-push 차단: 영향 테스트 실패"
+    echo "  우회: SKIP_PREPUSH=1 git push"
+    exit 1
+}
 
 # 문서 동기화 게이트 — push되는 커밋 범위(origin/main..HEAD)에 소스 변경이
 # 있으면 문서(docs/·AGENTS.md·README.md) 갱신이 함께 있어야 한다.

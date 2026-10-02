@@ -9,12 +9,13 @@
  *   node tools/impact_tests.js                      # 미커밋 변경(워크트리+스테이징) 자동 분석
  *   node tools/impact_tests.js src/views/dashboard.js css/dashboard.css
  *   node tools/impact_tests.js --ref origin/main    # 특정 ref 대비 diff 분석
+ *   node tools/impact_tests.js --ref origin/main --run  # 권장 테스트까지 실행 (pre-push 게이트)
  */
 
 // @spec none (영향도 분석 도구)
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
+const { execSync, spawnSync } = require('child_process');
 const T = require('./lib/trace_scan');
 
 const REF_RE = /^(?!-)[A-Za-z0-9][A-Za-z0-9._/-]*$/; // git ref 형식 — 플래그·셸 인젝션 차단
@@ -35,8 +36,32 @@ function gitChanged(ref) {
   }
 }
 
+/** 권장 테스트 실제 실행 — unit은 node --test, dom은 vitest. 실패 시 exit 1 */
+function runTests(testFiles) {
+  const units = [...testFiles].filter((f) => f.includes('/unit/')).sort();
+  const doms = [...testFiles].filter((f) => f.includes('/dom/')).sort();
+  const other = [...testFiles].filter((f) => !units.includes(f) && !doms.includes(f));
+  if (other.length) console.log(`  ※ 실행 미지정 테스트 유형 스킵: ${other.join(', ')}`);
+
+  let failed = false;
+  if (units.length) {
+    console.log(`\n▶ unit 실행: node --test (${units.length}개)`);
+    const r = spawnSync('node', ['--test', ...units], { cwd: T.ROOT, stdio: 'inherit' });
+    if (r.status !== 0) failed = true;
+  }
+  if (doms.length) {
+    // 셸 래퍼(npx.cmd) 대신 vitest 엔트리를 node로 직접 실행 — 인자 인젝션·DEP0190 회피
+    const vitest = path.join(T.ROOT, 'node_modules', 'vitest', 'vitest.mjs');
+    console.log(`\n▶ dom 실행: vitest run (${doms.length}개)`);
+    const r = spawnSync(process.execPath, [vitest, 'run', ...doms], { cwd: T.ROOT, stdio: 'inherit' });
+    if (r.status !== 0) failed = true;
+  }
+  return failed;
+}
+
 function main() {
   const args = process.argv.slice(2);
+  const doRun = args.includes('--run');
   const refIdx = args.indexOf('--ref');
   const files = refIdx >= 0
     ? gitChanged(args[refIdx + 1])
@@ -82,11 +107,13 @@ function main() {
   console.log(`\n■ 권장 테스트 (${testFiles.size}개):`);
   if (testFiles.size) {
     for (const f of [...testFiles].sort()) console.log(`  ${f}`);
-    const doms = [...testFiles].filter(f => f.includes('/dom/'));
-    const units = [...testFiles].filter(f => f.includes('/unit/'));
-    console.log('\n실행 예시:');
-    if (units.length) console.log(`  node --test ${units.join(' ')}`);
-    if (doms.length) console.log(`  npx vitest run ${doms.map(f => f.replace('tests/dom/', '')).join(' ')}`);
+    if (!doRun) {
+      const doms = [...testFiles].filter(f => f.includes('/dom/'));
+      const units = [...testFiles].filter(f => f.includes('/unit/'));
+      console.log('\n실행 예시:');
+      if (units.length) console.log(`  node --test ${units.join(' ')}`);
+      if (doms.length) console.log(`  npx vitest run ${doms.map(f => f.replace('tests/dom/', '')).join(' ')}`);
+    }
   } else {
     console.log('  — (영향 ID를 참조하는 테스트 없음)');
   }
@@ -103,6 +130,18 @@ function main() {
     console.log(`\n◇ 추적 태그 없는 변경 파일 ${unscanned.length}개 (영향 분석 불가):`);
     for (const f of unscanned.slice(0, 10)) console.log(`  ${f}`);
     if (unscanned.length > 10) console.log(`  …외 ${unscanned.length - 10}개`);
+  }
+
+  if (doRun) {
+    if (!testFiles.size) {
+      console.log('\n◇ 실행할 테스트 없음 — 통과');
+      process.exit(0);
+    }
+    if (runTests(testFiles)) {
+      console.log('\n✗ 영향 테스트 실패');
+      process.exit(1);
+    }
+    console.log('\n✓ 영향 테스트 전부 통과');
   }
 }
 
