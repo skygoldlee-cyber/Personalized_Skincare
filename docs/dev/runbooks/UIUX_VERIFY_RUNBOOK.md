@@ -1,7 +1,7 @@
 # UI/UX 검증 런북 — TRACE 체계 단계별 확인 절차
 
 > **목적**: UI/UX 변경(크기·배치·가시성·인터랙션)을 TRACE MATRIX 체계 안에서 단계별로 검증하는 표준 절차. SPEC 선행 → @spec 추적 → 정적 게이트 → 자동 테스트 → 시각 실측 → 추적 갱신 → 배포 확인까지 누락 없이 진행하기 위한 운영 문서.
-> **관련 문서**: [SPEC.md](../SPEC.md) §4.8.8 (UX-VFY-01~05 — 본 절차의 요구사양 원천) · [VERIFY_DEPLOY_PIPELINE.md](VERIFY_DEPLOY_PIPELINE.md) (전체 게이트 파이프라인) · [TESTING.md](../reference/TESTING.md)
+> **관련 문서**: [SPEC.md](../SPEC.md) §4.8.8 (UX-VFY-01~05 — 본 절차의 요구사양 원천) · [UIUX_요구사양.md](../UIUX_요구사양.md) (기기별 배치 계약 — 검증 대상 정의) · [VERIFY_DEPLOY_PIPELINE.md](VERIFY_DEPLOY_PIPELINE.md) (전체 게이트 파이프라인) · [TESTING.md](../reference/TESTING.md)
 > **최종 업데이트**: 2026-10-02
 > **문서 ID**: DOC-RBK-11
 > **관련 SPEC ID**: `UX-VFY-01~05`

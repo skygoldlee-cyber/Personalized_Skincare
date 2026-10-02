@@ -532,6 +532,7 @@
 ### 4.8 UI/UX 설계 요구사양 (재사용 가이드)
 
 > 다른 프로젝트에서 그대로 참고할 수 있도록, 이 프로젝트에서 검증된 UI/UX 설계 규칙과 그 근거를 정리. "왜"를 함께 기록한다.
+> 본 절은 규칙의 원천이며, **기기별 배치 계약은 [UIUX_요구사양.md](UIUX_요구사양.md)**, 화면 인벤토리는 [reference/SCREEN_MAP.md](reference/SCREEN_MAP.md), 화면 간 흐름은 [design/USER_FLOW.md](design/USER_FLOW.md), 검증 절차는 [runbooks/UIUX_VERIFY_RUNBOOK.md](runbooks/UIUX_VERIFY_RUNBOOK.md)가 각각 담당한다.
 
 #### 4.8.1 레이아웃·네비게이션
 

@@ -103,8 +103,18 @@ docs/
 |------|------|
 | [ARCHITECTURE.md](dev/ARCHITECTURE.md) | 시스템 아키텍처·설계 철학 — Local-First + 선택적 클라우드, ESM 구조, 데이터 흐름, PWA/SW 전략, 계정·동기화, UI 모드, Formula OS, 배포 파이프라인, 구현 레시피, 강건성 가이드라인 |
 | [SPEC.md](dev/SPEC.md) | 요구사양 명세서 — 구현된 기능을 역공학해 정리 (현행 기준서) |
-| [SCREEN_MAP.md](dev/reference/SCREEN_MAP.md) | 화면 지도 — 13개 뷰의 view id ↔ 파셜 ↔ URL 해시 ↔ 내비 위치 ↔ SPEC § 매핑 + 비뷰 오버레이 목록, 뷰별 상태 분기 |
-| [USER_FLOW.md](dev/design/USER_FLOW.md) | 사용자 흐름 명세 — 기동/학습 루프/리더/모의고사/Formula OS/시험 전환/모드 전환의 진입·분기·종료 조건 계약 |
+
+### UI/UX 명세·검증
+
+UI/UX 작업의 문서 계열 — 역할 분담과 읽기 순서는 "무엇을(SPEC ID) → 어떤 화면(SCREEN_MAP) → 어떤 흐름(USER_FLOW) → 기기별 배치(UIUX_요구사양) → 어떻게 검증(UIUX_VERIFY_RUNBOOK)" 순이다. **요구사항 ID의 원천은 SPEC.md만** — 나머지 문서는 뷰·계약·절차이며 새 ID를 만들지 않는다.
+
+| 문서 | 역할 | 언제 보는가 |
+|------|------|------|
+| [SPEC.md](dev/SPEC.md) §4.5~4.9 | 요구사항 ID 원천 (A-·R-·TH-·UX-·UX-VFY-) | 요구사항 추가·변경 시 먼저 |
+| [SCREEN_MAP.md](dev/reference/SCREEN_MAP.md) | 화면 지도 — 13개 뷰의 view id ↔ 파셜 ↔ URL 해시 ↔ 내비 위치 ↔ SPEC § 매핑 | "이 화면은 어느 SPEC 섹션인가" 탐색 |
+| [USER_FLOW.md](dev/design/USER_FLOW.md) | 사용자 흐름 명세 — 기동/학습 루프/리더/모의고사/Formula OS/시험 전환/모드 전환의 진입·분기·종료 조건 계약 | 화면 간 전환·상태 분기 작업 |
+| [UIUX_요구사양.md](dev/UIUX_요구사양.md) | 기기별 UI/UX 계약서 — 모바일·태블릿·PC 배치 매트릭스, 요구사항→SPEC ID 매핑, 미구현 제안(UXD-*) | 기기별 레이아웃·입력·PWA 동작 정의 |
+| [UIUX_VERIFY_RUNBOOK.md](dev/runbooks/UIUX_VERIFY_RUNBOOK.md) | UI/UX 검증 런북 — TRACE 체계 단계별 확인 (SPEC 선행 → @spec 연결 → E2E 실측 → 배포·실기기 확인) | UI/UX 변경 검증·배포 절차 |
 | [DEV_ENVIRONMENT.md](dev/reference/DEV_ENVIRONMENT.md) | 개발환경 요구사양 — Node/Python/CLI 도구 버전, 최초 설정 절차, 검증·빌드·배포 명령 |
 | [SUPABASE_DESIGN.md](dev/design/SUPABASE_DESIGN.md) | Supabase 계정·클라우드 동기화·Pro 권한 설계 — Phase 1~2 구현 완료, URL/PWA 동일 로그인 UX |
 | [FLASHCARD_LOGIC.md](dev/reference/FLASHCARD_LOGIC.md) | 플래시카드 생성·난이도·필터·SM-2 간격 반복 로직 |
@@ -149,7 +159,6 @@ docs/
 | [MULTI_MACHINE_SETUP.md](dev/runbooks/MULTI_MACHINE_SETUP.md) | 다중 머신 개발 환경 — GitHub SSH, Vercel CLI 인증, Actions 자동 배포 |
 | [AUDIO_HOSTING_GUIDE.md](dev/runbooks/AUDIO_HOSTING_GUIDE.md) | 오디오북 호스팅·청취 아키텍처 — GitHub Releases 연동, 모바일 청취 동작 |
 | [Supabase_Custom_SMTP_MagicLink_OTP_설정가이드.md](dev/runbooks/Supabase_Custom_SMTP_MagicLink_OTP_설정가이드.md) | Supabase 운영 런북 — Custom SMTP(Gmail 앱 비밀번호)·Magic Link/OTP 템플릿·체크리스트 |
-| [UIUX_VERIFY_RUNBOOK.md](dev/runbooks/UIUX_VERIFY_RUNBOOK.md) | UI/UX 검증 런북 — TRACE 체계 단계별 확인 (SPEC 선행 → @spec 연결 → E2E 실측 → 배포·실기기 확인) |
 | [CHANGES.md](dev/CHANGES.md) | 코드 변경 이력 (Changelog) — 변경의 이유와 맥락 |
 
 ### 제품 전략·기획
