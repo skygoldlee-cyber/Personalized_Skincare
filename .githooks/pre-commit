@@ -6,6 +6,7 @@
 #   2. lint        — ESLint 에러 (경고는 통과)
 #   3. check:html  — html/views 파셜 편집 후 build:html 누락 차단
 #   4. check:secrets — 추적 파일의 시크릿 패턴(개인키·service_role·토큰) 커밋 차단
+#   5. check:testfirst — 로직(src/·ref-pipeline/) 스테이징 시 테스트 동반 (Docs-First)
 #
 # 우회: git commit --no-verify  또는  SKIP_PRECOMMIT=1 git commit
 
@@ -31,6 +32,16 @@ done
 echo "  - node tools/check/check_doc_sync.js --staged"
 node tools/check/check_doc_sync.js --staged || {
     echo "✗ 커밋 차단: 소스 변경에 문서 갱신이 동반되지 않았습니다"
+    echo "  우회: git commit --no-verify"
+    exit 1
+}
+
+# 테스트 선행 게이트 — 로직(src/·ref-pipeline/)이 스테이징됐는데
+# 테스트(tests/·ref-pipeline/tests/) 변경이 없으면 차단.
+# 브랜치에 이미 커밋된 테스트 변경도 인정한다 (테스트→구현 커밋 분할 허용).
+echo "  - node tools/check/check_test_first.js --staged"
+node tools/check/check_test_first.js --staged || {
+    echo "✗ 커밋 차단: 로직 변경에 테스트 변경이 동반되지 않았습니다 (Docs-First)"
     echo "  우회: git commit --no-verify"
     exit 1
 }

@@ -72,6 +72,7 @@ npm.cmd run check:imports     # ES 모듈 import/export 교차 검증
 npm.cmd run verify:assets     # sw.js SHELL_ASSETS/DATA_ASSETS 파일 존재 검증
 npm.cmd run check:docs        # 문서 내 경로 참조 유효성 + 문서 ID 누락·중복 검증
 npm.cmd run check:docsync     # 소스 변경 시 문서 갱신 강제 (우회: [no-docs] 메시지·SKIP_DOCSYNC=1)
+npm.cmd run check:testfirst   # 로직(src/·ref-pipeline/) 변경 시 테스트 동반 강제 — Docs-First (우회: [no-test] 메시지·SKIP_TESTFIRST=1)
 npm.cmd run check:specrefs    # SPEC ID ↔ 코드 @spec 태그 양방향 검증 + 테스트 갭 기준선
 npm.cmd run check:trace       # TRACE_MATRIX 신선도 (입력 해시 — 스테일 시 실패)
 npm.cmd run lint              # ESLint — 0 problems 필수 (--max-warnings 0, 경고도 차단)

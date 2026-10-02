@@ -10,6 +10,7 @@
 #   6. lint           — ESLint 에러 (경고는 통과)
 #   7. impact tests   — origin/main 대비 변경 파일의 @spec 역산 → 해당 unit/DOM 테스트만 실행
 #   8. check:docsync  — 소스 변경에 문서 갱신 동반 여부
+#   9. check:testfirst — 로직(src/·ref-pipeline/) 변경에 테스트 동반 여부 (Docs-First)
 #
 # 건너뛰기: SKIP_PREPUSH=1 git push
 
@@ -45,6 +46,15 @@ node tools/impact_tests.js --ref origin/main --run || {
 echo "  - node tools/check/check_doc_sync.js --ref origin/main"
 node tools/check/check_doc_sync.js --ref origin/main || {
     echo "✗ pre-push 차단: 소스 변경에 문서 갱신이 동반되지 않았습니다"
+    echo "  우회: SKIP_PREPUSH=1 git push"
+    exit 1
+}
+
+# 테스트 선행 게이트 — push 범위에 로직(src/·ref-pipeline/) 변경이 있으면
+# 테스트(tests/·ref-pipeline/tests/) 변경이 함께 있어야 한다.
+echo "  - node tools/check/check_test_first.js --ref origin/main"
+node tools/check/check_test_first.js --ref origin/main || {
+    echo "✗ pre-push 차단: 로직 변경에 테스트 변경이 동반되지 않았습니다"
     echo "  우회: SKIP_PREPUSH=1 git push"
     exit 1
 }

@@ -60,6 +60,9 @@ jobs:
       - name: Doc sync gate (소스 변경 시 문서 갱신 강제)
         run: node tools/check/check_doc_sync.js --ref origin/main
 
+      - name: Test-first gate (로직 변경 시 테스트 동반 강제)
+        run: node tools/check/check_test_first.js --ref origin/main
+
       - name: SPEC refs + test gap check
         run: npm run check:specrefs
 

@@ -90,6 +90,7 @@ npm.cmd run lint                        # ESLint — 에러 0 필수 (기존 경
 npm.cmd run check:types                 # tsc --noEmit (jsconfig checkJs — JSDoc 타입 진단)
 npm.cmd run check:specrefs              # SPEC↔@spec 스테일 참조 + 테스트 갭 기준선(기준선 0 — 신규 갭 즉시 실패)
 npm.cmd run check:docsync               # 소스 변경 시 문서 갱신 강제 — src/tools/tests/설정 변경에 docs/·AGENTS·README 갱신 동반 필수. 우회: SKIP_DOCSYNC=1 (모든 단계) · 커밋 메시지 행 끝의 [no-docs] (pre-push --ref 단계에서만 인식 — 마크된 커밋의 파일만 면제되며 다른 커밋은 계속 검사. pre-commit은 메시지 미존재로 불가)
+npm.cmd run check:testfirst             # 로직(src/*.js·ref-pipeline/*.py) 변경 시 테스트(tests/·ref-pipeline/tests/) 동반 강제 — Docs-First 기계화. 우회: SKIP_TESTFIRST=1 · 커밋 메시지 행 끝 [no-test] (--ref 모드, 그 커밋만 면제)
 npm.cmd run check:trace                 # TRACE_MATRIX 입력 해시 신선도
 npm.cmd run check:lawurls               # law.go.kr 한글주소 유효성 전수 검증 (law-links.js 매핑 실호출, 오류 페이지 본문 판별)
 node tools/impact_tests.js              # 변경 파일 → 영향 요구사항·권장 테스트 (미커밋 변경 자동 분석, --ref <ref>로 diff 분석, --run으로 권장 테스트 실제 실행 — pre-push 게이트)
@@ -310,6 +311,7 @@ docs/                   # 개발 문서
   2. **테스트 선행** — 버그 수정은 재현 테스트(실패하는 테스트)를 먼저 작성하고, 기능 변경은 기대 동작을 테스트로 고정한 뒤 구현한다.
   3. 그 다음 소스를 구현하고, 완료 시 문서↔코드 정합은 기존 게이트(`check:docs`, `check:docsync`, `build:trace`)가 검증한다.
 - 사후 문서화(check:docsync)는 최소 안전망일 뿐이며, 이 규칙의 선행 절차를 대체하지 않는다.
+- **기계적 강제**: `check:testfirst`가 실행 로직(`src/*.js`·`ref-pipeline/*.py`) 변경에 테스트(`tests/`·`ref-pipeline/tests/`) 변경 동반을 요구한다 — pre-commit(`--staged`)·pre-push/CI(`--ref origin/main`)·`check:ci` 3층에서 작동하므로 머신과 무관하게 강제된다. 브랜치에 커밋된 테스트 변경도 인정돼 "테스트→구현" 커밋 분할이 가능하다. 기존 테스트로 충분한 변경은 `[no-test]` 또는 `SKIP_TESTFIRST=1`로 면제.
 
 ## 구조 변경 시 문서 갱신 규칙
 

@@ -108,6 +108,7 @@ npm run check:types       # tsc --noEmit (jsconfig.json의 checkJs — src 전�
 npm run check:imports     # src/ import↔export 교차 검증 (경고도 0)
 npm run check:docs        # 문서 경로 참조 + DOC ID 정합
 npm run check:docsync     # 소스 변경 시 문서 갱신 강제 (작업 트리 기준 — pre-commit은 --staged, pre-push/CI는 --ref origin/main)
+npm run check:testfirst   # 로직(src/*.js·ref-pipeline/*.py) 변경 시 테스트 동반 강제 — Docs-First 게이트 (pre-commit은 --staged+기커밋 인정, pre-push/CI는 --ref origin/main, 우회: [no-test]·SKIP_TESTFIRST=1)
 npm run check:specrefs    # SPEC↔@spec 양방향 + 테스트 갭 기준선(기준선 0 — 신규 갭 즉시 실패)
 npm run check:trace       # TRACE_MATRIX 신선도 (입력 해시 — 미재생성 시 실패)
 
@@ -224,7 +225,8 @@ npm run hooks:install
 | 53 | `ux-invariants.test.js` | 20 | UX-FB/FORM/PWA/SCR/SET — 스크롤바·CSS 변수·설정 패널·44px·버전·토스트·모달·펄스·standalone·app-height·폼 16px·터치 피드백 | CSS·HTML·JS 정적 검증, 2026-10-14 추가 |
 | 54 | `content-engineering.test.js` | 6 | CE-01~05 + TR-16a — 학습 가이드·한 줄 요약·비교표·확인문제·용어 표·툴바 자동 숨김 | 콘텐츠·소스 정적 검증, 2026-10-14 추가 |
 | 55 | `doc-sync.test.js` | 7 | `tools/check/check_doc_sync.js` — 트리거/면제/문서 경로 분류, analyze 위반 판정, porcelain 파서 | 정적 패턴 검증, 2026-10-14 추가 |
-| | **합계** | **694** | | |
+| 56 | `test-first.test.js` | 7 | `tools/check/check_test_first.js` — 로직 트리거/테스트 경로 분류, analyze 위반 판정 | 정적 패턴 검증, 2026-11-02 추가 |
+| | **합계** | **701** | | |
 
 ### DOM 테스트 (`tests/dom/`)
 
@@ -730,6 +732,7 @@ function detectDiagramType(textContent) {
 - npm run check:imports   # import/export 교차 검증
 - npm run check:docs      # 문서 경로 + DOC ID
 - node tools/check/check_doc_sync.js --ref origin/main   # 소스 변경 시 문서 갱신 강제
+- node tools/check/check_test_first.js --ref origin/main # 로직 변경 시 테스트 동반 강제 (Docs-First)
 - npm run check:specrefs  # 스테일 SPEC 참조 + 테스트 갭 기준선(0)
 - npm run check:trace     # TRACE_MATRIX 신선도 (해시)
 - node tools/check/check_content.js --content-only --quick  # 콘텐츠 추적 게이트 (manifest·구조·인용·참조라인·신선도·ID이관·카드)
