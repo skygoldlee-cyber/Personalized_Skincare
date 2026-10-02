@@ -1,5 +1,12 @@
 [
   {
+    "version": "v20261003-9f876ad",
+    "date": "2026-10-03",
+    "notes": [
+      "[테스트·e2e] UI/UX E2E 2차 확장 — 키보드·반응형·리더 고급 실측 + 다크 대비 결함 수정"
+    ]
+  },
+  {
     "version": "v20261002-10732e1",
     "date": "2026-10-02",
     "notes": [
@@ -138,14 +145,6 @@
     "date": "2026-10-02",
     "notes": [
       "[정리] Vercel 프로젝트 리네임 반영 — personalized-skincare-study → passory"
-    ]
-  },
-  {
-    "version": "v20261002-0596951",
-    "date": "2026-10-02",
-    "notes": [
-      "[수정·tools] docsync [no-docs] 면제를 커밋 단위로 한정",
-      "[수정·tools] 검증 게이트 리뷰 지적 3건 반영"
     ]
   }
 ]
