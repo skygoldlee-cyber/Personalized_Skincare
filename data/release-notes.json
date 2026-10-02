@@ -1,5 +1,21 @@
 [
   {
+    "version": "v20261002-7c58456",
+    "date": "2026-10-02",
+    "notes": [
+      "[정리] exams.js 재생성 — exams.json 키 순서 반영",
+      "[기능·tools] 기능 플래그·저장소 접근 정합 체크 추가 + 체커 자기검증",
+      "[수정·exams] cosmetic에 story_textbook 플래그 선언 — 서사 검색 인덱스 활성화",
+      "[정리] TRACE_MATRIX 재생성 — AGENTS.md 명령어 표 갱신 반영",
+      "[기능·tools] release-notes.json ↔ git 이력 정합 체크 추가",
+      "[기능·tools] 시크릿 스캔 게이트 check:secrets 추가",
+      "[기능·tools] check_inventory에 ARCHITECTURE box 트리 검증 추가",
+      "[기능·tools] pre-push에 영향 테스트 게이트 추가",
+      "[수정·tools] @spec 주석 내 /Pro 가 ID 토큰 오인되는 파싱 오류 + TRACE_MATRIX 재생성",
+      "[기능·tools] 문서↔소스 정합성 검증 3종 추가 + @spec 태그 강제"
+    ]
+  },
+  {
     "version": "v20261002-41afab9",
     "date": "2026-10-02",
     "notes": [
@@ -123,11 +139,6 @@
   },
   {
     "version": "v20261001-b2761e3",
-    "date": "2026-10-01",
-    "notes": []
-  },
-  {
-    "version": "v20261001-f585bdf",
     "date": "2026-10-01",
     "notes": []
   }
