@@ -1,4 +1,4 @@
-/* @spec TR-15~18,TR-21,TR-22,UX-SCR-01~03,UX-FORM-01,UX-NAV-09 */
+/* @spec TR-15~18,TR-21~23,R-10,UX-SCR-01~03,UX-FORM-01,UX-NAV-09 */
 @import url('./reader-mermaid.css');
 
 /* ============================================================
@@ -41,7 +41,8 @@
    표시된 동안에는 ~50px를 영구 잠식한다. */
 .reader-sticky-heading {
     position: absolute;
-    top: 4px;
+    /* 크롬 오버레이 아래에 배치 — 크롬 숨김 시 상단으로 (아래 ~ 시빌링 규칙) */
+    top: calc(var(--reader-chrome-h, 56px) + var(--space-2));
     left: 0;
     right: 0;
     z-index: var(--z-dropdown);
@@ -64,6 +65,10 @@
     opacity: 0;
     pointer-events: none;
 }
+/* 크롬이 숨겨진 상태(읽기 중)에는 섹션 표시줄이 레이아웃 최상단에 붙음 */
+.reader-chrome.reader-chrome-hidden ~ .reader-sticky-heading {
+    top: 4px;
+}
 .reader-sticky-heading i {
     font-size: 0.8rem;
     flex-shrink: 0;
@@ -75,23 +80,8 @@
     align-items: center;
     gap: var(--space-4);
     flex-wrap: wrap;
-    padding: 0.75rem 1.25rem;
-    margin-bottom: var(--space-5);
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    position: sticky;
-    top: 8px;
-    z-index: var(--z-dropdown);
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
-    transition: transform 0.25s ease, opacity 0.25s ease;
-}
-/* 스크롤 다운 시 툴바 자동 숨김 (몰입형 독서) — 위로 스크롤하면 복귀 */
-.reader-toolbar.toolbar-auto-hidden {
-    transform: translateY(calc(-100% - 16px));
-    opacity: 0;
-    pointer-events: none;
+    /* 크롬 카드(#reader-chrome) 안의 패널 — 자체 카드 스타일·sticky는
+       오버레이 크롬으로 일원화 (TR-22/23). 스크롤 숨김도 크롬이 담당 */
 }
 .reader-toolbar-toggle {
     display: none;
@@ -253,6 +243,47 @@
 @media (min-width: 901px) {
     .reader-toc:not(.is-hidden) ~ .reader-sticky-heading {
         left: calc(250px + 1.75rem + var(--space-3));
+    }
+}
+
+/* Reader Chrome (TR-22/TR-23, UX-NAV-09) — 컨트롤+툴바+오디오를 하나의 absolute
+   오버레이 카드로 묶어 본문 컬럼 위에 띄움. 인플로우 배치는 본문 높이를 영구
+   잠식하므로 레이아웃에서 빼내고, 스크롤 다운 시 자동 숨김으로 공간 회수.
+   크롬 높이는 JS가 --reader-chrome-h로 실측 동기화 (본문 padding-top·
+   scroll-margin·섹션 표시줄 top이 이 변수를 참조) */
+.reader-chrome {
+    position: absolute;
+    top: var(--space-2);
+    left: 0;
+    right: 0;
+    z-index: var(--z-sticky);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: var(--space-3) var(--space-4);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+.reader-chrome .textbook-reader-controls {
+    margin-bottom: 0; /* 크롬 카드가 간격을 담당 */
+}
+.reader-chrome.reader-chrome-hidden {
+    transform: translateY(calc(-100% - 16px));
+    opacity: 0;
+    pointer-events: none;
+}
+/* 데스크톱(TOC 사이드바 노출 폭) — 크롬을 본문 컬럼 위에만 오버레이 (TR-23) */
+@media (min-width: 901px) {
+    .reader-layout:has(> .reader-toc:not(.is-hidden)) > .reader-chrome {
+        left: calc(250px + 1.75rem);
+    }
+    /* 집중 모드는 TOC가 display:none이라 is-hidden 없이도 오프셋 해제 */
+    body.reader-focus-mode .reader-layout > .reader-chrome {
+        left: 0;
     }
 }
 
@@ -566,6 +597,9 @@
     min-width: 0;
     /* CSS variable driven font sizing for A-/A+ controls */
     --reader-font-scale: 1;
+    /* 첫 줄이 크롬 오버레이 아래 묻지 않도록 — 크롬 높이 JS 실측 변수 + 여유.
+       스크롤과 함께 밀려나므로 읽는 중 잠식은 0 (TR-22/23, UX-NAV-09) */
+    padding-top: calc(var(--reader-chrome-h, 64px) + var(--space-3));
 }
 
 /* Max line width for optimal readability (~40 Korean chars) */
@@ -581,7 +615,8 @@
     border-radius: var(--radius-md);
     margin-bottom: 1.75rem;
     overflow: hidden;
-    scroll-margin-top: 80px;
+    /* 앵커 점프 시 카드가 크롬 오버레이에 가려지지 않게 크롬 높이 연동 */
+    scroll-margin-top: calc(var(--reader-chrome-h, 80px) + var(--space-2));
     transition: border-color var(--transition-base), box-shadow var(--transition-base);
 }
 .reader-section-card:hover {
@@ -978,9 +1013,7 @@ body.reader-focus-mode .reader-layout {
 body.reader-focus-mode .textbook-reader-content {
     max-height: 100%;
 }
-body.reader-focus-mode .reader-toolbar {
-    top: 8px;
-}
+
 body.reader-focus-mode .reader-readable-width {
     max-width: 52rem;
 }
@@ -1232,60 +1265,20 @@ body.reader-focus-mode .reader-readable-width {
     .reader-toolbar-toggle {
         display: inline-flex;
     }
-    /* TR-22 몰입형 크롬 (UX-NAV-09): 크롬을 본문 위 absolute 오버레이로 전환 —
-       인플로우 배치는 본문 높이를 영구 잠식하고, transform만 적용한 숨김은
-       공간을 회수하지 못하므로, 크롬 자체를 레이아웃에서 빼낸다. */
+    /* TR-22 몰입형 크롬 — 오버레이 구조·자동 숨김은 전역 규칙에 통합.
+       여기서는 모바일 간격만 좁힘 */
     #textbook-reader-view {
-        position: relative;
         padding: 0.5rem 0.75rem;
     }
     .reader-progress-bar {
         margin-bottom: var(--space-2);
     }
     .reader-chrome {
-        position: absolute;
-        top: calc(4px + var(--space-2)); /* 진행바 바로 아래 */
-        left: 0.75rem;
-        right: 0.75rem;
-        z-index: var(--z-sticky);
-        background: var(--bg-card);
-        border: 1px solid var(--border-color);
-        border-radius: var(--radius-md);
         padding: var(--space-2) var(--space-3);
-        -webkit-backdrop-filter: blur(12px);
-        backdrop-filter: blur(12px);
-        transition: transform 0.25s ease, opacity 0.25s ease;
-    }
-    /* 스크롤 다운 시 크롬 자동 숨김 — 오버레이라 본문 높이는 그대로 유지됨 */
-    .reader-chrome.reader-chrome-hidden {
-        transform: translateY(calc(-100% - 16px));
-        opacity: 0;
-        pointer-events: none;
-    }
-    /* 본문 첫 줄이 크롬 바 아래 묻지 않도록 상단 패딩 — 스크롤과 함께 밀려남 */
-    .textbook-reader-content {
-        padding-top: 68px;
-    }
-    /* 섹션 표시줄은 크롬 바 아래에 배치, 크롬 숨김 시 상단으로 이동 */
-    .reader-sticky-heading {
-        top: calc(60px + var(--space-2));
-    }
-    .reader-chrome.reader-chrome-hidden ~ .reader-layout .reader-sticky-heading {
-        top: 4px;
+        gap: var(--space-2);
     }
     .reader-toolbar {
-        flex-wrap: nowrap;
-        overflow: hidden;
         gap: var(--space-3);
-        /* 크롬 카드 안의 패널 — 자체 카드 스타일·sticky는 오버레이와 중복 */
-        position: static;
-        background: transparent;
-        border: none;
-        box-shadow: none;
-        padding: var(--space-2) 0 0;
-        margin-bottom: 0;
-        -webkit-backdrop-filter: none;
-        backdrop-filter: none;
     }
     /* TR-21: 접힌 툴바는 빈 셸(토글·목차 버튼이 통합 바로 이동) — 통째로 숨김 */
     .reader-toolbar.collapsed {

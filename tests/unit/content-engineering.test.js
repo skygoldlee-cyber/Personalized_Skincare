@@ -82,14 +82,15 @@ test('CE-05: 챕터별 용어 정리 섹션 + 용어|정의 표가 있다', () =
 
 // ---------- TR-16a: 모바일 툴바 자동 숨김 ----------
 
-test('TR-16a: 아래 스크롤 시 툴바 숨김·위 스크롤 시 복귀가 구현된다', () => {
+test('TR-16a: 아래 스크롤 시 크롬 숨김·위 스크롤 시 복귀가 구현된다', () => {
   const reader = readFileSync(join(ROOT, 'src', 'views', 'textbook-reader.js'), 'utf-8')
     + readFileSync(join(ROOT, 'src', 'views', 'reader-toolbar.js'), 'utf-8');
   assert.ok(reader.includes('reader-toolbar'), '툴바 요소 참조');
-  assert.ok(reader.includes('toolbar-auto-hidden'), '자동 숨김 클래스');
+  // TR-22/23: 툴바 개별이 아니라 크롬 전체(컨트롤+툴바+오디오) 오버레이 숨김
+  assert.ok(reader.includes('reader-chrome-hidden'), '크롬 자동 숨김 클래스');
   // 아래로(>6px·140px 임계) 숨김, 위로(<-6px) 또는 상단 복귀 시 표시
   assert.ok(/curY > lastScrollY \+ 6 && curY > 140/.test(reader), '하향 숨김 임계');
   assert.ok(/curY < lastScrollY - 6 \|\| curY <= 140/.test(reader), '상향 복귀 조건');
   const css = readdirSync(join(ROOT, 'css')).map(f => readFileSync(join(ROOT, 'css', f), 'utf-8')).join('\n');
-  assert.ok(/\.toolbar-auto-hidden/.test(css), 'toolbar-auto-hidden CSS 규칙');
+  assert.ok(/\.reader-chrome-hidden/.test(css), 'reader-chrome-hidden CSS 규칙');
 });

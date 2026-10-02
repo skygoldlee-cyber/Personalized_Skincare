@@ -1274,16 +1274,18 @@
             </section>
 
             <!-- Textbook Reader View -->
-            <!-- @spec TR-01,TR-21,TR-22 -->
+            <!-- @spec TR-01,TR-21~23 -->
             <section id="textbook-reader-view" class="view-section">
                 <!-- Reading Progress Bar (fixed at top of view) -->
                 <div id="reader-progress-bar" class="reader-progress-bar is-hidden">
                     <div id="reader-progress-fill" class="reader-progress-fill"></div>
                     <span id="reader-section-progress" class="reader-section-progress"></span>
                 </div>
-                <!-- Reader Chrome (TR-21/TR-22): 컨트롤+툴바+오디오를 하나의 래퍼로 묶어
-                     모바일에서는 본문 위 absolute 오버레이 바로 전환하고 스크롤 방향으로
-                     자동 숨김한다. 데스크톱에서는 평범한 인플로우 래퍼. -->
+                <!-- Reader Layout: TOC sidebar + Content -->
+                <div id="reader-layout" class="reader-layout">
+                <!-- Reader Chrome (TR-21~23): 컨트롤+툴바+오디오를 하나의 absolute 오버레이
+                     래퍼로 묶어 본문 컬럼 위에 띄우고 스크롤 방향으로 자동 숨김한다.
+                     .reader-layout이 containing block — 데스크톱은 TOC 폭만큼 left 오프셋 -->
                 <div id="reader-chrome" class="reader-chrome">
                 <div class="textbook-reader-controls mb-5">
                     <div class="reader-mode-buttons">
@@ -1361,8 +1363,6 @@
                 <div id="reader-audio-player-area" class="reader-audio-player-area is-hidden"></div>
                 </div><!-- /#reader-chrome -->
 
-                <!-- Reader Layout: TOC sidebar + Content -->
-                <div id="reader-layout" class="reader-layout">
                     <!-- TOC Sidebar (sections of current chapter) -->
                     <aside id="reader-toc" class="reader-toc is-hidden">
                         <div class="reader-toc-header">

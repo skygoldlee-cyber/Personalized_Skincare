@@ -1,5 +1,5 @@
 // views/reader-toolbar.js — 교재 리더 툴바·독서 설정·스크롤 이벤트 (textbook-reader.js에서 분리)
-// @spec TR-15,TR-16,TR-16a,TR-18,TR-21,TR-22,UX-SCR-01
+// @spec TR-15,TR-16,TR-16a,TR-18,TR-21~23,UX-SCR-01
 // 역할: 북마크 토글, 폰트 스케일·줄간격·테마 클래스 적용, 스크롤 스파이(rAF 디바운스),
 //       툴바 버튼 바인딩, 표 전체화면 모달. 렌더링 로직은 textbook-reader.js에 남음.
 import { safeGetItem, safeSetItem } from '../state.js';
@@ -85,21 +85,16 @@ export function bindReaderScrollEvents() {
                 const pct = max > 0 ? (container.scrollTop / max) * 100 : 0;
                 progressFill.style.width = pct + '%';
             }
-            // Toolbar auto-hide: 아래로 스크롤 시 숨기고 위로 올리면 표시 (몰입형 독서)
-            // TR-22: 모바일에서는 크롬 전체(controls+toolbar+audio)가 오버레이로 숨어
-            // 공간을 회수한다. 크롬 숨김 CSS는 모바일 미디어쿼리 안에 있으므로 데스크톱은
-            // 기존 toolbar-auto-hidden(transform)만 실질 적용.
+            // Chrome auto-hide (TR-22/23): 아래로 스크롤 시 크롬 오버레이를 숨기고
+            // 위로 올리면 복귀 — 크롬은 absolute 오버레이라 본문 높이 변동 없이
+            // 공간 전체를 해방한다. 크롬에는 컨트롤·툴바·오디오가 모두 포함됨.
             const chromeEl = document.getElementById('reader-chrome');
-            const toolbarEl = document.getElementById('reader-toolbar');
             const curY = container.scrollTop;
             const hiding = curY > lastScrollY + 6 && curY > 140;
             const showing = curY < lastScrollY - 6 || curY <= 140;
-            if (hiding) {
-                if (chromeEl) chromeEl.classList.add('reader-chrome-hidden');
-                if (toolbarEl) toolbarEl.classList.add('toolbar-auto-hidden');
-            } else if (showing) {
-                if (chromeEl) chromeEl.classList.remove('reader-chrome-hidden');
-                if (toolbarEl) toolbarEl.classList.remove('toolbar-auto-hidden');
+            if (chromeEl) {
+                if (hiding) chromeEl.classList.add('reader-chrome-hidden');
+                else if (showing) chromeEl.classList.remove('reader-chrome-hidden');
             }
             lastScrollY = curY;
             // Back to top visibility
@@ -253,6 +248,18 @@ export function initReaderToolbar() {
         document.getElementById('reader-toolbar-toggle')?.setAttribute('aria-expanded', 'false');
     }
     if (toolbarEl0) toolbarEl0.dataset.mobileInit = '1';
+
+    // TR-23: 크롬 오버레이 높이 실측 → --reader-chrome-h. 본문 padding-top·
+    // scroll-margin·섹션 표시줄 top이 이 변수를 참조하므로 툴바 펼침·래핑·
+    // 폰트 스케일 등 어떤 변동에도 자동 동기화된다.
+    const viewEl = document.getElementById('textbook-reader-view');
+    const chromeEl = document.getElementById('reader-chrome');
+    if (viewEl && chromeEl && !chromeEl.dataset.roBound && typeof ResizeObserver !== 'undefined') {
+        chromeEl.dataset.roBound = '1';
+        const syncChromeH = () => viewEl.style.setProperty('--reader-chrome-h', chromeEl.offsetHeight + 'px');
+        new ResizeObserver(syncChromeH).observe(chromeEl);
+        syncChromeH();
+    }
 
     const decBtn = document.getElementById('reader-font-decrease');
     const incBtn = document.getElementById('reader-font-increase');

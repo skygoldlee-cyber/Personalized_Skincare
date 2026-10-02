@@ -179,6 +179,7 @@
 | TR-20 | 본문 이미지 라이트박스 — `.reader-img` 탭/확대 버튼 → 배율 단계·맞춤·드래그 스크롤 전체화면 모달 (`image-zoom.js`, reader-table-modal 셸·mermaid 툴바 재사용, Esc/백드롭 닫기) | ✅ |
 | TR-21 | **모바일 통합 크롬 바** (≤768px·가로 저높이): 목차·과목 선택·이야기형 토글·툴바 접기를 `.reader-mode-buttons` 단일 행으로 통합 — '과목 선택' 라벨은 셀렉트 값 자체가 과목명이라 생략, 접힌 도구 패널은 0px (`.reader-toolbar.collapsed` 모바일 display:none) | ✅ |
 | TR-22 | **몰입형 크롬 오버레이** (모바일): `#reader-chrome`(컨트롤+툴바 래퍼)을 `.reader-layout` 위 absolute 오버레이로 전환 + 본문 스크롤 다운 시 `.reader-chrome-hidden` 자동 숨김·업 시 복귀 — 본문이 항상 잔여 높이 전체 차지(실측 ~89% vh), 상시 노출은 진행바 4px만. 섹션 표시줄은 크롬 표시 상태에 따라 top 위치 연동 (UX-NAV-09 규칙 적용) | ✅ |
+| TR-23 | **데스크톱 통합 크롬 오버레이**: `#reader-chrome`을 본문 컬럼 위 absolute 오버레이로 확장 — TOC 사이드바 노출 폭(≥901px)에서는 `:has(.reader-toc:not(.is-hidden))` 매칭으로 left 오프셋(TOC 250px + gap)해 사이드바를 덮지 않음. 크롬 높이는 `ResizeObserver` 실측 → `--reader-chrome-h` CSS 변수로 본문 `padding-top`·`scroll-margin-top`·섹션 표시줄 top을 자동 동기화 (툴바 펼침·폰트 스케일·래핑 변동에 대응). 스크롤 방향 자동 숨김은 모바일과 동일 클래스 공유 | ✅ |
 
 ### 3.6 교재 리더 — 학습 보조 도구
 
@@ -515,6 +516,7 @@
 | R-07 | 전역 테이블 가로 스크롤 (`width:max-content;min-width:100%` + wrapper `overflow-x:auto`) | ✅ |
 | R-08 | 가로/세로 보기 전환 버튼 (모바일 헤더 회전 아이콘, `orientation-toggle-btn`, 강제 가로 레이아웃 전환) | ✅ |
 | R-09 | localStorage 용량 초과 안내 배너 (`QuotaExceededError` 감지 시 하단 고정 경고 배너) | ✅ |
+| R-10 | **리더 본문 가시 영역 비율 게이트**: 교재 리더 본문 컬럼 높이 ≥ 뷰포트의 60% (모바일·데스크톱 공통 — 크롬은 오버레이라 표시/숨김 무관하게 동일; 실측 모바일 ~78%·데스크톱 720p ~69%, 실사용 데스크톱은 더 큼). TR-22/23 오버레이 구조로 달성, E2E 실측 단언 | ✅ |
 
 ### 4.7 테마 시스템
 

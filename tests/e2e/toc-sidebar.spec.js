@@ -1,5 +1,5 @@
 // tests/e2e/toc-sidebar.spec.js — 교재리더 TOC 사이드바 뷰포트 잘림 회귀
-// @spec TR-21,TR-22,UX-NAV-09 (레이아웃 회귀 검증)
+// @spec TR-21~23,R-10,UX-NAV-09 (레이아웃 회귀 검증)
 // 배경: .reader-toc가 calc(100vh - 200px) 매직넘버로 실제 크롬 높이(~380px)를
 // 과소계상해 aside 하단이 뷰포트 밖으로 나감 → 스크롤바를 끝까지 내려도
 // 마지막 목차 항목이 화면에 표시되지 않던 버그. 뷰가 flex 컬럼으로 잔여 높이를
@@ -54,11 +54,9 @@ test.describe('교재리더 TOC 사이드바', () => {
         expect(m.contentBottom).toBeLessThanOrEqual(m.vh);
         // 스크롤바를 끝까지 내린 상태에서 마지막 목차 항목이 보여야 함
         expect(m.lastItemBottom).toBeLessThanOrEqual(m.vh + 1);
-        // TR-22: 모바일은 크롬이 오버레이로 전환되어 본문이 잔여 높이 전체 차지 —
-        // 뷰포트의 70% 이상 확보해야 실질적 가독 영역. 데스크톱은 인플로우 크롬을
-        // 감안해 35% 이상
-        const isMobile = test.info().project.name === 'mobile';
-        expect(m.contentClientH).toBeGreaterThan(m.vh * (isMobile ? 0.7 : 0.35));
+        // TR-22/23 + R-10: 크롬이 오버레이로 전환되어 본문이 잔여 높이 전체 차지 —
+        // 뷰포트의 60% 이상 확보해야 실질적 가독 영역 (모바일·데스크톱 공통)
+        expect(m.contentClientH).toBeGreaterThan(m.vh * 0.6);
 
         // 본문 스크롤 → sticky-heading 표시돼도 본문 높이는 리플로우되지 않아야 함
         // (오버레이 배치 — 이전에는 인플로우라 표시 시 ~50px 영구 잠식)
@@ -73,10 +71,10 @@ test.describe('교재리더 TOC 사이드바', () => {
         );
         expect(afterScroll).toBe(m.contentClientH);
 
-        // TR-22: 스크롤 다운 시 크롬 오버레이 자동 숨김 (공간 회수는 오버레이라 높이 불변)
+        // TR-22/23: 스크롤 다운 시 크롬 오버레이 자동 숨김 (공간 회수는 오버레이라 높이 불변)
         const chromeHidden = await page.evaluate(() =>
             document.getElementById('reader-chrome')?.classList.contains('reader-chrome-hidden')
         );
-        if (isMobile) expect(chromeHidden).toBe(true);
+        expect(chromeHidden).toBe(true);
     });
 });
