@@ -40,6 +40,13 @@ const ROOT = T.ROOT;
 // 테스트 @spec을 추가해 갭을 줄였다면 이 수치를 함께 낮춘다.
 const TEST_GAP_BASELINE = 0;
 
+// UI/UX E2E 갭 기준선 (UX-VFY-03) — 기하 계열 요구사항은 브라우저 실측만이 유효 검증.
+// 소스 참조는 있으나 tests/e2e/ @spec이 없는 UI/UX 계열 ID의 허용 상한.
+// 기존 백로그(규약·리뷰형 다수)를 승계하되, 신규 UI/UX 요구사항이 갭을 늘리면 실패한다.
+// e2e @spec을 추가해 갭을 줄였다면 이 수치를 함께 낮춘다.
+const UIUX_PREFIX_RE = /^(?:UX-|TR-|R-|TH-|A-)/;
+const UIUX_E2E_GAP_BASELINE = 61;
+
 // @spec 태그 강제 디렉터리 — 이 아래 모든 스캔 대상 파일에 최소 1개 @spec 태그 필요
 // (`@spec none`으로 의도적 미커버 명시 가능). tools/_archive·ref-pipeline은
 // 일회성·보조 스크립트라 강제 제외.
@@ -50,6 +57,7 @@ const SPEC_TAG_EXEMPT_PREFIXES = ['tools/_archive/'];
 function collectCodeRefs(specIds) {
   const refs = new Map();     // id → [{file, line}] (전체)
   const testRefs = new Set(); // tests/ 하위 파일에서 참조된 ID
+  const e2eRefs = new Set();  // tests/e2e/ 하위 파일에서 참조된 ID (UX-VFY-03)
   const srcRefs = new Set();  // tests/ 외부(소스·도구)에서 참조된 ID
   const errors = [];
   const files = [...T.SCAN_FILES.map((f) => path.join(ROOT, f)).filter((f) => fs.existsSync(f))];
@@ -69,6 +77,7 @@ function collectCodeRefs(specIds) {
           if (!refs.has(id)) refs.set(id, []);
           refs.get(id).push({ file: rel, line: i + 1 });
           (isTest ? testRefs : srcRefs).add(id);
+          if (rel.startsWith('tests/e2e/')) e2eRefs.add(id);
         }
       }
     });
@@ -78,7 +87,7 @@ function collectCodeRefs(specIds) {
       errors.push(`${rel} — @spec 태그 없음 (모듈 헤더에 \`// @spec XX-NN\` 또는 \`// @spec none\` 추가 필요)`);
     }
   }
-  return { refs, testRefs, srcRefs, errors };
+  return { refs, testRefs, e2eRefs, srcRefs, errors };
 }
 
 /** 문서 헤더 "관련 SPEC ID" 수집 → id → [{file}] (docId는 meta로 파일명에 환원) */
@@ -94,7 +103,7 @@ function collectDocRefs(specIds) {
 
 function main() {
   const specIds = new Set(T.extractSpec().keys());
-  const { refs, testRefs, srcRefs, errors } = collectCodeRefs(specIds);
+  const { refs, testRefs, e2eRefs, srcRefs, errors } = collectCodeRefs(specIds);
   const { refs: docRefs, errors: docErrors, missing: missingHeaders } = collectDocRefs(specIds);
   errors.push(...docErrors);
 
@@ -158,11 +167,23 @@ function main() {
   }
   const gapExceeded = testGap.length > TEST_GAP_BASELINE;
 
-  const fail = stale.length > 0 || errors.length > 0 || gapExceeded;
+  // UI/UX E2E 갭 (UX-VFY-03) — UI/UX 계열 중 소스 참조 있으나 tests/e2e/ 미연결
+  const uxE2eGap = [...srcRefs]
+    .filter((id) => specIds.has(id) && UIUX_PREFIX_RE.test(id) && !e2eRefs.has(id))
+    .sort();
+  console.log(`  UI/UX E2E 갭: ${uxE2eGap.length}개 (기준선 ${UIUX_E2E_GAP_BASELINE}개 — 기하 계열 신규 요구사항은 e2e 실측 필수)`);
+  const uxGapExceeded = uxE2eGap.length > UIUX_E2E_GAP_BASELINE;
+
+  const fail = stale.length > 0 || errors.length > 0 || gapExceeded || uxGapExceeded;
   console.log(fail ? '\n실패 — 스테일 참조·파싱 오류·테스트 갭 증가를 수정하세요.' : '\n통과 — 스테일 참조 없음.');
   if (gapExceeded) {
     console.log(`  테스트 갭 ${testGap.length}개 > 기준선 ${TEST_GAP_BASELINE}개 — 신규 요구사항에 tests/ @spec을 추가하거나,`);
     console.log(`  테스트 없이 유지할 정책형 요구사항이라면 TEST_GAP_BASELINE을 갱신하세요 (tools/check/check_spec_refs.js).`);
+  }
+  if (uxGapExceeded) {
+    console.log(`  UI/UX E2E 갭 ${uxE2eGap.length}개 > 기준선 ${UIUX_E2E_GAP_BASELINE}개 — 신규 UI/UX 요구사항에 tests/e2e/ @spec을 추가하거나,`);
+    console.log(`  규약·리뷰형 요구사항으로 유지할 경우 UIUX_E2E_GAP_BASELINE을 갱신하세요 (tools/check/check_spec_refs.js).`);
+    console.log(`  현재 갭: ${uxE2eGap.join(', ')}`);
   }
   if (!fail && uncovered.length) console.log('  (커버리지 공백은 경고 — 문서/정책형 요구사항은 코드 참조 없음이 정상일 수 있음)');
   process.exit(fail ? 1 : 0);

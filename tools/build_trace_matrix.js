@@ -53,10 +53,13 @@ function inputsHash(specIds) {
   return h.digest('hex').slice(0, 16);
 }
 
-/** 검증 수단 파생 — 연결된 산출물 유형으로 분류 (29148의 검증 방법 식별에 대응) */
+/** 검증 수단 파생 — 연결된 산출물 유형으로 분류 (29148의 검증 방법 식별에 대응).
+ *  tests/e2e/ 참조가 있으면 'E2E 테스트'로 분리 표기 — 기하·시각 계열 UI/UX
+ *  요구사양(UX-VFY-02/03)의 실제 검증 수위를 구분하기 위함. */
 function verMeans(id, src, tst, docs) {
   const s = src.get(id);
-  if (tst.has(id)) return '테스트';
+  const t = tst.get(id);
+  if (t?.size) return [...t].some(f => f.startsWith('tests/e2e/')) ? 'E2E 테스트' : '테스트';
   if (s?.size && [...s].every(f => f.startsWith('tools/') || f.startsWith('ref-pipeline/'))) return '도구 검증';
   if (s?.size) return '구현 (테스트 갭)';
   if (docs.has(id)) return '문서 검토';
@@ -80,7 +83,7 @@ function build(specIds, src, tst, docs, reports, meta, missingRef, status, sourc
   out.push('| 열 | 의미 | 원천 |');
   out.push('|----|------|------|');
   out.push('| 상태 | SPEC의 구현 상태 (✅·🟡·미구현 등) | SPEC.md 표 마지막 셀 |');
-  out.push('| 검증 수단 | 파생 분류 — 테스트/도구 검증/구현(테스트 갭)/문서 검토 | 연결된 산출물 유형 |');
+  out.push('| 검증 수단 | 파생 분류 — E2E 테스트(tests/e2e 참조)/테스트/도구 검증/구현(테스트 갭)/문서 검토 | 연결된 산출물 유형 |');
   out.push('| 문서 | 해당 요구사항을 다루는 문서 (DOC-ID) | 각 문서 헤더 "관련 SPEC ID" |');
   out.push('| 소스 | 구현 코드 파일 | `// @spec` 태그 |');
   out.push('| 테스트 | 검증 테스트 파일 | `// @spec` 태그 (tests/) |');

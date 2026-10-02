@@ -6,6 +6,15 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-02 UI/UX TRACE 검증 체계 신설 (UX-VFY-01~05)
+
+- **배경**: UI/UX 요구사항은 단위·DOM 테스트로 검증 불가능한 영역 존재 — jsdom은 레이아웃을 계산하지 않아 기하 단언 불가. "어떤 검증으로 증명됐는가"를 TRACE_MATRIX가 구분하지 못했음 (UI/UX 계열 75개 중 e2e 연결 7개뿐이라는 실측이 있었으나 게이트 없음)
+- **SPEC**: §4.8.8 "UI/UX 검증 절차" 신설 — UX-VFY-01(SPEC 선행)·02(기하 계열 E2E 실측 필수)·03(E2E 커버리지 회귀 금지)·04(시각 실측 수치 기록)·05(배포 후 실기기 확인)
+- **게이트** (`tools/check/check_spec_refs.js`): `UIUX_E2E_GAP_BASELINE=61` 신설 — `UX-*`·`TR-*`·`R-*`·`TH-*`·`A-*` 계열 중 소스 참조 있으나 `tests/e2e/` 미연결 ID가 기준선 초과 시 실패 (신규 UI/UX 요구사항은 e2e 동반 필수, 백로그는 기준선 승계 후 점진 축소)
+- **매트릭스** (`tools/build_trace_matrix.js`): "검증 수단"이 `tests/e2e/` 참조 시 'E2E 테스트'로 분리 표기 — 기하·시각 계열의 실제 검증 수위 구분 (7개 ID가 E2E 테스트로 표기)
+- **런북**: `docs/dev/runbooks/UIUX_VERIFY_RUNBOOK.md` (DOC-RBK-11) — V0 요구사양 정의 → V1 @spec 연결 → V2 정적 게이트 → V3 e2e 계측 → V4 시각 실측·CHANGES 수치 기록 → V5 추적 갱신 → V6 배포·실기기 확인
+- 검증: check:specrefs(갭 61/61 통과)·check:trace·check:docs·docsync·lint·types 통과
+
 ## 2026-10-02 교재리더 콘텐츠 밖 스크롤 시 뷰 밀림 수정 (TR-23)
 
 - **증상**: 데스크톱에서 본문 컬럼 이외(TOC·여백·크롬 카드 위)를 상하 스크롤하면 교재 뷰 전체가 위로 밀려 올라감

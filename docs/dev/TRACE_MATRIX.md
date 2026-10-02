@@ -3,20 +3,20 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: 6e31381b8504ef10
-> 생성: 2026-10-02 · 원천: SPEC.md(383개 ID) + @spec 태그 + 문서 헤더
+> 입력 해시: 56bc0d768edc0200
+> 생성: 2026-10-02 · 원천: SPEC.md(388개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
 |----|------|------|
 | 상태 | SPEC의 구현 상태 (✅·🟡·미구현 등) | SPEC.md 표 마지막 셀 |
-| 검증 수단 | 파생 분류 — 테스트/도구 검증/구현(테스트 갭)/문서 검토 | 연결된 산출물 유형 |
+| 검증 수단 | 파생 분류 — E2E 테스트(tests/e2e 참조)/테스트/도구 검증/구현(테스트 갭)/문서 검토 | 연결된 산출물 유형 |
 | 문서 | 해당 요구사항을 다루는 문서 (DOC-ID) | 각 문서 헤더 "관련 SPEC ID" |
 | 소스 | 구현 코드 파일 | `// @spec` 태그 |
 | 테스트 | 검증 테스트 파일 | `// @spec` 태그 (tests/) |
 | 보고서 | 분석·결과 보고서 | report_archive 헤더 |
 | 출처 | 요구사항의 기원 (법령·시험 규정·사업 문서) | SPEC 부록 "요구사항 출처" 표 |
 
-**커버리지 요약**: 요구사항 383개 — 문서 연결 247 · 소스 연결 363 · 테스트 연결 377 · 보고서 연결 109
+**커버리지 요약**: 요구사항 388개 — 문서 연결 252 · 소스 연결 363 · 테스트 연결 377 · 보고서 연결 109
 
 ---
 
@@ -123,9 +123,9 @@
 | TR-18 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | css/reader-extras.css<br>css/reader.css<br>src/views/reader-toolbar.js<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
 | TR-19 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/unit/reader-analysis-gates.test.js | — | — |
 | TR-20 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | src/image-zoom.js | tests/dom/onboarding-zoom.dom.test.js | — | — |
-| TR-21 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | css/reader.css<br>html/views/textbook-reader.html<br>index.html<br>src/views/reader-toolbar.js | tests/e2e/toc-sidebar.spec.js | — | — |
-| TR-22 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | css/reader.css<br>html/views/textbook-reader.html<br>index.html<br>src/views/reader-toolbar.js | tests/e2e/toc-sidebar.spec.js | — | — |
-| TR-23 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | css/reader.css<br>html/views/textbook-reader.html<br>index.html<br>src/views/reader-toolbar.js | tests/e2e/toc-sidebar.spec.js | — | — |
+| TR-21 | ✅ | E2E 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | css/reader.css<br>html/views/textbook-reader.html<br>index.html<br>src/views/reader-toolbar.js | tests/e2e/toc-sidebar.spec.js | — | — |
+| TR-22 | ✅ | E2E 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | css/reader.css<br>html/views/textbook-reader.html<br>index.html<br>src/views/reader-toolbar.js | tests/e2e/toc-sidebar.spec.js | — | — |
+| TR-23 | ✅ | E2E 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | css/reader.css<br>html/views/textbook-reader.html<br>index.html<br>src/views/reader-toolbar.js | tests/e2e/toc-sidebar.spec.js | — | — |
 
 ## 3.6 교재 리더 — 학습 보조 도구
 
@@ -456,7 +456,7 @@
 | R-07 | ✅ | 테스트 | DOC-DSN-01 | — | tests/dom/common-navigation.dom.test.js | — | — |
 | R-08 | ✅ | 테스트 | DOC-DSN-01 | src/app-shell.js | tests/dom/common-navigation.dom.test.js | — | — |
 | R-09 | ✅ | 테스트 | DOC-DSN-01 | — | tests/dom/common-navigation.dom.test.js | — | — |
-| R-10 | ✅ | 테스트 | — | css/reader.css | tests/e2e/toc-sidebar.spec.js | — | — |
+| R-10 | ✅ | E2E 테스트 | — | css/reader.css | tests/e2e/toc-sidebar.spec.js | — | — |
 
 ## 4.7 테마 시스템
 
@@ -480,15 +480,15 @@
 | UX-FB-05 | 기존 사용자는 플래그만 기록해 방해하지 않음 — 재방문 강제 안내 금지 | 테스트 | DOC-DSN-11 | src/onboarding.js | tests/dom/onboarding-zoom.dom.test.js | — | — |
 | UX-FORM-01 | 16px 미만이면 iOS Safari가 포커스 시 자동 확대 | 테스트 | — | css/reader.css | tests/unit/ux-invariants.test.js | — | — |
 | UX-FORM-02 | 모바일에서 물리적 눌림감 제공 | 테스트 | — | css/base.css | tests/unit/ux-invariants.test.js | — | — |
-| UX-NAV-01 | 한 번에 하나의 네비게이션만 노출 — 중복 방지. 하단 탭 바는 엄지 도달권, 탭 수가 늘어나면 가로 스크롤보다 핵심 5탭 + `role="dialog"` 시트(`#mobile-more-sheet`)가 발견성·터치 안정성에 유리. 활성 탭은 `scrollIntoView({inline:'center'})`로 가시화 + `aria-current="page"`, 시트 소속 뷰 활성 시 더보기 탭에 활성 표시 | 테스트 | DOC-DSN-01<br>DOC-REF-09 | css/app-responsive.css<br>src/app.js<br>src/router.js | tests/dom/common-navigation.dom.test.js<br>tests/dom/router.dom.test.js<br>tests/dom/ui-structure.dom.test.js<br>tests/e2e/more-sheet.spec.js | — | — |
+| UX-NAV-01 | 한 번에 하나의 네비게이션만 노출 — 중복 방지. 하단 탭 바는 엄지 도달권, 탭 수가 늘어나면 가로 스크롤보다 핵심 5탭 + `role="dialog"` 시트(`#mobile-more-sheet`)가 발견성·터치 안정성에 유리. 활성 탭은 `scrollIntoView({inline:'center'})`로 가시화 + `aria-current="page"`, 시트 소속 뷰 활성 시 더보기 탭에 활성 표시 | E2E 테스트 | DOC-DSN-01<br>DOC-REF-09 | css/app-responsive.css<br>src/app.js<br>src/router.js | tests/dom/common-navigation.dom.test.js<br>tests/dom/router.dom.test.js<br>tests/dom/ui-structure.dom.test.js<br>tests/e2e/more-sheet.spec.js | — | — |
 | UX-NAV-02 | 스크롤 중에도 설정·테마에 접근 가능. 단, 부모가 스크롤 컨테이너(`overflow-y: auto`)일 때만 작동 — `body` 스크롤 구조면 의도대로 동작하는지 확인할 것 | 테스트 | DOC-DSN-01 | — | tests/dom/common-navigation.dom.test.js | — | — |
 | UX-NAV-03 | 드롭다운은 절대위치로 헤더 경계를 넘어야 함. 넘침 제어는 `min-width:0`+말줄임과 `flex-shrink:0`으로 처리 | 테스트 | DOC-DSN-01 | — | tests/dom/common-navigation.dom.test.js | — | — |
 | UX-NAV-04 | `.app-container { width: 100% }`. 특히 클래식 스크롤바가 상시 표시되는 데스크톱에서 차이 발생 | 테스트 | DOC-DSN-01 | — | tests/dom/common-navigation.dom.test.js | — | — |
 | UX-NAV-05 | back-to-top(`bottom:1.25rem`)이 탭 바(z 1400)에 완전히 가려진 실제 사례. 배너·토스트·플로팅 버튼 신규 추가 시에도 동일 규칙 적용. `.main-content`는 `padding-bottom: calc(80px + safe)` + `scroll-padding-bottom`으로 콘텐츠·포커스 요소 보호 | 테스트 | DOC-DSN-01 | — | tests/dom/common-navigation.dom.test.js | — | — |
 | UX-NAV-06 | `searchAll()`은 소스 주입 가능한 순수 함수로 분리해 테스트 가능. 실행은 기존 경로 재사용(nav 클릭 시뮬레이션, `startSubjectStudy/Quiz`, `openSubjectChapter`, `ExamViewer.openExam`) — 네비게이션 분기 신설 금지. 뷰 목록은 nav-item DOM 스캔이라 feature 게이팅(`is-hidden`)을 자동 반영. z-index 2500 (탭 바·모달 위). 전 소스 로컬 데이터로 오프라인 동작 | 테스트 | DOC-DSN-01<br>DOC-DSN-11 | src/command-palette.js | tests/dom/common-navigation.dom.test.js<br>tests/dom/study-commandpalette.dom.test.js<br>tests/unit/command-palette.test.js | — | — |
 | UX-NAV-07 | 내비게이션(사이드바·탭 바·뒤로가기)은 사용자의 이전 위치를 보존하는 게 기대 동작이지만, "맞춤 리포트 보기"·"퀴즈 풀기" 같은 액션 버튼이 이전 스크롤을 복원하면 중간에서 열려 맥락을 잃는다. `restoreScrollPosition`의 `pendingTop` 플래그가 복원 시점에 소비되어 `saveScrollPosition` 덮어쓰기와 무관하게 동작. 새 액션 딥링크 추가 시 `scrollTop: true` 필수 — `data-args='["view-id", {"scrollTop": true}]'` 또는 직접 호출 모두 지원 | 테스트 | DOC-DSN-01<br>DOC-DSN-11 | src/views/navigation.js | tests/dom/common-navigation.dom.test.js | — | — |
-| UX-NAV-08 | SPA에서 뒤로가기가 없으면 Android/PWA 뒤로가기 시 앱이 종료됨. 해시는 공유 가능한 딥링크도 제공. `navigateToView` 재진입은 `_hashNavigating` 플래그로 pushState를 생략해 무한 루프 방지. nav-item 없는 뷰(exam-select)는 `registerViewNavigator`로 등록된 라우터 경로가 `switchView` 폴백을 대신해 제목·해시·렌더를 동일하게 동기화 | 테스트 | DOC-DSN-11<br>DOC-REF-09 | src/modal-back.js<br>src/router.js | tests/dom/router.dom.test.js<br>tests/dom/ui-structure.dom.test.js<br>tests/e2e/more-sheet.spec.js | — | — |
-| UX-NAV-09 | 인플로우 크롬은 본문 높이를 영구 잠식하고, transform만 적용한 숨김은 공간을 회수하지 못함(실측: 본문 63%→89% vh). 오버레이 시 콘텐츠 스크롤 컨테이너에 `padding-top`=크롬 높이를 줘 첫 화면이 크롬 아래 묻히지 않게 함 — 패딩은 스크롤과 함께 밀려나므로 읽는 중 잠식 0. 크롬 아래를 지나는 다른 오버레이(섹션 표시줄 등)는 `~` 시빌링 셀렉터로 숨김 상태와 위치를 연동할 것 | 테스트 | — | css/reader.css | tests/e2e/toc-sidebar.spec.js | — | — |
+| UX-NAV-08 | SPA에서 뒤로가기가 없으면 Android/PWA 뒤로가기 시 앱이 종료됨. 해시는 공유 가능한 딥링크도 제공. `navigateToView` 재진입은 `_hashNavigating` 플래그로 pushState를 생략해 무한 루프 방지. nav-item 없는 뷰(exam-select)는 `registerViewNavigator`로 등록된 라우터 경로가 `switchView` 폴백을 대신해 제목·해시·렌더를 동일하게 동기화 | E2E 테스트 | DOC-DSN-11<br>DOC-REF-09 | src/modal-back.js<br>src/router.js | tests/dom/router.dom.test.js<br>tests/dom/ui-structure.dom.test.js<br>tests/e2e/more-sheet.spec.js | — | — |
+| UX-NAV-09 | 인플로우 크롬은 본문 높이를 영구 잠식하고, transform만 적용한 숨김은 공간을 회수하지 못함(실측: 본문 63%→89% vh). 오버레이 시 콘텐츠 스크롤 컨테이너에 `padding-top`=크롬 높이를 줘 첫 화면이 크롬 아래 묻히지 않게 함 — 패딩은 스크롤과 함께 밀려나므로 읽는 중 잠식 0. 크롬 아래를 지나는 다른 오버레이(섹션 표시줄 등)는 `~` 시빌링 셀렉터로 숨김 상태와 위치를 연동할 것 | E2E 테스트 | — | css/reader.css | tests/e2e/toc-sidebar.spec.js | — | — |
 | UX-PWA-01 | 모바일 OS(Android/iOS)는 웹의 자체 종료를 차단 — 프로그래밍으로 완전 종료 불가. 데스크톱 설치 PWA는 `close()`가 동작하므로 모바일 안내는 불필요. 차단되면 "최근 앱 목록에서 밀어 닫으세요"(터치)/"창을 닫아주세요"(데스크톱) 안내 화면으로 대체하는 것이 최선 | 테스트 | — | src/app.js | tests/unit/ux-invariants.test.js | — | — |
 | UX-PWA-02 | 브라우저 탭에서 의미 없는 버튼(앱 종료 등)을 숨겨 혼란 방지. iOS는 `navigator.standalone`만 지원하므로 둘 다 확인 필수 | 테스트 | — | src/pwa-install.js | tests/unit/ux-invariants.test.js | — | — |
 | UX-PWA-03 | "배포했는데 안 바뀐다" 보고의 대부분이 이 패턴. 사용자 안내 문구와 업데이트 토스트 필수 | 테스트 | — | sw.js | tests/unit/ux-invariants.test.js | — | — |
@@ -502,6 +502,11 @@
 | UX-SET-03 | Apple HIG/Google Material 최소 터치 영역 | 테스트 | — | css/ui-overlay.css | tests/unit/ux-invariants.test.js | — | — |
 | UX-SET-04 | 사용자가 "몇 버전인지" 문의할 때 유일한 확인 경로. SW 등록 스크립트 URL에서 버전 자동 추출 | 테스트 | — | css/ui-overlay.css | tests/unit/ux-invariants.test.js | — | — |
 | UX-SET-05 | 일관된 드롭다운 UX | 테스트 | — | css/ui-overlay.css | tests/unit/ux-invariants.test.js | — | — |
+| UX-VFY-01 | 요구사양 없는 UI 변경은 추적·리뷰 불가 — TR-21~23처럼 선 정의 후 구현하는 관행을 규약화 | 문서 검토 | DOC-RBK-11 | — | — | — | — |
+| UX-VFY-02 | jsdom은 레이아웃을 계산하지 않으므로 DOM/단위 테스트로는 기하 요구사항을 검증할 수 없음 | 문서 검토 | DOC-RBK-11 | — | — | — | — |
+| UX-VFY-03 | 신규 UI/UX 요구사항은 E2E와 함께 진입 — 기존 백로그(규약형 다수)는 기준선 승계 후 점진 축소 | 문서 검토 | DOC-RBK-11 | — | — | — | — |
+| UX-VFY-04 | 선언이 아닌 계측으로 증명 — 리더 개선(349→527→652px)처럼 전후 수치를 이력에 남김 | 문서 검토 | DOC-RBK-11 | — | — | — | — |
+| UX-VFY-05 | SW Cache First로 즉시 반영되지 않고(UX-PWA-03), 기기별 뷰포트·safe-area는 로컬 에뮬레이션과 다를 수 있음 | 문서 검토 | DOC-RBK-11 | — | — | — | — |
 
 ## 5.1 데이터 아키텍처
 
@@ -656,6 +661,7 @@
 | DOC-RBK-08 | docs/dev/runbooks/TEXTBOOK_REPLACEMENT_RUNBOOK.md | BP-01, BP-02, BP-03, BP-04, BP-05, BP-06, BP-07, BP-08, CS-01, CS-02, CS-03, CS-04, CS-05, CS-06, CS-07, CS-08, CS-09, CS-10, DA-01, ID-01, ID-02, ID-03, ID-04 |
 | DOC-RBK-09 | docs/dev/runbooks/VERIFY_DEPLOY_PIPELINE.md | BP-01, BP-02, BP-03, BP-04, BP-05, BP-06, BP-07, BP-08, P-13 |
 | DOC-RBK-10 | docs/dev/runbooks/NEW_EXAM_RUNBOOK.md | BP-09, DA-11, DA-12, ES-01 |
+| DOC-RBK-11 | docs/dev/runbooks/UIUX_VERIFY_RUNBOOK.md | UX-VFY-01, UX-VFY-02, UX-VFY-03, UX-VFY-04, UX-VFY-05 |
 | DOC-REF-01 | docs/dev/reference/COMBO_STUDY_STRATEGY.md | DR-02, DR-03, DR-04, DR-05, DR-06, DR-07, Q-01, Q-02, Q-03, Q-04, Q-05, Q-06, Q-07, Q-08, Q-09, Q-10, Q-11 |
 | DOC-REF-02 | docs/dev/reference/DEV_ENVIRONMENT.md | — |
 | DOC-REF-03 | docs/dev/reference/FLASHCARD_LOGIC.md | F-01, F-02, F-03, F-04, F-05, F-06, F-07, F-08, F-09, F-10, ID-01, ID-02, ID-03, ID-04, TR-01 |
