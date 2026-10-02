@@ -1,5 +1,12 @@
 [
   {
+    "version": "v20261002-4ef1ebb",
+    "date": "2026-10-02",
+    "notes": [
+      "[content·textbook] 1·2·4과목 표지 삽화 교체 및 webp 재생성"
+    ]
+  },
+  {
     "version": "v20261002-a21c5e1",
     "date": "2026-10-02",
     "notes": [
@@ -147,13 +154,6 @@
     "date": "2026-10-01",
     "notes": [
       "[수정·multi-exam] 시험 비보유 시험에 화장품 결합 요소 노출 제거"
-    ]
-  },
-  {
-    "version": "v20261001-6673b49",
-    "date": "2026-10-01",
-    "notes": [
-      "[기능·check] 파일 계층 분류 맵 + check:domainmap 게이트 추가"
     ]
   }
 ]
