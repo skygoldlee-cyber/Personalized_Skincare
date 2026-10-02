@@ -1,5 +1,15 @@
 [
   {
+    "version": "v20261003-6fef04f",
+    "date": "2026-10-03",
+    "notes": [
+      "[문서·spec] UIUX_요구사양.md를 SPEC §4.10으로 병합 — 이중 원천 해소",
+      "[문서·uiux] 외주 인도용 UI/UX 패키지 신설 — DOC-DEV-07",
+      "[문서·uiux] UI/UX 문서 계열 정리 — README 전용 섹션 + 상호 링크 + SPEC 포인터",
+      "[문서·uiux] UI/UX 요구사양서 실구현 정합화 + DOC-DEV-06 등록"
+    ]
+  },
+  {
     "version": "v20261003-9f876ad",
     "date": "2026-10-03",
     "notes": [
@@ -138,13 +148,6 @@
     "date": "2026-10-02",
     "notes": [
       "내부 개선 및 안정성 향상"
-    ]
-  },
-  {
-    "version": "v20261002-3640449",
-    "date": "2026-10-02",
-    "notes": [
-      "[정리] Vercel 프로젝트 리네임 반영 — personalized-skincare-study → passory"
     ]
   }
 ]
