@@ -59,7 +59,8 @@ function* walk(dir, exts) {
 function expandIds(tagText, specIds = new Set(), errors = null, src = '') {
   const ids = new Set();
   if (/^(none\b|해당|전 영역)/.test(tagText.trim())) return ids;
-  for (const raw of tagText.split(/[,·]/)) {
+  // 구분자: 쉼표·가운뎃점·슬래시 (FO-24/RR-19 형태의 연접 나열 허용 — 접두사 생략형 `FO-24/25`는 비지원, `25`가 파싱 오류로 잡혀 명시 강제)
+  for (const raw of tagText.split(/[,·/]/)) {
     const token = raw.trim()
       .replace(/\*\/\s*$/, '')
       .replace(/-->\s*$/, '')
@@ -83,6 +84,8 @@ function expandIds(tagText, specIds = new Set(), errors = null, src = '') {
       continue;
     }
     if (PURE_ID_RE.test(token)) { ids.add(token); continue; }
+    // 파일 경로·확장자 토큰(`../design/X.md` 등)은 ID 아님 — `/` 구분자로 쪼개진 조각 포함
+    if (/\.[a-z0-9]{1,6}$/i.test(token)) continue;
     // 대문자 시작 토큰은 ID 의도로 간주 — 해석 불가를 오류로 수집 (무소음 드롭 방지)
     if (errors && /^[A-Z0-9]/.test(token)) errors.push(`${src} — ID 토큰 해석 불가: "${token}"`);
   }

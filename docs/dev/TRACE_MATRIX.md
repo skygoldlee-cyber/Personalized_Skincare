@@ -3,7 +3,7 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: 8e7151933b7b2cb1
+> 입력 해시: d6e461d7e66f4f5f
 > 생성: 2026-10-02 · 원천: SPEC.md(376개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
@@ -16,7 +16,7 @@
 | 보고서 | 분석·결과 보고서 | report_archive 헤더 |
 | 출처 | 요구사항의 기원 (법령·시험 규정·사업 문서) | SPEC 부록 "요구사항 출처" 표 |
 
-**커버리지 요약**: 요구사항 376개 — 문서 연결 239 · 소스 연결 356 · 테스트 연결 370 · 보고서 연결 109
+**커버리지 요약**: 요구사항 376개 — 문서 연결 241 · 소스 연결 356 · 테스트 연결 370 · 보고서 연결 109
 
 ---
 
@@ -169,7 +169,7 @@
 | RR-16 | ✅ | 테스트 | DOC-REF-04<br>DOC-REF-07 | src/html-viewer.js | tests/dom/common-htmlviewer.dom.test.js | — | — |
 | RR-17 | ✅ | 테스트 | DOC-DSN-10 | src/law-links.js<br>src/views/reader-ref-links.js<br>tools/build/build_pdf_registry.js<br>tools/check/check_law_urls.js | tests/unit/law-links.test.js | — | 국가법령정보센터(law.go.kr) 한글주소 — 공식 최신 통합본 링크 규약 |
 | RR-18 | ✅ | 테스트 | — | src/reader-format.js | tests/unit/reader-format-general.test.js | — | — |
-| RR-19 | ✅ | 테스트 | DOC-DSN-10 | src/notice-check.js<br>src/views/reader-ref-links.js | tests/unit/notice-check.test.js | — | 식약처 고시 개정 감지 — 시행 예정본(현행 아님) 구분, `notice_status.json` |
+| RR-19 | ✅ | 테스트 | DOC-DEV-05<br>DOC-DSN-10 | src/notice-check.js<br>src/views/reader-ref-links.js | tests/unit/notice-check.test.js | — | 식약처 고시 개정 감지 — 시행 예정본(현행 아님) 구분, `notice_status.json` |
 
 ## 3.9 교재 검색
 
@@ -184,7 +184,7 @@
 | TS-07 | ✅ | 테스트 | — | src/mermaid-render.js<br>src/views/textbook-search.js | tests/dom/study-search.dom.test.js | — | — |
 | TS-08 | ✅ | 테스트 | — | src/views/textbook-search.js | tests/dom/study-search.dom.test.js | — | — |
 | TS-09 | ✅ | 테스트 | — | src/views/textbook-search.js | tests/dom/study-search.dom.test.js | — | — |
-| TS-10 | ✅ | 테스트 | — | src/views/textbook-search.js | tests/dom/story-search.dom.test.js | — | — |
+| TS-10 | ✅ | 테스트 | DOC-DEV-41 | src/views/textbook-search.js | tests/dom/story-search.dom.test.js | — | — |
 
 ## 3.10 성분 사전
 
@@ -194,7 +194,7 @@
 | DI-02 | ✅ | 테스트 | — | src/views/dictionary.js | tests/dom/dictionary-schema.dom.test.js<br>tests/dom/study-dictionary.dom.test.js | — | — |
 | DI-03 | ✅ | 테스트 | — | src/views/dictionary.js | tests/dom/dictionary-schema.dom.test.js<br>tests/dom/study-dictionary.dom.test.js | — | — |
 | DI-04 | ✅ | 테스트 | — | html/views/dictionary.html<br>index.html<br>src/views/dictionary.js | tests/dom/review-drills-formula.dom.test.js | — | — |
-| DI-05 | ✅ | 테스트 | — | html/views/dictionary.html<br>index.html<br>src/views/dictionary.js | tests/dom/review-drills-formula.dom.test.js | — | — |
+| DI-05 | ✅ | 테스트 | DOC-DEV-05 | html/views/dictionary.html<br>index.html<br>src/views/dictionary.js | tests/dom/review-drills-formula.dom.test.js | — | — |
 
 ## 3.11 훈련소
 
@@ -276,7 +276,7 @@
 | FO-02 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02 | src/formula-check.js<br>src/views/formula.js | tests/unit/formula-check.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | 화장품 안전기준 등에 관한 규정(식약처고시 제2026-19호) — 원료별 사용 한도·금지 |
 | FO-03 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02 | src/views/formula.js | tests/unit/formula-os.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
 | FO-04 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02 | src/views/formula.js | tests/unit/formula-os.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
-| FO-05 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02 | src/formula-rules.js<br>src/views/formula-recommend.js<br>src/views/formula.js | tests/unit/formula-rules.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
+| FO-05 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DEV-05<br>DOC-DSN-02 | src/formula-rules.js<br>src/views/formula-recommend.js<br>src/views/formula.js | tests/unit/formula-rules.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
 | FO-06 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02 | src/formula-rules.js<br>src/views/formula-recommend.js<br>src/views/formula.js | tests/unit/formula-rules.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
 | FO-07 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02 | src/views/formula.js | tests/unit/formula-os.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
 | FO-08 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02 | src/formula-store.js<br>src/views/formula-recommend.js<br>src/views/formula.js | tests/unit/formula-store.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
@@ -295,7 +295,7 @@
 | FO-21 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02 | css/print.css<br>src/views/formula-print.js | tests/dom/formula-print.dom.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | 화장품법 표시 규정 — 용기 라벨 기재사항·조제 기록지 |
 | FO-22 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02 | src/csv-utils.js | tests/unit/csv-import.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
 | FO-23 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02 | src/batch-store.js<br>src/formula-store.js | tests/unit/batch-store.test.js<br>tests/unit/formula-store.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | 사업 판단 — docs/dev/design/SUBSCRIPTION_ROADMAP.md |
-| FO-24 | ✅ | 테스트 | DOC-DSN-10 | html/views/formula.html<br>index.html<br>ref-pipeline/check_mfds_notice.py<br>src/notice-check.js | tests/dom/formula-nav.dom.test.js<br>tests/unit/notice-check.test.js | — | 식약처 고시 개정 추적 — law.go.kr 오픈API(법제처) + `content/exams/cosmetic/참조자료/법령고시/` PDF 기준본 |
+| FO-24 | ✅ | 테스트 | DOC-DEV-05<br>DOC-DSN-10 | html/views/formula.html<br>index.html<br>ref-pipeline/check_mfds_notice.py<br>src/notice-check.js | tests/dom/formula-nav.dom.test.js<br>tests/unit/notice-check.test.js | — | 식약처 고시 개정 추적 — law.go.kr 오픈API(법제처) + `content/exams/cosmetic/참조자료/법령고시/` PDF 기준본 |
 | FO-25 | ✅ | 테스트 | — | html/views/formula.html<br>index.html | tests/dom/formula-nav.dom.test.js | — | 화장품 안전기준 등에 관한 규정(별표1·2) — 네거티브 리스트 판정 원칙 · 색소/기능성 고시 — 지정 목록 예외 |
 
 ## 3.19 계정·클라우드 동기화
@@ -535,9 +535,9 @@
 | BP-07 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 2개 | tools/build/stamp_release_notes.js<br>tools/build/stamp_sw_version.js<br>tools/deploy.js | tests/unit/build-pipeline.test.js | — | — |
 | BP-08 | ✅ | 테스트 | DOC-PPL-01<br>DOC-RBK-02<br>DOC-RBK-03<br>DOC-RBK-08<br>…외 2개 | tools/check/audit_card_quality.js | tests/unit/build-pipeline.test.js | — | — |
 | BP-09 | ✅ | 테스트 | DOC-RBK-02<br>DOC-RBK-10 | tools/build/build_doc_bundles.js | tests/unit/multi-exam-gates.test.js | — | — |
-| BP-10 | ✅ | 테스트 | DOC-RBK-02 | tools/build/build_story_textbooks.js | tests/unit/reader-analysis-gates.test.js | — | — |
-| BP-11 | ✅ | 테스트 | DOC-RBK-02 | tools/build/build_story_textbooks.js | tests/unit/story-merge.test.js | — | — |
-| BP-12 | ✅ | 테스트 | DOC-RBK-02 | tools/build/build_story_textbooks.js | tests/unit/story-merge.test.js | — | — |
+| BP-10 | ✅ | 테스트 | DOC-DEV-41<br>DOC-RBK-02 | tools/build/build_story_textbooks.js | tests/unit/reader-analysis-gates.test.js | — | — |
+| BP-11 | ✅ | 테스트 | DOC-DEV-41<br>DOC-RBK-02 | tools/build/build_story_textbooks.js | tests/unit/story-merge.test.js | — | — |
+| BP-12 | ✅ | 테스트 | DOC-DEV-41<br>DOC-RBK-02 | tools/build/build_story_textbooks.js | tests/unit/story-merge.test.js | — | — |
 
 ## 5.4 콘텐츠 구조
 
@@ -568,13 +568,13 @@
 
 | ID | 상태 | 검증 수단 | 문서 | 소스 | 테스트 | 보고서 | 출처 |
 |----|------|-----------|------|------|--------|--------|------|
-| ST-01 | ✅ | 테스트 | DOC-RBK-07 | src/views/textbook-reader.js | tests/unit/story-textbook.test.js | — | — |
-| ST-02 | ✅ | 테스트 | DOC-RBK-07 | src/views/textbook-reader.js | tests/unit/story-textbook.test.js | — | — |
-| ST-03 | ✅ | 테스트 | DOC-RBK-07 | src/views/textbook-reader.js | tests/unit/story-textbook.test.js | — | — |
-| ST-04 | ✅ | 테스트 | DOC-RBK-07 | src/views/textbook-reader.js | tests/unit/story-textbook.test.js | — | — |
-| ST-05 | ✅ | 테스트 | DOC-RBK-07 | src/views/textbook-reader.js | tests/unit/story-textbook.test.js | — | — |
-| ST-06 | ✅ | 테스트 | DOC-RBK-07 | src/views/textbook-reader.js | tests/unit/story-textbook.test.js | — | — |
-| ST-07 | ✅ | 테스트 | DOC-RBK-07 | src/views/textbook-reader.js | tests/unit/story-textbook.test.js | — | — |
+| ST-01 | ✅ | 테스트 | DOC-DEV-41<br>DOC-RBK-07 | src/views/textbook-reader.js | tests/unit/story-textbook.test.js | — | — |
+| ST-02 | ✅ | 테스트 | DOC-DEV-41<br>DOC-RBK-07 | src/views/textbook-reader.js | tests/unit/story-textbook.test.js | — | — |
+| ST-03 | ✅ | 테스트 | DOC-DEV-41<br>DOC-RBK-07 | src/views/textbook-reader.js | tests/unit/story-textbook.test.js | — | — |
+| ST-04 | ✅ | 테스트 | DOC-DEV-41<br>DOC-RBK-07 | src/views/textbook-reader.js | tests/unit/story-textbook.test.js | — | — |
+| ST-05 | ✅ | 테스트 | DOC-DEV-41<br>DOC-RBK-07 | src/views/textbook-reader.js | tests/unit/story-textbook.test.js | — | — |
+| ST-06 | ✅ | 테스트 | DOC-DEV-41<br>DOC-RBK-07 | src/views/textbook-reader.js | tests/unit/story-textbook.test.js | — | — |
+| ST-07 | ✅ | 테스트 | DOC-DEV-41<br>DOC-RBK-07 | src/views/textbook-reader.js | tests/unit/story-textbook.test.js | — | — |
 
 ## 7.2 유료화 인프라
 
@@ -622,8 +622,8 @@
 | DOC-DEV-02 | docs/dev/ARCHITECTURE.md | — |
 | DOC-DEV-03 | docs/dev/CHANGES.md | — |
 | DOC-DEV-04 | docs/dev/TRACE_MATRIX.md | — |
-| DOC-DEV-05 | docs/dev/ingredients_audit_제2026-19호.md | — |
-| DOC-DEV-41 | docs/dev/runbooks/STORY_PATCH_GUIDE.md | — |
+| DOC-DEV-05 | docs/dev/ingredients_audit_제2026-19호.md | DI-05, FO-05, FO-24, RR-19 |
+| DOC-DEV-41 | docs/dev/runbooks/STORY_PATCH_GUIDE.md | BP-10, BP-11, BP-12, ST-01, ST-02, ST-03, ST-04, ST-05, ST-06, ST-07, TS-10 |
 | DOC-DSN-01 | docs/dev/design/DOM_TEST_DESIGN.md | A-01, A-02, A-03, A-04, A-05, A-06, A-07, R-01, R-02, R-03, R-04, R-05, R-06, R-07, R-08, R-09, TH-01, TH-02, TH-03, TH-04, TH-05, TH-06, UM-01, UM-02, UM-03, UM-04, UM-05, UX-NAV-01, UX-NAV-02, UX-NAV-03, UX-NAV-04, UX-NAV-05, UX-NAV-06, UX-NAV-07 |
 | DOC-DSN-02 | docs/dev/design/FORMULA_OS_WORKFLOW_DESIGN.md | FO-01, FO-02, FO-03, FO-04, FO-05, FO-06, FO-07, FO-08, FO-09, FO-10, FO-11, FO-12, FO-13, FO-14, FO-15, FO-16, FO-17, FO-18, FO-19, FO-20, FO-21, FO-22, FO-23, UM-01, UM-02, UM-03, UM-04, UM-05 |
 | DOC-DSN-03 | docs/dev/design/LEARNING_PREMIUM_PLAN.md | AN-01, AN-02, AN-03, ROAD-P0 |
@@ -667,8 +667,3 @@
 ## 부록 B — 테스트 갭 (소스 연결 있으나 테스트 @spec 미연결)
 
 없음 — 소스 연결된 모든 요구사항에 테스트 참조가 있음.
-
-## 부록 C — 관련 SPEC ID 헤더 누락 문서
-
-- docs/dev/ingredients_audit_제2026-19호.md
-- docs/dev/runbooks/STORY_PATCH_GUIDE.md
