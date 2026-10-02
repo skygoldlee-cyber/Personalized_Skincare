@@ -52,7 +52,7 @@ flowchart TB
 
 ## 3. 유입 채널 추적 (`entry_source`)
 
-- **링크 규격**: `https://personalized-skincare-study.vercel.app/?src=yt-main`
+- **링크 규격**: `https://passory.vercel.app/?src=yt-main`
   - 메인 영상 `yt-main`, 쇼츠 `yt-shorts`, 범퍼 `yt-bumper`, 그 외 채널 `bl`·`ig` 등 임의 확장
   - QR 코드에도 동일 파라미터 URL 삽입
 - **캡처 로직** (app.js boot 초기, ~20줄):

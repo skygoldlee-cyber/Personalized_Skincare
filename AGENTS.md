@@ -383,7 +383,7 @@ docs/                   # 개발 문서
 5. `npm.cmd run verify:assets` — SHELL_ASSETS 파일 존재 확인
 6. `git status` — 임시 파일(`_temp_*.js`, `.git/COMMIT_MSG.txt`) 제거 확인
 7. `sw.js` `CACHE_VERSION` bump 확인
-7. Vercel 배포 후 `https://personalized-skincare-study.vercel.app` 200 OK 확인
+7. Vercel 배포 후 `https://passory.vercel.app` 200 OK 확인
 
 ## 주의사항
 

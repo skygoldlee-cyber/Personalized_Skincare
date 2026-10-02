@@ -67,13 +67,13 @@ gh auth setup-git   # git이 gh 인증을 사용하도록 설정
 |------|-----|
 | **projectId** | `prj_706IdDze2DZsNwjADIfhvsfWL3HW` |
 | **orgId** | `team_P4ciaJGD9bvDziPxZM6FOCSK` |
-| **projectName** | `personalized-skincare-study` |
+| **projectName** | `passory` |
 
 #### 토큰 발급 (기존 머신 또는 웹에서 1회)
 
 1. https://vercel.com/account/tokens 접속 (skygold 계정으로 로그인)
 2. **Create Token** 클릭
-3. Scope를 `personalized-skincare-study` 프로젝트로 **제한** (보안 권장)
+3. Scope를 `passory` 프로젝트로 **제한** (보안 권장)
 4. 생성된 토큰을 안전한 곳에 보관 (1Password, Bitwarden 등)
 
 #### 새 머신에서 배포

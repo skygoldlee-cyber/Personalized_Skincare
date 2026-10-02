@@ -27,9 +27,9 @@
 |------|-----|
 | **projectId** | `prj_706IdDze2DZsNwjADIfhvsfWL3HW` |
 | **orgId** | `team_P4ciaJGD9bvDziPxZM6FOCSK` |
-| **projectName** | `personalized-skincare-study` |
-| **프로덕션 URL** | `https://personalized-skincare-study.vercel.app` |
-| **Vercel 대시보드** | `https://vercel.com/skygold/personalized-skincare-study` |
+| **projectName** | `passory` |
+| **프로덕션 URL** | `https://passory.vercel.app` |
+| **Vercel 대시보드** | `https://vercel.com/skygold/passory` |
 
 > `.vercel/project.json`은 `.gitignore`에 의해 Git에 커밋되지 않지만, `.vercelignore`에서 `.vercel/`이 배포 제외되므로 로컬에만 존재합니다. 새 머신에서는 `vercel` 명령 한 번으로 자동 생성됩니다.
 
@@ -135,7 +135,7 @@ npm.cmd run deploy
 배포 완료 후 출력 예:
 ```
 ✓ Ready in 6s
-Production:  https://personalized-skincare-study.vercel.app
+Production:  https://passory.vercel.app
 ```
 
 ### 방법 B: GitHub 연동 자동 배포
@@ -200,7 +200,7 @@ Production:  https://personalized-skincare-study.vercel.app
   > Cascade는 동기 대기 시 `WaitDelay expired` 타임아웃 발생. 비동기 + 폴링 방식만 작동함.
 
 #### 6. 배포 확인
-- Production URL: https://personalized-skincare-study.vercel.app
+- Production URL: https://passory.vercel.app
 - Inspect URL: 배포 완료 시 출력되는 URL에서 빌드 로그 확인
 - `✓ Ready in Ns` 메시지 확인
 

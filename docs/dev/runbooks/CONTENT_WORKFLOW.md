@@ -485,7 +485,7 @@ npx.cmd vercel --prod --yes --scope skygold
 
 ### 5.3 배포 확인
 
-- https://personalized-skincare-study.vercel.app 접속
+- https://passory.vercel.app 접속
 - HTTP 200 확인
 - 변경된 콘텐츠 정상 표시 확인
 

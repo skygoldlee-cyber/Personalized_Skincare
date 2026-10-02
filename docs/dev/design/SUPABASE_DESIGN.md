@@ -431,8 +431,8 @@ select polname, polrelid::regclass from pg_policy;
 
 | 항목 | 값 |
 |---|---|
-| Site URL | `https://personalized-skincare-study.vercel.app` |
-| Redirect URLs | `https://personalized-skincare-study.vercel.app/**` + `http://localhost:3000/**` (로컬 테스트용) |
+| Site URL | `https://passory.vercel.app` |
+| Redirect URLs | `https://passory.vercel.app/**` + `http://localhost:3000/**` (로컬 테스트용) |
 
 > 기본 Site URL은 `http://localhost:3000` — 설정 전에 발송된 확인 메일·매직링크는 localhost로 리다이렉트된다. **토큰 검증 자체는 Supabase 서버에서 완료되므로 리다이렉트가 실패해도 이메일 확인은 성공** — 이후 프로덕션에서 정상 로그인 가능. 단, 매직링크 로그인은 리다이렉트가 앱으로 돌아와야 세션이 성립하므로 Site URL 변경은 사실상 필수.
 
