@@ -303,6 +303,14 @@ docs/                   # 개발 문서
 - **Node 도구**: `EXAM_ID`/`EXAM_CONTENT_ROOT`/`EXAM_DATA_ROOT` env로 대상 시험 지정 (예: `EXAM_ID=<id> node tools/build/index.js`)
 - **Python 도구**: ref-pipeline 전 스크립트가 `ref-pipeline/_exam_root.py`로 동일 순서 해석 — `--exam` 인자 > `EXAM_CONTENT_ROOT` > `EXAM_ID` > exams.json default (예: `python ref-pipeline/check_laws.py --exam <id>`)
 
+## 작업 절차 — 설계 문서 우선 (Docs-First)
+
+- 소스(`src/`, `tools/` 등)를 수정하기 **전에** 항상 설계 문서를 먼저 점검·갱신한다:
+  1. **SPEC 점검** — 변경 대상 기능의 요구사양(`docs/dev/SPEC.md`의 SPEC ID)과 현재 설계(`docs/dev/ARCHITECTURE.md`·`docs/dev/design/`)를 확인하고, 의도하는 동작 변경이 문서와 어긋나면 문서를 먼저 수정한다. 신규 기능이면 SPEC에 ID를 부여한 뒤 구현에 들어간다.
+  2. **테스트 선행** — 버그 수정은 재현 테스트(실패하는 테스트)를 먼저 작성하고, 기능 변경은 기대 동작을 테스트로 고정한 뒤 구현한다.
+  3. 그 다음 소스를 구현하고, 완료 시 문서↔코드 정합은 기존 게이트(`check:docs`, `check:docsync`, `build:trace`)가 검증한다.
+- 사후 문서화(check:docsync)는 최소 안전망일 뿐이며, 이 규칙의 선행 절차를 대체하지 않는다.
+
 ## 구조 변경 시 문서 갱신 규칙
 
 - 디렉터리/파일 이동·삭제·추가 시 경로를 참조하는 문서를 함께 갱신: `README.md`·`AGENTS.md` 디렉터리 트리, `docs/dev/ARCHITECTURE.md` 트리·변경 매트릭스, `docs/README.md` 인덱스, 관련 런북(`docs/dev/runbooks/CONTENT_WORKFLOW.md`, `docs/dev/runbooks/TEXTBOOK_REPLACEMENT_RUNBOOK.md`, `ref-pipeline/README.md`)
