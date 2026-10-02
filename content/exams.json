@@ -30,7 +30,8 @@
         "formula": true,
         "limitsTrainer": true,
         "studyGuide": true,
-        "userManual": true
+        "userManual": true,
+        "story_textbook": true
       }
     },
     {

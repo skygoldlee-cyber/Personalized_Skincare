@@ -26,6 +26,7 @@ var EXAMS_LIST = {
         "calcPractice": true,
         "ingredients": true,
         "audiobook": false,
+        "story_textbook": true,
         "refDocs": true,
         "appendixDocs": true,
         "pomodoro": true,
