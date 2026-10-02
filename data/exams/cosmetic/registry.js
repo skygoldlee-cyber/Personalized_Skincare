@@ -2,7 +2,7 @@
 var DATA_REGISTRY = {
   "schemaVersion": 1,
   "contentYear": "2027",
-  "generatedAt": "2026-10-02T10:53:04.031Z",
+  "generatedAt": "2026-10-02T11:00:23.245Z",
   "subjects": [
     {
       "key": "law",
@@ -59,7 +59,7 @@ var DATA_REGISTRY = {
       "order": 4,
       "name": "맞춤형화장품의 이해",
       "shortName": "맞춤형화장품",
-      "contentHash": "d4665d88",
+      "contentHash": "c0e93dcf",
       "stats": {
         "cards": 433,
         "quizzes": 165,
