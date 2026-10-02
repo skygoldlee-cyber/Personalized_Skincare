@@ -571,13 +571,28 @@ pre.mermaid-other .labelBkg {
         max-height: 100%;
     }
     
+    /* 과목 선택 한 줄화 — 기존 세로 스택은 본문 영역을 과도하게 잠식함.
+       '과목 선택' 라벨은 select 값 자체가 과목명을 보여주므로 모바일에서는 생략 */
     .textbook-reader-controls > div {
-        flex-direction: column;
-        align-items: stretch;
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: nowrap;
+        gap: var(--space-3);
     }
-    
+    .textbook-reader-controls .filter-group {
+        flex: 1;
+        min-width: 0;
+    }
+    .textbook-reader-controls .filter-group label {
+        display: none;
+    }
     .textbook-reader-controls select {
-        width: 100%;
+        width: auto;
+        min-width: 0;
+        flex: 1;
+    }
+    #textbook-reader-view .textbook-reader-controls {
+        margin-bottom: var(--space-3);
     }
 
     /* 모바일 터치 영역 — 표 확장 버튼과 동일 기준 */

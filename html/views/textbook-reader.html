@@ -5,12 +5,6 @@
                     <div id="reader-progress-fill" class="reader-progress-fill"></div>
                     <span id="reader-section-progress" class="reader-section-progress"></span>
                 </div>
-                <!-- Sticky current section heading -->
-                <div id="reader-sticky-heading" class="reader-sticky-heading is-hidden">
-                    <i class="fa-solid fa-bookmark text-primary" aria-hidden="true"></i>
-                    <span id="reader-sticky-heading-text"></span>
-                </div>
-
                 <div class="textbook-reader-controls mb-5">
                     <div class="reader-mode-buttons">
                         <div class="filter-group">
@@ -101,6 +95,12 @@
                     <!-- 왼쪽 가장자리 스와이프 힌트 탭 — TOC 로드 시에만 표시 (모바일) -->
                     <button id="reader-toc-edge-hint" class="reader-toc-edge-hint" type="button"
                             aria-label="목차 열기" title="왼쪽 끝을 오른쪽으로 밀면 목차"></button>
+                    <!-- Sticky current section heading — .reader-layout 기준 absolute 오버레이
+                         (인플로우 배치 시 표시/숨김마다 flex 높이 리플로우로 본문 영역이 흔들림) -->
+                    <div id="reader-sticky-heading" class="reader-sticky-heading is-hidden">
+                        <i class="fa-solid fa-bookmark text-primary" aria-hidden="true"></i>
+                        <span id="reader-sticky-heading-text"></span>
+                    </div>
 
                     <div id="textbook-reader-container" class="textbook-reader-content">
                         <div class="empty-state" role="status">

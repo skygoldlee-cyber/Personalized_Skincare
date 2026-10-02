@@ -36,10 +36,14 @@
     pointer-events: none;
 }
 
-/* Sticky current section heading */
+/* Sticky current section heading — .reader-layout(position:relative) 기준 오버레이.
+   인플로우 배치하면 is-hidden(display:none) 토글 시 본문 컬럼 높이가 매번 리플로우되고,
+   표시된 동안에는 ~50px를 영구 잠식한다. */
 .reader-sticky-heading {
-    position: sticky;
+    position: absolute;
     top: 4px;
+    left: 0;
+    right: 0;
     z-index: var(--z-dropdown);
     display: flex;
     align-items: center;
@@ -50,7 +54,6 @@
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-sm);
-    margin-bottom: var(--space-3);
     font-size: 0.9rem;
     font-weight: 600;
     color: var(--color-text-main);
@@ -242,6 +245,15 @@
     align-items: flex-start;
     flex: 1;
     min-height: 0;
+    /* .reader-sticky-heading 오버레이의 containing block */
+    position: relative;
+}
+
+/* 데스크톱(TOC 사이드바 노출 폭) — 섹션 표시줄을 본문 컬럼 위에만 오버레이 */
+@media (min-width: 901px) {
+    .reader-toc:not(.is-hidden) ~ .reader-sticky-heading {
+        left: calc(250px + 1.75rem + var(--space-3));
+    }
 }
 
 /* TOC sidebar */
@@ -1220,9 +1232,19 @@ body.reader-focus-mode .reader-readable-width {
     .reader-toolbar-toggle {
         display: inline-flex;
     }
+    /* 모바일 본문 영역 확보 — 상단 크롬 높이 축소 */
+    #textbook-reader-view {
+        padding: 0.5rem 0.75rem;
+    }
+    .reader-progress-bar {
+        margin-bottom: var(--space-2);
+    }
     .reader-toolbar {
         flex-wrap: nowrap;
         overflow: hidden;
+        padding: 0.4rem 0.75rem;
+        gap: var(--space-3);
+        margin-bottom: var(--space-3);
     }
     /* M: 모바일에서 토글 버튼은 한 행 독차지, inner는 다음 행 */
     .reader-toolbar:not(.collapsed) {

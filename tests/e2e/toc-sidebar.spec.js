@@ -55,7 +55,23 @@ test.describe('교재리더 TOC 사이드바', () => {
         // 스크롤바를 끝까지 내린 상태에서 마지막 목차 항목이 보여야 함
         expect(m.lastItemBottom).toBeLessThanOrEqual(m.vh + 1);
         // 모바일 회귀: 펼친 툴바(~430px)가 flex 잔여 공간을 잠식해 본문이 34px로
-        // 붕괴했던 문제 — 본문 컬럼은 뷰포트의 30% 이상 확보해야 함
-        expect(m.contentClientH).toBeGreaterThan(m.vh * 0.3);
+        // 붕괴했던 문제 + 상단 크롬(컨트롤 세로 스택·툴바 패딩)이 본문을 349px로
+        // 줄이던 문제 — 모바일은 뷰포트 55% 이상, 데스크톱은 펼친 툴바를
+        // 감안해 35% 이상 확보해야 실질적 가독 영역
+        const isMobile = test.info().project.name === 'mobile';
+        expect(m.contentClientH).toBeGreaterThan(m.vh * (isMobile ? 0.55 : 0.35));
+
+        // 본문 스크롤 → sticky-heading 표시돼도 본문 높이는 리플로우되지 않아야 함
+        // (오버레이 배치 — 이전에는 인플로우라 표시 시 ~50px 영구 잠식)
+        await page.evaluate(() => {
+            const c = document.getElementById('textbook-reader-container');
+            c.scrollTop = c.scrollTopMax || c.scrollHeight;
+            c.dispatchEvent(new Event('scroll'));
+        });
+        await page.waitForTimeout(400);
+        const afterScroll = await page.evaluate(() =>
+            document.getElementById('textbook-reader-container').clientHeight
+        );
+        expect(afterScroll).toBe(m.contentClientH);
     });
 });
