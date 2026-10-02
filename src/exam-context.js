@@ -64,7 +64,14 @@ export function selectExam(id) {
     const exams = getExamList();
     const exam = exams.find(e => e.id === id);
     if (!exam) return false;
-    if (getActiveExamId() === id) return false; // 미선택 상태에서도 기본 시험 선택 시 불필요 리로드 방지
+    if (getActiveExamId() === id) {
+        // 같은 시험: 리로드 불필요. 단, 미선택 상태에서 기본 시험을 고른 경우도
+        // current_exam을 저장해야 한다 — 저장 생략 시 매번 피커가 뜨는 회귀.
+        try {
+            localStorage.setItem(CURRENT_EXAM_KEY, id);
+        } catch (e) { /* noop */ }
+        return false;
+    }
     try {
         localStorage.setItem(CURRENT_EXAM_KEY, id);
     } catch (e) { /* noop */ }

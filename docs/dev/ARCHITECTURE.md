@@ -809,6 +809,7 @@ const state = {
 ### 시험 선택/전환
 - `src/views/exam-select.js` — 시험 선택 카드 뷰(`exam-select-view`). `current_exam` 미설정 **+ 등록 시험 2개 이상**일 때만 홈으로 표시 — 단일 시험 레지스트리에서는 기본 시험으로 바로 진입해 피커 생략
 - 데스크톱 사이드바 푸터 + 모바일 더보기 시트의 "시험 전환" 버튼 → `showExamSelect()` → 카드 선택 시 `selectExam()` → 리로드. 버튼도 등록 시험 2개 이상일 때만 노출
+- `selectExam()`은 활성 시험과 같은 id 선택 시 리로드를 생략하되 **`current_exam` 저장은 항상 수행** — 미선택 상태의 기본 시험 선택도 저장되어야 다음 진입에서 피커가 다시 뜨지 않는다 (저장 생략 시 매번 피커 표시 회귀)
 
 ### 레지스트리 로딩
 - 기본 시험: `data/exams/cosmetic/registry.js` 정적 로드 (`window.DATA_REGISTRY`)

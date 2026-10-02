@@ -48,6 +48,16 @@ describe('시험 선택 — 목록·전환·복귀', () => {
         expect(el('dashboard-view').classList.contains('active')).toBe(false);
     });
 
+    it('미선택 상태에서 기본 시험 선택 → current_exam 저장 (재진입 피커 생략)', () => {
+        // 회귀: current_exam 미설정 시 getActiveExamId()가 기본 시험으로 폴백해
+        // "같은 시험"으로 오인 → 저장 생략 → 매번 피커가 뜨던 버그
+        renderExamSelect();
+        selectExamAction('cosmetic');
+
+        expect(localStorage.getItem('current_exam')).toBe('cosmetic');
+        expect(el('dashboard-view').classList.contains('active')).toBe(true);
+    });
+
     it('같은 시험 선택 → 리로드 없이 대시보드로 복귀 (H)', () => {
         localStorage.setItem('current_exam', 'cosmetic');
         renderExamSelect();
