@@ -26,14 +26,14 @@ var EXAMS_LIST = {
         "calcPractice": true,
         "ingredients": true,
         "audiobook": false,
-        "story_textbook": true,
         "refDocs": true,
         "appendixDocs": true,
         "pomodoro": true,
         "formula": true,
         "limitsTrainer": true,
         "studyGuide": true,
-        "userManual": true
+        "userManual": true,
+        "story_textbook": true
       }
     },
     {
