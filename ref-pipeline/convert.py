@@ -106,6 +106,9 @@ def main():
     fails = [r for r in report if 'error' in r]
     logger.info('총 %d개 → %s%s', len(report), paths['staging'],
                 f'  ⚠ 실패 {len(fails)}건' if fails else '')
+    # 문서별 실패가 있으면 비정상 종료 — npm 체인이 침묵 실패를 감지해야 함
+    if fails:
+        sys.exit(1)
 
 
 if __name__ == '__main__':

@@ -4,6 +4,7 @@ pdfplumber/pymupdf 없이 import 가능하도록 설계된 함수만 대상으�
 (pdf2md는 두 의존성을 lazy import하므로 테스트 환경에 설치 불필요).
 실행: python -m pytest ref-pipeline/tests/ -v
 """
+import logging
 import os
 import sys
 from pathlib import Path
@@ -470,3 +471,93 @@ class TestReconstructBorderless:
         md, ivs, rows = pdf2md.reconstruct_borderless(
             page, self.EDGES, 0, [])
         assert '오버행' in md
+
+
+# ---------------------------------------------------------------------------
+# collect_pdfs — 토큰 해석 경고 (침묵적 무시/격하 방지)
+# ---------------------------------------------------------------------------
+
+class TestCollectPdfsWarnings:
+    def test_filter_ignored_when_path_given_warns(self, tmp_path, caplog):
+        # 경로 입력이 매칭되면 파일명 필터 토큰은 적용되지 않음 — 경고 필수
+        (tmp_path / 'a.pdf').write_bytes(b'x')
+        with caplog.at_level(logging.WARNING, 'pdf2md'):
+            out = pdf2md.collect_pdfs(
+                [str(tmp_path / 'a.pdf'), '화장품법'], str(tmp_path))
+        assert len(out) == 1
+        assert any('화장품법' in r.getMessage() for r in caplog.records)
+
+    def test_filter_matching_nothing_warns(self, tmp_path, caplog):
+        # 존재하지 않는 경로 오타 → 필터로 격하 후 무매칭 — 경고로 표출
+        (tmp_path / 'a.pdf').write_bytes(b'x')
+        with caplog.at_level(logging.WARNING, 'pdf2md'):
+            out = pdf2md.collect_pdfs(['zzz_nomatch'], str(tmp_path))
+        assert out == []
+        assert any('zzz_nomatch' in r.getMessage() for r in caplog.records)
+
+
+# ---------------------------------------------------------------------------
+# _pool_init — --no-segment가 프로파일보다 우선 (직렬 경로와 동일 우선순위)
+# ---------------------------------------------------------------------------
+
+class TestPoolInit:
+    def test_cli_segment_flag_wins_over_profile(self, tmp_path):
+        prof = tmp_path / 'p.json'
+        prof.write_text('{"segment": true}', encoding='utf-8')
+        old = pdf2md.PROFILE['segment']
+        try:
+            pdf2md._pool_init(False, str(prof))
+            assert pdf2md.PROFILE['segment'] is False
+        finally:
+            pdf2md.PROFILE['segment'] = old
+
+
+# ---------------------------------------------------------------------------
+# main() — 문서별 실패가 있으면 종료 코드 1 (CI/스크립트 체인이 감지 가능)
+# ---------------------------------------------------------------------------
+
+class TestMainExitCode:
+    def test_doc_failure_exits_1(self, tmp_path, monkeypatch):
+        pdf = tmp_path / 'a.pdf'
+        pdf.write_bytes(b'x')
+        monkeypatch.setattr(
+            pdf2md, '_convert_one',
+            lambda job, use_images: (_ for _ in ()).throw(
+                RuntimeError('convert fail')))
+        monkeypatch.setattr(
+            sys, 'argv',
+            ['pdf2md.py', '--cli', str(pdf), '-o', str(tmp_path / 'out')])
+        with pytest.raises(SystemExit) as e:
+            pdf2md.main()
+        assert e.value.code == 1
+
+    def test_all_success_does_not_exit(self, tmp_path, monkeypatch):
+        pdf = tmp_path / 'a.pdf'
+        pdf.write_bytes(b'x')
+        monkeypatch.setattr(pdf2md, '_convert_one',
+                            lambda job, use_images: '본문')
+        out_dir = tmp_path / 'out'
+        monkeypatch.setattr(
+            sys, 'argv',
+            ['pdf2md.py', '--cli', str(pdf), '-o', str(out_dir)])
+        assert pdf2md.main() is None
+        assert (out_dir / 'a' / 'a.md').exists()
+
+    def test_convert_wrapper_failure_exits_1(self, tmp_path, monkeypatch):
+        # convert.py(convert:refs 진입점)도 동일한 종료 코드 계약을 가져야 함
+        old = pdf2md.PROFILE['segment']
+        try:
+            import convert
+            (tmp_path / 'a.pdf').write_bytes(b'x')
+            monkeypatch.setattr(
+                pdf2md, 'convert',
+                lambda *a, **k: (_ for _ in ()).throw(RuntimeError('x')))
+            monkeypatch.setattr(
+                sys, 'argv',
+                ['convert.py', '--pdf-root', str(tmp_path),
+                 '--staging', str(tmp_path / 'st')])
+            with pytest.raises(SystemExit) as e:
+                convert.main()
+            assert e.value.code == 1
+        finally:
+            pdf2md.PROFILE['segment'] = old

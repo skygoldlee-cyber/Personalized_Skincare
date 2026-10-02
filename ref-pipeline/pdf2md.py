@@ -829,11 +829,18 @@ def collect_pdfs(tokens, pdf_root):
 
     if path_pdfs:
         pdfs = path_pdfs
+        if filters:
+            logger.warning('경로 입력과 함께 쓰인 파일명 필터는 무시됩니다 — %s',
+                           ', '.join(filters))
     else:
         pdfs = _scan_dir(pdf_root, apply_excludes=True)
         if filters:
             pdfs = [(l, p) for (l, p) in pdfs
                     if any(f in os.path.basename(p) for f in filters)]
+            matched = {os.path.basename(p) for _, p in pdfs}
+            for f in filters:
+                if not any(f in b for b in matched):
+                    logger.warning("필터 '%s'에 매칭되는 PDF가 없습니다", f)
 
     seen, uniq = set(), []
     for lbl, p in pdfs:
@@ -978,10 +985,14 @@ def verify(out_dir, gold_dir, only=None):
 
 
 def _pool_init(segment, profile_path):
-    """ProcessPool 워커 초기화 — 부모의 프로파일/세그먼트 설정을 복제한다."""
-    PROFILE['segment'] = segment
+    """ProcessPool 워커 초기화 — 부모의 프로파일/세그먼트 설정을 복제한다.
+
+    프로파일을 먼저 로드하고 segment 플래그를 나중에 덮어써, main()의
+    직렬 경로와 같이 CLI --no-segment가 프로파일보다 우선하도록 한다.
+    """
     if profile_path:
         load_profile(profile_path)
+    PROFILE['segment'] = segment
 
 
 def _convert_one(job, use_images):
@@ -1120,6 +1131,10 @@ def main():
             logger.info('표 점검 필요 문항: %d건', flagged)
         else:
             logger.info('표 점검: 이상 없음')
+    # 문서별 실패가 있으면 비정상 종료 — convert:refs 같은 스크립트 체인이
+    # 침묵 실패를 감지할 수 있어야 한다 (--verify 경로와 같은 계약).
+    if fails:
+        sys.exit(1)
 
 
 # ── GUI (PySide6 — 선택 의존. --gui 실행 시에만 import한다) ──────────────

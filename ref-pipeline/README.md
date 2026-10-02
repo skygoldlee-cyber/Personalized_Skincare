@@ -147,8 +147,9 @@ python ref-pipeline/pdf2md.py --cli -v / -q       # 로그 레벨 (기본 INFO)
 
 - **동명 PDF 충돌**: 같은 basename의 PDF가 2개 이상이면 subdir 라벨로 출력을 구분 — `{out}/{subdir}/{name}/{name}.md` (골드 `ref_md/과목N/` 구조와 정합, `--flat`은 `{subdir}__{name}.md`). 충돌 시 경고 로그 출력
 - **verify**: `--verify`가 충돌 구분 산출물도 재귀 탐색해 골드와 비교 (필터 복수 지정 가능)
+- **종료 코드**: 문서별 변환 실패가 1건이라도 있으면 `exit 1` (convert:refs 래퍼 동일) — 스크립트 체인에서 침묵 실패 감지 가능. 입력 토큰 해석도 경고로 표출 — 경로 입력과 혼용된 파일명 필터는 무시 경고, 필터 무매칭도 경고
 - **의존성**: pdfplumber 필수 / pymupdf는 이미지 추출 시에만 (없으면 텍스트·표만 변환)
-- **테스트**: `python -m pytest` — 표 구조화·무선 표 재구성·문장 병합·출력 계획·verify 등 순수 로직 40+건
+- **테스트**: `python -m pytest` — 표 구조화·무선 표 재구성·문장 병합·출력 계획·verify·입력 해석·종료 코드 등 순수 로직 53건
 
 ### 시나리오 B — 교재 MD 교체/개정 → 파생물 재생성
 
