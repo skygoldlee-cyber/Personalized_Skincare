@@ -78,7 +78,9 @@ html.light-theme {
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     padding: var(--space-6);
-    max-height: calc(100vh - 280px);
+    /* .reader-layout이 flex로 확정 높이를 가지므로 행 높이까지만 —
+       calc(100vh - N) 매직넘버는 실제 크롬 높이와 어긋나 하단이 잘렸음 */
+    max-height: 100%;
     overflow-y: auto;
 }
 
@@ -566,7 +568,7 @@ pre.mermaid-other .labelBkg {
 @media (max-width: 768px), (orientation: landscape) and (max-height: 500px) {
     .textbook-reader-content {
         padding: var(--space-4);
-        max-height: calc(100vh - 220px);
+        max-height: 100%;
     }
     
     .textbook-reader-controls > div {

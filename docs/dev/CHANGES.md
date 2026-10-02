@@ -6,6 +6,15 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-02 교재리더 TOC 사이드바 하단 잘림 수정
+
+- **증상**: 표준형 보기에서 TOC 스크롤바를 끝까지 내려도 마지막 목차 항목이 화면에 표시되지 않음
+- **원인**: `body`는 `overflow:hidden`이고 `.main-content`가 유일한 페이지 스크롤러인데, `.reader-toc`의 `max-height: calc(100vh - 200px)` 매직넘버가 실제 상단 크롬 높이(~380px)를 과소계상 — aside 하단이 뷰포트 밖으로 영구 노출. 본문 컬럼(`.textbook-reader-content`)도 `calc(100vh - 280px)`로 동일하게 하단 잘림. 이야기형도 동일 기하 구조로 같은 잠재 결함
+- **수정** (`css/reader.css` + `css/reader-mermaid.css`): 매직넘버 대신 flex 높이 배분 — `#textbook-reader-view.active { display:flex; flex-direction:column; flex:1; min-height:0 }` → `.reader-layout { flex:1; min-height:0 }`로 확정 높이 확보 → `.reader-toc`/`.textbook-reader-content`는 `max-height:100%`. 툴바 래핑·오디오 영역 등 크롬 높이 변동에 자동 적응
+- **부수 수정**: `.reader-toc-children.toc-chapter-children:not(.collapsed)`에 `max-height:none` — 챕터 children이 섹션+펼쳐진 하위 헤딩 전체를 담아 기본 2000px 캡을 초과 시 `overflow:hidden`으로 잘려 동일 증상을 유발할 수 있던 잠재 결함 차단
+- **집중 모드**: `reader-focus-mode .textbook-reader-content`의 `max-height:none`을 `100%`로 교정 — 확정 높이 행 안에서 `none`은 하단 오버플로로 되돌림
+- 테스트: `tests/e2e/toc-sidebar.spec.js` 신규 — TOC·본문 컬럼이 뷰포트 내 완전 표시 + 스크롤 끝 마지막 항목 가시성 (chromium·mobile)
+
 ## 2026-10-04 이야기형·Pro 보완 5종 (정합 검증·오디오 커버리지·서사 검색·이야기 회상·혜택 실체화)
 
 - **서사-본문 정합 검증** (`story_merge.js`+`build_story_textbooks.js`, BP-11): `findStoryInconsistencies`가 서사 인용 조문·수치(`제N조/항/호/목`, `%`·`ppm`·`점`·`배`·`종`)를 표준형과 대조 — 본문에 없는 인용을 `⚠` 경고로 출력 (내러티브 숫자는 패턴에서 제외해 오탐 억제). 패치·수작업 이야기형 모두 적용, 빌드는 통과

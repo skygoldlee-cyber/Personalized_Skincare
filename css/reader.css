@@ -226,11 +226,22 @@
     font-variant-numeric: tabular-nums;
 }
 
+/* 교재리더 뷰 — flex 컬럼으로 .main-content의 잔여 높이를 정확히 차지.
+   .reader-layout에 확정 높이가 생겨야 TOC/본문의 max-height:100%가 동작한다. */
+#textbook-reader-view.active {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+}
+
 /* Reader layout: TOC + content */
 .reader-layout {
     display: flex;
     gap: 1.75rem;
     align-items: flex-start;
+    flex: 1;
+    min-height: 0;
 }
 
 /* TOC sidebar */
@@ -239,7 +250,9 @@
     flex-shrink: 0;
     position: sticky;
     top: 90px;
-    max-height: calc(100vh - 200px);
+    /* 레이아웃 행 높이까지만 — calc(100vh - N) 매직넘버는 실제 크롬 높이보다 커서
+       스크롤바 하단이 뷰포트 밖으로 잘렸음 */
+    max-height: 100%;
     overflow-y: auto;
     background: var(--bg-card);
     border: 1px solid var(--border-color);
@@ -413,6 +426,11 @@
     padding-left: var(--space-3);
     margin-left: var(--space-2);
     border-left: 2px solid var(--border-color);
+}
+/* 챕터 children은 섹션 + 펼쳐진 하위 헤딩 전체를 담아 기본 2000px 캡을 초과 가능 —
+   초과분이 overflow:hidden으로 잘려 TOC 끝 항목에 도달 불가 → 캡 해제 */
+.reader-toc-children.toc-chapter-children:not(.collapsed) {
+    max-height: none;
 }
 .reader-toc-children.collapsed {
     max-height: 0;
@@ -946,7 +964,7 @@ body.reader-focus-mode .reader-layout {
     gap: 0;
 }
 body.reader-focus-mode .textbook-reader-content {
-    max-height: none;
+    max-height: 100%;
 }
 body.reader-focus-mode .reader-toolbar {
     top: 8px;
