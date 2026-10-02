@@ -3,7 +3,7 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: 604a5379f2a7e9c1
+> 입력 해시: 6e31381b8504ef10
 > 생성: 2026-10-02 · 원천: SPEC.md(383개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
@@ -16,7 +16,7 @@
 | 보고서 | 분석·결과 보고서 | report_archive 헤더 |
 | 출처 | 요구사항의 기원 (법령·시험 규정·사업 문서) | SPEC 부록 "요구사항 출처" 표 |
 
-**커버리지 요약**: 요구사항 383개 — 문서 연결 245 · 소스 연결 363 · 테스트 연결 377 · 보고서 연결 109
+**커버리지 요약**: 요구사항 383개 — 문서 연결 247 · 소스 연결 363 · 테스트 연결 377 · 보고서 연결 109
 
 ---
 
@@ -102,30 +102,30 @@
 
 | ID | 상태 | 검증 수단 | 문서 | 소스 | 테스트 | 보고서 | 출처 |
 |----|------|-----------|------|------|--------|--------|------|
-| TR-01 | ✅ | 테스트 | DOC-RBK-07<br>DOC-REF-03<br>DOC-REF-04<br>DOC-REF-05 | html/views/textbook-reader.html<br>index.html<br>src/markdown-parser.js<br>src/reader-format.js<br>…외 2개 | tests/dom/study-reader.dom.test.js<br>tests/unit/markdown-parser-general.test.js<br>tests/unit/reader-format-general.test.js<br>tests/unit/textbook-parser.test.js | — | — |
-| TR-02 | ✅ | 테스트 | DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
-| TR-03 | ✅ | 테스트 | DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
-| TR-04 | ✅ | 테스트 | DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
-| TR-05 | ✅ | 테스트 | DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
-| TR-06 | ✅ | 테스트 | DOC-RBK-07<br>DOC-REF-05 | css/reader-mermaid.css<br>src/mermaid-render.js<br>src/mermaid-utils.js<br>src/views/textbook-reader.js | tests/dom/mermaid-zoom.dom.test.js<br>tests/dom/study-reader.dom.test.js<br>tests/unit/mermaid-parser.test.js<br>tests/unit/mermaid-pipeline.test.js<br>…외 4개 | — | — |
-| TR-07 | ✅ | 테스트 | DOC-RBK-07<br>DOC-REF-05 | src/mermaid-render.js<br>src/mermaid-utils.js<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js<br>tests/unit/mermaid-parser.test.js<br>tests/unit/mermaid-pipeline.test.js<br>tests/unit/mermaid-reader-format.test.js<br>…외 3개 | — | — |
-| TR-08 | ✅ | 테스트 | DOC-RBK-07<br>DOC-REF-05 | src/mermaid-render.js<br>src/mermaid-utils.js<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js<br>tests/unit/mermaid-parser.test.js<br>tests/unit/mermaid-pipeline.test.js<br>tests/unit/mermaid-reader-format.test.js<br>…외 3개 | — | — |
-| TR-09 | ✅ | 테스트 | DOC-RBK-07<br>DOC-REF-05 | src/markdown-parser.js<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js<br>tests/unit/markdown-parser-general.test.js | — | — |
-| TR-10 | ✅ | 테스트 | DOC-RBK-07<br>DOC-REF-05 | src/views/reader-ref-links.js<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
-| TR-11 | ✅ | 테스트 | DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
-| TR-12 | ✅ | 테스트 | DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
-| TR-13 | ✅ | 테스트 | DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
-| TR-14 | ✅ | 테스트 | DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
-| TR-15 | ✅ | 테스트 | DOC-RBK-07<br>DOC-REF-05 | css/reader-extras.css<br>css/reader.css<br>src/views/reader-toolbar.js<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
-| TR-16 | ✅ | 테스트 | DOC-RBK-07<br>DOC-REF-05 | css/reader-extras.css<br>css/reader.css<br>src/views/reader-toolbar.js<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
+| TR-01 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-03<br>DOC-REF-04<br>…외 1개 | html/views/textbook-reader.html<br>index.html<br>src/markdown-parser.js<br>src/reader-format.js<br>…외 2개 | tests/dom/study-reader.dom.test.js<br>tests/unit/markdown-parser-general.test.js<br>tests/unit/reader-format-general.test.js<br>tests/unit/textbook-parser.test.js | — | — |
+| TR-02 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
+| TR-03 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
+| TR-04 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
+| TR-05 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
+| TR-06 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | css/reader-mermaid.css<br>src/mermaid-render.js<br>src/mermaid-utils.js<br>src/views/textbook-reader.js | tests/dom/mermaid-zoom.dom.test.js<br>tests/dom/study-reader.dom.test.js<br>tests/unit/mermaid-parser.test.js<br>tests/unit/mermaid-pipeline.test.js<br>…외 4개 | — | — |
+| TR-07 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | src/mermaid-render.js<br>src/mermaid-utils.js<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js<br>tests/unit/mermaid-parser.test.js<br>tests/unit/mermaid-pipeline.test.js<br>tests/unit/mermaid-reader-format.test.js<br>…외 3개 | — | — |
+| TR-08 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | src/mermaid-render.js<br>src/mermaid-utils.js<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js<br>tests/unit/mermaid-parser.test.js<br>tests/unit/mermaid-pipeline.test.js<br>tests/unit/mermaid-reader-format.test.js<br>…외 3개 | — | — |
+| TR-09 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | src/markdown-parser.js<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js<br>tests/unit/markdown-parser-general.test.js | — | — |
+| TR-10 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | src/views/reader-ref-links.js<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
+| TR-11 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
+| TR-12 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
+| TR-13 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
+| TR-14 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
+| TR-15 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | css/reader-extras.css<br>css/reader.css<br>src/views/reader-toolbar.js<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
+| TR-16 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | css/reader-extras.css<br>css/reader.css<br>src/views/reader-toolbar.js<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
 | TR-16a | ✅ | 테스트 | DOC-RBK-07<br>DOC-REF-05 | src/views/reader-toolbar.js | tests/unit/content-engineering.test.js | — | — |
-| TR-17 | ✅ | 테스트 | DOC-RBK-07<br>DOC-REF-05 | css/reader-extras.css<br>css/reader.css<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
-| TR-18 | ✅ | 테스트 | DOC-RBK-07<br>DOC-REF-05 | css/reader-extras.css<br>css/reader.css<br>src/views/reader-toolbar.js<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
-| TR-19 | ✅ | 테스트 | DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/unit/reader-analysis-gates.test.js | — | — |
-| TR-20 | ✅ | 테스트 | DOC-RBK-07<br>DOC-REF-05 | src/image-zoom.js | tests/dom/onboarding-zoom.dom.test.js | — | — |
-| TR-21 | ✅ | 테스트 | DOC-RBK-07<br>DOC-REF-05 | css/reader.css<br>html/views/textbook-reader.html<br>index.html<br>src/views/reader-toolbar.js | tests/e2e/toc-sidebar.spec.js | — | — |
-| TR-22 | ✅ | 테스트 | DOC-RBK-07<br>DOC-REF-05 | css/reader.css<br>html/views/textbook-reader.html<br>index.html<br>src/views/reader-toolbar.js | tests/e2e/toc-sidebar.spec.js | — | — |
-| TR-23 | ✅ | 테스트 | DOC-RBK-07<br>DOC-REF-05 | css/reader.css<br>html/views/textbook-reader.html<br>index.html<br>src/views/reader-toolbar.js | tests/e2e/toc-sidebar.spec.js | — | — |
+| TR-17 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | css/reader-extras.css<br>css/reader.css<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
+| TR-18 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | css/reader-extras.css<br>css/reader.css<br>src/views/reader-toolbar.js<br>src/views/textbook-reader.js | tests/dom/study-reader.dom.test.js | — | — |
+| TR-19 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | src/views/textbook-reader.js | tests/unit/reader-analysis-gates.test.js | — | — |
+| TR-20 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | src/image-zoom.js | tests/dom/onboarding-zoom.dom.test.js | — | — |
+| TR-21 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | css/reader.css<br>html/views/textbook-reader.html<br>index.html<br>src/views/reader-toolbar.js | tests/e2e/toc-sidebar.spec.js | — | — |
+| TR-22 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | css/reader.css<br>html/views/textbook-reader.html<br>index.html<br>src/views/reader-toolbar.js | tests/e2e/toc-sidebar.spec.js | — | — |
+| TR-23 | ✅ | 테스트 | DOC-DSN-11<br>DOC-RBK-07<br>DOC-REF-05 | css/reader.css<br>html/views/textbook-reader.html<br>index.html<br>src/views/reader-toolbar.js | tests/e2e/toc-sidebar.spec.js | — | — |
 
 ## 3.6 교재 리더 — 학습 보조 도구
 
@@ -276,29 +276,29 @@
 
 | ID | 상태 | 검증 수단 | 문서 | 소스 | 테스트 | 보고서 | 출처 |
 |----|------|-----------|------|------|--------|--------|------|
-| FO-01 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02 | src/views/formula.js | tests/dom/formula-calc.dom.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
-| FO-02 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02 | src/formula-check.js<br>src/views/formula.js | tests/unit/formula-check.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | 화장품 안전기준 등에 관한 규정(식약처고시 제2026-19호) — 원료별 사용 한도·금지 |
-| FO-03 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02 | src/views/formula.js | tests/unit/formula-os.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
-| FO-04 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02 | src/views/formula.js | tests/unit/formula-os.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
-| FO-05 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DEV-05<br>DOC-DSN-02 | src/formula-rules.js<br>src/views/formula-recommend.js<br>src/views/formula.js | tests/unit/formula-rules.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
-| FO-06 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02 | src/formula-rules.js<br>src/views/formula-recommend.js<br>src/views/formula.js | tests/unit/formula-rules.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
-| FO-07 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02 | src/views/formula.js | tests/unit/formula-os.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
-| FO-08 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02 | src/formula-store.js<br>src/views/formula-recommend.js<br>src/views/formula.js | tests/unit/formula-store.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
-| FO-09 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02 | src/views/formula.js | tests/unit/formula-os.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
-| FO-10 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02 | css/formula.css<br>src/views/formula.js | tests/dom/review-drills-formula.dom.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
-| FO-11 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02 | src/views/formula.js | tests/dom/review-drills-formula.dom.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
-| FO-12 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02 | src/formula-stability.js | tests/unit/formula-stability.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
-| FO-13 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02 | src/formula-stability.js | tests/unit/formula-stability.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
-| FO-14 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02 | src/formula-stability.js<br>src/views/formula-print.js | tests/unit/formula-stability.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | 화장품법 시행규칙 — 전성분 표기 순서 (1% 초과 내림차순 → 1% 이하 → 색소 최하단) |
-| FO-15 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02 | css/formula.css<br>css/trainer.css<br>html/views/formula.html<br>index.html<br>…외 1개 | tests/dom/formula-nav.dom.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
-| FO-16 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02 | src/batch-store.js<br>src/store-utils.js<br>src/views/formula-batch.js | tests/dom/formula-batch.dom.test.js<br>tests/unit/batch-store.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | 화장품법·시행규칙 — 맞춤형화장품 판매업의 조제 기록 의무 |
-| FO-17 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02 | src/customer-store.js<br>src/store-utils.js<br>src/views/formula-customer.js | tests/dom/formula-customer.dom.test.js<br>tests/unit/customer-store.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
-| FO-18 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02 | src/material-ledger.js<br>src/store-utils.js<br>src/views/formula-material.js | tests/dom/formula-material.dom.test.js<br>tests/unit/material-ledger.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
-| FO-19 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02 | src/views/formula-compliance.js | tests/dom/formula-compliance.dom.test.js<br>tests/unit/formula-compliance.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | 화장품법·시행규칙 전반 — 영업·자격·표시·기록 준수 의무 |
-| FO-20 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02 | src/usage-guide.js | tests/unit/usage-guide.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
-| FO-21 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02 | css/print.css<br>src/views/formula-print.js | tests/dom/formula-print.dom.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | 화장품법 표시 규정 — 용기 라벨 기재사항·조제 기록지 |
-| FO-22 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02 | src/csv-utils.js | tests/unit/csv-import.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
-| FO-23 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02 | src/batch-store.js<br>src/formula-store.js | tests/unit/batch-store.test.js<br>tests/unit/formula-store.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | 사업 판단 — docs/dev/design/SUBSCRIPTION_ROADMAP.md |
+| FO-01 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/views/formula.js | tests/dom/formula-calc.dom.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
+| FO-02 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/formula-check.js<br>src/views/formula.js | tests/unit/formula-check.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | 화장품 안전기준 등에 관한 규정(식약처고시 제2026-19호) — 원료별 사용 한도·금지 |
+| FO-03 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/views/formula.js | tests/unit/formula-os.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
+| FO-04 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/views/formula.js | tests/unit/formula-os.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
+| FO-05 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DEV-05<br>DOC-DSN-02<br>…외 1개 | src/formula-rules.js<br>src/views/formula-recommend.js<br>src/views/formula.js | tests/unit/formula-rules.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
+| FO-06 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/formula-rules.js<br>src/views/formula-recommend.js<br>src/views/formula.js | tests/unit/formula-rules.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
+| FO-07 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/views/formula.js | tests/unit/formula-os.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
+| FO-08 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/formula-store.js<br>src/views/formula-recommend.js<br>src/views/formula.js | tests/unit/formula-store.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
+| FO-09 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/views/formula.js | tests/unit/formula-os.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
+| FO-10 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | css/formula.css<br>src/views/formula.js | tests/dom/review-drills-formula.dom.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
+| FO-11 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/views/formula.js | tests/dom/review-drills-formula.dom.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
+| FO-12 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/formula-stability.js | tests/unit/formula-stability.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
+| FO-13 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/formula-stability.js | tests/unit/formula-stability.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
+| FO-14 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/formula-stability.js<br>src/views/formula-print.js | tests/unit/formula-stability.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | 화장품법 시행규칙 — 전성분 표기 순서 (1% 초과 내림차순 → 1% 이하 → 색소 최하단) |
+| FO-15 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | css/formula.css<br>css/trainer.css<br>html/views/formula.html<br>index.html<br>…외 1개 | tests/dom/formula-nav.dom.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
+| FO-16 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/batch-store.js<br>src/store-utils.js<br>src/views/formula-batch.js | tests/dom/formula-batch.dom.test.js<br>tests/unit/batch-store.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | 화장품법·시행규칙 — 맞춤형화장품 판매업의 조제 기록 의무 |
+| FO-17 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/customer-store.js<br>src/store-utils.js<br>src/views/formula-customer.js | tests/dom/formula-customer.dom.test.js<br>tests/unit/customer-store.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
+| FO-18 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/material-ledger.js<br>src/store-utils.js<br>src/views/formula-material.js | tests/dom/formula-material.dom.test.js<br>tests/unit/material-ledger.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
+| FO-19 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/views/formula-compliance.js | tests/dom/formula-compliance.dom.test.js<br>tests/unit/formula-compliance.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | 화장품법·시행규칙 전반 — 영업·자격·표시·기록 준수 의무 |
+| FO-20 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/usage-guide.js | tests/unit/usage-guide.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
+| FO-21 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | css/print.css<br>src/views/formula-print.js | tests/dom/formula-print.dom.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | 화장품법 표시 규정 — 용기 라벨 기재사항·조제 기록지 |
+| FO-22 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/csv-utils.js | tests/unit/csv-import.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | — |
+| FO-23 | ✅ | 테스트 | DOC-BIZ-01<br>DOC-BIZ-05<br>DOC-DSN-02<br>DOC-DSN-11 | src/batch-store.js<br>src/formula-store.js | tests/unit/batch-store.test.js<br>tests/unit/formula-store.test.js | DOC-ARC-01<br>DOC-ARC-04<br>DOC-ARC-06 | 사업 판단 — docs/dev/design/SUBSCRIPTION_ROADMAP.md |
 | FO-24 | ✅ | 테스트 | DOC-DEV-05<br>DOC-DSN-10 | html/views/formula.html<br>index.html<br>ref-pipeline/check_mfds_notice.py<br>src/notice-check.js | tests/dom/formula-nav.dom.test.js<br>tests/unit/notice-check.test.js | — | 식약처 고시 개정 추적 — law.go.kr 오픈API(법제처) + `content/exams/cosmetic/참조자료/법령고시/` PDF 기준본 |
 | FO-25 | ✅ | 테스트 | — | html/views/formula.html<br>index.html | tests/dom/formula-nav.dom.test.js | — | 화장품 안전기준 등에 관한 규정(별표1·2) — 네거티브 리스트 판정 원칙 · 색소/기능성 고시 — 지정 목록 예외 |
 
@@ -306,14 +306,14 @@
 
 | ID | 상태 | 검증 수단 | 문서 | 소스 | 테스트 | 보고서 | 출처 |
 |----|------|-----------|------|------|--------|--------|------|
-| AU-01 | ✅ | 테스트 | DOC-DSN-08<br>DOC-DSN-09 | src/auth-view.js | tests/dom/common-auth.dom.test.js | — | — |
-| AU-02 | ✅ | 테스트 | DOC-DSN-08<br>DOC-DSN-09<br>DOC-RBK-06 | src/auth-view.js<br>src/supabase-client.js | tests/dom/common-auth.dom.test.js<br>tests/unit/supabase-client.test.js | — | — |
-| AU-03 | ✅ | 테스트 | DOC-DSN-08<br>DOC-DSN-09<br>DOC-RBK-06 | src/auth-view.js | tests/dom/common-auth.dom.test.js | — | — |
-| AU-04 | ✅ | 테스트 | DOC-DSN-08<br>DOC-DSN-09<br>DOC-RBK-06 | src/auth-view.js | tests/dom/common-auth.dom.test.js | — | — |
-| AU-05 | ✅ | 테스트 | DOC-DSN-08<br>DOC-DSN-09 | src/sync.js | tests/dom/common-sync.dom.test.js | — | — |
-| AU-06 | ✅ | 테스트 | DOC-DSN-08<br>DOC-DSN-09 | src/sync.js | tests/dom/common-sync.dom.test.js | — | — |
-| AU-07 | ✅ | 테스트 | DOC-DSN-08<br>DOC-DSN-09 | src/sync.js | tests/dom/common-sync.dom.test.js<br>tests/unit/storage-key-sync.test.js | — | 개인정보보호법 — 타인(고객) PII의 서버 저장 제한 원칙 |
-| AU-08 | ✅ | 테스트 | DOC-DSN-08<br>DOC-DSN-09 | src/auth-view.js<br>src/supabase-client.js<br>src/supabase-config.js<br>src/sync.js | tests/dom/common-auth.dom.test.js<br>tests/dom/common-sync.dom.test.js<br>tests/unit/supabase-client.test.js | — | — |
+| AU-01 | ✅ | 테스트 | DOC-DSN-08<br>DOC-DSN-09<br>DOC-DSN-11 | src/auth-view.js | tests/dom/common-auth.dom.test.js | — | — |
+| AU-02 | ✅ | 테스트 | DOC-DSN-08<br>DOC-DSN-09<br>DOC-DSN-11<br>DOC-RBK-06 | src/auth-view.js<br>src/supabase-client.js | tests/dom/common-auth.dom.test.js<br>tests/unit/supabase-client.test.js | — | — |
+| AU-03 | ✅ | 테스트 | DOC-DSN-08<br>DOC-DSN-09<br>DOC-DSN-11<br>DOC-RBK-06 | src/auth-view.js | tests/dom/common-auth.dom.test.js | — | — |
+| AU-04 | ✅ | 테스트 | DOC-DSN-08<br>DOC-DSN-09<br>DOC-DSN-11<br>DOC-RBK-06 | src/auth-view.js | tests/dom/common-auth.dom.test.js | — | — |
+| AU-05 | ✅ | 테스트 | DOC-DSN-08<br>DOC-DSN-09<br>DOC-DSN-11 | src/sync.js | tests/dom/common-sync.dom.test.js | — | — |
+| AU-06 | ✅ | 테스트 | DOC-DSN-08<br>DOC-DSN-09<br>DOC-DSN-11 | src/sync.js | tests/dom/common-sync.dom.test.js | — | — |
+| AU-07 | ✅ | 테스트 | DOC-DSN-08<br>DOC-DSN-09<br>DOC-DSN-11 | src/sync.js | tests/dom/common-sync.dom.test.js<br>tests/unit/storage-key-sync.test.js | — | 개인정보보호법 — 타인(고객) PII의 서버 저장 제한 원칙 |
+| AU-08 | ✅ | 테스트 | DOC-DSN-08<br>DOC-DSN-09<br>DOC-DSN-11 | src/auth-view.js<br>src/supabase-client.js<br>src/supabase-config.js<br>src/sync.js | tests/dom/common-auth.dom.test.js<br>tests/dom/common-sync.dom.test.js<br>tests/unit/supabase-client.test.js | — | — |
 
 ## 3.20 학습 캘린더·복습·드릴
 
@@ -337,11 +337,11 @@
 
 | ID | 상태 | 검증 수단 | 문서 | 소스 | 테스트 | 보고서 | 출처 |
 |----|------|-----------|------|------|--------|--------|------|
-| UM-01 | ✅ | 테스트 | DOC-DSN-01<br>DOC-DSN-02 | src/ui-mode.js | tests/dom/common-uimode.dom.test.js | DOC-ARC-06 | — |
-| UM-02 | ✅ | 테스트 | DOC-DSN-01<br>DOC-DSN-02 | src/ui-mode.js | tests/dom/common-uimode.dom.test.js | DOC-ARC-06 | — |
-| UM-03 | ✅ | 테스트 | DOC-DSN-01<br>DOC-DSN-02 | src/ui-mode.js | tests/dom/common-uimode.dom.test.js | DOC-ARC-06 | — |
-| UM-04 | ✅ | 테스트 | DOC-DSN-01<br>DOC-DSN-02 | src/router.js<br>src/ui-mode.js | tests/dom/common-uimode.dom.test.js<br>tests/dom/router.dom.test.js<br>tests/dom/ui-structure.dom.test.js | DOC-ARC-06 | — |
-| UM-05 | ✅ | 테스트 | DOC-DSN-01<br>DOC-DSN-02 | src/ui-mode.js | tests/dom/common-uimode.dom.test.js | DOC-ARC-06 | — |
+| UM-01 | ✅ | 테스트 | DOC-DSN-01<br>DOC-DSN-02<br>DOC-DSN-11<br>DOC-REF-09 | src/ui-mode.js | tests/dom/common-uimode.dom.test.js | DOC-ARC-06 | — |
+| UM-02 | ✅ | 테스트 | DOC-DSN-01<br>DOC-DSN-02<br>DOC-DSN-11<br>DOC-REF-09 | src/ui-mode.js | tests/dom/common-uimode.dom.test.js | DOC-ARC-06 | — |
+| UM-03 | ✅ | 테스트 | DOC-DSN-01<br>DOC-DSN-02<br>DOC-DSN-11<br>DOC-REF-09 | src/ui-mode.js | tests/dom/common-uimode.dom.test.js | DOC-ARC-06 | — |
+| UM-04 | ✅ | 테스트 | DOC-DSN-01<br>DOC-DSN-02<br>DOC-DSN-11<br>DOC-REF-09 | src/router.js<br>src/ui-mode.js | tests/dom/common-uimode.dom.test.js<br>tests/dom/router.dom.test.js<br>tests/dom/ui-structure.dom.test.js | DOC-ARC-06 | — |
+| UM-05 | ✅ | 테스트 | DOC-DSN-01<br>DOC-DSN-02<br>DOC-DSN-11<br>DOC-REF-09 | src/ui-mode.js | tests/dom/common-uimode.dom.test.js | DOC-ARC-06 | — |
 
 ## 3.22 시험 선택·전환
 
@@ -477,17 +477,17 @@
 | UX-FB-02 | 네이티브 대화상자는 PWA 설치 흐름을 깨고 스타일 제어 불가. 커스텀 모달은 포커스 트랩 + Escape + 배경 클릭 닫기 포함 | 테스트 | — | css/ui-overlay.css<br>src/ui-utils.js | tests/unit/ux-invariants.test.js | — | — |
 | UX-FB-03 | `animationend` 리스너로 클래스 해제 — `display:none` 상태에서는 애니메이션이 안 돌아 첫 실제 표시에 실행됨. `prefers-reduced-motion`에서는 자동으로 0.01ms 처리됨 | 테스트 | — | css/ui-overlay.css<br>src/ui-utils.js | tests/unit/ux-invariants.test.js | — | — |
 | UX-FB-04 | 부분 스켈레톤보다 구현 비용이 낮고 일관됨 | 테스트 | — | css/ui-overlay.css<br>src/ui-utils.js | tests/unit/ux-invariants.test.js | — | — |
-| UX-FB-05 | 기존 사용자는 플래그만 기록해 방해하지 않음 — 재방문 강제 안내 금지 | 테스트 | — | src/onboarding.js | tests/dom/onboarding-zoom.dom.test.js | — | — |
+| UX-FB-05 | 기존 사용자는 플래그만 기록해 방해하지 않음 — 재방문 강제 안내 금지 | 테스트 | DOC-DSN-11 | src/onboarding.js | tests/dom/onboarding-zoom.dom.test.js | — | — |
 | UX-FORM-01 | 16px 미만이면 iOS Safari가 포커스 시 자동 확대 | 테스트 | — | css/reader.css | tests/unit/ux-invariants.test.js | — | — |
 | UX-FORM-02 | 모바일에서 물리적 눌림감 제공 | 테스트 | — | css/base.css | tests/unit/ux-invariants.test.js | — | — |
-| UX-NAV-01 | 한 번에 하나의 네비게이션만 노출 — 중복 방지. 하단 탭 바는 엄지 도달권, 탭 수가 늘어나면 가로 스크롤보다 핵심 5탭 + `role="dialog"` 시트(`#mobile-more-sheet`)가 발견성·터치 안정성에 유리. 활성 탭은 `scrollIntoView({inline:'center'})`로 가시화 + `aria-current="page"`, 시트 소속 뷰 활성 시 더보기 탭에 활성 표시 | 테스트 | DOC-DSN-01 | css/app-responsive.css<br>src/app.js<br>src/router.js | tests/dom/common-navigation.dom.test.js<br>tests/dom/router.dom.test.js<br>tests/dom/ui-structure.dom.test.js<br>tests/e2e/more-sheet.spec.js | — | — |
+| UX-NAV-01 | 한 번에 하나의 네비게이션만 노출 — 중복 방지. 하단 탭 바는 엄지 도달권, 탭 수가 늘어나면 가로 스크롤보다 핵심 5탭 + `role="dialog"` 시트(`#mobile-more-sheet`)가 발견성·터치 안정성에 유리. 활성 탭은 `scrollIntoView({inline:'center'})`로 가시화 + `aria-current="page"`, 시트 소속 뷰 활성 시 더보기 탭에 활성 표시 | 테스트 | DOC-DSN-01<br>DOC-REF-09 | css/app-responsive.css<br>src/app.js<br>src/router.js | tests/dom/common-navigation.dom.test.js<br>tests/dom/router.dom.test.js<br>tests/dom/ui-structure.dom.test.js<br>tests/e2e/more-sheet.spec.js | — | — |
 | UX-NAV-02 | 스크롤 중에도 설정·테마에 접근 가능. 단, 부모가 스크롤 컨테이너(`overflow-y: auto`)일 때만 작동 — `body` 스크롤 구조면 의도대로 동작하는지 확인할 것 | 테스트 | DOC-DSN-01 | — | tests/dom/common-navigation.dom.test.js | — | — |
 | UX-NAV-03 | 드롭다운은 절대위치로 헤더 경계를 넘어야 함. 넘침 제어는 `min-width:0`+말줄임과 `flex-shrink:0`으로 처리 | 테스트 | DOC-DSN-01 | — | tests/dom/common-navigation.dom.test.js | — | — |
 | UX-NAV-04 | `.app-container { width: 100% }`. 특히 클래식 스크롤바가 상시 표시되는 데스크톱에서 차이 발생 | 테스트 | DOC-DSN-01 | — | tests/dom/common-navigation.dom.test.js | — | — |
 | UX-NAV-05 | back-to-top(`bottom:1.25rem`)이 탭 바(z 1400)에 완전히 가려진 실제 사례. 배너·토스트·플로팅 버튼 신규 추가 시에도 동일 규칙 적용. `.main-content`는 `padding-bottom: calc(80px + safe)` + `scroll-padding-bottom`으로 콘텐츠·포커스 요소 보호 | 테스트 | DOC-DSN-01 | — | tests/dom/common-navigation.dom.test.js | — | — |
-| UX-NAV-06 | `searchAll()`은 소스 주입 가능한 순수 함수로 분리해 테스트 가능. 실행은 기존 경로 재사용(nav 클릭 시뮬레이션, `startSubjectStudy/Quiz`, `openSubjectChapter`, `ExamViewer.openExam`) — 네비게이션 분기 신설 금지. 뷰 목록은 nav-item DOM 스캔이라 feature 게이팅(`is-hidden`)을 자동 반영. z-index 2500 (탭 바·모달 위). 전 소스 로컬 데이터로 오프라인 동작 | 테스트 | DOC-DSN-01 | src/command-palette.js | tests/dom/common-navigation.dom.test.js<br>tests/dom/study-commandpalette.dom.test.js<br>tests/unit/command-palette.test.js | — | — |
-| UX-NAV-07 | 내비게이션(사이드바·탭 바·뒤로가기)은 사용자의 이전 위치를 보존하는 게 기대 동작이지만, "맞춤 리포트 보기"·"퀴즈 풀기" 같은 액션 버튼이 이전 스크롤을 복원하면 중간에서 열려 맥락을 잃는다. `restoreScrollPosition`의 `pendingTop` 플래그가 복원 시점에 소비되어 `saveScrollPosition` 덮어쓰기와 무관하게 동작. 새 액션 딥링크 추가 시 `scrollTop: true` 필수 — `data-args='["view-id", {"scrollTop": true}]'` 또는 직접 호출 모두 지원 | 테스트 | DOC-DSN-01 | src/views/navigation.js | tests/dom/common-navigation.dom.test.js | — | — |
-| UX-NAV-08 | SPA에서 뒤로가기가 없으면 Android/PWA 뒤로가기 시 앱이 종료됨. 해시는 공유 가능한 딥링크도 제공. `navigateToView` 재진입은 `_hashNavigating` 플래그로 pushState를 생략해 무한 루프 방지. nav-item 없는 뷰(exam-select)는 `registerViewNavigator`로 등록된 라우터 경로가 `switchView` 폴백을 대신해 제목·해시·렌더를 동일하게 동기화 | 테스트 | — | src/modal-back.js<br>src/router.js | tests/dom/router.dom.test.js<br>tests/dom/ui-structure.dom.test.js<br>tests/e2e/more-sheet.spec.js | — | — |
+| UX-NAV-06 | `searchAll()`은 소스 주입 가능한 순수 함수로 분리해 테스트 가능. 실행은 기존 경로 재사용(nav 클릭 시뮬레이션, `startSubjectStudy/Quiz`, `openSubjectChapter`, `ExamViewer.openExam`) — 네비게이션 분기 신설 금지. 뷰 목록은 nav-item DOM 스캔이라 feature 게이팅(`is-hidden`)을 자동 반영. z-index 2500 (탭 바·모달 위). 전 소스 로컬 데이터로 오프라인 동작 | 테스트 | DOC-DSN-01<br>DOC-DSN-11 | src/command-palette.js | tests/dom/common-navigation.dom.test.js<br>tests/dom/study-commandpalette.dom.test.js<br>tests/unit/command-palette.test.js | — | — |
+| UX-NAV-07 | 내비게이션(사이드바·탭 바·뒤로가기)은 사용자의 이전 위치를 보존하는 게 기대 동작이지만, "맞춤 리포트 보기"·"퀴즈 풀기" 같은 액션 버튼이 이전 스크롤을 복원하면 중간에서 열려 맥락을 잃는다. `restoreScrollPosition`의 `pendingTop` 플래그가 복원 시점에 소비되어 `saveScrollPosition` 덮어쓰기와 무관하게 동작. 새 액션 딥링크 추가 시 `scrollTop: true` 필수 — `data-args='["view-id", {"scrollTop": true}]'` 또는 직접 호출 모두 지원 | 테스트 | DOC-DSN-01<br>DOC-DSN-11 | src/views/navigation.js | tests/dom/common-navigation.dom.test.js | — | — |
+| UX-NAV-08 | SPA에서 뒤로가기가 없으면 Android/PWA 뒤로가기 시 앱이 종료됨. 해시는 공유 가능한 딥링크도 제공. `navigateToView` 재진입은 `_hashNavigating` 플래그로 pushState를 생략해 무한 루프 방지. nav-item 없는 뷰(exam-select)는 `registerViewNavigator`로 등록된 라우터 경로가 `switchView` 폴백을 대신해 제목·해시·렌더를 동일하게 동기화 | 테스트 | DOC-DSN-11<br>DOC-REF-09 | src/modal-back.js<br>src/router.js | tests/dom/router.dom.test.js<br>tests/dom/ui-structure.dom.test.js<br>tests/e2e/more-sheet.spec.js | — | — |
 | UX-NAV-09 | 인플로우 크롬은 본문 높이를 영구 잠식하고, transform만 적용한 숨김은 공간을 회수하지 못함(실측: 본문 63%→89% vh). 오버레이 시 콘텐츠 스크롤 컨테이너에 `padding-top`=크롬 높이를 줘 첫 화면이 크롬 아래 묻히지 않게 함 — 패딩은 스크롤과 함께 밀려나므로 읽는 중 잠식 0. 크롬 아래를 지나는 다른 오버레이(섹션 표시줄 등)는 `~` 시빌링 셀렉터로 숨김 상태와 위치를 연동할 것 | 테스트 | — | css/reader.css | tests/e2e/toc-sidebar.spec.js | — | — |
 | UX-PWA-01 | 모바일 OS(Android/iOS)는 웹의 자체 종료를 차단 — 프로그래밍으로 완전 종료 불가. 데스크톱 설치 PWA는 `close()`가 동작하므로 모바일 안내는 불필요. 차단되면 "최근 앱 목록에서 밀어 닫으세요"(터치)/"창을 닫아주세요"(데스크톱) 안내 화면으로 대체하는 것이 최선 | 테스트 | — | src/app.js | tests/unit/ux-invariants.test.js | — | — |
 | UX-PWA-02 | 브라우저 탭에서 의미 없는 버튼(앱 종료 등)을 숨겨 혼란 방지. iOS는 `navigator.standalone`만 지원하므로 둘 다 확인 필수 | 테스트 | — | src/pwa-install.js | tests/unit/ux-invariants.test.js | — | — |
@@ -641,6 +641,7 @@
 | DOC-DSN-08 | docs/dev/design/SUPABASE_DESIGN.md | AU-01, AU-02, AU-03, AU-04, AU-05, AU-06, AU-07, AU-08, DA-08, ROAD-P0, S-01 |
 | DOC-DSN-09 | docs/dev/design/USER_FEEDBACK_DESIGN.md | AU-01, AU-02, AU-03, AU-04, AU-05, AU-06, AU-07, AU-08, FB-01, FB-02, FB-03, FB-04, FB-05, FB-06, FB-07, FB-08, S-01 |
 | DOC-DSN-10 | docs/dev/design/MULTI_EXAM_DB_DESIGN.md | DA-06, DA-07, DA-08, ES-01, ES-02, ES-03, ES-04, ES-05, FO-24, RR-13, RR-17, RR-19 |
+| DOC-DSN-11 | docs/dev/design/USER_FLOW.md | AU-01, AU-02, AU-03, AU-04, AU-05, AU-06, AU-07, AU-08, FO-01, FO-02, FO-03, FO-04, FO-05, FO-06, FO-07, FO-08, FO-09, FO-10, FO-11, FO-12, FO-13, FO-14, FO-15, FO-16, FO-17, FO-18, FO-19, FO-20, FO-21, FO-22, FO-23, TR-01, TR-02, TR-03, TR-04, TR-05, TR-06, TR-07, TR-08, TR-09, TR-10, TR-11, TR-12, TR-13, TR-14, TR-15, TR-16, TR-17, TR-18, TR-19, TR-20, TR-21, TR-22, TR-23, UM-01, UM-02, UM-03, UM-04, UM-05, UX-FB-05, UX-NAV-06, UX-NAV-07, UX-NAV-08 |
 | DOC-IDX-01 | docs/README.md | — |
 | DOC-PPL-01 | ref-pipeline/README.md | AO-01, AO-02, AO-03, AO-04, AO-05, BP-01, BP-02, BP-03, BP-04, BP-05, BP-06, BP-07, BP-08, CS-01, CS-02, CS-03, CS-04, CS-05, CS-06, CS-07, CS-08, CS-09, CS-10 |
 | DOC-PPL-02 | ref-pipeline/audiobook/README.md | AO-01, AO-02, AO-03, AO-04, AO-05 |
@@ -663,6 +664,7 @@
 | DOC-REF-06 | docs/dev/reference/TESTING.md | — |
 | DOC-REF-07 | docs/dev/reference/TEXTBOOK_REFERENCE_MAPPING.md | CS-01, CS-02, CS-03, CS-04, CS-05, CS-06, CS-07, CS-08, CS-09, CS-10, RR-01, RR-02, RR-03, RR-04, RR-05, RR-06, RR-07, RR-08, RR-09, RR-10, RR-11, RR-12, RR-13, RR-14, RR-15, RR-16 |
 | DOC-REF-08 | docs/dev/reference/ENGINEERING_PRACTICES.md | BP-01, BP-02, BP-03, BP-04, BP-05, BP-06, BP-07, BP-08, DA-01, DA-02, DA-03, DA-04, DA-05, DA-06, DA-07, DA-08, DA-09 |
+| DOC-REF-09 | docs/dev/reference/SCREEN_MAP.md | UM-01, UM-02, UM-03, UM-04, UM-05, UX-NAV-01, UX-NAV-08 |
 | DOC-ROOT-01 | README.md | — |
 | DOC-ROOT-02 | AGENTS.md | — |
 | DOC-USR-01 | docs/user/exam_strategy.md | — |

@@ -84,11 +84,11 @@ user/user_manual.md → 학습안내서(앱 내) → user/exam_strategy.md → u
 docs/
 ├── README.md                    ← 본 파일 (문서 인덱스 + 읽기 순서)
 ├── business/                    ← 사업 기획·시장 조사·마케팅 문서 (5개)
-├── dev/                         ← 개발 문서 (27개)
+├── dev/                         ← 개발 문서 (29개)
 │   ├── ARCHITECTURE.md·SPEC.md·CHANGES.md  ← 수위 문서 (아키텍처·명세·이력)
 │   ├── runbooks/              ← 실행 절차·운영 런북 (10개)
-│   ├── design/                ← 설계·계획·평가 문서 (9개)
-│   └── reference/             ← 명세·로직·참조 문서 (8개)
+│   ├── design/                ← 설계·계획·평가 문서 (11개)
+│   └── reference/             ← 명세·로직·참조 문서 (9개)
 ├── user/                        ← 사용자/학습자 문서 (7개)
 └── report_archive/              ← 분석 보고서 + 대체된 전략 문서 아카이브 (11개)
 ```
@@ -103,6 +103,8 @@ docs/
 |------|------|
 | [ARCHITECTURE.md](dev/ARCHITECTURE.md) | 시스템 아키텍처·설계 철학 — Local-First + 선택적 클라우드, ESM 구조, 데이터 흐름, PWA/SW 전략, 계정·동기화, UI 모드, Formula OS, 배포 파이프라인, 구현 레시피, 강건성 가이드라인 |
 | [SPEC.md](dev/SPEC.md) | 요구사양 명세서 — 구현된 기능을 역공학해 정리 (현행 기준서) |
+| [SCREEN_MAP.md](dev/reference/SCREEN_MAP.md) | 화면 지도 — 13개 뷰의 view id ↔ 파셜 ↔ URL 해시 ↔ 내비 위치 ↔ SPEC § 매핑 + 비뷰 오버레이 목록, 뷰별 상태 분기 |
+| [USER_FLOW.md](dev/design/USER_FLOW.md) | 사용자 흐름 명세 — 기동/학습 루프/리더/모의고사/Formula OS/시험 전환/모드 전환의 진입·분기·종료 조건 계약 |
 | [DEV_ENVIRONMENT.md](dev/reference/DEV_ENVIRONMENT.md) | 개발환경 요구사양 — Node/Python/CLI 도구 버전, 최초 설정 절차, 검증·빌드·배포 명령 |
 | [SUPABASE_DESIGN.md](dev/design/SUPABASE_DESIGN.md) | Supabase 계정·클라우드 동기화·Pro 권한 설계 — Phase 1~2 구현 완료, URL/PWA 동일 로그인 UX |
 | [FLASHCARD_LOGIC.md](dev/reference/FLASHCARD_LOGIC.md) | 플래시카드 생성·난이도·필터·SM-2 간격 반복 로직 |
@@ -264,6 +266,8 @@ docs/
 | DOC-DSN-07 | `docs/dev/design/SUBSCRIPTION_ROADMAP.md` |
 | DOC-DSN-08 | `docs/dev/design/SUPABASE_DESIGN.md` |
 | DOC-DSN-09 | `docs/dev/design/USER_FEEDBACK_DESIGN.md` |
+| DOC-DSN-10 | `docs/dev/design/MULTI_EXAM_DB_DESIGN.md` |
+| DOC-DSN-11 | `docs/dev/design/USER_FLOW.md` |
 | DOC-REF-01 | `docs/dev/reference/COMBO_STUDY_STRATEGY.md` |
 | DOC-REF-02 | `docs/dev/reference/DEV_ENVIRONMENT.md` |
 | DOC-REF-03 | `docs/dev/reference/FLASHCARD_LOGIC.md` |
@@ -272,6 +276,7 @@ docs/
 | DOC-REF-06 | `docs/dev/reference/TESTING.md` |
 | DOC-REF-07 | `docs/dev/reference/TEXTBOOK_REFERENCE_MAPPING.md` |
 | DOC-REF-08 | `docs/dev/reference/ENGINEERING_PRACTICES.md` |
+| DOC-REF-09 | `docs/dev/reference/SCREEN_MAP.md` |
 | DOC-RBK-01 | `docs/dev/runbooks/AUDIO_HOSTING_GUIDE.md` |
 | DOC-RBK-02 | `docs/dev/runbooks/COMBO_GENERATION_GUIDE.md` |
 | DOC-RBK-03 | `docs/dev/runbooks/CONTENT_WORKFLOW.md` |
