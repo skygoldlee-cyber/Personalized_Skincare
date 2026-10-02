@@ -300,7 +300,7 @@
 | MV-01 | 마크다운 문서 런타임 뷰어 (`docs/*.md` 직접 fetch + 렌더링) | ✅ |
 | MV-02 | Mermaid 다이어그램 렌더링 (온디맨드, 테마별 dark/default) | ✅ |
 | MV-03 | `popstate` 타이밍 가드 (open 후 300ms 이내 이벤트 무시) | ✅ |
-| MV-04 | `file://` 폴백 번들 — 시험별 `{dataRoot}/docs_md/*.js` (앱 공용 문서는 `data/docs_md/`) | ✅ |
+| MV-04 | `file://` 폴백 번들 — 시험별 `{dataRoot}/docs_md/*.js` (앱 공용 슬롯은 현재 비어 있음 — 인앱 문서는 전부 시험별) | ✅ |
 
 ### 3.16 차트 및 시각화 (Charts)
 

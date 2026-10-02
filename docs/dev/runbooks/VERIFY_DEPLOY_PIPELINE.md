@@ -66,7 +66,7 @@ flowchart TD
 |---|---|---|---|
 | `index.template.html` + `html/views/*.html` | `index.html` | `check:html` (개행 정규화 후 비교) | `build:html` |
 | `docs/dev/SPEC.md` + `@spec` 주석 + 문서 헤더 | `docs/dev/TRACE_MATRIX.md` | `check:trace` (입력 해시 — 개행 정규화 후 계산) | `build:trace` |
-| `docs/user/*.md` · `content/**/docs/학습안내서.md` | `data/docs_md/` 번들 | `check:docbundles` | `node tools/build/build_doc_bundles.js` |
+| `{contentRoot}/docs/*.md` | `{dataRoot}/docs_md/` 번들 | `check:docbundles` | `node tools/build/build_doc_bundles.js` |
 | `content/**` (교재·문제은행·manifest·exams.json) | `data/` 번들 · `src/keyword-index.js` · `sw.js` 자산 목록 등 | `check:datafresh` (빌드 체인 실행 → git diff 비교 → 자동 원복) | `build:data` |
 | 문제은행 번들 | `data/` 드릴 번들 | `check:drillfresh` | `build:drills` |
 | `content/**/참조자료/*.pdf` | `ref_md/` | `check:reffresh` (PDF 해시) | `convert:refs` → 승격 절차 |

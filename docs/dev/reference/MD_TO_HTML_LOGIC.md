@@ -34,7 +34,7 @@
 │  │                                                              │
 │  │  [1] 원문 확보                                                │
 │  │   ├─ http(s):  fetch(content/*.md)  ← SW Cache First         │
-│  │   └─ file://:  data/docs_md/*.js    ← 전역 __DOC_MD__ 폴백    │
+│  │   └─ file://:  {dataRoot}/docs_md/*.js ← __DOC_MD__ 폴백      │
 │  │                                                              │
 │  │  [2] 파싱                                                    │
 │  │   └─ markdown-parser.js → parseMarkdown(mdText, options)     │
@@ -94,7 +94,7 @@
 | `src/reader-format.js` | 교재 리더용 포맷터 (`parseMarkdown`에 reader 옵션 적용) |
 | `src/exam-viewer.js` | 예상문제집 뷰어 (`parseMarkdown` 사용, Mermaid 비활성) |
 | `sw.js` | Service Worker — `.md` 파일 Cache First, 프리캐시 |
-| `tools/build/build_doc_bundles.js` | `file://` 폴백용 JS 번들 빌드 (`data/docs_md/*.js`) |
+| `tools/build/build_doc_bundles.js` | `file://` 폴백용 JS 번들 빌드 (`{dataRoot}/docs_md/*.js`) |
 | `ref-pipeline/md2doc.py` | Python 독립 HTML 변환기 (GUI/CLI, Tailwind + Mermaid 임베드) |
 | `ref-pipeline/batch_convert.py` | 배치 변환 스크립트 (교재/학습안내서/보고서/문제은행 일괄 HTML 변환) |
 
@@ -135,8 +135,8 @@ async function _loadMd(sourceKey) {
 
 | 프로토콜 | 1순위 | 2순위 (폴백) |
 |----------|-------|-------------|
-| `http(s):` | `fetch(.md)` — 항상 최신 | `data/docs_md/*.js` 번들 |
-| `file://` | — (fetch 차단) | `data/docs_md/*.js` 번들 |
+| `http(s):` | `fetch(.md)` — 항상 최신 | `{dataRoot}/docs_md/*.js` 번들 |
+| `file://` | — (fetch 차단) | `{dataRoot}/docs_md/*.js` 번들 |
 
 ### 2.3 번들 폴백 메커니즘
 
@@ -425,7 +425,7 @@ document.addEventListener('themechange', () => {
 |------|----------|
 | SW 프리캐시 | `MD_ASSETS`가 `install` 시 `SHELL_CACHE`에 캐싱 → 오프라인에서도 `.md` fetch 가능 |
 | SW Cache First | `.md` 패턴 요청은 캐시 우선 서빙 |
-| 번들 폴백 | `fetch` 실패 시 `data/docs_md/*.js` 번들에서 원문 확보 |
+| 번들 폴백 | `fetch` 실패 시 `{dataRoot}/docs_md/*.js` 번들에서 원문 확보 |
 | sessionStorage | 변환된 HTML을 24h 캐싱 → 재방문 시 파싱 생략 |
 
 ### 7.2 모바일 UI 최적화

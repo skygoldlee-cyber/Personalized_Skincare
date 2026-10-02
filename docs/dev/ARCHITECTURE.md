@@ -1913,7 +1913,7 @@ npm.cmd run deploy
 | `<droot>/exams/*.hash.js` | `tools/build/index.js` (exams.plugin.js) |
 | `<droot>/exams_md/*.js` | `tools/build/build_exam_bundles.js` |
 | `<droot>/study_md/*.js` | `tools/build/build_study_md_bundle.js` |
-| `data/docs_md/*.js` + `<droot>/docs_md/*.js` | `tools/build/build_doc_bundles.js` |
+| `<droot>/docs_md/*.js` | `tools/build/build_doc_bundles.js` |
 | `<droot>/ingredients_data.*.js` | `tools/build/index.js` (knowledge.plugin.js) |
 | `<droot>/id_migration.js` | `tools/build/build_id_migration.js` |
 | `<droot>/question_chapters.js` | `tools/build/build_question_chapters.js` |

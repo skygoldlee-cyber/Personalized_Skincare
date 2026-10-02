@@ -11,7 +11,7 @@
 ## 1. 단일 소스 오브 트루스 (SSOT)
 
 - `content/exams/<id>/*.md`가 유일한 원본이고 `data/`의 JS 번들은 전부 **생성물**이다. 원본을 편집하고 `build:data`를 실행하면 파생물이 결정적으로 재생성된다
-- 같은 패턴이 반복 적용된다: `html/views/*.html + index.template.html → index.html`, `SPEC.md + @spec 주석 → TRACE_MATRIX.md`, `docs/user/*.md → data/docs_md/`
+- 같은 패턴이 반복 적용된다: `html/views/*.html + index.template.html → index.html`, `SPEC.md + @spec 주석 → TRACE_MATRIX.md`, `{contentRoot}/docs/*.md → {dataRoot}/docs_md/`
 - 생성물 직접 편집은 규칙으로 금지(AGENTS.md)하고, 신선도 게이트가 기계적으로 강제한다 (§3)
 
 ## 2. 생성물 파이프라인과 신선도 게이트
