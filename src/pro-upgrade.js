@@ -157,6 +157,26 @@ const PLAN_FEATURES = [
     { key: 'cloud_sync', label: '클라우드 동기화 (여러 디바이스 상태 공유)' },
 ];
 
+/** 플래그·플랜에서 유도한 Pro 전용 혜택 항목 — 두 모달(showPlanCompare/showUpgradeNotice)이 공유 */
+function _proBenefitItems(extraRow = '') {
+    const items = [];
+    if (isProFeature('personal_analysis')) {
+        items.push('<li>맞춤학습 리포트 — 복합 예상 점수·실제 결과 보정·취약 단원 추적·주간 리포트 공유</li>');
+    }
+    if (isProFeature('story_textbook')) {
+        items.push('<li>이야기형 교재 — 서사 삽입 본문·서사 검색·이야기 회상</li>');
+    }
+    if (hasFeature('audiobook') && isProFeature('audiobook')) {
+        items.push('<li>오디오북 — 과목별 챕터 MP3 청취</li>');
+    }
+    if (isProFeature('cloud_sync')) {
+        items.push('<li>클라우드 동기화 — 로그인 계정 기준 여러 디바이스 간 학습 상태 공유</li>');
+    }
+    if (extraRow) items.push(extraRow);
+    items.push('<li>신규 Pro 기능 우선 제공</li>');
+    return items;
+}
+
 /** Free/Pro 기능 비교 안내 모달 — 설정의 '플랜 안내'·계정 모달에서 연다.
  * feature-plan.json의 현재 값을 반영하므로 플랜 전환 시 문구가 어긋나지 않는다. */
 export async function showPlanCompare() {
@@ -183,21 +203,7 @@ export async function showPlanCompare() {
     }).join('');
 
     // Pro 전용 혜택 — 실제 플래그/플랜에서 유도한 구체 기능 목록 (플레이스홀더 아님)
-    const proBenefits = [];
-    if (isProFeature('personal_analysis')) {
-        proBenefits.push('<li>맞춤학습 리포트 — 복합 예상 점수·실제 결과 보정·취약 단원 추적·주간 리포트 공유</li>');
-    }
-    if (isProFeature('story_textbook')) {
-        proBenefits.push('<li>이야기형 교재 — 서사 삽입 본문·서사 검색·이야기 회상</li>');
-    }
-    if (hasFeature('audiobook')) {
-        proBenefits.push('<li>오디오북 — 과목별 챕터 MP3 청취</li>');
-    }
-    if (isProFeature('cloud_sync')) {
-        proBenefits.push('<li>클라우드 동기화 — 로그인 계정 기준 여러 디바이스 간 학습 상태 공유</li>');
-    }
-    if (limitsRow) proBenefits.push(limitsRow);
-    proBenefits.push('<li>신규 Pro 기능 우선 제공</li>');
+    const proBenefits = _proBenefitItems(limitsRow);
     const benefitsBlock = `
                 <p class="pro-upgrade-sub"><strong>Pro 전용 혜택</strong> — 결제 도입 시 적용</p>
                 <ul>${proBenefits.join('')}</ul>`;
@@ -226,17 +232,14 @@ export async function showPlanCompare() {
 
 /** Pro 업그레이드 안내 모달 (정보성 — 결제 경로 없음) */
 export function showUpgradeNotice(featureLabel, limitMessage) {
+    const benefitItems = [`<li>${esc(featureLabel)} 저장 한도 무제한</li>`, ..._proBenefitItems()];
     const { overlay, close } = _showDialog(`
         <div class="app-confirm-dialog pro-upgrade-dialog" role="alertdialog" aria-modal="true" aria-labelledby="pro-upgrade-title">
             <h3 id="pro-upgrade-title">💎 무료 한도 도달</h3>
             <p>${esc(limitMessage || `${featureLabel}의 무료 플랜 한도에 도달했습니다.`)}</p>
             <div class="pro-upgrade-benefits">
                 <p class="pro-upgrade-sub"><strong>Pro 플랜(준비 중)</strong>에서는:</p>
-                <ul>
-                    <li>${esc(featureLabel)} 저장 한도 무제한</li>
-                    <li>클라우드 동기화 — 여러 디바이스 간 학습 상태 공유</li>
-                    <li>오디오북 · 개인화된 맞춤형 리포트</li>
-                </ul>
+                <ul>${benefitItems.join('')}</ul>
             </div>
             <div class="app-confirm-actions">
                 <button class="app-confirm-cancel app-confirm-compare">Free / Pro 비교</button>

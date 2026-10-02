@@ -16,7 +16,7 @@ vi.mock('../../src/ui-utils.js', () => ({
 }));
 
 import { loadIndexHtml } from './helpers.js';
-import { loadFeaturePlan, showPlanCompare, proFeatureNotice, canCloudSync, hasProEntitlement } from '../../src/pro-upgrade.js';
+import { loadFeaturePlan, showPlanCompare, showUpgradeNotice, proFeatureNotice, canCloudSync, hasProEntitlement } from '../../src/pro-upgrade.js';
 
 function stubPlan(features) {
     vi.stubGlobal('fetch', vi.fn(() => Promise.resolve({
@@ -75,6 +75,36 @@ describe('플랜 안내 모달 (showPlanCompare)', () => {
         await showPlanCompare();
         const items = [...overlay().querySelectorAll('li')].map(li => li.textContent);
         expect(items.some(t => t.includes('클라우드 동기화') && t.includes('PRO'))).toBe(true);
+    });
+
+    it('플랜이 free로 전환되면 Pro 전용 혜택 목록에서도 해당 항목이 빠진다', async () => {
+        await stubPlan({ personal_analysis: 'free', story_textbook: 'free', cloud_sync: 'free', audiobook: 'free' });
+        await showPlanCompare();
+        const text = overlay().textContent;
+        expect(text).not.toContain('복합 예상 점수');
+        expect(text).not.toContain('서사 삽입 본문');
+        expect(text).not.toContain('로그인 계정 기준 여러 디바이스');
+    });
+
+    it('오디오북 혜택은 시험 보유 + 플랜 pro일 때만 표시된다', async () => {
+        window.EXAMS_LIST.exams[0].features.audiobook = true;
+        await stubPlan({ audiobook: 'pro' });
+        await showPlanCompare();
+        expect(overlay().textContent).toContain('챕터 MP3 청취');
+        overlay().remove();
+        await stubPlan({ audiobook: 'free' });
+        await showPlanCompare();
+        expect(overlay().textContent).not.toContain('챕터 MP3 청취');
+    });
+
+    it('한도 초과 모달도 플랜·플래그에서 혜택 목록을 유도한다', async () => {
+        await stubPlan({ personal_analysis: 'free', story_textbook: 'free', cloud_sync: 'free', audiobook: 'free' });
+        showUpgradeNotice('My 포뮬러', 'Free 플랜은 My 포뮬러를 5개까지 저장할 수 있습니다.');
+        const text = overlay().textContent;
+        expect(text).toContain('My 포뮬러 저장 한도 무제한');
+        expect(text).not.toContain('복합 예상 점수');
+        expect(text).not.toContain('로그인 계정 기준 여러 디바이스');
+        expect(text).not.toContain('챕터 MP3');
     });
 });
 

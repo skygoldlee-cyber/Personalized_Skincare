@@ -2,7 +2,7 @@
 // @spec TR-01~19,SA-01~05,G-01~09,ST-01~07
 //   (참조 링크 프리뷰/위임 → reader-ref-links.js, 툴바·스크롤스파이·표 모달 → reader-toolbar.js)
 import { esc } from '../sanitize.js';
-import { proFeatureNotice } from '../pro-upgrade.js';
+import { proFeatureNotice, refreshProBadges } from '../pro-upgrade.js';
 import { trackAction } from '../usage-stats.js';
 import { formatSectionContentForReader, markStoryNarrative } from '../reader-format.js';
 import { parseTextbookContent } from '../textbook-parser.js';
@@ -206,44 +206,44 @@ export function openSubjectSection(subject, sectionTitle) {
 export function renderTextbookReader() {
     const subjectSelect = /** @type {HTMLSelectElement|null} */ (document.getElementById('reader-subject-select'));
     const container = document.getElementById('textbook-reader-container');
-    
+
     if (!subjectSelect || !container) return;
 
     // Initialize reader convenience toolbar (font size, theme, focus mode, etc.)
     initReaderToolbar();
-    
+
     // Always repopulate subject select to ensure fresh state
     const previousValue = subjectSelect.value || textbookReaderState.selectedSubject;
     subjectSelect.innerHTML = '<option value="">과목을 선택하세요</option>';
-    
+
     // DataLoader를 사용하여 레지스트리 기반으로 과목 목록 구성
     const subjects = (typeof DataLoader !== 'undefined' && DataLoader.registry)
         ? DataLoader.getSubjectList()
         : [];
-    
+
     subjects.forEach(subj => {
         const option = document.createElement('option');
         option.value = subj.key;
         option.textContent = subj.name;
         subjectSelect.appendChild(option);
     });
-    
+
     // Restore subject selection
     if (previousValue && subjectSelect.querySelector(`option[value="${previousValue}"]`)) {
         subjectSelect.value = previousValue;
         textbookReaderState.selectedSubject = previousValue;
     }
-    
+
     // 1. 교재 읽기 이어하기 — 저장된 위치 복원
     const savedPos = (!previousValue && !textbookReaderState.selectedSubject) ? loadReaderPosition() : null;
-    
+
     // Restore previous selections
     if (savedPos && savedPos.subject) {
         textbookReaderState.selectedSubject = savedPos.subject;
         textbookReaderState.selectedChapter = savedPos.chapter || '0';
         textbookReaderState.storyMode = savedPos.storyMode || false;
     }
-    
+
     if (textbookReaderState.selectedSubject) {
         subjectSelect.value = textbookReaderState.selectedSubject;
         // 단원 선택 UI 제거: 과목 선택 시 자동으로 chapter 0(전체) 로드
@@ -262,18 +262,18 @@ export function renderTextbookReader() {
             }).catch(err => console.error('renderChapterContent failed:', err));
         }).catch(err => console.error('loadSubject failed:', err));
     }
-    
+
     // Bind events only once
     if (!subjectSelect.dataset.bound) {
         subjectSelect.dataset.bound = 'true';
-        
+
         subjectSelect.addEventListener('change', (e) => {
             const subjId = (/** @type {HTMLSelectElement|null} */ (e.target) || { value: '' }).value;
             textbookReaderState.selectedSubject = subjId;
             const hadAudio = !!readerAudioState.audio;
             stopReaderAudio();
             if (hadAudio) showAudioToast('과목이 변경되어 오디오 재생이 중지되었습니다.');
-            
+
             if (subjId) {
                 // 단원 선택 UI 제거: 과목 선택 시 자동으로 chapter 0(전체) 로드
                 textbookReaderState.selectedChapter = '0';
@@ -721,10 +721,11 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
         }
         if (hasAudio) {
             actionsHtml += `<button id="reader-audio-toggle-btn" class="reader-tool-btn" data-click="toggleReaderAudio" data-args='["${subjId}", ${chapterIdx}]' title="오디오 듣기">
-                <i class="fa-solid fa-headphones" aria-hidden="true"></i> 오디오
+                <i class="fa-solid fa-headphones" aria-hidden="true"></i> 오디오 <span class="pro-badge" data-pro-feature="audiobook">PRO</span>
             </button>`;
         }
         actionsGroup.innerHTML = actionsHtml;
+        refreshProBadges(actionsGroup);
     }
 
     // --- 오디오 플레이어 영역을 툴바 아래로 이동 ---

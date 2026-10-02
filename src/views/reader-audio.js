@@ -5,6 +5,7 @@ import { safeGetItem, safeSetItem, safeRemoveItem } from '../state.js';
 import { TIMING } from '../config/timing.js';
 import { PATHS } from '../paths.js';
 import { getActiveExamId, getExamAppName } from '../exam-context.js';
+import { refreshProBadges, proFeatureNotice } from '../pro-upgrade.js';
 
 // --- 오디오북 플레이어 상태 ---
 /** @type {{audio: HTMLAudioElement|null, currentSrc: string, subjId: string, chapterIdx: number, chapterTitle: string, wasPlayingBeforeHidden: boolean, sectionBoundaries: {start:number,end:number}[], lastSectionIdx: number, autoScroll: boolean}} */
@@ -293,6 +294,14 @@ export function toggleReaderAutoScroll() {
     showAudioToast(readerAudioState.autoScroll ? '오디오 따라가기 켜짐' : '오디오 따라가기 꺼짐');
 }
 
+/** 오디오 토글 버튼 라벨 갱신 — PRO 배지를 포함시키고 플랜을 즉시 반영 */
+function setAudioBtnLabel(html) {
+    const ui = getAudioUI();
+    if (!ui.btn) return;
+    ui.btn.innerHTML = `${html} <span class="pro-badge" data-pro-feature="audiobook">PRO</span>`;
+    refreshProBadges(ui.btn);
+}
+
 /** 재생/일시정지 아이콘 갱신 */
 function updatePlayPauseIcon() {
     const ui = getAudioUI();
@@ -303,11 +312,9 @@ function updatePlayPauseIcon() {
             : '<i class="fa-solid fa-play"></i>';
         ui.playPauseBtn.title = playing ? '일시정지' : '재생';
     }
-    if (ui.btn) {
-        ui.btn.innerHTML = (readerAudioState.audio)
-            ? '<i class="fa-solid fa-stop"></i> 정지'
-            : '<i class="fa-solid fa-headphones"></i> 오디오 듣기';
-    }
+    setAudioBtnLabel(readerAudioState.audio
+        ? '<i class="fa-solid fa-stop"></i> 정지'
+        : '<i class="fa-solid fa-headphones"></i> 오디오 듣기');
 }
 
 /** 재생 상태 메시지 표시 (로딩/버퍼링/오류) */
@@ -372,7 +379,7 @@ export function stopReaderAudio() {
         container.querySelectorAll('.reader-section-card.current-section').forEach(el => el.classList.remove('current-section'));
     }
     const ui = getAudioUI();
-    if (ui.btn) ui.btn.innerHTML = '<i class="fa-solid fa-headphones"></i> 오디오 듣기';
+    setAudioBtnLabel('<i class="fa-solid fa-headphones"></i> 오디오 듣기');
     if (ui.playerArea) ui.playerArea.classList.add('is-hidden');
     setAudioStatus('');
 }
@@ -418,11 +425,14 @@ export function toggleReaderAudio(subjId, chapterIdx) {
         stopReaderAudio();
     }
 
+    // Pro 예정 기능 — 최초 재생 시 1회 안내 (무료 체험 중에도 유료 경계 인지)
+    proFeatureNotice('audiobook', '오디오북');
+
     // 플레이어 영역 표시 + 로딩 표시
     if (ui.playerArea) ui.playerArea.classList.remove('is-hidden');
     if (ui.label) ui.label.textContent = chapter.chapterTitle;
     setAudioStatus('로딩 중…');
-    if (ui.btn) ui.btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 로딩';
+    setAudioBtnLabel('<i class="fa-solid fa-spinner fa-spin"></i> 로딩');
     if (ui.rateBtn) ui.rateBtn.textContent = getSavedRate() + 'x';
 
     // 새 오디오 생성
