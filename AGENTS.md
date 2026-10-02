@@ -74,12 +74,13 @@ npm.cmd run check:reflines              # 교재 (LNN)/📌출처 조문 ↔ ref
 npm.cmd run check:drillfresh            # 드릴 번들 ↔ 문제은행 번들 신선도 (stale 시 npm run build:drills)
 npm.cmd run check:docbundles           # docs_md 번들 ↔ 원본 문서 신선도 (check:content에 포함)
 npm.cmd run check:datafresh            # data/·생성물 ↔ 원본 신선도 — 빌드 체인 실행 후 git diff 비교·자동 원복 (생성물 경로가 clean이어야 실행 가능)
-npm.cmd run check:docs                  # README·AGENTS·docs/*.md 내 경로 참조 존재 검증 + 문서 ID 누락·중복 검증 + 디렉토리 구조 정합 (check_inventory) + npm 명령 정합 (check_npm_commands) + 플랜 키 정합 (check_plan_features) + 도메인 기능 플래그 정합 (check_feature_flags) + 저장소 접근 탐지 (check_storage_access) + 릴리스 노트 정합 (check_release_notes)
+npm.cmd run check:docs                  # README·AGENTS·docs/*.md 내 경로 참조 존재 검증 + 문서 ID 누락·중복 검증 + 디렉토리 구조 정합 (check_inventory) + npm 명령 정합 (check_npm_commands) + 플랜 키 정합 (check_plan_features) + 도메인 기능 플래그 정합 (check_feature_flags) + 저장소 접근 탐지 (check_storage_access) + 릴리스 노트 정합 (check_release_notes) + CI 패리티 (check_ci_parity)
 npm.cmd run check:inventory             # AGENTS.md 디렉토리 구조 트리 ↔ 실제 파일시스템 정합 (전 트리 존재성 + src/ 전수·css 목록 양방향 + N개 개수 표기) + ARCHITECTURE.md box 트리(├──/└──) 존재성
 npm.cmd run check:commands              # 문서의 npm 명령 인용 ↔ package.json 스크립트 양방향 정합
 npm.cmd run check:plan                  # feature-plan.json 키 ↔ 코드 사용(isProFeature·data-pro-feature·proFeatureNotice) ↔ 로드맵 문서 정합
 npm.cmd run check:featflags             # exams.json features 키 ↔ 코드 사용(hasFeature·features.X·data-feature) 양방향 — 미선언 키 사용 = 영구 falsy 죽은 경로로 오류
 npm.cmd run check:storage               # src/ 내 localStorage 직접 접근 탐지 — storage.js 추상화 우회 금지 (부트스크립트·인프라 모듈은 ALLOWED_FILES)
+npm.cmd run check:ciparity              # ci.yml 워크플로 명령 ↔ check:ci 체인 양방향 정합 (비대칭은 CI_ONLY·LOCAL_ONLY 명단에 사유 명시)
 npm.cmd run check:secrets               # 추적 파일 시크릿 패턴 스캔 (개인키·service_role·토큰 — 공개키는 ALLOWLIST, pre-commit 게이트)
 npm.cmd run check:notes                 # release-notes.json 스키마·버전 해시→커밋 해석·최신 항목↔APP_VERSION 정합
 npm.cmd run check:domainmap             # 파일 계층 분류 강제 — src/css/html/data/content/tests 전 파일이 domain-map.json에 선언 필수 (분류 규약: ARCHITECTURE.md "파일 계층 분류")
@@ -383,7 +384,7 @@ docs/                   # 개발 문서
 5. `npm.cmd run verify:assets` — SHELL_ASSETS 파일 존재 확인
 6. `git status` — 임시 파일(`_temp_*.js`, `.git/COMMIT_MSG.txt`) 제거 확인
 7. `sw.js` `CACHE_VERSION` bump 확인
-7. Vercel 배포 후 `https://passory.vercel.app` 200 OK 확인
+7. `npm run deploy`의 배포 후 스모크 자동 통과 확인 (200·sw.js·APP_VERSION 스탬프 — passory.vercel.app)
 
 ## 주의사항
 

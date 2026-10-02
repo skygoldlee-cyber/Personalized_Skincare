@@ -36,6 +36,9 @@ jobs:
           path: sbom.spdx.json
           retention-days: 30
 
+      - name: Secret scan (추적 파일 비밀키 패턴)
+        run: npm run check:secrets
+
       - name: Lint
         run: npm run lint
 
@@ -47,6 +50,12 @@ jobs:
 
       - name: Docs path + document ID check
         run: npm run check:docs
+
+      - name: Domain map (파일 계층 분류)
+        run: npm run check:domainmap
+
+      - name: UI text coverage
+        run: npm run check:uitext
 
       - name: Doc sync gate (소스 변경 시 문서 갱신 강제)
         run: node tools/check/check_doc_sync.js --ref origin/main

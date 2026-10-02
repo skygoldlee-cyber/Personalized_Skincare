@@ -10,6 +10,8 @@
  *   2) sw.js CACHE_VERSION 스탬프 (stamp_sw_version.js)
  *      → 값이 바뀌면 'chore(sw): CACHE_VERSION 스탬프' 자동 커밋 + push
  *   3) vercel --prod --yes 실행
+ *   4) 프로덕션 스모크 — https://<projectName>.vercel.app 200 +
+ *      sw.js·version.js 스탬프 일치 (엣지 전파 대기 재시도 포함)
  *
  * 차단 조건:
  *   - 커밋되지 않은 변경이 있는 경우 (untracked 포함)
@@ -37,6 +39,52 @@ function vercelScopeArgs() {
     } catch {
         return [];
     }
+}
+
+// 프로젝트의 기본 *.vercel.app 도메인 — projectName 기반이라 리네임에 자동 추종
+function projectUrl() {
+    try {
+        const p = path.join(__dirname, '..', '.vercel', 'project.json');
+        const { projectName } = JSON.parse(fs.readFileSync(p, 'utf8'));
+        return projectName ? `https://${projectName}.vercel.app` : null;
+    } catch {
+        return null;
+    }
+}
+
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+/** 배포 직후 프로덕션 스모크 — 응답·버전 스탬프·SW 실서빙 확인 (엣지 전파 대기 포함) */
+async function smokeCheck(baseUrl, expectedVersion) {
+    const checks = [
+        { url: `${baseUrl}/`, want: null, label: 'index 응답' },
+        { url: `${baseUrl}/sw.js`, want: expectedVersion, label: 'sw.js CACHE_VERSION' },
+        { url: `${baseUrl}/data/version.js`, want: expectedVersion, label: 'APP_VERSION' },
+    ];
+    const fails = [];
+    for (const c of checks) {
+        let ok = false, detail = '';
+        for (let i = 0; i < 4 && !ok; i++) {  // 최대 ~25s (엣지 전파 대기)
+            try {
+                const r = await fetch(c.url, { cache: 'no-store' });
+                if (r.status !== 200) {
+                    detail = `HTTP ${r.status}`;
+                } else if (c.want) {
+                    const body = await r.text();
+                    ok = body.includes(c.want);
+                    if (!ok) detail = `스탬프 불일치 (기대 ${c.want})`;
+                } else {
+                    ok = true;
+                }
+            } catch (e) {
+                detail = e.message;
+            }
+            if (!ok && i < 3) await sleep(5000);
+        }
+        if (ok) console.log(`  ✓ ${c.label} — 200${c.want ? ` · ${c.want}` : ''}`);
+        else fails.push(`${c.label}: ${detail}`);
+    }
+    return fails;
 }
 
 function git(args, opts = {}) {
@@ -158,7 +206,22 @@ function main() {
         stdio: 'inherit',
         shell: true,
     });
-    process.exit(result.status ?? 1);
+    if ((result.status ?? 1) !== 0) process.exit(result.status ?? 1);
+
+    // 배포 후 스모크 — 200·스탬프 불일치·엣지 정체를 자동 탐지
+    const baseUrl = projectUrl();
+    const stamped = stamp.changed ? stamp.newValue
+        : (fs.readFileSync(path.join(__dirname, '..', 'sw.js'), 'utf8').match(/CACHE_VERSION\s*=\s*'([^']+)'/) || [])[1];
+    if (baseUrl && stamped) {
+        console.log(`\n▶ 배포 후 스모크 — ${baseUrl}`);
+        smokeCheck(baseUrl, stamped).then((fails) => {
+            if (fails.length) {
+                console.error(`\n❌ 스모크 실패:\n  ${fails.join('\n  ')}\n  배포는 됐지만 프로덕션 응답 이상 — Vercel 대시보드·엣지 캐시 확인`);
+                process.exit(1);
+            }
+            console.log('✅ 프로덕션 스모크 통과');
+        });
+    }
 }
 
 main();
