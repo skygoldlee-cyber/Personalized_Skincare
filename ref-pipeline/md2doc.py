@@ -76,6 +76,25 @@ COLLAPSE_CODEBLOCK_MIN_LINES = 35
 # 라이브러리로 임포트될 때는 핸들러 없이 조용히 동작한다.
 logger = logging.getLogger("md2doc")
 
+
+class _CallbackLogHandler(logging.Handler):
+    """로그 레코드를 콜백으로 전달하는 핸들러.
+
+    GUI 모드는 logging.basicConfig를 호출하지 않으므로 이미지 누락·
+    Mermaid 렌더 실패 같은 warning이 사용자에게 보이지 않는다 —
+    워커 실행 동안 이 핸들러를 달아 경고를 UI로 라우팅한다.
+    """
+
+    def __init__(self, cb, level: int = logging.WARNING):
+        super().__init__(level)
+        self._cb = cb
+
+    def emit(self, record: logging.LogRecord) -> None:
+        try:
+            self._cb(self.format(record))
+        except Exception:
+            pass
+
 # ASCII/박스 드로잉 다이어그램 감지용 문자 집합 (여러 파이프라인 함수에서 공용)
 BOX_CHARS = frozenset("┌┐└┘├┤┬┴┼│─═╔╗╚╝╠╣╦╩╬┃━▲▼◀▶")
 
@@ -593,7 +612,8 @@ def _inline_mermaid_fences(md_text: str) -> str:
                         break
                     result.append(line[pos:open_idx + 2])  # [" 포함
                     inner_start = open_idx + 2
-                    # "] 종료 탐색 — 가장 마지막 "] 사용 (탐욕적)
+                    # "] 종료 탐색 — 첫 번째 "] 사용 (레이블 내부 "]가 없는
+                    # 일반적인 형태를 가정; find는 첫 매칭을 반환한다)
                     close_idx = line.find('"]', inner_start)
                     if close_idx == -1:
                         result.append(line[inner_start:])
@@ -623,10 +643,11 @@ def _inline_mermaid_fences(md_text: str) -> str:
         buf.append(sanitize_mermaid_line(line))
         i += 1
 
-    # Unterminated fence: fall back to original text
+    # Unterminated fence: fall back to the ORIGINAL lines — buf에는
+    # sanitize 결과가 들어 있으므로 폴백에는 raw_buf를 써야 원본이 보존된다.
     if in_mermaid:
         out.append("```mermaid")
-        out.extend(buf)
+        out.extend(raw_buf)
 
     return "\n".join(out) + ("\n" if md_text.endswith("\n") else "")
 
@@ -747,15 +768,18 @@ def _mermaid_cache_dir() -> Path:
     return Path(__file__).resolve().parent / ".mermaid_cache"
 
 
-def _mermaid_cache_key(src: str) -> str:
+def _mermaid_cache_key(src: str, renderer: str = "mermaid.ink") -> str:
+    # 렌더러를 키에 포함 — mermaid.ink와 kroki 폴백은 같은 소스에서
+    # 다른 SVG를 생성하므로, 분리하지 않으면 먼저 성공한 렌더러의 출력이
+    # 캐시에 고착되어 환경별 결과가 달라진다.
     return hashlib.sha256(
-        (_MERMAID_CACHE_SALT + "\x00" + src).encode("utf-8")
+        (_MERMAID_CACHE_SALT + "\x00" + renderer + "\x00" + src).encode("utf-8")
     ).hexdigest()
 
 
-def _mermaid_cache_read(src: str) -> str | None:
+def _mermaid_cache_read(src: str, renderer: str = "mermaid.ink") -> str | None:
     try:
-        p = _mermaid_cache_dir() / (_mermaid_cache_key(src) + ".svg")
+        p = _mermaid_cache_dir() / (_mermaid_cache_key(src, renderer) + ".svg")
         if p.is_file():
             text = p.read_text(encoding="utf-8")
             if text.strip().startswith("<svg") and "</svg>" in text:
@@ -765,13 +789,32 @@ def _mermaid_cache_read(src: str) -> str | None:
     return None
 
 
-def _mermaid_cache_write(src: str, svg: str) -> None:
+def _mermaid_cache_write(src: str, svg: str, renderer: str = "mermaid.ink") -> None:
     try:
         d = _mermaid_cache_dir()
         d.mkdir(parents=True, exist_ok=True)
-        (d / (_mermaid_cache_key(src) + ".svg")).write_text(svg, encoding="utf-8")
+        (d / (_mermaid_cache_key(src, renderer) + ".svg")).write_text(svg, encoding="utf-8")
     except Exception as e:
         logger.warning("[mermaid-cache] write failed: %s", e)
+
+
+def _sanitize_svg(svg: str) -> str:
+    """외부 렌더러(mermaid.ink/kroki) 응답의 실행 가능 요소를 제거한다.
+
+    신뢰 경계 주의: 이 함수는 알려진 렌더러 응답에 대한 최소 살균이며
+    임의 SVG 입력에 대한 범용 새니타이저가 아니다. <script>·on* 핸들러·
+    javascript:/vbscript: href를 제거한다.
+    """
+    svg = re.sub(r"<script[\s\S]*?</script>", "", svg, flags=re.IGNORECASE)
+    svg = re.sub(r'\son\w+\s*=\s*"[^"]*"', "", svg)
+    svg = re.sub(r"\son\w+\s*=\s*'[^']*'", "", svg)
+    svg = re.sub(
+        r'(\s(?:xlink:)?href\s*=\s*["\'])\s*(?:javascript|vbscript)\s*:[^"\']*(["\'])',
+        r"\1#\2",
+        svg,
+        flags=re.IGNORECASE,
+    )
+    return svg
 
 
 def _prerender_mermaid_to_svg(html_body: str, progress_cb=None) -> str:
@@ -793,113 +836,117 @@ def _prerender_mermaid_to_svg(html_body: str, progress_cb=None) -> str:
     # 진행 표시용 라벨 (다이어그램 소스 첫 줄)
     labels = [html.unescape(m.group(1)).strip().split('\n')[0][:60] for m in matches]
 
-    # 동일 소스의 중복 네트워크 요청 방지 (워커 간 공유 — dict get/set은 GIL로 안전)
-    src_results: dict[str, str | None] = {}
+    def _fetch_svg(src: str, label: str = "") -> str | None:
+        # 렌더러별 캐시 — 주 렌더러 키를 먼저 조회하고 폴백 키도 확인
+        for renderer in ("mermaid.ink", "kroki"):
+            svg = _mermaid_cache_read(src, renderer)
+            if svg is not None:
+                return svg
 
-    def _render_one(m: re.Match, label: str = "") -> str:
-        src = html.unescape(m.group(1)).strip()
-        if not src:
-            return m.group(0)
+        # 메인 웹앱(src/mermaid-utils.js)과 동일한 전략:
+        # mindmap은 항상 'default' 테마로 렌더링 (밝은 파스텔 배경 + 어두운 텍스트).
+        # dark 테마는 노드 배경이 어두워져 텍스트 대비가 급격히 저하됨.
+        # flowchart 등 다른 타입도 동일하게 default로 렌더링하여
+        # 다크 페이지 위에서 "밝은 카드"처럼 표시.
+        # 모든 다이어그램을 default 테마로 렌더링
+        encoded = base64.urlsafe_b64encode(src.encode("utf-8")).decode("ascii")
+        url = f"https://mermaid.ink/svg/{encoded}?theme=default&bgColor=ffffff"
 
-        if src in src_results:
-            svg = src_results[src]
-        else:
-            svg = _mermaid_cache_read(src)
+        svg = None
+        renderer_used = None
+        last_err = None
+        for _attempt in range(4):
+            try:
+                req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+                with urllib.request.urlopen(req, timeout=30) as resp:
+                    svg = resp.read().decode("utf-8", errors="replace")
+                if svg and svg.strip().startswith("<svg") and "</svg>" in svg:
+                    renderer_used = "mermaid.ink"
+                    break
+                svg = None
+                last_err = "empty/invalid SVG response"
+            except Exception as e:
+                last_err = e
+                svg = None
+            if _attempt < 3:
+                # 503 레이트리밋 대비 지터 백오프 (워커 간 요청 분산)
+                time.sleep(1.5 * (_attempt + 1) + random.random())
 
         if svg is None:
-            # 메인 웹앱(src/mermaid-utils.js)과 동일한 전략:
-            # mindmap은 항상 'default' 테마로 렌더링 (밝은 파스텔 배경 + 어두운 텍스트).
-            # dark 테마는 노드 배경이 어두워져 텍스트 대비가 급격히 저하됨.
-            # flowchart 등 다른 타입도 동일하게 default로 렌더링하여
-            # 다크 페이지 위에서 "밝은 카드"처럼 표시.
-            # 모든 다이어그램을 default 테마로 렌더링
-            encoded = base64.urlsafe_b64encode(src.encode("utf-8")).decode("ascii")
-            url = f"https://mermaid.ink/svg/{encoded}?theme=default&bgColor=ffffff"
-
-            last_err = None
-            for _attempt in range(4):
+            # Fallback renderer: kroki.io (deflate + base64url path encoding).
+            # Transparent-background SVG sits on .mermaid-img's own background.
+            kdata = base64.urlsafe_b64encode(
+                zlib.compress(src.encode("utf-8"), 9)
+            ).decode("ascii")
+            kurl = f"https://kroki.io/mermaid/svg/{kdata}"
+            for _kattempt in range(2):
                 try:
-                    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+                    req = urllib.request.Request(kurl, headers={"User-Agent": "Mozilla/5.0"})
                     with urllib.request.urlopen(req, timeout=30) as resp:
-                        svg = resp.read().decode("utf-8", errors="replace")
-                    if svg and svg.strip().startswith("<svg") and "</svg>" in svg:
+                        cand = resp.read().decode("utf-8", errors="replace")
+                    if cand and cand.strip().startswith("<svg") and "</svg>" in cand:
+                        svg = cand
+                        renderer_used = "kroki"
                         break
-                    svg = None
-                    last_err = "empty/invalid SVG response"
                 except Exception as e:
                     last_err = e
-                    svg = None
-                if _attempt < 3:
-                    # 503 레이트리밋 대비 지터 백오프 (워커 간 요청 분산)
-                    time.sleep(1.5 * (_attempt + 1) + random.random())
+                    if _kattempt == 0:
+                        time.sleep(1.0)
 
-            if svg is None:
-                # Fallback renderer: kroki.io (deflate + base64url path encoding).
-                # Transparent-background SVG sits on .mermaid-img's own background.
-                kdata = base64.urlsafe_b64encode(
-                    zlib.compress(src.encode("utf-8"), 9)
-                ).decode("ascii")
-                kurl = f"https://kroki.io/mermaid/svg/{kdata}"
-                for _kattempt in range(2):
-                    try:
-                        req = urllib.request.Request(kurl, headers={"User-Agent": "Mozilla/5.0"})
-                        with urllib.request.urlopen(req, timeout=30) as resp:
-                            cand = resp.read().decode("utf-8", errors="replace")
-                        if cand and cand.strip().startswith("<svg") and "</svg>" in cand:
-                            svg = cand
-                            break
-                    except Exception as e:
-                        last_err = e
-                        if _kattempt == 0:
-                            time.sleep(1.0)
+        if svg is None:
+            logger.warning("[Mermaid pre-render failed] %s: %s", label, last_err)
+            return None
 
-            if svg is None:
-                logger.warning("[Mermaid pre-render failed] %s: %s", label, last_err)
+        # 렌더러 응답의 실행 가능 요소 제거 (XSS 방어)
+        svg = _sanitize_svg(svg)
+        _mermaid_cache_write(src, svg, renderer_used)
+        return svg
 
-            if svg:
-                # SVG에서 악의적 요소 제거 (XSS 방어)
-                svg = re.sub(r"<script[\s\S]*?</script>", "", svg, flags=re.IGNORECASE)
-                svg = re.sub(r'\son\w+\s*=\s*"[^"]*"', "", svg)
-                svg = re.sub(r"\son\w+\s*=\s*'[^']*'", "", svg)
+    # 동일 소스의 중복 렌더링은 제출 단계에서 dedupe — 워커 간 check-then-set
+    # 경합으로 같은 다이어그램을 두 번 렌더링하는 레이스를 원천 차단한다.
+    srcs = [html.unescape(m.group(1)).strip() for m in matches]
+    unique_srcs = list(dict.fromkeys(s for s in srcs if s))
+    first_label = {}
+    for i, s in enumerate(srcs):
+        if s not in first_label:
+            first_label[s] = labels[i]
 
-            src_results[src] = svg
-            if svg:
-                _mermaid_cache_write(src, svg)
+    rendered: dict[str, str | None] = {}
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        fut_map = {
+            pool.submit(_fetch_svg, s, first_label[s]): s for s in unique_srcs
+        }
+        done = 0
+        for fut in as_completed(fut_map):
+            s = fut_map[fut]
+            try:
+                rendered[s] = fut.result()
+            except Exception:
+                rendered[s] = None
+            done += 1
+            if progress_cb:
+                try:
+                    progress_cb(done, total, first_label[s])
+                except Exception:
+                    pass
 
+    # SVG를 <img> 태그로 인라인 임베드하여 외부 CSS의 영향을
+    # 완전히 차단. data: URI로 인라인 SVG를 사용하면 다크/라이트
+    # 모드 전환과 무관하게 SVG 자체 색상이 유지됨.
+    replacements: list[str] = []
+    for i, m in enumerate(matches):
+        svg = rendered.get(srcs[i])
         if svg:
-            # SVG를 <img> 태그로 인라인 임베드하여 외부 CSS의 영향을
-            # 완전히 차단. data: URI로 인라인 SVG를 사용하면 다크/라이트
-            # 모드 전환과 무관하게 SVG 자체 색상이 유지됨.
             svg_b64 = base64.b64encode(svg.encode("utf-8")).decode("ascii")
-            return (
+            replacements.append(
                 f'<div class="mermaid-img">'
                 f'<img src="data:image/svg+xml;base64,{svg_b64}"'
                 f' alt="Mermaid diagram" />'
                 f"</div>"
             )
-
-        # Fallback: keep original div for client-side rendering
-        return m.group(0)
-
-    # 다이어그램 렌더링은 네트워크 바운드이므로 병렬 처리한다.
-    # 결과는 원래 순서대로 재조립하고, progress_cb는 이 스레드에서만 호출한다.
-    # 워커 2개 + 지터 백오프로 mermaid.ink 레이트리밋(503)을 완화한다.
-    replacements: list[str] = [m.group(0) for m in matches]
-    with ThreadPoolExecutor(max_workers=2) as pool:
-        fut_map = {pool.submit(_render_one, m, labels[i]): i for i, m in enumerate(matches)}
-        done = 0
-        for fut in as_completed(fut_map):
-            i = fut_map[fut]
-            try:
-                replacements[i] = fut.result()
-            except Exception:
-                replacements[i] = matches[i].group(0)
-            done += 1
-            if progress_cb:
-                try:
-                    progress_cb(done, total, labels[i])
-                except Exception:
-                    pass
+        else:
+            # Fallback: keep original div for client-side rendering
+            replacements.append(m.group(0))
 
     result = []
     last_end = 0
@@ -918,13 +965,13 @@ def _prerender_mermaid_to_svg(html_body: str, progress_cb=None) -> str:
     return "".join(result)
 
 
-def markdown_to_tailwind_html(md_text: str, title: str = "Document", config: RenderConfig | None = None, progress_cb=None) -> str:
-    config = config or RenderConfig()
-    md_text = _auto_fence_ascii_diagrams(md_text)
-    md_text = _tag_fenced_diagram_blocks_as_text(md_text)
-    md_text = _normalize_diagram_codeblocks(md_text)
-    md_text = _inline_mermaid_fences(md_text)
-    md = markdown.Markdown(
+def _build_markdown(toc_permalink: bool = True) -> markdown.Markdown:
+    """독립 HTML·인쇄 경로가 공유하는 Markdown 변환기를 생성한다.
+
+    확장 목록은 두 경로에서 동일해야 변환 결과가 드리프트하지 않는다 —
+    toc permalink만 경로별로 다르다(독립 HTML=앵커 아이콘, 인쇄=없음).
+    """
+    return markdown.Markdown(
         extensions=[
             "fenced_code",
             "tables",
@@ -940,11 +987,20 @@ def markdown_to_tailwind_html(md_text: str, title: str = "Document", config: Ren
                 "linenums": False,
             },
             "toc": {
-                "permalink": True,
+                "permalink": toc_permalink,
                 "toc_depth": "2-4",
             },
         },
     )
+
+
+def markdown_to_tailwind_html(md_text: str, title: str = "Document", config: RenderConfig | None = None, progress_cb=None) -> str:
+    config = config or RenderConfig()
+    md_text = _auto_fence_ascii_diagrams(md_text)
+    md_text = _tag_fenced_diagram_blocks_as_text(md_text)
+    md_text = _normalize_diagram_codeblocks(md_text)
+    md_text = _inline_mermaid_fences(md_text)
+    md = _build_markdown(toc_permalink=True)
 
     html_body = md.convert(md_text)
     toc_html = getattr(md, "toc", "") or ""
@@ -1440,6 +1496,7 @@ def run_gui() -> int:
         class _Worker(QThread):
             finished_signal = Signal(object, object, object)  # (result_html, pdf_result, error)
             progress_signal = Signal(int, int, str)   # (current, total, status)
+            log_signal = Signal(str)                  # 변환 중 발생한 경고 로그
 
             def __init__(self, md_text, title, config, want_pdf, in_path):
                 super().__init__()
@@ -1450,6 +1507,9 @@ def run_gui() -> int:
                 self._in_path = in_path
 
             def run(self):
+                # 변환 중 발생한 warning(이미지 누락·Mermaid 실패 등)을 UI로 라우팅
+                handler = _CallbackLogHandler(lambda m: self.log_signal.emit(m))
+                logger.addHandler(handler)
                 try:
                     out_html = markdown_to_tailwind_html(
                         self._md_text,
@@ -1469,9 +1529,13 @@ def run_gui() -> int:
                     self.finished_signal.emit(out_html, pdf_res, None)
                 except Exception as e:
                     self.finished_signal.emit(None, None, e)
+                finally:
+                    logger.removeHandler(handler)
 
         worker = _Worker(md_text, title, render_config, chk_pdf.isChecked(), in_path)
         w._active_worker = worker  # prevent GC while running
+        warnings_seen: list[str] = []
+        worker.log_signal.connect(lambda msg: warnings_seen.append(msg))
 
         def _on_progress(cur, tot, st):
             if st == "done":
@@ -1519,6 +1583,8 @@ def run_gui() -> int:
             elif isinstance(pdf_res, Exception):
                 QMessageBox.warning(w, "PDF 실패",
                                     f"HTML은 생성됐지만 PDF 변환에 실패했습니다:\n{pdf_res}")
+            if warnings_seen:
+                msg += f"\n\n⚠️ 경고 {len(warnings_seen)}건:\n" + "\n".join(warnings_seen[:10])
             QMessageBox.information(w, "Done", msg)
 
         worker.finished_signal.connect(_on_done)
@@ -1616,13 +1682,7 @@ def md_to_html_body(
     # (md2doc.py와 동일한 전처리 — 변환 후 정규식은 codehilite 마크업과 불일치)
     if render_mermaid:
         md_text = _inline_mermaid_fences(md_text)
-    md = markdown.Markdown(
-        extensions=[
-            "fenced_code", "tables", "toc", "codehilite",
-            "admonition", "attr_list", "md_in_html",
-        ],
-        extension_configs={"toc": {"permalink": False}},
-    )
+    md = _build_markdown(toc_permalink=False)
     body = md.convert(md_text)
     if render_mermaid:
         body = _prerender_mermaid_to_svg(body, progress_cb=progress_cb)
@@ -1765,6 +1825,16 @@ def _embed_local_images(body: str, base_dir: Path) -> str:
         # URL 디코딩 + ?query / #fragment 제거 후 실제 파일 경로 해석
         raw = urllib.parse.unquote(re.split(r"[?#]", src, 1)[0])
         img_path = (base_dir / raw).resolve()
+        # base_dir 밖 경로(../ 탈출)는 임베드 금지 — 임의 로컬 파일이
+        # 출력 HTML에 base64로 유출되는 것을 막는다.
+        try:
+            if not img_path.is_relative_to(base_dir.resolve()):
+                logger.warning(
+                    "[img skipped] 입력 디렉터리 밖 경로: %s (기준: %s)", src, base_dir
+                )
+                return m.group(0)
+        except Exception:
+            return m.group(0)
         mime = _IMG_MIME.get(img_path.suffix.lower())
         if mime and img_path.is_file():
             try:
@@ -1865,30 +1935,36 @@ def run_pdf_gui() -> int:
         def run(self):
             ok = 0
             total = len(self._paths)
-            for i, in_path in enumerate(self._paths):
-                self.log.emit(f"[변환 시작] {in_path.name}")
+            # 변환 중 warning(이미지 누락·Mermaid 실패 등)을 로그 뷰로 라우팅
+            handler = _CallbackLogHandler(lambda m: self.log.emit(f"  ⚠️ {m}"))
+            logger.addHandler(handler)
+            try:
+                for i, in_path in enumerate(self._paths):
+                    self.log.emit(f"[변환 시작] {in_path.name}")
 
-                def mermaid_cb(cur, tot, label, name=in_path.name):
-                    self.log.emit(f"  {name}: mermaid {cur}/{tot} — {label}")
+                    def mermaid_cb(cur, tot, label, name=in_path.name):
+                        self.log.emit(f"  {name}: mermaid {cur}/{tot} — {label}")
 
-                try:
-                    out_path = (
-                        (self._out_dir / (in_path.stem + ".pdf"))
-                        if self._out_dir else None
-                    )
-                    written = convert_markdown_to_pdf(
-                        in_path, out_path=out_path,
-                        keep_html=self._opts["keep_html"],
-                        render_mermaid=not self._opts["no_mermaid"],
-                        new_page_h2=self._opts["new_page_h2"],
-                        browser=self._opts["browser"] or None,
-                        progress_cb=mermaid_cb,
-                    )
-                    self.log.emit(f"[완료] {written}")
-                    ok += 1
-                except Exception as e:
-                    self.log.emit(f"[오류] {in_path.name}: {e}")
-                self.progress.emit(i + 1, total)
+                    try:
+                        out_path = (
+                            (self._out_dir / (in_path.stem + ".pdf"))
+                            if self._out_dir else None
+                        )
+                        written = convert_markdown_to_pdf(
+                            in_path, out_path=out_path,
+                            keep_html=self._opts["keep_html"],
+                            render_mermaid=not self._opts["no_mermaid"],
+                            new_page_h2=self._opts["new_page_h2"],
+                            browser=self._opts["browser"] or None,
+                            progress_cb=mermaid_cb,
+                        )
+                        self.log.emit(f"[완료] {written}")
+                        ok += 1
+                    except Exception as e:
+                        self.log.emit(f"[오류] {in_path.name}: {e}")
+                    self.progress.emit(i + 1, total)
+            finally:
+                logger.removeHandler(handler)
             self.done.emit(ok)
 
     class MainWindow(QMainWindow):

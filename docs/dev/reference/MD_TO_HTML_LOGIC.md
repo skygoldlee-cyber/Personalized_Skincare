@@ -621,7 +621,9 @@ class RenderConfig:
 
 `@/content/utils/md_to_html.py:3167-3233`
 
-- `<div class="mermaid">` 블록을 mermaid.ink API(`https://mermaid.ink/svg/{base64}?theme=default`)로 SVG 변환
+- `<div class="mermaid">` 블록을 mermaid.ink API(`https://mermaid.ink/svg/{base64}?theme=default`)로 SVG 변환 — 실패 시 kroki.io 폴백 렌더러 사용
+- 렌더러 응답은 `<script>`·`on*` 핸들러·`javascript:`/`vbscript:` href를 제거(최소 살균)하고 `.mermaid_cache/`에 **렌더러별** 키로 디스크 캐시 — mermaid.ink와 kroki의 출력이 다르므로 같은 소스라도 캐시 엔트리를 분리해 재현성 확보
+- 동일 다이어그램 소스는 제출 단계에서 dedupe — 워커 간 중복 네트워크 요청 방지
 - 변환 성공 시 SVG를 base64 인코딩하여 `<img src="data:image/svg+xml;base64,...">`로 임베드
   - 인라인 `<svg>`는 외부 CSS의 `color`/`fill`/`currentColor` 상속으로 다크 모드에서 글자가 안 보이는 문제가 있어 `<img>`로 격리
   - `theme=default` 고정: 밝은 배경 + 어두운 텍스트 조합이 다크/라이트 페이지 모두에서 대비 확보

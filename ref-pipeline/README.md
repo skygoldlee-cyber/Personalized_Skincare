@@ -210,9 +210,11 @@ python ref-pipeline/md2doc.py --cli --in doc.md -q   # 경고 이상만
 #### md2doc 동작 참고
 
 - **Mermaid 런타임**: 저장소 `vendor/mermaid/mermaid.min.js`를 1순위로 임베드(오프라인·버전 확정). 부재 시 고정 버전(`MERMAID_VERSION`) CDN 폴백 + SHA-384 SRI 검증
-- **Mermaid 사전렌더 캐시**: 다이어그램 소스 해시 키로 `ref-pipeline/.mermaid_cache/`에 SVG 저장 — 재빌드 시 네트워크 요청 생략, 동일 다이어그램 중복 요청 방지. 렌더러 출력을 무효화하려면 코드의 `_MERMAID_CACHE_SALT`를 올리고 캐시 폴더를 비운다 (gitignore 대상)
+- **Mermaid 사전렌더 캐시**: 다이어그램 소스+렌더러(mermaid.ink/kroki) 해시 키로 `ref-pipeline/.mermaid_cache/`에 SVG 저장 — 재빌드 시 네트워크 요청 생략, 동일 다이어그램은 제출 단계 dedupe로 중복 요청 방지. 렌더러 출력을 무효화하려면 코드의 `_MERMAID_CACHE_SALT`를 올리고 캐시 폴더를 비운다 (gitignore 대상)
+- **외부 렌더러 응답 살균**: 사전렌더 SVG는 `<script>`·`on*` 핸들러·`javascript:`/`vbscript:` href 제거 후 `<img>` data URI로 임베드 — 알려진 렌더러 대상 최소 살균이며 범용 SVG 새니타이저가 아님
+- **이미지 임베드 범위**: PDF 변환 시 `<img>` 상대경로는 입력 MD 디렉터리 안쪽만 base64 임베드 — `../` 등 디렉터리 밖 경로는 경고 후 스킵 (임의 로컬 파일 유출 방지). GUI 모드는 변환 경고가 완료 메시지/로그 뷰에 표시됨
 - **입력 인코딩**: `utf-8-sig` — BOM 있는 MD도 헤딩이 깨지지 않음
-- **테스트**: `python -m pytest` — 순수 변환 함수·Mermaid 에셋 선택·SVG 캐시·템플릿 치환 39건 (pytest는 개발 의존성, requirements 미포함)
+- **테스트**: `python -m pytest` — 순수 변환 함수·Mermaid 에셋 선택·SVG 캐시·이미지 임베드·SVG 살균·템플릿 치환 49건 (pytest는 개발 의존성, requirements 미포함)
 
 ---
 

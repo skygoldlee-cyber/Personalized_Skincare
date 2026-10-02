@@ -115,6 +115,13 @@ class TestInlineMermaidFences:
         assert "```mermaid" in out
         assert '<div class="mermaid">' not in out
 
+    def test_unterminated_fence_returns_raw_lines(self):
+        # 미종결 펜스는 sanitize 없이 원본 라인을 그대로 돌려줘야 한다 —
+        # 'flowchart' 같은 입력이 따옴표 삽입 등으로 변형되면 안 된다.
+        md = '```mermaid\nflowchart LR\n    A[원본 "따옴표" 레이블]-->B\n'
+        out = md2doc._inline_mermaid_fences(md)
+        assert 'A[원본 "따옴표" 레이블]-->B' in out
+
     def test_other_fence_unchanged(self):
         md = "```python\nprint(1)\n```\n"
         assert md2doc._inline_mermaid_fences(md) == md
@@ -293,6 +300,18 @@ class TestMermaidCache:
         assert a == b
         assert md2doc._mermaid_cache_key("other") != a
 
+    def test_key_includes_renderer(self):
+        # 같은 소스라도 렌더러(mermaid.ink / kroki 폴백)가 다르면
+        # 출력 SVG가 다르므로 캐시 키를 분리해야 한다.
+        a = md2doc._mermaid_cache_key("src", renderer="mermaid.ink")
+        b = md2doc._mermaid_cache_key("src", renderer="kroki")
+        assert a != b
+
+    def test_renderer_entries_isolated(self, _cache_tmp):
+        md2doc._mermaid_cache_write("src", self._SVG, renderer="kroki")
+        assert md2doc._mermaid_cache_read("src", renderer="kroki") == self._SVG
+        assert md2doc._mermaid_cache_read("src", renderer="mermaid.ink") is None
+
 
 # ---------------------------------------------------------------------------
 # _embed_mermaid_js
@@ -342,3 +361,67 @@ class TestMarkdownToTailwindHtmlOffline:
             "# x\n", title='a<b>"c"', config=cfg
         )
         assert "<title>a&lt;b&gt;&quot;c&quot;</title>" in out
+
+
+# ---------------------------------------------------------------------------
+# _embed_local_images — base_dir 밖 경로 탈출 차단
+# ---------------------------------------------------------------------------
+
+class TestEmbedLocalImages:
+    def test_sibling_image_embedded(self, tmp_path):
+        base = tmp_path / "docs"
+        base.mkdir()
+        (base / "pic.png").write_bytes(b"pngdata")
+        body = '<p><img src="pic.png" alt="x"></p>'
+        out = md2doc._embed_local_images(body, base)
+        assert "data:image/png;base64," in out
+
+    def test_parent_traversal_not_embedded(self, tmp_path):
+        # base_dir 밖 파일은 임베드되지 않아야 한다 (임의 로컬 파일 유출 방지)
+        base = tmp_path / "docs"
+        base.mkdir()
+        (tmp_path / "outside.png").write_bytes(b"secret")
+        body = '<p><img src="../outside.png" alt="x"></p>'
+        out = md2doc._embed_local_images(body, base)
+        assert "base64" not in out
+
+    def test_remote_and_data_uri_untouched(self, tmp_path):
+        body = (
+            '<img src="https://x/y.png">'
+            '<img src="data:image/png;base64,AAAA">'
+        )
+        assert md2doc._embed_local_images(body, tmp_path) == body
+
+
+# ---------------------------------------------------------------------------
+# _sanitize_svg — 렌더러 응답의 실행 가능 요소 제거
+# ---------------------------------------------------------------------------
+
+class TestSanitizeSvg:
+    def test_script_and_handlers_removed(self):
+        svg = '<svg><script>alert(1)</script><a onclick="x()">t</a></svg>'
+        out = md2doc._sanitize_svg(svg)
+        assert "<script" not in out
+        assert "onclick" not in out
+
+    def test_javascript_href_neutralized(self):
+        svg = '<svg><a href="javascript:alert(1)">t</a></svg>'
+        out = md2doc._sanitize_svg(svg)
+        assert "javascript:" not in out
+
+    def test_plain_svg_untouched(self):
+        svg = '<svg xmlns="http://www.w3.org/2000/svg"><text>ok</text></svg>'
+        assert md2doc._sanitize_svg(svg) == svg
+
+
+# ---------------------------------------------------------------------------
+# _build_markdown — 공통 변환기 팩토리
+# ---------------------------------------------------------------------------
+
+class TestBuildMarkdown:
+    def test_extensions_available(self):
+        md = md2doc._build_markdown()
+        out = md.convert("| a | b |\n|---|---|\n| 1 | 2 |\n")
+        assert "<table>" in out
+        out = md.convert("```python\nx = 1\n```")
+        assert "codehilite" in out or "highlight" in out
