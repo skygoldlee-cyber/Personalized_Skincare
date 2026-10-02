@@ -5,6 +5,7 @@
 #   1. check:types — tsc(IDE와 동일 계열 TS 5.x) JSDoc 진단
 #   2. lint        — ESLint 에러 (경고는 통과)
 #   3. check:html  — html/views 파셜 편집 후 build:html 누락 차단
+#   4. check:secrets — 추적 파일의 시크릿 패턴(개인키·service_role·토큰) 커밋 차단
 #
 # 우회: git commit --no-verify  또는  SKIP_PRECOMMIT=1 git commit
 
@@ -16,7 +17,7 @@ if command -v npm.cmd >/dev/null 2>&1; then NPM="npm.cmd"; else NPM="npm"; fi
 
 echo "▶ pre-commit 오류 게이트 (check:types + lint)"
 
-for check in check:types lint check:html; do
+for check in check:types lint check:html check:secrets; do
     echo "  - npm run $check"
     $NPM run "$check" --silent || {
         echo "✗ 커밋 차단: $check 실패 — IDE에 표시되는 오류를 먼저 해소하세요"
