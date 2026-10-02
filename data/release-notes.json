@@ -1,5 +1,12 @@
 [
   {
+    "version": "v20261002-3640449",
+    "date": "2026-10-02",
+    "notes": [
+      "[정리] Vercel 프로젝트 리네임 반영 — personalized-skincare-study → passory"
+    ]
+  },
+  {
     "version": "v20261002-0596951",
     "date": "2026-10-02",
     "notes": [
@@ -139,10 +146,5 @@
     "notes": [
       "[개선] PRO 배지가 더 잘 보이도록 디자인을 개선했습니다"
     ]
-  },
-  {
-    "version": "v20261001-f1ac3ff",
-    "date": "2026-10-01",
-    "notes": []
   }
 ]
