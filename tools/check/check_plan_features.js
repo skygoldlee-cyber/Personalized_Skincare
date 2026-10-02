@@ -13,7 +13,7 @@
  *   npm.cmd run check:plan   # 단독 실행
  */
 
-// @spec ROAD-P0 (무료/Pro 전환 레버 정합)
+// @spec ROAD-P0 — 무료·프로 전환 레버 정합
 const fs = require('fs');
 const path = require('path');
 
