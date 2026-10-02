@@ -548,7 +548,7 @@ passory/
 | 모듈 | 책임 |
 |------|------|
 | [`src/app.js`](../../src/app.js) | **메인 오케스트레이터**. 초기화(`initApp`/`initExamContext`), **이벤트 위임 바인딩**(`data-click`/`data-input`/`data-args` + `resolveDelegatedHandler`/`parseDelegatedArgs`), `startFocusSubjectStudy` 등 뷰 간 브릿지 함수. 라우팅은 `router.js`에 위임. 대시보드 카드 생성은 `app-dashboard.js`, 뷰포트·가로세로·브랜딩·기능플래그는 `app-shell.js`로 분리됨 |
-| [`src/router.js`](../../src/router.js) | **SPA 라우터**. `getViewTitles()`로 뷰 타이틀/서브타이틀 맵 생성, `navigateToView()`로 뷰 전환 디스패치 (active 클래스 토글, 헤더 갱신, 뷰 렌더러 호출, 오디오 정지, 포커스 모드 해제), `#/slug` 해시 라우팅 + **뒤로가기 종료 가드** (루트 뷰에서 보초 엔트리 소비 시 '한 번 더 누르면 종료' 토스트, 2.5초 내 반복 시 종료 허용 — 모달 열림 시 modal-back 우선) |
+| [`src/router.js`](../../src/router.js) | **SPA 라우터**. `getViewTitles()`로 뷰 타이틀/서브타이틀 맵 생성, `navigateToView()`로 뷰 전환 디스패치 (active 클래스 토글, 헤더 갱신, 뷰 렌더러 호출, 오디오 정지, 포커스 모드 해제), `#/slug` 해시 라우팅 + **뒤로가기 종료 가드** (루트 뷰에서 보초 엔트리 소비 시 '한 번 더 누르면 종료' 토스트, 2.5초 내 반복 시 종료 허용 — 모달 열림 시 modal-back 우선. 뷰 간 뒤로가기는 `hashchange`를 동반하므로 판정을 `setTimeout`으로 지연해 동반 해시 변경이 있으면 발동하지 않음 — popstate/hashchange 도착 순서는 브라우저별 상이) |
 | [`src/charts.js`](../../src/charts.js) | SVG 기반 차트 생성 (레이더 차트, 성적 꺾은선 그래프). **인터랙티브 툴팁**(hover/touch) 지원. 외부 차트 라이브러리 미사용 |
 | [`src/scratchpad.js`](../../src/scratchpad.js) | HTML5 Canvas 손글씨 연습장 (계산 문제 풀이용) |
 | [`src/trainer-calc.js`](../../src/trainer-calc.js) | 계산 훈련 문제 생성기. **순수 로직** — DOM 의존 없이 문제 데이터 객첼만 반환 |

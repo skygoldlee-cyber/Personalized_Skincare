@@ -188,6 +188,12 @@ function syncViewHash(target) {
 const EXIT_GUARD_WINDOW_MS = 2500;
 let _exitGuardArmedAt = 0;
 let _exitGuardBound = false;
+// 마지막 hashchange 기록 — 뷰 간 뒤로가기는 popstate와 hashchange를 동반한다.
+// 두 이벤트의 도착 순서는 브라우저마다 다르므로(특히 모바일 WebView), 착륙
+// 시점의 state.currentView 비교만으로는 "루트 종료"와 "뷰 전환"을 구분할 수 없다.
+// seq는 popstate 이후 도착한 hashchange를, at은 직전에 도착한 hashchange를 잡는다.
+let _hashNavSeq = 0;
+let _lastHashNavAt = 0;
 
 // 종료 가드는 터치 우선(모바일) 환경에서만 활성 — PC 뒤로가기는
 // 앱 종료가 아니라 일반 탐색이므로 경고 토스트가 소음이 된다.
@@ -208,17 +214,34 @@ function _handleExitGuardPopstate() {
     const s = history.state;
     // 기저 엔트리 판정 — 뷰 스탬프·보초 마커·(딥링크 직접 진입의) 무스탬프 모두 커버
     const isBase = s ? (s.view === state.currentView || s.exitGuard === true) : true;
-    // 해시가 바뀐 경우(뷰 간 이동)는 hashchange가 처리 — 종료 가드와 무관
-    if (!isBase || _viewFromLocation() !== state.currentView) return;
-    const now = Date.now();
-    if (now - _exitGuardArmedAt <= EXIT_GUARD_WINDOW_MS) {
-        _exitGuardArmedAt = 0;
-        try { history.go(-2); } catch (_) { /* 제한 환경 무시 */ }
-        return;
-    }
-    _exitGuardArmedAt = now;
-    _pushExitGuard();
-    showToast('뒤로가기를 한 번 더 누르면 종료됩니다', 'info', EXIT_GUARD_WINDOW_MS);
+    if (!isBase) return;
+    // 해시가 바뀐 착륙(뷰 간 이동)은 hashchange가 처리한다. 그런데 popstate와
+    // hashchange의 도착 순서는 브라우저마다 다르다 — hashchange가 먼저 오는
+    // 환경에서는 여기 도달할 때 currentView가 이미 전환된 상태라 위의 뷰 비교가
+    // 무의미해진다. 그래서 판정을 태스크 경계 뒤로 미뤄, 같은 탐색에서
+    // hashchange가 발생했다면 뷰 전환으로 보고 종료 가드를 건너뛴다.
+    const seqAtPop = _hashNavSeq;
+    const poppedAt = Date.now();
+    setTimeout(() => {
+        if (isAnyModalOpen() || consumedModalPop()) return;
+        // 이번 탐색이 해시 변경을 동반했다 = 뷰 전환 (종료 제스처 아님).
+        // popstate 이후 도착(seq 증가)이거나 직전 같은 탐색으로 도착한 hashchange.
+        if (_hashNavSeq !== seqAtPop || _lastHashNavAt >= poppedAt - 50) return;
+        // 판정 시점의 엔트리·뷰로 기저 조건을 재검증 (역직렬화 객체 동일성 비교는
+        // 브라우저마다 다르게 동작하므로 판정을 그대로 재실행한다)
+        const cur = history.state;
+        const stillBase = cur ? (cur.view === state.currentView || cur.exitGuard === true) : true;
+        if (!stillBase || _viewFromLocation() !== state.currentView) return;
+        const now = Date.now();
+        if (now - _exitGuardArmedAt <= EXIT_GUARD_WINDOW_MS) {
+            _exitGuardArmedAt = 0;
+            try { history.go(-2); } catch (_) { /* 제한 환경 무시 */ }
+            return;
+        }
+        _exitGuardArmedAt = now;
+        _pushExitGuard();
+        showToast('뒤로가기를 한 번 더 누르면 종료됩니다', 'info', EXIT_GUARD_WINDOW_MS);
+    }, 0);
 }
 
 /**
@@ -250,10 +273,19 @@ export function initViewHashRouting(ctx) {
         window.addEventListener('popstate', _handleExitGuardPopstate);
     }
     window.addEventListener('hashchange', () => {
+        _hashNavSeq++;
+        _lastHashNavAt = Date.now();
         const view = _viewFromLocation();
         if (!view || view === state.currentView) return;
         _hashNavigating = true;
         navigateToView(view, ctx);
         _hashNavigating = false;
     });
+}
+
+/** 테스트 격리용 — 종료 가드·해시 네비게이션 상태 초기화 (리스너는 유지). */
+export function resetExitGuardState() {
+    _exitGuardArmedAt = 0;
+    _hashNavSeq = 0;
+    _lastHashNavAt = 0;
 }

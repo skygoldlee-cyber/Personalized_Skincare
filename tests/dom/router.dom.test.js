@@ -1,6 +1,6 @@
 // @spec UX-NAV-01,UX-NAV-08,UM-04
 import { describe, it, beforeEach, afterEach, expect, vi } from 'vitest';
-import { getViewTitles, navigateToView, initViewHashRouting } from '../../src/router.js';
+import { getViewTitles, navigateToView, initViewHashRouting, resetExitGuardState } from '../../src/router.js';
 import { state } from '../../src/state.js';
 
 // navigation.js의 DOM 의존성 모킹
@@ -282,14 +282,19 @@ describe('router.js — DOM 테스트', () => {
         const setMobile = (on) => Object.defineProperty(
             navigator, 'maxTouchPoints', { value: on ? 5 : 0, configurable: true }
         );
-        beforeEach(() => setMobile(true));
+        beforeEach(() => { setMobile(true); resetExitGuardState(); });
         afterEach(() => setMobile(false));
 
-        it('모바일: 루트 뷰 뒤로가기 → 종료 안내 토스트 + 보초 엔트리 재삽입', () => {
+        // 종료 가드 판정은 setTimeout으로 지연된다 — popstate와 동반된 hashchange를
+        // 기다렸다가 뷰 전환이면 건너뛰기 위함. 단언 전 태스크 경계를 기다려야 한다.
+        const settle = () => new Promise(r => setTimeout(r, 10));
+
+        it('모바일: 루트 뷰 뒤로가기 → 종료 안내 토스트 + 보초 엔트리 재삽입', async () => {
             initViewHashRouting(ctx());
             // 루트에서의 뒤로가기 착륙 시뮬레이션 — 기저 뷰 엔트리로 상태 교체 후 popstate
             history.replaceState({ view: 'dashboard-view' }, '', '#/dashboard');
             window.dispatchEvent(new Event('popstate'));
+            await settle();
             const toast = document.getElementById('app-toast');
             expect(toast).toBeTruthy();
             expect(toast.textContent).toContain('종료');
@@ -297,20 +302,47 @@ describe('router.js — DOM 테스트', () => {
             expect(history.state && history.state.exitGuard).toBe(true);
         });
 
-        it('PC(비터치)에서는 종료 가드가 발동하지 않는다 — 토스트·보초 없음', () => {
+        it('뷰 간 뒤로가기(hashchange 동반)는 종료 가드를 발동하지 않는다 — hashchange 우선 순서', async () => {
+            initViewHashRouting(ctx());
+            // 모바일에서 뒤로가기로 메뉴 전환: '#/quiz' 엔트리 → 보초 엔트리 '#/dashboard' 착륙.
+            // 일부 모바일 WebView는 hashchange를 popstate보다 먼저 발화한다 — 그 순서에서도
+            // 종료 토스트가 떠서는 안 된다.
+            navigateToView('quiz-view', ctx());
+            history.replaceState({ exitGuard: true }, '', '#/dashboard');
+            window.dispatchEvent(new Event('hashchange')); // 먼저 도착 → currentView가 dashboard로 갱신
+            expect(state.currentView).toBe('dashboard-view');
+            window.dispatchEvent(new Event('popstate'));
+            await settle();
+            expect(document.getElementById('app-toast')).toBeFalsy();
+        });
+
+        it('뷰 간 뒤로가기(hashchange 동반)는 종료 가드를 발동하지 않는다 — popstate 우선 순서', async () => {
+            initViewHashRouting(ctx());
+            navigateToView('quiz-view', ctx());
+            history.replaceState({ exitGuard: true }, '', '#/dashboard');
+            window.dispatchEvent(new Event('popstate'));
+            window.dispatchEvent(new Event('hashchange'));
+            await settle();
+            expect(document.getElementById('app-toast')).toBeFalsy();
+            expect(state.currentView).toBe('dashboard-view');
+        });
+
+        it('PC(비터치)에서는 종료 가드가 발동하지 않는다 — 토스트·보초 없음', async () => {
             setMobile(false);
             initViewHashRouting(ctx());
             expect(history.state && history.state.exitGuard).not.toBe(true);
             history.replaceState({ view: 'dashboard-view' }, '', '#/dashboard');
             window.dispatchEvent(new Event('popstate'));
+            await settle();
             expect(document.getElementById('app-toast')).toBeFalsy();
         });
 
-        it('모달이 열려 있으면 종료 가드가 개입하지 않는다 (modal-back 우선)', () => {
+        it('모달이 열려 있으면 종료 가드가 개입하지 않는다 (modal-back 우선)', async () => {
             initViewHashRouting(ctx());
             document.body.insertAdjacentHTML('beforeend', '<div id="test-modal"></div>');
             history.replaceState({ view: 'dashboard-view' }, '', '#/dashboard');
             window.dispatchEvent(new Event('popstate'));
+            await settle();
             expect(document.getElementById('app-toast')).toBeFalsy();
             document.getElementById('test-modal').remove();
         });
@@ -325,6 +357,7 @@ describe('router.js — DOM 테스트', () => {
             await new Promise(r => setTimeout(r, 0)); // observer 마이크로태스크 → 마커 삽입
             history.replaceState({ view: 'dashboard-view' }, '', '#/dashboard');
             window.dispatchEvent(new Event('popstate')); // 뒤로가기로 모달 닫기
+            await settle();
             expect(document.getElementById('app-toast')).toBeFalsy();
             expect(document.getElementById('test-zoom-modal').classList.contains('is-hidden')).toBe(true);
             document.getElementById('test-zoom-modal').remove();
