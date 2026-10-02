@@ -115,6 +115,7 @@ UI/UX 작업의 문서 계열 — 역할 분담과 읽기 순서는 "무엇을(S
 | [USER_FLOW.md](dev/design/USER_FLOW.md) | 사용자 흐름 명세 — 기동/학습 루프/리더/모의고사/Formula OS/시험 전환/모드 전환의 진입·분기·종료 조건 계약 | 화면 간 전환·상태 분기 작업 |
 | [UIUX_요구사양.md](dev/UIUX_요구사양.md) | 기기별 UI/UX 계약서 — 모바일·태블릿·PC 배치 매트릭스, 요구사항→SPEC ID 매핑, 미구현 제안(UXD-*) | 기기별 레이아웃·입력·PWA 동작 정의 |
 | [UIUX_VERIFY_RUNBOOK.md](dev/runbooks/UIUX_VERIFY_RUNBOOK.md) | UI/UX 검증 런북 — TRACE 체계 단계별 확인 (SPEC 선행 → @spec 연결 → E2E 실측 → 배포·실기기 확인) | UI/UX 변경 검증·배포 절차 |
+| [UIUX_외주전달_패키지.md](dev/UIUX_외주전달_패키지.md) | 외주 인도용 추출본 — 위 계열 문서를 프로젝트 중립화해 단일 파일로 묶은 패키지 (수주사 요구사양·산출물 의무·검수 기준) | 외주 개발 발주 시 단독 인도 |
 | [DEV_ENVIRONMENT.md](dev/reference/DEV_ENVIRONMENT.md) | 개발환경 요구사양 — Node/Python/CLI 도구 버전, 최초 설정 절차, 검증·빌드·배포 명령 |
 | [SUPABASE_DESIGN.md](dev/design/SUPABASE_DESIGN.md) | Supabase 계정·클라우드 동기화·Pro 권한 설계 — Phase 1~2 구현 완료, URL/PWA 동일 로그인 UX |
 | [FLASHCARD_LOGIC.md](dev/reference/FLASHCARD_LOGIC.md) | 플래시카드 생성·난이도·필터·SM-2 간격 반복 로직 |
@@ -268,6 +269,7 @@ UI/UX 작업의 문서 계열 — 역할 분담과 읽기 순서는 "무엇을(S
 | DOC-DEV-04 | `docs/dev/TRACE_MATRIX.md` (자동 생성 — npm run build:trace) |
 | DOC-DEV-05 | `docs/dev/ingredients_audit_제2026-19호.md` |
 | DOC-DEV-06 | `docs/dev/UIUX_요구사양.md` |
+| DOC-DEV-07 | `docs/dev/UIUX_외주전달_패키지.md` |
 | DOC-DSN-01 | `docs/dev/design/DOM_TEST_DESIGN.md` |
 | DOC-DSN-02 | `docs/dev/design/FORMULA_OS_WORKFLOW_DESIGN.md` |
 | DOC-DSN-03 | `docs/dev/design/LEARNING_PREMIUM_PLAN.md` |
