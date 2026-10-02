@@ -74,7 +74,8 @@ npm.cmd run check:reflines              # 교재 (LNN)/📌출처 조문 ↔ ref
 npm.cmd run check:drillfresh            # 드릴 번들 ↔ 문제은행 번들 신선도 (stale 시 npm run build:drills)
 npm.cmd run check:docbundles           # docs_md 번들 ↔ 원본 문서 신선도 (check:content에 포함)
 npm.cmd run check:datafresh            # data/·생성물 ↔ 원본 신선도 — 빌드 체인 실행 후 git diff 비교·자동 원복 (생성물 경로가 clean이어야 실행 가능)
-npm.cmd run check:docs                  # README·AGENTS·docs/*.md 내 경로 참조 존재 검증 + 문서 ID 누락·중복 검증
+npm.cmd run check:docs                  # README·AGENTS·docs/*.md 내 경로 참조 존재 검증 + 문서 ID 누락·중복 검증 + src/ 인벤토리 정합 (check_src_inventory)
+npm.cmd run check:srcinv                # AGENTS.md 디렉토리 구조의 src/ 파일 나열 ↔ 실제 파일 양방향 검증 (단독 실행)
 npm.cmd run check:domainmap             # 파일 계층 분류 강제 — src/css/html/data/content/tests 전 파일이 domain-map.json에 선언 필수 (분류 규약: ARCHITECTURE.md "파일 계층 분류")
 npm.cmd run check:uitext                # UI 텍스트 커버리지 — data-uitext↔manifest.uiText 양방향 + platform HTML 시험명 잔존 검사
 npm.cmd run scaffold:exam -- <id> --name "시험명"  # 새 시험 스캐폴딩 — exams.json 등록 + manifest/references 골격 + 샘플 교재·문제은행·docs/ 생성 (--dry-run=미리보기, <id> --remove=제거)
@@ -133,11 +134,13 @@ src/                    # ES Modules
   sanitize.js           # XSS 방어 (escapeHTML, safeTextWithBreaks, esc, stripTags)
   data-loader.js        # 온디맨드 콘텐츠 로더 (DataLoader)
   scratchpad.js          # 스크래치패드 캔버스 (계산 연습용)
+  trainer-calc.js       # 계산 트레이너 문제 생성기 (순수 로직, 전역 스코프 실행)
   spaced-repetition.js  # SM-2 간격 반복 알고리즘
   study-aids.js         # 기출 필터, 숫자 암기표
   study-tracker.js      # 학습 캘린더/목표 추적 헬퍼 (recordStudyActivity, getStudyGoals)
   statement-tracker.js  # 진술 원자(sid) 단위 오판 통계·졸업 추적 (SM-2 연동)
   recommendations.js    # 합격 전략 추천 엔진 + 예상 점수 추정 + 실제 결과 보고 (순수 로직)
+  analysis-engine.js    # 맞춤학습 심층 분석 순수 로직 (AN-01~09 — 예측 점수·취약 단원·주간 리포트)
   command-palette.js    # 통합 검색 팔레트 (Ctrl+K) — 뷰/교재/카드/퀴즈/성분/문제집 검색·실행
   weak-items.js         # 약점(오답) 항목 ID 문법·해석 공용 모듈 (weak_quiz_/weak_sim_ 접두사, 퀴즈·카드 인덱스 캐시, DOM 비의존)
   questions.js          # 문항 스키마 (single/combo/short/ox), deriveComboAnswer, validateQuestion (샘플 문항은 tests/fixtures/sample-questions.js)
@@ -156,11 +159,13 @@ src/                    # ES Modules
   markdown-parser.js    # 공통 MD 파서
   mermaid-utils.js       # Mermaid 다이어그램 설정
   mermaid-render.js      # Mermaid 지연 로딩 + 컨테이너 렌더링 + 다이어그램 확대 모달 (reader/search/manual 공용)
+  image-zoom.js          # 교재 본문 이미지(.reader-img) 라이트박스 확대 모달
   pwa-manifest.js        # 시험별 동적 PWA 매니페스트 (클래식 스크립트 — 빌드 산출물 manifest.<id>.webmanifest 실제 파일로 링크 교체 + 문서 제목·설명·apple-mobile-web-app-title 갱신, blob: 금지)
   keyword-index.js      # 교재 셀→참조자료 키워드 매핑 (시험별 — 자동 생성)
   web-vitals.js         # Core Web Vitals 모니터링
   sha256.js             # 안정적 ID 해시
   utils.js              # 공통 유틸리티 (shuffle·todayKey·getChosung 등)
+  types.js              # 중앙 JSDoc 타입 정의 모듈 (@spec none)
   storage-keys.js       # localStorage 키 중앙 관리
   paths.js              # 파일 경로 상수 중앙 관리 (시험 루트 인지형)
   exam-context.js       # 활성 시험 해석/전환, scopedKey 네임스페이스, hasFeature, getExamAppName(시험별 앱 이름 — exams.json appName)
@@ -175,7 +180,10 @@ src/                    # ES Modules
   usage-guide.js        # Formula OS — 사용 안내문 생성기 (제형 템플릿+원료 주의)
   csv-utils.js          # Formula OS — CSV 파서·EUC-KR 폴백 디코딩·BOM 직렬화
   pwa-install.js        # PWA 설치 프롬프트 설정
+  pwa-install-capture.js # beforeinstallprompt 조기 캡처 + SW 조기 등록 (<head> 즉시 실행, 클래식 스크립트)
+  app-version.js        # 앱 버전 접근·표시 포맷터 (window.APP_VERSION → formatAppVersion)
   whats-new.js          # 새 버전 변경 이력 알림 (APP_VERSION 비교 → 모달, 설정 "변경 이력" 재열람)
+  onboarding.js         # 첫 방문 시작 안내 모달 (학습 데이터 없는 최초 방문 1회, 설정에서 재열람)
   feedback.js           # 의견 수신 — 설정 "의견 보내기" 모달, ?src= 유입 추적, 익명 insert, 오프라인 큐
   pro-upgrade.js        # Pro 안내 — feature-plan.json 로드, PRO 배지(data-pro-feature) 제어, 한도 초과 업그레이드 모달, Free/Pro 플랜 비교 모달 (showPlanCompare — 설정 '플랜 안내')
   usage-stats.js        # 로컬 사용 카운터 (ROAD-L5) — 뷰·액션 횟수를 기기 단위(익명 device_id) localStorage에 누적, Pro 후보 액션 20회 판정, 설정 '내 사용 통계' 모달
@@ -186,12 +194,16 @@ src/                    # ES Modules
   supabase-client.js    # Supabase lazy init — vendor/supabase UMD 동적 로드
   auth-view.js          # 계정/로그인 모달 (이메일+PW·회원가입·매직링크)
   sync.js               # 클라우드 스냅샷 동기화 (sync_snapshots push/pull, dirty 훅·디바운스·충돌 확인, 고객 키 제외, Pro entitlement 게이트)
+  globals.d.ts          # 전역 타입 선언 (jsconfig checkJs용)
+  package.json          # {"type":"module"} — src/ ESM 선언
   config/
     timing.js           # 타이밍 상수 (PWA 프로브, 스와이프 임계값 등)
     cache.js            # 캐시 설정 상수
   views/                # 뷰 컨트롤러 (35개)
     navigation.js       # 뷰 전환 유틸 (switchView)
     textbook-reader.js  # 교재 리더 (본문 + 참조자료)
+    reader-ref-links.js # 참조자료 링크 생성·프리뷰·클릭 위임 (textbook-reader.js에서 분리)
+    reader-toolbar.js   # 교재 리더 툴바·독서 설정·스크롤 이벤트 (textbook-reader.js에서 분리)
     reader-audio.js     # 오디오북 플레이어
     textbook-search.js # 교재 검색 (역색인)
     quiz.js             # 기출 퀴즈
@@ -215,6 +227,7 @@ src/                    # ES Modules
     glossary-renderer.js # 용어집 렌더링
     event-listeners.js  # 이벤트 리스너 일괄 바인딩
     formula.js          # Formula OS 뷰 — 배합 계산기, 추천, My 포뮬러, 서브내비 칩, 인쇄·JSON 공유
+    formula-recommend.js # 추천 베이스·원료 패널 + 맞춤 규칙 UI (formula.js에서 분리)
     formula-batch.js    # Formula OS — 조제 기록(배치) 목록·폼·상세 패널
     formula-customer.js # Formula OS — 고객 관리 패널 (카드·상담 이력·역참조)
     formula-material.js # Formula OS — 원료 장부 패널 (기한 배지·경고)
