@@ -1,5 +1,5 @@
 // 자동 생성된 복수정답형 드릴 데이터입니다. 수정하지 마십시오. (tools/build/build_combo_drills.js)
-// 원본: data/exams/cosmetic/exams/subject2.7f8c389e.js — mode: fact(명제 조합) 19문 / answer(정답 조합) 138문
+// 원본: data/exams/cosmetic/exams/subject2.8f7fb7b2.js — mode: fact(명제 조합) 19문 / answer(정답 조합) 138문
 var COMBO_DRILLS_subject2 = [
  {
   "id": "manufacturing_combo_f62cd4",
@@ -838,41 +838,41 @@ var COMBO_DRILLS_subject2 = [
   "subject": 2,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L3371 (출처: 과목2 문제은행 Q10)",
+  "citation": "📖 교재: L3355 (출처: 과목2 문제은행 Q10)",
   "stem": "다음 중 CGMP 기준상 제조업자가 보유해야 하는 원료의 '보관 상태 표시 라벨'의 색상 매칭이 올바르지 않은 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "manufacturing_st_05ceb6",
-    "conceptId": "L3371",
+    "conceptId": "L3355",
     "text": "시험 중 (대기): 황색 (또는 주황색)",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "manufacturing_st_44a44c",
-    "conceptId": "L3371",
+    "conceptId": "L3355",
     "text": "출고 가능: 청색",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "manufacturing_st_00ceeb",
-    "conceptId": "L3371",
+    "conceptId": "L3355",
     "text": "부적합 (반려): 적색",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "manufacturing_st_03f855",
-    "conceptId": "L3371",
+    "conceptId": "L3355",
     "text": "적합 (승인): 녹색",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "manufacturing_st_bcf6ea",
-    "conceptId": "L3371",
+    "conceptId": "L3355",
     "text": "반품 대기: 적색",
     "truth": false
    }
@@ -925,7 +925,7 @@ var COMBO_DRILLS_subject2 = [
    "절차"
   ],
   "derivedFrom": "subject2_q10",
-  "explain": "📖 법령 근거 (교재: L3371):\n③ 원자재, 시험 중인 제품 및 부적합품은 각각 구획된 장소에서 보관해야 한다. 다만, 서로 혼동을 일으킬 우려가 없는 시스템에 의해 보관되는 경우는 제외한다.",
+  "explain": "📖 법령 근거 (교재: L3355):\n③ 원자재, 시험 중인 제품 및 부적합품은 각각 구획된 장소에서 보관해야 한다. 다만, 서로 혼동을 일으킬 우려가 없는 시스템에 의해 보관되는 경우는 제외한다.",
   "source": "화장품 제조 및 품질관리 (250제)",
   "answer": "1"
  },
@@ -3161,41 +3161,41 @@ var COMBO_DRILLS_subject2 = [
   "subject": 2,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L3371 (출처: 과목2 문제은행 Q35)",
+  "citation": "📖 교재: L3355 (출처: 과목2 문제은행 Q35)",
   "stem": "다음 중 CGMP 기준상 원자재의 '수입 검사' 절차으로 옳은 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "manufacturing_st_8b09e1",
-    "conceptId": "L3371",
+    "conceptId": "L3355",
     "text": "원자재가 입고되면 외관 상태 및 제조번호를 확인한다.",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "manufacturing_st_b9765c",
-    "conceptId": "L3371",
+    "conceptId": "L3355",
     "text": "시험 결과가 나오기 전까지는 '시험 중(대기)' 구역에 보관한다.",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "manufacturing_st_4322ee",
-    "conceptId": "L3371",
+    "conceptId": "L3355",
     "text": "시험 검사 결과 적합 판정이 내려지면 '적합' 라벨을 부착하고 적합 구역으로 이동한다.",
     "truth": true
    },
    {
     "id": "ㄹ",
     "sid": "manufacturing_st_cd822c",
-    "conceptId": "L3371",
+    "conceptId": "L3355",
     "text": "시험 결과 부적합 판정이 나면 '부적합' 라벨을 부착하고 격리 보관한다.",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "manufacturing_st_2a259e",
-    "conceptId": "L3371",
+    "conceptId": "L3355",
     "text": "급한 생산 일정을 위해 시험 결과 확인 전에 출고 승인을 진행할 수 있다.",
     "truth": false
    }
@@ -3247,7 +3247,7 @@ var COMBO_DRILLS_subject2 = [
    "절차"
   ],
   "derivedFrom": "subject2_q35",
-  "explain": "📖 법령 근거 (교재: L3371):\n③ 원자재, 시험 중인 제품 및 부적합품은 각각 구획된 장소에서 보관해야 한다. 다만, 서로 혼동을 일으킬 우려가 없는 시스템에 의해 보관되는 경우는 제외한다.",
+  "explain": "📖 법령 근거 (교재: L3355):\n③ 원자재, 시험 중인 제품 및 부적합품은 각각 구획된 장소에서 보관해야 한다. 다만, 서로 혼동을 일으킬 우려가 없는 시스템에 의해 보관되는 경우는 제외한다.",
   "source": "화장품 제조 및 품질관리 (250제)",
   "answer": "3"
  },
@@ -4356,41 +4356,41 @@ var COMBO_DRILLS_subject2 = [
   "subject": 2,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L3371 (출처: 과목2 문제은행 Q48)",
+  "citation": "📖 교재: L3355 (출처: 과목2 문제은행 Q48)",
   "stem": "다음 중 CGMP 기준상 원료의 품질시험 결과 부적합 판정이 났을 때 처리 절차으로 옳은 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "manufacturing_st_ca8410",
-    "conceptId": "L3371",
+    "conceptId": "L3355",
     "text": "즉시 '부적합' 라벨을 부착한다.",
     "truth": true
    },
    {
     "id": "ㄴ",
     "sid": "manufacturing_st_87287d",
-    "conceptId": "L3371",
+    "conceptId": "L3355",
     "text": "다른 적합 원료와 혼동하여 사용하지 않도록 물리적으로 격리된 장소에 보관한다.",
     "truth": true
    },
    {
     "id": "ㄷ",
     "sid": "manufacturing_st_1fe172",
-    "conceptId": "L3371",
+    "conceptId": "L3355",
     "text": "부적합 원료는 생산부서장의 임의 승인 하에 재작업용 원료로 바로 투입한다.",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "manufacturing_st_22a7ea",
-    "conceptId": "L3371",
+    "conceptId": "L3355",
     "text": "원인 규명을 위한 일탈(Deviation) 조사를 실시한다.",
     "truth": true
    },
    {
     "id": "ㅁ",
     "sid": "manufacturing_st_2e7752",
-    "conceptId": "L3371",
+    "conceptId": "L3355",
     "text": "공급업체에 반품 처리하거나 적법한 절차에 따라 폐기 처분한다.",
     "truth": true
    }
@@ -4440,7 +4440,7 @@ var COMBO_DRILLS_subject2 = [
    "절차"
   ],
   "derivedFrom": "subject2_q48",
-  "explain": "📖 법령 근거 (교재: L3371):\n③ 원자재, 시험 중인 제품 및 부적합품은 각각 구획된 장소에서 보관해야 한다. 다만, 서로 혼동을 일으킬 우려가 없는 시스템에 의해 보관되는 경우는 제외한다.",
+  "explain": "📖 법령 근거 (교재: L3355):\n③ 원자재, 시험 중인 제품 및 부적합품은 각각 구획된 장소에서 보관해야 한다. 다만, 서로 혼동을 일으킬 우려가 없는 시스템에 의해 보관되는 경우는 제외한다.",
   "source": "화장품 제조 및 품질관리 (250제)",
   "answer": "3"
  },
@@ -7126,41 +7126,41 @@ var COMBO_DRILLS_subject2 = [
   "subject": 2,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L3375 (출처: 과목2 문제은행 Q79)",
+  "citation": "📖 교재: L3359 (출처: 과목2 문제은행 Q79)",
   "stem": "다음 중 CGMP 기준상 제조 장비의 세척 상태를 최종 승인하고 적합 라벨을 부착할 수 있는 권한을 가진 부서에 해당하는 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
     "sid": "manufacturing_st_8a0d1a",
-    "conceptId": "L3375",
+    "conceptId": "L3359",
     "text": "생산부서",
     "truth": false
    },
    {
     "id": "ㄴ",
     "sid": "manufacturing_st_a7a50a",
-    "conceptId": "L3375",
+    "conceptId": "L3359",
     "text": "대표이사 직속 비서실",
     "truth": false
    },
    {
     "id": "ㄷ",
     "sid": "manufacturing_st_344e4d",
-    "conceptId": "L3375",
+    "conceptId": "L3359",
     "text": "영업부서",
     "truth": false
    },
    {
     "id": "ㄹ",
     "sid": "manufacturing_st_4a490e",
-    "conceptId": "L3375",
+    "conceptId": "L3359",
     "text": "구매부서",
     "truth": false
    },
    {
     "id": "ㅁ",
     "sid": "manufacturing_st_8a1040",
-    "conceptId": "L3375",
+    "conceptId": "L3359",
     "text": "품질부서 (QA/QC)",
     "truth": true
    }
@@ -7210,7 +7210,7 @@ var COMBO_DRILLS_subject2 = [
    "절차"
   ],
   "derivedFrom": "subject2_q79",
-  "explain": "📖 교재 근거 (교재: L3375):\n⑤ 완제품은 시험 결과 적합 판정과 품질부서 책임자가 출고 승인한 것만을 출고한다.",
+  "explain": "📖 교재 근거 (교재: L3359):\n⑤ 완제품은 시험 결과 적합 판정과 품질부서 책임자가 출고 승인한 것만을 출고한다.",
   "source": "화장품 제조 및 품질관리 (250제)",
   "answer": "1"
  },
@@ -14507,78 +14507,88 @@ var COMBO_DRILLS_subject2 = [
   "answer": "5"
  },
  {
-  "id": "manufacturing_combo-cluster_06a2f3",
+  "id": "manufacturing_combo-cluster_e383ed",
   "subject": 2,
   "type": "combo",
   "points": 4,
-  "citation": "📖 교재: L3371 (출처: 과목2 문제은행 진술 재조합)",
+  "citation": "📖 교재: L3355 (출처: 과목2 문제은행 진술 재조합)",
   "stem": "다음 설명 중 옳은 것을 모두 고른 것은?",
   "statements": [
    {
     "id": "ㄱ",
-    "sid": "manufacturing_st_4322ee",
-    "conceptId": "L3371",
-    "text": "시험 검사 결과 적합 판정이 내려지면 '적합' 라벨을 부착하고 적합 구역으로 이동한다.",
+    "sid": "manufacturing_st_b9765c",
+    "conceptId": "L3355",
+    "text": "시험 결과가 나오기 전까지는 '시험 중(대기)' 구역에 보관한다.",
     "truth": true,
-    "explain": "원본: 과목2 문제은행 Q35 · 교재 L3371"
+    "explain": "원본: 과목2 문제은행 Q35 · 교재 L3355"
    },
    {
     "id": "ㄴ",
     "sid": "manufacturing_st_1fe172",
-    "conceptId": "L3371",
+    "conceptId": "L3355",
     "text": "부적합 원료는 생산부서장의 임의 승인 하에 재작업용 원료로 바로 투입한다.",
     "truth": false,
-    "explain": "원본: 과목2 문제은행 Q48 · 교재 L3371"
+    "explain": "원본: 과목2 문제은행 Q48 · 교재 L3355"
    },
    {
     "id": "ㄷ",
-    "sid": "manufacturing_st_87287d",
-    "conceptId": "L3371",
-    "text": "다른 적합 원료와 혼동하여 사용하지 않도록 물리적으로 격리된 장소에 보관한다.",
+    "sid": "manufacturing_st_2e7752",
+    "conceptId": "L3355",
+    "text": "공급업체에 반품 처리하거나 적법한 절차에 따라 폐기 처분한다.",
     "truth": true,
-    "explain": "원본: 과목2 문제은행 Q48 · 교재 L3371"
+    "explain": "원본: 과목2 문제은행 Q48 · 교재 L3355"
    },
    {
     "id": "ㄹ",
+    "sid": "manufacturing_st_22a7ea",
+    "conceptId": "L3355",
+    "text": "원인 규명을 위한 일탈(Deviation) 조사를 실시한다.",
+    "truth": true,
+    "explain": "원본: 과목2 문제은행 Q48 · 교재 L3355"
+   },
+   {
+    "id": "ㅁ",
     "sid": "manufacturing_st_2a259e",
-    "conceptId": "L3371",
+    "conceptId": "L3355",
     "text": "급한 생산 일정을 위해 시험 결과 확인 전에 출고 승인을 진행할 수 있다.",
     "truth": false,
-    "explain": "원본: 과목2 문제은행 Q35 · 교재 L3371"
+    "explain": "원본: 과목2 문제은행 Q35 · 교재 L3355"
    }
   ],
   "options": [
    {
     "id": "1",
     "members": [
-     "ㄹ"
+     "ㄱ"
     ]
    },
    {
     "id": "2",
     "members": [
      "ㄱ",
-     "ㄷ"
+     "ㄴ",
+     "ㅁ"
     ]
    },
    {
     "id": "3",
     "members": [
-     "ㄱ",
-     "ㄹ"
+     "ㄷ"
     ]
    },
    {
     "id": "4",
     "members": [
-     "ㄴ",
-     "ㄷ"
+     "ㄱ",
+     "ㄷ",
+     "ㄹ"
     ]
    },
    {
     "id": "5",
     "members": [
-     "ㄱ"
+     "ㄱ",
+     "ㄴ"
     ]
    }
   ],
@@ -14586,12 +14596,13 @@ var COMBO_DRILLS_subject2 = [
    "자동변환",
    "명제판정",
    "개념재조합",
+   "처분기준",
    "절차"
   ],
-  "derivedFrom": "cluster:2|L3371",
-  "explain": "ㄱ. 원본: 과목2 문제은행 Q35 · 교재 L3371\nㄴ. 원본: 과목2 문제은행 Q48 · 교재 L3371\nㄷ. 원본: 과목2 문제은행 Q48 · 교재 L3371\nㄹ. 원본: 과목2 문제은행 Q35 · 교재 L3371",
+  "derivedFrom": "cluster:2|L3355",
+  "explain": "ㄱ. 원본: 과목2 문제은행 Q35 · 교재 L3355\nㄴ. 원본: 과목2 문제은행 Q48 · 교재 L3355\nㄷ. 원본: 과목2 문제은행 Q48 · 교재 L3355\nㄹ. 원본: 과목2 문제은행 Q48 · 교재 L3355\nㅁ. 원본: 과목2 문제은행 Q35 · 교재 L3355",
   "source": "과목2 개념 재조합",
-  "answer": "2"
+  "answer": "4"
  },
  {
   "id": "manufacturing_combo-cluster_e63e94",

@@ -1,5 +1,5 @@
 // tests/e2e/a11y.spec.js — 접근성 자동 스캔 (axe-core, 실브라우저)
-// @spec A-01,A-03,A-04
+// @spec A-01,A-03,A-04,UX-NAV-04
 // ARIA·대비·터치 타겟은 실제 렌더링 DOM에서만 검증 가능 — jsdom 불가.
 // 심각(critical/serious) 위반 0건을 게이트로 고정한다.
 // moderate/minor는 보고만 — 기존 백로그가 있을 수 있어 점진 정리 대상.
@@ -85,5 +85,54 @@ test.describe('접근성 자동 스캔 (A-01/03/04)', () => {
         await expect(page.locator('#settings-panel')).not.toHaveClass(/is-hidden/);
         const bad = await scan(page, 'settings');
         expect(bad.map(v => v.id)).toEqual([]);
+    });
+
+    test('다크 테마 — 대시보드·플래시카드: 심각 위반 0건', async ({ page }) => {
+        test.setTimeout(60_000);
+        await page.goto('/index.html');
+        await page.waitForFunction(() => window.__APP_INITIALIZED === true, null, { timeout: 15_000 });
+        await page.evaluate(() => localStorage.setItem('appTheme', 'dark'));
+        await page.reload();
+        await page.waitForFunction(() => window.__APP_INITIALIZED === true, null, { timeout: 15_000 });
+        let bad = await scan(page, 'dashboard-dark');
+        const nav = page.locator('.nav-item[data-target="flashcard-view"]:visible, .mobile-tab-item[data-target="flashcard-view"]:visible');
+        await nav.first().click();
+        await expect(page.locator('#flashcard-view')).toBeVisible();
+        await page.waitForFunction(() =>
+            document.getElementById('fc-subject-select')?.options.length > 1, null, { timeout: 20_000 });
+        bad = bad.concat(await scan(page, 'flashcard-dark'));
+        expect(bad.map(v => v.id)).toEqual([]);
+    });
+
+    test('주요 뷰에서 가로 오버플로가 발생하지 않는다 (UX-NAV-04)', async ({ page }) => {
+        test.setTimeout(60_000);
+        await page.goto('/index.html');
+        await page.waitForFunction(() => window.__APP_INITIALIZED === true, null, { timeout: 15_000 });
+        await page.evaluate(() =>
+            document.querySelectorAll('#onboarding-overlay, #app-confirm-overlay').forEach(el => el.remove()));
+        for (const target of ['dashboard-view', 'flashcard-view', 'quiz-view', 'textbook-view', 'dictionary-view']) {
+            const nav = page.locator(`.nav-item[data-target="${target}"]:visible, .mobile-tab-item[data-target="${target}"]:visible`).first();
+            if (await nav.count()) {
+                await nav.click();
+            } else {
+                // 탭 바에 없는 뷰 — 더보기 시트 경유 (모바일)
+                const more = page.locator('#mobile-more-btn');
+                if (!(await more.isVisible())) continue;
+                await more.click();
+                const item = page.locator(`#mobile-more-sheet [data-target="${target}"]`).first();
+                if (!(await item.count())) {
+                    await page.locator('#more-sheet-close').click();
+                    continue;
+                }
+                await item.click();
+            }
+            await expect(page.locator(`#${target}`)).toBeVisible({ timeout: 10_000 });
+            const over = await page.evaluate(() => ({
+                sw: document.documentElement.scrollWidth,
+                iw: window.innerWidth,
+                view: document.querySelector('.view-section.active')?.id,
+            }));
+            expect(over.sw, `${over.view} 가로 오버플로 ${over.sw}>${over.iw}`).toBeLessThanOrEqual(over.iw + 1);
+        }
     });
 });

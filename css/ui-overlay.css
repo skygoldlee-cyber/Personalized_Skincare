@@ -666,7 +666,8 @@
   font-size: 0.55rem;
   font-weight: var(--font-weight-bold, 700);
   letter-spacing: 0.05em;
-  color: var(--color-secondary, #8b5cf6);
+  /* A-03: #8b5cf6은 다크 카드 배경에서 3.77:1 실패 → violet-400(≈6.3:1) */
+  color: #a78bfa;
   border: 1px solid var(--secondary-tint-40, rgba(139, 92, 246, 0.4));
   background: var(--secondary-tint-10, rgba(139, 92, 246, 0.1));
   vertical-align: middle;
