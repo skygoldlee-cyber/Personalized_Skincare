@@ -1,5 +1,5 @@
 // tests/unit/study-aids.test.js
-// @spec SA-01~05
+// @spec SA-02~05
 // 학습 보조 모듈의 순수 함수들을 합성 데이터로 검증.
 // 교재 콘텐츠가 바뀌어도 로직 자체는 동일해야 함.
 
@@ -10,7 +10,6 @@ import {
     loadNumberDrills,
     detectProcedureFlow,
     detectAdminPenalty,
-    isKeySection,
 } from '../../src/study-aids.js';
 
 // --- 합성 챕터 데이터 ---
@@ -239,31 +238,4 @@ test('detectAdminPenalty: 행 2개 미만 → null', () => {
 test('detectAdminPenalty: 빈 챕터', () => {
     assert.equal(detectAdminPenalty({ sections: [] }), null);
     assert.equal(detectAdminPenalty({}), null);
-});
-
-// ==================== isKeySection ====================
-
-test('isKeySection: 🔖기출 마커 감지', () => {
-    assert.equal(isKeySection({ title: '제1장', content: '🔖기출 내용' }), true);
-});
-
-test('isKeySection: 📌중요 마커 감지', () => {
-    assert.equal(isKeySection({ title: '제1장', content: '📌중요 내용' }), true);
-});
-
-test('isKeySection: 🎯 기출 마커 감지', () => {
-    assert.equal(isKeySection({ title: '제1장', content: '🎯 기출 내용' }), true);
-});
-
-test('isKeySection: 마커 없음 → false', () => {
-    assert.equal(isKeySection({ title: '제1장', content: '일반 내용' }), false);
-});
-
-test('isKeySection: 제목에 마커가 있어도 감지', () => {
-    assert.equal(isKeySection({ title: '🔖기출 제1장', content: '내용' }), true);
-});
-
-test('isKeySection: 빈 입력', () => {
-    assert.equal(isKeySection({}), false);
-    assert.equal(isKeySection({ title: '', content: '' }), false);
 });

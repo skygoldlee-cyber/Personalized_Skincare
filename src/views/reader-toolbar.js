@@ -267,9 +267,6 @@ export function initReaderToolbar() {
     const lhDecBtn = document.getElementById('reader-line-height-decrease');
     const lhIncBtn = document.getElementById('reader-line-height-increase');
     const lhResetBtn = document.getElementById('reader-line-height-reset');
-    const focusBtn = document.getElementById('reader-focus-toggle');
-    const expandAllBtn = document.getElementById('reader-expand-all');
-    const collapseAllBtn = document.getElementById('reader-collapse-all');
     const toolbarToggleBtn = document.getElementById('reader-toolbar-toggle');
     const modalClose = document.getElementById('reader-table-modal-close');
     const modal = document.getElementById('reader-table-modal');
@@ -332,16 +329,6 @@ export function initReaderToolbar() {
     if (!document.body.dataset.readerThemeSync) {
         document.body.dataset.readerThemeSync = 'true';
         document.addEventListener('themechange', applyReaderThemeClass);
-    }
-    if (focusBtn && !focusBtn.dataset.bound) {
-        focusBtn.dataset.bound = 'true';
-        focusBtn.addEventListener('click', () => {
-            const focused = document.body.classList.toggle('reader-focus-mode');
-            focusBtn.classList.toggle('active', focused);
-            focusBtn.innerHTML = focused
-                ? '<i class="fa-solid fa-compress"></i> <span>집중 해제</span>'
-                : '<i class="fa-solid fa-expand"></i> <span>집중 모드</span>';
-        });
     }
     // P2-7: 본문 내 검색 하이라이트
     const searchInput = /** @type {HTMLInputElement|null} */ (document.getElementById('reader-in-content-search'));
@@ -479,20 +466,6 @@ export function initReaderToolbar() {
                 }
             });
         }
-    }
-    if (expandAllBtn && !expandAllBtn.dataset.bound) {
-        expandAllBtn.dataset.bound = 'true';
-        expandAllBtn.addEventListener('click', () => {
-            document.querySelectorAll('#textbook-reader-container .reader-section-card.collapsed')
-                .forEach(c => c.classList.remove('collapsed'));
-        });
-    }
-    if (collapseAllBtn && !collapseAllBtn.dataset.bound) {
-        collapseAllBtn.dataset.bound = 'true';
-        collapseAllBtn.addEventListener('click', () => {
-            document.querySelectorAll('#textbook-reader-container .reader-section-card')
-                .forEach(c => c.classList.add('collapsed'));
-        });
     }
     if (modalClose && !modalClose.dataset.bound) {
         modalClose.dataset.bound = 'true';

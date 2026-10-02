@@ -163,7 +163,6 @@ describe('교재 리더 — 툴바·검색·드로어·표 모달', () => {
         loadIndexHtml();
         Element.prototype.scrollIntoView = Element.prototype.scrollIntoView || vi.fn();
         vi.clearAllMocks();
-        document.body.classList.remove('reader-focus-mode');
     });
 
     it('글자 크기 +/-/리셋 → 표시·CSS 변수·localStorage 영속, 경계 클램프', async () => {
@@ -195,35 +194,12 @@ describe('교재 리더 — 툴바·검색·드로어·표 모달', () => {
         expect(el('reader-line-height-display').textContent).toBe('2.05');
     });
 
-    it('집중 모드 토글 → body 클래스 + 버튼 라벨 전환', async () => {
-        await renderRichChapter();
-
-        el('reader-focus-toggle').click();
-        expect(document.body.classList.contains('reader-focus-mode')).toBe(true);
-        expect(el('reader-focus-toggle').textContent).toContain('집중 해제');
-
-        el('reader-focus-toggle').click();
-        expect(document.body.classList.contains('reader-focus-mode')).toBe(false);
-    });
-
     it('툴바 접기 토글 → collapsed + aria-expanded', async () => {
         await renderRichChapter();
 
         el('reader-toolbar-toggle').click();
         expect(el('reader-toolbar').classList.contains('collapsed')).toBe(true);
         expect(el('reader-toolbar-toggle').getAttribute('aria-expanded')).toBe('false');
-    });
-
-    it('모두 접기/펼치기 → 섹션 카드 collapsed 일괄 토글', async () => {
-        await renderRichChapter();
-
-        el('reader-collapse-all').click();
-        const cards = el('textbook-reader-container').querySelectorAll('.reader-section-card');
-        expect(cards.length).toBeGreaterThan(0);
-        cards.forEach(c => expect(c.classList.contains('collapsed')).toBe(true));
-
-        el('reader-expand-all').click();
-        cards.forEach(c => expect(c.classList.contains('collapsed')).toBe(false));
     });
 
     it('본문 검색 → 하이라이트 마크 + 카운트, next/prev 순환, clear 해제', async () => {

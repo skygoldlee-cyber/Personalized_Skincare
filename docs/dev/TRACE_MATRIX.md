@@ -3,7 +3,7 @@
 > **문서 ID**: DOC-DEV-04
 > **관련 SPEC ID**: 해당 없음 (본 문서가 추적 산출물)
 > ⚠️ 자동 생성 파일 — `npm run build:trace`로 재생성. 직접 편집 금지.
-> 입력 해시: 106507da3ad04b44
+> 입력 해시: c8c3ff2ac6b0f3ee
 > 생성: 2026-10-02 · 원천: SPEC.md(388개 ID) + @spec 태그 + 문서 헤더
 
 | 열 | 의미 | 원천 |
@@ -16,7 +16,7 @@
 | 보고서 | 분석·결과 보고서 | report_archive 헤더 |
 | 출처 | 요구사항의 기원 (법령·시험 규정·사업 문서) | SPEC 부록 "요구사항 출처" 표 |
 
-**커버리지 요약**: 요구사항 388개 — 문서 연결 252 · 소스 연결 363 · 테스트 연결 377 · 보고서 연결 109
+**커버리지 요약**: 요구사항 388개 — 문서 연결 252 · 소스 연결 362 · 테스트 연결 377 · 보고서 연결 109
 
 ---
 
@@ -131,7 +131,7 @@
 
 | ID | 상태 | 검증 수단 | 문서 | 소스 | 테스트 | 보고서 | 출처 |
 |----|------|-----------|------|------|--------|--------|------|
-| SA-01 | ✅ | 테스트 | — | src/study-aids.js<br>src/views/textbook-reader.js | tests/unit/study-aids.test.js | — | — |
+| SA-01 | ✅ | E2E 테스트 | — | — | tests/e2e/reader-flow.spec.js | — | — |
 | SA-02 | ✅ | 테스트 | — | src/study-aids.js<br>src/views/textbook-reader.js | tests/unit/study-aids.test.js | — | — |
 | SA-03 | ✅ | 테스트 | — | src/study-aids.js<br>src/views/textbook-reader.js | tests/unit/study-aids.test.js | — | — |
 | SA-04 | ✅ | 테스트 | — | src/study-aids.js<br>src/views/textbook-reader.js | tests/unit/study-aids.test.js | — | — |
@@ -161,7 +161,7 @@
 | RR-04 | ✅ | 테스트 | DOC-REF-04<br>DOC-REF-07 | src/keyword-index.js<br>src/views/reader-ref-links.js<br>tools/build/build_keyword_index.js | tests/dom/common-htmlviewer.dom.test.js | — | — |
 | RR-05 | ✅ | 테스트 | DOC-REF-04<br>DOC-REF-07 | src/html-viewer.js<br>src/views/reader-ref-links.js | tests/dom/common-htmlviewer.dom.test.js | — | — |
 | RR-06 | ✅ | 테스트 | DOC-REF-04<br>DOC-REF-07 | src/html-viewer.js<br>src/views/reader-ref-links.js | tests/dom/common-htmlviewer.dom.test.js | — | — |
-| RR-07 | ✅ | 테스트 | DOC-REF-04<br>DOC-REF-07 | src/html-viewer.js | tests/dom/common-htmlviewer.dom.test.js | — | — |
+| RR-07 | ✅ | E2E 테스트 | DOC-REF-04<br>DOC-REF-07 | src/html-viewer.js | tests/dom/common-htmlviewer.dom.test.js<br>tests/e2e/reader-flow.spec.js | — | — |
 | RR-08 | ✅ | 테스트 | DOC-REF-04<br>DOC-REF-07 | src/html-viewer.js | tests/dom/common-htmlviewer.dom.test.js | — | — |
 | RR-09 | ✅ | 테스트 | DOC-REF-04<br>DOC-REF-07 | src/html-viewer.js | tests/dom/common-htmlviewer.dom.test.js | — | — |
 | RR-10 | ✅ | 테스트 | DOC-REF-04<br>DOC-REF-07 | src/html-viewer.js | tests/dom/common-htmlviewer.dom.test.js | — | — |

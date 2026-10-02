@@ -159,23 +159,6 @@ describe('router.js — DOM 테스트', () => {
             expect(stopAudio).not.toHaveBeenCalled();
         });
 
-        it('reader-focus-mode 해제 (textbook-reader-view가 아닌 경우)', () => {
-            document.body.classList.add('reader-focus-mode');
-            const focusBtn = document.createElement('button');
-            focusBtn.id = 'reader-focus-toggle';
-            focusBtn.classList.add('active');
-            focusBtn.innerHTML = '<i></i> <span>집중 모드</span>';
-            document.body.appendChild(focusBtn);
-
-            const ctx = {
-                titlesMap: getViewTitles(null),
-                handlers: { viewRenderers: {}, stopReaderAudio: vi.fn() }
-            };
-            navigateToView('dashboard-view', ctx);
-
-            expect(document.body.classList.contains('reader-focus-mode')).toBe(false);
-            expect(focusBtn.classList.contains('active')).toBe(false);
-        });
     });
 
     describe('접근성 — aria-current + 활성 탭 가시성', () => {

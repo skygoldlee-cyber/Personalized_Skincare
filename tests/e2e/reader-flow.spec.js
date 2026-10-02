@@ -1,5 +1,5 @@
 // tests/e2e/reader-flow.spec.js — 교재리더 본체 동작 회귀 (실브라우저)
-// @spec TR-01,TR-02,TR-03,TR-11,TR-12,TR-14,TR-17,TR-18
+// @spec TR-01,TR-02,TR-03,TR-11,TR-12,TR-14,TR-17,TR-18,SA-01,RR-07
 // 렌더·TOC·단원 이동·읽기 위치 영속/복원·이야기형 토글·섹션 표시줄을 실측한다.
 // jsdom은 레이아웃·스크롤을 계산하지 않으므로 이 검증은 e2e에서만 유효하다.
 
@@ -58,6 +58,15 @@ test.describe('교재리더 본체', () => {
         expect(m.headings).toBeGreaterThan(0);
         expect(m.tocItems).toBeGreaterThan(0);
         expect(page._errors.filter(e => !/favicon|manifest/i.test(e))).toEqual([]);
+    });
+
+    test('툴바에 기출 필터·원본·참조자료 버튼이 노출되지 않는다 (SA-01,RR-07)', async ({ page }) => {
+        test.setTimeout(60_000);
+        await openReader(page);
+        const group = page.locator('#reader-chapter-actions-group');
+        await expect(group.locator('#exam-filter-btn')).toHaveCount(0);
+        await expect(group.locator('#reader-ref-dropdown')).toHaveCount(0);
+        await expect(group.locator('a:has-text("원본")')).toHaveCount(0);
     });
 
     test('TOC 항목 클릭으로 단원 간 이동한다 (TR-03)', async ({ page }) => {

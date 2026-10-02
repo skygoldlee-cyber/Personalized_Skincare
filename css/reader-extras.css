@@ -202,43 +202,6 @@
     font-size: var(--text-xs);
 }
 
-/* 기출 필터 토글 버튼 */
-.exam-filter-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-size: var(--text-2xs);
-    padding: 0.35rem 0.75rem;
-    border-radius: var(--radius-xs);
-    border: 1px solid var(--border-color);
-    background: var(--bg-card);
-    color: var(--color-text-muted);
-    cursor: pointer;
-    transition: all 0.15s;
-}
-
-.exam-filter-btn:hover {
-    border-color: var(--color-primary);
-    color: var(--color-primary);
-}
-
-.exam-filter-btn.active {
-    background: var(--warning);
-    color: var(--color-on-brand);
-    border-color: var(--warning);
-}
-
-/* 기출 필터 dimmed 섹션 */
-.reader-section-card.exam-filter-dimmed {
-    opacity: 0.25;
-    transition: opacity var(--transition-slow);
-    pointer-events: none;
-}
-
-.reader-section-card.exam-filter-dimmed:hover {
-    opacity: 0.25;
-}
-
 /* ===== ③ 중요 숫자 암기표 ===== */
 
 .number-drill-card {
@@ -462,20 +425,7 @@
     }
 }
 
-/* --- 참조자료 드롭다운 --- */
-.reader-ref-dropdown summary::-webkit-details-marker { display: none; }
-.reader-ref-dropdown summary::marker { display: none; }
-.ref-group-label {
-    font-size: var(--text-2xs);
-    font-weight: var(--font-weight-bold);
-    color: var(--color-primary);
-    margin: 0.5rem 0 0.25rem;
-    padding-bottom: 0.2rem;
-    border-bottom: 1px solid var(--border-color);
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-}
-.ref-group-label:first-child { margin-top: 0; }
+/* --- 본문 인라인 참조 링크 (툴바 "참조자료" 드롭다운은 제거됨 — SPEC RR-07) --- */
 .ref-link-item {
     display: flex;
     align-items: center;
@@ -507,15 +457,7 @@
 .ref-link-item:hover i {
     color: var(--color-primary);
 }
-/* 참조자료 행 + law.go.kr 원문 링크 (law-links.js) */
-.ref-link-row {
-    display: flex;
-    align-items: center;
-}
-.ref-link-row .ref-link-item {
-    flex: 1;
-    min-width: 0;
-}
+/* law.go.kr 원문 링크 (law-links.js) */
 .ref-law-ext {
     flex-shrink: 0;
     display: inline-flex;

@@ -1,5 +1,5 @@
 // src/study-aids.js — 교재 학습 보조 모듈 (기출 필터, 숫자 암기표, 절차 플로우, 비교 시각화)
-// @spec SA-01~05
+// @spec SA-02~05
 // 순수 함수 기반, CSP-safe, 외부 의존성 없음
 
 import { escapeHTML as esc } from './sanitize.js';  // escapeHTML을 esc로 alias하여 사용
@@ -342,52 +342,6 @@ export function detectAdminPenalty(chapter) {
     return null;
 }
 
-
-// --- ② 기출 필터 토글 ---
-
-/**
- * 기출 필터 토글 버튼 HTML을 생성합니다.
- */
-export function renderExamFilterToggle() {
-    return `
-        <button class="exam-filter-btn" id="exam-filter-btn" title="기출·중요 마커가 있는 섹션만 강조">
-            <i class="fa-solid fa-filter"></i>
-            <span>기출만 보기</span>
-        </button>
-    `;
-}
-
-/**
- * 섹션이 기출/중요 마커를 포함하는지 확인합니다.
- */
-export function isKeySection(sec) {
-    const c = sec.content || '';
-    const t = sec.title || '';
-    const text = c + '\n' + t;
-    return text.includes('🔖기출') || text.includes('📌중요') || /🎯\s*기출/.test(text) || /★\s*필수/.test(text);
-}
-
-/**
- * 기출 필터를 토글합니다. 비기출 섹션에 dim 클래스를 추가/제거합니다.
- * @param {HTMLElement} container - 교재 리더 컨테이너
- * @param {object} chapter
- * @param {boolean} active - 필터 활성화 여부
- */
-export function applyExamFilter(container, chapter, active) {
-    if (!container) return;
-    const sections = chapter.sections || [];
-
-    sections.forEach((sec, idx) => {
-        const sectionEl = container.querySelector(`#reader-section-${idx}`);
-        if (!sectionEl) return;
-
-        if (active && !isKeySection(sec)) {
-            sectionEl.classList.add('exam-filter-dimmed');
-        } else {
-            sectionEl.classList.remove('exam-filter-dimmed');
-        }
-    });
-}
 
 // --- 통합 렌더링 ---
 

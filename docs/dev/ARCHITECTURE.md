@@ -540,7 +540,7 @@ passory/
 - 뷰 목록: dashboard / analysis / flashcard / quiz / review / trainer / exam / textbook / textbook-reader / dictionary / formula / exam-select / calendar
 - 내비게이션 동기화: `.nav-item`(사이드바)과 `.mobile-tab-item`(핵심 탭 바 + `#mobile-more-sheet`)에 동일 `data-target` 부여 → 뷰 전환 시 양쪽 활성 상태 자동 동기화 (`aria-current="page"` 부여, 탭 바 안 활성 탭은 `scrollIntoView({inline:'center'})`로 가시화, 시트 소속 뷰는 `#mobile-more-btn`이 활성 표시). 양쪽 `data-target` 집합·뷰별 PRO 배지(`data-pro-feature`) 일치는 `tests/dom/common-navigation.dom.test.js`의 parity 테스트가 강제 (한쪽 누락 시 실패)
 - **뷰 해시 라우팅**: `navigateToView`가 현재 뷰를 `#/슬러그`로 `pushState` — 브라우저/PWA 뒤로가기로 이전 뷰 복귀 + 딥링크 공유. `initViewHashRouting(ctx)`이 초기 해시를 딥링크로 해석하고 `hashchange`를 구독 (재진입 시 `_hashNavigating` 플래그로 pushState 생략 — 모달 전용 `pushState`/`popstate` 흐름과 충돌 없이 공존)
-- 전환 부가 동작: 이전 뷰 스크롤 위치 저장·복원, 리더 집중 모드 해제, 오디오 정지, 뷰별 렌더 핸들러 호출 (`ctx.handlers`)
+- 전환 부가 동작: 이전 뷰 스크롤 위치 저장·복원, 오디오 정지, 뷰별 렌더 핸들러 호출 (`ctx.handlers`)
 - **스크롤 규칙**: 내비 전환은 이전 `scrollTop` 복원, **액션 딥링크(다른 화면을 여는 버튼)는 `switchView(target, { scrollTop: true })`로 맨 위 오픈** — `restoreScrollPosition`의 `pendingTop` 플래그가 복원 시점에 1회 소비되어 `saveScrollPosition` 덮어쓰기와 무관 (SPEC §4.8.1 UX-NAV-07)
 
 ### 2. Application Layer (응용 계층)

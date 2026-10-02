@@ -84,16 +84,6 @@ export function navigateToView(target, ctx) {
         else moreBtn.removeAttribute('aria-current');
     }
 
-    // 교재 읽기 집중 모드 해제 (다른 뷰로 이동 시)
-    if (target !== 'textbook-reader-view' && document.body.classList.contains('reader-focus-mode')) {
-        document.body.classList.remove('reader-focus-mode');
-        const focusBtn = document.getElementById('reader-focus-toggle');
-        if (focusBtn) {
-            focusBtn.classList.remove('active');
-            focusBtn.innerHTML = '<i class="fa-solid fa-expand"></i> <span>집중 모드</span>';
-        }
-    }
-
     // 리더 화면을 벗어나면 재생 중인 오디오 정지
     if (target !== 'textbook-reader-view' && typeof handlers.stopReaderAudio === 'function') {
         handlers.stopReaderAudio();

@@ -144,7 +144,7 @@ src/                    # ES Modules
   scratchpad.js          # 스크래치패드 캔버스 (계산 연습용)
   trainer-calc.js       # 계산 트레이너 문제 생성기 (순수 로직, 전역 스코프 실행)
   spaced-repetition.js  # SM-2 간격 반복 알고리즘
-  study-aids.js         # 기출 필터, 숫자 암기표
+  study-aids.js         # 학습 보조 (기출·중요 마커 추출 카드, 숫자 암기표)
   study-tracker.js      # 학습 캘린더/목표 추적 헬퍼 (recordStudyActivity, getStudyGoals)
   statement-tracker.js  # 진술 원자(sid) 단위 오판 통계·졸업 추적 (SM-2 연동)
   recommendations.js    # 합격 전략 추천 엔진 + 예상 점수 추정 + 실제 결과 보고 (순수 로직)

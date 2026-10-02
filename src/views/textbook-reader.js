@@ -1,12 +1,12 @@
 // views/textbook-reader.js - 교재 본문 읽기 및 오디오북 플레이어 (Textbook Reader + Audio)
-// @spec TR-01~19,SA-01~05,G-01~09,ST-01~07
+// @spec TR-01~19,SA-02~05,G-01~09,ST-01~07
 //   (참조 링크 프리뷰/위임 → reader-ref-links.js, 툴바·스크롤스파이·표 모달 → reader-toolbar.js)
 import { esc } from '../sanitize.js';
 import { proFeatureNotice, refreshProBadges } from '../pro-upgrade.js';
 import { trackAction } from '../usage-stats.js';
 import { formatSectionContentForReader, markStoryNarrative } from '../reader-format.js';
 import { parseTextbookContent } from '../textbook-parser.js';
-import { renderStudyAids, bindStudyAidToggles, renderExamFilterToggle, applyExamFilter } from '../study-aids.js';
+import { renderStudyAids, bindStudyAidToggles } from '../study-aids.js';
 import { renderMermaidIn } from '../mermaid-render.js';
 import { attachImageZoomIn } from '../image-zoom.js';
 import {
@@ -45,7 +45,7 @@ import {
     applyReaderFontScale, applyReaderLineHeight, applyReaderThemeClass,
     bindReaderScrollEvents, initReaderToolbar, openTableModal
 } from './reader-toolbar.js';
-import { buildReferenceLinks, bindReferenceLinks } from './reader-ref-links.js';
+import { bindReferenceLinks, refreshRefLinkNotices } from './reader-ref-links.js';
 
 // --- 교재 본문 읽기 (Textbook Reader) ---
 const textbookReaderState = {
@@ -679,7 +679,6 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
     const audioChapter = (subj.chapters && subj.chapters[chapterIdx]) || chapter;
     const audioPath = (hasFeature('audiobook') && isStoryMode) ? getAudioPathForChapter(subjId, audioChapter) : null;
     const hasAudio = !!audioPath;
-    const refsEnabled = hasFeature('refDocs');
 
     // 챕터 전체에서 출처 텍스트 추출 (컨텍스트 사이드바 + L-line PDF 링크용)
     let chapterSourceText = '';
@@ -702,32 +701,22 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
         <div class="reader-readable-width">
     `;
 
-    // --- 챕터 액션을 툴바에 동적 주입 ---
+    // --- 챕터 액션을 툴바에 동적 주입 (오디오 — 기출 필터/원본/참조자료 버튼은 2026-10 제거, SA-01·RR-07) ---
     const actionsGroup = document.getElementById('reader-chapter-actions-group');
     if (actionsGroup) {
         let actionsHtml = '';
-        if (!isStoryMode) {
-            actionsHtml += renderExamFilterToggle();
-        }
-        actionsHtml += `<a href="${esc(chapter.filePath)}" target="_blank" class="reader-tool-btn" title="원본 MD 열기" style="text-decoration:none;">
-            <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> 원본
-        </a>`;
-        if (refsEnabled) {
-            actionsHtml += `<details id="reader-ref-dropdown" class="reader-ref-dropdown" style="display:inline-block;position:relative;">
-                <summary class="reader-tool-btn" title="참조자료" style="cursor:pointer;list-style:none;">
-                    <i class="fa-solid fa-book-bookmark" aria-hidden="true"></i> 참조자료
-                </summary>
-                <div class="reader-ref-panel" style="position:absolute;top:100%;right:0;z-index:100;margin-top:0.4rem;min-width:320px;max-height:400px;overflow-y:auto;background:var(--bg-card);border:1px solid var(--border-color);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,0.25);padding:0.6rem;">
-                    ${buildReferenceLinks(subjId, chapterRefPath)}
-                </div>
-            </details>`;
-        }
         if (hasAudio) {
             actionsHtml += `<button id="reader-audio-toggle-btn" class="reader-tool-btn" data-click="toggleReaderAudio" data-args='["${subjId}", ${chapterIdx}]' title="오디오 듣기">
                 <i class="fa-solid fa-headphones" aria-hidden="true"></i> 오디오 <span class="pro-badge" data-pro-feature="audiobook">PRO</span>
             </button>`;
         }
         actionsGroup.innerHTML = actionsHtml;
+        // 오디오 미보유 시험은 액션 그룹이 완전히 빈다 — 고아 분리선이 남지 않게 함께 숨김
+        actionsGroup.classList.toggle('is-hidden', !actionsHtml);
+        const divider = actionsGroup.previousElementSibling;
+        if (divider && divider.classList.contains('reader-toolbar-divider')) {
+            divider.classList.toggle('is-hidden', !actionsHtml);
+        }
         refreshProBadges(actionsGroup);
     }
 
@@ -816,6 +805,9 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
 
     container.innerHTML = html;
 
+    // 참조 링크 원문 최신화 배지 (인라인 [data-law-url] — 구 드롭다운 트리거 대체, RR-19)
+    refreshRefLinkNotices();
+
     // 이야기형: 📖 장면·💭 에필로그·프롤로그 범위에 서사 스타일 태깅 (명조체+색상 구분)
     if (isStoryMode) {
         container.querySelectorAll('.textbook-reader-section-content, .reader-subsection-content')
@@ -824,19 +816,6 @@ async function _renderChapterContentInternal(subjId, chapterIdx, subj, chapter, 
 
     // Study aid toggles (기출 핵심, 숫자 암기표)
     bindStudyAidToggles(container);
-
-    // Exam filter button — 기출/중요 마커가 있는 섹션만 강조
-    const examFilterBtn = container.querySelector('#exam-filter-btn');
-    if (examFilterBtn) {
-        let filterActive = false;
-        examFilterBtn.addEventListener('click', () => {
-            filterActive = !filterActive;
-            examFilterBtn.classList.toggle('active', filterActive);
-            const btnText = examFilterBtn.querySelector('span');
-            if (btnText) btnText.textContent = filterActive ? '기출만 보기 ON' : '기출만 보기';
-            applyExamFilter(container, chapter, filterActive);
-        });
-    }
 
     // Section collapse toggles
     container.querySelectorAll('.reader-section-header').forEach(header => {

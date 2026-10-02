@@ -6,6 +6,13 @@
 > **문서 ID**: DOC-DEV-03
 > **관련 SPEC ID**: 해당 없음 (변경 이력 — 개별 항목이 관련 ID 인용)
 
+## 2026-10-03 교재리더 툴바 버튼 제거 (기출만 보기·원본·참조자료·집중 모드·모두 접기/펼치기)
+
+- **범위**: 제품 판정으로 리더 툴바에서 기출만 보기(SA-01)·원본 MD·참조자료 드롭다운(RR-07)·집중 모드·모두 접기/모두 펼치기 제거 — 정적 그룹은 글자 크기·줄 간격·본문 검색만 남고, 챕터 액션 그룹은 오디오 버튼만 유지(미보유 시험은 그룹+분리선 숨김). 섹션 카드 개별 접기(헤더 클릭)·TOC 계층 접기(TR-15)·툴바 접기(TR-21)는 유지
+- **코드**: `study-aids.js`의 `renderExamFilterToggle`/`isKeySection`/`applyExamFilter` 삭제, `reader-ref-links.js`의 `buildReferenceLinks`/`refItemRow` 삭제 → `refreshRefLinkNotices()` export로 교체 (인라인 `[data-law-url]` 링크의 현행본 보정·배지는 RR-19 유지를 위해 본문 렌더 시점 호출로 이전), `reader-toolbar.js`의 집중 모드·일괄 접기 바인딩 삭제, `router.js`의 리더 이탈 시 집중 모드 해제 블록 삭제. 관련 CSS(`.exam-filter-*`, `.reader-ref-*`, `.ref-group-label`, `.ref-link-row`, `body.reader-focus-mode` 전 규칙, 모바일 터치 대상 id) 제거 — 인라인 참조 링크용 `.ref-link-item`/`.ref-law-ext`/`.ref-snapshot`은 유지
+- **SPEC**: SA-01·RR-07 행을 제거 기록으로 갱신 (기능 폐기 이력 보존). 집중 모드·모두 접기/펼치기는 전용 요구사항 행 없음 — SCREEN_MAP 상태 목록·USER_FLOW 뷰 이탈 표·ARCHITECTURE 전환 부가 동작에서 기술 제거
+- **테스트**: `study-aids.test.js`의 isKeySection 테스트 6건 삭제, `study-reader.dom.test.js`의 집중 모드·모두 접기/펼치기 테스트 삭제, `router.dom.test.js`의 focus-mode 해제 테스트 삭제, `reader-flow.spec.js`에 툴바 버튼 부재 단언 신규 (SA-01,RR-07)
+
 ## 2026-10-02 UI/UX E2E 2차 확장 — 키보드·반응형·리더 고급 실측
 
 - **범위**: 잔여 갭 자동화 가능분 전면 전환 — `a11y-interaction.spec.js`(A-02 카드 키보드·A-05 focus-visible·A-06 reduced-motion·A-07/UX-FB-01 토스트·컨펌·UX-FB-05 온보딩 1회성), `responsive-flow.spec.js`(R-04/UX-NAV-07 스크롤 복원·R-05 그리드 종열·R-08 회전 버튼 비활성 계약·UX-NAV-06 커맨드 팔레트·UX-SCR-01 스크롤바 이원화·UX-FORM-01 입력 16px·UX-FORM-02 터치 scale·UX-PWA-01 종료 폴백·UX-PWA-02 standalone UI 비노출·UX-PWA-05 `--app-height`), `reader-advanced.spec.js`(TR-15 계층 TOC·TR-16 드로어·TR-16a 크롬 자동숨김·TR-06 mermaid 모달·TR-10 기출 링크·TR-20 라이트박스). `a11y.spec.js`에 다크 테마 스캔 + 주요 뷰 가로 오버플로 전수 검사(UX-NAV-04) 추가
