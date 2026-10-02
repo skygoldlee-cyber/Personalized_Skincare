@@ -1228,6 +1228,10 @@ body.reader-focus-mode .reader-readable-width {
     .reader-toolbar:not(.collapsed) {
         flex-wrap: wrap;
         overflow: visible;
+        /* 펼친 툴바가 flex 잔여 배분을 잠식해 본문 컬럼이 0으로 붕괴하는 것 방지 —
+           내부 스크롤로 상한 적용 */
+        max-height: 38vh;
+        overflow-y: auto;
     }
     .reader-toolbar:not(.collapsed) .reader-toolbar-toggle {
         width: 100%;

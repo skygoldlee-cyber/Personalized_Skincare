@@ -11,6 +11,7 @@
 - **증상**: 표준형 보기에서 TOC 스크롤바를 끝까지 내려도 마지막 목차 항목이 화면에 표시되지 않음
 - **원인**: `body`는 `overflow:hidden`이고 `.main-content`가 유일한 페이지 스크롤러인데, `.reader-toc`의 `max-height: calc(100vh - 200px)` 매직넘버가 실제 상단 크롬 높이(~380px)를 과소계상 — aside 하단이 뷰포트 밖으로 영구 노출. 본문 컬럼(`.textbook-reader-content`)도 `calc(100vh - 280px)`로 동일하게 하단 잘림. 이야기형도 동일 기하 구조로 같은 잠재 결함
 - **수정** (`css/reader.css` + `css/reader-mermaid.css`): 매직넘버 대신 flex 높이 배분 — `#textbook-reader-view.active { display:flex; flex-direction:column; flex:1; min-height:0 }` → `.reader-layout { flex:1; min-height:0 }`로 확정 높이 확보 → `.reader-toc`/`.textbook-reader-content`는 `max-height:100%`. 툴바 래핑·오디오 영역 등 크롬 높이 변동에 자동 적응
+- **모바일 대응** (`reader-toolbar.js` + `reader.css` + `html/views/textbook-reader.html`): flex 잔여 배분으로 모바일에서 펼친 툴바(~430px)가 본문을 34px로 붕괴시키는 회귀 방지 — ≤768px/가로모드 저높이에서는 툴바 기본 접힘(세션 내 사용자 토글은 유지) + 펼침 시 `max-height:38vh` 내부 스크롤 + 목차 버튼을 `.reader-toolbar-inner` 밖으로 이동해 접힘 상태에서도 TOC 드로어 접근 유지. 본문은 단일 내부 스크롤러로 안정 (이중 스크롤 타깃 전환·sticky 크롬 중첩으로 본문 영역이 줄어들던 모바일 증상도 함께 해소)
 - **부수 수정**: `.reader-toc-children.toc-chapter-children:not(.collapsed)`에 `max-height:none` — 챕터 children이 섹션+펼쳐진 하위 헤딩 전체를 담아 기본 2000px 캡을 초과 시 `overflow:hidden`으로 잘려 동일 증상을 유발할 수 있던 잠재 결함 차단
 - **집중 모드**: `reader-focus-mode .textbook-reader-content`의 `max-height:none`을 `100%`로 교정 — 확정 높이 행 안에서 `none`은 하단 오버플로로 되돌림
 - 테스트: `tests/e2e/toc-sidebar.spec.js` 신규 — TOC·본문 컬럼이 뷰포트 내 완전 표시 + 스크롤 끝 마지막 항목 가시성 (chromium·mobile)

@@ -38,10 +38,13 @@ test.describe('교재리더 TOC 사이드바', () => {
             const cr = content.getBoundingClientRect();
             const items = toc.querySelectorAll('.reader-toc-item, .reader-toc-sub-item');
             const last = items[items.length - 1].getBoundingClientRect();
+            const mc = document.querySelector('.main-content');
             return {
                 vh: window.innerHeight,
                 tocBottom: tr.bottom,
                 contentBottom: cr.bottom,
+                contentClientH: content.clientHeight,
+                mcCanScroll: mc.scrollHeight > mc.clientHeight + 2,
                 lastItemBottom: last.bottom,
                 lastItemTitle: items[items.length - 1].dataset.tocTitle,
             };
@@ -51,5 +54,8 @@ test.describe('교재리더 TOC 사이드바', () => {
         expect(m.contentBottom).toBeLessThanOrEqual(m.vh);
         // 스크롤바를 끝까지 내린 상태에서 마지막 목차 항목이 보여야 함
         expect(m.lastItemBottom).toBeLessThanOrEqual(m.vh + 1);
+        // 모바일 회귀: 펼친 툴바(~430px)가 flex 잔여 공간을 잠식해 본문이 34px로
+        // 붕괴했던 문제 — 본문 컬럼은 뷰포트의 30% 이상 확보해야 함
+        expect(m.contentClientH).toBeGreaterThan(m.vh * 0.3);
     });
 });

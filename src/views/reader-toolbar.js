@@ -234,6 +234,17 @@ export function bindReaderScrollEvents() {
 }
 
 export function initReaderToolbar() {
+    // M: 모바일(≤768px·가로모드 저높이)에서는 펼친 툴바가 수백 px를 차지해
+    // 본문 영역을 잠식 — 기본 접힘으로 시작. 세션 내 사용자 토글은 유지.
+    const toolbarEl0 = document.getElementById('reader-toolbar');
+    if (toolbarEl0 && !toolbarEl0.dataset.mobileInit
+        && window.matchMedia
+        && window.matchMedia('(max-width: 768px), (orientation: landscape) and (max-height: 500px)').matches) {
+        toolbarEl0.classList.add('collapsed');
+        document.getElementById('reader-toolbar-toggle')?.setAttribute('aria-expanded', 'false');
+    }
+    if (toolbarEl0) toolbarEl0.dataset.mobileInit = '1';
+
     const decBtn = document.getElementById('reader-font-decrease');
     const incBtn = document.getElementById('reader-font-increase');
     const resetBtn = document.getElementById('reader-font-reset');

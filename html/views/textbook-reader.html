@@ -31,6 +31,10 @@
                     <button class="reader-toolbar-toggle" id="reader-toolbar-toggle" title="툴바 접기/펼치기" aria-label="툴바 접기/펼치기" aria-expanded="true">
                         <i class="fa-solid fa-chevron-up" aria-hidden="true"></i>
                     </button>
+                    <!-- 목차 버튼은 inner 밖에 둬서 모바일 접힘 상태에서도 TOC 접근 유지 -->
+                    <button class="reader-tool-btn reader-toc-mobile-toggle" id="reader-toc-mobile-btn" title="목차 열기">
+                        <i class="fa-solid fa-list" aria-hidden="true"></i> <span>목차</span>
+                    </button>
                     <div class="reader-toolbar-inner" id="reader-toolbar-inner">
                     <div class="reader-toolbar-group">
                         <span class="reader-toolbar-label"><i class="fa-solid fa-text-height" aria-hidden="true"></i> 글자 크기</span>
@@ -51,9 +55,6 @@
                     <div class="reader-toolbar-group">
                         <button class="reader-tool-btn" id="reader-focus-toggle" title="집중 모드 (주변 UI 숨기기)">
                             <i class="fa-solid fa-expand" aria-hidden="true"></i> <span>집중 모드</span>
-                        </button>
-                        <button class="reader-tool-btn reader-toc-mobile-toggle" id="reader-toc-mobile-btn" title="목차 열기">
-                            <i class="fa-solid fa-list" aria-hidden="true"></i> <span>목차</span>
                         </button>
                     </div>
                     <div class="reader-toolbar-divider"></div>
