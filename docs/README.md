@@ -258,6 +258,7 @@ docs/
 | DOC-DEV-03 | `docs/dev/CHANGES.md` |
 | DOC-DEV-04 | `docs/dev/TRACE_MATRIX.md` (자동 생성 — npm run build:trace) |
 | DOC-DEV-05 | `docs/dev/ingredients_audit_제2026-19호.md` |
+| DOC-DEV-06 | `docs/dev/UIUX_요구사양.md` |
 | DOC-DSN-01 | `docs/dev/design/DOM_TEST_DESIGN.md` |
 | DOC-DSN-02 | `docs/dev/design/FORMULA_OS_WORKFLOW_DESIGN.md` |
 | DOC-DSN-03 | `docs/dev/design/LEARNING_PREMIUM_PLAN.md` |
