@@ -1,5 +1,15 @@
 [
   {
+    "version": "v20261002-10732e1",
+    "date": "2026-10-02",
+    "notes": [
+      "[테스트·e2e] UI/UX 커버리지 확장 — tablet 프로젝트·axe 스캔·리더 본체 + 실결함 5종 수정",
+      "[기능·trace] UI/UX 검증 절차 UX-VFY 체계 신설 — E2E 갭 기준선 + 런북 (DOC-RBK-11)",
+      "[문서·user-flow] 흐름 다이어그램을 Mermaid로 전환",
+      "[문서] 화면 지도 + 사용자 흐름 명세 신설 — DOC-REF-09·DOC-DSN-11"
+    ]
+  },
+  {
     "version": "v20261002-18aeaa4",
     "date": "2026-10-02",
     "notes": [
@@ -136,22 +146,6 @@
     "notes": [
       "[수정·tools] docsync [no-docs] 면제를 커밋 단위로 한정",
       "[수정·tools] 검증 게이트 리뷰 지적 3건 반영"
-    ]
-  },
-  {
-    "version": "v20261002-7c58456",
-    "date": "2026-10-02",
-    "notes": [
-      "[정리] exams.js 재생성 — exams.json 키 순서 반영",
-      "[기능·tools] 기능 플래그·저장소 접근 정합 체크 추가 + 체커 자기검증",
-      "[수정·exams] cosmetic에 story_textbook 플래그 선언 — 서사 검색 인덱스 활성화",
-      "[정리] TRACE_MATRIX 재생성 — AGENTS.md 명령어 표 갱신 반영",
-      "[기능·tools] release-notes.json ↔ git 이력 정합 체크 추가",
-      "[기능·tools] 시크릿 스캔 게이트 check:secrets 추가",
-      "[기능·tools] check_inventory에 ARCHITECTURE box 트리 검증 추가",
-      "[기능·tools] pre-push에 영향 테스트 게이트 추가",
-      "[수정·tools] @spec 주석 내 /Pro 가 ID 토큰 오인되는 파싱 오류 + TRACE_MATRIX 재생성",
-      "[기능·tools] 문서↔소스 정합성 검증 3종 추가 + @spec 태그 강제"
     ]
   }
 ]
